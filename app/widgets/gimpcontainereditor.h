@@ -57,20 +57,21 @@ struct _GimpContainerEditorClass
 };
 
 
-GType       gimp_container_editor_get_type   (void) G_GNUC_CONST;
+GType       gimp_container_editor_get_type  (void) G_GNUC_CONST;
 
 
 /*  protected  */
 
-gboolean    gimp_container_editor_construct  (GimpContainerEditor *editor,
-					      GimpViewType         view_type,
-					      GimpContainer       *container,
-					      GimpContext         *context,
-					      gint                 preview_size,
-                                              gboolean             reorderable,
-					      gint                 min_items_x,
-					      gint                 min_items_y,
-					      GimpItemFactory     *item_factory);
+gboolean    gimp_container_editor_construct (GimpContainerEditor *editor,
+                                             GimpViewType         view_type,
+                                             GimpContainer       *container,
+                                             GimpContext         *context,
+                                             gint                 preview_size,
+                                             gboolean             reorderable,
+                                             gint                 min_items_x,
+                                             gint                 min_items_y,
+                                             GimpMenuFactory     *menu_factory,
+                                             const gchar         *menu_identifier);
 
 
 #endif  /*  __GIMP_CONTAINER_EDITOR_H__  */

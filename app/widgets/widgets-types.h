@@ -32,6 +32,7 @@
 typedef struct _GimpDeviceInfo          GimpDeviceInfo;
 typedef struct _GimpDialogFactory       GimpDialogFactory;
 typedef struct _GimpItemFactory         GimpItemFactory;
+typedef struct _GimpMenuFactory         GimpMenuFactory;
 
 
 /*  widgets  */
@@ -102,10 +103,18 @@ typedef struct _GimpHistogramView       GimpHistogramView;
 typedef struct _GimpHistogramBox        GimpHistogramBox;
 
 
+/*  structs  */
+
+typedef struct _GimpItemFactoryEntry    GimpItemFactoryEntry;
+
+
 /*  function types  */
 
-typedef gchar * (* GimpItemGetNameFunc) (GtkWidget  *widget,
-					 gchar     **tooltip);
+typedef void    (* GimpItemFactorySetupFunc)  (GimpItemFactory *factory);
+typedef void    (* GimpItemFactoryUpdateFunc) (GtkItemFactory  *factory,
+                                               gpointer         data);
+typedef gchar * (* GimpItemGetNameFunc)       (GtkWidget       *widget,
+                                               gchar          **tooltip);
 
 
 #endif /* __WIDGETS_TYPES_H__ */

@@ -153,7 +153,7 @@ gimp_brush_factory_view_new (GimpViewType      view_type,
 			     gint              preview_size,
 			     gint              min_items_x,
 			     gint              min_items_y,
-			     GimpItemFactory  *item_factory)
+			     GimpMenuFactory  *menu_factory)
 {
   GimpBrushFactoryView *factory_view;
   GimpContainerEditor  *editor;
@@ -176,7 +176,7 @@ gimp_brush_factory_view_new (GimpViewType      view_type,
 					  preview_size,
 					  min_items_x,
 					  min_items_y,
-					  item_factory))
+					  menu_factory, "<Brushes>"))
     {
       g_object_unref (factory_view);
       return NULL;

@@ -16,16 +16,21 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __FILE_SAVE_DIALOG_H__
-#define __FILE_SAVE_DIALOG_H__
+#ifndef __DEBUG_COMMANDS_H__
+#define __DEBUG_COMMANDS_H__
 
 
-void   file_save_dialog_set_type    (PlugInProcDef   *proc);
-
-void   file_save_dialog_show        (GimpImage       *gimage,
-                                     GimpMenuFactory *menu_factory);
-void   file_save_a_copy_dialog_show (GimpImage       *gimage,
-                                     GimpMenuFactory *menu_factory);
+#define ENABLE_DEBUG_ENTRIES 1
 
 
-#endif /* __FILE_SAVE_DIALOG_H__ */
+#ifdef ENABLE_DEBUG_ENTRIES
+void   debug_dump_menus_cmd_callback  (GtkWidget       *widget,
+                                       gpointer         data,
+                                       guint            action);
+void   debug_mem_profile_cmd_callback (GtkWidget       *widget,
+                                       gpointer         data,
+                                       guint            action);
+#endif /*  ENABLE_DEBUG_ENTRIES  */
+
+
+#endif /* __DEBUG_COMMANDS_H__ */

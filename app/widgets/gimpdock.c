@@ -650,7 +650,7 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
 
 	  gimp_dockbook_remove (src_dockable->dockbook, src_dockable);
 
-	  dockbook = gimp_dockbook_new ();
+	  dockbook = gimp_dockbook_new (dock->dialog_factory->menu_factory);
 	  gimp_dock_add_book (dock, GIMP_DOCKBOOK (dockbook), index);
 
 	  gimp_dockbook_add (GIMP_DOCKBOOK (dockbook), src_dockable, -1);

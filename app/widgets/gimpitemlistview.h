@@ -120,7 +120,8 @@ GtkWidget * gimp_item_list_view_new      (gint                  preview_size,
                                           GimpNewItemFunc       new_item_func,
                                           GimpEditItemFunc      edit_item_func,
                                           GimpActivateItemFunc  activate_item_func,
-                                          GimpItemFactory      *item_facotry);
+                                          GimpMenuFactory      *menu_facotry,
+                                          const gchar          *menu_identifier);
 
 void       gimp_item_list_view_set_image (GimpItemListView     *view,
                                           GimpImage            *gimage);

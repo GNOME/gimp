@@ -254,6 +254,8 @@ image_flatten_image_cmd_callback (GtkWidget *widget,
   gimp_image_flatten (gimage);
   gimp_image_flush (gimage);
 }
+
+
 /****************************/
 /*  The layer merge dialog  */
 /****************************/

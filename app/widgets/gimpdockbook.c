@@ -29,12 +29,15 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpcontext.h"
+
 #include "gimpdialogfactory.h"
 #include "gimpdnd.h"
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 #include "gimpimagedock.h"
 #include "gimpitemfactory.h"
+#include "gimpmenufactory.h"
 #include "gimppreview.h"
 
 
@@ -47,6 +50,8 @@
 
 static void        gimp_dockbook_class_init       (GimpDockbookClass *klass);
 static void        gimp_dockbook_init             (GimpDockbook      *dockbook);
+
+static void        gimp_dockbook_finalize         (GObject        *object);
 
 static void        gimp_dockbook_style_set        (GtkWidget      *widget,
                                                    GtkStyle       *prev_style);
@@ -119,11 +124,15 @@ gimp_dockbook_get_type (void)
 static void
 gimp_dockbook_class_init (GimpDockbookClass *klass)
 {
+  GObjectClass   *object_class;
   GtkWidgetClass *widget_class;
 
+  object_class = G_OBJECT_CLASS (klass);
   widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
+
+  object_class->finalize  = gimp_dockbook_finalize;
 
   widget_class->style_set = gimp_dockbook_style_set;
   widget_class->drag_drop = gimp_dockbook_drag_drop;
@@ -145,7 +154,8 @@ gimp_dockbook_class_init (GimpDockbookClass *klass)
 static void
 gimp_dockbook_init (GimpDockbook *dockbook)
 {
-  dockbook->dock = NULL;
+  dockbook->dock         = NULL;
+  dockbook->item_factory = NULL;
 
   gtk_notebook_popup_enable (GTK_NOTEBOOK (dockbook));
   gtk_notebook_set_scrollable (GTK_NOTEBOOK (dockbook), TRUE);
@@ -156,10 +166,38 @@ gimp_dockbook_init (GimpDockbook *dockbook)
                      GDK_ACTION_MOVE);
 }
 
-GtkWidget *
-gimp_dockbook_new (void)
+static void
+gimp_dockbook_finalize (GObject *object)
 {
-  return GTK_WIDGET (g_object_new (GIMP_TYPE_DOCKBOOK, NULL));
+  GimpDockbook *dockbook;
+
+  dockbook = GIMP_DOCKBOOK (object);
+
+  if (dockbook->item_factory)
+    {
+      g_object_unref (dockbook->item_factory);
+      dockbook->item_factory = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+GtkWidget *
+gimp_dockbook_new (GimpMenuFactory *menu_factory)
+{
+  GimpDockbook *dockbook;
+
+  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
+
+  dockbook = g_object_new (GIMP_TYPE_DOCKBOOK, NULL);
+
+  dockbook->item_factory = gimp_menu_factory_menu_new (menu_factory,
+                                                       "<Dialogs>",
+                                                       GTK_TYPE_MENU,
+                                                       menu_factory->gimp,
+                                                       FALSE);
+
+  return GTK_WIDGET (dockbook);
 }
 
 static void
@@ -507,13 +545,11 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
 
   if (bevent->button == 3)
     {
-      GimpItemFactory *item_factory;
-      GtkWidget       *add_widget;
+      GtkWidget *add_widget;
 
-      item_factory = dockbook->dock->dialog_factory->item_factory;
-
-      add_widget = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (item_factory),
-                                                "/Select Tab");
+      add_widget =
+        gtk_item_factory_get_widget (GTK_ITEM_FACTORY (dockbook->item_factory),
+                                     "/Select Tab");
 
       /*  do evil things  */
       {
@@ -537,7 +573,7 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
        */
       g_object_ref (dockbook);
 
-      gimp_item_factory_popup_with_data (item_factory,
+      gimp_item_factory_popup_with_data (dockbook->item_factory,
                                          dockbook,
                                          (GtkDestroyNotify) gimp_dockbook_menu_end);
     }
@@ -649,7 +685,7 @@ gimp_dockbook_tab_drag_end (GtkWidget      *widget,
 
       gtk_window_set_position (GTK_WINDOW (dock), GTK_WIN_POS_MOUSE);
 
-      dockbook = gimp_dockbook_new ();
+      dockbook = gimp_dockbook_new (src_dock->dialog_factory->menu_factory);
 
       gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), 0);
 

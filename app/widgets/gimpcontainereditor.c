@@ -35,6 +35,7 @@
 #include "gimpcontainerlistview.h"
 #include "gimpdnd.h"
 #include "gimpitemfactory.h"
+#include "gimpmenufactory.h"
 #include "gimppreview.h"
 
 
@@ -138,20 +139,25 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
                                  gboolean             reorderable,
 				 gint                 min_items_x,
 				 gint                 min_items_y,
-				 GimpItemFactory     *item_factory)
+				 GimpMenuFactory     *menu_factory,
+                                 const gchar         *menu_identifier)
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER_EDITOR (editor), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
-  g_return_val_if_fail (GIMP_IS_ITEM_FACTORY (item_factory), FALSE);
+  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), FALSE);
+  g_return_val_if_fail (menu_identifier != NULL, FALSE);
 
   g_return_val_if_fail (preview_size > 0 &&
 			preview_size <= GIMP_PREVIEW_MAX_SIZE, FALSE);
   g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, FALSE);
   g_return_val_if_fail (min_items_y > 0 && min_items_y <= 64, FALSE);
 
-  editor->item_factory = item_factory;
-  g_object_ref (editor->item_factory);
+  editor->item_factory = gimp_menu_factory_menu_new (menu_factory,
+                                                     menu_identifier,
+                                                     GTK_TYPE_MENU,
+                                                     context->gimp,
+                                                     FALSE);
 
   switch (view_type)
     {

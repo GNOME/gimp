@@ -36,9 +36,9 @@
 #include "pdb/procedural_db.h"
 
 #include "widgets/gimpdatafactoryview.h"
-#include "widgets/gimpitemfactory.h"
 
 #include "dialogs-constructors.h"
+#include "menus.h"
 #include "palette-select.h"
 
 #include "libgimp/gimpintl.h"
@@ -127,14 +127,13 @@ palette_select_new (Gimp        *gimp,
 				NULL);
 
   /*  The Palette List  */
-  psp->view =
-    gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
-                                gimp->palette_factory,
-                                dialogs_edit_palette_func,
-                                psp->context,
-                                32,
-                                5, 3,
-                                gimp_item_factory_from_path ("<Palettes>"));
+  psp->view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
+                                          gimp->palette_factory,
+                                          dialogs_edit_palette_func,
+                                          psp->context,
+                                          32,
+                                          5, 3,
+                                          global_menu_factory, "<Palettes>");
 
   gtk_container_set_border_width (GTK_CONTAINER (psp->view), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (psp->shell)->vbox), psp->view);

@@ -37,11 +37,11 @@
 #include "pdb/procedural_db.h"
 
 #include "widgets/gimpbrushfactoryview.h"
-#include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-constructors.h"
 
 #include "brush-select.h"
 #include "dialogs-constructors.h"
+#include "menus.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -168,7 +168,7 @@ brush_select_new (Gimp                 *gimp,
                                  MIN_CELL_SIZE,
                                  STD_BRUSH_COLUMNS,
                                  STD_BRUSH_ROWS,
-                                 gimp_item_factory_from_path ("<Brushes>"));
+                                 global_menu_factory);
 
   gtk_container_set_border_width (GTK_CONTAINER (bsp->view), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (bsp->shell)->vbox), bsp->view);

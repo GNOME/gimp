@@ -37,8 +37,8 @@
 #include "pdb/procedural_db.h"
 
 #include "widgets/gimpdatafactoryview.h"
-#include "widgets/gimpitemfactory.h"
 
+#include "menus.h"
 #include "pattern-select.h"
 
 #include "libgimp/gimpintl.h"
@@ -128,15 +128,14 @@ pattern_select_new (Gimp        *gimp,
                                 NULL);
 
   /*  the pattern grid  */
-  psp->view =
-    gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
-                                gimp->pattern_factory,
-                                NULL,
-                                psp->context,
-                                MIN_CELL_SIZE,
-                                STD_PATTERN_COLUMNS,
-                                STD_PATTERN_ROWS,
-                                gimp_item_factory_from_path ("<Patterns>"));
+  psp->view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
+                                          gimp->pattern_factory,
+                                          NULL,
+                                          psp->context,
+                                          MIN_CELL_SIZE,
+                                          STD_PATTERN_COLUMNS,
+                                          STD_PATTERN_ROWS,
+                                          global_menu_factory, "<Patterns>");
 
   gtk_container_set_border_width (GTK_CONTAINER (psp->view), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (psp->shell)->vbox), psp->view);

@@ -54,7 +54,7 @@
 #include "file/file-open.h"
 #include "file/file-utils.h"
 
-#include "widgets/gimpitemfactory.h"
+#include "widgets/gimpmenufactory.h"
 #include "widgets/gimppreview.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -68,9 +68,8 @@
 
 /*  local function prototypes  */
 
-static GtkWidget * file_open_dialog_create          (Gimp             *gimp);
-static void        file_open_type_callback          (GtkWidget        *widget,
-                                                     gpointer          data);
+static GtkWidget * file_open_dialog_create          (Gimp             *gimp,
+                                                     GimpMenuFactory  *menu_factory);
 static void        file_open_selchanged_callback    (GtkTreeSelection *sel,
                                                      GtkWidget        *open_dialog);
 static void        file_open_imagefile_info_changed (GimpImagefile    *imagefile,
@@ -107,77 +106,28 @@ static PlugInProcDef  *load_file_proc         = NULL;
 /*  public functions  */
 
 void
-file_open_dialog_menu_init (Gimp            *gimp,
-                            GimpItemFactory *item_factory)
+file_open_dialog_set_type (PlugInProcDef *proc)
 {
-  GimpItemFactoryEntry  entry;
-  PlugInProcDef        *file_proc;
-  GSList               *list;
+  if (proc)
+    file_dialog_update_name (proc, GTK_FILE_SELECTION (fileload));
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_ITEM_FACTORY (item_factory));
-
-  gimp->load_procs = g_slist_reverse (gimp->load_procs);
-
-  for (list = gimp->load_procs; list; list = g_slist_next (list))
-    {
-      gchar *basename;
-      gchar *lowercase_basename;
-      gchar *help_page;
-
-      file_proc = (PlugInProcDef *) list->data;
-
-      basename = g_path_get_basename (file_proc->prog);
-
-      lowercase_basename = g_ascii_strdown (basename, -1);
-
-      g_free (basename);
-
-      /*  NOT g_build_filename() because this is a relative URI */
-      help_page = g_strconcat ("filters/",
-			       lowercase_basename,
-			       ".html",
-			       NULL);
-
-      g_free (lowercase_basename);
-
-      entry.entry.path            = strstr (file_proc->menu_path, "/");
-      entry.entry.accelerator     = NULL;
-      entry.entry.callback        = file_open_type_callback;
-      entry.entry.callback_action = 0;
-      entry.entry.item_type       = NULL;
-      entry.quark_string          = NULL;
-      entry.help_page             = help_page;
-      entry.description           = NULL;
-
-      gimp_item_factory_create_item (item_factory,
-                                     &entry,
-                                     NULL,
-                                     file_proc, 2,
-                                     TRUE, FALSE);
-
-      g_free (help_page);
-    }
+  load_file_proc = proc;
 }
 
 void
-file_open_dialog_menu_reset (void)
-{
-  load_file_proc = NULL;
-}
-
-void
-file_open_dialog_show (Gimp        *gimp,
-                       GimpImage   *gimage,
-                       const gchar *uri)
+file_open_dialog_show (Gimp            *gimp,
+                       GimpImage       *gimage,
+                       const gchar     *uri,
+                       GimpMenuFactory *menu_factory)
 {
   gchar *filename = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_MENU_FACTORY (menu_factory));
 
   if (! fileload)
-    fileload = file_open_dialog_create (gimp);
+    fileload = file_open_dialog_create (gimp, menu_factory);
 
   gtk_widget_set_sensitive (GTK_WIDGET (fileload), TRUE);
 
@@ -223,14 +173,15 @@ file_open_dialog_show (Gimp        *gimp,
 /*  private functions  */
 
 static GtkWidget *
-file_open_dialog_create (Gimp *gimp)
+file_open_dialog_create (Gimp            *gimp,
+                         GimpMenuFactory *menu_factory)
 {
   GtkWidget        *open_dialog;
   GtkFileSelection *fs;
   GtkTreeSelection *tree_sel;
 
   open_dialog = file_dialog_new (gimp,
-                                 gimp_item_factory_from_path ("<Load>"),
+                                 menu_factory, "<Load>",
                                  _("Open Image"), "open_image",
                                  "open/dialogs/file_open.html",
                                  G_CALLBACK (file_open_ok_callback));
@@ -400,17 +351,6 @@ file_open_dialog_create (Gimp *gimp)
     }
 
   return open_dialog;
-}
-
-static void
-file_open_type_callback (GtkWidget *widget,
-			 gpointer   data)
-{
-  PlugInProcDef *proc = (PlugInProcDef *) data;
-
-  file_dialog_update_name (proc, GTK_FILE_SELECTION (fileload));
-
-  load_file_proc = proc;
 }
 
 static void

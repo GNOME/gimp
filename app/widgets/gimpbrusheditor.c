@@ -37,6 +37,7 @@
 
 #include "base/temp-buf.h"
 
+#include "core/gimp.h"
 #include "core/gimpbrushgenerated.h"
 
 #include "gimpbrusheditor.h"
@@ -260,9 +261,14 @@ gimp_brush_editor_new (Gimp *gimp)
 
   brush_editor = g_object_new (GIMP_TYPE_BRUSH_EDITOR, NULL);
 
-  gimp_data_editor_construct (GIMP_DATA_EDITOR (brush_editor),
-                              gimp,
-                              GIMP_TYPE_BRUSH);
+  if (! gimp_data_editor_construct (GIMP_DATA_EDITOR (brush_editor),
+                                    gimp,
+                                    GIMP_TYPE_BRUSH,
+                                    NULL, NULL))
+    {
+      g_object_unref (brush_editor);
+      return NULL;
+    }
 
   return GIMP_DATA_EDITOR (brush_editor);
 }

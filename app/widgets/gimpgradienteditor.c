@@ -520,15 +520,21 @@ gimp_gradient_editor_set_data (GimpDataEditor *editor,
 /*  public functions  */
 
 GimpDataEditor *
-gimp_gradient_editor_new (Gimp *gimp)
+gimp_gradient_editor_new (Gimp            *gimp,
+                          GimpMenuFactory *menu_factory)
 {
   GimpGradientEditor *editor;
 
   editor = g_object_new (GIMP_TYPE_GRADIENT_EDITOR, NULL);
 
-  gimp_data_editor_construct (GIMP_DATA_EDITOR (editor),
-                              gimp,
-                              GIMP_TYPE_GRADIENT);
+  if (! gimp_data_editor_construct (GIMP_DATA_EDITOR (editor),
+                                    gimp,
+                                    GIMP_TYPE_GRADIENT,
+                                    menu_factory, "<GradientEditor>"))
+    {
+      g_object_unref (editor);
+      return NULL;
+    }
 
   return GIMP_DATA_EDITOR (editor);
 }
@@ -768,11 +774,8 @@ preview_events (GtkWidget          *widget,
 	case 3:
           if (! GIMP_DATA_EDITOR (editor)->data->internal)
             {
-              GimpItemFactory *factory;
-
-              factory = gimp_item_factory_from_path ("<GradientEditor>");
-
-              gimp_item_factory_popup_with_data (factory, editor, NULL);
+              gimp_item_factory_popup_with_data (GIMP_DATA_EDITOR (editor)->item_factory,
+                                                 editor, NULL);
             }
 	  break;
 
@@ -1311,7 +1314,7 @@ control_button_press (GimpGradientEditor *editor,
       {
         GimpItemFactory *factory;
 
-        factory = gimp_item_factory_from_path ("<GradientEditor>");
+        factory = GIMP_DATA_EDITOR (editor)->item_factory;
 
         gimp_item_factory_popup_with_data (factory, editor, NULL);
       }

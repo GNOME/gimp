@@ -1356,11 +1356,7 @@ gimp_display_shell_qmask_button_press (GtkWidget        *widget,
 {
   if ((bevent->type == GDK_BUTTON_PRESS) && (bevent->button == 3))
     {
-      GimpItemFactory *factory;
-
-      factory = gimp_item_factory_from_path ("<QMask>");
-
-      gimp_item_factory_popup_with_data (factory, shell, NULL);
+      gimp_item_factory_popup_with_data (shell->qmask_factory, shell, NULL);
 
       return TRUE;
     }

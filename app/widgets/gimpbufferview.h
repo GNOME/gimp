@@ -60,7 +60,7 @@ GtkWidget * gimp_buffer_view_new      (GimpViewType     view_type,
 				       gint             preview_size,
 				       gint             min_items_x,
 				       gint             min_items_y,
-				       GimpItemFactory *item_factory);
+				       GimpMenuFactory *menu_factory);
 
 
 #endif  /*  __GIMP_BUFFER_VIEW_H__  */

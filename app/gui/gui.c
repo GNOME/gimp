@@ -45,14 +45,13 @@
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpitemfactory.h"
+#include "widgets/gimpmenufactory.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "device-status-dialog.h"
 #include "dialogs.h"
 #include "dialogs-commands.h"
 #include "error-console-dialog.h"
-#include "file-open-dialog.h"
-#include "file-save-dialog.h"
 #include "gui.h"
 #include "menus.h"
 #include "session.h"
@@ -100,6 +99,10 @@ static void         gui_image_disconnect            (GimpImage   *gimage,
 static GQuark image_disconnect_handler_id = 0;
 
 static GHashTable *themes_hash = NULL;
+
+static GimpItemFactory *toolbox_item_factory = NULL;
+static GimpItemFactory *image_item_factory   = NULL;
+static GimpItemFactory *paths_item_factory   = NULL;
 
 
 /*  public functions  */
@@ -285,10 +288,23 @@ gui_restore (Gimp     *gimp,
 
   gimp->message_handler = GIMP_MESSAGE_BOX;
 
-  file_open_dialog_menu_init (gimp, gimp_item_factory_from_path ("<Load>"));
-  file_save_dialog_menu_init (gimp, gimp_item_factory_from_path ("<Save>"));
+  toolbox_item_factory = gimp_menu_factory_menu_new (global_menu_factory,
+                                                     "<Toolbox>",
+                                                     GTK_TYPE_MENU_BAR,
+                                                     gimp,
+                                                     TRUE);
 
-  menus_restore (gimp);
+  image_item_factory = gimp_menu_factory_menu_new (global_menu_factory,
+                                                   "<Image>",
+                                                   GTK_TYPE_MENU,
+                                                   gimp,
+                                                   TRUE);
+
+  paths_item_factory = gimp_menu_factory_menu_new (global_menu_factory,
+                                                   "<Paths>",
+                                                   GTK_TYPE_MENU,
+                                                   gimp,
+                                                   FALSE);
 
   gimp_devices_restore (gimp);
 
@@ -425,14 +441,16 @@ static GimpObject *
 gui_display_new (GimpImage *gimage,
                  guint      scale)
 {
-  GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
+  GimpDisplay      *gdisp;
 
-  gdisp = gimp_display_new (gimage, scale);
+  gdisp = gimp_display_new (gimage, scale,
+                            global_menu_factory,
+                            image_item_factory);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gimp_display_shell_set_menu_sensitivity (shell, gimage->gimp, FALSE);
+  gimp_item_factory_update (shell->menubar_factory, shell);
 
   gimp_context_set_display (gimp_get_user_context (gimage->gimp), gdisp);
 
@@ -553,6 +571,15 @@ static gboolean
 gui_exit_finish_callback (Gimp     *gimp,
                           gboolean  kill_it)
 {
+  g_object_unref (toolbox_item_factory);
+  toolbox_item_factory = NULL;
+
+  g_object_unref (image_item_factory);
+  image_item_factory = NULL;
+
+  g_object_unref (paths_item_factory);
+  paths_item_factory = NULL;
+
   menus_exit (gimp);
   render_exit (gimp);
 
@@ -624,12 +651,15 @@ gui_display_changed (GimpContext *context,
 		     GimpDisplay *display,
 		     Gimp        *gimp)
 {
+  GimpItemFactory  *item_factory;
   GimpDisplayShell *shell = NULL;
+
+  item_factory = gimp_item_factory_from_path ("<Image>");
 
   if (display)
     shell = GIMP_DISPLAY_SHELL (display->shell);
 
-  gimp_display_shell_set_menu_sensitivity (shell, gimp, TRUE);
+  gimp_item_factory_update (item_factory, shell);
 }
 
 static void

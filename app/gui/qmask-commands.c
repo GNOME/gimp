@@ -33,7 +33,6 @@
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpviewabledialog.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -57,13 +56,13 @@ struct _EditQmaskOptions
 
 /*  local function prototypes  */
 
-static void   qmask_channel_query         (GimpDisplayShell *shell);
-static void   qmask_query_ok_callback     (GtkWidget        *widget, 
-                                           gpointer          client_data);
-static void   qmask_query_scale_update    (GtkAdjustment    *adjustment,
-                                           gpointer          data);
-static void   qmask_query_color_changed   (GimpColorButton  *button,
-                                           gpointer          data);
+static void   qmask_channel_query       (GimpDisplayShell *shell);
+static void   qmask_query_ok_callback   (GtkWidget        *widget, 
+                                         gpointer          client_data);
+static void   qmask_query_scale_update  (GtkAdjustment    *adjustment,
+                                         gpointer          data);
+static void   qmask_query_color_changed (GimpColorButton  *button,
+                                         gpointer          data);
 
 
 /*  public functionss */
@@ -75,15 +74,15 @@ qmask_toggle_cmd_callback (GtkWidget *widget,
 {
   GimpDisplayShell *shell;
 
-  shell = (GimpDisplayShell *) gimp_widget_get_callback_context (widget);
+  shell = GIMP_DISPLAY_SHELL (data);
 
-  if (! shell)
-    return;
+  if (GTK_CHECK_MENU_ITEM (widget)->active != shell->gdisp->gimage->qmask_state)
+    {
+      gimp_image_set_qmask_state (shell->gdisp->gimage,
+                                  GTK_CHECK_MENU_ITEM (widget)->active);
 
-  gimp_image_set_qmask_state (shell->gdisp->gimage,
-                              GTK_CHECK_MENU_ITEM (widget)->active);
-
-  gimp_image_flush (shell->gdisp->gimage);
+      gimp_image_flush (shell->gdisp->gimage);
+    }
 }
 
 void
@@ -93,17 +92,17 @@ qmask_invert_cmd_callback (GtkWidget *widget,
 {
   GimpDisplayShell *shell;
 
-  shell = (GimpDisplayShell *) gimp_widget_get_callback_context (widget);
-
-  if (! shell)
-    return;
+  shell = GIMP_DISPLAY_SHELL (data);
 
   if (GTK_CHECK_MENU_ITEM (widget)->active)
     {
-      gimp_image_qmask_invert (shell->gdisp->gimage);
+      if (action != shell->gdisp->gimage->qmask_inverted)
+        {
+          gimp_image_qmask_invert (shell->gdisp->gimage);
 
-      if (shell->gdisp->gimage->qmask_state)
-        gimp_image_flush (shell->gdisp->gimage);
+          if (shell->gdisp->gimage->qmask_state)
+            gimp_image_flush (shell->gdisp->gimage);
+        }
     }
 }
 
@@ -114,10 +113,7 @@ qmask_configure_cmd_callback (GtkWidget *widget,
 {
   GimpDisplayShell *shell;
 
-  shell = (GimpDisplayShell *) gimp_widget_get_callback_context (widget);
-
-  if (! shell)
-    return;
+  shell = GIMP_DISPLAY_SHELL (data);
 
   qmask_channel_query (shell);
 }

@@ -388,15 +388,21 @@ gimp_palette_editor_set_data (GimpDataEditor *editor,
 /*  public functions  */
 
 GimpDataEditor *
-gimp_palette_editor_new (Gimp *gimp)
+gimp_palette_editor_new (Gimp            *gimp,
+                         GimpMenuFactory *menu_factory)
 {
   GimpPaletteEditor *palette_editor;
 
   palette_editor = g_object_new (GIMP_TYPE_PALETTE_EDITOR, NULL);
 
-  gimp_data_editor_construct (GIMP_DATA_EDITOR (palette_editor),
-                              gimp,
-                              GIMP_TYPE_PALETTE);
+  if (! gimp_data_editor_construct (GIMP_DATA_EDITOR (palette_editor),
+                                    gimp,
+                                    GIMP_TYPE_PALETTE,
+                                    menu_factory, "<PaletteEditor>"))
+    {
+      g_object_unref (palette_editor);
+      return NULL;
+    }
 
   return GIMP_DATA_EDITOR (palette_editor);
 }
@@ -452,11 +458,8 @@ palette_editor_eventbox_button_press (GtkWidget         *widget,
 {
   if (bevent->button == 3)
     {
-      GimpItemFactory *factory;
-
-      factory = gimp_item_factory_from_path ("<PaletteEditor>");
-
-      gimp_item_factory_popup_with_data (factory, editor, NULL);
+      gimp_item_factory_popup_with_data (GIMP_DATA_EDITOR (editor)->item_factory,
+                                         editor, NULL);
     }
 
   return TRUE;

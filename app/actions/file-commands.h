@@ -20,45 +20,54 @@
 #define __FILE_COMMANDS_H__
 
 
-void   file_new_cmd_callback               (GtkWidget *widget,
-					    gpointer   data,
-					    guint      action);
+void   file_new_cmd_callback               (GtkWidget   *widget,
+					    gpointer     data,
+					    guint        action);
 
-void   file_open_by_extension_cmd_callback (GtkWidget *widget,
-					    gpointer   data,
-					    guint      action);
-void   file_open_cmd_callback              (GtkWidget *widget,
-					    gpointer   data,
-					    guint      action);
-void   file_last_opened_cmd_callback       (GtkWidget *widget,
-					    gpointer   data,
-					    guint      action);
+void   file_open_by_extension_cmd_callback (GtkWidget   *widget,
+					    gpointer     data,
+					    guint        action);
+void   file_open_type_cmd_callback         (GtkWidget   *widget,
+					    gpointer     data,
+					    guint        action);
+void   file_open_cmd_callback              (GtkWidget   *widget,
+					    gpointer     data,
+					    guint        action);
+void   file_last_opened_cmd_callback       (GtkWidget   *widget,
+					    gpointer     data,
+					    guint        action);
 
-void   file_save_by_extension_cmd_callback (GtkWidget *widget,
-					    gpointer   data,
-					    guint      action);
-void   file_save_cmd_callback              (GtkWidget *widget,
-					    gpointer   data,
-					    guint      action);
-void   file_save_as_cmd_callback           (GtkWidget *widget,
-					    gpointer   data,
-					    guint      action);
-void   file_save_a_copy_cmd_callback       (GtkWidget *widget,
-					    gpointer   data,
-					    guint      action);
+void   file_save_by_extension_cmd_callback (GtkWidget   *widget,
+					    gpointer     data,
+					    guint        action);
+void   file_save_type_cmd_callback         (GtkWidget   *widget,
+					    gpointer     data,
+					    guint        action);
+void   file_save_cmd_callback              (GtkWidget   *widget,
+					    gpointer     data,
+					    guint        action);
+void   file_save_as_cmd_callback           (GtkWidget   *widget,
+					    gpointer     data,
+					    guint        action);
+void   file_save_a_copy_cmd_callback       (GtkWidget   *widget,
+					    gpointer     data,
+					    guint        action);
 
-void   file_revert_cmd_callback            (GtkWidget *widget,
-					    gpointer   data,
-					    guint      action);
-void   file_pref_cmd_callback              (GtkWidget *widget,
-					    gpointer   data,
-					    guint      action);
-void   file_close_cmd_callback             (GtkWidget *widget,
-					    gpointer   data,
-					    guint      action);
-void   file_quit_cmd_callback              (GtkWidget *widget,
-					    gpointer   data,
-					    guint      action);
+void   file_revert_cmd_callback            (GtkWidget   *widget,
+					    gpointer     data,
+					    guint        action);
+void   file_pref_cmd_callback              (GtkWidget   *widget,
+					    gpointer     data,
+					    guint        action);
+void   file_close_cmd_callback             (GtkWidget   *widget,
+					    gpointer     data,
+					    guint        action);
+void   file_quit_cmd_callback              (GtkWidget   *widget,
+					    gpointer     data,
+					    guint        action);
+
+void   file_file_open_dialog               (Gimp        *gimp,
+                                            const gchar *uri);
 
 
 #endif /* __FILE_COMMANDS_H__ */

@@ -113,8 +113,9 @@ gimp_item_factory_class_init (GimpItemFactoryClass *klass)
 static void
 gimp_item_factory_init (GimpItemFactory *factory)
 {
-  factory->gimp        = NULL;
-  factory->update_func = NULL;
+  factory->gimp            = NULL;
+  factory->update_func     = NULL;
+  factory->update_on_popup = FALSE;
 }
 
 static void
@@ -161,6 +162,7 @@ gimp_item_factory_new (Gimp                      *gimp,
                        const gchar               *factory_path,
                        const gchar               *help_path,
                        GimpItemFactoryUpdateFunc  update_func,
+                       gboolean                   update_on_popup,
                        guint                      n_entries,
                        GimpItemFactoryEntry      *entries,
                        gpointer                   callback_data,
@@ -190,8 +192,9 @@ gimp_item_factory_new (Gimp                      *gimp,
 				       factory,
 				       NULL);
 
-  factory->gimp        = gimp;
-  factory->update_func = update_func;
+  factory->gimp            = gimp;
+  factory->update_func     = update_func;
+  factory->update_on_popup = update_on_popup;
 
   list = g_hash_table_lookup (factory_class->factories, factory_path);
 
@@ -359,6 +362,16 @@ gimp_item_factory_create_items (GimpItemFactory      *item_factory,
 }
 
 void
+gimp_item_factory_update (GimpItemFactory *item_factory,
+                          gpointer         popup_data)
+{
+  g_return_if_fail (GIMP_IS_ITEM_FACTORY (item_factory));
+
+  if (item_factory->update_func)
+    item_factory->update_func (GTK_ITEM_FACTORY (item_factory), popup_data);
+}
+
+void
 gimp_item_factory_popup_with_data (GimpItemFactory  *item_factory,
 				   gpointer          data,
                                    GtkDestroyNotify  popdown_func)
@@ -369,8 +382,8 @@ gimp_item_factory_popup_with_data (GimpItemFactory  *item_factory,
 
   g_return_if_fail (GIMP_IS_ITEM_FACTORY (item_factory));
 
-  if (item_factory->update_func)
-    item_factory->update_func (GTK_ITEM_FACTORY (item_factory), data);
+  if (item_factory->update_on_popup)
+    gimp_item_factory_update (item_factory, data);
 
   gimp_menu_position (GTK_MENU (GTK_ITEM_FACTORY (item_factory)->widget),
 		      &x, &y,

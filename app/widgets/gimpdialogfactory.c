@@ -40,7 +40,7 @@
 #include "gimpdockbook.h"
 #include "gimpdockable.h"
 #include "gimpimagedock.h"
-#include "gimpitemfactory.h"
+#include "gimpmenufactory.h"
 
 
 /* #define DEBUG_FACTORY */
@@ -153,7 +153,7 @@ gimp_dialog_factory_class_init (GimpDialogFactoryClass *klass)
 static void
 gimp_dialog_factory_init (GimpDialogFactory *factory)
 {
-  factory->item_factory       = NULL;
+  factory->menu_factory       = NULL;
   factory->new_dock_func      = NULL;
   factory->registered_dialogs = NULL;
   factory->session_infos      = NULL;
@@ -235,7 +235,7 @@ gimp_dialog_factory_finalize (GObject *object)
 GimpDialogFactory *
 gimp_dialog_factory_new (const gchar       *name,
 			 GimpContext       *context,
-			 GimpItemFactory   *item_factory,
+			 GimpMenuFactory   *menu_factory,
 			 GimpDialogNewFunc  new_dock_func)
 {
   GimpDialogFactoryClass *factory_class;
@@ -243,7 +243,7 @@ gimp_dialog_factory_new (const gchar       *name,
 
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (! item_factory || GIMP_IS_ITEM_FACTORY (item_factory),
+  g_return_val_if_fail (! menu_factory || GIMP_IS_MENU_FACTORY (menu_factory),
 			NULL);
 
   /* EEK */
@@ -264,7 +264,7 @@ gimp_dialog_factory_new (const gchar       *name,
 		       GIMP_OBJECT (factory)->name, factory);
 
   factory->context       = context;
-  factory->item_factory  = item_factory;
+  factory->menu_factory  = menu_factory;
   factory->new_dock_func = new_dock_func;
 
   return factory;
@@ -419,10 +419,14 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
        */
       if (factory->new_dock_func && ! context)
 	{
-	  dock = gimp_dialog_factory_dock_new (factory);
+          GtkWidget *dockbook;
+
+	  dock     = gimp_dialog_factory_dock_new (factory);
+          dockbook = gimp_dockbook_new (factory->menu_factory);
 
 	  gimp_dock_add_book (GIMP_DOCK (dock),
-			      GIMP_DOCKBOOK (gimp_dockbook_new ()), 0);
+			      GIMP_DOCKBOOK (dockbook),
+                              0);
 	}
 
       /*  Create the new dialog in the appropriate context which is
@@ -1180,12 +1184,12 @@ gimp_dialog_factories_restore_foreach (gchar             *name,
 
 	  for (books = info->sub_dialogs; books; books = g_list_next (books))
 	    {
-	      GimpDockbook *dockbook;
-	      GList        *pages;
+	      GtkWidget *dockbook;
+	      GList     *pages;
 
-	      dockbook = GIMP_DOCKBOOK (gimp_dockbook_new ());
+	      dockbook = gimp_dockbook_new (factory->menu_factory);
 
-	      gimp_dock_add_book (dock, dockbook, -1);
+	      gimp_dock_add_book (dock, GIMP_DOCKBOOK (dockbook), -1);
 
 	      for (pages = books->data; pages; pages = g_list_next (pages))
 		{
@@ -1218,7 +1222,8 @@ gimp_dialog_factories_restore_foreach (gchar             *name,
                                                       preview_size);
 
 		  if (dockable)
-		    gimp_dockbook_add (dockbook, GIMP_DOCKABLE (dockable), -1);
+		    gimp_dockbook_add (GIMP_DOCKBOOK (dockbook),
+                                       GIMP_DOCKABLE (dockable), -1);
 
 		  g_free (identifier);
 		}
@@ -1309,8 +1314,8 @@ gimp_dialog_factory_set_window_geometry (GtkWidget       *window,
       screen_height = gdk_screen_height ();
     }
 
-  info->x = CLAMP (info->x, 0, screen_width  - 32);
-  info->y = CLAMP (info->y, 0, screen_height - 32);
+  info->x = CLAMP (info->x, 0, screen_width  - 128);
+  info->y = CLAMP (info->y, 0, screen_height - 128);
 
   gtk_window_move (GTK_WINDOW (window), info->x, info->y);
 

@@ -21,7 +21,8 @@
 
 
 GtkWidget * file_dialog_new          (Gimp             *gimp,
-                                      GimpItemFactory  *item_factory,
+                                      GimpMenuFactory  *menu_factory,
+                                      const gchar      *menu_identifier,
                                       const gchar      *title,
                                       const gchar      *wmclass_name,
                                       const gchar      *help_data,

@@ -1,3 +1,103 @@
+2003-01-10  Michael Natterer  <mitch@gimp.org>
+
+	Move away from creating all item_factories statically in
+	menus_init() but create a new one for each place where one is
+	needed:
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpmenufactory.[ch]: new factory which creates and
+	configures the GimpItemFactories it knows about on-the-fly.
+
+	* app/widgets/gimpitemfactory.[ch]: added
+	gimp_item_factory_update() which calls the "update_func". Added
+	"gboolean update_on_popup" so item_factories can be configured to
+	require manual updates (used for the <Image> factory).
+
+	* app/gui/menus.[ch]: create a "global_menu_factory" and register
+	all menus we have with it. Added various setup functions which
+	do stuff like adding the "Open Recent" menu or reorder plug-in
+	menu entries. Removed the debugging stuff...
+
+	* app/gui/Makefile.am
+	* app/gui/debug-commands.[ch]: ...and added it here.
+
+	* app/gui/gui.c: create the <Toolbox>, the popup-<Image> and the
+	<Paths> factories here because they are still global.
+
+	* app/gui/plug-in-menus.[ch]: changed the "image_factory"
+	parameters to "item_factory" and create/update the entries for the
+	passed item_factory only. Makes the whole stuff much more
+	straightforward.
+
+	* app/plug-in/plug-ins.c: don't call plug_in_make_menu().
+
+	* app/display/gimpdisplay.[ch]
+	* app/display/gimpdisplayshell.[ch]: added "menu_factory" and
+	"popup_factory" parameters to gimp_display_new() and
+	gimp_display_shell_new(). Create the menubar_factory and the
+	qmask_factory dynamically. Pass the shell, not a Gimp to the QMask
+	callbacks. Changed gimp_display_shell_set_menu_sensitivity() to
+	gimp_display_shell_menu_update() and don't call it directly (it's
+	a GimpItemFactory update_func now). Call gimp_item_factory_update()
+	on the resp. factories instead.
+
+	* app/gui/qmask-commands.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/tools/gimpimagemaptool.c: changed accordingly.
+
+	* app/widgets/gimpbrusheditor.c
+	* app/widgets/gimpbrushfactoryview.[ch]
+	* app/widgets/gimpbufferview.[ch]
+	* app/widgets/gimpcolormapeditor.[ch]
+	* app/widgets/gimpcontainereditor.[ch]
+	* app/widgets/gimpdataeditor.[ch]
+	* app/widgets/gimpdatafactoryview.[ch]
+	* app/widgets/gimpdialogfactory.[ch]
+	* app/widgets/gimpdock.c
+	* app/widgets/gimpdockbook.[ch]
+	* app/widgets/gimpdocumentview.[ch]
+	* app/widgets/gimpgradienteditor.[ch]
+	* app/widgets/gimpimageview.[ch]
+	* app/widgets/gimpitemlistview.[ch]
+	* app/widgets/gimppaletteeditor.[ch]: pass around lots of
+	GimpMenuFactory pointers and menu_identifiers so all views can
+	create their item_factories themselves. Unref the factories when
+	they are no longer needed because they belong to the views now.
+
+	* app/gui/dialogs-commands.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/dialogs.c
+	* app/gui/brush-select.c
+	* app/gui/gradient-select.c
+	* app/gui/palette-select.c
+	* app/gui/pattern-select.c: changed accordingly.
+
+	* app/gui/file-dialog-utils.[ch] (file_dialog_new): require
+	menu_factory and menu_identifier parameters.
+
+	* app/gui/file-open-dialog.[ch]
+	* app/gui/file-save-dialog.[ch]: removed file_*_dialog_menu_init()
+	(they went to menus.c as setup_funcs). Added file_*_dialog_set_type()
+	and moved the <Load> and <Save> factory callbacks to file-commands.c
+
+	* app/gui/file-commands.[ch]: changed accordingly.
+
+	* app/gui/view-commands.c: changed the statusbar, menubar, rulers
+	and guides callbacks to do their job only if the setting has
+	actually changed. Don't update whole item factories afterwards.
+	Instead, just change the state of the items that actually need
+	update.
+
+	Unrelated:
+
+	* app/core/gimpchannel.c (gimp_channel_init): set "bounds_known"
+	and friends to FALSE since we don't know that the new channel will
+	be empty (fixes QMask and probably other stuff).
+
+	* app/gui/image-commands.c
+	* app/gui/vectors-commands.c: cleanup.
+
 2003-01-10  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpstock.c (gimp_stock_init): fixed my last commit.

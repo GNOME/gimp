@@ -24,6 +24,8 @@
 
 #include "gui-types.h"
 
+#include "core/gimpcontext.h"
+
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpcontainerview-utils.h"
 #include "widgets/gimpdialogfactory.h"
@@ -314,7 +316,7 @@ dialogs_create_lc_cmd_callback (GtkWidget *widget,
 
   gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dock), TRUE);
 
-  dockbook = gimp_dockbook_new ();
+  dockbook = gimp_dockbook_new (global_dock_factory->menu_factory);
 
   gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), 0);
 
@@ -353,7 +355,7 @@ dialogs_create_stuff_cmd_callback (GtkWidget *widget,
 
   dock = gimp_dialog_factory_dock_new (global_dock_factory);
 
-  dockbook = gimp_dockbook_new ();
+  dockbook = gimp_dockbook_new (global_dock_factory->menu_factory);
 
   gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), 0);
 

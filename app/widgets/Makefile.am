@@ -121,6 +121,8 @@ libappwidgets_a_sources = \
 	gimplayerlistview.h		\
 	gimplistitem.c			\
 	gimplistitem.h			\
+	gimpmenufactory.c		\
+	gimpmenufactory.h		\
 	gimpmenuitem.c			\
 	gimpmenuitem.h			\
 	gimpnavigationpreview.c		\

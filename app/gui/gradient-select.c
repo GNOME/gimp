@@ -36,10 +36,10 @@
 #include "pdb/procedural_db.h"
 
 #include "widgets/gimpdatafactoryview.h"
-#include "widgets/gimpitemfactory.h"
 
 #include "dialogs-constructors.h"
 #include "gradient-select.h"
+#include "menus.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -126,14 +126,13 @@ gradient_select_new (Gimp        *gimp,
 				NULL);
 
   /*  the gradient list  */
-  gsp->view =
-    gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
-                                gsp->context->gimp->gradient_factory,
-                                dialogs_edit_gradient_func,
-                                gsp->context,
-                                GIMP_PREVIEW_SIZE_EXTRA_SMALL,
-                                6, 6,
-                                gimp_item_factory_from_path ("<Gradients>"));
+  gsp->view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
+                                          gsp->context->gimp->gradient_factory,
+                                          dialogs_edit_gradient_func,
+                                          gsp->context,
+                                          GIMP_PREVIEW_SIZE_EXTRA_SMALL,
+                                          6, 6,
+                                          global_menu_factory, "<Gradients>");
 
   gtk_container_set_border_width (GTK_CONTAINER (gsp->view), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (gsp->shell)->vbox), gsp->view);

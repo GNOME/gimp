@@ -20,17 +20,11 @@
 #define __MENUS_H__
 
 
-void   menus_init    (Gimp *gimp);
-void   menus_exit    (Gimp *gimp);
-void   menus_restore (Gimp *gimp);
+extern GimpMenuFactory *global_menu_factory;
 
 
-/* FIXME: remove this and add a GimpMenuFactory class which produces
- *        GimpItemFactories on demand
- */
-GimpItemFactory * menus_get_new_image_factory (Gimp     *gimp,
-                                               gpointer  callback_data,
-                                               gboolean  menu_bar);
+void   menus_init (Gimp *gimp);
+void   menus_exit (Gimp *gimp);
 
 
 #endif /* __MENUS_H__ */

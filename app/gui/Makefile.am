@@ -24,6 +24,8 @@ libappgui_a_SOURCES = \
 	convert-dialog.h		\
 	data-commands.c			\
 	data-commands.h			\
+	debug-commands.c		\
+	debug-commands.h		\
 	device-status-dialog.c		\
 	device-status-dialog.h		\
 	dialogs.c			\

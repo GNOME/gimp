@@ -47,6 +47,7 @@
 #include "gimpitemfactory.h"
 #include "gimplayerlistview.h"
 #include "gimplistitem.h"
+#include "gimpmenufactory.h"
 #include "gimppreview.h"
 #include "gimpvectorslistview.h"
 #include "gimpwidgets-utils.h"
@@ -289,7 +290,8 @@ gimp_item_list_view_new (gint                  preview_size,
                          GimpNewItemFunc       new_item_func,
                          GimpEditItemFunc      edit_item_func,
                          GimpActivateItemFunc  activate_item_func,
-                         GimpItemFactory      *item_factory)
+                         GimpMenuFactory      *menu_factory,
+                         const gchar          *menu_identifier)
 {
   GimpItemListView  *list_view;
   GimpContainerView *view;
@@ -309,7 +311,8 @@ gimp_item_list_view_new (gint                  preview_size,
   g_return_val_if_fail (new_item_func != NULL, NULL);
   g_return_val_if_fail (edit_item_func != NULL, NULL);
   g_return_val_if_fail (activate_item_func != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_ITEM_FACTORY (item_factory), NULL);
+  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
+  g_return_val_if_fail (menu_identifier != NULL, NULL);
 
   if (item_type == GIMP_TYPE_LAYER)
     {
@@ -351,8 +354,11 @@ gimp_item_list_view_new (gint                  preview_size,
   list_view->edit_item_func     = edit_item_func;
   list_view->activate_item_func = activate_item_func;
 
-  list_view->item_factory = item_factory;
-  g_object_ref (list_view->item_factory);
+  list_view->item_factory = gimp_menu_factory_menu_new (menu_factory,
+                                                        menu_identifier,
+                                                        GTK_TYPE_MENU,
+                                                        menu_factory->gimp,
+                                                        FALSE);
 
   /*  connect "drop to new" manually as it makes a difference whether
    *  it was clicked or dropped

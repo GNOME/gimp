@@ -53,6 +53,7 @@
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpdnd.h"
 #include "widgets/gimpitemfactory.h"
+#include "widgets/gimpmenufactory.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gui/info-window.h"
@@ -202,6 +203,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->gdisp                 = NULL;
   shell->menubar_factory       = NULL;
   shell->popup_factory         = NULL;
+  shell->qmask_factory         = NULL;
 
   shell->scale                 = 0;
   shell->dot_for_dot           = TRUE;
@@ -339,6 +341,12 @@ gimp_display_shell_destroy (GtkObject *object)
 
   shell->popup_factory = NULL;
 
+  if (shell->qmask_factory)
+    {
+      g_object_unref (shell->qmask_factory);
+      shell->qmask_factory = NULL;
+    }
+
   if (shell->select)
     {
       gimp_display_shell_selection_free (shell->select);
@@ -398,8 +406,10 @@ gimp_display_shell_delete_event (GtkWidget   *widget,
 }
 
 GtkWidget *
-gimp_display_shell_new (GimpDisplay *gdisp,
-                        guint        scale)
+gimp_display_shell_new (GimpDisplay     *gdisp,
+                        guint            scale,
+                        GimpMenuFactory *menu_factory,
+                        GimpItemFactory *popup_factory)
 {
   GimpDisplayShell  *shell;
   GimpDisplayConfig *config;
@@ -418,6 +428,8 @@ gimp_display_shell_new (GimpDisplay *gdisp,
   gint               scalesrc, scaledest;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), NULL);
+  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
+  g_return_val_if_fail (GIMP_IS_ITEM_FACTORY (popup_factory), NULL);
 
   /*  the toplevel shell */
   shell = g_object_new (GIMP_TYPE_DISPLAY_SHELL, NULL);
@@ -462,12 +474,19 @@ gimp_display_shell_new (GimpDisplay *gdisp,
 
   shell->scale = (scaledest << 8) + scalesrc;
 
-  shell->menubar_factory =
-    menus_get_new_image_factory (shell->gdisp->gimage->gimp,
-                                 shell->gdisp,
-                                 TRUE);
+  shell->menubar_factory = gimp_menu_factory_menu_new (menu_factory,
+                                                       "<Image>",
+                                                       GTK_TYPE_MENU_BAR,
+                                                       gdisp,
+                                                       TRUE);
 
-  shell->popup_factory = gimp_item_factory_from_path ("<Image>");
+  shell->popup_factory = popup_factory;
+
+  shell->qmask_factory = gimp_menu_factory_menu_new (menu_factory,
+                                                     "<QMask>",
+                                                     GTK_TYPE_MENU,
+                                                     shell,
+                                                     FALSE);
 
   /*  The accelerator table for images  */
   gimp_window_add_accel_group (GTK_WINDOW (shell),
@@ -864,34 +883,39 @@ gimp_display_shell_scrolled (GimpDisplayShell *shell)
 
 
 void
-gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell,
-                                         Gimp             *gimp,
-                                         gboolean          popup_only)
+gimp_display_shell_menu_update (GtkItemFactory *item_factory,
+                                gpointer        data)
 {
-  GtkItemFactory *item_factory = NULL;
-  GimpDisplay    *gdisp        = NULL;
-  GimpImage      *gimage       = NULL;
-  GimpImageType   type         = -1;
-  GimpDrawable   *drawable     = NULL;
-  GimpLayer      *layer        = NULL;
-  GimpRGB         fg;
-  GimpRGB         bg;
-  gboolean        is_rgb       = FALSE;
-  gboolean        is_gray      = FALSE;
-  gboolean        is_indexed   = FALSE;
-  gboolean        fs           = FALSE;
-  gboolean        aux          = FALSE;
-  gboolean        lm           = FALSE;
-  gboolean        lp           = FALSE;
-  gboolean        sel          = FALSE;
-  gboolean        alpha        = FALSE;
-  gint            lind         = -1;
-  gint            lnum         = -1;
+  Gimp             *gimp          = NULL;
+  GimpDisplayShell *shell         = NULL;
+  GimpDisplay      *gdisp         = NULL;
+  GimpImage        *gimage        = NULL;
+  GimpDrawable     *drawable      = NULL;
+  GimpLayer        *layer         = NULL;
+  GimpImageType     drawable_type = -1;
+  GimpRGB           fg;
+  GimpRGB           bg;
+  gboolean          is_rgb        = FALSE;
+  gboolean          is_gray       = FALSE;
+  gboolean          is_indexed    = FALSE;
+  gboolean          fs            = FALSE;
+  gboolean          aux           = FALSE;
+  gboolean          lm            = FALSE;
+  gboolean          lp            = FALSE;
+  gboolean          sel           = FALSE;
+  gboolean          alpha         = FALSE;
+  gint              lind          = -1;
+  gint              lnum          = -1;
 
-  g_return_if_fail (shell == NULL || GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (popup_only == TRUE || GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  gimp = GIMP_ITEM_FACTORY (item_factory)->gimp;
 
+  if (data)
+    {
+      shell = GIMP_DISPLAY_SHELL (data);
+      gdisp = shell->gdisp;
+    }
+
+#if 0
   if (shell)
     {
       gdisp = shell->gdisp;
@@ -905,6 +929,7 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell,
     {
       item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path ("<Image>"));
     }
+#endif
 
   if (gdisp)
     {
@@ -925,7 +950,7 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell,
 
       drawable = gimp_image_active_drawable (gimage);
       if (drawable)
-	type = gimp_drawable_type (drawable);
+	drawable_type = gimp_drawable_type (drawable);
 
       if (lp)
 	{
@@ -1130,8 +1155,9 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell,
 #undef SET_LABEL
 #undef SET_SENSITIVE
 
-  plug_in_set_menu_sensitivity (GIMP_ITEM_FACTORY (item_factory), type);
+  plug_in_set_menu_sensitivity (GIMP_ITEM_FACTORY (item_factory), drawable_type);
 
+#if 0
   /*  update the popup menu  */
   if (! popup_only)
     {
@@ -1151,6 +1177,7 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell,
                                                    TRUE);
         }
     }
+#endif
 }
 
 GimpGuide *

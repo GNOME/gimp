@@ -38,9 +38,10 @@ typedef struct _GimpDockbookClass  GimpDockbookClass;
 
 struct _GimpDockbook
 {
-  GtkNotebook  parent_instance;
+  GtkNotebook      parent_instance;
 
-  GimpDock    *dock;
+  GimpDock        *dock;
+  GimpItemFactory *item_factory;
 };
 
 struct _GimpDockbookClass
@@ -51,7 +52,7 @@ struct _GimpDockbookClass
 
 GType       gimp_dockbook_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_dockbook_new      (void);
+GtkWidget * gimp_dockbook_new      (GimpMenuFactory  *menu_factory);
 
 void        gimp_dockbook_add      (GimpDockbook     *dockbook,
 				    GimpDockable     *dockable,

@@ -32,6 +32,7 @@
 #include "plug-in/plug-in-proc.h"
 
 #include "widgets/gimpitemfactory.h"
+#include "widgets/gimpmenufactory.h"
 
 #include "file-dialog-utils.h"
 
@@ -40,7 +41,8 @@
 
 GtkWidget *
 file_dialog_new (Gimp            *gimp,
-                 GimpItemFactory *item_factory,
+                 GimpMenuFactory *menu_factory,
+                 const gchar     *menu_identifier,
                  const gchar     *title,
                  const gchar     *wmclass_name,
                  const gchar     *help_data,
@@ -50,7 +52,8 @@ file_dialog_new (Gimp            *gimp,
   GtkFileSelection *fs;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (GIMP_IS_ITEM_FACTORY (item_factory), NULL);
+  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
+  g_return_val_if_fail (menu_identifier != NULL, NULL);
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (wmclass_name != NULL, NULL);
   g_return_val_if_fail (help_data != NULL, NULL);
@@ -83,21 +86,30 @@ file_dialog_new (Gimp            *gimp,
 
   /*  The file type menu  */
   {
-    GtkWidget *hbox;
-    GtkWidget *option_menu;
-    GtkWidget *label;
+    GimpItemFactory *item_factory;
+    GtkWidget       *hbox;
+    GtkWidget       *option_menu;
+    GtkWidget       *label;
 
     hbox = gtk_hbox_new (FALSE, 4);
+    gtk_box_pack_end (GTK_BOX (fs->main_vbox), hbox, FALSE, FALSE, 0);
+    gtk_widget_show (hbox);
 
+    item_factory = gimp_menu_factory_menu_new (menu_factory,
+                                               menu_identifier,
+                                               GTK_TYPE_MENU,
+                                               gimp,
+                                               FALSE);
     option_menu = gtk_option_menu_new ();
     gtk_box_pack_end (GTK_BOX (hbox), option_menu, FALSE, FALSE, 0);
     gtk_widget_show (option_menu);
 
+    g_object_weak_ref (G_OBJECT (option_menu),
+                       (GWeakNotify) g_object_unref,
+                       item_factory);
+
     gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu),
                               GTK_ITEM_FACTORY (item_factory)->widget);
-
-    gtk_box_pack_end (GTK_BOX (fs->main_vbox), hbox, FALSE, FALSE, 0);
-    gtk_widget_show (hbox);
 
     label = gtk_label_new (_("Determine File Type:"));
     gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);

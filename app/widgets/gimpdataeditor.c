@@ -32,6 +32,8 @@
 #include "core/gimpdata.h"
 
 #include "gimpdataeditor.h"
+#include "gimpitemfactory.h"
+#include "gimpmenufactory.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -107,8 +109,9 @@ gimp_data_editor_class_init (GimpDataEditorClass *klass)
 static void
 gimp_data_editor_init (GimpDataEditor *editor)
 {
-  editor->data_type = G_TYPE_NONE;
-  editor->data      = NULL;
+  editor->data_type    = G_TYPE_NONE;
+  editor->data         = NULL;
+  editor->item_factory = NULL;
 
   editor->name_entry = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (editor), editor->name_entry,
@@ -148,6 +151,12 @@ gimp_data_editor_dispose (GObject *object)
 
   if (editor->data)
     gimp_data_editor_set_data (editor, NULL);
+
+  if (editor->item_factory)
+    {
+      g_object_unref (editor->item_factory);
+      editor->item_factory = NULL;
+    }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -190,18 +199,31 @@ gimp_data_editor_real_set_data (GimpDataEditor *editor,
 }
 
 gboolean
-gimp_data_editor_construct (GimpDataEditor *editor,
-                            Gimp           *gimp,
-                            GType           data_type)
+gimp_data_editor_construct (GimpDataEditor  *editor,
+                            Gimp            *gimp,
+                            GType            data_type,
+                            GimpMenuFactory *menu_factory,
+                            const gchar     *menu_identifier)
 {
   GimpData *data;
 
   g_return_val_if_fail (GIMP_IS_DATA_EDITOR (editor), FALSE);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (g_type_is_a (data_type, GIMP_TYPE_DATA), FALSE);
+  g_return_val_if_fail (menu_factory == NULL ||
+                        GIMP_IS_MENU_FACTORY (menu_factory), FALSE);
+  g_return_val_if_fail (menu_factory == NULL ||
+                        menu_identifier != NULL, FALSE);
 
-  editor->gimp      = gimp;
-  editor->data_type = data_type;
+  editor->gimp         = gimp;
+  editor->data_type    = data_type;
+
+  if (menu_factory && menu_identifier)
+    editor->item_factory = gimp_menu_factory_menu_new (menu_factory,
+                                                       menu_identifier,
+                                                       GTK_TYPE_MENU,
+                                                       gimp,
+                                                       FALSE);
 
   data = (GimpData *)
     gimp_context_get_by_type (gimp_get_user_context (gimp), data_type);

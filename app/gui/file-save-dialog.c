@@ -44,7 +44,7 @@
 #include "file/file-save.h"
 #include "file/file-utils.h"
 
-#include "widgets/gimpitemfactory.h"
+#include "widgets/gimpmenufactory.h"
 
 #include "file-dialog-utils.h"
 #include "file-save-dialog.h"
@@ -54,23 +54,22 @@
 
 /*  local function prototypes  */
 
-static GtkWidget * file_save_dialog_create      (Gimp          *gimp);
-static void        file_save_type_callback      (GtkWidget     *widget,
-                                                 gpointer       data);
-static void        file_save_ok_callback        (GtkWidget     *widget,
-                                                 GtkWidget     *save_dialog);
-static void        file_save_overwrite          (GtkWidget     *save_dialog,
-                                                 const gchar   *uri,
-                                                 const gchar   *raw_filename);
-static void        file_save_overwrite_callback (GtkWidget     *widget,
-                                                 gboolean       overwrite,
-                                                 gpointer       data);
-static void        file_save_dialog_save_image  (GtkWidget     *save_dialog,
-                                                 GimpImage     *gimage,
-                                                 const gchar   *uri,
-                                                 const gchar   *raw_filename,
-                                                 PlugInProcDef *save_proc,
-                                                 gboolean       set_uri);
+static GtkWidget * file_save_dialog_create      (Gimp            *gimp,
+                                                 GimpMenuFactory *menu_factory);
+static void        file_save_ok_callback        (GtkWidget       *widget,
+                                                 GtkWidget       *save_dialog);
+static void        file_save_overwrite          (GtkWidget       *save_dialog,
+                                                 const gchar     *uri,
+                                                 const gchar     *raw_filename);
+static void        file_save_overwrite_callback (GtkWidget       *widget,
+                                                 gboolean         overwrite,
+                                                 gpointer         data);
+static void        file_save_dialog_save_image  (GtkWidget       *save_dialog,
+                                                 GimpImage       *gimage,
+                                                 const gchar     *uri,
+                                                 const gchar     *raw_filename,
+                                                 PlugInProcDef   *save_proc,
+                                                 gboolean         set_uri);
 
 
 static GtkWidget     *filesave       = NULL;
@@ -83,71 +82,22 @@ static gboolean       set_uri        = TRUE;
 /*  public functions  */
 
 void
-file_save_dialog_menu_init (Gimp            *gimp,
-                            GimpItemFactory *item_factory)
+file_save_dialog_set_type (PlugInProcDef *proc)
 {
-  GimpItemFactoryEntry  entry;
-  PlugInProcDef        *file_proc;
-  GSList               *list;
+  if (proc)
+    file_dialog_update_name (proc, GTK_FILE_SELECTION (filesave));
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_ITEM_FACTORY (item_factory));
-
-  gimp->save_procs = g_slist_reverse (gimp->save_procs);
-
-  for (list = gimp->save_procs; list; list = g_slist_next (list))
-    {
-      gchar *basename;
-      gchar *lowercase_basename;
-      gchar *help_page;
-
-      file_proc = (PlugInProcDef *) list->data;
-
-      basename = g_path_get_basename (file_proc->prog);
-
-      lowercase_basename = g_ascii_strdown (basename, -1);
-
-      g_free (basename);
-
-      /*  NOT g_build_filename() because this is a relative URI */
-      help_page = g_strconcat ("filters/",
-			       lowercase_basename,
-			       ".html",
-			       NULL);
-
-      g_free (lowercase_basename);
-
-      entry.entry.path            = strstr (file_proc->menu_path, "/");
-      entry.entry.accelerator     = NULL;
-      entry.entry.callback        = file_save_type_callback;
-      entry.entry.callback_action = 0;
-      entry.entry.item_type       = NULL;
-      entry.quark_string          = NULL;
-      entry.help_page             = help_page;
-      entry.description           = NULL;
-
-      gimp_item_factory_create_item (item_factory,
-                                     &entry,
-                                     NULL,
-                                     file_proc, 2,
-                                     TRUE, FALSE);
-
-      g_free (help_page);
-    }
+  save_file_proc = proc;
 }
 
 void
-file_save_dialog_menu_reset (void)
-{
-  save_file_proc = NULL;
-}
-
-void
-file_save_dialog_show (GimpImage *gimage)
+file_save_dialog_show (GimpImage       *gimage,
+                       GimpMenuFactory *menu_factory)
 {
   gchar *filename;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_MENU_FACTORY (menu_factory));
 
   if (! gimp_image_active_drawable (gimage))
     return;
@@ -156,7 +106,7 @@ file_save_dialog_show (GimpImage *gimage)
   set_uri    = TRUE;
 
   if (! filesave)
-    filesave = file_save_dialog_create (gimage->gimp);
+    filesave = file_save_dialog_create (gimage->gimp, menu_factory);
 
   gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
 
@@ -184,12 +134,14 @@ file_save_dialog_show (GimpImage *gimage)
 }
 
 void
-file_save_a_copy_dialog_show (GimpImage *gimage)
+file_save_a_copy_dialog_show (GimpImage       *gimage,
+                              GimpMenuFactory *menu_factory)
 {
   const gchar *uri;
   gchar       *filename = NULL;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_MENU_FACTORY (menu_factory));
 
   if (! gimp_image_active_drawable (gimage))
     return;
@@ -203,7 +155,7 @@ file_save_a_copy_dialog_show (GimpImage *gimage)
     filename = g_filename_from_uri (uri, NULL, NULL);
 
   if (! filesave)
-    filesave = file_save_dialog_create (gimage->gimp);
+    filesave = file_save_dialog_create (gimage->gimp, menu_factory);
 
   gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
 
@@ -230,24 +182,14 @@ file_save_a_copy_dialog_show (GimpImage *gimage)
 /*  private functions  */
 
 static GtkWidget *
-file_save_dialog_create (Gimp *gimp)
+file_save_dialog_create (Gimp            *gimp,
+                         GimpMenuFactory *menu_factory)
 {
   return file_dialog_new (gimp,
-                          gimp_item_factory_from_path ("<Save>"),
+                          menu_factory, "<Save>",
                           _("Save Image"), "save_image",
                           "save/dialogs/file_save.html",
                           G_CALLBACK (file_save_ok_callback));
-}
-
-static void
-file_save_type_callback (GtkWidget *widget,
-			 gpointer   data)
-{
-  PlugInProcDef *proc = (PlugInProcDef *) data;
-
-  file_dialog_update_name (proc, GTK_FILE_SELECTION (filesave));
-
-  save_file_proc = proc;
 }
 
 static void

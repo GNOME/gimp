@@ -38,17 +38,19 @@ typedef struct _GimpDataEditorClass  GimpDataEditorClass;
 
 struct _GimpDataEditor
 {
-  GimpEditor   parent_instance;
+  GimpEditor       parent_instance;
 
-  Gimp        *gimp;
+  Gimp            *gimp;
 
-  GType        data_type;
-  GimpData    *data;
+  GType            data_type;
+  GimpData        *data;
 
-  GtkWidget   *name_entry;
+  GimpItemFactory *item_factory;
 
-  GtkWidget   *save_button;
-  GtkWidget   *revert_button;
+  GtkWidget       *name_entry;
+
+  GtkWidget       *save_button;
+  GtkWidget       *revert_button;
 };
 
 struct _GimpDataEditorClass
@@ -64,13 +66,15 @@ struct _GimpDataEditorClass
 
 GType       gimp_data_editor_get_type   (void) G_GNUC_CONST;
 
-gboolean    gimp_data_editor_construct  (GimpDataEditor *editor,
-                                         Gimp           *gimp,
-                                         GType           data_type);
+gboolean    gimp_data_editor_construct  (GimpDataEditor  *editor,
+                                         Gimp            *gimp,
+                                         GType            data_type,
+                                         GimpMenuFactory *menu_factory,
+                                         const gchar     *menu_identifier);
 
-void        gimp_data_editor_set_data   (GimpDataEditor *editor,
-                                         GimpData       *data);
-GimpData  * gimp_data_editor_get_data   (GimpDataEditor *editor);
+void        gimp_data_editor_set_data   (GimpDataEditor  *editor,
+                                         GimpData        *data);
+GimpData  * gimp_data_editor_get_data   (GimpDataEditor  *editor);
 
 
 #endif  /*  __GIMP_DATA_EDITOR_H__  */

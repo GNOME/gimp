@@ -19,6 +19,7 @@
 #include "config.h"
 
 #include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "display-types.h"
@@ -31,6 +32,8 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-projection.h"
 #include "core/gimplist.h"
+
+#include "widgets/gimpitemfactory.h"
 
 #include "libgimptool/gimptool.h"
 
@@ -203,8 +206,10 @@ gimp_display_get_property (GObject    *object,
 }
 
 GimpDisplay *
-gimp_display_new (GimpImage *gimage,
-                  guint      scale)
+gimp_display_new (GimpImage       *gimage,
+                  guint            scale,
+                  GimpMenuFactory *menu_factory,
+                  GimpItemFactory *popup_factory)
 {
   GimpDisplay *gdisp;
 
@@ -222,7 +227,8 @@ gimp_display_new (GimpImage *gimage,
   gimp_display_connect (gdisp, gimage);
 
   /*  create the shell for the image  */
-  gdisp->shell = gimp_display_shell_new (gdisp, scale);
+  gdisp->shell = gimp_display_shell_new (gdisp, scale,
+                                         menu_factory, popup_factory);
 
   gtk_widget_show (gdisp->shell);
 
@@ -474,7 +480,16 @@ gimp_display_flush_whenever (GimpDisplay *gdisp,
 
   /*  ensure the consistency of the menus  */
   if (! now)
-    gimp_display_shell_set_menu_sensitivity (shell, gdisp->gimage->gimp, FALSE);
+    {
+      GimpContext *context;
+
+      gimp_item_factory_update (shell->menubar_factory, shell);
+
+      context = gimp_get_current_context (gdisp->gimage->gimp);
+
+      if (gdisp == gimp_context_get_display (context))
+        gimp_item_factory_update (shell->popup_factory, shell);
+    }
 }
 
 static void

@@ -54,7 +54,7 @@ struct _PlugInMenuEntry
 
 static gboolean plug_in_menu_tree_traverse_func (gpointer         foo,
                                                  PlugInMenuEntry *menu_entry,
-                                                 GimpItemFactory *image_factory);
+                                                 GimpItemFactory *item_factory);
 static gchar  * plug_in_escape_uline            (const gchar     *menu_path);
 
 
@@ -108,15 +108,15 @@ plug_in_menus_init (GSList      *plug_in_defs,
 }
 
 void
-plug_in_make_menu (GimpItemFactory *image_factory,
+plug_in_make_menu (GimpItemFactory *item_factory,
                    GSList          *proc_defs)
 {
   PlugInProcDef   *proc_def;
   GSList          *procs;
   GTree           *menu_entries;
 
-  g_return_if_fail (image_factory == NULL ||
-                    GIMP_IS_ITEM_FACTORY (image_factory));
+  g_return_if_fail (item_factory == NULL ||
+                    GIMP_IS_ITEM_FACTORY (item_factory));
   g_return_if_fail (proc_defs != NULL);
 
   menu_entries = g_tree_new_full ((GCompareDataFunc) g_utf8_collate, NULL,
@@ -151,12 +151,12 @@ plug_in_make_menu (GimpItemFactory *image_factory,
 
   g_tree_foreach (menu_entries, 
                   (GTraverseFunc) plug_in_menu_tree_traverse_func,
-                  image_factory);
+                  item_factory);
   g_tree_destroy (menu_entries);
 }
 
 void
-plug_in_make_menu_entry (GimpItemFactory *image_factory,
+plug_in_make_menu_entry (GimpItemFactory *item_factory,
                          PlugInProcDef   *proc_def,
                          const gchar     *domain,
                          const gchar     *help_path)
@@ -167,8 +167,8 @@ plug_in_make_menu_entry (GimpItemFactory *image_factory,
   gchar                *basename;
   gchar                *lowercase_page;
 
-  g_return_if_fail (image_factory == NULL ||
-                    GIMP_IS_ITEM_FACTORY (image_factory));
+  g_return_if_fail (item_factory == NULL ||
+                    GIMP_IS_ITEM_FACTORY (item_factory));
 
   basename = g_path_get_basename (proc_def->prog);
 
@@ -205,11 +205,16 @@ plug_in_make_menu_entry (GimpItemFactory *image_factory,
   entry.help_page             = lowercase_page;
   entry.description           = NULL;
 
-  if (image_factory)
+  if (item_factory)
     {
-      if (! strncmp (proc_def->menu_path, "<Image>", 7))
+      gchar *factory_path;
+
+      factory_path = GTK_ITEM_FACTORY (item_factory)->path;
+
+      if (! strncmp (proc_def->menu_path,
+                     factory_path, strlen (factory_path)))
         {
-          gimp_item_factory_create_item (image_factory,
+          gimp_item_factory_create_item (item_factory,
                                          &entry,
                                          domain,
                                          &proc_def->db_info, 2,
@@ -224,7 +229,7 @@ plug_in_make_menu_entry (GimpItemFactory *image_factory,
            list;
            list = g_list_next (list))
         {
-          GimpItemFactory *item_factory = list->data;
+          item_factory = list->data;
 
           gimp_item_factory_create_item (item_factory,
                                          &entry,
@@ -256,15 +261,20 @@ plug_in_delete_menu_entry (const gchar *menu_path)
 }
 
 void
-plug_in_set_menu_sensitivity (GimpItemFactory *image_factory,
+plug_in_set_menu_sensitivity (GimpItemFactory *item_factory,
                               GimpImageType    type)
 {
   PlugInProcDef *proc_def;
   GSList        *tmp;
-  gboolean       sensitive = FALSE;
+  gchar         *factory_path;
+  gboolean       is_image_factory = FALSE;
 
-  g_return_if_fail (image_factory == NULL ||
-                    GIMP_IS_ITEM_FACTORY (image_factory));
+  g_return_if_fail (GIMP_IS_ITEM_FACTORY (item_factory));
+
+  factory_path = GTK_ITEM_FACTORY (item_factory)->path;
+
+  if (! strcmp (factory_path, "<Image>"))
+    is_image_factory = TRUE;
 
   for (tmp = proc_defs; tmp; tmp = g_slist_next (tmp))
     {
@@ -272,6 +282,8 @@ plug_in_set_menu_sensitivity (GimpItemFactory *image_factory,
 
       if (proc_def->image_types_val && proc_def->menu_path)
         {
+          gboolean sensitive;
+
           switch (type)
             {
             case GIMP_RGB_IMAGE:
@@ -297,16 +309,16 @@ plug_in_set_menu_sensitivity (GimpItemFactory *image_factory,
               break;
             }
 
-          if (image_factory && ! strncmp (proc_def->menu_path, "<Image>", 7))
-            gimp_item_factory_set_sensitive (GTK_ITEM_FACTORY (image_factory),
-                                             proc_def->menu_path,
-                                             sensitive);
-          else
-            gimp_item_factories_set_sensitive (proc_def->menu_path,
+          if (! strncmp (proc_def->menu_path, factory_path,
+                         strlen (factory_path)))
+            {
+              gimp_item_factory_set_sensitive (GTK_ITEM_FACTORY (item_factory),
                                                proc_def->menu_path,
                                                sensitive);
+            }
 
-          if (last_plug_in && (last_plug_in == &proc_def->db_info))
+          if (is_image_factory &&
+              last_plug_in && (last_plug_in == &proc_def->db_info))
             {
               gchar *basename;
               gchar *ellipses;
@@ -325,37 +337,37 @@ plug_in_set_menu_sensitivity (GimpItemFactory *image_factory,
 
               g_free (basename);
 
-              gimp_item_factories_set_label ("<Image>",
-                                             "/Filters/Repeat Last", repeat);
-              gimp_item_factories_set_label ("<Image>",
-                                             "/Filters/Re-Show Last", reshow);
+              gimp_item_factory_set_label (GTK_ITEM_FACTORY (item_factory),
+                                           "/Filters/Repeat Last", repeat);
+              gimp_item_factory_set_label (GTK_ITEM_FACTORY (item_factory),
+                                           "/Filters/Re-Show Last", reshow);
 
               g_free (repeat);
               g_free (reshow);
 
-	      gimp_item_factories_set_sensitive ("<Image>",
-                                                 "/Filters/Repeat Last",
-                                                 sensitive);
-	      gimp_item_factories_set_sensitive ("<Image>",
-                                                 "/Filters/Re-Show Last",
-                                                 sensitive);
+	      gimp_item_factory_set_sensitive (GTK_ITEM_FACTORY (item_factory),
+                                               "/Filters/Repeat Last",
+                                               sensitive);
+	      gimp_item_factory_set_sensitive (GTK_ITEM_FACTORY (item_factory),
+                                               "/Filters/Re-Show Last",
+                                               sensitive);
 	    }
 	}
     }
 
-  if (! last_plug_in)
+  if (is_image_factory && ! last_plug_in)
     {
-      gimp_item_factories_set_label ("<Image>",
-                                     "/Filters/Repeat Last",
-                                     _("Repeat Last"));
-      gimp_item_factories_set_label ("<Image>",
-                                     "/Filters/Re-Show Last",
-                                     _("Re-Show Last"));
+      gimp_item_factory_set_label (GTK_ITEM_FACTORY (item_factory),
+                                   "/Filters/Repeat Last",
+                                   _("Repeat Last"));
+      gimp_item_factory_set_label (GTK_ITEM_FACTORY (item_factory),
+                                   "/Filters/Re-Show Last",
+                                   _("Re-Show Last"));
 
-      gimp_item_factories_set_sensitive ("<Image>",
-                                         "/Filters/Repeat Last", FALSE);
-      gimp_item_factories_set_sensitive ("<Image>",
-                                         "/Filters/Re-Show Last", FALSE);
+      gimp_item_factory_set_sensitive (GTK_ITEM_FACTORY (item_factory),
+                                       "/Filters/Repeat Last", FALSE);
+      gimp_item_factory_set_sensitive (GTK_ITEM_FACTORY (item_factory),
+                                       "/Filters/Re-Show Last", FALSE);
     }
 }
 
@@ -365,9 +377,9 @@ plug_in_set_menu_sensitivity (GimpItemFactory *image_factory,
 static gboolean
 plug_in_menu_tree_traverse_func (gpointer         foo,
                                  PlugInMenuEntry *menu_entry,
-                                 GimpItemFactory *image_factory)
+                                 GimpItemFactory *item_factory)
 {
-  plug_in_make_menu_entry (image_factory,
+  plug_in_make_menu_entry (item_factory,
                            menu_entry->proc_def,
                            menu_entry->domain,
                            menu_entry->help_path);

@@ -84,7 +84,7 @@ struct _GimpDialogFactory
   GimpObject         parent_instance;
 
   GimpContext       *context;
-  GimpItemFactory   *item_factory;
+  GimpMenuFactory   *menu_factory;
 
   /*< private >*/
   GimpDialogNewFunc  new_dock_func;
@@ -107,7 +107,7 @@ GType               gimp_dialog_factory_get_type  (void) G_GNUC_CONST;
 
 GimpDialogFactory * gimp_dialog_factory_new       (const gchar       *name,
 						   GimpContext       *context,
-						   GimpItemFactory   *item_factory,
+						   GimpMenuFactory   *menu_factory,
 						   GimpDialogNewFunc  new_dock_func);
 
 GimpDialogFactory * gimp_dialog_factory_from_name (const gchar       *name);

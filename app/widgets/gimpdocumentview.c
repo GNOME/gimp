@@ -45,8 +45,6 @@
 
 #include "display/gimpdisplay.h"
 
-#include "gui/file-open-dialog.h"
-
 #include "gimpcontainerview.h"
 #include "gimpdocumentview.h"
 #include "gimpdnd.h"
@@ -130,17 +128,20 @@ gimp_document_view_init (GimpDocumentView *view)
 }
 
 GtkWidget *
-gimp_document_view_new (GimpViewType     view_type,
-                        GimpContainer   *container,
-                        GimpContext     *context,
-                        gint             preview_size,
-                        gint             min_items_x,
-                        gint             min_items_y,
-                        GimpItemFactory *item_factory)
+gimp_document_view_new (GimpViewType            view_type,
+                        GimpContainer          *container,
+                        GimpContext            *context,
+                        gint                    preview_size,
+                        gint                    min_items_x,
+                        gint                    min_items_y,
+                        GimpFileOpenDialogFunc  file_open_dialog_func,
+                        GimpMenuFactory        *menu_factory)
 {
   GimpDocumentView    *document_view;
   GimpContainerEditor *editor;
   gchar               *str;
+
+  g_return_val_if_fail (file_open_dialog_func != NULL, NULL);
 
   document_view = g_object_new (GIMP_TYPE_DOCUMENT_VIEW, NULL);
 
@@ -152,11 +153,13 @@ gimp_document_view_new (GimpViewType     view_type,
                                          TRUE, /* reorderable */
                                          min_items_x,
                                          min_items_y,
-                                         item_factory))
+                                         menu_factory, "<Documents>"))
     {
       g_object_unref (document_view);
       return NULL;
     }
+
+  document_view->file_open_dialog_func = file_open_dialog_func;
 
   editor = GIMP_CONTAINER_EDITOR (document_view);
 
@@ -235,7 +238,7 @@ gimp_document_view_open_clicked (GtkWidget        *widget,
     }
   else
     {
-      file_open_dialog_show (editor->view->context->gimp, NULL, NULL);
+      view->file_open_dialog_func (editor->view->context->gimp, NULL);
     }
 }
 
@@ -285,8 +288,8 @@ gimp_document_view_open_extended_clicked (GtkWidget        *widget,
     {
       if (state & GDK_CONTROL_MASK)
         {
-          file_open_dialog_show (editor->view->context->gimp, NULL,
-                                 gimp_object_get_name (GIMP_OBJECT (imagefile)));
+          view->file_open_dialog_func (editor->view->context->gimp,
+                                       gimp_object_get_name (GIMP_OBJECT (imagefile)));
         }
       else if (state & GDK_SHIFT_MASK)
         {
@@ -311,7 +314,7 @@ gimp_document_view_open_extended_clicked (GtkWidget        *widget,
     }
   else
     {
-      file_open_dialog_show (editor->view->context->gimp, NULL, NULL);
+      view->file_open_dialog_func (editor->view->context->gimp, NULL);
     }
 }
 

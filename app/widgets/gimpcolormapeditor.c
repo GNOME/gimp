@@ -50,6 +50,7 @@
 #include "gimpcolormapeditor.h"
 #include "gimpdnd.h"
 #include "gimpitemfactory.h"
+#include "gimpmenufactory.h"
 
 #include "gui/color-notebook.h"
 
@@ -204,6 +205,12 @@ gimp_colormap_editor_destroy (GtkObject *object)
 
   editor = GIMP_COLORMAP_EDITOR (object);
 
+  if (editor->item_factory)
+    {
+      g_object_unref (editor->item_factory);
+      editor->item_factory = NULL;
+    }
+
   if (editor->color_notebook)
     {
       color_notebook_free (editor->color_notebook);
@@ -221,9 +228,7 @@ gimp_colormap_editor_unmap (GtkWidget *widget)
   editor = GIMP_COLORMAP_EDITOR (widget);
 
   if (editor->color_notebook)
-    {
-      color_notebook_hide (editor->color_notebook);
-    }
+    color_notebook_hide (editor->color_notebook);
 
   GTK_WIDGET_CLASS (parent_class)->unmap (widget);
 }
@@ -232,15 +237,23 @@ gimp_colormap_editor_unmap (GtkWidget *widget)
 /*  public functions  */
 
 GtkWidget *
-gimp_colormap_editor_new (GimpImage *gimage)
+gimp_colormap_editor_new (GimpImage       *gimage,
+                          GimpMenuFactory *menu_factory)
 {
   GimpColormapEditor *editor;
   GtkWidget          *frame;
   GtkWidget          *table;
 
   g_return_val_if_fail (! gimage || GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
 
   editor = g_object_new (GIMP_TYPE_COLORMAP_EDITOR, NULL);
+
+  editor->item_factory = gimp_menu_factory_menu_new (menu_factory,
+                                                     "<ColormapEditor>",
+                                                     GTK_TYPE_MENU,
+                                                     menu_factory->gimp,
+                                                     FALSE);
 
   /*  The palette frame  */
   frame = gtk_frame_new (NULL);
@@ -711,14 +724,8 @@ gimp_colormap_preview_button_press (GtkWidget          *widget,
       break;
 
     case 3:
-      {
-        GimpItemFactory *factory;
-
-        factory = gimp_item_factory_from_path ("<ColormapEditor>");
-
-        gimp_colormap_editor_set_index (editor, col);
-        gimp_item_factory_popup_with_data (factory, editor, NULL);
-      }
+      gimp_colormap_editor_set_index (editor, col);
+      gimp_item_factory_popup_with_data (editor->item_factory, editor, NULL);
       return TRUE;
 
     default:

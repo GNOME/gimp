@@ -115,13 +115,13 @@ gimp_channel_init (GimpChannel *channel)
   channel->show_masked = FALSE;
 
   /*  Selection mask variables  */
-  channel->boundary_known = TRUE;
+  channel->boundary_known = FALSE;
   channel->segs_in        = NULL;
   channel->segs_out       = NULL;
   channel->num_segs_in    = 0;
   channel->num_segs_out   = 0;
-  channel->empty          = TRUE;
-  channel->bounds_known   = TRUE;
+  channel->empty          = FALSE;
+  channel->bounds_known   = FALSE;
   channel->x1             = 0;
   channel->y1             = 0;
   channel->x2             = 0;
@@ -242,13 +242,17 @@ gimp_channel_copy (const GimpChannel *channel,
                                                   FALSE));
 
   /*  set the channel color and opacity  */
-  new_channel->color       = channel->color;
+  new_channel->color        = channel->color;
 
-  new_channel->show_masked = channel->show_masked;
+  new_channel->show_masked  = channel->show_masked;
 
   /*  selection mask variables  */
-  new_channel->x2          = gimp_drawable_width (GIMP_DRAWABLE (new_channel));
-  new_channel->y2          = gimp_drawable_height (GIMP_DRAWABLE (new_channel));
+  new_channel->bounds_known = channel->bounds_known;
+  new_channel->empty        = channel->empty;
+  new_channel->x1           = channel->x1;
+  new_channel->y1           = channel->y1;
+  new_channel->x2           = channel->x2;
+  new_channel->y2           = channel->y2;
 
   return new_channel;
 }

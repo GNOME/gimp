@@ -236,12 +236,7 @@ plug_ins_init (Gimp               *gimp,
     }
 
   if (! gimp->no_interface)
-    {
-      plug_in_menus_init (plug_in_defs, STD_PLUGINS_DOMAIN);
-
-      /* make the menu */
-      plug_in_make_menu (NULL, proc_defs);
-    }
+    plug_in_menus_init (plug_in_defs, STD_PLUGINS_DOMAIN);
 
   /* initial the plug-ins */
   (* status_callback) (_("Initializing Plug-ins"), "", 0);

@@ -37,19 +37,22 @@ typedef struct _GimpColormapEditorClass GimpColormapEditorClass;
 
 struct _GimpColormapEditor
 {
-  GimpEditor     parent_instance;
+  GimpEditor       parent_instance;
 
-  GimpImage     *gimage;
-  gint           col_index;
-  gint           dnd_col_index;
-  GtkWidget     *palette;
-  gint           xn;
-  gint           yn;
-  gint           cellsize;
-  GtkAdjustment *index_adjustment;
-  GtkWidget     *index_spinbutton;
-  GtkWidget     *color_entry;
-  ColorNotebook *color_notebook;
+  GimpItemFactory *item_factory;
+
+  GimpImage       *gimage;
+
+  gint             col_index;
+  gint             dnd_col_index;
+  GtkWidget       *palette;
+  gint             xn;
+  gint             yn;
+  gint             cellsize;
+  GtkAdjustment   *index_adjustment;
+  GtkWidget       *index_spinbutton;
+  GtkWidget       *color_entry;
+  ColorNotebook   *color_notebook;
 };
 
 struct _GimpColormapEditorClass
@@ -62,7 +65,8 @@ struct _GimpColormapEditorClass
 
 GType       gimp_colormap_editor_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_colormap_editor_new       (GimpImage          *gimage);
+GtkWidget * gimp_colormap_editor_new       (GimpImage          *gimage,
+                                            GimpMenuFactory    *menu_factory);
 
 void        gimp_colormap_editor_selected  (GimpColormapEditor *editor);
 

@@ -76,27 +76,29 @@ struct _GimpDisplayClass
 
 GType         gimp_display_get_type             (void) G_GNUC_CONST;
 
-GimpDisplay * gimp_display_new                  (GimpImage   *gimage,
-                                                 guint        scale);
-void          gimp_display_delete               (GimpDisplay *gdisp);
+GimpDisplay * gimp_display_new                  (GimpImage       *gimage,
+                                                 guint            scale,
+                                                 GimpMenuFactory *menu_factory,
+                                                 GimpItemFactory *popup_factory);
+void          gimp_display_delete               (GimpDisplay     *gdisp);
 
-gint          gimp_display_get_ID               (GimpDisplay *gdisp);
-GimpDisplay * gimp_display_get_by_ID            (Gimp        *gimp,
-                                                 gint         ID);
+gint          gimp_display_get_ID               (GimpDisplay     *gdisp);
+GimpDisplay * gimp_display_get_by_ID            (Gimp            *gimp,
+                                                 gint             ID);
 
-void          gimp_display_reconnect            (GimpDisplay *gdisp,
-                                                 GimpImage   *gimage);
+void          gimp_display_reconnect            (GimpDisplay     *gdisp,
+                                                 GimpImage       *gimage);
 
-void          gimp_display_add_update_area      (GimpDisplay *gdisp,
-                                                 gint         x,
-                                                 gint         y,
-                                                 gint         w,
-                                                 gint         h);
+void          gimp_display_add_update_area      (GimpDisplay     *gdisp,
+                                                 gint             x,
+                                                 gint             y,
+                                                 gint             w,
+                                                 gint             h);
 
-void          gimp_display_flush                (GimpDisplay *gdisp);
-void          gimp_display_flush_now            (GimpDisplay *gdisp);
+void          gimp_display_flush                (GimpDisplay     *gdisp);
+void          gimp_display_flush_now            (GimpDisplay     *gdisp);
 
-void          gimp_display_finish_draw          (GimpDisplay *gdisp);
+void          gimp_display_finish_draw          (GimpDisplay     *gdisp);
 
 gboolean gimp_display_coords_in_active_drawable (GimpDisplay      *gdisp,
                                                  const GimpCoords *coords);

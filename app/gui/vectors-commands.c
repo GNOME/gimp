@@ -441,14 +441,12 @@ vectors_new_vectors_query (GimpImage   *gimage,
     {
       GimpVectors *new_vectors;
 
-      /* undo_push_group_start (gimage, EDIT_PASTE_UNDO_GROUP); */
-
-      new_vectors = NULL; /*gimp_vectors_new (gimage, _("Empty Vectors Copy"));*/
+      new_vectors = g_object_new (GIMP_TYPE_VECTORS, NULL);
 
       gimp_image_add_vectors (gimage, new_vectors, -1);
 
-      /* undo_push_group_end (gimage); */
-
+      gimp_object_set_name (GIMP_OBJECT (new_vectors),
+                            _("Empty Vectors Copy"));
       return;
     }
 

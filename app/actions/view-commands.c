@@ -37,6 +37,7 @@
 #include "display/gimpdisplayshell-selection.h"
 
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpitemfactory.h"
 
 #include "dialogs.h"
 #include "info-dialog.h"
@@ -100,11 +101,24 @@ void
 view_dot_for_dot_cmd_callback (GtkWidget *widget,
 			       gpointer   data)
 {
-  GimpDisplay *gdisp;
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
   return_if_no_display (gdisp, data);
 
-  gimp_display_shell_scale_set_dot_for_dot (GIMP_DISPLAY_SHELL (gdisp->shell),
-                                            GTK_CHECK_MENU_ITEM (widget)->active);
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  if (shell->dot_for_dot != GTK_CHECK_MENU_ITEM (widget)->active)
+    {
+      gimp_display_shell_scale_set_dot_for_dot (shell,
+                                                GTK_CHECK_MENU_ITEM (widget)->active);
+
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
+                                    "/View/Dot for Dot",
+                                    shell->dot_for_dot);
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
+                                    "/View/Dot for Dot",
+                                    shell->dot_for_dot);
+    }
 }
 
 void
@@ -164,19 +178,22 @@ view_toggle_selection_cmd_callback (GtkWidget *widget,
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
-  gint              new_val;
   return_if_no_display (gdisp, data);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  new_val = GTK_CHECK_MENU_ITEM (widget)->active;
-
   /*  hidden == TRUE corresponds to the menu toggle being FALSE  */
-  if (new_val == shell->select->hidden)
+  if (GTK_CHECK_MENU_ITEM (widget)->active == shell->select->hidden)
     {
       gimp_display_shell_selection_toggle (shell->select);
-
       gimp_display_shell_flush (shell);
+
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
+                                    "/View/Show Selection",
+                                    ! shell->select->hidden);
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
+                                    "/View/Show Selection",
+                                    ! shell->select->hidden);
     }
 }
 
@@ -186,19 +203,22 @@ view_toggle_layer_boundary_cmd_callback (GtkWidget *widget,
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
-  gint              new_val;
   return_if_no_display (gdisp, data);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  new_val = GTK_CHECK_MENU_ITEM (widget)->active;
-
   /*  hidden == TRUE corresponds to the menu toggle being FALSE  */
-  if (new_val == shell->select->layer_hidden)
+  if (GTK_CHECK_MENU_ITEM (widget)->active == shell->select->layer_hidden)
     {
       gimp_display_shell_selection_toggle_layer (shell->select);
-
       gimp_display_shell_flush (shell);
+
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
+                                    "/View/Show Layer Boundary",
+                                    ! shell->select->layer_hidden);
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
+                                    "/View/Show Layer Boundary",
+                                    ! shell->select->layer_hidden);
     }
 }
 
@@ -215,18 +235,21 @@ view_toggle_menubar_cmd_callback (GtkWidget *widget,
 
   menubar = GTK_ITEM_FACTORY (shell->menubar_factory)->widget;
 
-  if (! GTK_CHECK_MENU_ITEM (widget)->active)
+  if (GTK_CHECK_MENU_ITEM (widget)->active !=
+      GTK_WIDGET_VISIBLE (menubar))
     {
       if (GTK_WIDGET_VISIBLE (menubar))
 	gtk_widget_hide (menubar);
-    }
-  else
-    {
-      if (! GTK_WIDGET_VISIBLE (menubar))
+      else
 	gtk_widget_show (menubar);
-    }
 
-  gimp_display_shell_set_menu_sensitivity (shell, gdisp->gimage->gimp, FALSE);
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
+                                    "/View/Show Menubar",
+                                    GTK_WIDGET_VISIBLE (menubar));
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
+                                    "/View/Show Menubar",
+                                    GTK_WIDGET_VISIBLE (menubar));
+    }
 }
 
 void
@@ -242,30 +265,29 @@ view_toggle_rulers_cmd_callback (GtkWidget *widget,
 
   config = GIMP_DISPLAY_CONFIG (gdisp->gimage->gimp->config);
 
-  if (! GTK_CHECK_MENU_ITEM (widget)->active)
+  if (GTK_CHECK_MENU_ITEM (widget)->active !=
+      GTK_WIDGET_VISIBLE (shell->origin))
     {
       if (GTK_WIDGET_VISIBLE (shell->origin))
 	{
           gtk_widget_hide (shell->origin);
 	  gtk_widget_hide (shell->hrule);
 	  gtk_widget_hide (shell->vrule);
-
-	  gtk_widget_queue_resize (GTK_WIDGET (shell->origin->parent));
 	}
-    }
-  else
-    {
-      if (! GTK_WIDGET_VISIBLE (shell->origin))
+      else
 	{
           gtk_widget_show (shell->origin);
 	  gtk_widget_show (shell->hrule);
 	  gtk_widget_show (shell->vrule);
-
-	  gtk_widget_queue_resize (GTK_WIDGET (shell->origin->parent));
 	}
-    }
 
-  gimp_display_shell_set_menu_sensitivity (shell, gdisp->gimage->gimp, FALSE);
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
+                                    "/View/Show Rulers",
+                                    GTK_WIDGET_VISIBLE (shell->origin));
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
+                                    "/View/Show Rulers",
+                                    GTK_WIDGET_VISIBLE (shell->origin));
+    }
 }
 
 void
@@ -278,18 +300,21 @@ view_toggle_statusbar_cmd_callback (GtkWidget *widget,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  if (! GTK_CHECK_MENU_ITEM (widget)->active)
+  if (GTK_CHECK_MENU_ITEM (widget)->active !=
+      GTK_WIDGET_VISIBLE (shell->statusbar))
     {
       if (GTK_WIDGET_VISIBLE (shell->statusbar))
 	gtk_widget_hide (shell->statusbar);
-    }
-  else
-    {
-      if (! GTK_WIDGET_VISIBLE (shell->statusbar))
+      else
 	gtk_widget_show (shell->statusbar);
-    }
 
-  gimp_display_shell_set_menu_sensitivity (shell, gdisp->gimage->gimp, FALSE);
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
+                                    "/View/Show Statusbar",
+                                    GTK_WIDGET_VISIBLE (shell->statusbar));
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
+                                    "/View/Show Statusbar",
+                                    GTK_WIDGET_VISIBLE (shell->statusbar));
+    }
 }
 
 void
@@ -297,16 +322,30 @@ view_toggle_guides_cmd_callback (GtkWidget *widget,
 				 gpointer   data)
 {
   GimpDisplay *gdisp;
-  gboolean     old_val;
   return_if_no_display (gdisp, data);
 
-  old_val = gdisp->draw_guides;
-  gdisp->draw_guides = GTK_CHECK_MENU_ITEM (widget)->active;
-
-  if ((old_val != gdisp->draw_guides) && gdisp->gimage->guides)
+  if (GTK_CHECK_MENU_ITEM (widget)->active != gdisp->draw_guides)
     {
-      gimp_display_shell_expose_full (GIMP_DISPLAY_SHELL (gdisp->shell));
-      gimp_display_flush (gdisp);
+      GimpDisplayShell *shell;
+
+      shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+      gdisp->draw_guides = GTK_CHECK_MENU_ITEM (widget)->active;
+
+      if (gdisp->gimage->guides)
+        {
+          gimp_display_shell_expose_full (shell);
+          gimp_display_flush (gdisp);
+        }
+      else
+        {
+          gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
+                                        "/View/Show Guides",
+                                        gdisp->draw_guides);
+          gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
+                                        "/View/Show Guides",
+                                        gdisp->draw_guides);
+        }
     }
 }
 
@@ -314,13 +353,23 @@ void
 view_snap_to_guides_cmd_callback (GtkWidget *widget,
 				  gpointer   data)
 {
-  GimpDisplay *gdisp;
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
   return_if_no_display (gdisp, data);
 
-  gdisp->snap_to_guides = GTK_CHECK_MENU_ITEM (widget)->active;
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gimp_display_shell_set_menu_sensitivity (GIMP_DISPLAY_SHELL (gdisp->shell),
-                                           gdisp->gimage->gimp, FALSE);
+  if (gdisp->snap_to_guides != GTK_CHECK_MENU_ITEM (widget)->active)
+    {
+      gdisp->snap_to_guides = GTK_CHECK_MENU_ITEM (widget)->active;
+
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
+                                    "/View/Snap to Guides",
+                                    gdisp->snap_to_guides);
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
+                                    "/View/Snap to Guides",
+                                    gdisp->snap_to_guides);
+    }
 }
 
 void

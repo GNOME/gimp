@@ -69,7 +69,8 @@ GtkWidget * gimp_data_factory_view_new       (GimpViewType      view_type,
 					      gint              preview_size,
 					      gint              min_items_x,
 					      gint              min_items_y,
-					      GimpItemFactory  *item_factory);
+					      GimpMenuFactory  *menu_factory,
+                                              const gchar      *menu_identifier);
 
 
 /*  protected  */
@@ -82,7 +83,8 @@ gboolean    gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 					      gint                 preview_size,
 					      gint                 min_items_x,
 					      gint                 min_items_y,
-					      GimpItemFactory     *item_factory);
+					      GimpMenuFactory     *menu_factory,
+                                              const gchar         *menu_identifier);
 
 
 #endif  /*  __GIMP_DATA_FACTORY_VIEW_H__  */

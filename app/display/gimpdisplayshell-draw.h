@@ -75,6 +75,7 @@ struct _GimpDisplayShell
 
   GimpItemFactory  *menubar_factory;
   GimpItemFactory  *popup_factory;
+  GimpItemFactory  *qmask_factory;
 
   gdouble           monitor_xres;
   gdouble           monitor_yres;
@@ -163,7 +164,9 @@ struct _GimpDisplayShellClass
 GType       gimp_display_shell_get_type              (void) G_GNUC_CONST;
 
 GtkWidget * gimp_display_shell_new                   (GimpDisplay      *gdisp,
-                                                      guint             scale);
+                                                      guint             scale,
+                                                      GimpMenuFactory  *menu_factory,
+                                                      GimpItemFactory  *popup_factory);
 
 void        gimp_display_shell_close                 (GimpDisplayShell *shell,
                                                       gboolean          kill_it);
@@ -173,9 +176,8 @@ void        gimp_display_shell_reconnect             (GimpDisplayShell *shell);
 void        gimp_display_shell_scaled                (GimpDisplayShell *shell);
 void        gimp_display_shell_scrolled              (GimpDisplayShell *shell);
 
-void        gimp_display_shell_set_menu_sensitivity  (GimpDisplayShell *shell,
-                                                      Gimp             *gimp,
-                                                      gboolean          popup_only);
+void        gimp_display_shell_menu_update           (GtkItemFactory   *item_factory,
+                                                      gpointer          data);
 
 GimpGuide * gimp_display_shell_find_guide            (GimpDisplayShell *shell,
                                                       gdouble           x,

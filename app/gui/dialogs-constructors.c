@@ -78,6 +78,7 @@
 #include "dialogs-constructors.h"
 #include "documents-commands.h"
 #include "error-console-dialog.h"
+#include "file-commands.h"
 #include "gradients-commands.h"
 #include "layers-commands.h"
 #include "module-browser.h"
@@ -343,7 +344,7 @@ dialogs_image_list_view_new (GimpDialogFactory *factory,
                               context,
                               preview_size,
                               5, 3,
-                              gimp_item_factory_from_path ("<Images>"));
+                              factory->menu_factory);
 
   return dialogs_dockable_new (view,
 			       _("Image List"), _("Images"), NULL,
@@ -365,7 +366,7 @@ dialogs_brush_list_view_new (GimpDialogFactory *factory,
 				      TRUE,
 				      preview_size,
 				      5, 3,
-				      gimp_item_factory_from_path ("<Brushes>"));
+                                      factory->menu_factory);
 
   return dialogs_dockable_new (view,
 			       _("Brush List"), _("Brushes"), NULL,
@@ -386,7 +387,7 @@ dialogs_pattern_list_view_new (GimpDialogFactory *factory,
 				     context,
 				     preview_size,
 				     5, 3,
-				     gimp_item_factory_from_path ("<Patterns>"));
+                                     factory->menu_factory, "<Patterns>");
 
   return dialogs_dockable_new (view,
 			       _("Pattern List"), _("Patterns"), NULL,
@@ -407,7 +408,7 @@ dialogs_gradient_list_view_new (GimpDialogFactory *factory,
 				     context,
 				     preview_size,
 				     5, 3,
-				     gimp_item_factory_from_path ("<Gradients>"));
+				     factory->menu_factory, "<Gradients>");
 
   return dialogs_dockable_new (view,
 			       _("Gradient List"), _("Gradients"), NULL,
@@ -428,7 +429,7 @@ dialogs_palette_list_view_new (GimpDialogFactory *factory,
 				     context,
 				     preview_size,
 				     5, 3,
-				     gimp_item_factory_from_path ("<Palettes>"));
+				     factory->menu_factory, "<Palettes>");
 
   return dialogs_dockable_new (view,
 			       _("Palette List"), _("Palettes"), NULL,
@@ -467,7 +468,7 @@ dialogs_buffer_list_view_new (GimpDialogFactory *factory,
 			       context,
 			       preview_size,
 			       5, 3,
-			       gimp_item_factory_from_path ("<Buffers>"));
+                               factory->menu_factory);
 
   return dialogs_dockable_new (view,
 			       _("Buffer List"), _("Buffers"),
@@ -491,7 +492,7 @@ dialogs_image_grid_view_new (GimpDialogFactory *factory,
                               context,
                               preview_size,
                               5, 3,
-                              gimp_item_factory_from_path ("<Images>"));
+                              factory->menu_factory);
 
   return dialogs_dockable_new (view,
 			       _("Image Grid"), _("Images"), NULL,
@@ -513,7 +514,7 @@ dialogs_brush_grid_view_new (GimpDialogFactory *factory,
 				      TRUE,
 				      preview_size,
 				      5, 3,
-				      gimp_item_factory_from_path ("<Brushes>"));
+                                      factory->menu_factory);
 
   return dialogs_dockable_new (view,
 			       _("Brush Grid"), _("Brushes"), NULL,
@@ -534,7 +535,7 @@ dialogs_pattern_grid_view_new (GimpDialogFactory *factory,
 				     context,
 				     preview_size,
 				     5, 3,
-				     gimp_item_factory_from_path ("<Patterns>"));
+				     factory->menu_factory, "<Patterns>");
 
   return dialogs_dockable_new (view,
 			       _("Pattern Grid"), _("Patterns"), NULL,
@@ -555,7 +556,7 @@ dialogs_gradient_grid_view_new (GimpDialogFactory *factory,
 				     context,
 				     preview_size,
 				     5, 3,
-				     gimp_item_factory_from_path ("<Gradients>"));
+                                     factory->menu_factory, "<Gradients>");
 
   return dialogs_dockable_new (view,
 			       _("Gradient Grid"), _("Gradients"), NULL,
@@ -576,7 +577,7 @@ dialogs_palette_grid_view_new (GimpDialogFactory *factory,
 				     context,
 				     preview_size,
 				     5, 3,
-				     gimp_item_factory_from_path ("<Gradients>"));
+                                     factory->menu_factory, "<Gradients>");
 
   return dialogs_dockable_new (view,
 			       _("Palette Grid"), _("Palettes"), NULL,
@@ -615,7 +616,7 @@ dialogs_buffer_grid_view_new (GimpDialogFactory *factory,
 			       context,
 			       preview_size,
 			       5, 3,
-			       gimp_item_factory_from_path ("<Buffers>"));
+                               factory->menu_factory);
 
   return dialogs_dockable_new (view,
 			       _("Buffer Grid"), _("Buffers"),
@@ -655,7 +656,7 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
                              (GimpNewItemFunc)      layers_new_layer_query,
                              (GimpEditItemFunc)     layers_edit_layer_query,
                              (GimpActivateItemFunc) layers_edit_layer_query,
-                             gimp_item_factory_from_path ("<Layers>"));
+                             factory->menu_factory, "<Layers>");
 
   layer_view = GIMP_LAYER_LIST_VIEW (view);
 
@@ -698,7 +699,7 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
                              (GimpNewItemFunc)      channels_new_channel_query,
                              (GimpEditItemFunc)     channels_edit_channel_query,
                              (GimpActivateItemFunc) channels_edit_channel_query,
-                             gimp_item_factory_from_path ("<Channels>"));
+                             factory->menu_factory, "<Channels>");
 
   dockable = dialogs_dockable_new (view,
 				   _("Channel List"), _("Channels"), NULL,
@@ -749,7 +750,7 @@ dialogs_vectors_list_view_new (GimpDialogFactory *factory,
                              (GimpNewItemFunc)      vectors_new_vectors_query,
                              (GimpEditItemFunc)     vectors_edit_vectors_query,
                              (GimpActivateItemFunc) vectors_vectors_tool,
-                             gimp_item_factory_from_path ("<Vectors>"));
+                             factory->menu_factory, "<Vectors>");
 
   vectors_view = GIMP_VECTORS_LIST_VIEW (view);
 
@@ -802,7 +803,7 @@ dialogs_indexed_palette_new (GimpDialogFactory *factory,
 
   gimage = gimp_context_get_image (context);
 
-  view = gimp_colormap_editor_new (gimage);
+  view = gimp_colormap_editor_new (gimage, factory->menu_factory);
 
   dockable = dialogs_dockable_new (view,
 				   _("Indexed Palette"), _("Colormap"), NULL,
@@ -873,7 +874,8 @@ dialogs_document_history_new (GimpDialogFactory *factory,
                                  context,
                                  preview_size,
                                  5, 3,
-                                 gimp_item_factory_from_path ("<Documents>"));
+                                 file_file_open_dialog,
+                                 factory->menu_factory);
 
   return dialogs_dockable_new (view,
 			       _("Document History"), _("History"),
@@ -921,7 +923,8 @@ dialogs_gradient_editor_get (GimpDialogFactory *factory,
 			     GimpContext       *context,
                              gint               preview_size)
 {
-  gradient_editor = gimp_gradient_editor_new (context->gimp);
+  gradient_editor = gimp_gradient_editor_new (context->gimp,
+                                              factory->menu_factory);
 
   return dialogs_dockable_new (GTK_WIDGET (gradient_editor),
 			       _("Gradient Editor"), _("Gradient Editor"), NULL,
@@ -948,7 +951,8 @@ dialogs_palette_editor_get (GimpDialogFactory *factory,
 			    GimpContext       *context,
                             gint               preview_size)
 {
-  palette_editor = gimp_palette_editor_new (context->gimp);
+  palette_editor = gimp_palette_editor_new (context->gimp,
+                                            factory->menu_factory);
 
   return dialogs_dockable_new (GTK_WIDGET (palette_editor),
 			       _("Palette Editor"), _("Palette Editor"), NULL,

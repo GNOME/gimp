@@ -29,6 +29,7 @@
 #include "core/gimpimagemap.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpitemfactory.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
@@ -256,8 +257,12 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
                     G_CALLBACK (gimp_image_map_tool_flush),
                     image_map_tool);
 
-  gimp_display_shell_set_menu_sensitivity (GIMP_DISPLAY_SHELL (gdisp->shell),
-                                           gdisp->gimage->gimp, FALSE);
+  {
+    GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+    gimp_item_factory_update (shell->menubar_factory, shell);
+    gimp_item_factory_update (shell->popup_factory,   shell);
+  }
 }
 
 static void
@@ -356,7 +361,8 @@ static void
 gimp_image_map_tool_ok_clicked (GtkWidget        *widget,
                                 GimpImageMapTool *image_map_tool)
 {
-  GimpTool *tool;
+  GimpDisplayShell *shell;
+  GimpTool         *tool;
 
   tool = GIMP_TOOL (image_map_tool);
 
@@ -377,8 +383,10 @@ gimp_image_map_tool_ok_clicked (GtkWidget        *widget,
 
   gimp_tool_control_set_preserve (tool->control, FALSE);
 
-  gimp_display_shell_set_menu_sensitivity (GIMP_DISPLAY_SHELL (tool->gdisp->shell),
-                                           tool->gdisp->gimage->gimp, FALSE);
+  shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
+
+  gimp_item_factory_update (shell->menubar_factory, shell);
+  gimp_item_factory_update (shell->popup_factory,   shell);
 
   tool->gdisp    = NULL;
   tool->drawable = NULL;

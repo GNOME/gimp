@@ -118,7 +118,7 @@ gimp_buffer_view_new (GimpViewType     view_type,
 		      gint             preview_size,
 		      gint             min_items_x,
 		      gint             min_items_y,
-		      GimpItemFactory *item_factory)
+		      GimpMenuFactory *menu_factory)
 {
   GimpBufferView      *buffer_view;
   GimpContainerEditor *editor;
@@ -133,7 +133,7 @@ gimp_buffer_view_new (GimpViewType     view_type,
                                          TRUE, /* reorderable */
                                          min_items_x,
                                          min_items_y,
-                                         item_factory))
+                                         menu_factory, "<Buffers>"))
     {
       g_object_unref (buffer_view);
       return NULL;

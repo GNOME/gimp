@@ -23,14 +23,14 @@
 void   plug_in_menus_init           (GSList          *plug_in_defs,
                                      const gchar     *std_plugins_domain);
 
-void   plug_in_make_menu            (GimpItemFactory *image_factory,
+void   plug_in_make_menu            (GimpItemFactory *item_factory,
                                      GSList          *proc_defs);
-void   plug_in_make_menu_entry      (GimpItemFactory *image_factory,
+void   plug_in_make_menu_entry      (GimpItemFactory *item_factory,
                                      PlugInProcDef   *proc_def,
                                      const gchar     *locale_domain,
                                      const gchar     *help_path);
 void   plug_in_delete_menu_entry    (const gchar     *menu_path);
-void   plug_in_set_menu_sensitivity (GimpItemFactory *image_factory,
+void   plug_in_set_menu_sensitivity (GimpItemFactory *item_factory,
                                      GimpImageType    type);
 
 

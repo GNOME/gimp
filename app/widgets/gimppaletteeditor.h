@@ -76,7 +76,8 @@ struct _GimpPaletteEditorClass
 
 GType            gimp_palette_editor_get_type     (void) G_GNUC_CONST;
 
-GimpDataEditor * gimp_palette_editor_new          (Gimp *gimp);
+GimpDataEditor * gimp_palette_editor_new          (Gimp                 *gimp,
+                                                   GimpMenuFactory      *menu_factory);
 
 void             gimp_palette_editor_update_color (GimpContext          *context,
                                                    const GimpRGB        *color,
