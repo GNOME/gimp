@@ -7,14 +7,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
-"POT-Creation-Date: 2003-01-08 22:52+0100\n"
-"PO-Revision-Date: 2003-01-08 22:52GMT\n"
-"Last-Translator: Michal Bukovjan <bukm@centrum.cz>\n"
+"POT-Creation-Date: 2003-02-06 11:03+0100\n"
+"PO-Revision-Date: 2003-02-07 17:51+0100\n"
+"Last-Translator: Miloslav Trmač <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.0\n"
 
 #: libgimp/gimpexport.c:170 libgimp/gimpexport.c:206
 #, c-format
@@ -196,19 +195,19 @@ msgstr ""
 msgid "Skipping module: '%s'\n"
 msgstr "Vynechává se modul: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:409
+#: libgimpmodule/gimpmodule.c:406
 msgid "Module error"
 msgstr "Chyba modulu"
 
-#: libgimpmodule/gimpmodule.c:410
+#: libgimpmodule/gimpmodule.c:407
 msgid "Loaded"
 msgstr "Načteno"
 
-#: libgimpmodule/gimpmodule.c:411
+#: libgimpmodule/gimpmodule.c:408
 msgid "Load failed"
 msgstr "Načtení selhalo"
 
-#: libgimpmodule/gimpmodule.c:412
+#: libgimpmodule/gimpmodule.c:409
 msgid "Not loaded"
 msgstr "Nenačteno"
 
@@ -304,15 +303,15 @@ msgstr "Výběr adresáře"
 msgid "Select File"
 msgstr "Výběr souboru"
 
-#: libgimpwidgets/gimpmemsizeentry.c:186
+#: libgimpwidgets/gimpmemsizeentry.c:185
 msgid "KiloBytes"
 msgstr "kilobajtů"
 
-#: libgimpwidgets/gimpmemsizeentry.c:187
+#: libgimpwidgets/gimpmemsizeentry.c:186
 msgid "MegaBytes"
 msgstr "megabajtů"
 
-#: libgimpwidgets/gimpmemsizeentry.c:188
+#: libgimpwidgets/gimpmemsizeentry.c:187
 msgid "GigaBytes"
 msgstr "gigabajtů"
 
@@ -324,67 +323,67 @@ msgstr ""
 "Klikněte na zaměřovač oka, a poté vyberte barvu kliknutím na tuto barvu "
 "kdekoli na vaší obrazovce"
 
-#: libgimpwidgets/gimpstock.c:88
+#: libgimpwidgets/gimpstock.c:91
 msgid "Anchor"
 msgstr "Ukotvit"
 
-#: libgimpwidgets/gimpstock.c:89
-msgid "Duplicate"
-msgstr "Duplikovat"
+#: libgimpwidgets/gimpstock.c:92
+msgid "_Duplicate"
+msgstr "_Duplikovat"
 
-#: libgimpwidgets/gimpstock.c:90
-msgid "Edit"
-msgstr "Úpravy"
+#: libgimpwidgets/gimpstock.c:93
+msgid "_Edit"
+msgstr "_Úpravy"
 
-#: libgimpwidgets/gimpstock.c:91
+#: libgimpwidgets/gimpstock.c:94
 msgid "Linked"
 msgstr "Spojený"
 
-#: libgimpwidgets/gimpstock.c:92
+#: libgimpwidgets/gimpstock.c:95
 msgid "Paste as New"
 msgstr "Vložit jako nové"
 
-#: libgimpwidgets/gimpstock.c:93
+#: libgimpwidgets/gimpstock.c:96
 msgid "Paste Into"
 msgstr "Vložit do"
 
-#: libgimpwidgets/gimpstock.c:94
+#: libgimpwidgets/gimpstock.c:97
 msgid "_Reset"
 msgstr "_Obnovit"
 
-#: libgimpwidgets/gimpstock.c:95
+#: libgimpwidgets/gimpstock.c:98
 msgid "Visible"
 msgstr "Viditelný"
 
-#: libgimpwidgets/gimpstock.c:127
+#: libgimpwidgets/gimpstock.c:140
 msgid "_Resize"
 msgstr "Změnit _velikost"
 
-#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:180
+#: libgimpwidgets/gimpstock.c:141 libgimpwidgets/gimpstock.c:193
 msgid "_Scale"
 msgstr "Š_kálovat"
 
-#: libgimpwidgets/gimpstock.c:136
+#: libgimpwidgets/gimpstock.c:149
 msgid "L_etter Spacing"
 msgstr "Roz_estup písmen"
 
-#: libgimpwidgets/gimpstock.c:137
+#: libgimpwidgets/gimpstock.c:150
 msgid "L_ine Spacing"
 msgstr "Řá_dkování"
 
-#: libgimpwidgets/gimpstock.c:158
+#: libgimpwidgets/gimpstock.c:171
 msgid "Crop"
 msgstr "Ořezat"
 
-#: libgimpwidgets/gimpstock.c:176
+#: libgimpwidgets/gimpstock.c:189
 msgid "_Transform"
 msgstr "_Transformace"
 
-#: libgimpwidgets/gimpstock.c:179
+#: libgimpwidgets/gimpstock.c:192
 msgid "_Rotate"
 msgstr "_Rotovat"
 
-#: libgimpwidgets/gimpstock.c:181
+#: libgimpwidgets/gimpstock.c:194
 msgid "_Shear"
 msgstr "Na_klonění"
 
@@ -420,27 +419,31 @@ msgstr "Gene_rovat náhodná čísla"
 msgid "Seed random number generator with a generated random number"
 msgstr "Hnízdo generátoru náhodného čísla z generovaného náhodného čísla"
 
-#: modules/cdisplay_colorblind.c:101
-msgid "Colorblind display filter"
-msgstr "Barvoslepý zobrazovací filtr"
+#: modules/cdisplay_colorblind.c:122
+msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
+msgstr "Filtr simulace barevné poruchy (algoritmus Brettel-Vienot-Mollon)"
 
-#: modules/cdisplay_colorblind.c:167
+#: modules/cdisplay_colorblind.c:188
 msgid "Color Deficient Vision"
 msgstr "Vidění s barevnou poruchou"
 
-#: modules/cdisplay_colorblind.c:327
+#: modules/cdisplay_colorblind.c:473
 msgid "Color Deficiency Type:"
 msgstr "Typ barevné poruchy:"
 
-#: modules/cdisplay_colorblind.c:337
-msgid "Protonopia (insensitivity to red)"
-msgstr "Protanomálie (necitlivost na červenou)"
+#: modules/cdisplay_colorblind.c:483
+msgid "None (normal vision)"
+msgstr "Žádný (normální vidění)"
 
-#: modules/cdisplay_colorblind.c:341
+#: modules/cdisplay_colorblind.c:487
+msgid "Protanopia (insensitivity to red)"
+msgstr "Protanopie (necitlivost na červenou)"
+
+#: modules/cdisplay_colorblind.c:491
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteroanopie (barvoslepost na zelenou)"
 
-#: modules/cdisplay_colorblind.c:345
+#: modules/cdisplay_colorblind.c:495
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopie (necitlivost na modrou)"
 
@@ -488,6 +491,9 @@ msgstr "_Vodová barva"
 msgid "Pressure"
 msgstr "Tlak"
 
+#~ msgid "Colorblind display filter"
+#~ msgstr "Barvoslepý zobrazovací filtr"
+
 #~ msgid "a layer mask"
 #~ msgstr "masku vrstvy"
 
@@ -502,12 +508,6 @@ msgstr "Tlak"
 
 #~ msgid "Unloaded OK"
 #~ msgstr "Uvolněno úspěšně"
-
-#~ msgid "OK"
-#~ msgstr "OK"
-
-#~ msgid "pixel"
-#~ msgstr "pixel"
 
 #~ msgid "pixels"
 #~ msgstr "pixelů"

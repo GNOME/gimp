@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
-"POT-Creation-Date: 2003-01-08 23:07+0100\n"
-"PO-Revision-Date: 2003-01-08 23:07GMT\n"
+"POT-Creation-Date: 2003-02-06 11:06+0100\n"
+"PO-Revision-Date: 2003-02-07 05:46+0100\n"
 "Last-Translator: Michal Bukovjan <bukm@centrum.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -107,17 +107,17 @@ msgstr ""
 "Zkontrolujte si nastavení.\n"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1960
-#: plug-ins/dbbrowser/dbbrowser_utils.c:484
+#: plug-ins/dbbrowser/dbbrowser_utils.c:482
 msgid "Author:"
 msgstr "Autor:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1966
-#: plug-ins/dbbrowser/dbbrowser_utils.c:500
+#: plug-ins/dbbrowser/dbbrowser_utils.c:498
 msgid "Copyright:"
 msgstr "Copyright:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1972
-#: plug-ins/dbbrowser/dbbrowser_utils.c:492
+#: plug-ins/dbbrowser/dbbrowser_utils.c:490
 msgid "Date:"
 msgstr "Datum:"
 
@@ -187,39 +187,39 @@ msgstr "Hledat podle _popisu"
 msgid "_Search:"
 msgstr "_Hledat:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:343
+#: plug-ins/dbbrowser/dbbrowser_utils.c:341
 msgid "Name:"
 msgstr "Název:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:352
+#: plug-ins/dbbrowser/dbbrowser_utils.c:350
 msgid "Blurb:"
 msgstr "Popis:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:364
+#: plug-ins/dbbrowser/dbbrowser_utils.c:362
 msgid "In:"
 msgstr "V:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:412
+#: plug-ins/dbbrowser/dbbrowser_utils.c:410
 msgid "Out:"
 msgstr "Ven:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:466
+#: plug-ins/dbbrowser/dbbrowser_utils.c:464
 msgid "Help:"
 msgstr "Nápověda:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:602
+#: plug-ins/dbbrowser/dbbrowser_utils.c:600
 msgid "Searching by name - please wait"
 msgstr "Vyhledává se podle názvu - prosím počkejte"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:625
+#: plug-ins/dbbrowser/dbbrowser_utils.c:623
 msgid "Searching by blurb - please wait"
 msgstr "Vyhledává se podle popisu - prosím počkejte"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:635
+#: plug-ins/dbbrowser/dbbrowser_utils.c:633
 msgid "Searching - please wait"
 msgstr "Vyhledává se - prosím počkejte"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:674
+#: plug-ins/dbbrowser/dbbrowser_utils.c:672
 msgid "No matches"
 msgstr "Nic nebylo nalezeno"
 
@@ -2295,25 +2295,8 @@ msgstr "<Toolbox>/Rozš./Webový prohlížeč/Registr modulů"
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr "<Toolbox>/Rozš./Webový prohlížeč/Otázky (FAQ) uživatelů"
 
-#, fuzzy
-#~ msgid "DB Browser (init...)"
-#~ msgstr "Procházet..."
-
 #~ msgid "Reset to Defaults"
 #~ msgstr "Nastavit na implicitní hodnody"
 
-#, fuzzy
-#~ msgid "Script-Fu Directory Selection"
-#~ msgstr "Skript-fu výběr souboru"
-
 #~ msgid "NOT SET"
 #~ msgstr "NENÍ URČENO"
-
-#~ msgid "Close"
-#~ msgstr "Zavřít"
-
-#~ msgid "OK"
-#~ msgstr "OK"
-
-#~ msgid "Cancel"
-#~ msgstr "Zrušit"
