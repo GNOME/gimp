@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #ifndef __TEXT_TOOL_H__
 #define __TEXT_TOOL_H__
@@ -26,6 +26,8 @@ void     tools_free_text (Tool *);
 
 /*  Procedure definition and marshalling function  */
 extern ProcRecord text_tool_proc;
+extern ProcRecord text_tool_proc_ext;
 extern ProcRecord text_tool_get_extents_proc;
+extern ProcRecord text_tool_get_extents_proc_ext;
 
 #endif /* __TEXT_TOOL_H__ */

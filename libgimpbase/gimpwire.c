@@ -12,8 +12,9 @@
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the Free
- * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
  */                                                                             
 #include <errno.h>
 #include <stdio.h>
@@ -124,7 +125,7 @@ wire_read (int     fd,
 
 	  if (bytes == 0) 
 	    {
-	      g_print ("wire_read: unexpected EOF\n");
+	      g_print ("wire_read: unexpected EOF (plug-in crashed?)\n");
 	      wire_error_val = TRUE;
 	      return FALSE;
 	    }

@@ -13,13 +13,13 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #ifndef __TOOLS_H__
 #define __TOOLS_H__
 
 #include "layer.h"
-
+#include "gdisplay.h"
 
 /*  The possible states for tools  */
 #define  INACTIVE               0
@@ -108,7 +108,11 @@ struct _tool
   int            auto_snap_to;         /*  should the mouse snap to guides automatically */
   void *         private;              /*  Tool-specific information  */
   void *         gdisp_ptr;            /*  pointer to currently active gdisp  */
+  void *         drawable;             /*  pointer to the drawable that was
+					   active when the tool was created */
   int            ID;                   /*  unique tool ID  */
+
+  int            preserve;             /*  Perserve this tool through the current image changes */
 
   /*  Action functions  */
   ButtonPressFunc    button_press_func;
@@ -137,6 +141,7 @@ extern ToolInfo tool_info[];
 /*  Function declarations  */
 
 void     tools_select              (ToolType);
+void     tools_initialize          (ToolType, GDisplay *);
 void     tools_options_dialog_new  (void);
 void     tools_options_dialog_show (void);
 void     tools_options_dialog_free (void);

@@ -13,9 +13,10 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include "config.h"
+#include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
@@ -23,6 +24,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+
+#include "libgimp/gimpfeatures.h"
 #include "tag.h"
 
 #ifndef  WAIT_ANY
@@ -48,6 +51,11 @@ int no_splash;
 int no_splash_image;
 int be_verbose;
 int use_shm;
+int use_debug_handler;
+int console_messages;
+
+MessageHandlerType message_handler;
+
 char *prog_name;		/* The path name we are invoked with */
 char **batch_cmds;
 int parentPID = 0;		/* If invoked using share memory intf from another process.. who parent is */
@@ -92,12 +100,14 @@ main (int argc, char **argv)
   int i, j;
   gchar *display_name, *display_env;
 
-  atexit (g_mem_profile);
+  ATEXIT (g_mem_profile);
 
   /* Initialize variables */
   prog_name = argv[0];
 
   /* Initialize Gtk toolkit */
+  gtk_set_locale ();
+  setlocale(LC_NUMERIC, "C");  /* must use dot, not comma, as decimal separator */
   gtk_init (&argc, &argv);
   gtk_accelerator_table_set_mod_mask (NULL, GDK_SHIFT_MASK |
                                             GDK_CONTROL_MASK |
@@ -115,6 +125,11 @@ main (int argc, char **argv)
   no_splash = FALSE;
   no_splash_image = FALSE;
   use_shm = TRUE;
+  use_debug_handler = FALSE;
+  console_messages = FALSE;
+
+  message_handler = CONSOLE;
+
   batch_cmds = g_new (char*, argc);
   batch_cmds[0] = NULL;
 
@@ -127,18 +142,17 @@ main (int argc, char **argv)
 	  (strcmp (argv[i], "-n") == 0))
 	{
 	  no_interface = TRUE;
-	  argv[i] = NULL;
 	}
       else if ((strcmp (argv[i], "--batch") == 0) ||
 	       (strcmp (argv[i], "-b") == 0))
 	{
-	  argv[i] = NULL;
-	  for (j = 0, i++ ; i < argc; j++, i++)
-	    {
+	  for (j = 0, i++ ; i < argc && argv[i][0] != '-'; j++, i++)
 	      batch_cmds[j] = argv[i];
-	      argv[i] = NULL;
-	    }
 	  batch_cmds[j] = NULL;
+	  if (batch_cmds[0] == NULL)	/* We need at least one batch command */
+		 show_help = TRUE;
+	  if (argv[i-1][0] != '-')		/* Did loop end due to a new argument? */
+		 --i;						/* Ensure new argument gets processed */
 	}
       else if ((strcmp (argv[i], "--help") == 0) ||
 	       (strcmp (argv[i], "-h") == 0))
@@ -170,7 +184,15 @@ main (int argc, char **argv)
 	{
 	  use_shm = FALSE;
 	}
-	  else if( strcmp( argv[i], "--sharedmem" ) == 0 )
+      else if (strcmp (argv[i], "--debug-handlers") == 0)
+	{
+	  use_debug_handler = TRUE;
+	}
+      else if (strcmp (argv[i], "--console-messages") == 0)
+        {
+          console_messages = TRUE;
+        }
+      else if( strcmp( argv[i], "--sharedmem" ) == 0 )
 	{
 	  if( i+6 >= argc )
 		  show_help = TRUE;
@@ -199,7 +221,7 @@ main (int argc, char **argv)
     }
 
   if (show_version)
-    g_print ("GIMP version " VERSION "\n");
+    g_print ("GIMP version " GIMP_VERSION "\n");
 
   if (show_help)
     {
@@ -215,16 +237,16 @@ main (int argc, char **argv)
       g_print ("  --no-splash-image      Do not add an image to the startup window.\n");
       g_print ("  --no-shm               Do not use shared memory between GIMP and its plugins.\n");
       g_print ("  --no-xshm              Do not use the X Shared Memory extension.\n");
+      g_print ("  --console-messages     Display warnings to console instead of a dialog box.\n");
+      g_print ("  --debug-handlers       Enable debugging signal handlers.\n");
       g_print ("  --display <display>    Use the designated X display.\n\n");
-      g_print ("Valid debugging options are:\n");
-      g_print ("  --sync                 Send X commands synchronously.\n");
-      g_print ("  --show-events          Show GDK events.\n");
-      g_print ("  --no-show-events       Don't show GDK events.\n");
-      g_print ("  --debug-level <level>  Provide debug output at designated level.\n");
+
     }
 
   if (show_version || show_help)
     exit (0);
+
+  g_set_message_handler (&message_func);
 
   /* Handle some signals */
   signal (SIGHUP, on_signal);
@@ -296,14 +318,11 @@ init ()
 	gimp_init (gimp_argc, gimp_argv);
 }
 
-
 static int caught_fatal_sig = 0;
 
 static RETSIGTYPE
 on_signal (int sig_num)
 {
-  char *sig;
-
   if (caught_fatal_sig)
 /*    raise (sig_num);*/
     kill (getpid (), sig_num);
@@ -312,38 +331,36 @@ on_signal (int sig_num)
   switch (sig_num)
     {
     case SIGHUP:
-      sig = "sighup";
+      terminate ("sighup caught");
       break;
     case SIGINT:
-      sig = "sigint";
+      terminate ("sigint caught");
       break;
     case SIGQUIT:
-      sig = "sigquit";
+      terminate ("sigquit caught");
       break;
     case SIGABRT:
-      sig = "sigabrt";
+      terminate ("sigabrt caught");
       break;
     case SIGBUS:
-      sig = "sigbus";
+      fatal_error ("sigbus caught");
       break;
     case SIGSEGV:
-      sig = "sigsegv";
+      fatal_error ("sigsegv caught");
       break;
     case SIGPIPE:
-      sig = "sigpipe";
+      terminate ("sigpipe caught");
       break;
     case SIGTERM:
-      sig = "sigterm";
+      terminate ("sigterm caught");
       break;
     case SIGFPE:
-      sig = "sigfpe";
+      fatal_error ("sigfpe caught");
       break;
     default:
-      sig = "unknown signal";
+      fatal_error ("unknown signal");
       break;
     }
-
-  fatal_error ("%s caught", sig);
 }
 
 static RETSIGTYPE

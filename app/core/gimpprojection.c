@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -41,7 +41,6 @@
 #include "scroll.h"
 #include "tools.h"
 #include "undo.h"
-#include "tools.h"
 
 #include "layer_pvt.h"			/* ick. */
 
@@ -183,11 +182,23 @@ gdisplay_format_title (GImage *gimage,
 static void
 gdisplay_delete (GDisplay *gdisp)
 {
+  GDisplay *tool_gdisp;
+
   g_hash_table_remove (display_ht, gdisp->shell);
   g_hash_table_remove (display_ht, gdisp->canvas);
 
   /*  stop any active tool  */
   active_tool_control (HALT, (void *) gdisp);
+
+  /*  clear out the pointer to this gdisp from the active tool */
+
+  if (active_tool && active_tool->gdisp_ptr) {
+    tool_gdisp = active_tool->gdisp_ptr;
+    if (gdisp->ID == tool_gdisp->ID) {
+      active_tool->drawable = NULL;
+      active_tool->gdisp_ptr = NULL;
+    }
+  }
 
   /*  free the selection structure  */
   selection_free (gdisp->select);
@@ -488,13 +499,15 @@ gdisplay_find_guide (GDisplay *gdisp,
 	    {
 	    case HORIZONTAL_GUIDE:
 	      pos = (int) (scale * guide->position - offset_y);
-	      if ((pos > (y - EPSILON)) &&
+	      if ((guide->position != -1) &&
+		  (pos > (y - EPSILON)) &&
 		  (pos < (y + EPSILON)))
 		return guide;
 	      break;
 	    case VERTICAL_GUIDE:
 	      pos = (int) (scale * guide->position - offset_x);
-	      if ((pos > (x - EPSILON)) &&
+	      if ((guide->position != -1) &&
+		  (pos > (x - EPSILON)) &&
 		  (pos < (x + EPSILON)))
 		return guide;
 	      break;
@@ -974,6 +987,7 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   gint aux;
   gint lm;
   gint lp;
+  gint alpha = FALSE;
   GimpDrawable *drawable;
   gint base_type;
   gint type;
@@ -981,11 +995,12 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   fs = (gimage_floating_sel (gdisp->gimage) != NULL);
   aux = (gimage_get_active_channel (gdisp->gimage) != NULL);
   if ((layer = gimage_get_active_layer (gdisp->gimage)) != NULL)
-    lm = (layer->mask) ? TRUE : FALSE;
+      lm = (layer->mask) ? TRUE : FALSE;
   else
     lm = FALSE;
   base_type = gimage_base_type (gdisp->gimage);
   lp = (gdisp->gimage->layers != NULL);
+  alpha = layer && layer_has_alpha (layer);
 
   type = -1;
   if (lp)
@@ -994,13 +1009,14 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
       type = drawable_type (drawable);
     }
 
-  menus_set_sensitive ("<Image>/Layers/Raise Layer", !fs && !aux && lp);
-  menus_set_sensitive ("<Image>/Layers/Lower Layer", !fs && !aux && lp);
+  menus_set_sensitive ("<Image>/Layers/Raise Layer", !fs && !aux && lp && alpha);
+  menus_set_sensitive ("<Image>/Layers/Lower Layer", !fs && !aux && lp && alpha);
   menus_set_sensitive ("<Image>/Layers/Anchor Layer", fs && !aux && lp);
   menus_set_sensitive ("<Image>/Layers/Merge Visible Layers", !fs && !aux && lp);
   menus_set_sensitive ("<Image>/Layers/Flatten Image", !fs && !aux && lp);
-  menus_set_sensitive ("<Image>/Layers/Alpha To Selection", !aux && lp);
+  menus_set_sensitive ("<Image>/Layers/Alpha To Selection", !aux && lp && alpha);
   menus_set_sensitive ("<Image>/Layers/Mask To Selection", !aux && lm && lp);
+  menus_set_sensitive ("<Image>/Layers/Add Alpha Channel", !fs && !aux && lp && !lm && !alpha);
 
   menus_set_sensitive ("<Image>/Image/RGB", (base_type != RGB));
   menus_set_sensitive ("<Image>/Image/Grayscale", (base_type != GRAY));
@@ -1019,15 +1035,19 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
 
   menus_set_sensitive ("<Image>/Image/Colors/Desaturate", (base_type == RGB));
 
+  menus_set_sensitive ("<Image>/Image/Alpha/Add Alpha Channel", !fs && !aux && lp && !lm && !alpha);
+
   menus_set_sensitive ("<Image>/Select", lp);
   menus_set_sensitive ("<Image>/Edit/Cut", lp);
   menus_set_sensitive ("<Image>/Edit/Copy", lp);
+  menus_set_sensitive ("<Image>/Edit/Paste", lp);
   menus_set_sensitive ("<Image>/Edit/Paste Into", lp);
   menus_set_sensitive ("<Image>/Edit/Clear", lp);
   menus_set_sensitive ("<Image>/Edit/Fill", lp);
   menus_set_sensitive ("<Image>/Edit/Stroke", lp);
   menus_set_sensitive ("<Image>/Edit/Cut Named", lp);
   menus_set_sensitive ("<Image>/Edit/Copy Named", lp);
+  menus_set_sensitive ("<Image>/Edit/Paste Named", lp);
   menus_set_sensitive ("<Image>/Image/Colors", lp);
   menus_set_sensitive ("<Image>/Image/Channel Ops/Offset", lp);
   menus_set_sensitive ("<Image>/Image/Histogram", lp);
@@ -1057,31 +1077,21 @@ void
 gdisplay_expose_guide (GDisplay *gdisp,
 		       Guide    *guide)
 {
-  int x1, y1;
-  int x2, y2;
   int x, y;
-  int w, h;
 
   if (guide->position < 0)
     return;
 
-  gdisplay_transform_coords (gdisp, 0, 0, &x1, &y1, FALSE);
-  gdisplay_transform_coords (gdisp, gdisp->disp_width, gdisp->disp_height, &x2, &y2, FALSE);
-  gdisplay_transform_coords (gdisp, guide->position, guide->position, &x, &y, FALSE);
-  gdk_window_get_size (gdisp->canvas->window, &w, &h);
-
-  if (x1 < 0) x1 = 0;
-  if (y1 < 0) y1 = 0;
-  if (x2 > w) x2 = w;
-  if (y2 > h) y2 = h;
+  gdisplay_transform_coords (gdisp, guide->position,
+			     guide->position, &x, &y, FALSE);
 
   switch (guide->orientation)
     {
     case HORIZONTAL_GUIDE:
-      gdisplay_expose_area (gdisp, x1, y, x2 - x1, 1);
+      gdisplay_expose_area (gdisp, 0, y, gdisp->disp_width, 1);
       break;
     case VERTICAL_GUIDE:
-      gdisplay_expose_area (gdisp, x, y1, 1, y2 - y1);
+      gdisplay_expose_area (gdisp, x, 0, 1, gdisp->disp_height);
       break;
     }
 }
@@ -1110,6 +1120,10 @@ gdisplay_active ()
   event = gtk_get_current_event ();
   event_widget = gtk_get_event_widget (event);
   gdk_event_free (event);
+
+  if (event_widget == NULL)
+    return NULL;
+
   toplevel_widget = gtk_widget_get_toplevel (event_widget);
   gdisp = g_hash_table_lookup (display_ht, toplevel_widget);
 
@@ -1118,7 +1132,6 @@ gdisplay_active ()
 
   if (popup_shell)
     {
-      active_tool_control (DESTROY, gdisp);
       gdisp = gtk_object_get_user_data (GTK_OBJECT (popup_shell));
       return gdisp;
     }
@@ -1181,7 +1194,7 @@ gdisplays_update_area (int ID,
   GDisplay *gdisp;
   GSList *list = display_list;
   int x1, y1, x2, y2;
-  int count = 0;
+  /*  int count = 0; */
 
   /*  traverse the linked list of displays  */
   while (list)
@@ -1192,6 +1205,13 @@ gdisplays_update_area (int ID,
 	  /*  We only need to update the first instance that
 	      we find of this gimage ID.  Otherwise, we would
 	      be reconverting the same region unnecessarily.   */
+
+	  /* Um.. I don't think so. If you only do this to the first
+	     instance, you don't update other gdisplays pointing to this
+	     gimage.  I'm going to comment this out to show how it was in
+	     case we need to change it back.  msw 4/15/1998
+	  */
+	  /*
 	  if (! count)
 	    gdisplay_add_update_area (gdisp, x, y, w, h);
 	  else
@@ -1200,9 +1220,13 @@ gdisplays_update_area (int ID,
 	      gdisplay_transform_coords (gdisp, x + w, y + h, &x2, &y2, 0);
 	      gdisplay_add_display_area (gdisp, x1, y1, (x2 - x1), (y2 - y1));
 	    }
-	  count++;
-	}
+	  */
 
+	  gdisplay_add_update_area (gdisp, x, y, w, h);
+	  gdisplay_transform_coords (gdisp, x, y, &x1, &y1, 0);
+	  gdisplay_transform_coords (gdisp, x + w, y + h, &x2, &y2, 0);
+	  gdisplay_add_display_area (gdisp, x1, y1, (x2 - x1), (y2 - y1));
+	}
       list = g_slist_next (list);
     }
 }

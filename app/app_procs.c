@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <signal.h>
 #include <stdio.h>
@@ -21,6 +21,10 @@
 #include <string.h>
 #include <sys/param.h>
 #include <unistd.h>
+
+#include <gtk/gtk.h>
+
+#include "libgimp/gimpfeatures.h"
 
 #include "appenv.h"
 #include "app_procs.h"
@@ -42,23 +46,25 @@
 #include "layers_dialog.h"
 #include "levels.h"
 #include "menus.h"
-#include "paint_funcs.h"
+#include "paint_funcs_area.h"
 #include "palette.h"
 #include "patterns.h"
 #include "plug_in.h"
 #include "procedural_db.h"
-#include "temp_buf.h"
 #include "tile_swap.h"
 #include "tips_dialog.h"
 #include "tools.h"
 #include "undo.h"
 #include "xcf.h"
-#include <gtk/gtk.h>
+#include "errors.h"
+
+#include "config.h"
 
 #define LOGO_WIDTH_MIN 350
 #define LOGO_HEIGHT_MIN 110 
 #define NAME "The GIMP"
-#define AUTHORS "brought to you by Spencer Kimball and Peter Mattis" 
+#define BROUGHT "brought to you by"
+#define AUTHORS "Spencer Kimball and Peter Mattis" 
  
 #define SHOW_NEVER 0
 #define SHOW_LATER 1
@@ -119,6 +125,10 @@ gimp_init (int    gimp_argc,
       }
 
   batch_init ();
+
+  /* Handle showing dialogs with gdk_quit_adds here  */
+  if (!no_interface && show_tips)
+    tips_dialog_create ();
 }
 
 
@@ -129,6 +139,7 @@ static int logo_height = 0;
 static int logo_area_width = 0;
 static int logo_area_height = 0;
 static int show_logo = SHOW_NEVER;
+static int max_label_length = MAXPATHLEN;
 
 static int
 splash_logo_load_size (GtkWidget *window)
@@ -239,24 +250,36 @@ splash_text_draw (GtkWidget *widget)
   font = gdk_font_load ("-Adobe-Helvetica-Bold-R-Normal--*-140-*-*-*-*-*-*");
   gdk_draw_string (widget->window,
 		   font,
-		   widget->style->black_gc,
+		   widget->style->fg_gc[GTK_STATE_NORMAL],
 		   ((logo_area_width - gdk_string_width (font, NAME)) / 2), 
-		   (0.3 * logo_area_height),
+		   (0.25 * logo_area_height),
 		   NAME);
 
   font = gdk_font_load ("-Adobe-Helvetica-Bold-R-Normal--*-120-*-*-*-*-*-*");
   gdk_draw_string (widget->window,
 		   font,
-		   widget->style->black_gc,
-		   ((logo_area_width - gdk_string_width (font, VERSION)) / 2), 
-		   (0.5 * logo_area_height),
-		   VERSION);
+		   widget->style->fg_gc[GTK_STATE_NORMAL],
+		   ((logo_area_width - gdk_string_width (font, GIMP_VERSION)) / 2), 
+		   (0.45 * logo_area_height),
+		   GIMP_VERSION);
   gdk_draw_string (widget->window,
 		   font,
-		   widget->style->black_gc,
+		   widget->style->fg_gc[GTK_STATE_NORMAL],
+		   ((logo_area_width - gdk_string_width (font, BROUGHT)) / 2), 
+		   (0.65 * logo_area_height),
+		   BROUGHT);
+  gdk_draw_string (widget->window,
+		   font,
+		   widget->style->fg_gc[GTK_STATE_NORMAL],
 		   ((logo_area_width - gdk_string_width (font, AUTHORS)) / 2), 
-		   (0.7 * logo_area_height),
+		   (0.80 * logo_area_height),
 		   AUTHORS);
+  /*  
+   *  This is a hack: we try to compute a good guess for the maximum number
+   *  of charcters that will fit into the splash-screen using the given font 
+   */
+  max_label_length = (float)strlen (AUTHORS) * 
+        ( (float)logo_area_width / (float)gdk_string_width (font, AUTHORS) ); 
 }
 
 static void
@@ -295,17 +318,12 @@ destroy_initialization_status_window(void)
   if(win_initstatus)
     {
       gtk_widget_destroy(win_initstatus);
+      if (logo_pixmap != NULL)
+	gdk_pixmap_unref(logo_pixmap);
       win_initstatus = label1 = label2 = pbar = logo_area = NULL;
       logo_pixmap = NULL;
       gtk_idle_remove(idle_tag);
     }
-}
-
-static void 
-my_idle_proc(void)
-{
-  /* Do nothing. This is needed to stop the GIMP
-     from blocking in gtk_main_iteration() */
 }
 
 static void
@@ -313,12 +331,14 @@ make_initialization_status_window(void)
 {
   if (no_interface == FALSE)
     {
-      get_standard_colormaps ();
       if (no_splash == FALSE)
 	{
 	  GtkWidget *vbox;
 
 	  win_initstatus = gtk_window_new(GTK_WINDOW_DIALOG);
+	  gtk_signal_connect (GTK_OBJECT (win_initstatus), "delete_event",
+			      GTK_SIGNAL_FUNC (gtk_true),
+			      NULL);
 	  gtk_window_set_wmclass (GTK_WINDOW(win_initstatus), "gimp_startup", "Gimp");
 	  gtk_window_set_title(GTK_WINDOW(win_initstatus),
 		               "GIMP Startup");
@@ -375,6 +395,8 @@ app_init_update_status(char *label1val,
 		       char *label2val,
 		       float pct_progress)
 {
+  char *temp;
+
   if(no_interface == FALSE && no_splash == FALSE && win_initstatus)
     {
       GdkRectangle area = {0, 0, -1, -1};
@@ -386,6 +408,14 @@ app_init_update_status(char *label1val,
       if(label2val
 	 && strcmp(label2val, GTK_LABEL(label2)->label))
 	{
+	  while ( strlen (label2val) > max_label_length )
+	    {
+	      temp = strchr (label2val, '/');
+	      if (temp == NULL)  /* for sanity */
+		break;
+	      temp++;
+	      label2val = temp;
+	    }
 	  gtk_label_set(GTK_LABEL(label2), label2val);
 	}
       if(pct_progress >= 0
@@ -394,7 +424,7 @@ app_init_update_status(char *label1val,
 	  gtk_progress_bar_update(GTK_PROGRESS_BAR(pbar), pct_progress);
 	}
       gtk_widget_draw(win_initstatus, &area);
-      idle_tag = gtk_idle_add((GtkFunction) my_idle_proc, NULL);
+      idle_tag = gtk_idle_add((GtkFunction) gtk_true, NULL);
       gtk_main_iteration();
       gtk_idle_remove(idle_tag);
     }
@@ -404,11 +434,22 @@ app_init_update_status(char *label1val,
 #define RESET_BAR()
 
 void
-app_init ()
+app_init (void)
 {
   char filename[MAXPATHLEN];
   char *gimp_dir;
   char *path;
+
+  gimp_dir = gimp_directory ();
+  if (gimp_dir[0] != '\000')
+    {
+      sprintf (filename, "%s/gtkrc", gimp_dir);
+
+      if ((be_verbose == TRUE) || (no_splash == TRUE))
+	g_print ("parsing \"%s\"\n", filename);
+
+      gtk_rc_parse (filename);
+    }
 
   make_initialization_status_window();
   if (no_interface == FALSE && no_splash == FALSE && win_initstatus) {
@@ -426,18 +467,6 @@ app_init ()
   RESET_BAR();
   procedural_db_register (&quit_proc);
 
-  gimp_dir = gimp_directory ();
-  if (gimp_dir[0] != '\000')
-    {
-      sprintf (filename, "%s/gtkrc", gimp_dir);
-
-      if (be_verbose == TRUE)
-      g_print ("parsing \"%s\"\n", filename);
-      app_init_update_status("Resource configuration", filename, -1);
-
-      gtk_rc_parse (filename);
-    }
-
   RESET_BAR();
   parse_gimprc ();         /*  parse the local GIMP configuration file  */
 
@@ -454,18 +483,17 @@ app_init ()
   file_ops_pre_init ();    /*  pre-initialize the file types  */
   RESET_BAR();
   xcf_init ();             /*  initialize the xcf file format routines */
-  if (no_data == FALSE)
-    {
-      RESET_BAR();
-      brushes_init ();         /*  initialize the list of gimp brushes  */
-      RESET_BAR();
-      patterns_init ();        /*  initialize the list of gimp patterns  */
-      RESET_BAR();
-      palettes_init ();        /*  initialize the list of gimp palettes  */
-      RESET_BAR();
-      gradients_init ();       /*  initialize the list of gimp gradients  */
-    }
-  RESET_BAR();
+
+  app_init_update_status ("Looking for data files", "Brushes", 0.00);
+  brushes_init (no_data);         /*  initialize the list of gimp brushes  */
+  app_init_update_status (NULL, "Patterns", 0.25);
+  patterns_init (no_data);        /*  initialize the list of gimp patterns  */
+  app_init_update_status (NULL, "Palettes", 0.50);
+  palettes_init (no_data);        /*  initialize the list of gimp palettes  */
+  app_init_update_status (NULL, "Gradients", 0.75);
+  gradients_init (no_data);       /*  initialize the list of gimp gradients  */
+  app_init_update_status (NULL, NULL, 1.00);
+
   plug_in_init ();         /*  initialize the plug in structures  */
   RESET_BAR();
   file_ops_post_init ();   /*  post-initialize the file types  */
@@ -483,13 +511,13 @@ app_init ()
   /*  Things to do only if there is an interface  */
   if (no_interface == FALSE)
     {
+      get_standard_colormaps ();
       create_toolbox ();
       gximage_init ();
       render_setup (transparency_type, transparency_size);
       tools_options_dialog_new ();
       tools_select (RECT_SELECT);
-      if (show_tips)
-	tips_dialog_create ();
+      message_handler = MESSAGE_BOX;
     }
 
   color_transfer_init ();
@@ -506,11 +534,13 @@ app_exit_finish_done (void)
 }
 
 void
-app_exit_finish ()
+app_exit_finish (void)
 {
   if (app_exit_finish_done ())
     return;
   is_app_exit_finish_done = TRUE;
+
+  message_handler = CONSOLE;
 
   lc_dialog_free ();
   gdisplays_delete ();
@@ -569,7 +599,7 @@ really_quit_callback (GtkButton *button,
 }
 
 static void
-really_quit_cancel_callback (GtkButton *button,
+really_quit_cancel_callback (GtkWidget *widget,
 			     GtkWidget *dialog)
 {
   menus_set_sensitive ("<Toolbox>/File/Quit", TRUE);
@@ -582,9 +612,9 @@ really_quit_delete_callback (GtkWidget *widget,
 			     GdkEvent  *event,
 			     gpointer client_data) 
 {
-  really_quit_cancel_callback (GTK_BUTTON(widget), (GtkWidget *) client_data);
+  really_quit_cancel_callback (widget, (GtkWidget *) client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -658,9 +688,9 @@ gimp_shmem_init( int precision, key_t shmid, int chans, long offset,
 	int			 r;
 	gint32 		layer_ID;
 	gint32 		display_ID;
-	gint32 		drawable;
+	gint32 		drawable = U16_RGB_GIMAGE;
 	gint32		image_ID;
-	gint		type;
+	gint		type = RGB;
 
 	/*printf( "gimp_shmem_init: entering.\n" );*/
 

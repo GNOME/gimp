@@ -1,1 +1,6 @@
-Can someone please update this file?
+Please add things to this file when the need to do them is
+discovered.  
+
+brightness_contrast.c : 326  active_tool->preserve CP error
+levels.c : 2077  active_tool->preserve CP error
+

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -73,7 +73,6 @@ static void indexed_palette_update (int);
 /*  indexed palette menu callbacks  */
 static void indexed_palette_close_callback (GtkWidget *, gpointer);
 static void indexed_palette_select_callback (int, int, int, ColorSelectState, void *);
-static gint indexed_palette_delete_callback (GtkWidget *, GdkEvent *, gpointer);
 
 /*  event callback  */
 static gint indexed_palette_area_events (GtkWidget *, GdkEvent *);
@@ -133,12 +132,13 @@ indexed_palette_create (int gimage_id)
       /*  The shell and main vbox  */
       indexedP->shell = gtk_dialog_new ();
       gtk_window_set_wmclass (GTK_WINDOW (indexedP->shell), "indexed_color_palette", "Gimp");
+      gtk_window_set_policy (GTK_WINDOW (indexedP->shell), FALSE, FALSE, FALSE); 
       gtk_window_set_title (GTK_WINDOW (indexedP->shell), "Indexed Color Palette");
       gtk_window_add_accelerator_table (GTK_WINDOW (indexedP->shell), table);
-
       gtk_signal_connect (GTK_OBJECT (indexedP->shell), "delete_event",
-			  GTK_SIGNAL_FUNC (indexed_palette_delete_callback),
-			  indexedP);
+			  GTK_SIGNAL_FUNC (gtk_widget_hide_on_delete),
+			  NULL);
+      gtk_quit_add_destroy (1, GTK_OBJECT (indexedP->shell));
 
       indexedP->vbox = vbox = gtk_vbox_new (FALSE, 1);
       gtk_container_border_width (GTK_CONTAINER (vbox), 1);
@@ -152,10 +152,9 @@ indexed_palette_create (int gimage_id)
       label = gtk_label_new ("Image:");
       gtk_box_pack_start (GTK_BOX (util_box), label, FALSE, FALSE, 2);
       indexedP->image_option_menu = gtk_option_menu_new ();
-      indexedP->image_menu = create_image_menu (&gimage_id, &default_index, image_menu_callback);
       gtk_box_pack_start (GTK_BOX (util_box), indexedP->image_option_menu, TRUE, TRUE, 2);
-
       gtk_widget_show (indexedP->image_option_menu);
+      indexedP->image_menu = create_image_menu (&gimage_id, &default_index, image_menu_callback);
       gtk_option_menu_set_menu (GTK_OPTION_MENU (indexedP->image_option_menu), indexedP->image_menu);
       if (default_index != -1)
 	gtk_option_menu_set_history (GTK_OPTION_MENU (indexedP->image_option_menu), default_index);
@@ -216,6 +215,7 @@ indexed_palette_create (int gimage_id)
       gtk_widget_show (indexedP->shell);
 
       indexed_palette_update (gimage_id);
+      indexed_palette_update_image_list ();
     }
   else
     {
@@ -235,9 +235,6 @@ indexed_palette_update_image_list ()
 
   if (! indexedP)
     return;
-
-  gtk_option_menu_remove_menu (GTK_OPTION_MENU (indexedP->image_option_menu));
-  gtk_widget_destroy (indexedP->image_menu);
 
   default_id = indexedP->gimage_id;
   indexedP->image_menu = create_image_menu (&default_id, &default_index, image_menu_callback);
@@ -343,16 +340,6 @@ indexed_palette_update (int gimage_id)
     }
 }
 
-static gint
-indexed_palette_delete_callback (GtkWidget *w,
-				 GdkEvent *e,
-				 gpointer   client_data)
-{
-  indexed_palette_close_callback (w, client_data);
-
-  return FALSE;
-}
-
 static void
 indexed_palette_close_callback (GtkWidget *w,
 				gpointer   client_data)
@@ -360,8 +347,7 @@ indexed_palette_close_callback (GtkWidget *w,
   if (!indexedP)
     return;
 
-  if (GTK_WIDGET_VISIBLE (indexedP->shell))
-    gtk_widget_hide (indexedP->shell);
+  gtk_widget_hide (indexedP->shell);
 }
 
 static void

@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <ctype.h>
 #include <errno.h>
@@ -68,15 +68,9 @@ static void file_open_ok_callback   (GtkWidget *w,
 				     gpointer   client_data);
 static void file_save_ok_callback   (GtkWidget *w,
 				     gpointer   client_data);
-static void file_cancel_callback    (GtkWidget *w,
-				     gpointer   client_data);
-
-static gint file_delete_callback    (GtkWidget *w,
-				     GdkEvent  *e,
-				     gpointer   client_data);
 
 static void file_dialog_show        (GtkWidget *filesel);
-static void file_dialog_hide        (GtkWidget *filesel);
+static int  file_dialog_hide        (GtkWidget *filesel);
 static void file_update_name        (PlugInProcDef *proc,
 				     GtkWidget     *filesel);
 static void file_load_type_callback (GtkWidget *w,
@@ -303,11 +297,19 @@ static GSList *save_procs = NULL;
 
 static PlugInProcDef *load_file_proc = NULL;
 static PlugInProcDef *save_file_proc = NULL;
-static PlugInProcDef *last_load_file_proc = NULL;
-static PlugInProcDef *last_save_file_proc = NULL;
 
 static int image_ID = 0;
 
+static void
+file_message_box_close_callback (GtkWidget *w,
+				 gpointer   client_data)
+{
+  GtkFileSelection *fs;
+
+  fs = (GtkFileSelection *) client_data;
+
+  gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
+}
 
 void
 file_ops_pre_init ()
@@ -390,7 +392,7 @@ register_magic_load_handler_invoker (Argument *args)
 	       (proc->args[2].arg_type != PDB_STRING) ||
 	       (proc->values[0].arg_type != PDB_IMAGE)))
     {
-      g_warning ("load handler \"%s\" does not take the standard load handler args",
+      g_message ("load handler \"%s\" does not take the standard load handler args",
 		 (char*) args[0].value.pdb_pointer);
       goto done;
     }
@@ -402,7 +404,7 @@ register_magic_load_handler_invoker (Argument *args)
 
   if (!file_proc)
     {
-      g_warning ("attempt to register non-existant load handler \"%s\"",
+      g_message ("attempt to register non-existant load handler \"%s\"",
 		 (char*) args[0].value.pdb_pointer);
       goto done;
     }
@@ -436,7 +438,7 @@ register_save_handler_invoker (Argument *args)
 	       (proc->args[3].arg_type != PDB_STRING) ||
 	       (proc->args[4].arg_type != PDB_STRING)))
     {
-      g_warning ("save handler \"%s\" does not take the standard save handler args",
+      g_message ("save handler \"%s\" does not take the standard save handler args",
 		 (char*) args[0].value.pdb_pointer);
       goto done;
     }
@@ -448,7 +450,7 @@ register_save_handler_invoker (Argument *args)
 
   if (!file_proc)
     {
-      g_warning ("attempt to register non-existant save handler \"%s\"",
+      g_message ("attempt to register non-existant save handler \"%s\"",
 		 (char*) args[0].value.pdb_pointer);
       goto done;
     }
@@ -478,20 +480,24 @@ file_open_callback (GtkWidget *w,
       fileload = gtk_file_selection_new ("Load Image");
       gtk_window_position (GTK_WINDOW (fileload), GTK_WIN_POS_MOUSE);
       gtk_window_set_wmclass (GTK_WINDOW (fileload), "load_image", "Gimp");
-      gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (fileload)->cancel_button), "clicked",
-			  (GtkSignalFunc) file_cancel_callback, fileload);
-      gtk_signal_connect (GTK_OBJECT (fileload), "delete_event",
-			  (GtkSignalFunc) file_delete_callback, fileload);
+      gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (fileload)->cancel_button),
+				 "clicked",
+				 GTK_SIGNAL_FUNC (file_dialog_hide),
+				 GTK_OBJECT (fileload));
+      gtk_signal_connect (GTK_OBJECT (fileload),
+			  "delete_event",
+			  GTK_SIGNAL_FUNC (file_dialog_hide),
+			  NULL);
       gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (fileload)->ok_button), "clicked", (GtkSignalFunc) file_open_ok_callback, fileload);
-      /* hide the help button because we have nothing to connect to it */
-      gtk_widget_hide ( GTK_FILE_SELECTION(fileload)->help_button);
-
+      gtk_quit_add_destroy (1, GTK_OBJECT (fileload));
     }
   else
     {
+      gtk_widget_set_sensitive (GTK_WIDGET (fileload), TRUE);
       if (GTK_WIDGET_VISIBLE (fileload))
 	return;
 
+      gtk_file_selection_set_filename (GTK_FILE_SELECTION(fileload), "./");
       gtk_window_set_title (GTK_WINDOW (fileload), "Load Image");
     }
 
@@ -520,9 +526,6 @@ file_open_callback (GtkWidget *w,
       gtk_box_pack_end (GTK_BOX (GTK_FILE_SELECTION (fileload)->main_vbox),
 			open_options, FALSE, FALSE, 5);
     }
-
-  load_file_proc = last_load_file_proc;
-  last_load_file_proc = NULL;
 
   gtk_widget_show (open_options);
 
@@ -566,19 +569,24 @@ file_save_as_callback (GtkWidget *w,
       filesave = gtk_file_selection_new ("Save Image");
       gtk_window_set_wmclass (GTK_WINDOW (filesave), "save_image", "Gimp");
       gtk_window_position (GTK_WINDOW (filesave), GTK_WIN_POS_MOUSE);
-      gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesave)->cancel_button), "clicked",
-			  (GtkSignalFunc) file_cancel_callback, filesave);
-      gtk_signal_connect (GTK_OBJECT (filesave), "delete_event",
-			  (GtkSignalFunc) file_delete_callback, filesave);
+      gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (filesave)->cancel_button),
+			  "clicked",
+			  GTK_SIGNAL_FUNC (file_dialog_hide),
+			  GTK_OBJECT (filesave));
+      gtk_signal_connect (GTK_OBJECT (filesave),
+			  "delete_event",
+			  GTK_SIGNAL_FUNC (file_dialog_hide),
+			  NULL);
       gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesave)->ok_button), "clicked", (GtkSignalFunc) file_save_ok_callback, filesave);
-      /* hide the help button because we have nothing to connect to it */
-      gtk_widget_hide ( GTK_FILE_SELECTION(filesave)->help_button);
+      gtk_quit_add_destroy (1, GTK_OBJECT (filesave));
     }
   else
     {
+      gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
       if (GTK_WIDGET_VISIBLE (filesave))
 	return;
 
+      gtk_file_selection_set_filename (GTK_FILE_SELECTION(filesave), "./");
       gtk_window_set_title (GTK_WINDOW (filesave), "Save Image");
     }
 
@@ -621,9 +629,6 @@ file_save_as_callback (GtkWidget *w,
       file_update_menus (save_procs, INDEXED_IMAGE);
       break;
     }
-
-  save_file_proc = last_save_file_proc;
-  last_save_file_proc = NULL;
 
   gtk_widget_show (save_options);
 
@@ -763,6 +768,8 @@ file_save (int   image_ID,
 
   if ((gimage = gimage_get_ID (image_ID)) == NULL)
     return FALSE;
+  if (gimage_active_drawable (gimage) == NULL)
+    return FALSE;
 
   file_proc = save_file_proc;
   if (!file_proc)
@@ -837,9 +844,15 @@ file_open_ok_callback (GtkWidget *w,
       return;
     }
 
+  gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
+
+  if (err)
+    filename = raw_filename;
+
   if (file_open (filename, raw_filename))
     {
       file_dialog_hide (client_data);
+      gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
       return;
     }
 
@@ -847,7 +860,7 @@ file_open_ok_callback (GtkWidget *w,
 
   g_string_append (s, raw_filename);
 
-  message_box (s->str, NULL, NULL);
+  message_box (s->str, file_message_box_close_callback, (void *) fs);
 
   g_string_free (s, TRUE);
 }
@@ -881,46 +894,33 @@ file_save_ok_callback (GtkWidget *w,
 	}
       else if (buf.st_mode & S_IFREG)
 	{
+	  gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
 	  file_overwrite (g_strdup (filename), g_strdup (raw_filename));
 	  return;
 	}
       else
 	{
 	  s = g_string_new (NULL);
-	  g_string_sprintf (s, "%s is an irregular file", raw_filename, g_strerror(errno));
+	  g_string_sprintf (s, "%s is an irregular file (%s)", raw_filename, g_strerror(errno));
+	}
+    } else {
+      gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
+      if (file_save (image_ID, filename, raw_filename))
+	{
+	  file_dialog_hide (client_data);
+	  gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
+	  return;
+	}
+      else
+	{
+	  s = g_string_new ("Save failed: ");
+	  g_string_append (s, raw_filename);
 	}
     }
-  else if (file_save (image_ID, filename, raw_filename))
-    {
-      file_dialog_hide (client_data);
-      return;
-    }
-  else
-    {
-      s = g_string_new ("Save failed: ");
-      g_string_append (s, raw_filename);
-    }
+  message_box (s->str, file_message_box_close_callback, (void *) fs);
 
-  message_box (s->str, NULL, NULL);
 
   g_string_free (s, TRUE);
-}
-
-static gint
-file_delete_callback (GtkWidget *w,
-		      GdkEvent *e,
-		      gpointer client_data)
-{
-  file_cancel_callback (w, client_data);
-
-  return FALSE;
-}
-
-static void
-file_cancel_callback (GtkWidget *w,
-		      gpointer   client_data)
-{
-  file_dialog_hide (client_data);
 }
 
 static void
@@ -934,7 +934,7 @@ file_dialog_show (GtkWidget *filesel)
   gtk_widget_show (filesel);
 }
 
-static void
+static int
 file_dialog_hide (GtkWidget *filesel)
 {
   gtk_widget_hide (filesel);
@@ -943,6 +943,8 @@ file_dialog_hide (GtkWidget *filesel)
   menus_set_sensitive ("<Image>/File/Open", TRUE);
   menus_set_sensitive ("<Image>/File/Save", TRUE);
   menus_set_sensitive ("<Image>/File/Save as", TRUE);
+
+  return TRUE;
 }
 
 static void
@@ -966,11 +968,12 @@ file_overwrite (char *filename, char* raw_filename)
   overwrite_box->full_filename = filename;
   overwrite_box->raw_filename = raw_filename;
   overwrite_box->obox = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (overwrite_box->obox), "fiel_exists", "Gimp");
+  gtk_window_set_wmclass (GTK_WINDOW (overwrite_box->obox), "file_exists", "Gimp");
   gtk_window_set_title (GTK_WINDOW (overwrite_box->obox), "File Exists!");
   gtk_window_position (GTK_WINDOW (overwrite_box->obox), GTK_WIN_POS_MOUSE);
 
-  gtk_signal_connect (GTK_OBJECT (overwrite_box->obox), "delete_event",
+  gtk_signal_connect (GTK_OBJECT (overwrite_box->obox),
+		      "delete_event",
 		      (GtkSignalFunc) file_overwrite_delete_callback,
 		      overwrite_box);
 
@@ -1001,6 +1004,8 @@ file_overwrite_yes_callback (GtkWidget *w,
 
   overwrite_box = (OverwriteBox *) client_data;
 
+  gtk_widget_destroy (overwrite_box->obox);
+
   if (((gimage = gimage_get_ID (image_ID)) != NULL) &&
       file_save (image_ID, overwrite_box->full_filename, overwrite_box->raw_filename))
     {
@@ -1015,12 +1020,10 @@ file_overwrite_yes_callback (GtkWidget *w,
 
       g_string_append (s, overwrite_box->raw_filename);
 
-      message_box (s->str, NULL, NULL);
-
+      message_box (s->str, file_message_box_close_callback, (void *) filesave);
       g_string_free (s, TRUE);
     }
 
-  gtk_widget_destroy (overwrite_box->obox);
   g_free (overwrite_box->full_filename);
   g_free (overwrite_box->raw_filename);
   g_free (overwrite_box);
@@ -1033,7 +1036,7 @@ file_overwrite_delete_callback (GtkWidget *w,
 {
   file_overwrite_no_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -1048,6 +1051,8 @@ file_overwrite_no_callback (GtkWidget *w,
   g_free (overwrite_box->full_filename);
   g_free (overwrite_box->raw_filename);
   g_free (overwrite_box);
+
+  gtk_widget_set_sensitive (GTK_WIDGET(filesave), TRUE);
 }
 
 static PlugInProcDef*
@@ -1119,6 +1124,13 @@ file_proc_find (GSList *procs,
 	  if (strncmp (filename, prefixes->data, strlen (prefixes->data)) == 0)
 	    return file_proc;
 	}
+     }
+
+  procs = all_procs;
+  while (procs)
+    {
+      file_proc = procs->data;
+      procs = procs->next;
 
       for (extensions = file_proc->extensions_list; extension && extensions; extensions = extensions->next)
 	{
@@ -1173,7 +1185,7 @@ static void file_convert_string (char *instr,
                   break;
               }
             *tmpptr = '\0';
-            sscanf (tmp, "%o", &k);
+            sscanf ((char *)tmp, "%o", &k);
             *(uout++) = k;
             break;
 
@@ -1271,7 +1283,7 @@ file_check_single_magic (char *offset,
         num_testval = strtol(value+2, NULL, 16);
       else                      /* octal */
         num_testval = strtol(value+1, NULL, 8);
-    
+
       fileval = 0;
       if (numbytes == 5)    /* Check for file size ? */
         {struct stat buf;
@@ -1341,11 +1353,11 @@ static int file_check_magic_list (GSList *magics_list,
   while (magics_list)
     {
       if ((offset = (char *)magics_list->data) == NULL) break;
-      if ((magics_list = magics_list->next) == NULL) break; 
+      if ((magics_list = magics_list->next) == NULL) break;
       if ((type = (char *)magics_list->data) == NULL) break;
-      if ((magics_list = magics_list->next) == NULL) break; 
+      if ((magics_list = magics_list->next) == NULL) break;
       if ((value = (char *)magics_list->data) == NULL) break;
-      magics_list = magics_list->next; 
+      magics_list = magics_list->next;
 
       match_val = file_check_single_magic (offset, type, value,
                                            headsize, head, ifp);
@@ -1417,7 +1429,7 @@ file_save_invoker (Argument *args)
   return_vals = procedural_db_execute (proc->name, new_args);
   g_free (new_args);
 
-  return return_vals; 
+  return return_vals;
 }
 
 static Argument*

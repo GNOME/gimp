@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <string.h>
@@ -99,10 +99,6 @@ static void apply_layer_mode_replace (unsigned char *, unsigned char *,
 				      int, int, int,
 				      int, int, int, int *);
 
-void rgb_to_hsv (int *r, int *g, int *b);
-void hsv_to_rgb (int *h, int *s, int *v);
-void rgb_to_hls (int *r, int *g, int *b);
-void hls_to_rgb (int *h, int *l, int *s);
 
 static unsigned char *
 paint_funcs_get_buffer (int size)
@@ -329,6 +325,15 @@ paint_funcs_setup ()
   srand (RANDOM_SEED);
   for (i = 0; i < RANDOM_TABLE_SIZE; i++)
     random_table[i] = rand ();
+
+  for (i = 0; i < RANDOM_TABLE_SIZE; i++)
+    {
+      int tmp;
+      int swap = i + rand () % (RANDOM_TABLE_SIZE - i);
+      tmp = random_table[i];
+      random_table[i] = random_table[swap];
+      random_table[swap] = tmp;
+    }
 }
 
 
@@ -878,7 +883,7 @@ replace_pixels (unsigned char *src1,
 
   if (b1 != b2)
     {
-      g_warning ("replace_pixels only works on commensurate pixel regions");
+      g_message ("replace_pixels only works on commensurate pixel regions");
       return;
     }
 
@@ -2163,7 +2168,6 @@ extract_from_indexed_pixels (unsigned char *src,
 }
 
 
-#if 0
 void
 map_to_color (int            src_type,
 	      unsigned char *cmap,
@@ -2253,7 +2257,7 @@ map_rgb_to_indexed (unsigned char *cmap,
 
   return cmap_index;
 }
-#endif
+
 
 
 /**************************************************/
@@ -3667,8 +3671,6 @@ initial_region (PixelRegion   *src,
   unsigned char * buf;
   void * pr;
 
-  g_warning ("initial_region() was called");
-
   buf = paint_funcs_get_buffer (src->w * (src->bytes + 1));
 
   for (pr = pixel_regions_register (3, src, dest, mask); pr != NULL; pr = pixel_regions_process (pr))
@@ -3748,8 +3750,6 @@ combine_regions (PixelRegion   *src1,
   unsigned char * d, * m;
   unsigned char * buf;
   void * pr;
-
-  g_warning ("combine_regions() was called");
 
   combine = 0;
 
@@ -3966,7 +3966,6 @@ combine_regions_replace (PixelRegion   *src1,
 }
 
 
-#if 0
 /*********************************
  *   color conversion routines   *
  *********************************/
@@ -4240,7 +4239,6 @@ hls_to_rgb (int *h,
       *s = hls_value (m1, m2, hue - 85);
     }
 }
-#endif
 
 
 /************************************/

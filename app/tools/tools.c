@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include "appenv.h"
@@ -120,10 +120,13 @@ static void
 active_tool_free (void)
 {
   gtk_container_disable_resize (GTK_CONTAINER (options_shell));
-  
+
+  if (!active_tool)
+    return;
+
   if (tool_info[(int) active_tool->type].tool_options)
     gtk_widget_hide (tool_info[(int) active_tool->type].tool_options);
-  
+
   switch (active_tool->type)
     {
     case RECT_SELECT:
@@ -363,10 +366,192 @@ tools_select (ToolType type)
    */
   active_tool->paused_count = 0;
   active_tool->gdisp_ptr = NULL;
+  active_tool->drawable = NULL;
   active_tool->ID = global_tool_ID++;
   active_tool_type = active_tool->type;
 }
 
+void
+tools_initialize (ToolType type, GDisplay *gdisp_ptr)
+{
+  GDisplay *gdisp;
+
+  /* If you're wondering... only these dialog type tools have init functions */
+  gdisp = gdisp_ptr;
+
+  if (active_tool)
+    active_tool_free ();
+
+  switch (type)
+    {
+    case RECT_SELECT:
+      active_tool = tools_new_rect_select ();
+      break;
+    case ELLIPSE_SELECT:
+      active_tool = tools_new_ellipse_select ();
+      break;
+    case FREE_SELECT:
+      active_tool = tools_new_free_select ();
+      break;
+    case FUZZY_SELECT:
+      active_tool = tools_new_fuzzy_select ();
+      break;
+    case BEZIER_SELECT:
+      active_tool = tools_new_bezier_select ();
+      break;
+    case ISCISSORS:
+      active_tool = tools_new_iscissors ();
+      break;
+    case MOVE:
+      active_tool = tools_new_move_tool ();
+      break;
+    case MAGNIFY:
+      active_tool = tools_new_magnify ();
+      break;
+    case CROP:
+      active_tool = tools_new_crop ();
+      break;
+    case ROTATE:
+      active_tool = tools_new_transform_tool ();
+      break;
+    case SCALE:
+      active_tool = tools_new_transform_tool ();
+      break;
+    case SHEAR:
+      active_tool = tools_new_transform_tool ();
+      break;
+    case PERSPECTIVE:
+      active_tool = tools_new_transform_tool ();
+      break;
+    case FLIP_HORZ:
+      active_tool = tools_new_flip ();
+      break;
+    case FLIP_VERT:
+      active_tool = tools_new_flip ();
+      break;
+    case TEXT:
+      active_tool = tools_new_text ();
+      break;
+    case COLOR_PICKER:
+      active_tool = tools_new_color_picker ();
+      break;
+    case BUCKET_FILL:
+      active_tool = tools_new_bucket_fill ();
+      break;
+    case BLEND:
+      active_tool = tools_new_blend ();
+      break;
+    case PENCIL:
+      active_tool = tools_new_pencil ();
+      break;
+    case PAINTBRUSH:
+      active_tool = tools_new_paintbrush ();
+      break;
+    case ERASER:
+      active_tool = tools_new_eraser ();
+      break;
+    case AIRBRUSH:
+      active_tool = tools_new_airbrush ();
+      break;
+    case CLONE:
+      active_tool = tools_new_clone ();
+      break;
+    case CONVOLVE:
+      active_tool = tools_new_convolve ();
+      break;
+    case BY_COLOR_SELECT:
+      if (gdisp) {
+	active_tool = tools_new_by_color_select ();
+	by_color_select_initialize (gdisp->gimage);
+      } else {
+	active_tool = tools_new_rect_select ();
+      }
+      break;
+    case COLOR_BALANCE:
+      if (gdisp) {
+	active_tool = tools_new_color_balance ();
+	color_balance_initialize (gdisp);
+      } else {
+	active_tool = tools_new_rect_select ();
+      }
+      break;
+    case BRIGHTNESS_CONTRAST:
+      if (gdisp) {
+	active_tool = tools_new_brightness_contrast ();
+	brightness_contrast_initialize (gdisp);
+      } else {
+	active_tool = tools_new_rect_select ();
+      }
+      break;
+    case HUE_SATURATION:
+      if (gdisp) {
+	active_tool = tools_new_hue_saturation ();
+	hue_saturation_initialize (gdisp);
+      } else {
+	active_tool = tools_new_rect_select ();
+      }
+      break;
+    case POSTERIZE:
+      if (gdisp) {
+	active_tool = tools_new_posterize ();
+	posterize_initialize (gdisp);
+      } else {
+	active_tool = tools_new_rect_select ();
+      }
+      break;
+    case THRESHOLD:
+      if (gdisp) {
+	active_tool = tools_new_threshold ();
+	threshold_initialize (gdisp);
+      } else {
+	active_tool = tools_new_rect_select ();
+      }
+      break;
+    case CURVES:
+      if (gdisp) {
+	active_tool = tools_new_curves ();
+	curves_initialize (gdisp);
+      } else {
+	active_tool = tools_new_rect_select ();
+      }
+      break;
+    case LEVELS:
+      if (gdisp) {
+	active_tool = tools_new_levels ();
+	levels_initialize (gdisp);
+      } else {
+	active_tool = tools_new_rect_select ();
+      }
+      break;
+    case HISTOGRAM:
+      if (gdisp) {
+	active_tool = tools_new_histogram_tool ();
+	histogram_tool_initialize (gdisp);
+      } else {
+	active_tool = tools_new_rect_select ();
+      }
+      break;
+    default:
+      break;
+    }
+
+  /*  Show the options for the active tool
+   */
+  if (tool_info[(int) active_tool->type].tool_options)
+    gtk_widget_show (tool_info[(int) active_tool->type].tool_options);
+
+  gtk_container_enable_resize (GTK_CONTAINER (options_shell));
+
+  /*  Set the paused count variable to 0
+   */
+  if (gdisp)
+    active_tool->drawable = gimage_active_drawable (gdisp->gimage);
+  else
+    active_tool->drawable = NULL;
+  active_tool->gdisp_ptr = NULL;
+  active_tool->ID = global_tool_ID++;
+  active_tool_type = active_tool->type;
+}
 
 void
 tools_options_dialog_new ()
@@ -406,14 +591,12 @@ tools_options_dialog_show ()
      cases.  if the user tries to bring up the options before
      switching tools, the dialog will be empty.  recreate the active
      tool here if necessary to avoid this behavior */
-  if (!active_tool)
-    active_tool_control (RECREATE, gdisplay_active());
 
-  if (!GTK_WIDGET_VISIBLE(options_shell)) 
+  if (!GTK_WIDGET_VISIBLE(options_shell))
     {
       gtk_widget_show (options_shell);
-    } 
-  else 
+    }
+  else
     {
       gdk_window_raise (options_shell->window);
     }
@@ -506,16 +689,14 @@ active_tool_control (int   action,
 	      (* active_tool->control_func) (active_tool, action, gdisp_ptr);
 	      break;
 	    case DESTROY :
-	      active_tool_free();
+              active_tool_free();
               gtk_widget_hide (options_shell);
-	      break;
+              break;
 	    }
 	}
       else if (action == HALT)
 	active_tool->state = INACTIVE;
     }
-  if (action == RECREATE && active_tool_type >= 0)
-    tools_select (active_tool_type);
 }
 
 
@@ -533,7 +714,7 @@ tools_options_delete_callback (GtkWidget *w,
 {
   tools_options_dialog_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -545,5 +726,3 @@ tools_options_dialog_callback (GtkWidget *w,
   shell = (GtkWidget *) client_data;
   gtk_widget_hide (shell);
 }
-
-

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <string.h>
@@ -29,6 +29,8 @@
 #include "gimprc.h"
 #include "gdisplay.h"
 #include "rect_select.h"
+#include "paint_funcs.h"
+
 
 #define DEFAULT_FUZZINESS 15
 #define PREVIEW_WIDTH   256
@@ -292,6 +294,8 @@ by_color_select_button_press (Tool           *tool,
   gdisp = (GDisplay *) gdisp_ptr;
   by_color_sel = (ByColorSelect *) tool->private;
 
+  tool->drawable = gimage_active_drawable (gdisp->gimage);
+
   if (!by_color_dialog)
     return;
 
@@ -359,6 +363,8 @@ by_color_select_button_release (Tool           *tool,
 	  tile = tile_manager_get_tile (gimage_composite (gdisp->gimage), x, y, 0);
 	  tile_ref (tile);
 	  data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
+          gimage_get_color (gdisp->gimage, gimage_composite_type(gdisp->gimage), col, data);
+          tile_unref (tile, FALSE);
 	}
       else
 	{
@@ -367,10 +373,9 @@ by_color_select_button_release (Tool           *tool,
 	  tile = tile_manager_get_tile (drawable_data (drawable), x, y, 0);
 	  tile_ref (tile);
 	  data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
+          gimage_get_color (gdisp->gimage, drawable_type(drawable), col, data);
+          tile_unref (tile, FALSE);
 	}
-
-      gimage_get_color (gdisp->gimage, gimage_composite_type(gdisp->gimage), col, data);
-      tile_unref (tile, FALSE);
 
       /*  select the area  */
       by_color_select (gdisp->gimage, drawable, col,
@@ -476,6 +481,9 @@ tools_new_by_color_select ()
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = by_color_select_cursor_update;
   tool->control_func = by_color_select_control;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
+  tool->preserve = TRUE;
 
   return tool;
 }
@@ -520,7 +528,7 @@ by_color_select_initialize (void *gimage_ptr)
 /*  Select by Color dialog  */
 /****************************/
 
-ByColorDialog *
+static ByColorDialog *
 by_color_select_new_dialog ()
 {
   ByColorDialog *bcd;
@@ -600,7 +608,7 @@ by_color_select_new_dialog ()
   gtk_container_border_width (GTK_CONTAINER (options_box), 5);
   gtk_box_pack_start (GTK_BOX (hbox), options_box, TRUE, TRUE, 0);
 
-  /*  Create the active brush label  */
+  /*  Create the active image label  */
   util_box = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (options_box), util_box, FALSE, FALSE, 0);
   bcd->gimage_name = gtk_label_new ("Inactive");
@@ -831,7 +839,12 @@ by_color_select_reset_callback (GtkWidget *widget,
   ByColorDialog *bcd;
 
   bcd = (ByColorDialog *) client_data;
+
   if (!bcd->gimage)
+    return;
+
+  /*  check if the image associated to the mask still exists  */
+  if (!drawable_gimage (GIMP_DRAWABLE(gimage_get_mask (bcd->gimage))))
     return;
 
   /*  reset the mask  */
@@ -852,7 +865,7 @@ by_color_select_delete_callback (GtkWidget *w,
 {
   by_color_select_close_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -888,7 +901,12 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
 
   if (!bcd->gimage)
     return;
+
   drawable = gimage_active_drawable (bcd->gimage);
+
+  /*  check if the gimage associated to the drawable still exists  */
+  if (!drawable_gimage (drawable))
+    return;
 
   /*  Defaults  */
   replace = FALSE;

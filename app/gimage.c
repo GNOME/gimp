@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -21,6 +21,7 @@
 #include <sys/types.h>
 #include <math.h>
 #include "appenv.h"
+#include "canvas.h"
 #include "channels_dialog.h"
 #include "drawable.h"
 #include "errors.h"
@@ -32,21 +33,18 @@
 #include "indexed_palette.h"
 #include "interface.h"
 #include "layers_dialog.h"
-#include "paint_funcs.h"
 #include "paint_funcs_area.h"
 #include "palette.h"
 #include "pixelarea.h"
 #include "pixelrow.h"
 #include "plug_in.h"
+#include "tools.h"
+#include "trace.h"
 #include "undo.h"
 
 #include "tile_manager_pvt.h"		/* ick. */
 #include "layer_pvt.h"
 #include "drawable_pvt.h"		/* ick ick. */
-
-#include "canvas.h"
-#include "pixelarea.h"
-#include "trace.h"
 
 /*  Local function declarations  */
 static void     gimage_free_projection       (GImage *);
@@ -71,7 +69,10 @@ static void     project_indexed              (GImage *, Layer *, PixelArea *,
 static void     project_channel              (GImage *, Channel *, PixelArea *,
 					      PixelArea *);
 
-static int valid_combinations[][MAX_CHANNELS + 1] =
+/*
+ *  Global variables
+ */
+int valid_combinations[][MAX_CHANNELS + 1] =
 {
   /* RGB GIMAGE */
   { -1, -1, -1, COMBINE_INTEN_INTEN, COMBINE_INTEN_INTEN_A },
@@ -137,38 +138,6 @@ gimage_create (void)
   return gimage;
 }
 
-#if 0
-static void
-gimage_allocate_projection (GImage *gimage)
-{
-  if (gimage->projection)
-    gimage_free_projection (gimage);
-  /*  Find the number of bytes required for the projection.
-   *  This includes the intensity channels and an alpha channel
-   *  if one doesn't exist.
-   */
-  switch (gimage_base_type (gimage))
-    {
-    case RGB:
-    case INDEXED:
-      gimage->proj_bytes = 4;
-      gimage->proj_type = RGBA_GIMAGE;
-      break;
-    case GRAY:
-      gimage->proj_bytes = 2;
-      gimage->proj_type = GRAYA_GIMAGE;
-      break;
-    default:
-      warning ("gimage type unsupported.\n");
-      break;
-    }
-  
-  /*  allocate the new projection */
-  gimage->projection = tile_manager_new (gimage->width, gimage->height, gimage->proj_bytes);
-  gimage->projection->user_data = (void *) gimage;
-  tile_manager_set_validate_proc (gimage->projection, gimage_validate);
-}
-#endif
 
 Tag 
 gimage_tag (GImage *gimage)
@@ -184,6 +153,7 @@ gimage_allocate_projection (GImage *gimage)
   Tag projection_canvas_tag;
   if (gimage->projection_canvas)
     gimage_free_projection (gimage);
+
   /*  Find the number of bytes required for the projection.
    *  This includes the intensity channels and an alpha channel
    *  if one doesn't exist.
@@ -200,8 +170,8 @@ gimage_allocate_projection (GImage *gimage)
       gimage->proj_type = GRAYA_GIMAGE;
       break;
     default:
-      warning ("gimage format unsupported.\n");
-      break;
+      g_message ("gimage format unsupported.\n");
+      return;
     }
   
   precision = tag_precision (gimage_tag(gimage)); 
@@ -215,21 +185,6 @@ gimage_allocate_projection (GImage *gimage)
 }
 
 
-#if 0
-static void
-gimage_free_projection (GImage *gimage)
-{
-  if (gimage->projection)
-    tile_manager_destroy (gimage->projection);
-
-  gimage->projection = NULL;
-
-  if (gimage->projection_canvas)
-    canvas_delete (gimage->projection_canvas);
-
-  gimage->projection_canvas = NULL;
-}
-#endif
 
 static void
 gimage_free_projection (GImage *gimage)
@@ -339,6 +294,7 @@ gimage_new_tag (int width, int height, Tag tag)
   return gimage;
 }
 
+
 void
 gimage_set_filename (GImage *gimage, char *filename)
 {
@@ -376,7 +332,7 @@ gimage_resize (GImage *gimage, int new_width, int new_height,
 
   if (new_width <= 0 || new_height <= 0) 
     {
-      warning("gimage_resize: width and height must be positive");
+      g_message ("gimage_resize: width and height must be positive");
       return;
     }
 
@@ -562,8 +518,9 @@ gimage_shadow (GImage *gimage, int width, int height, int bpp)
   gimage_allocate_shadow (gimage, width, height, bpp);
 
   return gimage->shadow;
-#endif
+#else
   return NULL;
+#endif
 }
 
 
@@ -643,91 +600,9 @@ gimage_delete (GImage *gimage)
 }
 
 void
-gimage_apply_image (GImage *gimage, GimpDrawable *drawable, PixelRegion *src2PR,
-		    int undo, int opacity, int mode,
-		    /*  alternative to using drawable tiles as src1: */
-		    TileManager *src1_tiles,
-		    int x, int y)
+gimage_apply_image ()
 {
-  Channel * mask;
-  int x1, y1, x2, y2;
-  int offset_x, offset_y;
-  PixelRegion src1PR, destPR, maskPR;
-  int operation;
-  int active [MAX_CHANNELS];
-
   g_warning ("gimage_apply_image() was called");
-
-  /*  get the selection mask if one exists  */
-  mask = (gimage_mask_is_empty (gimage)) ?
-    NULL : gimage_get_mask (gimage);
-
-  /*  configure the active channel array  */
-  gimage_get_active_channels (gimage, drawable, active);
-
-  /*  determine what sort of operation is being attempted and
-   *  if it's actually legal...
-   */
-  operation = valid_combinations [drawable_type (drawable)][src2PR->bytes];
-  if (operation == -1)
-    {
-      warning ("gimage_apply_image sent illegal parameters\n");
-      return;
-    }
-
-  /*  get the layer offsets  */
-  drawable_offsets (drawable, &offset_x, &offset_y);
-
-  /*  make sure the image application coordinates are within gimage bounds  */
-  x1 = BOUNDS (x, 0, drawable_width (drawable));
-  y1 = BOUNDS (y, 0, drawable_height (drawable));
-  x2 = BOUNDS (x + src2PR->w, 0, drawable_width (drawable));
-  y2 = BOUNDS (y + src2PR->h, 0, drawable_height (drawable));
-
-  if (mask)
-    {
-      /*  make sure coordinates are in mask bounds ...
-       *  we need to add the layer offset to transform coords
-       *  into the mask coordinate system
-       */
-      x1 = BOUNDS (x1, -offset_x, drawable_width (GIMP_DRAWABLE(mask)) - offset_x);
-      y1 = BOUNDS (y1, -offset_y, drawable_height (GIMP_DRAWABLE(mask)) - offset_y);
-      x2 = BOUNDS (x2, -offset_x, drawable_width (GIMP_DRAWABLE(mask)) - offset_x);
-      y2 = BOUNDS (y2, -offset_y, drawable_height (GIMP_DRAWABLE(mask)) - offset_y);
-    }
-
-  /*  If the calling procedure specified an undo step...  */
-  if (undo)
-    drawable_apply_image (drawable, x1, y1, x2, y2, NULL, FALSE);
-
-  /* configure the pixel regions
-   *  If an alternative to using the drawable's data as src1 was provided...
-   */
-  if (src1_tiles)
-    pixel_region_init (&src1PR, src1_tiles, x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  else
-    pixel_region_init (&src1PR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  pixel_region_init (&destPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
-  pixel_region_resize (src2PR, src2PR->x + (x1 - x), src2PR->y + (y1 - y), (x2 - x1), (y2 - y1));
-
-  if (mask)
-    {
-      int mx, my;
-
-      /*  configure the mask pixel region
-       *  don't use x1 and y1 because they are in layer
-       *  coordinate system.  Need mask coordinate system
-       */
-      mx = x1 + offset_x;
-      my = y1 + offset_y;
-
-      pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), mx, my, (x2 - x1), (y2 - y1), FALSE);
-      combine_regions (&src1PR, src2PR, &destPR, &maskPR, NULL,
-		       opacity, mode, active, operation);
-    }
-  else
-    combine_regions (&src1PR, src2PR, &destPR, NULL, NULL,
-		     opacity, mode, active, operation);
 }
 
 void 
@@ -848,121 +723,10 @@ gimage_apply_painthit  (
    Takes an additional mask pixel region as well.
 
 */
-
 void
-gimage_replace_image (GImage *gimage, GimpDrawable *drawable, PixelRegion *src2PR,
-		      int undo, int opacity,
-		      PixelRegion *maskPR,
-		      int x, int y)
+gimage_replace_image ()
 {
-  Channel * mask;
-  int x1, y1, x2, y2;
-  int offset_x, offset_y;
-  PixelRegion src1PR, destPR;
-  PixelRegion mask2PR, tempPR;
-  unsigned char *temp_data;
-  int operation;
-  int active [MAX_CHANNELS];
-
-
   g_warning ("gimage_replace_image() was called");
-
-  /*  get the selection mask if one exists  */
-  mask = (gimage_mask_is_empty (gimage)) ?
-    NULL : gimage_get_mask (gimage);
-
-  /*  configure the active channel array  */
-  gimage_get_active_channels (gimage, drawable, active);
-
-  /*  determine what sort of operation is being attempted and
-   *  if it's actually legal...
-   */
-  operation = valid_combinations [drawable_type (drawable)][src2PR->bytes];
-  if (operation == -1)
-    {
-      warning ("gimage_apply_image sent illegal parameters\n");
-      return;
-    }
-
-  /*  get the layer offsets  */
-  drawable_offsets (drawable, &offset_x, &offset_y);
-
-  /*  make sure the image application coordinates are within gimage bounds  */
-  x1 = BOUNDS (x, 0, drawable_width (drawable));
-  y1 = BOUNDS (y, 0, drawable_height (drawable));
-  x2 = BOUNDS (x + src2PR->w, 0, drawable_width (drawable));
-  y2 = BOUNDS (y + src2PR->h, 0, drawable_height (drawable));
-
-  if (mask)
-    {
-      /*  make sure coordinates are in mask bounds ...
-       *  we need to add the layer offset to transform coords
-       *  into the mask coordinate system
-       */
-      x1 = BOUNDS (x1, -offset_x, drawable_width (GIMP_DRAWABLE(mask)) - offset_x);
-      y1 = BOUNDS (y1, -offset_y, drawable_height (GIMP_DRAWABLE(mask)) - offset_y);
-      x2 = BOUNDS (x2, -offset_x, drawable_width (GIMP_DRAWABLE(mask)) - offset_x);
-      y2 = BOUNDS (y2, -offset_y, drawable_height (GIMP_DRAWABLE(mask)) - offset_y);
-    }
-
-  /*  If the calling procedure specified an undo step...  */
-  if (undo)
-    drawable_apply_image (drawable, x1, y1, x2, y2, NULL, FALSE);
-
-  /* configure the pixel regions
-   *  If an alternative to using the drawable's data as src1 was provided...
-   */
-  pixel_region_init (&src1PR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  pixel_region_init (&destPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
-  pixel_region_resize (src2PR, src2PR->x + (x1 - x), src2PR->y + (y1 - y), (x2 - x1), (y2 - y1));
-
-  if (mask)
-    {
-      int mx, my;
-
-      /*  configure the mask pixel region
-       *  don't use x1 and y1 because they are in layer
-       *  coordinate system.  Need mask coordinate system
-       */
-      mx = x1 + offset_x;
-      my = y1 + offset_y;
-
-      pixel_region_init (&mask2PR, drawable_data (GIMP_DRAWABLE(mask)), mx, my, (x2 - x1), (y2 - y1), FALSE);
-
-      tempPR.bytes = 1;
-      tempPR.x = 0;
-      tempPR.y = 0;
-      tempPR.w = x2 - x1;
-      tempPR.h = y2 - y1;
-      tempPR.rowstride = mask2PR.rowstride;
-      temp_data = g_malloc (tempPR.h * tempPR.rowstride);
-      tempPR.data = temp_data;
-      /* copy selection mask to temp */
-      copy_region (&mask2PR, &tempPR);
-
-      /* apparently, region operations can mutate some PR data. */
-      tempPR.x = 0;
-      tempPR.y = 0;
-      tempPR.w = x2 - x1;
-      tempPR.h = y2 - y1;
-      tempPR.data = temp_data;
-      /* apply brush mask to temp */
-      apply_mask_to_region (&tempPR, maskPR, OPAQUE_OPACITY);
-
-      tempPR.x = 0;
-      tempPR.y = 0;
-      tempPR.w = x2 - x1;
-      tempPR.h = y2 - y1;
-      tempPR.data = temp_data;
-
-      combine_regions_replace (&src1PR, src2PR, &destPR, &tempPR, NULL,
-		       opacity, active, operation);
-
-      g_free (temp_data);
-    }
-  else
-    combine_regions_replace (&src1PR, src2PR, &destPR, maskPR, NULL,
-		     opacity, active, operation);
 }
 
 
@@ -1002,7 +766,7 @@ gimage_replace_painthit  (
   
   if (operation == -1)
     {
-      warning ("gimage_replace_painthit: not a valid combination\n");
+      g_message ("gimage_replace_painthit: not a valid combination\n");
       return;
     }
 
@@ -1215,6 +979,7 @@ gimage_add_hguide (GImage *gimage)
   Guide *guide;
 
   guide = g_new (Guide, 1);
+  guide->ref_count = 0;
   guide->position = -1;
   guide->orientation = HORIZONTAL_GUIDE;
 
@@ -1229,6 +994,7 @@ gimage_add_vguide (GImage *gimage)
   Guide *guide;
 
   guide = g_new (Guide, 1);
+  guide->ref_count = 0;
   guide->position = -1;
   guide->orientation = VERTICAL_GUIDE;
 
@@ -1264,20 +1030,6 @@ gimage_delete_guide (GImage *gimage,
 /*  Projection functions                                    */
 /************************************************************/
 
-#if 0
-static void
-project_intensity (GImage *gimage, Layer *layer,
-		   PixelRegion *src, PixelRegion *dest, PixelRegion *mask)
-{
-  if (! gimage->construct_flag)
-    initial_region (src, dest, mask, NULL, layer->opacity,
-		    layer->mode, gimage->visible, INITIAL_INTENSITY);
-  else
-    combine_regions (dest, src, dest, mask, NULL, layer->opacity,
-		     layer->mode, gimage->visible, COMBINE_INTEN_A_INTEN);
-}
-#endif
-
 static void
 project_intensity (GImage *gimage, Layer *layer,
 		   PixelArea *src, PixelArea *dest, PixelArea *mask)
@@ -1290,20 +1042,6 @@ project_intensity (GImage *gimage, Layer *layer,
 		     layer->mode, gimage->visible, COMBINE_INTEN_A_INTEN);
 }
 
-#if 0
-static void
-project_intensity_alpha (GImage *gimage, Layer *layer,
-			 PixelRegion *src, PixelRegion *dest,
-			 PixelRegion *mask)
-{
-  if (! gimage->construct_flag)
-    initial_region (src, dest, mask, NULL, layer->opacity,
-		    layer->mode, gimage->visible, INITIAL_INTENSITY_ALPHA);
-  else
-    combine_regions (dest, src, dest, mask, NULL, layer->opacity,
-		     layer->mode, gimage->visible, COMBINE_INTEN_A_INTEN_A);
-}
-#endif
 
 static void
 project_intensity_alpha (GImage *gimage, Layer *layer,
@@ -1318,18 +1056,6 @@ project_intensity_alpha (GImage *gimage, Layer *layer,
 		     layer->mode, gimage->visible, COMBINE_INTEN_A_INTEN_A);
 }
 
-#if 0
-static void
-project_indexed (GImage *gimage, Layer *layer,
-		 PixelRegion *src, PixelRegion *dest)
-{
-  if (! gimage->construct_flag)
-    initial_region (src, dest, NULL, gimage->cmap, layer->opacity,
-		    layer->mode, gimage->visible, INITIAL_INDEXED);
-  else
-    warning ("Unable to project indexed image.");
-}
-#endif
 
 static void
 project_indexed (GImage *gimage, Layer *layer,
@@ -1339,23 +1065,10 @@ project_indexed (GImage *gimage, Layer *layer,
     initial_area (src, dest, NULL, gimage->cmap, layer->opacity/255.0,
 		    layer->mode, gimage->visible, INITIAL_INDEXED);
   else
-    warning ("Unable to project indexed image.");
+    g_message ("Unable to project indexed image.");
 }
 
-#if 0
-static void
-project_indexed_alpha (GImage *gimage, Layer *layer,
-		       PixelRegion *src, PixelRegion *dest,
-		       PixelRegion *mask)
-{
-  if (! gimage->construct_flag)
-    initial_region (src, dest, mask, gimage->cmap, layer->opacity,
-		    layer->mode, gimage->visible, INITIAL_INDEXED_ALPHA);
-  else
-    combine_regions (dest, src, dest, mask, gimage->cmap, layer->opacity,
-		     layer->mode, gimage->visible, COMBINE_INTEN_A_INDEXED_A);
-}
-#endif
+
 static void
 project_indexed_alpha (GImage *gimage, Layer *layer,
 		       PixelArea *src, PixelArea *dest,
@@ -1369,29 +1082,6 @@ project_indexed_alpha (GImage *gimage, Layer *layer,
 		     layer->mode, gimage->visible, COMBINE_INTEN_A_INDEXED_A);
 }
 
-#if 0
-static void
-project_channel (GImage *gimage, Channel *channel,
-		 PixelRegion *src, PixelRegion *src2)
-{
-  int type;
-
-  if (! gimage->construct_flag)
-    {
-      type = (channel->show_masked) ?
-	INITIAL_CHANNEL_MASK : INITIAL_CHANNEL_SELECTION;
-      initial_region (src2, src, NULL, channel->col, channel->opacity,
-		      NORMAL, NULL, type);
-    }
-  else
-    {
-      type = (channel->show_masked) ?
-	COMBINE_INTEN_A_CHANNEL_MASK : COMBINE_INTEN_A_CHANNEL_SELECTION;
-      combine_regions (src, src2, src, NULL, channel->col, channel->opacity,
-		       NORMAL, NULL, type);
-    }
-}
-#endif
 
 static void
 project_channel (GImage *gimage, Channel *channel,
@@ -1414,6 +1104,7 @@ project_channel (GImage *gimage, Channel *channel,
 		       NORMAL, NULL, type);
     }
 }
+
 
 /************************************************************/
 /*  Layer/Channel functions                                 */
@@ -1452,134 +1143,6 @@ gimage_free_channels (GImage *gimage)
   g_slist_free (gimage->channels);
 }
 
-#if 0
-static void
-gimage_construct_layers (GImage *gimage, int x, int y, int w, int h)
-{
-  Layer * layer;
-  int x1, y1, x2, y2;
-  PixelRegion src1PR, src2PR, maskPR;
-  PixelRegion * mask;
-  GSList *list = gimage->layers;
-  GSList *reverse_list = NULL;
-  int off_x, off_y;
-
-  /*  composite the floating selection if it exists  */
-  if ((layer = gimage_floating_sel (gimage)))
-    floating_sel_composite (layer, x, y, w, h, FALSE);
-
-  /* Note added by Raph Levien, 27 Jan 1998
-
-     This looks it was intended as an optimization, but it seems to
-     have correctness problems. In particular, if all channels are
-     turned off, the screen simply does not update the projected
-     image. It should be black. Turning off this optimization seems to
-     restore correct behavior. At some future point, it may be
-     desirable to turn the optimization back on.
-
-     */
-#if 0
-  /*  If all channels are not visible, simply return  */
-  switch (gimage_base_type (gimage))
-    {
-    case RGB:
-      if (! gimage_get_component_visible (gimage, Red) &&
-	  ! gimage_get_component_visible (gimage, Green) &&
-	  ! gimage_get_component_visible (gimage, Blue))
-	return;
-      break;
-    case GRAY:
-      if (! gimage_get_component_visible (gimage, Gray))
-	return;
-      break;
-    case INDEXED:
-      if (! gimage_get_component_visible (gimage, Indexed))
-	return;
-      break;
-    }
-#endif
-
-  while (list)
-    {
-      layer = (Layer *) list->data;
-
-      /*  only add layers that are visible and not floating selections to the list  */
-      if (!layer_is_floating_sel (layer) && drawable_visible (GIMP_DRAWABLE(layer)))
-	reverse_list = g_slist_prepend (reverse_list, layer);
-
-      list = g_slist_next (list);
-    }
-
-  while (reverse_list)
-    {
-      layer = (Layer *) reverse_list->data;
-      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
-
-      x1 = BOUNDS (off_x, x, x + w);
-      y1 = BOUNDS (off_y, y, y + h);
-      x2 = BOUNDS (off_x + drawable_width (GIMP_DRAWABLE(layer)), x, x + w);
-      y2 = BOUNDS (off_y + drawable_height (GIMP_DRAWABLE(layer)), y, y + h);
-
-      /* configure the pixel regions  */
-      pixel_region_init (&src1PR, gimage_projection (gimage), x1, y1, (x2 - x1), (y2 - y1), TRUE);
-
-      /*  If we're showing the layer mask instead of the layer...  */
-      if (layer->mask && layer->show_mask)
-	{
-	  pixel_region_init (&src2PR, drawable_data (GIMP_DRAWABLE(layer->mask)),
-			     (x1 - off_x), (y1 - off_y),
-			     (x2 - x1), (y2 - y1), FALSE);
-
-	  copy_gray_to_region (&src2PR, &src1PR);
-	}
-      /*  Otherwise, normal  */
-      else
-	{
-	  pixel_region_init (&src2PR, drawable_data (GIMP_DRAWABLE(layer)),
-			     (x1 - off_x), (y1 - off_y),
-			     (x2 - x1), (y2 - y1), FALSE);
-
-	  if (layer->mask && layer->apply_mask)
-	    {
-	      pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(layer->mask)),
-				 (x1 - off_x), (y1 - off_y),
-				 (x2 - x1), (y2 - y1), FALSE);
-	      mask = &maskPR;
-	    }
-	  else
-	    mask = NULL;
-
-	  /*  Based on the type of the layer, project the layer onto the
-	   *  projection image...
-	   */
-	  switch (drawable_type (GIMP_DRAWABLE(layer)))
-	    {
-	    case RGB_GIMAGE: case GRAY_GIMAGE:
-	      /* no mask possible */
-	      project_intensity (gimage, layer, &src2PR, &src1PR, mask);
-	      break;
-	    case RGBA_GIMAGE: case GRAYA_GIMAGE:
-	      project_intensity_alpha (gimage, layer, &src2PR, &src1PR, mask);
-	      break;
-	    case INDEXED_GIMAGE:
-	      /* no mask possible */
-	      project_indexed (gimage, layer, &src2PR, &src1PR);
-	      break;
-	    case INDEXEDA_GIMAGE:
-	      project_indexed_alpha (gimage, layer, &src2PR, &src1PR, mask);
-	      break;
-	    default:
-	      break;
-	    }
-	}
-      gimage->construct_flag = 1;  /*  something was projected  */
-
-      reverse_list = g_slist_next (reverse_list);
-    }
-
-  g_slist_free (reverse_list);
-}
-#endif
 
 static void
 gimage_construct_layers (GImage *gimage, int x, int y, int w, int h)
@@ -1709,43 +1272,6 @@ gimage_construct_layers (GImage *gimage, int x, int y, int w, int h)
   g_slist_free (reverse_list);
 }
 
-#if 0
-static void
-gimage_construct_channels (GImage *gimage, int x, int y, int w, int h)
-{
-  Channel * channel;
-  PixelRegion src1PR, src2PR;
-  GSList *list = gimage->channels;
-  GSList *reverse_list = NULL;
-
-  /*  reverse the channel list  */
-  while (list)
-    {
-      reverse_list = g_slist_prepend (reverse_list, list->data);
-      list = g_slist_next (list);
-    }
-
-  while (reverse_list)
-    {
-      channel = (Channel *) reverse_list->data;
-
-      if (drawable_visible (GIMP_DRAWABLE(channel)))
-	{
-	  /* configure the pixel regions  */
-	  pixel_region_init (&src1PR, gimage_projection (gimage), x, y, w, h, TRUE);
-	  pixel_region_init (&src2PR, drawable_data (GIMP_DRAWABLE(channel)), x, y, w, h, FALSE);
-
-	  project_channel (gimage, channel, &src1PR, &src2PR);
-
-	  gimage->construct_flag = 1;
-	}
-
-      reverse_list = g_slist_next (reverse_list);
-    }
-
-  g_slist_free (reverse_list);
-}
-#endif
 
 static void
 gimage_construct_channels (GImage *gimage, int x, int y, int w, int h)
@@ -1785,51 +1311,12 @@ gimage_construct_channels (GImage *gimage, int x, int y, int w, int h)
   g_slist_free (reverse_list);
 }
 
-#if 0
-static void
-gimage_initialize_projection (GImage *gimage, int x, int y, int w, int h)
-{
-  GSList *list;
-  Layer *layer;
-  int coverage = 0;
-  PixelRegion PR;
-  unsigned char clear[4] = { 0, 0, 0, 0 };
-
-  /*  this function determines whether a visible layer
-   *  provides complete coverage over the image.  If not,
-   *  the projection is initialized to transparent
-   */
-  list = gimage->layers;
-  while (list)
-    {
-      int off_x, off_y;
-      layer = (Layer *) list->data;
-      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
-      if (drawable_visible (GIMP_DRAWABLE(layer)) &&
-	  ! layer_has_alpha (layer) &&
-	  (off_x <= x) &&
-	  (off_y <= y) &&
-	  (off_x + drawable_width (GIMP_DRAWABLE(layer)) >= x + w) &&
-	  (off_y + drawable_height (GIMP_DRAWABLE(layer)) >= y + h))
-	coverage = 1;
-
-      list = g_slist_next (list);
-    }
-
-  if (!coverage)
-    {
-      pixel_region_init (&PR, gimage_projection (gimage), x, y, w, h, TRUE);
-      color_region (&PR, clear);
-    }
-}
-
-#endif
 
 static void
 gimage_initialize_projection (GImage *gimage, int x, int y, int w, int h)
 {
   GSList *list;
-  Layer *layer;
+  Layer *layer = NULL;
   int coverage = 0;
   PixelArea PR;
 
@@ -1865,33 +1352,6 @@ gimage_initialize_projection (GImage *gimage, int x, int y, int w, int h)
     }
 }
 
-#if 0
-static void
-gimage_get_active_channels (GImage *gimage, GimpDrawable *drawable, int *active)
-{
-  Layer * layer;
-  int i;
-
-  /*  first, blindly copy the gimage active channels  */
-  for (i = 0; i < MAX_CHANNELS; i++)
-    active[i] = gimage->active[i];
-
-  /*  If the drawable is a channel (a saved selection, etc.)
-   *  make sure that the alpha channel is not valid
-   */
-  if (drawable_channel (drawable) != NULL)
-    active[ALPHA_G_PIX] = 0;  /*  no alpha values in channels  */
-  else
-    {
-      /*  otherwise, check whether preserve transparency is
-       *  enabled in the layer and if the layer has alpha
-       */
-      if ((layer = drawable_layer (drawable)))
-	if (layer_has_alpha (layer) && layer->preserve_trans)
-	  active[drawable_bytes (GIMP_DRAWABLE(layer)) - 1] = 0;
-    }
-}
-#endif
 
 static void
 gimage_get_active_channels (GImage *gimage, GimpDrawable *drawable, int *active)
@@ -1972,96 +1432,12 @@ gimage_construct (GImage *gimage, int x, int y, int w, int h)
     }
 }
 
-#if 0
 void
 gimage_invalidate (GImage *gimage, int x, int y, int w, int h, int x1, int y1,
 		   int x2, int y2)
 {
-  Tile *tile;
-  TileManager *tm;
-  int i, j;
   int startx, starty;
   int endx, endy;
-  int tilex, tiley;
-  int flat;
-
-  /* this will eventually be hooked into some form of
-     canvas_portion_init().  for now, just disable it cause it's not
-     doing anything */
-  return;
-
-  
-  flat = gimage_is_flat (gimage);
-  tm = gimage_projection (gimage);
-
-  startx = x;
-  starty = y;
-  endx = x + w;
-  endy = y + h;
-  /*  invalidate all tiles which are located outside of the displayed area
-   *   all tiles inside the displayed area are constructed.
-   */
-  for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
-    for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
-      {
-	tile = tile_manager_get_tile (tm, j, i, 0);
-
-	/*  invalidate all lower level tiles  */
-	/*tile_manager_invalidate_tiles (gimage_projection (gimage), tile);*/
-
-	if (! flat)
-	  {
-	    /*  check if the tile is outside the bounds  */
-	    if ((MIN ((j + tile->ewidth), x2) - MAX (j, x1)) <= 0)
-	      {
-		tile->valid = FALSE;
-		if (j < x1)
-		  startx = MAX (startx, (j + tile->ewidth));
-		else
-		  endx = MIN (endx, j);
-	      }
-	    else if (MIN ((i + tile->eheight), y2) - MAX (i, y1) <= 0)
-	      {
-		tile->valid = FALSE;
-		if (i < y1)
-		  starty = MAX (starty, (i + tile->eheight));
-		else
-		  endy = MIN (endy, i);
-	      }
-	    else
-	      {
-		/*  If the tile is not valid, make sure we get the entire tile
-		 *   in the construction extents
-		 */
-		if (tile->valid == FALSE)
-		  {
-		    tilex = j - (j % TILE_WIDTH);
-		    tiley = i - (i % TILE_HEIGHT);
-
-		    startx = MIN (startx, tilex);
-		    endx = MAX (endx, tilex + tile->ewidth);
-		    starty = MIN (starty, tiley);
-		    endy = MAX (endy, tiley + tile->eheight);
-
-		    tile->valid = TRUE;
-		  }
-	      }
-	  }
-      }
-
-  if (! flat && (endx - startx) > 0 && (endy - starty) > 0)
-    gimage_construct (gimage, startx, starty, (endx - startx), (endy - starty));
-}
-#endif
-
-void
-gimage_invalidate (GImage *gimage, int x, int y, int w, int h, int x1, int y1,
-		   int x2, int y2)
-{
-  int i, j;
-  int startx, starty;
-  int endx, endy;
-  int tilex, tiley;
   int flat;
 
   flat = gimage_is_flat (gimage);
@@ -2451,7 +1827,7 @@ gimage_raise_layer (GImage *gimage, Layer *layer_arg)
 	    }
 	  else
 	    {
-	      message_box ("Layer cannot be raised any further", NULL, NULL);
+	      g_message ("Layer cannot be raised any further");
 	      return NULL;
 	    }
 	}
@@ -2520,7 +1896,7 @@ gimage_lower_layer (GImage *gimage, Layer *layer_arg)
 	    }
 	  else
 	    {
-	      message_box ("Layer cannot be lowered any further", NULL, NULL);
+	      g_message ("Layer cannot be lowered any further");
 	      return NULL;
 	    }
 	}
@@ -2557,8 +1933,7 @@ gimage_merge_visible_layers (GImage *gimage, MergeType merge_type)
     }
   else
     {
-      message_box ("There are not enough visible layers for a merge.\nThere must be at least two.",
-		   NULL, NULL);
+      g_message ("There are not enough visible layers for a merge.\nThere must be at least two.");
       g_slist_free (merge_list);
       return NULL;
     }
@@ -2587,249 +1962,6 @@ gimage_flatten (GImage *gimage)
   return layer;
 }
 
-#if 0
-Layer *
-gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
-{
-  GSList *reverse_list = NULL;
-  PixelRegion src1PR, src2PR, maskPR;
-  PixelRegion * mask;
-  Layer *merge_layer;
-  Layer *layer;
-  Layer *bottom;
-  unsigned char bg[4] = {0, 0, 0, 0};
-  int type;
-  int count;
-  int x1, y1, x2, y2;
-  int x3, y3, x4, y4;
-  int operation;
-  int position;
-  int active[MAX_CHANNELS] = {1, 1, 1, 1};
-  int off_x, off_y;
-
-  layer = NULL;
-  type  = RGBA_GIMAGE;
-  x1 = y1 = x2 = y2 = 0;
-  bottom = NULL;
-
-  /*  Get the layer extents  */
-  count = 0;
-  while (merge_list)
-    {
-      layer = (Layer *) merge_list->data;
-      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
-
-      switch (merge_type)
-	{
-	case ExpandAsNecessary:
-	case ClipToImage:
-	  if (!count)
-	    {
-	      x1 = off_x;
-	      y1 = off_y;
-	      x2 = off_x + drawable_width (GIMP_DRAWABLE(layer));
-	      y2 = off_y + drawable_height (GIMP_DRAWABLE(layer));
-	    }
-	  else
-	    {
-	      if (off_x < x1)
-		x1 = off_x;
-	      if (off_y < y1)
-		y1 = off_y;
-	      if ((off_x + drawable_width (GIMP_DRAWABLE(layer))) > x2)
-		x2 = (off_x + drawable_width (GIMP_DRAWABLE(layer)));
-	      if ((off_y + drawable_height (GIMP_DRAWABLE(layer))) > y2)
-		y2 = (off_y + drawable_height (GIMP_DRAWABLE(layer)));
-	    }
-	  if (merge_type == ClipToImage)
-	    {
-	      x1 = BOUNDS (x1, 0, gimage->width);
-	      y1 = BOUNDS (y1, 0, gimage->height);
-	      x2 = BOUNDS (x2, 0, gimage->width);
-	      y2 = BOUNDS (y2, 0, gimage->height);
-	    }
-	  break;
-	case ClipToBottomLayer:
-	  if (merge_list->next == NULL)
-	    {
-	      x1 = off_x;
-	      y1 = off_y;
-	      x2 = off_x + drawable_width (GIMP_DRAWABLE(layer));
-	      y2 = off_y + drawable_height (GIMP_DRAWABLE(layer));
-	    }
-	  break;
-	case FlattenImage:
-	  if (merge_list->next == NULL)
-	    {
-	      x1 = 0;
-	      y1 = 0;
-	      x2 = gimage->width;
-	      y2 = gimage->height;
-	    }
-	  break;
-	}
-
-      count ++;
-      reverse_list = g_slist_prepend (reverse_list, layer);
-      merge_list = g_slist_next (merge_list);
-    }
-
-  if ((x2 - x1) == 0 || (y2 - y1) == 0)
-    return NULL;
-
-  /*  Start a merge undo group  */
-  undo_push_group_start (gimage, LAYER_MERGE_UNDO);
-
-  if (merge_type == FlattenImage)
-    {
-      switch (gimage_base_type (gimage))
-	{
-	case RGB: type = RGB_GIMAGE; break;
-	case GRAY: type = GRAY_GIMAGE; break;
-	case INDEXED: type = INDEXED_GIMAGE; break;
-	}
-      merge_layer = layer_new (gimage->ID, gimage->width, gimage->height,
-			       type, drawable_name (GIMP_DRAWABLE(layer)), OPAQUE_OPACITY, NORMAL_MODE);
-
-      if (!merge_layer) {
-	warning("gimage_merge_layers: could not allocate merge layer");
-	return NULL;
-      }
-
-      /*  get the background for compositing  */
-      gimage_get_background (gimage, GIMP_DRAWABLE(merge_layer), bg);
-
-      /*  init the pixel region  */
-      pixel_region_init (&src1PR, drawable_data (GIMP_DRAWABLE(merge_layer)), 0, 0, gimage->width, gimage->height, TRUE);
-
-      /*  set the region to the background color  */
-      color_region (&src1PR, bg);
-
-      position = 0;
-    }
-  else
-    {
-      /*  The final merged layer inherits the attributes of the bottomost layer,
-       *  with a notable exception:  The resulting layer has an alpha channel
-       *  whether or not the original did
-       */
-      merge_layer = layer_new (gimage->ID, (x2 - x1), (y2 - y1),
-			       drawable_type_with_alpha (GIMP_DRAWABLE(layer)),
-			       drawable_name (GIMP_DRAWABLE(layer)),
-			       layer->opacity, layer->mode);
-      
-      if (!merge_layer) {
-	warning("gimage_merge_layers: could not allocate merge layer");
-	return NULL;
-      }
-
-      GIMP_DRAWABLE(merge_layer)->offset_x = x1;
-      GIMP_DRAWABLE(merge_layer)->offset_y = y1;
-
-      /*  Set the layer to transparent  */
-      pixel_region_init (&src1PR, drawable_data (GIMP_DRAWABLE(merge_layer)), 0, 0, (x2 - x1), (y2 - y1), TRUE);
-
-      /*  set the region to 0's  */
-      color_region (&src1PR, bg);
-
-      /*  Find the index in the layer list of the bottom layer--we need this
-       *  in order to add the final, merged layer to the layer list correctly
-       */
-      layer = (Layer *) reverse_list->data;
-      position = g_slist_length (gimage->layers) - gimage_get_layer_index (gimage, layer);
-      
-      /* set the mode of the bottom layer to normal so that the contents
-       *  aren't lost when merging with the all-alpha merge_layer
-       *  Keep a pointer to it so that we can set the mode right after it's been
-       *  merged so that undo works correctly.
-       */
-      layer -> mode =NORMAL;
-      bottom = layer;
-
-    }
-
-  while (reverse_list)
-    {
-      layer = (Layer *) reverse_list->data;
-
-      /*  determine what sort of operation is being attempted and
-       *  if it's actually legal...
-       */
-      operation = valid_combinations [drawable_type (GIMP_DRAWABLE(merge_layer))][drawable_bytes (GIMP_DRAWABLE(layer))];
-      if (operation == -1)
-	{
-	  warning ("gimage_merge_layers attempting to merge incompatible layers\n");
-	  return NULL;
-	}
-
-      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
-      x3 = BOUNDS (off_x, x1, x2);
-      y3 = BOUNDS (off_y, y1, y2);
-      x4 = BOUNDS (off_x + drawable_width (GIMP_DRAWABLE(layer)), x1, x2);
-      y4 = BOUNDS (off_y + drawable_height (GIMP_DRAWABLE(layer)), y1, y2);
-
-      /* configure the pixel regions  */
-      pixel_region_init (&src1PR, drawable_data (GIMP_DRAWABLE(merge_layer)), (x3 - x1), (y3 - y1), (x4 - x3), (y4 - y3), TRUE);
-      pixel_region_init (&src2PR, drawable_data (GIMP_DRAWABLE(layer)), (x3 - off_x), (y3 - off_y),
-			 (x4 - x3), (y4 - y3), FALSE);
-
-      if (layer->mask)
-	{
-	  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(layer->mask)), (x3 - off_x), (y3 - off_y),
-			     (x4 - x3), (y4 - y3), FALSE);
-	  mask = &maskPR;
-	}
-      else
-	mask = NULL;
-
-      combine_regions (&src1PR, &src2PR, &src1PR, mask, NULL,
-		       layer->opacity, layer->mode, active, operation);
-
-      gimage_remove_layer (gimage, layer);
-      reverse_list = g_slist_next (reverse_list);
-    }
-
-  /* Save old mode in undo */
-  if (bottom)
-    bottom -> mode = merge_layer -> mode;
-
-  g_slist_free (reverse_list);
-
-  /*  if the type is flatten, remove all the remaining layers  */
-  if (merge_type == FlattenImage)
-    {
-      merge_list = gimage->layers;
-      while (merge_list)
-	{
-	  layer = (Layer *) merge_list->data;
-	  merge_list = g_slist_next (merge_list);
-	  gimage_remove_layer (gimage, layer);
-	}
-
-      gimage_add_layer (gimage, merge_layer, position);
-    }
-  else
-    {
-      /*  Add the layer to the gimage  */
-      gimage_add_layer (gimage, merge_layer, (g_slist_length (gimage->layers) - position + 1));
-    }
-
-  /*  End the merge undo group  */
-  undo_push_group_end (gimage);
-
-  /*  Update the gimage  */
-  GIMP_DRAWABLE(merge_layer)->visible = TRUE;
-
-  /*  update gdisplay titles to reflect the possibility of
-   *  this layer being the only layer in the gimage
-   */
-  gdisplays_update_title (gimage->ID);
-
-  drawable_update (GIMP_DRAWABLE(merge_layer), 0, 0, drawable_width (GIMP_DRAWABLE(merge_layer)), drawable_height (GIMP_DRAWABLE(merge_layer)));
-
-  return merge_layer;
-}
-#endif
 
 Layer *
 gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
@@ -2839,7 +1971,7 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
   PixelArea * mask;
   Layer *merge_layer;
   Tag layer_tag, merge_layer_tag;
-  Layer *layer;
+  Layer *layer = NULL;
   Layer *bottom;
   int type;
   int count;
@@ -2933,7 +2065,7 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
 			OPAQUE_OPACITY, NORMAL_MODE);
 
       if (!merge_layer) {
-	warning("gimage_merge_layers: could not allocate merge layer");
+	g_message ("gimage_merge_layers: could not allocate merge layer");
 	return NULL;
       }
 
@@ -2965,7 +2097,7 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
 			       layer->opacity, layer->mode);
       
       if (!merge_layer) {
-	warning("gimage_merge_layers: could not allocate merge layer");
+	g_message ("gimage_merge_layers: could not allocate merge layer");
 	return NULL;
       }
 
@@ -3009,7 +2141,7 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
       
       if (operation == -1)
 	{
-	  warning ("gimage_merge_layers attempting to merge incompatible layers\n");
+	  g_message ("gimage_merge_layers attempting to merge incompatible layers\n");
 	  return NULL;
 	}
 
@@ -3077,12 +2209,11 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
    */
   gdisplays_update_title (gimage->ID);
 
-  drawable_update (GIMP_DRAWABLE(merge_layer), 
-	0, 0, 
-	drawable_width (GIMP_DRAWABLE(merge_layer)), drawable_height (GIMP_DRAWABLE(merge_layer)));
+  drawable_update (GIMP_DRAWABLE(merge_layer), 0, 0, drawable_width (GIMP_DRAWABLE(merge_layer)), drawable_height (GIMP_DRAWABLE(merge_layer)));
 
   return merge_layer;
 }
+
 
 Layer *
 gimage_add_layer (GImage *gimage, Layer *float_layer, int position)
@@ -3092,7 +2223,7 @@ gimage_add_layer (GImage *gimage, Layer *float_layer, int position)
   if (GIMP_DRAWABLE(float_layer)->gimage_ID != 0 && 
       GIMP_DRAWABLE(float_layer)->gimage_ID != gimage->ID) 
     {
-      warning("gimage_add_layer: attempt to add layer to wrong image");
+      g_message ("gimage_add_layer: attempt to add layer to wrong image");
       return NULL;
     }
 
@@ -3102,7 +2233,7 @@ gimage_add_layer (GImage *gimage, Layer *float_layer, int position)
       {
 	if (ll->data == float_layer) 
 	  {
-	    warning("gimage_add_layer: trying to add layer to image twice");
+	    g_message ("gimage_add_layer: trying to add layer to image twice");
 	    return NULL;
 	  }
 	ll = g_slist_next(ll);
@@ -3181,7 +2312,7 @@ gimage_remove_layer (GImage *gimage, Layer * layer)
 
 	  floating_sel_reset (layer);
 	}
-      else if (gimage->active_layer == layer)
+      if (gimage->active_layer == layer)
 	{
 	  if (gimage->layers)
 	    gimage->active_layer = (Layer *) gimage->layer_stack->data;
@@ -3225,7 +2356,7 @@ gimage_add_layer_mask (GImage *gimage, Layer *layer, LayerMask *mask)
 
   if (error)
     {
-      message_box (error, NULL, NULL);
+      g_message (error);
       return NULL;
     }
 
@@ -3291,9 +2422,12 @@ gimage_remove_layer_mask (GImage *gimage, Layer *layer, int mode)
       gdisplays_update_area (gimage->ID, off_x, off_y,
 			     drawable_width (GIMP_DRAWABLE(layer)), drawable_height (GIMP_DRAWABLE(layer)));
     }
+
+  drawable_update (GIMP_DRAWABLE(layer), 0, 0, drawable_width (GIMP_DRAWABLE(layer)), drawable_height (GIMP_DRAWABLE(layer)));
+
   gdisplays_flush ();
 
-  return GIMP_CHANNEL (layer->mask);
+  return NULL;
 }
 
 
@@ -3327,7 +2461,7 @@ gimage_raise_channel (GImage *gimage, Channel * channel_arg)
 	    }
 	  else
 	    {
-	      message_box ("Channel cannot be raised any further", NULL, NULL);
+	      g_message ("Channel cannot be raised any further");
 	      return NULL;
 	    }
 	}
@@ -3374,7 +2508,7 @@ gimage_lower_channel (GImage *gimage, Channel *channel_arg)
 	    }
 	  else
 	    {
-	      message_box ("Channel cannot be lowered any further", NULL, NULL);
+	      g_message ("Channel cannot be lowered any further");
 	      return NULL;
 	    }
 	}
@@ -3394,7 +2528,7 @@ gimage_add_channel (GImage *gimage, Channel *channel, int position)
   if (GIMP_DRAWABLE(channel)->gimage_ID != 0 &&
       GIMP_DRAWABLE(channel)->gimage_ID != gimage->ID)
     {
-      warning("gimage_add_channel: attempt to add channel to wrong image");
+      g_message ("gimage_add_channel: attempt to add channel to wrong image");
       return NULL;
     }
 
@@ -3404,7 +2538,7 @@ gimage_add_channel (GImage *gimage, Channel *channel, int position)
       {
 	if (cc->data == channel) 
 	  {
-	    warning("gimage_add_channel: trying to add channel to image twice");
+	    g_message ("gimage_add_channel: trying to add channel to image twice");
 	    return NULL;
 	  }
 	cc = g_slist_next (cc);
@@ -3466,6 +2600,7 @@ gimage_remove_channel (GImage *gimage, Channel *channel)
 
       return channel;
     }
+
   else
     return NULL;
 }
@@ -3474,64 +2609,6 @@ gimage_remove_channel (GImage *gimage, Channel *channel)
 /************************************************************/
 /*  Access functions                                        */
 /************************************************************/
-#if 0
-int
-gimage_is_flat (GImage *gimage)
-{
-  Layer *layer;
-  int ac_visible = TRUE;
-  int flat = TRUE;
-  int off_x, off_y;
-
-  /*  Are there no layers?  */
-  if (gimage_is_empty (gimage))
-    flat = FALSE;
-  /*  Is there more than one layer?  */
-  else if (gimage->layers->next)
-    flat = FALSE;
-  else
-    {
-      /*  determine if all channels are visible  */
-      int a, b;
-
-      layer = gimage->layers->data;
-      a = layer_has_alpha (layer) ? drawable_bytes (GIMP_DRAWABLE(layer)) - 1 : drawable_bytes (GIMP_DRAWABLE(layer));
-      for (b = 0; b < a; b++)
-	if (gimage->visible[b] == FALSE)
-	  ac_visible = FALSE;
-
-      /*  What makes a flat image?
-       *  1) the solitary layer is exactly gimage-sized and placed
-       *  2) no layer mask
-       *  3) opacity == OPAQUE_OPACITY
-       *  4) all channels must be visible
-       */
-      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
-      if ((drawable_width (GIMP_DRAWABLE(layer)) != gimage->width) ||
-	  (drawable_height (GIMP_DRAWABLE(layer)) != gimage->height) ||
-	  (off_x != 0) ||
-	  (off_y != 0) ||
-	  (layer->mask != NULL) ||
-	  (layer->opacity != OPAQUE_OPACITY) ||
-	  (ac_visible == FALSE))
-	flat = FALSE;
-    }
-
-  /*  Are there any channels?  */
-  if (gimage->channels)
-    flat = FALSE;
-
-  if (gimage->flat != flat)
-    {
-      if (flat)
-	gimage_deflate (gimage);
-      else
-	gimage_inflate (gimage);
-    }
-
-  return gimage->flat;
-}
-#endif
 int
 gimage_is_flat (GImage *gimage)
 {
@@ -3590,7 +2667,6 @@ gimage_is_flat (GImage *gimage)
 
   return gimage->flat;
 }
-
 
 int
 gimage_is_empty (GImage *gimage)
@@ -3671,10 +2747,22 @@ gimage_disable_undo (GImage *gimage)
 int
 gimage_dirty (GImage *gimage)
 {
+  GDisplay *gdisp;
+  
   if (gimage->dirty < 0)
     gimage->dirty = 2;
   else
     gimage->dirty ++;
+  if (active_tool && !active_tool->preserve) {
+    gdisp = active_tool->gdisp_ptr;
+    if (gdisp) {
+      if (gdisp->gimage->ID == gimage->ID)
+        tools_initialize (active_tool->type, gdisp);
+      else
+        tools_initialize (active_tool->type, NULL);
+    }
+  }
+  
   return gimage->dirty;
 }
 
@@ -3860,6 +2948,7 @@ gimage_composite_bytes (GImage *gimage)
 static TempBuf *
 gimage_construct_composite_preview (GImage *gimage, int width, int height)
 {
+#if 0
   Layer * layer;
   PixelRegion src1PR, src2PR, maskPR;
   PixelRegion * mask;
@@ -3875,7 +2964,7 @@ gimage_construct_composite_preview (GImage *gimage, int width, int height)
   int construct_flag;
   int visible[MAX_CHANNELS] = {1, 1, 1, 1};
   int off_x, off_y;
-  printf("gimage_construct_composite_preview\n");
+
   ratio = (double) width / (double) gimage->width;
 
   switch (gimage_base_type (gimage))
@@ -3935,6 +3024,7 @@ gimage_construct_composite_preview (GImage *gimage, int width, int height)
       layer_buf = layer_preview (layer, w, h);
       src2PR.bytes = layer_buf->bytes;
       src2PR.w = src1PR.w;  src2PR.h = src1PR.h;
+      src2PR.x = src1PR.x;  src2PR.y = src1PR.y;
       src2PR.rowstride = layer_buf->width * src2PR.bytes;
       src2PR.data = temp_buf_data (layer_buf) +
 	(y1 - y) * src2PR.rowstride + (x1 - x) * src2PR.bytes;
@@ -3989,6 +3079,8 @@ gimage_construct_composite_preview (GImage *gimage, int width, int height)
   g_slist_free (reverse_list);
 
   return comp;
+#endif
+  return NULL;
 }
 
 TempBuf *
@@ -3996,7 +3088,6 @@ gimage_composite_preview (GImage *gimage, ChannelType type,
 			  int width, int height)
 {
   int channel;
-  printf( "In gimage_composite_preview\n");
 
   switch (type)
     {

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <string.h>
@@ -52,7 +52,6 @@ struct _PosterizeDialog
 };
 
 /*  posterize action functions  */
-
 
 static void   posterize_button_press   (Tool *, GdkEventButton *, gpointer);
 static void   posterize_button_release (Tool *, GdkEventButton *, gpointer);
@@ -226,6 +225,10 @@ posterize_button_press (Tool           *tool,
 			GdkEventButton *bevent,
 			gpointer        gdisp_ptr)
 {
+  GDisplay *gdisp;
+
+  gdisp = gdisp_ptr;
+  tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
 static void
@@ -271,7 +274,9 @@ posterize_control (Tool     *tool,
     case HALT :
       if (posterize_dialog)
 	{
-	  image_map_abort_16 (posterize_dialog->image_map);
+	  active_tool->preserve = TRUE;
+	  image_map_abort (posterize_dialog->image_map);
+	  active_tool->preserve = FALSE;
 	  posterize_dialog->image_map = NULL;
 	  posterize_cancel_callback (NULL, (gpointer) posterize_dialog);
 	}
@@ -310,6 +315,9 @@ tools_new_posterize ()
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = posterize_cursor_update;
   tool->control_func = posterize_control;
+  tool->preserve = FALSE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
 
   return tool;
 }
@@ -323,7 +331,7 @@ tools_free_posterize (Tool *tool)
 
   /*  Close the color select dialog  */
   if (posterize_dialog)
-    posterize_ok_callback (NULL, (gpointer) posterize_dialog);
+    posterize_cancel_callback (NULL, (gpointer) posterize_dialog);
 
   g_free (post);
 }
@@ -337,7 +345,7 @@ posterize_initialize (void *gdisp_ptr)
 
   if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
     {
-      message_box ("Posterize does not operate on indexed drawables.", NULL, NULL);
+      g_message ("Posterize does not operate on indexed drawables.");
       return;
     }
 
@@ -365,7 +373,7 @@ static ActionAreaItem action_items[] =
   { "Cancel", posterize_cancel_callback, NULL, NULL }
 };
 
-PosterizeDialog *
+static PosterizeDialog *
 posterize_new_dialog ()
 {
   PosterizeDialog *pd;
@@ -441,7 +449,6 @@ posterize_new_dialog ()
 static void
 posterize_preview (PosterizeDialog *pd)
 {
-
   if (!pd->image_map)
   {
     g_warning ("No image map");
@@ -450,7 +457,9 @@ posterize_preview (PosterizeDialog *pd)
   {
     PosterizeFunc posterize;
     posterize = posterize_func (drawable_tag (pd->drawable));
+    active_tool->preserve = TRUE;
     image_map_apply_16 (pd->image_map, posterize, (void *) pd);
+    active_tool->preserve = FALSE;
   }
 }
 
@@ -465,6 +474,8 @@ posterize_ok_callback (GtkWidget *widget,
   if (GTK_WIDGET_VISIBLE (pd->shell))
     gtk_widget_hide (pd->shell);
 
+  active_tool->preserve = TRUE;
+
   if (!pd->preview)
   {
     PosterizeFunc posterize;
@@ -475,6 +486,7 @@ posterize_ok_callback (GtkWidget *widget,
   if (pd->image_map)
     image_map_commit_16 (pd->image_map);
 
+  active_tool->preserve = FALSE;
   pd->image_map = NULL;
 }
 
@@ -482,7 +494,8 @@ static gint
 posterize_delete_callback (GtkWidget *w, GdkEvent *e, gpointer data)
 {
   posterize_cancel_callback (w, data);
-  return FALSE;
+
+  return TRUE;
 }
 
 static void
@@ -497,7 +510,9 @@ posterize_cancel_callback (GtkWidget *widget,
 
   if (pd->image_map)
     {
+      active_tool->preserve = TRUE;
       image_map_abort_16 (pd->image_map);
+      active_tool->preserve = FALSE;
       gdisplays_flush ();
     }
 

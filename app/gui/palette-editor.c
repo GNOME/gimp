@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <stdio.h>
@@ -86,12 +86,13 @@ static gint palette_color_area_events (GtkWidget *, GdkEvent *, PaletteP);
 static void palette_scroll_update (GtkAdjustment *, gpointer);
 static void palette_new_callback (GtkWidget *, gpointer);
 static void palette_delete_callback (GtkWidget *, gpointer);
+static void palette_refresh_callback (GtkWidget *, gpointer);
 static void palette_edit_callback (GtkWidget *, gpointer);
 static void palette_close_callback (GtkWidget *, gpointer);
 static gint palette_dialog_delete_callback (GtkWidget *, GdkEvent *, gpointer);
 static void palette_new_entries_callback (GtkWidget *, gpointer);
 static void palette_add_entries_callback (GtkWidget *, gpointer, gpointer);
-static void palette_merge_entries_callback (GtkWidget *, gpointer);
+/* static void palette_merge_entries_callback (GtkWidget *, gpointer); */
 static void palette_delete_entries_callback (GtkWidget *, gpointer);
 static void palette_select_callback (int, int, int, ColorSelectState, void *);
 
@@ -107,6 +108,9 @@ static int              num_palette_entries = 0;
 static unsigned char    foreground[3] = { 0, 0, 0 };
 static unsigned char    background[3] = { 255, 255, 255 };
 
+/*  Color select dialog  */
+/* static ColorSelectP color_select = NULL;
+static int color_select_active = 0; */
 
 static ActionAreaItem action_items[] =
 {
@@ -119,8 +123,8 @@ static ActionAreaItem action_items[] =
 static MenuItem palette_ops[] =
 {
   { "New Palette", 0, 0, palette_new_entries_callback, NULL, NULL, NULL },
-  { "Merge Palette", 0, 0, palette_merge_entries_callback, NULL, NULL, NULL },
   { "Delete Palette", 0, 0, palette_delete_entries_callback, NULL, NULL, NULL },
+  { "Refresh Palettes", 0, 0, palette_refresh_callback, NULL, NULL, NULL },
   { "Close", 0, 0, palette_close_callback, NULL, NULL, NULL },
   { NULL, 0, 0, NULL, NULL, NULL, NULL },
 };
@@ -191,9 +195,9 @@ color16_background  (
 
 
 void
-palettes_init ()
+palettes_init (int no_data)
 {
-  palette_init_palettes ();
+  palette_init_palettes (no_data);
 }
 
 void
@@ -215,6 +219,7 @@ palette_create ()
   GtkWidget *arrow;
   GtkWidget *menu_bar;
   GtkWidget *menu_bar_item;
+  int i;
 
   if (!palette)
     {
@@ -247,13 +252,9 @@ palette_create ()
       gtk_box_pack_start (GTK_BOX (vbox), options_box, FALSE, FALSE, 0);
 
       /*  The popup menu -- palette_ops  */
-      palette_ops[0].user_data = palette;
-      palette_ops[1].user_data = palette;
-      palette_ops[2].user_data = palette;
-      palette_ops[3].user_data = palette;
-      palette_ops[4].user_data = palette;
-      palette_ops[5].user_data = palette;
-      palette_ops[6].user_data = palette;
+      for (i = 0; palette_ops[i].label; i++)
+	  palette_ops[i].user_data = palette;
+
       palette->palette_ops = build_menu (palette_ops, NULL);
 
       /*  The palette commands pulldown menu  */
@@ -319,6 +320,9 @@ palette_create ()
       gtk_widget_show (sbar);
       gtk_widget_show (frame);
       gtk_widget_show (hbox);
+
+      if(no_data)
+	 palettes_init(FALSE);
 
       /*  The action area  */
       action_items[0].user_data = palette;
@@ -444,9 +448,11 @@ palette_swap_colors (void)
 }
 
 void
-palette_init_palettes (void)
+palette_init_palettes (int no_data)
 {
-  datafiles_read_directories (palette_path, palette_entries_load, 0);
+  if(!no_data)
+    datafiles_read_directories (palette_path, palette_entries_load, 0);
+
 }
 
 
@@ -667,7 +673,7 @@ palette_entries_save (PaletteEntriesP  palette,
   /*  Open the requested file  */
   if (! (fp = fopen (filename, "w")))
     {
-      warning ("can't save palette \"%s\"\n", filename);
+      g_message ("can't save palette \"%s\"\n", filename);
       return;
     }
 
@@ -819,18 +825,18 @@ palette_color_area_events (GtkWidget *widget,
     {
     case GDK_BUTTON_PRESS:
       bevent = (GdkEventButton *) event;
-
+      width = palette->color_area->requisition.width;
+      height = palette->color_area->requisition.height;
+      entry_width = ((width - (SPACING * (COLUMNS + 1))) / COLUMNS) + SPACING;
+      entry_height = ((height - (SPACING * (ROWS + 1))) / ROWS) + SPACING;
+      
+      col = (bevent->x - 1) / entry_width;
+      row = (palette->scroll_offset + bevent->y - 1) / entry_height;
+      pos = row * COLUMNS + col;
+      
       if (bevent->button == 1 && palette->entries)
 	{
-	  width = palette->color_area->requisition.width;
-	  height = palette->color_area->requisition.height;
-	  entry_width = ((width - (SPACING * (COLUMNS + 1))) / COLUMNS) + SPACING;
-	  entry_height = ((height - (SPACING * (ROWS + 1))) / ROWS) + SPACING;
-
-	  col = (bevent->x - 1) / entry_width;
-	  row = (palette->scroll_offset + bevent->y - 1) / entry_height;
-	  pos = row * COLUMNS + col;
-
+	  
 	  tmp_link = g_slist_nth (palette->entries->colors, pos);
 	  if (tmp_link)
 	    {
@@ -850,11 +856,11 @@ palette_color_area_events (GtkWidget *widget,
 	    }
 	}
       break;
-
+      
     default:
       break;
     }
-
+  
   return FALSE;
 }
 
@@ -909,6 +915,33 @@ palette_delete_callback (GtkWidget *w,
     palette_delete_entry (palette);
 }
 
+
+static void
+palette_refresh_callback (GtkWidget *w,
+			  gpointer client_data)
+{
+  PaletteP palette;
+  
+  palette = client_data;
+  if(palette)
+    {
+      palette_free_palettes (); 
+      palette_init_palettes(FALSE);
+      palette_create_palette_menu (palette, default_palette_entries);
+      palette_calc_scrollbar (palette);
+      palette_draw_entries (palette);
+      palette_draw_current_entry (palette);
+    }
+  else
+    {
+      palette_free_palettes (); 
+      palette_init_palettes(FALSE);
+    }
+  
+}
+
+
+
 static void
 palette_edit_callback (GtkWidget *w,
 		       gpointer   client_data)
@@ -948,7 +981,7 @@ palette_dialog_delete_callback (GtkWidget *w,
 {
   palette_close_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 
@@ -1037,16 +1070,15 @@ palette_add_entries_callback (GtkWidget *w,
       palette_entries_list = palette_entries_insert_list (palette_entries_list, entries);
 
       gtk_option_menu_remove_menu (GTK_OPTION_MENU (palette->option_menu));
-      gtk_widget_destroy (palette->menu);
       palette_create_palette_menu (palette, entries);
     }
 }
 
-static void
+/* static void
 palette_merge_entries_callback (GtkWidget *w,
 				gpointer   client_data)
 {
-}
+} */
 
 static void
 palette_delete_entries_callback (GtkWidget *w,
@@ -1066,7 +1098,6 @@ palette_delete_entries_callback (GtkWidget *w,
 	}
 
       gtk_option_menu_remove_menu (GTK_OPTION_MENU (palette->option_menu));
-      gtk_widget_destroy (palette->menu);
 
       entries = palette->entries;
       if (entries && entries->filename)
@@ -1077,7 +1108,7 @@ palette_delete_entries_callback (GtkWidget *w,
       palette->entries = NULL;
 
       palette_free_palettes ();   /*  free palettes, don't save any modified versions  */
-      palette_init_palettes ();   /*  load in brand new palettes  */
+      palette_init_palettes (FALSE);   /*  load in brand new palettes  */
 
       palette_create_palette_menu (palette, default_palette_entries);
     }
@@ -1118,7 +1149,7 @@ palette_select_callback (int   r,
 	  }
 	/* Fallthrough */
       case COLOR_SELECT_CANCEL:
-	color_select_hide (palette->color_select);
+        color_select_hide (palette->color_select);
 	palette->color_select_active = 0;
       }
     }
@@ -1496,6 +1527,51 @@ palette_calc_scrollbar (PaletteP palette)
 
 /****************************/
 /*  PALETTE_GET_FOREGROUND  */
+
+
+static Argument *
+palette_refresh_invoker (Argument *args)
+{
+  /* FIXME: I've hardcoded success to be 1, because brushes_init() is a 
+   *        void function right now.  It'd be nice if it returned a value at 
+   *        some future date, so we could tell if things blew up when reparsing
+   *        the list (for whatever reason). 
+   *                       - Seth "Yes, this is a kludge" Burgess
+   *                         <sjburges@ou.edu>
+   *   -and shaemlessly stolen by Adrian Likins for use here...
+   */
+  
+  int success = TRUE ;
+  palette_free_palettes();
+  palette_init_palettes(FALSE);
+
+  return procedural_db_return_args (&palette_refresh_proc, success);
+}
+
+
+ProcRecord palette_refresh_proc =
+{
+  "gimp_palette_refresh",
+  "Refreshes current palettes",
+  "This procedure incorporates all palettes currently in the users palette path. ",
+  "Adrian Likins <adrain@gimp.org>",
+  "Adrian Likins",
+  "1998",
+  PDB_INTERNAL,
+
+  /* input aarguments */
+  0,
+  NULL,
+
+  /* Output arguments */
+  0,
+  NULL,
+  
+  /* Exec mehtos  */
+  { { palette_refresh_invoker } },
+};
+
+
 
 static Argument *
 palette_get_foreground_invoker (Argument *args)

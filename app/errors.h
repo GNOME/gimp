@@ -13,13 +13,13 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #ifndef __ERRORS_H__
 #define __ERRORS_H__
 
-void message (char *, ...);
-void warning (char *, ...);
+void message_func (char *);
 void fatal_error (char *, ...);
+void terminate (char *, ...);
 
 #endif /* __ERRORS_H__ */

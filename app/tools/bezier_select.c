@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <string.h>
@@ -26,6 +26,8 @@
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "rect_select.h"
+#include "interface.h"
+#include "paint_funcs.h"
 
 #define BEZIER_START     1
 #define BEZIER_ADD       2
@@ -138,6 +140,7 @@ tools_new_bezier_select ()
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = rect_select_cursor_update;
   tool->control_func = bezier_select_control;
+  tool->preserve = FALSE;
 
   return tool;
 }
@@ -171,8 +174,7 @@ bezier_select_load (void        *gdisp_ptr,
   gdisp = (GDisplay *) gdisp_ptr;
 
   /*  select the bezier tool  */
-  tools_select (BEZIER_SELECT);
-
+  gtk_widget_activate (tool_widgets[tool_info[BEZIER_SELECT].toolbar_position]);
   tool = active_tool;
   tool->state = ACTIVE;
   tool->gdisp_ptr = gdisp_ptr;
@@ -246,9 +248,10 @@ bezier_select_button_press (Tool           *tool,
   grab_pointer = 0;
 
   /*  If the tool was being used in another image...reset it  */
-  if (tool->state == ACTIVE && gdisp_ptr != tool->gdisp_ptr)
+  if (tool->state == ACTIVE && gdisp_ptr != tool->gdisp_ptr) {
+    draw_core_stop(bezier_sel->core, tool);
     bezier_select_reset (bezier_sel);
-
+  }
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, TRUE, 0);
 
   /* get halfwidth in image coord */
@@ -1131,7 +1134,7 @@ bezier_convert (BezierSelect *bezier_sel,
           x = (long) list->data;
           list = list->next;
           if (!list)
-	    warning ("cannot properly scanline convert bezier curve: %d", i);
+	    g_message ("cannot properly scanline convert bezier curve: %d", i);
           else
             {
 	      /*  bounds checking  */

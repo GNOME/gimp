@@ -1,12 +1,19 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = libgimp plug-ins app docs
+SUBDIRS = libgimp plug-ins app
 
-EXTRA_DIST = TODO TODO-DIST NOTES gtkrc gimp_logo.ppm rmshm user_install gimp_tips.txt ps-menurc
+bin_SCRIPTS = gimptool
 
-gimpdata_DATA = gimprc gtkrc gimp_logo.ppm gimp_tips.txt ps-menurc
+EXTRA_DIST = TODO gtkrc gimp_logo.ppm gimp_splash.ppm rmshm user_install gimp_tips.txt ps-menurc gimp.1 gimptool.1 gtkrc.forest2 gimp.m4
+
+gimpdata_DATA = gimprc gimprc_user gtkrc gimp_logo.ppm gimp_splash.ppm gimp_tips.txt ps-menurc gtkrc.forest2
 
 gimpdata_SCRIPTS = user_install
+
+man_MANS=gimp.1 gimptool.1
+
+m4datadir = $(datadir)/aclocal
+m4data_DATA = gimp.m4
 
 scriptdata =
 

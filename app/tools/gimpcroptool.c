@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <stdio.h>
@@ -101,7 +101,7 @@ static Argument *crop_invoker (Argument *);
 
 /*  Functions  */
 
-void
+static void
 crop_button_press (Tool           *tool,
 		   GdkEventButton *bevent,
 		   gpointer        gdisp_ptr)
@@ -172,7 +172,7 @@ crop_button_press (Tool           *tool,
   tool->state = ACTIVE;
 }
 
-void
+static void
 crop_button_release (Tool           *tool,
 		     GdkEventButton *bevent,
 		     gpointer        gdisp_ptr)
@@ -207,7 +207,7 @@ crop_button_release (Tool           *tool,
   tool->state = INACTIVE;
 }
 
-void
+static void
 crop_adjust_guides (GImage *gimage,
                     int x1, int y1,
                     int x2, int y2)
@@ -254,7 +254,7 @@ while (glist  != NULL)  {
 }
 		 
 
-void
+static void
 crop_motion (Tool           *tool,
 	     GdkEventMotion *mevent,
 	     gpointer        gdisp_ptr)
@@ -341,7 +341,7 @@ crop_motion (Tool           *tool,
   draw_core_resume (crop->core, tool);
 }
 
-void
+static void
 crop_cursor_update (Tool           *tool,
 		    GdkEventMotion *mevent,
 		    gpointer        gdisp_ptr)
@@ -380,7 +380,7 @@ crop_cursor_update (Tool           *tool,
   gdisplay_install_tool_cursor (gdisp, ctype);
 }
 
-void
+static void
 crop_arrow_keys_func (Tool        *tool,
 		      GdkEventKey *kevent,
 		      gpointer     gdisp_ptr)
@@ -435,7 +435,7 @@ crop_arrow_keys_func (Tool        *tool,
     }
 }
 
-void
+static void
 crop_control (Tool     *tool,
 	      int       action,
 	      gpointer  gdisp_ptr)
@@ -466,8 +466,8 @@ crop_draw (Tool *tool)
   Crop * crop;
   GDisplay * gdisp;
 
-  #define SRW 10
-  #define SRH 10
+#define SRW 10
+#define SRH 10
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   crop = (Crop *) tool->private;
@@ -524,6 +524,7 @@ tools_new_crop ()
   tool->arrow_keys_func = crop_arrow_keys_func;
   tool->cursor_update_func = crop_cursor_update;
   tool->control_func = crop_control;
+  tool->preserve = TRUE;  /* XXX Check me */
 
   return tool;
 }

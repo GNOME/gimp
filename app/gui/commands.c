@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
 #include <stdlib.h>
@@ -54,6 +54,7 @@
 #include "layers_dialog.h"
 #include "layer_select.h"
 #include "levels.h"
+#include "paint_funcs_area.h"
 #include "palette.h"
 #include "patterns.h"
 #include "plug_in.h"
@@ -217,13 +218,6 @@ file_new_ok_callback (GtkWidget *widget,
 
   precision = PRECISION_CONFIG; 
 
-#if 0
-  gimage = gimage_new (vals->width, vals->height, vals->type);
-
-  /*  Make the background (or first) layer  */
-  layer = layer_new (gimage->ID, gimage->width, gimage->height,
-		     type, "Background", OPAQUE_OPACITY, NORMAL);
-#endif
   {  
     Tag tag = tag_new ( precision, format, alpha);
     gimage = gimage_new_tag (vals->width, vals->height, tag);
@@ -256,7 +250,7 @@ file_new_delete_callback (GtkWidget *widget,
 {
   file_new_cancel_callback (widget, data);
 
-  return FALSE;
+  return TRUE;
 }
   
 
@@ -526,6 +520,17 @@ file_new_cmd_callback (GtkWidget *widget,
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
   gtk_widget_show (button);
 
+  button = gtk_radio_button_new_with_label (group, "Foreground");
+  group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+  gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
+  gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) FOREGROUND_FILL);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      (GtkSignalFunc) file_new_toggle_callback,
+		      &vals->fill_type);
+  if (vals->fill_type == FOREGROUND_FILL)
+    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+  gtk_widget_show (button);
+
   button = gtk_radio_button_new_with_label (group, "No Fill");
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
   gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
@@ -643,29 +648,25 @@ file_prefs_ok_callback (GtkWidget *widget,
 
   if (levels_of_undo < 0) 
     {
-      message_box("Error: Levels of undo must be zero or greater.", 
-		  NULL, NULL);
+      g_message ("Error: Levels of undo must be zero or greater.");
       levels_of_undo = old_levels_of_undo;
       return;
     }
   if (marching_speed < 50)
     {
-      message_box("Error: Marching speed must be 50 or greater.",
-		  NULL, NULL);
+      g_message ("Error: Marching speed must be 50 or greater.");
       marching_speed = old_marching_speed;
       return;
     }
   if (default_width < 1)
     {
-      message_box("Error: Default width must be one or greater.",
-		  NULL, NULL);
+      g_message ("Error: Default width must be one or greater.");
       default_width = old_default_width;
       return;
     }
   if (default_height < 1)
     {
-      message_box("Error: Default height must be one or greater.",
-		  NULL, NULL);
+      g_message ("Error: Default height must be one or greater.");
       default_height = old_default_height;
       return;
     }  
@@ -696,6 +697,7 @@ file_prefs_save_callback (GtkWidget *widget,
   gchar *save_palette_path;
   gchar *save_plug_in_path;
   gchar *save_gradient_path;
+  int restart_notification = FALSE;
 
   file_prefs_ok_callback (widget, dlg);
 
@@ -752,56 +754,67 @@ file_prefs_save_callback (GtkWidget *widget,
     {
       update = g_list_append (update, "stingy-memory-use");
       stingy_memory_use = edit_stingy_memory_use;
+      restart_notification = TRUE;
     }
   if (edit_tile_cache_size != tile_cache_size)
     {
       update = g_list_append (update, "tile-cache-size");
       tile_cache_size = edit_tile_cache_size;
+      restart_notification = TRUE;
     }
-  if (edit_install_cmap != install_cmap)
+  if (edit_install_cmap != old_install_cmap)
     {
       update = g_list_append (update, "install-colormap");
       install_cmap = edit_install_cmap;
+      restart_notification = TRUE;
     }
   if (edit_cycled_marching_ants != cycled_marching_ants)
     {
       update = g_list_append (update, "colormap-cycling");
       cycled_marching_ants = edit_cycled_marching_ants;
+      restart_notification = TRUE;
     }
   if (file_prefs_strcmp (temp_path, edit_temp_path))
     {
       update = g_list_append (update, "temp-path");
       temp_path = edit_temp_path;
+      restart_notification = TRUE;
     }
   if (file_prefs_strcmp (swap_path, edit_swap_path))
     {
       update = g_list_append (update, "swap-path");
       swap_path = edit_swap_path;
+      restart_notification = TRUE;
     }
   if (file_prefs_strcmp (brush_path, edit_brush_path))
     {
       update = g_list_append (update, "brush-path");
       brush_path = edit_brush_path;
+      restart_notification = TRUE;
     }
   if (file_prefs_strcmp (pattern_path, edit_pattern_path))
     {
       update = g_list_append (update, "pattern-path");
       pattern_path = edit_pattern_path;
+      restart_notification = TRUE;
     }
   if (file_prefs_strcmp (palette_path, edit_palette_path))
     {
       update = g_list_append (update, "palette-path");
       palette_path = edit_palette_path;
+      restart_notification = TRUE;
     }
   if (file_prefs_strcmp (plug_in_path, edit_plug_in_path))
     {
       update = g_list_append (update, "plug-in-path");
       plug_in_path = edit_plug_in_path;
+      restart_notification = TRUE;
     }
   if (file_prefs_strcmp (gradient_path, edit_gradient_path))
     {
       update = g_list_append (update, "gradient-path");
       gradient_path = edit_gradient_path;
+      restart_notification = TRUE;
     }
   save_gimprc (&update, &remove);
 
@@ -817,6 +830,9 @@ file_prefs_save_callback (GtkWidget *widget,
   palette_path = save_palette_path;
   plug_in_path = save_plug_in_path;
   gradient_path = save_gradient_path;
+
+  if (restart_notification)
+    g_message ("You will need to restart GIMP for these changes to take effect.");
   
   g_list_free (update);
   g_list_free (remove);
@@ -830,7 +846,7 @@ file_prefs_delete_callback (GtkWidget *widget,
   file_prefs_cancel_callback (widget, dlg);
 
   /* the widget is already destroyed here no need to try again */
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -901,12 +917,12 @@ file_prefs_toggle_callback (GtkWidget *widget,
     cubic_interpolation = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data==&confirm_on_close)
     confirm_on_close = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data==&old_stingy_memory_use)
-    old_stingy_memory_use = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data==&old_install_cmap)
-    old_install_cmap = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data==&old_cycled_marching_ants)
-    old_cycled_marching_ants = GTK_TOGGLE_BUTTON (widget)->active;
+  else if (data==&edit_stingy_memory_use)
+    edit_stingy_memory_use = GTK_TOGGLE_BUTTON (widget)->active;
+  else if (data==&edit_install_cmap)
+    edit_install_cmap = GTK_TOGGLE_BUTTON (widget)->active;
+  else if (data==&edit_cycled_marching_ants)
+    edit_cycled_marching_ants = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data==&default_type)
     {
       default_type = (long) gtk_object_get_user_data (GTK_OBJECT (widget));
@@ -1340,14 +1356,18 @@ file_pref_cmd_callback (GtkWidget *widget,
                           &allow_resize_windows);
       gtk_widget_show (button);
       
-      button = gtk_check_button_new_with_label("Auto save");
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
+      /* Don't show the Auto-save button until we really 
+	 have auto-saving in the gimp.
+      
+	 button = gtk_check_button_new_with_label("Auto save");
+	 gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
                                    auto_save);
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-                          (GtkSignalFunc) file_prefs_toggle_callback,
-                          &auto_save);
-      gtk_widget_show (button);
+	 gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+	 gtk_signal_connect (GTK_OBJECT (button), "toggled",
+	                           (GtkSignalFunc) file_prefs_toggle_callback,
+                                   &auto_save);
+         gtk_widget_show (button);
+      */
 
       button = gtk_check_button_new_with_label("Disable cursor updating");
       gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
@@ -1405,7 +1425,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
 			  (GtkSignalFunc) file_prefs_toggle_callback,
-			  &old_stingy_memory_use);
+			  &edit_stingy_memory_use);
       gtk_widget_show (button);
       
       hbox = gtk_hbox_new (FALSE, 2);
@@ -1423,7 +1443,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (entry), "changed",
                           (GtkSignalFunc) file_prefs_text_callback,
-                          &old_tile_cache_size);
+                          &edit_tile_cache_size);
       gtk_widget_show (entry);
       
       button = gtk_check_button_new_with_label("Install colormap (8-bit only)");
@@ -1431,7 +1451,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 				   install_cmap);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
                           (GtkSignalFunc) file_prefs_toggle_callback,
-                          &old_install_cmap);
+                          &edit_install_cmap);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
@@ -1440,8 +1460,10 @@ file_pref_cmd_callback (GtkWidget *widget,
                                    cycled_marching_ants);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
                           (GtkSignalFunc) file_prefs_toggle_callback,
-                          &old_cycled_marching_ants);
+                          &edit_cycled_marching_ants);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      if (g_visual->depth != 8)
+	gtk_widget_set_sensitive (GTK_WIDGET(button), FALSE);
       gtk_widget_show (button);
       
       label = gtk_label_new ("Environment");
@@ -1731,7 +1753,7 @@ select_border_cmd_callback (GtkWidget *widget,
 
   sprintf (initial, "%d", gimage_mask_border_radius);
   query_string_box ("Border Selection", "Border selection by:", initial,
-		    gimage_mask_border_callback, gdisp->gimage);
+		    gimage_mask_border_callback, (gpointer) gdisp->gimage->ID);
 }
 
 void
@@ -1745,7 +1767,7 @@ select_feather_cmd_callback (GtkWidget *widget,
 
   sprintf (initial, "%f", gimage_mask_feather_radius);
   query_string_box ("Feather Selection", "Feather selection by:", initial,
-		    gimage_mask_feather_callback, gdisp->gimage);
+		    gimage_mask_feather_callback, (gpointer) gdisp->gimage->ID);
 }
 
 void
@@ -1759,7 +1781,7 @@ select_grow_cmd_callback (GtkWidget *widget,
 
   sprintf (initial, "%d", gimage_mask_grow_pixels);
   query_string_box ("Grow Selection", "Grow selection by:", initial,
-		    gimage_mask_grow_callback, gdisp->gimage);
+		    gimage_mask_grow_callback, (gpointer) gdisp->gimage->ID);
 }
 
 void
@@ -1773,7 +1795,7 @@ select_shrink_cmd_callback (GtkWidget *widget,
 
   sprintf (initial, "%d", gimage_mask_shrink_pixels);
   query_string_box ("Shrink Selection", "Shrink selection by:", initial,
-		    gimage_mask_shrink_callback, gdisp->gimage);
+		    gimage_mask_shrink_callback, (gpointer) gdisp->gimage->ID);
 }
 
 void
@@ -1785,6 +1807,10 @@ select_by_color_cmd_callback (GtkWidget *widget,
   gdisp = gdisplay_active ();
   gtk_widget_activate (tool_widgets[tool_info[(int) BY_COLOR_SELECT].toolbar_position]);
   by_color_select_initialize ((void *) gdisp->gimage);
+
+  gdisp = gdisplay_active ();
+
+  active_tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
 void
@@ -2039,6 +2065,10 @@ image_posterize_cmd_callback (GtkWidget *widget,
   gdisp = gdisplay_active ();
   gtk_widget_activate (tool_widgets[tool_info[(int) POSTERIZE].toolbar_position]);
   posterize_initialize ((void *) gdisp);
+
+  gdisp = gdisplay_active ();
+
+  active_tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
 void
@@ -2050,6 +2080,10 @@ image_threshold_cmd_callback (GtkWidget *widget,
   gdisp = gdisplay_active ();
   gtk_widget_activate (tool_widgets[tool_info[(int) THRESHOLD].toolbar_position]);
   threshold_initialize ((void *) gdisp);
+
+  gdisp = gdisplay_active ();
+
+  active_tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
 void
@@ -2061,6 +2095,11 @@ image_color_balance_cmd_callback (GtkWidget *widget,
   gdisp = gdisplay_active ();
   gtk_widget_activate (tool_widgets[tool_info[(int) COLOR_BALANCE].toolbar_position]);
   color_balance_initialize ((void *) gdisp);
+
+  gdisp = gdisplay_active ();
+
+  active_tool->drawable = gimage_active_drawable (gdisp->gimage);
+
 }
 
 void
@@ -2072,6 +2111,10 @@ image_brightness_contrast_cmd_callback (GtkWidget *widget,
   gdisp = gdisplay_active ();
   gtk_widget_activate (tool_widgets[tool_info[(int) BRIGHTNESS_CONTRAST].toolbar_position]);
   brightness_contrast_initialize ((void *) gdisp);
+
+  gdisp = gdisplay_active ();
+
+  active_tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
 void
@@ -2083,6 +2126,10 @@ image_hue_saturation_cmd_callback (GtkWidget *widget,
   gdisp = gdisplay_active ();
   gtk_widget_activate (tool_widgets[tool_info[(int) HUE_SATURATION].toolbar_position]);
   hue_saturation_initialize ((void *) gdisp);
+
+  gdisp = gdisplay_active ();
+
+  active_tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
 void
@@ -2094,6 +2141,10 @@ image_curves_cmd_callback (GtkWidget *widget,
   gdisp = gdisplay_active ();
   gtk_widget_activate (tool_widgets[tool_info[(int) CURVES].toolbar_position]);
   curves_initialize ((void *) gdisp);
+
+  gdisp = gdisplay_active ();
+
+  active_tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
 void
@@ -2105,6 +2156,10 @@ image_levels_cmd_callback (GtkWidget *widget,
   gdisp = gdisplay_active ();
   gtk_widget_activate (tool_widgets[tool_info[(int) LEVELS].toolbar_position]);
   levels_initialize ((void *) gdisp);
+
+  gdisp = gdisplay_active ();
+
+  active_tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
 void
@@ -2271,6 +2326,10 @@ image_histogram_cmd_callback (GtkWidget *widget,
   gdisp = gdisplay_active ();
   gtk_widget_activate (tool_widgets[tool_info[(int) HISTOGRAM].toolbar_position]);
   histogram_tool_initialize ((void *) gdisp);
+
+  gdisp = gdisplay_active ();
+
+  active_tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
 void
@@ -2358,6 +2417,18 @@ layers_mask_select_cmd_callback (GtkWidget *widget,
 }
 
 void
+layers_add_alpha_channel_cmd_callback (GtkWidget *widget,
+				       gpointer   client_data)
+{
+  GDisplay * gdisp;
+
+  gdisp = gdisplay_active ();
+
+  layer_add_alpha ( gdisp->gimage->active_layer);
+  gdisplays_flush ();
+}
+
+void
 tools_default_colors_cmd_callback (GtkWidget *widget,
 				   gpointer   client_data)
 {
@@ -2375,8 +2446,14 @@ void
 tools_select_cmd_callback (GtkWidget *widget,
 			   gpointer   client_data)
 {
+  GDisplay * gdisp;
+
   /*  Activate the approriate widget  */
   gtk_widget_activate (tool_widgets[tool_info[(long) client_data].toolbar_position]);
+
+  gdisp = gdisplay_active ();
+
+  active_tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
 void
@@ -2489,7 +2566,7 @@ image_resize_callback (GtkWidget *w,
 	}
       else 
 	{
-	  message_box("Resize Error: Both width and height must be greater than zero.", NULL, NULL);
+	  g_message ("Resize Error: Both width and height must be greater than zero.");
 	  return;
 	}
     }
@@ -2519,7 +2596,7 @@ image_scale_callback (GtkWidget *w,
 	}
       else 
 	{
-	  message_box("Scale Error: Both width and height must be greater than zero.", NULL, NULL);
+	  g_message ("Scale Error: Both width and height must be greater than zero.");
 	  return;
 	}
     }
@@ -2536,7 +2613,7 @@ image_delete_callback (GtkWidget *w,
 {
   image_cancel_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 
@@ -2561,7 +2638,9 @@ gimage_mask_feather_callback (GtkWidget *w,
   GImage *gimage;
   double feather_radius;
 
-  gimage = (GImage *) client_data;
+  if (!(gimage = gimage_get_ID ((int)client_data)))
+    return;
+
   feather_radius = atof (call_data);
 
   gimage_mask_feather (gimage, feather_radius);
@@ -2577,7 +2656,9 @@ gimage_mask_border_callback (GtkWidget *w,
   GImage *gimage;
   int border_radius;
 
-  gimage = (GImage *) client_data;
+  if (!(gimage = gimage_get_ID ((int)client_data)))
+    return;
+
   border_radius = atoi (call_data);
 
   gimage_mask_border (gimage, border_radius);
@@ -2593,7 +2674,9 @@ gimage_mask_grow_callback (GtkWidget *w,
   GImage *gimage;
   int grow_pixels;
 
-  gimage = (GImage *) client_data;
+  if (!(gimage = gimage_get_ID ((int)client_data)))
+    return;
+
   grow_pixels = atoi (call_data);
 
   gimage_mask_grow (gimage, grow_pixels);
@@ -2609,9 +2692,17 @@ gimage_mask_shrink_callback (GtkWidget *w,
   GImage *gimage;
   int shrink_pixels;
 
-  gimage = (GImage *) client_data;
+  if (!(gimage = gimage_get_ID ((int)client_data)))
+    return;
+
   shrink_pixels = atoi (call_data);
 
   gimage_mask_shrink (gimage, shrink_pixels);
   gdisplays_flush ();
 }
+
+
+
+
+
+

@@ -12,8 +12,9 @@
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the Free
- * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
  */                                                                             
 #include <string.h>
 #include "gimp.h"
@@ -300,7 +301,7 @@ gimp_image_merge_visible_layers (gint32 image_ID,
 
   layer_ID = -1;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    layer_ID = return_vals[0].data.d_layer;
+    layer_ID = return_vals[1].data.d_layer;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
@@ -325,7 +326,7 @@ gimp_image_pick_correlate_layer (gint32 image_ID,
 
   layer_ID = -1;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    layer_ID = return_vals[0].data.d_layer;
+    layer_ID = return_vals[1].data.d_layer;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
@@ -553,8 +554,8 @@ gimp_image_get_component_active (gint32 image_ID,
 }
 
 gint
-gimp_image_get_component_visibile (gint32 image_ID,
-				   gint   component)
+gimp_image_get_component_visible (gint32 image_ID,
+				  gint   component)
 {
   GParam *return_vals;
   int nreturn_vals;

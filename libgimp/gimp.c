@@ -12,8 +12,9 @@
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the Free
- * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
  */
 #include "config.h"
 
@@ -51,12 +52,17 @@ static void       gimp_loop          (void);
 static void       gimp_config        (GPConfig *config);
 static void       gimp_proc_run      (GPProcRun *proc_run);
 static void       gimp_temp_proc_run (GPProcRun *proc_run);
+static void       gimp_message_func  (char *str);
 
 
 int _readfd = 0;
 int _writefd = 0;
 int _shm_ID = -1;
 guchar *_shm_addr = NULL;
+
+const guint gimp_major_version = GIMP_MAJOR_VERSION;
+const guint gimp_minor_version = GIMP_MINOR_VERSION;
+const guint gimp_micro_version = GIMP_MICRO_VERSION;
 
 static gdouble _gamma_val;
 static gint _install_cmap;
@@ -91,6 +97,7 @@ gimp_main (int   argc,
   signal (SIGSEGV, gimp_signal);
   signal (SIGPIPE, gimp_signal);
   signal (SIGTERM, gimp_signal);
+  signal (SIGFPE, gimp_signal);
 
   _readfd = atoi (argv[2]);
   _writefd = atoi (argv[3]);
@@ -107,7 +114,9 @@ gimp_main (int   argc,
       return 0;
     }
 
-  temp_proc_ht = g_hash_table_new (g_str_hash, g_str_equal);
+  g_set_message_handler (&gimp_message_func);
+
+  temp_proc_ht = g_hash_table_new (&g_str_hash, &g_str_equal);
 
   gimp_loop ();
   return 0;
@@ -196,6 +205,27 @@ gimp_progress_update (gdouble percentage)
 				    PARAM_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
+}
+
+
+void
+gimp_message (char *message)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+
+  return_vals = gimp_run_procedure ("gimp_message",
+				    &nreturn_vals,
+				    PARAM_STRING, message,
+				    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+}
+
+static void
+gimp_message_func (char *str)
+{
+  gimp_message (str);
 }
 
 
@@ -770,7 +800,7 @@ gimp_gtkrc ()
   if (!home_dir)
     return NULL;
 
-  sprintf (filename, "%s/.gimp/gtkrc", home_dir);
+  sprintf (filename, "%s/%s/gtkrc", home_dir, GIMPDIR);
 
   return filename;
 }
@@ -858,7 +888,17 @@ gimp_signal (int signum)
   caught_fatal_sig = 1;
 
   fprintf (stderr, "\n%s: %s caught\n", progname, g_strsignal (signum));
-  g_debug (progname);
+
+  switch (signum)
+    {
+    case SIGBUS:
+    case SIGSEGV:
+    case SIGFPE:
+      g_debug (progname);
+      break;
+    default:
+      break;
+    }
 
   gimp_quit ();
 }
@@ -972,14 +1012,14 @@ gimp_config (GPConfig *config)
 
   if (config->version < GP_VERSION)
     {
-      g_print ("%s: the gimp is using an older version of the "
-	       "plug-in protocol than this plug-in\n", progname);
+      g_message ("%s: the gimp is using an older version of the "
+		 "plug-in protocol than this plug-in\n", progname);
       gimp_quit ();
     }
   else if (config->version > GP_VERSION)
     {
-      g_print ("%s: the gimp is using a newer version of the "
-	       "plug-in protocol than this plug-in\n", progname);
+      g_message ("%s: the gimp is using a newer version of the "
+		 "plug-in protocol than this plug-in\n", progname);
       gimp_quit ();
     }
 
@@ -1035,7 +1075,7 @@ gimp_temp_proc_run (GPProcRun *proc_run)
   int nreturn_vals;
   GRunProc run_proc;
 
-  run_proc = g_hash_table_lookup (temp_proc_ht, (gpointer) proc_run->name);
+  run_proc = (GRunProc)g_hash_table_lookup (temp_proc_ht, (gpointer) proc_run->name);
 
   if (run_proc)
     {

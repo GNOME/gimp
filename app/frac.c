@@ -11,6 +11,34 @@
 #include "xcf.h"
 #include "frac.h"
 
+#define FRAC_DONT_WORK
+
+#ifdef FRAC_DONT_WORK
+
+void xcf_compress_frac_info (int _layer_type)
+{
+}
+
+void xcf_save_compress_frac_init (int _dom_density, double quality)
+{
+}
+
+void xcf_load_compress_frac_init (int _image_scale, int _iterations)
+{
+}
+
+gint xcf_load_frac_compressed_tile (XcfInfo *info, Tile *tile)
+{
+  return 0;
+}
+
+gint xcf_save_frac_compressed_tile (XcfInfo *info, Tile *tile)
+{
+  return 0;
+}
+
+#else /* FRAC_DONT_WORK */
+
 #define float double
 
 typedef unsigned char image_data;
@@ -270,7 +298,7 @@ xcf_load_frac_compressed_tile (XcfInfo *info, Tile *tile)
   return 1;
 }
 
-void
+static void
 decompressTile (Tile *destTile, gint num_channels)
 {
   gint i, j, k;
@@ -307,7 +335,7 @@ decompressTile (Tile *destTile, gint num_channels)
   return;
 }
 
-void
+static void
 decompressChannelTile (guchar *channelTileData, gint _x, gint _y)
 {
 
@@ -639,7 +667,7 @@ static void
 /* Initialize the domain information dom_info. This must be done in the
  * same manner in the compressor and the decompressor.
  */
-void dominfo_init(gint x_size, gint y_size, gint density) {
+static void dominfo_init(gint x_size, gint y_size, gint density) {
   gint s;            /* size index for domains; their size is 1<<(s+1) */
 
   for (s = MIN_BITS; s <= MAX_BITS; s++)
@@ -951,7 +979,7 @@ compress_cleanup (gint y_size)
 }
 
 /* Free a two dimensional array allocated as a set of rows. */
-void free_array (void **array, gint rows)
+static void free_array (void **array, gint rows)
 {
   gint row;
 
@@ -999,10 +1027,12 @@ void
 CloseOutputBitFile (BIT_FILE *bit_file )
 {
   if ( bit_file->mask != 0x80 )
-    if ( putc( bit_file->rack, bit_file->file ) != bit_file->rack )
-      g_error( "Fatal error in CloseOutputBitFile!\n" );
-    else
-      (*(bit_file->cp)) += 1;
+    {
+      if ( putc( bit_file->rack, bit_file->file ) != bit_file->rack )
+	g_error( "Fatal error in CloseOutputBitFile!\n" );
+      else
+	(*(bit_file->cp)) += 1;
+    }
   /*  fclose (bit_file->file );
       free ((char *) bit_file);  */
 }
@@ -1372,3 +1402,5 @@ pete_fatal (char *shoutAtPete)
 {
   g_error ("Pete, you are a dumbass because %s\n", shoutAtPete);
 }
+
+#endif /* FRAC_DONT_WORK */

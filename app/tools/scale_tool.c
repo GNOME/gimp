@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <stdio.h>
@@ -22,6 +22,7 @@
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "info_dialog.h"
+#include "paint_funcs.h"
 #include "scale_tool.h"
 #include "selection.h"
 #include "tools.h"
@@ -181,7 +182,7 @@ scale_info_update (tool)
   info_dialog_popup (transform_info);
 }
 
-void
+static void
 scale_tool_motion (tool, gdisp_ptr)
      Tool * tool;
      void * gdisp_ptr;

@@ -2,15 +2,17 @@ dnl Process this file with autoconf to produce a configure script.
 AC_INIT(gimprc.in)
 
 dnl Initialize automake stuff
-dnl $Format: "GIMP_MAJOR_VERSION_NUMBER=$ReleaseMajorVersion$" $
-GIMP_MAJOR_VERSION_NUMBER=0
-dnl $Format: "GIMP_MINOR_VERSION_NUMBER=$ReleaseMinorVersion$" $
-GIMP_MINOR_VERSION_NUMBER=99
-dnl $Format: "GIMP_MICRO_VERSION_NUMBER=$ReleaseMicroVersion$" $
-GIMP_MICRO_VERSION_NUMBER=16
+dnl $Format: "GIMP_MAJOR_VERSION=$ReleaseMajorVersion$" $
+GIMP_MAJOR_VERSION=1
+dnl $Format: "GIMP_MINOR_VERSION=$ReleaseMinorVersion$" $
+GIMP_MINOR_VERSION=0
+dnl $Format: "GIMP_MICRO_VERSION=$ReleaseMicroVersion$" $
+GIMP_MICRO_VERSION=0
+
+GIMP_VERSION=$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION.$GIMP_MICRO_VERSION
 
 dnl $Format: "AM_INIT_AUTOMAKE(gimp, $ReleaseVersion$)" $
-AM_INIT_AUTOMAKE(gimp, 0.99.16)
+AM_INIT_AUTOMAKE(gimp, $GIMP_VERSION, no-define)
 
 dnl Specify a header configuration file
 AM_CONFIG_HEADER(config.h)
@@ -57,50 +59,16 @@ fi)
 
 AC_DEFUN(AC_GIMP_CHECK,
 [
-	AC_PATH_X
-	AC_PATH_XTRA
-
-	saved_cflags="$CFLAGS"
-	saved_ldflags="$LDFLAGS"
-
-	CFLAGS="$X_CFLAGS $CFLAGS"
-	LDFLAGS="$X_LDFLAGS $X_LIBS $LDFLAGS"
-
-	dnl Checks for libraries.
-	AC_CHECK_LIB(X11, XOpenDisplay,
-		x_libs="-lX11 $X_EXTRA_LIBS",
-		[AC_MSG_ERROR(No X11 installed)],
-		$X_EXTRA_LIBS)
-
- 	LD_FLAGS="$saved_ldflags $X_LDFLAGS $X_LIBS $x_libs"
-
-	AC_CHECK_LIB(Xext, XShmAttach,
-		x_libs="-lXext $x_libs", ,
-		$x_libs)
-
-	X_LIBS="$X_LIBS -lgtk -lgdk -lglib $x_libs -lm"
-
- 	LDFLAGS="$saved_ldflags $X_LDFLAGS $X_LIBS"
-
-	dnl Dont cache this as it depends on CFLAGS, LDFLAGS, etc
-	AC_MSG_CHECKING([for glib and gtk])
-        AC_TRY_COMPILE(
-[#include <gtk/gtk.h>],
-[gtk_button_new ();],
-gtk_found=yes,
-gtk_found=no)
-	AC_MSG_RESULT($gtk_found)
-
-	if test $gtk_found = no; then
- 	  AC_MSG_ERROR(Cannot include/link gtk/gdk/glib--check CFLAGS/LDFLAGS)
-        fi
-
-        dnl CFLAGS="$saved_cflags"
-	dnl LDFLAGS="$saved_ldflags"
+	AM_PATH_GTK(1.0.1,,
+ 	  AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))
+        X_LIBS=$GTK_LIBS
+        X_CFLAGS=$GTK_CFLAGS
+        AC_SUBST(X_LIBS)
+        AC_SUBST(X_CFLAGS)
 ])
 
 if test -n "$DEBUGFLAG"; then
-  CFLAGS="$DEBUGFLAG"
+  CFLAGS="$DEBUGFLAG $CFLAGS"
 fi
 
 dnl Checks for programs.
@@ -109,6 +77,7 @@ AM_PROG_CC_STDC
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
+AC_PROG_CPP
 AC_GIMP_CHECK
 
 if eval "test x$GCC = xyes"; then
@@ -133,60 +102,141 @@ if eval "test x$GCC = xyes"; then
   fi
 fi
 
+gimp_save_CPPFLAGS="$CPPFLAGS"
+gimp_save_LDFLAGS="$LDFLAGS"
+gimp_save_LIBS="$LIBS"
+
+CPPFLAGS="$CPPFLAGS $GTK_CFLAGS"
+LDFLAGS="$LDFLAGS `echo $GTK_LIBS | sed 's/\(.*\)\(-lgtk.*\)/\1/'`"
+LIBS="$LIBS $GTK_LIBS"
+
+dnl Test for Xmu
+  if test -z "$LIBXMU_LIB"; then
+    AC_CHECK_LIB(Xmu, XmuClientWindow,
+      AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
+	WEBBROWSER="webbrowser"; LIBXMU_LIB='-lXmu -lXt -lSM -lICE',
+	AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU header file not found) ***)),
+	AC_CHECK_LIB(Xmu, XmuUpdateMapHints,
+	  AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
+	    WEBBROWSER="webbrowser"; LIBXMU_LIB='-lXmu -lXt',
+	    AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU header file not found) ***)),
+	AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU library not found) ***), -lXt), -lXt -lSM -lICE)
+  fi
+
+dnl Test for libaa
+  if test -z "$LIBAA_LIB"; then
+    AC_CHECK_LIB(aa, aa_printf,
+      AC_CHECK_HEADER(aalib.h,
+	AA='aa'; LIBAA_LIB='-laa',
+	AC_MSG_WARN(*** AA plug-in will not be built (AA header file not found) ***)),
+      AC_MSG_WARN(*** AA plug-in will not be built (AA library not found) ***))
+  fi
+
 dnl Test for libtiff
   if test -z "$LIBTIFF_LIB"; then
     AC_CHECK_LIB(tiff, TIFFReadScanline,
-      TIFF='tiff'; LIBTIFF_LIB='-ltiff',
+      AC_CHECK_HEADER(tiffio.h,
+	TIFF='tiff'; LIBTIFF_LIB='-ltiff',
+	AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF header files not found) ***)),
       AC_CHECK_LIB(tiff, TIFFWriteScanline,
-        TIFF='tiff'; LIBTIFF_LIB='-ltiff -lz -ljpeg',
-        AC_MSG_WARN(*** TIFF plug-in will not be built ***), -lz -ljpeg -lm), -lm)
+	AC_CHECK_HEADER(tiffio.h,
+          TIFF='tiff'; LIBTIFF_LIB='-ltiff -ljpeg -lz',
+	  AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF header files not found) ***)),
+	AC_CHECK_LIB(tiff34, TIFFFlushData,
+	  AC_CHECK_HEADER(tiffio.h,
+            TIFF='tiff'; LIBTIFF_LIB='-ltiff34 -ljpeg -lz',
+	    AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF header files not found) ***)),
+        AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF library not found) ***), -ljpeg -lz -lm), -ljpeg -lz -lm), -lm)
   fi
 
 dnl Test for libjpeg
   if test -z "$LIBJPEG_LIB"; then
     AC_CHECK_LIB(jpeg, jpeg_destroy_decompress,
-      JPEG='jpeg'; LIBJPEG_LIB='-ljpeg',
-      AC_MSG_WARN(*** JPEG plug-in will not be built ***))
+      jpeg_ok=yes,
+      jpeg_ok=no
+      AC_MSG_WARN(*** JPEG plug-in will not be built (JPEG library not found) ***))
+    if test "$jpeg_ok" = yes; then
+      AC_MSG_CHECKING([for jpeglib.h])
+      AC_TRY_CPP(
+[#include <stdio.h>
+#undef PACKAGE
+#undef VERSION
+#include <jpeglib.h>],
+	jpeg_ok=yes,
+	jpeg_ok=no)
+      AC_MSG_RESULT($jpeg_ok)
+      if test "$jpeg_ok" = yes; then
+	JPEG='jpeg'; LIBJPEG_LIB='-ljpeg'
+      else
+	AC_MSG_WARN(*** JPEG plug-in will not be built (JPEG header file not found) ***)
+      fi
+    fi
   fi
 
 dnl Test for libpng
   if test -z "$LIBPNG_LIB"; then
     AC_CHECK_LIB(png, png_read_info,
-      PNG='png'; LIBPNG_LIB='-lpng -lz',
-      AC_MSG_WARN(*** PNG plug-in will not be built ***), -lz -lm)
+      AC_CHECK_HEADER(png.h,
+	png_ok=yes,
+	png_ok=no),
+      AC_MSG_WARN(*** PNG plug-in will not be built (PNG library not found) ***), -lz -lm)
+    if test "$png_ok" = yes; then
+      AC_MSG_CHECKING([for png_structp in png.h])
+      AC_TRY_COMPILE([#include <png.h>],
+        [png_structp pp; png_infop info; png_colorp cmap; png_create_read_struct;],
+        png_ok=yes,
+        png_ok=no)
+      AC_MSG_RESULT($png_ok)
+      if test "$png_ok" = yes; then
+        PNG='png'; LIBPNG_LIB='-lpng -lz'
+      else
+        AC_MSG_WARN(*** PNG plug-in will not be built (PNG library is too old) ***)
+      fi
+    else
+      AC_MSG_WARN(*** PNG plug-in will not be built (PNG header file not found) ***)
+    fi
   fi
 
 dnl Test for libmpeg
   if test -z "$LIBMPEG_LIB"; then
     AC_CHECK_LIB(mpeg, GetMPEGFrame,
-      MPEG='mpeg'; LIBMPEG_LIB='-lmpeg',
-      AC_MSG_WARN(*** MPEG plug-in will not be built ***))
-  fi
-
-dnl Test for libtcl
-  if test -z "$LIBTCL_LIB"; then
-	AC_CHECK_LIB(dl, dlopen, DL_LIBRARY=-ldl)
-	AC_ARG_WITH(tcl, --with-{tcl/tk}		use this tcl/tk library,
-    AC_CHECK_LIB($with_tcl, Tcl_StaticPackage,
-      GIMPTCL='gimptcl'; LIBTCL_LIB="-l$with_tcl -l$with_tk $DL_LIBRARY",
-      AC_MSG_WARN(*** gimptcl plug-in will not be built ***), -lm $DL_LIBRARY),
-    AC_CHECK_LIB(tcl, Tcl_StaticPackage,
-      GIMPTCL='gimptcl'; LIBTCL_LIB="-ltcl -ltk $DL_LIBRARY",
-      AC_MSG_WARN(*** gimptcl plug-in will not be built ***), -lm $DL_LIBRARY))
+      AC_CHECK_HEADER(mpeg.h,
+	MPEG='mpeg'; LIBMPEG_LIB='-lmpeg',
+	AC_MSG_WARN(*** MPEG plug-in will not be built (MPEG header file not found) ***)),
+      AC_MSG_WARN(*** MPEG plug-in will not be built (MPEG library not found) ***))
   fi
 
 dnl Test for libxdelta
   if test -z "$LIBXDELTA_LIB"; then
     AC_CHECK_LIB(xdelta, xd_checkin,
-      XD='xd'; LIBXDELTA_LIB='-lxdelta -lglib -lgdbm',
-      AC_MSG_WARN(*** XD plug-in will not be built ***), -lglib -lgdbm)
+      xdelta_ok=yes ; LIBXDELTA_LIB='-lxdelta -lglib -lgdbm',
+      AC_CHECK_LIB(xdelta, xd_checkout,
+	xdelta_ok=yes ; LIBXDELTA_LIB='-lxdelta -lglib -lgdbm -lz',
+	xdelta_ok=no
+	AC_MSG_WARN(*** XD plug-in will not be built (XDELTA library not found) ***), -lglib -lgdbm -lz), -lglib -lgdbm)
+    if test "$xdelta_ok" = yes; then
+      AC_MSG_CHECKING([for xdelta.h])
+      AC_TRY_CPP(
+[#include <glib.h>
+#include <xdelta.h>],
+	xdelta_ok=yes,
+	xdelta_ok=no)
+      AC_MSG_RESULT($xdelta_ok)
+      if test "$xdelta_ok" = yes; then
+	XD='xd'
+      else
+	AC_MSG_WARN(*** XD plug-in will not be built (XDELTA header file not found) ***)
+      fi
+    fi
   fi
 
 dnl Test for libXpm
   if test -z "$LIBXPM_LIB"; then
     AC_CHECK_LIB(Xpm, XpmReadFileToXpmImage,
-      XPM='xpm'; LIBXPM_LIB='-lXpm',
-      AC_MSG_WARN(*** XPM plug-in will not be build ***), $X_LIBS)
+      AC_CHECK_HEADER(X11/xpm.h,
+	XPM='xpm'; LIBXPM_LIB='-lXpm',
+	AC_MSG_WARN(*** XPM plug-in will not be built (XPM header file not found) ***)),
+      AC_MSG_WARN(*** XPM plug-in will not be built (XPM library not found) ***), $X_LIBS)
   fi
 
 dnl Check for shared memory
@@ -235,7 +285,9 @@ AC_TYPE_PID_T
 AC_TYPE_SIGNAL
 AC_FUNC_VPRINTF
 
-# Check for sys/select.h
+AC_FUNC_ALLOCA
+
+dnl Check for sys/select.h
 
 AC_MSG_CHECKING([fd_set and sys/select])
 AC_TRY_COMPILE([#include <sys/types.h>],
@@ -251,40 +303,160 @@ if test $gimp_ok = no; then
     AC_DEFINE(NO_FD_SET)
 fi
 
-dnl TVM: check for compiler characteristics
-AC_C_INLINE
+dnl Check for random number functions
+dnl LIBUCB_LIB=""
+dnl AC_CHECK_FUNC(random, [
+dnl  AC_DEFINE(RAND_FUNC, random)
+dnl  AC_DEFINE(SRAND_FUNC, srandom)],
+dnl  [AC_CHECK_LIB(ucb, random, [
+dnl    AC_DEFINE(RAND_FUNC, random)
+dnl    AC_DEFINE(SRAND_FUNC, srandom)
+dnl    LIBUCB_LIB='-lucb'],
+dnl    [AC_CHECK_FUNC(lrand48,
+dnl      [AC_DEFINE(RAND_FUNC, lrand48) AC_DEFINE(SRAND_FUNC, srand48)],
+dnl      [AC_DEFINE(RAND_FUNC, rand) AC_DEFINE(SRAND_FUNC, srand)])])])
 
-gimpdatadir=$datadir/$PACKAGE
-gimpplugindir=$libdir/$PACKAGE/$GIMP_MAJOR_VERSION_NUMBER.$GIMP_MINOR_VERSION_NUMBER
+dnl check for difftime
+dnl AC_CHECK_FUNC(difftime, , AC_DEFINE(NO_DIFFTIME))
+
+dnl check for inline
+AC_MSG_CHECKING([for inline definition in glibconfig.h])
+AC_EGREP_CPP(glib_defines_inline,
+[#include <glibconfig.h>
+#ifdef inline
+   glib_defines_inline
+#endif
+], have_glib_inline=yes, have_glib_inline=no)
+AC_MSG_RESULT($have_glib_inline)
+if test "$have_glib_inline" = "no"; then
+  AC_C_INLINE
+fi  
+
+CPPFLAGS="$gimp_save_CPPFLAGS"
+LDFLAGS="$gimp_save_LDFLAGS"
+LIBS="$gimp_save_LIBS"
+
+gimpdatadir=$datadir/gimp
+gimpplugindir=$libdir/$PACKAGE/$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
+
+brushdata=`ls -1 $srcdir/data/brushes | grep -v Makefile`
+gradientdata=`ls -1 $srcdir/data/gradients | grep -v Makefile`
+palettedata=`ls -1 $srcdir/data/palettes | grep -v Makefile`
+patterndata=`ls -1 $srcdir/data/patterns | grep -v Makefile`
+
+brushdata=`echo $brushdata`
+gradientdata=`echo $gradientdata`
+palettedata=`echo $palettedata`
+patterndata=`echo $patterndata`
 
 dnl This is for generating PDB docuemntation.
-AC_PATH_PROG(EMACS, emacs, :)
+AC_PATH_PROGS(EMACS, emacs xemacs, :)
+
+dnl This is for the mail plug-in
+sendmail_path=":"
+AC_ARG_ENABLE(sendmail_path, [  --with-sendmail=DIR     set sendmail command location],
+if eval "test x$with_sendmail != x"; then
+    sendmail_path=$with_sendmail
+fi)
+AC_PATH_PROG(SENDMAIL, "sendmail", $sendmail_path, $PATH:/usr/lib:/usr/sbin)
+
+if test $ac_cv_path_SENDMAIL != ":"; then
+  MAILER="-DMAILER=\\\"$ac_cv_path_SENDMAIL\\\""
+fi
+
+dnl This is for the print plug-in
+lp_path=":"
+AC_ARG_ENABLE(lp_path, [  --with-lp=DIR           set lp command location],
+if eval "test x$with_lp != x"; then
+    lp_path=$with_lp
+fi)
+AC_PATH_PROG(LP_COMMAND, "lp", $lp_path,
+  $PATH:/usr/bin:/usr/sbin:/usr/ucb:/usr/bsd)
+
+if test $ac_cv_path_LP_COMMAND != ":"; then
+  LP_DEF="-DLP_COMMAND=\\\"$ac_cv_path_LP_COMMAND\\\""
+fi
+
+lpstat_path=":"
+AC_ARG_ENABLE(lpstat_path, [  --with-lpstat=DIR       set lpstat command location],
+if eval "test x$with_lpstat != x"; then
+    lpstat_path=$with_lpstat
+fi)
+AC_PATH_PROG(LPSTAT_COMMAND, "lpstat", $lpstat_path,
+  $PATH:/usr/bin:/usr/sbin:/usr/ucb:/usr/bsd)
+
+if test $ac_cv_path_LPSTAT_COMMAND != ":"; then
+  LPSTAT_DEF="-DLPSTAT_COMMAND=\\\"$ac_cv_path_LPSTAT_COMMAND\\\""
+fi
+
+lpr_path=":"
+AC_ARG_ENABLE(lpr_path, [  --with-lpr=DIR          set lpr command location],
+if eval "test x$with_lpr != x"; then
+    lpr_path=$with_lpr
+fi)
+AC_PATH_PROG(LPR_COMMAND, "lpr", $lpr_path,
+  $PATH:/usr/bin:/usr/sbin:/usr/ucb:/usr/bsd)
+
+if test $ac_cv_path_LPR_COMMAND != ":"; then
+  LPR_DEF="-DLPR_COMMAND=\\\"$ac_cv_path_LPR_COMMAND\\\""
+fi
+
+lpc_path=":"
+AC_ARG_ENABLE(lpc_path, [  --with-lpc=DIR          set lpc command location],
+if eval "test x$with_lpc != x"; then
+    lpc_path=$with_lpc
+fi)
+AC_PATH_PROG(LPC_COMMAND, "lpc", $lpc_path,
+  $PATH:/usr/bin:/usr/sbin:/usr/ucb:/usr/bsd)
+
+if test $ac_cv_path_LPC_COMMAND != ":"; then
+  LPC_DEF="-DLPC_COMMAND=\\\"$ac_cv_path_LPC_COMMAND\\\""
+fi
+
+AC_SUBST(GIMP_MAJOR_VERSION)
+AC_SUBST(GIMP_MINOR_VERSION)
+AC_SUBST(GIMP_MICRO_VERSION)
+AC_SUBST(GIMP_VERSION)
 
 AC_SUBST(precision)
 AC_SUBST(gimpdir)
 AC_SUBST(gimpdatadir)
 AC_SUBST(gimpplugindir)
+AC_SUBST(brushdata)
+AC_SUBST(gradientdata)
+AC_SUBST(palettedata)
+AC_SUBST(patterndata)
+AC_SUBST(WEBBROWSER)
+AC_SUBST(LIBXMU_LIB)
 AC_SUBST(TIFF)
 AC_SUBST(LIBTIFF_LIB)
 AC_SUBST(JPEG)
 AC_SUBST(LIBJPEG_LIB)
 AC_SUBST(PNG)
 AC_SUBST(LIBPNG_LIB)
+AC_SUBST(AA)
+AC_SUBST(LIBAA_LIB)
 AC_SUBST(MPEG)
 AC_SUBST(LIBMPEG_LIB)
-AC_SUBST(GIMPTCL)
-AC_SUBST(LIBTCL_LIB)
 AC_SUBST(XD)
 AC_SUBST(LIBXDELTA_LIB)
 AC_SUBST(XPM)
 AC_SUBST(LIBXPM_LIB)
-
+AC_SUBST(LIBUCB_LIB)
+AC_SUBST(LP_DEF)
+AC_SUBST(LPSTAT_DEF)
+AC_SUBST(LPR_DEF)
+AC_SUBST(LPC_DEF)
+AC_SUBST(MAILER)
 
 dnl Output the Makefiles
 
 AC_OUTPUT(
 Makefile
 gimprc
+gimprc_user
+gimptool
+libgimp/gimpfeatures.h
 libgimp/Makefile
 plug-ins/Makefile
 plug-ins/build
@@ -296,5 +468,6 @@ plug-ins/script-fu/Makefile
 plug-ins/script-fu/scripts/Makefile
 plug-ins/dbbrowser/Makefile
 app/Makefile
-docs/Makefile
+docs/Makefile,
+chmod +x gimptool
 )

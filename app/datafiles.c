@@ -16,7 +16,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
 
@@ -97,7 +97,7 @@ datafiles_read_directories (char *path_str,
 	  dir = opendir(path);
 
 	  if (!dir)
-	    warning("error reading datafiles directory \"%s\"", path);
+	    g_message ("error reading datafiles directory \"%s\"", path);
 	  else
 	    {
 	      while ((dir_ent = readdir(dir)))

@@ -13,11 +13,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include <stdlib.h>
-
 #include "appenv.h"
 #include "brushes.h"
 #include "canvas.h"
@@ -33,17 +31,16 @@
 #include "tools.h"
 
 /*  forward function declarations  */
-static void         pencil_motion       (PaintCore16 *, GimpDrawable *);
+static void         pencil_motion       (PaintCore *, GimpDrawable *);
 static Argument *   pencil_invoker  (Argument *);
 
 static void *  pencil_options = NULL;
 
-void * 
-pencil_paint_func  (
-                    PaintCore16 * paint_core,
-                    GimpDrawable * drawable,
-                    int state
-                    )
+void *
+pencil_paint_func (paint_core, drawable, state)
+     PaintCore *paint_core;
+     GimpDrawable *drawable;
+     int state;
 {
   switch (state)
     {
@@ -65,40 +62,36 @@ pencil_paint_func  (
 }
 
 
-Tool * 
-tools_new_pencil  (
-                   void
-                   )
+Tool *
+tools_new_pencil ()
 {
   Tool * tool;
-  PaintCore16 * private;
+  PaintCore * private;
 
   if (!pencil_options)
     pencil_options = tools_register_no_options (PENCIL, "Pencil Options");
 
-  tool = paint_core_16_new (PENCIL);
+  tool = paint_core_new (PENCIL);
 
-  private = (PaintCore16 *) tool->private;
+  private = (PaintCore *) tool->private;
   private->paint_func = pencil_paint_func;
 
   return tool;
 }
 
 
-void 
-tools_free_pencil  (
-                    Tool * tool
-                    )
+void
+tools_free_pencil (tool)
+     Tool * tool;
 {
-  paint_core_16_free (tool);
+  paint_core_free (tool);
 }
 
 
-void 
-pencil_motion  (
-                PaintCore16 * paint_core,
-                GimpDrawable * drawable
-                )
+static void
+pencil_motion (paint_core, drawable)
+     PaintCore *paint_core;
+     GimpDrawable *drawable;
 {
   Canvas * painthit;
   PixelArea a;
@@ -126,12 +119,8 @@ pencil_motion  (
 }
 
 
-static void * 
-pencil_non_gui_paint_func  (
-                            PaintCore16 * paint_core,
-                            GimpDrawable * drawable,
-                            int state
-                            )
+static void *
+pencil_non_gui_paint_func (PaintCore *paint_core, GimpDrawable *drawable, int state)
 {
   pencil_motion (paint_core, drawable);
 
@@ -229,36 +218,36 @@ pencil_invoker (args)
 
   if (success)
     /*  init the paint core  */
-    success = paint_core_16_init (&non_gui_paint_core_16, drawable,
+    success = paint_core_init (&non_gui_paint_core, drawable,
 			       stroke_array[0], stroke_array[1]);
 
   if (success)
     {
       /*  set the paint core's paint func  */
-      non_gui_paint_core_16.paint_func = pencil_non_gui_paint_func;
+      non_gui_paint_core.paint_func = pencil_non_gui_paint_func;
 
-      non_gui_paint_core_16.startx = non_gui_paint_core_16.lastx = stroke_array[0];
-      non_gui_paint_core_16.starty = non_gui_paint_core_16.lasty = stroke_array[1];
+      non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
+      non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
 
       if (num_strokes == 1)
-	pencil_non_gui_paint_func (&non_gui_paint_core_16, drawable, 0);
+	pencil_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
 
       for (i = 1; i < num_strokes; i++)
 	{
-	  non_gui_paint_core_16.curx = stroke_array[i * 2 + 0];
-	  non_gui_paint_core_16.cury = stroke_array[i * 2 + 1];
+	  non_gui_paint_core.curx = stroke_array[i * 2 + 0];
+	  non_gui_paint_core.cury = stroke_array[i * 2 + 1];
 
-	  paint_core_16_interpolate (&non_gui_paint_core_16, drawable);
+	  paint_core_interpolate (&non_gui_paint_core, drawable);
 
-	  non_gui_paint_core_16.lastx = non_gui_paint_core_16.curx;
-	  non_gui_paint_core_16.lasty = non_gui_paint_core_16.cury;
+	  non_gui_paint_core.lastx = non_gui_paint_core.curx;
+	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
 	}
 
       /*  finish the painting  */
-      paint_core_16_finish (&non_gui_paint_core_16, drawable, -1);
+      paint_core_finish (&non_gui_paint_core, drawable, -1);
 
       /*  cleanup  */
-      paint_core_16_cleanup ();
+      paint_core_cleanup ();
     }
 
   return procedural_db_return_args (&pencil_proc, success);

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include "appenv.h"
@@ -188,7 +188,7 @@ create_selection_options (ToolType tool_type)
 /*************************************/
 /*  Rectangular selection apparatus  */
 
-void
+static void
 rect_select (GImage *gimage,
 	     int     x,
 	     int     y,
@@ -209,7 +209,7 @@ rect_select (GImage *gimage,
   /*  if feathering for rect, make a new mask with the
    *  rectangle and feather that with the old mask
    */
-  if (feather || op == INTERSECT)
+  if (feather)
     {
       Tag tag = gimage_tag (gimage);
       Tag new_mask_tag = tag_new (tag_precision (tag),FORMAT_GRAY, ALPHA_NO);
@@ -217,11 +217,18 @@ rect_select (GImage *gimage,
       new_mask = channel_new_mask_tag (gimage->ID, 
 			gimage->width, gimage->height, new_mask_tag);
       channel_combine_rect (new_mask, ADD, x, y, w, h);
-      if (feather)
-	  channel_feather (new_mask, gimage_get_mask (gimage),
-			   feather_radius, op, 0, 0);
-      else
-	  channel_combine_mask (gimage_get_mask (gimage), new_mask, op, 0, 0);
+      channel_feather (new_mask, gimage_get_mask (gimage),
+		       feather_radius, op, 0, 0);
+      channel_delete (new_mask);
+    }
+  else if (op == INTERSECT)
+    {
+      Tag tag = gimage_tag (gimage);
+      Tag new_mask_tag = tag_new (tag_precision (tag),FORMAT_GRAY, ALPHA_NO);
+      new_mask = channel_new_mask_tag (gimage->ID, 
+                        gimage->width, gimage->height, new_mask_tag);
+      channel_combine_rect (new_mask, ADD, x, y, w, h);
+      channel_combine_mask (gimage_get_mask (gimage), new_mask, op, 0, 0);
       channel_delete (new_mask);
     }
   else
@@ -436,6 +443,7 @@ rect_select_draw (Tool *tool)
   GDisplay * gdisp;
   RectSelect * rect_sel;
   int x1, y1, x2, y2;
+
   gdisp = (GDisplay *) tool->gdisp_ptr;
   rect_sel = (RectSelect *) tool->private;
 
@@ -531,6 +539,7 @@ tools_new_rect_select ()
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = rect_select_cursor_update;
   tool->control_func = rect_select_control;
+  tool->preserve = TRUE;
 
   return tool;
 }

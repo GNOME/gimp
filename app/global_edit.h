@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #ifndef __GLOBAL_EDIT_H__
 #define __GLOBAL_EDIT_H__
@@ -22,10 +22,6 @@
 struct _Canvas;
 
 /*  The interface functions  */
-TileManager *  crop_buffer            (TileManager *, int);
-TileManager *  edit_cut               (GImage *, GimpDrawable *);
-TileManager *  edit_copy              (GImage *, GimpDrawable *);
-int            edit_paste             (GImage *, GimpDrawable *, TileManager *, int);
 struct _Canvas *  crop_buffer_16            (struct _Canvas *, int);
 struct _Canvas *  edit_cut_16               (GImage *, GimpDrawable *);
 struct _Canvas *  edit_copy_16              (GImage *, GimpDrawable *);

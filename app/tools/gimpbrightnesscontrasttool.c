@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <string.h>
@@ -355,6 +355,10 @@ brightness_contrast_button_press (Tool           *tool,
 				  GdkEventButton *bevent,
 				  gpointer        gdisp_ptr)
 {
+  GDisplay *gdisp;
+
+  gdisp = gdisp_ptr;
+  tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
 static void
@@ -396,7 +400,9 @@ brightness_contrast_control (Tool     *tool,
     case HALT :
       if (brightness_contrast_dialog)
 	{
-	  image_map_abort_16 (brightness_contrast_dialog->image_map);
+	  active_tool->preserve = TRUE;
+          image_map_abort_16 (brightness_contrast_dialog->image_map);
+          active_tool->preserve = FALSE;
           brightness_contrast_free_transfers();
 	  brightness_contrast_dialog->image_map = NULL;
 	  brightness_contrast_cancel_callback (NULL, (gpointer) brightness_contrast_dialog);
@@ -426,6 +432,9 @@ tools_new_brightness_contrast ()
   tool->private = (void *) private;
   tool->button_press_func = brightness_contrast_button_press;
   tool->button_release_func = brightness_contrast_button_release;
+  tool->preserve = FALSE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
   tool->motion_func = brightness_contrast_motion;
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = brightness_contrast_cursor_update;
@@ -443,9 +452,7 @@ tools_free_brightness_contrast (Tool *tool)
 
   /*  Close the color select dialog  */
   if (brightness_contrast_dialog)
-  {
-    brightness_contrast_ok_callback (NULL, (gpointer) brightness_contrast_dialog);
-  }
+    brightness_contrast_cancel_callback (NULL, (gpointer) brightness_contrast_dialog);
 
   g_free (bc);
 }
@@ -460,7 +467,7 @@ brightness_contrast_initialize (void *gdisp_ptr)
 
   if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
     {
-      message_box ("Brightness-Contrast does not operate on indexed drawables.", NULL, NULL);
+      g_message ("Brightness-Contrast does not operate on indexed drawables.");
       return;
     }
 
@@ -482,6 +489,7 @@ brightness_contrast_initialize (void *gdisp_ptr)
   /*  Initialize dialog fields  */
   brightness_contrast_dialog->image_map = NULL;
   brightness_contrast_dialog->brightness = 0.0;
+
   brightness_contrast_dialog->contrast = 0.0;
 
   brightness_contrast_dialog->drawable = drawable;
@@ -502,7 +510,7 @@ static ActionAreaItem action_items[] =
   { "Cancel", brightness_contrast_cancel_callback, NULL, NULL }
 };
 
-BrightnessContrastDialog *
+static BrightnessContrastDialog *
 brightness_contrast_new_dialog ()
 {
   BrightnessContrastDialog *bcd;
@@ -666,10 +674,11 @@ static void
 brightness_contrast_preview (BrightnessContrastDialog *bcd)
 {
   if (!bcd->image_map)
-    g_warning ("No image map");
-  
+    g_message ("brightness_contrast_preview(): No image map");
+  active_tool->preserve = TRUE;
   (*brightness_contrast_init_transfers) ((void *)bcd); 
   image_map_apply_16 (bcd->image_map, brightness_contrast, (void *) bcd);
+  active_tool->preserve = FALSE;
 }
 
 static void
@@ -683,6 +692,8 @@ brightness_contrast_ok_callback (GtkWidget *widget,
   if (GTK_WIDGET_VISIBLE (bcd->shell))
     gtk_widget_hide (bcd->shell);
 
+  active_tool->preserve = TRUE;
+
   if (!bcd->preview)
   {
     (*brightness_contrast_init_transfers) ((void *)bcd); 
@@ -695,6 +706,8 @@ brightness_contrast_ok_callback (GtkWidget *widget,
     brightness_contrast_free_transfers();
   }
 
+  active_tool->preserve = FALSE;
+
   bcd->image_map = NULL;
 }
 
@@ -705,7 +718,7 @@ brightness_contrast_delete_callback (GtkWidget *w,
 {
   brightness_contrast_cancel_callback (w, d);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -720,8 +733,10 @@ brightness_contrast_cancel_callback (GtkWidget *widget,
 
   if (bcd->image_map)
     {
+      active_tool->preserve = TRUE;
       image_map_abort_16 (bcd->image_map);
       brightness_contrast_free_transfers();
+      active_tool->preserve = FALSE;
       gdisplays_flush ();
     }
 
@@ -757,11 +772,11 @@ brightness_contrast_brightness_scale_update (GtkAdjustment *adjustment,
     {
       bcd->brightness = adjustment->value;
       brightness_contrast_update (bcd, BRIGHTNESS_TEXT);
-
       if (bcd->preview)
 	brightness_contrast_preview (bcd);
     }
 }
+
 
 
 static void
@@ -813,7 +828,6 @@ brightness_contrast_brightness_text_check (
   }
   return FALSE;
 }
-
 
 static void
 brightness_contrast_contrast_text_update (GtkWidget *w,

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include "appenv.h"
@@ -227,9 +227,9 @@ tools_button_press (GtkWidget      *w,
 static gint
 toolbox_delete (GtkWidget *w, GdkEvent *e, gpointer data)
 {
-  app_exit (FALSE);
+  app_exit (0);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -252,7 +252,7 @@ gdisplay_delete (GtkWidget *w,
 {
   gdisplay_close_window (gdisp, FALSE);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -387,7 +387,7 @@ create_tools (GtkWidget *parent)
       tool_widgets[i] = button = gtk_radio_button_new (group);
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
 
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
+      gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			  (GtkSignalFunc) tools_select_update,
 			  tool_data[i].callback_data);
     }
@@ -675,7 +675,9 @@ create_display_shell (int   gdisp_id,
 		      gdisp);
 
   gdisp->hsb = gtk_hscrollbar_new (gdisp->hsbdata);
+  GTK_WIDGET_UNSET_FLAGS (gdisp->hsb, GTK_CAN_FOCUS);
   gdisp->vsb = gtk_vscrollbar_new (gdisp->vsbdata);
+  GTK_WIDGET_UNSET_FLAGS (gdisp->vsb, GTK_CAN_FOCUS);
 
   gdisp->canvas = gtk_drawing_area_new ();
   gtk_drawing_area_size (GTK_DRAWING_AREA (gdisp->canvas), n_width, n_height);
@@ -818,7 +820,7 @@ query_box_delete_callback (GtkWidget *w,
 {
   query_box_cancel_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -884,10 +886,10 @@ message_box (char        *message,
   GtkWidget *label_vbox;
   GtkWidget *label;
   GtkWidget *button;
-  char *str;
+  char *str, *orig;
 
   if (message)
-    message = g_strdup (message);
+    message = orig = g_strdup (message);
   else
     return NULL;
 
@@ -941,6 +943,8 @@ message_box (char        *message,
       gtk_widget_show (label);
     }
 
+  g_free (orig);
+
   msg_box->mbox = mbox;
   msg_box->callback = callback;
   msg_box->data = data;
@@ -955,7 +959,7 @@ message_box_delete_callback (GtkWidget *w, GdkEvent *e, gpointer client_data)
 {
   message_box_close_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 

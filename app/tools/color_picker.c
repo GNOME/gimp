@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <stdio.h>
@@ -29,7 +29,7 @@
 
 /* maximum information buffer size */
 
-#define MAX_INFO_BUF    4
+#define MAX_INFO_BUF    8
 
 
 /*  local function prototypes  */
@@ -59,6 +59,7 @@ static char           blue_buf  [MAX_INFO_BUF];
 static char           alpha_buf [MAX_INFO_BUF];
 static char           index_buf [MAX_INFO_BUF];
 static char           gray_buf  [MAX_INFO_BUF];
+static char           hex_buf   [MAX_INFO_BUF];
 
 typedef struct _ColorPickerOptions ColorPickerOptions;
 struct _ColorPickerOptions
@@ -155,6 +156,7 @@ color_picker_button_press (Tool           *tool,
 	  info_dialog_add_field (color_picker_info, "Green", green_buf);
 	  info_dialog_add_field (color_picker_info, "Blue", blue_buf);
 	  info_dialog_add_field (color_picker_info, "Alpha", alpha_buf);
+	  info_dialog_add_field (color_picker_info, "Hex Triplet", hex_buf);
 	  break;
 
 	case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
@@ -163,11 +165,13 @@ color_picker_button_press (Tool           *tool,
 	  info_dialog_add_field (color_picker_info, "Red", red_buf);
 	  info_dialog_add_field (color_picker_info, "Green", green_buf);
 	  info_dialog_add_field (color_picker_info, "Blue", blue_buf);
+	  info_dialog_add_field (color_picker_info, "Hex Triplet", hex_buf);
 	  break;
 
 	case GRAY_GIMAGE: case GRAYA_GIMAGE:
 	  info_dialog_add_field (color_picker_info, "Intensity", gray_buf);
 	  info_dialog_add_field (color_picker_info, "Alpha", alpha_buf);
+	  info_dialog_add_field (color_picker_info, "Hex Triplet", hex_buf);
 	  break;
 
 	default :
@@ -384,6 +388,7 @@ color_picker_info_update (Tool *tool,
       sprintf (alpha_buf, "N/A");
       sprintf (index_buf, "N/A");
       sprintf (gray_buf, "N/A");
+      sprintf (hex_buf, "N/A");
     }
   else
     {
@@ -397,6 +402,8 @@ color_picker_info_update (Tool *tool,
 	    sprintf (alpha_buf, "%d", col_value [ALPHA_PIX]);
 	  else
 	    sprintf (alpha_buf, "N/A");
+	  sprintf (hex_buf, "#%.2x%.2x%.2x", col_value [RED_PIX],
+		   col_value [GREEN_PIX], col_value [BLUE_PIX]);
 	  break;
 
 	case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
@@ -408,6 +415,8 @@ color_picker_info_update (Tool *tool,
 	  sprintf (red_buf, "%d", col_value [RED_PIX]);
 	  sprintf (green_buf, "%d", col_value [GREEN_PIX]);
 	  sprintf (blue_buf, "%d", col_value [BLUE_PIX]);
+	  sprintf (hex_buf, "#%.2x%.2x%.2x", col_value [RED_PIX],
+		   col_value [GREEN_PIX], col_value [BLUE_PIX]);
 	  break;
 
 	case GRAY_GIMAGE: case GRAYA_GIMAGE:
@@ -416,6 +425,8 @@ color_picker_info_update (Tool *tool,
 	    sprintf (alpha_buf, "%d", col_value [ALPHA_PIX]);
 	  else
 	    sprintf (alpha_buf, "N/A");
+	  sprintf (hex_buf, "#%.2x%.2x%.2x", col_value [GRAY_PIX],
+		   col_value [GRAY_PIX], col_value [GRAY_PIX]);
 	  break;
 	}
     }
@@ -445,6 +456,7 @@ tools_new_color_picker ()
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = color_picker_cursor_update;
   tool->control_func = color_picker_control;
+  tool->preserve = TRUE;
 
   return tool;
 }

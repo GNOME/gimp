@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <string.h>
@@ -25,6 +25,7 @@
 #include "gimage_mask.h"
 #include "gdisplay.h"
 #include "rect_select.h"
+#include "paint_funcs.h"
 
 typedef struct _free_select FreeSelect;
 
@@ -212,7 +213,7 @@ scan_convert (int gimage_ID, int num_pts, FreeSelectPoint *pts,
 	  x = (long) list->data;
 	  list = g_slist_next(list);
 	  if (!list)
-	      warning ("Cannot properly scanline convert polygon!\n");
+	      g_message ("Cannot properly scanline convert polygon!\n");
 	  else
 	    {
 	      /*  bounds checking  */
@@ -468,6 +469,7 @@ tools_new_free_select (void)
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = rect_select_cursor_update;
   tool->control_func = free_select_control;
+  tool->preserve = TRUE;
 
   return tool;
 }

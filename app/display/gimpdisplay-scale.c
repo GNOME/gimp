@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include "appenv.h"
@@ -121,12 +121,12 @@ change_scale (GDisplay *gdisp,
 
       break;
     default :
-      scalesrc = dir/100;
+      scalesrc = dir%100;
       if (scalesrc < 1)
 	scalesrc = 1;
       else if (scalesrc > 0x10)
 	scalesrc = 0x10;
-      scaledest = dir%100;
+      scaledest = dir/100;
       if (scaledest < 1)
 	scaledest = 1;
       else if (scaledest > 0x10)

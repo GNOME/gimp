@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #ifndef __APPENV_H__
 #define __APPENV_H__
@@ -28,10 +28,19 @@
 #define MINIMUM(x,y) ((x < y) ? x : y)
 #define MAXIMUM(x,y) ((x > y) ? x : y)
 
+typedef enum {
+  MESSAGE_BOX,
+  CONSOLE
+} MessageHandlerType;
+
 extern int no_interface;
 extern int no_splash;
 extern int no_splash_image;
 extern int no_data;
 extern int be_verbose;
+extern int use_debug_handler;
+extern int console_messages;
+
+extern MessageHandlerType message_handler;
 
 #endif /*  APPENV_H  */

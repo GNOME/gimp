@@ -16,7 +16,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
 
@@ -166,6 +166,10 @@
 
 
 /***** Magic numbers *****/
+
+#ifndef M_PI
+#define M_PI    3.14159265358979323846
+#endif /* M_PI */
 
 #define EPSILON 1e-10
 
@@ -471,7 +475,8 @@ static void       cpopup_get_color_selection_color(GtkColorSelection *cs,
 static void       cpopup_create_color_dialog(char *title, double r, double g, double b, double a,
 					     GtkSignalFunc color_changed_callback,
 					     GtkSignalFunc ok_callback,
-					     GtkSignalFunc cancel_callback);
+					     GtkSignalFunc cancel_callback,
+					     GtkSignalFunc delete_callback);
 
 static grad_segment_t *cpopup_save_selection(void);
 static void            cpopup_free_selection(grad_segment_t *seg);
@@ -481,10 +486,12 @@ static void       cpopup_set_left_color_callback(GtkWidget *widget, gpointer dat
 static void       cpopup_left_color_changed(GtkWidget *widget, gpointer client_data);
 static void       cpopup_left_color_dialog_ok(GtkWidget *widget, gpointer client_data);
 static void       cpopup_left_color_dialog_cancel(GtkWidget *widget, gpointer client_data);
+static int        cpopup_left_color_dialog_delete(GtkWidget *widget, GdkEvent *event, gpointer data);
 static void       cpopup_set_right_color_callback(GtkWidget *widget, gpointer data);
 static void       cpopup_right_color_changed(GtkWidget *widget, gpointer client_data);
 static void       cpopup_right_color_dialog_ok(GtkWidget *widget, gpointer client_data);
 static void       cpopup_right_color_dialog_cancel(GtkWidget *widget, gpointer client_data);
+static int        cpopup_right_color_dialog_delete(GtkWidget *widget, GdkEvent *event, gpointer data);
 
 static void       cpopup_split_midpoint_callback(GtkWidget *widget, gpointer data);
 static void       cpopup_split_uniform_callback(GtkWidget *widget, gpointer data);
@@ -587,15 +594,17 @@ static char *coloring_types[] = {
 /*****/
 
 void
-gradients_init(void)
+gradients_init(int no_data)
 {
-	datafiles_read_directories(gradient_path, grad_load_gradient, 0);
+  if(!no_data)
+    datafiles_read_directories(gradient_path, grad_load_gradient, 0);
 
-	if (grad_default_gradient != NULL)
-		curr_gradient = grad_default_gradient;
-	else if (gradients_list != NULL)
-		curr_gradient = (gradient_t *) gradients_list->data;
-	else {
+
+  if (grad_default_gradient != NULL)
+    curr_gradient = grad_default_gradient;
+  else if (gradients_list != NULL)
+    curr_gradient = (gradient_t *) gradients_list->data;
+  else {
 		curr_gradient = grad_create_default_gradient();
 		curr_gradient->name     = g_strdup("Default");
 		curr_gradient->filename = build_user_filename(curr_gradient->name, gradient_path);
@@ -625,6 +634,13 @@ grad_get_color_at(double pos, double *r, double *g, double *b, double *a)
 	double          seg_len, middle;
 	double          h0, s0, v0;
 	double          h1, s1, v1;
+
+	/* if there is no gradient return a totally transparent black */
+	if (curr_gradient == NULL) 
+	  {
+	    r = 0; g = 0; b = 0; a = 0;
+	    return;
+	  }
 
 	if (pos < 0.0)
 		pos = 0.0;
@@ -763,12 +779,14 @@ grad_create_gradient_editor(void)
 
 	/* Create editor */
 
+	if(no_data)
+	  gradients_init(FALSE);
 	g_editor = g_malloc(sizeof(gradient_editor_t));
 
 	/* Shell and main vbox */
 
 	g_editor->shell = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_window_set_wmclass (GTK_WINDOW(g_editor->shell), "gradiet_editor", "Gimp");
+	gtk_window_set_wmclass (GTK_WINDOW(g_editor->shell), "gradient_editor", "Gimp");
 	gtk_container_border_width(GTK_CONTAINER(g_editor->shell), 0);
 	gtk_window_set_title(GTK_WINDOW(g_editor->shell), "Gradient Editor");
 	gtk_window_position(GTK_WINDOW(g_editor->shell), GTK_WIN_POS_CENTER);
@@ -835,6 +853,9 @@ grad_create_gradient_editor(void)
 	g_editor->list = gtk_list_new();
 	gtk_list_set_selection_mode(GTK_LIST(g_editor->list), GTK_SELECTION_BROWSE);
 	gtk_container_add(GTK_CONTAINER(listbox), g_editor->list);
+	gtk_container_set_focus_vadjustment(GTK_CONTAINER(g_editor->list),
+					    gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(listbox)));
+	GTK_WIDGET_UNSET_FLAGS(GTK_SCROLLED_WINDOW(listbox)->vscrollbar, GTK_CAN_FOCUS);
 	gtk_widget_show(g_editor->list);
 
 	/* Buttons for gradient functions */
@@ -925,15 +946,23 @@ grad_create_gradient_editor(void)
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), TRUE);
 	gtk_widget_show(button);
 
+	/* hbox for that holds the frame for gradient preview and gradient control; 
+           this is only here, because resizing the preview doesn't work (and is disabled) 
+           to keep the preview and controls together */
+	
+	hbox = gtk_hbox_new(FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+	gtk_widget_show(hbox);
+
 	/* Frame for gradient preview and gradient control */
 
 	frame = gtk_frame_new(NULL);
 	gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_IN);
-	gtk_box_pack_start(GTK_BOX(vbox), frame, TRUE, TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(hbox), frame, FALSE, FALSE, 0);
 	gtk_widget_show(frame);
 
 	gvbox = gtk_vbox_new(FALSE, 0);
-	gtk_container_add(GTK_CONTAINER(frame), gvbox);
+	gtk_container_add(GTK_CONTAINER(frame), gvbox); 
 	gtk_widget_show(gvbox);
 
 	/* Gradient preview */
@@ -1042,7 +1071,7 @@ grad_free_gradient_editor(void)
 
 /*****/
 
-void
+static void
 ed_fetch_foreground(double *fg_r, double *fg_g, double *fg_b, double *fg_a)
 {
 	unsigned char r, g, b;
@@ -1255,7 +1284,7 @@ ed_close_callback(GtkWidget *widget, gpointer client_data)
 	if (GTK_WIDGET_VISIBLE(g_editor->shell))
 		gtk_widget_hide(g_editor->shell);
 
-	return FALSE;
+	return TRUE;
 } /* ed_close_callback */
 
 
@@ -1283,7 +1312,7 @@ ed_do_new_gradient_callback(GtkWidget *widget, gpointer client_data, gpointer ca
 	gradient_name = (char *) call_data;
 
 	if (!gradient_name) {
-		warning("ed_do_new_gradient_callback(): oops, received NULL in call_data");
+		g_message ("ed_do_new_gradient_callback(): oops, received NULL in call_data");
 		return;
 	} /* if */
 
@@ -1311,6 +1340,9 @@ ed_copy_gradient_callback(GtkWidget *widget, gpointer client_data)
 {
 	char *name;
 
+	if (curr_gradient == NULL) 
+               return;
+
 	name = g_malloc((strlen(curr_gradient->name) + 6) * sizeof(char));
 
 	sprintf(name, "%s copy", curr_gradient->name);
@@ -1337,7 +1369,7 @@ ed_do_copy_gradient_callback(GtkWidget *widget, gpointer client_data, gpointer c
 	gradient_name = (char *) call_data;
 
 	if (!gradient_name) {
-		warning("ed_do_copy_gradient_callback(): oops, received NULL in call_data");
+		g_message ("ed_do_copy_gradient_callback(): oops, received NULL in call_data");
 		return;
 	} /* if */
 
@@ -1531,6 +1563,8 @@ ed_save_pov_callback(GtkWidget *widget, gpointer client_data)
 {
 	GtkWidget *window;
 
+	if (curr_gradient == NULL) return;
+
 	window = gtk_file_selection_new("Save as POV-Ray");
 	gtk_window_position(GTK_WINDOW(window), GTK_WIN_POS_MOUSE);
 
@@ -1567,7 +1601,7 @@ ed_refresh_callback(GtkWidget *widget, gpointer client_data)
 
 	grad_free_gradients();
 
-	gradients_init();
+	gradients_init(FALSE);
 
 	ed_set_list_of_gradients();
 
@@ -1588,10 +1622,10 @@ ed_do_save_pov_callback(GtkWidget *widget, gpointer client_data)
 	file = fopen(filename, "w");
 
 	if (!file)
-		warning("ed_do_save_pov_callback(): oops, could not open \"%s\"", filename);
+		g_message ("ed_do_save_pov_callback(): oops, could not open \"%s\"", filename);
 	else {
 		fprintf(file, "/* color_map file created by the GIMP */\n");
-		fprintf(file, "/* http://www.xcf.berkeley.edu/~gimp  */\n");
+		fprintf(file, "/* http://www.gimp.org/               */\n");
 
 		fprintf(file, "color_map {\n");
 
@@ -1767,6 +1801,10 @@ prev_events(GtkWidget *widget, GdkEvent *event)
 	gint            x, y;
 	GdkEventButton *bevent;
 
+	/* ignore events when no gradient is present */
+	if (curr_gradient == NULL) 
+	        return FALSE;
+
 	switch (event->type) {
 		case GDK_EXPOSE:
 			prev_update(0);
@@ -1894,8 +1932,10 @@ prev_update(int recalculate)
 	guint16        width, height;
 	guint16        pwidth, pheight;
 
-	/* We only update if we can draw to the widget */
+	/* We only update if we can draw to the widget and a gradient is present */
 
+	if (curr_gradient == NULL) 
+	        return;
 	if (!GTK_WIDGET_DRAWABLE(g_editor->preview))
 		return;
 
@@ -1911,9 +1951,10 @@ prev_update(int recalculate)
 	 *  A full Bugfix should change the preview size according to the users     
 	 *  window resize actions.   
 	 */
-		width   = GRAD_PREVIEW_WIDTH;
-		height  = GRAD_PREVIEW_HEIGHT;
 
+	       width   = GRAD_PREVIEW_WIDTH;
+	       height  = GRAD_PREVIEW_HEIGHT;
+	
 	pwidth  = GTK_PREVIEW(g_editor->preview)->buffer_width;
 	pheight = GTK_PREVIEW(g_editor->preview)->buffer_height;
 
@@ -2148,7 +2189,7 @@ control_do_hint(gint x, gint y)
 				break;
 
 			default:
-				warning("control_do_hint: oops, in_handle is true "
+				g_message ("control_do_hint: oops, in_handle is true "
 					"yet we got handle type %d", (int) handle);
 				break;
 		} /* switch */
@@ -2252,7 +2293,7 @@ control_button_press(gint x, gint y, guint button, guint state)
 				return;
 
 			default:
-				warning("control_button_press(): oops, in_handle is true "
+				g_message ("control_button_press(): oops, in_handle is true "
 					"yet we got handle type %d", (int) handle);
 				return;
 		} /* switch */
@@ -2296,7 +2337,7 @@ control_point_in_handle(gint x, gint y, grad_segment_t *seg, control_drag_mode_t
 			break;
 
 		default:
-			warning("control_point_in_handle(): oops, can not handle drag mode %d",
+			g_message ("control_point_in_handle(): oops, can not handle drag mode %d",
 				(int) handle);
 			return 0;
 	} /* switch */
@@ -2591,19 +2632,23 @@ control_move(grad_segment_t *range_l, grad_segment_t *range_r, double delta)
 	/* Fix the segments that surround the range */
 
 	if (!is_first)
+	  {
 		if (!g_editor->control_compress)
 			range_l->prev->right = range_l->left;
 		else
 			control_compress_range(range_l->prev, range_l->prev,
 					       range_l->prev->left, range_l->left);
-
+	  }
+	
 	if (!is_last)
+	  {
 		if (!g_editor->control_compress)
 			range_r->next->left = range_r->right;
 		else
 			control_compress_range(range_r->next, range_r->next,
 					       range_r->right, range_r->next->right);
-
+	  }
+	
 	return delta;
 } /* control_move */
 
@@ -2617,14 +2662,22 @@ control_update(int recalculate)
 	gint 	       pwidth, pheight;
 	GtkAdjustment *adjustment;
 
-	/* We only update if we can redraw */
+	/* We only update if we can redraw and a gradient is present */
 
+	if (curr_gradient == NULL) 
+	        return;	
 	if (!GTK_WIDGET_DRAWABLE(g_editor->control))
 		return;
 
 	/* See whether we have to re-create the control pixmap */
 
 	gdk_window_get_size(g_editor->control->window, &cwidth, &cheight);
+
+	/* as long as we have that ugly workaround in prev_update() don't
+	   change the size of the controls either when the window is resized */
+
+        	cwidth   = GRAD_PREVIEW_WIDTH;
+		cheight  = GRAD_PREVIEW_HEIGHT;
 
 	if (g_editor->control_pixmap)
 		gdk_window_get_size(g_editor->control_pixmap, &pwidth, &pheight);
@@ -3968,7 +4021,8 @@ static void
 cpopup_create_color_dialog(char *title, double r, double g, double b, double a,
 			   GtkSignalFunc color_changed_callback,
 			   GtkSignalFunc ok_callback,
-			   GtkSignalFunc cancel_callback)
+			   GtkSignalFunc cancel_callback,
+			   GtkSignalFunc delete_callback)
 {
 	GtkWidget               *window;
 	GtkColorSelection       *cs;
@@ -3992,6 +4046,9 @@ cpopup_create_color_dialog(char *title, double r, double g, double b, double a,
 
 	cpopup_set_color_selection_color(cs, r, g, b, a);
 	cpopup_set_color_selection_color(cs, r, g, b, a);
+
+	gtk_signal_connect(GTK_OBJECT(csd), "delete_event",
+			   delete_callback, NULL);
 
 	gtk_signal_connect(GTK_OBJECT(cs), "color_changed",
 			   color_changed_callback, window);
@@ -4107,7 +4164,8 @@ cpopup_set_left_color_callback(GtkWidget *widget, gpointer data)
 				   g_editor->control_sel_l->a0,
 				   (GtkSignalFunc) cpopup_left_color_changed,
 				   (GtkSignalFunc) cpopup_left_color_dialog_ok,
-				   (GtkSignalFunc) cpopup_left_color_dialog_cancel);
+				   (GtkSignalFunc) cpopup_left_color_dialog_cancel,
+				   (GtkSignalFunc) cpopup_left_color_dialog_delete);
 
 	gtk_widget_set_sensitive(g_editor->shell, FALSE);
 } /* cpopup_set_left_color_callback */
@@ -4177,6 +4235,21 @@ cpopup_left_color_dialog_cancel(GtkWidget *widget, gpointer client_data)
 	gtk_widget_set_sensitive(g_editor->shell, TRUE);
 } /* cpopup_left_color_dialog_cancel */
 
+
+/*****/
+
+static int
+cpopup_left_color_dialog_delete(GtkWidget *widget, GdkEvent *event,
+				gpointer data)
+{
+	curr_gradient->dirty = g_editor->left_saved_dirty;
+	cpopup_replace_selection(g_editor->left_saved_segments);
+	ed_update_editor(GRAD_UPDATE_PREVIEW);
+
+	gtk_widget_set_sensitive(g_editor->shell, TRUE);
+	return FALSE;
+} /* cpopup_left_color_dialog_delete */
+
 /*****/
 
 static void
@@ -4192,7 +4265,8 @@ cpopup_set_right_color_callback(GtkWidget *widget, gpointer data)
 				   g_editor->control_sel_r->a1,
 				   (GtkSignalFunc) cpopup_right_color_changed,
 				   (GtkSignalFunc) cpopup_right_color_dialog_ok,
-				   (GtkSignalFunc) cpopup_right_color_dialog_cancel);
+				   (GtkSignalFunc) cpopup_right_color_dialog_cancel,
+				   (GtkSignalFunc) cpopup_right_color_dialog_delete);
 
 	gtk_widget_set_sensitive(g_editor->shell, FALSE);
 } /* cpopup_set_right_color_callback */
@@ -4261,6 +4335,21 @@ cpopup_right_color_dialog_cancel(GtkWidget *widget, gpointer client_data)
 	gtk_widget_destroy(GTK_WIDGET(client_data));
 	gtk_widget_set_sensitive(g_editor->shell, TRUE);
 } /* cpopup_right_color_dialog_cancel */
+
+
+/*****/
+
+static int
+cpopup_right_color_dialog_delete(GtkWidget *widget, GdkEvent *event,
+				 gpointer data)
+{
+	curr_gradient->dirty = g_editor->right_saved_dirty;
+	cpopup_replace_selection(g_editor->right_saved_segments);
+	ed_update_editor(GRAD_UPDATE_PREVIEW);
+
+	gtk_widget_set_sensitive(g_editor->shell, TRUE);
+	return FALSE;
+} /* cpopup_right_color_dialog_delete */
 
 
 /*****/
@@ -5201,7 +5290,7 @@ grad_load_gradient(char *filename)
 	num_segments = atoi(line);
 
 	if (num_segments < 1) {
-		warning("grad_load_gradient(): invalid number of segments in \"%s\"", filename);
+		g_message ("grad_load_gradient(): invalid number of segments in \"%s\"", filename);
 		g_free(grad);
 		return;
 	} /* if */
@@ -5224,9 +5313,9 @@ grad_load_gradient(char *filename)
 			   &(seg->r0), &(seg->g0), &(seg->b0), &(seg->a0),
 			   &(seg->r1), &(seg->g1), &(seg->b1), &(seg->a1),
 			   &type, &color) != 13) {
-			warning("grad_load_gradient(): badly formatted "
-				"gradient segment %d in \"%s\" --- bad things may "
-				"happen soon", i, filename);
+			g_message ("grad_load_gradient(): badly formatted "
+				   "gradient segment %d in \"%s\" --- bad things may "
+				   "happen soon", i, filename);
 		} else {
 			seg->type  = (grad_type_t) type;
 			seg->color = (grad_color_t) color;
@@ -5258,13 +5347,13 @@ grad_save_gradient(gradient_t *grad, char *filename)
 	g_assert(grad != NULL);
 
 	if (!filename) {
-		warning("grad_save_gradient(): can not save gradient with NULL filename");
+		g_message ("grad_save_gradient(): can not save gradient with NULL filename");
 		return;
 	} /* if */
 
 	file = fopen(filename, "w");
 	if (!file) {
-		warning("grad_save_gradient(): can't open \"%s\"", filename);
+		g_message ("grad_save_gradient(): can't open \"%s\"", filename);
 		return;
 	} /* if */
 
@@ -5815,7 +5904,7 @@ ProcRecord gradients_get_list_proc = {
 }; /* gradients_get_list_proc */
 
 
-Argument *
+static Argument *
 gradients_get_list_invoker(Argument *args)
 {
 	Argument   *return_args;
@@ -5899,7 +5988,7 @@ gradients_get_active_invoker(Argument *args)
 		return_args[1].value.pdb_pointer = g_strdup(curr_gradient->name);
 
 	return return_args;
-}; /* gradients_get_active_invoker */
+} /* gradients_get_active_invoker */
 
 
 /***** gradients_set_active *****/
@@ -5942,7 +6031,7 @@ ProcRecord gradients_set_active_proc = {
 }; /* gradients_set_active_proc */
 
 
-Argument *
+static Argument *
 gradients_set_active_invoker(Argument *args)
 {
 	char       *name;
@@ -6039,7 +6128,7 @@ ProcRecord gradients_sample_uniform_proc = {
 }; /* gradients_sample_uniform_proc */
 
 
-Argument *
+static Argument *
 gradients_sample_uniform_invoker(Argument *args)
 {
 	Argument *return_args;
@@ -6138,7 +6227,7 @@ ProcRecord gradients_sample_custom_proc = {
 }; /* gradients_sample_custom_proc */
 
 
-Argument *
+static Argument *
 gradients_sample_custom_invoker(Argument *args)
 {
 	Argument *return_args;

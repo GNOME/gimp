@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -48,7 +48,7 @@ install_verify (InstallCallback install_callback)
   filename = gimp_directory ();
   if ('\000' == filename[0])
     {
-      g_warning ("No home directory--skipping GIMP user installation.");
+      g_message ("No home directory--skipping GIMP user installation.");
       (* install_callback) ();
     }
 
@@ -97,6 +97,9 @@ install_help (InstallCallback callback)
   GdkFont   *font;
 
   help_widget = gtk_dialog_new ();
+  gtk_signal_connect (GTK_OBJECT (help_widget), "delete_event",
+		      GTK_SIGNAL_FUNC (gtk_true),
+		      NULL);
   gtk_window_set_wmclass (GTK_WINDOW (help_widget), "gimp_installation", "Gimp");
   gtk_window_set_title (GTK_WINDOW (help_widget), "GIMP Installation");
   gtk_window_position (GTK_WINDOW (help_widget), GTK_WIN_POS_CENTER);
@@ -164,7 +167,7 @@ install_help (InstallCallback callback)
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
 		   "along with this program; if not, write to the Free Software\n", -1);
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   "Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.\n", -1);
+		   "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n", -1);
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
 		   "\n\n", -1);
 
@@ -227,6 +230,30 @@ install_help (InstallCallback callback)
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
 		   "\t\tgradients.\n", -1);
   gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
+		   "gfig\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\tThis is a subdirectory which can be used to store\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\tuser defined figures to be used by the gfig plug-in.\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\tThe default gimprc file checks this subdirectory in\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\taddition to the systemwide gimp gfig installation\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\twhen searching for gfig figures.\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
+		   "gflares\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\tThis is a subdirectory which can be used to store\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\tuser defined gflares to be used by the gflare plug-in.\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\tThe default gimprc file checks this subdirectory in\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\taddition to the systemwide gimp gflares installation\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\twhen searching for gflares.\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
 		   "palettes\n", -1);
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
 		   "\t\tThis is a subdirectory which can be used to store\n", -1);
@@ -270,6 +297,16 @@ install_help (InstallCallback callback)
 		   "\t\twide GIMP plug-in directories when searching for\n", -1);
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
 		   "\t\tplug-ins.\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
+		   "scripts\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\tThis subdirectory is used by the GIMP to store \n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\tuser created and installed scripts. The default gimprc\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\tfile checks this subdirectory in addition to the system\n", -1);
+  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
+		   "\t\t-wide gimp scripts subdirectory when searching for scripts\n", -1);
   gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
 		   "tmp\n", -1);
   gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
@@ -340,6 +377,9 @@ install_run (InstallCallback callback)
   int executable = TRUE;
 
   install_widget = gtk_dialog_new ();
+  gtk_signal_connect (GTK_OBJECT (install_widget), "delete_event",
+		      GTK_SIGNAL_FUNC (gtk_true),
+		      NULL);
   gtk_window_set_wmclass (GTK_WINDOW (install_widget), "installation_log", "Gimp");
   gtk_window_set_title (GTK_WINDOW (install_widget), "Installation Log");
   gtk_window_position (GTK_WINDOW (install_widget), GTK_WIN_POS_CENTER);

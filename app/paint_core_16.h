@@ -94,7 +94,6 @@ struct _PaintCore16
 
 
 
-
 /* create and destroy a paint_core based tool */
 struct _tool *     paint_core_16_new             (int type);
 
@@ -152,6 +151,16 @@ void               paint_core_16_area_replace    (PaintCore16 *,
 /* paintcore for PDB functions to use */
 extern PaintCore16  non_gui_paint_core_16;
 
+
+/* minimize the context diffs */
+#define PaintCore PaintCore16
+#define paint_core_new paint_core_16_new
+#define paint_core_free paint_core_16_free
+#define paint_core_init paint_core_16_init
+#define paint_core_interpolate paint_core_16_interpolate
+#define paint_core_finish paint_core_16_finish
+#define paint_core_cleanup paint_core_16_cleanup
+#define non_gui_paint_core non_gui_paint_core_16
 
 
 /*=======================================

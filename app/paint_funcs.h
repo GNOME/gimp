@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
 /*
@@ -413,8 +413,8 @@ void  combine_regions_replace             (PixelRegion *, PixelRegion *,
 #define SATURATION_MODE    12
 #define COLOR_MODE         13
 #define VALUE_MODE         14
-#define ERASE_MODE         20
-#define REPLACE_MODE       21
+#define ERASE_MODE         15
+#define REPLACE_MODE       16
 
 /*  Applying layer modes...  */
 

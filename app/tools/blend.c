@@ -13,12 +13,11 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-
 #include "appenv.h"
 #include "asupsample.h"
 #include "blend.h"
@@ -27,6 +26,7 @@
 #include "draw_core.h"
 #include "drawable.h"
 #include "errors.h"
+#include "fuzzy_select.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gradient.h"
@@ -47,6 +47,10 @@
 #define  TARGET_WIDTH      15
 
 #define  SQR(x) ((x) * (x))
+
+#ifndef M_PI
+#define M_PI    3.14159265358979323846
+#endif /* M_PI */
 
 /*  the Blend structures  */
 
@@ -75,7 +79,7 @@ typedef enum
 {
   REPEAT_NONE,
   REPEAT_SAWTOOTH,
-  REPEAT_TRIANGULAR,
+  REPEAT_TRIANGULAR
 } RepeatMode;
 
 typedef double (*RepeatFunc)(double);
@@ -101,6 +105,7 @@ struct _BlendOptions
   int          paint_mode;
   GradientType gradient_type;
   RepeatMode   repeat;
+  GtkWidget   *repeat_mode_menu;
   int          supersample;
   GtkWidget   *frame;
   int          max_depth;
@@ -191,7 +196,6 @@ static void calc_hsv_to_rgb(double *h, double *s, double *v);
 static BlendOptions *create_blend_options   (void);
 static Argument *blend_invoker              (Argument *);
 
-
 /*  variables for the shapeburst algs  */
 static Canvas * distance_canvas;
 
@@ -247,6 +251,8 @@ gradient_type_callback (GtkWidget *w,
 			gpointer   client_data)
 {
   blend_options->gradient_type = (GradientType) client_data;
+  gtk_widget_set_sensitive (blend_options->repeat_mode_menu, 
+			    (blend_options->gradient_type < 6));
 }
 
 static void
@@ -441,6 +447,8 @@ create_blend_options ()
   gtk_widget_show(label);
   gtk_widget_show(rt_option_menu);
 
+  options->repeat_mode_menu = rt_option_menu;
+
   /* show the whole table */
 
   gtk_widget_show (table);
@@ -542,7 +550,7 @@ blend_button_press (Tool           *tool,
   switch (drawable_type (gimage_active_drawable (gdisp->gimage)))
     {
     case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
-      message_box ("Blend: Invalid for indexed images.", NULL, NULL);
+      g_message ("Blend: Invalid for indexed images.");
       return;
 
       break;
@@ -614,7 +622,7 @@ blend_button_release (Tool           *tool,
       if (return_vals[0].value.pdb_int == PDB_SUCCESS)
 	gdisplays_flush ();
       else
-	message_box ("Blend operation failed.", NULL, NULL);
+	g_message ("Blend operation failed.");
 
       procedural_db_destroy_args (return_vals, nreturn_vals);
     }
@@ -722,8 +730,7 @@ blend_control (Tool     *tool,
 }
 
 
-
-
+/*****/
 
 /*  The actual blending procedure  */
 static void 
@@ -769,112 +776,104 @@ blend  (
 }
 
 
-static double 
-gradient_calc_conical_sym_factor  (
-                                   double dist,
-                                   double * axis,
-                                   double offset,
-                                   double x,
-                                   double y
-                                   )
+static double
+gradient_calc_conical_sym_factor (double  dist,
+				  double *axis,
+				  double  offset,
+				  double  x,
+				  double  y)
 {
   double vec[2];
   double r;
   double rat;
 
   if (dist == 0.0)
-    {
-      rat = 0.0;
-    }
-  else if ((x != 0) || (y != 0))
-    {
-      /* Calculate offset from the start in pixels */
-      
-      r = sqrt(x * x + y * y);
-      
-      vec[0] = x / r;
-      vec[1] = y / r;
-      
-      rat = axis[0] * vec[0] + axis[1] * vec[1]; /* Dot product */
-      
-      if (rat > 1.0)
-        rat = 1.0;
-      else if (rat < -1.0)
-        rat = -1.0;
-      
-      /* This cool idea is courtesy Josh MacDonald,
-       * Ali Rahimi --- two more XCF losers.  */
-      
-      rat = acos(rat) / M_PI;
-      rat = pow(rat, (offset / 10) + 1);
-      
-      rat = BOUNDS(rat, 0.0, 1.0);
-    }
+    rat = 0.0;
   else
-    {
+    if ((x != 0) || (y != 0))
+      {
+	/* Calculate offset from the start in pixels */
+
+	r = sqrt(x * x + y * y);
+
+	vec[0] = x / r;
+	vec[1] = y / r;
+
+	rat = axis[0] * vec[0] + axis[1] * vec[1]; /* Dot product */
+
+	if (rat > 1.0)
+	  rat = 1.0;
+	else if (rat < -1.0)
+	  rat = -1.0;
+
+	/* This cool idea is courtesy Josh MacDonald,
+	 * Ali Rahimi --- two more XCF losers.  */
+
+	rat = acos(rat) / M_PI;
+	rat = pow(rat, (offset / 10) + 1);
+
+	rat = BOUNDS(rat, 0.0, 1.0);
+      }
+    else
       rat = 0.5;
-    }
 
   return rat;
-}
+} /* gradient_calc_conical_sym_factor */
 
 
-static double 
-gradient_calc_conical_asym_factor  (
-                                    double dist,
-                                    double * axis,
-                                    double offset,
-                                    double x,
-                                    double y
-                                    )
+/*****/
+
+static double
+gradient_calc_conical_asym_factor (double  dist,
+				   double *axis,
+				   double  offset,
+				   double  x,
+				   double  y)
 {
   double ang0, ang1;
   double ang;
   double rat;
 
   if (dist == 0.0)
-    {
-      rat = 0.0;
-    }
-  else if ((x != 0) || (y != 0))
-    {
-      ang0 = atan2(axis[0], axis[1]) + M_PI;
-      ang1 = atan2(x, y) + M_PI;
-      
-      ang = ang1 - ang0;
-      
-      if (ang < 0.0)
-        ang += (2.0 * M_PI);
-      
-      rat = ang / (2.0 * M_PI);
-      rat = pow(rat, (offset / 10) + 1);
-      
-      rat = BOUNDS(rat, 0.0, 1.0);
-    }
+    rat = 0.0;
   else
     {
-      rat = 0.5; /* We are on middle point */
-    }
+      if ((x != 0) || (y != 0))
+	{
+	  ang0 = atan2(axis[0], axis[1]) + M_PI;
+	  ang1 = atan2(x, y) + M_PI;
+
+	  ang = ang1 - ang0;
+
+	  if (ang < 0.0)
+	    ang += (2.0 * M_PI);
+
+	  rat = ang / (2.0 * M_PI);
+	  rat = pow(rat, (offset / 10) + 1);
+
+	  rat = BOUNDS(rat, 0.0, 1.0);
+	}
+      else
+	rat = 0.5; /* We are on middle point */
+    } /* else */
 
   return rat;
-}
+} /* gradient_calc_conical_asym_factor */
 
 
-static double 
-gradient_calc_square_factor  (
-                              double dist,
-                              double offset,
-                              double x,
-                              double y
-                              )
+/*****/
+
+static double
+gradient_calc_square_factor (double dist,
+			     double offset,
+			     double x,
+			     double y)
 {
   double r;
   double rat;
 
   if (dist == 0.0)
-    {
-      rat = 0.0;
-    }
+    rat = 0.0;
   else
     {
       /* Calculate offset from start as a value in [0, 1] */
@@ -890,27 +889,25 @@ gradient_calc_square_factor  (
         rat = (rat>=1) ? 1 : 0;
       else
 	rat = (rat - offset) / (1.0 - offset);
-    }
+    } /* else */
 
   return rat;
-}
+} /* gradient_calc_square_factor */
 
 
-static double 
-gradient_calc_radial_factor  (
-                              double dist,
-                              double offset,
-                              double x,
-                              double y
-                              )
+/*****/
+
+static double
+gradient_calc_radial_factor (double dist,
+			     double offset,
+			     double x,
+			     double y)
 {
   double r;
   double rat;
 
   if (dist == 0.0)
-    {
-      rat = 0.0;
-    }
+    rat = 0.0;
   else
     {
       /* Calculate radial offset from start as a value in [0, 1] */
@@ -926,53 +923,49 @@ gradient_calc_radial_factor  (
         rat = (rat>=1) ? 1 : 0;
       else
 	rat = (rat - offset) / (1.0 - offset);
-    }
+    } /* else */
 
   return rat;
-}
+} /* gradient_calc_radial_factor */
 
 
-static double 
-gradient_calc_linear_factor  (
-                              double dist,
-                              double * vec,
-                              double x,
-                              double y
-                              )
+/*****/
+
+static double
+gradient_calc_linear_factor (double  dist,
+			     double *vec,
+			     double  x,
+			     double  y)
 {
   double r;
   double rat;
 
   if (dist == 0.0)
-    {
-      rat = 0.0;
-    }
+    rat = 0.0;
   else
     {
       r   = vec[0] * x + vec[1] * y;
       rat = r / dist;
-    }
+    } /* else */
 
   return rat;
-}
+} /* gradient_calc_linear_factor */
 
 
-static double 
-gradient_calc_bilinear_factor  (
-                                double dist,
-                                double * vec,
-                                double offset,
-                                double x,
-                                double y
-                                )
+/*****/
+
+static double
+gradient_calc_bilinear_factor (double  dist,
+			       double *vec,
+			       double  offset,
+			       double  x,
+			       double  y)
 {
   double r;
   double rat;
 
   if (dist == 0.0)
-    {
-      rat = 0.0;
-    }
+    rat = 0.0;
   else
     {
       /* Calculate linear offset from the start line outward */
@@ -988,10 +981,10 @@ gradient_calc_bilinear_factor  (
         rat = (rat>=1) ? 1 : 0;
       else
 	rat = (fabs(rat) - offset) / (1.0 - offset);
-    }
+    } /* else */
 
   return rat;
-}
+} /* gradient_calc_bilinear_factor */
 
 
 static double 
@@ -1045,20 +1038,14 @@ gradient_calc_shapeburst_dimpled_factor  (
   return value;
 }
 
-
-static double 
-gradient_repeat_none  (
-                       double val
-                       )
+static double
+gradient_repeat_none(double val)
 {
   return BOUNDS(val, 0.0, 1.0);
 }
 
-
-static double 
-gradient_repeat_sawtooth  (
-                           double val
-                           )
+static double
+gradient_repeat_sawtooth(double val)
 {
   if (val >= 0.0)
     return fmod(val, 1.0);
@@ -1066,11 +1053,8 @@ gradient_repeat_sawtooth  (
     return 1.0 - fmod(-val, 1.0);
 }
 
-
-static double 
-gradient_repeat_triangular  (
-                             double val
-                             )
+static double
+gradient_repeat_triangular(double val)
 {
   int ival;
 
@@ -1195,21 +1179,16 @@ gradient_precalc_shapeburst  (
 }
 
 
-static void 
-gradient_render_pixel  (
-                        double x,
-                        double y,
-                        gfloat * color,
-                        void * render_data
-                        )
+static void
+gradient_render_pixel(double x, double y, gfloat *color, void *render_data)
 {
   RenderBlendData *rbd;
   double           factor;
 
-  
   rbd = render_data;
 
   /* Calculate blending factor */
+
   switch (rbd->gradient_type)
     {
     case Radial:
@@ -1260,11 +1239,10 @@ gradient_render_pixel  (
       return;
     }
 
-  
   /* Adjust for repeat */
+
   factor = (*rbd->repeat_func)(factor);
 
-  
   /* Blend the colors */
   {
     color_t c;
@@ -1323,7 +1301,7 @@ gradient_put_pixel(int x, int y, color_t color, void *put_pixel_data)
   /* Paint whole row if we are on the rightmost pixel */
 
   if (x == (ppd->width - 1))
-    pixel_region_set_row (ppd->PR, 0, y, ppd->width, ppd->row_data);
+    pixel_region_set_row(ppd->PR, 0, y, ppd->width, ppd->row_data);
 }
 #endif
 
@@ -1430,7 +1408,7 @@ gradient_fill_region (GImage       *gimage,
     case ShapeburstSpherical:
     case ShapeburstDimpled:
       rbd.dist = sqrt(SQR(ex - sx) + SQR(ey - sy));
-      gradient_precalc_shapeburst (gimage, drawable, PR, rbd.dist);
+      gradient_precalc_shapeburst(gimage, drawable, PR, rbd.dist);
       break;
 
     default:
@@ -1470,6 +1448,7 @@ gradient_fill_region (GImage       *gimage,
   rbd.gradient_type = gradient_type;
 
   /* Render the gradient! */
+
   if (supersample)
     {
 #if 0
@@ -1591,7 +1570,6 @@ gradient_fill_region (GImage       *gimage,
     }
 #endif
 }
-
 
 static void
 calc_rgb_to_hsv(double *r, double *g, double *b)
@@ -1762,6 +1740,7 @@ tools_new_blend ()
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = blend_cursor_update;
   tool->control_func = blend_control;
+  tool->preserve = TRUE;
 
   return tool;
 }

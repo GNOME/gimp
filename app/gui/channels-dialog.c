@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -33,12 +33,22 @@
 #include "general.h"
 #include "interface.h"
 #include "layers_dialogP.h"
-#include "paint_funcs.h"
+#include "ops_buttons.h"
 #include "palette.h"
 #include "resize.h"
 
 #include "tools/eye.xbm"
 #include "tools/channel.xbm"
+#include "tools/new.xpm"
+#include "tools/new_is.xpm"
+#include "tools/raise.xpm"
+#include "tools/raise_is.xpm"
+#include "tools/lower.xpm"
+#include "tools/lower_is.xpm"
+#include "tools/duplicate.xpm"
+#include "tools/duplicate_is.xpm"
+#include "tools/delete.xpm"
+#include "tools/delete_is.xpm"
 
 #include "channel_pvt.h"
 
@@ -143,6 +153,9 @@ static GdkPixmap *channel_pixmap[3] = { NULL, NULL, NULL };
 
 static int suspend_gimage_notify = 0;
 
+static guint32 button_click_time = 0;
+static int button_last_id = 0;
+
 static MenuItem channels_ops[] =
 {
   { "New Channel", 'N', GDK_CONTROL_MASK,
@@ -160,6 +173,16 @@ static MenuItem channels_ops[] =
   { NULL, 0, 0, NULL, NULL, NULL, NULL },
 };
 
+/* the ops buttons */
+static OpsButton channels_ops_buttons[] =
+{
+  { new_xpm, new_is_xpm, channels_dialog_new_channel_callback, "New Channel", NULL, NULL, NULL, NULL, NULL, NULL },
+  { raise_xpm, raise_is_xpm, channels_dialog_raise_channel_callback, "Raise Channel", NULL, NULL, NULL, NULL, NULL, NULL },
+  { lower_xpm, lower_is_xpm, channels_dialog_lower_channel_callback, "Lower Channel", NULL, NULL, NULL, NULL, NULL, NULL },
+  { duplicate_xpm, duplicate_is_xpm, channels_dialog_duplicate_channel_callback, "Duplicate Channel", NULL, NULL, NULL, NULL, NULL, NULL },
+  { delete_xpm, delete_is_xpm, channels_dialog_delete_channel_callback, "Delete Channel", NULL, NULL, NULL, NULL, NULL, NULL },
+  { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL}
+};
 
 /**************************************/
 /*  Public channels dialog functions  */
@@ -170,6 +193,7 @@ channels_dialog_create ()
 {
   GtkWidget *vbox;
   GtkWidget *listbox;
+  GtkWidget *button_box;
 
   if (!channelsD)
     {
@@ -205,9 +229,20 @@ channels_dialog_create ()
       gtk_signal_connect (GTK_OBJECT (channelsD->channel_list), "event",
 			  (GtkSignalFunc) channel_list_events,
 			  channelsD);
-
+      gtk_container_set_focus_vadjustment (GTK_CONTAINER (channelsD->channel_list),
+					   gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (listbox)));
+      GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW (listbox)->vscrollbar, GTK_CAN_FOCUS);
+      
       gtk_widget_show (channelsD->channel_list);
       gtk_widget_show (listbox);
+
+
+      /* The ops buttons */
+
+      button_box = ops_button_box_new (lc_shell, tool_tips, channels_ops_buttons);
+
+      gtk_box_pack_start (GTK_BOX (vbox), button_box, FALSE, FALSE, 2);
+      gtk_widget_show (button_box);
 
       /*  Set up signals for map/unmap for the accelerators  */
       gtk_signal_connect (GTK_OBJECT (channelsD->vbox), "map",
@@ -288,7 +323,7 @@ channels_dialog_flush ()
 
   /*  Switch positions of items if necessary  */
   list = channelsD->channel_widgets;
-  pos = -channelsD->num_components;
+  pos = -channelsD->num_components + 1;
   while (list)
     {
       cw = (ChannelWidget *) list->data;
@@ -423,6 +458,8 @@ channels_dialog_update (int gimage_id)
 void
 channels_dialog_clear ()
 {
+  ops_button_box_set_insensitive (channels_ops_buttons);
+
   suspend_gimage_notify++;
   gtk_list_clear_items (GTK_LIST (channelsD->channel_list), 0, -1);
   suspend_gimage_notify--;
@@ -454,10 +491,10 @@ channels_dialog_free ()
   channelsD->floating_sel = NULL;
 
   if (channelsD->preview)
-    gtk_widget_destroy (channelsD->preview);
+    gtk_object_sink (GTK_OBJECT (channelsD->preview));
 
   if (channelsD->ops_menu)
-    gtk_widget_destroy (channelsD->ops_menu);
+    gtk_object_sink (GTK_OBJECT (channelsD->ops_menu));
 
   g_free (channelsD);
   channelsD = NULL;
@@ -513,20 +550,25 @@ channels_dialog_set_menu_sensitivity ()
 
   /* new channel */
   gtk_widget_set_sensitive (channels_ops[0].widget, !fs_sensitive);
+  ops_button_set_sensitive (channels_ops_buttons[0], !fs_sensitive);
   /* raise channel */
   gtk_widget_set_sensitive (channels_ops[1].widget, !fs_sensitive && aux_sensitive);
+  ops_button_set_sensitive (channels_ops_buttons[1], !fs_sensitive && aux_sensitive);
   /* lower channel */
   gtk_widget_set_sensitive (channels_ops[2].widget, !fs_sensitive && aux_sensitive);
+  ops_button_set_sensitive (channels_ops_buttons[2], !fs_sensitive && aux_sensitive);
   /* duplicate channel */
-  gtk_widget_set_sensitive (channels_ops[3].widget, !fs_sensitive );
+  gtk_widget_set_sensitive (channels_ops[3].widget, !fs_sensitive && aux_sensitive);
+  ops_button_set_sensitive (channels_ops_buttons[3], !fs_sensitive && aux_sensitive);
   /* delete channel */
   gtk_widget_set_sensitive (channels_ops[4].widget, !fs_sensitive && aux_sensitive);
+  ops_button_set_sensitive (channels_ops_buttons[4], !fs_sensitive && aux_sensitive);
   /* channel to selection */
   gtk_widget_set_sensitive (channels_ops[5].widget, aux_sensitive);
 }
 
 
-void
+static void
 channels_dialog_set_channel (ChannelWidget *channel_widget)
 {
   GtkStateType state;
@@ -580,7 +622,7 @@ channels_dialog_set_channel (ChannelWidget *channel_widget)
 }
 
 
-void
+static void
 channels_dialog_unset_channel (ChannelWidget * channel_widget)
 {
   GtkStateType state;
@@ -635,7 +677,7 @@ channels_dialog_unset_channel (ChannelWidget * channel_widget)
 }
 
 
-void
+static void
 channels_dialog_position_channel (ChannelWidget *channel_widget,
 				  int new_index)
 {
@@ -650,16 +692,17 @@ channels_dialog_position_channel (ChannelWidget *channel_widget,
   /*  Remove the channel from the dialog  */
   list = g_list_append (list, channel_widget->list_item);
   gtk_list_remove_items (GTK_LIST (channelsD->channel_list), list);
-
+  channelsD->channel_widgets = g_slist_remove (channelsD->channel_widgets, channel_widget);
+  
   suspend_gimage_notify--;
 
   /*  Add it back at the proper index  */
   gtk_list_insert_items (GTK_LIST (channelsD->channel_list), list, new_index + channelsD->num_components);
-
+  channelsD->channel_widgets = g_slist_insert (channelsD->channel_widgets, channel_widget, new_index + channelsD->num_components);
 }
 
 
-void
+static void
 channels_dialog_add_channel (Channel *channel)
 {
   GImage *gimage;
@@ -685,7 +728,7 @@ channels_dialog_add_channel (Channel *channel)
 }
 
 
-void
+static void
 channels_dialog_remove_channel (ChannelWidget *channel_widget)
 {
   GList *list = NULL;
@@ -700,13 +743,10 @@ channels_dialog_remove_channel (ChannelWidget *channel_widget)
   list = g_list_append (list, channel_widget->list_item);
   gtk_list_remove_items (GTK_LIST (channelsD->channel_list), list);
 
-  gtk_widget_destroy (channel_widget->list_item);
-  gtk_widget_unref (channel_widget->list_item);
-
-  suspend_gimage_notify--;
-
   /*  Delete the channel_widget  */
   channel_widget_delete (channel_widget);
+
+  suspend_gimage_notify--;
 }
 
 
@@ -735,6 +775,15 @@ channel_list_events (GtkWidget *widget,
 	      gtk_menu_popup (GTK_MENU (channelsD->ops_menu), NULL, NULL, NULL, NULL, 3, bevent->time);
 	      return TRUE;
 	    }
+	  /* Grumble - we have to handle double clicks ourselves because channels_dialog_flush is broken */
+	  if (channel_widget->type == Auxillary)
+	    if ((event->button.time < (button_click_time + 250)) && (channel_widget->ID == button_last_id)) {
+	      channels_dialog_edit_channel_query (channel_widget);
+	      return TRUE;
+	    } else {
+	      button_click_time = event->button.time;
+	      button_last_id = channel_widget->ID;
+	    }
 	  break;
 
 	case GDK_2BUTTON_PRESS:
@@ -748,10 +797,10 @@ channel_list_events (GtkWidget *widget,
 	  switch (kevent->keyval)
 	    {
 	    case GDK_Up:
-	      printf ("up arrow\n");
+	      /* printf ("up arrow\n"); */
 	      break;
 	    case GDK_Down:
-	      printf ("down arrow\n");
+	      /* printf ("down arrow\n"); */
 	      break;
 	    default:
 	      return FALSE;
@@ -954,7 +1003,6 @@ create_channel_widget (GImage      *gimage,
   GtkWidget *alignment;
 
   list_item = gtk_list_item_new ();
-  gtk_widget_ref (GTK_WIDGET (list_item));
 
   /*  create the channel widget and add it to the list  */
   channel_widget = (ChannelWidget *) g_malloc (sizeof (ChannelWidget));
@@ -1034,6 +1082,8 @@ create_channel_widget (GImage      *gimage,
   gtk_widget_show (vbox);
   gtk_widget_show (list_item);
 
+  gtk_widget_ref (channel_widget->list_item);
+
   return channel_widget;
 }
 
@@ -1047,7 +1097,8 @@ channel_widget_delete (ChannelWidget *channel_widget)
   /*  Remove the channel widget from the list  */
   channelsD->channel_widgets = g_slist_remove (channelsD->channel_widgets, channel_widget);
 
-  /*  Free the widget  */
+  /*  Release the widget  */
+  gtk_widget_unref (channel_widget->list_item);
   g_free (channel_widget);
 }
 
@@ -1095,6 +1146,7 @@ channel_widget_button_events (GtkWidget *widget,
   static int exclusive;
   ChannelWidget *channel_widget;
   GtkWidget *event_widget;
+  GdkEventButton *bevent;
   gint return_val;
   int visible;
   int width, height;
@@ -1125,6 +1177,13 @@ channel_widget_button_events (GtkWidget *widget,
 
     case GDK_BUTTON_PRESS:
       return_val = TRUE;
+
+      bevent = (GdkEventButton *) event;
+
+      if (bevent->button == 3) {
+	gtk_menu_popup (GTK_MENU (channelsD->ops_menu), NULL, NULL, NULL, NULL, 3, bevent->time);
+	return TRUE;
+      }
 
       button_down = 1;
       click_widget = widget;
@@ -1210,6 +1269,7 @@ channel_widget_preview_events (GtkWidget *widget,
 			       GdkEvent  *event)
 {
   GdkEventExpose *eevent;
+  GdkEventButton *bevent;
   ChannelWidget *channel_widget;
   int valid;
 
@@ -1217,6 +1277,16 @@ channel_widget_preview_events (GtkWidget *widget,
 
   switch (event->type)
     {
+    case GDK_BUTTON_PRESS:
+
+      bevent = (GdkEventButton *) event;
+
+      if (bevent->button == 3) {
+	gtk_menu_popup (GTK_MENU (channelsD->ops_menu), NULL, NULL, NULL, NULL, 3, bevent->time);
+	return TRUE;
+      }
+      break;
+
     case GDK_EXPOSE:
       if (!preview_size)
 	channel_widget_no_preview_redraw (channel_widget);
@@ -1689,7 +1759,7 @@ new_channel_query_delete_callback (GtkWidget *w,
 {
   new_channel_query_cancel_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -1801,6 +1871,7 @@ struct _EditChannelOptions {
   GtkWidget *name_entry;
 
   ChannelWidget *channel_widget;
+  int gimage_id;
   ColorPanel *color_panel;
   double opacity;
 };
@@ -1819,30 +1890,33 @@ edit_channel_query_ok_callback (GtkWidget *w,
   channel = options->channel_widget->channel;
   opacity = (int) (255 * options->opacity) / 100;
 
-  /*  Set the new channel name  */
-  if (GIMP_DRAWABLE(channel)->name)
-    g_free (GIMP_DRAWABLE(channel)->name);
-  GIMP_DRAWABLE(channel)->name = g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
-  gtk_label_set (GTK_LABEL (options->channel_widget->label), GIMP_DRAWABLE(channel)->name);
 
-  if (channel->opacity != opacity)
-    {
-      channel->opacity = opacity;
-      update = TRUE;
-    }
-  for (i = 0; i < 3; i++)
-    if (options->color_panel->color[i] != channel->col[i])
+  if (gimage_get_ID (options->gimage_id)) {
+    
+    /*  Set the new channel name  */
+    if (GIMP_DRAWABLE(channel)->name)
+      g_free (GIMP_DRAWABLE(channel)->name);
+    GIMP_DRAWABLE(channel)->name = g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
+    gtk_label_set (GTK_LABEL (options->channel_widget->label), GIMP_DRAWABLE(channel)->name);
+    
+    if (channel->opacity != opacity)
       {
-	channel->col[i] = options->color_panel->color[i];
+	channel->opacity = opacity;
 	update = TRUE;
       }
-
-  if (update)
-    {
-      drawable_update (GIMP_DRAWABLE(channel), 0, 0, GIMP_DRAWABLE(channel)->width, GIMP_DRAWABLE(channel)->height);
-      gdisplays_flush ();
-    }
-
+    for (i = 0; i < 3; i++)
+      if (options->color_panel->color[i] != channel->col[i])
+	{
+	  channel->col[i] = options->color_panel->color[i];
+	  update = TRUE;
+	}
+    
+    if (update)
+      {
+	drawable_update (GIMP_DRAWABLE(channel), 0, 0, GIMP_DRAWABLE(channel)->width, GIMP_DRAWABLE(channel)->height);
+	gdisplays_flush ();
+      }
+  }
   color_panel_free (options->color_panel);
   gtk_widget_destroy (options->query_box);
   g_free (options);
@@ -1868,7 +1942,7 @@ edit_channel_query_delete_callback (GtkWidget *w,
 {
   edit_channel_query_cancel_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -1891,6 +1965,7 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
   /*  the new options structure  */
   options = (EditChannelOptions *) g_malloc (sizeof (EditChannelOptions));
   options->channel_widget = channel_widget;
+  options->gimage_id = channel_widget->gimage->ID;
   options->opacity = (double) channel_widget->channel->opacity / 2.55;
   for (i = 0; i < 3; i++) 
     channel_color[i] =  channel_widget->channel->col[i];
@@ -1938,7 +2013,7 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  opacity_scale_data = gtk_adjustment_new (options->opacity, 0.0, 100.0, 1.0, 1.0, 1.0);
+  opacity_scale_data = gtk_adjustment_new (options->opacity, 0.0, 100.0, 1.0, 1.0, 0.0);
   opacity_scale = gtk_hscale_new (GTK_ADJUSTMENT (opacity_scale_data));
   gtk_box_pack_start (GTK_BOX (hbox), opacity_scale, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (opacity_scale), GTK_POS_TOP);

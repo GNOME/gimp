@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <string.h>
@@ -23,6 +23,7 @@
 #include "equalize.h"
 #include "interface.h"
 #include "gimage.h"
+#include "paint_funcs.h"
 
 static void       equalize (GImage *, GimpDrawable *, int);
 static void       eq_histogram (double [3][256], unsigned char [3][256], int, double);
@@ -42,7 +43,7 @@ image_equalize (gimage_ptr)
 
   if (drawable_indexed (drawable))
     {
-      message_box ("Equalize does not operate on indexed drawables.", NULL, NULL);
+      g_message ("Equalize does not operate on indexed drawables.");
       return;
     }
   equalize (gimage, drawable, mask_only);

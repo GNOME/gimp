@@ -12,8 +12,9 @@
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the Free
- * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
  */                                                                             
 #include "gimp.h"
 
@@ -260,6 +261,43 @@ gimp_channel_set_visible (gint32 channel_ID,
 				    &nreturn_vals,
 				    PARAM_CHANNEL, channel_ID,
 				    PARAM_INT32, visible,
+				    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+}
+
+gint
+gimp_channel_get_show_masked (gint32 channel_ID)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+  int show_masked;
+
+  return_vals = gimp_run_procedure ("gimp_channel_get_show_masked",
+				    &nreturn_vals,
+				    PARAM_CHANNEL, channel_ID,
+				    PARAM_END);
+
+  show_masked = -1;
+  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+    show_masked = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return show_masked;
+}
+
+void
+gimp_channel_set_show_masked (gint32 channel_ID,
+			      gint   show_masked)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+
+  return_vals = gimp_run_procedure ("gimp_channel_set_show_masked",
+				    &nreturn_vals,
+				    PARAM_CHANNEL, channel_ID,
+				    PARAM_INT32, show_masked,
 				    PARAM_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);

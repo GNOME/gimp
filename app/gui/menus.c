@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,11 +25,10 @@
 #include "gimprc.h"
 #include "interface.h"
 #include "menus.h"
-#include "paint_funcs.h"
 #include "procedural_db.h"
 #include "scale.h"
 #include "tools.h"
-
+#include "gdisplay.h"
 
 static void menus_init (void);
 static void menus_foreach (gpointer key,
@@ -43,7 +42,6 @@ static gint menus_install_accel (GtkWidget *widget,
 static void menus_remove_accel (GtkWidget *widget,
 				gchar     *signal_name,
 				gchar     *path);
-
 
 static GtkMenuEntry menu_items[] =
 {
@@ -136,6 +134,8 @@ static GtkMenuEntry menu_items[] =
   { "<Image>/Image/Colors/Desaturate", NULL, image_desaturate_cmd_callback, NULL },
   { "<Image>/Image/Channel Ops/Duplicate", "<control>D", channel_ops_duplicate_cmd_callback, NULL },
   { "<Image>/Image/Channel Ops/Offset", "<control><shift>O", channel_ops_offset_cmd_callback, NULL },
+ { "<Image>/Image/Alpha/Add Alpha Channel", NULL, layers_add_alpha_channel_cmd_callback, NULL },
+
   { "<Image>/Image/<separator>", NULL, NULL, NULL },
   { "<Image>/Image/RGB", NULL, image_convert_rgb_cmd_callback, NULL },
   { "<Image>/Image/Grayscale", NULL, image_convert_grayscale_cmd_callback, NULL },
@@ -155,6 +155,7 @@ static GtkMenuEntry menu_items[] =
   { "<Image>/Layers/Flatten Image", NULL, layers_flatten_cmd_callback, NULL },
   { "<Image>/Layers/Alpha To Selection", NULL, layers_alpha_select_cmd_callback, NULL },
   { "<Image>/Layers/Mask To Selection", NULL, layers_mask_select_cmd_callback, NULL },
+  { "<Image>/Layers/Add Alpha Channel", NULL, layers_add_alpha_channel_cmd_callback, NULL },
 
   { "<Image>/Tools/Rect Select", "R", tools_select_cmd_callback, (gpointer) RECT_SELECT },
   { "<Image>/Tools/Ellipse Select", "E", tools_select_cmd_callback, (gpointer) ELLIPSE_SELECT },
@@ -314,7 +315,7 @@ menus_set_sensitive (char *path,
   if (menu_path)
     gtk_widget_set_sensitive (menu_path->widget, sensitive);
   else
-    g_warning ("Unable to set sensitivity for menu which doesn't exist: %s", path);
+    g_message ("Unable to set sensitivity for menu which doesn't exist: %s", path);
 }
 
 void
@@ -333,7 +334,7 @@ menus_set_state (char *path,
 	gtk_check_menu_item_set_state (GTK_CHECK_MENU_ITEM (menu_path->widget), state);
     }
   else
-    g_warning ("Unable to set state for menu which doesn't exist: %s", path);
+    g_message ("Unable to set state for menu which doesn't exist: %s", path);
 }
 
 void
@@ -486,3 +487,4 @@ menus_remove_accel (GtkWidget *widget,
       g_hash_table_insert (entry_ht, path, g_strdup (""));
     }
 }
+

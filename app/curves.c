@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <string.h>
@@ -99,7 +99,6 @@ struct _CurvesDialog
   /* points and curves for ui 0-255 based */
   int            points[5][17][2];
   unsigned char  curve[5][256];
-
 };
 
 /* curves for image data */
@@ -252,7 +251,7 @@ curves_u8 (PixelArea *src_area,
   CurvesDialog *cd;
   guchar *src, *dest;
   guint8 *s, *d;
-  guint8 *curve_red, *curve_green, *curve_blue, *curve_value, *curve_alpha;
+  guint8 *curve_red, *curve_green, *curve_blue, *curve_value, *curve_alpha = NULL;
   int has_alpha = tag_alpha (src_tag) == ALPHA_YES ? TRUE: FALSE;
   int alpha = has_alpha ? src_num_channels - 1 : src_num_channels;
   int w, h;
@@ -341,7 +340,7 @@ curves_u16 (PixelArea *src_area,
   CurvesDialog *cd;
   guchar *src, *dest;
   guint16 *s, *d;
-  guint16 *curve_red, *curve_green, *curve_blue, *curve_value, *curve_alpha;
+  guint16 *curve_red, *curve_green, *curve_blue, *curve_value, *curve_alpha = NULL;
   int has_alpha = tag_alpha (src_tag) == ALPHA_YES ? TRUE: FALSE;
   int alpha = has_alpha ? src_num_channels - 1 : src_num_channels;
   int w, h;
@@ -423,6 +422,10 @@ curves_button_press (Tool           *tool,
 		     GdkEventButton *bevent,
 		     gpointer        gdisp_ptr)
 {
+  GDisplay *gdisp;
+
+  gdisp = gdisp_ptr;
+  tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
 static void
@@ -468,8 +471,9 @@ curves_control (Tool     *tool,
     case HALT :
       if (curves_dialog)
 	{
+	  active_tool->preserve = TRUE;
 	  image_map_abort_16 (curves_dialog->image_map);
-	  curves_free_curves(curves_dialog);
+	  active_tool->preserve = FALSE;
 	  curves_dialog->image_map = NULL;
 	  curves_cancel_callback (NULL, (gpointer) curves_dialog);
 	}
@@ -501,6 +505,9 @@ tools_new_curves ()
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = curves_cursor_update;
   tool->control_func = curves_control;
+  tool->preserve = TRUE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
 
   return tool;
 }
@@ -514,7 +521,7 @@ tools_free_curves (Tool *tool)
 
   /*  Close the color select dialog  */
   if (curves_dialog)
-    curves_ok_callback (NULL, (gpointer) curves_dialog);
+    curves_cancel_callback (NULL, (gpointer) curves_dialog);
 
   g_free (_curves);
 }
@@ -554,7 +561,7 @@ curves_initialize (void *gdisp_ptr)
 
   if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
     {
-      message_box ("Curves for indexed drawables cannot be adjusted.", NULL, NULL);
+      g_message ("Curves for indexed drawables cannot be adjusted.");
       return;
     }
 
@@ -615,6 +622,8 @@ curves_initialize (void *gdisp_ptr)
   /* set the current selection */
   gtk_option_menu_set_history ( GTK_OPTION_MENU (curves_dialog->channel_menu), 0);
 
+  if (!GTK_WIDGET_VISIBLE (curves_dialog->shell))
+    gtk_widget_show (curves_dialog->shell);
 
 
   curves_update (curves_dialog, GRAPH | DRAW);
@@ -627,8 +636,9 @@ curves_free ()
     {
       if (curves_dialog->image_map)
 	{
+	  active_tool->preserve = TRUE;
 	  image_map_abort_16 (curves_dialog->image_map);
-	  curves_free_curves(curves_dialog);
+	  active_tool->preserve = FALSE;
 	  curves_dialog->image_map = NULL;
 	}
       if (curves_dialog->pixmap)
@@ -641,7 +651,7 @@ curves_free ()
 /*  Select Curves dialog  */
 /**************************/
 
-CurvesDialog *
+static CurvesDialog *
 curves_new_dialog ()
 {
   CurvesDialog *cd;
@@ -654,12 +664,16 @@ curves_new_dialog ()
   GtkWidget *channel_hbox;
   GtkWidget *menu;
   GtkWidget *table;
-  int i;
+  int i, j;
 
   cd = g_malloc (sizeof (CurvesDialog));
   cd->preview = TRUE;
   cd->curve_type = SMOOTH;
   cd->pixmap = NULL;
+  cd->channel = HISTOGRAM_VALUE;
+  for (i = 0; i < 5; i++)
+    for (j = 0; j < 256; j++)
+      cd->curve[i][j] = j;
 
   for (i = 0; i < 5; i++)
     channel_items [i].user_data = (gpointer) cd;
@@ -788,7 +802,6 @@ curves_new_dialog ()
   build_action_area (GTK_DIALOG (cd->shell), action_items, 3, 0);
 
   gtk_widget_show (vbox);
-  gtk_widget_show (cd->shell);
 
   return cd;
 }
@@ -1064,7 +1077,6 @@ curves_plot_curve_u16(
   int i;
   guint16* curve_data = (guint16*) pixelrow_data (curve);
 
-  
   /* construct the geometry matrix from the segment */
   for (i = 0; i < 4; i++)
     {
@@ -1253,16 +1265,19 @@ curves_plot_curve_ui(
       lasty = newy;
     }
 }
-					
 
 static void
 curves_preview (CurvesDialog *cd)
 {
   if (!cd->image_map)
-    g_warning ("No image map");
+    g_message ("curves_preview(): No image map");
+
+  active_tool->preserve = TRUE;  /* Going to dirty the display... */
 
   curves_calculate_image_data_curves(cd); 
   image_map_apply_16 (cd->image_map, curves, (void *) cd);
+
+  active_tool->preserve = FALSE;  /* All done */
 }
 
 static void
@@ -1458,6 +1473,8 @@ curves_ok_callback (GtkWidget *widget,
   if (GTK_WIDGET_VISIBLE (cd->shell))
     gtk_widget_hide (cd->shell);
 
+  active_tool->preserve = TRUE;  /* We're about to dirty... */
+
   if (!cd->preview)
   {
     curves_calculate_image_data_curves (cd);
@@ -1470,6 +1487,7 @@ curves_ok_callback (GtkWidget *widget,
     curves_free_curves(cd);
   }
 
+  active_tool->preserve = FALSE;
   cd->image_map = NULL;
 }
 
@@ -1485,8 +1503,9 @@ curves_cancel_callback (GtkWidget *widget,
 
   if (cd->image_map)
     {
+      active_tool->preserve = TRUE;
       image_map_abort_16 (cd->image_map);
-      curves_free_curves(cd);
+      active_tool->preserve = FALSE;
       gdisplays_flush ();
     }
 
@@ -1500,7 +1519,7 @@ curves_delete_callback (GtkWidget *w,
 {
   curves_cancel_callback (w, data);
 
-  return FALSE;
+  return TRUE;
 }
 static void
 curves_preview_update (GtkWidget *w,
@@ -1509,7 +1528,7 @@ curves_preview_update (GtkWidget *w,
   CurvesDialog *cd;
 
   cd = (CurvesDialog *) data;
-
+  
   if (GTK_TOGGLE_BUTTON (w)->active)
     {
       cd->preview = TRUE;
@@ -1862,11 +1881,15 @@ curves_spline_invoker (Argument *args)
       if (success)
 	{
 	  if (drawable_gray (drawable))
-	    if (int_value != 0)
-	      success = FALSE;
+	    {
+	      if (int_value != 0)
+		success = FALSE;
+	    }
 	  else if (drawable_color (drawable))
-	    if (int_value < 0 || int_value > 3)
-	      success = FALSE;
+	    {
+	      if (int_value < 0 || int_value > 3)
+		success = FALSE;
+	    }
 	  else
 	    success = FALSE;
 	}
@@ -2031,11 +2054,15 @@ curves_explicit_invoker (Argument *args)
       if (success)
 	{
 	  if (drawable_gray (drawable))
-	    if (int_value != 0)
-	      success = FALSE;
+	    {
+	      if (int_value != 0)
+		success = FALSE;
+	    }
 	  else if (drawable_color (drawable))
-	    if (int_value < 0 || int_value > 3)
-	      success = FALSE;
+	    {
+	      if (int_value < 0 || int_value > 3)
+		success = FALSE;
+	    }
 	  else
 	    success = FALSE;
 	}

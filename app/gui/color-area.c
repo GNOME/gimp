@@ -1,4 +1,4 @@
-#/* The GIMP -- an image manipulation program
+/* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify
@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
 #include <stdlib.h>
@@ -208,15 +208,24 @@ color_area_events (GtkWidget *widget,
 
   switch (event->type)
     {
-    case GDK_EXPOSE:
-      if (!color_area_pixmap)
-	color_area_pixmap = gdk_pixmap_new (widget->window,
-					    widget->allocation.width,
-					    widget->allocation.height, -1);
-      if (!color_area_gc)
-	color_area_gc = gdk_gc_new (widget->window);
+    case GDK_CONFIGURE:
+      if (color_area_pixmap)
+	gdk_pixmap_unref (color_area_pixmap);
 
-      color_area_draw ();
+      color_area_pixmap = gdk_pixmap_new (widget->window,
+					  widget->allocation.width,
+					  widget->allocation.height, -1);
+
+      break;
+
+    case GDK_EXPOSE:
+      if (GTK_WIDGET_DRAWABLE (widget))
+	{
+	  if (!color_area_gc)
+	    color_area_gc = gdk_gc_new (widget->window);
+
+	  color_area_draw ();
+	}
       break;
 
     case GDK_BUTTON_PRESS:

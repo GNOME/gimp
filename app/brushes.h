@@ -13,14 +13,13 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #ifndef __BRUSHES_H__
 #define __BRUSHES_H__
 
 #include <glib.h>
 #include "procedural_db.h"
-#include "temp_buf.h"
 
 struct _Canvas;
 typedef struct _GBrush  GBrush, * GBrushP;
@@ -31,7 +30,7 @@ struct _GBrush
   char *     name;        /*  brush's name--for brush selection dialog   */
   int        spacing;     /*  brush's spacing                            */
   int        index;       /*  brush's index...                           */
-  TempBuf *  mask;        /*  the actual mask...                         */
+  //TempBuf *  mask;        /*  the actual mask...                         */
   struct _Canvas *  mask_canvas;  /*  the actual mask as canvas                  */
 };
 
@@ -41,7 +40,7 @@ extern int          num_brushes;
 
 
 /*  function declarations  */
-void                brushes_init             (void);
+void                brushes_init             (int no_data);
 void                brushes_free             (void);
 void                brush_select_dialog_free (void);
 void                select_brush             (GBrushP);

@@ -1,0 +1,149 @@
+#!/bin/sh
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+exec_prefix_set=no
+plug_in_dir=@gimpplugindir@
+data_dir=@gimpdatadir@
+
+usage="\
+Usage: gimptool [--prefix[=DIR]] [--exec-prefix[=DIR]] [--version] [--libs] [--cflags] [--build plug-in.c] [--install plug-in.c] [--install-admin plug-in.c] [--install-bin plug-in] [--install-admin-bin plug-in] [--install-script script.scm] [--install-admin-script script.scm]"
+
+noarg="\
+Error: Need a plug-in source file to build"
+
+notfound="\
+Error: Couldn't find source file to build"
+
+if test $# -eq 0; then
+      echo "${usage}" 1>&2
+      exit 1
+fi
+
+if test x${GTK_CONFIG+set} != xset ; then
+      gtk_config='@GTK_CONFIG@'
+else
+      gtk_config="$GTK_CONFIG"
+fi
+
+if test x${CC+set} != xset ; then
+      cc='@CC@'
+else
+      cc="$CC"
+fi
+
+if test x${CFLAGS+set} != xset ; then
+      cflags='@CFLAGS@'
+else
+      cflags="$CFLAGS"
+fi
+
+while test $# -gt 0; do
+  case "$1" in
+  -*=*) optarg=`echo "$1" | sed 's/[-_a-zA-Z0-9]*=//'` ;;
+  *) optarg= ;;
+  esac
+
+  case $1 in
+    --prefix=*)
+      prefix=$optarg
+      if test $exec_prefix_set = no ; then
+        exec_prefix=$optarg
+      fi
+      ;;
+    --prefix)
+      echo $prefix
+      ;;
+    --exec-prefix=*)
+      exec_prefix=$optarg
+      exec_prefix_set=yes
+      ;;
+    --exec-prefix)
+      echo $exec_prefix
+      ;;
+    --version)
+      echo @GIMP_VERSION@
+      ;;
+    --cflags)
+      if test @includedir@ != /usr/include ; then
+        includes=-I@includedir@
+      fi
+      echo $includes `$gtk_config --cflags`
+      ;;
+    --libs)
+      echo -L@libdir@ -lgimpui -lgimp `$gtk_config --libs`
+      ;;
+    --install-bin | --install-admin-bin \
+    | --install-script | --install-admin-script)
+      case $1 in
+        --install-bin)
+          install_cmd="@INSTALL@ @INSTALL_PROGRAM@"
+          install_dir="$HOME/@gimpdir@/plug-ins"
+          ;;
+        --install-admin-bin)
+          install_cmd="@INSTALL@ @INSTALL_PROGRAM@"
+          install_dir="$plug_in_dir/plug-ins"
+          ;;
+        --install-script)
+          install_cmd="@INSTALL@ @INSTALL_DATA@"
+          install_dir="$HOME/.gimp/scripts"
+          ;;
+        --install-admin-script)
+          install_cmd="@INSTALL@ @INSTALL_DATA@"
+          install_dir="$data_dir/scripts"
+          ;;
+      esac
+      shift
+      if test "x$1" != "x"; then
+        if test -r "$1"; then
+          cmd="$install_cmd $1 $install_dir/$1"
+          echo $cmd
+          exec $cmd
+        else
+          echo "${notfound}" 1>&2
+          echo "${usage}" 1>&2
+          exit 1
+        fi  
+      else
+        echo "${noarg}" 1>&2
+        echo "${usage}" 1>&2
+        exit 1
+      fi
+      ;;
+    --build | --install | --install-admin)
+      case $1 in
+        --build)
+          install_dir=. ;;
+        --install)
+          install_dir="$HOME/@gimpdir@/plug-ins" ;;
+        --install-admin)
+          install_dir="$plug_in_dir/plug-ins" ;;
+      esac
+      if test @includedir@ != /usr/include ; then
+        includes=-I@includedir@
+      fi
+      shift
+      if test "x$1" != "x"; then
+        if test -r "$1"; then
+          cmd="$cc $cflags $includes `$gtk_config --cflags` -o $install_dir/`echo $1|sed 's/\.[^\.]*$//'` $1 -L@libdir@ -lgimpui -lgimp `$gtk_config --libs`"
+          echo $cmd
+          exec $cmd
+        else
+          echo "${notfound}" 1>&2
+          echo "${usage}" 1>&2
+          exit 1
+        fi  
+      else
+        echo "${noarg}" 1>&2
+        echo "${usage}" 1>&2
+        exit 1
+      fi
+      ;;
+    *)
+      echo "${usage}" 1>&2
+      exit 1
+      ;;
+  esac
+  shift
+done
+

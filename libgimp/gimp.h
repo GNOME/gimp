@@ -12,20 +12,27 @@
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the Free
- * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
  */                                                                             
 #ifndef __GIMP_H__
 #define __GIMP_H__
 
 
 #include <glib.h>
+#include <libgimp/gimpfeatures.h>
 #include <libgimp/gimpenums.h>
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
+
+
+extern const guint gimp_major_version;
+extern const guint gimp_minor_version;
+extern const guint gimp_micro_version;
 
 
 typedef struct _GPlugInInfo  GPlugInInfo;
@@ -203,6 +210,12 @@ void gimp_progress_init (char *message);
  *  value between 0 and 1.
  */
 void gimp_progress_update (gdouble percentage);
+
+
+/* Pops up a dialog box with "message". Useful for status and
+ * error reports. If "message" is NULL, do nothing.
+ */
+void gimp_message (char *message);
 
 
 /* Query the gimp application's procedural database.

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include "appenv.h"
@@ -28,7 +28,6 @@
 #include "global_edit.h"
 #include "interface.h"
 #include "layer.h"
-#include "paint_funcs.h"
 #include "paint_funcs_area.h"
 #include "palette.h"
 #include "pixelarea.h"
@@ -69,106 +68,6 @@ TileManager * global_buf = NULL;
 Canvas *global_buf_canvas = NULL;
 
 /*  Crop the buffer to the size of pixels with non-zero transparency */
-TileManager *
-crop_buffer (TileManager *tiles,
-	     int          border)
-{
-  PixelRegion PR;
-  TileManager *new_tiles;
-  int bytes, alpha;
-  unsigned char * data;
-  int empty;
-  int x1, y1, x2, y2;
-  int x, y;
-  int ex, ey;
-  int found;
-  void * pr;
-  unsigned char black[MAX_CHANNELS] = { 0, 0, 0, 0 };
-
-  bytes = tiles->levels[0].bpp;
-  alpha = bytes - 1;
-
-  /*  go through and calculate the bounds  */
-  x1 = tiles->levels[0].width;
-  y1 = tiles->levels[0].height;
-  x2 = 0;
-  y2 = 0;
-
-  pixel_region_init (&PR, tiles, 0, 0, x1, y1, FALSE);
-  for (pr = pixel_regions_register (1, &PR); pr != NULL; pr = pixel_regions_process (pr))
-    {
-      data = PR.data + alpha;
-      ex = PR.x + PR.w;
-      ey = PR.y + PR.h;
-
-      for (y = PR.y; y < ey; y++)
-	{
-	  found = FALSE;
-	  for (x = PR.x; x < ex; x++, data+=bytes)
-	    if (*data)
-	      {
-		if (x < x1)
-		  x1 = x;
-		if (x > x2)
-		  x2 = x;
-		found = TRUE;
-	      }
-	  if (found)
-	    {
-	      if (y < y1)
-		y1 = y;
-	      if (y > y2)
-		y2 = y;
-	    }
-	}
-    }
-
-  x2 = BOUNDS (x2 + 1, 0, tiles->levels[0].width);
-  y2 = BOUNDS (y2 + 1, 0, tiles->levels[0].height);
-
-  empty = (x1 == tiles->levels[0].width && y1 == tiles->levels[0].height);
-
-  /*  If there are no visible pixels, return NULL */
-  if (empty)
-    new_tiles = NULL;
-  /*  If no cropping, return original buffer  */
-  else if (x1 == 0 && y1 == 0 && x2 == tiles->levels[0].width &&
-	   y2 == tiles->levels[0].height && border == 0)
-    new_tiles = tiles;
-  /*  Otherwise, crop the original area  */
-  else
-    {
-      PixelRegion srcPR, destPR;
-      int new_width, new_height;
-
-      new_width = (x2 - x1) + border * 2;
-      new_height = (y2 - y1) + border * 2;
-      new_tiles = tile_manager_new (new_width, new_height, bytes);
-
-      /*  If there is a border, make sure to clear the new tiles first  */
-      if (border)
-	{
-	  pixel_region_init (&destPR, new_tiles, 0, 0, new_width, border, TRUE);
-	  color_region (&destPR, black);
-	  pixel_region_init (&destPR, new_tiles, 0, border, border, (y2 - y1), TRUE);
-	  color_region (&destPR, black);
-	  pixel_region_init (&destPR, new_tiles, new_width - border, border, border, (y2 - y1), TRUE);
-	  color_region (&destPR, black);
-	  pixel_region_init (&destPR, new_tiles, 0, new_height - border, new_width, border, TRUE);
-	  color_region (&destPR, black);
-	}
-
-      pixel_region_init (&srcPR, tiles, x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixel_region_init (&destPR, new_tiles, border, border, (x2 - x1), (y2 - y1), TRUE);
-
-      copy_region (&srcPR, &destPR);
-
-      new_tiles->x = x1;
-      new_tiles->y = y1;
-    }
-
-  return new_tiles;
-}
 
 Canvas *
 crop_buffer_16 (Canvas *canvas,
@@ -284,58 +183,6 @@ crop_buffer_16 (Canvas *canvas,
   return new_canvas;
 }
 
-#if 0
-TileManager *
-edit_cut (GImage *gimage,
-	  GimpDrawable *drawable)
-{
-  TileManager *cut;
-  TileManager *cropped_cut;
-  int empty;
-
-  if (!gimage || drawable == NULL)
-    return NULL;
-
-  /*  Start a group undo  */
-  undo_push_group_start (gimage, EDIT_CUT_UNDO);
-
-  /*  See if the gimage mask is empty  */
-  empty = gimage_mask_is_empty (gimage);
-
-  /*  Next, cut the mask portion from the gimage  */
-  cut = gimage_mask_extract (gimage, drawable, TRUE, FALSE);
-
-  /*  Only crop if the gimage mask wasn't empty  */
-  if (cut && empty == FALSE)
-    {
-      cropped_cut = crop_buffer (cut, 0);
-
-      if (cropped_cut != cut)
-	tile_manager_destroy (cut);
-    }
-  else if (cut)
-    cropped_cut = cut;
-  else
-    cropped_cut = NULL;
-
-  /*  end the group undo  */
-  undo_push_group_end (gimage);
-
-  if (cropped_cut)
-    {
-      /*  Free the old global edit buffer  */
-      if (global_buf)
-	tile_manager_destroy (global_buf);
-      /*  Set the global edit buffer  */
-      global_buf = cropped_cut;
-
-      return cropped_cut;
-    }
-  else
-    return NULL;
-}
-#endif
-
 Canvas *
 edit_cut_16 (GImage *gimage,
 	  GimpDrawable *drawable)
@@ -354,7 +201,7 @@ edit_cut_16 (GImage *gimage,
   empty = gimage_mask_is_empty (gimage);
 
   /*  Next, cut the mask portion from the gimage  */
-  cut = gimage_mask_extract_canvas (gimage, drawable, TRUE, FALSE);
+  cut = gimage_mask_extract (gimage, drawable, TRUE, FALSE);
 
   /*  Only crop if the gimage mask wasn't empty  */
   if (cut && empty == FALSE)
@@ -386,52 +233,6 @@ edit_cut_16 (GImage *gimage,
     return NULL;
 }
 
-#if 0
-TileManager *
-edit_copy (GImage *gimage,
-	   GimpDrawable *drawable)
-{
-  TileManager * copy;
-  TileManager * cropped_copy;
-  int empty;
-
-  if (!gimage || drawable == NULL)
-    return NULL;
-
-  /*  See if the gimage mask is empty  */
-  empty = gimage_mask_is_empty (gimage);
-
-  /*  First, copy the masked portion of the gimage  */
-  copy = gimage_mask_extract (gimage, drawable, FALSE, FALSE);
-
-  /*  Only crop if the gimage mask wasn't empty  */
-  if (copy && empty == FALSE)
-    {
-      cropped_copy = crop_buffer (copy, 0);
-
-      if (cropped_copy != copy)
-	tile_manager_destroy (copy);
-    }
-  else if (copy)
-    cropped_copy = copy;
-  else
-    cropped_copy = NULL;
-
-  if (cropped_copy)
-    {
-      /*  Free the old global edit buffer  */
-      if (global_buf)
-	tile_manager_destroy (global_buf);
-      /*  Set the global edit buffer  */
-      global_buf = cropped_copy;
-
-      return cropped_copy;
-    }
-  else
-    return NULL;
-}
-#endif
-
 Canvas *
 edit_copy_16 (GImage *gimage,
 	   GimpDrawable *drawable)
@@ -447,7 +248,7 @@ edit_copy_16 (GImage *gimage,
   empty = gimage_mask_is_empty (gimage);
 
   /*  First, copy the masked portion of the gimage  */
-  copy = gimage_mask_extract_canvas (gimage, drawable, FALSE, FALSE);
+  copy = gimage_mask_extract (gimage, drawable, FALSE, FALSE);
 
   /*  Only crop if the gimage mask wasn't empty  */
   if (copy && empty == FALSE)
@@ -475,54 +276,6 @@ edit_copy_16 (GImage *gimage,
   else
     return NULL;
 }
-
-#if 0
-int
-edit_paste (GImage      *gimage,
-	    GimpDrawable *drawable,
-	    TileManager *paste,
-	    int          paste_into)
-{
-  Layer * float_layer;
-  int x1, y1, x2, y2;
-  int cx, cy;
-
-  /*  Make a new floating layer  */
-  float_layer = layer_from_tiles (gimage, drawable, paste, "Pasted Layer", OPAQUE_OPACITY, NORMAL);
-
-  if (float_layer)
-    {
-      /*  Start a group undo  */
-      undo_push_group_start (gimage, EDIT_PASTE_UNDO);
-
-      /*  Set the offsets to the center of the image  */
-      drawable_offsets ( (drawable), &cx, &cy);
-      drawable_mask_bounds ( (drawable), &x1, &y1, &x2, &y2);
-      cx += (x1 + x2) >> 1;
-      cy += (y1 + y2) >> 1;
-
-      GIMP_DRAWABLE(float_layer)->offset_x = cx - (GIMP_DRAWABLE(float_layer)->width >> 1);
-      GIMP_DRAWABLE(float_layer)->offset_y = cy - (GIMP_DRAWABLE(float_layer)->height >> 1);
-
-      /*  If there is a selection mask clear it--
-       *  this might not always be desired, but in general,
-       *  it seems like the correct behavior.
-       */
-      if (! gimage_mask_is_empty (gimage) && !paste_into)
-	channel_clear (gimage_get_mask (gimage));
-
-      /*  add a new floating selection  */
-      floating_sel_attach (float_layer, drawable);
-
-      /*  end the group undo  */
-      undo_push_group_end (gimage);
-
-      return GIMP_DRAWABLE(float_layer)->ID;
-    }
-  else
-    return 0;
-}
-#endif
 
 int
 edit_paste_16 (GImage      *gimage,
@@ -570,46 +323,6 @@ edit_paste_16 (GImage      *gimage,
     return 0;
 }
 
-#if 0
-int
-edit_clear (GImage *gimage,
-	    GimpDrawable *drawable)
-{
-  TileManager *buf_tiles;
-  PixelRegion bufPR;
-  int x1, y1, x2, y2;
-  unsigned char col[MAX_CHANNELS];
-
-  if (!gimage || drawable == NULL)
-    return FALSE;
-
-  gimage_get_background (gimage, drawable, col);
-  if (drawable_has_alpha (drawable))
-    col [drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
-
-  drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-
-  if (!(x2 - x1) || !(y2 - y1))
-    return FALSE;
-
-  buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1), drawable_bytes (drawable));
-  pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
-  color_region (&bufPR, col);
-
-  pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimage_apply_image (gimage, drawable, &bufPR, 1, OPAQUE_OPACITY,
-		      ERASE_MODE, NULL, x1, y1);
-
-  /*  update the image  */
-  drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
-
-  /*  free the temporary tiles  */
-  tile_manager_destroy (buf_tiles);
-
-  return TRUE;
-}
-#endif
-
 int
 edit_clear (GImage *gimage,
 	    GimpDrawable *drawable)
@@ -654,48 +367,8 @@ edit_clear (GImage *gimage,
   return TRUE;
 }
 
-#if 0
 int
 edit_fill (GImage *gimage,
-	   GimpDrawable *drawable)
-{
-  TileManager *buf_tiles;
-  PixelRegion bufPR;
-  int x1, y1, x2, y2;
-  unsigned char col[MAX_CHANNELS];
-
-  if (!gimage || drawable == NULL)
-    return FALSE;
-
-  gimage_get_background (gimage, drawable, col);
-  if (drawable_has_alpha (drawable))
-    col [drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
-
-  drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-
-  if (!(x2 - x1) || !(y2 - y1))
-    return FALSE;
-
-  buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1), drawable_bytes (drawable));
-  pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
-  color_region (&bufPR, col);
-
-  pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimage_apply_image (gimage, drawable, &bufPR, 1, OPAQUE_OPACITY,
-		      NORMAL_MODE, NULL, x1, y1);
-
-  /*  update the image  */
-  drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
-
-  /*  free the temporary tiles  */
-  tile_manager_destroy (buf_tiles);
-
-  return TRUE;
-}
-#endif
-
-int
-edit_fill(GImage *gimage,
 	   GimpDrawable *drawable)
 {
   Canvas *buf_canvas;
@@ -856,6 +529,9 @@ named_buffer_paste_callback (GtkWidget *w,
   gtk_widget_destroy (pn_dlg->shell);
 
   g_free (pn_dlg);
+      
+  /*  flush the display  */
+  gdisplays_flush ();
 }
 
 static void
@@ -909,7 +585,7 @@ named_buffer_dialog_delete_callback (GtkWidget *w,
 {
   named_buffer_cancel_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void

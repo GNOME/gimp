@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <math.h>
@@ -28,10 +28,10 @@
 #include "info_dialog.h"
 #include "interface.h"
 #include "layers_dialog.h"
+#include "paint_funcs.h"
 #include "palette.h"
 #include "transform_core.h"
 #include "transform_tool.h"
-#include "temp_buf.h"
 #include "tools.h"
 #include "undo.h"
 
@@ -40,7 +40,7 @@
 #include "tile_manager_pvt.h"
 
 #define    SQR(x) ((x) * (x))
-/* define pi */
+
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif  /*  M_PI  */
@@ -82,6 +82,10 @@ transform_core_button_press (tool, bevent, gdisp_ptr)
 
   gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
+
+  transform_core->bpressed = TRUE; /* ALT */
+
+  tool->drawable = gimage_active_drawable (gdisp->gimage);
 
   /*  Save the current transformation info  */
   for (i = 0; i < TRAN_INFO_SIZE; i++)
@@ -149,9 +153,9 @@ transform_core_button_press (tool, bevent, gdisp_ptr)
 	if (gimage_mask_is_empty (gdisp->gimage) ||
 	    gimage_mask_value (gdisp->gimage, x, y))
 	  {
-	    if (GIMP_DRAWABLE(layer->mask))
+	    if (layer->mask != NULL && GIMP_DRAWABLE(layer->mask))
 	      {
-		message_box ("Transformations do not work on\nlayers that contain layer masks.", NULL, NULL);
+		g_message ("Transformations do not work on\nlayers that contain layer masks.");
 		tool->state = INACTIVE;
 		return;
 	      }
@@ -205,10 +209,12 @@ transform_core_button_release (tool, bevent, gdisp_ptr)
   TransformUndo *tu;
   int first_transform;
   int new_layer;
-  int i;
+  int i, x, y;
 
   gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
+
+  transform_core->bpressed = FALSE; /* ALT */
 
   /*  if we are creating, there is nothing to be done...exit  */
   if (transform_core->function == CREATING && transform_core->interactive)
@@ -221,6 +227,12 @@ transform_core_button_release (tool, bevent, gdisp_ptr)
   /*  if the 3rd button isn't pressed, transform the selected mask  */
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
+      /*  We're going to dirty this image, but we want to keep the tool
+	  around
+      */
+
+      tool->preserve = TRUE;
+
       /*  Start a transform undo group  */
       undo_push_group_start (gdisp->gimage, TRANSFORM_CORE_UNDO);
 
@@ -232,7 +244,7 @@ transform_core_button_release (tool, bevent, gdisp_ptr)
        *  the transform tool's private selection pointer, so that the
        *  original source can be repeatedly modified.
        */
-      if (first_transform)
+      if (first_transform) 
 	transform_core->original = transform_core_cut (gdisp->gimage,
 						       gimage_active_drawable (gdisp->gimage),
 						       &new_layer);
@@ -260,13 +272,42 @@ transform_core_button_release (tool, bevent, gdisp_ptr)
 	  tu->first = first_transform;
 	  tu->original = NULL;
 
+	  /* Make a note of the new current drawable (since we may have
+	     a floating selection, etc now. */
+	  
+	  tool->drawable = gimage_active_drawable (gdisp->gimage);
+
 	  undo_push_transform (gdisp->gimage, (void *) tu);
 	}
 
       /*  push the undo group end  */
       undo_push_group_end (gdisp->gimage);
 
+      /*  We're done dirtying the image, and would like to be restarted
+	  if the image gets dirty while the tool exists
+      */
+      
+      tool->preserve = FALSE;
+
       /*  Flush the gdisplays  */
+      if (gdisp->disp_xoffset || gdisp->disp_yoffset)
+	{
+	  gdk_window_get_size (gdisp->canvas->window, &x, &y);
+	  if (gdisp->disp_yoffset)
+	    {
+	      gdisplay_expose_area (gdisp, 0, 0, gdisp->disp_width,
+				    gdisp->disp_yoffset);
+	      gdisplay_expose_area (gdisp, 0, gdisp->disp_yoffset + y,
+				    gdisp->disp_width, gdisp->disp_height);
+	    }
+	  if (gdisp->disp_xoffset)
+	    {
+	      gdisplay_expose_area (gdisp, 0, 0, gdisp->disp_xoffset,
+				    gdisp->disp_height);
+	      gdisplay_expose_area (gdisp, gdisp->disp_xoffset + x, 0,
+				    gdisp->disp_width, gdisp->disp_height);
+	    }
+	}
       gdisplays_flush ();
     }
   else
@@ -299,8 +340,17 @@ transform_core_motion (tool, mevent, gdisp_ptr)
   GDisplay *gdisp;
   TransformCore *transform_core;
 
+
   gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
+
+  if(transform_core->bpressed == FALSE)
+  {
+    /* hey we have not got the button press yet
+     * so go away.
+     */
+    return;
+  }
 
   /*  if we are creating or this tool is non-interactive, there is
    *  nothing to be done so exit.
@@ -480,6 +530,8 @@ transform_core_new (type, interactive)
   private->function = CREATING;
   private->original = NULL;
 
+  private->bpressed = FALSE;
+
   for (i = 0; i < TRAN_INFO_SIZE; i++)
     private->trans_info[i] = 0;
 
@@ -487,8 +539,9 @@ transform_core_new (type, interactive)
   tool->state = INACTIVE;
   tool->scroll_lock = 1;    /*  Do not allow scrolling  */
   tool->auto_snap_to = TRUE;
-  tool->gdisp_ptr = NULL;
   tool->private = (void *) private;
+
+  tool->preserve = FALSE;   /*  Destroy when the image is dirtied. */
 
   tool->button_press_func = transform_core_button_press;
   tool->button_release_func = transform_core_button_release;
@@ -838,8 +891,8 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
   double dx1, dy1, dx2, dy2, dx3, dy3, dx4, dy4;
   double xinc, yinc, winc;
   double tx, ty, tw;
-  double ttx, tty;
-  double dx, dy;
+  double ttx = 0.0, tty = 0.0;
+  double dx = 0.0, dy = 0.0;
   unsigned char * dest, * d;
   unsigned char * src[16];
   double src_a[16][MAX_CHANNELS];
@@ -929,7 +982,7 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
 	{
 	  /*  normalize homogeneous coords  */
 	  if (tw == 0.0)
-	    warning ("homogeneous coordinate = 0...\n");
+	    g_message ("homogeneous coordinate = 0...\n");
 	  else if (tw != 1.0)
 	    {
 	      ttx = tx / tw;
@@ -1183,7 +1236,6 @@ transform_core_paste (gimage, drawable, tiles, new_layer)
 {
   Layer * layer;
   Layer * floating_layer;
-  int layer_type;
 
   if (new_layer)
     {
@@ -1211,6 +1263,7 @@ transform_core_paste (gimage, drawable, tiles, new_layer)
       if ((layer = drawable_layer ( (drawable))) == NULL)
 	return NULL;
 
+      layer_add_alpha (layer);
       floating_layer = gimage_floating_sel (gimage);
 
       if (floating_layer)
@@ -1232,25 +1285,6 @@ transform_core_paste (gimage, drawable, tiles, new_layer)
       GIMP_DRAWABLE(layer)->bytes = tiles->levels[0].bpp;
       GIMP_DRAWABLE(layer)->offset_x = tiles->x;
       GIMP_DRAWABLE(layer)->offset_y = tiles->y;
-
-      /*  Select the layer type based on the number of bytes  */
-      layer_type = GIMP_DRAWABLE(layer)->type;
-      switch (layer_type)
-	{
-	case RGB_GIMAGE : case RGBA_GIMAGE:
-	  GIMP_DRAWABLE(layer)->type = (GIMP_DRAWABLE(layer)->bytes == 4) ? RGBA_GIMAGE : RGB_GIMAGE;
-	  break;
-	case GRAY_GIMAGE : case GRAYA_GIMAGE:
-	  GIMP_DRAWABLE(layer)->type = (GIMP_DRAWABLE(layer)->bytes == 2) ? GRAYA_GIMAGE : GRAY_GIMAGE;
-	  break;
-	case INDEXED_GIMAGE : case INDEXEDA_GIMAGE:
-	  GIMP_DRAWABLE(layer)->type = (GIMP_DRAWABLE(layer)->bytes == 2) ? INDEXEDA_GIMAGE : INDEXED_GIMAGE;
-	  break;
-	}
-
-      /*  If the layer type changed, update the gdisplay titles  */
-      if (GIMP_DRAWABLE(layer)->type != layer_type)
-	gdisplays_update_title (gimage->ID);
 
       if (floating_layer)
 	floating_sel_rigor (floating_layer, TRUE);

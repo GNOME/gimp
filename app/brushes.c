@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <stdio.h>
@@ -22,7 +22,6 @@
 #include <dirent.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-
 #include "appenv.h"
 #include "brushes.h"
 #include "brush_header.h"
@@ -71,15 +70,16 @@ static gint         brush_compare_func     (gpointer, gpointer);
 
 /*  function declarations  */
 void
-brushes_init ()
+brushes_init (int no_data)
 {
   GSList * list;
+
   if (brush_list)
     brushes_free();
 
   brush_list = NULL;
   num_brushes = 0;
-  
+
   if (!brush_path)
   {
     GBrushP brush;
@@ -321,7 +321,7 @@ load_brush(char *filename)
     }
   else if (header.version != FILE_VERSION)
     {
-      warning ("Unknown GIMP version #%d in \"%s\"\n", header.version,
+      g_message ("Unknown GIMP version #%d in \"%s\"\n", header.version,
 	       filename);
       fclose (fp);
       free_brush (brush);
@@ -353,7 +353,7 @@ load_brush(char *filename)
       brush->name = (char *) g_malloc (sizeof (char) * bn_size);
       if ((fread (brush->name, 1, bn_size, fp)) < bn_size)
 	{
-	  warning ("Error in GIMP brush file...aborting.");
+	  g_message ("Error in GIMP brush file...aborting.");
 	  fclose (fp);
 	  free_brush (brush);
 	  return;
@@ -369,7 +369,7 @@ load_brush(char *filename)
   bytes = tag_bytes (tag); 
   if ((fread (canvas_portion_data (brush->mask_canvas,0,0), 1, header.width * header.height * bytes, fp)) <
       header.width * header.height * bytes)
-    warning ("GIMP brush file appears to be truncated.");
+    g_message ("GIMP brush file appears to be truncated.");
   
   canvas_portion_unref (brush->mask_canvas,0,0); 
   
@@ -464,6 +464,7 @@ free_brush (brush)
     g_free (brush->filename);
   if (brush->name)
     g_free (brush->name);
+
   g_free (brush);
 }
 
@@ -548,7 +549,7 @@ brushes_refresh_brush_invoker (Argument *args)
    */
 
   success = TRUE ;
-  brushes_init();
+  brushes_init(FALSE);
   return procedural_db_return_args (&brushes_refresh_brush_proc, success);
 }
 

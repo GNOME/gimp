@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <math.h>
@@ -27,6 +27,7 @@
 #include "gimprc.h"
 #include "gdisplay.h"
 #include "rect_select.h"
+#include "paint_funcs.h"
 
 #define NO  0
 #define YES 1
@@ -201,11 +202,13 @@ find_contiguous_segment (unsigned char *col, PixelRegion *src,
 
 static void
 find_contiguous_region_helper (PixelRegion *mask, PixelRegion *src,
-			       int has_alpha, int antialias, int threshold,
+			       int has_alpha, int antialias, int threshold, int indexed,
 			       int x, int y, unsigned char *col)
 {
   int start, end, i;
   int val;
+  int bytes;
+
   Tile *tile;
 
   if (threshold == 0) threshold = 1;
@@ -222,6 +225,13 @@ find_contiguous_region_helper (PixelRegion *mask, PixelRegion *src,
   src->x = x;
   src->y = y;
 
+  bytes = src->bytes;
+  if(indexed)
+    {
+      bytes = has_alpha ? 4 : 3;
+    }
+    
+
   if ( ! find_contiguous_segment (col, src, mask, src->w,
 				  src->bytes, has_alpha,
 				  antialias, threshold, x, &start, &end))
@@ -229,8 +239,8 @@ find_contiguous_region_helper (PixelRegion *mask, PixelRegion *src,
 
   for (i = start + 1; i < end; i++)
     {
-      find_contiguous_region_helper (mask, src, has_alpha, antialias, threshold, i, y - 1, col);
-      find_contiguous_region_helper (mask, src, has_alpha, antialias, threshold, i, y + 1, col);
+      find_contiguous_region_helper (mask, src, has_alpha, antialias, threshold, indexed, i, y - 1, col);
+      find_contiguous_region_helper (mask, src, has_alpha, antialias, threshold, indexed, i, y + 1, col);
     }
 }
 
@@ -242,7 +252,9 @@ find_contiguous_region (GImage *gimage, GimpDrawable *drawable, int antialias,
   Channel *mask;
   unsigned char *start;
   int has_alpha;
+  int indexed;
   int type;
+  int bytes;
   Tile *tile;
 
   if (sample_merged)
@@ -260,7 +272,13 @@ find_contiguous_region (GImage *gimage, GimpDrawable *drawable, int antialias,
 			 drawable_width (drawable), drawable_height (drawable), FALSE);
       has_alpha = drawable_has_alpha (drawable);
     }
-
+  indexed = drawable_indexed (drawable);
+  bytes = drawable_bytes (drawable);
+  
+  if(indexed)
+    {
+      bytes = has_alpha ? 4 : 3;
+    }
   mask = channel_new_mask (gimage->ID, srcPR.w, srcPR.h);
   pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), 0, 0, drawable_width (GIMP_DRAWABLE(mask)), drawable_height (GIMP_DRAWABLE(mask)), TRUE);
 
@@ -272,7 +290,7 @@ find_contiguous_region (GImage *gimage, GimpDrawable *drawable, int antialias,
       start = tile->data + tile->ewidth * tile->bpp * (y % TILE_HEIGHT) +
 	tile->bpp * (x % TILE_WIDTH);
 
-      find_contiguous_region_helper (&maskPR, &srcPR, has_alpha, antialias, threshold, x, y, start);
+      find_contiguous_region_helper (&maskPR, &srcPR, has_alpha, antialias, threshold, bytes, x, y, start);
 
       tile_unref (tile, FALSE);
     }
@@ -439,7 +457,6 @@ fuzzy_select_motion (Tool *tool, GdkEventMotion *mevent, gpointer gdisp_ptr)
 static GdkSegment *
 fuzzy_select_calculate (Tool *tool, void *gdisp_ptr, int *nsegs)
 {
-#if 0
   PixelRegion maskPR;
   FuzzySelect *fuzzy_sel;
   GDisplay *gdisp;
@@ -489,8 +506,6 @@ fuzzy_select_calculate (Tool *tool, void *gdisp_ptr, int *nsegs)
   g_free (bsegs);
 
   return segs;
-#endif
-  return NULL;
 }
 
 static void

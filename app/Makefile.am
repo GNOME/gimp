@@ -8,8 +8,6 @@ gimp_SOURCES = \
 	\
 	tag.c                   \
 	tag.h                   \
-	paint.c                 \
-	paint.h                 \
 	canvas.c                \
 	canvas.h                \
 	pixelrow.c              \
@@ -217,10 +215,10 @@ gimp_SOURCES = \
 	menus.h			\
 	move.c			\
 	move.h			\
+	ops_buttons.c		\
+	ops_buttons.h		\
 	palette.c		\
 	palette.h		\
-	paint_core.c		\
-	paint_core.h		\
 	paint_funcs.c		\
 	paint_funcs.h		\
 	paintbrush.c		\
@@ -246,6 +244,8 @@ gimp_SOURCES = \
 	rect_select.c		\
 	rect_select.h		\
 	rect_selectP.h		\
+	regex.h			\
+	regex.c			\
 	resize.c		\
 	resize.h		\
 	rotate_tool.c		\
@@ -296,15 +296,25 @@ EXTRA_DIST = \
 	tools/eye.xbm		\
 	tools/layer.xbm		\
 	tools/linked.xbm	\
-	tools/mask.xbm
+	tools/mask.xbm		\
+	tools/anchor.xpm	\
+	tools/anchor_is.xpm	\
+	tools/delete.xpm	\
+	tools/delete_is.xpm	\
+	tools/duplicate.xpm	\
+	tools/duplicate_is.xpm	\
+	tools/lower.xpm		\
+	tools/lower_is.xpm	\
+	tools/new.xpm		\
+	tools/new_is.xpm	\
+	tools/raise.xpm		\
+	tools/raise_is.xpm
 
 CPPFLAGS = \
 	-DLIBDIR=\""$(gimpplugindir)"\"	\
 	-DDATADIR=\""$(gimpdatadir)"\"	\
 	-DGIMPDIR=\""$(gimpdir)"\"	\
-	-DVERSION=\"$(VERSION)\"        \
-	-DNDEBUG                        \
-        -DPRECISION_CONFIG=$(precision)
+	-DPRECISION_CONFIG=$(precision)
 
 INCLUDES = \
 	$(X_CFLAGS)			\

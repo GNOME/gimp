@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include "appenv.h"
@@ -127,7 +127,44 @@ move_tool_button_press (Tool           *tool,
     
 }
 
-void
+static void
+move_draw_guide (GDisplay *gdisp, Guide *guide)
+{
+  int x1, y1;
+  int x2, y2;
+  int w, h;
+  int x, y;
+
+  if (!move_gc)
+    move_create_gc (gdisp);
+
+  if (guide->position == -1)
+    return;
+  
+  gdisplay_transform_coords (gdisp, gdisp->gimage->width, 
+			     gdisp->gimage->height, &x2, &y2, FALSE); 
+
+  gdk_window_get_size (gdisp->canvas->window, &w, &h);
+
+  switch (guide->orientation) {
+  case HORIZONTAL_GUIDE:
+    gdisplay_transform_coords (gdisp, 0, guide->position, &x1, &y, FALSE);
+    if (x1 < 0) x1 = 0;
+    if (x2 > w) x2 = w;
+
+    gdk_draw_line (gdisp->canvas->window, move_gc, x1, y, x2, y); 
+    break;
+  case VERTICAL_GUIDE:
+    gdisplay_transform_coords (gdisp, guide->position, 0, &x, &y1, FALSE);
+    if (y1 < 0) y1 = 0;
+    if (y2 > h) y2 = h;
+
+    gdk_draw_line (gdisp->canvas->window, move_gc, x, y1, x, y2);
+    break;
+  }
+}
+
+static void
 move_tool_button_release (Tool           *tool,
 			  GdkEventButton *bevent,
 			  gpointer        gdisp_ptr)
@@ -175,6 +212,7 @@ move_tool_button_release (Tool           *tool,
 
       if (remove_guide)
 	{
+	  move_draw_guide (gdisp, move->guide);
 	  move->guide->position = -1;
 	  move->guide = NULL;
 	  move->guide_disp = -1;
@@ -204,70 +242,39 @@ move_tool_button_release (Tool           *tool,
     }
 }
 
-void
+static void
 move_tool_motion (Tool           *tool,
 		  GdkEventMotion *mevent,
 		  gpointer        gdisp_ptr)
+
 {
-  MoveTool *private;
   GDisplay *gdisp;
-  int x1, y1;
-  int x2, y2;
-  int w, h;
+  MoveTool *private;
   int x, y;
 
-  private = tool->private;
   gdisp = gdisp_ptr;
+  private = tool->private;
 
   if (private->guide)
     {
-      if (!move_gc)
-	move_create_gc (gdisp);
-
-      gdisplay_transform_coords (gdisp, 0, 0, &x1, &y1, FALSE);
-      gdisplay_transform_coords (gdisp, gdisp->gimage->width, gdisp->gimage->height, &x2, &y2, FALSE);
-      gdk_window_get_size (gdisp->canvas->window, &w, &h);
-
-      if (x1 < 0) x1 = 0;
-      if (y1 < 0) y1 = 0;
-      if (x2 > w) x2 = w;
-      if (y2 > h) y2 = h;
-
-      if (private->guide->orientation == HORIZONTAL_GUIDE)
+      move_draw_guide (gdisp, private->guide);
+      
+      if (mevent)
 	{
-	  gdisplay_transform_coords (gdisp, 0, private->guide->position, &x, &y, FALSE);
-	  gdk_draw_line (gdisp->canvas->window, move_gc, x1, y, x2, y);
-
-	  if (mevent)
-	    {
-	      gdisplay_untransform_coords (gdisp, 0, mevent->y,
-					   &x, &private->guide->position,
-					   TRUE, FALSE);
-
-	      gdisplay_transform_coords (gdisp, 0, private->guide->position, &x, &y, FALSE);
-	      gdk_draw_line (gdisp->canvas->window, move_gc, x1, y, x2, y);
-	    }
-	}
-      else if (private->guide->orientation == VERTICAL_GUIDE)
-	{
-	  gdisplay_transform_coords (gdisp, private->guide->position, 0, &x, &y, FALSE);
-	  gdk_draw_line (gdisp->canvas->window, move_gc, x, y1, x, y2);
-
-	  if (mevent)
-	    {
-	      gdisplay_untransform_coords (gdisp, mevent->x, 0,
-					   &private->guide->position, &y,
-					   TRUE, FALSE);
-
-	      gdisplay_transform_coords (gdisp, private->guide->position, 0, &x, &y, FALSE);
-	      gdk_draw_line (gdisp->canvas->window, move_gc, x, y1, x, y2);
-	    }
+	  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, 
+				       &x, &y, TRUE, FALSE);
+	  
+	  if (private->guide->orientation == HORIZONTAL_GUIDE)
+	    private->guide->position = y;
+	  else
+	    private->guide->position = x;
+	  
+	  move_draw_guide (gdisp, private->guide);
 	}
     }
 }
 
-
-void
+static void
 move_tool_cursor_update (Tool           *tool,
 			 GdkEventMotion *mevent,
 			 gpointer        gdisp_ptr)
@@ -427,6 +434,7 @@ tools_new_move_tool ()
   tool->arrow_keys_func = edit_sel_arrow_keys_func;
   tool->cursor_update_func = move_tool_cursor_update;
   tool->control_func = move_tool_control;
+  tool->preserve = TRUE;
 
   private->layer = NULL;
   private->guide = NULL;

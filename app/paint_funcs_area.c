@@ -1954,7 +1954,7 @@ scale_area  (
   ScaleType scale_type;
   guchar *src_row_data, *src_m1_row_data, *src_p1_row_data, *src_p2_row_data;
   PixelRow src_row, src_m1_row, src_p1_row, src_p2_row;
-  guchar *dest_row_data;
+  /* guchar *dest_row_data; */
   PixelRow dest_row;
   guchar *src, *src_m1, *src_p1, *src_p2;
   gint orig_width = pixelarea_width (src_area);
@@ -2122,7 +2122,7 @@ scale_area  (
   g_free (src_row_data);
   g_free (src_p1_row_data);
   g_free (src_p2_row_data);
-  g_free (dest_row_data);
+  /* g_free (dest_row_data); */
 }
 
 
@@ -3031,7 +3031,7 @@ thin_row_u8  (
               )
 {
   gint j;
-  gint found_one;
+  gint found_one = FALSE;
   guint8 *cur = (guint8*) pixelrow_data (cur_row);
   guint8 *next =(guint8*) pixelrow_data (next_row);
   guint8 *prev =(guint8*) pixelrow_data (prev_row);
@@ -3091,7 +3091,7 @@ thin_row_u16  (
                )
 {
   gint j;
-  gint found_one;
+  gint found_one = FALSE;
   guint16 *cur = (guint16*) pixelrow_data (cur_row);
   guint16 *next =(guint16*) pixelrow_data (next_row);
   guint16 *prev =(guint16*) pixelrow_data (prev_row);
@@ -3152,7 +3152,7 @@ thin_row_float  (
                  )
 {
   gint j;
-  gint found_one;
+  gint found_one = FALSE;
   gfloat *cur = (gfloat*) pixelrow_data (cur_row);
   gfloat *next =(gfloat*) pixelrow_data (next_row);
   gfloat *prev =(gfloat*) pixelrow_data (prev_row);
@@ -3726,7 +3726,7 @@ combine_areas  (
                 )
 {
   void *  pag;
-  gint combine;
+  gint combine = type;
   gint mode_affect;
   PixelRow buf_row;
   gint buf_size;

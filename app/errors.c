@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <signal.h>
 #include <stdarg.h>
@@ -24,34 +24,21 @@
 #include <time.h>
 #include <unistd.h>
 
-#include <glib.h>
+#include <gtk/gtk.h>
+#include "appenv.h"
 #include "app_procs.h"
+#include "interface.h"
 #include "errors.h"
 
 extern char *prog_name;
 
 void
-message (char *fmt, ...)
+message_func (char *str)
 {
-  va_list args;
-
-  va_start (args, fmt);
-  printf ("%s: ", prog_name);
-  vprintf (fmt, args);
-  printf ("\n");
-  va_end (args);
-}
-
-void
-warning (char *fmt, ...)
-{
-  va_list args;
-
-  va_start (args, fmt);
-  printf ("%s warning: ", prog_name);
-  vprintf (fmt, args);
-  printf ("\n");
-  va_end (args);
+  if ((console_messages == FALSE) && (message_handler == MESSAGE_BOX))
+      message_box (str, NULL, NULL);
+  else
+      fprintf (stderr, "%s: %s\n", prog_name, str);
 }
 
 void
@@ -67,4 +54,20 @@ fatal_error (char *fmt, ...)
 
   g_debug (prog_name);
   app_exit (1);
+}
+
+void
+terminate (char *fmt, ...)
+{
+  va_list args;
+
+  va_start (args, fmt);
+  printf ("%s terminated: ", prog_name);
+  vprintf (fmt, args);
+  printf ("\n");
+  va_end (args);
+
+  if (use_debug_handler)
+    g_debug (prog_name);
+  gdk_exit (1);
 }

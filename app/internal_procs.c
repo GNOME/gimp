@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <stdio.h>
@@ -73,7 +73,6 @@
 #include "procedural_db.h"
 
 
-
 void
 internal_procs_init ()
 {
@@ -107,8 +106,10 @@ internal_procs_init ()
   procedural_db_register (&scale_proc); pcount++;
   procedural_db_register (&shear_proc); pcount++;
   procedural_db_register (&text_tool_proc); pcount++;
+  procedural_db_register (&text_tool_proc_ext); pcount++;
   procedural_db_register (&text_tool_get_extents_proc); pcount++;
-
+  procedural_db_register (&text_tool_get_extents_proc_ext); pcount++;
+  
   app_init_update_status(NULL, "GDisplay procedures",
 			 pcount/total_pcount);
 
@@ -298,6 +299,7 @@ internal_procs_init ()
   procedural_db_register (&palette_set_background_proc); pcount++;
   procedural_db_register (&palette_set_default_colors_proc); pcount++;
   procedural_db_register (&palette_swap_colors_proc); pcount++; 
+  procedural_db_register (&palette_refresh_proc); pcount++;
 
   app_init_update_status(NULL, "Interface procedures",
 			 pcount/total_pcount);

@@ -1,9 +1,32 @@
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "gtk/gtk.h"
+
+#include <gtk/gtk.h>
+
+#include "libgimp/gimpfeatures.h"
+
 #include "about_dialog.h"
 #include "interface.h"
+
+#include "config.h"
 
 #define ANIMATION_STEPS 16
 #define ANIMATION_SIZE 2
@@ -45,7 +68,7 @@ static char *scroll_text[] =
   "Roberto Boyd",
   "Seth Burgess",
   "Brent Burton",
-  "Francisco Bustamente",
+  "Francisco Bustamante",
   "Ed Connel",
   "Andreas Dilger",
   "Misha Dynin",
@@ -61,9 +84,11 @@ static char *scroll_text[] =
   "Tim Janik",
   "Tuomas Kuosmanen",
   "Peter Kirchgessner", 
+  "Nick Lamb",
   "Karl LaRocca",
   "Jens Lautenbacher",
   "Laramie Leavitt",
+  "Elliot Lee",
   "Raph Levien",
   "Adrian Likins",
   "Ingo Luetkebohle",
@@ -92,8 +117,10 @@ static char *scroll_text[] =
   "Tristan Tarrant",
   "Owen Taylor",
   "Ian Tester",
+  "Andy Thomas",
   "James Wang",
   "Kris Wehner",
+  "Matthew Wilson",
 };
 static int nscroll_texts = sizeof (scroll_text) / sizeof (scroll_text[0]);
 static int scroll_text_widths[100] = { 0 };
@@ -121,8 +148,6 @@ about_dialog_create (int timeout)
       gtk_window_set_policy (GTK_WINDOW (about_dialog), FALSE, FALSE, FALSE);
       gtk_window_position (GTK_WINDOW (about_dialog), GTK_WIN_POS_CENTER);
       gtk_signal_connect (GTK_OBJECT (about_dialog), "destroy",
-			  (GtkSignalFunc) about_dialog_destroy, NULL);
-      gtk_signal_connect (GTK_OBJECT (about_dialog), "delete_event",
 			  (GtkSignalFunc) about_dialog_destroy, NULL);
       gtk_signal_connect (GTK_OBJECT (about_dialog), "unmap_event",
 			  (GtkSignalFunc) about_dialog_unmap, NULL);
@@ -165,7 +190,7 @@ about_dialog_create (int timeout)
       style->font = gdk_font_load ("-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*");
       gtk_widget_push_style (style);
 
-      label = gtk_label_new ("Version " VERSION " brought to you by");
+      label = gtk_label_new ("Version " GIMP_VERSION " brought to you by");
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
       gtk_widget_show (label);
 
@@ -201,6 +226,10 @@ about_dialog_create (int timeout)
       gtk_widget_set_events (scroll_area, GDK_BUTTON_PRESS_MASK);
       gtk_container_add (GTK_CONTAINER (aboutframe), scroll_area);
       gtk_widget_show (scroll_area);
+
+      label = gtk_label_new ("Please visit http://www.gimp.org/ for more info");
+      gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
+      gtk_widget_show (label);
 
       gtk_widget_realize (scroll_area);
       gdk_window_set_background (scroll_area->window, &scroll_area->style->white);
@@ -258,7 +287,7 @@ about_dialog_load_logo (GtkWidget *window)
 
   sprintf (buf, "%s/gimp_logo.ppm", DATADIR);
 
-  fp = fopen (buf, "r");
+  fp = fopen (buf, "rb");
   if (!fp)
     return 0;
 

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #ifndef __PALETTE_H__
 #define __PALETTE_H__
@@ -57,7 +57,7 @@ void color16_background   (struct _PixelRow *);
 
 
 
-void palettes_init (void);
+void palettes_init (int no_data);
 void palettes_free (void);
 void palette_create (void);
 void palette_free (void);
@@ -86,7 +86,7 @@ struct _PaletteEntry {
 typedef struct _PaletteEntry _PaletteEntry, *PaletteEntryP;
 
 extern GSList * palette_entries_list;
-void palette_init_palettes (void);
+void palette_init_palettes (int no_data);
 void palette_free_palettes (void);
 
 /*  Procedure definition and marshalling function  */
@@ -96,5 +96,6 @@ extern ProcRecord palette_set_foreground_proc;
 extern ProcRecord palette_set_background_proc;
 extern ProcRecord palette_set_default_colors_proc;
 extern ProcRecord palette_swap_colors_proc;
+extern ProcRecord palette_refresh_proc;
 
 #endif /* __PALETTE_H__ */

@@ -13,17 +13,13 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
   /*
    * TODO for Convert:
    *
-   *   Make GRAYSCALE->INDEXED sane again (done?)
-   *
    *   Use palette of another open INDEXED image
-   *
-   * Post-1.0 TODO:
    *
    *   Different dither types
    *
@@ -31,6 +27,13 @@
    */
 
 /*
+ * 98/04/13 - avoid a division by zero when converting an empty gray-scale
+ *  image (who would like to do such a thing anyway??)  [Sven ] 
+ *
+ * 98/03/23 - fixed a longstanding fencepost - hopefully the *right*
+ *  way, *again*.  (anyone ELSE want a go?  okay, just kidding... :))
+ *  [Adam]
+ *
  * 97/11/14 - added a proper pdb interface and support for dithering
  *  to custom palettes (based on a patch by Eric Hernes) [Yosh]
  *
@@ -54,6 +57,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+
 #include "appenv.h"
 #include "actionarea.h"
 #include "convert.h"
@@ -63,6 +67,7 @@
 #include "gdisplay.h"
 #include "indexed_palette.h"
 #include "interface.h"
+#include "paint_funcs.h"
 #include "undo.h"
 #include "palette.h"
 
@@ -194,6 +199,7 @@ typedef struct
   GtkWidget *  shell;
   void *       gimage_ptr;
 
+  int          gimage_ID;
   int          dither;
   int          num_cols;
   int          palette;
@@ -279,6 +285,7 @@ convert_to_indexed (void *gimage_ptr)
   gimage = (GImage *) gimage_ptr;
   dialog = (IndexedDialog *) g_malloc (sizeof (IndexedDialog));
   dialog->gimage_ptr = gimage_ptr;
+  dialog->gimage_ID = gimage->ID;
   dialog->num_cols = 256;
   dialog->dither = TRUE;
 
@@ -297,8 +304,7 @@ convert_to_indexed (void *gimage_ptr)
       dialog->num_cols = 255;
       if (!shown_message_already)
 	{
-	  message_box ("Note:  You are attempting to convert an image\nwith alpha/layers.  It is recommended that you quantize\nto no more than 255 colors if you wish to make\na transparent or animated GIF from it.\n\nYou won't get this message again\nuntil the next time you run GIMP.\nHave a nice day!",
-		       NULL, NULL);
+	  g_message ("Note:  You are attempting to convert an image\nwith alpha/layers.  It is recommended that you quantize\nto no more than 255 colors if you wish to make\na transparent or animated GIF from it.\n\nYou won't get this message again\nuntil the next time you run GIMP.\nHave a nice day!");
 	  shown_message_already = True;
 	}
     }
@@ -466,7 +472,7 @@ build_palette_menu(int *default_palette){
 
   if(!palette_entries_list) {
     /* fprintf(stderr, "no palette_entries_list, building...\n");*/
-     palette_init_palettes();
+     palette_init_palettes(FALSE);
   }
 
   list = palette_entries_list;
@@ -482,13 +488,17 @@ build_palette_menu(int *default_palette){
     {
       entries = (PaletteEntriesP) list->data;
       /*      fprintf(stderr, "(palette %s)\n", entries->filename);*/
-      menu_item = gtk_menu_item_new_with_label (entries->name);
-      gtk_signal_connect( GTK_OBJECT(menu_item), "activate",
-			  (GtkSignalFunc) palette_entries_callback,
-			  (gpointer)entries);
-      gtk_container_add(GTK_CONTAINER(menu), menu_item);
-      gtk_widget_show(menu_item);
-      if (theCustomPalette == entries) *default_palette = i;
+
+      /* We can't dither to > 256 colors */
+      if (entries->n_colors <= 256) {
+	menu_item = gtk_menu_item_new_with_label (entries->name);
+	gtk_signal_connect( GTK_OBJECT(menu_item), "activate",
+			    (GtkSignalFunc) palette_entries_callback,
+			    (gpointer)entries);
+	gtk_container_add(GTK_CONTAINER(menu), menu_item);
+	gtk_widget_show(menu_item);
+	if (theCustomPalette == entries) *default_palette = i;
+      }
     }
 
    /* default to first one */
@@ -524,11 +534,16 @@ indexed_ok_callback (GtkWidget *widget,
         else
           palette_type = REUSE_PALETTE;
   /*  Convert the image to indexed color  */
-  convert_image ((GImage *) dialog->gimage_ptr, INDEXED, dialog->num_cols, dialog->dither, palette_type);
-  gdisplays_flush ();
+  if (gimage_get_ID (dialog->gimage_ID))
+    {
+      convert_image ((GImage *) dialog->gimage_ptr, INDEXED, dialog->num_cols,
+		     dialog->dither, palette_type);
+      gdisplays_flush ();
+    }
 
   gtk_widget_destroy (dialog->shell);
   g_free (dialog);
+  dialog = NULL;
 }
 
 static gint
@@ -538,7 +553,7 @@ indexed_delete_callback (GtkWidget *w,
 {
   indexed_cancel_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -550,6 +565,7 @@ indexed_cancel_callback (GtkWidget *widget,
   dialog = (IndexedDialog *) client_data;
   gtk_widget_destroy (dialog->shell);
   g_free (dialog);
+  dialog = NULL;
 }
 
 static void
@@ -1003,9 +1019,12 @@ generate_histogram_rgb (Histogram  histogram,
 
   has_alpha = (gboolean) layer_has_alpha(layer);
 
-  g_print ("col_limit = %d, nfc = %d\n", col_limit, num_found_cols);
+/*  g_print ("col_limit = %d, nfc = %d\n", col_limit, num_found_cols);*/
 
-  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
+  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0,
+		     GIMP_DRAWABLE(layer)->width,
+		     GIMP_DRAWABLE(layer)->height,
+		     FALSE);
   for (pr = pixel_regions_register (1, &srcPR);
        pr != NULL;
        pr = pixel_regions_process (pr))
@@ -1058,12 +1077,6 @@ generate_histogram_rgb (Histogram  histogram,
 		       * existing colours
 		       */
 		      
-		      /* Remember the new colour we just found.
-		       */
-		      found_cols[num_found_cols][0] = data[RED_PIX];
-		      found_cols[num_found_cols][1] = data[GREEN_PIX];
-		      found_cols[num_found_cols][2] = data[BLUE_PIX];
-		      
 		      num_found_cols++;
 		      
 		      if (num_found_cols > col_limit)
@@ -1074,8 +1087,16 @@ generate_histogram_rgb (Histogram  histogram,
 			   *  quantizing at a later stage.
 			   */
 			  needs_quantize = TRUE;
-			  g_print ("max colours exceeded - needs quantize.\n");
+/*			  g_print ("\nmax colours exceeded - needs quantize.\n");*/
 			  goto already_found;
+			}
+		      else
+			{
+			  /* Remember the new colour we just found.
+			   */
+			  found_cols[num_found_cols-1][0] = data[RED_PIX];
+			  found_cols[num_found_cols-1][1] = data[GREEN_PIX];
+			  found_cols[num_found_cols-1][2] = data[BLUE_PIX];
 			}
 		    }
 		}
@@ -1085,7 +1106,7 @@ generate_histogram_rgb (Histogram  histogram,
 	}
     }
 
-  g_print ("O: col_limit = %d, nfc = %d\n", col_limit, num_found_cols);
+/*  g_print ("O: col_limit = %d, nfc = %d\n", col_limit, num_found_cols);*/
 }
 
 
@@ -1468,9 +1489,21 @@ compute_color_gray (QuantizeObj *quantobj,
 	}
     }
 
-  quantobj->cmap[icolor].red = (gtotal + (total >> 1)) / total;
-  quantobj->cmap[icolor].green = quantobj->cmap[icolor].red;
-  quantobj->cmap[icolor].blue = quantobj->cmap[icolor].red;
+  if (total != 0)
+    {
+      quantobj->cmap[icolor].red = (gtotal + (total >> 1)) / total;
+      quantobj->cmap[icolor].green = quantobj->cmap[icolor].red;
+      quantobj->cmap[icolor].blue = quantobj->cmap[icolor].red;
+    }
+   else /* The only situation where total==0 is if the image was null or
+	*  all-transparent.  In that case we just put a dummy value in
+	*  the colourmap.
+	*/
+    {
+      quantobj->cmap[icolor].red =
+	quantobj->cmap[icolor].green =
+	quantobj->cmap[icolor].blue = 0;
+    }
 }
 
 static void
@@ -3054,7 +3087,7 @@ convert_indexed_palette_invoker (Argument *args)
 		  case CUSTOM_PALETTE:
           palette_name = args[4].value.pdb_pointer;
  /*         fprintf(stderr, "looking for palette `%s'\n", palette_name); */
-          if (!palette_entries_list) palette_init_palettes();
+          if (!palette_entries_list) palette_init_palettes(FALSE);
 		    for(list = palette_entries_list;
               list;
               list = g_slist_next(list)) {
@@ -3078,5 +3111,5 @@ convert_indexed_palette_invoker (Argument *args)
 	 }
     if (success)
        convert_image ((void *) gimage, INDEXED, num_cols, dither, palette_type);
-  return procedural_db_return_args (&convert_indexed_proc, success);
+  return procedural_db_return_args (&convert_indexed_palette_proc, success);
 }

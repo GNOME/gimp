@@ -1,11 +1,18 @@
 There are three basic steps to building and installing the
 GIMP on unix:
 
-  1. Configure the GIMP by running the `configure' script.
-  2. Build the GIMP by running `make'.
-  3. Install the GIMP by running `make install'.
-  4. Install the gimp-data package.  Be sure to install this, or you
-     won't have the GIMP's datafiles installed.
+  1. You need to have installed GTK version 1.0.1 or better
+  2. You may want to install other third party libraries that
+     are needed for some of the available plugins: TIFF, PNG,
+     JPEG, MPEG, etc.
+  3. Configure the GIMP by running the `configure' script.
+  4. Build the GIMP by running `make'.
+  5. Install the GIMP by running `make install'.
+  6. Optionally install the separate gimp-data-extras package.
+
+Please make sure you don't have any old GTK, jpeg, etc. libraries lying
+around on your system, otherwise configure will fail to find the new
+ones.
 
 Generic instructions for configuring and compiling auto-configured
 packages are included below. Here is an illustration of commands that
@@ -47,27 +54,11 @@ recognizes. These are:
      the gimp uses to search for its configuration files from ~/.gimp (the
      directory .gimp in the users home directory) to DIR.
 
-  5. --with-libtiff=DIR. This option specifies the location of the
-     tiff library and header files. For instance, the libtiff library
-     may reside in "/usr/local". This may be specified by
-     --with-libtiff="/usr/local". (Note: The compilation process
-     should automatically find the tiff library if it resides in
-     "/usr/local").
-
-  6. --with-libjpeg=DIR. This option specifies the location of the
-     jpeg library and header files. For instance, the libjpeg library
-     may reside in "/usr/local". This may be specified by
-     --with-libjpeg="/usr/local". (Note: The compilation process
-     should automatically find the tiff library if it resides in
-     "/usr/local").
-
 The `make' command builds several things:
- - The libraries `gtk+/glib/libglib.la', `gtk+/gdk/libgdk.la',
-   `gtk+/gtk/libgtk.la', `libgimp/libgimp.la', `libgimp/libgimpi.la' and
+ - The libraries `libgimp/libgimp.la', `libgimp/libgimpi.la' and
    `libgimp/libgimpui.la'. The `.la' suffix is used by libtool, the
     program used to ease the compilation of shared libraries on
     different platforms.
- - The test programs `gtk+/glib/testglib' and `gtk+/gtk/testgtk'.
  - The plug-in programs in the `plug-ins' subdirectory.
  - The main GIMP program in `app/gimp'.
 
@@ -76,6 +67,79 @@ files and libraries, the gimp header files associated with libgimp and
 the libgimp library, the plug-ins, and the GIMP executable. After
 running `make install' and assuming the build process was successful
 you should be able to run `gimp'.
+
+When ./configure fails
+======================
+
+'configure' tries to compile and run a short GTK program. There are
+several reasons why this might fail:
+
+* The 'gtk-config' script installed with GTK could not be found.
+  (This script is used to get information about where GTK is
+   installed.)
+
+  Fix: Either make sure that this program is in your path, or set
+  the environment variable GTK_CONFIG to the full pathname to
+  this program before running configure.
+
+* The GTK libraries were not found at run time. The details
+  of how to fix this problem will depend on the system:
+
+  Fix: On Linux and other systems using ELF libraries, add the
+  directory to /etc/ld.so.conf or to the environment variable 
+  LD_LIBRARY_PATH, and run 'ldconfig'.
+
+  On other systems, it may be necessary to encode this path
+  into the executable, by setting the LDFLAGS environment variable
+  before running configure. For example:
+
+    LDFLAGS="-R/home/joe/lib" ./configure
+  or
+    LDFLAGS="-Wl,-rpath -Wl,/home/joe/lib" ./configure
+
+* An old version of the GTK libraries was found instead of 
+  your newly installed version. This commonly happens if a
+  binary package of GTK was previously installed on your system,
+  and you later compiled GTK from source.
+
+  Fix: remove the old libraries and include files.
+
+A detailed log of the ./configure output is written to the file
+config.log. This may help diagnose problems.
+
+If you are sure of what you're doing, you can bypass the sanity check and
+just go by what gtk-config by using the --disable-gtktest option. Please
+only use this in dire circumstances.
+
+After fixing a problem, it is safest to delete the file 'config.cache'
+before re-running ./configure.
+
+
+
+When ./configure fails on plug-ins
+==================================
+
+There are some GIMP plug-ins that need additional third-party libraries 
+installed on your system. For example to compile the plug-ins that load 
+and save JPEG, PNG or TIFF files you need the related libraries and header 
+files installed, otherwise you'll get a message that plugin xyz will not 
+be build. 
+
+If you are sure that those libraries are correctly installed, but configure
+fails to detect them, the following might help:
+
+Set your LDFLAGS environment variable to look for the library in a certain
+place, e.g. if you are working in a bash shell you would say:
+      export LDFLAGS="-L<path_to_library> -L<path_to_another_one>"
+before you run configure.
+
+Set your CPPFLAGS environment variable to look for the header file in a
+certain place, e.g. if you are working in a bash shell you would say:
+      export CPPFLAGS="-I<path_to_header_file> -I<path_to_another_one>"
+before you run configure.
+
+It's wise to remove the file 'config.cache' before re-running configure.
+
 
 
       Generic Instructions for Building Auto-Configured Packages

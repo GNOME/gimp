@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <string.h>
@@ -23,7 +23,6 @@
 #include "drawable.h"
 #include "desaturate.h"
 #include "interface.h"
-#include "paint_funcs.h"
 #include "gimage.h"
 #include "pixelarea.h"
 #include "pixelrow.h"
@@ -68,14 +67,14 @@ image_desaturate (gimage_ptr)
 
   if (! drawable_color (drawable))
     {
-      message_box ("Desaturate operates only on RGB color drawables.", NULL, NULL);
+      g_message ("Desaturate operates only on RGB color drawables.");
       return;
     }
   desaturate (drawable);
 }
 
-/*  Desaturateer  */
 
+/*  Desaturateer  */
 
 static void
 desaturate (GimpDrawable *drawable)
@@ -242,7 +241,6 @@ ProcArg desaturate_args[] =
     "the drawable"
   }
 };
-
 
 ProcRecord desaturate_proc =
 {

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <string.h>
@@ -61,104 +61,6 @@ static void make_horiz_segs (int, int, int, int *, int, int);
 static void generate_boundary (BoundaryType, int, int, int, int);
 
 /*  Function definitions  */
-
-#if 0
-static void
-find_empty_segs (PixelRegion  *maskPR,
-		 int           scanline,
-		 int           empty_segs[],
-		 int           max_empty,
-		 int          *num_empty,
-		 BoundaryType  type,
-		 int           x1,
-		 int           y1,
-		 int           x2,
-		 int           y2)
-{
-  unsigned char *data;
-  int x;
-  int start, end;
-  int val, last;
-  int tilex;
-  Tile *tile = NULL;
-
-  data  = NULL;
-  start = 0;
-  end   = 0;
-
-  *num_empty = 0;
-
-  if (scanline < maskPR->y || scanline >= (maskPR->y + maskPR->h))
-    {
-      empty_segs[(*num_empty)++] = 0;
-      empty_segs[(*num_empty)++] = G_MAXINT;
-      return;
-    }
-
-  if (type == WithinBounds)
-    {
-      if (scanline < y1 || scanline >= y2)
-	{
-	  empty_segs[(*num_empty)++] = 0;
-	  empty_segs[(*num_empty)++] = G_MAXINT;
-	  return;
-	}
-
-      start = x1;
-      end = x2;
-    }
-  else if (type == IgnoreBounds)
-    {
-      start = maskPR->x;
-      end = maskPR->x + maskPR->w;
-      if (scanline < y1 || scanline >= y2)
-	x2 = -1;
-    }
-
-  tilex = -1;
-  empty_segs[(*num_empty)++] = 0;
-  last = -1;
-
-  for (x = start; x < end; x++)
-    {
-      /*  Check to see if we must advance to next tile  */
-      if ((x / TILE_WIDTH) != tilex)
-	{
-	  if (tile)
-	    tile_unref (tile, FALSE);
-	  tile = tile_manager_get_tile (maskPR->tiles, x, scanline, 0);
-	  tile_ref (tile);
-	  data = tile->data + tile->bpp *
-	    ((scanline % TILE_HEIGHT) * tile->ewidth + (x % TILE_WIDTH)) + (tile->bpp - 1);
-	  tilex = x / TILE_WIDTH;
-	}
-      canvas_ref (maskPR->canvas,
-      *data = address of alpha value at(x,y)
-
-      empty_segs[*num_empty] = x;
-      val = (*data > HALF_WAY) ? 1 : -1;
-
-      /*  The IgnoreBounds case  */
-      if (val == 1 && type == IgnoreBounds)
-	if (x >= x1 && x < x2)
-	  val = -1;
-
-      if (last * val < 0)
-	(*num_empty)++;
-      last = val;
-
-      data += tile->bpp;
-    }
-
-  if (last > 0)
-    empty_segs[(*num_empty)++] = x;
-
-  empty_segs[(*num_empty)++] = G_MAXINT;
-
-  if (tile)
-    tile_unref (tile, FALSE);
-}
-#endif
 
 static void
 find_empty_segs (PixelArea  *maskPR,
@@ -452,41 +354,6 @@ generate_boundary (BoundaryType type,
     }
 }
 
-#if 0
-BoundSeg *
-find_mask_boundary (PixelRegion  *maskPR,
-		    int          *num_elems,
-		    BoundaryType  type,
-		    int           x1,
-		    int           y1,
-		    int           x2,
-		    int           y2)
-{
-  BoundSeg * new_segs = NULL;
-
-  /*  The mask paramater can be any PixelRegion.  If the region
-   *  has more than 1 bytes/pixel, the last byte of each pixel is
-   *  used to determine the boundary outline.
-   */
-  cur_PR = maskPR;
-
-  /*  Calculate the boundary  */
-  generate_boundary (type, x1, y1, x2, y2);
-
-  /*  Set the number of X segments  */
-  *num_elems = num_segs;
-
-  /*  Make a copy of the boundary  */
-  if (num_segs)
-    {
-      new_segs = (BoundSeg *) g_malloc (sizeof (BoundSeg) * num_segs);
-      memcpy (new_segs, tmp_segs, (sizeof (BoundSeg) * num_segs));
-    }
-
-  /*  Return the new boundary  */
-  return new_segs;
-}
-#endif
 BoundSeg *
 find_mask_boundary (PixelArea  *maskPR,
 		    int          *num_elems,
@@ -611,7 +478,7 @@ sort_boundary (BoundSeg *segs,
 	    }
 
 	  if (x != startx || y != starty)
-	    g_warning ("Unconnected boundary group!");
+	    g_message ("sort_boundary(): Unconnected boundary group!");
 
 	  /*  Mark the end of a group  */
 	  *num_groups = *num_groups + 1;

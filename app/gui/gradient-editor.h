@@ -16,7 +16,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
 
@@ -29,7 +29,7 @@
 
 /***** Functions *****/
 
-void gradients_init(void);
+void gradients_init(int no_data);
 void gradients_free(void);
 
 void grad_get_color_at(double pos, double *r, double *g, double *b, double *a);

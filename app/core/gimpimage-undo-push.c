@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <string.h>
@@ -32,7 +32,6 @@
 #include "indexed_palette.h"
 #include "layer.h"
 #include "paint_core_16.h"
-#include "paint_funcs.h"
 #include "palette.h"
 #include "tools.h"
 #include "transform_core.h"
@@ -66,39 +65,39 @@ struct _undo
 
 /*  Pop functions  */
 
-static int      undo_pop_image            (GImage *, int, int, void *);
-static int      undo_pop_mask             (GImage *, int, int, void *);
-static int      undo_pop_layer_displace   (GImage *, int, int, void *);
-static int      undo_pop_transform        (GImage *, int, int, void *);
-static int      undo_pop_paint            (GImage *, int, int, void *);
-static int      undo_pop_layer            (GImage *, int, int, void *);
-static int      undo_pop_layer_mod        (GImage *, int, int, void *);
-static int      undo_pop_layer_mask       (GImage *, int, int, void *);
-static int      undo_pop_channel          (GImage *, int, int, void *);
-static int      undo_pop_channel_mod      (GImage *, int, int, void *);
-static int      undo_pop_fs_to_layer      (GImage *, int, int, void *);
-static int      undo_pop_fs_rigor         (GImage *, int, int, void *);
-static int      undo_pop_fs_relax         (GImage *, int, int, void *);
-static int      undo_pop_gimage_mod       (GImage *, int, int, void *);
-static int      undo_pop_guide            (GImage *, int, int, void *);
+int      undo_pop_image            (GImage *, int, int, void *);
+int      undo_pop_mask             (GImage *, int, int, void *);
+int      undo_pop_layer_displace   (GImage *, int, int, void *);
+int      undo_pop_transform        (GImage *, int, int, void *);
+int      undo_pop_paint            (GImage *, int, int, void *);
+int      undo_pop_layer            (GImage *, int, int, void *);
+int      undo_pop_layer_mod        (GImage *, int, int, void *);
+int      undo_pop_layer_mask       (GImage *, int, int, void *);
+int      undo_pop_channel          (GImage *, int, int, void *);
+int      undo_pop_channel_mod      (GImage *, int, int, void *);
+int      undo_pop_fs_to_layer      (GImage *, int, int, void *);
+int      undo_pop_fs_rigor         (GImage *, int, int, void *);
+int      undo_pop_fs_relax         (GImage *, int, int, void *);
+int      undo_pop_gimage_mod       (GImage *, int, int, void *);
+int      undo_pop_guide            (GImage *, int, int, void *);
 
 /*  Free functions  */
 
-static void     undo_free_image           (int, void *);
-static void     undo_free_mask            (int, void *);
-static void     undo_free_layer_displace  (int, void *);
-static void     undo_free_transform       (int, void *);
-static void     undo_free_paint           (int, void *);
-static void     undo_free_layer           (int, void *);
-static void     undo_free_layer_mod       (int, void *);
-static void     undo_free_layer_mask      (int, void *);
-static void     undo_free_channel         (int, void *);
-static void     undo_free_channel_mod     (int, void *);
-static void     undo_free_fs_to_layer     (int, void *);
-static void     undo_free_fs_rigor        (int, void *);
-static void     undo_free_fs_relax        (int, void *);
-static void     undo_free_gimage_mod      (int, void *);
-static void     undo_free_guide           (int, void *);
+void     undo_free_image           (int, void *);
+void     undo_free_mask            (int, void *);
+void     undo_free_layer_displace  (int, void *);
+void     undo_free_transform       (int, void *);
+void     undo_free_paint           (int, void *);
+void     undo_free_layer           (int, void *);
+void     undo_free_layer_mod       (int, void *);
+void     undo_free_layer_mask      (int, void *);
+void     undo_free_channel         (int, void *);
+void     undo_free_channel_mod     (int, void *);
+void     undo_free_fs_to_layer     (int, void *);
+void     undo_free_fs_rigor        (int, void *);
+void     undo_free_fs_relax        (int, void *);
+void     undo_free_gimage_mod      (int, void *);
+void     undo_free_guide           (int, void *);
 
 
 /*  Sizing functions  */
@@ -282,6 +281,8 @@ pop_stack (GImage  *gimage,
   GSList *tmp;
   int status = 0;
   int in_group = 0;
+  int x, y;
+  GDisplay *gdisp;
 
   /*  Keep popping until we pop a valid object
    *  or get to the end of a group if we're in one
@@ -319,6 +320,27 @@ pop_stack (GImage  *gimage,
       if (status && !in_group)
 	{
 	  /*  Flush any image updates and displays  */
+	  gdisp = gdisplay_active();
+	  if (gdisp != NULL) {
+	    if (gdisp->disp_xoffset || gdisp->disp_yoffset)
+	      {
+		gdk_window_get_size (gdisp->canvas->window, &x, &y);
+		if (gdisp->disp_yoffset)
+		  {
+		    gdisplay_expose_area (gdisp, 0, 0, gdisp->disp_width,
+					  gdisp->disp_yoffset);
+		    gdisplay_expose_area (gdisp, 0, gdisp->disp_yoffset + y,
+					  gdisp->disp_width, gdisp->disp_height);
+		  }
+		if (gdisp->disp_xoffset)
+		  {
+		    gdisplay_expose_area (gdisp, 0, 0, gdisp->disp_xoffset,
+					  gdisp->disp_height);
+		    gdisplay_expose_area (gdisp, gdisp->disp_xoffset + x, 0,
+					  gdisp->disp_width, gdisp->disp_height);
+		  }
+	      }
+	  }
 	  gdisplays_flush ();
 
 	  /*  If the shrink_wrap flag was set  */
@@ -426,15 +448,13 @@ struct _image_undo
 };
 
 
-int 
-undo_push_image  (
-                  GImage * gimage,
-                  GimpDrawable * drawable,
-                  int x1,
-                  int y1,
-                  int x2,
-                  int y2
-                  )
+int
+undo_push_image (GImage *gimage,
+		 GimpDrawable *drawable,
+		 int     x1,
+		 int     y1,
+		 int     x2,
+		 int     y2)
 {
   long size;
   Undo *new;
@@ -542,13 +562,11 @@ undo_push_image_mod  (
 }
 
 
-static int 
-undo_pop_image  (
-                 GImage * gimage,
-                 int state,
-                 int type,
-                 void * image_undo_ptr
-                 )
+int
+undo_pop_image (GImage *gimage,
+		int     state,
+		int     type,
+		void   *image_undo_ptr)
 {
   ImageUndo *image_undo;
   Canvas * tiles;
@@ -556,7 +574,7 @@ undo_pop_image  (
   PixelArea PR1, PR2;
   int x, y;
   int w, h;
-  
+
   image_undo = (ImageUndo *) image_undo_ptr;
   tiles = image_undo->tiles;
   imagetiles = drawable_data_canvas (image_undo->drawable);
@@ -589,7 +607,7 @@ undo_pop_image  (
 }
 
 
-static void
+void
 undo_free_image (int   state,
 		 void *image_undo_ptr)
 {
@@ -636,7 +654,8 @@ undo_push_mask (GImage *gimage,
     }
 }
 
-static int
+
+int
 undo_pop_mask (GImage *gimage,
 	       int     state,
 	       int     type,
@@ -733,7 +752,8 @@ undo_pop_mask (GImage *gimage,
   return TRUE;
 }
 
-static void
+
+void
 undo_free_mask (int   state,
 		void *mask_ptr)
 {
@@ -777,7 +797,7 @@ undo_push_layer_displace (GImage *gimage,
 }
 
 
-static int
+int
 undo_pop_layer_displace (GImage *gimage,
 			 int     state,
 			 int     type,
@@ -818,7 +838,7 @@ undo_pop_layer_displace (GImage *gimage,
 }
 
 
-static void
+void
 undo_free_layer_displace (int   state,
 			  void *info_ptr)
 {
@@ -854,7 +874,7 @@ undo_push_transform (GImage *gimage,
 }
 
 
-static int
+int
 undo_pop_transform (GImage *gimage,
 		    int     state,
 		    int     type,
@@ -906,7 +926,7 @@ undo_pop_transform (GImage *gimage,
 }
 
 
-static void
+void
 undo_free_transform (int   state,
 		     void *tu_ptr)
 {
@@ -947,13 +967,13 @@ undo_push_paint (GImage *gimage,
 }
 
 
-static int
+int
 undo_pop_paint (GImage *gimage,
 		int     state,
 		int     type,
 		void   *pu_ptr)
 {
-  PaintCore16 * pc;
+  PaintCore * pc;
   PaintUndo16 * pu;
   double tmp;
 
@@ -961,7 +981,7 @@ undo_pop_paint (GImage *gimage,
   if (active_tool == NULL)
     return TRUE;
 
-  pc = (PaintCore16 *) active_tool->private;
+  pc = (PaintCore *) active_tool->private;
   pu = (PaintUndo16 *) pu_ptr;
 
   /*  only pop if the active tool is the tool that pushed this undo  */
@@ -981,7 +1001,7 @@ undo_pop_paint (GImage *gimage,
 }
 
 
-static void
+void
 undo_free_paint (int   state,
 		 void *pu_ptr)
 {
@@ -1030,7 +1050,7 @@ undo_push_layer (GImage *gimage,
 }
 
 
-static int
+int
 undo_pop_layer (GImage *gimage,
 		int     state,
 		int     type,
@@ -1100,7 +1120,7 @@ undo_pop_layer (GImage *gimage,
 }
 
 
-static void
+void
 undo_free_layer (int   state,
 		 void *lu_ptr)
 {
@@ -1166,7 +1186,7 @@ undo_push_layer_mod (GImage *gimage,
 }
 
 
-static int
+int
 undo_pop_layer_mod (GImage *gimage,
 		    int     state,
 		    int     type,
@@ -1215,6 +1235,7 @@ undo_pop_layer_mod (GImage *gimage,
   GIMP_DRAWABLE(layer)->height = tiles->levels[0].height;
   GIMP_DRAWABLE(layer)->bytes = tiles->levels[0].bpp;
   GIMP_DRAWABLE(layer)->type = layer_type;
+  GIMP_DRAWABLE(layer)->has_alpha = TYPE_HAS_ALPHA (layer_type);
 
   if (layer->mask) 
     {
@@ -1236,7 +1257,7 @@ undo_pop_layer_mod (GImage *gimage,
 }
 
 
-static void
+void
 undo_free_layer_mod (int   state,
 		     void *data_ptr)
 {
@@ -1285,7 +1306,7 @@ undo_push_layer_mask (GImage *gimage,
 }
 
 
-static int
+int
 undo_pop_layer_mask (GImage *gimage,
 		     int     state,
 		     int     type,
@@ -1346,7 +1367,7 @@ undo_pop_layer_mask (GImage *gimage,
 }
 
 
-static void
+void
 undo_free_layer_mask (int   state,
 		      void *lmu_ptr)
 {
@@ -1403,7 +1424,7 @@ undo_push_channel (GImage *gimage,
 }
 
 
-static int
+int
 undo_pop_channel (GImage *gimage,
 		  int     state,
 		  int     type,
@@ -1461,7 +1482,7 @@ undo_pop_channel (GImage *gimage,
 }
 
 
-static void
+void
 undo_free_channel (int   state,
 		   void *cu_ptr)
 {
@@ -1524,7 +1545,7 @@ undo_push_channel_mod (GImage *gimage,
 }
 
 
-static int
+int
 undo_pop_channel_mod (GImage *gimage,
 		      int     state,
 		      int     type,
@@ -1570,7 +1591,7 @@ undo_pop_channel_mod (GImage *gimage,
 }
 
 
-static void
+void
 undo_free_channel_mod (int   state,
 		       void *data_ptr)
 {
@@ -1618,7 +1639,7 @@ undo_push_fs_to_layer (GImage *gimage,
 }
 
 
-static int
+int
 undo_pop_fs_to_layer (GImage *gimage,
 		      int     state,
 		      int     type,
@@ -1686,7 +1707,7 @@ undo_pop_fs_to_layer (GImage *gimage,
 }
 
 
-static void
+void
 undo_free_fs_to_layer (int   state,
 		       void *fsu_ptr)
 {
@@ -1727,7 +1748,7 @@ undo_push_fs_rigor (GImage *gimage,
 }
 
 
-static int
+int
 undo_pop_fs_rigor (GImage *gimage,
 		   int     state,
 		   int     type,
@@ -1766,7 +1787,7 @@ undo_pop_fs_rigor (GImage *gimage,
 }
 
 
-static void
+void
 undo_free_fs_rigor (int   state,
 		    void *layer_ptr)
 {
@@ -1801,7 +1822,7 @@ undo_push_fs_relax (GImage *gimage,
 }
 
 
-static int
+int
 undo_pop_fs_relax (GImage *gimage,
 		   int     state,
 		   int     type,
@@ -1840,7 +1861,7 @@ undo_pop_fs_relax (GImage *gimage,
 }
 
 
-static void
+void
 undo_free_fs_relax (int   state,
 		    void *layer_ptr)
 {
@@ -1881,7 +1902,7 @@ undo_push_gimage_mod (GImage *gimage)
 }
 
 
-static int
+int
 undo_pop_gimage_mod (GImage *gimage,
 		     int     state,
 		     int     type,
@@ -1929,7 +1950,7 @@ undo_pop_gimage_mod (GImage *gimage,
 }
 
 
-static void
+void
 undo_free_gimage_mod (int   state,
 		      void *data_ptr)
 {
@@ -1964,6 +1985,7 @@ undo_push_guide (GImage *gimage,
 
   if ((new = undo_push (gimage, size, GIMAGE_MOD)))
     {
+      ((Guide *)(guide))->ref_count++;
       data               = g_new (GuideUndo, 1);
       new->data          = data;
       new->pop_func      = undo_pop_guide;
@@ -1980,7 +2002,7 @@ undo_push_guide (GImage *gimage,
 }
 
 
-static int
+int
 undo_pop_guide (GImage *gimage,
 		int     state,
 		int     type,
@@ -1988,14 +2010,17 @@ undo_pop_guide (GImage *gimage,
 {
   GuideUndo *data;
   Guide tmp;
+  int tmp_ref;
 
   data = data_ptr;
 
   gdisplays_expose_guide (gimage->ID, data->guide);
   gdisplays_expose_guide (gimage->ID, &data->orig);
 
+  tmp_ref = data->guide->ref_count;
   tmp = *(data->guide);
   *(data->guide) = data->orig;
+  data->guide->ref_count = tmp_ref;
   data->orig = tmp;
 
   switch (state)
@@ -2012,7 +2037,7 @@ undo_pop_guide (GImage *gimage,
 }
 
 
-static void
+void
 undo_free_guide (int   state,
 		 void *data_ptr)
 {
@@ -2020,8 +2045,9 @@ undo_free_guide (int   state,
 
   data = data_ptr;
 
-  if (data->guide->position < 0)
-    gimage_delete_guide (data->gimage, data->guide);
+  data->guide->ref_count--;
+  if (data->guide->position < 0 && data->guide->ref_count <= 0)
+      gimage_delete_guide (data->gimage, data->guide);
 
   g_free (data_ptr);
 }

@@ -26,6 +26,9 @@ struct _PixelArea;
 struct _PixelRow;
 
 
+/* hack */
+#define OPAQUE_OPACITY 255
+
 /*  The types of convolutions  */
 #define NORMAL     0   /*  Negative numbers truncated  */
 #define ABSOLUTE   1   /*  Absolute value              */

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <string.h>
@@ -248,8 +248,8 @@ levels_u8 (PixelArea *src_area,
   guint8 *s, *d;
   int has_alpha, alpha;
   int w, h;
-  guint8 *output_r, *output_g, *output_b, *output_val, *output_a;
-  guint8 *input_r, *input_g, *input_b, *input_val, *input_a;
+  guint8 *output_r, *output_g, *output_b, *output_val, *output_a = NULL;
+  guint8 *input_r, *input_g, *input_b, *input_val, *input_a = NULL;
 
   ld = (LevelsDialog *) user_data;
 
@@ -635,8 +635,8 @@ levels_u16 (PixelArea *src_area,
   guint16 *s, *d;
   int has_alpha, alpha;
   int w, h;
-  guint16 *output_r, *output_g, *output_b, *output_val, *output_a;
-  guint16 *input_r, *input_g, *input_b, *input_val, *input_a;
+  guint16 *output_r, *output_g, *output_b, *output_val, *output_a = NULL;
+  guint16 *input_r, *input_g, *input_b, *input_val, *input_a = NULL;
 
   ld = (LevelsDialog *) user_data;
 
@@ -1262,6 +1262,10 @@ levels_button_press (Tool           *tool,
 		     GdkEventButton *bevent,
 		     gpointer        gdisp_ptr)
 {
+  GDisplay *gdisp;
+
+  gdisp = gdisp_ptr;
+  tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
 static void
@@ -1307,7 +1311,9 @@ levels_control (Tool     *tool,
     case HALT :
       if (levels_dialog)
 	{
+          active_tool->preserve = TRUE;
 	  image_map_abort_16 (levels_dialog->image_map);
+          active_tool->preserve = FALSE;
 	  levels_free_transfers(levels_dialog);
 	  levels_dialog->image_map = NULL;
 	  levels_cancel_callback (NULL, (gpointer) levels_dialog);
@@ -1334,6 +1340,9 @@ tools_new_levels ()
   tool->scroll_lock = 1;  /*  Disallow scrolling  */
   tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
+  tool->preserve = FALSE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
   tool->button_press_func = levels_button_press;
   tool->button_release_func = levels_button_release;
   tool->motion_func = levels_motion;
@@ -1353,7 +1362,7 @@ tools_free_levels (Tool *tool)
 
   /*  Close the color select dialog  */
   if (levels_dialog)
-    levels_ok_callback (NULL, (gpointer) levels_dialog);
+    levels_cancel_callback (NULL, (gpointer) levels_dialog);
 
   g_free (_levels);
 }
@@ -1380,7 +1389,7 @@ levels_initialize (void *gdisp_ptr)
 
   if (drawable_indexed (drawable))
     {
-      message_box ("Levels for indexed drawables cannot be adjusted.", NULL, NULL);
+      g_message ("Levels for indexed drawables cannot be adjusted.");
       return;
     }
 
@@ -1421,6 +1430,7 @@ levels_initialize (void *gdisp_ptr)
   /* set the current selection */
   gtk_option_menu_set_history ( GTK_OPTION_MENU (levels_dialog->channel_menu), 0);
 
+
   levels_update (levels_dialog, LOW_INPUT | GAMMA | HIGH_INPUT | LOW_OUTPUT | HIGH_OUTPUT | DRAW);
   levels_update (levels_dialog, INPUT_LEVELS | OUTPUT_LEVELS);
 #if 0
@@ -1439,7 +1449,9 @@ levels_free ()
     {
       if (levels_dialog->image_map)
 	{
+	  active_tool->preserve = TRUE;
 	  image_map_abort_16 (levels_dialog->image_map);
+	  active_tool->preserve = FALSE;
 	  levels_free_transfers(levels_dialog);
 	  levels_dialog->image_map = NULL;
 	}
@@ -1450,7 +1462,6 @@ levels_free ()
 /****************************/
 /*  Levels dialog  */
 /****************************/
-
 
 /*  the action area structure  */
 static ActionAreaItem action_items[] =
@@ -1520,7 +1531,6 @@ levels_new_dialog ()
   gtk_widget_show (label);
 
   /*  low input text  */
-  
   ld->low_input_text = gtk_entry_new ();
 /*gtk_entry_set_text (GTK_ENTRY (ld->low_input_text), "0");*/
   gtk_entry_set_text (GTK_ENTRY (ld->low_input_text), ui_strings[LOW_INPUT_STRING]);
@@ -1810,7 +1820,6 @@ levels_update (LevelsDialog *ld,
     }
   if (update & OUTPUT_SLIDERS)
     {
-      
       levels_erase_slider (ld->output_levels_da[1]->window, ld->slider_pos[3]);
       levels_erase_slider (ld->output_levels_da[1]->window, ld->slider_pos[4]);
 
@@ -1827,7 +1836,6 @@ levels_update (LevelsDialog *ld,
 			  ld->slider_pos[4]);
     }
 }
-
 
 static void
 levels_preview (LevelsDialog *ld)
@@ -2024,6 +2032,8 @@ levels_ok_callback (GtkWidget *widget,
   if (GTK_WIDGET_VISIBLE (ld->shell))
     gtk_widget_hide (ld->shell);
 
+  active_tool->preserve = TRUE;
+
   if (!ld->preview)
   {
     (*levels_calculate_transfers) (ld);
@@ -2036,6 +2046,7 @@ levels_ok_callback (GtkWidget *widget,
     levels_free_transfers(ld);
   }
 
+  active_tool->preserve = FALSE;
   ld->image_map = NULL;
 }
 
@@ -2046,7 +2057,7 @@ levels_delete_callback (GtkWidget *w,
 {
   levels_cancel_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -2061,7 +2072,9 @@ levels_cancel_callback (GtkWidget *widget,
 
   if (ld->image_map)
     {
+      active_tool->preserve = TRUE;
       image_map_abort_16 (ld->image_map);
+      active_tool->preserve = FALSE;
       levels_free_transfers(ld);
       gdisplays_flush ();
     }
@@ -2104,9 +2117,6 @@ levels_low_input_text_update (GtkWidget *w,
 	levels_preview (ld);
     }
 }
-
-
-
 
 static void
 levels_gamma_text_update (GtkWidget *w,
@@ -2168,7 +2178,6 @@ levels_low_output_text_update (GtkWidget *w,
     }
 }
 
-
 static void
 levels_high_output_text_update (GtkWidget *w,
 				gpointer   data)
@@ -2195,8 +2204,6 @@ levels_input_da_events (GtkWidget    *widget,
 {
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
-  char text[12];
-  double width, mid, tmp;
   int x, distance;
   int i;
 
@@ -2252,9 +2259,11 @@ levels_input_da_events (GtkWidget    *widget,
 	case 0:  /*  low input  */
 	  levels_update (ld, INPUT_SLIDERS | INPUT_LEVELS | LOW_INPUT | GAMMA | DRAW);
 	  break;
+
 	case 1:  /*  gamma  */
 	  levels_update (ld, INPUT_SLIDERS | INPUT_LEVELS | GAMMA | DRAW);
 	  break;
+
 	case 2:  /*  high input  */
 	  levels_update (ld, INPUT_SLIDERS | INPUT_LEVELS | HIGH_INPUT | GAMMA | DRAW);
 	  break;
@@ -2267,7 +2276,6 @@ levels_input_da_events (GtkWidget    *widget,
 
   return FALSE;
 }
-
 
 static gint
 levels_output_da_events (GtkWidget    *widget,
@@ -2327,6 +2335,7 @@ levels_output_da_events (GtkWidget    *widget,
 	case 3:  /*  low output  */
 	  levels_update (ld, OUTPUT_SLIDERS | LOW_OUTPUT | DRAW);
 	  break;
+
 	case 4:  /*  high output  */
 	  levels_update (ld, OUTPUT_SLIDERS | HIGH_OUTPUT | DRAW);
 	  break;

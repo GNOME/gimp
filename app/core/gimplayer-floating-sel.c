@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -28,7 +28,6 @@
 #include "gimage.h"
 #include "gimage_mask.h"
 #include "interface.h"
-#include "paint_funcs.h"
 #include "paint_funcs_area.h"
 #include "pixelarea.h"
 #include "pixelrow.h"
@@ -108,8 +107,7 @@ floating_sel_anchor (Layer *layer)
     return;
   if (! layer_is_floating_sel (layer))
     {
-      message_box ("Cannot anchor this layer because\nit is not a floating selection.",
-		   NULL, NULL);
+      g_message ("Cannot anchor this layer because\nit is not a floating selection.");
       return;
     }
 
@@ -164,7 +162,6 @@ floating_sel_to_layer (Layer *layer)
   FStoLayerUndo *fsu;
   int off_x, off_y;
   int width, height;
-  int update = FALSE;
 
   GImage *gimage;
 
@@ -175,9 +172,9 @@ floating_sel_to_layer (Layer *layer)
   if (drawable_channel (layer->fs.drawable) ||
       drawable_layer_mask (layer->fs.drawable))
     {
-      message_box ("Cannot create a new layer from the floating\n"
-		   "selection because it belongs to a\n"
-		   "layer mask or channel.", NULL, NULL);
+      g_message ("Cannot create a new layer from the floating\n"
+		 "selection because it belongs to a\n"
+		 "layer mask or channel.");
       return;
     }
 
@@ -188,10 +185,6 @@ floating_sel_to_layer (Layer *layer)
   drawable_offsets (layer->fs.drawable, &off_x, &off_y);
   width = drawable_width (layer->fs.drawable);
   height = drawable_height (layer->fs.drawable);
-  update = (update || ((GIMP_DRAWABLE(layer)->offset_x < off_x) ||
-		       (GIMP_DRAWABLE(layer)->offset_y < off_y) ||
-		       (GIMP_DRAWABLE(layer)->offset_x + GIMP_DRAWABLE(layer)->width > off_x + width) ||
-		       (GIMP_DRAWABLE(layer)->offset_y + GIMP_DRAWABLE(layer)->height > off_y + height)) ? TRUE : FALSE);
 
   /*  update the fs drawable--this updates the gimage composite preview
    *  as well as the underlying drawable's
@@ -211,13 +204,18 @@ floating_sel_to_layer (Layer *layer)
   /*  Set pointers  */
   layer->fs.drawable = NULL;
   gimage->floating_sel = NULL;
+  GIMP_DRAWABLE(layer)->visible = TRUE;
 
-  /*  if the floating selection exceeds the attached layer's extents, update the new layer  */
-  if (update)
-    drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
-  /*  otherwise, just update the preview, because the image is valid as is  */
-  else
-    drawable_invalidate_preview (GIMP_DRAWABLE(layer));
+  /*  if the floating selection exceeds the attached layer's extents,
+      update the new layer  */
+
+  /*  I don't think that the preview is ever valid as is, since the layer
+      will be added on top of the others.  Revert this if I'm wrong.
+      msw@gimp.org
+  */
+
+  drawable_update (GIMP_DRAWABLE(layer), 0, 0,
+		   GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
 }
 
 void
@@ -299,10 +297,8 @@ floating_sel_restore (Layer *layer,
   drawable_offsets (layer->fs.drawable, &offx, &offy);
   x1 = MAXIMUM (GIMP_DRAWABLE(layer)->offset_x, offx);
   y1 = MAXIMUM (GIMP_DRAWABLE(layer)->offset_y, offy);
-  x2 = MINIMUM (GIMP_DRAWABLE(layer)->offset_x + GIMP_DRAWABLE(layer)->width, 	
-		offx + drawable_width (layer->fs.drawable));
-  y2 = MINIMUM (GIMP_DRAWABLE(layer)->offset_y + GIMP_DRAWABLE(layer)->height, 
-		offy + drawable_height (layer->fs.drawable));
+  x2 = MINIMUM (GIMP_DRAWABLE(layer)->offset_x + GIMP_DRAWABLE(layer)->width, offx + drawable_width (layer->fs.drawable));
+  y2 = MINIMUM (GIMP_DRAWABLE(layer)->offset_y + GIMP_DRAWABLE(layer)->height, offy + drawable_height (layer->fs.drawable));
 
   x1 = BOUNDS (x, x1, x2);
   y1 = BOUNDS (y, y1, y2);
@@ -334,11 +330,7 @@ floating_sel_rigor (Layer *layer,
     return;
 
   /*  store the affected area from the drawable in the backing store  */
-  floating_sel_store (layer, 
-			GIMP_DRAWABLE(layer)->offset_x, 
-			GIMP_DRAWABLE(layer)->offset_y, 
-			GIMP_DRAWABLE(layer)->width, 
-			GIMP_DRAWABLE(layer)->height);
+  floating_sel_store (layer, GIMP_DRAWABLE(layer)->offset_x, GIMP_DRAWABLE(layer)->offset_y, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
   layer->fs.initial = TRUE;
 
   if (undo)
@@ -356,11 +348,7 @@ floating_sel_relax (Layer *layer,
 
   /*  restore the contents of drawable the floating layer is attached to  */
   if (layer->fs.initial == FALSE)
-    floating_sel_restore (layer, 
-			GIMP_DRAWABLE(layer)->offset_x, 
-			GIMP_DRAWABLE(layer)->offset_y, 
-			GIMP_DRAWABLE(layer)->width, 
-			GIMP_DRAWABLE(layer)->height);
+    floating_sel_restore (layer, GIMP_DRAWABLE(layer)->offset_x, GIMP_DRAWABLE(layer)->offset_y, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
   layer->fs.initial = TRUE;
 
   if (undo)
@@ -407,10 +395,8 @@ floating_sel_composite (Layer *layer,
       drawable_offsets (layer->fs.drawable, &offx, &offy);
       x1 = MAXIMUM (GIMP_DRAWABLE(layer)->offset_x, offx);
       y1 = MAXIMUM (GIMP_DRAWABLE(layer)->offset_y, offy);
-      x2 = MINIMUM (GIMP_DRAWABLE(layer)->offset_x + GIMP_DRAWABLE(layer)->width, 
-		offx + drawable_width (layer->fs.drawable));
-      y2 = MINIMUM (GIMP_DRAWABLE(layer)->offset_y + GIMP_DRAWABLE(layer)->height, 
-		offy + drawable_height (layer->fs.drawable));
+      x2 = MINIMUM (GIMP_DRAWABLE(layer)->offset_x + GIMP_DRAWABLE(layer)->width, offx + drawable_width (layer->fs.drawable));
+      y2 = MINIMUM (GIMP_DRAWABLE(layer)->offset_y + GIMP_DRAWABLE(layer)->height, offy + drawable_height (layer->fs.drawable));
 
       x1 = BOUNDS (x, x1, x2);
       y1 = BOUNDS (y, y1, y2);
@@ -485,9 +471,8 @@ floating_sel_boundary (Layer *layer,
 		0, 0, 
 		GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
       layer->fs.segs = find_mask_boundary (&bPR, &layer->fs.num_segs,
-					WithinBounds, 0, 0,
-					GIMP_DRAWABLE(layer)->width, 
-					GIMP_DRAWABLE(layer)->height);
+					   WithinBounds, 0, 0,
+					   GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
 
       /*  offset the segments  */
       for (i = 0; i < layer->fs.num_segs; i++)

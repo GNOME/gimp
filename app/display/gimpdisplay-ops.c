@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <stdio.h>
@@ -77,6 +77,7 @@ gdisplay_new_view (GDisplay *gdisp)
   if (gdisp->gimage)
     {
       new_gdisp = gdisplay_new (gdisp->gimage, gdisp->scale);
+      new_gdisp->scale = gdisp->scale;
       new_gdisp->offset_x = gdisp->offset_x;
       new_gdisp->offset_y = gdisp->offset_y;
     }
@@ -153,8 +154,8 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
       shell_width = width + border_x;
       shell_height = height + border_y;
 
-      x = HIGHPASS (shell_x, BOUNDS (s_width - shell_width, 0, s_width));
-      y = HIGHPASS (shell_y, BOUNDS (s_height - shell_height, 0, s_height));
+      x = HIGHPASS (shell_x, BOUNDS (s_width - shell_width, border_x, s_width));
+      y = HIGHPASS (shell_y, BOUNDS (s_height - shell_height, border_y, s_height));
 
       if (x != shell_x || y != shell_y)
 	gdk_window_move (gdisp->shell->window, x, y);
@@ -182,8 +183,8 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
       shell_width = width + border_x;
       shell_height = height + border_y;
 
-      x = HIGHPASS (shell_x, BOUNDS (s_width - shell_width, 0, s_width));
-      y = HIGHPASS (shell_y, BOUNDS (s_height - shell_height, 0, s_height));
+      x = HIGHPASS (shell_x, BOUNDS (s_width - shell_width, border_x, s_width));
+      y = HIGHPASS (shell_y, BOUNDS (s_height - shell_height, border_y, s_height));
 
       if (x != shell_x || y != shell_y)
 	gdk_window_move (gdisp->shell->window, x, y);
@@ -287,7 +288,7 @@ gdisplay_delete_warning_callback (GtkWidget *widget,
 				  GdkEvent  *event,
 				  gpointer  client_data)
 {
-  gdisplay_cancel_warning_callback (widget, client_data);
+  menus_set_sensitive ("<Image>/File/Close", TRUE);
 
   return FALSE;
 }
@@ -326,8 +327,8 @@ gdisplay_close_warning_dialog (char     *image_name,
   menus_set_sensitive ("<Image>/File/Close", FALSE);
 
   warning_dialog = mbox = gtk_dialog_new ();
-  /* should this be imaeg_window or the actual image naem??? */
-  gtk_window_set_wmclass (GTK_WINDOW (mbox), "image_window", "Gimp");
+  /* should this be image_window or the actual image name??? */
+  gtk_window_set_wmclass (GTK_WINDOW (mbox), "really_close", "Gimp");
   gtk_window_set_title (GTK_WINDOW (mbox), image_name);
   gtk_window_position (GTK_WINDOW (mbox), GTK_WIN_POS_MOUSE);
   gtk_object_set_user_data (GTK_OBJECT (mbox), gdisp);

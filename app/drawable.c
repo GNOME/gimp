@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -102,7 +102,7 @@ gimp_drawable_class_init (GimpDrawableClass *class)
 		    gtk_signal_default_marshaller,
 		    GTK_TYPE_NONE, 0);
 
-  gtk_object_class_add_signals (object_class, drawable_signals, LAST_SIGNAL);
+  gtk_object_class_add_signals (object_class, (guint *)drawable_signals, LAST_SIGNAL);
 
   object_class->destroy = gimp_drawable_destroy;
 }
@@ -180,39 +180,13 @@ drawable_apply_image_16  (
 
 
 void
-drawable_merge_shadow (GimpDrawable *drawable, int undo)
-{
-  GImage *gimage;
-  PixelRegion shadowPR;
-  int x1, y1, x2, y2;
-
-  g_warning ("drawable_merge_shadow() was called");
-
-  if (! drawable) 
-    return;
-
-  if (! (gimage = drawable_gimage (drawable)))
-    return;
-
-  /*  A useful optimization here is to limit the update to the
-   *  extents of the selection mask, as it cannot extend beyond
-   *  them.
-   */
-  drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-  pixel_region_init (&shadowPR, gimage->shadow, x1, y1,
-		     (x2 - x1), (y2 - y1), FALSE);
-  gimage_apply_image (gimage, drawable, &shadowPR, undo, OPAQUE_OPACITY,
-		      REPLACE_MODE, NULL, x1, y1);
-}
-
-void
 drawable_merge_shadow_canvas (GimpDrawable *drawable, int undo)
 {
   GImage *gimage;
   PixelArea shadow_area;
   int x1, y1, x2, y2;
 
-  if (! drawable) 
+  if (! drawable)
     return;
 
   if (! (gimage = drawable_gimage (drawable)))
@@ -229,16 +203,22 @@ drawable_merge_shadow_canvas (GimpDrawable *drawable, int undo)
 		      REPLACE_MODE,  x1, y1);
 }
 
-void 
-drawable_fill  (
-                GimpDrawable * drawable,
-                int fill_type
-                )
+
+void
+drawable_merge_shadow (GimpDrawable *drawable, int undo)
+{
+  g_warning ("drawable_merge_shadow() was called");
+}
+
+
+void
+drawable_fill (GimpDrawable *drawable, int fill_type)
 {
   GImage *gimage;
 
   if (! drawable)
     return;
+
   if (! (gimage = drawable_gimage (drawable)))
     return;
 
@@ -277,6 +257,7 @@ drawable_fill  (
 		   drawable_width (drawable),
 		   drawable_height (drawable));
 }
+
 
 void
 drawable_update (GimpDrawable *drawable, int x, int y, int w, int h)
@@ -708,7 +689,7 @@ gimp_drawable_configure (GimpDrawable *drawable,
       alpha = ALPHA_YES;
       break;
     default:
-      warning ("Layer type %d not supported.", type);
+      g_message ("Layer type %d not supported.", type);
       return;
     }
   
@@ -757,7 +738,7 @@ gimp_drawable_configure_tag  (
   drawable->has_alpha = (tag_alpha (drawable->tag) == ALPHA_YES) ? TRUE : FALSE;
   drawable->offset_x = 0;
   drawable->offset_y = 0;
-  
+
   if (drawable->tiles)
     tile_manager_destroy (drawable->tiles);
   /*drawable->tiles = tile_manager_new (width, height, tag_bytes (drawable->tag));*/
@@ -776,3 +757,4 @@ gimp_drawable_configure_tag  (
   drawable->preview = NULL;
   drawable->preview_valid = FALSE;
 }
+  

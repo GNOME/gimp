@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <stdio.h>
@@ -27,7 +27,6 @@
 #include "colormaps.h"
 #include "disp_callbacks.h"
 #include "errors.h"
-#include "paint_funcs.h"
 #include "tag.h"
 
 
@@ -189,9 +188,12 @@ pattern_select_new ()
   gtk_widget_show (vbox);
   gtk_widget_show (psp->shell);
 
+  if(no_data)   /* if patterns are already loaded, dont do it now... */
+    patterns_init(FALSE);
   preview_calc_scrollbar (psp);
   display_patterns (psp);
 
+  
   /*  update the active selection  */
   active = get_active_pattern ();
   if (active)
@@ -769,7 +771,7 @@ pattern_select_delete_callback (GtkWidget *w,
 {
   pattern_select_close_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -792,7 +794,7 @@ pattern_select_refresh_callback (GtkWidget *w,
   psp = (PatternSelectP) client_data;
 
   /*  re-init the pattern list  */
-  patterns_init ();
+  patterns_init (FALSE);
 
   /*  recalculate scrollbar extents  */
   preview_calc_scrollbar (psp);

@@ -13,14 +13,13 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #ifndef __TRANSFORM_CORE_H__
 #define __TRANSFORM_CORE_H__
 
 #include "info_dialog.h"
 #include "draw_core.h"
-#include "temp_buf.h"
 
 /* possible scaling functions */
 #define CREATING        0
@@ -89,6 +88,10 @@ struct _transform_core
   int             function;     /*  current tool activity       */
 
   int             interactive;  /*  tool is interactive         */
+  int             bpressed;     /* Bug work around make sure we have 
+				 * a button pressed before we deal with
+				 * motion events. ALT.
+				 */
 };
 
 

@@ -16,6 +16,7 @@
 #include "gimage.h"
 #include "gimage_mask.h"
 #include "interface.h"
+#include "paint_funcs_area.h"
 #include "plug_in.h"
 #include "procedural_db.h"
 #include "tile_swap.h"
@@ -294,7 +295,7 @@ xcf_load_invoker (Argument *args)
 
   filename = args[1].value.pdb_pointer;
 
-  info.fp = fopen (filename, "r");
+  info.fp = fopen (filename, "rb");
   if (info.fp)
     {
       info.cp = 0;
@@ -328,16 +329,12 @@ xcf_load_invoker (Argument *args)
 	  if (info.file_version < N_xcf_loaders)
 	    {
 	      gimage = (*(xcf_loaders[info.file_version])) (&info);
-	      if (gimage)
-		success = TRUE;
+	      if (!gimage)
+		success = FALSE;
 	    }
 	  else 
 	    {
-	      char message[256];
-	      sprintf (message, 
-		       "XCF error: unsupported XCF file version %d encountered",
-		       info.file_version);
-	      message_box (message, NULL, NULL);
+	      g_message ("XCF error: unsupported XCF file version %d encountered", info.file_version);
 	      success = FALSE;
 	    }
 	}
@@ -366,7 +363,7 @@ xcf_save_invoker (Argument *args)
   gimage = gimage_get_ID (args[1].value.pdb_int);
   filename = args[3].value.pdb_pointer;
 
-  info.fp = fopen (filename, "w");
+  info.fp = fopen (filename, "wb");
   if (info.fp)
     {
       info.cp = 0;
@@ -387,7 +384,7 @@ xcf_save_invoker (Argument *args)
     }
   else
     {
-      g_warning ("open failed on %s: %s\n", filename, g_strerror(errno));
+      g_message ("open failed on %s: %s\n", filename, g_strerror(errno));
     }
 
   return_args = procedural_db_return_args (&xcf_plug_in_save_proc.db_info, success);
@@ -1353,9 +1350,9 @@ xcf_load_image_props (XcfInfo *info,
 	  if (info->file_version == 0) 
 	    {
 	      int i;
-	      message_box ("XCF warning: version 0 of XCF file format\n"
-			   "did not save indexed colormaps correctly.\n"
-			   "Substituting grayscale map.", NULL, NULL);
+	      g_message ("XCF warning: version 0 of XCF file format\n"
+			 "did not save indexed colormaps correctly.\n"
+			 "Substituting grayscale map.");
 	      info->cp += xcf_read_int32 (info->fp, (guint32*) &gimage->num_cols, 1);
 	      gimage->cmap = g_new (guchar, gimage->num_cols*3);
 	      xcf_seek_pos (info, info->cp + gimage->num_cols);
@@ -1384,7 +1381,7 @@ xcf_load_image_props (XcfInfo *info,
 		(compression != COMPRESS_ZLIB) &&
 		(compression != COMPRESS_FRACTAL))
 	      {
-		g_warning ("unknown compression type: %d", (int) compression);
+		g_message ("unknown compression type: %d", (int) compression);
 		return FALSE;
 	      }
 
@@ -1415,7 +1412,7 @@ xcf_load_image_props (XcfInfo *info,
 	  }
 	  break;
 	default:
-	  g_warning ("unexpected/unknown image property: %d (skipping)", prop_type);
+	  g_message ("unexpected/unknown image property: %d (skipping)", prop_type);
 
 	  {
 	    guint8 buf[16];
@@ -1488,7 +1485,7 @@ xcf_load_layer_props (XcfInfo *info,
 	  info->cp += xcf_read_int32 (info->fp, (guint32*) &layer->mode, 1);
 	  break;
 	default:
-	  g_warning ("unexpected/unknown layer property: %d (skipping)", prop_type);
+	  g_message ("unexpected/unknown layer property: %d (skipping)", prop_type);
 
 	  {
 	    guint8 buf[16];
@@ -1547,7 +1544,7 @@ xcf_load_channel_props (XcfInfo *info,
 	  info->cp += xcf_read_int8 (info->fp, (guint8*) channel->col, 3);
 	  break;
 	default:
-	  g_warning ("unexpected/unknown channel property: %d (skipping)", prop_type);
+	  g_message ("unexpected/unknown channel property: %d (skipping)", prop_type);
 
 	  {
 	    guint8 buf[16];
@@ -1638,6 +1635,10 @@ xcf_load_layer (XcfInfo *info,
       layer_mask = xcf_load_layer_mask (info, gimage);
       if (!layer_mask)
 	goto error;
+
+      /* set the offsets of the layer_mask */
+      GIMP_DRAWABLE(layer_mask)->offset_x = GIMP_DRAWABLE(layer)->offset_x;
+      GIMP_DRAWABLE(layer_mask)->offset_y = GIMP_DRAWABLE(layer)->offset_y;
 
       apply_mask = layer->apply_mask;
       edit_mask = layer->edit_mask;
@@ -1818,7 +1819,7 @@ xcf_load_hierarchy (XcfInfo     *info,
 
       if (offset == 0)
 	{
-	  g_warning ("not enough levels found in hierarchy");
+	  g_message ("not enough levels found in hierarchy");
 	  return FALSE;
 	}
 
@@ -1843,7 +1844,7 @@ xcf_load_hierarchy (XcfInfo     *info,
   info->cp += xcf_read_int32 (info->fp, &offset, 1);
   if (offset != 0)
     {
-      g_warning ("encountered garbage after reading hierarchy: %d", offset);
+      g_message ("encountered garbage after reading hierarchy: %d", offset);
       return FALSE;
     }
 
@@ -1889,7 +1890,7 @@ xcf_load_level (XcfInfo     *info,
     {
       if (offset == 0)
 	{
-	  g_warning ("not enough tiles found in level");
+	  g_message ("not enough tiles found in level");
 	  return FALSE;
 	}
 
@@ -1931,7 +1932,7 @@ xcf_load_level (XcfInfo     *info,
 
   if (offset != 0)
     {
-      g_warning ("encountered garbage after reading level: %d", offset);
+      g_message ("encountered garbage after reading level: %d", offset);
       return FALSE;
     }
 
@@ -2033,7 +2034,7 @@ xcf_load_tile_rle (XcfInfo *info,
 	      size -= length;
 
               if (size < 0)
-                g_warning ("xcf: uh oh! xcf rle tile loading error: %d", count);
+                g_message ("xcf: uh oh! xcf rle tile loading error: %d", count);
 
 	      info->cp += xcf_read_int8 (info->fp, &val, 1);
 
@@ -2082,7 +2083,7 @@ xcf_swap_func (int       fd,
 
 	  if (err <= 0)
 	    {
-	      g_warning ("unable to read tile data from xcf file: %d ( %d ) bytes read", err, nleft);
+	      g_message ("unable to read tile data from xcf file: %d ( %d ) bytes read", err, nleft);
 	      return FALSE;
 	    }
 

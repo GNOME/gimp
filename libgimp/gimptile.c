@@ -12,8 +12,9 @@
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the Free
- * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
  */                                                                             
 #include <string.h>
 #include "gimp.h"
@@ -155,7 +156,7 @@ gimp_tile_get (GTile *tile)
 
   if (msg.type != GP_TILE_DATA)
     {
-      g_warning ("unexpected message: %d\n", msg.type);
+      g_message ("unexpected message: %d\n", msg.type);
       gimp_quit ();
     }
 
@@ -167,7 +168,7 @@ gimp_tile_get (GTile *tile)
       (tile_data->height != tile->eheight) ||
       (tile_data->bpp != tile->bpp))
     {
-      g_warning ("received tile info did not match computed tile info\n");
+      g_message ("received tile info did not match computed tile info\n");
       gimp_quit ();
     }
 
@@ -211,7 +212,7 @@ gimp_tile_put (GTile *tile)
 
   if (msg.type != GP_TILE_DATA)
     {
-      g_warning ("unexpected message: %d\n", msg.type);
+      g_message ("unexpected message: %d\n", msg.type);
       gimp_quit ();
     }
 
@@ -239,7 +240,7 @@ gimp_tile_put (GTile *tile)
 
   if (msg.type != GP_TILE_ACK)
     {
-      g_warning ("unexpected message: %d\n", msg.type);
+      g_message ("unexpected message: %d\n", msg.type);
       gimp_quit ();
     }
 

@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -32,12 +32,10 @@
 #include "interface.h"
 #include "layer.h"
 #include "layers_dialog.h"
-#include "paint_funcs.h"
 #include "paint_funcs_area.h"
 #include "palette.h"
 #include "pixelarea.h"
 #include "pixelrow.h"
-#include "temp_buf.h"
 #include "undo.h"
 
 #include "layer_pvt.h"
@@ -158,11 +156,12 @@ gimp_layer_mask_init (GimpLayerMask *layermask)
 }
 
 /*  static functions  */
-
+#if 0
 static void transform_color     (GImage *, PixelRegion *,
 				 PixelRegion *, GimpDrawable *, int);
 static void layer_preview_scale (int, unsigned char *, PixelRegion *,
 				 PixelRegion *, int);
+#endif
 
 /*
  *  Static variables
@@ -189,6 +188,7 @@ layer_invalidate_preview (GtkObject *object)
     floating_sel_invalidate (layer);
 }
 
+#if 0
 static void
 transform_color (gimage, layerPR, bufPR, drawable, type)
      GImage * gimage;
@@ -223,6 +223,7 @@ transform_color (gimage, layerPR, bufPR, drawable, type)
 	}
     }
 }
+#endif
 
 /**************************/
 /*  Function definitions  */
@@ -293,7 +294,7 @@ layer_new_tag  (
   Layer * layer;
 
   if (width == 0 || height == 0) {
-    warning ("Zero width or height layers not allowed.");
+    g_message ("Zero width or height layers not allowed.");
     return NULL;
   }
 
@@ -327,6 +328,7 @@ layer_new_tag  (
   return layer;
 }
 
+
 Layer *
 layer_ref (Layer *layer)
 {
@@ -342,87 +344,6 @@ layer_unref (Layer *layer)
   gtk_object_unref (GTK_OBJECT (layer));
 }
 
-#if 0
-Layer *
-layer_copy (layer, add_alpha)
-     Layer * layer;
-     int add_alpha;
-{
-  char * layer_name;
-  Layer * new_layer;
-  int new_type;
-  PixelRegion srcPR, destPR;
-
-  /*  formulate the new layer name  */
-  layer_name = (char *) g_malloc (strlen (GIMP_DRAWABLE(layer)->name) + 6);
-  sprintf (layer_name, "%s copy", GIMP_DRAWABLE(layer)->name);
-
-  /*  when copying a layer, the copy ALWAYS has an alpha channel  */
-  if (add_alpha)
-    {
-      switch (GIMP_DRAWABLE(layer)->type)
-	{
-	case RGB_GIMAGE:
-	  new_type = RGBA_GIMAGE;
-	  break;
-	case GRAY_GIMAGE:
-	  new_type = GRAYA_GIMAGE;
-	  break;
-	case INDEXED_GIMAGE:
-	  new_type = INDEXEDA_GIMAGE;
-	  break;
-	default:
-	  new_type = GIMP_DRAWABLE(layer)->type;
-	  break;
-	}
-    }
-  else
-    new_type = GIMP_DRAWABLE(layer)->type;
-
-  /*  allocate a new layer object  */
-  new_layer = layer_new (GIMP_DRAWABLE(layer)->gimage_ID, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height,
-			 new_type, layer_name, layer->opacity, layer->mode);
-  if (!new_layer) {
-    warning("layer_copy: could not allocate new layer");
-    goto cleanup;
-  }
-
-  GIMP_DRAWABLE(new_layer)->offset_x = GIMP_DRAWABLE(layer)->offset_x;
-  GIMP_DRAWABLE(new_layer)->offset_y = GIMP_DRAWABLE(layer)->offset_y;
-  GIMP_DRAWABLE(new_layer)->visible = GIMP_DRAWABLE(layer)->visible;
-  new_layer->linked = layer->linked;
-  new_layer->preserve_trans = layer->preserve_trans;
-
-  /*  copy the contents across layers  */
-  if (new_type == GIMP_DRAWABLE(layer)->type)
-    {
-      pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
-      pixel_region_init (&destPR, GIMP_DRAWABLE(new_layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
-      copy_region (&srcPR, &destPR);
-    }
-  else
-    {
-      pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
-      pixel_region_init (&destPR, GIMP_DRAWABLE(new_layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
-      add_alpha_region (&srcPR, &destPR);
-    }
-
-  /*  duplicate the layer mask if necessary  */
-  if (layer->mask)
-    {
-      new_layer->mask = layer_mask_ref (layer_mask_copy (layer->mask));
-      new_layer->apply_mask = layer->apply_mask;
-      new_layer->edit_mask = layer->edit_mask;
-      new_layer->show_mask = layer->show_mask;
-    }
-
- cleanup:
-  /*  free up the layer_name memory  */
-  g_free (layer_name);
-
-  return new_layer;
-}
-#endif
 
 Layer *
 layer_copy (layer, add_alpha)
@@ -438,7 +359,7 @@ layer_copy (layer, add_alpha)
   layer_name = (char *) g_malloc (strlen (GIMP_DRAWABLE(layer)->name) + 6);
   sprintf (layer_name, "%s copy", GIMP_DRAWABLE(layer)->name);
 
-  layer_tag = drawable_tag (GIMP_DRAWABLE(layer));
+  layer_tag = new_layer_tag = drawable_tag (GIMP_DRAWABLE(layer));
   
   /*  when copying a layer, the copy ALWAYS has an alpha channel  */
   if (add_alpha)
@@ -450,7 +371,7 @@ layer_copy (layer, add_alpha)
 			 new_layer_tag, STORAGE_TILED, layer_name, 
 			 layer->opacity, layer->mode);
   if (!new_layer) {
-    warning("layer_copy: could not allocate new layer");
+    g_message ("layer_copy: could not allocate new layer");
     goto cleanup;
   }
 
@@ -498,6 +419,7 @@ layer_copy (layer, add_alpha)
   return new_layer;
 }
 
+
 Layer *
 layer_from_tiles (gimage_ptr, drawable, tiles, name, opacity, mode)
      void *gimage_ptr;
@@ -507,6 +429,7 @@ layer_from_tiles (gimage_ptr, drawable, tiles, name, opacity, mode)
      int opacity;
      int mode;
 {
+#if 0
   GImage * gimage;
   Layer * new_layer;
   int layer_type;
@@ -530,7 +453,7 @@ layer_from_tiles (gimage_ptr, drawable, tiles, name, opacity, mode)
 			 layer_type, name, opacity, mode);
 
   if (!new_layer) {
-    warning("layer_from_tiles: could not allocate new layer");
+    g_message ("layer_from_tiles: could not allocate new layer");
     return NULL;
   }
 
@@ -548,6 +471,8 @@ layer_from_tiles (gimage_ptr, drawable, tiles, name, opacity, mode)
 		     (tiles->levels[0].bpp == 4) ? RGB : GRAY);
 
   return new_layer;
+#endif
+  return NULL;
 }
 
 
@@ -583,7 +508,7 @@ layer_from_canvas (gimage_ptr, drawable, canvas, name, opacity, mode)
 			 new_layer_tag, STORAGE_TILED, name, opacity, mode);
 
   if (!new_layer) {
-    warning("layer_from_canvas: could not allocate new layer");
+    g_message("layer_from_canvas: could not allocate new layer");
     return NULL;
   }
 
@@ -621,52 +546,6 @@ layer_add_mask (layer, mask)
   return layer->mask;
 }
 
-#if 0
-LayerMask *
-layer_create_mask (layer, add_mask_type)
-     Layer * layer;
-     AddMaskType add_mask_type;
-{
-  PixelRegion maskPR, layerPR;
-  LayerMask *mask;
-  char * mask_name;
-  unsigned char black[3] = {0, 0, 0};
-  unsigned char white_mask = OPAQUE_OPACITY;
-  unsigned char black_mask = TRANSPARENT_OPACITY;
-
-  mask_name = (char *) g_malloc (strlen (GIMP_DRAWABLE(layer)->name) + strlen ("mask") + 2);
-  sprintf (mask_name, "%s mask", GIMP_DRAWABLE(layer)->name);
-
-  /*  Create the layer mask  */
-  mask = layer_mask_new (GIMP_DRAWABLE(layer)->gimage_ID, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height,
-		      mask_name, OPAQUE_OPACITY, black);
-  GIMP_DRAWABLE(mask)->offset_x = GIMP_DRAWABLE(layer)->offset_x;
-  GIMP_DRAWABLE(mask)->offset_y = GIMP_DRAWABLE(layer)->offset_y;
-
-  pixel_region_init (&maskPR, GIMP_DRAWABLE(mask)->tiles, 0, 0, GIMP_DRAWABLE(mask)->width, GIMP_DRAWABLE(mask)->height, TRUE);
-
-  switch (add_mask_type)
-    {
-    case WhiteMask:
-      color_region (&maskPR, &white_mask);
-      break;
-    case BlackMask:
-      color_region (&maskPR, &black_mask);
-      break;
-    case AlphaMask:
-      /*  Extract the layer's alpha channel  */
-      if (layer_has_alpha (layer))
-	{
-	  pixel_region_init (&layerPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
-	  extract_alpha_region (&layerPR, NULL, &maskPR);
-	}
-      break;
-    }
-
-  g_free (mask_name);
-  return mask;
-}
-#endif
 
 LayerMask *
 layer_create_mask (layer, add_mask_type)
@@ -726,6 +605,7 @@ layer_create_mask (layer, add_mask_type)
   return mask;
 }
 
+
 Layer *
 layer_get_ID (ID)
      int ID;
@@ -744,36 +624,6 @@ layer_delete (Layer * layer)
 {
   gtk_object_unref (GTK_OBJECT (layer));
 }
-
-#if 0
-static void
-gimp_layer_destroy (GtkObject *object)
-{
-  GimpLayer *layer;
-  
-  g_return_if_fail (object != NULL);
-  g_return_if_fail (GIMP_IS_LAYER (object));
-
-  layer = GIMP_LAYER (object);
-
-  /*  if a layer mask exists, free it  */
-  if (layer->mask)
-    layer_mask_delete (layer->mask);
-
-  /*  free the layer boundary if it exists  */
-  if (layer->fs.segs)
-    g_free (layer->fs.segs);
-
-  /*  free the floating selection if it exists  */
-  if (layer_is_floating_sel (layer))
-    {
-      tile_manager_destroy (layer->fs.backing_store);
-    }
-
-  if (GTK_OBJECT_CLASS (layer_parent_class)->destroy)
-    (*GTK_OBJECT_CLASS (layer_parent_class)->destroy) (object);
-}
-#endif
 
 static void
 gimp_layer_destroy (GtkObject *object)
@@ -801,51 +651,6 @@ gimp_layer_destroy (GtkObject *object)
     (*GTK_OBJECT_CLASS (layer_parent_class)->destroy) (object);
 }
 
-#if 0
-void
-layer_apply_mask (layer, mode)
-     Layer * layer;
-     int mode;
-{
-  PixelRegion srcPR, maskPR;
-
-  if (!layer->mask)
-    return;
-
-  /*  this operation can only be done to layers with an alpha channel  */
-  if (! layer_has_alpha (layer))
-    return;
-
-  /*  Need to save the mask here for undo  */
-
-  if (mode == APPLY)
-    {
-      /*  Put this apply mask operation on the undo stack
-       */
-      drawable_apply_image (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, NULL, FALSE);
-
-      /*  Combine the current layer's alpha channel and the mask  */
-      pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
-      pixel_region_init (&maskPR, GIMP_DRAWABLE(layer->mask)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
-
-      apply_mask_to_region (&srcPR, &maskPR, OPAQUE_OPACITY);
-      GIMP_DRAWABLE(layer)->preview_valid = FALSE;
-
-      layer->mask = NULL;
-      layer->apply_mask = 0;
-      layer->edit_mask = 0;
-      layer->show_mask = 0;
-    }
-  else if (mode == DISCARD)
-    {
-      layer->mask = NULL;
-      layer->apply_mask = 0;
-      layer->edit_mask = 0;
-      layer->show_mask = 0;
-    }
-}
-#endif
-
 void
 layer_apply_mask (layer, mode)
      Layer * layer;
@@ -866,8 +671,7 @@ layer_apply_mask (layer, mode)
     {
       /*  Put this apply mask operation on the undo stack
        */
-      drawable_apply_image (GIMP_DRAWABLE(layer), 0, 0, 
-		GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, NULL, FALSE);
+      drawable_apply_image (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, NULL, FALSE);
 
       /*  Combine the current layer's alpha channel and the mask  */
       pixelarea_init (&srcPR, GIMP_DRAWABLE(layer)->canvas, NULL,
@@ -891,6 +695,7 @@ layer_apply_mask (layer, mode)
       layer->show_mask = 0;
     }
 }
+
 
 void
 layer_translate (layer, off_x, off_y)
@@ -924,60 +729,6 @@ layer_translate (layer, off_x, off_y)
 
 
 
-#if 0
-void
-layer_add_alpha (layer)
-     Layer *layer;
-{
-  PixelRegion srcPR, destPR;
-  TileManager *new_tiles;
-  int type;
-
-  /*  Don't bother if the layer already has alpha  */
-  switch (GIMP_DRAWABLE(layer)->type)
-    {
-    case RGB_GIMAGE:
-      type = RGBA_GIMAGE;
-      break;
-    case GRAY_GIMAGE:
-      type = GRAYA_GIMAGE;
-      break;
-    case INDEXED_GIMAGE:
-      type = INDEXEDA_GIMAGE;
-      break;
-    case RGBA_GIMAGE:
-    case GRAYA_GIMAGE:
-    case INDEXEDA_GIMAGE:
-    default:
-      return;
-      break;
-    }
-
-  /*  Configure the pixel regions  */
-  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
-
-  /*  Allocate the new layer, configure dest region  */
-  new_tiles = tile_manager_new (GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, (GIMP_DRAWABLE(layer)->bytes + 1));
-  pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
-
-  /*  Add an alpha channel  */
-  add_alpha_region (&srcPR, &destPR);
-
-  /*  Push the layer on the undo stack  */
-  undo_push_layer_mod (gimage_get_ID (GIMP_DRAWABLE(layer)->gimage_ID), layer);
-
-  /*  Configure the new layer  */
-  GIMP_DRAWABLE(layer)->tiles = new_tiles;
-  GIMP_DRAWABLE(layer)->type = type;
-  GIMP_DRAWABLE(layer)->bytes = GIMP_DRAWABLE(layer)->bytes + 1;
-  GIMP_DRAWABLE(layer)->has_alpha = TYPE_HAS_ALPHA (type);
-
-  /*  update gdisplay titles to reflect the possibility of
-   *  this layer being the only layer in the gimage
-   */
-  gdisplays_update_title (GIMP_DRAWABLE(layer)->gimage_ID);
-}
-#endif
 
 void
 layer_add_alpha (layer)
@@ -1012,6 +763,7 @@ layer_add_alpha (layer)
 
   /*  Configure the new layer  */
   GIMP_DRAWABLE(layer)->canvas = new_canvas;
+  type = tag_to_drawable_type (new_canvas_tag);
   GIMP_DRAWABLE(layer)->type = type;
   GIMP_DRAWABLE(layer)->bytes = tag_bytes (new_canvas_tag);
   GIMP_DRAWABLE(layer)->has_alpha = TYPE_HAS_ALPHA (type);
@@ -1022,80 +774,6 @@ layer_add_alpha (layer)
   gdisplays_update_title (GIMP_DRAWABLE(layer)->gimage_ID);
 }
 
-#if 0
-void
-layer_scale (layer, new_width, new_height, local_origin)
-     Layer *layer;
-     int new_width, new_height;
-     int local_origin;
-{
-  PixelRegion srcPR, destPR;
-  TileManager *new_tiles;
-
-  if (new_width == 0 || new_height == 0)
-    return;
-
-
-  /*  Update the old layer position  */
-  drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
-
-  /*  Configure the pixel regions  */
-  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
-
-  /*  Allocate the new layer, configure dest region  */
-  new_tiles = tile_manager_new (new_width, new_height, GIMP_DRAWABLE(layer)->bytes);
-  pixel_region_init (&destPR, new_tiles, 0, 0, new_width, new_height, TRUE);
-
-  /*  Scale the layer -
-   *   If the layer is of type INDEXED, then we don't use pixel-value
-   *   resampling because that doesn't necessarily make sense for INDEXED
-   *   images.
-   */
-  if ((GIMP_DRAWABLE(layer)->type == INDEXED_GIMAGE) || (GIMP_DRAWABLE(layer)->type == INDEXEDA_GIMAGE))
-    scale_region_no_resample (&srcPR, &destPR);
-  else
-    scale_region (&srcPR, &destPR);
-
-  /*  Push the layer on the undo stack  */
-  undo_push_layer_mod (gimage_get_ID (GIMP_DRAWABLE(layer)->gimage_ID), layer);
-
-  /*  Configure the new layer  */
-  if (local_origin)
-    {
-      int cx, cy;
-
-      cx = GIMP_DRAWABLE(layer)->offset_x + GIMP_DRAWABLE(layer)->width / 2;
-      cy = GIMP_DRAWABLE(layer)->offset_y + GIMP_DRAWABLE(layer)->height / 2;
-
-      GIMP_DRAWABLE(layer)->offset_x = cx - (new_width / 2); 
-      GIMP_DRAWABLE(layer)->offset_y = cy - (new_height / 2); 
-    }
-  else
-    {
-      double xrat, yrat;
-
-      xrat = (double) new_width / (double) GIMP_DRAWABLE(layer)->width;
-      yrat = (double) new_height / (double) GIMP_DRAWABLE(layer)->height;
-
-      GIMP_DRAWABLE(layer)->offset_x = (int) (xrat * GIMP_DRAWABLE(layer)->offset_x);
-      GIMP_DRAWABLE(layer)->offset_y = (int) (yrat * GIMP_DRAWABLE(layer)->offset_y);
-    }
-  GIMP_DRAWABLE(layer)->tiles = new_tiles;
-  GIMP_DRAWABLE(layer)->width = new_width;
-  GIMP_DRAWABLE(layer)->height = new_height;
-
-  /*  If there is a layer mask, make sure it gets scaled also  */
-  if (layer->mask) 
-    {
-      GIMP_DRAWABLE(layer->mask)->offset_x = GIMP_DRAWABLE(layer)->offset_x;
-      GIMP_DRAWABLE(layer->mask)->offset_y = GIMP_DRAWABLE(layer)->offset_y;
-      channel_scale (GIMP_CHANNEL(layer->mask), new_width, new_height);
-    }
-  
-  /*  Update the new layer position  */
-  drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
-}
-#endif
 
 void
 layer_scale (layer, new_width, new_height, local_origin)
@@ -1172,100 +850,6 @@ layer_scale (layer, new_width, new_height, local_origin)
   drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
 }
 
-#if 0
-void
-layer_resize (layer, new_width, new_height, offx, offy)
-     Layer *layer;
-     int new_width, new_height;
-     int offx, offy;
-{
-  PixelRegion srcPR, destPR;
-  TileManager *new_tiles;
-  int w, h;
-  int x1, y1, x2, y2;
-
-  if (!new_width || !new_height)
-    return;
-
-  x1 = BOUNDS (offx, 0, new_width);
-  y1 = BOUNDS (offy, 0, new_height);
-  x2 = BOUNDS ((offx + GIMP_DRAWABLE(layer)->width), 0, new_width);
-  y2 = BOUNDS ((offy + GIMP_DRAWABLE(layer)->height), 0, new_height);
-  w = x2 - x1;
-  h = y2 - y1;
-
-  if (offx > 0)
-    {
-      x1 = 0;
-      x2 = offx;
-    }
-  else
-    {
-      x1 = -offx;
-      x2 = 0;
-    }
-
-  if (offy > 0)
-    {
-      y1 = 0;
-      y2 = offy;
-    }
-  else
-    {
-      y1 = -offy;
-      y2 = 0;
-    }
-
-  /*  Update the old layer position  */
-  drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
-
-  /*  Configure the pixel regions  */
-  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, x1, y1, w, h, FALSE);
-
-  /*  Allocate the new layer, configure dest region  */
-  new_tiles = tile_manager_new (new_width, new_height, GIMP_DRAWABLE(layer)->bytes);
-  pixel_region_init (&destPR, new_tiles, 0, 0, new_width, new_height, TRUE);
-
-  /*  fill with the fill color  */
-  if (layer_has_alpha (layer))
-    {
-      /*  Set to transparent and black  */
-      unsigned char bg[4] = {0, 0, 0, 0};
-      color_region (&destPR, bg);
-    }
-  else
-    {
-      unsigned char bg[3];
-      gimage_get_background (gimage_get_ID (GIMP_DRAWABLE(layer)->gimage_ID), GIMP_DRAWABLE(layer), bg);
-      color_region (&destPR, bg);
-    }
-  pixel_region_init (&destPR, new_tiles, x2, y2, w, h, TRUE);
-
-  /*  copy from the old to the new  */
-  if (w && h)
-    copy_region (&srcPR, &destPR);
-
-  /*  Push the layer on the undo stack  */
-  undo_push_layer_mod (gimage_get_ID (GIMP_DRAWABLE(layer)->gimage_ID), layer);
-
-  /*  Configure the new layer  */
-  GIMP_DRAWABLE(layer)->tiles = new_tiles;
-  GIMP_DRAWABLE(layer)->offset_x = x1 + GIMP_DRAWABLE(layer)->offset_x - x2;
-  GIMP_DRAWABLE(layer)->offset_y = y1 + GIMP_DRAWABLE(layer)->offset_y - y2;
-  GIMP_DRAWABLE(layer)->width = new_width;
-  GIMP_DRAWABLE(layer)->height = new_height;
-
-  /*  If there is a layer mask, make sure it gets resized also  */
-  if (layer->mask) {
-    GIMP_DRAWABLE(layer->mask)->offset_x = GIMP_DRAWABLE(layer)->offset_x;
-    GIMP_DRAWABLE(layer->mask)->offset_y = GIMP_DRAWABLE(layer)->offset_y;
-    channel_resize (GIMP_CHANNEL(layer->mask), new_width, new_height, offx, offy);
-  }
-
-  /*  update the new layer area  */
-  drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
-}
-#endif
 
 void
 layer_resize (layer, new_width, new_height, offx, offy)
@@ -1363,9 +947,9 @@ layer_resize (layer, new_width, new_height, offx, offy)
   }
 
   /*  update the new layer area  */
-  drawable_update (GIMP_DRAWABLE(layer), 
-	0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
+  drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
 }
+
 
 BoundSeg *
 layer_boundary (layer, num_segs)
@@ -1449,54 +1033,6 @@ layer_invalidate_boundary (layer)
   gdisplays_selection_visibility (GIMP_DRAWABLE(layer)->gimage_ID, SelectionLayerOff);
 }
 
-#if 0
-int
-layer_pick_correlate (layer, x, y)
-     Layer *layer;
-     int x, y;
-{
-  Tile *tile;
-  Tile *mask_tile;
-  int val;
-
-  /*  Is the point inside the layer?
-   *  First transform the point to layer coordinates...
-   */
-  x -= GIMP_DRAWABLE(layer)->offset_x;
-  y -= GIMP_DRAWABLE(layer)->offset_y;
-  if (x >= 0 && x < GIMP_DRAWABLE(layer)->width &&
-      y >= 0 && y < GIMP_DRAWABLE(layer)->height &&
-      GIMP_DRAWABLE(layer)->visible)
-    {
-      /*  If the point is inside, and the layer has no
-       *  alpha channel, success!
-       */
-      if (! layer_has_alpha (layer))
-	return TRUE;
-
-      /*  Otherwise, determine if the alpha value at
-       *  the given point is non-zero
-       */
-      tile = tile_manager_get_tile (GIMP_DRAWABLE(layer)->tiles, x, y, 0);
-      tile_ref (tile);
-
-      val = tile->data[tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH) + 1) - 1];
-      if (layer->mask)
-	{
-	  mask_tile = tile_manager_get_tile (GIMP_DRAWABLE(layer->mask)->tiles, x, y, 0);
-	  tile_ref (mask_tile);
-	  val = (val * mask_tile->data[mask_tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH)]) / 255;
-	}
-
-      tile_unref (tile, FALSE);
-
-      if (val > 63)
-	return TRUE;
-    }
-
-  return FALSE;
-}
-#endif
 
 int
 layer_pick_correlate (layer, x, y)
@@ -1554,6 +1090,8 @@ layer_pick_correlate (layer, x, y)
 
   return FALSE;
 }
+
+
 /********************/
 /* access functions */
 
@@ -1608,6 +1146,7 @@ layer_preview (layer, w, h)
      int w, h;
 {
   printf("layer_preview not implemented\n");
+  return NULL;
 #if 0
   GImage *gimage;
   TempBuf *preview_buf;
@@ -1615,7 +1154,6 @@ layer_preview (layer, w, h)
   int type;
   int bytes;
   int subsample;
-
 
   type  = 0;
   bytes = 0;
@@ -1674,8 +1212,8 @@ layer_preview (layer, w, h)
       return GIMP_DRAWABLE(layer)->preview;
     }
 #endif
- return NULL;
 }
+
 
 TempBuf *
 layer_mask_preview (layer, w, h)
@@ -1683,6 +1221,7 @@ layer_mask_preview (layer, w, h)
      int w, h;
 {
   printf("layer_mask_preview not implemented\n");
+  return NULL;
 #if 0
   TempBuf *preview_buf;
   LayerMask *mask;
@@ -1729,7 +1268,6 @@ layer_mask_preview (layer, w, h)
       return GIMP_DRAWABLE(mask)->preview;
     }
 #endif
-  return NULL;
 }
 
 
@@ -1755,6 +1293,7 @@ layer_invalidate_previews (gimage_id)
 }
 
 
+#if 0
 static void
 layer_preview_scale (type, cmap, srcPR, destPR, subsample)
      int type;
@@ -1764,7 +1303,7 @@ layer_preview_scale (type, cmap, srcPR, destPR, subsample)
      int subsample;
 {
   printf("layer_preview_scale not implemented\n");
-#if 0
+  return;
 #define EPSILON 0.000001
   unsigned char * src, * s;
   unsigned char * dest, * d;
@@ -1928,8 +1467,8 @@ layer_preview_scale (type, cmap, srcPR, destPR, subsample)
   g_free (row);
   g_free (x_frac);
   g_free (src);
-#endif
 }
+#endif
 
 static void
 gimp_layer_mask_destroy (GtkObject *object)
@@ -1946,7 +1485,7 @@ gimp_layer_mask_destroy (GtkObject *object)
 }
 
 LayerMask *
-layer_mask_new(int gimage_ID, int width, int height, char *name, int opacity,
+layer_mask_new (int gimage_ID, int width, int height, char *name, int opacity,
 	     unsigned char *col)
 {
   LayerMask * layer_mask;
@@ -2011,43 +1550,6 @@ layer_mask_new_tag(int gimage_ID, int width, int height,
   return layer_mask;
 }
 
-#if 0
-LayerMask *
-layer_mask_copy (LayerMask *layer_mask)
-{
-  char * layer_mask_name;
-  LayerMask * new_layer_mask;
-  PixelRegion srcPR, destPR;
-
-  /*  formulate the new layer_mask name  */
-  layer_mask_name = (char *) g_malloc (strlen (GIMP_DRAWABLE(layer_mask)->name) + 6);
-  sprintf (layer_mask_name, "%s copy", GIMP_DRAWABLE(layer_mask)->name);
-
-  /*  allocate a new layer_mask object  */
-  new_layer_mask = layer_mask_new (GIMP_DRAWABLE(layer_mask)->gimage_ID, 
-				   GIMP_DRAWABLE(layer_mask)->width, 
-				   GIMP_DRAWABLE(layer_mask)->height, 
-				   layer_mask_name, 
-				   GIMP_CHANNEL(layer_mask)->opacity, 
-				   GIMP_CHANNEL(layer_mask)->col);
-  GIMP_DRAWABLE(new_layer_mask)->visible = GIMP_DRAWABLE(layer_mask)->visible;
-  GIMP_DRAWABLE(new_layer_mask)->offset_x = GIMP_DRAWABLE(layer_mask)->offset_x;
-  GIMP_DRAWABLE(new_layer_mask)->offset_y = GIMP_DRAWABLE(layer_mask)->offset_y;
-  GIMP_CHANNEL(new_layer_mask)->show_masked = GIMP_CHANNEL(layer_mask)->show_masked;
-
-  /*  copy the contents across layer masks  */
-  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer_mask)->tiles, 0, 0, 
-		     GIMP_DRAWABLE(layer_mask)->width, 
-		     GIMP_DRAWABLE(layer_mask)->height, FALSE);
-  pixel_region_init (&destPR, GIMP_DRAWABLE(new_layer_mask)->tiles, 0, 0, GIMP_DRAWABLE(layer_mask)->width, GIMP_DRAWABLE(layer_mask)->height, TRUE);
-  copy_region (&srcPR, &destPR);
-
-  /*  free up the layer_mask_name memory  */
-  g_free (layer_mask_name);
-
-  return new_layer_mask;
-}
-#endif
 
 LayerMask *
 layer_mask_copy (LayerMask *layer_mask)
@@ -2120,36 +1622,6 @@ layer_mask_unref (LayerMask *mask)
   gtk_object_unref (GTK_OBJECT (mask));
 }
 
-#if 0
-void
-channel_layer_mask (Channel *mask, Layer * layer)
-{
-  PixelRegion srcPR, destPR;
-  unsigned char empty = 0;
-  int x1, y1, x2, y2;
-
-  /*  push the current mask onto the undo stack  */
-  channel_push_undo (mask);
-
-  /*  clear the mask  */
-  pixel_region_init (&destPR, GIMP_DRAWABLE(mask)->tiles, 0, 0, GIMP_DRAWABLE(mask)->width, GIMP_DRAWABLE(mask)->height, TRUE);
-  color_region (&destPR, &empty);
-
-  x1 = BOUNDS (GIMP_DRAWABLE(layer)->offset_x, 0, GIMP_DRAWABLE(mask)->width);
-  y1 = BOUNDS (GIMP_DRAWABLE(layer)->offset_y, 0, GIMP_DRAWABLE(mask)->height);
-  x2 = BOUNDS (GIMP_DRAWABLE(layer)->offset_x + GIMP_DRAWABLE(layer)->width, 0, GIMP_DRAWABLE(mask)->width);
-  y2 = BOUNDS (GIMP_DRAWABLE(layer)->offset_y + GIMP_DRAWABLE(layer)->height, 0, GIMP_DRAWABLE(mask)->height);
-
-  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer->mask)->tiles,
-		     (x1 - GIMP_DRAWABLE(layer)->offset_x), (y1 - GIMP_DRAWABLE(layer)->offset_y),
-		     (x2 - x1), (y2 - y1), FALSE);
-  pixel_region_init (&destPR, GIMP_DRAWABLE(mask)->tiles, x1, y1, (x2 - x1), (y2 - y1), TRUE);
-  copy_region (&srcPR, &destPR);
-
-  mask->bounds_known = FALSE;
-}
-#endif
-
 void
 channel_layer_mask (Channel *mask, Layer * layer)
 {
@@ -2170,10 +1642,8 @@ channel_layer_mask (Channel *mask, Layer * layer)
 
   x1 = BOUNDS (GIMP_DRAWABLE(layer)->offset_x, 0, GIMP_DRAWABLE(mask)->width);
   y1 = BOUNDS (GIMP_DRAWABLE(layer)->offset_y, 0, GIMP_DRAWABLE(mask)->height);
-  x2 = BOUNDS (GIMP_DRAWABLE(layer)->offset_x + GIMP_DRAWABLE(layer)->width, 
-		0, GIMP_DRAWABLE(mask)->width);
-  y2 = BOUNDS (GIMP_DRAWABLE(layer)->offset_y + GIMP_DRAWABLE(layer)->height, 
-		0, GIMP_DRAWABLE(mask)->height);
+  x2 = BOUNDS (GIMP_DRAWABLE(layer)->offset_x + GIMP_DRAWABLE(layer)->width, 0, GIMP_DRAWABLE(mask)->width);
+  y2 = BOUNDS (GIMP_DRAWABLE(layer)->offset_y + GIMP_DRAWABLE(layer)->height, 0, GIMP_DRAWABLE(mask)->height);
 
   pixelarea_init (&srcPR, GIMP_DRAWABLE(layer->mask)->canvas, NULL,
 		     (x1 - GIMP_DRAWABLE(layer)->offset_x), (y1 - GIMP_DRAWABLE(layer)->offset_y),

@@ -16,7 +16,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
  */
 
@@ -30,7 +30,6 @@
 
 
 #include <math.h>
-#include <string.h>
 
 #include "appenv.h"
 #include "asupsample.h"
@@ -65,7 +64,7 @@ adaptive_supersample_area(int x1, int y1, int x2, int y2, int max_depth, double 
 			  progress_func_t progress_func, void *progress_data)
 {
 	int          	x, y, width;                 /* Counters, width of region */
-	int          	xt, yt;                      /* Temporary counters */
+	int          	xt, xtt, yt;                 /* Temporary counters */
 	int          	sub_pixel_size;              /* Numbe of samples per pixel (1D) */
 	size_t       	row_size;                    /* Memory needed for one row */
  	color_t      	color;                       /* Rendered pixel's color */
@@ -114,9 +113,18 @@ adaptive_supersample_area(int x1, int y1, int x2, int y2, int max_depth, double 
 
 	block = g_malloc((sub_pixel_size + 1) * sizeof(sample_t *)); /* Rows */
 
-	for (y = 0; y < (sub_pixel_size + 1); y++)
-	    /* Columns */
-	    block[y] = g_malloc0((sub_pixel_size + 1) * sizeof(sample_t));
+	for (y = 0; y < (sub_pixel_size + 1); y++) {
+		block[y] = g_malloc((sub_pixel_size + 1) * sizeof(sample_t)); /* Columns */
+
+		for (x = 0; x < (sub_pixel_size + 1); x++) {
+			block[y][x].ready = 0;
+
+			block[y][x].color.r = 0;
+			block[y][x].color.g = 0;
+			block[y][x].color.b = 0;
+			block[y][x].color.a = 0;
+		}
+	}
 
 	/* Render region */
 
@@ -144,9 +152,10 @@ adaptive_supersample_area(int x1, int y1, int x2, int y2, int max_depth, double 
 
 			/* Copy samples from top row to block */
 
-			memcpy(block[0],
-			       top_row + ((x - x1) * sub_pixel_size),
-			       sizeof(sample_t) * sub_pixel_size);
+			for (xtt = 0, xt = (x - x1) * sub_pixel_size;
+			     xtt < (sub_pixel_size + 1);
+			     xtt++, xt++)
+				block[0][xtt] = top_row[xt];
 
 			/* Render pixel on (x, y) */
 
@@ -162,9 +171,10 @@ adaptive_supersample_area(int x1, int y1, int x2, int y2, int max_depth, double 
 
 			top_row[((x - x1) + 1) * sub_pixel_size] = block[0][sub_pixel_size];
 
-			memcpy(bot_row + ((x - x1) * sub_pixel_size),
-			       block[sub_pixel_size],
-			       sub_pixel_size * sizeof(sample_t));
+			for (xtt = 0, xt = (x - x1) * sub_pixel_size;
+			     xtt < (sub_pixel_size + 1);
+			     xtt++, xt++)
+				bot_row[xt] = block[sub_pixel_size][xtt];
 
 			/* Swap first and last columns */
 
@@ -216,7 +226,7 @@ render_sub_pixel(int max_depth, int depth, sample_t **block,
 
 	/* Get offsets for corners */
 
-        dx1 = (double) (x1 - sub_pixel_size / 2) / sub_pixel_size;
+	dx1 = (double) (x1 - sub_pixel_size / 2) / sub_pixel_size;
 	dx3 = (double) (x3 - sub_pixel_size / 2) / sub_pixel_size;
 
 	dy1 = (double) (y1 - sub_pixel_size / 2) / sub_pixel_size;

@@ -13,18 +13,19 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #ifndef __APP_PROCS_H__
 #define __APP_PROCS_H__
 
 /* Function declarations */
-void	gimp_init (int, char **);
+void gimp_init (int, char **);
+typedef int key_t;
 gint32  gimp_shmem_init (int p, key_t k, int s, long o, int xs, int ys);
-void	app_init (void);
-void	app_exit (int);
-void	app_exit_finish (void);
-int		app_exit_finish_done (void);
-void	app_init_update_status(char *label1val, char *label2val, float pct_progress);
+void app_init (void);
+void app_exit (int);
+void app_exit_finish (void);
+int app_exit_finish_done (void);
+void app_init_update_status(char *label1val, char *label2val, float pct_progress);
 
 #endif /* APP_PROCS_H */

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include "gdk/gdkkeysyms.h"
@@ -62,14 +62,6 @@ redraw (GDisplay *gdisp,
     }
 }
 
-static gint
-expose_predicate (GdkEvent *event,
-		  gpointer  data)
-{
-  return ((event->type == GDK_EXPOSE) &&
-	  (event->any.window == data));
-}
-
 gint
 gdisplay_canvas_events (GtkWidget *canvas,
 			GdkEvent  *event)
@@ -83,6 +75,8 @@ gdisplay_canvas_events (GtkWidget *canvas,
   GdkModifierType tmask;
   guint state = 0;
   gint return_val = FALSE;
+  static gboolean scrolled = FALSE;
+  static guint key_signal_id = 0;
 
   gdisp = (GDisplay *) gtk_object_get_user_data (GTK_OBJECT (canvas));
 
@@ -146,8 +140,21 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	{
 	case 1:
 	  gtk_grab_add (canvas);
-	  if (!active_tool)
-	    active_tool_control (RECREATE, gdisp);
+
+	  /* This is a hack to prevent other stuff being run in the middle of
+	     a tool operation (like changing image types.... brrrr). We just
+	     block all the keypress event. A better solution is to implement
+	     some sort of locking for images.
+	     Note that this is dependent on specific GTK behavior, and isn't
+	     guaranteed to work in future versions of GTK.
+	     -Yosh
+	   */
+	  if (key_signal_id == 0)
+	    key_signal_id = gtk_signal_connect (GTK_OBJECT (canvas),
+						"key_press_event",
+						GTK_SIGNAL_FUNC (gtk_true),
+						NULL);
+
 	  if (active_tool && ((active_tool->type == MOVE) ||
 			      !gimage_is_empty (gdisp->gimage)))
 	      {
@@ -157,17 +164,32 @@ gdisplay_canvas_events (GtkWidget *canvas,
 		    bevent->x = tx;
 		    bevent->y = ty;
 		  }
-
-		if (gimage_get_active_layer (gdisp->gimage) != active_tool_layer)
-		  {
-		    active_tool_control (RECREATE, gdisp);
-		    active_tool_layer = gimage_get_active_layer (gdisp->gimage);
+		
+		/* reset the current tool if we're changing gdisplays */
+		/*
+		if (active_tool->gdisp_ptr) {
+		  tool_gdisp = active_tool->gdisp_ptr;
+		  if (tool_gdisp->ID != gdisp->ID) {
+		    tools_initialize (active_tool->type, gdisp);
+		    active_tool->drawable = gimage_active_drawable(gdisp->gimage);
 		  }
+		} else
+		*/
+		/* reset the current tool if we're changing drawables */
+		  if (active_tool->drawable) {
+		    if (((gimage_active_drawable(gdisp->gimage)) !=
+			 active_tool->drawable) &&
+			!active_tool->preserve)
+		      tools_initialize (active_tool->type, gdisp);
+		  } else
+		    active_tool->drawable = gimage_active_drawable(gdisp->gimage);
+		
 		(* active_tool->button_press_func) (active_tool, bevent, gdisp);
 	      }
 	  break;
 
 	case 2:
+	  scrolled = TRUE;
 	  gtk_grab_add (canvas);
 	  start_grab_and_scroll (gdisp, bevent);
 	  break;
@@ -190,7 +212,15 @@ gdisplay_canvas_events (GtkWidget *canvas,
       switch (bevent->button)
 	{
 	case 1:
+	  /* Lame hack. See above */
+	  if (key_signal_id)
+	    {
+	      gtk_signal_disconnect (GTK_OBJECT (canvas), key_signal_id);
+	      key_signal_id = 0;
+	    }
+
 	  gtk_grab_remove (canvas);
+	  gdk_pointer_ungrab (bevent->time);  /* fixes pointer grab bug */
 	  if (active_tool && ((active_tool->type == MOVE) ||
 			      !gimage_is_empty (gdisp->gimage)))
 	    if (active_tool->state == ACTIVE)
@@ -207,6 +237,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  break;
 
 	case 2:
+	  scrolled = FALSE;
 	  gtk_grab_remove (canvas);
 	  end_grab_and_scroll (gdisp, bevent);
 	  break;
@@ -257,14 +288,9 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	      (* active_tool->motion_func) (active_tool, mevent, gdisp);
 	    }
 	}
-      else if (mevent->state & GDK_BUTTON2_MASK)
+      else if ((mevent->state & GDK_BUTTON2_MASK) && scrolled)
 	{
-	  /* int flush; */
-
 	  grab_and_scroll (gdisp, mevent);
-
-	  /* if (flush)
-	    gdisplays_flush (); */
 	}
       break;
 
@@ -356,6 +382,7 @@ gdisplay_hruler_button_press (GtkWidget      *widget,
   if (event->button == 1)
     {
       gdisp = data;
+
       gtk_widget_activate (tool_widgets[tool_info[(int) MOVE].toolbar_position]);
       move_tool_start_hguide (active_tool, gdisp);
       gtk_grab_add (gdisp->canvas);
@@ -374,6 +401,7 @@ gdisplay_vruler_button_press (GtkWidget      *widget,
   if (event->button == 1)
     {
       gdisp = data;
+
       gtk_widget_activate (tool_widgets[tool_info[(int) MOVE].toolbar_position]);
       move_tool_start_vguide (active_tool, gdisp);
       gtk_grab_add (gdisp->canvas);

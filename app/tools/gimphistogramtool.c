@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <string.h>
@@ -71,8 +71,7 @@ static void   histogram_tool_cursor_update  (Tool *, GdkEventMotion *, gpointer)
 static void   histogram_tool_control        (Tool *, int, gpointer);
 
 static HistogramToolDialog *  histogram_tool_new_dialog       (void);
-static void                   histogram_tool_ok_callback      (GtkWidget *, gpointer);
-static void                   histogram_tool_cancel_callback  (GtkWidget *, gpointer);
+static void                   histogram_tool_close_callback   (GtkWidget *, gpointer);
 static gint                   histogram_tool_delete_callback  (GtkWidget *, GdkEvent *, gpointer);
 static void                   histogram_tool_value_callback   (GtkWidget *, gpointer);
 static void                   histogram_tool_red_callback     (GtkWidget *, gpointer);
@@ -287,6 +286,10 @@ histogram_tool_button_press (Tool           *tool,
 			     GdkEventButton *bevent,
 			     gpointer        gdisp_ptr)
 {
+  GDisplay *gdisp;
+
+  gdisp = gdisp_ptr;
+  tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
 static void
@@ -327,7 +330,7 @@ histogram_tool_control (Tool     *tool,
       break;
     case HALT :
       if (histogram_tool_dialog)
-	histogram_tool_cancel_callback (NULL, (gpointer) histogram_tool_dialog);
+	histogram_tool_close_callback (NULL, (gpointer) histogram_tool_dialog);
       break;
     }
 }
@@ -356,6 +359,7 @@ tools_new_histogram_tool ()
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = histogram_tool_cursor_update;
   tool->control_func = histogram_tool_control;
+  tool->preserve = FALSE;
 
   return tool;
 }
@@ -369,7 +373,7 @@ tools_free_histogram_tool (Tool *tool)
 
   /*  Close the histogram dialog  */
   if (histogram_tool_dialog)
-    histogram_tool_ok_callback (NULL, (gpointer) histogram_tool_dialog);
+    histogram_tool_close_callback (NULL, (gpointer) histogram_tool_dialog);
 
   g_free (hist);
 }
@@ -383,7 +387,7 @@ histogram_tool_initialize (void *gdisp_ptr)
 
   if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
     {
-      message_box ("Histogram does not operate on indexed drawables.", NULL, NULL);
+      g_message ("Histogram does not operate on indexed drawables.");
       return;
     }
 
@@ -410,15 +414,14 @@ histogram_tool_initialize (void *gdisp_ptr)
 }
 
 
-/****************************/
-/*  Select by Color dialog  */
-/****************************/
+/***************************/
+/*  Histogram Tool dialog  */
+/***************************/
 
 /*  the action area structure  */
 static ActionAreaItem action_items[] =
 {
-  { "OK", histogram_tool_ok_callback, NULL, NULL },
-  { "Cancel", histogram_tool_cancel_callback, NULL, NULL }
+  { "Close", histogram_tool_close_callback, NULL, NULL }
 };
 
 static MenuItem color_option_items[] =
@@ -431,7 +434,7 @@ static MenuItem color_option_items[] =
 };
 
 
-HistogramToolDialog *
+static HistogramToolDialog *
 histogram_tool_new_dialog ()
 {
   HistogramToolDialog *htd;
@@ -521,8 +524,7 @@ histogram_tool_new_dialog ()
 
   /*  The action area  */
   action_items[0].user_data = htd;
-  action_items[1].user_data = htd;
-  build_action_area (GTK_DIALOG (htd->shell), action_items, 2, 0);
+  build_action_area (GTK_DIALOG (htd->shell), action_items, 1, 0);
 
   gtk_widget_show (table);
   gtk_widget_show (vbox);
@@ -532,13 +534,12 @@ histogram_tool_new_dialog ()
 }
 
 static void
-histogram_tool_ok_callback (GtkWidget *widget,
+histogram_tool_close_callback (GtkWidget *widget,
 			    gpointer   client_data)
 {
   HistogramToolDialog *htd;
 
   htd = (HistogramToolDialog *) client_data;
-
   if (GTK_WIDGET_VISIBLE (htd->shell))
     gtk_widget_hide (htd->shell);
 }
@@ -548,20 +549,9 @@ histogram_tool_delete_callback (GtkWidget *widget,
 				GdkEvent *event,
 				gpointer client_data)
 {
-  histogram_tool_cancel_callback (widget, client_data);
+  histogram_tool_close_callback (widget, client_data);
 
-  return FALSE;
-}
-
-static void
-histogram_tool_cancel_callback (GtkWidget *widget,
-				gpointer   client_data)
-{
-  HistogramToolDialog *htd;
-
-  htd = (HistogramToolDialog *) client_data;
-  if (GTK_WIDGET_VISIBLE (htd->shell))
-    gtk_widget_hide (htd->shell);
+  return TRUE;
 }
 
 static void

@@ -756,7 +756,7 @@ ProcRecord shmseg_status_proc =
 
   /*  Output arguments  */
   2,
-  &shmseg_status_out_args,
+  shmseg_status_out_args,
 
   /*  Exec method  */
   { { shmseg_status_invoker } },

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <string.h>
@@ -68,10 +68,7 @@ static TempBuf *  canvas_buf = NULL;
 
 /*  brush buffers  */
 static MaskBuf *  solid_brush;
-static MaskBuf *  kernel_brushes[4][4] = { {NULL, NULL, NULL, NULL},
-					   {NULL, NULL, NULL, NULL},
-					   {NULL, NULL, NULL, NULL},
-					   {NULL, NULL, NULL, NULL}};
+static MaskBuf *  kernel_brushes[5][5];
 
 
 /*  paint buffers utility functions  */
@@ -85,32 +82,42 @@ static void        free_paint_buffers     (void);
 #define KERNEL_HEIGHT  3
 
 /*  Brush pixel subsampling kernels  */
-static int subsample[4][4][9] =
-{
-  {
-    { 16, 48, 0, 48, 144, 0, 0, 0, 0 },
-    { 0, 64, 0, 0, 192, 0, 0, 0, 0 },
-    { 0, 48, 16, 0, 144, 48, 0, 0, 0 },
-    { 0, 32, 32, 0, 96, 96, 0, 0, 0 },
-  },
-  {
-    { 0, 0, 0, 64, 192, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 256, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 192, 64, 0, 0, 0 },
-    { 0, 0, 0, 0, 128, 128, 0, 0, 0 },
-  },
-  {
-    { 0, 0, 0, 48, 144, 0, 16, 48, 0 },
-    { 0, 0, 0, 0, 192, 0, 0, 64, 0 },
-    { 0, 0, 0, 0, 144, 48, 0, 48, 16 },
-    { 0, 0, 0, 0, 96, 96, 0, 32, 32 },
-  },
-  {
-    { 0, 0, 0, 32, 96, 0, 32, 96, 0 },
-    { 0, 0, 0, 0, 128, 0, 0, 128, 0 },
-    { 0, 0, 0, 0, 96, 32, 0, 96, 32 },
-    { 0, 0, 0, 0, 64, 64, 0, 64, 64 },
-  },
+static int subsample[5][5][9] = {
+	{
+		{ 64, 64, 0, 64, 64, 0, 0, 0, 0, },
+		{ 32, 96, 0, 32, 96, 0, 0, 0, 0, },
+		{ 0, 128, 0, 0, 128, 0, 0, 0, 0, },
+		{ 0, 96, 32, 0, 96, 32, 0, 0, 0, },
+		{ 0, 64, 64, 0, 64, 64, 0, 0, 0, },
+	},
+	{
+		{ 32, 32, 0, 96, 96, 0, 0, 0, 0, },
+		{ 16, 48, 0, 48, 144, 0, 0, 0, 0, },
+		{ 0, 64, 0, 0, 192, 0, 0, 0, 0, },
+		{ 0, 48, 16, 0, 144, 48, 0, 0, 0, },
+		{ 0, 32, 32, 0, 96, 96, 0, 0, 0, },
+	},
+	{
+		{ 0, 0, 0, 128, 128, 0, 0, 0, 0, },
+		{ 0, 0, 0, 64, 192, 0, 0, 0, 0, },
+		{ 0, 0, 0, 0, 256, 0, 0, 0, 0, },
+		{ 0, 0, 0, 0, 192, 64, 0, 0, 0, },
+		{ 0, 0, 0, 0, 128, 128, 0, 0, 0, },
+	},
+	{
+		{ 0, 0, 0, 96, 96, 0, 32, 32, 0, },
+		{ 0, 0, 0, 48, 144, 0, 16, 48, 0, },
+		{ 0, 0, 0, 0, 192, 0, 0, 64, 0, },
+		{ 0, 0, 0, 0, 144, 48, 0, 48, 16, },
+		{ 0, 0, 0, 0, 96, 96, 0, 32, 32, },
+	},
+	{
+		{ 0, 0, 0, 64, 64, 0, 64, 64, 0, },
+		{ 0, 0, 0, 32, 96, 0, 32, 96, 0, },
+		{ 0, 0, 0, 0, 128, 0, 0, 128, 0, },
+		{ 0, 0, 0, 0, 96, 32, 0, 96, 32, },
+		{ 0, 0, 0, 0, 64, 64, 0, 64, 64, },
+	},
 };
 
 void
@@ -329,6 +336,7 @@ paint_core_new (type)
   tool->auto_snap_to = TRUE;
   tool->gdisp_ptr = NULL;
   tool->private = (void *) private;
+  tool->preserve = TRUE;
 
   tool->button_press_func = paint_core_button_press;
   tool->button_release_func = paint_core_button_release;
@@ -377,7 +385,7 @@ paint_core_init (paint_core, drawable, x, y)
   /*  Each buffer is the same size as the maximum bounds of the active brush... */
   if (!(brush = get_active_brush ()))
     {
-      warning ("No brushes available for use with this tool.");
+      g_message ("No brushes available for use with this tool.");
       return FALSE;
     }
 
@@ -687,22 +695,20 @@ paint_core_subsample_mask (mask, x, y)
   int r, s;
 
   x += (x < 0) ? mask->width : 0;
-  left = x - ((int) x);
+  left = x - floor(x) + 0.125;
   index1 = (int) (left * 4);
-  index1 = (index1 < 0) ? 0 : index1;
 
   y += (y < 0) ? mask->height : 0;
-  left = y - ((int) y);
+  left = y - floor(y) + 0.125;
   index2 = (int) (left * 4);
-  index2 = (index2 < 0) ? 0 : index2;
 
   kernel = subsample[index2][index1];
 
   if ((mask == last_brush) && kernel_brushes[index2][index1])
     return kernel_brushes[index2][index1];
   else if (mask != last_brush)
-    for (i = 0; i < 4; i++)
-      for (j = 0; j < 4; j++)
+    for (i = 0; i < 5; i++)
+      for (j = 0; j < 5; j++)
 	{
 	  if (kernel_brushes[i][j])
 	    mask_buf_free (kernel_brushes[i][j]);
@@ -893,7 +899,7 @@ paint_core_replace (paint_core, brush_mask, drawable, brush_opacity, image_opaci
 
   if (mode != INCREMENTAL)
     {
-      g_warning ("paint_core_replace only works in INCREMENTAL mode");
+      g_message ("paint_core_replace only works in INCREMENTAL mode");
       return;
     }
 
@@ -907,8 +913,8 @@ paint_core_replace (paint_core, brush_mask, drawable, brush_opacity, image_opaci
 
   maskPR.bytes = 1;
   maskPR.x = 0; maskPR.y = 0;
-  maskPR.w = srcPR.w;
-  maskPR.h = srcPR.h;
+  maskPR.w = canvas_buf->width;
+  maskPR.h = canvas_buf->height;
   maskPR.rowstride = maskPR.bytes * brush_mask->width;
   maskPR.data = mask_buf_data (brush_mask);
   
@@ -994,6 +1000,14 @@ paint_to_canvas_buf (paint_core, brush_mask, brush_opacity)
      int brush_opacity;
 {
   PixelRegion srcPR, maskPR;
+  int x, y;
+  int xoff, yoff;
+
+  x = (int) paint_core->curx - (brush_mask->width >> 1);
+  y = (int) paint_core->cury - (brush_mask->height >> 1);
+  xoff = (x < 0) ? -x : 0;
+  yoff = (y < 0) ? -y : 0;
+
 
   /*  combine the canvas buf and the brush mask to the canvas buf  */
   srcPR.bytes = canvas_buf->bytes;
@@ -1008,7 +1022,7 @@ paint_to_canvas_buf (paint_core, brush_mask, brush_opacity)
   maskPR.w = srcPR.w;
   maskPR.h = srcPR.h;
   maskPR.rowstride = maskPR.bytes * brush_mask->width;
-  maskPR.data = mask_buf_data (brush_mask);
+  maskPR.data = mask_buf_data (brush_mask) + yoff * maskPR.rowstride + xoff * maskPR.bytes;
 
   /*  apply the mask  */
   apply_mask_to_region (&srcPR, &maskPR, brush_opacity);

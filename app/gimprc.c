@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <stdio.h>
@@ -84,6 +84,7 @@ char *    palette_path = NULL;
 char *    default_palette = NULL;
 char *    gradient_path = NULL;
 char *    default_gradient = NULL;
+char *    pluginrc_path = NULL;
 int       tile_cache_size = 4194304;  /* 4 MB */
 int       marching_speed = 150;   /* 150 ms */
 double    gamma_val = 1.0;
@@ -176,6 +177,7 @@ static ParseFunc funcs[] =
   { "plug-in-path",          TT_PATH,       &plug_in_path, NULL },
   { "palette-path",          TT_PATH,       &palette_path, NULL },
   { "gradient-path",         TT_PATH,       &gradient_path, NULL },
+  { "pluginrc-path",         TT_PATH,       &pluginrc_path, NULL },
   { "default-brush",         TT_STRING,     &default_brush, NULL },
   { "default-pattern",       TT_STRING,     &default_pattern, NULL },
   { "default-palette",       TT_STRING,     &default_palette, NULL },
@@ -251,7 +253,7 @@ gimp_directory ()
 	      gimp_dir[len_env_home_dir] = '/';
 	    }
 	  else
-	    g_warning ("No home directory.");
+	    g_message ("warning: no home directory.");
 
 	  strncpy (&gimp_dir[len_env_home_dir+1],
 		   env_gimp_dir,
@@ -266,7 +268,7 @@ gimp_directory ()
 	  gimp_dir[len_env_home_dir] = '/';
 	}
       else
-	g_warning ("No home directory.");
+	g_message ("warning: no home directory.");
 
       strncpy (&gimp_dir[len_env_home_dir+1],
 	       GIMPDIR,
@@ -323,7 +325,7 @@ parse_gimprc_file (char *filename)
   if (!parse_info.fp)
     return;
 
-  if (be_verbose == TRUE)
+  if ((be_verbose == TRUE) || (no_splash == TRUE))
     g_print ("parsing \"%s\"\n", filename);
 
   cur_token = -1;
@@ -387,8 +389,7 @@ save_gimprc (GList **updated_options,
   error_msg = open_backup_file (name, &fp_new, &fp_old);
   if (error_msg != NULL)
     {
-      /* FIXME: show the error in a nice dialog box */
-      g_warning (error_msg);
+      g_message (error_msg);
       return;
     }
 
@@ -1059,7 +1060,7 @@ parse_plug_in_def (gpointer val1p,
   return OK;
 
 error:
-  g_warning ("error parsing pluginrc");
+  g_message ("error parsing pluginrc");
   tmp_list = plug_in_def->proc_defs;
   while (tmp_list)
     {
@@ -1353,10 +1354,13 @@ transform_path (char *path,
   char *tmp;
   char *tmp2;
   int  substituted;
+  int  is_env;
+  UnknownToken *ut;
 
   home = getenv ("HOME");
   length = 0;
   substituted = FALSE;
+  is_env = FALSE;
 
   tmp = path;
   while (*tmp)
@@ -1383,9 +1387,36 @@ transform_path (char *path,
 	  *tmp = '\0';
 
 	  tmp2 = gimprc_find_token (token);
+	  if (tmp2 == NULL) 
+	    {
+	      /* maybe token is an environment variable */
+	      tmp2 = getenv (token);
+	      if (tmp2 != NULL)
+		{
+		  is_env = TRUE;
+		}
+	      else
+		{
+		  terminate("gimprc token referenced but not defined: %s", token);
+		}
+	    }
 	  tmp2 = transform_path (tmp2, FALSE);
-	  gimprc_set_token (token, tmp2);
-
+	  if (is_env)
+	    {
+	      /* then add to list of unknown tokens */
+	      /* but only if it isn't already in list */
+	      if (gimprc_find_token (token) == NULL)
+		{
+		  ut = g_new (UnknownToken, 1);
+		  ut->token = g_strdup (token);
+		  ut->value = g_strdup (tmp2);
+		  unknown_tokens = g_list_append (unknown_tokens, ut);
+		}
+	    }
+	  else
+	    {
+	      gimprc_set_token (token, tmp2);
+	    }
 	  length += strlen (tmp2);
 
 	  *tmp = '}';

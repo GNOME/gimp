@@ -13,13 +13,12 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #ifndef __GDISPLAY_OPS_H__
 #define __GDISPLAY_OPS_H__
 
 #include "gdisplay.h"
-#include "temp_buf.h"
 
 gulong  gdisplay_black_pixel  (GDisplay *);
 gulong  gdisplay_gray_pixel   (GDisplay *);

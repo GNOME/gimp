@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
 /* This tool is based on a paper from SIGGRAPH '95
@@ -37,6 +37,14 @@
 #include "paint_funcs.h"
 #include "rect_select.h"
 #include "temp_buf.h"
+#include "tools.h"
+
+#ifndef M_PI
+#define M_PI    3.14159265358979323846
+#endif /* M_PI */
+#ifndef M_PI_4
+#define M_PI_4  0.78539816339744830962
+#endif /* M_PI_4 */
 
 /*  local structures  */
 
@@ -49,6 +57,7 @@ struct _IScissorsOptions
   double feather_radius;
   double resolution;
   double threshold;
+  double elasticity;
 };
 
 typedef struct _kink Kink;
@@ -145,9 +154,6 @@ static Point *     pts = NULL;
 static int         max_pts = 0;
 
 /*  boundary resolution variables  */
-static int         resolution = 20;     /* in pixels */
-static int         threshold  = 15;     /* in intensity */
-static double      elasticity = 0.30;   /* between 0.0 -> 1.0 */
 static double      kink_thres = 0.33;   /* between 0.0 -> 1.0 */
 static double      std_dev    = 1.0;    /* in pixels */
 static int         miss_thres = 4;      /* in intensity */
@@ -185,7 +191,7 @@ static IScissorsOptions *iscissors_options = NULL;
 
 /*  Local function prototypes  */
 
-static void   selection_to_bezier	    (GtkWidget* , gpointer);
+static void   selection_to_bezier	(GtkWidget* , gpointer);
 
 static void   iscissors_button_press    (Tool *, GdkEventButton *, gpointer);
 static void   iscissors_button_release  (Tool *, GdkEventButton *, gpointer);
@@ -275,15 +281,15 @@ selection_to_bezier(GtkWidget *w, gpointer none)
 	bezierify_boundary (last_tool);
     }
    return;
-};
+}
 
 static IScissorsOptions *
 iscissors_selection_options (void)
 {
   IScissorsOptions *options;
   GtkWidget *vbox;
-  GtkWidget *hbox;
   GtkWidget *label;
+  GtkWidget *hbox;
   GtkWidget *antialias_toggle;
   GtkWidget *feather_toggle;
   GtkWidget *feather_scale;
@@ -303,7 +309,8 @@ iscissors_selection_options (void)
   options->feather_radius = 10.0;
   options->resolution = 40.0;
   options->threshold = 15.0;
-  
+  options->elasticity = 0.30;
+
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
 
@@ -315,6 +322,8 @@ iscissors_selection_options (void)
 
   /*  the antialias toggle button  */
   antialias_toggle = gtk_check_button_new_with_label ("Antialiasing");
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON(antialias_toggle),
+			       options->antialias);
   gtk_box_pack_start (GTK_BOX (vbox), antialias_toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (antialias_toggle), "toggled",
 		      (GtkSignalFunc) selection_toggle_update,
@@ -323,6 +332,8 @@ iscissors_selection_options (void)
 
   /*  the feather toggle button  */
   feather_toggle = gtk_check_button_new_with_label ("Feather");
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON(feather_toggle),
+			       options->feather);
   gtk_box_pack_start (GTK_BOX (vbox), feather_toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (feather_toggle), "toggled",
 		      (GtkSignalFunc) selection_toggle_update,
@@ -337,7 +348,8 @@ iscissors_selection_options (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  feather_scale_data = gtk_adjustment_new (10.0, 0.0, 100.0, 1.0, 1.0, 0.0);
+  feather_scale_data = gtk_adjustment_new (options->feather_radius,
+					   0.0, 100.0, 1.0, 1.0, 0.0);
   feather_scale = gtk_hscale_new (GTK_ADJUSTMENT (feather_scale_data));
   gtk_box_pack_start (GTK_BOX (hbox), feather_scale, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (feather_scale), GTK_POS_TOP);
@@ -356,7 +368,8 @@ iscissors_selection_options (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  resolution_scale_data = gtk_adjustment_new (4.0, 1.0, 200.0, 1.0, 1.0, 0.0);
+  resolution_scale_data = gtk_adjustment_new (options->resolution,
+					      1.0, 200.0, 1.0, 1.0, 0.0);
   resolution_scale = gtk_hscale_new (GTK_ADJUSTMENT (resolution_scale_data));
   gtk_box_pack_start (GTK_BOX (hbox), resolution_scale, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (resolution_scale), GTK_POS_TOP);
@@ -375,7 +388,8 @@ iscissors_selection_options (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  threshold_scale_data = gtk_adjustment_new (15.0, 1.0, 255.0, 1.0, 1.0, 0.0);
+  threshold_scale_data = gtk_adjustment_new (options->threshold,
+					     1.0, 255.0, 1.0, 1.0, 0.0);
   threshold_scale = gtk_hscale_new (GTK_ADJUSTMENT (threshold_scale_data));
   gtk_box_pack_start (GTK_BOX (hbox), threshold_scale, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (threshold_scale), GTK_POS_TOP);
@@ -394,14 +408,15 @@ iscissors_selection_options (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  elasticity_scale_data = gtk_adjustment_new (.01, 0.0, 1.0, 0.05, 0.05, 0.0);
+  elasticity_scale_data = gtk_adjustment_new (options->elasticity,
+					      0.0, 1.0, 0.05, 0.05, 0.0);
   elasticity_scale = gtk_hscale_new (GTK_ADJUSTMENT (elasticity_scale_data));
   gtk_box_pack_start (GTK_BOX (hbox), elasticity_scale, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (elasticity_scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (elasticity_scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (elasticity_scale_data), "value_changed",
 		      (GtkSignalFunc) selection_scale_update,
-		      &elasticity);
+		      &options -> elasticity);
   gtk_widget_show (elasticity_scale);
   gtk_widget_show (hbox);
 
@@ -414,7 +429,7 @@ iscissors_selection_options (void)
 			NULL);
   gtk_widget_show (convert_button);
 
-
+  
   /*  Register this selection options widget with the main tools options dialog  */
   tools_register_options (ISCISSORS, vbox);
 
@@ -449,6 +464,8 @@ tools_new_iscissors ()
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = rect_select_cursor_update;
   tool->control_func = iscissors_control;
+  tool->auto_snap_to = 0;
+  tool->preserve = TRUE;
   
   last_tool = tool;
   
@@ -482,6 +499,7 @@ iscissors_button_press (Tool           *tool,
 			gpointer        gdisp_ptr)
 {
   GDisplay *gdisp;
+  GimpDrawable *drawable;
   Iscissors *iscissors;
   int replace, op;
   int x, y;
@@ -489,15 +507,13 @@ iscissors_button_press (Tool           *tool,
   last_tool = tool;
   gdisp = (GDisplay *) gdisp_ptr;
   iscissors = (Iscissors *) tool->private;
+  drawable = gimage_active_drawable (gdisp->gimage);
 
-  /*message_box ("Intelligent Scissors is currently not enabled\nfor use with
-  the tile-based GIMP\non anything but yosh's computer.",   NULL, NULL);*/
-  /*  return;*/
-  
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
-			       &iscissors->x, &iscissors->y, FALSE, TRUE);
+			       &iscissors->x, &iscissors->y, FALSE, TRUE); 
 
   /*  If the tool was being used in another image...reset it  */
+
   if (tool->state == ACTIVE && gdisp_ptr != tool->gdisp_ptr)
     {
       draw_core_stop (iscissors->core, tool);
@@ -536,8 +552,8 @@ iscissors_button_press (Tool           *tool,
       /*  If the edge map blocks haven't been allocated, do so now  */
       if (!edge_map_blocks)
 	allocate_edge_map_blocks (BLOCK_WIDTH, BLOCK_HEIGHT,
-				  gdisp->gimage->width,
-				  gdisp->gimage->height);
+				  drawable_width(drawable),
+				  drawable_height(drawable));
 				  
       iscissors->num_segs = 0;
 	x = bevent->x;
@@ -628,7 +644,6 @@ iscissors_button_release (Tool           *tool,
 	  /*  Add one additional segment  */
 	  add_segment (&(iscissors->num_segs), segs[0].x1, segs[0].y1);
 
-
 	  if (iscissors->num_segs >= 3)
 	    {
 	      /*  Find the boundary  */
@@ -667,12 +682,14 @@ iscissors_motion (Tool           *tool,
   gdisp = (GDisplay *) gdisp_ptr;
   iscissors = (Iscissors *) tool->private;
 
+  
   switch (iscissors->state)
     {
     case FREE_SELECT_MODE:
     	x = mevent->x;
 	y = mevent->y;
       if (add_segment (&(iscissors->num_segs), x, y))
+	
 	gdk_draw_segments (iscissors->core->win, iscissors->core->gc,
 			   segs + (iscissors->num_segs - 1), 1);
       break;
@@ -731,8 +748,12 @@ iscissors_draw_CR (GDisplay  *gdisp,
   double d, d2, d3;
   int lastx, lasty;
   int newx, newy;
+  /* int tx, ty; */
   int index;
   int i;
+
+  GimpDrawable *drawable;
+  drawable = gimage_active_drawable (gdisp->gimage);
 
   /* construct the geometry matrix from the segment */
   /* assumes that a valid segment containing 4 points is passed in */
@@ -750,10 +771,11 @@ iscissors_draw_CR (GDisplay  *gdisp,
 	  geometry[i][1] = pts[indices[i]].dy * SUPERSAMPLE;
 	  break;
 	case SCREEN_COORDS:
-	  gdisplay_transform_coords_f (gdisp, (int) pts[indices[i]].dx,
-				       (int) pts[indices[i]].dy, &x, &y, TRUE);
+	  gdisplay_transform_coords_f(gdisp, (int) pts[indices[i]].dx, 
+			  (int) pts[indices[i]].dy, &x, &y, TRUE);
 	  geometry[i][0] = x;
 	  geometry[i][1] = y;
+	  /*g_print("%f %f\n", x, y);*/
 	  break;
 	}
       geometry[i][2] = 0;
@@ -819,10 +841,17 @@ iscissors_draw_CR (GDisplay  *gdisp,
       if ((lastx != newx) || (lasty != newy))
 	{
 	  /* add the point to the point buffer */
+		      	  
+	  /*gdisplay_transform_coords (gdisp, newx, newy, &tx, &ty,1 );*/
+	  /*drawable_offsets(drawable, &tx, &ty);
+	  tx += newx;
+	  ty += newy;*/
+	  
 	  gdk_points[index].x = newx;
 	  gdk_points[index].y = newy;
-	  index++;
 
+
+	  index++;
 	  /* if the point buffer is full put it to the screen and zero it out */
 	  if (index >= npoints)
 	    {
@@ -950,6 +979,7 @@ add_segment (int *num_segs,
 
   return 1;
 }
+
 
 static int
 add_point (int    *num_pts,
@@ -1162,6 +1192,7 @@ find_edge_xy (TempBuf *edge_buf,
   int d11, d12, d21, d22;
   unsigned char * data;
   int b;
+  int threshold = (int) iscissors_options->threshold;
 
   bytes = edge_buf->bytes;
   rowstride = bytes * edge_buf->width;
@@ -1224,6 +1255,7 @@ find_edge_xy (TempBuf *edge_buf,
 static void
 find_boundary (Tool *tool)
 {
+  
   /*  Find directional changes  */
   shape_of_boundary (tool);
 
@@ -1268,6 +1300,7 @@ shape_of_boundary (Tool *tool)
   double weight;
   int left, right;
   int i, j;
+  int resolution = (int) iscissors_options->resolution;
   /* int x, y; */
 
   /*  This function determines the kinkiness at each point in the
@@ -1289,19 +1322,19 @@ shape_of_boundary (Tool *tool)
 
   for (i = 0,j=0; i < iscissors->num_kinks; i++)
     {
+	/* untransform coords */
+     gdisplay_untransform_coords (gdisp, segs[i].x1, segs[i].y1,
+		       &kinks[j].x, &kinks[j].y, FALSE, TRUE);
+	    
+/*	   
       kinks[j].x = segs[i].x1;
       kinks[j].y = segs[i].y1;
+*/
       
-      /*  transform from screen to image coordinates  */
-      /*gdisplay_untransform_coords (gdisp, kinks[j].x, kinks[j].y,
-				   &x, &y, FALSE, TRUE);*/
-
-      kinks[j].x = BOUNDS (kinks[j].x, 0, (gdisp->gimage->width - 1));
-      kinks[j].y = BOUNDS (kinks[j].y, 0, (gdisp->gimage->height - 1));
 	if(j) {
-	   if((kinks[i].x != kinks[j-1].x) || (kinks[j].y != kinks[j-1].y))
+	   if((kinks[j].x != kinks[j-1].x) || (kinks[j].y != kinks[j-1].y))
 		++j;
-	} else ++j;
+	} else j++;
     }
 
   iscissors->num_kinks = j;
@@ -1372,19 +1405,20 @@ process_kinks (Tool *tool)
   Kink * kinks, * k_left, * k_right;
   /* int x, y; */
   int i;
+  GimpDrawable *drawable;
+
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
+  drawable = gimage_active_drawable (gdisp->gimage);
   iscissors = (Iscissors *) tool->private;
   kinks = iscissors->kinks;
 
   for (i = 0; i < iscissors->num_kinks; i++)
     {
-       /* transform from screen to image coordinates  */
-      /*gdisplay_untransform_coords (gdisp, kinks[i].x, kinks[i].y,
-				   &x, &y, FALSE, TRUE); */
 
-      kinks[i].x = BOUNDS (kinks[i].x, 0, (gdisp->gimage->width - 1));
-      kinks[i].y = BOUNDS (kinks[i].y, 0, (gdisp->gimage->height - 1));
+      /*FIXME*/
+      kinks[i].x = BOUNDS (kinks[i].x, 0, (drawable_width(drawable) - 1));
+      kinks[i].y = BOUNDS (kinks[i].y, 0, (drawable_height(drawable) - 1));
 
       /*  get local maximums  */
       k_left = get_kink (kinks, i-1, iscissors->num_kinks);
@@ -1408,6 +1442,7 @@ initial_boundary (Tool *tool)
   double x, y;
   double dist;
   double res;
+  double i_resolution = 1.0 / iscissors_options->resolution;
   int i, n, this, next, k;
   int num_pts = 0;
 
@@ -1435,7 +1470,7 @@ initial_boundary (Tool *tool)
 	  /*  Find the number of segments that should be created
 	   *  to fill the void
 	   */
-	  n = (int) (dist / resolution);
+	  n = (int) (dist * i_resolution);
 	  res = dist / (double) (n + 1);
 
 	  add_point (&num_pts, 1, kinks[this].x, kinks[this].y, kinks[this].normal);
@@ -1463,26 +1498,29 @@ edge_map_from_boundary (Tool *tool)
   int x, y, w, h;
   int x1, y1, x2, y2;
   int i;
+  GimpDrawable *drawable;
 
+  
   gdisp = (GDisplay *) tool->gdisp_ptr;
+  drawable = gimage_active_drawable (gdisp->gimage);
   iscissors = (Iscissors *) tool->private;
 
   x = y = w = h = x1 = y1 = x2 = y2 = 0;
   
-  x1 = gdisp->gimage->width;
-  y1 = gdisp->gimage->height;
+  x1 = drawable_width(drawable);
+  y1 = drawable_height(drawable);
 
   /*  Find the edge map extents  */
   for (i = 0; i < iscissors->num_pts; i++)
     {
       x = BOUNDS (pts[i].x - LOCALIZE_RADIUS, 0,
-		  gdisp->gimage->width);
+		  drawable_width(drawable));
       y = BOUNDS (pts[i].y - LOCALIZE_RADIUS, 0,
-		  gdisp->gimage->height);
+		  drawable_height(drawable));
       w = BOUNDS (pts[i].x + LOCALIZE_RADIUS, 0,
-		  gdisp->gimage->width);
+		  drawable_width(drawable));
       h = BOUNDS (pts[i].y + LOCALIZE_RADIUS, 0,
-		  gdisp->gimage->height);
+		  drawable_height(drawable));
 		  
       w -= x;
       h -= y;
@@ -1644,6 +1682,7 @@ localize_boundary (Tool *tool)
   double edge[EDGE_WIDTH];
   int i, left, right;
   int moved = 0;
+  double elasticity = iscissors_options->elasticity + 1.0;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   iscissors = (Iscissors *) tool->private;
@@ -1675,7 +1714,7 @@ localize_boundary (Tool *tool)
 
 	  dx = pts[left].dx - pts[right].dx;
 	  dy = pts[left].dy - pts[right].dy;
-	  max = (sqrt (SQR (dx) + SQR (dy)) / 2.0) * (1.0 + elasticity);
+	  max = (sqrt (SQR (dx) + SQR (dy)) / 2.0) * elasticity;
 
 	  /*  If moving the point along it's directional vector
 	   *  still satisfies the elasticity constraints (OR)
@@ -1717,11 +1756,12 @@ post_process_boundary (Tool *tool)
    */
   for (i = 0; i < iscissors->num_pts; i++)
     {
-      pts[i].x = BOUNDS (pts[i].x, 0, (gdisp->gimage->width - 1));
+/*   iff you uncomment this, change it to use the drawable width&height
+   pts[i].x = BOUNDS (pts[i].x, 0, (gdisp->gimage->width - 1));
       pts[i].y = BOUNDS (pts[i].y, 0, (gdisp->gimage->height - 1));
       pts[i].dx = BOUNDS (pts[i].dx, 0, (gdisp->gimage->width - 1));
       pts[i].dy = BOUNDS (pts[i].dy, 0, (gdisp->gimage->height - 1));
-   
+*/   
       if (pts[i].dir == 0 || pts[i].stable == 0)
 	{
 	  left = (i == 0) ? iscissors->num_pts - 1 : i - 1;
@@ -1751,20 +1791,24 @@ bezierify_boundary (Tool *tool)
   BezierPoint * new_pt;
   BezierPoint * last_pt;
   int indices[4];
-  int i, j;
+  int i, j, off_x, off_y;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   iscissors = (Iscissors *) tool->private;
+  draw_core_stop (iscissors->core, tool);
 
   if (iscissors->num_pts < 4)
     {
-      message_box ("Boundary contains < 4 points!  Cannot bezierify.", NULL, NULL);
+      g_message ("Boundary contains < 4 points!  Cannot bezierify.");
       return;
     }
 
   bez_pts = NULL;
   last_pt = NULL;
 
+  drawable_offsets (GIMP_DRAWABLE (gdisp->gimage->active_layer),
+		      &off_x, &off_y);
+    
   for (i = 0; i < iscissors->num_pts; i ++)
     {
       indices[0] = (i < 3) ? (iscissors->num_pts + i - 3) : (i - 3);
@@ -1774,8 +1818,8 @@ bezierify_boundary (Tool *tool)
 
       for (j = 0; j < 4; j++)
 	{
-	  geometry[j][0] = pts[indices[j]].dx;
-	  geometry[j][1] = pts[indices[j]].dy;
+	  geometry[j][0] = pts[indices[j]].dx + off_x;
+	  geometry[j][1] = pts[indices[j]].dy + off_y;
 
 	  geometry[j][2] = 0;
 	  geometry[j][3] = 0;
@@ -1841,10 +1885,10 @@ calculate_edge_map (GImage *gimage,
   edge_map = temp_buf_new (w, h, EDGE_WIDTH, x, y, NULL);
 
   /*  calculate the extent of the search make a 1 pixel border */
-  x1 = BOUNDS (x, 0, gimage->width);
-  y1 = BOUNDS (y, 0, gimage->height);
-  x2 = BOUNDS (x + w, 0, gimage->width);
-  y2 = BOUNDS (y + h, 0, gimage->height);
+  x1 = BOUNDS (x, 0, drawable_width(drawable));
+  y1 = BOUNDS (y, 0, drawable_height(drawable));
+  x2 = BOUNDS (x + w, 0, drawable_width(drawable));
+  y2 = BOUNDS (y + h, 0, drawable_height(drawable));
 
   width = x2 - x1;
   height = y2 - y1;
@@ -1861,10 +1905,16 @@ calculate_edge_map (GImage *gimage,
   pixel_region_init(&srcPR, drawable_data(drawable), x1, y1, width, height, 1);
 
   /*  Get the horizontal derivative  */
-  destPR.data = conv1 + MAX_CHANNELS * (CONV_WIDTH * offy + offx);
+  destPR.data = conv1 /*+ MAX_CHANNELS * (CONV_WIDTH * offy + offx)*/;
   destPR.rowstride = CONV_WIDTH * MAX_CHANNELS;
   destPR.tiles = NULL;
-
+  destPR.bytes = MAX_CHANNELS;
+  destPR.x = x1;
+  destPR.y = y1;
+  destPR.w = CONV_WIDTH;
+  destPR.h = CONV_HEIGHT;
+  destPR.dirty = 1;
+  
   for (pr =pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
     gaussian_deriv (&srcPR, &destPR, HORIZONTAL, std_dev);
 
@@ -1976,13 +2026,15 @@ construct_edge_map (Tool    *tool,
   long dboffset;
    
   PixelRegion srcPR, destPR;
-  /* FILE *dump; */
-
+/*#define ISCISSORS_STILL_DOES_NOT_WORK */
+#ifdef ISCISSORS_STILL_DOES_NOT_WORK
+   FILE *dump; 
+#endif
   /*  init some variables  */
   srcPR.bytes = edge_buf->bytes;
   destPR.rowstride = edge_buf->bytes * edge_buf->width;
-  destPR.x = edge_buf->x;
-  destPR.y = edge_buf->y;
+  destPR.x = 0 /*edge_buf->x*/;
+  destPR.y = 0 /*edge_buf->y*/;
   destPR.h = edge_buf->height;
   destPR.w = edge_buf->width;
   destPR.bytes = edge_buf->bytes;
@@ -2050,8 +2102,9 @@ construct_edge_map (Tool    *tool,
 	   printf("bdata:%d edata:%d\n", block->data, edge_buf->data);
 	   if((dboffset + (srcPR.h*destPR.rowstride)) > (edge_buf->height * edge_buf -> width)) printf ("ERROR\n");
 	   */
-	   
-	  copy_region (&srcPR, &destPR);
+	   if(!((dboffset + (srcPR.h*destPR.rowstride)) >
+		(edge_buf->height * edge_buf -> width)))
+	     copy_region (&srcPR, &destPR);
 	  }
 
 	col ++;
@@ -2062,14 +2115,16 @@ construct_edge_map (Tool    *tool,
       row ++;
       y = row * BLOCK_HEIGHT;
     }
-
+    
+#ifdef ISCISSORS_STILL_DOES_NOT_WORK
+    
   /*  dump the edge buffer for debugging*/
 
-   /*dump=fopen("dump", "w"); 
+   dump=fopen("dump", "w"); 
    fprintf(dump, "P5\n%d %d\n255\n", edge_buf->width, edge_buf->height); 
    fwrite(edge_buf->data, edge_buf->width * edge_buf->height, sizeof (guchar), dump); 
-   fclose (dump);*/
-
+   fclose (dump);
+#endif
 }
 
 
@@ -2090,12 +2145,14 @@ set_edge_map_blocks (void *gimage_ptr,
   int x2, y2;
   int row, col;
   int width, height;
+  GimpDrawable *drawable;
 
   width = height = 0;
 
   gimage = (GImage *) gimage_ptr;
-  width = gimage->width;
-  height = gimage->height;
+  drawable = gimage_active_drawable (gimage);
+  width = drawable_width(drawable);
+  height = drawable_height(drawable);
 
   startx = x;
   endx = x + w;
@@ -2492,9 +2549,12 @@ CR_convert (Iscissors *iscissors,
   int *vals, val;
   int x, w;
   int i, j;
+  int offx, offy;
   PixelRegion maskPR;
   unsigned char *buf, *b;
-
+  GimpDrawable *drawable;
+  
+  drawable = gimage_active_drawable(gdisp->gimage);
   vals = NULL;
 
   /* destroy previous region */
@@ -2546,11 +2606,12 @@ CR_convert (Iscissors *iscissors,
       iscissors_draw_CR (gdisp, iscissors, pts, indices, draw_type);
     }
 
+  drawable_offsets(drawable, &offx, &offy);
   pixel_region_init (&maskPR, iscissors->mask->drawable.tiles, 0, 0,
 		     iscissors->mask->drawable.width,
 		     iscissors->mask->drawable.height, TRUE);
 
-  for (i = 0; i < height; i++)
+  for (i = 0; i < height-(offy*SUPERSAMPLE); i++)
     {
       list = CR_scanlines[i];
 
@@ -2560,7 +2621,7 @@ CR_convert (Iscissors *iscissors,
 
       while (list)
         {
-          x = (long) list->data;
+          x = (long) list->data + offx;
           if ( x < 0 ) x = 0;
           
           list = list->next;
@@ -2571,7 +2632,7 @@ CR_convert (Iscissors *iscissors,
 		  if (w+x > width) w = width - x;
 		  
 	      if (!antialias)
-		 channel_add_segment (iscissors->mask, x, i, w, 255);
+		 channel_add_segment (iscissors->mask, x, i+offy, w, 255);
 	      else
 		for (j = 0; j < w; j++)
 		  vals[j + x] += 255;
@@ -2591,7 +2652,7 @@ CR_convert (Iscissors *iscissors,
 
 	      *b++ = (unsigned char) (val / SUPERSAMPLE2);
 	    }
-	  pixel_region_set_row (&maskPR, 0, (i / SUPERSAMPLE), iscissors->mask->drawable.width, buf);
+	  pixel_region_set_row (&maskPR, offx/*0*/, (i / SUPERSAMPLE)+offy, iscissors->mask->drawable.width-offx, buf);
 	}
 
       g_slist_free (CR_scanlines[i]);

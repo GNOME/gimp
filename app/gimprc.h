@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #ifndef __GIMPRC_H__
 #define __GIMPRC_H__
@@ -33,6 +33,7 @@ extern char *    palette_path;
 extern char *    default_palette;
 extern char *    gradient_path;
 extern char *    default_gradient;
+extern char *    pluginrc_path;
 extern int       tile_cache_size;
 extern int       marching_speed;
 extern double    gamma_val;

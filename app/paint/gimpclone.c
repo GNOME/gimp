@@ -13,11 +13,10 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <string.h>
-
 #include "appenv.h"
 #include "brushes.h"
 #include "canvas.h"
@@ -34,6 +33,7 @@
 #include "procedural_db.h"
 #include "tools.h"
 
+
 #define INTENSITY(r,g,b) (r * 0.30 + g * 0.59 + b * 0.11 + 0.001)
 
 #define TARGET_HEIGHT  15
@@ -47,10 +47,9 @@ typedef enum
 
 /*  forward function declarations  */
 static void         clone_draw            (Tool *);
-static void         clone_motion          (PaintCore16 *, GimpDrawable *, GimpDrawable *, CloneType, int, int);
-static void         clone_line_pattern    (GImage *, GimpDrawable *, GPatternP, unsigned char *,
-					   int, int, int, int);
-
+static void         clone_motion          (PaintCore *, GimpDrawable *, GimpDrawable *, CloneType, int, int);
+static int          clone_line_image    (PaintCore *, Canvas *, GimpDrawable *, GimpDrawable *, int, int);
+static int          clone_line_pattern  (PaintCore *, Canvas *, GimpDrawable *, GPatternP, int, int);
 static Argument *   clone_invoker         (Argument *);
 
 
@@ -1376,7 +1375,7 @@ create_clone_options (void)
 }
 
 void *
-clone_paint_func (PaintCore16 *paint_core,
+clone_paint_func (PaintCore *paint_core,
 		  GimpDrawable *drawable,
 		  int        state)
 {
@@ -1438,7 +1437,7 @@ clone_paint_func (PaintCore16 *paint_core,
 
       if (clone_options->type == PatternClone)
 	if (!get_active_pattern ())
-	  message_box ("No patterns available for this operation.", NULL, NULL);
+	  g_message ("No patterns available for this operation.");
       break;
 
     case FINISH_PAINT :
@@ -1476,14 +1475,14 @@ Tool *
 tools_new_clone ()
 {
   Tool * tool;
-  PaintCore16 * private;
+  PaintCore * private;
 
   if (! clone_options)
     clone_options = create_clone_options ();
 
-  tool = paint_core_16_new (CLONE);
+  tool = paint_core_new (CLONE);
 
-  private = (PaintCore16 *) tool->private;
+  private = (PaintCore *) tool->private;
   private->paint_func = clone_paint_func;
   private->core->draw_func = clone_draw;
 
@@ -1493,15 +1492,15 @@ tools_new_clone ()
 void
 tools_free_clone (Tool *tool)
 {
-  paint_core_16_free (tool);
+  paint_core_free (tool);
 }
 
 static void
 clone_draw (Tool *tool)
 {
-  PaintCore16 * paint_core;
+  PaintCore * paint_core;
 
-  paint_core = (PaintCore16 *) tool->private;
+  paint_core = (PaintCore *) tool->private;
 
   if (clone_options->type == ImageClone)
     {
@@ -1516,9 +1515,55 @@ clone_draw (Tool *tool)
 
 
 
+static void 
+clone_motion  (
+               PaintCore * paint_core,
+               GimpDrawable * drawable,
+               GimpDrawable * src_drawable,
+               CloneType type,
+               int offset_x,
+               int offset_y
+               )
+{
+  Canvas * painthit = paint_core_16_area (paint_core, drawable);
+  int rc = FALSE;
+
+  if (painthit)
+    {
+      switch (type)
+        {
+        case ImageClone:
+          {
+            rc = clone_line_image (paint_core, painthit,
+                                     drawable, src_drawable,
+                                     paint_core->x + offset_x,
+                                     paint_core->y + offset_y);
+          }
+          break;
+        case PatternClone:
+          {
+            GPatternP pattern;
+            if ((pattern = get_active_pattern ()))
+              rc = clone_line_pattern (paint_core, painthit,
+                                         drawable, pattern,
+                                         paint_core->x + offset_x,
+                                         paint_core->y + offset_y);
+          }
+          break;
+        }
+      
+      if (rc == TRUE)
+        paint_core_16_area_paste (paint_core, drawable,
+                                  1.0, (gfloat) get_brush_opacity (),
+                                  SOFT, CONSTANT,
+                                  get_brush_paint_mode ());
+    }
+}
+
+
 static int 
-clone_motion_image  (
-                     PaintCore16 * paint_core,
+clone_line_image  (
+                     PaintCore * paint_core,
                      Canvas * painthit,
                      GimpDrawable * drawable,
                      GimpDrawable * src_drawable,
@@ -1584,8 +1629,8 @@ clone_motion_image  (
 
 
 static int 
-clone_motion_pattern  (
-                       PaintCore16 * paint_core,
+clone_line_pattern  (
+                       PaintCore * paint_core,
                        Canvas * painthit,
                        GimpDrawable * drawable,
                        GPatternP pattern,
@@ -1685,95 +1730,8 @@ clone_motion_pattern  (
 }
 
 
-static void 
-clone_motion  (
-               PaintCore16 * paint_core,
-               GimpDrawable * drawable,
-               GimpDrawable * src_drawable,
-               CloneType type,
-               int offset_x,
-               int offset_y
-               )
-{
-  Canvas * painthit = paint_core_16_area (paint_core, drawable);
-  int rc = FALSE;
-
-  if (painthit)
-    {
-      switch (type)
-        {
-        case ImageClone:
-          {
-            rc = clone_motion_image (paint_core, painthit,
-                                     drawable, src_drawable,
-                                     paint_core->x + offset_x,
-                                     paint_core->y + offset_y);
-          }
-          break;
-        case PatternClone:
-          {
-            GPatternP pattern;
-            if ((pattern = get_active_pattern ()))
-              rc = clone_motion_pattern (paint_core, painthit,
-                                         drawable, pattern,
-                                         paint_core->x + offset_x,
-                                         paint_core->y + offset_y);
-          }
-          break;
-        }
-      
-      if (rc == TRUE)
-        paint_core_16_area_paste (paint_core, drawable,
-                                  1.0, (gfloat) get_brush_opacity (),
-                                  SOFT, CONSTANT,
-                                  get_brush_paint_mode ());
-    }
-}
-
-
-static void
-clone_line_pattern (GImage        *dest,
-		    GimpDrawable  *drawable,
-		    GPatternP      pattern,
-		    unsigned char *d,
-		    int            x,
-		    int            y,
-		    int            bytes,
-		    int            width)
-{
-#if 0
-  unsigned char *pat, *p;
-  int color, alpha;
-  int i;
-
-  /*  Make sure x, y are positive  */
-  while (x < 0)
-    x += pattern->mask->width;
-  while (y < 0)
-    y += pattern->mask->height;
-
-  /*  Get a pointer to the appropriate scanline of the pattern buffer  */
-  pat = temp_buf_data (pattern->mask) +
-    (y % pattern->mask->height) * pattern->mask->width * pattern->mask->bytes;
-  color = (pattern->mask->bytes == 3) ? RGB : GRAY;
-
-  alpha = bytes - 1;
-
-  for (i = 0; i < width; i++)
-    {
-      p = pat + ((i + x) % pattern->mask->width) * pattern->mask->bytes;
-
-      gimage_transform_color (dest, drawable, p, d, color);
-
-      d[alpha] = OPAQUE_OPACITY;
-
-      d += bytes;
-    }
-#endif
-}
-
 static void *
-clone_non_gui_paint_func (PaintCore16 *paint_core,
+clone_non_gui_paint_func (PaintCore *paint_core,
 			  GimpDrawable *drawable,
 			  int        state)
 {
@@ -1919,39 +1877,39 @@ clone_invoker (Argument *args)
 
   if (success)
     /*  init the paint core  */
-    success = paint_core_16_init (&non_gui_paint_core_16, drawable,
-                                  stroke_array[0], stroke_array[1]);
+    success = paint_core_init (&non_gui_paint_core, drawable,
+			       stroke_array[0], stroke_array[1]);
 
   if (success)
     {
       /*  set the paint core's paint func  */
-      non_gui_paint_core_16.paint_func = clone_non_gui_paint_func;
+      non_gui_paint_core.paint_func = clone_non_gui_paint_func;
 
-      non_gui_paint_core_16.startx = non_gui_paint_core_16.lastx = stroke_array[0];
-      non_gui_paint_core_16.starty = non_gui_paint_core_16.lasty = stroke_array[1];
+      non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
+      non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
 
-      non_gui_offset_x = (int) (src_x - non_gui_paint_core_16.startx);
-      non_gui_offset_y = (int) (src_y - non_gui_paint_core_16.starty);
+      non_gui_offset_x = (int) (src_x - non_gui_paint_core.startx);
+      non_gui_offset_y = (int) (src_y - non_gui_paint_core.starty);
 
       if (num_strokes == 1)
-	clone_non_gui_paint_func (&non_gui_paint_core_16, drawable, 0);
+	clone_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
 
       for (i = 1; i < num_strokes; i++)
 	{
-	  non_gui_paint_core_16.curx = stroke_array[i * 2 + 0];
-	  non_gui_paint_core_16.cury = stroke_array[i * 2 + 1];
+	  non_gui_paint_core.curx = stroke_array[i * 2 + 0];
+	  non_gui_paint_core.cury = stroke_array[i * 2 + 1];
 
-	  paint_core_16_interpolate (&non_gui_paint_core_16, drawable);
+	  paint_core_interpolate (&non_gui_paint_core, drawable);
 
-	  non_gui_paint_core_16.lastx = non_gui_paint_core_16.curx;
-	  non_gui_paint_core_16.lasty = non_gui_paint_core_16.cury;
+	  non_gui_paint_core.lastx = non_gui_paint_core.curx;
+	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
 	}
 
       /*  finish the painting  */
-      paint_core_16_finish (&non_gui_paint_core_16, drawable, -1);
+      paint_core_finish (&non_gui_paint_core, drawable, -1);
 
       /*  cleanup  */
-      paint_core_16_cleanup ();
+      paint_core_cleanup ();
     }
 
   return procedural_db_return_args (&clone_proc, success);

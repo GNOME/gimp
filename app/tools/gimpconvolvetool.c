@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <stdio.h>
@@ -24,10 +24,8 @@
 #include "errors.h"
 #include "convolve.h"
 #include "gdisplay.h"
-#include "paint_funcs.h"
 #include "paint_funcs_area.h"
 #include "paint_core_16.h"
-#include "paint_core.h"
 #include "palette.h"
 #include "pixelarea.h"
 #include "selection.h"
@@ -45,8 +43,8 @@ static void         calculate_matrix     (ConvolveType, double);
 static void         integer_matrix       (float *, int *, int, int);
 static void         copy_matrix          (float *, float *, int);
 static int          sum_matrix           (int *, int);
-static void        *convolve_non_gui_paint_func (PaintCore16 *, GimpDrawable *, int);
-static void         convolve_motion      (PaintCore16 *, GimpDrawable *);
+static void        *convolve_non_gui_paint_func (PaintCore *, GimpDrawable *, int);
+static void         convolve_motion      (PaintCore *, GimpDrawable *);
 static Argument *   convolve_invoker     (Argument *);
 
 #define FIELD_COLS    4
@@ -190,7 +188,7 @@ create_convolve_options (void)
 }
 
 void *
-convolve_paint_func (PaintCore16 *paint_core,
+convolve_paint_func (PaintCore *paint_core,
 		     GimpDrawable *drawable,
 		     int        state)
 {
@@ -216,19 +214,18 @@ Tool *
 tools_new_convolve ()
 {
   Tool * tool;
-  PaintCore16 * private;
+  PaintCore * private;
 
   if (! convolve_options)
     convolve_options = create_convolve_options ();
 
-  tool = paint_core_16_new (CONVOLVE);
+  tool = paint_core_new (CONVOLVE);
 
-  private = (PaintCore16 *) tool->private;
+  private = (PaintCore *) tool->private;
   private->paint_func = convolve_paint_func;
 
   return tool;
 }
-
 
 void
 tools_free_convolve (Tool *tool)
@@ -236,19 +233,16 @@ tools_free_convolve (Tool *tool)
   paint_core_free (tool);
 }
 
-
 static void
-convolve_motion (
-		 PaintCore16 *paint_core,
-	         GimpDrawable *drawable
-		)
+convolve_motion (PaintCore *paint_core,
+		 GimpDrawable *drawable)
 {
   GImage *gimage;
   Tag tag = drawable_tag (drawable);
   Canvas *painthit_canvas; 
   PixelArea src_area, painthit_area;
 
-  if ( !(gimage = drawable_gimage (drawable)) )
+  if (! (gimage = drawable_gimage (drawable)))
     return;
 
   if ( tag_format (tag) == FORMAT_INDEXED )
@@ -393,7 +387,7 @@ sum_matrix (int *matrix,
 
 
 static void *
-convolve_non_gui_paint_func (PaintCore16 *paint_core,
+convolve_non_gui_paint_func (PaintCore *paint_core,
 			     GimpDrawable *drawable,
 			     int        state)
 {
@@ -527,7 +521,7 @@ convolve_invoker (Argument *args)
 
   if (success)
     /*  init the paint core  */
-    success = paint_core_16_init (&non_gui_paint_core_16, drawable,
+    success = paint_core_init (&non_gui_paint_core, drawable,
 			       stroke_array[0], stroke_array[1]);
 
   if (success)
@@ -536,30 +530,30 @@ convolve_invoker (Argument *args)
       calculate_matrix (type, pressure);
 
       /*  set the paint core's paint func  */
-      non_gui_paint_core_16.paint_func = (PaintFunc16)convolve_non_gui_paint_func;
+      non_gui_paint_core.paint_func = (PaintFunc16)convolve_non_gui_paint_func;
 
-      non_gui_paint_core_16.startx = non_gui_paint_core_16.lastx = stroke_array[0];
-      non_gui_paint_core_16.starty = non_gui_paint_core_16.lasty = stroke_array[1];
+      non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
+      non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
 
       if (num_strokes == 1)
-	convolve_non_gui_paint_func (&non_gui_paint_core_16, drawable, 0);
+	convolve_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
 
       for (i = 1; i < num_strokes; i++)
 	{
-	  non_gui_paint_core_16.curx = stroke_array[i * 2 + 0];
-	  non_gui_paint_core_16.cury = stroke_array[i * 2 + 1];
+	  non_gui_paint_core.curx = stroke_array[i * 2 + 0];
+	  non_gui_paint_core.cury = stroke_array[i * 2 + 1];
 
-	  paint_core_16_interpolate (&non_gui_paint_core_16, drawable);
+	  paint_core_interpolate (&non_gui_paint_core, drawable);
 
-	  non_gui_paint_core_16.lastx = non_gui_paint_core_16.curx;
-	  non_gui_paint_core_16.lasty = non_gui_paint_core_16.cury;
+	  non_gui_paint_core.lastx = non_gui_paint_core.curx;
+	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
 	}
 
       /*  finish the painting  */
-      paint_core_16_finish (&non_gui_paint_core_16, drawable, -1);
+      paint_core_finish (&non_gui_paint_core, drawable, -1);
 
       /*  cleanup  */
-      paint_core_16_cleanup ();
+      paint_core_cleanup ();
     }
 
   return procedural_db_return_args (&convolve_proc, success);

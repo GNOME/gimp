@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #ifndef __GIMAGE_MASK_H__
 #define __GIMAGE_MASK_H__
@@ -30,8 +30,7 @@ void            gimage_mask_invalidate    (GImage *);
 int             gimage_mask_value         (GImage *, int, int);
 int             gimage_mask_is_empty      (GImage *);
 void            gimage_mask_translate     (GImage *, int, int);
-TileManager *   gimage_mask_extract       (GImage *, GimpDrawable *, int, int);
-struct _Canvas      *   gimage_mask_extract_canvas(GImage *, GimpDrawable *, int, int);
+struct _Canvas * gimage_mask_extract      (GImage *, GimpDrawable *, int, int);
 Layer *         gimage_mask_float         (GImage *, GimpDrawable *, int, int);
 void            gimage_mask_clear         (GImage *);
 void            gimage_mask_undo          (GImage *);

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include "appenv.h"
@@ -254,7 +254,7 @@ create_bucket_options (void)
 }
 
 
-void
+static void
 bucket_fill_button_press (tool, bevent, gdisp_ptr)
      Tool *tool;
      GdkEventButton *bevent;
@@ -284,7 +284,7 @@ bucket_fill_button_press (tool, bevent, gdisp_ptr)
 }
 
 
-void
+static void
 bucket_fill_button_release (tool, bevent, gdisp_ptr)
      Tool *tool;
      GdkEventButton *bevent;
@@ -327,7 +327,7 @@ bucket_fill_button_release (tool, bevent, gdisp_ptr)
       if (return_vals[0].value.pdb_int == PDB_SUCCESS)
 	gdisplays_flush ();
       else
-	message_box ("Bucket Fill operation failed.", NULL, NULL);
+	g_message ("Bucket Fill operation failed.");
 
       procedural_db_destroy_args (return_vals, nreturn_vals);
     }
@@ -424,7 +424,7 @@ bucket_fill (gimage, drawable, fill_mode, paint_mode,
 
       if (!pattern)
 	{
-	  message_box ("No available patterns for this operation.", NULL, NULL);
+	  g_message ("No available patterns for this operation.");
 	  return;
 	}
 
@@ -673,6 +673,7 @@ tools_new_bucket_fill ()
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = bucket_fill_cursor_update;
   tool->control_func = bucket_fill_control;
+  tool->preserve = TRUE;
 
   return tool;
 }

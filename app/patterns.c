@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <stdio.h>
@@ -60,7 +60,7 @@ static gint         pattern_compare_func     (gpointer, gpointer);
 
 /*  function declarations  */
 void
-patterns_init ()
+patterns_init (int no_data)
 {
   GSList *list;
 
@@ -72,8 +72,8 @@ patterns_init ()
 
   if (!pattern_path)
     return;
-
-  datafiles_read_directories (pattern_path, load_pattern, 0);
+  if(!no_data)
+    datafiles_read_directories (pattern_path, load_pattern, 0);
 
   /*  assign indexes to the loaded patterns  */
 
@@ -213,10 +213,10 @@ load_pattern (char *filename)
 
     }
   /*  Check for correct version  */
-  else if (header.version != FILE_VERSION)
+  if (header.version != FILE_VERSION)
     {
-      warning ("Unknown GIMP version #%d in \"%s\"\n", header.version,
-	       filename);
+      g_message ("Unknown GIMP version #%d in \"%s\"\n", header.version,
+		 filename);
       fclose (fp);
       free_pattern (pattern);
       return;
@@ -244,7 +244,7 @@ load_pattern (char *filename)
       pattern->name = (char *) g_malloc (sizeof (char) * bn_size);
       if ((fread (pattern->name, 1, bn_size, fp)) < bn_size)
 	{
-	  warning ("Error in GIMP pattern file...aborting.");
+	  g_message ("Error in GIMP pattern file...aborting.");
 	  fclose (fp);
 	  free_pattern (pattern);
 	  return;
@@ -262,7 +262,7 @@ load_pattern (char *filename)
   bytes = tag_bytes (tag); 
   if ((fread (canvas_portion_data (pattern->mask_canvas,0,0), 1, header.width * header.height * bytes, fp)) <
       header.width * header.height * bytes)
-    warning ("GIMP pattern file appears to be truncated.");
+    g_message ("GIMP pattern file appears to be truncated.");
   
   canvas_portion_unref (pattern->mask_canvas,0,0); 
   /*  Clean up  */

@@ -13,14 +13,14 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
 #include <sys/types.h>
-#include <regex.h>
+#include "regex.h"
 #include "appenv.h"
 #include "app_procs.h"
 #include "general.h"
@@ -580,7 +580,7 @@ procedural_db_execute (gchar    *name,
 	      return_args->arg_type = PDB_STATUS;
 	      return_args->value.pdb_int = PDB_CALLING_ERROR;
 
-	      g_warning ("PDB calling error %s", procedure->name);
+	      g_message ("PDB calling error %s", procedure->name);
 
 	      return return_args;
 	    }
@@ -656,7 +656,7 @@ procedural_db_run_proc (gchar *name,
     {
       if (proc->args[i].arg_type != (params[i].arg_type = va_arg (args, PDBArgType)))
 	{
-	  g_warning ("Incorrect arguments passed to procedural_db_run_proc");
+	  g_message ("Incorrect arguments passed to procedural_db_run_proc");
 	  g_free (params);
 	  return NULL;
 	}
@@ -1069,6 +1069,14 @@ procedural_db_query (Argument *args)
   pdb_query.num_procs = 0;
 
   g_hash_table_foreach (procedural_ht, procedural_db_query_entry, &pdb_query);
+
+  free (pdb_query.name_regex.buffer);
+  free (pdb_query.blurb_regex.buffer);
+  free (pdb_query.help_regex.buffer);
+  free (pdb_query.author_regex.buffer);
+  free (pdb_query.copyright_regex.buffer);
+  free (pdb_query.date_regex.buffer);
+  free (pdb_query.proc_type_regex.buffer);
 
   return_args = procedural_db_return_args (&procedural_db_query_proc, TRUE);
 

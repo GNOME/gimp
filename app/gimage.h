@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #ifndef __GIMAGE_H__
 #define __GIMAGE_H__
@@ -22,7 +22,6 @@
 #include "drawable.h"
 #include "channel.h"
 #include "layer.h"
-#include "paint_funcs.h"
 #include "tag.h"
 #include "temp_buf.h"
 #include "tile_manager.h"
@@ -56,7 +55,7 @@ struct _Canvas;
 #define FLOAT_GRAY_GIMAGE         14 
 #define FLOAT_GRAYA_GIMAGE        15 
 
-#define TYPE_HAS_ALPHA(t)  ((t)==RGBA_GIMAGE || (t)==GRAYA_GIMAGE || (t)==INDEXEDA_GIMAGE) 
+#define TYPE_HAS_ALPHA(t)  ((t)==RGBA_GIMAGE || (t)==GRAYA_GIMAGE || (t)==INDEXEDA_GIMAGE)
 
 #define GRAY_PIX         0
 #define ALPHA_G_PIX      1
@@ -83,6 +82,7 @@ struct _Canvas;
 #define WHITE_FILL       1
 #define TRANSPARENT_FILL 2
 #define NO_FILL          3
+#define FOREGROUND_FILL  4
 
 #define COLORMAP_SIZE    768
 
@@ -114,6 +114,7 @@ typedef struct _GImage GImage;
 
 struct _Guide
 {
+  int ref_count;
   int position;
   int orientation;
 };
@@ -199,18 +200,14 @@ void            gimage_free_shadow            (GImage *);
 void            gimage_free_shadow_canvas     (GImage *);
 void            gimage_delete                 (GImage *);
 
-void            gimage_apply_image            (GImage *, GimpDrawable *,
-                                               PixelRegion *, int, int, int,
-					       TileManager *, int, int);
+void            gimage_apply_image            ();
 void            gimage_apply_painthit         (GImage *, GimpDrawable *,
                                                struct _Canvas *,
                                                struct _PixelArea *,
                                                int undo,
                                                gfloat, int mode,
                                                int x, int y);
-void            gimage_replace_image          (GImage *, GimpDrawable *,
-                                               PixelRegion *, int, int,
-					       PixelRegion *, int, int);
+void            gimage_replace_image          ();
 void            gimage_replace_painthit       (GImage *, GimpDrawable *,
                                                struct _Canvas *, int undo,
                                                gfloat, struct _Canvas *,

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <string.h>
@@ -225,6 +225,10 @@ threshold_button_press (Tool           *tool,
 			GdkEventButton *bevent,
 			gpointer        gdisp_ptr)
 {
+  GDisplay *gdisp;
+
+  gdisp = gdisp_ptr;
+  tool->drawable = gimage_active_drawable (gdisp->gimage);
 }
 
 static void
@@ -270,7 +274,9 @@ threshold_control (Tool     *tool,
     case HALT :
       if (threshold_dialog)
 	{
+	  active_tool->preserve = TRUE;
 	  image_map_abort (threshold_dialog->image_map);
+	  active_tool->preserve = FALSE;
 	  threshold_dialog->image_map = NULL;
 	  threshold_cancel_callback (NULL, (gpointer) threshold_dialog);
 	}
@@ -309,6 +315,7 @@ tools_new_threshold ()
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = threshold_cursor_update;
   tool->control_func = threshold_control;
+  tool->preserve = FALSE;
 
   return tool;
 }
@@ -322,7 +329,7 @@ tools_free_threshold (Tool *tool)
 
   /*  Close the color select dialog  */
   if (threshold_dialog)
-    threshold_ok_callback (NULL, (gpointer) threshold_dialog);
+    threshold_cancel_callback (NULL, (gpointer) threshold_dialog);
 
   g_free (thresh);
 }
@@ -336,7 +343,7 @@ threshold_initialize (void *gdisp_ptr)
 
   if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
     {
-      message_box ("Threshold does not operate on indexed drawables.", NULL, NULL);
+      g_message ("Threshold does not operate on indexed drawables.");
       return;
     }
 
@@ -373,7 +380,7 @@ static ActionAreaItem action_items[] =
   { "Cancel", threshold_cancel_callback, NULL, NULL }
 };
 
-ThresholdDialog *
+static ThresholdDialog *
 threshold_new_dialog ()
 {
   ThresholdDialog *td;
@@ -481,7 +488,7 @@ static void
 threshold_preview (ThresholdDialog *td)
 {
   if (!td->image_map)
-    g_warning ("No image map");
+    g_message ("threshold_preview(): No image map");
   image_map_apply (td->image_map, threshold, (void *) td);
 }
 
@@ -496,11 +503,14 @@ threshold_ok_callback (GtkWidget *widget,
   if (GTK_WIDGET_VISIBLE (td->shell))
     gtk_widget_hide (td->shell);
 
+  active_tool->preserve = TRUE;
+
   if (!td->preview)
     image_map_apply (td->image_map, threshold, (void *) td);
-
   if (td->image_map)
     image_map_commit (td->image_map);
+
+  active_tool->preserve = FALSE;
 
   td->image_map = NULL;
 }
@@ -512,7 +522,7 @@ threshold_delete_callback (GtkWidget *w,
 {
   threshold_cancel_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -527,7 +537,9 @@ threshold_cancel_callback (GtkWidget *widget,
 
   if (td->image_map)
     {
+      active_tool->preserve = TRUE;
       image_map_abort (td->image_map);
+      active_tool->preserve = FALSE;
       gdisplays_flush ();
     }
 

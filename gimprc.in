@@ -1,3 +1,7 @@
+# This is the system-wide gimprc file.  Any change made in this file
+# will affect all users of this system, provided that they are not
+# overriding the default values in their personal gimprc file.
+#
 # Lines that start with a '#' are comments.
 # Blank lines are ignored.
 
@@ -47,7 +51,7 @@
 
 # Set the palette search path...this path will be searched for valid
 #  palettes at startup.
-(palette-path "${gimp_dir}/palettes:${gimp_data_dir}/palettes")
+(palette-path "${gimp_dir}/palettes")
 
 # Specify a default palette.
 #  The pattern is searched for in the specified pattern paths.
@@ -153,6 +157,8 @@
 (ruler-units pixels)
 
 # Disable auto saving
+#  Auto saving is not yet implemented! Nothing will be auto-saved, no matter
+#  how you set this here.  
 #  Just uncomment the line below...
 # (dont-auto-save)
 
@@ -198,7 +204,7 @@
 (transparency-size 2)
 
 # gfig pattern directory
-(gfig-path "${gimp_dir}/gfig")
+(gfig-path "${gimp_dir}/gfig:${gimp_data_dir}/gfig")
 
 # path for gflare flares directory
 (gflare-path "${gimp_dir}/gflares:${gimp_data_dir}/gflares")

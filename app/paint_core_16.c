@@ -36,9 +36,6 @@
 #include "tools.h"
 #include "undo.h"
 
-/* for brush_mask derefs */
-#include "temp_buf.h"
-
 #define    SQR(x) ((x) * (x))
 
 /*  global variables--for use in the various paint tools  */
@@ -90,7 +87,7 @@ static Canvas *  orig_buf = NULL;
 
 /* ------------------------------------------------------------------------
 
-   PaintCore Frontend
+   PaintCore16 Frontend
 
 */
 Tool * 
@@ -165,7 +162,7 @@ paint_core_16_init  (
   /* get the brush mask */
   if (!(brush = get_active_brush ()))
     {
-      warning ("No brushes available for use with this tool.");
+      g_message ("No brushes available for use with this tool.");
       return FALSE;
     }
  
@@ -572,7 +569,7 @@ paint_core_16_no_draw  (
 
 /* ------------------------------------------------------------------------
 
-   PaintCore Backend
+   PaintCore16 Backend
 
 */
 Canvas * 
@@ -1129,7 +1126,6 @@ brush_mask_solidify  (
   static Canvas * last_brush  = NULL;
   Precision prec = tag_precision (canvas_tag (brush_mask));  
 
-  int i, j;
   unsigned char * data, * src;
 
   if (brush_mask == last_brush)

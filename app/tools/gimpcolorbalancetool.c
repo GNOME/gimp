@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
 #include <string.h>
@@ -449,14 +449,18 @@ gdouble f2_u8(
   return 0.667 * (1 - SQR ((x - 127.0) / 127.0));
 }
 
+/*  by_color select action functions  */
 
 static void
 color_balance_button_press (Tool           *tool,
 			    GdkEventButton *bevent,
 			    gpointer        gdisp_ptr)
 {
-}
+  GDisplay *gdisp;
 
+  gdisp = gdisp_ptr;
+  tool->drawable = gimage_active_drawable (gdisp->gimage);
+}
 
 static void
 color_balance_button_release (Tool           *tool,
@@ -501,8 +505,10 @@ color_balance_control (Tool     *tool,
     case HALT :
       if (color_balance_dialog)
 	{
-	  image_map_abort_16 (color_balance_dialog->image_map);
-	  color_balance_free_transfer_arrays();
+          active_tool->preserve = TRUE;
+          image_map_abort_16 (color_balance_dialog->image_map);
+	  active_tool->preserve = FALSE;
+          color_balance_free_transfer_arrays();
 	  color_balance_dialog->image_map = NULL;
 	  color_balance_cancel_callback (NULL, (gpointer) color_balance_dialog);
 	}
@@ -534,6 +540,9 @@ tools_new_color_balance ()
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = color_balance_cursor_update;
   tool->control_func = color_balance_control;
+  tool->preserve = FALSE;
+  tool->gdisp_ptr = NULL;
+  tool->drawable = NULL;
 
   return tool;
 }
@@ -547,9 +556,7 @@ tools_free_color_balance (Tool *tool)
 
   /*  Close the color select dialog  */
   if (color_balance_dialog)
-  {
-    color_balance_ok_callback (NULL, (gpointer) color_balance_dialog);
-  }
+    color_balance_cancel_callback (NULL, (gpointer) color_balance_dialog);
 
   g_free (color_bal);
 }
@@ -565,7 +572,7 @@ color_balance_initialize (void *gdisp_ptr)
 
   if (! drawable_color (gimage_active_drawable (gdisp->gimage)))
     {
-      message_box ("Color balance operates only on RGB color drawables.", NULL, NULL);
+      g_message ("Color balance operates only on RGB color drawables.");
       return;
     }
 
@@ -597,6 +604,7 @@ color_balance_initialize (void *gdisp_ptr)
   color_balance_update (color_balance_dialog, ALL);
 }
 
+
 /****************************/
 /*  Color Balance dialog  */
 /****************************/
@@ -608,7 +616,7 @@ static ActionAreaItem action_items[] =
   { "Cancel", color_balance_cancel_callback, NULL, NULL }
 };
 
-ColorBalanceDialog *
+static ColorBalanceDialog *
 color_balance_new_dialog ()
 {
   ColorBalanceDialog *cbd;
@@ -873,8 +881,10 @@ static void
 color_balance_preview (ColorBalanceDialog *cbd)
 {
   if (!cbd->image_map)
-    g_warning ("No image map");
+    g_message ("color_balance_preview(): No image map");
+  active_tool->preserve = TRUE;
   image_map_apply_16 (cbd->image_map, color_balance, (void *) cbd);
+  active_tool->preserve = FALSE;
 }
 
 static void
@@ -887,6 +897,8 @@ color_balance_ok_callback (GtkWidget *widget,
 
   if (GTK_WIDGET_VISIBLE (cbd->shell))
     gtk_widget_hide (cbd->shell);
+  
+  active_tool->preserve = TRUE;
 
   if (!cbd->preview)
     image_map_apply_16 (cbd->image_map, color_balance, (void *) cbd);
@@ -896,7 +908,9 @@ color_balance_ok_callback (GtkWidget *widget,
     image_map_commit_16 (cbd->image_map);
     color_balance_free_transfer_arrays();
   }
-  
+
+  active_tool->preserve = FALSE;
+
   cbd->image_map = NULL;
 }
 
@@ -906,7 +920,8 @@ color_balance_delete_callback (GtkWidget *w,
 			       gpointer client_data)
 {
   color_balance_cancel_callback (w, client_data);
-  return FALSE;
+
+  return TRUE;
 }
 
 static void
@@ -921,10 +936,13 @@ color_balance_cancel_callback (GtkWidget *widget,
 
   if (cbd->image_map)
     {
+      active_tool->preserve = TRUE;
       image_map_abort_16 (cbd->image_map);
+      active_tool->preserve = FALSE;
       color_balance_free_transfer_arrays();
       gdisplays_flush ();
     }
+
   cbd->image_map = NULL;
 }
 
