@@ -28,6 +28,9 @@ Revision history for Gimp-Perl extension.
         - skip t/run when no DISPLAY set.
         - modernize parasite-editor to use Gimp::basewidget.
         - modified all custom widgets to work with the next Gtk release.
+        - added examples/gap-vcr
+        - applied Kevon Cozens patch to scm2scm. That's a great start, I
+          should really add the rest of the function names.
 
 1.17  Wed Nov 24 21:25:19 CET 1999
         - re-fitted i18n translation for most plug-ins.

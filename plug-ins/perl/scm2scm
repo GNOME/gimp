@@ -1,8 +1,5 @@
 #!/usr/bin/perl
 
-eval 'exec /usr/bin/perl  -S $0 ${1+"$@"}'
-    if 0; # not running under some shell
-
 use 5.005;
 
 $VERSION = 1.0;
@@ -70,6 +67,15 @@ gimp(1), L<Gimp>.
 
 =cut
 
+# Fixes names of functions by swapping last two parts of the name
+# eg. gimp-image-disable-undo becomes gimp-image-undo-disable
+# Whitespace is preserved(!)
+sub swap_last_two {
+  my($a,$f,$t1,$t2,@t)=@_;
+  $f->[1] =~ s/(\w+)-(\w+)-(\w+)-(\w+)/$1-$2-$4-$3/;
+  ($a,$f,new token($t1->[0],$t1->[1],$t2->[1]),@t);
+}
+
 # drop the first argument, while preserving correct whitespace(!)
 sub drop_1st {
   my($a,$f,$t1,$t2,@t)=@_;
@@ -89,7 +95,8 @@ sub plug_in_constant {
 # name)
 %translation = (
    'api1' =>
-      [[
+      [
+       [
         "^(gimp-airbrush|gimp-blend|gimp-brightness-contrast|gimp-bucket-fill|".
         "gimp-by-color-select|gimp-channel-ops-offset|gimp-clone|gimp-color-balance|".
         "gimp-color-picker|gimp-convolve|gimp-curves-explicit|gimp-curves-spline|".
@@ -101,11 +108,17 @@ sub plug_in_constant {
         "gimp-rotate|gimp-scale|gimp-selection-float|gimp-selection-layer-alpha|".
         "gimp-selection-load|gimp-shear|gimp-threshold)\$",
         \&drop_1st
-      ]],
+       ]
+      ],
    'api2' => [[
-      ]],
-   '1.1' => ['nice','api1'],
-   '1.2' => ['nice','api1'],
+      [
+       [
+        "^(gimp-image-disable-undo|gimp-image-enable-undo)\$",
+        \&swap_last_two
+       }
+      ],
+   '1.1' => ['nice','api1','api2'],
+   '1.2' => ['nice','api1','api2'],
    'nice'=> [],#["^(plug-in-|file-|gimp-file-)", \&plug_in_constant]],
 );
 
