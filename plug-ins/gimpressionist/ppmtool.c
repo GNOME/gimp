@@ -13,6 +13,8 @@
 #include <math.h>
 #include "ppmtool.h"
 #include "gimpressionist.h"
+#include <errno.h>
+#include "libgimp/stdplugins-intl.h"
 
 int readline(FILE *f, char *buffer, int len)
 {
@@ -490,9 +492,15 @@ void pad(struct ppm *p, int left,int right, int top, int bottom, guchar *bg)
 void saveppm(struct ppm *p, char *fn)
 {
   FILE *f = fopen(fn, "wb");
-  fprintf(f, "P6\n%d %d\n255\n", p->width, p->height);
-  fwrite(p->col, p->width * 3 * p->height, 1, f);
-  fclose(f);
+  if (f != NULL)
+    {
+      fprintf(f, "P6\n%d %d\n255\n", p->width, p->height);
+      fwrite(p->col, p->width * 3 * p->height, 1, f);
+      fclose(f);
+    }
+  else
+    g_message (_("GIMPressionist:\nFailed to save PPM file '%s':\n%s"),
+	       fn, g_strerror (errno));
 }
 
 void edgepad(struct ppm *p, int left,int right, int top, int bottom)
