@@ -865,6 +865,9 @@ data/gradients/Makefile
 data/palettes/Makefile
 data/patterns/Makefile
 Makefile
+build/Makefile
+build/win32/Makefile
+build/win32/dirent/Makefile
 po/Makefile.in
 po-libgimp/Makefile.in
 plug-ins/perl/po/Makefile.in
