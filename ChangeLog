@@ -1,6 +1,8 @@
-Tue Sep  7 02:09:31 MEST 1999  Sven Neumann <sven@gimp.org>
+Tue Sep  7 02:17:02 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/gimpcontextpreview.c: return FALSE in event_handlers.
+	* app/tools: Shame on me! Of course a tool should have a unique
+	ID number -- bad copy&paste bug!
 
 Tue Sep  7 02:03:18 MEST 1999  Sven Neumann <sven@gimp.org>
 
