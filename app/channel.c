@@ -238,7 +238,7 @@ channel_get_name (Channel *channel)
 
 void 
 channel_set_color (Channel *channel,
-		   guchar   *color)
+		   guchar  *color)
 {
   gint i;
 
@@ -315,7 +315,7 @@ gimp_channel_destroy (GtkObject *object)
  * particular layer. */
 void
 channel_removed (Channel  *channel,
-		 gpointer  image)
+		 gpointer  data)
 {
   g_return_if_fail (channel != NULL);
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
@@ -592,9 +592,10 @@ channel_get_tattoo (const Channel *channel)
 }
 
 void
-channel_set_tattoo (const Channel *channel, Tattoo val)
+channel_set_tattoo (const Channel *channel, 
+		    Tattoo         value)
 {
-  gimp_drawable_set_tattoo(GIMP_DRAWABLE (channel),val);
+  gimp_drawable_set_tattoo (GIMP_DRAWABLE (channel), value);
 }
 
 /******************************/
@@ -602,7 +603,7 @@ channel_set_tattoo (const Channel *channel, Tattoo val)
 /******************************/
 
 Channel *
-channel_new_mask (GimpImage* gimage,
+channel_new_mask (GimpImage *gimage,
 		  gint       width,
 		  gint       height)
 {
@@ -731,9 +732,9 @@ channel_bounds (Channel *mask,
   guchar *data, *data1;
   gint x, y;
   gint ex, ey;
-  void *pr;
   gint tx1, tx2, ty1, ty2;
   gint minx, maxx;
+  gpointer pr;
 
   /*  if the mask's bounds have already been reliably calculated...  */
   if (mask->bounds_known)
@@ -840,7 +841,7 @@ channel_is_empty (Channel *mask)
   PixelRegion maskPR;
   guchar * data;
   gint x, y;
-  void * pr;
+  gpointer pr;
 
   if (mask->bounds_known)
     return mask->empty;
@@ -896,7 +897,7 @@ channel_add_segment (Channel *mask,
   guchar *data;
   gint val;
   gint x2;
-  void * pr;
+  gpointer pr;
 
   /*  check horizontal extents...  */
   x2 = x + width;
@@ -939,7 +940,7 @@ channel_sub_segment (Channel *mask,
   guchar *data;
   gint val;
   gint x2;
-  void * pr;
+  gpointer pr;
 
   /*  check horizontal extents...  */
   x2 = x + width;
@@ -1037,7 +1038,7 @@ channel_combine_ellipse (Channel    *mask,
 			 gint        y,
 			 gint        w,
 			 gint        h,
-			 gboolean    aa /*  antialias selection?  */)
+			 gboolean    antialias)
 {
   gint i, j;
   gint x0, x1, x2;
@@ -1066,7 +1067,7 @@ channel_combine_ellipse (Channel    *mask,
       if (i >= 0 && i < GIMP_DRAWABLE (mask)->height)
 	{
 	  /*  Non-antialiased code  */
-	  if (!aa)
+	  if (!antialias)
 	    {
 	      y_sqr = (i + 0.5 - cy) * (i + 0.5 - cy);
 	      rad = sqrt (a_sqr - a_sqr * y_sqr / (double) b_sqr);
@@ -1754,3 +1755,4 @@ channel_invalidate_bounds (Channel *channel)
 {
   channel->bounds_known = FALSE;
 }
+

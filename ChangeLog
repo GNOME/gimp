@@ -1,3 +1,32 @@
+2000-05-12  Sven Neumann  <sven@gimp.org>
+
+	* gimpdrawable.c: enabled the (commented out) signal 
+	"invalidate_preview".
+	
+	* app/layers_dialog.c: connect to the "invalidate_preview"
+	signal to catch changes that need to be shown in the layer
+	previews. Synthetize an expose event when a layer changes. 
+	
+	Expose events are optimzed away by GTK+ if the widget is not
+	visible. Therefore, previews not visible in the layers_dialog
+	are not redrawn when they invalidate. Later the preview gets
+	validated by the image_preview in lc_dialog but is never
+	propagated to the layer_pixmap. We work around this by using an
+	additional flag "layer_pixmap_valid" so that the pixmap gets
+	updated once the preview scrolls into sight.
+	
+	We should probably do the same for all drawables (masks, 
+	channels), but it is much more difficult to change one of these
+	when it's not visible.
+
+	In other words: This is an awful hack but otherwise I would have
+	had to rewrite it all....
+
+	Fixes bugs #10549, #10300 and #8787.
+
+	* app/channel.[ch]
+	* app/layer.[ch]: code review and indentation
+	
 2000-05-12  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimp.c (gimp_plugin_io_error_handler): fixed a

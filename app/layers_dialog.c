@@ -120,6 +120,9 @@ struct _LayerWidget
   gboolean   visited;
 
   GimpDropType drop_type;
+
+  gboolean   layer_pixmap_valid;
+  guint      invalidate_preview_handler;
 };
 
 /*  layers dialog widget routines  */
@@ -364,27 +367,26 @@ layers_dialog_create (void)
   gtk_box_pack_start (GTK_BOX (util_box), label, FALSE, FALSE, 2);
   gtk_widget_show (label);
 
-  layersD->mode_option_menu = gimp_option_menu_new2
-    (FALSE, paint_mode_menu_callback,
-     NULL, (gpointer) NORMAL_MODE,
-
-     _("Normal"),          (gpointer) NORMAL_MODE, NULL,
-     _("Dissolve"),        (gpointer) DISSOLVE_MODE, NULL,
-     _("Multiply (Burn)"), (gpointer) MULTIPLY_MODE, NULL,
-     _("Divide (Dodge)"),  (gpointer) DIVIDE_MODE, NULL,
-     _("Screen"),          (gpointer) SCREEN_MODE, NULL,
-     _("Overlay"),         (gpointer) OVERLAY_MODE, NULL,
-     _("Difference"),      (gpointer) DIFFERENCE_MODE, NULL,
-     _("Addition"),        (gpointer) ADDITION_MODE, NULL,
-     _("Subtract"),        (gpointer) SUBTRACT_MODE, NULL,
-     _("Darken Only"),     (gpointer) DARKEN_ONLY_MODE, NULL,
-     _("Lighten Only"),    (gpointer) LIGHTEN_ONLY_MODE, NULL,
-     _("Hue"),             (gpointer) HUE_MODE, NULL,
-     _("Saturation"),      (gpointer) SATURATION_MODE, NULL,
-     _("Color"),           (gpointer) COLOR_MODE, NULL,
-     _("Value"),           (gpointer) VALUE_MODE, NULL,
-
-    NULL);
+  layersD->mode_option_menu = 
+    gimp_option_menu_new2 (FALSE, paint_mode_menu_callback,
+			   NULL, (gpointer) NORMAL_MODE,
+			   _("Normal"),          (gpointer) NORMAL_MODE,       NULL,
+			   _("Dissolve"),        (gpointer) DISSOLVE_MODE,     NULL,
+			   _("Multiply (Burn)"), (gpointer) MULTIPLY_MODE,     NULL,
+			   _("Divide (Dodge)"),  (gpointer) DIVIDE_MODE,       NULL,
+			   _("Screen"),          (gpointer) SCREEN_MODE,       NULL,
+			   _("Overlay"),         (gpointer) OVERLAY_MODE,      NULL,
+			   _("Difference"),      (gpointer) DIFFERENCE_MODE,   NULL,
+			   _("Addition"),        (gpointer) ADDITION_MODE,     NULL,
+			   _("Subtract"),        (gpointer) SUBTRACT_MODE,     NULL,
+			   _("Darken Only"),     (gpointer) DARKEN_ONLY_MODE,  NULL,
+			   _("Lighten Only"),    (gpointer) LIGHTEN_ONLY_MODE, NULL,
+			   _("Hue"),             (gpointer) HUE_MODE,          NULL,
+			   _("Saturation"),      (gpointer) SATURATION_MODE,   NULL,
+			   _("Color"),           (gpointer) COLOR_MODE,        NULL,
+			   _("Value"),           (gpointer) VALUE_MODE,        NULL,
+			   NULL);
+  
   gtk_box_pack_start (GTK_BOX (util_box), layersD->mode_option_menu,
 		      FALSE, FALSE, 2);
   gtk_widget_show (layersD->mode_option_menu);
@@ -442,7 +444,7 @@ layers_dialog_create (void)
   gtk_signal_connect (GTK_OBJECT (layersD->layer_list), "event",
 		      (GtkSignalFunc) layer_list_events, 
 		      layersD);
-  gtk_container_set_focus_vadjustment (GTK_CONTAINER (layersD->layer_list), 
+  gtk_container_set_focus_vadjustment (GTK_CONTAINER (layersD->layer_list),
 				       gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (layersD->scrolled_win)));
   GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW (layersD->scrolled_win)->vscrollbar,
 			  GTK_CAN_FOCUS);
@@ -473,7 +475,7 @@ layers_dialog_create (void)
                       GTK_SIGNAL_FUNC (layers_dialog_drag_duplicate_layer_callback),
 		      NULL);
 
-  /*  Drop to trahcan  */
+  /*  Drop to trashcan  */
   gtk_drag_dest_set (layers_ops_buttons[5].widget,
 		     GTK_DEST_DEFAULT_ALL,
                      trashcan_target_table, n_trashcan_targets,
@@ -752,7 +754,8 @@ render_preview (TempBuf   *preview_buf,
    *   the preview buf is assumed to be gray despite the number of
    *   channels it contains
    */
-  color = (preview_buf->bytes == 3 || preview_buf->bytes == 4) && (channel == -1);
+  color = (channel == -1) &&
+          (preview_buf->bytes == 3 || preview_buf->bytes == 4);
 
   if (has_alpha)
     {
@@ -1219,6 +1222,17 @@ layers_dialog_position_layer (Layer *layer,
 }
 
 static void
+invalidate_preview_callback (GtkWidget   *widget,
+			     LayerWidget *layer_widget)
+{
+  layer_widget->layer_pixmap_valid = FALSE;
+
+  /* synthesize an expose event */
+  gtk_widget_queue_draw (layer_widget->layer_preview);
+}
+
+
+static void
 layers_dialog_add_layer (Layer *layer)
 {
   LayerWidget *layer_widget;
@@ -1238,6 +1252,11 @@ layers_dialog_add_layer (Layer *layer)
   layersD->layer_widgets =
     g_slist_insert (layersD->layer_widgets, layer_widget, position);
   gtk_list_insert_items (GTK_LIST (layersD->layer_list), item_list, position);
+
+  layer_widget->invalidate_preview_handler = 
+    gtk_signal_connect (GTK_OBJECT (layer), "invalidate_pr",
+			GTK_SIGNAL_FUNC (invalidate_preview_callback),
+			(gpointer)layer_widget);
 }
 
 static void
@@ -1252,6 +1271,9 @@ layers_dialog_remove_layer (Layer *layer)
 
   /*  Make sure the gimage is not notified of this change  */
   suspend_gimage_notify++;
+
+  gtk_signal_disconnect (GTK_OBJECT (layer), 
+			 layer_widget->invalidate_preview_handler);
 
   /*  Remove the requested layer from the dialog  */
   list = g_list_append (list, layer_widget->list_item);
@@ -2025,21 +2047,22 @@ layer_widget_create (GimpImage *gimage,
 
   /*  create the layer widget and add it to the list  */
   layer_widget = g_new (LayerWidget, 1);
-  layer_widget->gimage        = gimage;
-  layer_widget->layer         = layer;
-  layer_widget->list_item     = list_item;
-  layer_widget->layer_preview = NULL;
-  layer_widget->mask_preview  = NULL;
-  layer_widget->layer_pixmap  = NULL;
-  layer_widget->mask_pixmap   = NULL;
-  layer_widget->width         = -1;
-  layer_widget->height        = -1;
-  layer_widget->layer_mask    = (layer_get_mask (layer) != NULL);
-  layer_widget->apply_mask    = layer->apply_mask;
-  layer_widget->edit_mask     = layer->edit_mask;
-  layer_widget->show_mask     = layer->show_mask;
-  layer_widget->visited       = TRUE;
-  layer_widget->drop_type     = GIMP_DROP_NONE;
+  layer_widget->gimage             = gimage;
+  layer_widget->layer              = layer;
+  layer_widget->list_item          = list_item;
+  layer_widget->layer_preview      = NULL;
+  layer_widget->mask_preview       = NULL;
+  layer_widget->layer_pixmap       = NULL;
+  layer_widget->mask_pixmap        = NULL;
+  layer_widget->width              = -1;
+  layer_widget->height             = -1;
+  layer_widget->layer_mask         = (layer_get_mask (layer) != NULL);
+  layer_widget->apply_mask         = layer->apply_mask;
+  layer_widget->edit_mask          = layer->edit_mask;
+  layer_widget->show_mask          = layer->show_mask;
+  layer_widget->visited            = TRUE;
+  layer_widget->drop_type          = GIMP_DROP_NONE;
+  layer_widget->layer_pixmap_valid = FALSE;
 
   if (layer_get_mask (layer))
     layer_widget->active_preview =
@@ -2511,7 +2534,7 @@ layer_widget_button_events (GtkWidget *widget,
   GdkEventButton *bevent;
   gint return_val;
 
-  static gboolean button_down = FALSE;
+  static gboolean   button_down  = FALSE;
   static GtkWidget *click_widget = NULL;
   static gint old_state;
   static gint exclusive;
@@ -2672,11 +2695,11 @@ layer_widget_preview_events (GtkWidget *widget,
     {
     case LAYER_PREVIEW:
       pixmap = &layer_widget->layer_pixmap;
-      valid = GIMP_DRAWABLE (layer_widget->layer)->preview_valid;
+      valid  = GIMP_DRAWABLE (layer_widget->layer)->preview_valid;
       break;
     case MASK_PREVIEW:
       pixmap = &layer_widget->mask_pixmap;
-      valid = GIMP_DRAWABLE (layer_get_mask (layer_widget->layer))->preview_valid;
+      valid  = GIMP_DRAWABLE (layer_get_mask (layer_widget->layer))->preview_valid;
       break;
     }
 
@@ -2685,7 +2708,7 @@ layer_widget_preview_events (GtkWidget *widget,
 
   switch (event->type)
     {
-    case GDK_BUTTON_PRESS:
+     case GDK_BUTTON_PRESS:
       /*  Control-button press disables the application of the mask  */
       bevent = (GdkEventButton *) event;
 
@@ -2779,17 +2802,33 @@ layer_widget_preview_events (GtkWidget *widget,
 		h = layersD->image_height - sy;
 
 	      if ((w > 0) && (h > 0))
-		gdk_draw_pixmap (widget->window,
-				 widget->style->black_gc,
-				 *pixmap,
-				 sx, sy, dx, dy, w, h);
+		{
+		  /* Expose events are optimzed away by GTK+ if the widget is not
+		     visible. Therefore, previews not visible in the layers_dialog
+		     are not redrawn when they invalidate. Later the preview gets
+		     validated by the image_preview in lc_dialog but is never
+		     propagated to the layer_pixmap. We work around this by using an
+		     additional flag "layer_pixmap_valid" so that the pixmap gets
+		     updated once the preview scrolls into sight.
+		     We should probably do the same for all drawables (masks, 
+		     channels), but it is much more difficult to change one of these
+		     when it's not visible.
+		  */
+		  if (preview_type == LAYER_PREVIEW && ! layer_widget->layer_pixmap_valid)
+		    layer_widget_preview_redraw (layer_widget, preview_type);
+
+		  gdk_draw_pixmap (widget->window,
+				   widget->style->black_gc,
+				   *pixmap,
+				   sx, sy, dx, dy, w, h);
+		}
 	    }
-	}
+	} 
 
       /*  The boundary indicating whether layer or mask is active  */
       layer_widget_boundary_redraw (layer_widget, preview_type);
       break;
-
+ 
     default:
       break;
     }
@@ -2923,6 +2962,7 @@ layer_widget_preview_redraw (LayerWidget *layer_widget,
 				       layer_widget->width,
 				       layer_widget->height);
 
+	  layer_widget->layer_pixmap_valid = TRUE;
 	  break;
 	case MASK_PREVIEW:
 	  preview_buf = layer_mask_preview (layer_widget->layer,
@@ -2942,10 +2982,11 @@ layer_widget_preview_redraw (LayerWidget *layer_widget,
 
       gtk_preview_put (GTK_PREVIEW (layersD->layer_preview),
 		       *pixmap, widget->style->black_gc,
-		       0, 0, 0, 0, layersD->image_width, layersD->image_height);
+		       0, 0, 0, 0, 
+		       layersD->image_width, layersD->image_height);
 
-      /*  make sure the image has been transfered completely to the pixmap before
-       *  we use it again...
+      /*  make sure the image has been transfered completely to the pixmap 
+       *  before we use it again...
        */
       gdk_flush ();
     }

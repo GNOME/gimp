@@ -217,10 +217,8 @@ gimp_drawable_invalidate_preview (GimpDrawable *drawable)
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
   drawable->preview_valid = FALSE;
-#if 0
   gtk_signal_emit (GTK_OBJECT (drawable),
 		   gimp_drawable_signals[INVALIDATE_PREVIEW]);
-#endif
   gimage = gimp_drawable_gimage (drawable);
   if (gimage)
     {

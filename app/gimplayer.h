@@ -71,66 +71,108 @@ struct _fs_to_layer_undo
 
 /*  function declarations  */
 
-Layer *         layer_new   (GimpImage*, gint, gint,
-			     GimpImageType,
-			     gchar *, gint,
-			     LayerModeEffects);
-Layer *         layer_copy  (Layer *, gboolean);
-Layer *		layer_ref   (Layer *);
-void   		layer_unref (Layer *);
+Layer *         layer_new   (GimpImage        *gimage,
+			     gint              width,
+			     gint              height,
+			     GimpImageType     type,
+			     gchar            *name,
+			     gint              opacity,
+			     LayerModeEffects  mode);
+Layer *         layer_copy  (Layer            *layer,
+			     gboolean          add_alpha);
+Layer *		layer_ref   (Layer            *layer);
+void   		layer_unref (Layer            *layer);
 
-Layer *         layer_new_from_tiles        (GimpImage *, GimpImageType, TileManager *,
-					     gchar *, gint, LayerModeEffects);
-LayerMask *     layer_add_mask              (Layer *, LayerMask *);
-gboolean        layer_check_scaling         (Layer *, gint, gint);
-LayerMask *     layer_create_mask           (Layer *, AddMaskType);
-Layer *         layer_get_ID                (gint);
-void            layer_delete                (Layer *);
-void            layer_removed               (Layer *, gpointer);
-void            layer_apply_mask            (Layer *, MaskApplyMode);
-void            layer_temporarily_translate (Layer *, gint, gint);
-void            layer_translate             (Layer *, gint, gint);
-void            layer_add_alpha             (Layer *);
-gboolean        layer_scale_by_factors      (Layer *, gdouble, gdouble);
-void            layer_scale                 (Layer *, gint, gint, gboolean);
-void            layer_resize                (Layer *, gint, gint, gint, gint);
-void            layer_resize_to_image       (Layer *);
-BoundSeg *      layer_boundary              (Layer *, gint *);
-void            layer_invalidate_boundary   (Layer *);
-gint            layer_pick_correlate        (Layer *, gint, gint);
+Layer *         layer_new_from_tiles        (GimpImage        *gimage,
+					     GimpImageType     layer_type,
+					     TileManager      *tiles,
+					     gchar            *name,
+					     gint              opacity,
+					     LayerModeEffects  mode);
+gboolean        layer_check_scaling         (Layer            *layer,
+					     gint              new_width,
+					     gint              new_height);
+LayerMask *     layer_create_mask           (Layer            *layer,
+					     AddMaskType       add_mask_type);
+LayerMask *     layer_add_mask              (Layer            *layer,
+					     LayerMask        *mask);
+Layer *         layer_get_ID                (gint              ID);
+void            layer_delete                (Layer            *layer);
+void            layer_removed               (Layer            *layer, 
+					     gpointer          data);
+void            layer_apply_mask            (Layer            *layer,
+					     MaskApplyMode     mode);
+void            layer_temporarily_translate (Layer            *layer,
+					     gint              off_x,
+					     gint              off_y);
+void            layer_translate             (Layer            *layer,
+					     gint              off_x,
+					     gint              off_y);
+void            layer_add_alpha             (Layer            *layer);
+gboolean        layer_scale_by_factors      (Layer            *layer, 
+					     gdouble           w_factor, 
+					     gdouble           h_factor);
+void            layer_scale                 (Layer            *layer, 
+					     gint              new_width,
+					     gint              new_height,
+					     gboolean          local_origin);
+void            layer_resize                (Layer            *layer,
+					     gint              new_width,
+					     gint              new_height,
+					     gint              offx,
+					     gint              offy);
+void            layer_resize_to_image       (Layer            *layer);
+BoundSeg *      layer_boundary              (Layer            *layer, 
+					     gint             *num_segs);
+void            layer_invalidate_boundary   (Layer           *layer);
+gint            layer_pick_correlate        (Layer           *layer, 
+					     gint             x, 
+					     gint             y);
 
-LayerMask *     layer_mask_new	     (GimpImage*, gint, gint, gchar *, 
-				      gint, guchar *);
-LayerMask *	layer_mask_copy	     (LayerMask *);
-void		layer_mask_delete    (LayerMask *);
-LayerMask *	layer_mask_get_ID    (gint);
-LayerMask *	layer_mask_ref       (LayerMask *);
-void   		layer_mask_unref     (LayerMask *);
-void            layer_mask_set_layer (LayerMask *, Layer *);
-Layer *         layer_mask_get_layer (LayerMask *);
+LayerMask *     layer_mask_new	     (GimpImage *gimage,
+				      gint       width,
+				      gint       height,
+				      gchar     *name,
+				      gint       opacity,
+				      guchar    *col);
+LayerMask *	layer_mask_copy	     (LayerMask *layer_mask);
+void		layer_mask_delete    (LayerMask *layer_mask);
+LayerMask *	layer_mask_get_ID    (gint       ID);
+LayerMask *	layer_mask_ref       (LayerMask *layer_mask);
+void   		layer_mask_unref     (LayerMask *layer_mask);
+void            layer_mask_set_layer (LayerMask *layer_mask, 
+				      Layer     *layer);
+Layer *         layer_mask_get_layer (LayerMask *layer_mask);
 
 /*  access functions  */
 
-void            layer_set_name        (Layer *, gchar *);
-gchar *         layer_get_name        (Layer *);
-guchar *        layer_data            (Layer *);
-LayerMask *     layer_get_mask        (Layer *);
-gboolean        layer_has_alpha       (Layer *);
-gboolean        layer_is_floating_sel (Layer *);
-gboolean        layer_linked          (Layer *);
-TempBuf *       layer_preview         (Layer *, gint, gint);
-TempBuf *       layer_mask_preview    (Layer *, gint, gint);
+void            layer_set_name        (Layer *layer, 
+				       gchar *name);
+gchar *         layer_get_name        (Layer *layer);
+guchar *        layer_data            (Layer *layer);
+LayerMask *     layer_get_mask        (Layer *layer);
+gboolean        layer_has_alpha       (Layer *layer);
+gboolean        layer_is_floating_sel (Layer *layer);
+gboolean        layer_linked          (Layer *layer);
+TempBuf *       layer_preview         (Layer *layer, 
+				       gint   width, 
+				       gint   height);
+TempBuf *       layer_mask_preview    (Layer *layer, 
+				       gint   width, 
+				       gint   height);
 
-void            layer_invalidate_previews (GimpImage *);
-Tattoo          layer_get_tattoo          (const Layer *);
-void            layer_set_tattoo          (const Layer *, Tattoo);
+void            layer_invalidate_previews (GimpImage   *gimage);
+Tattoo          layer_get_tattoo          (const Layer *layer);
+void            layer_set_tattoo          (const Layer *layer, 
+					   Tattoo       value);
 
 #define drawable_layer      GIMP_IS_LAYER
 #define drawable_layer_mask GIMP_IS_LAYER_MASK
 
+void            channel_layer_alpha (Channel *mask, 
+				     Layer   *layer);
 /*  from channel.c  */
-
-void            channel_layer_alpha (Channel *, Layer *);
-void            channel_layer_mask  (Channel *, Layer *);
+void            channel_layer_mask  (Channel *mask, 
+				     Layer   *layer);
 
 #endif /* __LAYER_H__ */
