@@ -1,3 +1,23 @@
+2003-01-11  Sven Neumann  <sven@gimp.org>
+
+	* app/config/Makefile.am: always build gimpconfig-dump.
+
+	* app/config/gimpconfig-params.[ch]: added an enum to specify the
+	type of path with GIMP_PARAM_SPEC_PATH.
+
+	* app/config/gimpconfig-dump.c: document the different types of
+	paths differently.
+
+	* app/config/gimpbaseconfig.c
+	* app/config/gimpcoreconfig.c
+	* app/config/gimpguiconfig.c
+	* app/config/gimppluginconfig.c: register the path types.
+
+	* etc/gimprc: generated a new system gimprc.
+
+	* plug-ins/common/tiff.c: added missing spaces in warning and
+	removed trailing newlines in strings passed to g_message().
+
 2003-01-10  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/tiff.c (load_image): fix compilation error and

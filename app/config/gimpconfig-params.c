@@ -30,6 +30,10 @@
 #include "gimpconfig-types.h"
 
 
+/*
+ * GIMP_TYPE_PARAM_COLOR
+ */
+
 #define GIMP_PARAM_SPEC_COLOR(pspec) (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_COLOR, GimpParamSpecColor))
 
 static void       gimp_param_color_class_init  (GParamSpecClass *class);
@@ -184,6 +188,10 @@ gimp_param_spec_color (const gchar   *name,
 }
 
 
+/*
+ * GIMP_TYPE_PARAM_MEMSIZE
+ */
+
 static void  gimp_param_memsize_class_init (GParamSpecClass *class);
 
 GType
@@ -239,6 +247,21 @@ gimp_param_spec_memsize (const gchar *name,
 }
 
 
+/*
+ * GIMP_TYPE_PARAM_PATH
+ */
+
+#define GIMP_PARAM_SPEC_PATH(pspec) (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_PATH, GimpParamSpecPath))
+
+typedef struct _GimpParamSpecPath GimpParamSpecPath;
+
+struct _GimpParamSpecPath
+{
+  GParamSpecString   parent_instance;
+
+  GimpParamPathType  type;
+};
+
 static void  gimp_param_path_class_init (GParamSpecClass *class);
 
 GType
@@ -254,7 +277,7 @@ gimp_param_path_get_type (void)
         NULL, NULL, 
         (GClassInitFunc) gimp_param_path_class_init, 
         NULL, NULL,
-        sizeof (GParamSpecString),
+        sizeof (GimpParamSpecPath),
         0, NULL, NULL
       };
 
@@ -273,22 +296,38 @@ gimp_param_path_class_init (GParamSpecClass *class)
 }
 
 GParamSpec *
-gimp_param_spec_path (const gchar *name,
-                      const gchar *nick,
-                      const gchar *blurb,
-                      gchar       *default_value,
-                      GParamFlags  flags)
+gimp_param_spec_path (const gchar        *name,
+                      const gchar        *nick,
+                      const gchar        *blurb,
+		      GimpParamPathType   type,
+                      gchar              *default_value,
+                      GParamFlags         flags)
 {
   GParamSpecString *pspec;
 
   pspec = g_param_spec_internal (GIMP_TYPE_PARAM_PATH,
                                  name, nick, blurb, flags);
   
-  pspec->default_value = default_value;
   
+  pspec->default_value = default_value;
+
+  GIMP_PARAM_SPEC_PATH (pspec)->type = type;
+
   return G_PARAM_SPEC (pspec);
 }
 
+GimpParamPathType
+gimp_param_spec_path_type (GParamSpec *pspec)
+{
+  g_return_val_if_fail (GIMP_IS_PARAM_SPEC_PATH (pspec), 0);
+
+  return GIMP_PARAM_SPEC_PATH (pspec)->type;
+}
+
+
+/*
+ * GIMP_TYPE_PARAM_UNIT
+ */
 
 static void      gimp_param_unit_class_init     (GParamSpecClass *class);
 static gboolean  gimp_param_unit_value_validate (GParamSpec      *pspec,

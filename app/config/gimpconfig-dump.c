@@ -127,10 +127,10 @@ dump_system_gimprc (void)
      "# By default everything in this file is commented out. The file then\n"
      "# documents the default values and shows what changes are possible.\n" 
      "\n"
-     "# The variable gimp_dir is set to either the internal value\n"
-     "# @gimpdir@ or the environment variable GIMP_DIRECTORY.  If\n"
-     "# the path in GIMP_DIRECTORY is relative, it is considered\n"
-     "# relative to your home directory.\n"
+     "# The variable ${gimp_dir} is set to the value of the environment\n"
+     "# variable GIMP_DIRECTORY or, if that is not set, the compiled-in\n"
+     "# default value is used. If GIMP_DIRECTORY is not an absolute path,\n"
+     "# it is interpreted relative to your home directory.\n"
      "\n");
 
   write (1, str->str, str->len);
@@ -208,15 +208,44 @@ dump_get_comment (GParamSpec *param_spec)
     }
   else if (g_type_is_a (type, GIMP_TYPE_PATH))
     {
-      switch (G_SEARCHPATH_SEPARATOR)
+      switch (gimp_param_spec_path_type (param_spec))
 	{
-	case ':':
-	  values = "This is a colon-separated list of directories to search.";
+	case GIMP_PARAM_PATH_FILE:
+	  values = "This is a single filename.";
 	  break;
-	case ';':
-	  values = "This is a semicolon-separated list of directories to search.";
+
+	case GIMP_PARAM_PATH_FILE_LIST:
+	  switch (G_SEARCHPATH_SEPARATOR)
+	    {
+	    case ':':
+	      values = "This is a colon-separated list of files.";
+	      break;
+	    case ';':
+	      values = "This is a semicolon-separated list of files.";
+	      break;
+	    default:
+	      g_warning ("unhandled G_SEARCHPATH_SEPARATOR value");
+	      break;
+	    }
 	  break;
-	default:
+
+	case GIMP_PARAM_PATH_DIR:
+	  values = "This is a single folder.";
+	  break;
+	  
+	case GIMP_PARAM_PATH_DIR_LIST:
+	  switch (G_SEARCHPATH_SEPARATOR)
+	    {
+	    case ':':
+	      values = "This is a colon-separated list of folders to search.";
+	      break;
+	    case ';':
+	      values = "This is a semicolon-separated list of folders to search.";
+	      break;
+	    default:
+	      g_warning ("unhandled G_SEARCHPATH_SEPARATOR value");
+	      break;
+	    }
 	  break;
 	}
     }

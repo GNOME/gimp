@@ -33,6 +33,10 @@
                                  GIMP_PARAM_SERIALIZE)
 
 
+/*
+ * GIMP_TYPE_PARAM_COLOR
+ */
+
 #define GIMP_TYPE_PARAM_COLOR             (gimp_param_color_get_type ())
 #define GIMP_IS_PARAM_SPEC_COLOR(pspec)   (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_COLOR))
 
@@ -44,6 +48,10 @@ GParamSpec * gimp_param_spec_color        (const gchar    *name,
                                            const GimpRGB  *default_value,
                                            GParamFlags     flags);
 
+
+/*
+ * GIMP_TYPE_PARAM_MEMSIZE
+ */
 
 #define GIMP_TYPE_PARAM_MEMSIZE           (gimp_param_memsize_get_type ())
 #define GIMP_IS_PARAM_SPEC_MEMSIZE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_MEMSIZE))
@@ -59,17 +67,36 @@ GParamSpec * gimp_param_spec_memsize      (const gchar    *name,
                                            GParamFlags     flags);
 
 
+/*
+ * GIMP_TYPE_PARAM_PATH
+ */
+
+typedef enum
+{
+  GIMP_PARAM_PATH_FILE,
+  GIMP_PARAM_PATH_FILE_LIST,
+  GIMP_PARAM_PATH_DIR,
+  GIMP_PARAM_PATH_DIR_LIST
+} GimpParamPathType;
+
 #define GIMP_TYPE_PARAM_PATH              (gimp_param_path_get_type ())
 #define GIMP_IS_PARAM_SPEC_PATH(pspec)    (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_PATH))
 
 GType        gimp_param_path_get_type     (void) G_GNUC_CONST;
 
-GParamSpec * gimp_param_spec_path         (const gchar    *name,
-                                           const gchar    *nick,
-                                           const gchar    *blurb,
-                                           gchar          *default_value,
-                                           GParamFlags     flags);
+GParamSpec * gimp_param_spec_path         (const gchar         *name,
+                                           const gchar         *nick,
+                                           const gchar         *blurb,
+					   GimpParamPathType    type,
+                                           gchar               *default_value,
+                                           GParamFlags          flags);
 
+GimpParamPathType  gimp_param_spec_path_type (GParamSpec       *pspec);
+
+
+/*
+ * GIMP_TYPE_PARAM_UNIT
+ */
 
 #define GIMP_TYPE_PARAM_UNIT              (gimp_param_unit_get_type ())
 #define GIMP_IS_PARAM_SPEC_UNIT(pspec)    (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_UNIT))
@@ -129,10 +156,10 @@ GParamSpec * gimp_param_spec_unit         (const gchar    *name,
                                    object_type,\
                                    flags | GIMP_CONFIG_PARAM_FLAGS))
 #define GIMP_CONFIG_INSTALL_PROP_PATH(class, id,\
-                                      name, blurb, default, flags)\
+                                      name, blurb, type, default, flags)\
   g_object_class_install_property (class, id,\
                                    gimp_param_spec_path (name, NULL, blurb,\
-                                   default,\
+                                   type, default,\
                                    flags | GIMP_CONFIG_PARAM_FLAGS))
 #define GIMP_CONFIG_INSTALL_PROP_STRING(class, id,\
                                         name, blurb, default, flags)\

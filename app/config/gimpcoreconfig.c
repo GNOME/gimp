@@ -132,34 +132,42 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  0);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PLUG_IN_PATH,
                                  "plug-in-path", PLUG_IN_PATH_BLURB,
+				 GIMP_PARAM_PATH_DIR_LIST,
                                  gimp_config_build_plug_in_path ("plug-ins"),
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_TOOL_PLUG_IN_PATH,
                                  "tool-plug-in-path", TOOL_PLUG_IN_PATH_BLURB,
+				 GIMP_PARAM_PATH_DIR_LIST,
                                  gimp_config_build_plug_in_path ("tool-plug-ins"),
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_MODULE_PATH,
                                  "module-path", MODULE_PATH_BLURB,
+				 GIMP_PARAM_PATH_DIR_LIST,
                                  gimp_config_build_plug_in_path ("modules"),
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_ENVIRON_PATH,
                                  "environ-path", ENVIRON_PATH_BLURB,
+				 GIMP_PARAM_PATH_DIR_LIST,
                                  gimp_config_build_plug_in_path ("environ"),
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_BRUSH_PATH,
                                  "brush-path", BRUSH_PATH_BLURB,
+				 GIMP_PARAM_PATH_DIR_LIST,
                                  gimp_config_build_data_path ("brushes"),
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PATTERN_PATH,
                                  "pattern-path", PATTERN_PATH_BLURB,
+				 GIMP_PARAM_PATH_DIR_LIST,
                                  gimp_config_build_data_path ("patterns"),
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PALETTE_PATH,
                                  "palette-path", PALETTE_PATH_BLURB,
+				 GIMP_PARAM_PATH_DIR_LIST,
                                  gimp_config_build_data_path ("palettes"),
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_GRADIENT_PATH,
                                  "gradient-path", GRADIENT_PATH_BLURB,
+				 GIMP_PARAM_PATH_DIR_LIST,
                                  gimp_config_build_data_path ("gradients"),
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_BRUSH,
@@ -225,6 +233,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class,
                                  PROP_PLUGINRC_PATH,
                                  "pluginrc-path", PLUGINRC_PATH_BLURB,
+				 GIMP_PARAM_PATH_FILE,
                                  "${gimp_dir}" G_DIR_SEPARATOR_S "pluginrc",
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_MODULE_LOAD_INHIBIT,

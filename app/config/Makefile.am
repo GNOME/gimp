@@ -58,14 +58,21 @@ gimpconfig_libs = \
 
 
 #
-# extra programs, not to be built by default and never installed
+# GimpConfig dump utility that generates a system gimprc and the manpage
 #
 
-EXTRA_PROGRAMS = gimpconfig-dump test-config
+noinst_PROGRAMS = gimpconfig-dump
 
 gimpconfig_dump_SOURCES = gimpconfig-dump.c
 
 gimpconfig_dump_LDADD = $(GLIB_LIBS) $(gimpconfig_libs)
+
+
+#
+# unit tests for the GimpConfig system
+#
+
+EXTRA_PROGRAMS = test-config
 
 TESTS = test-config
 

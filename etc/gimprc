@@ -7,17 +7,16 @@
 # By default everything in this file is commented out. The file then
 # documents the default values and shows what changes are possible.
 
-# The variable gimp_dir is set to either the internal value
-# @gimpdir@ or the environment variable GIMP_DIRECTORY.  If
-# the path in GIMP_DIRECTORY is relative, it is considered
-# relative to your home directory.
+# The variable ${gimp_dir} is set to the value of the environment
+# variable GIMP_DIRECTORY or, if that is not set, the compiled-in
+# default value is used. If GIMP_DIRECTORY is not an absolute path,
+# it is interpreted relative to your home directory.
 
 # Set the temporary storage directory. Files will appear here during the
 # course of running the gimp.  Most files will disappear when the gimp exits,
 # but some files are likely to remain, such as working palette files, so it is
 # best if this directory not be one that is shared by other users or is
-# cleared on machine reboot such as /tmp.  This is a colon-separated list of
-# directories to search.
+# cleared on machine reboot such as /tmp.  This is a single folder.
 #
 # (temp-path "${gimp_dir}/tmp")
 
@@ -27,7 +26,7 @@
 # gimp is used with large images. Also, things can get horribly slow if the
 # swap file is created on a directory that is mounted over NFS.  For these
 # reasons, it may be desirable to put your swap file in "/tmp".  This is a
-# colon-separated list of directories to search.
+# single folder.
 #
 # (swap-path "${gimp_dir}")
 
@@ -59,41 +58,41 @@
 #
 # (interpolation-type linear)
 
-# Set the plug-in search path.  This is a colon-separated list of directories
-# to search.
+# Set the plug-in search path.  This is a colon-separated list of folders to
+# search.
 #
 # (plug-in-path "${gimp_dir}/plug-ins:${gimp_plug_in_dir}/plug-ins")
 
-# tool-plug-in-path  This is a colon-separated list of directories to search.
+# tool-plug-in-path  This is a colon-separated list of folders to search.
 #
 # (tool-plug-in-path "${gimp_dir}/tool-plug-ins:${gimp_plug_in_dir}/tool-plug-ins")
 
-# Set the module search path.  This is a colon-separated list of directories
-# to search.
+# Set the module search path.  This is a colon-separated list of folders to
+# search.
 #
 # (module-path "${gimp_dir}/modules:${gimp_plug_in_dir}/modules")
 
-# environ-path  This is a colon-separated list of directories to search.
+# environ-path  This is a colon-separated list of folders to search.
 #
 # (environ-path "${gimp_dir}/environ:${gimp_plug_in_dir}/environ")
 
-# Set the brush search path.  This is a colon-separated list of directories to
+# Set the brush search path.  This is a colon-separated list of folders to
 # search.
 #
 # (brush-path "${gimp_dir}/brushes:${gimp_data_dir}/brushes")
 
-# Set the pattern search path.  This is a colon-separated list of directories
-# to search.
+# Set the pattern search path.  This is a colon-separated list of folders to
+# search.
 #
 # (pattern-path "${gimp_dir}/patterns:${gimp_data_dir}/patterns")
 
-# Set the palette search path.  This is a colon-separated list of directories
-# to search.
+# Set the palette search path.  This is a colon-separated list of folders to
+# search.
 #
 # (palette-path "${gimp_dir}/palettes:${gimp_data_dir}/palettes")
 
-# Set the gradient search path.  This is a colon-separated list of directories
-# to search.
+# Set the gradient search path.  This is a colon-separated list of folders to
+# search.
 #
 # (gradient-path "${gimp_dir}/gradients:${gimp_data_dir}/gradients")
 
@@ -144,7 +143,7 @@
 #
 # (undo-levels 5)
 
-# pluginrc-path  This is a colon-separated list of directories to search.
+# pluginrc-path  This is a single filename.
 #
 # (pluginrc-path "${gimp_dir}/pluginrc")
 
@@ -365,7 +364,7 @@
 #
 # (max-new-image-size 32M)
 
-# theme-path  This is a colon-separated list of directories to search.
+# theme-path  This is a colon-separated list of folders to search.
 #
 # (theme-path "${gimp_dir}/themes:${gimp_data_dir}/themes")
 
@@ -378,27 +377,27 @@
 # (help-browser gimp)
 
 # Where to search for fractals used by the Fractal Explorer plug-in.  This is
-# a colon-separated list of directories to search.
+# a colon-separated list of folders to search.
 #
 # (fractalexplorer-path "${gimp_dir}/fractalexplorer:${gimp_data_dir}/fractalexplorer")
 
-# Where to search for GFig figures used by the GFig plug-in.  This is a
-# colon-separated list of directories to search.
+# Where to search for Gfig figures used by the Gfig plug-in.  This is a
+# colon-separated list of folders to search.
 #
 # (gfig-path "${gimp_dir}/gfig:${gimp_data_dir}/gfig")
 
 # Where to search for gflares used by the GFlare plug-in.  This is a
-# colon-separated list of directories to search.
+# colon-separated list of folders to search.
 #
 # (gflare-path "${gimp_dir}/gflare:${gimp_data_dir}/gflare")
 
 # Where to search for data used by the Gimpressionist plug-in.  This is a
-# colon-separated list of directories to search.
+# colon-separated list of folders to search.
 #
 # (gimpressionist-path "${gimp_dir}/gimpressionist:${gimp_data_dir}/gimpressionist")
 
 # This path will be searched for scripts when the Script-Fu plug-in is run. 
-# This is a colon-separated list of directories to search.
+# This is a colon-separated list of folders to search.
 #
 # (script-fu-path "${gimp_dir}/scripts:${gimp_data_dir}/scripts")
 
