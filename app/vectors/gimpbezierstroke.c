@@ -29,6 +29,8 @@
 #include "gimpanchor.h"
 #include "gimpbezierstroke.h"
 
+#define INPUT_RESOLUTION 256
+#define DETAIL 0.25
 
 
 /*  private variables  */
@@ -274,17 +276,172 @@ gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
 
 /* local helper functions for bezier subdivision */
 
+/*   amul * a + bmul * b   */
+
+static void
+gimp_bezier_coords_mix (gdouble amul,
+                        GimpCoords *a,
+                        gdouble bmul,
+                        GimpCoords *b,
+                        GimpCoords *ret_val)
+{
+  if (b)
+    {
+      ret_val->x        = amul * a->x        + bmul * b->x ;
+      ret_val->y        = amul * a->y        + bmul * b->x ;
+      ret_val->pressure = amul * a->pressure + bmul * b->x ;
+      ret_val->xtilt    = amul * a->xtilt    + bmul * b->x ;
+      ret_val->ytilt    = amul * a->ytilt    + bmul * b->x ;
+      ret_val->wheel    = amul * a->wheel    + bmul * b->x ;
+    }
+  else
+    {
+      ret_val->x        = amul * a->x;
+      ret_val->y        = amul * a->y;
+      ret_val->pressure = amul * a->pressure;
+      ret_val->xtilt    = amul * a->xtilt;
+      ret_val->ytilt    = amul * a->ytilt;
+      ret_val->wheel    = amul * a->wheel;
+    }
+}
+
+                        
+/*    (a+b)/2   */
+
 static void
 gimp_bezier_coords_average (GimpCoords *a,
                             GimpCoords *b,
                             GimpCoords *ret_average)
 {
-  ret_average->x        = (a->x        + b->x       ) / 2.0;
-  ret_average->y        = (a->y        + b->y       ) / 2.0;
-  ret_average->pressure = (a->pressure + b->pressure) / 2.0;
-  ret_average->xtilt    = (a->xtilt    + b->xtilt   ) / 2.0;
-  ret_average->ytilt    = (a->ytilt    + b->ytilt   ) / 2.0;
-  ret_average->wheel    = (a->wheel    + b->wheel   ) / 2.0;
+  gimp_bezier_coords_mix (0.5, a, 0.5, b, ret_average);
+}
+
+
+/* a - b */
+
+static void
+gimp_bezier_coords_difference (GimpCoords *a,
+                               GimpCoords *b,
+                               GimpCoords *ret_difference)
+{
+  gimp_bezier_coords_mix (1.0, a, -1.0, b, ret_difference);
+}
+
+
+/* a * f = ret_product */
+
+static void
+gimp_bezier_coords_scale (gdouble     f,
+                          GimpCoords *a,
+                          GimpCoords *ret_multiply)
+{
+  gimp_bezier_coords_mix (f, a, 0.0, NULL, ret_multiply);
+}
+
+
+/* local helper for measuring the scalarproduct of two gimpcoords. */
+
+static gdouble
+gimp_bezier_coords_scalarprod (GimpCoords *a,
+                               GimpCoords *b)
+{
+  return (a->x        * b->x        +
+          a->y        * b->y        +
+          a->pressure * b->pressure +
+          a->xtilt    * b->xtilt    +
+          a->ytilt    * b->ytilt    +
+          a->wheel    * b->wheel   );
+}
+
+
+/*
+ * The "lenght" of the gimpcoord.
+ * Applies a metric that increases the weight on the
+ * pressure/xtilt/ytilt/wheel to ensure proper interpolation
+ */
+
+static gdouble
+gimp_bezier_coords_length2 (GimpCoords *a)
+{
+  GimpCoords upscaled_a;
+
+  upscaled_a.x        = a->x;
+  upscaled_a.y        = a->y;
+  upscaled_a.pressure = a->pressure * INPUT_RESOLUTION;
+  upscaled_a.xtilt    = a->xtilt    * INPUT_RESOLUTION;
+  upscaled_a.ytilt    = a->ytilt    * INPUT_RESOLUTION;
+  upscaled_a.wheel    = a->wheel    * INPUT_RESOLUTION;
+  return (gimp_bezier_coords_scalarprod (&upscaled_a, &upscaled_a));
+}
+
+
+static gdouble
+gimp_bezier_coords_length (GimpCoords *a)
+{
+  return (sqrt (gimp_bezier_coords_length2 (a)));
+}
+
+
+/*
+ * a helper function that determines if a bezier segment is "straight
+ * enough" to be approximated by a line.
+ * 
+ * Needs four GimpCoords in an array.
+ */
+
+static gboolean
+gimp_bezier_coords_is_straight (GimpCoords *beziercoords)
+{
+  GimpCoords line, tan1, tan2, d1, d2;
+  gdouble l2, s1, s2;
+
+  gimp_bezier_coords_difference (&(beziercoords[3]),
+                                 &(beziercoords[0]),
+                                 &line);
+
+  if (gimp_bezier_coords_length2 (&line) < DETAIL * DETAIL)
+    {
+      gimp_bezier_coords_difference (&(beziercoords[1]),
+                                     &(beziercoords[0]),
+                                     &tan1);
+      gimp_bezier_coords_difference (&(beziercoords[2]),
+                                     &(beziercoords[3]),
+                                     &tan2);
+      if ((gimp_bezier_coords_length2 (&tan1) < DETAIL * DETAIL) &&
+          (gimp_bezier_coords_length2 (&tan2) < DETAIL * DETAIL))
+        {
+          return 1;
+        }
+      else
+        {
+          return 0;
+        }
+    }
+  else
+    {
+      gimp_bezier_coords_difference (&(beziercoords[1]),
+                                     &(beziercoords[0]),
+                                     &tan1);
+      gimp_bezier_coords_difference (&(beziercoords[2]),
+                                     &(beziercoords[0]),
+                                     &tan2);
+
+      l2 = gimp_bezier_coords_scalarprod (&line, &line);
+      s1 = gimp_bezier_coords_scalarprod (&line, &tan1) / l2;
+      s2 = gimp_bezier_coords_scalarprod (&line, &tan2) / l2;
+
+      if (s1 < 0 || s1 > 1 || s2 < 0 || s2 > 1 || s2 < s1)
+        return 0;
+
+      gimp_bezier_coords_mix (1.0, &tan1, - s1, &line, &d1);
+      gimp_bezier_coords_mix (1.0, &tan2, - s2, &line, &d2);
+
+      if ((gimp_bezier_coords_length2 (&d1) > DETAIL * DETAIL) ||
+          (gimp_bezier_coords_length2 (&d2) > DETAIL * DETAIL))
+        return 0;
+
+      return 1;
+    }
 }
 
 
@@ -300,7 +457,7 @@ gimp_bezier_coords_subdivide (GimpCoords    *beziercoords,
    */
 
   GimpCoords subdivided[8];
-  gint i, good_enough = 1;
+  gint i; 
 
   subdivided[0] = beziercoords[0];
   subdivided[6] = beziercoords[3];
@@ -333,7 +490,7 @@ gimp_bezier_coords_subdivide (GimpCoords    *beziercoords,
    * if the stroke is sufficiently close to a straight line.
    */
 
-  if ( good_enough /* stroke 1 */ )
+  if (gimp_bezier_coords_is_straight (&(subdivided[0])) /* stroke 1 */)
     {
       for (i=0; i < 3; i++)
         {
@@ -348,7 +505,7 @@ gimp_bezier_coords_subdivide (GimpCoords    *beziercoords,
                                     ret_ncoords, ret_coords);
     }
 
-  if ( good_enough /* stroke 2 */ )
+  if (gimp_bezier_coords_is_straight (&(subdivided[3])) /* stroke 1 */)
     {
       for (i=0; i < 3; i++)
         {

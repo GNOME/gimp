@@ -1,3 +1,8 @@
+2002-12-28  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpbezierstroke.c: untested and unused stuff
+	for the interpolation of bezier curves. More to come soon.
+
 2002-12-27  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/smooth_palette.c (dialog): fix for #82490 (Smooth 
