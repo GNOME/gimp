@@ -89,6 +89,7 @@ static void          gimp_imagefile_init            (GimpImagefile  *imagefile);
 static void          gimp_imagefile_finalize        (GObject        *object);
 static void          gimp_imagefile_name_changed    (GimpObject     *object);
 static void          gimp_imagefile_set_info        (GimpImagefile  *imagefile,
+                                                     gboolean        emit_always,
                                                      gint            width,
                                                      gint            height,
                                                      gint            size,
@@ -274,13 +275,6 @@ gimp_imagefile_update (GimpImagefile *imagefile)
       g_free (thumbname);
     }
 
-  if (imagefile->description)
-    {
-      if (!imagefile->static_desc)
-        g_free (imagefile->description);
-      imagefile->description = NULL;
-    }
-
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (imagefile));
 
   if (uri)
@@ -438,22 +432,18 @@ gimp_imagefile_name_changed (GimpObject *object)
   if (GIMP_OBJECT_CLASS (parent_class)->name_changed)
     GIMP_OBJECT_CLASS (parent_class)->name_changed (object);
 
-  imagefile->width       = -1;
-  imagefile->height      = -1;
-  imagefile->size        = -1;
-  imagefile->type        = -1;
-
   imagefile->image_state = GIMP_IMAGEFILE_STATE_UNKNOWN;
   imagefile->image_mtime = 0;
 
   imagefile->thumb_state = GIMP_IMAGEFILE_STATE_UNKNOWN;
   imagefile->thumb_mtime = 0;
 
-  g_signal_emit (G_OBJECT (imagefile), gimp_imagefile_signals[INFO_CHANGED], 0);
+  gimp_imagefile_set_info (imagefile, TRUE, -1, -1, -1, -1);
 }
 
 static void
 gimp_imagefile_set_info (GimpImagefile *imagefile,
+                         gboolean       emit_always,
                          gint           width,
                          gint           height,
                          gint           size,
@@ -471,7 +461,14 @@ gimp_imagefile_set_info (GimpImagefile *imagefile,
   imagefile->size   = size;
   imagefile->type   = type;
 
-  if (changed)
+  if (imagefile->description)
+    {
+      if (!imagefile->static_desc)
+        g_free (imagefile->description);
+      imagefile->description = NULL;
+    }
+
+  if (changed || emit_always)
     g_signal_emit (G_OBJECT (imagefile),
                    gimp_imagefile_signals[INFO_CHANGED], 0);
 }
@@ -511,7 +508,8 @@ gimp_imagefile_set_info_from_pixbuf (GimpImagefile *imagefile,
         img_type = enum_value->value;
     }
 
-  gimp_imagefile_set_info (imagefile, img_width, img_height, img_size, img_type);
+  gimp_imagefile_set_info (imagefile, FALSE,
+                           img_width, img_height, img_size, img_type);
 }
 
 static TempBuf *
@@ -573,19 +571,6 @@ gimp_imagefile_get_description (GimpImagefile *imagefile)
                                       imagefile->width, imagefile->height);
             }
 
-          if (imagefile->size > -1)
-            {
-              gchar *size;
-
-              size = gimp_image_new_get_memsize_string (imagefile->size);
-
-              if (str->len)
-                g_string_append_len (str, ", ", 2);
-
-              g_string_append (str, size);
-              g_free (size);
-            }
-
           enum_class = g_type_class_peek (GIMP_TYPE_IMAGE_TYPE);
           enum_value = g_enum_get_value (enum_class, imagefile->type);
 
@@ -595,6 +580,19 @@ gimp_imagefile_get_description (GimpImagefile *imagefile)
                 g_string_append_len (str, ", ", 2);
 
               g_string_append (str, gettext (enum_value->value_name));
+            }
+
+          if (imagefile->size > -1)
+            {
+              gchar *size;
+
+              size = gimp_image_new_get_memsize_string (imagefile->size);
+
+              if (str->len)
+                g_string_append_len (str, "\n", 1);
+
+              g_string_append (str, size);
+              g_free (size);
             }
 
           imagefile->static_desc = FALSE;
@@ -901,7 +899,8 @@ gimp_imagefile_read_xv_thumb (GimpImagefile *imagefile)
           img_width  = 0;
           img_height = 0;
         }
-      gimp_imagefile_set_info (imagefile, img_width, img_height, -1, -1);
+      gimp_imagefile_set_info (imagefile, FALSE,
+                               img_width, img_height, -1, -1);
 
       g_free (image_info);
     }

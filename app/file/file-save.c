@@ -135,8 +135,6 @@ file_save (GimpImage     *gimage,
               return GIMP_PDB_CANCEL;  /* inhibits error messages by caller */
             }
         }
-
-      g_free (filename);
     }
 
   /* ref the image, so it can't get deleted during save */

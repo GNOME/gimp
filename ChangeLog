@@ -1,3 +1,13 @@
+2002-04-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/file/file-save.c: shouldn't free the filename before using it :)
+
+	* app/core/gimpimagefile.c: emit the "info_changed" signal more
+	often, assemble the description string differently.
+
+	* app/gui/file-open-dialog.c: moved the preview into a frame right
+	of the file selection box, lots of gui and other cleanup...
+
 2002-04-17  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimagefile.[ch]

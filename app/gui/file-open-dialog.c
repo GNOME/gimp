@@ -83,11 +83,12 @@ static void     file_open_imagefile_info_changed (GimpImagefile    *imagefile,
 
 
 static GtkWidget     *fileload               = NULL;
-static GtkWidget     *open_options           = NULL;
-static GimpImagefile *open_options_imagefile = NULL;
-
-static GtkWidget     *open_options_label     = NULL;
+static GtkWidget     *open_options_hbox      = NULL;
 static GtkWidget     *open_options_frame     = NULL;
+
+static GimpImagefile *open_options_imagefile = NULL;
+static GtkWidget     *open_options_title     = NULL;
+static GtkWidget     *open_options_label     = NULL;
 
 static PlugInProcDef *load_file_proc = NULL;
 
@@ -216,85 +217,110 @@ file_open_dialog_create (Gimp *gimp)
 
   {
     GimpItemFactory *item_factory;
-    GtkWidget       *frame;
+    GtkWidget       *label;
     GtkWidget       *vbox;
+    GtkWidget       *ebox;
     GtkWidget       *hbox;
     GtkWidget       *option_menu;
-    GtkWidget       *open_options_genbutton;
+    GtkWidget       *button;
     GtkWidget       *preview;
+    GtkStyle        *style;
 
-    open_options = gtk_hbox_new (TRUE, 4);
+    /*  File type menu  */
 
-    /* format-chooser frame */
-    frame = gtk_frame_new (_("Determine File Type"));
-    gtk_box_pack_start (GTK_BOX (open_options), frame, TRUE, TRUE, 0);
-    gtk_widget_show (frame);
-
-    vbox = gtk_vbox_new (FALSE, 2);
-    gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-    gtk_container_add (GTK_CONTAINER (frame), vbox);
-    gtk_widget_show (vbox);
-
-    hbox = gtk_hbox_new (FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-    gtk_widget_show (hbox);
+    open_options_hbox = gtk_hbox_new (FALSE, 4);
 
     option_menu = gtk_option_menu_new ();
-    gtk_box_pack_start (GTK_BOX (hbox), option_menu, FALSE, FALSE, 0);
+    gtk_box_pack_end (GTK_BOX (open_options_hbox), option_menu,
+                      FALSE, FALSE, 0);
     gtk_widget_show (option_menu);
 
     item_factory = gimp_item_factory_from_path ("<Load>");
     gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu),
                               GTK_ITEM_FACTORY (item_factory)->widget);
 
-    /* Preview frame */
-    open_options_frame = frame = gtk_frame_new (_("No Selection"));
-    gtk_box_pack_end (GTK_BOX (open_options), frame, TRUE, TRUE, 0);
-    gtk_widget_show (frame);
+    gtk_box_pack_end (GTK_BOX (GTK_FILE_SELECTION (fileload)->main_vbox),
+                      open_options_hbox, FALSE, FALSE, 0);
+    gtk_widget_show (open_options_hbox);
+
+    label = gtk_label_new (_("Determine File Type:"));
+    gtk_box_pack_end (GTK_BOX (open_options_hbox), label, FALSE, FALSE, 0);
+    gtk_widget_show (label);
+
+    /*  Preview frame  */
+
+    open_options_frame = gtk_frame_new (NULL);
+    gtk_frame_set_shadow_type (GTK_FRAME (open_options_frame), GTK_SHADOW_IN);
+
+    ebox = gtk_event_box_new ();
+
+    gtk_widget_ensure_style (ebox);
+    style = gtk_widget_get_style (ebox);
+    gtk_widget_modify_bg (ebox, GTK_STATE_NORMAL,
+                          &style->base[GTK_STATE_NORMAL]);
+    gtk_widget_modify_bg (ebox, GTK_STATE_INSENSITIVE,
+                          &style->base[GTK_STATE_NORMAL]);
+
+    gtk_container_add (GTK_CONTAINER (open_options_frame), ebox);
+    gtk_widget_show (ebox);
 
     vbox = gtk_vbox_new (FALSE, 2);
-    gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-    gtk_container_add (GTK_CONTAINER (frame), vbox);
+    gtk_container_add (GTK_CONTAINER (ebox), vbox);
     gtk_widget_show (vbox);
+
+    button = gtk_button_new_with_mnemonic (_("_Preview"));
+    gtk_misc_set_alignment (GTK_MISC (GTK_BIN (button)->child), 0.0, 0.5);
+    gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+    gtk_widget_show (button);
+
+    g_signal_connect (G_OBJECT (button), "clicked",
+		      G_CALLBACK (file_open_genbutton_callback),
+		      fileload);
+
+    gimp_help_set_help_data (button, _("Click to create preview"), NULL);
 
     hbox = gtk_hbox_new (TRUE, 0);
     gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
     gtk_widget_show (hbox);
 
-    open_options_genbutton = gtk_button_new ();
-    gtk_box_pack_start (GTK_BOX (hbox), open_options_genbutton, TRUE, FALSE, 0);
-    gtk_widget_show (open_options_genbutton);
-
-    g_signal_connect (G_OBJECT (open_options_genbutton), "clicked",
-		      G_CALLBACK (file_open_genbutton_callback),
-		      fileload);
-
-    gimp_help_set_help_data (open_options_genbutton,
-                             _("Click to create preview"), NULL);
-
     open_options_imagefile = gimp_imagefile_new (NULL);
 
     preview = gimp_preview_new (GIMP_VIEWABLE (open_options_imagefile),
                                 128, 0, FALSE);
-    gtk_container_add (GTK_CONTAINER (open_options_genbutton), preview);
+
+    gtk_widget_ensure_style (preview);
+    style = gtk_widget_get_style (preview);
+    gtk_widget_modify_bg (preview, GTK_STATE_NORMAL,
+                          &style->base[GTK_STATE_NORMAL]);
+    gtk_widget_modify_bg (preview, GTK_STATE_INSENSITIVE,
+                          &style->base[GTK_STATE_NORMAL]);
+
+    gtk_box_pack_start (GTK_BOX (hbox), preview, TRUE, FALSE, 4);
     gtk_widget_show (preview);
 
     g_signal_connect (G_OBJECT (open_options_imagefile), "info_changed",
                       G_CALLBACK (file_open_imagefile_info_changed),
                       NULL);
 
-    open_options_label = gtk_label_new (NULL);
+    open_options_title = gtk_label_new (_("No Selection"));
+    gtk_box_pack_start (GTK_BOX (vbox), open_options_title, FALSE, FALSE, 0);
+    gtk_widget_show (open_options_title);
+
+    open_options_label = gtk_label_new (" \n ");
+    gtk_label_set_justify (GTK_LABEL (open_options_label), GTK_JUSTIFY_CENTER);
     gtk_box_pack_start (GTK_BOX (vbox), open_options_label, FALSE, FALSE, 0);
-    gtk_widget_show (open_options_label); 
+    gtk_widget_show (open_options_label);
 
     /* pack the containing open_options hbox into the open-dialog */
-    gtk_box_pack_end (GTK_BOX (GTK_FILE_SELECTION (fileload)->main_vbox),
-		      open_options, FALSE, FALSE, 0);
+    for (hbox = GTK_FILE_SELECTION (fileload)->dir_list;
+         ! GTK_IS_HBOX (hbox);
+         hbox = hbox->parent);
+
+    gtk_box_pack_end (GTK_BOX (hbox), open_options_frame, FALSE, FALSE, 0);
+    gtk_widget_show (open_options_frame);
   }
 
   gtk_widget_set_sensitive (GTK_WIDGET (open_options_frame), FALSE);
-
-  gtk_widget_show (open_options);
 }
 
 static void
@@ -312,25 +338,8 @@ static void
 file_open_imagefile_info_changed (GimpImagefile *imagefile,
                                   gpointer       data)
 {
-  const gchar *uri;
-
-  uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
-
-  if (! uri)
-    {
-      gtk_frame_set_label (GTK_FRAME (open_options_frame), _("No Selection"));
-      gtk_label_set_text (GTK_LABEL (open_options_label), NULL);
-    }
-  else
-    {
-      gchar *basename = file_utils_uri_to_utf8_basename (uri);
-
-      gtk_frame_set_label (GTK_FRAME (open_options_frame), basename);
-      g_free (basename);
-
-      gtk_label_set_text (GTK_LABEL (open_options_label),
-                          gimp_imagefile_get_description (imagefile));
-    }
+  gtk_label_set_text (GTK_LABEL (open_options_label),
+                      gimp_imagefile_get_description (imagefile));
 }
 
 static void
@@ -359,6 +368,7 @@ file_open_selchanged_callback (GtkTreeSelection *sel,
   if (selected)
     {
       gchar *uri;
+      gchar *basename;
 
       fileload = GTK_FILE_SELECTION (data);
 
@@ -368,15 +378,19 @@ file_open_selchanged_callback (GtkTreeSelection *sel,
 
       gtk_widget_set_sensitive (GTK_WIDGET (open_options_frame), TRUE);
 
-      uri = file_utils_filename_to_uri (gimp->load_procs, fullfname, NULL);
+      uri      = file_utils_filename_to_uri (gimp->load_procs, fullfname, NULL);
+      basename = file_utils_uri_to_utf8_basename (uri);
 
       gimp_object_set_name (GIMP_OBJECT (open_options_imagefile), uri);
+      gtk_label_set_text (GTK_LABEL (open_options_title), basename);
 
       g_free (uri);
+      g_free (basename);
     }
   else
     {
       gimp_object_set_name (GIMP_OBJECT (open_options_imagefile), NULL);
+      gtk_label_set_text (GTK_LABEL (open_options_title), _("No Selection"));
     }
 
   gimp_imagefile_update (open_options_imagefile);
