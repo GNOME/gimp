@@ -302,9 +302,9 @@ HELP
     @inargs = &_grad_and_seg_params;
 
     @outargs = (
-        { name => 'blend_func', type => "int32",
-          desc => "The blending function of the segment", void_ret => 1,
-          init => 1 }
+        { name => 'blend_func', type => 'enum GimpGradientSegmentType',
+          desc => "The blending function of the segment: { %%desc%% }",
+          void_ret => 1, init => 1 }
     );
 
     %invoke = (
@@ -329,9 +329,9 @@ HELP
     @inargs = &_grad_and_seg_params;
 
     @outargs = (
-        { name => 'coloring_type', type => "int32",
-          desc => "The coloring type of the segment", void_ret => 1,
-          init => 1 }
+        { name => 'coloring_type', type => 'enum GimpGradientSegmentColor',
+          desc => "The coloring type of the segment: { %%desc%% }",
+          void_ret => 1, init => 1 }
     );
 
     %invoke = (

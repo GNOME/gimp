@@ -68,14 +68,14 @@ gboolean gimp_gradient_segment_set_right_pos              (const gchar          
 							   gdouble                  *final_pos);
 gboolean gimp_gradient_segment_get_blending_function      (const gchar              *name,
 							   gint                      segment,
-							   gint                     *blend_func);
+							   GimpGradientSegmentType  *blend_func);
 gboolean gimp_gradient_segment_set_blending_function      (const gchar              *name,
 							   gint                      start_segment,
 							   gint                      end_segment,
 							   GimpGradientSegmentType   blending_function);
 gboolean gimp_gradient_segment_get_coloring_type          (const gchar              *name,
 							   gint                      segment,
-							   gint                     *coloring_type);
+							   GimpGradientSegmentColor *coloring_type);
 gboolean gimp_gradient_segment_set_coloring_type          (const gchar              *name,
 							   gint                      start_segment,
 							   gint                      end_segment,

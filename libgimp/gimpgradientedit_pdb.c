@@ -473,9 +473,9 @@ gimp_gradient_segment_set_right_pos (const gchar *name,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_gradient_segment_get_blending_function (const gchar *name,
-					     gint         segment,
-					     gint        *blend_func)
+gimp_gradient_segment_get_blending_function (const gchar             *name,
+					     gint                     segment,
+					     GimpGradientSegmentType *blend_func)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -552,9 +552,9 @@ gimp_gradient_segment_set_blending_function (const gchar             *name,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_gradient_segment_get_coloring_type (const gchar *name,
-					 gint         segment,
-					 gint        *coloring_type)
+gimp_gradient_segment_get_coloring_type (const gchar              *name,
+					 gint                      segment,
+					 GimpGradientSegmentColor *coloring_type)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

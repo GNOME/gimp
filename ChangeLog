@@ -1,3 +1,10 @@
+2004-06-02  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/gradient_edit.pdb: forgot two more s/int32/enum/.
+
+	* app/pdb/gradient_edit_cmds.c
+	* libgimp/gimpgradientedit_pdb.[ch]: regenerated.
+
 2004-06-01  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/image.pdb

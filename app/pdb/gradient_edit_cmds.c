@@ -1204,7 +1204,7 @@ static ProcArg gradient_segment_get_blending_function_outargs[] =
   {
     GIMP_PDB_INT32,
     "blend_func",
-    "The blending function of the segment"
+    "The blending function of the segment: { GIMP_GRADIENT_SEGMENT_LINEAR (0), GIMP_GRADIENT_SEGMENT_CURVED (1), GIMP_GRADIENT_SEGMENT_SINE (2), GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING (3), GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING (4) }"
   }
 };
 
@@ -1422,7 +1422,7 @@ static ProcArg gradient_segment_get_coloring_type_outargs[] =
   {
     GIMP_PDB_INT32,
     "coloring_type",
-    "The coloring type of the segment"
+    "The coloring type of the segment: { GIMP_GRADIENT_SEGMENT_RGB (0), GIMP_GRADIENT_SEGMENT_HSV_CCW (1), GIMP_GRADIENT_SEGMENT_HSV_CW (2) }"
   }
 };
 
