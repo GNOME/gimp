@@ -1,3 +1,8 @@
+2001-11-15  Abel Cheung  <maddog@linux.org.hk>
+
+	* plug-ins/gimpressionist/size.c (create_sizepage): Fixed a tooltip
+	  string.
+
 2001-11-15  Tor Lillqvist  <tml@iki.fi>
 
 	* configure.in: Do build the webbrowser plug-in on Windows. Output
