@@ -1,5 +1,10 @@
 2004-09-23  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/bumpmap.c (bumpmap_dialog): added a GtkPaned for
+	packing preview and controls so the controls are resizable again.
+
+2004-09-23  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/scripts/3d-outline.scm
 	* plug-ins/script-fu/scripts/beveled-pattern-arrow.scm
 	* plug-ins/script-fu/scripts/beveled-pattern-bullet.scm
