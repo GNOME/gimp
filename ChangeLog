@@ -4,6 +4,18 @@
 	* libgimp/gimpfontmenu.c
 	* libgimp/gimpgradientmenu.c
 	* libgimp/gimppalettemenu.c
+	* libgimp/gimppatternmenu.c: accept names passed over DND no matter
+	whether they are NULL-terminated or not.
+
+	* app/widgets/gimpselectiondata.c: same change here, also
+	UTF8-validate the selection data before accepting it.
+
+2005-03-23  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpbrushmenu.c
+	* libgimp/gimpfontmenu.c
+	* libgimp/gimpgradientmenu.c
+	* libgimp/gimppalettemenu.c
 	* libgimp/gimppatternmenu.c: accept drops on selection widgets as
 	requested in bug #10677.
 

@@ -178,10 +178,10 @@ gimp_unescape_uri_string (const char *escaped,
 GList *
 gimp_selection_data_get_uri_list (GtkSelectionData *selection)
 {
-  GList    *crap_list = NULL;
-  GList    *uri_list  = NULL;
-  GList    *list;
-  gchar    *buffer;
+  GList       *crap_list = NULL;
+  GList       *uri_list  = NULL;
+  GList       *list;
+  const gchar *buffer;
 
   g_return_val_if_fail (selection != NULL, NULL);
 
@@ -191,7 +191,7 @@ gimp_selection_data_get_uri_list (GtkSelectionData *selection)
       return NULL;
     }
 
-  buffer = (gchar *) selection->data;
+  buffer = (const gchar *) selection->data;
 
   D (g_print ("%s: raw buffer >>%s<<\n", G_STRFUNC, buffer));
 
@@ -658,6 +658,19 @@ gimp_selection_data_set_viewable (GtkSelectionData *selection,
                             8, (const guchar *) name, strlen (name) + 1);
 }
 
+static gchar *
+gimp_selection_data_get_name (GtkSelectionData *selection)
+{
+  gchar *name = g_strndup (selection->data, selection->length);
+
+  if (g_utf8_validate (name, -1, NULL))
+    return name;
+
+  g_free (name);
+
+  return NULL;
+}
+
 GimpBrush *
 gimp_selection_data_get_brush (GtkSelectionData *selection,
                                Gimp             *gimp)
@@ -674,13 +687,17 @@ gimp_selection_data_get_brush (GtkSelectionData *selection,
       return NULL;
     }
 
-  name = (gchar *) selection->data;
+  name = gimp_selection_data_get_name (selection);
+  if (! name)
+    return NULL;
 
   if (strcmp (name, "Standard") == 0)
     brush = GIMP_BRUSH (gimp_brush_get_standard ());
   else
     brush = (GimpBrush *)
       gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+  g_free (name);
 
   return brush;
 }
@@ -701,13 +718,17 @@ gimp_selection_data_get_pattern (GtkSelectionData *selection,
       return NULL;
     }
 
-  name = (gchar *) selection->data;
+  name = gimp_selection_data_get_name (selection);
+  if (! name)
+    return NULL;
 
   if (strcmp (name, "Standard") == 0)
     pattern = GIMP_PATTERN (gimp_pattern_get_standard ());
   else
     pattern = (GimpPattern *)
       gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
+
+  g_free (name);
 
   return pattern;
 }
@@ -728,13 +749,17 @@ gimp_selection_data_get_gradient (GtkSelectionData *selection,
       return NULL;
     }
 
-  name = (gchar *) selection->data;
+  name = gimp_selection_data_get_name (selection);
+  if (! name)
+    return NULL;
 
   if (strcmp (name, "Standard") == 0)
     gradient = GIMP_GRADIENT (gimp_gradient_get_standard ());
   else
     gradient = (GimpGradient *)
       gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+
+  g_free (name);
 
   return gradient;
 }
@@ -755,13 +780,17 @@ gimp_selection_data_get_palette (GtkSelectionData *selection,
       return NULL;
     }
 
-  name = (gchar *) selection->data;
+  name = gimp_selection_data_get_name (selection);
+  if (! name)
+    return NULL;
 
   if (strcmp (name, "Standard") == 0)
     palette = GIMP_PALETTE (gimp_palette_get_standard ());
   else
     palette = (GimpPalette *)
       gimp_container_get_child_by_name (gimp->palette_factory->container, name);
+
+  g_free (name);
 
   return palette;
 }
@@ -782,13 +811,17 @@ gimp_selection_data_get_font (GtkSelectionData *selection,
       return NULL;
     }
 
-  name = (gchar *) selection->data;
+  name = gimp_selection_data_get_name (selection);
+  if (! name)
+    return NULL;
 
   if (strcmp (name, "Standard") == 0)
     font = gimp_font_get_standard ();
   else
     font = (GimpFont *)
       gimp_container_get_child_by_name (gimp->fonts, name);
+
+  g_free (name);
 
   return font;
 }
@@ -809,10 +842,14 @@ gimp_selection_data_get_buffer (GtkSelectionData *selection,
       return NULL;
     }
 
-  name = (gchar *) selection->data;
+  name = gimp_selection_data_get_name (selection);
+  if (! name)
+    return NULL;
 
   buffer = (GimpBuffer *)
     gimp_container_get_child_by_name (gimp->named_buffers, name);
+
+  g_free (name);
 
   return buffer;
 }
@@ -833,10 +870,14 @@ gimp_selection_data_get_imagefile (GtkSelectionData *selection,
       return NULL;
     }
 
-  name = (gchar *) selection->data;
+  name = gimp_selection_data_get_name (selection);
+  if (! name)
+    return NULL;
 
   imagefile = (GimpImagefile *)
     gimp_container_get_child_by_name (gimp->documents, name);
+
+  g_free (name);
 
   return imagefile;
 }
@@ -857,10 +898,14 @@ gimp_selection_data_get_template (GtkSelectionData *selection,
       return NULL;
     }
 
-  name = (gchar *) selection->data;
+  name = gimp_selection_data_get_name (selection);
+  if (! name)
+    return NULL;
 
   template = (GimpTemplate *)
     gimp_container_get_child_by_name (gimp->templates, name);
+
+  g_free (name);
 
   return template;
 }
@@ -881,13 +926,17 @@ gimp_selection_data_get_tool (GtkSelectionData *selection,
       return NULL;
     }
 
-  name = (gchar *) selection->data;
+  name = gimp_selection_data_get_name (selection);
+  if (! name)
+    return NULL;
 
   if (strcmp (name, "gimp-standard-tool") == 0)
     tool_info = gimp_tool_info_get_standard (gimp);
   else
     tool_info = (GimpToolInfo *)
       gimp_container_get_child_by_name (gimp->tool_info_list, name);
+
+  g_free (name);
 
   return tool_info;
 }

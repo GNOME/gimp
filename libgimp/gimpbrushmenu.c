@@ -604,18 +604,18 @@ gimp_brush_select_drag_data_received (GtkWidget        *preview,
                                       guint             time,
                                       GtkWidget        *widget)
 {
+  gchar *name;
+
   if ((selection->format != 8) || (selection->length < 1))
     {
       g_warning ("Received invalid brush data!");
       return;
     }
 
-  if (g_utf8_validate (selection->data, selection->length - 1, NULL))
-    {
-      gchar *name = g_strndup (selection->data, selection->length - 1);
+  name = g_strndup (selection->data, selection->length);
 
-      gimp_brush_select_widget_set (widget, name, -1.0, -1, -1);
+  if (g_utf8_validate (name, -1, NULL))
+    gimp_brush_select_widget_set (widget, name, -1.0, -1, -1);
 
-      g_free (name);
-    }
+  g_free (name);
 }

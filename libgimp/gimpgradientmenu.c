@@ -414,18 +414,18 @@ gimp_gradient_select_drag_data_received (GtkWidget        *widget,
                                          guint             info,
                                          guint             time)
 {
+  gchar *name;
+
   if ((selection->format != 8) || (selection->length < 1))
     {
       g_warning ("Received invalid gradient data!");
       return;
     }
 
-  if (g_utf8_validate (selection->data, selection->length - 1, NULL))
-    {
-      gchar *name = g_strndup (selection->data, selection->length - 1);
+  name = g_strndup (selection->data, selection->length);
 
-      gimp_gradient_select_widget_set (widget, name);
+  if (g_utf8_validate (name, -1, NULL))
+    gimp_gradient_select_widget_set (widget, name);
 
-      g_free (name);
-    }
+  g_free (name);
 }
