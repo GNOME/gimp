@@ -6,7 +6,8 @@
 	* app/main.c: added --pdb-compat-mode command line option. Renamed
 	--enable-stack-trace to --stack-trace-mode. Made default values of
 	stack_trace_mode and pdb_compat_mode depend on GIMP_MINOR_VERSION
-	(default to compat ON and stack_trace NEVER).
+	(default to compat ON and stack_trace NEVER for stable releases
+	and to compat WARN and stack_trace ASK for unstable ones).
 
 	* app/app_procs.[ch]: pass pdb_compat_mode to gimp_new().
 
