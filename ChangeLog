@@ -1,3 +1,10 @@
+2003-02-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainerview.c (gimp_container_view_remove):
+	remove the insert_data from the hash table *after* calling the
+	virtual remove_item() functions because GimpContainerTreeView's
+	GtkTreeIters are freed by the hash table when removing them.
+
 2003-02-25  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimprc-blurbs.h
