@@ -1,3 +1,10 @@
+2003-04-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/move.c (move_tool_button_press): partly merged fix for
+	bug #22375 from HEAD (Just pause the selection, don't g_memdup()
+	the boundary segs in edit_selection.c, since the latter is just
+	paranoia).
+
 2003-04-12  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/common/png.c (save_image,

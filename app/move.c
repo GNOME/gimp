@@ -118,6 +118,8 @@ move_tool_button_press (Tool           *tool,
 	  tool->scroll_lock = TRUE;
 	  tool->state       = ACTIVE;
 
+          selection_pause (gdisp->select);
+
 	  move_tool_motion (tool, NULL, gdisp);
 	}
       else if ((layer = gimage_pick_correlate_layer (gdisp->gimage, x, y)))
