@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gimp-plugin-1.3\n"
-"POT-Creation-Date: 2001-11-23 23:54+0100\n"
-"PO-Revision-Date: 2001-11-18 22:47+03:00\n"
+"Project-Id-Version: Gimp-libgimp-1.3+\n"
+"POT-Creation-Date: 2001-12-15 20:36+0300\n"
+"PO-Revision-Date: 2001-12-15 20:37+03:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -200,26 +200,25 @@ msgstr "пики"
 msgid "percent"
 msgstr "процент"
 
-#: libgimpwidgets/gimpcolorbutton.c:82
+#: libgimpwidgets/gimpcolorbutton.c:81
 msgid "/Foreground Color"
 msgstr "/Цвет переднего плана"
 
-#: libgimpwidgets/gimpcolorbutton.c:84
+#: libgimpwidgets/gimpcolorbutton.c:83
 msgid "/Background Color"
 msgstr "/Цвет фона"
 
-#: libgimpwidgets/gimpcolorbutton.c:87
+#: libgimpwidgets/gimpcolorbutton.c:86
 msgid "/Black"
 msgstr "/Чёрный"
 
-#: libgimpwidgets/gimpcolorbutton.c:89
+#: libgimpwidgets/gimpcolorbutton.c:88
 msgid "/White"
 msgstr "/Белый"
 
 #: libgimpwidgets/gimpfileselection.c:352
-#, fuzzy
 msgid "Select Directory"
-msgstr "Выбрать файл"
+msgstr "Выбрать каталог"
 
 #: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
@@ -241,7 +240,7 @@ msgstr "Единица"
 msgid "Factor"
 msgstr "Множитель"
 
-#: libgimpwidgets/gimpwidgets.c:769
+#: libgimpwidgets/gimpwidgets.c:801
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -250,11 +249,11 @@ msgstr ""
 "генератора случайных чисел, что позволяет вам повторить данное \"случайное\" "
 "действие "
 
-#: libgimpwidgets/gimpwidgets.c:774
+#: libgimpwidgets/gimpwidgets.c:806
 msgid "Time"
 msgstr "Время"
 
-#: libgimpwidgets/gimpwidgets.c:783
+#: libgimpwidgets/gimpwidgets.c:815
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -262,14 +261,14 @@ msgstr ""
 "Инициализировать генератор случайных чисел текущим времене - это гарантирует "
 "надежную \"случайность\""
 
-#: libgimpwidgets/gimpwidgets.c:1097
+#: libgimpwidgets/gimpwidgets.c:1129
 msgid "Bytes"
 msgstr "Байты"
 
-#: libgimpwidgets/gimpwidgets.c:1098
+#: libgimpwidgets/gimpwidgets.c:1130
 msgid "KiloBytes"
 msgstr "Килобайты"
 
-#: libgimpwidgets/gimpwidgets.c:1099
+#: libgimpwidgets/gimpwidgets.c:1131
 msgid "MegaBytes"
 msgstr "Мегабайты"
