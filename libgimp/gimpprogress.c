@@ -68,9 +68,9 @@ static GHashTable *gimp_progress_ht = NULL;
  *
  * Since: GIMP 2.2
  *
- * Note that since GIMP 2.4, the @value_callback can be called with
- * nagative values. This is triggered by calls to gimp_progress_pulse().
- * The callback should then implement a progress indicating busyness,
+ * Note that since GIMP 2.4, @value_callback can be called with
+ * negative values. This is triggered by calls to gimp_progress_pulse().
+ * The callback should then implement a progress indicating business,
  * e.g. by calling gtk_progress_bar_pulse().
  **/
 const gchar *

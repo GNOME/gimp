@@ -1,5 +1,8 @@
 2005-02-13  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpprogress.c (gimp_progress_install): fixed typos in
+	comment.
+
 	* libgimp/gimpprogress.[ch]: gimp_progress_set_text() has boolean
 	return value.
 
