@@ -15,7 +15,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1\n"
-"POT-Creation-Date: 2000-06-07 12:08+0300\n"
+"POT-Creation-Date: 2000-06-09 11:32+0300\n"
 "PO-Revision-Date: 2000-06-08 20:47+02:00\n"
 "Last-Translator: Ville Hautamäki <villeh@cs.joensuu.fi>\n"
 "Language-Team: fi <fi@li.org>\n"
@@ -131,9 +131,9 @@ msgstr "Poistu"
 #: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimpprogress.c:112
 #: app/global_edit.c:772 app/gradient.c:1768 app/gradient.c:4840
 #: app/gradient.c:5401 app/hue_saturation.c:374 app/interface.c:1039
-#: app/layers_dialog.c:3478 app/layers_dialog.c:3660 app/layers_dialog.c:3752
-#: app/layers_dialog.c:4012 app/levels.c:340 app/palette.c:1826
-#: app/posterize.c:202 app/preferences_dialog.c:1465 app/qmask.c:281
+#: app/layers_dialog.c:3483 app/layers_dialog.c:3665 app/layers_dialog.c:3757
+#: app/layers_dialog.c:4017 app/levels.c:340 app/palette.c:1826
+#: app/posterize.c:202 app/preferences_dialog.c:1465 app/qmask.c:278
 #: app/resize.c:194 app/resize.c:1326 app/threshold.c:275
 #: app/user_install.c:548 app/user_install.c:1190 modules/cdisplay_gamma.c:332
 #: modules/cdisplay_highcontrast.c:325
@@ -289,9 +289,9 @@ msgstr "Kirkkaus- ja kontrastisäätö ei toimi indeksoiduille kuville."
 #: app/color_balance.c:271 app/color_notebook.c:123 app/convert.c:504
 #: app/curves.c:558 app/file_new_dialog.c:207 app/file_new_dialog.c:353
 #: app/gdisplay_color_ui.c:133 app/gimpui.c:122 app/hue_saturation.c:370
-#: app/layers_dialog.c:3476 app/layers_dialog.c:3658 app/layers_dialog.c:3750
-#: app/layers_dialog.c:4010 app/levels.c:336 app/module_db.c:314
-#: app/posterize.c:198 app/preferences_dialog.c:1461 app/qmask.c:279
+#: app/layers_dialog.c:3481 app/layers_dialog.c:3663 app/layers_dialog.c:3755
+#: app/layers_dialog.c:4015 app/levels.c:336 app/module_db.c:314
+#: app/posterize.c:198 app/preferences_dialog.c:1461 app/qmask.c:276
 #: app/resize.c:192 app/resize.c:1326 app/threshold.c:271
 #: app/user_install.c:1188 modules/cdisplay_gamma.c:330
 #: modules/cdisplay_highcontrast.c:323
@@ -519,11 +519,11 @@ msgid "Wrap Around"
 msgstr "Reunan yli kierto"
 
 #: app/channel_ops.c:174 app/image_new.c:76 app/image_new.c:290
-#: app/layers_dialog.c:3578
+#: app/layers_dialog.c:3583
 msgid "Background"
 msgstr "Taustaväri"
 
-#: app/channel_ops.c:175 app/image_new.c:86 app/layers_dialog.c:3580
+#: app/channel_ops.c:175 app/image_new.c:86 app/layers_dialog.c:3585
 msgid "Transparent"
 msgstr "Läpinäkyvä"
 
@@ -983,7 +983,7 @@ msgid "Width:"
 msgstr "Leveys:"
 
 #: app/crop.c:1079 app/file_new_dialog.c:395 app/file_new_dialog.c:413
-#: app/layers_dialog.c:3519 app/resize.c:253 app/resize.c:278 app/resize.c:509
+#: app/layers_dialog.c:3524 app/resize.c:253 app/resize.c:278 app/resize.c:509
 #: app/scale_tool.c:79 app/scale_tool.c:86 app/tool_options.c:364
 msgid "Height:"
 msgstr "Korkeus:"
@@ -1334,13 +1334,13 @@ msgstr ""
 "%s: Tuntemattoman tiedoston tyyppi."
 
 #: app/fileops.c:1117
-#, c-format, fuzzy
+#, c-format
 msgid ""
 "Save failed.\n"
 "%s is not a regular file."
 msgstr ""
 "Tallennus epäonnistui.\n"
-"%s ei ole tavallinen tiedosto (%s)"
+"%s ei ole tavallinen tiedosto."
 
 #: app/fileops.c:1136
 #, c-format
@@ -1675,7 +1675,7 @@ msgstr ""
 "Tasomaskin lisäys ei onnistu\n"
 "koska tasolla on jo maski."
 
-#: app/gimpimage.c:3031
+#: app/gimpimage.c:3033
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1683,7 +1683,7 @@ msgstr ""
 "Tasomaskin lisäys indeksoidun kuvan\n"
 "tasoon ei onnistu."
 
-#: app/gimpimage.c:3035
+#: app/gimpimage.c:3039
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1691,19 +1691,19 @@ msgstr ""
 "Tasomaski lisäys tasoon jolla\n"
 "ei ole alfakanavaa ei onnistu."
 
-#: app/gimpimage.c:3042
+#: app/gimpimage.c:3048
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Erikokoisen tasomaskin lisäys ei onnistu."
 
-#: app/gimpimage.c:3149
+#: app/gimpimage.c:3155
 msgid "Channel cannot be raised any further"
 msgstr "Kanavaa ei voi nostaa enempää"
 
-#: app/gimpimage.c:3200
+#: app/gimpimage.c:3206
 msgid "Channel cannot be lowered any further"
 msgstr "Kanavaa ei voi laskea enempää"
 
-#: app/gimpimage.c:3420 app/palette.c:364 app/palette.c:941 app/palette.c:1077
+#: app/gimpimage.c:3426 app/palette.c:364 app/palette.c:941 app/palette.c:1077
 #: app/palette.c:2022 app/palette.c:2749 app/palette.c:2881
 msgid "Untitled"
 msgstr "Nimetön"
@@ -2291,11 +2291,11 @@ msgstr ""
 msgid "Grayscale"
 msgstr "Harmaasävy"
 
-#: app/image_new.c:71 app/layers_dialog.c:3577
+#: app/image_new.c:71 app/layers_dialog.c:3582
 msgid "Foreground"
 msgstr "Edustaväri"
 
-#: app/image_new.c:81 app/layers_dialog.c:3579
+#: app/image_new.c:81 app/layers_dialog.c:3584
 msgid "White"
 msgstr "Valkoinen"
 
@@ -2632,7 +2632,7 @@ msgstr "%s-maski"
 msgid "Layer Select"
 msgstr "Tason valinta"
 
-#: app/layers_dialog.c:264 app/layers_dialog.c:3509
+#: app/layers_dialog.c:264 app/layers_dialog.c:3514
 msgid "New Layer"
 msgstr "Uusi taso"
 
@@ -2708,62 +2708,62 @@ msgstr "Vain vaalennus"
 msgid "Keep Trans."
 msgstr "Säilytä läpinäkyvyys."
 
-#: app/layers_dialog.c:1901
+#: app/layers_dialog.c:1906
 msgid "Empty Layer Copy"
 msgstr "Tyhjä tason kopio"
 
-#: app/layers_dialog.c:2163 app/layers_dialog.c:3320 app/layers_dialog.c:3687
+#: app/layers_dialog.c:2168 app/layers_dialog.c:3325 app/layers_dialog.c:3692
 msgid "Floating Selection"
 msgstr "Kelluva valinta"
 
-#: app/layers_dialog.c:3470
+#: app/layers_dialog.c:3475
 msgid "New Layer Options"
 msgstr "Uuden tason asetukset"
 
 #. The name label and entry
-#: app/layers_dialog.c:3499
+#: app/layers_dialog.c:3504
 msgid "Layer Name:"
 msgstr "Tason nimi:"
 
 #. The size labels
-#: app/layers_dialog.c:3513
+#: app/layers_dialog.c:3518
 msgid "Layer Width:"
 msgstr "Tason leveys:"
 
-#: app/layers_dialog.c:3573
+#: app/layers_dialog.c:3578
 msgid "Layer Fill Type"
 msgstr "Tason täyttötapa"
 
-#: app/layers_dialog.c:3652
+#: app/layers_dialog.c:3657
 msgid "Edit Layer Attributes"
 msgstr "Muokkaa tason ominaisuuksia"
 
-#: app/layers_dialog.c:3679
+#: app/layers_dialog.c:3684
 msgid "Layer name:"
 msgstr "Tason nimi:"
 
-#: app/layers_dialog.c:3744
+#: app/layers_dialog.c:3749
 msgid "Add Mask Options"
 msgstr "Maskin lisäyksen asetukset"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3762
+#: app/layers_dialog.c:3767
 msgid "Initialize Layer Mask to:"
 msgstr "Alusta tason maski:"
 
-#: app/layers_dialog.c:3767
+#: app/layers_dialog.c:3772
 msgid "White (Full Opacity)"
 msgstr "Valkoinen (täysin peittävä)"
 
-#: app/layers_dialog.c:3769
+#: app/layers_dialog.c:3774
 msgid "Black (Full Transparency)"
 msgstr "Musta (täysin läpinäkyvä)"
 
-#: app/layers_dialog.c:3771
+#: app/layers_dialog.c:3776
 msgid "Layer's Alpha Channel"
 msgstr "Tason alfakanava"
 
-#: app/layers_dialog.c:3832 app/layers_dialog.c:3918
+#: app/layers_dialog.c:3837 app/layers_dialog.c:3923
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -2771,27 +2771,27 @@ msgstr ""
 "Epäkelpo leveys tai korkeus.\n"
 "Molempien täytyy olla suurempi kuin nolla."
 
-#: app/layers_dialog.c:4004
+#: app/layers_dialog.c:4009
 msgid "Layer Merge Options"
 msgstr "Tasojen yhdistelyn asetukset"
 
-#: app/layers_dialog.c:4029
+#: app/layers_dialog.c:4034
 msgid "Final, Merged Layer should be:"
 msgstr "Lopullista, yhdistettyä tasoa:"
 
-#: app/layers_dialog.c:4030
+#: app/layers_dialog.c:4035
 msgid "Final, Anchored Layer should be:"
 msgstr "Lopullista, ankkuroitua tasoa:"
 
-#: app/layers_dialog.c:4035
+#: app/layers_dialog.c:4040
 msgid "Expanded as necessary"
 msgstr "laajennetaan tarvittaessa"
 
-#: app/layers_dialog.c:4037
+#: app/layers_dialog.c:4042
 msgid "Clipped to image"
 msgstr "rajataan kuvan koon mukaan"
 
-#: app/layers_dialog.c:4039
+#: app/layers_dialog.c:4044
 msgid "Clipped to bottom layer"
 msgstr "rajataan pohjimmaisen tason koon mukaan"
 
@@ -4188,6 +4188,7 @@ msgid "Extensions"
 msgstr "Lisäykset"
 
 #: app/plug_in.c:822
+#, c-format
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "Liitännäistä ei lötynyt: \"%s\""
 
@@ -4827,12 +4828,12 @@ msgstr "GIMP-laajennus"
 msgid "Temporary Procedure"
 msgstr "Tilapäinen proseduuri"
 
-#: app/qmask.c:273
+#: app/qmask.c:270
 msgid "Edit Qmask Attributes"
 msgstr "Muuta Qmask ominaisuuksia"
 
 #. The opacity scale
-#: app/qmask.c:301
+#: app/qmask.c:298
 msgid "Mask Opacity:"
 msgstr "Maskin peitto"
 
@@ -5238,9 +5239,8 @@ msgid "Magnify"
 msgstr "Suurenna"
 
 #: app/tools.c:214
-#, fuzzy
 msgid "/Tools/Transform Tools/Magnify"
-msgstr "/Työkalut/Muunnokset/Siirto"
+msgstr "/Työkalut/Muunnokset/Suurennus"
 
 #: app/tools.c:219
 msgid "Zoom in & out"
@@ -5563,191 +5563,191 @@ msgstr "Näytä polku"
 msgid "Clip Result"
 msgstr "Leikkaa tulos"
 
-#: app/undo.c:2889
+#: app/undo.c:2871
 #, c-format
 msgid "Can't undo %s"
 msgstr "Toiminnon '%s' peruminen ei onnistu"
 
-#: app/undo.c:2920
+#: app/undo.c:2902
 msgid "<<invalid>>"
 msgstr "<<invalid>>"
 
-#: app/undo.c:2921
+#: app/undo.c:2903
 msgid "image"
 msgstr "kuva"
 
-#: app/undo.c:2922
+#: app/undo.c:2904
 msgid "image mod"
 msgstr "kuvan muokkaus"
 
-#: app/undo.c:2923
+#: app/undo.c:2905
 msgid "mask"
 msgstr "maski"
 
-#: app/undo.c:2924
+#: app/undo.c:2906
 msgid "layer move"
 msgstr "tason siirto"
 
 #. ok
-#: app/undo.c:2925
+#: app/undo.c:2907
 msgid "transform"
 msgstr "muunnos"
 
-#: app/undo.c:2926
+#: app/undo.c:2908
 msgid "paint"
 msgstr "piirto"
 
-#: app/undo.c:2927
+#: app/undo.c:2909
 msgid "new layer"
 msgstr "uusi taso"
 
-#: app/undo.c:2928
+#: app/undo.c:2910
 msgid "delete layer"
 msgstr "tason poisto"
 
-#: app/undo.c:2929
+#: app/undo.c:2911
 msgid "layer mod"
 msgstr "tason muokkaus"
 
-#: app/undo.c:2930
+#: app/undo.c:2912
 msgid "add layer mask"
 msgstr "tason maskin lisäys"
 
 #. ok
-#: app/undo.c:2931
+#: app/undo.c:2913
 msgid "delete layer mask"
 msgstr "tason maskin poisto"
 
 #. ok
-#: app/undo.c:2932
+#: app/undo.c:2914
 msgid "rename layer"
 msgstr "tason nimen vaihto"
 
-#: app/undo.c:2933
+#: app/undo.c:2915
 msgid "layer reposition"
 msgstr "tasojen keskinäinen siirto"
 
 #. ok
-#: app/undo.c:2934
+#: app/undo.c:2916
 msgid "new channel"
 msgstr "uusi kanava"
 
-#: app/undo.c:2935
+#: app/undo.c:2917
 msgid "delete channel"
 msgstr "kanavan poisto"
 
-#: app/undo.c:2936
+#: app/undo.c:2918
 msgid "channel mod"
 msgstr "kanavan muokkaus"
 
-#: app/undo.c:2937
+#: app/undo.c:2919
 msgid "FS to layer"
 msgstr "kelluva valinta tasoksi"
 
 #. ok
-#: app/undo.c:2938
+#: app/undo.c:2920
 msgid "gimage"
 msgstr "gimage"
 
-#: app/undo.c:2939
+#: app/undo.c:2921
 msgid "FS rigor"
 msgstr "FS rigoristinen"
 
-#: app/undo.c:2940
+#: app/undo.c:2922
 msgid "FS relax"
 msgstr "FS relaksoitu"
 
-#: app/undo.c:2941
+#: app/undo.c:2923
 msgid "guide"
 msgstr "apu"
 
-#: app/undo.c:2942
+#: app/undo.c:2924
 msgid "text"
 msgstr "teksti"
 
-#: app/undo.c:2943
+#: app/undo.c:2925
 msgid "float selection"
 msgstr "valinnan kellutus"
 
-#: app/undo.c:2944
+#: app/undo.c:2926
 msgid "paste"
 msgstr "liimaa"
 
-#: app/undo.c:2945
+#: app/undo.c:2927
 msgid "cut"
 msgstr "leikkaa"
 
-#: app/undo.c:2946
+#: app/undo.c:2928
 msgid "transform core"
 msgstr "ydinmuunnos"
 
-#: app/undo.c:2947
+#: app/undo.c:2929
 msgid "paint core"
 msgstr "piirtäminen"
 
-#: app/undo.c:2948
+#: app/undo.c:2930
 msgid "floating layer"
 msgstr "kelluva taso"
 
 #. unused!
-#: app/undo.c:2949
+#: app/undo.c:2931
 msgid "linked layer"
 msgstr "linkitetty taso"
 
-#: app/undo.c:2950
+#: app/undo.c:2932
 msgid "apply layer mask"
 msgstr "sovella tason maskia"
 
 #. ok
-#: app/undo.c:2951
+#: app/undo.c:2933
 msgid "layer merge"
 msgstr "tasojen yhdistäminen"
 
-#: app/undo.c:2952
+#: app/undo.c:2934
 msgid "FS anchor"
 msgstr "kelluvan valinnan ankkurointi"
 
-#: app/undo.c:2953
+#: app/undo.c:2935
 msgid "gimage mod"
 msgstr "gimage mod"
 
-#: app/undo.c:2954
+#: app/undo.c:2936
 msgid "crop"
 msgstr "rajaus"
 
-#: app/undo.c:2955
+#: app/undo.c:2937
 msgid "layer scale"
 msgstr "tason skaalaus"
 
-#: app/undo.c:2956
+#: app/undo.c:2938
 msgid "layer resize"
 msgstr "tason koon muokkaus"
 
-#: app/undo.c:2957
+#: app/undo.c:2939
 msgid "quickmask"
 msgstr "nopea maski"
 
-#: app/undo.c:2958
+#: app/undo.c:2940
 msgid "attach parasite"
 msgstr "liitä parasiitti"
 
-#: app/undo.c:2959
+#: app/undo.c:2941
 msgid "remove parasite"
 msgstr "poista parasiitti"
 
-#: app/undo.c:2960
+#: app/undo.c:2942
 msgid "resolution change"
 msgstr "tarkkuuden vaihto"
 
-#: app/undo.c:2961
+#: app/undo.c:2943
 msgid "image scale"
 msgstr "kuvan skaalaus"
 
-#: app/undo.c:2962
+#: app/undo.c:2944
 msgid "image resize"
 msgstr "kuvan mittojen muutos"
 
-#: app/undo.c:2963
+#: app/undo.c:2945
 msgid "misc"
 msgstr "sekalaiset"
 
