@@ -237,10 +237,8 @@ gimp_layer_list_view_style_set (GtkWidget *widget,
   layer_view = GIMP_LAYER_LIST_VIEW (widget);
 
   gtk_widget_style_get (widget,
-                        "content_spacing",
-                        &content_spacing,
-                        "button_spacing",
-                        &button_spacing,
+                        "content_spacing", &content_spacing,
+                        "button_spacing",  &button_spacing,
 			NULL);
 
   gtk_box_set_spacing (GTK_BOX (layer_view->options_box), content_spacing);

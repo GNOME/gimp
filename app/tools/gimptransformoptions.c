@@ -86,16 +86,16 @@ transform_options_init (TransformOptions *options,
   options->grid_size = options->grid_size_d = 32;
   options->show_grid = options->show_grid_d = TRUE;
 
-  frame = gimp_radio_group_new2 (TRUE, _("Tool Paradigm"),
+  frame = gimp_radio_group_new2 (TRUE, _("Transform Direction"),
                                  G_CALLBACK (gimp_radio_button_update),
                                  &options->direction,
                                  GINT_TO_POINTER (options->direction),
 
-                                 _("Traditional"),
+                                 _("Forward (Traditional)"),
                                  GINT_TO_POINTER (GIMP_TRANSFORM_FORWARD),
                                  &options->direction_w[0],
 
-                                 _("Corrective"),
+                                 _("Backward (Corrective)"),
                                  GINT_TO_POINTER (GIMP_TRANSFORM_BACKWARD),
                                  &options->direction_w[1],
 

@@ -1,3 +1,42 @@
+2001-11-26  Michael Natterer  <mitch@gimp.org>
+
+	* tools/authorsgen/contributors: added Rebecca Walter (bex).
+
+	* AUTHORS
+	* app/gui/authors.h: regenerated.
+
+	* app/widgets/widgets-types.h: added GimpPreviewSize enum.
+
+	* app/gimprc.c
+	* app/gui/menus.c
+	* app/gui/preferences-dialog.c
+	* app/widgets/gimpdockbook.c: use the new enum.
+
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpmagnifytool.c: added "(<Ctrl>)" and "(<Alt>)" to
+	some tool options strings.
+
+	* app/tools/gimpmovetool.c: some more widgets for hidden tool
+	options (#51108).
+
+	* app/tools/transform_options.c: renamed to "Tool Paradigm" stuff
+	to something more understandable.
+
+	* app/widgets/gimpdock.c: added a style property for the height
+	of the separator.
+
+	* themes/Default/gtkrc: show how to use the new property.
+
+	* app/widgets/gimpcontainerview.c
+	* app/widgets/gimpdockable.c
+	* app/widgets/gimplayerlistview.c: waste less lines when calling
+	gtk_widget_style_get().
+
 2001-11-25  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimperasertool.c

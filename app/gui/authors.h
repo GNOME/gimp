@@ -160,6 +160,7 @@ static gchar *authors[] =
   "Ian Tester",
   "Andy Thomas",
   "Kevin Turner",
+  "Rebecca Walter",
   "Martin Weber",
   "James Wang",
   "Kris Wehner",

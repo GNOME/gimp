@@ -670,7 +670,7 @@ gimp_dodgeburn_tool_options_new (GimpToolInfo *tool_info)
   gtk_widget_show (hbox);
 
   /* the type (dodge or burn) */
-  frame = gimp_radio_group_new2 (TRUE, _("Type"),
+  frame = gimp_radio_group_new2 (TRUE, _("Type (<Ctrl>)"),
 				 G_CALLBACK (gimp_radio_button_update),
 				 &options->type,
 				 GINT_TO_POINTER (options->type),

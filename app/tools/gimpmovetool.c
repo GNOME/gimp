@@ -29,6 +29,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimplayer.h"
+#include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -36,6 +37,7 @@
 
 #include "gimpeditselectiontool.h"
 #include "gimpmovetool.h"
+#include "tool_options.h"
 
 #include "colormaps.h"
 #include "floating_sel.h"
@@ -43,6 +45,24 @@
 
 #include "libgimp/gimpintl.h"
 
+
+typedef struct _MoveOptions MoveOptions;
+
+struct _MoveOptions
+{
+  GimpToolOptions  tool_options;
+
+  gboolean         move_current;
+  gboolean         move_current_d;
+  GtkWidget       *move_current_w[2];
+
+  gboolean         move_mask;
+  gboolean         move_mask_d;
+  GtkWidget       *move_mask_w[2];
+};
+
+
+/*  local function prototypes  */
 
 static void   gimp_move_tool_class_init     (GimpMoveToolClass *klass);
 static void   gimp_move_tool_init           (GimpMoveTool      *move_tool);
@@ -65,12 +85,20 @@ static void   gimp_move_tool_motion         (GimpTool          *tool,
                                              guint32            time,
                                              GdkModifierType    state,
                                              GimpDisplay       *gdisp);
+static void   gimp_move_tool_modifier_key   (GimpTool          *tool,
+                                             GdkModifierType    key,
+                                             gboolean           press,
+                                             GdkModifierType    state,
+                                             GimpDisplay       *gdisp);
 static void   gimp_move_tool_cursor_update  (GimpTool          *tool,
                                              GimpCoords        *coords,
                                              GdkModifierType    state,
                                              GimpDisplay       *gdisp);
 
 static void   gimp_move_tool_draw           (GimpDrawTool      *draw_tool);
+
+static GimpToolOptions * move_options_new   (GimpToolInfo      *tool_info);
+static void              move_options_reset (GimpToolOptions   *tool_options);
 
 
 static GimpDrawToolClass *parent_class = NULL;
@@ -82,7 +110,7 @@ gimp_move_tool_register (Gimp                     *gimp,
 {
   (* callback) (gimp,
                 GIMP_TYPE_MOVE_TOOL,
-                NULL,
+                move_options_new,
                 FALSE,
                 "gimp:move_tool",
                 _("Move Tool"),
@@ -136,6 +164,7 @@ gimp_move_tool_class_init (GimpMoveToolClass *klass)
   tool_class->button_release = gimp_move_tool_button_release;
   tool_class->motion         = gimp_move_tool_motion;
   tool_class->arrow_key      = gimp_edit_selection_tool_arrow_key;
+  tool_class->modifier_key   = gimp_move_tool_modifier_key;
   tool_class->cursor_update  = gimp_move_tool_cursor_update;
 
   draw_tool_class->draw      = gimp_move_tool_draw;
@@ -198,11 +227,14 @@ gimp_move_tool_button_press (GimpTool        *tool,
                              GimpDisplay     *gdisp)
 {
   GimpMoveTool     *move;
+  MoveOptions      *options;
   GimpDisplayShell *shell;
   GimpLayer        *layer;
   GimpGuide        *guide;
 
   move = GIMP_MOVE_TOOL (tool);
+
+  options = (MoveOptions *) tool->tool_info->tool_options;
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
@@ -211,12 +243,12 @@ gimp_move_tool_button_press (GimpTool        *tool,
   move->guide = NULL;
   move->disp  = NULL;
 
-  if ((state & GDK_MOD1_MASK) && ! gimage_mask_is_empty (gdisp->gimage))
+  if (options->move_mask && ! gimage_mask_is_empty (gdisp->gimage))
     {
       init_edit_selection (tool, gdisp, coords, EDIT_MASK_TRANSLATE);
       tool->state = ACTIVE;
     }
-  else if (state & GDK_SHIFT_MASK)
+  else if (options->move_current)
     {
       init_edit_selection (tool, gdisp, coords, EDIT_LAYER_TRANSLATE);
       tool->state = ACTIVE;
@@ -410,28 +442,54 @@ gimp_move_tool_motion (GimpTool        *tool,
 }
 
 static void
+gimp_move_tool_modifier_key (GimpTool        *tool,
+                             GdkModifierType  key,
+                             gboolean         press,
+			     GdkModifierType  state,
+			     GimpDisplay     *gdisp)
+{
+  MoveOptions *options;
+
+  options = (MoveOptions *) tool->tool_info->tool_options;
+
+  if (key == GDK_CONTROL_MASK)
+    {
+      gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->move_current_w[0]),
+                                   GINT_TO_POINTER (! options->move_current));
+    }
+  else if (key == GDK_MOD1_MASK)
+    {
+      gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->move_mask_w[0]),
+                                   GINT_TO_POINTER (! options->move_mask));
+    }
+}
+
+static void
 gimp_move_tool_cursor_update (GimpTool        *tool,
                               GimpCoords      *coords,
                               GdkModifierType  state,
                               GimpDisplay     *gdisp)
 {
   GimpMoveTool     *move;
+  MoveOptions      *options;
   GimpDisplayShell *shell;
   GimpGuide        *guide;
   GimpLayer        *layer;
 
   move = GIMP_MOVE_TOOL (tool);
 
+  options = (MoveOptions *) tool->tool_info->tool_options;
+
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  if ((state & GDK_MOD1_MASK) && ! gimage_mask_is_empty (gdisp->gimage))
+  if (options->move_mask && ! gimage_mask_is_empty (gdisp->gimage))
     {
       gimp_display_shell_install_tool_cursor (shell,
                                               GIMP_MOUSE_CURSOR,
                                               GIMP_RECT_SELECT_TOOL_CURSOR,
                                               GIMP_CURSOR_MODIFIER_MOVE);
     }
-  else if (state & GDK_SHIFT_MASK)
+  else if (options->move_current)
     {
       gimp_display_shell_install_tool_cursor (shell,
                                               GIMP_MOUSE_CURSOR,
@@ -599,4 +657,81 @@ gimp_move_tool_start_vguide (GimpTool    *tool,
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool),
                         GIMP_DISPLAY_SHELL (gdisp->shell)->canvas->window);
+}
+
+
+/*  tool options stuff  */
+
+static GimpToolOptions *
+move_options_new (GimpToolInfo *tool_info)
+{
+  MoveOptions *options;
+  GtkWidget   *vbox;
+  GtkWidget   *frame;
+ 
+  options = g_new0 (MoveOptions, 1);
+
+  tool_options_init ((GimpToolOptions *) options, tool_info);
+
+  ((GimpToolOptions *) options)->reset_func = move_options_reset;
+
+  options->move_current = options->move_current_d = FALSE;
+  options->move_mask    = options->move_mask_d    = FALSE;
+
+  /*  the main vbox  */
+  vbox = options->tool_options.main_vbox;
+
+  /*  tool toggle  */
+  frame = gimp_radio_group_new2 (TRUE, _("Tool Toggle (<Ctrl>)"),
+                                 G_CALLBACK (gimp_radio_button_update),
+                                 &options->move_current,
+                                 GINT_TO_POINTER (options->move_current),
+
+                                 _("Pick a Layer to Move"),
+                                 GINT_TO_POINTER (FALSE),
+                                 &options->move_current_w[0],
+
+                                 _("Move Current Layer"),
+                                 GINT_TO_POINTER (TRUE),
+                                 &options->move_current_w[1],
+
+                                 NULL);
+
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  /*  move mask  */
+  frame = gimp_radio_group_new2 (TRUE, _("Move Mode (<Alt>)"),
+                                 G_CALLBACK (gimp_radio_button_update),
+                                 &options->move_mask,
+                                 GINT_TO_POINTER (options->move_mask),
+
+                                 _("Move Pixels"),
+                                 GINT_TO_POINTER (FALSE),
+                                 &options->move_mask_w[0],
+
+                                 _("Move Selection Outline"),
+                                 GINT_TO_POINTER (TRUE),
+                                 &options->move_mask_w[1],
+
+                                 NULL);
+
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  return (GimpToolOptions *) options;
+}
+
+static void
+move_options_reset (GimpToolOptions *tool_options)
+{
+  MoveOptions *options;
+
+  options = (MoveOptions *) tool_options;
+
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->move_current_w[0]),
+                               GINT_TO_POINTER (options->move_current_d));
+
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->move_mask_w[0]),
+                               GINT_TO_POINTER (options->move_mask_d));
 }

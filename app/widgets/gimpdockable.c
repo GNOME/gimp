@@ -156,10 +156,8 @@ gimp_dockable_style_set (GtkWidget *widget,
   gint content_spacing;
 
   gtk_widget_style_get (widget,
-                        "content_border",
-                        &content_border,
-                        "content_spacing",
-                        &content_spacing,
+                        "content_border",  &content_border,
+                        "content_spacing", &content_spacing,
 			NULL);
 
   gtk_container_set_border_width (GTK_CONTAINER (widget), content_border);

@@ -411,7 +411,8 @@ gimp_eraser_tool_options_new (GimpToolInfo *tool_info)
   gtk_widget_show (options->hard_w);
 
   /* the anti_erase toggle */
-  options->anti_erase_w = gtk_check_button_new_with_label (_("Anti Erase"));
+  options->anti_erase_w =
+    gtk_check_button_new_with_label (_("Anti Erase (<Ctrl>)"));
   gtk_box_pack_start (GTK_BOX (vbox), options->anti_erase_w, FALSE, FALSE, 0);
   g_signal_connect (G_OBJECT (options->anti_erase_w), "toggled",
                     G_CALLBACK (gimp_toggle_button_update),

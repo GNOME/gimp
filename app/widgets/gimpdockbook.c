@@ -481,30 +481,45 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
 						   "/Auto Follow Active Image");
 
         /*  yes, this is insane  */
-        if (preview_size >= 128)
+        if (preview_size >= GIMP_PREVIEW_SIZE_GIGANTIC)
+          {
+            size_widget = gtk_item_factory_get_widget (ifactory,
+                                                       "/Preview Size/Gigantic");
+          }
+        if (preview_size >= GIMP_PREVIEW_SIZE_ENORMOUS)
           {
             size_widget = gtk_item_factory_get_widget (ifactory,
                                                        "/Preview Size/Enormous");
           }
-        else if (preview_size >= 64)
+        else if (preview_size >= GIMP_PREVIEW_SIZE_HUGE)
           {
             size_widget = gtk_item_factory_get_widget (ifactory,
                                                        "/Preview Size/Huge");
           }
-        else if (preview_size >= 48)
+        else if (preview_size >= GIMP_PREVIEW_SIZE_EXTRA_LARGE)
+          {
+            size_widget = gtk_item_factory_get_widget (ifactory,
+                                                       "/Preview Size/Extra Large");
+          }
+        else if (preview_size >= GIMP_PREVIEW_SIZE_LARGE)
           {
             size_widget = gtk_item_factory_get_widget (ifactory,
                                                        "/Preview Size/Large");
           }
-        else if (preview_size >= 32)
+        else if (preview_size >= GIMP_PREVIEW_SIZE_MEDIUM)
           {
             size_widget = gtk_item_factory_get_widget (ifactory,
                                                        "/Preview Size/Medium");
           }
-        else if (preview_size >= 24)
+        else if (preview_size >= GIMP_PREVIEW_SIZE_SMALL)
           {
             size_widget = gtk_item_factory_get_widget (ifactory,
                                                        "/Preview Size/Small");
+          }
+        else if (preview_size >= GIMP_PREVIEW_SIZE_EXTRA_SMALL)
+          {
+            size_widget = gtk_item_factory_get_widget (ifactory,
+                                                       "/Preview Size/Extra Small");
           }
         else
           {

@@ -1403,7 +1403,8 @@ crop_options_new (GimpToolInfo *tool_info)
   gtk_widget_show (options->layer_only_w);
 
   /*  enlarge toggle  */
-  options->allow_enlarge_w = gtk_check_button_new_with_label (_("Allow Enlarging"));
+  options->allow_enlarge_w =
+    gtk_check_button_new_with_label (_("Allow Enlarging (<Alt>)"));
   gtk_box_pack_start (GTK_BOX (vbox), options->allow_enlarge_w,
 		      FALSE, FALSE, 0);
   g_signal_connect (G_OBJECT (options->allow_enlarge_w), "toggled",
@@ -1414,7 +1415,7 @@ crop_options_new (GimpToolInfo *tool_info)
   gtk_widget_show (options->allow_enlarge_w);
 
   /*  tool toggle  */
-  frame = gimp_radio_group_new2 (TRUE, _("Tool Toggle"),
+  frame = gimp_radio_group_new2 (TRUE, _("Tool Toggle (<Ctrl>)"),
 				 G_CALLBACK (gimp_radio_button_update),
 				 &options->type,
                                  GINT_TO_POINTER (options->type),

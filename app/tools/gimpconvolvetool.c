@@ -721,7 +721,7 @@ convolve_options_new (GimpToolInfo *tool_info)
   gtk_widget_show (scale);
   gtk_widget_show (hbox);
 
-  frame = gimp_radio_group_new2 (TRUE, _("Convolve Type"),
+  frame = gimp_radio_group_new2 (TRUE, _("Convolve Type (<Ctrl>)"),
 				 G_CALLBACK (gimp_radio_button_update),
 				 &options->type,
                                  GINT_TO_POINTER (options->type),

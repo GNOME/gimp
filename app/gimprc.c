@@ -209,8 +209,8 @@ GimpRc gimprc =
   /* resize_windows_on_zoom    */  FALSE,
   /* resize_windows_on_resize  */  FALSE,
   /* no_cursor_updating        */  FALSE,
-  /* preview_size              */  32,
-  /* nav_preview_size          */  112,
+  /* preview_size              */  GIMP_PREVIEW_SIZE_SMALL,
+  /* nav_preview_size          */  GIMP_PREVIEW_SIZE_HUGE,
   /* show_rulers               */  TRUE,
   /* show_statusbar            */  TRUE,
   /* auto_save                 */  TRUE,
@@ -1306,15 +1306,23 @@ parse_preview_size (gpointer val1p,
       if (strcmp (token_sym, "none") == 0)
 	*((gint *) val1p) = 0;
       else if (strcmp (token_sym, "tiny") == 0)
-	*((gint *) val1p) = 24;
+	*((gint *) val1p) = GIMP_PREVIEW_SIZE_TINY;
+      else if (strcmp (token_sym, "extra-small") == 0)
+	*((gint *) val1p) = GIMP_PREVIEW_SIZE_EXTRA_SMALL;
       else if (strcmp (token_sym, "small") == 0)
-	*((gint *) val1p) = 32;
+	*((gint *) val1p) = GIMP_PREVIEW_SIZE_SMALL;
       else if (strcmp (token_sym, "medium") == 0)
-	*((gint *) val1p) = 48;
+	*((gint *) val1p) = GIMP_PREVIEW_SIZE_MEDIUM;
       else if (strcmp (token_sym, "large") == 0)
-	*((gint *) val1p) = 64;
+	*((gint *) val1p) = GIMP_PREVIEW_SIZE_LARGE;
+      else if (strcmp (token_sym, "extra-large") == 0)
+	*((gint *) val1p) = GIMP_PREVIEW_SIZE_EXTRA_LARGE;
       else if (strcmp (token_sym, "huge") == 0)
-	*((gint *) val1p) = 128;
+	*((gint *) val1p) = GIMP_PREVIEW_SIZE_HUGE;
+      else if (strcmp (token_sym, "enorous") == 0)
+	*((gint *) val1p) = GIMP_PREVIEW_SIZE_ENORMOUS;
+      else if (strcmp (token_sym, "gigantic") == 0)
+	*((gint *) val1p) = GIMP_PREVIEW_SIZE_GIGANTIC;
       else
 	*((gint *) val1p) = 0;
     }
@@ -1345,11 +1353,11 @@ parse_nav_preview_size (gpointer val1p,
       if (strcmp (token_sym, "none") == 0)
  	*((gint *) val1p) = 0;
       else if (strcmp (token_sym, "small") == 0)
-	*((gint *) val1p) = 48;
+	*((gint *) val1p) = GIMP_PREVIEW_SIZE_MEDIUM;
       else if (strcmp (token_sym, "medium") == 0)
-	*((gint *) val1p) = 80;
+	*((gint *) val1p) = GIMP_PREVIEW_SIZE_EXTRA_LARGE;
       else if (strcmp (token_sym, "large") == 0)
-	*((gint *) val1p) = 112;
+	*((gint *) val1p) = GIMP_PREVIEW_SIZE_HUGE;
       else
 	*((gint *) val1p) = 0;
     }
@@ -2999,15 +3007,23 @@ preview_size_to_str (gpointer val1p,
 
   size = *((gint *) val1p);
 
-  if (size >= 128)
+  if (size >= GIMP_PREVIEW_SIZE_GIGANTIC)
+    return g_strdup ("gigantic");
+  else if (size >= GIMP_PREVIEW_SIZE_ENORMOUS)
+    return g_strdup ("enormous");
+  else if (size >= GIMP_PREVIEW_SIZE_HUGE)
     return g_strdup ("huge");
-  else if (size >= 64)
+  else if (size >= GIMP_PREVIEW_SIZE_EXTRA_LARGE)
+    return g_strdup ("extra-large");
+  else if (size >= GIMP_PREVIEW_SIZE_LARGE)
     return g_strdup ("large");
-  else if (size >= 48)
+  else if (size >= GIMP_PREVIEW_SIZE_MEDIUM)
     return g_strdup ("medium");
-  else if (size >= 32)
+  else if (size >= GIMP_PREVIEW_SIZE_SMALL)
     return g_strdup ("small");
-  else if (size >= 24)
+  else if (size >= GIMP_PREVIEW_SIZE_EXTRA_SMALL)
+    return g_strdup ("extra-small");
+  else if (size >= GIMP_PREVIEW_SIZE_TINY)
     return g_strdup ("tiny");
   else
     return g_strdup ("none");
@@ -3021,11 +3037,11 @@ nav_preview_size_to_str (gpointer val1p,
 
   size = *((gint *) val1p);
 
-  if (size >= 112)
+  if (size >= GIMP_PREVIEW_SIZE_HUGE)
     return g_strdup ("large");
-  else if (size >= 80)
+  else if (size >= GIMP_PREVIEW_SIZE_EXTRA_LARGE)
     return g_strdup ("medium");
-  else if (size >= 48)
+  else if (size >= GIMP_PREVIEW_SIZE_MEDIUM)
     return g_strdup ("small");
   else
     return g_strdup ("none");

@@ -466,7 +466,7 @@ magnify_options_new (GimpToolInfo *tool_info)
                     &(gimprc.resize_windows_on_zoom));
 
   /*  tool toggle  */
-  frame = gimp_radio_group_new2 (TRUE, _("Tool Toggle"),
+  frame = gimp_radio_group_new2 (TRUE, _("Tool Toggle (<Ctrl>)"),
                                  G_CALLBACK (gimp_radio_button_update),
                                  &options->type,
                                  GINT_TO_POINTER (options->type),

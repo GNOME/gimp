@@ -296,7 +296,7 @@ flip_options_new (GimpToolInfo *tool_info)
   vbox = options->tool_options.main_vbox;
 
   /*  tool toggle  */
-  frame = gimp_radio_group_new2 (TRUE, _("Tool Toggle"),
+  frame = gimp_radio_group_new2 (TRUE, _("Tool Toggle (<Ctrl>)"),
                                  G_CALLBACK (gimp_radio_button_update),
                                  &options->type,
                                  GINT_TO_POINTER (options->type),

@@ -412,7 +412,7 @@ bucket_options_new (GimpToolInfo *tool_info)
 
   /*  fill type  */
   frame =
-    gimp_radio_group_new2 (TRUE, _("Fill Type"),
+    gimp_radio_group_new2 (TRUE, _("Fill Type (<Ctrl>)"),
 			   G_CALLBACK (gimp_radio_button_update),
 			   &options->fill_mode,
 			   GINT_TO_POINTER (options->fill_mode),

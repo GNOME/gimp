@@ -243,10 +243,8 @@ gimp_container_view_style_set (GtkWidget *widget,
   view = GIMP_CONTAINER_VIEW (widget);
 
   gtk_widget_style_get (widget,
-                        "content_spacing",
-                        &content_spacing,
-			"button_spacing",
-			&button_spacing,
+                        "content_spacing", &content_spacing,
+			"button_spacing",  &button_spacing,
 			NULL);
 
   gtk_box_set_spacing (GTK_BOX (widget), content_spacing);

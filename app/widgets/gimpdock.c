@@ -34,8 +34,7 @@
 #include "gimpdockbook.h"
 
 
-#define GIMP_DOCK_MINIMAL_WIDTH    250
-#define GIMP_DOCK_SEPARATOR_HEIGHT 8
+#define GIMP_DOCK_MINIMAL_WIDTH 250
 
 
 static void        gimp_dock_class_init               (GimpDockClass  *klass);
@@ -44,6 +43,8 @@ static void        gimp_dock_init                     (GimpDock       *dock);
 static GtkWidget * gimp_dock_separator_new            (GimpDock       *dock);
 
 static void        gimp_dock_destroy                  (GtkObject      *object);
+static void        gimp_dock_style_set                (GtkWidget      *widget,
+                                                       GtkStyle       *prev_style);
 
 static gboolean    gimp_dock_separator_button_press   (GtkWidget      *widget,
 						       GdkEventButton *bevent,
@@ -109,12 +110,24 @@ static void
 gimp_dock_class_init (GimpDockClass *klass)
 {
   GtkObjectClass *object_class;
+  GtkWidgetClass *widget_class;
 
   object_class = GTK_OBJECT_CLASS (klass);
+  widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy = gimp_dock_destroy;
+  object_class->destroy   = gimp_dock_destroy;
+
+  widget_class->style_set = gimp_dock_style_set;
+
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_int ("separator_height",
+                                                             NULL, NULL,
+                                                             0,
+                                                             G_MAXINT,
+                                                             6,
+                                                             G_PARAM_READABLE));
 }
 
 static void
@@ -164,6 +177,35 @@ gimp_dock_destroy (GtkObject *object)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
+static void
+gimp_dock_style_set (GtkWidget *widget,
+                     GtkStyle  *prev_style)
+{
+  GList *children;
+  GList *list;
+  gint   separator_height;
+
+  gtk_widget_style_get (widget,
+                        "separator_height", &separator_height,
+                        NULL);
+
+  children = gtk_container_get_children (GTK_CONTAINER (widget));
+
+  for (list = children; list; list = g_list_next (list))
+    {
+      GtkWidget *child;
+
+      child = GTK_WIDGET (list->data);
+
+      if (GTK_IS_EVENT_BOX (child))
+        {
+          gtk_widget_set_usize (child, -1, separator_height);
+       }
+    }
+
+  g_list_free (children);
+}
+
 static GtkWidget *
 gimp_dock_separator_new (GimpDock *dock)
 {
@@ -171,7 +213,7 @@ gimp_dock_separator_new (GimpDock *dock)
   GtkWidget *frame;
 
   event_box = gtk_event_box_new ();
-  gtk_widget_set_usize (event_box, -1, GIMP_DOCK_SEPARATOR_HEIGHT);
+  gtk_widget_set_usize (event_box, -1, 6);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
