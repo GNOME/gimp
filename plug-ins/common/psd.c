@@ -674,8 +674,8 @@ dispatch_resID(guint ID, FILE *fd, guint32 *offset, guint32 Size)
 
 		  if (psd_image.num_aux_channels > MAX_CHANNELS)
 		    {
-		      g_message(_("\nPSD: Sorry - this image has too many aux "
-				"channels.  Report it to GIMP's bugzilla!\n"));
+		      g_message(_("PSD: Sorry - this image has too many aux "
+				  "channels.  Report it to GIMP's bugzilla!"));
 		      gimp_quit();
 		    }
 		}
@@ -967,8 +967,8 @@ do_layer_record(FILE *fd, guint32 *offset, gint layernum)
 
   if (psd_image.layer[layernum].num_channels > MAX_CHANNELS)
     {
-      g_message (_("\nPSD: Sorry - this image has too many channels.  "
-		   "Report it to GIMP's bugzilla!\n"));
+      g_message (_("PSD: Sorry - this image has too many channels.  "
+		   "Report it to GIMP's bugzilla!"));
       gimp_quit();
     }
   
@@ -997,7 +997,7 @@ do_layer_record(FILE *fd, guint32 *offset, gint layernum)
   
   if (strncmp(sig, "8BIM", 4)!=0)
     {
-      g_message (_("PSD: Error - layer blend signature is incorrect. :-(\n"));
+      g_message (_("PSD: Error - layer blend signature is incorrect. :-("));
       gimp_quit();
     }
 
@@ -1141,8 +1141,8 @@ do_layer_struct(FILE *fd, guint32 *offset)
 
   if (psd_image.num_layers > MAX_LAYERS)
     {
-      g_message (_("\nPSD: Sorry - this image has too many layers.  "
-		   "Report it to GIMP's bugzilla!\n"));
+      g_message (_("PSD: Sorry - this image has too many layers.  "
+		   "Report it to GIMP's bugzilla!"));
       gimp_quit();
     }
 
@@ -2312,7 +2312,7 @@ decode(long clen, long uclen, char * src, char * dst, int step)
       }
     if (l)
       {
-	g_warning("decode: %ld should be zero\n", (long)l);
+	g_warning("decode: %ld should be zero", (long)l);
       }
 
     w = PSDheader.rowlength;
