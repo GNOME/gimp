@@ -1,3 +1,10 @@
+2000-01-01 Garry R. Osgood <gosgood@idt.net>
+	Happy New Year.
+	*app/disp_callbacks.c Checked RGB/GRAY/INDEXED combinations
+ 	RE testing #4708. added gdisplay_update_title() to gdisp_drag_drop().
+        so that a display endowed with dropped layers won't 
+        continue its insistence on being empty. Nice fix, Sven. 
+
 Sat Jan  1 16:10:32 PST 2000 Manish Singh <yosh@gimp.org>
 
 	* Makefile.am: cosmetic fix

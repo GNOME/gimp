@@ -752,6 +752,7 @@ gdisplay_drag_drop (GtkWidget      *widget,
 	      return_val = TRUE;
 
 	      undo_push_group_end (dest_gimage);
+              gdisplay_update_title (gdisp);
 	    }
 	}
     }
