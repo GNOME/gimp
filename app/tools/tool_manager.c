@@ -341,7 +341,7 @@ tool_manager_key_press_active (Gimp        *gimp,
 
   if (tool_manager->active_tool)
     {
-      gimp_tool_arrow_key (tool_manager->active_tool,
+      gimp_tool_key_press (tool_manager->active_tool,
                            kevent,
                            gdisp);
     }

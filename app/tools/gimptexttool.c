@@ -192,7 +192,7 @@ gimp_text_tool_class_init (GimpTextToolClass *klass)
 
   tool_class->control       = gimp_text_tool_control;
   tool_class->button_press  = gimp_text_tool_button_press;
-  tool_class->arrow_key     = gimp_edit_selection_tool_arrow_key;
+  tool_class->key_press     = gimp_edit_selection_tool_key_press;
   tool_class->cursor_update = gimp_text_tool_cursor_update;
 }
 

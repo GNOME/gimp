@@ -39,7 +39,7 @@ void   init_edit_selection (GimpTool       *tool,
                             EditType        edit_type);
 
 
-void   gimp_edit_selection_tool_arrow_key (GimpTool       *tool,
+void   gimp_edit_selection_tool_key_press (GimpTool       *tool,
                                            GdkEventKey    *kevent,
                                            GimpDisplay    *gdisp);
 

@@ -74,7 +74,7 @@ static void     gimp_tool_real_motion         (GimpTool        *tool,
                                                guint32          time,
                                                GdkModifierType  state,
                                                GimpDisplay     *gdisp);
-static void     gimp_tool_real_arrow_key      (GimpTool        *tool,
+static void     gimp_tool_real_key_press      (GimpTool        *tool,
                                                GdkEventKey     *kevent,
                                                GimpDisplay     *gdisp);
 static void     gimp_tool_real_modifier_key   (GimpTool        *tool,
@@ -141,7 +141,7 @@ gimp_tool_class_init (GimpToolClass *klass)
   klass->button_press   = gimp_tool_real_button_press;
   klass->button_release = gimp_tool_real_button_release;
   klass->motion         = gimp_tool_real_motion;
-  klass->arrow_key      = gimp_tool_real_arrow_key;
+  klass->key_press      = gimp_tool_real_key_press;
   klass->modifier_key   = gimp_tool_real_modifier_key;
   klass->oper_update    = gimp_tool_real_oper_update;
   klass->cursor_update  = gimp_tool_real_cursor_update;
@@ -277,7 +277,7 @@ gimp_tool_real_motion (GimpTool        *tool,
 }
 
 static void
-gimp_tool_real_arrow_key (GimpTool    *tool,
+gimp_tool_real_key_press (GimpTool    *tool,
                           GdkEventKey *kevent,
                           GimpDisplay *gdisp)
 {
@@ -443,7 +443,7 @@ gimp_tool_set_focus_display (GimpTool    *tool,
 }
 
 void
-gimp_tool_arrow_key (GimpTool    *tool,
+gimp_tool_key_press (GimpTool    *tool,
                      GdkEventKey *kevent,
                      GimpDisplay *gdisp)
 {
@@ -451,7 +451,7 @@ gimp_tool_arrow_key (GimpTool    *tool,
   g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
   g_return_if_fail (gdisp == tool->focus_display);
 
-  GIMP_TOOL_GET_CLASS (tool)->arrow_key (tool, kevent, gdisp);
+  GIMP_TOOL_GET_CLASS (tool)->key_press (tool, kevent, gdisp);
 }
 
 static void

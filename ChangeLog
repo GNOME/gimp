@@ -1,3 +1,19 @@
+2004-06-12  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimptool.[ch]: renamed the "arrow_key" member
+	to "key_press", since it is now no longer about just the arrow
+	keys.
+
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpeditselectiontool.h
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimpselectiontool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimpvectortool.c
+	* app/tools/tool_manager.c: Changed accordingly.
+
 2004-06-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_init): add

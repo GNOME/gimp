@@ -113,7 +113,7 @@ static void    gimp_edit_selection_tool_motion         (GimpTool        *tool,
                                                         guint32          time,
                                                         GdkModifierType  state,
                                                         GimpDisplay     *gdisp);
-void           gimp_edit_selection_tool_arrow_key      (GimpTool        *tool,
+void           gimp_edit_selection_tool_key_press      (GimpTool        *tool,
                                                         GdkEventKey     *kevent,
                                                         GimpDisplay     *gdisp);
 
@@ -1052,7 +1052,7 @@ process_event_queue_keys (GdkEventKey *kevent,
 }
 
 void
-gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
+gimp_edit_selection_tool_key_press (GimpTool    *tool,
 				    GdkEventKey *kevent,
 				    GimpDisplay *gdisp)
 {

@@ -82,7 +82,7 @@ struct _GimpToolClass
                                GdkModifierType  state,
                                GimpDisplay     *gdisp);
 
-  void     (* arrow_key)      (GimpTool        *tool,
+  void     (* key_press)      (GimpTool        *tool,
                                GdkEventKey     *kevent,
                                GimpDisplay     *gdisp);
   void     (* modifier_key)   (GimpTool        *tool,
@@ -126,7 +126,7 @@ void          gimp_tool_motion             (GimpTool           *tool,
                                             GdkModifierType     state,
                                             GimpDisplay        *gdisp);
 
-void          gimp_tool_arrow_key          (GimpTool           *tool,
+void          gimp_tool_key_press          (GimpTool           *tool,
                                             GdkEventKey        *kevent,
                                             GimpDisplay        *gdisp);
 

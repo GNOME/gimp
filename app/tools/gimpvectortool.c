@@ -92,7 +92,7 @@ static void   gimp_vector_tool_motion          (GimpTool        *tool,
                                                 guint32          time,
                                                 GdkModifierType  state,
                                                 GimpDisplay     *gdisp);
-static void   gimp_vector_tool_arrow_key       (GimpTool        *tool,
+static void   gimp_vector_tool_key_press       (GimpTool        *tool,
                                                 GdkEventKey     *kevent,
                                                 GimpDisplay     *gdisp);
 static void   gimp_vector_tool_modifier_key    (GimpTool        *tool,
@@ -210,7 +210,7 @@ gimp_vector_tool_class_init (GimpVectorToolClass *klass)
   tool_class->button_press   = gimp_vector_tool_button_press;
   tool_class->button_release = gimp_vector_tool_button_release;
   tool_class->motion         = gimp_vector_tool_motion;
-  tool_class->arrow_key      = gimp_vector_tool_arrow_key;
+  tool_class->key_press      = gimp_vector_tool_key_press;
   tool_class->modifier_key   = gimp_vector_tool_modifier_key;
   tool_class->oper_update    = gimp_vector_tool_oper_update;
   tool_class->cursor_update  = gimp_vector_tool_cursor_update;
@@ -784,7 +784,7 @@ gimp_vector_tool_motion (GimpTool        *tool,
 }
 
 static void
-gimp_vector_tool_arrow_key (GimpTool     *tool,
+gimp_vector_tool_key_press (GimpTool     *tool,
                             GdkEventKey  *kevent,
                             GimpDisplay  *gdisp)
 {
