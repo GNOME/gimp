@@ -234,6 +234,8 @@
 #define GIMP_HELP_FILTER_RESHOW                   "gimp-filter-reshow"
 
 #define GIMP_HELP_TOOLBOX                         "gimp-toolbox"
+#define GIMP_HELP_TOOLBOX_COLOR_AREA              "gimp-toolbox-color-area"
+#define GIMP_HELP_TOOLBOX_INDICATOR_AREA          "gimp-toolbox-indicator-area"
 #define GIMP_HELP_TOOLBOX_DEFAULT_COLORS          "gimp-toolbox-default-colors"
 #define GIMP_HELP_TOOLBOX_SWAP_COLORS             "gimp-toolbox-swap-colors"
 
@@ -354,6 +356,8 @@
 #define GIMP_HELP_PREFS_FOLDERS_THEMES            "gimp-prefs-folders-themes"
 
 #define GIMP_HELP_DOCK                            "gimp-dock"
+#define GIMP_HELP_DOCK_IMAGE_MENU                 "gimp-dock-image-menu"
+#define GIMP_HELP_DOCK_AUTO_BUTTON                "gimp-dock-auto-button"
 #define GIMP_HELP_DOCK_TAB_ADD                    "gimp-dock-tab-add"
 #define GIMP_HELP_DOCK_TAB_REMOVE                 "gimp-dock-tab-remove"
 #define GIMP_HELP_DOCK_PREVIEW_SIZE               "gimp-dock-preview-size"

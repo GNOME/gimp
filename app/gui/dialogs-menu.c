@@ -169,10 +169,12 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
 
   { { N_("/Show Image _Menu"), NULL,
       dialogs_toggle_image_menu_cmd_callback, 0, "<ToggleItem>" },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_DOCK_IMAGE_MENU, NULL },
   { { N_("/Auto Follow Active _Image"), NULL,
       dialogs_toggle_auto_cmd_callback, 0, "<ToggleItem>" },
-    NULL, NULL, NULL }
+    NULL,
+    GIMP_HELP_DOCK_AUTO_BUTTON, NULL }
 };
 
 #undef ADD_TAB

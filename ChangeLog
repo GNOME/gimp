@@ -1,5 +1,14 @@
 2003-08-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimphelp-ids.h: added some toolbox and dock related
+	help IDs.
+
+	* app/gui/dialogs-menu.c
+	* app/widgets/gimpimagedock.c
+	* app/widgets/gimptoolbox.c: use them.
+
+2003-08-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/helpbrowser/helpbrowser.c: some cleanup and fixes before
 	porting to the new help ID based system. Definitely broken at the
 	moment.

@@ -37,6 +37,7 @@
 #include "gimpcontainermenuimpl.h"
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
+#include "gimphelp-ids.h"
 
 #include "gimp-intl.h"
 
@@ -169,6 +170,9 @@ gimp_image_dock_init (GimpImageDock *dock)
 		    G_CALLBACK (gtk_widget_destroyed),
 		    &dock->option_menu);
 
+  gimp_help_set_help_data (dock->option_menu, NULL,
+                           GIMP_HELP_DOCK_IMAGE_MENU);
+
   dock->auto_button = gtk_toggle_button_new_with_label (_("Auto"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dock->auto_button),
 				dock->auto_follow_active);
@@ -178,6 +182,9 @@ gimp_image_dock_init (GimpImageDock *dock)
   g_signal_connect (dock->auto_button, "clicked",
 		    G_CALLBACK (gimp_image_dock_auto_clicked),
 		    dock);
+
+  gimp_help_set_help_data (dock->auto_button, NULL,
+                           GIMP_HELP_DOCK_AUTO_BUTTON);
 }
 
 static void
@@ -309,6 +316,9 @@ gimp_image_dock_new (GimpDialogFactory *dialog_factory,
                               "Dock Context", NULL);
 
   gimp_dock_construct (GIMP_DOCK (image_dock), dialog_factory, context);
+
+  gimp_help_connect (GTK_WIDGET (image_dock), gimp_standard_help_func,
+                     GIMP_HELP_DOCK, NULL);
 
   gimp_context_define_properties (context,
 				  GIMP_CONTEXT_ALL_PROPS_MASK &

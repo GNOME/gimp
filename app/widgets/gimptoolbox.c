@@ -189,9 +189,6 @@ gimp_toolbox_init (GimpToolbox *toolbox)
   gtk_window_add_accel_group (GTK_WINDOW (toolbox),
                               GTK_ITEM_FACTORY (toolbox_factory)->accel_group);
 
-  gimp_help_connect (GTK_WIDGET (toolbox), gimp_standard_help_func,
-                     GIMP_HELP_TOOLBOX, NULL);
-
   toolbox->wbox = gtk_hwrap_box_new (FALSE);
   gtk_wrap_box_set_justify (GTK_WRAP_BOX (toolbox->wbox), GTK_JUSTIFY_TOP);
   gtk_wrap_box_set_line_justify (GTK_WRAP_BOX (toolbox->wbox),
@@ -446,6 +443,9 @@ gimp_toolbox_new (GimpDialogFactory *dialog_factory,
   toolbox = g_object_new (GIMP_TYPE_TOOLBOX, NULL);
 
   gimp_dock_construct (GIMP_DOCK (toolbox), dialog_factory, context);
+
+  gimp_help_connect (GTK_WIDGET (toolbox), gimp_standard_help_func,
+                     GIMP_HELP_TOOLBOX, NULL);
 
   /* We need to know when the current device changes, so we can update
    * the correct tool - to do this we connect to motion events.
@@ -727,7 +727,7 @@ toolbox_create_color_area (GimpToolbox *toolbox,
   gtk_container_set_border_width (GTK_CONTAINER (alignment), 3);
   gtk_container_add (GTK_CONTAINER (frame), alignment);
 
-  gimp_help_set_help_data (alignment, NULL, "#color_area");
+  gimp_help_set_help_data (alignment, NULL, GIMP_HELP_TOOLBOX_COLOR_AREA);
 
   col_area = gimp_toolbox_color_area_create (toolbox, 54, 42);
 
@@ -761,7 +761,7 @@ toolbox_create_indicator_area (GimpToolbox *toolbox,
   gtk_container_set_border_width (GTK_CONTAINER (alignment), 3);
   gtk_container_add (GTK_CONTAINER (frame), alignment);
 
-  gimp_help_set_help_data (alignment, NULL, "#indicator_area");
+  gimp_help_set_help_data (alignment, NULL, GIMP_HELP_TOOLBOX_INDICATOR_AREA);
 
   ind_area = gimp_toolbox_indicator_area_create (toolbox);
   gtk_container_add (GTK_CONTAINER (alignment), ind_area);
