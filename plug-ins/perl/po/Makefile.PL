@@ -64,5 +64,7 @@ $install
 uninstall-po ::
 $uninstall
 
+clean ::
+	test -f Makefile || mv -f Makefile.old Makefile
 XXX
 }
