@@ -1570,6 +1570,7 @@ gimp_image_transform_color (const GimpImage    *dest_gimage,
   GimpImageType dest_type;
 
   g_return_if_fail (GIMP_IS_IMAGE (dest_gimage));
+  g_return_if_fail (src_type != GIMP_INDEXED);
 
   dest_type = (dest_drawable ?
                gimp_drawable_type (dest_drawable) :

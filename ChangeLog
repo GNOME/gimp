@@ -1,3 +1,12 @@
+2003-09-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable.c: code cleanup.
+	(gimp_drawable_fill): use the INTENSITY() of the passed GimpRGB to
+	fill GIMP_GRAY drawables, not just the RED_PIX. Cleanup.
+
+	* app/core/gimpimage.c (gimp_image_transform_color):
+	added assertion for src_type != GIMP_INDEXED.
+
 2003-09-05  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_draw_grid):
@@ -22,7 +31,7 @@
 	colors here instead of calling map_to_color().
 
 	* app/core/gimpimage.[ch] (gimp_image_get_color): reordered
-	parameters src parameters are before dest parameters.
+	parameters so src parameters are before dest parameters.
 	Made the src color const.
 
 	(gimp_image_transform_color): reordered so src parameters are

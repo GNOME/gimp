@@ -677,11 +677,11 @@ void
 gimp_drawable_fill (GimpDrawable  *drawable,
 		    const GimpRGB *color)
 {
-  GimpItem    *item;
-  GimpImage   *gimage;
-  PixelRegion  destPR;
-  guchar       c[MAX_CHANNELS];
-  guchar       i;
+  GimpItem      *item;
+  GimpImage     *gimage;
+  GimpImageType  drawable_type;
+  PixelRegion    destPR;
+  guchar         c[MAX_CHANNELS];
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
@@ -690,41 +690,42 @@ gimp_drawable_fill (GimpDrawable  *drawable,
 
   g_return_if_fail (gimage != NULL);
 
-  switch (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable)))
+  drawable_type = gimp_drawable_type (drawable);
+
+  gimp_rgba_get_uchar (color,
+                       &c[RED_PIX],
+                       &c[GREEN_PIX],
+                       &c[BLUE_PIX],
+                       &c[ALPHA_PIX]);
+
+  switch (GIMP_IMAGE_TYPE_BASE_TYPE (drawable_type))
     {
     case GIMP_RGB:
-      gimp_rgba_get_uchar (color,
-			   &c[RED_PIX],
-			   &c[GREEN_PIX],
-			   &c[BLUE_PIX],
-			   &c[ALPHA_PIX]);
-      if (gimp_drawable_type (drawable) != GIMP_RGBA_IMAGE)
-	c[ALPHA_PIX] = 255;
+      if (drawable_type != GIMP_RGBA_IMAGE)
+	c[ALPHA_PIX] = OPAQUE_OPACITY;
       break;
 
     case GIMP_GRAY:
-      gimp_rgba_get_uchar (color,
-			   &c[GRAY_PIX],
-			   NULL,
-			   NULL,
-			   &c[ALPHA_G_PIX]);
-      if (gimp_drawable_type (drawable) != GIMP_GRAYA_IMAGE)
-	c[ALPHA_G_PIX] = 255;
+      c[GRAY_PIX] = INTENSITY (c[RED_PIX],
+                               c[GREEN_PIX],
+                               c[BLUE_PIX]);
+      c[ALPHA_G_PIX] = c[ALPHA_PIX];
+
+      if (drawable_type != GIMP_GRAYA_IMAGE)
+	c[ALPHA_G_PIX] = OPAQUE_OPACITY;
       break;
 
     case GIMP_INDEXED:
-      gimp_rgb_get_uchar (color,
-			  &c[RED_PIX],
-			  &c[GREEN_PIX],
-			  &c[BLUE_PIX]);
-      gimp_image_transform_color (gimage, drawable, &i, GIMP_RGB, c);
-      c[INDEXED_PIX] = i;
-      if (gimp_drawable_type (drawable) == GIMP_INDEXEDA_IMAGE)
-	gimp_rgba_get_uchar (color,
-			     NULL,
-			     NULL,
-			     NULL,
-			     &c[ALPHA_I_PIX]);
+      {
+        gint index;
+
+        gimp_image_transform_color (gimage, drawable, &i, GIMP_RGB, c);
+        c[INDEXED_PIX] = i;
+        c[ALPHA_I_PIX] = c[ALPHA_PIX];
+
+        if (drawable_type != GIMP_INDEXEDA_IMAGE)
+          c[ALPHA_I_PIX] = OPAQUE_OPACITY;
+      }
       break;
 
     default:
@@ -733,12 +734,9 @@ gimp_drawable_fill (GimpDrawable  *drawable,
       break;
     }
 
-  pixel_region_init (&destPR,
-		     gimp_drawable_data (drawable),
-		     0, 0,
-		     gimp_item_width  (item),
-		     gimp_item_height (item),
-		     TRUE);
+  pixel_region_init (&destPR, gimp_drawable_data (drawable),
+                     0, 0, gimp_item_width  (item), gimp_item_height (item),
+                     TRUE);
   color_region (&destPR, c);
 
   gimp_drawable_update (drawable,
@@ -756,27 +754,25 @@ gimp_drawable_fill_by_type (GimpDrawable *drawable,
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
-  color.a = GIMP_OPACITY_OPAQUE;
-
   switch (fill_type)
     {
     case GIMP_FOREGROUND_FILL:
       gimp_context_get_foreground (context, &color);
       break;
 
-    case  GIMP_BACKGROUND_FILL:
+    case GIMP_BACKGROUND_FILL:
       gimp_context_get_background (context, &color);
       break;
 
     case GIMP_WHITE_FILL:
-      gimp_rgb_set (&color, 1.0, 1.0, 1.0);
+      gimp_rgba_set (&color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
       break;
 
     case GIMP_TRANSPARENT_FILL:
       gimp_rgba_set (&color, 0.0, 0.0, 0.0, GIMP_OPACITY_TRANSPARENT);
       break;
 
-    case  GIMP_NO_FILL:
+    case GIMP_NO_FILL:
       return;
 
     default:
@@ -984,10 +980,12 @@ gimp_drawable_cmap (const GimpDrawable *drawable)
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
-  if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
-    return NULL;
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  return gimage->cmap;
+  if (gimage)
+    return gimage->cmap;
+
+  return NULL;
 }
 
 guchar *
@@ -995,17 +993,20 @@ gimp_drawable_get_color_at (GimpDrawable *drawable,
 			    gint          x,
 			    gint          y)
 {
-  Tile   *tile;
-  guchar *src;
-  guchar *dest;
+  GimpImage *gimage;
+  Tile      *tile;
+  guchar    *src;
+  guchar    *dest;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (gimp_item_get_image (GIMP_ITEM (drawable)) ||
-			! gimp_drawable_is_indexed (drawable), NULL);
+
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   /* do not make this a g_return_if_fail() */
-  if (! (x >= 0 && x < GIMP_ITEM (drawable)->width &&
-         y >= 0 && y < GIMP_ITEM (drawable)->height))
+  if (x < 0 || x >= GIMP_ITEM (drawable)->width ||
+      y < 0 || y >= GIMP_ITEM (drawable)->height)
     return NULL;
 
   dest = g_new (guchar, 5);
@@ -1014,13 +1015,12 @@ gimp_drawable_get_color_at (GimpDrawable *drawable,
 				TRUE, FALSE);
   src = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
 
-  gimp_image_get_color (gimp_item_get_image (GIMP_ITEM (drawable)),
-			gimp_drawable_type (drawable), src, dest);
+  gimp_image_get_color (gimage, gimp_drawable_type (drawable), src, dest);
 
   if (GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_drawable_type (drawable)))
-    dest[3] = src[gimp_drawable_bytes (drawable) - 1];
+    dest[ALPHA_PIX] = src[gimp_drawable_bytes (drawable) - 1];
   else
-    dest[3] = OPAQUE_OPACITY;
+    dest[ALPHA_PIX] = OPAQUE_OPACITY;
 
   if (gimp_drawable_is_indexed (drawable))
     dest[4] = src[0];
