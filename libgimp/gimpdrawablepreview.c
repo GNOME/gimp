@@ -23,8 +23,11 @@
 
 #include <gtk/gtk.h>
 
-#include "gimpuitypes.h"
 #include "libgimpwidgets/gimpwidgets.h"
+
+#include "gimpuitypes.h"
+
+#include "gimp.h"
 
 #include "gimpdrawablepreview.h"
 
@@ -224,25 +227,28 @@ gimp_drawable_preview_new_with_toggle (GimpDrawable *drawable,
 
 /**
  * gimp_drawable_preview_draw:
+ * @preview: a #GimpDrawablePreview widget
+ * @buf:
  *
+ * Since: GIMP 2.2
  **/
 void
-gimp_drawable_preview_draw (GimpDrawablePreview *drawable_preview,
+gimp_drawable_preview_draw (GimpDrawablePreview *preview,
                             guchar              *buf)
 {
-  GimpPreview  *preview;
+  GimpPreview  *gimp_preview;
   GimpDrawable *drawable;
 
-  g_return_if_fail (GIMP_IS_DRAWABLE_PREVIEW (drawable_preview));
+  g_return_if_fail (GIMP_IS_DRAWABLE_PREVIEW (preview));
   g_return_if_fail (buf != NULL);
 
-  preview  = GIMP_PREVIEW (drawable_preview);
-  drawable = drawable_preview->drawable;
+  gimp_preview = GIMP_PREVIEW (preview);
+  drawable     = preview->drawable;
 
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview->area),
-                          0, 0, preview->width, preview->height,
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (gimp_preview->area),
+                          0, 0, gimp_preview->width, gimp_preview->height,
                           gimp_drawable_type (drawable->drawable_id),
                           buf,
-                          preview->width * drawable->bpp);
+                          gimp_preview->width * drawable->bpp);
 }
 

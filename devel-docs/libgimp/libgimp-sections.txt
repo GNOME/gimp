@@ -683,6 +683,24 @@ gimp_drawable_get_thumbnail
 </SECTION>
 
 <SECTION>
+<FILE>gimpdrawablepreview</FILE>
+<TITLE>GimpDrawablePreview</TITLE>
+GimpDrawablePreview
+gimp_drawable_preview_new
+gimp_drawable_preview_new_with_toggle
+gimp_drawable_preview_draw
+<SUBSECTION Standard>
+GimpDrawablePreviewClass
+GIMP_DRAWABLE_PREVIEW
+GIMP_IS_DRAWABLE_PREVIEW
+GIMP_TYPE_DRAWABLE_PREVIEW
+gimp_drawable_preview_get_type
+GIMP_DRAWABLE_PREVIEW_CLASS
+GIMP_IS_DRAWABLE_PREVIEW_CLASS
+GIMP_DRAWABLE_PREVIEW_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpdrawablecombobox</FILE>
 GimpDrawableConstraintFunc
 gimp_drawable_combo_box_new

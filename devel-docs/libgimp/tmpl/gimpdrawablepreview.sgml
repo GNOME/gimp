@@ -1,0 +1,50 @@
+<!-- ##### SECTION Title ##### -->
+GimpDrawablePreview
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT GimpDrawablePreview ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION gimp_drawable_preview_new ##### -->
+<para>
+
+</para>
+
+@drawable: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_preview_new_with_toggle ##### -->
+<para>
+
+</para>
+
+@drawable: 
+@toggle: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_preview_draw ##### -->
+<para>
+
+</para>
+
+@preview: 
+@buf: 
+
+

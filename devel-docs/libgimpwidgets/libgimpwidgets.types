@@ -1,8 +1,5 @@
 #include <gtk/gtk.h>
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
-
-#include "devel-docs/libgimpwidgets/libgimpwidgets-include.c"
+#include <libgimpwidgets/gimpwidgets.h>
 
 gimp_button_get_type
 gimp_cell_renderer_color_get_type
@@ -30,5 +27,6 @@ gimp_path_editor_get_type
 gimp_pick_button_get_type
 gimp_pixmap_get_type
 gimp_preview_area_get_type
+gimp_preview_get_type
 gimp_size_entry_get_type
 gimp_unit_menu_get_type

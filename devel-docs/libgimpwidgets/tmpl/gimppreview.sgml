@@ -1,0 +1,76 @@
+<!-- ##### SECTION Title ##### -->
+GimpPreview
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT GimpPreview ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SIGNAL GimpPreview::updated ##### -->
+<para>
+
+</para>
+
+@gimppreview: the object which received the signal.
+
+<!-- ##### ARG GimpPreview:show-toggle-preview ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpPreview:update-preview ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_preview_get_width ##### -->
+<para>
+
+</para>
+
+@preview: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_preview_get_height ##### -->
+<para>
+
+</para>
+
+@preview: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_preview_get_position ##### -->
+<para>
+
+</para>
+
+@preview: 
+@x: 
+@y: 
+
+
+<!-- ##### FUNCTION gimp_preview_show_update_toggle ##### -->
+<para>
+
+</para>
+
+@preview: 
+@show_update: 
+
+

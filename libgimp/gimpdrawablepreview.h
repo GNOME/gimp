@@ -22,8 +22,7 @@
 #ifndef __GIMP_DRAWABLE_PREVIEW_H__
 #define __GIMP_DRAWABLE_PREVIEW_H__
 
-#include "libgimp/gimp.h"
-#include "libgimpwidgets/gimppreview.h"
+#include <libgimpwidgets/gimppreview.h>
 
 G_BEGIN_DECLS
 

@@ -39,7 +39,7 @@ HTML_IMAGES = \
 content_files =
 
 # Other files to distribute
-extra_files = libgimpwidgets-include.c
+extra_files =
 
 # CFLAGS and LDFLAGS for compiling scan program. Only needed
 # if $(DOC_MODULE).types is non-empty.
@@ -54,8 +54,6 @@ GTKDOC_LIBS = \
         $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la      \
         $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la        \
         $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la  \
-        $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la		      \
-        $(top_builddir)/libgimp/libgimpui-$(GIMP_API_VERSION).la	      \
 	@GTK_LIBS@
 
 GTKDOC_CC = $(LIBTOOL) --mode=compile $(CC)

@@ -1,0 +1,5 @@
+#include <gtk/gtk.h>
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
+gimp_drawable_preview_get_type

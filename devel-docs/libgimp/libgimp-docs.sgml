@@ -71,8 +71,15 @@
 
   <part id="libgimpui">
     <title>GIMP User Interface Library</title>
+
+    <chapter id="libgimpui-hierarchy">
+      <title>Object Hierarchy</title>
+      <xi:include href="xml/tree_index.sgml" />
+    </chapter>    
+
     <xi:include href="xml/gimpui.xml" />
     <xi:include href="xml/gimpexport.xml" />
+    <xi:include href="xml/gimpdrawablepreview.xml" />
     <xi:include href="xml/gimpdrawablecombobox.xml" />
     <xi:include href="xml/gimpimagecombobox.xml" />
     <xi:include href="xml/gimppixbuf.xml" />

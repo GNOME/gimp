@@ -3,6 +3,8 @@ Makefile.in
 deprecated
 libgimp.args
 libgimp.hierarchy
+libgimp.interfaces
+libgimp.prerequisites
 libgimp.signals
 libgimp-decl.txt
 libgimp-decl-list.txt

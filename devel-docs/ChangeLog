@@ -1,3 +1,22 @@
+2004-08-31  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/Makefile.am
+	* libgimp/libgimp-docs.sgml
+	* libgimp/libgimp-sections.txt
+	* libgimp/libgimp.types
+	* libgimp/tmpl/gimpdrawablepreview.sgml: updated for
+	GimpDrawablePreview
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/libgimpwidgets-include.c: removed this file, it
+	isn't needed since libgimpwidgets doesn't need to be linked
+	against libgimp.
+
+	* libgimpwidgets/libgimpwidgets-docs.sgml
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/libgimpwidgets.types
+	* libgimpwidgets/tmpl/gimppreview.sgml: updated for GimpPreview.
+
 2004-08-30  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/libgimp-sections.txt

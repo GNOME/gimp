@@ -22,15 +22,15 @@
 #ifndef __GIMP_UI_TYPES_H__
 #define __GIMP_UI_TYPES_H__
 
+#include <libgimpwidgets/gimpwidgetstypes.h>
+
 G_BEGIN_DECLS
 
 /* For information look into the html documentation */
 
 
-/* empty at the moment because most stuff went to libgimpwidgets.
- *
- * left here because it will contain stuff again  --Mitch
- */
+typedef struct _GimpDrawablePreview  GimpDrawablePreview;
+
 
 G_END_DECLS
 

@@ -794,6 +794,25 @@ GIMP_PREVIEW_AREA_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimppreview</FILE>
+<TITLE>GimpPreview</TITLE>
+GimpPreview
+gimp_preview_get_width
+gimp_preview_get_height
+gimp_preview_get_position
+gimp_preview_show_update_toggle
+<SUBSECTION Standard>
+GimpPreviewClass
+GIMP_PREVIEW
+GIMP_IS_PREVIEW
+GIMP_TYPE_PREVIEW
+gimp_preview_get_type
+GIMP_PREVIEW_CLASS
+GIMP_IS_PREVIEW_CLASS
+GIMP_PREVIEW_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpoldwidgets</FILE>
 gimp_int_option_menu_new
 gimp_int_option_menu_set_history
