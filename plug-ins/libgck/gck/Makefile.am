@@ -11,7 +11,6 @@ libgck_la_SOURCES = \
 gckinclude_HEADERS = \
 	gck.h		\
 	gckcolor.h	\
-	gckimage.h	\
 	gcktypes.h	\
 	gckui.h
 

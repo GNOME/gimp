@@ -1,5 +1,10 @@
 2000-02-14  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/libgck/gck/Makefile.am
+	* plug-ins/libgck/gck/gckimage.h: removed.
+
+2000-02-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* app/vector2d.[ch]: removed.
 
