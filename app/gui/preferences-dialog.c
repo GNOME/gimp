@@ -473,8 +473,7 @@ prefs_keyboard_shortcuts_dialog (GtkWidget *widget,
                             gimp_standard_help_func,
                             GIMP_HELP_PREFS_INTERFACE,
 
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CLOSE, GTK_RESPONSE_OK,
 
                             NULL);
 

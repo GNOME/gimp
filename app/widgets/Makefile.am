@@ -35,6 +35,8 @@ libappwidgets_a_sources = \
 	gimpbrushselect.h		\
 	gimpbufferview.c		\
 	gimpbufferview.h		\
+	gimpcellrendereraccel.c		\
+	gimpcellrendereraccel.h		\
 	gimpcellrenderertoggle.c	\
 	gimpcellrenderertoggle.h	\
 	gimpcellrendererviewable.c	\

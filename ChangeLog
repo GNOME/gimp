@@ -1,3 +1,25 @@
+2004-07-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpmarshal.list
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpcellrendereraccel.[ch]: new cell renderer
+	which displays an accelerator and allows to edit it (ripped
+	out of libegg and modified).
+
+	* app/widgets/gimpactionview.c: use the new renderer and connect
+	to its "accel-edited" signal (its callback is one huge mess that
+	needs to be cleaned up). Added ugly hack to work around GTK+ API
+	limitation that seems to prevent implementing a shortcut editor in
+	a sane way.
+
+	* app/actions/file-actions.c
+	* app/actions/image-actions.c
+	* app/actions/tools-actions.c: added ugly hacks here, too.
+
+	* app/gui/preferences-dialog.c: relaced Cancel/Ok in the shortcut
+	editor by Close.
+
 2004-07-20  Sven Neumann  <sven@gimp.org>
 
 	* configure.in (ALL_LINGUAS): added back "pa" for Punjabi now that

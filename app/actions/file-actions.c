@@ -72,7 +72,7 @@ static GimpActionEntry file_actions[] =
     GIMP_HELP_FILE_OPEN },
 
   { "file-open-from-image", GTK_STOCK_OPEN,
-    N_("_Open..."), "<control>O", NULL,
+    N_("_Open..."), NULL, NULL,
     G_CALLBACK (file_open_from_image_cmd_callback),
     GIMP_HELP_FILE_OPEN },
 
@@ -116,6 +116,7 @@ static GimpActionEntry file_actions[] =
 void
 file_actions_setup (GimpActionGroup *group)
 {
+  GtkAction           *action;
   GimpEnumActionEntry *entries;
   gint                 n_entries;
   gint                 i;
@@ -123,6 +124,16 @@ file_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_actions (group,
                                  file_actions,
                                  G_N_ELEMENTS (file_actions));
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                        "file-open-from-image");
+  gtk_action_set_accel_path (action, "<Actions>/file/file-open");
+
+#ifdef __GNUC__
+#warning FIXME: remove accel_path hack
+#endif
+  g_object_set_data (G_OBJECT (action), "gimp-accel-path",
+                     "<Actions>/file/file-open");
 
   n_entries = GIMP_GUI_CONFIG (group->gimp->config)->last_opened_size;
 
