@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-10-24 03:27+0200\n"
-"PO-Revision-Date: 2002-10-24 03:31+0200\n"
+"POT-Creation-Date: 2002-10-29 01:04+0100\n"
+"PO-Revision-Date: 2002-10-29 01:05+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -467,32 +467,27 @@ msgstr "Endast grå"
 msgid "Black Only"
 msgstr "Endast svart"
 
-#: app/base/base-enums.c:113 app/gui/color-notebook.c:267
-#: app/widgets/gimpwidgets-constructors.c:68
+#: app/base/base-enums.c:113 app/widgets/gimpwidgets-constructors.c:68
 #: app/widgets/gimpwidgets-constructors.c:98
 msgid "Value"
 msgstr "Värde"
 
-#: app/base/base-enums.c:114 app/gui/color-notebook.c:268
-#: app/tools/gimpcolorbalancetool.c:306
+#: app/base/base-enums.c:114 app/tools/gimpcolorbalancetool.c:306
 #: app/widgets/gimpcomponentlistitem.c:481
 msgid "Red"
 msgstr "Röd"
 
-#: app/base/base-enums.c:115 app/gui/color-notebook.c:269
-#: app/tools/gimpcolorbalancetool.c:313
+#: app/base/base-enums.c:115 app/tools/gimpcolorbalancetool.c:313
 #: app/widgets/gimpcomponentlistitem.c:482
 msgid "Green"
 msgstr "Grön"
 
-#: app/base/base-enums.c:116 app/gui/color-notebook.c:270
-#: app/tools/gimpcolorbalancetool.c:320
+#: app/base/base-enums.c:116 app/tools/gimpcolorbalancetool.c:320
 #: app/widgets/gimpcomponentlistitem.c:483
 msgid "Blue"
 msgstr "Blå"
 
-#: app/base/base-enums.c:117 app/gui/color-notebook.c:271
-#: app/widgets/gimpcomponentlistitem.c:486
+#: app/base/base-enums.c:117 app/widgets/gimpcomponentlistitem.c:486
 msgid "Alpha"
 msgstr "Alfa"
 
@@ -1010,7 +1005,7 @@ msgid "Text Layer"
 msgstr "Textlager"
 
 #: app/core/gimpimage.c:1040 app/core/gimppalette-import.c:203
-#: app/core/gimppalette.c:536 app/gui/palette-import-dialog.c:598
+#: app/core/gimppalette.c:536 app/gui/palette-import-dialog.c:591
 #: app/pdb/image_cmds.c:3632 app/widgets/gimpdatafactoryview.c:260
 msgid "Untitled"
 msgstr "Namnlös"
@@ -1640,70 +1635,21 @@ msgstr "Kanalattribut"
 msgid "Edit Channel Attributes"
 msgstr "Redigera kanalattribut"
 
-#. Hue
-#: app/gui/color-notebook.c:249
-msgid "H"
-msgstr "N"
-
-#. Saturation
-#: app/gui/color-notebook.c:251
-msgid "S"
-msgstr "M"
-
-#. Value
-#: app/gui/color-notebook.c:253
-msgid "V"
-msgstr "V"
-
-#. Red
-#: app/gui/color-notebook.c:255
-msgid "R"
-msgstr "R"
-
-#. Green
-#: app/gui/color-notebook.c:257
-msgid "G"
-msgstr "G"
-
-#. Blue
-#: app/gui/color-notebook.c:259
-msgid "B"
-msgstr "B"
-
-#. Alpha
-#: app/gui/color-notebook.c:261
-msgid "A"
-msgstr "A"
-
-#: app/gui/color-notebook.c:265 app/widgets/gimpwidgets-constructors.c:65
-#: app/widgets/gimpwidgets-constructors.c:95
-msgid "Hue"
-msgstr "Nyans"
-
-#: app/gui/color-notebook.c:266 app/widgets/gimpwidgets-constructors.c:66
-#: app/widgets/gimpwidgets-constructors.c:96
-msgid "Saturation"
-msgstr "Mättnad"
-
-#: app/gui/color-notebook.c:431
+#: app/gui/color-notebook.c:399
 msgid "Current:"
 msgstr "Aktuell:"
 
-#: app/gui/color-notebook.c:452
+#: app/gui/color-notebook.c:420
 msgid "Old:"
 msgstr "Gammal:"
 
-#: app/gui/color-notebook.c:474
+#: app/gui/color-notebook.c:442
 msgid "Revert to old color"
 msgstr "Återgå till gammal färg"
 
-#: app/gui/color-notebook.c:578
+#: app/gui/color-notebook.c:516
 msgid "Add the current color to the color history"
 msgstr "Lägg till aktuell färg till färghistoriken"
-
-#: app/gui/color-notebook.c:638
-msgid "He_x Triplet:"
-msgstr "He_x-triplett:"
 
 #: app/gui/colormap-editor-commands.c:108
 msgid "Edit Indexed Color"
@@ -2190,36 +2136,32 @@ msgid "Left Endpoint Color"
 msgstr "Vänstra ändpunktens färg"
 
 #: app/gui/gradient-editor-commands.c:90
-#, fuzzy
 msgid "Gradient Segment's Left Endpoint Color"
-msgstr "Vänstra ändpunktens färg"
+msgstr "Färgskalesegmentets vänstra ändpunktsfärg"
 
 #: app/gui/gradient-editor-commands.c:215
 msgid "Right Endpoint Color"
 msgstr "Högra ändpunktens färg"
 
 #: app/gui/gradient-editor-commands.c:217
-#, fuzzy
 msgid "Gradient Segment's Right Endpoint Color"
-msgstr "Högra ändpunktens färg"
+msgstr "Färgskalesegmentets högra ändpunktsfärg"
 
 #: app/gui/gradient-editor-commands.c:551
 msgid "Replicate Segment"
 msgstr "Replikera segment"
 
 #: app/gui/gradient-editor-commands.c:552
-#, fuzzy
 msgid "Replicate Gradient Segment"
-msgstr "Replikera segment"
+msgstr "Replikera färgskalesegment"
 
 #: app/gui/gradient-editor-commands.c:556
 msgid "Replicate Selection"
 msgstr "Replikera markering"
 
 #: app/gui/gradient-editor-commands.c:557
-#, fuzzy
 msgid "Replicate Gradient Selection"
-msgstr "Replikera markering"
+msgstr "Replikera markering av färgskala"
 
 #: app/gui/gradient-editor-commands.c:571
 msgid "Replicate"
@@ -2243,18 +2185,16 @@ msgid "Split Segment Uniformly"
 msgstr "Dela segment uniformt"
 
 #: app/gui/gradient-editor-commands.c:666
-#, fuzzy
 msgid "Split Gradient Segment Uniformly"
-msgstr "Dela segment uniformt"
+msgstr "Dela färgskalesegment uniformt"
 
 #: app/gui/gradient-editor-commands.c:670
 msgid "Split Segments Uniformly"
 msgstr "Dela segmenten uniformt"
 
 #: app/gui/gradient-editor-commands.c:671
-#, fuzzy
 msgid "Split Gradient Segments Uniformly"
-msgstr "Dela segmenten uniformt"
+msgstr "Dela färgskalesegmenten uniformt"
 
 #: app/gui/gradient-editor-commands.c:686
 msgid "Split"
@@ -2294,9 +2234,8 @@ msgid "Split Segment at Midpoint"
 msgstr "Dela segment vid mittpunkt"
 
 #: app/gui/gradient-editor-commands.c:1101
-#, fuzzy
 msgid "Split Segment Uniformly..."
-msgstr "Dela segment uniformt"
+msgstr "Dela segment uniformt..."
 
 #: app/gui/gradient-editor-commands.c:1102
 msgid "Delete Segment"
@@ -2331,9 +2270,8 @@ msgid "Split Segments at Midpoints"
 msgstr "Dela segment vid mittpunkter"
 
 #: app/gui/gradient-editor-commands.c:1114
-#, fuzzy
 msgid "Split Segments Uniformly..."
-msgstr "Dela segmenten uniformt"
+msgstr "Dela segmenten uniformt..."
 
 #: app/gui/gradient-editor-commands.c:1115
 msgid "Delete Selection"
@@ -2485,7 +2423,7 @@ msgstr "X:"
 #: app/tools/gimpcolorpickertool.c:617 app/tools/gimpcolorpickertool.c:624
 #: app/tools/gimpcolorpickertool.c:642 app/tools/gimpcolorpickertool.c:663
 msgid "N/A"
-msgstr "E/T"
+msgstr "-"
 
 #. Red
 #: app/gui/info-window.c:218
@@ -3357,7 +3295,7 @@ msgstr "/Ta bort lager"
 
 #: app/gui/menus.c:1090
 msgid "/Layer Boundary Size..."
-msgstr "/Storlek på lager..."
+msgstr "/Storlek på lagergräns..."
 
 #: app/gui/menus.c:1095
 msgid "/Layer to Imagesize"
@@ -3937,7 +3875,7 @@ msgstr "Läs in"
 
 #: app/gui/module-browser.c:478
 msgid "Query"
-msgstr ""
+msgstr "Fråga"
 
 #: app/gui/module-browser.c:485
 msgid "Unload"
@@ -4029,58 +3967,58 @@ msgstr "Redigera palettfärg"
 msgid "Edit Color Palette Entry"
 msgstr "Redigera färgpalettpost"
 
-#: app/gui/palette-import-dialog.c:173
+#: app/gui/palette-import-dialog.c:166
 msgid "Import Palette"
 msgstr "Importera palett"
 
-#: app/gui/palette-import-dialog.c:175
+#: app/gui/palette-import-dialog.c:168
 msgid "Import a New Palette"
 msgstr "Importera en ny palett"
 
-#: app/gui/palette-import-dialog.c:182
+#: app/gui/palette-import-dialog.c:175
 msgid "_Import"
 msgstr "_Importera"
 
 #. The "Source" frame
-#: app/gui/palette-import-dialog.c:208
+#: app/gui/palette-import-dialog.c:201
 msgid "Select Source"
 msgstr "Välj källa"
 
-#: app/gui/palette-import-dialog.c:220
+#: app/gui/palette-import-dialog.c:213
 msgid "_Gradient"
 msgstr "_Färgskala"
 
-#: app/gui/palette-import-dialog.c:232
+#: app/gui/palette-import-dialog.c:225
 msgid "I_mage"
 msgstr "_Bild"
 
 #. The "Import" frame
-#: app/gui/palette-import-dialog.c:290
+#: app/gui/palette-import-dialog.c:283
 msgid "Import Options"
 msgstr "Importalternativ"
 
-#: app/gui/palette-import-dialog.c:304
+#: app/gui/palette-import-dialog.c:297
 msgid "New Import"
 msgstr "Ny import"
 
-#: app/gui/palette-import-dialog.c:306
+#: app/gui/palette-import-dialog.c:299
 msgid "Palette _Name:"
 msgstr "Palett_namn:"
 
-#: app/gui/palette-import-dialog.c:312
+#: app/gui/palette-import-dialog.c:305
 msgid "N_umber of Colors:"
 msgstr "_Antal färger:"
 
-#: app/gui/palette-import-dialog.c:325
+#: app/gui/palette-import-dialog.c:318
 msgid "C_olumns:"
 msgstr "K_olumner:"
 
-#: app/gui/palette-import-dialog.c:337
+#: app/gui/palette-import-dialog.c:330
 msgid "I_nterval:"
 msgstr "I_ntervall:"
 
 #. The "Preview" frame
-#: app/gui/palette-import-dialog.c:349
+#: app/gui/palette-import-dialog.c:342
 msgid "Preview"
 msgstr "Förhandsvisning"
 
@@ -4702,9 +4640,8 @@ msgid "Mask Opacity:"
 msgstr "Maskopacitet:"
 
 #: app/gui/resize-dialog.c:193
-#, fuzzy
 msgid "Scale Layer Options"
-msgstr "Alternativ för nytt lager"
+msgstr "Alternativ för skalning av lager"
 
 #: app/gui/resize-dialog.c:195 app/gui/resize-dialog.c:227
 #: app/tools/paint_options.c:377
@@ -4712,32 +4649,28 @@ msgid "Size"
 msgstr "Storlek"
 
 #: app/gui/resize-dialog.c:201
-#, fuzzy
 msgid "Scale Image Options"
-msgstr "Skala bild"
+msgstr "Alternativ för bildskalning"
 
 #: app/gui/resize-dialog.c:203
 msgid "Pixel Dimensions"
 msgstr "Bildpunktsdimensioner"
 
 #: app/gui/resize-dialog.c:215
-#, fuzzy
 msgid "Layer Boundary Size"
-msgstr "/Storlek på lager..."
+msgstr "Storlek på lagergräns"
 
 #: app/gui/resize-dialog.c:216
 msgid "Set Layer Boundary Size"
-msgstr "Ställ in lagerstorlek"
+msgstr "Ställ in storlek på lagergräns"
 
 #: app/gui/resize-dialog.c:222
-#, fuzzy
 msgid "Canvas Size"
-msgstr "Ställ in storlek på canvas"
+msgstr "Storlek på canvas"
 
 #: app/gui/resize-dialog.c:223
-#, fuzzy
 msgid "Set Image Canvas Size"
-msgstr "Ställ in storlek på canvas"
+msgstr "Ställ in storlek på bildcanvas"
 
 #. the original width & height labels
 #: app/gui/resize-dialog.c:278 app/tools/gimpscaletool.c:189
@@ -4755,9 +4688,8 @@ msgid "Ratio X:"
 msgstr "X-förhållande:"
 
 #: app/gui/resize-dialog.c:430
-#, fuzzy
 msgid "Constrain aspect ratio"
-msgstr "Begränsningar"
+msgstr "Begränsa aspektförhållande"
 
 #: app/gui/resize-dialog.c:500
 msgid "Center"
@@ -4827,7 +4759,7 @@ msgstr "Kantmarkering med:"
 msgid "GIMP Startup"
 msgstr "Uppstart av GIMP"
 
-#: app/gui/splash.c:96 app/widgets/gimptoolbox.c:173
+#: app/gui/splash.c:96 app/widgets/gimptoolbox.c:183
 msgid "The GIMP"
 msgstr "GIMP"
 
@@ -5372,9 +5304,8 @@ msgid "Path name:"
 msgstr "Slingnamn:"
 
 #: app/gui/vectors-commands.c:556
-#, fuzzy
 msgid "Path Attributes"
-msgstr "Modifiera sökvägsattribut"
+msgstr "Sökvägsattribut"
 
 #: app/paint/paint-enums.c:13
 msgid "Image Source"
@@ -5625,9 +5556,8 @@ msgstr "Resurskonfiguration"
 #. *  the pluginrc file.
 #.
 #: app/plug-in/plug-ins.c:120
-#, fuzzy
 msgid "Querying new Plug-ins"
-msgstr "undersöker insticksmodul: \"%s\"\n"
+msgstr "Undersöker nya insticksmoduler"
 
 #: app/plug-in/plug-ins.c:132
 #, c-format
@@ -5641,9 +5571,8 @@ msgstr "skriver \"%s\"\n"
 
 #. initial the plug-ins
 #: app/plug-in/plug-ins.c:184
-#, fuzzy
 msgid "Initializing Plug-ins"
-msgstr "initierar insticksmodul: \"%s\"\n"
+msgstr "Initierar insticksmoduler"
 
 #: app/plug-in/plug-ins.c:193
 #, c-format
@@ -5655,9 +5584,8 @@ msgid "Starting extensions: "
 msgstr "Startar tillägg: "
 
 #: app/plug-in/plug-ins.c:207
-#, fuzzy
 msgid "Starting Extensions"
-msgstr "Startar tillägg: "
+msgstr "Startar tillägg"
 
 #: app/tools/tools-enums.c:13
 msgid "Crop"
@@ -5787,7 +5715,6 @@ msgid "/Layer/Colors/Brightness-Contrast..."
 msgstr "/Lager/Färger/Ljusstyrka-Kontrast..."
 
 #: app/tools/gimpbrightnesscontrasttool.c:148
-#, fuzzy
 msgid "Adjust Brightness and Contrast"
 msgstr "Justera ljusstyrka och kontrast"
 
@@ -5796,14 +5723,12 @@ msgid "Brightness-Contrast does not operate on indexed drawables."
 msgstr "Ljusstyrka-Kontrast går inte att använda på indexerade bilder."
 
 #: app/tools/gimpbrightnesscontrasttool.c:236
-#, fuzzy
 msgid "_Brightness:"
-msgstr "Ljusstyrka:"
+msgstr "_Ljusstyrka:"
 
 #: app/tools/gimpbrightnesscontrasttool.c:251
-#, fuzzy
 msgid "Con_trast:"
-msgstr "Kontrast:"
+msgstr "Kon_trast:"
 
 #: app/tools/gimpbucketfilltool.c:117
 msgid "Bucket Fill"
@@ -5891,7 +5816,6 @@ msgid "/Layer/Colors/Color Balance..."
 msgstr "/Lager/Färger/Färgbalans..."
 
 #: app/tools/gimpcolorbalancetool.c:160
-#, fuzzy
 msgid "Adjust Color Balance"
 msgstr "Justera färgbalans"
 
@@ -5901,11 +5825,11 @@ msgstr "Färgbalans fungerar endast på RGB-bilder."
 
 #: app/tools/gimpcolorbalancetool.c:279
 msgid "Select Range to Modify"
-msgstr ""
+msgstr "Välj intervall att modifiera"
 
 #: app/tools/gimpcolorbalancetool.c:288
 msgid "Modify Selected Range's Color Levels"
-msgstr ""
+msgstr "Modifiera markerade intervallets färgnivåer"
 
 #: app/tools/gimpcolorbalancetool.c:306
 msgid "Cyan"
@@ -5920,14 +5844,12 @@ msgid "Yellow"
 msgstr "Gul"
 
 #: app/tools/gimpcolorbalancetool.c:330
-#, fuzzy
 msgid "R_eset Range"
-msgstr "Återgå till gammal bild"
+msgstr "_Återställ intervall"
 
 #: app/tools/gimpcolorbalancetool.c:339
-#, fuzzy
 msgid "Preserve _Luminosity"
-msgstr "Behåll luminans"
+msgstr "Behåll _luminans"
 
 #: app/tools/gimpcolorpickertool.c:137 app/tools/gimpcolorpickertool.c:275
 msgid "Color Picker"
@@ -5942,9 +5864,8 @@ msgid "/Tools/Color Picker"
 msgstr "/Verktyg/Hämta färg"
 
 #: app/tools/gimpcolorpickertool.c:277
-#, fuzzy
 msgid "Color Picker Information"
-msgstr "Information om Beskär och ändra storlek"
+msgstr "Information om färghämtare"
 
 #: app/tools/gimpcolorpickertool.c:285 app/tools/gimpcolorpickertool.c:309
 msgid "Red:"
@@ -6018,9 +5939,8 @@ msgid "Crop or Resize an image"
 msgstr "Beskär eller ändra storlek på en bild"
 
 #: app/tools/gimpcroptool.c:178
-#, fuzzy
 msgid "/Tools/Transform Tools/Crop & Resize"
-msgstr "/Verktyg/Transformeringsverktyg/Beskäringsverktyg"
+msgstr "/Verktyg/Transformeringsverktyg/Beskär och ändra storlek"
 
 #: app/tools/gimpcroptool.c:565
 msgid "Crop: "
@@ -6075,7 +5995,6 @@ msgid "/Layer/Colors/Curves..."
 msgstr "/Lager/Färger/Kurvor..."
 
 #: app/tools/gimpcurvestool.c:246
-#, fuzzy
 msgid "Adjust Color Curves"
 msgstr "Justera färgkurvor"
 
@@ -6084,9 +6003,8 @@ msgid "Curves for indexed drawables cannot be adjusted."
 msgstr "Kurvor för indexerade bilder kan inte justeras."
 
 #: app/tools/gimpcurvestool.c:622 app/tools/gimplevelstool.c:392
-#, fuzzy
 msgid "R_eset Channel"
-msgstr "Offsetkanal"
+msgstr "_Återställ kanal"
 
 #: app/tools/gimpcurvestool.c:631
 msgid "Modify Curves for Channel:"
@@ -6106,19 +6024,16 @@ msgstr "Kurvtyp:"
 
 #. Horizontal button box for load / save
 #: app/tools/gimpcurvestool.c:707 app/tools/gimplevelstool.c:647
-#, fuzzy
 msgid "All Channels"
-msgstr "Kanaler"
+msgstr "Alla kanaler"
 
 #: app/tools/gimpcurvestool.c:721
-#, fuzzy
 msgid "Read curves settings from file"
-msgstr "Spara aktuella inställningar till disk"
+msgstr "Läs kurvinställningar från fil"
 
 #: app/tools/gimpcurvestool.c:731
-#, fuzzy
 msgid "Save curves settings to file"
-msgstr "Spara aktuella inställningar till disk"
+msgstr "Spara kurvinställningar till fil"
 
 #: app/tools/gimpcurvestool.c:1367
 msgid "Load Curves"
@@ -6271,18 +6186,16 @@ msgid "Percentile:"
 msgstr "Procentuellt:"
 
 #: app/tools/gimphistogramtool.c:346
-#, fuzzy
 msgid "View Image Histogram"
-msgstr "Visa bildens histogram"
+msgstr "Visa bildhistogram"
 
 #: app/tools/gimphistogramtool.c:364
 msgid "Information on Channel:"
 msgstr "Information om kanal:"
 
 #: app/tools/gimphistogramtool.c:377
-#, fuzzy
 msgid "Intensity Range:"
-msgstr "Intensitet:"
+msgstr "Intensitetsintervall:"
 
 #: app/tools/gimphuesaturationtool.c:108
 msgid "Hue-Saturation"
@@ -6297,82 +6210,68 @@ msgid "/Layer/Colors/Hue-Saturation..."
 msgstr "/Lager/Färger/Nyans-Mättnad..."
 
 #: app/tools/gimphuesaturationtool.c:176
-#, fuzzy
 msgid "Adjust Hue / Lightness / Saturation"
-msgstr "Nyans- / Ljusstyrka- / Mättnadsjusteringar"
+msgstr "Justera nyans / ljusstyrka / mättnad"
 
 #: app/tools/gimphuesaturationtool.c:210
 msgid "Hue-Saturation operates only on RGB color drawables."
 msgstr "Nyans-Mättnad fungerar endast på RGB bilder."
 
 #: app/tools/gimphuesaturationtool.c:265
-#, fuzzy
 msgid "_Master"
-msgstr "Huvud"
+msgstr "_Huvud"
 
 #: app/tools/gimphuesaturationtool.c:266
-#, fuzzy
 msgid "_R"
-msgstr "R"
+msgstr "_R"
 
 #: app/tools/gimphuesaturationtool.c:267
-#, fuzzy
 msgid "_Y"
-msgstr "Y"
+msgstr "_Y"
 
 #: app/tools/gimphuesaturationtool.c:268
-#, fuzzy
 msgid "_G"
-msgstr "G"
+msgstr "_G"
 
 #: app/tools/gimphuesaturationtool.c:269
-#, fuzzy
 msgid "_C"
-msgstr "C"
+msgstr "_C"
 
 #: app/tools/gimphuesaturationtool.c:270
-#, fuzzy
 msgid "_B"
-msgstr "B"
+msgstr "_B"
 
 #: app/tools/gimphuesaturationtool.c:271
-#, fuzzy
 msgid "_M"
-msgstr "M"
+msgstr "_M"
 
 #: app/tools/gimphuesaturationtool.c:276
-#, fuzzy
 msgid "Select Primary Color to Modify"
-msgstr "Markera via färg"
+msgstr "Välj primär färg att modifiera"
 
 #: app/tools/gimphuesaturationtool.c:305
 msgid "Modify all colors"
-msgstr ""
+msgstr "Modifiera alla färger"
 
 #: app/tools/gimphuesaturationtool.c:348
-#, fuzzy
 msgid "Modify Selected Color"
-msgstr "Markera via färg"
+msgstr "Modifiera markerad färg"
 
 #: app/tools/gimphuesaturationtool.c:367
-#, fuzzy
 msgid "_Hue:"
-msgstr "Nyans:"
+msgstr "_Nyans:"
 
 #: app/tools/gimphuesaturationtool.c:381
-#, fuzzy
 msgid "_Lightness:"
-msgstr "Ljushet:"
+msgstr "_Ljusstyrka:"
 
 #: app/tools/gimphuesaturationtool.c:395
-#, fuzzy
 msgid "_Saturation:"
-msgstr "Mättnad:"
+msgstr "_Mättnad:"
 
 #: app/tools/gimphuesaturationtool.c:411
-#, fuzzy
 msgid "R_eset Color"
-msgstr "/Ta bort färg"
+msgstr "_Återställ färg"
 
 #: app/tools/gimpinktool.c:256
 msgid "Ink Tool"
@@ -6448,7 +6347,6 @@ msgid "/Layer/Colors/Levels..."
 msgstr "/Lager/Färger/Nivåer..."
 
 #: app/tools/gimplevelstool.c:225
-#, fuzzy
 msgid "Adjust Color Levels"
 msgstr "Justera färgnivåer"
 
@@ -6462,50 +6360,45 @@ msgstr "Modifiera nivåer för kanal:"
 
 #. Input levels frame
 #: app/tools/gimplevelstool.c:402
-#, fuzzy
 msgid "Input Levels"
-msgstr "Inmatningsnivåer:"
+msgstr "Inmatningsnivåer"
 
 #: app/tools/gimplevelstool.c:479
 msgid "Pick Black Point"
-msgstr ""
+msgstr "Välj svart punkt"
 
 #: app/tools/gimplevelstool.c:511
 msgid "Pick Gray Point"
-msgstr ""
+msgstr "Välj grå punkt"
 
 #: app/tools/gimplevelstool.c:527 modules/cdisplay_gamma.c:155
 msgid "Gamma"
 msgstr "Gamma"
 
 #: app/tools/gimplevelstool.c:544
-#, fuzzy
 msgid "Pick White Point"
-msgstr "Ändra punkt"
+msgstr "Välj vit punkt"
 
 #. Output levels frame
 #: app/tools/gimplevelstool.c:568
-#, fuzzy
 msgid "Output Levels"
-msgstr "Utmatningsnivåer:"
+msgstr "Utmatningsnivåer"
 
 #: app/tools/gimplevelstool.c:658
-#, fuzzy
 msgid "_Auto"
-msgstr "Auto"
+msgstr "_Auto"
 
 #: app/tools/gimplevelstool.c:661
 msgid "Adjust levels automatically"
-msgstr ""
+msgstr "Justera nivåer automatiskt"
 
 #: app/tools/gimplevelstool.c:671
 msgid "Read levels settings from file"
-msgstr ""
+msgstr "Läs nivåinställningar från fil"
 
 #: app/tools/gimplevelstool.c:681
-#, fuzzy
 msgid "Save levels settings to file"
-msgstr "Spara aktuella inställningar till disk"
+msgstr "Spara nivåinställningar till fil"
 
 #: app/tools/gimplevelstool.c:1338
 msgid "Load Levels"
@@ -6544,9 +6437,8 @@ msgid "/Tools/Measure"
 msgstr "/Verktyg/Mät"
 
 #: app/tools/gimpmeasuretool.c:397
-#, fuzzy
 msgid "Measure Distances and Angles"
-msgstr "Mät vinklar och längder"
+msgstr "Mät avstånd och vinklar"
 
 #: app/tools/gimpmeasuretool.c:399
 msgid "Distance:"
@@ -6643,9 +6535,8 @@ msgid "/Tools/Transform Tools/Perspective"
 msgstr "/Verktyg/Transformeringsverktyg/Perspektiv"
 
 #: app/tools/gimpperspectivetool.c:153
-#, fuzzy
 msgid "Perspective Transform"
-msgstr "Information över perspektivtransformation"
+msgstr "Perspektivtransformation"
 
 #: app/tools/gimpperspectivetool.c:155
 msgid "Perspective Transform Information"
@@ -6664,7 +6555,6 @@ msgid "Posterize"
 msgstr "Posterisering"
 
 #: app/tools/gimpposterizetool.c:77
-#, fuzzy
 msgid "Reduce image to a fixed number of colors"
 msgstr "Reducera bilden till ett fixt antal färger"
 
@@ -6673,18 +6563,16 @@ msgid "/Layer/Colors/Posterize..."
 msgstr "/Lager/Färger/Posterisering..."
 
 #: app/tools/gimpposterizetool.c:141
-#, fuzzy
 msgid "Posterize (Reduce Number of Colors)"
-msgstr "Minsta antal färger:"
+msgstr "Posterisera (reducera antalet färger)"
 
 #: app/tools/gimpposterizetool.c:173
 msgid "Posterize does not operate on indexed drawables."
 msgstr "Kan inte använda posterisering på indexerade bilder."
 
 #: app/tools/gimpposterizetool.c:227
-#, fuzzy
 msgid "Posterize _Levels:"
-msgstr "Posteriseringsnivåer:"
+msgstr "Posterisera _nivåer:"
 
 #: app/tools/gimprectselecttool.c:92
 msgid "Rect Select"
@@ -6787,13 +6675,12 @@ msgid "Shear"
 msgstr "Luta"
 
 #: app/tools/gimpsheartool.c:175
-#, fuzzy
 msgid "Shearing Information"
 msgstr "Information för lutning"
 
 #: app/tools/gimpsheartool.c:183
 msgid "Shear Magnitude X:"
-msgstr "Lutamagnitud X:"
+msgstr "X-lutningsmagnitud:"
 
 #: app/tools/gimpsheartool.c:219
 msgid "Shearing..."
@@ -6824,7 +6711,6 @@ msgid "/Tools/Text"
 msgstr "/Verktyg/Text"
 
 #: app/tools/gimptexttool.c:348
-#, fuzzy
 msgid "No font chosen or font invalid."
 msgstr "Inget typsnitt valt eller typsnittet ogiltigt."
 
@@ -6833,48 +6719,42 @@ msgid "Font:"
 msgstr "Typsnitt:"
 
 #: app/tools/gimptexttool.c:447
-#, fuzzy
 msgid "_Size:"
-msgstr "Storlek:"
+msgstr "_Storlek:"
 
 #: app/tools/gimptexttool.c:460
-#, fuzzy
 msgid "_Border:"
-msgstr "Kant:"
+msgstr "_Kant:"
 
 #: app/tools/gimptexttool.c:476 app/tools/selection_options.c:428
 msgid "Unit:"
 msgstr "Enhet:"
 
-#: app/tools/gimptexttool.c:565
-#, fuzzy
+#: app/tools/gimptexttool.c:563
 msgid "GIMP Text Editor"
-msgstr "Palettredigerare"
+msgstr "GIMP-textredigerare"
 
-#: app/tools/gimptexttool.c:590
-#, fuzzy
+#: app/tools/gimptexttool.c:588
 msgid "Load Text from File"
-msgstr "Läs in från"
+msgstr "Läs in text från fil"
 
-#: app/tools/gimptexttool.c:594
+#: app/tools/gimptexttool.c:592
 msgid "Clear all Text"
-msgstr ""
+msgstr "Töm all text"
 
-#: app/tools/gimptexttool.c:637
+#: app/tools/gimptexttool.c:633
 msgid "Open Text File (UTF-8)"
-msgstr ""
+msgstr "Öppna textfil (UTF-8)"
 
-#: app/tools/gimptexttool.c:687
-#, fuzzy, c-format
+#: app/tools/gimptexttool.c:683
+#, c-format
 msgid "Error opening file '%s': %s"
-msgstr ""
-"Fel vid öppnande av filen \"%s\":\n"
-"%s"
+msgstr "Fel vid öppnande av filen \"%s\": %s"
 
-#: app/tools/gimptexttool.c:716
-#, fuzzy, c-format
+#: app/tools/gimptexttool.c:712
+#, c-format
 msgid "Invalid UTF-8 data in file '%s'."
-msgstr "Ogiltig UTF-8-sträng i penselfilen \"%s\"."
+msgstr "Ogiltig UTF-8-data i filen \"%s\"."
 
 #: app/tools/gimpthresholdtool.c:85
 msgid "Threshold"
@@ -6889,9 +6769,8 @@ msgid "/Layer/Colors/Threshold..."
 msgstr "/Lager/Färger/Tröskelvärde..."
 
 #: app/tools/gimpthresholdtool.c:153
-#, fuzzy
 msgid "Apply Threshold"
-msgstr "Tröskelvärde"
+msgstr "Applicera tröskelvärde"
 
 #: app/tools/gimpthresholdtool.c:195
 msgid "Threshold does not operate on indexed drawables."
@@ -7066,7 +6945,7 @@ msgid ""
 msgstr ""
 "Aktivera både \"Behåll höjd\"- och\n"
 "\"Behåll bredd\"-växlarna för att\n"
-"begränsa förhållandet"
+"begränsa aspektförhållandet"
 
 #: app/tools/transform_options.c:236
 msgid "Keep Width (<Alt>)"
@@ -7311,11 +7190,11 @@ msgstr ""
 msgid "Use Netscape instead"
 msgstr "Använd Netscape istället"
 
-#: app/widgets/gimpimagedock.c:164
+#: app/widgets/gimpimagedock.c:158
 msgid "Auto"
 msgstr "Auto"
 
-#: app/widgets/gimpimagedock.c:263
+#: app/widgets/gimpimagedock.c:257
 #, c-format
 msgid "Gimp Dock #%d"
 msgstr "Gimp-docka %d"
@@ -7374,34 +7253,28 @@ msgid "Columns:"
 msgstr "Kolumner:"
 
 #: app/widgets/gimpselectioneditor.c:178
-#, fuzzy
 msgid "Invert Selection"
 msgstr "Omvänd markering"
 
 #: app/widgets/gimpselectioneditor.c:186
-#, fuzzy
 msgid "Select All"
-msgstr "/Markera/Allt"
+msgstr "Markera allt"
 
 #: app/widgets/gimpselectioneditor.c:194
-#, fuzzy
 msgid "Select None"
-msgstr "/Markera/Inget"
+msgstr "Markera inget"
 
 #: app/widgets/gimpselectioneditor.c:202
-#, fuzzy
 msgid "Save Selection to Channel"
-msgstr "/Markera/Spara till kanal"
+msgstr "Spara markering till kanal"
 
 #: app/widgets/gimptoolbox-color-area.c:391
-#, fuzzy
 msgid "Change Foreground Color"
-msgstr "Förgrundsfärg inställd till:"
+msgstr "Ändra förgrundsfärg"
 
 #: app/widgets/gimptoolbox-color-area.c:392
-#, fuzzy
 msgid "Change Background Color"
-msgstr "Bakgrundsfärg inställd till:"
+msgstr "Ändra bakgrundsfärg"
 
 #: app/widgets/gimptoolbox-indicator-area.c:141
 msgid ""
@@ -7427,7 +7300,7 @@ msgstr ""
 "Den aktiva färgskalan.\n"
 "Klicka för att öppna färgskaledialogen."
 
-#: app/widgets/gimptoolbox.c:685
+#: app/widgets/gimptoolbox.c:723
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to open the color selection dialog."
@@ -7516,17 +7389,26 @@ msgstr "Gör endast mörkare"
 msgid "Lighten Only"
 msgstr "Gör endast ljusare"
 
+#: app/widgets/gimpwidgets-constructors.c:65
+#: app/widgets/gimpwidgets-constructors.c:95
+msgid "Hue"
+msgstr "Nyans"
+
+#: app/widgets/gimpwidgets-constructors.c:66
+#: app/widgets/gimpwidgets-constructors.c:96
+msgid "Saturation"
+msgstr "Mättnad"
+
 #: app/widgets/gimpwidgets-utils.c:95
-#, fuzzy, c-format
+#, c-format
 msgid "Message repeated %d times."
-msgstr "Meddelande repeterat %d gånger"
+msgstr "Meddelande upprepat %d gånger."
 
-#: app/widgets/gimpwidgets-utils.c:105
-#, fuzzy
+#: app/widgets/gimpwidgets-utils.c:104
 msgid "Message repeated once."
-msgstr "Meddelande repeterat en gång"
+msgstr "Meddelande upprepat en gång."
 
-#: app/widgets/gimpwidgets-utils.c:122
+#: app/widgets/gimpwidgets-utils.c:121
 msgid ""
 "WARNING:\n"
 "Too many open message dialogs.\n"
@@ -7536,7 +7418,7 @@ msgstr ""
 "För många öppna meddelandedialoger.\n"
 "Meddelanden dirigeras om till stderr."
 
-#: app/widgets/gimpwidgets-utils.c:130
+#: app/widgets/gimpwidgets-utils.c:129
 msgid "GIMP Message"
 msgstr "GIMP-meddelande"
 
@@ -7577,33 +7459,30 @@ msgid "High Contrast color display filter"
 msgstr "Färgvisningsfilter, högkontrast"
 
 #: modules/cdisplay_highcontrast.c:155
-#, fuzzy
 msgid "Contrast"
-msgstr "Kontrast:"
+msgstr "Kontrast"
 
 #: modules/cdisplay_highcontrast.c:314
 msgid "Contrast Cycles:"
 msgstr "Kontrastcykler:"
 
-#: modules/colorsel_triangle.c:110
-#, fuzzy
+#: modules/colorsel_triangle.c:107
 msgid "Painter-style triangle color selector"
-msgstr "Färgväljare i Painter-stil som insticksbar färgväljare"
+msgstr "Triangelfärgväljare i Painter-stil"
 
-#: modules/colorsel_triangle.c:182
+#: modules/colorsel_triangle.c:179
 msgid "Triangle"
 msgstr "Triangel"
 
-#: modules/colorsel_water.c:107
-#, fuzzy
+#: modules/colorsel_water.c:103
 msgid "Watercolor style color selector"
-msgstr "Färgväljare i vattenfärgsstil som insticksbar färgväljare"
+msgstr "Färgväljare i vattenfärgsstil"
 
-#: modules/colorsel_water.c:179
+#: modules/colorsel_water.c:175
 msgid "Watercolor"
 msgstr "Vattenfärg"
 
-#: modules/colorsel_water.c:253
+#: modules/colorsel_water.c:249
 msgid "Pressure"
 msgstr "Tryck"
 
@@ -7614,6 +7493,33 @@ msgstr "Skapa och redigera bilder eller fotografier"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "GIMP (ostabil)"
+
+#~ msgid "H"
+#~ msgstr "N"
+
+#~ msgid "S"
+#~ msgstr "M"
+
+#~ msgid "V"
+#~ msgstr "V"
+
+#~ msgid "R"
+#~ msgstr "R"
+
+#~ msgid "G"
+#~ msgstr "G"
+
+#~ msgid "B"
+#~ msgstr "B"
+
+#~ msgid "A"
+#~ msgstr "A"
+
+#~ msgid "He_x Triplet:"
+#~ msgstr "He_x-triplett:"
+
+#~ msgid "Text Editor"
+#~ msgstr "Textredigerare"
 
 #~ msgid "Cannot float selection: No selection made."
 #~ msgstr "Kan inte göra markering flytande: Ingen markering är gjord."
