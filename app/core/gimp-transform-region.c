@@ -99,13 +99,13 @@ static void     sample_linear     (PixelSurround *surround,
                                    gint           bytes,
                                    gint           alpha);
 
-static void     sample_lanczos    (const gdouble *kernel,
-                                   gint           su,
-                                   gint           sv,
+static void     sample_lanczos    (PixelSurround *surround,
+                                   gdouble        u,
+                                   gdouble        v,
                                    guchar        *color,
-                                   const guchar  *buffer,
                                    gint           bytes,
-                                   gint           alpha);
+                                   gint           alpha,
+                                   const gdouble *kernel);
 
 static gdouble * kernel_lanczos   (void);
 
@@ -149,9 +149,6 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                                          divisor */
 
   gdouble     *kernel = NULL;         /* Lanczos kernel                    */
-  gint         su, sv;                /* Lanczos kernel position           */
-  guchar      *buffer = NULL;         /* Holds sliding window buffer       */
-
 
   gint         coords;
   gint         width;
@@ -309,7 +306,8 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
       break;
     case GIMP_INTERPOLATION_LANCZOS:
       kernel = kernel_lanczos ();
-      buffer = g_new0 (guchar, SQR (LANCZOS_WIDTH2) * bytes);
+      pixel_surround_init (&surround, orig_tiles,
+                           LANCZOS_WIDTH2, LANCZOS_WIDTH2, bg_color);
       break;
     }
 
@@ -410,44 +408,6 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                     *d++ = bg_color[b];
                 }
             }
-          else if (interpolation_type == GIMP_INTERPOLATION_LANCZOS)
-            {
-              guchar color[MAX_CHANNELS];
-              gint   iu = (gint) u[0];
-              gint   iv = (gint) v[0];
-              gint   b;
-
-              if (iu >= u1 && iu < u2 &&
-                  iv >= v1 && iv < v2)
-                {
-                  /*  u, v coordinates into source tiles  */
-                  gint u = iu - u1;
-                  gint v = iv - v1;
-
-                  read_pixel_data (orig_tiles,
-                                   u - LANCZOS_WIDTH + 1,
-                                   v - LANCZOS_WIDTH + 1,
-                                   u + LANCZOS_WIDTH,
-                                   v + LANCZOS_WIDTH,
-                                   buffer,
-                                   bytes * LANCZOS_WIDTH2);
-
-                  su = (gint) ((u - iu) * LANCZOS_SPP);
-                  sv = (gint) ((v - iv) * LANCZOS_SPP);
-
-                  sample_lanczos (kernel, su, sv, color, buffer, bytes, alpha);
-
-                  for (b = 0; b < bytes; b++)
-                    *d++ = color[b];
-                }
-              else /* not in source range */
-                {
-                  /*  increment the destination pointers  */
-
-                  for (b = 0; b < bytes; b++)
-                    *d++ = bg_color[b];
-                }
-            }
           else
             {
               gint b;
@@ -487,12 +447,23 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                     }
                   else
                     {
-                      if (interpolation_type == GIMP_INTERPOLATION_LINEAR)
-                        sample_linear (&surround, u[0] - u1, v[0] - v1,
-                                       color, bytes, alpha);
-                      else
-                        sample_cubic (&surround, u[0] - u1, v[0] - v1,
-                                      color, bytes, alpha);
+                      switch (interpolation_type)
+                        {
+                        case GIMP_INTERPOLATION_NONE:
+                          break;
+                        case GIMP_INTERPOLATION_LINEAR:
+                          sample_linear (&surround, u[0] - u1, v[0] - v1,
+                                         color, bytes, alpha);
+                          break;
+                        case GIMP_INTERPOLATION_CUBIC:
+                          sample_cubic (&surround, u[0] - u1, v[0] - v1,
+                                        color, bytes, alpha);
+                          break;
+                        case GIMP_INTERPOLATION_LANCZOS:
+                          sample_lanczos (&surround, u[0] - u1, v[0] - v1,
+                                          color, bytes, alpha, kernel);
+                          break;
+                        }
                     }
 
                   /*  Set the destination pixel  */
@@ -522,8 +493,8 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
       pixel_surround_clear (&surround);
       break;
     case GIMP_INTERPOLATION_LANCZOS:
+      pixel_surround_clear (&surround);
       g_free (kernel);
-      g_free (buffer);
       break;
     }
 
@@ -1700,25 +1671,23 @@ sinc (gdouble x)
 }
 
 static inline gdouble
-lanczos_sum (const guchar *buffer,
+lanczos_sum (const guchar *data,
              gdouble      *l,
              gint          row,
              gint          bytes,
              gint          byte)
 {
   gdouble sum = 0;
-  gint    j, k, p;
+  gint    j, k;
 
-  p = row * bytes * LANCZOS_WIDTH2;
-
-  for (k = 0, j = 0; j < LANCZOS_WIDTH2; j++, k++)
-    sum += l[k] * (buffer + p)[j * bytes + byte];
+  for (k = 0, j = 0; j < LANCZOS_WIDTH2; j++, k+=bytes)
+    sum += (l[j] * data[row+k]);
 
   return sum;
 }
 
 static inline gdouble
-lanczos_sum_mul (const guchar  *buffer,
+lanczos_sum_mul (const guchar  *data,
                  const gdouble *l,
                  gint           row,
                  gint           bytes,
@@ -1726,14 +1695,12 @@ lanczos_sum_mul (const guchar  *buffer,
                  gint           alpha)
 {
   gdouble sum = 0;
-  gint    j, k, p;
+  gint    j, k;
 
-  p = row * bytes * LANCZOS_WIDTH2;
-
-  for (k = 0, j = 0; j < LANCZOS_WIDTH2; j++, k++)
-    sum += (l[k] *
-            (buffer + p)[j * bytes + byte] *
-            (buffer + p)[j * bytes + alpha]);
+  for (k = 0, j = 0; j < LANCZOS_WIDTH2; j++, k+=bytes)
+    sum += (l[j] *
+            data[row+k+byte] *
+            data[row+k+alpha]);
 
   return sum;
 }
@@ -1759,38 +1726,53 @@ kernel_lanczos (void)
 }
 
 static void
-sample_lanczos (const gdouble *kernel,
-                gint           su,
-                gint           sv,
+sample_lanczos (PixelSurround *surround,
+                gdouble        u,
+                gdouble        v,
                 guchar        *color,
-                const guchar  *buffer,
                 gint           bytes,
-                gint           alpha)
+                gint           alpha,
+                const gdouble *kernel)
 {
 
   gdouble  lu[LANCZOS_WIDTH2];      /* Lanczos sample value              */
   gdouble  lv[LANCZOS_WIDTH2];      /* Lanczos sample value              */
   gdouble  lusum, lvsum, weight;    /* Lanczos weighting vars            */
   gint	   i,j,row, byte;           /* loop vars to fill source window   */
+  gint     du,dv;
+  guchar  *data;
 
   gdouble  aval, arecip;            /* Handle alpha values               */
   gdouble  newval;                  /* New interpolated RGB value        */
 
+  gint     iu = floor(u);
+  gint     iv = floor(v);
+
+  /* lock the pixel surround */
+  data = pixel_surround_lock (surround, iu - 1 , iv - 1 );
+
+  row = pixel_surround_rowstride (surround);
+
+  /* the fractional error */
+  du = (gint)((u - iu) * LANCZOS_SPP);
+  dv = (gint)((v - iv) * LANCZOS_SPP);
 
   for (lusum = lvsum = i = 0, j = LANCZOS_WIDTH - 1;
        j >= - LANCZOS_WIDTH;
        j--, i++)
     {
-        lusum += lu[i] = kernel[ABS (j * LANCZOS_SPP + su)];
-        lvsum += lv[i] = kernel[ABS (j * LANCZOS_SPP + sv)];
+        lusum += lu[i] = kernel[ABS (j * LANCZOS_SPP + du)];
+        lvsum += lv[i] = kernel[ABS (j * LANCZOS_SPP + dv)];
     }
 
   weight = lusum * lvsum;
 
   if (alpha != 0)
     {
-       for ( aval = 0, row = 0 ; row < LANCZOS_WIDTH2 ; row ++ )
-          aval += lv[row] * lanczos_sum (buffer, lu, row, bytes, alpha);
+       for ( aval = 0, i = 0 ; i < LANCZOS_WIDTH2 ; i ++ )
+          aval += lv[i] * lanczos_sum (data, lu,
+                                       i * LANCZOS_WIDTH2 * bytes,
+                                       bytes, alpha);
 
        /* calculate alpha of result */
        aval /= weight;
@@ -1813,9 +1795,10 @@ sample_lanczos (const gdouble *kernel,
 
        for (byte = 0; byte < alpha; byte++)
          {
-           for (newval = 0, row = 0; row < LANCZOS_WIDTH2; row ++)
-             newval += lv[row] * lanczos_sum_mul (buffer, lu,
-                                                  row, bytes, byte, alpha);
+           for (newval = 0, i = 0; i < LANCZOS_WIDTH2; i ++)
+             newval += lv[i] * lanczos_sum_mul (data, lu,
+                                                i * LANCZOS_WIDTH2 * bytes,
+                                                bytes, byte, alpha);
            newval *= arecip;
            color[byte] = CLAMP (newval, 0, 255);
          }
@@ -1824,13 +1807,13 @@ sample_lanczos (const gdouble *kernel,
     {
       for (byte = 0; byte < bytes; byte++)
         {
-          for (newval = 0, row = 0 ; row < LANCZOS_WIDTH2 ; row++ )
-            newval += lv[row] * lanczos_sum (buffer, lu, row, bytes, byte);
+          for (newval = 0, i = 0 ; i < LANCZOS_WIDTH2 ; i++ )
+            newval += lv[i] * lanczos_sum (data, lu,
+                                           i * LANCZOS_WIDTH2 * bytes,
+                                           bytes, byte);
 
           newval /= weight;
           color[byte] = CLAMP ((gint) newval, 0, 255);
         }
     }
-
 }
-/* Lanczos */

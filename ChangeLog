@@ -1,3 +1,10 @@
+2005-01-19  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable-transform.c: applied a patch from Geert
+	Jordaens that fixes the crash in the drawable transformations
+	using the Lanczos interpolation type. The result is somewhat wrong
+	though :(
+
 2005-01-18  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/jpeg/jpeg-save.[ch]: Adapted the code from the stable
