@@ -3094,7 +3094,7 @@ query (void)
 			  "Vidar Madsen",
 			  "Vidar Madsen",
 			  "1999",
-			  N_("<Image>/Filters/Render/Sphere Designer..."),
+			  N_("<Image>/Filters/Render/Sphere _Designer..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN, G_N_ELEMENTS (args), 0, args, NULL);
 }

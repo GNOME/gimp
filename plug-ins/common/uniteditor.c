@@ -112,7 +112,7 @@ query (void)
                           "Michael Natterer <mitch@gimp.org>",
                           "Michael Natterer <mitch@gimp.org>",
                           "2000",
-			  N_("<Toolbox>/Xtns/Unit Editor..."),
+			  N_("<Toolbox>/Xtns/_Unit Editor..."),
 			  "",
                           GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

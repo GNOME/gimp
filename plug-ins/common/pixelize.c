@@ -181,7 +181,7 @@ query (void)
 			  "Spencer Kimball & Peter Mattis, Tracy Scott, (ported to 1.0 by) Eiichi Takamori",
 			  "Spencer Kimball & Peter Mattis, Tracy Scott",
 			  "1995",
-			  N_("<Image>/Filters/Blur/Pixelize..."),
+			  N_("<Image>/Filters/Blur/_Pixelize..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (pixelize_args), 0,

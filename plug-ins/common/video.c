@@ -1837,7 +1837,7 @@ query (void)
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "2nd March 1997",
-			  N_("<Image>/Filters/Distorts/Video..."),
+			  N_("<Image>/Filters/Distorts/Vi_deo..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

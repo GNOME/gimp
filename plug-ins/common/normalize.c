@@ -87,7 +87,7 @@ query (void)
 			  "Adam D. Moss, Federico Mena Quintero",
 			  "Adam D. Moss, Federico Mena Quintero",
 			  "1997",
-			  N_("<Image>/Layer/Colors/Auto/Normalize"),
+			  N_("<Image>/Layer/Colors/Auto/_Normalize"),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

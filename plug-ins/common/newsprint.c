@@ -561,7 +561,7 @@ query (void)
 			  "Austin Donnelly",
 			  "Austin Donnelly",
 			  "1998 (" VERSION ")",
-			  N_("<Image>/Filters/Distorts/Newsprint..."),
+			  N_("<Image>/Filters/Distorts/Newsprin_t..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

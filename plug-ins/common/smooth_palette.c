@@ -86,7 +86,7 @@ query (void)
 			  "Scott Draves",
 			  "Scott Draves",
 			  "1997",
-			  N_("<Image>/Filters/Colors/Smooth Palette..."),
+			  N_("<Image>/Filters/Colors/Smoo_th Palette..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), G_N_ELEMENTS (return_vals),

@@ -231,7 +231,7 @@ query (void)
 			  "Andy Thomas",
 			  "Andy Thomas",
 			  "1997",
-			  N_("<Image>/Filters/Map/Small Tiles..."),
+			  N_("<Image>/Filters/Map/_Small Tiles..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

@@ -351,7 +351,7 @@ query (void)
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
                           dversio,
-                          N_("<Image>/Filters/Colors/Map/Adjust FG-BG"),
+                          N_("<Image>/Filters/Colors/Map/Adjust _FG-BG"),
                           "RGB*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (adjust_args), 0,

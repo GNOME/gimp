@@ -129,7 +129,7 @@ query (void)
 			  "Francisco Bustamante",
 			  "Francisco Bustamante",
                           PLUG_IN_VERSION,
-			  N_("<Image>/Filters/Colors/Colorify..."), 
+			  N_("<Image>/Filters/Colors/_Colorify..."), 
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

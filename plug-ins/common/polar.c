@@ -199,7 +199,7 @@ query (void)
 			  "Daniel Dunbar and Federico Mena Quintero",
 			  "Daniel Dunbar and Federico Mena Quintero",
 			  PLUG_IN_VERSION,
-			  N_("<Image>/Filters/Distorts/Polar Coords..."),
+			  N_("<Image>/Filters/Distorts/P_olar Coords..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

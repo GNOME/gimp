@@ -118,7 +118,7 @@ query (void)
 			  "Shuji Narazaki (narazaki@InetQ.or.jp)",
 			  "Shuji Narazaki",
 			  "May 2000",
-                          N_("<Image>/Filters/Colors/Max RGB..."),
+                          N_("<Image>/Filters/Colors/_Max RGB..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

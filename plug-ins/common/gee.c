@@ -100,7 +100,7 @@ query (void)
 			 "Adam D. Moss <adam@gimp.org>",
 			 "Adam D. Moss <adam@gimp.org>",
 			 "2000",
-			 N_("<Image>/Filters/Toys/Gee-Slime"),
+			 N_("<Image>/Filters/Toys/Gee-_Slime"),
 			 "RGB*, INDEXED*, GRAY*",
 			 GIMP_PLUGIN,
 			 G_N_ELEMENTS (args), 0,

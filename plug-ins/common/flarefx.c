@@ -199,7 +199,7 @@ query (void)
 			  "May 2000",
 			  /* don't translate '<Image>' entry, 
 			   * it is keyword for the gtk toolkit */
-			  N_("<Image>/Filters/Light Effects/FlareFX..."),
+			  N_("<Image>/Filters/Light Effects/_FlareFX..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

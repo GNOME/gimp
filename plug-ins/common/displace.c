@@ -160,7 +160,7 @@ query (void)
 			  "Spencer Kimball",
 			  "Stephen Robert Norris",
 			  "1996",
-			  N_("<Image>/Filters/Map/Displace..."),
+			  N_("<Image>/Filters/Map/_Displace..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

@@ -76,7 +76,7 @@ query (void)
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "1998",
-			  N_("<Image>/Image/Transform/Guillotine"),
+			  N_("<Image>/Image/Transform/_Guillotine"),
 			  "RGB*, INDEXED*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

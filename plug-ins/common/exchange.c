@@ -137,7 +137,7 @@ query (void)
 			  "robert@experimental.net",
 			  "robert@experimental.net",
 			  "June 17th, 1997",
-			  N_("<Image>/Filters/Colors/Map/Color Exchange..."),
+			  N_("<Image>/Filters/Colors/Map/_Color Exchange..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

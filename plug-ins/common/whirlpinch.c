@@ -186,7 +186,7 @@ query (void)
 			  "Federico Mena Quintero and Scott Goehring",
 			  "Federico Mena Quintero and Scott Goehring",
 			  PLUG_IN_VERSION,
-			  N_("<Image>/Filters/Distorts/Whirl and Pinch..."),
+			  N_("<Image>/Filters/Distorts/W_hirl and Pinch..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

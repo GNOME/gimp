@@ -190,7 +190,7 @@ query (void)
 			  "Lauri Alanko",
 			  "Lauri Alanko",
 			  "1997",
-			  N_("<Image>/Filters/Generic/Convolution Matrix..."),
+			  N_("<Image>/Filters/Generic/_Convolution Matrix..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

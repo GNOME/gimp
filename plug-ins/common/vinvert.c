@@ -82,7 +82,7 @@ query ()
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "27th March 1997",
-			  N_("<Image>/Filters/Colors/Value Invert"),
+			  N_("<Image>/Filters/Colors/_Value Invert"),
 			  "RGB*, INDEXED*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

@@ -150,7 +150,7 @@ query (void)
 			  "Torsten Martinsen, Federico Mena Quintero and Daniel Skarda",
 			  "Torsten Martinsen, Federico Mena Quintero and Daniel Skarda",       
 			  PLUG_IN_VERSION,
-			  N_("<Image>/Filters/Blur/Motion Blur..."),
+			  N_("<Image>/Filters/Blur/_Motion Blur..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

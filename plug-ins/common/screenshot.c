@@ -132,7 +132,7 @@ query (void)
 			  "Sven Neumann <sven@gimp.org>",
 			  "1998 - 2000",
 			  "v0.9.5 (2000/10/29)",
-			  N_("<Toolbox>/File/Acquire/Screen Shot..."),
+			  N_("<Toolbox>/File/Acquire/_Screen Shot..."),
 			  NULL,
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args),

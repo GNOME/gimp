@@ -1159,7 +1159,7 @@ query (void)
 			  "Xavier Bouchoux",
 			  "Xavier Bouchoux",
 			  "1997",
-			  N_("<Image>/Filters/Render/Sinus..."),
+			  N_("<Image>/Filters/Render/_Sinus..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

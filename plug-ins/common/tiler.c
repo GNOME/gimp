@@ -62,7 +62,7 @@ query (void)
 			  "Tim Rowley",
 			  "Tim Rowley",
 			  "1997",
-			  N_("<Image>/Filters/Map/Make Seamless"),
+			  N_("<Image>/Filters/Map/_Make Seamless"),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

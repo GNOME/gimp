@@ -168,7 +168,7 @@ query (void)
 			  "Michael Sweet <mike@easysw.com>",
 			  "Copyright 1997-1998 by Michael Sweet",
 			  PLUG_IN_VERSION,
-			  N_("<Image>/Filters/Enhance/Sharpen..."),
+			  N_("<Image>/Filters/Enhance/_Sharpen..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

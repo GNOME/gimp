@@ -105,7 +105,7 @@ query (void)
 			  "Seth Burgess",
 			  "Seth Burgess <sjburges@gimp.org>",
 			  "7th Aug 1999",
-			  N_("<Image>/Filters/Colors/Color to Alpha..."),
+			  N_("<Image>/Filters/Colors/Color to _Alpha..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

@@ -120,7 +120,7 @@ query (void)
 			  "Karl-Johan Andersson", /* Author */
 			  "Karl-Johan Andersson", /* Copyright */
 			  "May 2000",
-			  N_("<Image>/Filters/Glass Effects/Glass Tile..."),
+			  N_("<Image>/Filters/Glass Effects/_Glass Tile..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

@@ -183,7 +183,7 @@ query (void)
 			  "Michael Sweet <mike@easysw.com>",
 			  "Copyright 1997-1998 by Michael Sweet",
 			  PLUG_IN_VERSION,
-			  N_("<Image>/Filters/Enhance/Despeckle..."),
+			  N_("<Image>/Filters/Enhance/Des_peckle..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

@@ -124,7 +124,7 @@ query (void)
 			  "Spencer Kimball & Peter Mattis",
 			  "Spencer Kimball & Peter Mattis",
 			  "1996-1997",
-			  N_("<Image>/Filters/Map/Tile..."),
+			  N_("<Image>/Filters/Map/_Tile..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args),

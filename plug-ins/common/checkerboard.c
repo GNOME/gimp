@@ -101,7 +101,7 @@ query (void)
 			  "Brent Burton & the Edward Blevins",
 			  "Brent Burton & the Edward Blevins",
 			  "1997",
-			  N_("<Image>/Filters/Render/Pattern/Checkerboard..."),
+			  N_("<Image>/Filters/Render/Pattern/_Checkerboard..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

@@ -193,7 +193,7 @@ query (void)
 			  (gchar *) author,
 			  (gchar *) copyrights,
 			  (gchar *) copyright_date,
-			  N_("<Image>/Filters/Blur/Blur..."),
+			  N_("<Image>/Filters/Blur/_Blur..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

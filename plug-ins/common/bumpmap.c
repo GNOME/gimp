@@ -373,7 +373,7 @@ query (void)
 			  "Federico Mena Quintero, Jens Lautenbacher & Sven Neumann",
 			  "Federico Mena Quintero, Jens Lautenbacher & Sven Neumann",
 			  PLUG_IN_VERSION,
-			  N_("<Image>/Filters/Map/Bump Map..."),
+			  N_("<Image>/Filters/Map/_Bump Map..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

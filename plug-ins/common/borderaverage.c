@@ -96,7 +96,7 @@ query (void)
 			  "Philipp Klaus",
 			  "Internet Access AG",
 			  "1998",
-			  N_("<Image>/Filters/Colors/Border Average..."),
+			  N_("<Image>/Filters/Colors/_Border Average..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args),

@@ -893,7 +893,7 @@ query (void)
 			  "Tom Bech & Federico Mena Quintero",
 			  "Tom Bech & Federico Mena Quintero",
 			  "Version 0.14, September 24 1997",
-			  N_("<Image>/Filters/Map/Van Gogh (LIC)..."),
+			  N_("<Image>/Filters/Map/_Van Gogh (LIC)..."),
 			  "RGB",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

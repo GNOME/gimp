@@ -938,7 +938,7 @@ query (void)
         		  "Daniel Cotting (cotting@mygale.org, http://www.mygale.org/~cotting)",
         		  "Daniel Cotting (cotting@mygale.org, http://www.mygale.org/~cotting)",
         		  "1th May 1997",
-        		  N_("<Image>/Filters/Colors/Map/Alien Map..."),
+        		  N_("<Image>/Filters/Colors/Map/_Alien Map..."),
         		  "RGB*",
         		  GIMP_PLUGIN,
         		  G_N_ELEMENTS (args), nreturn_vals,

@@ -256,7 +256,7 @@ query (void)
 			  "Norbert Schmitz",
 			  "Norbert Schmitz",
 			  "1997",
-			  N_("<Image>/Filters/Distorts/IWarp..."),
+			  N_("<Image>/Filters/Distorts/_IWarp..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

@@ -192,7 +192,7 @@ query (void)
 			  "Nigel Wetten",
 			  "Nigel Wetten",
 			  "May 2000",
-			  N_("<Image>/Filters/Distorts/Wind..."),
+			  N_("<Image>/Filters/Distorts/Wi_nd..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

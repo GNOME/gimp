@@ -123,7 +123,7 @@ query (void)
 			  "Graeme W. Gill, gimp 0.99 plugin by Eric L. Hernes",
 			  "Graeme W. Gill, Eric L. Hernes",
 			  "1997",
-			  N_("<Image>/Filters/Enhance/NL Filter..."),
+			  N_("<Image>/Filters/Enhance/_NL Filter..."),
 			  "RGB,GRAY",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

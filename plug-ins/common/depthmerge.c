@@ -199,7 +199,7 @@ query (void)
 			  "Sean Cier",
 			  "Sean Cier",
 			  PLUG_IN_VERSION,
-			  N_("<Image>/Filters/Combine/Depth Merge..."),
+			  N_("<Image>/Filters/Combine/_Depth Merge..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

@@ -189,7 +189,7 @@ query (void)
 			  "Stephen Norris & (ported to 1.0 by) Eiichi Takamori",
 			  "Stephen Norris",
 			  "May 2000",
-			  N_("<Image>/Filters/Render/Clouds/Plasma..."),
+			  N_("<Image>/Filters/Render/Clouds/_Plasma..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

@@ -146,7 +146,7 @@ query (void)
                           "Marc Lehmann <pcg@goof.com>",
                           "Marc Lehmann <pcg@goof.com>",
                           PLUG_IN_VERSION,
-                          N_("<Image>/Filters/Enhance/Destripe..."),
+                          N_("<Image>/Filters/Enhance/Des_tripe..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,

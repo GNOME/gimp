@@ -150,7 +150,7 @@ query (void)
 			  "Winston Chang <winstonc@cs.wisc.edu>",
 			  "Winston Chang",
 			  "1999",
-			  N_("<Image>/Filters/Enhance/Unsharp Mask..."),
+			  N_("<Image>/Filters/Enhance/_Unsharp Mask..."),
 			  "GRAY*, RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

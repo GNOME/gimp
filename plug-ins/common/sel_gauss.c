@@ -121,7 +121,7 @@ query (void)
 			  "Thom van Os",
 			  "Thom van Os",
 			  "1999",
-			  N_("<Image>/Filters/Blur/Selective Gaussian Blur..."),
+			  N_("<Image>/Filters/Blur/_Selective Gaussian Blur..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

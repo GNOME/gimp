@@ -146,7 +146,7 @@ query (void)
 			  "Shuji Narazaki (narazaki@InetQ.or.jp)",
 			  "Shuji Narazaki",
 			  "1997",
-			  N_("<Image>/Filters/Noise/Scatter HSV..."),
+			  N_("<Image>/Filters/Noise/S_catter HSV..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

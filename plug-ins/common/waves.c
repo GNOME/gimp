@@ -121,7 +121,7 @@ query (void)
 			  "Eric L. Hernes, Stephen Norris",
 			  "Stephen Norris",
 			  "1997",
-			  N_("<Image>/Filters/Distorts/Waves..."),
+			  N_("<Image>/Filters/Distorts/_Waves..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

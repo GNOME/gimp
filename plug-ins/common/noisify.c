@@ -129,7 +129,7 @@ query (void)
 			  "Torsten Martinsen",
 			  "Torsten Martinsen",
 			  "May 2000",
-			  N_("<Image>/Filters/Noise/Noisify..."),
+			  N_("<Image>/Filters/Noise/_Noisify..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

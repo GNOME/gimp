@@ -76,7 +76,7 @@ query (void)
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "27th January 1998",
-			  N_("<Image>/Filters/Colors/Semi-Flatten"),
+			  N_("<Image>/Filters/Colors/_Semi-Flatten"),
 			  "RGBA",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

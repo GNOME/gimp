@@ -180,7 +180,7 @@ query (void)
 			  "Marcelo de Gomensoro Malheiros",
 			  "Marcelo de Gomensoro Malheiros",
 			  "Apr 1998, v1.03",
-			  N_("<Image>/Filters/Render/Clouds/Solid Noise..."),
+			  N_("<Image>/Filters/Render/Clouds/_Solid Noise..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

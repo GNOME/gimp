@@ -304,7 +304,7 @@ query (void)
 			  "Wolfgang Hofer",
 			  "hof@hotbot.com",
 			  "02/2000",
-			  N_("<Image>/Filters/Colors/Map/Sample Colorize..."),
+			  N_("<Image>/Filters/Colors/Map/_Sample Colorize..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

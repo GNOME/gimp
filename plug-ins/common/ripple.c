@@ -144,7 +144,7 @@ query (void)
 			  "Brian Degenhardt <bdegenha@ucsd.edu>",
 			  "Brian Degenhardt",
 			  "1997",
-			  N_("<Image>/Filters/Distorts/Ripple..."),
+			  N_("<Image>/Filters/Distorts/_Ripple..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

@@ -151,7 +151,7 @@ query (void)
 			  "Eric L. Hernes, John Schlag",
 			  "Eric L. Hernes",
 			  "1997",
-			  N_("<Image>/Filters/Distorts/Emboss..."),
+			  N_("<Image>/Filters/Distorts/_Emboss..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

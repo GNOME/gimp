@@ -115,7 +115,7 @@ query (void)
 			  "Torsten Martinsen",
 			  "Torsten Martinsen",
 			  "1996",
-			  N_("<Image>/Filters/Artistic/Oilify..."),
+			  N_("<Image>/Filters/Artistic/Oili_fy..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

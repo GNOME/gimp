@@ -118,7 +118,7 @@ query()
 			  "Eiichi Takamori",
 			  "Eiichi Takamori",
 			  "1997",
-			  N_("<Image>/Filters/Colors/Map/Gradient Map"),
+			  N_("<Image>/Filters/Colors/Map/_Gradient Map"),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

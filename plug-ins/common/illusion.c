@@ -100,7 +100,7 @@ query (void)
 			  "Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>",
 			  "Hirotsuna Mizuno",
 			  PLUG_IN_VERSION,
-			  N_("<Image>/Filters/Map/Illusion..."),
+			  N_("<Image>/Filters/Map/_Illusion..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

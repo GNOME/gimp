@@ -263,7 +263,7 @@ query (void)
 			  "John P. Beale",
 			  "John P. Beale",
 			  "1997",
-			  N_("<Image>/Filters/Map/Warp..."),
+			  N_("<Image>/Filters/Map/_Warp..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

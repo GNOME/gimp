@@ -190,7 +190,7 @@ query (void)
 			  "Version 1.26, December 1998",
 			  /* don't translate '<Image>', it's a special
 			   * keyword for the gtk toolkit */
-			  N_("<Image>/Filters/Light Effects/Sparkle..."),
+			  N_("<Image>/Filters/Light Effects/_Sparkle..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

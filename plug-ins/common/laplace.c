@@ -92,7 +92,7 @@ query (void)
 			  "Thorsten Schnier",
 			  "Thorsten Schnier",
 			  "1997",
-			  N_("<Image>/Filters/Edge-Detect/Laplace"),
+			  N_("<Image>/Filters/Edge-Detect/_Laplace"),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

@@ -226,7 +226,7 @@ query (void)
 			  "Peter Kirchgessner",
 			  "Peter Kirchgessner (peter@kirchgessner.net)",
 			  "1997",
-			  N_("<Image>/Filters/Colors/Decompose..."),
+			  N_("<Image>/Filters/Colors/_Decompose..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args),

@@ -206,7 +206,7 @@ query (void)
                           "Eiichi Takamori",
                           "May 2000",
 			  /* don't translate '<Image>' */
-                          N_("<Image>/Filters/Light Effects/SuperNova..."),
+                          N_("<Image>/Filters/Light Effects/Su_perNova..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,

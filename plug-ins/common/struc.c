@@ -1150,7 +1150,7 @@ query (void)
 			  "Karl-Johan Andersson", /* Author */
 			  "Karl-Johan Andersson", /* Copyright */
 			  "1997",
-			  N_("<Image>/Filters/Artistic/Apply Canvas..."),
+			  N_("<Image>/Filters/Artistic/_Apply Canvas..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

@@ -128,7 +128,7 @@ query (void)
 			  "Morten Eriksen",
 			  "Morten Eriksen",
 			  "1997",
-			  N_("<Image>/Filters/Glass Effects/Apply Lens..."),
+			  N_("<Image>/Filters/Glass Effects/Apply _Lens..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

@@ -249,7 +249,7 @@ query (void)
 			  "Peter Kirchgessner",
 			  "Peter Kirchgessner (peter@kirchgessner.net)",
 			  "1997",
-			  N_("<Image>/Filters/Combine/Film..."),
+			  N_("<Image>/Filters/Combine/_Film..."),
 			  "INDEXED*, GRAY*, RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args),

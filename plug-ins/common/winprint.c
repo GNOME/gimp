@@ -183,7 +183,7 @@ query (void)
 			  "Tor Lillqvist <tml@iki.fi>",
 			  "Copyright 1999 Tor Lillqvist",
 			  "$Id$",
-			  N_("<Image>/File/Print"),
+			  N_("<Image>/File/_Print"),
 			  "RGB*,GRAY*,INDEXED*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (print_args), 0,

@@ -138,7 +138,7 @@ query (void)
 			  "Thorsten Schnier",
 			  "Thorsten Schnier",
 			  "1997",
-			  N_("<Image>/Filters/Edge-Detect/Sobel..."),
+			  N_("<Image>/Filters/Edge-Detect/_Sobel..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

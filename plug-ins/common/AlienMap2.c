@@ -946,7 +946,7 @@ query (void)
         		  "Martin Weber (martweb@gmx.net)",
         		  "Martin Weber (martweb@gmx.net",
         		  "24th April 1998",
-        		  N_("<Image>/Filters/Colors/Map/Alien Map 2..."),
+        		  N_("<Image>/Filters/Colors/Map/Alien Map _2..."),
         		  "RGB*",
         		  GIMP_PLUGIN,
         		  G_N_ELEMENTS (args), nreturn_vals,

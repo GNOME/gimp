@@ -435,7 +435,7 @@ query (void)
 			  "Jörn Loviscach, Jens Ch. Restemeier",
 			  "Jörn Loviscach, Jens Ch. Restemeier",
 			  PLUG_IN_VERSION,
-			  N_("<Image>/Filters/Render/Pattern/Qbist..."),
+			  N_("<Image>/Filters/Render/Pattern/_Qbist..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

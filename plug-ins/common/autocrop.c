@@ -72,7 +72,7 @@ query (void)
 			  "Tim Newsome",
 			  "Tim Newsome",
 			  "1997",
-			  N_("<Image>/Image/Transform/Autocrop"),
+			  N_("<Image>/Image/Transform/_Autocrop"),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

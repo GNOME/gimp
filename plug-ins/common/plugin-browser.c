@@ -142,7 +142,7 @@ query (void)
                           "Andy Thomas",
                           "Andy Thomas",
                           "1999",
-			  N_("<Toolbox>/Xtns/Plugin Details..."),
+			  N_("<Toolbox>/Xtns/_Plugin Details..."),
 			  "",
                           GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

@@ -679,7 +679,7 @@ query (void)
                           PLUG_IN_AUTHOR,
                           PLUG_IN_COPYRIGHT,
                           PLUG_IN_VERSION,
-                          N_("<Image>/Filters/Distorts/CurveBend..."),
+                          N_("<Image>/Filters/Distorts/_CurveBend..."),
                           PLUG_IN_IMAGE_TYPES,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args),

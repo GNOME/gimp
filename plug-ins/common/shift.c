@@ -113,7 +113,7 @@ query (void)
 			  "Spencer Kimball and Peter Mattis, ported by Brian Degenhardt and Federico Mena Quintero",
 			  "Brian Degenhardt",
 			  "1997",
-			  N_("<Image>/Filters/Distorts/Shift..."),
+			  N_("<Image>/Filters/Distorts/_Shift..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

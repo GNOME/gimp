@@ -89,7 +89,7 @@ query (void)
 			  "Scott Goehring and Federico Mena Quintero",
 			  "Scott Goehring and Federico Mena Quintero",
 			  "1997",
-			  N_("<Image>/Layer/Colors/Auto/Stretch HSV"),
+			  N_("<Image>/Layer/Colors/Auto/Stretch _HSV"),
 			  "RGB*, INDEXED*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

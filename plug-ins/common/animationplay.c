@@ -238,7 +238,7 @@ query (void)
 			  "Adam D. Moss <adam@gimp.org>",
 			  "Adam D. Moss <adam@gimp.org>",
 			  "1997, 1998...",
-			  N_("<Image>/Filters/Animation/Animation Playback..."),
+			  N_("<Image>/Filters/Animation/Animation _Playback..."),
 			  "RGB*, INDEXED*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

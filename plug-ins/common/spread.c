@@ -115,7 +115,7 @@ query (void)
 			  "Degenhardt and Federico Mena Quintero",
 			  "Federico Mena Quintero and Brian Degenhardt",
 			  "1997",
-			  N_("<Image>/Filters/Noise/Spread..."),
+			  N_("<Image>/Filters/Noise/Sp_read..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
