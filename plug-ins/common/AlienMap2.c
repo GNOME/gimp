@@ -395,10 +395,10 @@ alienmap2_dialog (void)
 {
   GtkWidget *dialog;
   GtkWidget *top_table;
+  GtkWidget *align;
   GtkWidget *frame;
   GtkWidget *toggle;
-  GtkWidget *toggle_vbox;
-  GtkWidget *sep;
+  GtkWidget *vbox;
   GtkWidget *table;
   GtkObject *adj;
 
@@ -421,18 +421,22 @@ alienmap2_dialog (void)
                     NULL);
 
   top_table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (top_table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (top_table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (top_table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (top_table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (top_table), 12);
+  gtk_table_set_row_spacings (GTK_TABLE (top_table), 12);
+  gtk_container_set_border_width (GTK_CONTAINER (top_table), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), top_table,
                       FALSE, FALSE, 0);
   gtk_widget_show (top_table);
 
   /* Preview */
+  align = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
+  gtk_table_attach (GTK_TABLE (top_table), align, 0, 1, 0, 1,
+                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (align);
+
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_table_attach (GTK_TABLE (top_table), frame, 0, 1, 0, 1, 0, 0, 0, 0);
+  gtk_container_add (GTK_CONTAINER (align), frame);
   gtk_widget_show (frame);
 
   preview = gimp_old_preview_new (NULL, FALSE);
@@ -442,8 +446,8 @@ alienmap2_dialog (void)
 
   /* Controls */
   table = gtk_table_new (6, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
   gtk_table_attach (GTK_TABLE (top_table), table, 0, 2, 1, 2,
                     GTK_EXPAND | GTK_FILL, 0, 0, 0);
   gtk_widget_show (table);
@@ -521,6 +525,11 @@ alienmap2_dialog (void)
                     &wvals.blueangle);
 
   /*  Mode toggle box  */
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_table_attach (GTK_TABLE (top_table), vbox, 1, 2, 0, 1,
+                    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
+  gtk_widget_show (vbox);
+
   frame =
     gimp_int_radio_group_new (TRUE, _("Mode"),
                               G_CALLBACK (alienmap2_radio_update),
@@ -530,17 +539,11 @@ alienmap2_dialog (void)
                               _("_HSL Color Model"), HSL_MODEL, NULL,
 
                               NULL);
-  gtk_table_attach (GTK_TABLE (top_table), frame, 1, 2, 0, 1,
-                    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
 
-  toggle_vbox = GTK_BIN (frame)->child;
-
-  sep = gtk_hseparator_new ();
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), sep, FALSE, FALSE, 0);
-  gtk_widget_show (sep);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
   toggle_modify_rh = toggle = gtk_check_button_new_with_mnemonic (NULL);
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), wvals.redmode);
   gtk_widget_show (toggle);
 
@@ -549,7 +552,7 @@ alienmap2_dialog (void)
                     &wvals.redmode);
 
   toggle_modify_gs = toggle = gtk_check_button_new_with_mnemonic (NULL);
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), wvals.greenmode);
   gtk_widget_show (toggle);
 
@@ -558,7 +561,7 @@ alienmap2_dialog (void)
                     &wvals.greenmode);
 
   toggle_modify_bl = toggle = gtk_check_button_new_with_mnemonic (NULL);
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), wvals.bluemode);
   gtk_widget_show (toggle);
 
