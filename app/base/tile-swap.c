@@ -18,11 +18,9 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
+#include <glib.h>
 
 #include <errno.h>
-#include <string.h>
-#include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -47,8 +45,9 @@
 #include "apptypes.h"
 
 #include "tile.h"
+#include "tile_pvt.h"
 #include "tile_swap.h"
-#include "tile_pvt.h"			/* ick. */
+
 
 #define MAX_OPEN_SWAP_FILES  16
 
@@ -59,96 +58,97 @@ typedef struct _AsyncSwapArgs AsyncSwapArgs;
 
 struct _SwapFile
 {
-  char *filename;
-  int swap_num;
-  SwapFunc swap_func;
-  gpointer user_data;
-  int fd;
+  gchar    *filename;
+  gint      swap_num;
+  SwapFunc  swap_func;
+  gpointer  user_data;
+  gint      fd;
 };
 
 struct _DefSwapFile
 {
   GList *gaps;
-  long swap_file_end;
-  off_t cur_position;
+  glong  swap_file_end;
+  off_t  cur_position;
 };
 
 struct _Gap
 {
-  long start;
-  long end;
+  glong start;
+  glong end;
 };
 
 struct _AsyncSwapArgs
 {
   DefSwapFile *def_swap_file;
-  int          fd;
+  gint         fd;
   Tile        *tile;
 };
 
 
-static void  tile_swap_init    (void);
-static guint tile_swap_hash    (int      *key);
-static gint  tile_swap_compare (int      *a,
-				int      *b);
-static void  tile_swap_command (Tile     *tile,
-				int       command);
-static void  tile_swap_open    (SwapFile *swap_file);
+static void    tile_swap_init             (void);
+static guint   tile_swap_hash             (gint        *key);
+static gint    tile_swap_compare          (gint        *a,
+					   gint        *b);
+static void    tile_swap_command          (Tile        *tile,
+					   gint         command);
+static void    tile_swap_open             (SwapFile    *swap_file);
 
-static int   tile_swap_default        (int       fd,
-				       Tile     *tile,
-				       int       cmd,
-				       gpointer  user_data);
-static void  tile_swap_default_in     (DefSwapFile *def_swap_file,
-				       int          fd,
-				       Tile        *tile);
-static void  tile_swap_default_in_async (DefSwapFile *def_swap_file,
-				        int          fd,
-				        Tile        *tile);
-static void  tile_swap_default_out    (DefSwapFile *def_swap_file,
-				       int          fd,
-				       Tile        *tile);
-static void  tile_swap_default_delete (DefSwapFile *def_swap_file,
-				       int          fd,
-				       Tile        *tile);
-static long  tile_swap_find_offset    (DefSwapFile *def_swap_file,
-				       int          fd,
-				       int          bytes);
-static void  tile_swap_resize         (DefSwapFile *def_swap_file,
-				       int          fd,
-				       long         new_size);
-static Gap*  tile_swap_gap_new        (long         start,
-				       long         end);
-static void  tile_swap_gap_destroy    (Gap         *gap);
+static gint    tile_swap_default          (gint         fd,
+					   Tile        *tile,
+					   gint         cmd,
+					   gpointer     user_data);
+static void    tile_swap_default_in       (DefSwapFile *def_swap_file,
+					   gint         fd,
+					   Tile        *tile);
+static void    tile_swap_default_in_async (DefSwapFile *def_swap_file,
+					   gint         fd,
+					   Tile        *tile);
+static void    tile_swap_default_out      (DefSwapFile *def_swap_file,
+					   gint         fd,
+					   Tile        *tile);
+static void    tile_swap_default_delete   (DefSwapFile *def_swap_file,
+					   gint         fd,
+					   Tile        *tile);
+static glong   tile_swap_find_offset      (DefSwapFile *def_swap_file,
+					   gint         fd,
+					   gint         bytes);
+static void    tile_swap_resize           (DefSwapFile *def_swap_file,
+					   gint         fd,
+					   glong        new_size);
+static Gap   * tile_swap_gap_new          (glong        start,
+					   glong        end);
+static void    tile_swap_gap_destroy      (Gap         *gap);
 #ifdef USE_PTHREADS
-static void* tile_swap_in_thread      (void *);
+static gpointer tile_swap_in_thread       (gpointer);
 #endif
 
 
-static int initialize = TRUE;
-static GHashTable *swap_files = NULL;
-static GList *open_swap_files = NULL;
-static int nopen_swap_files = 0;
-static int next_swap_num = 1;
-static long swap_file_grow = 16 * TILE_WIDTH * TILE_HEIGHT * 4;
+static gboolean        initialize       = TRUE;
+static GHashTable    * swap_files       = NULL;
+static GList         * open_swap_files  = NULL;
+static gint            nopen_swap_files = 0;
+static gint            next_swap_num    = 1;
+static glong           swap_file_grow   = 16 * TILE_WIDTH * TILE_HEIGHT * 4;
 #ifdef USE_PTHREADS
-static pthread_mutex_t swapfile_mutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t swapfile_mutex         = PTHREAD_MUTEX_INITIALIZER;
 
 /* async_swapin_mutex protects only the list, not the tiles therein */
-static pthread_t swapin_thread;
-static pthread_mutex_t async_swapin_mutex = PTHREAD_MUTEX_INITIALIZER;
-static pthread_cond_t async_swapin_signal = PTHREAD_COND_INITIALIZER;
-static GSList *async_swapin_tiles = NULL;
-static GSList *async_swapin_tiles_end = NULL;
+static pthread_t       swapin_thread;
+static pthread_mutex_t async_swapin_mutex     = PTHREAD_MUTEX_INITIALIZER;
+static pthread_cond_t  async_swapin_signal    = PTHREAD_COND_INITIALIZER;
+static GSList        * async_swapin_tiles     = NULL;
+static GSList        * async_swapin_tiles_end = NULL;
 #endif
 
 static gboolean seek_err_msg = TRUE, read_err_msg = TRUE, write_err_msg = TRUE;
+
 
 static void
 tile_swap_print_gaps (DefSwapFile *def_swap_file)
 {
   GList *gaps;
-  Gap *gap;
+  Gap   *gap;
 
   gaps = def_swap_file->gaps;
   while (gaps)
@@ -165,8 +165,8 @@ tile_swap_exit1 (gpointer key,
 		 gpointer value,
 		 gpointer data)
 {
-  extern int tile_ref_count;
-  SwapFile *swap_file;
+  extern gint  tile_ref_count;
+  SwapFile    *swap_file;
   DefSwapFile *def_swap_file;
 
   if (tile_ref_count != 0)
@@ -194,27 +194,26 @@ tile_swap_exit1 (gpointer key,
     }
 }
 
-
 void
-tile_swap_exit ()
+tile_swap_exit (void)
 {
 #ifdef HINTS_SANITY
   extern int tile_exist_peak;
 
-  fprintf(stderr,"Tile exist peak was %d Tile structs (%d bytes)",
-	   tile_exist_peak, tile_exist_peak * sizeof(Tile));
+  g_printerr ("Tile exist peak was %d Tile structs (%d bytes)",
+	      tile_exist_peak, tile_exist_peak * sizeof(Tile));
 #endif
 
   if (swap_files)
     g_hash_table_foreach (swap_files, tile_swap_exit1, NULL);
 }
 
-int
-tile_swap_add (char     *filename,
+gint
+tile_swap_add (gchar    *filename,
 	       SwapFunc  swap_func,
 	       gpointer  user_data)
 {
-  SwapFile *swap_file;
+  SwapFile    *swap_file;
   DefSwapFile *def_swap_file;
 
 #ifdef USE_PTHREADS
@@ -253,7 +252,7 @@ tile_swap_add (char     *filename,
 }
 
 void
-tile_swap_remove (int swap_num)
+tile_swap_remove (gint swap_num)
 {
   SwapFile *swap_file;
 
@@ -315,13 +314,13 @@ tile_swap_delete (Tile *tile)
 }
 
 void
-tile_swap_compress (int swap_num)
+tile_swap_compress (gint swap_num)
 {
   tile_swap_command (NULL, SWAP_COMPRESS);
 }
 
 static void
-tile_swap_init ()
+tile_swap_init (void)
 {
 
   if (initialize)
@@ -338,21 +337,21 @@ tile_swap_init ()
 }
 
 static guint
-tile_swap_hash (int *key)
+tile_swap_hash (gint *key)
 {
-  return ((guint) *key);
+  return (guint) *key;
 }
 
 static gint
-tile_swap_compare (int *a,
-		   int *b)
+tile_swap_compare (gint *a,
+		   gint *b)
 {
   return (*a == *b);
 }
 
 static void
 tile_swap_command (Tile *tile,
-		   int   command)
+		   gint  command)
 {
   SwapFile *swap_file;
 #ifdef USE_PTHREADS
@@ -377,11 +376,15 @@ tile_swap_command (Tile *tile,
 	if (swap_file->fd == -1)
 	  goto out;
       }
-  } while ((* swap_file->swap_func) (swap_file->fd, tile, command, swap_file->user_data));
+  } 
+  while ((* swap_file->swap_func) (swap_file->fd, 
+				   tile, command, swap_file->user_data));
+
 out:
 #ifdef USE_PTHREADS
   pthread_mutex_unlock(&swapfile_mutex);
 #endif
+
   return;
 }
 
@@ -427,9 +430,9 @@ tile_swap_open (SwapFile *swap_file)
  */
 
 static int
-tile_swap_default (int       fd,
+tile_swap_default (gint      fd,
 		   Tile     *tile,
-		   int       cmd,
+		   gint      cmd,
 		   gpointer  user_data)
 {
   DefSwapFile *def_swap_file;
@@ -460,7 +463,7 @@ tile_swap_default (int       fd,
 
 static void
 tile_swap_default_in_async (DefSwapFile *def_swap_file,
-		            int          fd,
+		            gint         fd,
 		            Tile        *tile)
 {
 #ifdef NOTDEF /* USE_PTHREADS */
@@ -506,12 +509,12 @@ tile_swap_default_in_async (DefSwapFile *def_swap_file,
  */
 static void
 tile_swap_default_in (DefSwapFile *def_swap_file,
-		      int          fd,
+		      gint         fd,
 		      Tile        *tile)
 {
-  int bytes;
-  int err;
-  int nleft;
+  gint  bytes;
+  gint  err;
+  gint  nleft;
   off_t offset;
 
   err = -1;
@@ -541,14 +544,17 @@ tile_swap_default_in (DefSwapFile *def_swap_file,
   nleft = bytes;
   while (nleft > 0)
     {
-      do {
-	err = read (fd, tile->data + bytes - nleft, nleft);
-      } while ((err == -1) && ((errno == EAGAIN) || (errno == EINTR)));
+      do 
+	{
+	  err = read (fd, tile->data + bytes - nleft, nleft);
+	} 
+      while ((err == -1) && ((errno == EAGAIN) || (errno == EINTR)));
 
       if (err <= 0)
 	{
 	  if (read_err_msg)
-	    g_message ("unable to read tile data from disk: %d/%d ( %d ) bytes read", err, errno, nleft);
+	    g_message ("unable to read tile data from disk: %s (%d/%d bytes read)", 
+		       g_strerror (errno), err, nleft);
 	  read_err_msg = FALSE;
 	  return;
 	}
@@ -569,12 +575,11 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
 		       int          fd,
 		       Tile        *tile)
 {
-  int bytes;
-  int rbytes;
-  int err;
-  int nleft;
+  gint  bytes;
+  gint  rbytes;
+  gint  err;
+  gint  nleft;
   off_t offset;
-
   off_t newpos;
 
   bytes = TILE_WIDTH * TILE_HEIGHT * tile->bpp;
@@ -592,7 +597,8 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
       if (offset == -1)
 	{
 	  if (seek_err_msg)
-	    g_message ("unable to seek to tile location on disk: %d", errno);
+	    g_message ("unable to seek to tile location on disk: %s", 
+		       g_strerror (errno));
 	  seek_err_msg = FALSE;
 	  return;
 	}
@@ -606,7 +612,8 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
       if (err <= 0)
 	{
 	  if (write_err_msg)
-	    g_message ("unable to write tile data to disk: %d ( %d ) bytes written", err, nleft);
+	    g_message ("unable to write tile data to disk: %s (%d/%d bytes written)", 
+		       g_strerror (errno), err, nleft);
 	  write_err_msg = FALSE;
 	  return;
 	}
@@ -627,15 +634,15 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
 
 static void
 tile_swap_default_delete (DefSwapFile *def_swap_file,
-			  int          fd,
+			  gint         fd,
 			  Tile        *tile)
 {
   GList *tmp;
   GList *tmp2;
-  Gap *gap;
-  Gap *gap2;
-  long start;
-  long end;
+  Gap   *gap;
+  Gap   *gap2;
+  glong  start;
+  glong  end;
 
   if (tile->swap_offset == -1)
     return;
@@ -660,7 +667,8 @@ tile_swap_default_delete (DefSwapFile *def_swap_file,
 		{
 		  gap2->end = gap->end;
 		  tile_swap_gap_destroy (gap);
-		  def_swap_file->gaps = g_list_remove_link (def_swap_file->gaps, tmp);
+		  def_swap_file->gaps = 
+		    g_list_remove_link (def_swap_file->gaps, tmp);
 		  g_list_free (tmp);
 		}
 	    }
@@ -677,7 +685,8 @@ tile_swap_default_delete (DefSwapFile *def_swap_file,
 		{
 		  gap2->start = gap->start;
 		  tile_swap_gap_destroy (gap);
-		  def_swap_file->gaps = g_list_remove_link (def_swap_file->gaps, tmp);
+		  def_swap_file->gaps = 
+		    g_list_remove_link (def_swap_file->gaps, tmp);
 		  g_list_free (tmp);
 		}
 	    }
@@ -731,26 +740,25 @@ tile_swap_default_delete (DefSwapFile *def_swap_file,
 
 static void
 tile_swap_resize (DefSwapFile *def_swap_file,
-		  int          fd,
-		  long         new_size)
+		  gint         fd,
+		  glong        new_size)
 {
   if (def_swap_file->swap_file_end > new_size)
     {
       ftruncate (fd, new_size);
-      /*fprintf(stderr, "TRUNCATED SWAP from %d to %d bytes.\n",
-	(int)def_swap_file->swap_file_end, (int) new_size);*/
     }
+
   def_swap_file->swap_file_end = new_size;
 }
 
 static long
 tile_swap_find_offset (DefSwapFile *def_swap_file,
-		       int          fd,
-		       int          bytes)
+		       gint         fd,
+		       gint         bytes)
 {
   GList *tmp;
-  Gap *gap;
-  long offset;
+  Gap   *gap;
+  glong  offset;
 
   tmp = def_swap_file->gaps;
   while (tmp)
@@ -765,7 +773,8 @@ tile_swap_find_offset (DefSwapFile *def_swap_file,
 	  if (gap->start == gap->end)
 	    {
 	      tile_swap_gap_destroy (gap);
-	      def_swap_file->gaps = g_list_remove_link (def_swap_file->gaps, tmp);
+	      def_swap_file->gaps = 
+		g_list_remove_link (def_swap_file->gaps, tmp);
 	      g_list_free (tmp);
 	    }
 
@@ -777,7 +786,8 @@ tile_swap_find_offset (DefSwapFile *def_swap_file,
 
   offset = def_swap_file->swap_file_end;
 
-  tile_swap_resize (def_swap_file, fd, def_swap_file->swap_file_end + swap_file_grow);
+  tile_swap_resize (def_swap_file, fd, 
+		    def_swap_file->swap_file_end + swap_file_grow);
 
   if ((offset + bytes) < (def_swap_file->swap_file_end))
     {
@@ -788,9 +798,9 @@ tile_swap_find_offset (DefSwapFile *def_swap_file,
   return offset;
 }
 
-static Gap*
-tile_swap_gap_new (long start,
-		   long end)
+static Gap *
+tile_swap_gap_new (glong start,
+		   glong end)
 {
   Gap *gap;
 
@@ -822,12 +832,12 @@ tile_swap_gap_destroy (Gap *gap)
 
 static void
 tile_swap_in_attempt (DefSwapFile *def_swap_file,
-		      int          fd,
+		      gint         fd,
 		      Tile        *tile)
 {
-  int bytes;
-  int err;
-  int nleft;
+  gint  bytes;
+  gint  err;
+  gint  nleft;
   off_t offset;
 
   err = -1;
@@ -854,9 +864,11 @@ tile_swap_in_attempt (DefSwapFile *def_swap_file,
   nleft = bytes;
   while (nleft > 0)
     {
-      do {
-	err = read (fd, tile->data + bytes - nleft, nleft);
-      } while ((err == -1) && ((errno == EAGAIN) || (errno == EINTR)));
+      do 
+	{
+	  err = read (fd, tile->data + bytes - nleft, nleft);
+	} 
+      while ((err == -1) && ((errno == EAGAIN) || (errno == EINTR)));
 
       if (err <= 0)
         {
@@ -873,13 +885,13 @@ out:
   TILE_MUTEX_UNLOCK (tile);
 }
 
-static void *
-tile_swap_in_thread (void *data)
+static gpointer
+tile_swap_in_thread (gpointer data)
 {
   AsyncSwapArgs *args;
-  GSList *free_item;
+  GSList        *free_item;
 
-  while (1)
+  while (TRUE)
     {
       pthread_mutex_lock (&async_swapin_mutex);
 
@@ -892,6 +904,7 @@ tile_swap_in_thread (void *data)
       free_item = async_swapin_tiles;
       async_swapin_tiles = async_swapin_tiles->next;
       g_slist_free_1(free_item);
+
       if (!async_swapin_tiles)
         async_swapin_tiles_end = NULL;
 

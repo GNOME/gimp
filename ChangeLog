@@ -1,5 +1,15 @@
 2001-01-23  Sven Neumann  <sven@gimp.org>
 
+	* app/paint_funcs.c
+	* app/pixel_processor.c
+	* app/tile.c
+	* app/tile_cache.c
+	* app/tile_manager.c
+	* app/tile_pvt.h
+	* app/tile_swap.[ch]: cleanups, indentation
+
+2001-01-23  Sven Neumann  <sven@gimp.org>
+
 	* app/convert.c
 	* app/floating_sel.c
 	* app/gimage_mask.c

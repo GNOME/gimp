@@ -18,11 +18,9 @@
 
 #include "config.h"
 
-#include <stdio.h>
+#include <glib.h>
 
-#include <gtk/gtk.h>
-
-#include <apptypes.h>
+#include "apptypes.h"
 
 #include "tile.h"
 #include "tile_pvt.h"
@@ -168,7 +166,6 @@ tile_lock (Tile *tile)
     }
 }
 
-
 void
 tile_release (Tile *tile, int dirty)
 {
@@ -279,7 +276,6 @@ tile_destroy (Tile *tile)
   tile_exist_count--;
 #endif
 }
-
 
 gint
 tile_size (Tile *tile)

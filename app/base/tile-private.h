@@ -2,6 +2,8 @@
 #define __TILE_PVT_H__
 
 
+#include "config.h"
+
 #ifdef USE_PTHREADS
 #include <pthread.h>
 #endif
@@ -9,20 +11,18 @@
 #include <sys/types.h>
 #include <glib.h>
 
-#include "config.h"
-#include "tile.h"
 
 typedef struct _TileLink TileLink;
 
 struct _TileLink
 {
-  TileLink *next;
-  int tile_num;       /* the number of this tile within the drawable */
-  void *tm;           /* A pointer to the tile manager for this tile.
-		       *  We need this in order to call the tile managers 
-		       *  validate proc whenever the tile is referenced yet 
-		       *  invalid.
-		       */
+  TileLink    *next;
+  gint         tile_num; /* the number of this tile within the drawable */
+  TileManager *tm;       /* A pointer to the tile manager for this tile.
+			  *  We need this in order to call the tile managers 
+			  *  validate proc whenever the tile is referenced 
+			  *  yet invalid.
+			  */
 };
 
 struct _Tile

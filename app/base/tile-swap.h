@@ -30,7 +30,7 @@ typedef enum
 } SwapCommand;
 
 typedef gint (*SwapFunc) (gint      fd,
-			 Tile      *tile,
+			  Tile     *tile,
 			  gint      cmd,
 			  gpointer  user_data);
 

@@ -18,18 +18,16 @@
 
 #include "config.h"
 
-#include <string.h>
-
-#include <gtk/gtk.h>
+#include <glib.h>
 
 #include "apptypes.h"
 
+#include "tile.h"
+#include "tile_pvt.h"
 #include "tile_cache.h"
 #include "tile_manager.h"
 #include "tile_manager_pvt.h"
 #include "tile_swap.h"
-
-#include "tile_pvt.h"			/* ick. */
 
 
 static gint tile_manager_get_tile_num (TileManager *tm,
@@ -301,8 +299,8 @@ tile_manager_invalidate_tiles (TileManager *tm,
   col = toplevel_tile->tlink->tile_num % tm->ntile_cols;
   row = toplevel_tile->tlink->tile_num / tm->ntile_cols;
 
-  x = (col * TILE_WIDTH + toplevel_tile->ewidth / 2.0) / (double) tm->width;
-  y = (row * TILE_HEIGHT + toplevel_tile->eheight / 2.0) / (double) tm->height;
+  x = (col * TILE_WIDTH + toplevel_tile->ewidth / 2.0) / (gdouble) tm->width;
+  y = (row * TILE_HEIGHT + toplevel_tile->eheight / 2.0) / (gdouble) tm->height;
 
   if (tm->tiles)
     {

@@ -33,7 +33,6 @@
 #include "pixel_processor.h"
 #include "pixel_region.h"
 #include "tile_manager.h"
-#include "tile_pvt.h"
 #include "tile.h"
 
 #include "libgimp/gimpmath.h"
@@ -161,7 +160,7 @@ update_tile_rowhints (Tile *tile,
   tile_sanitize_rowhints (tile);
 
   bpp = tile_bpp (tile);
-  ewidth = tile->ewidth;
+  ewidth = tile_ewidth (tile);
 
   if (bpp == 1 || bpp == 3)
     {
@@ -3458,10 +3457,10 @@ copy_region (PixelRegion *src,
 	  src->curtile && dest->curtile &&
 	  src->offx == 0 && dest->offx == 0 &&
 	  src->offy == 0 && dest->offy == 0 &&
-	  src->w == (src->curtile->ewidth) && 
-	  dest->w == (dest->curtile->ewidth) &&
-	  src->h == tile_eheight(src->curtile) && 
-	  dest->h == tile_eheight(dest->curtile)) 
+	  src->w  == tile_ewidth (src->curtile)  && 
+	  dest->w == tile_ewidth (dest->curtile) &&
+	  src->h  == tile_eheight (src->curtile) && 
+	  dest->h == tile_eheight (dest->curtile)) 
 	{
 #ifdef COWSHOW
 	  fputc('!',stderr);
@@ -4639,12 +4638,15 @@ shapeburst_region (PixelRegion *srcPR,
 
 	      while (y >= end)
 		{
-		  tile = tile_manager_get_tile (srcPR->tiles, x, y, TRUE, FALSE);
-		  tile_data = tile_data_pointer (tile, x%TILE_WIDTH, y%TILE_HEIGHT);
+		  tile = tile_manager_get_tile (srcPR->tiles, 
+						x, y, TRUE, FALSE);
+		  tile_data = tile_data_pointer (tile, 
+						 x % TILE_WIDTH, 
+						 y % TILE_HEIGHT);
 		  boundary = MIN ((y % TILE_HEIGHT),
-				  (tile->ewidth - (x % TILE_WIDTH) - 1));
+				  (tile_ewidth (tile) - (x % TILE_WIDTH) - 1));
 		  boundary = MIN (boundary, (y - end)) + 1;
-		  inc = 1 - (tile->ewidth);
+		  inc = 1 - tile_ewidth (tile);
 
 		  while (boundary--)
 		    {

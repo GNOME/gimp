@@ -18,7 +18,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #ifdef USE_PTHREADS
 #include <pthread.h>
 #endif
@@ -37,23 +36,28 @@
 /*  This is the percentage of the maximum cache size that should be cleared
  *   from the cache when an eviction is necessary
  */
-#define FREE_QUANTUM 0.1
+#define FREE_QUANTUM          0.1
 
-static void  tile_cache_init           (void);
-static gint  tile_cache_zorch_next     (void);
-static void  tile_cache_flush_internal (Tile *tile);
+#define IDLE_SWAPPER_TIMEOUT  250
+
+
+static void     tile_cache_init           (void);
+static gint     tile_cache_zorch_next     (void);
+static void     tile_cache_flush_internal (Tile     *tile);
 
 #ifdef USE_PTHREADS
-static void* tile_idle_thread          (void *);
+static gpointer tile_idle_thread          (gpointer  data);
 #else
-static gint  tile_idle_preswap         (gpointer);
+static gint     tile_idle_preswap         (gpointer  data);
 #endif
+
 
 static int initialize = TRUE;
 
-typedef struct _TileList {
-  Tile* first;
-  Tile* last;
+typedef struct _TileList 
+{
+  Tile *first;
+  Tile *last;
 } TileList;
 
 static unsigned long max_tile_size = TILE_WIDTH * TILE_HEIGHT * 4;
@@ -222,7 +226,7 @@ tile_cache_flush_internal (Tile *tile)
 
 /* untested -- ADM */
 void
-tile_cache_set_size (unsigned long cache_size)
+tile_cache_set_size (gulong cache_size)
 {
   if (initialize)
     tile_cache_init ();
@@ -239,7 +243,7 @@ tile_cache_set_size (unsigned long cache_size)
 
 
 static void
-tile_cache_init ()
+tile_cache_init (void)
 {
   if (initialize)
     {
@@ -253,7 +257,7 @@ tile_cache_init ()
 #ifdef USE_PTHREADS
       pthread_create (&preswap_thread, NULL, &tile_idle_thread, NULL);
 #else
-      idle_swapper = gtk_timeout_add (250,
+      idle_swapper = gtk_timeout_add (IDLE_SWAPPER_TIMEOUT,
 				      (GtkFunction) tile_idle_preswap, 
 				      (gpointer) 0);
 #endif
@@ -261,15 +265,16 @@ tile_cache_init ()
 }
 
 static gint
-tile_cache_zorch_next ()
+tile_cache_zorch_next (void)
 {
   Tile *tile;
 
-  /*  fprintf(stderr, "cache zorch: %u/%u\n", cur_cache_size, cur_cache_dirty);*/
-
-  if      (clean_list.first) tile = clean_list.first;
-  else if (dirty_list.first) tile = dirty_list.first;
-  else return FALSE;
+  if (clean_list.first) 
+    tile = clean_list.first;
+  else if (dirty_list.first) 
+    tile = dirty_list.first;
+  else 
+    return FALSE;
 
   CACHE_UNLOCK;
   TILE_MUTEX_LOCK (tile);
@@ -279,29 +284,34 @@ tile_cache_zorch_next ()
     {
       tile_swap_out (tile);
     }
-  if (! tile->dirty) {
-    g_free (tile->data);
-    tile->data = NULL;
-    TILE_MUTEX_UNLOCK (tile);
-    return TRUE;
-  }
+
+  if (! tile->dirty) 
+    {
+      g_free (tile->data);
+      tile->data = NULL;
+      TILE_MUTEX_UNLOCK (tile);
+
+      return TRUE;
+    }
+
   /* unable to swap out tile for some reason */
   TILE_MUTEX_UNLOCK (tile);
+
   return FALSE;
 }
 
 #if USE_PTHREADS
-static void *
-tile_idle_thread (void *data)
+static gpointer
+tile_idle_thread (gpointer data)
 {
-  Tile *tile;
+  Tile     *tile;
   TileList *list;
-  int count;
+  gint      count;
 
-  fprintf (stderr, "starting tile preswapper\n");
+  g_printerr ("starting tile preswapper\n");
 
   count = 0;
-  while (1)
+  while (TRUE)
     {
       CACHE_LOCK;
       if (count > 5 || dirty_list.first == NULL)
