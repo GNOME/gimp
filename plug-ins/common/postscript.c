@@ -1923,16 +1923,19 @@ load_ps (const gchar *filename,
 static void save_ps_header (FILE        *ofp,
                             const gchar *filename)
 {
-  time_t cutime = time (NULL);
+  gchar  *basename = g_path_get_basename (filename);
+  time_t  cutime   = time (NULL);
 
   fprintf (ofp, "%%!PS-Adobe-3.0%s\n", psvals.eps ? " EPSF-3.0" : "");
   fprintf (ofp, "%%%%Creator: GIMP PostScript file plugin V %4.2f \
 by Peter Kirchgessner\n", VERSIO);
-  fprintf (ofp, "%%%%Title: %s\n", filename);
+  fprintf (ofp, "%%%%Title: %s\n", basename);
   fprintf (ofp, "%%%%CreationDate: %s", ctime (&cutime));
   fprintf (ofp, "%%%%DocumentData: Clean7Bit\n");
   if (psvals.eps || (psvals.level > 1)) fprintf (ofp,"%%%%LanguageLevel: 2\n");
   fprintf (ofp, "%%%%Pages: 1\n");
+
+  g_free (basename);
 }
 
 
