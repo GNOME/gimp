@@ -19,6 +19,8 @@
 
 #include "config.h"
 
+#include <stdlib.h>
+
 #include "gimp.h"
 #include "gimpui.h"
 
@@ -74,7 +76,7 @@ gimp_ui_init (const gchar *prog_name,
 
   if (display_name)
     {
-      const gchar *var_name;
+      const gchar *var_name = NULL;
 
 #if defined (GDK_WINDOWING_X11)
       var_name = "DISPLAY";
