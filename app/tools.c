@@ -230,7 +230,7 @@ ToolInfo tool_info[] =
     N_("/Tools/Transform"),
     "<shift>T",
     (char **) scale_bits,
-    N_("Transform the layer or selection"),
+    N_("Rotation, scaling, shearing, perspective."),
     "tools/transform.html",
     ROTATE,
     tools_new_transform_tool,
