@@ -1,3 +1,7 @@
+Thu Mar  2 23:27:59 CET 2000  Marc Lehmann <pcg@goof.com>
+
+	* configure.in: Fix $dirprefix to $topdir in perl part.
+
 Thu Mar  2 21:45:17 GMT 2000 Andy Thomas <alt@gimp.org>
 
         * gimp/app/nav_window.c
