@@ -740,7 +740,7 @@ static ProcRecord dodgeburn_proc =
 {
   "gimp_dodgeburn",
   "Dodgeburn image with varying exposure.",
-  "Dodgebure. More details here later.",
+  "Dodgeburn. More details here later.",
   "Andy Thomas",
   "Andy Thomas",
   "1999",
