@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-12-04 13:55+0900\n"
-"PO-Revision-Date: 2003-12-04 13:57+0900\n"
+"POT-Creation-Date: 2004-01-06 20:32+0900\n"
+"PO-Revision-Date: 2004-01-06 20:34+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -198,27 +198,6 @@ msgstr "Gradientval"
 msgid "None"
 msgstr "Ingen"
 
-#: libgimp/gimpmiscui.c:50
-msgid "Preview"
-msgstr "Förhandsgranska"
-
-#: libgimp/gimpmiscui.c:536
-#, c-format
-msgid ""
-"No %s in gimprc:\n"
-"You need to add an entry like\n"
-"(%s \"%s\")\n"
-"to your %s file."
-msgstr ""
-"Ingen %s i gimprc:\n"
-"du måste lägga till en rad lik\n"
-"(%s \"%s\")\n"
-"till din %s-fil."
-
-#: libgimp/gimpmiscui.c:556
-msgid "Parameter Settings"
-msgstr "Parameterinställningar"
-
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
 msgstr "Mönsterval"
@@ -314,6 +293,11 @@ msgstr "Inläsning misslyckades"
 msgid "Not loaded"
 msgstr "Inte inläst"
 
+#: libgimpthumb/gimpthumb-utils.c:195
+#, c-format
+msgid "Failed to create thumbnail folder '%s'."
+msgstr "Kunde inte skapa miniaturbildskatalog \"%s\"."
+
 #: libgimpwidgets/gimpcolorbutton.c:93
 msgid "/_Foreground Color"
 msgstr "/_Förgrundsfärg"
@@ -407,11 +391,11 @@ msgstr "Nuvarande:"
 msgid "Old:"
 msgstr "Gammal:"
 
-#: libgimpwidgets/gimpfileentry.c:331
+#: libgimpwidgets/gimpfileentry.c:336
 msgid "Select Folder"
 msgstr "Välj mapp"
 
-#: libgimpwidgets/gimpfileentry.c:345
+#: libgimpwidgets/gimpfileentry.c:350
 msgid "Select File"
 msgstr "Välj fil"
 
@@ -499,23 +483,23 @@ msgstr "_Rotera"
 msgid "_Shear"
 msgstr "_Luta"
 
-#: libgimpwidgets/gimpunitmenu.c:298
+#: libgimpwidgets/gimpunitmenu.c:304
 msgid "More..."
 msgstr "Mer..."
 
-#: libgimpwidgets/gimpunitmenu.c:608
+#: libgimpwidgets/gimpunitmenu.c:614
 msgid "Unit Selection"
 msgstr "Enhetsval"
 
-#: libgimpwidgets/gimpunitmenu.c:655
+#: libgimpwidgets/gimpunitmenu.c:661
 msgid "Unit"
 msgstr "Enhet"
 
-#: libgimpwidgets/gimpunitmenu.c:659
+#: libgimpwidgets/gimpunitmenu.c:665
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:1252
+#: libgimpwidgets/gimpwidgets.c:1259
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -523,11 +507,11 @@ msgstr ""
 "Använd detta värde för generering av slumptalsfrö - det låter dig upprepa en "
 "given \"slumpfunktion\""
 
-#: libgimpwidgets/gimpwidgets.c:1256
+#: libgimpwidgets/gimpwidgets.c:1263
 msgid "_Randomize"
 msgstr "_Slumpa"
 
-#: libgimpwidgets/gimpwidgets.c:1267
+#: libgimpwidgets/gimpwidgets.c:1274
 msgid "Seed random number generator with a generated random number"
 msgstr "Skapa slumptalsfrö till slumptalsgeneratorn med ett genererat slumptal"
 
@@ -679,6 +663,23 @@ msgstr "Vattenfärg"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Tryck"
+
+#~ msgid "Preview"
+#~ msgstr "Förhandsgranska"
+
+#~ msgid ""
+#~ "No %s in gimprc:\n"
+#~ "You need to add an entry like\n"
+#~ "(%s \"%s\")\n"
+#~ "to your %s file."
+#~ msgstr ""
+#~ "Ingen %s i gimprc:\n"
+#~ "du måste lägga till en rad lik\n"
+#~ "(%s \"%s\")\n"
+#~ "till din %s-fil."
+
+#~ msgid "Parameter Settings"
+#~ msgstr "Parameterinställningar"
 
 #~ msgid "None (normal vision)"
 #~ msgstr "Ingen (normal syn)"
