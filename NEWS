@@ -23,10 +23,10 @@ Bugs fixed in GIMP 2.0.5
 - fixed run-with-last-vals mode for vpropagate plug-in (#151308)
 - respect the global-brush setting when stroking
 - fixed popup menu positioning (#152662)
-- fixed handling of QuickMask colors (#152937)
+- fixed handling of QuickMask color (#152937)
 - fixed bounding box problems when opening Postscript files (#152829)
 - fixed undo memory calculation for paint operations (#153035)
-- work around memleak in Pango (#143542, #148997)
+- work around file-descriptor leak in Pango (#143542, #148997)
 - made menu entry translatable (#153456)
 - use the global gradient for the airbrush and pencil tools (#153584)
 - fixed PDB call gimp-curves-spline (#153635)
