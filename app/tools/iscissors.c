@@ -765,7 +765,7 @@ iscissors_draw_CR (GDisplay  *gdisp,
 	  break;
 	case SCREEN_COORDS:
 	  gdisplay_transform_coords_f(gdisp, (int) pts[indices[i]].dx, 
-			  (int) pts[indicies[i]].dy, &x, &y, TRUE);
+			  (int) pts[indices[i]].dy, &x, &y, TRUE);
 	  geometry[i][0] = x;
 	  geometry[i][1] = y;
 	  /*g_print("%f %f\n", x, y);*/
