@@ -1,5 +1,16 @@
 2004-11-22  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpbase/gimputils.c (gimp_any_to_utf8): use g_strndup()
+	instead of g_strdup() if a length was passed.
+
+	* app/dialogs/info-window.c: g_strndup() the comment parasite's
+	data and pass -1 as length to gimp_any_to_utf8() so we don't
+	encounter the questionable (buggy?) behavior of g_utf8_validate()
+	to fail upon finding '\0' within the "length" passed.
+	Fixes bug #159051.
+
+2004-11-22  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/struc.c: applied patch from Wolfgang Hofer
 	which makes the plug-in use its procedure name for
 	storing the "last_vals" struct. Fixes bug #159028.

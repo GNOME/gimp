@@ -220,6 +220,7 @@ info_window_create_comment (InfoDialog  *info_win,
   GtkWidget    *vbox;
   GtkWidget    *vbox2;
   GimpParasite *comment;
+  gchar        *utf8;
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
@@ -234,11 +235,22 @@ info_window_create_comment (InfoDialog  *info_win,
 
   /*  image comment  */
   comment = gimp_image_parasite_find (gdisp->gimage, "gimp-comment");
-  if (comment == NULL)
-    g_snprintf (iwd->comment_str, MAX_BUF, "%s", _("(none)"));
+
+  if (comment)
+    {
+      gchar *str = g_strndup (gimp_parasite_data (comment),
+                              gimp_parasite_data_size (comment));
+
+      utf8 = gimp_any_to_utf8 (str, -1, NULL);
+    }
   else
-    g_snprintf (iwd->comment_str, MAX_BUF, "%s",
-                gimp_any_to_utf8 (comment->data, comment->size, NULL));
+    {
+      utf8 = g_strdup (_("(none)"));
+    }
+
+  g_snprintf (iwd->comment_str, MAX_BUF, "%s", utf8);
+
+  g_free (utf8);
 
   label = gtk_label_new (iwd->comment_str);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
@@ -606,13 +618,25 @@ info_window_update (GimpDisplay *gdisp)
   /*  image comment  */
   {
     GimpParasite *comment;
+    gchar        *utf8;
 
     comment = gimp_image_parasite_find (gdisp->gimage, "gimp-comment");
-    if (comment == NULL)
-      g_snprintf (iwd->comment_str, MAX_BUF, "%s", _("(none)"));
+
+    if (comment)
+      {
+        gchar *str = g_strndup (gimp_parasite_data (comment),
+                                gimp_parasite_data_size (comment));
+
+        utf8 = gimp_any_to_utf8 (str, -1, NULL);
+      }
     else
-      g_snprintf (iwd->comment_str, MAX_BUF, "%s",
-                  gimp_any_to_utf8 (comment->data, comment->size, NULL));
+      {
+        utf8 = g_strdup (_("(none)"));
+      }
+
+    g_snprintf (iwd->comment_str, MAX_BUF, "%s", utf8);
+
+    g_free (utf8);
   }
 
   {

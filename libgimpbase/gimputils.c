@@ -136,9 +136,16 @@ gimp_any_to_utf8 (const gchar  *str,
   g_return_val_if_fail (str != NULL, NULL);
 
   if (g_utf8_validate (str, len, &start_invalid))
-    utf8 = g_strdup (str);
+    {
+      if (len < 0)
+        utf8 = g_strdup (str);
+      else
+        utf8 = g_strndup (str, len);
+    }
   else
-    utf8 = g_locale_to_utf8 (str, len, NULL, NULL, NULL);
+    {
+      utf8 = g_locale_to_utf8 (str, len, NULL, NULL, NULL);
+    }
 
   if (! utf8)
     {
