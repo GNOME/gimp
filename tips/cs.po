@@ -1,15 +1,15 @@
 # Czech translation of gimp-tips
 # Copyright (C) 2003, 2004 gimp'S COPYRIGHT HOLDER
-# Copyright (C0 2004 Miloslav Trmac <mitr@volny.cz>
+# Copyright (C) 2004 Miloslav Trmac <mitr@volny.cz>
 # This file is distributed under the same license as the gimp package.
-# Miloslav Trmac <mitr@volny.cz>, 2003, 2004
+# Miloslav Trmac <mitr@volny.cz>, 2003, 2004.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-21 02:36+0100\n"
-"PO-Revision-Date: 2004-01-21 17:48+0100\n"
+"POT-Creation-Date: 2004-02-03 02:38+0100\n"
+"PO-Revision-Date: 2004-02-03 16:44+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -108,13 +108,10 @@ msgstr ""
 
 #: tips/gimp-tips.xml.in.h:11
 msgid ""
-"If you stroke a path (Edit-&gt;Stroke Selection), the paint tools can be "
-"used with their current settings. You can use the Paintbrush in gradient "
-"mode or even the Eraser or the Smudge tool."
-msgstr ""
-"Při vykreslení cesty (Úpravy-&gt;Vykreslit výběr) mohou být použity kreslicí "
-"nástroje s jejich aktuálním nastavením. Můžete použít Štětec v režimu "
-"přechodu nebo dokonce nástroje Guma nebo Šmouha."
+"If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
+"with their current settings. You can use the Paintbrush in gradient mode or "
+"even the Eraser or the Smudge tool."
+msgstr "Při vykreslení cesty (Úpravy-&gt;Vykreslit cestu) mohou být použity kreslicí nástroje s jejich aktuálním nastavením. Můžete použít Štětec v režimu přechodu nebo dokonce nástroje Guma nebo Šmouha."
 
 #: tips/gimp-tips.xml.in.h:12
 msgid ""
