@@ -22,10 +22,10 @@
  * Monniaux which are Copyright (C) 1999, 2001 David Monniaux
  * Tip-o-the-hat to David for pioneering this effort.
  *
- * All of these functions use the mmx registers and expect them to
- * remain intact across multiple asm() constructs.  This may not work
- * in the future, if the compiler allocates mmx registers for it's own
- * use. XXX
+ * All of these functions use the mmx and sse registers and expect
+ * them to remain intact across multiple asm() constructs.  This may
+ * not work in the future, if the compiler allocates mmx/sse registers
+ * for it's own use. XXX
  */
 
 #include "config.h"
@@ -39,10 +39,8 @@
 #include "base/base-types.h"
 
 #include "gimp-composite.h"
-#include "gimp-composite-mmx.h"
+#include "gimp-composite-sse.h"
 
-
-#undef USE_SSE
 
 #ifdef USE_SSE
 #define pminub(src,dst,tmp)  "pminub " "%%" #src ", %%" #dst
@@ -54,14 +52,6 @@
 #endif
 
 
-/*
- *  "\t" pdivwX(mm4,mm5,mm7) "\n"
- * "\tpsrlq     $32,%%mm4\n"
- * "\tpsrlq     $32,%%mm5\n"
- * "\t" pdivwX(mm4,mm5,mm5) "\n"
- * "\tpsllq     $32,%%mm5\n"
- * "\tpor       %%mm5,%%mm7\n"
- */
 /*
  * Clobbers eax, ecx edx
  */
@@ -142,27 +132,6 @@
                   "\tpsrlw     $8,        %%"#opr2"\n"
  
 
- 
-
-#define ASM(x) debug(#x); asm(x)
-
-#define DEBUG(x) 
-
-
-void
-debug_display_mmx()
-{
-#define mask32(x) ((x)& (unsigned long long) 0xFFFFFFFF)
-#define print64(reg) { unsigned long long reg; asm("movq %%" #reg ",%0" : "=m" (reg)); printf(#reg"=%08llx %08llx", mask32(reg>>32), mask32(reg)); }
-  printf("--------------------------------------------\n");
-  print64(mm0); printf("  "); print64(mm1); printf("\n");
-  print64(mm2); printf("  "); print64(mm3); printf("\n");
-  print64(mm4); printf("  "); print64(mm5); printf("\n");
-  print64(mm6); printf("  "); print64(mm7); printf("\n");
-  printf("--------------------------------------------\n");
-}
-
-
 unsigned long rgba8_alpha_mask[2] = { 0xFF000000, 0xFF000000 };
 unsigned long rgba8_b1[2] = { 0x01010101, 0x01010101 };
 unsigned long rgba8_b255[2] = { 0xFFFFFFFF, 0xFFFFFFFF };
@@ -179,7 +148,7 @@ unsigned long va8_w255[2] = { 0X00FF00FF, 0X00FF00FF };
  *
  */
 void
-gimp_composite_addition_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
+gimp_composite_addition_rgba8_rgba8_rgba8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -223,7 +192,7 @@ gimp_composite_addition_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
   asm("emms");
 }
 
-void gimp_composite_burn_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
+void gimp_composite_burn_rgba8_rgba8_rgba8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -336,7 +305,7 @@ void gimp_composite_burn_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
 }
 
 void
-xxxgimp_composite_coloronly_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
+xxxgimp_composite_coloronly_rgba8_rgba8_rgba8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -368,7 +337,7 @@ xxxgimp_composite_coloronly_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
 }
 
 void
-gimp_composite_darken_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
+gimp_composite_darken_rgba8_rgba8_rgba8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -396,7 +365,7 @@ gimp_composite_darken_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
 }
 
 void
-gimp_composite_difference_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
+gimp_composite_difference_rgba8_rgba8_rgba8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -445,7 +414,7 @@ gimp_composite_difference_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
 
 
 void
-xxxgimp_composite_dissolve_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
+xxxgimp_composite_dissolve_rgba8_rgba8_rgba8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -475,7 +444,7 @@ xxxgimp_composite_dissolve_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
 }
 
 void
-gimp_composite_divide_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
+gimp_composite_divide_rgba8_rgba8_rgba8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -574,7 +543,7 @@ gimp_composite_divide_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
  * (src1[b] << 8) / (256 - src2[b]);
  */
 void
-gimp_composite_dodge_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
+gimp_composite_dodge_rgba8_rgba8_rgba8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -660,7 +629,7 @@ gimp_composite_dodge_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
 }
 
 void
-gimp_composite_grain_extract_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
+gimp_composite_grain_extract_rgba8_rgba8_rgba8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -745,7 +714,7 @@ gimp_composite_grain_extract_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
 }
 
 void
-gimp_composite_grain_merge_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
+gimp_composite_grain_merge_rgba8_rgba8_rgba8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -830,7 +799,7 @@ gimp_composite_grain_merge_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
 }
 
 void
-xxxgimp_composite_hardlight_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
+xxxgimp_composite_hardlight_rgba8_rgba8_rgba8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -849,7 +818,7 @@ xxxgimp_composite_hardlight_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
 }
 
 void
-xxxgimp_composite_hueonly_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
+xxxgimp_composite_hueonly_rgba8_rgba8_rgba8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -867,7 +836,7 @@ xxxgimp_composite_hueonly_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
 }
 
 void
-gimp_composite_lighten_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
+gimp_composite_lighten_rgba8_rgba8_rgba8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -912,7 +881,7 @@ gimp_composite_lighten_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
 }
 
 void
-gimp_composite_multiply_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
+gimp_composite_multiply_rgba8_rgba8_rgba8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -1088,7 +1057,7 @@ op_overlay()
 }
 
 void
-gimp_composite_overlay_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
+gimp_composite_overlay_rgba8_rgba8_rgba8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -1122,7 +1091,7 @@ gimp_composite_overlay_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
 }
 
 void
-xxxgimp_composite_saturationonly_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
+xxxgimp_composite_saturationonly_rgba8_rgba8_rgba8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -1153,7 +1122,7 @@ xxxgimp_composite_saturationonly_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op
 }
 
 void
-gimp_composite_scale_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
+gimp_composite_scale_rgba8_rgba8_rgba8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -1213,7 +1182,7 @@ gimp_composite_scale_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
 }
 
 void
-gimp_composite_screen_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
+gimp_composite_screen_rgba8_rgba8_rgba8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -1327,7 +1296,7 @@ gimp_composite_screen_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
 }
 
 void
-xxxgimp_composite_softlight_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
+xxxgimp_composite_softlight_rgba8_rgba8_rgba8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -1358,7 +1327,7 @@ xxxgimp_composite_softlight_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
 }
 
 void
-gimp_composite_subtract_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
+gimp_composite_subtract_rgba8_rgba8_rgba8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -1408,7 +1377,7 @@ gimp_composite_subtract_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
 }
 
 void
-gimp_composite_swap_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
+gimp_composite_swap_rgba8_rgba8_rgba8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -1438,7 +1407,7 @@ gimp_composite_swap_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
 }
 
 void
-gimp_composite_valueonly_rgba8_rgba8_rgba8_mmx(GimpCompositeContext *_op)
+gimp_composite_valueonly_rgba8_rgba8_rgba8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -1474,7 +1443,7 @@ unsigned long v8_mul_shift[2] = { 0x00800080, 0x00800080 };
 
 #if 0
 void
-gimp_composite_addition_va8_va8_va8_mmx(GimpCompositeContext *_op)
+gimp_composite_addition_va8_va8_va8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -1555,7 +1524,7 @@ gimp_composite_addition_va8_va8_va8_mmx(GimpCompositeContext *_op)
 }
 
 void
-gimp_composite_burn_va8_va8_va8_mmx(GimpCompositeContext *_op)
+gimp_composite_burn_va8_va8_va8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -1668,14 +1637,14 @@ gimp_composite_burn_va8_va8_va8_mmx(GimpCompositeContext *_op)
 }
 
 void
-xxxgimp_composite_coloronly_va8_va8_va8_mmx(GimpCompositeContext *_op)
+xxxgimp_composite_coloronly_va8_va8_va8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
 }
 
 void
-gimp_composite_darken_va8_va8_va8_mmx(GimpCompositeContext *_op)
+gimp_composite_darken_va8_va8_va8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -1739,7 +1708,7 @@ gimp_composite_darken_va8_va8_va8_mmx(GimpCompositeContext *_op)
 }
 
 void
-gimp_composite_difference_va8_va8_va8_mmx(GimpCompositeContext *_op)
+gimp_composite_difference_va8_va8_va8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -1821,56 +1790,56 @@ gimp_composite_difference_va8_va8_va8_mmx(GimpCompositeContext *_op)
 }
 
 void
-xxxgimp_composite_dissolve_va8_va8_va8_mmx(GimpCompositeContext *_op)
+xxxgimp_composite_dissolve_va8_va8_va8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
 }
 
 void
-xxxgimp_composite_divide_va8_va8_va8_mmx(GimpCompositeContext *_op)
+xxxgimp_composite_divide_va8_va8_va8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
 }
 
 void
-xxxgimp_composite_dodge_va8_va8_va8_mmx(GimpCompositeContext *_op)
+xxxgimp_composite_dodge_va8_va8_va8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
 }
 
 void
-xxxgimp_composite_grainextract_va8_va8_va8_mmx(GimpCompositeContext *_op)
+xxxgimp_composite_grainextract_va8_va8_va8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
 }
 
 void
-xxxgimp_composite_grainmerge_va8_va8_va8_mmx(GimpCompositeContext *_op)
+xxxgimp_composite_grainmerge_va8_va8_va8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
 }
 
 void
-xxxgimp_composite_hardlight_va8_va8_va8_mmx(GimpCompositeContext *_op)
+xxxgimp_composite_hardlight_va8_va8_va8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
 }
 
 void
-xxxgimp_composite_hueonly_va8_va8_va8_mmx(GimpCompositeContext *_op)
+xxxgimp_composite_hueonly_va8_va8_va8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
 }
 
 void
-xxxgimp_composite_lighten_va8_va8_va8_mmx(GimpCompositeContext *_op)
+xxxgimp_composite_lighten_va8_va8_va8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -1949,7 +1918,7 @@ xxxgimp_composite_lighten_va8_va8_va8_mmx(GimpCompositeContext *_op)
 }
 
 void
-xxxgimp_composite_multiply_va8_va8_va8_mmx(GimpCompositeContext *_op)
+xxxgimp_composite_multiply_va8_va8_va8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -2103,7 +2072,7 @@ xxxgimp_composite_multiply_va8_va8_va8_mmx(GimpCompositeContext *_op)
 }
 
 void
-gimp_composite_overlay_va8_va8_va8_mmx(GimpCompositeContext *_op)
+gimp_composite_overlay_va8_va8_va8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -2155,21 +2124,21 @@ gimp_composite_overlay_va8_va8_va8_mmx(GimpCompositeContext *_op)
 }
 
 void
-xxxgimp_composite_replace_va8_va8_va8_mmx(GimpCompositeContext *_op)
+xxxgimp_composite_replace_va8_va8_va8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
 }
 
 void
-xxxgimp_composite_saturationonly_va8_va8_va8_mmx(GimpCompositeContext *_op)
+xxxgimp_composite_saturationonly_va8_va8_va8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
 }
 
 void
-xxxgimp_composite_screen_va8_va8_va8_mmx(GimpCompositeContext *_op)
+xxxgimp_composite_screen_va8_va8_va8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -2353,14 +2322,14 @@ xxxgimp_composite_screen_va8_va8_va8_mmx(GimpCompositeContext *_op)
 }
 
 void
-xxxgimp_composite_softlight_va8_va8_va8_mmx(GimpCompositeContext *_op)
+xxxgimp_composite_softlight_va8_va8_va8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
 }
 
 void
-xxxgimp_composite_subtract_va8_va8_va8_mmx(GimpCompositeContext *_op)
+xxxgimp_composite_subtract_va8_va8_va8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
@@ -2432,24 +2401,24 @@ xxxgimp_composite_subtract_va8_va8_va8_mmx(GimpCompositeContext *_op)
 }
 
 void
-xxxgimp_composite_swap_va8_va8_va8_mmx(GimpCompositeContext *_op)
+xxxgimp_composite_swap_va8_va8_va8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
 }
 
 void
-xxxgimp_composite_valueonly_va8_va8_va8_mmx(GimpCompositeContext *_op)
+xxxgimp_composite_valueonly_va8_va8_va8_sse(GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
 }
 #endif
 
-#endif  /* USE_MMX */
+#endif  /* USE_SSE */
 
 void
-gimp_composite_mmx_init()
+gimp_composite_sse_init()
 {
 
 }

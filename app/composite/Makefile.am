@@ -26,15 +26,14 @@ libappcomposite_a_sources = \
 	gimp-composite-generic.h	\
 	gimp-composite-mmx.c		\
 	gimp-composite-mmx.h		\
+	gimp-composite-sse.c		\
+	gimp-composite-ssex.h		\
 	gimp-composite-util.h
 
 libappcomposite_a_built_sources = gimp-composite-dispatch.c
 
 libappcomposite_a_SOURCES = $(libappcomposite_a_built_sources) $(libappcomposite_a_sources)
 
-
-
-#gimp-composite.c: gimp-composite-dispatch.c
 
 gimp-composite-dispatch.c: gimp-composite-generic.o make-gimp-composite-dispatch.py
 	./make-gimp-composite-dispatch.py gimp-composite-generic.o > gimp-composite-dispatch.c

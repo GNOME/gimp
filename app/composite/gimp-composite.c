@@ -42,11 +42,17 @@ const guchar gimp_composite_pixel_bpp[] =
   2, /* GIMP_PIXELFORMAT_VA8     */
   3, /* GIMP_PIXELFORMAT_RGB8    */
   4, /* GIMP_PIXELFORMAT_RGBA8   */
-#if GIMP_16BITCOLOR
+#if GIMP_COMPOSITE_16BIT
   2, /* GIMP_PIXELFORMAT_V16     */
   4, /* GIMP_PIXELFORMAT_VA16    */
   6, /* GIMP_PIXELFORMAT_RGB16   */
   8, /* GIMP_PIXELFORMAT_RGBA16  */
+#endif
+#if GIMP_COMPOSITE_32BIT
+  2, /* GIMP_PIXELFORMAT_V32     */
+  4, /* GIMP_PIXELFORMAT_VA32    */
+  6, /* GIMP_PIXELFORMAT_RGB32   */
+  8, /* GIMP_PIXELFORMAT_RGBA32  */
 #endif
   0, /* GIMP_PIXELFORMAT_ANY */
 };
@@ -57,11 +63,17 @@ const gchar *gimp_composite_pixel_name[] =
   "GIMP_PIXELFORMAT_VA8",
   "GIMP_PIXELFORMAT_RGB8",
   "GIMP_PIXELFORMAT_RGBA8",
-#if GIMP_16BITCOLOR
+#if GIMP_COMPOSITE_16BIT
   "GIMP_PIXELFORMAT_V16",
   "GIMP_PIXELFORMAT_VA16",
   "GIMP_PIXELFORMAT_RGB16 ",
   "GIMP_PIXELFORMAT_RGBA16 ",
+#endif
+#if GIMP_COMPOSITE_32BIT
+  "GIMP_PIXELFORMAT_V32",
+  "GIMP_PIXELFORMAT_VA32",
+  "GIMP_PIXELFORMAT_RGB32 ",
+  "GIMP_PIXELFORMAT_RGBA32 ",
 #endif
   "GIMP_PIXELFORMAT_ANY",
 };
@@ -75,11 +87,17 @@ const guchar gimp_composite_pixel_alphap[] =
   1, /* GIMP_PIXELFORMAT_VA8     */
   0, /* GIMP_PIXELFORMAT_RGB8    */
   1, /* GIMP_PIXELFORMAT_RGBA8   */
-#if GIMP_16BITCOLOR
+#if GIMP_COMPOSITE_16BIT
   0, /* GIMP_PIXELFORMAT_V16     */
   1, /* GIMP_PIXELFORMAT_VA16    */
   0, /* GIMP_PIXELFORMAT_RGB16   */
   1, /* GIMP_PIXELFORMAT_RGBA16  */
+#endif
+#if GIMP_COMPOSITE_32BIT
+  0, /* GIMP_PIXELFORMAT_V32     */
+  1, /* GIMP_PIXELFORMAT_VA32    */
+  0, /* GIMP_PIXELFORMAT_RGB32   */
+  1, /* GIMP_PIXELFORMAT_RGBA32  */
 #endif
   0, /* GIMP_PIXELFORMAT_UNKNOWN */
 };
@@ -93,11 +111,17 @@ const GimpPixelFormat gimp_composite_pixel_alpha[] =
   GIMP_PIXELFORMAT_V8,          /* GIMP_PIXELFORMAT_VA8     */
   GIMP_PIXELFORMAT_RGBA8,       /* GIMP_PIXELFORMAT_RGB8    */
   GIMP_PIXELFORMAT_RGB8,        /* GIMP_PIXELFORMAT_RGBA8   */
-#if GIMP_16BITCOLOR
+#if GIMP_COMPOSITE_16BIT
   GIMP_PIXELFORMAT_VA16,
   GIMP_PIXELFORMAT_V16,
   GIMP_PIXELFORMAT_RGBA16,
   GIMP_PIXELFORMAT_RGB16
+#endif
+#if GIMP_COMPOSITE_32BIT
+  GIMP_PIXELFORMAT_VA32,
+  GIMP_PIXELFORMAT_V32,
+  GIMP_PIXELFORMAT_RGBA32,
+  GIMP_PIXELFORMAT_RGB32
 #endif
   GIMP_PIXELFORMAT_ANY,         /* GIMP_PIXELFORMAT_ANY */
 };
@@ -151,7 +175,6 @@ struct {
   char announce_function;
 } gimp_composite_debug;
 
-/*#include "gimp-composite-dispatch.c"*/
 
 extern char *gimp_composite_function_name[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N];
 extern void (*gimp_composite_function[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N]);
@@ -183,3 +206,6 @@ gimp_composite_context_print(GimpCompositeContext *ctx)
          gimp_composite_pixel_name[ctx->pixelformat_M], ctx->pixelformat_M, ctx->A, 
          ctx->n_pixels);
 }
+
+struct GimpCompositeOptions gimp_composite_options;
+

@@ -22,18 +22,23 @@
 #ifndef __GIMP_COMPOSITE_H__
 #define __GIMP_COMPOSITE_H__
 
-
 typedef enum
 {
   GIMP_PIXELFORMAT_V8,
   GIMP_PIXELFORMAT_VA8,
   GIMP_PIXELFORMAT_RGB8,
   GIMP_PIXELFORMAT_RGBA8,
-#if GIMP_16BITCOLOR
+#if GIMP_COMPOSITE_16BIT
   GIMP_PIXELFORMAT_V16,
   GIMP_PIXELFORMAT_VA16,
   GIMP_PIXELFORMAT_RGB16,
   GIMP_PIXELFORMAT_RGBA16,
+#endif
+#if GIMP_COMPOSITE_32BIT
+  GIMP_PIXELFORMAT_V32,
+  GIMP_PIXELFORMAT_VA32,
+  GIMP_PIXELFORMAT_RGB32,
+  GIMP_PIXELFORMAT_RGBA32,
 #endif
   GIMP_PIXELFORMAT_ANY,
   GIMP_PIXELFORMAT_N
@@ -68,7 +73,7 @@ typedef struct
   guint8  a;
 } gimp_rgba8_t;
 
-#ifdef GIMP_16BITCOLOUR
+#ifdef GIMP_COMPOSIE_16BIT
 typedef struct
 {
   guint16  v;
@@ -94,6 +99,34 @@ typedef struct
   guint16  b;
   guint16  a;
 } gimp_rgba16_t;
+#endif
+
+#ifdef GIMP_COMPOSIE_32BIT
+typedef struct
+{
+  guint32  v;
+} gimp_v32_t;
+
+typedef struct
+{
+  guint32  v;
+  guint32  a;
+} gimp_va32_t;
+
+typedef struct
+{
+  guint32  r;
+  guint32  g;
+  guint32  b;
+} gimp_rgb32_t;
+
+typedef struct
+{
+  guint32  r;
+  guint32  g;
+  guint32  b;
+  guint32  a;
+} gimp_rgba32_t;
 #endif
 
 /* bytes per-pixel for each of the pixel formats */
@@ -189,9 +222,15 @@ typedef struct
 } GimpCompositeContext;
 
 
-extern void gimp_composite_dispatch(GimpCompositeContext *);
-extern void gimp_composite_init();
-extern void gimp_composite_context_print(GimpCompositeContext *);
+struct GimpCompositeOptions {
+		gboolean initialised;
+		gboolean use;
+};
 
+extern struct GimpCompositeOptions gimp_composite_options;
+
+extern void gimp_composite_dispatch(GimpCompositeContext *);
+extern void gimp_composite_init(void);
+extern void gimp_composite_context_print(GimpCompositeContext *);
 
 #endif  /* __GIMP_COMPOSITE_H__  */
