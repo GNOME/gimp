@@ -184,7 +184,6 @@ app/tools/gimpmoveoptions.c
 app/tools/gimpmovetool.c
 app/tools/gimppaintbrushtool.c
 app/tools/gimppainttool.c
-app/tools/gimppathtool.c
 app/tools/gimppenciltool.c
 app/tools/gimpperspectivetool.c
 app/tools/gimpposterizetool.c
@@ -202,7 +201,7 @@ app/tools/gimptransformoptions.c
 app/tools/gimptransformtool.c
 app/tools/gimpvectortool.c
 app/tools/paint_options.c
-app/tools/path_tool.c
+app/tools/tool_manager.c
 app/tools/tool_options.c
 
 app/widgets/widgets-enums.c
