@@ -1,3 +1,10 @@
+2004-02-10  Adam D. Moss  <adam@gimp.org>
+
+	* plug-ins/common/gif.c: Attempt to use the palette colour closest
+	to that of the GIMP's current brush background colour for the GIF
+	file's background index hint for non-transparency-aware image
+	viewers.
+
 2004-01-22  Manish Singh  <yosh@gimp.org>
 
 	* m4macros/gimp-2.0.m4: quote AM_PATH_GIMP properly so automake 1.8

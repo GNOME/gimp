@@ -1,5 +1,6 @@
-/* GIF saving file filter for The GIMP version 1.0/1.1
+/* GIF saving file filter for The GIMP version 1.0/1.1/1.2
  *
+ *    Copyright
  *    - Adam D. Moss
  *    - Peter Mattis
  *    - Spencer Kimball
@@ -7,7 +8,7 @@
  *      Based around original GIF code by David Koblas.
  *
  *
- * Version 3.0.2 - 99/04/25
+ * Version 3.1.0 - 2004-02-10
  *                        Adam D. Moss - <adam@gimp.org> <adam@foxbox.org>
  */
 /*
@@ -27,6 +28,14 @@
 
 /*
  * REVISION HISTORY
+ *
+ * 2004-02-10
+ * 3.01.00 - Attempt to use the palette colour closest to that of the
+ *           GIMP's current brush background colour for the GIF file's
+ *           background index hint for non-transparency-aware image
+ *           viewers.  NOTE that this is merely a hint and may be
+ *           ignored by this plugin for various (rare) reasons that
+ *           would usually entail writing a somewhat larger image file.
  *
  * 99/04/25
  * 3.00.02 - Save the comment back onto the image as a persistent
@@ -599,13 +608,11 @@ static int GIFNextPixel (ifunptr);
 
 static void GIFEncodeHeader (FILE *, gboolean, int, int, int, int,
 			     int *, int *, int *, ifunptr);
-static void GIFEncodeGraphicControlExt (FILE *, int, int, int, int, int,
-					int, int, int, int *, int *, int *,
-					ifunptr);
-static void GIFEncodeImageData (FILE *, int, int, int, int, int, int,
-				int *, int *, int *, ifunptr, gint, gint);
-static void GIFEncodeClose (FILE *, int, int, int, int, int, int,
-			    int *, int *, int *, ifunptr);
+static void GIFEncodeGraphicControlExt (FILE *, int, int, int, int,
+					int, int, int, ifunptr);
+static void GIFEncodeImageData (FILE *, int, int, int, int,
+				ifunptr, gint, gint);
+static void GIFEncodeClose (FILE *);
 static void GIFEncodeLoopExt (FILE *, guint);
 static void GIFEncodeCommentExt (FILE *, char *);
 
@@ -671,7 +678,7 @@ static int find_unused_ia_colour (guchar *pixels,
       return ((*colors)-1);
     }
   
-  g_message (_("GIF: Couldn't simply reduce colors further.\nSaving as opaque.\n"));
+  g_message (_("GIF: Couldn't simply reduce colors further.\nSaving as opaque."));
   return (-1);
 }
 
@@ -860,7 +867,8 @@ save_image (gchar  *filename,
   char *layer_name;
 
   unsigned char bgred, bggreen, bgblue;
-
+  unsigned char bgindex = 0;
+  unsigned int best_error = 0xFFFFFFFF;
 
 #ifdef FACEHUGGERS
   /* Save the comment back to the ImageID, if appropriate */
@@ -926,10 +934,23 @@ save_image (gchar  *filename,
       break;
 
     default:
-      g_message (_("GIF: Sorry, can't save RGB images as GIFs - convert to INDEXED\nor GRAY first.\n"));
+      g_message (_("GIF: Sorry, can't save RGB images as GIFs - convert to INDEXED\nor GRAY first."));
       return FALSE;
       break;
     }
+
+  /* find earliest index in palette which is closest to the background
+     colour, and ATTEMPT to use that as the GIF's default background colour. */
+  for (i=255; i>=0; --i) {
+    unsigned int local_error = 0;
+    local_error += (Red[i] - bgred)     * (Red[i] - bgred);
+    local_error += (Green[i] - bggreen) * (Green[i] - bggreen);
+    local_error += (Blue[i] - bgblue)   * (Blue[i] - bgblue);
+    if (local_error <= best_error) {
+      bgindex = i;
+      best_error = local_error;
+    }
+  }
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     {
@@ -944,7 +965,7 @@ save_image (gchar  *filename,
   outfile = fopen (filename, "wb");
   if (!outfile)
     {
-      g_message (_("GIF: can't open %s\n"), filename);
+      g_message (_("GIF: can't open %s"), filename);
       return FALSE;
     }
 
@@ -973,7 +994,7 @@ save_image (gchar  *filename,
   cols = gimp_image_width (image_ID);
   rows = gimp_image_height (image_ID);
   Interlace = gsvals.interlace;
-  GIFEncodeHeader (outfile, is_gif89, cols, rows, 0,
+  GIFEncodeHeader (outfile, is_gif89, cols, rows, bgindex,
 		   BitsPerPixel, Red, Green, Blue, GetPixel);
 
 
@@ -1047,12 +1068,21 @@ save_image (gchar  *filename,
 	  /* We were able to re-use an index within the existing bitspace,
 	     whereas the estimate in the header was pessimistic but still
 	     needs to be upheld... */
+	  static gboolean onceonly = FALSE;
+	  
+	  if (!onceonly)
+	    {
 #ifdef GIFDEBUG
-	  g_warning("Promised %d bpp, pondered writing chunk with %d bpp!",
-		    liberalBPP, BitsPerPixel);
+	      g_warning("Promised %d bpp, pondered writing chunk with %d bpp!",
+			liberalBPP, BitsPerPixel);
 #endif
-	  g_warning ("Transparent colour *might* be incorrect "
-		      "on viewers which don't support transparency.");
+	      g_message (_("GIF plugin: "
+			   "Warning: "
+			   "Transparent colour in written file *might* be "
+			   "incorrect on viewers which don't support "
+			   "transparency."));
+	      onceonly = TRUE;
+	    }
 	}
       useBPP = (BitsPerPixel > liberalBPP) ? BitsPerPixel : liberalBPP;
 
@@ -1086,26 +1116,24 @@ save_image (gchar  *filename,
 
 	      if (!onceonly)
 		{
-		  g_warning("GIF plugin: Delay inserted to prevent evil "
-			    "CPU-sucking anim.\n");
+		  g_message(_("GIF plugin: Delay inserted to prevent evil "
+			      "CPU-sucking anim."));
 		  onceonly = TRUE;
 		}
 	      Delay89 = 1;
 	    }
 
 	  GIFEncodeGraphicControlExt (outfile, Disposal, Delay89, nlayers,
-				      cols, rows, 0,
+				      cols, rows,
 				      transparent,
 				      useBPP,
-				      Red, Green,
-				      Blue, GetPixel);
+				      GetPixel);
 	}
 
       GIFEncodeImageData (outfile, cols, rows,
 			  (rows>4) ? gsvals.interlace : 0,
-			  0, transparent,
 			  useBPP,
-			  Red, Green, Blue, GetPixel,
+			  GetPixel,
 			  offset_x, offset_y);
 
       
@@ -1119,8 +1147,7 @@ save_image (gchar  *filename,
   
   g_free(layers);
 
-  GIFEncodeClose (outfile, cols, rows, gsvals.interlace, 0, transparent,
-		  useBPP, Red, Green, Blue, GetPixel);
+  GIFEncodeClose (outfile);
 
   return TRUE;
 }
@@ -1660,12 +1687,8 @@ GIFEncodeGraphicControlExt (FILE    *fp,
 			    int      NumFramesInImage,
 			    int      GWidth,
 			    int      GHeight,
-			    int      Background,
 			    int      Transparent,
 			    int      BitsPerPixel,
-			    int      Red[],
-			    int      Green[],
-			    int      Blue[],
 			    ifunptr  GetPixel)
 {
   int RWidth, RHeight;
@@ -1743,12 +1766,7 @@ GIFEncodeImageData (FILE    *fp,
 		    int      GWidth,
 		    int      GHeight,
 		    int      GInterlace,
-		    int      Background,
-		    int      Transparent,
 		    int      BitsPerPixel,
-		    int      Red[],
-		    int      Green[],
-		    int      Blue[],
 		    ifunptr  GetPixel,
 		    gint     offset_x,
 		    gint     offset_y)
@@ -1900,17 +1918,7 @@ GIFEncodeImageData (FILE    *fp,
 
 
 static void
-GIFEncodeClose (FILE    *fp,
-		int      GWidth,
-		int      GHeight,
-		int      GInterlace,
-		int      Background,
-		int      Transparent,
-		int      BitsPerPixel,
-		int      Red[],
-		int      Green[],
-		int      Blue[],
-		ifunptr  GetPixel)
+GIFEncodeClose (FILE    *fp)
 {
   /*
    * Write the GIF file terminator
@@ -2344,7 +2352,7 @@ cl_hash (register count_int hsize)			/* reset code table */
 static void
 writeerr ()
 {
-  g_message (_("GIF: error writing output file\n"));
+  g_message (_("GIF: error writing output file"));
   return;
 }
 
@@ -2435,7 +2443,7 @@ comment_entry_callback (GtkWidget *widget,
   /* Temporary kludge for overlength strings - just return */
   if (ssize > 240)
     {
-      g_message (_("GIF save: Your comment string is too long.\n"));
+      g_message (_("GIF save: Your comment string is too long."));
       g_free (str);
       return;
     }
