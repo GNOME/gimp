@@ -39,8 +39,10 @@
  * @callback_data: data to pass to the @callback.
  * @first_button: returns the first button in the created group.
  *
- * Creates a new group of #GtkRadioButtons representing the enum values.
- * This is very similar to gimp_enum_menu_new().
+ * Creates a new group of #GtkRadioButtons representing the enum
+ * values.  A group of radiobuttons is a good way to represent enums
+ * with up to three or four values. Often it is better to use a
+ * #GimpEnumComboBox instead.
  *
  * Return value: a new #GtkVBox holding a group of #GtkRadioButtons.
  **/
@@ -68,6 +70,22 @@ gimp_enum_radio_box_new (GType       enum_type,
   return vbox;
 }
 
+/**
+ * gimp_enum_radio_box_new_with_range:
+ * @minimum:
+ * @maximum:
+ * @enum_type: the #GType of an enum.
+ * @callback: a callback to connect to the "toggled" signal of each
+ *            #GtkRadioButton that is created.
+ * @callback_data: data to pass to the @callback.
+ * @first_button: returns the first button in the created group.
+ *
+ * Just like gimp_enum_radio_box_new(), this function creates a group
+ * of radio buttons, but it allows to limit the range of available
+ * enum values.
+ *
+ * Return value: a new #GtkVBox holding a group of #GtkRadioButtons.
+ **/
 GtkWidget *
 gimp_enum_radio_box_new_with_range (GType       enum_type,
                                     gint        minimum,
@@ -169,6 +187,22 @@ gimp_enum_radio_frame_new (GType        enum_type,
   return frame;
 }
 
+/**
+ * gimp_enum_radio_frame_new_with_range:
+ * @enum_type: the #GType of an enum.
+ * @minimum:
+ * @maximum:
+ * @label_widget: a widget to put into the frame that will hold the radio box.
+ * @callback: a callback to connect to the "toggled" signal of each
+ *            #GtkRadioButton that is created.
+ * @callback_data: data to pass to the @callback.
+ * @first_button: returns the first button in the created group.
+ *
+ * Calls gimp_enum_radio_box_new_with_range() and puts the resulting
+ * vbox into a #GtkFrame.
+ *
+ * Return value: a new #GtkFrame holding a group of #GtkRadioButtons.
+ **/
 GtkWidget *
 gimp_enum_radio_frame_new_with_range (GType        enum_type,
                                       gint         minimum,
@@ -248,6 +282,24 @@ gimp_enum_stock_box_new (GType         enum_type,
   return box;
 }
 
+/**
+ * gimp_enum_stock_box_new_with_range:
+ * @enum_type: the #GType of an enum.
+ * @minimum:
+ * @maximum:
+ * @stock_prefix: the prefix of the group of stock ids to use.
+ * @icon_size:
+ * @callback: a callback to connect to the "toggled" signal of each
+ *            #GtkRadioButton that is created.
+ * @callback_data: data to pass to the @callback.
+ * @first_button: returns the first button in the created group.
+ *
+ * Just like gimp_enum_stock_box_new(), this function creates a group
+ * of radio buttons, but it allows to limit the range of available
+ * enum values.
+ *
+ * Return value: a new #GtkHbox holding a group of #GtkRadioButtons.
+ **/
 GtkWidget *
 gimp_enum_stock_box_new_with_range (GType         enum_type,
                                     gint          minimum,
@@ -322,6 +374,15 @@ gimp_enum_stock_box_new_with_range (GType         enum_type,
   return hbox;
 }
 
+/**
+ * gimp_enum_stock_box_set_child_padding:
+ * @stock_box: a stock box widget
+ * @xpad: horizontal padding
+ * @ypad: vertical padding
+ *
+ * Sets the padding of all buttons in a box created by
+ * gimp_enum_stock_box_new().
+ **/
 void
 gimp_enum_stock_box_set_child_padding (GtkWidget *stock_box,
                                        gint       xpad,
@@ -335,11 +396,15 @@ gimp_enum_stock_box_set_child_padding (GtkWidget *stock_box,
        list;
        list = g_list_next (list))
     {
-      GtkBin  *bin  = list->data;
-      GtkMisc *misc = GTK_MISC (bin->child);
+      GtkBin *bin  = list->data;
 
-      gtk_misc_set_padding (misc,
-                            xpad < 0 ? misc->xpad : xpad,
-                            ypad < 0 ? misc->ypad : ypad);
+      if (GTK_IS_MISC (bin->child))
+        {
+          GtkMisc *misc = GTK_MISC (bin->child);
+
+          gtk_misc_set_padding (misc,
+                                xpad < 0 ? misc->xpad : xpad,
+                                ypad < 0 ? misc->ypad : ypad);
+        }
     }
 }

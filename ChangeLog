@@ -1,5 +1,9 @@
 2005-01-22  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpenumwidgets.c: added more gtk-doc comments.
+
+2005-01-22  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/gimpbase.def
 	* libgimpcolor/gimpcolor.def
 	* libgimpmath/gimpmath.def: added new symbols.
