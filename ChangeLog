@@ -1,3 +1,33 @@
+2003-10-20  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimptooldialog.[ch]: added a simple utility function
+	gimp_tool_dialog_new() that creates a GimpVieawableDialog based on
+	GimpToolInfo and registers it with the toplevel dialog factory.
+	
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorizetool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimpimagemaptool.[ch]
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpmeasuretool.c: use the new functionality; removed
+	the shell_identifier since it can be created from the tool name.
+
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c
+	* app/tools/gimpthresholdtool.c
+	* app/tools/gimptransformtool.[ch]: removed the shell_identifier
+	here as well. Should also be ported to gimp_tool_dialog_new().
+
+	* NEWS: removed stuff that isn't new at all.
+
 2003-10-20  Dave Neary  <bolsh@gimp.org>
 
 	* NEWS: Updated the NEWS file.

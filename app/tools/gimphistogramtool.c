@@ -36,11 +36,11 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpenummenu.h"
-#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimphistogrambox.h"
 #include "widgets/gimphistogramview.h"
 #include "widgets/gimppropwidgets.h"
+#include "widgets/gimptooldialog.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
@@ -323,7 +323,6 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
   GtkWidget   *table;
   GtkWidget   *label;
   GtkWidget   *menu;
-  const gchar *stock_id;
   gint         i;
   gint         x, y;
 
@@ -340,21 +339,14 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
   htd = g_new0 (HistogramToolDialog, 1);
   htd->hist = gimp_histogram_new (GIMP_BASE_CONFIG (tool_info->gimp->config));
 
-  stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
-
   /*  The shell and main vbox  */
-  htd->shell =
-    gimp_viewable_dialog_new (NULL,
-                              tool_info->blurb,
-                              GIMP_OBJECT (tool_info)->name,
-                              stock_id,
-                              _("View Image Histogram"),
-                              gimp_standard_help_func, tool_info->help_id,
+  htd->shell = gimp_tool_dialog_new (tool_info,
+                                     _("View Image Histogram"),
 
-                              GTK_STOCK_CLOSE, histogram_tool_close_callback,
-                              htd, NULL, NULL, TRUE, TRUE,
+                                     GTK_STOCK_CLOSE, histogram_tool_close_callback,
+                                     htd, NULL, NULL, TRUE, TRUE,
 
-                              NULL);
+                                     NULL);
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
@@ -431,10 +423,6 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
 			GTK_FILL, GTK_FILL, 2, 2);
       gtk_widget_show (htd->info_labels[i]);
     }
-
-  gimp_dialog_factory_add_foreign (gimp_dialog_factory_from_name ("toplevel"),
-                                   "gimp-histogram-tool-dialog",
-                                   htd->shell);
 
   return htd;
 }

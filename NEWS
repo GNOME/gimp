@@ -15,10 +15,7 @@ Overview of Changes in GIMP 1.3.22
 - Auto-scrolling for DND in list views [Mitch]
 - Refresh rendering of paint strokes more often [Mitch]
 - Refactored handling of modifier keys for tools [Mitch]
-- Allow editing of image templates [Sven]
 - Changed the redo shortcut to Ctrl-Y [Sven]
-- Display real-world units and pixels in the measure tool info
-  window [Sven] 
 - Lots of bug fixes
 
 Other contributors:

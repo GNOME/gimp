@@ -1260,52 +1260,50 @@ gimp_transform_tool_grid_recalc (GimpTransformTool *tr_tool)
 static void
 gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
 {
-  if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog)
-    {
-      GimpToolInfo *tool_info;
-      const gchar  *stock_id;
+  GimpToolInfo *tool_info;
+  const gchar  *stock_id;
+  gchar        *identifier;
 
-      tool_info = GIMP_TOOL (tr_tool)->tool_info;
+  if (! GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog)
+    return;
 
-      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+  tool_info = GIMP_TOOL (tr_tool)->tool_info;
 
-      tr_tool->info_dialog =
-        info_dialog_new (NULL,
-                         tool_info->blurb,
-                         GIMP_OBJECT (tool_info)->name,
-                         stock_id,
-                         tr_tool->shell_desc,
-                         gimp_standard_help_func, tool_info->help_id);
+  stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
 
-      gimp_dialog_create_action_area (GIMP_DIALOG (tr_tool->info_dialog->shell),
+  tr_tool->info_dialog = info_dialog_new (NULL,
+                                          tool_info->blurb,
+                                          GIMP_OBJECT (tool_info)->name,
+                                          stock_id,
+                                          tr_tool->shell_desc,
+                                          gimp_standard_help_func,
+                                          tool_info->help_id);
 
-                                      GIMP_STOCK_RESET,
-                                      transform_reset_callback,
-                                      tr_tool, NULL, NULL, FALSE, FALSE,
+  gimp_dialog_create_action_area (GIMP_DIALOG (tr_tool->info_dialog->shell),
 
-                                      GTK_STOCK_CANCEL,
-                                      transform_cancel_callback,
-                                      tr_tool, NULL, NULL, FALSE, TRUE,
+                                  GIMP_STOCK_RESET,
+                                  transform_reset_callback,
+                                  tr_tool, NULL, NULL, FALSE, FALSE,
 
-                                      stock_id,
-                                      transform_ok_callback,
-                                      tr_tool, NULL, NULL, TRUE, FALSE,
+                                  GTK_STOCK_CANCEL,
+                                  transform_cancel_callback,
+                                  tr_tool, NULL, NULL, FALSE, TRUE,
 
-                                      NULL);
+                                  stock_id,
+                                  transform_ok_callback,
+                                  tr_tool, NULL, NULL, TRUE, FALSE,
 
-      GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog (tr_tool);
+                                  NULL);
 
-      if (tr_tool->shell_identifier)
-        {
-          GimpDialogFactory *dialog_factory;
+  GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog (tr_tool);
 
-          dialog_factory = gimp_dialog_factory_from_name ("toplevel");
+  identifier = g_strconcat (GIMP_OBJECT (tool_info)->name, "-dialog", NULL);
 
-          gimp_dialog_factory_add_foreign (dialog_factory,
-                                           tr_tool->shell_identifier,
-                                           tr_tool->info_dialog->shell);
-        }
-    }
+  gimp_dialog_factory_add_foreign (gimp_dialog_factory_from_name ("toplevel"),
+                                   identifier,
+                                   tr_tool->info_dialog->shell);
+
+  g_free (identifier);
 }
 
 static void

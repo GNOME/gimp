@@ -37,8 +37,8 @@
 #include "core/gimpimage-unit.h"
 #include "core/gimptoolinfo.h"
 
-#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimptooldialog.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
@@ -111,7 +111,7 @@ gimp_measure_tool_register (GimpToolRegisterCallback  callback,
                 0,
                 "gimp-measure-tool",
                 _("Measure"),
-                _("Measure angles and lengths"),
+                _("Measure distances and angles"),
                 N_("/Tools/_Measure"), NULL,
                 NULL, GIMP_HELP_TOOL_MEASURE,
                 GIMP_STOCK_TOOL_MEASURE,
@@ -827,25 +827,19 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *mtool,
 static GtkWidget *
 gimp_measure_tool_dialog_new (GimpMeasureTool *mtool)
 {
-  GimpToolInfo *tool_info = GIMP_TOOL (mtool)->tool_info;
   GtkWidget    *dialog;
   GtkWidget    *hbox;
   GtkWidget    *table;
   GtkWidget    *label;
-  const gchar  *stock_id;
 
-  stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+  dialog = gimp_tool_dialog_new (GIMP_TOOL (mtool)->tool_info,
+                                 _("Measure Distances and Angles"),
 
-  dialog = gimp_viewable_dialog_new (NULL,
-                                     tool_info->blurb,
-                                     GIMP_OBJECT (tool_info)->name,
-                                     stock_id,
-                                     _("Measure Distances and Angles"),
-                                     gimp_standard_help_func,
-                                     tool_info->help_id,
-                                     NULL);
+                                 GTK_STOCK_CLOSE,
+                                 gtk_widget_destroy, NULL,
+                                 1, NULL, TRUE, TRUE,
 
-  gtk_window_set_type_hint (GTK_WINDOW (dialog), GDK_WINDOW_TYPE_HINT_UTILITY);
+                                 NULL);
 
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
@@ -908,18 +902,6 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *mtool)
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 4, 5, 1, 2);
   gtk_widget_show (label);
-
-  gimp_dialog_create_action_area (GIMP_DIALOG (dialog),
-
-                                  GTK_STOCK_CLOSE,
-                                  gtk_widget_destroy, NULL,
-                                  1, NULL, TRUE, TRUE,
-
-                                  NULL);
-
-  gimp_dialog_factory_add_foreign (gimp_dialog_factory_from_name ("toplevel"),
-                                   "gimp-measure-tool-dialog",
-                                   dialog);
 
   return dialog;
 }

@@ -30,8 +30,8 @@
 #include "core/gimpimagemap.h"
 #include "core/gimptoolinfo.h"
 
-#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpitemfactory.h"
+#include "widgets/gimptooldialog.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
@@ -146,14 +146,13 @@ gimp_image_map_tool_init (GimpImageMapTool *image_map_tool)
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
   gimp_tool_control_set_preserve    (tool->control, FALSE);
 
-  image_map_tool->drawable         = NULL;
-  image_map_tool->image_map        = NULL;
-  image_map_tool->preview          = TRUE;
+  image_map_tool->drawable   = NULL;
+  image_map_tool->image_map  = NULL;
+  image_map_tool->preview    = TRUE;
 
-  image_map_tool->shell_identifier = NULL;
-  image_map_tool->shell_desc       = NULL;
-  image_map_tool->shell            = NULL;
-  image_map_tool->main_vbox        = NULL;
+  image_map_tool->shell_desc = NULL;
+  image_map_tool->shell      = NULL;
+  image_map_tool->main_vbox  = NULL;
 }
 
 void
@@ -217,27 +216,21 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
       stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
 
       image_map_tool->shell = shell =
-        gimp_viewable_dialog_new (NULL,
-                                  tool_info->blurb,
-                                  GIMP_OBJECT (tool_info)->name,
-                                  stock_id,
-                                  image_map_tool->shell_desc,
-                                  gimp_standard_help_func,
-                                  tool_info->help_id,
+        gimp_tool_dialog_new (tool_info, image_map_tool->shell_desc,
 
-                                  GIMP_STOCK_RESET,
-                                  gimp_image_map_tool_reset_clicked,
-                                  image_map_tool, NULL, NULL, FALSE, FALSE,
+                              GIMP_STOCK_RESET,
+                              gimp_image_map_tool_reset_clicked,
+                              image_map_tool, NULL, NULL, FALSE, FALSE,
 
-                                  GTK_STOCK_CANCEL,
-                                  gimp_image_map_tool_cancel_clicked,
-                                  image_map_tool, NULL, NULL, FALSE, TRUE,
+                              GTK_STOCK_CANCEL,
+                              gimp_image_map_tool_cancel_clicked,
+                              image_map_tool, NULL, NULL, FALSE, TRUE,
 
-                                  GTK_STOCK_OK,
-                                  gimp_image_map_tool_ok_clicked,
-                                  image_map_tool, NULL, NULL, TRUE, FALSE,
+                              GTK_STOCK_OK,
+                              gimp_image_map_tool_ok_clicked,
+                              image_map_tool, NULL, NULL, TRUE, FALSE,
 
-                                  NULL);
+                              NULL);
 
       image_map_tool->main_vbox = vbox = gtk_vbox_new (FALSE, 4);
       gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
@@ -259,17 +252,6 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
       gimp_image_map_tool_dialog (image_map_tool);
 
       gtk_widget_show (vbox);
-
-      if (image_map_tool->shell_identifier)
-        {
-          GimpDialogFactory *dialog_factory;
-
-          dialog_factory = gimp_dialog_factory_from_name ("toplevel");
-
-          gimp_dialog_factory_add_foreign (dialog_factory,
-                                           image_map_tool->shell_identifier,
-                                           image_map_tool->shell);
-        }
     }
 
   drawable = gimp_image_active_drawable (gdisp->gimage);

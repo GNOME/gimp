@@ -31,9 +31,9 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpcolorframe.h"
-#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimppaletteeditor.h"
+#include "widgets/gimptooldialog.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
@@ -307,19 +307,17 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool)
 
   g_return_if_fail (tool->drawable != NULL);
 
-  picker_tool->dialog =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (tool->drawable),
-                              _("Color Picker"), "color_picker",
-                              GIMP_STOCK_TOOL_COLOR_PICKER,
-                              _("Color Picker Information"),
-                              gimp_standard_help_func,
-                              tool->tool_info->help_id,
+  picker_tool->dialog = gimp_tool_dialog_new (tool->tool_info,
+                                              _("Color Picker Information"),
 
-                              GTK_STOCK_CLOSE,
-                              gimp_color_picker_tool_info_close,
-                              tool, NULL, NULL, TRUE, TRUE,
+                                              GTK_STOCK_CLOSE,
+                                              gimp_color_picker_tool_info_close,
+                                              tool, NULL, NULL, TRUE, TRUE,
 
-                              NULL);
+                                              NULL);
+
+  gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (picker_tool->dialog),
+                                     GIMP_VIEWABLE (tool->drawable));
 
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
@@ -357,10 +355,6 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool)
   gtk_drag_dest_unset (picker_tool->color_area);
   gtk_container_add (GTK_CONTAINER (frame), picker_tool->color_area);
   gtk_widget_show (picker_tool->color_area);
-
-  gimp_dialog_factory_add_foreign (gimp_dialog_factory_from_name ("toplevel"),
-                                   "gimp-color-picker-tool-dialog",
-                                   picker_tool->dialog);
 }
 
 static void

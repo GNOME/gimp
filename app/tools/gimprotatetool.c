@@ -157,17 +157,13 @@ gimp_rotate_tool_class_init (GimpRotateToolClass *klass)
 static void
 gimp_rotate_tool_init (GimpRotateTool *rotate_tool)
 {
-  GimpTool          *tool;
-  GimpTransformTool *tr_tool;
-
-  tool    = GIMP_TOOL (rotate_tool);
-  tr_tool = GIMP_TRANSFORM_TOOL (rotate_tool);
+  GimpTool          *tool    = GIMP_TOOL (rotate_tool);
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (rotate_tool);
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_ROTATE_TOOL_CURSOR);
 
-  tr_tool->shell_identifier = "gimp-rotate-tool-dialog";
-  tr_tool->shell_desc       = _("Rotation Information");
-  tr_tool->progress_text    = _("Rotating...");
+  tr_tool->shell_desc    = _("Rotation Information");
+  tr_tool->progress_text = _("Rotating...");
 }
 
 static void

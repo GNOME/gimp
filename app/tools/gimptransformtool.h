@@ -93,7 +93,6 @@ struct _GimpTransformTool
   GimpTransformDirection  direction;
 
   /*  transform info dialog  */
-  const gchar    *shell_identifier;
   const gchar    *shell_desc;
   const gchar    *progress_text;
 

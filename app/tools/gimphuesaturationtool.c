@@ -170,12 +170,9 @@ gimp_hue_saturation_tool_class_init (GimpHueSaturationToolClass *klass)
 static void
 gimp_hue_saturation_tool_init (GimpHueSaturationTool *hs_tool)
 {
-  GimpImageMapTool *image_map_tool;
+  GimpImageMapTool *image_map_tool = GIMP_IMAGE_MAP_TOOL (hs_tool);
 
-  image_map_tool = GIMP_IMAGE_MAP_TOOL (hs_tool);
-
-  image_map_tool->shell_identifier = "gimp-hue-saturation-tool-dialog";
-  image_map_tool->shell_desc       = _("Adjust Hue / Lightness / Saturation");
+  image_map_tool->shell_desc = _("Adjust Hue / Lightness / Saturation");
 
   hs_tool->hue_saturation = g_new0 (HueSaturation, 1);
   hs_tool->hue_partition  = GIMP_ALL_HUES;

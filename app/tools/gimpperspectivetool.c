@@ -134,18 +134,14 @@ gimp_perspective_tool_class_init (GimpPerspectiveToolClass *klass)
 static void
 gimp_perspective_tool_init (GimpPerspectiveTool *perspective_tool)
 {
-  GimpTool          *tool;
-  GimpTransformTool *tr_tool;
-
-  tool    = GIMP_TOOL (perspective_tool);
-  tr_tool = GIMP_TRANSFORM_TOOL (perspective_tool);
+  GimpTool          *tool    = GIMP_TOOL (perspective_tool);
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (perspective_tool);
 
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_PERSPECTIVE_TOOL_CURSOR);
 
-  tr_tool->shell_identifier = "gimp-perspective-tool-dialog";
-  tr_tool->shell_desc       = _("Perspective Transform Information");
-  tr_tool->progress_text    = _("Perspective...");
+  tr_tool->shell_desc    = _("Perspective Transform Information");
+  tr_tool->progress_text = _("Perspective...");
 }
 
 static void

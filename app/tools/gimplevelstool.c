@@ -228,12 +228,9 @@ gimp_levels_tool_class_init (GimpLevelsToolClass *klass)
 static void
 gimp_levels_tool_init (GimpLevelsTool *l_tool)
 {
-  GimpImageMapTool *image_map_tool;
+  GimpImageMapTool *image_map_tool = GIMP_IMAGE_MAP_TOOL (l_tool);
 
-  image_map_tool = GIMP_IMAGE_MAP_TOOL (l_tool);
-
-  image_map_tool->shell_identifier = "gimp-levels-tool-dialog";
-  image_map_tool->shell_desc       = _("Adjust Color Levels");
+  image_map_tool->shell_desc = _("Adjust Color Levels");
 
   l_tool->lut           = gimp_lut_new ();
   l_tool->levels        = g_new0 (Levels, 1);

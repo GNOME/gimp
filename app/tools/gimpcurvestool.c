@@ -226,13 +226,10 @@ gimp_curves_tool_class_init (GimpCurvesToolClass *klass)
 static void
 gimp_curves_tool_init (GimpCurvesTool *c_tool)
 {
-  GimpImageMapTool *image_map_tool;
+  GimpImageMapTool *image_map_tool = GIMP_IMAGE_MAP_TOOL (c_tool);
   gint              i;
 
-  image_map_tool = GIMP_IMAGE_MAP_TOOL (c_tool);
-
-  image_map_tool->shell_identifier = "gimp-curves-tool-dialog";
-  image_map_tool->shell_desc       = _("Adjust Color Curves");
+  image_map_tool->shell_desc = _("Adjust Color Curves");
 
   c_tool->curves  = g_new0 (Curves, 1);
   c_tool->lut     = gimp_lut_new ();

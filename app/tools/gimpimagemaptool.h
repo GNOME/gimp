@@ -43,7 +43,6 @@ struct _GimpImageMapTool
   gboolean       preview;
 
   /* the dialog */
-  const gchar   *shell_identifier;
   const gchar   *shell_desc;
 
   GtkWidget     *shell;

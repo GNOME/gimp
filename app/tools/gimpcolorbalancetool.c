@@ -121,7 +121,7 @@ gimp_color_balance_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_IMAGE_MAP_TOOL,
-					  "GimpColorBalanceTool", 
+					  "GimpColorBalanceTool",
                                           &tool_info, 0);
     }
 
@@ -153,12 +153,9 @@ gimp_color_balance_tool_class_init (GimpColorBalanceToolClass *klass)
 static void
 gimp_color_balance_tool_init (GimpColorBalanceTool *cb_tool)
 {
-  GimpImageMapTool *image_map_tool;
+  GimpImageMapTool *image_map_tool = GIMP_IMAGE_MAP_TOOL (cb_tool);
 
-  image_map_tool = GIMP_IMAGE_MAP_TOOL (cb_tool);
-
-  image_map_tool->shell_identifier = "gimp-color-balance-tool-dialog";
-  image_map_tool->shell_desc       = _("Adjust Color Balance");
+  image_map_tool->shell_desc = _("Adjust Color Balance");
 
   cb_tool->color_balance = g_new0 (ColorBalance, 1);
   cb_tool->transfer_mode = GIMP_MIDTONES;
@@ -303,21 +300,21 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  cb_tool->cyan_red_adj = 
+  cb_tool->cyan_red_adj =
     create_levels_scale (_("Cyan"), _("Red"), table, 0);
 
   g_signal_connect (cb_tool->cyan_red_adj, "value_changed",
                     G_CALLBACK (color_balance_cr_adjustment_update),
                     cb_tool);
 
-  cb_tool->magenta_green_adj = 
+  cb_tool->magenta_green_adj =
     create_levels_scale (_("Magenta"), _("Green"), table, 1);
 
   g_signal_connect (cb_tool->magenta_green_adj, "value_changed",
                     G_CALLBACK (color_balance_mg_adjustment_update),
                     cb_tool);
 
-  cb_tool->yellow_blue_adj = 
+  cb_tool->yellow_blue_adj =
     create_levels_scale (_("Yellow"), _("Blue"), table, 2);
 
   g_signal_connect (cb_tool->yellow_blue_adj, "value_changed",
