@@ -29,6 +29,10 @@ script_fu_SOURCES = \
 	siod.h			\
 	siodp.h
 
+EXTRA_DIST = \
+	script-fu.ico		\
+	script-fu.rc
+
 INCLUDES = \
 	-I$(top_srcdir)			\
 	-I$(top_srcdir)/intl		\

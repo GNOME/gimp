@@ -42,6 +42,8 @@
 	* plug-ins/script-fu/script-fu.ico
 	* plug-ins/script-fu/script-fu.rc: Were missing from CVS.
 
+	* plug-ins/script-fu/Makefile.am (EXTRA_DIST): Distribute them.
+
 2001-10-31  Gediminas Paulauskas <menesis@delfi.lt>
 
 	* tips/gimp_tips.lt.txt: convert to UNIX newline format.
