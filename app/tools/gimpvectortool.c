@@ -487,6 +487,9 @@ gimp_vector_tool_motion (GimpTool        *tool,
   vector_tool = GIMP_VECTOR_TOOL (tool);
   options     = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
 
+  if (vector_tool->function == VECTORS_FINISHED)
+    return;
+
   gimp_vectors_freeze (vector_tool->vectors);
 
   if (state & GDK_SHIFT_MASK)
@@ -738,7 +741,10 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
 
   if (! vector_tool->vectors || GIMP_DRAW_TOOL (tool)->gdisp != gdisp)
     {
-      vector_tool->function = VECTORS_CREATE_VECTOR;
+      vector_tool->function =
+          edit_mode == GIMP_VECTOR_MODE_ADJUST ?
+                             VECTORS_FINISHED :
+                             VECTORS_CREATE_VECTOR;
       return;
     }
 

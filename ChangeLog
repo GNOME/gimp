@@ -1,4 +1,9 @@
 2003-08-21  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimpvectortool.c: Don't allow to create a new stroke
+	when in in Insert/Delete Mode.
+
+2003-08-21  Simon Budig  <simon@gimp.org>
 	
 	* app/tools/tools-enums.h: Added enum for vector tool operation
 	mode
