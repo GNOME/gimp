@@ -740,6 +740,8 @@ gimp_brush_generated_load (const gchar  *filename,
 
  failed:
 
+  fclose (file);
+
   if (name)
     g_free (name);
 
