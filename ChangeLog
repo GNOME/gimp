@@ -1,3 +1,12 @@
+2003-03-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainerpopup.c
+	(gimp_container_popup_real_confirm): don't use
+	gimp_context_copy_property() but gimp_context_get_by_type()
+	followed by gimp_context_set_by_type() because GimpContext's
+	"copy" functions are special and skip the normal parent_context
+	logic intentionally (fixes bug #109115).
+
 2003-03-25  Sven Neumann  <sven@gimp.org>
 
 	* configure.in

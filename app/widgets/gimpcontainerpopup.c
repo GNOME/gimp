@@ -275,13 +275,16 @@ gimp_container_popup_real_cancel (GimpContainerPopup *popup)
 static void
 gimp_container_popup_real_confirm (GimpContainerPopup *popup)
 {
-  GimpContextPropType  prop_type;
-  GtkWidget           *widget;
+  GtkWidget  *widget;
+  GimpObject *object;
 
   widget = GTK_WIDGET (popup);
 
-  prop_type = gimp_context_type_to_property (popup->container->children_type);
-  gimp_context_copy_property (popup->context, popup->orig_context, prop_type);
+  object = gimp_context_get_by_type (popup->context,
+                                     popup->container->children_type);
+  gimp_context_set_by_type (popup->orig_context,
+                            popup->container->children_type,
+                            object);
 
   if (gtk_grab_get_current () == widget)
     gtk_grab_remove (widget);
