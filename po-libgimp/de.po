@@ -4,14 +4,15 @@
 # Daniel Egger <Daniel.Egger@suse.de>
 # Sven Neumann <sven@gimp.org>
 # Christian Neumair <christian-neumair@web.de>
+# Michael Natterer <mitch@gimp.org>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.17\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-03 01:00+0100\n"
-"PO-Revision-Date: 2003-07-15 02:18+0200\n"
-"Last-Translator: Sven Neumann <sven@gimp.org>\n"
+"POT-Creation-Date: 2003-11-15 13:55+0100\n"
+"PO-Revision-Date: 2003-11-15 13:55+0100\n"
+"Last-Translator: Michael Natterer <mitch@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,7 +24,7 @@ msgstr "Pinselauswahl"
 
 #: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
 msgid "_Browse..."
-msgstr ""
+msgstr "_Durchsuchen..."
 
 #: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, c-format
@@ -112,48 +113,39 @@ msgstr "%s benötigt einen Alphakanal"
 msgid "Add Alpha Channel"
 msgstr "Alphakanal hinzufügen"
 
-#.
-#. *  Plug-ins must have called gtk_init () before calling gimp_export ().
-#. *  Otherwise bad things will happen now!!
-#.
-#. the dialog
-#: libgimp/gimpexport.c:370
+#: libgimp/gimpexport.c:331
 msgid "Confirm Save"
 msgstr "Sichern bestätigen"
 
-#: libgimp/gimpexport.c:378
+#: libgimp/gimpexport.c:336
 msgid "Confirm"
 msgstr "Bestätigen"
 
-#.
-#. *  Plug-ins must have called gtk_init () before calling gimp_export ().
-#. *  Otherwise bad things will happen now!!
-#.
-#. the dialog
-#: libgimp/gimpexport.c:431
+#: libgimp/gimpexport.c:405
 msgid "Export File"
 msgstr "Datei exportieren"
 
-#: libgimp/gimpexport.c:436
-msgid "Ignore"
-msgstr "Ignorieren"
+#: libgimp/gimpexport.c:409
+msgid "_Ignore"
+msgstr "_Ignorieren"
 
-#: libgimp/gimpexport.c:442
-msgid "Export"
-msgstr "Exportieren"
+#: libgimp/gimpexport.c:411
+msgid "_Export"
+msgstr "_Exportieren"
 
-#: libgimp/gimpexport.c:468
+#. the headline
+#: libgimp/gimpexport.c:433
+#, c-format
 msgid ""
-"Your image should be exported before it can be saved for the following "
+"Your image should be exported before it can be saved as %s for the following "
 "reasons:"
-msgstr "Das Bild sollte vor dem Abspeichern exportiert werden, denn:"
+msgstr "Das Bild sollte vor dem Abspeichern als %s exportiert werden, denn:"
 
-#. the footline
-#: libgimp/gimpexport.c:541
+#: libgimp/gimpexport.c:511
 msgid "The export conversion won't modify your original image."
 msgstr "Dieser Vorgang wird das Originalbild nicht verändern."
 
-#: libgimp/gimpexport.c:611
+#: libgimp/gimpexport.c:607
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -162,7 +154,7 @@ msgstr ""
 "Sie sichern eine Ebenenmaske als %s.\n"
 "Die sichtbaren Ebenen werden dabei nicht gesichert."
 
-#: libgimp/gimpexport.c:617
+#: libgimp/gimpexport.c:613
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -197,9 +189,8 @@ msgid ""
 msgstr ""
 
 #: libgimp/gimpmiscui.c:556
-#, fuzzy
 msgid "Parameter Settings"
-msgstr "Musterauswahl"
+msgstr "Parameter Einstellungen"
 
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
@@ -211,37 +202,57 @@ msgstr "Prozent"
 
 #: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
 msgid "(invalid UTF-8 string)"
-msgstr ""
+msgstr "(Ungültiger UTF-8 Text)"
 
 #: libgimpbase/gimputils.c:189
 #, c-format
 msgid "%d Bytes"
 msgstr "%d Byte"
 
-#: libgimpbase/gimputils.c:193
+#: libgimpbase/gimputils.c:194
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f KB"
 
-#: libgimpbase/gimputils.c:197
+#: libgimpbase/gimputils.c:198
 #, c-format
 msgid "%.1f KB"
 msgstr "%1.f KB"
 
-#: libgimpbase/gimputils.c:201
+#: libgimpbase/gimputils.c:202
 #, c-format
 msgid "%d KB"
 msgstr "%d KB"
 
-#: libgimpbase/gimputils.c:206
+#: libgimpbase/gimputils.c:209
 #, c-format
 msgid "%.2f MB"
 msgstr "%2.f MB"
 
-#: libgimpbase/gimputils.c:211
+#: libgimpbase/gimputils.c:213
 #, c-format
 msgid "%.1f MB"
 msgstr "%1.f MB"
+
+#: libgimpbase/gimputils.c:217
+#, c-format
+msgid "%d MB"
+msgstr "%d MB"
+
+#: libgimpbase/gimputils.c:224
+#, c-format
+msgid "%.2f GB"
+msgstr "%.2f GB"
+
+#: libgimpbase/gimputils.c:228
+#, c-format
+msgid "%.1f GB"
+msgstr "%.1f GB"
+
+#: libgimpbase/gimputils.c:232
+#, c-format
+msgid "%d GB"
+msgstr "%d GB"
 
 #: libgimpmodule/gimpmodule.c:174
 #, c-format
@@ -252,12 +263,8 @@ msgstr "Lade Modul: '%s'\n"
 #: libgimpmodule/gimpmodule.c:314 libgimpmodule/gimpmodule.c:341
 #: libgimpmodule/gimpmodule.c:434
 #, c-format
-msgid ""
-"Module '%s' load error:\n"
-"%s"
-msgstr ""
-"Fehler beim Laden von Modul '%s':\n"
-"%s"
+msgid "Module '%s' load error: %s"
+msgstr "Fehler beim Laden von Modul '%s': %s"
 
 #: libgimpmodule/gimpmodule.c:271
 #, c-format
@@ -280,21 +287,21 @@ msgstr "Laden fehlgeschlagen"
 msgid "Not loaded"
 msgstr "Nicht geladen"
 
-#: libgimpwidgets/gimpcolorbutton.c:84
-msgid "/Foreground Color"
-msgstr "/Vordergrundfarbe"
+#: libgimpwidgets/gimpcolorbutton.c:93
+msgid "/_Foreground Color"
+msgstr "/_Vordergrundfarbe"
 
-#: libgimpwidgets/gimpcolorbutton.c:86
-msgid "/Background Color"
-msgstr "/Hintergrundfarbe"
+#: libgimpwidgets/gimpcolorbutton.c:95
+msgid "/_Background Color"
+msgstr "/_Hintergrundfarbe"
 
-#: libgimpwidgets/gimpcolorbutton.c:89
-msgid "/Black"
-msgstr "/Schwarz"
+#: libgimpwidgets/gimpcolorbutton.c:98
+msgid "/Blac_k"
+msgstr "/_Schwarz"
 
-#: libgimpwidgets/gimpcolorbutton.c:91
-msgid "/White"
-msgstr "/Weiss"
+#: libgimpwidgets/gimpcolorbutton.c:100
+msgid "/_White"
+msgstr "/_Weiss"
 
 #: libgimpwidgets/gimpcolorscales.c:142
 msgid "Scales"
@@ -372,15 +379,15 @@ msgstr "Verzeichnis auswählen"
 msgid "Select File"
 msgstr "Datei auswählen"
 
-#: libgimpwidgets/gimpmemsizeentry.c:187
+#: libgimpwidgets/gimpmemsizeentry.c:218
 msgid "KiloBytes"
 msgstr "KiloByte"
 
-#: libgimpwidgets/gimpmemsizeentry.c:188
+#: libgimpwidgets/gimpmemsizeentry.c:219
 msgid "MegaBytes"
 msgstr "MegaByte"
 
-#: libgimpwidgets/gimpmemsizeentry.c:189
+#: libgimpwidgets/gimpmemsizeentry.c:220
 msgid "GigaBytes"
 msgstr "GigaByte"
 
@@ -460,19 +467,19 @@ msgstr "_Scheren"
 msgid "More..."
 msgstr "Mehr..."
 
-#: libgimpwidgets/gimpunitmenu.c:576
+#: libgimpwidgets/gimpunitmenu.c:578
 msgid "Unit Selection"
 msgstr "Einheit auswählen"
 
-#: libgimpwidgets/gimpunitmenu.c:622
+#: libgimpwidgets/gimpunitmenu.c:625
 msgid "Unit"
 msgstr "Einheit"
 
-#: libgimpwidgets/gimpunitmenu.c:626
+#: libgimpwidgets/gimpunitmenu.c:629
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:943
+#: libgimpwidgets/gimpwidgets.c:1253
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -480,11 +487,11 @@ msgstr ""
 "Benutze diesen Wert für den Zufallsgenerator - dies ermgöglicht es "
 "\"zufällige\" Funktionen zu wiederholen"
 
-#: libgimpwidgets/gimpwidgets.c:947
+#: libgimpwidgets/gimpwidgets.c:1257
 msgid "_Randomize"
 msgstr "_Würfeln"
 
-#: libgimpwidgets/gimpwidgets.c:958
+#: libgimpwidgets/gimpwidgets.c:1268
 msgid "Seed random number generator with a generated random number"
 msgstr "Initialisiere den Zufallsgenerator mit einer Zufallszahl"
 
@@ -501,19 +508,19 @@ msgstr "Farbenblindheit"
 msgid "Color Deficiency Type:"
 msgstr "Art der Sehschwäche:"
 
-#: modules/cdisplay_colorblind.c:483
+#: modules/cdisplay_colorblind.c:482
 msgid "None (normal vision)"
 msgstr "Keine (Normale Sicht)"
 
-#: modules/cdisplay_colorblind.c:487
+#: modules/cdisplay_colorblind.c:485
 msgid "Protanopia (insensitivity to red)"
 msgstr "Protanopia (Rotschwäche)"
 
-#: modules/cdisplay_colorblind.c:491
+#: modules/cdisplay_colorblind.c:488
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteranopia (Grünschwäche)"
 
-#: modules/cdisplay_colorblind.c:495
+#: modules/cdisplay_colorblind.c:491
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopia (Blauschwäche)"
 
@@ -546,9 +553,8 @@ msgid "CMYK color selector"
 msgstr "CMYK Farbmischer"
 
 #: modules/colorsel_cmyk.c:132
-#, fuzzy
 msgid "CMYK"
-msgstr "_CMYK"
+msgstr "CMYK"
 
 #: modules/colorsel_cmyk.c:149
 msgid "_C"
@@ -591,18 +597,16 @@ msgid "Painter-style triangle color selector"
 msgstr "Dreiecks-Farbauswahl im Stil von Painter"
 
 #: modules/colorsel_triangle.c:182
-#, fuzzy
 msgid "Triangle"
-msgstr "_Dreieck"
+msgstr "Dreieck"
 
 #: modules/colorsel_water.c:104
 msgid "Watercolor style color selector"
 msgstr "Wasserfarben Farbmischer"
 
 #: modules/colorsel_water.c:176
-#, fuzzy
 msgid "Watercolor"
-msgstr "_Wasserfarbe"
+msgstr "Wasserfarbe"
 
 #: modules/colorsel_water.c:251
 msgid "Pressure"
