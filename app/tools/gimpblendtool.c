@@ -42,6 +42,7 @@
 #include "gimpblendoptions.h"
 #include "gimpblendtool.h"
 #include "gimptoolcontrol.h"
+#include "tools-utils.h"
 
 #include "gimp-intl.h"
 
@@ -297,33 +298,8 @@ gimp_blend_tool_motion (GimpTool        *tool,
   /* Restrict to multiples of 15 degrees if ctrl is pressed */
   if (state & GDK_CONTROL_MASK)
     {
-      gint tangens2[6] = {  34, 106, 196, 334, 618, 1944 };
-      gint cosinus[7]  = { 256, 247, 222, 181, 128, 66, 0 };
-      gint dx, dy, i, radius, frac;
-
-      dx = blend_tool->endx - blend_tool->startx;
-      dy = blend_tool->endy - blend_tool->starty;
-
-      if (dy)
-	{
-	  radius = sqrt (SQR (dx) + SQR (dy));
-	  frac = abs ((dx << 8) / dy);
-
-	  for (i = 0; i < 6; i++)
-	    {
-	      if (frac < tangens2[i])
-		break;
-	    }
-
-	  dx = dx > 0 ?
-            (cosinus[6-i] * radius) >> 8 : - ((cosinus[6-i] * radius) >> 8);
-
-	  dy = dy > 0 ?
-            (cosinus[i]   * radius) >> 8 : - ((cosinus[i]   * radius) >> 8);
-	}
-
-      blend_tool->endx = blend_tool->startx + dx;
-      blend_tool->endy = blend_tool->starty + dy;
+      gimp_tool_motion_constrain (blend_tool->startx, blend_tool->starty,
+                                  &blend_tool->endx, &blend_tool->endy);
     }
 
   gimp_tool_pop_status (tool);

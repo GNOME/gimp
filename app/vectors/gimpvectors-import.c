@@ -7,11 +7,12 @@
  * Some code here is based on code from librsvg that was originally
  * written by Raph Levien <raph@artofcode.com> for Gill.
  *
- * This SVG path importer implements a subset of SVG that is sufficient
- * to parse path elements and to apply all defined transformations as
- * described by the SVG specification: http://www.w3.org/TR/SVG/.
- * It must handle the SVG files exported by GIMP but it is also supposed
- * to be able to extract paths from foreign SVG documents.
+ * This SVG path importer implements a subset of SVG that is
+ * sufficient to parse path elements and basic shapes and to apply
+ * transformations as described by the SVG specification:
+ * http://www.w3.org/TR/SVG/.  It must handle the SVG files exported
+ * by GIMP but it is also supposed to be able to extract paths and
+ * shapes from foreign SVG documents.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

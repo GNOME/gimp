@@ -452,67 +452,6 @@ gimp_paint_core_cleanup (GimpPaintCore *core)
     }
 }
 
-/**
- * gimp_paint_core_constrain_helper:
- * @dx: the (fixed) delta-x
- * @dy: a suggested delta-y
- *
- * Returns an adjusted dy' near dy such that the slope (dx,dy') is a
- * multiple of 15 degrees.
- **/
-static gdouble
-gimp_paint_core_constrain_helper (gdouble dx,
-                                  gdouble dy)
-{
-  static gdouble slope[4]   = { 0, 0.26795, 0.57735, 1 };
-  static gdouble divider[3] = { 0.13165, 0.41421, 0.76732 };
-  gint           i;
-
-  if (dy < 0)
-    return - gimp_paint_core_constrain_helper (dx,-dy);
-  dx = fabs (dx);
-  for (i = 0; i < 3; i ++)
-    if (dy < dx * divider[i])
-      break;
-  dy = dx * slope[i];
-  return dy;
-}
-
-/**
- * gimp_paint_core_constrain:
- * @core: the #GimpPaintCore.
- *
- * Restricts the (core->last_coords, core->cur_coords) vector to 15
- * degree steps, possibly changing core->cur_coords.
- **/
-void
-gimp_paint_core_constrain (GimpPaintCore *core)
-{
-  gdouble dx, dy;
-
-  g_return_if_fail (GIMP_IS_PAINT_CORE (core));
-
-  dx = core->cur_coords.x - core->last_coords.x;
-  dy = core->cur_coords.y - core->last_coords.y;
-
-  /*  This algorithm changes only one of dx and dy, and does not try
-   *  to constrain the resulting dx and dy to integers. This gives
-   *  at least two benefits:
-   *    1. gimp_paint_core_constrain is idempotent, even if followed by
-   *       a rounding operation.
-   *    2. For any two lines with the same starting-point and ideal
-   *       15-degree direction, the points plotted by
-   *       gimp_paint_core_interpolate for the shorter line will always
-   *       be a superset of those plotted for the longer line.
-   */
-  if (fabs (dx) > fabs (dy))
-    core->cur_coords.y = (core->last_coords.y +
-                          gimp_paint_core_constrain_helper (dx,dy));
-  else
-    core->cur_coords.x = (core->last_coords.x +
-                          gimp_paint_core_constrain_helper (dy,dx));
-}
-
 void
 gimp_paint_core_interpolate (GimpPaintCore    *core,
                              GimpDrawable     *drawable,

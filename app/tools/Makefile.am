@@ -7,6 +7,8 @@ libapptools_a_sources = \
 	tools-types.h			\
 	gimp-tools.c			\
 	gimp-tools.h			\
+	tools-utils.c			\
+	tools-utils.h			\
 	tool_manager.c			\
 	tool_manager.h			\
 	\

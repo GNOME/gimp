@@ -53,6 +53,7 @@
 #include "gimpcolorpickertool.h"
 #include "gimppainttool.h"
 #include "gimptoolcontrol.h"
+#include "tools-utils.h"
 
 #include "gimp-intl.h"
 
@@ -358,7 +359,8 @@ gimp_paint_tool_round_line (GimpPaintCore   *core,
 
   /* Restrict to multiples of 15 degrees if ctrl is pressed */
   if (state & GDK_CONTROL_MASK)
-    gimp_paint_core_constrain (core);
+    gimp_tool_motion_constrain (core->last_coords.x, core->last_coords.y,
+                                &core->cur_coords.x, &core->cur_coords.y);
 }
 
 static void

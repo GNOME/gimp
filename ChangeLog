@@ -1,3 +1,18 @@
+2004-08-22  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/Makefile.am
+	* app/tools/tools-utils.[ch]: added gimp_tool_motion_constrain(),
+
+	* app/paint/gimppaintcore.[ch]: removed gimp_paint_core_constrain().
+
+	* app/tools/gimppainttool.c: changed accordingly.
+
+	* app/tools/gimpblendtool.[ch]: use gimp_tool_motion_constrain()
+	instead of duplicating that functionality.
+
+	* app/tools/gimpmeasuretool.c: use gimp_tool_motion_constrain()
+	instead of implementing completely different constraints.
+
 2004-08-22  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpbezierstroke.c: Implemented the ellipse basic

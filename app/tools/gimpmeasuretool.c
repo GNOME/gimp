@@ -47,6 +47,7 @@
 #include "gimpmeasureoptions.h"
 #include "gimpmeasuretool.h"
 #include "gimptoolcontrol.h"
+#include "tools-utils.h"
 
 #include "gimp-intl.h"
 
@@ -450,29 +451,15 @@ gimp_measure_tool_motion (GimpTool        *tool,
       mtool->x[i] = ROUND (coords->x);
       mtool->y[i] = ROUND (coords->y);
 
-      /*  restrict to horizontal/vertical movements if modifiers are pressed */
-      if (state & GDK_MOD1_MASK)
+      if (state & GDK_CONTROL_MASK)
 	{
-	  if (state & GDK_CONTROL_MASK)
-	    {
-	      dx = mtool->x[i] - mtool->x[0];
-	      dy = mtool->y[i] - mtool->y[0];
+          gdouble  x = mtool->x[i];
+          gdouble  y = mtool->y[i];
 
-	      mtool->x[i] = mtool->x[0] + (dx > 0 ?
-                                           MAX (abs (dx), abs (dy)) :
-                                           - MAX (abs (dx), abs (dy)));
-	      mtool->y[i] = mtool->y[0] + (dy > 0  ?
-                                           MAX (abs (dx), abs (dy)) :
-                                           - MAX (abs (dx), abs (dy)));
-	    }
-	  else
-            {
-              mtool->x[i] = mtool->x[0];
-            }
-	}
-      else if (state & GDK_CONTROL_MASK)
-        {
-          mtool->y[i] = mtool->y[0];
+          gimp_tool_motion_constrain (mtool->x[0], mtool->y[0], &x, &y);
+
+          mtool->x[i] = ROUND (x);
+          mtool->y[i] = ROUND (y);
         }
       break;
 

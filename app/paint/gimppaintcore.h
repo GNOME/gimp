@@ -117,8 +117,6 @@ void      gimp_paint_core_cancel         (GimpPaintCore      *core,
                                           GimpDrawable       *drawable);
 void      gimp_paint_core_cleanup        (GimpPaintCore      *core);
 
-void      gimp_paint_core_constrain      (GimpPaintCore      *core);
-
 void      gimp_paint_core_interpolate    (GimpPaintCore      *core,
                                           GimpDrawable       *drawable,
                                           GimpPaintOptions   *paint_options,
