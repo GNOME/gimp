@@ -217,6 +217,27 @@ drw_get_ID(PyGimpDrawable *self, void *closure)
 }
 
 static PyObject *
+drw_get_name(PyGimpDrawable *self, void *closure)
+{
+    return PyString_FromString(gimp_drawable_get_name(self->ID));
+}
+
+static int
+drw_set_name(PyGimpDrawable *self, PyObject *value, void *closure)
+{
+    if (value == NULL) {
+        PyErr_SetString(PyExc_TypeError, "cannot delete name");
+        return -1;
+    }
+    if (!PyString_Check(value)) {
+        PyErr_SetString(PyExc_TypeError, "type mismatch");
+        return -1;
+    }
+    gimp_drawable_set_name(self->ID, PyString_AsString(value));
+    return 0;
+}
+
+static PyObject *
 drw_get_bpp(PyGimpDrawable *self, void *closure)
 {
     return PyInt_FromLong(gimp_drawable_bpp(self->ID));
@@ -300,8 +321,51 @@ drw_get_width(PyGimpDrawable *self, void *closure)
     return PyInt_FromLong(gimp_drawable_width(self->ID));
 }
 
+static PyObject *
+drw_get_tattoo(PyGimpDrawable *self, void *closure)
+{
+    return PyInt_FromLong(gimp_drawable_get_tattoo(self->ID));
+}
+
+static int
+drw_set_tattoo(PyGimpDrawable *self, PyObject *value, void *closure)
+{
+    if (value == NULL) {
+        PyErr_SetString(PyExc_TypeError, "cannot delete tattoo");
+        return -1;
+    }
+    if (!PyInt_Check(value)) {
+        PyErr_SetString(PyExc_TypeError, "type mismatch");
+        return -1;
+    }
+    gimp_drawable_set_tattoo(self->ID, PyInt_AsLong(value));
+    return 0;
+}
+
+static PyObject *
+drw_get_visible(PyGimpDrawable *self, void *closure)
+{
+    return PyInt_FromLong(gimp_drawable_get_visible(self->ID));
+}
+                                                                                
+static int
+drw_set_visible(PyGimpDrawable *self, PyObject *value, void *closure)
+{
+    if (value == NULL) {
+        PyErr_SetString(PyExc_TypeError, "cannot delete visible");
+        return -1;
+    }
+    if (!PyInt_Check(value)) {
+        PyErr_SetString(PyExc_TypeError, "type mismatch");
+        return -1;
+    }
+    gimp_drawable_set_visible(self->ID, PyInt_AsLong(value));
+    return 0;
+}
+
 static  PyGetSetDef drw_getsets[] = {
     { "ID", (getter)drw_get_ID, (setter)0 },
+    { "name", (getter)drw_get_name, (setter)drw_set_name },
     { "bpp", (getter)drw_get_bpp, (setter)0 },
     { "has_alpha", (getter)drw_get_has_alpha, (setter)0 },
     { "height", (getter)drw_get_height, (setter)0 },
@@ -316,11 +380,13 @@ static  PyGetSetDef drw_getsets[] = {
     { "type", (getter)drw_get_type, (setter)0 },
     { "type_with_alpha", (getter)drw_get_type_with_alpha, (setter)0 },
     { "width", (getter)drw_get_width, (setter)0 },
+    { "tattoo", (getter)drw_get_tattoo, (setter)drw_set_tattoo },
+    { "visible", (getter)drw_get_visible, (setter)drw_set_visible },
     { NULL, (getter)0, (setter)0 }
 };
 
 static void
-drw_dealloc(PyGimpLayer *self)
+drw_dealloc(PyGimpDrawable *self)
 {
     if (self->drawable)
 	gimp_drawable_detach(self->drawable);
@@ -328,7 +394,7 @@ drw_dealloc(PyGimpLayer *self)
 }
 
 static PyObject *
-drw_repr(PyGimpLayer *self)
+drw_repr(PyGimpDrawable *self)
 {
     PyObject *s;
     gchar *name;
@@ -340,7 +406,7 @@ drw_repr(PyGimpLayer *self)
 }
 
 static int
-drw_cmp(PyGimpLayer *self, PyGimpLayer *other)
+drw_cmp(PyGimpDrawable *self, PyGimpDrawable *other)
 {
     if (self->ID == other->ID) return 0;
     if (self->ID > other->ID) return -1;
@@ -558,11 +624,11 @@ static int
 lay_set_apply_mask(PyGimpLayer *self, PyObject *value, void *closure)
 {
     if (value == NULL) {
-        PyErr_SetString(PyExc_TypeError, "can not delete apply_mask.");
+        PyErr_SetString(PyExc_TypeError, "cannot delete apply_mask");
         return -1;
     }
     if (!PyInt_Check(value)) {
-	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
     gimp_layer_set_apply_mask(self->ID, PyInt_AsLong(value));
@@ -578,11 +644,11 @@ static int
 lay_set_edit_mask(PyGimpLayer *self, PyObject *value, void *closure)
 {
     if (value == NULL) {
-        PyErr_SetString(PyExc_TypeError, "can not delete edit_mask.");
+        PyErr_SetString(PyExc_TypeError, "cannot delete edit_mask");
         return -1;
     }
     if (!PyInt_Check(value)) {
-	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
     gimp_layer_set_edit_mask(self->ID, PyInt_AsLong(value));
@@ -599,11 +665,11 @@ static int
 lay_set_linked(PyGimpLayer *self, PyObject *value, void *closure)
 {
     if (value == NULL) {
-        PyErr_SetString(PyExc_TypeError, "can not delete linked.");
+        PyErr_SetString(PyExc_TypeError, "cannot delete linked");
         return -1;
     }
     if (!PyInt_Check(value)) {
-	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
     gimp_layer_set_linked(self->ID, PyInt_AsLong(value));
@@ -620,35 +686,14 @@ static int
 lay_set_mode(PyGimpLayer *self, PyObject *value, void *closure)
 {
     if (value == NULL) {
-        PyErr_SetString(PyExc_TypeError, "can not delete mode.");
+        PyErr_SetString(PyExc_TypeError, "cannot delete mode");
         return -1;
     }
     if (!PyInt_Check(value)) {
-	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
     gimp_layer_set_mode(self->ID, (GimpLayerModeEffects)PyInt_AsLong(value));
-    return 0;
-}
-
-static PyObject *
-lay_get_name(PyGimpLayer *self, void *closure)
-{
-    return PyString_FromString(gimp_drawable_get_name(self->ID));
-}
-
-static int
-lay_set_name(PyGimpLayer *self, PyObject *value, void *closure)
-{
-    if (value == NULL) {
-        PyErr_SetString(PyExc_TypeError, "can not delete name.");
-        return -1;
-    }
-    if (!PyString_Check(value)) {
-	PyErr_SetString(PyExc_TypeError, "type mis-match.");
-	return -1;
-    }
-    gimp_drawable_set_name(self->ID, PyString_AsString(value));
     return 0;
 }
 
@@ -662,11 +707,11 @@ static int
 lay_set_opacity(PyGimpLayer *self, PyObject *value, void *closure)
 {
     if (value == NULL) {
-        PyErr_SetString(PyExc_TypeError, "can not delete opacity.");
+        PyErr_SetString(PyExc_TypeError, "cannot delete opacity");
         return -1;
     }
     if (!PyFloat_Check(value)) {
-	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
     gimp_layer_set_opacity(self->ID, PyFloat_AsDouble(value));
@@ -684,11 +729,11 @@ lay_set_preserve_trans(PyGimpLayer *self, PyObject *value, void *closure)
 {
     if (value == NULL) {
         PyErr_SetString(PyExc_TypeError,
-			"can not delete preserve_transparency.");
+			"cannot delete preserve_transparency");
         return -1;
     }
     if (!PyInt_Check(value)) {
-	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
     gimp_layer_set_preserve_trans(self->ID, PyInt_AsLong(value));
@@ -705,56 +750,14 @@ static int
 lay_set_show_mask(PyGimpLayer *self, PyObject *value, void *closure)
 {
     if (value == NULL) {
-        PyErr_SetString(PyExc_TypeError, "can not delete show_mask.");
+        PyErr_SetString(PyExc_TypeError, "cannot delete show_mask");
         return -1;
     }
     if (!PyInt_Check(value)) {
-	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
     gimp_layer_set_show_mask(self->ID, PyInt_AsLong(value));
-    return 0;
-}
-
-static PyObject *
-lay_get_tattoo(PyGimpLayer *self, void *closure)
-{
-    return PyInt_FromLong(gimp_drawable_get_tattoo(self->ID));
-}
-
-static int
-lay_set_tattoo(PyGimpLayer *self, PyObject *value, void *closure)
-{
-    if (value == NULL) {
-        PyErr_SetString(PyExc_TypeError, "can not delete tattoo.");
-        return -1;
-    }
-    if (!PyInt_Check(value)) {
-	PyErr_SetString(PyExc_TypeError, "type mis-match.");
-	return -1;
-    }
-    gimp_drawable_set_tattoo(self->ID, PyInt_AsLong(value));
-    return 0;
-}
-
-static PyObject *
-lay_get_visible(PyGimpLayer *self, void *closure)
-{
-    return PyInt_FromLong(gimp_drawable_get_visible(self->ID));
-}
-
-static int
-lay_set_visible(PyGimpLayer *self, PyObject *value, void *closure)
-{
-    if (value == NULL) {
-        PyErr_SetString(PyExc_TypeError, "can not delete visible.");
-        return -1;
-    }
-    if (!PyInt_Check(value)) {
-	PyErr_SetString(PyExc_TypeError, "type mis-match.");
-	return -1;
-    }
-    gimp_drawable_set_visible(self->ID, PyInt_AsLong(value));
     return 0;
 }
 
@@ -765,13 +768,10 @@ static PyGetSetDef lay_getsets[] = {
     { "edit_mask", (getter)lay_get_edit_mask, (setter)lay_set_edit_mask },
     { "linked", (getter)lay_get_linked, (setter)lay_set_linked },
     { "mode", (getter)lay_get_mode, (setter)lay_set_mode },
-    { "name", (getter)lay_get_name, (setter)lay_set_name },
     { "opacity", (getter)lay_get_opacity, (setter)lay_set_opacity },
     { "preserve_trans", (getter)lay_get_preserve_trans,
       (setter)lay_set_preserve_trans },
     { "show_mask", (getter)lay_get_show_mask, (setter)lay_set_show_mask },
-    { "tattoo", (getter)lay_get_tattoo, (setter)lay_set_tattoo },
-    { "visible", (getter)lay_get_visible, (setter)lay_set_visible },
     { NULL, (getter)0, (setter)0 }
 };
 
@@ -927,37 +927,16 @@ chn_set_color(PyGimpChannel *self, PyObject *value, void *closure)
     GimpRGB colour;
 
     if (value == NULL) {
-        PyErr_SetString(PyExc_TypeError, "can not delete colour.");
+        PyErr_SetString(PyExc_TypeError, "cannot delete colour");
         return -1;
     }
     if (!PyTuple_Check(value) || !PyArg_ParseTuple(value, "(BBB)", &r,&g,&b)) {
 	PyErr_Clear();
-	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
     gimp_rgb_set_uchar(&colour, r, g, b);
     gimp_channel_set_color(self->ID, &colour);
-    return 0;
-}
-
-static PyObject *
-chn_get_name(PyGimpChannel *self, void *closure)
-{
-    return PyString_FromString(gimp_drawable_get_name(self->ID));
-}
-
-static int
-chn_set_name(PyGimpChannel *self, PyObject *value, void *closure)
-{
-    if (value == NULL) {
-        PyErr_SetString(PyExc_TypeError, "can not delete name.");
-        return -1;
-    }
-    if (!PyString_Check(value)) {
-	PyErr_SetString(PyExc_TypeError, "type mis-match.");
-	return -1;
-    }
-    gimp_drawable_set_name(self->ID, PyString_AsString(value));
     return 0;
 }
 
@@ -971,11 +950,11 @@ static int
 chn_set_opacity(PyGimpLayer *self, PyObject *value, void *closure)
 {
     if (value == NULL) {
-        PyErr_SetString(PyExc_TypeError, "can not delete opacity.");
+        PyErr_SetString(PyExc_TypeError, "cannot delete opacity");
         return -1;
     }
     if (!PyFloat_Check(value)) {
-	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
     gimp_channel_set_opacity(self->ID, PyFloat_AsDouble(value));
@@ -992,67 +971,22 @@ static int
 chn_set_show_masked(PyGimpLayer *self, PyObject *value, void *closure)
 {
     if (value == NULL) {
-        PyErr_SetString(PyExc_TypeError, "can not delete show_masked.");
+        PyErr_SetString(PyExc_TypeError, "cannot delete show_masked");
         return -1;
     }
     if (!PyInt_Check(value)) {
-	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
     gimp_channel_set_show_masked(self->ID, PyInt_AsLong(value));
     return 0;
 }
 
-static PyObject *
-chn_get_tattoo(PyGimpChannel *self, void *closure)
-{
-    return PyInt_FromLong(gimp_drawable_get_tattoo(self->ID));
-}
-
-static int
-chn_set_tattoo(PyGimpChannel *self, PyObject *value, void *closure)
-{
-    if (value == NULL) {
-        PyErr_SetString(PyExc_TypeError, "can not delete tattoo.");
-        return -1;
-    }
-    if (!PyInt_Check(value)) {
-	PyErr_SetString(PyExc_TypeError, "type mis-match.");
-	return -1;
-    }
-    gimp_drawable_set_tattoo(self->ID, PyInt_AsLong(value));
-    return 0;
-}
-
-static PyObject *
-chn_get_visible(PyGimpLayer *self, void *closure)
-{
-    return PyInt_FromLong(gimp_drawable_get_visible(self->ID));
-}
-
-static int
-chn_set_visible(PyGimpLayer *self, PyObject *value, void *closure)
-{
-    if (value == NULL) {
-        PyErr_SetString(PyExc_TypeError, "can not delete visible.");
-        return -1;
-    }
-    if (!PyInt_Check(value)) {
-	PyErr_SetString(PyExc_TypeError, "type mis-match.");
-	return -1;
-    }
-    gimp_drawable_set_visible(self->ID, PyInt_AsLong(value));
-    return 0;
-}
-
 static PyGetSetDef chn_getsets[] = {
     { "color", (getter)chn_get_color, (setter)chn_set_color },
     { "colour", (getter)chn_get_color, (setter)chn_set_color },
-    { "name", (getter)chn_get_name, (setter)chn_set_name },
     { "opacity", (getter)chn_get_opacity, (setter)chn_set_opacity },
     { "show_masked", (getter)chn_get_show_masked, (setter)chn_set_show_masked},
-    { "tattoo", (getter)chn_get_tattoo, (setter)chn_set_tattoo },
-    { "visible", (getter)chn_get_visible, (setter)chn_set_visible },
     { NULL, (getter)0, (setter)0 }
 };
 

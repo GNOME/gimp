@@ -127,7 +127,7 @@ img_merge_visible_layers(PyGimpImage *self, PyObject *args)
 	return NULL;
     id = gimp_image_merge_visible_layers(self->ID, merge);
     if (id == -1) {
-	PyErr_SetString(pygimp_error, "Can't merge layers.");
+	PyErr_SetString(pygimp_error, "Can't merge layers");
 	return NULL;
     }
     return pygimp_layer_new(id);
@@ -145,7 +145,7 @@ img_merge_down(PyGimpImage *self, PyObject *args)
 	return NULL;
     id = gimp_image_merge_down(self->ID, layer->ID, merge);
     if (id == -1) {
-	PyErr_SetString(pygimp_error, "Can't merge layers.");
+	PyErr_SetString(pygimp_error, "Can't merge layers");
 	return NULL;
     }
     return pygimp_layer_new(id);
@@ -549,11 +549,11 @@ static int
 img_set_active_channel(PyGimpImage *self, PyObject *value, void *closure)
 {
     if (value == NULL) {
-	PyErr_SetString(PyExc_TypeError, "can not delete active_channel.");
+	PyErr_SetString(PyExc_TypeError, "cannot delete active_channel");
 	return -1;
     }
     if (!pygimp_channel_check(value)) {
-	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
     gimp_image_set_active_channel(self->ID, ((PyGimpChannel *)value)->ID);
@@ -588,11 +588,11 @@ static int
 img_set_active_layer(PyGimpImage *self, PyObject *value, void *closure)
 {
     if (value == NULL) {
-	PyErr_SetString(PyExc_TypeError, "can not delete active_layer.");
+	PyErr_SetString(PyExc_TypeError, "cannot delete active_layer");
 	return -1;
     }
     if (!pygimp_layer_check(value)) {
-	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
     gimp_image_set_active_layer(self->ID, ((PyGimpLayer *)value)->ID);
@@ -637,11 +637,11 @@ static int
 img_set_cmap(PyGimpImage *self, PyObject *value, void *closure)
 {
     if (value == NULL) {
-	PyErr_SetString(PyExc_TypeError, "can not delete cmap.");
+	PyErr_SetString(PyExc_TypeError, "cannot delete cmap");
 	return -1;
     }
     if (!PyString_Check(value)) {
-	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
     gimp_image_set_cmap(self->ID, PyString_AsString(value),
@@ -668,11 +668,11 @@ static int
 img_set_filename(PyGimpImage *self, PyObject *value, void *closure)
 {
     if (value == NULL) {
-	PyErr_SetString(PyExc_TypeError, "can not delete filename.");
+	PyErr_SetString(PyExc_TypeError, "cannot delete filename");
 	return -1;
     }
     if (!PyString_Check(value)) {
-	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
     gimp_image_set_filename(self->ID, PyString_AsString(value));
@@ -751,11 +751,11 @@ static int
 img_set_tattoo_state(PyGimpImage *self, PyObject *value, void *closure)
 {
     if (value == NULL) {
-	PyErr_SetString(PyExc_TypeError, "can not delete tattoo_state.");
+	PyErr_SetString(PyExc_TypeError, "cannot delete tattoo_state");
 	return -1;
     }
     if (!PyInt_Check(value)) {
-	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
     gimp_image_set_tattoo_state(self->ID, PyInt_AsLong(value));
@@ -789,13 +789,13 @@ img_set_resolution(PyGimpImage *self, PyObject *value, void *closure)
     gdouble xres, yres;
 
     if (value == NULL) {
-	PyErr_SetString(PyExc_TypeError, "can not delete filename.");
+	PyErr_SetString(PyExc_TypeError, "cannot delete resolution");
 	return -1;
     }
     if (!PySequence_Check(value) ||
 	!PyArg_ParseTuple(value, "dd", &xres, &yres)) {
 	PyErr_Clear();
-	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
     gimp_image_set_resolution(self->ID, xres, yres);
@@ -812,11 +812,11 @@ static int
 img_set_unit(PyGimpImage *self, PyObject *value, void *closure)
 {
     if (value == NULL) {
-	PyErr_SetString(PyExc_TypeError, "can not delete filename.");
+	PyErr_SetString(PyExc_TypeError, "cannot delete unit");
 	return -1;
     }
     if (!PyInt_Check(value)) {
-	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	PyErr_SetString(PyExc_TypeError, "type mismatch");
 	return -1;
     }
     gimp_image_set_unit(self->ID, PyInt_AsLong(value));

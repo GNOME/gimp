@@ -317,7 +317,7 @@ pr_dealloc(PyGimpPixelRgn *self)
 static int
 pr_length(PyGimpPixelRgn *self)
 {
-    PyErr_SetString(pygimp_error, "Can't get size of pixel region.");
+    PyErr_SetString(pygimp_error, "Can't get size of pixel region");
     return -1;
 }
 
@@ -330,7 +330,7 @@ pr_subscript(PyGimpPixelRgn *self, PyObject *key)
     int x1, y1, x2, y2, xs, ys;
 
     if (!PyTuple_Check(key) || PyTuple_Size(key) != 2) {
-	PyErr_SetString(PyExc_TypeError,"subscript must be a 2-tuple.");
+	PyErr_SetString(PyExc_TypeError, "subscript must be a 2-tuple");
 	return NULL;
     }
     if (!PyArg_ParseTuple(key, "OO", &x, &y))
@@ -437,7 +437,7 @@ pr_ass_sub(PyGimpPixelRgn *self, PyObject *v, PyObject *w)
     int len, x1, x2, xs, y1, y2, ys;
 	
     if (w == NULL) {
-	PyErr_SetString(PyExc_TypeError, "can't delete subscripts.");
+	PyErr_SetString(PyExc_TypeError, "can't delete subscripts");
 	return -1;
     }
     if (!PyString_Check(w)) {
@@ -446,7 +446,7 @@ pr_ass_sub(PyGimpPixelRgn *self, PyObject *v, PyObject *w)
 	return -1;
     }
     if (!PyTuple_Check(v) || PyTuple_Size(v) != 2) {
-	PyErr_SetString(PyExc_TypeError,"subscript must be a 2-tuple");
+	PyErr_SetString(PyExc_TypeError, "subscript must be a 2-tuple");
 	return -1;
     }
     if (!PyArg_ParseTuple(v, "OO", &x, &y))

@@ -1,3 +1,16 @@
+2003-12-03  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/gimpmodule.c
+	* plug-ins/pygimp/pygimp-drawable.c
+	* plug-ins/pygimp/pygimp-image.c
+	* plug-ins/pygimp/pygimp-pdb.c
+	* plug-ins/pygimp/pygimp-tile.c: some cosmetic changes to error
+	messages.
+
+	* plug-ins/pygimp/pygimp-drawable.c: accessors for name, tattoo, and
+	visible live in the drawable class now, so layer and channel objects
+	inherit it.
+
 2003-12-03  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimp.def: updated.

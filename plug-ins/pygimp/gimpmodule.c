@@ -156,11 +156,11 @@ pygimp_main(PyObject *self, PyObject *args)
 
     if (!Arg_Check(ip) || !Arg_Check(qp) || !Arg_Check(query) ||
 	!Arg_Check(rp)) {
-	PyErr_SetString(pygimp_error, "arguments must be callable.");
+	PyErr_SetString(pygimp_error, "arguments must be callable");
 	return NULL;
     }
     if (query == Py_None) {
-	PyErr_SetString(pygimp_error, "a query procedure must be provided.");
+	PyErr_SetString(pygimp_error, "a query procedure must be provided");
 	return NULL;
     }
 

@@ -588,7 +588,7 @@ pdb_subscript(PyGimpPDB *self, PyObject *key)
     PyObject *r;
 
     if (!PyString_Check(key)) {
-	PyErr_SetString(PyExc_TypeError, "Subscript must be a string.");
+	PyErr_SetString(PyExc_TypeError, "Subscript must be a string");
 	return NULL;
     }
     r = (PyObject *)pygimp_pdb_function_new(PyString_AsString(key));
@@ -677,7 +677,7 @@ pygimp_pdb_function_new(char *name)
 
     if (!gimp_procedural_db_proc_info (name, &b, &h, &a, &c, &d, &pt,
 				       &np, &nr, &p, &r)) {
-	PyErr_SetString(pygimp_error, "procedure not found.");
+	PyErr_SetString(pygimp_error, "procedure not found");
 	return NULL;
     }
 
@@ -829,7 +829,7 @@ pf_call(PyGimpPDBFunction *self, PyObject *args, PyObject *kwargs)
 	fprintf(stderr, "unknown - %i (type %i)\n",
 		ret[0].data.d_status, ret[0].type);
 #endif
-	PyErr_SetString(pygimp_error, "unknown return code.");
+	PyErr_SetString(pygimp_error, "unknown return code");
 	return NULL;
 	break;
     }
