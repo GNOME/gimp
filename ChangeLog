@@ -1,3 +1,17 @@
+2001-02-20  Simon Budig  <simon@gimp.org>
+	
+	* app/gdisplay.[ch]
+	* app/disp_callbacks.c
+	* app/interface.c: Added preliminary support for Preview icons.
+
+	This is not finished: We need a better way to get previews with
+	a specific depth and probably a rendered Checkerboard for the
+	alpha channel. Also the update function is now bound to a click
+	in the top left menu-button and should go in some idle-stuff.
+	Please test this on various window managers and give some
+	feedback. The last point is the aspect ratio of the generated
+	previews...
+
 2001-02-20  Nick Lamb  <njl195@zepler.org.uk>
 
 	* libgimpwidgets/gimpwidgets.c: include string.h

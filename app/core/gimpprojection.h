@@ -121,6 +121,11 @@ struct _GDisplay
   GtkAdjustment *hsbdata;         /*  horizontal data information             */
   GtkAdjustment *vsbdata;         /*  vertical data information               */
 
+  GdkPixmap *icon;		  /*  Pixmap for the icon                     */
+  GdkBitmap *iconmask;		  /*  Bitmap for the icon mask                */
+  guint      iconsize;            /*  The size of the icon pixmap             */
+  guint      icon_needs_update;   /*  Do we need to render a new icon?        */
+
   GimpImage *gimage;	          /*  pointer to the associated gimage struct */
   gint instance;                  /*  the instance # of this gdisplay as      */
                                   /*  taken from the gimage at creation       */
@@ -208,6 +213,7 @@ void       gdisplay_expose_guide           (GDisplay *, Guide *);
 void       gdisplay_expose_full            (GDisplay *);
 void       gdisplay_flush                  (GDisplay *);
 void       gdisplay_flush_now              (GDisplay *);
+void       gdisplay_update_icon            (GDisplay *);
 void       gdisplay_draw_guides            (GDisplay *);
 void       gdisplay_draw_guide             (GDisplay *, Guide *, gboolean);
 Guide*     gdisplay_find_guide             (GDisplay *, gdouble, double);

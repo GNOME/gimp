@@ -53,8 +53,10 @@
 #include "qmask.h"
 #include "scale.h"
 #include "selection.h"
+#include "temp_buf.h"
 #include "undo.h"
 
+#include "pixmaps/wilber.xpm"
 
 #ifdef DISPLAY_FILTERS
 #include "gdisplay_color.h"
@@ -429,6 +431,9 @@ gdisplay_delete (GDisplay *gdisp)
   if (gdisp->nav_popup)
     nav_popup_free (gdisp->nav_popup);
 
+  gdk_pixmap_unref (gdisp->icon);
+  gdk_pixmap_unref (gdisp->iconmask);
+
   gtk_widget_unref (gdisp->shell);
 
   g_free (gdisp);
@@ -773,6 +778,124 @@ gdisplays_finish_draw (void)
 	}
       list = g_slist_next (list);
     }
+}
+
+void
+gdisplay_update_icon (GDisplay *gdisp)
+{
+
+  /* Warning: Lots of obscure Gdk-Stuff ahead. */
+
+  static GdkPixmap *wilber_pixmap = NULL;
+  static GdkBitmap *wilber_mask   = NULL;
+  GtkStyle         *style;
+  GdkGC		   *icongc, *iconmaskgc;
+  GdkColormap	   *colormap;
+  GdkColor	   black, white;
+
+  TempBuf *icondata;
+  guchar  *data;
+
+  gdk_rgb_init ();
+  icongc = gdk_gc_new (gdisp->icon);
+  iconmaskgc = gdk_gc_new (gdisp->iconmask);
+  colormap = gdk_colormap_get_system ();   /* or gdk_rgb_get_cmap ()  */
+
+  gdk_color_white (colormap, &white);
+  gdk_color_black (colormap, &black);
+
+  if (! gdisp->icon_needs_update)
+    return;
+
+  style = gtk_widget_get_style (gdisp->shell);
+  if (wilber_pixmap == NULL)
+    wilber_pixmap =
+      gdk_pixmap_create_from_xpm_d (gdisp->shell->window,
+                                    &wilber_mask,
+                                    &style->bg[GTK_STATE_NORMAL],
+                                    wilber_xpm);
+
+  icondata = gimp_viewable_get_new_preview (GIMP_VIEWABLE (gdisp->gimage),
+      					    gdisp->iconsize,
+					    gdisp->iconsize);
+  data = temp_buf_data (icondata);
+
+  /* Set up an icon mask */
+  gdk_gc_set_foreground (iconmaskgc, &black);
+  gdk_draw_rectangle (gdisp->iconmask, iconmaskgc, TRUE, 0, 0,
+		      gdisp->iconsize, gdisp->iconsize);
+	  
+  gdk_gc_set_foreground (iconmaskgc, &white);
+  gdk_draw_rectangle (gdisp->iconmask, iconmaskgc, TRUE,
+		      (gdisp->iconsize - icondata->height) / 2,
+		      (gdisp->iconsize - icondata->width) / 2,
+		      icondata->width, icondata->height);
+
+  /* This is an ugly bad hack. There should be a clean way to get
+   * a preview in a specified depth with a nicely rendered
+   * checkerboard if no alpha channel is requested.
+   * We ignore the alpha channel for now. Also the aspect ratio is
+   * incorrect.
+   *
+   * Currently the icons are updated when you press the "menu" button in
+   * the top left corner of the window. Of course this should go in an
+   * idle routine.
+   */
+  if (icondata->bytes == 1)
+    {
+      gdk_draw_gray_image (gdisp->icon,
+			   icongc,
+	  		   (gdisp->iconsize - icondata->height) / 2,
+	  		   (gdisp->iconsize - icondata->width) / 2,
+			   icondata->width,
+			   icondata->height,
+			   GDK_RGB_DITHER_MAX,
+			   data,
+			   icondata->width * icondata->bytes);
+      gdk_window_set_icon (gdisp->shell->window,
+	  		   NULL, gdisp->icon, gdisp->iconmask);
+    }
+  else if (icondata->bytes == 3)
+    {
+      gdk_draw_rgb_image  (gdisp->icon,
+	  		   icongc,
+	  		   (gdisp->iconsize - icondata->height) / 2,
+	  		   (gdisp->iconsize - icondata->width) / 2,
+			   icondata->width,
+			   icondata->height,
+			   GDK_RGB_DITHER_MAX,
+			   data,
+			   icondata->width * icondata->bytes);
+      gdk_window_set_icon (gdisp->shell->window,
+	  		   NULL, gdisp->icon, gdisp->iconmask);
+    }
+  else if (icondata->bytes == 4)
+    {
+      gdk_draw_rgb_32_image  (gdisp->icon,
+			      icongc,
+			      (gdisp->iconsize - icondata->height) / 2,
+			      (gdisp->iconsize - icondata->width) / 2,
+			      icondata->width,
+			      icondata->height,
+			      GDK_RGB_DITHER_MAX,
+			      data,
+			      icondata->width * icondata->bytes);
+      gdk_window_set_icon (gdisp->shell->window,
+	  		   NULL, gdisp->icon, gdisp->iconmask);
+    }
+  else
+    {
+      g_printerr ("gdisplay: falling back to default\n");
+      gdk_window_set_icon (gdisp->shell->window,
+	  		   NULL, wilber_pixmap, wilber_mask);
+    }
+
+  gdisp->icon_needs_update = 0;
+
+  gdk_gc_unref (icongc);
+  gdk_gc_unref (iconmaskgc);
+  
+  temp_buf_free (icondata);
 }
 
 void
@@ -2421,6 +2544,7 @@ gdisplay_cleandirty_handler (GimpImage *gimage,
   GDisplay *gdisp = data;
 
   gdisplay_update_title (gdisp);
+  gdisp->icon_needs_update = 1;
 }
 
 void

@@ -415,6 +415,17 @@ create_display_shell (GDisplay *gdisp,
 				      &navbutton_mask,
 				      &style->bg[GTK_STATE_NORMAL],
 				      navbutton_xpm);   
+      /*  Icon stuff  */
+      gdisp->iconsize = 32;
+      gdisp->icon = gdk_pixmap_new (gdisp->shell->window,
+		      		    gdisp->iconsize,
+				    gdisp->iconsize,
+				    -1);
+      gdisp->iconmask = gdk_pixmap_new (NULL,
+		      		        gdisp->iconsize,
+				        gdisp->iconsize,
+				        1);
+      gdisp->icon_needs_update = 1;
     }
 
   /*  create the GtkPixmaps  */
