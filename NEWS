@@ -26,6 +26,7 @@ Bugs fixed in GIMP 2.2.3
 - update the menus when selecting a component in the Channels dialog
   (bug #164195)
 - fixed issues with the save dialog in the Imagemap plug-in (bug #164864)
+- update filesize in JPEG dialog if size of EXIF data changes (bug #164914)
 
 
 Bugs fixed in GIMP 2.2.2

@@ -2107,6 +2107,9 @@ save_dialog (void)
   g_signal_connect (exif_toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &jsvals.save_exif);
+  g_signal_connect (exif_toggle, "toggled",
+                    G_CALLBACK (make_preview),
+                    NULL);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (exif_toggle),
                                 jsvals.save_exif && exif_data);
@@ -2121,6 +2124,9 @@ save_dialog (void)
   g_signal_connect (thumbnail_toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &jsvals.save_thumbnail);
+  g_signal_connect (thumbnail_toggle, "toggled",
+                    G_CALLBACK (make_preview),
+                    NULL);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (thumbnail_toggle),
                                 jsvals.save_thumbnail);

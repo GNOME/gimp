@@ -2,6 +2,14 @@
 
 	Merged from HEAD branch:
 
+	* plug-ins/common/jpeg.c (save_dialog): update the preview (and
+        thus the filesize) if the EXIF or thumbnail toggles are being used.
+        Fixes bug #164914.
+
+2005-01-22  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
 	* plug-ins/imagemap/imap_file.c: fixed overwrite confirmation
 	dialog (bug #164864).
 
