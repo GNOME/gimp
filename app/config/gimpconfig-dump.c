@@ -119,9 +119,7 @@ dump_gimprc (DumpFormat format)
 
   g_type_init ();
 
-  rc = g_object_new (GIMP_TYPE_RC,
-                     "module-load-inhibit", "foo",  /* for completeness */
-                     NULL);
+  rc = g_object_new (GIMP_TYPE_RC, NULL);
 
   writer = gimp_config_writer_new_fd (fd);
 

@@ -1,3 +1,8 @@
+2003-09-20  Henrik Brix Andersen  <brix@gimp.org>
+
+	* app/config/gimpconfig-dump.c (dump_gimprc): removed reference to
+	the "module-load-inhibit" property
+
 2003-09-19  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/gimp-composite-mmx.c
