@@ -492,13 +492,16 @@ dialog (gint32     image_ID,
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 4);
 
   width = gimp_size_entry_new (3,                            /*  number_of_fields  */ 
-			       UNIT_PIXEL,                   /*  FIXME - use unit  */
+			       unit,                         /*  unit              */
 			       "%a",                         /*  unit_format       */
 			       TRUE,                         /*  menu_show_pixels  */
 			       TRUE,                         /*  menu_show_percent */
 			       FALSE,                        /*  show_refval       */
 			       SPIN_BUTTON_WIDTH,            /*  spinbutton_usize  */
 			       GIMP_SIZE_ENTRY_UPDATE_SIZE); /*  update_policy     */
+
+  /*  set the unit back to pixels, since most times we will want pixels */
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (width), UNIT_PIXEL);
 
   /*  set the resolution to the image resolution  */
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (width), 0, xres, TRUE);
@@ -552,13 +555,15 @@ dialog (gint32     image_ID,
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 4);
 
   space = gimp_size_entry_new (3,                            /*  number_of_fields  */ 
-			       UNIT_PIXEL,                   /*  FIXME - use unit  */
+			       unit,                         /*  unit              */
 			       "%a",                         /*  unit_format       */
 			       TRUE,                         /*  menu_show_pixels  */
 			       TRUE,                         /*  menu_show_percent */
 			       FALSE,                        /*  show_refval       */
 			       SPIN_BUTTON_WIDTH,            /*  spinbutton_usize  */
 			       GIMP_SIZE_ENTRY_UPDATE_SIZE); /*  update_policy     */
+
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (space), UNIT_PIXEL);
 
   /*  set the resolution to the image resolution  */
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (space), 0, xres, TRUE);
@@ -609,13 +614,15 @@ dialog (gint32     image_ID,
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 4);
 
   offset = gimp_size_entry_new (3,                            /*  number_of_fields  */ 
-				UNIT_PIXEL,                   /*  FIXME - use unit  */
+				unit,                         /*  unit              */
 				"%a",                         /*  unit_format       */
 				TRUE,                         /*  menu_show_pixels  */
 				TRUE,                         /*  menu_show_percent */
 				FALSE,                        /*  show_refval       */
 				SPIN_BUTTON_WIDTH,            /*  spinbutton_usize  */
 				GIMP_SIZE_ENTRY_UPDATE_SIZE); /*  update_policy     */
+
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (offset), UNIT_PIXEL);
 
   /*  set the resolution to the image resolution  */
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (offset), 0, xres, TRUE);

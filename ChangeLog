@@ -1,3 +1,23 @@
+Tue Jan 18 21:46:25 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/gauss_iir.c
+	* plug-ins/common/gauss_rle.c: The blur radius can now be specified
+	indepently in each direction. For backward compatibility I left the
+	original PDB functions unchanged and added new ones. The actual 
+	blurring is done in the same function for both interfaces.
+
+	* plug-ins/gap/Makefile.am
+	* plug-ins/gap/gap_filter_iterators.c
+	* plug-ins/gap/iter_ALT/gen/plug_in_gauss_iir2_iter_ALT.inc
+	* plug-ins/gap/iter_ALT/gen/plug_in_gauss_rle2_iter_ALT.inc: added
+	iteraror functions for the new gauss_blur functions.
+
+	* plug-ins/common/grid.c: small changes to the way the size_entrys are
+	set up
+	
+	* plug-ins/common/noisify.c: 
+	applied (modified) patch from Julian Kinraid <jkinraid@clear.net.nz>
+
 2000-01-18  Tor Lillqvist  <tml@iki.fi>
 
 	* README.win32: Some clarifications.

@@ -267,15 +267,18 @@ noisify (GDrawable *drawable)
 		  if (nvals.independent == TRUE)
 		    noise = (gint) (nvals.noise[b] * gauss() * 127);
 
-		  
-		  p = src[b] + noise;
-		  if (p < 0)
-		    p = 0;
-		  else if (p > 255)
-		    p = 255;
-		  if (nvals.noise[b] != 0)
-		    dest[b] = p;
-		  
+		  if (nvals.noise[b] > 0.0)
+		    {
+		      p = src[b] + noise;
+		      if (p < 0)
+		        p = 0;
+		      else if (p > 255)
+		        p = 255;
+		      dest[b] = p;
+		    }
+		  else
+		    dest[b] = src[b];
+
 		}
 	      src += src_rgn.bpp;
 	      dest += dest_rgn.bpp;

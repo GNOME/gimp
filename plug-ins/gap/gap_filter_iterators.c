@@ -454,7 +454,9 @@ static void p_delta_LightSettings(t_LightSettings *val, t_LightSettings *val_fro
 #include "iter_ALT/gen/plug_in_flarefx_iter_ALT.inc"
 #include "iter_ALT/gen/plug_in_fractal_trace_iter_ALT.inc"
 #include "iter_ALT/gen/plug_in_gauss_iir_iter_ALT.inc"
+#include "iter_ALT/gen/plug_in_gauss_iir2_iter_ALT.inc"
 #include "iter_ALT/gen/plug_in_gauss_rle_iter_ALT.inc"
+#include "iter_ALT/gen/plug_in_gauss_rle2_iter_ALT.inc"
 #include "iter_ALT/gen/plug_in_gfig_iter_ALT.inc"
 #include "iter_ALT/gen/plug_in_glasstile_iter_ALT.inc"
 #include "iter_ALT/gen/plug_in_grid_iter_ALT.inc"
@@ -546,7 +548,9 @@ static t_iter_ALT_tab   g_iter_ALT_tab[] =
   , { "plug_in_flarefx",  p_plug_in_flarefx_iter_ALT }
   , { "plug_in_fractal_trace",  p_plug_in_fractal_trace_iter_ALT }
   , { "plug_in_gauss_iir",  p_plug_in_gauss_iir_iter_ALT }
+  , { "plug_in_gauss_iir2",  p_plug_in_gauss_iir2_iter_ALT }
   , { "plug_in_gauss_rle",  p_plug_in_gauss_rle_iter_ALT }
+  , { "plug_in_gauss_rle2",  p_plug_in_gauss_rle2_iter_ALT }
   , { "plug_in_gfig",  p_plug_in_gfig_iter_ALT }
   , { "plug_in_gflare",  p_plug_in_gflare_iter_ALT }
   , { "plug_in_glasstile",  p_plug_in_glasstile_iter_ALT }

@@ -28,7 +28,9 @@ EXTRA_DIST = \
 	iter_ALT/gen/plug_in_flarefx_iter_ALT.inc		\
 	iter_ALT/gen/plug_in_fractal_trace_iter_ALT.inc		\
 	iter_ALT/gen/plug_in_gauss_iir_iter_ALT.inc		\
+	iter_ALT/gen/plug_in_gauss_iir2_iter_ALT.inc		\
 	iter_ALT/gen/plug_in_gauss_rle_iter_ALT.inc		\
+	iter_ALT/gen/plug_in_gauss_rle2_iter_ALT.inc		\
 	iter_ALT/gen/plug_in_gfig_iter_ALT.inc			\
 	iter_ALT/gen/plug_in_glasstile_iter_ALT.inc		\
 	iter_ALT/gen/plug_in_grid_iter_ALT.inc			\
