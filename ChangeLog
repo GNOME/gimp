@@ -1,5 +1,11 @@
 2002-11-02  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpcolorarea.[ch]: simplified the code and
+	improved the performance by getting rid of the idle function.
+	Simply rerender the buffer on expose if necessary.
+
+2002-11-02  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpprogress.c (gimp_progress_update): force an update
 	of the progress bar (#97459, reported by Akkana).
 

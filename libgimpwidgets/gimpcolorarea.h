@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
  *
  * gimpcolorarea.h
- * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -55,7 +55,8 @@ struct _GimpColorArea
 
   GimpColorAreaType    type;
   GimpRGB              color;
-  guint                idle_id;
+
+  gboolean             needs_render;
 };
 
 struct _GimpColorAreaClass
