@@ -256,7 +256,7 @@ dockable_tab_style_cmd_callback (GtkAction *action,
     {
       GtkWidget *tab_widget;
 
-      dockable->tab_style = tab_style;
+      gimp_dockable_set_tab_style (dockable, tab_style);
 
       tab_widget = gimp_dockbook_get_tab_widget (dockbook, dockable);
 

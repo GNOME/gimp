@@ -543,6 +543,31 @@ gimp_session_info_deserialize (GScanner *scanner,
   return token;
 }
 
+static void
+gimp_session_info_paned_size_allocate (GtkWidget     *paned,
+                                       GtkAllocation *allocation,
+                                       gpointer       data)
+{
+  g_signal_handlers_disconnect_by_func (paned,
+                                        gimp_session_info_paned_size_allocate,
+                                        data);
+
+  gtk_paned_set_position (GTK_PANED (paned), GPOINTER_TO_INT (data));
+}
+
+static void
+gimp_session_info_paned_map (GtkWidget *paned,
+                             gpointer   data)
+{
+  g_signal_handlers_disconnect_by_func (paned,
+                                        gimp_session_info_paned_map,
+                                        data);
+
+  g_signal_connect_after (paned, "size-allocate",
+                          G_CALLBACK (gimp_session_info_paned_size_allocate),
+                          data);
+}
+
 void
 gimp_session_info_restore (GimpSessionInfo   *info,
                            GimpDialogFactory *factory)
@@ -620,25 +645,8 @@ gimp_session_info_restore (GimpSessionInfo   *info,
               if (! dockable)
                 continue;
 
-              if (! GIMP_DOCKED_GET_INTERFACE (GTK_BIN (dockable)->child)->get_preview)
-                {
-                  switch (dockable_info->tab_style)
-                    {
-                    case GIMP_TAB_STYLE_PREVIEW:
-                      dockable_info->tab_style = GIMP_TAB_STYLE_ICON;
-                      break;
-                    case GIMP_TAB_STYLE_PREVIEW_NAME:
-                      dockable_info->tab_style = GIMP_TAB_STYLE_ICON_BLURB;
-                      break;
-                    case GIMP_TAB_STYLE_PREVIEW_BLURB:
-                      dockable_info->tab_style = GIMP_TAB_STYLE_ICON_BLURB;
-                      break;
-                    default:
-                      break;
-                    }
-                }
-
-              GIMP_DOCKABLE (dockable)->tab_style = dockable_info->tab_style;
+              gimp_dockable_set_tab_style (GIMP_DOCKABLE (dockable),
+                                           dockable_info->tab_style);
 
               if (dockable_info->aux_info)
                 session_info_set_aux_info (dockable, dockable_info->aux_info);
@@ -666,7 +674,9 @@ gimp_session_info_restore (GimpSessionInfo   *info,
               GtkPaned *paned = GTK_PANED (dockbook->parent);
 
               if (dockbook == paned->child2)
-                gtk_paned_set_position (paned, book_info->position);
+                g_signal_connect_after (paned, "map",
+                                        G_CALLBACK (gimp_session_info_paned_map),
+                                        GINT_TO_POINTER (book_info->position));
             }
         }
 

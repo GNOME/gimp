@@ -702,6 +702,37 @@ gimp_dockable_get_aux_info (GimpDockable *dockable)
   return NULL;
 }
 
+void
+gimp_dockable_set_tab_style (GimpDockable *dockable,
+                             GimpTabStyle  tab_style)
+{
+  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
+
+  if (GTK_BIN (dockable)->child &&
+      ! GIMP_DOCKED_GET_INTERFACE (GTK_BIN (dockable)->child)->get_preview)
+    {
+      switch (tab_style)
+        {
+        case GIMP_TAB_STYLE_PREVIEW:
+          tab_style = GIMP_TAB_STYLE_ICON;
+          break;
+
+        case GIMP_TAB_STYLE_PREVIEW_NAME:
+          tab_style = GIMP_TAB_STYLE_ICON_BLURB;
+          break;
+
+        case GIMP_TAB_STYLE_PREVIEW_BLURB:
+          tab_style = GIMP_TAB_STYLE_ICON_BLURB;
+          break;
+
+        default:
+          break;
+        }
+    }
+
+  dockable->tab_style = tab_style;
+}
+
 GtkWidget *
 gimp_dockable_get_tab_widget (GimpDockable *dockable,
                               GimpContext  *context,

@@ -73,6 +73,8 @@ void            gimp_dockable_set_aux_info   (GimpDockable   *dockable,
                                               GList          *aux_info);
 GList         * gimp_dockable_get_aux_info   (GimpDockable   *dockable);
 
+void            gimp_dockable_set_tab_style  (GimpDockable   *dockable,
+                                              GimpTabStyle    tab_style);
 GtkWidget     * gimp_dockable_get_tab_widget (GimpDockable   *dockable,
                                               GimpContext    *context,
                                               GimpTabStyle    tab_style,

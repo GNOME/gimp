@@ -1,5 +1,19 @@
 2004-06-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpsessioninfo.c (gimp_session_info_restore): added
+	a horrible hack that sets the paned's position after the first
+	"size-allocate" after "map". Makes position remembering work for
+	the toolbox and fixes bug #142697.
+
+	* app/widgets/gimpdockable.[ch]: added new function
+	gimp_dockable_set_tab_style()
+
+	* app/actions/dockable-commands.c (dockable_tab_style_cmd_callback)
+	* app/widgets/gimpsessioninfo.c (gimp_session_info_restore):
+	use gimp_dockable_set_tab_style().
+
+2004-06-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimptoolbox.c (toolbox_area_notify): removed
 	unused variable.
 
