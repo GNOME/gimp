@@ -1,3 +1,9 @@
+2003-08-27  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/curve_bend.c: (party) applied patch from 
+	hof@gimp.org. Fixes both #119937 and #119938. Some cleanup of the 
+	code.
+
 2003-08-27  Michael Natterer  <mitch@gimp.org>
 
 	Cleaned up my "To Selection" cleanup:
