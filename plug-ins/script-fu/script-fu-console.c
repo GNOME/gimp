@@ -292,6 +292,10 @@ script_fu_console_interface (void)
 		    NULL);
 
   input_channel = g_io_channel_unix_new (siod_output_pipe[0]);
+
+  g_io_channel_set_encoding (input_channel, NULL, NULL);
+  g_io_channel_set_buffered (input_channel, FALSE);
+
   cint.input_id = g_io_add_watch (input_channel,
 				  G_IO_IN,
 				  script_fu_siod_read,
@@ -389,7 +393,7 @@ script_fu_siod_read (GIOChannel  *channel,
 {
   gint         count;
   GIOStatus    status;
-  GError      *error;
+  GError      *error = NULL;
   GtkTextIter  cursor;
 
   count = 0;
@@ -400,6 +404,13 @@ script_fu_siod_read (GIOChannel  *channel,
 					BUFSIZE - 1,
 					&count,
 					&error);
+
+      if (error)
+        {
+          g_printerr ("%s: failed to read SIOD's output: %s\n",
+                      g_get_prgname (), error->message);
+          g_clear_error (&error);
+        }
     }
   while (status == G_IO_STATUS_AGAIN);
 

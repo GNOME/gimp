@@ -1,3 +1,11 @@
+2002-05-02  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/script-fu-console.c: fixed communication
+	with the SIOD interpreter:
+
+	- set the GError variable to NULL before using it.
+	- set the GIOChannel used to read SIOD's output to binary mode.
+
 2002-04-29  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimagefile.[ch]: added some assertions, cleaned up
