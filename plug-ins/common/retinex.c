@@ -50,6 +50,7 @@ typedef enum
   filter_low,
   filter_high
 } FilterMode;
+
 /*
   Definit comment sont repartis les
   differents filtres en fonction de
@@ -150,7 +151,7 @@ query (void)
     { GIMP_PDB_INT32,    "scale",       "Biggest scale value"                 },
     { GIMP_PDB_INT32,    "nscales",     "Number of scales"                    },
     { GIMP_PDB_INT32,    "scales_mode", "Retinex distribution through scales" },
-    { GIMP_PDB_FLOAT,    "cvar",        "variance value"                      }
+    { GIMP_PDB_FLOAT,    "cvar",        "Variance value"                      }
   };
 
   gimp_install_procedure ("plug_in_retinex",
@@ -223,7 +224,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
-      if (nparams != 6)
+      if (nparams != 7)
         {
           status = GIMP_PDB_CALLING_ERROR;
         }

@@ -1,5 +1,12 @@
 2005-01-14  Sven Neumann  <sven@gimp.org>
 
+	Merged from HEAD branch:
+
+	* plug-ins/common/retinex.c (run): fixed check for number of
+	parameters in non-interactive mode.
+
+2005-01-14  Sven Neumann  <sven@gimp.org>
+
 	Merged from HEAD branch (fix by Bill Skaggs):
 
 	* plug-ins/bmp/bmp.h
