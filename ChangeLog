@@ -1,5 +1,9 @@
 2003-10-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/app_procs.c (app_init): fixed starting with --no-splash.
+
+2003-10-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdrawable.[ch]: added new virtual functions
 	GimpDrawable::get_active_components(), apply_region() and
 	replace_region().

@@ -96,7 +96,7 @@ app_init (const gchar         *full_prog_name,
           GimpStackTraceMode   stack_trace_mode,
           gboolean             restore_session)
 {
-  GimpInitStatusFunc update_status_func = app_init_update_none;
+  GimpInitStatusFunc update_status_func = NULL;
 
   /*  Create an instance of the "Gimp" object which is the root of the
    *  core object system
@@ -195,7 +195,8 @@ app_init (const gchar         *full_prog_name,
   if (! no_interface)
     update_status_func = gui_init (the_gimp, no_splash, no_splash_image);
 
-  g_assert (update_status_func != NULL);
+  if (! update_status_func)
+    update_status_func = app_init_update_none;
 
   /*  connect our "exit" callbacks after gui_init() so they are
    *  invoked after the GUI's "exit" callbacks
