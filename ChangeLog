@@ -1,5 +1,10 @@
 2004-01-09  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/scripts/add-bevel.scm: fix typo:
+	gimp-editbucket-fill -> gimp-edit-bucket-fill
+
+2004-01-09  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpbase/gimpenv.c: coding style fixes and minor cleanup.
 
 2004-01-09  Tor Lillqvist  <tml@iki.fi>

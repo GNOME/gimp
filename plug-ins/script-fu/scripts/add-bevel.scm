@@ -131,7 +131,8 @@
 	   (set! greyness (/ (* index 255) thickness))
 	   (gimp-palette-set-background (list greyness greyness greyness))
 	   ;(gimp-selection-feather image 1) ;Stop the slopey jaggies?
-	   (gimp-editbucket-fill bump-layer BG-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
+	   (gimp-edit-bucket-fill bump-layer BG-BUCKET-FILL NORMAL-MODE
+				  100 0 FALSE 0 0)
 	   (gimp-selection-shrink image 1)
 	   (set! index (+ index 1))
 	   )
