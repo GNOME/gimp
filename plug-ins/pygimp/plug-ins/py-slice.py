@@ -89,6 +89,8 @@ def slice(image, image_path, image_basename, image_extension,
     filename = os.path.join(image_path, src)
 
     temp_image = image.duplicate()
+    temp_image.disable_undo()
+
     temp_image.crop(right - left, bottom - top, left, top)
 
     pdb.gimp_file_save(temp_image, temp_image.active_layer, filename, filename)
@@ -116,10 +118,15 @@ def get_guides(image):
     for guide in GuideIter(image):
         orientation = image.get_guide_orientation(guide)
 
-        if orientation == ORIENTATION_VERTICAL:
-            vguides.append((image.get_guide_position(guide), guide))
-        elif orientation == ORIENTATION_HORIZONTAL:
-            hguides.append((image.get_guide_position(guide), guide))
+        guide_position = image.get_guide_position(guide)
+
+        if guide_position > 0:
+            if orientation == ORIENTATION_VERTICAL:
+                if guide_position < image.width:
+                    vguides.append((guide_position, guide))
+            elif orientation == ORIENTATION_HORIZONTAL:
+                if guide_position < image.height:
+                    hguides.append((guide_position, guide))
 
     def position_sort(x, y):
         return cmp(x[0], y[0])
