@@ -157,6 +157,8 @@ static void   pnmscanner_eatwhitespace (PNMScanner *s);
 static void   pnmscanner_gettoken      (PNMScanner *s,
 					gchar      *buf,
 					gint        bufsize);
+static void   pnmscanner_getsmalltoken (PNMScanner *s,
+					gchar      *buf);
 
 static PNMScanner * pnmscanner_create  (gint        fd);
 
@@ -167,7 +169,7 @@ static PNMScanner * pnmscanner_create  (gint        fd);
 /* Checks for a fatal error */
 #define CHECK_FOR_ERROR(predicate, jmpbuf, errmsg) \
         if ((predicate)) \
-        { /*gimp_message((errmsg));*/ longjmp((jmpbuf),1); }
+        { g_message ((errmsg)); longjmp((jmpbuf),1); }
 
 static struct struct_pnm_types
 {
@@ -401,14 +403,14 @@ static gint32
 load_image (gchar *filename)
 {
   GPixelRgn pixel_rgn;
-  gint32 image_ID;
+  gint32 volatile image_ID = -1;
   gint32 layer_ID;
   GDrawable *drawable;
   int fd;			/* File descriptor */
   char *temp;
   char buf[BUFLEN];		/* buffer for random things like scanning */
   PNMInfo *pnminfo;
-  PNMScanner *scan;
+  PNMScanner * volatile scan;
   int ctr;
 
   temp = g_strdup_printf (_("Loading %s:"), filename);
@@ -420,7 +422,7 @@ load_image (gchar *filename)
 
   if (fd == -1)
     {
-      /*gimp_message("pnm filter: can't open file\n");*/
+      g_message (_("PNM: Can't open file %s."), filename);
       return -1;
     }
 
@@ -436,6 +438,8 @@ load_image (gchar *filename)
 	pnmscanner_destroy (scan);
       close (fd);
       g_free (pnminfo);
+      if (image_ID != -1)
+	gimp_image_delete (image_ID);
       return -1;
     }
 
@@ -445,9 +449,9 @@ load_image (gchar *filename)
   /* Get magic number */
   pnmscanner_gettoken (scan, buf, BUFLEN);
   CHECK_FOR_ERROR(pnmscanner_eof(scan), pnminfo->jmpbuf,
-		  "pnm filter: premature end of file\n");
+		  _("PNM: Premature end of file."));
   CHECK_FOR_ERROR((buf[0] != 'P' || buf[2]), pnminfo->jmpbuf,
-		  "pnm filter: %s is not a valid file\n");
+		  _("PNM: %s is not a valid file."));
 
   /* Look up magic number to see what type of PNM this is */
   for (ctr=0; pnm_types[ctr].name; ctr++)
@@ -460,35 +464,35 @@ load_image (gchar *filename)
       }
   if (!pnminfo->loader)
     {
-      /*gimp_message("pnm filter: file not in a supported format\n");*/
+      g_message (_("PNM: File not in a supported format."));
       longjmp(pnminfo->jmpbuf,1);
     }
 
   pnmscanner_gettoken(scan, buf, BUFLEN);
   CHECK_FOR_ERROR(pnmscanner_eof(scan), pnminfo->jmpbuf,
-		  "pnm filter: premature end of file\n");
+		  _("PNM: Premature end of file."));
   pnminfo->xres = isdigit(*buf)?atoi(buf):0;
   CHECK_FOR_ERROR(pnminfo->xres<=0, pnminfo->jmpbuf,
-		  "pnm filter: invalid xres while loading\n");
+		  _("PNM: Invalid X resolution."));
 
   pnmscanner_gettoken(scan, buf, BUFLEN);
   CHECK_FOR_ERROR(pnmscanner_eof(scan), pnminfo->jmpbuf,
-		  "pnm filter: premature end of file\n");
+		  _("PNM: Premature end of file."));
   pnminfo->yres = isdigit(*buf)?atoi(buf):0;
   CHECK_FOR_ERROR(pnminfo->yres<=0, pnminfo->jmpbuf,
-		  "pnm filter: invalid yres while loading\n");
+		  _("PNM: Invalid Y resolution."));
 
   if (pnminfo->np != 0)		/* pbm's don't have a maxval field */
     {
       pnmscanner_gettoken(scan, buf, BUFLEN);
       CHECK_FOR_ERROR(pnmscanner_eof(scan), pnminfo->jmpbuf,
-		      "pnm filter: premature end of file\n");
+		      _("PNM: Premature end of file."));
 
       pnminfo->maxval = isdigit(*buf)?atoi(buf):0;
       CHECK_FOR_ERROR(((pnminfo->maxval<=0)
 		       || (pnminfo->maxval>255 && !pnminfo->asciibody)),
 		      pnminfo->jmpbuf,
-		      "pnm filter: invalid maxval while loading\n");
+		      _("PNM: Invalid maximum value."));
     }
 
   /* Create a new image of the proper size and associate the filename with it.
@@ -557,8 +561,11 @@ pnm_load_ascii (PNMScanner *scan,
 	      {
 		/* Truncated files will just have all 0's at the end of the images */
 		CHECK_FOR_ERROR(pnmscanner_eof(scan), info->jmpbuf,
-				"pnm filter: premature end of file\n");
-		pnmscanner_gettoken(scan, buf, BUFLEN);
+				_("PNM: Premature end of file."));
+		if (info->np)
+		  pnmscanner_gettoken(scan, buf, BUFLEN);
+		else
+		  pnmscanner_getsmalltoken(scan, buf);
 		switch (info->maxval)
 		  {
 		  case 255:
@@ -610,7 +617,7 @@ pnm_load_raw (PNMScanner *scan,
 	  CHECK_FOR_ERROR((info->xres*info->np
 			   != read(fd, d, info->xres*info->np)),
 			  info->jmpbuf,
-			  "pnm filter: premature end of file\n");
+			  _("PNM: Premature end of file."));
 
 	  if (info->maxval != 255)	/* Normalize if needed */
 	    {
@@ -658,7 +665,7 @@ pnm_load_rawpbm (PNMScanner *scan,
       for (i = 0; i < scanlines; i++)
 	{
 	  CHECK_FOR_ERROR((rowlen != read(fd, buf, rowlen)),
-			  info->jmpbuf, "pnm filter: error reading file\n");
+			  info->jmpbuf, _("PNM: Error reading file."));
 	  bufpos = 0;
 	  curbyte = buf[0];
 
@@ -1040,6 +1047,21 @@ pnmscanner_gettoken (PNMScanner *s,
       pnmscanner_getchar(s);
     }
   buf[ctr] = '\0';
+}
+
+/* pnmscanner_getsmalltoken ---
+ *    Gets the next char, eating any leading whitespace.
+ */
+static void
+pnmscanner_getsmalltoken (PNMScanner *s,
+			  gchar      *buf)
+{
+  pnmscanner_eatwhitespace(s);
+  if (!(s->eof) && !isspace(s->cur) && (s->cur != '#'))
+    {
+      *buf = s->cur;
+      pnmscanner_getchar(s);
+    }
 }
 
 /* pnmscanner_getchar ---
