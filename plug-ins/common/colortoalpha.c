@@ -167,7 +167,7 @@ run (gchar      *name,
       break;
  
     case GIMP_RUN_NONINTERACTIVE:
-      if (nparams != 3)
+      if (nparams != 4)
 	status = GIMP_PDB_CALLING_ERROR;
 
       if (status == GIMP_PDB_SUCCESS)

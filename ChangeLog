@@ -1,3 +1,9 @@
+2001-08-11  Seth Burgess      <sjburges@gimp.org>
+	
+	* plug-ins/common/colortoalpha.c: set nparams != 4 for 
+	non-interactive execution.  Thanks to alex@foogod.com for
+	this fix.
+
 2001-08-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/Makefile.am
@@ -25,7 +31,7 @@
 	* app/widgets/gimpdnd.[ch]: make it DND-able.
 
 	* app/widgets/gimppreview.c: fix  preview rendering correctly this
-	itme.
+	time.
 
 2001-08-10  Sven Neumann  <sven@gimp.org>
 
