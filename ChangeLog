@@ -1,3 +1,9 @@
+2003-07-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimppaintcore-stroke.c
+	(gimp_paint_core_stroke_vectors): honor the destination drawable's
+	offsets and stroke multi-stroke vectors correctly.
+
 2003-07-24  Sven Neumann  <sven@gimp.org>
 
 	* app/config/Makefile.am
