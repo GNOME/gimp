@@ -33,7 +33,6 @@ struct _PatternSelect
 
 
 PatternSelect * pattern_select_new             (Gimp          *gimp,
-                                                GimpContext   *context,
                                                 const gchar   *title,
                                                 const gchar   *initial_pattern,
                                                 const gchar   *callback_name);

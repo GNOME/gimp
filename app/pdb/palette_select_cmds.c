@@ -73,14 +73,9 @@ palettes_popup_invoker (Gimp     *gimp,
       if (! gimp->no_interface &&
 	  (proc = procedural_db_lookup (gimp, palette_callback)))
 	{
-	  if (initial_palette && strlen (initial_palette))
-	    palette_select_new (gimp, NULL, popup_title,
-				initial_palette,
-				palette_callback);
-	  else
-	    palette_select_new (gimp, NULL, popup_title,
-				NULL,
-				palette_callback);
+	  palette_select_new (gimp, popup_title,
+			      initial_palette,
+			      palette_callback);
 	}
       else
 	{

@@ -73,14 +73,9 @@ patterns_popup_invoker (Gimp     *gimp,
       if (! gimp->no_interface &&
 	  (proc = procedural_db_lookup (gimp, pattern_callback)))
 	{
-	  if (initial_pattern && strlen (initial_pattern))
-	    pattern_select_new (gimp, NULL, popup_title,
-				initial_pattern,
-				pattern_callback);
-	  else
-	    pattern_select_new (gimp, NULL, popup_title,
-				NULL,
-				pattern_callback);
+	  pattern_select_new (gimp, popup_title,
+			      initial_pattern,
+			      pattern_callback);
 	}
       else
 	{

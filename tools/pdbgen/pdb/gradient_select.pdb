@@ -57,16 +57,10 @@ sub gradients_popup {
   if (! gimp->no_interface &&
       (proc = procedural_db_lookup (gimp, gradient_callback)))
     {
-      if (initial_gradient && strlen (initial_gradient))
-	gradient_select_new (gimp, NULL, popup_title,
-                             initial_gradient,
-                             gradient_callback,
-                             sample_size);
-      else
-	gradient_select_new (gimp, NULL, popup_title,
-                             NULL,
-                             gradient_callback,
-                             sample_size);
+      gradient_select_new (gimp, popup_title,
+                           initial_gradient,
+                           gradient_callback,
+                           sample_size);
     }
   else
     {

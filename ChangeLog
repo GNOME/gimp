@@ -1,5 +1,33 @@
 2002-11-18  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpdialog.c: removed the "feature" of creating
+	dialogs without action area by passing "_delete_event_" as button
+	text. Also changed the delete_event() implementation: don't
+	remember a callback and call it manually but gtk_widget_activate()
+	the button for which "connect_delete" was passed as TRUE.
+
+	* app/gui/test-commands.c: added a "Close" button to the multi view.
+
+	* app/gui/brush-select.[ch]
+	* app/gui/gradient-select.[ch]
+	* app/gui/palette-select.[ch]
+	* app/gui/pattern-select.[ch]: ditto. Removed the "context"
+	parameter of the *_select_new() functions. All sorts of cleanups
+	in all dialogs.
+
+	* app/gui/convert-dialog.c
+	* tools/pdbgen/pdb/brush_select.pdb
+	* tools/pdbgen/pdb/gradient_select.pdb
+	* tools/pdbgen/pdb/palette_select.pdb
+	* tools/pdbgen/pdb/pattern_select.pdb: changed accordingly.
+
+	* app/pdb/brush_select_cmds.c
+	* app/pdb/gradient_select_cmds.c
+	* app/pdb/palette_select_cmds.c
+	* app/pdb/pattern_select_cmds.c: regenerated.
+
+2002-11-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimprotatetool.c (roatate_angle_changed): compare the
 	old and new angle using an epsilon of 0.0001 degrees so we don't
 	get double "angle changed" because of rounding foobar.

@@ -63,7 +63,6 @@ static GSList *gradient_active_dialogs = NULL;
 
 GradientSelect *
 gradient_select_new (Gimp        *gimp,
-                     GimpContext *context,
                      const gchar *title,
 		     const gchar *initial_gradient,
                      const gchar *callback_name,
@@ -72,16 +71,19 @@ gradient_select_new (Gimp        *gimp,
   GradientSelect *gsp;
   GimpGradient   *active = NULL;
 
-  static gboolean  first_call = TRUE;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (! context || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (title != NULL, NULL);
 
-  if (gimp->no_data && first_call)
-    gimp_data_factory_data_init (gimp->gradient_factory, FALSE);
+  if (gimp->no_data)
+    {
+      static gboolean first_call = TRUE;
 
-  first_call = FALSE;
+      if (first_call)
+        gimp_data_factory_data_init (gimp->gradient_factory, FALSE);
+
+      first_call = FALSE;
+    }
 
   if (initial_gradient && strlen (initial_gradient))
     {
@@ -101,39 +103,27 @@ gradient_select_new (Gimp        *gimp,
   /*  Add to active gradient dialogs list  */
   gradient_active_dialogs = g_slist_append (gradient_active_dialogs, gsp);
 
-  gsp->context       = gimp_context_new (gimp, title, context);
+  gsp->context       = gimp_context_new (gimp, title, NULL);
   gsp->callback_name = g_strdup (callback_name);
   gsp->sample_size   = sample_size;
-  
-  if (context)
-    {
-      gimp_context_define_properties (gsp->context,
-                                      GIMP_CONTEXT_GRADIENT_MASK,
-                                      FALSE);
-      gimp_context_set_parent (gsp->context, context);
-    }
 
   gimp_context_set_gradient (gsp->context, active);
 
   g_signal_connect (G_OBJECT (gsp->context), "gradient_changed",
                     G_CALLBACK (gradient_select_gradient_changed),
-                    (gpointer) gsp);
+                    gsp);
 
   /*  the shell  */
-  gsp->shell = gimp_dialog_new (title ? title : _("Gradient Selection"),
-				"gradient_selection",
+  gsp->shell = gimp_dialog_new (title, "gradient_selection",
 				gimp_standard_help_func,
 				"dialogs/gradient_selection.html",
-				title ? GTK_WIN_POS_MOUSE : GTK_WIN_POS_NONE,
+				GTK_WIN_POS_MOUSE,
 				FALSE, TRUE, FALSE,
 
-				"_delete_event_", gradient_select_close_callback,
-				gsp, NULL, NULL, FALSE, TRUE,
+				GTK_STOCK_CLOSE, gradient_select_close_callback,
+				gsp, NULL, NULL, TRUE, TRUE,
 
 				NULL);
-
-  gtk_dialog_set_has_separator (GTK_DIALOG (gsp->shell), FALSE);
-  gtk_widget_hide (GTK_DIALOG (gsp->shell)->action_area);
 
   /*  the gradient list  */
   gsp->view =
@@ -141,11 +131,11 @@ gradient_select_new (Gimp        *gimp,
                                 gsp->context->gimp->gradient_factory,
                                 dialogs_edit_gradient_func,
                                 gsp->context,
-                                16,
-                                10, 10,
+                                GIMP_PREVIEW_SIZE_EXTRA_SMALL,
+                                6, 6,
                                 gimp_item_factory_from_path ("<Gradients>"));
 
-  gtk_container_set_border_width (GTK_CONTAINER (gsp->view), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (gsp->view), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (gsp->shell)->vbox), gsp->view);
   gtk_widget_show (gsp->view);
 
@@ -195,7 +185,6 @@ gradient_select_dialogs_check (void)
 {
   GradientSelect *gsp;
   GSList         *list;
-  ProcRecord     *proc = NULL;
 
   list = gradient_active_dialogs;
 
@@ -207,9 +196,7 @@ gradient_select_dialogs_check (void)
 
       if (gsp->callback_name)
         {
-          proc = procedural_db_lookup (gsp->context->gimp, gsp->callback_name);
-
-          if (! proc)
+          if (! procedural_db_lookup (gsp->context->gimp, gsp->callback_name))
             gradient_select_close_callback (NULL, gsp); 
         }
     }
@@ -228,7 +215,6 @@ gradient_select_change_callbacks (GradientSelect *gsp,
   gint          nreturn_vals;
 
   static gboolean  busy = FALSE;
-
 
   if (! (gsp && gsp->callback_name) || busy)
     return;
@@ -293,9 +279,7 @@ gradient_select_gradient_changed (GimpContext    *context,
 				  GradientSelect *gsp)
 {
   if (gradient)
-    {
-      gradient_select_change_callbacks (gsp, FALSE);
-    }
+    gradient_select_change_callbacks (gsp, FALSE);
 }
 
 static void

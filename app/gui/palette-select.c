@@ -67,7 +67,6 @@ static GSList *palette_active_dialogs = NULL;
 
 PaletteSelect *
 palette_select_new (Gimp        *gimp,
-                    GimpContext *context,
                     const gchar *title,
 		    const gchar *initial_palette,
                     const gchar *callback_name)
@@ -75,26 +74,24 @@ palette_select_new (Gimp        *gimp,
   PaletteSelect *psp;
   GimpPalette   *active = NULL;
 
-  static gboolean first_call = TRUE;
-
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (! context || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (title != NULL, NULL);
 
-  if (gimp->no_data && first_call)
-    gimp_data_factory_data_init (gimp->palette_factory, FALSE);
+  if (gimp->no_data)
+    {
+      static gboolean first_call = TRUE;
 
-  first_call = FALSE;
+      if (first_call)
+        gimp_data_factory_data_init (gimp->palette_factory, FALSE);
+
+      first_call = FALSE;
+    }
 
   if (initial_palette && strlen (initial_palette))
     {
       active = (GimpPalette *)
 	gimp_container_get_child_by_name (gimp->palette_factory->container,
 					  initial_palette);
-    }
-  else
-    {
-      active = gimp_context_get_palette (gimp_get_user_context (gimp));
     }
 
   if (! active)
@@ -110,14 +107,6 @@ palette_select_new (Gimp        *gimp,
 
   psp->context       = gimp_context_new (gimp, title, NULL);
   psp->callback_name = g_strdup (callback_name);
-  
-  if (context)
-    {
-      gimp_context_define_properties (psp->context,
-                                      GIMP_CONTEXT_PALETTE_MASK,
-                                      FALSE);
-      gimp_context_set_parent (psp->context, context);
-    }
 
   gimp_context_set_palette (psp->context, active);
 
@@ -132,13 +121,10 @@ palette_select_new (Gimp        *gimp,
 				GTK_WIN_POS_MOUSE,
 				FALSE, TRUE, FALSE,
 
-				"_delete_event_", palette_select_close_callback,
-				psp, NULL, NULL, FALSE, TRUE,
+				GTK_STOCK_CLOSE, palette_select_close_callback,
+				psp, NULL, NULL, TRUE, TRUE,
 
 				NULL);
-
-  gtk_dialog_set_has_separator (GTK_DIALOG (psp->shell), FALSE);
-  gtk_widget_hide (GTK_DIALOG (psp->shell)->action_area);
 
   /*  The Palette List  */
   psp->view =
@@ -150,7 +136,7 @@ palette_select_new (Gimp        *gimp,
                                 5, 3,
                                 gimp_item_factory_from_path ("<Palettes>"));
 
-  gtk_container_set_border_width (GTK_CONTAINER (psp->view), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (psp->view), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (psp->shell)->vbox), psp->view);
   gtk_widget_show (psp->view);
 
@@ -200,7 +186,6 @@ palette_select_dialogs_check (void)
 {
   PaletteSelect *psp;
   GSList        *list;
-  ProcRecord    *proc = NULL;
 
   list = palette_active_dialogs;
 
@@ -212,9 +197,7 @@ palette_select_dialogs_check (void)
 
       if (psp->callback_name)
         {        
-          proc = procedural_db_lookup (psp->context->gimp, psp->callback_name);
-
-          if (! proc)
+          if (!  procedural_db_lookup (psp->context->gimp, psp->callback_name))
             palette_select_close_callback (NULL, psp); 
         }
     }
@@ -250,9 +233,9 @@ palette_select_change_callbacks (PaletteSelect *psp,
 	procedural_db_run_proc (psp->context->gimp,
 				psp->callback_name,
 				&nreturn_vals,
-				GIMP_PDB_STRING,    GIMP_OBJECT (palette)->name,
-				GIMP_PDB_INT32,     palette->n_colors,
-				GIMP_PDB_INT32,     closing,
+				GIMP_PDB_STRING, GIMP_OBJECT (palette)->name,
+				GIMP_PDB_INT32,  palette->n_colors,
+				GIMP_PDB_INT32,  closing,
 				GIMP_PDB_END);
  
       if (!return_vals || return_vals[0].value.pdb_int != GIMP_PDB_SUCCESS)
@@ -272,9 +255,7 @@ palette_select_palette_changed (GimpContext   *context,
 				PaletteSelect *psp)
 {
   if (palette)
-    {
-      palette_select_change_callbacks (psp, FALSE);
-    }
+    palette_select_change_callbacks (psp, FALSE);
 }
 
 static void

@@ -36,7 +36,6 @@ struct _BrushSelect
 
 
 BrushSelect * brush_select_new             (Gimp                 *gimp,
-                                            GimpContext          *context,
                                             const gchar          *title,
                                             const gchar          *initial_brush,
                                             gdouble               initial_opacity, 

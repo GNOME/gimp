@@ -20,10 +20,6 @@
 #define __PALETTE_SELECT_H__
 
 
-#define SM_PREVIEW_WIDTH  (96 + 2)
-#define SM_PREVIEW_HEIGHT (33 + 2)
-
-
 typedef struct _PaletteSelect PaletteSelect;
 
 struct _PaletteSelect
@@ -37,7 +33,6 @@ struct _PaletteSelect
 
 
 PaletteSelect * palette_select_new             (Gimp          *gimp,
-                                                GimpContext   *context,
                                                 const gchar   *title,
                                                 const gchar   *initial_palette,
                                                 const gchar   *callback_name);

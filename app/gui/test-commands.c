@@ -155,7 +155,7 @@ container_multi_view_new (gboolean       list,
 				  view, NULL, NULL, FALSE, FALSE,
 				*/
 
-			    "_delete_event_", gtk_widget_destroy,
+			    GTK_STOCK_CLOSE, gtk_widget_destroy,
 			    NULL, 1, NULL, FALSE, TRUE,
 
 			    NULL);

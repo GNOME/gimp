@@ -91,20 +91,12 @@ brushes_popup_invoker (Gimp     *gimp,
       if (! gimp->no_interface &&
 	  (proc = procedural_db_lookup (gimp, brush_callback)))
 	{
-	  if (initial_brush && strlen (initial_brush))
-	    brush_select_new (gimp, NULL, popup_title,
-			      initial_brush,
-			      opacity / 100.0,
-			       paint_mode,
-			      spacing,
-			      brush_callback);
-	  else
-	    brush_select_new (gimp, NULL, popup_title,
-			      NULL,
-			      0.0,
-			      0, 
-			      0,
-			      brush_callback);
+	  brush_select_new (gimp, popup_title,
+			    initial_brush,
+			    opacity / 100.0,
+			     paint_mode,
+			    spacing,
+			    brush_callback);
 	}
       else
 	{

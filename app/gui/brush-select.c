@@ -43,14 +43,12 @@
 #include "brush-select.h"
 #include "dialogs-constructors.h"
 
-#include "gimprc.h"
-
 #include "libgimp/gimpintl.h"
 
 
-#define MIN_CELL_SIZE     25
-#define STD_BRUSH_COLUMNS  5
-#define STD_BRUSH_ROWS     5
+#define MIN_CELL_SIZE     GIMP_PREVIEW_SIZE_EXTRA_SMALL
+#define STD_BRUSH_COLUMNS 5
+#define STD_BRUSH_ROWS    5
 
 
 /*  local function prototypes  */
@@ -87,7 +85,6 @@ static GSList *brush_active_dialogs = NULL;
 
 BrushSelect *
 brush_select_new (Gimp                 *gimp,
-                  GimpContext          *context,
                   const gchar          *title,
 		  const gchar          *initial_brush,
 		  gdouble               initial_opacity,
@@ -96,22 +93,22 @@ brush_select_new (Gimp                 *gimp,
                   const gchar          *callback_name)
 {
   BrushSelect   *bsp;
-  GtkWidget     *sep;
   GtkWidget     *table;
-  GtkWidget     *slider;
   GtkAdjustment *spacing_adj;
   GimpBrush     *active = NULL;
 
-  static gboolean first_call = TRUE;
-
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (! context || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (title != NULL, NULL);
 
-  if (gimp->no_data && first_call)
-    gimp_data_factory_data_init (gimp->brush_factory, FALSE);
+  if (gimp->no_data)
+    {
+      static gboolean first_call = TRUE;
 
-  first_call = FALSE;
+      if (first_call)
+        gimp_data_factory_data_init (gimp->brush_factory, FALSE);
+
+      first_call = FALSE;
+    }
 
   if (initial_brush && strlen (initial_brush))
     {
@@ -121,12 +118,7 @@ brush_select_new (Gimp                 *gimp,
     }
 
   if (! active)
-    {
-      if (context)
-        active = gimp_context_get_brush (context);
-      else
-        active = gimp_context_get_brush (gimp_get_current_context (gimp));
-    }
+    active = gimp_context_get_brush (gimp_get_current_context (gimp));
 
   if (! active)
     return NULL;
@@ -136,18 +128,8 @@ brush_select_new (Gimp                 *gimp,
   /*  Add to active brush dialogs list  */
   brush_active_dialogs = g_slist_append (brush_active_dialogs, bsp);
 
-  bsp->context       = gimp_context_new (gimp, title, context);
+  bsp->context       = gimp_context_new (gimp, title, NULL);
   bsp->callback_name = g_strdup (callback_name);
-
-  if (context)
-    {
-      gimp_context_define_properties (bsp->context,
-                                      GIMP_CONTEXT_OPACITY_MASK    |
-                                      GIMP_CONTEXT_PAINT_MODE_MASK |
-                                      GIMP_CONTEXT_BRUSH_MASK,
-                                      FALSE);
-      gimp_context_set_parent (bsp->context, context);
-    }
 
   gimp_context_set_brush (bsp->context, active);
   gimp_context_set_paint_mode (bsp->context, initial_mode);
@@ -171,13 +153,10 @@ brush_select_new (Gimp                 *gimp,
 				GTK_WIN_POS_MOUSE,
 				FALSE, TRUE, FALSE,
 
-				"_delete_event_", brush_select_close_callback,
+				GTK_STOCK_CLOSE, brush_select_close_callback,
 				bsp, NULL, NULL, TRUE, TRUE,
 
 				NULL);
-
-  gtk_dialog_set_has_separator (GTK_DIALOG (bsp->shell), FALSE);
-  gtk_widget_hide (GTK_DIALOG (bsp->shell)->action_area);
 
   /*  The Brush Grid  */
   bsp->view =
@@ -185,37 +164,33 @@ brush_select_new (Gimp                 *gimp,
                                  gimp->brush_factory,
                                  dialogs_edit_brush_func,
                                  bsp->context,
-                                 title ? FALSE : TRUE,
+                                 FALSE,
                                  MIN_CELL_SIZE,
                                  STD_BRUSH_COLUMNS,
                                  STD_BRUSH_ROWS,
                                  gimp_item_factory_from_path ("<Brushes>"));
 
-  gtk_container_set_border_width (GTK_CONTAINER (bsp->view), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (bsp->view), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (bsp->shell)->vbox), bsp->view);
   gtk_widget_show (bsp->view);
 
   /*  Create the frame and the table for the options  */
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
+  table = GIMP_BRUSH_FACTORY_VIEW (bsp->view)->spacing_scale->parent;
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (bsp->view), table, FALSE, FALSE, 2);
-  gtk_widget_show (table);
 
   /*  Create the opacity scale widget  */
   bsp->opacity_data = 
-    GTK_ADJUSTMENT (gtk_adjustment_new
-		    (gimp_context_get_opacity (bsp->context) * 100.0,
-		     0.0, 100.0, 1.0, 1.0, 0.0));
-  slider = gtk_hscale_new (bsp->opacity_data);
-  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+    GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+                                          _("Opacity:"), -1, 5,
+                                          gimp_context_get_opacity (bsp->context) * 100.0,
+                                          0.0, 100.0, 1.0, 10.0, 1,
+                                          TRUE, 0.0, 0.0,
+                                          NULL, NULL));
+
   g_signal_connect (G_OBJECT (bsp->opacity_data), "value_changed",
                     G_CALLBACK (opacity_scale_update),
                     bsp);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Opacity:"), 1.0, 1.0,
-			     slider, 1, FALSE);
 
   /*  Create the paint mode option menu  */
   bsp->option_menu =
@@ -223,22 +198,15 @@ brush_select_new (Gimp                 *gimp,
 			      bsp,
 			      TRUE,
 			      gimp_context_get_paint_mode (bsp->context));
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Mode:"), 1.0, 0.5,
-			     bsp->option_menu, 1, TRUE);
-
-  /*  A separator after the paint options  */
-  sep = gtk_hseparator_new ();
-  gtk_box_pack_start (GTK_BOX (bsp->view), sep, FALSE, FALSE, 0);
-  gtk_widget_show (sep);
+			     bsp->option_menu, 2, TRUE);
 
   spacing_adj = GIMP_BRUSH_FACTORY_VIEW (bsp->view)->spacing_adjustment;
 
+  /*  Use passed spacing instead of brushes default  */
   if (initial_spacing >= 0)
-    {
-      /*  Use passed spacing instead of brushes default  */
-      gtk_adjustment_set_value (spacing_adj, initial_spacing);
-    }
+    gtk_adjustment_set_value (spacing_adj, initial_spacing);
 
   g_signal_connect (G_OBJECT (spacing_adj), "value_changed",
                     G_CALLBACK (spacing_scale_update),
@@ -292,7 +260,6 @@ brush_select_dialogs_check (void)
 {
   BrushSelect *bsp;
   GSList      *list;
-  ProcRecord  *proc = NULL;
 
   list = brush_active_dialogs;
 
@@ -304,9 +271,7 @@ brush_select_dialogs_check (void)
 
       if (bsp->callback_name)
         {
-          proc = procedural_db_lookup (bsp->context->gimp, bsp->callback_name);
-
-          if (! proc)
+          if (! procedural_db_lookup (bsp->context->gimp, bsp->callback_name))
             brush_select_close_callback (NULL, bsp);
         }
     }
@@ -351,7 +316,7 @@ brush_select_change_callbacks (BrushSelect *bsp,
 				GIMP_PDB_INT32,     (brush->mask->width *
 						     brush->mask->height),
 				GIMP_PDB_INT8ARRAY, temp_buf_data (brush->mask),
-				GIMP_PDB_INT32,     (gint) closing,
+				GIMP_PDB_INT32,     closing,
 				GIMP_PDB_END);
  
       if (!return_vals || return_vals[0].value.pdb_int != GIMP_PDB_SUCCESS)
@@ -371,9 +336,7 @@ brush_select_brush_changed (GimpContext *context,
 			    BrushSelect *bsp)
 {
   if (brush)
-    {
-      brush_select_change_callbacks (bsp, FALSE);
-    }
+    brush_select_change_callbacks (bsp, FALSE);
 }
 
 static void

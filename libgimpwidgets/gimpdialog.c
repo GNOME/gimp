@@ -32,15 +32,11 @@
 #include "gimphelpui.h"
 
 
-typedef void (* GimpDialogCancelCallback) (GtkWidget *widget,
-					   gpointer   data);
+static void       gimp_dialog_class_init   (GimpDialogClass *klass);
+static void       gimp_dialog_init         (GimpDialog      *dialog);
 
-
-static void       gimp_dialog_class_init   (GimpDialogClass  *klass);
-static void       gimp_dialog_init         (GimpDialog       *dialog);
-
-static gboolean   gimp_dialog_delete_event (GtkWidget        *widget,
-                                            GdkEventAny      *event);
+static gboolean   gimp_dialog_delete_event (GtkWidget       *widget,
+                                            GdkEventAny     *event);
 
 
 static GtkDialogClass *parent_class = NULL;
@@ -95,24 +91,13 @@ static gboolean
 gimp_dialog_delete_event (GtkWidget   *widget,
                           GdkEventAny *event)
 {
-  GimpDialogCancelCallback  cancel_callback;
-  GtkWidget                *cancel_widget;
-  gpointer                  cancel_data;
-
-  cancel_callback = (GimpDialogCancelCallback)
-    g_object_get_data (G_OBJECT (widget), "gimp_dialog_cancel_callback");
+  GtkWidget *cancel_widget;
 
   cancel_widget = (GtkWidget *)
-    g_object_get_data (G_OBJECT (widget), "gimp_dialog_cancel_widget");
+    g_object_get_data (G_OBJECT (widget), "gimp-dialog-cancel-button");
 
-  cancel_data =
-    g_object_get_data (G_OBJECT (widget), "gimp_dialog_cancel_data");
-
-  /*  the cancel callback has to destroy the dialog  */
-  if (cancel_callback)
-    {
-      cancel_callback (cancel_widget, cancel_data);
-    }
+  if (GTK_IS_WIDGET (cancel_widget))
+    gtk_widget_activate (cancel_widget);
 
   return TRUE;
 }
@@ -314,10 +299,8 @@ gimp_dialog_create_action_areav (GimpDialog *dialog,
 
   g_return_if_fail (GIMP_IS_DIALOG (dialog));
 
-  label = va_arg (args, const gchar *);
-
   /*  the action_area buttons  */
-  while (label)
+  while ((label = va_arg (args, const gchar *)))
     {
       callback       = va_arg (args, GCallback);
       callback_data  = va_arg (args, gpointer);
@@ -332,66 +315,33 @@ gimp_dialog_create_action_areav (GimpDialog *dialog,
       if (callback_data == NULL)
 	callback_data = dialog;
 
-      /*
-       * Dont create a button if the label is "_delete_event_" --
-       * some dialogs just need to connect to the delete_event from
-       * the window...
-       */
-      if (connect_delete &&
-	  callback &&
-	  ! delete_connected &&
-	  strcmp (label, "_delete_event_") == 0)
+      button = gtk_dialog_add_button (GTK_DIALOG (dialog), label,
+                                      GTK_RESPONSE_NONE);
+
+      if (callback)
         {
-	  if (widget_ptr)
-	    *widget_ptr = GTK_WIDGET (dialog);
+          if (slot_object)
+            g_signal_connect_swapped (G_OBJECT (button), "clicked",
+                                      G_CALLBACK (callback),
+                                      slot_object);
+          else
+            g_signal_connect (G_OBJECT (button), "clicked",
+                              G_CALLBACK (callback),
+                              callback_data);
+        }
 
-	  g_object_set_data (G_OBJECT (dialog), "gimp_dialog_cancel_callback",
-			     callback);
-	  g_object_set_data (G_OBJECT (dialog), "gimp_dialog_cancel_widget",
-			     slot_object ? slot_object : G_OBJECT (dialog));
-	  g_object_set_data (G_OBJECT (dialog), "gimp_dialog_cancel_data",
-			     callback_data);
+      if (widget_ptr)
+        *widget_ptr = button;
 
-	  delete_connected = TRUE;
-	}
-
-      /* otherwise just create the requested button. */
-      else
+      if (connect_delete && callback && ! delete_connected)
         {
-	  button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-                                          label, GTK_RESPONSE_NONE);
+          g_object_set_data (G_OBJECT (dialog), "gimp-dialog-cancel-button",
+                             button);
 
-	  if (callback)
-	    {
-	      if (slot_object)
-		g_signal_connect_swapped (G_OBJECT (button), "clicked",
-					  G_CALLBACK (callback),
-					  slot_object);
-	      else
-		g_signal_connect (G_OBJECT (button), "clicked",
-				  G_CALLBACK (callback),
-				  callback_data);
-	    }
+          delete_connected = TRUE;
+        }
 
-	  if (widget_ptr)
-	    *widget_ptr = button;
-
-	  if (connect_delete && callback && ! delete_connected)
-	    {
-	      g_object_set_data (G_OBJECT (dialog), "gimp_dialog_cancel_callback",
-				 callback);
-	      g_object_set_data (G_OBJECT (dialog), "gimp_dialog_cancel_widget",
-				 slot_object ? slot_object : G_OBJECT (button));
-              g_object_set_data (G_OBJECT (dialog), "gimp_dialog_cancel_data",
-                                 callback_data);
-
-	      delete_connected = TRUE;
-	    }
-
-	  if (default_action)
-	    gtk_widget_grab_default (button);
-	}
-
-      label = va_arg (args, gchar *);
+      if (default_action)
+        gtk_widget_grab_default (button);
     }
 }

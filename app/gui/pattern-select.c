@@ -44,20 +44,20 @@
 #include "libgimp/gimpintl.h"
 
 
-#define MIN_CELL_SIZE       32
-#define STD_PATTERN_COLUMNS  6
-#define STD_PATTERN_ROWS     5 
+#define MIN_CELL_SIZE       GIMP_PREVIEW_SIZE_SMALL
+#define STD_PATTERN_COLUMNS 5
+#define STD_PATTERN_ROWS    5 
 
 
 /*  local function prototypes  */
 
-static void  pattern_select_change_callbacks (PatternSelect *psp,
-                                              gboolean       closing);
-static void  pattern_select_pattern_changed  (GimpContext   *context,
-                                              GimpPattern   *pattern,
-                                              PatternSelect *psp);
-static void  pattern_select_close_callback   (GtkWidget     *widget,
-                                              PatternSelect *psp);
+static void   pattern_select_change_callbacks (PatternSelect *psp,
+                                               gboolean       closing);
+static void   pattern_select_pattern_changed  (GimpContext   *context,
+                                               GimpPattern   *pattern,
+                                               PatternSelect *psp);
+static void   pattern_select_close_callback   (GtkWidget     *widget,
+                                               PatternSelect *psp);
 
 
 /*  List of active dialogs  */
@@ -68,7 +68,6 @@ static GSList *pattern_active_dialogs = NULL;
 
 PatternSelect *
 pattern_select_new (Gimp        *gimp,
-                    GimpContext *context,
                     const gchar *title,
 		    const gchar *initial_pattern,
                     const gchar *callback_name)
@@ -76,16 +75,18 @@ pattern_select_new (Gimp        *gimp,
   PatternSelect *psp;
   GimpPattern   *active = NULL;
 
-  static gboolean first_call = TRUE;
-
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (! context || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (title != NULL, NULL);
 
-  if (gimp->no_data && first_call)
-    gimp_data_factory_data_init (gimp->pattern_factory, FALSE);
+  if (gimp->no_data)
+    {
+      static gboolean first_call = TRUE;
 
-  first_call = FALSE;
+      if (first_call)
+        gimp_data_factory_data_init (gimp->pattern_factory, FALSE);
+
+      first_call = FALSE;
+    }
 
   if (initial_pattern && strlen (initial_pattern))
     {
@@ -108,14 +109,6 @@ pattern_select_new (Gimp        *gimp,
   psp->context       = gimp_context_new (gimp, title, NULL);
   psp->callback_name = g_strdup (callback_name);
 
-  if (context)
-    {
-      gimp_context_define_properties (psp->context,
-                                      GIMP_CONTEXT_BRUSH_MASK,
-                                      FALSE);
-      gimp_context_set_parent (psp->context, context);
-    }
-
   gimp_context_set_pattern (psp->context, active);
 
   g_signal_connect (G_OBJECT (psp->context), "pattern_changed",
@@ -129,13 +122,10 @@ pattern_select_new (Gimp        *gimp,
                                 GTK_WIN_POS_MOUSE,
                                 FALSE, TRUE, FALSE,
 
-                                "_delete_event_", pattern_select_close_callback,
+                                GTK_STOCK_CLOSE, pattern_select_close_callback,
                                 psp, NULL, NULL, TRUE, TRUE,
 
                                 NULL);
-
-  gtk_dialog_set_has_separator (GTK_DIALOG (psp->shell), FALSE);
-  gtk_widget_hide (GTK_DIALOG (psp->shell)->action_area);
 
   /*  the pattern grid  */
   psp->view =
@@ -148,7 +138,7 @@ pattern_select_new (Gimp        *gimp,
                                 STD_PATTERN_ROWS,
                                 gimp_item_factory_from_path ("<Patterns>"));
 
-  gtk_container_set_border_width (GTK_CONTAINER (psp->view), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (psp->view), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (psp->shell)->vbox), psp->view);
   gtk_widget_show (psp->view);
 
@@ -198,7 +188,6 @@ pattern_select_dialogs_check (void)
 {
   PatternSelect *psp;
   GSList        *list;
-  ProcRecord    *proc = NULL;
 
   list = pattern_active_dialogs;
 
@@ -210,9 +199,7 @@ pattern_select_dialogs_check (void)
 
       if (psp->callback_name)
         {        
-          proc = procedural_db_lookup (psp->context->gimp, psp->callback_name);
-
-          if (! proc)
+          if (! procedural_db_lookup (psp->context->gimp, psp->callback_name))
             pattern_select_close_callback (NULL, psp); 
         }
     }
@@ -256,7 +243,7 @@ pattern_select_change_callbacks (PatternSelect *psp,
                                                      pattern->mask->height *
                                                      pattern->mask->width),
 				GIMP_PDB_INT8ARRAY, temp_buf_data (pattern->mask),
-				GIMP_PDB_INT32,     (gint) closing,
+				GIMP_PDB_INT32,     closing,
 				GIMP_PDB_END);
  
       if (!return_vals || return_vals[0].value.pdb_int != GIMP_PDB_SUCCESS)
@@ -276,9 +263,7 @@ pattern_select_pattern_changed (GimpContext   *context,
 				PatternSelect *psp)
 {
   if (pattern)
-    {
-      pattern_select_change_callbacks (psp, FALSE);
-    }
+    pattern_select_change_callbacks (psp, FALSE);
 }
 
 static void
