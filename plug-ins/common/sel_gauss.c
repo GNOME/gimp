@@ -138,6 +138,7 @@ run (const gchar      *name,
 
   /* Get the specified drawable */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
+  gimp_tile_cache_ntiles (2 * drawable->ntile_cols);
 
   switch (run_mode)
     {

@@ -204,6 +204,7 @@ run (const gchar      *name,
 
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
+  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
   if (gimp_drawable_is_gray (drawable->drawable_id))
     nvals.noise[1] = 0.0;
@@ -282,7 +283,6 @@ run (const gchar      *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       gimp_progress_init (_("Adding Noise..."));
-      gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
       /*  compute the luminosity which exceeds the luminosity threshold  */
       gimp_rgn_iterate2 (drawable, 0 /* unused */, noisify_func, noise_gr);

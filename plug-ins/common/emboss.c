@@ -155,6 +155,8 @@ run (const gchar      *name,
   INIT_I18N ();
 
   drawable = gimp_drawable_get (param[2].data.d_drawable);
+  gimp_tile_cache_ntiles (drawable->ntile_cols);
+
 
   rvals[0].type = GIMP_PDB_STATUS;
   rvals[0].data.d_status = GIMP_PDB_SUCCESS;
@@ -372,8 +374,6 @@ emboss (GimpDrawable *drawable,
   EmbossInit (DtoR(evals.azimuth), DtoR(evals.elevation), evals.depth);
   if (!preview)
     gimp_progress_init (_("Emboss"));
-
-  gimp_tile_cache_ntiles ((width + gimp_tile_width () - 1) / gimp_tile_width ());
 
   /* first row */
   gimp_pixel_rgn_get_rect (&src, srcbuf, x1, y1, width, 3);

@@ -150,6 +150,8 @@ run (const gchar      *name,
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
+  gimp_tile_cache_ntiles (2 * drawable->ntile_cols);
+
   switch (run_mode)
    {
     case GIMP_RUN_INTERACTIVE:
@@ -188,7 +190,6 @@ run (const gchar      *name,
   if (gimp_drawable_is_rgb (drawable->drawable_id) ||
       gimp_drawable_is_gray (drawable->drawable_id))
     {
-      gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
       sobel (drawable,
              bvals.horizontal, bvals.vertical, bvals.keep_sign,
              NULL);

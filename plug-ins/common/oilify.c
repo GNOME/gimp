@@ -135,6 +135,7 @@ run (const gchar      *name,
 
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
+  gimp_tile_cache_ntiles (2 * drawable->ntile_cols);
 
   *nreturn_vals = 2;
   *return_vals  = values;
@@ -186,7 +187,6 @@ run (const gchar      *name,
        gimp_drawable_is_gray (drawable->drawable_id)))
     {
       gimp_progress_init (_("Oil Painting..."));
-      gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 
       oilify (drawable, NULL);
 

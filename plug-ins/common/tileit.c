@@ -256,6 +256,8 @@ run (const gchar      *name,
 
   tileitdrawable = drawable = gimp_drawable_get (param[2].data.d_drawable);
 
+  gimp_tile_cache_ntiles (drawable->ntile_cols + 1);
+
   has_alpha = gimp_drawable_has_alpha (tileitdrawable->drawable_id);
 
   gimp_drawable_mask_bounds (drawable->drawable_id,
@@ -314,9 +316,6 @@ run (const gchar      *name,
       gimp_drawable_is_gray (drawable->drawable_id))
     {
       /* Set the tile cache size */
-
-      gimp_tile_cache_ntiles ((drawable->width + gimp_tile_width () - 1) /
-                              gimp_tile_width ());
 
       gimp_progress_init (_("Tiling..."));
 

@@ -126,6 +126,9 @@ run (const gchar      *name,
   image_ID = param[1].data.d_image;
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
+  /*  set the tile cache size  */
+  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
+
   *nreturn_vals = 1;
   *return_vals  = values;
 
@@ -178,8 +181,6 @@ run (const gchar      *name,
         {
           gimp_progress_init (_("Spreading..."));
 
-          /*  set the tile cache size  */
-          gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
           /*  run the spread effect  */
           spread (drawable);

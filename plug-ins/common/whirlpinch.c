@@ -201,6 +201,9 @@ run (const gchar      *name,
   gimp_drawable_mask_bounds (drawable->drawable_id,
                              &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
+      /* Set the tile cache size */
+  gimp_tile_cache_ntiles (2 * drawable->ntile_cols);
+
   /* Calculate scaling parameters */
 
   sel_width  = sel_x2 - sel_x1;
@@ -273,9 +276,6 @@ run (const gchar      *name,
       (gimp_drawable_is_rgb (drawable->drawable_id) ||
        gimp_drawable_is_gray (drawable->drawable_id)))
     {
-      /* Set the tile cache size */
-      gimp_tile_cache_ntiles (2 * (drawable->width + gimp_tile_width () - 1) /
-                              gimp_tile_width ());
 
       /* Run! */
       whirl_pinch (drawable);

@@ -271,6 +271,12 @@ run (const gchar      *name,
   image_ID = param[1].data.d_image;
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
+  /*  set the tile cache size so that the gaussian blur works well  */
+  gimp_tile_cache_ntiles (2 *
+                          (MAX (drawable->width, drawable->height) /
+                           gimp_tile_width () + 1));
+
+
   if (strcmp (name, "plug_in_gauss") == 0)
     {
       switch (run_mode)
@@ -405,11 +411,6 @@ run (const gchar      *name,
           gimp_drawable_is_gray (drawable->drawable_id))
         {
           gimp_progress_init (_("Gaussian Blur..."));
-
-          /*  set the tile cache size so that the gaussian blur works well  */
-          gimp_tile_cache_ntiles (2 *
-                                  (MAX (drawable->width, drawable->height) /
-                                  gimp_tile_width () + 1));
 
           /*  run the gaussian blur  */
           gauss (drawable,

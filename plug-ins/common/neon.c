@@ -158,6 +158,9 @@ run (const gchar      *name,
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
+  /*  set the tile cache size so that the gaussian blur works well  */
+  gimp_tile_cache_ntiles (2 * (MAX (drawable->ntile_rows, drawable->ntile_cols)));
+
   *nreturn_vals = 1;
   *return_vals  = values;
 
@@ -202,10 +205,6 @@ run (const gchar      *name,
       gimp_drawable_is_gray (drawable->drawable_id))
     {
       gimp_progress_init (_("Neon..."));
-
-      /*  set the tile cache size so that the gaussian blur works well  */
-      gimp_tile_cache_ntiles (2 * (MAX (drawable->width, drawable->height) /
-                                   gimp_tile_width () + 1));
 
       /*  run the neon effect  */
       neon (drawable, evals.radius, evals.amount, NULL);

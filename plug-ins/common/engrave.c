@@ -138,6 +138,7 @@ run (const gchar      *name,
 
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
+  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
   switch (run_mode)
     {
@@ -179,7 +180,6 @@ run (const gchar      *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       gimp_progress_init (_("Engraving..."));
-      gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
       engrave (drawable, NULL);
 

@@ -187,6 +187,10 @@ run (const gchar      *name,
   /*  get the active drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
+  /*  set cache size  */
+  /* asking for a lot here but seems to give a speedup -- WES 12-23-04 */
+  gimp_tile_cache_ntiles (2 * drawable->ntile_rows * drawable->ntile_cols);
+
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
@@ -227,8 +231,6 @@ run (const gchar      *name,
       (gimp_drawable_is_rgb (drawable->drawable_id) ||
        gimp_drawable_is_gray (drawable->drawable_id)))
     {
-      /*  set cache size  */
-      gimp_tile_cache_ntiles (SQR (4 * cvals.tile_size * cvals.tile_saturation) / SQR (gimp_tile_width ()));
 
       cubism (drawable, NULL);
 

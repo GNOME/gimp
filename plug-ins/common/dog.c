@@ -172,6 +172,11 @@ run (const gchar      *name,
   image_ID = param[1].data.d_image;
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
+  /*  set the tile cache size so that the gaussian blur works well  */
+  gimp_tile_cache_ntiles (2 *
+                          (MAX (drawable->width, drawable->height) /
+                           gimp_tile_width () + 1));
+
   if (strcmp (name, "plug_in_dog") == 0)
     {
       switch (run_mode)
@@ -221,10 +226,6 @@ run (const gchar      *name,
         {
           gimp_progress_init (_("DoG Edge Detect"));
 
-          /*  set the tile cache size so that the gaussian blur works well  */
-          gimp_tile_cache_ntiles (2 *
-                                  (MAX (drawable->width, drawable->height) /
-                                  gimp_tile_width () + 1));
 
           /*  run the Difference of Gaussians  */
           gimp_image_undo_group_start (image_ID);

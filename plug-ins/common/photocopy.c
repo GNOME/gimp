@@ -181,6 +181,9 @@ run (const gchar      *name,
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
+  /*  set the tile cache size  */
+  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
+
   *nreturn_vals = 1;
   *return_vals  = values;
 
@@ -223,9 +226,6 @@ run (const gchar      *name,
           gimp_drawable_is_gray (drawable->drawable_id))
         {
           gimp_progress_init ("Photocopy...");
-
-          /*  set the tile cache size  */
-          gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
           photocopy (drawable, NULL);
 
