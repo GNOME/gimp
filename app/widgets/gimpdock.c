@@ -43,8 +43,8 @@
 #include "gimp-intl.h"
 
 
-#define DEFAULT_SEPARATOR_HEIGHT 6
-
+#define DEFAULT_DOCK_HEIGHT       300
+#define DEFAULT_SEPARATOR_HEIGHT  6
 
 enum
 {
@@ -198,6 +198,13 @@ gimp_dock_class_init (GimpDockClass *klass)
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_int ("default_height",
+                                                             NULL, NULL,
+                                                             0,
+                                                             G_MAXINT,
+                                                             DEFAULT_DOCK_HEIGHT,
+                                                             G_PARAM_READABLE));
+  gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("separator_height",
                                                              NULL, NULL,
                                                              0,
@@ -320,6 +327,7 @@ gimp_dock_style_set (GtkWidget *widget,
   GimpDock *dock;
   GList    *children;
   GList    *list;
+  gint      default_height;
   gint      separator_height;
 
   dock = GIMP_DOCK (widget);
@@ -328,8 +336,11 @@ gimp_dock_style_set (GtkWidget *widget,
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
   gtk_widget_style_get (widget,
+                        "default_height",   &default_height,
                         "separator_height", &separator_height,
                         NULL);
+
+  gtk_window_set_default_size (GTK_WINDOW (widget), -1, default_height);
 
   children = gtk_container_get_children (GTK_CONTAINER (dock->vbox));
 

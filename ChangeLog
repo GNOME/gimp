@@ -1,3 +1,12 @@
+2004-03-22  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpdock.c: added a style property "default_height"
+	and set a window default size for new docks. Fixes bug #137876.
+
+	* themes/Default/gtkrc: document the default dock height.
+
+	* themes/Small/gtkrc: set a smaller default dock height here.
+
 2004-03-21  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpundo.[ch]: added gimp_undo_type_to_name() a similar

@@ -30,7 +30,7 @@ style "gimp-default-style"
       { "../Default/images/stock-warning-64.png", *, *, "gtk-dialog" }
     }
 
-  font_name = "sans 7"
+  font_name = "sans 8"
 
 # Enabling the following line for some reason breaks toolbox resize
 # increment calculation. You can enable it to get an even smaller GUI
@@ -43,6 +43,7 @@ style "gimp-default-style"
 
   GtkPaned::handle_size            = 5
   GimpDock::separator_height       = 5
+  GimpDock::default_height         = 240
   GimpImageDock::minimal_width     = 200
   GimpImageDock::menu_preview_size = small-toolbar
   GimpToolbox::tool_icon_size      = menu
