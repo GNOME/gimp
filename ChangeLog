@@ -1,3 +1,8 @@
+2003-08-19  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimppickbutton.c: fixed color picking from other
+	screens.
+
 2003-08-18  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/gimpmodule.c: updated for new gradient sample API,

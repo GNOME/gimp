@@ -60,7 +60,7 @@ static gboolean   gimp_pick_button_mouse_release (GtkWidget      *invisible,
                                                   GdkEventButton *event,
                                                   GimpPickButton *button);
 static void       gimp_pick_button_shutdown      (GimpPickButton *button);
-static void       gimp_pick_button_grab          (GtkWidget      *invisible,
+static void       gimp_pick_button_pick          (GdkScreen      *screen,
                                                   gint            x_root,
                                                   gint            y_root,
                                                   GimpPickButton *button);
@@ -342,7 +342,8 @@ gimp_pick_button_mouse_motion (GtkWidget      *invisible,
                                GdkEventMotion *event,
                                GimpPickButton *button)
 {
-  gimp_pick_button_grab (invisible, event->x_root, event->y_root, button); 
+  gimp_pick_button_pick (gdk_event_get_screen ((GdkEvent *) event),
+                         event->x_root, event->y_root, button); 
 
   return TRUE;
 }
@@ -355,7 +356,8 @@ gimp_pick_button_mouse_release (GtkWidget      *invisible,
   if (event->button != 1)
     return FALSE;
 
-  gimp_pick_button_grab (invisible, event->x_root, event->y_root, button);
+  gimp_pick_button_pick (gdk_event_get_screen ((GdkEvent *) event),
+                         event->x_root, event->y_root, button);
 
   gimp_pick_button_shutdown (button);
   
@@ -379,18 +381,19 @@ gimp_pick_button_shutdown (GimpPickButton *button)
 }
 
 static void
-gimp_pick_button_grab (GtkWidget      *invisible,
+gimp_pick_button_pick (GdkScreen      *screen,
                        gint            x_root,
                        gint            y_root,
                        GimpPickButton *button)
 {
+  GdkColormap *colormap    = gdk_screen_get_system_colormap (screen);
+  GdkWindow   *root_window = gdk_screen_get_root_window (screen);
   GdkImage    *image;
   guint32      pixel;
-  GdkColormap *colormap = gdk_colormap_get_system ();
   GdkColor     color;
   GimpRGB      rgb;
   
-  image = gdk_drawable_get_image (GDK_DRAWABLE (gdk_get_default_root_window ()),
+  image = gdk_drawable_get_image (GDK_DRAWABLE (root_window),
                                   x_root, y_root, 1, 1);
   pixel = gdk_image_get_pixel (image, 0, 0);
   g_object_unref (image);
