@@ -287,11 +287,13 @@ static void
 object_moved_cb(Object_t *obj, gpointer data)
 {
   Selection_t *selection = (Selection_t*) data;
-  gint row = object_get_position_in_list(obj);
   selection->select_lock = TRUE;
 #ifdef _OLD_
-  gtk_clist_set_row_data(GTK_CLIST(selection->list), row, (gpointer) obj);
-  selection_set_selected(selection, row);
+  {
+    gint row = object_get_position_in_list(obj);
+    gtk_clist_set_row_data(GTK_CLIST(selection->list), row, (gpointer) obj);
+    selection_set_selected(selection, row);
+  }
 #endif
 }
 

@@ -528,6 +528,7 @@ create_colors_tab(PreferencesDialog_t *data, GtkWidget *notebook)
 					  G_CALLBACK(edit_selected_bg));
 }
 
+#ifdef _NOT_READY_YET_
 static void
 create_contiguous_regions_tab(PreferencesDialog_t *data, GtkWidget *notebook)
 {
@@ -539,6 +540,7 @@ create_contiguous_regions_tab(PreferencesDialog_t *data, GtkWidget *notebook)
    data->auto_convert =
       create_check_button_in_table(table, 1, 0, _("_Automatically convert"));
 }
+#endif
 
 static void
 switch_page(GtkWidget *widget, GtkNotebookPage *page, gint page_num,
