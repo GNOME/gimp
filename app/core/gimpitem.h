@@ -84,6 +84,11 @@ struct _GimpItemClass
                             GimpOrientationType     flip_type,
                             gdouble                 axis,
                             gboolean                clip_result);
+  void       (* rotate)    (GimpItem               *item,
+                            GimpRotationType        rotate_type,
+                            gdouble                 center_x,
+                            gdouble                 center_y,
+                            gboolean                clip_result);
   void       (* transform) (GimpItem               *item,
                             GimpMatrix3             matrix,
                             GimpTransformDirection  direction,
@@ -154,6 +159,11 @@ void            gimp_item_resize_to_image  (GimpItem       *item);
 void            gimp_item_flip             (GimpItem       *item,
                                             GimpOrientationType flip_type,
                                             gdouble         axis,
+                                            gboolean        flip_result);
+void            gimp_item_rotate           (GimpItem       *item,
+                                            GimpRotationType rotate_type,
+                                            gdouble         center_x,
+                                            gdouble         center_y,
                                             gboolean        flip_result);
 void            gimp_item_transform        (GimpItem       *item,
                                             GimpMatrix3     matrix,

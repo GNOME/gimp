@@ -476,6 +476,23 @@ GimpItemFactoryEntry image_menu_entries[] =
     "image/dialogs/flip_image.html", NULL },
 
   MENU_SEPARATOR ("/Image/Transform/---"),
+
+  { { N_("/Image/Transform/Rotate Right"), NULL,
+      image_rotate_cmd_callback, GIMP_ROTATE_90,
+      "<StockItem>", GIMP_STOCK_ROTATE_90 },
+    NULL,
+    "image/dialogs/rotate_image.html", NULL },
+  { { N_("/Image/Transform/Rotate Left"), NULL,
+      image_rotate_cmd_callback, GIMP_ROTATE_270,
+      "<StockItem>", GIMP_STOCK_ROTATE_270 },
+    NULL,
+    "image/dialogs/rotate_image.html", NULL },
+  { { N_("/Image/Transform/Rotate 180 degrees"), NULL,
+      image_rotate_cmd_callback, GIMP_ROTATE_180,
+      "<StockItem>", GIMP_STOCK_ROTATE_180 },
+    NULL,
+    "image/dialogs/rotate_image.html", NULL },
+
   MENU_SEPARATOR ("/Image/Transform/---"),
 
   MENU_SEPARATOR ("/Image/---"),
@@ -610,6 +627,23 @@ GimpItemFactoryEntry image_menu_entries[] =
     "layers/flip_layer.html", NULL },
 
   MENU_SEPARATOR ("/Layer/Transform/---"),
+
+  { { N_("/Layer/Transform/Rotate Right"), NULL,
+      drawable_rotate_cmd_callback, GIMP_ROTATE_90,
+      "<StockItem>", GIMP_STOCK_ROTATE_90 },
+    NULL,
+    "layers/rotate_layer.html", NULL },
+  { { N_("/Layer/Transform/Rotate Left"), NULL,
+      drawable_rotate_cmd_callback, GIMP_ROTATE_270,
+      "<StockItem>", GIMP_STOCK_ROTATE_270 },
+    NULL,
+    "layers/rotate_layer.html", NULL },
+  { { N_("/Layer/Transform/Rotate 180 degrees"), NULL,
+      drawable_rotate_cmd_callback, GIMP_ROTATE_180,
+      "<StockItem>", GIMP_STOCK_ROTATE_180 },
+    NULL,
+    "layers/rotate_layer.html", NULL },
+
   MENU_SEPARATOR ("/Layer/Transform/---"),
 
   { { N_("/Layer/Transform/Offset..."), "<control><shift>O",
@@ -980,9 +1014,6 @@ image_menu_setup (GimpItemFactory *factory)
   plug_in_menus_create (factory, factory->gimp->plug_in_proc_defs);
 
   {
-    static gchar *rotate_plugins[]      = { "Rotate 90 degrees",
-                                            "Rotate 180 degrees",
-                                            "Rotate 270 degrees" };
     static gchar *image_file_entries[]  = { "---moved",
                                             "Close",
                                             "Quit" };
@@ -1019,39 +1050,6 @@ image_menu_setup (GimpItemFactory *factory)
                 list = g_list_nth (GTK_MENU_SHELL (menu)->children, pos);
                 pos++;
               }
-          }
-      }
-
-    /*  Reorder Rotate plugin menu entries */
-    pos = 4;
-    for (i = 0; i < G_N_ELEMENTS (rotate_plugins); i++)
-      {
-        path = g_strconcat ("/Image/Transform/", rotate_plugins[i], NULL);
-        menu_item = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (factory),
-                                                 path);
-        g_free (path);
-
-        if (menu_item && menu_item->parent)
-          {
-            gtk_menu_reorder_child (GTK_MENU (menu_item->parent),
-                                    menu_item, pos);
-            pos++;
-          }
-      }
-
-    pos = 4;
-    for (i = 0; i < G_N_ELEMENTS (rotate_plugins); i++)
-      {
-        path = g_strconcat ("/Layer/Transform/", rotate_plugins[i], NULL);
-        menu_item = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (factory),
-                                                 path);
-        g_free (path);
-
-        if (menu_item && menu_item->parent)
-          {
-            gtk_menu_reorder_child (GTK_MENU (menu_item->parent),
-                                    menu_item, pos);
-            pos++;
           }
       }
 

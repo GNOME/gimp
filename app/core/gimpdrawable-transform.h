@@ -47,6 +47,12 @@ TileManager * gimp_drawable_transform_tiles_flip   (GimpDrawable *drawable,
                                                     gdouble       axis,
                                                     gboolean      clip_result);
 
+TileManager * gimp_drawable_transform_tiles_rotate (GimpDrawable *drawable,
+                                                    TileManager  *orig_tiles,
+                                                    GimpRotationType  rotate_type,
+                                                    gdouble       center_x,
+                                                    gdouble       center_y,
+                                                    gboolean      clip_result);
 gboolean      gimp_drawable_transform_affine       (GimpDrawable *drawable,
                                                     GimpMatrix3   matrix,
                                                     GimpTransformDirection direction,
@@ -56,6 +62,8 @@ gboolean      gimp_drawable_transform_flip         (GimpDrawable *drawable,
                                                     GimpOrientationType flip_type);
 
 
+gboolean      gimp_drawable_transform_rotate       (GimpDrawable *drawable,
+                                                    GimpRotationType  rotate_type);
 TileManager * gimp_drawable_transform_cut          (GimpDrawable *drawable,
                                                     gboolean     *new_layer);
 gboolean      gimp_drawable_transform_paste        (GimpDrawable *drawable,

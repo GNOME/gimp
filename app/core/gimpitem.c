@@ -162,6 +162,9 @@ gimp_item_class_init (GimpItemClass *klass)
   klass->translate                = gimp_item_real_translate;
   klass->scale                    = gimp_item_real_scale;
   klass->resize                   = gimp_item_real_resize;
+  klass->flip                     = NULL;
+  klass->rotate                   = NULL;
+  klass->transform                = NULL;
 }
 
 static void
@@ -664,6 +667,22 @@ gimp_item_flip (GimpItem            *item,
   item_class = GIMP_ITEM_GET_CLASS (item);
 
   item_class->flip (item, flip_type, axis, clip_result);
+}
+
+void
+gimp_item_rotate (GimpItem         *item,
+                  GimpRotationType  rotate_type,
+                  gdouble           center_x,
+                  gdouble           center_y,
+                  gboolean          clip_result)
+{
+  GimpItemClass *item_class;
+
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  item_class = GIMP_ITEM_GET_CLASS (item);
+
+  item_class->rotate (item, rotate_type, center_x, center_y, clip_result);
 }
 
 void

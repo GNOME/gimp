@@ -91,6 +91,11 @@ static void       gimp_drawable_flip               (GimpItem          *item,
                                                     GimpOrientationType  flip_type,
                                                     gdouble            axis,
                                                     gboolean           clip_result);
+static void       gimp_drawable_rotate             (GimpItem          *item,
+                                                    GimpRotationType   rotate_type,
+                                                    gdouble            center_x,
+                                                    gdouble            center_y,
+                                                    gboolean           clip_result);
 static void       gimp_drawable_transform          (GimpItem          *item,
                                                     GimpMatrix3        matrix,
                                                     GimpTransformDirection  direction,
@@ -172,6 +177,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   item_class->scale                  = gimp_drawable_scale;
   item_class->resize                 = gimp_drawable_resize;
   item_class->flip                   = gimp_drawable_flip;
+  item_class->rotate                 = gimp_drawable_rotate;
   item_class->transform              = gimp_drawable_transform;
 
   klass->visibility_changed          = NULL;
@@ -460,6 +466,36 @@ gimp_drawable_flip (GimpItem            *item,
                                               drawable->tiles,
                                               flip_type, axis,
                                               clip_result);
+
+  tile_manager_set_offsets (drawable->tiles, old_off_x, old_off_y);
+
+  if (tiles)
+    gimp_drawable_transform_paste (drawable, tiles, FALSE);
+}
+
+static void
+gimp_drawable_rotate (GimpItem         *item,
+                      GimpRotationType  rotate_type,
+                      gdouble           center_x,
+                      gdouble           center_y,
+                      gboolean          clip_result)
+{
+  GimpDrawable *drawable;
+  TileManager  *tiles;
+  gint          off_x, off_y;
+  gint          old_off_x, old_off_y;
+
+  drawable = GIMP_DRAWABLE (item);
+
+  gimp_item_offsets (item, &off_x, &off_y);
+
+  tile_manager_get_offsets (drawable->tiles, &old_off_x, &old_off_y);
+  tile_manager_set_offsets (drawable->tiles, off_x, off_y);
+
+  tiles = gimp_drawable_transform_tiles_rotate (drawable,
+                                                drawable->tiles,
+                                                rotate_type, center_x, center_y,
+                                                clip_result);
 
   tile_manager_set_offsets (drawable->tiles, old_off_x, old_off_y);
 

@@ -110,7 +110,7 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 /* the image and drawable that will be used later */
 static GimpDrawable *active_drawable = NULL;
-static gint32        image_ID = -1;
+static gint32        image_ID        = -1;
 
 /* Functions */
 
@@ -128,13 +128,6 @@ query (void)
     { GIMP_PDB_INT32,    "everything", "Rotate the whole image? { TRUE, FALSE }" }
   };
 
-  static GimpParamDef menuargs[] =
-  {
-    { GIMP_PDB_INT32,    "run_mode",   "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",      "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",   "Input drawable"}
-  };
-
   gimp_install_procedure ("plug_in_rotate",
 			  "Rotates a layer or the whole image by 90, 180 or 270 degrees",
 			  "This plug-in does rotate the active layer or the "
@@ -149,74 +142,6 @@ query (void)
 			  GIMP_PLUGIN,		
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
-
-  gimp_install_procedure ("plug_in_layer_rot90",
-			  "Rotates the given layer 90 degrees clockwise.",
-			  "Rotates the given layer 90 degrees clockwise.",
-			  PLUG_IN_AUTHOR,
-			  PLUG_IN_COPYRIGHT,
-			  PLUG_IN_VERSION,
-			  N_("<Image>/Layer/Transform/Rotate 90 degrees"),
-			  PLUG_IN_IMAGE_TYPES,
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (menuargs), 0,
-			  menuargs, NULL);
-  gimp_install_procedure ("plug_in_layer_rot180",
-			  "Rotates the given layer 180 degrees.",
-			  "Rotates the given layer 180 degrees.",
-			  PLUG_IN_AUTHOR,
-			  PLUG_IN_COPYRIGHT,
-			  PLUG_IN_VERSION,
-			  N_("<Image>/Layer/Transform/Rotate 180 degrees"),
-			  PLUG_IN_IMAGE_TYPES,
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (menuargs), 0,
-			  menuargs, NULL);
-  gimp_install_procedure ("plug_in_layer_rot270",
-			  "Rotates the given layer 270 degrees clockwise.",
-			  "Rotates the given layer 270 degrees clockwise.",
-			  PLUG_IN_AUTHOR,
-			  PLUG_IN_COPYRIGHT,
-			  PLUG_IN_VERSION,
-			  N_("<Image>/Layer/Transform/Rotate 270 degrees"),
-			  PLUG_IN_IMAGE_TYPES,
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (menuargs), 0,
-			  menuargs, NULL);
-
-  gimp_install_procedure ("plug_in_image_rot90",
-			  "Rotates the given image 90 degrees clockwise.",
-			  "Rotates the given image 90 degrees clockwise.",
-			  PLUG_IN_AUTHOR,
-			  PLUG_IN_COPYRIGHT,
-			  PLUG_IN_VERSION,
-			  N_("<Image>/Image/Transform/Rotate 90 degrees"),
-			  PLUG_IN_IMAGE_TYPES,
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (menuargs), 0,
-			  menuargs, NULL);
-  gimp_install_procedure ("plug_in_image_rot180",
-			  "Rotates the given image 180 degrees.",
-			  "Rotates the given image 180 degrees.",
-			  PLUG_IN_AUTHOR,
-			  PLUG_IN_COPYRIGHT,
-			  PLUG_IN_VERSION,
-			  N_("<Image>/Image/Transform/Rotate 180 degrees"),
-			  PLUG_IN_IMAGE_TYPES,
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (menuargs), 0,
-			  menuargs, NULL);
-  gimp_install_procedure ("plug_in_image_rot270",
-			  "Rotates the given image 270 degrees clockwise.",
-			  "Rotates the given image 270 degrees clockwise.",
-			  PLUG_IN_AUTHOR,
-			  PLUG_IN_COPYRIGHT,
-			  PLUG_IN_VERSION,
-			  N_("<Image>/Image/Transform/Rotate 270 degrees"),
-			  PLUG_IN_IMAGE_TYPES,
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (menuargs), 0,
-			  menuargs, NULL);
 }
 
 static void 
@@ -277,38 +202,10 @@ run (gchar      *name,
 	  break;
 	}
     }
-  else if (strcmp (name, "plug_in_layer_rot90") == 0)
+  else
     {
-      rotvals.angle      = 1;
-      rotvals.everything = FALSE;
+      status = GIMP_PDB_CALLING_ERROR;
     }
-  else if (strcmp (name, "plug_in_layer_rot180") == 0)
-    {
-      rotvals.angle      = 2;
-      rotvals.everything = FALSE;
-    }
-  else if (strcmp (name, "plug_in_layer_rot270") == 0)
-    {
-      rotvals.angle      = 3;
-      rotvals.everything = FALSE;
-    }
-  else if (strcmp (name, "plug_in_image_rot90") == 0)
-    {
-      rotvals.angle      = 1;
-      rotvals.everything = TRUE;
-    }
-  else if (strcmp (name, "plug_in_image_rot180") == 0)
-    {
-      rotvals.angle      = 2;
-      rotvals.everything = TRUE;
-    }
-  else if (strcmp (name, "plug_in_image_rot270") == 0)
-    {
-      rotvals.angle      = 3;
-      rotvals.everything = TRUE;
-    }
-  else 
-    status = GIMP_PDB_CALLING_ERROR;
 
   if (status == GIMP_PDB_SUCCESS)
     {

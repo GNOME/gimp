@@ -33,6 +33,7 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-merge.h"
 #include "core/gimpimage-resize.h"
+#include "core/gimpimage-rotate.h"
 #include "core/gimpimage-scale.h"
 #include "core/gimpimage-undo.h"
 
@@ -215,6 +216,25 @@ image_flip_cmd_callback (GtkWidget *widget,
 
   gimp_image_flip (gdisp->gimage, (GimpOrientationType) action,
                    gimp_progress_update_and_flush, progress);
+
+  gimp_progress_end (progress);
+
+  gimp_image_flush (gdisp->gimage);
+}
+
+void
+image_rotate_cmd_callback (GtkWidget *widget,
+                           gpointer   data,
+                           guint      action)
+{
+  GimpDisplay  *gdisp;
+  GimpProgress *progress;
+  return_if_no_display (gdisp, data);
+
+  progress = gimp_progress_start (gdisp, _("Rotating..."), TRUE, NULL, NULL);
+
+  gimp_image_rotate (gdisp->gimage, (GimpRotationType) action,
+                     gimp_progress_update_and_flush, progress);
 
   gimp_progress_end (progress);
 

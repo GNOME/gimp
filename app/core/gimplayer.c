@@ -95,6 +95,11 @@ static void       gimp_layer_flip               (GimpItem           *item,
                                                  GimpOrientationType flip_type,
                                                  gdouble             axis,
                                                  gboolean            clip_result);
+static void       gimp_layer_rotate             (GimpItem           *item,
+                                                 GimpRotationType    rotate_type,
+                                                 gdouble             center_x,
+                                                 gdouble             center_y,
+                                                 gboolean            clip_result);
 static void       gimp_layer_transform          (GimpItem           *item,
                                                  GimpMatrix3         matrix,
                                                  GimpTransformDirection direction,
@@ -207,6 +212,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   item_class->scale                  = gimp_layer_scale;
   item_class->resize                 = gimp_layer_resize;
   item_class->flip                   = gimp_layer_flip;
+  item_class->rotate                 = gimp_layer_rotate;
   item_class->transform              = gimp_layer_transform;
   item_class->default_name           = _("Layer");
   item_class->rename_desc            = _("Rename Layer");
@@ -490,10 +496,41 @@ gimp_layer_flip (GimpItem            *item,
 
   GIMP_ITEM_CLASS (parent_class)->flip (item, flip_type, axis, clip_result);
 
-  /*  If there is a layer mask, make sure it gets flipped also  */
+  /*  If there is a layer mask, make sure it gets flipped as well  */
   if (layer->mask)
     gimp_item_flip (GIMP_ITEM (layer->mask),
                     flip_type, axis, clip_result);
+
+  gimp_image_undo_group_end (gimage);
+
+  /*  Make sure we're not caching any old selection info  */
+  gimp_layer_invalidate_boundary (layer);
+}
+
+static void
+gimp_layer_rotate (GimpItem         *item,
+                   GimpRotationType  rotate_type,
+                   gdouble           center_x,
+                   gdouble           center_y,
+                   gboolean          clip_result)
+{
+  GimpLayer *layer;
+  GimpImage *gimage;
+
+  layer  = GIMP_LAYER (item);
+  gimage = gimp_item_get_image (item);
+
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
+                               _("Rotate Layer"));
+
+  GIMP_ITEM_CLASS (parent_class)->rotate (item,
+                                          rotate_type, center_x, center_y,
+                                          clip_result);
+
+  /*  If there is a layer mask, make sure it gets rotates as well  */
+  if (layer->mask)
+    gimp_item_rotate (GIMP_ITEM (layer->mask),
+                      rotate_type, center_x, center_y, clip_result);
 
   gimp_image_undo_group_end (gimage);
 

@@ -1,3 +1,27 @@
+2003-05-20  Sven Neumann  <sven@gimp.org>
+
+	* app/core/core-enums.[ch]: added new enum GimpRotationType.
+
+	* app/core/Makefile.am
+	* app/core/gimpimage-rotate.[ch]: new files.
+
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable-transform.[ch]
+	* app/core/gimpdrawable.c
+	* app/core/gimpitem.[ch]
+	* app/core/gimplayer.c
+	* app/vectors/gimpvectors.c: added GimpItem::rotate. Still work in
+	progress.
+
+	* plug-ins/common/rotate.c: don't install any menu entries. The
+	plug-in is only kept around to provide plug_in_rotate for backward
+	compatibility.
+
+	* app/gui/drawable-commands.[ch]
+	* app/gui/image-commands.[ch]
+	* app/gui/image-menu.c: use the new rotate implementation and use
+	stock icons for the menu entries. Fixes bug #57797.
+
 2003-05-20  Michael Natterer  <mitch@gimp.org>
 
 	Some color API cleanup:

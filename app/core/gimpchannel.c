@@ -78,6 +78,11 @@ static void       gimp_channel_flip        (GimpItem         *item,
                                             GimpOrientationType flip_type,
                                             gdouble           axis,
                                             gboolean          flip_result);
+static void       gimp_channel_rotate      (GimpItem         *item,
+                                            GimpRotationType  flip_type,
+                                            gdouble           center_x,
+                                            gdouble           center_y,
+                                            gboolean          flip_result);
 static void       gimp_channel_transform   (GimpItem         *item,
                                             GimpMatrix3       matrix,
                                             GimpTransformDirection direction,
@@ -149,6 +154,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
   item_class->scale                = gimp_channel_scale;
   item_class->resize               = gimp_channel_resize;
   item_class->flip                 = gimp_channel_flip;
+  item_class->rotate               = gimp_channel_rotate;
   item_class->transform            = gimp_channel_transform;
   item_class->default_name         = _("Channel");
   item_class->rename_desc          = _("Rename Channel");
@@ -413,6 +419,35 @@ gimp_channel_flip (GimpItem            *item,
     clip_result = TRUE;
 
   GIMP_ITEM_CLASS (parent_class)->flip (item, flip_type, axis, clip_result);
+
+  gimp_image_undo_group_end (gimage);
+
+  /*  bounds are now unknown  */
+  channel->bounds_known = FALSE;
+}
+
+static void
+gimp_channel_rotate (GimpItem         *item,
+                     GimpRotationType  rotate_type,
+                     gdouble           center_x,
+                     gdouble           center_y,
+                     gboolean          clip_result)
+{
+  GimpChannel *channel;
+  GimpImage   *gimage;
+
+  channel = GIMP_CHANNEL (item);
+  gimage  = gimp_item_get_image (item);
+
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
+                               _("Rotate Channel"));
+
+  if (G_TYPE_FROM_INSTANCE (item) == GIMP_TYPE_CHANNEL)
+    clip_result = TRUE;
+
+  GIMP_ITEM_CLASS (parent_class)->rotate (item,
+                                          rotate_type, center_x, center_y,
+                                          clip_result);
 
   gimp_image_undo_group_end (gimage);
 

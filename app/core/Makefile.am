@@ -121,6 +121,8 @@ libappcore_a_sources = \
 	gimpimage-qmask.h		\
 	gimpimage-resize.c		\
 	gimpimage-resize.h		\
+	gimpimage-rotate.c		\
+	gimpimage-rotate.h		\
 	gimpimage-scale.c		\
 	gimpimage-scale.h		\
 	gimpimage-undo.c		\

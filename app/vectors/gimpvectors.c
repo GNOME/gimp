@@ -74,6 +74,11 @@ static void       gimp_vectors_flip         (GimpItem         *item,
                                              GimpOrientationType  flip_type,
                                              gdouble           axis,
                                              gboolean          clip_result);
+static void       gimp_vectors_rotate       (GimpItem         *item,
+                                             GimpRotationType  rotate_type,
+                                             gdouble           center_x,
+                                             gdouble           center_y,
+                                             gboolean          clip_result);
 static void       gimp_vectors_transform    (GimpItem         *item,
                                              GimpMatrix3       matrix,
                                              GimpTransformDirection direction,
@@ -187,6 +192,7 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
   item_class->scale               = gimp_vectors_scale;
   item_class->resize              = gimp_vectors_resize;
   item_class->flip                = gimp_vectors_flip;
+  item_class->rotate              = gimp_vectors_rotate;
   item_class->transform           = gimp_vectors_transform;
   item_class->default_name        = _("Path");
   item_class->rename_desc         = _("Rename Path");
@@ -426,6 +432,54 @@ gimp_vectors_flip (GimpItem            *item,
             }
         }
     }
+
+  gimp_vectors_thaw (vectors);
+}
+
+static void
+gimp_vectors_rotate (GimpItem         *item,
+                     GimpRotationType  rotate_type,
+                     gdouble           center_x,
+                     gdouble           center_y,
+                     gboolean          clip_result)
+{
+  GimpVectors *vectors;
+  GList       *list;
+
+  vectors = GIMP_VECTORS (item);
+
+  gimp_vectors_freeze (vectors);
+
+  gimp_image_undo_push_vectors_mod (gimp_item_get_image (item),
+                                    _("Rotate Path"),
+                                    vectors);
+
+#if 0  /*  FIXME: implement!  */
+  for (list = vectors->strokes; list; list = g_list_next (list))
+    {
+      GimpStroke *stroke = list->data;
+      GList      *list2;
+
+      for (list2 = stroke->anchors; list2; list2 = g_list_next (list2))
+        {
+          GimpAnchor *anchor = list2->data;
+
+          switch (flip_type)
+            {
+            case GIMP_ORIENTATION_HORIZONTAL:
+              anchor->position.x = -(anchor->position.x - axis) + axis;
+              break;
+
+            case GIMP_ORIENTATION_VERTICAL:
+              anchor->position.y = -(anchor->position.y - axis) + axis;
+              break;
+
+            default:
+              break;
+            }
+        }
+    }
+#endif
 
   gimp_vectors_thaw (vectors);
 }

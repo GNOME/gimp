@@ -209,6 +209,18 @@ typedef enum
 } GimpOrientationType;
 
 
+#define GIMP_TYPE_ROTATION_TYPE (gimp_rotation_type_get_type ())
+
+GType gimp_rotation_type_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_ROTATE_90,
+  GIMP_ROTATE_180,
+  GIMP_ROTATE_270
+} GimpRotationType;
+
+
 #define GIMP_TYPE_PREVIEW_SIZE (gimp_preview_size_get_type ())
 
 GType gimp_preview_size_get_type (void) G_GNUC_CONST;
@@ -318,6 +330,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_IMAGE_SCALE,        /*< desc="Scale Image"                 >*/
   GIMP_UNDO_GROUP_IMAGE_RESIZE,       /*< desc="Resize Image"                >*/
   GIMP_UNDO_GROUP_IMAGE_FLIP,         /*< desc="Flip Image"                  >*/
+  GIMP_UNDO_GROUP_IMAGE_ROTATE,       /*< desc="Rotate Image"                >*/
   GIMP_UNDO_GROUP_IMAGE_CONVERT,      /*< desc="Convert Image"               >*/
   GIMP_UNDO_GROUP_IMAGE_CROP,         /*< desc="Crop Image"                  >*/
   GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE, /*< desc="Merge Layers"                >*/

@@ -155,6 +155,29 @@ drawable_flip_cmd_callback (GtkWidget *widget,
 }
 
 void
+drawable_rotate_cmd_callback (GtkWidget *widget,
+                              gpointer   data,
+                              guint      action)
+{
+  GimpImage    *gimage;
+  GimpDrawable *active_drawable;
+  GimpItem     *item;
+  gint          off_x, off_y;
+  gdouble       center_x, center_y;
+  return_if_no_drawable (gimage, active_drawable, data);
+
+  item = GIMP_ITEM (active_drawable);
+
+  gimp_item_offsets (item, &off_x, &off_y);
+
+  center_x = ((gdouble) off_x + (gdouble) gimp_item_width  (item) / 2.0);
+  center_y = ((gdouble) off_y + (gdouble) gimp_item_height (item) / 2.0);
+
+  gimp_item_rotate (item, (GimpRotationType) action, center_x, center_y, TRUE);
+  gimp_image_flush (gimage);
+}
+
+void
 drawable_offset_cmd_callback (GtkWidget *widget,
                               gpointer   data)
 {
