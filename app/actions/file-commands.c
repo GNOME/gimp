@@ -273,27 +273,32 @@ file_revert_cmd_callback (GtkAction *action,
 
       g_free (basename);
 
-      query_box = gimp_query_boolean_box (_("Revert Image"),
-                                          gdisp->shell,
-					  gimp_standard_help_func,
-					  GIMP_HELP_FILE_REVERT,
-					  GIMP_STOCK_QUESTION,
-					  text,
-					  GTK_STOCK_YES, GTK_STOCK_NO,
-					  G_OBJECT (gdisp->gimage),
-					  "disconnect",
-					  file_revert_confirm_callback,
-					  gdisp->gimage);
+      if (gdisp->gimage->dirty)
+	{
+	  query_box = gimp_query_boolean_box (_("Revert Image"),
+					      gdisp->shell,
+					      gimp_standard_help_func,
+					      GIMP_HELP_FILE_REVERT,
+					      GIMP_STOCK_QUESTION,
+					      text,
+					      GTK_STOCK_YES, GTK_STOCK_NO,
+					      G_OBJECT (gdisp->gimage),
+					      "disconnect",
+					      file_revert_confirm_callback,
+					      gdisp->gimage);
+
+	  g_object_set_data (G_OBJECT (gdisp->gimage), REVERT_DATA_KEY,
+			     query_box);
+	  
+	  gtk_window_set_transient_for (GTK_WINDOW (query_box),
+					GTK_WINDOW (gdisp->shell));
+	  
+	  gtk_widget_show (query_box);
+	}
+      else
+	file_revert_confirm_callback (NULL, TRUE, (gpointer)(gdisp->gimage));
 
       g_free (text);
-
-      g_object_set_data (G_OBJECT (gdisp->gimage), REVERT_DATA_KEY,
-			 query_box);
-
-      gtk_window_set_transient_for (GTK_WINDOW (query_box),
-                                    GTK_WINDOW (gdisp->shell));
-
-      gtk_widget_show (query_box);
     }
 }
 

@@ -1,5 +1,10 @@
 2004-06-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/actions/file-commands.c: make "Revert" only ask for 
+	confirmation if image is dirty.  Fixes bug #141971.
+	
+2004-06-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/gui/*.c:
 	* app/widgets/*.c:
 	* etc/templaterc: HIGify capitalization.  Should finish bug #123699
