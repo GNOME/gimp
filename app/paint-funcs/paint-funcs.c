@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+
 #include "appenv.h"
 #include "gimprc.h"
 #include "paint_funcs.h"
@@ -442,6 +443,8 @@ extract_alpha_pixels (unsigned char *src,
 {
   int alpha;
   unsigned char * m;
+
+  /*  printf("[eap:%d]", w);*/
 
   if (mask)
     m = mask;
@@ -1616,7 +1619,7 @@ combine_inten_and_inten_a_pixels (unsigned char *src1,
     }
 }
 
-#define alphify(src2_alpha,new_alpha) \
+/*orig #define alphify(src2_alpha,new_alpha) \
 	if (new_alpha == 0 || src2_alpha == 0)							\
 	  {											\
 	    for (b = 0; b < alpha; b++)								\
@@ -1632,7 +1635,61 @@ combine_inten_and_inten_a_pixels (unsigned char *src1,
 	  for (b = 0; b < alpha; b++)								\
 	    dest[b] = affect[b] ?								\
 	      (unsigned char) (src2[b] * ratio + src1[b] * compl_ratio + EPSILON) : src1[b];	\
-	}
+	}*/
+
+/*shortened #define alphify(src2_alpha,new_alpha) \
+	if (src2_alpha != 0 && new_alpha != 0)							\
+	  {											\
+	    if (src2_alpha == new_alpha){							\
+	      for (b = 0; b < alpha; b++)							\
+	      dest [b] = affect [b] ? src2 [b] : src1 [b];					\
+	    } else {										\
+	      ratio = (float) src2_alpha / new_alpha;						\
+	      compl_ratio = 1.0 - ratio;							\
+	  											\
+	      for (b = 0; b < alpha; b++)							\
+	        dest[b] = affect[b] ?								\
+	          (unsigned char) (src2[b] * ratio + src1[b] * compl_ratio + EPSILON) : src1[b];\
+	    }                                                                                   \
+	  }*/
+
+#define alphify(src2_alpha,new_alpha) \
+	if (src2_alpha != 0 && new_alpha != 0)							\
+	  {											\
+            b = alpha; \
+	    if (src2_alpha == new_alpha){							\
+	      do { \
+	      b--; dest [b] = affect [b] ? src2 [b] : src1 [b];} while (b);	\
+	    } else {										\
+	      ratio = (float) src2_alpha / new_alpha;						\
+	      compl_ratio = 1.0 - ratio;							\
+	  											\
+              do { b--; \
+	        dest[b] = affect[b] ?								\
+	          (unsigned char) (src2[b] * ratio + src1[b] * compl_ratio + EPSILON) : src1[b];\
+         	  } while (b); \
+	    }    \
+	  }
+
+/*special #define alphify4(src2_alpha,new_alpha) \
+	if (src2_alpha != 0 && new_alpha != 0)							\
+	  {											\
+	    if (src2_alpha == new_alpha){							\
+	      dest [0] = affect [0] ? src2 [0] : src1 [0];					\
+	      dest [1] = affect [1] ? src2 [1] : src1 [1];					\
+	      dest [2] = affect [2] ? src2 [2] : src1 [2];					\
+	    } else {										\
+	      ratio = (float) src2_alpha / new_alpha;						\
+	      compl_ratio = 1.0 - ratio;							\
+	  											\
+	      dest[0] = affect[0] ?								\
+	        (unsigned char) (src2[0] * ratio + src1[0] * compl_ratio + EPSILON) : src1[0];  \
+	      dest[1] = affect[1] ?								\
+	        (unsigned char) (src2[1] * ratio + src1[1] * compl_ratio + EPSILON) : src1[1];  \
+	      dest[2] = affect[2] ?								\
+	        (unsigned char) (src2[2] * ratio + src1[2] * compl_ratio + EPSILON) : src1[2];  \
+	    }                                                                                   \
+	  }*/
 	
 void
 combine_inten_a_and_inten_pixels (unsigned char *src1,
@@ -1658,25 +1715,56 @@ combine_inten_a_and_inten_pixels (unsigned char *src1,
   if (mask)
     {
       m = mask;
-      while (length --)
+      if (opacity == OPAQUE_OPACITY) /* HAS MASK, FULL OPACITY */
 	{
-	  src2_alpha = (*m * opacity) / 255;
-	  new_alpha = src1[alpha] + ((255 - src1[alpha]) * src2_alpha) / 255;
-	  alphify (src2_alpha, new_alpha);
-	  
-	  if (mode_affect)
-	    dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
-	  else
-	    dest[alpha] = (src1[alpha]) ? src1[alpha] : (affect[alpha] ? new_alpha : src1[alpha]);
-
-	  m++;
-
-	  src1 += bytes;
-	  src2 += src2_bytes;
-	  dest += bytes;
+	  while (length--)
+	    {
+	      src2_alpha = *m;
+	      new_alpha = src1[alpha] + ((255 - src1[alpha]) * src2_alpha) / 255;
+	      alphify (src2_alpha, new_alpha);
+	      
+	      if (mode_affect)
+		{
+		  dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
+		}
+	      else
+		{
+		  dest[alpha] = (src1[alpha]) ? src1[alpha] :
+		    (affect[alpha] ? new_alpha : src1[alpha]);
+		}
+		
+	      m++;
+	      src1 += bytes;
+	      src2 += src2_bytes;
+	      dest += bytes;
+	    }
+	}
+      else /* HAS MASK, SEMI-OPACITY */
+	{
+	  while (length--)
+	    {
+	      src2_alpha = (*m * opacity) / 255;
+	      new_alpha = src1[alpha] + ((255 - src1[alpha]) * src2_alpha) / 255;
+	      alphify (src2_alpha, new_alpha);
+	      
+	      if (mode_affect)
+		{
+		  dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
+		}
+	      else
+		{
+		  dest[alpha] = (src1[alpha]) ? src1[alpha] :
+		    (affect[alpha] ? new_alpha : src1[alpha]);
+		}
+		
+	      m++;
+	      src1 += bytes;
+	      src2 += src2_bytes;
+	      dest += bytes;
+	    }
 	}
     }
-  else
+  else /* NO MASK */
     {
       while (length --)
 	{
@@ -1689,9 +1777,9 @@ combine_inten_a_and_inten_pixels (unsigned char *src1,
 	  else
 	    dest[alpha] = (src1[alpha]) ? src1[alpha] : (affect[alpha] ? new_alpha : src1[alpha]);
 
-	  src1 += bytes;
-	  src2 += src2_bytes;
-	  dest += bytes;
+	    src1 += bytes;
+	    src2 += src2_bytes;
+	    dest += bytes;
 	}
     }
 }
@@ -1715,44 +1803,112 @@ combine_inten_a_and_inten_a_pixels (unsigned char *src1,
   float ratio, compl_ratio;
 
   alpha = bytes - 1;
-  if (mask){
-    m = mask;
-    while (length --)
-      {
-	src2_alpha = (src2[alpha] * *m * opacity) / 65025;
-	new_alpha = src1[alpha] + ((255 - src1[alpha]) * src2_alpha) / 255;
 
-	alphify (src2_alpha, new_alpha);
-	
-	if (mode_affect)
-	  dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
-	else
-	  dest[alpha] = (src1[alpha]) ? src1[alpha] : (affect[alpha] ? new_alpha : src1[alpha]);
-	
-	m++;
-	
-	src1 += bytes;
-	src2 += bytes;
-	dest += bytes;
-      }
-  } else {
-    while (length --)
-      {
-	src2_alpha = (src2[alpha] * opacity) / 255;
-	new_alpha = src1[alpha] + ((255 - src1[alpha]) * src2_alpha) / 255;
-
-	alphify (src2_alpha, new_alpha);
-	
-	if (mode_affect)
-	  dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
-	else
-	  dest[alpha] = (src1[alpha]) ? src1[alpha] : (affect[alpha] ? new_alpha : src1[alpha]);
-
-	src1 += bytes;
-	src2 += bytes;
-	dest += bytes;
-      }
-  }
+  if (mask)
+    {
+      m = mask;
+      if (opacity == OPAQUE_OPACITY) /* HAS MASK, FULL OPACITY */
+	{
+	  while (length --)
+	    {
+	      src2_alpha = (src2[alpha] * *m) / 255;
+	      new_alpha = src1[alpha] + ((255 - src1[alpha]) * src2_alpha) / 255;
+		  
+	      alphify (src2_alpha, new_alpha);
+		  
+	      if (mode_affect)
+		{
+		  dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
+		}
+	      else
+		{
+		  dest[alpha] = (src1[alpha]) ? src1[alpha] :
+		    (affect[alpha] ? new_alpha : src1[alpha]);      
+		}
+		  
+	      m++;
+	      src1 += bytes;
+	      src2 += bytes;
+	      dest += bytes;		  
+	    }
+	}
+      else /* HAS MASK, SEMI-OPACITY */
+	{
+	  while (length --)
+	    {
+	      src2_alpha = (src2[alpha] * *m * opacity) / 65025;
+	      new_alpha = src1[alpha] + ((255 - src1[alpha]) * src2_alpha) / 255;
+	      
+	      alphify (src2_alpha, new_alpha);
+	      
+	      if (mode_affect)
+		{
+		  dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
+		}
+	      else
+		{
+		  dest[alpha] = (src1[alpha]) ? src1[alpha] :
+		    (affect[alpha] ? new_alpha : src1[alpha]);
+		}
+		
+	      m++;
+	      src1 += bytes;
+	      src2 += bytes;
+	      dest += bytes;
+	    }
+	}
+    }
+  else
+    {
+      if (opacity == OPAQUE_OPACITY) /* NO MASK, FULL OPACITY */
+	{
+	  while (length --)
+	    {
+	      src2_alpha = src2[alpha];
+	      new_alpha = src1[alpha] + ((255 - src1[alpha]) * src2_alpha) / 255;
+	      
+	      alphify (src2_alpha, new_alpha);
+	      
+	      if (mode_affect)
+		{
+		  dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
+		}
+	      else
+		{
+		  dest[alpha] = (src1[alpha]) ? src1[alpha] :
+		    (affect[alpha] ? new_alpha : src1[alpha]);
+		}
+		
+	      src1 += bytes;
+	      src2 += bytes;
+	      dest += bytes;
+	    }
+	}
+      else /* NO MASK, SEMI OPACITY */
+	{
+	  while (length --)
+	    {
+	      src2_alpha = (src2[alpha] * opacity) / 255;
+	      new_alpha = src1[alpha] + ((255 - src1[alpha]) * src2_alpha) / 255;
+	      
+	      alphify (src2_alpha, new_alpha);
+	      
+	      if (mode_affect)
+		{
+		  dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
+		}
+	      else
+		{
+		  dest[alpha] = (src1[alpha]) ? src1[alpha] :
+		    (affect[alpha] ? new_alpha : src1[alpha]);
+		}
+		
+	      src1 += bytes;
+	      src2 += bytes;
+	      dest += bytes;	  
+	    }
+	}
+    }
 }
 #undef alphify
 

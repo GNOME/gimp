@@ -1951,14 +1951,14 @@ xcf_load_level (XcfInfo     *info,
 	      tile_release (tile, TRUE);
 	      tile_manager_map (tiles, i, level_num, previous);
 
-	      putchar('M');
+	      /*	      putchar('M');*/
 	    }
 	  else
 	    {
 	      tile_release (tile, TRUE);
 	      previous = tile;
 
-	      putchar('.');
+	      /*	      putchar('.');*/
 	    }
 	  tile_release (previous, FALSE);
 	}
@@ -1976,7 +1976,7 @@ xcf_load_level (XcfInfo     *info,
       info->cp += xcf_read_int32 (info->fp, &offset, 1);
     }
 
-  fflush(stdout);
+  /*  fflush(stdout);*/
 
   if (offset != 0)
     {
