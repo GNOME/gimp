@@ -26,6 +26,7 @@ EXPORTS
 	gimp_gtkrc
 	gimp_image_base_type_get_type
 	gimp_image_type_get_type
+	gimp_interpolation_type_get_type
 	gimp_locale_directory
 	gimp_memsize_deserialize
 	gimp_memsize_get_type
@@ -33,12 +34,12 @@ EXPORTS
 	gimp_memsize_to_string
 	gimp_message_handler_type_get_type
 	gimp_param_memsize_get_type
-	gimp_param_spec_memsize
 	gimp_param_path_get_type
+	gimp_param_spec_memsize
 	gimp_param_spec_path
 	gimp_param_spec_path_type
-	gimp_param_unit_get_type
 	gimp_param_spec_unit
+	gimp_param_unit_get_type
 	gimp_parasite_compare
 	gimp_parasite_copy
 	gimp_parasite_data
@@ -69,6 +70,7 @@ EXPORTS
 	gimp_stack_trace_mode_get_type
 	gimp_strip_uline
 	gimp_sysconf_directory
+	gimp_transfer_mode_get_type
 	gimp_type_get_translation_domain
 	gimp_type_set_translation_domain
 	gimp_unit_get_abbreviation

@@ -41,6 +41,25 @@ package Gimp::CodeGen::enums;
 		       GIMP_INDEXED_IMAGE => '4',
 		       GIMP_INDEXEDA_IMAGE => '5' }
 	},
+    GimpInterpolationType =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_INTERPOLATION_NONE GIMP_INTERPOLATION_LINEAR
+			  GIMP_INTERPOLATION_CUBIC
+			  GIMP_INTERPOLATION_LANCZOS) ],
+	  mapping => { GIMP_INTERPOLATION_NONE => '0',
+		       GIMP_INTERPOLATION_LINEAR => '1',
+		       GIMP_INTERPOLATION_CUBIC => '2',
+		       GIMP_INTERPOLATION_LANCZOS => '3' }
+	},
+    GimpTransferMode =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_SHADOWS GIMP_MIDTONES GIMP_HIGHLIGHTS) ],
+	  mapping => { GIMP_SHADOWS => '0',
+		       GIMP_MIDTONES => '1',
+		       GIMP_HIGHLIGHTS => '2' }
+	},
     GimpUnit =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
@@ -152,17 +171,6 @@ package Gimp::CodeGen::enums;
 		       GIMP_HISTOGRAM_BLUE => '3',
 		       GIMP_HISTOGRAM_ALPHA => '4' }
 	},
-    GimpInterpolationType =>
-	{ contig => 1,
-	  header => 'base/base-enums.h',
-	  symbols => [ qw(GIMP_INTERPOLATION_NONE GIMP_INTERPOLATION_LINEAR
-			  GIMP_INTERPOLATION_CUBIC
-			  GIMP_INTERPOLATION_LANCZOS) ],
-	  mapping => { GIMP_INTERPOLATION_NONE => '0',
-		       GIMP_INTERPOLATION_LINEAR => '1',
-		       GIMP_INTERPOLATION_CUBIC => '2',
-		       GIMP_INTERPOLATION_LANCZOS => '3' }
-	},
     GimpLayerModeEffects =>
 	{ contig => 1,
 	  header => 'base/base-enums.h',
@@ -200,14 +208,6 @@ package Gimp::CodeGen::enums;
 		       GIMP_GRAIN_EXTRACT_MODE => '20',
 		       GIMP_GRAIN_MERGE_MODE => '21',
 		       GIMP_COLOR_ERASE_MODE => '22' }
-	},
-    GimpTransferMode =>
-	{ contig => 1,
-	  header => 'base/base-enums.h',
-	  symbols => [ qw(GIMP_SHADOWS GIMP_MIDTONES GIMP_HIGHLIGHTS) ],
-	  mapping => { GIMP_SHADOWS => '0',
-		       GIMP_MIDTONES => '1',
-		       GIMP_HIGHLIGHTS => '2' }
 	},
     GimpConvolutionType =>
 	{ contig => 1,

@@ -278,19 +278,6 @@ typedef enum
 } GimpIconType;
 
 
-#define GIMP_TYPE_INTERPOLATION_TYPE (gimp_interpolation_type_get_type ())
-
-GType gimp_interpolation_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_INTERPOLATION_NONE,
-  GIMP_INTERPOLATION_LINEAR,
-  GIMP_INTERPOLATION_CUBIC,
-  GIMP_INTERPOLATION_LANCZOS
-} GimpInterpolationType;
-
-
 #define GIMP_TYPE_LAYER_MODE_EFFECTS (gimp_layer_mode_effects_get_type ())
 
 GType gimp_layer_mode_effects_get_type (void) G_GNUC_CONST;
@@ -426,18 +413,6 @@ typedef enum
   GIMP_PIXELS,
   GIMP_POINTS
 } GimpSizeType;
-
-
-#define GIMP_TYPE_TRANSFER_MODE (gimp_transfer_mode_get_type ())
-
-GType gimp_transfer_mode_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_SHADOWS,
-  GIMP_MIDTONES,
-  GIMP_HIGHLIGHTS
-} GimpTransferMode;
 
 
 #define GIMP_TYPE_TRANSFORM_DIRECTION (gimp_transform_direction_get_type ())

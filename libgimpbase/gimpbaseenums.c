@@ -144,6 +144,70 @@ gimp_image_type_get_type (void)
 }
 
 GType
+gimp_interpolation_type_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_INTERPOLATION_NONE, "GIMP_INTERPOLATION_NONE", "none" },
+    { GIMP_INTERPOLATION_LINEAR, "GIMP_INTERPOLATION_LINEAR", "linear" },
+    { GIMP_INTERPOLATION_CUBIC, "GIMP_INTERPOLATION_CUBIC", "cubic" },
+    { GIMP_INTERPOLATION_LANCZOS, "GIMP_INTERPOLATION_LANCZOS", "lanczos" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_INTERPOLATION_NONE, N_("None (Fastest)"), NULL },
+    { GIMP_INTERPOLATION_LINEAR, N_("Linear"), NULL },
+    { GIMP_INTERPOLATION_CUBIC, N_("Cubic"), NULL },
+    { GIMP_INTERPOLATION_LANCZOS, N_("Lanczos (Best)"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpInterpolationType", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_transfer_mode_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_SHADOWS, "GIMP_SHADOWS", "shadows" },
+    { GIMP_MIDTONES, "GIMP_MIDTONES", "midtones" },
+    { GIMP_HIGHLIGHTS, "GIMP_HIGHLIGHTS", "highlights" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_SHADOWS, N_("Shadows"), NULL },
+    { GIMP_MIDTONES, N_("Midtones"), NULL },
+    { GIMP_HIGHLIGHTS, N_("Highlights"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpTransferMode", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_pdb_arg_type_get_type (void)
 {
   static const GEnumValue values[] =

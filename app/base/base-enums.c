@@ -73,38 +73,6 @@ gimp_histogram_channel_get_type (void)
 }
 
 GType
-gimp_interpolation_type_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_INTERPOLATION_NONE, "GIMP_INTERPOLATION_NONE", "none" },
-    { GIMP_INTERPOLATION_LINEAR, "GIMP_INTERPOLATION_LINEAR", "linear" },
-    { GIMP_INTERPOLATION_CUBIC, "GIMP_INTERPOLATION_CUBIC", "cubic" },
-    { GIMP_INTERPOLATION_LANCZOS, "GIMP_INTERPOLATION_LANCZOS", "lanczos" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_INTERPOLATION_NONE, N_("None (Fastest)"), NULL },
-    { GIMP_INTERPOLATION_LINEAR, N_("Linear"), NULL },
-    { GIMP_INTERPOLATION_CUBIC, N_("Cubic"), NULL },
-    { GIMP_INTERPOLATION_LANCZOS, N_("Lanczos (Best)"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (! type)
-    {
-      type = g_enum_register_static ("GimpInterpolationType", values);
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
 gimp_layer_mode_effects_get_type (void)
 {
   static const GEnumValue values[] =

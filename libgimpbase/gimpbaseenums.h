@@ -80,6 +80,31 @@ typedef enum
 } GimpImageType;
 
 
+#define GIMP_TYPE_INTERPOLATION_TYPE (gimp_interpolation_type_get_type ())
+
+GType gimp_interpolation_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_INTERPOLATION_NONE,   /*< desc="None (Fastest)" >*/
+  GIMP_INTERPOLATION_LINEAR, /*< desc="Linear"         >*/
+  GIMP_INTERPOLATION_CUBIC,  /*< desc="Cubic"          >*/
+  GIMP_INTERPOLATION_LANCZOS /*< desc="Lanczos (Best)" >*/
+} GimpInterpolationType;
+
+
+#define GIMP_TYPE_TRANSFER_MODE (gimp_transfer_mode_get_type ())
+
+GType gimp_transfer_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_SHADOWS,     /*< desc="Shadows"    >*/
+  GIMP_MIDTONES,    /*< desc="Midtones"   >*/
+  GIMP_HIGHLIGHTS   /*< desc="Highlights" >*/
+} GimpTransferMode;
+
+
 typedef enum /*< skip >*/
 {
   GIMP_UNIT_PIXEL   = 0,
