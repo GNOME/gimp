@@ -58,7 +58,7 @@ typedef struct
   gdouble           dist;
   gdouble           vec[2];
   GimpRepeatMode    repeat;
-  GRand            *dither_rand;
+  GRand            *seed;
 } RenderBlendData;
 
 typedef struct
@@ -151,10 +151,14 @@ static void     gradient_fill_region        (GimpImage        *gimage,
                                              gdouble           ey,
                                              GimpProgress     *progress);
 
-static void     gradient_fill_single_region_rgb  (RenderBlendData *rbd,
-                                                  PixelRegion     *PR);
-static void     gradient_fill_single_region_gray (RenderBlendData *rbd,
-                                                  PixelRegion     *PR);
+static void     gradient_fill_single_region_rgb         (RenderBlendData *rbd,
+                                                         PixelRegion     *PR);
+static void     gradient_fill_single_region_rgb_dither  (RenderBlendData *rbd,
+                                                         PixelRegion     *PR);
+static void     gradient_fill_single_region_gray        (RenderBlendData *rbd,
+                                                         PixelRegion     *PR);
+static void     gradient_fill_single_region_gray_dither (RenderBlendData *rbd,
+                                                         PixelRegion     *PR);
 
 
 /*  variables for the shapeburst algorithms  */
@@ -903,7 +907,6 @@ gradient_fill_region (GimpImage        *gimage,
 		      GimpProgress     *progress)
 {
   RenderBlendData  rbd;
-  GRand           *dither_rand = NULL;
 
   rbd.gradient = gimp_context_get_gradient (context);
   rbd.reverse  = reverse;
@@ -994,9 +997,6 @@ gradient_fill_region (GimpImage        *gimage,
   rbd.gradient_type = gradient_type;
   rbd.repeat        = repeat;
 
-  if (dither)
-    dither_rand = g_rand_new ();
-
   /* Render the gradient! */
 
   if (supersample)
@@ -1007,7 +1007,7 @@ gradient_fill_region (GimpImage        *gimage,
       ppd.row_data    = g_malloc (width * PR->bytes);
       ppd.bytes       = PR->bytes;
       ppd.width       = width;
-      ppd.dither_rand = dither_rand;
+      ppd.dither_rand = g_rand_new ();
 
       gimp_adaptive_supersample_area (0, 0, (width - 1), (height - 1),
 				      max_depth, threshold,
@@ -1017,6 +1017,7 @@ gradient_fill_region (GimpImage        *gimage,
                                       gimp_progress_update_and_flush : NULL,
                                       progress);
 
+      g_rand_free (ppd.dither_rand);
       g_free (ppd.row_data);
     }
   else
@@ -1024,12 +1025,22 @@ gradient_fill_region (GimpImage        *gimage,
       PixelProcessorFunc          func;
       PixelProcessorProgressFunc  progress_func = NULL;
 
-      rbd.dither_rand = dither_rand;
+      if (dither)
+        {
+          rbd.seed = g_rand_new ();
 
-      if (PR->bytes >= 3)
-        func = (PixelProcessorFunc) gradient_fill_single_region_rgb;
+          if (PR->bytes >= 3)
+            func = (PixelProcessorFunc) gradient_fill_single_region_rgb_dither;
+          else
+            func = (PixelProcessorFunc) gradient_fill_single_region_gray_dither;
+        }
       else
-        func = (PixelProcessorFunc) gradient_fill_single_region_gray;
+        {
+          if (PR->bytes >= 3)
+            func = (PixelProcessorFunc) gradient_fill_single_region_rgb;
+          else
+            func = (PixelProcessorFunc) gradient_fill_single_region_gray;
+        }
 
       if (progress)
         progress_func = (PixelProcessorProgressFunc) gimp_progress_set_value;
@@ -1037,10 +1048,10 @@ gradient_fill_region (GimpImage        *gimage,
       pixel_regions_process_parallel_progress (func, &rbd,
                                                progress_func, progress,
                                                1, PR);
-    }
 
-  if (dither)
-    g_rand_free (dither_rand);
+      if (dither)
+        g_rand_free (rbd.seed);
+    }
 }
 
 static void
@@ -1053,59 +1064,74 @@ gradient_fill_single_region_rgb (RenderBlendData *rbd,
   gint    x, y;
 
   for (y = PR->y; y < endy; y++)
-    {
-      for (x = PR->x; x < endx; x++)
-        {
-          GimpRGB  color;
+    for (x = PR->x; x < endx; x++)
+      {
+        GimpRGB  color;
 
-          gradient_render_pixel (x, y, &color, rbd);
+        gradient_render_pixel (x, y, &color, rbd);
 
-          if (rbd->dither_rand)
-            {
-              gdouble dither_prob;
-              gdouble ftmp;
-              gint    itmp;
+        *dest++ = color.r * 255.0;
+        *dest++ = color.g * 255.0;
+        *dest++ = color.b * 255.0;
+        *dest++ = color.a * 255.0;
+      }
+}
 
-              ftmp = color.r * 255.0;
-              itmp = ftmp;
-              dither_prob = ftmp - itmp;
+static void
+gradient_fill_single_region_rgb_dither (RenderBlendData *rbd,
+                                        PixelRegion     *PR)
+{
+  GRand  *dither_rand = g_rand_new_with_seed (g_rand_int (rbd->seed));
+  guchar *dest        = PR->data;
+  gint    endx        = PR->x + PR->w;
+  gint    endy        = PR->y + PR->h;
+  gint    x, y;
 
-              if (g_rand_double (rbd->dither_rand) < dither_prob)
-                color.r += (1.0 / 255.0);
+  for (y = PR->y; y < endy; y++)
+    for (x = PR->x; x < endx; x++)
+      {
+        GimpRGB  color;
+        gdouble  dither_prob;
+        gdouble  ftmp;
+        gint     itmp;
 
-              ftmp = color.g * 255.0;
-              itmp = ftmp;
-              dither_prob = ftmp - itmp;
+        gradient_render_pixel (x, y, &color, rbd);
 
-              if (g_rand_double (rbd->dither_rand) < dither_prob)
-                color.g += (1.0 / 255.0);
+        ftmp = color.r * 255.0;
+        itmp = ftmp;
+        dither_prob = ftmp - itmp;
 
-              ftmp = color.b * 255.0;
-              itmp = ftmp;
-              dither_prob = ftmp - itmp;
+        if (g_rand_double (dither_rand) < dither_prob)
+          color.r += (1.0 / 255.0);
 
-              if (g_rand_double (rbd->dither_rand) < dither_prob)
-                color.b += (1.0 / 255.0);
+        ftmp = color.g * 255.0;
+        itmp = ftmp;
+        dither_prob = ftmp - itmp;
 
-              ftmp = color.a * 255.0;
-              itmp = ftmp;
-              dither_prob = ftmp - itmp;
+        if (g_rand_double (dither_rand) < dither_prob)
+          color.g += (1.0 / 255.0);
 
-              if (g_rand_double (rbd->dither_rand) < dither_prob)
-                color.a += (1.0 / 255.0);
+        ftmp = color.b * 255.0;
+        itmp = ftmp;
+        dither_prob = ftmp - itmp;
 
-              if (color.r > 1.0) color.r = 1.0;
-              if (color.g > 1.0) color.g = 1.0;
-              if (color.b > 1.0) color.b = 1.0;
-              if (color.a > 1.0) color.a = 1.0;
-            }
+        if (g_rand_double (dither_rand) < dither_prob)
+          color.b += (1.0 / 255.0);
 
-          *dest++ = color.r * 255.0;
-          *dest++ = color.g * 255.0;
-          *dest++ = color.b * 255.0;
-          *dest++ = color.a * 255.0;
-        }
-    }
+        ftmp = color.a * 255.0;
+        itmp = ftmp;
+        dither_prob = ftmp - itmp;
+
+        if (g_rand_double (dither_rand) < dither_prob)
+          color.a += (1.0 / 255.0);
+
+        *dest++ = (color.r > 1.0) ? 255 : color.r * 255.0;
+        *dest++ = (color.g > 1.0) ? 255 : color.g * 255.0;
+        *dest++ = (color.b > 1.0) ? 255 : color.b * 255.0;
+        *dest++ = (color.a > 1.0) ? 255 : color.a * 255.0;
+      }
+
+  g_rand_free (dither_rand);
 }
 
 static void
@@ -1118,42 +1144,57 @@ gradient_fill_single_region_gray (RenderBlendData *rbd,
   gint    x, y;
 
   for (y = PR->y; y < endy; y++)
-    {
-      for (x = PR->x; x < endx; x++)
-        {
-          GimpRGB  color;
-          gdouble  gray;
+    for (x = PR->x; x < endx; x++)
+      {
+        GimpRGB  color;
 
-          gradient_render_pixel (x, y, &color, rbd);
+        gradient_render_pixel (x, y, &color, rbd);
 
-          gray = gimp_rgb_intensity (&color);
+        *dest++ = gimp_rgb_intensity (&color) * 255.0;
+        *dest++ = color.a * 255.0;
+      }
+}
 
-          if (rbd->dither_rand)
-            {
-              gdouble dither_prob;
-              gdouble ftmp;
-              gint    itmp;
+static void
+gradient_fill_single_region_gray_dither (RenderBlendData *rbd,
+                                         PixelRegion     *PR)
+{
+  GRand  *dither_rand = g_rand_new_with_seed (g_rand_int (rbd->seed));
+  guchar *dest        = PR->data;
+  gint    endx        = PR->x + PR->w;
+  gint    endy        = PR->y + PR->h;
+  gint    x, y;
 
-              ftmp = gray * 255.0;
-              itmp = ftmp;
-              dither_prob = ftmp - itmp;
+  for (y = PR->y; y < endy; y++)
+    for (x = PR->x; x < endx; x++)
+      {
+        GimpRGB  color;
+        gdouble  gray;
+        gdouble  dither_prob;
+        gdouble  ftmp;
+        gint     itmp;
 
-              if (g_rand_double (rbd->dither_rand) < dither_prob)
-                gray += (1.0 / 255.0);
+        gradient_render_pixel (x, y, &color, rbd);
 
-              ftmp = color.a * 255.0;
-              itmp = ftmp;
-              dither_prob = ftmp - itmp;
+        gray = gimp_rgb_intensity (&color);
 
-              if (g_rand_double (rbd->dither_rand) < dither_prob)
-                color.a += (1.0 / 255.0);
+        ftmp = gray * 255.0;
+        itmp = ftmp;
+        dither_prob = ftmp - itmp;
 
-              if (gray > 1.0)    gray    = 1.0;
-              if (color.a > 1.0) color.a = 1.0;
-            }
+        if (g_rand_double (dither_rand) < dither_prob)
+          gray += (1.0 / 255.0);
 
-          *dest++ = gray * 255.0;
-          *dest++ = color.a * 255.0;
-        }
-    }
+        ftmp = color.a * 255.0;
+        itmp = ftmp;
+        dither_prob = ftmp - itmp;
+
+        if (g_rand_double (dither_rand) < dither_prob)
+          color.a += (1.0 / 255.0);
+
+        *dest++ = (gray    > 1.0) ? 255 : gray    * 255.0;
+        *dest++ = (color.a > 1.0) ? 255 : color.a * 255.0;
+      }
+
+  g_rand_free (dither_rand);
 }

@@ -1,5 +1,10 @@
 2005-02-27  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpdrawable-blend.c: (hopefully) improve the threaded
+	performance by using a dedicated RNG per tile.
+
+2005-02-27  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage-convert-fsdither.h
 	* app/core/gimpimage-convertc: save a kilobyte of data by using
 	guchar for the range array.
