@@ -1351,6 +1351,8 @@ gimage_get_layer_index (GImage *gimage, int layer_ID)
   link_ptr layers = gimage->layers;
   int index = 0;
 
+  g_return_val_if_fail(gimage != NULL, -1);
+
   while (layers)
     {
       layer = (Layer *) layers->data;
