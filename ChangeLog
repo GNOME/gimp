@@ -1,3 +1,11 @@
+2004-05-09  Maurits Rijk  <m.rijk@chello.nl>
+
+	* plug-ins/common/aa.c
+	* plug-ins/common/apply_lens.c
+	* plug-ins/common/autocrop.c
+	* plug-ins/common/autostretch_hsv.c: HIGified, GPL license added in
+	some plug-ins, minor code clean-up.
+
 2004-05-08  Maurits Rijk  <m.rijk@chello.nl>
 
 	* plug-ins/common/spread.c: HIGified, simplified and fixes #141733

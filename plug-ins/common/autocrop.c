@@ -1,20 +1,29 @@
 /*
  * Autocrop plug-in version 1.00
  * by Tim Newsome <drz@froody.bloke.com>
- * thanks to quartic for finding a nasty bug for me
  */
 
-/* 1999/04/09 -- Sven Neumann <sven@gimp.org>
- * Fixed bad crash that occured when running on an entirely blank image.
- * Cleaned up the code a bit, while I was at it.
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
-#include <time.h>
 
 #include <libgimp/gimp.h>
 
@@ -29,9 +38,9 @@ static void run           (const gchar      *name,
                            gint             *nreturn_vals,
                            GimpParam       **return_vals);
 
-static gint colors_equal  (guchar       *col1,
-                           guchar       *col2,
-                           gint          bytes);
+static gboolean colors_equal  (const guchar *col1,
+			       const guchar *col2,
+			       gint          bytes);
 static gint guess_bgcolor (GimpPixelRgn *pr,
                            gint          width,
                            gint          height,
@@ -312,26 +321,26 @@ guess_bgcolor (GimpPixelRgn *pr,
     }
 }
 
-static gint
-colors_equal (guchar *col1,
-              guchar *col2,
-              gint    bytes)
+static gboolean
+colors_equal (const guchar 	*col1,
+              const guchar	*col2,
+              gint  		 bytes)
 {
-  gint equal = 1;
+  gboolean equal = TRUE;
   gint b;
 
   if ((bytes == 2 || bytes == 4) &&     /* HACK! */
       col1[bytes-1] == 0 &&
       col2[bytes-1] == 0)
     {
-      return 1;                         /* handle zero alpha */
+      return TRUE;                      /* handle zero alpha */
     }
 
   for (b = 0; b < bytes; b++)
     {
       if (col1[b] != col2[b])
         {
-          equal = 0;
+          equal = FALSE;
           break;
         }
     }

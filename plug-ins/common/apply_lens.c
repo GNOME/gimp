@@ -23,13 +23,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* Version 0.1:
- *
- * First release. No known serious bugs, and basically does what you want.
- * All fancy features postponed until the next release, though. :)
- *
- */
-
 /*
   TO DO:
   - antialiasing
@@ -46,9 +39,6 @@
  */
 
 #include "config.h"
-
-#include <stdio.h>
-#include <stdlib.h>
 
 #include <gtk/gtk.h>
 
@@ -211,26 +201,24 @@ find_projected_pos (gfloat  a2,
                     gfloat *projx,
                     gfloat *projy)
 {
-  gfloat n[3];
+  gfloat z;
   gfloat nxangle, nyangle, theta1, theta2;
   gfloat ri1 = 1.0;
   gfloat ri2 = lvals.refraction;
 
-  n[0] = x;
-  n[1] = y;
-  n[2] = sqrt ((1 - x * x / a2 - y * y / b2) * c2);
+  z = sqrt ((1 - x * x / a2 - y * y / b2) * c2);
 
-  nxangle = acos (n[0] / sqrt(n[0] * n[0] + n[2] * n[2]));
+  nxangle = acos (x / sqrt(x * x + z * z));
   theta1 = G_PI / 2 - nxangle;
   theta2 = asin (sin (theta1) * ri1 / ri2);
   theta2 = G_PI / 2 - nxangle - theta2;
-  *projx = x - tan (theta2) * n[2];
+  *projx = x - tan (theta2) * z;
 
-  nyangle = acos (n[1]/sqrt (n[1] * n[1] + n[2] * n[2]));
+  nyangle = acos (y / sqrt (y * y + z * z));
   theta1 = G_PI / 2 - nyangle;
   theta2 = asin (sin (theta1) * ri1 / ri2);
   theta2 = G_PI / 2 - nyangle - theta2;
-  *projy = y - tan (theta2) * n[2];
+  *projy = y - tan (theta2) * z;
 }
 
 static void
@@ -350,7 +338,7 @@ drawlens (GimpDrawable *drawable)
 
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_update (drawable->drawable_id, x1, y1, x2 - x1, y2 - y1);
 }
 
 static gint
@@ -359,9 +347,7 @@ lens_dialog (GimpDrawable *drawable)
   GtkWidget *dlg;
   GtkWidget *label;
   GtkWidget *toggle;
-  GtkWidget *frame;
   GtkWidget *vbox;
-  GtkWidget *sep;
   GtkWidget *hbox;
   GtkWidget *spinbutton;
   GtkObject *adj;
@@ -378,14 +364,9 @@ lens_dialog (GimpDrawable *drawable)
 
                          NULL);
 
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
   vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   toggle = gtk_radio_button_new_with_mnemonic_from_widget
@@ -424,10 +405,6 @@ lens_dialog (GimpDrawable *drawable)
                         G_CALLBACK (gimp_toggle_button_update),
                         &lvals.set_transparent);
   }
-
-  sep = gtk_hseparator_new ();
-  gtk_box_pack_start (GTK_BOX (vbox), sep, FALSE, FALSE, 2);
-  gtk_widget_show (sep);
 
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);

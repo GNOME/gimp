@@ -5,7 +5,6 @@
  * Copyright (C) 1996 Federico Mena Quintero
  *
  * You can contact me at scott@poverty.bloomington.in.us
- * You can contact the original The Gimp authors at gimp@xcf.berkeley.edu
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,17 +21,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* This simple plug-in does an automatic contrast stretch.  For each
-   channel in the image, it finds the minimum and maximum values... it
-   uses those values to stretch the individual histograms to the full
-   contrast range.  For some images it may do just what you want; for
-   others it may be total crap :) This version operates in HSV space
-   and preserves hue, unlike the original Contrast Autostretch. */
-
 #include "config.h"
-
-#include <stdlib.h>
-#include <stdio.h>
 
 #include <libgimp/gimp.h>
 
@@ -190,18 +179,18 @@ autostretch_hsv_func (guchar *src, guchar *dest, gint bpp,
 }
 
 static void
-indexed_autostretch_hsv (gint32 image_ID)  /* a.d.m. */
+indexed_autostretch_hsv (gint32 image_ID)
 {
   guchar *cmap;
   AutostretchData data = {0.0, 1.0, 0.0, 1.0};
-  gint ncols,i;
+  gint ncols, i;
 
   cmap = gimp_image_get_cmap (image_ID, &ncols);
 
-  if (cmap==NULL)
+  if (!cmap)
     {
-      fprintf(stderr, "autostretch_hsv: cmap was NULL!  Quitting...\n");
-      gimp_quit();
+      g_message (_("autostretch_hsv: cmap was NULL!  Quitting...\n"));
+      gimp_quit ();
     }
 
   for (i = 0; i < ncols; i++)
