@@ -1,3 +1,14 @@
+2003-09-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/Makefile.am
+	* app/gui/Makefile.am
+	* app/paint/Makefile.am
+	* app/pdb/Makefile.am
+	* app/text/Makefile.am
+	* app/tools/Makefile.am
+	* app/widgets/Makefile.am
+	* app/xcf/Makefile.am (INCLUDES): add $(LIBART_CFLAGS) here too.
+
 2003-09-06  Dave Neary  <bolsh@gimp.org>
 
 	* app/vectors/Makefile.am: Include libart headers

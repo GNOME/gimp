@@ -11,6 +11,7 @@ INCLUDES = \
 	-I$(top_builddir)/app	\
 	-I$(top_srcdir)/app	\
 	$(GTK_CFLAGS)		\
+	$(LIBART_CFLAGS)	\
 	-I$(includedir)
 
 noinst_LIBRARIES = libapppaint.a

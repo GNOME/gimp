@@ -10,6 +10,7 @@ INCLUDES = \
 	-I$(top_srcdir)/app	\
 	$(GTK_CFLAGS)		\
 	$(PANGOFT2_CFLAGS)	\
+	$(LIBART_CFLAGS)	\
 	-I$(includedir)
 
 noinst_LIBRARIES = libapptext.a
