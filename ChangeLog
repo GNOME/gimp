@@ -1,3 +1,8 @@
+2003-03-07  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/guides.pdb
+	* app/guides_cmds.c: merged fix for bug #90629 from HEAD branch.
+
 2003-03-06  Tor Lillqvist  <tml@iki.fi>
 
 	* app/fileops.c (file_save_as_callback): Yet one more UTF-8 hack
@@ -51,7 +56,7 @@
 
 2003-02-22  Dave Neary  <bolsh@gimp.org>
 
-        * plug-ins/common/png.c: Merged fix for bug #105360 from
+	* plug-ins/common/png.c: Merged fix for bug #105360 from
         HEAD.
 
 2003-02-18  Tor Lillqvist  <tml@iki.fi>
