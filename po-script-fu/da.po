@@ -19,8 +19,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu\n"
-"POT-Creation-Date: 2002-05-28 02:11+0200\n"
-"PO-Revision-Date: 2002-04-09 21:15+0200\n"
+"POT-Creation-Date: 2002-06-18 00:21+0200\n"
+"PO-Revision-Date: 2002-06-18 00:20+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -118,18 +118,18 @@ msgstr ""
 "En eller flere af de skrifttyper du har valgt\n"
 "er ugyldige. Tjek venligst indstillingerne.\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:487
 #: plug-ins/script-fu/script-fu-scripts.c:1961
+#: plug-ins/dbbrowser/dbbrowser_utils.c:481
 msgid "Author:"
 msgstr "Udvikler:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:503
 #: plug-ins/script-fu/script-fu-scripts.c:1967
+#: plug-ins/dbbrowser/dbbrowser_utils.c:497
 msgid "Copyright:"
 msgstr "Ophavsret:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:495
 #: plug-ins/script-fu/script-fu-scripts.c:1973
+#: plug-ins/dbbrowser/dbbrowser_utils.c:489
 msgid "Date:"
 msgstr "Dato:"
 
@@ -152,15 +152,15 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:551
+#: plug-ins/script-fu/script-fu-server.c:568
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu-tjenesteindstillinger"
 
-#: plug-ins/script-fu/script-fu-server.c:578
+#: plug-ins/script-fu/script-fu-server.c:595
 msgid "Server Port:"
 msgstr "Tjenesteport: "
 
-#: plug-ins/script-fu/script-fu-server.c:584
+#: plug-ins/script-fu/script-fu-server.c:601
 msgid "Server Logfile:"
 msgstr "Tjenestelogfil:"
 
@@ -182,58 +182,58 @@ msgstr "<Toolbox>/Udvidelser/Script-Fu/Genopfrisk"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:125
 #: plug-ins/dbbrowser/dbbrowser_utils.c:144
-msgid "DB Browser (init...)"
-msgstr "Proceduredatabase (klargør...)"
+msgid "DB Browser"
+msgstr "Proceduredatabase"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:130
 #: plug-ins/dbbrowser/dbbrowser_utils.c:149
-msgid "Search by Name"
-msgstr "Søg efter navn"
+msgid "Search by _Name"
+msgstr "Søg efter _navn"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:132
 #: plug-ins/dbbrowser/dbbrowser_utils.c:151
-msgid "Search by Blurb"
-msgstr "Søg efter beskrivelse"
+msgid "Search by _Blurb"
+msgstr "Søg efter _beskrivelse"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:215
-msgid "Search:"
-msgstr "Søg:"
+#: plug-ins/dbbrowser/dbbrowser_utils.c:208
+msgid "_Search:"
+msgstr "_Søg:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:346
+#: plug-ins/dbbrowser/dbbrowser_utils.c:340
 msgid "Name:"
 msgstr "Navn:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:355
+#: plug-ins/dbbrowser/dbbrowser_utils.c:349
 msgid "Blurb:"
 msgstr "Beskrivelse:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:367
+#: plug-ins/dbbrowser/dbbrowser_utils.c:361
 msgid "In:"
 msgstr "Ind:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:415
+#: plug-ins/dbbrowser/dbbrowser_utils.c:409
 msgid "Out:"
 msgstr "Ud:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:469
+#: plug-ins/dbbrowser/dbbrowser_utils.c:463
 msgid "Help:"
 msgstr "Hjælp:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:572
-msgid "DB Browser (by name - please wait)"
-msgstr "Proceduredatabase (efter navn - vent venligst)"
+#: plug-ins/dbbrowser/dbbrowser_utils.c:599
+msgid "Searching by name - please wait"
+msgstr "Søger efter navn - vent venligst"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:596
-msgid "DB Browser (by blurb - please wait)"
-msgstr "Proceduredatabase (efter beskrivelse - vent venligst)"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:606
-msgid "DB Browser (please wait)"
-msgstr "Proceduredatabase (vent venligst)"
+#: plug-ins/dbbrowser/dbbrowser_utils.c:622
+msgid "Searching by blurb - please wait"
+msgstr "Søger efter beskrivelse - vent venligst"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:632
-msgid "DB Browser"
-msgstr "Proceduredatabase"
+msgid "Searching - please wait"
+msgstr "Søger - vent venligst"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:674
+msgid "No matches"
+msgstr "Ingen fundet"
 
 # "Selection to AnimImage" dækker over at der laves en ordentlig portion
 # billeder af det markerede
@@ -2338,6 +2338,3 @@ msgstr "<Toolbox>/Udvidelser/Internet/Udvidelsesmodulregistrering"
 #: plug-ins/webbrowser/web-browser.scm.h:17
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr "<Toolbox>/Udvidelser/Internet/OSS for brugere"
-
-#~ msgid "Reset to Defaults"
-#~ msgstr "Gendan standarder"
