@@ -285,7 +285,7 @@ gimage_mask_extract (GImage       *gimage,
 				 tiles->width, tiles->height);
 
 	  /*  Invalidate the preview  */
-	  drawable_invalidate_preview (drawable);
+	  gimp_drawable_invalidate_preview (drawable, TRUE);
 	}
     }
   /*  Otherwise, get the entire active layer  */

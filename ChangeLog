@@ -1,3 +1,18 @@
+Sat Jun  3 11:11:58 PDT 2000  Sven Neumann <sven@gimp.org>
+
+	* app/channel.c
+	* app/drawable.c
+	* app/floating_sel.c
+	* app/gimage_mask.c
+	* app/gimpdrawable.[ch]
+	* app/ink.c
+	* app/layer.c
+	* app/paint_core.c
+	* app/undo.c
+	* app/xinput_airbrush.c: be smarter about emitting the 
+	"invalidate_preview" signal, so it doesn't slow down 
+	painting and image_map color-corrections. 
+
 2000-06-03  Michael Natterer  <mitch@gimp.org>
 	    Sven Neumann  <sven@gimp.org>
 

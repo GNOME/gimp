@@ -580,7 +580,7 @@ channel_invalidate_previews (GimpImage* gimage)
   while (tmp)
     {
       channel = (Channel *) tmp->data;
-      drawable_invalidate_preview (GIMP_DRAWABLE (channel));
+      gimp_drawable_invalidate_preview (GIMP_DRAWABLE (channel), TRUE);
       tmp = g_slist_next (tmp);
     }
 }

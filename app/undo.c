@@ -1995,7 +1995,7 @@ undo_pop_fs_to_layer (GImage    *gimage,
     {
     case UNDO:
       /*  Update the preview for the floating sel  */
-      drawable_invalidate_preview (GIMP_DRAWABLE (fsu->layer));
+      gimp_drawable_invalidate_preview (GIMP_DRAWABLE (fsu->layer), TRUE);
 
       fsu->layer->fs.drawable = fsu->drawable;
       gimage->active_layer = fsu->layer;
@@ -2013,7 +2013,7 @@ undo_pop_fs_to_layer (GImage    *gimage,
       layer_invalidate_boundary (fsu->layer);
 
       /*  Update the preview for the gimage and underlying drawable  */
-      drawable_invalidate_preview (GIMP_DRAWABLE (fsu->layer));
+      gimp_drawable_invalidate_preview (GIMP_DRAWABLE (fsu->layer), TRUE);
       break;
 
     case REDO:
@@ -2025,7 +2025,7 @@ undo_pop_fs_to_layer (GImage    *gimage,
 			    GIMP_DRAWABLE (fsu->layer)->height);
 
       /*  Update the preview for the gimage and underlying drawable  */
-      drawable_invalidate_preview (GIMP_DRAWABLE (fsu->layer));
+      gimp_drawable_invalidate_preview (GIMP_DRAWABLE (fsu->layer), TRUE);
 
       /*  clear the selection  */
       layer_invalidate_boundary (fsu->layer);
@@ -2035,7 +2035,7 @@ undo_pop_fs_to_layer (GImage    *gimage,
       gimage->floating_sel = NULL;
 
       /*  Update the fs drawable  */
-      drawable_invalidate_preview (GIMP_DRAWABLE (fsu->layer));
+      gimp_drawable_invalidate_preview (GIMP_DRAWABLE (fsu->layer), TRUE);
       break;
     }
 

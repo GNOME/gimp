@@ -98,7 +98,7 @@ drawable_update (GimpDrawable *drawable,
   gdisplays_update_area (gimage, x, y, w, h);
 
   /*  invalidate the preview  */
-  gimp_drawable_invalidate_preview (drawable);
+  gimp_drawable_invalidate_preview (drawable, FALSE);
 }
 
 void

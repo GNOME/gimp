@@ -1115,7 +1115,7 @@ ink_finish (InkTool *ink_tool, GimpDrawable *drawable, int tool_id)
   /*  invalidate the drawable--have to do it here, because
    *  it is not done during the actual painting.
    */
-  drawable_invalidate_preview (drawable);
+  gimp_drawable_invalidate_preview (drawable, TRUE);
 }
 
 static void

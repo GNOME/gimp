@@ -92,7 +92,7 @@ floating_sel_remove (Layer *layer)
    *  because it will not be done until the floating selection is removed,
    *  at which point the obscured drawable's preview will not be declared invalid
    */
-  drawable_invalidate_preview (GIMP_DRAWABLE (layer));
+  gimp_drawable_invalidate_preview (GIMP_DRAWABLE (layer), TRUE);
 
   /*  remove the layer from the gimage  */
   gimage_remove_layer (gimage, layer);
@@ -116,7 +116,7 @@ floating_sel_anchor (Layer *layer)
 
   /* Invalidate the previews of the layer that will be composited with the floating section. */
 
-  drawable_invalidate_preview (layer->fs.drawable);
+  gimp_drawable_invalidate_preview (layer->fs.drawable, TRUE);
 
   /*  Relax the floating selection  */
   floating_sel_relax (layer, TRUE);
@@ -198,7 +198,7 @@ floating_sel_to_layer (Layer *layer)
   /*  update the fs drawable--this updates the gimage composite preview
    *  as well as the underlying drawable's
    */
-  drawable_invalidate_preview (GIMP_DRAWABLE (layer));
+  gimp_drawable_invalidate_preview (GIMP_DRAWABLE (layer), TRUE);
 
   /*  allocate the undo structure  */
   fsu = g_new (FStoLayerUndo, 1);
@@ -516,7 +516,7 @@ void
 floating_sel_invalidate (Layer *layer)
 {
   /*  Invalidate the attached-to drawable's preview  */
-  drawable_invalidate_preview (layer->fs.drawable);
+  gimp_drawable_invalidate_preview (layer->fs.drawable, TRUE);
 
   /*  Invalidate the boundary  */
   layer->fs.boundary_known = FALSE;

@@ -215,15 +215,19 @@ gimp_drawable_mask_bounds (GimpDrawable *drawable,
 }
 
 void
-gimp_drawable_invalidate_preview (GimpDrawable *drawable)
+gimp_drawable_invalidate_preview (GimpDrawable *drawable,
+				  gboolean      emit_signal)
 {
   GimpImage *gimage;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
   drawable->preview_valid = FALSE;
-  gtk_signal_emit (GTK_OBJECT (drawable),
-		   gimp_drawable_signals[INVALIDATE_PREVIEW]);
+
+  if (emit_signal)
+    gtk_signal_emit (GTK_OBJECT (drawable),
+		     gimp_drawable_signals[INVALIDATE_PREVIEW]);
+
   gimage = gimp_drawable_gimage (drawable);
   if (gimage)
     {

@@ -694,7 +694,8 @@ layer_translate_lowlevel (Layer    *layer,
       if (!temporary)
 	{
 	  /*  invalidate the mask preview  */
-	  drawable_invalidate_preview (GIMP_DRAWABLE (layer->mask));
+	  gimp_drawable_invalidate_preview (GIMP_DRAWABLE (layer->mask),
+					    FALSE);
 	}
     }
 }
@@ -1505,7 +1506,7 @@ layer_invalidate_previews (GimpImage *gimage)
   while (tmp)
     {
       layer = (Layer *) tmp->data;
-      drawable_invalidate_preview (GIMP_DRAWABLE(layer));
+      gimp_drawable_invalidate_preview (GIMP_DRAWABLE(layer), TRUE);
       tmp = g_slist_next (tmp);
     }
 }

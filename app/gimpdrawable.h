@@ -45,7 +45,8 @@ gboolean         gimp_drawable_mask_bounds        (GimpDrawable *,
 						   gint *, gint *,
 						   gint *, gint *);
 
-void             gimp_drawable_invalidate_preview (GimpDrawable *);
+void             gimp_drawable_invalidate_preview (GimpDrawable *drawable, 
+						   gboolean      emit_signal);
 gint             gimp_drawable_dirty              (GimpDrawable *);
 gint             gimp_drawable_clean              (GimpDrawable *);
 gboolean         gimp_drawable_has_alpha          (GimpDrawable *);
