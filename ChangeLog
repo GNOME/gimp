@@ -1,4 +1,4 @@
-Sun Dec  7 17:05:32 PST 1997
+Sun Dec  7 17:05:32 PST 1997  Manish Singh <yosh@gimp.org>
 
 	* added Sven Neumann's patch to the scale and resize dialogs for		ratio input fields (app/resize.h, app/resize.c)
 
