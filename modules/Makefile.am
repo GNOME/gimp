@@ -76,5 +76,6 @@ libcontroller_linux_input_la_LDFLAGS = -avoid-version -module $(no_undefined)
 libcontroller_linux_input_la_LIBADD = $(controller_libadd)
 
 libcontroller_midi_la_SOURCES = controller_midi.c
+libcontroller_midi_la_CFLAGS = $(ALSA_CFLAGS)
 libcontroller_midi_la_LDFLAGS = -avoid-version -module $(no_undefined)
-libcontroller_midi_la_LIBADD = $(controller_libadd)
+libcontroller_midi_la_LIBADD = $(controller_libadd) $(ALSA_LIBS)

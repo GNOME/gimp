@@ -22,16 +22,14 @@
 
 #include "config.h"
 
-#undef HAVE_ASOUNDLIB_H
-
 #include <errno.h>
 #include <fcntl.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#ifdef HAVE_ASOUNDLIB_H
-#  include <alsa/asoundlib.h>
+#ifdef HAVE_ALSA
+#include <alsa/asoundlib.h>
 #endif
 
 #include <gtk/gtk.h>
@@ -79,7 +77,7 @@ struct _ControllerMidi
   GIOChannel     *io;
   guint           io_id;
 
-#ifdef HAVE_ASOUNDLIB_H
+#ifdef HAVE_ALSA
   snd_seq_t      *sequencer;
   guint           seq_id;
 #endif
@@ -132,7 +130,7 @@ static gboolean      midi_read_event      (GIOChannel     *io,
                                            GIOCondition    cond,
                                            gpointer        data);
 
-#ifdef HAVE_ASOUNDLIB_H
+#ifdef HAVE_ALSA
 static gboolean      midi_alsa_prepare    (GSource        *source,
                                            gint           *timeout);
 static gboolean      midi_alsa_check      (GSource        *source);
@@ -155,8 +153,7 @@ struct _GAlsaSource
   GSource         source;
   ControllerMidi *controller;
 };
-
-#endif
+#endif /* HAVE_ALSA */
 
 static const GimpModuleInfo midi_info =
 {
@@ -260,7 +257,7 @@ midi_init (ControllerMidi *midi)
   midi->midi_channel = -1;
   midi->io           = NULL;
   midi->io_id        = 0;
-#ifdef HAVE_ASOUNDLIB_H
+#ifdef HAVE_ALSA
   midi->sequencer    = NULL;
   midi->seq_id       = 0;
 #endif
@@ -405,7 +402,7 @@ midi_set_device (ControllerMidi *midi,
       midi->io = NULL;
     }
 
-#ifdef HAVE_ASOUNDLIB_H
+#ifdef HAVE_ALSA
   if (midi->seq_id)
     {
       g_source_remove (midi->seq_id);
@@ -414,7 +411,7 @@ midi_set_device (ControllerMidi *midi,
       snd_seq_close (midi->sequencer);
       midi->sequencer = NULL;
     }
-#endif
+#endif /* HAVE_ALSA */
 
   if (midi->device)
     g_free (midi->device);
@@ -425,7 +422,7 @@ midi_set_device (ControllerMidi *midi,
     {
       gint fd;
 
-#ifdef HAVE_ASOUNDLIB_H
+#ifdef HAVE_ALSA
       if (! g_ascii_strcasecmp (midi->device, "alsa"))
         {
           GAlsaSource *event_source;
@@ -473,9 +470,10 @@ midi_set_device (ControllerMidi *midi,
                                                        sizeof (GAlsaSource));
           event_source->controller = midi;
           midi->seq_id = g_source_attach ((GSource *) event_source, NULL);
+
           return TRUE;
         }
-#endif
+#endif /* HAVE_ALSA */
 
 #ifdef G_OS_WIN32
       fd = open (midi->device, O_RDONLY);
@@ -806,7 +804,7 @@ midi_read_event (GIOChannel   *io,
   return TRUE;
 }
 
-#ifdef HAVE_ASOUNDLIB_H
+#ifdef HAVE_ALSA
 static gboolean
 midi_alsa_prepare (GSource *source,
                    gint    *timeout)
@@ -833,12 +831,13 @@ midi_alsa_dispatch (GSource     *source,
                     GSourceFunc  callback,
                     gpointer     user_data)
 {
-  ControllerMidi *midi = CONTROLLER_MIDI (((GAlsaSource *) source)->controller);
+  ControllerMidi  *midi = CONTROLLER_MIDI (((GAlsaSource *) source)->controller);
   snd_seq_event_t *event;
 
   if (snd_seq_event_input_pending (midi->sequencer, 1) > 0)
     {
       snd_seq_event_input (midi->sequencer, &event);
+
       if (event->type == SND_SEQ_EVENT_NOTEON &&
           event->data.note.velocity == 0)
         event->type = SND_SEQ_EVENT_NOTEOFF;
@@ -869,4 +868,4 @@ midi_alsa_dispatch (GSource     *source,
 
   return FALSE;
 }
-#endif
+#endif /* HAVE_ALSA */

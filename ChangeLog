@@ -1,5 +1,18 @@
 2004-11-18  Michael Natterer  <mitch@gimp.org>
 
+	* acinclude.m4: pasted the complete alsa.m4 so compiling from
+	CVS doesn't require alsa.m4 to be installed.
+
+	* configure.in: check for alsa >= 1.0.0 and define HAVE_ALSA
+	if found.
+
+	* modules/Makefile.am: build controller_midi with ALSA_CFLAGS
+	and ALSA_LIBS.
+
+	* modules/controller_midi.c: s/HAVE_ALSALIB_H/HAVE_ALSA/.
+
+2004-11-18  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/compressor.c (compressors): added back the
 	.xcf.gz and .xcf.bz2 extensions because they are the only way
 	to figure the special nature of this plug-in's extensions.

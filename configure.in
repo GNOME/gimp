@@ -54,6 +54,7 @@ m4_define([gtkhtml2_required_version], [2.0.0])
 m4_define([gimpprint_required_version], [4.2.0])
 m4_define([gimpprint_suggested_version], [4.2.6])
 m4_define([gimpprint_toonew_version], [4.3.0])
+m4_define([alsa_required_version], [1.0.0])
 m4_define([rsvg_required_version], [2.2.0])
 m4_define([wmf_required_version], [0.2.8])
 m4_define([pygtk_required_version], [1.99.15])
@@ -1205,6 +1206,15 @@ fi
 
 AC_SUBST(LCMS_LIBS)
 AM_CONDITIONAL(HAVE_LCMS, test $have_lcms = yes)
+
+
+################
+# Check for alsa
+################
+
+AM_PATH_ALSA(alsa_required_version,
+             AC_DEFINE(HAVE_ALSA, 1, [Define to 1 if alsa is available]),
+             AC_MSG_WARN([*** midi input controller will be built without alsa support (alsa not found or unuseable) ***]))
 
 
 #######################
