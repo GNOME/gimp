@@ -287,9 +287,9 @@ gdisplay_delete_warning_callback (GtkWidget *widget,
 				  GdkEvent  *event,
 				  gpointer  client_data)
 {
-  gdisplay_cancel_warning_callback (widget, client_data);
+  menus_set_sensitive ("<Image>/File/Close", TRUE);
 
-  return TRUE;
+  return FALSE;
 }
 
 static void

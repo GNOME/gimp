@@ -227,9 +227,9 @@ tools_button_press (GtkWidget      *w,
 static gint
 toolbox_delete (GtkWidget *w, GdkEvent *e, gpointer data)
 {
-  app_exit (FALSE);
+  app_exit (0);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -252,7 +252,7 @@ gdisplay_delete (GtkWidget *w,
 {
   gdisplay_close_window (gdisp, FALSE);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void

@@ -572,7 +572,7 @@ really_quit_callback (GtkButton *button,
 }
 
 static void
-really_quit_cancel_callback (GtkButton *button,
+really_quit_cancel_callback (GtkWidget *widget,
 			     GtkWidget *dialog)
 {
   menus_set_sensitive ("<Toolbox>/File/Quit", TRUE);
@@ -585,7 +585,7 @@ really_quit_delete_callback (GtkWidget *widget,
 			     GdkEvent  *event,
 			     gpointer client_data) 
 {
-  really_quit_cancel_callback (GTK_BUTTON(widget), (GtkWidget *) client_data);
+  really_quit_cancel_callback (widget, (GtkWidget *) client_data);
 
   return TRUE;
 }
