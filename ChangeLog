@@ -1,3 +1,7 @@
+2003-12-19  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpcompat.h: added some missing #defines.
+
 2003-12-18  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpfileentry.c
