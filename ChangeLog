@@ -1,5 +1,22 @@
 2005-02-14  Sven Neumann  <sven@gimp.org>
 
+	* app/base/gimphistogram.[ch]: allocate temporary histogram slots
+	on demand and provide an array with enough slots for the maximum
+	number of threads. gimp_histogram_new() doesn't need a
+	GimpBaseConfig parameter any longer.
+
+	* app/core/gimpdrawable-equalize.c
+	* app/core/gimpdrawable-levels.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpthresholdtool.c
+	* app/widgets/gimphistogrameditor.c
+	* tools/pdbgen/pdb/color.pdb: changed accordingly.
+
+	* app/pdb/color_cmds.c: regenerated.
+
+2005-02-14  Sven Neumann  <sven@gimp.org>
+
 	* app/base/pixel-processor.[ch]: define the maximum number of
 	threads in the header file.
 

@@ -31,8 +31,6 @@
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
 
-#include "config/gimpbaseconfig.h"
-
 #include "gimp.h"
 #include "gimpcontext.h"
 #include "gimpdrawable.h"
@@ -133,7 +131,7 @@ gimp_drawable_levels_stretch (GimpDrawable *drawable,
     return;
 
   /* Build the histogram */
-  hist = gimp_histogram_new (GIMP_BASE_CONFIG (context->gimp->config));
+  hist = gimp_histogram_new ();
 
   gimp_drawable_calculate_histogram (drawable, hist);
 

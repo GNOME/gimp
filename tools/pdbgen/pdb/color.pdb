@@ -733,8 +733,7 @@ HELP
     }
 
     %invoke = (
-	headers => [ qw("config/gimpbaseconfig.h" "core/gimp.h"
-                        "core/gimpdrawable-histogram.h") ],
+	headers => [ qw("core/gimp.h" "core/gimpdrawable-histogram.h") ],
 	code => <<'CODE'
 {
   if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
@@ -747,9 +746,7 @@ HELP
 
   if (success)
     {
-      GimpHistogram *histogram;
-
-      histogram = gimp_histogram_new (GIMP_BASE_CONFIG (gimp->config));
+      GimpHistogram *histogram = gimp_histogram_new ();
 
       gimp_drawable_calculate_histogram (drawable, histogram);
 

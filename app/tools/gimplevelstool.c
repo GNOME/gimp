@@ -34,8 +34,6 @@
 #include "base/gimplut.h"
 #include "base/levels.h"
 
-#include "config/gimpbaseconfig.h"
-
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
@@ -283,11 +281,7 @@ gimp_levels_tool_initialize (GimpTool    *tool,
     }
 
   if (! l_tool->hist)
-    {
-      Gimp *gimp = tool->tool_info->gimp;
-
-      l_tool->hist = gimp_histogram_new (GIMP_BASE_CONFIG (gimp->config));
-    }
+    l_tool->hist = gimp_histogram_new ();
 
   levels_init (l_tool->levels);
 

@@ -27,8 +27,6 @@
 #include "base/gimphistogram.h"
 #include "base/pixel-region.h"
 
-#include "config/gimpbaseconfig.h"
-
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
@@ -291,8 +289,7 @@ gimp_histogram_editor_set_image (GimpImageEditor *image_editor,
 
   if (gimage)
     {
-      editor->histogram =
-        gimp_histogram_new (GIMP_BASE_CONFIG (gimage->gimp->config));
+      editor->histogram = gimp_histogram_new ();
 
       gimp_histogram_view_set_histogram (view, editor->histogram);
 

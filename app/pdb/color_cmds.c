@@ -37,7 +37,6 @@
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
 #include "base/threshold.h"
-#include "config/gimpbaseconfig.h"
 #include "core/gimp.h"
 #include "core/gimpdrawable-desaturate.h"
 #include "core/gimpdrawable-equalize.h"
@@ -1214,9 +1213,7 @@ histogram_invoker (Gimp         *gimp,
 
       if (success)
         {
-          GimpHistogram *histogram;
-
-          histogram = gimp_histogram_new (GIMP_BASE_CONFIG (gimp->config));
+          GimpHistogram *histogram = gimp_histogram_new ();
 
           gimp_drawable_calculate_histogram (drawable, histogram);
 

@@ -22,7 +22,7 @@
 #define __GIMP_HISTOGRAM_H__
 
 
-GimpHistogram * gimp_histogram_new         (GimpBaseConfig       *config);
+GimpHistogram * gimp_histogram_new         (void);
 void            gimp_histogram_free        (GimpHistogram        *histogram);
 
 void            gimp_histogram_calculate   (GimpHistogram        *histogram,

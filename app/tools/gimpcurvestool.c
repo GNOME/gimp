@@ -29,7 +29,6 @@
 
 #include "tools-types.h"
 
-#include "config/gimpbaseconfig.h"
 #include "config/gimpguiconfig.h"
 
 #include "base/curves.h"
@@ -281,11 +280,7 @@ gimp_curves_tool_initialize (GimpTool    *tool,
     }
 
   if (! c_tool->hist)
-    {
-      Gimp *gimp = GIMP_TOOL (c_tool)->tool_info->gimp;
-
-      c_tool->hist = gimp_histogram_new (GIMP_BASE_CONFIG (gimp->config));
-    }
+    c_tool->hist = gimp_histogram_new ();
 
   curves_init (c_tool->curves);
 

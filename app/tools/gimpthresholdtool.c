@@ -27,8 +27,6 @@
 #include "base/gimphistogram.h"
 #include "base/threshold.h"
 
-#include "config/gimpbaseconfig.h"
-
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
@@ -200,11 +198,7 @@ gimp_threshold_tool_initialize (GimpTool    *tool,
     }
 
   if (!t_tool->hist)
-    {
-      Gimp *gimp = GIMP_TOOL (t_tool)->tool_info->gimp;
-
-      t_tool->hist = gimp_histogram_new (GIMP_BASE_CONFIG (gimp->config));
-    }
+    t_tool->hist = gimp_histogram_new ();
 
   t_tool->threshold->color          = gimp_drawable_is_rgb (drawable);
   t_tool->threshold->low_threshold  = 127;

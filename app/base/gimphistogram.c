@@ -26,8 +26,6 @@
 
 #include "base-types.h"
 
-#include "config/gimpbaseconfig.h"
-
 #include "gimphistogram.h"
 #include "pixel-processor.h"
 #include "pixel-region.h"
@@ -35,49 +33,38 @@
 
 struct _GimpHistogram
 {
-  gint               bins;
-  gdouble          **values;
-  gint               n_channels;
+  gint            bins;
+  gdouble       **values;
+  gint            n_channels;
 
 #ifdef ENABLE_MP
-  GStaticMutex       mutex;
-  gint               num_slots;
-  gdouble         ***tmp_values;
-  gchar             *tmp_slots;
+  GStaticMutex    mutex;
+  gdouble       **tmp_values[GIMP_MAX_NUM_THREADS];
+  gchar           tmp_slots[GIMP_MAX_NUM_THREADS];
 #endif
 };
 
 
 /*  local function prototypes  */
 
-static void   gimp_histogram_alloc_values         (GimpHistogram *histogram,
-                                                   gint           bytes);
-static void   gimp_histogram_free_values          (GimpHistogram *histogram);
-static void   gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
-                                                   PixelRegion   *region,
-                                                   PixelRegion   *mask);
+static void  gimp_histogram_alloc_values         (GimpHistogram *histogram,
+                                                  gint           bytes);
+static void  gimp_histogram_free_values          (GimpHistogram *histogram);
+static void  gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
+                                                  PixelRegion   *region,
+                                                  PixelRegion   *mask);
 
 
 /*  public functions  */
 
 GimpHistogram *
-gimp_histogram_new (GimpBaseConfig *config)
+gimp_histogram_new (void)
 {
-  GimpHistogram *histogram;
-
-  g_return_val_if_fail (GIMP_IS_BASE_CONFIG (config), NULL);
-
-  histogram = g_new0 (GimpHistogram, 1);
+  GimpHistogram *histogram = g_new0 (GimpHistogram, 1);
 
   histogram->bins       = 0;
   histogram->values     = NULL;
   histogram->n_channels = 0;
-
-#ifdef ENABLE_MP
-  histogram->num_slots  = config->num_processors;
-  histogram->tmp_slots  = g_new0 (gchar,      histogram->num_slots);
-  histogram->tmp_values = g_new0 (gdouble **, histogram->num_slots);
-#endif /* ENABLE_MP */
 
   return histogram;
 }
@@ -86,11 +73,6 @@ void
 gimp_histogram_free (GimpHistogram *histogram)
 {
   g_return_if_fail (histogram != NULL);
-
-#ifdef ENABLE_MP
-  g_free (histogram->tmp_values);
-  g_free (histogram->tmp_slots);
-#endif
 
   gimp_histogram_free_values (histogram);
   g_free (histogram);
@@ -113,24 +95,6 @@ gimp_histogram_calculate (GimpHistogram *histogram,
 
   gimp_histogram_alloc_values (histogram, region->bytes);
 
-#ifdef ENABLE_MP
-  for (i = 0; i < histogram->num_slots; i++)
-    {
-      histogram->tmp_values[i] = g_new0 (gdouble *, histogram->n_channels);
-      histogram->tmp_slots[i]  = 0;
-
-      for (j = 0; j < histogram->n_channels; j++)
-        {
-          gint k;
-
-          histogram->tmp_values[i][j] = g_new0 (gdouble, 256);
-
-          for (k = 0; k < 256; k++)
-            histogram->tmp_values[i][j][k] = 0.0;
-        }
-    }
-#endif
-
   for (i = 0; i < histogram->n_channels; i++)
     for (j = 0; j < 256; j++)
       histogram->values[i][j] = 0.0;
@@ -141,19 +105,23 @@ gimp_histogram_calculate (GimpHistogram *histogram,
 
 #ifdef ENABLE_MP
   /* add up all the tmp buffers and free their memmory */
-  for (i = 0; i < histogram->num_slots; i++)
+  for (i = 0; i < GIMP_MAX_NUM_THREADS; i++)
     {
-      for (j = 0; j < histogram->n_channels; j++)
+      if (histogram->tmp_values[i])
         {
-          gint k;
+          for (j = 0; j < histogram->n_channels; j++)
+            {
+              gint k;
 
-          for (k = 0; k < 256; k++)
-            histogram->values[j][k] += histogram->tmp_values[i][j][k];
+              for (k = 0; k < 256; k++)
+                histogram->values[j][k] += histogram->tmp_values[i][j][k];
 
-          g_free (histogram->tmp_values[i][j]);
+              g_free (histogram->tmp_values[i][j]);
+            }
+
+          g_free (histogram->tmp_values[i]);
+          histogram->tmp_values[i] = NULL;
         }
-
-      g_free (histogram->tmp_values[i]);
     }
 #endif
 }
@@ -470,6 +438,18 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 
   g_static_mutex_unlock (&histogram->mutex);
 
+  if (! values)
+    {
+      gint j;
+
+      histogram->tmp_values[slot] = g_new0 (gdouble *, histogram->n_channels);
+
+      for (j = 0; j < histogram->n_channels; j++)
+        histogram->tmp_values[slot][j] = g_new0 (gdouble, 256);
+
+      values = histogram->tmp_values[slot];
+    }
+
 #else
   values = histogram->values;
 #endif
@@ -627,7 +607,6 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 
 #ifdef ENABLE_MP
   /* unlock this slot */
-  /* we shouldn't have to use mutex locks here */
   g_static_mutex_lock (&histogram->mutex);
 
   histogram->tmp_slots[slot] = 0;
