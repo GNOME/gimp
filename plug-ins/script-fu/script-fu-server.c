@@ -268,7 +268,7 @@ script_fu_server_listen (gint timeout)
 
 	    /*  Associate the client address with the socket  */
 	    g_hash_table_insert (clientname_ht,
-				 (gpointer) new,
+				 GINT_TO_POINTER (new),
 				 g_strdup (inet_ntoa (clientname.sin_addr)));
 	    /*
 	    server_log ("Server: connect from host %s, port %d.\n",
@@ -283,7 +283,7 @@ script_fu_server_listen (gint timeout)
 	    if (read_from_client (i) < 0)
 	      {
 		/*  Disassociate the client address with the socket  */
-		g_hash_table_remove (clientname_ht, (gpointer) i);
+		g_hash_table_remove (clientname_ht, GINT_TO_POINTER (i));
 
 		/*
 		server_log ("Server: disconnect from host %s, port %d.\n",
@@ -490,7 +490,8 @@ read_from_client (gint filedes)
   queue_length ++;
 
   /*  Get the client address from the address/socket table  */
-  clientaddr = g_hash_table_lookup (clientname_ht, (gpointer) cmd->filedes);
+  clientaddr = g_hash_table_lookup (clientname_ht,
+                                    GINT_TO_POINTER (cmd->filedes));
   time (&clock);
   server_log ("Received request #%d from IP address %s: %s on %s,"
 	      "[Request queue length: %d]",

@@ -369,7 +369,7 @@ new_window_callback (GtkWidget *widget,
 {
   if (GTK_TOGGLE_BUTTON (widget)->active)
     {
-      url_info.new_window = (gint) data;
+      url_info.new_window = GPOINTER_TO_INT (data);
     }
 }
 

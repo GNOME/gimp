@@ -2832,8 +2832,8 @@ void
 p_end_gdrw (t_GDRW *gdrw)
 {
   if(gb_debug)  
-    printf ("\np_end_gdrw: drawable %x  ID: %d\n", 
-	    (int)gdrw->drawable, (int)gdrw->drawable->drawable_id);
+    printf ("\np_end_gdrw: drawable %p  ID: %d\n", 
+	    gdrw->drawable, (int)gdrw->drawable->drawable_id);
 
   if(gdrw->tile)
   {
@@ -2858,7 +2858,7 @@ p_init_gdrw (t_GDRW    *gdrw,
   gint32 l_sel_channel_id;
   gint    l_offsetx, l_offsety;
 
-  if(gb_debug)  printf("\np_init_gdrw: drawable %x  ID: %d\n", (int)drawable, (int)drawable->drawable_id);
+  if(gb_debug)  printf("\np_init_gdrw: drawable %p  ID: %d\n", drawable, (int)drawable->drawable_id);
 
   gdrw->drawable = drawable;
   gdrw->tile = NULL;

@@ -831,7 +831,7 @@ static void
 my_bmode_callback (GtkWidget *widget,
 		   gpointer   data)
 {
-  my_config.bmode = (int) data - 1;
+  my_config.bmode = GPOINTER_TO_INT (data) - 1;
 }
 
 static gint
@@ -1010,7 +1010,7 @@ dialog (void)
 
       g_signal_connect (G_OBJECT (button), "toggled",
                         G_CALLBACK (my_bmode_callback),
-                        (gpointer) (i + 1));
+                        GINT_TO_POINTER (i + 1));
     }
 
   gtk_widget_show (box);

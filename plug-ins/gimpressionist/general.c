@@ -32,7 +32,7 @@ void generalbgchange(GtkWidget *wg, void *d, int num)
   int n;
 
   if(wg) {
-    n = (int) d;
+    n = GPOINTER_TO_INT (d);
     if(!img_has_alpha && (n == 3))
       n = 1;
     pcvals.generalbgtype = n;

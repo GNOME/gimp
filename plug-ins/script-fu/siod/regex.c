@@ -141,7 +141,7 @@ regex_prin1 (LISP ptr, struct gen_printio *f)
   char buffer[256];
   regex_t *p;
   p = get_tc_regex (ptr)->r;
-  sprintf (buffer, "#<REGEX %p nsub=%d",
+  sprintf (buffer, "#<REGEX %p nsub=%lu",
 	   p, p->re_nsub);
   gput_st (f, buffer);
   gput_st (f, ">");

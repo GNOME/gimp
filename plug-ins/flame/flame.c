@@ -583,7 +583,7 @@ static void
 preview_clicked (GtkWidget *widget, 
 		 gpointer   data) 
 {
-  gint mut = (gint) data;
+  gint mut = GPOINTER_TO_INT (data);
 
   if (mut == 4)
     {
@@ -874,7 +874,7 @@ static void
 gradient_cb (GtkWidget *widget, 
 	     gpointer   data) 
 {
-  config.cmap_drawable = (gint) data;
+  config.cmap_drawable = GPOINTER_TO_INT (data);
   set_cmap_preview();
   set_flame_preview();
   /* set_edit_preview(); */
@@ -1149,7 +1149,7 @@ dialog (void)
 	  menuitem = gtk_menu_item_new_with_label (names[i]);
 	  g_signal_connect (G_OBJECT (menuitem), "activate",
                             G_CALLBACK (gradient_cb),
-                            (gpointer) d);
+                            GINT_TO_POINTER (d));
 	  gtk_menu_shell_prepend (GTK_MENU_SHELL (menu), menuitem);
 	  if (d == save_drawable)
 	    gtk_menu_set_active (GTK_MENU (menu), 0);

@@ -28,7 +28,7 @@ GtkWidget *sizeradio[NUMSIZERADIO];
 void sizechange(GtkWidget *wg, void *d, int num)
 {
   if(wg) {
-    pcvals.sizetype = (int) d;
+    pcvals.sizetype = GPOINTER_TO_INT (d);
   } else {
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(sizeradio[num]), TRUE);
   }

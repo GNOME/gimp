@@ -32,7 +32,7 @@ GtkWidget *orientradio[NUMORIENTRADIO];
 void orientchange(GtkWidget *wg, void *d, int num)
 {
   if (wg) {
-    pcvals.orienttype = (int) d;
+    pcvals.orienttype = GPOINTER_TO_INT (d);
   } else {
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(orientradio[num]), TRUE);
   }

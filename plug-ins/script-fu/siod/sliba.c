@@ -1489,19 +1489,19 @@ number2string (LISP x, LISP b, LISP w, LISP p)
 
       if ((width >= 0) && (prec >= 0))
         sprintf (format,
-                 NULLP (b) ? "%%%d.%dg" :
-                 EQ (sym_e, b) ? "%%%d.%dd" : "%%%d.%df",
+                 NULLP (b) ? "%%%ld.%ldg" :
+                 EQ (sym_e, b) ? "%%%ld.%ldd" : "%%%ld.%ldf",
                  width, prec);
       else if (width >= 0)
 	sprintf (format,
-		 NULLP (b) ? "%%%dg" : EQ (sym_e, b) ? "%%%de" : "%%%df",
+		 NULLP (b) ? "%%%ldg" : EQ (sym_e, b) ? "%%%lde" : "%%%ldf",
                  width);
       else if (prec >= 0)
 	sprintf (format,
-		 NULLP (b) ? "%%.%dg" : EQ (sym_e, b) ? "%%.%de" : "%%.%df",
+		 NULLP (b) ? "%%.%ldg" : EQ (sym_e, b) ? "%%.%lde" : "%%.%ldf",
                  prec);
       else
-        sprintf (format, NULLP (b) ? "%g" : EQ (sym_e, b) ? "%e" : "%f");
+        sprintf (format, NULLP (b) ? "%%g" : EQ (sym_e, b) ? "%%e" : "%%f");
 
       g_ascii_formatd (buffer, sizeof(buffer), format, y);
     }
@@ -1510,7 +1510,7 @@ number2string (LISP x, LISP b, LISP w, LISP p)
       if (width >= 0)
 	sprintf (buffer,
 		 (base == 10) ? "%0*ld" : (base == 8) ? "%0*lo" : "%0*lX",
-		 width,
+		 (int) width,
 		 (long) y);
       else
 	sprintf (buffer,
@@ -2304,7 +2304,7 @@ fast_save (LISP fname, LISP forms, LISP nohash, LISP comment)
   sprintf (msgbuff, "# Siod Binary Object Save File\n");
   fput_st (f, msgbuff);
   sprintf (msgbuff, "# sizeof(long) = %d\n# sizeof(double) = %d\n",
-	   sizeof (long), sizeof (double));
+	   (int) sizeof (long), (int) sizeof (double));
   fput_st (f, msgbuff);
   shexstr (databuff, &l_one, sizeof (l_one));
   sprintf (msgbuff, "# 1 = %s\n", databuff);

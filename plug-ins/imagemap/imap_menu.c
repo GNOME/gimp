@@ -89,7 +89,7 @@ static void
 menu_zoom_to(GtkWidget *widget, gpointer data)
 {
    if (gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(widget))) {
-      gint factor = (gint) data;
+      gint factor = GPOINTER_TO_INT (data);
 
       if (_menu_callback_lock) {
 	 _menu_callback_lock--;

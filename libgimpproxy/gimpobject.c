@@ -295,7 +295,7 @@ gimp_object_get_memsize (GimpObject *object)
 
       indent_buf[i] = '\0';
 
-      object_size = g_strdup_printf ("%s%s \"%s\": %d\n",
+      object_size = g_strdup_printf ("%s%s \"%s\": %lu\n",
                                      indent_buf,
                                      g_type_name (G_TYPE_FROM_INSTANCE (object)),
                                      object->name,

@@ -512,7 +512,7 @@ gimp_brush_load_brush (gint          fd,
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Could not read %d bytes from '%s': %s"),
-                   sizeof (header), filename, g_strerror (errno));
+                   (gint) sizeof (header), filename, g_strerror (errno));
       return NULL;
     }
 

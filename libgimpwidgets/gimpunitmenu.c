@@ -630,7 +630,8 @@ gimp_unit_menu_callback (GtkWidget *widget,
   GimpUnit      new_unit;
 
   gum = data;
-  new_unit = (guint) g_object_get_data (G_OBJECT (widget), "gimp_unit_menu"); 
+  new_unit = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (widget),
+                                                  "gimp_unit_menu"));
   
   if (gum->unit == new_unit)
     return;

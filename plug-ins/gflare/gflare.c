@@ -4310,7 +4310,7 @@ ed_ientry_callback (GtkWidget *widget, gpointer data)
 static void
 ed_page_map_callback (GtkWidget *widget, gpointer data)
 {
-  gint		page_num = (gint) data;
+  gint		page_num = GPOINTER_TO_INT (data);
 
   DEBUG_PRINT(("ed_page_map_callback\n"));
 

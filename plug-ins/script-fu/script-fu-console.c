@@ -391,7 +391,7 @@ script_fu_siod_read (GIOChannel  *channel,
 		     GIOCondition cond,
 		     gpointer     data)
 {
-  gint         count;
+  gsize        count;
   GIOStatus    status;
   GError      *error = NULL;
   GtkTextIter  cursor;

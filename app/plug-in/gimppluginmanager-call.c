@@ -1655,7 +1655,7 @@ plug_in_flush (GIOChannel *channel,
   GIOStatus  status;
   GError    *error = NULL;
   gint       count;
-  guint      bytes;
+  gsize      bytes;
 
   plug_in = (PlugIn *) user_data;
 

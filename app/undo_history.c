@@ -428,7 +428,7 @@ undo_history_set_pixmap (GtkCList  *clist,
 {
   static idle_preview_args idle;
   
-  if (!size || ((gint)gtk_clist_get_row_data (clist, row)) == 2)
+  if (!size || (GPOINTER_TO_INT (gtk_clist_get_row_data (clist, row))) == 2)
     return;
     
   idle.clist  = clist;

@@ -82,7 +82,7 @@ void updatepreviewprev(GtkWidget *wg, gpointer d)
     if(d) {
       storevals();
 
-      if((gint) d != 2)
+      if(GPOINTER_TO_INT(d) != 2)
 	repaint(&p, &a);
     }
     if(img_has_alpha)

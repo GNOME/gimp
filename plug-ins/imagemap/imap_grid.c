@@ -112,7 +112,7 @@ static void
 type_toggled_cb(GtkWidget *widget, gpointer data)
 {
    if (GTK_WIDGET_STATE(widget) & GTK_STATE_SELECTED) {
-      grid_type = (gint) data;
+      grid_type = GPOINTER_TO_INT (data);
       redraw_preview();
    }
 }

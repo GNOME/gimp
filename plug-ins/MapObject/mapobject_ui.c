@@ -387,7 +387,7 @@ box_drawable_callback (gint32   id,
 {
   gint i;
   
-  i = (gint) g_object_get_data (G_OBJECT (data), "_mapwid_id");
+  i = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (data), "_mapwid_id"));
 
   mapvals.boxmap_id[i] = id;
 }
@@ -410,7 +410,7 @@ cylinder_drawable_callback (gint32   id,
 {
   gint i;
   
-  i = (gint) g_object_get_data (G_OBJECT (data), "_mapwid_id");
+  i = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (data), "_mapwid_id"));
 
   mapvals.cylindermap_id[i] = id;
 }
