@@ -110,8 +110,11 @@ static void     brush_popup_open                   (BrushSelect *,
 static void     brush_popup_close                  (BrushSelect *);
 
 static void     display_setup                      (BrushSelect *);
-static void     display_brush                      (BrushSelect *,
+static void     clear_brush                        (BrushSelect *,
 						    GimpBrush *, gint, gint);
+static void     display_brush                      (BrushSelect *,
+						    GimpBrush *, gint, gint,
+						    gboolean);
 static void     do_display_brush                   (GimpBrush   *brush,
 						    BrushSelect *bsp);
 static void     display_brushes                    (BrushSelect *);
@@ -207,7 +210,7 @@ brush_dialog_create (void)
 }
 
 void
-brush_dialog_free ()
+brush_dialog_free (void)
 {
   if (brush_select_dialog)
     {
@@ -857,16 +860,23 @@ static void
 brush_select_brush_dirty_callback (GimpBrush   *brush,
 				   BrushSelect *bsp)
 {
-  gint index;
+  gint     index;
+  gboolean redraw;
 
-  if (!bsp && bsp->freeze)
+  if (!bsp || bsp->freeze)
     return;
 
-  index = gimp_brush_list_get_brush_index (brush_list, brush);
+  index  = gimp_brush_list_get_brush_index (brush_list, brush);
+  redraw = (brush != gimp_context_get_brush (bsp->context));
+
+  clear_brush (bsp, brush,
+	       index % (bsp->NUM_BRUSH_COLUMNS),
+	       index / (bsp->NUM_BRUSH_COLUMNS));
 
   display_brush (bsp, brush,
 		 index % (bsp->NUM_BRUSH_COLUMNS),
-		 index / (bsp->NUM_BRUSH_COLUMNS));
+		 index / (bsp->NUM_BRUSH_COLUMNS),
+		 redraw);
 }
 
 static void
@@ -1155,10 +1165,41 @@ display_setup (BrushSelect *bsp)
 }
 
 static void
+clear_brush (BrushSelect *bsp,
+	     GimpBrush   *brush,
+	     gint         col,
+	     gint         row)
+{
+  guchar *buf;
+  gint width, height;
+  gint offset_x, offset_y;
+  gint ystart, yend;
+  gint i;
+
+  width  = bsp->cell_width  - 2 * MARGIN_WIDTH;
+  height = bsp->cell_height - 2 * MARGIN_HEIGHT;
+
+  offset_x = col * bsp->cell_width  + MARGIN_WIDTH;
+  offset_y = row * bsp->cell_height - bsp->scroll_offset + MARGIN_HEIGHT;
+
+  ystart = CLAMP (offset_y, 0, bsp->preview->allocation.height);
+  yend   = CLAMP (offset_y + height, 0, bsp->preview->allocation.height);
+
+  buf = g_new (guchar, 3 * width);
+
+  memset (buf, 255, 3 * width * sizeof (guchar));
+
+  for (i = ystart; i < yend; i++)
+    gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), buf,
+			  offset_x, i, width);
+}
+
+static void
 display_brush (BrushSelect *bsp,
 	       GimpBrush   *brush,
 	       gint         col,
-	       gint         row)
+	       gint         row,
+	       gboolean     redraw)
 {
   TempBuf *mask_buf, *pixmap_buf = NULL;
   guchar *mask, *buf, *b;
@@ -1279,6 +1320,22 @@ display_brush (BrushSelect *bsp,
 				  offset_x, offset_y, indicator_width);
 	}
     }
+
+  if (redraw && bsp->redraw)
+    {
+      GdkRectangle area;
+
+      area.x = col * bsp->cell_width + MARGIN_WIDTH;
+      area.y = CLAMP (row * bsp->cell_height - bsp->scroll_offset +
+		      MARGIN_HEIGHT,
+		      0, bsp->preview->allocation.height);
+      area.width  = cell_width;
+      area.height = CLAMP (row * bsp->cell_height - bsp->scroll_offset +
+			   MARGIN_HEIGHT + cell_height,
+			   0, bsp->preview->allocation.height);
+
+      gtk_widget_draw (bsp->preview, &area);
+    }
 }
 
 static gint brush_counter = 0;
@@ -1287,8 +1344,10 @@ static void
 do_display_brush (GimpBrush   *brush,
 		  BrushSelect *bsp)
 {
-  display_brush (bsp, brush, brush_counter % (bsp->NUM_BRUSH_COLUMNS),
-		 brush_counter / (bsp->NUM_BRUSH_COLUMNS));
+  display_brush (bsp, brush,
+		 brush_counter % (bsp->NUM_BRUSH_COLUMNS),
+		 brush_counter / (bsp->NUM_BRUSH_COLUMNS),
+		 FALSE);
   brush_counter++;
 }
 
