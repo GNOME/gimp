@@ -1,3 +1,7 @@
+2003-08-10  Ville Pätsi   <drc@gimp.org>
+	* configure.in: Added gimp.spec.
+	* gimp.spec.in: Brought up to date.
+
 2003-08-09  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/iwarp.c (iwarp): added undo group to fix #119438.

@@ -16,7 +16,11 @@ Docdir:		%{prefix}/doc
 Prefix:		%{prefix}
 Obsoletes: 	gimp-data-min
 Obsoletes:	gimp-libgimp
-Requires: 	gtk+ >= 2.0.0
+Requires: 	gtk2 >= 2.2.0
+Requires:	libart_lgpl >= 2.0
+Requires:	fontconfig >= 1.0.1
+Requires:	gimp-print >= 4.2.0
+Requires:	gtkhtml2 >= 1.99.5
 Source: 	ftp://ftp.gimp.org/pub/gimp/v%{subver}/%{name}-%{ver}.tar.bz2
 
 %description
@@ -48,7 +52,7 @@ gimp-data-extras, which includes various extra files for the GIMP.
 %package devel
 Summary: GIMP plugin and extension development kit
 Group: 		Applications/Graphics
-Requires: 	gtk+-devel
+Requires: 	gtk2-devel
 %description devel
 The gimp-devel package contains the static libraries and header files
 for writing GNU Image Manipulation Program (GIMP) plug-ins and
@@ -57,6 +61,12 @@ extensions.
 Install gimp-devel if you're going to create plug-ins and/or
 extensions for the GIMP.  You'll also need to install gimp-limpgimp
 and gimp, and you may want to install gimp-data-extras.
+
+%package docs
+Summary: GIMP Documentation
+Group: Applications/Graphics
+%description docs
+GIMP documentation
 
 %prep
 %setup -q
@@ -71,29 +81,13 @@ if [ ! -f configure ]; then
 else
   CFLAGS="$RPM_OPT_FLAGS" %configure --quiet
 fi
-
-if [ "$SMP" != "" ]; then
-  (make "MAKE=make -k -j $SMP"; exit 0)
-  make
-else
-  make
-fi
+make
 
 %install
 [ -n "$RPM_BUILD_ROOT" -a "$RPM_BUILD_ROOT" != / ] && rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/%{prefix}/info $RPM_BUILD_ROOT/%{prefix}/include \
 	$RPM_BUILD_ROOT/%{prefix}/lib $RPM_BUILD_ROOT/%{prefix}/bin
-make prefix=$RPM_BUILD_ROOT/%{prefix} PREFIX=$RPM_BUILD_ROOT/%{prefix} install
-
-# Strip the executables
-strip $RPM_BUILD_ROOT/%{prefix}/bin/gimp
-# Only strip execuable files and leave scripts alone.
-strip `file $RPM_BUILD_ROOT/%{prefix}/lib/gimp/%{subver}/plug-ins/* | grep ELF | cut -d':' -f 1`
-
-# Compress down the online documentation.
-if [ -d $RPM_BUILD_ROOT/%{prefix}/man ]; then
-  find $RPM_BUILD_ROOT/%{prefix}/man -type f -exec gzip -9nf {} \;
-fi
+make destdir=$RPM_BUILD_ROOT DESTDIR=$RPM_BUILD_ROOT install
 
 #
 # Plugins and modules change often (grab the executeable ones)
@@ -102,31 +96,14 @@ echo "%defattr (0555, bin, bin)" > gimp-plugin-files
 find $RPM_BUILD_ROOT/%{prefix}/lib/gimp/%{subver} -type f -exec file {} \; | cut -d':' -f 1 | sed "s@^$RPM_BUILD_ROOT@@g"  >>gimp-plugin-files
 
 #
-# Auto detect the lang files.
-#
-if [ -f /usr/lib/rpm/find-lang.sh ] ; then
- /usr/lib/rpm/find-lang.sh $RPM_BUILD_ROOT %{name}
- /usr/lib/rpm/find-lang.sh $RPM_BUILD_ROOT gimp-libgimp
- /usr/lib/rpm/find-lang.sh $RPM_BUILD_ROOT gimp-std-plugins
- /usr/lib/rpm/find-lang.sh $RPM_BUILD_ROOT gimp-script-fu
- cat %{name}.lang gimp-libgimp gimp-std-plugins.lang gimp-script-fu.lang \
-    | sed "s:(644, root, root, 755):(444, bin, bin, 555):" > gimp-all.lang
-fi
-
-#
 # Tips
 #
 echo "%defattr (444, bin, bin, 555)" >gimp-tips-files
-echo "%{prefix}/share/gimp/%{subver}/tips/gimp_tips.txt" >> gimp-tips-files
-for I in `ls $RPM_BUILD_ROOT/%{prefix}/share/gimp/%{subver}/tips/gimp*.[a-z]*.txt | sed "s@^$RPM_BUILD_ROOT/@@g"`; do
-   tip_lang=`basename $I | cut -d'.' -f2`
-   echo "%lang($tip_lang)    $I" >> gimp-tips-files
-done
 
 #
 # Build the master filelists generated from the above mess.
 #
-cat gimp-plugin-files gimp-all.lang gimp-tips-files > gimp.files
+cat gimp-plugin-files gimp-tips-files > gimp.files
 
 %clean
 [ -n "$RPM_BUILD_ROOT" -a "$RPM_BUILD_ROOT" != / ] && rm -rf $RPM_BUILD_ROOT
@@ -136,8 +113,8 @@ cat gimp-plugin-files gimp-all.lang gimp-tips-files > gimp.files
 %postun -p /sbin/ldconfig
 
 %files -f gimp.files
-%attr (0555, bin, man) %doc AUTHORS COPYING ChangeLog MAINTAINERS NEWS README TODO
-%attr (0555, bin, man) %doc docs/*.txt docs/*.eps ABOUT-NLS README.i18n README.win32 TODO
+%attr (0555, bin, man) %doc AUTHORS COPYING ChangeLog MAINTAINERS NEWS README
+%attr (0555, bin, man) %doc docs/*.txt README.i18n README.win32
 %defattr (0444, bin, bin, 0555)
 %dir %{prefix}/share/gimp/%{subver}
 %dir %{prefix}/share/gimp/%{subver}/tips
@@ -151,23 +128,15 @@ cat gimp-plugin-files gimp-all.lang gimp-tips-files > gimp.files
 %{prefix}/share/gimp/%{subver}/gflare/
 %{prefix}/share/gimp/%{subver}/gimpressionist/
 %{prefix}/share/gimp/%{subver}/gradients/
-%{prefix}/share/gimp/%{subver}/help/
 %{prefix}/share/gimp/%{subver}/palettes/
 %{prefix}/share/gimp/%{subver}/patterns/
 %{prefix}/share/gimp/%{subver}/scripts/
 
-%{sysconfdir}/gimp/%{subver}/gimprc
-%{sysconfdir}/gimp/%{subver}/gimprc_user
-%{sysconfdir}/gimp/%{subver}/gtkrc
 %{sysconfdir}/gimp/%{subver}/gtkrc_user
 %{sysconfdir}/gimp/%{subver}/unitrc
 %{sysconfdir}/gimp/%{subver}/ps-menurc
 
-%{prefix}/share/gimp/%{subver}/gimp_logo.ppm
-%{prefix}/share/gimp/%{subver}/gimp_splash.ppm
-
 %defattr (0555, bin, bin)
-%{prefix}/share/gimp/%{subver}/user_install
 
 %{prefix}/lib/libgimp-%{subver}.so.%{microver}.0.0
 %{prefix}/lib/libgimp-%{subver}.so.%{microver}
@@ -176,22 +145,36 @@ cat gimp-plugin-files gimp-all.lang gimp-tips-files > gimp.files
 %{prefix}/lib/libgck-%{subver}.so.%{microver}.0.0
 %{prefix}/lib/libgck-%{subver}.so.%{microver}
 
-%{prefix}/bin/gimp
-%{prefix}/bin/gimp-remote
-%{prefix}/bin/embedxpm
-%{prefix}/bin/gimpdoc
-%{prefix}/bin/xcftopnm
+# 1.3
+%{prefix}/lib/libgimpbase-%{subver}.so.%{microver}.0.0
+%{prefix}/lib/libgimpbase-%{subver}.so.%{microver}
+%{prefix}/lib/libgimpcolor-%{subver}.so.%{microver}.0.0
+%{prefix}/lib/libgimpcolor-%{subver}.so.%{microver}
+%{prefix}/lib/libgimpmath-%{subver}.so.%{microver}.0.0
+%{prefix}/lib/libgimpmath-%{subver}.so.%{microver}
+%{prefix}/lib/libgimpwidgets-%{subver}.so.%{microver}.0.0
+%{prefix}/lib/libgimpwidgets-%{subver}.so.%{microver}
+%{prefix}/lib/libgimpmodule-%{subver}.so.%{microver}.0.0
+%{prefix}/lib/libgimpmodule-%{subver}.so.%{microver}
+
+%{prefix}/share/gimp/%{subver}/images
+%{prefix}/share/gimp/%{subver}/misc
+%{prefix}/share/gimp/%{subver}/themes
+%{prefix}/share/gimp/%{subver}/tips/gimp-tips.xml
+
+%{prefix}/share/locale/
+
+%{prefix}/share/man/man1/*
+%{prefix}/share/man/man5/*
+
+%{prefix}/bin/gimp-1.3
+%{prefix}/bin/gimp-remote-1.3
 
 %defattr (0444, bin, man)
-%{prefix}/man/man1/gimp.1*
-%{prefix}/man/man1/gimp-remote.1*
-%{prefix}/man/man5/gimprc.5*
-%{prefix}/man/man1/
 
 %files devel
 %defattr (0555, bin, bin, 0555)
-%{prefix}/bin/gimptool
-%{prefix}/bin/gimp-config
+%{prefix}/bin/gimptool-1.3
 %{prefix}/lib/*.so
 %{prefix}/lib/*.la
 %dir %{prefix}/lib/gimp/%{subver}
@@ -199,16 +182,53 @@ cat gimp-plugin-files gimp-all.lang gimp-tips-files > gimp.files
 %{prefix}/lib/gimp/%{subver}/modules/*.la
 
 %defattr (0444, root, root, 0555)
-%{prefix}/share/aclocal/gimp.m4
+#new stuff 1.3
+/etc/gimp/%{subver}/gimprc
+/etc/gimp/%{subver}/sessionrc
+/etc/gimp/%{subver}/templaterc
+%{prefix}/lib/pkgconfig/gimp-1.3.pc
+%{prefix}/lib/pkgconfig/gimpui-1.3.pc
+
+%dir %{prefix}/include/gimp-%{subver}/gck
+%{prefix}/include/gimp-%{subver}/gck/*
+
+%dir %{prefix}/include/gimp-%{subver}/libgimpbase
+%{prefix}/include/gimp-%{subver}/libgimpbase/*
+
+%dir %{prefix}/include/gimp-%{subver}/libgimpmath
+%{prefix}/include/gimp-%{subver}/libgimpmath/*
+
+%dir %{prefix}/include/gimp-%{subver}/libgimpmodule
+%{prefix}/include/gimp-%{subver}/libgimpmodule/*
+
+%dir %{prefix}/include/gimp-%{subver}/libgimpwidgets
+%{prefix}/include/gimp-%{subver}/libgimpwidgets/*
+
+%dir %{prefix}/include/gimp-%{subver}/libgimpcolor
+%{prefix}/include/gimp-%{subver}/libgimpcolor/*
+
+%{prefix}/share/aclocal/gimp-2.0.m4
 
 %{prefix}/lib/*.a
 %{prefix}/lib/gimp/%{subver}/modules/*.a
 
-%{prefix}/include/libgimp/
-%{prefix}/include/gck/
-%{prefix}/man/man1/gimptool.1*
+%{prefix}/include/gimp-%{subver}/libgimp
+
+%files docs
+%{prefix}/share/gtk-doc/html/libgimp
+%{prefix}/share/gtk-doc/html/libgimpbase
+%{prefix}/share/gtk-doc/html/libgimpcolor
+%{prefix}/share/gtk-doc/html/libgimpmath
+%{prefix}/share/gtk-doc/html/libgimpmodule
+%{prefix}/share/gtk-doc/html/libgimpwidgets
 
 %changelog
+* Sun Aug 10 2003 Ville Pätsi <drc@gimp.org>
+- Bring gtk2 package names up to date
+- Change PREFIX to DESTDIR
+- Change files to match what 1.3 uses.
+- Remove lots of obsolete (?) macros
+
 * Fri Apr 14 2000 Matt Wilson <msw@redhat.com>
 - include subdirs in the help find
 - remove gimp-help-files generation
