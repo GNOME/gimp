@@ -1,3 +1,8 @@
+2005-03-23  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpcanvas.[ch] (gimp_canvas_draw_text): fixed
+	gtk-doc comments; added G_GNUC_PRINTF attribute.
+
 2005-03-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpselectiondata.c (gimp_selection_data_get_image)

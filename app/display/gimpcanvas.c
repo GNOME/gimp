@@ -643,11 +643,12 @@ gimp_canvas_draw_segments (GimpCanvas      *canvas,
 
 /**
  * gimp_canvas_draw_text:
- * @canvas: a #GimpCanvas widget
- * @style:  one of the enumerated #GimpCanvasStyle's.
- * @x:      X coordinate of the left edge of the layout.
- * @y:      Y coordinate of the top edge of the layout.
- * @layout: a #PangoLayout object.
+ * @canvas:  a #GimpCanvas widget
+ * @style:   one of the enumerated #GimpCanvasStyle's.
+ * @x:       X coordinate of the left of the layout.
+ * @y:       Y coordinate of the top of the layout.
+ * @format:  a standard printf() format string.
+ * @Varargs: the parameters to insert into the format string.
  *
  * Draws a layout, in the specified style.
  **/
@@ -666,10 +667,8 @@ gimp_canvas_draw_text (GimpCanvas      *canvas,
     return;
 
   if (! canvas->layout)
-    {
-      canvas->layout = gtk_widget_create_pango_layout (GTK_WIDGET (canvas),
-                                                       NULL);
-    }
+    canvas->layout = gtk_widget_create_pango_layout (GTK_WIDGET (canvas),
+                                                     NULL);
 
   va_start (args, format);
   text = g_strdup_vprintf (format, args);

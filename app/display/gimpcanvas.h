@@ -125,7 +125,7 @@ void         gimp_canvas_draw_text         (GimpCanvas      *canvas,
                                             gint             x,
                                             gint             y,
                                             const gchar     *format,
-                                            ...);
+                                            ...) G_GNUC_PRINTF (5, 6);
 void         gimp_canvas_draw_rgb          (GimpCanvas      *canvas,
                                             GimpCanvasStyle  style,
                                             gint             x,
