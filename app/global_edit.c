@@ -334,13 +334,12 @@ edit_paste_as_new (GImage       *invoke,
   if (!global_buf)
     return FALSE;
 
-  /*  create a new image  */
-  gimage = gimage_new (paste->width, paste->height, invoke->base_type);
+  /*  create a new image  (always of type RGB)  */
+  gimage = gimage_new (paste->width, paste->height, RGB);
   gimp_image_set_resolution (gimage, invoke->xresolution, invoke->yresolution);
   gimp_image_set_unit (gimage, invoke->unit);
-
-  layer = layer_new (gimage, gimage->width, gimage->height,
-		     (invoke->base_type == RGB) ? RGBA_GIMAGE : GRAYA_GIMAGE, 
+  
+  layer = layer_new (gimage, gimage->width, gimage->height, RGBA_GIMAGE, 
 		     _("Pasted Layer"), OPAQUE_OPACITY, NORMAL_MODE);
 
   /*  add the new layer to the image  */

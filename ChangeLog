@@ -1,3 +1,8 @@
+Sat Jan  1 14:57:19 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/global_edit.c: Paste as New now always creates a RGB image,
+	independent of the image it is invoked from. Fixes bug #4871.
+
 2000-01-01  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* plug-ins/common/max_rgb.c
