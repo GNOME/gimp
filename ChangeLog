@@ -1,3 +1,13 @@
+Wed Feb  9 23:47:08 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/interface.c
+	* app/pixmaps2.h
+	* app/tools.c: use new icons courtesy by Tigert.
+
+	* plug-ins/common/gauss_iir.c
+	* plug-ins/common/gauss_rle.c
+	* plug-ins/common/spread.c: enlarged maximum values
+
 2000-02-09  Garry R. Osgood <gosgood@idt.net>
 
         * gimp/plug-ins/common/randomize.c
