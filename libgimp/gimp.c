@@ -1276,7 +1276,7 @@ gimp_debug_stop (void)
 {
 #ifndef G_OS_WIN32
   g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "Waiting for debugger...");
-  kill (getpid (), SIGSTOP);
+  raise (SIGSTOP);
 #else
   g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "Debugging not implemented on Win32");
 #endif
