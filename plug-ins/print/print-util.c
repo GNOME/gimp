@@ -1606,7 +1606,9 @@ const static papersize_t paper_sizes[] =
   { "Letter",   612,  792, PAPERSIZE_ENGLISH },	/* 8.5in x 11in */
   { "Legal",    612, 1008, PAPERSIZE_ENGLISH },	/* 8.5in x 14in */
   { "Tabloid",  792, 1224, PAPERSIZE_ENGLISH },	/*  11in x 17in */
+  { "Executive", 522, 756, PAPERSIZE_ENGLISH },	/* 7.25 * 10.5in */
   { "Postcard", 283,  416, PAPERSIZE_ENGLISH },	/* 100mm x 147mm */
+  { "3x5",	216,  360, PAPERSIZE_ENGLISH },
   { "4x6",      288,  432, PAPERSIZE_ENGLISH },
   { "Epson 4x6 Photo Paper", 306, 495, PAPERSIZE_ENGLISH },
   { "5x7",      360,  504, PAPERSIZE_ENGLISH },
@@ -1710,10 +1712,10 @@ const static papersize_t paper_sizes[] =
   { "C3",        918, 1298, PAPERSIZE_METRIC },	/*  324mm x  458mm */
   { "C4",        649,  918, PAPERSIZE_METRIC },	/*  229mm x  324mm */
   { "C5",        459,  649, PAPERSIZE_METRIC },	/*  162mm x  229mm */
-  { "B6/C4",     354,  918, PAPERSIZE_METRIC },	/*  125mm x  324mm */
+  { "B6-C4",     354,  918, PAPERSIZE_METRIC },	/*  125mm x  324mm */
   { "C6",        323,  459, PAPERSIZE_METRIC },	/*  114mm x  162mm */
   { "DL",        311,  623, PAPERSIZE_METRIC },	/*  110mm x  220mm */
-  { "C7/6",      229,  459, PAPERSIZE_METRIC },	/*   81mm x  162mm */
+  { "C7-6",      229,  459, PAPERSIZE_METRIC },	/*   81mm x  162mm */
   { "C7",        229,  323, PAPERSIZE_METRIC },	/*   81mm x  114mm */
   { "C8",        161,  229, PAPERSIZE_METRIC },	/*   57mm x   81mm */
   { "C9",        113,  161, PAPERSIZE_METRIC },	/*   40mm x   57mm */
@@ -1754,6 +1756,15 @@ const static papersize_t paper_sizes[] =
   { "Small paperback",         314, 504, PAPERSIZE_METRIC }, /* 111mm x 178mm */
   { "Penguin small paperback", 314, 513, PAPERSIZE_METRIC }, /* 111mm x 181mm */
   { "Penguin large paperback", 365, 561, PAPERSIZE_METRIC }, /* 129mm x 198mm */
+
+  /* Miscellaneous sizes */
+  { "Hagaki Card", 283, 420, PAPERSIZE_METRIC }, /* 100 x 148 mm */
+  { "Oufuku Card", 420, 567, PAPERSIZE_METRIC }, /* 148 x 200 mm */
+  { "Long 3", 340, 666, PAPERSIZE_METRIC }, /* Japanese long envelope #3 */
+  { "Long 4", 255, 581, PAPERSIZE_METRIC }, /* Japanese long envelope #4 */
+  { "Kaku", 680, 941, PAPERSIZE_METRIC }, /* Japanese Kaku envelope #4 */
+  { "Commercial 10", 297, 684, PAPERSIZE_ENGLISH }, /* US Commercial 10 env */
+  { "A2 Invitation", 315, 414, PAPERSIZE_ENGLISH }, /* US A2 invitation */
 
   { "",           0,    0, PAPERSIZE_METRIC }
 };

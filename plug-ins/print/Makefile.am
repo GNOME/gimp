@@ -35,8 +35,8 @@ AM_CPPFLAGS = \
 	@LPSTAT_DEF@				\
 	@LPR_DEF@				\
 	@LPC_DEF@				\
-	-DVERSION=\"4.0a1\"			\
-	-DRELEASE_DATE=\"11\ Aug\ 2000\"
+	-DVERSION=\"4.0b3\"			\
+	-DRELEASE_DATE=\"14\ Oct\ 2000\"
 
 LDADD = \
 	$(top_builddir)/libgimp/libgimpui.la	\

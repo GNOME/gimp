@@ -823,6 +823,21 @@ do {									\
     }									\
 } while (0)
 
+static void *
+psearch(const void *key, const void *base, size_t nmemb, size_t size,
+	int (*compar)(const void *, const void *))
+{
+  int i;
+  const char *cbase = (const char *) base;
+  for (i = 0; i < nmemb; i++)
+    {
+      if ((*compar)(key, (const void *) cbase) == 0)
+	return (void *) cbase;
+      cbase += size;
+    }
+  return NULL;
+}
+
 /*
  * 'printrc_load()' - Load the printer resource configuration file.
  */
@@ -949,7 +964,7 @@ printrc_load(void)
 /*
  * The format of the list is the File printer followed by a qsort'ed list
  * of system printers. So, if we want to update the file printer, it is
- * always first in the list, else call bsearch.
+ * always first in the list, else call psearch.
  */
         if ((strcmp(key.name, _("File")) == 0) && (strcmp(plist[0].name,
 	     _("File")) == 0))
@@ -963,7 +978,7 @@ printrc_load(void)
 	  }
         else
 	  {
-            if ((p = bsearch(&key, plist + 1, plist_count - 1, sizeof(plist_t),
+            if ((p = psearch(&key, plist + 1, plist_count - 1, sizeof(plist_t),
                          (int (*)(const void *, const void *))compare_printers))
 	        != NULL)
 	      {
@@ -1047,7 +1062,7 @@ printrc_load(void)
 	  {
 	    if (get_printer_by_driver(key.v.driver))
 	      {
-		p = bsearch(&key, plist + 1, plist_count - 1,
+		p = psearch(&key, plist + 1, plist_count - 1,
 			    sizeof(plist_t),
 			    (int (*)(const void *, const void *)) compare_printers);
 		if (p == NULL)
@@ -1147,7 +1162,7 @@ printrc_load(void)
 	  {
 	    if (get_printer_by_driver(key.v.driver))
 	      {
-		p = bsearch(&key, plist + 1, plist_count - 1,
+		p = psearch(&key, plist + 1, plist_count - 1,
 			    sizeof(plist_t),
 			    (int (*)(const void *, const void *)) compare_printers);
 		if (p == NULL)

@@ -1,5 +1,17 @@
 2000-10-14  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/print/Makefile.am
+	* plug-ins/print/README
+	* plug-ins/print/gimp_main_window.c
+	* plug-ins/print/print-canon.c
+	* plug-ins/print/print-escp2.c
+	* plug-ins/print/print-pcl.c
+	* plug-ins/print/print-printers.c
+	* plug-ins/print/print-util.c
+	* plug-ins/print/print.c: updated gimp-print to version 4.0b3
+
+2000-10-14  Sven Neumann  <sven@gimp.org>
+
 	* app/user_install.c: applied patch from Ben Gertzfield which fixes
 	a misuse of "it's", changing it to "its".
 

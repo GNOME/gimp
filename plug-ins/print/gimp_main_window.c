@@ -548,6 +548,19 @@ gimp_create_main_window (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
+  (*current_printer->media_size) (current_printer, &vars, &paper_width,
+				  &paper_height);
+
+  (*current_printer->imageable_area) (current_printer, &vars, &left, &right,
+				      &bottom, &top);
+
+  /* Rationalise things a bit by measuring everything from the top left */
+  top = paper_height - top;
+  bottom = paper_height - bottom;
+
+  printable_width  = right - left;
+  printable_height = bottom - top;
+
   if (vars.scaling < 0.0)
     {
       const vars_t *lower = print_minimum_settings();
@@ -2076,7 +2089,7 @@ gimp_preview_update (void)
     gint preview_w = MAX (1, (preview_ppi * print_width) / 72);
     gint preview_h = MAX (1, (preview_ppi * print_height) / 72);
 
-    guchar preview_data[3 * preview_h * preview_w];
+    guchar *preview_data;
 
     gint v_denominator = preview_h > 1 ? preview_h - 1 : 1;
     gint v_numerator = (thumbnail_h - 1) % v_denominator;
@@ -2086,6 +2099,7 @@ gimp_preview_update (void)
     gint v_error = v_denominator / 2;
     gint y = 0;
 
+    preview_data = g_malloc(3 * preview_h * preview_w);
     while (y < preview_h)
       {
 	if (v_cur == v_last)
@@ -2230,6 +2244,7 @@ gimp_preview_update (void)
 	gdk_draw_line (preview->widget.window, gcinv, ox, oy - u, ox + u, oy);
 	gdk_draw_line (preview->widget.window, gcinv, ox, oy - u, ox, oy + u);
       }
+    g_free(preview_data);
   }
 
   gdk_flush ();

@@ -78,6 +78,7 @@ static void canon_write_line(FILE *, canon_cap_t, int,
  * Each combo is represented by the colors that can be used with
  * the installed ink-tank(s)
  * Combinations of the codes represent the combinations allowed for a model
+ * Note that only preferrable combinations should be used 
  */
 #define CANON_INK_K           1
 #define CANON_INK_CMY         2
@@ -198,7 +199,7 @@ static canon_cap_t canon_model_capabilities[] =
     11*72, 17*72,
     1200, 600, 2,
     11, 9, 10, 18,
-    CANON_INK_CMYK | CANON_INK_CcMmYK,
+    CANON_INK_CMYK | CANON_INK_CcMmYyK,
     CANON_SLOT_ASF1,
     0
   },
@@ -307,11 +308,12 @@ canon_source_type(const char *name, canon_cap_t caps)
 static int
 canon_printhead_type(const char *name, canon_cap_t caps)
 {
-  if (!strcmp(name,"Black"))       return 0;
-  if (!strcmp(name,"Color"))       return 1;
-  if (!strcmp(name,"Black/Color")) return 2;
-  if (!strcmp(name,"Photo/Color")) return 3;
-  if (!strcmp(name,"Photo"))       return 4;
+  if (!strcmp(name,"Black"))             return 0;
+  if (!strcmp(name,"Color"))             return 1;
+  if (!strcmp(name,"Black/Color"))       return 2;
+  if (!strcmp(name,"Photo/Color"))       return 3;
+  if (!strcmp(name,"Photo"))             return 4;
+  if (!strcmp(name,"Black/Photo Color")) return 5;
 
 #ifdef DEBUG
   fprintf(stderr,"canon: Unknown head combo '%s' - reverting to black\n",name);
@@ -492,7 +494,9 @@ canon_parameters(const printer_t *printer,	/* I - Printer model */
     if ((caps.inks & CANON_INK_CcMmYK))
       valptrs[c++]= c_strdup("Photo/Color");
     if ((caps.inks & CANON_INK_CcMmYy))
-      valptrs[c++]= c_strdup("Photo/Color");
+      valptrs[c++]= c_strdup("Photo");
+    if ((caps.inks & CANON_INK_CcMmYyK))
+      valptrs[c++]= c_strdup("Black/Photo Color");
     *count = c;
     p = valptrs;
   }
@@ -1019,7 +1023,8 @@ canon_print(const printer_t *printer,		/* I - Model */
     if (printhead==3 && (caps.inks & (CANON_INK_PHOTO_MASK))) {
       lcyan = canon_alloc_buffer(buf_length*(delay_lc+1));
       lmagenta = canon_alloc_buffer(buf_length*(delay_lm+1));
-      if ((caps.inks & CANON_INK_CcMmYy))
+      if ((caps.inks & CANON_INK_CcMmYy) || 
+	  (caps.inks & CANON_INK_CcMmYyK))
 	lyellow = canon_alloc_buffer(buf_length*(delay_lc+1));
       else
 	lyellow = NULL;

@@ -1,85 +1,122 @@
-Print plugin for the Gimp.  Version 3.0.6 by Robert Krawitz
-<rlk@alum.mit.edu> based on version 2.0 by Michael Sweet
-<mike@easysw.com>.
+This is Gimp-Print version 4.0b3 (beta).  Gimp-print is the print
+facility for the Gimp, and in addition a suite of drivers that may be
+used with common UNIX spooling systems using GhostScript or CUPS.
+These drivers provide printing quality for UNIX/Linux on a par with
+proprietary vendor-supplied drivers in many cases, and can be used for
+many of the most demanding printing tasks.
 
-This version has numerous enhancements:
-
-1) Full support for the Epson Stylus Photo, Photo 700, and Photo EX
-   printers, including 6-color printing, 1440x720 dpi resolution, and
-   "soft" weave for much faster high quality printing.
-
-2) Many new controls, including:
-
-   * Output gamma adjustment
-   * Contrast
-   * Red/green/blue levels
-   * Saturation
-   * Density
-   * Additional scaling options
-
-3) Improved tonal resolution.  Calculations are now done in 16 bit
-   rather than 8 bit resolution, which eliminates stair stepping.
-   Input levels do not map one to one onto output levels, so in 8 bit
-   output resolution multiple input levels will map to a single output
-   level.  Usually the density range is compressed in the light end of
-   the tonal range, so many different input levels will map to one
-   output level.  Use of 16 bit output resolution avoids this
-   undesirable behavior and results in smooth tonal gradations in
-   highlights.
-
-4) Saving of all settings between print jobs.
+Please read the release notes (RELNOTES) carefully, as this release is
+not entirely compatible with 4.0a3 and earlier releases!  There is in
+addition a minor incompatibility with 4.0b1 in the Epson head
+alignment utility.
 
 
-This plugin has been optimized for the Epson Stylus Photo EX, since
-that's the printer I own.  I am interested in comments on performance
-both with Epson Stylus printers and with others.
+BASIC INSTALLATION
 
-Some tips on tuning the output:
+If you have downloaded a .tar.gz file (tarball), you should follow
+these directions.
 
-* Start with the default settings
+To build and install the Gimp Print plug-in:
 
-* Brightness and density are not the same thing.  Density is a purely
-  linear adjustment; more density means more ink.  Brightness affects
-  perceived brightness.
+./configure
+make
+make install
 
-* Higher gamma values result in brighter images with compressed
-  highlights.  Lower gamma values are darker, but with better tonal
-  range in the highlights.
+This installs two programs: the print plugin itself (named "print") in
+your system Gimp plugin directory, and a utility named "escputil" for
+performing head cleaning, nozzle alignment, and other tasks on Epson
+Stylus inkjet printers.  Type "escputil" for a description of the
+options and functionality.
 
-* Different brands of ink yield different results.  I've found that
-  third party inks on Epson printers are generally too cyan.  The
-  correction for excessive cyan is to add red (or reduce blue and
-  green).
+Please check our web site at http://gimp-print.sourceforge.net for
+details about what is and is not supported.
 
-* I've found that what creates good test patterns does not necessarily
-  create good photographs.  In particular, test patterns often print
-  well with gamma of .6 or thereabouts, but that gives washed out
-  photographs.  Perhaps when I implement a better contrast control
-  this can be improved.
+Please report any problems to gimp-print-devel@sourceforge.net.
 
-* The contrast control scales polynomially around the midpoint of the
-  range.  Lower contrast will reduce the contrast in the midtones, but
-  increase the contrast in the highlights and shadows.  Contrariwise,
-  a high contrast value will stretch the scale in midtones,
-  compressing the highlights and shadows.
+If you have installed the Gimp as a precompiled package (e. g. from an
+RPM), you will need to install the gimp-devel package as well as the
+gimp package.  The gimp package as supplied in most distributions only
+contains what's needed to run the Gimp.  The gimp-devel package
+contains additional files required to actually build new plugins.
 
-* There are many combinations of brightness, gamma, and density that
-  will create acceptable images.  You may find that you want different
-  settings for different images.
-
-* One group of settings you might want to start with is:
-
-  Brightness 45
-  Gamma 1.5
-  Contrast 105
-  Saturation 1.4
-  Density 0.8
+If you have installed the Gimp from source on Linux: after running
+make install, you must run ldconfig as root before attempting to build
+this plugin.
 
 
-Makefile.standalone enables you to build this plugin as a standalone
-plugin, without reference to a Gimp source tree.
+GHOSTSCRIPT
 
+This package includes a Ghostscript driver that may be built, allowing
+use of this software for general printing purposes.  Please read
+Ghost/README for more information, including how to build and install
+it.
+
+The Ghostscript driver also includes everything necessary to configure
+use with Grant Taylor's Foomatic printing package (see
+http://www.linuxprinting.org for a description of this package).
+
+
+CUPS
+
+This package includes a CUPS driver that may be built, allowing use of
+this software for general printing purposes.  Please read cups/README
+for more information, including how to build and install it.
+
+If you prefer Cups-o-matic, instructions may be found in Ghost/README.
+
+
+RECOMMENDED SETTINGS
+
+We recommend starting with all default settings for the slider
+adjustments in the Color Adjustment window.  The settings can be
+adjusted as necessary for particular combinations of ink, paper, and
+subject material.
+
+We recommend use of the Adaptive Hybrid dithering algorithm in most
+cases.  Users of four color printers may find that the Ordered
+dithering algorithm is faster and produces nearly as good output.  Use
+of this method is strongly discouraged on six color (photo) printers.
+
+On most inkjet printers, 720 dpi will produce very high quality;
+1440x720 dpi will produce extremely high quality.
+
+
+USE OF THE CVS REPOSITORY
+
+If you have a copy of the source from the CVS repository, then prior
+to running configure, you must
+
+aclocal;autoconf;automake
+
+If you do run aclocal, beware that versions of the Gimp from 1.1.17
+and earlier have a version of gimp.m4 that will create an incorrect
+configure script.  The patch is as follows:
+
+diff -u /usr/local/share/aclocal/gimp.m4~ /usr/local/share/aclocal/gimp.m4
+--- /usr/local/share/aclocal/gimp.m4~   Tue Mar 30 13:49:58 1999
++++ /usr/local/share/aclocal/gimp.m4    Fri Feb 11 22:34:47 2000
+@@ -134,6 +134,13 @@
+           AC_TRY_LINK([
+ #include <stdio.h>
+ #include <libgimp/gimp.h>
++GPlugInInfo    PLUG_IN_INFO =          /* Plug-in information */
++{
++  NULL,    /* init_proc */
++  NULL,    /* quit_proc */
++  NULL,    /* query_proc */
++  NULL,    /* run_proc */
++};
+ ],      [ return 0; ],
+         [ echo "*** The test program compiled, but did not run. This usually means"
+           echo "*** that the run-time linker is not finding GIMP or finding the wrong"
+
+If you wish to build the Ghostscript driver, you must run 'make ghost'
+from top level.
+
+If you wish to build the CUPS driver, you must run 'make cups'
+from top level.
+
+If you are building this from a release, you should not have any
+trouble because the configure script will already exist.
 
 Enjoy!
-
--Robert Krawitz, January 13, 2000
