@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins\n"
-"POT-Creation-Date: 2001-11-06 19:13+0100\n"
-"PO-Revision-Date: 2001-11-06 19:13+0100\n"
+"POT-Creation-Date: 2001-11-09 18:14+0100\n"
+"PO-Revision-Date: 2001-11-09 18:27+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -12283,10 +12283,10 @@ msgstr "Zmiana danych"
 #: plug-ins/imagemap/imap_main.c:1
 msgid ""
 "Some data has been changed.\n"
-"Do you really want to continue?"
+"Do you really want to discard your changes?"
 msgstr ""
 "Niektóre dane zosta³y zmienione.\n"
-"Czy na pewno chcesz kontynuowaæ?"
+"Czy na pewno chcesz porzuciæ zmiany?"
 
 #: plug-ins/imagemap/imap_main.c:1
 #, c-format
