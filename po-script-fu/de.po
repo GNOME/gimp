@@ -5,11 +5,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.2.2\n"
-"POT-Creation-Date: 2002-08-20 15:18+0200\n"
-"PO-Revision-Date: 2002-03-26 14:52+0100\n"
-"Last-Translator: Sven Neumann <sven@gimp.org>\n"
-"Language-Team: German <de@li.org>\n"
+"Project-Id-Version: GIMP HEAD\n"
+"POT-Creation-Date: 2002-08-28 22:23+0200\n"
+"PO-Revision-Date: 2002-08-28 22:23+0100\n"
+"Last-Translator: Christian Neumair <christian-neumair@web.de>\n"
+"Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -29,11 +29,11 @@ msgstr "SIOD Ausgabe"
 #. The current command
 #: plug-ins/script-fu/script-fu-console.c:265
 msgid "Current Command"
-msgstr "Aktuelles Kommando"
+msgstr "Aktueller Befehl"
 
 #: plug-ins/script-fu/script-fu-console.c:285
 msgid "Browse..."
-msgstr "Durchsuchen..."
+msgstr "Auswählen..."
 
 #: plug-ins/script-fu/script-fu-console.c:581
 msgid "Unable to open a stream on the SIOD output pipe"
@@ -43,7 +43,6 @@ msgstr "Kann mit dem SIOD-Ausgabe-pipe keinen Stream erstellen"
 msgid "Unable to open the SIOD output pipe"
 msgstr "Kann SIOD Ausgabe-Pipe nicht öffnen"
 
-# <Toolbox>/Xtns/Web-Browser/gimp.org/
 #: plug-ins/script-fu/script-fu-console.c:632
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Der Skript-Fu Auswerte-Modus ermöglicht nur nicht-interaktive Aufrufe"
@@ -106,18 +105,18 @@ msgstr ""
 "Mindestens eine Schriftart, die Sie ausgewählt haben, ist ungültig.\n"
 "Bitte überprüfen Sie Ihre Einstellungen.\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:481
 #: plug-ins/script-fu/script-fu-scripts.c:1961
+#: plug-ins/dbbrowser/dbbrowser_utils.c:481
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:497
 #: plug-ins/script-fu/script-fu-scripts.c:1967
+#: plug-ins/dbbrowser/dbbrowser_utils.c:497
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:489
 #: plug-ins/script-fu/script-fu-scripts.c:1973
+#: plug-ins/dbbrowser/dbbrowser_utils.c:489
 msgid "Date:"
 msgstr "Datum:"
 
@@ -140,15 +139,15 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:568
+#: plug-ins/script-fu/script-fu-server.c:569
 msgid "Script-Fu Server Options"
 msgstr "Skript-Fu Server-Einstellungen"
 
-#: plug-ins/script-fu/script-fu-server.c:595
+#: plug-ins/script-fu/script-fu-server.c:596
 msgid "Server Port:"
 msgstr "Server Port:"
 
-#: plug-ins/script-fu/script-fu-server.c:601
+#: plug-ins/script-fu/script-fu-server.c:602
 msgid "Server Logfile:"
 msgstr "Server Logdatei:"
 
@@ -175,20 +174,17 @@ msgstr "DB Browser"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:130
 #: plug-ins/dbbrowser/dbbrowser_utils.c:149
-#, fuzzy
 msgid "Search by _Name"
-msgstr "Suchen nach Namen"
+msgstr "Nach _Name suchen"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:132
 #: plug-ins/dbbrowser/dbbrowser_utils.c:151
-#, fuzzy
 msgid "Search by _Blurb"
-msgstr "Suchen nach Beschreibung"
+msgstr "Nach _Beschreibung suchen"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:208
-#, fuzzy
 msgid "_Search:"
-msgstr "Suchen:"
+msgstr "_Suche:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:340
 msgid "Name:"
@@ -212,19 +208,19 @@ msgstr "Hilfe:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:599
 msgid "Searching by name - please wait"
-msgstr ""
+msgstr "Suche nach Name läuft - bitte warten"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:622
 msgid "Searching by blurb - please wait"
-msgstr ""
+msgstr "Suche nach Beschreibung läuft - bitte warten"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:632
 msgid "Searching - please wait"
-msgstr ""
+msgstr "Suche läuft - bitte warten"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:671
 msgid "No matches"
-msgstr ""
+msgstr "Keine Treffer"
 
 #: plug-ins/gap/sel-to-anim-img.scm.h:1
 msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
@@ -847,7 +843,7 @@ msgstr "Fleckendichte Y"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
 msgid "Add Glowing"
-msgstr ""
+msgstr "Glühen hinzufügen"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
 msgid "After Glow"
@@ -859,6 +855,9 @@ msgid ""
 "        A foreground text layer with transparency\n"
 "        and a background layer."
 msgstr ""
+"Burn-In: Es werden insgesamt zwei Ebenen benötigt!\n"
+"        Eine transparente Textebene im Vordergrund\n"
+"        sowie eine Hintergrundebene"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Corona Width"
@@ -874,7 +873,7 @@ msgstr "Ausblenden Breite"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
 msgid "Prepare for GIF"
-msgstr ""
+msgstr "Für GIF vorbereiten"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
 msgid "Speed (pixels/frame)"
@@ -2279,12 +2278,3 @@ msgstr "<Toolbox>/Xtns/Web-Browser/Plugin Registrierung"
 #: plug-ins/webbrowser/web-browser.scm.h:17
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr "<Toolbox>/Xtns/Web-Browser/Benutzer FAQ"
-
-#~ msgid "DB Browser (init...)"
-#~ msgstr "DB Browser (Initialisierung...)"
-
-#~ msgid "DB Browser (please wait)"
-#~ msgstr "DB Browser (bitte warten)"
-
-#~ msgid "Reset to Defaults"
-#~ msgstr "Auf Standardwerte zurücksetzen"
