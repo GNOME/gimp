@@ -1,3 +1,8 @@
+2002-05-14  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/ps.c: reverted the last change and applied a patch
+	from Peter Kirchgessner instead (closes reopened bug #81606).
+
 2002-05-14  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/common/plasma.c: Fix to have the preview and actual
