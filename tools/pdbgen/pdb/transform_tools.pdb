@@ -152,7 +152,8 @@ HELP
       /* Perspective the selection */
       success = gimp_drawable_transform_affine (drawable,
                                                 &matrix, GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, FALSE);
+                                                interpolation_type, TRUE,
+                                                FALSE);
     }
 }
 CODE
@@ -211,7 +212,8 @@ HELP
       /* Rotate the selection */
       success = gimp_drawable_transform_affine (drawable,
                                                 &matrix, GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, FALSE);
+                                                interpolation_type, FALSE,
+                                                FALSE);
     }
 }
 CODE
@@ -284,7 +286,8 @@ HELP
       /* Scale the selection */
       success = gimp_drawable_transform_affine (drawable,
                                                 &matrix, GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, FALSE);
+                                                interpolation_type, TRUE,
+                                                FALSE);
     }
 }
 CODE
@@ -350,7 +353,8 @@ HELP
       /* Shear the selection */
       success = gimp_drawable_transform_affine (drawable,
                                                 &matrix, GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, FALSE);
+                                                interpolation_type, FALSE,
+                                                FALSE);
     }
 }
 CODE
@@ -425,7 +429,8 @@ HELP
       /* Transform the selection */
       success = gimp_drawable_transform_affine (drawable,
                                                 &matrix, GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, FALSE);
+                                                interpolation_type, TRUE,
+                                                FALSE);
     }
 }
 CODE

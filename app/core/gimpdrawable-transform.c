@@ -55,8 +55,7 @@
 
 /* recursion level should be a usersettable parameter,
    3 seems to be a reasonable default */
-/* temporarily set to 0 - http://bugzilla.gnome.org/show_bug.cgi?id=136702 */
-#define RECURSION_LEVEL 0
+#define RECURSION_LEVEL 3
 
 
 /*  forward function prototypes  */
@@ -104,6 +103,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                                       const GimpMatrix3      *matrix,
                                       GimpTransformDirection  direction,
                                       GimpInterpolationType   interpolation_type,
+                                      gboolean                supersample,
                                       gboolean                clip_result,
                                       GimpProgressFunc        progress_callback,
                                       gpointer                progress_data)
@@ -373,7 +373,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                 {
                   guchar color[MAX_CHANNELS];
 
-                  if (RECURSION_LEVEL &&
+                  if (supersample &&
                       supersample_dtest (u[1], v[1], u[2], v[2],
                                          u[3], v[3], u[4], v[4]))
                     {
@@ -807,6 +807,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
                                 const GimpMatrix3      *matrix,
                                 GimpTransformDirection  direction,
                                 GimpInterpolationType   interpolation_type,
+                                gboolean                supersample,
                                 gboolean                clip_result)
 {
   GimpImage   *gimage;
@@ -841,6 +842,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
                                                         matrix,
                                                         GIMP_TRANSFORM_FORWARD,
                                                         interpolation_type,
+                                                        supersample,
                                                         FALSE,
                                                         NULL, NULL);
 

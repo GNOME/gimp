@@ -38,6 +38,7 @@ TileManager * gimp_drawable_transform_tiles_affine (GimpDrawable           *draw
                                                     const GimpMatrix3      *matrix,
                                                     GimpTransformDirection  direction,
                                                     GimpInterpolationType   interpolation_type,
+                                                    gboolean                supersample,
                                                     gboolean                clip_result,
                                                     GimpProgressFunc        progress_callback,
                                                     gpointer                progress_data);
@@ -57,6 +58,7 @@ gboolean      gimp_drawable_transform_affine       (GimpDrawable           *draw
                                                     const GimpMatrix3      *matrix,
                                                     GimpTransformDirection  direction,
                                                     GimpInterpolationType   interpolation_type,
+                                                    gboolean                supersample,
                                                     gboolean                clip_result);
 gboolean      gimp_drawable_transform_flip         (GimpDrawable           *drawable,
                                                     GimpOrientationType     flip_type);

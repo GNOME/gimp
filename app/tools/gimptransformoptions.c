@@ -48,6 +48,7 @@ enum
   PROP_TYPE,
   PROP_DIRECTION,
   PROP_INTERPOLATION,
+  PROP_SUPERSAMPLE,
   PROP_CLIP,
   PROP_GRID_TYPE,
   PROP_GRID_SIZE,
@@ -137,6 +138,10 @@ gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
                                  GIMP_TYPE_INTERPOLATION_TYPE,
                                  GIMP_INTERPOLATION_LINEAR,
                                  0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SUPERSAMPLE,
+                                    "supersample", NULL,
+                                    FALSE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CLIP,
                                     "clip", NULL,
                                     FALSE,
@@ -186,6 +191,9 @@ gimp_transform_options_set_property (GObject      *object,
     case PROP_INTERPOLATION:
       options->interpolation = g_value_get_enum (value);
       break;
+    case PROP_SUPERSAMPLE:
+      options->supersample = g_value_get_boolean (value);
+      break;
     case PROP_CLIP:
       options->clip = g_value_get_boolean (value);
       break;
@@ -227,6 +235,9 @@ gimp_transform_options_get_property (GObject    *object,
       break;
     case PROP_INTERPOLATION:
       g_value_set_enum (value, options->interpolation);
+      break;
+    case PROP_SUPERSAMPLE:
+      g_value_set_boolean (value, options->supersample);
       break;
     case PROP_CLIP:
       g_value_set_boolean (value, options->clip);
@@ -314,6 +325,12 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   optionmenu = gimp_prop_enum_option_menu_new (config, "interpolation", 0, 0);
   gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
   gtk_widget_show (optionmenu);
+
+  /*  the supersample toggle button  */
+  button = gimp_prop_check_button_new (config, "supersample",
+                                       _("Supersample"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   /*  the clip resulting image toggle button  */
   button = gimp_prop_check_button_new (config, "clip", _("Clip Result"));

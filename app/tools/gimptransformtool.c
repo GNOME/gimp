@@ -848,6 +848,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                                 &tr_tool->transform,
                                                 options->direction,
                                                 options->interpolation,
+                                                options->supersample,
                                                 clip_result,
                                                 progress ?
                                                 gimp_progress_update_and_flush :

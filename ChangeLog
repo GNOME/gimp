@@ -1,5 +1,28 @@
 2004-03-13  Raphaël Quinet  <quinet@gamers.org>
 
+	* app/tools/gimptransformoptions.[ch]: added new "supersample"
+	property to GimpTransformOptions and added corresponding check
+	button in the option dialog for the transform tools.
+
+	* app/core/gimpdrawable-transform.[ch],
+	* app/core/gimpdrawable.c,
+	* app/tools/gimptransformtool.c: new "gboolean supersample"
+	parameter added to gimp_drawable_transform_tiles_affine() and
+	gimp_drawable_transform_affine().
+
+	* tools/pdbgen/pdb/transform_tools.pdb: ditto.  For the PDB calls,
+	the supersample parameter is set to FALSE for "rotate" and "shear"
+	and set to TRUE for "perspective", "scale" and "transform_2d".
+
+	* app/pdb/transform_tools_cmds.c: regenerated.
+
+	The new "supersample" option lets the user decide if the
+	transformations should use supersampling (RECURSION_LEVEL 3) or
+	not.  This fixes both bug #136702 and bug #109817.  Hopefully for
+	good, this time.
+
+2004-03-13  Raphaël Quinet  <quinet@gamers.org>
+
 	* app/tools/gimptexttool.c (gimp_text_tool_set_layer): added
 	missing semicolon that was breaking the build.
 
