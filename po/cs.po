@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-08 03:32+0100\n"
-"PO-Revision-Date: 2004-03-08 10:23+0100\n"
+"POT-Creation-Date: 2004-03-09 03:36+0100\n"
+"PO-Revision-Date: 2004-03-09 20:49+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2480,15 +2480,23 @@ msgstr "/Podle _předvoleb"
 msgid "Toggle QuickMask"
 msgstr "Přepnout Rychlou masku"
 
-#: app/display/gimpdisplayshell.c:1388
+#: app/display/gimpdisplayshell.c:1395
 #, c-format
 msgid "Close %s?"
 msgstr "Zavřít %s?"
 
-#: app/display/gimpdisplayshell.c:1390
+#: app/display/gimpdisplayshell.c:1405
+msgid "_Discard changes"
+msgstr "Za_hodit změny"
+
+#: app/display/gimpdisplayshell.c:1445
 #, c-format
-msgid "Changes were made to '%s'. Close anyway?"
-msgstr "V '%s' byly provedeny změny. Přesto zavřít?"
+msgid "Changes were made to '%s'."
+msgstr "V '%s' byly provedeny změny."
+
+#: app/display/gimpdisplayshell.c:1459
+msgid "Unsaved changes will be lost."
+msgstr "Neuložené změny budou ztraceny."
 
 #: app/display/gimpdisplayshell-dnd.c:79
 msgid "Drop New Layer"
@@ -2847,7 +2855,11 @@ msgstr ""
 "Není vhodné vytvářet paletu z více než 255 barev, zamýšlíte-li z tohoto "
 "obrázku vytvořit průhledný nebo animovaný GIF."
 
-#: app/gui/convert-dialog.c:510
+#: app/gui/convert-dialog.c:498
+msgid "Cannot convert to a palette with more than 256 colors."
+msgstr "Nemohu převést do palety s více než 256 barvami."
+
+#: app/gui/convert-dialog.c:517
 msgid "Select Custom Palette"
 msgstr "Zvolte vlastní paletu"
 
@@ -9891,9 +9903,6 @@ msgstr "Vytvářet a upravovat obrázky a fotografie"
 
 #~ msgid "No Selection"
 #~ msgstr "Žádný výběr"
-
-#~ msgid "Thumbnail %d of %d"
-#~ msgstr "Miniatura č. %d z %d"
 
 #~ msgid "Modify Curves for Channel:"
 #~ msgstr "Upravit křivky pro kanál:"
