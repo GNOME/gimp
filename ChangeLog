@@ -1,5 +1,8 @@
 2003-07-24  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/imagemap/imap_selection.c (selection_update): moved
+	variable declarations inside the #ifdef branch where they are used.
+
 	* plug-ins/gimpressionist/sizemap.c: commented out unused function
 	update_sizemap_dialog().
 
