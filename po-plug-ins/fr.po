@@ -1230,7 +1230,6 @@ msgid "Maximum Height:"
 msgstr "Hauteur maximum :"
 
 #: plug-ins/Lighting/lighting_ui.c:947
-#, fuzzy
 msgid "Autostretch to Fit Value Range"
 msgstr "Étaler automatiquement les valeurs pour les adapter à l'intervalle possible"
 
