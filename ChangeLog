@@ -1,3 +1,8 @@
+2002-01-01  Tor Lillqvist  <tml@iki.fi>
+
+	* gimptool-win32.c.in (do_build_2): Pass also a flag to build
+	a windowing application (not a console one).
+
 2001-12-31  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/common/gz.c (save_image, load_image): (Win32) Improve

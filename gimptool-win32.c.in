@@ -444,6 +444,7 @@ do_build_2 (gchar *cflags,
   gchar *output_flag;
   gchar *dest_exe;
   gchar *here_comes_linker_flags;
+  gchar *windows_subsystem_flag;
   gchar *p, *q, *r;
 
   if (install_dir != NULL)
@@ -478,14 +479,16 @@ do_build_2 (gchar *cflags,
     {
       output_flag = "-Fe";
       here_comes_linker_flags = "-link";
+      windows_subsystem_flag = "-subsystem:windows";
     }
   else
     {
       output_flag = "-o ";
       here_comes_linker_flags = "";
+      windows_subsystem_flag = "-mwindows";
     }
 
-  cmd = g_strdup_printf ("%s %s %s %s%s%s %s %s %s %s %s",
+  cmd = g_strdup_printf ("%s %s %s %s%s%s %s %s %s %s %s %s",
 			 env_cc,
 			 env_cflags,
 			 cflags,
@@ -495,6 +498,7 @@ do_build_2 (gchar *cflags,
 			 what,
 			 here_comes_linker_flags,
 			 env_ldflags,
+			 windows_subsystem_flag,
 			 libs,
 			 env_libs);
   maybe_run (cmd);
