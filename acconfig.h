@@ -18,6 +18,7 @@
 #undef HAVE_DOPRNT
 #undef HAVE_IPC_H
 #undef HAVE_NDIR_H
+#undef HAVE_PUTENV
 #undef HAVE_SHM_H
 #undef HAVE_SYS_DIR_H
 #undef HAVE_SYS_NDIR_H

@@ -84,7 +84,9 @@ main (int argc, char **argv)
   int show_version;
   int show_help;
   int i, j;
+#ifdef HAVE_PUTENV
   gchar *display_name, *display_env;
+#endif
 
   ATEXIT (g_mem_profile);
 
@@ -99,18 +101,24 @@ main (int argc, char **argv)
                                             GDK_CONTROL_MASK |
                                             GDK_MOD1_MASK);
 
+#ifdef HAVE_PUTENV
   display_name = gdk_get_display ();
   display_env = g_new (gchar, strlen (display_name) + 9);
   *display_env = 0;
   strcat (display_env, "DISPLAY=");
   strcat (display_env, display_name);
   putenv (display_env);
+#endif
 
   no_interface = FALSE;
   no_data = FALSE;
   no_splash = FALSE;
   no_splash_image = FALSE;
+#ifdef HAVE_SHM_H
   use_shm = TRUE;
+#else
+  use_shm = FALSE;
+#endif
   use_debug_handler = FALSE;
   console_messages = FALSE;
 

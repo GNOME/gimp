@@ -25,11 +25,17 @@
 #include <sys/time.h>
 #include <sys/types.h>
 #include <sys/param.h>
-#include <sys/ipc.h>
-#include <sys/shm.h>
 #include <sys/stat.h>
 #include <time.h>
 #include <unistd.h>
+
+#ifdef HAVE_IPC_H
+#include <sys/ipc.h>
+#endif
+
+#ifdef HAVE_SHM_H
+#include <sys/shm.h>
+#endif
 
 #include "libgimp/gimpprotocol.h"
 #include "libgimp/gimpwire.h"
@@ -286,6 +292,7 @@ plug_in_init ()
   wire_set_writer (plug_in_write);
   wire_set_flusher (plug_in_flush);
 
+#ifdef HAVE_SHM_H
   /* allocate a piece of shared memory for use in transporting tiles
    *  to plug-ins. if we can't allocate a piece of shared memory then
    *  we'll fall back on sending the data over the pipe.
@@ -310,6 +317,7 @@ plug_in_init ()
 #endif
 	}
     }
+#endif
 
   /* search for binaries in the plug-in directory path */
   datafiles_read_directories (plug_in_path, plug_in_init_file, MODE_EXECUTABLE);
@@ -438,6 +446,7 @@ plug_in_kill ()
   GSList *tmp;
   PlugIn *plug_in;
   
+#ifdef HAVE_SHM_H
 #ifndef	IPC_RMID_DEFERRED_RELEASE
   if (shm_ID != -1)
     {
@@ -448,7 +457,8 @@ plug_in_kill ()
   if (shm_ID != -1)
     shmdt ((char*) shm_addr);
 #endif
-  
+#endif
+ 
   tmp = open_plug_ins;
   while (tmp)
     {

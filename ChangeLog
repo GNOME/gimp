@@ -1,3 +1,15 @@
+Thu Aug 27 18:58:44 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* acconfig.h
+	* configure.in
+	* app/main.c: added check for putenv and #ifdefed it's usage since
+	NeXTStep is lame
+
+	* libgimp/gimp.c
+	* app/main.c
+	* app/plug_in.c: conditionally compile shared mem stuff so platforms
+	without it can still work
+
 Thu Aug 27 18:53:50 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/CEL/CEL.c
