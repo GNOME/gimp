@@ -714,31 +714,20 @@ guint
 canvas_portion_init  (
                       Canvas * c,
                       int x,
-                      int y
+                      int y,
+                      int w,
+                      int h
                       )
 {
   if (c)
     {
-      x = canvas_portion_x (c, x, y);
-      y = canvas_portion_y (c, x, y);
-
       if (c->init_func)
         {
-          return c->init_func (c, x, y, c->init_data);
+          return c->init_func (c, x, y, w, h, c->init_data);
         }
-      else
-        {
-          guint w = canvas_portion_width (c, x, y);
-          guint h = canvas_portion_height (c, x, y);
-          guchar * d = canvas_portion_data (c, x, y);
-
-          if (d != NULL)
-            {
-              memset (d, 0, w * h * canvas_bytes (c));
-              return TRUE;
-            }
-        }
+      return TRUE;
     }
+
   return FALSE;
 }
 

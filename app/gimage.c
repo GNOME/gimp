@@ -54,6 +54,7 @@ static void     gimage_construct_layers      (GImage *, int, int, int, int);
 static void     gimage_construct_channels    (GImage *, int, int, int, int);
 static void     gimage_initialize_projection (GImage *, int, int, int, int);
 static void     gimage_get_active_channels   (GImage *, GimpDrawable *, int *);
+static int      gimage_is_flat               (GImage *gimage);
 
 /*  projection functions  */
 static void     project_intensity            (GImage *, Layer *, PixelArea *,
@@ -65,7 +66,7 @@ static void     project_indexed              (GImage *, Layer *, PixelArea *,
 static void     project_channel              (GImage *, Channel *, PixelArea *,
 					      PixelArea *);
 
-static guint    gimage_validate              (Canvas * c, int x, int y, void * data);
+static guint    gimage_validate              (Canvas * c, int x, int y, int w, int h, void * data);
 
 
 static int
@@ -1161,13 +1162,18 @@ gimage_get_active_channels (GImage *gimage, GimpDrawable *drawable, int *active)
 }
 
 
+
+
 void
 gimage_construct (GImage *gimage, int x, int y, int w, int h)
 {
-  gimage->construct_flag = 0;
-  gimage_initialize_projection (gimage, x, y, w, h);
-  gimage_construct_layers (gimage, x, y, w, h);
-  gimage_construct_channels (gimage, x, y, w, h);
+  if (! gimage_is_flat (gimage))
+    {
+      gimage->construct_flag = 0;
+      gimage_initialize_projection (gimage, x, y, w, h);
+      gimage_construct_layers (gimage, x, y, w, h);
+      gimage_construct_channels (gimage, x, y, w, h);
+    }
 }
 
 static guint 
@@ -1175,14 +1181,12 @@ gimage_validate  (
                   Canvas * c,
                   int x,
                   int y,
+                  int w,
+                  int h,
                   void * data
                   )
 {
-  int w = canvas_portion_width (c, x, y);
-  int h = canvas_portion_height (c, x, y);
-  
   gimage_construct ((GImage *) data, x, y, w, h);
-
   return TRUE;
 }
 
@@ -2335,6 +2339,70 @@ gimage_remove_channel (GImage *gimage, Channel *channel)
 /*  Access functions                                        */
 /************************************************************/
 
+static int
+gimage_is_flat (GImage *gimage)
+{
+  int flat = FALSE;
+
+  /*  What makes a flat image?
+   *  1) the solitary layer is exactly gimage-sized and placed
+   *  2) no layer mask
+   *  3) opacity == OPAQUE_OPACITY
+   *  4) all primary channels must be visible
+   *  5) no auxilliary channels
+   */
+  
+  if ((gimage->channels == NULL) &&
+      (gimage->layers) &&
+      (gimage->layers->next == NULL))
+    {
+      Layer * l = (Layer *) gimage->layers->data;
+      
+      if ((l->mask == NULL) &&
+          (l->opacity == OPAQUE_OPACITY))
+        {
+          GimpDrawable * d = GIMP_DRAWABLE (l);
+          int off_x, off_y;
+          
+          drawable_offsets (d, &off_x, &off_y);
+          
+          if ((off_x == 0) &&
+              (off_y == 0) &&
+              (drawable_width (d) == gimage->width) &&
+              (drawable_height (d) == gimage->height))
+            {
+              int a, b;
+              
+              flat = TRUE;
+              
+              a = layer_has_alpha (l)
+                ? drawable_bytes (d) - 1
+                : drawable_bytes (d);
+              
+              for (b = 0; b < a; b++)
+                {
+                  if (gimage->visible[b] == FALSE)
+                    {
+                      flat = FALSE;
+                    }
+                }
+            }
+        }
+    }
+  
+  if ((flat == TRUE) && (gimage->projection))
+    {
+      gimage_free_projection (gimage);
+    }
+  else if ((flat == FALSE) && (gimage->projection == NULL))
+    {
+      gimage_allocate_projection (gimage);
+    }
+  
+  return flat;
+}
+
+
 int
 gimage_is_empty (GImage *gimage)
 {
@@ -2450,23 +2518,42 @@ gimage_cmap (GImage *gimage)
 Canvas *
 gimage_projection (GImage *gimage)
 {
-  if (( canvas_width (gimage->projection) != gimage->width) ||
-      ( canvas_height (gimage->projection)!= gimage->height))
-    gimage_allocate_projection (gimage);
+  Layer * layer;
   
-  return gimage->projection;
+  if (gimage_is_flat (gimage))
+    {
+      if ((layer = gimage->active_layer))
+	return drawable_data (GIMP_DRAWABLE(layer));
+      else
+	return NULL;
+    }
+  else
+    {
+      if (( canvas_width (gimage->projection) != gimage->width) ||
+          ( canvas_height (gimage->projection)!= gimage->height))
+        gimage_allocate_projection (gimage);
+  
+      return gimage->projection;
+    }
 }
 
 int
 gimage_projection_opacity (GImage *gimage)
 {
+  Layer * layer;
+
+  if (gimage_is_flat (gimage))
+    if ((layer = (gimage->active_layer)))
+      return layer->opacity;
+  
   return OPAQUE_OPACITY;
 }
 
 void
 gimage_projection_realloc (GImage *gimage)
 {
-  gimage_allocate_projection (gimage);
+  if (! gimage_is_flat (gimage))
+    gimage_allocate_projection (gimage);
 }
 
 /************************************************************/

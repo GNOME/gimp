@@ -445,8 +445,13 @@ tilebuf_portion_alloc  (
             {
               memset (tile->data, 0, n);
               tile->is_alloced = TRUE;
-              if (canvas_portion_init (t->canvas, x, y) != TRUE)
-                g_warning ("tilebuf failed to init portion...");
+              if (canvas_portion_init (t->canvas,
+                                       x - tile16_xoffset (t, x),
+                                       y - tile16_yoffset (t, y),
+                                       TILE16_WIDTH, TILE16_HEIGHT) != TRUE)
+                {
+                  g_warning ("tilebuf failed to init portion...");
+                }
               return TRUE;
             }
         }

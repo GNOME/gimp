@@ -352,8 +352,12 @@ flatbuf_portion_alloc  (
             {
               memset (f->data, 0, n);
               f->is_alloced = TRUE;
-              if (canvas_portion_init (f->canvas, x, y) != TRUE)
-                g_warning ("flatbuf failed to init portion...");
+              if (canvas_portion_init (f->canvas,
+                                       0, 0,
+                                       f->width, f->height) != TRUE)
+                {
+                  g_warning ("flatbuf failed to init portion...");
+                }
               return TRUE;
             }
         }

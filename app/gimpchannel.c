@@ -109,16 +109,12 @@ int channel_get_count = 0;
 /*  Function definitions  */
 
 static guint
-channel_validate (Canvas * c, int x, int y, void * data)
+channel_validate (Canvas * c, int x, int y, int w, int h, void * data)
 {
-  int xx = canvas_portion_x (c, x, y);
-  int yy = canvas_portion_y (c, x, y);
-  int ww = canvas_portion_width (c, xx, yy);
-  int hh = canvas_portion_height (c, xx, yy);
-  guchar * d = canvas_portion_data (c, xx, yy);
+  guchar * d = canvas_portion_data (c, x, y);
   
   /*  Set the contents of the tile to empty  */
-  memset (d, 0, ww * hh * canvas_bytes (c));
+  memset (d, 0, w * h * canvas_bytes (c));
 
   return 1;
 }
