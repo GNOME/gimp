@@ -11,9 +11,8 @@
 #define CPP "cpp"
 #endif
 
-Id header_root = "..";
+Id header_root = NULL;
 Id source_name = NULL;
-Id impl_name = NULL;
 
 gboolean collect_marshall = FALSE;
 
@@ -31,9 +30,6 @@ void get_options(int argc, char* argv[]){
 		case 'I':
 			g_string_append(cpp_cmd, " -I ");
 			g_string_append(cpp_cmd, optarg);
-			break;
-		case 'i':
-			impl_name=optarg;
 			break;
 		case 'd':
 			if(!yydebug)
@@ -109,29 +105,37 @@ int main(int argc, char* argv[]){
 	g_assert(yyin);
 	yyparse();
 	
-	if(!impl_name)
-		impl_name = p_to_str(p_fmt("~.c",
-					   p_c_ident(current_module->name)),
-				     NULL);
 	if(!source_name)
-		source_name = p_to_str(p_fmt("~_s.c",
+		source_name = p_to_str(p_fmt("~.c",
 					     p_c_ident(current_module->name)),
 				       NULL);
-		
+	if(!header_root)
+		if(!current_module->package->headerbase
+		   || current_module->package->headerbase[0])
+			header_root = "..";
+		else
+			header_root = ".";
+		   
 	foreach_def(output_cb, out);
 
 	f=fopen(source_name, "w+");
 	if(!f)
 		g_error("Unable to open file %s: %s",
 			source_name, strerror(errno));
-	p_write(p_fmt("~~~~~"
-		      "#include \"~\"\n",
+	p_write(p_fmt("~~~~"
+		      "#ifdef GCG_IMPL\n"
+		      "#\tinclude GCG_IMPL\n"
+		      "#else\n"
+		      "#\tinclude \"~\"\n"
+		      "#endif\n"
+		      "~",
 		      p_col("source_prot_depends", p_prot_include),
 		      p_col("source_head", NULL),
 		      p_col("source_sigtypes", p_sigdemarsh_decl),
-		      p_col("source", NULL),
 		      p_col("source_sigtypes", p_demarshaller),
-		      p_str(impl_name)),
+		      p_fmt("~.i.c",
+			     p_c_ident(current_module->name)),
+		      p_col("source", NULL)),
 		f, out);
 	fclose(f);
 	

@@ -35,58 +35,53 @@ PNode* p_c_macro(Id id){
 	return n;
 }
 
-PNode* p_param(FunParams* p, ParamOptions* opt){
+PNode* p_param(FunParams* p, ParamOptions* o){
 	return p_fmt("~~~~~~",
-		     opt->first ? p_nil : p_str(","),
-		     !opt->first && !opt->types ? p_str(" ") : p_nil,
-		     opt->types ? p_str("\n\t") : p_nil,
-		     opt->types ? p_type(&p->type) : p_nil,
-		     opt->types && opt->names ? p_str(" ") : p_nil,
-		     opt->names ? p->name : p_nil);
+		     o->first ? p_nil : p_str(","),
+		     !o->first && !(o->types && o->names) ? p_str(" ") : p_nil,
+		     (o->types && o->names) ? p_str("\n\t") : p_nil,
+		     o->types ? p_type(&p->type) : p_nil,
+		     o->types && o->names ? p_str(" ") : p_nil,
+		     o->names ? p->name : p_nil);
+}
+
+PNode* p_header(Module* m, Id suffix){
+	Id base = m->package->headerbase;
+	Id hdr = m->header;
+	Id name = m->package->name;
+	
+	return p_fmt("~~",
+		     base
+		     ? (base[0]
+			? p_fmt("~/", p_str(base))
+			: p_nil)
+		     : ((name && name[0])
+			? p_fmt("~/", p_c_ident(name))
+			: p_nil),
+		     hdr
+		     ? p_str(hdr)
+		     : p_fmt("~~",
+			     p_c_ident(m->name),
+			     p_str(suffix)));
 }
 
 PNode* p_prot_header(Module* m){
-	if(m->header)
-		return p_str(m->header);
-	else
-		return p_fmt("~/~_p.h",
-			     m->package->headerbase
-			     ? p_str(m->package->headerbase)
-			     : p_c_ident(m->package->name),
-			     p_c_ident(m->name));
+	return p_header(m, ".p.h");
 }
 
 PNode* p_type_header(Module* m){
-	if(m->header)
-		return p_str(m->header);
-	else
-		return p_fmt("~/~_t.h",
-			     m->package->headerbase
-			     ? p_str(m->package->headerbase)
-			     : p_c_ident(m->package->name),
-			     p_c_ident(m->name));
+	return p_header(m, ".t.h");
 }
 
 PNode* p_func_header(Module* m){
-	if(m->header)
-		return p_str(m->header);
-	else
-		return p_fmt("~/~.h",
-			     m->package->headerbase
-			     ? p_str(m->package->headerbase)
-			     : p_c_ident(m->package->name),
-			     p_c_ident(m->name));
+	return p_header(m, ".h");
 }
 
 PNode* p_import_header(Module* m){
 	if(m->header)
 		return p_nil;
 	else
-		return p_fmt("~/~_i.h",
-			     m->package->headerbase
-			     ? p_str(m->package->headerbase)
-			     : p_c_ident(m->package->name),
-			     p_c_ident(m->name));
+		return p_header(m, ".i.h");
 }
 
 PNode* p_type_include(Module* m){

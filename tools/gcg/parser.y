@@ -180,7 +180,7 @@ current_module_def: T_MODULE ident T_SCOPE ident T_END {
 }
 
 
-modulelist: /* empty */ | modulelist module;
+modulelist: /* empty */ | modulelist simpledecl | modulelist module;
 
 headerdef: /* empty */ {
 	$$ = NULL;
@@ -203,7 +203,9 @@ module: T_MODULE maybeident headerdef T_OPEN_B {
 		put_mod(m);
 	}
 	current_module = m;
-} decllist T_CLOSE_B;
+} decllist T_CLOSE_B {
+	current_module = NULL;
+};
 
 decllist: /* empty */ | decllist decl;
 
@@ -228,10 +230,21 @@ fundtype: T_INT {
 };
 
 
-
 simpledecl: fundtype ident T_END {
 	PrimType* t = g_new(PrimType, 1);
-	t->module = current_module;
+	if(current_module)
+		t->module = current_module;
+	else{
+		Module* m;
+		g_assert(!get_mod(current_package, $2));
+		m = g_new(Module, 1);
+		m->package = current_package;
+		m->name = $2;
+		m->header = NULL;
+		put_mod(m);
+		t->module = m;
+	}
+	
 	t->name = $2;
 	t->kind = $1;
 	put_type(t);

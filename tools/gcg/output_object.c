@@ -147,6 +147,7 @@ void output_method(PRoot* out, Method* m){
 	ParamOptions o={TRUE, TRUE, FALSE};
 	FunParams* par;
 	PNode* dispatch;
+	GSList* params;
 	
 	if(k == METH_STATIC)
 		par = fparams("p", m->params);
@@ -210,24 +211,32 @@ void output_method(PRoot* out, Method* m){
 		dispatch=p_sig_marshalling(m);
 		break;
 	case METH_STATIC:
-	case METH_DIRECT:
+	case METH_DIRECT:{
+		PNode* impl_name;
 		o.names=TRUE;
-		o.types=TRUE;
-		pr_put(out, "source_head",
-		       p_fmt("static ~ ~_~_real (~);\n",
-			     p_type(&m->ret_type),
-			     p_c_ident(t->name),
-			     name,
-			     p_params(par, &o)));
 		o.types=FALSE;
-		dispatch=p_fmt("\t~~_~_real (~);\n",
-			       m->ret_type.prim?
-			       p_str("return "):
-			       p_nil,
-			       p_c_ident(t->name),
-			       name,
-			       p_params(par, &o));
+
+		impl_name=p_fmt("~_~",
+				p_c_macro(t->name),
+				p_c_macro(MEMBER(m)->name));
+				
+		dispatch=p_fmt("#ifdef ~\n"
+			       "\t~~ (~);\n"
+			       "#else\n"
+			       "\tg_error(\"Not implemented: ~.~.~\");\n"
+			       "#endif\n",
+			       impl_name,
+			       m->ret_type.prim
+			       ? p_str("return ")
+			       : p_nil,
+			       impl_name,
+			       p_params(par, &o),
+			       p_str(t->module->package->name),
+			       p_str(t->name),
+			       p_str(MEMBER(m)->name));
+		
 		break;
+	}
 	case METH_VIRTUAL:
 		dispatch=p_fmt("\t~((~*)((GtkObject*) ~)->klass)->~ (~);\n",
 			       m->ret_type.prim?
@@ -249,6 +258,14 @@ void output_method(PRoot* out, Method* m){
 	 dispatch);
 
 	output_var_import(out, t, name);
+	for(params = m->params; params; params = params->next)
+		pr_put(out,
+		       m->prot==METH_PUBLIC?"func_depends":"prot_depends",
+		       ((Param*)(params->data))->type.prim->module);
+	
+		
+	
+	
 	
 	fparams_free(par);
 }
@@ -392,43 +409,44 @@ void output_object_type_init(PRoot* out, ObjectDef* o){
 
 
 void output_object_init(PRoot* out, ObjectDef* o){
-	pr_put(out, "source_head",
-	       p_fmt("static void ~ (~ ~);\n",
-		     p_varname(DEF(o)->type, p_str("init_real")),
-		     p_type(&o->self_type[FALSE]),
-		     p_c_ident(DEF(o)->type->name)));
+	PrimType* t = DEF(o)->type;
 	output_func(out, NULL,
 		    NULL,
-		    p_varname(DEF(o)->type, p_str("init")),
+		    p_varname(t, p_str("init")),
 		    p_fmt("~ ~",
 			  p_type(&o->self_type[FALSE]),
-			  p_c_ident(DEF(o)->type->name)),
+			  p_c_ident(t->name)),
 		    NULL,
-		    p_fmt("\t~ (~);\n",
-			  p_varname(DEF(o)->type, p_str("init_real")),
-			  p_c_ident(DEF(o)->type->name)));
+		    p_fmt("\t(void) ~;\n"
+			  "#ifdef ~_INIT\n"
+			  "\t~_INIT (~);\n"
+			  "#endif\n",
+			  p_c_ident(t->name),
+			  p_c_macro(t->name),
+			  p_c_macro(t->name),
+			  p_c_ident(t->name)));
 }
 
 void output_class_init(PRoot* out, ObjectDef* o){
-	pr_put(out, "source_head",
-	       p_fmt("static void ~ (~* klass);\n",
-		     p_varname(DEF(o)->type, p_str("class_init_real")),
-		     p_class_name(DEF(o)->type)));
+	PrimType* t = DEF(o)->type;
 	output_func(out, NULL,
 		    NULL,
-		    p_varname(DEF(o)->type, p_str("class_init")),
+		    p_varname(t, p_str("class_init")),
 		    p_fmt("~* klass",
-			  p_class_name(DEF(o)->type)),
+			  p_class_name(t)),
 		    NULL,
 		    p_fmt("\tGtkObjectClass* obklass = "
 			  "(GtkObjectClass*) klass;\n"
 			  "~"
 			  "\t(void) obklass;\n"
 			  "~"
-			  "\t~ (klass);\n",
+			  "#ifdef ~_CLASS_INIT\n"
+			  "\t~_CLASS_INIT (klass);\n"
+			  "#endif\n",
 			  p_col("class_init_head", NULL),
 			  p_col("member_class_init", NULL),
-			  p_varname(DEF(o)->type, p_str("class_init_real"))));
+			  p_c_macro(t->name),
+			  p_c_macro(t->name)));
 }
 
 void output_object(PRoot* out, Def* d){

@@ -1,0 +1,2 @@
+#!/bin/sh 
+gcc -M -I . -x c $* | sed -e "s/.gc.o/.c/g"

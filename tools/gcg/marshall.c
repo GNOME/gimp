@@ -244,17 +244,20 @@ PNode* p_arg_marsh(gpointer p, gpointer d){
 		     
 PNode* p_sig_marshalling(Method* m){
 	gint idx=-1;
-	gboolean ret=marshalling_type(&m->ret_type)!=MARSHALL_VOID;
+	gint nargs = g_slist_length(m->params);
+	gboolean ret = marshalling_type(&m->ret_type)!=MARSHALL_VOID;
 	return p_fmt("\t{\n"
-		     "\tGtkArg args[~];\n"
 		     "~"
 		     "~"
 		     "~"
-		     "\tgtk_signal_emitv((GtkObject*)~, ~, args);\n"
+		     "~"
+		     "\tgtk_signal_emitv((GtkObject*)~, ~, ~);\n"
 		     "~"
 		     "\t}\n",
-		     p_prf("%d",
-			   g_slist_length(m->params)+ret),
+		     nargs > 0
+		     ? p_fmt("\tGtkArg args[~];\n",
+			     p_prf("%d", nargs+ret))
+		     : p_nil,
 		     ret
 		     ?p_fmt("\t~ retval;\n",
 			    p_type(&m->ret_type))
@@ -263,10 +266,13 @@ PNode* p_sig_marshalling(Method* m){
 		     ret
 		     /* cannot use retloc here, ansi forbids casted lvalues */
 		     ?p_fmt("\tGTK_VALUE_POINTER(args[~]) = &retval;\n",
-			    p_prf("%d", g_slist_length(m->params)))
+			    p_prf("%d", nargs))
 		     :p_nil,
 		     p_c_ident(DEF(MEMBER(m)->my_class)->type->name),
 		     p_signal_id(m),
+		     nargs > 0
+		     ? p_str("args")
+		     : p_str("NULL"),
 		     ret
 		     ?p_str("\treturn retval;\n")
 		     :p_nil);

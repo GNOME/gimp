@@ -1,6 +1,6 @@
 
 package Gtk{
-	module <gtk/gtksignal.h>{
+	module <gtksignal.h>{
 		class Object;
 	}
 }

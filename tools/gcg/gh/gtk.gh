@@ -1,0 +1,18 @@
+package Gtk {
+	module <gtkwidget.h> {
+		class Widget;
+	}
+	module <gtkdialog.h> {
+		class Dialog;
+	}
+	module <gtkoptionmenu.h>{
+		class OptionMenu;
+	}
+	module <gtkpreview.h>{
+		class Preview;
+	}
+	module <gtkentry.h>{
+		class Entry;
+	}
+}
+

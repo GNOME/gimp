@@ -1,4 +1,4 @@
-package g {
+package g <> {
 	module <glib.h> {
 		integer int;
 		integer uint;
@@ -8,7 +8,7 @@ package g {
 	}
 }
 
-package G {
+package G <> {
 	module <glib.h> {
 		boxed List;
 		boxed SList;

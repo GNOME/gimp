@@ -9,7 +9,7 @@
 
 
 ident		[A-Za-z][A-Za-z0-9-]*
-header		<[[:alnum:]/.]+>
+header		<[[:alnum:]_/.]*>
 ws		[ \n\t\r] 
 comment		\/\/[^\n]*\n
 string		\"(([^\"]*)|\\\"|\\\\)*\"

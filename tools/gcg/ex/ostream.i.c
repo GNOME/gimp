@@ -6,11 +6,8 @@ static void putstring(ExOstream* str, gchar* string){
 		ex_ostream_putchar(str, string[i]);
 }
 	
-	
-static void ex_ostream_init_real(ExOstream* str){
-}
-
-static void ex_ostream_class_init_real(ExOstreamClass* klass){
+#define OSTREAM_CLASS_INIT ostream_class_init
+static void ostream_class_init(ExOstreamClass* klass){
 	klass->putstring = putstring;
 }
 

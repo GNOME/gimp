@@ -42,7 +42,7 @@ Module* get_mod(Package* pkg, Id modname){
 }
 
 void put_mod(Module* m){
-	if(m->package)
+	if(m->package && m->name)
 		g_hash_table_insert(m->package->mod_hash, (gpointer)m->name, m);
 }
 
