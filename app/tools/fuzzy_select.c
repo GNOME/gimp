@@ -33,7 +33,106 @@
 #include "pixelrow.h"
 
 
+/* ------------------------------------------------------------
+  
+      prototype of a generalized PixelArea control structure
+             with a sample seed-fill application
+  
+  ------------------------------------------------------------ */
+
+/* a bounding box */
+
+typedef struct _BBox BBox;
+struct _BBox
+{
+  gint x, y, w, h;
+};
+
+
+
+/* a range of pixels in a row */
+
+typedef struct _Segment Segment;
+struct _Segment
+{
+  guint start;
+  guint end;
+  Segment * next;
+};
+
+static Segment * segment_new    (guint start, guint end, Segment * next);
+static void      segment_delete (Segment * s);
+static void      segment_add    (Segment ** s, guint start, guint end);
+static void      segment_del    (Segment ** s, guint start, guint end);
+
+
+
+/* a generalized PixelArea control structure */
+
+typedef struct _PixelIter PixelIter;
+
+/* an image area operation.  it may be precision neutral or not */
+typedef guint (*PIFunc) (PixelIter * p);
+
+/* the data block for the control structure */
+struct _PixelIter
+{
+  /* the image on which to operate */
+  Canvas * image;
+
+  /* automatic canvas portion ref: none, RO, RW */
+  guint reftype;
+  
+  /* the bounding box of the whole area */
+  BBox area; 
+  
+  /* the bounding box of the current chunk */
+  BBox chunk;
+  
+  /* user callback to invoke */
+  PIFunc callback;
+
+  /* user data */
+  void * data;
+
+  /* pixel to do list */
+  Segment ** todo;  
+};
+
+/* public methods */
+PixelIter *  pixeliter_new       (void);
+void         pixeliter_delete    (PixelIter *);
+guint        pixeliter_init      (PixelIter * p, Canvas * c,
+                                  PIFunc callback, void * userdata,
+                                  guint x, guint y, guint w, guint h,
+                                  guint reftype);
+guint        pixeliter_process   (PixelIter *);
+guint        pixeliter_get_work  (PixelIter *, gint *, gint *);
+void         pixeliter_add_work  (PixelIter *, gint, gint, gint, gint);
+void         pixeliter_del_work  (PixelIter *, gint, gint, gint, gint);
+
+/* private methods */
+static guint pixeliter_choose_chunk (PixelIter *);
+static guint pixeliter_first        (PixelIter *, BBox *, guint *, guint *);
+
+/* types of refs for pixeliter_init */
+#define REF_NONE 0
+#define REF_RO   1
+#define REF_RW   2
+
+
+
+
+
+
+
+
 typedef struct _fuzzy_select FuzzySelect;
+typedef struct _SeedFillData SeedFillData;
+
+/* the precision-specific kernel for the seed fill */
+typedef guint (*SFFunc) (PixelIter * p, SeedFillData * d);
+
 
 struct _fuzzy_select
 {
@@ -48,26 +147,31 @@ struct _fuzzy_select
 };
 
 
-typedef struct _fuzzy_select_helper FuzzySelectHelper;
-
-struct _fuzzy_select_helper
+struct _SeedFillData
 {
-  /* the image and generated mask */
-  Canvas *   image;
-  Canvas *   mask;
+  /* the specific kernel to use */
+  SFFunc kernel;
+  
+  /* fill this with the contiguous area */
+  Canvas * mask;
 
-  /* initial color for fill */
-  PixelRow   color;
+  /* the threshold */
+  gfloat threshold;
 
-  /* bounding box for fill */
-  int        x1, x2;
-  int        y1, y2;
+  /* should we antialias */
+  guint antialias;
 
-  /* threshold for fill */
-  gfloat     threshold;
+  /* the color to match */
+  PixelRow color;
+  
+  /* size of existing scratch space */
+  guint x_w, x_h;
 
-  /* should fill antialias edges? */
-  int        antialias;
+  /* temp copy of mask for this chunk */
+  Canvas * x_mask;
+
+  /* the output of absdiff for this chunk */
+  Canvas * x_diff;
 };
 
 
@@ -93,183 +197,19 @@ static SelectionOptions *fuzzy_options = NULL;
 static void fuzzy_select (GImage *, GimpDrawable *, int, int, double);
 static Argument *fuzzy_select_invoker (Argument *);
 
+
+/* seed fill kernel */
+
+static guint seed_fill        (PixelIter * p);
+static guint seed_fill_alloc  (PixelIter * p, SeedFillData * d);
+static void  seed_fill_free   (SeedFillData * d);
+static guint seed_fill_u8     (PixelIter * p, SeedFillData * d);
+static guint seed_fill_u16    (PixelIter * p, SeedFillData * d);
+static guint seed_fill_float  (PixelIter * p, SeedFillData * d);
+
+
 /*************************************/
 /*  Fuzzy selection apparatus  */
-
-#
-static int
-is_pixel_sufficiently_different (unsigned char *col1, unsigned char *col2,
-				 int antialias, int threshold, int bytes,
-				 int has_alpha)
-{
-  int diff;
-  int max;
-  int b;
-  int alpha;
-
-  max = 0;
-  alpha = (has_alpha) ? bytes - 1 : bytes;
-
-  /*  if there is an alpha channel, never select transparent regions  */
-  if (has_alpha && col2[alpha] == 0)
-    return 0;
-
-  for (b = 0; b < bytes; b++)
-    {
-      diff = col1[b] - col2[b];
-      diff = abs (diff);
-      if (diff > max)
-	max = diff;
-    }
-
-  if (antialias)
-    {
-      float aa;
-
-      aa = 1.5 - ((float) max / threshold);
-      if (aa <= 0)
-	return 0;
-      else if (aa < 0.5)
-	return (unsigned char) (aa * 512);
-      else
-	return 255;
-    }
-  else
-    {
-      if (max > threshold)
-	return 0;
-      else
-	return 255;
-    }
-}
-
-#define FIXME
-#if 0
-static void
-ref_tiles (Canvas *src, Canvas *mask, Tile **s_tile, Tile **m_tile,
-	   int x, int y, unsigned char **s, unsigned char **m)
-{
-  if (*s_tile != NULL)
-    tile_unref (*s_tile, FALSE);
-  if (*m_tile != NULL)
-    tile_unref (*m_tile, TRUE);
-
-  *s_tile = tile_manager_get_tile (src, x, y, 0);
-  *m_tile = tile_manager_get_tile (mask, x, y, 0);
-  tile_ref (*s_tile);
-  tile_ref (*m_tile);
-
-  *s = (*s_tile)->data + (*s_tile)->bpp * ((*s_tile)->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
-  *m = (*m_tile)->data + (*m_tile)->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH);
-}
-#endif
-
-static int 
-find_contiguous_segment  (
-                          FuzzySelectHelper * h,
-                          int x,
-                          int y,
-                          int * start,
-                          int * end
-                          )
-{
-#define FIXME
-#if 0
-  unsigned char diff;
-
-  ref_tiles (src->tiles, mask->tiles, &s_tile, &m_tile, src->x, src->y, &s, &m);
-
-  /* check the starting pixel */
-  if (! (diff = is_pixel_sufficiently_different (col, s, antialias,
-						 threshold, bytes, has_alpha)))
-    {
-      tile_unref (s_tile, FALSE);
-      tile_unref (m_tile, TRUE);
-      return FALSE;
-    }
-
-  *m-- = diff;
-  s -= bytes;
-  *start = initial - 1;
-
-  while (*start >= 0 && diff)
-    {
-      if (! ((*start + 1) % TILE_WIDTH))
-	ref_tiles (src->tiles, mask->tiles, &s_tile, &m_tile, *start, src->y, &s, &m);
-
-      diff = is_pixel_sufficiently_different (col, s, antialias,
-					      threshold, bytes, has_alpha);
-      if ((*m-- = diff))
-	{
-	  s -= bytes;
-	  (*start)--;
-	}
-    }
-
-  diff = 1;
-  *end = initial + 1;
-  if (*end % TILE_WIDTH && *end < width)
-    ref_tiles (src->tiles, mask->tiles, &s_tile, &m_tile, *end, src->y, &s, &m);
-
-  while (*end < width && diff)
-    {
-      if (! (*end % TILE_WIDTH))
-	ref_tiles (src->tiles, mask->tiles, &s_tile, &m_tile, *end, src->y, &s, &m);
-
-      diff = is_pixel_sufficiently_different (col, s, antialias,
-					      threshold, bytes, has_alpha);
-      if ((*m++ = diff))
-	{
-	  s += bytes;
-	  (*end)++;
-	}
-    }
-
-  tile_unref (s_tile, FALSE);
-  tile_unref (m_tile, TRUE);
-#endif
-  return TRUE;
-}
-
-static void 
-find_contiguous_region_helper  (
-                                FuzzySelectHelper * h,
-                                int x,
-                                int y
-                                )
-{
-  if (x < h->x1 || x >= h->x2 || y < h->y1 || y >= h->y2)
-    return;
-
-  if (canvas_portion_refrw (h->mask, x, y) == REFRC_OK)
-    {
-      PixelRow m;
-      
-      pixelrow_init (&m,
-                     canvas_tag (h->mask),
-                     canvas_portion_data (h->mask, x, y),
-                     1);
-
-      if (color16_is_black (&m))
-        {
-          int start, end;
-
-          if (find_contiguous_segment (h, x, y, &start, &end))
-            {
-              int i;
-              
-              for (i = start; i <= end; i++)
-                {
-                  find_contiguous_region_helper (h, i, y - 1);
-                  find_contiguous_region_helper (h, i, y + 1);
-                }
-            }
-        }
-
-      canvas_portion_unref (h->mask, x, y);
-    }
-}
-
 
 Channel * 
 find_contiguous_region  (
@@ -282,45 +222,311 @@ find_contiguous_region  (
                          int sample_merged
                          )
 {
-  FuzzySelectHelper h;
   Channel * mask;
-  Canvas * s, * m;
-  
+  Canvas * s;
+
+  /* use either the current layer or the composite */
   s = (sample_merged)
     ? gimage_projection (gimage)
     : drawable_data (drawable);
 
+  /* create a new mask */
   mask = channel_new_mask (gimage->ID,
                            canvas_width (s), canvas_height (s),
                            tag_precision (canvas_tag (s)));
 
-  m = drawable_data (GIMP_DRAWABLE(mask));
-  
+  /* if the image refs okay, do a seed fill */
   if (canvas_portion_refro (s, x, y) == REFRC_OK)
     {
-      h.image = s;
-      h.mask = m;
+      SeedFillData data;
+      PixelIter * p;
       
-      h.x1 = 0;
-      h.y1 = 0;
-      h.x2 = canvas_width (s);
-      h.y2 = canvas_height (s);      
+      /* choose the right kernel */
+      switch (tag_precision (canvas_tag (s)))
+        {
+        case PRECISION_U8:
+          data.kernel = seed_fill_u8;
+          break;
+        case PRECISION_U16:
+          data.kernel = seed_fill_u16;
+          break;
+        case PRECISION_FLOAT:
+          data.kernel = seed_fill_float;
+          break;
+        case PRECISION_NONE:
+        default:
+          data.kernel = NULL;
+        }
 
-      h.antialias = antialias;
-      h.threshold = threshold ? threshold : 0.001;
-      
-      pixelrow_init (&h.color,
+      /* init the seed fill parms */
+      data.mask = drawable_data (GIMP_DRAWABLE(mask));
+      data.threshold = threshold ? threshold : 0.000001;
+      data.antialias = antialias;
+      pixelrow_init (&data.color,
                      canvas_tag (s),
                      canvas_portion_data (s, x, y),
                      1);
+        
+      /* init the scratch space too */
+      data.x_w = 0;
+      data.x_h = 0;
+      data.x_mask = NULL;
+      data.x_diff = NULL;
+      
+      /* set up a processor for the seed fill */
+      p = pixeliter_new ();
+      
+      if (pixeliter_init (p, s,
+                          seed_fill, &data,
+                          0, 0,
+                          0, 0,
+                          REF_RO))
+        {
+          /* mark the initial click point for processing */
+          pixeliter_add_work (p, x, y, 1, 1);
 
-      find_contiguous_region_helper (&h, x, y);
+          /* at this point, the seed fill operation could be queued
+             for execution.  a smart scheduler could optimize the
+             execution of the seed fill.  since no such mechanism
+             exists, do the work immediately */
+          while (pixeliter_process (p));
 
+        }
+
+      /* clean up */
+      pixeliter_delete (p);
+      seed_fill_free (&data);
+
+      /* unref the canvas */
       canvas_portion_unref (s, x, y);
     }
+
+  /* we don;t know the bounds anymore */
+  channel_invalidate_bounds (mask);
   
   return mask;
 }
+
+static guint 
+seed_fill  (
+            PixelIter * p
+            )
+{
+  PixelArea src, dst;
+  SeedFillData * d;
+  
+  /* abort the entire operation if things get weird */
+  g_return_val_if_fail (p != NULL, FALSE);
+  d = (SeedFillData *) p->data;
+  g_return_val_if_fail (d != NULL, FALSE);
+  g_return_val_if_fail (d->kernel != NULL, FALSE);
+  
+  /* realloc scratch space */
+  if (seed_fill_alloc (p, d) != TRUE)
+    return FALSE;
+  
+  /* copy in part of the existing mask into our scratch pad */
+  pixelarea_init (&src, d->mask,
+                  p->chunk.x, p->chunk.y,
+                  p->chunk.w, p->chunk.h,
+                  FALSE);    
+  pixelarea_init (&dst, d->x_mask,
+                  0, 0,
+                  0, 0,
+                  TRUE);
+  copy_area (&src, &dst);
+
+  /* create the sufficiently_different map */
+  pixelarea_init (&src, p->image,
+                  p->chunk.x, p->chunk.y,
+                  p->chunk.w, p->chunk.h,
+                  FALSE);    
+  pixelarea_init (&dst, d->x_diff,
+                  0, 0,
+                  0, 0,
+                  TRUE);
+  absdiff_area (&src, &dst, &d->color, d->threshold, d->antialias);
+
+  /* process the chunk and save any modifications to the real mask */
+  if (d->kernel (p, d) == TRUE)
+    {
+      pixelarea_init (&src, d->x_mask,
+                      0, 0,
+                      0, 0,
+                      FALSE);
+      pixelarea_init (&dst, d->mask,
+                      p->chunk.x, p->chunk.y,
+                      p->chunk.w, p->chunk.h,
+                      TRUE);    
+      copy_area (&src, &dst);
+    }
+
+  /* we want to be called again */
+  return TRUE;
+}
+
+
+/* allocate scratch space for use while calculating contiguous mask */
+static guint 
+seed_fill_alloc  (
+                  PixelIter * p,
+                  SeedFillData * d
+                  )
+{
+  /* see if the old stuff is the right size */
+  if ((p->chunk.w == d->x_w) &&
+      (p->chunk.h == d->x_h) &&
+      (d->x_mask) && (d->x_diff))
+    {
+      return TRUE;
+    }
+
+  /* blow away the old stuff */
+  seed_fill_free (d);
+
+  /* save the new chunk size */
+  d->x_w = p->chunk.w;
+  d->x_h = p->chunk.h;
+
+  /* temporary copy of existing mask */
+  d->x_mask = canvas_new (canvas_tag (d->mask),
+                          d->x_w, d->x_h,
+                          STORAGE_FLAT);
+
+  if (canvas_portion_refrw (d->x_mask, 0, 0) != REFRC_OK)
+    {
+      g_warning ("ooooops");
+      return FALSE;
+    }
+  
+
+  /* scratch pad holding abs diff values */
+  d->x_diff = canvas_new (canvas_tag (d->mask),
+                          d->x_w, d->x_h,
+                          STORAGE_FLAT);
+
+  if (canvas_portion_refrw (d->x_diff, 0, 0) != REFRC_OK)
+    {
+      g_warning ("ooooops2");
+      return FALSE;
+    }
+  
+  return TRUE;
+}
+
+
+/* delete any scratch space that's hanging around */
+static void 
+seed_fill_free  (
+                 SeedFillData * d
+                 )
+{
+  if (d->x_mask)
+    {
+      canvas_portion_unref (d->x_mask, 0, 0);
+      canvas_delete (d->x_mask);
+    }
+
+  if (d->x_diff)
+    {
+      canvas_portion_unref (d->x_diff, 0, 0);
+      canvas_delete (d->x_diff);
+    }
+}
+
+
+static guint
+seed_fill_u8 (
+               PixelIter * p,
+               SeedFillData * d
+               )
+{
+  return FALSE;
+}
+
+static guint
+seed_fill_u16 (
+               PixelIter * p,
+               SeedFillData * d
+               )
+{
+  guint changed = FALSE;
+  guint x, y;
+  
+  /* get pixels in this chunk which need attention */
+  while (pixeliter_get_work (p, &x, &y))
+    {
+      guint16 * dd, * md;
+      int xmin_c, xmax_c;
+
+      /* see if this pixel should be done */
+      dd = (guint16*) canvas_portion_data (d->x_diff, 0, y - p->chunk.y);
+      if (dd[x - p->chunk.x] == 0)
+        continue;
+
+      /* see if this pixel is already done */
+      md = (guint16*) canvas_portion_data (d->x_mask, 0, y - p->chunk.y);
+      if (md[x - p->chunk.x] != 0)
+        continue;
+      
+      /* find contig segment endpoints */
+      for (xmin_c = x - p->chunk.x;
+           (xmin_c >= 0) && (dd[xmin_c] != 0);
+           xmin_c--);
+
+      for (xmax_c = x - p->chunk.x;
+           (xmax_c < p->chunk.w) && (dd[xmax_c] != 0);
+           xmax_c++);
+             
+      /* add work to adjacent chunks if segment reached the edges */
+      if (xmin_c < 0)
+        {
+          pixeliter_add_work (p,
+                              p->chunk.x - 1, y,
+                              1, 1);
+        }
+
+      if (xmax_c == p->chunk.w)
+        {
+          pixeliter_add_work (p,
+                              p->chunk.x + p->chunk.w, y,
+                              1, 1);
+        }
+      
+      xmin_c++;
+      xmax_c--;
+      
+      /* del work for those pixels */
+      pixeliter_del_work (p,
+                          p->chunk.x + xmin_c, y,
+                          xmax_c - xmin_c + 1, 1);
+
+      /* add work to next and prev rows */
+      pixeliter_add_work (p,
+                          p->chunk.x + xmin_c, y - 1,
+                          xmax_c - xmin_c + 1, 1);
+      
+      pixeliter_add_work (p,
+                          p->chunk.x + xmin_c, y + 1,
+                          xmax_c - xmin_c + 1, 1);
+      
+      /* save those pixels on x_mask */
+      memcpy (&md[xmin_c], &dd[xmin_c], (xmax_c - xmin_c + 1) * sizeof (guint16));
+      changed = TRUE;
+    }
+
+  return changed;
+}
+
+static guint
+seed_fill_float (
+                 PixelIter * p,
+                 SeedFillData * d
+                 )
+{
+  return FALSE;
+}
+
 
 static void
 fuzzy_select (GImage *gimage, GimpDrawable *drawable, int op, int feather,
@@ -780,3 +986,593 @@ fuzzy_select_invoker (Argument *args)
 
   return procedural_db_return_args (&fuzzy_select_proc, success);
 }
+
+
+
+
+
+
+
+
+
+
+
+/* the rest of this stuff goes elsewhere eventually */
+
+static Segment *
+segment_new (
+             guint start,
+             guint end,
+             Segment * next
+             )
+{
+  Segment * s = (Segment *) g_malloc (sizeof (Segment));
+
+  s->start = start;
+  s->end = end;
+  s->next = next;
+
+  return s;
+}
+
+
+static void
+segment_delete (
+                Segment * s
+                )
+{
+  g_free (s);
+}
+
+
+/* add (x1 <= x < x2) to the segment */
+static void 
+segment_add  (
+              Segment ** s,
+              guint start,
+              guint end
+              )
+{
+  g_return_if_fail (s != NULL);
+
+  if (start >= end)
+    return;
+  
+  /* insert a new segment or extend an existing one */
+  while (1)
+    {
+      /* did we hit the end of the list */
+      if (*s == NULL)
+        {
+          /* insert at the end of the (possibly empty) list */
+          *s = segment_new (start, end, NULL);
+          return;
+        }
+
+      /* do we start before this guy */
+      if (start < (*s)->start)
+        {
+          /* insert a new segment */
+          *s = segment_new (start, end, *s);
+          break;
+        }
+      
+      /* do we start in or immediately after this guy */
+      if (start <= (*s)->end)
+        {
+          /* do we end before this guy */
+          if (end <= (*s)->end)
+            return;
+
+          /* extend the current segment */
+          (*s)->end = end;
+          break;
+        }
+
+      /* try next segment */
+      s = &((*s)->next);
+    }
+
+  /* at this point, *s points to a segment with the correct start and
+     end points.  however, it might overlap the following segments */
+  while (1)
+    {
+      /* are we at the end of the list */
+      if ((*s)->next == NULL)
+        return;
+
+      /* is the next guy correct */
+      if ((*s)->next->start > (*s)->end)
+        return;
+
+      {
+        /* pull the next guy out of the list */
+        Segment * n = (*s)->next;
+        (*s)->next = n->next;
+
+        /* does the next guy have a partial segment we need */
+        if (n->end > (*s)->end)
+          (*s)->end = n->end;
+
+        segment_delete (n);
+      }
+    }
+}
+
+
+static void 
+segment_del  (
+              Segment ** s,
+              guint start,
+              guint end
+              )
+{
+  g_return_if_fail (s != NULL);
+
+  if (start >= end)
+    return;
+  
+  while (1)
+    {
+      /* we hit the end of the list */
+      if (*s == NULL)
+        return;
+
+      /* see if we overlap segment head */
+      if ((*s)->end > end)
+        {
+          if ((*s)->start >= end)
+            {
+              /* first segment is completely after deletion */
+              return;
+            }
+          else if ((*s)->start >= start)
+            {
+              /* first segment head overlaps us */
+              (*s)->start = end;
+              return;
+            }
+          else
+            {
+              /* we split first segment */
+              *s = segment_new ((*s)->start, start, *s);
+              (*s)->next->start = end;
+              return;
+            }
+        }
+      
+      /* see if we overlap segment tail */
+      else if ((*s)->end > start)
+        {
+          if ((*s)->start >= start)
+            {
+              Segment * n = *s;
+              *s = (*s)->next;
+              segment_delete (n);
+              continue;
+            }
+          else
+            {
+              (*s)->end = start;
+            }
+        }
+
+      /* next segment */
+      s = &((*s)->next);
+    }
+}
+
+
+PixelIter * 
+pixeliter_new  (
+                void
+                )
+{
+  PixelIter * p;
+  
+  p = (PixelIter *) g_malloc (sizeof (PixelIter));
+  
+  p->image = NULL;
+  p->reftype = REF_NONE;
+  p->area.x = 0;
+  p->area.y = 0;
+  p->area.w = 0;
+  p->area.h = 0;
+  p->chunk.x = 0;
+  p->chunk.y = 0;
+  p->chunk.w = 0;
+  p->chunk.h = 0;
+
+  p->callback = NULL;
+  p->data = NULL;
+  p->todo = NULL;
+
+  return p;
+}
+
+
+void 
+pixeliter_delete  (
+                   PixelIter * p
+                   )
+{
+  guint h;
+  
+  g_return_if_fail (p != NULL);
+  g_return_if_fail (p->todo != NULL);
+
+  h = p->area.h;
+
+  while (h-- > 0)
+    {
+      Segment * s = p->todo[h];
+      while (s)
+        {
+          Segment * n = s->next;
+          segment_delete (s);
+          s = n;
+        }
+    }
+
+  g_free (p->todo);
+}
+
+
+/* set up p so that it will work within the xywh bounding box on image
+  calling callback with the pixeliter p as an arg.
+
+  data is stored inside p so callback has access to it
+*/
+guint 
+pixeliter_init  (
+                 PixelIter * p,
+                 Canvas * image,
+                 PIFunc callback,
+                 void * data,
+                 guint x,
+                 guint y,
+                 guint w,
+                 guint h,
+                 guint reftype
+                 )
+{
+  g_return_val_if_fail (p != NULL, FALSE);
+  g_return_val_if_fail (image != NULL, FALSE);
+  g_return_val_if_fail (w >= 0, FALSE);
+  g_return_val_if_fail (h >= 0, FALSE);
+  g_return_val_if_fail (callback != NULL, FALSE);
+  g_return_val_if_fail (x < canvas_width (image), FALSE);
+  g_return_val_if_fail (y < canvas_height (image), FALSE);
+
+  p->image = image;
+  p->reftype = reftype;
+  p->area.x = x;
+  p->area.y = y;
+  p->area.w = canvas_width (image);
+  if ((w > 0) && (w <= p->area.w))
+    p->area.w = w;
+  p->area.h = canvas_height (image);
+  if ((h > 0) && (h <= p->area.h))
+    p->area.h = h;
+  p->chunk.x = 0;
+  p->chunk.y = 0;
+  p->chunk.w = 0;
+  p->chunk.h = 0;
+  
+  p->callback = callback;
+  p->data = data;
+  p->todo = (Segment **) g_malloc (sizeof (Segment*) * p->area.h);
+  memset (p->todo, 0, (sizeof (Segment*) * p->area.h));
+  
+  return TRUE;
+}
+
+
+/* choose a chunk of the image to process and invoke the user callback
+  on that chunk.
+
+  from the perspective of the user callback, the exact area chosen is
+  random.  however, the entire area is guaranteed to be contained
+  somewhere within a single portion of the canvas and inside the
+  bounding box specified in the init call.
+
+  the user callback may cause the entire operation to cease simply by
+  returning FALSE.  this is useful for things like "is_area_empty"
+  which may only need to see a single data point to return an answer.
+
+  the user callback may add or delete work from the todo list.  this
+  is useful for operations like seed fill that need to go exploring.
+
+  it is trivial to emulate the current pixelarea_process behaviour.
+  simply schedule the top left corner of the bounding box as the
+  initial work, have the callback process the entire chunk, then add
+  work for the strip of pixels directly to the right and below the
+  chunk.  if pixeliter_choose_chunk() always prefers upper left chunks
+  over lower right chunks, the chunks will be processed in exactly the
+  same order.
+  
+  return true if more work remains, false if todo list is empty or if
+  the operation was aborted by the user callback */
+guint 
+pixeliter_process  (
+                    PixelIter * p
+                    )
+{
+  guint rc = FALSE;
+  
+  g_return_val_if_fail (p != NULL, FALSE);
+
+  /* see if work remains on this image */
+  if (pixeliter_choose_chunk (p) != TRUE)
+    return FALSE;
+  
+  /* if requested, ref the underlying image data */
+  if (p->reftype == REF_RO)
+    if (canvas_portion_refro (p->image, p->chunk.x, p->chunk.y) != REFRC_OK)
+      return FALSE;
+
+  if (p->reftype == REF_RW)
+    if (canvas_portion_refrw (p->image, p->chunk.x, p->chunk.y) != REFRC_OK)
+      return FALSE;
+
+  /* ready ike?  kick the callback! */
+  rc = p->callback (p);
+
+  /* unref the image data if required */
+  if ((p->reftype == REF_RO) || (p->reftype == REF_RW))
+    {
+      (void) canvas_portion_unref (p->image, p->chunk.x, p->chunk.y);
+    }
+
+  return rc;
+}
+
+
+/* pick a pixel that needs attention and decide how big of a chunk to
+   work on.  set the chunk boundaries.
+
+   any policy decisions can go in here, but we must at a minimum
+   respect the users bounding box and the underlying canvas portion
+   boundaries */
+static guint
+pixeliter_choose_chunk (
+                        PixelIter * p
+                        )
+{
+  gint x, y, w, h;
+
+  /* pick a pixel from the todo list */
+  if (pixeliter_first (p, &p->area, &x, &y) != TRUE)
+    return FALSE;
+  
+  /* size the chunk around the pixel, respecting user bounding box and
+     canvas portion boundaries.  other criteria, such as an absolute
+     maximum chunk size/aspect ratio/whatever can be added */
+  x = MAX (p->area.x,
+           canvas_portion_x (p->image, x, y));
+  y = MAX (p->area.y,
+           canvas_portion_y (p->image, x, y));
+  w = MIN (p->area.w - (x - p->area.x),
+           canvas_portion_width (p->image, x, y));
+  h = MIN (p->area.h - (y - p->area.y),
+           canvas_portion_height (p->image, x, y));
+
+  /* save it so the callback knows where to work */
+  p->chunk.x = x;
+  p->chunk.y = y;
+  p->chunk.w = w;
+  p->chunk.h = h;
+
+  return TRUE;
+}         
+
+
+/* find the first pixel in the todo list for p that lies within box b.
+   return coords in x,y */
+static guint 
+pixeliter_first  (
+                  PixelIter * p,
+                  BBox * b,
+                  guint * xx,
+                  guint * yy
+                  )
+{
+  guint x, y, w, h;
+  
+  g_return_val_if_fail (p != NULL, FALSE);
+  g_return_val_if_fail (b != NULL, FALSE);
+  g_return_val_if_fail (xx != NULL, FALSE);
+  g_return_val_if_fail (yy != NULL, FALSE);
+
+  x = b->x;
+  y = b->y;
+  w = b->w;
+  h = b->h;
+  
+  /* is the work right or below area */
+  if (x >= p->area.x + p->area.w)
+    return FALSE;
+  
+  if (y >= p->area.y + p->area.h)
+    return FALSE;
+
+  /* does work start left or above area */
+  if (x < p->area.x)
+    {
+      w = w - (p->area.x - x);
+      x = p->area.x;
+    }
+  
+  if (y < p->area.y)
+    {
+      h = h - (p->area.y - y);
+      y = p->area.y;
+    }
+
+  w = CLAMP (w, 0, p->area.w);
+  h = CLAMP (h, 0, p->area.h);
+
+  if ((w == 0) || (h == 0))
+    return FALSE;
+
+  while (h--)
+    {
+      Segment * s = p->todo[y - p->area.y];
+      while (s)
+        {
+          /* is segment completely to right of our range */
+          if (s->start >= x+w)
+            break;
+          
+          /* is segment completely to left of our range */
+          if (s->end <= x)
+            {
+              s = s->next;
+              continue;
+            }
+          
+          *xx = MAX (s->start, x);
+          *yy = y;
+          
+          return TRUE;
+        }
+
+      /* try next row */
+      y++;
+    }
+
+  return FALSE;
+}
+
+
+/* add the specified rectangle to the PixelIter's todo list.  only the
+  part that overlaps the PixelIters area will be added.
+
+  no return code */
+void 
+pixeliter_add_work  (
+                     PixelIter * p,
+                     gint x,
+                     gint y,
+                     gint w,
+                     gint h
+                     )
+{
+  g_return_if_fail (p != NULL);
+  g_return_if_fail (p->todo != NULL);
+
+  /* is the work right or below area */
+  if (x >= p->area.x + p->area.w)
+    return;
+  
+  if (y >= p->area.y + p->area.h)
+    return;
+
+  /* does work start left or above area */
+  if (x < p->area.x)
+    {
+      w = w - (p->area.x - x);
+      x = p->area.x;
+    }
+  
+  if (y < p->area.y)
+    {
+      h = h - (p->area.y - y);
+      y = p->area.y;
+    }
+
+  w = CLAMP (w, 0, p->area.w);
+  h = CLAMP (h, 0, p->area.h);
+
+  if ((w == 0) || (h == 0))
+    return;
+
+  /* add to each segment list */
+  while (h--)
+    {
+      Segment ** s = &(p->todo[y - p->area.y]);
+      segment_add (s, x, x + w);
+      y++;
+    }
+}
+
+
+/* remove the specified rectangle to the PixelIter's todo list.  only
+  the part that overlaps the PixelIters area will be cleared.
+
+  no return code */
+void
+pixeliter_del_work  (
+                     PixelIter * p,
+                     gint x,
+                     gint y,
+                     gint w,
+                     gint h
+                     )
+{
+  g_return_if_fail (p != NULL);
+  g_return_if_fail (p->todo != NULL);
+  
+  /* is the work right or below area */
+  if (x >= p->area.x + p->area.w)
+    return;
+  
+  if (y >= p->area.y + p->area.h)
+    return;
+
+  /* does work start left or above area */
+  if (x < p->area.x)
+    {
+      w = w - (p->area.x - x);
+      x = p->area.x;
+    }
+  
+  if (y < p->area.y)
+    {
+      h = h - (p->area.y - y);
+      y = p->area.y;
+    }
+
+  w = CLAMP (w, 0, p->area.w);
+  h = CLAMP (h, 0, p->area.h);
+
+  if ((w == 0) || (h == 0))
+    return;
+
+  /* add to each segment list */
+  while (h--)
+    {
+      Segment ** s = &(p->todo[y - p->area.y]);
+      segment_del (s, x, x + w);
+      y++;
+    }
+}
+
+
+/* see if there are any pixels in the todo list that fall within the
+  chunk we are processing. if so, pick one, remove from todo list, and
+  store in x,y.
+
+  return true if a point was returned, false if not */
+guint 
+pixeliter_get_work  (
+                     PixelIter * p,
+                     gint * x,
+                     gint * y
+                     )
+{
+  g_return_val_if_fail (p != NULL, FALSE);
+  g_return_val_if_fail (p->todo != NULL, FALSE);
+  g_return_val_if_fail (x != NULL, FALSE);
+  g_return_val_if_fail (y != NULL, FALSE);
+
+  /* get a pixel */
+  if (pixeliter_first (p, &p->chunk, x, y) != TRUE)
+    return FALSE;
+
+  /* mark it as done */
+  pixeliter_del_work (p, *x, *y, 1, 1);
+  
+  return TRUE;
+}
+

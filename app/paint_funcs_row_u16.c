@@ -206,6 +206,10 @@ color_row_u16 (
 	      PixelRow * col
 	      )
 {
+#define FIXME
+  /* this should probably handle the case of an ALPHA_NO color applied
+     to an ALPHA_YES area */
+  
   gint     b;
   guint16 *dest         = (guint16*) pixelrow_data (dest_row);
   guint16 *color        = (guint16*) pixelrow_data (col);

@@ -44,7 +44,7 @@ extern int       levels_of_undo;
 extern int       color_cube_shades[];
 extern int       install_cmap;
 extern int       cycled_marching_ants;
-extern int       default_threshold;
+extern double    default_threshold;
 extern int       stingy_memory_use;
 extern int       allow_resize_windows;
 extern int       no_cursor_updating;

@@ -94,7 +94,7 @@ int       levels_of_undo = 1;     /* 1 level of undo default */
 int       color_cube_shades[4] = {6, 7, 4, 24};
 int       install_cmap = 0;
 int       cycled_marching_ants = 0;
-int       default_threshold = 15;
+double    default_threshold = .05;
 int       stingy_memory_use = 0;
 int       allow_resize_windows = 0;
 int       no_cursor_updating = 0;
@@ -192,7 +192,7 @@ static ParseFunc funcs[] =
   { "transparency-size",     TT_INT,        &transparency_size, NULL },
   { "install-colormap",      TT_BOOLEAN,    &install_cmap, NULL },
   { "colormap-cycling",      TT_BOOLEAN,    &cycled_marching_ants, NULL },
-  { "default-threshold",     TT_INT,        &default_threshold, NULL },
+  { "default-threshold",     TT_DOUBLE,     &default_threshold, NULL },
   { "stingy-memory-use",     TT_BOOLEAN,    &stingy_memory_use, NULL },
   { "allow-resize-windows",  TT_BOOLEAN,    &allow_resize_windows, NULL },
   { "cursor-updating",       TT_BOOLEAN,    NULL, &no_cursor_updating },
