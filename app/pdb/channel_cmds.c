@@ -44,6 +44,7 @@ static ProcRecord channel_set_show_masked_proc;
 static ProcRecord channel_get_opacity_proc;
 static ProcRecord channel_set_opacity_proc;
 static ProcRecord channel_get_color_proc;
+static ProcRecord channel_set_color_proc;
 static ProcRecord channel_get_tattoo_proc;
 static ProcRecord channel_set_tattoo_proc;
 
@@ -62,6 +63,7 @@ register_channel_procs (void)
   procedural_db_register (&channel_get_opacity_proc);
   procedural_db_register (&channel_set_opacity_proc);
   procedural_db_register (&channel_get_color_proc);
+  procedural_db_register (&channel_set_color_proc);
   procedural_db_register (&channel_get_tattoo_proc);
   procedural_db_register (&channel_set_tattoo_proc);
 }
@@ -744,6 +746,60 @@ static ProcRecord channel_get_color_proc =
   1,
   channel_get_color_outargs,
   { { channel_get_color_invoker } }
+};
+
+static Argument *
+channel_set_color_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  Channel *channel;
+  GimpRGB color;
+
+  channel = (GimpChannel *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  if (channel == NULL)
+    success = FALSE;
+
+  color = args[1].value.pdb_color;
+
+  if (success)
+    {
+      GimpRGB rgb_color = color;
+    
+      rgb_color.a = channel->color.a;
+      channel_set_color(channel, &rgb_color);
+    }
+
+  return procedural_db_return_args (&channel_set_color_proc, success);
+}
+
+static ProcArg channel_set_color_inargs[] =
+{
+  {
+    PDB_CHANNEL,
+    "channel",
+    "The channel"
+  },
+  {
+    PDB_COLOR,
+    "color",
+    "The new channel compositing color"
+  }
+};
+
+static ProcRecord channel_set_color_proc =
+{
+  "gimp_channel_set_color",
+  "Set the compositing color of the specified channel.",
+  "This procedure sets the specified channel's compositing color.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  PDB_INTERNAL,
+  2,
+  channel_set_color_inargs,
+  0,
+  NULL,
+  { { channel_set_color_invoker } }
 };
 
 static Argument *

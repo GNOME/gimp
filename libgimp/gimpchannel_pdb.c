@@ -425,6 +425,38 @@ gimp_channel_get_color (gint32   channel_ID,
 }
 
 /**
+ * gimp_channel_set_color:
+ * @channel_ID: The channel.
+ * @color: The new channel compositing color.
+ *
+ * Set the compositing color of the specified channel.
+ *
+ * This procedure sets the specified channel's compositing color.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_channel_set_color (gint32   channel_ID,
+			GimpRGB *color)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_channel_set_color",
+				    &nreturn_vals,
+				    GIMP_PDB_CHANNEL, channel_ID,
+				    GIMP_PDB_COLOR, color,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_channel_get_tattoo:
  * @channel_ID: The channel.
  *

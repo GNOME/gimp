@@ -53,6 +53,8 @@ gboolean gimp_channel_set_opacity     (gint32    channel_ID,
 				       gdouble   opacity);
 gboolean gimp_channel_get_color       (gint32    channel_ID,
 				       GimpRGB  *color);
+gboolean gimp_channel_set_color       (gint32    channel_ID,
+				       GimpRGB  *color);
 gint     gimp_channel_get_tattoo      (gint32    channel_ID);
 gboolean gimp_channel_set_tattoo      (gint32    channel_ID,
 				       gint      tattoo);

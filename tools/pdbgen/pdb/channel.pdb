@@ -230,7 +230,7 @@ CODE
 			  s%(color.a);$%(($1 / 100.0);%' ]);
 
 &channel_accessors('color', 'color', 'compositing color', 0, 
-                   [ '$outargs[0]->{void_ret} = 1' ]);
+                   [ '$outargs[0]->{void_ret} = 1', '' ]);
 
 &channel_accessors('tattoo', 'tattoo', 'tattoo', 1,
 		   <<'CODE');
