@@ -53,7 +53,7 @@ sub pixelmap {					# es folgt das eigentliche Skript...
 
 register "pixelmap",
          "Maps Pixel values and coordinates through general Perl expressions",
-         "=pod(DESCRIPTION)",
+         undef,
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
          "19991115",
@@ -66,7 +66,7 @@ register "pixelmap",
 
 register "pixelgen",
          "Generate the pixels of an image by expressions (in PDL)",
-         "=pod(DESCRIPTION)",
+         undef,
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
          "19991115",

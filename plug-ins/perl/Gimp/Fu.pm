@@ -150,7 +150,7 @@ sub expand_podsections() {
    my $pod;
    for (@scripts) {
       $_->[2] ||= "=pod(NAME)";
-      $_->[3] ||= "=pod(HELP)";
+      $_->[3] ||= "=pod(DESCRIPTION)";
       $_->[4] ||= "=pod(AUTHOR)";
       $_->[5] ||= "=pod(AUTHOR)";
       $_->[6] ||= "=pod(DATE)";
@@ -454,7 +454,7 @@ Each array element has the form C<[type, name, description, default_value, extra
 
 <Image>-type plugins get two additional parameters, image (C<PF_IMAGE>) and
 drawable (C<PF_DRAWABLE>). Do not specify these yourself. Also, the
-C<run_mode> argument is never given to the script, but its value canm be
+C<run_mode> argument is never given to the script, but its value can be
 accessed in the package-global C<$run_mode>. The B<name> is used in the
 dialog box as a hint, the B<description> will be used as a tooltip.
 
