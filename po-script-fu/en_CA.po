@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-24 22:11-0500\n"
-"PO-Revision-Date: 2005-03-24 00:14-0400\n"
+"POT-Creation-Date: 2005-04-06 11:33-0400\n"
+"PO-Revision-Date: 2005-04-06 00:14-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -115,17 +115,17 @@ msgid "(none)"
 msgstr "(none)"
 
 #: plug-ins/script-fu/script-fu-interface.c:1083
-#: plug-ins/dbbrowser/gimpprocview.c:198
+#: plug-ins/dbbrowser/gimpprocview.c:199
 msgid "Author:"
 msgstr "Author:"
 
 #: plug-ins/script-fu/script-fu-interface.c:1090
-#: plug-ins/dbbrowser/gimpprocview.c:220
+#: plug-ins/dbbrowser/gimpprocview.c:221
 msgid "Copyright:"
 msgstr "Copyright:"
 
 #: plug-ins/script-fu/script-fu-interface.c:1097
-#: plug-ins/dbbrowser/gimpprocview.c:209
+#: plug-ins/dbbrowser/gimpprocview.c:210
 msgid "Date:"
 msgstr "Date:"
 
@@ -133,92 +133,7 @@ msgstr "Date:"
 msgid "Image Types:"
 msgstr "Image Types:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:133
-msgid "_Script-Fu"
-msgstr "_Script-Fu"
-
-#: plug-ins/script-fu/script-fu-scripts.c:135
-msgid "_Buttons"
-msgstr "_Buttons"
-
-#: plug-ins/script-fu/script-fu-scripts.c:137
-msgid "_Logos"
-msgstr "_Logos"
-
-#: plug-ins/script-fu/script-fu-scripts.c:139
-msgid "Make Br_ush"
-msgstr "Make Br_ush"
-
-#: plug-ins/script-fu/script-fu-scripts.c:141
-msgid "_Misc"
-msgstr "_Misc"
-
-#: plug-ins/script-fu/script-fu-scripts.c:143
-msgid "_Patterns"
-msgstr "_Patterns"
-
-#: plug-ins/script-fu/script-fu-scripts.c:145
-msgid "_Test"
-msgstr "_Test"
-
-#: plug-ins/script-fu/script-fu-scripts.c:147
-#: plug-ins/script-fu/script-fu-scripts.c:176
-msgid "_Utils"
-msgstr "_Utils"
-
-#: plug-ins/script-fu/script-fu-scripts.c:149
-msgid "_Web Page Themes"
-msgstr "_Web Page Themes"
-
-#: plug-ins/script-fu/script-fu-scripts.c:151
-msgid "_Alien Glow"
-msgstr "_Alien Glow"
-
-#: plug-ins/script-fu/script-fu-scripts.c:153
-msgid "_Beveled Pattern"
-msgstr "_Bevelled Pattern"
-
-#: plug-ins/script-fu/script-fu-scripts.c:155
-msgid "_Classic.Gimp.Org"
-msgstr "_Classic.Gimp.Org"
-
-#: plug-ins/script-fu/script-fu-scripts.c:158
-msgid "S_cript-Fu"
-msgstr "S_cript-Fu"
-
-#: plug-ins/script-fu/script-fu-scripts.c:160
-msgid "_Alchemy"
-msgstr "_Alchemy"
-
-#: plug-ins/script-fu/script-fu-scripts.c:162
-msgid "Alpha to _Logo"
-msgstr "Alpha to _Logo"
-
-#: plug-ins/script-fu/script-fu-scripts.c:164
-msgid "A_nimators"
-msgstr "A_nimators"
-
-#: plug-ins/script-fu/script-fu-scripts.c:166
-msgid "_Decor"
-msgstr "_Decor"
-
-#: plug-ins/script-fu/script-fu-scripts.c:168
-msgid "_Render"
-msgstr "_Render"
-
-#: plug-ins/script-fu/script-fu-scripts.c:170
-msgid "_Selection"
-msgstr "_Selection"
-
-#: plug-ins/script-fu/script-fu-scripts.c:172
-msgid "S_hadow"
-msgstr "S_hadow"
-
-#: plug-ins/script-fu/script-fu-scripts.c:174
-msgid "Stencil _Ops"
-msgstr "Stencil _Ops"
-
-#: plug-ins/script-fu/script-fu-scripts.c:706
+#: plug-ins/script-fu/script-fu-scripts.c:660
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -246,7 +161,7 @@ msgid "Script-Fu _Console"
 msgstr "Script-Fu _Console"
 
 #: plug-ins/script-fu/script-fu.c:123 plug-ins/script-fu/script-fu.c:152
-#: plug-ins/script-fu/script-fu.c:284
+#: plug-ins/script-fu/script-fu.c:330
 msgid "<Toolbox>/Xtns/Script-Fu"
 msgstr "<Toolbox>/Xtns/Script-Fu"
 
@@ -254,79 +169,160 @@ msgstr "<Toolbox>/Xtns/Script-Fu"
 msgid "_Start Server..."
 msgstr "_Start Server..."
 
-#: plug-ins/script-fu/script-fu.c:276
+#: plug-ins/script-fu/script-fu.c:271
+msgid "_Script-Fu"
+msgstr "_Script-Fu"
+
+#: plug-ins/script-fu/script-fu.c:273
+msgid "_Buttons"
+msgstr "_Buttons"
+
+#: plug-ins/script-fu/script-fu.c:275
+msgid "_Logos"
+msgstr "_Logos"
+
+#: plug-ins/script-fu/script-fu.c:277
+msgid "Make Br_ush"
+msgstr "Make Br_ush"
+
+#: plug-ins/script-fu/script-fu.c:279
+msgid "_Misc"
+msgstr "_Misc"
+
+#: plug-ins/script-fu/script-fu.c:281
+msgid "_Patterns"
+msgstr "_Patterns"
+
+#: plug-ins/script-fu/script-fu.c:283
+msgid "_Test"
+msgstr "_Test"
+
+#: plug-ins/script-fu/script-fu.c:285 plug-ins/script-fu/script-fu.c:314
+msgid "_Utils"
+msgstr "_Utils"
+
+#: plug-ins/script-fu/script-fu.c:287
+msgid "_Web Page Themes"
+msgstr "_Web Page Themes"
+
+#: plug-ins/script-fu/script-fu.c:289
+msgid "_Alien Glow"
+msgstr "_Alien Glow"
+
+#: plug-ins/script-fu/script-fu.c:291
+msgid "_Beveled Pattern"
+msgstr "_Bevelled Pattern"
+
+#: plug-ins/script-fu/script-fu.c:293
+msgid "_Classic.Gimp.Org"
+msgstr "_Classic.Gimp.Org"
+
+#: plug-ins/script-fu/script-fu.c:296
+msgid "S_cript-Fu"
+msgstr "S_cript-Fu"
+
+#: plug-ins/script-fu/script-fu.c:298
+msgid "_Alchemy"
+msgstr "_Alchemy"
+
+#: plug-ins/script-fu/script-fu.c:300
+msgid "Alpha to _Logo"
+msgstr "Alpha to _Logo"
+
+#: plug-ins/script-fu/script-fu.c:302
+msgid "A_nimators"
+msgstr "A_nimators"
+
+#: plug-ins/script-fu/script-fu.c:304
+msgid "_Decor"
+msgstr "_Decor"
+
+#: plug-ins/script-fu/script-fu.c:306
+msgid "_Render"
+msgstr "_Render"
+
+#: plug-ins/script-fu/script-fu.c:308
+msgid "_Selection"
+msgstr "_Selection"
+
+#: plug-ins/script-fu/script-fu.c:310
+msgid "S_hadow"
+msgstr "S_hadow"
+
+#: plug-ins/script-fu/script-fu.c:312
+msgid "Stencil _Ops"
+msgstr "Stencil _Ops"
+
+#: plug-ins/script-fu/script-fu.c:322
 msgid "_Refresh Scripts"
 msgstr "_Refresh Scripts"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:128
-#: plug-ins/dbbrowser/gimpprocbrowser.c:142
+#: plug-ins/dbbrowser/gimpprocbrowser.c:126
 msgid "Procedure Browser"
 msgstr "Procedure Browser"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:132
-#: plug-ins/dbbrowser/gimpprocbrowser.c:146
+#: plug-ins/dbbrowser/gimpprocbrowser.c:130
 msgid "Search by _Name"
 msgstr "Search by _Name"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:133
-#: plug-ins/dbbrowser/gimpprocbrowser.c:147
-msgid "Search by _Blurb"
-msgstr "Search by _Blurb"
+#: plug-ins/dbbrowser/gimpprocbrowser.c:131
+msgid "Search by _Description"
+msgstr "Search by _Description"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:224
+#: plug-ins/dbbrowser/gimpprocbrowser.c:213
 msgid "_Search:"
 msgstr "_Search:"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:386
+#: plug-ins/dbbrowser/gimpprocbrowser.c:375
 msgid "Searching by name - please wait"
 msgstr "Searching by name - please wait"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:410
+#: plug-ins/dbbrowser/gimpprocbrowser.c:399
 msgid "Searching by blurb - please wait"
 msgstr "Searching by blurb - please wait"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:421
+#: plug-ins/dbbrowser/gimpprocbrowser.c:410
 msgid "Searching - please wait"
 msgstr "Searching - please wait"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:428
+#: plug-ins/dbbrowser/gimpprocbrowser.c:417
 msgid "1 Procedure"
 msgstr "1 Procedure"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:430
+#: plug-ins/dbbrowser/gimpprocbrowser.c:419
 #, c-format
 msgid "%d Procedures"
 msgstr "%d Procedures"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:476
+#: plug-ins/dbbrowser/gimpprocbrowser.c:465
 msgid "No matches"
 msgstr "No matches"
 
-#: plug-ins/dbbrowser/gimpprocview.c:133
+#: plug-ins/dbbrowser/gimpprocview.c:134
 msgid "Parameters"
 msgstr "Parameters"
 
-#: plug-ins/dbbrowser/gimpprocview.c:146
+#: plug-ins/dbbrowser/gimpprocview.c:147
 msgid "Return Values"
 msgstr "Return Values"
 
-#: plug-ins/dbbrowser/gimpprocview.c:159
+#: plug-ins/dbbrowser/gimpprocview.c:160
 msgid "Additional Information"
 msgstr "Additional Information"
 
-#: plug-ins/dbbrowser/gimpprocview.c:319
+#: plug-ins/dbbrowser/gimpprocview.c:320
 msgid "Internal GIMP procedure"
 msgstr "Internal GIMP procedure"
 
-#: plug-ins/dbbrowser/gimpprocview.c:320
+#: plug-ins/dbbrowser/gimpprocview.c:321
 msgid "GIMP Plug-In"
 msgstr "GIMP Plug-In"
 
-#: plug-ins/dbbrowser/gimpprocview.c:321
+#: plug-ins/dbbrowser/gimpprocview.c:322
 msgid "GIMP Extension"
 msgstr "GIMP Extension"
 
-#: plug-ins/dbbrowser/gimpprocview.c:322
+#: plug-ins/dbbrowser/gimpprocview.c:323
 msgid "Temporary Procedure"
 msgstr "Temporary Procedure"
 
