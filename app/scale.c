@@ -155,7 +155,6 @@ change_scale (GDisplay *gdisp,
 
       /*  resize the image  */
       resize_display (gdisp, allow_resize_windows, TRUE);
-
     }
 }
 
@@ -255,8 +254,8 @@ setup_scale (GDisplay *gdisp)
 				 FUNSCALEY (gdisp, (double) gdisp->offset_y));
     }
 
-  gtk_widget_draw (GTK_WIDGET (hruler), NULL);
-  gtk_widget_draw (GTK_WIDGET (vruler), NULL);
+  gtk_widget_queue_draw (GTK_WIDGET (hruler));
+  gtk_widget_queue_draw (GTK_WIDGET (vruler));
 
-  nav_window_update_window_marker(gdisp->window_nav_dialog);
+  nav_window_update_window_marker (gdisp->window_nav_dialog);
 }

@@ -1,3 +1,11 @@
+Sat Jan 22 16:00:52 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/commands.c
+	* app/gdisplay.c
+	* app/gdisplay.h
+	* app/scale.c: call setup_scale when changing the resolution or unit,
+	so the rulers get updated correctly
+
 Sat Jan 21 21:00:00 CST 2000 Seth Burgess <sjburges@gimp.org>
 
 	* app/transform_core.c: applied Steinar's 

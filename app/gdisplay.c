@@ -1882,6 +1882,23 @@ gdisplays_resize_cursor_label (GimpImage *gimage)
 }
 
 void
+gdisplays_setup_scale (GimpImage *gimage)
+{
+  GDisplay *gdisp;
+  GSList *list = display_list;
+
+  /*  traverse the linked list of displays, handling each one  */
+  while (list)
+    {
+      gdisp = (GDisplay *) list->data;
+      if (gdisp->gimage == gimage)
+	setup_scale (gdisp);
+
+      list = g_slist_next (list);
+    }
+}
+
+void
 gdisplays_update_area (GimpImage *gimage,
 		       int        x,
 		       int        y,
