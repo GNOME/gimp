@@ -3,15 +3,15 @@
 # Copyright (C) 2000-2002,2003, 2004 Free Software Foundation, Inc.
 # Valek Filippov <frob@df.ru>, 2000-2002.
 # Anatoly A. Yakushin <jaa@altlinux.ru>, 2003, 2004.
-# Roxana Chernogolova <padavan@mail.ru>, 2003.
+# Roxana Chernogolova <padavan@mail.ru>, 2003, 2004.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.SCRIPTFU\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-02-04 02:50+0100\n"
-"PO-Revision-Date: 2004-02-06 00:20+0300\n"
-"Last-Translator: Anatoly A. Yakushin <jaa@altlinux.ru>\n"
+"PO-Revision-Date: 2004-02-17 14:23+0300\n"
+"Last-Translator: Roxana Chernogolova <padavan@mail.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1965,7 +1965,6 @@ msgid "<Image>/Script-Fu/Selection/To _Image"
 msgstr "<Image>/Скрипт-Фу/Выделение/В изображение"
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
-#, fuzzy
 msgid ""
 ")))\n"
 "  (set! filename2 (string-append data-dir\n"

@@ -10,15 +10,15 @@
 # Copyright (C) 1999-2002,2003, 2004 Free Software Foundation, Inc.
 # Valek Filippov <frob@df.ru>, 1999-2002.
 # Anatoly A. Yakushin <jaa@altlinux.ru>, 2003, 2004.
-# Roxana Chernogolova <padavan@mail.ru>, 2003.
+# Roxana Chernogolova <padavan@mail.ru>, 2003, 2004.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-02-04 02:48+0100\n"
-"PO-Revision-Date: 2004-02-05 01:06+0300\n"
-"Last-Translator: Anatoly A. Yakushin <jaa@altlinux.ru>\n"
+"PO-Revision-Date: 2004-02-25 14:10+0300\n"
+"Last-Translator: Roxana Chernogolova <padavan@mail.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -105,9 +105,8 @@ msgstr ""
 "его дополнениями.\n"
 
 #: app/main.c:513
-#, fuzzy
 msgid "  --no-cpu-accel           Do not use special CPU accelerations.\n"
-msgstr "  --no-mmx                Без  MMX расширения.\n"
+msgstr "  --no-cpu-accel                Не использовать ускорители CPU.\n"
 
 #: app/main.c:514
 msgid ""
@@ -182,6 +181,8 @@ msgid ""
 "  --pdb-compat-mode <off | on | warn>\n"
 "                           Procedural Database compatibility mode.\n"
 msgstr ""
+"  --pdb-compat-mode <off | on | warn>\n"
+"                           Режим совместимости с базой данных процедур.\n"
 
 #: app/main.c:530
 msgid "  -b, --batch <commands>   Process commands in batch mode.\n"
@@ -358,9 +359,7 @@ msgstr "Ошибка при чтении файла '%s': %s"
 msgid ""
 "There was an error parsing your '%s' file. Default values will be used. A "
 "backup of your configuration has been created at '%s'."
-msgstr ""
-"ПРоизошла ошибка при чтении файла '%s'. Будут использованы параметры по "
-"умолчанию. Резервная копия вашей конфигурации была создана в '%s'."
+msgstr "Произошла ошибка при чтении файла '%s'. Будут использованы параметры по умолчанию. Резервная копия вашей конфигурации была создана в '%s'."
 
 #: app/config/gimpconfigwriter.c:107
 #, c-format
@@ -851,9 +850,8 @@ msgid "Layer's _Alpha Channel"
 msgstr "Альфа-канал слоя"
 
 #: app/core/core-enums.c:16
-#, fuzzy
 msgid "_Transfer Layer's Alpha Channel"
-msgstr "Альфа-канал слоя"
+msgstr "Преобразовать альфа-канал слоя"
 
 #: app/core/core-enums.c:17
 msgid "_Selection"
@@ -1038,46 +1036,43 @@ msgstr "По выбору"
 
 #: app/core/core-enums.c:321
 msgid "Line"
-msgstr "Линейное"
+msgstr "Линия"
 
 #: app/core/core-enums.c:322
 msgid "Long Dashes"
-msgstr ""
+msgstr "Длинные линии"
 
 #: app/core/core-enums.c:323
-#, fuzzy
 msgid "Medium Dashes"
-msgstr "Средний"
+msgstr "Средние линии"
 
 #: app/core/core-enums.c:324
 msgid "Short Dashes"
-msgstr ""
+msgstr "Короткие линии"
 
 #: app/core/core-enums.c:325
 msgid "Sparse Dots"
-msgstr ""
+msgstr "Редкие точки"
 
 #: app/core/core-enums.c:326
-#, fuzzy
 msgid "Normal Dots"
-msgstr "Нормальное"
+msgstr "Точки"
 
 #: app/core/core-enums.c:327
 msgid "Dense Dots"
-msgstr ""
+msgstr "Частые точки"
 
 #: app/core/core-enums.c:328
-#, fuzzy
 msgid "Stipples"
-msgstr "Стиль"
+msgstr "Пунктир"
 
 #: app/core/core-enums.c:329
 msgid "Dash Dot..."
-msgstr ""
+msgstr "Тире-точка..."
 
 #: app/core/core-enums.c:330
 msgid "Dash Dot Dot..."
-msgstr ""
+msgstr "Тире-точка-точка..."
 
 #: app/core/core-enums.c:348 app/core/core-enums.c:368
 #: app/display/gimpdisplayshell-title.c:219 app/widgets/widgets-enums.c:34
@@ -1459,9 +1454,8 @@ msgid "Fill with Transparency"
 msgstr "Заливка прозрачным"
 
 #: app/core/gimp-edit.c:288
-#, fuzzy
 msgid "Fill with Pattern"
-msgstr "/Правка/Заливка образцом"
+msgstr "Заливка образцом"
 
 #: app/core/gimp-gradients.c:75
 msgid "FG to BG (HSV counter-clockwise)"
@@ -1955,7 +1949,6 @@ msgid "Change Image Unit"
 msgstr "Изменить единицы измерения"
 
 #: app/core/gimpimage.c:1940
-#, fuzzy
 msgid "Attach Parasite to Image"
 msgstr "Добавить шум к изображению"
 
@@ -2174,7 +2167,7 @@ msgstr ""
 
 #: app/core/gimplayer.c:1092
 msgid "Transfer Alpha to Mask"
-msgstr ""
+msgstr "Преобразовать альфа-канал в маску"
 
 #. Push the layer on the undo stack
 #: app/core/gimplayer.c:1354
@@ -2191,7 +2184,7 @@ msgid ""
 "Fatal parse error in palette file '%s': Missing magic header.\n"
 "Does this file need converting from DOS?"
 msgstr ""
-"Неисправимая ошибка разбора файла палитыр '%s': отсутствует заголовок.\n"
+"Неисправимая ошибка разбора файла палитры '%s': отсутствует заголовок.\n"
 "Надо ли преобразовать этот файл из формата DOS?"
 
 #: app/core/gimppalette.c:390
@@ -2609,19 +2602,20 @@ msgid "Version %s brought to you by"
 msgstr "Версия %s создана для Вас"
 
 #: app/gui/about-dialog.c:53
-#, fuzzy
 msgid "Translation by"
-msgstr "Преобразование"
+msgstr "Перевод"
 
 #. Translators: insert your names here, separated by newline
 #. we'd prefer just the names, please no email adresses.
 #: app/gui/about-dialog.c:56
 msgid "translator-credits"
 msgstr ""
+"Anatoly A. Yakushin\n"
+"Roxana Chernogolova"
 
 #: app/gui/about-dialog.c:61
 msgid "Contributions by"
-msgstr ""
+msgstr "При учатсии"
 
 #: app/gui/about-dialog.c:160
 msgid "About The GIMP"
@@ -3120,7 +3114,7 @@ msgstr "/Просмотр в виде списка"
 
 #: app/gui/dialogs-menu.c:169
 msgid "/View as _Grid"
-msgstr "/Просмотр в виде cетки"
+msgstr "/Просмотр в виде таблицы"
 
 #: app/gui/dialogs-menu.c:176
 msgid "/Show Image _Menu"
@@ -3774,7 +3768,7 @@ msgstr ""
 
 #: app/gui/image-commands.c:535
 msgid "Image exceeds maximum image size"
-msgstr ""
+msgstr "Размер изображения превышает установленный лимит"
 
 #: app/gui/image-commands.c:543
 msgid ""
@@ -4985,7 +4979,6 @@ msgid "/Merge _Visible Layers..."
 msgstr "/Объединить видимые слои..."
 
 #: app/gui/layers-menu.c:172
-#, fuzzy
 msgid "/_Flatten Image"
 msgstr "/Свести изображение"
 
@@ -6105,7 +6098,7 @@ msgstr "Интерполяция:"
 msgid ""
 "Indexed color layers are always scaled without interpolation. The chosen "
 "interpolation type will affect scaling channels and masks only."
-msgstr ""
+msgstr "Индексированные слои масштабируются без интерполяции. При выбранном типе интерполяции будут отмасштабированы только каналы и маски."
 
 #: app/gui/resolution-calibrate-dialog.c:85
 msgid "Calibrate Monitor Resolution"
@@ -6113,7 +6106,7 @@ msgstr "Откалибровать разрешение монитора"
 
 #: app/gui/resolution-calibrate-dialog.c:195
 msgid "Measure the rulers and enter their lengths below."
-msgstr "Измерьте линейки и введите их длину ниже."
+msgstr "Измерьте линейки и введите значение их длины ниже."
 
 #: app/gui/resolution-calibrate-dialog.c:217
 msgid "_Horizontal:"
@@ -6276,7 +6269,7 @@ msgstr "/Сохранить параметры как/Новое значени�
 
 #: app/gui/tool-options-menu.c:68
 msgid "/_Restore Options from/(None)"
-msgstr "Г/Загрузить параметры из/(Нет)"
+msgstr "/Загрузить параметры из/(Нет)"
 
 #: app/gui/tool-options-menu.c:74
 msgid "/Re_name Saved Options/(None)"
@@ -6549,12 +6542,11 @@ msgstr ""
 "шрифты располагаются в общем каталоге."
 
 #: app/gui/user-install-dialog.c:207
-#, fuzzy
 msgid ""
 "This folder is used to store user defined gradients.  The GIMP checks this "
 "folder in addition to the system-wide GIMP gradients installation when "
 "searching for gradients."
-msgstr "Этот каталог используется для хранения созданных пользователем градиентов."
+msgstr "Этот каталог используется для хранения созданных пользователем градиентов. При поиске градиентов GIMP проверяет содержимое этого каталога в дополнение к системному."
 
 #: app/gui/user-install-dialog.c:214
 msgid ""
@@ -6603,7 +6595,6 @@ msgstr ""
 "загружаемых при инициализации."
 
 #: app/gui/user-install-dialog.c:245
-#, fuzzy
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
 "system-supported additions to the plug-in environment.  The GIMP checks this "
@@ -6611,20 +6602,17 @@ msgid ""
 "for plug-in environment modification files."
 msgstr ""
 "Этот каталог используется для хранения созданных пользователем,\n"
-"временных или других неподдерживаемых дополнений. По умолчанию\n"
-"в файле gimprc указана проверка этого подкаталога,\n"
+"временных или других неподдерживаемых дополнений. Gimp проверяет этот каталог\n"
 "в дополнение к системному при поиске дополнений."
 
 #: app/gui/user-install-dialog.c:255
-#, fuzzy
 msgid ""
 "This folder is used to store user created and installed scripts.  The GIMP "
 "checks this folder in addition to the systemwide GIMP scripts folder when "
 "searching for scripts."
 msgstr ""
 "Этот каталог используется GIMP для хранения созданных\n"
-"пользователем  и установленных скриптов. По умолчанию\n"
-"в файле gimprc указана проверка этого подкаталога,\n"
+"пользователем  и установленных скриптов. GIMP проверяет этот каталог\n"
 "в дополнение к системному при поиске скриптов."
 
 #: app/gui/user-install-dialog.c:263
@@ -6638,7 +6626,6 @@ msgstr ""
 "установленных пользователем."
 
 #: app/gui/user-install-dialog.c:273
-#, fuzzy
 msgid ""
 "This folder is used to temporarily store undo buffers to reduce memory "
 "usage.  If The GIMP is unceremoniously killed, files of the form: gimp<#>."
@@ -6647,27 +6634,25 @@ msgid ""
 msgstr ""
 "Этот каталог используется GIMP для временного хранения\n"
 "буферов отката для уменьшения использования памяти. Если\n"
-"GIMP бесцеремонно убит, файлы могут остаться в этом каталоге\n"
+"GIMP некорректно завершил работу, файлы могут остаться в этом каталоге\n"
 "в виде: gimp<#>.<#>. Эти файлы бесполезны после прерывания\n"
-"сеанса GIMP и могут быть безнаказанно уничтожены."
+"сеанса GIMP и могут быть удалены."
 
 #: app/gui/user-install-dialog.c:282
 msgid "This folder is used to store tool options."
 msgstr "Этот каталог используется для сохранения параметров инструментов"
 
 #: app/gui/user-install-dialog.c:287
-#, fuzzy
 msgid "This folder is used to store parameter files for the Curves tool."
 msgstr ""
-"Этот каталог используется для сохранения файла\n"
-"параметров инструмента \"Кривые\"."
+"Этот каталог используется для сохранения файлов, содержащих\n"
+"параметры инструмента \"Контуры\"."
 
 #: app/gui/user-install-dialog.c:292
-#, fuzzy
 msgid "This folder is used to store parameter files for the Levels tool."
 msgstr ""
-"Этот каталог используется для сохранения файла\n"
-"параметров инструмента \"Уровни\"."
+"Этот каталог используется для сохранения файлов, содержащих\n"
+"параметры инструмента \"Уровни\"."
 
 #: app/gui/user-install-dialog.c:392
 msgid "Installation successful.  Click \"Continue\" to proceed."
@@ -6764,14 +6749,13 @@ msgstr ""
 "каталог с именем '<b>%s</b>'."
 
 #: app/gui/user-install-dialog.c:854
-#, fuzzy
 msgid ""
 "This folder will contain a number of important files.  Click on one of the "
 "files or folders in the tree to get more information about the selected item."
 msgstr ""
 "Этот каталог будет содержать ряд важных файлов.\n"
 "Для получения дополнительной информации о файле или\n"
-"подкаталоге в дереве щелкните на нем."
+"подкаталоге в дереве щелкните кнопкой мыши на его названии."
 
 #: app/gui/user-install-dialog.c:942
 msgid "User Installation Log"
@@ -7596,17 +7580,15 @@ msgstr "Тип заливки %s"
 #: app/tools/gimpbucketfilloptions.c:266
 #, c-format
 msgid "Affected Area  %s"
-msgstr ""
+msgstr "Область применения  %s"
 
 #: app/tools/gimpbucketfilloptions.c:269
-#, fuzzy
 msgid "Fill Whole Selection"
-msgstr "Плавающее выделение"
+msgstr "Заполнить все выделенное"
 
 #: app/tools/gimpbucketfilloptions.c:270
-#, fuzzy
 msgid "Fill Similar Colors"
-msgstr "Поиск похожих цветов"
+msgstr "Заполнить похожие цвета"
 
 #: app/tools/gimpbucketfilloptions.c:276 app/tools/gimpselectionoptions.c:474
 msgid "Finding Similar Colors"
@@ -7919,9 +7901,8 @@ msgstr "Переместить контур"
 
 #: app/tools/gimpeditselectiontool.c:255
 #: app/tools/gimpeditselectiontool.c:1210
-#, fuzzy
 msgid "Move Layer Mask"
-msgstr "Переместить слой"
+msgstr "Переместить маску слоя"
 
 #: app/tools/gimpeditselectiontool.c:267
 #: app/tools/gimpeditselectiontool.c:1220
@@ -8713,9 +8694,8 @@ msgid "Connect Strokes"
 msgstr "Соединить контуры"
 
 #: app/tools/gimpvectortool.c:557
-#, fuzzy
 msgid "Drag Path"
-msgstr "Опустить новый контур"
+msgstr "Переместить контур"
 
 #: app/tools/gimpvectortool.c:567
 msgid "Convert Edge"
@@ -8746,46 +8726,36 @@ msgid "Click to create a new component of the path."
 msgstr "Нажмите чтобы создать новый компонент контура"
 
 #: app/tools/gimpvectortool.c:1167
-#, fuzzy
 msgid "Click to create a new anchor. (try SHIFT)"
-msgstr "Нажмите чтобы создать новый контур"
+msgstr "Нажмите чтобы создать новую точку. (попробуйте нажать SHIFT)"
 
 #: app/tools/gimpvectortool.c:1170
-#, fuzzy
 msgid "Click-Drag to move the anchor around."
 msgstr "Нажмите и потащите чтобы переместить точку"
 
 #: app/tools/gimpvectortool.c:1173
-#, fuzzy
 msgid "Click-Drag to move the anchors around."
 msgstr "Нажмите и потащите чтобы переместить точки"
 
 #: app/tools/gimpvectortool.c:1176
-#, fuzzy
 msgid "Click-Drag to move the handle around. (try SHIFT)"
-msgstr "Нажмите и потащите чтобы переместить точку"
+msgstr "Нажмите и потащите чтобы переместить рычаг. (попробуйте нажать SHIFT)"
 
 #: app/tools/gimpvectortool.c:1179
-#, fuzzy
 msgid "Click-Drag to change the shape of the curve. (SHIFT: symmetrical)"
-msgstr ""
-"Нажмите и потащите чтобы изменить линию. С SHIFT рычаги конечных точек "
-"перемещаются симметрично."
+msgstr "Нажмите и потащите чтобы изменить линию. С SHIFT рычаги перемещаются симметрично."
 
 #: app/tools/gimpvectortool.c:1183
-#, fuzzy
 msgid "Click-Drag to move the component around. (try SHIFT)"
-msgstr "Нажмите и потащите чтобы переместить точку"
+msgstr "Нажмите и потащите чтобы переместить элемент. (попробуйте нажать SHIFT)"
 
 #: app/tools/gimpvectortool.c:1187
-#, fuzzy
 msgid "Click-Drag to move the path around."
-msgstr "Нажмите и потащите чтобы переместить точку"
+msgstr "Нажмите и потащите чтобы переместить контур"
 
 #: app/tools/gimpvectortool.c:1190
-#, fuzzy
 msgid "Click to insert an anchor on the path. (try SHIFT)"
-msgstr "Нажмите чтобы создать точку на контуре."
+msgstr "Нажмите чтобы создать точку на контуре. (попробуйте нажать SHIFT)"
 
 #: app/tools/gimpvectortool.c:1193
 msgid "Click to delete this anchor."
@@ -8846,7 +8816,7 @@ msgstr "В '%s' не найдено контуров"
 
 #: app/vectors/gimpvectors-import.c:294
 msgid "No paths found in the buffer"
-msgstr ""
+msgstr "В буфере не найдены контуры"
 
 #: app/widgets/gimpbrusheditor.c:143
 msgid "Hardness:"
@@ -9508,13 +9478,12 @@ msgid "_Miter Limit:"
 msgstr "Острота скосов:"
 
 #: app/widgets/gimpstrokeeditor.c:261
-#, fuzzy
 msgid "Dash Pattern:"
 msgstr "Шаблон:"
 
 #: app/widgets/gimpstrokeeditor.c:271
 msgid "Dash Preset:"
-msgstr ""
+msgstr "Тип линии:"
 
 #: app/widgets/gimpstrokeeditor.c:276
 msgid "_Antialiasing"
@@ -9874,12 +9843,10 @@ msgid "View as Grid"
 msgstr "Просмотр в виде таблицы"
 
 #: app/widgets/widgets-enums.c:136
-#, fuzzy
 msgid "Normal Window"
-msgstr "Окно изображения"
+msgstr "Стандартное окно"
 
 #: app/widgets/widgets-enums.c:137
-#, fuzzy
 msgid "Utility Window"
 msgstr "Вспомогательное"
 
