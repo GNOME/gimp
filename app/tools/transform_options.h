@@ -31,7 +31,7 @@ struct _TransformOptions
 
   GimpTransformDirection  direction;
   GimpTransformDirection  direction_d;
-  GtkWidget              *direction_w[2];  /* 2 radio buttons */
+  GtkWidget              *direction_w;
 
   GimpInterpolationType   interpolation;
   /* GimpInterpolationType interpolation_d; (from gimprc) */

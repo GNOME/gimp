@@ -30,8 +30,8 @@ GType gimp_zoom_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_ZOOM_IN,
-  GIMP_ZOOM_OUT
+  GIMP_ZOOM_IN,  /*< desc="Zoom in"  >*/
+  GIMP_ZOOM_OUT  /*< desc="Zoom out" >*/
 } GimpZoomType;
 
 

@@ -162,12 +162,12 @@ libappwidgets_a_SOURCES = $(libappwidgets_a_built_sources) $(libappwidgets_a_sou
 gen_sources = xgen-wec
 CLEANFILES = $(gen_sources)
 
-$(srcdir)/widgets-enums.c: $(srcdir)/widgets-enums.h
-	$(GLIB_MKENUMS) \
-		--fhead "#include <gtk/gtk.h>\n#include \"widgets-enums.h\"" \
+$(srcdir)/widgets-enums.c: $(srcdir)/widgets-enums.h $(GIMP_MKENUMS)
+	$(GIMP_MKENUMS) \
+		--fhead "#include \"config.h\"\n#include <gtk/gtk.h>\n#include \"widgets-enums.h\"\n#include\"libgimp/gimpintl.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \
 		--vhead "\nstatic const GEnumValue @enum_name@_enum_values[] =\n{" \
-		--vprod "  { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
+		--vprod "  { @VALUENAME@, @valuedesc@, \"@valuenick@\" }," \
 		--vtail "  { 0, NULL, NULL }\n};\n\nGType\n@enum_name@_get_type (void)\n{\n  static GType enum_type = 0;\n\n  if (!enum_type)\n    enum_type = g_enum_register_static (\"@EnumName@\", @enum_name@_enum_values);\n\n  return enum_type;\n}\n" \
 		$(srcdir)/widgets-enums.h > xgen-wec \
 	&& cp xgen-wec $(@F) \

@@ -94,20 +94,14 @@ transform_options_init (TransformOptions *options,
   options->constrain_1   = options->constrain_1_d = FALSE;
   options->constrain_2   = options->constrain_2_d = FALSE;
 
-  frame = gimp_radio_group_new2 (TRUE, _("Transform Direction"),
-                                 G_CALLBACK (gimp_radio_button_update),
-                                 &options->direction,
-                                 GINT_TO_POINTER (options->direction),
-
-                                 _("Forward (Traditional)"),
-                                 GINT_TO_POINTER (GIMP_TRANSFORM_FORWARD),
-                                 &options->direction_w[0],
-
-                                 _("Backward (Corrective)"),
-                                 GINT_TO_POINTER (GIMP_TRANSFORM_BACKWARD),
-                                 &options->direction_w[1],
-
-                                 NULL);
+  frame = gimp_enum_radio_frame_new (GIMP_TYPE_TRANSFORM_DIRECTION,
+                                     gtk_label_new (_("Transform Direction")),
+                                     2,
+                                     G_CALLBACK (gimp_radio_button_update),
+                                     &options->direction,
+                                     &options->direction_w);
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->direction_w),
+                               GINT_TO_POINTER (options->direction));
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -266,7 +260,7 @@ transform_options_reset (GimpToolOptions *tool_options)
 
   options = (TransformOptions *) tool_options;
 
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->direction_w[0]),
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->direction_w),
                                GINT_TO_POINTER (options->direction_d));
 
   options->interpolation =

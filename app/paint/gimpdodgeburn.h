@@ -49,15 +49,15 @@ typedef struct _GimpDodgeBurnOptions GimpDodgeBurnOptions;
 
 struct _GimpDodgeBurnOptions
 {
-  GimpPaintOptions   paint_options;
+  GimpPaintOptions  paint_options;
 
-  DodgeBurnType      type;
-  DodgeBurnType      type_d;
-  GtkWidget         *type_w[2];
+  DodgeBurnType     type;
+  DodgeBurnType     type_d;
+  GtkWidget        *type_w[2];
 
   GimpTransferMode  mode;     /*highlights, midtones, shadows*/
   GimpTransferMode  mode_d;
-  GtkWidget        *mode_w[3];
+  GtkWidget        *mode_w;
 
   gdouble           exposure;
   gdouble           exposure_d;

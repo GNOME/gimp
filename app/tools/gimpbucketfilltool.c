@@ -38,6 +38,8 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 
+#include "widgets/gimpenummenu.h"
+
 #include "gimpbucketfilltool.h"
 #include "paint_options.h"
 
@@ -67,7 +69,7 @@ struct _BucketOptions
 
   GimpBucketFillMode  fill_mode;
   GimpBucketFillMode  fill_mode_d;
-  GtkWidget          *fill_mode_w[3];
+  GtkWidget          *fill_mode_w;
 };
 
 
@@ -263,14 +265,12 @@ gimp_bucket_fill_tool_modifier_key (GimpTool        *tool,
       switch (options->fill_mode)
         {
         case GIMP_FG_BUCKET_FILL:
-          gimp_radio_group_set_active
-            (GTK_RADIO_BUTTON (options->fill_mode_w[0]),
-             GINT_TO_POINTER (GIMP_BG_BUCKET_FILL));
+          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->fill_mode_w),
+                                       GINT_TO_POINTER (GIMP_BG_BUCKET_FILL));
           break;
         case GIMP_BG_BUCKET_FILL:
-          gimp_radio_group_set_active
-            (GTK_RADIO_BUTTON (options->fill_mode_w[0]),
-             GINT_TO_POINTER (GIMP_FG_BUCKET_FILL));
+          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->fill_mode_w),
+                                       GINT_TO_POINTER (GIMP_FG_BUCKET_FILL));
           break;
         default:
           break;
@@ -354,24 +354,14 @@ bucket_options_new (GimpToolInfo *tool_info)
   vbox = ((GimpToolOptions *) options)->main_vbox;
 
   /*  fill type  */
-  frame = gimp_radio_group_new2 (TRUE, _("Fill Type (<Ctrl>)"),
-                                 G_CALLBACK (gimp_radio_button_update),
-                                 &options->fill_mode,
-                                 GINT_TO_POINTER (options->fill_mode),
-
-                                 _("FG Color Fill"),
-                                 GINT_TO_POINTER (GIMP_FG_BUCKET_FILL),
-                                 &options->fill_mode_w[0],
-
-                                 _("BG Color Fill"),
-                                 GINT_TO_POINTER (GIMP_BG_BUCKET_FILL),
-                                 &options->fill_mode_w[1],
-
-                                 _("Pattern Fill"),
-                                 GINT_TO_POINTER (GIMP_PATTERN_BUCKET_FILL),
-                                 &options->fill_mode_w[2],
-
-                                 NULL);
+  frame = gimp_enum_radio_frame_new (GIMP_TYPE_BUCKET_FILL_MODE,
+                                     gtk_label_new (_("Fill Type (<Ctrl>)")),
+                                     2,
+                                     G_CALLBACK (gimp_radio_button_update),
+                                     &options->fill_mode,
+                                     &options->fill_mode_w);
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->fill_mode_w),
+                               GINT_TO_POINTER (options->fill_mode));
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -457,6 +447,6 @@ bucket_options_reset (GimpToolOptions *tool_options)
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w),
 			    gimprc.default_threshold);
 
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->fill_mode_w[0]),
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->fill_mode_w),
                                GINT_TO_POINTER (options->fill_mode_d));
 }

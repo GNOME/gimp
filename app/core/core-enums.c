@@ -8,6 +8,98 @@
 
 /* enumerations from "./core-enums.h" */
 
+static const GEnumValue gimp_blend_mode_enum_values[] =
+{
+  { GIMP_FG_BG_RGB_MODE, N_("FG to BG (RGB)"), "fg-bg-rgb-mode" },
+  { GIMP_FG_BG_HSV_MODE, N_("FG to BG (HSV)"), "fg-bg-hsv-mode" },
+  { GIMP_FG_TRANSPARENT_MODE, N_("FG to Transparent"), "fg-transparent-mode" },
+  { GIMP_CUSTOM_MODE, N_("Custom Gradient"), "custom-mode" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_blend_mode_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpBlendMode", gimp_blend_mode_enum_values);
+
+  return enum_type;
+}
+
+
+static const GEnumValue gimp_bucket_fill_mode_enum_values[] =
+{
+  { GIMP_FG_BUCKET_FILL, N_("FG Color Fill"), "fg-bucket-fill" },
+  { GIMP_BG_BUCKET_FILL, N_("BG Color Fill"), "bg-bucket-fill" },
+  { GIMP_PATTERN_BUCKET_FILL, N_("Pattern Fill"), "pattern-bucket-fill" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_bucket_fill_mode_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpBucketFillMode", gimp_bucket_fill_mode_enum_values);
+
+  return enum_type;
+}
+
+
+static const GEnumValue gimp_channel_type_enum_values[] =
+{
+  { GIMP_RED_CHANNEL, "GIMP_RED_CHANNEL", "red-channel" },
+  { GIMP_GREEN_CHANNEL, "GIMP_GREEN_CHANNEL", "green-channel" },
+  { GIMP_BLUE_CHANNEL, "GIMP_BLUE_CHANNEL", "blue-channel" },
+  { GIMP_GRAY_CHANNEL, "GIMP_GRAY_CHANNEL", "gray-channel" },
+  { GIMP_INDEXED_CHANNEL, "GIMP_INDEXED_CHANNEL", "indexed-channel" },
+  { GIMP_ALPHA_CHANNEL, "GIMP_ALPHA_CHANNEL", "alpha-channel" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_channel_type_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpChannelType", gimp_channel_type_enum_values);
+
+  return enum_type;
+}
+
+
+static const GEnumValue gimp_gradient_type_enum_values[] =
+{
+  { GIMP_LINEAR, N_("Linear"), "linear" },
+  { GIMP_BILINEAR, N_("Bi-Linear"), "bilinear" },
+  { GIMP_RADIAL, N_("Radial"), "radial" },
+  { GIMP_SQUARE, N_("Square"), "square" },
+  { GIMP_CONICAL_SYMMETRIC, N_("Conical (symmetric)"), "conical-symmetric" },
+  { GIMP_CONICAL_ASYMMETRIC, N_("Conical (asymmetric)"), "conical-asymmetric" },
+  { GIMP_SHAPEBURST_ANGULAR, N_("Shapeburst (angular)"), "shapeburst-angular" },
+  { GIMP_SHAPEBURST_SPHERICAL, N_("Shapeburst (spherical)"), "shapeburst-spherical" },
+  { GIMP_SHAPEBURST_DIMPLED, N_("Shapeburst (dimpled)"), "shapeburst-dimpled" },
+  { GIMP_SPIRAL_CLOCKWISE, N_("Spiral (clockwise)"), "spiral-clockwise" },
+  { GIMP_SPIRAL_ANTICLOCKWISE, N_("Spiral (anticlockwise)"), "spiral-anticlockwise" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_gradient_type_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpGradientType", gimp_gradient_type_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_image_base_type_enum_values[] =
 {
   { GIMP_RGB, "GIMP_RGB", "rgb" },
@@ -55,6 +147,26 @@ gimp_preview_size_get_type (void)
 }
 
 
+static const GEnumValue gimp_repeat_mode_enum_values[] =
+{
+  { GIMP_REPEAT_NONE, N_("None"), "none" },
+  { GIMP_REPEAT_SAWTOOTH, N_("Sawtooth Wave"), "sawtooth" },
+  { GIMP_REPEAT_TRIANGULAR, N_("Triangular Wave"), "triangular" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_repeat_mode_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpRepeatMode", gimp_repeat_mode_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_selection_control_enum_values[] =
 {
   { GIMP_SELECTION_OFF, "GIMP_SELECTION_OFF", "off" },
@@ -77,93 +189,21 @@ gimp_selection_control_get_type (void)
 }
 
 
-static const GEnumValue gimp_channel_type_enum_values[] =
+static const GEnumValue gimp_transfer_mode_enum_values[] =
 {
-  { GIMP_RED_CHANNEL, "GIMP_RED_CHANNEL", "red-channel" },
-  { GIMP_GREEN_CHANNEL, "GIMP_GREEN_CHANNEL", "green-channel" },
-  { GIMP_BLUE_CHANNEL, "GIMP_BLUE_CHANNEL", "blue-channel" },
-  { GIMP_GRAY_CHANNEL, "GIMP_GRAY_CHANNEL", "gray-channel" },
-  { GIMP_INDEXED_CHANNEL, "GIMP_INDEXED_CHANNEL", "indexed-channel" },
-  { GIMP_ALPHA_CHANNEL, "GIMP_ALPHA_CHANNEL", "alpha-channel" },
+  { GIMP_SHADOWS, N_("Shadows"), "shadows" },
+  { GIMP_MIDTONES, N_("Midtones"), "midtones" },
+  { GIMP_HIGHLIGHTS, N_("Highlights"), "highlights" },
   { 0, NULL, NULL }
 };
 
 GType
-gimp_channel_type_get_type (void)
+gimp_transfer_mode_get_type (void)
 {
   static GType enum_type = 0;
 
   if (!enum_type)
-    enum_type = g_enum_register_static ("GimpChannelType", gimp_channel_type_enum_values);
-
-  return enum_type;
-}
-
-
-static const GEnumValue gimp_blend_mode_enum_values[] =
-{
-  { GIMP_FG_BG_RGB_MODE, N_("FG to BG (RGB)"), "fg-bg-rgb-mode" },
-  { GIMP_FG_BG_HSV_MODE, N_("FG to BG (HSV)"), "fg-bg-hsv-mode" },
-  { GIMP_FG_TRANSPARENT_MODE, N_("FG to Transparent"), "fg-transparent-mode" },
-  { GIMP_CUSTOM_MODE, N_("Custom Gradient"), "custom-mode" },
-  { 0, NULL, NULL }
-};
-
-GType
-gimp_blend_mode_get_type (void)
-{
-  static GType enum_type = 0;
-
-  if (!enum_type)
-    enum_type = g_enum_register_static ("GimpBlendMode", gimp_blend_mode_enum_values);
-
-  return enum_type;
-}
-
-
-static const GEnumValue gimp_gradient_type_enum_values[] =
-{
-  { GIMP_LINEAR, N_("Linear"), "linear" },
-  { GIMP_BILINEAR, N_("Bi-Linear"), "bilinear" },
-  { GIMP_RADIAL, N_("Radial"), "radial" },
-  { GIMP_SQUARE, N_("Square"), "square" },
-  { GIMP_CONICAL_SYMMETRIC, N_("Conical (symmetric)"), "conical-symmetric" },
-  { GIMP_CONICAL_ASYMMETRIC, N_("Conical (asymmetric)"), "conical-asymmetric" },
-  { GIMP_SHAPEBURST_ANGULAR, N_("Shapeburst (angular)"), "shapeburst-angular" },
-  { GIMP_SHAPEBURST_SPHERICAL, N_("Shapeburst (spherical)"), "shapeburst-spherical" },
-  { GIMP_SHAPEBURST_DIMPLED, N_("Shapeburst (dimpled)"), "shapeburst-dimpled" },
-  { GIMP_SPIRAL_CLOCKWISE, N_("Spiral (clockwise)"), "spiral-clockwise" },
-  { GIMP_SPIRAL_ANTICLOCKWISE, N_("Spiral (anticlockwise)"), "spiral-anticlockwise" },
-  { 0, NULL, NULL }
-};
-
-GType
-gimp_gradient_type_get_type (void)
-{
-  static GType enum_type = 0;
-
-  if (!enum_type)
-    enum_type = g_enum_register_static ("GimpGradientType", gimp_gradient_type_enum_values);
-
-  return enum_type;
-}
-
-
-static const GEnumValue gimp_repeat_mode_enum_values[] =
-{
-  { GIMP_REPEAT_NONE, N_("None"), "none" },
-  { GIMP_REPEAT_SAWTOOTH, N_("Sawtooth Wave"), "sawtooth" },
-  { GIMP_REPEAT_TRIANGULAR, N_("Triangular Wave"), "triangular" },
-  { 0, NULL, NULL }
-};
-
-GType
-gimp_repeat_mode_get_type (void)
-{
-  static GType enum_type = 0;
-
-  if (!enum_type)
-    enum_type = g_enum_register_static ("GimpRepeatMode", gimp_repeat_mode_enum_values);
+    enum_type = g_enum_register_static ("GimpTransferMode", gimp_transfer_mode_enum_values);
 
   return enum_type;
 }

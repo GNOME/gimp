@@ -95,6 +95,23 @@ gimp_enum_menu_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+/**
+ * gimp_enum_menu_new:
+ * @enum_type: the #GType of an enum.
+ * @callback: a callback to connect to the "activate" signal of each
+ *            #GtkMenuItem that is created.
+ * @callback_data: data to pass to the @callback. 
+ * 
+ * Creates a new #GimpEnumMenu, derived from #GtkMenu with menu items
+ * for each of the enum values. The enum needs to be registered to the
+ * type system and should have translatable value names.
+ *
+ * To each menu item it's enum value is attached as "gimp-item-data".
+ * Therefore you can use gimp_menu_item_update() from libgimpwidgets
+ * as @callback function.
+ * 
+ * Return value: a new #GimpEnumMenu.
+ **/
 GtkWidget *
 gimp_enum_menu_new (GType      enum_type,
                     GCallback  callback,
@@ -128,6 +145,18 @@ gimp_enum_menu_new (GType      enum_type,
   return GTK_WIDGET (menu);
 }
 
+/**
+ * gimp_enum_option_menu_new:
+ * @enum_type: the #GType of an enum.
+ * @callback: a callback to connect to the "activate" signal of each
+ *            #GtkMenuItem that is created.
+ * @callback_data: data to pass to the @callback. 
+ * 
+ * This function calls gimp_enum_menu_new() for you and attaches
+ * the resulting @GtkMenu to a newly created #GtkOptionMenu.
+ *
+ * Return value: a new #GtkOptionMenu.
+ **/
 GtkWidget *
 gimp_enum_option_menu_new (GType      enum_type,
                            GCallback  callback,
@@ -144,4 +173,110 @@ gimp_enum_option_menu_new (GType      enum_type,
   gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
   
   return option_menu;
+}
+
+/**
+ * gimp_enum_radio_box_new:
+ * @enum_type: the #GType of an enum.
+ * @callback: a callback to connect to the "toggled" signal of each
+ *            #GtkRadioButton that is created.
+ * @callback_data: data to pass to the @callback. 
+ * @first_button: returns the first button in the created group.
+ * 
+ * Creates a new group of #GtkRadioButtons representing the enum values.
+ * This is very similar to gimp_enum_menu_new().
+ * 
+ * Return value: a new #GtkVBox holding a group of #GtkRadioButtons.
+ **/
+GtkWidget *
+gimp_enum_radio_box_new (GType       enum_type,
+                         GCallback   callback,
+                         gpointer    callback_data,
+                         GtkWidget **first_button)
+{
+  GtkWidget  *vbox;
+  GtkWidget  *button;
+  GEnumClass *enum_class;
+  GEnumValue *value;
+  GSList     *group = NULL;
+
+  g_return_val_if_fail (G_TYPE_IS_ENUM (enum_type), NULL);
+
+  enum_class = g_type_class_ref (enum_type);
+
+  vbox = gtk_vbox_new (FALSE, 1);
+  g_object_weak_ref (G_OBJECT (vbox),
+                     (GWeakNotify) g_type_class_unref, enum_class);
+
+  for (value = enum_class->values; value->value_name; value++)
+    {
+      button = gtk_radio_button_new_with_label (group, 
+                                                gettext (value->value_name));
+
+      if (first_button && value == enum_class->values)
+        *first_button = button;
+
+      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
+
+      g_object_set_data (G_OBJECT (button), "gimp-item-data",
+                         GINT_TO_POINTER (value->value));
+
+      if (callback)
+        g_signal_connect (G_OBJECT (button), "toggled",
+                          callback,
+                          callback_data);
+    }
+
+  return vbox;
+}
+
+/**
+ * gimp_enum_radio_frame_new:
+ * @enum_type: the #GType of an enum.
+ * @label_widget: a widget to put into the frame that will hold the radio box.
+ * @border_width: the border_width of the vbox inside the frame.
+ * @callback: a callback to connect to the "toggled" signal of each
+ *            #GtkRadioButton that is created.
+ * @callback_data: data to pass to the @callback.
+ * @first_button: returns the first button in the created group.
+ *
+ * Calls gimp_enum_radio_box_new() and puts the resulting vbox into a
+ * #GtkFrame.
+ * 
+ * Return value: a new #GtkFrame holding a group of #GtkRadioButtons.
+ **/
+GtkWidget *
+gimp_enum_radio_frame_new (GType        enum_type,
+                           GtkWidget   *label_widget,
+                           gint         border_width,
+                           GCallback    callback,
+                           gpointer     callback_data,
+                           GtkWidget  **first_button)
+{
+  GtkWidget  *frame;
+  GtkWidget  *radio_box;
+
+  g_return_val_if_fail (G_TYPE_IS_ENUM (enum_type), NULL);
+  g_return_val_if_fail (label_widget == NULL || GTK_IS_WIDGET (label_widget),
+                        NULL);
+
+  frame = gtk_frame_new (NULL);
+  
+  if (label_widget)
+    {
+      gtk_frame_set_label_widget (GTK_FRAME (frame), label_widget);
+      gtk_widget_show (label_widget);
+    }
+
+  radio_box = gimp_enum_radio_box_new (enum_type, 
+                                       callback, callback_data,
+                                       first_button);
+
+  gtk_container_set_border_width (GTK_CONTAINER (radio_box), border_width);
+  gtk_container_add (GTK_CONTAINER (frame), radio_box);
+  gtk_widget_show (radio_box);
+
+  return frame;
 }

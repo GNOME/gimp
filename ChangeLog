@@ -1,3 +1,23 @@
+2002-03-18  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-enums.[ch]: use gimp_mkenums to create 
+	widgets-enums.c, added it to CVS since it contains translatable
+	messages now.
+
+	* app/widgets/gimpenummenu.[ch]: added new functions 
+	gimp_enum_radio_box_new() and gimp_enum_radio_frame_new() that create
+	groups of radio buttons out of enum types.
+
+	* app/core/core-enums.[ch]: registered more enums.
+	
+	* app/paint/gimpdodgeburn.h
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/transform_options.[ch]: use gimp_enum_radio_frame_new()
+	for some tool options.
+
 2002-03-18  Manish Singh  <yosh@gimp.org>
 
 	* app/gui/preferences-dialog.c: slight cosmetic fix to make the
@@ -34,7 +54,7 @@
 	for documentation.
 
 	* etc/gtkrc_user: added a (commented out) example style which makes
-	lots of things a smaller.
+	lots of things smaller.
 
 2002-03-18  Sven Neumann  <sven@gimp.org>
 

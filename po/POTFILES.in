@@ -160,6 +160,7 @@ app/tools/selection_options.c
 app/tools/tool_options.c
 app/tools/transform_options.c
 
+app/widgets/widgets-enums.c
 app/widgets/gimpbrusheditor.c
 app/widgets/gimpbrushfactoryview.c
 app/widgets/gimpbufferview.c

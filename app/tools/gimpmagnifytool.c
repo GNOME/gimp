@@ -34,6 +34,8 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-scale.h"
 
+#include "widgets/gimpenummenu.h"
+
 #include "gimpmagnifytool.h"
 #include "tool_options.h"
 
@@ -54,7 +56,7 @@ struct _MagnifyOptions
 
   GimpZoomType  type;
   GimpZoomType  type_d;
-  GtkWidget    *type_w[2];
+  GtkWidget    *type_w;
 
   gdouble       threshold;
   gdouble       threshold_d;
@@ -336,11 +338,11 @@ gimp_magnify_tool_modifier_key (GimpTool        *tool,
       switch (options->type)
         {
         case GIMP_ZOOM_IN:
-          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
                                        GINT_TO_POINTER (GIMP_ZOOM_OUT));
           break;
         case GIMP_ZOOM_OUT:
-          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
                                        GINT_TO_POINTER (GIMP_ZOOM_IN));
           break;
         default:
@@ -454,20 +456,14 @@ magnify_options_new (GimpToolInfo *tool_info)
                     &(gimprc.resize_windows_on_zoom));
 
   /*  tool toggle  */
-  frame = gimp_radio_group_new2 (TRUE, _("Tool Toggle (<Ctrl>)"),
-                                 G_CALLBACK (gimp_radio_button_update),
-                                 &options->type,
-                                 GINT_TO_POINTER (options->type),
-
-                                 _("Zoom in"),
-                                 GINT_TO_POINTER (GIMP_ZOOM_IN),
-                                 &options->type_w[0],
-
-                                 _("Zoom out"),
-                                 GINT_TO_POINTER (GIMP_ZOOM_OUT),
-                                 &options->type_w[1],
-
-                                 NULL);
+  frame = gimp_enum_radio_frame_new (GIMP_TYPE_ZOOM_TYPE,
+                                     gtk_label_new (_("Tool Toggle (<Ctrl>)")),
+                                     2,
+                                     G_CALLBACK (gimp_radio_button_update),
+                                     &options->type,
+                                     &options->type_w);
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
+                               GINT_TO_POINTER (options->type));
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -502,7 +498,7 @@ magnify_options_reset (GimpToolOptions *tool_options)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_resize_w),
 				options->allow_resize_d);
 
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
                                GINT_TO_POINTER (options->type_d));
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w),

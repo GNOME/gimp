@@ -36,6 +36,66 @@
  * these enums that are registered with the type system
  */
 
+#define GIMP_TYPE_BLEND_MODE (gimp_blend_mode_get_type ())
+
+GType gimp_blend_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_FG_BG_RGB_MODE,         /*< desc="FG to BG (RGB)"    >*/
+  GIMP_FG_BG_HSV_MODE,         /*< desc="FG to BG (HSV)"    >*/
+  GIMP_FG_TRANSPARENT_MODE,    /*< desc="FG to Transparent" >*/
+  GIMP_CUSTOM_MODE             /*< desc="Custom Gradient"   >*/
+} GimpBlendMode;
+
+
+#define GIMP_TYPE_BUCKET_FILL_MODE (gimp_bucket_fill_mode_get_type ())
+
+GType gimp_bucket_fill_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_FG_BUCKET_FILL,      /*< desc="FG Color Fill" >*/
+  GIMP_BG_BUCKET_FILL,      /*< desc="BG Color Fill" >*/
+  GIMP_PATTERN_BUCKET_FILL  /*< desc="Pattern Fill"  >*/
+} GimpBucketFillMode;
+
+
+#define GIMP_TYPE_CHANNEL_TYPE (gimp_channel_type_get_type ())
+
+GType gimp_channel_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_RED_CHANNEL,
+  GIMP_GREEN_CHANNEL,
+  GIMP_BLUE_CHANNEL,
+  GIMP_GRAY_CHANNEL,
+  GIMP_INDEXED_CHANNEL,
+  GIMP_ALPHA_CHANNEL
+} GimpChannelType;
+
+
+#define GIMP_TYPE_GRADIENT_TYPE (gimp_gradient_type_get_type ())
+
+GType gimp_gradient_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_LINEAR,                 /*< desc="Linear"                 >*/ 
+  GIMP_BILINEAR,               /*< desc="Bi-Linear"              >*/
+  GIMP_RADIAL,                 /*< desc="Radial"                 >*/
+  GIMP_SQUARE,                 /*< desc="Square"                 >*/
+  GIMP_CONICAL_SYMMETRIC,      /*< desc="Conical (symmetric)"    >*/
+  GIMP_CONICAL_ASYMMETRIC,     /*< desc="Conical (asymmetric)"   >*/
+  GIMP_SHAPEBURST_ANGULAR,     /*< desc="Shapeburst (angular)"   >*/
+  GIMP_SHAPEBURST_SPHERICAL,   /*< desc="Shapeburst (spherical)" >*/
+  GIMP_SHAPEBURST_DIMPLED,     /*< desc="Shapeburst (dimpled)"   >*/
+  GIMP_SPIRAL_CLOCKWISE,       /*< desc="Spiral (clockwise)"     >*/
+  GIMP_SPIRAL_ANTICLOCKWISE    /*< desc="Spiral (anticlockwise)" >*/
+} GimpGradientType;
+
+
 #define GIMP_TYPE_IMAGE_BASE_TYPE (gimp_image_base_type_get_type ())
 
 GType gimp_image_base_type_get_type (void) G_GNUC_CONST;
@@ -67,6 +127,18 @@ typedef enum  /*< pdb-skip >*/
 } GimpPreviewSize;
 
 
+#define GIMP_TYPE_REPEAT_MODE (gimp_repeat_mode_get_type ())
+
+GType gimp_repeat_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_REPEAT_NONE,       /*< desc="None"            >*/
+  GIMP_REPEAT_SAWTOOTH,   /*< desc="Sawtooth Wave"   >*/
+  GIMP_REPEAT_TRIANGULAR  /*< desc="Triangular Wave" >*/
+} GimpRepeatMode;
+
+
 #define GIMP_TYPE_SELECTION_CONTROL (gimp_selection_control_get_type ())
 
 GType gimp_selection_control_get_type (void) G_GNUC_CONST;
@@ -81,64 +153,16 @@ typedef enum  /*< pdb-skip >*/
 } GimpSelectionControl;
 
 
-#define GIMP_TYPE_CHANNEL_TYPE (gimp_channel_type_get_type ())
+#define GIMP_TYPE_TRANSFER_MODE (gimp_transfer_mode_get_type ())
 
-GType gimp_channel_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_RED_CHANNEL,
-  GIMP_GREEN_CHANNEL,
-  GIMP_BLUE_CHANNEL,
-  GIMP_GRAY_CHANNEL,
-  GIMP_INDEXED_CHANNEL,
-  GIMP_ALPHA_CHANNEL
-} GimpChannelType;
-
-
-#define GIMP_TYPE_BLEND_MODE (gimp_blend_mode_get_type ())
-
-GType gimp_blend_mode_get_type (void) G_GNUC_CONST;
+GType gimp_transfer_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_FG_BG_RGB_MODE,         /*< desc="FG to BG (RGB)"    >*/
-  GIMP_FG_BG_HSV_MODE,         /*< desc="FG to BG (HSV)"    >*/
-  GIMP_FG_TRANSPARENT_MODE,    /*< desc="FG to Transparent" >*/
-  GIMP_CUSTOM_MODE             /*< desc="Custom Gradient"   >*/
-} GimpBlendMode;
-
-
-#define GIMP_TYPE_GRADIENT_TYPE (gimp_gradient_type_get_type ())
-
-GType gimp_gradient_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_LINEAR,                 /*< desc="Linear"                 >*/ 
-  GIMP_BILINEAR,               /*< desc="Bi-Linear"              >*/
-  GIMP_RADIAL,                 /*< desc="Radial"                 >*/
-  GIMP_SQUARE,                 /*< desc="Square"                 >*/
-  GIMP_CONICAL_SYMMETRIC,      /*< desc="Conical (symmetric)"    >*/
-  GIMP_CONICAL_ASYMMETRIC,     /*< desc="Conical (asymmetric)"   >*/
-  GIMP_SHAPEBURST_ANGULAR,     /*< desc="Shapeburst (angular)"   >*/
-  GIMP_SHAPEBURST_SPHERICAL,   /*< desc="Shapeburst (spherical)" >*/
-  GIMP_SHAPEBURST_DIMPLED,     /*< desc="Shapeburst (dimpled)"   >*/
-  GIMP_SPIRAL_CLOCKWISE,       /*< desc="Spiral (clockwise)"     >*/
-  GIMP_SPIRAL_ANTICLOCKWISE    /*< desc="Spiral (anticlockwise)" >*/
-} GimpGradientType;
-
-
-#define GIMP_TYPE_REPEAT_MODE (gimp_repeat_mode_get_type ())
-
-GType gimp_repeat_mode_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_REPEAT_NONE,       /*< desc="None"            >*/
-  GIMP_REPEAT_SAWTOOTH,   /*< desc="Sawtooth Wave"   >*/
-  GIMP_REPEAT_TRIANGULAR  /*< desc="Triangular Wave" >*/
-} GimpRepeatMode;
+  GIMP_SHADOWS,     /*< desc="Shadows"    >*/
+  GIMP_MIDTONES,    /*< desc="Midtones"   >*/
+  GIMP_HIGHLIGHTS   /*< desc="Highlights" >*/
+} GimpTransferMode;
 
 
 #define GIMP_TYPE_TRANSFORM_DIRECTION (gimp_transform_direction_get_type ())
@@ -155,13 +179,6 @@ typedef enum  /*< pdb-skip >*/
 /*
  * non-registered enums; register them if needed
  */
-
-typedef enum  /*< skip >*/
-{
-  GIMP_FG_BUCKET_FILL,
-  GIMP_BG_BUCKET_FILL,
-  GIMP_PATTERN_BUCKET_FILL
-} GimpBucketFillMode;
 
 typedef enum  /*< skip >*/
 {
@@ -254,13 +271,6 @@ typedef enum  /*< skip >*/
   GIMP_OFFSET_BACKGROUND,
   GIMP_OFFSET_TRANSPARENT
 } GimpOffsetType;
-
-typedef enum  /*< skip >*/
-{
-  GIMP_SHADOWS,
-  GIMP_MIDTONES,
-  GIMP_HIGHLIGHTS
-} GimpTransferMode;
 
 
 #endif /* __CORE_TYPES_H__ */

@@ -28,6 +28,8 @@
 
 #include "paint/gimpdodgeburn.h"
 
+#include "widgets/gimpenummenu.h"
+
 #include "gimpdodgeburntool.h"
 #include "paint_options.h"
 
@@ -213,24 +215,14 @@ gimp_dodgeburn_tool_options_new (GimpToolInfo *tool_info)
   gtk_widget_show (frame);
 
   /*  mode (highlights, midtones, or shadows)  */
-  frame = gimp_radio_group_new2 (TRUE, _("Mode"),
-                                 G_CALLBACK (gimp_radio_button_update),
-                                 &options->mode,
-                                 GINT_TO_POINTER (options->mode),
-
-                                 _("Highlights"),
-                                 GINT_TO_POINTER (GIMP_HIGHLIGHTS), 
-                                 &options->mode_w[0],
-
-                                 _("Midtones"),
-                                 GINT_TO_POINTER (GIMP_MIDTONES),
-                                 &options->mode_w[1],
-
-                                 _("Shadows"),
-                                 GINT_TO_POINTER (GIMP_SHADOWS),
-                                 &options->mode_w[2],
-
-                                 NULL);
+  frame = gimp_enum_radio_frame_new (GIMP_TYPE_TRANSFER_MODE,
+                                     gtk_label_new (_("Mode")),
+                                     2,
+                                     G_CALLBACK (gimp_radio_button_update),
+                                     &options->mode,
+                                     &options->mode_w);
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->mode_w),
+                               GINT_TO_POINTER (options->mode));
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -270,6 +262,6 @@ gimp_dodgeburn_tool_options_reset (GimpToolOptions *tool_options)
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
                                GINT_TO_POINTER (options->type_d));
 
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->mode_w[0]),
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->mode_w),
                                GINT_TO_POINTER (options->mode_d));
 }
