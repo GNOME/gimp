@@ -63,7 +63,7 @@
 		    "Seth Burgess"
 		    "1997"
 		    ""
-		    SF-STRING     _"Name"    _"Rectangle"
+		    SF-STRING     _"Name"    "Rectangle"
 		    SF-ADJUSTMENT _"Width"   '(20 1 200 1 10 0 1)
 		    SF-ADJUSTMENT _"Height"  '(20 1 200 1 10 0 1)
 		    SF-ADJUSTMENT _"Spacing" '(25 1 100 1 10 1 0))
@@ -120,7 +120,7 @@
             "Seth Burgess"
             "1997"
             ""
-            SF-STRING     _"Name"       _"Rectangle"
+            SF-STRING     _"Name"       "Rectangle"
             SF-ADJUSTMENT _"Width"      '(20 1 200 1 10 0 1)
             SF-ADJUSTMENT _"Height"     '(20 1 200 1 10 0 1)
             SF-ADJUSTMENT _"Feathering" '(4 1 100 1 10 0 1)
@@ -167,7 +167,7 @@
 		    "Seth Burgess"
 		    "1997"
 		    ""
-		    SF-STRING     _"Name"    _"Ellipse"
+		    SF-STRING     _"Name"    "Ellipse"
 		    SF-ADJUSTMENT _"Width"   '(20 1 200 1 10 0 1)
 		    SF-ADJUSTMENT _"Height"  '(20 1 200 1 10 0 1)
 		    SF-ADJUSTMENT _"Spacing" '(25 1 100 1 10 1 0))
@@ -226,7 +226,7 @@
 		    "Seth Burgess"
 		    "1997"
 		    ""
-		    SF-STRING     _"Name"       _"Ellipse"
+		    SF-STRING     _"Name"       "Ellipse"
 		    SF-ADJUSTMENT _"Width"      '(20 1 200 1 10 0 1)
 		    SF-ADJUSTMENT _"Height"     '(20 1 200 1 10 0 1)
 		    SF-ADJUSTMENT _"Feathering" '(4 1 100 1 10 0 1)

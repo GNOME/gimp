@@ -192,7 +192,7 @@
 		    SF-ADJUSTMENT _"Chrome factor" '(.75 0 1 .1 .01 2 0)
 		    SF-FILENAME _"Environment map"
 		                (string-append ""
-					       gimp-data-dir
+					       gimp-data-directory
 					       "/scripts/images/beavis.jpg")
 		    SF-COLOR _"Highlight balance" '(211 95 0)
 		    SF-COLOR _"Chrome balance" '(0 0 0)

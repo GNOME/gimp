@@ -163,7 +163,7 @@
 		    SF-FONT       _"Font" "Engraver"
 		    SF-FILENAME   _"Background Image"
 		                  (string-append ""
-						 gimp-data-dir
+						 gimp-data-directory
 						 "/scripts/images/texture3.jpg")
 		    SF-TOGGLE     _"Carve raised text" FALSE
 		    SF-ADJUSTMENT _"Padding around text" '(10 0 1000 1 10 0 1))

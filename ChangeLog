@@ -1,5 +1,22 @@
 2004-09-23  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/script-fu-interface.c: put the text view into
+	a scrolled window. Removed "changed" callbacks for GtkEntry and
+	GtkTextView. Instead retrieve the final string when the dialog is
+	confirmed.
+
+	* plug-ins/script-fu/scripts/carved-logo.scm
+	* plug-ins/script-fu/scripts/chrome-it.scm
+	* plug-ins/script-fu/scripts/crystal-logo.scm
+	* plug-ins/script-fu/scripts/sota-chrome-logo.scm: use
+	gimp-data-directory instead of the deprecated constant
+	gimp-data-dir.
+
+	* plug-ins/script-fu/scripts/mkbrush.scm: unmarked strings for
+	translation that I marked yesterday. Won't work unfortunately.
+
+2004-09-23  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/blended-logo.scm: fixed context
 	push/pop.
 

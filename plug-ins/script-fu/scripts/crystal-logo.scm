@@ -198,9 +198,9 @@
 		    SF-FONT   _"Font" "Engraver"
 		    SF-FILENAME _"Background image"
 		                (string-append ""
-					       gimp-data-dir
+					       gimp-data-directory
 					       "/scripts/images/texture1.jpg")
 		    SF-FILENAME _"Environment map"
 		                (string-append ""
-					       gimp-data-dir
+					       gimp-data-directory
 					       "/scripts/images/beavis.jpg"))

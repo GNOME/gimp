@@ -76,10 +76,6 @@ static void   script_fu_ok                  (SFScript             *script);
 static void   script_fu_reset               (SFScript             *script);
 static void   script_fu_about               (SFScript             *script);
 
-static void   script_fu_string_callback     (GtkWidget            *widget,
-                                             gchar               **value);
-static void   script_fu_text_callback       (GtkWidget            *widget,
-                                             gchar               **value);
 static void   script_fu_file_entry_callback (GtkWidget            *widget,
                                              SFFilename           *file);
 static void   script_fu_combo_callback      (GtkWidget            *widget,
@@ -328,7 +324,8 @@ script_fu_interface (SFScript *script)
 	case SF_TOGGLE:
 	  g_free (label_text);
 	  label_text = NULL;
-	  widget = gtk_check_button_new_with_mnemonic (gettext (script->arg_labels[i]));
+	  widget =
+            gtk_check_button_new_with_mnemonic (gettext (script->arg_labels[i]));
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
 				       script->arg_values[i].sfa_toggle);
 
@@ -344,29 +341,32 @@ script_fu_interface (SFScript *script)
 
 	  gtk_entry_set_text (GTK_ENTRY (widget),
                               script->arg_values[i].sfa_value);
-
-          g_signal_connect (widget, "changed",
-                            G_CALLBACK (script_fu_string_callback),
-                            &script->arg_values[i].sfa_value);
 	  break;
 
         case SF_TEXT:
           {
-            GtkTextBuffer *text_buf;
+            GtkWidget     *view;
+            GtkTextBuffer *buffer;
 
-            leftalign = FALSE;
-            widget = gtk_text_view_new ();
-
-            text_buf = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget));
-            gtk_text_view_set_editable (GTK_TEXT_VIEW (widget), TRUE);
+            widget = gtk_scrolled_window_new (NULL, NULL);
+            gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (widget),
+                                                 GTK_SHADOW_IN);
+            gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (widget),
+                                            GTK_POLICY_AUTOMATIC,
+                                            GTK_POLICY_AUTOMATIC);
             gtk_widget_set_size_request (widget, TEXT_WIDTH, -1);
 
-            gtk_text_buffer_set_text (text_buf,
+            view = gtk_text_view_new ();
+            gtk_container_add (GTK_CONTAINER (widget), view);
+            gtk_widget_show (view);
+
+            buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
+            gtk_text_view_set_editable (GTK_TEXT_VIEW (view), TRUE);
+
+            gtk_text_buffer_set_text (buffer,
                                       script->arg_values[i].sfa_value, -1);
 
-            g_signal_connect (text_buf, "modified-changed",
-                              G_CALLBACK (script_fu_text_callback),
-                              &script->arg_values[i].sfa_value);
+            label_yalign = 0.0;
           }
           break;
 
@@ -594,34 +594,6 @@ script_fu_interface_quit (SFScript *script)
 }
 
 static void
-script_fu_string_callback (GtkWidget  *widget,
-                           gchar     **value)
-{
-  if (*value)
-    g_free (*value);
-
-  *value = g_strdup (gtk_entry_get_text (GTK_ENTRY (widget)));
-}
-
-static void
-script_fu_text_callback (GtkWidget  *widget,
-                         gchar     **value)
-{
-  GtkTextBuffer *text_buf;
-  GtkTextIter    start, end;
-  gchar         *text;
-
-  if (*value)
-    g_free (*value);
-
-  text_buf = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget));
-  gtk_text_buffer_get_start_iter (text_buf, &start);
-  gtk_text_buffer_get_end_iter (text_buf, &end);
-  text = (gchar *) gtk_text_buffer_get_text (text_buf, &start, &end, FALSE);
-  *value = g_strdup (text);
-}
-
-static void
 script_fu_file_entry_callback (GtkWidget  *widget,
                                SFFilename *file)
 {
@@ -754,6 +726,7 @@ script_fu_ok (SFScript *script)
   for (i = 0; i < script->num_args; i++)
     {
       SFArgValue *arg_value = &script->arg_values[i];
+      GtkWidget  *widget    = sf_interface->args_widgets[i];
 
       g_string_append_c (s, ' ');
 
@@ -785,6 +758,10 @@ script_fu_ok (SFScript *script)
           break;
 
         case SF_STRING:
+          g_free (arg_value->sfa_value);
+          arg_value->sfa_value =
+            g_strdup (gtk_entry_get_text (GTK_ENTRY (widget)));
+
           escaped = g_strescape (arg_value->sfa_value, NULL);
           g_string_append_printf (s, "\"%s\"", escaped);
           g_free (escaped);
@@ -792,21 +769,24 @@ script_fu_ok (SFScript *script)
 
         case SF_TEXT:
           {
-            GtkTextBuffer *text_buf = gtk_text_view_get_buffer (GTK_TEXT_VIEW (sf_interface->args_widgets[i]));
+            GtkWidget     *view;
+            GtkTextBuffer *buffer;
             GtkTextIter    start, end;
-            gchar         *text;
 
-            gtk_text_buffer_get_start_iter (text_buf, &start);
-            gtk_text_buffer_get_end_iter (text_buf, &end);
-            text = (gchar *) gtk_text_buffer_get_text (text_buf,
-                                                       &start, &end, FALSE);
+            view = gtk_bin_get_child (GTK_BIN (widget));
+            buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
+
+            gtk_text_buffer_get_start_iter (buffer, &start);
+            gtk_text_buffer_get_end_iter (buffer, &end);
 
             g_free (arg_value->sfa_value);
-            arg_value->sfa_value = g_strdup (text);
-            escaped = g_strescape (text, NULL);
+            arg_value->sfa_value = gtk_text_buffer_get_text (buffer,
+                                                             &start, &end,
+                                                             FALSE);
+
+            escaped = g_strescape (arg_value->sfa_value, NULL);
             g_string_append_printf (s, "\"%s\"", escaped);
             g_free (escaped);
-            g_free (text);
           }
           break;
 
@@ -907,11 +887,11 @@ script_fu_reset (SFScript *script)
           {
             GtkTextBuffer *buffer;
 
-            buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget));
-
             g_free (script->arg_values[i].sfa_value);
             script->arg_values[i].sfa_value =
               g_strdup (script->arg_defaults[i].sfa_value);
+
+            buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget));
             gtk_text_buffer_set_text (buffer,
                                       script->arg_values[i].sfa_value, -1);
           }
