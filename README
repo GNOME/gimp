@@ -1,5 +1,11 @@
-The GIMP: The GNU Image Manipulation Program: The Hadjaha Release
-=================================================================
+The GIMP: The GNU Image Manipulation Program
+============================================
+
+This is version 1.3, the developers version of The GIMP. Only use
+it if you are brave and curious and want to participate development
+towards the next stable release version 1.4. Please do not yet report
+bugs in this version. This is a developers version. We know it has 
+bugs and it might not even compile. You have been warned!
 
 The GIMP is designed to be a professional image manipulation program 
 suitable for such tasks as photo retouching, image composition and image
@@ -82,20 +88,22 @@ Many of the developers hang out there.  One of the Byxnet servers are:
 The look of GIMP's interface can be customized like any other GTK app
 by editing the ~/.gtkrc file or by using "themes" (ready-made 
 customizations). For downloadable themes and further details, see
-http://gtk.themes.org. Additionally GIMP reads ~/.gimp-1.2/gtkrc so you 
+http://gtk.themes.org. Additionally GIMP reads ~/.gimp-1.3/gtkrc so you 
 can have settings that only apply to The GIMP.
 
 Included is a set of keybindings similar to those in Adobe Photoshop (tm).
 You can find them in the ps-menurc file.  To use them, copy this file to
-~/.gimp-1.2/menurc. You can also manually change the keybindings to any of
-your choice by editing ~/.gimp-1.2/menurc.
+~/.gimp-1.3/menurc. You can also manually change the keybindings to any of
+your choice by editing ~/.gimp-1.3/menurc.
 
 5. Bugs
 =======
 
-We sincerely hope you enjoy the program.  Please report problems to
-bugs@gimp.org.  Before reporting a problem, you may want to see if someone
-else did already - check http://bugs.gnome.org/db/pa/lgimp.html for this.
+Since this is a developers version, we are at the moment not really
+interested in receiving bug-reports. If you find a bug, contact the person
+who is working on this particular part of the program (check the ChangeLog)
+or try to fix it yourself.
+
 
 Have fun,
 
@@ -103,4 +111,13 @@ Have fun,
   Peter Mattis
   Federico Mena
   Manish Singh
+  Sven Neumann
+  Michael Natterer	
+
+
+
+
+
+
+
 
