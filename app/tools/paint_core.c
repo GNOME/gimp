@@ -51,7 +51,7 @@ static void      paint_to_canvas_tiles      (PaintCore *, MaskBuf *, int);
 static void      paint_to_canvas_buf        (PaintCore *, MaskBuf *, int);
 static void      set_undo_tiles             (GimpDrawable *, int, int, int, int);
 static void      set_canvas_tiles           (int, int, int, int);
-
+static int paint_core_invalidate_cache(GimpBrush *brush, gpointer *blah);
 
 /***********************************************************************/
 
@@ -399,8 +399,8 @@ paint_core_init (paint_core, drawable, x, y)
      GimpDrawable *drawable;
      double x, y;
 {
-  GimpBrushP brush;
-
+  static GimpBrushP brush = 0;
+  
   paint_core->curx = x;
   paint_core->cury = y;
 
@@ -410,11 +410,22 @@ paint_core_init (paint_core, drawable, x, y)
   paint_core->startytilt = paint_core->lastytilt = paint_core->curytilt = 0;
 
   /*  Each buffer is the same size as the maximum bounds of the active brush... */
+  if (brush && brush != get_active_brush ())
+  {
+    gtk_signal_disconnect_by_func(GTK_OBJECT(brush),
+				  GTK_SIGNAL_FUNC(paint_core_invalidate_cache),
+				  NULL);
+    gtk_object_unref(GTK_OBJECT(brush));
+  }
   if (!(brush = get_active_brush ()))
     {
       g_message ("No brushes available for use with this tool.");
       return FALSE;
     }
+  gtk_object_ref(GTK_OBJECT(brush));
+  gtk_signal_connect(GTK_OBJECT (brush), "dirty",
+		     GTK_SIGNAL_FUNC(paint_core_invalidate_cache),
+		     NULL);
 
   paint_core->spacing =
     (double) MAXIMUM (brush->mask->width, brush->mask->height) *
@@ -714,15 +725,13 @@ paint_core_replace_canvas (paint_core, drawable, brush_opacity, image_opacity,
 		      brush_opacity, image_opacity, mode);
 }
 
-/* This is a hack to make sure we don't cache data for a brush that 
- * has changed.  Do it the right way when signals get put in.
- */
-static MaskBuf *last_brush = NULL;
+static MaskBuf *last_brush_mask = NULL;
 static int cache_invalid = 0;
 
-int paint_core_invalidate_cache(MaskBuf *buf)
+static int paint_core_invalidate_cache(GimpBrush *brush, gpointer *blah)
 {
-  if (last_brush == buf)
+/* Make sure we don't cache data for a brush that has changed */
+  if (last_brush_mask == brush->mask)
   {
     cache_invalid = 1;
     return 1;
@@ -739,7 +748,6 @@ paint_core_subsample_mask (mask, x, y)
      MaskBuf * mask;
      double x, y;
 {
-/*  static MaskBuf *last_brush = NULL; */
   MaskBuf * dest;
   double left;
   unsigned char * m, * d;
@@ -760,9 +768,10 @@ paint_core_subsample_mask (mask, x, y)
 
   kernel = subsample[index2][index1];
 
-  if ((mask == last_brush) && kernel_brushes[index2][index1] && !cache_invalid)
+  if ((mask == last_brush_mask) && kernel_brushes[index2][index1] &&
+      !cache_invalid)
     return kernel_brushes[index2][index1];
-  else if (mask != last_brush || cache_invalid)
+  else if (mask != last_brush_mask || cache_invalid)
     for (i = 0; i < 5; i++)
       for (j = 0; j < 5; j++)
 	{
@@ -771,7 +780,7 @@ paint_core_subsample_mask (mask, x, y)
 	  kernel_brushes[i][j] = NULL;
 	}
 
-  last_brush = mask;
+  last_brush_mask = mask;
   cache_invalid = 0;
   kernel_brushes[index2][index1] = mask_buf_new (mask->width + 2, mask->height + 2);
   dest = kernel_brushes[index2][index1];

@@ -29,7 +29,7 @@
 static GimpObjectClass* parent_class;
 
 static void
-gimp_brush_generated_destroy(GimpBrushGenerated *object)
+gimp_brush_generated_destroy(GtkObject *object)
 {
   GTK_OBJECT_CLASS(parent_class)->destroy (object);
 }
@@ -195,17 +195,11 @@ gimp_brush_generated_generate(GimpBrushGenerated *brush)
 	a = 0;
       centerp[   y*gbrush->mask->width + x] = a;
       centerp[-1*y*gbrush->mask->width - x] = a;
-/*      centerp[-1*y*brush->mask->width + x] = a;
-      centerp[-1*y*brush->mask->width - x] = a;
-      centerp[   x*brush->mask->width + y] = a;
-      centerp[   x*brush->mask->width - y] = a;
-      centerp[-1*x*brush->mask->width + y] = a;
-      centerp[-1*x*brush->mask->width - y] = a;*/
     }
   }
   g_free (lookup);
-/*  gtk_signal_emit_by_name(brush, "dirty"); */
-  brush_changed_notify(GIMP_BRUSH(brush));
+  gtk_signal_emit_by_name(GTK_OBJECT(brush), "dirty");
+/*  brush_changed_notify(GIMP_BRUSH(brush)); */
 }
 
 float

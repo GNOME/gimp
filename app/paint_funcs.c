@@ -3963,12 +3963,17 @@ border_region(PixelRegion *src, gint16 radius)
   out = (guchar *)g_malloc ((src->w)*sizeof(guchar));
   density = (guchar **)g_malloc (diameter*sizeof(void *));
   density += radius;
+
+  for (x = -(radius); x < (radius+1); x++) /* allocate density[][] */
+  {
+    density[x] = (guchar *)g_malloc (diameter);
+    density[x] += radius;
+  }
   for (x = -(radius); x < (radius+1); x++) /* compute density[][] */
   {
     register double tmpx, tmpy;
-    density[x] = (guchar *)g_malloc (diameter);
-    density[x] += radius;
-    for (y = -radius; y < (radius+1); y++)
+    guchar a;
+    for (y = 0; y < (radius+1); y++)
     {
       if (x > 0)
 	tmpx = x - 0.5;
@@ -3983,9 +3988,17 @@ border_region(PixelRegion *src, gint16 radius)
       else
 	tmpy = 0.0;
       if (tmpy*tmpy + tmpx*tmpx < (radius)*(radius))
-	density[x][y] = 255*(1.0 - sqrt ((tmpx*tmpx+tmpy*tmpy))/radius);
+	a = 255*(1.0 - sqrt ((tmpx*tmpx+tmpy*tmpy))/radius);
       else
-	density[x][y] = 0;
+	a = 0;
+      density[ x][ y] = a;
+      density[-x][ y] = a;
+      density[ x][-y] = a;
+      density[-x][-y] = a;
+      density[ y][ x] = a;
+      density[-y][ x] = a;
+      density[ y][-x] = a;
+      density[-y][-x] = a;
     }
   }
   pixel_region_get_row (src, src->x, src->y + 0, src->w, buf[0], 1);

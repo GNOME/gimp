@@ -65,6 +65,18 @@ static gint edit_brush_callback		(GtkWidget *w, GdkEvent *e,
 					 gpointer data);
 static gint new_brush_callback		(GtkWidget *w, GdkEvent *e,
 					 gpointer data);
+static gint brush_select_brush_dirty_callback(GimpBrushP brush,
+					      BrushSelectP bsp);
+static void connect_signals_to_brush    (GimpBrushP brush, 
+					 BrushSelectP bsp);
+static void disconnect_signals_from_brush(GimpBrushP brush,
+					  BrushSelectP bsp);
+static void brush_added_callback     (GimpBrushList *list,
+				      GimpBrushP brush,
+				      BrushSelectP bsp);
+static void brush_removed_callback   (GimpBrushList *list,
+				      GimpBrushP brush,
+				      BrushSelectP bsp);
 static void brush_select_close_callback  (GtkWidget *, gpointer);
 static void brush_select_refresh_callback(GtkWidget *, gpointer);
 static void paint_mode_menu_callback     (GtkWidget *, gpointer);
@@ -312,6 +324,14 @@ brush_select_new ()
   /*  render the brushes into the newly created image structure  */
   display_brushes (bsp);
 
+  gimp_set_foreach(GIMP_SET(brush_list), (GFunc)connect_signals_to_brush, bsp);
+  gtk_signal_connect (GTK_OBJECT (brush_list), "add",
+		      (GtkSignalFunc) brush_added_callback,
+		      bsp);
+  gtk_signal_connect (GTK_OBJECT (brush_list), "remove",
+		      (GtkSignalFunc) brush_removed_callback,
+		      bsp);
+  
   /*  update the active selection  */
   active = get_active_brush ();
   if (active)
@@ -352,7 +372,7 @@ brush_select_free (BrushSelectP bsp)
     }
 }
 
-void
+static void
 brush_select_brush_changed(BrushSelectP bsp, GimpBrushP brush)
 {
 /* TODO: be smarter here and only update the part of the preview
@@ -364,10 +384,41 @@ brush_select_brush_changed(BrushSelectP bsp, GimpBrushP brush)
   }
 }
 
-void
+static gint
 brush_select_brush_dirty_callback(GimpBrushP brush, BrushSelectP bsp)
 {
   brush_select_brush_changed(bsp, brush);
+  return TRUE;
+}
+
+static void
+connect_signals_to_brush(GimpBrushP brush, BrushSelectP bsp)
+{
+  gtk_signal_connect(GTK_OBJECT (brush), "dirty",
+		     GTK_SIGNAL_FUNC(brush_select_brush_dirty_callback),
+		     bsp);
+}
+
+static void
+disconnect_signals_from_brush(GimpBrushP brush, BrushSelectP bsp)
+{
+  gtk_signal_disconnect_by_data(GTK_OBJECT(brush), bsp);
+}
+
+static void
+brush_added_callback(GimpBrushList *list, GimpBrushP brush, 
+		     BrushSelectP bsp)
+{
+  connect_signals_to_brush(brush, bsp);
+  brush_select_brush_changed(bsp, brush);
+}
+
+static void
+brush_removed_callback(GimpBrushList *list, GimpBrushP brush,
+		       BrushSelectP bsp)
+{
+  disconnect_signals_from_brush(brush, bsp);
+/*  brush_select_brush_changed(bsp, brush); */
 }
 
 
@@ -833,7 +884,8 @@ edit_brush_callback (GtkWidget *w, GdkEvent *e, gpointer data)
 static gint
 new_brush_callback (GtkWidget *w, GdkEvent *e, gpointer data)
 {
-  brush_changed_notify(GIMP_BRUSH(gimp_brush_generated_new(10, .5, 0.0, 1.0)));
+  gimp_brush_list_add(brush_list,
+		      GIMP_BRUSH(gimp_brush_generated_new(10, .5, 0.0, 1.0)));
   return TRUE;
 }
 

@@ -45,8 +45,6 @@ struct _BrushSelect {
 BrushSelectP  brush_select_new     (void);
 void          brush_select_select  (BrushSelectP, int);
 void          brush_select_free    (BrushSelectP);
-void          brush_select_brush_changed(BrushSelectP bsp,
-					 GimpBrushP brush);
 
 /*  An interface to other dialogs which need to create a paint mode menu  */
 GtkWidget *   create_paint_mode_menu (MenuItemCallback);

@@ -66,9 +66,8 @@ void       select_brush             (GimpBrushP);
 GimpBrushP get_brush_by_index       (int);
 GimpBrushP get_active_brush         (void);
 
-/* TODO: {re}move these functions */
+/* TODO: {re}move this function */
 void       create_brush_dialog      (void);
-void       brush_changed_notify     (GimpBrushP);
 
 
 

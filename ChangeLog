@@ -1,4 +1,14 @@
-Thu Jul  9 21:23:46 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
+Fri Jul 10 01:44:29 PDT 1998 Jay Cox <jaycox@earthlink.net>
+
+	* paint_core.c paint_core.h gimpbrushlist.h gimpbrushlist.c
+	  gimpbrushgenerated.c brush_select.h brush_select.c 
+        Signalified brushes.  got rid of some warnings. 
+        Fixed a bug that showed up when run --no-data
+
+        * paint_funcs.c
+        Minor speed tweak to border_region
+
+Thu Jul 9 21:23:46 1998 Scott Goehring <scott@poverty.bloomington.in.us>
 
 	* paint_core.c tile.c undo.c: tile tweaks.
 

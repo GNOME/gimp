@@ -166,10 +166,11 @@ brushes_init (int no_data)
 
   brush_list = gimp_brush_list_new();
 
-  if (!brush_path)
+  if (brush_path == NULL || (no_data))
     create_default_brush ();
-  if(!no_data)
-    datafiles_read_directories (brush_path, gimp_brush_new, 0);
+  else
+    datafiles_read_directories (brush_path,
+				(datafile_loader_t)gimp_brush_new, 0);
 
   gimp_brush_list_recalc_indexes(brush_list);
   gimp_brush_list_uniquefy_names(brush_list);
@@ -194,7 +195,7 @@ void
 brushes_free ()
 {
   if (brush_list) {
-    gimp_set_foreach (brush_list, brushes_free_one, NULL);
+/*    gimp_set_foreach (brush_list, brushes_free_one, NULL); */
     gimp_object_destroy(GIMP_OBJECT(brush_list));
   }
 
@@ -278,7 +279,8 @@ static void
 gimp_brush_list_recalc_indexes(GimpBrushList *brush_list)
 {
   int index = 0;
-  gimp_set_foreach (GIMP_SET(brush_list), gimp_brush_do_indexes, &index);
+  gimp_set_foreach (GIMP_SET(brush_list), (GFunc)gimp_brush_do_indexes,
+		    &index);
 }
 
 void
@@ -330,16 +332,6 @@ create_brush_dialog ()
   
 }
 
-void
-brush_changed_notify (GimpBrushP brush)
-{
-  if (brush)
-  {
-    paint_core_invalidate_cache(brush->mask);
-    if (brush_select_dialog)
-      brush_select_brush_changed(brush_select_dialog, brush);
-  }
-}
 
 
 /***********************/
@@ -785,8 +777,10 @@ gimp_brush_list_get_brush(GimpBrushListP blist, char *name)
 {
   GimpBrushP brushp;
   GSList *list;
+  if (blist == NULL)
+    return NULL;
+
   list = GIMP_SET(brush_list)->list;
-  success = FALSE;
 
   while (list)
   {
