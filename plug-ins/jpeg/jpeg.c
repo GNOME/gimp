@@ -413,9 +413,18 @@ run (const gchar      *name,
           switch (export)
             {
             case GIMP_EXPORT_EXPORT:
-              display_ID = gimp_display_new (image_ID);
-              gimp_image_set_filename (image_ID, _("Export Preview"));
-              gimp_displays_flush ();
+              {
+                gchar *tmp = g_filename_from_utf8 (_("Export Preview"), -1,
+                                                   NULL, NULL, NULL);
+                if (tmp)
+                  {
+                    gimp_image_set_filename (image_ID, tmp);
+                    g_free (tmp);
+                  }
+
+                display_ID = gimp_display_new (image_ID);
+                gimp_displays_flush ();
+              }
               break;
             case GIMP_EXPORT_IGNORE:
               break;
