@@ -1,3 +1,9 @@
+2004-05-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimperrorconsole.c
+	(gimp_error_console_save_ext_clicked): use
+	gtk_widget_get_screen(), not window_get_screen() on a button.
+
 2004-05-20  Maurits Rijk  <m.rijk@chello.nl>
 
 	* plug-ins/imagemap/imap_*.[ch]: (partly) HIG-ified, replaced 

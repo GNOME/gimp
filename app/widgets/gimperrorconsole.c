@@ -364,8 +364,7 @@ gimp_error_console_save_ext_clicked (GtkWidget        *button,
 
   chooser = GTK_FILE_CHOOSER (console->file_dialog);
 
-  gtk_window_set_screen (GTK_WINDOW (chooser),
-                         gtk_window_get_screen (GTK_WINDOW (console)));
+  gtk_window_set_screen (GTK_WINDOW (chooser), gtk_widget_get_screen (button));
 
   gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);
   gtk_window_set_role (GTK_WINDOW (chooser), "gimp-save-errors");
