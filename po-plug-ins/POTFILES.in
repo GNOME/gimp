@@ -32,6 +32,7 @@ plug-ins/print/print-escp2.c
 plug-ins/print/print-pcl.c
 plug-ins/print/print-ps.c
 plug-ins/print/print.c
+plug-ins/sel2path/sel2path.c
 plug-ins/common/ps.c
 plug-ins/common/xbm.c
 plug-ins/common/xpm.c

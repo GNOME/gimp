@@ -48,6 +48,7 @@ app/floating_sel.c
 app/fuzzy_select.c
 app/free_select.c
 app/gdisplay.c
+app/gdisplay_color_ui.c
 app/gdisplay_ops.c
 app/gimage_mask.c
 app/gimpbrush.c
@@ -64,6 +65,7 @@ app/gradient_select.c
 app/histogram_tool.c
 app/hue_saturation.c
 app/image_map.c
+app/indicator_area.c
 app/info_window.c
 app/ink.c
 app/install.c
