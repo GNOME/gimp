@@ -168,7 +168,7 @@ static void run( char    *name,
 
   if( status == STATUS_SUCCESS ){
 
-    if( gimp_drawable_color( drawable->id ) || 
+    if( gimp_drawable_is_rgb( drawable->id ) || 
 	gimp_drawable_is_gray( drawable->id ) ){
 
       gimp_tile_cache_ntiles( 2 * ( drawable->width / gimp_tile_width() + 1 ) );

@@ -756,7 +756,7 @@ plugin_run (gchar   *name,
    */
 
   drawable = gimp_drawable_get (param[2].data.d_drawable);
-  dinfo.is_color  = gimp_drawable_color (drawable->id);
+  dinfo.is_color  = gimp_drawable_is_rgb (drawable->id);
   dinfo.has_alpha = gimp_drawable_has_alpha (drawable->id);
   gimp_drawable_mask_bounds (drawable->id, &dinfo.x1, &dinfo.y1,
 			     &dinfo.x2, &dinfo.y2);
@@ -831,7 +831,7 @@ plugin_run (gchar   *name,
   if (status == STATUS_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
-      if (gimp_drawable_color (drawable->id) || gimp_drawable_is_gray (drawable->id))
+      if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
 	{
 	  gimp_progress_init ("Gradient Flare...");
 	  plugin_do ();

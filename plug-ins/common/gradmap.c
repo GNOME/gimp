@@ -142,7 +142,7 @@ run (gchar   *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   /*  Make sure that the drawable is gray or RGB color	*/
-  if (gimp_drawable_color (drawable->id) || gimp_drawable_is_gray (drawable->id))
+  if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
 	{
 	  gimp_progress_init ("Gradient Map...");
 	  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
@@ -181,7 +181,7 @@ gradmap (GDrawable *drawable)
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
 
   bpp = alpha = gimp_drawable_bpp( drawable->id );
-  color = gimp_drawable_color( drawable->id );
+  color = gimp_drawable_is_rgb( drawable->id );
   has_alpha = gimp_drawable_has_alpha( drawable->id );
   if( has_alpha )
     alpha--;
@@ -253,7 +253,7 @@ get_samples (GDrawable *drawable)
   f_samples = gimp_gradients_sample_uniform (NSAMPLES);
 
   bpp	    = gimp_drawable_bpp (drawable->id);
-  color	    = gimp_drawable_color (drawable->id);
+  color	    = gimp_drawable_is_rgb (drawable->id);
   has_alpha = gimp_drawable_has_alpha (drawable->id);
   alpha	    = (has_alpha ? bpp - 1 : bpp);
 

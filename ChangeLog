@@ -1,3 +1,8 @@
+Sun Oct 24 16:49:13 CEST 1999  Marc Lehmann <pcg@goof.com>
+
+        * tools/pdbgen/pdb/drawable.pdb, all calls: fixed some improperly
+        renamed pdb functions, most notably gimp_drawable_color.
+
 Sun Oct 24 22:10:16 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/channels_dialog.c
@@ -197,6 +202,7 @@ Thu Oct 19 05:30:11 BST 1999 Nick Lamb <njl195@zepler.org>
 
 	* app/image_new.c: Still using RGB_IMAGE instead of GIMAGE (!)
 	
+>>>>>>> 1.1725
 Mon Oct 18 21:24:47 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* app/bezier_select.c
@@ -215,8 +221,13 @@ Mon Oct 18 21:24:47 BST 1999 Andy Thomas <alt@gimp.org>
 	not on the curve the "new point" option will become selected and the
 	new point will be added.
 
+<<<<<<< ChangeLog
+	2) The "new point" option is defaulted to on when a new image is created
+        or a new image is selected from the image menu.
+=======
 	2) The "new point" option is defaulted to on when a new image is
 	created	or a new image is selected from the image menu.
+>>>>>>> 1.1725
 
 	3) Move and flip tool now effect the path if it is locked.
 
@@ -5913,7 +5924,7 @@ Sat May 29 23:43:56 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* libgimp/stdplugins-intl.h: #include <locale.h>
 
-1999-05-30  Jens Lauterbacher <jens@tellux.de>
+1999-05-30  Jens Lautenbacher <jens@tellux.de>
 	    Simon Budig <Simon.Budig@unix-ag.org>
 	    Michael Natterer <mitschel@cs.tu-berlin.de>
 	    Adam D. Moss <adam@gimp.org>

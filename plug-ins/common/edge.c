@@ -226,7 +226,7 @@ run (gchar  *name,
     }
 
   /* make sure the drawable exist and is not indexed */
-  if (gimp_drawable_color (drawable->id) || gimp_drawable_is_gray (drawable->id))
+  if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
     {
       gimp_progress_init ("Edge detection...");
 
@@ -267,7 +267,7 @@ init_tile_buf( TileBuf *buf, GDrawable *drawable )
   buf->tile = NULL;
   buf->col = 0;
   buf->row = 0;
-  if ( gimp_drawable_color( drawable->id ) )
+  if ( gimp_drawable_is_rgb( drawable->id ) )
     buf->bpp = 3;
   else
     buf->bpp = 1;

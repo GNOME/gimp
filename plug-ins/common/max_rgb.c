@@ -167,7 +167,7 @@ run (char	*name,
       hold_max = VALS.max_p;
       hold_min = VALS.max_p ? 0 : 1;
       /* Since a channel might be selected, we must check wheter RGB or not. */
-      if (!gimp_drawable_color(drawable_id))
+      if (!gimp_drawable_is_rgb(drawable_id))
 	{
 	  ERROR_DIALOG (1, "RGB drawable is not selected.");
 	  return;

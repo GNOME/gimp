@@ -285,13 +285,13 @@ gimp_drawable_is_channel (gint32 drawable_ID)
 }
 
 gint
-gimp_drawable_color (gint32 drawable_ID)
+gimp_drawable_is_rgb (gint32 drawable_ID)
 {
   GParam *return_vals;
   int nreturn_vals;
   int result;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_color",
+  return_vals = gimp_run_procedure ("gimp_drawable_is_rgb",
 				    &nreturn_vals,
 				    PARAM_DRAWABLE, drawable_ID,
 				    PARAM_END);

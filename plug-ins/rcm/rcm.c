@@ -260,7 +260,7 @@ void run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **ret
   {
     /* call dialog and rotate the colormap */
 
-    if (gimp_drawable_color(Current.drawable->id) && rcm_dialog())
+    if (gimp_drawable_is_rgb(Current.drawable->id) && rcm_dialog())
     {
       gimp_progress_init(_("Rotating the colormap..."));
 

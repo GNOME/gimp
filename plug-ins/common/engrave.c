@@ -322,7 +322,7 @@ engrave_large(GDrawable * drawable, gint height, gint limit)
 
     gimp_drawable_mask_bounds(drawable->id, &x1, &y1, &x2, &y2);
 
-    if (gimp_drawable_color(drawable->id))
+    if (gimp_drawable_is_rgb(drawable->id))
 	bpp = 3;
     else
 	bpp = 1;
@@ -440,7 +440,7 @@ engrave_small(GDrawable * drawable, gint height, gint limit, gint tile_width)
     max_progress = (x2 - x1) * (y2 - y1);
 
     bpp = drawable->bpp;
-    if (gimp_drawable_color(drawable->id))
+    if (gimp_drawable_is_rgb(drawable->id))
 	color_n = 3;
     else
 	color_n = 1;

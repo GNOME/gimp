@@ -201,7 +201,7 @@ run (gchar   *name,
       drawable = gimp_drawable_get (param[2].data.d_drawable);
 
       /*  Make sure that the drawable is gray or RGB color  */
-      if (gimp_drawable_color (drawable->id) ||
+      if (gimp_drawable_is_rgb (drawable->id) ||
           gimp_drawable_is_gray (drawable->id))
         {
           gimp_progress_init ("IIR Gaussian Blur");

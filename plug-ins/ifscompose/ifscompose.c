@@ -437,7 +437,7 @@ run (char    *name,
 
   /*  Render the fractal  */
   if ((status == STATUS_SUCCESS) &&
-      (gimp_drawable_color (active_drawable->id) || gimp_drawable_is_gray (active_drawable->id)))
+      (gimp_drawable_is_rgb (active_drawable->id) || gimp_drawable_is_gray (active_drawable->id)))
     {
       /*  set the tile cache size so that the operation works well  */
       gimp_tile_cache_ntiles (2 * (MAX (active_drawable->width, active_drawable->height) /

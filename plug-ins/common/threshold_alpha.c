@@ -236,7 +236,7 @@ run (char	*name,
 	  ERROR_DIALOG (1, "The layer preserves transparency.");
 	  return;
 	}
-      if (!gimp_drawable_color (drawable_id) &&
+      if (!gimp_drawable_is_rgb (drawable_id) &&
 	  !gimp_drawable_is_gray (drawable_id))
 	{
 	  ERROR_DIALOG (1, "RGBA/GRAYA drawable is not selected.");
@@ -284,7 +284,7 @@ MAIN_FUNCTION (gint32 drawable_id)
   drawable = gimp_drawable_get (drawable_id);
   if (! gimp_drawable_has_alpha (drawable_id)) return STATUS_EXECUTION_ERROR;
 
-  if (gimp_drawable_color(drawable_id))
+  if (gimp_drawable_is_rgb(drawable_id))
     gap = 3;
   else
     gap = 1;

@@ -1340,7 +1340,7 @@ bender_new_dialog (GDrawable *drawable)
   cd->rotation = 0.0;       /* vertical bend */
 
   cd->drawable = drawable;
-  cd->color = gimp_drawable_color (cd->drawable->id);
+  cd->color = gimp_drawable_is_rgb (cd->drawable->id);
 
   cd->run = FALSE;
   cd->bval_from = NULL;

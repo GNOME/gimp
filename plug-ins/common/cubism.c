@@ -243,7 +243,7 @@ run (char    *name,
 
   /*  Render the cubism effect  */
   if ((status == STATUS_SUCCESS) &&
-      (gimp_drawable_color (active_drawable->id) || gimp_drawable_is_gray (active_drawable->id)))
+      (gimp_drawable_is_rgb (active_drawable->id) || gimp_drawable_is_gray (active_drawable->id)))
     {
       /*  set cache size  */
       gimp_tile_cache_ntiles (SQR (4 * cvals.tile_size * cvals.tile_saturation) / SQR (gimp_tile_width ()));

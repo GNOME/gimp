@@ -443,7 +443,7 @@ run(char    *name,
 	/* Bumpmap the image */
 
 	if (status == STATUS_SUCCESS) {
-		if ((gimp_drawable_color(drawable->id) ||
+		if ((gimp_drawable_is_rgb(drawable->id) ||
 		     gimp_drawable_is_gray(drawable->id))) {
 			/* Set the tile cache size */
 			
@@ -1546,7 +1546,7 @@ dialog_constrain(gint32 image_id, gint32 drawable_id, gpointer data)
 	if (drawable_id == -1)
 		return TRUE;
 
-	return (gimp_drawable_color(drawable_id) || gimp_drawable_is_gray(drawable_id));
+	return (gimp_drawable_is_rgb(drawable_id) || gimp_drawable_is_gray(drawable_id));
 } /* dialog_constrain */
 
 

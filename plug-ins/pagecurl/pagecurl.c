@@ -333,7 +333,7 @@ static void run (gchar * name,
    drawable = gimp_drawable_get (param[2].data.d_drawable);
    image_id = param[1].data.d_image;
 
-   if ((gimp_drawable_color (drawable->id)
+   if ((gimp_drawable_is_rgb (drawable->id)
 	|| gimp_drawable_is_gray (drawable->id))
        && gimp_drawable_has_alpha (drawable->id)) {
 
@@ -798,7 +798,7 @@ static void do_curl_effect (void) {
    gpointer pr;
    guchar *grad_samples = NULL;
 
-   color_image = gimp_drawable_color (drawable->id);
+   color_image = gimp_drawable_is_rgb (drawable->id);
    curl_layer =
       gimp_drawable_get (gimp_layer_new (image_id,
 					 "Curl layer",
@@ -1023,7 +1023,7 @@ static guchar *get_samples (GDrawable *drawable) {
   f_samples = gimp_gradients_sample_uniform (NGRADSAMPLES);
 
   bpp       = gimp_drawable_bpp (drawable->id);
-  color     = gimp_drawable_color (drawable->id);
+  color     = gimp_drawable_is_rgb (drawable->id);
   has_alpha = gimp_drawable_has_alpha (drawable->id);
   alpha     = (has_alpha ? bpp - 1 : bpp);
 

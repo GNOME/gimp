@@ -36,7 +36,7 @@ EXPORTS
 	gimp_drawable_parasite_attach
 	gimp_drawable_bpp
 	gimp_drawable_is_channel
-	gimp_drawable_color
+	gimp_drawable_is_rgb
 	gimp_drawable_delete
 	gimp_drawable_detach
 	gimp_drawable_parasite_detach

@@ -1198,7 +1198,7 @@ plugin_run ( gchar *          name,
   p.selection.width  = p.selection.x1 - p.selection.x0;
   p.selection.height = p.selection.y1 - p.selection.y0;
 
-  if( gimp_drawable_color( p.drawable->id ) ){
+  if( gimp_drawable_is_rgb( p.drawable->id ) ){
     switch( p.run_mode ){
     case RUN_INTERACTIVE: {
       params_load_from_gimp();

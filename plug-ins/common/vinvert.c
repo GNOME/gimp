@@ -254,7 +254,7 @@ run (char    *name,
   if (status == STATUS_SUCCESS)
     {
       /*  Make sure that the drawable is indexed or RGB color  */
-      if (gimp_drawable_color (drawable->id))
+      if (gimp_drawable_is_rgb (drawable->id))
 	{
           if (run_mode != RUN_NONINTERACTIVE)
 	    gimp_progress_init ("Value Invert...");

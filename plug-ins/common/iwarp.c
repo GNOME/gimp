@@ -262,7 +262,7 @@ run (char    *name,
   destdrawable = drawable = gimp_drawable_get (param[2].data.d_drawable);
   imageID = param[1].data.d_int32;
   /*  Make sure that the drawable is gray or RGB color  */
-  if (gimp_drawable_color (drawable->id) || gimp_drawable_is_gray (drawable->id)) { 
+  if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id)) { 
       switch ( run_mode) {
         case RUN_INTERACTIVE :
           gimp_get_data("plug_in_iwarp",&iwarp_vals);

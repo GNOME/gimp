@@ -35,9 +35,9 @@ static ProcRecord drawable_image_proc;
 static ProcRecord drawable_type_proc;
 static ProcRecord drawable_has_alpha_proc;
 static ProcRecord drawable_type_with_alpha_proc;
-static ProcRecord drawable_color_proc;
-static ProcRecord drawable_gray_proc;
-static ProcRecord drawable_indexed_proc;
+static ProcRecord drawable_is_rgb_proc;
+static ProcRecord drawable_is_gray_proc;
+static ProcRecord drawable_is_indexed_proc;
 static ProcRecord drawable_bytes_proc;
 static ProcRecord drawable_width_proc;
 static ProcRecord drawable_height_proc;
@@ -61,9 +61,9 @@ register_drawable_procs (void)
   procedural_db_register (&drawable_type_proc);
   procedural_db_register (&drawable_has_alpha_proc);
   procedural_db_register (&drawable_type_with_alpha_proc);
-  procedural_db_register (&drawable_color_proc);
-  procedural_db_register (&drawable_gray_proc);
-  procedural_db_register (&drawable_indexed_proc);
+  procedural_db_register (&drawable_is_rgb_proc);
+  procedural_db_register (&drawable_is_gray_proc);
+  procedural_db_register (&drawable_is_indexed_proc);
   procedural_db_register (&drawable_bytes_proc);
   procedural_db_register (&drawable_width_proc);
   procedural_db_register (&drawable_height_proc);
@@ -528,20 +528,20 @@ static ProcRecord drawable_type_with_alpha_proc =
 };
 
 static Argument *
-drawable_color_invoker (Argument *args)
+drawable_is_rgb_invoker (Argument *args)
 {
   Argument *return_args;
   GimpDrawable *drawable;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
 
-  return_args = procedural_db_return_args (&drawable_color_proc, TRUE);
+  return_args = procedural_db_return_args (&drawable_is_rgb_proc, TRUE);
   return_args[1].value.pdb_int = drawable_color (drawable);
 
   return return_args;
 }
 
-static ProcArg drawable_color_inargs[] =
+static ProcArg drawable_is_rgb_inargs[] =
 {
   {
     PDB_DRAWABLE,
@@ -550,7 +550,7 @@ static ProcArg drawable_color_inargs[] =
   }
 };
 
-static ProcArg drawable_color_outargs[] =
+static ProcArg drawable_is_rgb_outargs[] =
 {
   {
     PDB_INT32,
@@ -559,9 +559,9 @@ static ProcArg drawable_color_outargs[] =
   }
 };
 
-static ProcRecord drawable_color_proc =
+static ProcRecord drawable_is_rgb_proc =
 {
-  "gimp_drawable_color",
+  "gimp_drawable_is_rgb",
   "Returns whether the drawable is an RGB type.",
   "This procedure returns non-zero if the specified drawable is of type { RGB, RGBA }.",
   "Spencer Kimball & Peter Mattis",
@@ -569,27 +569,27 @@ static ProcRecord drawable_color_proc =
   "1995-1996",
   PDB_INTERNAL,
   1,
-  drawable_color_inargs,
+  drawable_is_rgb_inargs,
   1,
-  drawable_color_outargs,
-  { { drawable_color_invoker } }
+  drawable_is_rgb_outargs,
+  { { drawable_is_rgb_invoker } }
 };
 
 static Argument *
-drawable_gray_invoker (Argument *args)
+drawable_is_gray_invoker (Argument *args)
 {
   Argument *return_args;
   GimpDrawable *drawable;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
 
-  return_args = procedural_db_return_args (&drawable_gray_proc, TRUE);
+  return_args = procedural_db_return_args (&drawable_is_gray_proc, TRUE);
   return_args[1].value.pdb_int = drawable_gray (drawable);
 
   return return_args;
 }
 
-static ProcArg drawable_gray_inargs[] =
+static ProcArg drawable_is_gray_inargs[] =
 {
   {
     PDB_DRAWABLE,
@@ -598,7 +598,7 @@ static ProcArg drawable_gray_inargs[] =
   }
 };
 
-static ProcArg drawable_gray_outargs[] =
+static ProcArg drawable_is_gray_outargs[] =
 {
   {
     PDB_INT32,
@@ -607,9 +607,9 @@ static ProcArg drawable_gray_outargs[] =
   }
 };
 
-static ProcRecord drawable_gray_proc =
+static ProcRecord drawable_is_gray_proc =
 {
-  "gimp_drawable_gray",
+  "gimp_drawable_is_gray",
   "Returns whether the drawable is a grayscale type.",
   "This procedure returns non-zero if the specified drawable is of type { Gray, GrayA }.",
   "Spencer Kimball & Peter Mattis",
@@ -617,27 +617,27 @@ static ProcRecord drawable_gray_proc =
   "1995-1996",
   PDB_INTERNAL,
   1,
-  drawable_gray_inargs,
+  drawable_is_gray_inargs,
   1,
-  drawable_gray_outargs,
-  { { drawable_gray_invoker } }
+  drawable_is_gray_outargs,
+  { { drawable_is_gray_invoker } }
 };
 
 static Argument *
-drawable_indexed_invoker (Argument *args)
+drawable_is_indexed_invoker (Argument *args)
 {
   Argument *return_args;
   GimpDrawable *drawable;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
 
-  return_args = procedural_db_return_args (&drawable_indexed_proc, TRUE);
+  return_args = procedural_db_return_args (&drawable_is_indexed_proc, TRUE);
   return_args[1].value.pdb_int = drawable_indexed (drawable);
 
   return return_args;
 }
 
-static ProcArg drawable_indexed_inargs[] =
+static ProcArg drawable_is_indexed_inargs[] =
 {
   {
     PDB_DRAWABLE,
@@ -646,7 +646,7 @@ static ProcArg drawable_indexed_inargs[] =
   }
 };
 
-static ProcArg drawable_indexed_outargs[] =
+static ProcArg drawable_is_indexed_outargs[] =
 {
   {
     PDB_INT32,
@@ -655,9 +655,9 @@ static ProcArg drawable_indexed_outargs[] =
   }
 };
 
-static ProcRecord drawable_indexed_proc =
+static ProcRecord drawable_is_indexed_proc =
 {
-  "gimp_drawable_indexed",
+  "gimp_drawable_is_indexed",
   "Returns whether the drawable is an indexed type.",
   "This procedure returns non-zero if the specified drawable is of type { Indexed, IndexedA }.",
   "Spencer Kimball & Peter Mattis",
@@ -665,10 +665,10 @@ static ProcRecord drawable_indexed_proc =
   "1995-1996",
   PDB_INTERNAL,
   1,
-  drawable_indexed_inargs,
+  drawable_is_indexed_inargs,
   1,
-  drawable_indexed_outargs,
-  { { drawable_indexed_invoker } }
+  drawable_is_indexed_outargs,
+  { { drawable_is_indexed_invoker } }
 };
 
 static Argument *

@@ -97,7 +97,7 @@ run (char    *name,
     status = STATUS_EXECUTION_ERROR;
   }
   
-  else if (gimp_drawable_color (drawable->id) && fp_dialog())
+  else if (gimp_drawable_is_rgb (drawable->id) && fp_dialog())
     {
       gimp_progress_init ("Applying the Filter Pack..."); 
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));

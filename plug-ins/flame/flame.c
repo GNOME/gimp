@@ -198,7 +198,7 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
 
   if (status == STATUS_SUCCESS) {
 
-    if (gimp_drawable_color(drawable->id)) {
+    if (gimp_drawable_is_rgb(drawable->id)) {
       gimp_progress_init("Drawing Flame...");
       gimp_tile_cache_ntiles(2 * (drawable->width / gimp_tile_width() + 1));
 

@@ -50,7 +50,7 @@ gint             gimp_drawable_clean              (GimpDrawable *);
 gboolean         gimp_drawable_has_alpha          (GimpDrawable *);
 GimpImageType    gimp_drawable_type               (GimpDrawable *);
 GimpImageType    gimp_drawable_type_with_alpha    (GimpDrawable *);
-gboolean         gimp_drawable_color              (GimpDrawable *);
+gboolean         gimp_drawable_is_rgb              (GimpDrawable *);
 gboolean         gimp_drawable_is_gray               (GimpDrawable *);
 gboolean         gimp_drawable_is_indexed            (GimpDrawable *);
 TileManager *    gimp_drawable_data               (GimpDrawable *);

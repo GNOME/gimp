@@ -957,7 +957,7 @@ gint effect_image_constrain(gint32 image_id, gint32 drawable_id, gpointer data)
   if (drawable_id == -1)
     return(TRUE);
 
-  return(gimp_drawable_color(drawable_id));
+  return(gimp_drawable_is_rgb(drawable_id));
 }
 
 void effect_image_callback(gint32 id, gpointer data)
@@ -1363,7 +1363,7 @@ static void run(gchar   *name,
       /* Make sure that the drawable is RGBA or RGB color */
       /* ================================================ */
 
-      if (gimp_drawable_color(drawable->id))
+      if (gimp_drawable_is_rgb(drawable->id))
 	{
 	  /* Set the tile cache size */
           /* ======================= */

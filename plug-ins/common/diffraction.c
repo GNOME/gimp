@@ -264,7 +264,7 @@ run(char    *name,
 
 	/* Create the diffraction pattern */
 
-	if ((status == STATUS_SUCCESS) && gimp_drawable_color(active_drawable->id)) {
+	if ((status == STATUS_SUCCESS) && gimp_drawable_is_rgb(active_drawable->id)) {
 		/* Set the tile cache size */
 
 		gimp_tile_cache_ntiles((active_drawable->width + gimp_tile_width() - 1) / gimp_tile_width());

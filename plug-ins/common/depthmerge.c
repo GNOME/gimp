@@ -960,8 +960,8 @@ gint constraintResultSizeAndResultColorOrGray(gint32 imageId,
 	   gimp_drawable_width( dm->params.result)) &&
 	  (gimp_drawable_height(drawableId) ==
 	   gimp_drawable_height(dm->params.result)) &&
-	  ((gimp_drawable_color(drawableId) &&
-	    (gimp_drawable_color(dm->params.result))) ||
+	  ((gimp_drawable_is_rgb(drawableId) &&
+	    (gimp_drawable_is_rgb(dm->params.result))) ||
 	   gimp_drawable_is_gray( drawableId))));
 }
 

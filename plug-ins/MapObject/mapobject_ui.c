@@ -568,7 +568,7 @@ gint box_constrain(gint32 image_id, gint32 drawable_id, gpointer data)
   if (drawable_id == -1)
     return(TRUE);
 
-  return (gimp_drawable_color(drawable_id) && !gimp_drawable_is_indexed(drawable_id));
+  return (gimp_drawable_is_rgb(drawable_id) && !gimp_drawable_is_indexed(drawable_id));
 }
 
 void box_drawable_callback(gint32 id, gpointer data)
@@ -585,7 +585,7 @@ gint cylinder_constrain(gint32 image_id, gint32 drawable_id, gpointer data)
   if (drawable_id == -1)
     return(TRUE);
 
-  return (gimp_drawable_color(drawable_id) && !gimp_drawable_is_indexed(drawable_id));
+  return (gimp_drawable_is_rgb(drawable_id) && !gimp_drawable_is_indexed(drawable_id));
 }
 
 void cylinder_drawable_callback(gint32 id, gpointer data)

@@ -2395,7 +2395,7 @@ lay_getattr(self, name)
 	return (PyObject *)newimgobject(id);
     }
     if (!strcmp(name, "is_color") || !strcmp(name, "is_colour"))
-	return PyInt_FromLong(gimp_drawable_color(self->ID));
+	return PyInt_FromLong(gimp_drawable_is_rgb(self->ID));
     if (!strcmp(name, "is_floating_selection"))
 	return PyInt_FromLong(
 			      gimp_layer_is_floating_selection(self->ID));
@@ -2694,7 +2694,7 @@ chn_getattr(self, name)
 	return (PyObject *)newimgobject(id);
     }
     if (!strcmp(name, "is_color") || !strcmp(name, "is_colour"))
-	return PyInt_FromLong(gimp_drawable_color(self->ID));
+	return PyInt_FromLong(gimp_drawable_is_rgb(self->ID));
     if (!strcmp(name, "is_gray") || !strcmp(name, "is_grey"))
 	return PyInt_FromLong(gimp_drawable_is_gray(self->ID));
     if (!strcmp(name, "is_indexed"))

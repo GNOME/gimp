@@ -359,7 +359,7 @@ run (gchar   *name,
   p_clear_tables();
   
   /*  Make sure that the dst_drawable is gray or RGB color	*/
-  if (gimp_drawable_color (dst_drawable->id) || gimp_drawable_is_gray (dst_drawable->id))
+  if (gimp_drawable_is_rgb (dst_drawable->id) || gimp_drawable_is_gray (dst_drawable->id))
   {
       gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
       

@@ -307,7 +307,7 @@ run(char *name, int nparams, GParam *param, int *nreturn_vals,
 /*
  *  Make sure the drawable type is appropriate.
  */
-    if (gimp_drawable_color(drawable->id) ||
+    if (gimp_drawable_is_rgb(drawable->id) ||
       gimp_drawable_is_gray(drawable->id) ||
       gimp_drawable_is_indexed(drawable->id)) {
 

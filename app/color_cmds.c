@@ -398,7 +398,7 @@ desaturate_invoker (Argument *args)
 
   if (success)
     {
-      if (gimp_drawable_color (drawable))
+      if (gimp_drawable_is_rgb (drawable))
 	desaturate (drawable);
       else
 	success = FALSE;
@@ -581,7 +581,7 @@ curves_spline_invoker (Argument *args)
     
 	  cd.drawable = drawable;
 	  cd.channel = channel;
-	  cd.color = gimp_drawable_color (drawable);
+	  cd.color = gimp_drawable_is_rgb (drawable);
 	  cd.curve_type = SMOOTH;
     
 	  for (j = 0; j < num_points / 2; j++)
@@ -691,7 +691,7 @@ curves_explicit_invoker (Argument *args)
     
 	  cd.drawable = drawable;
 	  cd.channel = channel;
-	  cd.color = gimp_drawable_color (drawable);
+	  cd.color = gimp_drawable_is_rgb (drawable);
     
 	  for (j = 0; j < 256; j++)
 	    cd.curve[cd.channel][j] = curve[j];
@@ -929,7 +929,7 @@ histogram_invoker (Argument *args)
 	  htd.shell = NULL;
 	  htd.channel = channel;
 	  htd.drawable = drawable;
-	  htd.color = gimp_drawable_color (drawable);
+	  htd.color = gimp_drawable_is_rgb (drawable);
 	  htd.histogram = histogram_widget_new (HISTOGRAM_WIDTH,
 						HISTOGRAM_HEIGHT);
     
@@ -1201,7 +1201,7 @@ threshold_invoker (Argument *args)
 	success = FALSE;
       else
 	{
-	  td.color = gimp_drawable_color (drawable);
+	  td.color = gimp_drawable_is_rgb (drawable);
 	  td.low_threshold = low_threshold;
 	  td.high_threshold = high_threshold;
     

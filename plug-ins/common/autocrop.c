@@ -98,7 +98,7 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
     image_id = param[1].data.d_image;
     
     /*  Make sure that the drawable is gray or RGB color  */
-    if (gimp_drawable_color(drawable->id) ||
+    if (gimp_drawable_is_rgb(drawable->id) ||
 	gimp_drawable_is_gray(drawable->id)  ||
 	gimp_drawable_is_indexed(drawable->id)) 
       {

@@ -197,7 +197,7 @@ void	run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **ret
 	}
 	if (status == STATUS_SUCCESS)
 	{
-		if (gimp_drawable_color(drw->id))
+		if (gimp_drawable_is_rgb(drw->id))
 		{
 			gimp_progress_init("Color Exchange...");
 			gimp_tile_cache_ntiles(2 * (drw->width / gimp_tile_width() + 1));

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 1999-10-17 01:34+0200\n"
+"POT-Creation-Date: 1999-10-24 16:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -124,11 +124,11 @@ msgstr ""
 msgid "Corrupt curve"
 msgstr ""
 
-#: app/bezier_select.c:2829
+#: app/bezier_select.c:2855
 msgid "Curve not closed!"
 msgstr ""
 
-#: app/bezier_select.c:3164
+#: app/bezier_select.c:3148 app/gimage_mask.c:604
 msgid "Paintbrush operation failed."
 msgstr ""
 
@@ -943,7 +943,7 @@ msgid "Allow Enlarging"
 msgstr ""
 
 #. tool toggle
-#: app/crop.c:209 app/flip_tool.c:88
+#: app/crop.c:209 app/flip_tool.c:89
 msgid "Tool Toggle"
 msgstr ""
 
@@ -1132,11 +1132,11 @@ msgstr ""
 msgid "drawable_fill called with unknown fill type"
 msgstr ""
 
-#: app/edit_selection.c:163
+#: app/edit_selection.c:164
 msgid "Move: 0, 0"
 msgstr ""
 
-#: app/edit_selection.c:442 app/edit_selection.c:452
+#: app/edit_selection.c:447 app/edit_selection.c:457
 msgid "Move: "
 msgstr ""
 
@@ -1345,17 +1345,17 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: app/flip_tool.c:74 app/preferences_dialog.c:1287
+#: app/flip_tool.c:75 app/preferences_dialog.c:1287
 #: app/preferences_dialog.c:2027
 msgid "Horizontal"
 msgstr ""
 
-#: app/flip_tool.c:74 app/preferences_dialog.c:1289
+#: app/flip_tool.c:75 app/preferences_dialog.c:1289
 #: app/preferences_dialog.c:2029
 msgid "Vertical"
 msgstr ""
 
-#: app/flip_tool.c:80
+#: app/flip_tool.c:81
 msgid "Flip Tool Options"
 msgstr ""
 
@@ -1668,34 +1668,34 @@ msgid ""
 "Close anyway?"
 msgstr ""
 
-#: app/gimage_mask.c:212
+#: app/gimage_mask.c:206
 msgid ""
 "Unable to cut/copy because the selected\n"
 "region is empty."
 msgstr ""
 
-#: app/gimage_mask.c:342
+#: app/gimage_mask.c:336
 msgid "Float Selection: No selection to float."
 msgstr ""
 
 #. Create a new layer from the buffer
-#: app/gimage_mask.c:353
+#: app/gimage_mask.c:347
 msgid "Floated Layer"
 msgstr ""
 
-#: app/gimage_mask.c:490
+#: app/gimage_mask.c:484
 msgid ""
 "The active layer has no alpha channel\n"
 "to convert to a selection."
 msgstr ""
 
-#: app/gimage_mask.c:509
+#: app/gimage_mask.c:503
 msgid ""
 "The active layer has no mask\n"
 "to convert to a selection."
 msgstr ""
 
-#: app/gimage_mask.c:556
+#: app/gimage_mask.c:554
 msgid "No selection to stroke!"
 msgstr ""
 
@@ -3252,11 +3252,11 @@ msgstr ""
 msgid "/Delete Layer"
 msgstr ""
 
-#: app/layers_dialog.c:1035 app/menus.c:465
+#: app/layers_dialog.c:1035 app/menus.c:467
 msgid "/Scale Layer"
 msgstr ""
 
-#: app/layers_dialog.c:1036 app/menus.c:467
+#: app/layers_dialog.c:1036 app/menus.c:465
 msgid "/Resize Layer"
 msgstr ""
 
@@ -3457,7 +3457,7 @@ msgstr ""
 msgid "Load/Save Levels"
 msgstr ""
 
-#: app/levels.c:1403 app/levels.c:1421 app/paths_dialog.c:2202
+#: app/levels.c:1403 app/levels.c:1421 app/paths_dialog.c:2225
 #, c-format
 msgid "Unable to open file %s"
 msgstr ""
@@ -4388,53 +4388,53 @@ msgstr ""
 msgid "Edit Point"
 msgstr ""
 
-#: app/paths_dialog.c:416
+#: app/paths_dialog.c:424
 #, c-format
 msgid "Path %d"
 msgstr ""
 
-#: app/paths_dialog.c:1231
+#: app/paths_dialog.c:1241
 msgid "Rename path"
 msgstr ""
 
-#: app/paths_dialog.c:1234
+#: app/paths_dialog.c:1244
 msgid "Enter a new name for the path"
 msgstr ""
 
-#: app/paths_dialog.c:2216
+#: app/paths_dialog.c:2239
 #, c-format
 msgid "Failed to read from %s"
 msgstr ""
 
-#: app/paths_dialog.c:2231
+#: app/paths_dialog.c:2254
 #, c-format
 msgid "Failed to read path from %s"
 msgstr ""
 
-#: app/paths_dialog.c:2238
+#: app/paths_dialog.c:2261
 #, c-format
 msgid "No points specified in path file %s"
 msgstr ""
 
-#: app/paths_dialog.c:2249
+#: app/paths_dialog.c:2272
 #, c-format
 msgid "Failed to read path points from %s"
 msgstr ""
 
-#: app/paths_dialog.c:2328 app/xcf.c:418
+#: app/paths_dialog.c:2353 app/xcf.c:418
 #, c-format
 msgid "open failed on %s: %s\n"
 msgstr ""
 
-#: app/paths_dialog.c:2367
+#: app/paths_dialog.c:2392
 msgid "Load/Store Bezier Curves"
 msgstr ""
 
-#: app/paths_dialog.c:2399
+#: app/paths_dialog.c:2424
 msgid "Load Path"
 msgstr ""
 
-#: app/paths_dialog.c:2417
+#: app/paths_dialog.c:2442
 msgid "Store Path"
 msgstr ""
 

@@ -154,7 +154,7 @@ run (char    *name,
 
   if (status == STATUS_SUCCESS) {
     drawable = gimp_drawable_get(param[2].data.d_drawable);
-    if (gimp_drawable_color(drawable->id)) {
+    if (gimp_drawable_is_rgb(drawable->id)) {
       gimp_progress_init ("Deriving smooth palette...");
       gimp_tile_cache_ntiles (2 * (drawable->width + 1) / gimp_tile_width ());
       values[1].data.d_image = doit(drawable, &values[2].data.d_layer);

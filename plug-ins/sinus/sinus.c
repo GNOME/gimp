@@ -250,7 +250,7 @@ static void run (gchar   *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   /*  Make sure that the drawable is gray or RGB */
-  if (( status == STATUS_SUCCESS) && (gimp_drawable_color (drawable->id) || gimp_drawable_is_gray (drawable->id)))
+  if (( status == STATUS_SUCCESS) && (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id)))
     {
       gimp_progress_init("Calculating picture...");
       gimp_tile_cache_ntiles( 1 );

@@ -234,7 +234,7 @@ static void run(char *name, int n_params, GParam * param,
 	if (status == STATUS_SUCCESS) {
 
 		/*  Make sure that the drawable is gray or RGB color  */
-		if (gimp_drawable_color(drawable->id) ||
+		if (gimp_drawable_is_rgb(drawable->id) ||
 		    gimp_drawable_is_gray(drawable->id)) {
 			gimp_progress_init(_("Applying convolution"));
 			gimp_tile_cache_ntiles(2 * (drawable->width /
@@ -431,7 +431,7 @@ static void doit(void)
 	height = drawable->height;
 	bytes = drawable->bpp;
 
-	if(gimp_drawable_color(drawable->id))
+	if(gimp_drawable_is_rgb(drawable->id))
 	    for(i=0;i<3;i++)
 		chanmask[i]=my_config.channels[i+1];
 	else /* Grayscale */
@@ -605,7 +605,7 @@ static void check_config(void){
 	for(i=0;i<5;i++)
 	    if(my_config.channels[i]<0)
 		my_config.channels[i]=0;
-	if(gimp_drawable_color(drawable->id))
+	if(gimp_drawable_is_rgb(drawable->id))
 	    my_config.channels[0]=-1;
 	else if(gimp_drawable_is_gray(drawable->id))
 	    for(i=1;i<4;i++)

@@ -142,7 +142,7 @@
     (plug-in-gauss-rle 1 img disp-map blur TRUE TRUE)
     (gimp-levels disp-map 0 0 255 1.0 96 255)
 
-    (if (= (car (gimp-drawable-color bg-layer)) 1)
+    (if (= (car (gimp-drawable-is-rgb bg-layer)) 1)
 	(gimp-convert-rgb img))
 
    

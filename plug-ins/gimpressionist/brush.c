@@ -208,7 +208,7 @@ void savebrush(GtkWidget *wg, gpointer data)
 gint validdrawable(gint32 imageid, gint32 drawableid, gpointer data)
 {
   if(drawableid == -1) return TRUE;
-  return (gimp_drawable_color(drawableid) || gimp_drawable_is_gray(drawableid));
+  return (gimp_drawable_is_rgb(drawableid) || gimp_drawable_is_gray(drawableid));
 }
 
 void reloadbrush(char *fn, struct ppm *p)

@@ -260,7 +260,7 @@ run(char 	*name,
   /* Blur the image */
 
   if ((status == STATUS_SUCCESS) &&
-      (gimp_drawable_color(drawable->id) ||
+      (gimp_drawable_is_rgb(drawable->id) ||
        gimp_drawable_is_gray(drawable->id))) {
     /* Set the tile cache size */
 

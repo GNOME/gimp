@@ -213,7 +213,7 @@ run (char    *name,
 
     /* Make sure the drawable is RGB color */
     drawable = gimp_drawable_get (param[2].data.d_drawable);
-    if (!gimp_drawable_color (drawable->id))
+    if (!gimp_drawable_is_rgb (drawable->id))
     {
       gimp_message ("color_adjust/color_map: cannot operate on grey/indexed\
  images");

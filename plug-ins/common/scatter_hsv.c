@@ -204,7 +204,7 @@ run (char	*name,
     {
     case RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_NAME, &VALS);
-      if (!gimp_drawable_color(drawable_id))
+      if (!gimp_drawable_is_rgb(drawable_id))
 	{
 	  scatter_hsv_error_dialog (1, (guchar *)"RGB drawable is not selected.");
 	  return;

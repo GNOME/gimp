@@ -331,7 +331,7 @@ void run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **ret
         img_has_alpha = gimp_drawable_has_alpha(drawable->id);
         gimp_drawable_mask_bounds(drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
-	if (!gimp_drawable_color(drawable->id))
+	if (!gimp_drawable_is_rgb(drawable->id))
 		status=STATUS_CALLING_ERROR;
 		
 	if (status==STATUS_SUCCESS) {

@@ -252,15 +252,15 @@ HELP
 			"The drawable's type with alpha: { %%desc%% }");
 }
 
-sub drawable_color {
+sub drawable_is_rgb {
     &drawable_type_proc('an RGB', 'RGB, RGBA', 'color');
 }
 
-sub drawable_gray {
+sub drawable_is_gray {
     &drawable_type_proc('a grayscale', 'Gray, GrayA', 'gray');
 }
 
-sub drawable_indexed {
+sub drawable_is_indexed {
     &drawable_type_proc('an indexed', 'Indexed, IndexedA', 'indexed');
 }
 
@@ -507,8 +507,8 @@ CODE
 
 @procs = qw(drawable_merge_shadow drawable_fill drawable_update
 	    drawable_mask_bounds drawable_image drawable_type
-	    drawable_has_alpha drawable_type_with_alpha drawable_color
-	    drawable_gray drawable_indexed drawable_bytes drawable_width
+	    drawable_has_alpha drawable_type_with_alpha drawable_is_rgb
+	    drawable_is_gray drawable_is_indexed drawable_bytes drawable_width
 	    drawable_height drawable_offsets drawable_layer
 	    drawable_layer_mask drawable_channel drawable_get_pixel
 	    drawable_set_pixel drawable_set_image drawable_thumbnail);

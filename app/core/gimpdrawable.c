@@ -522,7 +522,7 @@ gimp_drawable_get_tattoo (const GimpDrawable *drawable)
 }
 
 gboolean
-gimp_drawable_color (GimpDrawable *drawable)
+gimp_drawable_is_rgb (GimpDrawable *drawable)
 {
   if (gimp_drawable_type (drawable) == RGBA_GIMAGE ||
       gimp_drawable_type (drawable) == RGB_GIMAGE)

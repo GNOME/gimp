@@ -226,7 +226,7 @@ static void run(gchar   *name,
       /* Make sure that the drawable is RGBA or RGB color */
       /* ================================================ */
 
-      if (gimp_drawable_color(drawable->id))
+      if (gimp_drawable_is_rgb(drawable->id))
 	{
 	  /* Set the tile cache size */
           /* ======================= */
