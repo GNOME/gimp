@@ -213,7 +213,7 @@ static gint32 load_image (char *filename) {
 	ph.version = ntohl(ph.version);
 	ph.width = ntohl(ph.width);
 	ph.height = ntohl(ph.height);
-	ph.bytes = ntohl(ph.bytes);
+	ph.tag = ntohl(ph.tag);
 	ph.magic_number = ntohl(ph.magic_number);
 	ph.spacing = ntohl(ph.spacing);
 
@@ -234,21 +234,21 @@ static gint32 load_image (char *filename) {
   /*
 	 * Create a new image of the proper size and associate the filename with it.
    */
-  image_ID = gimp_image_new(ph.width, ph.height, (ph.bytes >= 3) ? RGB : GRAY);
+  image_ID = gimp_image_new(ph.width, ph.height, (ph.tag >= 3) ? RGB : GRAY);
   gimp_image_set_filename(image_ID, filename);
 
   layer_ID = gimp_layer_new(image_ID, "Background", ph.width, ph.height,
-			(ph.bytes >= 3) ? RGB_IMAGE : GRAY_IMAGE, 100, NORMAL_MODE);
+			(ph.tag >= 3) ? RGB_IMAGE : GRAY_IMAGE, 100, NORMAL_MODE);
 	gimp_image_add_layer(image_ID, layer_ID, 0);
 
   drawable = gimp_drawable_get(layer_ID);
   gimp_pixel_rgn_init(&pixel_rgn, drawable, 0, 0, drawable->width,
 			drawable->height, TRUE, FALSE);
 
-	buffer = g_malloc(ph.width * ph.bytes);
+	buffer = g_malloc(ph.width * ph.tag);
 
 	for (line = 0; line < ph.height; line++) {
-		if (read(fd, buffer, ph.width * ph.bytes) != ph.width * ph.bytes) {
+		if (read(fd, buffer, ph.width * ph.tag) != ph.width * ph.tag) {
 			close(fd);
 			g_free(buffer);
 			return -1;
@@ -256,7 +256,6 @@ static gint32 load_image (char *filename) {
 		gimp_pixel_rgn_set_row(&pixel_rgn, buffer, 0, line, ph.width);
 		gimp_progress_update((double) line / (double) ph.height);
 	}
-
 	gimp_drawable_flush(drawable);
 
 	return image_ID;
@@ -290,7 +289,7 @@ static gint save_image (char *filename, gint32 image_ID, gint32 drawable_ID) {
 	ph.version = htonl(2);
 	ph.width = htonl(drawable->width);
 	ph.height = htonl(drawable->height);
-	ph.bytes = htonl(drawable->bpp);
+	ph.tag = htonl(drawable->bpp);
 	ph.magic_number = htonl(GBRUSH_MAGIC);
 	ph.spacing = htonl(info.spacing);
 
