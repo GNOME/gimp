@@ -165,7 +165,7 @@ do_file_save_as_dialog (void)
       dialog =
         gtk_file_chooser_dialog_new (_("Save Imagemap"),
                                      NULL,
-                                     GTK_FILE_CHOOSER_ACTION_OPEN,
+                                     GTK_FILE_CHOOSER_ACTION_SAVE,
 
                                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                      GTK_STOCK_OPEN,   GTK_RESPONSE_OK,

@@ -1,5 +1,10 @@
 2004-11-23  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/imagemap/imap_file.c (do_file_save_as_dialog): do
+	actually use a save dialog here. Fixes bug #159194.
+
+2004-11-23  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdrawable.c (gimp_drawable_resize): do nothing if
 	the size doesn't change. This keeps text layers from being
 	modified when an image is cropped and the layer is entirely inside
