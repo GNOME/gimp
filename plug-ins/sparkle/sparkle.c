@@ -623,6 +623,7 @@ fspike (GPixelRgn *dest_rgn,
   gdouble theta, efac;
   gdouble sfac;
   gdouble *gd_tmp1, *gd_tmp2;
+  guchar *guc_tmp;
   GTile *tile = NULL;
   gint row, col;
   gint i;
@@ -646,8 +647,8 @@ fspike (GPixelRgn *dest_rgn,
 
       gimp_pixel_rgn_get_pixel (dest_rgn, pixel, x, y);
 
-      for (b = 0, gd_tmp1 = val, gd_tmp2 = pixel; b < bytes; b++)
-	*gd_tmp1++ = (gdouble) (gint)(*gd_tmp2++) / 255.0;
+      for (b = 0, gd_tmp1 = val, guc_tmp = pixel; b < bytes; b++)
+	*gd_tmp1++ = (gdouble) (gint)(*guc_tmp++) / 255.0;
 
       /*  increase saturation to full for color image  */
       if (! gray)
@@ -713,11 +714,6 @@ rpnt (GDrawable *drawable,
   guchar *pixel;
   guchar *guc_tmp;
   gdouble *gd_tmp;
-  gint *oldrow;
-  gint *oldcol;
-
-  oldrow = row - 1;
-  oldcol = col - 1;
 
   x = (int) (xr);	/* integer coord. to upper left of real point */
   y = (int) (yr);
@@ -730,10 +726,10 @@ rpnt (GDrawable *drawable,
 	  *row = y >> 6;
 	  if (tile)
 	    gimp_tile_unref (tile, TRUE);
-	  tile = gimp_drawable_get_tile (drawable, TRUE,
-					 *row, *col);
+	  tile = gimp_drawable_get_tile (drawable, TRUE, *row, *col);
 	  gimp_tile_ref (tile);
 	}
+
       pixel = tile->data + tile->bpp * (tile->ewidth * (y % 64) + (x % 64));
       dx = xr - x; dy = yr - y;
       rs = dx * dx + dy * dy;
