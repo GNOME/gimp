@@ -171,7 +171,7 @@
     <xi:include href="xml/gimptooloptions.xml"/>
     <xi:include href="xml/gimpunits.xml"/>
     <xi:include href="xml/gimpmarshal.xml"/>
- </chapter>
+  </chapter>
 
   <chapter>
     <title>File</title>
@@ -288,6 +288,7 @@
     <xi:include href="xml/gimpdisplay-area.xml"/>
     <xi:include href="xml/gimpdisplay-foreach.xml"/>
     <xi:include href="xml/gimpdisplay-handlers.xml"/>
+    <xi:include href="xml/gimpdisplayshell.xml"/>
     <xi:include href="xml/gimpdisplayshell-appearance.xml"/>
     <xi:include href="xml/gimpdisplayshell-callbacks.xml"/>
     <xi:include href="xml/gimpdisplayshell-cursor.xml"/>

@@ -1,5 +1,9 @@
 2003-08-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/app-docs.sgml: updated.
+
+2003-08-18  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/tmpl/gimpgradients.sgml: regenerated.
 
 2003-08-11  Sven Neumann  <sven@gimp.org>
