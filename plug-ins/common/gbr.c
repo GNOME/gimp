@@ -35,8 +35,7 @@ t_info info = {   /* Initialize to this, change if non-interactive later */
 
 int run_flag = 0;
 
-/* Declare some local functions.
- */
+/* Declare some local functions.  */
 static void   query      (void);
 static void   run        (char    *name,
                           int      nparams,
@@ -61,8 +60,11 @@ GPlugInInfo PLUG_IN_INFO =
   run,     /* run_proc */
 };
 
-
-MAIN ()
+  
+int main (int argc, char *argv[]) 
+{ 
+  return gimp_main (argc, argv); 
+}
 
 static void
 query ()
@@ -192,9 +194,8 @@ static gint32 load_image (char *filename) {
 	GDrawable *drawable;
 	gint line;
 	GPixelRgn pixel_rgn;
-  gint bytes;
-  gint layer_type, image_type;
-
+	gint bytes;
+	gint layer_type, image_type;
 	temp = g_malloc(strlen (filename) + 11);
 	sprintf(temp, "Loading %s:", filename);
 	gimp_progress_init(temp);
@@ -210,7 +211,7 @@ static gint32 load_image (char *filename) {
 		return -1;
 	}
 
-  /*  rearrange the bytes in each unsigned int  */
+	/*  rearrange the bytes in each unsigned int  */
 	ph.header_size = ntohl(ph.header_size);
 	ph.version = ntohl(ph.version);
 	ph.width = ntohl(ph.width);
@@ -231,14 +232,14 @@ static gint32 load_image (char *filename) {
 		return -1;
 	}
  
-  /* In version 2 the type field was bytes */ 
+	/* In version 2 the type field was bytes */ 
 	if (ph.version == 2) 
 	{ 
-		if (ph.type == 1)  /* 1 byte is gray*/
+		if (ph.type == 1)      /*in version 2, 1 byte is 8bit gray*/
 		{
 			ph.type = GRAY_IMAGE;
 		}
-    else if (ph.type == 3) /* 3 bytes is color */
+		else if (ph.type == 3) /*in version 2, 3 bytes is 8bit color */
 		{
 			ph.type = RGB_IMAGE;
 		}
@@ -249,75 +250,75 @@ static gint32 load_image (char *filename) {
 		}
 	}
 
-  switch (ph.type)
+	switch (ph.type)
 	{
 		case RGB_IMAGE:
 			image_type = RGB;
 			layer_type = RGB_IMAGE;
-		  break;
+			break;
 		case RGBA_IMAGE:
 			image_type = RGB;
 			layer_type = RGBA_IMAGE;
-		  break;
+			break;
 		case GRAY_IMAGE:
 			image_type = GRAY;
 			layer_type = GRAY_IMAGE;
-		  break;
+			break;
 		case GRAYA_IMAGE:
 			image_type = GRAY;
 			layer_type = GRAYA_IMAGE;
-		  break;
+			break;
 		case U16_RGB_IMAGE:
 			image_type = U16_RGB;
 			layer_type = U16_RGB_IMAGE;
-		  break;
+			break;
 		case U16_RGBA_IMAGE:
 			image_type = U16_RGB;
 			layer_type = U16_RGBA_IMAGE;
-		  break;
+			break;
 		case U16_GRAY_IMAGE:
 			image_type = U16_GRAY;
 			layer_type = U16_GRAY_IMAGE;
-		  break;
+			break;
 		case U16_GRAYA_IMAGE:
 			image_type = U16_GRAY;
 			layer_type = U16_GRAYA_IMAGE;
-		  break;
+			break;
 		case FLOAT_RGB_IMAGE:
 			image_type = FLOAT_RGB;
 			layer_type = FLOAT_RGB_IMAGE;
-		  break;
+			break;
 		case FLOAT_RGBA_IMAGE:
 			image_type = FLOAT_RGB;
 			layer_type = FLOAT_RGBA_IMAGE;
-		  break;
+			break;
 		case FLOAT_GRAY_IMAGE:
 			image_type = FLOAT_GRAY;
 			layer_type = FLOAT_GRAY_IMAGE;
-		  break;
+			break;
 		case FLOAT_GRAYA_IMAGE:
 			image_type = FLOAT_GRAY;
 			layer_type = FLOAT_GRAYA_IMAGE;
-		  break;
+			break;
 		default:
-      close (fd);
+			close (fd);
 			return -1;
 	}
 	
-  /* Now there's just raw data left. */
+       /* Now there's just raw data left. */
 
-  /*
-	 * Create a new image of the proper size and associate the filename with it.
-   */
-  image_ID = gimp_image_new(ph.width, ph.height, image_type);
-  gimp_image_set_filename(image_ID, filename);
+       /*
+ 	* Create a new image of the proper size and associate the filename with it.
+        */
+	image_ID = gimp_image_new(ph.width, ph.height, image_type);
+	gimp_image_set_filename(image_ID, filename);
 
-  layer_ID = gimp_layer_new(image_ID, "Background", ph.width, ph.height,
+	layer_ID = gimp_layer_new(image_ID, "Background", ph.width, ph.height,
 			layer_type, 100, NORMAL_MODE);
 	gimp_image_add_layer(image_ID, layer_ID, 0);
 
-  drawable = gimp_drawable_get(layer_ID);
-  gimp_pixel_rgn_init(&pixel_rgn, drawable, 0, 0, drawable->width,
+	drawable = gimp_drawable_get(layer_ID);
+  	gimp_pixel_rgn_init(&pixel_rgn, drawable, 0, 0, drawable->width,
 			drawable->height, TRUE, FALSE);
 
 	bytes = gimp_drawable_bpp (layer_ID);
@@ -346,7 +347,7 @@ static gint save_image (char *filename, gint32 image_ID, gint32 drawable_ID) {
 	gint line;
 	GPixelRgn pixel_rgn;
 	char *temp;
-
+	
 	temp = g_malloc(strlen (filename) + 10);
 	sprintf(temp, "Saving %s:", filename);
 	gimp_progress_init(temp);
