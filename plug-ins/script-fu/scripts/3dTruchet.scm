@@ -92,14 +92,14 @@
       (gimp-palette-set-foreground endcolor)
 
       (center-ellipse temp-img size size outer-radius outer-radius
-		      REPLACE TRUE FALSE 0)
+		      CHANNEL-OP-REPLACE TRUE FALSE 0)
       (center-ellipse temp-img size size inner-radius inner-radius
-		      SUB TRUE FALSE 0)
+		      CHANNEL-OP-SUBTRACT TRUE FALSE 0)
       
       (center-ellipse temp-img (* size 2) (*  size 2)  outer-radius outer-radius
-		      ADD TRUE FALSE 0)
+		      CHANNEL-OP-ADD TRUE FALSE 0)
       (center-ellipse temp-img (* size 2) (*  size 2)  inner-radius inner-radius
-		      SUB TRUE FALSE 0)
+		      CHANNEL-OP-SUBTRACT TRUE FALSE 0)
 
       (gimp-edit-blend temp-draw FG-BG-RGB-MODE NORMAL-MODE
 		       GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
@@ -107,14 +107,14 @@
 		       size size (* size 2) (/ size 2))
 
       (center-ellipse temp-img size (* size 2)  outer-radius outer-radius
-		      REPLACE TRUE FALSE 0)
+		      CHANNEL-OP-REPLACE TRUE FALSE 0)
       (center-ellipse temp-img size (* size 2) inner-radius inner-radius
-		      SUB TRUE FALSE 0)
+		      CHANNEL-OP-SUBTRACT TRUE FALSE 0)
 
       (center-ellipse temp-img (* size 2) size  outer-radius outer-radius
-		      ADD TRUE FALSE 0)
+		      CHANNEL-OP-ADD TRUE FALSE 0)
       (center-ellipse temp-img (* size 2) size  inner-radius inner-radius
-		      SUB TRUE FALSE 0)
+		      CHANNEL-OP-SUBTRACT TRUE FALSE 0)
 
       ;(gimp-edit-fill temp-img temp-draw2 BACKGROUND-FILL)
 

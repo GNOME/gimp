@@ -132,7 +132,7 @@
     (gimp-edit-copy mask-highlight)
     (set! highlight-layer (car (gimp-edit-paste shadow-layer FALSE)))
     (gimp-floating-sel-to-layer highlight-layer)
-    (gimp-layer-set-mode highlight-layer SCREEN)
+    (gimp-layer-set-mode highlight-layer SCREEN-MODE)
 
     (gimp-edit-copy mask)
     (set! cast-shadow-layer (car (gimp-edit-paste highlight-layer FALSE)))

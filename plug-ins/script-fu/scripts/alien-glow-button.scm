@@ -41,7 +41,7 @@
 		       y1
 		       x2
 		       y2)
-  (gimp-edit-blend drawable FG-BG-RGB-MODE DARKEN-ONLY
+  (gimp-edit-blend drawable FG-BG-RGB-MODE DARKEN-ONLY-MODE
 		   GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
 		   FALSE 0 0 TRUE
 		   x1 y1 x2 y2))
@@ -98,7 +98,7 @@
     (gimp-image-add-layer img button-layer -1)
     (gimp-layer-set-offsets button-layer (/ glow-radius 2) (/ glow-radius 2))
     (gimp-selection-none img)
-    (gimp-rect-select img 0 0 img-width img-height REPLACE FALSE 0)
+    (gimp-rect-select img 0 0 img-width img-height CHANNEL-OP-REPLACE FALSE 0)
     (gimp-palette-set-foreground '(100 100 100))
     (gimp-palette-set-background '(0 0 0))
 
@@ -114,7 +114,7 @@
 		      (/ glow-radius 4)
 		      (- img-width (/ glow-radius 2))
 		      (- img-height (/ glow-radius 2))
-		      REPLACE FALSE 0 )
+		      CHANNEL-OP-REPLACE FALSE 0 )
 
     (gimp-palette-set-foreground glow-color)
     (gimp-edit-fill glow-layer FOREGROUND-FILL)

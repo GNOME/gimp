@@ -50,7 +50,7 @@
     (gimp-edit-clear glow-layer)
     (gimp-edit-clear ruler-layer)
     
-    (gimp-rect-select img (/ height 2) (/ height 2) length height REPLACE FALSE 0)
+    (gimp-rect-select img (/ height 2) (/ height 2) length height CHANNEL-OP-REPLACE FALSE 0)
     (gimp-palette-set-foreground '(79 79 79))
     (gimp-palette-set-background '(0 0 0))
 

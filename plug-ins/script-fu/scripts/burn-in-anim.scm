@@ -74,9 +74,9 @@
 		 (set! bl-y-off             (cadr (gimp-drawable-offsets bl-layer)))
 
                  ;--- select a rectangular area to blend
-		 (gimp-rect-select img bl-x-off bl-y-off bl-width bl-height REPLACE 0 0)
+		 (gimp-rect-select img bl-x-off bl-y-off bl-width bl-height CHANNEL-OP-REPLACE 0 0)
                  ;--- select at least 1 pixel!
-		 (gimp-rect-select img bl-x-off bl-y-off (+ bl-width 1) bl-height ADD 0 0)
+		 (gimp-rect-select img bl-x-off bl-y-off (+ bl-width 1) bl-height CHANNEL-OP-ADD 0 0)
 
 		 (if (= fadeout FALSE)
 		     (begin
@@ -85,7 +85,7 @@
 		       (set! nofadeout-bl-width (max nofadeout-bl-width 1))
 		       (gimp-rect-select img nofadeout-bl-x-off bl-y-off
 					 nofadeout-bl-width bl-height
-					 REPLACE 0 0)))
+					 CHANNEL-OP-REPLACE 0 0)))
 
                  ;--- alpha blending text to trans (fadeout)
 		 (gimp-palette-set-foreground '(255 255 255))

@@ -88,7 +88,7 @@
 	 (tile-type (car (gimp-drawable-type tile-layer)))
 	 (bg-layer (car (gimp-layer-new img tile-width tile-height tile-type "BG-Layer" 100 NORMAL-MODE)))
 	 (layer1 (car (gimp-layer-new img banding-width banding-height banding-type "Layer1" 100 NORMAL-MODE)))
-	 (layer2 (car (gimp-layer-new img width height GRAYA-IMAGE "Layer 2" 100 DIFFERENCE)))
+	 (layer2 (car (gimp-layer-new img width height GRAYA-IMAGE "Layer 2" 100 DIFFERENCE-MODE)))
 	 (layer3 (car (gimp-layer-new img width height GRAYA-IMAGE "Layer 3" 100 NORMAL-MODE)))
 	 (layer-mask 0)
 	 (layer-mask2 0)
@@ -162,13 +162,13 @@
 
     (gimp-selection-none img)
     (gimp-levels layer2 0 0 200 1.5 50 255)
-    (gimp-layer-set-mode layer1 OVERLAY)
+    (gimp-layer-set-mode layer1 OVERLAY-MODE)
 
     (plug-in-gauss-rle 1 img text-layer blur TRUE TRUE)
     (gimp-layer-set-preserve-trans text-layer TRUE)
     (gimp-palette-set-background '(0 0 0))
     (gimp-edit-fill text-layer BACKGROUND-FILL)
-    (gimp-layer-set-mode text-layer OVERLAY)
+    (gimp-layer-set-mode text-layer OVERLAY-MODE)
     (gimp-layer-translate text-layer offx1 offy1)
 
     (gimp-image-remove-channel img disp-map)

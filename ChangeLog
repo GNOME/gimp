@@ -1,5 +1,11 @@
 2004-02-03  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/scripts/*.scm: applied patch from Kevin
+	Cozens <kcozens@interlog.com> which removes the use of deprecated
+	constants in all scripts. Fixes bug #133270.
+
+2004-02-03  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/script-fu-scripts.c (script_fu_free_script): 
 	call gimp_uninstall_temp_proc() with script->pdb_name, not
 	script->script_name. Fixes bug #133280.

@@ -26,7 +26,7 @@
    (gimp-image-undo-group-start theImage)
    (gimp-layer-resize theLayer (* 3 theWidth) (* 3 theHeight) 0 0)
 
-   (gimp-rect-select theImage 0 0 theWidth theHeight REPLACE 0 0)
+   (gimp-rect-select theImage 0 0 theWidth theHeight CHANNEL-OP-REPLACE 0 0)
    (gimp-edit-cut theLayer)
 
    (gimp-selection-none theImage)

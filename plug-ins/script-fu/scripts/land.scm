@@ -50,7 +50,7 @@
 
 
 
-  (gimp-by-color-select layer-one '(190 190 190) 55 REPLACE FALSE FALSE 0 FALSE)
+  (gimp-by-color-select layer-one '(190 190 190) 55 CHANNEL-OP-REPLACE FALSE FALSE 0 FALSE)
   (plug-in-bump-map 1 img layer-two layer-one 135.0 35 landheight 0 0 0 0 TRUE FALSE 0)
 
   ;(plug-in-c-astretch 1 img layer-two)

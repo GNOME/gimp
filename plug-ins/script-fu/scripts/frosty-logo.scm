@@ -61,7 +61,7 @@
     (gimp-layer-remove-mask logo-layer 0)
     (gimp-selection-load selection)
     (gimp-brushes-set-brush "Circle Fuzzy (07)")
-    (gimp-brushes-set-paint-mode BEHIND)
+    (gimp-brushes-set-paint-mode BEHIND-MODE)
     (gimp-palette-set-foreground '(186 241 255))
     (gimp-edit-stroke logo-layer)
     (gimp-selection-none img)

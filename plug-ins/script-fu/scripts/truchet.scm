@@ -59,11 +59,11 @@
       (gimp-edit-fill temp-draw BACKGROUND-FILL)
       
       
-      (center-ellipse temp-img size size outer-radius outer-radius REPLACE TRUE FALSE 0)
-      (center-ellipse temp-img size size inner-radius inner-radius SUB TRUE FALSE 0)
+      (center-ellipse temp-img size size outer-radius outer-radius CHANNEL-OP-REPLACE TRUE FALSE 0)
+      (center-ellipse temp-img size size inner-radius inner-radius CHANNEL-OP-SUBTRACT TRUE FALSE 0)
       
-      (center-ellipse temp-img (* size 2) (*  size 2)  outer-radius outer-radius ADD TRUE FALSE 0)
-      (center-ellipse temp-img (* size 2) (*  size 2)  inner-radius inner-radius SUB TRUE FALSE 0)
+      (center-ellipse temp-img (* size 2) (*  size 2)  outer-radius outer-radius CHANNEL-OP-ADD TRUE FALSE 0)
+      (center-ellipse temp-img (* size 2) (*  size 2)  inner-radius inner-radius CHANNEL-OP-SUBTRACT TRUE FALSE 0)
       (gimp-palette-set-background forecolor)
       (gimp-edit-fill temp-draw BACKGROUND-FILL)
       

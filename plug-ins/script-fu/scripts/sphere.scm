@@ -47,11 +47,11 @@
 		     (set! shadow-w (- shadow-w))))
 
 	  (gimp-ellipse-select img shadow-x shadow-y shadow-w shadow-h
-			       REPLACE TRUE TRUE 7.5)
-	  (gimp-edit-bucket-fill drawable BG-BUCKET-FILL MULTIPLY 100 0 FALSE 0 0)))
+			       CHANNEL-OP-REPLACE TRUE TRUE 7.5)
+	  (gimp-edit-bucket-fill drawable BG-BUCKET-FILL MULTIPLY-MODE 100 0 FALSE 0 0)))
 
     (gimp-ellipse-select img (- cx radius) (- cy radius)
-			 (* 2 radius) (* 2 radius) REPLACE TRUE FALSE 0)
+			 (* 2 radius) (* 2 radius) CHANNEL-OP-REPLACE TRUE FALSE 0)
 
     (gimp-edit-blend drawable FG-BG-RGB-MODE NORMAL-MODE
 		     GRADIENT-RADIAL 100 offset REPEAT-NONE FALSE

@@ -52,7 +52,7 @@
 		     FALSE 0 0 TRUE
 		     0 0 0 (+ height 5))
 
-    (gimp-rect-select img 0 (- (/ height 2) feather) img-width (* 2 feather) REPLACE 0 0)
+    (gimp-rect-select img 0 (- (/ height 2) feather) img-width (* 2 feather) CHANNEL-OP-REPLACE 0 0)
     (plug-in-gauss-iir 1 img logo-layer smear TRUE TRUE)
     (gimp-selection-none img)
     (plug-in-ripple 1 img logo-layer period amplitude 1 0 1 TRUE FALSE)
@@ -83,7 +83,7 @@
     (gimp-floating-sel-anchor fs)
     (plug-in-gauss-rle 1 img shadow-layer smear TRUE TRUE)
 
-    (gimp-rect-select img 5 5 width height REPLACE FALSE 0)
+    (gimp-rect-select img 5 5 width height CHANNEL-OP-REPLACE FALSE 0)
     (gimp-edit-copy logo-layer)
     (set! fs (car (gimp-edit-paste reflect-layer FALSE)))
     (gimp-floating-sel-anchor fs)

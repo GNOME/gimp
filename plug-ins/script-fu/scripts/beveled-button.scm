@@ -44,7 +44,7 @@
 		       y1
 		       x2
 		       y2)
-  (gimp-edit-blend drawable FG-BG-RGB-MODE DARKEN-ONLY
+  (gimp-edit-blend drawable FG-BG-RGB-MODE DARKEN-ONLY-MODE
 		   GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
 		   FALSE 0 0 TRUE
 		   x1 y1 x2 y2))
@@ -91,16 +91,16 @@
     (gimp-palette-set-background '(255 255 255))
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
-    (gimp-rect-select img 0 0 bevel-width img-height REPLACE FALSE 0)
+    (gimp-rect-select img 0 0 bevel-width img-height CHANNEL-OP-REPLACE FALSE 0)
     (blend-bumpmap img bumpmap 0 0 (- bevel-width 1) 0)
 
-    (gimp-rect-select img 0 0 img-width bevel-width REPLACE FALSE 0)
+    (gimp-rect-select img 0 0 img-width bevel-width CHANNEL-OP-REPLACE FALSE 0)
     (blend-bumpmap img bumpmap 0 0 0 (- bevel-width 1))
 
-    (gimp-rect-select img (- img-width bevel-width) 0 bevel-width img-height REPLACE FALSE 0)
+    (gimp-rect-select img (- img-width bevel-width) 0 bevel-width img-height CHANNEL-OP-REPLACE FALSE 0)
     (blend-bumpmap img bumpmap (- img-width 1) 0 (- img-width bevel-width) 0)
 
-    (gimp-rect-select img 0 (- img-height bevel-width) img-width bevel-width REPLACE FALSE 0)
+    (gimp-rect-select img 0 (- img-height bevel-width) img-width bevel-width CHANNEL-OP-REPLACE FALSE 0)
     (blend-bumpmap img bumpmap 0 (- img-height 1) 0 (- img-height bevel-width))
 
     (gimp-selection-none img)

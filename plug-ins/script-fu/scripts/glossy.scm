@@ -115,13 +115,13 @@
     (gimp-selection-none img)
 
     (plug-in-bump-map noninteractive img grow-me logo-layer 110.0 45.0 3 0 0 0 0 TRUE FALSE 0)
-    (gimp-layer-set-mode logo-layer SCREEN)
+    (gimp-layer-set-mode logo-layer SCREEN-MODE)
 
     (if (= use-pattern-overlay TRUE)
       (begin
         (gimp-selection-layer-alpha grow-me)
         (gimp-patterns-set-pattern pattern-overlay)
-        (gimp-edit-bucket-fill grow-me PATTERN-BUCKET-FILL OVERLAY 100 0 FALSE 0 0)
+        (gimp-edit-bucket-fill grow-me PATTERN-BUCKET-FILL OVERLAY-MODE 100 0 FALSE 0 0)
         (gimp-patterns-set-pattern old-patterns)
         (gimp-selection-none img)))
 

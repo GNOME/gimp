@@ -44,11 +44,11 @@
 		      height
 		      ratio)
   (let* ((diameter (* ratio height)))
-    (gimp-ellipse-select img x y diameter height ADD FALSE 0 0)
+    (gimp-ellipse-select img x y diameter height CHANNEL-OP-ADD FALSE 0 0)
     (gimp-ellipse-select img (+ x (- width diameter)) y
-			 diameter height ADD FALSE 0 0)
+			 diameter height CHANNEL-OP-ADD FALSE 0 0)
     (gimp-rect-select img (+ x (/ diameter 2)) y
-		      (- width diameter) height ADD FALSE 0)))
+		      (- width diameter) height CHANNEL-OP-ADD FALSE 0)))
 
 (define (script-fu-round-button text
 				size

@@ -80,7 +80,7 @@
 	 (width (car (gimp-drawable-width text-layer)))
 	 (height (car (gimp-drawable-height text-layer)))
 	 (layer1 (car (gimp-layer-new img banding-width banding-height banding-type "Layer1" 100 NORMAL-MODE)))
-	 (layer2 (car (gimp-layer-new img width height GRAYA-IMAGE "Layer 2" 100 DIFFERENCE)))
+	 (layer2 (car (gimp-layer-new img width height GRAYA-IMAGE "Layer 2" 100 DIFFERENCE-MODE)))
 	 (layer3 (car (gimp-layer-new img width height GRAYA-IMAGE "Layer 3" 100 NORMAL-MODE)))
 	 (shadow (car (gimp-layer-new img width height GRAYA-IMAGE "Drop Shadow" 100 NORMAL-MODE)))
 	 (layer-mask 0)
@@ -102,8 +102,8 @@
     (gimp-drawable-set-visible text-layer FALSE)
     (gimp-drawable-set-visible shadow FALSE)
 
-    (gimp-rect-select img (/ b-size 2) (/ b-size 2) (- width b-size) (- height b-size) REPLACE 0 0)
-    (gimp-rect-select img b-size b-size (- width (* b-size 2)) (- height (* b-size 2)) SUB 0 0)
+    (gimp-rect-select img (/ b-size 2) (/ b-size 2) (- width b-size) (- height b-size) CHANNEL-OP-REPLACE 0 0)
+    (gimp-rect-select img b-size b-size (- width (* b-size 2)) (- height (* b-size 2)) CHANNEL-OP-SUBTRACT 0 0)
     (gimp-edit-fill text-layer BACKGROUND-FILL)
 
     (gimp-selection-layer-alpha text-layer)

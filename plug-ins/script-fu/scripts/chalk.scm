@@ -47,7 +47,7 @@
 
     ; work-around for sobel edge detect screw-up (why does this happen?)
     ; the top line of the image has some garbage instead of the bgcolor
-    (gimp-rect-select img 0 0 width 1 ADD FALSE 0)
+    (gimp-rect-select img 0 0 width 1 CHANNEL-OP-ADD FALSE 0)
     (gimp-edit-clear logo-layer)
     (gimp-selection-none img)
 

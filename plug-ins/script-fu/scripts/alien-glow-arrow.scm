@@ -103,7 +103,7 @@
     (gimp-edit-clear glow-layer)
     (gimp-edit-clear ruler-layer)
 
-    (gimp-free-select img 6 big-arrow REPLACE TRUE FALSE 0)
+    (gimp-free-select img 6 big-arrow CHANNEL-OP-REPLACE TRUE FALSE 0)
 
     (gimp-palette-set-foreground '(103 103 103))
     (gimp-palette-set-background '(0 0 0))

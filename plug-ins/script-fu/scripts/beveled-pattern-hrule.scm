@@ -41,11 +41,11 @@
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-palette-set-background '(127 127 127))
-    (gimp-rect-select img 1 1 (- width 2) (- height 2) REPLACE FALSE 0)
+    (gimp-rect-select img 1 1 (- width 2) (- height 2) CHANNEL-OP-REPLACE FALSE 0)
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-palette-set-background '(255 255 255))
-    (gimp-rect-select img 2 2 (- width 4) (- height 4) REPLACE FALSE 0)
+    (gimp-rect-select img 2 2 (- width 4) (- height 4) CHANNEL-OP-REPLACE FALSE 0)
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-selection-none img)

@@ -35,7 +35,7 @@
 	  (set! theStain (car (gimp-layer-new theImage theSize theSize
 					      RGBA-IMAGE "Stain" 100
 					      (if (= inDark TRUE)
-						  DARKEN-ONLY NORMAL-MODE))))
+						  DARKEN-ONLY-MODE NORMAL-MODE))))
 
 	  (gimp-image-add-layer theImage theStain 0)
 	  (gimp-selection-all theImage)
@@ -45,7 +45,7 @@
             (gimp-ellipse-select theImage
 				 (/ (- theSize blobSize) 2)
 				 (/ (- theSize blobSize) 2)
-				 blobSize blobSize REPLACE TRUE 0 FALSE))
+				 blobSize blobSize CHANNEL-OP-REPLACE TRUE 0 FALSE))
 
 	  (script-fu-distress-selection theImage theStain
 					(* (+ (rand 15) 1) (+ (rand 15) 1))

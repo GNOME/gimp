@@ -51,23 +51,23 @@
 
     ; Whirl upper left
 
-    (gimp-rect-select img 0 0 hsize hsize REPLACE 0 0)
+    (gimp-rect-select img 0 0 hsize hsize CHANNEL-OP-REPLACE 0 0)
     (whirl-it img drawable angle times)
     (gimp-invert drawable)
 
     ; Whirl upper right
 
-    (gimp-rect-select img hsize 0 hsize hsize REPLACE 0 0)
+    (gimp-rect-select img hsize 0 hsize hsize CHANNEL-OP-REPLACE 0 0)
     (whirl-it img drawable (- angle) times)
 
     ; Whirl lower left
 
-    (gimp-rect-select img 0 hsize hsize hsize REPLACE 0 0)
+    (gimp-rect-select img 0 hsize hsize hsize CHANNEL-OP-REPLACE 0 0)
     (whirl-it img drawable (- angle) times)
 
     ; Whirl lower right
 
-    (gimp-rect-select img hsize hsize hsize hsize REPLACE 0 0)
+    (gimp-rect-select img hsize hsize hsize hsize CHANNEL-OP-REPLACE 0 0)
     (whirl-it img drawable angle times)
     (gimp-invert drawable)
 

@@ -92,19 +92,19 @@
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-palette-set-background '(127 127 127))
-    (gimp-rect-select img 1 1 (- size 2) (- size 2) REPLACE FALSE 0)
+    (gimp-rect-select img 1 1 (- size 2) (- size 2) CHANNEL-OP-REPLACE FALSE 0)
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-palette-set-background '(255 255 255))
-    (gimp-rect-select img 2 2 (- size 4) (- size 4) REPLACE FALSE 0)
+    (gimp-rect-select img 2 2 (- size 4) (- size 4) CHANNEL-OP-REPLACE FALSE 0)
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-palette-set-background '(127 127 127))
-    (gimp-free-select img 6 big-arrow REPLACE TRUE FALSE 0)
+    (gimp-free-select img 6 big-arrow CHANNEL-OP-REPLACE TRUE FALSE 0)
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-palette-set-background '(0 0 0))
-    (gimp-free-select img 6 med-arrow REPLACE TRUE FALSE 0)
+    (gimp-free-select img 6 med-arrow CHANNEL-OP-REPLACE TRUE FALSE 0)
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-selection-none img)
@@ -119,7 +119,7 @@
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-palette-set-background '(192 192 192))
-    (gimp-free-select img 6 small-arrow REPLACE TRUE FALSE 0)
+    (gimp-free-select img 6 small-arrow CHANNEL-OP-REPLACE TRUE FALSE 0)
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-selection-none img)

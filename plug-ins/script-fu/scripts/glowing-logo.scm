@@ -49,7 +49,7 @@
     (gimp-edit-fill glow-layer BACKGROUND-FILL)
     (gimp-selection-none img)
 
-    (gimp-layer-set-mode logo-layer OVERLAY)
+    (gimp-layer-set-mode logo-layer OVERLAY-MODE)
     (gimp-drawable-set-name glow-layer "Glow Layer")
 
     (gimp-palette-set-background old-bg)

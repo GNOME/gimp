@@ -78,7 +78,7 @@
 	  (gimp-layer-remove-mask layer
 				  (if (= TRUE apply-layer-mask?)
 				      MASK-APPLY
-				      DISCARD)))
+				      MASK-DISCARD)))
       (if (= TRUE with-pad?)
 	  (begin
 	    (gimp-selection-layer-alpha layer)

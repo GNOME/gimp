@@ -81,7 +81,7 @@
 	 (mask (car (gimp-channel-new img width height "Chrome Stencil" 50 '(0 0 0))))
 	 (bg-layer (car (gimp-layer-new img width height GRAY-IMAGE "Background" 100 NORMAL-MODE)))
 	 (layer1 (car (gimp-layer-new img banding-width banding-height banding-type "Layer1" 100 NORMAL-MODE)))
-	 (layer2 (car (gimp-layer-new img width height GRAYA-IMAGE "Layer 2" 100 DIFFERENCE)))
+	 (layer2 (car (gimp-layer-new img width height GRAYA-IMAGE "Layer 2" 100 DIFFERENCE-MODE)))
 	 (layer3 (car (gimp-layer-new img width height GRAYA-IMAGE "Layer 3" 100 NORMAL-MODE)))
 	 (shadow (car (gimp-layer-new img width height GRAYA-IMAGE "Drop Shadow" 100 NORMAL-MODE)))
 	 (mask-fs 0)

@@ -181,7 +181,7 @@
 			     top-y
 			     hole-width
 			     hole-height
-			     ADD
+			     CHANNEL-OP-ADD
 			     FALSE
 			     0)
 	   (gimp-rect-select image
@@ -189,7 +189,7 @@
 			     bottom-y
 			     hole-width
 			     hole-height
-			     ADD
+			     CHANNEL-OP-ADD
 			     FALSE
 			     0)
 	   (set! hole (+ hole 1)))

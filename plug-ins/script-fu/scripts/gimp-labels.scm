@@ -71,7 +71,7 @@
     (if (= rm-bg TRUE)
 	(begin
 	  (gimp-by-color-select text-layer bg-color
-				color-thresh REPLACE TRUE FALSE 0 FALSE)
+				color-thresh CHANNEL-OP-REPLACE TRUE FALSE 0 FALSE)
 	  (gimp-edit-clear text-layer)
 	  (gimp-selection-clear img)))
     

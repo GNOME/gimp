@@ -96,7 +96,7 @@
     (if (= rm-bg TRUE)
 	(begin
 	  (gimp-by-color-select text-layer '(255 255 255)
-				1 REPLACE TRUE FALSE 0 FALSE)
+				1 CHANNEL-OP-REPLACE TRUE FALSE 0 FALSE)
 	  (gimp-edit-clear text-layer)
 	  (gimp-selection-clear img)))
         

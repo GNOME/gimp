@@ -45,7 +45,7 @@
 		    (+ beg-x (* off (cos dir0)))
 		    (+ beg-y (* off (sin dir0))))
 	(set-marginal-point beg-x beg-y direction)
-	(gimp-free-select img 6 *points* ADD
+	(gimp-free-select img 6 *points* CHANNEL-OP-ADD
 			  TRUE		; antialias
 			  FALSE		; feather
 			  0		; feather radius

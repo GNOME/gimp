@@ -55,7 +55,7 @@
     (gimp-edit-clear blend-layer)
     (gimp-palette-set-background bg-color)
     (gimp-drawable-fill shadow-layer BACKGROUND-FILL)
-    (gimp-rect-select img b-size-2 b-size-2 (- width b-size) (- height b-size) REPLACE TRUE b-size-2)
+    (gimp-rect-select img b-size-2 b-size-2 (- width b-size) (- height b-size) CHANNEL-OP-REPLACE TRUE b-size-2)
     (gimp-palette-set-background '(0 0 0))
     (gimp-edit-fill shadow-layer BACKGROUND-FILL)
     (gimp-selection-layer-alpha logo-layer)

@@ -41,11 +41,11 @@
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-palette-set-background '(127 127 127))
-    (gimp-ellipse-select img 1 1 (- diameter 2) (- diameter 2) REPLACE TRUE FALSE 0)
+    (gimp-ellipse-select img 1 1 (- diameter 2) (- diameter 2) CHANNEL-OP-REPLACE TRUE FALSE 0)
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-palette-set-background '(255 255 255))
-    (gimp-ellipse-select img 2 2 (- diameter 4) (- diameter 4) REPLACE TRUE FALSE 0)
+    (gimp-ellipse-select img 2 2 (- diameter 4) (- diameter 4) CHANNEL-OP-REPLACE TRUE FALSE 0)
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-selection-none img)
@@ -57,7 +57,7 @@
     ; Background
 
     (gimp-palette-set-background '(0 0 0))
-    (gimp-ellipse-select img 0 0 diameter diameter REPLACE TRUE FALSE 0)
+    (gimp-ellipse-select img 0 0 diameter diameter CHANNEL-OP-REPLACE TRUE FALSE 0)
     (gimp-selection-invert img)
     (gimp-edit-clear background)
     (gimp-selection-none img)

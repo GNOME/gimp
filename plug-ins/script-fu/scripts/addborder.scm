@@ -116,7 +116,7 @@
     (gimp-free-select img
 		      10
 		      (gen_top_array xsize ysize owidth oheight width height)
-		      REPLACE
+		      CHANNEL-OP-REPLACE
 		      0
 		      0
 		      0.0)
@@ -125,7 +125,7 @@
     (gimp-free-select img
 		      10
 		      (gen_left_array xsize ysize owidth oheight width height)
-		      REPLACE
+		      CHANNEL-OP-REPLACE
 		      0
 		      0
 		      0.0)
@@ -134,7 +134,7 @@
     (gimp-free-select img
 		      10
 		      (gen_right_array xsize ysize owidth oheight width height)
-		      REPLACE
+		      CHANNEL-OP-REPLACE
 		      0
 		      0
 		      0.0)
@@ -144,7 +144,7 @@
     (gimp-free-select img
 		      10
 		      (gen_bottom_array xsize ysize owidth oheight width height)
-		      REPLACE
+		      CHANNEL-OP-REPLACE
 		      0
 		      0
 		      0.0)

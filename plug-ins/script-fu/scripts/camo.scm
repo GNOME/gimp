@@ -47,7 +47,7 @@
 	(set! theBlur (- 16 inGrain))
 
         (gimp-palette-set-background inColor2)
-        (gimp-by-color-select thickLayer '(0 0 0) 127 REPLACE  TRUE FALSE 0 FALSE)
+        (gimp-by-color-select thickLayer '(0 0 0) 127 CHANNEL-OP-REPLACE  TRUE FALSE 0 FALSE)
         (gimp-edit-clear thickLayer)
         (gimp-selection-invert theImage)
         (gimp-edit-fill thickLayer BACKGROUND-FILL)
@@ -59,7 +59,7 @@
 
 
         (gimp-palette-set-background inColor3)
-        (gimp-by-color-select thinLayer '(0 0 0) 127 REPLACE  TRUE FALSE 0 FALSE)
+        (gimp-by-color-select thinLayer '(0 0 0) 127 CHANNEL-OP-REPLACE  TRUE FALSE 0 FALSE)
         (gimp-edit-clear thinLayer)
         (gimp-selection-invert theImage)
         (gimp-edit-fill thinLayer BACKGROUND-FILL)

@@ -150,7 +150,7 @@
 
   (define (fill-color-band img drawable x scale x-base y-base color)
     (gimp-palette-set-foreground color)
-    (gimp-rect-select img (+ x-base (* scale x)) 0 scale y-base REPLACE FALSE 0)
+    (gimp-rect-select img (+ x-base (* scale x)) 0 scale y-base CHANNEL-OP-REPLACE FALSE 0)
     (gimp-edit-bucket-fill drawable FG-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
     (gimp-selection-none img))
 
@@ -313,7 +313,7 @@
 				      1 1 12 PIXELS
 				      "-*-helvetica-*-r-*-*-12-*-*-*-p-*-*-*")))
 	  (offset-y (- y-base (car (gimp-drawable-height clayer)))))
-      (gimp-layer-set-mode text-layer DIFFERENCE)
+      (gimp-layer-set-mode text-layer DIFFERENCE-MODE)
       (gimp-layer-translate clayer 0 offset-y)
       (gimp-layer-translate text-layer border-size (+ offset-y 15)))
     (gimp-image-set-active-layer gimg bglayer)

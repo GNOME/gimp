@@ -30,7 +30,7 @@
 			height
 			dest-x
 			dest-y)
-  (gimp-rect-select img x1 y1 width height REPLACE FALSE 0)
+  (gimp-rect-select img x1 y1 width height CHANNEL-OP-REPLACE FALSE 0)
   (gimp-edit-copy drawable)
   (let ((floating-sel (car (gimp-edit-paste drawable FALSE))))
     (gimp-layer-set-offsets floating-sel dest-x dest-y)
@@ -64,7 +64,7 @@
 		      ribbon-spacing
 		      (+ (* 2 ribbon-spacing) ribbon-width)
 		      ribbon-width
-		      REPLACE
+		      CHANNEL-OP-REPLACE
 		      FALSE
 		      0)
 
@@ -80,7 +80,7 @@
 		      0
 		      ribbon-width
 		      (+ (* 2 ribbon-spacing) ribbon-width)
-		      REPLACE
+		      CHANNEL-OP-REPLACE
 		      FALSE
 		      0)
 
@@ -177,9 +177,9 @@
     (gimp-palette-set-background '(0 0 0))
     (gimp-edit-fill drawable BACKGROUND-FILL)
 
-    (gimp-rect-select img r1-x1 r1-y1 r1-width r1-height REPLACE FALSE 0)
-    (gimp-rect-select img r2-x1 r2-y1 r2-width r2-height ADD FALSE 0)
-    (gimp-rect-select img r3-x1 r3-y1 r3-width r3-height ADD FALSE 0)
+    (gimp-rect-select img r1-x1 r1-y1 r1-width r1-height CHANNEL-OP-REPLACE FALSE 0)
+    (gimp-rect-select img r2-x1 r2-y1 r2-width r2-height CHANNEL-OP-ADD FALSE 0)
+    (gimp-rect-select img r3-x1 r3-y1 r3-width r3-height CHANNEL-OP-ADD FALSE 0)
 
     (gimp-palette-set-background '(255 255 255))
     (gimp-edit-fill drawable BACKGROUND-FILL)

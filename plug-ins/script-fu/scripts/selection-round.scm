@@ -59,35 +59,35 @@
 		    select-y1
 		    (+ cut-radius 1)
 		    (+ cut-radius 1)
-		    SUB
+		    CHANNEL-OP-SUBTRACT
 		    FALSE 0)
   (gimp-rect-select image
 		    select-x1
 		    (- select-y2 cut-radius)
 		    (+ cut-radius 1)
 		    (+ cut-radius 1)
-		    SUB
+		    CHANNEL-OP-SUBTRACT
 		    FALSE 0)
   (gimp-rect-select image
 		    (- select-x2 cut-radius)
 		    select-y1
 		    (+ cut-radius 1)
 		    (+ cut-radius 1)
-		    SUB
+		    CHANNEL-OP-SUBTRACT
 		    FALSE 0)
   (gimp-rect-select image
 		    (- select-x2 cut-radius)
 		    (- select-y2 cut-radius)
 		    (+ cut-radius 1)
 		    (+ cut-radius 1)
-		    SUB
+		    CHANNEL-OP-SUBTRACT
 		    FALSE 0)
   (gimp-ellipse-select image
 		       select-x1
 		       select-y1
 		       ellipse-radius
 		       ellipse-radius
-		       ADD
+		       CHANNEL-OP-ADD
 		       TRUE
 		       FALSE 0)
   (gimp-ellipse-select image
@@ -95,7 +95,7 @@
 		       (- select-y2 ellipse-radius)
 		       ellipse-radius
 		       ellipse-radius
-		       ADD
+		       CHANNEL-OP-ADD
 		       TRUE
 		       FALSE 0)
   (gimp-ellipse-select image
@@ -103,7 +103,7 @@
 		       select-y1
 		       ellipse-radius
 		       ellipse-radius
-		       ADD
+		       CHANNEL-OP-ADD
 		       TRUE
 		       FALSE 0)
   (gimp-ellipse-select image
@@ -111,7 +111,7 @@
 		       (- select-y2 ellipse-radius)
 		       ellipse-radius
 		       ellipse-radius
-		       ADD
+		       CHANNEL-OP-ADD
 		       TRUE
 		       FALSE 0)
 

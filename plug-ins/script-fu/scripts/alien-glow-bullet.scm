@@ -64,9 +64,9 @@
     (gimp-edit-clear bullet-layer)
 
     (center-ellipse img radius radius half-radius half-radius
-		    REPLACE TRUE FALSE 0)
+		    CHANNEL-OP-REPLACE TRUE FALSE 0)
     
-    ; (gimp-rect-select img (/ height 2) (/ height 2) length height REPLACE FALSE 0)
+    ; (gimp-rect-select img (/ height 2) (/ height 2) length height CHANNEL-OP-REPLACE FALSE 0)
     (gimp-palette-set-foreground '(90 90 90))
     (gimp-palette-set-background '(0 0 0))
 
