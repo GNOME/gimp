@@ -1,3 +1,8 @@
+2004-06-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontrollerinfo.c (gimp_controller_info_event):
+	more debugging output.
+
 2004-06-18 Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimpscaletool.c: changed algorithm for scaling when

@@ -428,6 +428,24 @@ gimp_controller_info_event (GimpController            *controller,
            controller->name, GIMP_CONTROLLER_GET_CLASS (controller)->name,
            event_name, event_blurb);
 
+  switch (event->any.type)
+    {
+    case GIMP_CONTROLLER_EVENT_TRIGGER:
+      g_print ("    (trigger event)\n");
+      break;
+
+    case GIMP_CONTROLLER_EVENT_VALUE:
+      {
+        if (G_VALUE_HOLDS_DOUBLE (&event->value.value))
+          g_print ("    (value event, value = %f)\n",
+                   g_value_get_double (&event->value.value));
+        else
+          g_print ("    (value event, unhandled type '%s')\n",
+                   g_type_name (event->value.value.g_type));
+      }
+      break;
+    }
+
   if (! info->enabled)
     {
       g_print ("    ignoring because controller is disabled\n");
