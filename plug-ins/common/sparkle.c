@@ -68,6 +68,7 @@ typedef struct
   gboolean  inverse;
   gboolean  border;
   gint      colortype;
+  gboolean  update_preview;
 } SparkleVals;
 
 
@@ -132,19 +133,20 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 static SparkleVals svals =
 {
-  0.001,  /* luminosity threshold */
-  0.5,    /* flare intensity      */
-  20.0,   /* spike length         */
-  4.0,    /* spike points         */
-  15.0,   /* spike angle          */
-  1.0,    /* spike density        */
-  0.0,    /* opacity              */
-  0.0,    /* random hue           */
-  0.0,    /* random saturation    */
-  FALSE,  /* preserve_luminosity  */
-  FALSE,  /* inverse              */
-  FALSE,  /* border               */
-  NATURAL /* colortype            */
+  0.001,   /* luminosity threshold */
+  0.5,     /* flare intensity      */
+  20.0,    /* spike length         */
+  4.0,     /* spike points         */
+  15.0,    /* spike angle          */
+  1.0,     /* spike density        */
+  0.0,     /* opacity              */
+  0.0,     /* random hue           */
+  0.0,     /* random saturation    */
+  FALSE,   /* preserve_luminosity  */
+  FALSE,   /* inverse              */
+  FALSE,   /* border               */
+  NATURAL, /* colortype            */
+  FALSE    /* update_preview       */
 };
 
 static gint num_sparkles;
@@ -342,7 +344,7 @@ sparkle_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new (drawable, NULL);
+  preview = gimp_drawable_preview_new (drawable, &svals.update_preview);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",
@@ -364,6 +366,9 @@ sparkle_dialog (GimpDrawable *drawable)
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.lum_threshold);
+  g_signal_connect_swapped (scale_data, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
@@ -374,6 +379,9 @@ sparkle_dialog (GimpDrawable *drawable)
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.flare_inten);
+  g_signal_connect_swapped (scale_data, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
@@ -384,6 +392,9 @@ sparkle_dialog (GimpDrawable *drawable)
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.spike_len);
+  g_signal_connect_swapped (scale_data, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
@@ -394,6 +405,9 @@ sparkle_dialog (GimpDrawable *drawable)
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.spike_pts);
+  g_signal_connect_swapped (scale_data, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
@@ -405,6 +419,9 @@ sparkle_dialog (GimpDrawable *drawable)
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.spike_angle);
+  g_signal_connect_swapped (scale_data, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
@@ -415,6 +432,9 @@ sparkle_dialog (GimpDrawable *drawable)
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.density);
+  g_signal_connect_swapped (scale_data, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
@@ -425,6 +445,9 @@ sparkle_dialog (GimpDrawable *drawable)
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.opacity);
+  g_signal_connect_swapped (scale_data, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 7,
@@ -436,6 +459,9 @@ sparkle_dialog (GimpDrawable *drawable)
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.random_hue);
+  g_signal_connect_swapped (scale_data, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 8,
@@ -447,6 +473,9 @@ sparkle_dialog (GimpDrawable *drawable)
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.random_saturation);
+  g_signal_connect_swapped (scale_data, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   hbox = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
@@ -468,6 +497,9 @@ sparkle_dialog (GimpDrawable *drawable)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &svals.preserve_luminosity);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   toggle = gtk_check_button_new_with_mnemonic (_("In_verse"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -480,6 +512,9 @@ sparkle_dialog (GimpDrawable *drawable)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &svals.inverse);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   toggle = gtk_check_button_new_with_mnemonic (_("A_dd border"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -492,6 +527,9 @@ sparkle_dialog (GimpDrawable *drawable)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &svals.border);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /*  colortype  */
   vbox = gimp_int_radio_group_new (FALSE, NULL,
@@ -510,6 +548,15 @@ sparkle_dialog (GimpDrawable *drawable)
   gimp_help_set_help_data (r1, _("Use the color of the image"), NULL);
   gimp_help_set_help_data (r2, _("Use the foreground color"), NULL);
   gimp_help_set_help_data (r3, _("Use the background color"), NULL);
+  g_signal_connect_swapped (r1, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  g_signal_connect_swapped (r2, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  g_signal_connect_swapped (r3, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_widget_show (dialog);
 
