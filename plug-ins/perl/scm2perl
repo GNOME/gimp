@@ -40,7 +40,7 @@ Perl knows the length of arrays, Script-Fu doesn't. Functions returning
 single arrays return them as a normal perl array, Functions returning
 more then one array return it as an array-ref. Script-Fu (and the
 converted script) expect to get a length argument and then the
-arguments. Each occurence (common ones are C<gimp_list_images> or
+arguments. Each occurrence (common ones are C<gimp_list_images> or
 C<gimp_image_get_layers>) must be fixed by hand.
 
 =head1 AUTHOR

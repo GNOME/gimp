@@ -1,0 +1,47 @@
+#!/usr/bin/perl
+# <sjburges@gimp.org>
+# This is adrian's idea - take random blends and difference them.  You're
+# bound to come up w/ something cool eventually.
+
+use Gimp;
+use Gimp::Fu;
+use Gimp::Util;
+
+# Gimp::set_trace(TRACE_ALL);
+
+register "round_rect_sel", 
+         "Rounds a rectangular selection.",
+         "Rounds a rectangular selection. If no selection exists, it selects all first, then rounds that selection.  If there exists a selection, but its non-rectangluar, it will be replaced by a rectangluar one.",
+         "Seth Burgess", 
+         "Seth Burgess <sjburges\@gimp.org>", 
+         "1999-03-25",
+         "<Image>/Select/Generate/Rounded Rectangluar Selection", 
+         "*", 
+         [ 
+           [PF_SPINNER, "x_rounding", "How much to round in the horizontal, in pixels", 16, [1,1000,1]], 
+           [PF_SPINNER, "y_rounding", "How far to round the in vertical, in pixels", 16, [1,1000,1]], 
+            ], sub {
+    my($img,$layer,$x_round, $y_round) =@_;
+	eval { $img->undo_push_group_start };
+	@bounds = $img->selection_bounds;
+	# recreate the selection
+	$img->rect_select($bounds[1], $bounds[2], $bounds[3]-$bounds[1], $bounds[4]-$bounds[2], 0, 0, 0.5);
+
+	# cut out the corners
+	$img->rect_select($bounds[1], $bounds[2], $x_round/2, $y_round/2, 1, 0, 0.5); 
+	$img->rect_select($bounds[3]-$x_round/2, $bounds[2], $x_round/2, $y_round/2, 1, 0, 0.5); 
+	$img->rect_select($bounds[3]-$x_round/2, $bounds[4]-$y_round/2, $x_round/2, $y_round/2, 1, 0, 0.5); 
+	$img->rect_select($bounds[1], $bounds[4]-$y_round/2, $x_round/2, $y_round/2, 1, 0, 0.5); 
+
+	# add them back as elipses
+	
+	$img->ellipse_select($bounds[1], $bounds[2], $x_round, $y_round, 0, 1, 0, 0.5); 
+	$img->ellipse_select($bounds[3]-$x_round, $bounds[2], $x_round, $y_round, 0, 1, 0, 0.5); 
+	$img->ellipse_select($bounds[3]-$x_round, $bounds[4]-$y_round, $x_round, $y_round, 0, 1, 0, 0.5); 
+	$img->ellipse_select($bounds[1], $bounds[4]-$y_round, $x_round, $y_round, 0, 1, 0, 0.5); 
+
+
+	eval { $img->undo_push_group_end };
+    return();
+};
+exit main;

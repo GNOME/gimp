@@ -21,7 +21,7 @@ sub skip($$;$) {
 }
 
 END {
-#  system("rm","-rf",$dir);#d##FIXME#
+  system("rm","-rf",$dir);#d##FIXME#
 }
 
 use Cwd;

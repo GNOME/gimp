@@ -10,7 +10,7 @@ $|=1;
       border.pl view3d.pl feedback.pl xachlego.pl xachshadow.pl parasite-editor
       scratches.pl blowinout.pl terral_text xachvision.pl gimpmagick perlcc
       sethspin.pl animate_cells image_tile yinyang stamps font_table
-      perlotine randomblends innerbevel
+      perlotine randomblends innerbevel fit-text guidegrid roundrectsel
    );
 @shebang = (map("examples/$_",@examples),
    qw(Perl-Server examples/example-net.pl examples/homepage-logo.pl
@@ -288,6 +288,7 @@ clean mostlyclean objclean:
 
 distclean maintainer-clean: clean
 	rm -f Makefile config.cache config.pl config.log config.h config.status stamp-h Makefile.old
+        rm -rf test-dir inst-temp
 EOF
    close MAKEFILE;
    exit;

@@ -40,6 +40,7 @@ sub import {
    my $pkg = shift;
    my $feature;
 
+   local $Gimp::in_query=1;
    while(@_) {
       $_=shift;
       s/^://;
@@ -91,21 +92,26 @@ sub present {
       0;
    } else {
       require Gimp;
-      Gimp::logger(message => "unimplemented requirement '$_' (failed)", fatal => 1);
+      Gimp::logger(message => "unimplemented requirement '$_' (failed)");
       0;
    }
 }
 
-sub missing {
+sub _missing {
    my ($msg,$function)=@_;
    require Gimp;
    Gimp::logger(message => "$_[0] is required but not found", function => $function);
-   Gimp::initialized() ? die "BE QUIET ABOUT THIS DIE\n" : exit Gimp::quiet_main();
+   Gimp::initialized() ? &Gimp::quiet_die() : exit Gimp::quiet_main();
+}
+
+sub missing {
+   local $Gimp::in_query=1;
+   &_missing;
 }
 
 sub need {
    my ($feature,$function)=@_;
-   missing($description{$feature},$function) unless present $feature;
+   _missing($description{$feature},$function) unless present $feature;
 }
 
 1;

@@ -1,0 +1,45 @@
+#!/usr/bin/perl
+# <sjburges@gimp.org>
+# This is adrian's idea - take random blends and difference them.  You're
+# bound to come up w/ something cool eventually.
+
+use Gimp;
+use Gimp::Fu;
+use Gimp::Util;
+
+# Gimp::set_trace(TRACE_ALL);
+
+register "guide_grid", 
+         "GuideGrid - creates a grid of guides\n",
+         "You specify the X spacing, the Y spacing, and initial offsets.  It creates a grid of guides\n",
+         "Seth Burgess", 
+         "Seth Burgess <sjburges\@gimp.org>", 
+         "1999-03-20",
+         "<Image>/GuideGrid", 
+         "*", 
+         [ 
+           [PF_SPINNER, "x_spacing", "How far to space grid horizontally", 24, [1,1000,1]], 
+           [PF_SPINNER, "y_spacing", "How far to space grid vertically", 24, [1,1000,1]], 
+           [PF_SPINNER, "x_offset", "How much to initially offset it horizontally", 0, [0,1000,1]], 
+           [PF_SPINNER, "y_offset", "How much to initially offset it vertically", 0, [0,1000,1]], 
+            ],
+         [],
+         ['gimp-1.1'],
+         sub {
+    my($img,$layer,$xspace, $yspace, $xoffset, $yoffset) =@_;
+
+	for ($i=$xoffset; $i<$img->width; $i+=$xspace) {
+		if ($i) {
+			$img->add_vguide($i);
+			}
+		}
+
+	for ($i=$yoffset; $i<$img->height; $i+=$yspace) {
+		if ($i) {
+			$img->add_hguide($i);
+			}
+		}
+
+    return();
+};
+exit main;

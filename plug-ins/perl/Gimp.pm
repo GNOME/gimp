@@ -8,11 +8,12 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $AUTOLOAD %EXPORT_TAGS @EXPORT_FAIL
             @gimp_gui_functions $function $basename
             $in_quit $in_run $in_net $in_init $in_query $no_SIG
             $help $verbose $host);
+use subs qw(init end lock unlock canonicalize_color);
 
 require DynaLoader;
 
 @ISA=qw(DynaLoader);
-$VERSION = 1.071;
+$VERSION = 1.072;
 
 @_param = qw(
 	PARAM_BOUNDARY	PARAM_CHANNEL	PARAM_COLOR	PARAM_DISPLAY	PARAM_DRAWABLE
@@ -161,7 +162,7 @@ sub import($;@) {
    for(@_) {
       if ($_ eq ":auto") {
          push(@export,@_consts,@_procs);
-         *{"${up}::AUTOLOAD"} = sub {
+         *{"$up\::AUTOLOAD"} = sub {
             croak "cannot autoload '$AUTOLOAD' at this time" unless initialized();
             my ($class,$name) = $AUTOLOAD =~ /^(.*)::(.*?)$/;
             *{$AUTOLOAD} = sub { Gimp->$name(@_) };
@@ -183,7 +184,7 @@ sub import($;@) {
    }
    
    for(@export) {
-      *{"${up}::$_"} = \&$_;
+      *{"$up\::$_"} = \&$_;
    }
 }
 
@@ -308,11 +309,16 @@ sub die_msg {
    logger(message => substr($_[0],0,-1), fatal => 1, function => 'ERROR');
 }
 
+# this needs to be improved
+sub quiet_die {
+   die "BE QUIET ABOUT THIS DIE\n";
+}
+
 unless ($no_SIG) {
    $SIG{__DIE__} = sub {
       unless ($^S || !defined $^S || $in_quit) {
          die_msg $_[0];
-         initialized() ? die "BE QUIET ABOUT THIS DIE\n" : xs_exit(main());
+         initialized() ? &quiet_die : exit quiet_main();
       } else {
         die $_[0];
       }
@@ -332,7 +338,7 @@ sub call_callback {
    my $cb = shift;
    return () if $caller eq "Gimp";
    if (UNIVERSAL::can($caller,$cb)) {
-      &{"${caller}::$cb"};
+      &{"$caller\::$cb"};
    } else {
       die_msg "required callback '$cb' not found\n" if $req;
    }
@@ -363,7 +369,7 @@ sub main {
    $caller=caller;
    #d# #D# # BIG BUG LURKING SOMEWHERE
    # just calling exit() will be too much for bigexitbug.pl
-   xs_exit(&{"${interface_pkg}::gimp_main"});
+   xs_exit(&{"$interface_pkg\::gimp_main"});
 }
 
 # same as main, but callbacks are ignored
@@ -386,18 +392,20 @@ $interface_pkg->import;
 
 # create some common aliases
 for(qw(_gimp_procedure_available gimp_call_procedure set_trace initialized)) {
-   *$_ = \&{"${interface_pkg}::$_"};
+   *$_ = \&{"$interface_pkg\::$_"};
 }
 
-*init  = \&{"${interface_pkg}::gimp_init"};
-*end   = \&{"${interface_pkg}::gimp_end" };
-*lock  = \&{"${interface_pkg}::lock" };
-*unlock= \&{"${interface_pkg}::unlock" };
+*init  = \&{"$interface_pkg\::gimp_init"};
+*end   = \&{"$interface_pkg\::gimp_end" };
+*lock  = \&{"$interface_pkg\::lock" };
+*unlock= \&{"$interface_pkg\::unlock" };
 
 ($basename = $0) =~ s/^.*[\\\/]//;
 
+# extra check for Gimp::Feature::import
+$in_query=0 unless defined $in_query;	# perl -w is SOOO braindamaged
 $verbose=
-$in_quit=$in_run=$in_net=$in_init=$in_query=0; # perl -w is braindamaged
+$in_quit=$in_run=$in_net=$in_init;	# perl -w is braindamaged
 
 my %ignore_function = ();
 
@@ -422,7 +430,7 @@ sub _croak($) {
 
 sub AUTOLOAD {
    my ($class,$name) = $AUTOLOAD =~ /^(.*)::(.*?)$/;
-   for(@{"${class}::PREFIXES"}) {
+   for(@{"$class\::PREFIXES"}) {
       my $sub = $_.$name;
       if (exists $ignore_function{$sub}) {
         *{$AUTOLOAD} = sub { () };
@@ -438,7 +446,7 @@ sub AUTOLOAD {
          };
          goto &$AUTOLOAD;
       } elsif (UNIVERSAL::can($interface_pkg,$sub)) {
-         my $ref = \&{"${interface_pkg}::$sub"};
+         my $ref = \&{"$interface_pkg\::$sub"};
          *{$AUTOLOAD} = sub {
             shift unless ref $_[0];
 #               goto &$ref;	# does not always work, PERLBUG! #FIXME
@@ -469,10 +477,10 @@ sub AUTOLOAD {
 sub _pseudoclass {
   my ($class, @prefixes)= @_;
   unshift(@prefixes,"");
-  *{"Gimp::${class}::AUTOLOAD"} = \&AUTOLOAD;
-  push(@{"${class}::ISA"}		, "Gimp::${class}");
-  push(@{"Gimp::${class}::PREFIXES"}	, @prefixes); @prefixes=@{"Gimp::${class}::PREFIXES"};
-  push(@{"${class}::PREFIXES"}		, @prefixes); @prefixes=@{"${class}::PREFIXES"};
+  *{"Gimp::$class\::AUTOLOAD"} = \&AUTOLOAD;
+  push(@{"$class\::ISA"}		, "Gimp::$class");
+  push(@{"Gimp::$class\::PREFIXES"}	, @prefixes); @prefixes=@{"Gimp::$class\::PREFIXES"};
+  push(@{"$class\::PREFIXES"}		, @prefixes); @prefixes=@{"$class\::PREFIXES"};
 }
 
 _pseudoclass qw(Layer		gimp_layer_ gimp_drawable_ gimp_floating_sel_ gimp_image_ gimp_ plug_in_);

@@ -75,4 +75,7 @@ examples/font_table
 examples/perlotine
 examples/randomblends
 examples/innerbevel
+examples/fit-text
+examples/guidegrid
+examples/roundrectsel
 

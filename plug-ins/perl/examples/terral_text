@@ -49,6 +49,7 @@ register
 	  [ PF_SLIDER, "blur_amount", "Blur Amount", 10, [0,26,1]],
 	], 
         [],
+        ['gimp-1.1'],
 sub {
 	($img, $pattern, $solidnoise, $font, $text, $blur) = @_;
 	$oldbg = gimp_palette_get_background();

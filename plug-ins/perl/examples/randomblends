@@ -24,7 +24,10 @@ register "random_blends",
          "RGB*, GRAY*", 
          [ 
            [PF_SPINNER, "number", "How many gradients to apply", 7, [1,255,1]], 
-            ], sub {
+            ],
+         [],
+         ['gimp-1.1'],
+         sub {
     my($img,$layer,$numgradients) =@_;
     eval { $img->undo_push_group_start };  # undo is broked for this one.
 # add this to the get_state (after its working?)

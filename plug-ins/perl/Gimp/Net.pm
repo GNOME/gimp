@@ -73,9 +73,9 @@ sub _gimp_procedure_available {
 # this is hardcoded into gimp_call_procedure!
 sub response {
    my($len,$req);
-   read($server_fh,$len,4) == 4 or die "protocol error";
+   read($server_fh,$len,4) == 4 or die "protocol error (1)";
    $len=unpack("N",$len);
-   read($server_fh,$req,$len) == $len or die "protocol error";
+   read($server_fh,$req,$len) == $len or die "protocol error (2)";
    net2args($req);
 }
 
