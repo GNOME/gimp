@@ -56,8 +56,14 @@ GtkWidget * gimp_int_combo_box_new        (const gchar     *first_label,
 GtkWidget * gimp_int_combo_box_new_valist (const gchar     *first_label,
                                            gint             first_value,
                                            va_list          values);
+
 GtkWidget * gimp_int_combo_box_new_array  (gint             n_values,
                                            const gchar     *labels[]);
+
+void        gimp_int_combo_box_prepend    (GimpIntComboBox *combo_box,
+                                           ...);
+void        gimp_int_combo_box_append     (GimpIntComboBox *combo_box,
+                                           ...);
 
 gboolean    gimp_int_combo_box_set_active (GimpIntComboBox *combo_box,
                                            gint             value);

@@ -52,6 +52,24 @@ GimpIntComboBox
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_int_combo_box_prepend ##### -->
+<para>
+
+</para>
+
+@combo_box: 
+@Varargs: 
+
+
+<!-- ##### FUNCTION gimp_int_combo_box_append ##### -->
+<para>
+
+</para>
+
+@combo_box: 
+@Varargs: 
+
+
 <!-- ##### FUNCTION gimp_int_combo_box_set_active ##### -->
 <para>
 

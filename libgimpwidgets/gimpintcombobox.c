@@ -218,6 +218,68 @@ gimp_int_combo_box_new_array (gint         n_values,
 }
 
 /**
+ * gimp_int_combo_box_prepend:
+ * @combo_box: a #GimpIntComboBox
+ * @...:       pairs of column number and value, terminated with -1
+ *
+ * This function provides a convenient way to prepend items to a
+ * #GimpIntComboBox. It prepends a row to the @combo_box's list store
+ * and calls gtk_list_store_set() for you.
+ *
+ * The column number must be taken from the enum #GimpIntStoreColumns.
+ **/
+void
+gimp_int_combo_box_prepend (GimpIntComboBox *combo_box,
+                            ...)
+{
+  GtkListStore *store;
+  GtkTreeIter   iter;
+  va_list       args;
+
+  g_return_if_fail (GIMP_IS_INT_COMBO_BOX (combo_box));
+
+  store = GTK_LIST_STORE (gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box)));
+
+  va_start (args, combo_box);
+
+  gtk_list_store_prepend (store, &iter);
+  gtk_list_store_set_valist (store, &iter, args);
+
+  va_end (args);
+}
+
+/**
+ * gimp_int_combo_box_append:
+ * @combo_box: a #GimpIntComboBox
+ * @...:       pairs of column number and value, terminated with -1
+ *
+ * This function provides a convenient way to append items to a
+ * #GimpIntComboBox. It appends a row to the @combo_box's list store
+ * and calls gtk_list_store_set() for you.
+ *
+ * The column number must be taken from the enum #GimpIntStoreColumns.
+ **/
+void
+gimp_int_combo_box_append (GimpIntComboBox *combo_box,
+                           ...)
+{
+  GtkListStore *store;
+  GtkTreeIter   iter;
+  va_list       args;
+
+  g_return_if_fail (GIMP_IS_INT_COMBO_BOX (combo_box));
+
+  store = GTK_LIST_STORE (gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box)));
+
+  va_start (args, combo_box);
+
+  gtk_list_store_append (store, &iter);
+  gtk_list_store_set_valist (store, &iter, args);
+
+  va_end (args);
+}
+
+/**
  * gimp_int_combo_box_set_active:
  * @combo_box: a #GimpIntComboBox
  * @value:     an integer value
