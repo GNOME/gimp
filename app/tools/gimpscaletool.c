@@ -51,6 +51,10 @@ static void        scale_tool_motion  (Tool *, void *);
 static void        scale_info_update  (Tool *);
 static Argument *  scale_invoker      (Argument *);
 
+/*  callback functions for the info dialog entries  */
+static void        scale_width_changed  (GtkWidget *entry, gpointer data);
+static void        scale_height_changed (GtkWidget *entry, gpointer data);
+
 void *
 scale_tool_transform (tool, gdisp_ptr, state)
      Tool * tool;
@@ -69,12 +73,12 @@ scale_tool_transform (tool, gdisp_ptr, state)
       if (!transform_info)
 	{
 	  transform_info = info_dialog_new ("Scaling Information");
-	  info_dialog_add_field (transform_info, "Original Width: ", orig_width_buf);
-	  info_dialog_add_field (transform_info, "Original Height: ", orig_height_buf);
-	  info_dialog_add_field (transform_info, "Current Width: ", width_buf);
-	  info_dialog_add_field (transform_info, "Current Height: ", height_buf);
-	  info_dialog_add_field (transform_info, "X Scale Ratio: ", x_ratio_buf);
-	  info_dialog_add_field (transform_info, "Y Scale Ratio: ", y_ratio_buf);
+	  info_dialog_add_field (transform_info, "Original Width: ", orig_width_buf, NULL, NULL);
+	  info_dialog_add_field (transform_info, "Original Height: ", orig_height_buf, NULL, NULL);
+	  info_dialog_add_field (transform_info, "Current Width: ", width_buf, scale_width_changed, tool);
+	  info_dialog_add_field (transform_info, "Current Height: ", height_buf, scale_height_changed, tool);
+	  info_dialog_add_field (transform_info, "X Scale Ratio: ", x_ratio_buf, NULL, NULL);
+	  info_dialog_add_field (transform_info, "Y Scale Ratio: ", y_ratio_buf, NULL, NULL);
 	}
 
       transform_core->trans_info [X1] = (double) transform_core->x1;
@@ -179,6 +183,70 @@ scale_info_update (tool)
 
   info_dialog_update (transform_info);
   info_dialog_popup (transform_info);
+}
+
+static void
+scale_width_changed (GtkWidget *w,
+		     gpointer  data)
+{
+  Tool * tool;
+  TransformCore * transform_core;
+  GDisplay * gdisp;
+  gchar *str;
+  int value;
+
+  tool = (Tool *)data;
+
+  if (tool)
+    {
+      gdisp = (GDisplay *) tool->gdisp_ptr;
+      transform_core = (TransformCore *) tool->private;
+
+      str = g_strdup (gtk_entry_get_text (GTK_ENTRY (w)));
+      value = (int) atof(str);
+
+      if (value != (transform_core->trans_info[X2] - transform_core->trans_info[X1]))
+	{
+	  draw_core_pause (transform_core->core, tool);
+	  transform_core->trans_info[X2] = transform_core->trans_info[X1] + value;
+	  scale_tool_recalc (tool, gdisp);
+	  draw_core_resume (transform_core->core, tool);
+	}
+      
+      g_free (str);
+    }
+}
+
+static void
+scale_height_changed (GtkWidget *w,
+		      gpointer  data)
+{
+  Tool * tool;
+  TransformCore * transform_core;
+  GDisplay * gdisp;
+  gchar *str;
+  int value;
+
+  tool = (Tool *)data;
+
+  if (tool)
+    {
+      gdisp = (GDisplay *) tool->gdisp_ptr;
+      transform_core = (TransformCore *) tool->private;
+
+      str = g_strdup (gtk_entry_get_text (GTK_ENTRY (w)));
+      value = (int) atof(str);
+
+      if (value != (transform_core->trans_info[Y2] - transform_core->trans_info[Y1]))
+	{
+	  draw_core_pause (transform_core->core, tool);
+	  transform_core->trans_info[Y2] = transform_core->trans_info[Y1] + value;
+	  scale_tool_recalc (tool, gdisp);
+	  draw_core_resume (transform_core->core, tool);
+	}
+      
+      g_free (str);
+    }
 }
 
 static void

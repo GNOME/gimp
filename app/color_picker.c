@@ -153,26 +153,26 @@ color_picker_button_press (Tool           *tool,
       switch (drawable_type (active_drawable))
 	{
 	case RGB_GIMAGE: case RGBA_GIMAGE:
-	  info_dialog_add_field (color_picker_info, "Red", red_buf);
-	  info_dialog_add_field (color_picker_info, "Green", green_buf);
-	  info_dialog_add_field (color_picker_info, "Blue", blue_buf);
-	  info_dialog_add_field (color_picker_info, "Alpha", alpha_buf);
-	  info_dialog_add_field (color_picker_info, "Hex Triplet", hex_buf);
+	  info_dialog_add_field (color_picker_info, "Red", red_buf, NULL, NULL);
+	  info_dialog_add_field (color_picker_info, "Green", green_buf, NULL, NULL);
+	  info_dialog_add_field (color_picker_info, "Blue", blue_buf, NULL, NULL);
+	  info_dialog_add_field (color_picker_info, "Alpha", alpha_buf, NULL, NULL);
+	  info_dialog_add_field (color_picker_info, "Hex Triplet", hex_buf, NULL, NULL);
 	  break;
 
 	case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
-	  info_dialog_add_field (color_picker_info, "Index", index_buf);
-	  info_dialog_add_field (color_picker_info, "Alpha", alpha_buf);
-	  info_dialog_add_field (color_picker_info, "Red", red_buf);
-	  info_dialog_add_field (color_picker_info, "Green", green_buf);
-	  info_dialog_add_field (color_picker_info, "Blue", blue_buf);
-	  info_dialog_add_field (color_picker_info, "Hex Triplet", hex_buf);
+	  info_dialog_add_field (color_picker_info, "Index", index_buf, NULL, NULL);
+	  info_dialog_add_field (color_picker_info, "Alpha", alpha_buf, NULL, NULL);
+	  info_dialog_add_field (color_picker_info, "Red", red_buf, NULL, NULL);
+	  info_dialog_add_field (color_picker_info, "Green", green_buf, NULL, NULL);
+	  info_dialog_add_field (color_picker_info, "Blue", blue_buf, NULL, NULL);
+	  info_dialog_add_field (color_picker_info, "Hex Triplet", hex_buf, NULL, NULL);
 	  break;
 
 	case GRAY_GIMAGE: case GRAYA_GIMAGE:
-	  info_dialog_add_field (color_picker_info, "Intensity", gray_buf);
-	  info_dialog_add_field (color_picker_info, "Alpha", alpha_buf);
-	  info_dialog_add_field (color_picker_info, "Hex Triplet", hex_buf);
+	  info_dialog_add_field (color_picker_info, "Intensity", gray_buf, NULL, NULL);
+	  info_dialog_add_field (color_picker_info, "Alpha", alpha_buf, NULL, NULL);
+	  info_dialog_add_field (color_picker_info, "Hex Triplet", hex_buf, NULL, NULL);
 	  break;
 
 	default :

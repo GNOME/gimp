@@ -70,11 +70,11 @@ perspective_tool_transform (tool, gdisp_ptr, state)
 	{
 	  transform_info = info_dialog_new ("Perspective Transform Information");
 	  info_dialog_add_field (transform_info, "Matrix: ",
-				 matrix_row_buf[0]);
+				 matrix_row_buf[0], NULL, NULL);
 	  info_dialog_add_field (transform_info, "        ",
-				 matrix_row_buf[1]);
+				 matrix_row_buf[1], NULL, NULL);
 	  info_dialog_add_field (transform_info, "        ",
-				 matrix_row_buf[2]);
+				 matrix_row_buf[2], NULL, NULL);
 	}
 
       transform_core->trans_info [X0] = (double) transform_core->x1;
@@ -211,7 +211,6 @@ perspective_tool_motion (tool, gdisp_ptr)
       return;
     }
 }
-
 
 static void *
 perspective_tool_recalc (tool, gdisp_ptr)

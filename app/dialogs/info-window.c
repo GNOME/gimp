@@ -148,17 +148,17 @@ info_window_create (void *gdisp_ptr)
   iwd->shades_str[0] = '\0';
 
   /*  add the information fields  */
-  info_dialog_add_field (info_win, "Dimensions (w x h): ", iwd->dimensions_str);
-  info_dialog_add_field (info_win, "Scale Ratio: ", iwd->scale_str);
-  info_dialog_add_field (info_win, "Display Type: ", iwd->color_type_str);
-  info_dialog_add_field (info_win, "Visual Class: ", iwd->visual_class_str);
-  info_dialog_add_field (info_win, "Visual Depth: ", iwd->visual_depth_str);
+  info_dialog_add_field (info_win, "Dimensions (w x h): ", iwd->dimensions_str, NULL, NULL);
+  info_dialog_add_field (info_win, "Scale Ratio: ", iwd->scale_str, NULL, NULL);
+  info_dialog_add_field (info_win, "Display Type: ", iwd->color_type_str, NULL, NULL);
+  info_dialog_add_field (info_win, "Visual Class: ", iwd->visual_class_str, NULL, NULL);
+  info_dialog_add_field (info_win, "Visual Depth: ", iwd->visual_depth_str, NULL, NULL);
   if (type == RGB)
-    info_dialog_add_field (info_win, "Shades of Color: ", iwd->shades_str);
+    info_dialog_add_field (info_win, "Shades of Color: ", iwd->shades_str, NULL, NULL);
   else if (type == INDEXED)
-    info_dialog_add_field (info_win, "Shades: ", iwd->shades_str);
+    info_dialog_add_field (info_win, "Shades: ", iwd->shades_str, NULL, NULL);
   else if (type == GRAY)
-    info_dialog_add_field (info_win, "Shades of Gray: ", iwd->shades_str);
+    info_dialog_add_field (info_win, "Shades of Gray: ", iwd->shades_str, NULL, NULL);
 
   /*  update the fields  */
   info_window_update (info_win, gdisp_ptr);

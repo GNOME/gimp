@@ -24,32 +24,54 @@
 #include "session.h"
 
 /*  static functions  */
-static InfoField * info_field_new (InfoDialog *, char *, char *);
+static InfoField * info_field_new (InfoDialog *, char *, char *, GtkSignalFunc, gpointer);
 static void        update_field (InfoField *);
 static gint        info_dialog_delete_callback (GtkWidget *, GdkEvent *, gpointer);
 
 static InfoField *
-info_field_new (InfoDialog *idialog,
-		char       *title,
-		char       *text_ptr)
+info_field_new (InfoDialog    *idialog,
+		char          *title,
+		char          *text_ptr,
+		GtkSignalFunc  callback,
+		gpointer       client_data)
 {
   GtkWidget *label;
   InfoField *field;
+  int        row; 
 
   field = (InfoField *) g_malloc (sizeof (InfoField));
 
+  row = idialog->nfields + 1;
+  gtk_table_resize (GTK_TABLE (idialog->info_table), 2, row);
+
   label = gtk_label_new (title);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (idialog->labels), label, FALSE, FALSE, 0);
+  gtk_table_attach_defaults (GTK_TABLE (idialog->info_table), label, 
+			     0, 1, row - 1, row);
 
-  field->w = gtk_label_new (text_ptr);
-  gtk_misc_set_alignment (GTK_MISC (field->w), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (idialog->values), field->w, FALSE, FALSE, 0);
+  if (callback == NULL)
+    {
+      field->w = gtk_label_new (text_ptr);
+      gtk_misc_set_alignment (GTK_MISC (field->w), 0.0, 0.5);
+    }
+  else
+    {
+      field->w = gtk_entry_new ();
+      gtk_widget_set_usize (field->w, 50, 0);
+      gtk_entry_set_text (GTK_ENTRY (field->w), text_ptr);
+      gtk_signal_connect (GTK_OBJECT (field->w), "changed",
+			  GTK_SIGNAL_FUNC (callback), client_data);
+    }
 
-  field->text_ptr = text_ptr;
+  gtk_table_attach_defaults (GTK_TABLE (idialog->info_table), field->w, 
+			     1, 2, row - 1, row);
 
   gtk_widget_show (field->w);
   gtk_widget_show (label);
+
+  field->text_ptr = text_ptr;
+  field->callback = callback;
+  field->client_data = client_data;
 
   return field;
 }
@@ -60,12 +82,18 @@ update_field (InfoField *field)
   gchar *old_text;
 
   /*  only update the field if its new value differs from the old  */
-  gtk_label_get (GTK_LABEL (field->w), &old_text);
+  if (field->callback == NULL)
+    gtk_label_get (GTK_LABEL (field->w), &old_text);
+  else
+    old_text = gtk_entry_get_text (GTK_ENTRY (field->w));
 
   if (strcmp (old_text, field->text_ptr))
     {
       /* set the new value and update somehow */
-      gtk_label_set (GTK_LABEL (field->w), field->text_ptr);
+        if (field->callback == NULL)
+	  gtk_label_set (GTK_LABEL (field->w), field->text_ptr);
+	else
+	  gtk_entry_set_text (GTK_ENTRY (field->w), field->text_ptr);
     }
 }
 
@@ -77,11 +105,11 @@ info_dialog_new (char *title)
   InfoDialog * idialog;
   GtkWidget *shell;
   GtkWidget *vbox;
-  GtkWidget *labels, *values;
-  GtkWidget *info_area;
+  GtkWidget *info_table;
 
   idialog = (InfoDialog *) g_malloc (sizeof (InfoDialog));
   idialog->field_list = NULL;
+  idialog->nfields = 0;
 
   shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (shell), "info_dialog", "Gimp");
@@ -96,25 +124,15 @@ info_dialog_new (char *title)
   gtk_container_border_width (GTK_CONTAINER (vbox), 1);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (shell)->vbox), vbox, TRUE, TRUE, 0);
 
-  info_area = gtk_hbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (info_area), 5);
-  gtk_box_pack_start (GTK_BOX (vbox), info_area, TRUE, TRUE, 0);
-
-  labels = gtk_vbox_new (FALSE, 1);
-  gtk_box_pack_start (GTK_BOX (info_area), labels, TRUE, TRUE, 0);
-
-  values = gtk_vbox_new (FALSE, 1);
-  gtk_box_pack_start (GTK_BOX (info_area), values, TRUE, TRUE, 0);
+  info_table = gtk_table_new (0, 0, FALSE);
+  gtk_container_border_width (GTK_CONTAINER (info_table), 5);
+  gtk_box_pack_start (GTK_BOX (vbox), info_table, TRUE, TRUE, 0);
 
   idialog->shell = shell;
   idialog->vbox = vbox;
-  idialog->info_area = info_area;
-  idialog->labels = labels;
-  idialog->values = values;
+  idialog->info_table = info_table;
 
-  gtk_widget_show (idialog->labels);
-  gtk_widget_show (idialog->values);
-  gtk_widget_show (idialog->info_area);
+  gtk_widget_show (idialog->info_table);
   gtk_widget_show (idialog->vbox);
 
   return idialog;
@@ -150,17 +168,20 @@ info_dialog_free (InfoDialog *idialog)
 }
 
 void
-info_dialog_add_field (InfoDialog *idialog,
-		       char       *title,
-		       char       *text_ptr)
+info_dialog_add_field (InfoDialog    *idialog,
+		       char          *title,
+		       char          *text_ptr,
+		       GtkSignalFunc  callback,
+		       gpointer       data)
 {
   InfoField * new_field;
 
   if (!idialog)
     return;
 
-  new_field = info_field_new (idialog, title, text_ptr);
+  new_field = info_field_new (idialog, title, text_ptr, callback, data);
   idialog->field_list = g_slist_prepend (idialog->field_list, (void *) new_field);
+  idialog->nfields++;
 }
 
 void

@@ -125,8 +125,8 @@ create_transform_options (void)
   /*  the new options structure  */
   options = (TransformOptions *) g_malloc (sizeof (TransformOptions));
   options->type = ROTATE;
-  options->smoothing = 1;
-  options->clip = 1;
+  options->smoothing = TRUE;
+  options->clip = FALSE;
   options->direction = TRANSFORM_TRADITIONAL;
   options->grid_size = 32;
   options->show_grid = TRUE;
@@ -238,7 +238,7 @@ create_transform_options (void)
   gtk_widget_show (grid_density);
 
   /*  the clip resulting image toggle button  */
-  toggle = gtk_check_button_new_with_label ("Clip perspective");
+  toggle = gtk_check_button_new_with_label ("Clip result");
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) transform_toggle_update,
@@ -324,7 +324,7 @@ int
 transform_tool_smoothing ()
 {
   if (!transform_options)
-    return 1;
+    return TRUE;
   else
     return transform_options->smoothing;
 }
@@ -333,7 +333,7 @@ int
 transform_tool_clip ()
 {
   if (!transform_options)
-    return 1;
+    return FALSE;
   else
     return transform_options->clip;
 }

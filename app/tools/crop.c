@@ -97,6 +97,12 @@ static void crop_ok_callback        (GtkWidget *, gpointer);
 static void crop_selection_callback (GtkWidget *, gpointer);
 static void crop_close_callback     (GtkWidget *, gpointer);
 
+/*  Crop dialog callback funtions  */
+static void crop_orig_x_changed     (GtkWidget *, gpointer);
+static void crop_orig_y_changed     (GtkWidget *, gpointer);
+static void crop_width_changed      (GtkWidget *, gpointer);
+static void crop_height_changed     (GtkWidget *, gpointer);
+			
 static void *crop_options = NULL;
 
 static Argument *crop_invoker (Argument *);
@@ -719,10 +725,10 @@ crop_info_create (Tool *tool)
   crop_info = info_dialog_new ("Crop Information");
 
   /*  add the information fields  */
-  info_dialog_add_field (crop_info, "X Origin: ", orig_x_buf);
-  info_dialog_add_field (crop_info, "Y Origin: ", orig_y_buf);
-  info_dialog_add_field (crop_info, "Width: ", width_buf);
-  info_dialog_add_field (crop_info, "Height: ", height_buf);
+  info_dialog_add_field (crop_info, "X Origin: ", orig_x_buf, crop_orig_x_changed, tool);
+  info_dialog_add_field (crop_info, "Y Origin: ", orig_y_buf, crop_orig_y_changed, tool);
+  info_dialog_add_field (crop_info, "Width: ", width_buf, crop_width_changed, tool);
+  info_dialog_add_field (crop_info, "Height: ", height_buf, crop_height_changed, tool);
 
   /* Create the action area  */
   build_action_area (GTK_DIALOG (crop_info->shell), action_items, 3, 0);
@@ -800,6 +806,135 @@ crop_close_callback (GtkWidget *w,
   tool->state = INACTIVE;
 }
 
+static void
+crop_orig_x_changed (GtkWidget *w,
+		     gpointer  data)
+{
+  Tool * tool;
+  Crop * crop;
+  GDisplay * gdisp;
+  gchar *str;
+  int value;
+
+  tool = (Tool *)data;
+
+  if (tool)
+    {
+      gdisp = (GDisplay *) tool->gdisp_ptr;
+      crop = (Crop *) tool->private;
+
+      str = g_strdup (gtk_entry_get_text (GTK_ENTRY (w)));
+      value = (int) atof(str);
+
+      if (value != crop->tx1)
+	{
+	  draw_core_pause (crop->core, tool);
+	  crop->tx2 = crop->tx2 + (value - crop->tx1);
+	  crop->tx1 = value;
+	  crop_recalc (tool, crop);
+	  draw_core_resume (crop->core, tool);
+	}
+      
+      g_free (str);
+    }
+}
+
+static void
+crop_orig_y_changed (GtkWidget *w,
+		     gpointer  data)
+{
+  Tool * tool;
+  Crop * crop;
+  GDisplay * gdisp;
+  gchar *str;
+  int value;
+
+  tool = (Tool *)data;
+
+  if (tool)
+    {
+      gdisp = (GDisplay *) tool->gdisp_ptr;
+      crop = (Crop *) tool->private;
+
+      str = g_strdup (gtk_entry_get_text (GTK_ENTRY (w)));
+      value = (int) atof(str);
+
+      if (value != crop->ty1)
+	{
+	  draw_core_pause (crop->core, tool);
+	  crop->ty2 = crop->ty2 + (value - crop->ty1);
+	  crop->ty1 = value;
+	  crop_recalc (tool, crop);
+	  draw_core_resume (crop->core, tool);
+	}
+      
+      g_free (str);
+    }
+}
+
+static void
+crop_width_changed (GtkWidget *w,
+		    gpointer  data)
+{
+  Tool * tool;
+  Crop * crop;
+  GDisplay * gdisp;
+  gchar *str;
+  int value;
+
+  tool = (Tool *)data;
+
+  if (tool)
+    {
+      gdisp = (GDisplay *) tool->gdisp_ptr;
+      crop = (Crop *) tool->private;
+
+      str = g_strdup (gtk_entry_get_text (GTK_ENTRY (w)));
+      value = (int) atof(str);
+
+      if (value != (crop->tx2 - crop->tx1));
+	{
+	  draw_core_pause (crop->core, tool);
+	  crop->tx2 = value + crop->tx1;
+	  crop_recalc (tool, crop);
+	  draw_core_resume (crop->core, tool);
+	}
+      
+      g_free (str);
+    }
+}
+
+static void
+crop_height_changed (GtkWidget *w,
+		     gpointer  data)
+{
+  Tool * tool;
+  Crop * crop;
+  GDisplay * gdisp;
+  gchar *str;
+  int value;
+
+  tool = (Tool *)data;
+
+  if (tool)
+    {
+      gdisp = (GDisplay *) tool->gdisp_ptr;
+      crop = (Crop *) tool->private;
+
+      str = g_strdup (gtk_entry_get_text (GTK_ENTRY (w)));
+      value = (int) atof(str);
+
+      if (value != (crop->ty2 - crop->ty1));
+	{
+	  draw_core_pause (crop->core, tool);
+	  crop->ty2 = value + crop->ty1;
+	  crop_recalc (tool, crop);
+	  draw_core_resume (crop->core, tool);
+	}
+      
+      g_free (str);
+    }
+}
 
 /*  The procedure definition  */
 ProcArg crop_args[] =

@@ -185,7 +185,7 @@ create_selection_options (ToolType tool_type)
   /* Widgets for fixed size select */
   if (tool_type == RECT_SELECT || tool_type == ELLIPSE_SELECT) 
     {
-      fixed_size_toggle = gtk_check_button_new_with_label ("Fixed size");
+      fixed_size_toggle = gtk_check_button_new_with_label ("Fixed size / aspect ratio");
       gtk_box_pack_start (GTK_BOX(vbox), fixed_size_toggle, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT(fixed_size_toggle), "toggled",
 			  (GtkSignalFunc)selection_toggle_update,

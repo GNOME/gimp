@@ -24,8 +24,10 @@ typedef struct _info_field InfoField;
 
 struct _info_field
 {
-  GtkWidget *w;
-  char *     text_ptr;
+  GtkWidget     *w;
+  char          *text_ptr;
+  GtkSignalFunc  callback;
+  gpointer       client_data;
 };
 
 
@@ -35,11 +37,10 @@ struct _info_dialog
 {
   GtkWidget   *shell;
   GtkWidget   *vbox;
-  GtkWidget   *info_area;
-  GtkWidget   *labels;
-  GtkWidget   *values;
+  GtkWidget   *info_table;
 
   GSList      *field_list;
+  int          nfields;
 
   void        *user_data;
 };
@@ -49,7 +50,11 @@ struct _info_dialog
 
 InfoDialog *  info_dialog_new         (char *);
 void          info_dialog_free        (InfoDialog *);
-void          info_dialog_add_field   (InfoDialog *, char *, char *);
+void          info_dialog_add_field   (InfoDialog *, 
+				       char *, 
+				       char *, 
+				       GtkSignalFunc,
+				       gpointer);
 void          info_dialog_popup       (InfoDialog *);
 void          info_dialog_popdown     (InfoDialog *);
 void          info_dialog_update      (InfoDialog *);

@@ -58,6 +58,12 @@ static void        rotate_tool_motion  (Tool *, void *);
 static void        rotate_info_update  (Tool *);
 static Argument *  rotate_invoker      (Argument *);
 
+/*  callback functions for the info dialog entries  */
+static void        rotate_angle_changed  (GtkWidget *entry, gpointer data);
+static void        rotate_center_x_changed  (GtkWidget *entry, gpointer data);
+static void        rotate_center_y_changed  (GtkWidget *entry, gpointer data);
+
+
 void *
 rotate_tool_transform (tool, gdisp_ptr, state)
      Tool * tool;
@@ -76,9 +82,9 @@ rotate_tool_transform (tool, gdisp_ptr, state)
       if (!transform_info)
 	{
 	  transform_info = info_dialog_new ("Rotation Information");
-	  info_dialog_add_field (transform_info, "Angle: ", angle_buf);
-	  info_dialog_add_field (transform_info, "Center X: ", center_x_buf);
-	  info_dialog_add_field (transform_info, "Center Y: ", center_y_buf);
+	  info_dialog_add_field (transform_info, "Angle: ", angle_buf, (GtkSignalFunc) rotate_angle_changed, tool);
+	  info_dialog_add_field (transform_info, "Center X: ", center_x_buf, (GtkSignalFunc) rotate_center_x_changed, tool);
+	  info_dialog_add_field (transform_info, "Center Y: ", center_y_buf, (GtkSignalFunc) rotate_center_y_changed, tool);
 	}
 
       transform_core->trans_info[ANGLE]      = 0.0;
@@ -145,12 +151,10 @@ static void
 rotate_info_update (tool)
      Tool * tool;
 {
-  GDisplay * gdisp;
   TransformCore * transform_core;
   double angle;
   int cx, cy;
 
-  gdisp = (GDisplay *) tool->gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
 
   angle = (transform_core->trans_info[ANGLE] * 180.0) / M_PI;
@@ -163,6 +167,102 @@ rotate_info_update (tool)
 
   info_dialog_update (transform_info);
   info_dialog_popup (transform_info);
+}
+
+static void
+rotate_angle_changed (GtkWidget *w,
+		      gpointer  data)
+{
+  Tool  * tool;
+  GDisplay * gdisp;
+  TransformCore * transform_core;
+  gchar *str;
+  double value;
+
+  tool = (Tool *)data;
+
+  if (tool)
+    {
+      gdisp = (GDisplay *) tool->gdisp_ptr;
+      transform_core = (TransformCore *) tool->private;
+
+      str = g_strdup (gtk_entry_get_text (GTK_ENTRY (w)));
+      value = (atof(str) * M_PI) / 180.0;
+
+      if (value != transform_core->trans_info[ANGLE])
+	{
+	  draw_core_pause (transform_core->core, tool);      
+	  transform_core->trans_info[ANGLE] = value;
+	  rotate_tool_recalc (tool, gdisp);
+	  draw_core_resume (transform_core->core, tool);
+	}
+      
+      g_free (str);
+    }
+}
+
+static void
+rotate_center_x_changed (GtkWidget *w,
+			 gpointer  data)
+{
+  Tool  * tool;
+  GDisplay * gdisp;
+  TransformCore * transform_core;
+  gchar *str;
+  int value;
+
+  tool = (Tool *)data;
+
+  if (tool)
+    {
+      gdisp = (GDisplay *) tool->gdisp_ptr;
+      transform_core = (TransformCore *) tool->private;
+
+      str = g_strdup (gtk_entry_get_text (GTK_ENTRY (w)));
+      value = (int) atof(str);
+
+      if (value != transform_core->cx)
+	{
+	  draw_core_pause (transform_core->core, tool);      
+	  transform_core->cx = value;
+	  rotate_tool_recalc (tool, gdisp);
+	  draw_core_resume (transform_core->core, tool);
+	}
+      
+      g_free (str);
+    }
+}
+
+static void
+rotate_center_y_changed (GtkWidget *w,
+			 gpointer  data)
+{
+  Tool  * tool;
+  GDisplay * gdisp;
+  TransformCore * transform_core;
+  gchar *str;
+  int value;
+
+  tool = (Tool *)data;
+
+  if (tool)
+    {
+      gdisp = (GDisplay *) tool->gdisp_ptr;
+      transform_core = (TransformCore *) tool->private;
+
+      str = g_strdup (gtk_entry_get_text (GTK_ENTRY (w)));
+      value = (int) atof(str);
+
+      if (value != transform_core->cy)
+	{
+	  draw_core_pause (transform_core->core, tool);      
+	  transform_core->cy = value;
+	  rotate_tool_recalc (tool, gdisp);
+	  draw_core_resume (transform_core->core, tool);
+	}
+      
+      g_free (str);
+    }
 }
 
 static void

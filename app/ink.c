@@ -160,6 +160,11 @@ create_ink_options ()
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
 
+  /*  the main label  */
+  label = gtk_label_new ("Ink Options");
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
   /* size slider */
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX(vbox), hbox, FALSE, FALSE, 0);

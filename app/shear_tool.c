@@ -57,6 +57,10 @@ static void        shear_tool_motion  (Tool *, void *);
 static void        shear_info_update  (Tool *);
 static Argument *  shear_invoker      (Argument *);
 
+/*  Info dialog callback funtions  */
+static void        shear_x_mag_changed (GtkWidget *, gpointer);
+static void        shear_y_mag_changed (GtkWidget *, gpointer);
+
 void *
 shear_tool_transform (tool, gdisp_ptr, state)
      Tool * tool;
@@ -75,8 +79,8 @@ shear_tool_transform (tool, gdisp_ptr, state)
       if (!transform_info)
 	{
 	  transform_info = info_dialog_new ("Shear Information");
-	  info_dialog_add_field (transform_info, "X Shear Magnitude: ", xshear_buf);
-	  info_dialog_add_field (transform_info, "Y Shear Magnitude: ", yshear_buf);
+	  info_dialog_add_field (transform_info, "X Shear Magnitude: ", xshear_buf, shear_x_mag_changed, tool);
+	  info_dialog_add_field (transform_info, "Y Shear Magnitude: ", yshear_buf, shear_y_mag_changed, tool);
 	}
       direction_unknown = 1;
       transform_core->trans_info[HORZ_OR_VERT] = HORZ;
@@ -150,6 +154,69 @@ shear_info_update (tool)
   info_dialog_popup (transform_info);
 }
 
+static void
+shear_x_mag_changed (GtkWidget *w,
+		     gpointer  data)
+{
+  Tool * tool;
+  TransformCore * transform_core;
+  GDisplay * gdisp;
+  gchar *str;
+  int value;
+
+  tool = (Tool *)data;
+
+  if (tool)
+    {
+      gdisp = (GDisplay *) tool->gdisp_ptr;
+      transform_core = (TransformCore *) tool->private;
+
+      str = g_strdup (gtk_entry_get_text (GTK_ENTRY (w)));
+      value = (int) atof(str);
+
+      if (value != transform_core->trans_info[XSHEAR])
+	{
+	  draw_core_pause (transform_core->core, tool);
+	  transform_core->trans_info[XSHEAR] = value;
+	  shear_tool_recalc (tool, gdisp);
+	  draw_core_resume (transform_core->core, tool);
+	}
+      
+      g_free (str);
+    }
+}
+
+static void
+shear_y_mag_changed (GtkWidget *w,
+		     gpointer  data)
+{
+  Tool * tool;
+  TransformCore * transform_core;
+  GDisplay * gdisp;
+  gchar *str;
+  int value;
+
+  tool = (Tool *)data;
+
+  if (tool)
+    {
+      gdisp = (GDisplay *) tool->gdisp_ptr;
+      transform_core = (TransformCore *) tool->private;
+
+      str = g_strdup (gtk_entry_get_text (GTK_ENTRY (w)));
+      value = (int) atof(str);
+
+      if (value != transform_core->trans_info[YSHEAR])
+	{
+	  draw_core_pause (transform_core->core, tool);
+	  transform_core->trans_info[YSHEAR] = value;
+	  shear_tool_recalc (tool, gdisp);
+	  draw_core_resume (transform_core->core, tool);
+	}
+      
+      g_free (str);
+    }
+}
 
 static void
 shear_tool_motion (tool, gdisp_ptr)

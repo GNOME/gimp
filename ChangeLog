@@ -1,3 +1,21 @@
+Sat Aug 15 15:27:39 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/color_picker.c
+	* app/crop.c
+	* app/info_dialog.[ch]
+	* app/info_window.c
+	* app/rotate_tool.c
+	* app/scale_tool.c
+	* app/shear_tool.c: We have entries in the info dialog now that
+	allow to enter exact values for the transformations and crop.
+
+	* app/transform_core.c
+	* app/transform_tool.c: Changed "Clip perspective" to "Clip result"
+	and made it available for all transformations.
+
+	* app/rect_select.c
+	* app/ink.c: minor cosmetic changes
+
 Fri Aug 14 19:58:13 EDT 1998 Adrian Likins <adrian@gimp.org>
 
 	* plugins/script-fu/scripts/select_to_brush.scm,

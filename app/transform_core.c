@@ -79,8 +79,8 @@ transform_ok_callback (GtkWidget *w,
 }
 
 static void
-transform_cancel_callback (GtkWidget *w,
-			   gpointer   client_data)
+transform_reset_callback (GtkWidget *w,
+			  gpointer   client_data)
 {
   Tool *tool;
   TransformCore *transform_core;
@@ -106,7 +106,7 @@ transform_cancel_callback (GtkWidget *w,
 static ActionAreaItem action_items[2] = 
 {
   { NULL, transform_ok_callback, NULL, NULL },
-  { "Cancel", transform_cancel_callback, NULL, NULL },
+  { "Reset", transform_reset_callback, NULL, NULL },
 };
 
 static char *action_labels[4] =
@@ -607,8 +607,8 @@ transform_core_draw (tool)
   if ((transform_core->grid_coords != NULL) && 
       (transform_core->tgrid_coords != NULL) &&
       ((tool->type != PERSPECTIVE) ||
-       (transform_core->transform[0][0] >=0.0) && 
-       (transform_core->transform[1][1] >=0.0)))
+       ((transform_core->transform[0][0] >=0.0) && 
+	(transform_core->transform[1][1] >=0.0))))
     {
 
       gci = 0;
@@ -1196,7 +1196,7 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
   y2 = y1 + float_tiles->levels[0].height;
 
   /*  Find the bounding coordinates  */
-  if (active_tool && active_tool->type == PERSPECTIVE && transform_tool_clip ())
+  if (active_tool && transform_tool_clip ())
     {
       tx1 = x1;
       ty1 = y1;
