@@ -1,0 +1,190 @@
+# This is a list of tips for the GIMP.  Every time the GIMP is
+# started, one tip will be selected from this file and will be
+# displayed in the "Tip of the day" dialog.
+#
+# - Lines starting with '#' are comments.
+# - Blank lines or comments separate two tips (they are not ignored).
+#   Multiple blank lines are treated as one.  If you want to have a
+#   blank line in a tip, put a space or tab in it.
+# - Text will appear in the dialog as it is in this file.  This is
+#   done on purpose in order to have more freedom in the layout of the
+#   tips than with automatic word-wrapping, but this also means that
+#   you have to avoid excessively long lines in this file.
+# - Tips should be concise: 3 lines or less.
+# - Advice for translators to other languages: keep the original tips
+#   as comments before the translated tips.  It will be easier for
+#   other people to check for changes or additions.
+#
+# Tips in this file have been contributed by Zachary Beane, Mo Oishi,
+# Raphael Quinet, Sven Neumann, Carey Bunks and other people on the
+# gimp mailing lists and newsgroup (comp.graphics.apps.gimp).
+# --------------------------------------------------------------------
+
+# The first tip should be a welcome message, because this is the
+# first thing that a new user will see.
+#
+                            Bem Vindo ao GIMP !
+      
+Praticamente todas as operações com imagens são realizadas clicando
+com o botão direito do rato na imagem.  E não se preocupe, pode 
+desfazer a maioria dos erros...    
+
+# Tips for beginners start here
+# (for people who are not familiar yet with layers and image formats)
+#
+
+Pode obter ajuda sensível ao contexto para a maioria das funcionalidades
+do GIMP primindo em qualquer altura a tecla F1. Também funciona nos menus.
+
+O GIMP utiliza camadas para organizar a sua imagem.  Pense nelas como
+uma pilha de diapositivos ou filtros, por forma a que olhando através
+da pilha observa um composto dos seus conteudos.
+
+Pode realizar muitas operações de camadas clicando com o direito na 
+etiqueta de texto de uma camada, no diálogo "Camadas, Canais e Caminhos"
+
+Quando gravar uma imagem para mais tarde a trabalhar, tente utilizar XCF,
+o formato de ficheiro nativo do GIMP (utilize a extensão de ficheiro 
+".xcf"). Isto preserva as camadas e todos os aspectos do seu trabalho-
+-em-curso. Uma vez completo o projecto, grave-o como JPEG, PNG, GIF, ...
+
+A camada chamada "Fundo" é especial pois não tem transparência. Isto 
+impede-o de adicionar uma camada máscara ou de a mover acima na pilha. 
+Pode adicionar-lhe transparência clicando com o direito no diálogo 
+"Camadas, Canais e Caminhos" e seleccionando "Adicionar Canal Alfa".
+
+A maioria dos plug-ins funciona na camada actual da imagem actual. Nalguns
+casos, terá de juntar todas as camadas (Camadas->Unificar Camadas) se
+desejar que o plug-in funcione para toda a imagem.
+
+Nem todos os efeitos podem ser aplicados a todos os tipos de imagens.
+Isto é indicado por uma opção de menu cinzenta. Poderá ter de modificar
+o modo da imagem para RGB (Imagem->Modo->RGB), adicionar um canal alfa
+(Camadas->Adicionar Canal Alfa) ou unifica-la (Camadas->Unificar Imagem).
+
+# Tips for intermediate users start here
+#
+
+Pode arrastar e largar muitas coisas no GIMP.  Por exemplo, arrastar
+uma cor da caixa de ferramentas ou de uma paleta de cores e larga-la
+numa imagem irá encher a imagem actual ou a seleccção com essa cor.
+
+Quando se estiver a utilizar uma ferramenta de desenho (Pincel, Spay
+ou Lápis), clique e Shift desenhará uma linha recta desde a sua última
+posição de desenho até à posição actual do cursor. Se também primir o
+Ctrl, a linha será limitada a ângulos de 15 graus.
+
+O diálogo de selecção de ficheiro completa a linha de comando com o Tab,
+tal como numa consola. Escreva parte do nome de um ficheiro, prima tab,
+e voila! Está completo.
+
+Pode redefinir teclas de atalho para qualquer menu fazendo-o aparecer,
+seleccionando um item do menu, e primindo a nova combinação de teclas
+de atalho. Isto é dinâmico e será gravado quando sair do GIMP.
+
+Pode utilizar o botão do meio do rato para se deslocar pela 
+imagem, caso seja maior que a janela de visualização.
+
+Clique e arraste uma régua para colocar um Guia numa imagem. Todas 
+as selecções arrastadas irão para os guias. Pode remover guias 
+arrastando-os para fora da imagem com a ferramenta de Movimento.
+
+Pode arrastar uma camada do diálogo "Camadas, Canais e Caminhos"
+e larga-la na cauxa de ferramentas. Isto irá criar uma nova imagem
+contendo apenas aquela camada.
+
+Uma Selecção Flutuante tem de estar ancorada a uma nova camada ou à
+última camada activa antes de realizar outras operações com a imagem.
+Clique nos botões Nova Camada ou Ancorar Camada no diálogo "Camadas, 
+Canais e Caminhos", ou utilize os menus para o fazer.
+
+O GIMP suporta compressão gzip automaticamente. Basta adicionar
+".gz" (ou ".bz2", se tiver o bzip2 instalado) ao nome do ficheiro
+e a sua imagem será gravada comprimida. Claro que ler imagens
+comprimidas também funciona.
+
+Primir e segurar a tecla Shift antes de fazer uma selecção permite-lhe
+adicionar à selecção actual em vez de a substituir. Utilizar o Ctrl
+antes de fazer uma selecção subtrai à actual.
+
+Pode primir ou largar as teclas Shift e Ctrl durante a realização
+de uma selecção por forma a limita-la a um quadrado ou círculo
+perfeito, ou torna-la centrada no ponto de partida.
+
+Utilizar Editar->Pincelada permite-lhe desenhar quadrados ou círculos
+simples pintando a margem da sua selecção actual com o pincel activo.
+Formas geométricas mais complexas podem ser desenhadas com Filtros->
+->Renderizar->Gfig.
+
+Se tiver desenhado um caminho (Editar->Pincelar), são utilizadas a
+ferramenta de desenho e as suas definições actuais. Pode utilizar o
+Spray em modo gradiente, a ferramenta de clonagem com um padrão ou
+mesmo a Borracha ou a ferramenta de Esborratar.
+
+Pode criar e editar selecções complexas utilizando a ferramenta de
+Bezier. O separador "Caminhos" no diálogo "Camadas, Canais e Caminhos"
+permite-lhe trabalhar em múltiplos caminhos e converte-los em selecções.
+
+Pode utilizar as ferramentas de pintura para alterar a selecção. Clique
+no botão de Máscara Rápida no canto inferior esquerdo de uma janela de
+imagem. Altere a sua selecção pintando na imagem e clique novamente no
+botão para a converter para a selecção normal.
+
+Pode gravar uma selecção para um canal (Seleccionar->Gravar para Canal)
+e depois modificar este canal com quaisquer ferramentas de desenho.
+Utilizando os botões no separador "Canais" do diálogo "Camadas, Canais
+e Caminhos", pode slternar a visibilidade deste novo canal ou converte-lo
+novamente numa selecção.
+
+# Tips for advanced users start here
+# (this is mostly for learning shortcut keys)
+#
+
+Se o seu ecrã estiver demasiado cheio, pode primir Tab várias vezes
+numa janela de imagem para esconder ou mostrar a caixa de ferramentas
+e outros diálogos.
+
+Pode ajustar o alcance da selecção de uma selecção livre
+clicando e arrastando para a esquerda e direita.
+
+Clique com shift no ícone do olho no diálogo de Camadas 
+para esconder todas as camadas menos uma. Clique com shift
+novamente para mostrar todas as camadas.
+
+Clique com control na previsão de máscara de camada no
+diálogo de Camadas alterna o efeito da máscara de camada.
+
+Clique com Alt na previsão de máscara de camada no diálogo
+de Camadas alterna a visão directa da máscara.
+
+Pode utilizar Alt-Tab para ciclar entre todas as camadas
+numa imagem (se o seu gestor de janelas não utilizar essa
+combinação de teclas...).
+
+Clique com Shift com a ferramenta de Enchimento para que
+ela utilizar a cor de fundo em vez da cor de primeiro plano.
+
+Arrastar com Ctrl com a ferramenta de Transformação em modo
+de rotação irá restringir a rotação a ângulos de 15 graus.
+
+Pode ajustar e recolocar uma selecção utilizando arrastar com Alt.
+
+Se as suas fontes parecerem quadradas, deve-se a não serem fontes
+escaláveis. A maioria dos servidores X suporta fontes Postscript
+tipo 1 escaláveis. Descarregue-as e instale-as. Alguns servidores
+de fontes permitem-lhe utilizar fontes TrueType (.ttf), que são
+também escaláveis.
+
+Para criar um círculo perfeito, prima o Shift enquanto faz uma selecção 
+eliptica. Para colocar um círculo precisamente, arraste guias horizontais
+e verticais tangentes ao círculo que quer seleccionar, coloque o cursor
+na intersecção dos guias, e a selecção resultante apenas tocará nos guias.
+
+Se algumas das suas fotografias passadas no scanner não tiverem cor 
+suficiente, pode facilmente melhorar o seu âmbito de cores com o botão
+"Auto" na ferramenta de Níveis (Imagem->Cores->Níveis). Se existirem
+quaisquer esbatimentos de cor, poderá corrigi-los com a ferramenta de
+Curvas (Imagem->Cores->Curvas).
+
+# (end of tips)
+
