@@ -1,5 +1,7 @@
 Thu Jul  9 21:23:46 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
+	* paint_core.c tile.c undo.c: tile tweaks.
+
 	* tile.c tile_manager.c tile_cache.c tile.h tile_manager.h
 	  tile_manager_pvt.h tile_pvt.h:
 	  completely redid tile management.

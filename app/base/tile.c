@@ -76,7 +76,7 @@ tile_lock (Tile *tile)
   TILE_MUTEX_LOCK (tile);
   tile->ref_count += 1;
 
-  if (tile->ref_count++ == 1) 
+  if (tile->ref_count == 1) 
     {
       if (tile->listhead) 
 	{

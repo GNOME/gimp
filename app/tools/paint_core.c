@@ -615,6 +615,7 @@ paint_core_get_orig_image (paint_core, drawable, x1, y1, x2, y2)
   PixelRegion srcPR, destPR;
   Tile *undo_tile;
   int h;
+  int refd;
   int pixelwidth;
   unsigned char * s, * d;
   void * pr;
@@ -638,9 +639,12 @@ paint_core_get_orig_image (paint_core, drawable, x1, y1, x2, y2)
   for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
     {
       /*  If the undo tile corresponding to this location is valid, use it  */
-      undo_tile = tile_manager_get_tile (undo_tiles, srcPR.x, srcPR.y, 0, TRUE, FALSE);
+      undo_tile = tile_manager_get_tile (undo_tiles, srcPR.x, srcPR.y, 0, FALSE, FALSE);
       if (undo_tile->valid == TRUE)
 	{
+	  refd = 1;
+	  undo_tile = tile_manager_get_tile (undo_tiles, srcPR.x, srcPR.y, 0, TRUE, FALSE);
+	  tile_lock (undo_tile->valid);
 	  s = undo_tile->data + srcPR.rowstride * (srcPR.y % TILE_HEIGHT) +
 	    srcPR.bytes * (srcPR.x % TILE_WIDTH);
 	}
@@ -659,7 +663,8 @@ paint_core_get_orig_image (paint_core, drawable, x1, y1, x2, y2)
 	  d += destPR.rowstride;
 	}
 
-      tile_release (undo_tile, FALSE);
+      if (refd)
+	tile_release (undo_tile, FALSE);
     }
 
   return orig_buf;
