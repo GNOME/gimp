@@ -1,18 +1,17 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Irish Translations for gimp plug ins 
+# Copyright (C) 2000 Free Software Foundation, Inc.
+# Seán Ó Ceallaigh <s_oceallaigh@yahoo.com>, 2000.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: gimp po-plug-ins CVS\n"
 "POT-Creation-Date: 2000-08-26 11:21-0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2000-08-27 00:23+0000\n"
+"Last-Translator: Seán Ó Ceallaigh <s_oceallaigh@yahoo.com>\n"
+"Language-Team: Gaeilge <gaeilge-a@listserv.heanet.ie>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: ENCODING\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8-bit\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:282
 #: plug-ins/FractalExplorer/Dialogs.c:1372 plug-ins/common/AlienMap.c:1396
@@ -20,7 +19,7 @@ msgstr ""
 #: plug-ins/gfig/gfig.c:3338 plug-ins/imagemap/imap_about.c:33
 #: plug-ins/webbrowser/webbrowser.c:279
 msgid "About"
-msgstr "About"
+msgstr "Faoi"
 
 #. the 3 Action Buttons
 #: plug-ins/FractalExplorer/Dialogs.c:284
@@ -103,7 +102,7 @@ msgstr "About"
 #: plug-ins/sel2path/sel2path.c:336 plug-ins/sgi/sgi.c:640
 #: plug-ins/webbrowser/webbrowser.c:281 plug-ins/xjt/xjt.c:793
 msgid "OK"
-msgstr ""
+msgstr "Ceart go leor"
 
 #. the  Action Button
 #: plug-ins/FractalExplorer/Dialogs.c:286
@@ -188,7 +187,7 @@ msgstr ""
 #: plug-ins/sgi/sgi.c:642 plug-ins/webbrowser/webbrowser.c:283
 #: plug-ins/winsnap/winsnap.c:913 plug-ins/xjt/xjt.c:795
 msgid "Cancel"
-msgstr ""
+msgstr "Cealaigh"
 
 #. Preview
 #: plug-ins/FractalExplorer/Dialogs.c:308 plug-ins/Lighting/lighting_ui.c:1094
@@ -214,15 +213,15 @@ msgstr ""
 #: plug-ins/imagemap/imap_grid.c:232 plug-ins/print/gimp_main_window.c:261
 #: plug-ins/rcm/rcm_dialog.c:115 plug-ins/rcm/rcm_dialog.c:627
 msgid "Preview"
-msgstr ""
+msgstr "Réamhthaispeántas"
 
 #: plug-ins/FractalExplorer/Dialogs.c:352
 msgid "Realtime Preview"
-msgstr ""
+msgstr "Réamhthaispeántas Beo"
 
 #: plug-ins/FractalExplorer/Dialogs.c:359
 msgid "If you enable this option the preview will be redrawn automatically"
-msgstr ""
+msgstr "Má chuireann tú an rogha seo ar súil, athscríobhfar an réamhthaispeántas gan stró"
 
 #: plug-ins/FractalExplorer/Dialogs.c:362
 msgid "Redraw"

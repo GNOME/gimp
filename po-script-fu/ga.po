@@ -1,23 +1,23 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Irish Translations for gimp po script fu 
+# Copyright (C) 2000 Free Software Foundation, Inc.
+# Seán Ó Ceallaigh <s_oceallaigh@yahoo.com>, 2000.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2000-08-27 08:22-0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2000-08-27 00:36+0000\n"
+"Last-Translator: Seán Ó Ceallaigh <s_oceallaigh@yahoo.com>\n"
+"Language-Team: Gaeilge <gaeilge-a@listserv.heanet.ie>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: ENCODING\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8-bit\n"
 
 #: plug-ins/script-fu/script-fu-console.c:156
 msgid "Script-Fu console mode allows only interactive invocation"
-msgstr "Script-Fu console mode allows only interactive invocation"
+msgstr ""
 
+"Content-Transfer-Encoding: ENCODING\n"
 #: plug-ins/script-fu/script-fu-console.c:186
 msgid "Script-Fu Console"
 msgstr ""
@@ -26,17 +26,17 @@ msgstr ""
 #: plug-ins/script-fu/script-fu-console.c:199
 #: plug-ins/script-fu/script-fu-scripts.c:1962
 msgid "Close"
-msgstr ""
+msgstr "Druid"
 
 #. The info vbox
 #: plug-ins/script-fu/script-fu-console.c:207
 msgid "SIOD Output"
-msgstr ""
+msgstr "Aschur SIOD"
 
 #. The current command
 #: plug-ins/script-fu/script-fu-console.c:286
 msgid "Current Command"
-msgstr ""
+msgstr "Ordú Reatha"
 
 #: plug-ins/script-fu/script-fu-console.c:307
 msgid "Browse..."
