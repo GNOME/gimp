@@ -1,3 +1,9 @@
+2003-03-31  Jakub Steiner <jimmac@ximian.com>
+
+	* themes/Default/images/stock-text-dir-ltr-24.png:
+	* themes/Default/images/stock-text-dir-rtl-24.png: replace
+	  placeholder artwork
+
 2003-03-31  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimptextlayer.[ch]: when the user has changed the layer
