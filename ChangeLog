@@ -1,5 +1,15 @@
 2003-11-11  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpstock.[ch]
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-move-to-screen-[16|24].png: added
+	new icon drawn by Jimmac.
+
+	* app/gui/dialogs-menu.c
+	* app/gui/image-menu.c: use the new icon.
+
+2003-11-11  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpcanvas.[ch]: added gimp_canvas_set_clip_region().
 
 	* app/display/gimpdisplayshell-callbacks.c

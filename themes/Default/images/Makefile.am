@@ -74,6 +74,7 @@ STOCK_MENU_IMAGES = \
 	stock-menu-left-12.png				\
 	stock-menu-right-12.png				\
 	stock-merge-down-16.png				\
+	stock-move-to-screen-16.png			\
 	stock-navigation-16.png				\
 	stock-path-16.png				\
 	stock-paths-16.png				\
@@ -147,6 +148,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-line-spacing-22.png		\
 	stock-linked-12.png			\
 	stock-linked-20.png			\
+	stock-move-to-screen-24.png		\
 	stock-paste-as-new-16.png		\
 	stock-paste-into-16.png			\
 	stock-path-stroke-16.png		\

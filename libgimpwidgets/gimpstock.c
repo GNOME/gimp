@@ -366,6 +366,8 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_LINKED,                   stock_linked_20                   },
   { GIMP_STOCK_VISIBLE,                  stock_eye_20                      },
 
+  { GIMP_STOCK_MOVE_TO_SCREEN,           stock_move_to_screen_24           },
+
   { GIMP_STOCK_TOOL_AIRBRUSH,            stock_tool_airbrush_22            },
   { GIMP_STOCK_TOOL_BLEND,               stock_tool_blend_22               },
   { GIMP_STOCK_TOOL_BLUR,                stock_tool_blur_22                },
@@ -480,6 +482,7 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_LANDSCAPE,                stock_landscape_16                },
 
   { GIMP_STOCK_CLOSE,                    stock_close_12                    },
+  { GIMP_STOCK_MOVE_TO_SCREEN,           stock_move_to_screen_16           },
   { GIMP_STOCK_DEFAULT_COLORS,           stock_default_colors_12           },
   { GIMP_STOCK_SWAP_COLORS,              stock_swap_colors_12              },
 

@@ -182,7 +182,8 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
     NULL,
     GIMP_HELP_DOCK_AUTO_BUTTON, NULL },
   { { N_("/Move to Screen..."), NULL,
-      dialogs_change_screen_cmd_callback, 0, NULL },
+      dialogs_change_screen_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_MOVE_TO_SCREEN },
     NULL,
     GIMP_HELP_DOCK_CHANGE_SCREEN, NULL }
 };

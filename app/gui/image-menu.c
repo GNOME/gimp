@@ -483,7 +483,8 @@ GimpItemFactoryEntry image_menu_entries[] =
     GIMP_HELP_VIEW_FULLSCREEN, NULL },
 
   { { N_("/View/Move to Screen..."), NULL,
-      view_change_screen_cmd_callback, 0, NULL },
+      view_change_screen_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_MOVE_TO_SCREEN },
     NULL,
     GIMP_HELP_VIEW_CHANGE_SCREEN, NULL },
 
