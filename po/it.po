@@ -13,14 +13,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.3.1\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 02:46+0100\n"
+"POT-Creation-Date: 2003-11-24 04:02+0100\n"
 "PO-Revision-Date: 2003-11-05 15:26+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: app/app_procs.c:182
 msgid ""
@@ -35,11 +35,9 @@ msgstr ""
 "GIMP senza l'opzione '--no-interface'."
 
 #: app/app_procs.c:275
-#, fuzzy, c-format
+#, c-format
 msgid "Opening '%s' failed: %s"
-msgstr ""
-"Apertura di '%s' fallita:\n"
-"%s"
+msgstr "L'apertura di '%s' è fallita: %s"
 
 #: app/main.c:211
 msgid ""
@@ -49,7 +47,7 @@ msgstr ""
 "GIMP non può inizializzare l'interfaccia grafica.\n"
 "Controllare la corretta esistenza dell'impostazione dell'ambiente grafico."
 
-#: app/main.c:218 app/gui/splash.c:111 app/widgets/gimptoolbox.c:439
+#: app/gui/splash.c:111 app/main.c:218 app/widgets/gimptoolbox.c:439
 msgid "The GIMP"
 msgstr "The GIMP"
 
@@ -117,9 +115,8 @@ msgstr ""
 "motivi.\n"
 
 #: app/main.c:486
-#, fuzzy
 msgid "  -f, --no-fonts           Do not load any fonts.\n"
-msgstr "  -s, --no-splash          Non mostrare la finestra iniziale.\n"
+msgstr "  -f, --no-fonts           Non caricare nessun carattere.\n"
 
 #: app/main.c:487
 msgid "  -i, --no-interface       Run without a user interface.\n"
@@ -139,9 +136,8 @@ msgstr ""
 "  -S, --no-splash-image    Non mostrare l'immagine nella finestra iniziale.\n"
 
 #: app/main.c:491
-#, fuzzy
 msgid "  --session <name>         Use an alternate sessionrc file.\n"
-msgstr "  -g, --gimprc <gimprc>    Utilizza alternativi file gimprc.\n"
+msgstr "  --session <nome>         Usa un file sessionrc alternativo.\n"
 
 #: app/main.c:492
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
@@ -304,9 +300,9 @@ msgid "invalid value '%ld' for token %s"
 msgstr "valore non valido '%ld' per il token %s"
 
 #: app/config/gimpconfig-deserialize.c:616
-#, fuzzy, c-format
+#, c-format
 msgid "while parsing token '%s': %s"
-msgstr "analizzando il token %s: %s"
+msgstr "analizzando il token '%s': %s"
 
 #: app/config/gimpconfig-deserialize.c:767
 #, c-format
@@ -314,9 +310,9 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "il valore per il token %s non è una stringa UTF-8 valida"
 
 #: app/config/gimpconfig-path.c:144
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot expand ${%s}"
-msgstr "non posso espandere $(%s)"
+msgstr "Impossibile espandere $(%s)"
 
 #: app/config/gimpconfig-utils.c:472 app/config/gimpscanner.c:92
 #: app/core/gimpbrush.c:414 app/core/gimpbrushgenerated.c:377
@@ -349,17 +345,17 @@ msgid "Error while reading '%s': %s"
 msgstr "Errore durante la lettura di '%s': %s"
 
 #: app/config/gimpconfig-utils.c:540
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "There was an error parsing your '%s' file. Default values will be used. A "
 "backup of your configuration has been created at '%s'."
 msgstr ""
-"C'è stato un'errore elaborando il tuo file %s .\n"
-"Saranno usati valori predefiniti. È stata fatta una copia di\n"
-"salvataggio su '%s'."
+"C'è stato un'errore elaborando il file '%s'. Saranno usati i valori "
+"predefiniti. È stata fatta una copia di salvataggio della configurazione su "
+"'%s'."
 
 #: app/config/gimpconfigwriter.c:105
-#, fuzzy, c-format
+#, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr "Impossibile creare il file temporaneo per '%s': %s"
 
@@ -387,9 +383,9 @@ msgid "Error writing to '%s': %s"
 msgstr "Errore scrivendo su '%s': %s"
 
 #: app/config/gimpconfigwriter.c:600
-#, fuzzy, c-format
+#, c-format
 msgid "Could not create '%s': %s"
-msgstr "Impossibile cancellare '%s': %s"
+msgstr "Impossibile creare '%s': %s"
 
 #: app/config/gimprc.c:341 app/config/gimprc.c:353
 #, c-format
@@ -411,6 +407,9 @@ msgid ""
 "receives the focus. This is useful for window managers using \"click to focus"
 "\"."
 msgstr ""
+"Se abilitato un'immagine diventa un'immagine attiva se la sua finestra "
+"immagine riceve il focus. È utile per i gestori di finestre che usano il "
+"\"focus con clic\"."
 
 #: app/config/gimprc-blurbs.h:21
 msgid "Specifies how the area around the image should be drawn."
@@ -467,6 +466,9 @@ msgid ""
 "The window type hint that is set on dock windows. This may affect the way "
 "your window manager decorates and handles dock windows."
 msgstr ""
+"Il suggerimento per il tipo di finestra impostato sulle finestre in "
+"pannello. Può modificare il modo con cui il gestore delle finestre decora e "
+"gestisce le finestre in pannello."
 
 #: app/config/gimprc-blurbs.h:118
 msgid "Sets the browser used by the help system."
@@ -728,13 +730,12 @@ msgid "When enabled, menus can be torn off."
 msgstr "Se abilitata i menu possono essere staccati."
 
 #: app/config/gimprc-blurbs.h:288
-#, fuzzy
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
 msgstr ""
-"Se abilitata è possibile cambiare i tasti scorciatoia per le voci di menu al "
-"volo."
+"Se abilitata è possibile cambiare i tasti scorciatoia per le voci di menu "
+"premendo una combinazione di tasti mentre la voce del menu è selezionata."
 
 #: app/config/gimprc-blurbs.h:292
 msgid "Save changed keyboard shortcuts when the GIMP exits."
@@ -782,6 +783,8 @@ msgid ""
 "The window type hint that is set on the toolbox. This may affect how your "
 "window manager decorates and handles the toolbox window."
 msgstr ""
+"Il suggerimento tipo finestra impostato sugli strumenti. Può condizionare "
+"come il gestore delle finestre decora e gestisce la finestra strumenti."
 
 #: app/config/gimprc-blurbs.h:325
 msgid "Sets the manner in which transparency is displayed in images."
@@ -843,11 +846,9 @@ msgid "invalid UTF-8 string"
 msgstr "stringa UTF-8 non valida"
 
 #: app/config/gimpscanner.c:494
-#, fuzzy, c-format
+#, c-format
 msgid "Error while parsing '%s' in line %d: %s"
-msgstr ""
-"Errore durante l'elaborazione di '%s' alla riga  %d:\n"
-"%s"
+msgstr "Errore durante l'elaborazione di '%s' alla riga  %d: %s"
 
 #: app/core/core-enums.c:13
 msgid "_White (Full Opacity)"
@@ -920,7 +921,7 @@ msgstr "Grigio"
 #: app/core/core-enums.c:101 app/core/core-enums.c:320
 #: app/core/core-enums.c:342
 msgid "Indexed"
-msgstr "Scala di colore"
+msgstr "Indicizzata"
 
 #: app/core/core-enums.c:139
 msgid "No Color Dithering"
@@ -1046,7 +1047,7 @@ msgstr "RGB"
 #: app/core/core-enums.c:319 app/core/core-enums.c:340
 #: app/gui/info-window.c:87 app/gui/info-window.c:554
 msgid "Grayscale"
-msgstr "Scala di grigio"
+msgstr "Scala di grigi"
 
 #: app/core/core-enums.c:339
 msgid "RGB-Alpha"
@@ -1054,7 +1055,7 @@ msgstr "Alpha-RGB"
 
 #: app/core/core-enums.c:341
 msgid "Grayscale-Alpha"
-msgstr "Scala di grigio-Alpha"
+msgstr "Scala di grigi-Alfa"
 
 #: app/core/core-enums.c:343
 msgid "Indexed-Alpha"
@@ -1161,9 +1162,8 @@ msgid "Merge Layers"
 msgstr "Fondi i ivelli"
 
 #: app/core/core-enums.c:558
-#, fuzzy
 msgid "Merge Vectors"
-msgstr "Nuovi vettori"
+msgstr "Fondi vettori"
 
 #: app/core/core-enums.c:559 app/core/core-enums.c:588
 msgid "QuickMask"
@@ -1508,24 +1508,22 @@ msgid "Could not read %d bytes from '%s': %s"
 msgstr "Impossibile leggere %d byte da '%s': %s"
 
 #: app/core/gimpbrush.c:590
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
 msgstr ""
-"Errore fatale di analisi:\n"
-"il file pennello '%s' è errato."
+"Errore fatale di analisi nel file pennello '%s': profondità sconosciuta %d."
 
 #: app/core/gimpbrush.c:603
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
 msgstr ""
-"Errore fatale di interpretazione: '%s': versione di pennello GIMP sconosciuta"
+"Errore fatale di analisi nel file pennello '%s': versione sconosciuta %d."
 
 #: app/core/gimpbrush.c:619 app/core/gimpbrush.c:735
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr ""
-"Errore di analisi fatale:\n"
-"Il file pennello '%s' sembra troncato."
+"Errore di analisi fatale nel file pennello '%s': il file sembra troncato."
 
 #: app/core/gimpbrush.c:627 app/core/gimpbrushpipe.c:374
 #, c-format
@@ -1540,33 +1538,34 @@ msgid "Unnamed"
 msgstr "Senza nome"
 
 #: app/core/gimpbrush.c:723
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA."
 msgstr ""
-"Profondità pennello non supportata %d\\n\n"
-"nel file '%s'.\n"
-"I pennelli di Gimp devono essere grigi o RGBA."
+"Errore fatale di analisi nel file pennello '%s': profondita pennello non "
+"supportata %d\n"
+"I pennelli di GIMP devono essere grigi o RGBA."
 
 #: app/core/gimpbrushgenerated.c:388
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
-msgstr "Errore fatale di interpretazione: '%s' non è un file pennello di GIMP"
+msgstr ""
+"Errore fatale di analisi nel file pennello '%s': non è un file pennello di "
+"GIMP."
 
 #: app/core/gimpbrushgenerated.c:399
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version."
 msgstr ""
-"Errore fatale di interpretazione: '%s': versione di pennello GIMP sconosciuta"
+"Errore fatale di analisi nel file pennello '%s': versione di pennello "
+"sconosciuta"
 
 #: app/core/gimpbrushpipe.c:384 app/core/gimpbrushpipe.c:404
 #: app/core/gimpbrushpipe.c:494
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
-msgstr ""
-"Errore fatale di analisi:\n"
-"il file pennello '%s' è errato."
+msgstr "Errore fatale di analisi nel file pennello '%s': il file è errato."
 
 #: app/core/gimpchannel.c:234 app/pdb/internal_procs.c:87
 msgid "Channel"
@@ -1694,12 +1693,10 @@ msgid "%s copy"
 msgstr "%s copia"
 
 #: app/core/gimpdatafactory.c:443
-#, fuzzy, c-format
+#, c-format
 msgid "Trying legacy loader on file '%s' with unknown extension."
 msgstr ""
-"Prova del caricatore standard\n"
-"sul file '%s'\n"
-"con estensione sconosciuta."
+"Prova del caricatore standard sul file '%s' con estensione sconosciuta."
 
 #: app/core/gimpdatafactory.c:467
 #, c-format
@@ -1777,9 +1774,11 @@ msgid "Illegal variable name in environment file %s: %s"
 msgstr "Nome variabile illegale nel file di ambiente %s: %s"
 
 #: app/core/gimpgradient.c:365
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
-msgstr "Errore di analisi fatale: '%s' non è un file di gradiente Gimp"
+msgstr ""
+"Errore di analisi fatale nel file gradiente: '%s' non è un file di gradiente "
+"Gimp."
 
 #: app/core/gimpgradient.c:382
 #, c-format
@@ -1787,11 +1786,9 @@ msgid "Invalid UTF-8 string in gradient file '%s'."
 msgstr "Stringa UTF-8 non valida in file gradiente '%s'."
 
 #: app/core/gimpgradient.c:410
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in gradient file '%s': File is corrupt."
-msgstr ""
-"Errore di analisi fatale:\n"
-"il file gradiente '%s' è errato."
+msgstr "Errore di analisi fatale nel file gradiente '%s': il file è errato."
 
 #: app/core/gimpgradient.c:467
 #, c-format
@@ -1879,11 +1876,10 @@ msgid "Merge Visible Layers"
 msgstr "Fondi livelli visibili"
 
 #: app/core/gimpimage-merge.c:105
-#, fuzzy
 msgid "Not enough visible layers for a merge. There must be at least two."
 msgstr ""
-"Non ci sono  sufficienti livelli visibili da fondere.\n"
-"Ce ne devono essere almeno due."
+"Non ci sono  sufficienti livelli visibili da fondere. Ce ne devono essere "
+"almeno due."
 
 #: app/core/gimpimage-merge.c:138
 msgid "Flatten Image"
@@ -1898,16 +1894,14 @@ msgid "There are not enough visible layers for a merge down."
 msgstr "Non ci sono abbastanza livelli visibili per fonderli."
 
 #: app/core/gimpimage-merge.c:537
-#, fuzzy
 msgid "Merge Visible Paths"
-msgstr "Fondi livelli visibili"
+msgstr "Fondi tracciati visibili"
 
 #: app/core/gimpimage-merge.c:574
-#, fuzzy
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
-"Non ci sono  sufficienti livelli visibili da fondere.\n"
-"Ce ne devono essere almeno due."
+"Non ci sono  sufficienti tracciati visibili da fondere. Ce ne devono essere "
+"almeno due."
 
 #: app/core/gimpimage-qmask.c:75
 msgid "Enable QuickMask"
@@ -1989,11 +1983,10 @@ msgid "Lower Layer to Bottom"
 msgstr "Sposta il livello in fondo"
 
 #: app/core/gimpimage.c:2699
-#, fuzzy, c-format
+#, c-format
 msgid "Layer '%s' has no alpha. Layer was placed above it."
 msgstr ""
-"Il livello \"%s\" non ha alpha.\n"
-"Il livello era stato disposto sopra di esso."
+"Il livello '%s' non ha alfa. Il livello è stato disposto sopra di esso."
 
 #: app/core/gimpimage.c:2749
 msgid "Add Channel"
@@ -2044,12 +2037,12 @@ msgid "Lower Path"
 msgstr "Abbassa tracciato"
 
 #: app/core/gimpimagefile.c:458 app/core/gimpimagefile.c:1047
-#, fuzzy, c-format
+#, c-format
 msgid "Could not write thumbnail for '%s' as '%s': %s"
-msgstr "Non è possibile scrivere i file miniatura per '%s' come '%s': %s"
+msgstr "Non è possibile scrivere la miniatura per '%s' come '%s': %s"
 
 #: app/core/gimpimagefile.c:464 app/core/gimpimagefile.c:1053
-#, fuzzy, c-format
+#, c-format
 msgid "Could not set permissions of thumbnail '%s': %s"
 msgstr "Impossibile impostare i permessi per la miniatura '%s': %s"
 
@@ -2058,7 +2051,6 @@ msgid "Remote image"
 msgstr "Immagine remota"
 
 #: app/core/gimpimagefile.c:746
-#, fuzzy
 msgid "Could not open"
 msgstr "Impossibile aprire"
 
@@ -2093,12 +2085,12 @@ msgid "%d Layers"
 msgstr "%d livelli"
 
 #: app/core/gimpimagefile.c:892
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open thumbnail '%s': %s"
-msgstr "Impossibile aprire il file miniatura '%s': %s."
+msgstr "Impossibile aprire la miniatura '%s': %s."
 
 #: app/core/gimpimagefile.c:1141
-#, fuzzy, c-format
+#, c-format
 msgid "Could not create thumbnail folder '%s'."
 msgstr "Impossibile creare la cartella miniature '%s'."
 
@@ -2111,21 +2103,17 @@ msgid "Remove Parasite from Item"
 msgstr "Rimuovi parasite dall'elemento"
 
 #: app/core/gimplayer-floating-sel.c:123
-#, fuzzy
 msgid "Cannot anchor this layer because it is not a floating selection."
 msgstr ""
-"Non posso ancorare questo livello\n"
-"perchè questo non è una selezione fluttuante."
+"Non posso ancorare questo livello perchè non è una selezione fluttuante."
 
 #: app/core/gimplayer-floating-sel.c:201
-#, fuzzy
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
 msgstr ""
-"Impossibile creare un nuovo livello da una\n"
-"selezione fluttuante perchè appartiene ad\n"
-"un livello maschera o canale."
+"Impossibile creare un nuovo livello da una selezione fluttuante perchè "
+"appartiene ad un livello maschera o canale."
 
 #: app/core/gimplayer.c:236 app/pdb/internal_procs.c:135
 msgid "Layer"
@@ -2187,27 +2175,29 @@ msgid "Layer to Image Size"
 msgstr "Livello a dimensione dell'immagine"
 
 #: app/core/gimppalette.c:394
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Fatal parse error in palette file '%s': Missing magic header.\n"
 "Does this file need converting from DOS?"
 msgstr ""
-"Caricamento palette '%s':\n"
-"palette errata: manca l'intestazione magica\n"
+"Errore fatale di analisi nel file tavolozza '%s': manca l'intestazione "
+"magica\n"
 "Forse è necessaria la conversione da DOS?"
 
 #: app/core/gimppalette.c:400
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in palette file '%s': Missing magic header."
-msgstr "Errore di elaborazione fatale: il file motivo '%s' sembra troncato."
+msgstr ""
+"Errore fatale di analisi nel file tavolozza '%s': manca l'intestazione "
+"magica."
 
 #: app/core/gimppalette.c:416 app/core/gimppalette.c:441
 #: app/core/gimppalette.c:471 app/core/gimppalette.c:550
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
 msgstr ""
-"Caricamento palette '%s':\n"
-"errore di lettura alla riga %d."
+"Errore fatale di analisi caricamento tavolozza '%s': errore di lettura alla "
+"riga %d."
 
 #: app/core/gimppalette.c:431
 #, c-format
@@ -2215,42 +2205,34 @@ msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Stringa UTF-8 non valida nel file palette '%s'"
 
 #: app/core/gimppalette.c:459
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
 msgstr ""
-"Caricamento palette '%s':\n"
-"numero di colonne non valido alla riga %d."
+"Caricamento file tavolozza '%s': numero di colonne non valido alla riga %d. "
+"Uso il valore predefinito."
 
 #. maybe we should just abort?
 #: app/core/gimppalette.c:505
-#, fuzzy, c-format
+#, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
-msgstr ""
-"Caricamento palette '%s':\n"
-"Manca componente ROSSA in linea %d."
+msgstr "Caricamento tavolozza '%s': manca componente ROSSA alla riga %d."
 
 #: app/core/gimppalette.c:513
-#, fuzzy, c-format
+#, c-format
 msgid "Reading palette '%s': Missing GREEN component in line %d."
-msgstr ""
-"Caricamento palette '%s' :\n"
-"Manca componente VERDE in linea %d."
+msgstr "Caricamento tavolozza '%s': manca componente VERDE alla riga %d."
 
 #: app/core/gimppalette.c:521
-#, fuzzy, c-format
+#, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
-msgstr ""
-"Caricamento palette '%s':\n"
-"Manca componente BLU in linea %d."
+msgstr "Caricamento tavolozza '%s': manca componente BLU alla riga %d."
 
 #: app/core/gimppalette.c:531
-#, fuzzy, c-format
+#, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
-msgstr ""
-"Caricamento palette '%s':\n"
-"Valori RGB fuori range in linea %d."
+msgstr "Caricamento tavolozza '%s': valori RGB fuori range alla riga %d."
 
 #: app/core/gimppalette.c:707
 msgid "Black"
@@ -2258,25 +2240,27 @@ msgstr "Nero"
 
 #: app/core/gimppattern.c:353 app/core/gimppattern.c:399
 #: app/core/gimppattern.c:424
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in pattern file '%s': Could not read %d bytes: %s"
-msgstr "Errore di elaborazione fatale: il file motivo '%s' sembra troncato."
+msgstr ""
+"Errore di analisi fatale nel file motivo '%s': impossibile leggere %d byte: %"
+"s"
 
 #: app/core/gimppattern.c:372
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
-msgstr "Errore di elaborazione fatale: il file motivo '%s' sembra troncato."
+msgstr ""
+"Errore di analisi fatale nel file motivo: formato motivo sconosciuto %d."
 
 #: app/core/gimppattern.c:382
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
-"Profondità di bit colore del motivo %d non supportata\n"
-"nel file '%s'.\n"
-"I motivi di GIMP possono essere in toni di grigio o RGB."
+"Errore fatale nel file motivo '%s': profondità motivo %d non supportata.\n"
+"I motivi di GIMP devono essere in toni di grigio o RGB."
 
 #: app/core/gimppattern.c:406
 #, c-format
@@ -2336,18 +2320,14 @@ msgid "Channel to Selection"
 msgstr "Canale a selezione"
 
 #: app/core/gimpselection.c:669
-#, fuzzy
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr ""
-"Non è possibile a tagliare o copiare\n"
-"perché la regione selezionata è vuota."
+"Non è possibile a tagliare o copiare perché la regione selezionata è vuota."
 
 #: app/core/gimpselection.c:814
-#, fuzzy
 msgid "Cannot float selection because the selected region is empty."
 msgstr ""
-"Non è possibile la selezione fluttuante\n"
-"perché la regione selezionata è vuota"
+"Non è possibile la selezione fluttuante perché la regione selezionata è vuota"
 
 #: app/core/gimpselection.c:837 app/gui/layers-commands.c:889
 msgid "Floating Selection"
@@ -2453,29 +2433,24 @@ msgid "Set canvas padding color"
 msgstr "Imposta il colore dei motivi di riempimento"
 
 #: app/display/gimpdisplayshell.c:812
-#, fuzzy
 msgid "/From _Theme"
-msgstr "/Dal tema"
+msgstr "/Dal _tema"
 
 #: app/display/gimpdisplayshell.c:815
-#, fuzzy
 msgid "/_Light Check Color"
-msgstr "/Colore a scacchi chiaro"
+msgstr "/Colore a scacchi c_hiaro"
 
 #: app/display/gimpdisplayshell.c:818
-#, fuzzy
 msgid "/_Dark Check Color"
-msgstr "/Colore a scacchi scuro"
+msgstr "/Colore a scacchi _scuro"
 
 #: app/display/gimpdisplayshell.c:824
-#, fuzzy
 msgid "/Select _Custom Color..."
-msgstr "/Selezione colore personalizzato..."
+msgstr "/Selezione _colore personalizzato..."
 
 #: app/display/gimpdisplayshell.c:828
-#, fuzzy
 msgid "/As in _Preferences"
-msgstr "/Come in preferenze"
+msgstr "/Come in _preferenze"
 
 #: app/display/gimpdisplayshell.c:857
 msgid "Toggle QuickMask"
@@ -2487,11 +2462,9 @@ msgid "Close %s?"
 msgstr "Chiudere %s?"
 
 #: app/display/gimpdisplayshell.c:1740
-#, fuzzy, c-format
+#, c-format
 msgid "Changes were made to '%s'. Close anyway?"
-msgstr ""
-"Sono stati effettuati cambiamenti al file %s.\n"
-"Chiudere ugualmente?"
+msgstr "Sono stati effettuati cambiamenti al file '%s'. Chiudere ugualmente?"
 
 #: app/display/gimpdisplayshell-dnd.c:77
 msgid "Drop New Layer"
@@ -2634,12 +2607,11 @@ msgid "Mode:"
 msgstr "Modalità:"
 
 #: app/gui/brush-select.c:322
-#, fuzzy
 msgid ""
 "Unable to run brush callback. The corresponding plug-in may have crashed."
 msgstr ""
-"Impossibile eseguire la callback del pennello.\n"
-"Può essere andato in crash il plug-in corrispondente."
+"Impossibile eseguire la callback del pennello. Può essere andato in crash il "
+"plug-in corrispondente."
 
 #: app/gui/brushes-menu.c:45
 msgid "/_Edit Brush..."
@@ -2899,7 +2871,7 @@ msgstr "Mappa colore"
 
 #: app/gui/dialogs-constructors.c:740
 msgid "Indexed Palette"
-msgstr "Palette scala di colore"
+msgstr "Tavolozza indicizzata"
 
 #: app/gui/dialogs-constructors.c:767
 msgid "Histogram"
@@ -3132,7 +3104,7 @@ msgstr "/Auto segui _immagine attiva"
 
 #: app/gui/dialogs-menu.c:184
 msgid "/Move to Screen..."
-msgstr ""
+msgstr "/Sposta sullo schermo..."
 
 #: app/gui/documents-menu.c:43
 msgid "/_Open Image"
@@ -3163,19 +3135,16 @@ msgid "/Remove Dangling E_ntries"
 msgstr "/Rimuovi voci sco_nnesse"
 
 #: app/gui/drawable-commands.c:81
-#, fuzzy
 msgid "Desaturate operates only on RGB color layers."
-msgstr "La desaturazione opera solo su figure con colore RGB."
+msgstr "La desaturazione opera solo su livelli con colore RGB."
 
 #: app/gui/drawable-commands.c:99
-#, fuzzy
 msgid "Invert does not operate on indexed layers."
-msgstr "L'inversione non opera in modalità scala di colore"
+msgstr "L'inversione non opera su livelli in di colore indicizzati."
 
 #: app/gui/drawable-commands.c:117
-#, fuzzy
 msgid "Equalize does not operate on indexed layers."
-msgstr "L'equalizzazione non opera in modalità scala di colore."
+msgstr "L'equalizzazione non opera su livelli di colore indicizzati."
 
 #: app/gui/edit-commands.c:195
 msgid "Cut Named"
@@ -3191,9 +3160,8 @@ msgstr "Copia con nome"
 
 #: app/gui/edit-commands.c:290 app/gui/stroke-dialog.c:272
 #: app/gui/vectors-commands.c:289
-#, fuzzy
 msgid "There is no active layer or channel to stroke to."
-msgstr "Non c'è un livello o un canale attivo da disegnare"
+msgstr "Non c'è un livello o un canale attivo su cui disegnare"
 
 #: app/gui/edit-commands.c:321 app/gui/edit-commands.c:350
 msgid "(Unnamed Buffer)"
@@ -3243,11 +3211,8 @@ msgid "Enter a name for this template"
 msgstr "Inserire un nome per questo modello"
 
 #: app/gui/file-commands.c:318
-#, fuzzy
 msgid "Revert failed. No file name associated with this image."
-msgstr ""
-"Recupero fallito.\n"
-"Nessun nome file associato all'immagine"
+msgstr "Recupero fallito. Nessun nome file associato all'immagine"
 
 #: app/gui/file-commands.c:331
 #, c-format
@@ -3299,7 +3264,7 @@ msgid "From _Template:"
 msgstr "Dal modello:"
 
 #: app/gui/file-new-dialog.c:270
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You are trying to create an image with an initial size of %s.\n"
 "\n"
@@ -3309,16 +3274,13 @@ msgid ""
 "To prevent this dialog from appearing, increase the \"Maximum Image Size\" "
 "setting (currently %s) in the Preferences dialog."
 msgstr ""
-"State cercando di creare una immagine \n"
-"di dimensione iniziale %s.\n"
+"State cercando di creare una immagine di dimensione iniziale %s.\n"
 "\n"
 "Segliere OK per creare questa immagine comunque.\n"
-"Segliere Cancella se non intendete creare\n"
-"un immagine così ampia.\n"
+"Segliere Cancella se non intendete creare un immagine così ampia.\n"
 "\n"
-"Per prevenire questa finestra di dialogo,\n"
-"aumentate la \"Massima dimensione immagine\"\n"
-"(attualmente %s) nelle preferenze generali."
+"Per prevenire questa finestra di dialogo, aumentate la \"Massima dimensione "
+"immagine\" (attualmente %s) nelle finestra preferenze."
 
 #: app/gui/file-new-dialog.c:285
 msgid "Confirm Image Size"
@@ -3381,12 +3343,11 @@ msgid "/By Extension"
 msgstr "/Per estensione"
 
 #: app/gui/font-select.c:234
-#, fuzzy
 msgid ""
 "Unable to run font callback. The corresponding plug-in may have crashed."
 msgstr ""
-"Impossibile eseguire callback dei font.\n"
-"Probabilmente il corrispondente plug-in è andato in crash."
+"Impossibile eseguire callback dei font. Probabilmente il corrispondente plug-"
+"in è andato in crash."
 
 #: app/gui/fonts-menu.c:44
 msgid "/_Rescan Font List"
@@ -3659,17 +3620,16 @@ msgid "Re-distribute _Handles in Selection"
 msgstr "Ri-distribuizione dei _punti nella selezione"
 
 #: app/gui/gradient-select.c:272
-#, fuzzy
 msgid ""
 "Unable to run gradient callback. The corresponding plug-in may have crashed."
 msgstr ""
-"Impossibile eseguire la callback del gradiente.\n"
-"Probabilmente è andato in crash il plug-in corrispondente."
+"Impossibile eseguire la callback del gradiente. Probabilmente è andato in "
+"crash il plug-in corrispondente."
 
 #: app/gui/gradients-commands.c:75
-#, fuzzy, c-format
+#, c-format
 msgid "Save '%s' as POV-Ray"
-msgstr "Salva \"%s\" come POV-Ray"
+msgstr "Salva '%s' come POV-Ray"
 
 #: app/gui/gradients-menu.c:46
 msgid "/_Edit Gradient..."
@@ -3768,14 +3728,12 @@ msgid "Layer Too Small"
 msgstr "Livello troppo piccolo"
 
 #: app/gui/image-commands.c:510
-#, fuzzy
 msgid ""
 "The chosen image size will shrink some layers completely away. Is this what "
 "you want?"
 msgstr ""
-"La dimensione immagine scelta\n"
-"ridurrà alcuni livelli.\n"
-"E' questo quello che desiderate?"
+"La dimensione immagine scelta ridurrà alcuni livelli. È questo quello che "
+"desiderate?"
 
 #: app/gui/image-commands.c:575 app/tools/gimpscaletool.c:162
 msgid "Scaling..."
@@ -4103,7 +4061,7 @@ msgstr "/Visualizza/A tutto sch_ermo"
 
 #: app/gui/image-menu.c:485
 msgid "/View/Move to Screen..."
-msgstr ""
+msgstr "/Mostra/Sposta sullo schermo..."
 
 #. <Image>/Image
 #: app/gui/image-menu.c:493
@@ -4753,14 +4711,12 @@ msgstr "Informazioni immagine"
 
 #. add the information fields
 #: app/gui/info-window.c:253
-#, fuzzy
 msgid "Pixel Dimensions:"
-msgstr "Dimensione in pixel"
+msgstr "Dimensioni in punti:"
 
 #: app/gui/info-window.c:255
-#, fuzzy
 msgid "Print Size:"
-msgstr "/Dimensione anteprima"
+msgstr "Dimensione di stampa:"
 
 #: app/gui/info-window.c:257
 msgid "Resolution:"
@@ -4771,14 +4727,12 @@ msgid "Scale Ratio:"
 msgstr "Rapporto di scala:"
 
 #: app/gui/info-window.c:261
-#, fuzzy
 msgid "Number of Layers:"
-msgstr "N_umero di colori:"
+msgstr "Numero di livelli:"
 
 #: app/gui/info-window.c:263
-#, fuzzy
 msgid "Size in Memory:"
-msgstr "Memoria max dedicata agli annullamenti:"
+msgstr "Ampiezza in memoria:"
 
 #: app/gui/info-window.c:265
 msgid "Display Type:"
@@ -4881,11 +4835,8 @@ msgid "In_vert Mask"
 msgstr "In_vertita maschera"
 
 #: app/gui/layers-commands.c:1077 app/gui/layers-commands.c:1171
-#, fuzzy
 msgid "Invalid width or height. Both must be positive."
-msgstr ""
-"Larghezza o Altezza Invalida.\n"
-"Entrambe devono essere positive."
+msgstr "Larghezza o Altezza Invalida. Entrambe devono essere positive."
 
 #: app/gui/layers-menu.c:44
 msgid "/_Edit Layer Attributes..."
@@ -5270,21 +5221,19 @@ msgid "Preview"
 msgstr "Anteprima"
 
 #: app/gui/palette-select.c:250
-#, fuzzy
 msgid ""
 "Unable to run palette callback. The corresponding plug-in may have crashed."
 msgstr ""
-"Impossibile eseguire la callback palette.\n"
-"Probabilmente è andato in crash il corrispondente plug-in."
+"Impossibile eseguire la callback tavolozza. Probabilmente è andato in crash "
+"il corrispondente plug-in."
 
 #: app/gui/palettes-commands.c:82
 msgid "Merge Palette"
 msgstr "Incolla palette"
 
 #: app/gui/palettes-commands.c:86
-#, fuzzy
 msgid "Enter a name for the merged palette"
-msgstr "Digitate un nome per la palette incollata"
+msgstr "Digitare un nome per la tavolozza fusa"
 
 #: app/gui/palettes-menu.c:46
 msgid "/_Edit Palette..."
@@ -5315,12 +5264,11 @@ msgid "/_Refresh Palettes"
 msgstr "/_Rinfresca tavolozza"
 
 #: app/gui/pattern-select.c:252
-#, fuzzy
 msgid ""
 "Unable to run pattern callback. The corresponding plug-in may have crashed."
 msgstr ""
-"Impossibile eseguire la callback dei pattern.\n"
-"Probabilmente è andato in crash il plug-in corrispondente."
+"Impossibile eseguire la callback dei motivi. Probabilmente è andato in crash "
+"il plug-in corrispondente."
 
 #: app/gui/patterns-menu.c:45
 msgid "/Edit Pattern..."
@@ -5361,11 +5309,8 @@ msgid "Re-Show Last"
 msgstr "Ri-mostra ultimo"
 
 #: app/gui/preferences-dialog.c:274
-#, fuzzy
 msgid "You will have to restart GIMP for the following changes to take effect:"
-msgstr ""
-"È necessario riavviare GIMP per\n"
-"apportare i seguenti cambiamenti:"
+msgstr "È necessario riavviare GIMP per apportare i seguenti cambiamenti:"
 
 #: app/gui/preferences-dialog.c:858
 msgid "Show _Menubar"
@@ -5416,9 +5361,8 @@ msgid "Preferences"
 msgstr "Preferenze"
 
 #: app/gui/preferences-dialog.c:1124
-#, fuzzy
 msgid "Maximum New Image Size:"
-msgstr "Massima dimensione immagine:"
+msgstr "Dimensione massima nuova immagine:"
 
 #: app/gui/preferences-dialog.c:1133
 msgid "Default Image Grid"
@@ -5486,23 +5430,20 @@ msgstr "Usa _tasti scorciatoia dinamici"
 
 #. Themes
 #: app/gui/preferences-dialog.c:1209
-#, fuzzy
 msgid "Select Theme"
-msgstr "Seleziona cartelle dei temi"
+msgstr "Seleziona tema"
 
 #: app/gui/preferences-dialog.c:1239
-#, fuzzy
 msgid "Theme"
-msgstr "Temi"
+msgstr "Tema"
 
 #: app/gui/preferences-dialog.c:1244
-#, fuzzy
 msgid "Folder"
-msgstr "Cartelle"
+msgstr "Cartella"
 
 #: app/gui/preferences-dialog.c:1282
 msgid "Reload C_urrent Theme"
-msgstr ""
+msgstr "Ricarica il tema c_orrente"
 
 #: app/gui/preferences-dialog.c:1297 app/gui/preferences-dialog.c:1300
 msgid "Help System"
@@ -5745,31 +5686,28 @@ msgid "_Manually"
 msgstr "_Manualmente"
 
 #: app/gui/preferences-dialog.c:1786 app/gui/preferences-dialog.c:1789
-#, fuzzy
 msgid "Window Management"
-msgstr "Gestione sessioni"
+msgstr "Gestione finestre"
 
 #: app/gui/preferences-dialog.c:1795
-#, fuzzy
 msgid "Window Type Hints"
-msgstr "Posizione finestra"
+msgstr "Suggerimenti tipo finestre"
 
 #: app/gui/preferences-dialog.c:1801
 msgid "Window Type Hint for the _Toolbox:"
-msgstr ""
+msgstr "Tipo di suggerimento finestra per gli s_trumenti:"
 
 #: app/gui/preferences-dialog.c:1805
 msgid "Window Type Hint for the _Docks:"
-msgstr ""
+msgstr "Tipo di suggerimento finestra per i _pannelli:"
 
 #: app/gui/preferences-dialog.c:1808
-#, fuzzy
 msgid "Focus"
-msgstr "Caratteri"
+msgstr "Focus"
 
 #: app/gui/preferences-dialog.c:1812
 msgid "Activate the _Focused Image"
-msgstr ""
+msgstr "Attiva l'immagine con il _focus"
 
 #: app/gui/preferences-dialog.c:1821 app/gui/preferences-dialog.c:1824
 #: app/gui/preferences-dialog.c:2079
@@ -5807,7 +5745,7 @@ msgstr "Salvataggio file"
 
 #: app/gui/preferences-dialog.c:1864
 msgid "Confirm Closing of Unsaved Images"
-msgstr ""
+msgstr "Conferma chiusura immagini non salvate"
 
 #: app/gui/preferences-dialog.c:1870
 msgid "Only when Modified"
@@ -6092,7 +6030,6 @@ msgid "Resolution X:"
 msgstr "Risoluzione X:"
 
 #: app/gui/resize-dialog.c:651 app/widgets/gimptemplateeditor.c:403
-#, c-format
 msgid "pixels/%a"
 msgstr "pixel/%a"
 
@@ -6117,28 +6054,24 @@ msgid "_Vertical:"
 msgstr "_Verticale:"
 
 #: app/gui/select-commands.c:155
-#, fuzzy
 msgid "Feather selection by"
-msgstr "Selezione piumata per:"
+msgstr "Selezione piumata per"
 
 #: app/gui/select-commands.c:191
-#, fuzzy
 msgid "Shrink selection by"
-msgstr "Riduci selezione per:"
+msgstr "Riduci selezione per"
 
 #: app/gui/select-commands.c:200
 msgid "Shrink from image border"
 msgstr "Riduci dal bordo dell'immagine"
 
 #: app/gui/select-commands.c:225
-#, fuzzy
 msgid "Grow selection by"
-msgstr "Espandi selezione per:"
+msgstr "Espandi selezione per"
 
 #: app/gui/select-commands.c:248
-#, fuzzy
 msgid "Border selection by"
-msgstr "Selezione bordo per:"
+msgstr "Selezione bordo per"
 
 #: app/gui/splash.c:58
 msgid "GIMP Startup"
@@ -6197,9 +6130,9 @@ msgid "/_Delete Template"
 msgstr "/_Elimina modello"
 
 #: app/gui/themes.c:231 app/plug-in/plug-ins.c:218
-#, fuzzy, c-format
+#, c-format
 msgid "Writing '%s'\n"
-msgstr "Analisi di '%s'\n"
+msgstr "Scrittura di '%s'\n"
 
 #: app/gui/themes.c:283
 #, c-format
@@ -6258,7 +6191,6 @@ msgid "Saved Options"
 msgstr "Opzioni salvate"
 
 #: app/gui/tool-options-commands.c:121
-#, fuzzy
 msgid "Rename Saved Tool Options"
 msgstr "Rinomina le opzioni strumenti salvate"
 
@@ -7000,9 +6932,8 @@ msgid "/_Delete Path"
 msgstr "/_Cancella tracciato"
 
 #: app/gui/vectors-menu.c:82
-#, fuzzy
 msgid "/Merge _Visible Paths"
-msgstr "Fondi livelli visibili"
+msgstr "/Fondi livelli _visibili"
 
 #: app/gui/vectors-menu.c:90
 msgid "/Path to Sele_ction"
@@ -7145,12 +7076,11 @@ msgid "Threshold"
 msgstr "Soglia"
 
 #: app/pdb/image_cmds.c:3886
-#, fuzzy
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
-"La risoluzione immagine è fuori limite,\n"
-"utilizzo  della risoluzione base."
+"La risoluzione immagine è fuori margini, utilizzo della risoluzione "
+"predefinita."
 
 #: app/pdb/internal_procs.c:81
 msgid "Internal Procedures"
@@ -7300,13 +7230,13 @@ msgstr "Versione di GIMP"
 msgid "Temporary Procedure"
 msgstr "Procedure temporanee"
 
-#: app/pdb/selection_tools_cmds.c:326 app/tools/tools-enums.c:53
-#: app/tools/gimpfreeselecttool.c:97
+#: app/pdb/selection_tools_cmds.c:326 app/tools/gimpfreeselecttool.c:97
+#: app/tools/tools-enums.c:53
 msgid "Free Select"
 msgstr "Selezione libera"
 
 #: app/plug-in/plug-in.c:696
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
 "(%s)\n"
@@ -7317,14 +7247,14 @@ msgstr ""
 "Plug-In bloccato: \"%s\"\n"
 "(%s)\n"
 "\n"
-"Il lancio del plugin potrebbe aver condizionato lo stato interno\n"
+"La morte del plugin potrebbe aver condizionato lo stato interno\n"
 "di GIMP. Dovreste salvare le immagini e riavviare il programma per\n"
 "maggior sicurezza."
 
 #: app/plug-in/plug-in-rc.c:155
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
-msgstr ""
+msgstr "Salto di '%s': versione protocollo GIMP errata."
 
 #: app/plug-in/plug-ins.c:134
 msgid "Resource configuration"
@@ -7338,9 +7268,9 @@ msgid "Querying new Plug-ins"
 msgstr "Interrogazione nuovi plug-in"
 
 #: app/plug-in/plug-ins.c:163
-#, fuzzy, c-format
+#, c-format
 msgid "Querying plug-in: '%s'\n"
-msgstr "interrogazione plug-in: \"%s\"\n"
+msgstr "Interrogazione plug-in: '%s'\n"
 
 #. initial the plug-ins
 #: app/plug-in/plug-ins.c:288
@@ -7348,18 +7278,18 @@ msgid "Initializing Plug-ins"
 msgstr "Inizializzazione plug-in"
 
 #: app/plug-in/plug-ins.c:303
-#, fuzzy, c-format
+#, c-format
 msgid "Initializing plug-in: '%s'\n"
-msgstr "Inizializzazione plug-in: \"%s\"\n"
+msgstr "Inizializzazione plug-in: '%s'\n"
 
 #: app/plug-in/plug-ins.c:332
 msgid "Starting Extensions"
 msgstr "Avvio estensioni"
 
 #: app/plug-in/plug-ins.c:341
-#, fuzzy, c-format
+#, c-format
 msgid "Starting extension: '%s'\n"
-msgstr "Avvio estensioni: \"%s\"\n"
+msgstr "Avvio estensioni: '%s'\n"
 
 #: app/text/text-enums.c:32
 msgid "From Left to Right"
@@ -7437,6 +7367,8 @@ msgstr "Livello testo"
 #: app/text/gimptextlayer.c:374
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr ""
+"A causa della mancanza di qualsiasi carattere, la funzionalità di testo non "
+"è disponibile."
 
 #: app/text/gimptextlayer.c:414
 msgid "Empty Text Layer"
@@ -7451,7 +7383,7 @@ msgid "Rotate Text Layer"
 msgstr "Ruota livello testo"
 
 #: app/text/gimptextlayer-xcf.c:65
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Problems parsing the text parasite for layer '%s':\n"
 "%s\n"
@@ -7459,7 +7391,7 @@ msgid ""
 "Some text properties may be wrong. Unless you want to edit the text layer, "
 "you don't need to worry about this."
 msgstr ""
-"Problemi nell'elaborare il testo parassita per il livello %s:\n"
+"Problemi nell'elaborare il testo parassita per il livello '%s':\n"
 "%s\n"
 "\n"
 "Alcune proprietà del testo possono essere errate. A meno\n"
@@ -7510,7 +7442,7 @@ msgstr "Progetta"
 msgid "Edit"
 msgstr "Modifica"
 
-#: app/tools/tools-enums.c:95 app/tools/gimpmovetool.c:109
+#: app/tools/gimpmovetool.c:109 app/tools/tools-enums.c:95
 msgid "Move"
 msgstr "Muovi"
 
@@ -7610,9 +7542,8 @@ msgid "Adjust Brightness and Contrast"
 msgstr "Regola luminosità e contrasto"
 
 #: app/tools/gimpbrightnesscontrasttool.c:182
-#, fuzzy
 msgid "Brightness-Contrast does not operate on indexed layers."
-msgstr "Luminosità e contrasto non operano su figure in scala di colore"
+msgstr "Luminosità e contrasto non operano su livelli indicizzati."
 
 #: app/tools/gimpbrightnesscontrasttool.c:235
 msgid "_Brightness:"
@@ -7703,9 +7634,8 @@ msgid "Adjust Color Balance"
 msgstr "Regola il bilanciamento del colore"
 
 #: app/tools/gimpcolorbalancetool.c:194
-#, fuzzy
 msgid "Color balance operates only on RGB color layers."
-msgstr "Il bilanciamento del colore opera solo su figure con colore RGB."
+msgstr "Il bilanciamento del colore opera solo su livelli con colore RGB."
 
 #: app/tools/gimpcolorbalancetool.c:275
 msgid "Select Range to Modify"
@@ -7752,9 +7682,8 @@ msgid "Colorize the Image"
 msgstr "Colora l'immagine"
 
 #: app/tools/gimpcolorizetool.c:196
-#, fuzzy
 msgid "Colorize operates only on RGB color layers."
-msgstr "Colora opera solo su figure a colori RGB."
+msgstr "Colora opera solo su livelli a colori RGB."
 
 #: app/tools/gimpcolorizetool.c:234
 msgid "Select Color"
@@ -7887,9 +7816,8 @@ msgid "Adjust Color Curves"
 msgstr "Regola le curve di colore"
 
 #: app/tools/gimpcurvestool.c:292
-#, fuzzy
 msgid "Curves for indexed layers cannot be adjusted."
-msgstr "Le curve per le immagini a colori indicizzati non sono modificabili."
+msgstr "Le curve per il livelli a colori indicizzati non sono modificabili."
 
 #: app/tools/gimpcurvestool.c:485 app/tools/gimplevelstool.c:430
 msgid "R_eset Channel"
@@ -8035,9 +7963,8 @@ msgid "Adjust Hue / Lightness / Saturation"
 msgstr "Regola tonalità / luminosità / saturazione"
 
 #: app/tools/gimphuesaturationtool.c:211
-#, fuzzy
 msgid "Hue-Saturation operates only on RGB color layers."
-msgstr "Tonalità-saturazione operano solamente su figure RGB."
+msgstr "Tonalità-saturazione operano solamente su livelli RGB."
 
 #: app/tools/gimphuesaturationtool.c:262
 msgid "_Master"
@@ -8156,9 +8083,8 @@ msgid "Adjust Color Levels"
 msgstr "Regola i livelli colore"
 
 #: app/tools/gimplevelstool.c:285
-#, fuzzy
 msgid "Levels for indexed layers cannot be adjusted."
-msgstr "I livelli per le figure a colori indicizzati non sono modificabili."
+msgstr "I livelli per i livelli a colori indicizzati non sono modificabili."
 
 #: app/tools/gimplevelstool.c:353
 msgid "Pick Black Point"
@@ -8395,9 +8321,8 @@ msgid "Posterize (Reduce Number of Colors)"
 msgstr "Posterizzazione (riduzione numero di colori)"
 
 #: app/tools/gimpposterizetool.c:174
-#, fuzzy
 msgid "Posterize does not operate on indexed layers."
-msgstr "Posterizzazione non possibile su una immagine in Scala di Colore"
+msgstr "Posterizzazione non possibile su livelli indicizzati."
 
 #: app/tools/gimpposterizetool.c:222
 msgid "Posterize _Levels:"
@@ -8612,9 +8537,8 @@ msgid "Apply Threshold"
 msgstr "Applica soglia"
 
 #: app/tools/gimpthresholdtool.c:200
-#, fuzzy
 msgid "Threshold does not operate on indexed layers."
-msgstr "La soglia non opera su figure indicizzate."
+msgstr "La soglia non opera su livelli indicizzati."
 
 #: app/tools/gimpthresholdtool.c:256
 msgid "Threshold Range:"
@@ -8668,11 +8592,10 @@ msgid "Transforming..."
 msgstr "Trasformazione..."
 
 #: app/tools/gimptransformtool.c:338
-#, fuzzy
 msgid "Transformations do not work on layers that contain layer masks."
 msgstr ""
-"Trasformazioni non possono avvenire\n"
-"su livelli che contengono livelli maschere."
+"Le trasformazioni non possono avvenire su livelli che contengono livelli "
+"maschere."
 
 #: app/tools/gimpvectoroptions.c:113
 msgid "restrict editing to polygonals"
@@ -8700,9 +8623,8 @@ msgstr ""
 "%s%s%s  Interseca"
 
 #: app/tools/gimpvectoroptions.c:208
-#, fuzzy
 msgid "Create Selection from Path"
-msgstr "/Selezi_one a tracciato "
+msgstr "Crea selezione dal tracciato"
 
 #: app/tools/gimpvectoroptions.c:219 app/widgets/gimpvectorstreeview.c:192
 msgid "Stroke Path"
@@ -9065,11 +8987,9 @@ msgid "Refresh"
 msgstr "Aggiorna"
 
 #: app/widgets/gimpdatafactoryview.c:401
-#, fuzzy, c-format
+#, c-format
 msgid "Are you sure you want to delete '%s' from the list and from disk?"
-msgstr ""
-"Siete sicuri di volere eliminare\n"
-"\"%s\" dalla lista e dal disco?"
+msgstr "Siete sicuri di volere eliminare '%s' dall'elenco e dal disco?"
 
 #: app/widgets/gimpdatafactoryview.c:405
 msgid "Delete Data Object"
@@ -9100,11 +9020,13 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"Il nome file '%s' non può essere convertito in un URI valido:\n"
+"\n"
+"%s"
 
 #: app/widgets/gimpdnd.c:1201
-#, fuzzy
 msgid "Invalid UTF-8"
-msgstr "stringa UTF-8 non valida"
+msgstr "UTF-8 non valido"
 
 #: app/widgets/gimpdock.c:378
 msgid "You can drop dockable dialogs here."
@@ -9308,14 +9230,12 @@ msgid "Could not find GIMP Help Browser"
 msgstr "Impossibile trovare il visualizzatore dell'aiuto di GIMP"
 
 #: app/widgets/gimphelp.c:211
-#, fuzzy
 msgid ""
 "Could not find the GIMP Help Browser procedure. It probably was not compiled "
 "because you don't have GtkHtml2 installed."
 msgstr ""
-"Impossibile trovare le procedure del browser aiuti di GIMP.\n"
-"Probabilmente non era stato compilato\n"
-"perchè non era installato GtkXmHTML."
+"Impossibile trovare le procedure del navigatore aiuto di GIMP. Probabilmente "
+"non era stato compilato perché non era stato installato GtkHTML2."
 
 #: app/widgets/gimphelp.c:215 app/widgets/gimphelp.c:257
 msgid "Use web browser instead"
@@ -9412,9 +9332,8 @@ msgid "Set Item Exclusive Visible"
 msgstr "Imposta voce esclusiva visibile"
 
 #: app/widgets/gimpitemtreeview.c:1284
-#, fuzzy
 msgid "Set Item Exclusive Linked"
-msgstr "Imposta voce esclusiva visibile"
+msgstr "Imposta voce esclusiva collegata"
 
 #: app/widgets/gimplayertreeview.c:214
 msgid "Duplicate Layer"
@@ -9537,12 +9456,11 @@ msgid "Delete the selected template"
 msgstr "Rimuovi il modello selezionato"
 
 #: app/widgets/gimptemplateview.c:388
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Are you sure you want to delete template '%s' from the list and from disk?"
 msgstr ""
-"Siete sicuri di volere eliminare\n"
-"\"%s\" dalla lista e dal disco?"
+"Siete sicuri di volere eliminare il modello '%s' dall'elenco e dal disco?"
 
 #: app/widgets/gimptemplateview.c:392
 msgid "Delete Template"
@@ -9637,11 +9555,9 @@ msgid "Reset Tool Options"
 msgstr "Reimposta le opzioni strumenti"
 
 #: app/widgets/gimptooloptionseditor.c:416
-#, fuzzy
 msgid "Do you really want to reset all tool options to default values?"
 msgstr ""
-"Sicuri di voler reimpostare tutte\n"
-"le opzioni strumenti ai valori predefiniti?"
+"Sicuri di voler reimpostare tutte le opzioni strumenti ai valori predefiniti?"
 
 #: app/widgets/gimpundoeditor.c:130
 msgid "Redo"
@@ -9861,7 +9777,7 @@ msgstr "Mostra come griglia"
 
 #: app/widgets/widgets-enums.c:137
 msgid "Utility"
-msgstr ""
+msgstr "Utilità"
 
 #: app/xcf/xcf-load.c:288
 msgid ""
@@ -9869,9 +9785,9 @@ msgid ""
 "did not save indexed colormaps correctly.\n"
 "Substituting grayscale map."
 msgstr ""
-"Avviso XCF: la versione 0 del formato file XCF\n"
-"non salva le mappe dei colori di immagini in scala di colore.\n"
-"Sostituzione mappa in scala di grigio."
+"Avviso XCF: la versione 0 del formato file XCF non salva\n"
+"le mappe colore di immagini indicizzate correttamente.\n"
+"Sostituzione mappa in scala di grigi."
 
 #: app/xcf/xcf-read.c:107
 msgid "Invalid UTF-8 string in XCF file"
@@ -9905,144 +9821,3 @@ msgstr "Crea e modifica immagini o fotografie"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "Gimp (instabile)"
-
-#~ msgid "  -r, --restore-session    Try to restore saved session.\n"
-#~ msgstr ""
-#~ "  -r, --restore-session    Prova a ripristinare una sessione salvata.\n"
-
-#~ msgid "Cannot open '%s' for reading: %s"
-#~ msgstr "Impossibile aprire '%s' in lettura: %s"
-
-#~ msgid "Cannot open '%s' for writing: %s"
-#~ msgstr "Impossibile aprire '%s' in scrittura: %s"
-
-#~ msgid "Failed to open '%s' for writing: %s"
-#~ msgstr "Impossibile aprire '%s' in scrittura: %s"
-
-#~ msgid "Failed to create file '%s': %s"
-#~ msgstr "Impossibile creare il file '%s': %s"
-
-#~ msgid ""
-#~ "Specify that marching ants for selected regions will be drawn with "
-#~ "colormap cycling as opposed to be drawn as animated lines.  This color "
-#~ "cycling option works only with 8-bit displays."
-#~ msgstr ""
-#~ "Specifica che l'animazione del tratteggio per le regioni selezionate "
-#~ "sarà\n"
-#~ "ottenuta con il cambiamento ciclico della mappa dei colori invece che "
-#~ "come\n"
-#~ "linee animate. L'opzione colori ciclici funziona solo con schermi a "
-#~ "colori\n"
-#~ "a 8 bit."
-
-#~ msgid "Failed to open file: '%s': %s"
-#~ msgstr "Impossibile aprire il file:  '%s': %s"
-
-#~ msgid ""
-#~ "Fatal parsing error (unknown version %d):\n"
-#~ "Brush file '%s'"
-#~ msgstr ""
-#~ "Errore di analisi (versione sconosciuta %d):\n"
-#~ "File pennello '%s'"
-
-#~ msgid ""
-#~ "Loading palette '%s':\n"
-#~ "Corrupt palette: missing magic header"
-#~ msgstr ""
-#~ "Caricamento palette '%s':\n"
-#~ "Palette errata: manca l'instestazione magica"
-
-#~ msgid "Unknown pattern format version %d in '%s'."
-#~ msgstr "Versione formato motivo %d in '%s' sconosciuta."
-
-#~ msgid "Error in GIMP pattern file '%s'."
-#~ msgstr "Errore nel file motivo di GIMP '%s'."
-
-#~ msgid "Available Filters"
-#~ msgstr "Filtri disponibili"
-
-#~ msgid "Add the selected filter to the list of active filters."
-#~ msgstr "Aggiungi il filtro selezionato all'elenco dei filtri attivi."
-
-#~ msgid "Remove the selected filter from the list of active filters."
-#~ msgstr "Elimina il filtro selezionato dall'elenco dei filtri attivi."
-
-#~ msgid "Move the selected filter up"
-#~ msgstr "Muovi il filtro selezionato in alto"
-
-#~ msgid "Move the selected filter down"
-#~ msgstr "Muovi il filtro selezionato in basso"
-
-#~ msgid "Active Filters"
-#~ msgstr "Filtri attivi"
-
-#~ msgid "Reset the selected filter to default values"
-#~ msgstr "Reimposta il filtro selezionato ai valori predefiniti"
-
-#~ msgid "Configure Selected Filter: %s"
-#~ msgstr "Configura filtro selezionato: %s"
-
-#~ msgid "No Filter Selected"
-#~ msgstr "Nessun filtro selezionato"
-
-#~ msgid "Configure Selected Filter"
-#~ msgstr "Configura filtro selezionato"
-
-#~ msgid "Current:"
-#~ msgstr "Corrente:"
-
-#~ msgid "Old:"
-#~ msgstr "Vecchio:"
-
-#~ msgid "Revert to old color"
-#~ msgstr "Ripristina al vecchio colore"
-
-#~ msgid "Dimensions (W x H):"
-#~ msgstr "Dimensioni (l x a):"
-
-#~ msgid "Colormap Cycling"
-#~ msgstr "Riciclo mappa del colore"
-
-#~ msgid "/Save Options to/new-separator"
-#~ msgstr "/Salva le opzioni su/nuovo-separatore"
-
-#~ msgid "writing \"%s\"\n"
-#~ msgstr "scrittura di \"%s\"\n"
-
-#~ msgid "Font:"
-#~ msgstr "Caratteri:"
-
-#~ msgid "GIMP Font Selection"
-#~ msgstr "Selezione caratteri GIMP"
-
-#~ msgid "_Family:"
-#~ msgstr "_Famiglia:"
-
-#~ msgid "_Style:"
-#~ msgstr "_Stile:"
-
-#~ msgid "Pack my box with five dozen liquor jugs."
-#~ msgstr "Mai posto quiz vaghi o indecifrabili."
-
-#~ msgid "Click to open the Font Selection Dialog"
-#~ msgstr "Fare clic per aprire la finestra di selezione caratteri"
-
-#~ msgid "Too large!"
-#~ msgstr "Troppo grande!"
-
-#~ msgid ""
-#~ "Are you sure you want to delete\n"
-#~ "template \"%s\" from the list?"
-#~ msgstr ""
-#~ "Siete sicuri di volere eliminare\n"
-#~ "il modello \"%s\" dall'elenco?"
-
-#~ msgid "Error opening file '%s': %s"
-#~ msgstr "Errore aprendo il file '%s': %s"
-
-#~ msgid ""
-#~ "Can't open '%s' for writing:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Impossibile aprire '%s' in scrittura:\n"
-#~ "%s"
