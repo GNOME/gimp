@@ -1,5 +1,10 @@
 2005-03-02  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/tools/tools-enums.[ch]: oops, missed in previous 
+	commit.
+	
+2005-03-02  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/tools/gimprectangletool.c
 	* app/tools/gimprectangletool.h
 	* app/tools/gimprectangleoptions.c
