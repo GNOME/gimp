@@ -1,3 +1,10 @@
+2001-07-14  Fatih Demir <kabalak@gtranslator.org>
+
+	* tips/Makefile.am|makefile.mingw: Added gimp_tips.tr.txt to the
+		targets and re-ordered the tips files listings.
+
+	* tips/gimp_tips.tr.txt: Added Turkish tips file from Alper Ersoy.
+
 2001-07-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/appenv.h
