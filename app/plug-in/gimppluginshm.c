@@ -143,15 +143,15 @@ static void plug_in_handle_message        (PlugIn            *plug_in,
 static void plug_in_handle_quit           (PlugIn            *plug_in);
 static void plug_in_handle_tile_req       (PlugIn            *plug_in,
                                            GPTileReq         *tile_req);
-static void plug_in_handle_proc_run       (Gimp              *gimp,
+static void plug_in_handle_proc_run       (PlugIn            *plug_in,
                                            GPProcRun         *proc_run);
-static void plug_in_handle_proc_return    (Gimp              *gimp,
+static void plug_in_handle_proc_return    (PlugIn            *plug_in,
                                            GPProcReturn      *proc_return);
-static void plug_in_handle_proc_install   (Gimp              *gimp,
+static void plug_in_handle_proc_install   (PlugIn            *plug_in,
                                            GPProcInstall     *proc_install);
-static void plug_in_handle_proc_uninstall (Gimp              *gimp,
+static void plug_in_handle_proc_uninstall (PlugIn            *plug_in,
                                            GPProcUninstall   *proc_uninstall);
-static void plug_in_handle_has_init       (void);
+static void plug_in_handle_has_init       (PlugIn            *plug_in);
 
 static Argument * plug_in_temp_run       (ProcRecord *proc_rec,
 					  Argument   *args,
@@ -169,8 +169,6 @@ static GSList     *open_plug_ins    = NULL;
 static GSList     *blocked_plug_ins = NULL;
 
 static GSList     *plug_in_stack              = NULL;
-static GIOChannel *current_readchannel        = NULL;
-static GIOChannel *current_writechannel       = NULL;
 static gint        current_write_buffer_index = 0;
 static gchar      *current_write_buffer       = NULL;
 static Argument   *current_return_vals        = NULL;
@@ -329,13 +327,13 @@ plug_in_call_query (Gimp      *gimp,
 
 	  while (plug_in->open)
 	    {
-	      if (! wire_read_msg (current_readchannel, &msg))
+	      if (! wire_read_msg (plug_in->my_read, &msg))
                 {
-                  plug_in_close (current_plug_in, TRUE);
+                  plug_in_close (plug_in, TRUE);
                 }
 	      else 
 		{
-		  plug_in_handle_message (current_plug_in, &msg);
+		  plug_in_handle_message (plug_in, &msg);
 		  wire_destroy (&msg);
 		}
 	    }
@@ -367,13 +365,13 @@ plug_in_call_init (Gimp      *gimp,
 
 	  while (plug_in->open)
 	    {
-	      if (! wire_read_msg (current_readchannel, &msg))
+	      if (! wire_read_msg (plug_in->my_read, &msg))
                 {
-                  plug_in_close (current_plug_in, TRUE);
+                  plug_in_close (plug_in, TRUE);
                 }
 	      else 
 		{
-		  plug_in_handle_message (current_plug_in, &msg);
+		  plug_in_handle_message (plug_in, &msg);
 		  wire_destroy (&msg);
 		}
 	    }
@@ -678,7 +676,7 @@ plug_in_close (PlugIn   *plug_in,
   if (kill_it && plug_in->pid)
     {
       plug_in_push (plug_in);
-      gp_quit_write (current_writechannel);
+      gp_quit_write (plug_in->my_write);
       plug_in_pop ();
 
       /*  give the plug-in some time (10 ms)  */
@@ -874,9 +872,9 @@ plug_in_run (Gimp       *gimp,
 	  proc_run.nparams = argc;
 	  proc_run.params  = plug_in_args_to_params (args, argc, FALSE);
 
-	  if (! gp_config_write (current_writechannel, &config)     ||
-	      ! gp_proc_run_write (current_writechannel, &proc_run) ||
-	      ! wire_flush (current_writechannel))
+	  if (! gp_config_write (plug_in->my_write, &config)     ||
+	      ! gp_proc_run_write (plug_in->my_write, &proc_run) ||
+	      ! wire_flush (plug_in->my_write))
 	    {
 	      return_vals = procedural_db_return_args (proc_rec, FALSE);
 	      goto done;
@@ -958,7 +956,7 @@ plug_in_recv_message (GIOChannel   *channel,
   if (plug_in != current_plug_in)
     plug_in_push (plug_in);
 
-  if (current_readchannel == NULL)
+  if (plug_in->my_read == NULL)
     return TRUE;
 
   if (cond & (G_IO_IN | G_IO_PRI))
@@ -967,7 +965,7 @@ plug_in_recv_message (GIOChannel   *channel,
 
       memset (&msg, 0, sizeof (WireMessage));
 
-      if (! wire_read_msg (current_readchannel, &msg))
+      if (! wire_read_msg (plug_in->my_read, &msg))
 	{
 	  plug_in_close (plug_in, TRUE);
 	}
@@ -1031,10 +1029,10 @@ plug_in_handle_message (PlugIn      *plug_in,
       plug_in_close (plug_in, TRUE);
       break;
     case GP_PROC_RUN:
-      plug_in_handle_proc_run (plug_in->gimp, msg->data);
+      plug_in_handle_proc_run (plug_in, msg->data);
       break;
     case GP_PROC_RETURN:
-      plug_in_handle_proc_return (plug_in->gimp, msg->data);
+      plug_in_handle_proc_return (plug_in, msg->data);
       plug_in_close (plug_in, FALSE);
       break;
     case GP_TEMP_PROC_RUN:
@@ -1043,20 +1041,20 @@ plug_in_handle_message (PlugIn      *plug_in,
       plug_in_close (plug_in, TRUE);
       break;
     case GP_TEMP_PROC_RETURN:
-      plug_in_handle_proc_return (plug_in->gimp, msg->data);
+      plug_in_handle_proc_return (plug_in, msg->data);
       gimp_main_loop_quit (plug_in->gimp);
       break;
     case GP_PROC_INSTALL:
-      plug_in_handle_proc_install (plug_in->gimp, msg->data);
+      plug_in_handle_proc_install (plug_in, msg->data);
       break;
     case GP_PROC_UNINSTALL:
-      plug_in_handle_proc_uninstall (plug_in->gimp, msg->data);
+      plug_in_handle_proc_uninstall (plug_in, msg->data);
       break;
     case GP_EXTENSION_ACK:
       gimp_main_loop_quit (plug_in->gimp);
       break;
     case GP_HAS_INIT:
-      plug_in_handle_has_init ();
+      plug_in_handle_has_init (plug_in);
     }
 }
 
@@ -1087,14 +1085,14 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
       tile_data.use_shm     = (shm_ID == -1) ? FALSE : TRUE;
       tile_data.data        = NULL;
 
-      if (! gp_tile_data_write (current_writechannel, &tile_data))
+      if (! gp_tile_data_write (plug_in->my_write, &tile_data))
 	{
 	  g_warning ("plug_in_handle_tile_req: ERROR");
 	  plug_in_close (plug_in, TRUE);
 	  return;
 	}
 
-      if (!wire_read_msg (current_readchannel, &msg))
+      if (! wire_read_msg (plug_in->my_read, &msg))
 	{
 	  g_warning ("plug_in_handle_tile_req: ERROR");
 	  plug_in_close (plug_in, TRUE);
@@ -1142,7 +1140,7 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
       tile_release (tile, TRUE);
 
       wire_destroy (&msg);
-      if (!gp_tile_ack_write (current_writechannel))
+      if (! gp_tile_ack_write (plug_in->my_write))
 	{
 	  g_warning ("plug_in_handle_tile_req: ERROR");
 	  plug_in_close (plug_in, TRUE);
@@ -1188,7 +1186,7 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
       else
 	tile_data.data = tile_data_pointer (tile, 0, 0);
 
-      if (! gp_tile_data_write (current_writechannel, &tile_data))
+      if (! gp_tile_data_write (plug_in->my_write, &tile_data))
 	{
 	  g_message ("plug_in_handle_tile_req: ERROR");
 	  plug_in_close (plug_in, TRUE);
@@ -1197,7 +1195,7 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
 
       tile_release (tile, FALSE);
 
-      if (! wire_read_msg (current_readchannel, &msg))
+      if (! wire_read_msg (plug_in->my_read, &msg))
 	{
 	  g_message ("plug_in_handle_tile_req: ERROR");
 	  plug_in_close (plug_in, TRUE);
@@ -1216,7 +1214,7 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
 }
 
 static void
-plug_in_handle_proc_run (Gimp      *gimp,
+plug_in_handle_proc_run (PlugIn    *plug_in,
                          GPProcRun *proc_run)
 {
   GPProcReturn   proc_return;
@@ -1226,11 +1224,11 @@ plug_in_handle_proc_run (Gimp      *gimp,
   PlugInBlocked *blocked;
 
   args = plug_in_params_to_args (proc_run->params, proc_run->nparams, FALSE);
-  proc_rec = procedural_db_lookup (gimp, proc_run->name);
+  proc_rec = procedural_db_lookup (plug_in->gimp, proc_run->name);
 
   if (proc_rec)
     {
-      return_vals = procedural_db_execute (gimp, proc_run->name, args);
+      return_vals = procedural_db_execute (plug_in->gimp, proc_run->name, args);
     }
   else
     {
@@ -1257,10 +1255,10 @@ plug_in_handle_proc_run (Gimp      *gimp,
 	  proc_return.params = plug_in_args_to_params (return_vals, 1, FALSE);
 	}
 
-      if (! gp_proc_return_write (current_writechannel, &proc_return))
+      if (! gp_proc_return_write (plug_in->my_write, &proc_return))
 	{
 	  g_warning ("plug_in_handle_proc_run: ERROR");
-	  plug_in_close (current_plug_in, TRUE);
+	  plug_in_close (plug_in, TRUE);
 	  return;
 	}
 
@@ -1272,7 +1270,7 @@ plug_in_handle_proc_run (Gimp      *gimp,
     {
       blocked = g_new0 (PlugInBlocked, 1);
 
-      blocked->plug_in   = current_plug_in;
+      blocked->plug_in   = plug_in;
       blocked->proc_name = g_strdup (proc_run->name);
 
       blocked_plug_ins = g_slist_prepend (blocked_plug_ins, blocked);
@@ -1280,7 +1278,7 @@ plug_in_handle_proc_run (Gimp      *gimp,
 }
 
 static void
-plug_in_handle_proc_return (Gimp         *gimp,
+plug_in_handle_proc_return (PlugIn       *plug_in,
                             GPProcReturn *proc_return)
 {
   PlugInBlocked *blocked;
@@ -1305,12 +1303,15 @@ plug_in_handle_proc_return (Gimp         *gimp,
 	      strcmp (blocked->proc_name, proc_return->name) == 0)
 	    {
 	      plug_in_push (blocked->plug_in);
-	      if (! gp_proc_return_write (current_writechannel, proc_return))
+
+	      if (! gp_proc_return_write (blocked->plug_in->my_write,
+                                          proc_return))
 		{
 		  g_message ("plug_in_handle_proc_run: ERROR");
-		  plug_in_close (current_plug_in, TRUE);
+		  plug_in_close (blocked->plug_in, TRUE);
 		  return;
 		}
+
 	      plug_in_pop ();
 
 	      blocked_plug_ins = g_slist_remove (blocked_plug_ins, blocked);
@@ -1323,7 +1324,7 @@ plug_in_handle_proc_return (Gimp         *gimp,
 }
 
 static void
-plug_in_handle_proc_install (Gimp          *gimp,
+plug_in_handle_proc_install (PlugIn        *plug_in,
                              GPProcInstall *proc_install)
 {
   PlugInDef       *plug_in_def = NULL;
@@ -1350,8 +1351,8 @@ plug_in_handle_proc_install (Gimp          *gimp,
 	      g_message ("Plug-In \"%s\"\n(%s)\n"
 			 "attempted to install procedure \"%s\"\n"
 			 "which does not take the standard Plug-In args.",
-			 g_path_get_basename (current_plug_in->args[0]),
-			 current_plug_in->args[0],
+			 g_path_get_basename (plug_in->args[0]),
+			 plug_in->args[0],
 			 proc_install->name);
 	      return;
 	    }
@@ -1366,8 +1367,8 @@ plug_in_handle_proc_install (Gimp          *gimp,
 	      g_message ("Plug-In \"%s\"\n(%s)\n"
 			 "attempted to install procedure \"%s\"\n"
 			 "which does not take the standard Plug-In args.",
-			 g_path_get_basename (current_plug_in->args[0]),
-			 current_plug_in->args[0],
+			 g_path_get_basename (plug_in->args[0]),
+			 plug_in->args[0],
 			 proc_install->name);
 	      return;
 	    }
@@ -1382,8 +1383,8 @@ plug_in_handle_proc_install (Gimp          *gimp,
 	      g_message ("Plug-In \"%s\"\n(%s)\n"
 			 "attempted to install procedure \"%s\"\n"
 			 "which does not take the standard Plug-In args.",
-			 g_path_get_basename (current_plug_in->args[0]),
-			 current_plug_in->args[0],
+			 g_path_get_basename (plug_in->args[0]),
+			 plug_in->args[0],
 			 proc_install->name);
 	      return;
 	    }
@@ -1400,8 +1401,8 @@ plug_in_handle_proc_install (Gimp          *gimp,
 	      g_message ("Plug-In \"%s\"\n(%s)\n"
 			 "attempted to install procedure \"%s\"\n"
 			 "which does not take the standard Plug-In args.",
-			 g_path_get_basename (current_plug_in->args[0]),
-			 current_plug_in->args[0],
+			 g_path_get_basename (plug_in->args[0]),
+			 plug_in->args[0],
 			 proc_install->name);
 	      return;
 	    }
@@ -1413,8 +1414,8 @@ plug_in_handle_proc_install (Gimp          *gimp,
 		     "in an invalid menu location.\n"
 		     "Use either \"<Toolbox>\", \"<Image>\", "
 		     "\"<Load>\", or \"<Save>\".",
-		     g_path_get_basename (current_plug_in->args[0]),
-		     current_plug_in->args[0],
+		     g_path_get_basename (plug_in->args[0]),
+		     plug_in->args[0],
 		     proc_install->name);
 	  return;
 	}
@@ -1435,8 +1436,8 @@ plug_in_handle_proc_install (Gimp          *gimp,
 		     "attempted to install procedure \"%s\"\n"
 		     "which fails to comply with the array parameter\n"
 		     "passing standard.  Argument %d is noncompliant.", 
-		     g_path_get_basename (current_plug_in->args[0]),
-		     current_plug_in->args[0],
+		     g_path_get_basename (plug_in->args[0]),
+		     plug_in->args[0],
 		     proc_install->name, i);
 	  return;
 	}
@@ -1481,8 +1482,8 @@ plug_in_handle_proc_install (Gimp          *gimp,
     {
       g_message ("Plug-In \"%s\"\n(%s)\n"
                  "attempted to install a procedure with invalid UTF-8 strings.\n", 
-                 g_path_get_basename (current_plug_in->args[0]),
-                 current_plug_in->args[0]);
+                 g_path_get_basename (plug_in->args[0]),
+                 plug_in->args[0]);
       return;
     }
 
@@ -1494,7 +1495,7 @@ plug_in_handle_proc_install (Gimp          *gimp,
     {
     case GIMP_PLUGIN:
     case GIMP_EXTENSION:
-      plug_in_def = current_plug_in->user_data;
+      plug_in_def = plug_in->user_data;
       prog = plug_in_def->prog;
 
       tmp = plug_in_def->proc_defs;
@@ -1503,7 +1504,7 @@ plug_in_handle_proc_install (Gimp          *gimp,
     case GIMP_TEMPORARY:
       prog = "none";
 
-      tmp = current_plug_in->temp_proc_defs;
+      tmp = plug_in->temp_proc_defs;
       break;
     }
 
@@ -1515,7 +1516,7 @@ plug_in_handle_proc_install (Gimp          *gimp,
       if (strcmp (proc_def->db_info.name, proc_install->name) == 0)
 	{
 	  if (proc_install->type == GIMP_TEMPORARY)
-	    plug_ins_proc_def_remove (proc_def, gimp);
+	    plug_ins_proc_def_remove (proc_def, plug_in->gimp);
 	  else
 	    plug_in_proc_def_destroy (proc_def, TRUE); /* destroys data_only */
 
@@ -1586,14 +1587,14 @@ plug_in_handle_proc_install (Gimp          *gimp,
 
     case GIMP_TEMPORARY:
       if (add_proc_def)
-	current_plug_in->temp_proc_defs = 
-	  g_slist_prepend (current_plug_in->temp_proc_defs, proc_def);
+	plug_in->temp_proc_defs = g_slist_prepend (plug_in->temp_proc_defs,
+                                                   proc_def);
 
       proc_defs = g_slist_append (proc_defs, proc_def);
-      proc->exec_method.temporary.plug_in = (void *) current_plug_in;
-      procedural_db_register (gimp, proc);
+      proc->exec_method.temporary.plug_in = plug_in;
+      procedural_db_register (plug_in->gimp, proc);
 
-      if (! gimp->no_interface)
+      if (! plug_in->gimp->no_interface)
         {
           /*  If there is a menu path specified, create a menu entry  */
           if (proc_install->menu_path)
@@ -1626,13 +1627,13 @@ plug_in_handle_proc_install (Gimp          *gimp,
 }
 
 static void
-plug_in_handle_proc_uninstall (Gimp            *gimp,
+plug_in_handle_proc_uninstall (PlugIn          *plug_in,
                                GPProcUninstall *proc_uninstall)
 {
   PlugInProcDef *proc_def;
   GSList        *tmp;
 
-  tmp = current_plug_in->temp_proc_defs;
+  tmp = plug_in->temp_proc_defs;
   while (tmp)
     {
       proc_def = tmp->data;
@@ -1640,17 +1641,18 @@ plug_in_handle_proc_uninstall (Gimp            *gimp,
 
       if (strcmp (proc_def->db_info.name, proc_uninstall->name) == 0)
 	{
-	  current_plug_in->temp_proc_defs = g_slist_remove (current_plug_in->temp_proc_defs, proc_def);
-	  plug_ins_proc_def_remove (proc_def, gimp);
+	  plug_in->temp_proc_defs = g_slist_remove (plug_in->temp_proc_defs,
+                                                    proc_def);
+	  plug_ins_proc_def_remove (proc_def, plug_in->gimp);
 	  break;
 	}
     }
 }
 
 static void
-plug_in_handle_has_init (void)
+plug_in_handle_has_init (PlugIn *plug_in)
 {
-  current_plug_in->user_data->has_init = TRUE;
+  plug_in->user_data->has_init = TRUE;
 }
 
 static gboolean
@@ -1667,7 +1669,7 @@ plug_in_write (GIOChannel *channel,
 	  bytes = WRITE_BUFFER_SIZE - current_write_buffer_index;
 	  memcpy (&current_write_buffer[current_write_buffer_index], buf, bytes);
 	  current_write_buffer_index += bytes;
-	  if (!wire_flush (channel))
+	  if (! wire_flush (channel))
 	    return FALSE;
 	}
       else
@@ -1743,8 +1745,6 @@ plug_in_push (PlugIn *plug_in)
 
   plug_in_stack = g_slist_prepend (plug_in_stack, current_plug_in);
 
-  current_readchannel        = current_plug_in->my_read;
-  current_writechannel       = current_plug_in->my_write;
   current_write_buffer_index = current_plug_in->write_buffer_index;
   current_write_buffer       = current_plug_in->write_buffer;
 }
@@ -1767,16 +1767,12 @@ plug_in_pop (void)
   if (plug_in_stack)
     {
       current_plug_in            = plug_in_stack->data;
-      current_readchannel        = current_plug_in->my_read;
-      current_writechannel       = current_plug_in->my_write;
       current_write_buffer_index = current_plug_in->write_buffer_index;
       current_write_buffer       = current_plug_in->write_buffer;
     }
   else
     {
       current_plug_in            = NULL;
-      current_readchannel        = NULL;
-      current_writechannel       = NULL;
       current_write_buffer_index = 0;
       current_write_buffer        = NULL;
     }
@@ -1811,8 +1807,8 @@ plug_in_temp_run (ProcRecord *proc_rec,
       proc_run.nparams = argc;
       proc_run.params  = plug_in_args_to_params (args, argc, FALSE);
 
-      if (!gp_temp_proc_run_write (current_writechannel, &proc_run) ||
-	  !wire_flush (current_writechannel))
+      if (! gp_temp_proc_run_write (plug_in->my_write, &proc_run) ||
+	  ! wire_flush (plug_in->my_write))
 	{
 	  return_vals = procedural_db_return_args (proc_rec, FALSE);
 	  goto done;

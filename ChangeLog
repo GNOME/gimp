@@ -1,3 +1,12 @@
+2002-05-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in.c: Pass PlugIn, not Gimp pointers to all
+	message handler functions so they have a proper context to operate
+	on. Use the PlugIn pointer passed instead of "current_plug_in".
+	Removed global variables "current_readchannel" and
+	"current_writechannel" because it is now always possible to use
+	plug_in->my_read and plug_in->my_write.
+
 2002-05-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpmovetool.c: <shift>+click toggles the active
