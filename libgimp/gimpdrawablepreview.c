@@ -291,6 +291,9 @@ gimp_drawable_preview_draw_buffer (GimpPreview  *preview,
                                    buffer, rowstride);
 }
 
+#define MAX3(a, b, c)  (MAX (MAX ((a), (b)), (c)))
+#define MIN3(a, b, c)  (MIN (MIN ((a), (b)), (c)))
+
 static void
 gimp_drawable_preview_set_drawable (GimpDrawablePreview *drawable_preview,
                                     GimpDrawable        *drawable)
@@ -300,16 +303,20 @@ gimp_drawable_preview_set_drawable (GimpDrawablePreview *drawable_preview,
   gint         height  = gimp_drawable_height (drawable->drawable_id);
   gint         x1, x2;
   gint         y1, y2;
+  gint         xmin, ymin, xmax, ymax;
+  gint         offset_x, offset_y;
 
   drawable_preview->drawable = drawable;
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  gimp_drawable_offsets (drawable->drawable_id, &offset_x, &offset_y);
 
-  gimp_preview_set_bounds (preview,
-                           MAX (x1 - SELECTION_BORDER, 0),
-                           MAX (y1 - SELECTION_BORDER, 0),
-                           MIN (x2 + SELECTION_BORDER, width),
-                           MIN (y2 + SELECTION_BORDER, height));
+  xmin = MAX3 (x1 - SELECTION_BORDER, 0, - offset_x);
+  ymin = MAX3 (y1 - SELECTION_BORDER, 0, - offset_y);
+  xmax = MIN3 (x2 + SELECTION_BORDER, width, width + offset_x);
+  ymax = MIN3 (y2 + SELECTION_BORDER, height, height + offset_y);
+
+  gimp_preview_set_bounds (preview, xmin, ymin, xmax, ymax);
 
   if (gimp_drawable_is_indexed (drawable->drawable_id))
     {
