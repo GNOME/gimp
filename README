@@ -1,19 +1,20 @@
 The GIMP: The GNU Image Manipulation Program
 ============================================
 
-This is version 1.3, the developers version of The GIMP. Only use it
-if you are brave and curious and want to participate development
-towards the next stable release version 1.4. This is a developers
-version. We know it has bugs and it might not even compile. You have
-been warned!
+This is version 1.3, the developers version of The GIMP. Only use it if you
+are brave and curious and want to participate development towards the next
+stable release version 1.4. This is a developers version. We know it has bugs
+and it might not even compile. You have been warned!
 
-Some features that were present in GIMP 1.2 are disabled or not even 
-included in this release. This includes the Perl extension and thus 
-all the perl plug-ins. The new text tool is only halfway done and
-various other tools and functions are broken. Almost everything is under
-construction. Don't even think about using this for daily work. If you
-are a software distributor, dont' dare to ship this package to innocent
-users.
+Some features that were present in GIMP 1.2 are disabled or not even included
+in this release. The perl bindings as well as all the perl scripts are not any
+longer included in this source tree. They have been moved into its own module
+called gimp-perl and await being porting to GIMP-1.3 and GTK+-2.0.
+
+The new text tool is only halfway done and various other tools and functions
+are broken. Almost everything is under construction. Don't even think about
+using this for daily work. If you are a software distributor, dont' dare to
+ship this package to innocent users.
 
 For installation instructions, see the file INSTALL.
 
@@ -25,8 +26,8 @@ The GIMP's home page is at:
 
 	http://www.gimp.org/
 
-Please be sure to visit this site for information, documentation,
-tutorials, news, etc.  All things GIMP-ish are available from there.
+Please be sure to visit this site for information, documentation, tutorials,
+news, etc.  All things GIMP-ish are available from there.
 
 The automated plug-in registry is located at:
 
@@ -48,22 +49,21 @@ discussion.  There is more info at
 
 	https://lists.xcf.berkeley.edu/mailman/listinfo/<listname>
 
-substituting <listname> for "gimp-announce", "gimp-user",
-"gimp-win-user", or "gimp-developer" (without the quotes, of course)
-depending on the list you want to subscribe to.  Links to the mailing
-list archives can be found at the same addresses as given above.
+substituting <listname> for "gimp-announce", "gimp-user", "gimp-win-user", or
+"gimp-developer" (without the quotes, of course) depending on the list you
+want to subscribe to.  Links to the mailing list archives can be found at the
+same addresses as given above.
 
-Gimp-announce is a low-traffic list with announcements about new
-releases of GIMP and plug-ins. Gimp-user is a mailing list dedicated
-to user problems, hints and tips, discussion of cool effects, etc.
-Gimp-developer is oriented to GIMP core and plug-in developers.  Most
-people will only want to be subscribed to gimp-user. If you want to
-help develop The GIMP, the gimp-developer mailing list is a good
-starting point.
+Gimp-announce is a low-traffic list with announcements about new releases of
+GIMP and plug-ins. Gimp-user is a mailing list dedicated to user problems,
+hints and tips, discussion of cool effects, etc.  Gimp-developer is oriented
+to GIMP core and plug-in developers.  Most people will only want to be
+subscribed to gimp-user. If you want to help develop The GIMP, the
+gimp-developer mailing list is a good starting point.
 
-There are two mailing lists dedicated to the Win32 port, "gimpwin-users" 
-and "gimpwin-dev". Especially the latter also carries traffic about the 
-GTk+ port to Win32 in general. To subscribe, send an empty message to
+There are two mailing lists dedicated to the Win32 port, "gimpwin-users" and
+"gimpwin-dev". Especially the latter also carries traffic about the GTk+ port
+to Win32 in general. To subscribe, send an empty message to
 
 	gimpwin-users-subscribe@egroups.com
 or
@@ -74,18 +74,17 @@ respectively. You can also use the web interface at
         http://www.egroups.com/group/gimpwin-users/ and
         http://www.egroups.com/group/gimpwin-dev/ 
 
-Note that as these mailing lists are hosted on egroups.com, the
-messages from the list contain relatively unintrusive and easily
-ignored advertisements at the end. But if you are absolutely allergic
-to ads, don't subscribe.
+Note that as these mailing lists are hosted on egroups.com, the messages from
+the list contain relatively unintrusive and easily ignored advertisements at
+the end. But if you are absolutely allergic to ads, don't subscribe.
 
 
 3. IRC
 ======
 
-And finally, for the real junkies, there is an IRC channel devoted to
-the GIMP. On Byxnet (a private mostly-GIMP network) there is #gimp.
-Many of the developers hang out there.  One of the Byxnet servers are:
+And finally, for the real junkies, there is an IRC channel devoted to the
+GIMP. On Byxnet (a private mostly-GIMP network) there is #gimp.  Many of the
+developers hang out there.  One of the Byxnet servers are:
 
 	irc.gimp.org:6667
 
@@ -93,37 +92,34 @@ Many of the developers hang out there.  One of the Byxnet servers are:
 4. Customizing
 ==============
 
-The look of GIMP's interface can be customized like any other GTK app
-by editing the ~/.gtkrc file or by using "themes" (ready-made
-customizations). For downloadable themes and further details, see
-http://gtk.themes.org. Additionally GIMP reads ~/.gimp-1.3/gtkrc so
-you can have settings that only apply to The GIMP.
+The look of GIMP's interface can be customized like any other GTK app by
+editing the ~/.gtkrc file or by using "themes" (ready-made customizations).
+For downloadable themes and further details, see http://gtk.themes.org.
+Additionally GIMP reads ~/.gimp-1.3/gtkrc so you can have settings that
+only apply to The GIMP.
 
-Included is a set of keybindings similar to those in Adobe Photoshop.
-You can find them in the ps-menurc file.  To use them, copy this file
-to ~/.gimp-1.3/menurc. You can also manually change the keybindings to
-any of your choice by editing ~/.gimp-1.3/menurc.
+Included is a set of keybindings similar to those in Adobe Photoshop.  You
+can find them in the ps-menurc file.  To use them, copy this file to 
+~/.gimp-1.3/menurc. You can also manually change the keybindings to any of
+your choice by editing ~/.gimp-1.3/menurc.
 
 
 5. Bugs
 =======
 
-Since this is a developers version, we are at the moment not really
-interested in receiving too many bug-reports. Some parts of the code
-are unfinished and under heavy development and we know that.
-Bug-reports for incomplete or missing are features are therefore often
-not helpful. Instead of filing a bug you should try to contact the
-person who is working on this particular part of the program (see the
-ChangeLog) or try to fix it yourself. You should report crashes and
-other severe bugs at Bugzilla (http://bugzilla.gnome.org/). Your
-bug-report needs to provide detailed instruction of how to reproduce
-the problem. For reports on crashes, please also include a stack
-trace.
+Since this is a developers version, we are at the moment not really interested
+in receiving too many bug-reports. Some parts of the code are unfinished and
+under heavy development and we know that.  Bug-reports for incomplete or
+missing are features are therefore often not helpful. Instead of filing a bug
+you should try to contact the person who is working on this particular part of
+the program (see the ChangeLog) or try to fix it yourself. You should report
+crashes and other severe bugs at Bugzilla (http://bugzilla.gnome.org/). Your
+bug-report needs to provide detailed instruction of how to reproduce the
+problem. For reports on crashes, please also include a stack trace.
 
-If you experience crashes whenever you try to start gimp-1.3, you are
-most probably using gdkxft or another LD_PRELOAD hack designed for
-gtk+-1.2. These hacks will not work with GTK+-2.0 applications like
-this version of The GIMP.
+If you experience crashes whenever you try to start gimp-1.3, you are most
+probably using gdkxft or another LD_PRELOAD hack designed for gtk+-1.2. These
+hacks will not work with GTK+-2.0 applications like this version of The GIMP.
 
 
 Have fun,
@@ -133,4 +129,4 @@ Have fun,
   Federico Mena
   Manish Singh
   Sven Neumann
-  Michael Natterer	
+  Michael Natterer

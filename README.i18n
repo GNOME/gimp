@@ -167,10 +167,8 @@ this one may not necessarily fit.
 	 po-script-fu/gimp14-script-fu.pot  --  the script-fu scripts
          tips/gimp-tips14.pot               --  the startup tips
 
-        (plug-ins/perl/po/gimp14-perl.pot   --  the gimp-perl scripts)
-
- The perl translation is in brackets since gimp-perl is not built at
- the moment and it is not sure whether it will be in GIMP-1.4 or not.	
+ If you are looking for the translations of gimp-perl, please note that
+ gimp-perl has been moved into it's own CVS module called gimp-perl.
 
  When translating menu_paths, please do not translate the name of the
  item_factory (that is the one in brackets at the front), e.g.

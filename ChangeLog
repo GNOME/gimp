@@ -1,5 +1,16 @@
 2003-02-23  Sven Neumann  <sven@gimp.org>
 
+	* Makefile.am
+	* README.perl: removed this file.
+
+	* INSTALL
+	* README
+	* README.i18n
+	* gimp.spec.in: removed traces of gimp-perl and added some
+	pointers to the new CVS module.
+
+2003-02-23  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/convert-dialog.c (convert_to_indexed): set the correct
 	default value for the palette type menu (fixes bug #106798).
 

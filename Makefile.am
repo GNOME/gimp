@@ -48,7 +48,6 @@ EXTRA_DIST = \
 	PLUGIN_MAINTAINERS	\
 	README			\
 	README.i18n		\
-	README.perl		\
 	README.win32		\
 	TODO.xml		\
 	config.h.win32		\
