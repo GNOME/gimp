@@ -2019,11 +2019,7 @@ file_save_ok_callback (GtkWidget *widget,
   g_assert (filename && raw_filename);
 
 #ifdef GDK_USE_UTF8_MBS
-  {
-    gchar *tmp = raw_filename;
-    raw_filename = g_filename_from_utf8 (raw_filename, -1, NULL, NULL, NULL);
-    g_free (tmp);
-  }
+  raw_filename = g_filename_from_utf8 (raw_filename, -1, NULL, NULL, NULL);
 #endif
 
   for (dot = strrchr (filename, '.'), x = 0; dot && *(++dot);)
@@ -2038,7 +2034,12 @@ file_save_ok_callback (GtkWidget *widget,
 
 	  the_drawable = gimp_image_active_drawable (the_gimage);
 	  if (!the_drawable)
-	    return;
+	    {
+#ifdef GDK_USE_UTF8_MBS
+	      g_free (raw_filename);
+#endif
+	      return;
+	    }
 
 	  proc_rec = procedural_db_lookup ("plug_in_the_slimy_egg");
 	  if (!proc_rec)
@@ -2058,6 +2059,9 @@ file_save_ok_callback (GtkWidget *widget,
 
 	  g_free (args);
 	  
+#ifdef GDK_USE_UTF8_MBS
+	  g_free (raw_filename);
+#endif
 	  return;
 	}
    }
@@ -2092,6 +2096,9 @@ file_save_ok_callback (GtkWidget *widget,
 
       gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
     }
+#ifdef GDK_USE_UTF8_MBS
+  g_free (raw_filename);
+#endif
 }
 
 static void

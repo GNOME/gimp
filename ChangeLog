@@ -1,3 +1,9 @@
+2003-07-22  Tor Lillqvist  <tml@iki.fi>
+
+	* app/fileops.c (file_save_ok_callback): [Win32] Fix memory error
+	(inside GDK_USE_UTF8_MBS ifdef): Do not g_free() a value returned
+	from gtk_entry_get_text().
+
 2003-07-02  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/jpeg.c (background_jpeg_save): do not free the
