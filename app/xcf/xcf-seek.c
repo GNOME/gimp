@@ -19,6 +19,7 @@
 #include "config.h"
 
 #include <stdio.h>
+#include <errno.h>
 
 #include <glib-object.h>
 
@@ -27,21 +28,52 @@
 #include "xcf-private.h"
 #include "xcf-seek.h"
 
+#include "libgimp/gimpintl.h"
 
-void
+gboolean
 xcf_seek_pos (XcfInfo *info,
-	      guint    pos)
+	      guint    pos,
+	      GError **error)
 {
   if (info->cp != pos)
     {
       info->cp = pos;
-      fseek (info->fp, info->cp, SEEK_SET);
+      if (fseek (info->fp, info->cp, SEEK_SET) == -1)
+        {
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Could not seek in XCF file: %s"), 
+                       g_strerror (errno));
+
+          return FALSE;
+        }
     }
+
+    return TRUE;
 }
 
-void
-xcf_seek_end (XcfInfo *info)
+gboolean
+xcf_seek_end (XcfInfo *info,
+              GError **error)
 {
-  fseek (info->fp, 0, SEEK_END);
+  if (fseek (info->fp, 0, SEEK_END) == -1)
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not seek in XCF file: %s"), 
+                   g_strerror (errno));
+
+      return FALSE;
+    }
+        
   info->cp = ftell (info->fp);
+
+  if (fseek (info->fp, 0, SEEK_END) == -1)
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not seek in XCF file: %s"), 
+                   g_strerror (errno));
+
+      return FALSE;
+    }
+    
+  return TRUE;
 }

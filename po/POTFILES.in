@@ -203,6 +203,9 @@ app/widgets/gimpwidgets-utils.c
 
 app/xcf/xcf-load.c
 app/xcf/xcf-read.c
+app/xcf/xcf-save.c
+app/xcf/xcf-write.c
+app/xcf/xcf-seek.c
 app/xcf/xcf.c
 
 data/misc/gimp.desktop.in.in

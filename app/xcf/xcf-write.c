@@ -20,17 +20,22 @@
 
 #include <stdio.h>
 #include <string.h> /* strlen */
+#include <errno.h>
 
 #include <glib.h>
 
 #include "xcf-write.h"
 
 
+#include "libgimp/gimpintl.h"
+
 guint
 xcf_write_int32 (FILE     *fp,
 		 guint32  *data,
-		 gint      count)
+		 gint      count,
+		 GError  **error)
 {
+  GError *tmp_error = NULL;
   guint32 tmp;
   gint i;
 
@@ -39,7 +44,13 @@ xcf_write_int32 (FILE     *fp,
       for (i = 0; i < count; i++)
         {
           tmp = g_htonl (data[i]);
-          xcf_write_int8 (fp, (guint8*) &tmp, 4);
+          xcf_write_int8 (fp, (guint8*) &tmp, 4, &tmp_error); 
+          if (tmp_error)
+            {
+              g_propagate_error (error, tmp_error);
+              
+              return i * 4;
+            }
         }
     }
 
@@ -49,15 +60,17 @@ xcf_write_int32 (FILE     *fp,
 guint
 xcf_write_float (FILE     *fp,
 		 gfloat   *data,
-		 gint      count)
+		 gint      count,
+		 GError  **error)
 {
-  return (xcf_write_int32(fp, (guint32 *)((void *)data), count));
+  return xcf_write_int32 (fp, (guint32 *)((void *)data), count, error);
 }
 
 guint
 xcf_write_int8 (FILE     *fp,
 		guint8   *data,
-		gint      count)
+		gint      count,
+		GError  **error)
 {
   guint total;
   gint bytes;
@@ -66,6 +79,15 @@ xcf_write_int8 (FILE     *fp,
   while (count > 0)
     {
       bytes = fwrite ((gchar*) data, sizeof (gchar), count, fp);
+
+      if (bytes == 0)
+        {
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Error writing XCF: %s"), g_strerror (errno));
+
+          return total;
+        }
+        
       count -= bytes;
       data += bytes;
     }
@@ -76,8 +98,10 @@ xcf_write_int8 (FILE     *fp,
 guint
 xcf_write_string (FILE     *fp,
 		  gchar   **data,
-		  gint      count)
+		  gint      count,
+		  GError  **error)
 {
+  GError *tmp_error = NULL;
   guint32 tmp;
   guint total;
   gint i;
@@ -90,9 +114,20 @@ xcf_write_string (FILE     *fp,
       else
         tmp = 0;
 
-      xcf_write_int32 (fp, &tmp, 1);
+      xcf_write_int32 (fp, &tmp, 1, &tmp_error);
+      if (tmp_error)
+        {
+          g_propagate_error(error, tmp_error);
+          return total;
+        }
+        
       if (tmp > 0)
-        xcf_write_int8 (fp, (guint8*) data[i], tmp);
+        xcf_write_int8 (fp, (guint8*) data[i], tmp, &tmp_error);
+      if (tmp_error)
+        {
+          g_propagate_error(error, tmp_error);
+          return total;
+        }
 
       total += 4 + tmp;
     }

@@ -283,7 +283,8 @@ xcf_load_image (Gimp    *gimp,
       saved_pos = info->cp;
 
       /* seek to the layer offset */
-      xcf_seek_pos (info, offset);
+      if (! xcf_seek_pos (info, offset, NULL))
+        goto error;
 
       /* read in the layer */
       layer = xcf_load_layer (info, gimage);
@@ -300,7 +301,8 @@ xcf_load_image (Gimp    *gimp,
       /* restore the saved position so we'll be ready to
        *  read the next offset.
        */
-      xcf_seek_pos (info, saved_pos);
+      if (! xcf_seek_pos (info, saved_pos, NULL))
+        goto error;
     }
 
   while (TRUE)
@@ -320,7 +322,8 @@ xcf_load_image (Gimp    *gimp,
       saved_pos = info->cp;
 
       /* seek to the channel offset */
-      xcf_seek_pos (info, offset);
+      if (! xcf_seek_pos (info, offset, NULL))
+        goto error;
 
       /* read in the layer */
       channel = xcf_load_channel (info, gimage);
@@ -336,7 +339,8 @@ xcf_load_image (Gimp    *gimp,
       /* restore the saved position so we'll be ready to
        *  read the next offset.
        */
-      xcf_seek_pos (info, saved_pos);
+      if (! xcf_seek_pos (info, saved_pos, NULL))
+        goto error;
     }
 
   if (info->active_layer)
@@ -395,7 +399,9 @@ xcf_load_image_props (XcfInfo   *info,
 	      info->cp += 
                 xcf_read_int32 (info->fp, (guint32*) &gimage->num_cols, 1);
 	      gimage->cmap = g_new (guchar, gimage->num_cols*3);
-	      xcf_seek_pos (info, info->cp + gimage->num_cols);
+	      if (!xcf_seek_pos (info, info->cp + gimage->num_cols, NULL))
+	        return FALSE;
+
 	      for (i = 0; i<gimage->num_cols; i++) 
 		{
 		  gimage->cmap[i*3+0] = i;
@@ -886,14 +892,17 @@ xcf_load_layer (XcfInfo   *info,
   info->cp += xcf_read_int32 (info->fp, &layer_mask_offset, 1);
 
   /* read in the hierarchy */
-  xcf_seek_pos (info, hierarchy_offset);
+  if (!xcf_seek_pos (info, hierarchy_offset, NULL))
+    goto error;
+
   if (!xcf_load_hierarchy (info, GIMP_DRAWABLE(layer)->tiles))
     goto error;
 
   /* read in the layer mask */
   if (layer_mask_offset != 0)
     {
-      xcf_seek_pos (info, layer_mask_offset);
+      if (! xcf_seek_pos (info, layer_mask_offset, NULL))
+        goto error;
 
       layer_mask = xcf_load_layer_mask (info, gimage);
       if (!layer_mask)
@@ -964,7 +973,9 @@ xcf_load_channel (XcfInfo   *info,
   info->cp += xcf_read_int32 (info->fp, &hierarchy_offset, 1);
 
   /* read in the hierarchy */
-  xcf_seek_pos (info, hierarchy_offset);
+  if (!xcf_seek_pos (info, hierarchy_offset, NULL))
+    goto error;
+    
   if (!xcf_load_hierarchy (info, GIMP_DRAWABLE (channel)->tiles))
     goto error;
 
@@ -1021,7 +1032,9 @@ xcf_load_layer_mask (XcfInfo   *info,
   info->cp += xcf_read_int32 (info->fp, &hierarchy_offset, 1);
 
   /* read in the hierarchy */
-  xcf_seek_pos (info, hierarchy_offset);
+  if (! xcf_seek_pos (info, hierarchy_offset, NULL))
+    goto error;
+
   if (!xcf_load_hierarchy (info, GIMP_DRAWABLE (layer_mask)->tiles))
     goto error;
 
@@ -1085,7 +1098,8 @@ xcf_load_hierarchy (XcfInfo     *info,
   saved_pos = info->cp;
   
   /* seek to the level offset */
-  xcf_seek_pos (info, offset);
+  if (!xcf_seek_pos (info, offset, NULL))
+    return FALSE;
   
   /* read in the level */
   if (!xcf_load_level (info, tiles))
@@ -1094,7 +1108,8 @@ xcf_load_hierarchy (XcfInfo     *info,
   /* restore the saved position so we'll be ready to
    *  read the next offset.
    */
-  xcf_seek_pos (info, saved_pos);
+  if (!xcf_seek_pos (info, saved_pos, NULL))
+    return FALSE;
 
   return TRUE;
 }
@@ -1161,7 +1176,8 @@ xcf_load_level (XcfInfo     *info,
 					   than we need to allow */
 
       /* seek to the tile offset */
-      xcf_seek_pos (info, offset);
+      if (! xcf_seek_pos (info, offset, NULL))
+        return FALSE;
 
       /* get the tile from the tile manager */
       tile = tile_manager_get (tiles, i, TRUE, TRUE);
@@ -1216,7 +1232,8 @@ xcf_load_level (XcfInfo     *info,
       /* restore the saved position so we'll be ready to
        *  read the next offset.
        */
-      xcf_seek_pos (info, saved_pos);
+      if (!xcf_seek_pos (info, saved_pos, NULL))
+        return FALSE;
 
       /* read in the offset of the next tile */
       info->cp += xcf_read_int32 (info->fp, &offset, 1);

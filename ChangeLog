@@ -1,3 +1,22 @@
+2002-12-20  Nathan Summers  <rock@gimp.org>
+
+	* app/xcf/xcf-write.[ch]
+	* app/xcf/xcf-save.c
+	* app/xcf/xcf.c: ported the fix for bug #101340 over from the stable 
+	branch.  Uses GError to report errors, unlike the stable version, which
+	uses a pointer to gboolean.
+	
+	* app/xcf/xcf-seek.[ch]: check the return value of fseek and ftell for
+	errors.  Return FALSE and set GError if an error is detected.
+
+	* app/xcf/xcf-load.c: since the xcf-seek functions use GError now,
+	added a NULL for the error parameter.  Added basic error checking
+	on the return value of the xcf-seek functions.  In the future,
+	changing xcf-load.c to use GError more completely should be
+	considered.
+	
+	* po/POTFILES.in: mark the error messages added for translation
+
 2002-12-19  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/grid.c: replace preview code by calls to libgimp
