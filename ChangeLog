@@ -1,3 +1,8 @@
+2000-08-16  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gdyntext/README
+	* plug-ins/gdyntext/gdyntext.[ch]: updated to version 1.5.2
+
 2000-08-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/app_procs.c

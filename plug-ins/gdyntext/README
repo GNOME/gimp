@@ -1,7 +1,7 @@
 GIMP Dynamic Text -- image filter plug-in for The GIMP program
 ==============================================================
 
-GDynText  1.5.0 #define GDT_REV()							((int)(atof(GDYNTEXT_VERSION) * 10)) 
+GDynText  1.5.2
 Copyright (C) 1998,1999,2000 Marco Lamberto
 E-mail:   lm@geocities.com
 Web page: http://www.geocities.com/Tokyo/1474/gimp/

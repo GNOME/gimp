@@ -23,7 +23,7 @@
 #ifndef _GDYNTEXT_H_
 #define _GDYNTEXT_H_
 
-#define GDYNTEXT_VERSION    "1.5.0"
+#define GDYNTEXT_VERSION    "1.5.2"
 #define GDYNTEXT_MAGIC	    "GDT10"
 #define GDYNTEXT_WEB_PAGE   "http://www.geocities.com/Tokyo/1474/gimp/"
 #define MAX_TEXT_SIZE	    (1024 << 6)

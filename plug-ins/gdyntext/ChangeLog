@@ -1,3 +1,10 @@
+Aug 14 2000
+  * MADE 1.5.2 RELEASE
+  * Merged with 1.5.0 from gimp CVS.
+Aug 12 2000
+  * MADE 1.5.1 RELEASE
+  * Fixed a "bug" that avoided setting the plugin values at the first startup
+    (mainly the color value, and the antialias erroneously disabled).
 Jun 25 2000
   * MADE 1.5.0 RELEASE
   * Requires gimp 1.1.24+.

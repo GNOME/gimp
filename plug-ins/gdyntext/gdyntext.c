@@ -22,7 +22,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
@@ -37,11 +36,11 @@
 
 
 static void gdt_query (void);
-static void gdt_run   (char       *name, 
-		       int         nparams, 
-		       GimpParam  *param, 
-		       int        *nreturn_vals, 
-		       GimpParam **return_vals);
+static void gdt_run   (gchar       *name, 
+		       gint         nparams, 
+		       GimpParam   *param, 
+		       gint        *nreturn_vals, 
+		       GimpParam  **return_vals);
 
 
 GimpPlugInInfo PLUG_IN_INFO = 
@@ -66,37 +65,37 @@ gdt_query (void)
   static GimpParamDef gdt_args[] = 
   {
     /* standard params */
-    { PARAM_INT32,    "run_mode",        "Interactive, non-interactive" },
-    { PARAM_IMAGE,    "image",           "Input image"                  },
-    { PARAM_DRAWABLE, "drawable",        "Input drawable"               },
+    { GIMP_PDB_INT32,    "run_mode",        "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",           "Input image"                  },
+    { GIMP_PDB_DRAWABLE, "drawable",        "Input drawable"               },
     /* gdyntext params */
-    { PARAM_STRING,   "text",            "Text to render"               },
-    { PARAM_INT32,    "antialias",       "Generate antialiased text"    },
-    { PARAM_INT32,    "alignment",       "Text alignment: { LEFT = 0, CENTER = 1, RIGHT = 2 }" },
-    { PARAM_INT32,    "rotation",        "Text rotation (degrees)"      },
-    { PARAM_INT32,    "line_spacing",    "Line spacing"                 },
-    { PARAM_COLOR,    "color",           "Text color"                   },
-    { PARAM_INT32,    "layer_alignment", "Layer alignment { NONE = 0, BOTTOM_LEFT = 1, BOTTOM_CENTER = 2, BOTTOM_RIGHT = 3, MIDDLE_LEFT = 4, CENTER = 5, MIDDLE_RIGHT = 6, TOP_LEFT = 7, TOP_CENTER = 8, TOP_RIGHT = 9 }" },
-    { PARAM_STRING,   "fontname",        "The fontname (conforming to the X Logical Font Description Conventions)" }
+    { GIMP_PDB_STRING,   "text",            "Text to render"               },
+    { GIMP_PDB_INT32,    "antialias",       "Generate antialiased text"    },
+    { GIMP_PDB_INT32,    "alignment",       "Text alignment: { LEFT = 0, CENTER = 1, RIGHT = 2 }" },
+    { GIMP_PDB_INT32,    "rotation",        "Text rotation (degrees)"      },
+    { GIMP_PDB_INT32,    "line_spacing",    "Line spacing"                 },
+    { GIMP_PDB_COLOR,    "color",           "Text color"                   },
+    { GIMP_PDB_INT32,    "layer_alignment", "Layer alignment { NONE = 0, BOTTOM_LEFT = 1, BOTTOM_CENTER = 2, BOTTOM_RIGHT = 3, MIDDLE_LEFT = 4, CENTER = 5, MIDDLE_RIGHT = 6, TOP_LEFT = 7, TOP_CENTER = 8, TOP_RIGHT = 9 }" },
+    { GIMP_PDB_STRING,   "fontname",        "The fontname (conforming to the X Logical Font Description Conventions)" }
   };
   static GimpParamDef gdt_rets[] = 
   {
-    { PARAM_LAYER,    "layer",           "The text layer"               }
+    { GIMP_PDB_LAYER,    "layer",           "The text layer"               }
   };
   static gint ngdt_args = sizeof (gdt_args) / sizeof (gdt_args[0]);
   static gint ngdt_rets = sizeof (gdt_rets) / sizeof (gdt_rets[0]);
     
-  gimp_install_procedure("plug_in_dynamic_text",
-			 "GIMP Dynamic Text",
-			 "",
-			 "Marco Lamberto <lm@geocities.com>",
-			 "Marco Lamberto",
-			 "Jan 1999",
-			 N_("<Image>/Filters/Render/Dynamic Text..."),
-			 "RGB*,GRAY*,INDEXED*",
-			 PROC_PLUG_IN,
-			 ngdt_args, ngdt_rets,
-			 gdt_args, gdt_rets);
+  gimp_install_procedure ("plug_in_dynamic_text",
+			  "GIMP Dynamic Text",
+			  "",
+			  "Marco Lamberto <lm@geocities.com>",
+			  "Marco Lamberto",
+			  "Jan 1999",
+			  N_("<Image>/Filters/Render/Dynamic Text..."),
+			  "RGB*,GRAY*,INDEXED*",
+			  GIMP_PLUGIN,
+			  ngdt_args, ngdt_rets,
+			  gdt_args, gdt_rets);
 }
 
 
@@ -134,12 +133,13 @@ gdt_run (gchar       *name,
   switch(run_mode) 
     {
     case RUN_INTERACTIVE:
-      memset(&oldvals, 0, sizeof(GdtVals));
-      gimp_get_data("plug_in_gdyntext", &oldvals);
+      memset (&oldvals, 0, sizeof(GdtVals));
+      gimp_get_data ("plug_in_gdyntext", &oldvals);
+
       if (oldvals.valid) 
 	{
-	  strncpy(gdtvals.text, oldvals.text, sizeof(gdtvals.text));
-	  strncpy(gdtvals.xlfd, oldvals.xlfd, sizeof(gdtvals.xlfd));
+	  strncpy (gdtvals.text, oldvals.text, sizeof(gdtvals.text));
+	  strncpy (gdtvals.xlfd, oldvals.xlfd, sizeof(gdtvals.xlfd));
 	  gdtvals.color	          = oldvals.color;
 	  gdtvals.antialias	  = oldvals.antialias;
 	  gdtvals.alignment       = oldvals.alignment;
@@ -147,15 +147,20 @@ gdt_run (gchar       *name,
 	  gdtvals.line_spacing	  = oldvals.line_spacing;
 	  gdtvals.layer_alignment = oldvals.layer_alignment;
 	  gdtvals.preview	  = oldvals.preview;
+	} 
+      else
+	{
+	  gdtvals.valid             = FALSE;
 	}
-      gdt_load(&gdtvals);
-      if (!gdt_create_ui(&gdtvals))
+
+      gdt_load (&gdtvals);
+      if (!gdt_create_ui (&gdtvals))
 	return;
       break;
 
     case RUN_NONINTERACTIVE:
 #ifdef DEBUG
-      printf("%d\n", nparams);
+      g_print ("%d\n", nparams);
 #endif
       if (nparams != 11) 
 	{
@@ -164,7 +169,7 @@ gdt_run (gchar       *name,
 	} 
       else 
 	{
-	  gdtvals.new_layer	  = !gimp_drawable_has_alpha(gdtvals.drawable_id);
+	  gdtvals.new_layer	  = !gimp_drawable_has_alpha (gdtvals.drawable_id);
 	  strncpy(gdtvals.text, param[3].data.d_string, sizeof(gdtvals.text));
 	  gdtvals.antialias	  = param[4].data.d_int32;
 	  gdtvals.alignment	  = param[5].data.d_int32;
@@ -177,19 +182,24 @@ gdt_run (gchar       *name,
 	  strncpy(gdtvals.xlfd, param[10].data.d_string, sizeof(gdtvals.xlfd));
 	}
       break;
+
     case RUN_WITH_LAST_VALS:
-      gimp_get_data("plug_in_gdyntext", &gdtvals);
+      gimp_get_data ("plug_in_gdyntext", &gdtvals);
       gdtvals.image_id		 = param[1].data.d_image;
       gdtvals.drawable_id	 = param[2].data.d_drawable;
       gdtvals.layer_id		 = param[2].data.d_layer;
-      gdtvals.new_layer		 = !gimp_drawable_has_alpha(gdtvals.drawable_id);
+      gdtvals.new_layer		 = !gimp_drawable_has_alpha (gdtvals.drawable_id);
       break;
     }
   
-  gdt_render_text(&gdtvals);
+  gdt_render_text (&gdtvals);
 
   if (run_mode == RUN_INTERACTIVE)
-    gimp_set_data("plug_in_gdyntext", &gdtvals, sizeof(GdtVals));
+    {
+      gdtvals.valid = TRUE;
+      gimp_set_data ("plug_in_gdyntext", &gdtvals, sizeof(GdtVals));
+    }
+
   values[1].data.d_int32 = gdtvals.layer_id; 
 }
 
@@ -197,67 +207,85 @@ gdt_run (gchar       *name,
 void 
 gdt_load (GdtVals *data)
 {
-  gchar *gdtparams  = NULL;
-  gchar *gdtparams0 = NULL;
-  gchar **params    = NULL;
-  GimpParasite *parasite = NULL;
-  
+  gchar  *gdtparams  = NULL;
+  gchar  *gdtparams0 = NULL;
+  gchar **params     = NULL;
+  GimpParamColor  col;
+  GimpParasite   *parasite = NULL;  
 	
-  if (gdt_compat_load(data))
+  if (gdt_compat_load (data))
     return;
   
   if ((parasite = gimp_drawable_parasite_find (data->drawable_id, GDYNTEXT_PARASITE)) != NULL)
     {
-      gdtparams = g_strdup(gimp_parasite_data(parasite));
-      gimp_parasite_free(parasite);
+      gdtparams = g_strdup (gimp_parasite_data (parasite));
+      gimp_parasite_free (parasite);
     }
   
   if (gdtparams == NULL)
-    gdtparams = gimp_layer_get_name(data->layer_id);
+    gdtparams = gimp_layer_get_name (data->layer_id);
   
-  if (!gimp_drawable_has_alpha(data->drawable_id) ||
-      strncmp(gdtparams, "GDT", 3) != 0)
+  if (!gimp_drawable_has_alpha (data->drawable_id) ||
+      strncmp (gdtparams, "GDT", 3) != 0)
     {
-      data->messages = g_list_append(data->messages, _(" Current layer isn't a GDynText layer or it has no alpha channel."
-						       " Forcing new layer creation."));
+      data->messages = g_list_append (data->messages, _(" Current layer isn't a GDynText layer or it has no alpha channel."
+							" Forcing new layer creation."));
       data->new_layer = TRUE;
+      if (!data->valid)   /* setup default values if it wasn't already done */
+	{		
+	  strcpy (data->text, "");
+	  strcpy (data->xlfd, "");
+
+	  gimp_palette_get_foreground (&col.red, &col.green, &col.blue);
+	  data->color = (col.red << 16) + (col.green << 8) + col.blue;
+
+	  data->antialias         = TRUE;
+	  data->alignment 	  = LEFT;
+	  data->rotation	  = 0;
+	  data->line_spacing	  = 0;
+	  data->layer_alignment	  = LA_NONE;
+	  data->change_layer_name = FALSE;
+	  data->messages	  = NULL;
+	  data->preview		  = TRUE;
+	}
+
       return;
     }
 
 #ifdef DEBUG
-  printf("'%s'\n", gdtparams);
+  g_print ("'%s'\n", gdtparams);
 #endif
   {
     gchar *st;
-    int len;
+    gint len;
     
-    st = strchr(gdtparams, '{') + 1;
-    len = strrchr(st, '}') - st;
-    gdtparams0 = g_strndup(st, len);
+    st = strchr (gdtparams, '{') + 1;
+    len = strrchr (st, '}') - st;
+    gdtparams0 = g_strndup (st, len);
   }
 #ifdef DEBUG
-  printf("'%s'\n", gdtparams0);
+  g_print ("'%s'\n", gdtparams0);
 #endif
-  params = g_strsplit(gdtparams0, "}{", -1);
-  g_free(gdtparams0);
+  params = g_strsplit (gdtparams0, "}{", -1);
+  g_free (gdtparams0);
   
   data->new_layer       = FALSE;
-  data->antialias       = atoi(params[ANTIALIAS]);
-  data->alignment       = atoi(params[ALIGNMENT]);
-  data->rotation        = atoi(params[ROTATION]);
-  data->line_spacing	= atoi(params[LINE_SPACING]);
-  data->layer_alignment	= atoi(params[LAYER_ALIGNMENT]);
-  data->color		= strtol(params[COLOR], (char **)NULL, 16);
+  data->antialias       = atoi (params[ANTIALIAS]);
+  data->alignment       = atoi (params[ALIGNMENT]);
+  data->rotation        = atoi (params[ROTATION]);
+  data->line_spacing	= atoi (params[LINE_SPACING]);
+  data->layer_alignment	= atoi (params[LAYER_ALIGNMENT]);
+  data->color		= strtol (params[COLOR], (gchar **)NULL, 16);
 
-  strncpy(data->xlfd, params[XLFD], sizeof(data->xlfd));
-  strncpy(data->text, params[TEXT], sizeof(data->text));
+  strncpy (data->xlfd, params[XLFD], sizeof(data->xlfd));
+  strncpy (data->text, params[TEXT], sizeof(data->text));
   {
-    gchar *text = gimp_strcompress(data->text);
-    g_snprintf(data->text, sizeof(data->text), "%s", text);
-    g_free(text);
+    gchar *text = gimp_strcompress (data->text);
+    g_snprintf (data->text, sizeof(data->text), "%s", text);
+    g_free (text);
   }
-  g_free(gdtparams);
-  g_strfreev(params);
+  g_free (gdtparams);
+  g_strfreev (params);
 }
 
 
@@ -268,37 +296,38 @@ gdt_save (GdtVals *data)
   GimpParasite *parasite;
   
   text = gimp_strescape (data->text, NULL);
-  lname = g_strdup_printf(GDYNTEXT_MAGIC
-			  "{%s}{%d}{%d}{%d}{%d}{%06X}{%d}{%s}",
-			  text,
-			  data->antialias, data->alignment, data->rotation, data->line_spacing,
-			  data->color, data->layer_alignment, data->xlfd);
+  lname = g_strdup_printf (GDYNTEXT_MAGIC
+			   "{%s}{%d}{%d}{%d}{%d}{%06X}{%d}{%s}",
+			   text,
+			   data->antialias, data->alignment, data->rotation, data->line_spacing,
+			   data->color, data->layer_alignment, data->xlfd);
   g_free(text);
   
-  parasite = gimp_parasite_new(GDYNTEXT_PARASITE,
-			       PARASITE_PERSISTENT | PARASITE_UNDOABLE, strlen(lname), lname);
-  gimp_drawable_attach_parasite(data->drawable_id, parasite);
-  gimp_parasite_free(parasite);
+  parasite = gimp_parasite_new (GDYNTEXT_PARASITE,
+				PARASITE_PERSISTENT | PARASITE_UNDOABLE, strlen(lname), lname);
+  gimp_drawable_attach_parasite (data->drawable_id, parasite);
+  gimp_parasite_free (parasite);
   
   if (!data->change_layer_name) 
     {
-      gimp_layer_set_name(data->layer_id, _("GDynText Layer"));
-      gimp_displays_flush();
-      g_free(lname);
+      gimp_layer_set_name (data->layer_id, _("GDynText Layer"));
+      gimp_displays_flush ();
+      g_free (lname);
+
       return;
     }
 
   /* change the layer name as in GIMP 1.x */
-  gimp_layer_set_name(data->layer_id, lname);
-  gimp_displays_flush();
-  g_free(lname);
+  gimp_layer_set_name (data->layer_id, lname);
+  gimp_displays_flush ();
+  g_free (lname);
 }
 
 
 void 
-gdt_render_text(GdtVals *data)
+gdt_render_text (GdtVals *data)
 {
-  gdt_render_text_p(data, TRUE);
+  gdt_render_text_p (data, TRUE);
 }
 
 
@@ -328,30 +357,30 @@ gdt_render_text_p (GdtVals  *data,
   
   /* save and remove current selection */
   selection_empty = gimp_selection_is_empty (data->image_id);
-  if (selection_empty == FALSE) 
+  if (!selection_empty) 
     {
       /* there is an active selection to save */
-      ret_vals = gimp_run_procedure("gimp_selection_save", &nret_vals,
-				    GIMP_PDB_IMAGE, data->image_id, GIMP_PDB_END);
+      ret_vals = gimp_run_procedure ("gimp_selection_save", &nret_vals,
+				     GIMP_PDB_IMAGE, data->image_id, GIMP_PDB_END);
       selection_channel = ret_vals[1].data.d_int32;
-      gimp_destroy_params(ret_vals, nret_vals);
+      gimp_destroy_params (ret_vals, nret_vals);
       
       gimp_selection_none (data->image_id);
     }
 
-  text_xlfd = g_strsplit(data->xlfd, "-", -1);
-  if (!strlen(text_xlfd[XLFD_PIXEL_SIZE]) ||
-      !strcmp(text_xlfd[XLFD_PIXEL_SIZE], "*"))
+  text_xlfd = g_strsplit (data->xlfd, "-", -1);
+  if (!strlen (text_xlfd[XLFD_PIXEL_SIZE]) ||
+      !strcmp (text_xlfd[XLFD_PIXEL_SIZE], "*"))
     {
-      font_size = atof(text_xlfd[XLFD_POINT_SIZE]);
+      font_size = atof (text_xlfd[XLFD_POINT_SIZE]);
       font_size_type = FONT_METRIC_POINTS;
     } 
   else 
     {
-      font_size = atof(text_xlfd[XLFD_PIXEL_SIZE]);
+      font_size = atof (text_xlfd[XLFD_PIXEL_SIZE]);
       font_size_type = FONT_METRIC_PIXELS;
     }
-  g_strfreev(text_xlfd);
+  g_strfreev (text_xlfd);
 
   /* retrieve space char width */
   gimp_text_get_extents_fontname ("AA", 
@@ -373,14 +402,15 @@ gdt_render_text_p (GdtVals  *data,
 				  &text_descent);
   space_width -= text_width;
 #ifdef DEBUG
-  printf("GDT: space width = %d\n", space_width);
+  g_print ("GDT: space width = %d\n", space_width);
 #endif
   
   /* setup text and compute layer size */
-  text_lines = g_strsplit(data->text, "\n", -1);
+  text_lines = g_strsplit (data->text, "\n", -1);
   for (i = 0; text_lines[i]; i++);
-  text_lines_w = g_new0(gint32, i);
+  text_lines_w = g_new0 (gint32, i);
   layer_width = layer_height = 0;
+
   for (i = 0; text_lines[i]; i++) 
     {
       gimp_text_get_extents_fontname (strlen(text_lines[i]) > 0 ? text_lines[i] : " ",
@@ -392,7 +422,7 @@ gdt_render_text_p (GdtVals  *data,
 				      &text_ascent,
 				      &text_descent);
 #ifdef DEBUG
-      printf("GDT: %4dx%4d A:%3d D:%3d [%s]\n", text_width, text_height, text_ascent, text_descent, text_lines[i]);
+      g_print ("GDT: %4dx%4d A:%3d D:%3d [%s]\n", text_width, text_height, text_ascent, text_descent, text_lines[i]);
 #endif
       text_lines_w[i] = text_width;
       if (layer_width < text_width)
@@ -401,31 +431,34 @@ gdt_render_text_p (GdtVals  *data,
     }
   layer_height -= data->line_spacing;
   
-  if (layer_height == 0) layer_height = 10;
-  if (layer_width == 0) layer_width = 10;
+  if (layer_height == 0) 
+    layer_height = 10;
+  if (layer_width == 0) 
+    layer_width = 10;
+
   if (!data->new_layer) 
     {
       /* resize the old layer */
-      gimp_layer_resize(data->layer_id, layer_width, layer_height, 0, 0);
+      gimp_layer_resize (data->layer_id, layer_width, layer_height, 0, 0);
     } 
   else 
     {
       /* create a new layer */
-      data->layer_id = data->drawable_id = gimp_layer_new(data->image_id,
-							  _("GDynText Layer "), layer_width, layer_height,
-							  (GDrawableType)(gimp_image_base_type(data->image_id) * 2 + 1),
-							  100.0, NORMAL_MODE);
-      gimp_layer_add_alpha(data->layer_id);
-      gimp_image_add_layer(data->image_id, data->layer_id, 0);
-      gimp_image_set_active_layer(data->image_id, data->layer_id);
+      data->layer_id = data->drawable_id = gimp_layer_new (data->image_id,
+							   _("GDynText Layer"), layer_width, layer_height,
+							   (GimpImageType)(gimp_image_base_type (data->image_id) * 2 + 1),
+							   100.0, NORMAL_MODE);
+      gimp_layer_add_alpha (data->layer_id);
+      gimp_image_add_layer (data->image_id, data->layer_id, 0);
+      gimp_image_set_active_layer (data->image_id, data->layer_id);
     }
   
   /* clear layer */
-  gimp_layer_set_preserve_transparency(data->layer_id, 0);
+  gimp_layer_set_preserve_transparency (data->layer_id, 0);
   gimp_edit_clear (data->drawable_id);
   
   /* get layer offsets */
-  gimp_drawable_offsets(data->layer_id, &layer_ox, &layer_oy);
+  gimp_drawable_offsets (data->layer_id, &layer_ox, &layer_oy);
   
   /* get foreground color */
   gimp_palette_get_foreground (&old_color.red, 
@@ -460,7 +493,7 @@ gdt_render_text_p (GdtVals  *data,
       layer_f = gimp_text_fontname (data->image_id,
 				    data->drawable_id,
 				    (gdouble)layer_ox +
-				    strspn(text_lines[i], " ") * space_width + xoffs,	        /* x */
+				    strspn (text_lines[i], " ") * space_width + xoffs,	        /* x */
 				    (gdouble)layer_oy + i * (text_height + data->line_spacing), /* y */
 				    text_lines[i],
 				    0,  /* border */
@@ -471,17 +504,16 @@ gdt_render_text_p (GdtVals  *data,
       
       /* FIXME: ascent/descent stuff, use gimp_layer_translate */
 #ifdef DEBUG
-      printf("GDT: MH:%d LH:%d\n", text_height, gimp_drawable_height(layer_f));
+      g_print ("GDT: MH:%d LH:%d\n", text_height, gimp_drawable_height (layer_f));
 #endif
       
       gimp_floating_sel_anchor (layer_f);
       
       if (show_progress)
-	gimp_progress_update((double)(i + 2) * 100.0 * (double)text_height /
-			     (double)layer_height);
+	gimp_progress_update ((gdouble)(i + 2) * 100.0 * (gdouble)text_height / (gdouble)layer_height);
     }
-  g_strfreev(text_lines);
-  g_free(text_lines_w);
+  g_strfreev (text_lines);
+  g_free (text_lines_w);
   
   /* set foreground color to the old one */
   gimp_palette_set_foreground (old_color.red, 
@@ -494,14 +526,15 @@ gdt_render_text_p (GdtVals  *data,
       gimp_rotate (data->drawable_id, 
 		   TRUE,
 		   (gdouble)data->rotation * G_PI / 180.0);
-      gimp_layer_set_offsets(data->layer_id, layer_ox, layer_oy);
+      gimp_layer_set_offsets (data->layer_id, layer_ox, layer_oy);
     }
 
-	/* sets the layer alignment */
-  layer_width  = gimp_drawable_width(data->drawable_id);
-  layer_height = gimp_drawable_height(data->drawable_id);
-  image_width  = gimp_image_width(data->image_id);
-  image_height = gimp_image_height(data->image_id);
+  /* sets the layer alignment */
+  layer_width  = gimp_drawable_width (data->drawable_id);
+  layer_height = gimp_drawable_height (data->drawable_id);
+  image_width  = gimp_image_width (data->image_id);
+  image_height = gimp_image_height (data->image_id);
+
   switch (data->layer_alignment) 
     {
     case LA_TOP_LEFT:
@@ -540,25 +573,25 @@ gdt_render_text_p (GdtVals  *data,
     default:
     }
   
-  gimp_layer_set_preserve_transparency(data->layer_id, 1);
+  gimp_layer_set_preserve_transparency (data->layer_id, 1);
 
   /* restore old selection if any */
   if (selection_empty == FALSE) 
     {
-      ret_vals = gimp_run_procedure("gimp_selection_load", &nret_vals,
-				    GIMP_PDB_IMAGE, data->image_id,
-				    GIMP_PDB_CHANNEL, selection_channel, GIMP_PDB_END);
-      gimp_destroy_params(ret_vals, nret_vals);
-      gimp_image_remove_channel(data->image_id, selection_channel);
+      ret_vals = gimp_run_procedure ("gimp_selection_load", &nret_vals,
+				     GIMP_PDB_IMAGE, data->image_id,
+				     GIMP_PDB_CHANNEL, selection_channel, GIMP_PDB_END);
+      gimp_destroy_params (ret_vals, nret_vals);
+      gimp_image_remove_channel (data->image_id, selection_channel);
     }
 
-  gdt_save(data);
+  gdt_save (data);
   
   /* undo end */
   gimp_undo_push_group_end (gdtvals.image_id);
   
   if (show_progress)
-    gimp_progress_update(100.0);
+    gimp_progress_update (100.0);
   
-  gimp_displays_flush();
+  gimp_displays_flush ();
 }
