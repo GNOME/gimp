@@ -1016,6 +1016,9 @@ read_pnmraw_type (FILE *ifp,
  for (;;)
  {
    if (thrd == EOF) return (-1);
+#ifdef __EMX__
+   if (thrd == '\r') thrd = getc (ifp);
+#endif
    if ((thrd == '\n') && (frst == 'P') && (scnd >= '1') && (scnd <= '6'))
      break;
    frst = scnd;
