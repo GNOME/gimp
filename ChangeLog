@@ -1,3 +1,12 @@
+2004-09-02  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/script-fu-interface.c (script_fu_ok)
+	* plug-ins/script-fu/script-fu-scripts.c (script_fu_script_proc):
+	use a GString for assembling the commands string instead of
+	g_sprintf()ing into a buffer. Removes the need for a separate loop
+	over all args to determine the buffer's length and makes the
+	remaining code smaller and more readable.
+
 2004-09-02  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimppreview.[ch]: made gimp_preview_draw() public,

@@ -43,8 +43,6 @@
 #define COLOR_SAMPLE_HEIGHT   15
 #define SLIDER_WIDTH          80
 
-#define MAX_STRING_LENGTH   4096
-
 
 typedef struct
 {
@@ -704,201 +702,106 @@ script_fu_response (GtkWidget *widget,
 static void
 script_fu_ok (SFScript *script)
 {
-  gchar  *escaped;
-  gchar  *text = NULL;
-  gchar  *command;
-  gchar  *c;
-  guchar  r, g, b;
-  gchar   buffer[MAX_STRING_LENGTH];
-  gint    length;
-  gint    i;
+  gchar   *escaped;
+  GString *s;
+  gchar   *command;
+  gchar    buffer[G_ASCII_DTOSTR_BUF_SIZE];
+  gint     i;
 
-  length = strlen (script->script_name) + 3;
+  s = g_string_new ("(");
+  g_string_append (s, script->script_name);
 
   for (i = 0; i < script->num_args; i++)
     {
+      SFArgValue *arg_value = &script->arg_values[i];
+
+      g_string_append_c (s, ' ');
+
       switch (script->arg_types[i])
         {
         case SF_IMAGE:
         case SF_DRAWABLE:
         case SF_LAYER:
         case SF_CHANNEL:
-          length += 12;  /*  Maximum size of integer value  */
+          g_string_append_printf (s, "%d", arg_value->sfa_image);
           break;
 
         case SF_COLOR:
-          length += 16;  /*  Maximum size of color string: '(XXX XXX XXX)  */
-          break;
-
-        case SF_TOGGLE:
-          length += 6;   /*  Maximum size of (TRUE, FALSE)  */
-          break;
-
-        case SF_VALUE:
-          length += strlen (script->arg_values[i].sfa_value) + 1;
-          break;
-
-        case SF_STRING:
-          escaped = g_strescape (script->arg_values[i].sfa_value, NULL);
-          length += strlen (escaped) + 3;
-          g_free (escaped);
-          break;
-
-        case SF_ADJUSTMENT:
-          length += G_ASCII_DTOSTR_BUF_SIZE;
-          break;
-
-        case SF_FILENAME:
-        case SF_DIRNAME:
-          escaped = g_strescape (script->arg_values[i].sfa_file.filename,
-                                 NULL);
-          length += strlen (escaped) + 3;
-          g_free (escaped);
-          break;
-
-        case SF_FONT:
-          length += strlen (script->arg_values[i].sfa_font) + 3;
-          break;
-
-        case SF_PALETTE:
-          length += strlen (script->arg_values[i].sfa_palette) + 3;
-          break;
-
-        case SF_PATTERN:
-          length += strlen (script->arg_values[i].sfa_pattern) + 3;
-          break;
-
-        case SF_GRADIENT:
-          length += strlen (script->arg_values[i].sfa_gradient) + 3;
-          break;
-
-        case SF_BRUSH:
-          length += strlen (script->arg_values[i].sfa_brush.name) + 3;
-          length += 36;  /*  Maximum size of three ints  */
-          /*  for opacity, spacing, mode  */
-          break;
-
-        case SF_OPTION:
-          length += 12;  /*  Maximum size of integer value  */
-          break;
-
-        default:
-          break;
-        }
-    }
-
-  c = command = g_new (gchar, length);
-
-  sprintf (command, "(%s ", script->script_name);
-  c += strlen (script->script_name) + 2;
-
-  for (i = 0; i < script->num_args; i++)
-    {
-      switch (script->arg_types[i])
-        {
-        case SF_IMAGE:
-        case SF_DRAWABLE:
-        case SF_LAYER:
-        case SF_CHANNEL:
-          g_snprintf (buffer, sizeof (buffer), "%d",
-                      script->arg_values[i].sfa_image);
-          text = buffer;
-          break;
-
-        case SF_COLOR:
-          gimp_rgb_get_uchar (&script->arg_values[i].sfa_color, &r, &g, &b);
-          g_snprintf (buffer, sizeof (buffer), "'(%d %d %d)",
-                      (gint) r, (gint) g, (gint) b);
-          text = buffer;
-          break;
-
-        case SF_TOGGLE:
-          g_snprintf (buffer, sizeof (buffer), "%s",
-                      (script->arg_values[i].sfa_toggle) ? "TRUE" : "FALSE");
-          text = buffer;
-          break;
-
-        case SF_VALUE:
-          text = script->arg_values[i].sfa_value;
-          break;
-
-        case SF_STRING:
-          escaped = g_strescape (script->arg_values[i].sfa_value, NULL);
-          g_snprintf (buffer, sizeof (buffer), "\"%s\"", escaped);
-          g_free (escaped);
-          text = buffer;
-          break;
-
-        case SF_ADJUSTMENT:
-          text = g_ascii_dtostr (buffer, sizeof (buffer),
-                                 script->arg_values[i].sfa_adjustment.value);
-          break;
-
-        case SF_FILENAME:
-        case SF_DIRNAME:
-          escaped = g_strescape (script->arg_values[i].sfa_file.filename,
-                                 NULL);
-          g_snprintf (buffer, sizeof (buffer), "\"%s\"", escaped);
-          g_free (escaped);
-          text = buffer;
-          break;
-
-        case SF_FONT:
-          g_snprintf (buffer, sizeof (buffer), "\"%s\"",
-                      script->arg_values[i].sfa_font);
-          text = buffer;
-          break;
-
-        case SF_PALETTE:
-          g_snprintf (buffer, sizeof (buffer), "\"%s\"",
-                      script->arg_values[i].sfa_palette);
-          text = buffer;
-          break;
-
-        case SF_PATTERN:
-          g_snprintf (buffer, sizeof (buffer), "\"%s\"",
-                      script->arg_values[i].sfa_pattern);
-          text = buffer;
-          break;
-
-        case SF_GRADIENT:
-          g_snprintf (buffer, sizeof (buffer), "\"%s\"",
-                      script->arg_values[i].sfa_gradient);
-          text = buffer;
-          break;
-
-        case SF_BRUSH:
           {
-            gchar opacity[G_ASCII_DTOSTR_BUF_SIZE];
+            guchar r, g, b;
 
-            g_ascii_dtostr (opacity, sizeof (opacity),
-                            script->arg_values[i].sfa_brush.opacity);
-
-            g_snprintf (buffer, sizeof (buffer), "'(\"%s\" %s %d %d)",
-                        script->arg_values[i].sfa_brush.name,
-                        opacity,
-                        script->arg_values[i].sfa_brush.spacing,
-                        script->arg_values[i].sfa_brush.paint_mode);
-            text = buffer;
+            gimp_rgb_get_uchar (&arg_value->sfa_color, &r, &g, &b);
+            g_string_append_printf (s, "'(%d %d %d)",
+                                    (gint) r, (gint) g, (gint) b);
           }
           break;
 
+        case SF_TOGGLE:
+          g_string_append (s, arg_value->sfa_toggle ? "TRUE" : "FALSE");
+          break;
+
+        case SF_VALUE:
+          g_string_append (s, arg_value->sfa_value);
+          break;
+
+        case SF_STRING:
+          escaped = g_strescape (arg_value->sfa_value, NULL);
+          g_string_append_printf (s, "\"%s\"", escaped);
+          g_free (escaped);
+          break;
+
+        case SF_ADJUSTMENT:
+          g_ascii_dtostr (buffer, sizeof (buffer),
+                          arg_value->sfa_adjustment.value);
+          g_string_append (s, buffer);
+          break;
+
+        case SF_FILENAME:
+        case SF_DIRNAME:
+          escaped = g_strescape (arg_value->sfa_file.filename, NULL);
+          g_string_append_printf (s, "\"%s\"", escaped);
+          g_free (escaped);
+          break;
+
+        case SF_FONT:
+          g_string_append_printf (s, "\"%s\"", arg_value->sfa_font);
+          break;
+
+        case SF_PALETTE:
+          g_string_append_printf (s, "\"%s\"", arg_value->sfa_palette);
+          break;
+
+        case SF_PATTERN:
+          g_string_append_printf (s, "\"%s\"", arg_value->sfa_pattern);
+          break;
+
+        case SF_GRADIENT:
+          g_string_append_printf (s, "\"%s\"", arg_value->sfa_gradient);
+          break;
+
+        case SF_BRUSH:
+          g_ascii_dtostr (buffer, sizeof (buffer),
+                          arg_value->sfa_brush.opacity);
+
+          g_string_append_printf (s, "'(\"%s\" %s %d %d)",
+                                  arg_value->sfa_brush.name,
+                                  buffer,
+                                  arg_value->sfa_brush.spacing,
+                                  arg_value->sfa_brush.paint_mode);
+          break;
+
         case SF_OPTION:
-          g_snprintf (buffer, sizeof (buffer), "%d",
-                      script->arg_values[i].sfa_option.history);
-          text = buffer;
+          g_string_append_printf (s, "%d", arg_value->sfa_option.history);
           break;
 
         default:
           break;
         }
-
-      if (i == script->num_args - 1)
-        sprintf (c, "%s)", text);
-      else
-        sprintf (c, "%s ", text);
-      c += strlen (text) + 1;
     }
+
+  g_string_append_c (s, ')');
+
+  command = g_string_free (s, FALSE);
 
   /*  run the command through the interpreter  */
   if (repl_c_string (command, 0, 0, 1) != 0)

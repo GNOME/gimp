@@ -54,8 +54,6 @@
 #define COLOR_SAMPLE_HEIGHT   15
 #define SLIDER_WIDTH          80
 
-#define MAX_STRING_LENGTH   4096
-
 
 /* External functions
  */
@@ -684,119 +682,64 @@ script_fu_script_proc (const gchar      *name,
 
 	  if (status == GIMP_PDB_SUCCESS)
 	    {
-	      guchar color[3];
-	      gchar *text = NULL;
-	      gchar *command;
-	      gchar *c;
-	      gchar  buffer[MAX_STRING_LENGTH];
-	      gint   length;
-	      gint   i;
+              GString *s;
+	      gchar   *command;
+	      gchar    buffer[G_ASCII_DTOSTR_BUF_SIZE];
+	      gint     i;
 
-	      length = strlen (script->script_name) + 3;
-
-	      for (i = 0; i < script->num_args; i++)
-		switch (script->arg_types[i])
-		  {
-		  case SF_IMAGE:
-		  case SF_DRAWABLE:
-		  case SF_LAYER:
-		  case SF_CHANNEL:
-		    length += 12;  /*  Maximum size of integer value will not exceed this many characters  */
-		    break;
-
-		  case SF_COLOR:
-		    length += 16;  /*  Maximum size of color string: '(XXX XXX XXX)  */
-		    break;
-
-		  case SF_TOGGLE:
-		    length += 6;   /*  Maximum size of (TRUE, FALSE)  */
-		    break;
-
-		  case SF_VALUE:
-		    length += strlen (params[i + 1].data.d_string) + 1;
-		    break;
-
-		  case SF_STRING:
-		  case SF_FILENAME:
-		  case SF_DIRNAME:
-		    escaped = g_strescape (params[i + 1].data.d_string, NULL);
-		    length += strlen (escaped) + 3;
-		    g_free (escaped);
-		    break;
-
-		  case SF_ADJUSTMENT:
-		    length += G_ASCII_DTOSTR_BUF_SIZE;
-		    break;
-
-		  case SF_FONT:
-                  case SF_PALETTE:
-		  case SF_PATTERN:
-		  case SF_GRADIENT:
-		  case SF_BRUSH:
-		    length += strlen (params[i + 1].data.d_string) + 3;
-		    break;
-
-		  case SF_OPTION:
-		    length += strlen (params[i + 1].data.d_string) + 1;
-		    break;
-
-		  default:
-		    break;
-		  }
-
-	      c = command = g_new (gchar, length);
+              s = g_string_new ("(");
+              g_string_append (s, script->script_name);
 
 	      if (script->num_args)
                 {
-                  sprintf (command, "(%s ", script->script_name);
-                  c += strlen (script->script_name) + 2;
-
                   for (i = 0; i < script->num_args; i++)
                     {
+                      const GimpParam *param = &params[i + 1];
+
+                      g_string_append_c (s, ' ');
+
                       switch (script->arg_types[i])
                         {
                         case SF_IMAGE:
                         case SF_DRAWABLE:
                         case SF_LAYER:
                         case SF_CHANNEL:
-                          g_snprintf (buffer, sizeof (buffer), "%d",
-				      params[i + 1].data.d_image);
-                          text = buffer;
+                          g_string_append_printf (s, "%d", param->data.d_image);
                           break;
 
                         case SF_COLOR:
-			  gimp_rgb_get_uchar (&params[i + 1].data.d_color,
-					      color, color + 1, color + 2);
-                          g_snprintf (buffer, sizeof (buffer), "'(%d %d %d)",
-				      color[0], color[1], color[2]);
-                          text = buffer;
+                          {
+                            guchar r, g, b;
+
+                            gimp_rgb_get_uchar (&param->data.d_color,
+                                                &r, &g, &b);
+                            g_string_append_printf (s, "'(%d %d %d)",
+                                                    (gint) r, (gint) g,
+                                                    (gint) b);
+                          }
                           break;
 
                         case SF_TOGGLE:
-                          g_snprintf (buffer, sizeof (buffer), "%s",
-				      (params[i + 1].data.d_int32) ? "TRUE"
-				                                   : "FALSE");
-                          text = buffer;
+                          g_string_append_printf (s, (param->data.d_int32 ?
+                                                      "TRUE" : "FALSE"));
                           break;
 
                         case SF_VALUE:
-                          text = params[i + 1].data.d_string;
+                          g_string_append (s, param->data.d_string);
                           break;
 
                         case SF_STRING:
                         case SF_FILENAME:
                         case SF_DIRNAME:
-                          escaped = g_strescape (params[i + 1].data.d_string,
-                                                 NULL);
-                          g_snprintf (buffer, sizeof (buffer), "\"%s\"",
-				      escaped);
+                          escaped = g_strescape (param->data.d_string, NULL);
+                          g_string_append_printf (s, "\"%s\"", escaped);
                           g_free (escaped);
-                          text = buffer;
                           break;
 
                         case SF_ADJUSTMENT:
-                          text = g_ascii_dtostr (buffer, sizeof (buffer),
-                                                 params[i + 1].data.d_float);
+                          g_ascii_dtostr (buffer, sizeof (buffer),
+                                          param->data.d_float);
+                          g_string_append (s, buffer);
                           break;
 
                         case SF_FONT:
@@ -804,29 +747,24 @@ script_fu_script_proc (const gchar      *name,
                         case SF_PATTERN:
                         case SF_GRADIENT:
                         case SF_BRUSH:
-                          g_snprintf (buffer, sizeof (buffer), "\"%s\"",
-				      params[i + 1].data.d_string);
-                          text = buffer;
+                          g_string_append_printf (s, "\"%s\"",
+                                                  param->data.d_string);
                           break;
 
                         case SF_OPTION:
-                          text = params[i + 1].data.d_string;
+                          g_string_append_printf (s, "%d",
+                                                  param->data.d_int32);
                           break;
 
                         default:
                           break;
                         }
-
-                      if (i == script->num_args - 1)
-                        sprintf (c, "%s)", text);
-                      else
-                        sprintf (c, "%s ", text);
-
-                      c += strlen (text) + 1;
                     }
                 }
-	      else
-		sprintf (command, "(%s)", script->script_name);
+
+              g_string_append_c (s, ')');
+
+              command = g_string_free (s, FALSE);
 
 	      /*  run the command through the interpreter  */
 	      if (repl_c_string (command, 0, 0, 1) != 0)
