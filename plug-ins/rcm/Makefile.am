@@ -12,6 +12,8 @@ endif
 
 AM_LDFLAGS = $(mwindows)
 
+SUBDIRS = images
+
 libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = rcm

@@ -1,3 +1,15 @@
+2004-11-14  Sven Neumann  <sven@gimp.org>
+
+	* configure.in
+	* plug-ins/rcm/Makefile.am
+	* plug-ins/rcm/images/Makefile.am
+	* plug-ins/rcm/images/rcm-360.png
+	* plug-ins/rcm/images/rcm-a-b.png
+	* plug-ins/rcm/images/rcm-ccw.png
+	* plug-ins/rcm/images/rcm-cw.png: added PNG versions of the XPM
+	icons used by the RCM plug-in. Added rules to build a header file
+	that can be used to get rid of the XPM files (bug #140202).
+
 2004-11-14  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/gfig/gfig-dialog.c
