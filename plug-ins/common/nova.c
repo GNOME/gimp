@@ -71,8 +71,6 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#include "gimpoldpreview.h"
-
 #ifdef RCSID
 static char rcsid[] = "$Id$";
 #endif
@@ -88,9 +86,12 @@ static char rcsid[] = "$Id$";
 #define PREVIEW_MASK (GDK_EXPOSURE_MASK | \
                       GDK_BUTTON_PRESS_MASK | \
                       GDK_BUTTON1_MOTION_MASK)
+#define PREVIEW_SIZE 128
 
-static GimpOldPreview *preview;
-static gboolean        show_cursor = TRUE;
+static GtkWidget *preview;
+static gint       preview_width, preview_height, preview_bpp;
+static guchar    *preview_cache;
+static gboolean   show_cursor = TRUE;
 
 
 typedef struct
@@ -398,6 +399,8 @@ nova_dialog (GimpDrawable *drawable)
     }
   gtk_widget_show (dlg);
 
+  nova (drawable, TRUE);
+
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dlg);
@@ -497,16 +500,23 @@ nova_center_create (GimpDrawable *drawable)
                     &pvals.ycenter);
 
   /* PREVIEW */
-  preview = gimp_old_preview_new (drawable);
-  gtk_widget_add_events (preview->widget, PREVIEW_MASK);
-  gtk_table_attach (GTK_TABLE (table), preview->frame, 0, 4, 1, 2,
+  preview = gimp_preview_area_new ();
+  preview_width = preview_height = PREVIEW_SIZE;
+  preview_cache =
+    gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                      &preview_width,
+                                      &preview_height,
+                                      &preview_bpp);
+  gtk_widget_set_size_request (preview, preview_width, preview_height);
+  gtk_widget_add_events (preview, PREVIEW_MASK);
+  gtk_table_attach (GTK_TABLE (table), preview, 0, 4, 1, 2,
                     0, 0, 0, 0);
-  gtk_widget_show (preview->frame);
+  gtk_widget_show (preview);
 
-  g_signal_connect_after (preview->widget, "expose_event",
+  g_signal_connect_after (preview, "expose_event",
                           G_CALLBACK (nova_center_preview_expose),
                           center);
-  g_signal_connect (preview->widget, "event",
+  g_signal_connect (preview, "event",
                     G_CALLBACK (nova_center_preview_events),
                     center);
 
@@ -531,7 +541,6 @@ nova_center_create (GimpDrawable *drawable)
 
   center->cursor  = FALSE;   /* Make sure that the cursor has not been drawn */
   center->in_call = FALSE;   /* End of initialization */
-  nova (drawable, TRUE);
 
   return frame;
 }
@@ -554,7 +563,7 @@ static void
 nova_center_draw (NovaCenter *center,
                   gint        update)
 {
-  GtkWidget *prvw = preview->widget;
+  GtkWidget *prvw = preview;
 
   if (update & PREVIEW)
     {
@@ -571,21 +580,21 @@ nova_center_draw (NovaCenter *center,
               gdk_draw_line (prvw->window,
                              prvw->style->black_gc,
                              center->oldx, 1, center->oldx,
-                             preview->height - 1);
+                             preview_height - 1);
               gdk_draw_line (prvw->window,
                              prvw->style->black_gc,
                              1, center->oldy,
-                             preview->width - 1, center->oldy);
+                             preview_width - 1, center->oldy);
             }
 
           gdk_draw_line (prvw->window,
                          prvw->style->black_gc,
                          center->curx, 1, center->curx,
-                         preview->height - 1);
+                         preview_height - 1);
           gdk_draw_line (prvw->window,
                          prvw->style->black_gc,
                          1, center->cury,
-                         preview->width - 1, center->cury);
+                         preview_width - 1, center->cury);
         }
 
       /* current position of cursor is updated */
@@ -626,11 +635,11 @@ nova_center_adjustment_update (GtkAdjustment *adjustment,
 static void
 nova_center_cursor_update (NovaCenter *center)
 {
-  center->curx = pvals.xcenter * preview->width / center->dwidth;
-  center->cury = pvals.ycenter * preview->height / center->dheight;
+  center->curx = pvals.xcenter * preview_width / center->dwidth;
+  center->cury = pvals.ycenter * preview_height / center->dheight;
 
-  center->curx = CLAMP (center->curx, 0, preview->width - 1);
-  center->cury = CLAMP (center->cury, 0, preview->height - 1);
+  center->curx = CLAMP (center->curx, 0, preview_width - 1);
+  center->cury = CLAMP (center->cury, 0, preview_height - 1);
 }
 
 /*
@@ -682,10 +691,10 @@ nova_center_preview_events (GtkWidget *widget,
       center->in_call = TRUE;
       gtk_adjustment_set_value (GTK_ADJUSTMENT (center->xadj),
                                 center->curx * center->dwidth /
-                                preview->width);
+                                preview_width);
       gtk_adjustment_set_value (GTK_ADJUSTMENT (center->yadj),
                                 center->cury * center->dheight /
-                                preview->height);
+                                preview_height);
       center->in_call = FALSE;
       nova (center->drawable, 1);
       break;
@@ -769,13 +778,13 @@ nova (GimpDrawable *drawable,
 
    if (preview_mode)
      {
-       xc = (gdouble) pvals.xcenter * preview->scale_x;
-       yc = (gdouble) pvals.ycenter * preview->scale_y;
+       xc = (gdouble) pvals.xcenter * preview_width  / drawable->width;
+       yc = (gdouble) pvals.ycenter * preview_height / drawable->height;
 
        x1 = y1 = 0;
-       x2 = preview->width;
-       y2 = preview->height;
-       bpp = preview->bpp;
+       x2 = preview_width;
+       y2 = preview_height;
+       bpp = preview_bpp;
      }
    else
      {
@@ -797,20 +806,22 @@ nova (GimpDrawable *drawable,
 
    if (preview_mode)
      {
-       save_src = src_row  = g_new (guchar, y2 * preview->rowstride);
-       memcpy (src_row, preview->cache, y2 * preview->rowstride);
+       save_src = src_row  = g_new (guchar, y2 * preview_width * bpp);
+       memcpy (src_row, preview_cache, y2 * preview_width * bpp);
 
-       dest_row = g_new (guchar, preview->rowstride);
+       dest_row = g_new (guchar, y2 * preview_width * bpp);
+       dest = dest_row;
+       src  = src_row;
 
        for (row = 0, y = 0; row < y2; row++, y++)
          {
-           src  = src_row;
-           dest = dest_row;
 
            for (col = 0, x = 0; col < x2; col++, x++)
              {
-               u = (gdouble) (x - xc) / (pvals.radius * preview->scale_x);
-               v = (gdouble) (y - yc) / (pvals.radius * preview->scale_y);
+               u = (gdouble) (x - xc) / 
+                          (pvals.radius * preview_width / drawable->width);
+               v = (gdouble) (y - yc) / 
+                          (pvals.radius * preview_height / drawable->height);
                l = sqrt (u * u + v * v);
 
                /* This algorithm is still under construction. */
@@ -884,14 +895,13 @@ nova (GimpDrawable *drawable,
 
                src  += bpp;
                dest += bpp;
-             }           
-           
-           src_row   += preview->rowstride;
-
-           gimp_old_preview_do_row (preview, row, preview->width, dest_row);
+             }
          }
-
-       gtk_widget_queue_draw (preview->widget);
+       gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                               0, 0, x2, y2,
+                               gimp_drawable_type (drawable->drawable_id),
+                               dest_row,
+                               bpp * preview_width);
        g_free (save_src);
        g_free (dest_row);
      }

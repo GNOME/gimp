@@ -1,3 +1,7 @@
+2004-08-06  DindinX  <david@dindinx.org>
+
+	* plug-ins/common/nova.c: ported to GimpPreviewArea.
+
 2004-08-06  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.1.3 release.
