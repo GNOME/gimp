@@ -92,7 +92,7 @@ static void      run         (const gchar      *name,
                               GimpParam       **return_vals);
 
 static void      edge        (GimpDrawable     *drawable);
-static gint      edge_dialog (GimpDrawable     *drawable);
+static gboolean  edge_dialog (GimpDrawable     *drawable);
 
 static gint edge_detect  (guchar *data);
 static gint prewitt      (guchar *data);
@@ -623,10 +623,11 @@ laplace (guchar *data)
 /*                    Dialog                           */
 /*******************************************************/
 
-static gint
+static gboolean
 edge_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
+  GtkWidget *vbox;
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *hbox;
@@ -650,6 +651,11 @@ edge_dialog (GimpDrawable *drawable)
 
                          NULL);
 
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start_defaults (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox);
+  gtk_widget_show (vbox);
+
   /*  compression  */
   frame = gimp_int_radio_group_new (TRUE, _("Algorithm"),
                                     G_CALLBACK (gimp_radio_button_update),
@@ -664,19 +670,16 @@ edge_dialog (GimpDrawable *drawable)
 
                                     NULL);
 
-  gtk_box_pack_start_defaults (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   /*  parameter settings  */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
   table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
   /*  Label, scale, entry for evals.amount  */
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
@@ -726,8 +729,6 @@ edge_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_toggle_button_update),
                     &use_black);
 
-  gtk_widget_show (table);
-  gtk_widget_show (frame);
   gtk_widget_show (dlg);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);

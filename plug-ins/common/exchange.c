@@ -77,7 +77,7 @@ static void	run   (const gchar      *name,
 static void	exchange              (void);
 static void	real_exchange         (gint, gint, gint, gint, gboolean);
 
-static int	exchange_dialog       (void);
+static gboolean exchange_dialog       (void);
 static void	update_preview        (void);
 static void	color_button_callback (GtkWidget *, gpointer);
 static void	scale_callback        (GtkAdjustment *, gpointer);
@@ -296,7 +296,7 @@ preview_event_handler (GtkWidget *widget,
 }
 
 /* show our dialog */
-static gint
+static gboolean
 exchange_dialog (void)
 {
   GtkWidget *dialog;
@@ -308,6 +308,7 @@ exchange_dialog (void)
   GtkWidget *threshold;
   GtkWidget *colorbutton;
   GtkWidget *scale;
+  GtkSizeGroup *group;
   GtkObject *adj;
   gint       framenumber;
   gboolean   run;
@@ -329,16 +330,16 @@ exchange_dialog (void)
 			    NULL);
 
   /* do some boxes here */
-  mainbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (mainbox), 6);
+  mainbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (mainbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), mainbox,
 		      TRUE, TRUE, 0);
 
-  frame = gtk_frame_new (_("Preview: Click Inside to Pick \"From Color\""));
+  frame = gimp_frame_new (_("Click inside preview to pick \"From Color\""));
   gtk_box_pack_start (GTK_BOX (mainbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  abox = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
   gtk_container_add (GTK_CONTAINER (frame), abox);
   gtk_widget_show (abox);
 
@@ -374,16 +375,19 @@ exchange_dialog (void)
                     &xargs.threshold);
 
   /* and our scales */
+  group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
   for (framenumber = 0; framenumber < 2; framenumber++)
     {
-      frame = gtk_frame_new (framenumber ? _("To Color") : _("From Color"));
+      GtkWidget *image;
+
+      frame = gimp_frame_new (framenumber ? _("To Color") : _("From Color"));
       gtk_box_pack_start (GTK_BOX (mainbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
-      table = gtk_table_new (framenumber ? 3 : 9, 4, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-      gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-      gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+      table = gtk_table_new (framenumber ? 3 : 9, 5, FALSE);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+      gtk_table_set_row_spacings (GTK_TABLE (table), 6);
       gtk_container_add (GTK_CONTAINER (frame), table);
       gtk_widget_show (table);
 
@@ -394,8 +398,8 @@ exchange_dialog (void)
 					   framenumber ? &xargs.to : &xargs.from,
 					   GIMP_COLOR_AREA_FLAT);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-				 NULL, 0.0, 0.0,
-				 colorbutton, 1, TRUE);
+                                 NULL, 0.0, 0.0,
+                                 colorbutton, 1, FALSE);
 
       g_signal_connect (colorbutton, "color_changed",
                         G_CALLBACK (gimp_color_button_get_color),
@@ -408,7 +412,14 @@ exchange_dialog (void)
 	from_colorbutton = colorbutton;
 
       /*  Red  */
-      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+      image = gtk_image_new_from_stock (GIMP_STOCK_CHANNEL_RED,
+                                        GTK_ICON_SIZE_BUTTON);
+      gtk_misc_set_alignment (GTK_MISC (image), 0.5, framenumber ? 0.5 : 0.1);
+      gtk_table_attach (GTK_TABLE (table), image,
+                        0, 1, 1, 3, GTK_FILL, GTK_FILL, 0, 0);
+      gtk_widget_show (image);
+
+      adj = gimp_scale_entry_new (GTK_TABLE (table), 1, 1,
 				  _("_Red:"), SCALE_WIDTH, 0,
 				  framenumber ? xargs.to.r : xargs.from.r,
 				  0.0, 1.0, 0.01, 0.1, 3,
@@ -427,10 +438,11 @@ exchange_dialog (void)
 
       scale = GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (adj));
       gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+      gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
 
       if (! framenumber)
 	{
-	  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+	  adj = gimp_scale_entry_new (GTK_TABLE (table), 1, 2,
 				      _("R_ed Threshold:"), SCALE_WIDTH, 0,
 				      xargs.threshold.r,
 				      0.0, 1.0, 0.01, 0.1, 3,
@@ -449,10 +461,18 @@ exchange_dialog (void)
 
 	  scale = GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (adj));
 	  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+          gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
 	}
 
       /*  Green  */
-      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
+      image = gtk_image_new_from_stock (GIMP_STOCK_CHANNEL_GREEN,
+                                        GTK_ICON_SIZE_BUTTON);
+      gtk_misc_set_alignment (GTK_MISC (image), 0.5, framenumber ? 0.5 : 0.1);
+      gtk_table_attach (GTK_TABLE (table), image,
+                        0, 1, 3, 5, GTK_FILL, GTK_FILL, 0, 0);
+      gtk_widget_show (image);
+
+      adj = gimp_scale_entry_new (GTK_TABLE (table), 1, 3,
 				  _("_Green:"), SCALE_WIDTH, 0,
 				  framenumber ? xargs.to.g : xargs.from.g,
 				  0.0, 1.0, 0.01, 0.1, 3,
@@ -471,10 +491,11 @@ exchange_dialog (void)
 
       scale = GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (adj));
       gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+      gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
 
       if (!framenumber)
 	{
-	  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
+	  adj = gimp_scale_entry_new (GTK_TABLE (table), 1, 4,
 				      _("G_reen Threshold:"), SCALE_WIDTH, 0,
 				      xargs.threshold.g,
 				      0.0, 1.0, 0.01, 0.1, 3,
@@ -493,10 +514,18 @@ exchange_dialog (void)
 
 	  scale = GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (adj));
 	  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+          gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
 	}
 
       /*  Blue  */
-      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
+      image = gtk_image_new_from_stock (GIMP_STOCK_CHANNEL_BLUE,
+                                        GTK_ICON_SIZE_BUTTON);
+      gtk_misc_set_alignment (GTK_MISC (image), 0.5, framenumber ? 0.5 : 0.1);
+      gtk_table_attach (GTK_TABLE (table), image,
+                        0, 1, 5, 7, GTK_FILL, GTK_FILL, 0, 0);
+      gtk_widget_show (image);
+
+      adj = gimp_scale_entry_new (GTK_TABLE (table), 1, 5,
 				  _("_Blue:"), SCALE_WIDTH, 0,
 				  framenumber ? xargs.to.b : xargs.from.b,
 				  0.0, 1.0, 0.01, 0.1, 3,
@@ -515,10 +544,11 @@ exchange_dialog (void)
 
       scale = GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (adj));
       gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+      gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
 
       if (! framenumber)
 	{
-	  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
+	  adj = gimp_scale_entry_new (GTK_TABLE (table), 1, 6,
 				      _("B_lue Threshold:"), SCALE_WIDTH, 0,
 				      xargs.threshold.b,
 				      0.0, 1.0, 0.01, 0.1, 3,
@@ -537,6 +567,7 @@ exchange_dialog (void)
 
 	  scale = GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (adj));
 	  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+          gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
 	}
 
       if (!framenumber)
@@ -544,7 +575,7 @@ exchange_dialog (void)
 	  GtkWidget *button;
 
 	  button = gtk_check_button_new_with_mnemonic (_("Lock _Thresholds"));
-	  gtk_table_attach (GTK_TABLE (table), button, 1, 3, 7, 8,
+	  gtk_table_attach (GTK_TABLE (table), button, 2, 4, 7, 8,
 			    GTK_FILL, 0, 0, 0);
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 					lock_threshold);
@@ -555,6 +586,8 @@ exchange_dialog (void)
                             &lock_threshold);
 	}
     }
+
+  g_object_unref (group);
 
   /* show everything */
   gtk_widget_show (mainbox);

@@ -476,7 +476,7 @@ emboss_int_adjustment_callback (GtkAdjustment *adj,
     emboss_do_preview (NULL);
 }
 
-static gint
+static gboolean
 pluginCoreIA (piArgs *argp)
 {
   GtkWidget *dlg;
@@ -499,13 +499,13 @@ pluginCoreIA (piArgs *argp)
 
 			 NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
 		      TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  hbox = gtk_hbox_new (FALSE, 5);
+  hbox = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -525,15 +525,10 @@ pluginCoreIA (piArgs *argp)
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("_Azimuth:"), 100, 6,
@@ -696,32 +691,26 @@ mw_preview_build (GimpDrawable *drw)
 }
 
 static GtkWidget *
-mw_preview_new (GtkWidget        *parent,
+mw_preview_new (GtkWidget *parent,
                 mwPreview *mwp)
 {
   GtkWidget *preview;
   GtkWidget *frame;
-  GtkWidget *pframe;
   GtkWidget *vbox;
   GtkWidget *button;
 
-  frame = gtk_frame_new (_("Preview"));
-  gtk_box_pack_start (GTK_BOX (parent), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_box_pack_start (GTK_BOX (parent), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  pframe = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME(pframe), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), pframe, FALSE, FALSE, 0);
-  gtk_widget_show (pframe);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (preview), mwp->width, mwp->height);
-  gtk_container_add (GTK_CONTAINER (pframe), preview);
+  gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 
   button = gtk_check_button_new_with_mnemonic (_("Do _Preview"));

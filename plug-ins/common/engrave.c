@@ -54,7 +54,7 @@ static void run   (const gchar      *name,
 		   gint             *nreturn_vals,
 		   GimpParam       **return_vals);
 
-static gint engrave_dialog      (void);
+static gboolean  engrave_dialog (void);
 
 static void engrave       (GimpDrawable *drawable);
 static void engrave_large (GimpDrawable *drawable,
@@ -194,11 +194,11 @@ run (const gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
-static gint
+static gboolean
 engrave_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *frame;
+  GtkWidget *vbox;
   GtkWidget *table;
   GtkWidget *toggle;
   GtkObject *adj;
@@ -215,29 +215,17 @@ engrave_dialog (void)
 
 			 NULL);
 
-  /*  parameter settings  */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  table = gtk_table_new (1, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("_Limit Line Width"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 0, 1, GTK_FILL, 0, 0, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pvals.limit);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &pvals.limit);
-
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("_Height:"), SCALE_WIDTH, 0,
 			      pvals.height, 2.0, 16.0, 1.0, 4.0, 0,
 			      TRUE, 0, 0,
@@ -245,6 +233,15 @@ engrave_dialog (void)
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pvals.height);
+
+  toggle = gtk_check_button_new_with_mnemonic (_("_Limit Line Width"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pvals.limit);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &pvals.limit);
 
   gtk_widget_show (dlg);
 

@@ -486,6 +486,7 @@ cm_dialog (void)
   GtkWidget *hbox;
   GtkWidget *button;
   GtkWidget *label;
+  GtkWidget *image;
   GtkWidget *table;
   gdouble    red_value, green_value, blue_value;
   gboolean   run;
@@ -545,7 +546,7 @@ cm_dialog (void)
 
   /*........................................................... */
   /* preview */
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
@@ -587,13 +588,28 @@ cm_dialog (void)
   gtk_widget_show (hbox);
 
   label = gtk_label_new_with_mnemonic (_("O_utput Channel:"));
+
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  mix.combo = gimp_int_combo_box_new (_("Red"),   CM_RED_CHANNEL,
-                                      _("Green"), CM_GREEN_CHANNEL,
-                                      _("Blue"),  CM_BLUE_CHANNEL,
-                                      NULL);
+  mix.combo = gimp_int_combo_box_new (NULL, 0);
+
+  gimp_int_combo_box_append (GIMP_INT_COMBO_BOX (mix.combo),
+                             GIMP_INT_STORE_VALUE,    CM_RED_CHANNEL,
+                             GIMP_INT_STORE_LABEL,    _("Red"),
+                             GIMP_INT_STORE_STOCK_ID, GIMP_STOCK_CHANNEL_RED,
+                             -1);
+  gimp_int_combo_box_append (GIMP_INT_COMBO_BOX (mix.combo),
+                             GIMP_INT_STORE_VALUE,    CM_GREEN_CHANNEL,
+                             GIMP_INT_STORE_LABEL,    _("Green"),
+                             GIMP_INT_STORE_STOCK_ID, GIMP_STOCK_CHANNEL_GREEN,
+                             -1);
+  gimp_int_combo_box_append (GIMP_INT_COMBO_BOX (mix.combo),
+                             GIMP_INT_STORE_VALUE,    CM_BLUE_CHANNEL,
+                             GIMP_INT_STORE_LABEL,    _("Blue"),
+                             GIMP_INT_STORE_STOCK_ID, GIMP_STOCK_CHANNEL_BLUE,
+                             -1);
+
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (mix.combo),
                                  mix.output_channel);
 
@@ -601,7 +617,7 @@ cm_dialog (void)
                     G_CALLBACK (cm_combo_callback),
                     &mix);
 
-  gtk_box_pack_start (GTK_BOX (hbox), mix.combo, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), mix.combo, TRUE, TRUE, 0);
   gtk_widget_show (mix.combo);
 
   if (mix.monochrome_flag)
@@ -611,14 +627,20 @@ cm_dialog (void)
 
   /*........................................................... */
 
-  table = gtk_table_new (3, 3, FALSE);
+  table = gtk_table_new (3, 4, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
+  image = gtk_image_new_from_stock (GIMP_STOCK_CHANNEL_RED,
+                                    GTK_ICON_SIZE_BUTTON);
+  gtk_table_attach (GTK_TABLE (table), image,
+                    0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (image);
+
   mix.red_data =
-    GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+    GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (table), 1, 0,
                                           _("_Red:"), 150, -1,
                                           red_value, -200.0, 200.0,
                                           1.0, 10.0, 1,
@@ -629,8 +651,14 @@ cm_dialog (void)
                     G_CALLBACK (cm_red_scale_callback),
                     &mix);
 
+  image = gtk_image_new_from_stock (GIMP_STOCK_CHANNEL_GREEN,
+                                    GTK_ICON_SIZE_BUTTON);
+  gtk_table_attach (GTK_TABLE (table), image,
+                    0, 1, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (image);
+
   mix.green_data =
-    GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+    GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (table), 1, 1,
                                           _("_Green:"), 150, -1,
                                           green_value, -200.0, 200.0,
                                           1.0, 10.0, 1,
@@ -642,8 +670,14 @@ cm_dialog (void)
                     &mix);
 
 
+  image = gtk_image_new_from_stock (GIMP_STOCK_CHANNEL_BLUE,
+                                    GTK_ICON_SIZE_BUTTON);
+  gtk_table_attach (GTK_TABLE (table), image,
+                    0, 1, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (image);
+
   mix.blue_data =
-    GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+    GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (table), 1, 2,
                                           _("_Blue:"), 150, -1,
                                           blue_value, -200.0, 200.0,
                                           1.0, 10.0, 1,

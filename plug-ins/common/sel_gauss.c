@@ -47,18 +47,17 @@ typedef struct
 
 /* Declare local functions.
  */
-static void   query            (void);
-static void   run              (const gchar      *name,
-                                gint              nparams,
-                                const GimpParam  *param,
-                                gint             *nreturn_vals,
-                                GimpParam       **return_vals);
+static void      query            (void);
+static void      run              (const gchar      *name,
+                                   gint              nparams,
+                                   const GimpParam  *param,
+                                   gint             *nreturn_vals,
+                                   GimpParam       **return_vals);
 
-static void   sel_gauss        (GimpDrawable     *drawable,
-                                gdouble           radius,
-                                gint              maxdelta);
-
-static gint   sel_gauss_dialog (void);
+static void      sel_gauss        (GimpDrawable     *drawable,
+                                   gdouble           radius,
+                                   gint              maxdelta);
+static gboolean  sel_gauss_dialog (void);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -131,7 +130,7 @@ run (const gchar      *name,
   *nreturn_vals = 1;
   *return_vals  = values;
 
-  INIT_I18N (); 
+  INIT_I18N ();
 
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
@@ -208,7 +207,7 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 }
 
-static gint
+static gboolean
 sel_gauss_dialog (void)
 {
   GtkWidget *dlg;
@@ -229,8 +228,8 @@ sel_gauss_dialog (void)
                          NULL);
 
   table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_set_border_width (GTK_CONTAINER (table), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table,
                      TRUE, TRUE, 0);
