@@ -27,16 +27,19 @@ CFILE_GLOB = $(DOC_SOURCE_DIR)/*.c
 
 # Header files to ignore when scanning
 IGNORE_HFILES = \
-	gimp-composite-dispatch.h	\
-	gimp-composite-regression.h	\
-	gimp-composite-altivec.h	\
-	gimp-composite-3dnow.h		\
-	gimp-composite-mmx.h		\
-	gimp-composite-sse.h		\
-	gimp-composite-sse2.h		\
-	gimp-composite-vis.h		\
-	gimphelp-ids.h			\
-	gimprc-blurbs.h			\
+	gimp-composite-dispatch.h		\
+	gimp-composite-regression.h		\
+	gimp-composite-altivec.h		\
+	gimp-composite-3dnow.h			\
+	gimp-composite-mmx.h			\
+	gimp-composite-sse.h			\
+	gimp-composite-sse2.h			\
+	gimp-composite-vis.h			\
+	gimpimage-convert-data.h		\
+	gimpimage-convert-fsdither.h		\
+	gimphelp-ids.h				\
+	gimprc-blurbs.h				\
+	gimpdisplayshell-marching-ants.h	\
 	paint-funcs-generic.h
 
 # Images to copy into HTML directory

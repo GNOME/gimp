@@ -1,5 +1,14 @@
 2003-09-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am: ignore some more headers.
+
+	* app/app-docs.sgml
+	* app/app-sections.txt: lots of updates. Made <part>s out of the
+	app/ subdirs and added sub-<chapter>s. The main TOC is way too
+	crowded currently, will fix that later...
+
+2003-09-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am: ignore paint-funcs-generic.h
 
 	* app/app-docs.sgml
