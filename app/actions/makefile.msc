@@ -78,6 +78,8 @@ OBJECTS = \
 	select-commands.obj \
 	templates-actions.obj \
 	templates-commands.obj \
+	text-editor-actions.obj \
+	text-editor-commands.obj \
 	tool-options-actions.obj \
 	tool-options-commands.obj \
 	tools-actions.obj \

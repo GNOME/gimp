@@ -38,6 +38,10 @@
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 
+#ifdef G_OS_WIN32
+#include "libgimpbase/gimpwin32-io.h"
+#endif
+
 #include "dialog.h"
 #include "queue.h"
 #include "uri.h"

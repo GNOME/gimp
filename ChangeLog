@@ -1,3 +1,23 @@
+2004-09-21  Hans Breuer  <hans@breuer.org>
+
+	* app/dialogs/makefile.msc : [new file]
+	  app/dialogs/Makefile.am : added to EXTRA_DIST
+
+	* **/makefile.msc app/gimpcore.def : updated
+
+	* app/gimp.rc : let wilber be first
+
+	* app/widgets/gimppropwidgets.c : msvc6 can't cast uint64 either
+
+	* libgimpbase/gimpwin32-io.h : make up recent loss of ftruncate in GLib
+
+	* libgimpthumbnail/gimpthumbnail.c : <process.h> for getpid() on win32
+
+	* plug-ins/helpbrowser/dialog.c : include gimpwin32-io.h
+
+	* plug-ins/script-fu/siodwrapper.c plug-ins/script-fu/scrip-fu.c : there
+	is no script-fu-server on win32
+
 2004-11-21  Michael Schumacher <schumaml@cvs.gnome.org>
 
 	* plug-ins/script-fu/scripts/addborder.scm: first resize the

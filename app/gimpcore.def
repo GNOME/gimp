@@ -503,7 +503,6 @@ EXPORTS
 	gimp_orientation_type_get_type
 	gimp_paint_core_cancel
 	gimp_paint_core_cleanup
-	gimp_paint_core_constrain
 	gimp_paint_core_finish
 	gimp_paint_core_interpolate
 	gimp_paint_core_paint
@@ -536,7 +535,6 @@ EXPORTS
 	gimp_pickable_get_image_type
 	gimp_pickable_interface_get_type
 	gimp_pickable_pick_color
-	gimp_preview_size_get_type
 	gimp_projection_flush
 	gimp_projection_flush_now
 	gimp_projection_get_bytes
@@ -655,7 +653,6 @@ EXPORTS
 	hue_saturation_init
 	hue_saturation_partition_reset
 	levels_adjust_by_colors
-	levels_auto
 	levels_calculate_transfers
 	levels_channel_reset
 	levels_init
@@ -719,3 +716,37 @@ EXPORTS
 	gimp_display_options_fullscreen_get_type
 	gimp_display_options_get_type
 
+gimp_color_dialog_state_get_type
+gimp_container_filter
+gimp_context_set_palette
+gimp_convert_palette_type_get_type
+gimp_drawable_levels_stretch
+gimp_image_get_resolution
+gimp_image_get_unit
+gimp_image_parasite_find
+gimp_image_resize_to_layers
+gimp_imagefile_create_thumbnail_weak
+gimp_marshal_VOID__BOXED_ENUM
+gimp_navigation_editor_get_type
+gimp_navigation_editor_new
+gimp_navigation_editor_popup
+gimp_progress_box_get_type
+gimp_progress_box_new
+gimp_progress_cancel
+gimp_progress_end
+gimp_progress_get_value
+gimp_progress_interface_get_type
+gimp_progress_is_active
+gimp_progress_set_text
+gimp_progress_set_value
+gimp_progress_start
+gimp_stroke_desc_new
+gimp_tool_motion_constrain
+gimp_view_renderer_image_get_type
+gimp_view_renderer_imagefile_get_type
+gimp_view_renderer_layer_get_type
+gimp_view_renderer_vectors_get_type
+gimp_view_size_get_type
+levels_stretch
+plug_in_proc_def_get_sensitive
+file_utils_find_proc_by_extension

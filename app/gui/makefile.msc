@@ -28,37 +28,12 @@ PKG_LINK = \
 	..\widgets\appwidgets-$(PKG_VER).lib \
 
 OBJECTS = \
-	about-dialog.obj \
 	color-history.obj \
-	color-notebook.obj \
-	convert-dialog.obj \
-	dialogs.obj \
-	dialogs-constructors.obj \
-	file-dialog-utils.obj \
-	file-new-dialog.obj \
-	file-open-dialog.obj \
-	file-open-location-dialog.obj \
-	file-save-dialog.obj \
-	grid-dialog.obj \
 	gui.obj \
 	gui-vtable.obj \
-	info-dialog.obj \
-	info-window.obj \
-	module-browser.obj \
-	offset-dialog.obj \
-	palette-import-dialog.obj \
-	preferences-dialog.obj \
-	quit-dialog.obj \
-	resize-dialog.obj \
-	resolution-calibrate-dialog.obj \
 	session.obj \
 	splash.obj \
-	stroke-dialog.obj \
 	themes.obj \
-	tips-dialog.obj \
-	tips-parser.obj \
-	user-install-dialog.obj \
-
 
 INCLUDES = \
 	-FImsvc_recommended_pragmas.h \

@@ -62,6 +62,7 @@ OBJECTS = \
 	gimpdrawable-equalize.obj \
 	gimpdrawable-histogram.obj \
 	gimpdrawable-invert.obj \
+	gimpdrawable-levels.obj \
 	gimpdrawable-offset.obj \
 	gimpdrawable-preview.obj \
 	gimpdrawable-stroke.obj \
@@ -115,9 +116,12 @@ OBJECTS = \
 	gimpparasitelist.obj \
 	gimppattern.obj \
 	gimppickable.obj \
+	gimppdbprogress.obj \
 	gimppreviewcache.obj \
+	gimpprogress.obj \
 	gimpscanconvert.obj \
 	gimpselection.obj \
+	gimpstrokedesc.obj \
 	gimpstrokeoptions.obj \
 	gimptemplate.obj \
 	gimptooloptions.obj \

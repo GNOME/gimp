@@ -40,6 +40,7 @@ OBJECTS = \
 	gimpchanneltreeview.obj \
 	gimpclipboard.obj \
 	gimpcolorbar.obj \
+	gimpcolordialog.obj \
 	gimpcolordisplayeditor.obj \
 	gimpcoloreditor.obj \
 	gimpcolorframe.obj \
@@ -56,6 +57,7 @@ OBJECTS = \
 	gimpcontainertreeview-dnd.obj \
 	gimpcontainerview.obj \
 	gimpcontainerview-utils.obj \
+	gimpcontrollereditor.obj \
 	gimpcontrollerinfo.obj \
 	gimpcontrollerkeyboard.obj \
 	gimpcontrollerwheel.obj \
@@ -63,7 +65,6 @@ OBJECTS = \
 	gimpcursor.obj \
 	gimpdasheditor.obj \
 	gimpdataeditor.obj \
-	gimpdataselect.obj \
 	gimpdatafactoryview.obj \
 	gimpdeviceinfo.obj \
 	gimpdevices.obj \
@@ -82,6 +83,7 @@ OBJECTS = \
 	gimpenumstore.obj \
 	gimpenumwidgets.obj \
 	gimperrorconsole.obj \
+	gimperrordialog.obj \
 	gimpfgbgeditor.obj \
 	gimpfiledialog.obj \
 	gimpfileprocview.obj \
@@ -97,32 +99,25 @@ OBJECTS = \
 	gimpimagedock.obj \
 	gimpimageeditor.obj \
 	gimpimageview.obj \
-	gimpitemfactory.obj \
 	gimpitemtreeview.obj \
 	gimplayertreeview.obj \
 	gimpmenufactory.obj \
-	gimpnavigationpreview.obj \
+	gimpmessagebox.obj \
+	gimpmessagedialog.obj \
+	gimpnavigationview.obj \
 	gimppaletteeditor.obj \
 	gimppaletteselect.obj \
 	gimppatternfactoryview.obj \
 	gimppatternselect.obj \
 	gimppdbdialog.obj \
 	gimppluginaction.obj \
-	gimppreview.obj \
-	gimppreview-popup.obj \
-	gimppreviewrenderer.obj \
-	gimppreviewrendererbrush.obj \
-	gimppreviewrendererdrawable.obj \
-	gimppreviewrenderergradient.obj \
-	gimppreviewrendererimage.obj \
-	gimppreviewrendererimagefile.obj \
-	gimppreviewrendererlayer.obj \
-	gimppreviewrenderervectors.obj \
-	gimppreviewrenderer-utils.obj \
+	gimpprogressbox.obj \
+	gimpprogressdialog.obj \
 	gimppropwidgets.obj \
 	gimpselectiondata.obj \
 	gimpselectioneditor.obj \
 	gimpsessioninfo.obj \
+	gimpsizebox.obj \
 	gimpstringaction.obj \
 	gimpstrokeeditor.obj \
 	gimptemplateeditor.obj \
@@ -142,8 +137,22 @@ OBJECTS = \
 	gimpundoeditor.obj \
 	gimpunitstore.obj \
 	gimpvectorstreeview.obj \
+ 	gimpview.obj \
+ 	gimpview-popup.obj \
+	gimpviewablebox.obj \
 	gimpviewablebutton.obj \
 	gimpviewabledialog.obj \
+	gimpviewrenderer.obj \
+	gimpviewrenderer-frame.obj \
+ 	gimpviewrenderer-utils.obj \
+ 	gimpviewrendererbrush.obj \
+	gimpviewrendererbuffer.obj \
+ 	gimpviewrendererdrawable.obj \
+ 	gimpviewrenderergradient.obj \
+	gimpviewrendererimage.obj \
+	gimpviewrendererimagefile.obj \
+	gimpviewrendererlayer.obj \
+	gimpviewrenderervectors.obj \
 	gimpwidgets-constructors.obj \
 	gimpwidgets-utils.obj \
 	gtkhwrapbox.obj \

@@ -60,6 +60,8 @@ OBJECTS = \
 	gimppickbutton.obj \
 	gimppixmap.obj \
 	gimppreviewarea.obj \
+	gimppreview.obj \
+	gimpscrolledpreview.obj \
 	gimpquerybox.obj \
 	gimpsizeentry.obj \
 	gimpstock.obj \

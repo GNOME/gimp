@@ -85,3 +85,6 @@ INCLUDES = \
 	-I$(top_srcdir)/app	\
 	$(GTK_CFLAGS)		\
 	-I$(includedir)
+
+EXTRA_DIST = \
+	makefile.msc

@@ -95,6 +95,7 @@ OBJECTS = \
 	tool_manager.obj \
 	gimp-tools.obj \
 	tools-enums.obj \
+	tools-utils.obj \
 
 INCLUDES = \
 	-FImsvc_recommended_pragmas.h \

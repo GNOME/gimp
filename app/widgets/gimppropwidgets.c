@@ -1124,7 +1124,7 @@ gimp_prop_adjustment_notify (GObject       *config,
 
       g_object_get (config, param_spec->name, &uint64_value, NULL);
 
-#if defined _MSC_VER && (_MSC_VER < 1200)
+#if defined _MSC_VER && (_MSC_VER < 1300)
       value = (gint64) uint64_value;
 #else
       value = uint64_value;

@@ -30,6 +30,7 @@ OBJECTS = \
 	gimpbaseenums.obj \
 	gimpbase-private.obj \
 	gimpbasetypes.obj \
+	gimpchecks.obj \
 	gimpdatafiles.obj \
 	gimpenv.obj \
 	gimpmemsize.obj \

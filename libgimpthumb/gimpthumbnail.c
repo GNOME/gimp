@@ -38,6 +38,8 @@
 
 #ifdef G_OS_WIN32
 #include "libgimpbase/gimpwin32-io.h"
+#include <process.h>
+#define _getpid getpid
 #endif
 
 #include "gimpthumb-types.h"

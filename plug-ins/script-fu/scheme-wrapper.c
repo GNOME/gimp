@@ -1199,9 +1199,11 @@ marshall_proc_db_call (LISP a)
   /*  reverse the return values  */
   return_val = nreverse (return_val);
 
+#ifndef G_OS_WIN32
   /*  if we're in server mode, listen for additional commands for 10 ms  */
   if (script_fu_server_get_mode ())
     script_fu_server_listen (10);
+#endif
 
 #ifdef GDK_WINDOWING_WIN32
   /* This seems to help a lot on Windoze. */
@@ -1233,7 +1235,9 @@ script_fu_menu_register_call (LISP a)
 static LISP
 script_fu_quit_call (LISP a)
 {
+#ifndef G_OS_WIN32
   script_fu_server_quit ();
+#endif
 
   return NIL;
 }

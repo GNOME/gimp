@@ -11,11 +11,11 @@ OBJECTS = \
   pygimp-parasite.obj \
   pygimp-pdb.obj
 
-PYTHON = ..\..\..\..\python22
+PYTHON = ..\..\..\..\python23
 !IFNDEF DEBUG
-EXTRALIBS = $(PYTHON)\libs\python22.lib user32.lib
+EXTRALIBS = $(PYTHON)\libs\python23.lib user32.lib
 !ELSE
-EXTRALIBS = $(PYTHON)\libs\python22_d.lib user32.lib
+EXTRALIBS = $(PYTHON)\libs\python23_d.lib user32.lib
 !ENDIF
 
 EXTRACFLAGS = -I$(PYTHON)\include

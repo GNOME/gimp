@@ -70,6 +70,17 @@ G_BEGIN_DECLS
 #define X_OK 0 /* not really */
 #endif
 
+/*
+2004-09-15  Tor Lillqvist  <tml@iki.fi>
+
+	* glib/gwin32.h: Don't define ftruncate as a macro. Was never a
+	good idea, and it clashes with newest mingw headers, which have a
+	ftruncate implementation as an inline function. Thanks to Dominik R.
+ */
+/* needs coorection for msvc though ;( */
+#ifdef _MSC_VER
+#define ftruncate(f,s) g_win32_ftruncate(f,s)
+#endif
 
 G_END_DECLS
 

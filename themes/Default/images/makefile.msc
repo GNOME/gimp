@@ -6,6 +6,8 @@ STOCK_VARIABLES = \
 	stock_cap_butt_16	stock-cap-butt-16.png \
 	stock_cap_round_16	stock-cap-round-16.png \
 	stock_cap_square_16	stock-cap-square-16.png \
+	stock_center_16		stock-center-16.png \
+	stock_center_24		stock-center-24.png \
 	stock_channel_16		stock-channel-16.png	\
 	stock_channel_24		stock-channel-24.png	\
 	stock_channel_32		stock-channel-32.png	\
@@ -64,6 +66,7 @@ STOCK_VARIABLES = \
 	stock_floating_selection_24	stock-floating-selection-24.png \
 	stock_floating_selection_32	stock-floating-selection-32.png \
 	stock_floating_selection_48	stock-floating-selection-48.png \
+	stock_frame_64		stock-frame-64.png \
 	stock_gradient_bilinear_16		stock-gradient-bilinear-16.png	\
 	stock_gradient_conical_asymmetric_16		stock-gradient-conical-asymmetric-16.png	\
 	stock_gradient_conical_symmetric_16		stock-gradient-conical-symmetric-16.png	\
@@ -137,6 +140,8 @@ STOCK_VARIABLES = \
 	stock_paths_22		stock-paths-22.png	\
 	stock_plugin_16		stock-plugin-16.png	\
 	stock_portrait_16		stock-portrait-16.png	\
+	stock_print_resolution_16	stock-print-resolution-16.png \
+	stock_print_resolution_24	stock-print-resolution-24.png \
 	stock_qmask_off_16		stock-qmask-off-16.png	\
 	stock_qmask_on_16		stock-qmask-on-16.png	\
 	stock_question_64		stock-question-64.png	\

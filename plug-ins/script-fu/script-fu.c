@@ -249,9 +249,12 @@ script_fu_run (const gchar      *name,
       /*
        *  The script-fu server for remote operation
        */
-
+#ifndef G_OS_WIN32
       script_fu_server_run (name, nparams, param,
 			    nreturn_vals, return_vals);
+#else
+	g_warning ("No script-fu server on win32");
+#endif
     }
   else if (strcmp (name, "plug_in_script_fu_eval") == 0)
     {
