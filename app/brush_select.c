@@ -1787,8 +1787,8 @@ brush_select_edit_brush_callback (GtkWidget *widget,
 	}
     }
   else
-    g_message (_("We are all fresh out of brush editors today,\n"
-		 "please write your own or try back tomorrow\n"));
+    /* this should never happen */
+    g_message (_("Sorry, this brush can't be edited."));
 }
 
 static void
@@ -1816,5 +1816,6 @@ brush_select_delete_brush_callback (GtkWidget *widget,
       brush_select_thaw_all ();
     }
   else
-    g_message (_("Wilber says: \"I don\'t know how to delete that brush.\""));
+    /* this should never happen */
+    g_message (_("Sorry, this brush can't be deleted."));
 }

@@ -1,3 +1,9 @@
+Mon Jan 31 01:42:54 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/brush_select.c: get serious...
+	* app/transform_core.c: don't use g_message for error messages that 
+	are intended for developers only
+
 Sun Jan 30 21:54:42 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/brush_select.c

@@ -1583,7 +1583,7 @@ transform_core_paste (GImage       *gimage,
 				    OPAQUE_OPACITY, NORMAL_MODE);
       if (!layer)
         {
-          g_message(_("transform_core_paste: layer_new_frome_tiles() failed"));
+          g_warning ("transform_core_paste: layer_new_frome_tiles() failed");
           return NULL;
         }
       GIMP_DRAWABLE (layer)->offset_x = tiles->x;

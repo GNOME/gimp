@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.15\n"
-"POT-Creation-Date: 2000-01-27 14:50+0100\n"
-"PO-Revision-Date: 2000-01-27 14:20+0100\n"
-"Last-Translator: Daniel Egger <Daniel.Egger@suse.de>\n"
+"POT-Creation-Date: 2000-01-31 01:01+0100\n"
+"PO-Revision-Date: 2000-01-31 01:37+0100\n"
+"Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -83,11 +83,11 @@ msgstr "Beenden"
 
 #: app/app_procs.c:748 app/brightness_contrast.c:217 app/channel_ops.c:90
 #: app/channels_dialog.c:2431 app/channels_dialog.c:2605
-#: app/color_balance.c:274 app/color_notebook.c:115 app/convert.c:500
+#: app/color_balance.c:274 app/color_notebook.c:115 app/convert.c:505
 #: app/curves.c:583 app/file_new_dialog.c:198 app/file_new_dialog.c:369
 #: app/gdisplay_color_ui.c:128 app/gdisplay_ops.c:369 app/gimpprogress.c:114
-#: app/gimpui.c:79 app/global_edit.c:738 app/gradient.c:1789
-#: app/gradient.c:4876 app/gradient.c:5437 app/hue_saturation.c:376
+#: app/gimpui.c:79 app/global_edit.c:738 app/gradient.c:1788
+#: app/gradient.c:4875 app/gradient.c:5436 app/hue_saturation.c:376
 #: app/interface.c:967 app/layers_dialog.c:3325 app/layers_dialog.c:3516
 #: app/layers_dialog.c:3616 app/layers_dialog.c:3718 app/layers_dialog.c:3981
 #: app/levels.c:354 app/palette.c:1852 app/posterize.c:200
@@ -138,7 +138,7 @@ msgstr "VG nach Transparent"
 msgid "Custom from Editor"
 msgstr "Selbsterstellt aus Editor"
 
-#: app/blend.c:270 app/gradient.c:528 app/preferences_dialog.c:2199
+#: app/blend.c:270 app/gradient.c:527 app/preferences_dialog.c:2199
 msgid "Linear"
 msgstr "Linear"
 
@@ -256,7 +256,7 @@ msgstr "Helligkeit-Kontrast"
 
 #: app/brightness_contrast.c:213 app/channel_ops.c:88
 #: app/channels_dialog.c:2429 app/channels_dialog.c:2603
-#: app/color_balance.c:270 app/color_notebook.c:112 app/convert.c:498
+#: app/color_balance.c:270 app/color_notebook.c:112 app/convert.c:503
 #: app/curves.c:579 app/file_new_dialog.c:196 app/file_new_dialog.c:365
 #: app/gdisplay_color_ui.c:126 app/gimpui.c:77 app/gimpui.c:457
 #: app/hue_saturation.c:372 app/layers_dialog.c:3323 app/layers_dialog.c:3514
@@ -301,10 +301,10 @@ msgstr "Pinseleditor"
 #: app/color_notebook.c:112 app/color_picker.c:296 app/colormap_dialog.i.c:151
 #: app/colormap_dialog.i.c:161 app/crop.c:1053 app/devices.c:755
 #: app/docindexif.c:104 app/errorconsole.c:281 app/gdisplay_ops.c:367
-#: app/gradient.c:800 app/gradient_select.c:152 app/histogram_tool.c:292
+#: app/gradient.c:799 app/gradient_select.c:152 app/histogram_tool.c:292
 #: app/info_window.c:308 app/lc_dialog.c:196 app/measure.c:273
 #: app/nav_window.c:1366 app/palette.c:2117 app/palette.c:2133
-#: app/palette.c:3179 app/palette_select.c:62 app/pattern_select.c:171
+#: app/palette.c:3179 app/palette_select.c:63 app/pattern_select.c:171
 #: app/preferences_dialog.c:359 app/tips_dialog.c:171 app/tools.c:993
 #: app/undo_history.c:761
 msgid "Close"
@@ -332,7 +332,7 @@ msgstr "Winkel:"
 msgid "Brush Selection"
 msgstr "Pinselauswahl"
 
-#: app/brush_select.c:277 app/gradient.c:798 app/module_db.c:320
+#: app/brush_select.c:277 app/gradient.c:797 app/module_db.c:320
 #: app/palette.c:2115 app/pattern_select.c:169
 msgid "Refresh"
 msgstr "Auffrischen"
@@ -356,11 +356,11 @@ msgstr "Neu"
 
 #: app/brush_select.c:473 app/colormap_dialog.i.c:149
 #: app/gradient_select.c:150 app/palette.c:1198 app/palette.c:2131
-#: app/palette_select.c:60
+#: app/palette_select.c:61
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: app/brush_select.c:479 app/global_edit.c:736 app/gradient.c:1787
+#: app/brush_select.c:479 app/global_edit.c:736 app/gradient.c:1786
 #: app/palette.c:1208 app/palette.c:1850 app/palette.c:2313
 msgid "Delete"
 msgstr "Löschen"
@@ -369,15 +369,15 @@ msgstr "Löschen"
 msgid "Spacing:"
 msgstr "Abstand:"
 
-#: app/brush_select.c:1790
-msgid ""
-"We are all fresh out of brush editors today,\n"
-"please write your own or try back tomorrow\n"
-msgstr ""
+#. this should never happen
+#: app/brush_select.c:1791
+msgid "Sorry, this brush can't be edited."
+msgstr "Dieser Pinsel kann nicht bearbeitet werden."
 
-#: app/brush_select.c:1819
-msgid "Wilber says: \"I don't know how to delete that brush.\""
-msgstr "Wilber sagt: \"Ich weiß nicht, wie ich diesen Pinsel löschen soll.\""
+#. this should never happen
+#: app/brush_select.c:1820
+msgid "Sorry, this brush can't be deleted."
+msgstr "Dieser Pinsel kann nicht gelöscht werden."
 
 #: app/bucket_fill.c:146 app/color_picker.c:155 app/tool_options.c:246
 msgid "Sample Merged"
@@ -447,7 +447,7 @@ msgid "copy"
 msgstr "Kopie"
 
 #. formulate the new layer_mask name
-#: app/channel.c:195 app/gradient.c:1616 app/layer.c:318 app/layer.c:1543
+#: app/channel.c:195 app/gradient.c:1615 app/layer.c:318 app/layer.c:1543
 #, c-format
 msgid "%s copy"
 msgstr "%s Kopie"
@@ -778,71 +778,72 @@ msgstr ""
 "Fehler beim Skalieren des Bildes:\n"
 "Breite und Höhe müssen größer als Null sein."
 
-#: app/convert.c:492
+#: app/convert.c:497
 msgid "Indexed Color Conversion"
 msgstr "Indizierte Farbumwandlung"
 
-#: app/convert.c:511
+#: app/convert.c:516
 msgid "General Palette Options"
 msgstr "Generelle Farbpaletten Einstellungen"
 
-#: app/convert.c:524
-msgid "Generate optimal palette:"
+#: app/convert.c:529
+msgid "Generate Optimal Palette:"
 msgstr "Erstelle optimale Palette:"
 
-#: app/convert.c:557
-msgid "# of colors:"
+#: app/convert.c:562
+msgid "# of Colors:"
 msgstr "Anzahl der Farben:"
 
-#: app/convert.c:575
-msgid "Use custom palette"
-msgstr "Benutze eigene Palette"
+#. create the custom_frame here, it'll be added later
+#: app/convert.c:578
+msgid "Custom Palette Options"
+msgstr "Eigene Farbpalette Einstellungen"
 
-#: app/convert.c:609
-msgid "Use WWW-optimised palette"
+#: app/convert.c:584
+msgid "Remove Unused Colors from Final Palette"
+msgstr "Entferne unbenutzte Farben aus fertiger Palette"
+
+#: app/convert.c:596
+msgid "Use Custom Palette:"
+msgstr "Benutze eigene Palette:"
+
+#: app/convert.c:630
+msgid "Use WWW-Optimized Palette"
 msgstr "Benutze WWW-optimierte Palette"
 
-#: app/convert.c:625
-msgid "Use black/white (1-bit) palette"
-msgstr "Benutze Schwarz/Weiß (1-bit) palette"
+#: app/convert.c:646
+msgid "Use Black/White (1-Bit) Palette"
+msgstr "Benutze Schwarz/Weiß (1-Bit) Palette"
 
-#: app/convert.c:636
+#: app/convert.c:657
 msgid "Dither Options"
 msgstr "Raster Einstellungen"
 
-#: app/convert.c:649
-msgid "No colour dithering"
+#: app/convert.c:670
+msgid "No Color Dithering"
 msgstr "Keine Farbrasterung"
 
-#: app/convert.c:663
-msgid "Positioned colour dithering"
+#: app/convert.c:684
+msgid "Positioned Color Dithering"
 msgstr "Geordnete Farbrasterung"
 
-#: app/convert.c:677
-msgid "Floyd-Steinberg colour dithering (reduced colour bleeding)"
+#: app/convert.c:698
+msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
 msgstr "Floyd-Steinberg Farbrasterung (reduziertes Farbbluten)"
 
-#: app/convert.c:690
-msgid "Floyd-Steinberg colour dithering (normal)"
+#: app/convert.c:711
+msgid "Floyd-Steinberg Color Dithering (Normal)"
 msgstr "Floyd-Steinberg Farbrasterung (normal)"
 
-#: app/convert.c:704
-msgid "Enable dithering of transparency"
+#: app/convert.c:725
+msgid "Enable Dithering of Transparency"
 msgstr "Aktiviere Rasterung für Transparenz"
 
-#: app/convert.c:714
-msgid "Custom Palette Options"
-msgstr "Eigene Farbpaletten Einstellungen"
-
-#: app/convert.c:740
-msgid "Remove unused colours from final palette"
-msgstr "Entferne unbenutzte Farben aus fertiger Palette"
-
-#: app/convert.c:765
+#: app/convert.c:754
 msgid "[ Warning ]"
 msgstr "[ Warnung ]"
 
-#: app/convert.c:775
+#: app/convert.c:764
 msgid ""
 "You are attempting to convert an image with alpha/layers from RGB/GRAY to "
 "INDEXED.\n"
@@ -854,6 +855,10 @@ msgstr ""
 "Sie sollten eine Farbpalette von nicht mehr als 255 Farben erzeugen falls "
 "Sie beabsichtigen aus diesem Bild eine transparente oder animierte GIF-Datei "
 "zu erzeugen."
+
+#: app/convert.c:964
+msgid "Select Custom Palette"
+msgstr "Benutze eigene Palette"
 
 #: app/convolve.c:171
 msgid "Convolve Type"
@@ -1690,132 +1695,132 @@ msgstr "Geben sie dieser Ablage einen Namen"
 msgid "Copy Named"
 msgstr "Kopieren in Ablage"
 
-#: app/gradient.c:529
+#: app/gradient.c:528
 msgid "Curved"
 msgstr "Kurvig"
 
-#: app/gradient.c:530
+#: app/gradient.c:529
 msgid "Sinusoidal"
 msgstr "Sinusförmig"
 
-#: app/gradient.c:531
+#: app/gradient.c:530
 msgid "Spherical (increasing)"
 msgstr "Sphärisch (zunehmend)"
 
-#: app/gradient.c:532
+#: app/gradient.c:531
 msgid "Spherical (decreasing)"
 msgstr "Sphärisch (abnehmend)"
 
-#: app/gradient.c:537
+#: app/gradient.c:536
 msgid "Plain RGB"
 msgstr "Reines RGB"
 
-#: app/gradient.c:538
+#: app/gradient.c:537
 msgid "HSV (counter-clockwise hue)"
 msgstr "HSV (Farbton gegen Uhrzeigersinn)"
 
-#: app/gradient.c:539
+#: app/gradient.c:538
 msgid "HSV (clockwise hue)"
 msgstr "HSV (Farbton im Uhrzeigersinn)"
 
-#: app/gradient.c:792
+#: app/gradient.c:791
 msgid "Gradient Editor"
 msgstr "Farbverlaufs Editor"
 
-#: app/gradient.c:823 app/gradient_select.c:206 app/paintbrush.c:287
+#: app/gradient.c:822 app/gradient_select.c:206 app/paintbrush.c:287
 #: app/palette.c:3235
 msgid "Gradient"
 msgstr "Farbverlauf"
 
-#: app/gradient.c:824 app/gradient_select.c:207 app/palette.c:2274
-#: app/palette_select.c:82
+#: app/gradient.c:823 app/gradient_select.c:207 app/palette.c:2274
+#: app/palette_select.c:83
 msgid "Name"
 msgstr "Name"
 
 #. Frame & vbox for gradient functions
-#: app/gradient.c:869
+#: app/gradient.c:868
 msgid "Gradient Ops"
 msgstr "Farbverlaufsfunktionen"
 
 #. Buttons for gradient functions
-#: app/gradient.c:877
+#: app/gradient.c:876
 msgid "New Gradient"
 msgstr "Neuer Farbverlauf"
 
-#: app/gradient.c:885
+#: app/gradient.c:884
 msgid "Copy Gradient"
 msgstr "Kopiere Farbverlauf"
 
-#: app/gradient.c:893
+#: app/gradient.c:892
 msgid "Delete Gradient"
 msgstr "Lösche Farbverlauf"
 
-#: app/gradient.c:901
+#: app/gradient.c:900
 msgid "Rename Gradient"
 msgstr "Benenne Farbverlauf um"
 
-#: app/gradient.c:909 app/gradient.c:1889
+#: app/gradient.c:908 app/gradient.c:1888
 msgid "Save as POV-Ray"
 msgstr "Sichere als POV-Ray Datei"
 
 #. Zoom all button
-#: app/gradient.c:927
+#: app/gradient.c:926
 msgid "Zoom all"
 msgstr "Zeige alles"
 
-#: app/gradient.c:993
+#: app/gradient.c:992
 msgid "Instant update"
 msgstr "Dauernd Auffrischen"
 
-#: app/gradient.c:1128 app/gradient.c:2006
+#: app/gradient.c:1127 app/gradient.c:2005
 msgid "Default"
 msgstr "Standard"
 
-#: app/gradient.c:1555
+#: app/gradient.c:1554
 msgid "New gradient"
 msgstr "Neuer Farbverlauf"
 
-#: app/gradient.c:1558
+#: app/gradient.c:1557
 msgid "Enter a name for the new gradient"
 msgstr "Geben sie dem neuen Farbverlauf einen Namen"
 
-#: app/gradient.c:1559
+#: app/gradient.c:1558
 msgid "untitled"
 msgstr "unbenannt"
 
-#: app/gradient.c:1618
+#: app/gradient.c:1617
 msgid "Copy gradient"
 msgstr "Farbverlauf kopieren"
 
-#: app/gradient.c:1621
+#: app/gradient.c:1620
 msgid "Enter a name for the copied gradient"
 msgstr "Geben sie dem kopierten Farbverlauf einen Namen"
 
-#: app/gradient.c:1704
+#: app/gradient.c:1703
 msgid "Rename gradient"
 msgstr "Farbverlauf umbenennen"
 
-#: app/gradient.c:1707
+#: app/gradient.c:1706
 msgid "Enter a new name for the gradient"
 msgstr "Geben sie dem Farbverlauf einen neuen Namen"
 
-#: app/gradient.c:1781
+#: app/gradient.c:1780
 msgid "Delete gradient"
 msgstr "Farbverlauf löschen"
 
-#: app/gradient.c:1800 app/palette.c:1863
+#: app/gradient.c:1799 app/palette.c:1863
 #, c-format
 msgid ""
 "Are you sure you want to delete\n"
 "\"%s\" from the list and from disk?"
 msgstr "\"%s\" wirklich aus der Liste und vom Datenträger löschen?"
 
-#: app/gradient.c:2043
+#: app/gradient.c:2042
 #, c-format
 msgid "Zoom factor: %d:1    Displaying [%0.6f, %0.6f]"
 msgstr "Zoom-Faktor: %d:1    Zeige [%0.6f, %0.6f]"
 
-#: app/gradient.c:2294
+#: app/gradient.c:2293
 #, c-format
 msgid ""
 "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
@@ -1824,31 +1829,31 @@ msgstr ""
 "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
 "Deckkraft: %0.3f"
 
-#: app/gradient.c:2319
+#: app/gradient.c:2318
 #, c-format
 msgid "Foreground color set to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr ""
 "Vordergrundfarbe auf RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f) gesetzt"
 
-#: app/gradient.c:2343
+#: app/gradient.c:2342
 #, c-format
 msgid "Background color to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr ""
 "Hintergrundfarbe auf RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f) gesetzt"
 
-#: app/gradient.c:2649
+#: app/gradient.c:2648
 msgid "Drag: move    Shift+drag: move & compress"
 msgstr "Ziehen: Bewegen    Shift+Ziehen: Bewegen & Stauchen"
 
-#: app/gradient.c:2651 app/gradient.c:2654
+#: app/gradient.c:2650 app/gradient.c:2653
 msgid "Click: select    Shift+click: extend selection"
 msgstr "Klick: Auswahl    Shift+Klick: Auswahl erweitern"
 
-#: app/gradient.c:2659
+#: app/gradient.c:2658
 msgid "Click: select    Shift+click: extend selection    Drag: move"
 msgstr "Klick: Auswahl    Shift+Klick: Auswahl erweitern   Ziehen: Bewegen"
 
-#: app/gradient.c:2671
+#: app/gradient.c:2670
 msgid ""
 "Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
 "move & compress"
@@ -1856,176 +1861,176 @@ msgstr ""
 "Klick: Auswahl   Shift+Klick: Auswahl erweitern   Ziehen: "
 "BewegenShift+Ziehen: Bewegen und Stauchen"
 
-#: app/gradient.c:2913 app/gradient.c:2922
+#: app/gradient.c:2912 app/gradient.c:2921
 #, c-format
 msgid "Handle position: %0.6f"
 msgstr "Markerposition: %0.6f"
 
-#: app/gradient.c:2940
+#: app/gradient.c:2939
 #, c-format
 msgid "Distance: %0.6f"
 msgstr "Abstand: %0.6f"
 
-#: app/gradient.c:3427 app/gradient.c:4485
+#: app/gradient.c:3426 app/gradient.c:4484
 msgid "Left endpoint's color"
 msgstr "Farbe des linken Endpunktes"
 
-#: app/gradient.c:3438 app/gradient.c:3480
+#: app/gradient.c:3437 app/gradient.c:3479
 msgid "Load from"
 msgstr "Hole aus"
 
-#: app/gradient.c:3442
+#: app/gradient.c:3441
 msgid "Left neighbor's right endpoint"
 msgstr "Linker Nachbar des rechten Endpunktes"
 
-#: app/gradient.c:3443
+#: app/gradient.c:3442
 msgid "Right endpoint"
 msgstr "Rechter Endpunkt"
 
-#: app/gradient.c:3453 app/gradient.c:3495
+#: app/gradient.c:3452 app/gradient.c:3494
 msgid "Save to"
 msgstr "Sichern unter"
 
-#: app/gradient.c:3469 app/gradient.c:4563
+#: app/gradient.c:3468 app/gradient.c:4562
 msgid "Right endpoint's color"
 msgstr "Farbe des rechten Endpunktes"
 
-#: app/gradient.c:3484
+#: app/gradient.c:3483
 msgid "Right neighbor's left endpoint"
 msgstr "Rechter Nachbar des linken Endpunktes"
 
-#: app/gradient.c:3485
+#: app/gradient.c:3484
 msgid "Left endpoint"
 msgstr "Linker Endpunkt"
 
-#: app/gradient.c:3596
+#: app/gradient.c:3595
 msgid "Selection operations"
 msgstr "Auswahl Operationen"
 
-#: app/gradient.c:3768
+#: app/gradient.c:3767
 msgid "Blending function for segment"
 msgstr "Übergangsfunktion für Segment"
 
-#: app/gradient.c:3770
+#: app/gradient.c:3769
 msgid "Coloring type for segment"
 msgstr "Farbe für Segment"
 
-#: app/gradient.c:3772
+#: app/gradient.c:3771
 msgid "Split segment at midpoint"
 msgstr "Segment mittig teilen"
 
-#: app/gradient.c:3774 app/gradient.c:4866
+#: app/gradient.c:3773 app/gradient.c:4865
 msgid "Split segment uniformly"
 msgstr "Segment gleichmäßig teilen"
 
-#: app/gradient.c:3776
+#: app/gradient.c:3775
 msgid "Delete segment"
 msgstr "Segment löschen"
 
-#: app/gradient.c:3778
+#: app/gradient.c:3777
 msgid "Re-center segment's midpoint"
 msgstr "Mittelpunkt des Segments zentrieren"
 
-#: app/gradient.c:3780
+#: app/gradient.c:3779
 msgid "Re-distribute handles in segment"
 msgstr "Punkte gleichmäßig im Segment verteilen"
 
-#: app/gradient.c:3782
+#: app/gradient.c:3781
 msgid "Flip segment"
 msgstr "Segment spiegeln"
 
-#: app/gradient.c:3784 app/gradient.c:5427
+#: app/gradient.c:3783 app/gradient.c:5426
 msgid "Replicate segment"
 msgstr "Segment duplizieren"
 
-#: app/gradient.c:3789
+#: app/gradient.c:3788
 msgid "Blending function for selection"
 msgstr "Farbverlaufsfunktion für Auswahl"
 
-#: app/gradient.c:3791
+#: app/gradient.c:3790
 msgid "Coloring type for selection"
 msgstr "Färbungsart für Auswahl"
 
-#: app/gradient.c:3793
+#: app/gradient.c:3792
 msgid "Split segments at midpoints"
 msgstr "Segment an Mittelpunkten aufteilen"
 
-#: app/gradient.c:3795 app/gradient.c:4867
+#: app/gradient.c:3794 app/gradient.c:4866
 msgid "Split segments uniformly"
 msgstr "Segment gleichmäßig aufteilen"
 
-#: app/gradient.c:3797
+#: app/gradient.c:3796
 msgid "Delete selection"
 msgstr "Auswahl löschen"
 
-#: app/gradient.c:3799
+#: app/gradient.c:3798
 msgid "Re-center midpoints in selection"
 msgstr "Mittelpunkte in Auswahl zentrieren"
 
-#: app/gradient.c:3801
+#: app/gradient.c:3800
 msgid "Re-distribute handles in selection"
 msgstr "Punkte gleichmäßig in Auswahl verteilen"
 
-#: app/gradient.c:3803
+#: app/gradient.c:3802
 msgid "Flip selection"
 msgstr "Auswahl spiegeln"
 
-#: app/gradient.c:3805 app/gradient.c:5428
+#: app/gradient.c:3804 app/gradient.c:5427
 msgid "Replicate selection"
 msgstr "Auswahl duplizieren"
 
-#: app/gradient.c:4089
+#: app/gradient.c:4088
 msgid "FG color"
 msgstr "VG Farbe"
 
-#: app/gradient.c:4137
+#: app/gradient.c:4136
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:4652 app/gradient.c:4722
+#: app/gradient.c:4651 app/gradient.c:4721
 msgid "(Varies)"
 msgstr "(veränderlich)"
 
-#: app/gradient.c:4874
+#: app/gradient.c:4873
 msgid "Split"
 msgstr "Teilen"
 
 #. Instructions
-#: app/gradient.c:4888
+#: app/gradient.c:4887
 msgid "Please select the number of uniform parts"
 msgstr "Bitte Anzahl der Abschnitte eingeben"
 
-#: app/gradient.c:4894
+#: app/gradient.c:4893
 msgid "in which you want to split the selected segment"
 msgstr "in der Sie das ausgewählte Segment teilen wollen"
 
-#: app/gradient.c:4895
+#: app/gradient.c:4894
 msgid "in which you want to split the segments in the selection"
 msgstr "in der Sie die Segmente in der Auswahl teilen woll"
 
-#: app/gradient.c:5255
+#: app/gradient.c:5254
 msgid "Blend endpoints' colors"
 msgstr "Übergang zwischen den Endpunktfarben"
 
-#: app/gradient.c:5267
+#: app/gradient.c:5266
 msgid "Blend endpoints' opacity"
 msgstr "Übergang zwischen der Endpunktdeckung"
 
-#: app/gradient.c:5435
+#: app/gradient.c:5434
 msgid "Replicate"
 msgstr "Duplizieren"
 
 #. Instructions
-#: app/gradient.c:5448
+#: app/gradient.c:5447
 msgid "Please select the number of times"
 msgstr "Bitte Anzahl der Nachbildungen"
 
-#: app/gradient.c:5453
+#: app/gradient.c:5452
 msgid "you want to replicate the selected segment"
 msgstr "des ausgweählten Segments eingeben"
 
-#: app/gradient.c:5454
+#: app/gradient.c:5453
 msgid "you want to replicate the selection"
 msgstr "der Auswahl eingeben"
 
@@ -2583,8 +2588,8 @@ msgstr ""
 "\t\tum benutzerdefinierte Fraktale zu sichern, die mit dem\n"
 "\t\tFraktalexplorer Plugin benutzt werden. Entsprechend der\n"
 "\t\tStandard gimprc wird dieses Verzeichnis zusätzlich zur\n"
-"\t\tsystemweiten Fraktalinstallation durchsucht, wenn nach Fraktalen\n"
-"\t\tgesucht wird.\n"
+"\t\tsystemweiten Fraktalinstallation durchsucht, wenn nach\n"
+"\t\tFraktalen gesucht wird.\n"
 
 #: app/install.c:216
 msgid ""
@@ -2597,6 +2602,13 @@ msgid ""
 "\t\tpalettes during GIMP execution to persist across\n"
 "\t\tsessions.\n"
 msgstr ""
+"\t\tDies ist ein Unterverzeichnis, das verwendet werden kann,\n"
+"\t\tum benutzerdefinierte Paletten zu sichern. Entsprechend\n"
+"\t\tder Standard gimprc Datei wird nur dieses Verzeichnis\n"
+"\t\t(nicht die systemweite Installation) durchsucht, wenn nach\n"
+"\t\tPaletten gesucht wird. Während der Installation werden die\n"
+"\t\tSystempaletten hierher kopiert, damit Änderungen an den\n"
+"\t\tPaletten während der Ausführung von GIMP erhalten bleiben.\n"
 
 #: app/install.c:226
 msgid ""
@@ -2606,6 +2618,11 @@ msgid ""
 "\t\twide gimp patterns installation when searching for\n"
 "\t\tpatterns.\n"
 msgstr ""
+"\t\tDies ist ein Unterverzeichnis, das verwendet werden kann,\n"
+"\t\tum benutzerdefinierte Füllmuster zu sichern. Entsprechend\n"
+"\t\tder Standard gimprc wird dieses Verzeichnis zusätzlich zur\n"
+"\t\tsystemweiten Musterinstallation durchsucht, wenn nach\n"
+"\t\tFüllmustern gesucht wird.\n"
 
 #: app/install.c:233
 msgid ""
@@ -2616,6 +2633,12 @@ msgid ""
 "\t\twide GIMP plug-in directories when searching for\n"
 "\t\tplug-ins.\n"
 msgstr ""
+"\t\tDies ist ein Unterverzeichnis, das verwendet werden kann,\n"
+"\t\tum selbsterstellte, temporäre oder in anderer Weise nicht\n"
+"\t\tsystemweit unterstützte Plugins zu speichern. Entsprechend\n"
+"\t\tder Standard gimprc wird dieses Verzeichnis zusätzlich zum\n"
+"\t\tsystemweiten Pluginverzeichnis durchsucht, wenn nach\n"
+"\t\tPlugins gesucht wird.\n"
 
 #: app/install.c:241
 msgid ""
@@ -2623,8 +2646,15 @@ msgid ""
 "\t\ttemporary, or otherwise non-system-supported DLL modules.\n"
 "\t\tThe default gimprc file checks this subdirectory\n"
 "\t\tin addition to the system-wide GIMP module directory\n"
-"\t\twhen searching for modules to load when initialising.\n"
+"\t\twhen searching for modules to load when initializing.\n"
 msgstr ""
+"\t\tDieses Unterverzeichnis kann verwendet werden, um\n"
+"\t\tselbsterstellte, temporäre oder in anderer Weise nicht\n"
+"\t\tsystemweit unterstützte DLL Module zu speichern.\n"
+"\t\tEntsprechend der Standard gimprc wird dieses Verzeichnis\n"
+"\t\tzusätzlich zum systemweiten Modulverzeichnis durchsucht,\n"
+"\t\twenn nach Modulen gesucht wird.\n"
+
 
 #: app/install.c:248
 msgid ""
@@ -2633,6 +2663,11 @@ msgid ""
 "\t\tfile checks this subdirectory in addition to the system\n"
 "\t\t-wide gimp scripts subdirectory when searching for scripts\n"
 msgstr ""
+"\t\tDieses Unterverzeichnis kann verwendet werden, um\n"
+"\t\tselbsterstellte Skripte zu speichern. Entsprechend der\n"
+"\t\tStandard gimprc wird dieses Verzeichnis zusätzlich zum\n"
+"\t\tsystemweiten Skriptverzeichnis durchsucht, wenn nach\n"
+"\t\tSkripten gesucht wird.\n"
 
 #: app/install.c:254
 msgid ""
@@ -2642,6 +2677,13 @@ msgid ""
 "\t\tof the form: gimp<#>.<#>.  These files are useless across\n"
 "\t\tGIMP sessions and can be destroyed with impunity.\n"
 msgstr ""
+"\t\tDieses Unterverzeichnis wird von GIMP verwendet, um\n"
+"\t\ttemporär Bilddaten abzulegen, um so den Bedarf an\n"
+"\t\tHauptspeicher zu verringern. When GIMP unschön beendet\n"
+"\t\twird, kann es passieren, das hier Dateien mit Namen wie\n"
+"\t\tgimp<#>.<#> zurückbleiben. Diese Dateien sind für eine\n"
+"\t\tandere GIMP-Session nutzlos und können bedenkenlos\n"
+"\t\tentfernt werden.\n"
 
 #: app/install.c:263
 msgid "GIMP Installation"
@@ -2655,6 +2697,14 @@ msgstr "Installieren"
 msgid "Ignore"
 msgstr "Ignorieren"
 
+#: app/install.c:294 app/install.c:440
+msgid "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"
+msgstr "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"
+
+#: app/install.c:296
+msgid "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
+msgstr "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
+
 #: app/install.c:411
 msgid "Installation Log"
 msgstr "Installation Logbuch"
@@ -2662,6 +2712,10 @@ msgstr "Installation Logbuch"
 #: app/install.c:416
 msgid "Continue"
 msgstr "Weiter"
+
+#: app/install.c:441
+msgid "-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*,*"
+msgstr "-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*,*"
 
 #: app/install.c:447
 msgid ""
@@ -2807,7 +2861,7 @@ msgid "Miscellaneous"
 msgstr "Verschiedenes"
 
 #: app/internal_procs.c:131 app/palette.c:2260 app/palette.c:2272
-#: app/palette_select.c:80
+#: app/palette_select.c:81
 msgid "Palette"
 msgstr "Palette"
 
@@ -3112,46 +3166,46 @@ msgstr "Vergrößern Einstellungen"
 msgid "Allow Window Resizing"
 msgstr "Anpassen der Fenster"
 
-#: app/main.c:301
+#: app/main.c:281
 msgid "GIMP version"
 msgstr "GIMP Version"
 
-#: app/main.c:305
+#: app/main.c:285
 #, c-format
 msgid "Usage: %s [option ...] [files ...]\n"
 msgstr "Benutzung: %s [Option ...] [Datei ...]\n"
 
-#: app/main.c:306
+#: app/main.c:286
 msgid "Valid options are:\n"
 msgstr "Gültige Möglichkeiten sind:\n"
 
-#: app/main.c:307
+#: app/main.c:287
 msgid "  -h --help                Output this help.\n"
 msgstr "  -h --help                Gibt diese Hilfe aus.\n"
 
-#: app/main.c:308
+#: app/main.c:288
 msgid "  -v --version             Output version info.\n"
 msgstr "  -v --version             Gibt Versionsinformationen aus.\n"
 
-#: app/main.c:309
+#: app/main.c:289
 msgid "  -b --batch <commands>    Run in batch mode.\n"
 msgstr "  -b --batch <Befehle>     Startet im Stapelmodus.\n"
 
-#: app/main.c:310
+#: app/main.c:290
 msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
 msgstr "  -g --gimprc <gimprc>     Benutzt ein alternatives Profil.\n"
 
-#: app/main.c:311
+#: app/main.c:291
 msgid "  -n --no-interface        Run without a user interface.\n"
 msgstr "  -n --no-interface        Startet ohne Oberfläche.\n"
 
-#: app/main.c:312
+#: app/main.c:292
 msgid "  -r --restore-session     Try to restore saved session.\n"
 msgstr ""
 "  -r --restore-session     Versucht eine abgelegte Sitzung "
 "wiederherzustellen.\n"
 
-#: app/main.c:313
+#: app/main.c:293
 msgid ""
 "  --no-data                Do not load patterns, gradients, palettes, "
 "brushes.\n"
@@ -3159,19 +3213,19 @@ msgstr ""
 "  --no-data                Lädt keine Muster, Farbverläufe, Farbpaletten und "
 "Pinsel.\n"
 
-#: app/main.c:314
+#: app/main.c:294
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Zeigt Startmeldungen.\n"
 
-#: app/main.c:315
+#: app/main.c:295
 msgid "  --no-splash              Do not show the startup window.\n"
 msgstr "  --no-splash              Verbirgt Startfenster.\n"
 
-#: app/main.c:316
+#: app/main.c:296
 msgid "  --no-splash-image        Do not add an image to the startup window.\n"
 msgstr "  --no-splash-image        Lädt kein Bild ins Startfenster.\n"
 
-#: app/main.c:317
+#: app/main.c:297
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and its "
 "plugins.\n"
@@ -3179,11 +3233,11 @@ msgstr ""
 "  --no-shm                 Keiner geteilter Speicher zwischen GIMP und "
 "Plug-ins.\n"
 
-#: app/main.c:318
+#: app/main.c:298
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr "  --no-xshm                Benutzt die Xshm Erweiterung nicht.\n"
 
-#: app/main.c:319
+#: app/main.c:299
 msgid ""
 "  --console-messages       Display warnings to console instead of a dialog "
 "box.\n"
@@ -3191,11 +3245,11 @@ msgstr ""
 "  --console-messages       Warnungen in einer Konsole statt in einem "
 "Dialog.\n"
 
-#: app/main.c:320
+#: app/main.c:300
 msgid "  --debug-handlers         Enable debugging signal handlers.\n"
 msgstr "  --debug-handlers         Aktiviert Fehlersuchroutinen.\n"
 
-#: app/main.c:321
+#: app/main.c:301
 msgid ""
 "  --display <display>      Use the designated X display.\n"
 "\n"
@@ -3203,11 +3257,11 @@ msgstr ""
 "  --display <Anzeige>      Benutzt die angegebene X Anzeige.\n"
 "\n"
 
-#: app/main.c:322
+#: app/main.c:302
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr "  --system-gimprc <gimprc> Benutzt alternatives Systemprofil.\n"
 
-#: app/main.c:339
+#: app/main.c:319
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Dieses Konsolenfenster wird in 10 Sekunden geschlossen)\n"
 
@@ -3309,6 +3363,7 @@ msgstr "/Script-Fu/Werkzeuge"
 msgid "/Script-Fu/Animators"
 msgstr "/Script-Fu/Animateure"
 
+# EEEK, mir fällt nix ein
 #: app/menus.c:104
 msgid "/Script-Fu/Stencil Ops"
 msgstr ""
@@ -4403,7 +4458,7 @@ msgstr "Farbpalette"
 msgid "Select"
 msgstr "Auswahl"
 
-#: app/palette.c:2273 app/palette_select.c:81
+#: app/palette.c:2273 app/palette_select.c:82
 msgid "Ncols"
 msgstr "Farben"
 
@@ -4453,7 +4508,7 @@ msgid "Interval:"
 msgstr "Intervall:"
 
 #. The shell and main vbox
-#: app/palette_select.c:53
+#: app/palette_select.c:54
 msgid "Palette Selection"
 msgstr "Paletten Auswahl"
 
@@ -5680,7 +5735,7 @@ msgstr "/Werkzeuge/Transformation"
 
 #: app/tools.c:233
 msgid "Rotation, scaling, shearing, perspective."
-msgstr ""
+msgstr "Drehen, Skalieren, Scheren, perspektivisch Verzerren."
 
 #: app/tools.c:249 app/tools.c:265 app/tools.c:281
 msgid "Transform the layer or selection"
@@ -5978,10 +6033,6 @@ msgstr ""
 msgid "Transformation"
 msgstr "Transformation"
 
-#: app/transform_core.c:1586
-msgid "transform_core_paste: layer_new_frome_tiles() failed"
-msgstr ""
-
 #: app/transform_tool.c:190
 msgid "Transform Tool Options"
 msgstr "Transformationswerkzeug Einstellungen"
@@ -6073,7 +6124,6 @@ msgstr "Maske"
 msgid "layer move"
 msgstr "Ebene verschieben"
 
-#. ok
 #: app/undo.c:2865
 msgid "transform"
 msgstr "Transformation"
@@ -6098,12 +6148,10 @@ msgstr "Ebenenveränderung"
 msgid "add layer mask"
 msgstr "Ebenenmaske hinzufügen"
 
-#. ok
 #: app/undo.c:2871
 msgid "delete layer mask"
 msgstr "Ebenenmaske löschen"
 
-#. ok
 #: app/undo.c:2872
 msgid "rename layer"
 msgstr "Ebene umbenennen"
@@ -6112,7 +6160,6 @@ msgstr "Ebene umbenennen"
 msgid "layer reposition"
 msgstr "Ebene neu positionieren"
 
-#. ok
 #: app/undo.c:2874
 msgid "new channel"
 msgstr "Neuer Kanal"
@@ -6129,18 +6176,17 @@ msgstr "Kanalveränderung"
 msgid "FS to layer"
 msgstr "Schwebende Auswahl -> Ebene"
 
-#. ok
 #: app/undo.c:2878
 msgid "gimage"
 msgstr "Bild"
 
 #: app/undo.c:2879
 msgid "FS rigor"
-msgstr ""
+msgstr "Schwebende Auswahl zeigen"
 
 #: app/undo.c:2880
 msgid "FS relax"
-msgstr ""
+msgstr "Schwebende Auswahl verstecken"
 
 #: app/undo.c:2881
 msgid "guide"
@@ -6152,7 +6198,7 @@ msgstr "Text"
 
 #: app/undo.c:2883
 msgid "float selection"
-msgstr "Schwebende Auswahl"
+msgstr "Auswahl -> schwebend"
 
 #: app/undo.c:2884
 msgid "paste"
@@ -6174,16 +6220,14 @@ msgstr "Zeichenwerkzeug"
 msgid "floating layer"
 msgstr "Schwebende Ebene"
 
-#. unused!
 #: app/undo.c:2889
 msgid "linked layer"
-msgstr ""
+msgstr "Ebene verbinden"
 
 #: app/undo.c:2890
 msgid "apply layer mask"
 msgstr "Ebenenmaske anwenden"
 
-#. ok
 #: app/undo.c:2891
 msgid "layer merge"
 msgstr "Ebenen vereinen"
@@ -6194,7 +6238,7 @@ msgstr "Schwebende Auswahl verankern"
 
 #: app/undo.c:2893
 msgid "gimage mod"
-msgstr ""
+msgstr "Bildveränderung"
 
 #: app/undo.c:2894
 msgid "crop"
