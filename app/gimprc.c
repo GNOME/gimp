@@ -2566,11 +2566,15 @@ preview_size_to_str (gpointer val1p,
 		     gpointer val2p)
 {
   if (preview_size >= 128)
-    return g_strdup ("large");
+    return g_strdup ("huge");
   else if (preview_size >= 64)
+    return g_strdup ("large");
+  else if (preview_size >= 48)
     return g_strdup ("medium");
   else if (preview_size >= 32)
     return g_strdup ("small");
+  else if (preview_size >= 24)
+    return g_strdup ("tiny");
   else
     return g_strdup ("none");
 }

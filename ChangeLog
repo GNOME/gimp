@@ -1,5 +1,10 @@
 1999-10-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimprc.c: preview_size_to_str() uses the new set of preview
+	sizes now.
+
+1999-10-16  Michael Natterer  <mitch@gimp.org>
+
 	* app/menus.c: made the "Dialogs" sub-menus of <Toolbox>/File and
 	<Image> consistent.
 
