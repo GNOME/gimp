@@ -1,3 +1,7 @@
+2003-12-21  Dave Neary  <bolsh@gimp.org>
+
+	* NEWS: Updated NEWS.
+
 2003-12-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpitemtreeview.c: made "item-type" and
