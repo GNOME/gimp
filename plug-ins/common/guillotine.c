@@ -22,10 +22,11 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <libgimp/gimp.h>
 
 #include "libgimp/stdplugins-intl.h"
-
 
 /* Declare local functions.
  */
@@ -112,7 +113,7 @@ run (const gchar      *name,
 
 static gint
 guide_sort_func (gconstpointer a,
-		 gconstpointer b)
+                 gconstpointer b)
 {
   return GPOINTER_TO_INT (a) - GPOINTER_TO_INT (b);
 }
@@ -173,11 +174,25 @@ guillotine (gint32 image_ID)
   if (guides_found)
     {
       gchar *filename;
+      gint   h, v, hpad, vpad;
       gint   x, y;
+      const gchar *hformat, *format;
 
       filename = gimp_image_get_filename (image_ID);
       if (!filename)
         filename = g_strdup (_("Untitled"));
+
+      /* get the number horizontal and vertical slices */
+      h = g_list_length (hguides);
+      v = g_list_length (vguides);
+
+      /* need the number of digits of h and v for the padding */
+      hpad = log10(h) + 1;
+      vpad = log10(v) + 1;
+
+      /* format for the x-y coordinates in the filename */
+      hformat = g_strdup_printf ("%%0%i", MAX (hpad, vpad));
+      format  = g_strdup_printf ("-%si-%si", hformat, hformat); 
 
       /*  Do the actual dup'ing and cropping... this isn't a too naive a
        *  way to do this since we got copy-on-write tiles, either.
@@ -186,8 +201,11 @@ guillotine (gint32 image_ID)
         {
           for (x = 0, vg = vguides; vg && vg->next; x++, vg = vg->next)
             {
-              gint32  new_image = gimp_image_duplicate (image_ID);
-              gchar  *new_filename;
+              gint32   new_image = gimp_image_duplicate (image_ID);
+              GString *new_filename;
+              gchar   *fileextension;
+              gchar   *fileindex;
+              gint     pos;
 
               if (new_image == -1)
                 {
@@ -205,21 +223,35 @@ guillotine (gint32 image_ID)
                                GPOINTER_TO_INT (vg->data),
                                GPOINTER_TO_INT (hg->data));
 
-              /* show the rough coordinates of the image in the title */
-              new_filename = g_strdup_printf ("%s-(%i,%i)", filename, x, y);
-              gimp_image_set_filename (new_image, new_filename);
-              g_free (new_filename);
 
+              new_filename = g_string_new (filename);
+
+              /* show the rough coordinates of the image in the title */
+              fileindex    = g_strdup_printf (format, x, y);
+              
+              /* get the position of the file extension - last . in filename */
+              fileextension = strrchr (new_filename->str, '.');
+              pos           = fileextension - new_filename->str;
+              
+              /* insert the coordinates before the extension */
+              g_string_insert (new_filename, pos, fileindex);
+	      g_free (fileindex);
+              
+              gimp_image_set_filename (new_image, new_filename->str);
+              g_string_free (new_filename, TRUE);
+              
               while ((guide = gimp_image_find_next_guide (new_image, 0)))
                 gimp_image_delete_guide (new_image, guide);
-
+              
               gimp_image_undo_enable (new_image);
-
+              
               gimp_display_new (new_image);
             }
         }
 
       g_free (filename);
+      g_free (hformat);
+      g_free (format);
     }
 
   g_list_free (hguides);
