@@ -443,6 +443,8 @@ gimp_image_resize_layers_get_type (void)
   {
     { GIMP_IMAGE_RESIZE_LAYERS_NONE, "GIMP_IMAGE_RESIZE_LAYERS_NONE", "none" },
     { GIMP_IMAGE_RESIZE_LAYERS_MATCHING, "GIMP_IMAGE_RESIZE_LAYERS_MATCHING", "matching" },
+    { GIMP_IMAGE_RESIZE_LAYERS_VISIBLE, "GIMP_IMAGE_RESIZE_LAYERS_VISIBLE", "visible" },
+    { GIMP_IMAGE_RESIZE_LAYERS_LINKED, "GIMP_IMAGE_RESIZE_LAYERS_LINKED", "linked" },
     { GIMP_IMAGE_RESIZE_LAYERS_ALL, "GIMP_IMAGE_RESIZE_LAYERS_ALL", "all" },
     { 0, NULL, NULL }
   };
@@ -451,6 +453,8 @@ gimp_image_resize_layers_get_type (void)
   {
     { GIMP_IMAGE_RESIZE_LAYERS_NONE, N_("None"), NULL },
     { GIMP_IMAGE_RESIZE_LAYERS_MATCHING, N_("Image-sized layers"), NULL },
+    { GIMP_IMAGE_RESIZE_LAYERS_VISIBLE, N_("All visible layers"), NULL },
+    { GIMP_IMAGE_RESIZE_LAYERS_LINKED, N_("All linked layers"), NULL },
     { GIMP_IMAGE_RESIZE_LAYERS_ALL, N_("All layers"), NULL },
     { 0, NULL, NULL }
   };

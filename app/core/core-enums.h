@@ -222,6 +222,8 @@ typedef enum  /*< pdb-skip >*/
 {
   GIMP_IMAGE_RESIZE_LAYERS_NONE,     /*< desc="None"               >*/
   GIMP_IMAGE_RESIZE_LAYERS_MATCHING, /*< desc="Image-sized layers" >*/
+  GIMP_IMAGE_RESIZE_LAYERS_VISIBLE,  /*< desc="All visible layers" >*/
+  GIMP_IMAGE_RESIZE_LAYERS_LINKED,   /*< desc="All linked layers"  >*/
   GIMP_IMAGE_RESIZE_LAYERS_ALL       /*< desc="All layers"         >*/
 } GimpImageResizeLayers;
 

@@ -1,3 +1,11 @@
+2005-03-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-enums.[ch]: added VISIBLE and LINKED to the
+	GimpImageResizeLayers enum.
+
+	* app/core/gimpimage-resize.c (gimp_image_resize_with_layers):
+	changed accordingly. Also looks nicer now.
+
 2005-03-01  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/ifscompose/ifscompose.[ch]
