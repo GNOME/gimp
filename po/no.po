@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.25\n"
-"POT-Creation-Date: 2000-10-16 11:48-0700\n"
+"POT-Creation-Date: 2000-10-17 00:20+0200\n"
 "PO-Revision-Date: 2000-10-15 12:04+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -356,7 +356,7 @@ msgstr "Valg av pensel"
 #: app/brush_select.c:279 app/gradient.c:798 app/module_db.c:354
 #: app/palette.c:2049 app/pattern_select.c:170
 msgid "Refresh"
-msgstr "Oppdater"
+msgstr "Oppdatér"
 
 #: app/brush_select.c:407
 msgid "No Brushes available"
@@ -691,7 +691,7 @@ msgstr "Gjennomsnitt"
 
 #: app/color_picker.c:214
 msgid "Update Active Color"
-msgstr "Oppdater aktiv farge"
+msgstr "Oppdatér aktiv farge"
 
 #: app/color_picker.c:255 app/color_picker.c:264
 msgid "Red:"
@@ -1466,7 +1466,7 @@ msgstr "Ned"
 
 #: app/gdisplay_color_ui.c:124
 msgid "Configure"
-msgstr "Konfigurer"
+msgstr "Konfigurér"
 
 #: app/gdisplay_color_ui.c:127
 msgid "Color Display Filters"
@@ -2325,8 +2325,8 @@ msgid ""
 "The active brush.\n"
 "Click to open the Brushes Dialog."
 msgstr ""
-"Den aktive kosten.\n"
-"Klikk for å åpne dialog for koster."
+"Den aktive penselen.\n"
+"Klikk for å åpne dialog for pensler."
 
 #: app/indicator_area.c:156
 msgid ""
@@ -3054,7 +3054,7 @@ msgstr "/Fil/Dialoger/Dokumentindeks..."
 
 #: app/menus.c:146
 msgid "/File/Dialogs/Error Console..."
-msgstr "/Fil/Dialoger/Feil-konsoll..."
+msgstr "/Fil/Dialoger/Feilkonsoll..."
 
 #: app/menus.c:148
 msgid "/File/Dialogs/Display Filters..."
@@ -3473,7 +3473,7 @@ msgstr "/Dialoger/Dokumentindeks..."
 
 #: app/menus.c:506
 msgid "/Dialogs/Error Console..."
-msgstr "/Dialoger/Feil-konsoll..."
+msgstr "/Dialoger/Feilkonsoll..."
 
 #: app/menus.c:508
 msgid "/Dialogs/Display Filters..."
@@ -3799,7 +3799,7 @@ msgstr "Frigi"
 
 #: app/module_db.c:890
 msgid "Purpose:"
-msgstr "Mening:"
+msgstr "Beskrivelse:"
 
 #: app/module_db.c:891
 msgid "Author:"
@@ -4428,7 +4428,7 @@ msgstr "Minimum antall farger:"
 
 #: app/preferences_dialog.c:1760
 msgid "Install Colormap"
-msgstr "Installer fargekart"
+msgstr "Installér fargekart"
 
 #: app/preferences_dialog.c:1769
 msgid "Colormap Cycling"
@@ -4617,7 +4617,7 @@ msgstr "Ressursbruk"
 
 #: app/preferences_dialog.c:2155
 msgid "Conservative Memory Usage"
-msgstr "Konservativt minnebruk"
+msgstr "Konservativ minnebruk"
 
 #: app/preferences_dialog.c:2183
 msgid "Levels of Undo:"
@@ -4750,7 +4750,7 @@ msgstr "Velg swap-katalog"
 
 #: app/preferences_dialog.c:2512
 msgid "Brushes Directories"
-msgstr "Katalog for pensler"
+msgstr "Kataloger for pensler"
 
 #: app/preferences_dialog.c:2514
 msgid "Select Brushes Dir"
@@ -4770,7 +4770,7 @@ msgstr "Velg katalog for genererte pensler"
 
 #: app/preferences_dialog.c:2520
 msgid "Patterns Directories"
-msgstr "Katalog for mønstre"
+msgstr "Kataloger for mønstre"
 
 #: app/preferences_dialog.c:2522
 msgid "Select Patterns Dir"
@@ -4786,7 +4786,7 @@ msgstr "Velg katalog for mønstre"
 
 #: app/preferences_dialog.c:2528
 msgid "Gradients Directories"
-msgstr "Katalog for gradienter"
+msgstr "Kataloger for gradienter"
 
 #: app/preferences_dialog.c:2530
 msgid "Select Gradients Dir"
@@ -5350,7 +5350,7 @@ msgstr "/Verktøy/Tegneverktøy/Bøttefyll"
 
 #: app/tools.c:602
 msgid "Fill with a color or pattern"
-msgstr "/Fyll med en farge eller et mønster"
+msgstr "Fyll med en farge eller et mønster"
 
 #: app/tools.c:624
 msgid "Blend"
@@ -6356,7 +6356,7 @@ msgstr "Gamma fargevisningsfilter"
 
 #: modules/cdisplay_gamma.c:325
 msgid "Gamma"
-msgstr "Gama"
+msgstr "Gamma"
 
 #: modules/cdisplay_gamma.c:344
 msgid "Gamma:"
