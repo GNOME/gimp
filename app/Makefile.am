@@ -304,8 +304,9 @@ CPPFLAGS = \
 	-DLIBDIR=\""$(gimpplugindir)"\"	\
 	-DDATADIR=\""$(gimpdatadir)"\"	\
 	-DGIMPDIR=\""$(gimpdir)"\"	\
-	-DVERSION=\"$(VERSION)\" \
-	-DNDEBUG
+	-DVERSION=\"$(VERSION)\"        \
+	-DNDEBUG                        \
+        -DPRECISION_CONFIG=$(precision)
 
 INCLUDES = \
 	$(X_CFLAGS)			\

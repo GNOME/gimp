@@ -1,148 +1,19 @@
 ## Process this file with automake to produce Makefile.in
 
 SUBDIRS = 			\
-	megawidget		\
-	libgck 			\
-	MapObject		\
-	AlienMap		\
-	Anamorphose		\
-	CentralReflection	\
-	Curtain			\
-	Encript_Decript		\
-	Julia			\
-	Mandelbrot		\
-	dbbrowser		\
-	fuse			\
-	gflare			\
-##	@GIMPTCL@		\
-	refract			\
-	script-fu		\
-	struc			\
-	twist			\
-	warp			\
 	@TIFF@			\
-	@JPEG@			\
-	@PNG@			\
-	@MPEG@			\
-	@XD@			\
-	@XPM@			\
-	CML_explorer		\
-	align_layers		\
-	apply_lens		\
-	autocrop		\
-	animationplay		\
-	autostretch_hsv		\
-	blinds			\
-	blur			\
-	blur2			\
-	bmp			\
-	bumpmap			\
-	bz2			\
-	c_astretch		\
-	CEL			\
-	checkerboard		\
-	colorify		\
-	compose			\
-	convmatrix		\
-	coordmap		\
-	cubism			\
-	decompose		\
-	deinterlace		\
-	depthmerge		\
-	despeckle		\
-	destripe		\
-	diffraction		\
-	displace		\
-	edge			\
-	emboss			\
-	engrave			\
-	exchange		\
-	faxg3			\
-	figures			\
-	film			\
-	fits			\
-	flame			\
-	fp			\
-	fractaltrace		\
-	gauss_iir		\
-	gauss_rle		\
 	gbr			\
-	gfli			\
-	gicon			\
-	gif			\
-	glasstile		\
-	gqbist			\
-	gradmap			\
-	grid			\
-	gz			\
-	header			\
-	holes			\
-	hot			\
-	hrz			\
-	ifscompose		\
-	illusion		\
-	iwarp			\
-	laplace			\
-	lic			\
-	magiceye		\
-	mail			\
-	max_rgb			\
-	maze			\
-	mblur			\
-	mosaic			\
-	nlfilt			\
-	noisify			\
-	normalize		\
-	nova			\
-	oilify			\
-	papertile		\
 	pat			\
-	pcx			\
-	pix			\
-	pixelize		\
-	plasma			\
-	pnm			\
-	polar			\
-	print			\
-	ps			\
-	psd			\
-	randomize		\
-	ripple			\
-	rotate			\
-	rotators		\
-	scatter_hsv		\
-	sgi			\
-	sharpen			\
-	shift			\
-	sinus			\
-	smooth_palette		\
-	snoise			\
-	snp			\
-	sobel			\
-	sparkle			\
-	spread			\
-	stereogram		\
-	sunras			\
-	tga			\
-	threshold_alpha		\
-	tile			\
-	tileit			\
-	tiler			\
-	universal		\
-	url			\
-	video			\
-	vinvert			\
-	vpropagate		\
-	waves			\
-	whirlpinch		\
-	xwd			\
-	zealouscrop
+	sgi
 
 scriptdata =
 
 pluginlibdir = $(gimpplugindir)/plug-ins
 
 EXTRA_DIST = build.in
+
+CPPFLAGS = \
+        -DPRECISION_CONFIG=$(precision)
 
 INCLUDES = \
 	$(X_CFLAGS)			\

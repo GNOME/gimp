@@ -32,7 +32,7 @@ blend_row_u8 (
               struct _PixelRow *src1_row,
 	      struct _PixelRow *src2_row,
 	      struct _PixelRow *dest_row,
-	      struct _Paint    *blend
+	      gfloat blend
               );
 
 void
@@ -40,7 +40,7 @@ shade_row_u8 (
 		 struct _PixelRow *src_row,
 	         struct _PixelRow *dest_row,
 	         struct _Paint    *color,
-		 struct _Paint    *blend
+		 gfloat blend
 	         );
 
 void
@@ -128,7 +128,7 @@ dissolve_row_u8 (
 		    struct _PixelRow *dest_row,
 		    gint      x,
 		    gint      y,
-		    struct _Paint    *opac
+		    gfloat opac
 		    );
 
 void
@@ -137,7 +137,7 @@ replace_row_u8 (
 		   struct _PixelRow *src2_row,
 		   struct _PixelRow *dest_row,
 		   struct _PixelRow *mask_row,
-		   struct _Paint    *opac,
+		   gfloat opac,
 		   gint      *affect
 		   );
 
@@ -187,7 +187,7 @@ void
 apply_mask_to_alpha_channel_row_u8 (
 				struct _PixelRow *src_row,
 				struct _PixelRow *mask_row,
-				struct _Paint    *opac
+				gfloat opac
 			       );
 
 /*  combine the mask data with the alpha channel of the pixel data  */
@@ -195,7 +195,7 @@ void
 combine_mask_and_alpha_channel_row_u8 (
 				    struct _PixelRow *src_row,
 				    struct _PixelRow *mask_row,
-				    struct _Paint        *opac
+				    gfloat opac
 				    );
 
 /*  copy gray pixels to intensity-alpha pixels.  This function
@@ -238,7 +238,7 @@ initial_indexed_a_row_u8 (
 			     struct _PixelRow *dest_row,
 			     struct _PixelRow *mask_row,
 			     unsigned char *cmap,
-			     struct _Paint    *opac
+			     gfloat opac
 			     );
 
 /*  lay down the initial pixels for the base layer.
@@ -249,7 +249,7 @@ initial_inten_row_u8 (
 			  struct _PixelRow *src_row,
 			  struct _PixelRow *dest_row,
 			  struct _PixelRow *mask_row,
-			  struct _Paint    *opac,
+			  gfloat opac,
 			  gint      *affect
 		         );
 
@@ -261,7 +261,7 @@ initial_inten_a_row_u8 (
 			    struct _PixelRow *src_row,
 			    struct _PixelRow *dest_row,
 			    struct _PixelRow *mask_row,
-			    struct _Paint    *opac,
+			    gfloat opac,
 			    gint     *affect
 			   );
 
@@ -274,7 +274,7 @@ combine_indexed_and_indexed_row_u8 (
 					struct _PixelRow *src2_row,
 					struct _PixelRow *dest_row,
 					struct _PixelRow *mask_row,
-					struct _Paint    *opac,
+					gfloat opac,
 				        gint     *affect
 				       );
 
@@ -287,7 +287,7 @@ combine_indexed_and_indexed_a_row_u8 (
 					struct _PixelRow *src2_row,
 					struct _PixelRow *dest_row,
 					struct _PixelRow *mask_row,
-					struct _Paint    *opac,
+					gfloat opac,
 				        gint     *affect
 				        ); 
 
@@ -301,7 +301,7 @@ combine_indexed_a_and_indexed_a_row_u8 (
 					    struct _PixelRow *src2_row,
 					    struct _PixelRow *dest_row,
 					    struct _PixelRow *mask_row,
-					    struct _Paint    *opac,
+					    gfloat opac,
 					    gint      *affect
 					   );
 
@@ -315,7 +315,7 @@ combine_inten_a_and_indexed_a_row_u8 (
 					  struct _PixelRow *dest_row,
 					  struct _PixelRow *mask_row,
 					  unsigned char *cmap,
-					  struct _Paint    *opac
+					  gfloat opac
 					 );
 
 /*  combine RGB image with RGB or GRAY with GRAY
@@ -327,7 +327,7 @@ combine_inten_and_inten_row_u8 (
 				    struct _PixelRow *src2_row,
 				    struct _PixelRow *dest_row,
 				    struct _PixelRow *mask_row,
-				    struct _Paint    *opac,
+				    gfloat opac,
 				    gint      *affect
 				   );
 
@@ -340,7 +340,7 @@ combine_inten_and_inten_a_row_u8 (
 				      struct _PixelRow *src2_row,
 				      struct _PixelRow *dest_row,
 				      struct _PixelRow *mask_row,
-				      struct _Paint    *opac,
+				      gfloat opac,
 				      gint      *affect
 				      );
 
@@ -353,7 +353,7 @@ combine_inten_a_and_inten_row_u8 (
 				      struct _PixelRow *src2_row,
 				      struct _PixelRow *dest_row,
 				      struct _PixelRow *mask_row,
-				      struct _Paint    *opac,
+				      gfloat opac,
 				      gint      *affect,
 				      gint       mode_affect /* how does the combination mode affect alpha?  */
 				      );  
@@ -367,7 +367,7 @@ combine_inten_a_and_inten_a_row_u8 (
 					struct _PixelRow *src2_row,
 					struct _PixelRow *dest_row,
 					struct _PixelRow *mask_row,
-					struct _Paint    *opac,
+					gfloat opac,
 					gint      *affect,
 					gint       mode_affect
 					);
@@ -382,7 +382,7 @@ combine_inten_a_and_channel_mask_row_u8 (
 					    struct _PixelRow *channel_row,
 					    struct _PixelRow *dest_row,
 					    struct _Paint    *col,
-					    struct _Paint    *opac
+					    gfloat opac
 					    );
 
 void
@@ -391,7 +391,7 @@ combine_inten_a_and_channel_selection_row_u8 (
 						  struct _PixelRow *channel_row,
 						  struct _PixelRow *dest_row,
 						  struct _Paint    *col,
-						  struct _Paint    *opac
+						  gfloat opac
 						 );
 
 /*  paint "behind" the existing pixel row.
@@ -404,7 +404,7 @@ behind_inten_row_u8 (
 			struct _PixelRow *src2_row,
 			struct _PixelRow *dest_row,
 			struct _PixelRow *mask_row,
-			struct _Paint    *opac,
+			gfloat opac,
 			gint      *affect
                         );
 
@@ -418,7 +418,7 @@ behind_indexed_row_u8 (
 			  struct _PixelRow *src2_row,
 			  struct _PixelRow *dest_row,
 			  struct _PixelRow *mask_row,
-			  struct _Paint    *opac,
+			  gfloat opac,
 			  gint     *affect
 			  );
 
@@ -431,7 +431,7 @@ replace_inten_row_u8 (
 			  struct _PixelRow *src2_row,
 			  struct _PixelRow *dest_row,
 			  struct _PixelRow *mask_row,
-			  struct _Paint    *opac,
+			  gfloat opac,
 			  gint     *affect
 			 );
 
@@ -444,7 +444,7 @@ replace_indexed_row_u8 (
 			    struct _PixelRow *src2_row,
 			    struct _PixelRow *dest_row,
 			    struct _PixelRow *mask_row,
-			    struct _Paint    *opac,
+			    gfloat opac,
 			    gint     *affect
 			   );
 
@@ -457,7 +457,7 @@ erase_inten_row_u8 (
 			struct _PixelRow *src2_row,
 			struct _PixelRow *dest_row,
 			struct _PixelRow *mask_row,
-			struct _Paint    *opac,
+			gfloat opac,
 			gint     *affect
 			);
 
@@ -470,7 +470,7 @@ erase_indexed_row_u8 (
 			  struct _PixelRow *src2_row,
 			  struct _PixelRow *dest_row,
 			  struct _PixelRow *mask_row,
-			  struct _Paint    *opac,
+			  gfloat opac,
 			  gint     *affect
 			 );
 

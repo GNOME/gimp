@@ -225,13 +225,7 @@ load_pattern (char *filename)
   tag = tag_from_drawable_type ( header.type );
 
 #define PATTERNS_C_2_cw
-#ifdef U8_SUPPORT
-     if (tag_precision (tag) != PRECISION_U8 )
-#elif U16_SUPPORT
-     if (tag_precision (tag) != PRECISION_U16 )
-#elif FLOAT_SUPPORT 
-     if (tag_precision (tag) != PRECISION_FLOAT )
-#endif
+  if (tag_precision (tag) != PRECISION_CONFIG )
      { 
 	  fclose (fp);
 	  free_pattern (pattern);

@@ -94,8 +94,6 @@ struct _Paint;
 
 void              paint_funcs_area_setup       (void);
 void              paint_funcs_area_free        (void);
-unsigned char *   paint_funcs_area_get_buffer  (int);
-void              paint_funcs_area_randomize   (int);
 
 
 void 
@@ -109,7 +107,7 @@ blend_area  (
              struct _PixelArea * src1_area,
              struct _PixelArea * src2_area,
              struct _PixelArea * dest_area,
-             struct _Paint * blend
+             gfloat blend
             );
 
 void
@@ -117,7 +115,7 @@ shade_area  (
              struct _PixelArea * src_area,
              struct _PixelArea * dest_area,
              struct _Paint * col,
-             struct _Paint * blend
+             gfloat blend
              );
 
 void 
@@ -231,14 +229,14 @@ void
 apply_mask_to_area  (
                      struct _PixelArea * src_area,
                      struct _PixelArea * mask_area,
-                     struct _Paint * opacity
+                     gfloat opacity
                      );
 
 void 
 combine_mask_and_area  (
                         struct _PixelArea * src_area,
                         struct _PixelArea * mask_area,
-                        struct _Paint * opacity
+                        gfloat opacity
                         );
 
 void 
@@ -253,7 +251,7 @@ initial_area  (
                struct _PixelArea * dest_area,
                struct _PixelArea * mask_area,
                unsigned char * data,    /*data is a cmap or color if needed*/
-               struct _Paint * opacity,
+               gfloat opacity,
                gint mode,
                gint * affect,
                gint type
@@ -266,7 +264,7 @@ combine_areas  (
                 struct _PixelArea * dest_area,
                 struct _PixelArea * mask_area,
                 unsigned char * data,   /* a colormap or a color --if needed */
-                struct _Paint * opacity,
+                gfloat opacity,
                 gint mode,
                 gint * affect,
                 gint type
@@ -278,9 +276,9 @@ combine_areas_replace  (
                         struct _PixelArea *src2_area,
                         struct _PixelArea *dest_area,
                         struct _PixelArea *mask_area,
-                        guchar    *data,
-                        struct _Paint     *opacity,
-                        gint       *affect,
-                        gint        type
+                        guchar * data,
+                        gfloat opacity,
+                        gint * affect,
+                        gint type
                         );
 #endif  /*  __PAINT_FUNCS_AREA_H__  */

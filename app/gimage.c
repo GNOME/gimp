@@ -723,31 +723,12 @@ gimage_apply_painthit  (
       
       gimage_get_active_channels (gimage, drawable, active);
 
-      {
-        static Paint * p;
-        if (p == NULL)
-          {
-#ifdef U8_SUPPORT
-          p = paint_new (tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_NO),
-                         NULL);
-#elif U16_SUPPORT
-          p = paint_new (tag_new (PRECISION_U16, FORMAT_GRAY, ALPHA_NO),
-                         NULL);
-#elif FLOAT_SUPPORT
-          p = paint_new (tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO),
-                         NULL);
-#endif
-          }
-        paint_load (p,
-                    tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO),
-                    &opacity);
-        if (mask)
-          combine_areas (&src1PR, &src2PR, &destPR, &maskPR, NULL,
-                         p, mode, active, operation);
-        else
-          combine_areas (&src1PR, &src2PR, &destPR, NULL, NULL,
-                         p, mode, active, operation);
-      }
+      if (mask)
+        combine_areas (&src1PR, &src2PR, &destPR, &maskPR, NULL,
+                       opacity, mode, active, operation);
+      else
+        combine_areas (&src1PR, &src2PR, &destPR, NULL, NULL,
+                       opacity, mode, active, operation);
     }
   }
 }
@@ -892,7 +873,6 @@ gimage_replace_painthit  (
   int operation;
   int active [MAX_CHANNELS];
   Precision prec = tag_precision (drawable_tag (drawable));
-  Paint *opacity_paint;
 
   /*  configure the active channel array  */
   gimage_get_active_channels (gimage, drawable, active);
@@ -945,8 +925,7 @@ gimage_replace_painthit  (
       PixelArea mask_area;
       Tag temp_tag;
       int mx, my;
-      Paint *opaque_paint;
-      gfloat opaque_paint_data = 1.0;
+      gfloat opacity = 1.0;
       
       /* create a temp canvas to hold the combined selection and brush masks */
       temp_tag = tag_new (prec, FORMAT_GRAY, ALPHA_NO);
@@ -974,14 +953,8 @@ gimage_replace_painthit  (
       pixelarea_init (&mask_area, mask_canvas, NULL, 0, 0, 0, 0, FALSE);
       pixelarea_init (&temp_area, temp_canvas, NULL, 0, 0, 0, 0, TRUE);
       
-      /* prepare the opaque paint*/
-      opaque_paint = paint_new (tag_new (prec, FORMAT_GRAY, ALPHA_NO), NULL);
-      paint_load (opaque_paint, tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO),
-			&opaque_paint_data);
-      
       /* apply brush mask to temp canvas */
-      apply_mask_to_area (&temp_area, &mask_area, opaque_paint);
-      paint_delete (opaque_paint); 
+      apply_mask_to_area (&temp_area, &mask_area, opacity);
        
       /* ready the temp_area for combine_areas_replace below */ 
       pixelarea_init (&temp_area, temp_canvas, NULL, 0, 0, 0, 0, TRUE);
@@ -1007,17 +980,10 @@ gimage_replace_painthit  (
 		  (x2 - x1), (y2 - y1),
 		  TRUE);
    
-  /* prepare the opacity paint*/
-  opacity_paint = paint_new (tag_new (prec, FORMAT_GRAY, ALPHA_NO), NULL);
-  paint_load (opacity_paint, tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO),
-                    &opacity);
-  
   /* combine the painthit(src2_area) with the 
      source(src1_area) using temp_area as a mask */ 
   combine_areas_replace (&src1_area, &src2_area, &dest_area, &temp_area, NULL,
-		     opacity_paint, active, operation);
-  
-  paint_delete (opacity_paint);
+                         opacity, active, operation);
 }
 
 

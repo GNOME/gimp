@@ -203,7 +203,7 @@ drawable_fill (GimpDrawable *drawable, int fill_type)
 {
   GImage *gimage;
   Tag draw_tag = drawable_tag (drawable);
-  Paint * color = paint_new (draw_tag, NULL);
+  Paint * color;
   gfloat  color_data[MAX_CHANNELS]; 
   gfloat  d[4];
 
@@ -212,6 +212,8 @@ drawable_fill (GimpDrawable *drawable, int fill_type)
 
   if (! (gimage = drawable_gimage (drawable)))
     return;
+
+  color = paint_new (draw_tag, NULL);
 
   d[3] = 1.0;
  

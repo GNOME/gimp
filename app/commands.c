@@ -211,13 +211,7 @@ file_new_ok_callback (GtkWidget *widget,
       break;
     }
 
-#ifdef U8_SUPPORT
-      precision = PRECISION_U8; 
-#elif U16_SUPPORT
-      precision = PRECISION_U16; 
-#elif FLOAT_SUPPORT
-      precision = PRECISION_FLOAT; 
-#endif
+  precision = PRECISION_CONFIG; 
 
 #if 0
   gimage = gimage_new (vals->width, vals->height, vals->type);

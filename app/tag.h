@@ -24,8 +24,7 @@
 typedef guint Tag;
 
 
-/* the largest possible value that can come from tag_bytes().  used to
-   statically size some other data structures (eg: Paint) */
+/* the largest possible value that can come from tag_bytes(). */
 #define TAG_MAX_BYTES 16
 
 /* supported precisions */

@@ -668,14 +668,28 @@ paint_core_16_area_original  (
 
   {
     void * pag;
+    int h;
+    
     for (pag = pixelarea_register (3, &srcPR, &undoPR, &destPR);
          pag != NULL;
          pag = pixelarea_process (pag))
       {
+        PixelRow srow, drow;
+        PixelArea *s, *d;
+
+        d = &destPR;
         if (pixelarea_data (&undoPR))
-          copy_area (&undoPR, &destPR);
+          s = &undoPR;
         else
-          copy_area (&srcPR, &destPR);
+          s = &srcPR;
+        
+        h = pixelarea_height (&srcPR);
+        while (h--)
+          {
+            pixelarea_getdata (s, &srow, h);
+            pixelarea_getdata (d, &drow, h);
+            copy_row (&srow, &drow);
+          }
       }
   }
   
@@ -834,26 +848,7 @@ painthit_create_constant (
                     xoff, yoff,
                     canvas_width (brush_mask), canvas_height (brush_mask),
                     TRUE);
-    {
-      static Paint * p;
-      if (p == NULL)
-        {
-#ifdef U8_SUPPORT
-          p = paint_new (tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_NO),
-                         NULL);
-#elif U16_SUPPORT
-          p = paint_new (tag_new (PRECISION_U16, FORMAT_GRAY, ALPHA_NO),
-                         NULL);
-#elif FLOAT_SUPPORT
-          p = paint_new (tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO),
-                         NULL);
-#endif
-        }
-      paint_load (p,
-                  tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO),
-                  &brush_opacity);
-      combine_mask_and_area (&srcPR, &maskPR, p);
-    }
+    combine_mask_and_area (&srcPR, &maskPR, brush_opacity);
   }
       
   /*  apply the canvas tiles to the canvas buf  */
@@ -865,30 +860,7 @@ painthit_create_constant (
                   paint_core->x, paint_core->y,
                   canvas_width (canvas_buf), canvas_height (canvas_buf),
                   FALSE);      
-  {
-    static Paint * p;
-    if (p == NULL)
-      {
-
-#ifdef U8_SUPPORT
-        p = paint_new (tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_NO),
-                       NULL);
-#elif U16_SUPPORT
-          p = paint_new (tag_new (PRECISION_U16, FORMAT_GRAY, ALPHA_NO),
-                         NULL);
-#elif FLOAT_SUPPORT
-          p = paint_new (tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO),
-                         NULL);
-#endif
-        {
-          static gfloat  d[3] = {1.0, 1.0, 1.0};
-          paint_load (p,
-                      tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO),
-                      (void *) &d);
-        }
-      }
-    apply_mask_to_area (&srcPR, &maskPR, p);
-  }
+  apply_mask_to_area (&srcPR, &maskPR, 1.0);
 }
 
 
@@ -910,26 +882,7 @@ painthit_create_incremental (
                   0, 0,
                   canvas_width (brush_mask), canvas_height (brush_mask),
                   FALSE);
-  {
-    static Paint * p;
-    if (p == NULL)
-      {
-#ifdef U8_SUPPORT
-        p = paint_new (tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_NO),
-                       NULL);
-#elif U16_SUPPORT
-          p = paint_new (tag_new (PRECISION_U16, FORMAT_GRAY, ALPHA_NO),
-                         NULL);
-#elif FLOAT_SUPPORT
-          p = paint_new (tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO),
-                         NULL);
-#endif
-      }
-    paint_load (p,
-                tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO),
-                &brush_opacity);
-    apply_mask_to_area (&srcPR, &maskPR, p);
-  }
+  apply_mask_to_area (&srcPR, &maskPR, brush_opacity);
 }
   
 

@@ -53,13 +53,13 @@ color_row_float (
 }
 
 
-void
-blend_row_float (
-              PixelRow *src1_row,
-	      PixelRow *src2_row,
-	      PixelRow *dest_row,
-	      Paint    *blend
-              )
+void 
+blend_row_float  (
+                  PixelRow * src1_row,
+                  PixelRow * src2_row,
+                  PixelRow * dest_row,
+                  gfloat blend
+                  )
 {
   gint alpha, b;
   Tag     src1_tag     = pixelrow_tag (src1_row); 
@@ -69,14 +69,13 @@ blend_row_float (
   gint    width        = pixelrow_width (dest_row);
   gint    has_alpha    = (tag_alpha (src1_tag)==ALPHA_YES)? TRUE: FALSE;
   gint    num_channels = tag_num_channels (src1_tag);
-  gfloat *blend_ptr    = (gfloat*)paint_data( blend);
-  gfloat  blend_comp   = (1.0 - *blend_ptr);
+  gfloat  blend_comp   = (1.0 - blend);
 
   alpha = (has_alpha) ? num_channels - 1 : num_channels;
   while (width --)
     {
       for (b = 0; b < alpha; b++)
-	dest[b] = src1[b] * blend_comp + src2[b] * *blend_ptr;
+	dest[b] = src1[b] * blend_comp + src2[b] * blend;
 
       if (has_alpha)
 	dest[alpha] = src1[alpha];  /*  alpha channel--assume src2 has none  */
@@ -88,13 +87,13 @@ blend_row_float (
 }
 
 
-void
-shade_row_float (
-		 PixelRow *src_row,
-	         PixelRow *dest_row,
-	         Paint    *color,
-		 Paint    *blend
-	         )
+void 
+shade_row_float  (
+                  PixelRow * src_row,
+                  PixelRow * dest_row,
+                  Paint * color,
+                  gfloat blend
+                  )
 {
   gint alpha, b;
   Tag     src_tag      = pixelrow_tag (src_row); 
@@ -103,15 +102,14 @@ shade_row_float (
   gint    width        = pixelrow_width (dest_row);
   gint    num_channels = tag_num_channels (src_tag);
   gint    has_alpha    = (tag_alpha (src_tag)==ALPHA_YES)? TRUE: FALSE;
-  gfloat *blend_ptr    = (gfloat*)paint_data (blend);
-  gfloat  blend_comp   = (1.0 - *blend_ptr);
+  gfloat  blend_comp   = (1.0 - blend);
   gfloat *col          = (gfloat*)paint_data (color);
 
   alpha = (has_alpha) ? num_channels - 1 : num_channels;
   while (width --)
     {
       for (b = 0; b < alpha; b++)
-	dest[b] = src[b] * blend_comp + col[b] * *blend_ptr;
+	dest[b] = src[b] * blend_comp + col[b] * blend;
 
       if (has_alpha)
 	dest[alpha] = src[alpha];  /* alpha channel */
@@ -597,14 +595,14 @@ difference_row_float (
 }
 
 
-void
-dissolve_row_float (
-		    PixelRow *src_row,
-		    PixelRow *dest_row,
-		    int       x,
-		    int       y,
-		    Paint    *opac
-		    )
+void 
+dissolve_row_float  (
+                     PixelRow * src_row,
+                     PixelRow * dest_row,
+                     int x,
+                     int y,
+                     gfloat opacity
+                     )
 {
   gint alpha, b;
   gfloat rand_val;
@@ -616,7 +614,6 @@ dissolve_row_float (
   gint    width            = pixelrow_width (dest_row);
   gint    dest_num_channels = tag_num_channels (dest_tag);
   gint    src_num_channels = tag_num_channels (src_tag);
-  gfloat *opacity          = (gfloat*)paint_data (opac);
 
   alpha = dest_num_channels - 1;
 
@@ -630,9 +627,9 @@ dissolve_row_float (
       rand_val = rand() / (gfloat)RAND_MAX;
 
       if (has_alpha)
-	dest[alpha] = (rand_val > *opacity) ? 0.0 : src[alpha];
+	dest[alpha] = (rand_val > opacity) ? 0.0 : src[alpha];
       else
-	dest[alpha] = (rand_val > *opacity) ? 0.0 : OPAQUE_FLOAT;
+	dest[alpha] = (rand_val > opacity) ? 0.0 : OPAQUE_FLOAT;
 
       dest += dest_num_channels;
       src += src_num_channels;
@@ -640,15 +637,15 @@ dissolve_row_float (
 }
 
 
-void
-replace_row_float (
-		   PixelRow *src1_row,
-		   PixelRow *src2_row,
-		   PixelRow *dest_row,
-		   PixelRow *mask_row,
-		   Paint    *opac,
-		   int      *affect
-		   )
+void 
+replace_row_float  (
+                    PixelRow * src1_row,
+                    PixelRow * src2_row,
+                    PixelRow * dest_row,
+                    PixelRow * mask_row,
+                    gfloat opacity,
+                    int * affect
+                    )
 {
   gint alpha;
   gint b;
@@ -664,7 +661,6 @@ replace_row_float (
   gint    width         = pixelrow_width (dest_row);
   gint    num_channels1 = tag_num_channels (src1_tag);
   gint    num_channels2 = tag_num_channels (src2_tag);
-  gfloat *opacity       = (gfloat*)paint_data (opac);
 
   if (num_channels1 != num_channels2)
     {
@@ -676,7 +672,7 @@ replace_row_float (
 
   while (width --)
     {
-      mask_val = mask[0] * *opacity;
+      mask_val = mask[0] * opacity;
       /* calculate new alpha first. */
       s1_a = src1[alpha];
       s2_a = src2[alpha];
@@ -876,36 +872,35 @@ gray_to_rgb_row_float (
 
 
 /*  apply the mask data to the alpha channel of the pixel data  */
-void
-apply_mask_to_alpha_channel_row_float (
-				PixelRow *src_row,
-				PixelRow *mask_row,
-				Paint    *opac
-			       )
+void 
+apply_mask_to_alpha_channel_row_float  (
+                                        PixelRow * src_row,
+                                        PixelRow * mask_row,
+                                        gfloat opacity
+                                        )
 {
   gint alpha;
   gfloat *src          = (gfloat*)pixelrow_data (src_row);
   gfloat *mask         = (gfloat*)pixelrow_data (mask_row);
   gint    num_channels = tag_num_channels (pixelrow_tag (src_row));
   gint    width        = pixelrow_width (src_row);
-  gfloat *opacity       = (gfloat*)paint_data (opac);
 
   alpha = num_channels - 1;
   while (width --)
     {
-      src[alpha] = src[alpha] * *mask++ * *opacity;
+      src[alpha] = src[alpha] * *mask++ * opacity;
       src += num_channels;
     }
 }
 
 
 /*  combine the mask data with the alpha channel of the pixel data  */
-void
-combine_mask_and_alpha_channel_row_float (
-				    PixelRow *src_row,
-				    PixelRow *mask_row,
-				    Paint        *opac
-				    )
+void 
+combine_mask_and_alpha_channel_row_float  (
+                                           PixelRow * src_row,
+                                           PixelRow * mask_row,
+                                           gfloat opacity
+                                           )
 {
   gfloat mask_val;
   gint alpha;
@@ -913,12 +908,11 @@ combine_mask_and_alpha_channel_row_float (
   gfloat *mask         = (gfloat*)pixelrow_data (mask_row);
   gint    num_channels = tag_num_channels (pixelrow_tag (src_row));
   gint    width        = pixelrow_width (src_row);
-  gfloat *opacity       = (gfloat*)paint_data (opac);
 
   alpha = num_channels - 1;
   while (width --)
     {
-      mask_val = *mask++ * *opacity;
+      mask_val = *mask++ * opacity;
       src[alpha] = src[alpha] + (1.0 - src[alpha]) * mask_val;
       src += num_channels;
     }
@@ -989,14 +983,14 @@ initial_channel_row_float (
 /*  lay down the initial pixels for the base layer.
  *  This process obviously requires no composition.
  */
-void
-initial_inten_row_float (
-			  PixelRow *src_row,
-			  PixelRow *dest_row,
-			  PixelRow *mask_row,
-			  Paint    *opac,
-			  int      *affect
-		         )
+void 
+initial_inten_row_float  (
+                          PixelRow * src_row,
+                          PixelRow * dest_row,
+                          PixelRow * mask_row,
+                          gfloat opacity,
+                          int * affect
+                          )
 {
   gint b, dest_num_channels;
   gfloat * m;
@@ -1005,7 +999,6 @@ initial_inten_row_float (
   gfloat *mask         = (gfloat*)pixelrow_data (mask_row);
   gint    width        = pixelrow_width (src_row);
   gint    num_channels = tag_num_channels (pixelrow_tag (src_row));
-  gfloat *opacity      = (gfloat*)paint_data (opac);
 
   if (mask)
     m = mask;
@@ -1025,7 +1018,7 @@ initial_inten_row_float (
 	    dest [b] = affect [b] ? src [b] : 0.0;
 	    
 	  /*  Set the alpha channel  */
-	  dest[b] = affect [b] ? *opacity * *m : 0.0;
+	  dest[b] = affect [b] ? opacity * *m : 0.0;
 	    
 	  m++;
 	  dest += dest_num_channels;
@@ -1040,7 +1033,7 @@ initial_inten_row_float (
 	    dest [b] = affect [b] ? src [b] : 0.0;
 	    
 	  /*  Set the alpha channel  */
-	  dest[b] = affect [b] ? *opacity : 0.0;
+	  dest[b] = affect [b] ? opacity : 0.0;
 	    
 	  dest += dest_num_channels;
 	  src += num_channels;
@@ -1052,14 +1045,14 @@ initial_inten_row_float (
 /*  lay down the initial pixels for the base layer.
  *  This process obviously requires no composition.
  */
-void
-initial_inten_a_row_float (
-			    PixelRow *src_row,
-			    PixelRow *dest_row,
-			    PixelRow *mask_row,
-			    Paint    *opac,
-			    int      *affect
-			   )
+void 
+initial_inten_a_row_float  (
+                            PixelRow * src_row,
+                            PixelRow * dest_row,
+                            PixelRow * mask_row,
+                            gfloat opacity,
+                            int * affect
+                            )
 {
   gint alpha, b;
   gfloat * m;
@@ -1068,7 +1061,6 @@ initial_inten_a_row_float (
   gfloat *mask         = (gfloat*)pixelrow_data (mask_row);
   gint    width        = pixelrow_width (src_row);
   gint    num_channels = tag_num_channels (pixelrow_tag (src_row));
-  gfloat *opacity      = (gfloat*)paint_data (opac);
 
   alpha = num_channels - 1;
   if (mask)
@@ -1080,7 +1072,7 @@ initial_inten_a_row_float (
 	    dest[b] = src[b] * affect[b];
 	  
 	  /*  Set the alpha channel  */
-	  dest[alpha] = affect [alpha] ? (*opacity * src[alpha] * *m)  : 0.0;
+	  dest[alpha] = affect [alpha] ? (opacity * src[alpha] * *m)  : 0.0;
 	  
 	  m++;
 	  
@@ -1096,7 +1088,7 @@ initial_inten_a_row_float (
 	    dest[b] = src[b] * affect[b];
 	  
 	  /*  Set the alpha channel  */
-	  dest[alpha] = affect [alpha] ? (*opacity * src[alpha]) : 0.0;
+	  dest[alpha] = affect [alpha] ? (opacity * src[alpha]) : 0.0;
 	  
 	  dest += num_channels;
 	  src += num_channels;
@@ -1108,15 +1100,15 @@ initial_inten_a_row_float (
 /*  combine RGB image with RGB or GRAY with GRAY
  *  destination is intensity-only...
  */
-void
-combine_inten_and_inten_row_float (
-				    PixelRow *src1_row,
-				    PixelRow *src2_row,
-				    PixelRow *dest_row,
-				    PixelRow *mask_row,
-				    Paint    *opac,
-				    int      *affect
-				   )
+void 
+combine_inten_and_inten_row_float  (
+                                    PixelRow * src1_row,
+                                    PixelRow * src2_row,
+                                    PixelRow * dest_row,
+                                    PixelRow * mask_row,
+                                    gfloat opacity,
+                                    int * affect
+                                    )
 {
   gint b;
   gfloat new_alpha;
@@ -1127,14 +1119,13 @@ combine_inten_and_inten_row_float (
   gfloat *mask         = (gfloat*)pixelrow_data (mask_row);
   gint    width        = pixelrow_width (src1_row);
   gint    num_channels = tag_num_channels (pixelrow_tag (src1_row));
-  gfloat *opacity      = (gfloat*)paint_data (opac);
 
   if (mask)
     {
       m = mask;
       while (width --)
 	{
-	  new_alpha = *m * *opacity;
+	  new_alpha = *m * opacity;
 
 	  for (b = 0; b < num_channels; b++)
 	    dest[b] = (affect[b]) ?
@@ -1151,7 +1142,7 @@ combine_inten_and_inten_row_float (
     {
       while (width --)
 	{
-	  new_alpha = *opacity;
+	  new_alpha = opacity;
 
 	  for (b = 0; b < num_channels; b++)
 	    dest[b] = (affect[b]) ?
@@ -1168,15 +1159,15 @@ combine_inten_and_inten_row_float (
 /*  combine an RGBA or GRAYA image with an RGB or GRAY image
  *  destination is intensity-only...
  */
-void
-combine_inten_and_inten_a_row_float (
-				      PixelRow *src1_row,
-				      PixelRow *src2_row,
-				      PixelRow *dest_row,
-				      PixelRow *mask_row,
-				      Paint    *opac,
-				      int      *affect
-				      )
+void 
+combine_inten_and_inten_a_row_float  (
+                                      PixelRow * src1_row,
+                                      PixelRow * src2_row,
+                                      PixelRow * dest_row,
+                                      PixelRow * mask_row,
+                                      gfloat opacity,
+                                      int * affect
+                                      )
 {
   gint alpha, b;
   gint src2_num_channels;
@@ -1188,7 +1179,6 @@ combine_inten_and_inten_a_row_float (
   gfloat *mask         = (gfloat*)pixelrow_data (mask_row);
   gint    width        = pixelrow_width (src1_row);
   gint    num_channels = tag_num_channels (pixelrow_tag (src1_row));
-  gfloat *opacity      = (gfloat*)paint_data (opac);
 
   alpha = num_channels;
   src2_num_channels = num_channels + 1;
@@ -1198,7 +1188,7 @@ combine_inten_and_inten_a_row_float (
       m = mask;
       while (width --)
 	{
-	  new_alpha = src2[alpha] * *m * *opacity ;
+	  new_alpha = src2[alpha] * *m * opacity ;
 
 	  for (b = 0; b < num_channels; b++)
 	    dest[b] = (affect[b]) ?
@@ -1214,7 +1204,7 @@ combine_inten_and_inten_a_row_float (
     {
       while (width --)
 	{
-	  new_alpha = src2[alpha] * *opacity;
+	  new_alpha = src2[alpha] * opacity;
 
 	  for (b = 0; b < num_channels; b++)
 	    dest[b] = (affect[b]) ?
@@ -1249,16 +1239,16 @@ combine_inten_and_inten_a_row_float (
 /*  combine an RGB or GRAY image with an RGBA or GRAYA image
  *  destination is intensity-alpha...
  */
-void
-combine_inten_a_and_inten_row_float (
-				      PixelRow *src1_row,
-				      PixelRow *src2_row,
-				      PixelRow *dest_row,
-				      PixelRow *mask_row,
-				      Paint    *opac,
-				      int      *affect,
-				      int       mode_affect /* how does the combination mode affect alpha?  */
-				      )  
+void 
+combine_inten_a_and_inten_row_float  (
+                                      PixelRow * src1_row,
+                                      PixelRow * src2_row,
+                                      PixelRow * dest_row,
+                                      PixelRow * mask_row,
+                                      gfloat opacity,
+                                      int * affect,
+                                      int mode_affect /* how does the combination mode affect alpha ? */
+                                      )
 {
   gint alpha, b;
   gint src2_num_channels;
@@ -1272,7 +1262,6 @@ combine_inten_a_and_inten_row_float (
   gfloat *mask         = (gfloat*)pixelrow_data (mask_row);
   gint    width        = pixelrow_width (src1_row);
   gint    num_channels = tag_num_channels (pixelrow_tag (src1_row));
-  gfloat *opacity      = (gfloat*)paint_data (opac);
 
   src2_num_channels = num_channels - 1;
   alpha = num_channels - 1;
@@ -1282,7 +1271,7 @@ combine_inten_a_and_inten_row_float (
       m = mask;
       while (width --)
 	{
-	  src2_alpha = *m * *opacity ;
+	  src2_alpha = *m * opacity ;
 	  new_alpha = src1[alpha] + (1.0 - src1[alpha]) * src2_alpha;
 	  alphify (src2_alpha, new_alpha);
 	  
@@ -1302,7 +1291,7 @@ combine_inten_a_and_inten_row_float (
     {
       while (width --)
 	{
-	  src2_alpha = *opacity;
+	  src2_alpha = opacity;
 	  new_alpha = src1[alpha] + (1.0 - src1[alpha]) * src2_alpha;
 	  alphify (src2_alpha, new_alpha);
 	  
@@ -1322,16 +1311,16 @@ combine_inten_a_and_inten_row_float (
 /*  combine an RGBA or GRAYA image with an RGBA or GRAYA image
  *  destination is of course intensity-alpha...
  */
-void
-combine_inten_a_and_inten_a_row_float (
-					PixelRow *src1_row,
-					PixelRow *src2_row,
-					PixelRow *dest_row,
-					PixelRow *mask_row,
-					Paint    *opac,
-					int      *affect,
-					int       mode_affect
-					)
+void 
+combine_inten_a_and_inten_a_row_float  (
+                                        PixelRow * src1_row,
+                                        PixelRow * src2_row,
+                                        PixelRow * dest_row,
+                                        PixelRow * mask_row,
+                                        gfloat opacity,
+                                        int * affect,
+                                        int mode_affect
+                                        )
 {
   gint alpha, b;
   gfloat src2_alpha;
@@ -1344,14 +1333,13 @@ combine_inten_a_and_inten_a_row_float (
   gfloat *mask         = (gfloat*)pixelrow_data (mask_row);
   gint    width        = pixelrow_width (src1_row);
   gint    num_channels = tag_num_channels (pixelrow_tag (src1_row));
-  gfloat *opacity      = (gfloat*)paint_data (opac);
 
   alpha = num_channels - 1;
   if (mask){
     m = mask;
     while (width --)
       {
-	src2_alpha = src2[alpha] * *m * *opacity;
+	src2_alpha = src2[alpha] * *m * opacity;
 	new_alpha = src1[alpha] + (1.0 - src1[alpha]) * src2_alpha;
 
 	alphify (src2_alpha, new_alpha);
@@ -1370,7 +1358,7 @@ combine_inten_a_and_inten_a_row_float (
   } else {
     while (width --)
       {
-	src2_alpha = src2[alpha] * *opacity;
+	src2_alpha = src2[alpha] * opacity;
 	new_alpha = src1[alpha] + (1.0 - src1[alpha]) * src2_alpha;
 
 	alphify (src2_alpha, new_alpha);
@@ -1393,14 +1381,14 @@ combine_inten_a_and_inten_a_row_float (
  *  on some opacity, and a channel color...
  *  destination is intensity-alpha
  */
-void
-combine_inten_a_and_channel_mask_row_float (
-					    PixelRow *src_row,
-					    PixelRow *channel_row,
-					    PixelRow *dest_row,
-					    Paint    *col,
-					    Paint    *opac
-					    )
+void 
+combine_inten_a_and_channel_mask_row_float  (
+                                             PixelRow * src_row,
+                                             PixelRow * channel_row,
+                                             PixelRow * dest_row,
+                                             Paint * col,
+                                             gfloat opacity
+                                             )
 {
   gint alpha, b;
   gfloat channel_alpha;
@@ -1411,13 +1399,12 @@ combine_inten_a_and_channel_mask_row_float (
   gfloat *channel      = (gfloat*)pixelrow_data (channel_row);
   gint    width        = pixelrow_width (src_row);
   gint    num_channels = tag_num_channels (pixelrow_tag (src_row));
-  gfloat *opacity      = (gfloat*)paint_data (opac);
   gfloat *color        = (gfloat*)paint_data (col);
 
   alpha = num_channels - 1;
   while (width --)
     {
-      channel_alpha =(1.0 - *channel) * *opacity;
+      channel_alpha =(1.0 - *channel) * opacity;
       if (channel_alpha)
 	{
 	  new_alpha = src[alpha] + (1.0 - src[alpha]) * channel_alpha;
@@ -1442,14 +1429,14 @@ combine_inten_a_and_channel_mask_row_float (
 }
 
 
-void
-combine_inten_a_and_channel_selection_row_float (
-						  PixelRow *src_row,
-						  PixelRow *channel_row,
-						  PixelRow *dest_row,
-						  Paint    *col,
-						  Paint    *opac
-						 )
+void 
+combine_inten_a_and_channel_selection_row_float  (
+                                                  PixelRow * src_row,
+                                                  PixelRow * channel_row,
+                                                  PixelRow * dest_row,
+                                                  Paint * col,
+                                                  gfloat opacity
+                                                  )
 {
   gint alpha, b;
   gfloat channel_alpha;
@@ -1460,13 +1447,12 @@ combine_inten_a_and_channel_selection_row_float (
   gfloat *channel      = (gfloat*)pixelrow_data (channel_row);
   gint    width        = pixelrow_width (src_row);
   gint    num_channels = tag_num_channels (pixelrow_tag (src_row));
-  gfloat *opacity      = (gfloat*)paint_data (opac);
   gfloat *color        = (gfloat*)paint_data (col);
 
   alpha = num_channels - 1;
   while (width --)
     {
-      channel_alpha = *channel * *opacity;
+      channel_alpha = *channel * opacity;
       if (channel_alpha)
 	{
 	  new_alpha = src[alpha] + (1.0 - src[alpha]) * channel_alpha;
@@ -1495,15 +1481,15 @@ combine_inten_a_and_channel_selection_row_float (
  *  This is similar in appearance to painting on a layer below
  *  the existing pixels.
  */
-void
-behind_inten_row_float (
-			PixelRow *src1_row,
-			PixelRow *src2_row,
-			PixelRow *dest_row,
-			PixelRow *mask_row,
-			Paint    *opac,
-			int      *affect
-                        )
+void 
+behind_inten_row_float  (
+                         PixelRow * src1_row,
+                         PixelRow * src2_row,
+                         PixelRow * dest_row,
+                         PixelRow * mask_row,
+                         gfloat opacity,
+                         int * affect
+                         )
 {
   gint alpha, b;
   gfloat src1_alpha;
@@ -1518,7 +1504,6 @@ behind_inten_row_float (
   gint    width         = pixelrow_width (src1_row);
   gint    src1_num_channels = tag_num_channels (pixelrow_tag (src1_row));
   gint    src2_num_channels = tag_num_channels (pixelrow_tag (src2_row));
-  gfloat *opacity       = (gfloat*)paint_data (opac);
 
   if (mask)
     m = mask;
@@ -1531,7 +1516,7 @@ behind_inten_row_float (
   while (width --)
     {
       src1_alpha = src1[alpha];
-      src2_alpha = src2[alpha] * *m * *opacity;
+      src2_alpha = src2[alpha] * *m * opacity;
       new_alpha = src2_alpha + (1.0 - src2_alpha) * src1_alpha; 
       if (new_alpha)
 	ratio = src1_alpha / new_alpha;
@@ -1557,15 +1542,15 @@ behind_inten_row_float (
 /*  replace the contents of one pixel row with the other
  *  The operation is still bounded by mask/opacity constraints
  */
-void
-replace_inten_row_float (
-			  PixelRow *src1_row,
-			  PixelRow *src2_row,
-			  PixelRow *dest_row,
-			  PixelRow *mask_row,
-			  Paint    *opac,
-			  int      *affect
-			 )
+void 
+replace_inten_row_float  (
+                          PixelRow * src1_row,
+                          PixelRow * src2_row,
+                          PixelRow * dest_row,
+                          PixelRow * mask_row,
+                          gfloat opacity,
+                          int * affect
+                          )
 {
   gint num_channels, b;
   gfloat mask_alpha;
@@ -1581,7 +1566,6 @@ replace_inten_row_float (
   gint    num_channels2 = tag_num_channels (src2_tag);
   gint    ha1           = (tag_alpha (src1_tag)==ALPHA_YES)? TRUE: FALSE;
   gint    ha2           = (tag_alpha (src2_tag)==ALPHA_YES)? TRUE: FALSE;
-  gfloat *opacity       = (gfloat*)paint_data (opac);
 
   if (mask)
     m = mask;
@@ -1591,7 +1575,7 @@ replace_inten_row_float (
   num_channels = MINIMUM (num_channels1, num_channels2);
   while (width --)
     {
-      mask_alpha = *m * *opacity ;
+      mask_alpha = *m * opacity ;
 
       for (b = 0; b < num_channels; b++)
 	dest[b] = (affect[b]) ?  (src2[b] * mask_alpha + src1[b] *(1.0 - mask_alpha)): src1[b];
@@ -1612,15 +1596,15 @@ replace_inten_row_float (
 /*  replace the contents of one pixel row with the other
  *  The operation is still bounded by mask/opacity constraints
  */
-void
-erase_inten_row_float (
-			PixelRow *src1_row,
-			PixelRow *src2_row,
-			PixelRow *dest_row,
-			PixelRow *mask_row,
-			Paint    *opac,
-			int      *affect
-			)
+void 
+erase_inten_row_float  (
+                        PixelRow * src1_row,
+                        PixelRow * src2_row,
+                        PixelRow * dest_row,
+                        PixelRow * mask_row,
+                        gfloat opacity,
+                        int * affect
+                        )
 {
   gint alpha, b;
   gfloat src2_alpha;
@@ -1631,7 +1615,6 @@ erase_inten_row_float (
   gfloat *mask          = (gfloat*)pixelrow_data (mask_row);
   gint    width         = pixelrow_width (src1_row);
   gint    num_channels  = tag_num_channels (pixelrow_tag (src1_row));
-  gfloat *opacity       = (gfloat*)paint_data (opac);
 
   if (mask)
     m = mask;
@@ -1644,7 +1627,7 @@ erase_inten_row_float (
       for (b = 0; b < alpha; b++)
 	dest[b] = src1[b];
 
-      src2_alpha = src2[alpha] * *m * *opacity ;
+      src2_alpha = src2[alpha] * *m * opacity ;
       dest[alpha] = src1[alpha] - (src1[alpha] * src2_alpha) ;
 
       if (mask)

@@ -31,12 +31,9 @@
 
 
 #define EPSILON            0.0001
-#define STD_BUF_SIZE       1021
-
-static unsigned char * tmp_buffer;  /* temporary buffer available upon request */
-static int tmp_buffer_size;
 
 
+/* only for scale_area et al. */
 typedef enum _ScaleType ScaleType;
 enum _ScaleType
 {
@@ -46,7 +43,8 @@ enum _ScaleType
   MagnifyX_MagnifyY
 };
 
-/*  Layer modes information  */
+
+/*  Layer modes information.  only the affect_alpha is used */
 typedef struct _LayerMode LayerMode;
 struct _LayerMode
 {
@@ -75,52 +73,143 @@ LayerMode layer_modes_16[] =
   { 1, "Replace" }
 };
 
-/* static functions */
-static gdouble * make_curve ( gdouble, gint*, gdouble);
-static void draw_segments ( PixelArea*, BoundSeg*, gint, gint, gint, Paint*);
-static gdouble cubic ( gdouble, gdouble, gdouble, gdouble, gdouble, gdouble, gdouble);
-static int apply_layer_mode ( PixelRow*, PixelRow*, PixelRow*, gint, gint, Paint*, gint, gint*);
-static int apply_indexed_layer_mode ( PixelRow*, PixelRow*, PixelRow*, gint);
-static void apply_layer_mode_replace  ( PixelRow*, PixelRow*, PixelRow*, PixelRow*, Paint* , gint*); 
 
-
-/* The 8bit data static functions */
 static void convolve_area_u8 (PixelArea*, PixelArea*, gint*, gint, gint, gint, gint);
-static gdouble* gaussian_curve_u8 (gint, gint*); 
-static void rle_row_u8 (PixelRow*, gint*, PixelRow*);
-static void gaussian_blur_row_u8 (PixelRow*, PixelRow*, gint*, PixelRow*, gint, gfloat*, gfloat); 
-static void border_set_opacity_u8 (gint, gint, Paint*);
-static void scale_row_no_resample_u8 ( PixelRow*, PixelRow*, gint*);
-static void scale_set_dest_row_u8 ( PixelRow*, gdouble*);
-static void scale_row_u8 ( guchar*, guchar*, guchar*, guchar*, gdouble, gdouble*, gdouble, gdouble, gdouble*, gint, gint, gint, gint); 
-static void subsample_row_u8 (PixelRow *, gdouble *, gdouble, gdouble, gdouble*);   
-static gint thin_row_u8 ( PixelRow*, PixelRow*, PixelRow*, PixelRow*, gint);
-
-
-/* The 16bit data static functions */
 static void convolve_area_u16 (PixelArea*, PixelArea*, gint*, gint, gint, gint, gint);
-static gdouble* gaussian_curve_u16 (gint, gint*); 
-static void rle_row_u16 (PixelRow*, gint*, PixelRow*);
-static void gaussian_blur_row_u16 (PixelRow*, PixelRow*, gint*, PixelRow*, gint, gfloat*, gfloat); 
-static void border_set_opacity_u16 (gint, gint, Paint*);
-static void scale_row_no_resample_u16 ( PixelRow*, PixelRow*, gint*);
-static void scale_set_dest_row_u16 ( PixelRow*, gdouble*);
-static void scale_row_u16 ( guchar*, guchar*, guchar*, guchar*, gdouble, gdouble*, gdouble, gdouble, gdouble*, gint, gint, gint, gint); 
-static void subsample_row_u16(PixelRow *, gdouble *, gdouble, gdouble, gdouble*);   
-static gint thin_row_u16 ( PixelRow*, PixelRow*, PixelRow*, PixelRow*, gint);
-
-
-/* The float data static functions */
 static void convolve_area_float (PixelArea*, PixelArea*, gint*, gint, gint, gint, gint);
+typedef void  (*ConvolveAreaFunc) (PixelArea*,PixelArea*,gint*,gint,gint,gint,gint);
+static ConvolveAreaFunc convolve_area_funcs[3] =
+{
+  convolve_area_u8,
+  convolve_area_u16,
+  convolve_area_float
+};
+
+
+static gdouble* gaussian_curve_u8 (gint, gint*); 
+static gdouble* gaussian_curve_u16 (gint, gint*); 
 static gdouble* gaussian_curve_float (gint, gint*); 
+typedef gdouble*  (*GaussianCurveFunc) (gint,gint*);
+static GaussianCurveFunc gaussian_curve_funcs[] =
+{
+  gaussian_curve_u8,
+  gaussian_curve_u16,
+  gaussian_curve_float
+};
+
+
+static void rle_row_u8 (PixelRow*, gint*, PixelRow*);
+static void rle_row_u16 (PixelRow*, gint*, PixelRow*);
 static void rle_row_float (PixelRow*, gint*, PixelRow*);
+typedef void  (*RleRowFunc) (PixelRow*,gint*,PixelRow*);
+static RleRowFunc rle_row_funcs[] =
+{
+  rle_row_u8,
+  rle_row_u16,
+  rle_row_float
+};
+
+
+static void gaussian_blur_row_u8 (PixelRow*, PixelRow*, gint*, PixelRow*, gint, gfloat*, gfloat); 
+static void gaussian_blur_row_u16 (PixelRow*, PixelRow*, gint*, PixelRow*, gint, gfloat*, gfloat); 
 static void gaussian_blur_row_float (PixelRow*, PixelRow*, gint*, PixelRow*, gint, gfloat*, gfloat); 
-static void border_set_opacity_float (gint, gint, Paint*);
+typedef void  (*GaussianBlurRowFunc) (PixelRow*,PixelRow*,gint*, PixelRow*,gint,gfloat*,gfloat);
+static GaussianBlurRowFunc gaussian_blur_row_funcs[] =
+{
+  gaussian_blur_row_u8,
+  gaussian_blur_row_u16,
+  gaussian_blur_row_float
+};
+
+
+static void scale_row_no_resample_u8 (PixelRow*, PixelRow*, gint*);
+static void scale_row_no_resample_u16 ( PixelRow*, PixelRow*, gint*);
 static void scale_row_no_resample_float ( PixelRow*, PixelRow*, gint*);
-static void scale_set_dest_row_float ( PixelRow*, gdouble*);
+typedef void (*ScaleRowNoResampleFunc) (PixelRow*,PixelRow*,gint*);
+static ScaleRowNoResampleFunc scale_row_no_resample_funcs[] =
+{
+  scale_row_no_resample_u8,
+  scale_row_no_resample_u16,
+  scale_row_no_resample_float
+};
+
+
+static void scale_row_u8 (guchar*, guchar*, guchar*, guchar*, gdouble, gdouble*, gdouble, gdouble, gdouble*, gint, gint, gint, gint); 
+static void scale_row_u16 ( guchar*, guchar*, guchar*, guchar*, gdouble, gdouble*, gdouble, gdouble, gdouble*, gint, gint, gint, gint); 
 static void scale_row_float ( guchar*, guchar*, guchar*, guchar*, gdouble, gdouble*, gdouble, gdouble, gdouble*, gint, gint, gint, gint); 
+typedef void (*ScaleRowFunc) ( guchar*, guchar*, guchar*, guchar*, 
+		    gdouble, gdouble*, gdouble, gdouble, gdouble*, 
+		    gint, gint, gint, gint); 
+static ScaleRowFunc scale_row_funcs[] =
+{
+  scale_row_u8,
+  scale_row_u16,
+  scale_row_float
+};
+
+
+static void scale_set_dest_row_u8 (PixelRow*, gdouble*);
+static void scale_set_dest_row_u16 ( PixelRow*, gdouble*);
+static void scale_set_dest_row_float ( PixelRow*, gdouble*);
+typedef void (*ScaleSetDestRowFunc) (PixelRow*, gdouble*);
+static ScaleSetDestRowFunc scale_set_dest_row_funcs[] =
+{
+  scale_set_dest_row_u8,
+  scale_set_dest_row_u16,
+  scale_set_dest_row_float
+};
+
+
+static void subsample_row_u8 (PixelRow *, gdouble *, gdouble, gdouble, gdouble*);   
+static void subsample_row_u16(PixelRow *, gdouble *, gdouble, gdouble, gdouble*);   
 static void subsample_row_float (PixelRow *, gdouble *, gdouble, gdouble, gdouble*);   
+typedef void (*SubsampleRowFunc) (PixelRow*, gdouble*, gdouble, gdouble, gdouble*);
+static SubsampleRowFunc subsample_row_funcs[] =
+{
+  subsample_row_u8,
+  subsample_row_u16,
+  subsample_row_float
+};
+
+
+static gint thin_row_u8 (PixelRow*, PixelRow*, PixelRow*, PixelRow*, gint);
+static gint thin_row_u16 ( PixelRow*, PixelRow*, PixelRow*, PixelRow*, gint);
 static gint thin_row_float ( PixelRow*, PixelRow*, PixelRow*, PixelRow*, gint);
+typedef gint (*ThinRowFunc) (PixelRow*,PixelRow*,PixelRow*,PixelRow*,gint);
+static ThinRowFunc thin_row_funcs[] =
+{
+  thin_row_u8,
+  thin_row_u16,
+  thin_row_float
+};
+
+
+
+
+/* gaussian_blur_area */
+static gdouble * make_curve                (gdouble, gint*, gdouble);
+
+/* border_area */
+static void      draw_segments             (PixelArea*, BoundSeg*,
+                                            gint, gint, gint, gfloat );
+
+/* scale_area */
+static gdouble   cubic                     (gdouble, gdouble, gdouble, gdouble,
+                                            gdouble, gdouble, gdouble);
+
+/* combine_areas */
+static int       apply_layer_mode          (PixelRow*, PixelRow*, PixelRow*,
+                                            gint, gint, gfloat, gint, gint*);
+static int       apply_indexed_layer_mode  (PixelRow*, PixelRow*, PixelRow*,
+                                            gint);
+
+/* combine_areas_replace */
+static void      apply_layer_mode_replace  (PixelRow*, PixelRow*, PixelRow*,
+                                            PixelRow*, gfloat , gint*); 
+
+
+
+
 
 
 void 
@@ -128,9 +217,7 @@ paint_funcs_area_setup  (
                          void
                          )
 {
-  /*  allocate the temporary buffer  */
-  tmp_buffer = (unsigned char *) g_malloc (STD_BUF_SIZE);
-  tmp_buffer_size = STD_BUF_SIZE;
+  /* FIXME code from paint.c */
 }
 
 
@@ -139,36 +226,12 @@ paint_funcs_area_free  (
                         void
                         )
 {
-  /*  free the temporary buffer  */
-  g_free (tmp_buffer);
-}
-
-
-unsigned char * 
-paint_funcs_area_get_buffer  (
-                              int size
-                              )
-{
-  if (size > tmp_buffer_size)
-    {
-      tmp_buffer_size = size;
-      tmp_buffer = (unsigned char *) g_realloc (tmp_buffer, size);
-    }
-
-  return tmp_buffer;
-}
-
-void
-paint_funcs_area_randomize (
-                            int y
-                            )
-{
-  paint_funcs_randomize_row ( y );
+  /* FIXME code from paint.c */
 }
 
 
 /**************************************************/
-/*    AREA FUNCTIONS                            */
+/*    AREA FUNCTIONS                              */
 /**************************************************/
 
 void 
@@ -177,7 +240,7 @@ color_area  (
              Paint * color
              )
 {
-  void *  pag;
+  void * pag;
   Tag src_tag = pixelarea_tag (src_area); 
   Tag color_tag = paint_tag (color); 
   
@@ -203,10 +266,10 @@ blend_area  (
              PixelArea * src1_area,
              PixelArea * src2_area,
              PixelArea * dest_area,
-             Paint * blend
+             gfloat blend
              )
 {
-  void *  pag;
+  void * pag;
   Tag src1_tag = pixelarea_tag (src1_area); 
   Tag src2_tag = pixelarea_tag (src2_area); 
   Tag dest_tag = pixelarea_tag (dest_area); 
@@ -240,7 +303,7 @@ shade_area  (
              PixelArea * src_area,
              PixelArea * dest_area,
              Paint * col,
-             Paint * blend
+             gfloat blend
              )
 {
   void *  pag;
@@ -327,6 +390,7 @@ add_alpha_area  (
 }
 
 
+/* UNUSED */
 void 
 flatten_area  (
                PixelArea * src_area,
@@ -335,21 +399,27 @@ flatten_area  (
                )
 {
   void *  pag;
-  PixelRow src_row;
-  PixelRow dest_row;
   Tag src_tag = pixelarea_tag (src_area); 
   Tag dest_tag = pixelarea_tag (dest_area); 
-  gint h = pixelarea_height (src_area);
 
    /*put in tags check*/
   
-  while (h--)
+  for (pag = pixelarea_register (2, src_area, dest_area);
+       pag != NULL;
+       pag = pixelarea_process (pag))
     {
-      pixelarea_getdata (src_area, &src_row, h);
-      pixelarea_getdata (dest_area, &dest_row, h);
-	
-      /*flatten_pixels (s, d, bg, src->w, src->bytes);*/
-        flatten_row (&src_row, &dest_row, bg);
+      PixelRow src_row;
+      PixelRow dest_row;
+ 
+      gint h = pixelarea_height (src_area);
+      while (h--)
+        {
+          pixelarea_getdata (src_area, &src_row, h);
+          pixelarea_getdata (dest_area, &dest_row, h);
+            
+          /*flatten_pixels (s, d, bg, src->w, src->bytes);*/
+          flatten_row (&src_row, &dest_row, bg);
+        }
     }
 }
 
@@ -395,12 +465,12 @@ extract_from_area  (
                     PixelArea * src_area,
                     PixelArea * dest_area,
                     PixelArea * mask_area,
-                    Paint *bg,
-                    unsigned char*cmap,
+                    Paint * bg,
+                    unsigned char * cmap,
                     gint cut
                     )
 {
-  void *  pag;
+  void * pag;
   Tag src_tag = pixelarea_tag (src_area); 
   Tag dest_tag = pixelarea_tag (dest_area); 
   Tag mask_tag = pixelarea_tag (mask_area); 
@@ -442,23 +512,15 @@ extract_from_area  (
 }
 
 
-typedef void  (*ConvolveAreaFunc) (PixelArea*,PixelArea*,gint*,gint,gint,gint,gint);
-static ConvolveAreaFunc convolve_area_funcs[3] =
-{
-  convolve_area_u8,
-  convolve_area_u16,
-  convolve_area_float
-};
-
-void
-convolve_area (
-	 	PixelArea   *src_area,
-		PixelArea   *dest_area,
-		gint         *matrix,
-		gint          matrix_size,
-		gint          divisor,
-		gint          mode
-		)
+void 
+convolve_area  (
+                PixelArea * src_area,
+                PixelArea * dest_area,
+                gint * matrix,
+                gint matrix_size,
+                gint divisor,
+                gint mode
+                )
 {
   gint offset;
   guint src_area_height = pixelarea_height (src_area);  
@@ -893,6 +955,7 @@ multiply_alpha_area  (
     }
 }
 
+
 /* Convert from premultiplied alpha to unpremultiplied */
 void 
 separate_alpha_area  (
@@ -920,36 +983,12 @@ separate_alpha_area  (
     }
 }
 
-typedef gdouble*  (*GaussianCurveFunc) (gint,gint*);
-static GaussianCurveFunc gaussian_curve_funcs[] =
-{
-  gaussian_curve_u8,
-  gaussian_curve_u16,
-  gaussian_curve_float
-};
 
-typedef void  (*RleRowFunc) (PixelRow*,gint*,PixelRow*);
-static RleRowFunc rle_row_funcs[] =
-{
-  rle_row_u8,
-  rle_row_u16,
-  rle_row_float
-};
-
-typedef void  (*GaussianBlurRowFunc) (PixelRow*,PixelRow*,gint*,
-					PixelRow*,gint,gfloat*,gfloat);
-static GaussianBlurRowFunc gaussian_blur_row_funcs[] =
-{
-  gaussian_blur_row_u8,
-  gaussian_blur_row_u16,
-  gaussian_blur_row_float
-};
-
-void
-gaussian_blur_area (
-		    PixelArea    *src_area,
-		    gdouble       radius
-		   )
+void 
+gaussian_blur_area  (
+                     PixelArea * src_area,
+                     gdouble radius
+                     )
 {
   gdouble *curve;
   gfloat *sum, total;
@@ -1046,37 +1085,45 @@ gaussian_blur_area (
     g_free (dest_row_data);
 }
 
-static gdouble *
-gaussian_curve_u8 ( gint radius, gint *length ) 
+static gdouble * 
+gaussian_curve_u8  (
+                    gint radius,
+                    gint * length
+                    )
 {
   gdouble std_dev;
   std_dev = sqrt (-(radius * radius) / (2 * log (1.0/255.0)));
   return make_curve (std_dev, length, 1.0/255.0);
 }
 
-static gdouble *
-gaussian_curve_u16 ( gint radius, gint *length ) 
+static gdouble * 
+gaussian_curve_u16  (
+                     gint radius,
+                     gint * length
+                     )
 {
   gdouble std_dev;
   std_dev = sqrt (-(radius * radius) / (2 * log (1.0/65535.0)));
   return make_curve (std_dev, length, 1.0/65535.0);
 }
 
-static gdouble *
-gaussian_curve_float ( gint radius, gint *length ) 
+static gdouble * 
+gaussian_curve_float  (
+                       gint radius,
+                       gint * length
+                       )
 {
   gdouble std_dev;
   std_dev = sqrt (-(radius * radius) / (2 * log (.000001)));
   return make_curve (std_dev, length, .000001 );
 }
 
-static void
-rle_row_u8
-                       (     
-		       PixelRow *src_row,    /*in --encode this row*/
-		       gint     *how_many,   /*out --how many of each code*/
-		       PixelRow *values_row /*out --the codes*/
-		       )
+static void 
+rle_row_u8  (
+             PixelRow * src_row    /* in  -- encode this row */,
+             gint * how_many       /* out -- how many of each code */,
+             PixelRow * values_row /* out -- the codes */
+             )
 {
   gint 	  start;
   gint    i;
@@ -1128,13 +1175,12 @@ rle_row_u8
     }
 }
 
-static void
-rle_row_u16
-                       (     
-		       PixelRow *src_row,    /*in --encode this row*/
-		       gint      *how_many,   /*out --how many of each code*/
-		       PixelRow *values_row /*out --the codes*/
-		       )
+static void 
+rle_row_u16  (
+              PixelRow * src_row     /* in  -- encode this row */,
+              gint * how_many        /* out -- how many of each code */,
+              PixelRow * values_row  /* out -- the codes */
+              )
 {
   gint start;
   gint i;
@@ -1186,13 +1232,12 @@ rle_row_u16
     }
 }
 
-static void
-rle_row_float
-                       (     
-		       PixelRow *src_row,    /*in --encode this row*/
-		       gint      *how_many,   /*out --how many of each code*/
-		       PixelRow *values_row   /*out --the codes*/
-		       )
+static void 
+rle_row_float  (
+                PixelRow * src_row     /* in  -- encode this row */,
+                gint * how_many        /* out -- how many of each code */,
+                PixelRow * values_row  /* out -- the codes */
+                )
 {
   int start;
   int i;
@@ -1245,15 +1290,16 @@ rle_row_float
     }
 }
 
-static void gaussian_blur_row_u8 (
-                        PixelRow *src, 
-			PixelRow *dest, 
-			gint* rle_count, 
-			PixelRow *rle_values, 
-			gint length, 
-			gfloat* sum,
-                        gfloat  total
-			) 
+static void 
+gaussian_blur_row_u8  (
+                       PixelRow * src,
+                       PixelRow * dest,
+                       gint * rle_count,
+                       PixelRow * rle_values,
+                       gint length,
+                       gfloat * sum,
+                       gfloat total
+                       )
 {  
   gint val, x, i, start, end, pixels;
   guint8 *rle_values_ptr;
@@ -1302,16 +1348,16 @@ static void gaussian_blur_row_u8 (
     }
 }
 
-static void
-gaussian_blur_row_u16 (
-                        PixelRow *src, 
-			PixelRow *dest, 
-			gint* rle_count, 
-			PixelRow *rle_values, 
-			gint length, 
-			gfloat *sum,
+static void 
+gaussian_blur_row_u16  (
+                        PixelRow * src,
+                        PixelRow * dest,
+                        gint * rle_count,
+                        PixelRow * rle_values,
+                        gint length,
+                        gfloat * sum,
                         gfloat total
-			) 
+                        )
 {  
   gint val, x, i, start, end, pixels;
   guint16 *rle_values_ptr;
@@ -1361,15 +1407,15 @@ gaussian_blur_row_u16 (
 }
 
 static void 
-gaussian_blur_row_float (
-                        PixelRow *src, 
-			PixelRow *dest, 
-			gint* rle_count, 
-			PixelRow *rle_values, 
-			gint length, 
-			gfloat *sum,
-                        gfloat total
-			) 
+gaussian_blur_row_float  (
+                          PixelRow * src,
+                          PixelRow * dest,
+                          gint * rle_count,
+                          PixelRow * rle_values,
+                          gint length,
+                          gfloat * sum,
+                          gfloat total
+                          )
 {  
   gint val, x, i, start, end, pixels;
   gfloat *rle_values_ptr;
@@ -1419,28 +1465,18 @@ gaussian_blur_row_float (
 }
 
 
-typedef void (*BorderSetOpacityFunc) (gint,gint,Paint*);
-static BorderSetOpacityFunc border_set_opacity_funcs[] =
-{
-  border_set_opacity_u8,
-  border_set_opacity_u16,
-  border_set_opacity_float
-};
-
-
-void
-border_area (
-	     PixelArea     *dest_area,
-	     void          *bs_ptr,
-	     gint          bs_segs,
-	     gint          radius
-	    )
+void 
+border_area  (
+              PixelArea * dest_area,
+              void * bs_ptr,
+              gint bs_segs,
+              gint radius
+              )
 {
   BoundSeg * bs;
   gint r, i, j;
   Tag dest_tag = pixelarea_tag (dest_area);
-  Precision prec = tag_precision (dest_tag);
-  Paint *opacity = paint_new ( dest_tag, NULL) ;
+  gfloat opacity;
   
   /* should do a check on the dest_tag to make sure grayscale */
  
@@ -1449,7 +1485,7 @@ border_area (
   /*  draw the border  */
   for (r = 0; r <= radius; r++)
     {
-      (*border_set_opacity_funcs[ prec-1 ]) (r, radius, opacity);      
+      opacity = (gfloat) (r + 1) / (gfloat) (radius + 1);
 
       j = radius - r;
 
@@ -1470,62 +1506,17 @@ border_area (
 	    }
 	}
     }
-    paint_delete (opacity);
-}
-
-static void
-border_set_opacity_u8(
-		     gint r,
-		     gint radius,
-                     Paint *opacity
-		    )
-{
- 
-  guint8 *data =(guint8*) paint_data (opacity);
-  *data = 255 * (r + 1) / (radius + 1);
-}
-
-
-static void
-border_set_opacity_u16(
-		     gint r,
-		     gint radius,
-                     Paint *opacity
-		    )
-{
-  guint16 *data =(guint16*) paint_data (opacity);
-  *data = 65535 * (r + 1) / (radius + 1);
-}
-
-
-static void
-border_set_opacity_float(
-		     gint r,
-		     gint radius,
-                     Paint *opacity
-		    )
-{
-  gfloat *data = (gfloat*)paint_data (opacity);
-  *data = (r + 1) / (gfloat)(radius + 1);
 }
 
 
 /* non-interpolating scale_region.  [adam]
  */
 
-typedef void (*ScaleRowNoResampleFunc) (PixelRow*,PixelRow*,gint*);
-static ScaleRowNoResampleFunc scale_row_no_resample_funcs[] =
-{
-  scale_row_no_resample_u8,
-  scale_row_no_resample_u16,
-  scale_row_no_resample_float
-};
-
-void
-scale_area_no_resample (
-			PixelArea *src_area,
-			PixelArea *dest_area
-		       )
+void 
+scale_area_no_resample  (
+                         PixelArea * src_area,
+                         PixelArea * dest_area
+                         )
 {
   gint *x_src_offsets, *y_src_offsets;
   gint last_src_y;
@@ -1593,12 +1584,12 @@ scale_area_no_resample (
   g_free (src_row_data);
 }
 
-static void
-scale_row_no_resample_u8 (
-			  PixelRow *src_row,
-			  PixelRow *dest_row,
-			  gint     *x_src_offsets
-			 )
+static void 
+scale_row_no_resample_u8  (
+                           PixelRow * src_row,
+                           PixelRow * dest_row,
+                           gint * x_src_offsets
+                           )
 {
   gint x;
   guint8 *dest = (guint8*) pixelrow_data (dest_row);
@@ -1608,12 +1599,12 @@ scale_row_no_resample_u8 (
     dest[x] = src[x_src_offsets[x]];
 }
 			
-static void
-scale_row_no_resample_u16 (
-			  PixelRow *src_row,
-			  PixelRow *dest_row,
-			  gint     *x_src_offsets
-			 )
+static void 
+scale_row_no_resample_u16  (
+                            PixelRow * src_row,
+                            PixelRow * dest_row,
+                            gint * x_src_offsets
+                            )
 {
   gint x;
   guint16 *dest = (guint16*) pixelrow_data (dest_row);
@@ -1622,13 +1613,13 @@ scale_row_no_resample_u16 (
   for (x = 0; x < row_num_channels ; x++)
     dest[x] = src[x_src_offsets[x]];
 }
-			
-static void
-scale_row_no_resample_float (
-			  PixelRow *src_row,
-			  PixelRow *dest_row,
-			  gint     *x_src_offsets
-			 )
+
+static void 
+scale_row_no_resample_float  (
+                              PixelRow * src_row,
+                              PixelRow * dest_row,
+                              gint * x_src_offsets
+                              )
 {
   gint x;
   gfloat *dest = (gfloat*) pixelrow_data (dest_row);
@@ -1639,29 +1630,13 @@ scale_row_no_resample_float (
 }
 
 
-typedef void (*ScaleRowFunc) ( guchar*, guchar*, guchar*, guchar*, 
-		    gdouble, gdouble*, gdouble, gdouble, gdouble*, 
-		    gint, gint, gint, gint); 
-static ScaleRowFunc scale_row_funcs[] =
-{
-  scale_row_u8,
-  scale_row_u16,
-  scale_row_float
-};
 
-typedef void (*ScaleSetDestRowFunc) (PixelRow*, gdouble*);
-static ScaleSetDestRowFunc scale_set_dest_row_funcs[] =
-{
-  scale_set_dest_row_u8,
-  scale_set_dest_row_u16,
-  scale_set_dest_row_float
-};
 
-void
-scale_area (
-	    PixelArea *src_area,
-	    PixelArea *dest_area
-           )
+void 
+scale_area  (
+             PixelArea * src_area,
+             PixelArea * dest_area
+             )
 {
   gdouble *row_accum;
   gint src_row_num, dest_row_num, src_col_num;
@@ -1845,11 +1820,11 @@ scale_area (
 }
 
 
-static void
-scale_set_dest_row_u8 (
-			PixelRow *dest_row,
-			gdouble *row_accum
-		   )
+static void 
+scale_set_dest_row_u8  (
+                        PixelRow * dest_row,
+                        gdouble * row_accum
+                        )
 {
   gint x;
   guint8 *dest = (guint8*)pixelrow_data (dest_row);
@@ -1861,11 +1836,11 @@ scale_set_dest_row_u8 (
 }
 
 
-static void
-scale_set_dest_row_u16 (
-			PixelRow *dest_row,
-			gdouble *row_accum
-		   )
+static void 
+scale_set_dest_row_u16  (
+                         PixelRow * dest_row,
+                         gdouble * row_accum
+                         )
 {
   gint x;
   guint16 *dest = (guint16*)pixelrow_data (dest_row);
@@ -1877,11 +1852,11 @@ scale_set_dest_row_u16 (
 }
 
 
-static void
-scale_set_dest_row_float (
-			PixelRow *dest_row,
-			gdouble *row_accum
-		   )
+static void 
+scale_set_dest_row_float  (
+                           PixelRow * dest_row,
+                           gdouble * row_accum
+                           )
 {
   gint x;
   gfloat *dest = (gfloat*)pixelrow_data (dest_row);
@@ -1894,21 +1869,21 @@ scale_set_dest_row_float (
 
 
 static void 
-scale_row_u8( 
-	      guchar *src, 
-	      guchar *src_m1, 
-	      guchar *src_p1, 
-	      guchar *src_p2, 
-	      gdouble dy, 
-	      gdouble *x_frac, 
-	      gdouble y_frac, 
-	      gdouble x_rat, 
-	      gdouble *row_accum, 
-	      gint    num_channels, 
-	      gint    orig_width, 
-	      gint    width, 
-	      gint    scale_type
-             ) 
+scale_row_u8  (
+               guchar * src,
+               guchar * src_m1,
+               guchar * src_p1,
+               guchar * src_p2,
+               gdouble dy,
+               gdouble * x_frac,
+               gdouble y_frac,
+               gdouble x_rat,
+               gdouble * row_accum,
+               gint num_channels,
+               gint orig_width,
+               gint width,
+               gint scale_type
+               )
 {
   gdouble dx;
   gint b;
@@ -2014,21 +1989,21 @@ scale_row_u8(
 }
 
 static void 
-scale_row_u16( 
-	      guchar *src, 
-	      guchar *src_m1, 
-	      guchar *src_p1, 
-	      guchar *src_p2, 
-	      gdouble dy, 
-	      gdouble *x_frac, 
-	      gdouble y_frac, 
-	      gdouble x_rat, 
-	      gdouble *row_accum, 
-	      gint    num_channels, 
-	      gint    orig_width, 
-	      gint    width, 
-	      gint    scale_type
-             ) 
+scale_row_u16  (
+                guchar * src,
+                guchar * src_m1,
+                guchar * src_p1,
+                guchar * src_p2,
+                gdouble dy,
+                gdouble * x_frac,
+                gdouble y_frac,
+                gdouble x_rat,
+                gdouble * row_accum,
+                gint num_channels,
+                gint orig_width,
+                gint width,
+                gint scale_type
+                )
 {
   gdouble dx;
   gint b;
@@ -2134,21 +2109,21 @@ scale_row_u16(
 }
 
 static void 
-scale_row_float( 
-	      guchar *src, 
-	      guchar *src_m1, 
-	      guchar *src_p1, 
-	      guchar *src_p2, 
-	      gdouble dy, 
-	      gdouble *x_frac, 
-	      gdouble y_frac, 
-	      gdouble x_rat, 
-	      gdouble *row_accum, 
-	      gint    num_channels, 
-	      gint    orig_width, 
-	      gint    width, 
-	      gint    scale_type
-             ) 
+scale_row_float  (
+                  guchar * src,
+                  guchar * src_m1,
+                  guchar * src_p1,
+                  guchar * src_p2,
+                  gdouble dy,
+                  gdouble * x_frac,
+                  gdouble y_frac,
+                  gdouble x_rat,
+                  gdouble * row_accum,
+                  gint num_channels,
+                  gint orig_width,
+                  gint width,
+                  gint scale_type
+                  )
 {
   gdouble dx;
   gint b;
@@ -2254,20 +2229,13 @@ scale_row_float(
 }
 
 
-typedef void (*SubsampleRowFunc) (PixelRow*, gdouble*, gdouble, gdouble, gdouble*);
-static SubsampleRowFunc subsample_row_funcs[] =
-{
-  subsample_row_u8,
-  subsample_row_u16,
-  subsample_row_float
-};
 
-void
-subsample_area (
-		PixelArea *src_area,
-		PixelArea *dest_area,
-		gint        subsample
-	       )
+void 
+subsample_area  (
+                 PixelArea * src_area,
+                 PixelArea * dest_area,
+                 gint subsample
+                 )
 {
   gdouble * row_accum;
   gint src_row_num, src_col_num, dest_row_num;
@@ -2391,15 +2359,14 @@ subsample_area (
   g_free (src_row_data);
 }
 
-
-static void
-subsample_row_u8 ( 
-		PixelRow *src_row, 
-		gdouble *x_frac, 
-		gdouble y_frac, 
-		gdouble x_rat, 
-		gdouble *row_accum
-		)   
+static void 
+subsample_row_u8  (
+                   PixelRow * src_row,
+                   gdouble * x_frac,
+                   gdouble y_frac,
+                   gdouble x_rat,
+                   gdouble * row_accum
+                   )
 {
   gdouble tot_frac;
   gint b;
@@ -2433,15 +2400,14 @@ subsample_row_u8 (
     }
 }
 
-
-static void
-subsample_row_u16 ( 
-		PixelRow *src_row, 
-		gdouble *x_frac, 
-		gdouble y_frac, 
-		gdouble x_rat, 
-		gdouble *row_accum
-		)   
+static void 
+subsample_row_u16  (
+                    PixelRow * src_row,
+                    gdouble * x_frac,
+                    gdouble y_frac,
+                    gdouble x_rat,
+                    gdouble * row_accum
+                    )
 {
   gdouble tot_frac;
   gint b;
@@ -2475,15 +2441,14 @@ subsample_row_u16 (
     }
 }
 
-
-static void
-subsample_row_float ( 
-		PixelRow *src_row, 
-		gdouble *x_frac, 
-		gdouble y_frac, 
-		gdouble x_rat, 
-		gdouble *row_accum
-		)   
+static void 
+subsample_row_float  (
+                      PixelRow * src_row,
+                      gdouble * x_frac,
+                      gdouble y_frac,
+                      gdouble x_rat,
+                      gdouble * row_accum
+                      )
 {
   gdouble tot_frac;
   gint b;
@@ -2516,6 +2481,7 @@ subsample_row_float (
 	}
     }
 }
+
 
 float 
 shapeburst_area  (
@@ -2640,20 +2606,13 @@ shapeburst_area  (
   return 0.0;
 }
 
-typedef gint (*ThinRowFunc) (PixelRow*,PixelRow*,PixelRow*,PixelRow*,gint);
-static ThinRowFunc thin_row_funcs[] =
-{
-  thin_row_u8,
-  thin_row_u16,
-  thin_row_float
-};
 
 
-gint
-thin_area (
-	   PixelArea *src_area,
-	   gint          type
-          )
+gint 
+thin_area  (
+            PixelArea * src_area,
+            gint type
+            )
 {
   int i;
   int found_one;
@@ -2718,15 +2677,14 @@ thin_area (
   return (found_one == FALSE);  /*  is the area empty yet?  */
 }
 
-
-static gint  
-thin_row_u8 (
-		PixelRow *cur_row,
-		PixelRow *next_row,
-		PixelRow *prev_row,
-		PixelRow *dest_row,
-		gint type
-	     )
+static gint 
+thin_row_u8  (
+              PixelRow * cur_row,
+              PixelRow * next_row,
+              PixelRow * prev_row,
+              PixelRow * dest_row,
+              gint type
+              )
 {
   gint j;
   gint found_one;
@@ -2779,15 +2737,14 @@ thin_row_u8 (
    return found_one;
 }
 
-
 static gint 
-thin_row_u16 (
-		PixelRow *cur_row,
-		PixelRow *next_row,
-		PixelRow *prev_row,
-		PixelRow *dest_row,
-		gint type
-	     )
+thin_row_u16  (
+               PixelRow * cur_row,
+               PixelRow * next_row,
+               PixelRow * prev_row,
+               PixelRow * dest_row,
+               gint type
+               )
 {
   gint j;
   gint found_one;
@@ -2842,13 +2799,13 @@ thin_row_u16 (
 }
 
 static gint 
-thin_row_float (
-		PixelRow *cur_row,
-		PixelRow *next_row,
-		PixelRow *prev_row,
-		PixelRow *dest_row,
-		gint type
-	     )
+thin_row_float  (
+                 PixelRow * cur_row,
+                 PixelRow * next_row,
+                 PixelRow * prev_row,
+                 PixelRow * dest_row,
+                 gint type
+                 )
 {
   gint j;
   gint found_one;
@@ -2909,7 +2866,7 @@ swap_area  (
             PixelArea * dest_area
             )
 {
-  void *  pag;
+  void * pag;
   Tag src_tag = pixelarea_tag (src_area); 
   Tag dest_tag = pixelarea_tag (dest_area); 
 
@@ -2939,14 +2896,14 @@ void
 apply_mask_to_area  (
                      PixelArea * src_area,
                      PixelArea * mask_area,
-                     Paint * opacity
+                     gfloat opacity
                      )
 {
   void *  pag;
   Tag src_tag = pixelarea_tag (src_area); 
   Tag mask_tag = pixelarea_tag (mask_area); 
 
-   /* put in tags check */
+  /* put in tags check */
   
   for (pag = pixelarea_register (2, src_area, mask_area);
        pag != NULL;
@@ -2961,8 +2918,9 @@ apply_mask_to_area  (
 	{
 	  pixelarea_getdata (src_area, &srcrow, h);
 	  pixelarea_getdata (mask_area, &maskrow, h);
-  	    /*apply_mask_to_alpha_channel(s, m, opacity, src-> w, srcPR->bytes);*/
-	    apply_mask_to_alpha_channel_row (&srcrow, &maskrow, opacity);
+
+          /*apply_mask_to_alpha_channel(s, m, opacity, src-> w, srcPR->bytes);*/
+          apply_mask_to_alpha_channel_row (&srcrow, &maskrow, opacity);
 	}
     }
 }
@@ -2972,14 +2930,14 @@ void
 combine_mask_and_area  (
                         PixelArea * src_area,
                         PixelArea * mask_area,
-                        Paint * opacity
+                        gfloat opacity
                         )
 {
   void *  pag;
   Tag src_tag = pixelarea_tag (src_area); 
   Tag mask_tag = pixelarea_tag (mask_area); 
 
-   /*put in tags check */
+  /*put in tags check */
   
   for (pag = pixelarea_register (2, src_area, mask_area);
        pag != NULL;
@@ -2994,6 +2952,7 @@ combine_mask_and_area  (
 	{
 	  pixelarea_getdata (src_area, &srcrow, h);
 	  pixelarea_getdata (mask_area, &maskrow, h);
+
   	  /*combine_mask_and_alpha_channel (s, m, opacity, src->w,src->bytes);*/
 	  combine_mask_and_alpha_channel_row (&srcrow, &maskrow, opacity);
 	}
@@ -3038,8 +2997,8 @@ initial_area  (
                PixelArea * src_area,
                PixelArea * dest_area,
                PixelArea * mask_area,
-               unsigned char * data,    /*data is a cmap or color if needed*/
-               Paint * opacity,
+               unsigned char * data,   /* data is a cmap or color if needed */
+               gfloat opacity,
                gint mode,
                gint * affect,
                gint type
@@ -3152,7 +3111,7 @@ combine_areas  (
                 PixelArea * dest_area,
                 PixelArea * mask_area,
                 unsigned char * data,   /* a colormap or a color --if needed */
-                Paint * opacity,
+                gfloat opacity,
                 gint mode,
                 gint * affect,
                 gint type
@@ -3343,14 +3302,14 @@ combine_areas  (
 
 void 
 combine_areas_replace  (
-                        PixelArea *src1_area,
-                        PixelArea *src2_area,
-                        PixelArea *dest_area,
-                        PixelArea *mask_area,
-                        guchar    *data,
-                        Paint     *opacity,
-                        gint       *affect,
-                        gint        type
+                        PixelArea * src1_area,
+                        PixelArea * src2_area,
+                        PixelArea * dest_area,
+                        PixelArea * mask_area,
+                        guchar * data,
+                        gfloat opacity,
+                        gint * affect,
+                        gint type
                         )
 {
   void *  pag;
@@ -3435,7 +3394,7 @@ draw_segments (
 	       gint          num_segs,
 	       gint          off_x,
 	       gint          off_y,
-	       Paint       *opacity
+	       gfloat opacity
                )
 {
   gint x1, y1, x2, y2;
@@ -3450,11 +3409,18 @@ draw_segments (
   length = MAXIMUM (width , height);
 
   /* get a row with same tag type as dest */
+  /* FIXME leak */
   line_data = (guchar *) g_malloc (length * bytes_per_pixel); 
   pixelrow_init (&line, dest_tag, line_data, length); 
   
   /* initialize line with opacity */
-  color_row(&line, opacity); 
+  {
+    Tag t = tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO);
+    Paint * p = paint_new (dest_tag, NULL);
+    paint_load (p, t, &opacity);
+    color_row(&line, p);
+    paint_delete (p);
+  }
 
   for (i = 0; i < num_segs; i++)
     {
@@ -3569,7 +3535,7 @@ apply_layer_mode  (
                    PixelRow *dest_row,
                    gint x,
                    gint y,
-                   Paint *opacity,
+                   gfloat opacity,
                    gint mode,
                    gint * mode_affect
                    )
@@ -3781,7 +3747,7 @@ apply_layer_mode_replace  (
                            PixelRow * src2_row,
                            PixelRow * dest_row,
                            PixelRow * mask_row,
-                           Paint *opacity,
+                           gfloat opacity,
                            gint * affect
                            )
 {

@@ -206,13 +206,7 @@ create_default_brush (gint width, gint height)
   GBrushP brush;
 #define BRUSHES_C_1_cw
 
-#ifdef U8_SUPPORT 
-  Tag brush_tag = tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_NO);
-#elif U16_SUPPORT
-  Tag brush_tag = tag_new (PRECISION_U16, FORMAT_GRAY, ALPHA_NO);
-#elif FLOAT_SUPPORT
-  Tag brush_tag = tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO);
-#endif 
+  Tag brush_tag = tag_new (PRECISION_CONFIG, FORMAT_GRAY, ALPHA_NO);
   brush = g_new (GBrush, 1);
 
   brush->filename = NULL;
@@ -328,13 +322,7 @@ load_brush(char *filename)
 
 
 #define BRUSHES_C_5_cw
-#ifdef U8_SUPPORT
-     if (tag_precision (tag) != PRECISION_U8 )
-#elif U16_SUPPORT
-     if (tag_precision (tag) != PRECISION_U16 )
-#elif FLOAT_SUPPORT 
-     if (tag_precision (tag) != PRECISION_FLOAT )
-#endif
+  if (tag_precision (tag) != PRECISION_CONFIG )
      { 
 	  fclose (fp);
 	  free_brush (brush);

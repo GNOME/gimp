@@ -50,11 +50,6 @@ random_table_initialize (
   random_table_initialized = TRUE;
 }
 
-void
-paint_funcs_randomize_row (int y)
-{
-  srand (random_table [y % RANDOM_TABLE_SIZE]);
-}
 
 void
 color_row (
@@ -78,12 +73,13 @@ color_row (
       break;	
     }
 }
+
 void
 blend_row (
               PixelRow *src1_row,
 	      PixelRow *src2_row,
 	      PixelRow *dest_row,
-	      Paint    *blend
+	      gfloat blend
               )
 {
   switch (tag_precision (pixelrow_tag (dest_row)))
@@ -101,12 +97,13 @@ blend_row (
       break;	
     }
 }
+
 void
 shade_row (
 		 PixelRow *src_row,
 	         PixelRow *dest_row,
 	         Paint    *color,
-		 Paint    *blend
+		 gfloat blend
 	         )
 {
   switch (tag_precision (pixelrow_tag (dest_row)))
@@ -403,7 +400,7 @@ dissolve_row (
 		    PixelRow *dest_row,
 		    gint      x,
 		    gint      y,
-		    Paint    *opac
+		    gfloat opac
 		    )
 {
   gint b;
@@ -438,7 +435,7 @@ replace_row (
 		   PixelRow *src2_row,
 		   PixelRow *dest_row,
 		   PixelRow *mask_row,
-		   Paint    *opac,
+		   gfloat opac,
 		   gint      *affect
 		   )
 {
@@ -634,7 +631,7 @@ void
 apply_mask_to_alpha_channel_row (
 				PixelRow *src_row,
 				PixelRow *mask_row,
-				Paint    *opac
+				gfloat opac
 			       )
 {
   switch (tag_precision (pixelrow_tag (src_row)))
@@ -658,7 +655,7 @@ void
 combine_mask_and_alpha_channel_row (
 				    PixelRow *src_row,
 				    PixelRow *mask_row,
-				    Paint        *opac
+				    gfloat opac
 				    )
 {
   switch (tag_precision (pixelrow_tag (src_row)))
@@ -763,7 +760,7 @@ initial_indexed_a_row (
 			     PixelRow *dest_row,
 			     PixelRow *mask_row,
 			     unsigned char *cmap,
-			     Paint    *opac
+			     gfloat opac
 			     )
 {
   switch (tag_precision (pixelrow_tag (dest_row)))
@@ -788,7 +785,7 @@ initial_inten_row (
 			  PixelRow *src_row,
 			  PixelRow *dest_row,
 			  PixelRow *mask_row,
-			  Paint    *opac,
+			  gfloat opac,
 			  gint      *affect
 		         )
 {
@@ -816,7 +813,7 @@ initial_inten_a_row (
 			    PixelRow *src_row,
 			    PixelRow *dest_row,
 			    PixelRow *mask_row,
-			    Paint    *opac,
+			    gfloat opac,
 			    gint     *affect
 			   )
 {
@@ -845,7 +842,7 @@ combine_indexed_and_indexed_row (
 					PixelRow *src2_row,
 					PixelRow *dest_row,
 					PixelRow *mask_row,
-					Paint    *opac,
+					gfloat opac,
 				        gint     *affect
 				       )
 {
@@ -872,7 +869,7 @@ combine_indexed_and_indexed_a_row (
 					PixelRow *src2_row,
 					PixelRow *dest_row,
 					PixelRow *mask_row,
-					Paint    *opac,
+					gfloat opac,
 				        gint     *affect
 				        ) 
 {
@@ -900,7 +897,7 @@ combine_indexed_a_and_indexed_a_row (
 					    PixelRow *src2_row,
 					    PixelRow *dest_row,
 					    PixelRow *mask_row,
-					    Paint    *opac,
+					    gfloat opac,
 					    gint      *affect
 					   )
 {
@@ -928,7 +925,7 @@ combine_inten_a_and_indexed_a_row (
 					  PixelRow *dest_row,
 					  PixelRow *mask_row,
 					  unsigned char *cmap,
-					  Paint    *opac
+					  gfloat opac
 					 )
 {
   switch (tag_precision (pixelrow_tag (dest_row)))
@@ -954,7 +951,7 @@ combine_inten_and_inten_row (
 				    PixelRow *src2_row,
 				    PixelRow *dest_row,
 				    PixelRow *mask_row,
-				    Paint    *opac,
+				    gfloat opac,
 				    gint      *affect
 				   )
 {
@@ -983,7 +980,7 @@ combine_inten_and_inten_a_row (
 				      PixelRow *src2_row,
 				      PixelRow *dest_row,
 				      PixelRow *mask_row,
-				      Paint    *opac,
+				      gfloat opac,
 				      gint      *affect
 				      )
 {
@@ -1012,7 +1009,7 @@ combine_inten_a_and_inten_row (
 				      PixelRow *src2_row,
 				      PixelRow *dest_row,
 				      PixelRow *mask_row,
-				      Paint    *opac,
+				      gfloat opac,
 				      gint      *affect,
 				      gint       mode_affect /* how does the combination mode affect alpha?  */
 				      )  
@@ -1042,7 +1039,7 @@ combine_inten_a_and_inten_a_row (
 					PixelRow *src2_row,
 					PixelRow *dest_row,
 					PixelRow *mask_row,
-					Paint    *opac,
+					gfloat opac,
 					gint      *affect,
 					gint       mode_affect
 					)
@@ -1073,7 +1070,7 @@ combine_inten_a_and_channel_mask_row (
 					    PixelRow *channel_row,
 					    PixelRow *dest_row,
 					    Paint    *col,
-					    Paint    *opac
+					    gfloat opac
 					    )
 {
   switch (tag_precision (pixelrow_tag (dest_row)))
@@ -1098,7 +1095,7 @@ combine_inten_a_and_channel_selection_row (
 						  PixelRow *channel_row,
 						  PixelRow *dest_row,
 						  Paint    *col,
-						  Paint    *opac
+						  gfloat opac
 						 )
 {
   switch (tag_precision (pixelrow_tag (dest_row)))
@@ -1127,7 +1124,7 @@ behind_inten_row (
 			PixelRow *src2_row,
 			PixelRow *dest_row,
 			PixelRow *mask_row,
-			Paint    *opac,
+			gfloat opac,
 			gint      *affect
                         )
 {
@@ -1157,7 +1154,7 @@ behind_indexed_row (
 			  PixelRow *src2_row,
 			  PixelRow *dest_row,
 			  PixelRow *mask_row,
-			  Paint    *opac,
+			  gfloat opac,
 			  gint     *affect
 			  )
 {
@@ -1184,7 +1181,7 @@ replace_inten_row (
 			  PixelRow *src2_row,
 			  PixelRow *dest_row,
 			  PixelRow *mask_row,
-			  Paint    *opac,
+			  gfloat opac,
 			  gint     *affect
 			 )
 {
@@ -1213,7 +1210,7 @@ replace_indexed_row (
 			    PixelRow *src2_row,
 			    PixelRow *dest_row,
 			    PixelRow *mask_row,
-			    Paint    *opac,
+			    gfloat opac,
 			    gint     *affect
 			   )
 {
@@ -1240,7 +1237,7 @@ erase_inten_row (
 			PixelRow *src2_row,
 			PixelRow *dest_row,
 			PixelRow *mask_row,
-			Paint    *opac,
+			gfloat opac,
 			gint     *affect
 			)
 {
@@ -1269,7 +1266,7 @@ erase_indexed_row (
 			  PixelRow *src2_row,
 			  PixelRow *dest_row,
 			  PixelRow *mask_row,
-			  Paint    *opac,
+			  gfloat opac,
 			  gint     *affect
 			 )
 {

@@ -40,6 +40,21 @@ if eval "test x$enable_gimpdir != x"; then
   fi
 fi)
 
+dnl Possibly change default precision from 16 bit
+precision=PRECISION_U16
+AC_ARG_ENABLE(precision, [  --enable-precision={u8,u16,float}  set the data precision [default=u16]],
+if eval "test x$enable_precision != x"; then
+  if eval "test x$enable_precision == xu8"; then
+    precision=PRECISION_U8
+  fi
+  if eval "test x$enable_precision == xu16"; then
+    precision=PRECISION_U16
+  fi
+  if eval "test x$enable_precision == xfloat"; then
+    precision=PRECISION_FLOAT
+  fi
+fi)
+
 AC_DEFUN(AC_GIMP_CHECK,
 [
 	AC_PATH_X
@@ -245,6 +260,7 @@ gimpplugindir=$libdir/$PACKAGE/$GIMP_MAJOR_VERSION_NUMBER.$GIMP_MINOR_VERSION_NU
 dnl This is for generating PDB docuemntation.
 AC_PATH_PROG(EMACS, emacs, :)
 
+AC_SUBST(precision)
 AC_SUBST(gimpdir)
 AC_SUBST(gimpdatadir)
 AC_SUBST(gimpplugindir)
@@ -272,155 +288,10 @@ gimprc
 libgimp/Makefile
 plug-ins/Makefile
 plug-ins/build
-plug-ins/dbbrowser/Makefile
-plug-ins/CML_explorer/Makefile
-plug-ins/convmatrix/Makefile
-plug-ins/diffraction/Makefile
-plug-ins/pix/Makefile
-plug-ins/oilify/Makefile
-plug-ins/nova/Makefile
-plug-ins/normalize/Makefile
-plug-ins/noisify/Makefile
-plug-ins/nlfilt/Makefile
-plug-ins/mosaic/Makefile
-plug-ins/mblur/Makefile
-plug-ins/maze/Makefile
-plug-ins/max_rgb/Makefile
-plug-ins/mail/Makefile
-plug-ins/magiceye/Makefile
-plug-ins/lic/Makefile
-plug-ins/laplace/Makefile
-plug-ins/ifscompose/Makefile
-plug-ins/iwarp/Makefile
-plug-ins/hrz/Makefile
-plug-ins/hot/Makefile
-plug-ins/holes/Makefile
-plug-ins/gz/Makefile
-plug-ins/header/Makefile
-plug-ins/grid/Makefile
-plug-ins/gradmap/Makefile
-plug-ins/gqbist/Makefile
-plug-ins/gif/Makefile
-plug-ins/gicon/Makefile
-plug-ins/gfli/Makefile
 plug-ins/gbr/Makefile
-plug-ins/gauss_iir/Makefile
-plug-ins/gauss_rle/Makefile
-plug-ins/fp/Makefile
-plug-ins/fits/Makefile
-plug-ins/film/Makefile
-plug-ins/figures/Makefile
-plug-ins/faxg3/Makefile
-plug-ins/exchange/Makefile
-plug-ins/engrave/Makefile
-plug-ins/emboss/Makefile
-plug-ins/edge/Makefile
-plug-ins/displace/Makefile
-plug-ins/destripe/Makefile
-plug-ins/despeckle/Makefile
-plug-ins/depthmerge/Makefile
-plug-ins/deinterlace/Makefile
-plug-ins/decompose/Makefile
-plug-ins/cubism/Makefile
-plug-ins/coordmap/Makefile
-plug-ins/compose/Makefile
-plug-ins/checkerboard/Makefile
-plug-ins/bz2/Makefile
-plug-ins/xpm/Makefile
-plug-ins/AlienMap/Makefile
-plug-ins/c_astretch/Makefile
-plug-ins/bumpmap/Makefile
-plug-ins/gflare/Makefile
-plug-ins/script-fu/Makefile
-plug-ins/script-fu/scripts/Makefile
-plug-ins/jpeg/Makefile
-plug-ins/mpeg/Makefile
-plug-ins/png/Makefile
 plug-ins/tiff/Makefile
-plug-ins/xd/Makefile
-plug-ins/bmp/Makefile
-plug-ins/aa/Makefile
-plug-ins/gag-0.3/Makefile
-plug-ins/Anamorphose/Makefile
-plug-ins/CentralReflection/Makefile
-plug-ins/Curtain/Makefile
-plug-ins/Encript_Decript/Makefile
-plug-ins/Julia/Makefile
-plug-ins/Mandelbrot/Makefile
-plug-ins/MapObject/Makefile
-plug-ins/megawidget/Makefile
-plug-ins/libgck/Makefile
-plug-ins/libgck/gck/Makefile
-plug-ins/blur/Makefile
-plug-ins/gfig/Makefile
-plug-ins/gfig/gfig-examples/Makefile
-plug-ins/flame/Makefile
-plug-ins/gimptcl/Makefile
-plug-ins/gimptcl/frags/Makefile
-plug-ins/gimptcl/misc/Makefile
-plug-ins/gimptcl/scripts/Makefile
-plug-ins/fuse/Makefile
-plug-ins/mathmap/Makefile
-plug-ins/rcm/Makefile
-plug-ins/refract/Makefile
-plug-ins/struc/Makefile
-plug-ins/twist/Makefile
-plug-ins/user_filter/Makefile
-plug-ins/user_filter/doc/Makefile
-plug-ins/warp/Makefile
-plug-ins/zealouscrop/Makefile
-plug-ins/xwd/Makefile
-plug-ins/whirlpinch/Makefile
-plug-ins/waves/Makefile
-plug-ins/vpropagate/Makefile
-plug-ins/vinvert/Makefile
-plug-ins/video/Makefile
-plug-ins/url/Makefile
-plug-ins/universal/Makefile
-plug-ins/tiler/Makefile
-plug-ins/tile/Makefile
-plug-ins/tileit/Makefile
-plug-ins/threshold_alpha/Makefile
-plug-ins/tga/Makefile
-plug-ins/sunras/Makefile
-plug-ins/stereogram/Makefile
-plug-ins/spread/Makefile
-plug-ins/sparkle/Makefile
-plug-ins/sobel/Makefile
-plug-ins/snp/Makefile
-plug-ins/snoise/Makefile
-plug-ins/smooth_palette/Makefile
-plug-ins/sinus/Makefile
-plug-ins/shift/Makefile
-plug-ins/sharpen/Makefile
 plug-ins/sgi/Makefile
-plug-ins/scatter_hsv/Makefile
-plug-ins/rotators/Makefile
-plug-ins/rotate/Makefile
-plug-ins/ripple/Makefile
-plug-ins/randomize/Makefile
-plug-ins/psd/Makefile
-plug-ins/ps/Makefile
-plug-ins/print/Makefile
-plug-ins/polar/Makefile
-plug-ins/pnm/Makefile
-plug-ins/plasma/Makefile
-plug-ins/pixelize/Makefile
-plug-ins/pcx/Makefile
 plug-ins/pat/Makefile
-plug-ins/blur2/Makefile
-plug-ins/blinds/Makefile
-plug-ins/autostretch_hsv/Makefile
-plug-ins/autocrop/Makefile
-plug-ins/apply_lens/Makefile
-plug-ins/animationplay/Makefile
-plug-ins/align_layers/Makefile
-plug-ins/CEL/Makefile
-plug-ins/glasstile/Makefile
-plug-ins/colorify/Makefile
-plug-ins/papertile/Makefile
-plug-ins/illusion/Makefile
-plug-ins/fractaltrace/Makefile
 app/Makefile
 docs/Makefile
 )
