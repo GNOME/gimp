@@ -1,3 +1,10 @@
+2004-03-14  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimptextoptions.[ch]
+	* app/tools/gimptexttool.[ch]: introduced a proxy GimpText object
+	that is tied to the GimpTextOptions for the lifetime of the text
+	tool. Brings us one step closer to text undo...
+
 2004-03-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable-offset.c (gimp_drawable_offset)

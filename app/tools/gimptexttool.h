@@ -29,12 +29,15 @@
 #define GIMP_TEXT_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TEXT_TOOL, GimpTextToolClass))
 #define GIMP_IS_TEXT_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TEXT_TOOL))
 
-typedef struct _GimpTextTool GimpTextTool;
-typedef struct _GimpTextToolClass GimpTextToolClass;
+typedef struct _GimpTextTool       GimpTextTool;
+typedef struct _GimpTextToolClass  GimpTextToolClass;
 
 struct _GimpTextTool
 {
   GimpTool       parent_instance;
+
+  GimpText      *proxy;
+  guint          idle_id;
 
   gint           x1, y1;
   gint           x2, y2;

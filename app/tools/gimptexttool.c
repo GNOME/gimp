@@ -59,31 +59,36 @@
 
 /*  local function prototypes  */
 
-static void   gimp_text_tool_class_init     (GimpTextToolClass *klass);
-static void   gimp_text_tool_init           (GimpTextTool      *tool);
+static void      gimp_text_tool_class_init     (GimpTextToolClass *klass);
+static void      gimp_text_tool_init           (GimpTextTool      *tool);
+static GObject * gimp_text_tool_constructor    (GType              type,
+                                                guint              n_params,
+                                                GObjectConstructParam *params);
+static void      gimp_text_tool_dispose        (GObject           *object);
+static void      gimp_text_tool_finalize       (GObject           *object);
 
-static void   gimp_text_tool_control        (GimpTool          *tool,
-					     GimpToolAction     action,
-					     GimpDisplay       *gdisp);
-static void   gimp_text_tool_button_press   (GimpTool          *tool,
-					     GimpCoords        *coords,
-					     guint32            time,
-					     GdkModifierType    state,
-					     GimpDisplay       *gdisp);
-static void   gimp_text_tool_cursor_update  (GimpTool          *tool,
-					     GimpCoords        *coords,
-					     GdkModifierType    state,
-					     GimpDisplay       *gdisp);
+static void      gimp_text_tool_control        (GimpTool          *tool,
+                                                GimpToolAction     action,
+                                                GimpDisplay       *gdisp);
+static void      gimp_text_tool_button_press   (GimpTool          *tool,
+                                                GimpCoords        *coords,
+                                                guint32            time,
+                                                GdkModifierType    state,
+                                                GimpDisplay       *gdisp);
+static void      gimp_text_tool_cursor_update  (GimpTool          *tool,
+                                                GimpCoords        *coords,
+                                                GdkModifierType    state,
+                                                GimpDisplay       *gdisp);
 
-static void   gimp_text_tool_connect        (GimpTextTool      *tool,
-					     GimpText          *text);
+static void      gimp_text_tool_connect        (GimpTextTool      *tool,
+                                                GimpText          *text);
 
-static void   gimp_text_tool_create_vectors (GimpTextTool      *text_tool);
-static void   gimp_text_tool_create_layer   (GimpTextTool      *text_tool);
+static void      gimp_text_tool_create_vectors (GimpTextTool      *text_tool);
+static void      gimp_text_tool_create_layer   (GimpTextTool      *text_tool);
 
-static void   gimp_text_tool_editor         (GimpTextTool      *text_tool);
-static void   gimp_text_tool_text_changed   (GimpTextEditor    *editor,
-					     GimpTextTool      *text_tool);
+static void      gimp_text_tool_editor         (GimpTextTool      *text_tool);
+static void      gimp_text_tool_text_changed   (GimpTextEditor    *editor,
+                                                GimpTextTool      *text_tool);
 
 
 /*  local variables  */
@@ -144,9 +149,14 @@ gimp_text_tool_get_type (void)
 static void
 gimp_text_tool_class_init (GimpTextToolClass *klass)
 {
-  GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
+  GObjectClass  *object_class = G_OBJECT_CLASS (klass);
+  GimpToolClass *tool_class   = GIMP_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
+
+  object_class->constructor = gimp_text_tool_constructor;
+  object_class->dispose     = gimp_text_tool_dispose;
+  object_class->finalize    = gimp_text_tool_finalize;
 
   tool_class->control       = gimp_text_tool_control;
   tool_class->button_press  = gimp_text_tool_button_press;
@@ -158,12 +168,64 @@ gimp_text_tool_init (GimpTextTool *text_tool)
 {
   GimpTool *tool = GIMP_TOOL (text_tool);
 
-  text_tool->text  = NULL;
-  text_tool->layer = NULL;
+  text_tool->proxy   = NULL;
+  text_tool->idle_id = 0;
+
+  text_tool->text    = NULL;
+  text_tool->layer   = NULL;
 
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
   gimp_tool_control_set_preserve    (tool->control, FALSE);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TEXT_TOOL_CURSOR);
+}
+
+static GObject *
+gimp_text_tool_constructor (GType                  type,
+                            guint                  n_params,
+                            GObjectConstructParam *params)
+{
+  GObject         *object;
+  GimpTextTool    *text_tool;
+  GimpTextOptions *options;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  text_tool = GIMP_TEXT_TOOL (object);
+  options = GIMP_TEXT_OPTIONS (GIMP_TOOL (text_tool)->tool_info->tool_options);
+
+  text_tool->proxy = g_object_new (GIMP_TYPE_TEXT, NULL);
+
+  gimp_text_options_connect_text (options, text_tool->proxy);
+
+  return object;
+}
+
+static void
+gimp_text_tool_dispose (GObject *object)
+{
+  GimpTextTool *text_tool = GIMP_TEXT_TOOL (object);
+
+  if (text_tool->idle_id)
+    {
+      g_source_remove (text_tool->idle_id);
+      text_tool->idle_id = 0;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_text_tool_finalize (GObject *object)
+{
+  GimpTextTool *text_tool = GIMP_TEXT_TOOL (object);
+
+  if (text_tool->proxy)
+    {
+      g_object_unref (text_tool->proxy);
+      text_tool->proxy = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -277,31 +339,28 @@ gimp_text_tool_create_vectors (GimpTextTool *text_tool)
 static void
 gimp_text_tool_create_layer (GimpTextTool *text_tool)
 {
-  GimpTool        *tool = GIMP_TOOL (text_tool);
-  GimpTextOptions *options;
-  GimpImage       *image;
-  GimpText        *text;
-  GimpLayer       *layer;
+  GimpTool  *tool = GIMP_TOOL (text_tool);
+  GimpText  *text;
+  GimpImage *image;
+  GimpLayer *layer;
 
   g_return_if_fail (text_tool->text == NULL);
 
-  options = GIMP_TEXT_OPTIONS (GIMP_TOOL (text_tool)->tool_info->tool_options);
-
-  text = gimp_text_options_create_text (options);
-
-  g_object_set (text,
+  g_object_set (text_tool->proxy,
                 "text",
                 gimp_text_editor_get_text (GIMP_TEXT_EDITOR (text_tool->editor)),
                 NULL);
 
   image = tool->gdisp->gimage;
+  text = gimp_config_duplicate (GIMP_CONFIG (text_tool->proxy));
   layer = gimp_text_layer_new (image, text);
+
   g_object_unref (text);
 
   if (! layer)
     return;
 
-  gimp_text_tool_connect (text_tool, text);
+  gimp_text_tool_connect (text_tool, GIMP_TEXT_LAYER (layer)->text);
 
   gimp_tool_control_set_preserve (tool->control, TRUE);
 
@@ -350,7 +409,13 @@ gimp_text_tool_connect (GimpTextTool *text_tool,
                                                 text_tool);
         }
 
-      gimp_text_options_disconnect_text (options, text_tool->text);
+      gimp_config_disconnect (G_OBJECT (text_tool->text),
+                              G_OBJECT (text_tool->proxy));
+
+      if (text_tool->editor)
+        gtk_widget_destroy (text_tool->editor);
+
+      g_object_set (G_OBJECT (text_tool->proxy), "text", NULL, NULL);
 
       g_object_unref (text_tool->text);
       text_tool->text = NULL;
@@ -358,11 +423,15 @@ gimp_text_tool_connect (GimpTextTool *text_tool,
       text_tool->layer = NULL;
     }
 
+  gimp_context_define_property (GIMP_CONTEXT (options),
+                                GIMP_CONTEXT_PROP_FOREGROUND, text != NULL);
+
   if (text)
     {
       text_tool->text = g_object_ref (text);
 
-      gimp_text_options_connect_text (options, text);
+      gimp_config_sync (GIMP_CONFIG (text), GIMP_CONFIG (text_tool->proxy), 0);
+      gimp_config_connect (G_OBJECT (text), G_OBJECT (text_tool->proxy), NULL);
 
       if (button)
         {
@@ -418,9 +487,7 @@ gimp_text_tool_text_changed (GimpTextEditor *editor,
 
       text = gimp_text_editor_get_text (GIMP_TEXT_EDITOR (text_tool->editor));
 
-      g_object_set (text_tool->text,
-                    "text", text,
-                    NULL);
+      g_object_set (text_tool->proxy, "text", text, NULL);
 
       g_free (text);
     }

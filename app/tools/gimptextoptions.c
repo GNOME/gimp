@@ -66,24 +66,30 @@ enum
 };
 
 
-static void  gimp_text_options_class_init   (GimpTextOptionsClass *options_class);
-static void  gimp_text_options_init         (GimpTextOptions      *options);
+static void  gimp_text_options_class_init (GimpTextOptionsClass *options_class);
+static void  gimp_text_options_init       (GimpTextOptions      *options);
 
-static void  gimp_text_options_set_property (GObject      *object,
-                                             guint         property_id,
-                                             const GValue *value,
-                                             GParamSpec   *pspec);
-static void  gimp_text_options_get_property (GObject      *object,
-                                             guint         property_id,
-                                             GValue       *value,
-                                             GParamSpec   *pspec);
+static void  gimp_text_options_set_property       (GObject      *object,
+                                                   guint         property_id,
+                                                   const GValue *value,
+                                                   GParamSpec   *pspec);
+static void  gimp_text_options_get_property       (GObject      *object,
+                                                   guint         property_id,
+                                                   GValue       *value,
+                                                   GParamSpec   *pspec);
 
-static void  gimp_text_options_notify_color (GimpContext  *context,
-                                             GParamSpec   *pspec,
-                                             GimpText     *text);
-static void  gimp_text_options_notify_font  (GimpContext  *context,
-                                             GParamSpec   *pspec,
-                                             GimpText     *text);
+static void  gimp_text_options_notify_font        (GimpContext  *context,
+                                                   GParamSpec   *pspec,
+                                                   GimpText     *text);
+static void  gimp_text_options_notify_text_font   (GimpText     *text,
+                                                   GParamSpec   *pspec,
+                                                   GimpContext  *context);
+static void  gimp_text_options_notify_color       (GimpContext  *context,
+                                                   GParamSpec   *pspec,
+                                                   GimpText     *text);
+static void  gimp_text_options_notify_text_color  (GimpText     *text,
+                                                   GParamSpec   *pspec,
+                                                   GimpContext  *context);
 
 
 static GimpToolOptionsClass *parent_class = NULL;
@@ -279,6 +285,36 @@ gimp_text_options_set_property (GObject      *object,
 }
 
 static void
+gimp_text_options_notify_font (GimpContext *context,
+                               GParamSpec  *pspec,
+                               GimpText    *text)
+{
+  g_signal_handlers_block_by_func (text,
+                                   gimp_text_options_notify_text_font,
+                                   context);
+
+  g_object_set (text, "font", gimp_context_get_font_name (context), NULL);
+
+  g_signal_handlers_unblock_by_func (text,
+                                     gimp_text_options_notify_text_font,
+                                     context);
+}
+
+static void
+gimp_text_options_notify_text_font (GimpText    *text,
+                                    GParamSpec  *pspec,
+                                    GimpContext *context)
+{
+  g_signal_handlers_block_by_func (context,
+                                   gimp_text_options_notify_font, text);
+
+  gimp_context_set_font_name (context, text->font);
+
+  g_signal_handlers_unblock_by_func (context,
+                                     gimp_text_options_notify_font, text);
+}
+
+static void
 gimp_text_options_notify_color (GimpContext *context,
                                 GParamSpec  *pspec,
                                 GimpText    *text)
@@ -287,80 +323,70 @@ gimp_text_options_notify_color (GimpContext *context,
 
   gimp_context_get_foreground (context, &color);
 
+  g_signal_handlers_block_by_func (text,
+                                   gimp_text_options_notify_text_color,
+                                   context);
+
   g_object_set (text, "color", &color, NULL);
+
+  g_signal_handlers_unblock_by_func (text,
+                                     gimp_text_options_notify_text_color,
+                                     context);
 }
 
 static void
-gimp_text_options_notify_font (GimpContext *context,
-                               GParamSpec  *pspec,
-                               GimpText    *text)
+gimp_text_options_notify_text_color (GimpText    *text,
+                                     GParamSpec  *pspec,
+                                     GimpContext *context)
 {
-  g_object_set (text, "font", gimp_context_get_font_name (context), NULL);
+  g_signal_handlers_block_by_func (context,
+                                   gimp_text_options_notify_color, text);
+
+  gimp_context_set_foreground (context, &text->color);
+
+  g_signal_handlers_unblock_by_func (context,
+                                     gimp_text_options_notify_color, text);
 }
 
-GimpText *
-gimp_text_options_create_text (GimpTextOptions *options)
+/*  This function could live in gimptexttool.c also.
+ *  But it takes some bloat out of that file...
+ */
+void
+gimp_text_options_connect_text (GimpTextOptions *options,
+                                GimpText        *text)
 {
   GimpContext *context;
-  GimpText    *text;
   GimpRGB      color;
 
-  g_return_val_if_fail (GIMP_IS_TEXT_OPTIONS (options), NULL);
+  g_return_if_fail (GIMP_IS_TEXT_OPTIONS (options));
+  g_return_if_fail (GIMP_IS_TEXT (text));
 
   context = GIMP_CONTEXT (options);
 
   gimp_context_get_foreground (context, &color);
 
-  text = g_object_new (GIMP_TYPE_TEXT,
-                       "color", &color,
-                       "font",  gimp_context_get_font_name (context),
-                       NULL);
-
   gimp_config_sync (GIMP_CONFIG (options), GIMP_CONFIG (text), 0);
 
-  return text;
-}
-
-void
-gimp_text_options_connect_text (GimpTextOptions *options,
-                                GimpText        *text)
-{
-  g_return_if_fail (GIMP_IS_TEXT_OPTIONS (options));
-  g_return_if_fail (GIMP_IS_TEXT (text));
-
-  gimp_context_define_property (GIMP_CONTEXT (options),
-                                GIMP_CONTEXT_PROP_FOREGROUND, TRUE);
-
-  gimp_config_sync (GIMP_CONFIG (text), GIMP_CONFIG (options), 0);
-  gimp_context_set_foreground (GIMP_CONTEXT (options), &text->color);
-  gimp_context_set_font_name (GIMP_CONTEXT (options), text->font);
+  g_object_set (text,
+                "color", &color,
+                "font",  gimp_context_get_font_name (context),
+                NULL);
 
   gimp_config_connect (G_OBJECT (options), G_OBJECT (text), NULL);
 
   g_signal_connect_object (options, "notify::font",
                            G_CALLBACK (gimp_text_options_notify_font),
                            text, 0);
+  g_signal_connect_object (text, "notify::font",
+                           G_CALLBACK (gimp_text_options_notify_text_font),
+                           options, 0);
+
   g_signal_connect_object (options, "notify::foreground",
                            G_CALLBACK (gimp_text_options_notify_color),
                            text, 0);
-}
-
-void
-gimp_text_options_disconnect_text (GimpTextOptions *options,
-                                   GimpText        *text)
-{
-  g_return_if_fail (GIMP_IS_TEXT_OPTIONS (options));
-  g_return_if_fail (GIMP_IS_TEXT (text));
-
-  gimp_config_disconnect (G_OBJECT (options), G_OBJECT (text));
-
-  g_signal_handlers_disconnect_by_func (options,
-                                        gimp_text_options_notify_font, text);
-  g_signal_handlers_disconnect_by_func (options,
-                                        gimp_text_options_notify_color, text);
-
-  gimp_context_define_property (GIMP_CONTEXT (options),
-                                GIMP_CONTEXT_PROP_FOREGROUND, FALSE);
+  g_signal_connect_object (text, "notify::color",
+                           G_CALLBACK (gimp_text_options_notify_text_color),
+                           options, 0);
 }
 
 GtkWidget *
@@ -474,13 +500,6 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 }
 
 static void
-gimp_text_options_text_changed (GimpTextEditor  *editor,
-                                GimpTextOptions *options)
-{
-
-}
-
-static void
 gimp_text_options_dir_changed (GimpTextEditor  *editor,
                                GimpTextOptions *options)
 {
@@ -516,10 +535,6 @@ gimp_text_options_editor_new (GimpTextOptions *options,
 
   gimp_text_editor_set_direction (GIMP_TEXT_EDITOR (editor),
                                   options->base_dir);
-
-  g_signal_connect_object (editor, "text_changed",
-                           G_CALLBACK (gimp_text_options_text_changed),
-                           options, 0);
 
   g_signal_connect_object (editor, "dir_changed",
                            G_CALLBACK (gimp_text_options_dir_changed),
