@@ -184,6 +184,8 @@ query (void)
 			  "Stephen Norris & (ported to 1.0 by) Eiichi Takamori",
 			  "Stephen Norris",
 			  "May 2000",
+			  /* don't translate '<Image>', it's a special
+			   * keyword of the gtk toolkit */
 			  N_("<Image>/Filters/Render/Clouds/Plasma..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,

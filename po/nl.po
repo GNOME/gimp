@@ -5195,7 +5195,7 @@ msgstr ""
 #: app/tools.c:350
 #, fuzzy
 msgid "/Tools/Transform Tools/Magnify"
-msgstr "<Beeld>/Beeld/Kleuren"
+msgstr "<Image>/Beeld/Kleuren"
 
 #: app/tools.c:355
 msgid "Zoom in & out"
@@ -6224,7 +6224,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "/Edit/Fill"
-#~ msgstr "<Beeld>/Editeer/Vul"
+#~ msgstr "<Image>/Editeer/Vul"
 
 #, fuzzy
 #~ msgid ""
@@ -6251,7 +6251,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "/File/Dialogs"
-#~ msgstr "<Beeld>/Bestand/Sluit"
+#~ msgstr "<Image>/Bestand/Sluit"
 
 #, fuzzy
 #~ msgid "/File"
@@ -6263,7 +6263,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "/Edit/Buffer"
-#~ msgstr "<Beeld>/Editeer/Wis"
+#~ msgstr "<Image>/Editeer/Wis"
 
 #, fuzzy
 #~ msgid "/Select"
@@ -6271,11 +6271,11 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "/View"
-#~ msgstr "<Beeld>/Zicht/Punt voor punt"
+#~ msgstr "<Image>/Zicht/Punt voor punt"
 
 #, fuzzy
 #~ msgid "/View/Zoom"
-#~ msgstr "<Beeld>/Zicht/Punt voor punt"
+#~ msgstr "<Image>/Zicht/Punt voor punt"
 
 #, fuzzy
 #~ msgid "/Image"
@@ -6283,15 +6283,15 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "/Image/Mode"
-#~ msgstr "<Beeld>/Beeld/RGB"
+#~ msgstr "<Image>/Beeld/RGB"
 
 #, fuzzy
 #~ msgid "/Image/Colors"
-#~ msgstr "<Beeld>/Beeld/Kleuren/Inverteren"
+#~ msgstr "<Image>/Beeld/Kleuren/Inverteren"
 
 #, fuzzy
 #~ msgid "/Image/Colors/Auto"
-#~ msgstr "<Beeld>/Beeld/Kleuren/Inverteren"
+#~ msgstr "<Image>/Beeld/Kleuren/Inverteren"
 
 #, fuzzy
 #~ msgid "/Image/Alpha"
@@ -6299,7 +6299,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "/Image/Transforms"
-#~ msgstr "<Beeld>/Beeld/Kleuren"
+#~ msgstr "<Image>/Beeld/Kleuren"
 
 #, fuzzy
 #~ msgid "/Layers"
@@ -6307,7 +6307,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "/Layers/Stack"
-#~ msgstr "<Beeld>/Lagen/Verhoog Laag"
+#~ msgstr "<Image>/Lagen/Verhoog Laag"
 
 #, fuzzy
 #~ msgid "/Tools/Select Tools"
@@ -6323,7 +6323,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "/Stack"
-#~ msgstr "<Beeld>/Lagen/Verhoog Laag"
+#~ msgstr "<Image>/Lagen/Verhoog Laag"
 
 #, fuzzy
 #~ msgid "Fill Options"
@@ -6331,7 +6331,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "/Xtns/Animation"
-#~ msgstr "<Beeld>/Filters"
+#~ msgstr "<Image>/Filters"
 
 #, fuzzy
 #~ msgid "/Xtns/Web Browser"
@@ -6339,19 +6339,19 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "/Filters/Colors/Map"
-#~ msgstr "<Beeld>/Bestand/Sluit"
+#~ msgstr "<Image>/Bestand/Sluit"
 
 #, fuzzy
 #~ msgid "/Filters/Render/Clouds"
-#~ msgstr "<Beeld>/Filters"
+#~ msgstr "<Image>/Filters"
 
 #, fuzzy
 #~ msgid "/Filters/Render/Nature"
-#~ msgstr "<Beeld>/Bestand/Bewaar"
+#~ msgstr "<Image>/Bestand/Bewaar"
 
 #, fuzzy
 #~ msgid "/Filters/Render/Pattern"
-#~ msgstr "<Beeld>/Bestand/Bewaar"
+#~ msgstr "<Image>/Bestand/Bewaar"
 
 #, fuzzy
 #~ msgid "/Script-Fu/Selection"
@@ -6359,11 +6359,11 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "/Script-Fu/Render"
-#~ msgstr "<Beeld>/Bestand/Bewaar"
+#~ msgstr "<Image>/Bestand/Bewaar"
 
 #, fuzzy
 #~ msgid "/Video"
-#~ msgstr "<Beeld>/Zicht/Punt voor punt"
+#~ msgstr "<Image>/Zicht/Punt voor punt"
 
 #, fuzzy
 #~ msgid "Path Tool"
@@ -6453,15 +6453,15 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "/Xtns/Render"
-#~ msgstr "<Beeld>/Bestand/Bewaar"
+#~ msgstr "<Image>/Bestand/Bewaar"
 
 #, fuzzy
 #~ msgid "/Xtns/Render/Logos"
-#~ msgstr "<Beeld>/Filters"
+#~ msgstr "<Image>/Filters"
 
 #, fuzzy
 #~ msgid "/Xtns/Render/Povray"
-#~ msgstr "<Beeld>/Bestand/Bewaar"
+#~ msgstr "<Image>/Bestand/Bewaar"
 
 #, fuzzy
 #~ msgid "Rename path"
@@ -6563,11 +6563,11 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "/Stack/Previous Layer"
-#~ msgstr "<Beeld>/Lagen/Verhoog Laag"
+#~ msgstr "<Image>/Lagen/Verhoog Laag"
 
 #, fuzzy
 #~ msgid "/Stack/Next Layer"
-#~ msgstr "<Beeld>/Lagen/Verhoog Laag"
+#~ msgstr "<Image>/Lagen/Verhoog Laag"
 
 #, fuzzy
 #~ msgid "Cannot convert from indexed color."
@@ -6618,11 +6618,11 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "/File/tearoff1"
-#~ msgstr "<Beeld>/Bestand/Bewaar"
+#~ msgstr "<Image>/Bestand/Bewaar"
 
 #, fuzzy
 #~ msgid "/File/Acquire/tearoff1"
-#~ msgstr "<Beeld>/Bestand/Bewaar"
+#~ msgstr "<Image>/Bestand/Bewaar"
 
 #, fuzzy
 #~ msgid "/File/Dialogs/tearoff1"
@@ -6630,7 +6630,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "/File/Dialogs/---"
-#~ msgstr "<Beeld>/Bestand/Sluit"
+#~ msgstr "<Image>/Bestand/Sluit"
 
 #, fuzzy
 #~ msgid "/Help/tearoff1"
@@ -6638,7 +6638,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "/Edit/tearoff1"
-#~ msgstr "<Beeld>/Editeer/Wis"
+#~ msgstr "<Image>/Editeer/Wis"
 
 #, fuzzy
 #~ msgid "/Select/tearoff1"
@@ -6650,35 +6650,35 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "/View/Zoom/tearoff1"
-#~ msgstr "<Beeld>/Bestand/Bewaar"
+#~ msgstr "<Image>/Bestand/Bewaar"
 
 #, fuzzy
 #~ msgid "/Image/tearoff1"
-#~ msgstr "<Beeld>/Editeer/Wis"
+#~ msgstr "<Image>/Editeer/Wis"
 
 #, fuzzy
 #~ msgid "/Image/Mode/tearoff1"
-#~ msgstr "<Beeld>/Editeer/Wis"
+#~ msgstr "<Image>/Editeer/Wis"
 
 #, fuzzy
 #~ msgid "/Image/Mode/---"
-#~ msgstr "<Beeld>/Beeld/Geindexeerd"
+#~ msgstr "<Image>/Beeld/Geindexeerd"
 
 #, fuzzy
 #~ msgid "/Image/Colors/Auto/tearoff1"
-#~ msgstr "<Beeld>/Beeld/Kleuren/Inverteren"
+#~ msgstr "<Image>/Beeld/Kleuren/Inverteren"
 
 #, fuzzy
 #~ msgid "/Image/Transforms/tearoff1"
-#~ msgstr "<Beeld>/Beeld/Kleuren/Inverteren"
+#~ msgstr "<Image>/Beeld/Kleuren/Inverteren"
 
 #, fuzzy
 #~ msgid "/Layers/tearoff1"
-#~ msgstr "<Beeld>/Lagen/Verhoog Laag"
+#~ msgstr "<Image>/Lagen/Verhoog Laag"
 
 #, fuzzy
 #~ msgid "/Layers/Stack/tearoff1"
-#~ msgstr "<Beeld>/Lagen/Verhoog Laag"
+#~ msgstr "<Image>/Lagen/Verhoog Laag"
 
 #, fuzzy
 #~ msgid "/Layers/---"
@@ -6697,7 +6697,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "/Image/Channels"
-#~ msgstr "<Beeld>/Beeld/Kanaal Ops/Offset"
+#~ msgstr "<Image>/Beeld/Kanaal Ops/Offset"
 
 #, fuzzy
 #~ msgid "/Resize Layer"
@@ -6709,7 +6709,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "/Image/Channels/tearoff1"
-#~ msgstr "<Beeld>/Beeld/Kanaal Ops/Offset"
+#~ msgstr "<Image>/Beeld/Kanaal Ops/Offset"
 
 #, fuzzy
 #~ msgid "Select File"
@@ -6728,7 +6728,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Merge visible layers"
-#~ msgstr "<Beeld>/Lagen/Voeg Zichtbare Lagen Samen"
+#~ msgstr "<Image>/Lagen/Voeg Zichtbare Lagen Samen"
 
 #, fuzzy
 #~ msgid "Save as animation"
@@ -6736,7 +6736,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Flatten Image"
-#~ msgstr "<Beeld>/Lagen/Verhoog Laag"
+#~ msgstr "<Image>/Lagen/Verhoog Laag"
 
 #, fuzzy
 #~ msgid "Convert to grayscale"
@@ -6756,11 +6756,11 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "needs an alpha channel"
-#~ msgstr "<Beeld>/Lagen/Voeg Alfa Kanaal toe"
+#~ msgstr "<Image>/Lagen/Voeg Alfa Kanaal toe"
 
 #, fuzzy
 #~ msgid "Add alpha channel"
-#~ msgstr "<Beeld>/Lagen/Voeg Alfa Kanaal toe"
+#~ msgstr "<Image>/Lagen/Voeg Alfa Kanaal toe"
 
 #, fuzzy
 #~ msgid "Export File"
@@ -6832,7 +6832,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "/Image/Channel Ops/Offset"
-#~ msgstr "<Beeld>/Beeld/Kanaal Ops/Offset"
+#~ msgstr "<Image>/Beeld/Kanaal Ops/Offset"
 
 #~ msgid "Unable to project indexed image."
 #~ msgstr "Kan geindexeerd beeld niet projecteren."
@@ -6927,7 +6927,7 @@ msgstr ""
 #~ msgstr "<Hulpdoos>/Bestand/Afsluiten"
 
 #~ msgid "<Image>/File/Quit"
-#~ msgstr "<Beeld>/Bestand/Afsluiten"
+#~ msgstr "<Image>/Bestand/Afsluiten"
 
 #, fuzzy
 #~ msgid "Automatic"
@@ -6937,124 +6937,124 @@ msgstr ""
 #~ msgstr "<Hulpdoos>/Bestand/Open"
 
 #~ msgid "<Image>/File/Open"
-#~ msgstr "<Beeld>/Bestand/Open"
+#~ msgstr "<Image>/Bestand/Open"
 
 #~ msgid "<Image>/File/Save"
-#~ msgstr "<Beeld>/Bestand/Bewaar"
+#~ msgstr "<Image>/Bestand/Bewaar"
 
 #~ msgid "<Image>/File/Save as"
-#~ msgstr "<beeld>/Bestand/Bewaar als"
+#~ msgstr "<Image>/Bestand/Bewaar als"
 
 #, fuzzy
 #~ msgid "<Image>/Layers/Stack/Previous Layer"
-#~ msgstr "<Beeld>/Lagen/Verhoog Laag"
+#~ msgstr "<Image>/Lagen/Verhoog Laag"
 
 #, fuzzy
 #~ msgid "<Image>/Layers/Stack/Next Layer"
-#~ msgstr "<Beeld>/Lagen/Verhoog Laag"
+#~ msgstr "<Image>/Lagen/Verhoog Laag"
 
 #, fuzzy
 #~ msgid "<Image>/Layers/Stack/Raise Layer"
-#~ msgstr "<Beeld>/Lagen/Verhoog Laag"
+#~ msgstr "<Image>/Lagen/Verhoog Laag"
 
 #, fuzzy
 #~ msgid "<Image>/Layers/Stack/Lower Layer"
-#~ msgstr "<Beeld>/Lagen/Verlaag Laag"
+#~ msgstr "<Image>/Lagen/Verlaag Laag"
 
 #, fuzzy
 #~ msgid "<Image>/Layers/Stack/Layer to Top"
-#~ msgstr "<Beeld>/Lagen/Verhoog Laag"
+#~ msgstr "<Image>/Lagen/Verhoog Laag"
 
 #, fuzzy
 #~ msgid "<Image>/Layers/Stack/Layer to Bottom"
-#~ msgstr "<Beeld>/Lagen/Verhoog Laag"
+#~ msgstr "<Image>/Lagen/Verhoog Laag"
 
 #~ msgid "<Image>/Layers/Anchor Layer"
-#~ msgstr "<Beeld>/Lagen/Veranker Laag"
+#~ msgstr "<Image>/Lagen/Veranker Laag"
 
 #~ msgid "<Image>/Layers/Merge Visible Layers"
-#~ msgstr "<Beeld>/Lagen/Voeg Zichtbare Lagen Samen"
+#~ msgstr "<Image>/Lagen/Voeg Zichtbare Lagen Samen"
 
 #~ msgid "<Image>/Layers/Add Alpha Channel"
-#~ msgstr "<Beeld>/Lagen/Voeg Alfa Kanaal toe"
+#~ msgstr "<Image>/Lagen/Voeg Alfa Kanaal toe"
 
 #~ msgid "<Image>/Image/RGB"
-#~ msgstr "<Beeld>/Beeld/RGB"
+#~ msgstr "<Image>/Beeld/RGB"
 
 #~ msgid "<Image>/Image/Grayscale"
-#~ msgstr "<Beeld>/Beeld/Grijswaarden"
+#~ msgstr "<Image>/Beeld/Grijswaarden"
 
 #~ msgid "<Image>/Image/Indexed"
-#~ msgstr "<Beeld>/Beeld/Geindexeerd"
+#~ msgstr "<Image>/Beeld/Geindexeerd"
 
 #~ msgid "<Image>/Image/Colors/Invert"
-#~ msgstr "<Beeld>/Beeld/Kleuren/Inverteren"
+#~ msgstr "<Image>/Beeld/Kleuren/Inverteren"
 
 #~ msgid "<Image>/Image/Colors/Desaturate"
-#~ msgstr "<Beeld>/Beeld/Kleuren/Desaturate"
+#~ msgstr "<Image>/Beeld/Kleuren/Desaturate"
 
 #~ msgid "<Image>/Image/Alpha/Add Alpha Channel"
-#~ msgstr "<Beeld>/Beeld/Alfa/Voeg Alfa Kanaal toe"
+#~ msgstr "<Image>/Beeld/Alfa/Voeg Alfa Kanaal toe"
 
 #~ msgid "<Image>/Select"
-#~ msgstr "<Beeld>/Selecteer"
+#~ msgstr "<Image>/Selecteer"
 
 #~ msgid "<Image>/Edit/Cut"
-#~ msgstr "<Beeld>/Editeer/Knip"
+#~ msgstr "<Image>/Editeer/Knip"
 
 #~ msgid "<Image>/Edit/Copy"
-#~ msgstr "<Beeld>/Editeer/Kopieer"
+#~ msgstr "<Image>/Editeer/Kopieer"
 
 #~ msgid "<Image>/Edit/Paste"
-#~ msgstr "<Beeld>/Editeer/Plak"
+#~ msgstr "<Image>/Editeer/Plak"
 
 #~ msgid "<Image>/Edit/Paste Into"
-#~ msgstr "<Beeld>/Editeer/Plak op"
+#~ msgstr "<Image>/Editeer/Plak op"
 
 #~ msgid "<Image>/Edit/Fill"
-#~ msgstr "<Beeld>/Editeer/Vul"
+#~ msgstr "<Image>/Editeer/Vul"
 
 #~ msgid "<Image>/Edit/Stroke"
-#~ msgstr "<Beeld>/Editeer/Stroke"
+#~ msgstr "<Image>/Editeer/Stroke"
 
 #~ msgid "<Image>/Edit/Cut Named"
-#~ msgstr "<Beeld>/Editeer/Knip met naam"
+#~ msgstr "<Image>/Editeer/Knip met naam"
 
 #~ msgid "<Image>/Edit/Copy Named"
-#~ msgstr "<Beeld>/Editeer/Kopieer met naam"
+#~ msgstr "<Image>/Editeer/Kopieer met naam"
 
 #~ msgid "<Image>/Edit/Paste Named"
-#~ msgstr "<Beeld>/Editeer/Plak met naam"
+#~ msgstr "<Image>/Editeer/Plak met naam"
 
 #~ msgid "<Image>/Image/Colors"
-#~ msgstr "<Beeld>/Beeld/Kleuren"
+#~ msgstr "<Image>/Beeld/Kleuren"
 
 #~ msgid "<Image>/Image/Channel Ops/Offset"
-#~ msgstr "<Beeld>/Beeld/Kanaal Ops/Offset"
+#~ msgstr "<Image>/Beeld/Kanaal Ops/Offset"
 
 #~ msgid "<Image>/Filters"
-#~ msgstr "<Beeld>/Filters"
+#~ msgstr "<Image>/Filters"
 
 #~ msgid "<Image>/Select/Save To Channel"
-#~ msgstr "<Beeld>/Selecteer/Bewaar in kanaal"
+#~ msgstr "<Image>/Selecteer/Bewaar in kanaal"
 
 #~ msgid "<Image>/View/Toggle Rulers"
-#~ msgstr "<Beeld>/Zicht/Linealen"
+#~ msgstr "<Image>/Zicht/Linealen"
 
 #~ msgid "<Image>/View/Toggle Guides"
-#~ msgstr "<Beeld>/Zicht/Hulplijnen"
+#~ msgstr "<Image>/Zicht/Hulplijnen"
 
 #~ msgid "<Image>/View/Snap To Guides"
-#~ msgstr "<Beeld>/Zicht/Snap To Guides"
+#~ msgstr "<Image>/Zicht/Snap To Guides"
 
 #~ msgid "<Image>/View/Toggle Statusbar"
-#~ msgstr "<Beeld>/Zicht/Statusbalk"
+#~ msgstr "<Image>/Zicht/Statusbalk"
 
 #~ msgid "<Image>/View/Dot for dot"
-#~ msgstr "<Beeld>/Zicht/Punt voor punt"
+#~ msgstr "<Image>/Zicht/Punt voor punt"
 
 #~ msgid "<Image>/File/Close"
-#~ msgstr "<Beeld>/Bestand/Sluit"
+#~ msgstr "<Image>/Bestand/Sluit"
 
 #, fuzzy
 #~ msgid "Replace Current Selection"

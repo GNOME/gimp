@@ -7,21 +7,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
-"POT-Creation-Date: 2000-12-18 23:30-0800\n"
+"POT-Creation-Date: 2001-05-21 20:20+0200\n"
 "PO-Revision-Date: 2000-06-29 23:23+02:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish/Dansk <sslug-locale@sslug.dk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: libgimp/gimpcolorbutton.c:121
-msgid "/Use Foreground Color"
-msgstr "/Brug forgrundsfarve"
-
-#: libgimp/gimpcolorbutton.c:122
-msgid "/Use Background Color"
-msgstr "/Brug baggrundsfarve"
 
 #: libgimp/gimpexport.c:160 libgimp/gimpexport.c:187
 msgid "can't handle layers"
@@ -112,9 +104,9 @@ msgstr "Eksportér"
 msgid "Ignore"
 msgstr "Ignorér"
 
-#: libgimp/gimpexport.c:342 libgimp/gimpquerybox.c:204
-#: libgimp/gimpquerybox.c:260 libgimp/gimpquerybox.c:318
-#: libgimp/gimpquerybox.c:383 libgimp/gimpunitmenu.c:505
+#: libgimp/gimpexport.c:342 libgimpwidgets/gimpquerybox.c:208
+#: libgimpwidgets/gimpquerybox.c:264 libgimpwidgets/gimpquerybox.c:322
+#: libgimpwidgets/gimpquerybox.c:387 libgimpwidgets/gimpunitmenu.c:510
 msgid "Cancel"
 msgstr "Annullér"
 
@@ -129,80 +121,88 @@ msgstr "Af følgende årsager skal billedet eksporteres før det kan gemmes:"
 msgid "The export conversion won't modify your original image."
 msgstr "Eksportkonverteringen vil ikke ændre det oprindelige billede."
 
-#: libgimp/gimpfileselection.c:388
-msgid "Select File"
-msgstr "Vælg fil"
-
-#: libgimp/gimpquerybox.c:204 libgimp/gimpquerybox.c:260
-#: libgimp/gimpquerybox.c:318 libgimp/gimpquerybox.c:383
-#: libgimp/gimpunitmenu.c:503
-msgid "OK"
-msgstr "Ok"
-
-#: libgimp/gimpunitmenu.c:241
-msgid "More..."
-msgstr "Flere..."
-
-#: libgimp/gimpunitmenu.c:498
-msgid "Unit Selection"
-msgstr "Enhedsvalg"
-
-#: libgimp/gimpunitmenu.c:535
-msgid "Unit"
-msgstr "Enhed"
-
-#: libgimp/gimpunitmenu.c:536
-msgid "Factor"
-msgstr "Faktor"
-
 #. pseudo unit
-#: libgimp/gimpunit.c:49
+#: libgimp/gimpunit.c:52
 msgid "pixel"
 msgstr "pixel"
 
-#: libgimp/gimpunit.c:49
+#: libgimp/gimpunit.c:52
 msgid "pixels"
 msgstr "pixler"
 
 #. standard units
-#: libgimp/gimpunit.c:52
+#: libgimp/gimpunit.c:55
 msgid "inch"
 msgstr "tomme"
 
-#: libgimp/gimpunit.c:52
+#: libgimp/gimpunit.c:55
 msgid "inches"
 msgstr "tommer"
 
-#: libgimp/gimpunit.c:53
+#: libgimp/gimpunit.c:56
 msgid "millimeter"
 msgstr "millimeter"
 
-#: libgimp/gimpunit.c:53
+#: libgimp/gimpunit.c:56
 msgid "millimeters"
 msgstr "millimetre"
 
 #. professional units
-#: libgimp/gimpunit.c:56
+#: libgimp/gimpunit.c:59
 msgid "point"
 msgstr "punkt"
 
-#: libgimp/gimpunit.c:56
+#: libgimp/gimpunit.c:59
 msgid "points"
 msgstr "punkter"
 
-#: libgimp/gimpunit.c:57
+#: libgimp/gimpunit.c:60
 msgid "pica"
 msgstr "pica"
 
-#: libgimp/gimpunit.c:57
+#: libgimp/gimpunit.c:60
 msgid "picas"
 msgstr "picaer"
 
-#: libgimp/gimpunit.c:64
+#: libgimp/gimpunit.c:67
 msgid "percent"
 msgstr "procent"
 
-#: libgimp/gimpwidgets.c:715
+#: libgimpwidgets/gimpcolorbutton.c:71
+msgid "/Use Foreground Color"
+msgstr "/Brug forgrundsfarve"
+
+#: libgimpwidgets/gimpcolorbutton.c:72
+msgid "/Use Background Color"
+msgstr "/Brug baggrundsfarve"
+
+#: libgimpwidgets/gimpfileselection.c:389
+msgid "Select File"
+msgstr "Vælg fil"
+
+#: libgimpwidgets/gimpquerybox.c:208 libgimpwidgets/gimpquerybox.c:264
+#: libgimpwidgets/gimpquerybox.c:322 libgimpwidgets/gimpquerybox.c:387
+#: libgimpwidgets/gimpunitmenu.c:508
+msgid "OK"
+msgstr "Ok"
+
+#: libgimpwidgets/gimpunitmenu.c:246
+msgid "More..."
+msgstr "Flere..."
+
+#: libgimpwidgets/gimpunitmenu.c:503
+msgid "Unit Selection"
+msgstr "Enhedsvalg"
+
+#: libgimpwidgets/gimpunitmenu.c:540
+msgid "Unit"
+msgstr "Enhed"
+
+#: libgimpwidgets/gimpunitmenu.c:541
+msgid "Factor"
+msgstr "Faktor"
+
+#: libgimpwidgets/gimpwidgets.c:722
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -211,11 +211,11 @@ msgstr ""
 "tilfældighedstal generator startværdi - dette tillader dig at gentage en "
 "given \"tilfældig\" operation"
 
-#: libgimp/gimpwidgets.c:720
+#: libgimpwidgets/gimpwidgets.c:727
 msgid "Time"
 msgstr "Tid"
 
-#: libgimp/gimpwidgets.c:729
+#: libgimpwidgets/gimpwidgets.c:736
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -223,14 +223,14 @@ msgstr ""
 "Start tilfældighedstalsgeneratoren fra  den aktuelle tid - dette garanterer "
 "en rimelig tilfældighed"
 
-#: libgimp/gimpwidgets.c:1041
+#: libgimpwidgets/gimpwidgets.c:1049
 msgid "Bytes"
 msgstr "Byte"
 
-#: libgimp/gimpwidgets.c:1042
+#: libgimpwidgets/gimpwidgets.c:1050
 msgid "KiloBytes"
 msgstr "Kilobyte"
 
-#: libgimp/gimpwidgets.c:1043
+#: libgimpwidgets/gimpwidgets.c:1051
 msgid "MegaBytes"
 msgstr "Megabyte"

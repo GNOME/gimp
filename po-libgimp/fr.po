@@ -5,7 +5,6 @@
 # Joaquim Fellmann <joaquim@hrnet.fr>, 2000.
 # Christophe Merlet (RedFox) <redfox@eikonex.org>, 2000.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 1.1.29\n"

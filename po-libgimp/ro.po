@@ -1,0 +1,4268 @@
+# gimp ro translation
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# Robert Claudiu Gheorghe <rgheorghe@writeme.com>, 2001.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-libgimp\n"
+"POT-Creation-Date: 2001-05-21 20:20+0200\n"
+"PO-Revision-Date: 2000-11-24 15:46+0100\n"
+"Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
+"Language-Team: Românã <ro@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: libgimp/gimpexport.c:160 libgimp/gimpexport.c:187
+#, fuzzy
+msgid "can't handle layers"
+msgstr "Scaleazã stratul"
+
+#: libgimp/gimpexport.c:161 libgimp/gimpexport.c:170
+#, fuzzy
+msgid "Merge Visible Layers"
+msgstr "/Combinã stratele vizibile..."
+
+#: libgimp/gimpexport.c:169 libgimp/gimpexport.c:178
+msgid "can only handle layers as animation frames"
+msgstr ""
+
+#: libgimp/gimpexport.c:170 libgimp/gimpexport.c:179
+#, fuzzy
+msgid "Save as Animation"
+msgstr "/Filtre/Animaþie"
+
+#: libgimp/gimpexport.c:179 libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
+#, fuzzy
+msgid "Flatten Image"
+msgstr "/Aplatizeazã imaginea"
+
+#: libgimp/gimpexport.c:196
+#, fuzzy
+msgid "can't handle transparency"
+msgstr "Pãstreazã Transparenþa"
+
+#: libgimp/gimpexport.c:205
+msgid "can only handle RGB images"
+msgstr ""
+
+#: libgimp/gimpexport.c:206 libgimp/gimpexport.c:234 libgimp/gimpexport.c:243
+#, fuzzy
+msgid "Convert to RGB"
+msgstr "Conversie"
+
+#: libgimp/gimpexport.c:214
+msgid "can only handle grayscale images"
+msgstr ""
+
+#: libgimp/gimpexport.c:215 libgimp/gimpexport.c:234 libgimp/gimpexport.c:255
+#, fuzzy
+msgid "Convert to Grayscale"
+msgstr "Scarã de gri-uri "
+
+#: libgimp/gimpexport.c:223
+#, fuzzy
+msgid "can only handle indexed images"
+msgstr "Amestec: Invalid pentru imaginii indexate"
+
+#: libgimp/gimpexport.c:224 libgimp/gimpexport.c:243 libgimp/gimpexport.c:253
+msgid ""
+"Convert to Indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+
+#: libgimp/gimpexport.c:233
+msgid "can only handle RGB or grayscale images"
+msgstr ""
+
+#: libgimp/gimpexport.c:242
+#, fuzzy
+msgid "can only handle RGB or indexed images"
+msgstr "Amestec: Invalid pentru imaginii indexate"
+
+#: libgimp/gimpexport.c:252
+#, fuzzy
+msgid "can only handle grayscale or indexed images"
+msgstr "Amestec: Invalid pentru imaginii indexate"
+
+#: libgimp/gimpexport.c:263
+#, fuzzy
+msgid "needs an alpha channel"
+msgstr "Canalul alfa al stratului"
+
+#: libgimp/gimpexport.c:264
+#, fuzzy
+msgid "Add Alpha Channel"
+msgstr "/Adaugã canal de transparenþa"
+
+#.
+#. *  Plug-ins have called gtk_init () before calling gimp_export ().
+#. *  Otherwise bad things will happen now!!
+#.
+#. the dialog
+#: libgimp/gimpexport.c:333
+#, fuzzy
+msgid "Export File"
+msgstr "Expunere:"
+
+#: libgimp/gimpexport.c:338
+#, fuzzy
+msgid "Export"
+msgstr "Expunere:"
+
+#: libgimp/gimpexport.c:340
+#, fuzzy
+msgid "Ignore"
+msgstr "nimic"
+
+#: libgimp/gimpexport.c:342 libgimpwidgets/gimpquerybox.c:208
+#: libgimpwidgets/gimpquerybox.c:264 libgimpwidgets/gimpquerybox.c:322
+#: libgimpwidgets/gimpquerybox.c:387 libgimpwidgets/gimpunitmenu.c:510
+msgid "Cancel"
+msgstr "Renunþã"
+
+#: libgimp/gimpexport.c:357
+msgid ""
+"Your image should be exported before it can be saved for the following "
+"reasons:"
+msgstr ""
+
+#. the footline
+#: libgimp/gimpexport.c:420
+msgid "The export conversion won't modify your original image."
+msgstr ""
+
+#. pseudo unit
+#: libgimp/gimpunit.c:52
+msgid "pixel"
+msgstr "punct ecran"
+
+#: libgimp/gimpunit.c:52
+msgid "pixels"
+msgstr "puncte ecran"
+
+#. standard units
+#: libgimp/gimpunit.c:55
+msgid "inch"
+msgstr "inch"
+
+#: libgimp/gimpunit.c:55
+msgid "inches"
+msgstr "inches"
+
+#: libgimp/gimpunit.c:56
+msgid "millimeter"
+msgstr "milimetru"
+
+#: libgimp/gimpunit.c:56
+msgid "millimeters"
+msgstr "milimetri"
+
+#. professional units
+#: libgimp/gimpunit.c:59
+msgid "point"
+msgstr "punct"
+
+#: libgimp/gimpunit.c:59
+msgid "points"
+msgstr "puncte"
+
+#: libgimp/gimpunit.c:60
+msgid "pica"
+msgstr "pica"
+
+#: libgimp/gimpunit.c:60
+msgid "picas"
+msgstr "picas"
+
+#: libgimp/gimpunit.c:67
+msgid "percent"
+msgstr "procent"
+
+#: libgimpwidgets/gimpcolorbutton.c:71
+#, fuzzy
+msgid "/Use Foreground Color"
+msgstr "Prim Plan "
+
+#: libgimpwidgets/gimpcolorbutton.c:72
+#, fuzzy
+msgid "/Use Background Color"
+msgstr "Fundal"
+
+#: libgimpwidgets/gimpfileselection.c:389
+#, fuzzy
+msgid "Select File"
+msgstr "Selecteazã"
+
+#: libgimpwidgets/gimpquerybox.c:208 libgimpwidgets/gimpquerybox.c:264
+#: libgimpwidgets/gimpquerybox.c:322 libgimpwidgets/gimpquerybox.c:387
+#: libgimpwidgets/gimpunitmenu.c:508
+msgid "OK"
+msgstr "De acord"
+
+#: libgimpwidgets/gimpunitmenu.c:246
+msgid "More..."
+msgstr ""
+
+#: libgimpwidgets/gimpunitmenu.c:503
+#, fuzzy
+msgid "Unit Selection"
+msgstr "Selecþie"
+
+#: libgimpwidgets/gimpunitmenu.c:540
+#, fuzzy
+msgid "Unit"
+msgstr "Unitate de masurã:"
+
+#: libgimpwidgets/gimpunitmenu.c:541
+#, fuzzy
+msgid "Factor"
+msgstr "Panã"
+
+#: libgimpwidgets/gimpwidgets.c:722
+msgid ""
+"If the \"Time\" button is not pressed, use this value for random number "
+"generator seed - this allows you to repeat a given \"random\" operation"
+msgstr ""
+
+#: libgimpwidgets/gimpwidgets.c:727
+#, fuzzy
+msgid "Time"
+msgstr "imagine"
+
+#: libgimpwidgets/gimpwidgets.c:736
+msgid ""
+"Seed random number generator from the current time - this guarantees a "
+"reasonable randomization"
+msgstr ""
+
+#: libgimpwidgets/gimpwidgets.c:1049
+#, fuzzy
+msgid "Bytes"
+msgstr "%d Octeþi"
+
+#: libgimpwidgets/gimpwidgets.c:1050
+msgid "KiloBytes"
+msgstr ""
+
+#: libgimpwidgets/gimpwidgets.c:1051
+msgid "MegaBytes"
+msgstr ""
+
+#~ msgid "About the GIMP"
+#~ msgstr "Despre GIMP"
+
+#~ msgid "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
+#~ msgstr "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
+
+#~ msgid "Version %s brought to you by"
+#~ msgstr "Versiunea %s vã este adusã de cãtre"
+
+#~ msgid "Please visit http://www.gimp.org/ for more info"
+#~ msgstr "Vizitaþi vã rog http://www.gimp.org/ pentru mai multe informaþii"
+
+#~ msgid "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
+#~ msgstr "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
+
+#~ msgid "The GIMP"
+#~ msgstr "GIMP"
+
+#~ msgid "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
+#~ msgstr "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
+
+#~ msgid "brought to you by"
+#~ msgstr "vã este adus(ã) de cãtre"
+
+#~ msgid "GIMP Startup"
+#~ msgstr "Pornire GIMP"
+
+#~ msgid "parsing \"%s\"\n"
+#~ msgstr "parcurg ºi procesez \"%s\"\n"
+
+#~ msgid "Looking for data files"
+#~ msgstr "Caut fiºierele de date"
+
+#~ msgid "Parasites"
+#~ msgstr "Paraziþi"
+
+#~ msgid "Brushes"
+#~ msgstr "Pensule"
+
+#~ msgid "Patterns"
+#~ msgstr "Modele"
+
+#~ msgid "Palettes"
+#~ msgstr "Palete"
+
+#~ msgid "Gradients"
+#~ msgstr "Gradienþi"
+
+#~ msgid "Really Quit?"
+#~ msgstr "Doreºti sã pãrãseºti programul?"
+
+#~ msgid ""
+#~ "Some files unsaved.\n"
+#~ "\n"
+#~ "Quit the GIMP?"
+#~ msgstr ""
+#~ "Unele fiºiere nu au fost salvate.\n"
+#~ "\n"
+#~ "Doreºti sã pãrãseºti GIMP?"
+
+#~ msgid "Quit"
+#~ msgstr "Ieºire"
+
+#~ msgid "Brush Editor"
+#~ msgstr "Modificator de pensule"
+
+#~ msgid "Radius:"
+#~ msgstr "Razã:"
+
+#~ msgid "Hardness:"
+#~ msgstr "Duritate:"
+
+#~ msgid "Aspect Ratio:"
+#~ msgstr "Raportul de aspect:"
+
+#~ msgid "Angle:"
+#~ msgstr "Unghi:"
+
+#~ msgid "Brush Selection"
+#~ msgstr "Selecþie pensulã"
+
+#~ msgid "No Brushes available"
+#~ msgstr "Nu este disponibilã nici o pensulã"
+
+#~ msgid "Opacity:"
+#~ msgstr "Opacitate:"
+
+#~ msgid "Mode:"
+#~ msgstr "Mod:"
+
+#~ msgid "Spacing:"
+#~ msgstr "Spaþiere:"
+
+#~ msgid "Sorry, this brush can't be edited."
+#~ msgstr "Îmi pare rãu, aceastã pensulã nu poate fi modificatã"
+
+#~ msgid "Offset"
+#~ msgstr "Decalaj"
+
+#~ msgid "Offset X:"
+#~ msgstr "Decalaj X:"
+
+#~ msgid "Y:"
+#~ msgstr "Y:"
+
+#~ msgid "Wrap Around"
+#~ msgstr "Umple împrejur"
+
+#~ msgid "Fill Type"
+#~ msgstr "Tip umplere"
+
+#~ msgid "Transparent"
+#~ msgstr "Transparent"
+
+#~ msgid "Offset by (x/2),(y/2)"
+#~ msgstr "Decalaj cu (x/2),(y/2)"
+
+#~ msgid "New Channel"
+#~ msgstr "Canal nou"
+
+#~ msgid "Raise Channel"
+#~ msgstr "Ridicã canalul"
+
+#~ msgid "Lower Channel"
+#~ msgstr "Coboarã canalul"
+
+#~ msgid "Duplicate Channel"
+#~ msgstr "Cloneazã canalul"
+
+#~ msgid ""
+#~ "Channel to Selection \n"
+#~ "<Shift> Add          <Ctrl> Subtract      <Shift><Ctrl> Intersect"
+#~ msgstr ""
+#~ "Canal -> Selecþie \n"
+#~ "<Shift> Adaugã       <Ctrl> Scade        <Shift><Ctrl> Intersecteazã"
+
+#~ msgid "Delete Channel"
+#~ msgstr "Eliminã canal"
+
+#~ msgid "Empty Channel Copy"
+#~ msgstr "Copie goalã a canalului"
+
+#~ msgid "Red"
+#~ msgstr "Roºu"
+
+#~ msgid "Green"
+#~ msgstr "Verde"
+
+#~ msgid "Blue"
+#~ msgstr "Albastru"
+
+#~ msgid "Gray"
+#~ msgstr "Gri"
+
+#~ msgid "Indexed"
+#~ msgstr "Indexat"
+
+#~ msgid "Alpha"
+#~ msgstr "Alfa"
+
+#~ msgid "New Channel Color"
+#~ msgstr "Culoarea pentru noul canal"
+
+#~ msgid "New Channel Options"
+#~ msgstr "Opþiuni pentru noul canal"
+
+#~ msgid "Channel name:"
+#~ msgstr "Nume canal:"
+
+#~ msgid "Fill Opacity:"
+#~ msgstr "Opacitate umplere:"
+
+#~ msgid "Edit Channel Color"
+#~ msgstr "Modificã culoare canalul"
+
+#~ msgid "Edit Channel Attributes"
+#~ msgstr "Modificã atribute canalul"
+
+#~ msgid "Color Selection"
+#~ msgstr "Selecþie culoare"
+
+#~ msgid "H"
+#~ msgstr "H"
+
+#~ msgid "S"
+#~ msgstr "S"
+
+#~ msgid "V"
+#~ msgstr "V"
+
+#~ msgid "R"
+#~ msgstr "R"
+
+#~ msgid "G"
+#~ msgstr "G"
+
+#~ msgid "B"
+#~ msgstr "B"
+
+#~ msgid "A"
+#~ msgstr "A"
+
+#~ msgid "Hue"
+#~ msgstr "Nuanþã"
+
+#~ msgid "Saturation"
+#~ msgstr "Saturare"
+
+#~ msgid "Value"
+#~ msgstr "Valoare"
+
+#~ msgid "Close"
+#~ msgstr "Închide"
+
+#~ msgid "Revert to Old Color"
+#~ msgstr "Înapoi la vechea culoare"
+
+#~ msgid "Hex Triplet:"
+#~ msgstr "Triplet hexazecimal:"
+
+#~ msgid "Add the current color to the color history"
+#~ msgstr "Adaugã culoarea curentã la istoricul de culori"
+
+#~ msgid "Indexed Color Palette"
+#~ msgstr "Paletã de culori indexatã"
+
+#~ msgid "Image:"
+#~ msgstr "Imagine:"
+
+#~ msgid "Index:"
+#~ msgstr "Index:"
+
+#~ msgid "Add"
+#~ msgstr "Adaugã"
+
+#~ msgid "Edit"
+#~ msgstr "Modificã"
+
+#~ msgid "Edit Indexed Color"
+#~ msgstr "Modificã culoarea indexatã"
+
+#~ msgid "Feather Selection"
+#~ msgstr "Selecþie panã"
+
+#~ msgid "Feather Selection by:"
+#~ msgstr "Selecþie panã:"
+
+#~ msgid "Shrink Selection"
+#~ msgstr "Micºoreazã selecþia"
+
+#~ msgid "Shrink Selection by:"
+#~ msgstr "Micºoreazã selecþia:"
+
+#~ msgid "Grow Selection"
+#~ msgstr "Mãreºte selecþia"
+
+#~ msgid "Grow Selection by:"
+#~ msgstr "Mãreºte selecþia:"
+
+#~ msgid "Border Selection"
+#~ msgstr "Selecþie bordurã"
+
+#~ msgid "Border Selection by:"
+#~ msgstr "Selecþie bordurã:"
+
+#~ msgid "Resize Error: Both width and height must be greater than zero."
+#~ msgstr ""
+#~ "Eroare de redimensionare: Atât lãþimea cât ºi înãlþimea trebuie sã fie "
+#~ "mai mari decât zero."
+
+#~ msgid "Indexed Color Conversion"
+#~ msgstr "Conversie la culori indexate"
+
+#~ msgid "General Palette Options"
+#~ msgstr "Opþiuni generale paletã culori"
+
+#~ msgid "Generate Optimal Palette:"
+#~ msgstr "Genereazã o paletã optimalã de culori:"
+
+#~ msgid "# of Colors:"
+#~ msgstr "Numãr de culori"
+
+#~ msgid "Custom Palette Options"
+#~ msgstr "Opþiuni personalizate paletã culori"
+
+#~ msgid "Remove Unused Colors from Final Palette"
+#~ msgstr "Eliminã culorile nefolosite din paleta finalã"
+
+#~ msgid "Use Custom Palette:"
+#~ msgstr "Foloseºte paleta de culori personalizatã:"
+
+#~ msgid "Use WWW-Optimized Palette"
+#~ msgstr "Foloseºte paleta de culori optimizata pentru WEB"
+
+#~ msgid "Use Black/White (1-Bit) Palette"
+#~ msgstr "Foloseºte paleta alb/negru (1 Bit)"
+
+#~ msgid "Dither Options"
+#~ msgstr "Opþiuni pentru simularea de nuanþe"
+
+#~ msgid "No Color Dithering"
+#~ msgstr "Fãrã simulare de nuanþe "
+
+#~ msgid "Positioned Color Dithering"
+#~ msgstr "Simulare poziþionalã de nuanþe"
+
+#~ msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
+#~ msgstr "Simulare de nuanþe Floyd-Steinberg (Cu scurgere redusã de culoare)"
+
+#~ msgid "Floyd-Steinberg Color Dithering (Normal)"
+#~ msgstr "Simulare de nuanþe Floyd-Steinberg (Normala)"
+
+#~ msgid "Enable Dithering of Transparency"
+#~ msgstr "Activeazã simularea de transparenþã"
+
+#~ msgid "[ Warning ]"
+#~ msgstr "[ Atenþie ]"
+
+#~ msgid ""
+#~ "You are attempting to convert an image with alpha/layers from RGB/GRAY to "
+#~ "INDEXED.\n"
+#~ "You should not generate a palette of more than 255 colors if you intend "
+#~ "to create a transparent or animated GIF file from this image."
+#~ msgstr ""
+#~ "Încercaþi sã convertiþi o imagine cu transparenþã/straturi din RGB/GRAY "
+#~ "în INDEXAT.\n"
+#~ "Nu trebuie sã generaþi o paletã de mai mult de 255 de culori dacã "
+#~ "intenþionaþi sã creaþi un fiºier GIF transparent sau animat din aceastã "
+#~ "imagine."
+
+#~ msgid "Select Custom Palette"
+#~ msgstr "Selectaþi paleta de culori personalizatã"
+
+#~ msgid "Desaturate operates only on RGB color drawables."
+#~ msgstr "De-saturarea functioneazã numai pe imaginile de tip RGB"
+
+#~ msgid "Device Status"
+#~ msgstr "Stare dispozitiv"
+
+#~ msgid "Save"
+#~ msgstr "Salveazã"
+
+#~ msgid "Foreground: %d, %d, %d"
+#~ msgstr "Prim plan: %d, %d, %d"
+
+#~ msgid "Background: %d, %d, %d"
+#~ msgstr "Fundal: %d, %d, %d"
+
+#~ msgid "Pasted Layer"
+#~ msgstr "Strat inserat"
+
+#~ msgid ""
+#~ "Open the selected entry\n"
+#~ "<Shift> Raise window if already open\n"
+#~ "<Ctrl> Load Image dialog"
+#~ msgstr ""
+#~ "Deschide obiectul curent selectat\n"
+#~ "<Shift> Ridicã fereastra dacã este deja deschisã\n"
+#~ "<Ctrl> Încarcã fereastra de dialog pentru imagini"
+
+#~ msgid ""
+#~ "Move the selected entry up in the index\n"
+#~ "<Shift> To top"
+#~ msgstr ""
+#~ "Mutã obiectul selectat în sus în index\n"
+#~ "<Shift> Cãtre vârf"
+
+#~ msgid ""
+#~ "Move the selected entry down in the index\n"
+#~ "<Shift> To bottom"
+#~ msgstr ""
+#~ "Mutã obiectul selectat în jos în index\n"
+#~ "<Shift> Cãtre bazã"
+
+#~ msgid "Remove the selected entry from the index"
+#~ msgstr "Eliminã obiectul selectat din index"
+
+#~ msgid "Document Index"
+#~ msgstr "Index document"
+
+#~ msgid "Equalize does not operate on indexed drawables."
+#~ msgstr "Egalizarea nu funcþioneazã pe imagini indexate."
+
+#~ msgid "Error opening file %s: %s"
+#~ msgstr "Eroare la deschiderea fiºierului %s: %s"
+
+#~ msgid "Can't save, nothing selected!"
+#~ msgstr "Nu pot salva, nu este nimic selectat!"
+
+#~ msgid "Save error log to file..."
+#~ msgstr "Salvare jurnal de erori în fiºier..."
+
+#~ msgid "GIMP Error Console"
+#~ msgstr "Consola de erori GIMP"
+
+#~ msgid "Clear"
+#~ msgstr "Curãþã"
+
+#~ msgid "Write all errors to file..."
+#~ msgstr "Scrie toate erorile în fiºier..."
+
+#~ msgid "Write selection to file..."
+#~ msgstr "Scrie selecþia în fiºier..."
+
+#~ msgid ""
+#~ "You are trying to create an image which\n"
+#~ "has an initial size of %s.\n"
+#~ "\n"
+#~ "Choose OK to create this image anyway.\n"
+#~ "Choose Cancel if you didn't mean to\n"
+#~ "create such a large image.\n"
+#~ "\n"
+#~ "To prevent this dialog from appearing,\n"
+#~ "increase the \"Maximum Image Size\"\n"
+#~ "setting (currently %s) in the\n"
+#~ "preferences dialog."
+#~ msgstr ""
+#~ "Încercaþi sã creaþi o imagine care\n"
+#~ "are dimensiunea iniþialã de %s.\n"
+#~ "\n"
+#~ "Alege OK pentru a crea aceastã imagine indiferent de consecinþe.\n"
+#~ "Alege Cancel dacã nu intenþionezi de fapt sã\n"
+#~ "creezi o imagine de asemenea dimensiune.\n"
+#~ "\n"
+#~ "Pentru ca aceastã fereastrã de dialog sã nu mai aparã de acum înainte,\n"
+#~ "mareºte valoarea \"Maximum Image Size\"(Dimensiunea maximã a imaginii\n"
+#~ "care acum este %s) în fereastra de \n"
+#~ "dialog pentru Preferinþe."
+
+#~ msgid "Confirm Image Size"
+#~ msgstr "Confirmã dimensiunea imaginii"
+
+#~ msgid "Image Size: %s"
+#~ msgstr "Dimensiunea imaginii: %s"
+
+#~ msgid "New Image"
+#~ msgstr "Imagine nouã"
+
+#~ msgid "Reset"
+#~ msgstr "Iniþializeazã"
+
+#~ msgid "Width:"
+#~ msgstr "Lãþime:"
+
+#~ msgid "Height:"
+#~ msgstr "Înãlþime:"
+
+#~ msgid "Pixels"
+#~ msgstr "Puncte ecran"
+
+#~ msgid "Resolution X:"
+#~ msgstr "Rezoluþie X:"
+
+#~ msgid "pixels/%a"
+#~ msgstr "puncte ecran/%a"
+
+#~ msgid "Image Type"
+#~ msgstr "Tip imagine"
+
+#~ msgid "Load Image"
+#~ msgstr "Încarcã imagine"
+
+#~ msgid "Determine File Type"
+#~ msgstr "Determinã tipul fiºierului"
+
+#~ msgid ""
+#~ "Generate\n"
+#~ "Preview"
+#~ msgstr ""
+#~ "Genereazã o\n"
+#~ "previzualizare"
+
+#~ msgid "Preview"
+#~ msgstr "Previzualizare"
+
+#~ msgid "No Selection."
+#~ msgstr "Nici o selecþie."
+
+#~ msgid "Save Image"
+#~ msgstr "Salvare imagine"
+
+#~ msgid "Save Options"
+#~ msgstr "Salvare opþiuni"
+
+#~ msgid "Determine File Type:"
+#~ msgstr "Determinã tipul fiºierului:"
+
+#~ msgid ""
+#~ "Save failed.\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Salvare eºuatã.\n"
+#~ "%s"
+
+#~ msgid "Save a Copy of the Image"
+#~ msgstr "Salveazã o copie a imaginii"
+
+#~ msgid ""
+#~ "Revert failed.\n"
+#~ "No filename associated with this image."
+#~ msgstr ""
+#~ "Refacerea a eºuat.\n"
+#~ "Nici un fiºier nu este asociat cu aceastã imagine."
+
+#~ msgid ""
+#~ "Reverting %s to\n"
+#~ "%s\n"
+#~ "\n"
+#~ "(You will lose all your changes\n"
+#~ "including all undo information)"
+#~ msgstr ""
+#~ "Restaurare %s în\n"
+#~ "%s\n"
+#~ "\n"
+#~ "(O sã pierdeþi toate schimbãrile efectuate\n"
+#~ "inclusiv toate informaþiile de refacere)"
+
+#~ msgid "Revert Image?"
+#~ msgstr "Restaurez imaginea?"
+
+#~ msgid "Yes"
+#~ msgstr "Da"
+
+#~ msgid "No"
+#~ msgstr "Nu"
+
+#~ msgid ""
+#~ "%s failed.\n"
+#~ "%s: Unknown file type."
+#~ msgstr ""
+#~ "%s a eºuat.\n"
+#~ "%s: Tip de fiºier necunoscut."
+
+#~ msgid ""
+#~ "%s failed.\n"
+#~ "%s is not a regular file."
+#~ msgstr ""
+#~ "%s a eºuat.\n"
+#~ "%s nu este un fiºier obiºnuit."
+
+#~ msgid ""
+#~ "%s failed.\n"
+#~ "%s: Permission denied."
+#~ msgstr ""
+#~ "%s a eºuat.\n"
+#~ "%s: Nu aveþi suficiente drepturi(Permission denied)."
+
+#~ msgid "Open"
+#~ msgstr "Deschide"
+
+#~ msgid ""
+#~ "Save failed.\n"
+#~ "%s: Unknown file type."
+#~ msgstr ""
+#~ "Salvarea a eºuat.\n"
+#~ "%s: Tip de fiºier necunoscut."
+
+#~ msgid ""
+#~ "Save failed.\n"
+#~ "%s is not a regular file."
+#~ msgstr ""
+#~ "Salvarea a eºuat.\n"
+#~ "%s nu este un fiºier obiºnuit."
+
+#~ msgid ""
+#~ "Save failed.\n"
+#~ "%s: Permission denied."
+#~ msgstr ""
+#~ "Salvarea a eºuat.\n"
+#~ "%s: Nu aveþi suficiente drepturi(Permission denied)."
+
+#~ msgid "(This thumbnail may be out of date)"
+#~ msgstr "(Este posibil ca aceastã imagine-medalion sã fie invalidã)"
+
+#~ msgid "(No Information)"
+#~ msgstr "(Nici o informaþie)"
+
+#~ msgid "(Thumbnail saving is disabled)"
+#~ msgstr "(Salvarea imaginii-medalion a fost dezactivatã)"
+
+#~ msgid "(Could not write thumbnail file)"
+#~ msgstr "(Nu am putut scrie fiºierul cu imaginea-medalion)"
+
+#~ msgid "(Thumbnail file not written)"
+#~ msgstr "(Fiºierul cu imaginea-medalion nu a fost salvat)"
+
+#~ msgid "No preview available"
+#~ msgstr "Previzualizare indisponibilã"
+
+#~ msgid "(could not make preview)"
+#~ msgstr "(nu am putut crea previzualizarea)"
+
+#~ msgid ""
+#~ "Open failed.\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Deschiderea a eºuat.\n"
+#~ "%s"
+
+#~ msgid "%s exists, overwrite?"
+#~ msgstr "%s existã, suprascriu?"
+
+#~ msgid "File Exists!"
+#~ msgstr "Fiºierul existã!"
+
+#~ msgid "Revert"
+#~ msgstr "Refacere"
+
+#~ msgid ""
+#~ "Revert failed.\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Refacerea a eºuat.\n"
+#~ "%s"
+
+#~ msgid ""
+#~ "Cannot anchor this layer because\n"
+#~ "it is not a floating selection."
+#~ msgstr ""
+#~ "Nu pot ancora acest strat deoarece\n"
+#~ "nu este o selecþie plutitoare."
+
+#~ msgid ""
+#~ "Cannot create a new layer from the floating\n"
+#~ "selection because it belongs to a\n"
+#~ "layer mask or channel."
+#~ msgstr ""
+#~ "Nu pot crea un nou strat din selecþia \n"
+#~ "plutitoare deoarece aparþine unui strat\n"
+#~ "de tip mascã sau canal."
+
+#~ msgid "RGB-empty"
+#~ msgstr "RGB-gol"
+
+#~ msgid "RGB"
+#~ msgstr "RGB"
+
+#~ msgid "grayscale-empty"
+#~ msgstr "nivele de gri-gol"
+
+#~ msgid "grayscale"
+#~ msgstr "nivele de gri"
+
+#~ msgid "indexed-empty"
+#~ msgstr "indexat-gol"
+
+#~ msgid "indexed"
+#~ msgstr "indexat"
+
+#~ msgid ""
+#~ "Changes were made to %s.\n"
+#~ "Close anyway?"
+#~ msgstr ""
+#~ "S-au fãcut schimbãri la '%s'.\n"
+#~ "Închid fãrã sã salvez aceste modificãri?"
+
+#~ msgid ""
+#~ "Unable to cut/copy because the selected\n"
+#~ "region is empty."
+#~ msgstr ""
+#~ "Nu pot sã tai/copiez deoarece regiunea\n"
+#~ "selectatã este goalã."
+
+#~ msgid "Float Selection: No selection to float."
+#~ msgstr "Selecþie Plutitoare: Nu exista nici o selecþie."
+
+#~ msgid "Floated Layer"
+#~ msgstr "Strat Plutitor"
+
+#~ msgid ""
+#~ "The active layer has no alpha channel\n"
+#~ "to convert to a selection."
+#~ msgstr ""
+#~ "Stratul activ nu are un canal de transparenþã(alfa)\n"
+#~ "pe care sã-l convertesc la o selecþie."
+
+#~ msgid ""
+#~ "The active layer has no mask\n"
+#~ "to convert to a selection."
+#~ msgstr ""
+#~ "Stratul activ nu are nici o mascã\n"
+#~ "pe care sã o convertesc la o selecþie."
+
+#~ msgid "No selection to stroke!"
+#~ msgstr "Nu existã nici o selecþie pe care sã o ºtanþez!"
+
+#~ msgid "Paintbrush operation failed."
+#~ msgstr "Operatia de tip 'pensula de pictura' a eºuat."
+
+#~ msgid "Unknown brush format version #%d in \"%s\"."
+#~ msgstr "Format necunoscut de pensulã versiunea #%d în \"%s\"."
+
+#~ msgid "Error in GIMP brush file \"%s\"."
+#~ msgstr "Eroare în fiºierul de pensule al GIMP \"%s\"."
+
+#~ msgid "Unnamed"
+#~ msgstr "Farã nume"
+
+#~ msgid "GIMP brush file appears to be truncated: \"%s\"."
+#~ msgstr "Fiºierul de pensule al GIMP pare sã fie trunchiat: \"%s\"."
+
+#~ msgid ""
+#~ "Brush pipes should have at least one brush:\n"
+#~ "\"%s\""
+#~ msgstr ""
+#~ "Colecþiile de pensule trebuie sã aibã cel puþin o pensula:\n"
+#~ "\"%s\""
+
+#~ msgid ""
+#~ "Failed to load one of the brushes in the brush pipe\n"
+#~ "\"%s\""
+#~ msgstr ""
+#~ "Nu am reuºit sã încarc una din pensule în colecþia de pensule\n"
+#~ "\"%s\""
+
+#~ msgid "copy"
+#~ msgstr "copiere"
+
+#~ msgid "%s copy"
+#~ msgstr "%s copiere"
+
+#~ msgid "Selection Mask"
+#~ msgstr "Masca de selecþie"
+
+#~ msgid "unnamed"
+#~ msgstr "fãrã nume"
+
+#~ msgid "Layer type %d not supported."
+#~ msgstr "Tipul de strat %d nu este suportat."
+
+#~ msgid "Can't fill unknown image type."
+#~ msgstr "Nu pot umple un tip necunoscut de imagine."
+
+#~ msgid "parasite attach to drawable"
+#~ msgstr "ataºare parazit la imagine"
+
+#~ msgid "detach parasite from drawable"
+#~ msgstr "detaºare parazit de imagine"
+
+#~ msgid "Could not find GIMP Help Browser"
+#~ msgstr "Nu am gãsit programul de afiºare informaþii de ajutor"
+
+#~ msgid ""
+#~ "Could not find the GIMP Help Browser procedure.\n"
+#~ "It probably was not compiled because\n"
+#~ "you don't have GtkXmHTML installed."
+#~ msgstr ""
+#~ "Nu am gãsit procedura de apelare a programului de afiºare informaþii de "
+#~ "ajutor.\n"
+#~ "Probabil nu a fost compilatã deoarece\n"
+#~ "nu aveþi instalat pe sistem GtkXmHTML."
+
+#~ msgid "Use Netscape instead"
+#~ msgstr "Folosesc Netscape în schimb."
+
+#~ msgid "Layer cannot be raised any further"
+#~ msgstr "Stratul nu mai poate fi ridicat"
+
+#~ msgid "Layer cannot be lowered any further"
+#~ msgstr "Stratul nu mai poate fi coborât"
+
+#~ msgid "Layer is already on top"
+#~ msgstr "Stratul este deja în vârf"
+
+#~ msgid "Can't raise Layer without alpha"
+#~ msgstr "Nu pot ridica un strat care nu are alfa(transparenþã)"
+
+#~ msgid "Layer is already on bottom"
+#~ msgstr "Stratul este deja la bazã"
+
+#~ msgid "BG has no alpha, layer was placed above"
+#~ msgstr "Fundalul nu are alfa(transparenþã), stratul a fost plasat deasupra"
+
+#~ msgid ""
+#~ "There are not enough visible layers for a merge.\n"
+#~ "There must be at least two."
+#~ msgstr ""
+#~ "Nu sunt suficiente straturi vizibile pentru a face o combinare.\n"
+#~ "Trebuie sã fie cel puþin douã."
+
+#~ msgid "There are not enough visible layers for a merge down."
+#~ msgstr ""
+#~ "Nu sunt suficiente straturi vizibile pentru a face o combinare în jos."
+
+#~ msgid ""
+#~ "Unable to add a layer mask since\n"
+#~ "the layer already has one."
+#~ msgstr ""
+#~ "Nu pot sã adaug stratul mascã\n"
+#~ "deoarece stratul are deja unul."
+
+#~ msgid ""
+#~ "Unable to add a layer mask to a\n"
+#~ "layer in an indexed image."
+#~ msgstr ""
+#~ "Nu pot sã adaug un strat de tip mascã\n"
+#~ "unui strat dintr-o imagine indexatã."
+
+#~ msgid ""
+#~ "Cannot add layer mask to a layer\n"
+#~ "with no alpha channel."
+#~ msgstr ""
+#~ "Nu pot sã adaug un strat de tip mascã\n"
+#~ "unui strat fãrã canal alfa(transparenþã)."
+
+#~ msgid "Cannot add layer mask of different dimensions than specified layer."
+#~ msgstr "Nu pot sã adaug un strat de tip mascã unui strat de alte dimensiuni"
+
+#~ msgid "Channel cannot be raiseed any further"
+#~ msgstr "Canalul nu mai poate fi ridicat"
+
+#~ msgid "Channel cannot be lowered any further"
+#~ msgstr "Canalul nu mai poate fi coborât"
+
+#~ msgid "Untitled"
+#~ msgstr "Fara nume"
+
+#~ msgid "Zero width or height layers not allowed."
+#~ msgstr "Nu sunt permise straturi cu lãþimea sau înãlþimea zero."
+
+#~ msgid "%s mask"
+#~ msgstr "masca %s"
+
+#~ msgid "Progress"
+#~ msgstr "Progres"
+
+#~ msgid "Please wait..."
+#~ msgstr "Aºteptaþi vã rog..."
+
+#~ msgid "error parsing: \"%s\"\n"
+#~ msgstr "eroare de procesare: \"%s\"\n"
+
+#~ msgid "  at line %d column %d\n"
+#~ msgstr "  la linia %d coloana %d\n"
+
+#~ msgid "  unexpected token: %s\n"
+#~ msgstr "  element neaºteptat: %s\n"
+
+#~ msgid "error parsing pluginrc"
+#~ msgstr "eroare la procesarea pluginrc"
+
+#~ msgid "Can't open %s; %s"
+#~ msgstr "Nu pot deschide %s; %s"
+
+#~ msgid "Can't rename %s to %s.old; %s"
+#~ msgstr "Nu pot redenumi %s în %s.old; %s"
+
+#~ msgid "Couldn't reopen %s\n"
+#~ msgstr "Nu am putut redeschide %s\n"
+
+#~ msgid "Can't write to %s; %s"
+#~ msgstr "Nu pot scrie în %s; %s"
+
+#~ msgid "Message repeated %d times"
+#~ msgstr "Mesaj repetat de %d ori"
+
+#~ msgid "Message repeated once"
+#~ msgstr "Mesaj repetat o singurã datã"
+
+#~ msgid ""
+#~ "WARNING:\n"
+#~ "Too many open message dialogs.\n"
+#~ "Messages are redirected to stderr."
+#~ msgstr ""
+#~ "ATENÞIE:\n"
+#~ "Prea multe ferestre de dialog deschise.\n"
+#~ "Mesajele sunt redirecþionate la stderr."
+
+#~ msgid "GIMP Message"
+#~ msgstr "Mesaj GIMP"
+
+#~ msgid "Paste"
+#~ msgstr "Insereazã"
+
+#~ msgid "Paste Into"
+#~ msgstr "Insereazã în"
+
+#~ msgid "Paste as New"
+#~ msgstr "Insereazã ca nou"
+
+#~ msgid "Paste Named Buffer"
+#~ msgstr "Insereazã informaþia memoratã cu nume"
+
+#~ msgid "Delete"
+#~ msgstr "Sterge"
+
+#~ msgid "Select a buffer to paste:"
+#~ msgstr "Selecteazã o memorie tampon pentru inserare:"
+
+#~ msgid "Enter a name for this buffer"
+#~ msgstr "Introduceþi un nume pentru acest memorie tampon"
+
+#~ msgid "Gradient Editor"
+#~ msgstr "Editorul de gradienþi"
+
+#~ msgid "Save as POV-Ray"
+#~ msgstr "Salveazã ca fiºier POV-Ray"
+
+#~ msgid "Zoom all"
+#~ msgstr "Scaleazã tot"
+
+#~ msgid "Instant update"
+#~ msgstr "Actualizare instantanee"
+
+#~ msgid "Default"
+#~ msgstr "Implicit"
+
+#~ msgid "Zoom factor: %d:1    Displaying [%0.6f, %0.6f]"
+#~ msgstr "Factorul de mãrire: %d:1    Afiºez [%0.6f, %0.6f]"
+
+#~ msgid ""
+#~ "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %"
+#~ "0.3f)    Opacity: %0.3f"
+#~ msgstr ""
+#~ "Poziþie: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %"
+#~ "0.3f)    Opacitate: %0.3f"
+
+#~ msgid "Foreground color set to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
+#~ msgstr "Culoarea de prim plan RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
+
+#~ msgid "Background color to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
+#~ msgstr "Culoarea de fundal RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
+
+#~ msgid "Drag: move    Shift+drag: move & compress"
+#~ msgstr "Tras: deplaseazã    Shift+Tras: deplaseazã ºi comprimã"
+
+#~ msgid "Click: select    Shift+click: extend selection"
+#~ msgstr "Clic: selecteazã    Shift+clic: extinde selecþia"
+
+#~ msgid "Click: select    Shift+click: extend selection    Drag: move"
+#~ msgstr "Clic: selecteazã  Shift+clic: extinde selecþia    Tras: deplaseazã"
+
+#~ msgid ""
+#~ "Click: select    Shift+click: extend selection    Drag: move    Shift"
+#~ "+drag: move & compress"
+#~ msgstr ""
+#~ "Clic: selecteazã  Shift+clic: extinde selecþia    Tras: deplaseazã    "
+#~ "Shift+Tras: deplaseazã ºi comprimã"
+
+#~ msgid "Handle position: %0.6f"
+#~ msgstr "Poziþie maner: %0.6f"
+
+#~ msgid "Distance: %0.6f"
+#~ msgstr "Distantã: %0.6f"
+
+#~ msgid "Left endpoint's color"
+#~ msgstr "Culoare punct stânga"
+
+#~ msgid "Load from"
+#~ msgstr "Încarcã din"
+
+#~ msgid "Left neighbor's right endpoint"
+#~ msgstr "Punctul din dreapta al vecinului din stânga"
+
+#~ msgid "Right endpoint"
+#~ msgstr "Punctul din dreapta"
+
+#~ msgid "Save to"
+#~ msgstr "Salveazã în"
+
+#~ msgid "Right endpoint's color"
+#~ msgstr "Culoarea punctului din dreapta"
+
+#~ msgid "Right neighbor's left endpoint"
+#~ msgstr "Punctul din stânga al vecinului din dreapta"
+
+#~ msgid "Left endpoint"
+#~ msgstr "Punctul din stânga"
+
+#~ msgid "Selection operations"
+#~ msgstr "Operaþie de selecþie"
+
+#~ msgid "Coloring type for segment"
+#~ msgstr "Tip de colorare pentru segment"
+
+#~ msgid "Split segment at midpoint"
+#~ msgstr "Împarþire segment la punctul median"
+
+#~ msgid "Split segment uniformly"
+#~ msgstr "Împarþire uniformã segment"
+
+#~ msgid "Delete segment"
+#~ msgstr "Eliminã segment"
+
+#~ msgid "Re-center segment's midpoint"
+#~ msgstr "Re-centreazã mijloc segment"
+
+#~ msgid "Re-distribute handles in segment"
+#~ msgstr "Re-distribuire mânere în segment"
+
+#~ msgid "Flip segment"
+#~ msgstr "Oglindire segment"
+
+#~ msgid "Replicate segment"
+#~ msgstr "Replicare segment"
+
+#~ msgid "Coloring type for selection"
+#~ msgstr "Tipul de colorare pentru selecþie"
+
+#~ msgid "Split segments at midpoints"
+#~ msgstr "Împarte segmentele în punctele mediane"
+
+#~ msgid "Split segments uniformly"
+#~ msgstr "Împarte segmentele în mod uniform"
+
+#~ msgid "Delete selection"
+#~ msgstr "Eliminã selecþia"
+
+#~ msgid "Re-center midpoints in selection"
+#~ msgstr "Re-centreazã punctele mediane în selecþie"
+
+#~ msgid "Re-distribute handles in selection"
+#~ msgstr "Re-distribuire mânere în selecþie"
+
+#~ msgid "Flip selection"
+#~ msgstr "Oglindire selecþie"
+
+#~ msgid "Replicate selection"
+#~ msgstr "Replicare selecþie"
+
+#~ msgid "FG color"
+#~ msgstr "Culoarea de prim-plan"
+
+#~ msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
+#~ msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
+
+#~ msgid "Left Endpoint Color"
+#~ msgstr "Culoarea punctului din stânga"
+
+#~ msgid "Right Endpoint Color"
+#~ msgstr "Culoarea punctului din dreapta"
+
+#~ msgid "Linear"
+#~ msgstr "Linear"
+
+#~ msgid "Curved"
+#~ msgstr "Curbat"
+
+#~ msgid "Sinusoidal"
+#~ msgstr "Sinusoidal"
+
+#~ msgid "Spherical (increasing)"
+#~ msgstr "Sferic (crescãtor)"
+
+#~ msgid "Spherical (decreasing)"
+#~ msgstr "Sferic (descrescãtor)"
+
+#~ msgid "(Varies)"
+#~ msgstr "(Variabil)"
+
+#~ msgid "Plain RGB"
+#~ msgstr "RGB simplu"
+
+#~ msgid "HSV (counter-clockwise hue)"
+#~ msgstr "HSV (nuanþa în sens invers acelor de ceas)"
+
+#~ msgid "HSV (clockwise hue)"
+#~ msgstr "HSV (nuanþa în sensul acelor de ceas)"
+
+#~ msgid "Split"
+#~ msgstr "Impãrþire"
+
+#~ msgid "Please select the number of uniform parts"
+#~ msgstr "Selectaþi vã rog numarul de zone uniforme"
+
+#~ msgid "in which you want to split the selected segment"
+#~ msgstr "în care doriþi sã impãrþiþi segmentul selectat"
+
+#~ msgid "in which you want to split the segments in the selection"
+#~ msgstr "în care doriþi sã impãrþiþi segmentele din selecþie"
+
+#~ msgid "Replicate"
+#~ msgstr "Replicare"
+
+#~ msgid "Please select the number of times"
+#~ msgstr "Selectaþi vã rog de câte ori"
+
+#~ msgid "you want to replicate the selected segment"
+#~ msgstr "doriþi sã replicaþi segmentul selectat"
+
+#~ msgid "you want to replicate the selection"
+#~ msgstr "doriþi sã replicaþi selecþia"
+
+#~ msgid "Gradient Selection"
+#~ msgstr "Selectie Gradient"
+
+#~ msgid "White"
+#~ msgstr "Alb"
+
+#~ msgid "%.2f KB"
+#~ msgstr "%.2f KOcteþi"
+
+#~ msgid "%.1f KB"
+#~ msgstr "%.1f KOcteþi"
+
+#~ msgid "%d KB"
+#~ msgstr "%d KOcteþi"
+
+#~ msgid "%.2f MB"
+#~ msgstr "%.2f MOcteþi"
+
+#~ msgid "%.1f MB"
+#~ msgstr "%.1f MOcteþi"
+
+#~ msgid ""
+#~ "The active brush.\n"
+#~ "Click to open the Brushes Dialog."
+#~ msgstr ""
+#~ "Pensula activã.\n"
+#~ "Clic pentru a deschide fereastra cu pensule."
+
+#~ msgid ""
+#~ "The active pattern.\n"
+#~ "Click to open the Patterns Dialog."
+#~ msgstr ""
+#~ "Modelul activ.\n"
+#~ "Clic pentru a deschide fereastra cu modele."
+
+#~ msgid ""
+#~ "The active gradient.\n"
+#~ "Click to open the Gradients Dialog."
+#~ msgstr ""
+#~ "Gradientul activ.\n"
+#~ "Clic pentru a deschide fereastra cu gradienþi."
+
+#~ msgid "General"
+#~ msgstr "General"
+
+#~ msgid "Static Gray"
+#~ msgstr "Gri Static"
+
+#~ msgid "Static Color"
+#~ msgstr "Culoare Statica"
+
+#~ msgid "Pseudo Color"
+#~ msgstr "Pseudo Culoare"
+
+#~ msgid "True Color"
+#~ msgstr "Culoare adevãratã"
+
+#~ msgid "Direct Color"
+#~ msgstr "Culoare Directã"
+
+#~ msgid "R:"
+#~ msgstr "R:"
+
+#~ msgid "G:"
+#~ msgstr "G:"
+
+#~ msgid "B:"
+#~ msgstr "B:"
+
+#~ msgid "A:"
+#~ msgstr "A:"
+
+#~ msgid "N/A"
+#~ msgstr "Indisponibil"
+
+#~ msgid "Extended"
+#~ msgstr "Extins"
+
+#~ msgid "Dimensions (w x h):"
+#~ msgstr "Dimensiuni (L x l):"
+
+#~ msgid "Resolution:"
+#~ msgstr "Rezoluþie:"
+
+#~ msgid "Scale Ratio:"
+#~ msgstr "Factorul de scarã:"
+
+#~ msgid "Display Type:"
+#~ msgstr "Tip Display:"
+
+#~ msgid "Visual Depth:"
+#~ msgstr "Adâncimea Visualã:"
+
+#~ msgid "Info: %s-%d.%d"
+#~ msgstr "Info: %s-%d.%d"
+
+#~ msgid "%d x %d pixels"
+#~ msgstr "%d x %d puncte ecran"
+
+#~ msgid "%g x %g dpi"
+#~ msgstr "%g x %g puncte/inch"
+
+#~ msgid "RGB Color"
+#~ msgstr "Culoare RGB"
+
+#~ msgid "Indexed Color"
+#~ msgstr "Culoare indexatã"
+
+#~ msgid "colors"
+#~ msgstr "culori"
+
+#~ msgid "Invert does not operate on indexed drawables."
+#~ msgstr "Invert nu funcþioneazã pe imagini indexate."
+
+#~ msgid "Invert operation failed."
+#~ msgstr "Operaþia Invert a eºuat."
+
+#~ msgid "Layer Select"
+#~ msgstr "Selectie Strat"
+
+#~ msgid "Layer"
+#~ msgstr "Strat"
+
+#~ msgid "New Layer"
+#~ msgstr "Strat nou"
+
+#~ msgid ""
+#~ "Raise Layer    \n"
+#~ "<Shift> To Top"
+#~ msgstr ""
+#~ "Ridica Stratul    \n"
+#~ "<Shift> Pânã în vârf"
+
+#~ msgid ""
+#~ "Lower Layer       \n"
+#~ "<Shift> To Bottom"
+#~ msgstr ""
+#~ "Coboarã Stratul       \n"
+#~ "<Shift> Pânã la bazã"
+
+#~ msgid "Duplicate Layer"
+#~ msgstr "Cloneazã stratul"
+
+#~ msgid "Anchor Layer"
+#~ msgstr "Ancoreazã stratul"
+
+#~ msgid "Delete Layer"
+#~ msgstr "Eliminã strat"
+
+#~ msgid "Normal"
+#~ msgstr "Normal"
+
+#~ msgid "Dissolve"
+#~ msgstr "Dizolvã"
+
+#~ msgid "Multiply"
+#~ msgstr "Multiplicã"
+
+#~ msgid "Divide"
+#~ msgstr "Imparte"
+
+#~ msgid "Screen"
+#~ msgstr "Ecran"
+
+#~ msgid "Overlay"
+#~ msgstr "Suprapunere"
+
+#~ msgid "Difference"
+#~ msgstr "Diferenþã"
+
+#~ msgid "Addition"
+#~ msgstr "Adãugare"
+
+#~ msgid "Subtract"
+#~ msgstr "Scãdere"
+
+#~ msgid "Color"
+#~ msgstr "Culoare"
+
+#~ msgid "Keep Trans."
+#~ msgstr "Pãstreazã Trans."
+
+#~ msgid "Floating Selection"
+#~ msgstr "Selecþie Plutitoare"
+
+#~ msgid "New Layer Options"
+#~ msgstr "Opþiuni strat nou"
+
+#~ msgid "Layer Name:"
+#~ msgstr "Nume strat:"
+
+#~ msgid "Layer Width:"
+#~ msgstr "Laþime strat:"
+
+#~ msgid "Layer Fill Type"
+#~ msgstr "Tip umplere strat"
+
+#~ msgid "Edit Layer Attributes"
+#~ msgstr "Modificare caracteristici strat"
+
+#~ msgid "Layer name:"
+#~ msgstr "Nume strat:"
+
+#~ msgid "Initialize Layer Mask to:"
+#~ msgstr "Iniþializeazã masca stratului cu:"
+
+#~ msgid "White (Full Opacity)"
+#~ msgstr "Alb (total opac)"
+
+#~ msgid "Black (Full Transparency)"
+#~ msgstr "Negru (total transparent)"
+
+#~ msgid ""
+#~ "Invalid width or height.\n"
+#~ "Both must be positive."
+#~ msgstr ""
+#~ "Lãþime sau înãlþime invalide.\n"
+#~ "Amândouã trebuie sã fie pozitive."
+
+#~ msgid "Layer Merge Options"
+#~ msgstr "Optiuni de combinare straturi"
+
+#~ msgid "Expanded as necessary"
+#~ msgstr "Expandeazã atât cât este necesar"
+
+#~ msgid "Clipped to image"
+#~ msgstr "Decupat dupã imagine"
+
+#~ msgid "Clipped to bottom layer"
+#~ msgstr "Decupat dupã stratul de la bazã"
+
+#~ msgid "Layers, Channels & Paths"
+#~ msgstr "Strate, Canale ºi Trasee"
+
+#~ msgid "Auto"
+#~ msgstr "Automat"
+
+#~ msgid "Layers"
+#~ msgstr "Strate"
+
+#~ msgid "Channels"
+#~ msgstr "Canale"
+
+#~ msgid "Paths"
+#~ msgstr "Trasee"
+
+#~ msgid ""
+#~ "\n"
+#~ "Invalid option.\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Opþiune invalidã.\n"
+
+#~ msgid "GIMP version"
+#~ msgstr "Versiunea de GIMP"
+
+#~ msgid ""
+#~ "\n"
+#~ "Usage: %s [option ... ] [file ... ]\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Utilizare: %s [opþiune ... ] [fiºier ... ]\n"
+#~ "\n"
+
+#~ msgid "Options:\n"
+#~ msgstr "Opþiuni:\n"
+
+#~ msgid "  -b, --batch <commands>   Run in batch mode.\n"
+#~ msgstr "  -b, --batch <comenzi>   Se executã în mod stivã de comenzi.\n"
+
+#~ msgid ""
+#~ "  -c, --console-messages   Display warnings to console instead of a "
+#~ "dialog box.\n"
+#~ msgstr ""
+#~ "  -c, --console-messages   Afiºeazã atenþionãrile la consolã în loc de o "
+#~ "fereastrã de dialog.\n"
+
+#~ msgid ""
+#~ "  -d, --no-data            Do not load brushes, gradients, palettes, "
+#~ "patterns.\n"
+#~ msgstr ""
+#~ "  -d, --no-data           Nu încãrca pensule, gradienþi, palete, modele.\n"
+
+#~ msgid "  -i, --no-interface       Run without a user interface.\n"
+#~ msgstr ""
+#~ "  -i, --no-interface       Se executã fãrã nici o interfaþã cu "
+#~ "utilizatorul.\n"
+
+#~ msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
+#~ msgstr ""
+#~ "  -g, --gimprc <gimprc>    Foloseºte un fiºier de configurare gimprc "
+#~ "alternativ.\n"
+
+#~ msgid "  -h, --help               Output this help.\n"
+#~ msgstr ""
+#~ "  -h, --help               Afiºeazã acest ecran cu mesaje de ajutor.\n"
+
+#~ msgid "  -r, --restore-session    Try to restore saved session.\n"
+#~ msgstr ""
+#~ "  -r, --restore-session    Încearcã sã refacã sesiunea salvatã anterior.\n"
+
+#~ msgid "  -s, --no-splash          Do not show the startup window.\n"
+#~ msgstr "  -s, --no-splash          Nu arãta fereastra de întâmpinare.\n"
+
+#~ msgid ""
+#~ "  -S, --no-splash-image    Do not add an image to the startup window.\n"
+#~ msgstr ""
+#~ "  -S, --no-splash-image    Nu adãuga o imagine la fereastra de "
+#~ "întâmpinare.\n"
+
+#~ msgid "  -v, --version            Output version information.\n"
+#~ msgstr "  -v, --version            Tipãreºte informaþii despre versiune.\n"
+
+#~ msgid "  --verbose                Show startup messages.\n"
+#~ msgstr "  --verbose                Aratã mesajele de întâmpinare.\n"
+
+#~ msgid ""
+#~ "  --no-shm                 Do not use shared memory between GIMP and "
+#~ "plugins.\n"
+#~ msgstr ""
+#~ "  --no-shm                 Nu folosi memorie partajatã între GIMP "
+#~ "ºimodulele auxiliare(plugins).\n"
+
+#~ msgid ""
+#~ "  --no-xshm                Do not use the X Shared Memory extension.\n"
+#~ msgstr ""
+#~ "  --no-xshm                Nu folosi extensia X Windows pentru memorie "
+#~ "partajatã.\n"
+
+#~ msgid "  --display <display>      Use the designated X display.\n"
+#~ msgstr ""
+#~ "  --display <display>      Foloseºte terminalul grafic X Windows "
+#~ "specificat.\n"
+
+#~ msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
+#~ msgstr ""
+#~ "  --system-gimprc <gimprc> Foloseºte fiºierul sistem de configurare "
+#~ "gimprc alternativ precizat.\n"
+
+#~ msgid "(This console window will close in ten seconds)\n"
+#~ msgstr "(Aceastã fereastrã de consola se va închide în zece secunde)\n"
+
+#~ msgid "/_File"
+#~ msgstr "/_Fiºier"
+
+#~ msgid "/File/New..."
+#~ msgstr "/Fiºier/Nou..."
+
+#~ msgid "/File/Open..."
+#~ msgstr "/Fiºier/Deschide..."
+
+#~ msgid "/File/Acquire"
+#~ msgstr "/Fiºier/Achiziþie"
+
+#~ msgid "/File/Preferences..."
+#~ msgstr "/Fiºier/Preferinþe..."
+
+#~ msgid "/File/Dialogs/Layers, Channels & Paths..."
+#~ msgstr "/Fiºier/Ferestre de dialog/Strate, Canale ºi Trasee..."
+
+#~ msgid "/File/Dialogs/Tool Options..."
+#~ msgstr "/Fiºier/Ferestre de dialog/Configurare Unelte..."
+
+#~ msgid "/File/Dialogs/Brushes..."
+#~ msgstr "/Fiºier/Ferestre de dialog/Pensule..."
+
+#~ msgid "/File/Dialogs/Patterns..."
+#~ msgstr "/Fiºier/Ferestre de dialog/Modele..."
+
+#~ msgid "/File/Dialogs/Palette..."
+#~ msgstr "/Fiºier/Ferestre de dialog/Paletã de culori..."
+
+#~ msgid "/File/Dialogs/Indexed Palette..."
+#~ msgstr "/Fiºier/Ferestre de dialog/Paletã de culori indexatã..."
+
+#~ msgid "/File/Dialogs/Input Devices..."
+#~ msgstr "/Fiºier/Ferestre de dialog/Dispozitive de intrare..."
+
+#~ msgid "/File/Dialogs/Device Status..."
+#~ msgstr "/Fiºier/Ferestre de dialog/Status Dispozitive..."
+
+#~ msgid "/File/Dialogs/Document Index..."
+#~ msgstr "/Fiºier/Ferestre de dialog/Index document..."
+
+#~ msgid "/File/Dialogs/Error Console..."
+#~ msgstr "/Fiºier/Ferestre de dialog/Consola cu mesaje de eroare..."
+
+#~ msgid "/File/Dialogs/Display Filters..."
+#~ msgstr "/Fiºier/Ferestre de dialog/Filtre pentru afiºare..."
+
+#~ msgid "/File/Test Dialogs/Layer List..."
+#~ msgstr "/Fiºier/Ferestre de dialog de test/Lista de strate..."
+
+#~ msgid "/File/Test Dialogs/Channel List..."
+#~ msgstr "/Fiºier/Ferestre de dialog de test/Lista de canale de culoare..."
+
+#~ msgid "/File/Quit"
+#~ msgstr "/Fiºier/Ieºire"
+
+#~ msgid "/_Xtns"
+#~ msgstr "/_Extensii"
+
+#~ msgid "/Xtns/Module Browser..."
+#~ msgstr "/Extensii/Navigator module..."
+
+#~ msgid "/_Help"
+#~ msgstr "/_Ajutor"
+
+#~ msgid "/Help/Help..."
+#~ msgstr "/Ajutor/Ajutor..."
+
+#~ msgid "/Help/Context Help..."
+#~ msgstr "/Ajutor/Informaþii legate de context..."
+
+#~ msgid "/Help/Tip of the Day..."
+#~ msgstr "/Ajutor/Una pe zi..."
+
+#~ msgid "/Help/About..."
+#~ msgstr "/Ajutor/Despre noi..."
+
+#~ msgid "/Help/Dump Items (Debug)"
+#~ msgstr "/Ajutor/Eliminã elemente(Debug)"
+
+#~ msgid "/File/Save"
+#~ msgstr "/Fiºier/Salveazã"
+
+#~ msgid "/File/Save as..."
+#~ msgstr "/Fiºier/Salveazã cu numele..."
+
+#~ msgid "/File/Save a Copy as..."
+#~ msgstr "/Fiºier/Salveazã o Copie cu numele..."
+
+#~ msgid "/File/Revert..."
+#~ msgstr "/Fiºier/Revenire..."
+
+#~ msgid "/File/Close"
+#~ msgstr "/Fiºier/închide"
+
+#~ msgid "/Edit/Undo"
+#~ msgstr "/Modificare/Refacere"
+
+#~ msgid "/Edit/Redo"
+#~ msgstr "/Modificare/Re-refacere"
+
+#~ msgid "/Edit/Cut"
+#~ msgstr "/Modificare/Taie ºi memoreazã"
+
+#~ msgid "/Edit/Copy"
+#~ msgstr "/Modificare/Memoreazã"
+
+#~ msgid "/Edit/Paste"
+#~ msgstr "/Modificare/Insereazã din memorie"
+
+#~ msgid "/Edit/Paste Into"
+#~ msgstr "/Modificarev/Paste Into"
+
+#~ msgid "/Edit/Paste as New"
+#~ msgstr "/Modificare/Insereazã din memorie ca un nou strat"
+
+#~ msgid "/Edit/Buffer/Cut Named..."
+#~ msgstr "/Modificare/Memorie tampon/Taie ºi memoreazã cu nume..."
+
+#~ msgid "/Edit/Buffer/Copy Named..."
+#~ msgstr "/Modificare/Memorie tampon/Memoreazã cu nume..."
+
+#~ msgid "/Edit/Buffer/Paste Named..."
+#~ msgstr "/Modificare/Memorie tampon/Insereazã din memoria cu numele..."
+
+#~ msgid "/Edit/Clear"
+#~ msgstr "/Modificare/Curãþã"
+
+#~ msgid "/Edit/Fill with FG Color"
+#~ msgstr "/Modificare/Umple cu culoarea de prim-plan"
+
+#~ msgid "/Edit/Fill with BG Color"
+#~ msgstr "/Modificare/Umple cu culoarea de fundal"
+
+#~ msgid "/Edit/Stroke"
+#~ msgstr "/Modificare/Stanþã"
+
+#~ msgid "/Select/Invert"
+#~ msgstr "/Selecþie/Inverseazã selecþia"
+
+#~ msgid "/Select/All"
+#~ msgstr "/Selecþie/Selecteazã tot"
+
+#~ msgid "/Select/None"
+#~ msgstr "/Selecþie/Deselecteazã tot"
+
+#~ msgid "/Select/Float"
+#~ msgstr "/Selecþie/Selecþie plutitoare"
+
+#~ msgid "/Select/Feather..."
+#~ msgstr "/Selecþie/Panã..."
+
+#~ msgid "/Select/Sharpen"
+#~ msgstr "/Selecþie/Ascuþime"
+
+#~ msgid "/Select/Shrink..."
+#~ msgstr "/Selecþie/Micºoreazã..."
+
+#~ msgid "/Select/Grow..."
+#~ msgstr "/Selecþie/Mareºte..."
+
+#~ msgid "/Select/Border..."
+#~ msgstr "/Selecþie/Margine..."
+
+#~ msgid "/Select/Save to Channel"
+#~ msgstr "/Selecþie/Salveazã în Canal"
+
+#~ msgid "/View/Zoom In"
+#~ msgstr "/Vizualizare/Mareºte"
+
+#~ msgid "/View/Zoom Out"
+#~ msgstr "/Vizualizare/Micºoreazã"
+
+#~ msgid "/View/Zoom/16:1"
+#~ msgstr "/Vizualizare/Rescalare/16:1"
+
+#~ msgid "/View/Zoom/8:1"
+#~ msgstr "/Vizualizare/Rescalare/8:1"
+
+#~ msgid "/View/Zoom/4:1"
+#~ msgstr "/Vizualizare/Rescalare/4:1"
+
+#~ msgid "/View/Zoom/2:1"
+#~ msgstr "/Vizualizare/Rescalare/2:1"
+
+#~ msgid "/View/Zoom/1:1"
+#~ msgstr "/Vizualizare/Rescalare/1:1"
+
+#~ msgid "/View/Zoom/1:2"
+#~ msgstr "/Vizualizare/Rescalare/1:2"
+
+#~ msgid "/View/Zoom/1:4"
+#~ msgstr "/Vizualizare/Rescalare/1:4"
+
+#~ msgid "/View/Zoom/1:8"
+#~ msgstr "/Vizualizare/Rescalare/1:8"
+
+#~ msgid "/View/Zoom/1:16"
+#~ msgstr "/Vizualizare/Rescalare/1:16"
+
+#~ msgid "/View/Dot for Dot"
+#~ msgstr "/Vizualizare/Punct la punct"
+
+#~ msgid "/View/Info Window..."
+#~ msgstr "/Vizualizare/Ferestrã de informaþii..."
+
+#~ msgid "/View/Nav. Window..."
+#~ msgstr "/Vizualizare/Fereastrã de navigare..."
+
+#~ msgid "/View/Toggle Selection"
+#~ msgstr "/Vizualizare/Comutator selecþii"
+
+#~ msgid "/View/Toggle Rulers"
+#~ msgstr "/Vizualizare/Comutator rigle"
+
+#~ msgid "/View/Toggle Statusbar"
+#~ msgstr "/Vizualizare/Comutator bara de status"
+
+#~ msgid "/View/Toggle Guides"
+#~ msgstr "/Vizualizare/Comutator gidaje"
+
+#~ msgid "/View/Snap to Guides"
+#~ msgstr "/Vizualizare/Agaþã-te de gidaje"
+
+#~ msgid "/View/New View"
+#~ msgstr "/Vizualizare/O nouã vizualizare"
+
+#~ msgid "/Image/Mode/RGB"
+#~ msgstr "/Imagine/Mod/RGB"
+
+#~ msgid "/Image/Mode/Grayscale"
+#~ msgstr "/Imagine/Mod/Nivele de gri"
+
+#~ msgid "/Image/Mode/Indexed..."
+#~ msgstr "/Imagine/Mod/Indexat..."
+
+#~ msgid "/Image/Colors/Desaturate"
+#~ msgstr "/Imagine/Culori/Desatureazã"
+
+#~ msgid "/Image/Colors/Invert"
+#~ msgstr "/Imagine/Culori/Inverseazã"
+
+#~ msgid "/Image/Colors/Auto/Equalize"
+#~ msgstr "/Imagine/Culori/Automat/Egalizeazã"
+
+#~ msgid "/Image/Alpha/Add Alpha Channel"
+#~ msgstr "/Imagine/Transparenþã/Adaugã canal alfa(trasparenþã)"
+
+#~ msgid "/Image/Transforms/Offset..."
+#~ msgstr "/Imagine/Transformare/Decalaj..."
+
+#~ msgid "/Image/Transforms/Rotate"
+#~ msgstr "/Imagine/Transformare/Rotire"
+
+#~ msgid "/Image/Canvas Size..."
+#~ msgstr "/Imagine/Dimensiune..."
+
+#~ msgid "/Image/Scale Image..."
+#~ msgstr "/Imagine/Scalare..."
+
+#~ msgid "/Image/Duplicate"
+#~ msgstr "/Imagine/Cloneazã"
+
+#~ msgid "/Layers/Layers, Channels & Paths..."
+#~ msgstr "/Strat/Strate, Canale ºi Trasee..."
+
+#~ msgid "/Layers/Layer to Imagesize"
+#~ msgstr "/Strat/Strat -> Dimensiune imagine"
+
+#~ msgid "/Layers/Stack/Previous Layer"
+#~ msgstr "/Strat/Stivã/Stratul anterior"
+
+#~ msgid "/Layers/Stack/Next Layer"
+#~ msgstr "/Strat/Stivã/Stratul urmator"
+
+#~ msgid "/Layers/Stack/Raise Layer"
+#~ msgstr "/Strat/Stivã/Ridicã strat"
+
+#~ msgid "/Layers/Stack/Lower Layer"
+#~ msgstr "/Strat/Stivã/Coboarã strat"
+
+#~ msgid "/Layers/Stack/Layer to Top"
+#~ msgstr "/Strat/Stivã/Mutã în vârf"
+
+#~ msgid "/Layers/Stack/Layer to Bottom"
+#~ msgstr "/Strat/Stivã/Mutã la bazã"
+
+#~ msgid "/Layers/Rotate"
+#~ msgstr "/Strat/Roteºte"
+
+#~ msgid "/Layers/Anchor Layer"
+#~ msgstr "/Strat/Ancoreazã Strat"
+
+#~ msgid "/Layers/Merge Visible Layers..."
+#~ msgstr "/Strat/Reuneºte stratele vizibile..."
+
+#~ msgid "/Layers/Flatten Image"
+#~ msgstr "/Strat/Aplatizare imagine"
+
+#~ msgid "/Layers/Mask to Selection"
+#~ msgstr "/Strat/Masca -> Selecþie"
+
+#~ msgid "/Layers/Add Alpha Channel"
+#~ msgstr "/Strat/Adauga canal alfa"
+
+#~ msgid "/Layers/Alpha to Selection"
+#~ msgstr "/Strat/Canal alfa -> Selecþie"
+
+#~ msgid "/Tools/Toolbox"
+#~ msgstr "/Unelte/Cutia de scule"
+
+#~ msgid "/Tools/Default Colors"
+#~ msgstr "/Unelte/Culorile implicite"
+
+#~ msgid "/Tools/Swap Colors"
+#~ msgstr "/Unelte/Interschimbã Culorile"
+
+#~ msgid "/Tools/Swap Contexts"
+#~ msgstr "/Unelte/"
+
+#~ msgid "/Dialogs/Layers, Channels & Paths..."
+#~ msgstr "/Ferestre de dialog/Strate, Canale ºi Trasee..."
+
+#~ msgid "/Dialogs/Tool Options..."
+#~ msgstr "/Ferestre de dialog/Configurare Unelte..."
+
+#~ msgid "/Dialogs/Brushes..."
+#~ msgstr "/Ferestre de dialog/Pensule..."
+
+#~ msgid "/Dialogs/Patterns..."
+#~ msgstr "/Ferestre de dialog/Modele..."
+
+#~ msgid "/Dialogs/Gradients..."
+#~ msgstr "/Ferestre de dialog/Gradienþi..."
+
+#~ msgid "/Dialogs/Palette..."
+#~ msgstr "/Ferestre de dialog/Palete..."
+
+#~ msgid "/Dialogs/Indexed Palette..."
+#~ msgstr "/Ferestre de dialog/Palete Indexate..."
+
+#~ msgid "/Dialogs/Input Devices..."
+#~ msgstr "/Ferestre de dialog/Dispozitive de intrare..."
+
+#~ msgid "/Dialogs/Device Status..."
+#~ msgstr "/Ferestre de dialog/Stare dispozitive..."
+
+#~ msgid "/Dialogs/Document Index..."
+#~ msgstr "/Ferestre de dialog/Index document..."
+
+#~ msgid "/Dialogs/Error Console..."
+#~ msgstr "/Ferestre de dialog/Mesaje de eroare..."
+
+#~ msgid "/Dialogs/Display Filters..."
+#~ msgstr "/Ferestre de dialog/Filtre de afiºare"
+
+#~ msgid "/Dialogs/Undo History..."
+#~ msgstr "/Ferestre de dialog/Istoric refaceri"
+
+#~ msgid "/Filters/Repeat Last"
+#~ msgstr "/Filtre/Repetã ultimul filtru"
+
+#~ msgid "/Filters/Re-Show Last"
+#~ msgstr "/Filtre/Aratã-l ultimul filtru"
+
+#~ msgid "/Filters/Blur"
+#~ msgstr "/Filtre/Claritate"
+
+#~ msgid "/Filters/Colors"
+#~ msgstr "/Filtre/Culori"
+
+#~ msgid "/Filters/Noise"
+#~ msgstr "/Filtre/Zgomote"
+
+#~ msgid "/Filters/Edge-Detect"
+#~ msgstr "/Filtre/Detecþie de margine"
+
+#~ msgid "/Filters/Enhance"
+#~ msgstr "/Filtre/Inbunãtãþire"
+
+#~ msgid "/Filters/Generic"
+#~ msgstr "/Filtre/Generice"
+
+#~ msgid "/Filters/Glass Effects"
+#~ msgstr "/Filtre/Efecte sticlã"
+
+#~ msgid "/Filters/Light Effects"
+#~ msgstr "/Filtre/Efecte de lumini"
+
+#~ msgid "/Filters/Distorts"
+#~ msgstr "/Filtre/Destorsionãri"
+
+#~ msgid "/Filters/Artistic"
+#~ msgstr "/Filtre/Artistic"
+
+#~ msgid "/Filters/Map"
+#~ msgstr "/Filtre/Poziþionare"
+
+#~ msgid "/Filters/Render"
+#~ msgstr "/Filtre/Procesare"
+
+#~ msgid "/Filters/Web"
+#~ msgstr "/Filtre/Web"
+
+#~ msgid "/Filters/Combine"
+#~ msgstr "/Filtre/Combinate"
+
+#~ msgid "/Filters/Toys"
+#~ msgstr "/Filtre/Jucãrii"
+
+#~ msgid "/Automatic"
+#~ msgstr "/Automatic"
+
+#~ msgid "/By Extension"
+#~ msgstr "/Dupã extensie"
+
+#~ msgid "/New Layer..."
+#~ msgstr "/Strat nou..."
+
+#~ msgid "/Stack/Raise Layer"
+#~ msgstr "/Stivã/Ridicã Stratul"
+
+#~ msgid "/Stack/Lower Layer"
+#~ msgstr "/Stivã/Coboarã Stratul"
+
+#~ msgid "/Stack/Layer to Top"
+#~ msgstr "/Stivã/Mutã în vârf"
+
+#~ msgid "/Stack/Layer to Bottom"
+#~ msgstr "/Stivã/Mutã la bazã"
+
+#~ msgid "/Duplicate Layer"
+#~ msgstr "/Cloneazã stratul"
+
+#~ msgid "/Anchor Layer"
+#~ msgstr "/Ancoreazã stratul"
+
+#~ msgid "/Delete Layer"
+#~ msgstr "/Eliminã stratul"
+
+#~ msgid "/Layer Boundary Size..."
+#~ msgstr "/Dimensiune exterioarã strat..."
+
+#~ msgid "/Layer to Imagesize"
+#~ msgstr "/Strat -> Dimensiune imagine"
+
+#~ msgid "/Scale Layer..."
+#~ msgstr "/Scaleazã strat..."
+
+#~ msgid "/Merge Down"
+#~ msgstr "/Combinã în jos"
+
+#~ msgid "/Add Layer Mask..."
+#~ msgstr "/Adauga un strat mascã..."
+
+#~ msgid "/Apply Layer Mask"
+#~ msgstr "/Aplicã stratul mascã"
+
+#~ msgid "/Delete Layer Mask"
+#~ msgstr "/Eliminã stratul mascã"
+
+#~ msgid "/Mask to Selection"
+#~ msgstr "/Masca -> Selecþie"
+
+#~ msgid "/Alpha to Selection"
+#~ msgstr "/Canal alfa -> Selecþie"
+
+#~ msgid "/Edit Layer Attributes..."
+#~ msgstr "/Modificã atributele stratului..."
+
+#~ msgid "/New Channel..."
+#~ msgstr "/Canal de culoare nou..."
+
+#~ msgid "/Raise Channel"
+#~ msgstr "/Ridicã canalul"
+
+#~ msgid "/Lower Channel"
+#~ msgstr "/Coboarã canalul"
+
+#~ msgid "/Duplicate Channel"
+#~ msgstr "/Cloneazã canalul"
+
+#~ msgid "/Channel to Selection"
+#~ msgstr "/Canal -> Selecþie"
+
+#~ msgid "/Add to Selection"
+#~ msgstr "/Adaugã la selecþie"
+
+#~ msgid "/Subtract from Selection"
+#~ msgstr "/Scade din selecþie"
+
+#~ msgid "/Intersect with Selection"
+#~ msgstr "/Intersecteazã cu selecþia"
+
+#~ msgid "/Delete Channel"
+#~ msgstr "/Eliminã Canalul"
+
+#~ msgid "/Edit Channel Attributes..."
+#~ msgstr "/Modificã atributele canalului..."
+
+#~ msgid "/New Path"
+#~ msgstr "/Traseu nou"
+
+#~ msgid "/Duplicate Path"
+#~ msgstr "/Cloneazã traseul"
+
+#~ msgid "/Path to Selection"
+#~ msgstr "/Traseu -> Selecþie"
+
+#~ msgid "/Selection to Path"
+#~ msgstr "/Selecþie -> Traseu"
+
+#~ msgid "/Delete Path"
+#~ msgstr "/Eliminã traseu"
+
+#~ msgid "/Copy Path"
+#~ msgstr "/Copiazã traseu"
+
+#~ msgid "/Paste Path"
+#~ msgstr "/Insereazã traseu"
+
+#~ msgid "/Import Path..."
+#~ msgstr "/Importã traseu..."
+
+#~ msgid "/Export Path..."
+#~ msgstr "/Exportã traseu..."
+
+#~ msgid "/Edit Path Attributes..."
+#~ msgstr "/Modificã atribute traseu"
+
+#~ msgid "Error opening file: %s\n"
+#~ msgstr "Eroare la deschiderea fiºierului: %s\n"
+
+#~ msgid "Module error"
+#~ msgstr "Eroare în modul"
+
+#~ msgid "Loaded OK"
+#~ msgstr "Incãrcat cu SUCCES"
+
+#~ msgid "Load failed"
+#~ msgstr "Incãrcarea a eºuat"
+
+#~ msgid "Unload requested"
+#~ msgstr "Solicitare de descãrcare"
+
+#~ msgid "Unloaded OK"
+#~ msgstr "Descãrcare REUSITA"
+
+#~ msgid "Refresh"
+#~ msgstr "Reîmprospãtare"
+
+#~ msgid "load module: \"%s\"\n"
+#~ msgstr "încarc modulul: \"%s\"\n"
+
+#~ msgid "skipping module: \"%s\"\n"
+#~ msgstr "ignor modulul: \"%s\"\n"
+
+#~ msgid "module load error: %s: %s"
+#~ msgstr "eroare la încãrcare modul: %s: %s"
+
+#~ msgid "<No modules>"
+#~ msgstr "<Fãrã module>"
+
+#~ msgid "on disk"
+#~ msgstr "pe disc"
+
+#~ msgid "only in memory"
+#~ msgstr "numai în memorie"
+
+#~ msgid "nowhere (click 'refresh')"
+#~ msgstr "nicãieri (apasã 'reîmprospãtare')"
+
+#~ msgid "Load"
+#~ msgstr "Incarcã"
+
+#~ msgid "Unload"
+#~ msgstr "Descarcã"
+
+#~ msgid "Purpose:"
+#~ msgstr "Scop:"
+
+#~ msgid "Author:"
+#~ msgstr "Autor:"
+
+#~ msgid "Version:"
+#~ msgstr "Versiune:"
+
+#~ msgid "Copyright:"
+#~ msgstr "Copyright:"
+
+#~ msgid "Date:"
+#~ msgstr "Data:"
+
+#~ msgid "Location:"
+#~ msgstr "Amplasare:"
+
+#~ msgid "State:"
+#~ msgstr "Stare:"
+
+#~ msgid "Autoload during startup"
+#~ msgstr "Încãrcare automatã la pornire"
+
+#~ msgid "Navigation: %s-%d.%d"
+#~ msgstr "Navigare: %s-%d.%d"
+
+#~ msgid "Navigation: No Image"
+#~ msgstr "Navigare: Fãrã Imagine"
+
+#~ msgid "Color Palette Edit"
+#~ msgstr "Modificare paleta de culori"
+
+#~ msgid "Color Palette"
+#~ msgstr "Paletã de culori"
+
+#~ msgid "Undefined"
+#~ msgstr "Nedefinit"
+
+#~ msgid "Palette"
+#~ msgstr "Paletã"
+
+#~ msgid "Import"
+#~ msgstr "Import"
+
+#~ msgid "Merge"
+#~ msgstr "Combinã"
+
+#~ msgid "New"
+#~ msgstr "Nou"
+
+#~ msgid "Edit Palette Color"
+#~ msgstr "Modificã paleta de culori"
+
+#~ msgid "Merge Palette"
+#~ msgstr "Combinã paleta"
+
+#~ msgid "Enter a name for merged palette"
+#~ msgstr "Introduceþi un nume pentru paleta combinatã"
+
+#~ msgid "Import Palette"
+#~ msgstr "Import Paletã"
+
+#~ msgid "Name:"
+#~ msgstr "Nume:"
+
+#~ msgid "Source:"
+#~ msgstr "Sursã:"
+
+#~ msgid "Gradient"
+#~ msgstr "Gradient"
+
+#~ msgid "Image"
+#~ msgstr "Imagine"
+
+#~ msgid "Indexed Palette"
+#~ msgstr "Paletã indexatã"
+
+#~ msgid "Sample Size:"
+#~ msgstr "Dimensiune Eºantion:"
+
+#~ msgid "Interval:"
+#~ msgstr "Interval:"
+
+#~ msgid "Palette Selection"
+#~ msgstr "Selecþie paletã"
+
+#~ msgid "New Path"
+#~ msgstr "Traseu nou"
+
+#~ msgid "Duplicate Path"
+#~ msgstr "Cloneazã traseul"
+
+#~ msgid "Path to Selection"
+#~ msgstr "Traseul -> Selecþie"
+
+#~ msgid "Selection to Path"
+#~ msgstr "Selecþie -> Traseu"
+
+#~ msgid "Delete Path"
+#~ msgstr "Eliminã traseul"
+
+#~ msgid "New Point"
+#~ msgstr "Punct nou"
+
+#~ msgid "Add Point"
+#~ msgstr "Adaugã punct"
+
+#~ msgid "Delete Point"
+#~ msgstr "Eliminã punct"
+
+#~ msgid "Edit Point"
+#~ msgstr "Modificã punct"
+
+#~ msgid "Path %d"
+#~ msgstr "Traseu %d"
+
+#~ msgid "Edit Path Attributes"
+#~ msgstr "Modificã atribute traseu"
+
+#~ msgid "Enter a new name for the path"
+#~ msgstr "Introduceþi un nume pentru traseu"
+
+#~ msgid "Unable to open file %s"
+#~ msgstr "Nu am putut deschide fiºierul %s"
+
+#~ msgid "Failed to read from %s"
+#~ msgstr "Nu am reuºit sã citesc din %s"
+
+#~ msgid "Failed to read path from %s"
+#~ msgstr "Nu am reuºit sã citesc traseul din %s"
+
+#~ msgid "No points specified in path file %s"
+#~ msgstr "Nu este specificat nici un punct în fisierul de traseu %s"
+
+#~ msgid "Failed to read path points from %s"
+#~ msgstr "Nu am reusit sã citesc punctele de traseu din %s"
+
+#~ msgid "open failed on %s: %s\n"
+#~ msgstr "deschidere eºuatã la %s: %s\n"
+
+#~ msgid "Load/Store Bezier Curves"
+#~ msgstr "Încarcã/Memoreazã curbele Bezier"
+
+#~ msgid "Load Path"
+#~ msgstr "Încarcã traseul"
+
+#~ msgid "Store Path"
+#~ msgstr "Memoreazã traseul"
+
+#~ msgid "Pattern Selection"
+#~ msgstr "Selecþie model"
+
+#~ msgid "No Patterns available"
+#~ msgstr "Nu este disponibil nici un model"
+
+#~ msgid "Resource configuration"
+#~ msgstr "Configurare resurse"
+
+#~ msgid "Plug-ins"
+#~ msgstr "Module inserabile"
+
+#~ msgid "query plug-in: \"%s\"\n"
+#~ msgstr "interogare modul inserabil: \"%s\"\n"
+
+#~ msgid "writing \"%s\"\n"
+#~ msgstr "scriu \"%s\"\n"
+
+#~ msgid "Starting extensions: "
+#~ msgstr "Pornesc extensia: "
+
+#~ msgid "Extensions"
+#~ msgstr "Extensii"
+
+#~ msgid "Unable to locate Plug-In: \"%s\""
+#~ msgstr "Nu am putut localiza modulul inserabil: \"%s\""
+
+#~ msgid ""
+#~ "Plug-In crashed: \"%s\"\n"
+#~ "(%s)\n"
+#~ "\n"
+#~ "The dying Plug-In may have messed up GIMP's internal state.\n"
+#~ "You may want to save your images and restart GIMP\n"
+#~ "to be on the safe side."
+#~ msgstr ""
+#~ "Eroare modul inserabil: \"%s\"\n"
+#~ "(%s)\n"
+#~ "\n"
+#~ "Este posibil ca modulul inserabil eronat sã fi afectat starea internã a "
+#~ "GIMP.\n"
+#~ "Recomand salvarea imaginilor modificate ºi repornirea GIMP-ului\n"
+#~ "pentru a evita surprizele neplãcute."
+
+#~ msgid "Error: Levels of undo must be zero or greater."
+#~ msgstr ""
+#~ "Eroare: Numarul de nivele de refacere trebuie sa fie un numar pozitiv"
+
+#~ msgid "Error: Marching speed must be 50 or greater."
+#~ msgstr "Eroare: Viteza de repetiþie trebuie sã fie >= 50."
+
+#~ msgid "Error: Default width must be one or greater."
+#~ msgstr "Eroare: Laþimea implicitã trebuie sã fie 1 sau mai mare."
+
+#~ msgid "Error: Default height must be one or greater."
+#~ msgstr "Eroare: Înãlþimea implicitã trebuie sã fie 1 sau mai mare."
+
+#~ msgid "Error: Default unit must be within unit range."
+#~ msgstr ""
+#~ "Eroare: Unitatea de mãsurã implicitã trebuie sã aparþinã domeniului ales."
+
+#~ msgid "Error: Default resolution must not be zero."
+#~ msgstr "Eroare: Rezoluþia implicitã nu poate fi zero."
+
+#~ msgid "Error: Default resolution unit must be within unit range."
+#~ msgstr ""
+#~ "Eroare: Unitatea de mãsurã implicitã a rezoluþiei trebuie sã aparþinã "
+#~ "domeniului ales."
+
+#~ msgid "Error: Monitor resolution must not be zero."
+#~ msgstr "Eroare: Rezoluþia monitorului nu poate fi zero."
+
+#~ msgid "Error: Image title format must not be NULL."
+#~ msgstr "Eroare: Formatul pentru titlul imaginii nu poate fi NULL."
+
+#~ msgid "Error: Number of processors must be between 1 and 30."
+#~ msgstr "Eroare: Numãrul de procesoare trebuie sã fie între 1 ºi 30."
+
+#~ msgid "Save Preferences ?"
+#~ msgstr "Salvez Preferinþele ?"
+
+#~ msgid ""
+#~ "At least one of the changes you made will only\n"
+#~ "take effect after you restart the GIMP.\n"
+#~ "\n"
+#~ "You may choose 'Save' now to make your changes\n"
+#~ "permanent, so you can restart GIMP or hit 'Close'\n"
+#~ "and the critical parts of your changes will not\n"
+#~ "be applied."
+#~ msgstr ""
+#~ "Cel puþin una dintre modificãrile pe care le-ai fãcut\n"
+#~ "vor intra în efect numai dupã ce reporneºti GIMP-ul.\n"
+#~ "\n"
+#~ "Poþi alege 'Salveazã' acum pentru a face ca modificarile sã devinã\n"
+#~ "permanente, ºi sã poþi restarta GIMP-ul sau alege 'Închide'\n"
+#~ "ºi pãrþile critice din modificãrile tale nu vor mai fi\n"
+#~ "aplicate."
+
+#~ msgid "You will need to restart GIMP for these changes to take effect."
+#~ msgstr ""
+#~ "Trebuie sã reporneºti GIMP-ul pentru ca aceste modificãri sã se efectueze."
+
+#~ msgid "The default comment is limited to %d characters."
+#~ msgstr "Linia implicitã de comentariu este limitatã la %d caractere."
+
+#~ msgid "Preferences"
+#~ msgstr "Preferinþe"
+
+#~ msgid "Categories"
+#~ msgstr "Categorii"
+
+#~ msgid "New File"
+#~ msgstr "Fiºier nou"
+
+#~ msgid "Default Image Size and Unit"
+#~ msgstr ""
+#~ "Dimensiunea implicitã a imaginii ºi unitatea de mãsurã a dimensiunii"
+
+#~ msgid "Width"
+#~ msgstr "Lãþime"
+
+#~ msgid "Height"
+#~ msgstr "Înãlþime"
+
+#~ msgid "Default Image Resolution and Resolution Unit"
+#~ msgstr "Rezoluþia implicitã a imaginii ºi unitatea de mãsurã a rezoluþiei"
+
+#~ msgid "Horizontal"
+#~ msgstr "Orizontal"
+
+#~ msgid "Vertical"
+#~ msgstr "Vertical"
+
+#~ msgid "dpi"
+#~ msgstr "puncte/inch"
+
+#~ msgid "Default Image Type:"
+#~ msgstr "Tipul implicit de imagine:"
+
+#~ msgid "Maximum Image Size:"
+#~ msgstr "Dimensiunea maximã a imaginii:"
+
+#~ msgid "Default Comment"
+#~ msgstr "Comentariul implicit"
+
+#~ msgid "Comment Used for New Images"
+#~ msgstr "Comentariul folosit pentru noile imaginii"
+
+#~ msgid "Display"
+#~ msgstr "Afiºare"
+
+#~ msgid "Transparency"
+#~ msgstr "Transparenþã"
+
+#~ msgid "White Only"
+#~ msgstr "Numai alb"
+
+#~ msgid "Gray Only"
+#~ msgstr "Numai gri"
+
+#~ msgid "Black Only"
+#~ msgstr "Numai negru"
+
+#~ msgid "Transparency Type:"
+#~ msgstr "Tipul de tranparenþã:"
+
+#~ msgid "Small"
+#~ msgstr "Mic"
+
+#~ msgid "Medium"
+#~ msgstr "Mediu"
+
+#~ msgid "Large"
+#~ msgstr "Mare"
+
+#~ msgid "8-Bit Displays"
+#~ msgstr "Afiºare pe 8 biþi de culoare(256 culori)"
+
+#~ msgid "Minimum Number of Colors:"
+#~ msgstr "Numãrul minim de culori:"
+
+#~ msgid "Install Colormap"
+#~ msgstr "Instaleazã harta de culori"
+
+#~ msgid "Interface"
+#~ msgstr "Interfaþã"
+
+#~ msgid "None"
+#~ msgstr "Nimic"
+
+#~ msgid "Tiny"
+#~ msgstr "Foarte mic"
+
+#~ msgid "Huge"
+#~ msgstr "Foarte mare"
+
+#~ msgid "Preview Size:"
+#~ msgstr "Dimensiune previzualizare:"
+
+#~ msgid "Nav Preview Size:"
+#~ msgstr "Dimensiune fereastrã de navigare:"
+
+#~ msgid "Recent Documents List Size:"
+#~ msgstr "Dimensiune listã de documente recente:"
+
+#~ msgid "Toolbox"
+#~ msgstr "Cutie de unelte"
+
+#~ msgid "Display Brush, Pattern and Gradient Indicators"
+#~ msgstr "Aratã indicatorii de pensule, modele ºi gradienþi"
+
+#~ msgid "Dialog Behaviour"
+#~ msgstr "Comportament ferestrã de dialog"
+
+#~ msgid "Navigation Window per Display"
+#~ msgstr "Câte o fereastrã de navigare pentru fiecare imagine"
+
+#~ msgid "Info Window Follows Mouse"
+#~ msgstr "Fereastra de informaþii urmareºte cursorul"
+
+#~ msgid "Menus"
+#~ msgstr "Meniuri"
+
+#~ msgid "Help System"
+#~ msgstr "Sistem de ajutor"
+
+#~ msgid "Show Tool Tips"
+#~ msgstr "Aratã sugestii"
+
+#~ msgid "Context Sensitive Help with \"F1\""
+#~ msgstr "Ajutor sensibil la context cu \"F1\""
+
+#~ msgid "Help Browser"
+#~ msgstr "Afiºare informaþii de ajutor"
+
+#~ msgid "Internal"
+#~ msgstr "Modulul propriu GIMP"
+
+#~ msgid "Netscape"
+#~ msgstr "Netscape"
+
+#~ msgid "Help Browser to Use:"
+#~ msgstr "Aratã informaþiile de ajutor cu:"
+
+#~ msgid "Image Windows"
+#~ msgstr "Ferestre cu imagini"
+
+#~ msgid "Appearance"
+#~ msgstr "Aspect"
+
+#~ msgid "Use \"Dot for Dot\" by default"
+#~ msgstr "Foloseºte implicit \"Punct la punct\""
+
+#~ msgid "Resize Window on Zoom"
+#~ msgstr "Redimensioneazã fereastra la scalare"
+
+#~ msgid "Show Rulers"
+#~ msgstr "Aratã riglele"
+
+#~ msgid "Show Statusbar"
+#~ msgstr "Aratã bara de status"
+
+#~ msgid "Marching Ants Speed:"
+#~ msgstr "Viteza de repetiþie:"
+
+#~ msgid "Custom"
+#~ msgstr "Personalizat"
+
+#~ msgid "Standard"
+#~ msgstr "Standard"
+
+#~ msgid "Show zoom percentage"
+#~ msgstr "Aratã procentul de mãrire"
+
+#~ msgid "Show zoom ratio"
+#~ msgstr "Aratã factorul de scarã"
+
+#~ msgid "Show reversed zoom ratio"
+#~ msgstr "Aratã factorul de scarã inversat"
+
+#~ msgid "Image Title Format:"
+#~ msgstr "Format titlu imagine:"
+
+#~ msgid "Pointer Movement Feedback"
+#~ msgstr "Caracteristici pointer(cursor)"
+
+#~ msgid "Perfect-but-Slow Pointer Tracking"
+#~ msgstr "Afiºare deplasare cursor la rezoluþie maximã (ceva mai lentã)"
+
+#~ msgid "Disable Cursor Updating"
+#~ msgstr "Dezactiveazã actualizarea cursorului"
+
+#~ msgid "Tool Icon"
+#~ msgstr "Pictograma uneltei folosite"
+
+#~ msgid "Tool Icon with Crosshair"
+#~ msgstr "Pictograma uneltei folosite + Cruce"
+
+#~ msgid "Crosshair only"
+#~ msgstr "Numai cruce"
+
+#~ msgid "Cursor Mode:"
+#~ msgstr "Tip cursor:"
+
+#~ msgid "Tool Options"
+#~ msgstr "Opþiuni unelte"
+
+#~ msgid "Paint Options"
+#~ msgstr "Opþiuni de desenare"
+
+#~ msgid "Use Global Paint Options"
+#~ msgstr "Foloseºte opþiunile globale de desenare"
+
+#~ msgid "Finding Contiguous Regions"
+#~ msgstr "Determinare limite(intindere) regiuni"
+
+#~ msgid "Default Threshold:"
+#~ msgstr "Prag implicit:"
+
+#~ msgid "Environment"
+#~ msgstr "Mediu"
+
+#~ msgid "Resource Consumption"
+#~ msgstr "Consum de resurse sistem"
+
+#~ msgid "Conservative Memory Usage"
+#~ msgstr "Folosire conservativã a memoriei"
+
+#~ msgid "Levels of Undo:"
+#~ msgstr "Nivele de refacere:"
+
+#~ msgid "Number of Processors to Use:"
+#~ msgstr "Numar de procesoare utilizat"
+
+#~ msgid "Scaling"
+#~ msgstr "Scalare"
+
+#~ msgid "Nearest Neighbor (Fast)"
+#~ msgstr "Cel mai apropiat vecin (Rapid)"
+
+#~ msgid "Cubic (Slow)"
+#~ msgstr "Cubic (Incet)"
+
+#~ msgid "Interpolation Type:"
+#~ msgstr "Tip de interpolare:"
+
+#~ msgid "File Saving"
+#~ msgstr "Salvare de fiºiere"
+
+#~ msgid "Always"
+#~ msgstr "Totdeauna"
+
+#~ msgid "Never"
+#~ msgstr "Niciodatã"
+
+#~ msgid "Try to Write a Thumbnail File:"
+#~ msgstr "Încerc sã scriu imaginea medalion:"
+
+#~ msgid "Only when Modified"
+#~ msgstr "Numai când este modificatã"
+
+#~ msgid "\"File > Save\" Saves the Image:"
+#~ msgstr "\"Fiºiere > Salvare\" salveazã imaginea:"
+
+#~ msgid "Session Management"
+#~ msgstr "Management sesiuni de lucru"
+
+#~ msgid "Session"
+#~ msgstr "Sesiune"
+
+#~ msgid "Window Positions"
+#~ msgstr "Poziþie fereastrã"
+
+#~ msgid "Save Window Positions on Exit"
+#~ msgstr "Salveazã poziþia ferestrei la ieºire"
+
+#~ msgid "Clear Saved Window Positions Now"
+#~ msgstr "Uitã poziþia salvatã a ferestrei"
+
+#~ msgid "Always Try to Restore Session"
+#~ msgstr "Totdeauna încearcã sã refaci sesiunea"
+
+#~ msgid "Devices"
+#~ msgstr "Dispozitive"
+
+#~ msgid "Save Device Status on Exit"
+#~ msgstr "Salveazã starea dispozitivului la ieºire"
+
+#~ msgid "Monitor"
+#~ msgstr "Monitor"
+
+#~ msgid "Get Monitor Resolution"
+#~ msgstr "Determinã rezoluþia monitorului"
+
+#~ msgid "(Currently %d x %d dpi)"
+#~ msgstr "(În prezent %d x %d puncte ecran/inch)"
+
+#~ msgid "Calibrate"
+#~ msgstr "Calibreazã"
+
+#~ msgid "From windowing system"
+#~ msgstr "De la sistemul de ferestre(XWindows)"
+
+#~ msgid "Manually:"
+#~ msgstr "Manual:"
+
+#~ msgid "Directories"
+#~ msgstr "Directoare"
+
+#~ msgid "Temp Dir:"
+#~ msgstr "Directorul temporar:"
+
+#~ msgid "Select Temp Dir"
+#~ msgstr "Alege directorul temporar"
+
+#~ msgid "Swap Dir:"
+#~ msgstr "Directorul de swap"
+
+#~ msgid "Select Swap Dir"
+#~ msgstr "Selectaþi directorul de swap"
+
+#~ msgid "Brushes Directories"
+#~ msgstr "Directorul de pensule"
+
+#~ msgid "Select Brushes Dir"
+#~ msgstr "Alege directorul de pensule"
+
+#~ msgid "Patterns Directories"
+#~ msgstr "Directorul de modele"
+
+#~ msgid "Select Patterns Dir"
+#~ msgstr "Alege directorul de modele"
+
+#~ msgid "Palettes Directories"
+#~ msgstr "Directorul de palete"
+
+#~ msgid "Select Palettes Dir"
+#~ msgstr "Alege directorul de palete"
+
+#~ msgid "Gradients Directories"
+#~ msgstr "Directorul de gradienþi"
+
+#~ msgid "Select Gradients Dir"
+#~ msgstr "Alege directorul de gradienþi"
+
+#~ msgid "Plug-Ins"
+#~ msgstr "Module inserabile"
+
+#~ msgid "Plug-Ins Directories"
+#~ msgstr "Directoarele de module inserabile"
+
+#~ msgid "Select Plug-Ins Dir"
+#~ msgstr "Alege directorul de module inserabile"
+
+#~ msgid "Modules"
+#~ msgstr "Module"
+
+#~ msgid "Modules Directories"
+#~ msgstr "Directorul de module"
+
+#~ msgid "Select Modules Dir"
+#~ msgstr "Alege directorul de module"
+
+#~ msgid "Edit Qmask Color"
+#~ msgstr "Modificã culoare Qmask"
+
+#~ msgid "Edit Qmask Attributes"
+#~ msgstr "Modificã atribute Qmask"
+
+#~ msgid "Mask Opacity:"
+#~ msgstr "Opacitate mascã"
+
+#~ msgid "Size"
+#~ msgstr "Dimensiune"
+
+#~ msgid "Scale Image"
+#~ msgstr "Scaleazã imaginea"
+
+#~ msgid "Pixel Dimensions"
+#~ msgstr "Dimensiune punct ecran"
+
+#~ msgid "Set Layer Boundary Size"
+#~ msgstr "Stabileºte dimensiune exterioarã strat"
+
+#~ msgid "Set Canvas Size"
+#~ msgstr "Stabileºte dimensiune imagine"
+
+#~ msgid "Original Width:"
+#~ msgstr "Lãþimea originalã"
+
+#~ msgid "New Width:"
+#~ msgstr "Lãþime nouã:"
+
+#~ msgid "Ratio X:"
+#~ msgstr "Proporþie pe X:"
+
+#~ msgid "X:"
+#~ msgstr "X:"
+
+#~ msgid "Print Size & Display Unit"
+#~ msgstr "Dimensiune la tipãrire ºi unitatea de masurã ecran"
+
+#~ msgid "Scale Error: Both width and height must be greater than zero."
+#~ msgstr ""
+#~ "Eroare de scalare: Atât lãþimea cât ºi înãlþimea trebuie sã fie mai mari "
+#~ "decât zero"
+
+#~ msgid "Layer Too Small"
+#~ msgstr "Strat prea mic"
+
+#~ msgid ""
+#~ "The chosen image size will shrink\n"
+#~ "some layers completely away.\n"
+#~ "Is this what you want?"
+#~ msgstr ""
+#~ "Dimensiunea de imagine aleasã va obliga\n"
+#~ "la micºorarea unor strate la extrem.\n"
+#~ "Sigur asta este ce doreºti?"
+
+#~ msgid "Calibrate Monitor Resolution"
+#~ msgstr "Calibrare rezolutie monitor"
+
+#~ msgid "Measure the rulers and enter their lengths below."
+#~ msgstr "Mãsoarã riglele(pe ecran) ºi introdu mai jos lungimea lor."
+
+#~ msgid "Horizontal:"
+#~ msgstr "Orizontal:"
+
+#~ msgid "Vertical:"
+#~ msgstr "Vertical:"
+
+#~ msgid "gimp_tips.txt"
+#~ msgstr "gimp_tips.txt"
+
+#~ msgid "GIMP Tip of the Day"
+#~ msgstr "Una pe zi de la GIMP"
+
+#~ msgid "Show tip next time GIMP starts"
+#~ msgstr "Aratã sugestii ºi la urmatoarea pornire"
+
+#~ msgid "Previous Tip"
+#~ msgstr "Sugestia anterioarã"
+
+#~ msgid "Next Tip"
+#~ msgstr "Sugestia urmãtoare"
+
+#~ msgid ""
+#~ "Your GIMP tips file appears to be missing!\n"
+#~ "There should be a file called gimp_tips.txt in\n"
+#~ "the tips subdirectory of the GIMP data directory.\n"
+#~ "Please check your installation."
+#~ msgstr ""
+#~ "Fiºierul de sugestii al GIMP pare sã lipseascã!\n"
+#~ "Ar trebui sã fie un fiºier numit gimp_tips.txt în\n"
+#~ "subdirectorul de sugestii al directorului în care este instalat GIMP-ul.\n"
+#~ "Te rog, verificã cum ai fãcut instalarea."
+
+#~ msgid ""
+#~ "Foreground & background colors.  The black and white squares reset "
+#~ "colors.  The arrows swap colors. Double click to select a color from a "
+#~ "colorrequester."
+#~ msgstr ""
+#~ "Culorile de Prim Plan ºi de Fundal.  Pãtrãþelele negru ºi alb "
+#~ "iniþializeazã culorile.  Sãgeþile interschimbã culorile. Click dublu "
+#~ "stânga deschide selectorul de culori."
+
+#~ msgid "Can't undo %s"
+#~ msgstr "Nu pot reface %s"
+
+#~ msgid "<<invalid>>"
+#~ msgstr "<<invalid>>"
+
+#~ msgid "image mod"
+#~ msgstr "mod imagine"
+
+#~ msgid "mask"
+#~ msgstr "mascã"
+
+#~ msgid "layer move"
+#~ msgstr "deplasare nivel"
+
+#~ msgid "transform"
+#~ msgstr "transformare"
+
+#~ msgid "paint"
+#~ msgstr "desen"
+
+#~ msgid "new layer"
+#~ msgstr "strat nou"
+
+#~ msgid "delete layer"
+#~ msgstr "eliminã strat"
+
+#~ msgid "layer mod"
+#~ msgstr "mod strat"
+
+#~ msgid "add layer mask"
+#~ msgstr "adauga strat mascã"
+
+#~ msgid "delete layer mask"
+#~ msgstr "eliminã stratul mascã"
+
+#~ msgid "rename layer"
+#~ msgstr "redenumeºte stratul"
+
+#~ msgid "layer reposition"
+#~ msgstr "repoziþionare strat"
+
+#~ msgid "new channel"
+#~ msgstr "canal nou"
+
+#~ msgid "delete channel"
+#~ msgstr "eliminã canal"
+
+#~ msgid "channel mod"
+#~ msgstr "mod canal"
+
+#~ msgid "FS to layer"
+#~ msgstr "FS -> Strat"
+
+#~ msgid "gimage"
+#~ msgstr "gimage"
+
+#~ msgid "guide"
+#~ msgstr "gidaj"
+
+#~ msgid "text"
+#~ msgstr "text"
+
+#~ msgid "float selection"
+#~ msgstr "selecþie plutitoare"
+
+#~ msgid "paste"
+#~ msgstr "insereazã"
+
+#~ msgid "cut"
+#~ msgstr "taie ºi memoreazã"
+
+#~ msgid "floating layer"
+#~ msgstr "strat plutitor"
+
+#~ msgid "linked layer"
+#~ msgstr "strat legat"
+
+#~ msgid "apply layer mask"
+#~ msgstr "aplicã stratul mascã"
+
+#~ msgid "layer merge"
+#~ msgstr "combinã strat"
+
+#~ msgid "gimage mod"
+#~ msgstr "mod gimage"
+
+#~ msgid "crop"
+#~ msgstr "decupeazã"
+
+#~ msgid "layer scale"
+#~ msgstr "scalare strat"
+
+#~ msgid "layer resize"
+#~ msgstr "redimensionare strat"
+
+#~ msgid "attach parasite"
+#~ msgstr "ataºeazã parazit"
+
+#~ msgid "remove parasite"
+#~ msgstr "eliminã parazit"
+
+#~ msgid "resolution change"
+#~ msgstr "schimbare rezoluþie"
+
+#~ msgid "image scale"
+#~ msgstr "scalare imagine"
+
+#~ msgid "image resize"
+#~ msgstr "redimensionare imagine"
+
+#~ msgid "misc"
+#~ msgstr "diverse"
+
+#~ msgid "Undo History: %s"
+#~ msgstr "Istoric refaceri: %s"
+
+#~ msgid "[ base image ]"
+#~ msgstr "[ imagine de bazã]"
+
+#~ msgid "Undo"
+#~ msgstr "Refacere"
+
+#~ msgid "Redo"
+#~ msgstr "Re-Refacere"
+
+#~ msgid "The GIMP is not properly installed for the current user\n"
+#~ msgstr "GIMP-ul nu este instalat corect pentru utilizatorul curent\n"
+
+#~ msgid ""
+#~ "User installation was skipped because the '--nointerface' flag was "
+#~ "encountered\n"
+#~ msgstr ""
+#~ "Instalarea utilizatorului a fost ignoratã deoarece s-a intâlnit flag-ul "
+#~ "'--nointerface'\n"
+
+#~ msgid ""
+#~ "To perform user installation, run the GIMP without the '--nointerface' "
+#~ "flag\n"
+#~ msgstr ""
+#~ "Pentru a efectua instalarea, porneºte GIMP-ul fãrã flag-ul '--"
+#~ "nointerface'\n"
+
+#~ msgid ""
+#~ "The gimprc is used to store personal preferences\n"
+#~ "that affect GIMP's default behavior.\n"
+#~ "Paths to search for brushes, palettes, gradients,\n"
+#~ "patterns, plug-ins and modules can also configured\n"
+#~ "here."
+#~ msgstr ""
+#~ "Fiºierul gimprc este folosit pentru a memora preferinþele personale\n"
+#~ "care afecteazã comportamentul GIMP.\n"
+#~ "Cãile de cãutare pentru pensule, palete, gradienþi,\n"
+#~ "modele, plugin-uri ºi module pot fi de asemenea configurate\n"
+#~ "aici."
+
+#~ msgid ""
+#~ "GIMP uses an additional gtkrc file so you can\n"
+#~ "configure it to look differently than other GTK apps."
+#~ msgstr ""
+#~ "GIMP foloseºte un fiºier adiþional gtkrc pentru a-l putea\n"
+#~ "configura sã arate diferit faþã de alte aplicaþii GTK."
+
+#~ msgid ""
+#~ "Plug-ins and extensions are external programs run\n"
+#~ "by the GIMP which provide additional functionality.\n"
+#~ "These programs are searched for at run-time and\n"
+#~ "information about their functionality and mod-times\n"
+#~ "is cached in this file.  This file is intended to\n"
+#~ "be GIMP-readable only, and should not be edited."
+#~ msgstr ""
+#~ "Modulele inserabile ºi extensiile sunt programe externe executate\n"
+#~ "de catre GIMP care furnizeazã funcþionalitãþi suplimentare.\n"
+#~ "Aceste programe sunt cãutate în momentul execuþiei iar\n"
+#~ "informaþiile despre funcþionalitatea lor ºi mod-times\n"
+#~ "sunt pastrate în acest fiºier.  Acest fiºier a fost proiectat\n"
+#~ "pentru a fi citit numai de catre GIMP, ºi nu trebuie modificat."
+
+#~ msgid ""
+#~ "Key shortcuts can be dynamically redefined in The GIMP.\n"
+#~ "The menurc is a dump of your configuration so it can.\n"
+#~ "be remembered for the next session.  You may edit this\n"
+#~ "file if you wish, but it is much easier to define the\n"
+#~ "keys from within The GIMP.  Deleting this file will\n"
+#~ "restore the default shortcuts."
+#~ msgstr ""
+#~ "Prescurtãrile de taste pot fi redefinite în mod dinamic în GIMP.\n"
+#~ "Fiºierul menurc conþine o salvare a configuraþiei curente pentru a "
+#~ "putea.\n"
+#~ "fi refãcutã la urmãtoarea sesiune.  Tu poþi modifica acest fiºier cum\n"
+#~ "doreºti, dar este mult mai uºor sã iþi defineºti tastele direct din\n"
+#~ "interiorul GIMP.  Stergerea acestui fiºier va forþa revenirea la \n"
+#~ "prescurtãrile de taste originale."
+
+#~ msgid ""
+#~ "The sessionrc is used to store what dialog windows were\n"
+#~ "open the last time you quit The GIMP.  You can configure\n"
+#~ "The GIMP to reopen these dialogs at the saved position."
+#~ msgstr ""
+#~ "Fiºierul sessionrc este folosit pentru a memora ce ferestre\n"
+#~ "de dialog erau deschise ultima oarã când aþi închis GIMP-ul.\n"
+#~ "GIMP poate fi configurat sã redeschidã aceste ferestre în acceaºi poziþie."
+
+#~ msgid ""
+#~ "The unitrc is used to store your user units database.\n"
+#~ "You can define additional units and use them just\n"
+#~ "like you use the built-in units inches, millimeters,\n"
+#~ "points and picas.  This file is overwritten each time\n"
+#~ "you quit the GIMP."
+#~ msgstr ""
+#~ "Fiºierul unitrc este folosit pentru a memora unitãþile de\n"
+#~ "mãsurã utilizator. Puteþi defini ºi folosi unitãþi adiþionale\n"
+#~ "asemãnãtoare cu cele de interne GIMP, inches, milimetri,\n"
+#~ "points ºi picas.  Acest fiºier este suprascris de fiecare\n"
+#~ "datã când parasiþi GIMP-ul."
+
+#~ msgid ""
+#~ "This is a subdirectory which can be used to store\n"
+#~ "user defined brushes.  The default gimprc file\n"
+#~ "checks this subdirectory in addition to the system-\n"
+#~ "wide GIMP brushes installation when searching for\n"
+#~ "brushes."
+#~ msgstr ""
+#~ "Acesta este un subdirector care poate fi folosit pentru a memora\n"
+#~ "pensulele create de dumneavoastrã.  Fiºierul gimprc\n"
+#~ "verificã acest subdirector pe lãngã cel în care sunt\n"
+#~ "instalate pensulele proprii GIMP atunci când cautã dupã\n"
+#~ "pensule."
+
+#~ msgid ""
+#~ "This is a subdirectory which is used to store brushes\n"
+#~ "that are created with the brush editor.  The default\n"
+#~ "gimprc file checks this subdirectory when searching\n"
+#~ "for generated brushes."
+#~ msgstr ""
+#~ "Acesta este un subdirector care este folosit pentru a memora\n"
+#~ "pensulele care sunt create cu editorul de pensule.  Fiºierul\n"
+#~ "gimprc verificã acest subdirector când cautã dupã pensulele\n"
+#~ "generate."
+
+#~ msgid ""
+#~ "This is a subdirectory which can be used to store\n"
+#~ "user defined gradients.  The default gimprc file\n"
+#~ "checks this subdirectory in addition to the system-\n"
+#~ "wide GIMP gradients installation when searching\n"
+#~ "for gradients."
+#~ msgstr ""
+#~ "Acesta este un director care poate fi folosit pentru a memora\n"
+#~ "gradienþii creati de dumneavoastrã.  Fiºierul gimprc verificã\n"
+#~ "acest subdirector pe lãngã cel în care sunt instalaþi\n"
+#~ "gradienþii proprii GIMP atunci când cautã dupã\n"
+#~ "gradienþi."
+
+#~ msgid ""
+#~ "This is a subdirectory which can be used to store\n"
+#~ "user defined palettes.  The default gimprc file\n"
+#~ "checks only this subdirectory (not the system-wide\n"
+#~ "installation) when searching for palettes.  During\n"
+#~ "installation, the system palettes will be copied\n"
+#~ "here.  This is done to allow modifications made to\n"
+#~ "palettes during GIMP execution to persist across\n"
+#~ "sessions."
+#~ msgstr ""
+#~ "Acesta este un subdirector care poate fi folosite pentru\n"
+#~ "a memora paletele create de dumneavoastrã.  Fiºierul gimprc\n"
+#~ "verificã numai acest subdirector (nu ºi pe cel de sistem)\n"
+#~ "atunci când cautã o paletã.  În timpul instalãrii, paletele\n"
+#~ "de sistem vor fi copiate in acest director. Acest lucru este\n"
+#~ "fãcut pentru a permite ca modificãrile efectuate asupra \n"
+#~ "paletelor de culori în timpul execuþiei GIMP sã persiste între \n"
+#~ "sesiuni."
+
+#~ msgid ""
+#~ "This is a subdirectory which can be used to store\n"
+#~ "user defined patterns.  The default gimprc file\n"
+#~ "checks this subdirectory in addition to the system-\n"
+#~ "wide GIMP patterns installation when searching for\n"
+#~ "patterns."
+#~ msgstr ""
+#~ "Acest subdirector poate fi utilizat pentru a memora\n"
+#~ "modelele create de dumneavoastrã.  Fiºierul gimprc\n"
+#~ "verificã acest subdirector pe lângã cel de sistem\n"
+#~ "cu modelele GIMP atunci când cautã dupã\n"
+#~ "modele."
+
+#~ msgid ""
+#~ "This is a subdirectory which can be used to store\n"
+#~ "user created, temporary, or otherwise non-system-\n"
+#~ "supported plug-ins.  The default gimprc file checks\n"
+#~ "this subdirectory in addition to the systemwide\n"
+#~ "GIMP plug-in directories when searching for plug-ins."
+#~ msgstr ""
+#~ "Acest subdirector poate fi folosit pentru a memora\n"
+#~ "modulele inserabile create de utilizator, temporare sau\n"
+#~ "cele nesuportate de sistem.  Fiºierul gimprc verificã\n"
+#~ "acest subdirector pe lângã cel de sistem cu module\n"
+#~ "inserabile atunci când cautã dupã module inserabile."
+
+#~ msgid ""
+#~ "This subdirectory can be used to store user created,\n"
+#~ "temporary, or otherwise non-system-supported DLL\n"
+#~ "modules.  The default gimprc file checks this subdirectory\n"
+#~ "in addition to the system-wide GIMP module directory\n"
+#~ "when searching for modules to load when initializing."
+#~ msgstr ""
+#~ "Acest subdirectori poate fi folosit pentru a memora,\n"
+#~ "modulele DLL create de utilizator, temporare sau nesuportate\n"
+#~ "Fiºierul gimprc verificã acest subdirector pe lângã cel\n"
+#~ "de sistem cu module al GIMP  atunci când incearcã sã încarce\n"
+#~ "module la iniþializare."
+
+#~ msgid ""
+#~ "This subdirectory is used by the GIMP to store user\n"
+#~ "created and installed scripts.  The default gimprc file\n"
+#~ "checks this subdirectory in addition to the systemwide\n"
+#~ "GIMP scripts subdirectory when searching for scripts"
+#~ msgstr ""
+#~ "Acest subdirector este folosit de cãtre GIMP pentru a memora\n"
+#~ "scripturile create ºi instalate de utilizator.  Fiºierul gimprc\n"
+#~ "verificã acest subdirector pe lângã cel de sistem atunci când cautã\n"
+#~ "scripturi"
+
+#~ msgid ""
+#~ "This subdirectory is used by the GIMP to temporarily\n"
+#~ "store undo buffers to reduce memory usage.  If GIMP is\n"
+#~ "unceremoniously killed, files may persist in this directory\n"
+#~ "of the form: gimp<#>.<#>.  These files are useless across\n"
+#~ "GIMP sessions and can be destroyed with impunity."
+#~ msgstr ""
+#~ "Acest subdirector este folosit de GIMP pentru a stoca pe duratã\n"
+#~ "scurtã de timp memoria tampot de refacere, pentru a reduce utilizarea "
+#~ "memoriei.\n"
+#~ "Dacã GIMP este oprit neprotocolar, pot rãmâne fiºiere în director fub "
+#~ "forma:\n"
+#~ "gimp<#>.<#>. Aceste fiºiere sunt inutile pentru celelalte sesiuni GIMP\n"
+#~ "ºi pot fi sterse farã nici o problemã."
+
+#~ msgid ""
+#~ "This subdirectory is used to store parameter files for\n"
+#~ "the Curves tool."
+#~ msgstr ""
+#~ "Acest subdirector este folosit pentru a memora fiºierele cu parametri\n"
+#~ "pentru unealta de trasat curbe."
+
+#~ msgid ""
+#~ "This is a subdirectory which can be used to store\n"
+#~ "user defined fractals to be used by the FractalExplorer\n"
+#~ "plug-in.  The default gimprc file checks this subdirectory\n"
+#~ "in addition to the systemwide GIMP FractalExplorer\n"
+#~ "installation when searching for fractals."
+#~ msgstr ""
+#~ "Acest subdirector poate fi utilizat pentru a memora fractali\n"
+#~ "definiþi de utilizator pentru a fi utilizaþi de catre modulul inserabil\n"
+#~ "FractalExplorer. Fiºierul gimprc verificã acest subdirector pe lângã cel\n"
+#~ "de sistem al instalarii FractalExplorer în GIMP atunci când cautã dupã\n"
+#~ "fractali."
+
+#~ msgid ""
+#~ "This is a subdirectory which can be used to store\n"
+#~ "user defined figures to be used by the GFig plug-in.\n"
+#~ "The default gimprc file checks this subdirectory in\n"
+#~ "addition to the systemwide GIMP GFig installation\n"
+#~ "when searching for gfig figures."
+#~ msgstr ""
+#~ "Acest subdirector poate fi utilizat pentru a memora\n"
+#~ "figuri definite de utilizator pentu a fi utilizate de modulul inserabil.\n"
+#~ "GFig. Fiºierul gimprc verificã acest subdirector pe lângã cel de sistem \n"
+#~ "cu instalarea GFig în GIMP atunci când cautã figuri\n"
+#~ "gfig."
+
+#~ msgid ""
+#~ "This is a subdirectory which can be used to store\n"
+#~ "user defined gflares to be used by the GFlare plug-in.\n"
+#~ "The default gimprc file checks this subdirectory in\n"
+#~ "addition to the systemwide GIMP GFlares installation\n"
+#~ "when searching for gflares."
+#~ msgstr ""
+#~ "Acest subdirector poate fi utilizat pentu a memora \n"
+#~ "gflare-urile definite de utilizator pentru a fi utilizate de modulul\n"
+#~ "inserabil GFlare. Fiºierul gimprc verificã acest subdirector pe lângã\n"
+#~ "cel de sistem cu instalarea GFlares atunci când cautã \n"
+#~ "gflares."
+
+#~ msgid ""
+#~ "This is a subdirectory which can be used to store\n"
+#~ "user defined data to be used by the Gimpressionist\n"
+#~ "plug-in.  The default gimprc file checks this subdirectory\n"
+#~ "in addition to the systemwide GIMP Gimpressionist\n"
+#~ "installation when searching for data."
+#~ msgstr ""
+#~ "Acest subdirector poate fi utilizat pentru a memora datele\n"
+#~ "definite de utilizator pentru a fi utilizate de modulul inserabil\n"
+#~ "Gimpressionist.  Fiºierul gimprc verificã acest subdirector pe lângã\n"
+#~ "cel de sistem cu instalarea Gimpressionist atunci când cautã dupã\n"
+#~ "aceste date."
+
+#~ msgid ""
+#~ "Please wait while your personal\n"
+#~ "GIMP directory is being created..."
+#~ msgstr ""
+#~ "Aºteptaþi pânã când vã este creat propriul director\n"
+#~ "GIMP ..."
+
+#~ msgid "GIMP User Installation"
+#~ msgstr "Instalare utilizator a GIMP"
+
+#~ msgid "Continue"
+#~ msgstr "Continuã"
+
+#~ msgid "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
+#~ msgstr "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
+
+#~ msgid ""
+#~ "Welcome to\n"
+#~ "The GIMP User Installation"
+#~ msgstr ""
+#~ "Bine aþi venit la \n"
+#~ "Instalarea utilizator a GIMP"
+
+#~ msgid "Click \"Continue\" to enter the GIMP user installation."
+#~ msgstr "Selectaþi \"Continuã\" pentu a porni 'The GIMP user installation'."
+
+#~ msgid ""
+#~ "The GIMP - GNU Image Manipulation Program\n"
+#~ "Copyright (C) 1995-2000\n"
+#~ "Spencer Kimball, Peter Mattis and the GIMP Development Team."
+#~ msgstr ""
+#~ "The GIMP - GNU Programul de manipulare de imagini\n"
+#~ "Copyright (C) 1995-2000\n"
+#~ "Spencer Kimball, Peter Mattis ºi echipa de dezvoltare GIMP."
+
+#~ msgid ""
+#~ "This program is free software; you can redistribute it and/or modify\n"
+#~ "it under the terms of the GNU General Public License as published by\n"
+#~ "the Free Software Foundation; either version 2 of the License, or\n"
+#~ "(at your option) any later version."
+#~ msgstr ""
+#~ "Acest program este liber; îl puteþi redistribui ºi/sau modifica atãt "
+#~ "timp\n"
+#~ "cãt respectaþi Licenta Publicã Generalã GNU aºa cum a fost ea publicatã\n"
+#~ "de cãtre 'Free Software Foundation'; fie versiunea 2 a licenþei, sau\n"
+#~ "(dacã doriþi) orice altã versiune ulterioarã."
+
+#~ msgid ""
+#~ "This program is distributed in the hope that it will be useful,\n"
+#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
+#~ "See the GNU General Public License for more details."
+#~ msgstr ""
+#~ "Acest program este distribuit în speranþa cã va fi util, dar fãrã\n"
+#~ "NICI UN FEL DE GARANÞII; fãrã chiar ºi garanþia implicitã BUN DE \n"
+#~ "A FI VÂNDUT sau CAPACITATE DE A ATINGE UN ANUMIT SCOP.\n"
+#~ "(Uitãte la Licenþa Publicã Generalã GNU pentru mai multe detalii)."
+
+#~ msgid ""
+#~ "You should have received a copy of the GNU General Public License\n"
+#~ "along with this program; if not, write to the Free Software\n"
+#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
+#~ "MA 02111-1307, USA."
+#~ msgstr ""
+#~ "Impreunã cu acest program trebuia sã fi primit ºi o copie a\n"
+#~ "Licenþei Publice Generale GNU; dacã nu, o puteþi solicita de la\n"
+#~ "Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
+#~ "MA 02111-1307, USA."
+
+#~ msgid "Personal GIMP Directory"
+#~ msgstr "Directorul personal GIMP"
+
+#~ msgid "Click \"Continue\" to create your personal GIMP directory."
+#~ msgstr "Selecteazã \"Continuã\" pentru aþi crea directorul personal GIMP."
+
+#~ msgid ""
+#~ "For a proper GIMP installation, a subdirectory named\n"
+#~ "%s needs to be created."
+#~ msgstr ""
+#~ "Pentru o instalare corectã GIMP, trebuie creat un subdirector\n"
+#~ "numit %s."
+
+#~ msgid ""
+#~ "This subdirectory will contain a number of important files.\n"
+#~ "Click on one of the files or subdirectories in the tree\n"
+#~ "to get more information about the selected item."
+#~ msgstr ""
+#~ "Acest subdirector va conþine un numãr de fiºiere importante.\n"
+#~ "Selecteazã un fiºier sau subdirectoar din arbore pentru\n"
+#~ "a primi mai multe informaþii despre elementul selectat."
+
+#~ msgid "User Installation Log"
+#~ msgstr "Jurnalul de instalare utilizator"
+
+#~ msgid "GIMP Performance Tuning"
+#~ msgstr "Ajustare performanþe GIMP"
+
+#~ msgid "Click \"Continue\" to accept the settings above."
+#~ msgstr ""
+#~ "Selecteazã \"Continuã\" pentru a accepta parametri stabiliþi de mai sus."
+
+#~ msgid "For optimal GIMP performance, some settings may have to be adjusted."
+#~ msgstr ""
+#~ "Pentru o performanþã optimã a GIMP, anumiþi parametri trebuiesc ajustaþi."
+
+#~ msgid "Monitor Resolution"
+#~ msgstr "Rezoluþie monitor"
+
+#~ msgid "Click \"Continue\" to start The GIMP."
+#~ msgstr "Selecteazã \"Continuã\" pentru a porni GIMP-ul"
+
+#~ msgid ""
+#~ "To display images in their natural size, GIMP needs to know your monitor "
+#~ "resolution."
+#~ msgstr ""
+#~ "Pentru a afiºa imaginile în marime naturalã, GIMP-ul trebuie sã cunoascã "
+#~ "rezoluþiamonitorului dumneavoastrã."
+
+#~ msgid "Aborting Installation..."
+#~ msgstr "Abandonez instalarea..."
+
+#~ msgid "does not exist.  Cannot install."
+#~ msgstr "nu existã. Nu pot instala."
+
+#~ msgid "has invalid permissions.  Cannot install."
+#~ msgstr "are permisiuni invalide. Nu pot instala."
+
+#~ msgid ""
+#~ "Did you notice any error messages in the console window?\n"
+#~ "If not, installation was successful!\n"
+#~ "Otherwise, quit and investigate the possible reason..."
+#~ msgstr ""
+#~ "Aþi observat vreun mesaj de eroare in fereastra consolã?\n"
+#~ "Dacã nu, instalarea s-a terminat cu succes!\n"
+#~ "Alfel, ieºi ºi investigheazã cauzele posibile ale erorilor..."
+
+#~ msgid ""
+#~ "Did you notice any error messages in the lines above?\n"
+#~ "If not, installation was successful!\n"
+#~ "Otherwise, quit and investigate the possible reason..."
+#~ msgstr ""
+#~ "Aþi observat vreun mesaj de eroare in liniile de mai sus?\n"
+#~ "Dacã nu, instalarea s-a terminat cu succes!\n"
+#~ "Alfel, ieºi ºi investigheazã cauzele posibile ale erorilor..."
+
+#~ msgid "Click \"Continue\" to complete GIMP installation."
+#~ msgstr "Selecteazã \"Continuã\" pentru a termina instalarea GIMP."
+
+#~ msgid "Installation failed.  Contact system administrator."
+#~ msgstr "Instalarea a eºuat. Contacteazã administratorul de sistem."
+
+#~ msgid ""
+#~ "GIMP uses a limited amount of memory to store image data, the so-called\n"
+#~ "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
+#~ "the amount of memory used by other running processes."
+#~ msgstr ""
+#~ "GIMP foloseºte o cantitate limitatã de memorie pentru a stoca imaginile, "
+#~ "aºa numita\n"
+#~ "\"Tile Cache\". Trebuie sã stabileºti marimea ei pentru a incãpea în "
+#~ "memorie. Ia în \n"
+#~ "considerare ºi cantitatea de memorie folositã de alte procese în execuþie."
+
+#~ msgid ""
+#~ "All image and undo data which doesn't fit into the Tile Cache will be\n"
+#~ "written to a swap file. This file should be located on a local "
+#~ "filesystem\n"
+#~ "with enough free space (several hundred MB). On a UNIX system, you\n"
+#~ "may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
+#~ msgstr ""
+#~ "Toate imaginile ºi informaþiile de refacere care nu încap în 'Tile Cache' "
+#~ "vor fi\n"
+#~ "scrise în fiºierul de swap. Acest fiºier trebuie sã fie localizat pe un "
+#~ "sistem de fiºiere local\n"
+#~ "cu suficient spaþiu liber(mai multe sute de MB). Pe un sistem UNIX, poþi "
+#~ "alege sã foloseºti\n"
+#~ "directorul temporar de sistem(\"/tmp\" sau \"/var/tmp\")."
+
+#~ msgid "Swap Directory:"
+#~ msgstr "Directorul de swap:"
+
+#~ msgid ""
+#~ "GIMP can obtain this information from the windowing system.\n"
+#~ "However, usually this does not give useful values."
+#~ msgstr ""
+#~ "GIMP poate obþine aceastã informaþie de la sistemul de ferestre.\n"
+#~ "Totuºi, de obicei acesta nu furnizeazã niºte valori utile."
+
+#~ msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
+#~ msgstr ""
+#~ "Preia rezoluþia de la sistemul de ferestre (Curent %d x %d puncte ecran / "
+#~ "inch)"
+
+#~ msgid "Alternatively, you can set the monitor resolution manually."
+#~ msgstr "In mod alternativ, poþi stabili rezoluþia monitorului manual."
+
+#~ msgid "Monitor Resolution X:"
+#~ msgstr "Rezoluþie monitor X:"
+
+#~ msgid ""
+#~ "You can also press the \"Calibrate\" button to open a window\n"
+#~ "which lets you determine your monitor resolution interactively."
+#~ msgstr ""
+#~ "De asemenea puteþi apãsa butonu \"Calibreazã\" pentru a deschide o "
+#~ "fereastrã\n"
+#~ "care vã permite sã determinaþi rezoluþia monitorului în mod interactiv."
+
+#~ msgid "XCF error: unsupported XCF file version %d encountered"
+#~ msgstr "Eroare XCF: am gãsit versiunea de fiºier XCF nesuportatã %d"
+
+#~ msgid "Internal Procedures"
+#~ msgstr "Proceduri interne"
+
+#~ msgid "Brush UI"
+#~ msgstr "Interfaþã utilizator pentru Pensule"
+
+#~ msgid "Channel"
+#~ msgstr "Canal"
+
+#~ msgid "Channel Ops"
+#~ msgstr "Operaþii pe canal de culoare"
+
+#~ msgid "GDisplay procedures"
+#~ msgstr "Proceduri GDisplay"
+
+#~ msgid "Edit procedures"
+#~ msgstr "Proceduri de modificare"
+
+#~ msgid "File Operations"
+#~ msgstr "Operaþii pe fiºiere"
+
+#~ msgid "Floating selections"
+#~ msgstr "Selecþii plutitoare"
+
+#~ msgid "Gimprc procedures"
+#~ msgstr "Proceduri gimprc"
+
+#~ msgid "Gradient UI"
+#~ msgstr "Interfaþã utilizator pentru Gradienþi"
+
+#~ msgid "Help procedures"
+#~ msgstr "Proceduri de ajutor"
+
+#~ msgid "Miscellaneous"
+#~ msgstr "Diverse"
+
+#~ msgid "Parasite procedures"
+#~ msgstr "Proceduri parazit"
+
+#~ msgid "Pattern UI"
+#~ msgstr "Interfaþã utilizator pentru Modele"
+
+#~ msgid "Plug-in"
+#~ msgstr "Modul inserabil"
+
+#~ msgid "Procedural database"
+#~ msgstr "Baza de date proceduralã"
+
+#~ msgid "Image mask"
+#~ msgstr "Mascã imagine"
+
+#~ msgid "Units"
+#~ msgstr "Unitãþi de mãsurã"
+
+#~ msgid "Procedural Database"
+#~ msgstr "Bazã de date proceduralã"
+
+#~ msgid "PDB calling error %s not found"
+#~ msgstr "Eroare la apelare PDB nu am gasit %s"
+
+#~ msgid "PDB calling error %s"
+#~ msgstr "Eroare la apelare PDB %s"
+
+#~ msgid ""
+#~ "Incorrect arguments passed to procedural_db_run_proc:\n"
+#~ "Argument %d to '%s' should be a %s, but got passed a %s"
+#~ msgstr ""
+#~ "Au fost trimise argumente incorecte cãtre procedural_db_run_proc:\n"
+#~ "Argumentul %d catre '%s' trebuie sã fie un %s, dar s-a trimis un %s"
+
+#~ msgid "Internal GIMP procedure"
+#~ msgstr "Procedurã internã GIMP"
+
+#~ msgid "GIMP Plug-In"
+#~ msgstr "Modul inserabil GIMP"
+
+#~ msgid "GIMP Extension"
+#~ msgstr "Extensie GIMP"
+
+#~ msgid "Temporary Procedure"
+#~ msgstr "Procedurã temporarã"
+
+#~ msgid "Pressure:"
+#~ msgstr "Presiune:"
+
+#~ msgid "Bezier path already closed."
+#~ msgstr "Calea Bezier este deja inchisã."
+
+#~ msgid "Corrupt curve"
+#~ msgstr "Curbã coruptã"
+
+#~ msgid "Curve not closed!"
+#~ msgstr "Curba nu este inchisã!"
+
+#~ msgid "Offset:"
+#~ msgstr "Decalaj:"
+
+#~ msgid "FG to BG (RGB)"
+#~ msgstr "Prim plan -> Fundal (RGB)"
+
+#~ msgid "FG to BG (HSV)"
+#~ msgstr "Prim plan -> Fundal (HSV)"
+
+#~ msgid "FG to Transparent"
+#~ msgstr "Prim plan -> Transparent"
+
+#~ msgid "Custom Gradient"
+#~ msgstr "Gradient personalizat"
+
+#~ msgid "Blend:"
+#~ msgstr "Amestec:"
+
+#~ msgid "Bi-Linear"
+#~ msgstr "Bi-Linear"
+
+#~ msgid "Radial"
+#~ msgstr "Radial"
+
+#~ msgid "Square"
+#~ msgstr "Pãtrat"
+
+#~ msgid "Conical (symmetric)"
+#~ msgstr "Conic (simetric)"
+
+#~ msgid "Conical (asymmetric)"
+#~ msgstr "Conic (asimetric)"
+
+#~ msgid "Spiral (clockwise)"
+#~ msgstr "Spiralã (sensul acelor de ceas)"
+
+#~ msgid "Spiral (anticlockwise)"
+#~ msgstr "Spiralã (invers acelor de ceas)"
+
+#~ msgid "Gradient:"
+#~ msgstr "Gradient:"
+
+#~ msgid "Sawtooth Wave"
+#~ msgstr "Undã în dinþi de fierastrãu"
+
+#~ msgid "Triangular Wave"
+#~ msgstr "Undã triunghiulara"
+
+#~ msgid "Repeat:"
+#~ msgstr "Repetã:"
+
+#~ msgid "Adaptive Supersampling"
+#~ msgstr "Supereºantionare adaptivã"
+
+#~ msgid "Max Depth:"
+#~ msgstr "Adâncimea maximã:"
+
+#~ msgid "Threshold:"
+#~ msgstr "Prag:"
+
+#~ msgid "Blend: 0, 0"
+#~ msgstr "Amestec: 0, 0"
+
+#~ msgid "Blend operation failed."
+#~ msgstr "Operaþia de amestecare a eºuat."
+
+#~ msgid "Blending..."
+#~ msgstr "Amestec..."
+
+#~ msgid "Blend: "
+#~ msgstr "Amestec:"
+
+#~ msgid "Brightness-Contrast"
+#~ msgstr "Luminozitate-Contrast"
+
+#~ msgid "Brightness-Contrast does not operate on indexed drawables."
+#~ msgstr "Luminozitate-Contrast nu funcþioneazã pe imagini indexate"
+
+#~ msgid "Brightness:"
+#~ msgstr "Luminozitate:"
+
+#~ msgid "Contrast:"
+#~ msgstr "Contrast:"
+
+#~ msgid "FG Color Fill"
+#~ msgstr "Umplere cu culoarea de prim-plan"
+
+#~ msgid "BG Color Fill"
+#~ msgstr "Umplere cu culoarea de fundal"
+
+#~ msgid "Pattern Fill"
+#~ msgstr "Umplere cu un model"
+
+#~ msgid "Bucket Fill operation failed."
+#~ msgstr "Operaþia de umplere a eºuat."
+
+#~ msgid "No available patterns for this operation."
+#~ msgstr "Nu existã nici un model disponibil pentru aceastã operaþie."
+
+#~ msgid "By Color Selection"
+#~ msgstr "Selecþie dupã culoare"
+
+#~ msgid "Inactive"
+#~ msgstr "Inactiv"
+
+#~ msgid "Selection Mode"
+#~ msgstr "Mod de selecþie"
+
+#~ msgid "Replace"
+#~ msgstr "Inlocuieºte"
+
+#~ msgid "Intersect"
+#~ msgstr "Intersecteazã"
+
+#~ msgid "Invert"
+#~ msgstr "Inverseazã"
+
+#~ msgid "All"
+#~ msgstr "Toate"
+
+#~ msgid "Source"
+#~ msgstr "Sursã"
+
+#~ msgid "Image Source"
+#~ msgstr "Imagine sursã"
+
+#~ msgid "Pattern Source"
+#~ msgstr "Model sursã"
+
+#~ msgid "Alignment"
+#~ msgstr "Aliniere"
+
+#~ msgid "Non Aligned"
+#~ msgstr "Nealiniat"
+
+#~ msgid "Aligned"
+#~ msgstr "Aliniat"
+
+#~ msgid "Registered"
+#~ msgstr "Inregistrat"
+
+#~ msgid "No patterns available for this operation."
+#~ msgstr "Nu existã nici un model disponibil pentru aceastã operaþie."
+
+#~ msgid "Color Balance"
+#~ msgstr "Balanþa de culori"
+
+#~ msgid "Color balance operates only on RGB color drawables."
+#~ msgstr "Balanþa de culori funcþioneazã numai pe imagini RGB."
+
+#~ msgid "Shadows"
+#~ msgstr "Umbre"
+
+#~ msgid "Color Levels:"
+#~ msgstr "Nivele de culoare:"
+
+#~ msgid "Cyan"
+#~ msgstr "Bleu"
+
+#~ msgid "Magenta"
+#~ msgstr "Violet"
+
+#~ msgid "Yellow"
+#~ msgstr "Galben"
+
+#~ msgid "Preserve Luminosity"
+#~ msgstr "Pãstreazã luminozitatea"
+
+#~ msgid "Color Picker"
+#~ msgstr "Selector de culori"
+
+#~ msgid "Pick colors from the image"
+#~ msgstr "Alege culori din imagine"
+
+#~ msgid "/Tools/Color Picker"
+#~ msgstr "/Unelte/Selector de culori"
+
+#~ msgid "Sample Average"
+#~ msgstr "Medie eºantion"
+
+#~ msgid "Update Active Color"
+#~ msgstr "Actualizeazã culoarea activã"
+
+#~ msgid "Red:"
+#~ msgstr "Roºu:"
+
+#~ msgid "Green:"
+#~ msgstr "Verde:"
+
+#~ msgid "Blue:"
+#~ msgstr "Albastru:"
+
+#~ msgid "Alpha:"
+#~ msgstr "Alfa(transparenþã):"
+
+#~ msgid "Hex Triplet"
+#~ msgstr "Triplet hexazecimalã"
+
+#~ msgid "Intensity:"
+#~ msgstr "Intensitate:"
+
+#~ msgid "Blur"
+#~ msgstr "Claritate"
+
+#~ msgid "Crop & Resize"
+#~ msgstr "Decupare ºi redimensionare"
+
+#~ msgid "Current Layer only"
+#~ msgstr "Numai stratul curent"
+
+#~ msgid "Allow Enlarging"
+#~ msgstr "Permite largirea"
+
+#~ msgid "Tool Toggle"
+#~ msgstr "Comutator unelte"
+
+#~ msgid "Crop"
+#~ msgstr "Decupare"
+
+#~ msgid "Resize"
+#~ msgstr "Redimensionare"
+
+#~ msgid "Crop: "
+#~ msgstr "Decupare:"
+
+#~ msgid "Crop: 0 x 0"
+#~ msgstr "Decupare: 0 x 0"
+
+#~ msgid "Crop & Resize Information"
+#~ msgstr "Informatii despre decupare ºi redimensionare"
+
+#~ msgid "Origin X:"
+#~ msgstr "Originea pe X:"
+
+#~ msgid "From Selection"
+#~ msgstr "Din selecþie"
+
+#~ msgid "Auto Shrink"
+#~ msgstr "Micºorare automatã"
+
+#~ msgid "Curves"
+#~ msgstr "Curbe"
+
+#~ msgid "Curves for indexed drawables cannot be adjusted."
+#~ msgstr "Curbele la imaginile indexate nu pot fi ajustate."
+
+#~ msgid "Modify Curves for Channel:"
+#~ msgstr "Modificã curbele pentru canal:"
+
+#~ msgid "Curve Type:"
+#~ msgstr "Tip curbã:"
+
+#~ msgid "Smooth"
+#~ msgstr "Netezire"
+
+#~ msgid "Free"
+#~ msgstr "Elibereazã"
+
+#~ msgid "Load Curves"
+#~ msgstr "Încarcã curbe"
+
+#~ msgid "Save Curves"
+#~ msgstr "Salveazã curbe"
+
+#~ msgid "Load/Save Curves"
+#~ msgstr "Încãrcare/Salvare curbe"
+
+#~ msgid "Type"
+#~ msgstr "Tip"
+
+#~ msgid "Mode"
+#~ msgstr "Mod"
+
+#~ msgid "Move: 0, 0"
+#~ msgstr "Deplasare: 0, 0"
+
+#~ msgid "Move: "
+#~ msgstr "Deplasare: "
+
+#~ msgid "Flip Tool"
+#~ msgstr "Rãstoarnã unealta"
+
+#~ msgid "Histogram"
+#~ msgstr "Histogramã"
+
+#~ msgid "Histogram does not operate on indexed drawables."
+#~ msgstr "Histograma nu funcþioneazã pe imagini indexate."
+
+#~ msgid "Mean:"
+#~ msgstr "Medie:"
+
+#~ msgid "Std Dev:"
+#~ msgstr "Deviaþia standard:"
+
+#~ msgid "Median:"
+#~ msgstr "Mediu:"
+
+#~ msgid "Pixels:"
+#~ msgstr "Pixeli:"
+
+#~ msgid "Count:"
+#~ msgstr "Numar:"
+
+#~ msgid "Information on Channel:"
+#~ msgstr "Informaþii despre canal:"
+
+#~ msgid "Hue-Saturation"
+#~ msgstr "Nuanþa-Saturare"
+
+#~ msgid "Hue-Saturation operates only on RGB color drawables."
+#~ msgstr "Nuanþa-Saturare funcþioneazã numai pe imaginii RGB."
+
+#~ msgid "Master"
+#~ msgstr "Stapân"
+
+#~ msgid "Y"
+#~ msgstr "Y"
+
+#~ msgid "C"
+#~ msgstr "C"
+
+#~ msgid "M"
+#~ msgstr "M"
+
+#~ msgid "Hue / Lightness / Saturation Adjustments"
+#~ msgstr "Reglare Nuanþa / Luminozitate / Saturare"
+
+#~ msgid "Hue:"
+#~ msgstr "Noanþã:"
+
+#~ msgid "Lightness:"
+#~ msgstr "Luminozitate:"
+
+#~ msgid "Saturation:"
+#~ msgstr "Saturare:"
+
+#~ msgid "Adjustment"
+#~ msgstr "Reglare"
+
+#~ msgid "Size:"
+#~ msgstr "Dimensiune:"
+
+#~ msgid "Sensitivity"
+#~ msgstr "Sensibilitate"
+
+#~ msgid "Speed:"
+#~ msgstr "Vitezã:"
+
+#~ msgid "Shape"
+#~ msgstr "Formã"
+
+#~ msgid "Levels"
+#~ msgstr "Nivele"
+
+#~ msgid "Levels for indexed drawables cannot be adjusted."
+#~ msgstr "Nivelele pentru imaginile indexate nu pot fi modificate."
+
+#~ msgid "Modify Levels for Channel:"
+#~ msgstr "Modificã nivele pentru canal:"
+
+#~ msgid "Input Levels:"
+#~ msgstr "Nivele intrare:"
+
+#~ msgid "Output Levels:"
+#~ msgstr "Nivele ieºire:"
+
+#~ msgid "Load Levels"
+#~ msgstr "Incarcã nivele"
+
+#~ msgid "Save Levels"
+#~ msgstr "Salveazã nivele"
+
+#~ msgid "Load/Save Levels"
+#~ msgstr "Incarcã/Salveazã nivele"
+
+#~ msgid "Magnify Tool"
+#~ msgstr "Unealta de marire"
+
+#~ msgid "Allow Window Resizing"
+#~ msgstr "Permite redimensionarea ferestrei"
+
+#~ msgid "Zoom in"
+#~ msgstr "Marire"
+
+#~ msgid "Zoom out"
+#~ msgstr "Micºorare"
+
+#~ msgid "Measure Tool"
+#~ msgstr "Unealtã de masurare"
+
+#~ msgid "Measure angles and legnths"
+#~ msgstr "Masoarã unghiuri ºi lungimi"
+
+#~ msgid "/Tools/Measure"
+#~ msgstr "/Unelte/Masurare"
+
+#~ msgid "Use Info Window"
+#~ msgstr "Foloseºte fereastra de informaþii"
+
+#~ msgid "Distance:"
+#~ msgstr "Distanþe:"
+
+#~ msgid "degrees"
+#~ msgstr "grade"
+
+#~ msgid "Move Tool"
+#~ msgstr "Unealtã deplasare"
+
+#~ msgid "Move layers & selections"
+#~ msgstr "Deplaseazã straturi ºi selecþii"
+
+#~ msgid "/Tools/Transform Tools/Move"
+#~ msgstr "/Unelte/Unelte de trasformare/Deplasare"
+
+#~ msgid "No brushes available for use with this tool."
+#~ msgstr ""
+#~ "Nu sunt disponibile pensule pentru a fi folosite cu aceastã unealtã."
+
+#~ msgid "Incremental"
+#~ msgstr "Incremental"
+
+#~ msgid "Behind"
+#~ msgstr "In spate"
+
+#~ msgid "Opacity"
+#~ msgstr "Opacitate"
+
+#~ msgid "Hardness"
+#~ msgstr "Duritate"
+
+#~ msgid "Type:"
+#~ msgstr "Tip:"
+
+#~ msgid "Once Forward"
+#~ msgstr "O datã inainte"
+
+#~ msgid "Once Backward"
+#~ msgstr "O datã inapoi"
+
+#~ msgid "Loop Sawtooth"
+#~ msgstr "Bucleazã dinte de fierastrãu"
+
+#~ msgid "Loop Triangle"
+#~ msgstr "Bucleazã triunghi"
+
+#~ msgid "Perspective Transform Information"
+#~ msgstr "Informaþii despre transformarea de perspectivã"
+
+#~ msgid "Matrix:"
+#~ msgstr "Matrice:"
+
+#~ msgid "Perspective..."
+#~ msgstr "Perspectivã..."
+
+#~ msgid "Selection: ADD"
+#~ msgstr "Selecþie: Adaugã"
+
+#~ msgid "Selection: SUBTRACT"
+#~ msgstr "Selecþie: Scade"
+
+#~ msgid "Selection: INTERSECT"
+#~ msgstr "Selecþie: Intersecteazã"
+
+#~ msgid "Selection: REPLACE"
+#~ msgstr "Selecþie: Inlocuieºte"
+
+#~ msgid "Selection: "
+#~ msgstr "Selecþie: "
+
+#~ msgid "Rotation Information"
+#~ msgstr "Informaþii despre rotaþie"
+
+#~ msgid "Center X:"
+#~ msgstr "Centru X:"
+
+#~ msgid "Rotating..."
+#~ msgstr "Rotesc..."
+
+#~ msgid "Scaling Information"
+#~ msgstr "Informaþii despre scalare"
+
+#~ msgid "Current Width:"
+#~ msgstr "Lãþimea curentã:"
+
+#~ msgid "Scale Ratio X:"
+#~ msgstr "Factor de scalã X:"
+
+#~ msgid "Scaling..."
+#~ msgstr "Scalez..."
+
+#~ msgid "Antialiasing"
+#~ msgstr "Antialiasing"
+
+#~ msgid "Show Interactive Boundary"
+#~ msgstr "Aratã marginile interactiv"
+
+#~ msgid "Fixed Size / Aspect Ratio"
+#~ msgstr "Dimensiune fixã / Raport de aspect"
+
+#~ msgid "Shearing..."
+#~ msgstr "Decupez..."
+
+#~ msgid "Text Tool"
+#~ msgstr "Unealtã pentru text"
+
+#~ msgid "Border:"
+#~ msgstr "Margine:"
+
+#~ msgid "Use Dynamic Text"
+#~ msgstr "Foloseºte text dinamic"
+
+#~ msgid "Font '%s' not found."
+#~ msgstr "Nu am gãsit fontul '%s'."
+
+#~ msgid "Font '%s' not found.%s"
+#~ msgstr "Nu am gãsit fontul '%s'.%s"
+
+#~ msgid ""
+#~ "\n"
+#~ "If you don't have scalable fonts, try turning off antialiasing in the "
+#~ "tool options."
+#~ msgstr ""
+#~ "\n"
+#~ "Dacã nu aveþi instalate fonturi scalabile, încercaþi sã opriþi "
+#~ "antialiasing-ul dinopþiunile acestei unelte."
+
+#~ msgid "Text Layer"
+#~ msgstr "Strat de text"
+
+#~ msgid "Threshold"
+#~ msgstr "Prag de declanºare"
+
+#~ msgid "Threshold does not operate on indexed drawables."
+#~ msgstr "Pragul de declanºare nu funcþioneazã pe imagini indexate."
+
+#~ msgid "Threshold Range:"
+#~ msgstr "Domeniu pentru pragul de declanºare:"
+
+#~ msgid "This tool has no options."
+#~ msgstr "Aceastã unealtã nu are nici un fel de opþiuni."
+
+#~ msgid "Rotate"
+#~ msgstr "Rotire"
+
+#~ msgid "Scale"
+#~ msgstr "Scalare"
+
+#~ msgid "Shear"
+#~ msgstr "Decupare"
+
+#~ msgid "Transform"
+#~ msgstr "Transformare"
+
+#~ msgid ""
+#~ "Transformations do not work on\n"
+#~ "layers that contain layer masks."
+#~ msgstr ""
+#~ "Transformãrile nu funcþioneazã pe straturi\n"
+#~ "care conþin strat mascã."
+
+#~ msgid "Transformation"
+#~ msgstr "Transformare"
+
+#~ msgid "Transform Tool"
+#~ msgstr "Unealtã transformare"
+
+#~ msgid "Rotation"
+#~ msgstr "Rotire"
+
+#~ msgid "Shearing"
+#~ msgstr "Decupare"
+
+#~ msgid "Perspective"
+#~ msgstr "Perspectivã"
+
+#~ msgid "Show Grid"
+#~ msgstr "Aratã grilaj"
+
+#~ msgid "Density:"
+#~ msgstr "Densitate:"
+
+#~ msgid "Smoothing"
+#~ msgstr "Netezire"
+
+#~ msgid "Show Path"
+#~ msgstr "Aratã Calea"
+
+#~ msgid "Clip Result"
+#~ msgstr "Decupeazã imaginea rezultatã"
+
+#~ msgid "Triangle"
+#~ msgstr "Triunghi"
+
+#~ msgid "Watercolor"
+#~ msgstr "Culoarea Apei"
+
+#~ msgid "Pressure"
+#~ msgstr "Presiune"

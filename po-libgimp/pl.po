@@ -1,4 +1,6 @@
-#, fuzzy
+#
+# GNOME PL Team <translators@gnome.pl>, 2000
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"

@@ -1,3 +1,7 @@
+2001-05-21  Pablo Saratxaga <pablo@mandrakesoft.com>
+
+	* ca.po,fr;po,ga.po,sk.po,ro.po: fixed headers and syntax errors
+
 2001-05-20  Michael Natterer  <mitch@gimp.org>
 
 	* hr.po

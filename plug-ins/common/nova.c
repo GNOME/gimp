@@ -224,6 +224,8 @@ query (void)
                           "Eiichi Takamori",
                           "Eiichi Takamori",
                           "May 2000",
+			  /* don't translate '<Image>', it's a keyword
+			   * of the gtk toolkit */
                           N_("<Image>/Filters/Light Effects/SuperNova..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,

@@ -187,6 +187,8 @@ query (void)
 			  "John Beale, & (ported to GIMP v0.54) Michael J. Hammel & ted to GIMP v1.0) Spencer Kimball",
 			  "John Beale",
 			  "Version 1.26, December 1998",
+			  /* don't translate '<Image>', it's a special
+			   * keyword for the gtk toolkit */
 			  N_("<Image>/Filters/Light Effects/Sparkle..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,

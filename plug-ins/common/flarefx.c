@@ -215,6 +215,8 @@ query (void)
 			  "Karl-Johan Andersson", /* Author */
 			  "Karl-Johan Andersson", /* Copyright */
 			  "May 2000",
+			  /* don't translate '<Image>' entry, 
+			   * it is keyword for the gtk toolkit */
 			  N_("<Image>/Filters/Light Effects/FlareFX..."),
 			  "RGB*",
 			  GIMP_PLUGIN,

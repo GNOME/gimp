@@ -823,6 +823,8 @@ plugin_query (void)
 			  "Eiichi Takamori",
 			  "Eiichi Takamori, and a lot of GIMP people",
 			  "1997",
+			  /* don't translate <Image>, it's a special
+			   * keyword for the gtk toolkit */
 			  N_("<Image>/Filters/Light Effects/GFlare..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
