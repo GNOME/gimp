@@ -1,3 +1,8 @@
+2003-09-12  Christian Neumair  <chris@gnome-de.org>
+
+	* app/gui/dialogs-menu.c: added missing ngettext calls to MENU_BRANCH
+	calls' argument.
+
 2003-09-12  Sven Neumann  <sven@gimp.org>
 
 	* libgimpmath/gimpmatrix.[ch]: added gimp_matrix3_affine().

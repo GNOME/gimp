@@ -61,7 +61,7 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
   { { N_("/_Select Tab"), NULL, NULL, 0 },
     NULL, NULL, NULL },
 
-  MENU_BRANCH ("/_Add Tab"),
+  MENU_BRANCH (N_("/_Add Tab")),
 
   ADD_TAB (N_("/Add Tab/Tool _Options..."),     "gimp-tool-options",
            GIMP_STOCK_TOOL_OPTIONS,             GIMP_HELP_TOOL_OPTIONS_DIALOG),
@@ -126,7 +126,7 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
 
   MENU_SEPARATOR ("/---"),
 
-  MENU_BRANCH ("/Preview Si_ze"),
+  MENU_BRANCH (N_("/Preview Si_ze")),
 
   { { N_("/Preview Size/_Tiny"), NULL,
       dialogs_preview_size_cmd_callback,
@@ -143,7 +143,7 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
   PREVIEW_SIZE (N_("/Preview Size/_Enormous"),    GIMP_PREVIEW_SIZE_ENORMOUS),
   PREVIEW_SIZE (N_("/Preview Size/_Gigantic"),    GIMP_PREVIEW_SIZE_GIGANTIC),
 
-  MENU_BRANCH ("/_Tab Style"),
+  MENU_BRANCH (N_("/_Tab Style")),
 
   { { N_("/Tab Style/_Icon"), NULL,
       dialogs_tab_style_cmd_callback,
