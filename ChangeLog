@@ -1,3 +1,9 @@
+2003-06-06  Jakub Steiner <jimmac@ximian.com>
+
+	* M themes/Default/images/tools/stock-tool-smudge-16.png
+	* themes/Default/images/tools/stock-tool-smudge-22.png: make it
+	  more clear it's a smudge tool, not a path tool
+
 2003-06-06  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpexport.c (confirm_save_dialog): fixed button order.
