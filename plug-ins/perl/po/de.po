@@ -39,25 +39,25 @@ msgid "illegal parasite specification, expected three array members"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Render/Golden Mean"
-msgstr "<Toolbox>/Xtns/Erzeuge/Goldener Schnitt"
+msgstr "<Toolbox>/Xtn/Erzeuge/Goldener Schnitt"
 
 msgid "Last Modified"
 msgstr "Zuletzt verändert"
 
 msgid "<Toolbox>/Xtns/Visual Scriptor"
-msgstr "<Toolbox>/Xtns/Visual Scriptor"
+msgstr "<Toolbox>/Xtn/Visual Scriptor"
 
 msgid "<Toolbox>/Xtns/Render/Logos/Firetext"
-msgstr "<Toolbox>/Xtns/Erzeuge/Logo/Feuerlogo"
+msgstr "<Toolbox>/Xtn/Erzeuge/Logo/Feuerlogo"
 
 msgid "unable to read '$fn': $!"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Render/Povray/Texture"
-msgstr "<Toolbox>/Xtns/Render/Povray/Textur"
+msgstr "<Toolbox>/Xtn/Render/Povray/Textur"
 
 msgid "<Toolbox>/Xtns/Render/Povray/Preferences"
-msgstr "<Toolbox>/Xtns/Erzeuge/Povray/Einstellungen"
+msgstr "<Toolbox>/Xtn/Erzeuge/Povray/Einstellungen"
 
 msgid "Unable to read temporary image tile $tmp: $!"
 msgstr ""
@@ -70,7 +70,7 @@ msgid "Font Selection Dialog ($desc)"
 msgstr "Schirftartenauswahl ($desc)"
 
 msgid "<Toolbox>/Xtns/Render/Pixelgenerator"
-msgstr "<Toolbox>/Xtns/Erzeuge/Pixelgenerator"
+msgstr "<Toolbox>/Xtn/Erzeuge/Pixelgenerator"
 
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
 msgstr ""
@@ -307,7 +307,7 @@ msgstr ""
 "Menüpfad _muß_ mit <Image>, <Toolbox>, <Load>, <Save> oder <None> anfangen!"
 
 msgid "<Toolbox>/Xtns/Perl/Server"
-msgstr "<Toolbox>/Xtns/Perl/Server"
+msgstr "<Toolbox>/Xtn/Perl/Server"
 
 msgid "accepted unix connection"
 msgstr "Unix-Verbindung angenommen"
@@ -388,7 +388,7 @@ msgstr "Konnte Referenz auf Typ '%s' nicht konvertieren"
 
 #, fuzzy
 msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-msgstr "<Toolbox>/Xtns/Erzeuge/Logo/Feuerlogo"
+msgstr "<Toolbox>/Xtn/Erzeuge/Logo/Feuerlogo"
 
 #, fuzzy
 msgid "<Image>/Filters/Render/Random Blends"
@@ -423,7 +423,7 @@ msgid "<Image>/Filters/Render/Terral Text"
 msgstr "<Image>/Filter/Render/Terraltext"
 
 msgid "<Toolbox>/Xtns/PDB Explorer"
-msgstr "<Toolbox>/Xtns/PDB-Buch"
+msgstr "<Toolbox>/Xtn/PDB-Buch"
 
 msgid "<Toolbox>/Xtns/Create_Images"
 msgstr "<Toolbox>/Xtns/Create_Images"
@@ -479,7 +479,7 @@ msgstr "Auf Standardwerte zurücksetzen"
 
 #, fuzzy
 msgid "<Toolbox>/Xtns/Gimp::Fu Example"
-msgstr "<Toolbox>/Xtns/PDB-Buch"
+msgstr "<Toolbox>/Xtn/PDB-Buch"
 
 msgid ""
 "Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
@@ -527,7 +527,7 @@ msgid "Cannot call '$AUTOLOAD' at this time"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Render/Yin-Yang"
-msgstr "<Toolbox>/Xtns/Erzeuge/Yin-Yang"
+msgstr "<Toolbox>/Xtn/Erzeuge/Yin-Yang"
 
 msgid "arguments to main not yet supported!"
 msgstr ""
@@ -554,7 +554,7 @@ msgid "get current background colour from the gimp"
 msgstr "Übernehme die aktuelle Hintergrundfarbe von Gimp"
 
 msgid "<Toolbox>/Xtns/Render/Font Table"
-msgstr "<Toolbox>/Xtns/Erzeuge/Fonttabelle"
+msgstr "<Toolbox>/Xtn/Erzeuge/Fonttabelle"
 
 msgid ""
 "Internal error: asked to deobjectify an object not in the cache, please report!"
@@ -584,7 +584,7 @@ msgid "<Image>/Filters/Distorts/MirrorSplit"
 msgstr "<Image>/Filter/"
 
 msgid "<Toolbox>/Xtns/Animation/Billboard"
-msgstr "<Toolbox>/Xtns/Animation/Billboard"
+msgstr "<Toolbox>/Xtn/Animation/Billboard"
 
 msgid "<Image>/Filters/Misc/Border Average"
 msgstr "<Image>/Filter/Verschiedenes/Rahmenfarbe"
@@ -626,7 +626,7 @@ msgstr ""
 
 #, fuzzy
 msgid "<Toolbox>/Xtns/Render/Bricks"
-msgstr "<Toolbox>/Xtns/Erzeuge/Yin-Yang"
+msgstr "<Toolbox>/Xtn/Erzeuge/Yin-Yang"
 
 msgid "WARNING: client disconnected while holding an active lock\n"
 msgstr ""
@@ -669,7 +669,7 @@ msgid "Save"
 msgstr "Speichern"
 
 msgid "<Toolbox>/Xtns/Perl/Control Center"
-msgstr "<Toolbox>/Xtns/Perl/Kontrollcenter"
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid "Function Info"
 msgstr "Mehr Info"
@@ -735,7 +735,7 @@ msgstr "[abgebrochen]\n"
 
 #, fuzzy
 msgid "<Toolbox>/Xtns/Homepage-Logo"
-msgstr "<Toolbox>/Xtns/Homepagelogo"
+msgstr "<Toolbox>/Xtn/Homepagelogo"
 
 msgid "Date/Version"
 msgstr "Datum/Version"
@@ -773,7 +773,7 @@ msgstr ""
 
 #, fuzzy
 msgid "<Toolbox>/Xtns/Perl Example Plug-in"
-msgstr "<Toolbox>/Xtns/PDB-Buch"
+msgstr "<Toolbox>/Xtn/PDB-Buch"
 
 msgid "unable to accept unix connection: $!\n"
 msgstr "Konnte Unix-Verbindung nicht annehmen: $!\n"
@@ -834,7 +834,7 @@ msgid " = [argument error]\n"
 msgstr " = [Argumentfehler]\n"
 
 msgid "<Toolbox>/Xtns/"
-msgstr "<Toolbox>/Xtns/"
+msgstr "<Toolbox>/Xtn/"
 
 msgid "plug-in returned %d more values than expected"
 msgstr ""
@@ -861,52 +861,52 @@ msgid "not enough"
 msgstr "nicht genügend"
 
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/3D Outline"
-msgstr "<Toolbox>/Xtns/Erzeuge/Logo/3D Outline"
+msgstr "<Toolbox>/Xtn/Erzeuge/Logo/3D Outline"
 
 msgid "accepting connections on $unix_path"
 msgstr "Akzeptiere Verbindungen auf $unix_path"
 
 #~ msgid "<Toolbox>/Xtns/Animation/Seth Spin"
-#~ msgstr "<Toolbox>/Xtns/Animation/Seth's Dreher"
+#~ msgstr "<Toolbox>/Xtn/Animation/Seth's Dreher"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Speed text"
-#~ msgstr "<Toolbox>/Xtns/Perl/Server"
+#~ msgstr "<Toolbox>/Xtn/Perl/Server"
 
 #~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Glossy"
 #~ msgstr "<Toolbox>/Xtns/Perl-Fu/Logos/Glossy"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Crystal"
-#~ msgstr "<Toolbox>/Xtns/Perl/Kontrollcenter"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Carved"
-#~ msgstr "<Toolbox>/Xtns/Perl/Server"
+#~ msgstr "<Toolbox>/Xtn/Perl/Server"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Bovination"
-#~ msgstr "<Toolbox>/Xtns/Perl/Kontrollcenter"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Frosty"
-#~ msgstr "<Toolbox>/Xtns/Perl/Kontrollcenter"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chrome"
-#~ msgstr "<Toolbox>/Xtns/Perl/Server"
+#~ msgstr "<Toolbox>/Xtn/Perl/Server"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Neon"
-#~ msgstr "<Toolbox>/Xtns/Perl/Kontrollcenter"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Textured"
-#~ msgstr "<Toolbox>/Xtns/Perl/Server"
+#~ msgstr "<Toolbox>/Xtn/Perl/Server"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chalk"
-#~ msgstr "<Toolbox>/Xtns/Perl/Kontrollcenter"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 #~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Particle Trace"
 #~ msgstr "<Toolbox>/Xtns/Perl-Fu/Logos/Particle Trace"
@@ -916,52 +916,52 @@ msgstr "Akzeptiere Verbindungen auf $unix_path"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Comic Book"
-#~ msgstr "<Toolbox>/Xtns/Perl/Kontrollcenter"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Starscape"
-#~ msgstr "<Toolbox>/Xtns/Perl/Server"
+#~ msgstr "<Toolbox>/Xtn/Perl/Server"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Newsprint text"
-#~ msgstr "<Toolbox>/Xtns/Perl/Kontrollcenter"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Gradient Bevel"
-#~ msgstr "<Toolbox>/Xtns/Perl/Kontrollcenter"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Blended"
-#~ msgstr "<Toolbox>/Xtns/Perl/Kontrollcenter"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Basic I"
-#~ msgstr "<Toolbox>/Xtns/Perl/Kontrollcenter"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Glowing Hot"
-#~ msgstr "<Toolbox>/Xtns/Perl/Kontrollcenter"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Starburst"
-#~ msgstr "<Toolbox>/Xtns/Perl/Server"
+#~ msgstr "<Toolbox>/Xtn/Perl/Server"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Alien Glow"
-#~ msgstr "<Toolbox>/Xtns/Perl/Kontrollcenter"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Basic II"
-#~ msgstr "<Toolbox>/Xtns/Perl/Kontrollcenter"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Imigre-26"
-#~ msgstr "<Toolbox>/Xtns/Perl/Server"
+#~ msgstr "<Toolbox>/Xtn/Perl/Server"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/SOTA Chrome"
-#~ msgstr "<Toolbox>/Xtns/Perl/Server"
+#~ msgstr "<Toolbox>/Xtn/Perl/Server"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Cool Metal"
-#~ msgstr "<Toolbox>/Xtns/Perl/Kontrollcenter"
+#~ msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"

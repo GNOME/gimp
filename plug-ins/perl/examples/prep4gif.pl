@@ -1,8 +1,5 @@
 #!/usr/bin/perl
 
-eval 'exec /usr/bin/perl  -S $0 ${1+"$@"}'
-    if 0; # not running under some shell
-
 use Gimp qw(:auto);
 use Gimp::Fu;
 
@@ -98,7 +95,7 @@ register
 	"Seth Burgess",
 	"Seth Burgess <sjburges\@gimp.org>",
 	"2-15-98",
-	__"<Image>/Filters/Misc/Prepare for GIF",
+	__"<Image>/Filters/Web/Prepare for GIF",
 	"RGB*",
 	[
 	 [PF_INT32, "lower_threshold", "Lower Alpha Threshold", 64],

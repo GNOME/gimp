@@ -11,7 +11,7 @@ register "webify",
          "Marc Lehmann",
          "Marc Lehmann",
          "1.0",
-         __"<Image>/Filters/Misc/Webify",
+         __"<Image>/Filters/Web/Webify",
          "RGB*, GRAY*",
          [
           [PF_BOOL,	"new",		"create a new image?", 1],

@@ -1,9 +1,11 @@
 Revision history for Gimp-Perl extension.
 
-1.17
+1.17  Wed Nov 24 21:25:19 CET 1999
         - re-fitted i18n translation for most plug-ins.
         - intllibs linking bugfix.
         - half-hearted attempt to i18nize logulator.
+        - preliminary support for N_ (this function should
+          not be necessary in perl).
 
 1.16  Sun Nov 21 02:37:16 CET 1999
 	- removed sethspin.pl & billboard, they are no longer maintained :(

@@ -1,7 +1,4 @@
 #!/usr/bin/perl
-
-eval 'exec /usr/bin/perl  -S $0 ${1+"$@"}'
-    if 0; # not running under some shell
 # <sjburges@gimp.org>
 # This is tigert's request.  I suppose it'll be useful to those that do
 # this sort of thing.  Personally I'll probably only run it to test and
@@ -11,12 +8,6 @@ eval 'exec /usr/bin/perl  -S $0 ${1+"$@"}'
 # 
 # Bruce Miller                              (fixed to accomdate 1.1.x changes)
 # Brendon and Wendy Humphrey <brendy@swipnet.se> (progress bar, nice comments)
-#
-# Tuomas Kuosmanen <tigert@gimp.org>
-# Fixed some things to make this work with cvs gimp. Fixed calls to
-# gimp_get_guide_orientation() (guide types that changed from
-# GUIDE_VERTICAL to VERTICAL and horizontal, respectively.  Should
-# work now). Also convert to indexed parameters changed, fixed them too.
 # 
 # If you have more additions, etc please don't hesitate to send them in!
 
@@ -37,7 +28,7 @@ sub get_vguides {
     $i=0;
     my @vguides;
     while ($i=$img->find_next_guide($i)) {
-        if ($img->get_guide_orientation($i) == &Gimp::VERTICAL){
+        if ($img->get_guide_orientation($i) == &Gimp::VERTICAL_GUIDE){
             $keyval = sprintf("%4d", $img->get_guide_position($i));
             $vkeys{$keyval} = $i;
             }
@@ -58,7 +49,7 @@ sub get_hguides {
     $i=0;
     my @hguides;
     while ($i=$img->find_next_guide($i)) {
-        if ($img->get_guide_orientation($i) == &Gimp::HORIZONTAL){
+        if ($img->get_guide_orientation($i) == &Gimp::HORIZONTAL_GUIDE){
             $keyval = sprintf("%4d", $img->get_guide_position($i));
             $hkeys{$keyval} = $i;
             }
@@ -82,12 +73,9 @@ sub dosel {
     # print "Cropping from $l to $r, $t to $b\n";
     $tmpimg->crop($r-$l, $b-$t, $l, $t);
     $tmplay = $tmpimg->active_drawable;
-    if (! $tmplay->is_indexed) {
-	# do this: fs/low-bleed dither, make palette, 256 colors, 
-	# dont dither alpha, do remove unused (is 1 "true" here?),
-	# custom palette is ignored (we create our own, thus "duck" works).
-        $tmpimg->convert_indexed (2,0,256,0,1,duck) 
-	}
+    if (! $tmplay->indexed) {
+        $tmpimg->convert_indexed(1,256);
+        }
     $tmpimg->gimp_file_save(-1,"$savepath$imgpath$imgname","$savepath$imgpath$imgname");
     $tmpimg->delete;
     return "$imgpath$imgname"; # what I want printed in html

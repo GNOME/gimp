@@ -127,7 +127,7 @@ sub croak {
    goto &Carp::croak;
 }
 
-my @_procs = ('main', 'xlfd_size', '__');
+my @_procs = ('main', 'xlfd_size', '__', 'N_');
 my @_default = (@_procs, ':consts' ,':_auto2');
    
 # we really abuse the import facility..
@@ -186,6 +186,9 @@ sub xlfd_size($) {
   $px>0 ? ($px,&Gimp::PIXELS)
         : ($pt,&Gimp::POINTS);
 }
+
+# the identity function
+sub N_($) { shift }
 
 my @init_functions;
 
