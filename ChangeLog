@@ -1,3 +1,9 @@
+2002-11-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdock.c (gimp_dock_class_init): connect
+	book_removed()'s default implementation correctly so dock auto
+	destruction on last dockbook removal works again.
+
 2002-11-04  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/print/gimp_color_window.c: use stock buttons.

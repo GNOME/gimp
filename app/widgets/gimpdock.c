@@ -160,7 +160,7 @@ gimp_dock_class_init (GimpDockClass *klass)
   widget_class->style_set = gimp_dock_style_set;
 
   klass->book_added       = gimp_dock_real_book_added;
-  klass->book_added       = gimp_dock_real_book_removed;
+  klass->book_removed     = gimp_dock_real_book_removed;
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("separator_height",
