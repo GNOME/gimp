@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.1.18\n"
-"POT-Creation-Date: 2000-04-02 11:42+0400\n"
-"PO-Revision-Date: 2000-04-06 19:03+04:00\n"
+"POT-Creation-Date: 2000-04-10 22:10+0400\n"
+"PO-Revision-Date: 2000-04-13 03:18+04:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -389,7 +389,7 @@ msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Frosty..."
 
 #: plug-ins/script-fu/scripts/glossy.scm:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Glossy..."
+msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Глянец..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
@@ -673,7 +673,7 @@ msgstr "Угол"
 
 #: plug-ins/gap/sel-to-anim-img.scm:4
 msgid "Anim-Filter for all Copies"
-msgstr ""
+msgstr "Аним-фильтр для всех копий"
 
 #: plug-ins/script-fu/scripts/text-circle.scm:7
 msgid "Antialias"
@@ -723,7 +723,7 @@ msgstr "Непрозрачность фона"
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:7
 #: plug-ins/script-fu/scripts/image-structure.scm:12
 #: plug-ins/script-fu/scripts/neon-logo.scm:5
-#: plug-ins/script-fu/scripts/news-text.scm:8
+#: plug-ins/script-fu/scripts/news-text.scm:9
 #: plug-ins/script-fu/scripts/speed-text.scm:7
 #: plug-ins/script-fu/scripts/sphere.scm:5
 #: plug-ins/script-fu/scripts/starburst-logo.scm:6
@@ -767,15 +767,15 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/glossy.scm:6
 msgid "Blend Gradient (Outline)"
-msgstr ""
+msgstr "Градиент (Контур)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:5
 msgid "Blend Gradient (Text)"
-msgstr ""
+msgstr "Градиент (Текст)"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:2
 msgid "Blend Mode"
-msgstr ""
+msgstr "Режим смешивания"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:2
 #: plug-ins/script-fu/scripts/truchet.scm:2
@@ -807,6 +807,7 @@ msgid "Blur Horizontally"
 msgstr "Размыть горизонтально"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:4
+#: plug-ins/script-fu/scripts/news-text.scm:7
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:5
 #: plug-ins/script-fu/scripts/round-corners.scm:6
 #: plug-ins/script-fu/scripts/swirltile.scm:5
@@ -853,7 +854,7 @@ msgstr "Рамка"
 
 #: plug-ins/script-fu/scripts/asc2img.scm:8
 msgid "Buffer Amount (% Height of Text)"
-msgstr ""
+msgstr "Размер буфера (% высоты текста)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:8
 msgid "Bumpmap (Alpha Layer) Blur Radius"
@@ -865,11 +866,11 @@ msgstr "Цвет взрыва"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:6
 msgid "Carve Raised Text"
-msgstr ""
+msgstr "Вырезать поднятый текст"
 
 #: plug-ins/script-fu/scripts/carve-it.scm:3
 msgid "Carve White Areas"
-msgstr ""
+msgstr "Вырезать белые участки"
 
 #: plug-ins/script-fu/scripts/news-text.scm:5
 msgid "Cell Size (pixels)"
@@ -906,7 +907,7 @@ msgstr "Насыщенность хрома"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:8
 msgid "Chrome White Areas"
-msgstr ""
+msgstr "Белые участки хрома"
 
 #: plug-ins/script-fu/scripts/circuit.scm:3
 msgid "Circuit Seed"
@@ -995,10 +996,6 @@ msgstr "Уровень деталей"
 msgid "Diameter"
 msgstr "Диаметр"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:3
-msgid "Drawable"
-msgstr ""
-
 #: plug-ins/script-fu/scripts/xach-effect.scm:8
 msgid "Drop Shadow Blur Radius"
 msgstr "Радиус размывания падающей тени"
@@ -1025,7 +1022,7 @@ msgstr "Падающая тень"
 
 #: plug-ins/script-fu/scripts/predator.scm:2
 msgid "Edge Amount"
-msgstr ""
+msgstr "Размер края"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:7
 msgid "Edge Only"
@@ -1062,8 +1059,8 @@ msgid "End: Blue Frequency (> 0)"
 msgstr "Конец: Частота синего (>0)"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:8
-msgid "End: Blue Intensity Factor (max. 128)"
-msgstr "Конец: Фактор интенсивности синего (макс. 128)"
+msgid "End: Blue Intensity Factor"
+msgstr "Конец: Фактор интенсивности синего"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:20
 msgid "End: Blue Phase Displacement (RAD)"
@@ -1074,8 +1071,8 @@ msgid "End: Green Frequency (> 0)"
 msgstr "Конец: Частота зеленого (> 0)"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:7
-msgid "End: Green Intensity Factor (max. 128)"
-msgstr "Конец: Фактор интенсивности зеленого (макс. 128)"
+msgid "End: Green Intensity Factor"
+msgstr "Конец: Фактор интенсивности зеленого"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:19
 msgid "End: Green Phase Displacement (RAD)"
@@ -1086,8 +1083,8 @@ msgid "End: Red Frequency (> 0)"
 msgstr "Конец: Частота красного (> 0)"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:6
-msgid "End: Red Intensity Factor (max. 128)"
-msgstr "Конец: Фактор интенсивности красного (макс. 128)"
+msgid "End: Red Intensity Factor"
+msgstr "Конец: Фактор интенсивности красного"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:18
 msgid "End: Red Phase Displacement (RAD)"
@@ -1095,7 +1092,7 @@ msgstr "Конец: Смещение фазы красного (рад)"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:9
 msgid "Ending Blend"
-msgstr ""
+msgstr "Завершение смешивания"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:5
 #: plug-ins/script-fu/scripts/crystal-logo.scm:7
@@ -1105,7 +1102,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/trochoid.scm:6
 msgid "Erase before Draw"
-msgstr ""
+msgstr "Очистить перед рисованием"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:3
 msgid "Even/Odd"
@@ -1130,9 +1127,6 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/asc2img.scm:2
 #: plug-ins/script-fu/scripts/asc2img.scm:10
-msgid "File Name"
-msgstr "Имя файла"
-
 #: plug-ins/script-fu/scripts/select_to_brush.scm:3
 msgid "Filename"
 msgstr "Имя файла"
@@ -1392,10 +1386,6 @@ msgstr "Щирина изображения"
 msgid "Image to Carve"
 msgstr "Изображение -> гравюра"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:2
-msgid "Image"
-msgstr "Изображение"
-
 #: plug-ins/script-fu/scripts/gimp-headers.scm:11
 #: plug-ins/script-fu/scripts/gimp-headers.scm:22
 #: plug-ins/script-fu/scripts/gimp-labels.scm:4
@@ -1433,7 +1423,7 @@ msgstr "Инвертировать"
 msgid "Keep Background"
 msgstr "Сохранить фон"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:6
+#: plug-ins/script-fu/scripts/add-bevel.scm:4
 #: plug-ins/script-fu/scripts/chip-away.scm:9
 msgid "Keep Bump Layer"
 msgstr ""
@@ -1445,7 +1435,7 @@ msgstr ""
 msgid "Keep Selection"
 msgstr "Сохранить выделение"
 
-#: plug-ins/script-fu/scripts/land.scm:6
+#: plug-ins/script-fu/scripts/land.scm:6 plug-ins/script-fu/scripts/land.scm:7
 msgid "Land Height"
 msgstr ""
 
@@ -1459,15 +1449,15 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:9
 msgid "Lower Color (Active)"
-msgstr ""
+msgstr "Нижний цвет (Активный)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:6
 msgid "Lower Color"
-msgstr ""
+msgstr "Нижний цвет"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:6
 msgid "Lower-Right color"
-msgstr ""
+msgstr "Нижний-правый цвет"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:11
 msgid "Make New Background"
@@ -1499,17 +1489,17 @@ msgstr "Крап"
 msgid "No Background (only for separate layer)"
 msgstr "Без фона (только для отдельного слоя)"
 
-#: plug-ins/script-fu/scripts/pupi-button.scm:15
-msgid "Not-Pressed         "
-msgstr ""
-
 #: plug-ins/script-fu/scripts/pupi-button.scm:16
-msgid "Not-Pressed (Active)"
-msgstr ""
+msgid "Not Pressed (Active)"
+msgstr "Не нажата (Активная)"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm:15
+msgid "Not Pressed"
+msgstr "Не нажатая"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:9
 msgid "Number of Bands"
-msgstr ""
+msgstr "Число связей"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:23
 #: plug-ins/script-fu/scripts/gimp-labels.scm:22
@@ -1551,6 +1541,10 @@ msgstr ""
 msgid "Number"
 msgstr "Число"
 
+#: plug-ins/script-fu/scripts/line-nova.scm:4
+msgid "Offset Radius"
+msgstr "Радиус смещения"
+
 #: plug-ins/script-fu/scripts/drop-shadow.scm:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm:24
 msgid "Offset X"
@@ -1560,10 +1554,6 @@ msgstr "Смещение по X"
 #: plug-ins/script-fu/scripts/gimp-labels.scm:25
 msgid "Offset Y"
 msgstr "Смещение по Y"
-
-#: plug-ins/script-fu/scripts/line-nova.scm:4
-msgid "Offset radius"
-msgstr "Радиус смещения"
 
 #: plug-ins/script-fu/scripts/circuit.scm:2
 msgid "Oilify Mask Size"
@@ -1663,14 +1653,11 @@ msgstr "Количество точек растра"
 msgid "Pixelize"
 msgstr "Пикселизовать"
 
-#: plug-ins/script-fu/scripts/pupi-button.scm:17
-msgid "Pressed             "
-msgstr ""
-
 #: plug-ins/script-fu/scripts/beveled-button.scm:10
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm:7
+#: plug-ins/script-fu/scripts/pupi-button.scm:17
 msgid "Pressed"
-msgstr ""
+msgstr "Нажатая"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:2
 msgid "Quarter Size"
@@ -1763,10 +1750,6 @@ msgstr "Масштаб X"
 msgid "Scale Y"
 msgstr "Масштаб Y"
 
-#: plug-ins/script-fu/scripts/land.scm:7
-msgid "Sea Septh"
-msgstr ""
-
 #: plug-ins/script-fu/scripts/lava.scm:2
 msgid "Seed"
 msgstr "Зерно"
@@ -1777,12 +1760,9 @@ msgid "Select-By-Color Threshold"
 msgstr "Порог выбора-по-цвету"
 
 #: plug-ins/script-fu/scripts/circuit.scm:6
-msgid "Separate Layer"
-msgstr "Отделить слой"
-
 #: plug-ins/script-fu/scripts/lava.scm:7
 #: plug-ins/script-fu/scripts/predator.scm:6
-msgid "Seperate Layer"
+msgid "Separate Layer"
 msgstr "Отделить слой"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:4
@@ -1886,7 +1866,7 @@ msgstr "Начальный угол"
 #: plug-ins/script-fu/scripts/3dTruchet.scm:5
 #: plug-ins/script-fu/scripts/blended-logo.scm:8
 msgid "Start Blend"
-msgstr ""
+msgstr "Начало смешивания"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:6
 msgid "Start X"
@@ -1901,8 +1881,8 @@ msgid "Start: Blue Frequency (> 0)"
 msgstr "Начало: Частота синего (> 0)"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:5
-msgid "Start: Blue Intensity Factor (max. 128)"
-msgstr "Начало: Фактор интенсивности синего (макс. 128)"
+msgid "Start: Blue Intensity Factor"
+msgstr "Начало: Фактор интенсивности синего"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:17
 msgid "Start: Blue Phase Displacement (RAD)"
@@ -1913,8 +1893,8 @@ msgid "Start: Green Frequency (> 0)"
 msgstr "Начало: Частота зеленого (> 0)"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:4
-msgid "Start: Green Intensity Factor (max. 128)"
-msgstr "Начало: Фактор интенсивности зеленого (макс. 128)"
+msgid "Start: Green Intensity Factor"
+msgstr "Начало: Фактор интенсивности зеленого"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:16
 msgid "Start: Green Phase Displacement (RAD)"
@@ -1925,8 +1905,8 @@ msgid "Start: Red Frequency (> 0)"
 msgstr "Начало: Частота красного (> 0)"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:3
-msgid "Start: Red Intensity Factor (max. 128)"
-msgstr "Начало: Фактор интенсивности красного (макс. 128)"
+msgid "Start: Red Intensity Factor"
+msgstr "Начало: Фактор интенсивности красного"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:15
 msgid "Start: Red Phase Displacement (RAD)"
@@ -1960,7 +1940,7 @@ msgstr "Цвет текста (Активный)"
 #: plug-ins/script-fu/scripts/gimp-headers.scm:16
 #: plug-ins/script-fu/scripts/gimp-labels.scm:17
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:3
-#: plug-ins/script-fu/scripts/news-text.scm:7
+#: plug-ins/script-fu/scripts/news-text.scm:8
 #: plug-ins/script-fu/scripts/pupi-button.scm:7
 #: plug-ins/script-fu/scripts/speed-text.scm:6
 msgid "Text Color"
@@ -2015,7 +1995,7 @@ msgid "Text"
 msgstr "Текст"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:3
-#: plug-ins/script-fu/scripts/add-bevel.scm:4
+#: plug-ins/script-fu/scripts/add-bevel.scm:2
 #: plug-ins/script-fu/scripts/truchet.scm:3
 msgid "Thickness"
 msgstr "Толщина"
@@ -2105,7 +2085,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:7
 msgid "Width of Bands"
-msgstr ""
+msgstr "Ширина лент"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:8
 msgid "Width of Gaps"
@@ -2121,7 +2101,7 @@ msgstr "Ширина зазора"
 msgid "Width"
 msgstr "Ширина"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:5
+#: plug-ins/script-fu/scripts/add-bevel.scm:3
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:8
 #: plug-ins/script-fu/scripts/old_photo.scm:6
 #: plug-ins/script-fu/scripts/round-corners.scm:8

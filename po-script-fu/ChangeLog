@@ -1,3 +1,7 @@
+2000-04-12  Valek Filippov <frob@df.ru>
+
+	* ru.po: Updated Russian translation.
+
 2000-04-11  Sven Neumann  <sven@gimp.org>
 
 	* script-fu-xgettext: set all linenumbers to 0 since they
