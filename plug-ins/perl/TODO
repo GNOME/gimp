@@ -34,6 +34,7 @@ bugs
   
 important issues
 
+  * migrate BOOT: into INIT()
   * gimp_progress_done
   * gimp_progress_close
   * maybe implement --enable-perl=runtime-only?

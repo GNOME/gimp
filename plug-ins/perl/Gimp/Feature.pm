@@ -89,9 +89,12 @@ sub present {
       !{
          MacOS		=> 1,
          MSWin32	=> 1,
-         os2		=> 1,
          dos		=> 1,
+         MSDOS		=> 1,
+         os2		=> 1,
          VMS		=> 1,
+         RISCOS		=> 1,
+         AmigaOS	=> 1,
        }->{$^O};
    } elsif ($_ eq "never") {
       0;

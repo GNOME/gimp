@@ -599,7 +599,7 @@ convert_array2paramdef (AV *av, GParamDef **res)
   return count;
 }
 
-SV *
+static SV *
 newSV_paramdefs (GParamDef *p, int n)
 {
    int i;
