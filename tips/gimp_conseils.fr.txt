@@ -9,7 +9,7 @@ pas, vous pouvez défaire la plupart des erreurs...
 # Conseils pour débutants
 
 Vous pouvez mieux organiser votre image à l'aide des calques de
-GIMP. Pensez à votre image comme une superposition de transparents
+GIMP. Pensez à votre image comme à une superposition de transparents
 ou de filtres tels que l'image soit une combinaison du contenu des
 différents calques.
 
