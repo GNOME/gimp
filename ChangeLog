@@ -1,3 +1,17 @@
+2003-07-21  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/make-gimp-composite-dispatch.py: big code cleanup.
+
+	* app/composite/Makefile.am: removed references to $(builddir)
+
+	* app/composite/test-composite.c: cleanup, preparation for transition to
+	automatically generated regression testing code.
+
+	* app/composite/gimp-composite.c: Clean up of typedef usage
+
+	* app/composite/gimp-composite-regression.[ch]: added foundation
+	for regression testing.
+
 2003-07-21  Sven Neumann  <sven@gimp.org>
 
 	* data/images/gimp_splash.png: use a simpler URL for the camp.

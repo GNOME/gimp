@@ -113,7 +113,7 @@ def functionnameify(filename):
   f = string.replace(f, "-", "_")
   return (f)
 
-def print_function_table(filename, function_table):
+def print_function_table(fpout, filename, function_table):
 
   function_table_declarations = dict()
 
@@ -122,72 +122,72 @@ def print_function_table(filename, function_table):
   
   for key in function_table_keys:
     if not function_table_declarations.has_key(function_table[key][0]):
-      print 'GimpCompositeFunction %s();' % (function_table[key][0])
+      print >>fpout, 'GimpCompositeFunction %s();' % (function_table[key][0])
       function_table_declarations[function_table[key][0]] = function_table[key][0]
       pass
     pass
 
-  print ''
-  print 'GimpCompositeFunction (*%s[%s][%s][%s][%s])() = {' % (functionnameify(filename),
-                                                               "GIMP_COMPOSITE_N",
-                                                               "GIMP_PIXELFORMAT_N",
-                                                               "GIMP_PIXELFORMAT_N",
-                                                               "GIMP_PIXELFORMAT_N")
+  print >>fpout, ''
+  print >>fpout, 'GimpCompositeFunction (*%s[%s][%s][%s][%s])() = {' % (functionnameify(filename),
+                                                                        "GIMP_COMPOSITE_N",
+                                                                        "GIMP_PIXELFORMAT_N",
+                                                                        "GIMP_PIXELFORMAT_N",
+                                                                        "GIMP_PIXELFORMAT_N")
   for mode in composite_modes:
-    print ' { /* %s */' % (mode)
+    print >>fpout, ' { /* %s */' % (mode)
     for A in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
-      print '  { /* A = %s */' % (pixel_depth_name(A))
+      print >>fpout, '  { /* A = %s */' % (pixel_depth_name(A))
       for B in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
-        print '   /* %-6s */ {' % (pixel_depth_name(B)),
+        print >>fpout, '   /* %-6s */ {' % (pixel_depth_name(B)),
         for D in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
           key = "%s_%s_%s_%s" % (string.lower(mode), pixel_depth_name(A), pixel_depth_name(B), pixel_depth_name(D))
           if function_table.has_key(key):
-            print '%s, ' % (function_table[key][0]),
+            print >>fpout, '%s, ' % (function_table[key][0]),
           else:
-            print '%s, ' % ("NULL"),
+            print >>fpout, '%s, ' % ("NULL"),
             pass
           pass
-        print '},'
+        print >>fpout, '},'
         pass
-      print '  },'
+      print >>fpout, '  },'
       pass
-    print ' },'
+    print >>fpout, ' },'
     pass
 
-  print '};\n'
+  print >>fpout, '};\n'
   
   return
   
-def print_function_table_name(filename, function_table):
+def print_function_table_name(fpout, filename, function_table):
 
-  print ''
-  print 'char *%s_name[%s][%s][%s][%s] = {' % (functionnameify(filename),
+  print >>fpout, ''
+  print >>fpout, 'char *%s_name[%s][%s][%s][%s] = {' % (functionnameify(filename),
                                                "GIMP_COMPOSITE_N",
                                                "GIMP_PIXELFORMAT_N",
                                                "GIMP_PIXELFORMAT_N",
                                                "GIMP_PIXELFORMAT_N")
   for mode in composite_modes:
-    print ' { /* %s */' % (mode)
+    print >>fpout, ' { /* %s */' % (mode)
     for A in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
-      print '  { /* A = %s */' % (pixel_depth_name(A))
+      print >>fpout, '  { /* A = %s */' % (pixel_depth_name(A))
       for B in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
-        print '   /* %-6s */ {' % (pixel_depth_name(B)),
+        print >>fpout, '   /* %-6s */ {' % (pixel_depth_name(B)),
         for D in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
           key = "%s_%s_%s_%s" % (string.lower(mode), pixel_depth_name(A), pixel_depth_name(B), pixel_depth_name(D))
           if function_table.has_key(key):
-            print '"%s", ' % (function_table[key][0]),
+            print >>fpout, '"%s", ' % (function_table[key][0]),
           else:
-            print '"%s", ' % (""),
+            print >>fpout, '"%s", ' % (""),
             pass
           pass
-        print '},'
+        print >>fpout, '},'
         pass
-      print '  },'
+      print >>fpout, '  },'
       pass
-    print ' },'
+    print >>fpout, ' },'
     pass
 
-  print '};\n'
+  print >>fpout, '};\n'
   
   return
   
@@ -246,126 +246,13 @@ def merge_function_tables(tables):
 def print_test_code(tables):
   return
 
+def gimp_composite_regression(fpout, function_tables):
 
-def main(argv):
-
-  objects = map(ns.nmx, argv)
-
-  objs = objects
-  objs.reverse()
-  
-  gimp_composite_function = dict()
-  for o in objs:
-    for mode in composite_modes:
-      for A in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
-        for B in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
-          for D in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
-            key = "%s_%s_%s_%s" % (string.lower(mode), pixel_depth_name(A), pixel_depth_name(B), pixel_depth_name(D))
-            
-            for a in [A, "GIMP_PIXELFORMAT_ANY"]:
-              for b in [B, "GIMP_PIXELFORMAT_ANY"]:
-                for d in [D, "GIMP_PIXELFORMAT_ANY"]:
-                  composite_function = "%s_%s_%s_%s" % (string.lower(mode), pixel_depth_name(a), pixel_depth_name(b), pixel_depth_name(d))
-                  
-                  f = o.exports_re(composite_function + ".*")
-                  if f != None:
-                    gimp_composite_function.update({key : [f, mode, A, B, D]})
-                    break
-                  pass
-                if gimp_composite_function.has_key(key):
-                  break;
-                pass
-              if gimp_composite_function.has_key(key):
-                break;
-              pass
-
-            if not gimp_composite_function.has_key(key):
-              gimp_composite_function.update({key : ["gimp_composite_unsupported", mode, A, B, D]})
-              pass
-
-            pass
-          pass
-        pass
-      pass
-    pass
-
-
-  print '/* THIS FILE IS AUTOMATICALLY GENERATED.  DO NOT EDIT */'
-  print '$Id$'
-  print '#include "gimp-composite.h"'
-  print 'extern GimpCompositeFunction %s();' % ("gimp_composite_unsupported")
-  done = dict()
-  for k in gimp_composite_function.keys():
-    f = gimp_composite_function[k]
-    if not done.has_key(f[0]):
-      print 'extern GimpCompositeFunction %s();' % (f[0])
-      done.update({f[0] : None})
-      pass
-    pass
-
-  if 1:
-    print 'char *gimp_composite_function_name[%d][%d][%d][%d] = {' % (len(composite_modes), len(pixel_format)-1, len(pixel_format)-1, len(pixel_format)-1)
-    for mode in composite_modes:
-      print ' {'
-      for A in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
-        print '  {'
-        for B in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
-          print '    {',
-          for D in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
-            key = "%s_%s_%s_%s" % (string.lower(mode), pixel_depth_name(A), pixel_depth_name(B), pixel_depth_name(D))
-            if gimp_composite_function.has_key(key):
-              print '"%s", ' % (gimp_composite_function[key][0]),
-            else:
-              print '"%s", ' % ("gimp_composite_unsupported"),
-              pass
-            pass
-          print '},'
-          pass
-        print '  },'
-      
-        pass
-      print ' },'
-      pass
-
-    print '};'
-    pass
-
-
-  print ''
-  print 'void (*gimp_composite_function[%d][%d][%d][%d])() = {' % (len(composite_modes), len(pixel_format)-1, len(pixel_format)-1, len(pixel_format)-1)
-  for mode in composite_modes:
-    print ' { /* %s */' % (mode)
-    for A in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
-      print '  { /* A = %s */' % (pixel_depth_name(A))
-      for B in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
-        print '   /* %s */ {' % (pixel_depth_name(B)),
-        for D in filter(lambda pf: pf != "GIMP_PIXELFORMAT_ANY", pixel_format):
-          key = "%s_%s_%s_%s" % (string.lower(mode), pixel_depth_name(A), pixel_depth_name(B), pixel_depth_name(D))
-          if gimp_composite_function.has_key(key):
-            print '%s, ' % (gimp_composite_function[key][0]),
-          else:
-            print '%s, ' % ("gimp_composite_unsupported"),
-            pass
-          pass
-        print '},'
-        pass
-      print '  },'
-      
-      pass
-    print ' },'
-    pass
-
-  print '};'
-
-  pass
-
-def gimp_composite_regression(function_tables):
-
-  print 'void'
-  print 'gimp_composite_regression()'
-  print '{'
-  print '  GimpCompositeContext generic_ctx;'
-  print '  GimpCompositeContext special_ctx;'
+  print >>fpout, 'void'
+  print >>fpout, 'gimp_composite_regression()'
+  print >>fpout, '{'
+  print >>fpout, '  GimpCompositeContext generic_ctx;'
+  print >>fpout, '  GimpCompositeContext special_ctx;'
 
   generic_table = function_tables[0][1]
   
@@ -376,14 +263,14 @@ def gimp_composite_regression(function_tables):
           for f in function_tables[1:]:
             key = "%s_%s_%s_%s" % (string.lower(mode), pixel_depth_name(A), pixel_depth_name(B), pixel_depth_name(D))
             if f[1].has_key(key):
-              print ''
-              print '  special_ctx.op = %s;' % (mode)
-              print '  generic_ctx.op = %s;' % (mode)
-              print '  %s(&special_ctx);' % (f[1][key][0])
-              print '  %s(&generic_ctx);' % (generic_table[key][0])
-              print '  if (gimp_composite_regression_compare(&generic_ctx, &special_ctx)) {'
-              print '    printf("%s disagrees with %s\\n");' % (f[1][key][0], generic_table[key][0])
-              print '  }'
+              print >>fpout, ''
+              print >>fpout, '  special_ctx.op = %s;' % (mode)
+              print >>fpout, '  generic_ctx.op = %s;' % (mode)
+              print >>fpout, '  %s(&special_ctx);' % (f[1][key][0])
+              print >>fpout, '  %s(&generic_ctx);' % (generic_table[key][0])
+              print >>fpout, '  if (gimp_composite_regression_compare(&generic_ctx, &special_ctx)) {'
+              print >>fpout, '    printf("%s disagrees with %s\\n");' % (f[1][key][0], generic_table[key][0])
+              print >>fpout, '  }'
               pass
             pass
           pass
@@ -391,74 +278,100 @@ def gimp_composite_regression(function_tables):
       pass
     pass
   
-  print '}'
+  print >>fpout, '}'
 
 
-def gimp_composite_init(function_tables):
+def gimp_composite_init(fpout, function_tables):
   for o in function_tables:
-    print 'extern void %s_init (void);' % (functionnameify(o[0]))
+    print >>fpout, 'extern void %s_init (void);' % (functionnameify(o[0]))
     pass
 
-  print ''
-  print 'void'
-  print 'gimp_composite_init (void)'
-  print '{'
-  print '  if (g_getenv ("GIMP_COMPOSITE"))'
-  print '    {'
-  print '      gimp_composite_options.use = TRUE;'
-  print '      g_printerr ("Using new image composite functions\\n");'
-  print '    }'
-  print ''
+  print >>fpout, ''
+  print >>fpout, 'void'
+  print >>fpout, 'gimp_composite_init (void)'
+  print >>fpout, '{'
+  print >>fpout, '  if (g_getenv ("GIMP_COMPOSITE"))'
+  print >>fpout, '    {'
+  print >>fpout, '      gimp_composite_options.use = TRUE;'
+  print >>fpout, '      g_printerr ("Using new image composite functions\\n");'
+  print >>fpout, '    }'
+  print >>fpout, ''
 
-  print '  if (! gimp_composite_options.initialised)'
-  print '    {'
+  print >>fpout, '  if (! gimp_composite_options.initialised)'
+  print >>fpout, '    {'
 
   for o in function_tables:
-    print '      %s_init ();' % (functionnameify(o[0]))
+    print >>fpout, '      %s_init ();' % (functionnameify(o[0]))
     pass
   
-  print '      gimp_composite_options.initialised = TRUE;'
-  print '    }'
-  print '}'
+  print >>fpout, '      gimp_composite_options.initialised = TRUE;'
+  print >>fpout, '    }'
+  print >>fpout, '}'
   pass
 
 def gimp_composite_hfile(fpout):
   print >>fpout, '/* THIS FILE IS AUTOMATICALLY GENERATED.  DO NOT EDIT */'
   print >>fpout, ''
-  print >>fpout, 'typedef void (*GimpCompositeFunction)(GimpCompositeContext *);'
+  #print >>fpout, 'typedef void (*GimpCompositeFunction)(GimpCompositeContext *);'
   print >>fpout, 'typedef GimpCompositeFunction (*GimpCompositeFunctionTable[%s][%s][%s][%s]);' % ("GIMP_COMPOSITE_N",
                                                                                                    "GIMP_PIXELFORMAT_N",
                                                                                                    "GIMP_PIXELFORMAT_N",
                                                                                                    "GIMP_PIXELFORMAT_N")
+  return
+
+def gimp_composite_cfile(fpout):
+  print >>fpout, '/* THIS FILE IS AUTOMATICALLY GENERATED.  DO NOT EDIT */'
+  print >>fpout, '#include "config.h"'
+  print >>fpout, '#include <glib-object.h>'
+  print >>fpout, '#include <stdlib.h>'
+  print >>fpout, '#include "base/base-types.h"'
+  print >>fpout, '#include "gimp-composite.h"'
+  print >>fpout, '#include "gimp-composite-dispatch.h"'
+  print >>fpout, 'extern GimpCompositeFunction %s();' % ("gimp_composite_unsupported")
+  print >>fpout, ''
+
+  for f in d:
+    print_function_table(fpout, f[0], f[1])
+    pass
+
+  main_table = merge_function_tables(d)
+
+  print_function_table(fpout, "gimp_composite_function", main_table)
+  print_function_table_name(fpout, "gimp_composite_function", main_table)
+
+  gimp_composite_init(fpout, d)
+
+  return
+
+###########################################3
+d = list()
+for f in sys.argv[1:]:
+  d.append((f, load_function_table(f)))
   pass
 
 gimp_composite_hfile(open("gimp-composite-dispatch.h", "w"))
 
+gimp_composite_cfile(open("gimp-composite-dispatch.c", "w"))
+# print '/* THIS FILE IS AUTOMATICALLY GENERATED.  DO NOT EDIT */'
+# print '#include "config.h"'
+# print '#include <glib-object.h>'
+# print '#include <stdlib.h>'
+# print '#include "base/base-types.h"'
+# print '#include "gimp-composite.h"'
+# print '#include "gimp-composite-dispatch.h"'
+# print 'extern GimpCompositeFunction %s();' % ("gimp_composite_unsupported")
+# print ''
 
-print '/* THIS FILE IS AUTOMATICALLY GENERATED.  DO NOT EDIT */'
-print '#include "config.h"'
-print '#include <glib-object.h>'
-print '#include <stdlib.h>'
-print '#include "base/base-types.h"'
-print '#include "gimp-composite.h"'
-print '#include "gimp-composite-dispatch.h"'
-print 'extern GimpCompositeFunction %s();' % ("gimp_composite_unsupported")
-print ''
+# for f in d:
+#   print_function_table(f[0], f[1])
+#   pass
 
+# main_table = merge_function_tables(d)
 
-d = list()
-for f in sys.argv[1:]:
-  dd = load_function_table(f)
-  d.append((f, dd))
-  print_function_table(f, dd)
-  pass
+# print_function_table("gimp_composite_function", main_table)
+# print_function_table_name("gimp_composite_function", main_table)
 
-main_table = merge_function_tables(d)
-
-print_function_table("gimp_composite_function", main_table)
-print_function_table_name("gimp_composite_function", main_table)
-
-gimp_composite_init(d)
+# gimp_composite_init(d)
 
 #gimp_composite_regression(d)
 

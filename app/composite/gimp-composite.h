@@ -44,91 +44,6 @@ typedef enum
   GIMP_PIXELFORMAT_N
 } GimpPixelFormat;
 
-/*
- * The following typedefs are temporary and only used in regression testing.
-	*/
-typedef struct
-{
-  guint8  v;
-} gimp_v8_t;
-
-typedef struct
-{
-  guint8  v;
-  guint8  a;
-} gimp_va8_t;
-
-typedef struct
-{
-  guint8  r;
-  guint8  g;
-  guint8  b;
-} gimp_rgb8_t;
-
-typedef struct
-{
-  guint8  r;
-  guint8  g;
-  guint8  b;
-  guint8  a;
-} gimp_rgba8_t;
-
-#ifdef GIMP_COMPOSIE_16BIT
-typedef struct
-{
-  guint16  v;
-} gimp_v16_t;
-
-typedef struct
-{
-  guint16  v;
-  guint16  a;
-} gimp_va16_t;
-
-typedef struct
-{
-  guint16  r;
-  guint16  g;
-  guint16  b;
-} gimp_rgb16_t;
-
-typedef struct
-{
-  guint16  r;
-  guint16  g;
-  guint16  b;
-  guint16  a;
-} gimp_rgba16_t;
-#endif
-
-#ifdef GIMP_COMPOSIE_32BIT
-typedef struct
-{
-  guint32  v;
-} gimp_v32_t;
-
-typedef struct
-{
-  guint32  v;
-  guint32  a;
-} gimp_va32_t;
-
-typedef struct
-{
-  guint32  r;
-  guint32  g;
-  guint32  b;
-} gimp_rgb32_t;
-
-typedef struct
-{
-  guint32  r;
-  guint32  g;
-  guint32  b;
-  guint32  a;
-} gimp_rgba32_t;
-#endif
-
 /* bytes per-pixel for each of the pixel formats */
 extern const guchar gimp_composite_pixel_bpp[];
 
@@ -221,6 +136,7 @@ typedef struct
   GimpCompositeOperation op;
 } GimpCompositeContext;
 
+typedef void (*GimpCompositeFunction)(GimpCompositeContext *);
 
 struct GimpCompositeOptions {
 		gboolean initialised;
@@ -229,7 +145,7 @@ struct GimpCompositeOptions {
 
 extern struct GimpCompositeOptions gimp_composite_options;
 
-extern void gimp_composite_dispatch(GimpCompositeContext *);
+extern GimpCompositeFunction gimp_composite_dispatch(GimpCompositeContext *);
 extern void gimp_composite_init(void);
 extern void gimp_composite_context_print(GimpCompositeContext *);
 
