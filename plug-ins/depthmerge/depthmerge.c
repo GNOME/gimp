@@ -1,11 +1,5 @@
-/* TODO:
- *   - Debug
- *   - Clean up source
- *   - Package, distribute
- */
-
 /* Depth Merge -- Combine two image layers via corresponding depth maps
- * Copyright (C) 1997 Sean Cier (scier@cmu.edu)
+ * Copyright (C) 1997, 1998 Sean Cier (scier@PostHorizon.com)
  *
  * A plug-in for The GIMP
  * The GIMP is Copyright (C) 1995 Spencer Kimball and Peter Mattis
@@ -21,13 +15,16 @@
  * GNU General Public License for more details.
  */
 
-/* Version 0.1: (6 July 1997)
+/* Version 1.0.0: (14 August 1998)
+ *   Math optimizations, miscellaneous speedups
+ *
+ * Version 0.1: (6 July 1997)
  *   Initial Release
  */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
@@ -39,10 +36,12 @@
 #define LERP(frac,a,b) ((frac)*(b) + (1-(frac))*(a))
 #endif
 
+#define MUL255(i) ((i)*256 - (i))
+#define DIV255(i) (((i) + (i)/256 + 1) / 256)
 
 #define PLUG_IN_NAME    "plug_in_depth_merge"
 #define PLUG_IN_TITLE   "Depth Merge"
-#define PLUG_IN_VERSION "0.1; 6 July 1997"
+#define PLUG_IN_VERSION "1.0.0; 14 August 1998"
 
 #define PREVIEW_SIZE 256
 #define SCALE_WIDTH  200
@@ -493,22 +492,22 @@ void DepthMerge_executeRegion(DepthMerge *dm,
                               guchar *source1Row, guchar *source2Row,
 			      guchar *depthMap1Row, guchar *depthMap2Row,
 			      guchar *resultRow, gint length) {
-  float          scale1, scale2, offset, invOverlap;
+  float          scale1, scale2, offset255, invOverlap255;
   float          frac, depth1, depth2;
   unsigned short c1[4], c2[4], cR1[4], cR2[4], cR[4], temp;
   int            i, tempInt;
 
-  invOverlap = 1.0 / MAX(dm->params.overlap, 0.001);
-  offset  = dm->params.offset;
-  scale1  = dm->params.scale1;
-  scale2  = dm->params.scale2;
+  invOverlap255 = 1.0 / (MAX(dm->params.overlap, 0.001)*255);
+  offset255  = dm->params.offset * 255;
+  scale1     = dm->params.scale1;
+  scale2     = dm->params.scale2;
 
   for (i = 0; i < length; i++) {
-    depth1 = depthMap1Row[i] * (1.0/255.0);
-    depth2 = depthMap2Row[i] * (1.0/255.0);
+    depth1 = (float)depthMap1Row[i];
+    depth2 = (float)depthMap2Row[i];
 
-    frac = (depth2*scale2 - (depth1*scale1 + offset)) * invOverlap;
-    frac = (frac+1.0)/2.0;
+    frac = (depth2*scale2 - (depth1*scale1 + offset255)) * invOverlap255;
+    frac = 0.5 * (frac+1.0);
     frac = CLAMP(frac, 0.0, 1.0);
 
       /* c1 -> color corresponding to source1 */
@@ -525,18 +524,18 @@ void DepthMerge_executeRegion(DepthMerge *dm,
 
     if (frac != 0) {
         /* cR1 -> result if c1 is completely on top */
-      cR1[0] = c1[3]*c1[0] + (255-c1[3])*c2[0];
-      cR1[1] = c1[3]*c1[1] + (255-c1[3])*c2[1];
-      cR1[2] = c1[3]*c1[2] + (255-c1[3])*c2[2];
-      cR1[3] = 255  *c1[3] + (255-c1[3])*c2[3];
+      cR1[0] = c1[3]*c1[0]   + (255-c1[3])*c2[0];
+      cR1[1] = c1[3]*c1[1]   + (255-c1[3])*c2[1];
+      cR1[2] = c1[3]*c1[2]   + (255-c1[3])*c2[2];
+      cR1[3] = MUL255(c1[3]) + (255-c1[3])*c2[3];
     }
 
     if (frac != 1) {
         /* cR2 -> result if c2 is completely on top */
-      cR2[0] = c2[3]*c2[0] + (255-c2[3])*c1[0];
-      cR2[1] = c2[3]*c2[1] + (255-c2[3])*c1[1];
-      cR2[2] = c2[3]*c2[2] + (255-c2[3])*c1[2];
-      cR2[3] = 255  *c2[3] + (255-c2[3])*c1[3];
+      cR2[0] = c2[3]*c2[0]   + (255-c2[3])*c1[0];
+      cR2[1] = c2[3]*c2[1]   + (255-c2[3])*c1[1];
+      cR2[2] = c2[3]*c2[2]   + (255-c2[3])*c1[2];
+      cR2[3] = MUL255(c2[3]) + (255-c2[3])*c1[3];
     }
 
     if (frac == 1) {
@@ -556,10 +555,10 @@ void DepthMerge_executeRegion(DepthMerge *dm,
       tempInt = LERP(frac, cR2[3], cR1[3]); cR[3] = CLAMP(tempInt,0,255*255);
     }
 
-    temp = cR[0]/255; resultRow[4*i  ] = CLAMP(temp, 0, 255);
-    temp = cR[1]/255; resultRow[4*i+1] = CLAMP(temp, 0, 255);
-    temp = cR[2]/255; resultRow[4*i+2] = CLAMP(temp, 0, 255);
-    temp = cR[3]/255; resultRow[4*i+3] = CLAMP(temp, 0, 255);
+    temp = DIV255(cR[0]); resultRow[4*i  ] = MIN(temp, 255);
+    temp = DIV255(cR[1]); resultRow[4*i+1] = MIN(temp, 255);
+    temp = DIV255(cR[2]); resultRow[4*i+2] = MIN(temp, 255);
+    temp = DIV255(cR[3]); resultRow[4*i+3] = MIN(temp, 255);
   }
 }
 
@@ -892,7 +891,7 @@ void DepthMerge_buildPreviewSourceImage(DepthMerge *dm) {
 }
 
 void DepthMerge_updatePreview(DepthMerge *dm) {
-  int    x, y;
+  int    x, y, i;
   guchar *source1Row, *source2Row, *depthMap1Row, *depthMap2Row,
          *resultRowRGBA, *resultRow,
          *checkRow;
@@ -921,15 +920,15 @@ void DepthMerge_updatePreview(DepthMerge *dm) {
 			     resultRowRGBA,
 			     dm->interface->previewWidth);
     for (x = 0; x < dm->interface->previewWidth; x++) {
-      resultRow[x*3  ] =
-        ((int)(      resultRowRGBA[x*4+3])*(int)resultRowRGBA[x*4  ] +
-         (int)(255 - resultRowRGBA[x*4+3])*(int)checkRow[x]          ) / 255;
-      resultRow[x*3+1] =
-        ((int)(      resultRowRGBA[x*4+3])*(int)resultRowRGBA[x*4+1] +
-         (int)(255 - resultRowRGBA[x*4+3])*(int)checkRow[x]          ) / 255;
-      resultRow[x*3+2] =
-        ((int)(      resultRowRGBA[x*4+3])*(int)resultRowRGBA[x*4+2] +
-         (int)(255 - resultRowRGBA[x*4+3])*(int)checkRow[x]          ) / 255;
+      i = ((int)(      resultRowRGBA[x*4+3])*(int)resultRowRGBA[x*4  ] +
+           (int)(255 - resultRowRGBA[x*4+3])*(int)checkRow[x]          );
+      resultRow[x*3  ] = DIV255(i);
+      i = ((int)(      resultRowRGBA[x*4+3])*(int)resultRowRGBA[x*4+1] +
+           (int)(255 - resultRowRGBA[x*4+3])*(int)checkRow[x]          );
+      resultRow[x*3+1] = DIV255(i);
+      i = ((int)(      resultRowRGBA[x*4+3])*(int)resultRowRGBA[x*4+2] +
+           (int)(255 - resultRowRGBA[x*4+3])*(int)checkRow[x]          );
+      resultRow[x*3+2] = DIV255(i);
     }
     gtk_preview_draw_row(GTK_PREVIEW(dm->interface->preview), resultRow, 0, y,
 			 dm->interface->previewWidth);
@@ -1110,8 +1109,10 @@ void util_fillReducedBuffer(guchar *dest, gint destWidth, gint destHeight,
                             gint x0, gint y0,
                             gint sourceWidth, gint sourceHeight) {
   GPixelRgn rgn;
-  guchar    *rowBuffer, *reducedRowBuffer;
-  int       x, y, xPrime, yPrime, sourceHasAlpha;
+  guchar    *sourceBuffer, *reducedRowBuffer,
+            *sourceBufferRow, *sourceBufferPos, *reducedRowBufferPos;
+  int       x, y, i, yPrime, sourceHasAlpha, sourceBpp;
+  int       *sourceRowOffsetLookup;
 
   if ((sourceDrawable == NULL) || (sourceWidth == 0) || (sourceHeight == 0)) {
     for (x = 0; x < destWidth*destHeight*destBPP; x++)
@@ -1119,29 +1120,41 @@ void util_fillReducedBuffer(guchar *dest, gint destWidth, gint destHeight,
     return;
   }
 
-  rowBuffer        = (guchar *)g_malloc(sourceWidth * sourceDrawable->bpp);
-  reducedRowBuffer = (guchar *)g_malloc(destWidth   * sourceDrawable->bpp);
+  sourceBpp = sourceDrawable->bpp;
+
+  sourceBuffer          = (guchar *)g_malloc(sourceWidth * sourceHeight *
+                                             sourceBpp);
+  reducedRowBuffer      = (guchar *)g_malloc(destWidth   * sourceBpp);
+  sourceRowOffsetLookup = (int    *)g_malloc(destWidth   * sizeof(int));
   gimp_pixel_rgn_init(&rgn, sourceDrawable, x0, y0, sourceWidth, sourceHeight,
 		      FALSE, FALSE);
   sourceHasAlpha = gimp_drawable_has_alpha(sourceDrawable->id);
 
+  for (x = 0; x < destWidth; x++)
+    sourceRowOffsetLookup[x] = (x*(sourceWidth-1)/(destWidth-1))*sourceBpp;
+
+  gimp_pixel_rgn_get_rect(&rgn, sourceBuffer,
+                          x0, y0, sourceWidth, sourceHeight);
+
   for (y = 0; y < destHeight; y++) {
     yPrime = y*(sourceHeight-1)/(destHeight-1);
-    gimp_pixel_rgn_get_row(&rgn, rowBuffer, x0, yPrime+y0,
-      sourceWidth);
+    sourceBufferRow = &(sourceBuffer[yPrime * sourceWidth * sourceBpp]);
+    sourceBufferPos = sourceBufferRow;
+    reducedRowBufferPos = reducedRowBuffer;
     for (x = 0; x < destWidth; x++) {
-      xPrime = x*(sourceWidth-1)/(destWidth-1);
-      memcpy(&(reducedRowBuffer[x     *sourceDrawable->bpp]),
-             &(rowBuffer[       xPrime*sourceDrawable->bpp]),
-	     sourceDrawable->bpp);
+      sourceBufferPos = sourceBufferRow + sourceRowOffsetLookup[x];
+      for (i = 0; i < sourceBpp; i++) 
+        reducedRowBufferPos[i] = sourceBufferPos[i];
+      reducedRowBufferPos += sourceBpp;
     }
     util_convertColorspace(&(dest[y*destWidth*destBPP]), destBPP, destHasAlpha,
                            reducedRowBuffer, sourceDrawable->bpp, sourceHasAlpha,
                            destWidth);
   }
 
-  g_free(rowBuffer);
+  g_free(sourceBuffer);
   g_free(reducedRowBuffer);
+  g_free(sourceRowOffsetLookup);
 }
 
 
@@ -1153,7 +1166,7 @@ void util_convertColorspace(guchar *dest,
 			    guchar *source,
 			    gint sourceBPP, gint sourceHasAlpha,
 			    gint length) {
-  int i, j, accum;
+  int i, j, sourcePos, destPos, accum;
   int sourceColorBPP = sourceHasAlpha ? (sourceBPP-1) : sourceBPP;
   int destColorBPP   = destHasAlpha   ? (destBPP  -1) : destBPP;
 
@@ -1163,48 +1176,63 @@ void util_convertColorspace(guchar *dest,
 
   if ((sourceColorBPP == destColorBPP) &&
       (sourceBPP      == destBPP     )) {
-    memcpy(dest, source, length*sourceBPP);
+    j = length*sourceBPP;
+    for (i = 0; i < j; i++) dest[i] = source[i];
     return;
   }
 
-  if (sourceColorBPP == 1) {
-    /* Duplicate single "gray" source byte across all dest bytes */
-    for (i = 0; i < length; i++) {
+  if (sourceColorBPP == destColorBPP) {
+    for (i = destPos = sourcePos = 0; i < length;
+         i++, destPos += destBPP, sourcePos += sourceBPP) {
       for (j = 0; j < destColorBPP; j++)
-	dest[i*destBPP + j] = source[i*sourceBPP];
+	dest[destPos + j] = source[sourcePos + j];
+    }
+  } else if (sourceColorBPP == 1) {
+    /* Duplicate single "gray" source byte across all dest bytes */
+    for (i = destPos = sourcePos = 0; i < length;
+         i++, destPos += destBPP, sourcePos += sourceBPP) {
+      for (j = 0; j < destColorBPP; j++)
+	dest[destPos + j] = source[sourcePos];
     }
   } else if (destColorBPP == 1) {
     /* Average all source bytes into single "gray" dest byte */
-    for (i = 0; i < length; i++) {
+    for (i = destPos = sourcePos = 0; i < length;
+         i++, destPos += destBPP, sourcePos += sourceBPP) {
       accum = 0;
       for (j = 0; j < sourceColorBPP; j++)
-	accum += source[i*sourceBPP + j];
-      dest[i*destBPP] = accum/sourceColorBPP;
+	accum += source[sourcePos + j];
+      dest[destPos] = accum/sourceColorBPP;
     }
   } else if (destColorBPP < sourceColorBPP) {
     /* Copy as many corresponding bytes from source to dest as will fit */
-    for (i = 0; i < length; i++) {
+    for (i = destPos = sourcePos = 0; i < length;
+         i++, destPos += destBPP, sourcePos += sourceBPP) {
       for (j = 0; j < destColorBPP; j++)
-	dest[i*destBPP + j] = source[i*sourceBPP + j];
+	dest[destPos + j] = source[sourcePos + j];
     }
   } else /* destColorBPP > sourceColorBPP */ {
     /* Fill extra dest bytes with zero */
-    for (i = 0; i < length; i++) {
+    for (i = destPos = sourcePos = 0; i < length;
+         i++, destPos += destBPP, sourcePos += sourceBPP) {
       for (j = 0; j < sourceColorBPP; j++)
-	dest[i*destBPP + j] = source[i*sourceBPP + j];
+	dest[destPos + j] = source[destPos + j];
       for (     ; j < destColorBPP; j++)
-	dest[i*destBPP + j] = 0;
+	dest[destPos + j] = 0;
     }
   }
 
   if (destHasAlpha) {
-    if (sourceHasAlpha)
-      for (i = 0; i < length; i++)
-	dest[i*destBPP + destColorBPP] =
-	  source[i*sourceBPP + sourceColorBPP];
-    else
-      for (i = 0; i < length; i++)
-	dest[i*destBPP + destColorBPP] =
-	  255;
+    if (sourceHasAlpha) {
+      for (i = 0, destPos = destColorBPP, sourcePos = sourceColorBPP;
+           i < length;
+           i++, destPos += destBPP, sourcePos += sourceBPP) {
+        for (i = 0; i < length; i++)
+          dest[destPos] = source[sourcePos];
+      }
+    } else {
+      for (i = 0, destPos = destColorBPP; i < length; i++, destPos += destBPP) {
+	dest[destPos] = 255;
+      }
+    }
   }
 }

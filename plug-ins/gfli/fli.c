@@ -1,3 +1,4 @@
+
 /*
  * Written 1998 Jens Ch. Restemeier <jchrr@hrz.uni-bielefeld.de>
  *
@@ -26,40 +27,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <glib.h>
 
 #include "fli.h"
 
 /*
  * To avoid endian-problems I wrote these functions:
  */
-static inline unsigned char fli_read_char(FILE *f)
+static unsigned char fli_read_char(FILE *f)
 {
 	unsigned char b;
 	fread(&b,1,1,f);
 	return b;
 }
 
-static inline unsigned short fli_read_short(FILE *f)
+static unsigned short fli_read_short(FILE *f)
 {
 	unsigned char b[2];
 	fread(&b,1,2,f);
 	return (unsigned short)(b[1]<<8) | b[0];
 }
 
-static inline unsigned long fli_read_long(FILE *f)
+static unsigned long fli_read_long(FILE *f)
 {
 	unsigned char b[4];
 	fread(&b,1,4,f);
 	return (unsigned long)(b[3]<<24) | (b[2]<<16) | (b[1]<<8) | b[0];
 }
 
-static inline void fli_write_char(FILE *f, unsigned char b)
+static void fli_write_char(FILE *f, unsigned char b)
 {
 	fwrite(&b,1,1,f);
 }
 
-static inline void fli_write_short(FILE *f, unsigned short w)
+static void fli_write_short(FILE *f, unsigned short w)
 {
 	unsigned char b[2];
 	b[0]=w&255;
@@ -67,7 +67,7 @@ static inline void fli_write_short(FILE *f, unsigned short w)
 	fwrite(&b,1,2,f);
 }
 
-static inline void fli_write_long(FILE *f, unsigned long l)
+static void fli_write_long(FILE *f, unsigned long l)
 {
 	unsigned char b[4];
 	b[0]=l&255;
@@ -117,13 +117,16 @@ void fli_write_header(FILE *f, s_fli_header *fli_header)
 		if (fli_header->magic == HEADER_FLC) {
 			/* FLC saves speed in 1/1000s */
 			fli_write_long(f, fli_header->speed);	/* 16 */
+			fseek(f, 80, SEEK_SET);
+			fli_write_long(f, fli_header->oframe1);	/* 80 */
+			fli_write_long(f, fli_header->oframe2);	/* 84 */
 		} else {
 			fprintf(stderr, "error: magic number in header is wrong !\n");
 		}
 	}
 }
 
-void fli_read_frame(FILE *f, s_fli_header *fli_header, unsigned char *old_framebuf, char *old_cmap, unsigned char *framebuf, char *cmap)
+void fli_read_frame(FILE *f, s_fli_header *fli_header, unsigned char *old_framebuf, unsigned char *old_cmap, unsigned char *framebuf, unsigned char *cmap)
 {
 	s_fli_frame fli_frame;
 	unsigned long framepos;
@@ -160,12 +163,17 @@ void fli_read_frame(FILE *f, s_fli_header *fli_header, unsigned char *old_frameb
 	fseek(f, framepos+fli_frame.size, SEEK_SET);
 }
 
-void fli_write_frame(FILE *f, s_fli_header *fli_header, unsigned char *old_framebuf, char *old_cmap, unsigned char *framebuf, char *cmap, unsigned short codec_mask)
+void fli_write_frame(FILE *f, s_fli_header *fli_header, unsigned char *old_framebuf, unsigned char *old_cmap, unsigned char *framebuf, unsigned char *cmap, unsigned short codec_mask)
 {
 	s_fli_frame fli_frame;
 	unsigned long framepos, frameend;
 	framepos=ftell(f);
 	fseek(f, framepos+16, SEEK_SET);
+
+	switch (fli_header->frames) {
+		case 0: fli_header->oframe1=framepos; break;
+		case 1: fli_header->oframe2=framepos; break;
+	}
 
 	fli_frame.size=0;
 	fli_frame.magic=FRAME;
@@ -175,11 +183,9 @@ void fli_write_frame(FILE *f, s_fli_header *fli_header, unsigned char *old_frame
 	 * create color chunk 
 	 */
 	if (fli_header->magic == HEADER_FLI) {
-		fprintf(stderr, "fli_color\n");
 		if (fli_write_color(f, fli_header, old_cmap, cmap)) fli_frame.chunks++;
 	} else {
 		if (fli_header->magic == HEADER_FLC) {
-			fprintf(stderr, "fli_color_2\n");
 			if (fli_write_color_2(f, fli_header, old_cmap, cmap)) fli_frame.chunks++;
 		} else {
 			fprintf(stderr, "error: magic number in header is wrong !\n");
@@ -215,7 +221,7 @@ void fli_write_frame(FILE *f, s_fli_header *fli_header, unsigned char *old_frame
 /*
  * palette chunks from the classical Autodesk Animator.
  */
-void fli_read_color(FILE *f, s_fli_header *fli_header, char *old_cmap, char *cmap)
+void fli_read_color(FILE *f, s_fli_header *fli_header, unsigned char *old_cmap, unsigned char *cmap)
 {
 	unsigned short num_packets, cnt_packets, col_pos;
 	col_pos=0;
@@ -228,22 +234,22 @@ void fli_read_color(FILE *f, s_fli_header *fli_header, char *old_cmap, char *cma
 			for (col_pos=0; col_pos<768; col_pos++) {
 				cmap[col_pos]=fli_read_char(f)<<2;
 			}
-		} else {
-			for (col_cnt=skip_col; (col_cnt>0) && (col_pos<768); col_cnt--) {
-				cmap[col_pos]=old_cmap[col_pos];col_pos++;
-				cmap[col_pos]=old_cmap[col_pos];col_pos++;
-				cmap[col_pos]=old_cmap[col_pos];col_pos++;
-			}
-			for (col_cnt=num_col; (col_cnt>0) && (col_pos<768); col_cnt--) {
-				cmap[col_pos++]=fli_read_char(f)<<2;
-				cmap[col_pos++]=fli_read_char(f)<<2;
-				cmap[col_pos++]=fli_read_char(f)<<2;
-			}
+			return;
+		}
+		for (col_cnt=skip_col; (col_cnt>0) && (col_pos<768); col_cnt--) {
+			cmap[col_pos]=old_cmap[col_pos];col_pos++;
+			cmap[col_pos]=old_cmap[col_pos];col_pos++;
+			cmap[col_pos]=old_cmap[col_pos];col_pos++;
+		}
+		for (col_cnt=num_col; (col_cnt>0) && (col_pos<768); col_cnt--) {
+			cmap[col_pos++]=fli_read_char(f)<<2;
+			cmap[col_pos++]=fli_read_char(f)<<2;
+			cmap[col_pos++]=fli_read_char(f)<<2;
 		}
 	}
 }
 
-int fli_write_color(FILE *f, s_fli_header *fli_header, char *old_cmap, char *cmap)
+int fli_write_color(FILE *f, s_fli_header *fli_header, unsigned char *old_cmap, unsigned char *cmap)
 {
 	unsigned long chunkpos;
 	unsigned short num_packets;
@@ -276,10 +282,11 @@ int fli_write_color(FILE *f, s_fli_header *fli_header, char *old_cmap, char *cma
 				num_packets++;
 				fli_write_char(f, cnt_skip & 255);
 				fli_write_char(f, cnt_col & 255);
-				for (; cnt_col>0; cnt_col--) {
+				while (cnt_col>0) {
 					fli_write_char(f, cmap[col_start++]>>2);
 					fli_write_char(f, cmap[col_start++]>>2);
 					fli_write_char(f, cmap[col_start++]>>2);
+					cnt_col--;
 				}
 			}
 		} while (col_pos<256);
@@ -305,7 +312,7 @@ int fli_write_color(FILE *f, s_fli_header *fli_header, char *old_cmap, char *cma
 /*
  * palette chunks from Autodesk Animator pro
  */
-void fli_read_color_2(FILE *f, s_fli_header *fli_header, char *old_cmap, char *cmap)
+void fli_read_color_2(FILE *f, s_fli_header *fli_header, unsigned char *old_cmap, unsigned char *cmap)
 {
 	unsigned short num_packets, cnt_packets, col_pos;
 	num_packets=fli_read_short(f);
@@ -318,21 +325,22 @@ void fli_read_color_2(FILE *f, s_fli_header *fli_header, char *old_cmap, char *c
 			for (col_pos=0; col_pos<768; col_pos++) {
 				cmap[col_pos]=fli_read_char(f);
 			}
-		} else {
-			for (col_cnt=skip_col; (col_cnt>0) && (col_pos<768); col_cnt--) {
-				cmap[col_pos]=old_cmap[col_pos];col_pos++;
-				cmap[col_pos]=old_cmap[col_pos];col_pos++;
-				cmap[col_pos]=old_cmap[col_pos];col_pos++;
-			}
-			for (col_cnt=num_col; (col_cnt>0) && (col_pos<768); col_cnt--) {
-				cmap[col_pos++]=fli_read_char(f);				cmap[col_pos++]=fli_read_char(f);
-				cmap[col_pos++]=fli_read_char(f);
-			}
+			return;
+		} 
+		for (col_cnt=skip_col; (col_cnt>0) && (col_pos<768); col_cnt--) {
+			cmap[col_pos]=old_cmap[col_pos];col_pos++;
+			cmap[col_pos]=old_cmap[col_pos];col_pos++;
+			cmap[col_pos]=old_cmap[col_pos];col_pos++;
+		}
+		for (col_cnt=num_col; (col_cnt>0) && (col_pos<768); col_cnt--) {
+			cmap[col_pos++]=fli_read_char(f);				
+			cmap[col_pos++]=fli_read_char(f);
+			cmap[col_pos++]=fli_read_char(f);
 		}
 	}
 }
 
-int fli_write_color_2(FILE *f, s_fli_header *fli_header, char *old_cmap, char *cmap)
+int fli_write_color_2(FILE *f, s_fli_header *fli_header, unsigned char *old_cmap, unsigned char *cmap)
 {
 	unsigned long chunkpos;
 	unsigned short num_packets;
@@ -396,7 +404,6 @@ int fli_write_color_2(FILE *f, s_fli_header *fli_header, char *old_cmap, char *c
  */
 void fli_read_black(FILE *f, s_fli_header *fli_header, unsigned char *framebuf)
 {
-	/* Wow, this is heavy stuff. */
 	memset(framebuf, 0, fli_header->width * fli_header->height);
 }
 
@@ -444,7 +451,7 @@ void fli_write_copy(FILE *f, s_fli_header *fli_header, unsigned char *framebuf)
 void fli_read_brun(FILE *f, s_fli_header *fli_header, unsigned char *framebuf)
 {
 	unsigned short yc;
-	char *pos;
+	unsigned char *pos;
 	for (yc=0; yc < fli_header->height; yc++) {
 		unsigned short xc, pc, pcnt;
 		pc=fli_read_char(f);
@@ -455,9 +462,7 @@ void fli_read_brun(FILE *f, s_fli_header *fli_header, unsigned char *framebuf)
 			ps=fli_read_char(f);
 			if (ps & 0x80) {
 				unsigned short len; 
-				ps^=0xFF;
-				ps+=1;
-				for (len=ps; len>0; len--) {
+				for (len=-(signed char)ps; len>0; len--) {
 					pos[xc++]=fli_read_char(f);
 				} 
 			} else {
@@ -547,7 +552,7 @@ void fli_write_brun(FILE *f, s_fli_header *fli_header, unsigned char *framebuf)
 void fli_read_lc(FILE *f, s_fli_header *fli_header, unsigned char *old_framebuf, unsigned char *framebuf)
 {
 	unsigned short yc, firstline, numline;
-	char *pos;
+	unsigned char *pos;
 	memcpy(framebuf, old_framebuf, fli_header->width * fli_header->height);
 	firstline = fli_read_short(f);
 	numline = fli_read_short(f);
@@ -563,8 +568,7 @@ void fli_read_lc(FILE *f, s_fli_header *fli_header, unsigned char *old_framebuf,
 			xc+=skip;
 			if (ps & 0x80) {
 				unsigned char val;
-				ps^=0xFF;
-				ps+=1;
+				ps=-(signed char)ps;
 				val=fli_read_char(f);
 				memset(&(pos[xc]), val, ps);
 				xc+=ps;
@@ -672,7 +676,7 @@ void fli_write_lc(FILE *f, s_fli_header *fli_header, unsigned char *old_framebuf
 void fli_read_lc_2(FILE *f, s_fli_header *fli_header, unsigned char *old_framebuf, unsigned char *framebuf)
 {
 	unsigned short yc, lc, numline;
-	char *pos;
+	unsigned char *pos;
 	memcpy(framebuf, old_framebuf, fli_header->width * fli_header->height);
 	yc=0;
 	numline = fli_read_short(f);
@@ -682,8 +686,7 @@ void fli_read_lc_2(FILE *f, s_fli_header *fli_header, unsigned char *old_framebu
 		lpf=0; lpn=0;
 		while (pc & 0x8000) {
 			if (pc & 0x4000) {
-				/* yc+=pc & 0x3FFF; */ /* BANG! */
-			        yc+=0x10000-pc;        /* better */
+				yc+=-(signed short)pc;
 			} else {
 				lpf=1;lpn=pc&0xFF;
 			}
@@ -698,8 +701,7 @@ void fli_read_lc_2(FILE *f, s_fli_header *fli_header, unsigned char *old_framebu
 			xc+=skip;
 			if (ps & 0x80) {
 				unsigned char v1,v2;
-				ps^=0xFF;
-				ps++;
+				ps=-(signed char)ps;
 				v1=fli_read_char(f);
 				v2=fli_read_char(f);
 				while (ps>0) {

@@ -1,3 +1,24 @@
+Mon Aug 24 09:34:37 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/depthmerge.c
+	* plug-ins/fli.[ch]
+	* plug-ins/gfli.c: updates from the registry
+
+	* plug-ins/pnm/pnm.c: fix for non-interactive mode
+
+	* plug-ins/fractaltrace/fractaltrace.c: minor code cleanups
+
+Mon Aug 24 09:20:38 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* configure.in: make xdelta not built by default, so poor users
+	aren't confused
+
+	* libgimp/gimp.c
+	* app/blob.c
+	* app/errors.c
+	* plug-ins/script-fu/script-fu-server.c: fixes for glib changes with
+	s/g_debug/g_on_error_debug/ and s/g_vsprintf/g_strdup_vprintf/
+
 Fri Aug 21 17:25:34 CDT 1998  Larry Ewing  <lewing@gimp.org>
 
 	* app/fileops.c: fixed a lingering bug that occured from the

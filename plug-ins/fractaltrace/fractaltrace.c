@@ -676,17 +676,6 @@ static void dialog_preview_init( void )
   }
 }
 
-static void dialog_preview_free( void )
-{
-  gint y;
-  for( y = 0; y < preview.height; y++ ){
-    free( preview.source[y] );
-    free( preview.pixels[y] );
-  }
-  free( preview.source );
-  free( preview.pixels );
-}
-
 static void dialog_preview_draw( void )
 {
   gint    x, y;

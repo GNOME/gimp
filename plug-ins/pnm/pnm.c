@@ -297,7 +297,7 @@ run (char    *name,
 
 	case RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
-	  if (nparams != 5)
+	  if (nparams != 6)
 	    status = STATUS_CALLING_ERROR;
 	  if (status == STATUS_SUCCESS)
 	    {

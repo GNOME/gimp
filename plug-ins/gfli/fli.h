@@ -34,6 +34,7 @@ typedef struct _fli_header {
 	unsigned long creator;
 	unsigned long updated;
 	unsigned short aspect_x, aspect_y;
+	unsigned long oframe1, oframe2;
 } s_fli_header;
 
 typedef struct _fli_frame {
@@ -60,7 +61,7 @@ typedef struct _fli_chunk {
 #define FLI_COPY	16
 #define FLI_LC		12
 #define FLI_LC_2	7
-#define FLI_COLOR_2	2
+#define FLI_COLOR_2	4
 #define FLI_MINI	18
 
 /** codec masks */
@@ -76,10 +77,10 @@ typedef struct _fli_chunk {
 
 /** functions */
 void fli_read_header(FILE *f, s_fli_header *fli_header);
-void fli_read_frame(FILE *f, s_fli_header *fli_header, unsigned char *old_framebuf, char *old_cmap, unsigned char *framebuf, char *cmap);
+void fli_read_frame(FILE *f, s_fli_header *fli_header, unsigned char *old_framebuf, unsigned char *old_cmap, unsigned char *framebuf, unsigned char *cmap);
 
-void fli_read_color(FILE *f, s_fli_header *fli_header, char *old_cmap, char *cmap); 
-void fli_read_color_2(FILE *f, s_fli_header *fli_header, char *old_cmap, char *cmap); 
+void fli_read_color(FILE *f, s_fli_header *fli_header, unsigned char *old_cmap, unsigned char *cmap); 
+void fli_read_color_2(FILE *f, s_fli_header *fli_header, unsigned char *old_cmap, unsigned char *cmap); 
 void fli_read_black(FILE *f, s_fli_header *fli_header, unsigned char *framebuf); 
 void fli_read_brun(FILE *f, s_fli_header *fli_header, unsigned char *framebuf); 
 void fli_read_copy(FILE *f, s_fli_header *fli_header, unsigned char *framebuf); 
@@ -87,10 +88,10 @@ void fli_read_lc(FILE *f, s_fli_header *fli_header, unsigned char *old_framebuf,
 void fli_read_lc_2(FILE *f, s_fli_header *fli_header, unsigned char *old_framebuf, unsigned char *framebuf);
 
 void fli_write_header(FILE *f, s_fli_header *fli_header);
-void fli_write_frame(FILE *f, s_fli_header *fli_header, unsigned char *old_framebuf, char *old_cmap, unsigned char *framebuf, char *cmap, unsigned short codec_mask);
+void fli_write_frame(FILE *f, s_fli_header *fli_header, unsigned char *old_framebuf, unsigned char *old_cmap, unsigned char *framebuf, unsigned char *cmap, unsigned short codec_mask);
 
-int fli_write_color(FILE *f, s_fli_header *fli_header, char *old_cmap, char *cmap); 
-int fli_write_color_2(FILE *f, s_fli_header *fli_header, char *old_cmap, char *cmap); 
+int fli_write_color(FILE *f, s_fli_header *fli_header, unsigned char *old_cmap, unsigned char *cmap); 
+int fli_write_color_2(FILE *f, s_fli_header *fli_header, unsigned char *old_cmap, unsigned char *cmap); 
 void fli_write_black(FILE *f, s_fli_header *fli_header, unsigned char *framebuf); 
 void fli_write_brun(FILE *f, s_fli_header *fli_header, unsigned char *framebuf); 
 void fli_write_copy(FILE *f, s_fli_header *fli_header, unsigned char *framebuf); 
