@@ -23,10 +23,6 @@
 #include <string.h>
 #include <math.h>
 
-#ifndef HAVE_RINT
-#define rint(x) floor (x + 0.5)
-#endif
-
 #include "appenv.h"
 #include "gimprc.h"
 #include "paint_funcs.h"
@@ -4296,7 +4292,7 @@ compute_border(gint16 *circ, guint16 xradius, guint16 yradius)
       tmp = (xradius - i) - .5;
     else
       tmp = 0.0;
-    circ[i] = rint(yradius/(double)xradius *
+    circ[i] = RINT(yradius/(double)xradius *
 		   sqrt((xradius)*(xradius) - (tmp)*(tmp)));
   }
 }

@@ -30,7 +30,6 @@
 #include "libgimp/gimpintl.h"
 
 #define DEFAULT_MAX_INC  1024
-#define ROUND(x) ((int) (x + 0.5))
 #define SUPERSAMPLE      3
 #define SUPERSAMPLE2     9
 

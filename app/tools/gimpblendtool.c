@@ -45,12 +45,6 @@
 #define  TARGET_HEIGHT  15
 #define  TARGET_WIDTH   15
 
-#define  SQR(x) ((x) * (x))
-
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif /* M_PI */
-
 #define  STATUSBAR_SIZE  128
 
 /*  the blend structures  */
@@ -869,7 +863,7 @@ gradient_calc_conical_sym_factor (double  dist,
 	/* This cool idea is courtesy Josh MacDonald,
 	 * Ali Rahimi --- two more XCF losers.  */
 
-	rat = acos(rat) / M_PI;
+	rat = acos(rat) / G_PI;
 	rat = pow(rat, (offset / 10) + 1);
 
 	rat = BOUNDS(rat, 0.0, 1.0);
@@ -900,15 +894,15 @@ gradient_calc_conical_asym_factor (double  dist,
     {
       if ((x != 0) || (y != 0))
 	{
-	  ang0 = atan2(axis[0], axis[1]) + M_PI;
-	  ang1 = atan2(x, y) + M_PI;
+	  ang0 = atan2(axis[0], axis[1]) + G_PI;
+	  ang1 = atan2(x, y) + G_PI;
 
 	  ang = ang1 - ang0;
 
 	  if (ang < 0.0)
-	    ang += (2.0 * M_PI);
+	    ang += (2.0 * G_PI);
 
-	  rat = ang / (2.0 * M_PI);
+	  rat = ang / (2.0 * G_PI);
 	  rat = pow(rat, (offset / 10) + 1);
 
 	  rat = BOUNDS(rat, 0.0, 1.0);
@@ -1064,18 +1058,18 @@ gradient_calc_spiral_factor (double  dist,
     {
       if (x != 0.0 || y != 0.0)
 	{
-	  ang0 = atan2 (axis[0], axis[1]) + M_PI;
-	  ang1 = atan2 (x, y) + M_PI;
+	  ang0 = atan2 (axis[0], axis[1]) + G_PI;
+	  ang1 = atan2 (x, y) + G_PI;
 	  if(!cwise)
 	    ang = ang0 - ang1;
 	  else
 	    ang = ang1 - ang0;
 
 	  if (ang < 0.0)
-	    ang += (2.0 * M_PI);
+	    ang += (2.0 * G_PI);
 
 	  r = sqrt (x * x + y * y) / dist;
-	  rat = ang / (2.0 * M_PI) + r + offset;
+	  rat = ang / (2.0 * G_PI) + r + offset;
 	  rat = fmod (rat, 1.0);
 	}
       else
@@ -1115,7 +1109,7 @@ gradient_calc_shapeburst_spherical_factor (double x,
   iy = (int) BOUNDS (y, 0, distR.h);
   tile = tile_manager_get_tile (distR.tiles, ix, iy, TRUE, FALSE);
   value = *((float *) tile_data_pointer (tile, ix % TILE_WIDTH, iy % TILE_HEIGHT));
-  value = 1.0 - sin (0.5 * M_PI * value);
+  value = 1.0 - sin (0.5 * G_PI * value);
   tile_release (tile, FALSE);
 
   return value;
@@ -1134,7 +1128,7 @@ gradient_calc_shapeburst_dimpled_factor (double x,
   iy = (int) BOUNDS (y, 0, distR.h);
   tile = tile_manager_get_tile (distR.tiles, ix, iy, TRUE, FALSE);
   value = *((float *) tile_data_pointer (tile, ix % TILE_WIDTH, iy % TILE_HEIGHT));
-  value = cos (0.5 * M_PI * value);
+  value = cos (0.5 * G_PI * value);
   tile_release (tile, FALSE);
 
   return value;

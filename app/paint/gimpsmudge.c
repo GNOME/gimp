@@ -33,8 +33,6 @@
 #include "tools.h"
 #include "gimage.h"
 
-#define ROUND(x) (int)((x) + .5)
-
 #include "libgimp/gimpintl.h"
 
 

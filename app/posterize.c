@@ -22,10 +22,6 @@
 #include <string.h>
 #include <math.h>
 
-#ifndef HAVE_RINT
-#define rint(x) floor (x + 0.5)
-#endif
-
 #include "appenv.h"
 #include "actionarea.h"
 #include "drawable.h"

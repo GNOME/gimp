@@ -42,6 +42,24 @@
 #define MINIMUM(x,y)   MIN(x,y)
 #define MAXIMUM(x,y)   MAX(x,y)
 
+#ifndef G_PI			/* G_PI will be in GLib eventually */
+#define G_PI 3.14159265358979323846
+#endif
+#ifndef G_PI_4			/* As will G_PI_4 */
+#define G_PI_4  0.78539816339744830962
+#endif
+
+#ifdef HAVE_RINT
+#define RINT(x) rint(x)
+#else
+#define RINT(x) floor ((x)+0.5)
+#endif
+
+#define ROUND(x) ((int) ((x)+0.5))
+
+/* Square */
+#define SQR(x) ((x)*(x))
+
 /* limit a (0->511) int to 255 */
 #define MAX255(a)  ((a) | (((a) & 256) - (((a) & 256) >> 8)))
 

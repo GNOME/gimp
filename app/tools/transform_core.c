@@ -42,12 +42,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define SQR(x)  ((x) * (x))
-
-#ifndef M_PI
-#define M_PI  3.14159265358979323846
-#endif  /*  M_PI  */
-
 #define BILINEAR(jk,j1k,jk1,j1k1,dx,dy) \
                 ((1-dy) * (jk + dx * (j1k - jk)) + \
                     dy  * (jk1 + dx * (j1k1 - jk1)))
@@ -1414,8 +1408,8 @@ transform_core_do (GImage          *gimage,
             }
           else  /*  no interpolation  */
             {
-              itx = rint(ttx);
-              ity = rint(tty);
+              itx = RINT(ttx);
+              ity = RINT(tty);
 
               if (itx >= x1 && itx < x2 &&
                   ity >= y1 && ity < y2 )

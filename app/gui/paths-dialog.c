@@ -23,6 +23,7 @@
 #include <string.h>
 #include <errno.h>
 #include <math.h>
+
 #include "gdk/gdkkeysyms.h"
 #include "appenv.h"
 #include "draw_core.h"
@@ -54,6 +55,7 @@
 #include "undo.h"
 
 #include "drawable_pvt.h"
+
 #include "libgimp/gimpintl.h"
 
 #include "pixmaps/new.xpm"
@@ -68,10 +70,6 @@
 #include "pixmaps/topath.xpm"
 #include "pixmaps/path.xbm"
 #include "pixmaps/locked.xbm"
-
-#ifndef HAVE_RINT
-#define rint(x) floor (x + 0.5)
-#endif
 
 #define PREVIEW_EVENT_MASK GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK | \
                            GDK_ENTER_NOTIFY_MASK
@@ -634,8 +632,8 @@ path_to_beziersel(PATHP bzp)
 	}
       bezier_add_point(bezier_sel,
 		       (gint)pdata->type,
-		       rint(pdata->x), /* ALT add rint() */
-		       rint(pdata->y));
+		       RINT(pdata->x), /* ALT add rint() */
+		       RINT(pdata->y));
       if(bpnt == NULL)
 	bpnt = bezier_sel->last_point;
       list = g_slist_next(list);

@@ -35,10 +35,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#ifndef HAVE_RINT
-#define rint(x) floor (x + 0.5)
-#endif
-
 /* Bezier extensions made by Raphael FRANCOIS (fraph@ibm.net)
 
   BEZIER_EXTENDS VER 1.0 
@@ -66,8 +62,6 @@
 
 #define NO  0
 #define YES 1
-
-#define ROUND(x)  ((int) ((x) + 0.5))
 
 /*  the bezier select structures  */
 
@@ -1946,8 +1940,6 @@ bezier_draw_segment (BezierSelect     *bezier_sel,
 		     BezierPointsFunc  points_func,
 		     gpointer          udata)
 {
-#define ROUND(x)  ((int) ((x) + 0.5))
-
   static GdkPoint gdk_points[256];
   static int npoints = 256;
 
@@ -2621,8 +2613,8 @@ test_add_point_on_segment (BezierSelect     *bezier_sel,
 	  geometry[i][1] = points->y;
 	  break;
 	case AA_IMAGE_COORDS:
-	  geometry[i][0] = rint(points->x * SUPERSAMPLE);
-	  geometry[i][1] = rint(points->y * SUPERSAMPLE);
+	  geometry[i][0] = RINT(points->x * SUPERSAMPLE);
+	  geometry[i][1] = RINT(points->y * SUPERSAMPLE);
 	  break;
 	case SCREEN_COORDS:
 	  geometry[i][0] = points->sx;
@@ -3289,8 +3281,8 @@ bezier_draw_segment_for_distance (BezierSelect     *bezier_sel,
  	  bdist->curdist += sqrt((dx*dx)+(dy*dy)); 
  	  if(bdist->curdist >= bdist->dist) 
  	    { 
- 	      *(bdist->x) = (gint)ROUND((rx + dx/2)); 
- 	      *(bdist->y) = (gint)ROUND((ry + dy/2)); 
+ 	      *(bdist->x) = ROUND((rx + dx/2)); 
+ 	      *(bdist->y) = ROUND((ry + dy/2)); 
  	      if(dx == 0.0) 
  		*(bdist->gradient) = G_MAXDOUBLE; 
  	      else 

@@ -18,15 +18,13 @@
 
 #include "config.h"
 
-#include "gimplut.h"
-#include "gimphistogram.h"
-#include <stdio.h>
 #include <math.h>
+#include <stdio.h>
 #include <glib.h>
 
-#ifndef HAVE_RINT
-#define rint(x) floor (x + 0.5)
-#endif
+#include "appenv.h"
+#include "gimplut.h"
+#include "gimphistogram.h"
 
 /* ---------- Brightness/Contrast -----------*/
 
@@ -329,7 +327,7 @@ posterize_lut_func(int *ilevels,
   else
     levels = *ilevels;
 
-  value = rint(value * (levels - 1.0)) / (levels - 1.0);
+  value = RINT(value * (levels - 1.0)) / (levels - 1.0);
 
   return value;
 }

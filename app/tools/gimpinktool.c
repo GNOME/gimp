@@ -35,10 +35,6 @@
 
 #include "tile.h"			/* ick. */
 
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
-
 #define SUBSAMPLE 8
 
 #define DIST_SMOOTHER_BUFFER 10
@@ -775,8 +771,8 @@ ink_pen_ellipse (gdouble x_center, gdouble y_center,
      both as affine transforms would make the most sense. -RLL */
 
   tscale = ink_options->tilt_sensitivity * 10.0;
-  tscale_c = tscale * cos (ink_options->tilt_angle * M_PI / 180);
-  tscale_s = tscale * sin (ink_options->tilt_angle * M_PI / 180);
+  tscale_c = tscale * cos (ink_options->tilt_angle * G_PI / 180);
+  tscale_s = tscale * sin (ink_options->tilt_angle * G_PI / 180);
   x = ink_options->aspect*cos(ink_options->angle) +
     xtilt * tscale_c - ytilt * tscale_s;
   y = ink_options->aspect*sin(ink_options->angle) +

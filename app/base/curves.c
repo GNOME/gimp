@@ -33,8 +33,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#define ROUND(x)  ((int) ((x) + 0.5))
-
 #define GRAPH              0x1
 #define XRANGE_TOP         0x2
 #define XRANGE_BOTTOM      0x4

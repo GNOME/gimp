@@ -101,8 +101,6 @@ gimp_channel_init (GimpChannel *channel)
 {
 }
 
-#define ROUND(x) ((int) (x + 0.5))
-
 /*
  *  Static variables
  */

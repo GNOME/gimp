@@ -1,3 +1,14 @@
+1999-08-05  Tor Lillqvist  <tml@iki.fi>
+
+	* app/appenv.h: Define ROUND(), RINT(), SQR(), G_PI and
+	G_PI_4. The latter two will presumably eventually be in
+	GLib. RINT() calls rint() if we have it, otherwise adds 0.5 and
+	calls floor().
+
+	* app/*.c: Remove the multiple identical definitions of M_PI. Use
+	G_PI instead of M_PI. Remove ROUND() and rint() definitions. Use
+	RINT() instead of rint().
+
 Tue Aug  3 22:16:57 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/interface.c: My last change to the dnd code did fix the bug

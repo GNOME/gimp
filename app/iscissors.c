@@ -20,9 +20,10 @@
  * thanks to Professor D. Forsyth for prompting us to implement this tool
  */
 
+#include <math.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
+
 #include "appenv.h"
 #include "draw_core.h"
 #include "channel_pvt.h"
@@ -41,13 +42,6 @@
 #include "bezier_selectP.h"
 
 #include "libgimp/gimpintl.h"
-
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
-#ifndef M_PI_4
-#define M_PI_4  0.78539816339744830962
-#endif /* M_PI_4 */
 
 /*  the intelligent scissors structures  */
 
@@ -708,8 +702,6 @@ iscissors_draw_CR (GDisplay  *gdisp,
 		   int       *indices,
 		   int        draw_type)
 {
-#define ROUND(x)  ((int) ((x) + 0.5))
-
   static GdkPoint gdk_points[256];
   static int npoints = 256;
 
@@ -1359,7 +1351,7 @@ shape_of_boundary (Tool *tool)
       normalize (vec2);
 
       /*  determine the kinkiness based on the two vectors  */
-      kinks[i].kinkiness = (M_PI - acos (dotprod (vec1, vec2)))/ M_PI;
+      kinks[i].kinkiness = (G_PI - acos (dotprod (vec1, vec2)))/ G_PI;
 
       kinks[i].normal[0] = (vec1[0] + vec2[0]) / 2.0;
       kinks[i].normal[1] = (vec1[1] + vec2[1]) / 2.0;
@@ -1552,7 +1544,7 @@ orient_boundary (Tool *tool)
       found = 0;
 
       angle = atan2 (pts[i].normal[1], pts[i].normal[0]);
-      dir = ((angle > -3 * M_PI_4) && (angle < M_PI_4)) ? 1 : -1;
+      dir = ((angle > -3 * G_PI_4) && (angle < G_PI_4)) ? 1 : -1;
 
       while (j < LOCALIZE_RADIUS && !found)
 	{

@@ -5,9 +5,9 @@
 # Locale directory.
 LOCALEDIR = c:\gimp\locale
 
-# Only the fr file seems to be OK
+# Only some languages actually have any translations
 # LANGUAGES= de fi fr hu it ja ko nl pl ru sv
-LANGUAGES= fr
+LANGUAGES= fr ja no sv
 
 ################################################################
 

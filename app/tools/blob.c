@@ -29,11 +29,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define ROUND(A) floor((A)+0.5)
-
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
+#include "appenv.h"
 
 static Blob *
 blob_new (int y, int height)
@@ -621,7 +617,7 @@ blob_ellipse (double xc, double yc, double xp, double yp, double xq, double yq)
     {
       trig_initialized = 1;
       for (i=0; i<256; i++)
-	trig_table[i] = 0.5 + sin(i * (M_PI / 128.)) * (1 << TABLE_SHIFT);
+	trig_table[i] = 0.5 + sin(i * (G_PI / 128.)) * (1 << TABLE_SHIFT);
     }
 
   /* Make sure we traverse ellipse in ccw direction */

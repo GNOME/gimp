@@ -24,14 +24,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#ifndef HAVE_RINT
-#define rint(x) floor (x + 0.5)
-#endif
-
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
-
 #include "appenv.h"
 #include "gimpbrushgenerated.h"
 #include "paint_core.h"
@@ -260,8 +252,8 @@ gimp_brush_generated_generate(GimpBrushGenerated *brush)
     temp_buf_free(gbrush->mask);
   }
   /* compute the range of the brush. should do a better job than this? */
-  s = sin(brush->angle*M_PI/180.0);
-  c = cos(brush->angle*M_PI/180.0);
+  s = sin(brush->angle*G_PI/180.0);
+  c = cos(brush->angle*G_PI/180.0);
   tx = MAXIMUM(fabs(c*ceil(brush->radius) - s*ceil(brush->radius)
 		    /brush->aspect_ratio), 
 	       fabs(c*ceil(brush->radius) + s*ceil(brush->radius)
@@ -316,7 +308,7 @@ gimp_brush_generated_generate(GimpBrushGenerated *brush)
 /*      buffer[x%OVERSAMPLING] =  (1.0 - pow(d/brush->radius, exponent));*/
       buffer[x%OVERSAMPLING] =  gauss(pow(d/brush->radius, exponent));
     sum += buffer[x%OVERSAMPLING];
-    lookup[x++] =  rint(sum*(255.0/OVERSAMPLING));
+    lookup[x++] =  RINT(sum*(255.0/OVERSAMPLING));
   }
   while (x < length)
   {
@@ -332,7 +324,7 @@ gimp_brush_generated_generate(GimpBrushGenerated *brush)
       ty *= brush->aspect_ratio;
       d = sqrt(tx*tx + ty*ty);
       if (d < brush->radius+1)
-	a = lookup[(int)rint(d*OVERSAMPLING)];
+	a = lookup[(int)RINT(d*OVERSAMPLING)];
       else
 	a = 0;
       centerp[   y*gbrush->mask->width + x] = a;

@@ -34,10 +34,6 @@
 #include "libgimp/gimpsizeentry.h"
 #include "libgimp/gimpintl.h"
 
-#ifndef M_PI
-#define M_PI  3.14159265358979323846
-#endif /* M_PI */
-
 /*  index into trans_info array  */
 #define ANGLE        0
 #define REAL_ANGLE   1
@@ -45,7 +41,7 @@
 #define CENTER_Y     3
 
 #define EPSILON      0.018  /*  ~ 1 degree  */
-#define FIFTEEN_DEG  (M_PI / 12.0)
+#define FIFTEEN_DEG  (G_PI / 12.0)
 
 /*  variables local to this file  */
 static gdouble    angle_val;
@@ -224,7 +220,7 @@ rotate_info_update (Tool *tool)
 
   transform_core = (TransformCore *) tool->private;
 
-  angle_val      = (transform_core->trans_info[ANGLE] * 180.0) / M_PI;
+  angle_val      = (transform_core->trans_info[ANGLE] * 180.0) / G_PI;
   center_vals[0] = transform_core->cx;
   center_vals[1] = transform_core->cy;
 
@@ -248,7 +244,7 @@ rotate_angle_changed (GtkWidget *w,
       gdisp = (GDisplay *) tool->gdisp_ptr;
       transform_core = (TransformCore *) tool->private;
 
-      value = GTK_ADJUSTMENT (w)->value * M_PI / 180.0;
+      value = GTK_ADJUSTMENT (w)->value * G_PI / 180.0;
 
       if (value != transform_core->trans_info[ANGLE])
 	{
@@ -327,19 +323,19 @@ rotate_tool_motion (Tool *tool,
 
   angle = angle2 - angle1;
 
-  if (angle > M_PI || angle < -M_PI)
-    angle = angle2 - ((angle1 < 0) ? 2*M_PI + angle1 : angle1 - 2*M_PI);
+  if (angle > G_PI || angle < -G_PI)
+    angle = angle2 - ((angle1 < 0) ? 2*G_PI + angle1 : angle1 - 2*G_PI);
 
   /*  increment the transform tool's angle  */
   transform_core->trans_info[REAL_ANGLE] += angle;
 
   /*  limit the angle to between 0 and 360 degrees  */
-  if (transform_core->trans_info[REAL_ANGLE] < - M_PI)
+  if (transform_core->trans_info[REAL_ANGLE] < - G_PI)
     transform_core->trans_info[REAL_ANGLE] =
-      2 * M_PI - transform_core->trans_info[REAL_ANGLE];
-  else if (transform_core->trans_info[REAL_ANGLE] > M_PI)
+      2 * G_PI - transform_core->trans_info[REAL_ANGLE];
+  else if (transform_core->trans_info[REAL_ANGLE] > G_PI)
     transform_core->trans_info[REAL_ANGLE] =
-      transform_core->trans_info[REAL_ANGLE] - 2 * M_PI;
+      transform_core->trans_info[REAL_ANGLE] - 2 * G_PI;
 
   /*  constrain the angle to 15-degree multiples if ctrl is held down  */
   if (transform_core->state & GDK_CONTROL_MASK)

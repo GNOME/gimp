@@ -172,10 +172,6 @@
 
 /***** Magic numbers *****/
 
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
-
 #define EPSILON 1e-10
 
 
@@ -5945,7 +5941,7 @@ calc_sine_factor(double middle, double pos)
 {
 	pos = calc_linear_factor(middle, pos);
 
-	return (sin((-M_PI / 2.0) + M_PI * pos) + 1.0) / 2.0;
+	return (sin((-G_PI / 2.0) + G_PI * pos) + 1.0) / 2.0;
 } /* calc_sine_factor */
 
 
