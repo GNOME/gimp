@@ -48,6 +48,7 @@ static ProcRecord plugins_query_proc;
 static ProcRecord plugin_domain_register_proc;
 static ProcRecord plugin_help_register_proc;
 static ProcRecord plugin_menu_register_proc;
+static ProcRecord plugin_menu_branch_register_proc;
 static ProcRecord plugin_icon_register_proc;
 
 void
@@ -57,6 +58,7 @@ register_plug_in_procs (Gimp *gimp)
   procedural_db_register (gimp, &plugin_domain_register_proc);
   procedural_db_register (gimp, &plugin_help_register_proc);
   procedural_db_register (gimp, &plugin_menu_register_proc);
+  procedural_db_register (gimp, &plugin_menu_branch_register_proc);
   procedural_db_register (gimp, &plugin_icon_register_proc);
 }
 
@@ -526,7 +528,7 @@ plugin_menu_register_invoker (Gimp         *gimp,
                           if (! gimp->no_interface &&
                               proc_def->db_info.proc_type == GIMP_TEMPORARY)
                             {
-                              gimp_menus_create_entry (gimp, proc_def, menu_path);
+                              gimp_menus_create_item (gimp, proc_def, menu_path);
                             }
                         }
                     }
@@ -586,6 +588,77 @@ static ProcRecord plugin_menu_register_proc =
   0,
   NULL,
   { { plugin_menu_register_invoker } }
+};
+
+static Argument *
+plugin_menu_branch_register_invoker (Gimp         *gimp,
+                                     GimpContext  *context,
+                                     GimpProgress *progress,
+                                     Argument     *args)
+{
+  gboolean success = TRUE;
+  gchar *menu_path;
+  gchar *menu_name;
+
+  menu_path = (gchar *) args[0].value.pdb_pointer;
+  if (menu_path == NULL || !g_utf8_validate (menu_path, -1, NULL))
+    success = FALSE;
+
+  menu_name = (gchar *) args[1].value.pdb_pointer;
+  if (menu_name == NULL || !g_utf8_validate (menu_name, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      if (gimp->current_plug_in)
+        {
+          plug_ins_menu_branch_add (gimp, gimp->current_plug_in->prog,
+                                    menu_path, menu_name);
+
+          if (! gimp->no_interface)
+            {
+              gimp_menus_create_branch (gimp, gimp->current_plug_in->prog,
+                                        menu_path, menu_name);
+            }
+          else
+            success = FALSE;
+        }
+      else
+        success = FALSE;
+    }
+
+  return procedural_db_return_args (&plugin_menu_branch_register_proc, success);
+}
+
+static ProcArg plugin_menu_branch_register_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "menu_path",
+    "The sub-menu's menu path"
+  },
+  {
+    GIMP_PDB_STRING,
+    "menu_name",
+    "The name of the sub-menu"
+  }
+};
+
+static ProcRecord plugin_menu_branch_register_proc =
+{
+  "gimp_plugin_menu_branch_register",
+  "Register a sub-menu.",
+  "This procedure installs an sub-menu which does not belong to any procedure.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer <mitch@gimp.org>",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  plugin_menu_branch_register_inargs,
+  0,
+  NULL,
+  { { plugin_menu_branch_register_invoker } }
 };
 
 static Argument *

@@ -211,6 +211,7 @@ plug_in_menus_add_proc (GimpUIManager *manager,
 {
   gchar *path;
   gchar *merge_key;
+  gchar *stripped_path;
   gchar *action_path;
   guint  merge_id;
   guint  menu_merge_id;
@@ -262,8 +263,10 @@ plug_in_menus_add_proc (GimpUIManager *manager,
                          GUINT_TO_POINTER (menu_merge_id));
     }
 
+  stripped_path = gimp_strip_uline (path);
   action_path = plug_in_menus_build_path (manager, ui_path, menu_merge_id,
-                                          path, FALSE);
+                                          stripped_path, FALSE);
+  g_free (stripped_path);
 
   if (! action_path)
     {

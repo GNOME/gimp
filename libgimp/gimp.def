@@ -471,6 +471,7 @@ EXPORTS
 	gimp_plugin_help_register
 	gimp_plugin_icon_register
 	gimp_plugin_menu_register
+	gimp_plugin_menu_branch_register
 	gimp_posterize
 	gimp_procedural_db_dump
 	gimp_procedural_db_get_data

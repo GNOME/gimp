@@ -134,6 +134,41 @@ gimp_plugin_menu_register (const gchar *procedure_name,
 }
 
 /**
+ * gimp_plugin_menu_branch_register:
+ * @menu_path: The sub-menu's menu path.
+ * @menu_name: The name of the sub-menu.
+ *
+ * Register a sub-menu.
+ *
+ * This procedure installs an sub-menu which does not belong to any
+ * procedure.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_plugin_menu_branch_register (const gchar *menu_path,
+				  const gchar *menu_name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_plugin_menu_branch_register",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, menu_path,
+				    GIMP_PDB_STRING, menu_name,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * _gimp_plugin_icon_register:
  * @procedure_name: The procedure for which to install the icon.
  * @icon_type: The type of the icon.

@@ -354,7 +354,7 @@ HELP
                       if (! gimp->no_interface &&
                           proc_def->db_info.proc_type == GIMP_TEMPORARY)
                         {
-                          gimp_menus_create_entry (gimp, proc_def, menu_path);
+                          gimp_menus_create_item (gimp, proc_def, menu_path);
                         }
                     }
                 }
@@ -374,6 +374,47 @@ HELP
 
               success = FALSE;
             }
+        }
+      else
+        success = FALSE;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub plugin_menu_branch_register {
+    $blurb = "Register a sub-menu.";
+
+    $help = <<HELP;
+This procedure installs an sub-menu which does not belong to any procedure.
+HELP
+
+    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
+    $date = '2005';
+    $since = '2.4';
+
+    @inargs = (
+	{ name => 'menu_path', type => 'string',
+	  desc => "The sub-menu's menu path" },
+	{ name => 'menu_name', type => 'string',
+	  desc => 'The name of the sub-menu' }
+    );
+
+    %invoke = (
+        code => <<'CODE',
+{
+  if (gimp->current_plug_in)
+    {
+      plug_ins_menu_branch_add (gimp, gimp->current_plug_in->prog,
+                                menu_path, menu_name);
+
+      if (! gimp->no_interface)
+        {
+          gimp_menus_create_branch (gimp, gimp->current_plug_in->prog,
+                                    menu_path, menu_name);
         }
       else
         success = FALSE;
@@ -478,8 +519,9 @@ CODE
 
 @procs = qw(plugins_query
 	    plugin_domain_register plugin_help_register
-            plugin_menu_register plugin_icon_register);
-%exports = (app => [@procs], lib => [@procs[1,2,3,4]]);
+            plugin_menu_register plugin_menu_branch_register
+            plugin_icon_register);
+%exports = (app => [@procs], lib => [@procs[1,2,3,4,5]]);
 
 $desc = 'Plug-in';
 

@@ -32,5 +32,10 @@ void   plug_in_actions_add_path    (GimpActionGroup *group,
 void   plug_in_actions_remove_proc (GimpActionGroup *group,
                                     PlugInProcDef   *proc_def);
 
+void   plug_in_actions_add_branch  (GimpActionGroup *group,
+                                    const gchar     *progname,
+                                    const gchar     *menu_path,
+                                    const gchar     *menu_label);
+
 
 #endif /* __PLUG_IN_ACTIONS_H__ */

@@ -72,6 +72,7 @@ struct _Gimp
   gboolean                write_pluginrc;
 
   GSList                 *plug_in_proc_defs;
+  GSList                 *plug_in_menu_branches;
   GSList                 *plug_in_locale_domains;
   GSList                 *plug_in_help_domains;
 

@@ -22,6 +22,14 @@
 #define __PLUG_INS_H__
 
 
+struct _PlugInMenuBranch
+{
+  gchar *prog_name;
+  gchar *menu_path;
+  gchar *menu_label;
+};
+
+
 void              plug_ins_init                 (Gimp               *gimp,
                                                  GimpContext        *context,
                                                  GimpInitStatusFunc  status_callback);
@@ -61,10 +69,28 @@ void              plug_ins_temp_proc_def_add    (Gimp          *gimp,
 void              plug_ins_temp_proc_def_remove (Gimp          *gimp,
                                                  PlugInProcDef *proc_def);
 
+/* Add a menu branch */
+void              plug_ins_menu_branch_add      (Gimp          *gimp,
+                                                 const gchar   *prog_name,
+                                                 const gchar   *menu_path,
+                                                 const gchar   *menu_label);
+
+/* Add a locale domain */
+void              plug_ins_locale_domain_add    (Gimp          *gimp,
+                                                 const gchar   *prog_name,
+                                                 const gchar   *domain_name,
+                                                 const gchar   *domain_path);
+
 /* Retrieve a plug-ins locale domain */
 const gchar     * plug_ins_locale_domain        (Gimp          *gimp,
                                                  const gchar   *prog_name,
                                                  const gchar  **locale_path);
+
+/* Add a help domain */
+void              plug_ins_help_domain_add      (Gimp          *gimp,
+                                                 const gchar   *prog_name,
+                                                 const gchar   *domain_name,
+                                                 const gchar   *domain_uri);
 
 /* Retrieve a plug-ins help domain */
 const gchar     * plug_ins_help_domain          (Gimp          *gimp,

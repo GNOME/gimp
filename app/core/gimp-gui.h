@@ -24,66 +24,70 @@ typedef struct _GimpGui GimpGui;
 
 struct _GimpGui
 {
-  void           (* threads_enter)      (Gimp          *gimp);
-  void           (* threads_leave)      (Gimp          *gimp);
+  void           (* threads_enter)       (Gimp          *gimp);
+  void           (* threads_leave)       (Gimp          *gimp);
 
-  void           (* set_busy)           (Gimp          *gimp);
-  void           (* unset_busy)         (Gimp          *gimp);
+  void           (* set_busy)            (Gimp          *gimp);
+  void           (* unset_busy)          (Gimp          *gimp);
 
-  void           (* message)            (Gimp          *gimp,
-                                         const gchar   *domain,
-                                         const gchar   *message);
-  void           (* help)               (Gimp          *gimp,
-                                         const gchar   *help_domain,
-                                         const gchar   *help_id);
+  void           (* message)             (Gimp          *gimp,
+                                          const gchar   *domain,
+                                          const gchar   *message);
+  void           (* help)                (Gimp          *gimp,
+                                          const gchar   *help_domain,
+                                          const gchar   *help_id);
 
-  const gchar  * (* get_program_class)  (Gimp          *gimp);
-  gchar        * (* get_display_name)   (Gimp          *gimp,
-                                         gint           gdisp_ID,
-                                         gint          *monitor_number);
-  const gchar  * (* get_theme_dir)      (Gimp          *gimp);
+  const gchar  * (* get_program_class)   (Gimp          *gimp);
+  gchar        * (* get_display_name)    (Gimp          *gimp,
+                                          gint           gdisp_ID,
+                                          gint          *monitor_number);
+  const gchar  * (* get_theme_dir)       (Gimp          *gimp);
 
-  GimpObject   * (* display_get_by_id)  (Gimp          *gimp,
-                                         gint           ID);
-  gint           (* display_get_id)     (GimpObject    *display);
-  GimpObject   * (* display_create)     (GimpImage     *gimage,
-                                         GimpUnit       unit,
-                                         gdouble        scale);
-  void           (* display_delete)     (GimpObject    *display);
-  void           (* displays_reconnect) (Gimp          *gimp,
-                                         GimpImage     *old_image,
-                                         GimpImage     *new_image);
+  GimpObject   * (* display_get_by_id)   (Gimp          *gimp,
+                                          gint           ID);
+  gint           (* display_get_id)      (GimpObject    *display);
+  GimpObject   * (* display_create)      (GimpImage     *gimage,
+                                          GimpUnit       unit,
+                                          gdouble        scale);
+  void           (* display_delete)      (GimpObject    *display);
+  void           (* displays_reconnect)  (Gimp          *gimp,
+                                          GimpImage     *old_image,
+                                          GimpImage     *new_image);
 
-  void           (* menus_init)         (Gimp          *gimp,
-                                         GSList        *plug_in_defs,
-                                         const gchar   *std_domain);
-  void           (* menus_create)       (Gimp          *gimp,
-                                         PlugInProcDef *proc_def,
-                                         const gchar   *menu_path);
-  void           (* menus_delete)       (Gimp          *gimp,
-                                         PlugInProcDef *proc_def);
+  void           (* menus_init)          (Gimp          *gimp,
+                                          GSList        *plug_in_defs,
+                                          const gchar   *std_domain);
+  void           (* menus_create_item)   (Gimp          *gimp,
+                                          PlugInProcDef *proc_def,
+                                          const gchar   *menu_path);
+  void           (* menus_delete_item)   (Gimp          *gimp,
+                                          PlugInProcDef *proc_def);
+  void           (* menus_create_branch) (Gimp          *gimp,
+                                          const gchar   *progname,
+                                          const gchar   *menu_path,
+                                          const gchar   *menu_label);
 
-  GimpProgress * (* progress_new)       (Gimp          *gimp,
-                                         gint           display_ID);
-  void           (* progress_free)      (Gimp          *gimp,
-                                         GimpProgress  *progress);
+  GimpProgress * (* progress_new)        (Gimp          *gimp,
+                                          gint           display_ID);
+  void           (* progress_free)       (Gimp          *gimp,
+                                          GimpProgress  *progress);
 
-  gboolean       (* pdb_dialog_new)     (Gimp          *gimp,
-                                         GimpContext   *context,
-                                         GimpContainer *container,
-                                         const gchar   *title,
-                                         const gchar   *callback_name,
-                                         const gchar   *object_name,
-                                         va_list        args);
-  gboolean       (* pdb_dialog_set)     (Gimp          *gimp,
-                                         GimpContainer *container,
-                                         const gchar   *callback_name,
-                                         const gchar   *object_name,
-                                         va_list        args);
-  gboolean       (* pdb_dialog_close)   (Gimp          *gimp,
-                                         GimpContainer *container,
-                                         const gchar   *callback_name);
-  void           (* pdb_dialogs_check)  (Gimp          *gimp);
+  gboolean       (* pdb_dialog_new)      (Gimp          *gimp,
+                                          GimpContext   *context,
+                                          GimpContainer *container,
+                                          const gchar   *title,
+                                          const gchar   *callback_name,
+                                          const gchar   *object_name,
+                                          va_list        args);
+  gboolean       (* pdb_dialog_set)      (Gimp          *gimp,
+                                          GimpContainer *container,
+                                          const gchar   *callback_name,
+                                          const gchar   *object_name,
+                                          va_list        args);
+  gboolean       (* pdb_dialog_close)    (Gimp          *gimp,
+                                          GimpContainer *container,
+                                          const gchar   *callback_name);
+  void           (* pdb_dialogs_check)   (Gimp          *gimp);
 };
 
 
@@ -120,11 +124,15 @@ void           gimp_help                 (Gimp               *gimp,
 void           gimp_menus_init           (Gimp               *gimp,
                                           GSList             *plug_in_defs,
                                           const gchar        *std_plugins_domain);
-void           gimp_menus_create_entry   (Gimp               *gimp,
+void           gimp_menus_create_item    (Gimp               *gimp,
                                           PlugInProcDef      *proc_def,
                                           const gchar        *menu_path);
-void           gimp_menus_delete_entry   (Gimp               *gimp,
+void           gimp_menus_delete_item    (Gimp               *gimp,
                                           PlugInProcDef      *proc_def);
+void           gimp_menus_create_branch  (Gimp               *gimp,
+                                          const gchar        *progname,
+                                          const gchar        *menu_path,
+                                          const gchar        *menu_label);
 
 GimpProgress * gimp_new_progress         (Gimp               *gimp,
                                           gint                display_ID);

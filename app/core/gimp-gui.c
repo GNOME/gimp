@@ -39,28 +39,29 @@ gimp_gui_init (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  gimp->gui.threads_enter      = NULL;
-  gimp->gui.threads_leave      = NULL;
-  gimp->gui.set_busy           = NULL;
-  gimp->gui.unset_busy         = NULL;
-  gimp->gui.message            = NULL;
-  gimp->gui.help               = NULL;
-  gimp->gui.get_program_class  = NULL;
-  gimp->gui.get_display_name   = NULL;
-  gimp->gui.get_theme_dir      = NULL;
-  gimp->gui.display_get_by_id  = NULL;
-  gimp->gui.display_get_id     = NULL;
-  gimp->gui.display_create     = NULL;
-  gimp->gui.display_delete     = NULL;
-  gimp->gui.displays_reconnect = NULL;
-  gimp->gui.menus_init         = NULL;
-  gimp->gui.menus_create       = NULL;
-  gimp->gui.menus_delete       = NULL;
-  gimp->gui.progress_new       = NULL;
-  gimp->gui.progress_free      = NULL;
-  gimp->gui.pdb_dialog_set     = NULL;
-  gimp->gui.pdb_dialog_close   = NULL;
-  gimp->gui.pdb_dialogs_check  = NULL;
+  gimp->gui.threads_enter       = NULL;
+  gimp->gui.threads_leave       = NULL;
+  gimp->gui.set_busy            = NULL;
+  gimp->gui.unset_busy          = NULL;
+  gimp->gui.message             = NULL;
+  gimp->gui.help                = NULL;
+  gimp->gui.get_program_class   = NULL;
+  gimp->gui.get_display_name    = NULL;
+  gimp->gui.get_theme_dir       = NULL;
+  gimp->gui.display_get_by_id   = NULL;
+  gimp->gui.display_get_id      = NULL;
+  gimp->gui.display_create      = NULL;
+  gimp->gui.display_delete      = NULL;
+  gimp->gui.displays_reconnect  = NULL;
+  gimp->gui.menus_init          = NULL;
+  gimp->gui.menus_create_item   = NULL;
+  gimp->gui.menus_delete_item   = NULL;
+  gimp->gui.menus_create_branch = NULL;
+  gimp->gui.progress_new        = NULL;
+  gimp->gui.progress_free       = NULL;
+  gimp->gui.pdb_dialog_set      = NULL;
+  gimp->gui.pdb_dialog_close    = NULL;
+  gimp->gui.pdb_dialogs_check   = NULL;
 }
 
 void
@@ -292,26 +293,40 @@ gimp_menus_init (Gimp        *gimp,
 }
 
 void
-gimp_menus_create_entry (Gimp          *gimp,
-                         PlugInProcDef *proc_def,
-                         const gchar   *menu_path)
+gimp_menus_create_item (Gimp          *gimp,
+                        PlugInProcDef *proc_def,
+                        const gchar   *menu_path)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (proc_def != NULL);
 
-  if (gimp->gui.menus_create)
-    gimp->gui.menus_create (gimp, proc_def, menu_path);
+  if (gimp->gui.menus_create_item)
+    gimp->gui.menus_create_item (gimp, proc_def, menu_path);
 }
 
 void
-gimp_menus_delete_entry (Gimp          *gimp,
-                         PlugInProcDef *proc_def)
+gimp_menus_delete_item (Gimp          *gimp,
+                        PlugInProcDef *proc_def)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (proc_def != NULL);
 
-  if (gimp->gui.menus_delete)
-    gimp->gui.menus_delete (gimp, proc_def);
+  if (gimp->gui.menus_delete_item)
+    gimp->gui.menus_delete_item (gimp, proc_def);
+}
+
+void
+gimp_menus_create_branch (Gimp        *gimp,
+                          const gchar *progname,
+                          const gchar *menu_path,
+                          const gchar *menu_label)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (menu_path != NULL);
+  g_return_if_fail (menu_label != NULL);
+
+  if (gimp->gui.menus_create_branch)
+    gimp->gui.menus_create_branch (gimp, progname, menu_path, menu_label);
 }
 
 GimpProgress *

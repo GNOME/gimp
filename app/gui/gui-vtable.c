@@ -103,11 +103,15 @@ static void           gui_displays_reconnect   (Gimp          *gimp,
 static void           gui_menus_init           (Gimp          *gimp,
                                                 GSList        *plug_in_defs,
                                                 const gchar   *plugins_domain);
-static void           gui_menus_create_entry   (Gimp          *gimp,
+static void           gui_menus_create_item    (Gimp          *gimp,
                                                 PlugInProcDef *proc_def,
                                                 const gchar   *menu_path);
-static void           gui_menus_delete_entry   (Gimp          *gimp,
+static void           gui_menus_delete_item    (Gimp          *gimp,
                                                 PlugInProcDef *proc_def);
+static void           gui_menus_create_branch  (Gimp          *gimp,
+                                                const gchar   *progname,
+                                                const gchar   *menu_path,
+                                                const gchar   *menu_label);
 static GimpProgress * gui_new_progress         (Gimp          *gimp,
                                                 gint           display_ID);
 static void           gui_free_progress        (Gimp          *gimp,
@@ -137,29 +141,30 @@ gui_vtable_init (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  gimp->gui.threads_enter      = gui_threads_enter;
-  gimp->gui.threads_leave      = gui_threads_leave;
-  gimp->gui.set_busy           = gui_set_busy;
-  gimp->gui.unset_busy         = gui_unset_busy;
-  gimp->gui.message            = gui_message;
-  gimp->gui.help               = gui_help;
-  gimp->gui.get_program_class  = gui_get_program_class;
-  gimp->gui.get_display_name   = gui_get_display_name;
-  gimp->gui.get_theme_dir      = gui_get_theme_dir;
-  gimp->gui.display_get_by_id  = gui_display_get_by_ID;
-  gimp->gui.display_get_id     = gui_display_get_ID;
-  gimp->gui.display_create     = gui_display_create;
-  gimp->gui.display_delete     = gui_display_delete;
-  gimp->gui.displays_reconnect = gui_displays_reconnect;
-  gimp->gui.menus_init         = gui_menus_init;
-  gimp->gui.menus_create       = gui_menus_create_entry;
-  gimp->gui.menus_delete       = gui_menus_delete_entry;
-  gimp->gui.progress_new       = gui_new_progress;
-  gimp->gui.progress_free      = gui_free_progress;
-  gimp->gui.pdb_dialog_new     = gui_pdb_dialog_new;
-  gimp->gui.pdb_dialog_set     = gui_pdb_dialog_set;
-  gimp->gui.pdb_dialog_close   = gui_pdb_dialog_close;
-  gimp->gui.pdb_dialogs_check  = gui_pdb_dialogs_check;
+  gimp->gui.threads_enter       = gui_threads_enter;
+  gimp->gui.threads_leave       = gui_threads_leave;
+  gimp->gui.set_busy            = gui_set_busy;
+  gimp->gui.unset_busy          = gui_unset_busy;
+  gimp->gui.message             = gui_message;
+  gimp->gui.help                = gui_help;
+  gimp->gui.get_program_class   = gui_get_program_class;
+  gimp->gui.get_display_name    = gui_get_display_name;
+  gimp->gui.get_theme_dir       = gui_get_theme_dir;
+  gimp->gui.display_get_by_id   = gui_display_get_by_ID;
+  gimp->gui.display_get_id      = gui_display_get_ID;
+  gimp->gui.display_create      = gui_display_create;
+  gimp->gui.display_delete      = gui_display_delete;
+  gimp->gui.displays_reconnect  = gui_displays_reconnect;
+  gimp->gui.menus_init          = gui_menus_init;
+  gimp->gui.menus_create_item   = gui_menus_create_item;
+  gimp->gui.menus_delete_item   = gui_menus_delete_item;
+  gimp->gui.menus_create_branch = gui_menus_create_branch;
+  gimp->gui.progress_new        = gui_new_progress;
+  gimp->gui.progress_free       = gui_free_progress;
+  gimp->gui.pdb_dialog_new      = gui_pdb_dialog_new;
+  gimp->gui.pdb_dialog_set      = gui_pdb_dialog_set;
+  gimp->gui.pdb_dialog_close    = gui_pdb_dialog_close;
+  gimp->gui.pdb_dialogs_check   = gui_pdb_dialogs_check;
 }
 
 
@@ -435,9 +440,9 @@ gui_menus_delete_proc (Gimp          *gimp,
 }
 
 static void
-gui_menus_create_entry (Gimp          *gimp,
-                        PlugInProcDef *proc_def,
-                        const gchar   *menu_path)
+gui_menus_create_item (Gimp          *gimp,
+                       PlugInProcDef *proc_def,
+                       const gchar   *menu_path)
 {
   GList *list;
 
@@ -467,8 +472,8 @@ gui_menus_create_entry (Gimp          *gimp,
 }
 
 static void
-gui_menus_delete_entry (Gimp          *gimp,
-                        PlugInProcDef *proc_def)
+gui_menus_delete_item (Gimp          *gimp,
+                       PlugInProcDef *proc_def)
 {
   GList *list;
 
@@ -480,6 +485,22 @@ gui_menus_delete_entry (Gimp          *gimp,
        list = g_list_next (list))
     {
       plug_in_actions_remove_proc (list->data, proc_def);
+    }
+}
+
+static void
+gui_menus_create_branch (Gimp        *gimp,
+                         const gchar *progname,
+                         const gchar *menu_path,
+                         const gchar *menu_label)
+{
+  GList *list;
+
+  for (list = gimp_action_groups_from_name ("plug-in");
+       list;
+       list = g_list_next (list))
+    {
+      plug_in_actions_add_branch (list->data, progname, menu_path, menu_label);
     }
 }
 

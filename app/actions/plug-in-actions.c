@@ -117,6 +117,18 @@ plug_in_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (plug_in_repeat_actions),
                                       G_CALLBACK (plug_in_repeat_cmd_callback));
 
+  for (list = group->gimp->plug_in_menu_branches;
+       list;
+       list = g_slist_next (list))
+    {
+      PlugInMenuBranch *branch = list->data;
+
+      plug_in_actions_add_branch (group,
+                                  branch->prog_name,
+                                  branch->menu_path,
+                                  branch->menu_label);
+    }
+
   for (list = group->gimp->plug_in_proc_defs;
        list;
        list = g_slist_next (list))
@@ -284,7 +296,7 @@ plug_in_actions_add_path (GimpActionGroup *group,
 {
   const gchar *progname;
   const gchar *locale_domain;
-  gchar       *path_translated  = NULL;
+  const gchar *path_translated;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
   g_return_if_fail (proc_def != NULL);
@@ -323,6 +335,36 @@ plug_in_actions_remove_proc (GimpActionGroup *group,
 
       gtk_action_group_remove_action (GTK_ACTION_GROUP (group), action);
     }
+}
+
+void
+plug_in_actions_add_branch (GimpActionGroup *group,
+                            const gchar     *progname,
+                            const gchar     *menu_path,
+                            const gchar     *menu_label)
+{
+  const gchar *locale_domain;
+  const gchar *path_translated;
+  const gchar *label_translated;
+  gchar       *full;
+  gchar       *full_translated;
+
+  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (menu_path != NULL);
+  g_return_if_fail (menu_label != NULL);
+
+  locale_domain = plug_ins_locale_domain (group->gimp, progname, NULL);
+
+  path_translated  = dgettext (locale_domain, menu_path);
+  label_translated = dgettext (locale_domain, menu_label);
+
+  full            = g_strconcat (menu_path,       "/", menu_label,       NULL);
+  full_translated = g_strconcat (path_translated, "/", label_translated, NULL);
+
+  if (plug_in_actions_check_translation (full, full_translated))
+    plug_in_actions_build_path (group, full, full_translated);
+  else
+    plug_in_actions_build_path (group, full, full);
 }
 
 
@@ -430,6 +472,8 @@ plug_in_actions_build_path (GimpActionGroup *group,
                             const gchar     *path_translated)
 {
   GHashTable *path_table;
+  gchar      *copy_original;
+  gchar      *copy_translated;
   gchar      *p1, *p2;
 
   path_table = g_object_get_data (G_OBJECT (group), "plug-in-path-table");
@@ -444,13 +488,14 @@ plug_in_actions_build_path (GimpActionGroup *group,
                               (GDestroyNotify) g_hash_table_destroy);
     }
 
-  p1 = strrchr (path_original, '/');
-  p2 = strrchr (path_translated, '/');
+  copy_original   = gimp_strip_uline (path_original);
+  copy_translated = g_strdup (path_translated);
 
-  if (p1 && p2 && ! g_hash_table_lookup (path_table, path_original))
+  p1 = strrchr (copy_original, '/');
+  p2 = strrchr (copy_translated, '/');
+
+  if (p1 && p2 && ! g_hash_table_lookup (path_table, copy_original))
     {
-      gchar     *copy_original   = g_strdup (path_original);
-      gchar     *copy_translated = g_strdup (path_translated);
       gchar     *label;
       GtkAction *action;
 
@@ -458,24 +503,21 @@ plug_in_actions_build_path (GimpActionGroup *group,
 
 #if 0
       g_print ("adding plug-in submenu '%s' (%s)\n",
-               path_original, label);
+               copy_original, label);
 #endif
 
-      action = gtk_action_new (path_original, label, NULL, NULL);
+      action = gtk_action_new (copy_original, label, NULL, NULL);
       gtk_action_group_add_action (GTK_ACTION_GROUP (group), action);
       g_object_unref (action);
 
-      g_hash_table_insert (path_table, g_strdup (path_original), action);
-
-      p1 = strrchr (copy_original, '/');
-      p2 = strrchr (copy_translated, '/');
+      g_hash_table_insert (path_table, g_strdup (copy_original), action);
 
       *p1 = '\0';
       *p2 = '\0';
 
       plug_in_actions_build_path (group, copy_original, copy_translated);
-
-      g_free (copy_original);
-      g_free (copy_translated);
     }
+
+  g_free (copy_original);
+  g_free (copy_translated);
 }

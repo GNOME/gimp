@@ -1,3 +1,54 @@
+2005-03-24  Michael Natterer  <mitch@gimp.org>
+
+	Added API to explicitly register dynamic menu items hierarchies.
+	Fixes bug #170623.
+
+	* app/core/gimp.h: added "GSList *plug_in_menu_branches".
+
+	* app/plug-in/plug-in-types.h
+
+	* app/plug-in/plug-ins.[ch]: added API to register plug-in menu
+	branches, just as for locale and help domans. Cleaned up handling
+	of locale and help domains.
+
+	(plug_ins_exit): free the registered menu branches.
+
+	* app/actions/plug-in-actions.[ch] (plug_in_actions_add_branch):
+	new function to explicitly add a menu branch action.
+
+	(plug_in_actions_setup): add the registered menu branches to each
+	new action group.
+
+	(plug_in_actions_build_path): always strip the untranslated menu
+	path from underlines before using it as hash table key or action
+	name.
+
+	* app/menus/plug-in-menus.c (plug_in_menus_add_proc): changed
+	accordingly: strip underlines from untranslated menu paths before
+	passing them to plug_in_menus_build_path().
+
+	* app/core/gimp-gui.[ch]: added gimp_menus_create_branch() plus
+	vtable entry to access the new stuff from the core. Renamed the
+	functions desling with items from gimp_foo_entry() to
+	gimp_foo_item().
+
+	* app/gui/gui-vtable.c: implement create_branch() and add the
+	branch action to all existing "plug-in" action groups. Note that
+	we don't need to create any menus because that happens implicitly
+	when adding menu items.
+
+	* tools/pdbgen/pdb/plug_in.pdb (plugin_menu_branch_register): new
+	PDB wrapper to access branch registering from plug-ins.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/plug_in_cmds.c
+	* libgimp/gimpplugin_pdb.[ch]: regenerated.
+
+	* libgimp/gimp.def: changed accordingly.
+
+	* plug-ins/script-fu/script-fu-scripts.c (script_fu_find_scripts):
+	register the menu branches for all included scripts.
+
 2005-03-24  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcolormapeditor.c: use a GimpColorHexEntry widget.
