@@ -3705,7 +3705,7 @@ msgstr "Вивантажити"
 
 #: app/module_db.c:853
 msgid "Purpose:"
-msgstr "Ц╕ль: "
+msgstr "Призначення:"
 
 #: app/module_db.c:854
 msgid "Author:"
@@ -3717,7 +3717,7 @@ msgstr "Верс╕я:"
 
 #: app/module_db.c:856
 msgid "Copyright:"
-msgstr "Авторське право:"
+msgstr "Авторськ╕ права:"
 
 #: app/module_db.c:857
 msgid "Date:"
@@ -3725,7 +3725,7 @@ msgstr "Дата:"
 
 #: app/module_db.c:858
 msgid "Location:"
-msgstr "Розм╕щення:"
+msgstr "Розташування:"
 
 #: app/module_db.c:859
 msgid "State:"

@@ -627,19 +627,19 @@ msgstr "Джул╕я"
 
 #: plug-ins/FractalExplorer/Dialogs.c:579
 msgid "Barnsley 1"
-msgstr ""
+msgstr "Барнсл╕ 1"
 
 #: plug-ins/FractalExplorer/Dialogs.c:581
 msgid "Barnsley 2"
-msgstr ""
+msgstr "Барнсл╕ 2"
 
 #: plug-ins/FractalExplorer/Dialogs.c:583
 msgid "Barnsley 3"
-msgstr ""
+msgstr "Бернсл╕ 3"
 
 #: plug-ins/FractalExplorer/Dialogs.c:585
 msgid "Spider"
-msgstr ""
+msgstr "Павук"
 
 #: plug-ins/FractalExplorer/Dialogs.c:587
 msgid "Man'o'war"
@@ -651,7 +651,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:591
 msgid "Sierpinski"
-msgstr ""
+msgstr "Серпинський"
 
 #: plug-ins/FractalExplorer/Dialogs.c:637
 #: plug-ins/imagemap/imap_preferences.c:542 plug-ins/sinus/sinus.c:910
@@ -727,7 +727,7 @@ msgstr ""
 #: plug-ins/FractalExplorer/Dialogs.c:798
 #: plug-ins/FractalExplorer/Dialogs.c:839
 msgid "Inversion"
-msgstr ""
+msgstr "╤нверс╕я"
 
 #: plug-ins/FractalExplorer/Dialogs.c:765
 #: plug-ins/FractalExplorer/Dialogs.c:806
@@ -929,7 +929,7 @@ msgstr ""
 #. General options
 #: plug-ins/Lighting/lighting_ui.c:393 plug-ins/MapObject/mapobject_ui.c:532
 msgid "General Options"
-msgstr ""
+msgstr "Основн╕ параметри"
 
 #: plug-ins/Lighting/lighting_ui.c:402
 msgid "Use Bump Mapping"
@@ -1025,7 +1025,7 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:575
 msgid "Spot Light"
-msgstr ""
+msgstr "Св╕тлова пляма"
 
 #: plug-ins/Lighting/lighting_ui.c:577 plug-ins/MapObject/mapobject_ui.c:710
 msgid "No Light"
@@ -1224,15 +1224,15 @@ msgstr "Параметри"
 #: plug-ins/Lighting/lighting_ui.c:1018 plug-ins/MapObject/mapobject_ui.c:1318
 #: plug-ins/common/spheredesigner.c:1574 plug-ins/common/spheredesigner.c:2618
 msgid "Light"
-msgstr ""
+msgstr "Св╕тло"
 
 #: plug-ins/Lighting/lighting_ui.c:1022 plug-ins/MapObject/mapobject_ui.c:1322
 msgid "Material"
-msgstr ""
+msgstr "Матер╕ал"
 
 #: plug-ins/Lighting/lighting_ui.c:1069
 msgid "Lighting Effects"
-msgstr ""
+msgstr "Св╕тлов╕ ефекти"
 
 #: plug-ins/Lighting/lighting_ui.c:1129 plug-ins/MapObject/mapobject_ui.c:1433
 #: plug-ins/common/diffraction.c:606
@@ -1271,15 +1271,15 @@ msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:554
 msgid "Plane"
-msgstr ""
+msgstr "Площина"
 
 #: plug-ins/MapObject/mapobject_ui.c:555
 msgid "Sphere"
-msgstr ""
+msgstr "Сфера"
 
 #: plug-ins/MapObject/mapobject_ui.c:563
 msgid "Type of object to map to"
-msgstr ""
+msgstr "тип об'╓кту в╕дображення"
 
 #: plug-ins/MapObject/mapobject_ui.c:575
 msgid "Make image transparent outside object"
@@ -5740,11 +5740,11 @@ msgstr ""
 
 #: plug-ins/common/spheredesigner.c:251
 msgid "Noise"
-msgstr ""
+msgstr "Шум"
 
 #: plug-ins/common/spheredesigner.c:252
 msgid "Wood"
-msgstr ""
+msgstr "Дерево"
 
 #: plug-ins/common/spheredesigner.c:253
 msgid "Spiral"
@@ -5752,11 +5752,11 @@ msgstr ""
 
 #: plug-ins/common/spheredesigner.c:254
 msgid "Spots"
-msgstr ""
+msgstr "Плями"
 
 #: plug-ins/common/spheredesigner.c:1572 plug-ins/common/spheredesigner.c:2606
 msgid "Texture"
-msgstr ""
+msgstr "Текстура"
 
 #: plug-ins/common/spheredesigner.c:1575
 msgid "(unknown!?)"
@@ -5787,13 +5787,13 @@ msgstr ""
 
 #: plug-ins/common/spheredesigner.c:2281
 msgid "Textures"
-msgstr ""
+msgstr "Текстури"
 
 #: plug-ins/common/spheredesigner.c:2306 plug-ins/gfig/gfig.c:3147
 #: plug-ins/gimpressionist/orientmap.c:531
 #: plug-ins/gimpressionist/sizemap.c:431
 msgid "Add"
-msgstr ""
+msgstr "Додати"
 
 #: plug-ins/common/spheredesigner.c:2313
 msgid "Dup"
@@ -5906,7 +5906,7 @@ msgstr ""
 
 #: plug-ins/common/sunras.c:436
 msgid "Type of colormap not supported"
-msgstr ""
+msgstr "Не п╕дтриму╓ться тип мапи кольор╕в"
 
 #: plug-ins/common/sunras.c:477
 msgid "This image depth is not supported"
@@ -6037,7 +6037,7 @@ msgstr ""
 #. Area for buttons etc
 #: plug-ins/common/tileit.c:456
 msgid "Flipping"
-msgstr ""
+msgstr "В╕дзеркалення"
 
 #: plug-ins/common/tileit.c:493
 msgid "Applied to Tile"
@@ -10420,7 +10420,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/gimp.c:105
 msgid "<Image>/Filters/Artistic/GIMPressionist..."
-msgstr "<Image>/Ф╕льтри/╤м╕тац╕я/GIMPressionist..."
+msgstr "<Image>/Ф╕льтри/╤м╕тац╕я/╫╕мпресион╕ст..."
 
 #: plug-ins/gimpressionist/gimp.c:294
 msgid "Painting..."
@@ -10438,7 +10438,7 @@ msgstr ""
 #: plug-ins/gimpressionist/gimpressionist.c:350
 #: plug-ins/gimpressionist/gimpressionist.c:447
 msgid "The GIMPressionist!"
-msgstr "GIMPressionist!"
+msgstr "╫╕мпресион╕ст!"
 
 #: plug-ins/gimpressionist/gimpressionist.c:489
 msgid "Run with the selected settings"
@@ -10591,15 +10591,15 @@ msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:596
 msgid "Vortex"
-msgstr ""
+msgstr "Вихор"
 
 #: plug-ins/gimpressionist/orientmap.c:608
 msgid "Vortex2"
-msgstr ""
+msgstr "Вихор2"
 
 #: plug-ins/gimpressionist/orientmap.c:614
 msgid "Vortex3"
-msgstr ""
+msgstr "Вихор3"
 
 #: plug-ins/gimpressionist/orientmap.c:631
 #: plug-ins/gimpressionist/sizemap.c:490
@@ -10883,11 +10883,11 @@ msgstr ""
 
 #: plug-ins/helpbrowser/helpbrowser.c:133
 msgid "Contents"
-msgstr ""
+msgstr "Зм╕ст"
 
 #: plug-ins/helpbrowser/helpbrowser.c:142
 msgid "Index"
-msgstr "Зм╕ст"
+msgstr "Покажчик"
 
 #: plug-ins/helpbrowser/helpbrowser.c:397 plug-ins/imagemap/imap_main.c:507
 #: plug-ins/imagemap/imap_settings.c:149
@@ -10900,10 +10900,13 @@ msgid ""
 "\n"
 "Couldn't find my root html directory."
 msgstr ""
+"Помилка дов╕дково╖ системи GIMP.\n"
+"\n"
+"Не вдалось знайти кореневий каталог html."
 
 #: plug-ins/helpbrowser/helpbrowser.c:762
 msgid "GIMP Help Browser"
-msgstr ""
+msgstr "Дов╕дкова система GIMP"
 
 #: plug-ins/helpbrowser/helpbrowser.c:777
 msgid "Back"
@@ -10930,7 +10933,7 @@ msgstr ""
 #. Flip
 #: plug-ins/ifscompose/ifscompose.c:596
 msgid "Flip"
-msgstr ""
+msgstr "В╕дзеркалити"
 
 #. Simple color control section
 #: plug-ins/ifscompose/ifscompose.c:627
@@ -10984,19 +10987,19 @@ msgstr ""
 
 #: plug-ins/ifscompose/ifscompose.c:905
 msgid "Render Options"
-msgstr ""
+msgstr "Параметри в╕зуал╕зац╕╖"
 
 #: plug-ins/ifscompose/ifscompose.c:919 plug-ins/print/gimp_main_window.c:385
 msgid "Auto"
-msgstr ""
+msgstr "Авто"
 
 #: plug-ins/ifscompose/ifscompose.c:952
 msgid "Spatial Transformation"
-msgstr ""
+msgstr "Просторове перетворення"
 
 #: plug-ins/ifscompose/ifscompose.c:958
 msgid "Color Transformation"
-msgstr ""
+msgstr "Перетворення кольор╕в"
 
 #: plug-ins/ifscompose/ifscompose.c:968
 msgid "Relative Probability:"
@@ -11030,18 +11033,18 @@ msgstr ""
 
 #: plug-ins/ifscompose/ifscompose.c:1304
 msgid "Spot Radius:"
-msgstr ""
+msgstr "Рад╕ус плями:"
 
 #: plug-ins/ifscompose/ifscompose.c:1374
 #, c-format
 msgid "Rendering IFS (%d/%d)..."
-msgstr ""
+msgstr "В╕зуал╕зац╕я IFS (%d/%d)..."
 
 #. transfer the image to the drawable
 #: plug-ins/ifscompose/ifscompose.c:1393
 #, c-format
 msgid "Copying IFS to image (%d/%d)..."
-msgstr ""
+msgstr "Коп╕ювання IFS у зображення (%d/%d)..."
 
 #: plug-ins/imagemap/imap_about.c:39
 msgid ""
@@ -12122,11 +12125,11 @@ msgstr "EPSON Stylus Photo"
 
 #: plug-ins/rcm/rcm.c:118
 msgid "<Image>/Image/Colors/Colormap Rotation..."
-msgstr ""
+msgstr "<Image>/Зображення/Кольори/Обертання мапи кольор╕в..."
 
 #: plug-ins/rcm/rcm.c:281
 msgid "Rotating the colormap..."
-msgstr ""
+msgstr "Обертання мапи кольор╕в..."
 
 #: plug-ins/rcm/rcm_callback.c:150 plug-ins/rcm/rcm_dialog.c:261
 msgid "Switch to clockwise"
@@ -12205,7 +12208,7 @@ msgstr ""
 #. Create dialog
 #: plug-ins/rcm/rcm_dialog.c:741
 msgid "Colormap Rotation"
-msgstr ""
+msgstr "Обертання мапи кольор╕в"
 
 #: plug-ins/rcm/rcm_dialog.c:792
 msgid "Main"
@@ -12278,7 +12281,7 @@ msgstr ""
 #. ==============================
 #: plug-ins/sinus/sinus.c:748
 msgid "Sinus"
-msgstr ""
+msgstr "Синус"
 
 #: plug-ins/sinus/sinus.c:808
 msgid "Drawing Settings"
@@ -12327,7 +12330,7 @@ msgstr "Передн╕й план ╕ тло"
 
 #: plug-ins/sinus/sinus.c:936
 msgid "Choose here:"
-msgstr ""
+msgstr "Вибер╕ть тут:"
 
 #: plug-ins/sinus/sinus.c:950
 msgid "First Color"
@@ -12436,7 +12439,7 @@ msgstr "Зняти весь екран"
 
 #: plug-ins/winsnap/winsnap.c:1229
 msgid "No data captured"
-msgstr ""
+msgstr "Даних не захоплено"
 
 #: plug-ins/xjt/xjt.c:664
 #, c-format
@@ -12461,12 +12464,12 @@ msgstr ""
 #: plug-ins/xjt/xjt.c:746
 #, c-format
 msgid "XJT file contains unknown unittype %d"
-msgstr ""
+msgstr "файл XJT м╕стить одиницю нев╕домого типу %d"
 
 #: plug-ins/xjt/xjt.c:767
 #, c-format
 msgid "Warning: unsupported unittype %d saved to XJT"
-msgstr ""
+msgstr "Попередження: в XJT збережено одиницю неп╕дтримуваного типу %d"
 
 #: plug-ins/xjt/xjt.c:795
 msgid "Save as XJT"
@@ -12474,7 +12477,7 @@ msgstr "Зберегти як XJT"
 
 #: plug-ins/xjt/xjt.c:832
 msgid "Clear Transparent"
-msgstr ""
+msgstr "Очистити прозоре"
 
 #: plug-ins/xjt/xjt.c:1227
 #, c-format
