@@ -20,6 +20,25 @@
 #include "gimp.h"
 #include "gimpui.h"
 
+/**
+ * gimp_ui_init:
+ * @prog_name: The name of the plug-in which will be passed as argv[0] to
+ *             gtk_init(). It's a convention to use the name of the
+ *             executable and _not_ the PDB procedure name or something.
+ * @preview: #TRUE if the plug-in has some kind of preview in it's UI.
+ *           Note that passing #TRUE is recommended also if one of the
+ *           used GIMP Library widgets contains a preview (like the image
+ *           menu returned by gimp_image_menu_new()).
+ *
+ * This function initializes GTK+ with gtk_init(), instructs GDK not to
+ * use X shared memory if The GIMP was invoked with the --no-xshm command
+ * line option and initializes GDK's image rendering subsystem (GdkRGB) to
+ * follow the GIMP main program's colormap allocation/installation policy.
+ *
+ * The GIMP's colormap policy can be determinded by the user with the
+ * gimprc variables @min_colors and @install_cmap.
+ *
+ */
 void
 gimp_ui_init (gchar    *prog_name,
 	      gboolean  preview)

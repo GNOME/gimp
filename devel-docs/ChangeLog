@@ -1,3 +1,12 @@
+2000-05-01  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/libgimp-decl.txt
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimp.sgml
+	* libgimp/tmpl/gimpsignal.sgml
+	* libgimp/tmpl/gimpui.sgml
+	* libgimp/tmpl/libgimp-unused.sgml: updated.
+
 2000-04-23  Sven Neumann  <sven@gimp.org>
 
         * libgimp/tmpl/gimpsignal.sgml: new file

@@ -26,10 +26,12 @@
 
 /** 
  * gimp_signal_private: 
- * @signum: Selects signal to be handled see man 5 signal
- * @gimp_sighandler:  Handler that maps to signum. Invoked by O/S. 
- *                    Handler gets signal that caused invocation. 
- * @sa_flags: preferences. OR'ed SA_<xxx>. See signal.h 
+ * @signum: Selects signal to be handled see man 5 signal (or man 7 signal)
+ * @handler: Handler that maps to signum. Invoked by O/S. 
+ *           Handler gets signal that caused invocation. Corresponds
+ *           to the @sa_handler field of the @sigaction struct.
+ * @flags: Preferences. OR'ed SA_<xxx>. See man sigaction. Corresponds
+ *         to the @sa_flags field of the @sigaction struct.
  *
  * This function furnishes a workalike for signal(2) but
  * which internally invokes sigaction(2) after certain
@@ -38,18 +40,19 @@
  * aid to transition and not new development: that effort 
  * should employ sigaction directly. [gosgood 18.04.2000] 
  *
- * Cause handler to be run when signum is delivered.  We
+ * Cause @handler to be run when @signum is delivered.  We
  * use sigaction(2) rather than signal(2) so that we can control the
- * signal hander's environment completely via sa_flags: some signal(2)
+ * signal handler's environment completely via @flags: some signal(2)
  * implementations differ in their sematics, so we need to nail down
  * exactly what we want. [austin 06.04.2000]
  *
- * Returns: A reference to a signal handling function
+ * Returns: A reference to the signal handling function which was
+ *          active before the call to gimp_signal_private().
  */
-GimpRetSigType
-gimp_signal_private (gint    signum,
-		     void (* gimp_sighandler) (gint),
-		     gint    sa_flags)
+GimpSignalHandlerFunc
+gimp_signal_private (gint                   signum,
+		     GimpSignalHandlerFunc  handler,
+		     gint                   flags)
 {
   gint ret;
   struct sigaction sa;
@@ -67,19 +70,19 @@ gimp_signal_private (gint    signum,
    *  SIG_DFL as (void (*)()0, so setting sa_handler to NULL is
    *  the same thing as passing SIG_DFL to it.
    */
-  sa.sa_handler = gimp_sighandler;
+  sa.sa_handler = handler;
 
   /*  Mask all signals while handler runs to avoid re-entrancy
    *  problems.
    */
   sigfillset (&sa.sa_mask);
 
-  sa.sa_flags = sa_flags;
+  sa.sa_flags = flags;
 
   ret = sigaction (signum, &sa, &osa);
 
   if (ret < 0)
     g_error ("unable to set handler for signal %d\n", signum);
 
-  return osa.sa_handler;
+  return (GimpSignalHandlerFunc) osa.sa_handler;
 }

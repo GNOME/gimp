@@ -11,24 +11,26 @@ Portable signal handling.
 
 <!-- ##### SECTION See_Also ##### -->
 <para>
-
+signal(2), signal(5 or 7), sigaction(2).
 </para>
 
-<!-- ##### MACRO gimp_signal_syscallrestart ##### -->
+<!-- ##### MACRO SA_RESTART ##### -->
 <para>
-
+This is just an alias for systems which do not define SA_RESTART.
 </para>
 
-@x: 
-@y: 
 
 
-<!-- ##### USER_FUNCTION GimpRetSigType ##### -->
+<!-- ##### USER_FUNCTION GimpSignalHandlerFunc ##### -->
 <para>
-
+A prototype for signal handler functions. Note that each function which
+takes or returns a variable of this type also accepts or may return
+special values defined by your system's signal.h header file (like
+@SIG_DFL or @SIG_IGN).
 </para>
 
-@Param1: 
+@signum: The number of the signal. Useful if different signals are handled
+         by a single handler.
 
 
 <!-- ##### FUNCTION gimp_signal_private ##### -->
@@ -37,8 +39,19 @@ Portable signal handling.
 </para>
 
 @signum: 
-@gimp_sighandler: 
-@sa_flags: 
+@handler: 
+@flags: 
 @Returns: 
+
+
+<!-- ##### MACRO gimp_signal_syscallrestart ##### -->
+<para>
+Installs a signal handler in a way that system calls which were not finished
+at the time of signal handler invocation will be silently restarted
+by the system (without failing with an error of EINTR).
+</para>
+
+@signum: The number of the signal.
+@handler: The signal handler.
 
 

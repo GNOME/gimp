@@ -361,6 +361,14 @@ gimp
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_min_colors ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_request_wakeups ##### -->
 <para>
 

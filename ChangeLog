@@ -1,5 +1,12 @@
 2000-05-01  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/gimpsignal.[ch]
+	* libgimp/gimpui.c: don't panic, this is not another signal handling
+	change but only a namespace cleanup to make the html documentation
+	better. Also added documentation for gimp_ui_init().
+
+2000-05-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/main.c
 	* libgimp/gimp.c: again... _do_ use gimp_signal_private() but
 	force it to behave like signal(). While on Linux it seems to

@@ -1,5 +1,5 @@
-/* LIBGIMP - The GIMP Library 
- * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball 
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  *  $Revision$
- */        
+ */
 #ifndef __GIMP_SIGNAL_H__
 #define __GIMP_SIGNAL_H__
 
@@ -28,6 +28,7 @@
  */
 
 #include <signal.h>
+
 #include <glib.h>
 
 #ifdef __EMX__
@@ -35,25 +36,22 @@
 #define SA_RESTART SA_SYSV
 #endif
 
-/* GimpRetSigType is a reference 
- * to a (signal handler) function 
- * that takes a signal ID and 
- * returns void. 
- * signal(2) returns such references; 
- * so does gimp_signal_private.
+/* GimpSignalHandlerFunc is a reference to a (signal handler) function 
+ * that takes a signal ID and returns void. 
+ * signal(2) returns such references; so does gimp_signal_private.
  */
-typedef void (* GimpRetSigType) (gint);
+typedef void (* GimpSignalHandlerFunc) (gint signum);
 
 /* Internal implementation that can be DEFINEd into various flavors of
  * signal(2) lookalikes.
  */
-GimpRetSigType gimp_signal_private (gint    signum,
-				    void (* gimp_sighandler) (gint),
-				    gint    sa_flags);
+GimpSignalHandlerFunc  gimp_signal_private (gint                   signum,
+					    GimpSignalHandlerFunc  handler,
+					    gint                   flags);
 
 /* the gimp_signal_syscallrestart() lookalike looks like signal(2) but
  * quietly requests the restarting of system calls. Addresses #2742
  */
-#define gimp_signal_syscallrestart(x, y) gimp_signal_private ((x), (y), SA_RESTART)
+#define gimp_signal_syscallrestart(signum,handler) gimp_signal_private ((signum), (handler), SA_RESTART)
 
 #endif /* __GIMP_SIGNAL_H__ */

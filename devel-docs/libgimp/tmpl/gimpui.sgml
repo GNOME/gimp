@@ -11,7 +11,10 @@ Common user interface functions.
 
 <!-- ##### SECTION See_Also ##### -->
 <para>
-
+gtk_init(), gdk_set_use_xshm(), gdk_rgb_set_min_colors(),
+gdk_rgb_set_install(), gdk_rgb_get_visual(), gdk_rgb_get_cmap(),
+gtk_widget_set_default_visual(), gtk_widget_set_default_colormap(),
+gtk_preview_set_gamma().
 </para>
 
 <!-- ##### FUNCTION gimp_ui_init ##### -->

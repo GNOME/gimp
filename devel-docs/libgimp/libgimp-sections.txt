@@ -37,6 +37,7 @@ gimp_gamma
 gimp_install_cmap
 gimp_use_xshm
 gimp_color_cube
+gimp_min_colors
 gimp_request_wakeups
 gimp_image_new
 gimp_image_duplicate
@@ -263,9 +264,10 @@ gp_request_wakeups_write
 
 <SECTION>
 <FILE>gimpsignal</FILE>
-gimp_signal_syscallrestart
-GimpRetSigType
+SA_RESTART
+GimpSignalHandlerFunc
 gimp_signal_private
+gimp_signal_syscallrestart
 </SECTION>
 
 <SECTION>
