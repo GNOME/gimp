@@ -453,7 +453,8 @@ gimp_brush_load_brush (gint         fd,
   if (header.version != 1 &&
       (header.magic_number != GBRUSH_MAGIC || header.version != 2))
     {
-      g_message (_("Unknown brush format version #%d in \"%s\"."),
+      g_message (_("Fatal parsing error (unknown version %d):\n"
+		   "Brush file '%s'"),
 		 header.version, filename);
       return NULL;
     }
@@ -473,14 +474,15 @@ gimp_brush_load_brush (gint         fd,
       name = g_new (gchar, bn_size);
       if ((read (fd, name, bn_size)) < bn_size)
 	{
-	  g_message (_("Error in GIMP brush file \"%s\"."), filename);
+	  g_message (_("Fatal parsing error:\nBrush file '%s' appears truncated."),
+		     filename);
 	  g_free (name);
 	  return NULL;
 	}
 
       if (!g_utf8_validate (name, -1, NULL))
         {
-          g_message (_("Invalid UTF-8 string in GIMP brush file \"%s\"."), 
+          g_message (_("Invalid UTF-8 string in brush file '%s'."), 
                      filename);
           g_free (name);
           name = NULL;
@@ -500,7 +502,7 @@ gimp_brush_load_brush (gint         fd,
 		temp_buf_data (brush->mask), header.width * header.height) <
 	  header.width * header.height)
 	{
-	  g_message (_("GIMP brush file appears to be truncated: \"%s\"."),
+	  g_message (_("Fatal parsing error:\nBrush file '%s' appears truncated."),
 		     filename);
 	  g_free (name);
 	  g_object_unref (G_OBJECT (brush));
@@ -519,7 +521,7 @@ gimp_brush_load_brush (gint         fd,
 		    + i * 3, 3) != 3 ||
 	      read (fd, temp_buf_data (brush->mask) + i, 1) != 1)
 	    {
-	      g_message (_("GIMP brush file appears to be truncated: \"%s\"."),
+	      g_message (_("Fatal parsing error:\nBrush file '%s' appears truncated."),
 			 filename);
 	      g_free (name);
 	      g_object_unref (G_OBJECT (brush));
@@ -529,9 +531,9 @@ gimp_brush_load_brush (gint         fd,
       break;
 
     default:
-      g_message ("Unsupported brush depth: %d\n"
-		 "in file \"%s\"\n"
-		 "GIMP Brushes must be GRAY or RGBA",
+      g_message ("Unsupported brush depth %d\n"
+		 "in file '%s'.\n"
+		 "GIMP brushes must be GRAY or RGBA.",
 		 header.bytes, filename);
       g_free (name);
       return NULL;
@@ -549,3 +551,7 @@ gimp_brush_load_brush (gint         fd,
 
   return brush;
 }
+
+
+
+

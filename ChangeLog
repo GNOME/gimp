@@ -1,3 +1,8 @@
+2001-11-15  Rebecca Walter <rjp@mail.tele.dk>
+	* app/core/gimpbrush.c
+	* app/core/gimpbrushpipe.c
+	* app/core/gimpchannel.c:  Proofreading to strings, approved by Sven
+
 2001-11-15  Sven Neumann  <sven@gimp.org>
 
 	* RELEASE-TO-CVS.patch: recreated from toplevel dir so it applies

@@ -286,7 +286,7 @@ gimp_brush_pipe_load (const gchar *filename)
   fd = open (filename, O_RDONLY | _O_BINARY);
   if (fd == -1)
     {
-      g_message ("Couldn't open file '%s'", filename);
+      g_message (_("Could not open file '%s'"), filename);
       return NULL;
     }
 
@@ -307,7 +307,7 @@ gimp_brush_pipe_load (const gchar *filename)
         }
       else
         {
-          g_message (_("Invalid UTF-8 string in GIMP brush file \"%s\"."), 
+          g_message (_("Invalid UTF-8 string in GIMP brush file '%s'."), 
                      filename);
           gimp_object_set_name (GIMP_OBJECT (pipe), _("Unnamed"));
         }
@@ -316,7 +316,7 @@ gimp_brush_pipe_load (const gchar *filename)
 
   if (!pipe)
     {
-      g_message ("Couldn't read name for brush pipe from file \"%s\".\n", 
+      g_message (_("Fatal parsing error:\nBrush pipe file '%s' is corrupt."), 
 		 filename);
       close (fd);
       return NULL;
@@ -334,7 +334,7 @@ gimp_brush_pipe_load (const gchar *filename)
 
   if (num_of_brushes < 1)
     {
-      g_message (_("Brush pipes should have at least one brush:\n\"%s\""), 
+      g_message (_("Fatal parsing error:\nBrush pipe file '%s' is corrupt."), 
 		 filename);
       close (fd);
       g_object_unref (G_OBJECT (pipe));
@@ -422,8 +422,7 @@ gimp_brush_pipe_load (const gchar *filename)
 	}
       else
 	{
-	  g_message (_("Failed to load one of the brushes in the brush pipe\n\"%s\""), 
-		       filename);
+	  g_message (_("Fatal parsing error:\nBrush pipe file '%s' is corrupt."), filename);
 	  close (fd);
 	  g_object_unref (G_OBJECT (pipe));
 	  return NULL;

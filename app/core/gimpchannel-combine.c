@@ -943,7 +943,7 @@ gimp_channel_combine_ellipse (GimpChannel *mask,
 		  gimp_channel_sub_segment (mask, x1, i, (x2 - x1), 255);
 		  break;
 		default:
-		  g_warning ("Only ADD, REPLACE and SUB are valid for channel_combine!");
+		  g_warning ("Only ADD, REPLACE, and SUB are valid for channel_combine!");
 		  break;
 		}
 	    }
@@ -987,7 +987,7 @@ gimp_channel_combine_ellipse (GimpChannel *mask,
 			  gimp_channel_sub_segment (mask, x0, i, j - x0, last);
 			  break;
 			default:
-			  g_warning ("Only ADD, REPLACE and SUB are valid for channel_combine!");
+			  g_warning ("Only ADD, REPLACE, and SUB are valid for channel_combine!");
 			  break;
 			}
 		    }
@@ -1010,7 +1010,7 @@ gimp_channel_combine_ellipse (GimpChannel *mask,
 		  else if (op == CHANNEL_OP_SUB)
 		    gimp_channel_sub_segment (mask, x0, i, j - x0, last);
 		  else
-		    g_warning ("Only ADD, REPLACE and SUB are valid for channel_combine!");
+		    g_warning ("Only ADD, REPLACE, and SUB are valid for channel_combine!");
 		}
 	    }
 
@@ -1166,7 +1166,7 @@ gimp_channel_combine_mask (GimpChannel *mask,
 				      NULL, 2, &srcPR, &destPR);
       break;
     default:
-      g_message ("Error: unknown opperation type in channel_combine_mask\n");
+      g_warning ("%s: unknown operation type\n", G_GNUC_PRETTY_FUNCTION);
       break;
     }
 
