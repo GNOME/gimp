@@ -1,3 +1,9 @@
+2004-06-22  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpcolorarea.c (gimp_color_area_set_color): use
+	gimp_rgb_distance() for flat color areas. Fixes bug #144786;
+	merged from HEAD.
+
 2004-06-19  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* tools/pdbgen/pdb/paths.pdb: Fix typos and improve documentation.
