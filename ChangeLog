@@ -2,11 +2,11 @@
 
 	* tools/pdbgen/pdb/convert.pdb:
 	* tools/pdbgen/pdb/palette.pdb:
-	* convert.c:
-	* convert_cmds.c:
-	* palette.c:
-	* palette_cmds.c: Removed superflous 
-	palette_init_palettes and palette_free_palettes functions
+	* app/convert.c:
+	* app/convert_cmds.c:
+	* app/palette.c:
+	* app/palette_cmds.c: Removed superflous 
+	palette_init_palettes() and palette_free_palettes() functions
 	and changed their callers accordingly.
 
 2000-08-08  Sven Neumann  <sven@gimp.org>
