@@ -1,3 +1,11 @@
+2003-07-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-transform.[ch]: added new function
+	gimp_display_shell_transform_boundary() which takes an array of
+	BoundSegs and returns an array of GdkSegments.
+
+	* app/tools/gimpeditselectiontool.c: use it.
+
 2003-07-09  Manish Singh  <yosh@gimp.org>
 
 	* devel-docs/Makefile.am: add gbr.txt and pat.txt

@@ -22,6 +22,8 @@
 
 #include "display-types.h"
 
+#include "base/boundary.h"
+
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
@@ -213,4 +215,68 @@ gimp_display_shell_untransform_xy_f (GimpDisplayShell *shell,
 
   *nx = (x + shell->offset_x) / scalex - offset_x;
   *ny = (y + shell->offset_y) / scaley - offset_y;
+}
+
+GdkSegment *
+gimp_display_shell_transform_boundary (GimpDisplayShell *shell,
+                                       BoundSeg         *bound_segs,
+                                       gint              n_bound_segs,
+                                       gint              offset_x,
+                                       gint              offset_y)
+{
+  GdkSegment *dest_segs;
+  gint        x, y;
+  gint        xclamp, yclamp;
+  gint        i;
+
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (n_bound_segs > 0 || bound_segs == NULL, NULL);
+
+  dest_segs = g_new0 (GdkSegment, n_bound_segs);
+
+  xclamp = shell->disp_width  + 1;
+  yclamp = shell->disp_height + 1;
+
+  for (i = 0; i < n_bound_segs; i++)
+    {
+      gimp_display_shell_transform_xy (shell,
+                                       bound_segs[i].x1 + offset_x,
+                                       bound_segs[i].y1 + offset_y,
+                                       &x, &y,
+                                       FALSE);
+
+      dest_segs[i].x1 = CLAMP (x, -1, xclamp);
+      dest_segs[i].y1 = CLAMP (y, -1, yclamp);
+
+      gimp_display_shell_transform_xy (shell,
+                                       bound_segs[i].x2 + offset_x,
+                                       bound_segs[i].y2 + offset_y,
+                                       &x, &y,
+                                       FALSE);
+
+      dest_segs[i].x2 = CLAMP (x, -1, xclamp);
+      dest_segs[i].y2 = CLAMP (y, -1, yclamp);
+
+      /*  If this segment is a closing segment && the segments lie inside
+       *  the region, OR if this is an opening segment and the segments
+       *  lie outside the region...
+       *  we need to transform it by one display pixel
+       */
+      if (! bound_segs[i].open)
+        {
+          /*  If it is vertical  */
+          if (dest_segs[i].x1 == dest_segs[i].x2)
+            {
+              dest_segs[i].x1 -= 1;
+              dest_segs[i].x2 -= 1;
+            }
+          else
+            {
+              dest_segs[i].y1 -= 1;
+              dest_segs[i].y2 -= 1;
+            }
+        }
+    }
+
+  return dest_segs;
 }

@@ -140,7 +140,7 @@ gimp_edit_selection_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
-					  "GimpEditSelectionTool", 
+					  "GimpEditSelectionTool",
                                           &tool_info, 0);
     }
 
@@ -197,7 +197,7 @@ gimp_edit_selection_tool_calc_coords (GimpEditSelectionTool *edit_select,
 
   dx = x - edit_select->origx;
   dy = y - edit_select->origy;
-  
+
   x1 = edit_select->x1 + dx;
   y1 = edit_select->y1 + dy;
 
@@ -532,7 +532,7 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
     if (edit_select->origx != x || edit_select->origy != y)
       {
 	gint xoffset, yoffset;
- 
+
 	xoffset = x - edit_select->origx;
 	yoffset = y - edit_select->origy;
 
@@ -589,7 +589,7 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 
 	  case EDIT_MASK_TO_LAYER_TRANSLATE:
 	  case EDIT_MASK_COPY_TO_LAYER_TRANSLATE:
-	    if (! gimp_image_mask_float (gdisp->gimage, 
+	    if (! gimp_image_mask_float (gdisp->gimage,
                                          gimp_image_active_drawable (gdisp->gimage),
                                          edit_select->edit_type ==
                                          EDIT_MASK_TO_LAYER_TRANSLATE,
@@ -605,7 +605,7 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
              *  EDIT_FLOATING_SEL_TRANSLATE when finished here
              */
 	    gimp_image_undo_freeze (gdisp->gimage);
-	    edit_select->first_move = FALSE; 
+	    edit_select->first_move = FALSE;
 
 	    edit_select->origx -= edit_select->x1;
 	    edit_select->origy -= edit_select->y1;
@@ -656,76 +656,20 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 }
 
 static void
-selection_transform_segs (GimpEditSelectionTool *edit_select,
-			  BoundSeg              *src_segs,
-			  GdkSegment            *dest_segs,
-			  gint                   num_segs)
-{
-  GimpDisplayShell *shell;
-  gint              x, y;
-  gint              i;
-  gint              xclamp, yclamp;
-
-  shell = GIMP_DISPLAY_SHELL (GIMP_TOOL (edit_select)->gdisp->shell);
-
-  xclamp = shell->disp_width + 1;
-  yclamp = shell->disp_height + 1;
-
-  for (i = 0; i < num_segs; i++)
-    {
-      gimp_display_shell_transform_xy (shell,
-                                       src_segs[i].x1 + edit_select->cumlx, 
-                                       src_segs[i].y1 + edit_select->cumly,
-                                       &x, &y,
-                                       FALSE);
-
-      dest_segs[i].x1 = CLAMP (x, -1, xclamp);
-      dest_segs[i].y1 = CLAMP (y, -1, yclamp);
-
-      gimp_display_shell_transform_xy (shell,
-                                       src_segs[i].x2 + edit_select->cumlx, 
-                                       src_segs[i].y2 + edit_select->cumly,
-                                       &x, &y,
-                                       FALSE);
-
-      dest_segs[i].x2 = CLAMP (x, -1, xclamp);
-      dest_segs[i].y2 = CLAMP (y, -1, yclamp);
-
-      /*  If this segment is a closing segment && the segments lie inside
-       *  the region, OR if this is an opening segment and the segments
-       *  lie outside the region...
-       *  we need to transform it by one display pixel
-       */
-      if (!src_segs[i].open)
-        {
-          /*  If it is vertical  */
-          if (dest_segs[i].x1 == dest_segs[i].x2)
-            {
-              dest_segs[i].x1 -= 1;
-              dest_segs[i].x2 -= 1;
-            }
-          else
-            {
-              dest_segs[i].y1 -= 1;
-              dest_segs[i].y2 -= 1;
-            }
-        }
-    }
-}
-
-static void
 gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpEditSelectionTool *edit_select;
   GimpTool              *tool;
   GimpDisplay           *gdisp;
+  GimpDisplayShell      *shell;
   Selection             *select;
 
   edit_select = GIMP_EDIT_SELECTION_TOOL (draw_tool);
   tool        = GIMP_TOOL (draw_tool);
 
   gdisp  = tool->gdisp;
-  select = GIMP_DISPLAY_SHELL (gdisp->shell)->select;
+  shell  = GIMP_DISPLAY_SHELL (gdisp->shell);
+  select = shell->select;
 
   switch (edit_select->edit_type)
     {
@@ -737,12 +681,12 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 
         if (! floating_sel)
           {
-            segs_copy = g_new (GdkSegment, edit_select->num_segs_in);
-
-            selection_transform_segs (edit_select,
-                                      edit_select->segs_in,
-                                      segs_copy,
-                                      edit_select->num_segs_in);
+            segs_copy =
+              gimp_display_shell_transform_boundary (shell,
+                                                     edit_select->segs_in,
+                                                     edit_select->num_segs_in,
+                                                     edit_select->cumlx,
+                                                     edit_select->cumly);
 
             /*  Draw the items  */
             gdk_draw_segments (draw_tool->win, draw_tool->gc,
@@ -751,12 +695,12 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
             g_free (segs_copy);
           }
 
-        segs_copy = g_new (GdkSegment, edit_select->num_segs_out);
-
-        selection_transform_segs (edit_select,
-                                  edit_select->segs_out,
-                                  segs_copy,
-                                  edit_select->num_segs_out);
+        segs_copy =
+          gimp_display_shell_transform_boundary (shell,
+                                                 edit_select->segs_out,
+                                                 edit_select->num_segs_out,
+                                                 edit_select->cumlx,
+                                                 edit_select->cumly);
 
         /*  Draw the items  */
         gdk_draw_segments (draw_tool->win, draw_tool->gc,
@@ -831,16 +775,14 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 
     case EDIT_FLOATING_SEL_TRANSLATE:
       {
-        GdkSegment *segs_copy = g_new (GdkSegment, edit_select->num_segs_in);
+        GdkSegment *segs_copy;
 
-        /* The selection segs are in image space convert these 
-         * to display space.
-         * Takes care of offset/zoom etc etc.
-         */
-        selection_transform_segs (edit_select,
-                                  edit_select->segs_in,
-                                  segs_copy,
-                                  edit_select->num_segs_in);
+        segs_copy =
+          gimp_display_shell_transform_boundary (shell,
+                                                 edit_select->segs_in,
+                                                 edit_select->num_segs_in,
+                                                 edit_select->cumlx,
+                                                 edit_select->cumly);
 
         /*  Draw the items  */
         gdk_draw_segments (draw_tool->win, draw_tool->gc,
@@ -856,7 +798,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
  * so it can be used by other tools?
  */
 static gint
-process_event_queue_keys (GdkEventKey *kevent, 
+process_event_queue_keys (GdkEventKey *kevent,
 			  ... /* GdkKeyType, GdkModifierType, value ... 0 */)
 {
 
@@ -969,7 +911,7 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
   /*  check for mask translation first because the translate_layer
    *  modifiers match the translate_mask ones...
    */
-  mask_inc_x = 
+  mask_inc_x =
     process_event_queue_keys (kevent,
 			      GDK_Left, (GDK_MOD1_MASK | GDK_SHIFT_MASK),
                               -1 * ARROW_VELOCITY,
@@ -1139,7 +1081,7 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
 
                 /*  translate all linked items as well  */
                 for (list = GIMP_LIST (gdisp->gimage->layers)->list;
-                     list; 
+                     list;
                      list = g_list_next (list))
                   {
                     GimpItem *item = list->data;
