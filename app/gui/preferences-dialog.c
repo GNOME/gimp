@@ -818,68 +818,53 @@ prefs_display_options_frame_add (Gimp         *gimp,
                                  const gchar  *label,
                                  GtkContainer *parent)
 {
-  /* General sketch: 
-  +      Frame VBox                     +
-    +    Checkbox HBox                +
-     + Checks VBox  + + Checks VBox  +
-      Menubar          Selection
-      Rulers           Active layer
-      Scrollbars       Guides
-      Statusbar        Grid
-     +              + +              + 
-    +                                 +
-    Canvas padding
-    Custom color
-  +                                     +
-  */
-
-  GtkBox    *box;
-  GtkWidget *checks_hbox;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
   GtkWidget *checks_vbox;
   GtkWidget *table;
   GtkWidget *button;
 
-  box = GTK_BOX (prefs_frame_new (label, parent, FALSE));
-  
-  checks_hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (box, checks_hbox, FALSE, FALSE, 0);
-  gtk_widget_show (checks_hbox);
+  vbox = prefs_frame_new (label, parent, FALSE);
 
-  checks_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (checks_hbox), checks_vbox, TRUE, FALSE, 0);
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  checks_vbox = gtk_vbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (hbox), checks_vbox, TRUE, TRUE, 0);
   gtk_widget_show (checks_vbox);
 
-  prefs_check_button_add (object,
-                          "show-menubar",    _("Show _Menubar"),
+  prefs_check_button_add (object, "show-menubar",
+                          _("Show _Menubar"),
                           GTK_BOX (checks_vbox));
-  prefs_check_button_add (object,
-                          "show-rulers",     _("Show _Rulers"),
+  prefs_check_button_add (object, "show-rulers",
+                          _("Show _Rulers"),
                           GTK_BOX (checks_vbox));
-  prefs_check_button_add (object,
-                          "show-scrollbars", _("Show Scroll_bars"),
+  prefs_check_button_add (object, "show-scrollbars",
+                          _("Show Scroll_bars"),
                           GTK_BOX (checks_vbox));
-  prefs_check_button_add (object,
-                          "show-statusbar",  _("Show S_tatusbar"),
+  prefs_check_button_add (object, "show-statusbar",
+                          _("Show S_tatusbar"),
                           GTK_BOX (checks_vbox));
 
-  checks_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (checks_hbox), checks_vbox, TRUE, FALSE, 0);
+  checks_vbox = gtk_vbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (hbox), checks_vbox, TRUE, TRUE, 0);
   gtk_widget_show (checks_vbox);
 
-  prefs_check_button_add (object,
-                          "show-selection",    _("Show S_election"),
+  prefs_check_button_add (object, "show-selection",
+                          _("Show S_election"),
                           GTK_BOX (checks_vbox));
-  prefs_check_button_add (object,
-                          "show-layer-boundary", _("Show _Layer Boundary"),
+  prefs_check_button_add (object, "show-layer-boundary",
+                          _("Show _Layer Boundary"),
                           GTK_BOX (checks_vbox));
-  prefs_check_button_add (object,
-                          "show-guides",       _("Show _Guides"),
+  prefs_check_button_add (object, "show-guides",
+                          _("Show _Guides"),
                           GTK_BOX (checks_vbox));
-  prefs_check_button_add (object,
-                          "show-grid",         _("Show Gri_d"),
+  prefs_check_button_add (object, "show-grid",
+                          _("Show Gri_d"),
                           GTK_BOX (checks_vbox));
 
-  table = prefs_table_new (2, GTK_CONTAINER (box), FALSE);
+  table = prefs_table_new (2, GTK_CONTAINER (vbox), FALSE);
 
   prefs_enum_option_menu_add (object, "padding-mode", 0, 0,
                               _("Canvas Padding Mode:"), GTK_TABLE (table), 0);
@@ -890,7 +875,6 @@ prefs_display_options_frame_add (Gimp         *gimp,
                                    GTK_TABLE (table), 1);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
                                 gimp_get_user_context (gimp));
-
 }
 
 static void
