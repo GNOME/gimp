@@ -1,3 +1,10 @@
+Tue Jun 27 22:26:30 BST 2000 Andy Thomas <alt@gimp.org>
+
+	* app/paint_core.c
+
+	Fixed problem with coloured brushes/grayscale images and painting
+	close to the edge. Fixes bug #14159
+
 2000-06-27  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/helpbrowser/helpbrowser.c: simplified the

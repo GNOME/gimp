@@ -2065,7 +2065,7 @@ paint_line_pixmap_mask (GimpImage            *dest,
   gdouble  alpha;
   gdouble  factor = 0.00392156986;  /*  1.0 / 255.0  */
   gint     x_index;
-  gint     i;
+  gint     i,byte_loop;
 
   /*  Make sure x, y are positive  */
   while (x < 0)
@@ -2093,12 +2093,10 @@ paint_line_pixmap_mask (GimpImage            *dest,
 	  /* maybe we could do this at tool creation or brush switch time? */
 	  /* and compute it for the whole brush at once and cache it?  */
 	  alpha = d[bytes-1] * factor;
-	  if (alpha)
-	    {
-	      d[0] *= alpha;
-	      d[1] *= alpha;
-	      d[2] *= alpha;
-	    }
+	  if(alpha)
+	    for (byte_loop = 0; byte_loop < bytes - 1; byte_loop++) 
+	      d[byte_loop] *= alpha;
+
 	  /* printf("i: %i d->r: %i d->g: %i d->b: %i d->a: %i\n",i,(int)d[0], (int)d[1], (int)d[2], (int)d[3]); */
 	  gimage_transform_color (dest, drawable, p, d, RGB);
 	  d += bytes;
