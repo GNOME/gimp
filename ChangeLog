@@ -1,5 +1,12 @@
 2005-01-04  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-close.c
+	(gimp_display_shell_close_dialog): set the default response to
+	Cancel in order to reduce the risk of accidentally saving an
+	image (bug #162872).
+
+2005-01-04  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcontainertreeview.c: prepared code for fixing
 	bug #162663.
 
