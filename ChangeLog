@@ -1,5 +1,14 @@
 2001-04-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/Makefile.am: new files:
+
+	* app/gui/gui.[ch]: the new place for the UI init and shutdown code.
+	* app/gui/splash.[ch]: a separate file for the splash.
+
+	* app/app_procs.c: removed lots of stuff. Still much UI code left.
+
+2001-04-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/menus.[ch]: changed all menus_get_*() functions to return
 	the GtkItemFactory, not separate widget, and accel_group
 	pointers. Disabled automatic tearoff item creation for all

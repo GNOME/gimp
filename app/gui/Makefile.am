@@ -8,7 +8,11 @@ libappgui_la_SOURCES = \
 	dialogs-commands.c	\
 	dialogs-commands.h	\
 	dialogs-constructors.c	\
-	dialogs-constructors.h
+	dialogs-constructors.h	\
+	gui.c			\
+	gui.h			\
+	splash.c		\
+	splash.h
 
 ##	about-dialog.c		\
 ##	about-dialog.h		\
