@@ -69,11 +69,14 @@ tile_ref (Tile *tile)
 
   /* Call 'tile_manager_validate' if the tile was invalid.
    */
-  if (!tile->valid)
-    tile_manager_validate ((TileManager*) tile->tm, tile);
+
 #if USE_PTHREADS
   pthread_mutex_unlock(&(tile->mutex));
 #endif
+  if (!tile->valid)
+    tile_manager_validate ((TileManager*) tile->tm, tile);
+  
+
 }
 
 void
