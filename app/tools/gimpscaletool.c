@@ -343,12 +343,13 @@ gimp_scale_tool_motion (GimpTransformTool *tr_tool,
       mag = hypot ((gdouble)(tr_tool->x2 - tr_tool->x1), 
 		  (gdouble)(tr_tool->y2 - tr_tool->y1));
 
-      dot = diff_x * (tr_tool->x2 - tr_tool->x1) + diff_y * (tr_tool->y2 - tr_tool->y1);
+      dot = dir_x * diff_x * (tr_tool->x2 - tr_tool->x1) 
+	+ dir_y * diff_y * (tr_tool->y2 - tr_tool->y1);
 
       if (mag > 0.)
 	{
-	  diff_x = (tr_tool->x2 - tr_tool->x1) * dot / (mag*mag);
-	  diff_y = (tr_tool->y2 - tr_tool->y1) * dot / (mag*mag);
+	  diff_x = dir_x * (tr_tool->x2 - tr_tool->x1) * dot / (mag*mag);
+	  diff_y = dir_y * (tr_tool->y2 - tr_tool->y1) * dot / (mag*mag);
 	}
       else
 	diff_x = diff_y = 0;

@@ -1,3 +1,8 @@
+2004-06-19 Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimpscaletool.c: fixed my fix for bug # 68106, which 
+	worked incorrectly for two of the control points.
+
 2004-06-19  Michael Natterer  <mitch@gimp.org>
 
 	* modules/controller_midi.c (midi_read_event): simplified
