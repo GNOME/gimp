@@ -1,3 +1,9 @@
+2005-02-09  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpscalecombobox.[ch]
+	* app/display/gimpstatusbar.c: add an "Other..." item to the scale
+	menu in the image window. Somewhat hackish but fixes bug #143747.
+
 2005-02-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimagefile.c

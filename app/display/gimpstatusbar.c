@@ -29,6 +29,7 @@
 #include "core/gimpmarshal.h"
 #include "core/gimpprogress.h"
 
+#include "widgets/gimpuimanager.h"
 #include "widgets/gimpunitstore.h"
 #include "widgets/gimpunitcombobox.h"
 
@@ -406,12 +407,23 @@ GtkWidget *
 gimp_statusbar_new (GimpDisplayShell *shell)
 {
   GimpStatusbar *statusbar;
+  GtkAction     *action;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
 
   statusbar = g_object_new (GIMP_TYPE_STATUSBAR, NULL);
 
   statusbar->shell = shell;
+
+  action = gimp_ui_manager_find_action (shell->menubar_manager,
+                                        "view", "view-zoom-other");
+
+  if (action)
+    {
+      GimpScaleComboBox *combo = GIMP_SCALE_COMBO_BOX (statusbar->scale_combo);
+
+      gimp_scale_combo_box_add_action (combo, action);
+    }
 
   g_signal_connect_object (shell, "scaled",
                            G_CALLBACK (gimp_statusbar_shell_scaled),
