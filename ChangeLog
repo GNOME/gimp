@@ -1,3 +1,7 @@
+Wed Aug 30 19:01:28 BST 2000  Adam D. Moss <adam@gimp.org>
+
+	* plug-ins/common/animoptimize.c: Same again.
+
 Wed Aug 30 18:49:01 BST 2000  Adam D. Moss <adam@gimp.org>
 
 	* plug-ins/common/animationplay.c: Change default frame duration

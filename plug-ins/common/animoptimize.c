@@ -1,5 +1,5 @@
 /*
- * Animation Optimizer plug-in version 1.0.3
+ * Animation Optimizer plug-in version 1.0.4
  *
  * (c) Adam D. Moss, 1997-2000
  *     adam@gimp.org
@@ -10,6 +10,10 @@
 
 /*
  * REVISION HISTORY:
+ *
+ * 2000-08-30 : version 1.0.4
+ *              Change default frame duration from 125ms to 100ms for
+ *              consistancy.
  *
  * 2000-06-05 : version 1.0.3
  *              Fix old bug which could cause errors in evaluating the
@@ -907,8 +911,8 @@ get_frame_duration (const guint whichframe)
       g_free(layer_name);
     }
   
-  if (duration < 0) duration = 125;  /* FIXME for default-if-not-said  */
-  if (duration == 0) duration = 125; /* FIXME - 0-wait is nasty */
+  if (duration < 0) duration = 100;  /* FIXME for default-if-not-said  */
+  if (duration == 0) duration = 100; /* FIXME - 0-wait is nasty */
 
   return ((guint32) duration);
 }
