@@ -1336,14 +1336,16 @@ save_dialog ( gint32 image_ID )
     else
       {
 #endif
-	globalcomment = g_malloc(1+strlen(_("Made with GIMP")));
-	strcpy(globalcomment, _("Made with GIMP"));
+	/*	globalcomment = g_malloc(1+strlen(_("Made with GIMP")));
+		strcpy(globalcomment, _("Made with GIMP")); */
+	globalcomment = NULL;
 #ifdef FACEHUGGERS
       }
     parasite_free (GIF2_CMNT);
 #endif
-    
-    gtk_text_insert(GTK_TEXT(text),NULL,NULL,NULL,globalcomment,-1);
+
+    if (globalcomment)
+      gtk_text_insert(GTK_TEXT(text),NULL,NULL,NULL,globalcomment,-1);
     gtk_signal_connect (GTK_OBJECT (text), "changed",
 			(GtkSignalFunc) comment_entry_callback,
 			NULL);
