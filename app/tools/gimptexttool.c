@@ -116,6 +116,8 @@ static void      gimp_text_tool_editor_update  (GimpTextTool      *text_tool);
 static void      gimp_text_tool_text_changed   (GimpTextEditor    *editor,
                                                 GimpTextTool      *text_tool);
 
+static void      gimp_text_tool_layer_changed  (GimpImage         *image,
+                                                GimpTextTool      *text_tool);
 static void      gimp_text_tool_set_image      (GimpTextTool      *text_tool,
                                                 GimpImage         *image);
 static gboolean  gimp_text_tool_set_drawable   (GimpTextTool      *text_tool,
@@ -697,7 +699,17 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
                                _("Add Text Layer"));
 
   if (gimp_image_floating_sel (image))
-    floating_sel_anchor (gimp_image_floating_sel (image));
+    {
+      g_signal_handlers_block_by_func (image,
+                                       gimp_text_tool_layer_changed,
+                                       text_tool);
+
+      floating_sel_anchor (gimp_image_floating_sel (image));
+
+      g_signal_handlers_unblock_by_func (image,
+                                         gimp_text_tool_layer_changed,
+                                         text_tool);
+    }
 
   GIMP_ITEM (layer)->offset_x = text_tool->x1;
   GIMP_ITEM (layer)->offset_y = text_tool->y1;
