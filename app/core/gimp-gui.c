@@ -319,12 +319,13 @@ gimp_menus_delete_entry (Gimp          *gimp,
 }
 
 GimpProgress *
-gimp_new_progress (Gimp *gimp)
+gimp_new_progress (Gimp *gimp,
+                   gint  display_ID)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   if (gimp->gui.progress_new)
-    return gimp->gui.progress_new (gimp);
+    return gimp->gui.progress_new (gimp, display_ID);
 
   return NULL;
 }

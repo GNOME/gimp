@@ -22,7 +22,7 @@
 
 void   plug_in_progress_start  (PlugIn      *plug_in,
                                 const gchar *message,
-                                gint         gdisp_ID);
+                                gint         display_ID);
 void   plug_in_progress_update (PlugIn      *plug_in,
                                 gdouble      percentage);
 void   plug_in_progress_end    (PlugIn      *plug_in);

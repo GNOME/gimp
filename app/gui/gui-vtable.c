@@ -107,7 +107,8 @@ static void           gui_menus_create_entry   (Gimp          *gimp,
                                                 PlugInProcDef *proc_def);
 static void           gui_menus_delete_entry   (Gimp          *gimp,
                                                 PlugInProcDef *proc_def);
-static GimpProgress * gui_new_progress         (Gimp          *gimp);
+static GimpProgress * gui_new_progress         (Gimp          *gimp,
+                                                gint           display_ID);
 static void           gui_free_progress        (Gimp          *gimp,
                                                 GimpProgress  *progress);
 static gboolean       gui_pdb_dialog_new       (Gimp          *gimp,
@@ -397,8 +398,17 @@ gui_menus_delete_entry (Gimp          *gimp,
 }
 
 static GimpProgress *
-gui_new_progress (Gimp *gimp)
+gui_new_progress (Gimp *gimp,
+                  gint  display_ID)
 {
+  GimpDisplay *display = NULL;
+
+  if (display_ID > 0)
+    display = gimp_display_get_by_ID (gimp, display_ID);
+
+  if (display)
+    return GIMP_PROGRESS (display);
+
   return GIMP_PROGRESS (gimp_progress_dialog_new ());
 }
 
@@ -408,7 +418,8 @@ gui_free_progress (Gimp          *gimp,
 {
   g_return_if_fail (GIMP_IS_PROGRESS_DIALOG (progress));
 
-  gtk_widget_destroy (GTK_WIDGET (progress));
+  if (GIMP_IS_PROGRESS_DIALOG (progress))
+    gtk_widget_destroy (GTK_WIDGET (progress));
 }
 
 static gboolean

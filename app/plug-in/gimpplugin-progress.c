@@ -42,7 +42,7 @@ static void   plug_in_progress_cancel (GimpProgress *progress,
 void
 plug_in_progress_start (PlugIn      *plug_in,
                         const gchar *message,
-                        gint         gdisp_ID)
+                        gint         display_ID)
 {
   g_return_if_fail (plug_in != NULL);
 
@@ -51,7 +51,7 @@ plug_in_progress_start (PlugIn      *plug_in,
 
   if (! plug_in->progress)
     {
-      plug_in->progress = gimp_new_progress (plug_in->gimp);
+      plug_in->progress = gimp_new_progress (plug_in->gimp, display_ID);
 
       if (plug_in->progress)
         plug_in->progress_created = TRUE;

@@ -62,7 +62,8 @@ struct _GimpGui
   void           (* menus_delete)       (Gimp          *gimp,
                                          PlugInProcDef *proc_def);
 
-  GimpProgress * (* progress_new)       (Gimp          *gimp);
+  GimpProgress * (* progress_new)       (Gimp          *gimp,
+                                         gint           display_ID);
   void           (* progress_free)      (Gimp          *gimp,
                                          GimpProgress  *progress);
 
@@ -123,7 +124,8 @@ void           gimp_menus_create_entry   (Gimp               *gimp,
 void           gimp_menus_delete_entry   (Gimp               *gimp,
                                           PlugInProcDef      *proc_def);
 
-GimpProgress * gimp_new_progress         (Gimp               *gimp);
+GimpProgress * gimp_new_progress         (Gimp               *gimp,
+                                          gint                display_ID);
 void           gimp_free_progress        (Gimp               *gimp,
                                           GimpProgress       *progress);
 

@@ -1,5 +1,14 @@
 2004-08-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimp-gui.[ch]: added "display_ID" to gimp_new_progress().
+
+	* app/gui/gui-vtable.c: changed accordingly.
+
+	* app/plug-in/plug-in-progress.[ch]: reenabled showing the
+	progress in a particular display.
+
+2004-08-11  Michael Natterer  <mitch@gimp.org>
+
 	* etc/controllerrc: added a commented-out midi controller entry
 	with some example mappings.
 
