@@ -22,7 +22,7 @@
 
 #define EPSILON          (0.0001)
 #define LANCZOS_SPP      (1000)
-#define LANCZOS_WIDTH    (2)
+#define LANCZOS_WIDTH    (4)
 #define LANCZOS_SAMPLES  (1 + (LANCZOS_SPP * LANCZOS_WIDTH))
 #define LANCZOS_WIDTH2   (LANCZOS_WIDTH * 2)
 
@@ -35,3 +35,4 @@ void  scale_region (PixelRegion           *srcPR,
 
 
 #endif  /*  __SCALE_FUNCS_H__  */
+

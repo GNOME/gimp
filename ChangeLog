@@ -1,5 +1,11 @@
 2005-01-20  Sven Neumann  <sven@gimp.org>
 
+	* app/paint-funcs/scale-funcs.[ch]: applied patch from Geert
+	Jordaens that improves results of the Lanczos interpolation
+	routine.
+
+2005-01-20  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcomponenteditor.c
 	(gimp_component_editor_button_press): call gimp_image_flush() after
 	setting the active component since this might unselect the active

@@ -790,6 +790,30 @@ subsample_region (PixelRegion *srcPR,
 
 
 /* Lanczos */
+static inline void
+mirror_edge (guchar *row,
+             gint    width,
+             gint    bytes)
+{
+  guchar *ptr;
+  gint    i, k;
+
+  ptr = row - LANCZOS_WIDTH * bytes;
+
+  for (i = LANCZOS_WIDTH; i > 0; i--)
+    {
+      for (k = 0 ;k < bytes; k++, ptr++)
+        *ptr = row[i * bytes + k];
+    }
+
+  ptr = row + width * bytes;
+
+  for (i = 1; i <= LANCZOS_WIDTH; i++)
+    {
+      for (k = 0; k < bytes; k++, ptr++)
+        *ptr = ptr[-i * bytes];
+    }
+}
 
 static inline gdouble
 sinc (gdouble x)
@@ -811,7 +835,8 @@ lanczos_sum (guchar        **src,
              gint            byte)
 {
   gdouble sum = 0;
-  gint    j, k;
+  gint    k;
+  guchar *ptr;
 
   /* LANCZOS_WIDTH = 2
      l[*] = kernel coefficients
@@ -824,8 +849,10 @@ lanczos_sum (guchar        **src,
      sum = d.l[0] +e.l[1] + f.l[2] + g.l[3]
   */
 
-  for (k = 0, j = col - LANCZOS_WIDTH + 1; j <= col + LANCZOS_WIDTH; j++, k++)
-    sum += l[k] * src[row][j * bytes + byte];
+  ptr = src[row] - LANCZOS_WIDTH * bytes;
+
+  for (k = 0 ; k < LANCZOS_WIDTH2 ; k++ )
+    sum += l[k] * ptr[(k + col) * bytes + byte];
 
   return sum;
 }
@@ -840,10 +867,13 @@ lanczos_sum_mul (guchar        **src,
                  gint            alpha)
 {
   gdouble sum = 0;
-  gint    j, k;
+  gint    k;
+  guchar *ptr;
 
-  for (k = 0, j = col - LANCZOS_WIDTH + 1; j <= col + LANCZOS_WIDTH; j++, k++)
-    sum += l[k] * src[row][j * bytes + byte] * src[row][j * bytes + alpha];
+  ptr = src[row] - LANCZOS_WIDTH * bytes;
+
+  for (k = 0 ; k < LANCZOS_WIDTH2; k++)
+    sum += l[k] * ptr[(k+col) * bytes + byte] * ptr[(k+col) * bytes + alpha];
 
   return sum;
 }
@@ -879,7 +909,7 @@ kernel_lanczos (void)
 
   kernel = g_new (gdouble, LANCZOS_SAMPLES);
 
-  for (i = 0 ;i < LANCZOS_SAMPLES; i++)
+  for (i = 0; i < LANCZOS_SAMPLES; i++)
     {
       kernel[i] = ((ABS (x) < LANCZOS_WIDTH) ?
                    (sinc (x) * sinc (x / LANCZOS_WIDTH)) : 0.0);
@@ -906,18 +936,15 @@ scale_region_lanczos (PixelRegion *srcPR,
   gint         srcrow;                  /* counter for read src rows         */
   guchar      *src_buf=NULL;            /* Holds sliding window buffer       */
   guchar      *src[LANCZOS_WIDTH2];     /* Array for sliding window pointers */
-  guchar      *cur_buf=NULL;            /* Current line in sliding window    */
 
   gint         dst_width, dst_height;   /* Destination width height          */
   gint         dst_rowstride;           /* Destination rowstride             */
   guchar      *dst_buf=NULL;            /* Pointers to image data            */
 
   gdouble      du ,dv;                  /* Pos in source image (double)      */
-  gdouble      fu ,fv;                  /* Pos in source image (fract.  part)*/
   gint         u, v;                    /* Pos in source image (integer part)*/
   gint         x, y;                    /* Position in destination image     */
-
-  gint	       i,j,pos,byte;            /* loop vars to fill source window   */
+  gint	       i, j, byte;              /* loop vars to fill source window   */
 
   gdouble      sx,  sy;                 /* Scalefactor                       */
   gdouble      trans[6],itrans[6];      /* Scale transformations             */
@@ -946,129 +973,142 @@ scale_region_lanczos (PixelRegion *srcPR,
   /* Calculate kernel */
   kernel = kernel_lanczos ();
 
-  /* allocate buffer for 2 * LANCZOS_WIDTH2 + 1 temp source rows
-     LANCZOS_WIDTH2   : lines are sliding window buffer
+  /*
+     allocate buffer for width + 2 * LANCZOS_WIDTH
+     We need 2* LANCZOS_WIDTH lines for sliding window
+     buffer with edge mirror
   */
-  src_rowstride = src_width * bytes;
+  src_rowstride = (src_width + LANCZOS_WIDTH2) * bytes;
   src_buf = g_new0 (guchar, LANCZOS_WIDTH2 * src_rowstride);
 
+  /*
+     fill src pointers with correct offset
+     offset is needed for pixel_region_get_row
+  */
   for (i = 0; i < LANCZOS_WIDTH2; i++)
-    src[i]=src_buf + i * src_rowstride;
+    src[i]=src_buf + i * src_rowstride + LANCZOS_WIDTH * bytes;
 
   /* allocate buffer for 1 destination row */
   dst_rowstride = dst_width * bytes;
   dst_buf = g_new0 (guchar, dst_rowstride);
 
-  for ( srcrow = -1, y = 0 ; y < dst_height ; y ++ )
+  /* fill buffer with first lines */
+  for (i = 0; i < LANCZOS_WIDTH2; i++)
+    {
+      pixel_region_get_row (srcPR,
+                            0, ABS (LANCZOS_WIDTH - i - 1),
+                            src_width, src[i], 1);
+      mirror_edge (src[i], src_width,  bytes);
+    }
+
+  for (srcrow = 0, y = 0; y < dst_height; y++)
     {
       pixel_region_get_row (dstPR, 0, y, dst_width, dst_buf, 1);
-
-      for ( x = 0 ; x < dst_width ; x ++ )
+      for (x = 0; x < dst_width; x++)
         {
-           du = itrans[0] * (gdouble) x + itrans[1] * (gdouble) y + itrans[2];
-           dv = itrans[3] * (gdouble) x + itrans[4] * (gdouble) y + itrans[5];
-           u = (gint) du;
-           v = (gint) dv;
+          du = itrans[0] * (gdouble) x + itrans[1] * (gdouble) y + itrans[2];
+          dv = itrans[3] * (gdouble) x + itrans[4] * (gdouble) y + itrans[5];
+          u = (gint) du;
+          v = (gint) dv;
 
            /* make sure we have enough data available */
-           if (srcrow < v + LANCZOS_WIDTH && srcrow < src_height-1 )
+           if (srcrow != v )
              {
-               for (i = srcrow + 1; i <= v + LANCZOS_WIDTH; i++)
+               if (v > srcrow)
                  {
-                   /* 2nd row in src buffer becomes first */
-                   rotate_pointers (src, LANCZOS_WIDTH2);
-                   /* Make sure we do not read past the end of image */
-                   srcrow = ( i < src_height ) ? i : src_height - 1;
-                   /* append row at the end src buffer*/
-                   pos = LANCZOS_WIDTH2 - 1;
-                   pixel_region_get_row (srcPR,
-                                         0, srcrow, src_width, src[pos], 1);
+                   for ( ; srcrow < v; )
+                     {
+                       srcrow++;
+
+                       row = srcrow + LANCZOS_WIDTH;
+                       if (row >= src_height)
+                         row = src_height - (row - src_height + 1);
+
+                       rotate_pointers (src, LANCZOS_WIDTH2);
+                       pixel_region_get_row (srcPR,
+                                             0, row,
+                                             src_width, src[LANCZOS_WIDTH2-1],
+                                             1);
+                       mirror_edge (src[LANCZOS_WIDTH2 - 1], src_width, bytes);
+                     }
                  }
-
-                 /* current src(v) line in sliding window */
-                 cur_buf = src[LANCZOS_WIDTH-1];
+               else
+                 {
+                   for ( ; srcrow > v; )
+                     {
+                       rotate_pointers (src, LANCZOS_WIDTH2);
+                       pixel_region_get_row (srcPR,
+                                             0, --srcrow,
+                                             src_width, src[LANCZOS_WIDTH2-1],
+                                             1);
+                       mirror_edge (src[LANCZOS_WIDTH2 - 1], src_width, bytes);
+                     }
+                 }
              }
-           /* check edge condition */
-           if ((u < LANCZOS_WIDTH - 1         ) ||
-               (u > src_width - LANCZOS_WIDTH ) ||
-               (v < LANCZOS_WIDTH - 1         ) ||
-               (v > src_height - LANCZOS_WIDTH))
-            {
-              u = CLAMP (u, 0, src_width - 1);
-              v = CLAMP (v, 0, src_height - 1);
 
-	      for ( byte = 0 ; byte < bytes ; byte++ )
-                dst_buf[x * bytes + byte] = cur_buf[u * bytes + byte];
-            }
-          else
-            {
-              /* get weight for fractional error */
-              fu = du - u;
-              su = (gint) (fu * LANCZOS_SPP);
-              fv = dv - v;
-              sv = (gint) (fv * LANCZOS_SPP);
+	   /* get weight for fractional error */
+	   su = (gint) ((du-u) * LANCZOS_SPP);
+	   sv = (gint) ((dv-v) * LANCZOS_SPP);
 
-              for (lusum = lvsum = i = 0, j = LANCZOS_WIDTH - 1;
-                   j >= -LANCZOS_WIDTH;
-                   j--, i++)
-                {
-                  lusum += lu[i] = kernel[ABS (j * LANCZOS_SPP + su)];
-                  lvsum += lv[i] = kernel[ABS (j * LANCZOS_SPP + sv)];
-                }
+	   for (lusum = lvsum = i = 0, j = LANCZOS_WIDTH - 1;
+		j >= -LANCZOS_WIDTH;
+		j--, i++)
+	     {
+	       lusum += lu[i] = kernel[ABS (j * LANCZOS_SPP + su)];
+	       lvsum += lv[i] = kernel[ABS (j * LANCZOS_SPP + sv)];
+	     }
 
-              weight = (lusum * lvsum);
+	   weight = (lusum * lvsum);
 
-              if (pixel_region_has_alpha (srcPR))
-                {
-                  alpha = bytes - 1;
+	   if (pixel_region_has_alpha (srcPR))
+	     {
+	       alpha = bytes - 1;
 
-                  for (aval = 0, row = 0; row < LANCZOS_WIDTH2; row++)
-                    aval += lv[row] * lanczos_sum (src, lu,
-                                                   row, u, bytes, alpha);
+	       for (aval = 0, row = 0; row < LANCZOS_WIDTH2; row++)
+		 aval += lv[row] * lanczos_sum (src, lu, row, u, bytes, alpha);
 
-                  /* calculate alpha of result */
-                  aval /= weight;
+	       /* calculate alpha of result */
+	       aval /= weight;
 
-                  if (aval <= 0.0)
-                    {
-                      arecip = 0.0;
-                      dst_buf[x * bytes + alpha] = 0;
-                    }
-                  else if (aval > 255.0)
-                    {
-                      arecip = 1.0 / aval;
-                      dst_buf[x * bytes + alpha] = 255;
-                    }
-                  else
-                    {
-                      arecip = 1.0 / aval;
-                      dst_buf[x * bytes + alpha] = RINT (aval);
-                    }
+	       if (aval <= 0.0)
+		 {
+		   arecip = 0.0;
+		   dst_buf[x * bytes + alpha] = 0;
+		 }
+	       else if (aval > 255.0)
+		 {
+		   arecip = 1.0 / aval;
+		   dst_buf[x * bytes + alpha] = 255;
+		 }
+	       else
+		 {
+		   arecip = 1.0 / aval;
+		   dst_buf[x * bytes + alpha] = RINT (aval);
+		 }
 
-                  for (byte = 0; byte < alpha; byte++)
-                    {
-                      for (newval = 0, row = 0; row < LANCZOS_WIDTH2; row ++)
-                        newval += lv[row] * lanczos_sum_mul (src, lu,
-                                                             row, u, bytes,
-                                                             byte, alpha);
+	       for (byte = 0; byte < alpha; byte++)
+		 {
+		   for (newval = 0, row = 0; row < LANCZOS_WIDTH2; row ++)
+		     newval += lv[row] * lanczos_sum_mul (src, lu,
+							  row, u, bytes,
+							  byte, alpha);
 
-                      newval *= arecip;
-                      dst_buf[x * bytes + byte] = CLAMP (newval, 0, 255);
-                    }
-                }
-              else
-                {
-                  for (byte = 0; byte < bytes; byte++)
-                    {
-                      for (newval = 0, row = 0 ; row < LANCZOS_WIDTH2 ; row++ )
-                        newval += lv[row] * lanczos_sum (src, lu,
-                                                         row, u, bytes, byte);
-                      newval /= weight;
-                      dst_buf[x * bytes + byte] = CLAMP ((gint)newval, 0, 255);
-                    }
-                }
-            }
-        }
+		   newval *= arecip;
+		   dst_buf[x * bytes + byte] = CLAMP (newval, 0, 255);
+		 }
+	     }
+	   else
+	     {
+	       for (byte = 0; byte < bytes; byte++)
+		 {
+		   for (newval = 0, row = 0 ; row < LANCZOS_WIDTH2 ; row++ )
+		     newval += lv[row] * lanczos_sum (src, lu,
+						      row, u, bytes, byte);
+		   newval /= weight;
+		   dst_buf[x * bytes + byte] = CLAMP ((gint) newval, 0, 255);
+		 }
+	     }
+	}
 
       pixel_region_set_row (dstPR, 0, y , dst_width, dst_buf);
     }
@@ -1077,3 +1117,4 @@ scale_region_lanczos (PixelRegion *srcPR,
   g_free (dst_buf);
   g_free (kernel);
 }
+
