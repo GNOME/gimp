@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpchannellistview.c
- * Copyright (C) 2001 Michael Natterer
+ * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -73,6 +73,8 @@ static void   gimp_channel_list_view_clear_components
                                                     (GimpChannelListView *view);
 
 static void   gimp_channel_list_view_mode_changed   (GimpImage           *gimage,
+						     GimpChannelListView *view);
+static void   gimp_channel_list_view_alpha_changed  (GimpImage           *gimage,
 						     GimpChannelListView *view);
 
 static void   gimp_channel_list_view_component_toggle
@@ -201,6 +203,9 @@ gimp_channel_list_view_set_image (GimpDrawableListView *view,
       g_signal_handlers_disconnect_by_func (G_OBJECT (view->gimage),
 					    gimp_channel_list_view_mode_changed,
 					    channel_view);
+      g_signal_handlers_disconnect_by_func (G_OBJECT (view->gimage),
+					    gimp_channel_list_view_alpha_changed,
+					    channel_view);
     }
 
   if (GIMP_DRAWABLE_LIST_VIEW_CLASS (parent_class)->set_image)
@@ -215,6 +220,9 @@ gimp_channel_list_view_set_image (GimpDrawableListView *view,
 
       g_signal_connect (G_OBJECT (view->gimage), "mode_changed",
 			G_CALLBACK (gimp_channel_list_view_mode_changed),
+			channel_view);
+      g_signal_connect (G_OBJECT (view->gimage), "alpha_changed",
+			G_CALLBACK (gimp_channel_list_view_alpha_changed),
 			channel_view);
     }
 }
@@ -431,6 +439,13 @@ gimp_channel_list_view_mode_changed (GimpImage           *gimage,
 {
   gimp_channel_list_view_clear_components (view);
   gimp_channel_list_view_create_components (view);
+}
+
+static void
+gimp_channel_list_view_alpha_changed (GimpImage           *gimage,
+                                      GimpChannelListView *view)
+{
+  g_print ("gimp_channel_list_view_alpha_changed()\n");
 }
 
 static void

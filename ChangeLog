@@ -8,7 +8,7 @@
 
 	* app/core/gimpedit.c: don't include "app_procs.h"
 
-	* app/display/gimpdisplay-callbacks.c: moved the "grab_abd_scroll"
+	* app/display/gimpdisplay-callbacks.c: moved the "grab_and_scroll"
 	stuff from gimpdisplay-scroll.* here (less complicated and easier
 	to cleanup...)
 
