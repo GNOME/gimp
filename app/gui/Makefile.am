@@ -49,6 +49,8 @@ libappgui_la_SOURCES = \
 	layers-dialog.h		\
 	menus.c			\
 	menus.h			\
+	offset-dialog.c		\
+	offset-dialog.h		\
 	palette-editor.c	\
 	palette-editor.h	\
 	palette-import-dialog.c	\

@@ -81,8 +81,6 @@ gimp_SOURCES = \
 ##
 ## stuff that needs to be split up in core / ui files
 ##
-	channel_ops.c		\
-	channel_ops.h		\
 	gdisplay.c		\
 	gdisplay.h		\
 	gdisplay_ops.c		\
@@ -162,6 +160,8 @@ gimp_SOURCES = \
 	gimpdatalist.h		\
 	gimpdrawable.c		\
 	gimpdrawable.h		\
+	gimpdrawable-offset.c	\
+	gimpdrawable-offset.h	\
 	gimpdrawable-preview.c	\
 	gimpdrawable-preview.h	\
 	gimpgradient.c		\
@@ -174,6 +174,8 @@ gimp_SOURCES = \
 	gimpimage.h		\
 	gimpimage-convert.c	\
 	gimpimage-convert.h	\
+	gimpimage-duplicate.c	\
+	gimpimage-duplicate.h	\
 	gimpimage-undo.c	\
 	gimpimage-undo.h	\
 	gimplayer.c		\

@@ -26,9 +26,9 @@
 #include "apptypes.h"
 #include "procedural_db.h"
 
-#include "channel_ops.h"
 #include "drawable.h"
-#include "gimage.h"
+#include "gimpdrawable-offset.h"
+#include "gimpimage-duplicate.h"
 #include "gimpimage.h"
 
 static ProcRecord channel_ops_offset_proc;
@@ -50,7 +50,6 @@ channel_ops_offset_invoker (Argument *args)
   gint32 fill_type;
   gint32 offset_x;
   gint32 offset_y;
-  GimpImage *gimage;
 
   drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
@@ -68,8 +67,7 @@ channel_ops_offset_invoker (Argument *args)
 
   if (success)
     {
-      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
-      offset (gimage, drawable, wrap_around, fill_type, offset_x, offset_y);
+      gimp_drawable_offset (drawable, wrap_around, fill_type, offset_x, offset_y);
     }
 
   return procedural_db_return_args (&channel_ops_offset_proc, success);
@@ -133,7 +131,7 @@ channel_ops_duplicate_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    success = (new_gimage = duplicate (gimage)) != NULL;
+    success = (new_gimage = gimp_image_duplicate (gimage)) != NULL;
 
   return_args = procedural_db_return_args (&channel_ops_duplicate_proc, success);
 

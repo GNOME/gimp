@@ -247,13 +247,6 @@ package Gimp::CodeGen::enums;
 		       CONSOLE => '1',
 		       ERROR_CONSOLE => '2' }
 	},
-    ChannelOffsetType =>
-	{ contig => 1,
-	  header => 'channel_ops.h',
-	  symbols => [ qw(OFFSET_BACKGROUND OFFSET_TRANSPARENT) ],
-	  mapping => { OFFSET_BACKGROUND => '0',
-		       OFFSET_TRANSPARENT => '1' }
-	},
     StackTraceMode =>
 	{ contig => 1,
 	  header => 'errors.h',
@@ -262,6 +255,13 @@ package Gimp::CodeGen::enums;
 	  mapping => { STACK_TRACE_NEVER => '0',
 		       STACK_TRACE_QUERY => '1',
 		       STACK_TRACE_ALWAYS => '2' }
+	},
+    ChannelOffsetType =>
+	{ contig => 1,
+	  header => 'gimpdrawable-offset.h',
+	  symbols => [ qw(OFFSET_BACKGROUND OFFSET_TRANSPARENT) ],
+	  mapping => { OFFSET_BACKGROUND => '0',
+		       OFFSET_TRANSPARENT => '1' }
 	},
     ChannelType =>
 	{ contig => 1,

@@ -48,12 +48,10 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("channel_ops.h") ],
-	vars => [ 'GimpImage *gimage' ],
+	headers => [ qw("gimpdrawable-offset.h") ],
 	code => <<'CODE'
 {
-  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
-  offset (gimage, drawable, wrap_around, fill_type, offset_x, offset_y);
+  gimp_drawable_offset (drawable, wrap_around, fill_type, offset_x, offset_y);
 }
 CODE
     );
@@ -79,9 +77,9 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("gimage.h") ],
+	headers => [ qw("gimpimage-duplicate.h") ],
         code => <<'CODE'
-success = (new_gimage = duplicate (gimage)) != NULL;
+success = (new_gimage = gimp_image_duplicate (gimage)) != NULL;
 CODE
     );
 }

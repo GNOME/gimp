@@ -16,29 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __CHANNEL_OPS_H__
-#define __CHANNEL_OPS_H__
+#ifndef __OFFSET_DIALOG_H__
+#define __OFFSET_DIALOG_H__
 
 
-typedef enum
-{
-  OFFSET_BACKGROUND,
-  OFFSET_TRANSPARENT
-} ChannelOffsetType;
-
-/*  channel_ops functions  */
-void  channel_ops_offset    (GimpImage *gimage);
-void  channel_ops_duplicate (GimpImage *gimage);
-
-void        offset    (GimpImage         *gimage,
-		       GimpDrawable      *drawable,
-		       gboolean           wrap_around,
-		       ChannelOffsetType  fill_type,
-		       gint               offset_x,
-		       gint               offset_y);
-
-GimpImage * duplicate (GimpImage         *gimage);
+void   offset_dialog_create (GimpImage *gimage);
 
 
-#endif  /*  __CHANNEL_OPS_H__  */
-
+#endif  /*  __OFFSET_DIALOG_H__  */

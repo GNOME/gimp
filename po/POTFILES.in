@@ -2,7 +2,6 @@
 # marked to allow runtime translation of messages
 
 app/app_procs.c
-app/channel_ops.c
 app/desaturate.c
 app/devices.c
 app/disp_callbacks.c
@@ -63,6 +62,7 @@ app/gui/info-window.c
 app/gui/layer-select.c
 app/gui/layers-dialog.c
 app/gui/menus.c
+app/gui/offset-dialog.h
 app/gui/palette-editor.c
 app/gui/palette-import-dialog.c
 app/gui/palette-select.c

@@ -1,6 +1,24 @@
 2001-04-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am
+	* app/channel_ops.[ch]: removed
+
+	* app/gimpdrawable-offset.[ch]
+	* app/gimpimage-duplicate.[ch]: new files without GUI.
+
+	* app/gui/Makefile.am
+	* app/gui/offset-dialog.[ch]: new files.
+
+	* app/gui/commands.c
+	* app/pdb/channel_ops_cmds.c
+	* po/POTFILES.in
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/enums.pl
+	* tools/pdbgen/pdb/channel_ops.pdb: changed accordingly.
+
+2001-04-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
 	* app/convert.[ch]: removed.
 	* app/gimpimage-convert.[ch]: new files: the convert functionality
 	without GUI (now called gimp_image_convert()).

@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __CHANNEL_OPS_H__
-#define __CHANNEL_OPS_H__
+#ifndef __GIMP_DRAWABLE_OFFSET_H__
+#define __GIMP_DRAWABLE_OFFSET_H__
 
 
 typedef enum
@@ -26,19 +26,12 @@ typedef enum
   OFFSET_TRANSPARENT
 } ChannelOffsetType;
 
-/*  channel_ops functions  */
-void  channel_ops_offset    (GimpImage *gimage);
-void  channel_ops_duplicate (GimpImage *gimage);
 
-void        offset    (GimpImage         *gimage,
-		       GimpDrawable      *drawable,
-		       gboolean           wrap_around,
-		       ChannelOffsetType  fill_type,
-		       gint               offset_x,
-		       gint               offset_y);
-
-GimpImage * duplicate (GimpImage         *gimage);
+void   gimp_drawable_offset (GimpDrawable      *drawable,
+			     gboolean           wrap_around,
+			     ChannelOffsetType  fill_type,
+			     gint               offset_x,
+			     gint               offset_y);
 
 
-#endif  /*  __CHANNEL_OPS_H__  */
-
+#endif  /*  __GIMP_DRAWABLE_OFFSET_H__  */

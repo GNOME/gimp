@@ -33,17 +33,17 @@
 #include "tools/gimptoolinfo.h"
 #include "tools/tool_manager.h"
 
+#include "commands.h"
 #include "convert-dialog.h"
 #include "errorconsole.h"
 #include "info-dialog.h"
 #include "info-window.h"
 #include "layer-select.h"
+#include "offset-dialog.h"
 
 #include "app_procs.h"
-#include "commands.h"
 #include "context_manager.h"
 #include "desaturate.h"
-#include "channel_ops.h"
 #include "equalize.h"
 #include "file-open.h"
 #include "file-save.h"
@@ -55,6 +55,7 @@
 #include "gimpdrawable.h"
 #include "gimphelp.h"
 #include "gimpimage.h"
+#include "gimpimage-duplicate.h"
 #include "gimplayer.h"
 #include "gimprc.h"
 #include "gimpui.h"
@@ -813,7 +814,7 @@ image_offset_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  channel_ops_offset (gdisp->gimage);
+  offset_dialog_create (gdisp->gimage);
 }
 
 void
@@ -897,7 +898,7 @@ image_duplicate_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  channel_ops_duplicate (gdisp->gimage);
+  gdisplay_new (gimp_image_duplicate (gdisp->gimage), 0x0101);
 }
 
 /*****  Layers  *****/

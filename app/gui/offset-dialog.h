@@ -16,22 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_DRAWABLE_OFFSET_H__
-#define __GIMP_DRAWABLE_OFFSET_H__
+#ifndef __OFFSET_DIALOG_H__
+#define __OFFSET_DIALOG_H__
 
 
-typedef enum
-{
-  OFFSET_BACKGROUND,
-  OFFSET_TRANSPARENT
-} ChannelOffsetType;
+void   offset_dialog_create (GimpImage *gimage);
 
 
-void   gimp_drawable_offset (GimpDrawable      *drawable,
-			     gboolean           wrap_around,
-			     ChannelOffsetType  fill_type,
-			     gint               offset_x,
-			     gint               offset_y);
-
-
-#endif  /*  __GIMP_DRAWABLE_OFFSET_H__  */
+#endif  /*  __OFFSET_DIALOG_H__  */
