@@ -83,6 +83,7 @@ aff2_scale(Aff2    *naff,
     naff->a11 = -s;
   else
     naff->a11 = s;
+
   naff->a12 = 0;
   naff->a21 = 0;
   naff->a22 = s;
@@ -91,7 +92,7 @@ aff2_scale(Aff2    *naff,
 }
 
 /* Create a unitary transform with given x-y asymmetry and shear */
-void 
+void
 aff2_distort (Aff2    *naff,
 	      gdouble  asym,
 	      gdouble  shear)
@@ -113,7 +114,7 @@ aff2_compute_stretch (Aff2    *naff,
 		      gdouble  yn)
 {
   gdouble denom = xo*xn + yo*yn;
-  
+
   if (denom == 0.0)	/* singular */
     {
       naff->a11 = 1.0;
@@ -123,26 +124,26 @@ aff2_compute_stretch (Aff2    *naff,
     }
   else
     {
-      naff->a11 = (SQR(xn) + SQR(yo))/denom;
-      naff->a22 = (SQR(xo) + SQR(yn))/denom;
-      naff->a12 = naff->a21 = (xn*yn - xo*yo)/denom;
+      naff->a11 = (SQR(xn) + SQR(yo)) / denom;
+      naff->a22 = (SQR(xo) + SQR(yn)) / denom;
+      naff->a12 = naff->a21 = (xn * yn - xo * yo) / denom;
     }
-  
+
   naff->b1 = 0.0;
   naff->b2 = 0.0;
 }
 
-void 
+void
 aff2_compose (Aff2 *naff,
 	      Aff2 *aff1,
 	      Aff2 *aff2)
 {
-  naff->a11 = aff1->a11*aff2->a11 + aff1->a12*aff2->a21;
-  naff->a12 = aff1->a11*aff2->a12 + aff1->a12*aff2->a22;
-  naff->b1 = aff1->a11*aff2->b1 + aff1->a12*aff2->b2 + aff1->b1;
-  naff->a21 = aff1->a21*aff2->a11 + aff1->a22*aff2->a21;
-  naff->a22 = aff1->a21*aff2->a12 + aff1->a22*aff2->a22;
-  naff->b2 = aff1->a21*aff2->b1 + aff1->a22*aff2->b2 + aff1->b2;
+  naff->a11 = aff1->a11 * aff2->a11 + aff1->a12 * aff2->a21;
+  naff->a12 = aff1->a11 * aff2->a12 + aff1->a12 * aff2->a22;
+  naff->b1  = aff1->a11 * aff2->b1  + aff1->a12 * aff2->b2 + aff1->b1;
+  naff->a21 = aff1->a21 * aff2->a11 + aff1->a22 * aff2->a21;
+  naff->a22 = aff1->a21 * aff2->a12 + aff1->a22 * aff2->a22;
+  naff->b2  = aff1->a21 * aff2->b1  + aff1->a22 * aff2->b2 + aff1->b2;
 }
 
 /* Returns the identity matrix if the original matrix was singular */
@@ -150,11 +151,11 @@ void
 aff2_invert (Aff2 *naff,
 	     Aff2 *aff)
 {
-  gdouble det = aff->a11*aff->a22 - aff->a12*aff->a21;
-  
+  gdouble det = aff->a11 * aff->a22 - aff->a12 * aff->a21;
+
   if (det==0)
     {
-      aff2_scale(naff,1.0,0);
+      aff2_scale (naff, 1.0, 0);
     }
   else
     {
@@ -162,20 +163,21 @@ aff2_invert (Aff2 *naff,
       naff->a22 = aff->a11 / det;
       naff->a21 = - aff->a21 / det;
       naff->a12 = - aff->a12 / det;
-      naff->b1 = - naff->a11*aff->b1 - naff->a12*aff->b2;
-      naff->b2 = - naff->a21*aff->b1 - naff->a22*aff->b2;
+      naff->b1 = - naff->a11 * aff->b1 - naff->a12 * aff->b2;
+      naff->b2 = - naff->a21 * aff->b1 - naff->a22 * aff->b2;
     }
 }
 
-void 
+void
 aff2_apply (Aff2    *aff,
 	    gdouble  x,
 	    gdouble  y,
 	    gdouble *xf,
 	    gdouble *yf)
 {
-  gdouble xt = aff->a11*x + aff->a12*y + aff->b1;
-  gdouble yt = aff->a21*x + aff->a22*y + aff->b2;
+  gdouble xt = aff->a11 * x + aff->a12 * y + aff->b1;
+  gdouble yt = aff->a21 * x + aff->a22 * y + aff->b2;
+
   *xf = xt;
   *yf = yt;
 }
@@ -190,18 +192,18 @@ aff2_fixed_point (Aff2    *aff,
 {
   Aff2 t1,t2;
 
-  t1.a11 = 1-aff->a11;
-  t1.a22 = 1-aff->a22;
+  t1.a11 = 1 - aff->a11;
+  t1.a22 = 1 - aff->a22;
   t1.a12 = -aff->a12;
   t1.a21 = -aff->a21;
-  t1.b1 = 0;
-  t1.b2 = 0;
+  t1.b1  = 0;
+  t1.b2  = 0;
 
-  aff2_invert(&t2,&t1);
-  aff2_apply(&t2,aff->b1,aff->b2,xf,yf);
+  aff2_invert (&t2, &t1);
+  aff2_apply (&t2, aff->b1, aff->b2, xf, yf);
 }
 
-void 
+void
 aff3_apply (Aff3    *t,
 	    gdouble  x,
 	    gdouble  y,
@@ -210,9 +212,15 @@ aff3_apply (Aff3    *t,
 	    gdouble *yf,
 	    gdouble *zf)
 {
-  double xt = t->vals[0][0]*x + t->vals[0][1]*y + t->vals[0][2]*z + t->vals[0][3];
-  double yt = t->vals[1][0]*x + t->vals[1][1]*y + t->vals[1][2]*z + t->vals[1][3];
-  double zt = t->vals[2][0]*x + t->vals[2][1]*y + t->vals[2][2]*z + t->vals[2][3];
+  gdouble xt = (t->vals[0][0] * x +
+                t->vals[0][1] * y +
+                t->vals[0][2] * z + t->vals[0][3]);
+  gdouble yt = (t->vals[1][0] * x +
+                t->vals[1][1] * y +
+                t->vals[1][2] * z + t->vals[1][3]);
+  gdouble zt = (t->vals[2][0] * x +
+                t->vals[2][1] * y +
+                t->vals[2][2] * z + t->vals[2][3]);
 
   *xf = xt;
   *yf = yt;
@@ -243,20 +251,20 @@ ipolygon_sort_func (const void *a,
 IPolygon *
 ipolygon_convex_hull (IPolygon *poly)
 {
-  gint num_new = poly->npoints;
-  GdkPoint *new_points = g_new(GdkPoint,num_new);
-  SortPoint *sort_points = g_new(SortPoint,num_new);
-  IPolygon *new_poly = g_new(IPolygon,1);
+  gint       num_new     = poly->npoints;
+  GdkPoint  *new_points  = g_new (GdkPoint, num_new);
+  SortPoint *sort_points = g_new (SortPoint, num_new);
+  IPolygon  *new_poly    = g_new (IPolygon, 1);
 
-  gint i,j;
-  gint x1,x2,y1,y2;
-  gint lowest;
-  GdkPoint lowest_pt;
+  gint       i, j;
+  gint       x1, x2, y1, y2;
+  gint       lowest;
+  GdkPoint   lowest_pt;
 
   new_poly->points = new_points;
   if (num_new <= 3)
     {
-      memcpy(new_points,poly->points,num_new*sizeof(GdkPoint));
+      memcpy (new_points, poly->points, num_new * sizeof (GdkPoint));
       new_poly->npoints = num_new;
       return new_poly;
     }
@@ -273,7 +281,7 @@ ipolygon_convex_hull (IPolygon *poly)
       }
 
   /* sort by angle from lowest point */
-  
+
   for (i=0,j=0;i<num_new;i++,j++)
     {
       if (i==lowest)
@@ -290,11 +298,11 @@ ipolygon_convex_hull (IPolygon *poly)
 	      continue;
 	    }
 	  sort_points[j].point = poly->points[i];
-	  sort_points[j].angle = atan2(dy,dx);
+	  sort_points[j].angle = atan2 (dy, dx);
 	}
     }
 
-  qsort(sort_points,num_new-1,sizeof(SortPoint),ipolygon_sort_func);
+  qsort (sort_points, num_new-1, sizeof (SortPoint), ipolygon_sort_func);
 
   /* now ensure that all turns as we trace the perimiter are
      counter-clockwise */
@@ -315,7 +323,7 @@ ipolygon_convex_hull (IPolygon *poly)
 	  j--;
 	  continue;
 	}
-      
+
       while (x1*y2 - x2*y1 < 0)	/* clockwise rotation */
 	{
 	  num_new--;
@@ -330,9 +338,10 @@ ipolygon_convex_hull (IPolygon *poly)
       y1 = y2;
     }
 
-  g_free(sort_points);
+  g_free (sort_points);
 
   new_poly->npoints = num_new;
+
   return new_poly;
 }
 
@@ -366,7 +375,7 @@ ipolygon_contains (IPolygon *poly,
     {
       xnew = poly->points[i].x;
       ynew = poly->points[i].y;
-      if (xnew > xold) 
+      if (xnew > xold)
 	{
 	  x1 = xold;
 	  x2 = xnew;
@@ -428,7 +437,7 @@ aff_element_compute_color_trans (AffElement *elem)
 	      elem->color_trans.vals[1][j] = elem->v.target_color.g
 		/ mag2 * (elem->v.value_scale - elem->v.hue_scale);
 	    }
-	  
+
 	  /*  blue  */
 	  for (j=0; j<3; j++)
 	    {
@@ -441,11 +450,11 @@ aff_element_compute_color_trans (AffElement *elem)
 	  elem->color_trans.vals[2][2] += elem->v.hue_scale;
 
 
-	  elem->color_trans.vals[0][3] = 
+	  elem->color_trans.vals[0][3] =
 	    (1-elem->v.value_scale)*elem->v.target_color.r;
-	  elem->color_trans.vals[1][3] = 
+	  elem->color_trans.vals[1][3] =
 	    (1-elem->v.value_scale)*elem->v.target_color.g;
-	  elem->color_trans.vals[2][3] = 
+	  elem->color_trans.vals[2][3] =
 	    (1-elem->v.value_scale)*elem->v.target_color.b;
 
 	  }
@@ -461,7 +470,7 @@ aff_element_compute_color_trans (AffElement *elem)
 		  &elem->v.green_color.b);
       aff3_apply (&elem->color_trans, 0.0, 0.0, 1.0,
 		  &elem->v.blue_color.r,
-		  &elem->v.blue_color.g, 
+		  &elem->v.blue_color.g,
 		  &elem->v.blue_color.b);
       aff3_apply (&elem->color_trans, 0.0, 0.0, 0.0,
 		  &elem->v.black_color.r,
@@ -470,25 +479,25 @@ aff_element_compute_color_trans (AffElement *elem)
     }
   else
     {
-      elem->color_trans.vals[0][0] = 
+      elem->color_trans.vals[0][0] =
 	elem->v.red_color.r - elem->v.black_color.r;
-      elem->color_trans.vals[1][0] = 
+      elem->color_trans.vals[1][0] =
 	elem->v.red_color.g - elem->v.black_color.g;
-      elem->color_trans.vals[2][0] = 
+      elem->color_trans.vals[2][0] =
 	elem->v.red_color.b - elem->v.black_color.b;
 
-      elem->color_trans.vals[0][1] = 
+      elem->color_trans.vals[0][1] =
 	elem->v.green_color.r - elem->v.black_color.r;
-      elem->color_trans.vals[1][1] = 
+      elem->color_trans.vals[1][1] =
 	elem->v.green_color.g - elem->v.black_color.g;
-      elem->color_trans.vals[2][1] = 
+      elem->color_trans.vals[2][1] =
 	elem->v.green_color.b - elem->v.black_color.b;
 
-      elem->color_trans.vals[0][2] = 
+      elem->color_trans.vals[0][2] =
 	elem->v.blue_color.r - elem->v.black_color.r;
-      elem->color_trans.vals[1][2] = 
+      elem->color_trans.vals[1][2] =
 	elem->v.blue_color.g - elem->v.black_color.g;
-      elem->color_trans.vals[2][2] = 
+      elem->color_trans.vals[2][2] =
 	elem->v.blue_color.b - elem->v.black_color.b;
 
       elem->color_trans.vals[0][3] = elem->v.black_color.r;
@@ -507,17 +516,17 @@ aff_element_compute_trans (AffElement *elem,
   Aff2 t1, t2, t3;
 
   /* create the rotation, scaling and shearing part of the transform */
-  aff2_distort(&t1, elem->v.asym, elem->v.shear);
-  aff2_scale(&t2, elem->v.scale, elem->v.flip);
-  aff2_compose(&t3, &t2, &t1);
-  aff2_rotate(&t2, elem->v.theta);
-  aff2_compose(&t1, &t2, &t3);
+  aff2_distort (&t1, elem->v.asym, elem->v.shear);
+  aff2_scale (&t2, elem->v.scale, elem->v.flip);
+  aff2_compose (&t3, &t2, &t1);
+  aff2_rotate (&t2, elem->v.theta);
+  aff2_compose (&t1, &t2, &t3);
 
   /* now create the translational part */
-  aff2_translate(&t2, -center_x*width, -center_y*width);
-  aff2_compose(&t3, &t1, &t2);
-  aff2_translate(&t2, elem->v.x*width, elem->v.y*width);
-  aff2_compose(&elem->trans, &t2, &t3);
+  aff2_translate (&t2, -center_x*width, -center_y*width);
+  aff2_compose (&t3, &t1, &t2);
+  aff2_translate (&t2, elem->v.x*width, elem->v.y*width);
+  aff2_compose (&elem->trans, &t2, &t3);
 }
 
 void
@@ -532,40 +541,40 @@ aff_element_decompose_trans (AffElement *elem,
   gdouble det,scale,sign;
 
   /* pull of the translational parts */
-  aff2_translate(&t1,center_x*width,center_y*width);
-  aff2_compose(&t2,aff,&t1);
-  
+  aff2_translate (&t1,center_x*width,center_y*width);
+  aff2_compose (&t2,aff,&t1);
+
   elem->v.x = t2.b1 / width;
   elem->v.y = t2.b2 / width;
 
-  det = t2.a11*t2.a22 - t2.a12*t2.a21;
+  det = t2.a11 * t2.a22 - t2.a12 * t2.a21;
 
   if (det == 0.0)
     {
       elem->v.scale = 0.0;
       elem->v.theta = 0.0;
-      elem->v.asym = 1.0;
+      elem->v.asym  = 1.0;
       elem->v.shear = 0.0;
-      elem->v.flip = 0;
+      elem->v.flip  = 0;
     }
   else
     {
       if (det >= 0)
 	{
-	  scale = elem->v.scale = sqrt(det);
+	  scale = elem->v.scale = sqrt (det);
 	  sign = 1;
 	  elem->v.flip = 0;
 	}
       else
 	{
-	  scale = elem->v.scale = sqrt(-det);
+	  scale = elem->v.scale = sqrt (-det);
 	  sign = -1;
 	  elem->v.flip = 1;
 	}
 
-      elem->v.theta = atan2(-t2.a21,t2.a11);
+      elem->v.theta = atan2 (-t2.a21, t2.a11);
 
-      if (cos(elem->v.theta) == 0.0)
+      if (cos (elem->v.theta) == 0.0)
 	{
 	  elem->v.asym = - t2.a21 / scale / sin(elem->v.theta);
 	  elem->v.shear = - sign * t2.a22 / scale / sin(elem->v.theta);
@@ -573,14 +582,14 @@ aff_element_decompose_trans (AffElement *elem,
       else
 	{
 	  elem->v.asym = sign * t2.a11 / scale / cos(elem->v.theta);
-	  elem->v.shear = sign * 
+	  elem->v.shear = sign *
 	    (t2.a12/scale - sin(elem->v.theta)/elem->v.asym)
 	    / cos(elem->v.theta);
 	}
     }
 }
 
-static void 
+static void
 aff_element_compute_click_boundary (AffElement *elem,
 				    int         num_elements,
 				    gdouble    *points_x,
@@ -609,10 +618,10 @@ aff_element_compute_click_boundary (AffElement *elem,
 
   xtot = 0;
   ytot = 0;
-  for (i=0; i<num_elements; i++)
+  for (i = 0; i < num_elements; i++)
     {
-      xtot += SQR(points_x[i]-xc)-SQR(points_y[i]-yc);
-      ytot += 2*(points_x[i]-xc)*(points_y[i]-yc);
+      xtot += SQR (points_x[i] - xc) - SQR (points_y[i] - yc);
+      ytot += 2 * (points_x[i] - xc) * (points_y[i] - yc);
     }
   theta = 0.5*atan2(ytot,xtot);
   sth = sin(theta);
@@ -646,15 +655,15 @@ aff_element_compute_click_boundary (AffElement *elem,
 
   if (axis1 < 8.0 || axis2 < 8.0)
     {
-      GdkPoint *points = g_new(GdkPoint,4);
+      GdkPoint *points = g_new (GdkPoint,4);
 
-      elem->click_boundary = g_new(IPolygon,1);
+      elem->click_boundary = g_new (IPolygon,1);
       elem->click_boundary->points = points;
       elem->click_boundary->npoints = 4;
 
       if (axis1 < 8.0) axis1 = 8.0;
       if (axis2 < 8.0) axis2 = 8.0;
-      
+
       points[0].x = xc + axis1*cth - axis2*sth;
       points[0].y = yc + axis1*sth + axis2*cth;
       points[1].x = xc - axis1*cth - axis2*sth;
@@ -668,11 +677,11 @@ aff_element_compute_click_boundary (AffElement *elem,
     elem->click_boundary = elem->draw_boundary;
 }
 
-void 
+void
 aff_element_compute_boundary (AffElement  *elem,
 			      gint         width,
 			      gint         height,
-			      AffElement **elements, 
+			      AffElement **elements,
 			      gint         num_elements)
 {
   int i;
@@ -681,34 +690,34 @@ aff_element_compute_boundary (AffElement  *elem,
   gdouble *points_y;
 
   if (elem->click_boundary && elem->click_boundary != elem->draw_boundary)
-    g_free(elem->click_boundary);
+    g_free (elem->click_boundary);
   if (elem->draw_boundary)
-    g_free(elem->draw_boundary);
+    g_free (elem->draw_boundary);
 
   tmp_poly.npoints = num_elements;
-  tmp_poly.points = g_new(GdkPoint,num_elements);
-  points_x = g_new(gdouble,num_elements);
-  points_y = g_new(gdouble,num_elements);
-  
+  tmp_poly.points  = g_new (GdkPoint, num_elements);
+  points_x = g_new (gdouble, num_elements);
+  points_y = g_new (gdouble, num_elements);
+
   for (i=0;i<num_elements;i++)
     {
-      aff2_apply(&elem->trans,elements[i]->v.x*width,elements[i]->v.y*width,
-		 &points_x[i],&points_y[i]);
+      aff2_apply (&elem->trans,elements[i]->v.x*width,elements[i]->v.y*width,
+                  &points_x[i],&points_y[i]);
       tmp_poly.points[i].x = (gint)points_x[i];
       tmp_poly.points[i].y = (gint)points_y[i];
     }
 
-  elem->draw_boundary = ipolygon_convex_hull(&tmp_poly);
-  aff_element_compute_click_boundary(elem,num_elements,points_x,points_y);
+  elem->draw_boundary = ipolygon_convex_hull (&tmp_poly);
+  aff_element_compute_click_boundary (elem,num_elements,points_x,points_y);
 
-  g_free(tmp_poly.points);
+  g_free (tmp_poly.points);
 }
 
-void 
+void
 aff_element_draw (AffElement  *elem,
 		  gboolean     selected,
 		  gint         width,
-		  gint         height, 
+		  gint         height,
 		  GdkDrawable *win,
 		  GdkGC       *normal_gc,
 		  GdkGC       *selected_gc,
@@ -754,7 +763,7 @@ aff_element_new (gdouble  x,
   elem->v.asym = 1.0;
   elem->v.shear = 0.0;
   elem->v.flip = 0;
-  
+
   elem->v.red_color   = *color;
   elem->v.blue_color  = *color;
   elem->v.green_color = *color;
@@ -775,7 +784,7 @@ aff_element_new (gdouble  x,
 
   sprintf (buffer,"%d",count);
   elem->name = g_strdup(buffer);
-  
+
   return elem;
 }
 
@@ -783,9 +792,10 @@ void
 aff_element_free (AffElement *elem)
 {
   if (elem->click_boundary != elem->draw_boundary)
-    g_free(elem->click_boundary);
-  g_free(elem->draw_boundary);
-  g_free(elem);
+    g_free (elem->click_boundary);
+
+  g_free (elem->draw_boundary);
+  g_free (elem);
 }
 
 #ifdef DEBUG_BRUSH
@@ -803,35 +813,39 @@ create_brush (IfsComposeVals *ifsvals,
 #ifdef DEBUG_BRUSH
   gdouble totpix = 0.0;
 #endif
-  
+
   gdouble radius = ifsvals->radius * ifsvals->subdivide;
-  *brush_size = ceil(2*radius);
-  *brush_offset = 0.5 * (*brush_size-1);
 
-  brush = g_new(guchar,SQR(*brush_size));
-  
-  for (i=0;i<*brush_size;i++)
+  *brush_size = ceil (2 * radius);
+  *brush_offset = 0.5 * (*brush_size - 1);
+
+  brush = g_new (guchar, SQR (*brush_size));
+
+  for (i=0 ; i < *brush_size; i++)
     {
-      for (j=0;j<*brush_size;j++)
+      for (j = 0; j < *brush_size; j++)
 	{
-	  gdouble d = sqrt(SQR(i-*brush_offset)+SQR(j-*brush_offset));
 	  gdouble pixel = 0.0;
+	  gdouble d     = sqrt (SQR (i - *brush_offset) +
+                                SQR (j - *brush_offset));
 
-	  if (d-0.5*sqrt(2) > radius)
+	  if (d - 0.5 * G_SQRT2 > radius)
 	    pixel = 0.0;
-	  else if (d+0.5*sqrt(2) < radius)
+	  else if (d + 0.5 * G_SQRT2 < radius)
 	    pixel = 1.0;
 	  else
-	    for (ii=0;ii<10;ii++)
-	      for (jj=0;jj<10;jj++)
+	    for (ii = 0; ii < 10; ii++)
+	      for (jj = 0; jj < 10; jj++)
 		{
-		  d = sqrt(SQR(i-*brush_offset+ii*0.1-0.45)
-			   +SQR(j-*brush_offset+jj*0.1-0.45));
-		  pixel += (d<radius)/100.0;
+		  d = sqrt (SQR (i - *brush_offset + ii * 0.1 - 0.45) +
+                            SQR (j - *brush_offset + jj * 0.1 - 0.45));
+		  pixel += (d < radius) / 100.0;
 		}
-	  brush[i**brush_size+j] = 255.999*pixel;
+
+	  brush[i**brush_size + j] = 255.999 * pixel;
+
 #ifdef DEBUG_BRUSH
-	  putchar(brush_chars[(int)(pixel*3.999)]);
+	  putchar(brush_chars[(gint)(pixel * 3.999)]);
 	  totpix += pixel;
 #endif /* DEBUG_BRUSH */
 	}
@@ -859,26 +873,25 @@ ifs_render (AffElement     **elements,
 	    guchar          *nhits,
 	    gint             preview)
 {
-  gint i, k;
-  gdouble x, y;
-  gdouble r, g, b;
-  gint ri, gi, bi;
-  guint32 p0, psum;
-  gdouble pt;
-  guchar *ptr;
+  gint     i, k;
+  gdouble  x, y;
+  gdouble  r, g, b;
+  gint     ri, gi, bi;
+  guint32  p0, psum;
+  gdouble  pt;
+  guchar  *ptr;
   guint32 *prob;
   gdouble *fprob;
-  gint subdivide;
-
-  guchar *brush = NULL;
-  gint brush_size;
-  gdouble brush_offset;
+  gint     subdivide;
+  guchar  *brush = NULL;
+  gint     brush_size;
+  gdouble  brush_offset;
 
   if (preview)
     subdivide = 1;
   else
     subdivide = vals->subdivide;
-  
+
   /* compute the probabilities and transforms */
   fprob = g_new (gdouble, num_elements);
   prob = g_new (guint32, num_elements);
@@ -894,10 +907,10 @@ ifs_render (AffElement     **elements,
 	 probably a line element, so increase the probability so
 	 it gets rendered */
       /* FIXME: figure out what 0.01 really should be */
-      if (fprob[i] < 0.01) 
+      if (fprob[i] < 0.01)
         fprob[i] = 0.01;
       fprob[i] *= elements[i]->v.prob;
-      
+
       pt += fprob[i];
     }
 
@@ -917,7 +930,7 @@ ifs_render (AffElement     **elements,
   r = g = b = 0;
 
   /* now run the iteration */
-  for (i=0;i<nsteps;i++) 
+  for (i=0;i<nsteps;i++)
     {
       if (!preview && !(i % 5000))
 	gimp_progress_update ((gdouble) i / (gdouble) nsteps);
@@ -933,10 +946,10 @@ ifs_render (AffElement     **elements,
       ri = (gint) (254.999 * r + 0.5);
       gi = (gint) (254.999 * g + 0.5);
       bi = (gint) (254.999 * b + 0.5);
-      
+
       if (preview)
 	{
-	  if ((x<width) && (y<(band_y+band_height)) && 
+	  if ((x<width) && (y<(band_y+band_height)) &&
 	      (x >= 0) && (y >= band_y) &&
 	      (ri >= 0) && (ri < 256) &&
 	      (gi >= 0) && (gi < 256) &&
@@ -959,7 +972,7 @@ ifs_render (AffElement     **elements,
 	    guint n_hits;
 	    guint old_scale;
 	    guint pix_scale;
-	    
+
 	    gint index;
 	    gint ii,jj;
 	    gint jj0 = floor(y-brush_offset-band_y*subdivide);
@@ -972,30 +985,30 @@ ifs_render (AffElement     **elements,
 	      iimin = - ii0;
 	    else
 	      iimin = 0;
-	    
+
 	    if (jj0 < 0)
 	      jjmin = - jj0;
 	    else
 	      jjmin = 0;
-	    
-	    if (jj0+brush_size >= subdivide*band_height) 
-	      jjmax = subdivide*band_height - jj0;
+
+	    if (jj0 + brush_size >= subdivide * band_height)
+	      jjmax = subdivide * band_height - jj0;
 	    else
 	      jjmax = brush_size;
 
-	    if (ii0+brush_size >= subdivide*width) 
-	      iimax = subdivide*width - ii0;
+	    if (ii0 + brush_size >= subdivide * width)
+	      iimax = subdivide * width - ii0;
 	    else
 	      iimax = brush_size;
 
-	    for (jj=jjmin;jj<jjmax;jj++)
-	      for (ii=iimin;ii<iimax;ii++)
+	    for (jj = jjmin; jj < jjmax; jj++)
+	      for (ii = iimin; ii < iimax; ii++)
 		{
-		  index = (jj0+jj)*width*subdivide + ii0 + ii;
+		  index = (jj0 + jj) * width * subdivide + ii0 + ii;
 		  n_hits = nhits[index];
 		  if (n_hits == 255)
 		    continue;
-		  
+
 		  m_pix = brush[jj*brush_size+ii];
 		  if (!m_pix)
 		    continue;
@@ -1008,7 +1021,7 @@ ifs_render (AffElement     **elements,
 		  old_scale = m_old*(255*n_hits-m_pix);
 		  /* relative probability that new colored pixel is on top */
 		  pix_scale = m_pix*((255-m_old)*n_hits+m_old);
-		    
+
 		  ptr = data + 3*index;
 		  *ptr = ( old_scale * (*ptr) + pix_scale * ri ) /
 		    ( old_scale + pix_scale );
@@ -1022,8 +1035,7 @@ ifs_render (AffElement     **elements,
 	  }
     } /* main iteration */
 
-  if (brush)
-    g_free(brush);
-  g_free(prob);
-  g_free(fprob);
+  g_free (brush);
+  g_free (prob);
+  g_free (fprob);
 }

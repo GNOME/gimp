@@ -1,5 +1,10 @@
 2004-06-19  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/ifscompose/ifscompose_utils.c (create_brush): use
+	G_SQRT2; some coding style cleanups.
+
+2004-06-19  Sven Neumann  <sven@gimp.org>
+
 	* app/vectors/gimpbezierstroke.c (arcto_ellipsesegment): moved
 	array initialization out of variable declaration (bug #144632).
 
