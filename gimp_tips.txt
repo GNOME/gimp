@@ -92,7 +92,7 @@ dragged selections will snap to the guides.  You can remove
 guides by dragging them off the image with the Move tool.
 
 The GIMP supports gzip compression on the fly.  Just add 
-'.gz' (or '.bz2', if you habe bzip2 installed) to the filename 
+'.gz' (or '.bz2', if you have bzip2 installed) to the filename 
 and your image will be saved compressed.  Of course loading 
 compressed images works too.
 
@@ -148,7 +148,7 @@ More complex shapes can be drawn with Filters->Render->Gfig.
 
 To create a perfect circle, hold Shift while doing an ellipse select. To 
 place a circle precisely, drag horizontal and vertical guides tangent to 
-the circle you want to select, place your cursor at the interesection
+the circle you want to select, place your cursor at the intersection
 of the guides, and the resulting selection will just touch the guides.
 
 # (end of tips)
