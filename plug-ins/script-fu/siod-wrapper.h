@@ -35,7 +35,9 @@ void          siod_print_welcome     (void);
 const gchar * siod_get_error_msg     (void);
 const gchar * siod_get_success_msg   (void);
 
-void          siod_output_string     (FILE *fp, char *string, ...);
+void          siod_output_string     (FILE        *fp,
+                                      const gchar *format,
+                                      ...) G_GNUC_PRINTF (2, 3);
 
 /* if the return value is 0, success. error otherwise. */
 gint          siod_interpret_string  (const gchar *expr);

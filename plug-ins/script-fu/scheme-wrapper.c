@@ -112,31 +112,28 @@ siod_get_success_msg (void)
 }
 
 void
-siod_output_string (FILE *fp, char *string, ...)
+siod_output_string (FILE        *fp,
+                    const gchar *format,
+                    ...)
 {
-  gint buff_len;
-  gchar *buff;
-  va_list args;
+  gchar   *buf;
+  va_list  args;
 
-  /* Ensure plenty of room in case string contains %-style format codes */
-  buff_len = strlen (string) * 2;
-  buff = g_malloc (buff_len);
-  if (buff == NULL)
-     return;	/* Should "No memory" be output here? */
-
-  va_start (args, string);
-  g_vsnprintf (buff, buff_len, string, args);
+  va_start (args, format);
+  buf = g_strdup_vprintf (format, args);
   va_end (args);
 
   if (siod_console_mode && fp == stdout)
-     script_fu_output_to_console (buff);
+    {
+      script_fu_output_to_console (buf);
+    }
   else
-  {
-     fprintf (fp, buff);
-     fflush (fp);
-  }
+    {
+      fprintf (fp, buf);
+      fflush (fp);
+    }
 
-  g_free (buff);
+  g_free (buf);
 }
 
 

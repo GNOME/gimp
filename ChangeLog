@@ -1,3 +1,9 @@
+2004-08-08  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/siod-wrapper.[ch] (siod_output_string): use
+	g_strdup_vprintf() instead of guessing the string length. Also
+	declare the function using G_GNUC_PRINTF().
+
 2004-08-08  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/ifscompose/README.ifscompose: fix out of date info,
