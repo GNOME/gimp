@@ -95,7 +95,7 @@ while test $# -gt 0; do
       esac
       shift
       if test "x$1" != "x"; then
-        if test -e "$1"; then
+        if test -r "$1"; then
           cmd="$install_cmd $1 $install_dir/$1"
           echo $cmd
           exec $cmd
@@ -124,7 +124,7 @@ while test $# -gt 0; do
       fi
       shift
       if test "x$1" != "x"; then
-        if test -e "$1"; then
+        if test -r "$1"; then
           cmd="$cc $cflags $includes `$gtk_config --cflags` -o $install_dir/`echo $1|sed 's/\.[^\.]*$//'` $1 -L@libdir@ -lgimpui -lgimp `$gtk_config --libs`"
           echo $cmd
           exec $cmd

@@ -1,3 +1,7 @@
+Sun May 31 15:35:33 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* gimptool.in: use test -r instead of test -e for portability
+
 Sun May 31 08:03:54 EDT 1998  Matthew Wilson  <msw@gimp.org>
 
 	* plug-ins/exchange/exchange.c: fix from sjburges to stop
