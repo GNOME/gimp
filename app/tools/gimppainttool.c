@@ -235,6 +235,31 @@ gimp_paint_tool_control (GimpTool       *tool,
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
+/**
+ * gimp_paint_tool_round_line:
+ * @core:  the #GimpPaintCore
+ * @state: the modifier state
+ *
+ * Adjusts core->last_coords and core_cur_coords in preparation to
+ * drawing a straight line. The rounding of the slope to 15 degree
+ * steps if ctrl is pressed happens, as does rounding the start and
+ * end coordinates (which may be fractional in high zoom modes) to
+ * the center of pixels.
+ **/
+static void
+gimp_paint_tool_round_line (GimpPaintCore   *core,
+                            GdkModifierType  state)
+{
+  core->last_coords.x = floor (core->last_coords.x) + 0.5;
+  core->last_coords.y = floor (core->last_coords.y) + 0.5;
+  core->cur_coords.x  = floor (core->cur_coords.x ) + 0.5;
+  core->cur_coords.y  = floor (core->cur_coords.y ) + 0.5;
+  
+  /* Restrict to multiples of 15 degrees if ctrl is pressed */
+  if (state & GDK_CONTROL_MASK)
+    gimp_paint_core_constrain (core);
+}
+
 static void
 gimp_paint_tool_button_press (GimpTool        *tool,
                               GimpCoords      *coords,
@@ -313,12 +338,7 @@ gimp_paint_tool_button_press (GimpTool        *tool,
 
       core->start_coords = core->last_coords;
 
-      if (state & GDK_CONTROL_MASK)
-	{
-          /* Restrict to multiples of 15 degrees if ctrl is pressed */
-
-          gimp_paint_core_constrain (core);
-	}
+      gimp_paint_tool_round_line (core, state);
     }
 
   gimp_tool_control_activate (tool->control);
@@ -532,12 +552,7 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
           core->cur_coords.x -= off_x;
           core->cur_coords.y -= off_y;
 
-	  if (state & GDK_CONTROL_MASK)
-	    {
-              /*  Restrict to multiples of 15 degrees if ctrl is pressed  */
-
-              gimp_paint_core_constrain (core);
-	    }
+          gimp_paint_tool_round_line (core, state);
 
 	  dx = core->cur_coords.x - core->last_coords.x;
 	  dy = core->cur_coords.y - core->last_coords.y;
@@ -627,8 +642,8 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
       /*  Draw start target  */
       gimp_draw_tool_draw_handle (draw_tool,
                                   GIMP_HANDLE_CROSS,
-                                  floor (core->last_coords.x) + 0.5,
-                                  floor (core->last_coords.y) + 0.5,
+                                  core->last_coords.x,
+                                  core->last_coords.y,
                                   TARGET_SIZE,
                                   TARGET_SIZE,
                                   GTK_ANCHOR_CENTER,
@@ -637,8 +652,8 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
       /*  Draw end target  */
       gimp_draw_tool_draw_handle (draw_tool,
                                   GIMP_HANDLE_CROSS,
-                                  floor (core->cur_coords.x) + 0.5,
-                                  floor (core->cur_coords.y) + 0.5,
+                                  core->cur_coords.x,
+                                  core->cur_coords.y,
                                   TARGET_SIZE,
                                   TARGET_SIZE,
                                   GTK_ANCHOR_CENTER,
@@ -646,10 +661,10 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
 
       /*  Draw the line between the start and end coords  */
       gimp_draw_tool_draw_line (draw_tool,
-                                floor (core->last_coords.x) + 0.5,
-                                floor (core->last_coords.y) + 0.5,
-                                floor (core->cur_coords.x) + 0.5,
-                                floor (core->cur_coords.y) + 0.5,
+                                core->last_coords.x,
+                                core->last_coords.y,
+                                core->cur_coords.x,
+                                core->cur_coords.y,
                                 TRUE);
     }
 }
