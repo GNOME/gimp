@@ -1,3 +1,12 @@
+2004-11-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in.c (plug_in_close): replaced the
+	while(plug_in->temp_procs) "loop" which called
+	plug_in_proc_frame_quit() by a real for()-loop iterating over the
+	list of PlugInProcFrames, calling g_main_loop_quit() on each main
+	loop. The old version did not unroll the stack but looped
+	infinitely. Spotted by Yosh.
+
 2004-11-17  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/imagemap/imap_selection.c

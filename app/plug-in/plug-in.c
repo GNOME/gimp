@@ -504,11 +504,12 @@ void
 plug_in_close (PlugIn   *plug_in,
 	       gboolean  kill_it)
 {
-  Gimp *gimp;
+  Gimp          *gimp;
 #ifndef G_OS_WIN32
-  gint  status;
+  gint           status;
   struct timeval tv;
 #endif
+  GList         *list;
 
   g_return_if_fail (plug_in != NULL);
   g_return_if_fail (plug_in->open == TRUE);
@@ -617,13 +618,20 @@ plug_in_close (PlugIn   *plug_in,
 
   wire_clear_error ();
 
-  while (plug_in->temp_proc_frames)
+  for (list = plug_in->temp_proc_frames; list; list = g_list_next (list))
     {
+      PlugInProcFrame *proc_frame = list->data;
+
 #ifdef GIMP_UNSTABLE
       g_printerr ("plug_in_close: plug-in aborted before sending its "
                   "temporary procedure return values\n");
 #endif
-      plug_in_main_loop_quit (plug_in);
+
+      if (proc_frame->main_loop &&
+          g_main_loop_is_running (proc_frame->main_loop))
+        {
+          g_main_loop_quit (proc_frame->main_loop);
+        }
     }
 
   if (plug_in->main_proc_frame.main_loop &&
@@ -633,6 +641,7 @@ plug_in_close (PlugIn   *plug_in,
       g_printerr ("plug_in_close: plug-in aborted before sending its "
                   "procedure return values\n");
 #endif
+
       g_main_loop_quit (plug_in->main_proc_frame.main_loop);
     }
 
@@ -645,6 +654,7 @@ plug_in_close (PlugIn   *plug_in,
       g_printerr ("plug_in_close: extension aborted before sending its "
                   "extension_ack message\n");
 #endif
+
       g_main_loop_quit (plug_in->ext_main_loop);
     }
 
