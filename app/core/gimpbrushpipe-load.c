@@ -315,7 +315,7 @@ gimp_brush_pipe_load (const gchar  *filename,
   if (fd == -1)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
-                   _("Failed to open '%s' for reading: %s"),
+                   _("Could not open '%s' for reading: %s"),
                    filename, g_strerror (errno));
       return NULL;
     }
