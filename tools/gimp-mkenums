@@ -109,7 +109,7 @@ sub parse_entries {
 	    if (defined $options) {
 		my %options = parse_trigraph($options);
 		if (!defined $options{"skip"}) {
-		    push @entries, [ $name, $options{nick}, $options{desc} ];
+		    push @entries, [ $name, $options{nick}, $options{desc}, $options{help} ];
 		}
 	    } else {
 		push @entries, [ $name ];
@@ -141,6 +141,9 @@ sub usage {
     print STDERR "  --vhead <text>             value header, produced before iterating over enum values\n";
     print STDERR "  --vprod <text>             value text, produced for each enum value\n";
     print STDERR "  --vtail <text>             value tail, produced after iterating over enum values\n";
+    print STDERR "  --dhead <text>             description header, produced before iterating over enum value descriptions\n";
+    print STDERR "  --dprod <text>             description text, produced for each enum value description\n";
+    print STDERR "  --dtail <text>             description tail, produced after iterating over enum value descriptions\n";
     print STDERR "  --comments <text>          comment structure\n";
     print STDERR "  -h, --help                 show this help message\n";
     print STDERR "  -v, --version              print version informations\n";
@@ -152,6 +155,7 @@ sub usage {
     print STDERR "  \@VALUENAME\@                PREFIX_THE_XVALUE\n";
     print STDERR "  \@valuenick\@                the-xvalue\n";
     print STDERR "  \@valuedesc\@                descriptions as defined in the header\n";
+    print STDERR "  \@valuehelp\@                help texts as defined in the header\n";
     print STDERR "  \@type\@                     either enum or flags\n";
     print STDERR "  \@Type\@                     either Enum or Flags\n";
     print STDERR "  \@TYPE\@                     either ENUM or FLAGS\n";
@@ -167,6 +171,9 @@ my $eprod = "";   # per enum text (produced prior to value itarations)
 my $vhead = "";   # value header, produced before iterating over enum values
 my $vprod = "";   # value text, produced for each enum value
 my $vtail = "";   # value tail, produced after iterating over enum values
+my $dhead = "";   # desc header, produced before iterating over enum values
+my $dprod = "";   # desc text, produced for each enum value
+my $dtail = "";   # desc tail, produced after iterating over enum values
 # other options
 my $comment_tmpl = "/* \@comment\@ */";
 
@@ -183,6 +190,9 @@ while ($_ = $ARGV[0], /^-/) {
     elsif (/^--vhead$/)              { $vhead = $vhead . shift }
     elsif (/^--vprod$/)              { $vprod = $vprod . shift }
     elsif (/^--vtail$/)              { $vtail = $vtail . shift }
+    elsif (/^--dhead$/)              { $dhead = $dhead . shift }
+    elsif (/^--dprod$/)              { $dprod = $dprod . shift }
+    elsif (/^--dtail$/)              { $dtail = $dtail . shift }
     elsif (/^--comments$/)           { $comment_tmpl = shift }
     elsif (/^--help$/ || /^-h$/)     { usage; }
     elsif (/^--version$/ || /^-v$/)  { version; }
@@ -289,7 +299,7 @@ while (<>) {
 	}
 	
 	for $entry (@entries) {
-	    my ($name,$nick,$desc) = @{$entry};
+	    my ($name,$nick,$desc,$help) = @{$entry};
             if (!defined $nick) {
  	        ($nick = $name) =~ s/^$enum_prefix//;
 	        $nick =~ tr/_/-/;
@@ -300,7 +310,12 @@ while (<>) {
 	    } else {
 		$desc = "N_($desc)";
 	    }
-	    @{$entry} = ($name, $nick, $desc);
+	    if (!defined $help) {
+		$help = "NULL";
+	    } else {
+		$help = "N_($help)";
+	    }
+	    @{$entry} = ($name, $nick, $desc, $help);
 	}
 	
 
@@ -376,12 +391,13 @@ while (<>) {
 	    $prod =~ s/\\a/\a/g; $prod =~ s/\\b/\b/g; $prod =~ s/\\t/\t/g; $prod =~ s/\\n/\n/g;
 	    $prod =~ s/\\f/\f/g; $prod =~ s/\\r/\r/g;
 	    for (@entries) {
-		my ($name,$nick,$desc) = @{$_};
+		my ($name,$nick,$desc,$help) = @{$_};
 		my $tmp_prod = $prod;
 
 		$tmp_prod =~ s/\@VALUENAME\@/$name/g;
 		$tmp_prod =~ s/\@valuenick\@/$nick/g;
 		$tmp_prod =~ s/\@valuedesc\@/$desc/g;
+		$tmp_prod =~ s/\@valuehelp\@/$help/g;
 		if ($flags) { $tmp_prod =~ s/\@type\@/flags/g; } else { $tmp_prod =~ s/\@type\@/enum/g; }
 		if ($flags) { $tmp_prod =~ s/\@Type\@/Flags/g; } else { $tmp_prod =~ s/\@Type\@/Enum/g; }
 		if ($flags) { $tmp_prod =~ s/\@TYPE\@/FLAGS/g; } else { $tmp_prod =~ s/\@TYPE\@/ENUM/g; }
@@ -392,6 +408,59 @@ while (<>) {
 
 	if (length($vtail)) {
 	    my $prod = $vtail;
+
+	    $prod =~ s/\@enum_name\@/$enumsym/g;
+            $prod =~ s/\@EnumName\@/$enumname/g;
+            $prod =~ s/\@ENUMSHORT\@/$enumshort/g;
+            $prod =~ s/\@ENUMNAME\@/$enumlong/g;
+	    if ($flags) { $prod =~ s/\@type\@/flags/g; } else { $prod =~ s/\@type\@/enum/g; }
+	    if ($flags) { $prod =~ s/\@Type\@/Flags/g; } else { $prod =~ s/\@Type\@/Enum/g; }
+	    if ($flags) { $prod =~ s/\@TYPE\@/FLAGS/g; } else { $prod =~ s/\@TYPE\@/ENUM/g; }
+            $prod =~ s/\\a/\a/g; $prod =~ s/\\b/\b/g; $prod =~ s/\\t/\t/g; $prod =~ s/\\n/\n/g;
+            $prod =~ s/\\f/\f/g; $prod =~ s/\\r/\r/g;
+	    
+            print "$prod\n";
+	}
+
+	if (length($dhead)) {
+	    my $prod = $dhead;
+
+	    $prod =~ s/\@enum_name\@/$enumsym/g;
+            $prod =~ s/\@EnumName\@/$enumname/g;
+            $prod =~ s/\@ENUMSHORT\@/$enumshort/g;
+            $prod =~ s/\@ENUMNAME\@/$enumlong/g;
+	    if ($flags) { $prod =~ s/\@type\@/flags/g; } else { $prod =~ s/\@type\@/enum/g; }
+	    if ($flags) { $prod =~ s/\@Type\@/Flags/g; } else { $prod =~ s/\@Type\@/Enum/g; }
+	    if ($flags) { $prod =~ s/\@TYPE\@/FLAGS/g; } else { $prod =~ s/\@TYPE\@/ENUM/g; }
+            $prod =~ s/\\a/\a/g; $prod =~ s/\\b/\b/g; $prod =~ s/\\t/\t/g; $prod =~ s/\\n/\n/g;
+            $prod =~ s/\\f/\f/g; $prod =~ s/\\r/\r/g;
+	    
+            print "$prod\n";
+	}
+
+	if (length($dprod)) {
+	    my $prod = $dprod;
+	    
+	    $prod =~ s/\\a/\a/g; $prod =~ s/\\b/\b/g; $prod =~ s/\\t/\t/g; $prod =~ s/\\n/\n/g;
+	    $prod =~ s/\\f/\f/g; $prod =~ s/\\r/\r/g;
+	    for (@entries) {
+		my ($name,$nick,$desc,$help) = @{$_};
+		my $tmp_prod = $prod;
+
+		$tmp_prod =~ s/\@VALUENAME\@/$name/g;
+		$tmp_prod =~ s/\@valuenick\@/$nick/g;
+		$tmp_prod =~ s/\@valuedesc\@/$desc/g;
+		$tmp_prod =~ s/\@valuehelp\@/$help/g;
+		if ($flags) { $tmp_prod =~ s/\@type\@/flags/g; } else { $tmp_prod =~ s/\@type\@/enum/g; }
+		if ($flags) { $tmp_prod =~ s/\@Type\@/Flags/g; } else { $tmp_prod =~ s/\@Type\@/Enum/g; }
+		if ($flags) { $tmp_prod =~ s/\@TYPE\@/FLAGS/g; } else { $tmp_prod =~ s/\@TYPE\@/ENUM/g; }
+
+		print "$tmp_prod\n";
+	    }
+	}
+
+	if (length($dtail)) {
+	    my $prod = $dtail;
 
 	    $prod =~ s/\@enum_name\@/$enumsym/g;
             $prod =~ s/\@EnumName\@/$enumname/g;

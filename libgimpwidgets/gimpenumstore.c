@@ -96,14 +96,14 @@ gimp_enum_store_add_value (GtkListStore *store,
                            GEnumValue   *value)
 {
   GtkTreeIter  iter;
-  const gchar *name;
+  const gchar *desc;
 
-  name = gimp_enum_value_get_name (GIMP_ENUM_STORE (store)->enum_class, value);
+  desc = gimp_enum_value_get_desc (GIMP_ENUM_STORE (store)->enum_class, value);
 
   gtk_list_store_append (store, &iter);
   gtk_list_store_set (store, &iter,
                       GIMP_INT_STORE_VALUE, value->value,
-                      GIMP_INT_STORE_LABEL, name,
+                      GIMP_INT_STORE_LABEL, desc,
                       -1);
 }
 

@@ -170,11 +170,14 @@ CLEANFILES = $(gen_sources)
 
 $(srcdir)/tools-enums.c: $(srcdir)/tools-enums.h $(GIMP_MKENUMS)
 	$(GIMP_MKENUMS) \
-		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"core/core-enums.h\"\n#include \"tools-enums.h\"\n#include \"gimp-intl.h\"" \
+		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"libgimpbase/gimpbase.h\"\n#include \"core/core-enums.h\"\n#include \"tools-enums.h\"\n#include \"gimp-intl.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \
 		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
-		--vprod "    { @VALUENAME@, @valuedesc@, \"@valuenick@\" }," \
-		--vtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (! type)\n    type = g_@type@_register_static (\"@EnumName@\", values);\n\n  return type;\n}\n" \
+		--vprod "    { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
+		--vtail "    { 0, NULL, NULL }\n  };\n" \
+		--dhead "  static const Gimp@Type@Desc descs[] =\n  {" \
+		--dprod "    { @VALUENAME@, @valuedesc@, @valuehelp@ }," \
+		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (! type)\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      gimp_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
 		$(srcdir)/tools-enums.h > xgen-tec \
 	&& cp xgen-tec $(@F) \
 	&& rm -f xgen-tec

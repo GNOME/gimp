@@ -95,14 +95,14 @@ gimp_enum_radio_box_new_with_range (GType       enum_type,
 
   for (value = enum_class->values; value->value_name; value++)
     {
-      const gchar *name;
+      const gchar *desc;
 
       if (value->value < minimum || value->value > maximum)
         continue;
 
-      name = gimp_enum_value_get_name (enum_class, value);
+      desc = gimp_enum_value_get_desc (enum_class, value);
 
-      button = gtk_radio_button_new_with_mnemonic (group, name);
+      button = gtk_radio_button_new_with_mnemonic (group, desc);
 
       if (first_button && *first_button == NULL)
         *first_button = button;
@@ -303,7 +303,7 @@ gimp_enum_stock_box_new_with_range (GType         enum_type,
         }
 
       gimp_help_set_help_data (button,
-                               gimp_enum_value_get_name (enum_class, value),
+                               gimp_enum_value_get_desc (enum_class, value),
                                NULL);
 
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));

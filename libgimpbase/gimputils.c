@@ -302,17 +302,67 @@ gimp_escape_uline (const gchar *str)
   return escaped;
 }
 
+GimpEnumDesc *
+gimp_enum_get_desc (GEnumClass *enum_class,
+                    gint        value)
+{
+  const GimpEnumDesc *value_desc;
+
+  g_return_val_if_fail (G_IS_ENUM_CLASS (enum_class), NULL);
+
+  value_desc = gimp_enum_get_value_descriptions (G_TYPE_FROM_CLASS (enum_class));
+
+  if (value_desc)
+    {
+      while (value_desc->value_desc)
+        {
+          if (value_desc->value == value)
+            return (GimpEnumDesc *) value_desc;
+
+          value_desc++;
+        }
+    }
+
+  return NULL;
+}
+
+GimpFlagsDesc *
+gimp_flags_get_first_desc (GFlagsClass *flags_class,
+                           guint        value)
+{
+  const GimpFlagsDesc *value_desc;
+
+  g_return_val_if_fail (G_IS_FLAGS_CLASS (flags_class), NULL);
+
+  value_desc = gimp_flags_get_value_descriptions (G_TYPE_FROM_CLASS (flags_class));
+
+  if (value_desc)
+    {
+      while (value_desc->value_desc)
+        {
+          if ((value_desc->value & value) == value_desc->value)
+            return (GimpFlagsDesc *) value_desc;
+
+          value_desc++;
+        }
+    }
+
+  return NULL;
+}
 
 /**
  * gimp_enum_get_value:
  * @enum_type:  the #GType of a registered enum
  * @value:      an integer value
+ * @value_name: return location for the value's name (or %NULL)
  * @value_nick: return location for the value's nick (or %NULL)
- * @value_name: return location for the value's translated name (or %NULL)
+ * @value_desc: return location for the value's translated desc (or %NULL)
+ * @value_help: return location for the value's translated help (or %NULL)
  *
  * Checks if @value is valid for the enum registered as @enum_type.
- * If the value exists in that enum, its nick and its translated name
- * are returned (if @value_nick and @value_name are not %NULL).
+ * If the value exists in that enum, its name, nick and its translated
+ * desc and help are returned (if @value_name, @value_nick, @value_desc
+ * and @value_help are not %NULL).
  *
  * Return value: %TRUE if @value is valid for the @enum_type,
  *               %FALSE otherwise
@@ -322,8 +372,10 @@ gimp_escape_uline (const gchar *str)
 gboolean
 gimp_enum_get_value (GType         enum_type,
                      gint          value,
+                     const gchar **value_name,
                      const gchar **value_nick,
-                     const gchar **value_name)
+                     const gchar **value_desc,
+                     const gchar **value_help)
 {
   GEnumClass *enum_class;
   GEnumValue *enum_value;
@@ -335,14 +387,30 @@ gimp_enum_get_value (GType         enum_type,
 
   if (enum_value)
     {
+      if (value_name)
+        *value_name = enum_value->value_name;
+
       if (value_nick)
         *value_nick = enum_value->value_nick;
 
-      if (value_name)
-        *value_name = (enum_value->value_name ?
-                       dgettext (gimp_type_get_translation_domain (enum_type),
-                                 enum_value->value_name) :
-                       NULL);
+      if (value_desc || value_help)
+        {
+          GimpEnumDesc *enum_desc;
+
+          enum_desc = gimp_enum_get_desc (enum_class, value);
+
+          if (value_desc)
+            *value_desc = ((enum_desc && enum_desc->value_desc) ?
+                           dgettext (gimp_type_get_translation_domain (enum_type),
+                                     enum_desc->value_desc) :
+                           NULL);
+
+          if (value_help)
+            *value_help = ((enum_desc && enum_desc->value_desc) ?
+                           dgettext (gimp_type_get_translation_domain (enum_type),
+                                     enum_desc->value_help) :
+                           NULL);
+        }
 
       return TRUE;
     }
@@ -351,25 +419,177 @@ gimp_enum_get_value (GType         enum_type,
 }
 
 /**
- * gimp_enum_value_get_name:
+ * gimp_flags_get_value:
+ * @flags_type: the #GType of registered flags
+ * @value:      an integer value
+ * @value_name: return location for the value's name (or %NULL)
+ * @value_nick: return location for the value's nick (or %NULL)
+ * @value_desc: return location for the value's translated desc (or %NULL)
+ * @value_help: return location for the value's translated help (or %NULL)
+ *
+ * Checks if @value is valid for the flags registered as @flags_type.
+ * If the value exists in that flags, its name, nick and its translated
+ * desc and help are returned (if @value_name, @value_nick, @value_desc
+ * and @value_help are not %NULL).
+ *
+ * Return value: %TRUE if @value is valid for the @flags_type,
+ *               %FALSE otherwise
+ *
+ * Since: GIMP 2.2
+ **/
+gboolean
+gimp_flags_get_value (GType         flags_type,
+                      guint         value,
+                      const gchar **value_name,
+                      const gchar **value_nick,
+                      const gchar **value_desc,
+                      const gchar **value_help)
+{
+  GFlagsClass *flags_class;
+  GFlagsValue *flags_value;
+
+  g_return_val_if_fail (G_TYPE_IS_FLAGS (flags_type), FALSE);
+
+  flags_class = g_type_class_peek (flags_type);
+  flags_value = g_flags_get_first_value (flags_class, value);
+
+  if (flags_value)
+    {
+      if (value_name)
+        *value_name = flags_value->value_name;
+
+      if (value_nick)
+        *value_nick = flags_value->value_nick;
+
+      if (value_desc || value_help)
+        {
+          GimpFlagsDesc *flags_desc;
+
+          flags_desc = gimp_flags_get_first_desc (flags_class, value);
+
+          if (value_desc)
+            *value_desc = ((flags_desc && flags_desc->value_desc) ?
+                           dgettext (gimp_type_get_translation_domain (flags_type),
+                                     flags_desc->value_desc) :
+                           NULL);
+
+          if (value_help)
+            *value_help = ((flags_desc && flags_desc->value_desc) ?
+                           dgettext (gimp_type_get_translation_domain (flags_type),
+                                     flags_desc->value_help) :
+                           NULL);
+        }
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+/**
+ * gimp_enum_value_get_desc:
  * @enum_class: a #GEnumClass
  * @enum_value: a #GEnumValue from @enum_class
  *
- * Retrieves the translated name for a given @enum_value.
+ * Retrieves the translated desc for a given @enum_value.
  *
- * Return value: the translated name of the enum value
+ * Return value: the translated desc of the enum value
  *
  * Since: GIMP 2.2
  **/
 const gchar *
-gimp_enum_value_get_name (GEnumClass *enum_class,
+gimp_enum_value_get_desc (GEnumClass *enum_class,
                           GEnumValue *enum_value)
 {
-  GType  type = G_TYPE_FROM_CLASS (enum_class);
+  GType         type = G_TYPE_FROM_CLASS (enum_class);
+  GimpEnumDesc *enum_desc;
 
-  if (enum_value->value_name)
+  enum_desc = gimp_enum_get_desc (enum_class, enum_value->value);
+
+  if (enum_desc->value_desc)
     return dgettext (gimp_type_get_translation_domain (type),
-                     enum_value->value_name);
+                     enum_desc->value_desc);
+
+  return enum_value->value_name;
+}
+
+/**
+ * gimp_enum_value_get_help:
+ * @enum_class: a #GEnumClass
+ * @enum_value: a #GEnumValue from @enum_class
+ *
+ * Retrieves the translated help for a given @enum_value.
+ *
+ * Return value: the translated help of the enum value
+ *
+ * Since: GIMP 2.2
+ **/
+const gchar *
+gimp_enum_value_get_help (GEnumClass *enum_class,
+                          GEnumValue *enum_value)
+{
+  GType         type = G_TYPE_FROM_CLASS (enum_class);
+  GimpEnumDesc *enum_desc;
+
+  enum_desc = gimp_enum_get_desc (enum_class, enum_value->value);
+
+  if (enum_desc->value_help)
+    return dgettext (gimp_type_get_translation_domain (type),
+                     enum_desc->value_help);
+
+  return NULL;
+}
+
+/**
+ * gimp_flags_value_get_desc:
+ * @flags_class: a #GFlagsClass
+ * @flags_value: a #GFlagsValue from @flags_class
+ *
+ * Retrieves the translated desc for a given @flags_value.
+ *
+ * Return value: the translated desc of the flags value
+ *
+ * Since: GIMP 2.2
+ **/
+const gchar *
+gimp_flags_value_get_desc (GFlagsClass *flags_class,
+                           GFlagsValue *flags_value)
+{
+  GType         type = G_TYPE_FROM_CLASS (flags_class);
+  GimpFlagsDesc *flags_desc;
+
+  flags_desc = gimp_flags_get_first_desc (flags_class, flags_value->value);
+
+  if (flags_desc->value_desc)
+    return dgettext (gimp_type_get_translation_domain (type),
+                     flags_desc->value_desc);
+
+  return flags_value->value_name;
+}
+
+/**
+ * gimp_flags_value_get_help:
+ * @flags_class: a #GFlagsClass
+ * @flags_value: a #GFlagsValue from @flags_class
+ *
+ * Retrieves the translated help for a given @flags_value.
+ *
+ * Return value: the translated help of the flags value
+ *
+ * Since: GIMP 2.2
+ **/
+const gchar *
+gimp_flags_value_get_help (GFlagsClass *flags_class,
+                           GFlagsValue *flags_value)
+{
+  GType         type = G_TYPE_FROM_CLASS (flags_class);
+  GimpFlagsDesc *flags_desc;
+
+  flags_desc = gimp_flags_get_first_desc (flags_class, flags_value->value);
+
+  if (flags_desc->value_help)
+    return dgettext (gimp_type_get_translation_domain (type),
+                     flags_desc->value_help);
 
   return NULL;
 }

@@ -1741,7 +1741,7 @@ gimp_preview_area_menu_new (GimpPreviewArea *area,
 
   for (enum_value = enum_class->values; enum_value->value_name; enum_value++)
     {
-      const gchar *name = gimp_enum_value_get_name (enum_class, enum_value);
+      const gchar *name = gimp_enum_value_get_desc (enum_class, enum_value);
 
       item = gtk_radio_menu_item_new_with_label (group, name);
 

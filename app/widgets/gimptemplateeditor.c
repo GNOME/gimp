@@ -646,7 +646,7 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
                                       GimpTemplateEditor *editor)
 {
   GimpAspectType  aspect;
-  const gchar    *name;
+  const gchar    *desc;
   gchar          *text;
 
   if (param_spec)
@@ -685,15 +685,15 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
   editor->block_aspect = FALSE;
 
   gimp_enum_get_value (GIMP_TYPE_IMAGE_BASE_TYPE, template->image_type,
-                       NULL, &name);
+                       NULL, NULL, &desc, NULL);
 
   if ((gint) template->xresolution != (gint) template->yresolution)
     text = g_strdup_printf (_("%d x %d dpi, %s"),
                             (gint) template->xresolution,
-                            (gint) template->yresolution, name);
+                            (gint) template->yresolution, desc);
   else
     text = g_strdup_printf (_("%d dpi, %s"),
-                            (gint) template->yresolution, name);
+                            (gint) template->yresolution, desc);
 
   gtk_label_set_text (GTK_LABEL (editor->more_label), text);
   g_free (text);

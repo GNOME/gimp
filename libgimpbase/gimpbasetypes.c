@@ -28,6 +28,7 @@
 
 
 static GQuark  gimp_translation_domain_quark (void) G_GNUC_CONST;
+static GQuark  gimp_value_descriptions_quark (void) G_GNUC_CONST;
 
 
 /**
@@ -71,6 +72,93 @@ gimp_type_get_translation_domain (GType type)
                                            gimp_translation_domain_quark ());
 }
 
+/**
+ * gimp_enum_set_value_descriptions:
+ * @enum_type:    a #GType
+ * @descriptions: a %NULL terminated constant static array of #GimpEnumDesc
+ *
+ * Sets the array of human readable and translatable descriptions
+ * and help texts for enum values.
+ *
+ * Since: GIMP 2.2
+ **/
+void
+gimp_enum_set_value_descriptions (GType               enum_type,
+                                  const GimpEnumDesc *descriptions)
+{
+  g_return_if_fail (g_type_is_a (enum_type, G_TYPE_ENUM));
+  g_return_if_fail (descriptions != NULL);
+
+  g_type_set_qdata (enum_type,
+                    gimp_value_descriptions_quark (),
+                    (gpointer) descriptions);
+}
+
+/**
+ * gimp_enum_get_value_descriptions:
+ * @enum_type: a #GType
+ *
+ * Retreives the array of human readable and translatable descriptions
+ * and help texts for enum values.
+ *
+ * Returns: a %NULL terminated constant array of #GimpEnumDesc
+ *
+ * Since: GIMP 2.2
+ **/
+const GimpEnumDesc *
+gimp_enum_get_value_descriptions (GType enum_type)
+{
+  g_return_val_if_fail (g_type_is_a (enum_type, G_TYPE_ENUM), NULL);
+
+  return (const GimpEnumDesc *)
+    g_type_get_qdata (enum_type, gimp_value_descriptions_quark ());
+}
+
+/**
+ * gimp_flags_set_value_descriptions:
+ * @flags_type:   a #GType
+ * @descriptions: a %NULL terminated constant static array of #GimpFlagsDesc
+ *
+ * Sets the array of human readable and translatable descriptions
+ * and help texts for flags values.
+ *
+ * Since: GIMP 2.2
+ **/
+void
+gimp_flags_set_value_descriptions (GType                flags_type,
+                                   const GimpFlagsDesc *descriptions)
+{
+  g_return_if_fail (g_type_is_a (flags_type, G_TYPE_FLAGS));
+  g_return_if_fail (descriptions != NULL);
+
+  g_type_set_qdata (flags_type,
+                    gimp_value_descriptions_quark (),
+                    (gpointer) descriptions);
+}
+
+/**
+ * gimp_flags_get_value_descriptions:
+ * @flags_type: a #GType
+ *
+ * Retreives the array of human readable and translatable descriptions
+ * and help texts for flags values.
+ *
+ * Returns: a %NULL terminated constant array of #GimpFlagsDesc
+ *
+ * Since: GIMP 2.2
+ **/
+const GimpFlagsDesc *
+gimp_flags_get_value_descriptions (GType flags_type)
+{
+  g_return_val_if_fail (g_type_is_a (flags_type, G_TYPE_FLAGS), NULL);
+
+  return (const GimpFlagsDesc *)
+    g_type_get_qdata (flags_type, gimp_value_descriptions_quark ());
+}
+
+
+/*  private functions  */
+
 static GQuark
 gimp_translation_domain_quark (void)
 {
@@ -78,6 +166,17 @@ gimp_translation_domain_quark (void)
 
   if (! quark)
     quark = g_quark_from_static_string ("gimp-translation-domain-quark");
+
+  return quark;
+}
+
+static GQuark
+gimp_value_descriptions_quark (void)
+{
+  static GQuark quark = 0;
+
+  if (! quark)
+    quark = g_quark_from_static_string ("gimp-value-descriptions-quark");
 
   return quark;
 }

@@ -1,3 +1,47 @@
+2004-10-25  Michael Natterer  <mitch@gimp.org>
+
+	Don't store human readable and translatable enum/flag strings in
+	GEnumValue's and GTypeValue's fields but attach them to their
+	GType using separate structs and utility functions:
+
+	* tools/gimp-mkenums: added params and perl voodoo to support
+	generating a second array of values, which is used by the
+	Makefiles below to create and register arrays of value
+	descriptions.
+
+	* libgimpbase/gimpbasetypes.[ch]: added API to attach/retreive
+	arrays of translatable strings to/from enum and flags types. Added
+	structs GimpEnumDesc and GimpFlagsDesc for that purpose.
+
+	* libgimpbase/gimputils.[ch]: changed existing enum utility
+	functions, added new ones and added a symmetric API for flags.
+
+	* app/base/Makefile.am
+	* app/core/Makefile.am
+	* app/display/Makefile.am
+	* app/paint/Makefile.am
+	* app/text/Makefile.am
+	* app/tools/Makefile.am
+	* app/widgets/Makefile.am
+	* libgimp/Makefile.am
+	* libgimpbase/Makefile.am: changed *-enums.c generation rules
+	accordingly.
+
+	* app/base/base-enums.c
+	* app/core/core-enums.c
+	* app/display/display-enums.c
+	* app/paint/paint-enums.c
+	* app/text/text-enums.c
+	* app/tools/tools-enums.c
+	* app/widgets/widgets-enums.c
+	* libgimpbase/gimpbaseenums.c: regenerated.
+
+	* app/widgets/gimpenumstore.c
+	* app/widgets/gimpenumwidgets.c
+	* app/widgets/gimptemplateeditor.c
+	* libgimpwidgets/gimppreviewarea.c: follow the enum utility
+	function API changes.
+
 2004-10-25  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/imagemap/imap_cmd_gimp_guides.c

@@ -538,7 +538,11 @@ plug_in_close (PlugIn   *plug_in,
   /* If necessary, kill the filter. */
 #ifndef G_OS_WIN32
   if (kill_it && plug_in->pid)
-    status = kill (plug_in->pid, SIGKILL);
+    {
+      g_warning ("Terminating %s ...",
+                 gimp_filename_to_utf8 (plug_in->prog));
+      status = kill (plug_in->pid, SIGKILL);
+    }
 
   /* Wait for the process to exit. This will happen
    *  immediately if it was just killed.

@@ -33,15 +33,40 @@ G_BEGIN_DECLS
 
 typedef struct _GimpParasite     GimpParasite;
 typedef struct _GimpDatafileData GimpDatafileData;
+typedef struct _GimpEnumDesc     GimpEnumDesc;
+typedef struct _GimpFlagsDesc    GimpFlagsDesc;
 
 
 typedef void (* GimpDatafileLoaderFunc) (const GimpDatafileData *file_data,
                                          gpointer                user_data);
 
 
-void           gimp_type_set_translation_domain (GType        type,
-                                                 const gchar *domain);
-const gchar *  gimp_type_get_translation_domain (GType        type);
+struct _GimpEnumDesc
+{
+  gint   value;
+  gchar *value_desc;
+  gchar *value_help;
+};
+
+struct _GimpFlagsDesc
+{
+  guint  value;
+  gchar *value_desc;
+  gchar *value_help;
+};
+
+
+void                  gimp_type_set_translation_domain  (GType                type,
+                                                         const gchar         *domain);
+const gchar         * gimp_type_get_translation_domain  (GType                type);
+
+void                  gimp_enum_set_value_descriptions  (GType                enum_type,
+                                                         const GimpEnumDesc  *descriptions);
+const GimpEnumDesc  * gimp_enum_get_value_descriptions  (GType                enum_type);
+
+void                  gimp_flags_set_value_descriptions (GType                flags_type,
+                                                         const GimpFlagsDesc *descriptions);
+const GimpFlagsDesc * gimp_flags_get_value_descriptions (GType                flags_type);
 
 
 G_END_DECLS
