@@ -1,3 +1,10 @@
+Sun Mar 28 23:56:46 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* plug-ins/gap/README: refelct the fact that GAP is now part of
+	the distribution
+	* plug-ins/gap/gimp_1.0.2: removes since the files were doubles
+	* plug-ins/gap/*.c: use g_getenv, g_malloc, g_new and g_free 
+
 Sat Mar 27 22:37:35 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* app/procedural_db.h: #include <glib.h>
