@@ -1,3 +1,10 @@
+2000-04-01  Jay Cox  <jaycox@earthlink.net>
+
+	* app/paint_funcs.c: Fixed the off by one error that was the cause
+ 	of bug #4980.  Fixed a bug that caused images to have their
+ 	centers shifted slightly when resizing.  Removed a couple of
+ 	unused variables.
+
 2000-03-31  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpdnd.[ch]: minor cleanups.

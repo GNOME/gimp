@@ -140,7 +140,7 @@ update_tile_rowhints (Tile *tile,
 		      int   ymin, 
 		      int   ymax)
 {
-  int bpp, ewidth, eheight;
+  int bpp, ewidth;
   int x,y;
   guchar* ptr;
   guchar alpha;
@@ -154,7 +154,6 @@ update_tile_rowhints (Tile *tile,
 
   bpp = tile_bpp (tile);
   ewidth = tile_ewidth (tile);
-  eheight = tile_eheight (tile);
 
   if (bpp == 1 || bpp == 3)
     {
@@ -3940,10 +3939,10 @@ void expand_line(double *dest, double *src, int bytes,
     case CUBIC_INTERPOLATION:
       for (x = 0; x < width; x++)
       {
-	src_col = ((int)((x - 0.5) * ratio + 2.0)) - 2;
+	src_col = ((int)((x) * ratio  + 2.0 - 0.5)) - 2;
 	/* +2, -2 is there because (int) rounds towards 0 and we need 
 	   to round down */
-	frac =          ((x - 0.5) * ratio) - src_col;
+	frac =          ((x) * ratio - 0.5) - src_col;
 	s = &src[src_col * bytes];
 	for (b = 0; b < bytes; b++)
 	  dest[b] = cubic (frac, s[b - bytes], s[b], s[b+bytes], s[b+bytes*2]);
@@ -3953,10 +3952,10 @@ void expand_line(double *dest, double *src, int bytes,
     case LINEAR_INTERPOLATION:
       for (x = 0; x < width; x++)
       {
-	src_col = ((int)((x - 0.5) * ratio + 2.0)) - 2;
+	src_col = ((int)((x) * ratio + 2.0 - 0.5)) - 2;
 	/* +2, -2 is there because (int) rounds towards 0 and we need 
 	   to round down */
-	frac =          ((x - 0.5) * ratio) - src_col;
+	frac =          ((x) * ratio - 0.5) - src_col;
 	s = &src[src_col * bytes];
 	for (b = 0; b < bytes; b++)
 	  dest[b] = ((s[b + bytes] - s[b]) * frac + s[b]);
@@ -4052,9 +4051,9 @@ scale_region (PixelRegion *srcPR,
   int bytes, b;
   int width, height;
   int orig_width, orig_height;
-  double x_rat, y_rat;
+  double y_rat;
   int i;
-  int old_y = -3, new_y;
+  int old_y = -4, new_y;
   int x, y;
 
   if (interpolation_type == NEAREST_NEIGHBOR_INTERPOLATION)
@@ -4069,11 +4068,9 @@ scale_region (PixelRegion *srcPR,
   width = destPR->w;
   height = destPR->h;
 
-  /*  find the ratios of old x to new x and old y to new y  */
-  x_rat = (double) orig_width / (double) width;
+  /*  find the ratios of old y to new y  */
   y_rat = (double) orig_height / (double) height;
 
-  /*  Some calculations...  */
   bytes = destPR->bytes;
 
   /*  the data pointers...  */
@@ -4130,7 +4127,8 @@ scale_region (PixelRegion *srcPR,
     }      
     else if (height > orig_height)
     {
-      new_y = floor((y - 0.5) * y_rat);
+      //      new_y = floor((y - 0.5) * y_rat);
+      new_y = floor((y) * y_rat - .5);
     
       while (old_y <= new_y)
       { /* get the necesary lines from the source image, scale them,
@@ -4144,7 +4142,8 @@ scale_region (PixelRegion *srcPR,
        case CUBIC_INTERPOLATION:
        {
 	 double p0, p1, p2, p3;
-	 double dy = ((y - 0.5) * y_rat) - new_y;
+	 //	 double dy = ((y - 0.5) * y_rat) - new_y;
+	 double dy = ((y) * y_rat - .5) - new_y;
 	 p0 = cubic(dy, 1, 0, 0, 0);
 	 p1 = cubic(dy, 0, 1, 0, 0);
 	 p2 = cubic(dy, 0, 0, 1, 0);
@@ -4155,7 +4154,7 @@ scale_region (PixelRegion *srcPR,
        } break;
        case LINEAR_INTERPOLATION:
        {
-	 double idy = ((y - 0.5) * y_rat) - new_y;
+	 double idy = ((y) * y_rat - 0.5) - new_y;
 	 double dy = 1.0 - idy;
 	 for (x = 0; x < width * bytes; x++)
 	   accum[x] = dy * src[1][x] + idy * src[2][x];
