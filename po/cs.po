@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.0\n"
-"POT-Creation-Date: 2002-10-25 05:42+0200\n"
-"PO-Revision-Date: 2002-10-25 12:40GMT\n"
+"POT-Creation-Date: 2002-11-04 10:01+0100\n"
+"PO-Revision-Date: 2002-11-04 22:35GMT\n"
 "Last-Translator: Michal Bukovjan <bukm@centrum.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -265,7 +265,7 @@ msgstr "Vložit"
 msgid "Cut"
 msgstr "Vyjmout"
 
-#: app/undo.c:3616
+#: app/undo.c:3616 app/tools/gimptexttool.c:148
 msgid "Text"
 msgstr "Text"
 
@@ -459,32 +459,27 @@ msgstr "Pouze šedá"
 msgid "Black Only"
 msgstr "Pouze černá"
 
-#: app/base/base-enums.c:113 app/gui/color-notebook.c:264
-#: app/widgets/gimpwidgets-constructors.c:68
+#: app/base/base-enums.c:113 app/widgets/gimpwidgets-constructors.c:68
 #: app/widgets/gimpwidgets-constructors.c:98
 msgid "Value"
 msgstr "Jas"
 
-#: app/base/base-enums.c:114 app/gui/color-notebook.c:265
-#: app/tools/gimpcolorbalancetool.c:306
+#: app/base/base-enums.c:114 app/tools/gimpcolorbalancetool.c:306
 #: app/widgets/gimpcomponentlistitem.c:481
 msgid "Red"
 msgstr "Červená"
 
-#: app/base/base-enums.c:115 app/gui/color-notebook.c:266
-#: app/tools/gimpcolorbalancetool.c:313
+#: app/base/base-enums.c:115 app/tools/gimpcolorbalancetool.c:313
 #: app/widgets/gimpcomponentlistitem.c:482
 msgid "Green"
 msgstr "Zelená"
 
-#: app/base/base-enums.c:116 app/gui/color-notebook.c:267
-#: app/tools/gimpcolorbalancetool.c:320
+#: app/base/base-enums.c:116 app/tools/gimpcolorbalancetool.c:320
 #: app/widgets/gimpcomponentlistitem.c:483
 msgid "Blue"
 msgstr "Modrá"
 
-#: app/base/base-enums.c:117 app/gui/color-notebook.c:268
-#: app/widgets/gimpcomponentlistitem.c:486
+#: app/base/base-enums.c:117 app/widgets/gimpcomponentlistitem.c:486
 msgid "Alpha"
 msgstr "Alfa"
 
@@ -811,7 +806,7 @@ msgstr "Popředí do pozadí (HSV proti směru hodinových ručiček)"
 msgid "FG to BG (HSV clockwise hue)"
 msgstr "Popředí do pozadí (HSV odstín po směru hodinových ručiček)"
 
-#: app/core/gimpbrush.c:510
+#: app/core/gimpbrush.c:511
 #, c-format
 msgid ""
 "Fatal parsing error (unknown version %d):\n"
@@ -820,7 +815,7 @@ msgstr ""
 "Fatální chyba zpracování (neznámá verze %d):\n"
 "Soubor se stopou '%s'"
 
-#: app/core/gimpbrush.c:531 app/core/gimpbrush.c:559 app/core/gimpbrush.c:578
+#: app/core/gimpbrush.c:532 app/core/gimpbrush.c:560 app/core/gimpbrush.c:579
 #, c-format
 msgid ""
 "Fatal parsing error:\n"
@@ -829,12 +824,12 @@ msgstr ""
 "Fatální chyba zpracování:\n"
 "Soubor se stopou '%s' vypadá jako useknutý."
 
-#: app/core/gimpbrush.c:539 app/core/gimpbrushpipe.c:330
+#: app/core/gimpbrush.c:540 app/core/gimpbrushpipe.c:330
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Neplatný řetězec v kódování UTF-8 v souboru se stopou '%s'."
 
-#: app/core/gimpbrush.c:547 app/core/gimpbrushpipe.c:332
+#: app/core/gimpbrush.c:548 app/core/gimpbrushpipe.c:332
 #: app/core/gimpcontext.c:1212 app/core/gimpgradient.c:354
 #: app/core/gimppalette.c:345 app/core/gimppattern.c:346
 msgid "Unnamed"
@@ -1630,70 +1625,21 @@ msgstr "Vlastnosti kanálu"
 msgid "Edit Channel Attributes"
 msgstr "Úpravy vlastností kanálu"
 
-#. Hue
-#: app/gui/color-notebook.c:246
-msgid "H"
-msgstr "H"
-
-#. Saturation
-#: app/gui/color-notebook.c:248
-msgid "S"
-msgstr "S"
-
-#. Value
-#: app/gui/color-notebook.c:250
-msgid "V"
-msgstr "V"
-
-#. Red
-#: app/gui/color-notebook.c:252
-msgid "R"
-msgstr "R"
-
-#. Green
-#: app/gui/color-notebook.c:254
-msgid "G"
-msgstr "G"
-
-#. Blue
-#: app/gui/color-notebook.c:256
-msgid "B"
-msgstr "B"
-
-#. Alpha
-#: app/gui/color-notebook.c:258
-msgid "A"
-msgstr "A"
-
-#: app/gui/color-notebook.c:262 app/widgets/gimpwidgets-constructors.c:65
-#: app/widgets/gimpwidgets-constructors.c:95
-msgid "Hue"
-msgstr "Odstín"
-
-#: app/gui/color-notebook.c:263 app/widgets/gimpwidgets-constructors.c:66
-#: app/widgets/gimpwidgets-constructors.c:96
-msgid "Saturation"
-msgstr "Sytost"
-
-#: app/gui/color-notebook.c:425
+#: app/gui/color-notebook.c:397
 msgid "Current:"
 msgstr "Aktuální:"
 
-#: app/gui/color-notebook.c:446
+#: app/gui/color-notebook.c:418
 msgid "Old:"
 msgstr "Stará:"
 
-#: app/gui/color-notebook.c:468
+#: app/gui/color-notebook.c:439
 msgid "Revert to old color"
 msgstr "Navrátit předchozí barvu"
 
-#: app/gui/color-notebook.c:572
+#: app/gui/color-notebook.c:474
 msgid "Add the current color to the color history"
 msgstr "Přidá aktuální barvy do historie barev"
-
-#: app/gui/color-notebook.c:636
-msgid "He_x Triplet:"
-msgstr "He_x trojice:"
 
 #: app/gui/colormap-editor-commands.c:108
 msgid "Edit Indexed Color"
@@ -1938,11 +1884,6 @@ msgstr "Navigace zobrazení"
 msgid "Navigation"
 msgstr "Navigace"
 
-#: app/gui/dialogs-constructors.c:1159 app/gui/dialogs-constructors.c:1197
-#, c-format
-msgid "%s Options"
-msgstr "Volby pro %s"
-
 #: app/gui/drawable-commands.c:72
 msgid "Desaturate operates only on RGB color drawables."
 msgstr "Odbarvení pracuje pouze s obrazovkami v RGB barvách."
@@ -2001,12 +1942,12 @@ msgstr ""
 "%s"
 
 #. Error message should be added. --bex
-#: app/gui/file-commands.c:173 app/gui/file-save-dialog.c:438
+#: app/gui/file-commands.c:184 app/gui/file-save-dialog.c:444
 #, c-format
 msgid "Saving '%s' failed."
 msgstr "Zápis '%s' selhal."
 
-#: app/gui/file-commands.c:215
+#: app/gui/file-commands.c:229
 msgid ""
 "Revert failed.\n"
 "No file name associated with this image."
@@ -2014,7 +1955,7 @@ msgstr ""
 "Navrácení selhalo.\n"
 "S tímto obrázkem není spojen žádný název souboru."
 
-#: app/gui/file-commands.c:229
+#: app/gui/file-commands.c:243
 #, c-format
 msgid ""
 "Revert '%s' to\n"
@@ -2029,11 +1970,11 @@ msgstr ""
 "(Všechny provedené změny se nenávratně\n"
 "ztratí, včetně informací o zpětných úpravách)"
 
-#: app/gui/file-commands.c:237
+#: app/gui/file-commands.c:251
 msgid "Revert Image"
 msgstr "Navrátit obrázek"
 
-#: app/gui/file-commands.c:321
+#: app/gui/file-commands.c:337
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -2126,11 +2067,11 @@ msgstr ""
 msgid "Confirm Image Size"
 msgstr "Potvrdit rozměry plátna"
 
-#: app/gui/file-open-dialog.c:181 app/gui/file-open-dialog.c:198
+#: app/gui/file-open-dialog.c:208 app/gui/file-open-dialog.c:232
 msgid "Open Image"
 msgstr "Otevřít obrázek"
 
-#: app/gui/file-open-dialog.c:244
+#: app/gui/file-open-dialog.c:278
 msgid ""
 "Click to update preview\n"
 "<Ctrl> Click to force update even if preview is up-to-date"
@@ -2139,28 +2080,28 @@ msgstr ""
 "Klávesou <Ctrl> vynutíte aktualizaci, i když je náhled aktuální"
 
 #. The preview toggle
-#: app/gui/file-open-dialog.c:256 app/tools/gimpimagemaptool.c:225
+#: app/gui/file-open-dialog.c:290 app/tools/gimpimagemaptool.c:225
 msgid "_Preview"
 msgstr "_Náhled"
 
-#: app/gui/file-open-dialog.c:309 app/gui/file-open-dialog.c:428
+#: app/gui/file-open-dialog.c:343 app/gui/file-open-dialog.c:462
 msgid "No Selection"
 msgstr "Žádný výběr"
 
-#: app/gui/file-open-dialog.c:517 app/gui/file-open-dialog.c:547
+#: app/gui/file-open-dialog.c:551 app/gui/file-open-dialog.c:581
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Miniatura č. %d z %d"
 
-#: app/gui/file-save-dialog.c:174 app/gui/file-save-dialog.c:234
+#: app/gui/file-save-dialog.c:172 app/gui/file-save-dialog.c:240
 msgid "Save Image"
 msgstr "Zapsat obrázek"
 
-#: app/gui/file-save-dialog.c:213
+#: app/gui/file-save-dialog.c:219
 msgid "Save a Copy of the Image"
 msgstr "Zapíše kopii obrázku"
 
-#: app/gui/file-save-dialog.c:371
+#: app/gui/file-save-dialog.c:377
 #, c-format
 msgid ""
 "File '%s' exists.\n"
@@ -2169,7 +2110,7 @@ msgstr ""
 "Soubor %s existuje.\n"
 "Přepsat?"
 
-#: app/gui/file-save-dialog.c:374
+#: app/gui/file-save-dialog.c:380
 msgid "File Exists!"
 msgstr "Soubor existuje!"
 
@@ -4800,7 +4741,7 @@ msgstr "Vybrat obvod:"
 msgid "GIMP Startup"
 msgstr "Spouští se program GIMP"
 
-#: app/gui/splash.c:96 app/widgets/gimptoolbox.c:173
+#: app/gui/splash.c:96 app/widgets/gimptoolbox.c:183
 msgid "The GIMP"
 msgstr "GIMP"
 
@@ -5635,14 +5576,6 @@ msgstr "Spouští se rozšíření: "
 msgid "Starting Extensions"
 msgstr "Spouští se rozšíření"
 
-#: app/tools/tools-enums.c:13
-msgid "Crop"
-msgstr "Ořez"
-
-#: app/tools/tools-enums.c:14
-msgid "Resize"
-msgstr "Rozměry plátna"
-
 #: app/tools/gimpairbrushtool.c:63
 msgid "Airbrush"
 msgstr "Vzdušný štětec"
@@ -6158,7 +6091,7 @@ msgid "Hard Edge"
 msgstr "Ostré hrany"
 
 #: app/tools/gimpfliptool.c:94
-msgid "Flip Tool"
+msgid "Flip"
 msgstr "Překlopení"
 
 #: app/tools/gimpfliptool.c:95
@@ -6322,8 +6255,8 @@ msgid "R_eset Color"
 msgstr "Obnovit bar_vu"
 
 #: app/tools/gimpinktool.c:256
-msgid "Ink Tool"
-msgstr "Pero"
+msgid "Ink"
+msgstr "Inkoust"
 
 #: app/tools/gimpinktool.c:257
 msgid "Draw in ink"
@@ -6371,8 +6304,8 @@ msgid "Shape"
 msgstr "Tvar"
 
 #: app/tools/gimpiscissorstool.c:276
-msgid "Intelligent Scissors"
-msgstr "Inteligentní nůžky"
+msgid "Scissors"
+msgstr "Nůžky"
 
 #: app/tools/gimpiscissorstool.c:277
 msgid "Select shapes from image"
@@ -6419,7 +6352,7 @@ msgstr "Vyberte černý bod"
 msgid "Pick Gray Point"
 msgstr "Vyberte šedý bod"
 
-#: app/tools/gimplevelstool.c:527 modules/cdisplay_gamma.c:155
+#: app/tools/gimplevelstool.c:527
 msgid "Gamma"
 msgstr "Gama"
 
@@ -6502,7 +6435,7 @@ msgid "Use Info Window"
 msgstr "Použít informační okno"
 
 #: app/tools/gimpmovetool.c:119
-msgid "Move Tool"
+msgid "Move"
 msgstr "Přesun"
 
 #: app/tools/gimpmovetool.c:120
@@ -6546,9 +6479,9 @@ msgstr "Kreslení neostrých tahů štětcem"
 msgid "/Tools/Paint Tools/Paintbrush"
 msgstr "/Nástroje/Nástroje kreslení/Štětec"
 
-#: app/tools/gimppathtool.c:116 app/tools/path_tool.c:1413
-msgid "Path Tool"
-msgstr "Nástroj pro cesty"
+#: app/tools/gimppathtool.c:116
+msgid "Path"
+msgstr "Cesta"
 
 #: app/tools/gimppathtool.c:117
 msgid "Path tool prototype"
@@ -6571,7 +6504,7 @@ msgid "/Tools/Paint Tools/Pencil"
 msgstr "/Nástroje/Nástroje kreslení/Tužka"
 
 #: app/tools/gimpperspectivetool.c:82
-msgid "Perspective Tool"
+msgid "Perspective"
 msgstr "Perspektiva"
 
 #: app/tools/gimpperspectivetool.c:83
@@ -6678,9 +6611,9 @@ msgstr "Střed X:"
 msgid "Rotating..."
 msgstr "Rotuje se..."
 
-#: app/tools/gimpscaletool.c:97
-msgid "Scale Tool"
-msgstr "Nástroj pro škálování"
+#: app/tools/gimpscaletool.c:97 app/tools/gimpscaletool.c:179
+msgid "Scale"
+msgstr "Škála"
 
 #: app/tools/gimpscaletool.c:98
 msgid "Scale the layer or selection"
@@ -6689,10 +6622,6 @@ msgstr "Škálování vrstvy nebo výběru"
 #: app/tools/gimpscaletool.c:99
 msgid "/Tools/Transform Tools/Scale"
 msgstr "/Nástroje/Nástroje transformace/Škálování"
-
-#: app/tools/gimpscaletool.c:179
-msgid "Scale"
-msgstr "Škála"
 
 #: app/tools/gimpscaletool.c:181
 msgid "Scaling Information"
@@ -6706,9 +6635,9 @@ msgstr "Aktuální šířka:"
 msgid "Scale Ratio X:"
 msgstr "Zvětšení X:"
 
-#: app/tools/gimpsheartool.c:99
-msgid "Shear Tool"
-msgstr "Naklonění"
+#: app/tools/gimpsheartool.c:99 app/tools/gimpsheartool.c:173
+msgid "Shear"
+msgstr "Naklonit"
 
 #: app/tools/gimpsheartool.c:100
 msgid "Shear the layer or selection"
@@ -6717,10 +6646,6 @@ msgstr "Naklonění vrstvy nebo výběru"
 #: app/tools/gimpsheartool.c:101
 msgid "/Tools/Transform Tools/Shear"
 msgstr "/Nástroje/Nástroje transformace/Naklonění"
-
-#: app/tools/gimpsheartool.c:173
-msgid "Shear"
-msgstr "Naklonit"
 
 #: app/tools/gimpsheartool.c:175
 msgid "Shearing Information"
@@ -6745,10 +6670,6 @@ msgstr "Poskvrnění obrázku"
 #: app/tools/gimpsmudgetool.c:59
 msgid "/Tools/Paint Tools/Smudge"
 msgstr "/Nástroje/Nástroje kreslení/Šmouha"
-
-#: app/tools/gimptexttool.c:148
-msgid "Text Tool"
-msgstr "Textový nástroj"
 
 #: app/tools/gimptexttool.c:149
 msgid "Add text to the image"
@@ -6837,16 +6758,16 @@ msgstr ""
 "které obsahují masky."
 
 #: app/tools/gimpvectortool.c:115
-msgid "Vector Tool"
-msgstr "Vektorový nástroj"
+msgid "Vectors"
+msgstr "Vektory"
 
 #: app/tools/gimpvectortool.c:116
 msgid "Vector angles and lengths"
 msgstr "Vektory úhlů a vzdáleností"
 
 #: app/tools/gimpvectortool.c:117
-msgid "/Tools/Vector"
-msgstr "/Nástroje/Vektor"
+msgid "/Tools/Vectors"
+msgstr "/Nástroje/Vektory"
 
 #: app/tools/paint_options.c:182
 msgid "Brush:"
@@ -6887,6 +6808,10 @@ msgstr "Použít barvu z přechodu"
 #: app/tools/paint_options.c:564
 msgid "Type:"
 msgstr "Typ:"
+
+#: app/tools/path_tool.c:1413
+msgid "Path Tool"
+msgstr "Nástroj pro cesty"
 
 #: app/tools/selection_options.c:112
 msgid "Replace the current selection"
@@ -7081,7 +7006,7 @@ msgstr "Úpravy"
 msgid "Refresh"
 msgstr "Zaktualizovat"
 
-#: app/widgets/gimpdatafactoryview.c:402
+#: app/widgets/gimpdatafactoryview.c:410
 #, c-format
 msgid ""
 "Are you sure you want to delete\n"
@@ -7090,7 +7015,7 @@ msgstr ""
 "Jste si jisti, že chcete smazat\n"
 "\"%s\" ze seznamu a vašeho disku?"
 
-#: app/widgets/gimpdatafactoryview.c:406
+#: app/widgets/gimpdatafactoryview.c:414
 msgid "Delete Data Object"
 msgstr "Smazat datový objekt"
 
@@ -7348,7 +7273,7 @@ msgstr ""
 "Aktivní přechod.\n"
 "Dialog přechodů otevřete klepnutím."
 
-#: app/widgets/gimptoolbox.c:685
+#: app/widgets/gimptoolbox.c:723
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to open the color selection dialog."
@@ -7436,6 +7361,16 @@ msgstr "Pouze ztmavení"
 msgid "Lighten Only"
 msgstr "Pouze zesvětlení"
 
+#: app/widgets/gimpwidgets-constructors.c:65
+#: app/widgets/gimpwidgets-constructors.c:95
+msgid "Hue"
+msgstr "Odstín"
+
+#: app/widgets/gimpwidgets-constructors.c:66
+#: app/widgets/gimpwidgets-constructors.c:96
+msgid "Saturation"
+msgstr "Sytost"
+
 #: app/widgets/gimpwidgets-utils.c:95
 #, c-format
 msgid "Message repeated %d times."
@@ -7483,46 +7418,6 @@ msgstr "chyba XCF: nalezena nepodporovaná verze %d XCF souboru"
 msgid "open failed on %s: %s\n"
 msgstr "otevření %s selhalo: %s\n"
 
-#: modules/cdisplay_gamma.c:89
-msgid "Gamma color display filter"
-msgstr "Zobrazovací filtr pro barvy gama"
-
-#: modules/cdisplay_gamma.c:316
-msgid "Gamma:"
-msgstr "Gama:"
-
-#: modules/cdisplay_highcontrast.c:89
-msgid "High Contrast color display filter"
-msgstr "Zobrazovací filtr pro vysoce kontrastní barvy"
-
-#: modules/cdisplay_highcontrast.c:155
-msgid "Contrast"
-msgstr "Kontrast"
-
-#: modules/cdisplay_highcontrast.c:314
-msgid "Contrast Cycles:"
-msgstr "Cykly kontrastu:"
-
-#: modules/colorsel_triangle.c:110
-msgid "Painter-style triangle color selector"
-msgstr "Výběr barev na malířský způsob z trojúhelníku"
-
-#: modules/colorsel_triangle.c:182
-msgid "Triangle"
-msgstr "Trojúhelník"
-
-#: modules/colorsel_water.c:107
-msgid "Watercolor style color selector"
-msgstr "Výběr barev na způsob vodových barev"
-
-#: modules/colorsel_water.c:179
-msgid "Watercolor"
-msgstr "Vodové barvy"
-
-#: modules/colorsel_water.c:253
-msgid "Pressure"
-msgstr "Tlak"
-
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "Vytváření a úpravy obrázků a fotografií"
@@ -7530,6 +7425,95 @@ msgstr "Vytváření a úpravy obrázků a fotografií"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "GIMP (nestabilní)"
+
+#: libgimptool/gimptoolenums.c:14
+msgid "Crop"
+msgstr "Ořez"
+
+#: libgimptool/gimptoolenums.c:15
+msgid "Resize"
+msgstr "Rozměry plátna"
+
+#~ msgid "H"
+#~ msgstr "H"
+
+#~ msgid "S"
+#~ msgstr "S"
+
+#~ msgid "V"
+#~ msgstr "V"
+
+#~ msgid "R"
+#~ msgstr "R"
+
+#~ msgid "G"
+#~ msgstr "G"
+
+#~ msgid "B"
+#~ msgstr "B"
+
+#~ msgid "A"
+#~ msgstr "A"
+
+#~ msgid "He_x Triplet:"
+#~ msgstr "He_x trojice:"
+
+#~ msgid "%s Options"
+#~ msgstr "Volby pro %s"
+
+#~ msgid "Ink Tool"
+#~ msgstr "Pero"
+
+#~ msgid "Intelligent Scissors"
+#~ msgstr "Inteligentní nůžky"
+
+#~ msgid "Move Tool"
+#~ msgstr "Přesun"
+
+#~ msgid "Perspective Tool"
+#~ msgstr "Perspektiva"
+
+#~ msgid "Scale Tool"
+#~ msgstr "Nástroj pro škálování"
+
+#~ msgid "Shear Tool"
+#~ msgstr "Naklonění"
+
+#~ msgid "Text Tool"
+#~ msgstr "Textový nástroj"
+
+#~ msgid "Vector Tool"
+#~ msgstr "Vektorový nástroj"
+
+#~ msgid "Gamma color display filter"
+#~ msgstr "Zobrazovací filtr pro barvy gama"
+
+#~ msgid "Gamma:"
+#~ msgstr "Gama:"
+
+#~ msgid "High Contrast color display filter"
+#~ msgstr "Zobrazovací filtr pro vysoce kontrastní barvy"
+
+#~ msgid "Contrast"
+#~ msgstr "Kontrast"
+
+#~ msgid "Contrast Cycles:"
+#~ msgstr "Cykly kontrastu:"
+
+#~ msgid "Painter-style triangle color selector"
+#~ msgstr "Výběr barev na malířský způsob z trojúhelníku"
+
+#~ msgid "Triangle"
+#~ msgstr "Trojúhelník"
+
+#~ msgid "Watercolor style color selector"
+#~ msgstr "Výběr barev na způsob vodových barev"
+
+#~ msgid "Watercolor"
+#~ msgstr "Vodové barvy"
+
+#~ msgid "Pressure"
+#~ msgstr "Tlak"
 
 #~ msgid "Cannot float selection: No selection made."
 #~ msgstr "Nelze vytvořit plovoucí výběr: Nebyl proveden výběr."
