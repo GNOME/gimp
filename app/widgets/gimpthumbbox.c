@@ -666,6 +666,9 @@ gimp_thumb_box_create_thumbnail (GimpThumbBox      *box,
       gtk_label_set_text (GTK_LABEL (box->filename), basename);
       g_free (basename);
 
+      if (force)
+        gimp_thumbs_delete_for_uri (uri);
+
       gimp_object_set_name (GIMP_OBJECT (box->imagefile), uri);
 
       if (force ||

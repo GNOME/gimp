@@ -26,14 +26,16 @@ GIMP_THUMBNAIL_GET_CLASS
 <SECTION>
 <FILE>gimpthumb-utils</FILE>
 gimp_thumb_init
-gimp_thumb_name_from_uri
 gimp_thumb_find_thumb
 gimp_thumb_file_test
+gimp_thumb_name_from_uri
 gimp_thumb_ensure_thumb_dir
 gimp_thumb_get_thumb_dir
+gimp_thumbs_delete_for_uri
 gimp_thumb_name_from_uri_local
 gimp_thumb_ensure_thumb_dir_local
 gimp_thumb_get_thumb_dir_local
+gimp_thumbs_delete_for_uri_local
 </SECTION>
 
 <SECTION>

@@ -22,3 +22,5 @@ EXPORTS
 	gimp_thumbnail_set_filename
 	gimp_thumbnail_set_from_thumb
 	gimp_thumbnail_set_uri
+	gimp_thumbs_delete_for_uri
+	gimp_thumbs_delete_for_uri_local

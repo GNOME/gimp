@@ -32,20 +32,6 @@ G_BEGIN_DECLS
 gboolean            gimp_thumb_init                   (const gchar    *creator,
                                                        const gchar    *thumb_basedir);
 
-const gchar       * gimp_thumb_get_thumb_dir          (GimpThumbSize   size);
-gboolean            gimp_thumb_ensure_thumb_dir       (GimpThumbSize   size,
-                                                       GError        **error);
-gchar             * gimp_thumb_name_from_uri          (const gchar    *uri,
-                                                       GimpThumbSize   size);
-
-gchar             * gimp_thumb_get_thumb_dir_local    (const gchar    *dirname,
-                                                       GimpThumbSize   size);
-gboolean            gimp_thumb_ensure_thumb_dir_local (const gchar    *dirname,
-                                                       GimpThumbSize   size,
-                                                       GError        **error);
-gchar             * gimp_thumb_name_from_uri_local    (const gchar    *uri,
-                                                       GimpThumbSize   size);
-
 gchar             * gimp_thumb_find_thumb             (const gchar    *uri,
                                                        GimpThumbSize  *size);
 
@@ -53,6 +39,23 @@ GimpThumbFileType   gimp_thumb_file_test              (const gchar    *filename,
                                                        gint64         *mtime,
                                                        gint64         *size,
                                                        gint           *err_no);
+
+gchar             * gimp_thumb_name_from_uri          (const gchar    *uri,
+                                                       GimpThumbSize   size);
+const gchar       * gimp_thumb_get_thumb_dir          (GimpThumbSize   size);
+gboolean            gimp_thumb_ensure_thumb_dir       (GimpThumbSize   size,
+                                                       GError        **error);
+void                gimp_thumbs_delete_for_uri        (const gchar    *uri);
+
+gchar             * gimp_thumb_name_from_uri_local    (const gchar    *uri,
+                                                       GimpThumbSize   size);
+gchar             * gimp_thumb_get_thumb_dir_local    (const gchar    *dirname,
+                                                       GimpThumbSize   size);
+gboolean            gimp_thumb_ensure_thumb_dir_local (const gchar    *dirname,
+                                                       GimpThumbSize   size,
+                                                       GError        **error);
+void                gimp_thumbs_delete_for_uri_local  (const gchar    *uri);
+
 
 
 G_END_DECLS

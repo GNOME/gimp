@@ -386,7 +386,6 @@ alienmap2_dialog (void)
   GtkWidget *dialog;
   GtkWidget *main_vbox;
   GtkWidget *top_table;
-  GtkWidget *align;
   GtkWidget *frame;
   GtkWidget *toggle;
   GtkWidget *hbox;

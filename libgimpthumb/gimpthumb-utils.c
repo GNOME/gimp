@@ -301,14 +301,14 @@ gimp_thumb_ensure_thumb_dir_local (const gchar    *dirname,
 
 /**
  * gimp_thumb_name_from_uri:
- * @uri: an escaped URI in UTF-8 encoding
+ * @uri: an escaped URI
  * @size: a #GimpThumbSize
  *
  * Creates the name of the thumbnail file of the specified @size that
  * belongs to an image file located at the given @uri.
  *
  * Return value: a newly allocated filename in the encoding of the
- *               filesystem or %NULL if @uri points to the global
+ *               filesystem or %NULL if @uri points to the user's
  *               thumbnail repository.
  **/
 gchar *
@@ -330,7 +330,7 @@ gimp_thumb_name_from_uri (const gchar   *uri,
 
 /**
  * gimp_thumb_name_from_uri_local:
- * @uri: an escaped URI in UTF-8 encoding
+ * @uri: an escaped URI
  * @size: a #GimpThumbSize
  *
  * Creates the name of a local thumbnail file of the specified @size
@@ -339,7 +339,7 @@ gimp_thumb_name_from_uri (const gchar   *uri,
  *
  * Return value: a newly allocated filename in the encoding of the
  *               filesystem or %NULL if @uri is a remote file or
- *               points to the global thumbnail repository.
+ *               points to the user's thumbnail repository.
  *
  * Since: GIMP 2.2
  **/
@@ -384,7 +384,7 @@ gimp_thumb_name_from_uri_local (const gchar   *uri,
 
 /**
  * gimp_thumb_find_thumb:
- * @uri: an escaped URI in UTF-8 encoding
+ * @uri: an escaped URI
  * @size: pointer to a #GimpThumbSize
  *
  * This function attempts to locate a thumbnail for the given
@@ -392,7 +392,7 @@ gimp_thumb_name_from_uri_local (const gchar   *uri,
  * thumbnail of that size is found, it will look for a larger
  * thumbnail, then falling back to a smaller size.
  *
- * If the global thumbnail repository doesn't provide a thumbnail but
+ * If the user's thumbnail repository doesn't provide a thumbnail but
  * a local thumbnail repository exists for the folder the image is
  * located in, the same search is done among the local thumbnails.
  *
@@ -487,6 +487,64 @@ gimp_thumb_file_test (const gchar *filename,
   if (err_no) *err_no = errno;
 
   return GIMP_THUMB_FILE_TYPE_NONE;
+}
+
+/**
+ * gimp_thumbs_delete_for_uri:
+ * @uri: an escaped URI
+ *
+ * Deletes all thumbnails for the image file specified by @uri from the
+ * user's thumbnail repository.
+ *
+ * Since: GIMP 2.2
+ **/
+void
+gimp_thumbs_delete_for_uri (const gchar *uri)
+{
+  gint i;
+
+  g_return_if_fail (gimp_thumb_initialized);
+  g_return_if_fail (uri != NULL);
+
+  for (i = 0; i < thumb_num_sizes; i++)
+    {
+      gchar *filename = gimp_thumb_name_from_uri (uri, thumb_sizes[i]);
+
+      if (filename)
+        {
+          unlink (filename);
+          g_free (filename);
+        }
+    }
+}
+
+/**
+ * gimp_thumbs_delete_for_uri_local:
+ * @uri: an escaped URI
+ *
+ * Deletes all thumbnails for the image file specified by @uri from
+ * the local thumbnail repository.
+ *
+ * Since: GIMP 2.2
+ **/
+void
+gimp_thumbs_delete_for_uri_local (const gchar *uri)
+{
+  gint i;
+
+  g_return_if_fail (gimp_thumb_initialized);
+  g_return_if_fail (uri != NULL);
+
+  for (i = 0; i < thumb_num_sizes; i++)
+    {
+      gchar *filename = gimp_thumb_name_from_uri_local (uri, thumb_sizes[i]);
+
+      if (filename)
+        {
+          unlink (filename);
+          g_free (filename);
+        }
+    }
 }
 
 static void

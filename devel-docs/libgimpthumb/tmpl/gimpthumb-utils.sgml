@@ -24,16 +24,6 @@ Utility functions provided and used by libgimpthumb
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_thumb_name_from_uri ##### -->
-<para>
-
-</para>
-
-@uri: 
-@size: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_thumb_find_thumb ##### -->
 <para>
 
@@ -56,6 +46,16 @@ Utility functions provided and used by libgimpthumb
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_thumb_name_from_uri ##### -->
+<para>
+
+</para>
+
+@uri: 
+@size: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_thumb_ensure_thumb_dir ##### -->
 <para>
 
@@ -73,6 +73,14 @@ Utility functions provided and used by libgimpthumb
 
 @size: 
 @Returns: 
+
+
+<!-- ##### FUNCTION gimp_thumbs_delete_for_uri ##### -->
+<para>
+
+</para>
+
+@uri: 
 
 
 <!-- ##### FUNCTION gimp_thumb_name_from_uri_local ##### -->
@@ -104,5 +112,13 @@ Utility functions provided and used by libgimpthumb
 @dirname: 
 @size: 
 @Returns: 
+
+
+<!-- ##### FUNCTION gimp_thumbs_delete_for_uri_local ##### -->
+<para>
+
+</para>
+
+@uri: 
 
 

@@ -400,7 +400,7 @@ gimp_thumbnail_new (void)
 /**
  * gimp_thumbnail_set_uri:
  * @thumbnail: a #GimpThumbnail object
- * @uri: an escaped URI in UTF-8 encoding
+ * @uri: an escaped URI
  *
  * Sets the location of the image file associated with the #thumbnail.
  *

@@ -1,3 +1,14 @@
+2004-10-11  Sven Neumann  <sven@gimp.org>
+
+	* libgimpthumb/gimpthumb-utils.[ch]
+	* libgimpthumb/gimpthumb.def: added an API to delete thumbnails.
+
+	* app/widgets/gimpthumbbox.c (gimp_thumb_box_create_thumbnail):
+	when recreating a thumbnail on user request, delete all existing
+	thumbnails for it.
+
+	* plug-ins/common/AlienMap2.c: removed unused variable.
+
 2004-10-10  Sven Neumann  <sven@gimp.org>
 
 	* libgimpthumb/gimpthumb-utils.[ch]
