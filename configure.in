@@ -264,7 +264,10 @@ AC_PATH_XTRA
 AM_PATH_GTK_2_0($GTK_REQUIRED_VERSION,,
   AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))
 
-PKG_CHECK_MODULES(PANGOFT2, pangoft2 >= $PANGOFT2_REQUIRED_VERSION)
+PKG_CHECK_MODULES(PANGOFT2, pangoft2 >= $PANGOFT2_REQUIRED_VERSION,,
+  AC_MSG_ERROR([Test for PangoFT2 failed.
+*** We require Pango with the optional support for FreeType2 compiled in.
+*** See the file 'INSTALL' for more help.]))
 AC_SUBST(PANGOFT2_CFLAGS)
 AC_SUBST(PANGOFT2_LIBS)
 

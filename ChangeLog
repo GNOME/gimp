@@ -1,3 +1,9 @@
+2002-06-06  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL: added FreeType2 URL and suggest to use GNU make.
+
+	* configure.in: improved output in case of missing PangoFT2.
+
 2002-06-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimprectselecttool.c: fixed #84157: allow the tool to
