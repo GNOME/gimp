@@ -802,6 +802,8 @@ data/gradients/Makefile
 data/palettes/Makefile
 data/patterns/Makefile
 Makefile
+build/Makefile
+build/win32/Makefile
 po/Makefile.in
 po-libgimp/Makefile.in
 po-plug-ins/Makefile.in

@@ -1,3 +1,8 @@
+2000-07-05  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: since there really seems to be a "build"
+	directory, we should include it (and its subdirectories) here too. 
+
 2000-07-05  Tor Lillqvist  <tml@iki.fi>
 
 	* app/user_install.c (user_install_resolution): Use "windowing
