@@ -1,3 +1,9 @@
+2001-11-06  Daniel Egger  <degger@fhm.edu>
+
+	* plug-ins/common/gauss_rle.c: Unconditionally premultiply
+	alpha into source and seperate it from the dest. Similar to
+	the previous fix.
+
 2001-11-05  Daniel Egger  <degger@fhm.edu>
 
 	* plug-ins/common/gauss_iir.c: Unconditionally premultiply
