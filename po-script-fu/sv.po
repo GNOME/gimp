@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2001-10-09 17:55+0200\n"
-"PO-Revision-Date: 2001-10-09 17:56+0200\n"
+"POT-Creation-Date: 2001-10-10 00:02+0200\n"
+"PO-Revision-Date: 2001-10-10 00:03+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -216,7 +216,7 @@ msgstr "<Image>/Script-Fu/Alkemi/Väv..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/3D Outline..."
-msgstr "<Image>/Script-Fu/Alfa till logotyp/3D-ram..."
+msgstr "<Image>/Script-Fu/Alfa till logotyp/3D-kontur..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien Glow..."
@@ -249,7 +249,7 @@ msgstr "<Image>/Script-Fu/Alfa till logotyp/Krita..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Chip Away..."
-msgstr "<Image>/Script-Fu/Alfa till logotyp/Kretsa..."
+msgstr "<Image>/Script-Fu/Alfa till logotyp/Hacka loss..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Chrome..."
@@ -289,7 +289,7 @@ msgstr "<Image>/Script-Fu/Alfa till logotyp/Partikelspår..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Starburst..."
-msgstr "<Image>/Script-Fu/Alfa till logotyp/Stjärnstråle..."
+msgstr "<Image>/Script-Fu/Alfa till logotyp/Stjärnutbrott..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Starscape..."
@@ -341,7 +341,7 @@ msgstr "<Image>/Script-Fu/Dekor/Gammalt foto..."
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "<Image>/Script-Fu/Decor/Round Corners..."
-msgstr "<Image>/Script-Fu/Dekor/Runda hörner..."
+msgstr "<Image>/Script-Fu/Dekor/Runda hörn..."
 
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "<Image>/Script-Fu/Decor/Slide..."
@@ -369,7 +369,7 @@ msgstr "<Image>/Script-Fu/Markering/Matta ut markering..."
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "<Image>/Script-Fu/Selection/Fade Outline..."
-msgstr "<Image>/Script-Fu/Markering/Glid över kant..."
+msgstr "<Image>/Script-Fu/Markering/Fasa ut kontur..."
 
 #: plug-ins/script-fu/scripts/selection-round.scm:0
 msgid "<Image>/Script-Fu/Selection/Round..."
@@ -425,7 +425,7 @@ msgstr "<Toolbox>/Utökningar/Script-Fu/Knappar/Enkel avfasad knapp..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/3D-kant..."
+msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/3D-kontur..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
@@ -461,7 +461,7 @@ msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Krita..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Kretsa..."
+msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Hacka loss..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
@@ -521,7 +521,7 @@ msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Snabb text..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Stjärnstråle..."
+msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Stjärnutbrott..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
@@ -873,7 +873,7 @@ msgstr "Avfasningsbredd"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Blend Gradient (Outline)"
-msgstr "Färgtoningsskala (kant)"
+msgstr "Färgtoningsskala (kontur)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Blend Gradient (Text)"
@@ -962,7 +962,7 @@ msgstr "Bumpmappsutsmetningsradie (alfalager)"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
 msgid "Burst Color"
-msgstr "Strålfärg"
+msgstr "Utbrottsfärg"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 msgid "Carve Raised Text"
@@ -982,7 +982,7 @@ msgstr "Kritfärg"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Chip Amount"
-msgstr "Kretsmängd"
+msgstr "Hackmängd"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
@@ -1572,7 +1572,7 @@ msgstr "Nedre färg"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 msgid "Lower-Right color"
-msgstr "Nedre högerkantsfärg"
+msgstr "Nedre högra färg"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Make New Background"
@@ -1700,16 +1700,16 @@ msgstr "Yttre kant"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "Outline Blur Radius"
-msgstr "Utsmetningsradie för kant"
+msgstr "Utsmetningsradie för kontur"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 msgid "Outline Color"
-msgstr "Kantfärg"
+msgstr "Konturfärg"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Outline Size"
-msgstr "Kantstorlek"
+msgstr "Konturstorlek"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Pad Color"
@@ -1742,7 +1742,7 @@ msgstr "Utfyllnad"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Pattern (Outline)"
-msgstr "Mönster (kant)"
+msgstr "Mönster (kontur)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Pattern (Overlay)"
@@ -1783,7 +1783,7 @@ msgstr "Nedtryckt"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 msgid "Quarter Size"
-msgstr "Fjärdedel"
+msgstr "Kvartsstor"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "RLE"
@@ -1946,16 +1946,16 @@ msgstr "Storlek"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Smooth Horizontally"
-msgstr "Mjuka horisontellt"
+msgstr "Utjämna horisontellt"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Smooth Vertically"
-msgstr "Mjuka vertikalt"
+msgstr "Utjämna vertikalt"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Smooth"
-msgstr "Mjuka"
+msgstr "Utjämna"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Space Between Layers"
@@ -2131,7 +2131,7 @@ msgstr "Övre färg"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 msgid "Upper-Left color"
-msgstr "Färg i övre vänsterkant"
+msgstr "Övre vänstra färg"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Use Brush"
@@ -2151,7 +2151,7 @@ msgstr "Använd mönsteröverlagring"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Use Pattern for Outline instead of Gradient"
-msgstr "Använd mönster för kan istället för färgtoning"
+msgstr "Använd mönster för kontur istället för färgtoning"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Use Pattern for Text instead of Gradient"
