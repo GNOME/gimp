@@ -103,4 +103,4 @@
 		    SF-DRAWABLE "Drawable to Animate" 0
 		    SF-ADJUSTMENT _"Rippling Strength" '(3 0 256 1 10 1 0)
 		    SF-ADJUSTMENT _"Number of Frames" '(15 0 256 1 10 0 1)
-		    SF-OPTION _"Edge Behaviour" '(_"Warp" _"Smear" _"Black"))
+		    SF-OPTION _"Edge Behaviour" '(_"Wrap" _"Smear" _"Black"))
