@@ -1,3 +1,9 @@
+Tue Jun  9 12:36:57 EDT 1998  Adrian Likins <adrian@gimp.org>
+
+	*confiure.in: corrected small type concering jpeg test
+	(warning printed out "chekcing for jpeg.h" instead of	
+	jpeglib.h)
+
 Tue Jun  9 04:36:52 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* Got rid of a bunch of warnings when compiling plugins

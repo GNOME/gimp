@@ -139,7 +139,7 @@ dnl Test for libjpeg
       jpeg_ok=no
       AC_MSG_WARN(*** JPEG plug-in will not be built (JPEG library not found) ***))
     if test "$jpeg_ok" = yes; then
-      AC_MSG_CHECKING([for jpeg.h])
+      AC_MSG_CHECKING([for jpeglib.h])
       AC_TRY_CPP(
 [#include <stdio.h>
 #undef PACKAGE
