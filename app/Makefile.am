@@ -60,12 +60,6 @@ if OS_WIN32
 mwindows = -mwindows
 endif
 
-gimp_1_3_LDFLAGS = \
-	$(mwindows)				\
-	-u $(SYMPREFIX)gimp_container_filter	\
-	-u $(SYMPREFIX)gimp_xml_parser_new	\
-	-u $(SYMPREFIX)gimp_drawable_stroke_vectors
-
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp\"		\
 	-DGIMP_APP_GLUE_COMPILATION	\
@@ -76,6 +70,12 @@ INCLUDES = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
 	-I$(includedir)
+
+gimp_1_3_LDFLAGS = \
+	$(mwindows)				\
+	-u $(SYMPREFIX)gimp_container_filter	\
+	-u $(SYMPREFIX)gimp_xml_parser_new	\
+	-u $(SYMPREFIX)gimp_drawable_stroke_vectors
 
 gimp_1_3_LDADD = \
 	config/libappconfig.a		\
@@ -113,11 +113,12 @@ gimp_1_3_LDADD = \
 
 if ENABLE_GIMP_CONSOLE
 gimp_console_1_3_SOURCES = $(gimp_1_3_SOURCES)
+gimp_console_1_3_LDFLAGS = $(gimp_1_3_LDFLAGS)
 
 gimp_console_1_3_LDADD = \
 	config/libappconfig.a		\
-	core/libappcore.a		\
 	pdb/libapppdb.a			\
+	core/libappcore.a		\
 	paint/libapppaint.a		\
 	xcf/libappxcf.a			\
 	text/libapptext.a		\
@@ -125,8 +126,8 @@ gimp_console_1_3_LDADD = \
 	file/libappfile.a		\
 	plug-in/libappplug-in.a		\
 	paint-funcs/libapppaint-funcs.a	\
-	base/libappbase.a		\
 	composite/libappcomposite.a	\
+	base/libappbase.a		\
 	$(libgimpmodule)		\
 	$(libgimpcolor)			\
 	$(libgimpthumb)			\
@@ -139,6 +140,7 @@ gimp_console_1_3_LDADD = \
 	$(FREETYPE_LIBS)		\
 	$(GIMP_THREAD_LIBS)		\
 	$(GIMP_MP_LIBS)			\
+	$(RT_LIBS)			\
 	$(INTLLIBS)			\
 	$(REGEXREPL)
 endif
