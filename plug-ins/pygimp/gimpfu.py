@@ -407,19 +407,27 @@ def _interact(func_name, start_params):
     dialog = gtk.Dialog(func_name, None, 0,
                         (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
                         gtk.STOCK_OK, gtk.RESPONSE_OK))
-    table = gtk.Table(len(params), 3, gtk.FALSE)
+
+    hbox = gtk.HBox(gtk.FALSE, 5)
+    hbox.set_border_width(5)
+    dialog.vbox.pack_start(hbox, expand=gtk.FALSE)
+    hbox.show()
+
+    table = gtk.Table(len(params), 2, gtk.FALSE)
     table.set_border_width(5)
-    table.set_row_spacings(2)
+    table.set_row_spacings(4)
     table.set_col_spacings(10)
-    dialog.vbox.pack_start(table)
+    hbox.pack_end(table, expand=gtk.FALSE)
     table.show()
 
-    vbox = gtk.VBox(gtk.FALSE, 15)
-    table.attach(vbox, 0,1, 0,len(params), xoptions=gtk.FILL)
+    vbox = gtk.VBox(gtk.FALSE, 10)
+    hbox.pack_start(vbox, expand=gtk.FALSE)
     vbox.show()
-    pix = _get_logo(vbox.get_colormap())
-    vbox.pack_start(pix, expand=gtk.FALSE)
-    pix.show()
+
+    pix = _get_logo()
+    if pix:
+        vbox.pack_start(pix, expand=gtk.FALSE)
+        pix.show()
 
     label = gtk.Label(blurb)
     label.set_line_wrap(gtk.TRUE)
@@ -467,7 +475,7 @@ def _interact(func_name, start_params):
         else:
             wid = _edit_mapping[pf_type](def_val)
         
-        table.attach(wid, 2,3, i,i+1)
+        table.attach(wid, 2,3, i,i+1, yoptions=0)
         if pf_type != PF_TEXT:
             tooltips.set_tip(wid, desc, None)         
         else:
@@ -585,87 +593,18 @@ def fail(msg):
     gimp.message(msg)
     raise error, msg
 
-_python_image = [
-"64 64 7 1",
-"  c #000000",
-". c #00FF00",
-"X c None",
-"o c #FF0000",
-"O c #FFFF00",
-"+ c #808000",
-"@ c #0000FF",
-"XXXXXXXXXXXXXX    XX      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-"XXXXXXXXXXXXXX    XX      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-"XXXXXXXXXXXX  ++++  ++++++  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-"XXXXXXXXXXXX  ++++  ++++++  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-"XXXXXXXXXX              ++++  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-"XXXXXXXXXX              ++++  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-"XXXXXXXXXX  OOOO  OOOOOO  ++  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-"XXXXXXXXXX  OOOO  OOOOOO  ++  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-"XXXXXXXXXX  OO@@  OO@@@@  ++  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-"XXXXXXXXXX  OO@@  OO@@@@  ++  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-"XXXXXXXXXX  OO@@  OO@@@@  ++  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-"XXXXXXXXXX  OO@@  OO@@@@  ++  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-"XXXXXXXXXX  OOOO  OOOOOO  ++    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-"XXXXXXXXXX  OOOO  OOOOOO  ++    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-"XXXXXXXX        ++      ++++++        XXXXXXXXXXXXXXXXXXXXXXXXXX",
-"XXXXXXXX        ++      ++++++        XXXXXXXXXXXXXXXXXXXXXXXXXX",
-"XXXX    ++++++++++++++++++++++  ++++++    XXXXXXXXXXXXXXXXXXXXXX",
-"XXXX    ++++++++++++++++++++++  ++++++    XXXXXXXXXXXXXXXXXXXXXX",
-"XX  ++++++++++++++++++++++++++++  ++++++++  XXXXXXXXXXXXXXXXXXXX",
-"XX  ++++++++++++++++++++++++++++  ++++++++  XXXXXXXXXXXXXXXXXXXX",
-"  ++++++++++++++++++++++++++++++++  ++++++++  XXXXXXXXXXXXXXXXXX",
-"  ++++++++++++++++++++++.+.+..++++  ++++++++  XXXXXXXXXXXXXXXXXX",
-"  ++  ++++  ++++++++++.+........++  ++++++++  XXXXXXXXXXXXXXXXXX",
-"  ++  ++++  ++++++++.+...........+  ++++++++  XXXXXXXXXXXXXXXXXX",
-"  ++++++++++++++++++.+..    ......  ++++++++++  XXXXXXXXXXXXXXXX",
-"  ++++++++++++++++.+...     ......  ++++++++++  XXXXXXXXXXXXXXXX",
-"  .+.+.+.+.+.+.+.+....    ..++..  ..++++++++++  XXXXXXXXXXXXXXXX",
-"  .+.+.+.+.+.+.+.....     ..++..  ...+++++++++  XXXXXXXXXXXXXXXX",
-"  ................      ++....  ......++++++++  XXXXXXXXXXXXXXXX",
-"  ...............       +.....  +......+++++++  XXXXXXXXXXXXXXXX",
-"XX  +.+.+.+.+..+      ++++..    ++++...+++++++  XXXXXXXXXXXXXXXX",
-"XX  ++++++++++++     +......    ++++...+++++++  XXXXXXXXXXXXXXXX",
-"XXXX      ooooo     ++....  XX  +......+++++++  XXXXXXXXXXXXXXXX",
-"XXXX     ooooo     ++.....  XX  .......+++++++  XXXXXXXXXXXXXXXX",
-"XXXX    ooooo   ++......  XXXX  ++....++++++  XXXXXXXXXXXXXXXXXX",
-"XXXX   ooooo   ++.......  XXXX  ++...+++++++  XXXXXXXXXXXXXXXXXX",
-"XXXX  ooooo.++......    XXXX  +......+++++++  XXXXXXXXXXXXXXXXXX",
-"XXXX ooooo..+.......    XXXX  ......++++++++  XXXXXXXXXXXXXXXXXX",
-"XXXXooooo.......    XXXX  +++++....+++++++  XXXXXXXXXXXXXXXXXXXX",
-"XXXooooo........    XXXX  +++++..+++++++++  XXXXXXXXXXXXXXXXXXXX",
-"XXoooo          XXXXXX  +.......++++++++  XXXXXXXXXXXXXXXXXXXXXX",
-"Xooooo          XXXXXX  .......+++++++++  XXXXXXXXXXXXXXXXXXXXXX",
-"oooXooXXXXXXXXXXXX  +++++....+++++++++  XXXXXXXXXXXXXXXXXXXXXX  ",
-"ooXXooXXXXXXXXXXXX  +++++...++++++++++  XXXXXXXXXXXXXXXXXXXXXX  ",
-"XXXXooXXXXXXXX    ++.......+++++++++  XXXXXXXXXXXXXXXXXXXXXX    ",
-"XXXXooXXXXXXXX    +.......++++++++++  XXXXXXXXXXXXXXXXXXXXXX    ",
-"XXXXXXXXXXXX  ++++++.....+++++++++        XXXXXX      XXXX  ++  ",
-"XXXXXXXXXXXX  ++++++....++++++++++        XXXXXX      XXXX  ++  ",
-"XXXXXXXXXXXX  +........+++++++++  ++++++++  XX  ++++++    ++++  ",
-"XXXXXXXXXXXX  ........++++++++++  ++++++++  XX  ++++++    ++++  ",
-"XXXXXXXXXX  ..........++++++++  ++++++++++++  ++++++++++++++++  ",
-"XXXXXXXXXX  .........+++++++++  ++++++++++++  ++++++++++++++++  ",
-"XXXXXXXXXX  ++++....++++++++++++++++++++++++++++++++++++++++  XX",
-"XXXXXXXXXX  +++++...++++++++++++++++++++++++++++++++++++++++  XX",
-"XXXXXXXXXX  ++++....++++++++++++++++++++++++++++++   .....  XXXX",
-"XXXXXXXXXX  ........++++++++++++++++++++++++++++++    ....  XXXX",
-"XXXXXXXXXX  .........+++++++++++..++++++++++++++  XXXX    XXXXXX",
-"XXXXXXXXXX  .............+++++++..++++++++++++++  XXXX    XXXXXX",
-"XXXXXXXXXXXX  +++++............  ............   XXXXXXXXXXXXXXXX",
-"XXXXXXXXXXXX  ++++++..........    ..........    XXXXXXXXXXXXXXXX",
-"XXXXXXXXXXXXXX  +.....++..    XXXX          XXXXXXXXXXXXXXXXXXXX",
-"XXXXXXXXXXXXXX  .....++++.    XXXX          XXXXXXXXXXXXXXXXXXXX",
-"XXXXXXXXXXXXXXXX          XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-"XXXXXXXXXXXXXXXX          XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-]
+def _get_logo():
+    import gtk, gobject
 
-def _get_logo(colormap):
-    import pygtk
-    pygtk.require('2.0')
-    import gtk
-    pix, mask = gtk.gdk.pixmap_colormap_create_from_xpm_d(None, colormap,
-                                                          None, _python_image)
+    import os.path
+    logofile = os.path.join(os.path.dirname(__file__), 'pygimp-logo.png')
+
+    try:
+        pixbuf = gtk.gdk.pixbuf_new_from_file(logofile)
+    except gobject.GError, e:
+        return None
+
     image = gtk.Image()
-    image.set_from_pixmap(pix, mask)
+    image.set_from_pixbuf(pixbuf)
+
     return image

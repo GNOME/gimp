@@ -60,6 +60,8 @@ pygimp_PYTHON = \
 	gimpui.py	\
 	gimpfu.py
 
+pygimp_DATA = pygimp-logo.png
+
 pyenvdir = $(gimpplugindir)/environ
 
 install-data-local:
