@@ -11,6 +11,57 @@ Wed Aug 25 17:27:40 PDT 1999 Manish Singh <yosh@gimp.org>
 	* plug-ins/unsharp/dialog_i.c
 	* plug-ins/unsharp/unsharp.c: // IS NOT A VALID C COMMENT
 
+1999-08-26  Tor Lillqvist  <tml@iki.fi>
+
+	Overhaul of pixmap brushes and pipes: No separate pixmap pipe
+	brush tool any longer. The paintbrush, airbrush and pencil
+	tools, which already knew how to handle the single-pixmap
+	brushes now also handle the pipes as well.
+
+	* app/pixmapbrush.{h,c}
+	* app/gimpbrushpixmap.{h,c}: Removed these files.
+
+	* app/Makefile.am
+	* app/makefile.{cygwin,msc}: Remove from here, too.
+
+	* app/gimpbrushpipe.{h,c}: Total overhaul.
+
+	* app/gimpbrushpipeP.h: New file.
+
+	* app/paint_core.h
+	* app/apptypes.h: Some more types moved to apptypes.h
+
+	* app/context_manager.c
+	* app/tool_options.c
+	* app/tools.c
+	* app/toolsF.h: Remove PIXMAPBRUSH tool.
+
+	* app/gimpbrush.h: New method: select_brush. Used to change the
+	brush in paint_core, for pipe brushes.
+
+	* app/gimpbrush.c: Add gimp_brush_select_brush, which is dummy for
+	the normal brushes (returns the same brush).
+
+	* app/paint_core.c: Call the brush's select_brush method to get a
+	potential new brush before calling the paint_func.
+
+	* app/gimpbrushlist.c: Various changes related to the pixmap and
+	pipe overhaul.
+
+	* app/airbrush.c
+	* app/pencil.c: Reorder code a bit in the tool motion function to
+	avoid executing unnecessary code in the case of a pixmap brush.
+
+	Other changes in the same commit:
+
+	* app/install.c: Make quote_spaces extern.
+
+	* app/appenv.h: Declare it.
+
+	* libgimp/gimpui.def: Add missing entry points.
+
+	* libgimp/makefile.{cygwin,msc}: Add missing objects to gimpui.
+
 1999-08-26  Tomas Ogren  <stric@ing.umu.se>
 
 	* app/module_db.c: Put the list above the description instead of
