@@ -35,8 +35,7 @@
 
      ; construct variables 
 
-     (data-dir (car (gimp-gimprc-query "gimp_dir")))
-     (filename (string-append data-dir
+     (filename (string-append gimp-directory
                "/brushes/r"
                (number->string width)
                "x"
@@ -106,8 +105,7 @@
      (old-fg-color (car (gimp-palette-get-foreground)))
      (old-bg-color (car (gimp-palette-get-background)))
      
-    (data-dir (car (gimp-gimprc-query "gimp_dir")))
-    (filename (string-append data-dir
+    (filename (string-append gimp-directory
                "/brushes/r"
                (number->string width)
                "x"
@@ -184,8 +182,7 @@
 
      ; Construct variables...
 
-     (data-dir (car (gimp-gimprc-query "gimp_dir")))
-     (filename (string-append data-dir
+     (filename (string-append gimp-directory
 			      "/brushes/e"
 			      (number->string width)
 			      "x"
@@ -256,8 +253,7 @@
      (old-bg-color (car (gimp-palette-get-background)))
 
      ; Construct variables...
-     (data-dir (car (gimp-gimprc-query "gimp_dir")))
-     (filename (string-append data-dir
+     (filename (string-append gimp-directory
 			      "/brushes/e"
 			      (number->string width)
 			      "x"

@@ -88,8 +88,7 @@
     (let ((floating-sel (car (gimp-edit-paste brush-draw FALSE))))
       (gimp-floating-sel-anchor floating-sel))
 
-    (set! data-dir (car (gimp-gimprc-query "gimp_dir")))
-    (set! filename2 (string-append data-dir
+    (set! filename2 (string-append gimp-directory
 				   "/brushes/"
 				   filename
 				   (number->string image)

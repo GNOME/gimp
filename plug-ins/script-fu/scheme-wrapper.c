@@ -281,23 +281,34 @@ init_procedures (void)
 static void
 init_constants (void)
 {
-  gchar *gimp_plugin_dir;
+  setvar (cintern ("gimp-directory"),
+          strcons (-1, (gchar *) gimp_directory ()), NIL);
 
-  setvar (cintern ("gimp-data-dir"),
+  setvar (cintern ("gimp-data-directory"),
           strcons (-1, (gchar *) gimp_data_directory ()), NIL);
 
-  gimp_plugin_dir = gimp_gimprc_query ("gimp_plugin_dir");
-  if (gimp_plugin_dir)
-    {
-      setvar (cintern ("gimp-plugin-dir"),
-              strcons (-1, gimp_plugin_dir), NIL);
-      g_free (gimp_plugin_dir);
-    }
+  setvar (cintern ("gimp-plug-in-directory"),
+          strcons (-1, (gchar *) gimp_plug_in_directory ()), NIL);
+
+  setvar (cintern ("gimp-locale-directory"),
+          strcons (-1, (gchar *) gimp_locale_directory ()), NIL);
+
+  setvar (cintern ("gimp-sysconf-directory"),
+          strcons (-1, (gchar *) gimp_sysconf_directory ()), NIL);
 
   /* Generated constants */
   init_generated_constants ();
 
   /* These are for backwards compatibility; they should be removed sometime */
+  setvar (cintern ("gimp-dir"),
+          strcons (-1, (gchar *) gimp_directory ()), NIL);
+
+  setvar (cintern ("gimp-data-dir"),
+          strcons (-1, (gchar *) gimp_data_directory ()), NIL);
+
+  setvar (cintern ("gimp-plugin-dir"),
+          strcons (-1, (gchar *) gimp_plug_in_directory ()), NIL);
+
   setvar (cintern ("NORMAL"),         flocons (GIMP_NORMAL_MODE),       NIL);
   setvar (cintern ("DISSOLVE"),       flocons (GIMP_DISSOLVE_MODE),     NIL);
   setvar (cintern ("BEHIND"),         flocons (GIMP_BEHIND_MODE),       NIL);

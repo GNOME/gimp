@@ -58,8 +58,7 @@
   (let ((floating-sel (car (gimp-edit-paste pattern-draw FALSE))))
     (gimp-floating-sel-anchor floating-sel))
 
-  (set! data-dir (car (gimp-gimprc-query "gimp_dir")))
-  (set! filename2 (string-append data-dir
+  (set! filename2 (string-append gimp-directory
 				 "/patterns/"
 				 filename
 				 (number->string image)
