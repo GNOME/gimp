@@ -69,6 +69,7 @@
 #  the GIMP if the script-fu plug-in is never run.
 (script-fu-path "${gimp_dir}/scripts:${gimp_data_dir}/scripts")
 
+
 # The tile cache is used to make sure the gimp doesn't thrash
 # tiles between memory and disk. Setting this value higher will
 # cause the gimp to use less swap space, but will also cause
@@ -198,3 +199,6 @@
 
 # gfig pattern directory
 (gfig-path "${gimp_dir}/gfig")
+
+# path for gflare flares directory
+(gflare-path "${gimp_dir}/gflares:${gimp_data_dir}/gflares")
