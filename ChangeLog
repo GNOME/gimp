@@ -2,7 +2,7 @@
 
 	* plug-ins/print/README
 	* plug-ins/print/RELNOTES
-	* plug-ins/print/print-pcl.c: Version 3.0.4
+	* plug-ins/print/print-pcl.c: Version 4.0.3
 
 2000-11-27  Austin Donnelly <austin@gimp.org>
 
