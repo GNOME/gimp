@@ -5,7 +5,6 @@
 	21.10 fixed point.
 	
 	Fixes bug #128594 for drawables less than 2G wide.
-	
 
 2004-10-27  Michael Schumacher <schumaml@gmx.de>
 
