@@ -15,9 +15,10 @@
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
- */                                                                             
-#ifndef __GIMP_ENTRY_H__
-#define __GIMP_ENTRY_H__
+ */
+
+#ifndef __GIMP_SIZE_ENTRY_H__
+#define __GIMP_SIZE_ENTRY_H__
 
 #include <gtk/gtk.h>
 #include "gimpunit.h"
@@ -29,22 +30,34 @@ extern "C" {
 #define GIMP_TYPE_SIZE_ENTRY          (gimp_size_entry_get_type ())
 #define GIMP_SIZE_ENTRY(obj)          (GTK_CHECK_CAST ((obj), GIMP_TYPE_SIZE_ENTRY, GimpSizeEntry))
 #define GIMP_SIZE_ENTRY_CLASS(klass)  (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SIZE_ENTRY, GimpSizeEntryClass))
-#define GIMP_IS_SIZE_ENTRY(obj)       (GTK_CHECK_TYPE (obj, GIMP_TYPE_SIZE_ENTRY)
+#define GIMP_IS_SIZE_ENTRY(obj)       (GTK_CHECK_TYPE (obj, GIMP_TYPE_SIZE_ENTRY))
 #define GIMP_IS_ENTRY_CLASS(klass)    (GTK_CHECK_CLASS_TYPE ((klass), GTK_TYPE_ENTRY))
-
 
 typedef struct _GimpSizeEntry       GimpSizeEntry;
 typedef struct _GimpSizeEntryClass  GimpSizeEntryClass;
 
+typedef enum
+{
+  GIMP_SIZE_ENTRY_UPDATE_NONE       = 0,
+  GIMP_SIZE_ENTRY_UPDATE_SIZE       = 1,
+  GIMP_SIZE_ENTRY_UPDATE_RESOLUTION = 2
+} GimpSizeEntryUP;
+
+typedef struct _GimpSizeEntryField  GimpSizeEntryField;
+
 struct _GimpSizeEntry
 {
-  GtkHBox hbox;
-      
-  GtkWidget *spinbutton;
-  GtkWidget *unitmenu;
-  GUnit      unit;
-  gfloat     resolution;
-  guint      positive_only; 
+  GtkTable         table;
+
+  GSList          *fields;
+  gint             number_of_fields;
+
+  GtkWidget       *unitmenu;
+  GUnit            unit;
+  guint            menu_show_pixels;
+
+  guint            show_refval;
+  GimpSizeEntryUP  update_policy;
 };
 
 struct _GimpSizeEntryClass
@@ -55,30 +68,110 @@ struct _GimpSizeEntryClass
 };
 
 guint       gimp_size_entry_get_type        (void);
-GtkWidget*  gimp_size_entry_new             (gfloat value, 
-					     GUnit unit,
-					     gfloat resolution,
-					     guint positive_only);
-void        gimp_size_entry_set_value       (GimpSizeEntry *gse, 
-					     gfloat value);
-void        gimp_size_entry_set_value_as_pixels (GimpSizeEntry *gse, 
-						 gint pixels);
-gfloat      gimp_size_entry_get_value       (GimpSizeEntry *gse);
-gint        gimp_size_entry_get_value_as_pixels (GimpSizeEntry *gse);
-void        gimp_size_entry_set_unit        (GimpSizeEntry *gse, 
-					     GUnit unit);
-GUnit       gimp_size_entry_get_unit        (GimpSizeEntry *gse);
-void        gimp_size_entry_set_resolution  (GimpSizeEntry *gse, 
-					     gfloat resolution);
-            /* This function does NOT change the value of the size_entry
-               for you! You have to take care of that yourself.           */
+
+/* creates a new GimpSizeEntry widget
+ * number_of_fields  -- how many spinbuttons to show
+ * unit              -- unit to show initially
+ * unit_format       -- printf-like unit-format (see GimpUnitMenu)
+ * menu_show_pixels  -- should the unit menu contain 'pixels'
+ *                      this parameter is ignored if you select an update_policy
+ * show_refval       -- TRUE if you want the extra 'reference value' row
+ * spinbutton_usize  -- the minimal horizontal size the spinbuttons will have
+ * update_policy     -- how calculations should be performed
+ *                      GIMP_SIZE_ENTRY_UPDATE_NONE --> no calculations
+ *			GIMP_SIZE_ENTRY_UPDATE_SIZE --> consider the values to
+ *                        be distances. The reference value equals to pixels
+ *			GIMP_SIZE_ENTRY_UPDATE_RESOLUTION --> consider the values
+ *                        to be resolutions. The reference value equals to dpi
+ *
+ * to have all automatic calculations performed correctly, set up the
+ * widget in the following order:
+ * 1. gimp_size_entry_new
+ * 2. (for each input column) gimp_size_entry_set_resolution
+ * 3. (for each input column) gimp_size_entry_set_value_boundaries
+ *                                                   (or _set_refval_boundaries)
+ * 4. (for each input column) gimp_size_entry_set_value (or _set_refval)
+ *
+ * the newly created GimpSizeEntry table will have an empty border
+ * of one cell width on each side plus an empty column left of the
+ * unit menu to allow the caller to add his own labels
+ */
+GtkWidget*  gimp_size_entry_new        (gint             number_of_fields,
+					GUnit            unit,
+					gchar           *unit_format,
+					guint            menu_show_pixels,
+					guint            show_refval,
+					guint            spinbutton_usize,
+					GimpSizeEntryUP  update_policy);
+
+/* this one is just a convenience function if you want to add labels
+ * to the empty cells of the widget
+ * (take care not to specify cells which already have a widget ;-)
+ */
+void        gimp_size_entry_attach_label          (GimpSizeEntry *gse,
+						   gchar         *text,
+						   gint           row,
+						   gint           column,
+						   gfloat         alignment);
+
+/* this one sets the resolution (in dpi)
+ *
+ * does nothing if update_policy != GIMP_SIZE_ENTRY_UPDATE_SIZE
+ *
+ * keep_size is a boolean value. If TRUE, the size in pixels will stay
+ * the same, otherwise the size in units will stay the same.
+ */
+void        gimp_size_entry_set_resolution        (GimpSizeEntry *gse,
+					           gint           field,
+					           gfloat         resolution,
+						   guint          keep_size);
+
+/* these functions set/return the value in the units the user selected
+ * note that in some cases where the caller chooses not to have the
+ * reference value row and the user selected the reference unit
+ * the both values 'value' and 'refvalue' will be the same
+ */
+void        gimp_size_entry_set_value_boundaries  (GimpSizeEntry *gse,
+						   gint           field,
+						   gfloat         lower,
+						   gfloat         upper);
+gfloat      gimp_size_entry_get_value             (GimpSizeEntry *gse,
+					           gint           field);
+void        gimp_size_entry_set_value             (GimpSizeEntry *gse,
+					           gint           field,
+					           gfloat         value);
+
+/* these functions set/return the value in the 'reference unit' for the
+ * current update policy
+ * for GIMP_SIZE_ENTRY_UPDATE_SIZE       it's the value in pixels
+ * for GIMP_SIZE_ENTRY_UPDATE_RESOLUTION it's the resolution in dpi
+ * for GIMP_SIZE_ENTRY_UPDATE_NONE       it's up to the caller as he has to
+ *                                       care for a correct value<->refval
+ *                                       mapping
+ */
+void        gimp_size_entry_set_refval_boundaries (GimpSizeEntry *gse,
+						   gint           field,
+						   gfloat         lower,
+						   gfloat         upper);
+gfloat      gimp_size_entry_get_refval            (GimpSizeEntry *gse,
+					           gint           field);
+void        gimp_size_entry_set_refval            (GimpSizeEntry *gse,
+					           gint           field,
+					           gfloat         refval);
+
+/* these functions set/return the currently used unit
+ * note that for GIMP_SIZE_ENTRY_UPDATE_SIZE a value of UNIT_PIXEL
+ * will be silently ignored if we have the extra refvalue line
+ */
+GUnit       gimp_size_entry_get_unit              (GimpSizeEntry *gse);
+void        gimp_size_entry_set_unit              (GimpSizeEntry *gse, 
+					           GUnit          unit);
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-
-#endif /* __GIMP_ENTRY_H__ */
+#endif /* __GIMP_SIZE_ENTRY_H__ */
 
 
 

@@ -1,3 +1,8 @@
+Wed Feb 24 19:19:07 MET 1999 Sven Neumann <sven@gimp.org>
+
+	* libgimp/gimpsizeentry.[ch]: applied the patch Michael Natterer
+	sent me. This makes the gimpsizeentry much more flexible.
+
 Tue Feb 23 02:57:16 CET 1999 Marc Lehmann <pcg@goof.com>
 
         * app/drawable_cmds.c: fix documentation for
