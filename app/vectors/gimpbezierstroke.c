@@ -210,7 +210,7 @@ gimp_bezier_stroke_new_from_coords (const GimpCoords *coords,
       while (count < ncoords)
         {
           last_anchor = gimp_bezier_stroke_extend (bezier_stroke,
-                                                   &(coords[count]),
+                                                   &coords[count++],
                                                    last_anchor,
                                                    EXTEND_SIMPLE);
         }
