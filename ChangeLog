@@ -1,5 +1,11 @@
 2003-05-15  Sven Neumann  <sven@gimp.org>
 
+	* app/pdb/fileops_cmds.c
+	* tools/pdbgen/pdb/fileops.pdb: fixed docs for file_save_thumbnail
+	(bug #113033).
+
+2003-05-15  Sven Neumann  <sven@gimp.org>
+
 	* app/base/temp-buf.c: added some sanity checks to temp_buf
 	conversion routines.
 
