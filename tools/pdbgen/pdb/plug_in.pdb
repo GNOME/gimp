@@ -286,7 +286,7 @@ CODE
     );
 }
 
-sub plugin_menu_add {
+sub plugin_menu_register {
     $blurb = "Register an additional menu path for a plug-in procedure.";
 
     $help = <<HELP;
@@ -350,7 +350,7 @@ CODE
               "plug-in/plug-in-progress.h");
 
 @procs = qw(progress_init progress_update plugins_query
-	    plugin_domain_register plugin_help_register plugin_menu_add);
+	    plugin_domain_register plugin_help_register plugin_menu_register);
 %exports = (app => [@procs], lib => [@procs[0,1,3,4,5]]);
 
 $desc = 'Plug-in';

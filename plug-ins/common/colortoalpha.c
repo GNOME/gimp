@@ -102,8 +102,8 @@ query (void)
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
-  gimp_plugin_menu_add ("plug_in_colortoalpha",
-                        N_("<Image>/Layer/Transparency/Modify/Color to _Alpha..."));
+  gimp_plugin_menu_register ("plug_in_colortoalpha",
+                             N_("<Image>/Layer/Transparency/Modify/Color to _Alpha..."));
 }
 
 static void

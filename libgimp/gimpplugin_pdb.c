@@ -161,7 +161,7 @@ gimp_plugin_help_register (const gchar *domain_name,
 }
 
 /**
- * gimp_plugin_menu_add:
+ * gimp_plugin_menu_register:
  * @procedure_name: The procedure for which to install the menu path.
  * @menu_path: The procedure's additional menu path.
  *
@@ -173,14 +173,14 @@ gimp_plugin_help_register (const gchar *domain_name,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_plugin_menu_add (const gchar *procedure_name,
-		      const gchar *menu_path)
+gimp_plugin_menu_register (const gchar *procedure_name,
+			   const gchar *menu_path)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_plugin_menu_add",
+  return_vals = gimp_run_procedure ("gimp_plugin_menu_register",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, procedure_name,
 				    GIMP_PDB_STRING, menu_path,

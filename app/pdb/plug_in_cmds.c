@@ -51,7 +51,7 @@ static ProcRecord progress_update_proc;
 static ProcRecord plugins_query_proc;
 static ProcRecord plugin_domain_register_proc;
 static ProcRecord plugin_help_register_proc;
-static ProcRecord plugin_menu_add_proc;
+static ProcRecord plugin_menu_register_proc;
 
 void
 register_plug_in_procs (Gimp *gimp)
@@ -61,7 +61,7 @@ register_plug_in_procs (Gimp *gimp)
   procedural_db_register (gimp, &plugins_query_proc);
   procedural_db_register (gimp, &plugin_domain_register_proc);
   procedural_db_register (gimp, &plugin_help_register_proc);
-  procedural_db_register (gimp, &plugin_menu_add_proc);
+  procedural_db_register (gimp, &plugin_menu_register_proc);
 }
 
 static int
@@ -496,9 +496,9 @@ static ProcRecord plugin_help_register_proc =
 };
 
 static Argument *
-plugin_menu_add_invoker (Gimp        *gimp,
-                         GimpContext *context,
-                         Argument    *args)
+plugin_menu_register_invoker (Gimp        *gimp,
+                              GimpContext *context,
+                              Argument    *args)
 {
   gboolean success = TRUE;
   gchar *procedure_name;
@@ -538,10 +538,10 @@ plugin_menu_add_invoker (Gimp        *gimp,
         }
     }
 
-  return procedural_db_return_args (&plugin_menu_add_proc, success);
+  return procedural_db_return_args (&plugin_menu_register_proc, success);
 }
 
-static ProcArg plugin_menu_add_inargs[] =
+static ProcArg plugin_menu_register_inargs[] =
 {
   {
     GIMP_PDB_STRING,
@@ -555,9 +555,9 @@ static ProcArg plugin_menu_add_inargs[] =
   }
 };
 
-static ProcRecord plugin_menu_add_proc =
+static ProcRecord plugin_menu_register_proc =
 {
-  "gimp_plugin_menu_add",
+  "gimp_plugin_menu_register",
   "Register an additional menu path for a plug-in procedure.",
   "This procedure installs an additional menu entry for the given procedure.",
   "Michael Natterer <mitch@gimp.org>",
@@ -565,8 +565,8 @@ static ProcRecord plugin_menu_add_proc =
   "2004",
   GIMP_INTERNAL,
   2,
-  plugin_menu_add_inargs,
+  plugin_menu_register_inargs,
   0,
   NULL,
-  { { plugin_menu_add_invoker } }
+  { { plugin_menu_register_invoker } }
 };

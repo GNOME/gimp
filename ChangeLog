@@ -1,5 +1,20 @@
 2004-05-06  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/plug_in.pdb: renamed gimp_plugin_menu_add() to
+	gimp_plugin_menu_register() for consistency with other
+	gimp_plugin_foo_register() functions which can be called during
+	query().
+
+	* app/pdb/plug_in_cmds.c
+	* libgimp/gimpplugin_pdb.[ch]: regenerated.
+
+	* plug-ins/common/ccanalyze.c
+	* plug-ins/common/colortoalpha.c
+	* plug-ins/common/screenshot.c
+	* plug-ins/winsnap/winsnap.c: changed accordingly.
+
+2004-05-06  Michael Natterer  <mitch@gimp.org>
+
 	Enabled multiple menu entries per plug-in procedure:
 
 	* app/plug-in/plug-in-proc.[ch]: changed "gchar *menu_path" to

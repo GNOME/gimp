@@ -143,8 +143,8 @@ query (void)
                           G_N_ELEMENTS (return_vals),
 			  args, return_vals);
 
-  gimp_plugin_menu_add (PLUG_IN_NAME,
-                        N_("<Image>/File/Acquire/_Screen Shot..."));
+  gimp_plugin_menu_register (PLUG_IN_NAME,
+                             N_("<Image>/File/Acquire/_Screen Shot..."));
 }
 
 static void
