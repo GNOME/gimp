@@ -32,23 +32,43 @@ if test "${CDPATH+set}" = set; then CDPATH=; export CDPATH; fi
 echo=echo
 if test "X`($echo '\t') 2>/dev/null`" = 'X\t'; then :
 else
-  # The Solaris and AIX default echo program unquotes backslashes.
-  # This makes it impossible to quote backslashes using
+  # The Solaris, AIX, and Digital Unix default echo programs unquote
+  # backslashes.  This makes it impossible to quote backslashes using
   #   echo "$something" | sed 's/\\/\\\\/g'
-  # So, we emulate echo with printf '%s\n'
-  echo="printf %s\\n"
-  if test "X`($echo '\t') 2>/dev/null`" = 'X\t'; then :
-  else
-    # Oops.  We have no working printf.  Try to find a not-so-buggy echo.
-    echo=echo
-    IFS="${IFS= 	}"; save_ifs="$IFS"; IFS="${IFS}:"
-    for dir in $PATH /usr/ucb; do
-      if test -f $dir/echo && test "X`$dir/echo '\t'`" = 'X\t'; then
-        echo="$dir/echo"
-        break
+  #
+  # So, first we look for a working echo in the user's PATH.
+  IFS="${IFS= 	}"; save_ifs="$IFS"; IFS="${IFS}:"
+  for dir in $PATH /usr/ucb; do
+    if test -f $dir/echo && test "X`($dir/echo '\t') 2>/dev/null`" = 'X\t'; then
+      echo="$dir/echo"
+      break
+    fi
+  done
+  IFS="$save_ifs"
+
+  if test "X$echo" = Xecho; then
+    # We didn't find a better echo, so look for alternatives.
+    if test "X`(print -r '\t') 2>/dev/null`" = 'X\t'; then
+      # This shell has a builtin print -r that does the trick.
+      echo='print -r'
+#
+# The following is from libtool-1.2a, won't work with this patched
+# libtool-1.2
+#
+#    elif test -f /bin/ksh && test "X$CONFIG_SHELL" != X/bin/ksh; then
+#      # If we have ksh, try running ltconfig again with it.
+#      CONFIG_SHELL=/bin/ksh
+#      export CONFIG_SHELL
+#      exec "$CONFIG_SHELL" "$0" --no-reexec ${1+"$@"}
+    else
+      # Try using printf.
+      echo='printf %s\n'
+      if test "X`($echo '\t') 2>/dev/null`" = 'X\t'; then :
+      else
+        # Oops.  We lost completely, so just stick with echo.
+        echo=echo
       fi
-    done
-    IFS="$save_ifs"
+    fi
   fi
 fi
 
@@ -66,7 +86,7 @@ progname=`$echo "X$0" | $Xsed -e 's%^.*/%%'`
 # Constants:
 PROGRAM=ltconfig
 PACKAGE=libtool
-VERSION=1.1
+VERSION=1.2
 ac_compile='${CC-cc} -c $CFLAGS $CPPFLAGS conftest.c 1>&5'
 ac_link='${CC-cc} -o conftest $CFLAGS $CPPFLAGS $LDFLAGS conftest.c $LIBS 1>&5'
 rm="rm -f"
@@ -421,7 +441,7 @@ if test "$with_gcc" != yes || test -z "$CC"; then
   # Now see if the compiler is really GCC.
   with_gcc=no
   echo $ac_n "checking whether we are using GNU C... $ac_c" 1>&6
-  echo "$progname:424: checking whether we are using GNU C" >&5
+  echo "$progname:444: checking whether we are using GNU C" >&5
 
   $rm conftest.c
   cat > conftest.c <<EOF
@@ -429,7 +449,7 @@ if test "$with_gcc" != yes || test -z "$CC"; then
   yes;
 #endif
 EOF
-  if { ac_try='${CC-cc} -E conftest.c'; { (eval echo $progname:432: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }; } | egrep yes >/dev/null 2>&1; then
+  if { ac_try='${CC-cc} -E conftest.c'; { (eval echo $progname:452: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }; } | egrep yes >/dev/null 2>&1; then
     with_gcc=yes
   fi
   $rm conftest.c
@@ -544,14 +564,15 @@ if test -n "$pic_flag"; then
   echo > conftest.c
   save_CFLAGS="$CFLAGS"
   CFLAGS="$CFLAGS $pic_flag -DPIC"
-  echo "$progname:547: checking if $compiler PIC flag $pic_flag works" >&5
-  if { (eval echo $progname:548: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>conftest.err; } && test -s conftest.o; then
-    # Append any errors to the config.log.
+  echo "$progname:567: checking if $compiler PIC flag $pic_flag works" >&5
+  if { (eval echo $progname:568: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>conftest.err; } && test -s conftest.o; then
+    # Append any warnings to the config.log.
     cat conftest.err 1>&5
 
-    # On HP-UX, the stripped-down bundled CC does not accept +Z, but also
-    # reports no error.  So, we need to grep stderr for (Bundled).
-    if grep '(Bundled)' conftest.err >/dev/null; then
+    # On HP-UX, both CC and GCC only warn that PIC is supported... then they
+    # create non-PIC objects.  So, if there were any warnings, we assume that
+    # PIC is not supported.
+    if test -s conftest.err; then
       echo "$ac_t"no 1>&6
       can_build_shared=no
       pic_flag=
@@ -587,8 +608,8 @@ $rm conftest*
 echo 'main(){return(0);}' > conftest.c
 save_LDFLAGS="$LDFLAGS"
 LDFLAGS="$LDFLAGS $link_static_flag"
-echo "$progname:590: checking if $compiler static flag $link_static_flag works" >&5
-if { (eval echo $progname:591: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest; then
+echo "$progname:611: checking if $compiler static flag $link_static_flag works" >&5
+if { (eval echo $progname:612: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest; then
   echo "$ac_t$link_static_flag" 1>&6
 else
   echo "$ac_t"none 1>&6
@@ -620,7 +641,7 @@ if test -z "$LD"; then
   if test "$with_gcc" = yes; then
     # Check if gcc -print-prog-name=ld gives a path.
     echo $ac_n "checking for ld used by GCC... $ac_c" 1>&6
-    echo "$progname:623: checking for ld used by GCC" >&5
+    echo "$progname:644: checking for ld used by GCC" >&5
     ac_prog=`($CC -print-prog-name=ld) 2>&5`
     case "$ac_prog" in
     # Accept absolute paths.
@@ -638,10 +659,10 @@ if test -z "$LD"; then
     esac
   elif test "$with_gnu_ld" = yes; then
     echo $ac_n "checking for GNU ld... $ac_c" 1>&6
-    echo "$progname:641: checking for GNU ld" >&5
+    echo "$progname:662: checking for GNU ld" >&5
   else
     echo $ac_n "checking for non-GNU ld""... $ac_c" 1>&6
-    echo "$progname:644: checking for non-GNU ld" >&5
+    echo "$progname:665: checking for non-GNU ld" >&5
   fi
 
   if test -z "$LD"; then
@@ -967,11 +988,11 @@ void nm_test_func(){}
 main(){nm_test_var='a';nm_test_func();return(0);}
 EOF
 
-echo "$progname:970: checking if global_symbol_pipe works" >&5
-if { (eval echo $progname:971: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; } && test -s conftest.o; then
+echo "$progname:991: checking if global_symbol_pipe works" >&5
+if { (eval echo $progname:992: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; } && test -s conftest.o; then
   # Now try to grab the symbols.
   nlist=conftest.nm
-  if { echo "$progname:974: eval \"$NM conftest.o | $global_symbol_pipe > $nlist\"" >&5; eval "$NM conftest.o | $global_symbol_pipe > $nlist 2>&5"; } && test -s "$nlist"; then
+  if { echo "$progname:995: eval \"$NM conftest.o | $global_symbol_pipe > $nlist\"" >&5; eval "$NM conftest.o | $global_symbol_pipe > $nlist 2>&5"; } && test -s "$nlist"; then
 
     # Try sorting and uniquifying the output.
     if sort "$nlist" | uniq > "$nlist"T; then
@@ -1029,7 +1050,7 @@ EOF
 	save_CFLAGS="$CFLAGS"
         LIBS='conftestm.o'
 	CFLAGS="$CFLAGS$no_builtin_flag"
-        if { (eval echo $progname:1032: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest; then
+        if { (eval echo $progname:1053: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest; then
           pipe_works=yes
         else
           echo "$progname: failed program was:" >&5
