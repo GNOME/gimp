@@ -22,8 +22,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
 #endif
@@ -75,11 +73,15 @@ struct __patterns_sel
 typedef struct __patterns_sel PSelect;
 
 
+static void  pattern_popup_close (PSelect *psel);
+
+
 static void
 pattern_popup_open (PSelect *psel,
 		    gint     x,
 		    gint     y)
 {
+  GtkWidget    *frame;
   const guchar *src;
   guchar       *buf;
   gint          x_org;
@@ -87,24 +89,22 @@ pattern_popup_open (PSelect *psel,
   gint          scr_w;
   gint          scr_h;
 
-  /* make sure the popup exists and is not visible */
-  if (! psel->device_patpopup)
-    {
-      GtkWidget *frame;
+  if (psel->device_patpopup)
+    pattern_popup_close (psel);
 
-      psel->device_patpopup = gtk_window_new (GTK_WINDOW_POPUP);
-      frame = gtk_frame_new (NULL);
-      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-      gtk_container_add (GTK_CONTAINER (psel->device_patpopup), frame);
-      gtk_widget_show (frame);
-      psel->device_patpreview = gtk_preview_new (GTK_PREVIEW_COLOR);
-      gtk_container_add (GTK_CONTAINER (frame), psel->device_patpreview);
-      gtk_widget_show (psel->device_patpreview);
-    }
-  else
-    {
-      gtk_widget_hide (psel->device_patpopup);
-    }
+  if (psel->width <= CELL_SIZE && psel->height <= CELL_SIZE)
+    return;
+
+  psel->device_patpopup = gtk_window_new (GTK_WINDOW_POPUP);
+
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
+  gtk_container_add (GTK_CONTAINER (psel->device_patpopup), frame);
+  gtk_widget_show (frame);
+
+  psel->device_patpreview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_container_add (GTK_CONTAINER (frame), psel->device_patpreview);
+  gtk_widget_show (psel->device_patpreview);
 
   /* decide where to put the popup */
   gdk_window_get_origin (psel->pattern_preview->window, &x_org, &y_org);
@@ -167,7 +167,10 @@ static void
 pattern_popup_close (PSelect *psel)
 {
   if (psel->device_patpopup)
-    gtk_widget_hide (psel->device_patpopup);
+    {
+      gtk_widget_destroy (psel->device_patpopup);
+      psel->device_patpopup = NULL;
+    }
 }
 
 static gint

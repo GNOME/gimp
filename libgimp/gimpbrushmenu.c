@@ -66,7 +66,7 @@ struct __brushes_sel
   gchar                *brush_name;       /* Local copy */
   gdouble               opacity;
   gint                  spacing;
-  gint                  paint_mode;
+  GimpLayerModeEffects  paint_mode;
   gint                  width;
   gint                  height;
   guchar               *mask_data;        /* local copy */
@@ -77,11 +77,15 @@ struct __brushes_sel
 typedef struct __brushes_sel BSelect;
 
 
+static void  brush_popup_close (BSelect *bsel);
+
+
 static void
 brush_popup_open (BSelect  *bsel,
 		  gint      x,
 		  gint      y)
 {
+  GtkWidget    *frame;
   const guchar *src;
   const guchar *s;
   guchar       *buf;
@@ -91,26 +95,22 @@ brush_popup_open (BSelect  *bsel,
   gint          scr_w;
   gint          scr_h;
 
-  /* make sure the popup exists and is not visible */
-  if (! bsel->device_brushpopup)
-    {
-      GtkWidget *frame;
+  if (bsel->device_brushpopup)
+    brush_popup_close (bsel);
 
-      bsel->device_brushpopup = gtk_window_new (GTK_WINDOW_POPUP);
+  if (bsel->width <= CELL_SIZE && bsel->height <= CELL_SIZE)
+    return;
 
-      frame = gtk_frame_new (NULL);
-      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-      gtk_container_add (GTK_CONTAINER (bsel->device_brushpopup), frame);
-      gtk_widget_show (frame);
+  bsel->device_brushpopup = gtk_window_new (GTK_WINDOW_POPUP);
 
-      bsel->device_brushpreview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
-      gtk_container_add (GTK_CONTAINER (frame), bsel->device_brushpreview);
-      gtk_widget_show (bsel->device_brushpreview);
-    }
-  else
-    {
-      gtk_widget_hide (bsel->device_brushpopup);
-    }
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
+  gtk_container_add (GTK_CONTAINER (bsel->device_brushpopup), frame);
+  gtk_widget_show (frame);
+  
+  bsel->device_brushpreview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
+  gtk_container_add (GTK_CONTAINER (frame), bsel->device_brushpreview);
+  gtk_widget_show (bsel->device_brushpreview);
 
   /* decide where to put the popup */
   gdk_window_get_origin (bsel->brush_preview->window, &x_org, &y_org);
@@ -128,7 +128,6 @@ brush_popup_open (BSelect  *bsel,
                     bsel->width, bsel->height);
 
   gtk_window_move (GTK_WINDOW (bsel->device_brushpopup), x, y);
-  gtk_widget_show (bsel->device_brushpopup);
   
   /*  Draw the brush  */
   buf = g_new (guchar, bsel->width);
@@ -153,14 +152,17 @@ brush_popup_open (BSelect  *bsel,
 
   g_free (buf);
 
-  gtk_widget_queue_draw (bsel->device_brushpreview);
+  gtk_widget_show (bsel->device_brushpopup);
 }
 
 static void
 brush_popup_close (BSelect *bsel)
 {
   if (bsel->device_brushpopup)
-    gtk_widget_hide (bsel->device_brushpopup);
+    {
+      gtk_widget_destroy (bsel->device_brushpopup);
+      bsel->device_brushpopup = NULL;
+    }
 }
 
 static gint
@@ -264,15 +266,15 @@ brush_preview_update (GtkWidget   *brush_preview,
 }
 
 static void
-brush_select_invoker (const gchar  *name,
-		      gdouble       opacity,
-		      gint          spacing,
-		      gint          paint_mode,
-		      gint          width,
-		      gint          height,
-		      const guchar *mask_data,
-		      gboolean      closing,
-		      gpointer      data)
+brush_select_invoker (const gchar          *name,
+		      gdouble               opacity,
+		      gint                  spacing,
+		      GimpLayerModeEffects  paint_mode,
+		      gint                  width,
+		      gint                  height,
+		      const guchar         *mask_data,
+		      gboolean              closing,
+		      gpointer              data)
 {
   BSelect *bsel = (BSelect *) data;
 
@@ -311,7 +313,6 @@ brush_select_callback (GtkWidget *widget,
 			      bsel->opacity,
 			      bsel->spacing,
 			      bsel->paint_mode);
- 
     }
   else
     {

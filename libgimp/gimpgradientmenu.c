@@ -22,8 +22,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
 #endif

@@ -22,8 +22,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include "gimp.h"
 #include "gimpui.h"
 

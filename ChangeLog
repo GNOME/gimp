@@ -1,5 +1,15 @@
 2003-06-17  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpfontmenu.c
+	* libgimp/gimpgradientmenu.c
+	* libgimp/gimpmenu.h: minor cleanups.
+
+	* libgimp/gimpbrushmenu.c
+	* libgimp/gimppatternmenu.c: destroy the popup window instead of
+	hiding it on button_release.
+
+2003-06-17  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/brush-select.c (opacity_scale_update): update the
 	BrushSelect "object" when the brush opacity is changed.
 
