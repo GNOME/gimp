@@ -170,7 +170,7 @@ static void       script_fu_script_proc      (gchar     *name,
 					      gint      *nreturn_vals,
 					      GParam   **return_vals);
 
-static SFScript  *script_fu_find_script      (gchar     *script_name);
+static SFScript * script_fu_find_script      (gchar     *script_name);
 static void       script_fu_free_script      (SFScript  *script);
 static void       script_fu_enable_cc        (void);
 static void       script_fu_disable_cc       (gint       err_msg);
@@ -210,23 +210,23 @@ static void       script_fu_pattern_preview        (gchar     *name,
 						    gint      bytes,
 						    gchar    *mask_data,
 						    gint      closing,
-						    gpointer  udata);
+						    gpointer  data);
 
 static void       script_fu_gradient_preview       (gchar    *name,
 						    gint      width,
 						    gdouble  *mask_data,
 						    gint      closing,
-						    gpointer  udata);
+						    gpointer  data);
 
-static void       script_fu_brush_preview          (gchar *, /* Name */
-						    gdouble, /* opacity */
-						    gint,    /* spacing */
-						    gint,    /* paint_mode */
-						    gint,    /* width */
-						    gint,    /* height */
-						    gchar *, /* mask data */
-						    gint,    /* dialog closing */
-						    gpointer /* user data */);
+static void       script_fu_brush_preview          (gchar    *name,
+						    gdouble   opacity,
+						    gint      spacing,
+						    gint      paint_mode,
+						    gint      width,
+						    gint      height,
+						    gchar    *mask_data,
+						    gint      closing,
+						    gpointer  data);
 
 
 /*
@@ -896,14 +896,15 @@ script_fu_script_proc (gchar    *name,
                         case SF_DRAWABLE:
                         case SF_LAYER:
                         case SF_CHANNEL:
-                          sprintf (buffer, "%d", params[i + 1].data.d_image);
+                          g_snprintf (buffer, sizeof (buffer), "%d",
+				      params[i + 1].data.d_image);
                           text = buffer;
                           break;
                         case SF_COLOR:
-                          sprintf (buffer, "'(%d %d %d)",
-                                   params[i + 1].data.d_color.red,
-                                   params[i + 1].data.d_color.green,
-                                   params[i + 1].data.d_color.blue);
+                          g_snprintf (buffer, sizeof (buffer), "'(%d %d %d)",
+				      params[i + 1].data.d_color.red,
+				      params[i + 1].data.d_color.green,
+				      params[i + 1].data.d_color.blue);
                           text = buffer;
                           break;
                         case SF_TOGGLE:
@@ -917,7 +918,8 @@ script_fu_script_proc (gchar    *name,
                         case SF_STRING:
                         case SF_FILENAME:
                           escaped = ESCAPE (params[i + 1].data.d_string);
-                          g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", escaped);
+                          g_snprintf (buffer, sizeof (buffer), "\"%s\"",
+				      escaped);
                           g_free (escaped);
                           text = buffer;
                           break;
@@ -928,7 +930,8 @@ script_fu_script_proc (gchar    *name,
                         case SF_PATTERN:
                         case SF_GRADIENT:
                         case SF_BRUSH:
-                          g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", params[i + 1].data.d_string);
+                          g_snprintf (buffer, sizeof (buffer), "\"%s\"",
+				      params[i + 1].data.d_string);
                           text = buffer;
                           break;
                         case SF_OPTION:
@@ -1103,7 +1106,6 @@ script_fu_interface (SFScript *script)
   gint    start_args;
   gint    i;
   guint   j;
-  guchar *color_cube;
 
   static gboolean gtk_initted = FALSE;
 
@@ -1140,7 +1142,7 @@ script_fu_interface (SFScript *script)
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) script_fu_destroy_callback,
+		      GTK_SIGNAL_FUNC (script_fu_destroy_callback),
 		      NULL);
 
   gimp_help_connect_help_accel (dlg, gimp_plugin_help_func,
@@ -1464,9 +1466,12 @@ script_fu_pattern_preview (gchar    *name,
 			   gint      bytes,
 			   gchar    *mask_data,
 			   gint      closing,
-			   gpointer  udata)
+			   gpointer  data)
 {
-  gchar ** pname = (gchar **) udata;
+  gchar **pname;
+
+  pname = (gchar **) data;
+
   g_free (*pname);
   *pname = g_strdup (name);
 }
@@ -1476,29 +1481,35 @@ script_fu_gradient_preview (gchar    *name,
 			    gint      width,
 			    gdouble  *mask_data,
 			    gint      closing,
-			    gpointer  udata)
+			    gpointer  data)
 {
-  gchar ** pname = (gchar **) udata;
-  g_free (*pname);
-  *pname = g_strdup (name);
+  gchar **gname;
+
+  gname = (gchar **) data;
+
+  g_free (*gname);
+  *gname = g_strdup (name);
 }
 
 static void      
-script_fu_brush_preview (gchar    *name,       /* Name */
-			 gdouble   opacity,    /* opacity */
-			 gint      spacing,    /* spacing */
-			 gint      paint_mode, /* paint_mode */
-			 gint      width,      /* width */
-			 gint      height,     /* height */
-			 gchar    *mask_data,  /* mask data */
-			 gint      closing,    /* dialog closing */
-			 gpointer  udata)      /* user data */
+script_fu_brush_preview (gchar    *name,
+			 gdouble   opacity,
+			 gint      spacing,
+			 gint      paint_mode,
+			 gint      width,
+			 gint      height,
+			 gchar    *mask_data,
+			 gint      closing,
+			 gpointer  data)
 {
-  SFBrush *brush = (SFBrush *)udata;
+  SFBrush *brush;
+
+  brush = (SFBrush *) data;
+
   g_free (brush->name);
-  brush->name = g_strdup (name);
-  brush->opacity = opacity;
-  brush->spacing = spacing;
+  brush->name       = g_strdup (name);
+  brush->opacity    = opacity;
+  brush->spacing    = spacing;
   brush->paint_mode = paint_mode;
 }
 
@@ -1684,7 +1695,8 @@ script_fu_ok_callback (GtkWidget *widget,
 	  text = buffer;
 	  break;
 	case SF_TOGGLE:
-	  sprintf (buffer, "%s", (script->arg_values[i].sfa_toggle) ? "TRUE" : "FALSE");
+	  g_snprintf (buffer, sizeof (buffer), "%s",
+		      (script->arg_values[i].sfa_toggle) ? "TRUE" : "FALSE");
 	  text = buffer;
 	  break;
 	case SF_VALUE:
@@ -1707,13 +1719,15 @@ script_fu_ok_callback (GtkWidget *widget,
 	    case SF_SLIDER:
 	      script->arg_values[i].sfa_adjustment.value =
 		script->arg_values[i].sfa_adjustment.adj->value;
-	      g_snprintf (buffer, 24, "%f", script->arg_values[i].sfa_adjustment.value);
+	      g_snprintf (buffer, sizeof (buffer), "%f",
+			  script->arg_values[i].sfa_adjustment.value);
 	      text = buffer;
 	      break;
 	    case SF_SPINNER:
 	      script->arg_values[i].sfa_adjustment.value = 
 		gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (script->args_widgets[i]));
-	      g_snprintf (buffer, 24, "%f", script->arg_values[i].sfa_adjustment.value);		       
+	      g_snprintf (buffer, sizeof (buffer), "%f",
+			  script->arg_values[i].sfa_adjustment.value);
 	      text = buffer;
 	      break;
 	    default:
@@ -1722,25 +1736,27 @@ script_fu_ok_callback (GtkWidget *widget,
 	  break;
 	case SF_FILENAME:
 	  escaped = ESCAPE (script->arg_values[i].sfa_file.filename);
-	  g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", escaped);
+	  g_snprintf (buffer, sizeof (buffer), "\"%s\"", escaped);
 	  g_free (escaped);
 	  text = buffer;
 	  break;
 	case SF_FONT:
-	  g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", script->arg_values[i].sfa_font.fontname);
+	  g_snprintf (buffer, sizeof (buffer), "\"%s\"",
+		      script->arg_values[i].sfa_font.fontname);
 	  text = buffer;
 	  break;
 	case SF_PATTERN:
-	  g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"",script->arg_values[i].sfa_pattern);
+	  g_snprintf (buffer, sizeof (buffer), "\"%s\"",
+		      script->arg_values[i].sfa_pattern);
 	  text = buffer;
 	  break;
 	case SF_GRADIENT:
-	  g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"",script->arg_values[i].sfa_gradient);
+	  g_snprintf (buffer, sizeof (buffer), "\"%s\"",
+		      script->arg_values[i].sfa_gradient);
 	  text = buffer;
 	  break;
 	case SF_BRUSH:
-	  g_snprintf (buffer, MAX_STRING_LENGTH, 
-		      "'(\"%s\" %f %d %d)",
+	  g_snprintf (buffer, sizeof (buffer), "'(\"%s\" %f %d %d)",
 		      script->arg_values[i].sfa_brush.name,
 		      script->arg_values[i].sfa_brush.opacity,
 		      script->arg_values[i].sfa_brush.spacing,
@@ -1752,7 +1768,8 @@ script_fu_ok_callback (GtkWidget *widget,
 	    gtk_menu_get_active (GTK_MENU (gtk_option_menu_get_menu (GTK_OPTION_MENU (script->args_widgets[i]))));
 	  script->arg_values[i].sfa_option.history = 
 	    GPOINTER_TO_UINT (gtk_object_get_user_data (GTK_OBJECT (menu_item))); 
-	  g_snprintf (buffer, sizeof (buffer), "%d", script->arg_values[i].sfa_option.history);
+	  g_snprintf (buffer, sizeof (buffer), "%d",
+		      script->arg_values[i].sfa_option.history);
 	  text = buffer;
 	  break;
 	default:
@@ -2132,9 +2149,3 @@ script_fu_about_dialog_delete (GtkWidget *widget,
   script_fu_about_dialog_close (widget, data);
   return TRUE;
 }
-
-
-
-
-
-

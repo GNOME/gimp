@@ -28,6 +28,7 @@
  */
 
 /* revision history:
+ * 1.1.20a; 2000/04/25   hof: new: p_get_video_paste_name p_vid_edit_clear
  * 1.1.17b; 2000/02/27   hof: bug/style fixes
  * 1.1.14a; 1999/12/18   hof: handle .xvpics on fileops (copy, rename and delete)
  *                            new: p_get_frame_nr,
@@ -87,6 +88,11 @@
 #  ifndef S_ISREG
 #    define S_ISREG(m) ((m) & _S_IFREG)
 #  endif
+#endif
+
+#ifdef G_OS_WIN32
+#include <direct.h>		/* For _mkdir() */
+#define mkdir(path,mode) _mkdir(path)
 #endif
 
 /* GAP includes */
@@ -1394,10 +1400,15 @@ int p_load_named_frame (gint32 image_id, char *lod_name)
    }
 
    /* delete the temporary image (old content of the original image) */
+   if(gap_debug)  printf("p_load_named_frame: BEFORE gimp_image_delete %d\n", (int)l_tmp_image_id);
    gimp_image_delete(l_tmp_image_id);
+   if(gap_debug)  printf("p_load_named_frame: AFTER gimp_image_delete %d\n", (int)l_tmp_image_id);
 
    /* use the original lod_name */
    gimp_image_set_filename (image_id, lod_name);
+   
+   /* dont consider image dirty after load */
+   gimp_image_clean_all(image_id);
    return image_id;
 
 }	/* end p_load_named_frame */
@@ -2363,3 +2374,472 @@ int gap_shift(GRunModeType run_mode, gint32 image_id, int nr,
  
 }	/* end gap_shift */
 
+
+/* ============================================================================
+ * gap_video_paste Buffer procedures
+ * ============================================================================
+ */
+
+gchar *
+p_get_video_paste_basename(void)
+{
+  gchar *l_basename;
+  
+  l_basename = p_gimp_gimprc_query("video-paste-basename");
+  if(l_basename == NULL)
+  {
+     l_basename = g_strdup("gap_video_pastebuffer_");
+  }
+  return(l_basename);
+}
+
+gchar *
+p_get_video_paste_dir(void)
+{
+  gchar *l_dir;
+  gint   l_len;
+  
+  l_dir = p_gimp_gimprc_query("video-paste-dir");
+  if(l_dir == NULL)
+  {
+     l_dir = g_strdup("/tmp");
+  }
+  
+  /* if dir is configured with trailing dir seprator slash
+   * then cut it off
+   */
+  l_len = strlen(l_dir);
+  if((l_dir[l_len -1] == G_DIR_SEPARATOR) && (l_len > 1))
+  {
+     l_dir[l_len -1] = '\0';
+  }
+  return(l_dir);
+}
+
+gchar *
+p_get_video_paste_name(void)
+{
+  gchar *l_dir;
+  gchar *l_basename;
+  gchar *l_video_name;
+  gchar *l_dir_thumb;
+	 
+  l_dir = p_get_video_paste_dir();
+  l_basename = p_get_video_paste_basename();
+  l_video_name = g_strdup_printf("%s%s%s", l_dir, G_DIR_SEPARATOR_S, l_basename);
+  l_dir_thumb = g_strdup_printf("%s%s%s", l_dir, G_DIR_SEPARATOR_S, ".xvpics");
+
+  mkdir (l_dir_thumb, 0755);
+
+  g_free(l_dir);
+  g_free(l_basename);
+  g_free(l_dir_thumb);
+
+  if(gap_debug) printf("p_get_video_paste_name: %s\n", l_video_name);
+  return(l_video_name); 
+}
+
+static gint32
+p_clear_or_count_video_paste(gint delete_flag)
+{
+  gchar *l_dir;
+  gchar *l_basename;
+  gchar *l_filename;
+  gchar *l_fname_thumbnail;
+  gint   l_len;
+  gint32 l_framecount;
+  DIR           *l_dirp;
+  struct dirent *l_dp;
+
+  l_dir = p_get_video_paste_dir();
+  l_dirp = opendir(l_dir);  
+  l_framecount = 0;
+  
+  if(!l_dirp)
+  {
+    printf("ERROR p_vid_edit_clear: cant read directory %s\n", l_dir);
+    l_framecount = -1;
+  }
+  else
+  {
+     l_basename = p_get_video_paste_basename();
+     
+     l_len = strlen(l_basename);
+     while ( (l_dp = readdir( l_dirp )) != NULL )
+     {
+       if(strncmp(l_basename, l_dp->d_name, l_len) == 0)
+       {
+          l_filename = g_strdup_printf("%s%s%s", l_dir, G_DIR_SEPARATOR_S, l_dp->d_name);
+          if(1 == p_file_exists(l_filename)) /* check for regular file */
+	  {
+             /* delete all files in the video paste directory
+	      * with names matching the basename part
+	      */
+	     l_framecount++;
+	     if(delete_flag)
+	     {
+        	if(gap_debug) printf("p_vid_edit_clear: remove file %s\n", l_filename);
+		remove(l_filename);
+
+		/* also delete thumbnail */
+        	l_fname_thumbnail = p_alloc_fname_thumbnail(l_filename);
+        	remove(l_fname_thumbnail);
+                g_free(l_fname_thumbnail);
+	     }
+	  }
+          g_free(l_filename);
+       }
+     }
+     closedir( l_dirp );
+     g_free(l_basename);
+   }
+   g_free(l_dir);
+   return(l_framecount);
+}
+
+gint32
+p_vid_edit_clear(void)
+{
+  return(p_clear_or_count_video_paste(TRUE)); /* delete frames */
+}
+
+gint32
+p_vid_edit_framecount()
+{
+  return (p_clear_or_count_video_paste(FALSE)); /* delete_flag is off, just count frames */
+}
+
+
+/* ============================================================================
+ * gap_vid_edit_copy
+ * ============================================================================
+ */
+gint
+gap_vid_edit_copy(GRunModeType run_mode, gint32 image_id, long range_from, long range_to)
+{
+  int rc;
+  t_anim_info *ainfo_ptr;
+  
+  gchar *l_curr_name;
+  gchar *l_fname ;
+  gchar *l_fname_copy;
+  gchar *l_basename;
+  gint32 l_frame_nr;
+  gint32 l_cnt_range;
+  gint32 l_cnt2;
+  gint32 l_idx;
+  gint32 l_tmp_image_id;
+
+  ainfo_ptr = p_alloc_ainfo(image_id, run_mode);
+  if(ainfo_ptr == NULL)
+  {
+     return (-1);
+  }
+  rc = 0;
+
+  if((ainfo_ptr->curr_frame_nr >= MIN(range_to, range_from))
+  && (ainfo_ptr->curr_frame_nr <= MAX(range_to, range_from)))
+  {
+    /* current frame is in the affected range
+     * so we have to save current frame to file
+     */   
+    l_curr_name = p_alloc_fname(ainfo_ptr->basename, ainfo_ptr->curr_frame_nr, ainfo_ptr->extension);
+    p_save_named_frame(ainfo_ptr->image_id, l_curr_name);
+    g_free(l_curr_name);
+  }
+  
+  l_basename = p_get_video_paste_name();
+  l_cnt2 = p_vid_edit_framecount();  /* count frames in the video paste buffer */
+  l_frame_nr = 1 + l_cnt2;           /* start at one, or continue (append) at end +1 */
+  
+  l_cnt_range = 1 + MAX(range_to, range_from) - MIN(range_to, range_from);
+  for(l_idx = 0; l_idx < l_cnt_range;  l_idx++)
+  {
+     if(rc < 0)
+     {
+       break;
+     }
+     l_fname = p_alloc_fname(ainfo_ptr->basename,
+                             MIN(range_to, range_from) + l_idx,
+                             ainfo_ptr->extension);
+     l_fname_copy = g_strdup_printf("%s%04ld.xcf", l_basename, (long)l_frame_nr);
+     
+     if(strcmp(ainfo_ptr->extension, ".xcf") == 0)
+     {
+        rc = p_image_file_copy(l_fname, l_fname_copy);
+     }
+     else
+     {
+        /* convert other fileformats to xcf before saving to video paste buffer */
+	l_tmp_image_id = p_load_image(l_fname);
+	rc = p_save_named_frame(l_tmp_image_id, l_fname_copy);
+	gimp_image_delete(l_tmp_image_id);
+     }
+     g_free(l_fname);
+     g_free(l_fname_copy);
+     l_frame_nr++;
+  }
+  p_free_ainfo(&ainfo_ptr);
+  return(rc);
+}	/* end gap_vid_edit_copy */
+
+/* ============================================================================
+ * p_custom_palette_file
+ *   write a gimp palette file
+ * ============================================================================
+ */
+
+static gint p_custom_palette_file(char *filename, guchar *rgb, gint count)
+{
+  FILE *l_fp;
+
+  l_fp= fopen(filename, "w");
+  if (l_fp == NULL)
+  {
+    return -1;
+  }
+  
+  fprintf(l_fp, "GIMP Palette\n");
+  fprintf(l_fp, "# this file will be overwritten each time when video frames are converted to INDEXED\n");
+
+  while (count > 0)
+  {
+    fprintf(l_fp, "%d %d %d\tUnknown\n", rgb[0], rgb[1], rgb[2]);
+    rgb+= 3;
+    --count;
+  }
+
+
+  fclose (l_fp);
+  return 0;
+}	/* end p_custom_palette_file */
+
+
+/* ============================================================================
+ * gap_vid_edit_paste
+ * ============================================================================
+ */
+gint
+gap_vid_edit_paste(GRunModeType run_mode, gint32 image_id, long paste_mode)
+{
+#define CUSTOM_PALETTE_NAME "gap_cmap"
+  int rc;
+  t_anim_info *ainfo_ptr;
+  
+  gchar *l_curr_name;
+  gchar *l_fname ;
+  gchar *l_fname_copy;
+  gchar *l_basename;
+  gint32 l_frame_nr;
+  gint32 l_dst_frame_nr;
+  gint32 l_cnt2;
+  gint32 l_lo, l_hi;
+  gint32 l_insert_frame_nr;
+  gint32 l_tmp_image_id;
+  gint       l_rc;
+  GParam     *l_params;
+  gint        l_retvals;
+  GImageType  l_orig_basetype;
+
+  l_cnt2 = p_vid_edit_framecount();
+  if(gap_debug)
+  {
+    printf("gap_vid_edit_paste: paste_mode %d found %d frames to paste\n"
+           , (int)paste_mode, (int)l_cnt2);
+  }
+  if (l_cnt2 < 1)
+  {
+    return(0);  /* video paste buffer is empty */
+  }
+
+
+  ainfo_ptr = p_alloc_ainfo(image_id, run_mode);
+  if(ainfo_ptr == NULL)
+  {
+     return (-1);
+  }
+  if (0 != p_dir_ainfo(ainfo_ptr))
+  {
+     return (-1);
+  }
+
+  rc = 0;
+
+  l_insert_frame_nr = ainfo_ptr->curr_frame_nr;
+
+  if(paste_mode != VID_PASTE_INSERT_AFTER)
+  {
+    /* we have to save current frame to file */   
+    l_curr_name = p_alloc_fname(ainfo_ptr->basename, ainfo_ptr->curr_frame_nr, ainfo_ptr->extension);
+    p_save_named_frame(ainfo_ptr->image_id, l_curr_name);
+    g_free(l_curr_name);
+  }
+  
+  if(paste_mode != VID_PASTE_REPLACE)
+  {
+     if(paste_mode == VID_PASTE_INSERT_AFTER)
+     {
+       l_insert_frame_nr = ainfo_ptr->curr_frame_nr +1;
+     }
+    
+     /* rename (renumber) all frames with number greater (or greater equal)  than current
+      */
+     l_lo   = ainfo_ptr->last_frame_nr;
+     l_hi   = l_lo + l_cnt2;
+
+     if(gap_debug)
+     {
+       printf("gap_vid_edit_paste: l_insert_frame_nr %d l_lo:%d l_hi:%d\n"
+           , (int)l_insert_frame_nr, (int)l_lo, (int)l_hi);
+     }
+     
+     while(l_lo >= l_insert_frame_nr)
+     {     
+       if(0 != p_rename_frame(ainfo_ptr, l_lo, l_hi))
+       {
+          gchar *tmp_errtxt;
+          tmp_errtxt = g_strdup_printf(_("Error: could not rename frame %ld to %ld"), l_lo, l_hi);
+          p_msg_win(ainfo_ptr->run_mode, tmp_errtxt);
+	  g_free(tmp_errtxt);
+          return -1;
+       }
+       l_lo--;
+       l_hi--;
+     }
+  }
+
+  l_basename = p_get_video_paste_name();
+  l_dst_frame_nr = l_insert_frame_nr;
+  for(l_frame_nr = 1; l_frame_nr <= l_cnt2; l_frame_nr++)
+  {
+     l_fname = p_alloc_fname(ainfo_ptr->basename,
+                             l_dst_frame_nr,
+                             ainfo_ptr->extension);
+     l_fname_copy = g_strdup_printf("%s%04ld.xcf", l_basename, (long)l_frame_nr);
+
+     l_tmp_image_id = p_load_image(l_fname_copy);
+     
+     /* check size and resize if needed */
+     if((gimp_image_width(l_tmp_image_id) != gimp_image_width(image_id))
+     || (gimp_image_height(l_tmp_image_id) != gimp_image_height(image_id)))
+     {
+         GParam     *l_params;
+         gint        l_retvals;
+	 gint32      l_size_x, l_size_y;
+
+         l_size_x = gimp_image_width(image_id);
+         l_size_y = gimp_image_height(image_id);
+	 if(gap_debug) printf("DEBUG: scale to size %d %d\n", (int)l_size_x, (int)l_size_y);
+ 
+         l_params = gimp_run_procedure ("gimp_image_scale",
+			         &l_retvals,
+			         PARAM_IMAGE,    l_tmp_image_id,
+			         PARAM_INT32,    l_size_x,
+			         PARAM_INT32,    l_size_y,
+			         PARAM_END);
+
+
+     }
+     
+     /* check basetype and convert if needed */
+     l_orig_basetype = gimp_image_base_type(image_id);
+     if(gimp_image_base_type(l_tmp_image_id) != l_orig_basetype)
+     {
+       switch(l_orig_basetype)
+       {
+           gchar      *l_palette_filename;
+           gchar      *l_gimp_dir;
+           guchar     *l_cmap;
+           gint        l_ncolors;
+ 
+           /* convert tmp image to dest type */
+           case INDEXED:
+             l_cmap = gimp_image_get_cmap(image_id, &l_ncolors);
+             if(gap_debug) printf("DEBUG: convert to INDEXED %d colors\n", (int)l_ncolors);
+
+             l_params = gimp_run_procedure ("gimp_gimprc_query",
+			                    &l_retvals,
+			                    PARAM_STRING, "gimp_dir",
+			                    PARAM_END);
+
+             l_gimp_dir = g_strdup(l_params[1].data.d_string);
+             gimp_destroy_params(l_params, l_retvals);
+
+             l_palette_filename = g_strdup_printf("%s%spalettes%s%s"
+                                                 , l_gimp_dir
+                                                 , G_DIR_SEPARATOR_S
+                                                 , G_DIR_SEPARATOR_S
+                                                 , CUSTOM_PALETTE_NAME);
+ 
+             l_rc = p_custom_palette_file(l_palette_filename, l_cmap, l_ncolors);
+             if(l_rc == 0)
+             {
+               l_params = gimp_run_procedure ("gimp_palette_refresh",
+			                    &l_retvals,
+			                    PARAM_END);
+               gimp_destroy_params(l_params, l_retvals);
+               
+               l_params = gimp_run_procedure ("gimp_convert_indexed",
+			                    &l_retvals,
+			                    PARAM_IMAGE,    l_tmp_image_id,
+			                    PARAM_INT32,    1,               /* dither  value 1== floyd-steinberg */
+			                    PARAM_INT32,    4,               /* palette_type 4 == CUSTOM_PALETTE */
+			                    PARAM_INT32,    l_ncolors,       /* number of colors */
+			                    PARAM_INT32,    0,               /* alpha_dither */
+			                    PARAM_INT32,    0,               /* remove_unused */
+			                    PARAM_STRING,   CUSTOM_PALETTE_NAME, /* name of the custom palette */
+			                    PARAM_END);
+               gimp_destroy_params(l_params, l_retvals);
+             }
+             else
+             {
+               printf("ERROR: gap_vid_edit_paste: could not save custom palette %s\n", l_palette_filename);
+             }
+             g_free(l_cmap);
+             g_free(l_palette_filename);
+             g_free(l_gimp_dir);          
+             break;
+           case GRAY:
+             if(gap_debug) printf("DEBUG: convert to GRAY'\n");
+             l_params = gimp_run_procedure ("gimp_convert_grayscale",
+			                  &l_retvals,
+			                  PARAM_IMAGE,    l_tmp_image_id,
+			                  PARAM_END);
+             gimp_destroy_params(l_params, l_retvals);
+             break;
+           case RGB:
+             if(gap_debug) printf("DEBUG: convert to RGB'\n");
+             l_params = gimp_run_procedure ("gimp_convert_rgb",
+			                  &l_retvals,
+			                  PARAM_IMAGE,    l_tmp_image_id,
+			                  PARAM_END);
+             gimp_destroy_params(l_params, l_retvals);
+             break;
+           default:
+             printf( "DEBUG: unknown image type\n");
+             return -1;
+             break;
+        }
+     }
+     rc = p_save_named_frame(l_tmp_image_id, l_fname);
+     gimp_image_delete(l_tmp_image_id);
+     g_free(l_fname);
+     g_free(l_fname_copy);
+
+     l_dst_frame_nr++;
+  }
+  
+  if((rc >= 0)  && (paste_mode != VID_PASTE_INSERT_AFTER))
+  {
+    /* load from the "new" current frame */   
+    if(ainfo_ptr->new_filename != NULL) g_free(ainfo_ptr->new_filename);
+    ainfo_ptr->new_filename = p_alloc_fname(ainfo_ptr->basename,
+                                      ainfo_ptr->curr_frame_nr,
+                                      ainfo_ptr->extension);
+    rc = p_load_named_frame(ainfo_ptr->image_id, ainfo_ptr->new_filename);
+  }
+  
+  p_free_ainfo(&ainfo_ptr);
+  
+  return(rc);
+}	/* end gap_vid_edit_paste */

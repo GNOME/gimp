@@ -1,4 +1,4 @@
-Project gap "Gimp Animation Package"   17. Mar 1999  release 0.99.00
+Project gap "Gimp Animation Package"   01. May 2000  release 1.1.20a
 
 --------------------------------------------------------------------
 Introduction
@@ -130,6 +130,18 @@ Write (encode)
 --------------------------------------------------------------------
 Change Log
 --------------------------------------------------------------------
+- 1.1.20a - MovePath
+             - AnimPreview
+             - Keyframes
+	     - Force visibility
+	  - VCR Navigator
+	     Popup menu
+		copy, 
+		cut
+		paste before
+		paste after
+		paste replace
+		clear pastebuffer
 - 0.99.00 - Move Path bugfix in the dialog
             (update preview did'nt work with gimp 1.1.2 and gtk 1.1)
           - Animated Filtercalls:
@@ -327,12 +339,102 @@ WebTip:	My GIMP-page http://pages.hotbot.com/arts/hof/index.html
       walk through the frames.
       Here are my settings (excerpt from my $HOME/.gimp/menurc )
 
-      (menu-path "<Image>/Video/Goto First" "<control><alt>1")
-      (menu-path "<Image>/Video/Goto Prev" "<alt>1")
-      (menu-path "<Image>/Video/Goto Next" "<alt>2")
-      (menu-path "<Image>/Video/Goto Any" "<alt>3")
-      (menu-path "<Image>/Video/Goto Last" "<control><alt>2")
+      (menu-path "<Image>/Video/Goto/First Frame" "<control><alt>1")
+      (menu-path "<Image>/Video/Goto/Prev Frame" "<alt>1")
+      (menu-path "<Image>/Video/Goto/Next Frame" "<alt>2")
+      (menu-path "<Image>/Video/Goto/Any Frame" "<alt>3")
+      (menu-path "<Image>/Video/Goto/Last Frame" "<control><alt>2")
+      
+      Alternative you may open the GAP Video Navigator Dialog
+      (menu-path "<Image>/Video/VCR Navigator)
+
+- GAP VCR Navigator:
+
+   The VCR Navigator Dialog shows icons frame_number and
+   time (mm:ss:msec) of the frames in a scrollable listbox.
+   framerate:
+     You can set the global framerate for all frames here.
+   timezoom:
+     with timezoom you tell theVCR Navigator Dialog Window
+     to display ever n-th frame only, to get an overview
+     on larger videos.
+
+     Framerate and timezoom values are stores in
+      a gap vide info file named:
+      <framebasename>_vin.gap
+
+   Double Click with Left Mousebutton on a frame in the listbox
+   performs a goto operation, which loads the clicked
+   frame as current frame.
+   
+   Single Click with Left Mousebutton 
+      selecets one frame (deselecting all others)
+   Ctrl  Clickwith Left Mousebutton
+      selecets one frame (additional to the current selection)
+   Shift Click with Left Mousebutton
+      selects a range of frames.
+   
+   Click with Right Mousebutton
+     brings up a PopUp Menu
+
+   Popup menu
+      copy, 
+      cut
+      paste before
+      paste after
+      paste replace
+      clear pastebuffer
+      
+      cut and copy
+         is sensitive if any frame is selected,
+      paste* and clear pastebuffer
+         is sensitive if video paste buffer contains
+	 at least one frame.
+	 
+
+      This menu enables you to cut/copy and paste the selected
+      frames even between different videos.
+      Size and type of the handled frames are converted at pasting
+      if needed.
+      The Palette of the current frame is used for the
+      pasted frames when the destination type is INDEXED.
+
+      There are 3 types of paste:
+        before:
+	   Insert Frames before the current frame.
+	   Use this mode if you want to insert frames
+	   before the first frame.
+	after:
+	   Insert Frames after the current frame.
+	   Use this mode if you want to insert frames
+	   after the last frame.
+	replace:
+	   Replace Frames beginning at the current frame
+	   with the frames from the video paste buffer.
+
+      If there are selected frames in the VCR navigator
+      Dialog Window, the current frame is set to
+      the first selected frame and the paste opration
+      is releted to the first selected frame
      
+      The paste buffer is located in the filesystem
+      and can be configured in the gimprc file:
+       
+       (video-paste-dir "/home/hof/gap_video_paste_dir")
+       (video-paste-basename "gap_video_paste_")
+     
+    The Duplicate Button in the VCR Navigator Dialog
+    duplicates the selected frames immediate into
+    the current Video, without writing to the
+    video paste buffer.
+    
+    The Delete Button in the VCR Navigator Dialog
+    deletes the selected frames without writing to the
+    video paste buffer.
+    IMPORTANT NOTE: 
+       There is no undo for GAP operations,
+       so the deleted Frames cannot be restored.
+    
 
 - Playback
       playbak of multilayered image is not available.
@@ -340,7 +442,12 @@ WebTip:	My GIMP-page http://pages.hotbot.com/arts/hof/index.html
       But you can convert your frames to one Multilayer Image
          (Video->Frames to Image)
       And then playback the newly created Image
-         (Filters->Animation->Playback)          
+         (Filters->Animation->Playback) 
+	 
+     The GAP Video Navigator Dialog Playback Button
+     does as described above automatic for all selected
+     Frames.
+     
 
 - Move Path (Make Things Move)
       For this Plugin you need a series of frames
@@ -400,6 +507,49 @@ WebTip:	My GIMP-page http://pages.hotbot.com/arts/hof/index.html
       in the "Mov Path Preview".
       You first have to Adjust the PreviewFrame
       then press the "UpdPreview" Button.
+
+     Controlpoints:
+       The move path is defined by contolpoints.
+       Only the Current Cotrolpoint is displyed with all
+       its values.
+
+       If checkbutton "Show Path" is on, all the Controlpoints
+       are shown in the Preview window, connected with pathlines.
+       Furter it enables picking controlpoints
+       and draging controlpoint koordinates (X/Y).
+       in the Preview with the Left Mousebutton.
+       With the Right Mousebutton you always drag
+       the koordinates of the current controlpoint
+       (without picking other controlpoints)
+       
+
+       There are Buttons to
+          "Add Point"
+	  "Insert Point"  "Delete Point"
+
+       With the Buttons
+          "Prev Point"    "Next Point"
+	  "First Point"   "Last Point"
+          you can step from point to point,
+	  and make other points to the curremt point.
+	  
+       "Clear Point"
+          does reset Witdh, Height and Opacity of the point to 100%
+	  and Rotat to 0 degree.
+	
+       "Reset Points"
+          removes all controlpoints.
+	  
+       "Save Points"
+          saves your controlpoints to file
+
+       "Load Points"
+          loads controlpoints from file
+         
+
+
+
+
       
       Tips:
          - with the UpdPreview Button you can blend in the
@@ -418,6 +568,7 @@ WebTip:	My GIMP-page http://pages.hotbot.com/arts/hof/index.html
            moves of your object, caused by resizing)
          
          - Speed:
+	   If no Keyframes are set,
            Move path alternates the settings linear from
            point to point, so things move (or happen) in constant speed
            between 2 Points.
@@ -435,8 +586,77 @@ WebTip:	My GIMP-page http://pages.hotbot.com/arts/hof/index.html
            That gives 5 frames (== equal time) for each part of the path,
            but each part has another length. This results in different
            (growing) speeds for each part of the path.
-           
-     
+ 	  
+    - Keyframes
+        
+	Keyframes can be used optional, to fix a controlpoint
+	to the given frame number. The first and last controlpoints
+	are implicite keyframes, always fixed to start or end
+	frame number. (The Keyframe entry is set insensitive
+	on the first and last contolpoint)
+	With the Help of Keyframes you can control exactly
+	when things should happen.
+	
+	Use a Value of 0 in the Keyframe entry if you dont want
+	to fix a controlpoint to a keyframe.
+	
+	Keyframes are shown as Absolute Frame Number
+	in the Move Path Dialog Window, but they
+	are saved as relative values in the
+	pointfile.
+	(if StartFrame = 5
+	 and a Keyframe is displayed as 7
+	 the Keyframe is internally stored as 2 (7 - 5)
+	 
+     - Check Controlpoints
+        - The Check is done at "OK", and "Anim Preview"
+	  button,
+	  If Errors are detected, they are shown
+	  in a Popup Window and the action is not performed.
+        - The number of cntrolpoints is now checked
+	  against the number of affected frames.
+	  (You can't have more controlpoints than frames)
+	- If Keyframes are used, they must be in
+	  (ascending or descending) sequence
+	 
+          
+     - AnimPreview
+        With this button You can generate an Animated Preview
+	to get an idea how the Inserted moving Object
+	will look like. The Animated Preview is generated
+	as Multilayer Image and the Filter/Animation/Playback
+	Plugin is started on that Multilayer Image.
+	
+	The Button opens a Dialog Window, where you can
+	enter options for the animated preview.
+	
+	- Object on empty frames
+	    renders quick on empty frames (filled with BG color)
+	    (scale down speeds up rendering time)
+	- Object on one frame
+	    renders quick on one frame (preview frame)
+	    (scale down speeds up rendering time)
+	- Exact Object on frames
+	    renders slow, but exactly on the selected framerange.
+	    (scale down increases rendering time)
+
+        - Scale Preview
+	    Optional you can scale down the Animated Preview
+	    Size (100% downto 5%)
+	    
+	- Framerate
+	    The Framerate is used in the generated 
+	    Multilayer Image only.
+	    
+	- Copy to Video Buffer   
+	  Optional you can copy the preview frames
+	  to the Video Buffer
+	  (can be pasted in the GAP Video Navigator)
+    
+    - Force visibility
+         If this checkbutton is set, all Source Layerobjects
+	 are set visible when they are copied into frames.
+    
 - Convert frames to one multilayered Image.
     This can be done with
     

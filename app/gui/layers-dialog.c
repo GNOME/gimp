@@ -1114,6 +1114,7 @@ layers_dialog_scroll_index (gint index)
     }
 }
 
+/* Commented out because this piece of code produced strange segfaults
 static gint
 layer_dialog_idle_set_active_layer_focus (gpointer data)
 {
@@ -1121,6 +1122,7 @@ layer_dialog_idle_set_active_layer_focus (gpointer data)
 
   return FALSE;
 }
+*/
 
 static void
 layers_dialog_set_active_layer (Layer *layer)
@@ -1143,8 +1145,10 @@ layers_dialog_set_active_layer (Layer *layer)
       gtk_object_set_user_data (GTK_OBJECT (layer_widget->list_item), NULL);
       gtk_list_select_item (GTK_LIST (layersD->layer_list), index);
       /*  let dnd finish it's work before setting the focus  */
+      /* Commented out because this piece of code produced strange segfaults
       gtk_idle_add ((GtkFunction) layer_dialog_idle_set_active_layer_focus,
 		    layer_widget->list_item);
+      */
       gtk_object_set_user_data (GTK_OBJECT (layer_widget->list_item),
 				layer_widget);
 

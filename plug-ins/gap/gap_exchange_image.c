@@ -28,6 +28,8 @@
  */
 
 /* revision history:
+ * 1.1.20a  2000/04/29   hof: bugfix in p_steal_content:  we must copy cmap before removing layers
+ *                            from src_image to avoid crash on indexed frames.
  * 1.1.16a  2000/02/05   hof: handle path lockedstaus and image unit
  * 1.1.15b  2000/01/30   hof: handle image specific parasites
  * 1.1.15a  2000/01/25   hof: stopped gimp 1.0.x support (removed p_copy_content)
@@ -52,6 +54,7 @@
 #include "gap_layer_copy.h"
 #include "gap_pdb_calls.h"
 #include "gap_exchange_image.h"
+#include "gap_lib.h"
 
 
 extern      int gap_debug; /* ==0  ... dont print debug infos */
@@ -115,6 +118,18 @@ p_steal_content(gint32 dst_image_id, gint32 src_image_id)
 
 
    if(gap_debug) printf("GAP-DEBUG: START p_steal_content dst_id=%d src_id=%d\n", (int)dst_image_id, (int)src_image_id);
+
+   /* gimp_image_undo_disable (src_image_id); */ /* does not work !! if active we can not steal layers */
+
+   /*  Copy the colormap if necessary  */
+   if(gimp_image_base_type(src_image_id) == INDEXED)
+   {
+       l_cmap = gimp_image_get_cmap (src_image_id, &l_ncolors);
+
+       if(gap_debug) printf("GAP-DEBUG: copy colormap ncolors %d\n", (int)l_ncolors);
+       gimp_image_set_cmap(dst_image_id, l_cmap, l_ncolors);
+   }
+
    
    /* check for floating selection */
    l_src_fsel_attached_to_id = -1;
@@ -135,7 +150,7 @@ p_steal_content(gint32 dst_image_id, gint32 src_image_id)
    for(l_idx = l_nlayers -1; l_idx >= 0; l_idx--)
    {
      l_layer_id = l_layers_list[l_idx];
-     if(gap_debug) printf("GAP-DEBUG: START p_steal_content layer_id=%d\n", (int)l_layer_id);
+     if(gap_debug) printf("GAP-DEBUG: START p_steal_content layer_id[%d]=%d\n", (int)l_idx, (int)l_layer_id);
 
 
      if(l_layer_id  == gimp_image_get_active_layer(src_image_id))
@@ -263,15 +278,6 @@ p_steal_content(gint32 dst_image_id, gint32 src_image_id)
        gimp_image_set_active_layer(dst_image_id, l_active_layer_id);
    }
 
-   /*  Copy the colormap if necessary  */
-   if(gimp_image_base_type(src_image_id) == INDEXED)
-   {
-       l_cmap = gimp_image_get_cmap (src_image_id, &l_ncolors);
-
-       if(gap_debug) printf("GAP-DEBUG: copy colormap ncolors %d\n", (int)l_ncolors);
-       gimp_image_set_cmap(dst_image_id, l_cmap, l_ncolors);
-   }
-
    /* copy guides */
    l_guide_id = p_gimp_image_findnext_guide(src_image_id, 0);  /* get 1.st guide */
    while(l_guide_id > 0)
@@ -346,16 +352,13 @@ p_steal_content(gint32 dst_image_id, gint32 src_image_id)
    l_rc = 0;
    
 cleanup:
-
    if(l_layers_list) g_free (l_layers_list);
    if(l_channels_list) g_free (l_channels_list);
    
    if(gap_debug) printf("GAP-DEBUG: END p_steal_content dst_id=%d src_id=%d  rc=%d\n",
                  (int)dst_image_id, (int)src_image_id, l_rc);
-
    return (l_rc);            /* 0 .. OK, or -1 on error */
 }   /* end p_steal_content */
-
 
 
 /* ============================================================================
@@ -363,8 +366,7 @@ cleanup:
  *   
  *   This procedure replaces the content of image_id 
  *     with the content from src_image_id.
- *     By copying or stealing all its layers and channels.
- *     (stealing is faster, but requres extensions to the GIMP-core).
+ *     By stealing all its layers and channels.
  * ============================================================================
  */
 
@@ -472,7 +474,6 @@ p_replace_img(gint32 image_id, gint32 src_image_id)
      }
    }
    
-
    /* steal all layers, channels and guides from src_image */
    l_rc = p_steal_content(image_id, src_image_id);
 

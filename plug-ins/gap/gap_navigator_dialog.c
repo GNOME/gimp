@@ -70,10 +70,11 @@
 
 
 /* revision history:
+ * version 1.1.20a; 2000.04.25   hof: copy/cut/paste menu
  * version 1.1.14a; 2000.01.08   hof: 1st release
  */
 
-static char *gap_navigator_version = "1.1.14a; 2000/01/08";
+static char *gap_navigator_version = "1.1.19a; 2000/04/24";
 
 
 /* SYTEM (UNIX) includes */ 
@@ -214,6 +215,13 @@ struct _NaviDialog
   GtkWidget     *timezoom_box;
   GtkWidget     *image_option_menu;
   GtkWidget     *image_menu;
+  GtkWidget     *ops_menu;
+  GtkWidget     *copy_menu_item;
+  GtkWidget     *cut_menu_item;
+  GtkWidget     *pastea_menu_item;
+  GtkWidget     *pasteb_menu_item;
+  GtkWidget     *paster_menu_item;
+  GtkWidget     *clrpaste_menu_item;
   GtkAccelGroup *accel_group;
   GtkAdjustment *framerate_data;
   GtkAdjustment *timezoom_data;
@@ -222,6 +230,7 @@ struct _NaviDialog
   gint           waiting_cursor;
   GdkCursor     *cursor_wait;
   GdkCursor     *cursor_acitve;
+  gint32         paste_at_frame;         /* -1: use current frame */
 
   gdouble ratio;
   gdouble preview_size;
@@ -268,6 +277,7 @@ struct _SelectedRange {
    gint32 from;
    gint32 to;
    SelectedRange *next;
+   SelectedRange *prev;
 };
 
 /* -----------------------
@@ -279,9 +289,13 @@ static void navi_preview_extents (void);
 static void frames_dialog_flush (void);
 static void frames_dialog_update (gint32 image_id);
 static void frame_widget_preview_redraw      (FrameWidget *);
+static void navi_vid_copy_and_cut(gint cut_flag);
 
 static gint navi_images_menu_constrain (gint32 image_id, gint32 drawable_id, gpointer data);
 static void navi_images_menu_callback  (gint32 id, gpointer data);
+static void navi_update_after_goto(void);
+static SelectedRange *navi_get_selected_ranges(void);
+static void navi_ops_menu_set_sensitive(void);
 
 static void navi_dialog_thumb_update_callback(GtkWidget *w, gpointer   data);
 static void navi_dialog_thumb_updateall_callback(GtkWidget *w, gpointer   data);
@@ -552,6 +566,175 @@ run (char    *name,
  * the navigator callback procedures
  * ---------------------------------
  */
+
+static void
+edit_copy_callback (GtkWidget *w,  gpointer   client_data)
+{
+  if(gap_debug) printf("edit_copy_callback\n");
+  navi_vid_copy_and_cut(FALSE /* cut_flag */);
+}
+static void
+edit_cut_callback (GtkWidget *w,  gpointer   client_data)
+{
+  if(gap_debug) printf("edit_cut_callback\n");
+  navi_vid_copy_and_cut(TRUE /* cut_flag */);
+}
+
+
+static void
+p_edit_paste_call(gint32 paste_mode)
+{
+  GParam          *return_vals;
+  int              nreturn_vals;
+  
+  if(naviD->paste_at_frame >= 0)
+  {
+     /* goto the first selected frame */
+         return_vals = gimp_run_procedure ("plug_in_gap_goto",
+                                      &nreturn_vals,
+	                              PARAM_INT32,    RUN_NONINTERACTIVE,
+				      PARAM_IMAGE,    naviD->active_imageid,
+				      PARAM_DRAWABLE, -1,  /* dummy */
+	                              PARAM_INT32,    naviD->paste_at_frame,
+                                      PARAM_END);
+         if (return_vals[0].data.d_status != STATUS_SUCCESS)
+         {
+ 	    return;
+         }
+  }
+  return_vals = gimp_run_procedure ("plug_in_gap_video_edit_paste",
+                                      &nreturn_vals,
+	                              PARAM_INT32,    RUN_NONINTERACTIVE,
+				      PARAM_IMAGE,    naviD->active_imageid,
+				      PARAM_DRAWABLE, -1,  /* dummy */
+	                              PARAM_INT32,    paste_mode,
+                                      PARAM_END);
+   navi_update_after_goto();                                 
+
+}
+static void
+edit_pasteb_callback (GtkWidget *w,  gpointer   client_data)
+{
+  p_edit_paste_call(VID_PASTE_INSERT_BEFORE);
+}
+static void
+edit_pastea_callback (GtkWidget *w,  gpointer   client_data)
+{
+  p_edit_paste_call(VID_PASTE_INSERT_AFTER);
+}
+static void
+edit_paster_callback (GtkWidget *w,  gpointer   client_data)
+{
+  p_edit_paste_call(VID_PASTE_REPLACE);
+}
+
+static void
+edit_clrpaste_callback (GtkWidget *w,  gpointer   client_data)
+{
+  GParam          *return_vals;
+  int              nreturn_vals;
+   
+  if(gap_debug) printf("edit_clrpaste_callback\n");
+  return_vals = gimp_run_procedure ("plug_in_gap_video_edit_clear",
+                                      &nreturn_vals,
+	                              PARAM_INT32,    RUN_NONINTERACTIVE,
+				      PARAM_IMAGE,    naviD->active_imageid,
+				      PARAM_DRAWABLE, -1,  /* dummy */
+                                      PARAM_END);
+}
+
+
+void 
+navi_vid_copy_and_cut(gint cut_flag)
+{
+   SelectedRange *range_list;
+   SelectedRange *range_list2;
+   SelectedRange *range_item;
+   GParam          *return_vals;
+   int              nreturn_vals;
+
+  if(gap_debug) printf("navi_dialog_vid_copy_callback\n");
+    
+  range_list = navi_get_selected_ranges();
+  if(range_list)
+  {
+    navi_set_waiting_cursor();    
+    p_vid_edit_clear();
+    
+    /* generate prev linkpointers in the range list */
+    range_item = NULL;
+    range_list2 = range_list;
+    while(1 == 1)
+    {
+       range_list2->prev = range_item;
+       range_item = range_list2;
+       if(range_list2->next == NULL)
+       {
+         break;
+       }
+       range_list2 = range_list2->next;
+    }
+    
+    while(range_list2)
+    {
+       /* Note: process the ranges from low frame_nummers
+	*       upto high frame_numbers.
+	*       (the range_list was created in a way that
+	*        the highest range is added as 1st list element
+        *        so we start at end of the list and to the 1. element using prev linkpinters
+	*/
+       if(gap_debug) printf("Copy Range from:%d  to:%d\n"
+	             ,(int)range_list2->from ,(int)range_list2->to );
+
+       return_vals = gimp_run_procedure ("plug_in_gap_video_edit_copy",
+                                   &nreturn_vals,
+	                           PARAM_INT32,    RUN_NONINTERACTIVE,
+				   PARAM_IMAGE,    naviD->active_imageid,
+				   PARAM_DRAWABLE, -1,  /* dummy */
+	                           PARAM_INT32,    range_list2->from,
+	                           PARAM_INT32,    range_list2->to,
+                                  PARAM_END);
+       range_item = range_list2;
+       range_list2 = range_list2->prev;
+    }
+
+    while(range_list)
+    {
+      if(cut_flag)
+      {
+         if(gap_debug) printf("Delete Range from:%d  to:%d\n"
+	               ,(int)range_list->from ,(int)range_list->to );
+
+         return_vals = gimp_run_procedure ("plug_in_gap_goto",
+                                      &nreturn_vals,
+	                              PARAM_INT32,    RUN_NONINTERACTIVE,
+				      PARAM_IMAGE,    naviD->active_imageid,
+				      PARAM_DRAWABLE, -1,  /* dummy */
+	                              PARAM_INT32,    range_list->from,
+                                      PARAM_END);
+         if (return_vals[0].data.d_status == STATUS_SUCCESS)
+         {
+ 	    return_vals = gimp_run_procedure ("plug_in_gap_del",
+                                     &nreturn_vals,
+	                             PARAM_INT32,    RUN_NONINTERACTIVE,
+				     PARAM_IMAGE,    naviD->active_imageid,
+				     PARAM_DRAWABLE, -1,  /* dummy */
+	                             PARAM_INT32,    1 + (range_list->to - range_list->from), /* number of frames to delete */
+                                    PARAM_END);
+         }
+      }
+
+       range_item = range_list;
+       range_list = range_list->next;
+       g_free(range_item);
+    }
+
+    navi_update_after_goto();                                 
+  }
+}	/* end navi_dialog_frames_duplicate_frame_callback */
+
+
+
 static gint32
 navi_get_preview_size(void)
 {
@@ -1007,7 +1190,8 @@ navi_refresh_image_menu()
   return(FALSE);
 }
 
-void navi_update_after_goto(void)
+void 
+navi_update_after_goto(void)
 {
    if(naviD)
    {
@@ -1060,6 +1244,55 @@ navi_get_selected_ranges(void)
   
   return(range_list);
 }
+
+void
+navi_ops_menu_set_sensitive(void)
+{
+  FrameWidget *fw;
+  GSList      *list;
+  GtkStateType  state;
+
+  if(naviD == NULL)
+  {
+    return;
+  }
+  if(p_vid_edit_framecount() > 0)
+  {
+     gtk_widget_set_sensitive(naviD->pastea_menu_item, TRUE);
+     gtk_widget_set_sensitive(naviD->pasteb_menu_item, TRUE);
+     gtk_widget_set_sensitive(naviD->paster_menu_item, TRUE);
+     gtk_widget_set_sensitive(naviD->clrpaste_menu_item, TRUE);
+  }
+  else
+  {
+     gtk_widget_set_sensitive(naviD->pastea_menu_item, FALSE);
+     gtk_widget_set_sensitive(naviD->pasteb_menu_item, FALSE);
+     gtk_widget_set_sensitive(naviD->paster_menu_item, FALSE);
+     gtk_widget_set_sensitive(naviD->clrpaste_menu_item, FALSE);
+  }
+  
+  list = naviD->frame_widgets;
+  while (list)
+  {
+      fw = (FrameWidget *) list->data;
+      list = g_slist_next (list);
+      state = fw->list_item->state;
+      if(state == GTK_STATE_SELECTED)
+      {
+         naviD->paste_at_frame = fw->frame_nr;
+         gtk_widget_set_sensitive(naviD->copy_menu_item, TRUE);
+         gtk_widget_set_sensitive(naviD->cut_menu_item, TRUE);
+         return;
+      }
+  }
+  gtk_widget_set_sensitive(naviD->copy_menu_item, FALSE);
+  gtk_widget_set_sensitive(naviD->cut_menu_item, FALSE);
+
+  naviD->paste_at_frame = -1;  /* nothing selected, use current frame_nr */
+
+}	/* end navi_ops_menu_set_sensitive */
+
+
 
 static void
 navi_thumb_update(gint update_all)
@@ -1573,7 +1806,12 @@ frame_list_events (GtkWidget *widget,
 
 	  if (bevent->button == 3)
 	  {
-	      if(gap_debug) printf("frame_list_events:nothing implemented on GDK_BUTTON_PRESS event\n");
+	      if(gap_debug) printf("frame_list_events: GDK_BUTTON_PRESS bevent->button == 3\n");
+              navi_ops_menu_set_sensitive();
+              gtk_menu_popup (GTK_MENU (naviD->ops_menu),
+		       NULL, NULL, NULL, NULL,
+		       3, bevent->time);
+
 	      return TRUE;
 	  }
 	  break;
@@ -2117,16 +2355,16 @@ frame_widget_preview_events (GtkWidget *widget,
       /*  Control-button press disables the application of the mask  */
       bevent = (GdkEventButton *) event;
 
-      if(gap_debug) printf("frame_widget_preview_events GDK_BUTTON_PRESS button:%d NOT IMPLEMENTED\n"
+      if(gap_debug) printf("frame_widget_preview_events GDK_BUTTON_PRESS button:%d\n"
                             , (int)bevent->button);
 
       if (bevent->button == 3)
       {
-/*
- * 	  gtk_menu_popup (GTK_MENU (naviD->ops_menu),
- * 			  NULL, NULL, NULL, NULL,
- * 			  3, bevent->time);
- */
+          navi_ops_menu_set_sensitive();
+          gtk_menu_popup (GTK_MENU (naviD->ops_menu),
+		       NULL, NULL, NULL, NULL,
+		       3, bevent->time);
+
 	  return TRUE;
       }
 
@@ -2614,6 +2852,7 @@ navi_dialog_create (GtkWidget* shell, gint32 image_id)
   GtkWidget *button_box;
   GtkWidget *label;
   GtkWidget *slider;
+  GtkWidget *menu_item;
   char  *l_basename;
   char frame_nr_to_char[20];
 
@@ -2674,6 +2913,73 @@ navi_dialog_create (GtkWidget* shell, gint32 image_id)
   util_box = gtk_hbox_new (FALSE, 1);
   gtk_box_pack_start (GTK_BOX (vbox), util_box, FALSE, FALSE, 0);
 
+  /*  The popup menu (copy/cut/paste) */
+  naviD->ops_menu = gtk_menu_new ();
+
+      /* menu_item copy */
+      menu_item = gtk_menu_item_new_with_label (_("Copy"));
+      gtk_container_add (GTK_CONTAINER (naviD->ops_menu), menu_item);
+
+      gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
+			    (GtkSignalFunc) edit_copy_callback,
+			    naviD);
+      gtk_widget_show (menu_item);
+      naviD->copy_menu_item = menu_item;
+
+      /* menu_item cut */
+      menu_item = gtk_menu_item_new_with_label (_("Cut"));
+      gtk_container_add (GTK_CONTAINER (naviD->ops_menu), menu_item);
+
+      gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
+			    (GtkSignalFunc) edit_cut_callback,
+			    naviD);
+      gtk_widget_show (menu_item);
+      naviD->cut_menu_item = menu_item;
+
+      /* menu_item paste before */
+      menu_item = gtk_menu_item_new_with_label (_("Paste before"));
+      gtk_container_add (GTK_CONTAINER (naviD->ops_menu), menu_item);
+
+      gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
+			    (GtkSignalFunc) edit_pasteb_callback,
+			    naviD);
+      gtk_widget_show (menu_item);
+      naviD->pasteb_menu_item = menu_item;
+
+      /* menu_item copy */
+      menu_item = gtk_menu_item_new_with_label (_("Paste after"));
+      gtk_container_add (GTK_CONTAINER (naviD->ops_menu), menu_item);
+
+      gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
+			    (GtkSignalFunc) edit_pastea_callback,
+			    naviD);
+      gtk_widget_show (menu_item);
+      naviD->pastea_menu_item = menu_item;
+
+      /* menu_item copy */
+      menu_item = gtk_menu_item_new_with_label (_("Paste replace"));
+      gtk_container_add (GTK_CONTAINER (naviD->ops_menu), menu_item);
+
+      gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
+			    (GtkSignalFunc) edit_paster_callback,
+			    naviD);
+      gtk_widget_show (menu_item);
+      naviD->paster_menu_item = menu_item;
+
+      /* menu_item copy */
+      menu_item = gtk_menu_item_new_with_label (_("Clear Video Buffer"));
+      gtk_container_add (GTK_CONTAINER (naviD->ops_menu), menu_item);
+
+      gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
+			    (GtkSignalFunc) edit_clrpaste_callback,
+			    naviD);
+      gtk_widget_show (menu_item);
+      naviD->clrpaste_menu_item = menu_item;
+
+  gtk_widget_show (naviD->ops_menu);
+
+
+  /*  The image menu */
   naviD->image_option_menu = gtk_option_menu_new();
   naviD->image_menu = NULL;
   navi_refresh_image_menu();

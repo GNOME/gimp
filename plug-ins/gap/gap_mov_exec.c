@@ -26,6 +26,7 @@
  */
 
 /* revision history:
+ * gimp    1.1.20a; 2000/04/25  hof: support for keyframes, anim_preview
  * version 0.93.04              hof: Window with Info Message if no Source Image was selected in MovePath
  * version 0.90.00;             hof: 1.st (pre) release 14.Dec.1997
  */
@@ -52,59 +53,168 @@
 #include "gap_lib.h"
 #include "gap_mov_dialog.h"
 #include "gap_mov_exec.h"
+#include "gap_pdb_calls.h"
 
 extern      int gap_debug; /* ==0  ... dont print debug infos */
 
-static int p_mov_call_render(t_mov_data *mov_ptr, t_mov_current *cur_ptr);
+static gint p_mov_call_render(t_mov_data *mov_ptr, t_mov_current *cur_ptr, gint apv_layerstack);
 static void p_mov_advance_src_layer(t_mov_current *cur_ptr, int src_stepmode);
 static long   p_mov_execute(t_mov_data *mov_ptr);
 
 /* ============================================================================
  * p_mov_call_render
  *  load current frame, render and save back to disk
+ *  for animted_preview
  * ============================================================================
  */
 
-int p_mov_call_render(t_mov_data *mov_ptr, t_mov_current *cur_ptr)
+gint
+p_mov_call_render(t_mov_data *mov_ptr, t_mov_current *cur_ptr, gint apv_layerstack)
 {
   t_anim_info *ainfo_ptr;
   gint32  l_tmp_image_id;
+  gint32  l_layer_id;
   int     l_rc;
+  char    *l_fname;
+  char    *l_name;
 
   l_rc = 0;
   ainfo_ptr = mov_ptr->dst_ainfo_ptr;
-  
 
-  if(ainfo_ptr->new_filename != NULL) g_free(ainfo_ptr->new_filename);
-  ainfo_ptr->new_filename = p_alloc_fname(ainfo_ptr->basename,
-                                      cur_ptr->dst_frame_nr,
-                                      ainfo_ptr->extension);
-  if(ainfo_ptr->new_filename == NULL)
-     return -1;
 
-  /* load next frame to render */
-  l_tmp_image_id = p_load_image(ainfo_ptr->new_filename);
-  if(l_tmp_image_id < 0)
-    return -1;
-
-  /* call render procedure for current image */
-  if(0 == p_mov_render(l_tmp_image_id, mov_ptr->val_ptr, cur_ptr))
+  if(mov_ptr->val_ptr->apv_mlayer_image < 0)
   {
-    /* if OK: save the rendered frame back to disk */
-    if(p_save_named_frame(l_tmp_image_id, ainfo_ptr->new_filename) < 0)
-      l_rc = -1;
+    /* We are generating the Animation on the ORIGINAL FRAMES */
+    if(ainfo_ptr->new_filename != NULL) g_free(ainfo_ptr->new_filename);
+    ainfo_ptr->new_filename = p_alloc_fname(ainfo_ptr->basename,
+                                	cur_ptr->dst_frame_nr,
+                                	ainfo_ptr->extension);
+    if(ainfo_ptr->new_filename == NULL)
+       return -1;
+
+    /* load next frame to render */
+    l_tmp_image_id = p_load_image(ainfo_ptr->new_filename);
+    if(l_tmp_image_id < 0)
+      return -1;
+
+    /* call render procedure for current image */
+    if(0 == p_mov_render(l_tmp_image_id, mov_ptr->val_ptr, cur_ptr))
+    {
+      /* if OK: save the rendered frame back to disk */
+      if(p_save_named_frame(l_tmp_image_id, ainfo_ptr->new_filename) < 0)
+	l_rc = -1;
+    }
+    else l_rc = -1;
   }
-  else l_rc = -1;
-  
+  else
+  {
+    /* We are generating an ANIMATED PREVIEW multilayer image */
+    if(mov_ptr->val_ptr->apv_src_frame >= 0)
+    {
+       /* anim preview uses one constant (prescaled) frame */
+       l_tmp_image_id = p_gimp_channel_ops_duplicate(mov_ptr->val_ptr->apv_src_frame);
+    }
+    else
+    {
+       /* anim preview exact mode uses original frames */
+       if(ainfo_ptr->new_filename != NULL) g_free(ainfo_ptr->new_filename);
+       ainfo_ptr->new_filename = p_alloc_fname(ainfo_ptr->basename,
+                                	   cur_ptr->dst_frame_nr,
+                                	   ainfo_ptr->extension);
+       l_tmp_image_id = p_load_image(ainfo_ptr->new_filename);
+       if(l_tmp_image_id < 0)
+	 return -1;
+
+       if((mov_ptr->val_ptr->apv_scalex != 100.0) || (mov_ptr->val_ptr->apv_scaley != 100.0))
+       {
+         GParam     *l_params;
+         gint        l_retvals;
+	 gint32      l_size_x, l_size_y;
+       
+         l_size_x = (gimp_image_width(l_tmp_image_id) * mov_ptr->val_ptr->apv_scalex) / 100;
+         l_size_y = (gimp_image_height(l_tmp_image_id) * mov_ptr->val_ptr->apv_scaley) / 100;
+       
+         l_params = gimp_run_procedure ("gimp_image_scale",
+			         &l_retvals,
+			         PARAM_IMAGE,    l_tmp_image_id,
+			         PARAM_INT32,    l_size_x,
+			         PARAM_INT32,    l_size_y,
+			         PARAM_END);
+       }
+    }
+    
+    /* call render procedure for current image */
+    if(0 == p_mov_render(l_tmp_image_id, mov_ptr->val_ptr, cur_ptr))
+    {
+      /* if OK and optional save to gap_paste-buffer */
+      if(mov_ptr->val_ptr->apv_gap_paste_buff != NULL)
+      {
+         l_fname = p_alloc_fname(mov_ptr->val_ptr->apv_gap_paste_buff,
+                                 cur_ptr->dst_frame_nr,
+                                 ".xcf");
+         p_save_named_frame(l_tmp_image_id, l_fname);
+      }
+      
+      /* flatten the rendered frame */
+      l_layer_id = gimp_image_flatten(l_tmp_image_id);
+      if(l_layer_id < 0)
+      {
+        if(gap_debug) printf("p_mov_call_render: flattened layer_id:%d\n", (int)l_layer_id);
+        /* hof:
+	 * if invisible layers are flattened on an empty image
+	 * we do not get a resulting layer (returned l_layer_id == -1)
+	 *
+	 *  I'm not sure if is this a bug, but here is a workaround:
+	 *
+	 * In that case I add a dummy layer 1x1 pixel (at offest -1,-1)
+	 * and flatten again, and it works (tested with gimp-1.1.19)
+	 */
+        l_layer_id = gimp_layer_new(l_tmp_image_id, "dummy",
+                                 1, 
+				 1,
+				 ((gint)(gimp_image_base_type(l_tmp_image_id)) * 2),
+                                 100.0,     /* Opacity full opaque */     
+                                 0);        /* NORMAL */
+         gimp_image_add_layer(l_tmp_image_id, l_layer_id, 0);
+	 gimp_layer_set_offsets(l_layer_id, -1, -1);
+        l_layer_id = gimp_image_flatten(l_tmp_image_id);
+	
+      }
+      gimp_layer_add_alpha(l_layer_id);
+      
+      if(gap_debug)
+      {
+        printf("p_mov_call_render: flattened layer_id:%d\n", (int)l_layer_id);
+        printf("p_mov_call_render: tmp_image_id:%d  apv_mlayer_image:%d\n",
+	        (int)l_tmp_image_id, (int)mov_ptr->val_ptr->apv_mlayer_image);
+      }
+
+      /* set layername (including delay for the framerate) */
+      l_name = g_strdup_printf("frame_%04d (%dms)"
+                              , (int) cur_ptr->dst_frame_nr
+                              , (int)(1000/mov_ptr->val_ptr->apv_framerate));
+      gimp_layer_set_name(l_layer_id, l_name);
+      g_free(l_name);
+      
+      /* remove (its only) layer from source */
+      gimp_image_remove_layer(l_tmp_image_id, l_layer_id);
+
+      /* and set the dst_image as it's new Master */
+      p_gimp_drawable_set_image(l_layer_id, mov_ptr->val_ptr->apv_mlayer_image);
+
+      /* add the layer to the anim preview multilayer image */
+      gimp_image_add_layer (mov_ptr->val_ptr->apv_mlayer_image, l_layer_id, apv_layerstack);
+    }
+    else l_rc = -1;
+  }
+    
 
   /* destroy the tmp image */
   gimp_image_delete(l_tmp_image_id);
 
   return l_rc;
-
 }	/* end p_mov_call_render */
  
-
 
 /* ============================================================================
  * p_mov_advance_src_layer
@@ -186,7 +296,7 @@ void p_mov_advance_src_layer(t_mov_current *cur_ptr, int src_stepmode)
  * p_mov_execute
  * Copy layer(s) from Sourceimage to given destination frame range,
  * varying koordinates and opacity of the copied layer.
- * To each affected destination frame exactly one is added.
+ * To each affected destination frame exactly one copy of a source layer is added.
  * The source layer is iterated through all layers of the sourceimage
  * according to stemmode parameter.
  * For the placement the layers act as if their size is equal to their
@@ -194,9 +304,12 @@ void p_mov_advance_src_layer(t_mov_current *cur_ptr, int src_stepmode)
  * ============================================================================
  */
 
-long   p_mov_execute(t_mov_data *mov_ptr)
+/* TODO: add keyframe support */
+
+long
+p_mov_execute(t_mov_data *mov_ptr)
 {
-  int l_idx;
+  gint l_idx;
    t_mov_current l_current_data;
    t_mov_current *cur_ptr;
    t_mov_values  *val_ptr;
@@ -209,11 +322,15 @@ long   p_mov_execute(t_mov_data *mov_ptr)
    long     l_cnt;
    long     l_points;
    long     l_ptidx;
+   long     l_prev_keyptidx;
    long     l_fridx;
    gdouble  l_flt_count;
-   int      l_rc;
-   int      l_nlayers;
-
+   gint     l_rc;
+   gint     l_nlayers;
+   gint     l_idk;
+   gint     l_prev_keyframe;
+   gint     l_apv_layerstack;
+   
    if(mov_ptr->val_ptr->src_image_id < 0)
    {
       p_msg_win(mov_ptr->dst_ainfo_ptr->run_mode,
@@ -222,16 +339,34 @@ long   p_mov_execute(t_mov_data *mov_ptr)
       return -1;
    }
 
-    
+  l_apv_layerstack = 0;
   l_percentage = 0.0;  
   if(mov_ptr->dst_ainfo_ptr->run_mode == RUN_INTERACTIVE)
   { 
-    gimp_progress_init( _("Copying Layers into Frames..."));
+    if(mov_ptr->val_ptr->apv_mlayer_image < 0)
+    {
+      gimp_progress_init( _("Copying Layers into Frames..."));
+    }
+    else
+    {
+      gimp_progress_init( _("Generating Animated Preview..."));
+    }
   }
 
   if(gap_debug)
   {
     printf("p_mov_execute: values got from dialog:\n");
+    printf("apv_mlayer_image: %ld\n", (long)mov_ptr->val_ptr->apv_mlayer_image);
+    printf("apv_mode: %ld\n", (long)mov_ptr->val_ptr->apv_mode);
+    printf("apv_scale x: %f y:%f\n", (float)mov_ptr->val_ptr->apv_scalex, (float)mov_ptr->val_ptr->apv_scaley);
+    if(mov_ptr->val_ptr->apv_gap_paste_buff)
+    {
+      printf("apv_gap_paste_buf: %s\n", mov_ptr->val_ptr->apv_gap_paste_buff);
+    }
+    else
+    {
+      printf("apv_gap_paste_buf: ** IS NULL ** (do not copy to paste buffer)\n");
+    }
     printf("src_image_id :%ld\n", (long)mov_ptr->val_ptr->src_image_id);
     printf("src_layer_id :%ld\n", (long)mov_ptr->val_ptr->src_layer_id);
     printf("src_handle :%d\n", mov_ptr->val_ptr->src_handle);
@@ -249,6 +384,8 @@ long   p_mov_execute(t_mov_data *mov_ptr)
       printf("w_resize[%d] :%d\n", l_idx, mov_ptr->val_ptr->point[l_idx].w_resize);
       printf("h_resize[%d] :%d\n", l_idx, mov_ptr->val_ptr->point[l_idx].h_resize);
       printf("rotation[%d] :%d\n", l_idx, mov_ptr->val_ptr->point[l_idx].rotation);
+      printf("keyframe[%d] :%d\n", l_idx, mov_ptr->val_ptr->point[l_idx].keyframe);
+      printf("keyframe_abs[%d] :%d\n", l_idx, mov_ptr->val_ptr->point[l_idx].keyframe_abs);
     }
     printf("\n");
   }
@@ -323,7 +460,7 @@ long   p_mov_execute(t_mov_data *mov_ptr)
    cur_ptr->currRotation = (gdouble)val_ptr->point[0].rotation;
 
    /* RENDER add current src_layer to current frame */
-   l_rc = p_mov_call_render(mov_ptr, cur_ptr);
+   l_rc = p_mov_call_render(mov_ptr, cur_ptr, l_apv_layerstack);
 
 
    /* how many frames are affected from one line of the moving path */   
@@ -331,7 +468,11 @@ long   p_mov_execute(t_mov_data *mov_ptr)
    l_fpl2 = (l_fpl + 0.5);
    
    l_ptidx = 1;
+   l_prev_keyptidx = 0;
    l_flt_count =  0.0;
+   l_prev_keyframe = 0;
+
+   if(gap_debug) printf("p_mov_execute: initial l_fpl=%f, l_fpl2=%d\n", l_fpl, (int)l_fpl2);
    
    
   /* loop for each frame within the range (may step up or down) */
@@ -339,7 +480,7 @@ long   p_mov_execute(t_mov_data *mov_ptr)
   for(l_fridx = 1; l_fridx < l_cnt; l_fridx++)
   {
      
-     if(gap_debug) printf("p_mov_execute: l_fridx=%ld, l_flt_count=%f, l_rc=%d\n",
+     if(gap_debug) printf("\np_mov_execute: l_fridx=%ld, l_flt_count=%f, l_rc=%d\n",
                           l_fridx, l_flt_count, (int)l_rc);
 
      if(l_rc != 0) break;
@@ -358,7 +499,37 @@ long   p_mov_execute(t_mov_data *mov_ptr)
          cur_ptr->currWidth  = (gdouble)val_ptr->point[l_ptidx -1].w_resize;
          cur_ptr->currHeight  = (gdouble)val_ptr->point[l_ptidx -1].h_resize;
          cur_ptr->currRotation  = (gdouble)val_ptr->point[l_ptidx -1].rotation;
-         
+
+	 /* check if there are controlpoints fixed to keyframes */
+	 if(l_ptidx > l_prev_keyptidx)
+	 {
+	   for(l_idk = l_ptidx; l_idk < l_points; l_idk++)
+	   {
+	      if (val_ptr->point[l_idk].keyframe > 0)
+	      {
+		/* found a keyframe, have to recalculate frames_per_line */
+        	l_fpl = ((gdouble)(val_ptr->point[l_idk].keyframe - l_prev_keyframe)) / ((gdouble)((l_idk -  l_ptidx) +1));
+        	l_fpl2 = (l_fpl + 0.5);
+        	l_prev_keyframe = val_ptr->point[l_idk].keyframe;
+
+                l_prev_keyptidx = l_idk;
+		/* l_flt_count = (gdouble)l_fridx - l_fpl; */
+        	if(gap_debug) printf("p_mov_execute: keyframe l_fpl=%f, l_fpl2=%d\n", l_fpl, (int)l_fpl2);
+        	break;
+	      }
+	      if ((l_idk == l_points -1) && (l_prev_keyframe != 0))
+	      {
+		/* last point is an implicite keyframe (if any keyframe was used ) */
+        	l_fpl = ((gdouble)(l_frames - l_prev_keyframe -1)) / ((gdouble)((l_idk -  l_ptidx) +1));
+        	l_fpl2 = (l_fpl + 0.5);
+        	l_prev_keyframe = val_ptr->point[l_idk].keyframe;
+
+        	if(gap_debug) printf("p_mov_execute: last frame l_fpl=%f, l_fpl2=%d\n", l_fpl, (int)l_fpl2);
+        	break;
+	      }
+	   }
+	 }
+	 
          /* change deltas for next line of the move path */
          cur_ptr->deltaX  = ((gdouble)val_ptr->point[l_ptidx].p_x  - (gdouble)val_ptr->point[l_ptidx -1].p_x) / (gdouble)l_fpl2;
          cur_ptr->deltaY  = ((gdouble)val_ptr->point[l_ptidx].p_y  - (gdouble)val_ptr->point[l_ptidx -1].p_y) / (gdouble)l_fpl2;
@@ -381,8 +552,18 @@ long   p_mov_execute(t_mov_data *mov_ptr)
        cur_ptr->currHeight   += cur_ptr->deltaHeight;
        cur_ptr->currRotation += cur_ptr->deltaRotation;
 
+       if(l_frame_step < 0)
+       {
+         /* if we step down, we have to insert the layer
+	  * as lowest layer in the existing layerstack
+	  * of the animated preview multilayer image.
+	  * (if we step up, we always use 0 as l_apv_layerstack,
+	  *  that means always insert on top of the layerstack)
+	  */
+         l_apv_layerstack++;
+       }
        /* RENDER add current src_layer to current frame */
-       l_rc = p_mov_call_render(mov_ptr, cur_ptr);
+       l_rc = p_mov_call_render(mov_ptr, cur_ptr, l_apv_layerstack);
 
        /* show progress */
        if(mov_ptr->dst_ainfo_ptr->run_mode == RUN_INTERACTIVE)
@@ -399,6 +580,158 @@ long   p_mov_execute(t_mov_data *mov_ptr)
 
 }	/* end p_mov_execute */
 
+/* ============================================================================
+ * p_mov_anim_preview
+ *   Generate an animate preview for the move path
+ * ============================================================================
+ */
+gint32 
+p_mov_anim_preview(t_mov_values *pvals_orig, t_anim_info *ainfo_ptr, gint preview_frame_nr)
+{
+  t_mov_data    apv_mov_data;
+  t_mov_values  apv_mov_vals;
+  t_mov_data    *l_mov_ptr;
+  t_mov_values  *l_pvals;
+  gint        l_idx;
+  gint32      l_size_x, l_size_y;
+  gint32      l_tmp_image_id;
+  gint32      l_tmp_frame_id;
+  gint32      l_mlayer_image_id;
+  GParam     *l_params;
+  gint        l_retvals;
+  GImageType  l_type;
+  guint       l_width, l_height;
+  gint32      l_tattoo;
+  gint        l_rc;
+  
+  l_mov_ptr = &apv_mov_data;
+  l_pvals = &apv_mov_vals;
+  
+  /* copy settings */
+  memcpy(l_pvals, pvals_orig, sizeof(t_mov_values));
+  l_mov_ptr->val_ptr = l_pvals;
+  l_mov_ptr->dst_ainfo_ptr = ainfo_ptr;
+
+  /* -1 assume no tmp_image (use unscaled original source) */
+  l_tmp_image_id = -1;
+
+  /* Scale (down) needed ? */
+  if((l_pvals->apv_scalex != 100.0) || (l_pvals->apv_scaley != 100.0))
+  {
+    /* scale the controlpoint koords */
+    for(l_idx = 0; l_idx <= l_pvals->point_idx_max; l_idx++)
+    {
+      l_pvals->point[l_idx].p_x  = (l_pvals->point[l_idx].p_x * l_pvals->apv_scalex) / 100;
+      l_pvals->point[l_idx].p_y  = (l_pvals->point[l_idx].p_y * l_pvals->apv_scaley) / 100;
+    }
+
+    /* copy and scale the source object image */
+    l_tmp_image_id = p_gimp_channel_ops_duplicate(pvals_orig->src_image_id);
+    l_pvals->src_image_id = l_tmp_image_id;
+
+    l_size_x = MAX(1, (gimp_image_width(l_tmp_image_id) * l_pvals->apv_scalex) / 100);
+    l_size_y = MAX(1, (gimp_image_height(l_tmp_image_id) * l_pvals->apv_scaley) / 100);
+    l_params = gimp_run_procedure ("gimp_image_scale",
+  		                 &l_retvals,
+			         PARAM_IMAGE,    l_tmp_image_id,
+			         PARAM_INT32,    l_size_x,
+			         PARAM_INT32,    l_size_y,
+			         PARAM_END);
+
+    /* find the selected src_layer by tattoo in the copy of src_image */
+    l_tattoo = gimp_layer_get_tattoo(pvals_orig->src_layer_id);
+    l_pvals->src_layer_id = gimp_image_get_layer_by_tattoo(l_tmp_image_id, l_tattoo);
+    
+  }
+
+
+  if(gap_debug)
+  {
+    printf("p_mov_anim_preview: src_image_id %d (orig:%d)\n"
+           , (int) l_pvals->src_image_id
+	   , (int) pvals_orig->src_image_id);
+  }
+  
+  /* create the animated preview multilayer image in (scaled) framesize */
+  l_width  = (gimp_image_width(ainfo_ptr->image_id) * l_pvals->apv_scalex) / 100;
+  l_height = (gimp_image_height(ainfo_ptr->image_id) * l_pvals->apv_scaley) / 100;
+  l_type   = gimp_image_base_type(ainfo_ptr->image_id);
+  
+  l_mlayer_image_id = gimp_image_new(l_width, l_height,l_type);
+  l_pvals->apv_mlayer_image = l_mlayer_image_id;
+
+  if(gap_debug)
+  {
+    printf("p_mov_anim_preview: apv_mlayer_image %d\n"
+           , (int) l_pvals->apv_mlayer_image);
+  }
+  
+  /* APV_MODE (Wich frames to use in the preview?)  */
+  switch(l_pvals->apv_mode)
+  {
+    gchar *l_filename;
+    
+    case GAP_APV_QUICK:
+      /* use an empty dummy frame for all frames */    
+      l_tmp_frame_id = gimp_image_new(l_width, l_height,l_type);
+      break;
+    case GAP_APV_ONE_FRAME:
+      /* use only one frame in the preview */    
+      l_filename = p_alloc_fname(ainfo_ptr->basename,
+                                 preview_frame_nr,
+                                 ainfo_ptr->extension);
+      l_tmp_frame_id =  p_load_image(l_filename);
+      if((l_pvals->apv_scalex != 100.0) || (l_pvals->apv_scaley != 100.0))
+      {
+	l_size_x = (gimp_image_width(l_tmp_frame_id) * l_pvals->apv_scalex) / 100;
+	l_size_y = (gimp_image_height(l_tmp_frame_id) * l_pvals->apv_scaley) / 100;
+	l_params = gimp_run_procedure ("gimp_image_scale",
+  		                   &l_retvals,
+			           PARAM_IMAGE,    l_tmp_frame_id,
+			           PARAM_INT32,    l_size_x,
+			           PARAM_INT32,    l_size_y,
+			           PARAM_END);
+      }
+      g_free(l_filename);
+      break;
+    default:  /* GAP_APV_EXACT */
+      /* read the original frames for the preview (slow) */
+      l_tmp_frame_id = -1; 
+      break;
+  }
+  l_pvals->apv_src_frame = l_tmp_frame_id;
+
+  if(gap_debug)
+  {
+    printf("p_mov_anim_preview: apv_src_frame %d\n"
+           , (int) l_pvals->apv_src_frame);
+  }
+
+
+  /* EXECUTE move path in preview Mode */ 
+  /* --------------------------------- */ 
+  l_rc = p_mov_execute(l_mov_ptr);
+  if(l_rc < 0)
+  {
+    return(-1);
+  }
+  
+  /* add a display for the animated preview multilayer image */
+  gimp_display_new(l_mlayer_image_id);
+ 
+  /* delete the scaled copy of the src image (if there is one) */
+  if(l_tmp_image_id >= 0)
+  { 
+    gimp_image_delete(l_tmp_image_id);
+  }
+  /* delete the (scaled) dummy frames (if there is one) */
+  if(l_tmp_frame_id >= 0)
+  { 
+    gimp_image_delete(l_tmp_frame_id);
+  }
+
+  return(l_mlayer_image_id);
+}	/* end p_mov_anim_preview */
 
 
 /* ============================================================================

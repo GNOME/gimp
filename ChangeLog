@@ -1,6 +1,26 @@
+2000-05-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/layers_dialog.c: removed layers_dialog_idle_set_layer_focus()
+	because Wolfgang pointed out that it caused bad segfaults. This
+	fixes #10139 and #9844. OTOH this brings back the bug that the
+	active layers is sometimes not the selected one in the layers
+	dialog, grmpf.
+
+	* plug-ins/script-fu/script-fu-scripts.c: small cleanups.
+
+	* plug-ins/gap/README
+	* plug-ins/gap/gap_exchange_image.c
+	* plug-ins/gap/gap_lib.[ch]
+	* plug-ins/gap/gap_main.c
+	* plug-ins/gap/gap_mov_dialog.[ch]
+	* plug-ins/gap/gap_mov_exec.[ch]
+	* plug-ins/gap/gap_navigator_dialog.c: applied a patch from
+	Wolfgang Hofer <hof@hotbot.com>.
+
 2000-05-03  Pablo Saratxaga <pablo@mandrakesoft.com>
 
-	* configure.in,po/ca.po: added Catalan file
+	* configure.in
+	* po/ca.po: added Catalan file
 
 2000-05-03  Sven Neumann  <sven@gimp.org>
 

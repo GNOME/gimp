@@ -38,9 +38,10 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-static char *gap_main_version =  "1.1.14a; 2000/01/01";
+static char *gap_main_version =  "1.1.20a; 2000/04/25";
 
 /* revision history:
+ * gimp    1.1.20a; 2000/04/25  hof: NON_INTERACTIVE PDB-Interfaces video_edit_copy/paste/clear
  * gimp    1.1.14a; 2000/01/01  hof: bugfix params for gap_dup in noninteractive mode
  * gimp    1.1.13a; 1999/11/26  hof: splitted frontends for external programs (mpeg encoders)
  *                                   to gap_frontends_main.c
@@ -332,6 +333,36 @@ query ()
   };
   static int nargs_modify = sizeof(args_modify) / sizeof(args_modify[0]);
 
+  static GParamDef args_video_copy[] =
+  {
+    {PARAM_INT32, "run_mode", "always non-interactive"},
+    {PARAM_IMAGE, "image", "Input image (current one of the Anim Frames)"},
+    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
+    {PARAM_INT32, "range_from", "frame nr to start"},
+    {PARAM_INT32, "range_to", "frame nr to stop"},
+  };
+  static int nargs_video_copy = sizeof(args_video_copy) / sizeof(args_video_copy[0]);
+
+  static GParamDef args_video_paste[] =
+  {
+    {PARAM_INT32, "run_mode", "always non-interactive"},
+    {PARAM_IMAGE, "image", "Input image (current one of the Anim Frames)"},
+    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
+    {PARAM_INT32, "paste_mode", "0 .. paste at current frame (replacing current and following frames)"
+                                "1 .. paste insert before current frame "
+				"2 .. paste insert after current frame"},
+  };
+  static int nargs_video_paste = sizeof(args_video_paste) / sizeof(args_video_paste[0]);
+
+  static GParamDef args_video_clear[] =
+  {
+    {PARAM_INT32, "run_mode", "always non-interactive"},
+    {PARAM_IMAGE, "image", "Input image (is ignored)"},
+    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
+  };
+  static int nargs_video_clear = sizeof(args_video_clear) / sizeof(args_video_clear[0]);
+
+
   INIT_I18N();
 
   gimp_install_procedure("plug_in_gap_next",
@@ -574,6 +605,54 @@ query ()
 			 PROC_PLUG_IN,
 			 nargs_modify, nreturn_vals,
 			 args_modify, return_vals);
+
+  gimp_install_procedure("plug_in_gap_video_edit_copy",
+			 "This plugin appends the selected framerange to the video paste buffer"
+			 "the video paste buffer is a directory configured by gimprc (video-paste-dir )"
+			 "and a framefile basename configured by gimprc (video-paste-basename)",
+			 "",
+			 "Wolfgang Hofer (hof@hotbot.com)",
+			 "Wolfgang Hofer",
+			 gap_main_version,
+			 NULL,                     /* do not appear in menus */
+			 "RGB*, INDEXED*, GRAY*",
+			 PROC_PLUG_IN,
+			 nargs_video_copy, nreturn_vals,
+			 args_video_copy, return_vals);
+
+  gimp_install_procedure("plug_in_gap_video_edit_paste",
+			 "This plugin copies all frames from the video paste buffer"
+			 "to the current video. Depending on the paste_mode parameter"
+			 "the copied frames are replacing frames beginning at current frame"
+			 "or are inserted before or after the current frame"
+			 "the pasted frames are scaled to fit the current video size"
+			 "and converted in Imagetype (RGB,GRAY,INDEXED) if necessary"
+			 "the video paste buffer is a directory configured by gimprc (video-paste-dir )"
+			 "and a framefile basename configured by gimprc (video-paste-basename)",
+			 "",
+			 "Wolfgang Hofer (hof@hotbot.com)",
+			 "Wolfgang Hofer",
+			 gap_main_version,
+			 NULL,                     /* do not appear in menus */
+			 "RGB*, INDEXED*, GRAY*",
+			 PROC_PLUG_IN,
+			 nargs_video_paste, nreturn_vals,
+			 args_video_paste, return_vals);
+
+  gimp_install_procedure("plug_in_gap_video_edit_clear",
+			 "clear the video paste buffer by deleting all framefiles"
+			 "the video paste buffer is a directory configured by gimprc (video-paste-dir )"
+			 "and a framefile basename configured by gimprc (video-paste-basename)",
+			 "",
+			 "Wolfgang Hofer (hof@hotbot.com)",
+			 "Wolfgang Hofer",
+			 gap_main_version,
+			 NULL,                     /* do not appear in menus */
+			 "RGB*, INDEXED*, GRAY*",
+			 PROC_PLUG_IN,
+			 nargs_video_clear, nreturn_vals,
+			 args_video_clear, return_vals);
+			 
 }	/* end query */
 
 
@@ -1130,6 +1209,51 @@ run (char    *name,
 
         l_rc = gap_shift(run_mode, image_id, nr, range_from, range_to );
 
+      }
+  }
+  else if (strcmp (name, "plug_in_gap_video_edit_copy") == 0)
+  {
+     if (n_params != 5)
+     {
+          status = STATUS_CALLING_ERROR;
+     }
+
+      if (status == STATUS_SUCCESS)
+      {
+        image_id = param[1].data.d_image;
+        range_from = param[3].data.d_int32;  /* frame nr to start */	
+        range_to   = param[4].data.d_int32;  /* frame nr to stop  */	
+
+        l_rc = gap_vid_edit_copy(run_mode, image_id, range_from, range_to );
+      }
+  }
+  else if (strcmp (name, "plug_in_gap_video_edit_paste") == 0)
+  {
+      if (n_params != 4)
+      {
+        status = STATUS_CALLING_ERROR;
+      }
+
+      if (status == STATUS_SUCCESS)
+      {
+        image_id = param[1].data.d_image;
+        nr       = param[3].data.d_int32;  /* paste_mode (0,1 or 2) */
+
+        l_rc = gap_vid_edit_paste(run_mode, image_id, nr );
+      }
+  }
+  else if (strcmp (name, "plug_in_gap_video_edit_clear") == 0)
+  {
+      if (status == STATUS_SUCCESS)
+      {
+        if(p_vid_edit_clear() < 0)
+	{
+          l_rc = -1;
+	}
+	else
+	{
+          l_rc = 0;
+	}
       }
   }
   else if (strcmp (name, "plug_in_gap_modify") == 0)

@@ -25,6 +25,7 @@
  */
 
 /* revision history:
+ * 1.1.20a; 2000/04/25   hof: new: p_get_video_paste_name p_clear_video_paste
  * 1.1.14a; 2000/01/02   hof: new: p_get_frame_nr
  * 1.1.8a;  1999/08/31   hof: new: p_strdup_del_underscore and p_strdup_add_underscore
  * 0.99.00; 1999/03/15   hof: prepared for win/dos filename conventions
@@ -117,6 +118,15 @@ int gap_exchg(GRunModeType run_mode, gint32 image_id, int nr);
 int gap_shift(GRunModeType run_mode, gint32 image_id, int nr, long range_from, long range_to);
 
 void p_msg_win(GRunModeType run_mode, char *msg);
+gchar *p_get_video_paste_name(void);
+gint32 p_vid_edit_clear(void);
+gint32 p_vid_edit_framecount(void);
+gint   gap_vid_edit_copy(GRunModeType run_mode, gint32 image_id, long range_from, long range_to);
+gint   gap_vid_edit_paste(GRunModeType run_mode, gint32 image_id, long paste_mode);
+
+#define  VID_PASTE_REPLACE         0
+#define  VID_PASTE_INSERT_BEFORE   1
+#define  VID_PASTE_INSERT_AFTER    2
 
 #endif
 

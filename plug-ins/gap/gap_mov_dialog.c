@@ -30,6 +30,7 @@
  */
 
 /* revision history:
+ * gimp    1.1.20a; 2000/04/25  hof: support for keyframes, anim_preview (suggested by jakub steiner)
  * gimp    1.1.17b; 2000/02/23  hof: bugfix: dont flatten the preview, just merge visible layers
  *                                   bugfix: for current frame never use diskfile for the preview
  *                                           (to avoid inconsitencies, and to speed up a little)
@@ -75,7 +76,7 @@
 #include "gap_mov_exec.h"
 #include "gap_mov_dialog.h"
 #include "gap_pdb_calls.h"
- 
+#include "gap_arr_dialog.h"
  
 /* Some useful macros */
 
@@ -133,6 +134,7 @@ typedef struct
   GtkAdjustment *hres_adj;
   GtkAdjustment *opacity_adj;
   GtkAdjustment *rotation_adj;
+  GtkAdjustment *keyframe_adj;
   gchar          PointIndex_Label[LABEL_LENGTH];
   GtkWidget     *PointIndex_LabelPtr;
   gint           p_x, p_y;
@@ -140,6 +142,8 @@ typedef struct
   gint           w_resize;
   gint           h_resize;
   gint           rotation;
+  gint           keyframe_abs;
+  gint           max_frame;
 
   gint           preview_frame_nr;      /* default: current frame */
   gint           old_preview_frame_nr;
@@ -178,6 +182,8 @@ GtkWidget       *  p_buildmenu (MenuItem *);
 
        long        p_move_dialog            (t_mov_data *mov_ptr);
 static void        p_update_point_labels    (t_mov_path_preview *path_ptr);
+static gint        p_conv_keyframe_to_rel   (gint abs_keframe);
+static gint        p_conv_keyframe_to_abs   (gint rel_keframe);
 static void        p_points_from_tab        (t_mov_path_preview *path_ptr);
 static void        p_points_to_tab          (t_mov_path_preview *path_ptr);
 static void        p_point_refresh          (t_mov_path_preview *path_ptr);
@@ -204,6 +210,7 @@ static void	   mov_path_y_adjustment_update ( GtkWidget *widget, gpointer data )
 static void	   mov_path_prevw_cursor_update ( t_mov_path_preview *path_ptr );
 static gint	   mov_path_prevw_preview_expose ( GtkWidget *widget, GdkEvent *event );
 static gint	   mov_path_prevw_preview_events ( GtkWidget *widget, GdkEvent *event );
+static gint        p_chk_keyframes(t_mov_path_preview *path_ptr);
 
 static void	mov_padd_callback        (GtkWidget *widget,gpointer data);
 static void	mov_pins_callback        (GtkWidget *widget,gpointer data);
@@ -222,6 +229,7 @@ static void     p_points_save_to_file    (GtkWidget *widget,gpointer data);
 static void	mov_close_callback	 (GtkWidget *widget,gpointer data);
 static void	mov_ok_callback	         (GtkWidget *widget,gpointer data);
 static void     mov_upvw_callback        (GtkWidget *widget,gpointer data);
+static void     mov_apv_callback         (GtkWidget *widget,gpointer data);
 static void	p_filesel_close_cb       (GtkWidget *widget, t_mov_path_preview *path_ptr);
 
 static gint mov_imglayer_constrain      (gint32 image_id, gint32 drawable_id, gpointer data);
@@ -314,6 +322,7 @@ long      p_move_dialog    (t_mov_data *mov_ptr)
   }
   path_ptr->show_path = TRUE;
   path_ptr->startup = TRUE;
+  path_ptr->keyframe_adj = NULL;
   path_ptr->PixelRgnIsInitialized = FALSE;
   
   pvals = mov_ptr->val_ptr;
@@ -334,8 +343,15 @@ long      p_move_dialog    (t_mov_data *mov_ptr)
   pvals->src_paintmode = NORMAL_MODE;
   pvals->src_handle = GAP_HANDLE_LEFT_TOP;
   pvals->src_stepmode = GAP_STEP_LOOP;
-  pvals->src_only_visible  = 0;
+  pvals->src_force_visible  = 0;
   pvals->clip_to_img  = 0;
+
+  pvals->apv_mode  = GAP_APV_QUICK;
+  pvals->apv_src_frame  = -1;
+  pvals->apv_mlayer_image  = -1;
+  pvals->apv_gap_paste_buff  = NULL;
+  pvals->apv_scalex  = 40.0;
+  pvals->apv_scaley  = 40.0;
 
   p_reset_points();
   
@@ -391,6 +407,7 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
              gint first_nr, gint last_nr )
 {
   GtkWidget *vbox;
+  GtkWidget *vcbox;
   GtkWidget *hbox_table;
   GtkWidget *hbbox;
   GtkWidget *dlg;
@@ -469,6 +486,17 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
                        , NULL);
   gtk_widget_show (button);
 
+  button = gtk_button_new_with_label ( _("Anim Preview"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) mov_apv_callback,
+		      path_ptr);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, TRUE, TRUE, 0);
+  gimp_help_set_help_data(button,
+                       _("Generate Animated Preview\nas multilayer image")
+                       , NULL);
+  gtk_widget_show (button);
+
   button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
@@ -493,7 +521,8 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
   src_sel_frame = mov_src_sel_create ();
   gtk_box_pack_start (GTK_BOX (vbox), src_sel_frame, TRUE, TRUE, 0);
 
-  /* the path preview frame (with all the controlpoint widgets) */  
+  /* the path preview frame (with all the controlpoint widgets) */
+  path_ptr->max_frame = MAX(first_nr, last_nr);
   path_prevw_frame = mov_path_prevw_create ( drawable, path_ptr);
   gtk_box_pack_start (GTK_BOX (vbox), path_prevw_frame, TRUE, TRUE, 0);
 
@@ -570,6 +599,23 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &pvals->dst_layerstack);
 
+  /* the vbox for checkbuttons */
+  vcbox = gtk_vbox_new (FALSE, 3);
+  gtk_widget_show (vcbox);
+
+
+  /* toggle force visibility  */
+  check_button = gtk_check_button_new_with_label ( _("Force visibility"));
+  gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
+                      (GtkSignalFunc) mov_gint_toggle_callback,
+                       &pvals->src_force_visible);
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (check_button), pvals->src_force_visible);
+  gimp_help_set_help_data(check_button,
+                       _("Force visibility for all copied Src-Layers")
+                       , NULL);
+  gtk_widget_show (check_button);
+  gtk_box_pack_start (GTK_BOX (vcbox), check_button, TRUE, TRUE, 0);
+
   /* toggle clip_to_image */
   check_button = gtk_check_button_new_with_label ( _("Clip To Frame"));
   gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
@@ -580,7 +626,9 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
                        _("Clip all copied Src-Layers\nat Frame Boundaries")
                        , NULL);
   gtk_widget_show (check_button);
-  gtk_table_attach(GTK_TABLE(hbox_table), check_button, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 4, 0);
+  gtk_box_pack_start (GTK_BOX (vcbox), check_button, TRUE, TRUE, 0);
+
+  gtk_table_attach(GTK_TABLE(hbox_table), vcbox, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 4, 0);
 
   gtk_widget_show (frame);
   gtk_widget_show (table);
@@ -627,6 +675,11 @@ mov_ok_callback (GtkWidget *widget,
 		   "(Please open a 2nd Image of the same type before opening Move Path)"));
        return;
     }
+  }
+
+  if(!p_chk_keyframes(ok_data_ptr->path_ptr))
+  {
+    return;
   }
 
   mov_int.run = TRUE;
@@ -701,16 +754,164 @@ mov_upvw_callback (GtkWidget *widget,
      }
 /* } */
 }
+static void
+mov_apv_callback (GtkWidget *widget,
+		      gpointer	 data)
+{
+#define ARGC_APV 4
+  t_mov_path_preview *path_ptr;
+  t_video_info       *vin_ptr;
+  static gint         apv_locked = FALSE;
+  gint32              l_new_image_id;
+  GParam             *return_vals;
+  int                 nreturn_vals;
+
+  static t_arr_arg  argv[ARGC_APV];
+  static char *radio_apv_mode[3] = { N_("Object on empty frames")
+                                   , N_("Object on one frame")
+				   , N_("Exact Object on frames")
+				   };
+  static int gettextize_loop = 0;
+
+
+
+  path_ptr = data;
+
+
+  if(!p_chk_keyframes(path_ptr))
+  {
+    return;
+  }
+
+  
+  if(apv_locked)
+  {
+    return;
+  }
+
+  apv_locked = TRUE;
+
+  if(gap_debug) printf("mov_apv_callback preview_frame_nr: %d \n",
+         (int)path_ptr->preview_frame_nr);
+
+
+  for (;gettextize_loop < 3; gettextize_loop++)
+    radio_apv_mode[gettextize_loop] = gettext(radio_apv_mode[gettextize_loop]);
+  
+  p_init_arr_arg(&argv[0], WGT_RADIO);
+  argv[0].label_txt = _("Anim Preview Mode");
+  argv[0].help_txt  = NULL;
+  argv[0].radio_argc  = 3;
+  argv[0].radio_argv = radio_apv_mode;
+  argv[0].radio_ret  = 0;
+
+  p_init_arr_arg(&argv[1], WGT_FLT_PAIR);
+  argv[1].constraint = TRUE;
+  argv[1].label_txt = _("Scale Preview");
+  argv[1].help_txt  = _("Scale down size of the generated animated preview in %");
+  argv[1].flt_min   = 5.0;
+  argv[1].flt_max   = 100.0;
+  argv[1].flt_step  = 1.0;
+  argv[1].flt_ret   = pvals->apv_scalex;
+
+  p_init_arr_arg(&argv[2], WGT_FLT_PAIR);
+  argv[2].constraint = TRUE;
+  argv[2].label_txt = _("Framerate");
+  argv[2].help_txt  = _("Framerate to use in the animated preview in frames/sec");
+  argv[2].flt_min   = 1.0;
+  argv[2].flt_max   = 100.0;
+  argv[2].flt_step  = 1.0;
+  argv[2].flt_ret   = 24;
+
+  vin_ptr = p_get_video_info(path_ptr->ainfo_ptr->basename);
+  if(vin_ptr)
+  {
+     if(vin_ptr->framerate > 0) argv[2].flt_ret = vin_ptr->framerate;
+     g_free(vin_ptr);
+   }	 
+
+  p_init_arr_arg(&argv[3], WGT_TOGGLE);
+  argv[3].label_txt = _("Copy to Video Buffer");
+  argv[3].help_txt  = _("Save all single frames of animated preview to video buffer\n"
+                        "(configured in gimprc by video-paste-dir and video-paste-basename)");
+  argv[3].int_ret   = 0;
+
+  p_arr_gtk_init(FALSE);
+  if(TRUE == p_array_dialog( _("Move Path Animated Preview"),
+                                 _("Options"), 
+                                  ARGC_APV, argv))
+  {
+      switch(argv[0].radio_ret)
+      {
+        case 2: 
+           pvals->apv_mode = GAP_APV_EXACT;
+           break;
+        case 1: 
+           pvals->apv_mode = GAP_APV_ONE_FRAME;
+           break;
+        default:
+           pvals->apv_mode = GAP_APV_QUICK;
+           break;
+      }
+      
+      pvals->apv_scalex = argv[1].flt_ret;
+      pvals->apv_scaley = argv[1].flt_ret;
+      pvals->apv_framerate = argv[2].flt_ret;
+
+      if(argv[3].int_ret)
+      {
+         pvals->apv_gap_paste_buff = p_get_video_paste_name();
+	 p_vid_edit_clear();
+      }
+      else
+      {
+         pvals->apv_gap_paste_buff = NULL;
+      }
+      
+      if(gap_debug) printf("Generating Animated Preview\n");
+
+        /* TODO: here we should start a thread for calculate and playback of the anim preview, 
+	 * so the move_path main window is not blocked until playback exits
+	 */
+      p_points_to_tab(path_ptr);
+      if(!p_chk_keyframes(path_ptr))
+      {
+	return;
+      }
+
+      l_new_image_id = p_mov_anim_preview(pvals, path_ptr->ainfo_ptr, path_ptr->preview_frame_nr);
+      if(l_new_image_id < 0)
+      {
+	 p_msg_win(RUN_INTERACTIVE,
+         _("Generate Animate Preview failed\n"));
+      }
+      else
+      {
+         return_vals = gimp_run_procedure ("plug_in_animationplay",
+                                 &nreturn_vals,
+	                         PARAM_INT32,    RUN_NONINTERACTIVE,
+				 PARAM_IMAGE,    l_new_image_id,
+				 PARAM_DRAWABLE, -1,  /* dummy */
+                                 PARAM_END);
+      }
+  }
+
+  apv_locked = FALSE;
+}
 
 static void
-p_copy_point(gint from_idx, gint to_idx)
+p_copy_point(gint to_idx, gint from_idx)
 {
-    pvals->point[from_idx].p_x = pvals->point[to_idx].p_x;
-    pvals->point[from_idx].p_y = pvals->point[to_idx].p_y;
-    pvals->point[from_idx].opacity = pvals->point[to_idx].opacity;
-    pvals->point[from_idx].w_resize = pvals->point[to_idx].w_resize;
-    pvals->point[from_idx].h_resize = pvals->point[to_idx].h_resize;
-    pvals->point[from_idx].rotation = pvals->point[to_idx].rotation;
+    pvals->point[to_idx].p_x = pvals->point[from_idx].p_x;
+    pvals->point[to_idx].p_y = pvals->point[from_idx].p_y;
+    pvals->point[to_idx].opacity = pvals->point[from_idx].opacity;
+    pvals->point[to_idx].w_resize = pvals->point[from_idx].w_resize;
+    pvals->point[to_idx].h_resize = pvals->point[from_idx].h_resize;
+    pvals->point[to_idx].rotation = pvals->point[from_idx].rotation;
+
+    /* do not copy keyframe */
+    pvals->point[to_idx].keyframe_abs = 0;
+    pvals->point[to_idx].keyframe = 0;
 }
 
 
@@ -753,7 +954,7 @@ mov_pins_callback (GtkWidget *widget,
 
     for(l_idx = pvals->point_idx_max; l_idx >  pvals->point_idx; l_idx--)
     {
-      /* copy values from next point */
+      /* copy values from prev point */
       p_copy_point(l_idx, l_idx-1);
     }
      
@@ -1032,6 +1233,8 @@ p_point_refresh(t_mov_path_preview *path_ptr)
 			    (gfloat)path_ptr->opacity);
   gtk_adjustment_set_value (path_ptr->rotation_adj,
 			    (gfloat)path_ptr->rotation);
+  gtk_adjustment_set_value (path_ptr->keyframe_adj,
+			    (gfloat)path_ptr->keyframe_abs);
   path_ptr->in_call = FALSE;
 }	/* end p_point_refresh */
 
@@ -1182,15 +1385,70 @@ mov_show_path_callback(GtkWidget *widget, gpointer   client_data)
  * procedures to handle POINTS - TABLE
  * ============================================================================
  */
+static gint
+p_conv_keyframe_to_rel(gint abs_keyframe)
+{
+    if(pvals->dst_range_start <= pvals->dst_range_end)
+    {
+       return (abs_keyframe -  pvals->dst_range_start);
+    }
+    return (pvals->dst_range_start - abs_keyframe);
+}
+
+static gint
+p_conv_keyframe_to_abs(gint rel_keyframe)
+{
+    if(pvals->dst_range_start <= pvals->dst_range_end)
+    {
+      return(rel_keyframe + pvals->dst_range_start);
+    }
+    return(pvals->dst_range_start - rel_keyframe);
+}
+ 
+ 
 static void
 p_points_from_tab(t_mov_path_preview *path_ptr)
 {
+  GtkWidget *scale;
+  GtkWidget *spinbutton;
+
   path_ptr->p_x      = pvals->point[pvals->point_idx].p_x;
   path_ptr->p_y      = pvals->point[pvals->point_idx].p_y;
   path_ptr->opacity  = pvals->point[pvals->point_idx].opacity;
   path_ptr->w_resize = pvals->point[pvals->point_idx].w_resize;
   path_ptr->h_resize = pvals->point[pvals->point_idx].h_resize;
   path_ptr->rotation = pvals->point[pvals->point_idx].rotation;
+  path_ptr->keyframe_abs = pvals->point[pvals->point_idx].keyframe_abs;
+  
+  if(( path_ptr->keyframe_adj != NULL) && (path_ptr->startup != TRUE))
+  {
+   /*   findout the gtk_widgets (scale and spinbutton) connected
+    *   to path_ptr->keyframe_adj
+    *   and set_sensitive to TRUE or FALSE
+    */
+    scale = GTK_WIDGET(gtk_object_get_data (GTK_OBJECT (path_ptr->keyframe_adj), "scale"));
+    spinbutton = GTK_WIDGET(gtk_object_get_data (GTK_OBJECT (path_ptr->keyframe_adj), "spinbutton"));
+
+    if((scale == NULL) || (spinbutton == NULL))
+    {
+      return;
+    }
+    if(gap_debug)
+    {
+      printf("p_points_from_tab: scale %x spinbutton %x\n",
+              (int)scale, (int)spinbutton);
+    }
+    if((pvals->point_idx == 0) || (pvals->point_idx == pvals->point_idx_max))
+    {
+      gtk_widget_set_sensitive(scale, FALSE);
+      gtk_widget_set_sensitive(spinbutton, FALSE);
+    }
+    else
+    {
+      gtk_widget_set_sensitive(scale, TRUE);
+      gtk_widget_set_sensitive(spinbutton, TRUE);
+    }
+  }
 }
 
 static void
@@ -1202,6 +1460,17 @@ p_points_to_tab(t_mov_path_preview *path_ptr)
   pvals->point[pvals->point_idx].w_resize  = path_ptr->w_resize;
   pvals->point[pvals->point_idx].h_resize  = path_ptr->h_resize;
   pvals->point[pvals->point_idx].rotation  = path_ptr->rotation;
+  pvals->point[pvals->point_idx].keyframe_abs  = path_ptr->keyframe_abs;
+  if((path_ptr->keyframe_abs > 0) 
+  && (pvals->point_idx != 0)
+  && (pvals->point_idx != pvals->point_idx_max))
+  {
+    pvals->point[pvals->point_idx].keyframe = p_conv_keyframe_to_rel(path_ptr->keyframe_abs);
+  }
+  else
+  {
+    pvals->point[pvals->point_idx].keyframe  = 0;
+  }
 }
 
 void
@@ -1233,6 +1502,8 @@ void p_clear_point()
     pvals->point[l_idx].w_resize = 100; /* 100%  no resizize (1:1) */
     pvals->point[l_idx].h_resize = 100; /* 100%  no resizize (1:1) */
     pvals->point[l_idx].rotation = 0;   /* no rotation (0 degree) */
+    pvals->point[l_idx].keyframe = 0;   /* 0: controlpoint is not fixed to keyframe */
+    pvals->point[l_idx].keyframe_abs = 0;   /* 0: controlpoint is not fixed to keyframe */
   }
 }	/* end p_clear_point */
 
@@ -1261,7 +1532,7 @@ void p_load_points(char *filename)
   char  l_buff[POINT_REC_MAX +1 ];
   char *l_ptr;
   gint   l_cnt;
-  gint   l_v1, l_v2, l_v3, l_v4, l_v5, l_v6;
+  gint   l_v1, l_v2, l_v3, l_v4, l_v5, l_v6, l_v7;
 
   if(filename == NULL) return;
   
@@ -1278,7 +1549,7 @@ void p_load_points(char *filename)
        /* check if line empty or comment only (starts with '#') */
        if((*l_ptr != '#') && (*l_ptr != '\n') && (*l_ptr != '\0'))
        {
-         l_cnt = sscanf(l_ptr, "%d%d%d%d%d%d", &l_v1, &l_v2, &l_v3, &l_v4, &l_v5, &l_v6);
+         l_cnt = sscanf(l_ptr, "%d%d%d%d%d%d%d", &l_v1, &l_v2, &l_v3, &l_v4, &l_v5, &l_v6, &l_v7);
          if(l_idx == -1)
          {
            if((l_cnt < 2) || (l_v2 > GAP_MOV_MAX_POINT) || (l_v1 > l_v2))
@@ -1291,7 +1562,7 @@ void p_load_points(char *filename)
          }
          else
          {
-           if(l_cnt != 6)
+           if((l_cnt != 6) && (l_cnt != 7))
            {
              p_reset_points();
              break;
@@ -1302,6 +1573,16 @@ void p_load_points(char *filename)
            pvals->point[l_idx].h_resize = l_v4;
            pvals->point[l_idx].opacity  = l_v5;
            pvals->point[l_idx].rotation = l_v6;
+           if((l_cnt == 7) && (l_idx > 0))
+	   {
+             pvals->point[l_idx].keyframe = l_v7;
+             pvals->point[l_idx].keyframe_abs = p_conv_keyframe_to_abs(l_v7);
+	   }
+	   else
+	   {
+             pvals->point[l_idx].keyframe_abs = 0;
+             pvals->point[l_idx].keyframe = 0;
+	   }
            l_idx ++;
          }
 
@@ -1335,13 +1616,29 @@ void p_save_points(char *filename)
     fprintf(l_fp, "# x  y   width height opacity rotation\n");
     for(l_idx = 0; l_idx <= pvals->point_idx_max; l_idx++)
     {
-      fprintf(l_fp, "%04d %04d  %03d %03d  %03d %d\n",
-                   (int)pvals->point[l_idx].p_x,
-                   (int)pvals->point[l_idx].p_y,
-                   (int)pvals->point[l_idx].w_resize,
-                   (int)pvals->point[l_idx].h_resize,
-                   (int)pvals->point[l_idx].opacity,
-                   (int)pvals->point[l_idx].rotation);
+      if((l_idx > 0) 
+      && (l_idx < pvals->point_idx_max)
+      && ((int)pvals->point[l_idx].keyframe > 0))
+      {
+	fprintf(l_fp, "%04d %04d  %03d %03d  %03d %d %d\n",
+                     (int)pvals->point[l_idx].p_x,
+                     (int)pvals->point[l_idx].p_y,
+                     (int)pvals->point[l_idx].w_resize,
+                     (int)pvals->point[l_idx].h_resize,
+                     (int)pvals->point[l_idx].opacity,
+                     (int)pvals->point[l_idx].rotation,
+                     (int)p_conv_keyframe_to_rel(pvals->point[l_idx].keyframe_abs));
+      }
+      else
+      {
+	fprintf(l_fp, "%04d %04d  %03d %03d  %03d %d\n",
+                     (int)pvals->point[l_idx].p_x,
+                     (int)pvals->point[l_idx].p_y,
+                     (int)pvals->point[l_idx].w_resize,
+                     (int)pvals->point[l_idx].h_resize,
+                     (int)pvals->point[l_idx].opacity,
+                     (int)pvals->point[l_idx].rotation);
+      }
     }
      
     fclose(l_fp);
@@ -1497,6 +1794,7 @@ mov_src_sel_create()
  *   - Resize 2x Scale + integer entry (for resizing Width + Height)
  *   - Opacity   Scale + integr entry  (0 to 100 %)
  *   - Rotation  Scale + ineger entry  (-360 to 360 degrees)
+ *   - Keyframe  Scale + ineger entry  (0 to max_frame)
  * ============================================================================
  */
 
@@ -1544,8 +1842,8 @@ mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  /* the table (3 rows) */
-  table = gtk_table_new ( 3, 6, FALSE );
+  /* the table (4 rows) */
+  table = gtk_table_new ( 4, 6, FALSE );
   gtk_container_border_width (GTK_CONTAINER (table), 2 );
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
@@ -1657,6 +1955,27 @@ mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
   path_ptr->rotation_adj = GTK_ADJUSTMENT(adj);
   gtk_widget_show( table );
 
+  
+  /* Keyframe */ 
+  adj = gimp_scale_entry_new( GTK_TABLE (table), 3, 3,        /* table col, row */
+			  _("Keyframe:"),                     /* label text */
+			  SCALE_WIDTH, ENTRY_WIDTH,           /* scalesize spinsize */
+			  (gfloat)path_ptr->keyframe_abs,     /* value */
+			  (gfloat)0, (gfloat)path_ptr->max_frame,       /* lower, upper */
+			  1, 10,                              /* step, page */
+			  0,                                  /* digits */
+			  TRUE,                               /* constrain */
+			  (gfloat)0, (gfloat)path_ptr->max_frame,       /* lower, upper (unconstrained) */
+			  _("Fix Controlpoint to Keyframe number\n(0 == No Keyframe)"),
+			  NULL);    /* tooltip privatetip */
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &path_ptr->keyframe_abs);
+  path_ptr->keyframe_adj = GTK_ADJUSTMENT(adj);
+
+
+  gtk_widget_show( table );
+
   /* the hbox (for preview table and button_table) */
   hbox = gtk_hbox_new (FALSE, 3);
   gtk_widget_show (hbox);
@@ -1705,8 +2024,8 @@ mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
   mov_path_prevw_preview_init( path_ptr );
   gtk_widget_show(preview);
 
-  /* button_table 7 rows */
-  button_table = gtk_table_new (7, 2, TRUE);
+  /* button_table 8 rows */
+  button_table = gtk_table_new (8, 2, TRUE);
   gtk_table_set_row_spacings (GTK_TABLE (button_table), 0);
   gtk_table_set_col_spacings (GTK_TABLE (button_table), 0);
 
@@ -2303,6 +2622,149 @@ mov_path_prevw_preview_events ( GtkWidget *widget,
   return FALSE;
 }
 
+
+/* ============================================================================
+ * p_chk_keyframes
+ *   check if controlpoints and keyframe settings are OK
+ *   return TRUE if OK,
+ *   Pop Up error Dialog window and return FALSE if NOT.
+ * ============================================================================
+ */
+
+gint
+p_chk_keyframes(t_mov_path_preview *path_ptr)
+{
+#define ARGC_ERRWINDOW 2
+
+  static t_arr_arg  argv[ARGC_APV];
+  gint   l_affected_frames;
+  gint   l_idx;
+  gint   l_errcount;
+  gint   l_prev_keyframe;
+  gint   l_prev_frame;
+  gchar *l_err;
+  gchar *l_err_lbltext;
+  static t_but_arg  b_argv[2];
+  static gint  keychk_locked = FALSE;
+
+  p_points_to_tab(path_ptr);
+
+  l_affected_frames = 1 + MAX(pvals->dst_range_start, pvals->dst_range_end)
+                    - MIN(pvals->dst_range_start, pvals->dst_range_end);
+  
+  l_errcount = 0;
+  l_prev_keyframe = 0;
+  l_prev_frame = 0;
+  l_err_lbltext = g_strdup("\0");
+  
+  for(l_idx = 0; l_idx < pvals->point_idx_max; l_idx++ )
+  {
+     if(pvals->point[l_idx].keyframe_abs != 0)
+     {
+         pvals->point[l_idx].keyframe = p_conv_keyframe_to_rel(pvals->point[l_idx].keyframe_abs);
+
+         if(pvals->point[l_idx].keyframe > l_affected_frames - 2)
+	 {
+	    l_err = g_strdup_printf(_("\nError: Keyframe %d at point [%d] higher or equal than last handled frame")
+	                              , pvals->point[l_idx].keyframe_abs,  l_idx+1);
+	    l_err_lbltext = g_strdup_printf("%s%s", l_err_lbltext, l_err);
+	    g_free(l_err);
+	    l_errcount++;
+	 }
+         if(pvals->point[l_idx].keyframe < l_prev_frame)
+	 {
+	    l_err = g_strdup_printf(_("\nError: Keyframe %d at point [%d] leaves not enough space (frames)"
+	                              "\nfor the previous controlpoints")
+				      , pvals->point[l_idx].keyframe_abs, l_idx+1);
+	    l_err_lbltext = g_strdup_printf("%s%s", l_err_lbltext, l_err);
+	    g_free(l_err);
+	    l_errcount++;
+	 }
+	 
+         if(pvals->point[l_idx].keyframe <= l_prev_keyframe)
+	 {
+	    l_err = g_strdup_printf(_("\nError: Keyframe %d is not in sequence at point [%d]")
+	                             , pvals->point[l_idx].keyframe_abs, l_idx+1);
+	    l_err_lbltext = g_strdup_printf("%s%s", l_err_lbltext, l_err);
+	    g_free(l_err);
+	    l_errcount++;
+	 }
+
+         l_prev_keyframe = pvals->point[l_idx].keyframe;
+	 if(l_prev_keyframe > l_prev_frame)
+	 {
+	   l_prev_frame = l_prev_keyframe +1;
+	 }
+     }
+     else
+     {
+	l_prev_frame++;
+	if(l_prev_frame +1 > l_affected_frames)
+	{
+	    l_err = g_strdup_printf(_("\nError: controlpoint [%d] is out of handled framerange"), l_idx+1);
+	    l_err_lbltext = g_strdup_printf("%s%s", l_err_lbltext, l_err);
+	    g_free(l_err);
+	    l_errcount++;
+	}
+     }
+     if(l_errcount > 10)
+     {
+       break;
+     }
+  }
+
+  if(pvals->point_idx_max + 1 > l_affected_frames)
+  {
+	l_err = g_strdup_printf(_("\nError: more controlpoints (%d) than handled frames (%d)"
+	                          "\nplease reduce controlpoints or select more frames"),
+	                          (int)pvals->point_idx_max+1, (int)l_affected_frames);
+	l_err_lbltext = g_strdup_printf("%s%s", l_err_lbltext, l_err);
+	g_free(l_err);
+  }
+
+  if(*l_err_lbltext != '\0')
+  {
+    if(!keychk_locked)
+    {
+      keychk_locked = TRUE;
+      p_init_arr_arg(&argv[0], WGT_LABEL);
+      argv[0].label_txt = _("Cant operate with current Controlpoint\nor Keyframe settings");
+
+      p_init_arr_arg(&argv[1], WGT_LABEL);
+      argv[1].label_txt = l_err_lbltext;
+
+      p_arr_gtk_init(FALSE);
+
+      b_argv[0].but_txt  = _("Reset Keyframes");
+      b_argv[0].but_val  = TRUE;
+      b_argv[1].but_txt  = _("Cancel");
+      b_argv[1].but_val  = FALSE;
+
+      if(TRUE == p_array_std_dialog( _("Move Path Controlpointcheck"),
+                                   _("Errors:"), 
+                                   ARGC_ERRWINDOW, argv,
+				   2,    b_argv, TRUE))
+      {
+	 /* Reset all keyframes */
+	 for(l_idx = 0; l_idx <= pvals->point_idx_max; l_idx++ )
+	 {
+            pvals->point[l_idx].keyframe = 0;
+            pvals->point[l_idx].keyframe_abs = 0;
+            p_point_refresh(path_ptr);
+	 }
+      }
+      keychk_locked = FALSE;
+    }
+    
+    g_free(l_err_lbltext);
+    return(FALSE);
+    
+  }
+  g_free(l_err_lbltext);
+  return(TRUE);
+}	/* end p_chk_keyframes */
+
+
 /* ============================================================================
  * p_get_flattened_drawable
  *   flatten the given image and return pointer to the
@@ -2487,14 +2949,15 @@ p_mov_render(gint32 image_id, t_mov_values *val_ptr, t_mov_current *cur_ptr)
  
   if(gap_debug) printf("p_mov_render: frame/layer: %ld/%ld  X=%f, Y=%f\n"
                 "       Width=%f Height=%f\n"
-                "       Opacity=%f  Rotate=%f  clip_to_img = %d\n",
+                "       Opacity=%f  Rotate=%f  clip_to_img = %d force_visibility = %d\n",
                      cur_ptr->dst_frame_nr, cur_ptr->src_layer_idx,
                      cur_ptr->currX, cur_ptr->currY,
                      cur_ptr->currWidth,
                      cur_ptr->currHeight,
                      cur_ptr->currOpacity,
                      cur_ptr->currRotation,
-                     val_ptr->clip_to_img );
+                     val_ptr->clip_to_img,
+                     val_ptr->src_force_visible);
 
 
 
@@ -2519,6 +2982,11 @@ p_mov_render(gint32 image_id, t_mov_values *val_ptr, t_mov_current *cur_ptr)
                        val_ptr->dst_layerstack);
 
   if(gap_debug) printf("p_mov_render: after add layer\n");
+
+  if(val_ptr->src_force_visible)
+  {
+     gimp_layer_set_visible(l_cp_layer_id, TRUE);
+  }
 
   /* check for layermask */
   l_cp_layer_mask_id = gimp_layer_get_mask_id(l_cp_layer_id);

@@ -27,6 +27,7 @@
 #define _GAP_MOV_DIALOG_H
 
 /* revision history:
+ * gimp    1.1.20a; 2000/04/25  hof: support for keyframes, anim_preview
  * version 0.96.02; 1998.07.25  hof: added clip_to_img
  */
  
@@ -48,6 +49,13 @@ typedef enum
   GAP_HANDLE_RIGHT_BOT = 3,
   GAP_HANDLE_CENTER    = 4
 } t_mov_handle;
+
+typedef enum
+{
+  GAP_APV_EXACT      = 0,
+  GAP_APV_ONE_FRAME  = 1,
+  GAP_APV_QUICK      = 2
+} t_apv_mode;
 
 typedef struct {
 	long    dst_frame_nr;     /* current destination frame_nr */
@@ -75,6 +83,9 @@ typedef struct {
 	gint    w_resize;   /* width resize 10 upto 300% */
 	gint    h_resize;   /* height resize 10 upto 300% */
 	gint    rotation;   /* rotatation +- degrees */
+	
+	gint    keyframe_abs;
+	gint    keyframe;
 } t_mov_point;
 
 #define GAP_MOV_MAX_POINT 256
@@ -96,7 +107,7 @@ typedef struct {
 	int     src_handle;
         int     src_stepmode;
         int     src_paintmode;
-        gint    src_only_visible;       /* TRUE FALSE */
+        gint    src_force_visible;      /* TRUE FALSE */
         gint    clip_to_img;            /* TRUE FALSE */
         
 	gint    point_idx;           /* 0 upto MAX_POINT -1 */
@@ -111,8 +122,25 @@ typedef struct {
         /* for dialog only */	
 	gint32  dst_image_id;      /* frame image */
 	gint32  tmp_image_id;      /* temp. flattened preview image */
-	
-	
+
+        /* for generating animated preview only */
+	t_apv_mode  apv_mode;
+        gint32   apv_src_frame;     /* image_id of the (already scaled) baseframe
+                                     * or -1 in exact mode.
+			             * (exact mode uses unscaled original frames)
+			             */
+        gint32   apv_mlayer_image;  /* destination image_id for the animated preview
+                                     * -1 if we are not in anim_preview mode
+				     */
+        gchar   *apv_gap_paste_buff;  /* Optional PasteBuffer (to store preview frames)
+	                               * "/tmp/gimp_video_paste_buffer/gap_pasteframe_" 
+				       * NULL if we do not copy frames to a paste_buffer
+				       */
+
+        gdouble  apv_framerate;
+        gdouble  apv_scalex;
+        gdouble  apv_scaley;
+
 } t_mov_values;
 
 typedef struct {
