@@ -1,3 +1,10 @@
+1999-02-05  Jay Cox  <jaycox@earthlink.net>
+
+	* app/clone.c: merged the registered clone option from the
+ 	hollywood branch.  Made the source for unaligned clones reset
+ 	after each stroke.  Make sure we don't crash if the source
+ 	drawable gets destroyed.
+
 Thu Feb  4 17:22:25 EST 1999 Peter Teichman  <pat4@acpub.duke.edu>
 
 	* app/convolve.c: added pressure support for the Convolve tool
