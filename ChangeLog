@@ -1,3 +1,9 @@
+Thu Jan  6 01:29:20 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/general.c
+	* app/plug_in.c: I might be wrong, but I think strtok wasn't used
+	correctly here
+
 Thu Jan  6 00:58:32 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/bmp/bmp.c

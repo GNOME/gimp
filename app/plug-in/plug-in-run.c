@@ -538,13 +538,15 @@ GSList*
 plug_in_extensions_parse (char *extensions)
 {
   GSList *list;
-  char *extension;
+  gchar *extension;
+  gchar *next_token;
   list = NULL;
   /* EXTENSIONS can be NULL.  Avoid calling strtok if it is.  */
   if (extensions)
     {
       extensions = g_strdup (extensions);
-      extension = strtok (extensions, " \t,");
+      next_token = extensions;
+      extension = strtok (next_token, " \t,");
       while (extension)
 	{
 	  list = g_slist_prepend (list, g_strdup (extension));

@@ -38,12 +38,15 @@ search_in_path (char *search_path,
 		char *filename)
 {
   static char path[256];
-  char *local_path, *token;
+  gchar *local_path;
+  gchar *token;
+  gchar *next_token;
   struct stat buf;
   int err;
 
   local_path = g_strdup (search_path);
-  token = strtok (local_path, G_SEARCHPATH_SEPARATOR_S);
+  next_token = local_path;
+  token = strtok (next_token, G_SEARCHPATH_SEPARATOR_S);
 
   while (token)
     {
