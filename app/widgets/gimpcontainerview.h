@@ -53,6 +53,8 @@ struct _GimpContainerView
 
   /*  initialized by subclass  */
   GtkWidget     *dnd_widget;
+
+  GQuark         name_changed_handler_id;
 };
 
 struct _GimpContainerViewClass
@@ -82,6 +84,9 @@ struct _GimpContainerViewClass
   void     (* reorder_item)     (GimpContainerView *view,
 				 GimpViewable      *object,
 				 gint               new_index,
+				 gpointer           insert_data);
+  void     (* rename_item)      (GimpContainerView *view,
+				 GimpViewable      *object,
 				 gpointer           insert_data);
   void     (* clear_items)      (GimpContainerView *view);
   void     (* set_preview_size) (GimpContainerView *view);

@@ -1,5 +1,32 @@
 2004-01-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpcontext.[ch]: removed the last artefact of context
+	signal handling from 1.2:
+
+	GimpContext used to connect to e.g. the current brush's
+	"invalidate_preview" and "name_changed" signals and emitted
+	"brush_changed" when the callback was invoked. This was needed to
+	make 1.2 work, but is conceptually broken with the real model <->
+	view approach implemented in the current code.
+	This change also optimizes things quite a bit because lots of
+	signal emissions are saved.
+
+	Added utility function which finds a container's current object
+	after a freeze/thaw.
+
+	* app/widgets/gimpcontainerview.[ch]: added new virtual function
+	GimpContainerView::rename_item(). Connect to "name_changed" of the
+	corrent container's children and invoke rename_item() accordingly.
+
+	* app/widgets/gimpcontainertreeview.[ch]: removed name_changed
+	handler and implement GimpContainerView::rename_item().
+
+	* app/widgets/gimpcontainergridview.c: ditto. the grid view was
+	still relying on the removed GimpContext behaviour for updating
+	the label showing the sleected item's name.
+
+2004-01-29  Michael Natterer  <mitch@gimp.org>
+
 	GimpData code review:
 
 	* app/core/gimpdata.c (gimp_data_init): default to

@@ -235,6 +235,13 @@ static void gimp_context_real_set_template   (GimpContext      *context,
 					      GimpTemplate     *template);
 
 
+/*  utilities  */
+static gpointer gimp_context_find_object     (GimpContext      *context,
+                                              GimpContainer    *container,
+                                              const gchar      *object_name,
+                                              gpointer          standard_object);
+
+
 /*  properties & signals  */
 
 enum
@@ -663,36 +670,41 @@ gimp_context_class_init (GimpContextClass *klass)
 static void
 gimp_context_init (GimpContext *context)
 {
-  context->gimp          = NULL;
+  context->gimp           = NULL;
 
-  context->parent        = NULL;
+  context->parent         = NULL;
 
-  context->defined_props = GIMP_CONTEXT_ALL_PROPS_MASK;
+  context->defined_props  = GIMP_CONTEXT_ALL_PROPS_MASK;
 
-  context->image         = NULL;
-  context->display       = NULL;
+  context->image          = NULL;
+  context->display        = NULL;
 
-  context->tool_info     = NULL;
-  context->tool_name     = NULL;
+  context->tool_info      = NULL;
+  context->tool_name      = NULL;
 
-  context->brush         = NULL;
-  context->brush_name    = NULL;
+  context->brush          = NULL;
+  context->brush_name     = NULL;
 
-  context->pattern       = NULL;
-  context->pattern_name  = NULL;
+  context->pattern        = NULL;
+  context->pattern_name   = NULL;
 
-  context->gradient      = NULL;
-  context->gradient_name = NULL;
+  context->gradient       = NULL;
+  context->gradient_name  = NULL;
 
-  context->palette       = NULL;
-  context->palette_name  = NULL;
+  context->palette        = NULL;
+  context->palette_name   = NULL;
 
-  context->font          = NULL;
-  context->font_name     = NULL;
+  context->font           = NULL;
+  context->font_name      = NULL;
 
-  context->buffer        = NULL;
-  context->imagefile     = NULL;
-  context->template      = NULL;
+  context->buffer         = NULL;
+  context->buffer_name    = NULL;
+
+  context->imagefile      = NULL;
+  context->imagefile_name = NULL;
+
+  context->template       = NULL;
+  context->template_name  = NULL;
 }
 
 static void
@@ -888,17 +900,32 @@ gimp_context_finalize (GObject *object)
       g_object_unref (context->buffer);
       context->buffer = NULL;
     }
+  if (context->buffer_name)
+    {
+      g_free (context->buffer_name);
+      context->buffer_name = NULL;
+    }
 
   if (context->imagefile)
     {
       g_object_unref (context->imagefile);
       context->imagefile = NULL;
     }
+  if (context->imagefile_name)
+    {
+      g_free (context->imagefile_name);
+      context->imagefile_name = NULL;
+    }
 
   if (context->template)
     {
       g_object_unref (context->template);
       context->template = NULL;
+    }
+  if (context->template_name)
+    {
+      g_free (context->template_name);
+      context->template_name = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -1063,6 +1090,15 @@ gimp_context_get_memsize (GimpObject *object,
 
   if (context->font_name)
     memsize += strlen (context->font_name) + 1;
+
+  if (context->buffer_name)
+    memsize += strlen (context->buffer_name) + 1;
+
+  if (context->imagefile_name)
+    memsize += strlen (context->imagefile_name) + 1;
+
+  if (context->template_name)
+    memsize += strlen (context->template_name) + 1;
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
@@ -1495,7 +1531,7 @@ gimp_context_copy_property (GimpContext         *src,
 
   if (src_name && dest_name_loc)
     {
-      if (! object || object == standard_object)
+      if (! object || (standard_object && object == standard_object))
         {
           g_free (*dest_name_loc);
           *dest_name_loc = g_strdup (src_name);
@@ -1781,9 +1817,6 @@ gimp_context_tool_dirty (GimpToolInfo *tool_info,
 {
   g_free (context->tool_name);
   context->tool_name = g_strdup (GIMP_OBJECT (tool_info)->name);
-
-  g_object_notify (G_OBJECT (context), "tool");
-  gimp_context_tool_changed (context);
 }
 
 /*  the global tool list is there again after refresh  */
@@ -1796,21 +1829,11 @@ gimp_context_tool_list_thaw (GimpContainer *container,
   if (! context->tool_name)
     context->tool_name = g_strdup ("gimp-rect-select-tool");
 
-  if ((tool_info = (GimpToolInfo *)
-       gimp_container_get_child_by_name (container,
-					 context->tool_name)))
-    {
-      gimp_context_real_set_tool (context, tool_info);
-      return;
-    }
+  tool_info = gimp_context_find_object (context, container,
+                                        context->tool_name,
+                                        gimp_tool_info_get_standard (context->gimp));
 
-  if (gimp_container_num_children (container))
-    gimp_context_real_set_tool
-      (context,
-       GIMP_TOOL_INFO (gimp_container_get_child_by_index (container, 0)));
-  else
-    gimp_context_real_set_tool (context,
-                                gimp_tool_info_get_standard (context->gimp));
+  gimp_context_real_set_tool (context, tool_info);
 }
 
 /*  the active tool disappeared  */
@@ -1864,10 +1887,6 @@ gimp_context_real_set_tool (GimpContext  *context,
     {
       g_object_ref (tool_info);
 
-      g_signal_connect_object (tool_info, "invalidate_preview",
-			       G_CALLBACK (gimp_context_tool_dirty),
-			       context,
-			       0);
       g_signal_connect_object (tool_info, "name_changed",
 			       G_CALLBACK (gimp_context_tool_dirty),
 			       context,
@@ -2155,9 +2174,6 @@ gimp_context_brush_dirty (GimpBrush   *brush,
 {
   g_free (context->brush_name);
   context->brush_name = g_strdup (GIMP_OBJECT (brush)->name);
-
-  g_object_notify (G_OBJECT (context), "brush");
-  gimp_context_brush_changed (context);
 }
 
 /*  the global brush list is there again after refresh  */
@@ -2170,20 +2186,11 @@ gimp_context_brush_list_thaw (GimpContainer *container,
   if (! context->brush_name)
     context->brush_name = g_strdup (context->gimp->config->default_brush);
 
-  if ((brush = (GimpBrush *)
-       gimp_container_get_child_by_name (container,
-					 context->brush_name)))
-    {
-      gimp_context_real_set_brush (context, brush);
-      return;
-    }
+  brush = gimp_context_find_object (context, container,
+                                    context->brush_name,
+                                    gimp_brush_get_standard ());
 
-  if (gimp_container_num_children (container))
-    gimp_context_real_set_brush
-      (context, GIMP_BRUSH (gimp_container_get_child_by_index (container, 0)));
-  else
-    gimp_context_real_set_brush (context,
-				 GIMP_BRUSH (gimp_brush_get_standard ()));
+  gimp_context_real_set_brush (context, brush);
 }
 
 /*  the active brush disappeared  */
@@ -2254,10 +2261,6 @@ gimp_context_real_set_brush (GimpContext *context,
 
       g_object_ref (brush);
 
-      g_signal_connect_object (brush, "invalidate_preview",
-			       G_CALLBACK (gimp_context_brush_dirty),
-			       context,
-			       0);
       g_signal_connect_object (brush, "name_changed",
 			       G_CALLBACK (gimp_context_brush_dirty),
 			       context,
@@ -2318,9 +2321,6 @@ gimp_context_pattern_dirty (GimpPattern *pattern,
 {
   g_free (context->pattern_name);
   context->pattern_name = g_strdup (GIMP_OBJECT (pattern)->name);
-
-  g_object_notify (G_OBJECT (context), "pattern");
-  gimp_context_pattern_changed (context);
 }
 
 /*  the global pattern list is there again after refresh  */
@@ -2333,21 +2333,11 @@ gimp_context_pattern_list_thaw (GimpContainer *container,
   if (! context->pattern_name)
     context->pattern_name = g_strdup (context->gimp->config->default_pattern);
 
-  if ((pattern = (GimpPattern *)
-       gimp_container_get_child_by_name (container,
-					 context->pattern_name)))
-    {
-      gimp_context_real_set_pattern (context, pattern);
-      return;
-    }
+  pattern = gimp_context_find_object (context, container,
+                                      context->pattern_name,
+                                      gimp_pattern_get_standard ());
 
-  if (gimp_container_num_children (container))
-    gimp_context_real_set_pattern
-      (context,
-       GIMP_PATTERN (gimp_container_get_child_by_index (container, 0)));
-  else
-    gimp_context_real_set_pattern (context,
-				   GIMP_PATTERN (gimp_pattern_get_standard ()));
+  gimp_context_real_set_pattern (context, pattern);
 }
 
 /*  the active pattern disappeared  */
@@ -2477,9 +2467,6 @@ gimp_context_gradient_dirty (GimpGradient *gradient,
 {
   g_free (context->gradient_name);
   context->gradient_name = g_strdup (GIMP_OBJECT (gradient)->name);
-
-  g_object_notify (G_OBJECT (context), "gradient");
-  gimp_context_gradient_changed (context);
 }
 
 /*  the global gradient list is there again after refresh  */
@@ -2492,21 +2479,11 @@ gimp_context_gradient_list_thaw (GimpContainer *container,
   if (! context->gradient_name)
     context->gradient_name = g_strdup (context->gimp->config->default_gradient);
 
-  if ((gradient = (GimpGradient *)
-       gimp_container_get_child_by_name (container,
-					 context->gradient_name)))
-    {
-      gimp_context_real_set_gradient (context, gradient);
-      return;
-    }
+  gradient = gimp_context_find_object (context, container,
+                                       context->gradient_name,
+                                       gimp_gradient_get_standard ());
 
-  if (gimp_container_num_children (container))
-    gimp_context_real_set_gradient
-      (context,
-       GIMP_GRADIENT (gimp_container_get_child_by_index (container, 0)));
-  else
-    gimp_context_real_set_gradient (context,
-				    GIMP_GRADIENT (gimp_gradient_get_standard ()));
+  gimp_context_real_set_gradient (context, gradient);
 }
 
 /*  the active gradient disappeared  */
@@ -2612,12 +2589,9 @@ gimp_context_palette_dirty (GimpPalette *palette,
 {
   g_free (context->palette_name);
   context->palette_name = g_strdup (GIMP_OBJECT (palette)->name);
-
-  g_object_notify (G_OBJECT (context), "palette");
-  gimp_context_palette_changed (context);
 }
 
-/*  the global gradient list is there again after refresh  */
+/*  the global palette list is there again after refresh  */
 static void
 gimp_context_palette_list_thaw (GimpContainer *container,
 				GimpContext   *context)
@@ -2627,21 +2601,11 @@ gimp_context_palette_list_thaw (GimpContainer *container,
   if (! context->palette_name)
     context->palette_name = g_strdup (context->gimp->config->default_palette);
 
-  if ((palette = (GimpPalette *)
-       gimp_container_get_child_by_name (container,
-					 context->palette_name)))
-    {
-      gimp_context_real_set_palette (context, palette);
-      return;
-    }
+  palette = gimp_context_find_object (context, container,
+                                      context->palette_name,
+                                      gimp_palette_get_standard ());
 
-  if (gimp_container_num_children (container))
-    gimp_context_real_set_palette
-      (context,
-       GIMP_PALETTE (gimp_container_get_child_by_index (container, 0)));
-  else
-    gimp_context_real_set_palette (context,
-				   GIMP_PALETTE (gimp_palette_get_standard ()));
+  gimp_context_real_set_palette (context, palette);
 }
 
 /*  the active palette disappeared  */
@@ -2747,9 +2711,6 @@ gimp_context_font_dirty (GimpFont    *font,
 {
   g_free (context->font_name);
   context->font_name = g_strdup (GIMP_OBJECT (font)->name);
-
-  g_object_notify (G_OBJECT (context), "font");
-  gimp_context_font_changed (context);
 }
 
 /*  the global font list is there again after refresh  */
@@ -2762,21 +2723,11 @@ gimp_context_font_list_thaw (GimpContainer *container,
   if (! context->font_name)
     context->font_name = g_strdup (context->gimp->config->default_font);
 
-  if ((font = (GimpFont *)
-       gimp_container_get_child_by_name (container,
-					 context->font_name)))
-    {
-      gimp_context_real_set_font (context, font);
-      return;
-    }
+  font = gimp_context_find_object (context, container,
+                                   context->font_name,
+                                   gimp_font_get_standard ());
 
-  if (gimp_container_num_children (container))
-    gimp_context_real_set_font
-      (context,
-       GIMP_FONT (gimp_container_get_child_by_index (container, 0)));
-  else
-    gimp_context_real_set_font (context,
-                                GIMP_FONT (gimp_font_get_standard ()));
+  gimp_context_real_set_font (context, font);
 }
 
 /*  the active font disappeared  */
@@ -2884,52 +2835,35 @@ static void
 gimp_context_buffer_dirty (GimpBuffer  *buffer,
 			   GimpContext *context)
 {
-  /*
   g_free (context->buffer_name);
   context->buffer_name = g_strdup (GIMP_OBJECT (buffer)->name);
-  */
-
-  g_object_notify (G_OBJECT (context), "buffer");
-  gimp_context_buffer_changed (context);
 }
 
-/*  the global gradient list is there again after refresh  */
+/*  the global buffer list is there again after refresh  */
 static void
 gimp_context_buffer_list_thaw (GimpContainer *container,
 			       GimpContext   *context)
 {
-  /*
   GimpBuffer *buffer;
 
+  /*
   if (! context->buffer_name)
     context->buffer_name = g_strdup (context->gimp->config->default_buffer);
+  */
 
-  if ((buffer = (GimpBuffer *)
-       gimp_container_get_child_by_name (container,
-					 context->buffer_name)))
+  buffer = gimp_context_find_object (context, container,
+                                     context->buffer_name,
+                                     NULL /* gimp_buffer_get_standard () */);
+
+  if (buffer)
     {
       gimp_context_real_set_buffer (context, buffer);
-      return;
-    }
-  */
-
-  if (gimp_container_num_children (container))
-    {
-      gimp_context_real_set_buffer
-        (context,
-         GIMP_BUFFER (gimp_container_get_child_by_index (container, 0)));
     }
   else
     {
-        g_object_notify (G_OBJECT (context), "buffer");
-        gimp_context_buffer_changed (context);
+      g_object_notify (G_OBJECT (context), "buffer");
+      gimp_context_buffer_changed (context);
     }
-
-  /*
-  else
-    gimp_context_real_set_buffer (context,
-				  GIMP_BUFFER (gimp_buffer_get_standard ()));
-  */
 }
 
 /*  the active buffer disappeared  */
@@ -2964,13 +2898,11 @@ gimp_context_real_set_buffer (GimpContext *context,
   if (context->buffer == buffer)
     return;
 
-  /*
-  if (context->buffer_name && buffer != standard_buffer)
+  if (context->buffer_name /* && buffer != standard_buffer */)
     {
       g_free (context->buffer_name);
       context->buffer_name = NULL;
     }
-  */
 
   /*  disconnect from the old buffer's signals  */
   if (context->buffer)
@@ -2994,8 +2926,8 @@ gimp_context_real_set_buffer (GimpContext *context,
 
       /*
       if (buffer != standard_buffer)
-	context->buffer_name = g_strdup (GIMP_OBJECT (buffer)->name);
       */
+      context->buffer_name = g_strdup (GIMP_OBJECT (buffer)->name);
     }
 
   g_object_notify (G_OBJECT (context), "buffer");
@@ -3043,52 +2975,35 @@ static void
 gimp_context_imagefile_dirty (GimpImagefile *imagefile,
                               GimpContext   *context)
 {
-  /*
   g_free (context->imagefile_name);
   context->imagefile_name = g_strdup (GIMP_OBJECT (imagefile)->name);
-  */
-
-  g_object_notify (G_OBJECT (context), "imagefile");
-  gimp_context_imagefile_changed (context);
 }
 
-/*  the global gradient list is there again after refresh  */
+/*  the global imagefile list is there again after refresh  */
 static void
 gimp_context_imagefile_list_thaw (GimpContainer *container,
                                   GimpContext   *context)
 {
-  /*
-  GimpBuffer *imagefile;
+  GimpImagefile *imagefile;
 
+  /*
   if (! context->imagefile_name)
     context->imagefile_name = g_strdup (context->gimp->config->default_imagefile);
-
-  if ((imagefile = (GimpImagefile *)
-       gimp_container_get_child_by_name (container,
-					 context->imagefile_name)))
-    {
-      gimp_context_real_set_imagefile (context, imagefile);
-      return;
-    }
   */
 
-  if (gimp_container_num_children (container))
+  imagefile = gimp_context_find_object (context, container,
+                                        context->imagefile_name,
+                                        NULL /* gimp_imagefile_get_standard () */);
+
+  if (imagefile)
     {
-      gimp_context_real_set_imagefile
-        (context,
-         GIMP_IMAGEFILE (gimp_container_get_child_by_index (container, 0)));
+      gimp_context_real_set_imagefile (context, imagefile);
     }
   else
     {
       g_object_notify (G_OBJECT (context), "imagefile");
       gimp_context_imagefile_changed (context);
     }
-
-  /*
-  else
-    gimp_context_real_set_imagefile (context,
-				     GIMP_IMAGEFILE (gimp_imagefile_get_standard ()));
-  */
 }
 
 /*  the active imagefile disappeared  */
@@ -3123,13 +3038,11 @@ gimp_context_real_set_imagefile (GimpContext   *context,
   if (context->imagefile == imagefile)
     return;
 
-  /*
-  if (context->imagefile_name && imagefile != standard_imagefile)
+  if (context->imagefile_name /* && imagefile != standard_imagefile */)
     {
       g_free (context->imagefile_name);
       context->imagefile_name = NULL;
     }
-  */
 
   /*  disconnect from the old imagefile's signals  */
   if (context->imagefile)
@@ -3153,8 +3066,8 @@ gimp_context_real_set_imagefile (GimpContext   *context,
 
       /*
       if (imagefile != standard_imagefile)
-	context->imagefile_name = g_strdup (GIMP_OBJECT (imagefile)->name);
       */
+      context->imagefile_name = g_strdup (GIMP_OBJECT (imagefile)->name);
     }
 
   g_object_notify (G_OBJECT (context), "imagefile");
@@ -3202,52 +3115,35 @@ static void
 gimp_context_template_dirty (GimpTemplate *template,
                              GimpContext  *context)
 {
-  /*
   g_free (context->template_name);
   context->template_name = g_strdup (GIMP_OBJECT (template)->name);
-  */
-
-  g_object_notify (G_OBJECT (context), "template");
-  gimp_context_template_changed (context);
 }
 
-/*  the global gradient list is there again after refresh  */
+/*  the global template list is there again after refresh  */
 static void
 gimp_context_template_list_thaw (GimpContainer *container,
                                  GimpContext   *context)
 {
-  /*
-  GimpBuffer *template;
+  GimpTemplate *template;
 
+  /*
   if (! context->template_name)
     context->template_name = g_strdup (context->gimp->config->default_template);
-
-  if ((template = (GimpTemplate *)
-       gimp_container_get_child_by_name (container,
-					 context->template_name)))
-    {
-      gimp_context_real_set_template (context, template);
-      return;
-    }
   */
 
-  if (gimp_container_num_children (container))
+  template = gimp_context_find_object (context, container,
+                                       context->template_name,
+                                        NULL /* gimp_template_get_standard () */);
+
+  if (template)
     {
-      gimp_context_real_set_template
-        (context,
-         GIMP_TEMPLATE (gimp_container_get_child_by_index (container, 0)));
+      gimp_context_real_set_template (context, template);
     }
   else
     {
       g_object_notify (G_OBJECT (context), "template");
       gimp_context_template_changed (context);
     }
-
-  /*
-  else
-    gimp_context_real_set_template (context,
-				     GIMP_TEMPLATE (gimp_template_get_standard ()));
-  */
 }
 
 /*  the active template disappeared  */
@@ -3282,13 +3178,11 @@ gimp_context_real_set_template (GimpContext  *context,
   if (context->template == template)
     return;
 
-  /*
-  if (context->template_name && template != standard_template)
+  if (context->template_name /* && template != standard_template */)
     {
       g_free (context->template_name);
       context->template_name = NULL;
     }
-  */
 
   /*  disconnect from the old template's signals  */
   if (context->template)
@@ -3312,10 +3206,34 @@ gimp_context_real_set_template (GimpContext  *context,
 
       /*
       if (template != standard_template)
-	context->template_name = g_strdup (GIMP_OBJECT (template)->name);
       */
+      context->template_name = g_strdup (GIMP_OBJECT (template)->name);
     }
 
   g_object_notify (G_OBJECT (context), "template");
   gimp_context_template_changed (context);
+}
+
+
+/*****************************************************************************/
+/*  utility functions  *******************************************************/
+
+static gpointer
+gimp_context_find_object (GimpContext   *context,
+                          GimpContainer *container,
+                          const gchar   *object_name,
+                          gpointer       standard_object)
+{
+  GimpObject *object = NULL;
+
+  if (object_name)
+    object = gimp_container_get_child_by_name (container, object_name);
+
+  if (! object && gimp_container_num_children (container) > 0)
+    object = gimp_container_get_child_by_index (container, 0);
+
+  if (! object)
+    object = standard_object;
+
+  return object;
 }

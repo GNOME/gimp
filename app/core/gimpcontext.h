@@ -74,8 +74,13 @@ struct _GimpContext
   gchar                *font_name;
 
   GimpBuffer           *buffer;
+  gchar                *buffer_name;
+
   GimpImagefile        *imagefile;
+  gchar                *imagefile_name;
+
   GimpTemplate         *template;
+  gchar                *template_name;
 };
 
 struct _GimpContextClass

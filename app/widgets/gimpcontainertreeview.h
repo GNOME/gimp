@@ -60,7 +60,6 @@ struct _GimpContainerTreeView
   GList             *editable_cells;
 
   GQuark             invalidate_preview_handler_id;
-  GQuark             name_changed_handler_id;
 
   GimpViewable      *dnd_viewable;
 

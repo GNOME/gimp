@@ -97,6 +97,8 @@ static void   gimp_container_view_freeze      (GimpContainerView      *view,
                                                GimpContainer          *container);
 static void   gimp_container_view_thaw        (GimpContainerView      *view,
                                                GimpContainer          *container);
+static void   gimp_container_view_name_changed (GimpViewable          *viewable,
+                                                GimpContainerView     *view);
 
 static GtkWidget * gimp_container_view_get_preview (GimpDocked         *docked,
                                                     GimpContext        *context,
@@ -215,6 +217,7 @@ gimp_container_view_class_init (GimpContainerViewClass *klass)
   klass->insert_item         = NULL;
   klass->remove_item         = NULL;
   klass->reorder_item        = NULL;
+  klass->rename_item         = NULL;
   klass->clear_items         = gimp_container_view_real_clear_items;
   klass->set_preview_size    = NULL;
 
@@ -352,6 +355,9 @@ gimp_container_view_real_set_container (GimpContainerView *view,
       gimp_container_view_select_item (view, NULL);
       gimp_container_view_clear_items (view);
 
+      gimp_container_remove_handler (view->container,
+                                     view->name_changed_handler_id);
+
       g_signal_handlers_disconnect_by_func (view->container,
 					    gimp_container_view_add,
 					    view);
@@ -395,9 +401,21 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 
   if (view->container)
     {
+      GimpViewableClass *viewable_class;
+
+      viewable_class = g_type_class_ref (container->children_type);
+
       gimp_container_foreach (view->container,
 			      (GFunc) gimp_container_view_add_foreach,
 			      view);
+
+      view->name_changed_handler_id =
+        gimp_container_add_handler (view->container,
+                                    viewable_class->name_changed_signal,
+                                    G_CALLBACK (gimp_container_view_name_changed),
+                                    view);
+
+      g_type_class_unref (viewable_class);
 
       g_signal_connect_object (view->container, "add",
 			       G_CALLBACK (gimp_container_view_add),
@@ -847,6 +865,22 @@ gimp_container_view_thaw (GimpContainerView *view,
                                          view->container->children_type);
 
       gimp_container_view_select_item (view, (GimpViewable *) object);
+    }
+}
+
+static void
+gimp_container_view_name_changed (GimpViewable      *viewable,
+                                  GimpContainerView *view)
+{
+  gpointer insert_data;
+
+  insert_data = g_hash_table_lookup (view->hash_table, viewable);
+
+  if (insert_data)
+    {
+      GIMP_CONTAINER_VIEW_GET_CLASS (view)->rename_item (view,
+                                                         viewable,
+							 insert_data);
     }
 }
 
