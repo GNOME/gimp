@@ -1,3 +1,8 @@
+Sat Aug 28 10:53:17 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* tools/pdbgen/pdb/layer.pdb
+	* app/layer_cmds.c: don't check name for NULL and fail
+
 1999-08-28  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimp/gimp.c (gimp_main): Put in a workaround for the problem

@@ -126,8 +126,6 @@ layer_new_invoker (Argument *args)
     success = FALSE;
 
   name = (gchar *) args[4].value.pdb_pointer;
-  if (name == NULL)
-    success = FALSE;
 
   opacity_arg = args[5].value.pdb_float;
   if (opacity_arg < 0.0 || opacity_arg > 100.0)
