@@ -140,6 +140,12 @@ main (gint   argc,
   return uri ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
+void
+help_exit (void)
+{
+  /* nothing */
+}
+
 static gchar *
 lookup (const gchar *help_domain,
         const gchar *help_locales,

@@ -32,8 +32,10 @@
 #define GIMP_HELP_PREFIX          "help"
 #define GIMP_HELP_ENV_URI         "GIMP2_HELP_URI"
 
-
 /*  #define GIMP_HELP_DEBUG  */
+
+
+void  help_exit (void);
 
 
 #endif /* ! __HELP_H__ */

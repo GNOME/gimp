@@ -76,6 +76,8 @@ static gboolean load_help_idle    (gpointer          data);
 
 /*  local variables  */
 
+static GMainLoop *main_loop = NULL;
+
 GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
@@ -86,6 +88,14 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 
 MAIN ()
+
+void
+help_exit (void)
+{
+  if (main_loop)
+    g_main_loop_quit (main_loop);
+}
+
 
 static void
 query (void)
@@ -182,16 +192,19 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      GMainLoop *loop = g_main_loop_new (NULL, FALSE);
+      main_loop = g_main_loop_new (NULL, FALSE);
 
       temp_proc_install ();
 
       gimp_extension_ack ();
       gimp_extension_enable ();
 
-      g_main_loop_run (loop);
+      g_main_loop_run (main_loop);
 
-      g_main_loop_unref (loop);
+      g_main_loop_unref (main_loop);
+      main_loop = NULL;
+
+      gimp_uninstall_temp_proc (GIMP_HELP_TEMP_EXT_NAME);
     }
 
   values[0].type          = GIMP_PDB_STATUS;
@@ -292,10 +305,8 @@ load_help (const gchar *procedure,
 static gboolean
 load_help_idle (gpointer data)
 {
-  IdleHelp   *idle_help;
+  IdleHelp   *idle_help = data;
   HelpDomain *domain;
-
-  idle_help = (IdleHelp *) data;
 
   domain = domain_lookup (idle_help->help_domain);
 

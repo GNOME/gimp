@@ -182,6 +182,8 @@ domain_map (HelpDomain   *domain,
                      _("Please check your installation."));
 
           g_error_free (error);
+
+          help_exit ();
         }
       else
         {
