@@ -24,10 +24,6 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
-#ifdef ENABLE_FILE_SYSTEM_ICONS
-#define GTK_FILE_SYSTEM_ENABLE_UNSUPPORTED
-#include <gtk/gtkfilesystem.h>
-#endif
 
 #include "libgimpthumb/gimpthumb.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -39,6 +35,11 @@
 #include "core/gimpimagefile.h"
 
 #include "gimppreviewrendererimagefile.h"
+
+#ifdef ENABLE_FILE_SYSTEM_ICONS
+#define GTK_FILE_SYSTEM_ENABLE_UNSUPPORTED
+#include <gtk/gtkfilesystem.h>
+#endif
 
 
 static void   gimp_preview_renderer_imagefile_class_init (GimpPreviewRendererImagefileClass *klass);

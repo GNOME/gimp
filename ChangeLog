@@ -1,3 +1,9 @@
+2004-03-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimppreviewrendererimagefile.[ch]: moved the
+	(disabled) ENABLE_FILE_SYSTEM_ICONS from the .c to the .h file and
+	#ifdef the "gpointer file_system" member with it.
+
 2004-03-03  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpvectors.c: fixed offset handling. Vectors

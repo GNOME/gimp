@@ -22,7 +22,11 @@
 #ifndef __GIMP_PREVIEW_RENDERER_IMAGEFILE_H__
 #define __GIMP_PREVIEW_RENDERER_IMAGEFILE_H__
 
+
 #include "gimppreviewrenderer.h"
+
+/* #define ENABLE_FILE_SYSTEM_ICONS 1 */
+
 
 #define GIMP_TYPE_PREVIEW_RENDERER_IMAGEFILE            (gimp_preview_renderer_imagefile_get_type ())
 #define GIMP_PREVIEW_RENDERER_IMAGEFILE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PREVIEW_RENDERER_IMAGEFILE, GimpPreviewRendererImagefile))
@@ -38,7 +42,9 @@ struct _GimpPreviewRendererImagefile
 {
   GimpPreviewRenderer parent_instance;
 
+#ifdef ENABLE_FILE_SYSTEM_ICONS
   gpointer            file_system;
+#endif
 };
 
 struct _GimpPreviewRendererImagefileClass
