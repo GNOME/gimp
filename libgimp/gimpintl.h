@@ -1,16 +1,16 @@
-/* LIBGIMP - The GIMP Library                                                   
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpintl.h
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.             
- *                                                                              
- * This library is distributed in the hope that it will be useful,              
- * but WITHOUT ANY WARRANTY; without even the implied warranty of               
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU            
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -56,11 +56,16 @@
 #    define N_(String) (String)
 #endif
 
+#ifndef HAVE_BIND_TEXTDOMAIN_CODESET
+#    define bind_textdomain_codeset(Domain, Codeset) (Domain)
+#endif
+
 #define INIT_LOCALE( domain )	G_STMT_START{	\
-	gtk_set_locale ();			\
-	setlocale (LC_NUMERIC, "C");		\
-	bindtextdomain (domain, LOCALEDIR);	\
-	textdomain (domain);			\
-				}G_STMT_END
+     gtk_set_locale ();			        \
+     setlocale (LC_NUMERIC, "C");               \
+     bindtextdomain (domain, LOCALEDIR);	\
+     bind_textdomain_codeset (domain, "UTF-8"); \
+     textdomain (domain);			\
+}G_STMT_END
 
 #endif /* __GIMPINTL_H__ */

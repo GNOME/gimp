@@ -492,19 +492,13 @@ AC_CHECK_FUNC(random, [
       [AC_DEFINE(RAND_FUNC, lrand48) AC_DEFINE(SRAND_FUNC, srand48)],
       [AC_DEFINE(RAND_FUNC, rand) AC_DEFINE(SRAND_FUNC, srand)])])])
 
-dnl check for difftime
-AC_CHECK_FUNC(difftime, , AC_DEFINE(NO_DIFFTIME))
-
-dnl check for putenv (because %#@&% NeXTStep doesn't have it)
-AC_CHECK_FUNC(putenv, AC_DEFINE(HAVE_PUTENV))
+dnl check some more funcs
+AC_CHECK_FUNCS(difftime putenv mmap bind_textdomain_codeset)
 
 dnl check for rint
 AC_CHECK_FUNC(rint, AC_DEFINE(HAVE_RINT), [
   AC_CHECK_LIB(m, rint, [
     AC_DEFINE(HAVE_RINT)])])
-
-dnl check for mmap
-AC_CHECK_FUNCS(mmap)
 
 dnl check for inline
 AC_MSG_CHECKING([for inline definition in glibconfig.h])

@@ -25,26 +25,19 @@
 #include "gimpintl.h"
 
 
-#ifdef HAVE_LC_MESSAGES
-#define INIT_I18N()	G_STMT_START{			\
-  setlocale(LC_MESSAGES, ""); 				\
-  bindtextdomain("gimp-libgimp", LOCALEDIR);            \
-  bindtextdomain("gimp-std-plugins", LOCALEDIR);	\
-  textdomain("gimp-std-plugins");			\
-  			}G_STMT_END
-#else
-#define INIT_I18N()	G_STMT_START{			\
-  bindtextdomain("gimp-libgimp", LOCALEDIR);            \
-  bindtextdomain("gimp-std-plugins", LOCALEDIR);	\
-  textdomain("gimp-std-plugins");			\
-  			}G_STMT_END
-#endif
+#define INIT_I18N()	G_STMT_START{		         \
+  bindtextdomain("gimp-libgimp", LOCALEDIR);             \
+  bind_textdomain_codeset ("gimp-libgimp", "UTF-8");     \
+  bindtextdomain("gimp-std-plugins", LOCALEDIR);         \
+  bind_textdomain_codeset ("gimp-std-plugins", "UTF-8"); \
+  textdomain("gimp-std-plugins");		         \
+  setlocale (LC_NUMERIC, "C");                           \
+}G_STMT_END
 
 #define INIT_I18N_UI()	G_STMT_START{	\
   gtk_set_locale();			\
-  setlocale (LC_NUMERIC, "C");		\
   INIT_I18N();				\
-			}G_STMT_END
+}G_STMT_END
 
 
 #endif /* __STDPLUGINS_INTL_H__ */

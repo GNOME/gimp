@@ -50,7 +50,7 @@
 #define RESPONSE_HEADER 4
 #define MAGIC           'G'
 
-#ifdef NO_DIFFTIME
+#ifndef HAVE_DIFFTIME
 #define difftime(a,b) (((gdouble)(a)) - ((gdouble)(b)))
 #endif
 

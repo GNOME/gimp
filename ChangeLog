@@ -1,3 +1,22 @@
+2001-08-30  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: check for bind_textdomain_codeset, use standard 
+	HAVE_FOO semantic for difftime.
+
+	* libgimp/gimpintl.h
+	* libgimp/libgimp-intl.h
+	* libgimp/stdplugins-intl.h: set encoding of message translations
+	to UTF-8 if bind_textdomain_codeset() is available. We still 
+	explicitely set LC_NUMERIC to "C" so we can write and parse floats 
+	in a defined way independent of the locale. We might want to find 
+	a cleaner solution for this.
+	
+	* plug-ins/script-fu/script-fu-server.c: inverted preprocessor logic
+	from NO_DIFFTIME to HAVE_DIFFTIME.
+	
+	* plug-ins/script-fu/scripts/trochoid.scm: 
+	fixed parameter description (bug #59760).
+
 2001-08-29  Sven Neumann  <sven@gimp.org>
 
 	* README.i18n: added a section that mentions the GNOME translation
