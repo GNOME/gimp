@@ -108,6 +108,8 @@
 	 (text-extents (gimp-text-get-extents-fontname text size PIXELS font))
 	 (x-position (- cx (/ (car text-extents) 2)))
 	 (y-position (- cy (/ (cadr text-extents) 2)))
+	 (old-pattern (car (gimp-patterns-get-pattern)))
+	 (old-gradient (car (gimp-gradients-get-active)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
     (gimp-image-undo-disable img)
@@ -148,6 +150,8 @@
 						       size PIXELS
 						       font)))
 
+    (gimp-gradients-set-active old-gradient)
+    (gimp-patterns-set-pattern old-pattern)
     (gimp-palette-set-background old-bg)
     (gimp-palette-set-foreground old-fg)
     (gimp-image-undo-enable img)

@@ -25,18 +25,16 @@
 
 
 (define (script-fu-predator image
-			      drawable
-			      edge-amount
-			      pixelize
-			      pixel-size
-			      keep-selection
-			      seperate-layer)
+			    drawable
+			    edge-amount
+			    pixelize
+			    pixel-size
+			    keep-selection
+			    seperate-layer)
   (let* (
 	 (type (car (gimp-drawable-type-with-alpha drawable)))
 	 (image-width (car (gimp-image-width image)))
-	 (image-height (car (gimp-image-height image)))
-	 (old-gradient (car (gimp-gradients-get-active)))
-	 (old-bg (car (gimp-palette-get-background))))
+	 (image-height (car (gimp-image-height image))))
     
     (gimp-image-undo-disable image)
     (gimp-layer-add-alpha drawable)
@@ -88,8 +86,6 @@
     
     ; clean up the selection copy
     (gimp-selection-load active-selection)
-    (gimp-gradients-set-active old-gradient)
-    (gimp-palette-set-background old-bg)
     
     (if (= keep-selection FALSE)
 	(gimp-selection-none image))
@@ -100,7 +96,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-predator"
-		    "<Image>/Script-Fu/Decor/Predator..."
+		    "<Image>/Script-Fu/Alchemy/Predator..."
 		    "Fills the current selection with test"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"

@@ -331,7 +331,6 @@
 			background-color
 			stroke-overwrite brush-opacity paint-mode))))
   ;; start of script-fu-trochoid
-  (gimp-brushes-set-brush (car brush-details))
   (let* ((base-radius (floor (abs base-radius-f))) ; to int
 	 (wheel-radius (floor wheel-radius-f)) ; to int
 	 (total-step-num (if (or (= 0 base-radius) (= 0 wheel-radius))
@@ -350,7 +349,9 @@
 	 (layer-paint-mode 0)
 	 (the-layer #f)
 	 (old-paint-mode (car (gimp-brushes-get-paint-mode)))
+	 (old-brush (car (gimp-brushes-get-brush)))
 	 (old-rgb (car (gimp-palette-get-foreground))))
+    (gimp-brushes-set-brush (car brush-details))
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img BG-layer 0)
     (gimp-edit-fill BG-layer)
@@ -377,6 +378,7 @@
 			      base-radius wheel-radius pen-pos hue-rate
 			      layer-paint-mode (= 0 erase-before-draw) brush-details))
     (gimp-palette-set-foreground old-rgb)
+    (gimp-brushes-set-brush old-brush)
     (gimp-brushes-set-paint-mode old-paint-mode)
     (gimp-image-undo-enable img)
     (gimp-displays-flush)))

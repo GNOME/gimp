@@ -17,7 +17,8 @@
 	(gimp-floating-sel-anchor floating-sel)))
 
 (define (script-fu-ripply-anim img drawable displacement num-frames)
-  (let* ((width (car (gimp-drawable-width drawable)))
+  (let* ((old-bg (car (gimp-palette-get-background)))
+	 (width (car (gimp-drawable-width drawable)))
 	 (height (car (gimp-drawable-height drawable)))
 	 (ripple-image (car (gimp-image-new width height GRAY)))
 	 (ripple-layer (car (gimp-layer-new ripple-image width height GRAY_IMAGE "Ripple Texture" 100 NORMAL))))
@@ -86,6 +87,7 @@
       
       (gimp-image-undo-enable rippletiled-image)
       (gimp-image-delete rippletiled-image)
+      (gimp-palette-set-background old-bg)
       (gimp-image-undo-enable out-imagestack)
       (gimp-display-new out-imagestack))))
 

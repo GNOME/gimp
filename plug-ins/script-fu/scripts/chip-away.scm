@@ -45,8 +45,8 @@
 	 (bg-layer (car (gimp-layer-new img width height RGB_IMAGE "Background" 100 NORMAL)))
 	 (bump-layer (car (gimp-layer-new img width height RGBA_IMAGE "Bump Layer" 100 NORMAL)))
 	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background))))
-    
+	 (old-bg (car (gimp-palette-get-background)))
+	 (old-pattern (car (gimp-patterns-get-pattern))))   
     (gimp-image-undo-disable img)
     (gimp-image-resize img width height 0 0)
     (gimp-image-add-layer img bg-layer 1)
@@ -103,6 +103,7 @@
      (if (= keep-back FALSE)
 	 (gimp-image-remove-layer img bg-layer))
     
+    (gimp-patterns-set-pattern old-pattern)
     (gimp-palette-set-foreground old-fg)
     (gimp-palette-set-background old-bg)
     (gimp-image-undo-enable img)

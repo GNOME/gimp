@@ -6,7 +6,7 @@
 ; aklikins@eos.ncsu.edu
 ;
 ; based on a idea by Sven Riedel <lynx@heim8.tu-clausthal.de>
-; tweaked a little by Sven Neumann <neumanns@uni-duesseldorf.de>
+; tweaked a bit by Sven Neumann <neumanns@uni-duesseldorf.de>
 ;
 ; This program is free software; you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -99,7 +99,7 @@
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-lava"
-		    "<Image>/Script-Fu/Decor/Lava..."
+		    "<Image>/Script-Fu/Render/Lava..."
 		    "Fills the current selection with lava."
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"

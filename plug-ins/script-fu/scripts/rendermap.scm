@@ -21,6 +21,9 @@
 
 (define (script-fu-render-map inSize inGrain inGrad inWiden)
 
+	(set! old-gradient (car (gimp-gradients-get-active)))
+	(set! old-fg (car (gimp-palette-get-foreground)))
+	(set! old-bg (car (gimp-palette-get-background)))
 
         (set! theWidth inSize)
 	(set! theHeight inSize)
@@ -51,6 +54,9 @@
 	(gimp-selection-none theImage)
 	(gimp-gradients-set-active inGrad)
 	(plug-in-gradmap TRUE theImage theLayer)
+        (gimp-gradients-set-active old-gradient)
+        (gimp-palette-set-background old-bg)
+        (gimp-palette-set-foreground old-fg)
         (gimp-display-new theImage)
 )
 

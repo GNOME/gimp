@@ -48,21 +48,21 @@
 
     (gimp-edit-copy drawable)
 
-    (set! brush-image (car (gimp-image-new selection-width selection-height image-type)))
-    (set! brush-draw (car (gimp-layer-new brush-image selection-width selection-height draw-type "Sloth" 100 NORMAL)))
-    (gimp-image-add-layer brush-image brush-draw 0)
-    (gimp-drawable-fill brush-draw BG-IMAGE-FILL)
+    (set! new-image (car (gimp-image-new selection-width selection-height image-type)))
+    (set! new-draw (car (gimp-layer-new new-image selection-width selection-height draw-type "Selection" 100 NORMAL)))
+    (gimp-image-add-layer new-image new-draw 0)
+    (gimp-drawable-fill new-draw BG-IMAGE-FILL)
 
-    (let ((floating-sel (car (gimp-edit-paste brush-draw FALSE))))
+    (let ((floating-sel (car (gimp-edit-paste new-draw FALSE))))
       (gimp-floating-sel-anchor floating-sel)
       )
 
     (gimp-palette-set-background old-bg)
     (gimp-image-undo-enable image)
     (gimp-image-set-active-layer image drawable)
-    (gimp-display-new brush-image)
+    (gimp-display-new new-image)
     (gimp-displays-flush)
-    (script-fu-export-file 1 img drawable RGB 255 FALSE 2 "-export" "png")
+;    (script-fu-export-file 1 img drawable RGB 255 FALSE 2 "-export" "png")
 
 ))
 

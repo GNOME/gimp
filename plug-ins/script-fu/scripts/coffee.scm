@@ -21,6 +21,7 @@
 
 (define (script-fu-coffee-stain inImage inLayer inNumber inDark)
 
+   (set! old-gradient (car (gimp-gradients-get-active)))
    (set! theImage inImage)
    (set! theHeight (car (gimp-image-height theImage)))
    (set! theWidth (car (gimp-image-width theImage)))
@@ -49,6 +50,7 @@
        (gimp-layer-set-offsets theStain (- (rand theWidth) (/ theSize 2)) (- (rand theHeight) (/ theSize 2)) theSize)
     )
    (gimp-selection-none theImage)
+   (gimp-gradients-set-active old-gradient)
    (gimp-displays-flush)
 )
 

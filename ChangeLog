@@ -1,3 +1,28 @@
+Sun Dec 19 17:42:32 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* app/menus.c
+	* plug-ins/script-fu/scripts/3dTruchet.scm
+	* plug-ins/script-fu/scripts/addborder.scm
+	* plug-ins/script-fu/scripts/chip-away.scm
+	* plug-ins/script-fu/scripts/circuit.scm
+	* plug-ins/script-fu/scripts/coffee.scm
+	* plug-ins/script-fu/scripts/comic-logo.scm
+	* plug-ins/script-fu/scripts/lava.scm
+	* plug-ins/script-fu/scripts/predator.scm
+	* plug-ins/script-fu/scripts/rendermap.scm
+	* plug-ins/script-fu/scripts/ripply-anim.scm
+	* plug-ins/script-fu/scripts/select_to_image.scm
+	* plug-ins/script-fu/scripts/test-sphere.scm
+	* plug-ins/script-fu/scripts/textured-logo.scm
+	* plug-ins/script-fu/scripts/trochoid.scm
+	* plug-ins/script-fu/scripts/truchet.scm
+	* plug-ins/script-fu/scripts/xach-effect.scm
+	
+	Reordered the Script-Fu menus a bit. Feel free to come up with a 
+	better menu structure!  Also made sure that all scripts do reset the 
+	fg/bg colors and the active brush, pattern and gradient when they are 
+	done.
+
 1999-12-19  Michael Natterer  <mitch@gimp.org>
 
 	* gimprc.in

@@ -105,7 +105,6 @@ static gchar G_GNUC_UNUSED *dummy_entries[] =
   N_("/Filters/Render/Pattern"),
   N_("/Filters/Misc"),
   N_("/Script-Fu/Decor"),
-  N_("/Script-Fu/Modify"),
   N_("/Script-Fu/Utils"),
   N_("/Script-Fu/Animators"),
   N_("/Script-Fu/Stencil Ops"),

@@ -1,4 +1,3 @@
-
 ; The GIMP -- an image manipulation program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
@@ -104,6 +103,7 @@
 	 (tiledraw2 (car (gimp-layer-new tile size size RGB "Cooper" 100 NORMAL)))
 	 (Xindex 0)
 	 (Yindex 0)
+	 (old-bg (car (gimp-palette-get-background)))
 	 )
 
     (gimp-image-undo-disable img)
@@ -137,6 +137,7 @@
     
     
     (gimp-image-delete tile)
+    (gimp-palette-set-background old-bg)
     (gimp-image-undo-enable img)
     (gimp-display-new img)
     )
