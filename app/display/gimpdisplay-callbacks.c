@@ -407,10 +407,11 @@ gdisplay_canvas_events (GtkWidget *canvas,
       if (mevent->is_hint)
 	gdk_input_window_get_pointer (canvas->window, current_device, &tx, &ty,
 #ifdef GTK_HAVE_SIX_VALUATORS
-				      NULL, NULL, NULL, NULL, NULL);
+				      NULL, NULL, NULL, NULL, NULL
 #else /* !GTK_HAVE_SIX_VALUATORS */	
-				      NULL, NULL, NULL, NULL);
+				      NULL, NULL, NULL, NULL
 #endif /* GTK_HAVE_SIX_VALUATORS */
+				      );
       else
 	{
 	  tx = mevent->x;
@@ -510,10 +511,11 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	    {
 	      gdk_input_window_get_pointer (canvas->window, current_device,
 #ifdef GTK_HAVE_SIX_VALUATORS 
-					    &tx, &ty, NULL, NULL, NULL, NULL, NULL);
+					    &tx, &ty, NULL, NULL, NULL, NULL, NULL
 #else /* !GTK_HAVE_SIX_VALUATORS */
-					    &tx, &ty, NULL, NULL, NULL, NULL);
+					    &tx, &ty, NULL, NULL, NULL, NULL
 #endif /* GTK_HAVE_SIX_VALUATORS */
+					    );
 	      (* active_tool->modifier_key_func) (active_tool, kevent, gdisp);
 	      return_val = TRUE;
 	    }
@@ -536,10 +538,11 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	    {
 	      gdk_input_window_get_pointer (canvas->window, current_device,
 #ifdef GTK_HAVE_SIX_VALUATORS
-                                            &tx, &ty, NULL, NULL, NULL, NULL, NULL);
+                                            &tx, &ty, NULL, NULL, NULL, NULL, NULL
 #else /* !GTK_HAVE_SIX_VALUATORS */
-	                                    &tx, &ty, NULL, NULL, NULL, NULL);
+	                                    &tx, &ty, NULL, NULL, NULL, NULL
 #endif /* GTK_HAVE_SIX_VALUATORS */ 
+					    );
 	      (* active_tool->modifier_key_func) (active_tool, kevent, gdisp);
 	      return_val = TRUE;
 	    }
@@ -569,7 +572,9 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  (* active_tool->cursor_update_func) (active_tool, &me, gdisp);
 	}
       else if (gimage_is_empty (gdisp->gimage))
-	gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW);
+	{
+	  gdisplay_install_tool_cursor (gdisp, GIMP_BAD_CURSOR);
+	}
     }
 
   if (update_cursor)

@@ -1,5 +1,12 @@
 2000-03-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/disp_callbacks.C: show GIMP_BAD_CURSOR if we have no layers.
+
+	Moved the closing bracket out of the GTK_HAVE_SIX_VALUATORS ifdefs
+	(just to force emacs to do correct indentation).
+
+2000-03-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/by_color_select.c: immediate cursor_update feedback on
 	modifier events.
 
