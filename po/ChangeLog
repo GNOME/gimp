@@ -1,3 +1,7 @@
+2005-02-20  Manish Singh  <yosh@gimp.org>
+
+	* POTFILES.in: add app/core/gimpinterpreterdb.c
+
 2005-02-19  Sven Neumann  <sven@gimp.org>
 
 	* fr.po: fixed a wrong translation (Debian bug report #292047).
