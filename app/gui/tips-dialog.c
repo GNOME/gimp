@@ -87,12 +87,12 @@ tips_dialog_create ()
 				0, y, wilber_width); 
 	}
       g_free(temp);
-      gtk_box_pack_start (GTK_BOX (hbox1), preview, FALSE, TRUE, 3);
+      gtk_box_pack_end (GTK_BOX (hbox1), preview, FALSE, TRUE, 3);
       gtk_widget_show (preview);
 
       tips_label = gtk_label_new (tips_text[last_tip]);
       gtk_label_set_justify (GTK_LABEL (tips_label), GTK_JUSTIFY_LEFT);
-      gtk_box_pack_end (GTK_BOX (hbox1), tips_label, TRUE, TRUE, 3);
+      gtk_box_pack_start (GTK_BOX (hbox1), tips_label, TRUE, TRUE, 3);
       gtk_widget_show (tips_label);
 
       button_close = gtk_button_new_with_label ("Close");

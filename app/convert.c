@@ -33,6 +33,13 @@
    */
 
 /*
+ * 97/11/04 - fixed the accidental use of the colour-counting case
+ *  when palette_type is WEB or MONO. [Adam]
+ *
+ * 97/10/25 - colour-counting implemented (could use some hashing, but
+ *  performance actually seems okay) - now RGB->INDEXED conversion isn't
+ *  destructive if it doesn't have to be. [Adam]
+ *
  * 97/10/14 - fixed divide-by-zero when converting a completely transparent
  *  RGB image to indexed. [Adam]
  *
@@ -69,6 +76,7 @@
 #define REUSE_PALETTE 1
 #define WEB_PALETTE 2
 #define MONO_PALETTE 3
+
 #define PRECISION_R 6
 #define PRECISION_G 6
 #define PRECISION_B 5
@@ -561,11 +569,31 @@ convert_image (GImage *gimage,
 		generate_histogram_gray (quantobj->histogram, layer);
 	      else
 		generate_histogram_rgb (quantobj->histogram, layer, num_cols);
+	      /*
+	       * Note: generate_histogram_rgb may set needs_quantize if
+	       *  the image contains more colours than the limit specified
+	       *  by the user.
+	       */
 	    }
 	}
 
-      if ((old_type == RGB) && !needs_quantize)
+       if (
+         (old_type == RGB) &&
+         (!needs_quantize) &&
+         (palette_type == MAKE_PALETTE)
+         )
+
 	{
+         /* If this is an RGB image, and the user wanted a custom-built
+          *  generated palette, and this image has no more colours than
+          *  the user asked for, we don't need the first pass (quantization).
+          *
+          * There's also no point in dithering, since there's no error to
+          *  spread.  So we destroy the old quantobj and make a new one
+          *  with the remapping function set to a special LUT-based
+          *  no-dither remapper.
+          */
+
 	  quantobj->delete_func (quantobj);
 	  quantobj = initialize_median_cut (old_type, num_cols,
 					    NODESTRUCTDITHER, palette_type);

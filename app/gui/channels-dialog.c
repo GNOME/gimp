@@ -483,6 +483,8 @@ channels_dialog_preview_extents ()
     {
       channelsD->image_width = (int) (channelsD->ratio * gimage->width);
       channelsD->image_height = (int) (channelsD->ratio * gimage->height);
+      if (channelsD->image_width < 1) channelsD->image_width = 1;
+      if (channelsD->image_height < 1) channelsD->image_height = 1;
     }
   else
     {
