@@ -49,6 +49,17 @@ using object properties.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_thumbnail_set_from_thumb ##### -->
+<para>
+
+</para>
+
+@thumbnail: 
+@filename: 
+@error: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_thumbnail_peek_image ##### -->
 <para>
 
