@@ -248,32 +248,32 @@ gimp_text_layer_new (GimpImage *image,
                      GimpText  *text)
 {
   GimpTextLayer *layer;
- 
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
- 
+
   if (!text->text)
     return NULL;
- 
+
   layer = g_object_new (GIMP_TYPE_TEXT_LAYER, NULL);
- 
+
   gimp_drawable_configure (GIMP_DRAWABLE (layer),
                            image,
                            0, 0, 0, 0,
                            gimp_image_base_type_with_alpha (image),
                            NULL);
- 
+
   gimp_text_layer_set_text (layer, text);
- 
+
   if (! gimp_text_layer_render_now (layer))
     {
       g_object_unref (layer);
       return NULL;
     }
- 
+
   return GIMP_LAYER (layer);
 }
- 
+
 /**
  * gimp_text_layer_from_layer:
  * @layer: a #GimpLayer object
@@ -326,12 +326,12 @@ gimp_text_layer_from_layer (GimpLayer *layer,
 
   gimp_item_offsets (GIMP_ITEM (layer), &item->offset_x, &item->offset_y);
 
+  item->visible   = gimp_item_get_visible (GIMP_ITEM (layer));
   item->linked    = gimp_item_get_linked (GIMP_ITEM (layer));
 
   drawable->tiles     = GIMP_DRAWABLE (layer)->tiles;
   GIMP_DRAWABLE (layer)->tiles = NULL;
 
-  drawable->visible   = gimp_drawable_get_visible (GIMP_DRAWABLE (layer));
   drawable->bytes     = gimp_drawable_bytes (GIMP_DRAWABLE (layer));
   drawable->type      = gimp_drawable_type (GIMP_DRAWABLE (layer));
   drawable->has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));

@@ -548,7 +548,7 @@ CODE
                  'object', 'GIMP_OBJECT (layer)');
 
 &layer_accessors('visible', 'boolean', 'visibility', 0, 1, undef,
-                 'drawable', 'GIMP_DRAWABLE (layer)');
+                 'item', 'GIMP_ITEM (layer)');
 
 &layer_accessors('preserve_trans', 'boolean', 'preserve transperancy', 1, 1);
 

@@ -1264,6 +1264,81 @@ undo_free_item_displace (GimpUndo     *undo,
 }
 
 
+/******************************/
+/*  Item Visibility Undo  */
+/******************************/
+
+typedef struct _ItemVisibilityUndo ItemVisibilityUndo;
+
+struct _ItemVisibilityUndo
+{
+  gboolean old_visible;
+};
+
+static gboolean undo_pop_item_visibility  (GimpUndo            *undo,
+                                           GimpUndoMode         undo_mode,
+                                           GimpUndoAccumulator *accum);
+static void     undo_free_item_visibility (GimpUndo            *undo,
+                                           GimpUndoMode         undo_mode);
+
+gboolean
+gimp_image_undo_push_item_visibility (GimpImage   *gimage,
+                                      const gchar *undo_desc,
+                                      GimpItem    *item)
+{
+  GimpUndo *new;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  if ((new = gimp_image_undo_push_item (gimage, item,
+                                        sizeof (ItemVisibilityUndo),
+                                        sizeof (ItemVisibilityUndo),
+                                        GIMP_UNDO_ITEM_VISIBILITY, undo_desc,
+                                        TRUE,
+                                        undo_pop_item_visibility,
+                                        undo_free_item_visibility)))
+    {
+      ItemVisibilityUndo *ivu;
+
+      ivu = new->data;
+
+      ivu->old_visible = gimp_item_get_visible (item);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gboolean
+undo_pop_item_visibility (GimpUndo            *undo,
+                          GimpUndoMode         undo_mode,
+                          GimpUndoAccumulator *accum)
+{
+  ItemVisibilityUndo *ivu;
+  GimpItem           *item;
+  gboolean            visible;
+
+  ivu = (ItemVisibilityUndo *) undo->data;
+
+  item = GIMP_ITEM_UNDO (undo)->item;
+
+  visible = gimp_item_get_visible (item);
+  gimp_item_set_visible (item, ivu->old_visible, FALSE);
+  ivu->old_visible = visible;
+
+  return TRUE;
+}
+
+static void
+undo_free_item_visibility (GimpUndo     *undo,
+                           GimpUndoMode  undo_mode)
+{
+  g_free (undo->data);
+}
+
+
 /**********************/
 /*  Item linked Undo  */
 /**********************/
@@ -1334,81 +1409,6 @@ undo_pop_item_linked (GimpUndo            *undo,
 static void
 undo_free_item_linked (GimpUndo     *undo,
                        GimpUndoMode  undo_mode)
-{
-  g_free (undo->data);
-}
-
-
-/******************************/
-/*  Drawable Visibility Undo  */
-/******************************/
-
-typedef struct _DrawableVisibilityUndo DrawableVisibilityUndo;
-
-struct _DrawableVisibilityUndo
-{
-  gboolean old_visible;
-};
-
-static gboolean undo_pop_drawable_visibility  (GimpUndo            *undo,
-                                               GimpUndoMode         undo_mode,
-                                               GimpUndoAccumulator *accum);
-static void     undo_free_drawable_visibility (GimpUndo            *undo,
-                                               GimpUndoMode         undo_mode);
-
-gboolean
-gimp_image_undo_push_drawable_visibility (GimpImage    *gimage,
-                                          const gchar  *undo_desc,
-                                          GimpDrawable *drawable)
-{
-  GimpUndo *new;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-
-  if ((new = gimp_image_undo_push_item (gimage, GIMP_ITEM (drawable),
-                                        sizeof (DrawableVisibilityUndo),
-                                        sizeof (DrawableVisibilityUndo),
-                                        GIMP_UNDO_DRAWABLE_VISIBILITY, undo_desc,
-                                        TRUE,
-                                        undo_pop_drawable_visibility,
-                                        undo_free_drawable_visibility)))
-    {
-      DrawableVisibilityUndo *dvu;
-
-      dvu = new->data;
-
-      dvu->old_visible = gimp_drawable_get_visible (drawable);
-
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-static gboolean
-undo_pop_drawable_visibility (GimpUndo            *undo,
-                              GimpUndoMode         undo_mode,
-                              GimpUndoAccumulator *accum)
-{
-  DrawableVisibilityUndo *dvu;
-  GimpDrawable           *drawable;
-  gboolean                visible;
-
-  dvu = (DrawableVisibilityUndo *) undo->data;
-
-  drawable = GIMP_DRAWABLE (GIMP_ITEM_UNDO (undo)->item);
-
-  visible = gimp_drawable_get_visible (drawable);
-  gimp_drawable_set_visible (drawable, dvu->old_visible, FALSE);
-  dvu->old_visible = visible;
-
-  return TRUE;
-}
-
-static void
-undo_free_drawable_visibility (GimpUndo     *undo,
-                               GimpUndoMode  undo_mode)
 {
   g_free (undo->data);
 }

@@ -78,9 +78,9 @@ static void     project_indexed                     (GimpImage      *gimage,
                                                      GimpLayer      *layer,
                                                      PixelRegion    *src,
                                                      PixelRegion    *dest);
-static void     project_indexed_alpha               (GimpImage      *gimage, 
+static void     project_indexed_alpha               (GimpImage      *gimage,
                                                      GimpLayer      *layer,
-                                                     PixelRegion    *src, 
+                                                     PixelRegion    *src,
                                                      PixelRegion    *dest,
                                                      PixelRegion    *mask);
 static void     project_channel                     (GimpImage      *gimage,
@@ -147,7 +147,7 @@ gimp_image_projection (GimpImage *gimage)
     {
       gimp_image_projection_allocate (gimage);
     }
-  
+
   return gimage->projection;
 }
 
@@ -176,8 +176,8 @@ gimp_image_projection_opacity (const GimpImage *gimage)
 }
 
 guchar *
-gimp_image_projection_get_color_at (GimpImage *gimage, 
-                                    gint       x, 
+gimp_image_projection_get_color_at (GimpImage *gimage,
+                                    gint       x,
                                     gint       y)
 {
   Tile   *tile;
@@ -188,7 +188,7 @@ gimp_image_projection_get_color_at (GimpImage *gimage,
 
   if (x < 0 || y < 0 || x >= gimage->width || y >= gimage->height)
     return NULL;
-  
+
   dest = g_new (guchar, 5);
   tile = tile_manager_get_tile (gimp_image_projection (gimage), x, y,
 				TRUE, FALSE);
@@ -207,7 +207,7 @@ gimp_image_projection_get_color_at (GimpImage *gimage,
 }
 
 void
-gimp_image_invalidate (GimpImage *gimage, 
+gimp_image_invalidate (GimpImage *gimage,
 		       gint       x,
 		       gint       y,
 		       gint       w,
@@ -267,25 +267,25 @@ gimp_image_invalidate (GimpImage *gimage,
               {
                 tilex = j - (j % TILE_WIDTH);
                 tiley = i - (i % TILE_HEIGHT);
-                
+
                 startx = MIN (startx, tilex);
                 endx   = MAX (endx, tilex + tile_ewidth (tile));
                 starty = MIN (starty, tiley);
                 endy   = MAX (endy, tiley + tile_eheight (tile));
-                
+
                 tile_mark_valid (tile); /* hmmmmmmm..... */
               }
           }
       }
 
   if ((endx - startx) > 0 && (endy - starty) > 0)
-    gimp_image_construct (gimage, 
-			  startx, starty, 
+    gimp_image_construct (gimage,
+			  startx, starty,
 			  (endx - startx), (endy - starty));
 }
 
 void
-gimp_image_invalidate_without_render (GimpImage *gimage, 
+gimp_image_invalidate_without_render (GimpImage *gimage,
 				      gint       x,
 				      gint       y,
 				      gint       w,
@@ -327,7 +327,7 @@ gimp_image_invalidate_without_render (GimpImage *gimage,
 /*  private functions  */
 
 static void
-gimp_image_projection_validate_tile (TileManager *tm, 
+gimp_image_projection_validate_tile (TileManager *tm,
                                      Tile        *tile)
 {
   GimpImage *gimage;
@@ -348,10 +348,10 @@ gimp_image_projection_validate_tile (TileManager *tm,
 }
 
 static void
-gimp_image_construct_layers (GimpImage *gimage, 
-			     gint       x, 
-			     gint       y, 
-			     gint       w, 
+gimp_image_construct_layers (GimpImage *gimage,
+			     gint       x,
+			     gint       y,
+			     gint       w,
 			     gint       h)
 {
   GimpLayer   *layer;
@@ -370,17 +370,17 @@ gimp_image_construct_layers (GimpImage *gimage,
 
   reverse_list = NULL;
 
-  for (list = GIMP_LIST (gimage->layers)->list; 
-       list; 
+  for (list = GIMP_LIST (gimage->layers)->list;
+       list;
        list = g_list_next (list))
     {
       layer = (GimpLayer *) list->data;
 
-      /*  only add layers that are visible and not floating selections 
+      /*  only add layers that are visible and not floating selections
        *  to the list
        */
-      if (! gimp_layer_is_floating_sel (layer) && 
-	  gimp_drawable_get_visible (GIMP_DRAWABLE (layer)))
+      if (! gimp_layer_is_floating_sel (layer) &&
+	  gimp_item_get_visible (GIMP_ITEM (layer)))
 	{
 	  reverse_list = g_list_prepend (reverse_list, layer);
 	}
@@ -398,14 +398,14 @@ gimp_image_construct_layers (GimpImage *gimage,
       y2 = CLAMP (off_y + gimp_item_height (GIMP_ITEM (layer)), y, y + h);
 
       /* configure the pixel regions  */
-      pixel_region_init (&src1PR, gimp_image_projection (gimage), 
-			 x1, y1, (x2 - x1), (y2 - y1), 
+      pixel_region_init (&src1PR, gimp_image_projection (gimage),
+			 x1, y1, (x2 - x1), (y2 - y1),
 			 TRUE);
 
       /*  If we're showing the layer mask instead of the layer...  */
       if (layer->mask && layer->mask->show_mask)
 	{
-	  pixel_region_init (&src2PR, 
+	  pixel_region_init (&src2PR,
 			     gimp_drawable_data (GIMP_DRAWABLE (layer->mask)),
 			     (x1 - off_x), (y1 - off_y),
 			     (x2 - x1), (y2 - y1), FALSE);
@@ -415,14 +415,14 @@ gimp_image_construct_layers (GimpImage *gimage,
       /*  Otherwise, normal  */
       else
 	{
-	  pixel_region_init (&src2PR, 
+	  pixel_region_init (&src2PR,
 			     gimp_drawable_data (GIMP_DRAWABLE (layer)),
 			     (x1 - off_x), (y1 - off_y),
 			     (x2 - x1), (y2 - y1), FALSE);
 
 	  if (layer->mask && layer->mask->apply_mask)
 	    {
-	      pixel_region_init (&maskPR, 
+	      pixel_region_init (&maskPR,
 				 gimp_drawable_data (GIMP_DRAWABLE (layer->mask)),
 				 (x1 - off_x), (y1 - off_y),
 				 (x2 - x1), (y2 - y1), FALSE);
@@ -466,10 +466,10 @@ gimp_image_construct_layers (GimpImage *gimage,
 }
 
 static void
-gimp_image_construct_channels (GimpImage *gimage, 
-			       gint       x, 
-			       gint       y, 
-			       gint       w, 
+gimp_image_construct_channels (GimpImage *gimage,
+			       gint       x,
+			       gint       y,
+			       gint       w,
 			       gint       h)
 {
   GimpChannel *channel;
@@ -479,8 +479,8 @@ gimp_image_construct_channels (GimpImage *gimage,
   GList       *reverse_list = NULL;
 
   /*  reverse the channel list  */
-  for (list = GIMP_LIST (gimage->channels)->list; 
-       list; 
+  for (list = GIMP_LIST (gimage->channels)->list;
+       list;
        list = g_list_next (list))
     {
       reverse_list = g_list_prepend (reverse_list, list->data);
@@ -490,16 +490,16 @@ gimp_image_construct_channels (GimpImage *gimage,
     {
       channel = (GimpChannel *) list->data;
 
-      if (gimp_drawable_get_visible (GIMP_DRAWABLE (channel)))
+      if (gimp_item_get_visible (GIMP_ITEM (channel)))
 	{
 	  /* configure the pixel regions  */
 	  pixel_region_init (&src1PR,
-			     gimp_image_projection (gimage), 
-			     x, y, w, h, 
+			     gimp_image_projection (gimage),
+			     x, y, w, h,
 			     TRUE);
 	  pixel_region_init (&src2PR,
-			     gimp_drawable_data (GIMP_DRAWABLE (channel)), 
-			     x, y, w, h, 
+			     gimp_drawable_data (GIMP_DRAWABLE (channel)),
+			     x, y, w, h,
 			     FALSE);
 
 	  project_channel (gimage, channel, &src1PR, &src2PR);
@@ -512,10 +512,10 @@ gimp_image_construct_channels (GimpImage *gimage,
 }
 
 static void
-gimp_image_initialize_projection (GimpImage *gimage, 
-				  gint       x, 
-				  gint       y, 
-				  gint       w, 
+gimp_image_initialize_projection (GimpImage *gimage,
+				  gint       x,
+				  gint       y,
+				  gint       w,
 				  gint       h)
 {
 
@@ -528,9 +528,9 @@ gimp_image_initialize_projection (GimpImage *gimage,
    *  provides complete coverage over the image.  If not,
    *  the projection is initialized to transparent
    */
-  
-  for (list = GIMP_LIST (gimage->layers)->list; 
-       list; 
+
+  for (list = GIMP_LIST (gimage->layers)->list;
+       list;
        list = g_list_next (list))
     {
       GimpItem *item;
@@ -540,11 +540,11 @@ gimp_image_initialize_projection (GimpImage *gimage,
 
       gimp_item_offsets (item, &off_x, &off_y);
 
-      if (gimp_drawable_get_visible (GIMP_DRAWABLE (item)) &&
+      if (gimp_item_get_visible (GIMP_ITEM (item))         &&
 	  ! gimp_drawable_has_alpha (GIMP_DRAWABLE (item)) &&
-	  (off_x <= x) &&
-	  (off_y <= y) &&
-	  (off_x + gimp_item_width  (item) >= x + w) &&
+	  (off_x <= x)                                     &&
+	  (off_y <= y)                                     &&
+	  (off_x + gimp_item_width  (item) >= x + w)       &&
 	  (off_y + gimp_item_height (item) >= y + h))
 	{
 	  coverage = 1;
@@ -554,14 +554,14 @@ gimp_image_initialize_projection (GimpImage *gimage,
 
   if (!coverage)
     {
-      pixel_region_init (&PR, gimp_image_projection (gimage), 
+      pixel_region_init (&PR, gimp_image_projection (gimage),
 			 x, y, w, h, TRUE);
       color_region (&PR, clear);
     }
 }
 
 static void
-gimp_image_construct (GimpImage *gimage, 
+gimp_image_construct (GimpImage *gimage,
 		      gint       x,
 		      gint       y,
 		      gint       w,
@@ -572,7 +572,7 @@ gimp_image_construct (GimpImage *gimage,
 #if 0
   gint xoff;
   gint yoff;
-  
+
   /*  set the construct flag, used to determine if anything
    *  has been written to the gimage raw image yet.
    */
@@ -584,10 +584,10 @@ gimp_image_construct (GimpImage *gimage,
     }
 
   if ((gimage->layers) &&                         /* There's a layer.      */
-      (! g_slist_next (gimage->layers)) &&        /* It's the only layer.  */ 
+      (! g_slist_next (gimage->layers)) &&        /* It's the only layer.  */
       (gimp_drawable_has_alpha (GIMP_DRAWABLE (gimage->layers->data))) &&
                                                   /* It's !flat.           */
-      (gimp_drawable_get_visible (GIMP_DRAWABLE (gimage->layers->data))) &&
+      (gimp_item_get_visible (GIMP_ITEM (gimage->layers->data))) &&
                                                   /* It's visible.         */
       (gimp_item_width  (GIMP_ITEM (gimage->layers->data)) ==
        gimage->width) &&
@@ -596,7 +596,7 @@ gimp_image_construct (GimpImage *gimage,
       (!gimp_drawable_is_indexed (GIMP_DRAWABLE (gimage->layers->data))) &&
                                                   /* Not indexed.          */
       (((GimpLayer *)(gimage->layers->data))->opacity == GIMP_OPACITY_OPAQUE)
-                                                  /* Opaque                */      
+                                                  /* Opaque                */
       )
     {
       gint xoff;
@@ -608,7 +608,7 @@ gimp_image_construct (GimpImage *gimage,
 	{
 	  PixelRegion srcPR, destPR;
 	  gpointer    pr;
-	
+
 	  g_warning("Can use cow-projection hack.  Yay!");
 
 	  pixel_region_init (&srcPR, gimp_drawable_data
@@ -635,14 +635,14 @@ gimp_image_construct (GimpImage *gimage,
 #else
   gimage->construct_flag = FALSE;
 #endif
-  
+
   /*  First, determine if the projection image needs to be
    *  initialized--this is the case when there are no visible
    *  layers that cover the entire canvas--either because layers
    *  are offset or only a floating selection is visible
    */
   gimp_image_initialize_projection (gimage, x, y, w, h);
-  
+
   /*  call functions which process the list of layers and
    *  the list of channels
    */
@@ -651,10 +651,10 @@ gimp_image_construct (GimpImage *gimage,
 }
 
 static void
-project_intensity (GimpImage   *gimage, 
+project_intensity (GimpImage   *gimage,
 		   GimpLayer   *layer,
-		   PixelRegion *src, 
-		   PixelRegion *dest, 
+		   PixelRegion *src,
+		   PixelRegion *dest,
 		   PixelRegion *mask)
 {
   if (! gimage->construct_flag)
@@ -672,7 +672,7 @@ project_intensity (GimpImage   *gimage,
 }
 
 static void
-project_intensity_alpha (GimpImage   *gimage, 
+project_intensity_alpha (GimpImage   *gimage,
 			 GimpLayer   *layer,
 			 PixelRegion *src,
 			 PixelRegion *dest,
@@ -693,9 +693,9 @@ project_intensity_alpha (GimpImage   *gimage,
 }
 
 static void
-project_indexed (GimpImage   *gimage, 
+project_indexed (GimpImage   *gimage,
 		 GimpLayer   *layer,
-		 PixelRegion *src, 
+		 PixelRegion *src,
 		 PixelRegion *dest)
 {
   if (! gimage->construct_flag)
@@ -709,9 +709,9 @@ project_indexed (GimpImage   *gimage,
 }
 
 static void
-project_indexed_alpha (GimpImage   *gimage, 
+project_indexed_alpha (GimpImage   *gimage,
 		       GimpLayer   *layer,
-		       PixelRegion *src, 
+		       PixelRegion *src,
 		       PixelRegion *dest,
 		       PixelRegion *mask)
 {
@@ -730,9 +730,9 @@ project_indexed_alpha (GimpImage   *gimage,
 }
 
 static void
-project_channel (GimpImage   *gimage, 
+project_channel (GimpImage   *gimage,
 		 GimpChannel *channel,
-		 PixelRegion *src, 
+		 PixelRegion *src,
 		 PixelRegion *src2)
 {
   guchar  col[3];

@@ -574,8 +574,8 @@ xcf_load_layer_props (XcfInfo   *info,
 	    gboolean visible;
 
 	    info->cp += xcf_read_int32 (info->fp, (guint32 *) &visible, 1);
-	    gimp_drawable_set_visible (GIMP_DRAWABLE (layer),
-				       visible ? TRUE : FALSE, FALSE);
+	    gimp_item_set_visible (GIMP_ITEM (layer),
+                                   visible ? TRUE : FALSE, FALSE);
 	  }
 	  break;
 	case PROP_LINKED:
@@ -701,8 +701,8 @@ xcf_load_channel_props (XcfInfo      *info,
 	    gboolean visible;
 
 	    info->cp += xcf_read_int32 (info->fp, (guint32 *) &visible, 1);
-	    gimp_drawable_set_visible (GIMP_DRAWABLE (*channel),
-				       visible ? TRUE : FALSE, FALSE);
+	    gimp_item_set_visible (GIMP_ITEM (*channel),
+                                   visible ? TRUE : FALSE, FALSE);
 	  }
 	  break;
 	case PROP_LINKED:
@@ -1552,6 +1552,7 @@ xcf_load_vector (XcfInfo   *info,
 {
   gchar       *name;
   GimpTattoo   tattoo = 0;
+  guint32      visible;
   guint32      linked;
   guint32      num_parasites;
   guint32      num_strokes;
@@ -1562,17 +1563,19 @@ xcf_load_vector (XcfInfo   *info,
 
   info->cp += xcf_read_string (info->fp, &name,          1);
   info->cp += xcf_read_int32  (info->fp, &tattoo,        1);
+  info->cp += xcf_read_int32  (info->fp, &visible,       1);
   info->cp += xcf_read_int32  (info->fp, &linked,        1);
   info->cp += xcf_read_int32  (info->fp, &num_parasites, 1);
   info->cp += xcf_read_int32  (info->fp, &num_strokes,   1);
 
-  g_printerr ("name: %s, tattoo: %d, linked: %d, num_parasites %d, "
+  g_printerr ("name: %s, tattoo: %d, visible: %d, linked: %d, num_parasites %d, "
               "num_strokes %d\n",
-              name, tattoo, linked, num_parasites, num_strokes);
+              name, tattoo, visible, linked, num_parasites, num_strokes);
 
   vectors = gimp_vectors_new (gimage, name);
 
-  GIMP_ITEM (vectors)->linked = linked;
+  GIMP_ITEM (vectors)->visible = visible ? TRUE : FALSE;
+  GIMP_ITEM (vectors)->linked  = linked  ? TRUE : FALSE;
 
   if (tattoo)
     GIMP_ITEM (vectors)->tattoo = tattoo;

@@ -268,7 +268,7 @@ CODE
                    'object', 'GIMP_OBJECT (channel)');
 
 &channel_accessors('visible', 'boolean', 'visibility', 1, undef,
-                   'drawable', 'GIMP_DRAWABLE (channel)');
+                   'item', 'GIMP_ITEM (channel)');
 
 &channel_accessors('show_masked', 'boolean', 'composite method', 0,
 		   <<'CODE');

@@ -38,7 +38,6 @@ struct _GimpDrawable
   GimpItem       parent_instance;
 
   TileManager   *tiles;              /* tiles for drawable data        */
-  gboolean       visible;            /* controls visibility            */
 
   gint           bytes;              /* bytes per pixel                */
   GimpImageType  type;               /* type of drawable               */
@@ -59,7 +58,6 @@ struct _GimpDrawableClass
                                 gint          y,
                                 gint          width,
                                 gint          height);
-  void (* visibility_changed)  (GimpDrawable *drawable);
   void (* alpha_changed)       (GimpDrawable *drawable);
 
   /*  virtual functions  */
@@ -91,7 +89,7 @@ void            gimp_drawable_push_undo          (GimpDrawable       *drawable,
 						  gint                x1,
 						  gint                y1,
 						  gint                x2,
-						  gint                y2, 
+						  gint                y2,
 						  TileManager        *tiles,
 						  gboolean            sparse);
 
@@ -121,11 +119,6 @@ TileManager   * gimp_drawable_data               (const GimpDrawable *drawable);
 TileManager   * gimp_drawable_shadow             (GimpDrawable       *drawable);
 gint            gimp_drawable_bytes              (const GimpDrawable *drawable);
 gint            gimp_drawable_bytes_with_alpha   (const GimpDrawable *drawable);
-
-gboolean	gimp_drawable_get_visible        (const GimpDrawable *drawable);
-void            gimp_drawable_set_visible        (GimpDrawable       *drawable,
-                                                  gboolean            visible,
-                                                  gboolean            push_undo);
 
 void            gimp_drawable_alpha_changed      (GimpDrawable       *drawable);
 

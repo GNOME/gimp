@@ -230,7 +230,7 @@ floating_sel_to_layer (GimpLayer *layer)
   /*  Set pointers  */
   layer->fs.drawable   = NULL;
   gimage->floating_sel = NULL;
-  gimp_drawable_set_visible (GIMP_DRAWABLE (layer), TRUE, TRUE);
+  gimp_item_set_visible (GIMP_ITEM (layer), TRUE, TRUE);
 
   gimp_image_undo_group_end (gimage);
 
@@ -418,13 +418,13 @@ floating_sel_composite (GimpLayer *layer,
    */
   if (! layer->fs.initial)
     floating_sel_restore (layer, x, y, w, h);
-  else if (gimp_drawable_get_visible (GIMP_DRAWABLE (layer)))
+  else if (gimp_item_get_visible (GIMP_ITEM (layer)))
     layer->fs.initial = FALSE;
 
   /*  First restore what's behind the image if necessary,
    *  then check for visibility
    */
-  if (gimp_drawable_get_visible (GIMP_DRAWABLE (layer)))
+  if (gimp_item_get_visible (GIMP_ITEM (layer)))
     {
       /*  Find the minimum area we need to composite -- in gimage space  */
       gimp_item_offsets (GIMP_ITEM (layer->fs.drawable), &offx, &offy);

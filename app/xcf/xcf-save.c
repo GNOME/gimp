@@ -504,7 +504,7 @@ xcf_save_layer_props (XcfInfo   *info,
   xcf_check_error (xcf_save_prop (info, gimage, PROP_OPACITY, error,
                                   layer->opacity));
   xcf_check_error (xcf_save_prop (info, gimage, PROP_VISIBLE, error,
-		                  gimp_drawable_get_visible (GIMP_DRAWABLE (layer))));
+		                  gimp_item_get_visible (GIMP_ITEM (layer))));
   xcf_check_error (xcf_save_prop (info, gimage, PROP_LINKED, error,
                                   gimp_item_get_linked (GIMP_ITEM (layer))));
   xcf_check_error (xcf_save_prop (info, gimage, PROP_PRESERVE_TRANSPARENCY,
@@ -580,7 +580,7 @@ xcf_save_channel_props (XcfInfo     *info,
   xcf_check_error (xcf_save_prop (info, gimage, PROP_OPACITY, error,
                                   channel->color.a));
   xcf_check_error (xcf_save_prop (info, gimage, PROP_VISIBLE, error,
-		                  gimp_drawable_get_visible (GIMP_DRAWABLE (channel))));
+		                  gimp_item_get_visible (GIMP_ITEM (channel))));
   xcf_check_error (xcf_save_prop (info, gimage, PROP_LINKED, error,
                                   gimp_item_get_linked (GIMP_ITEM (channel))));
   xcf_check_error (xcf_save_prop (info, gimage, PROP_SHOW_MASKED, error,
@@ -1675,6 +1675,7 @@ xcf_save_vectors (XcfInfo    *info,
       GimpParasiteList *parasites;
       gchar            *name;
       guint32           tattoo;
+      guint32           visible;
       guint32           linked;
       guint32           num_parasites;
       guint32           num_strokes;
@@ -1682,6 +1683,7 @@ xcf_save_vectors (XcfInfo    *info,
       /*
        * name (string)
        * tattoo (gint)
+       * visible (gint)
        * linked (gint)
        * num_parasites (gint)
        * num_strokes (gint)
@@ -1693,6 +1695,7 @@ xcf_save_vectors (XcfInfo    *info,
       parasites = GIMP_ITEM (vectors)->parasites;
 
       name          = (gchar *) gimp_object_get_name (GIMP_OBJECT (vectors));
+      visible       = gimp_item_get_visible (GIMP_ITEM (vectors));
       linked        = gimp_item_get_linked (GIMP_ITEM (vectors));
       tattoo        = gimp_item_get_tattoo (GIMP_ITEM (vectors));
       num_parasites = gimp_parasite_list_persistent_length (parasites);
@@ -1700,13 +1703,14 @@ xcf_save_vectors (XcfInfo    *info,
 
       xcf_write_string_check_error (info, &name,          1);
       xcf_write_int32_check_error  (info, &tattoo,        1);
+      xcf_write_int32_check_error  (info, &visible,       1);
       xcf_write_int32_check_error  (info, &linked,        1);
       xcf_write_int32_check_error  (info, &num_parasites, 1);
       xcf_write_int32_check_error  (info, &num_strokes,   1);
 
-      g_printerr ("name: %s, tattoo: %d, linked: %d, num_parasites %d, "
-                  "num_strokes %d\n",
-                  name, tattoo, linked, num_parasites, num_strokes);
+      g_printerr ("name: %s, tattoo: %d, visible: %d, linked: %d, "
+                  "num_parasites %d, num_strokes %d\n",
+                  name, tattoo, visible, linked, num_parasites, num_strokes);
 
       xcf_check_error (xcf_save_parasite_list (info, parasites, error));
 

@@ -47,6 +47,7 @@ struct _GimpItem
   gint              width, height;      /*  size in pixels           */
   gint              offset_x, offset_y; /*  pixel offset in image    */
 
+  gboolean          visible;            /*  control visibility       */
   gboolean          linked;             /*  control linkage          */
 };
 
@@ -55,8 +56,9 @@ struct _GimpItemClass
   GimpViewableClass  parent_class;
 
   /*  signals  */
-  void       (* removed)        (GimpItem          *item);
-  void       (* linked_changed) (GimpItem          *item);
+  void       (* removed)            (GimpItem      *item);
+  void       (* visibility_changed) (GimpItem      *item);
+  void       (* linked_changed)     (GimpItem      *item);
 
   /*  virtual functions  */
   GimpItem * (* duplicate) (GimpItem               *item,
@@ -208,6 +210,11 @@ GimpParasite  * gimp_item_parasite_find    (const GimpItem *item,
                                             const gchar    *name);
 gchar        ** gimp_item_parasite_list    (const GimpItem *item,
                                             gint           *count);
+
+gboolean	gimp_item_get_visible      (const GimpItem *item);
+void            gimp_item_set_visible      (GimpItem       *item,
+                                            gboolean        visible,
+                                            gboolean        push_undo);
 
 void            gimp_item_set_linked       (GimpItem       *item,
                                             gboolean        linked,

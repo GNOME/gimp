@@ -57,7 +57,6 @@
 enum
 {
   UPDATE,
-  VISIBILITY_CHANGED,
   ALPHA_CHANGED,
   LAST_SIGNAL
 };
@@ -176,15 +175,6 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
 		  G_TYPE_INT,
 		  G_TYPE_INT);
 
-  gimp_drawable_signals[VISIBILITY_CHANGED] =
-    g_signal_new ("visibility_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpDrawableClass, visibility_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
-
   gimp_drawable_signals[ALPHA_CHANGED] =
     g_signal_new ("alpha_changed",
 		  G_TYPE_FROM_CLASS (klass),
@@ -211,7 +201,6 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   item_class->transform              = gimp_drawable_transform;
 
   klass->update                      = gimp_drawable_real_update;
-  klass->visibility_changed          = NULL;
   klass->alpha_changed               = NULL;
   klass->invalidate_boundary         = NULL;
 }
@@ -220,7 +209,6 @@ static void
 gimp_drawable_init (GimpDrawable *drawable)
 {
   drawable->tiles         = NULL;
-  drawable->visible       = FALSE;
   drawable->bytes         = 0;
   drawable->type          = -1;
   drawable->has_alpha     = FALSE;
@@ -316,8 +304,6 @@ gimp_drawable_duplicate (GimpItem *item,
                            item->height,
                            new_image_type,
                            GIMP_OBJECT (new_drawable)->name);
-
-  new_drawable->visible = drawable->visible;
 
   pixel_region_init (&srcPR, drawable->tiles,
                      0, 0,
@@ -609,7 +595,7 @@ gimp_drawable_configure (GimpDrawable  *drawable,
 
   drawable->tiles = tile_manager_new (width, height, drawable->bytes);
 
-  drawable->visible = TRUE;
+  GIMP_ITEM (drawable)->visible = TRUE;
 
   /*  preview variables  */
   drawable->preview_cache = NULL;
@@ -925,39 +911,6 @@ gimp_drawable_bytes_with_alpha (const GimpDrawable *drawable)
   type = GIMP_IMAGE_TYPE_WITH_ALPHA (gimp_drawable_type (drawable));
 
   return GIMP_IMAGE_TYPE_BYTES (type);
-}
-
-gboolean
-gimp_drawable_get_visible (const GimpDrawable *drawable)
-{
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-
-  return drawable->visible;
-}
-
-void
-gimp_drawable_set_visible (GimpDrawable *drawable,
-                           gboolean      visible,
-                           gboolean      push_undo)
-{
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-
-  if (drawable->visible != visible)
-    {
-      GimpItem *item = GIMP_ITEM (drawable);
-
-      if (push_undo)
-        {
-          GimpImage *gimage = gimp_item_get_image (item);
-
-          if (gimage)
-            gimp_image_undo_push_drawable_visibility (gimage, NULL, drawable);
-        }
-
-      drawable->visible = visible ? TRUE : FALSE;
-
-      g_signal_emit (drawable, gimp_drawable_signals[VISIBILITY_CHANGED], 0);
-    }
 }
 
 void

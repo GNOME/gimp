@@ -75,7 +75,7 @@ gimp_image_merge_visible_layers (GimpImage     *gimage,
     {
       layer = (GimpLayer *) list->data;
 
-      if (gimp_drawable_get_visible (GIMP_DRAWABLE (layer)))
+      if (gimp_item_get_visible (GIMP_ITEM (layer)))
 	merge_list = g_slist_append (merge_list, layer);
     }
 
@@ -128,7 +128,7 @@ gimp_image_flatten (GimpImage *gimage)
     {
       layer = (GimpLayer *) list->data;
 
-      if (gimp_drawable_get_visible (GIMP_DRAWABLE (layer)))
+      if (gimp_item_get_visible (GIMP_ITEM (layer)))
 	merge_list = g_slist_append (merge_list, layer);
     }
 
@@ -171,7 +171,7 @@ gimp_image_merge_down (GimpImage     *gimage,
     {
       layer = (GimpLayer *) layer_list->data;
 
-      if (gimp_drawable_get_visible (GIMP_DRAWABLE (layer)))
+      if (gimp_item_get_visible (GIMP_ITEM (layer)))
 	merge_list = g_slist_append (NULL, layer);
     }
 
@@ -489,7 +489,7 @@ gimp_image_merge_layers (GimpImage     *gimage,
   gimp_object_set_name (GIMP_OBJECT (merge_layer), name);
   g_free (name);
 
-  gimp_drawable_set_visible (GIMP_DRAWABLE (merge_layer), TRUE, TRUE);
+  gimp_item_set_visible (GIMP_ITEM (merge_layer), TRUE, TRUE);
 
   /*  End the merge undo group  */
   gimp_image_undo_group_end (gimage);

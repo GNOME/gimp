@@ -114,7 +114,7 @@ gimp_image_get_popup_size (GimpViewable *viewable,
 
 TempBuf *
 gimp_image_get_preview (GimpViewable *viewable,
-			gint          width, 
+			gint          width,
 			gint          height)
 {
   GimpImage *gimage;
@@ -152,7 +152,7 @@ gimp_image_get_preview (GimpViewable *viewable,
 
 TempBuf *
 gimp_image_get_new_preview (GimpViewable *viewable,
-			    gint          width, 
+			    gint          width,
 			    gint          height)
 {
   GimpImage   *gimage;
@@ -201,16 +201,16 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 
   floating_sel = NULL;
 
-  for (list = GIMP_LIST (gimage->layers)->list; 
-       list; 
+  for (list = GIMP_LIST (gimage->layers)->list;
+       list;
        list = g_list_next (list))
     {
       layer = (GimpLayer *) list->data;
 
       /*  only add layers that are visible to the list  */
-      if (gimp_drawable_get_visible (GIMP_DRAWABLE (layer)))
+      if (gimp_item_get_visible (GIMP_ITEM (layer)))
 	{
-	  /*  floating selections are added right above the layer 
+	  /*  floating selections are added right above the layer
 	   *  they are attached to
 	   */
 	  if (gimp_layer_is_floating_sel (layer))
@@ -266,12 +266,12 @@ gimp_image_get_new_preview (GimpViewable *viewable,
       g_assert (layer_buf->bytes <= comp->bytes);
 
       src2PR.bytes     = layer_buf->bytes;
-      src2PR.x         = src1PR.x; 
+      src2PR.x         = src1PR.x;
       src2PR.y         = src1PR.y;
-      src2PR.w         = src1PR.w;  
+      src2PR.w         = src1PR.w;
       src2PR.h         = src1PR.h;
       src2PR.rowstride = layer_buf->width * src2PR.bytes;
-      src2PR.data      = (temp_buf_data (layer_buf) + 
+      src2PR.data      = (temp_buf_data (layer_buf) +
                           (y1 - y) * src2PR.rowstride +
                           (x1 - x) * src2PR.bytes);
 
@@ -280,9 +280,9 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 	  mask_buf = gimp_viewable_get_preview (GIMP_VIEWABLE (layer->mask),
 						w, h);
 	  maskPR.bytes     = mask_buf->bytes;
-          maskPR.x         = src1PR.x; 
+          maskPR.x         = src1PR.x;
           maskPR.y         = src1PR.y;
-          maskPR.w         = src1PR.w;  
+          maskPR.w         = src1PR.w;
           maskPR.h         = src1PR.h;
 	  maskPR.rowstride = mask_buf->width * mask_buf->bytes;
 	  maskPR.data      = (mask_buf_data (mask_buf) +
@@ -305,14 +305,14 @@ gimp_image_get_new_preview (GimpViewable *viewable,
       if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
 	{
 	  if (! construct_flag)
-	    initial_region (&src2PR, &src1PR, 
+	    initial_region (&src2PR, &src1PR,
 			    mask, NULL,
                             layer->opacity * 255.999,
 			    layer->mode,
                             visible_components,
                             INITIAL_INTENSITY_ALPHA);
 	  else
-	    combine_regions (&src1PR, &src2PR, &src1PR, 
+	    combine_regions (&src1PR, &src2PR, &src1PR,
 			     mask, NULL,
                              layer->opacity * 255.999,
 			     layer->mode,
@@ -322,14 +322,14 @@ gimp_image_get_new_preview (GimpViewable *viewable,
       else
         {
 	  if (! construct_flag)
-	    initial_region (&src2PR, &src1PR, 
+	    initial_region (&src2PR, &src1PR,
 			    mask, NULL,
                             layer->opacity * 255.999,
 			    layer->mode,
                             visible_components,
                             INITIAL_INTENSITY);
 	  else
-	    combine_regions (&src1PR, &src2PR, &src1PR, 
+	    combine_regions (&src1PR, &src2PR, &src1PR,
 			     mask, NULL,
                              layer->opacity * 255.999,
 			     layer->mode,

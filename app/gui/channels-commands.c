@@ -137,7 +137,7 @@ channels_duplicate_cmd_callback (GtkWidget *widget,
       enum_class = g_type_class_ref (GIMP_TYPE_CHANNEL_TYPE);
       enum_value = g_enum_get_value (enum_class, component);
       g_type_class_unref (enum_class);
-      
+
       name = g_strdup_printf (_("%s Channel Copy"),
                               gettext (enum_value->value_name));
 
@@ -147,7 +147,7 @@ channels_duplicate_cmd_callback (GtkWidget *widget,
       /*  copied components are invisible by default so subsequent copies
        *  of components don't affect each other
        */
-      gimp_drawable_set_visible (GIMP_DRAWABLE (new_channel), FALSE, FALSE);
+      gimp_item_set_visible (GIMP_ITEM (new_channel), FALSE, FALSE);
 
       g_free (name);
     }
@@ -336,7 +336,7 @@ channels_new_channel_query (GimpImage   *gimage,
 					       48, 64);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (options->color_panel),
                                 gimp_get_user_context (gimage->gimp));
-  
+
   /*  The dialog  */
   options->query_box =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
@@ -561,7 +561,7 @@ channels_edit_channel_query (GimpChannel *channel)
 
   g_signal_connect (options->color_panel, "color_changed",
 		    G_CALLBACK (channels_color_changed),
-		    opacity_scale_data);		      
+		    opacity_scale_data);
 
   gtk_widget_show (table);
   gtk_widget_show (vbox);

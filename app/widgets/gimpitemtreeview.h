@@ -78,10 +78,13 @@ struct _GimpItemTreeView
   GtkWidget             *edit_button;
   GtkWidget             *delete_button;
 
+  gint                   model_column_visible;
   gint                   model_column_linked;
+  GtkCellRenderer       *eye_cell;
   GtkCellRenderer       *chain_cell;
 
   /*< private >*/
+  GQuark                 visible_changed_handler_id;
   GQuark                 linked_changed_handler_id;
 };
 

@@ -1,3 +1,36 @@
+2003-09-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable.[ch]: removed "visible" and all its API...
+
+	* app/core/gimpitem.[ch]: ...and added it here.
+
+	* app/core/core-enums.[ch]
+	* app/core/gimpimage-undo-push.[ch]: changed the drawable
+	visibility undo to be an item visibility undo.
+
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-save.c: save it in PROP_VECTORS and changed channel
+	and layer loading/saving accordingly.
+
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-preview.c
+	* app/core/gimpimage-projection.c
+	* app/core/gimpimage.c
+	* app/core/gimplayer-floating-sel.c
+	* app/core/gimplayer.c
+	* app/core/gimpselection.c
+	* app/text/gimptextlayer.c
+	* app/gui/channels-commands.c
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/layer.pdb: changed accordingly.
+
+	* app/pdb/channel_cmds.c
+	* app/pdb/layer_cmds.c: regenerated.
+
+	* app/widgets/gimpdrawabletreeview.[ch]: removed the eye icon...
+
+	* app/widgets/gimpitemtreeview.[ch]: ...and added it here.
+
 2003-09-11  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/preferences/folders-fonts.png:

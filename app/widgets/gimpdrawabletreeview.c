@@ -32,7 +32,6 @@
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
-#include "core/gimpdrawable.h"
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
@@ -54,14 +53,6 @@
 static void   gimp_drawable_tree_view_class_init (GimpDrawableTreeViewClass *klass);
 static void   gimp_drawable_tree_view_init       (GimpDrawableTreeView      *view);
 
-static GObject *gimp_drawable_tree_view_constructor (GType              type,
-                                                     guint              n_params,
-                                                     GObjectConstructParam  *params);
-static void  gimp_drawable_tree_view_set_container  (GimpContainerView *view,
-                                                     GimpContainer     *container);
-static gpointer gimp_drawable_tree_view_insert_item (GimpContainerView *view,
-                                                     GimpViewable      *viewable,
-                                                     gint               index);
 static gboolean gimp_drawable_tree_view_select_item (GimpContainerView *view,
 						     GimpViewable      *item,
 						     gpointer           insert_data);
@@ -81,14 +72,6 @@ static void   gimp_drawable_tree_view_new_color_dropped
                                                  (GtkWidget            *widget,
                                                   const GimpRGB        *color,
                                                   gpointer              data);
-
-static void   gimp_drawable_tree_view_visibility_changed
-                                                 (GimpDrawable          *drawable,
-                                                  GimpDrawableTreeView  *view);
-static void   gimp_drawable_tree_view_eye_clicked(GtkCellRendererToggle *toggle,
-                                                  gchar                 *path,
-                                                  GdkModifierType        state,
-                                                  GimpDrawableTreeView  *view);
 
 
 static GimpItemTreeViewClass *parent_class = NULL;
@@ -125,20 +108,14 @@ gimp_drawable_tree_view_get_type (void)
 static void
 gimp_drawable_tree_view_class_init (GimpDrawableTreeViewClass *klass)
 {
-  GObjectClass           *object_class;
   GimpContainerViewClass *container_view_class;
   GimpItemTreeViewClass  *item_view_class;
 
-  object_class         = G_OBJECT_CLASS (klass);
   container_view_class = GIMP_CONTAINER_VIEW_CLASS (klass);
   item_view_class      = GIMP_ITEM_TREE_VIEW_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->constructor           = gimp_drawable_tree_view_constructor;
-
-  container_view_class->set_container = gimp_drawable_tree_view_set_container;
-  container_view_class->insert_item   = gimp_drawable_tree_view_insert_item;
   container_view_class->select_item   = gimp_drawable_tree_view_select_item;
 
   item_view_class->set_image          = gimp_drawable_tree_view_set_image;
@@ -153,10 +130,6 @@ gimp_drawable_tree_view_init (GimpDrawableTreeView *view)
   tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   item_view = GIMP_ITEM_TREE_VIEW (view);
 
-  view->model_column_visible = tree_view->n_model_columns;
-
-  tree_view->model_columns[tree_view->n_model_columns++] = G_TYPE_BOOLEAN;
-
   gimp_dnd_viewable_dest_add (item_view->new_button, GIMP_TYPE_PATTERN,
 			      gimp_drawable_tree_view_new_pattern_dropped,
                               view);
@@ -165,87 +138,8 @@ gimp_drawable_tree_view_init (GimpDrawableTreeView *view)
                            view);
 }
 
-static GObject *
-gimp_drawable_tree_view_constructor (GType                  type,
-                                     guint                  n_params,
-                                     GObjectConstructParam *params)
-{
-  GimpContainerTreeView *tree_view;
-  GimpDrawableTreeView  *drawable_view;
-  GObject               *object;
-  GtkTreeViewColumn     *column;
-
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  tree_view     = GIMP_CONTAINER_TREE_VIEW (object);
-  drawable_view = GIMP_DRAWABLE_TREE_VIEW (object);
-
-  column = gtk_tree_view_column_new ();
-  gtk_tree_view_insert_column (tree_view->view, column, 0);
-
-  drawable_view->eye_cell = gimp_cell_renderer_toggle_new (GIMP_STOCK_VISIBLE);
-  gtk_tree_view_column_pack_start (column, drawable_view->eye_cell, FALSE);
-  gtk_tree_view_column_set_attributes (column, drawable_view->eye_cell,
-                                       "active",
-                                       drawable_view->model_column_visible,
-                                       NULL);
-
-  tree_view->toggle_cells = g_list_prepend (tree_view->toggle_cells,
-                                            drawable_view->eye_cell);
-
-  g_signal_connect (drawable_view->eye_cell, "clicked",
-                    G_CALLBACK (gimp_drawable_tree_view_eye_clicked),
-                    drawable_view);
-
-  return object;
-}
-
 
 /*  GimpContainerView methods  */
-
-static void
-gimp_drawable_tree_view_set_container (GimpContainerView *view,
-                                       GimpContainer     *container)
-{
-  GimpDrawableTreeView *drawable_view;
-
-  drawable_view = GIMP_DRAWABLE_TREE_VIEW (view);
-
-  if (view->container)
-    {
-      gimp_container_remove_handler (view->container,
-				     drawable_view->visibility_changed_handler_id);
-    }
-
-  GIMP_CONTAINER_VIEW_CLASS (parent_class)->set_container (view, container);
-
-  if (view->container)
-    {
-      drawable_view->visibility_changed_handler_id =
-	gimp_container_add_handler (view->container, "visibility_changed",
-				    G_CALLBACK (gimp_drawable_tree_view_visibility_changed),
-				    view);
-    }
-}
-
-static gpointer
-gimp_drawable_tree_view_insert_item (GimpContainerView *view,
-                                     GimpViewable      *viewable,
-                                     gint               index)
-{
-  GtkTreeIter *iter;
-
-  iter = GIMP_CONTAINER_VIEW_CLASS (parent_class)->insert_item (view, viewable,
-                                                                index);
-
-  gtk_list_store_set (GTK_LIST_STORE (GIMP_CONTAINER_TREE_VIEW (view)->model),
-                      iter,
-                      GIMP_DRAWABLE_TREE_VIEW (view)->model_column_visible,
-                      gimp_drawable_get_visible (GIMP_DRAWABLE (viewable)),
-                      -1);
-
-  return iter;
-}
 
 static gboolean
 gimp_drawable_tree_view_select_item (GimpContainerView *view,
@@ -375,122 +269,4 @@ gimp_drawable_tree_view_new_color_dropped (GtkWidget     *widget,
                                        GIMP_FG_BUCKET_FILL,
                                        color,
                                        NULL);
-}
-
-static void
-gimp_drawable_tree_view_visibility_changed (GimpDrawable         *drawable,
-                                            GimpDrawableTreeView *view)
-{
-  GimpContainerView     *container_view;
-  GimpContainerTreeView *tree_view;
-  GtkTreeIter           *iter;
-
-  container_view = GIMP_CONTAINER_VIEW (view);
-  tree_view      = GIMP_CONTAINER_TREE_VIEW (view);
-
-  iter = g_hash_table_lookup (container_view->hash_table, drawable);
-
-  if (iter)
-    gtk_list_store_set (GTK_LIST_STORE (tree_view->model), iter,
-                        view->model_column_visible,
-                        gimp_drawable_get_visible (drawable),
-                        -1);
-}
-
-static void
-gimp_drawable_tree_view_eye_clicked (GtkCellRendererToggle *toggle,
-                                     gchar                 *path_str,
-                                     GdkModifierType        state,
-                                     GimpDrawableTreeView  *view)
-{
-  GimpContainerTreeView *tree_view;
-  GtkTreePath           *path;
-  GtkTreeIter            iter;
-
-  tree_view = GIMP_CONTAINER_TREE_VIEW (view);
-
-  path = gtk_tree_path_new_from_string (path_str);
-
-  if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
-    {
-      GimpPreviewRenderer *renderer;
-      GimpDrawable        *drawable;
-      GimpImage           *gimage;
-      gboolean             active;
-
-      gtk_tree_model_get (tree_view->model, &iter,
-                          tree_view->model_column_renderer, &renderer,
-                          -1);
-      g_object_get (toggle,
-                    "active", &active,
-                    NULL);
-
-      drawable = GIMP_DRAWABLE (renderer->viewable);
-      g_object_unref (renderer);
-
-      gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-      if (state & GDK_SHIFT_MASK)
-        {
-          GList    *visible   = NULL;
-          GList    *invisible = NULL;
-          GList    *list;
-          gboolean  iter_valid;
-
-          for (iter_valid = gtk_tree_model_get_iter_first (tree_view->model,
-                                                           &iter);
-               iter_valid;
-               iter_valid = gtk_tree_model_iter_next (tree_view->model,
-                                                      &iter))
-            {
-              gtk_tree_model_get (tree_view->model, &iter,
-                                  tree_view->model_column_renderer, &renderer,
-                                  -1);
-
-              if ((GimpDrawable *) renderer->viewable != drawable)
-                {
-                  if (gimp_drawable_get_visible (GIMP_DRAWABLE (renderer->viewable)))
-                    visible = g_list_prepend (visible, renderer->viewable);
-                  else
-                    invisible = g_list_prepend (invisible, renderer->viewable);
-                }
-
-              g_object_unref (renderer);
-            }
-
-          if (visible || invisible)
-            gimp_image_undo_group_start (gimage,
-                                         GIMP_UNDO_GROUP_DRAWABLE_VISIBILITY,
-                                         _("Set Drawable Exclusive Visible"));
-
-          gimp_drawable_set_visible (drawable, TRUE, TRUE);
-
-          if (visible)
-            {
-              for (list = visible; list; list = g_list_next (list))
-                gimp_drawable_set_visible (GIMP_DRAWABLE (list->data), FALSE,
-                                           TRUE);
-            }
-          else if (invisible)
-            {
-              for (list = invisible; list; list = g_list_next (list))
-                gimp_drawable_set_visible (GIMP_DRAWABLE (list->data), TRUE,
-                                           TRUE);
-            }
-
-          if (visible || invisible)
-            gimp_image_undo_group_end (gimage);
-
-          g_list_free (visible);
-          g_list_free (invisible);
-        }
-      else
-        {
-          gimp_drawable_set_visible (drawable, !active, TRUE);
-        }
-
-      gimp_image_flush (gimage);
-    }
-
-  gtk_tree_path_free (path);
 }

@@ -1389,7 +1389,7 @@ gimp_layer_pick_correlate (GimpLayer *layer,
 
   if (x >= 0 && x < GIMP_ITEM (layer)->width &&
       y >= 0 && y < GIMP_ITEM (layer)->height &&
-      gimp_drawable_get_visible (GIMP_DRAWABLE (layer)))
+      gimp_item_get_visible (GIMP_ITEM (layer)))
     {
       /*  If the point is inside, and the layer has no
        *  alpha channel, success!
@@ -1400,7 +1400,7 @@ gimp_layer_pick_correlate (GimpLayer *layer,
       /*  Otherwise, determine if the alpha value at
        *  the given point is non-zero
        */
-      tile = tile_manager_get_tile (GIMP_DRAWABLE(layer)->tiles,
+      tile = tile_manager_get_tile (GIMP_DRAWABLE (layer)->tiles,
 				    x, y, TRUE, FALSE);
 
       val = * ((guchar *) tile_data_pointer (tile,
@@ -1412,7 +1412,7 @@ gimp_layer_pick_correlate (GimpLayer *layer,
 	{
 	  guchar *ptr;
 
-	  mask_tile = tile_manager_get_tile (GIMP_DRAWABLE(layer->mask)->tiles,
+	  mask_tile = tile_manager_get_tile (GIMP_DRAWABLE (layer->mask)->tiles,
 					     x, y, TRUE, FALSE);
 	  ptr = tile_data_pointer (mask_tile, x % TILE_WIDTH, y % TILE_HEIGHT);
 	  val = val * (*ptr) / 255;

@@ -38,13 +38,7 @@ typedef struct _GimpDrawableTreeViewClass  GimpDrawableTreeViewClass;
 
 struct _GimpDrawableTreeView
 {
-  GimpItemTreeView   parent_instance;
-
-  gint               model_column_visible;
-
-  GtkCellRenderer   *eye_cell;
-
-  GQuark             visibility_changed_handler_id;
+  GimpItemTreeView  parent_instance;
 };
 
 struct _GimpDrawableTreeViewClass

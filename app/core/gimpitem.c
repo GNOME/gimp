@@ -49,6 +49,7 @@
 enum
 {
   REMOVED,
+  VISIBILITY_CHANGED,
   LINKED_CHANGED,
   LAST_SIGNAL
 };
@@ -147,6 +148,15 @@ gimp_item_class_init (GimpItemClass *klass)
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
+  gimp_item_signals[VISIBILITY_CHANGED] =
+    g_signal_new ("visibility_changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpItemClass, visibility_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
   gimp_item_signals[LINKED_CHANGED] =
     g_signal_new ("linked_changed",
 		  G_TYPE_FROM_CLASS (klass),
@@ -162,7 +172,9 @@ gimp_item_class_init (GimpItemClass *klass)
   gimp_object_class->get_memsize  = gimp_item_get_memsize;
 
   klass->removed                  = NULL;
+  klass->visibility_changed       = NULL;
   klass->linked_changed           = NULL;
+
   klass->duplicate                = gimp_item_real_duplicate;
   klass->convert                  = gimp_item_real_convert;
   klass->rename                   = gimp_item_real_rename;
@@ -186,6 +198,7 @@ gimp_item_init (GimpItem *item)
   item->height    = 0;
   item->offset_x  = 0;
   item->offset_y  = 0;
+  item->visible   = FALSE;
   item->linked    = FALSE;
 }
 
@@ -300,7 +313,8 @@ gimp_item_real_duplicate (GimpItem *item,
   g_object_unref (new_item->parasites);
   new_item->parasites = gimp_parasite_list_copy (item->parasites);
 
-  new_item->linked = item->linked;
+  new_item->visible = item->visible;
+  new_item->linked  = item->linked;
 
   return new_item;
 }
@@ -948,6 +962,37 @@ gimp_item_parasite_list (const GimpItem *item,
 			      &cur);
 
   return list;
+}
+
+gboolean
+gimp_item_get_visible (const GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  return item->visible;
+}
+
+void
+gimp_item_set_visible (GimpItem *item,
+                       gboolean  visible,
+                       gboolean  push_undo)
+{
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  if (item->visible != visible)
+    {
+      if (push_undo)
+        {
+          GimpImage *gimage = gimp_item_get_image (item);
+
+          if (gimage)
+            gimp_image_undo_push_item_visibility (gimage, NULL, item);
+        }
+
+      item->visible = visible ? TRUE : FALSE;
+
+      g_signal_emit (item, gimp_item_signals[VISIBILITY_CHANGED], 0);
+    }
 }
 
 void

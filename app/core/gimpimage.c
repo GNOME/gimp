@@ -124,13 +124,13 @@ static void     gimp_image_drawable_update       (GimpDrawable   *drawable,
                                                   gint            width,
                                                   gint            height,
                                                   GimpImage      *gimage);
-static void     gimp_image_drawable_visibility   (GimpDrawable   *drawable,
+static void     gimp_image_drawable_visibility   (GimpItem       *item,
                                                   GimpImage      *gimage);
 static void     gimp_image_drawable_add          (GimpContainer  *container,
-                                                  GimpDrawable   *drawable,
+                                                  GimpItem       *item,
                                                   GimpImage      *gimage);
 static void     gimp_image_drawable_remove       (GimpContainer  *container,
-                                                  GimpDrawable   *drawable,
+                                                  GimpItem       *item,
                                                   GimpImage      *gimage);
 
 static void     gimp_image_get_active_components (const GimpImage    *gimage,
@@ -844,12 +844,14 @@ gimp_image_drawable_update (GimpDrawable *drawable,
                             gint          height,
                             GimpImage    *gimage)
 {
-  if (gimp_drawable_get_visible (drawable))
+  GimpItem *item = GIMP_ITEM (drawable);
+
+  if (gimp_item_get_visible (item))
     {
       gint offset_x;
       gint offset_y;
 
-      gimp_item_offsets (GIMP_ITEM (drawable), &offset_x, &offset_y);
+      gimp_item_offsets (item, &offset_x, &offset_y);
       x += offset_x;
       y += offset_y;
 
@@ -859,14 +861,11 @@ gimp_image_drawable_update (GimpDrawable *drawable,
 }
 
 static void
-gimp_image_drawable_visibility (GimpDrawable *drawable,
-                                GimpImage    *gimage)
+gimp_image_drawable_visibility (GimpItem  *item,
+                                GimpImage *gimage)
 {
-  GimpItem *item;
-  gint      offset_x;
-  gint      offset_y;
-
-  item = GIMP_ITEM (drawable);
+  gint offset_x;
+  gint offset_y;
 
   gimp_item_offsets (item, &offset_x, &offset_y);
 
@@ -879,20 +878,20 @@ gimp_image_drawable_visibility (GimpDrawable *drawable,
 
 static void
 gimp_image_drawable_add (GimpContainer *container,
-                         GimpDrawable  *drawable,
+                         GimpItem      *item,
                          GimpImage     *gimage)
 {
-  if (gimp_drawable_get_visible (drawable))
-    gimp_image_drawable_visibility (drawable, gimage);
+  if (gimp_item_get_visible (item))
+    gimp_image_drawable_visibility (item, gimage);
 }
 
 static void
 gimp_image_drawable_remove (GimpContainer *container,
-                            GimpDrawable  *drawable,
+                            GimpItem      *item,
                             GimpImage     *gimage)
 {
-  if (gimp_drawable_get_visible (drawable))
-    gimp_image_drawable_visibility (drawable, gimage);
+  if (gimp_item_get_visible (item))
+    gimp_image_drawable_visibility (item, gimage);
 }
 
 static void
@@ -2910,7 +2909,7 @@ gimp_image_position_layer (GimpImage   *gimage,
 
   gimp_container_reorder (gimage->layers, GIMP_OBJECT (layer), new_index);
 
-  if (gimp_drawable_get_visible (GIMP_DRAWABLE (layer)))
+  if (gimp_item_get_visible (GIMP_ITEM (layer)))
     {
       gint off_x, off_y;
 
@@ -3074,7 +3073,7 @@ gimp_image_position_channel (GimpImage   *gimage,
                              gboolean     push_undo,
                              const gchar *undo_desc)
 {
- gint index;
+  gint index;
   gint num_channels;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
@@ -3098,7 +3097,7 @@ gimp_image_position_channel (GimpImage   *gimage,
   gimp_container_reorder (gimage->channels,
 			  GIMP_OBJECT (channel), new_index);
 
-  if (gimp_drawable_get_visible (GIMP_DRAWABLE (channel)))
+  if (gimp_item_get_visible (GIMP_ITEM (channel)))
     {
       gint off_x, off_y;
 

@@ -31,6 +31,7 @@
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimplayer.h"
 #include "core/gimpmarshal.h"
 
@@ -130,7 +131,14 @@ static void   gimp_item_tree_view_name_edited       (GtkCellRendererText *cell,
                                                      const gchar       *name,
                                                      GimpItemTreeView  *view);
 
+static void   gimp_item_tree_view_visible_changed   (GimpItem          *item,
+                                                     GimpItemTreeView  *view);
 static void   gimp_item_tree_view_linked_changed    (GimpItem          *item,
+                                                     GimpItemTreeView  *view);
+
+static void   gimp_item_tree_view_eye_clicked       (GtkCellRendererToggle *toggle,
+                                                     gchar             *path,
+                                                     GdkModifierType    state,
                                                      GimpItemTreeView  *view);
 static void   gimp_item_tree_view_chain_clicked     (GtkCellRendererToggle *toggle,
                                                      gchar             *path,
@@ -247,6 +255,9 @@ gimp_item_tree_view_init (GimpItemTreeView      *view,
   tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   editor    = GIMP_EDITOR (view);
 
+  view->model_column_visible = tree_view->n_model_columns;
+  tree_view->model_columns[tree_view->n_model_columns++] = G_TYPE_BOOLEAN;
+
   view->model_column_linked = tree_view->n_model_columns;
   tree_view->model_columns[tree_view->n_model_columns++] = G_TYPE_BOOLEAN;
 
@@ -347,6 +358,23 @@ gimp_item_tree_view_constructor (GType                  type,
 
   g_signal_connect (tree_view->name_cell, "edited",
                     G_CALLBACK (gimp_item_tree_view_name_edited),
+                    item_view);
+
+  column = gtk_tree_view_column_new ();
+  gtk_tree_view_insert_column (tree_view->view, column, 0);
+
+  item_view->eye_cell = gimp_cell_renderer_toggle_new (GIMP_STOCK_VISIBLE);
+  gtk_tree_view_column_pack_start (column, item_view->eye_cell, FALSE);
+  gtk_tree_view_column_set_attributes (column, item_view->eye_cell,
+                                       "active",
+                                       item_view->model_column_visible,
+                                       NULL);
+
+  tree_view->toggle_cells = g_list_prepend (tree_view->toggle_cells,
+                                            item_view->eye_cell);
+
+  g_signal_connect (item_view->eye_cell, "clicked",
+                    G_CALLBACK (gimp_item_tree_view_eye_clicked),
                     item_view);
 
   column = gtk_tree_view_column_new ();
@@ -552,6 +580,8 @@ gimp_item_tree_view_set_container (GimpContainerView *view,
   if (view->container)
     {
       gimp_container_remove_handler (view->container,
+				     item_view->visible_changed_handler_id);
+      gimp_container_remove_handler (view->container,
 				     item_view->linked_changed_handler_id);
     }
 
@@ -559,6 +589,10 @@ gimp_item_tree_view_set_container (GimpContainerView *view,
 
   if (view->container)
     {
+      item_view->visible_changed_handler_id =
+	gimp_container_add_handler (view->container, "visibility_changed",
+				    G_CALLBACK (gimp_item_tree_view_visible_changed),
+				    view);
       item_view->linked_changed_handler_id =
 	gimp_container_add_handler (view->container, "linked_changed",
 				    G_CALLBACK (gimp_item_tree_view_linked_changed),
@@ -585,6 +619,8 @@ gimp_item_tree_view_insert_item (GimpContainerView *view,
   item = GIMP_ITEM (viewable);
 
   gtk_list_store_set (GTK_LIST_STORE (tree_view->model), iter,
+                      item_view->model_column_visible,
+                      gimp_item_get_visible (item),
                       item_view->model_column_linked,
                       gimp_item_get_linked (item),
                       -1);
@@ -1061,6 +1097,125 @@ gimp_item_tree_view_name_edited (GtkCellRendererText *cell,
       gimp_image_flush (gimp_item_get_image (item));
 
       g_object_unref (renderer);
+    }
+
+  gtk_tree_path_free (path);
+}
+
+
+/*  "Visible" callbacks  */
+
+static void
+gimp_item_tree_view_visible_changed (GimpItem         *item,
+                                     GimpItemTreeView *view)
+{
+  GimpContainerView     *container_view;
+  GimpContainerTreeView *tree_view;
+  GtkTreeIter           *iter;
+
+  container_view = GIMP_CONTAINER_VIEW (view);
+  tree_view      = GIMP_CONTAINER_TREE_VIEW (view);
+
+  iter = g_hash_table_lookup (container_view->hash_table, item);
+
+  if (iter)
+    gtk_list_store_set (GTK_LIST_STORE (tree_view->model), iter,
+                        view->model_column_visible,
+                        gimp_item_get_visible (item),
+                        -1);
+}
+
+static void
+gimp_item_tree_view_eye_clicked (GtkCellRendererToggle *toggle,
+                                 gchar                 *path_str,
+                                 GdkModifierType        state,
+                                 GimpItemTreeView      *view)
+{
+  GimpContainerTreeView *tree_view;
+  GtkTreePath           *path;
+  GtkTreeIter            iter;
+
+  tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+
+  path = gtk_tree_path_new_from_string (path_str);
+
+  if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
+    {
+      GimpPreviewRenderer *renderer;
+      GimpItem            *item;
+      GimpImage           *gimage;
+      gboolean             active;
+
+      gtk_tree_model_get (tree_view->model, &iter,
+                          tree_view->model_column_renderer, &renderer,
+                          -1);
+      g_object_get (toggle,
+                    "active", &active,
+                    NULL);
+
+      item = GIMP_ITEM (renderer->viewable);
+      g_object_unref (renderer);
+
+      gimage = gimp_item_get_image (item);
+
+      if (state & GDK_SHIFT_MASK)
+        {
+          GList    *visible   = NULL;
+          GList    *invisible = NULL;
+          GList    *list;
+          gboolean  iter_valid;
+
+          for (iter_valid = gtk_tree_model_get_iter_first (tree_view->model,
+                                                           &iter);
+               iter_valid;
+               iter_valid = gtk_tree_model_iter_next (tree_view->model,
+                                                      &iter))
+            {
+              gtk_tree_model_get (tree_view->model, &iter,
+                                  tree_view->model_column_renderer, &renderer,
+                                  -1);
+
+              if ((GimpItem *) renderer->viewable != item)
+                {
+                  if (gimp_item_get_visible (GIMP_ITEM (renderer->viewable)))
+                    visible = g_list_prepend (visible, renderer->viewable);
+                  else
+                    invisible = g_list_prepend (invisible, renderer->viewable);
+                }
+
+              g_object_unref (renderer);
+            }
+
+          if (visible || invisible)
+            gimp_image_undo_group_start (gimage,
+                                         GIMP_UNDO_GROUP_ITEM_VISIBILITY,
+                                         _("Set Item Exclusive Visible"));
+
+          gimp_item_set_visible (item, TRUE, TRUE);
+
+          if (visible)
+            {
+              for (list = visible; list; list = g_list_next (list))
+                gimp_item_set_visible (GIMP_ITEM (list->data), FALSE, TRUE);
+            }
+          else if (invisible)
+            {
+              for (list = invisible; list; list = g_list_next (list))
+                gimp_item_set_visible (GIMP_ITEM (list->data), TRUE, TRUE);
+            }
+
+          if (visible || invisible)
+            gimp_image_undo_group_end (gimage);
+
+          g_list_free (visible);
+          g_list_free (invisible);
+        }
+      else
+        {
+          gimp_item_set_visible (item, ! active, TRUE);
+        }
+
+      gimp_image_flush (gimage);
     }
 
   gtk_tree_path_free (path);
