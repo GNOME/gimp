@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.15\n"
-"POT-Creation-Date: 2000-03-29 21:14-0800\n"
+"POT-Creation-Date: 2000-03-31 23:27+0200\n"
 "PO-Revision-Date: 2000-03-01 11:43+0100\n"
 "Last-Translator: David Monniaux <monniaux@arbouse.ens.fr>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
@@ -4523,14 +4523,12 @@ msgstr "Allouer les Couleur"
 
 # ???
 #: plug-ins/common/mapcolor.c:622
-#, fuzzy
 msgid "Source color range"
-msgstr "Première couleur de la source"
+msgstr "Intervalle de couleur de la source"
 
 #: plug-ins/common/mapcolor.c:623
-#, fuzzy
 msgid "Destination color range"
-msgstr "Canal Destination :"
+msgstr "Intervalle de couleur de la destination"
 
 #: plug-ins/common/max_rgb.c:114
 msgid "<Image>/Filters/Colors/Max RGB..."
@@ -4918,9 +4916,9 @@ msgstr "Détails >>"
 
 #. Number of plugins
 #: plug-ins/common/plugindetails.c:312
-#, fuzzy, c-format
+#, c-format
 msgid "Number of Plugin Interfaces: %d"
-msgstr " Nombre d'interfaces de modules chargeables : %d"
+msgstr "Nombre d'Interfaces de Modules Chargeables : %d"
 
 #. menu path
 #: plug-ins/common/plugindetails.c:330
@@ -6432,9 +6430,8 @@ msgid "<Image>/Filters/Distorts/Value Propagate..."
 msgstr "<Image>/Filtres/Déformations/Propagation de Valeur..."
 
 #: plug-ins/common/vpropagate.c:365
-#, fuzzy
 msgid "Value propagating..."
-msgstr "propagation de valeur en cours..."
+msgstr "Propagation de la valeur en cours..."
 
 #: plug-ins/common/vpropagate.c:938
 msgid "Value Propagate"
@@ -6662,11 +6659,8 @@ msgid "Rendering Blast..."
 msgstr "Calcul du Souffle en cours..."
 
 #: plug-ins/common/wind.c:687
-#, fuzzy
 msgid "Wind Strength must be greater than 0."
-msgstr ""
-"\n"
-"   La force du vent doit être supérieure à 0.   \n"
+msgstr "La force du vent doit être supérieure à 0."
 
 #: plug-ins/common/wind.c:714 plug-ins/common/wind.c:759
 msgid "Wind"
@@ -6876,13 +6870,14 @@ msgstr "Préfixe d'identification :"
 
 #. hotspot toggle
 #: plug-ins/common/xbm.c:1203
+#, fuzzy
 msgid "Write Hot Spot Values"
-msgstr ""
+msgstr "Écrire les Valeurs du Point Chaud"
 
 #: plug-ins/common/xbm.c:1227
 #, fuzzy
 msgid "Hot Spot X:"
-msgstr "Rotation en X :"
+msgstr "Point Chaud  X :"
 
 #: plug-ins/common/xpm.c:796
 msgid "Save as XPM"
@@ -7367,30 +7362,29 @@ msgstr "Appliquer un filtre sur une animation"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:101
 msgid "<Image>/Video/Split Video to Frames"
-msgstr "<Image>/Vidéo/Découper en trames"
+msgstr "<Image>/Vidéo/Video --> Trames"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:102
 msgid "<Toolbox>/Xtns/Split Video to Frames"
-msgstr "<Toolbox>/Extensions/Découper vidéo en trames"
+msgstr "<Toolbox>/Extensions/Video --> Trames"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:178
 msgid "<Image>/Video/Split Video to Frames/MPEG1"
-msgstr "<Image>/Vidéo/Découper en trames/MPEG1"
+msgstr "<Image>/Vidéo/Video --> Trames/MPEG1"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:190
 msgid "<Toolbox>/Xtns/Split Video to Frames/MPEG1"
-msgstr "<Toolbox>/Xtns/Découper vidéo en trames/MPEG1"
+msgstr "<Toolbox>/Xtns/Video --> Trames/MPEG1"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:332 plug-ins/gap/gap_decode_xanim.c:336
 #: plug-ins/gap/gap_range_ops.c:1200
-#, fuzzy
 msgid "Overwrite Frame"
-msgstr "Aperçu de la trame :"
+msgstr "Écraser la Trame"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:334 plug-ins/gap/gap_decode_xanim.c:338
 #: plug-ins/gap/gap_range_ops.c:1202
 msgid "Overwrite All"
-msgstr ""
+msgstr "Écraser Tout"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:342 plug-ins/gap/gap_decode_xanim.c:346
 #: plug-ins/gap/gap_lib.c:1020 plug-ins/gap/gap_range_ops.c:1207
@@ -7398,17 +7392,14 @@ msgid "GAP Question"
 msgstr "Question GAP"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:343 plug-ins/gap/gap_decode_xanim.c:347
-#, fuzzy
 msgid "File already exists"
-msgstr "Le fichier existe déjà :"
+msgstr "Le fichier existe déjà"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:437
-#, fuzzy
 msgid "Decoding MPEG Movie..."
-msgstr "Décodage du film MPEG..."
+msgstr "Décodage du Film MPEG..."
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:643
-#, fuzzy
 msgid ""
 "Name of the MPEG1 videofile to READ.\n"
 "Frames are extracted from the videofile\n"
@@ -7416,14 +7407,13 @@ msgid ""
 "Audiotracks in the videofile are ignored."
 msgstr ""
 "Nom du fichier MPEG à lire.\n"
-"Les images sont extraites du fichier vidéo\n"
+"Les trames sont extraites du fichier vidéo\n"
 "et écrites dans des fichiers séparés sur\n"
 "disque. Les pistes audio sont ignorées."
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:653 plug-ins/gap/gap_decode_xanim.c:224
-#, fuzzy
 msgid "Framenumber of 1st frame to extract"
-msgstr "Numéro de la première image à extraire"
+msgstr "Numéro de la première trame à extraire"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:663 plug-ins/gap/gap_decode_xanim.c:234
 msgid "Framenumber of last frame to extract"
@@ -7431,7 +7421,7 @@ msgstr "Numéro de la dernière image à extraire"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:672 plug-ins/gap/gap_decode_xanim.c:243
 msgid "Framenames:"
-msgstr "Noms des Fichiers :"
+msgstr "Noms des Trames :"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:673
 msgid ""
@@ -7447,12 +7437,10 @@ msgid "Open"
 msgstr "Ouvrir"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:681 plug-ins/gap/gap_decode_xanim.c:283
-#, fuzzy
 msgid "Open the 1st one of the extracted frames"
 msgstr "Ouvre la première des images extraites"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:685
-#, fuzzy
 msgid ""
 "\n"
 "WARNING: Do not attempt to split other files than MPEG1 videos.\n"
@@ -7464,9 +7452,8 @@ msgstr ""
 "images ouvertes avant de continuer cette action."
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:688
-#, fuzzy
 msgid "Split MPEG1 Video to Frames"
-msgstr "Séparer l'Image en Trames"
+msgstr "Séparer la Vidéo MPEG1 en Trames"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:689 plug-ins/gap/gap_decode_xanim.c:297
 #: plug-ins/gap/gap_range_ops.c:1422
@@ -7518,7 +7505,6 @@ msgid "Video:"
 msgstr "Vidéo :"
 
 #: plug-ins/gap/gap_decode_xanim.c:214
-#, fuzzy
 msgid ""
 "Name of a videofile to READ by xanim.\n"
 "Frames are extracted from the videofile\n"
@@ -7526,7 +7512,7 @@ msgid ""
 "xanim exporting edition is required."
 msgstr ""
 "Nom du fichier vidéo à LIRE par xanim.\n"
-"Les images sont extraites du fichier vidéo\n"
+"Les trames sont extraites du fichier vidéo\n"
 "et écrites dans des fichiers séparés sur\n"
 "disque. La version d'xanim comportant\n"
 "l'exportation est requise"
@@ -7579,7 +7565,6 @@ msgid "Jpeg Quality:"
 msgstr "Qualité Jpeg :"
 
 #: plug-ins/gap/gap_decode_xanim.c:271
-#, fuzzy
 msgid ""
 "Quality for resulting Jpeg frames\n"
 "(is ignored when other formats are used)"
@@ -7601,7 +7586,6 @@ msgstr ""
 "que XAnim tourne encore."
 
 #: plug-ins/gap/gap_decode_xanim.c:293
-#, fuzzy
 msgid ""
 "\n"
 "Warning: xanim 2.80 has only limited MPEG support.\n"
@@ -7609,7 +7593,7 @@ msgid ""
 msgstr ""
 "\n"
 "Avertissement: XAnim 2.80 est limité dans son support\n"
-"MPEG ; la plupart des trames (types P et B) seront\n"
+"MPEG. La plupart des trames (types P et B) seront\n"
 "sautées."
 
 #: plug-ins/gap/gap_decode_xanim.c:296
@@ -7617,13 +7601,13 @@ msgid "Split any Xanim readable Video to Frames"
 msgstr "Séparer n'importe quelle Vidéo lisible par xanim en Trames"
 
 #: plug-ins/gap/gap_decode_xanim.c:539
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "can't find any extracted frames,\n"
 "%s\n"
 "maybe xanim has failed or was cancelled"
 msgstr ""
-"Ne peut trouver d'images extraites,\n"
+"Ne peut trouver de trames extraites,\n"
 "%s\n"
 "peut être qu'xanim a échoué ou a été\n"
 "annulé"
@@ -7705,12 +7689,11 @@ msgstr ""
 "(programme=%s)"
 
 #: plug-ins/gap/gap_decode_xanim.c:1134
-#, fuzzy
 msgid ""
 "can't find any extracted frames,\n"
 "xanim has failed or was cancelled"
 msgstr ""
-"Je n'ai pu retrouver aucune des trames extraites.\n"
+"Ne peut trouver aucune trame extraite.\n"
 "XAnim a échoué ou a été annulé."
 
 #: plug-ins/gap/gap_decode_xanim.c:1153
@@ -7735,16 +7718,16 @@ msgid "Continue"
 msgstr "Continuer"
 
 #: plug-ins/gap/gap_filter_foreach.c:153 plug-ins/gap/gap_mod_layer.c:278
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "2nd call of %s\n"
 "(define end-settings)"
 msgstr ""
-"Deuxième appel de %s\n"
+"2ième appel de %s\n"
 "(define end-settings)"
 
 #: plug-ins/gap/gap_filter_foreach.c:157
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Non-Interactive call of %s\n"
 "(for all layers in between)"
@@ -7807,7 +7790,6 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gap/gap_lib.c:998
-#, fuzzy
 msgid ""
 "You are using a file format != xcf\n"
 "Save Operations may result\n"
@@ -7818,30 +7800,26 @@ msgstr ""
 "des informations de calque."
 
 #: plug-ins/gap/gap_lib.c:1014
-#, fuzzy
 msgid "Save Flattened"
-msgstr "SAUVER avec 1 seule calque"
+msgstr "Enregistrer Écrasé"
 
 #: plug-ins/gap/gap_lib.c:1016
-#, fuzzy
 msgid "Save As Is"
-msgstr "Enregistrer en GIF"
+msgstr "Enregistrer Tel Quel"
 
 #: plug-ins/gap/gap_lib.c:1486 plug-ins/gap/gap_lib.c:1603
 #: plug-ins/gap/gap_lib.c:1682 plug-ins/gap/gap_lib.c:1689
 #: plug-ins/gap/gap_lib.c:1696 plug-ins/gap/gap_lib.c:1779
 #: plug-ins/gap/gap_lib.c:1801
-#, fuzzy, c-format
+#, c-format
 msgid "Error: could not rename frame %ld to %ld"
-msgstr "Erreur : je n'ai pu renommer la trame %ld en %ld\n"
+msgstr "Erreur : impossible de renommer la trame %ld en %ld"
 
 #: plug-ins/gap/gap_lib.c:1591
-#, fuzzy
 msgid "Duplicating frames..."
 msgstr "Duplication de trames..."
 
 #: plug-ins/gap/gap_lib.c:1767
-#, fuzzy
 msgid "Renumber Framesequence..."
 msgstr "Renumérotation de la séquence de trames..."
 
@@ -7857,7 +7835,6 @@ msgstr "Numéro de la trame de destination (%ld - %ld)"
 
 #: plug-ins/gap/gap_lib.c:1960 plug-ins/gap/gap_lib.c:2037
 #: plug-ins/gap/gap_lib.c:2225
-#, fuzzy
 msgid "Number:"
 msgstr "Numéro :"
 
@@ -7867,9 +7844,9 @@ msgid "Delete Frames (%ld/%ld)"
 msgstr "Supprimer des trames (%ld/%ld)"
 
 #: plug-ins/gap/gap_lib.c:2024
-#, fuzzy, c-format
+#, c-format
 msgid "Delete Frames from %ld to (number)"
-msgstr "Supprimer les trames de %ld à (Numéro)c"
+msgstr "Supprimer les trames de %ld à (numéro)"
 
 #: plug-ins/gap/gap_lib.c:2087
 #, c-format
@@ -7885,7 +7862,6 @@ msgid "Source Range ends at this framenumber"
 msgstr "La séquence de trames s'arrête à ce numéro"
 
 #: plug-ins/gap/gap_lib.c:2108
-#, fuzzy
 msgid "N times:"
 msgstr "Nombre de fois :"
 
@@ -7898,9 +7874,8 @@ msgstr ""
 "(vous pouvez entrer des valeurs > 99)"
 
 #: plug-ins/gap/gap_lib.c:2117
-#, fuzzy
 msgid "Duplicate Frame Range"
-msgstr "Dupliquer l'intervalle"
+msgstr "Dupliquer l'Intervalle de Trame"
 
 #: plug-ins/gap/gap_lib.c:2220
 #, c-format
@@ -7908,9 +7883,8 @@ msgid "Exchange current Frame (%ld)"
 msgstr "Échanger la trame courante (%ld)"
 
 #: plug-ins/gap/gap_lib.c:2224
-#, fuzzy
 msgid "With Frame (number)"
-msgstr "Avec calque (numéro)"
+msgstr "Avec Trame (numéro)"
 
 #: plug-ins/gap/gap_lib.c:2266
 #, c-format
@@ -7926,7 +7900,6 @@ msgid "Affected Range ends at this framenumber"
 msgstr "La séquence de trames s'arrête à ce numéro"
 
 #: plug-ins/gap/gap_lib.c:2287
-#, fuzzy
 msgid "N-Shift:"
 msgstr "Décalage N :"
 
@@ -8008,9 +7981,8 @@ msgid "<Image>/Video/Frames Scale..."
 msgstr "<Image>/Vidéo/Mettre trames à l'échelle"
 
 #: plug-ins/gap/gap_main.c:547
-#, fuzzy
 msgid "<Image>/Video/Split Image to Frames..."
-msgstr "<Image>/Vidéo/Calques -> trames"
+msgstr "<Image>/Vidéo/Séparer l'Image en Trames..."
 
 #: plug-ins/gap/gap_main.c:560
 msgid "<Image>/Video/Framesequence Shift..."
@@ -8050,27 +8022,22 @@ msgid "All Visible (ignore Pattern)"
 msgstr "Ignorer le critère de recherche"
 
 #: plug-ins/gap/gap_mod_layer.c:90
-#, fuzzy
 msgid "Select all Layers where Layername is equal to Pattern"
-msgstr "Sélectionne tous les calques dont le nom est égal au critère."
+msgstr "Sélectionne tous les calques dont le nom est égal au critère"
 
 #: plug-ins/gap/gap_mod_layer.c:91
-#, fuzzy
 msgid "Select all Layers where Layername starts with Pattern"
-msgstr "Sélectionne tous les calques dont le nom débute par le motif."
+msgstr "Sélectionne tous les calques dont le nom débute par le critère"
 
 #: plug-ins/gap/gap_mod_layer.c:92
-#, fuzzy
 msgid "Select all Layers where Layername ends up with Pattern"
-msgstr "Sélectionne tous les calques dont les noms se terminent par le motif."
+msgstr "Sélectionne tous les calques dont les noms se terminent par le critère"
 
 #: plug-ins/gap/gap_mod_layer.c:93
-#, fuzzy
 msgid "Select all Layers where Layername contains Pattern"
-msgstr "Sélectionne tous les calques dont le nom contient le critère."
+msgstr "Sélectionne tous les calques dont le nom contient le critère"
 
 #: plug-ins/gap/gap_mod_layer.c:94
-#, fuzzy
 msgid ""
 "Select Layerstack positions.\n"
 "0, 4-5, 8\n"
@@ -8081,7 +8048,6 @@ msgstr ""
 "0 est le calque du dessus 1 le calque immédiatement en dessous etc..."
 
 #: plug-ins/gap/gap_mod_layer.c:95
-#, fuzzy
 msgid ""
 "Select Layerstack positions.\n"
 "0, 4-5, 8\n"
@@ -8092,85 +8058,70 @@ msgstr ""
 "0 est le calque de fond, 1 le calque immédiatement au dessus etc..."
 
 #: plug-ins/gap/gap_mod_layer.c:96
-#, fuzzy
 msgid "Select all visible Layers"
 msgstr "Sélectionne tous les calques visibles."
 
 #. action items what to do with the selected layer(s)
 #: plug-ins/gap/gap_mod_layer.c:100
-#, fuzzy
 msgid "Set Layer(s) visible"
-msgstr "rendre le(s) calque(s) visible(s)."
+msgstr "Rendre le(s) calque(s) visible(s)."
 
 #: plug-ins/gap/gap_mod_layer.c:101
-#, fuzzy
 msgid "Set Layer(s) invisible"
-msgstr "rendre le(s) calque(s) invisible(s)"
+msgstr "Rendre le(s) calque(s) invisible(s)"
 
 # what is a linked layer?
 #: plug-ins/gap/gap_mod_layer.c:102
-#, fuzzy
 msgid "Set Layer(s) linked"
-msgstr "rendre le(s) calque(s) lié(s)"
+msgstr "Rendre le(s) calque(s) lié(s)"
 
 #: plug-ins/gap/gap_mod_layer.c:103
-#, fuzzy
 msgid "Set Layer(s) unlinked"
-msgstr "rendre le(s) calque(s) lié(s)"
+msgstr "Rendre le(s) calque(s) non lié(s)"
 
 #: plug-ins/gap/gap_mod_layer.c:104
-#, fuzzy
 msgid "Raise Layer(s)"
-msgstr "élever les calques"
+msgstr "Élever les calques"
 
 #: plug-ins/gap/gap_mod_layer.c:105
-#, fuzzy
 msgid "Lower Layer(s)"
-msgstr "abaisser les calques"
+msgstr "Abaisser les calques"
 
 #: plug-ins/gap/gap_mod_layer.c:106
-#, fuzzy
 msgid "Merge Layer(s) expand as necessary"
-msgstr "fusionner les calques, étendre si nécessaire"
+msgstr "Fusionner le(s) calque(s), étendre si nécessaire"
 
 #: plug-ins/gap/gap_mod_layer.c:107
-#, fuzzy
 msgid "Merge Layer(s) clipped to image"
-msgstr "fusionner les calques, rogner selon l'image"
+msgstr "Fusionner le(s) calque(s), rogner selon l'image"
 
 #: plug-ins/gap/gap_mod_layer.c:108
-#, fuzzy
 msgid "Merge Layer(s) clipped to bg-layer"
-msgstr "fusionner les calques, rogner selon le fond"
+msgstr "Fusionner le(s) calque(s), rogner selon le fond"
 
 #: plug-ins/gap/gap_mod_layer.c:109
-#, fuzzy
 msgid "Apply filter on Layer(s)"
-msgstr "appliquer le filtre au(x) calque(s)"
+msgstr "Appliquer le filtre au(x) calque(s)"
 
 #: plug-ins/gap/gap_mod_layer.c:110
-#, fuzzy
 msgid "Duplicate Layer(s)"
-msgstr "dupliquer le(s) Calque(s)"
+msgstr "Dupliquer le(s) Calque(s)"
 
 #: plug-ins/gap/gap_mod_layer.c:111
-#, fuzzy
 msgid "Delete Layer(s)"
-msgstr "effacer le(s) Calque(s)"
+msgstr "Effacer le(s) Calque(s)"
 
 #: plug-ins/gap/gap_mod_layer.c:112
-#, fuzzy
 msgid "Rename Layer(s)"
-msgstr "renommer le(s) Calque(s)"
+msgstr "Renommer le(s) Calque(s)"
 
 #: plug-ins/gap/gap_mod_layer.c:151
-#, fuzzy
 msgid ""
 "Perform function on one or more Layer(s)\n"
 "in all frames of the selected frame range\n"
 msgstr ""
 "Appliquer la fonction sur un ou plusieurs\n"
-"Claques dans toutes les images de l'intervalle\n"
+"Claques dans toutes les trames de l'intervalle\n"
 "sélectionné\n"
 
 #: plug-ins/gap/gap_mod_layer.c:155 plug-ins/gap/gap_mpege.c:258
@@ -8193,7 +8144,6 @@ msgid "first handled frame"
 msgstr "Borne inférieure de l'intervalle de numésros des trames concernées."
 
 #: plug-ins/gap/gap_mod_layer.c:163 plug-ins/gap/gap_range_ops.c:449
-#, fuzzy
 msgid "To Frame:"
 msgstr "À la trame :"
 
@@ -8250,7 +8200,6 @@ msgid "Perform actions on all unselected Layers"
 msgstr "Effectuer les actions sur les calques non sélectionnés"
 
 #: plug-ins/gap/gap_mod_layer.c:201
-#, fuzzy
 msgid "Function:"
 msgstr "Fonction :"
 
@@ -8300,14 +8249,12 @@ msgstr ""
 "Modifier trames : pas de calque sélectionné dans la dernière trame modifiée\n"
 
 #: plug-ins/gap/gap_mod_layer.c:888
-#, fuzzy
 msgid "Modifying Frames/Layer(s)..."
-msgstr "Modifier trames & calques..."
+msgstr "Modification des trames & calques..."
 
 #: plug-ins/gap/gap_mod_layer.c:969
-#, fuzzy
 msgid "No selected Layer in start frame"
-msgstr "Pas de calque sélectionné dans la trame de départ.\n"
+msgstr "Pas de calque sélectionné dans la trame de départ"
 
 #: plug-ins/gap/gap_mov_dialog.c:239 plug-ins/gfig/gfig.c:3307
 #: plug-ins/gflare/gflare.c:594 plug-ins/gimpressionist/orientmap.c:590
@@ -8388,9 +8335,8 @@ msgid "Move Path"
 msgstr "Déplacer selon chemin"
 
 #: plug-ins/gap/gap_mov_dialog.c:461
-#, fuzzy
 msgid "Update Preview"
-msgstr "Aperçu en temps réel"
+msgstr "Mise à Jour de l'Aperçu"
 
 #: plug-ins/gap/gap_mov_dialog.c:468
 msgid ""
@@ -8507,14 +8453,12 @@ msgstr "Sélection de la source"
 
 #. Source Layer menu
 #: plug-ins/gap/gap_mov_dialog.c:1390
-#, fuzzy
 msgid "Source Image/Layer:"
 msgstr "Image / calque source :"
 
 #: plug-ins/gap/gap_mov_dialog.c:1400
-#, fuzzy
 msgid "Source Object to insert into Frame Range"
-msgstr "Objet source à insérer dans l'intervalle de trames"
+msgstr "Objet Source à insérer dans l'Intervalle de Trames"
 
 #. Paintmode menu
 #: plug-ins/gap/gap_mov_dialog.c:1415
@@ -8528,7 +8472,7 @@ msgstr "Mode de dessin"
 #. Loop Stepmode menu
 #: plug-ins/gap/gap_mov_dialog.c:1439
 msgid "Stepmode:"
-msgstr "Pas"
+msgstr "Mode Pas : "
 
 #: plug-ins/gap/gap_mov_dialog.c:1457
 msgid ""
@@ -8544,7 +8488,6 @@ msgid "Handle:"
 msgstr "Placement :"
 
 #: plug-ins/gap/gap_mov_dialog.c:1481
-#, fuzzy
 msgid ""
 "How to place the SrcLayer at   \n"
 "Controlpoint Coordinates"
@@ -8577,7 +8520,6 @@ msgstr "ordonnée"
 #. constrain
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:1601
-#, fuzzy
 msgid "Scale Source Layer's Width in percent"
 msgstr ""
 "Rapport d'agrandissement (%)\n"
@@ -8757,7 +8699,6 @@ msgid "Save Controlpoints to file"
 msgstr "Enregistrer des points de contrôles dans un fichier"
 
 #: plug-ins/gap/gap_mov_exec.c:220
-#, fuzzy
 msgid ""
 "No Source Image was selected.\n"
 "Please open a 2nd Image of the same type before opening Move Path."
@@ -8767,7 +8708,6 @@ msgstr ""
 "avant d'utiliser « Déplacer selon chemin »."
 
 #: plug-ins/gap/gap_mov_exec.c:229
-#, fuzzy
 msgid "Copying Layers into Frames..."
 msgstr "Copier calques dans trames..."
 
@@ -8822,7 +8762,6 @@ msgid "    (use 'Frames Convert' from the Video Menu"
 msgstr "    (utilisez au besoin « Convertir trames »"
 
 #: plug-ins/gap/gap_mpege.c:164
-#, fuzzy
 msgid "    or 'Split Image to Frames' from the Video Menu)"
 msgstr "    ou « Calques -> trames »)"
 
@@ -9097,9 +9036,8 @@ msgid "Delete selected Frames"
 msgstr "Effacer l'image sélectionnée"
 
 #: plug-ins/gap/gap_navigator_dialog.c:376
-#, fuzzy
 msgid "Goto 1st Frame"
-msgstr "Aller à la Première Image"
+msgstr "Aller à la 1ère Trame"
 
 #: plug-ins/gap/gap_navigator_dialog.c:380
 msgid ""
@@ -9127,7 +9065,7 @@ msgstr "<Image>/Vidéo/Magnétoscope..."
 
 #: plug-ins/gap/gap_navigator_dialog.c:511
 msgid "Cant open two or more Video Navigator Windows."
-msgstr ""
+msgstr "Ne peut ouvrir plus d'une Fenêtre de Navigation Vidéo."
 
 #: plug-ins/gap/gap_navigator_dialog.c:2689
 msgid "Videoframes:"
@@ -9144,27 +9082,23 @@ msgstr "Échelle de temps :"
 #. The main shell
 #: plug-ins/gap/gap_navigator_dialog.c:2821
 msgid "Video Navigator"
-msgstr "Navigateur vidéo"
+msgstr "Navigateur Vidéo"
 
 #: plug-ins/gap/gap_range_ops.c:118
-#, fuzzy
 msgid "New Width:"
 msgstr "Nouvelle largeur :"
 
 #: plug-ins/gap/gap_range_ops.c:127
-#, fuzzy
 msgid "New Height:"
 msgstr "Nouvelle hauteur :"
 
 #: plug-ins/gap/gap_range_ops.c:136
-#, fuzzy
 msgid "Offset X:"
-msgstr "Décalage :"
+msgstr "Décalage X :"
 
 #: plug-ins/gap/gap_range_ops.c:145
-#, fuzzy
 msgid "Offset Y:"
-msgstr "Décalage :"
+msgstr "Décalage Y :"
 
 #: plug-ins/gap/gap_range_ops.c:156
 msgid "Crop AnimFrames (all)"
@@ -9278,28 +9212,24 @@ msgid "Convert Frames to Indexed"
 msgstr "Convertir les Trames en Indexées"
 
 #: plug-ins/gap/gap_range_ops.c:364
-#, fuzzy
 msgid "Palette and Dither Settings"
-msgstr "Paramètres de Palette et de Lissage :"
+msgstr "Paramètres de Palette et de Lissage"
 
 #: plug-ins/gap/gap_range_ops.c:429
-#, fuzzy
 msgid "Keep Type"
-msgstr "Type de support:"
+msgstr "Garder le Type"
 
 #: plug-ins/gap/gap_range_ops.c:430
 msgid "Convert to RGB"
 msgstr "Convertir en RVB"
 
 #: plug-ins/gap/gap_range_ops.c:431
-#, fuzzy
 msgid "Convert to Gray"
-msgstr "Convertir en niveaux de gris"
+msgstr "Convertir en Niveaux de Gris"
 
 #: plug-ins/gap/gap_range_ops.c:432
-#, fuzzy
 msgid "Convert to Indexed"
-msgstr "Convertir les Trames en Indexées"
+msgstr "Convertir en Indexées"
 
 #: plug-ins/gap/gap_range_ops.c:456
 msgid ""
@@ -9336,7 +9266,6 @@ msgstr ""
 "aussi utilisé pour déterminer le format de fichier)"
 
 #: plug-ins/gap/gap_range_ops.c:472
-#, fuzzy
 msgid "Imagetype:"
 msgstr "Type d'Image :"
 
@@ -9349,7 +9278,6 @@ msgstr ""
 "(la plupart des formats de fichier ne supporte pas tous les types)"
 
 #: plug-ins/gap/gap_range_ops.c:479 plug-ins/gap/gap_split.c:245
-#, fuzzy
 msgid "Flatten:"
 msgstr "Applatir :"
 
@@ -9366,9 +9294,8 @@ msgid "Convert Frames to other Formats"
 msgstr "Convertir la Trame en d'autre Formats"
 
 #: plug-ins/gap/gap_range_ops.c:486
-#, fuzzy
 msgid "Convert Settings"
-msgstr "Convertir les Paramètres :"
+msgstr "Convertir les Paramètres"
 
 #: plug-ins/gap/gap_range_ops.c:563
 msgid "Expand as necessary"
@@ -9468,9 +9395,8 @@ msgstr ""
 "[####] est remplacé par le numéro de trame"
 
 #: plug-ins/gap/gap_range_ops.c:634
-#, fuzzy
 msgid "Layer Mergemode:"
-msgstr "Mode de fusion de Calque :"
+msgstr "Mode de Fusion de Calque :"
 
 #: plug-ins/gap/gap_range_ops.c:641
 msgid "Exclude BG-Layer"
@@ -9491,9 +9417,8 @@ msgid "Use all unselected Layers"
 msgstr "Utiliser tous les Calques non-sélectionnés"
 
 #: plug-ins/gap/gap_range_ops.c:746
-#, fuzzy
 msgid "Creating Layer-Animated Image..."
-msgstr "Création d'une image animée (trames -> calques)"
+msgstr "Création d'une Image de Calque Animés..."
 
 #: plug-ins/gap/gap_range_ops.c:968
 msgid "Frames to Image"
@@ -9504,49 +9429,43 @@ msgid "Create Multilayer-Image from Frames"
 msgstr "Création d'une image multicalques (trames -> calques)"
 
 #: plug-ins/gap/gap_range_ops.c:1109
-#, fuzzy
 msgid "Flattening Frames..."
-msgstr "Duplication de calques..."
+msgstr "Écrasement des Trames en cours..."
 
 #: plug-ins/gap/gap_range_ops.c:1110
-#, fuzzy
 msgid "Converting Frames..."
-msgstr "Duplication de calques..."
+msgstr "Conversion des Trames en cours..."
 
 #: plug-ins/gap/gap_range_ops.c:1221
-#, fuzzy
 msgid ""
 "Convert Frames: SAVE operation FAILED.\n"
 "Desired save plugin can't handle type\n"
 "or desired save plugin not available."
 msgstr ""
 "Convertir trames : l'opération d'enregistrement a ÉCHOUÉ\n"
-"- le format de fichier demandé n'est pas géré\n"
-"- ou alors le format de fichier demandé ne gère pas les images de ce type\n"
+"Le module d'enregistrement ne gère pas ce type\n"
+"ou alors le module d'enregistrement n'est pas disponible."
 
 #: plug-ins/gap/gap_range_ops.c:1329
-#, fuzzy
 msgid "Cropping all Animation Frames..."
-msgstr "Rognage de toutes les trames de l'animation..."
+msgstr "Rognage de toutes les Trames de l'Animation en cours..."
 
 #: plug-ins/gap/gap_range_ops.c:1332
-#, fuzzy
 msgid "Resizing all Animation Frames..."
-msgstr "Redimensionnement de toutes les trames d'animation..."
+msgstr "Redimensionnement de toutes les Trames d'Animation en cours..."
 
 #: plug-ins/gap/gap_range_ops.c:1335
-#, fuzzy
 msgid "Scaling all Animation Frames..."
-msgstr "Mise à l'échelle des trames d'animation..."
+msgstr "Mise à l'Échelle de toutes les Trames d'Animation en cours..."
 
 #: plug-ins/gap/gap_range_ops.c:1421
 msgid "Flatten Frames"
-msgstr "Aplatir trames"
+msgstr "Aplatir les Trames"
 
 #: plug-ins/gap/gap_range_ops.c:1477
-#, fuzzy, c-format
+#, c-format
 msgid "Removing Layer (pos:%ld) from Frames..."
-msgstr "Suppression du Calque (pos :%ld) des Images..."
+msgstr "Suppression du Calque (pos :%ld) des Trames en cours..."
 
 #: plug-ins/gap/gap_range_ops.c:1601
 msgid "Delete Layers in Frames"
@@ -9557,21 +9476,19 @@ msgid "Select Frame Range & Position"
 msgstr "Sélectionner l'Intervalle et la Position de la Trame"
 
 #: plug-ins/gap/gap_split.c:100
-#, fuzzy
 msgid "Splitting into Frames..."
 msgstr "Séparation en Trames en cours..."
 
 #: plug-ins/gap/gap_split.c:175
-#, fuzzy
 msgid ""
 "Split Frames: SAVE operation FAILED.\n"
 "desired save plugin can't handle type\n"
 "or desired save plugin not available."
 msgstr ""
 "Séparation des Trames: L'opération de SAUVEGARDE\n"
-"à échoué\n"
-"- le module de sauvegarde désiré ne supporte pas le type\n"
-"- ou le module de sauvegarde désiré n'est pas disponible\n"
+"à échoué.\n"
+"le module de sauvegarde désiré ne supporte pas le type\n"
+"ou le module de sauvegarde désiré n'est pas disponible."
 
 #: plug-ins/gap/gap_split.c:225
 #, c-format
@@ -9593,42 +9510,36 @@ msgid "frames are named: base_nr.extension"
 msgstr "les trames sont nommées: no_base.extension"
 
 #: plug-ins/gap/gap_split.c:235
-#, fuzzy
 msgid "extension of resulting frames (is also used to define Fileformat)"
 msgstr ""
 "extension de la trame résultante\n"
-"aussi utilisé pour déterminer le format de fichier)"
+"(aussi utilisé pour déterminer le format de fichier)"
 
 #: plug-ins/gap/gap_split.c:240
-#, fuzzy
 msgid "Inverse Order:"
-msgstr "Inverser l'Ordre"
+msgstr "Inverser l'Ordre :"
 
 #: plug-ins/gap/gap_split.c:241
 msgid "Start frame 0001 at Top Layer"
 msgstr "Commencer la trame 0001 au calque sommet"
 
 #: plug-ins/gap/gap_split.c:246
-#, fuzzy
 msgid ""
 "Remove Alpha Channel in resulting Frames. Transparent parts are filled with "
 "BG color."
 msgstr ""
-"Supprimer les Canaux Alpha dans les Trames   \n"
-"résultantes, les parties transparentes sont  \n"
-"remplies avec la couleur de fond"
+"Supprimer les Canaux Alpha dans les Trames résultantes. Les "
+"partiestransparentes sont remplies avec la couleur de fond."
 
 #: plug-ins/gap/gap_split.c:249
 msgid "Split Image into Frames"
 msgstr "Séparer l'Image en Trames"
 
 #: plug-ins/gap/gap_split.c:250
-#, fuzzy
 msgid "Split Settings"
-msgstr "Séparer les paramètres :"
+msgstr "Séparer les paramètres"
 
 #: plug-ins/gap/gap_split.c:297
-#, fuzzy
 msgid ""
 "OPERATION CANCELLED.\n"
 "This image is already an AnimFrame.\n"
@@ -9636,7 +9547,7 @@ msgid ""
 msgstr ""
 "OPÉRATION ANNULÉE\n"
 "Cette image est déjà une animation\n"
-"Essayez à nouveau sur une copie\n"
+"Essayez à nouveau sur une copie.\n"
 "(Image/Dupliquer)"
 
 #: plug-ins/gap/resize.c:107
@@ -10215,9 +10126,8 @@ msgid "Show Position"
 msgstr "Montrer position"
 
 #: plug-ins/gfig/gfig.c:3340
-#, fuzzy
 msgid "Hide Control Points"
-msgstr "Cacher les points de contrôle"
+msgstr "Cacher les Points de Contrôle"
 
 #: plug-ins/gfig/gfig.c:3352
 msgid "Show Tooltips"
@@ -10257,12 +10167,10 @@ msgstr "Effacer la collection d'objets Gfig actuellement sélectionnée"
 
 #. Position labels
 #: plug-ins/gfig/gfig.c:3674
-#, fuzzy
 msgid "XY Position:"
-msgstr "Position"
+msgstr "Position XY :"
 
 #: plug-ins/gfig/gfig.c:3695
-#, fuzzy
 msgid "Object Details"
 msgstr "Détails objet"
 
@@ -10531,9 +10439,9 @@ msgid "untitled"
 msgstr "sans-titre"
 
 #: plug-ins/gflare/gflare.c:3270
-#, fuzzy, c-format
+#, c-format
 msgid "The name '%s' is used already!"
-msgstr "Le nom `%s' est déjà utilisé !"
+msgstr "Le nom '%s' est déjà utilisé !"
 
 #: plug-ins/gflare/gflare.c:3319
 msgid "Copy GFlare"
@@ -13057,14 +12965,14 @@ msgid "Can't open (read): %s"
 msgstr "Impossible d'ouvrir %s"
 
 #: plug-ins/xjt/xjt.c:3126
-#, fuzzy, c-format
+#, c-format
 msgid "Error: Can't read XJT propertyfile %s"
-msgstr "Erreur : impossible de lire le fichier de propriétés XJT %s."
+msgstr "Erreur : Impossible de lire le fichier de propriétés XJT %s"
 
 #: plug-ins/xjt/xjt.c:3131
-#, fuzzy, c-format
+#, c-format
 msgid "Error, XJT propertyfile %s is empty"
-msgstr "Erreur, le fichier de propriétés XJT %s est vide."
+msgstr "Erreur, le fichier de propriétés XJT %s est vide"
 
 #~ msgid "Transpararent Background"
 #~ msgstr "Fond transparent"
