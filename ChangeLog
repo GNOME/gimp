@@ -1,3 +1,14 @@
+2002-01-18  Raja R Harinath  <harinath@cs.umn.edu>
+
+	* configure.in: Add a few [] to nested AC_CHECK_* invocations.
+	Needed for autoconf 2.52, but also the right fix for older
+	autoconfs.  (http://bugzilla.gnome.org/show_bug.cgi?id=68958)
+
+	* app/gui/Makefile.am
+	* app/tools/Makefile.am
+	* app/widgets/Makefile.am: Search for include files in build
+	directory too.  (http://bugzilla.gnome.org/show_bug.cgi?id=68961)
+
 2002-01-15  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/video.c

@@ -138,7 +138,9 @@ AM_CPPFLAGS = @STRIP_BEGIN@ \
 @STRIP_END@
 
 INCLUDES = @STRIP_BEGIN@ \
+	-I$(top_builddir)		\
 	-I$(top_srcdir)			\
+	-I$(top_builddir)/app		\
 	-I$(top_srcdir)/app		\
 	$(GTK_CFLAGS)			\
 	-I$(includedir)			\
