@@ -49,9 +49,10 @@ struct _GimpText
   GimpTextJustification  justify;
   gdouble                indent;
   gdouble                line_spacing;
-  gdouble                letter_spacing;
-  gint                   box_width;
-
+  GimpTextBoxMode        box_mode;
+  gdouble                box_width;
+  gdouble                box_height;
+  GimpUnit               box_unit;
   /* for historical reasons, don't use */
   gint                   border;
 };

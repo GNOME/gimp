@@ -299,8 +299,6 @@ gimp_text_layer_render (GimpTextLayer *layer)
 
   layout = gimp_text_layout_new (layer->text, image);
 
-  gimp_text_layout_get_size (layout, &width, &height);
-
   if (gimp_text_layout_get_size (layout, &width, &height))
     {
       if (width  != gimp_drawable_width (drawable) ||

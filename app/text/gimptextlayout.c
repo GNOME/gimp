@@ -62,6 +62,10 @@ static PangoContext * gimp_text_get_pango_context (GimpText     *text,
                                                    gdouble       xres,
                                                    gdouble       yres);
 
+static gint   gimp_text_layout_compute_size        (gdouble      value,
+                                                    GimpUnit     unit,
+                                                    gdouble      res);
+
 
 static GObjectClass * parent_class = NULL;
 
@@ -156,23 +160,8 @@ gimp_text_layout_new (GimpText  *text,
 
   gimp_image_get_resolution (image, &xres, &yres);
 
-  switch (text->font_size_unit)
-    {
-    case GIMP_UNIT_PIXEL:
-      size = PANGO_SCALE * text->font_size;
-      break;
-
-    default:
-      {
-	gdouble factor;
-
-	factor = gimp_unit_get_factor (text->font_size_unit);
-	g_return_val_if_fail (factor > 0.0, NULL);
-
-	size = (gdouble) PANGO_SCALE * text->font_size * yres / factor;
-      }
-      break;
-    }
+  size = gimp_text_layout_compute_size (text->font_size, text->font_size_unit,
+                                        yres);
   
   pango_font_description_set_size (font_desc, MAX (1, size));
 
@@ -211,14 +200,34 @@ gimp_text_layout_new (GimpText  *text,
 
   pango_layout_set_alignment (layout->layout, alignment);
 
-  pango_layout_set_width (layout->layout,
-			  text->box_width > 0 ? 
-			  text->box_width * PANGO_SCALE : -1);
+  switch (text->box_mode)
+    {
+    case GIMP_TEXT_BOX_DYNAMIC:
+      break;
+    case GIMP_TEXT_BOX_FIXED:
+      pango_layout_set_width (layout->layout,
+                              gimp_text_layout_compute_size (text->box_width,
+                                                             text->box_unit,
+                                                             xres));
+      break;
+    }
 
   pango_layout_set_indent (layout->layout, text->indent * PANGO_SCALE);
   pango_layout_set_spacing (layout->layout, text->line_spacing * PANGO_SCALE);
 
   gimp_text_layout_position (layout);
+
+  switch (text->box_mode)
+    {
+    case GIMP_TEXT_BOX_DYNAMIC:
+      break;
+    case GIMP_TEXT_BOX_FIXED:
+      layout->extents.height =
+        PANGO_PIXELS (gimp_text_layout_compute_size (text->box_height,
+                                                     text->box_unit,
+                                                     yres));
+      break;
+    }
 
   return layout;
 }
@@ -232,6 +241,7 @@ gimp_text_layout_get_size (GimpTextLayout *layout,
 
   if (width)
     *width = layout->extents.width;
+
   if (height)
     *height = layout->extents.height;
 
@@ -386,4 +396,24 @@ gimp_text_get_pango_context (GimpText *text,
     }
 
   return context;
+}
+
+static gint
+gimp_text_layout_compute_size (gdouble  value,
+                               GimpUnit unit,
+                               gdouble  res)
+{
+  gdouble factor;
+
+  switch (unit)
+    {
+    case GIMP_UNIT_PIXEL:
+      return PANGO_SCALE * value;
+
+    default:
+      factor = gimp_unit_get_factor (unit);
+      g_return_val_if_fail (factor > 0.0, 0);
+
+      return (gdouble) PANGO_SCALE * value * res / factor;
+    }
 }

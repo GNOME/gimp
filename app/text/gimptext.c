@@ -58,8 +58,10 @@ enum
   PROP_JUSTIFICATION,
   PROP_INDENTATION,
   PROP_LINE_SPACING,
-  PROP_LETTER_SPACING,
+  PROP_BOX_MODE,
   PROP_BOX_WIDTH,
+  PROP_BOX_HEIGHT,
+  PROP_BOX_UNIT,
   PROP_BORDER
 };
 
@@ -201,14 +203,24 @@ gimp_text_class_init (GimpTextClass *klass)
                                    N_("Additional line spacing (in pixels)"),
 				   -8192.0, 8192.0, 0.0,
 				   0);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LETTER_SPACING,
-				   "letter-spacing", NULL,
-                                    -8192.0, 8192.0, 0.0,
-                                    0);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_BOX_WIDTH,
-                                "box-width", NULL,
-                                0, GIMP_MAX_IMAGE_SIZE, 0,
-                                0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BOX_MODE,
+                                "box-mode",
+                                 NULL,
+                                 GIMP_TYPE_TEXT_BOX_MODE,
+                                 GIMP_TEXT_BOX_DYNAMIC,
+                                 0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BOX_WIDTH,
+                                   "box-width", NULL,
+                                   0.0, GIMP_MAX_IMAGE_SIZE, 0.0,
+                                   0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BOX_HEIGHT,
+                                   "box-height", NULL,
+                                   0.0, GIMP_MAX_IMAGE_SIZE, 0.0,
+                                   0);
+  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_BOX_UNIT,
+                                 "box-unit", NULL,
+                                 TRUE, GIMP_UNIT_PIXEL,
+                                 0);
 
   /*  border does only exist to implement the old text API  */
   param_spec = g_param_spec_int ("border", NULL, NULL,
@@ -292,11 +304,17 @@ gimp_text_get_property (GObject      *object,
     case PROP_LINE_SPACING:
       g_value_set_double (value, text->line_spacing);
       break;
-    case PROP_LETTER_SPACING:
-      g_value_set_double (value, text->letter_spacing);
+    case PROP_BOX_MODE:
+      g_value_set_enum (value, text->box_mode);
       break;
     case PROP_BOX_WIDTH:
-      g_value_set_int (value, text->box_width);
+      g_value_set_double (value, text->box_width);
+      break;
+    case PROP_BOX_HEIGHT:
+      g_value_set_double (value, text->box_height);
+      break;
+    case PROP_BOX_UNIT:
+      g_value_set_int (value, text->box_unit);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -358,11 +376,17 @@ gimp_text_set_property (GObject      *object,
     case PROP_LINE_SPACING:
       text->line_spacing = g_value_get_double (value);
       break;
-    case PROP_LETTER_SPACING:
-      text->letter_spacing = g_value_get_double (value);
+    case PROP_BOX_MODE:
+      text->box_mode = g_value_get_enum (value);
       break;
     case PROP_BOX_WIDTH:
-      text->box_width = g_value_get_int (value);
+      text->box_width = g_value_get_double (value);
+      break;
+    case PROP_BOX_HEIGHT:
+      text->box_height = g_value_get_double (value);
+      break;
+    case PROP_BOX_UNIT:
+      text->box_unit = g_value_get_int (value);
       break;
     case PROP_BORDER:
       text->border = g_value_get_int (value);
