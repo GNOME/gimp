@@ -7,7 +7,8 @@
 ;compability functions and define statements which follow the random number 
 ;generator routines.
 ;
-;This compatibility layer may be removed at some later date.
+;The items marked as deprecated at the end of this file may be removed
+;at some later date.
 
 
 ;The random number generator routines below have been slightly reformatted.
@@ -124,20 +125,28 @@
 )
 
 
-;Items below this line are deprecated and should not be used in new scripts.
+;Items below this line are for compatability with Script-Fu but
+;may be useful enough to keep around
 
-(define (nth k list)
-  (list-ref list k)
+(define (substring-equal? str str2 start end)
+  (string=? str (substring str2 start end))
 )
 
-(define (prog1 form1 . form2)
-  (let ((a))
-    (set! a form1)
-    (if (not (null? form2))
-      form2
-    )
-    a
-  )
+
+;Items below this line are deprecated and should not be used in new scripts.
+
+(define aset array-set!)
+(define aref array-ref)
+(define fopen open-input-file)
+(define mapcar map)
+(define nreverse reverse)
+(define pow expt)
+(define string-lessp string<?)
+(define symbol-bound? defined?)
+(define trunc truncate)
+
+(define *pi*
+  (* 4 (atan 1.0))
 )
 
 (define (cons-array count type)
@@ -153,17 +162,6 @@
 
 (define (fmod a b)
   (modulo (inexact->exact (truncate a)) (inexact->exact (truncate b)))
-)
-
-(define *pi*
-  (* 4 (atan 1.0))
-)
-
-(define (rand . modulus)
-  (if (null? modulus)
-    (msrg-rand)
-    (apply random modulus)
-  )
 )
 
 (define (fread arg1 file)
@@ -202,11 +200,23 @@
   )
 )
 
-(define aset array-set!)
-(define aref array-ref)
-(define fopen open-input-file)
-(define mapcar map)
-(define nreverse reverse)
-(define pow expt)
-(define symbol-bound? defined?)
-(define trunc truncate)
+(define (nth k list)
+  (list-ref list k)
+)
+
+(define (prog1 form1 . form2)
+  (let ((a))
+    (set! a form1)
+    (if (not (null? form2))
+      form2
+    )
+    a
+  )
+)
+
+(define (rand . modulus)
+  (if (null? modulus)
+    (msrg-rand)
+    (apply random modulus)
+  )
+)
