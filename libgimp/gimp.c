@@ -77,6 +77,10 @@
 #  include <fcntl.h>
 #endif
 
+#ifndef LIBGIMP_COMPILATION
+#define LIBGIMP_COMPILATION
+#endif
+
 #include "libgimpbase/gimpbasetypes.h"
 
 #include "libgimpbase/gimpenv.h"
@@ -187,7 +191,7 @@ gimp_main (int   argc,
     {
       k = strlen (argv[i]);
       if (k > 10)
-	if (g_strcasecmp (argv[i] + k - 4, ".exe") == 0)
+	if (g_ascii_strcasecmp (argv[i] + k - 4, ".exe") == 0)
 	  {
 	    /* Found the end of the executable name, most probably.
 	     * Splice the parts of the name back together.

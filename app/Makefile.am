@@ -66,8 +66,6 @@ gimp_1_3_SOURCES = \
 	$(stuff_sources)
 
 EXTRA_DIST = \
-	makefile.mingw			\
-	makefile.mingw.in		\
 	makefile.msc			\
 	gimp.rc				\
 	gimp.sym			\

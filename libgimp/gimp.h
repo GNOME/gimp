@@ -44,7 +44,7 @@
 #include <libgimp/gimp_pdb.h>
 
 #ifdef G_OS_WIN32
-#  include <stdlib.h>		/* For _-argc and __argv */
+#  include <stdlib.h>		/* For __argc and __argv */
 #  ifdef LIBGIMP_COMPILATION
 #    define GIMPVAR __declspec(dllexport)
 #  else  /* !LIBGIMP_COMPILATION */

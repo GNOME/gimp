@@ -1,4 +1,5 @@
 EXPORTS
+	_readchannel
 	gimp_airbrush
 	gimp_airbrush_default
 	gimp_attach_new_parasite

@@ -1,5 +1,53 @@
 ## Process this file with automake to produce Makefile.in
 
+if PLATFORM_WIN32
+no_undefined = -no-undefined
+conditional_libgimpbase_la = ../libgimpbase/libgimpbase-1.3.la
+conditional_libgimpcolor_la = ../libgimpcolor/libgimpcolor-1.3.la
+conditional_libgimpwidgets_la = ../libgimpwidgets/libgimpwidgets-1.3.la
+conditional_libgimp_la = libgimp-1.3.la
+endif
+
+if OS_WIN32
+gimp_def = gimp.def
+gimpui_def = gimpui.def
+libgimp_export_symbols = -export-symbols gimp.def
+libgimpui_export_symbols = -export-symbols gimpui.def
+
+install-libtool-import-lib:
+	$(INSTALL) .libs/libgimp-1.3.dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) .libs/libgimpui-1.3.dll.a $(DESTDIR)$(libdir)
+
+uninstall-libtool-import-lib:
+	-rm $(DESTDIR)$(libdir)/libgimp-1.3.dll.a
+	-rm $(DESTDIR)$(libdir)/libgimpui-1.3.dll.a
+else
+install-libtool-import-lib:
+uninstall-libtool-import-lib:
+endif
+
+if MS_LIB_AVAILABLE
+noinst_DATA = gimp-1.3.lib gimpui-1.3.lib 
+
+install-ms-lib:
+	$(INSTALL) gimp-1.3.lib $(DESTDIR)$(libdir)
+	$(INSTALL) gimpui-1.3.lib $(DESTDIR)$(libdir)
+
+uninstall-ms-lib:
+	-rm $(DESTDIR)$(libdir)/gimp-1.3.lib
+	-rm $(DESTDIR)$(libdir)/gimpui-1.3.lib
+
+gimp-1.3.lib: gimp.def
+	lib -name:libgimp-1.3-@LT_CURRENT_MINUS_AGE@.dll -def:gimp.def -out:$@
+
+gimpui-1.3.lib: gimpui.def
+	lib -name:libgimpui-1.3-@LT_CURRENT_MINUS_AGE@.dll -def:gimpui.def -out:$@
+
+else
+install-ms-lib:
+uninstall-ms-lib:
+endif
+
 gimpincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimp
 
 AM_CPPFLAGS = \
@@ -12,8 +60,6 @@ INCLUDES = \
 	-I$(includedir)
 
 EXTRA_DIST = \
-	makefile.mingw		\
-	makefile.mingw.in	\
 	makefile.msc		\
 	gimp.def		\
 	gimpui.def
@@ -165,11 +211,23 @@ gimpinclude_HEADERS = \
 	gimpmenu.h
 
 libgimp_1_3_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
+	$(no_undefined) \
+	$(libgimp_export_symbols)
 
-libgimp_1_3_la_LIBADD = $(GLIB_LIBS)
+libgimp_1_3_la_LIBADD = $(conditional_libgimpbase_la) $(conditional_libgimpcolor_la) $(GLIB_LIBS) 
+
+libgimp_1_3_la_DEPENDENCIES = $(gimp_def)
 
 libgimpui_1_3_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
+	$(no_undefined) \
+	$(libgimpui_export_symbols)
 
-libgimpui_1_3_la_LIBADD = $(GTK_LIBS)
+libgimpui_1_3_la_LIBADD = $(conditional_libgimp_la) $(conditional_libgimpbase_la) $(conditional_libgimpwidgets_la) $(GTK_LIBS)
+
+libgimpui_1_3_la_DEPENDENCIES = $(gimpui_def)
+
+install-data-local: install-ms-lib install-libtool-import-lib
+
+uninstall-local: uninstall-ms-lib uninstall-libtool-import-lib
