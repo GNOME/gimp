@@ -1,3 +1,9 @@
+2005-03-02  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* gimp/app/widgets/gimpgradienteditor.c: allow dnd of colors
+	into preview and control areas, as described in
+	bug #119470.
+
 2005-03-02  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimptextlayout.c

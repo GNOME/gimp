@@ -120,6 +120,16 @@ static void   gradient_editor_drop_gradient         (GtkWidget          *widget,
                                                      gint                y,
                                                      GimpViewable       *viewable,
                                                      gpointer            data);
+static void   gradient_editor_drop_color            (GtkWidget          *widget,
+                                                     gint                x,
+                                                     gint                y,
+                                                     const GimpRGB      *color,
+                                                     gpointer            data);
+static void   gradient_editor_control_drop_color    (GtkWidget          *widget,
+                                                     gint                x,
+                                                     gint                y,
+                                                     const GimpRGB      *color,
+                                                     gpointer            data);
 static void   gradient_editor_scrollbar_update      (GtkAdjustment      *adj,
                                                      GimpGradientEditor *editor);
 static void   gradient_editor_instant_update_update (GtkWidget          *widget,
@@ -312,6 +322,10 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
                               gradient_editor_drop_gradient,
                               editor);
 
+  gimp_dnd_color_dest_add (GTK_WIDGET (editor->preview),
+                              gradient_editor_drop_color,
+                              editor);
+
   /* Gradient control */
   editor->control_pixmap       = NULL;
   editor->control_drag_segment = NULL;
@@ -334,6 +348,10 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   g_signal_connect (editor->control, "event",
                     G_CALLBACK (control_events),
                     editor);
+
+  gimp_dnd_color_dest_add (GTK_WIDGET (editor->control),
+                              gradient_editor_control_drop_color,
+                              editor);
 
   /*  Scrollbar  */
   editor->zoom_factor = 1;
@@ -597,6 +615,88 @@ gradient_editor_drop_gradient (GtkWidget    *widget,
                                gpointer      data)
 {
   gimp_data_editor_set_data (GIMP_DATA_EDITOR (data), GIMP_DATA (viewable));
+}
+
+static void
+gradient_editor_drop_color (GtkWidget     *widget,
+                            gint           x,
+                            gint           y,
+                            const GimpRGB *color,
+                            gpointer       data)
+{
+  gdouble              xpos;
+  GimpGradientSegment *seg, *lseg, *rseg;
+  GimpGradient        *gradient;
+  GimpGradientEditor  *editor    = (GimpGradientEditor *) data;
+
+  gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
+
+  xpos = control_calc_g_pos (editor, x);
+  seg = gimp_gradient_get_segment_at (gradient, xpos);
+
+  gimp_data_freeze (GIMP_DATA (gradient));
+
+  gimp_gradient_segment_split_midpoint (gradient, seg, &lseg, &rseg);
+
+  if (lseg)
+    {
+      lseg->right = xpos;
+      lseg->middle = (lseg->left + lseg->right) / 2.0;
+      lseg->right_color = *color;
+    }
+
+  if (rseg)
+    {
+      rseg->left = xpos;
+      rseg->middle = (rseg->left + rseg->right) / 2.0;
+      rseg->left_color  = *color;
+    }
+
+  gimp_data_thaw (GIMP_DATA (gradient));
+}
+
+static void
+gradient_editor_control_drop_color (GtkWidget     *widget,
+                                    gint           x,
+                                    gint           y,
+                                    const GimpRGB *color,
+                                    gpointer       data)
+{
+  gdouble                xpos;
+  GimpGradientSegment   *seg, *lseg, *rseg;
+  GimpGradient          *gradient;
+  GimpGradientEditor    *editor    = (GimpGradientEditor *) data;
+  GradientEditorDragMode handle;
+
+  gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
+
+  xpos = control_calc_g_pos (editor, x);
+  seg_get_closest_handle (gradient, xpos, &seg, &handle);
+
+  if (seg)
+    {
+      if (handle == GRAD_DRAG_LEFT)
+        {
+          lseg = seg->prev;
+          rseg = seg;
+        }
+      else
+        return;
+    }
+  else
+    {
+      lseg = gimp_gradient_get_segment_at (gradient, xpos);
+      rseg = NULL;
+    }
+  gimp_data_freeze (GIMP_DATA (gradient));
+
+  if (lseg)
+    lseg->right_color = *color;
+
+  if (rseg)
+    rseg->left_color  = *color;
+
+  gimp_data_thaw (GIMP_DATA (gradient));
 }
 
 static void
