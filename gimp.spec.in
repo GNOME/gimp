@@ -18,11 +18,11 @@ Docdir:		%{prefix}/doc
 Prefix:		%{prefix}
 Obsoletes: 	gimp-data-min
 Obsoletes:	gimp-libgimp
-Requires: 	gtk2 >= 2.2.0
+Requires: 	gtk2 >= @GTK_REQUIRED_VERSION@
 Requires:	libart_lgpl >= 2.0
-Requires:	fontconfig >= 1.0.1
-Requires:	gimp-print >= 4.2.0
-Requires:	gtkhtml2 >= 1.99.5
+Requires:	fontconfig >= @FONTCONFIG_REQUIRED_VERSION@
+Requires:	gimp-print >= @GIMPPRINT_REQUIRED_VERSION@
+Requires:	gtkhtml2 >= @GTKHTML2_REQUIRED_VERSION@
 Source: 	ftp://ftp.gimp.org/pub/gimp/v%{subver}/%{name}-%{ver}.tar.bz2
 
 %description
