@@ -1,3 +1,8 @@
+2001-11-21  Sven Neumann  <sven@gimp.org>
+
+	* app/app_procs.c (splash_logo_load): sink the GtkPreview created for
+	the splash.
+
 2001-11-20  Sven Neumann  <sven@gimp.org>
 
 	* app/app_procs.c

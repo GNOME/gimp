@@ -238,7 +238,7 @@ splash_logo_load (GtkWidget *window)
       count = fread (pixelrow, sizeof (unsigned char), logo_width * 3, fp);
       if (count != (logo_width * 3))
 	{
-	  gtk_widget_destroy (preview);
+	  gtk_object_sink (GTK_OBJECT (preview));
 	  g_free (pixelrow);
 	  fclose (fp);
 	  return FALSE;
@@ -255,7 +255,7 @@ splash_logo_load (GtkWidget *window)
 		   0, 0, 0, 0, logo_width, logo_height);
   gdk_gc_destroy (gc);
 
-  gtk_widget_unref (preview);
+  gtk_object_sink (GTK_OBJECT (preview));
   g_free (pixelrow);
 
   fclose (fp);
