@@ -1,3 +1,9 @@
+2004-10-12  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpprogressdialog.c (gimp_progress_dialog_new): set
+	the "skip_taskbar_hint" and "skip_pager_hint" properties on the
+	progress window.
+
 2004-10-11  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/fp/fp.c: Moved from here...

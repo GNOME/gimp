@@ -237,8 +237,10 @@ GtkWidget *
 gimp_progress_dialog_new (void)
 {
   return g_object_new (GIMP_TYPE_PROGRESS_DIALOG,
-                       "title",     _("Progress"),
-                       "role",      "progress",
-                       "resizable", FALSE,
+                       "title",             _("Progress"),
+                       "role",              "progress",
+                       "skip_taskbar_hint", TRUE,
+                       "skip_pager_hint",   TRUE,
+                       "resizable",         FALSE,
                        NULL);
 }
