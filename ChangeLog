@@ -1,3 +1,68 @@
+2002-04-21  Nathan Summers  <rock@gimp.org>
+
+ 	* app/tools/gimptoolcontrol.[ch]
+ 	* libgimptool/gimptool.c: resurrected the motion hints and cursor
+ 	changing code.
+
+ 	app/tools/gimpairbrushtool.c
+	app/tools/gimpbezierselecttool.c
+ 	app/tools/gimpblendtool.c
+ 	app/tools/gimpbucketfilltool.c
+ 	app/tools/gimpbycolorselecttool.c
+ 	app/tools/gimpclonetool.c
+ 	app/tools/gimpcolorbalancetool.c
+ 	app/tools/gimpcolorpickertool.c
+ 	app/tools/gimpconvolvetool.c
+ 	app/tools/gimpcroptool.c
+ 	app/tools/gimpcurvestool.c
+ 	app/tools/gimpdodgeburntool.c
+ 	app/tools/gimpeditselectiontool.c
+ 	app/tools/gimpellipseselecttool.c
+ 	app/tools/gimperasertool.c
+ 	app/tools/gimpfliptool.c
+ 	app/tools/gimpfuzzyselecttool.c
+ 	app/tools/gimphistogramtool.c
+ 	app/tools/gimphuesaturationtool.c
+ 	app/tools/gimpimagemaptool.c
+ 	app/tools/gimpinktool.c
+ 	app/tools/gimpiscissorstool.c
+ 	app/tools/gimplevelstool.c
+ 	app/tools/gimpmagnifytool.c
+ 	app/tools/gimpmeasuretool.c
+ 	app/tools/gimpmovetool.c
+ 	app/tools/gimppaintbrushtool.c
+ 	app/tools/gimppainttool.c
+ 	app/tools/gimppathtool.c
+ 	app/tools/gimppenciltool.c
+ 	app/tools/gimpperspectivetool.c
+ 	app/tools/gimprectselecttool.c
+ 	app/tools/gimprotatetool.c
+ 	app/tools/gimpscaletool.c
+ 	app/tools/gimpselectiontool.c
+ 	app/tools/gimpsheartool.c
+ 	app/tools/gimpsmudgetool.c
+ 	app/tools/gimptexttool.c
+ 	app/tools/gimptransformtool.c
+ 	app/tools/gimpvectortool.c: set the motion mode; fix a few parameters
+
+ 	* app/tools/gimpinktool.c (gimp_ink_tool_button_press): uncommented
+ 	some code I had temporarily commented out and didn't uncomment before
+ 	committing
+
+ 	* libgimptool/gimptoolcontrol.h
+ 	* app/tools/gimptoolcontrol-displayshell.[ch]: merged with
+ 	gimptoolcontrol.[ch].  The distinction was fairly arbitrary.
+
+ 	* plug-ins/tools/gimptoolcontrol.c: added some stubs
+
+        * app/tools/Makefile.am
+ 	* app/tools/tool_manager.c
+ 	* app/display/gimpdisplayshell-callbacks.c: changed accordingly
+
+	* tools/pdbgen/pdb/image.pdb
+ 	* libgimp/gimpimage_pdb.c: applied a patch from Pippen to correct
+ 	documentation on the undo operations
+ 	
 2002-04-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimagefile.[ch]: made gimp_imagefile_save_thumbnail()
