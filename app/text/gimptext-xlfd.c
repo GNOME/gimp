@@ -285,7 +285,7 @@ gimp_text_get_xlfd_field (const gchar *fontname,
 static gchar *
 launder_font_name (gchar *name)
 {
-  gchar *laundered_name = name;
+  gchar *laundered_name;
   gchar  last_char;
 
   last_char = name[strlen (name) - 1];
@@ -294,7 +294,9 @@ launder_font_name (gchar *name)
     {
       laundered_name = g_strconcat (name, ",", NULL);
       g_free (name);
-    }
 
-  return laundered_name;
+      return laundered_name;
+    }
+  else
+    return name;
 }
