@@ -238,9 +238,7 @@ gimp_colormap_editor_init (GimpColormapEditor *editor)
 static void
 gimp_colormap_editor_destroy (GtkObject *object)
 {
-  GimpColormapEditor *editor;
-
-  editor = GIMP_COLORMAP_EDITOR (object);
+  GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (object);
 
   if (editor->color_notebook)
     {
@@ -254,9 +252,7 @@ gimp_colormap_editor_destroy (GtkObject *object)
 static void
 gimp_colormap_editor_unmap (GtkWidget *widget)
 {
-  GimpColormapEditor *editor;
-
-  editor = GIMP_COLORMAP_EDITOR (widget);
+  GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (widget);
 
   if (editor->color_notebook)
     color_notebook_hide (editor->color_notebook);
@@ -268,9 +264,7 @@ static void
 gimp_colormap_editor_set_image (GimpImageEditor *image_editor,
 				GimpImage       *gimage)
 {
-  GimpColormapEditor *editor;
-
-  editor = GIMP_COLORMAP_EDITOR (image_editor);
+  GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (image_editor);
 
   if (image_editor->gimage)
     {
@@ -590,9 +584,8 @@ gimp_colormap_editor_clear (GimpColormapEditor *editor,
 
   palette = editor->palette;
 
-  /* Watch out for negative values (at least on Win32) */
-  width  = (int) (gint16) palette->allocation.width;
-  height = (int) (gint16) palette->allocation.height;
+  width  = palette->allocation.width;
+  height = palette->allocation.height;
 
   if (start_row < 0)
     start_row = 0;
@@ -646,9 +639,7 @@ gimp_colormap_editor_clear (GimpColormapEditor *editor,
 static void
 gimp_colormap_editor_update_entries (GimpColormapEditor *editor)
 {
-  GimpImage *gimage;
-
-  gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
+  GimpImage *gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
 
   if (! gimage || (gimp_image_base_type (gimage) != GIMP_INDEXED))
     {
@@ -706,9 +697,7 @@ gimp_colormap_preview_size_allocate (GtkWidget          *widget,
                                      GtkAllocation      *alloc,
                                      GimpColormapEditor *editor)
 {
-  GimpImage *gimage;
-
-  gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
+  GimpImage *gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
 
   if (gimage && (gimp_image_base_type (gimage) == GIMP_INDEXED))
     gimp_colormap_editor_draw (editor);
@@ -810,10 +799,11 @@ static void
 gimp_colormap_adjustment_changed (GtkAdjustment      *adjustment,
                                   GimpColormapEditor *editor)
 {
-  if (GIMP_IMAGE_EDITOR (editor)->gimage)
+  GimpImage *gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
+
+  if (gimage && gimp_image_base_type (gimage) == GIMP_INDEXED)
     {
-      gimp_colormap_editor_set_index (editor,
-                                      (gint) (adjustment->value + 0.5));
+      gimp_colormap_editor_set_index (editor, adjustment->value + 0.5);
 
       gimp_colormap_editor_update_entries (editor);
     }
@@ -823,9 +813,7 @@ static void
 gimp_colormap_hex_entry_activate (GtkEntry           *entry,
                                   GimpColormapEditor *editor)
 {
-  GimpImage *gimage;
-
-  gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
+  GimpImage *gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
 
   if (gimage)
     {
@@ -893,9 +881,7 @@ static void
 gimp_colormap_edit_clicked (GtkWidget          *widget,
                             GimpColormapEditor *editor)
 {
-  GimpImage *gimage;
-
-  gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
+  GimpImage *gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
 
   if (gimage)
     {
@@ -948,9 +934,7 @@ gimp_colormap_add_ext_clicked (GtkWidget          *widget,
                                GdkModifierType     state,
                                GimpColormapEditor *editor)
 {
-  GimpImage *gimage;
-
-  gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
+  GimpImage *gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
 
   if (gimage && gimage->num_cols < 256)
     {

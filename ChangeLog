@@ -1,3 +1,8 @@
+2003-12-01  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcolormapeditor.c (gimp_colormap_adjustment_changed):
+	quick fix for bug #128285. This widget should be redone.
+
 2003-11-30  Sven Neumann  <sven@gimp.org>
 
 	* app/main.c: renamed remaining occurences of "use_mmx" to
