@@ -41,7 +41,7 @@ gimp-composite-dispatch.c: gimp-composite-generic.o make-gimp-composite-dispatch
 
 EXTRA_DIST = \
 	make-gimp-composite-dispatch.py	\
-	ns
+	ns.py
 
 EXTRA_PROGRAMS = test-composite
 
