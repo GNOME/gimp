@@ -1,3 +1,7 @@
+2004-02-13  Marco Ciampa  <ciampix@libero.it>
+
+	* it.po: Updated Italian translation.
+
 2004-02-10  Ole Laursen  <olau@hardworking.dk>
 
 	* da.po: Updated Danish translation.
@@ -5,7 +9,7 @@
 2004-02-10  Jan Morén  <jan.moren@lucs.lu.se>
  
 	* sv.po: Updated Swedish translation.
-	  
+
 2004-02-09  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am (tips_POFILES): added hr.po (Croatian).
