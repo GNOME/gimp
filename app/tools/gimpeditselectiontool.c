@@ -984,7 +984,7 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
   gboolean      push_undo = TRUE;
   GimpItem     *item      = NULL;
   EditType      edit_type = EDIT_MASK_TRANSLATE;
-  GimpUndoType  undo_type;
+  GimpUndoType  undo_type = GIMP_UNDO_GROUP_MASK;
   const gchar  *undo_desc = NULL;
 
   /*  check for mask translation first because the translate_layer
