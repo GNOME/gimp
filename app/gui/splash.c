@@ -150,7 +150,7 @@ splash_destroy (void)
     {
       gtk_widget_destroy (win_initstatus);
       if (logo_pixmap != NULL)
-	gdk_pixmap_unref (logo_pixmap);
+	gdk_drawable_unref (logo_pixmap);
 
       win_initstatus = label1 = label2 = pbar = logo_area = NULL;
       logo_pixmap = NULL;

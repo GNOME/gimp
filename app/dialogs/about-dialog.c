@@ -600,8 +600,8 @@ about_dialog_tool_drop (GtkWidget    *widget,
       gdk_gc_set_clip_origin (logo_area->style->black_gc, 0, 0);
     }
 
-  gdk_pixmap_unref (pixmap);
-  gdk_bitmap_unref (mask);
+  gdk_drawable_unref (pixmap);
+  gdk_drawable_unref (mask);
 
   scroll_text = drop_text;
   nscroll_texts = sizeof (drop_text) / sizeof (drop_text[0]);

@@ -2160,7 +2160,7 @@ control_update (GradientEditor *gradient_editor,
       (cheight != pheight))
     {
       if (gradient_editor->control_pixmap)
-	gdk_pixmap_unref (gradient_editor->control_pixmap);
+	gdk_drawable_unref (gradient_editor->control_pixmap);
 
       gradient_editor->control_pixmap =
 	gdk_pixmap_new (gradient_editor->control->window, cwidth, cheight, -1);

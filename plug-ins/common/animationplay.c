@@ -114,10 +114,15 @@
 #include <ctype.h>
 
 #include <gtk/gtk.h>
-#ifndef GDK_WINDOWING_WIN32
+
+#if defined (GDK_WINDOWING_X11)
 #include <gdk/gdkx.h>
-#else
-#include <gdk/win32/gdkwin32.h>
+#elif defined (GDK_WINDOWING_WIN32)
+#include <gdk/gdkwin32.h>
+#elif defined (GDK_WINDOWING_DIRECTFB)
+#include <gdk/gdkdirectfb.h>
+#elif defined (GDK_WINDOWING_FB)
+#include <gdk/gdkfb.h>
 #endif
 
 #include <libgimp/gimp.h>

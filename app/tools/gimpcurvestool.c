@@ -624,7 +624,7 @@ curves_free (void)
 	}
 
       if (curves_dialog->pixmap)
-	gdk_pixmap_unref (curves_dialog->pixmap);
+	gdk_drawable_unref (curves_dialog->pixmap);
 
       gtk_widget_destroy (curves_dialog->shell);
     }

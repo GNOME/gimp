@@ -283,7 +283,7 @@ devices_init (void)
       device_info->num_axes   = device->num_axes;
       device_info->axes       = NULL;
 
-      device_info->num_keys   = device->num_axes;
+      device_info->num_keys   = device->num_keys;
       device_info->keys       = NULL;
 
       device_info->context    = gimp_create_context (the_gimp,

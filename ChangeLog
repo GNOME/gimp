@@ -1,5 +1,28 @@
 2001-07-25  Sven Neumann  <sven@gimp.org>
 
+	* app/devices.c: fixed typo.
+	
+	* app/gdisplay.c
+	* app/undo_history.c
+	* app/user_install.c
+	* app/gui/about-dialog.c
+	* app/gui/color-area.c
+	* app/gui/gradient-editor.c
+	* app/gui/gui.c
+	* app/gui/paths-dialog.c
+	* app/gui/splash.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimptexttool.c: 
+	s/gdk_[bit|pix]map_unref/gdk_drawable_unref/
+	
+	* app/xcf/xcf-load.c: use GObject functions
+
+	* plug-ins/common/animationplay.c: include GDK backend specific 
+	headers
+
+2001-07-25  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: only build X11 specific plug-ins and tools if 
 	building for GTK+ on X11.
 

@@ -519,7 +519,7 @@ ink_options_new (void)
 			blob_ellipse);
 
   pixmap_widget = gtk_pixmap_new (pixmap, NULL);
-  gdk_pixmap_unref (pixmap);
+  gdk_drawable_unref (pixmap);
   gtk_misc_set_padding (GTK_MISC (pixmap_widget), 6, 0);
 
   radio_button = gtk_radio_button_new (NULL);
@@ -538,7 +538,7 @@ ink_options_new (void)
 			blob_square);
 
   pixmap_widget = gtk_pixmap_new (pixmap, NULL);
-  gdk_pixmap_unref (pixmap);
+  gdk_drawable_unref (pixmap);
   gtk_misc_set_padding (GTK_MISC (pixmap_widget), 6, 0);
 
   radio_button =
@@ -558,7 +558,7 @@ ink_options_new (void)
 			blob_diamond);
 
   pixmap_widget = gtk_pixmap_new (pixmap, NULL);
-  gdk_pixmap_unref (pixmap);
+  gdk_drawable_unref (pixmap);
   gtk_misc_set_padding (GTK_MISC (pixmap_widget), 6, 0);
 
   radio_button =

@@ -479,8 +479,8 @@ gdisplay_delete (GDisplay *gdisp)
   if (gdisp->icon_idle_id)
     g_source_remove (gdisp->icon_idle_id);
 
-  gdk_pixmap_unref (gdisp->icon);
-  gdk_pixmap_unref (gdisp->iconmask);
+  gdk_drawable_unref (gdisp->icon);
+  gdk_drawable_unref (gdisp->iconmask);
 
   gtk_widget_unref (gdisp->shell);
 

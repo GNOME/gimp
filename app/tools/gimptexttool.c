@@ -894,7 +894,7 @@ text_render (GimpImage    *gimage,
     }
 
   /* free the pixmap */
-  gdk_pixmap_unref (pixmap);
+  gdk_drawable_unref (pixmap);
 
   /* free the gc */
   gdk_gc_destroy (gc);
