@@ -2382,7 +2382,7 @@ convolve_region (PixelRegion         *srcR,
   gint     offset;
   gdouble  matrixsum = 0.0;
   gdouble  weighted_divisor, mult_alpha;
-  
+
   /*  If the mode is NEGATIVE_CONVOL, the offset should be 128  */
   if (mode == GIMP_NEGATIVE_CONVOL)
     {
@@ -2416,7 +2416,7 @@ convolve_region (PixelRegion         *srcR,
         }
       if (matrixsum == 0.0)
         matrixsum = 1.0;
-    } 
+    }
 
   /*  calculate the source wraparound value  */
   wraparound = srcR->rowstride - size * bytes;
@@ -2430,7 +2430,7 @@ convolve_region (PixelRegion         *srcR,
     }
 
   src = srcR->data;
-  
+
   for (y = margin; y < srcR->h - margin; y++)
     {
       s_row = src;
@@ -2453,7 +2453,7 @@ convolve_region (PixelRegion         *srcR,
             m = matrix;
             total [0] = total [1] = total [2] = total [3] = 0.0;
             weighted_divisor = 0.0;
-              
+
             i = size;
             while (i --)
               {
@@ -2473,7 +2473,7 @@ convolve_region (PixelRegion         *srcR,
                       }
                     else
                       s += bytes;
-                      
+
                     m ++;
                   }
 
@@ -4782,47 +4782,37 @@ combine_sub_region (struct combine_regions_struct *st,
         case COMBINE_INTEN_A_INTEN_A:
           {
             /*  Now, apply the paint mode  */
-            struct apply_layer_mode_struct alms;
-
-            alms.src1    = s1;
-            alms.src2    = s2;
-            alms.mask    = layer_mode_mask;
-            alms.dest    = &s;
-            alms.x       = src1->x;
-            alms.y       = src1->y + h;
-            alms.opacity = layer_mode_opacity;
-            alms.combine = combine;
-            alms.length  = src1->w;
-            alms.bytes1  = src1->bytes;
-            alms.bytes2  = src2->bytes;
 
             if (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_USE)
               {
                 GimpCompositeContext ctx;
 
-                ctx.A = s1;
-                ctx.pixelformat_A = (src1->bytes   == 1 ? GIMP_PIXELFORMAT_V8
-                                     : src1->bytes == 2 ? GIMP_PIXELFORMAT_VA8
-                                     : src1->bytes == 3 ? GIMP_PIXELFORMAT_RGB8
-                                     : src1->bytes == 4 ? GIMP_PIXELFORMAT_RGBA8
-                                     : GIMP_PIXELFORMAT_ANY);
-                ctx.B = s2;
-                ctx.pixelformat_B = (src2->bytes   == 1 ? GIMP_PIXELFORMAT_V8
-                                     : src2->bytes == 2 ? GIMP_PIXELFORMAT_VA8
-                                     : src2->bytes == 3 ? GIMP_PIXELFORMAT_RGB8
-                                     : src2->bytes == 4 ? GIMP_PIXELFORMAT_RGBA8
-                                     : GIMP_PIXELFORMAT_ANY);
-                ctx.D = s;
+                ctx.A             = s1;
+                ctx.pixelformat_A = (src1->bytes == 1 ? GIMP_PIXELFORMAT_V8    :
+                                     src1->bytes == 2 ? GIMP_PIXELFORMAT_VA8   :
+                                     src1->bytes == 3 ? GIMP_PIXELFORMAT_RGB8  :
+                                     src1->bytes == 4 ? GIMP_PIXELFORMAT_RGBA8 :
+                                     GIMP_PIXELFORMAT_ANY);
+
+                ctx.B             = s2;
+                ctx.pixelformat_B = (src2->bytes == 1 ? GIMP_PIXELFORMAT_V8    :
+                                     src2->bytes == 2 ? GIMP_PIXELFORMAT_VA8   :
+                                     src2->bytes == 3 ? GIMP_PIXELFORMAT_RGB8  :
+                                     src2->bytes == 4 ? GIMP_PIXELFORMAT_RGBA8 :
+                                     GIMP_PIXELFORMAT_ANY);
+
+                ctx.D             = s;
                 ctx.pixelformat_D = ctx.pixelformat_A;
 
-                ctx.M = layer_mode_mask;
+                ctx.M             = layer_mode_mask;
                 ctx.pixelformat_M = GIMP_PIXELFORMAT_ANY;
 
-                ctx.n_pixels = src1->w;
-                ctx.combine = combine;
-                ctx.op = mode;
-                ctx.dissolve.x = src1->x;
-                ctx.dissolve.y = src1->y + h;
+                ctx.n_pixels      = src1->w;
+                ctx.combine       = combine;
+                ctx.op            = mode;
+
+                ctx.dissolve.x       = src1->x;
+                ctx.dissolve.y       = src1->y + h;
                 ctx.dissolve.opacity = layer_mode_opacity;
 
                 mode_affect = gimp_composite_operation_effects[mode].affect_opacity;
@@ -4832,6 +4822,20 @@ combine_sub_region (struct combine_regions_struct *st,
               }
             else
               {
+                struct apply_layer_mode_struct alms;
+
+                alms.src1    = s1;
+                alms.src2    = s2;
+                alms.mask    = layer_mode_mask;
+                alms.dest    = &s;
+                alms.x       = src1->x;
+                alms.y       = src1->y + h;
+                alms.opacity = layer_mode_opacity;
+                alms.combine = combine;
+                alms.length  = src1->w;
+                alms.bytes1  = src1->bytes;
+                alms.bytes2  = src2->bytes;
+
                 /*  Determine whether the alpha channel of the destination
                  *  can be affected by the specified mode. -- This keeps
                  *  consistency with varying opacities.

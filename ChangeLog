@@ -1,3 +1,10 @@
+2004-11-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint-funcs/paint-funcs.c (combine_sub_region): applied
+	patch from Joao S. O. Bueno which moves assignments into an "else"
+	branch and thus optimizes the (common) "if" branch. Did some
+	cosmetic cleanups.
+
 2004-11-02  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/script-fu-interface.c (script_fu_interface):
