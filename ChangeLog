@@ -1,3 +1,17 @@
+1999-10-03  Tor Lillqvist  <tml@iki.fi>
+
+	* app/cursorutil.h app/session.c app/text_tool.c: Change the
+	GDK_WINDOWING_* stuff to be buildable with current CVS gtk+ (not
+	recommended for X11, but necessary for Win32).
+
+	* libgimp/gimp.c: Undef RGB from <windows.h> on Win32.
+
+	* app/makefile.{cygwin,msc} libgimp/makefile.{cygwin,msc} *
+	plug-ins/makefile.{cygwin,msc}: Add new files. Small changes for
+	current gtk+.
+
+	* plug-ins/common/animationplay.c: Win32 kludges.
+
 Mon Sep 20 18:58:38 BST 1999 Nick Lamb <njl195@zepler.org>
 
 	* plug-ins/common/png.c: Now PNGs with colormaps and tRNS

@@ -222,6 +222,12 @@ OBJECTS = \
 	gfli.o
 endif
 
+ifdef EXTRA_helpbrowser
+OBJECTS = \
+	helpbrowser.o \
+	queue.o
+endif
+
 ifdef EXTRA_ifscompose
 OBJECTS = \
 	ifscompose.o \
@@ -280,6 +286,7 @@ OBJECTS = \
 	interp_trace.o \
 	script-fu.o \
 	script-fu-console.o \
+	script-fu-constants.o \
 	script-fu-scripts.o \
 	regex.o \
 	../dbbrowser/dbbrowser_utils.o
@@ -411,7 +418,7 @@ OPTIMIZE = -O
 
 CC = gcc $(OPTIMIZE) -mno-cygwin -mpentium -fnative-struct
 
-CFLAGS = -DHAVE_CONFIG_H $(EXTRACFLAGS) -I. -I$(TOP) -I$(PLUGINDIR) -I$(PLUGINDIR)/libgck -I$(GLIB) -I$(GTK)/gdk/win32 -I$(GTK) -I$(INTL)
+CFLAGS = -DHAVE_CONFIG_H $(EXTRACFLAGS) -I. -I$(TOP) -I$(PLUGINDIR) -I$(PLUGINDIR)/libgck -I$(GLIB) -I$(GTK)/gdk/win32 -I$(GTK)/gdk -I$(GTK) -I$(INTL)
 
 ifdef PLUGIN
 

@@ -21,11 +21,11 @@
 #include <gdk/gdkkeysyms.h>
 #include <gdk/gdk.h>
 
-#if GDK_WINDOWING == GDK_WINDOWING_WIN32
+#ifdef GDK_WINDOWING_WIN32
 # define POINTS POINTS_win32	/* Guard against clash */
 #endif
 #include <gdk/gdkprivate.h>
-#if GDK_WINDOWING == GDK_WINDOWING_WIN32
+#ifdef GDK_WINDOWING_WIN32
 # undef POINTS
 #endif
 
@@ -523,7 +523,7 @@ text_gdk_image_to_region (GdkImage    *image,
 
   scale2 = scale * scale;
 /* GDK_WINDOWING is defined only with GTk+ 1.3 */
-#if !defined(GDK_WINDOWING) || (GDK_WINDOWING == GDK_WINDOWING_X11)
+#ifndef GDK_WINDOWING_WIN32
   black.red = black.green = black.blue = 0;
   gdk_colormap_alloc_color (gdk_colormap_get_system (), &black, FALSE, TRUE);
   black_pixel = black.pixel;
@@ -661,7 +661,7 @@ text_render (GimpImage *gimage,
   /*  get black and white pixels for this gdisplay  */
   black.red = black.green = black.blue = 0;
   white.red = white.green = white.blue = 65535;
-#if !defined(GDK_WINDOWING) || (GDK_WINDOWING == GDK_WINDOWING_X11)
+#ifndef GDK_WINDOWING_WIN32
   gdk_colormap_alloc_color (gdk_colormap_get_system (), &black, FALSE, TRUE);
   gdk_colormap_alloc_color (gdk_colormap_get_system (), &white, FALSE, TRUE);
 #else

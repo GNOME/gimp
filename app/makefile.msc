@@ -33,7 +33,7 @@ GLIB = ..\..\glib
 GMODULE = $(GLIB)\gmodule
 INTL = ..\..\intl
 
-CFLAGS = -DREGEX_MALLOC -DHAVE_CONFIG_H -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)\gdk\win32 -I$(GTK) -I$(INTL)
+CFLAGS = -DREGEX_MALLOC -DHAVE_CONFIG_H -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)\gdk\win32 -I$(GTK)\gdk -I$(GTK) -I$(INTL)
 
 # GCG = ..\tools\gcg\gcg -I. -I ..\tools\gcg\gh
 
@@ -148,6 +148,7 @@ gimp_OBJECTS = \
 	gimpcontext.obj		\
 	gimpcontextpreview.obj	\
 	gimpdnd.obj		\
+	gimphelp.obj		\
 	gimphistogram.obj	\
 	gimplist.obj		\
 	gimplut.obj		\
@@ -155,6 +156,7 @@ gimp_OBJECTS = \
 	gimpprogress.obj	\
 	gimprc.obj		\
 	gimprc_cmds.obj		\
+	gimpui.obj		\
 	gimpunit.obj		\
 	global_edit.obj		\
 	gradient.obj		\
@@ -251,6 +253,7 @@ gimp_OBJECTS = \
 	transform_tool.obj	\
 	undo.obj		\
 	undo_cmds.obj		\
+	undo_history.obj	\
 	unit_cmds.obj		\
 	vector2d.obj		\
 	xcf.obj			\

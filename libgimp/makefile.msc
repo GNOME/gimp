@@ -39,7 +39,7 @@ GTK = ..\..\gtk+
 GLIB = ..\..\glib
 INTL = ..\..\intl
 
-CFLAGS = -I.. -I$(GLIB) -I$(GTK)\gdk\win32 -I$(GTK) -I$(INTL) -DGIMPDIR=\"$(GIMPDIR)\"
+CFLAGS = -I.. -I$(GLIB) -I$(GTK)\gdk\win32 -I$(GTK)\gdk -I$(GTK) -I$(INTL) -DGIMPDIR=\"$(GIMPDIR)\"
 
 all : \
 	..\config.h	\

@@ -303,6 +303,7 @@ OBJECTS = \
 	interp_trace.obj \
 	script-fu.obj \
 	script-fu-console.obj \
+	script-fu-constants.obj \
 	script-fu-scripts.obj \
 	regex.obj \
 	..\dbbrowser\dbbrowser_utils.obj
@@ -458,7 +459,7 @@ RTL = -MDd
 
 CC = cl -nologo -G5 -GF $(OPTIMIZE) $(RTL) -W2 -Zm200
 
-CFLAGS = -DHAVE_CONFIG_H $(EXTRACFLAGS) -I. -I$(TOP) -I$(PLUGINDIR) -I$(PLUGINDIR)\libgck -I$(GLIB) -I$(GTK)\gdk\win32 -I$(GTK) -I$(INTL)
+CFLAGS = -DHAVE_CONFIG_H $(EXTRACFLAGS) -I. -I$(TOP) -I$(PLUGINDIR) -I$(PLUGINDIR)\libgck -I$(GLIB) -I$(GTK)\gdk\win32 -I$(GTK)\gdk -I$(GTK) -I$(INTL)
 
 LDFLAGS = /link /subsystem:windows /machine:ix86 $(LINKDEBUG)
 

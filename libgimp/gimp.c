@@ -54,6 +54,7 @@
 #ifdef WIN32
 #  define STRICT
 #  include <windows.h>
+#  undef RGB
 #endif
 #ifdef __EMX__
 #  include <fcntl.h>

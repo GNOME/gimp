@@ -95,18 +95,21 @@
  *
  *  write other half of the user interface (default timing, disposal &c)
  */
+#include "config.h"
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-#include "config.h"
+
+#define WinMain WinMain_foo	/* Kludge for Win32*/
+#include <gdk/gdkx.h>
+#undef WinMain
+#undef RGB			/* On Windows from <windows.h> */
+#include <gtk/gtk.h>
+
 #include "libgimp/gimp.h"
 #include "libgimp/stdplugins-intl.h"
-#define WinMain WinMain_foo	/* Kludge */
-#include "gdk/gdkx.h"
-#undef WinMain
-#include "gtk/gtk.h"
 
 
 /* Test for GTK1.2-style gdkrgb code, else use old 'preview' code. */

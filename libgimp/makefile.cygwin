@@ -10,7 +10,7 @@ BIN = /gimp/bin
 # and stuff is saved.
 GIMPDIR = _gimp$(GIMP_VER)
 
-OPTIMIZE = -g -O
+OPTIMIZE = -O
 
 ################################################################
 
@@ -33,7 +33,7 @@ INTL = ../../intl
 
 GIMP_VER = 1.1
 
-CFLAGS = $(OPTIMIZE) -I.. -I$(GLIB) -I$(GTK)/gdk/win32 -I$(GTK) -I$(INTL) -DGIMPDIR=\"$(GIMPDIR)\"
+CFLAGS = $(OPTIMIZE) -I.. -I$(GLIB) -I$(GTK)/gdk/win32 -I$(GTK)/gdk -I$(GTK) -I$(INTL) -DGIMPDIR=\"$(GIMPDIR)\"
 
 all : \
 	../config.h	\

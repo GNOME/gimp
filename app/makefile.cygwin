@@ -26,7 +26,7 @@ GLIB = ../../glib
 GMODULE = $(GLIB)/gmodule
 INTL = ../../intl
 
-CFLAGS = $(OPTIMIZE) -DREGEX_MALLOC -DHAVE_CONFIG_H -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)/gdk/win32 -I$(GTK) -I$(INTL)
+CFLAGS = $(OPTIMIZE) -DREGEX_MALLOC -DHAVE_CONFIG_H -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)/gdk/win32 -I$(GTK)/gdk -I$(GTK) -I$(INTL)
 
 # GCG = ../tools/gcg/gcg -I. -I../tools/gcg/gh
 
@@ -141,6 +141,7 @@ gimp_OBJECTS = \
 	gimpcontext.o		\
 	gimpcontextpreview.o	\
 	gimpdnd.o		\
+	gimphelp.o		\
 	gimphistogram.o		\
 	gimplist.o		\
 	gimplut.o		\
@@ -148,6 +149,7 @@ gimp_OBJECTS = \
 	gimpprogress.o		\
 	gimprc.o		\
 	gimprc_cmds.o		\
+	gimpui.o		\
 	gimpunit.o		\
 	global_edit.o		\
 	gradient.o		\
@@ -244,6 +246,7 @@ gimp_OBJECTS = \
 	transform_tool.o	\
 	undo.o			\
 	undo_cmds.o		\
+	undo_history.o		\
 	unit_cmds.o		\
 	vector2d.o		\
 	xcf.o			\
