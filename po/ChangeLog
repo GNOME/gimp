@@ -16,11 +16,12 @@
 
 2004-10-08  Nikos Charonitakis  <charosn@her.forthnet.gr>
 
-	* el.po: Updated Greek translation and fix bug [Bug 154234] - Broken GIMP translation (Greek)
+	* el.po: Updated Greek translation and fix bug [Bug 154234] -
+	Broken GIMP translation (Greek)
 
 2004-10-05  David Lodge <dave@cirt.net>
-                                                                                
-        * en_GB.po: Updated British English translation.
+
+	* en_GB.po: Updated British English translation.
                                                                                 
 2004-10-02  Adam Weinberger  <adamw@gnome.org>
 
@@ -31,9 +32,9 @@
 	* zh_TW.po: Updated traditional Chinese translation from GNOME HK Team
 
 2004-09-26  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
-                                                                                
-        * es.po: Updated Spanish translation by Franscisco Vila <francisco.vila@hispalinux.es>
-                                                                                
+
+	* es.po: Updated Spanish translation by Franscisco Vila
+	<francisco.vila@hispalinux.es>
 
 2004-09-25  Miloslav Trmac  <mitr@volny.cz>
 
