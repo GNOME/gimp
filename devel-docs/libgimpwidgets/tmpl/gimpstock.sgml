@@ -180,28 +180,28 @@ size).
 
 <!-- ##### MACRO GIMP_STOCK_SELECTION_ALL ##### -->
 <para>
-
+<inlinegraphic fileref="stock-selection-all-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_SELECTION_NONE ##### -->
 <para>
-
+<inlinegraphic fileref="stock-selection-none-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_SELECTION_GROW ##### -->
 <para>
-
+<inlinegraphic fileref="stock-selection-grow-16.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_SELECTION_SHRINK ##### -->
 <para>
-
+<inlinegraphic fileref="stock-selection-shrink-16.png" format="png"></inlinegraphic>
 </para>
 
 
