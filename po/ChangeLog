@@ -1,3 +1,10 @@
+1999-11-25  Vincent Renardias <vincent@ldsol.com>
+
+	* fr.po update.
+	  < 1243 translated messages, 138 fuzzy translations, 30 untranslated messages.
+	  > 1402 translated messages, 4 fuzzy translations, 5 untranslated messages.
+	  Had to s/appendice/extension/g again! (More appropriate in this context).
+
 1999-11-25  Michael Natterer  <mitch@gimp.org>
 
 	* *.po: did a 'make update-po' to get the new menus paths.
