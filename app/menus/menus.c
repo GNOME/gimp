@@ -46,8 +46,6 @@
 #include "tool-options-menu.h"
 #include "toolbox-menu.h"
 
-#include "gimp-intl.h"
-
 
 /*  local function prototypes  */
 
