@@ -92,27 +92,25 @@ typedef struct
  * Function prototypes.
  */
 
-static void       query                    (void);
-static void       run                      (const gchar      *name,
-                                            gint              nparams,
-                                            const GimpParam  *param,
-                                            gint             *nreturn_vals,
-                                            GimpParam       **return_vals);
+static void       query               (void);
+static void       run                 (const gchar      *name,
+                                       gint              nparams,
+                                       const GimpParam  *param,
+                                       gint             *nreturn_vals,
+                                       GimpParam       **return_vals);
 
-static void       edge                     (GimpDrawable     *drawable);
-static gboolean   edge_dialog              (GimpDrawable     *drawable);
-static GtkWidget *edge_preview_new         (GimpDrawable *drawable);
-static void       edge_preview_update      (GimpDrawable *drawable);
-static void       edge_radio_button_update (GtkWidget *widget,
-                                            gpointer   data);
+static void       edge                (GimpDrawable     *drawable);
+static gboolean   edge_dialog         (GimpDrawable     *drawable);
+static GtkWidget *edge_preview_new    (GimpDrawable     *drawable);
+static void       edge_preview_update (GimpDrawable     *drawable);
 
-static gint edge_detect  (guchar *data);
-static gint prewitt      (guchar *data);
-static gint gradient     (guchar *data);
-static gint roberts      (guchar *data);
-static gint differential (guchar *data);
-static gint laplace      (guchar *data);
-static gint sobel        (guchar *data);
+static gint edge_detect  (const guchar *data);
+static gint prewitt      (const guchar *data);
+static gint gradient     (const guchar *data);
+static gint roberts      (const guchar *data);
+static gint differential (const guchar *data);
+static gint laplace      (const guchar *data);
+static gint sobel        (const guchar *data);
 
 /***** Local vars *****/
 
@@ -412,7 +410,7 @@ edge (GimpDrawable *drawable)
  */
 
 static gint
-edge_detect (guchar *data)
+edge_detect (const guchar *data)
 {
   gint ret;
   switch (evals.edgemode)
@@ -447,7 +445,7 @@ edge_detect (guchar *data)
  * Sobel Edge detector
  */
 static gint
-sobel (guchar *data)
+sobel (const guchar *data)
 {
   gint    v_kernel[9] = {-1,  0,  1,
                          -2,  0,  2,
@@ -476,7 +474,7 @@ sobel (guchar *data)
  *   -- Prewitt
  */
 static gint
-prewitt (guchar *data)
+prewitt (const guchar *data)
 {
   gint    k, max;
   gint    m[8];
@@ -518,7 +516,7 @@ prewitt (guchar *data)
  * Gradient Edge detector
  */
 static gint
-gradient (guchar *data)
+gradient (const guchar *data)
 {
   gint    v_kernel[9] = { 0,  0,  0,
                           0,  4, -4,
@@ -547,7 +545,7 @@ gradient (guchar *data)
  * Roberts Edge detector
  */
 static gint
-roberts (guchar *data)
+roberts (const guchar *data)
 {
   gint    v_kernel[9] = {0,  0,  0,
                          0,  4,  0,
@@ -576,7 +574,7 @@ roberts (guchar *data)
  * Differential Edge detector
  */
 static gint
-differential (guchar *data)
+differential (const guchar *data)
 {
   gint    v_kernel[9] = { 0,  0,  0,
                           0,  2, -2,
@@ -606,7 +604,7 @@ differential (guchar *data)
  * Laplace Edge detector
  */
 static gint
-laplace (guchar *data)
+laplace (const guchar *data)
 {
   gint    kernel[9] = { 1,  1,  1,
                         1, -8,  1,
@@ -635,9 +633,9 @@ edge_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *vbox;
-  GtkWidget *frame;
-  GtkWidget *table;
   GtkWidget *hbox;
+  GtkWidget *table;
+  GtkWidget *combo;
   GtkWidget *toggle;
   GtkObject *scale_data;
   GSList    *group = NULL;
@@ -671,34 +669,32 @@ edge_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  /*  compression  */
-  frame = gimp_int_radio_group_new (TRUE, _("Algorithm"),
-                                    G_CALLBACK (edge_radio_button_update),
-                                    &evals.edgemode, evals.edgemode,
-
-                                    _("_Sobel"),        SOBEL,        NULL,
-                                    _("_Prewitt"),      PREWITT,      NULL,
-                                    _("_Gradient"),     GRADIENT,     NULL,
-                                    _("_Roberts"),      ROBERTS,      NULL,
-                                    _("_Differential"), DIFFERENTIAL, NULL,
-                                    _("_Laplace"),      LAPLACE,      NULL,
-
-                                    NULL);
-
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  /*  parameter settings  */
-
-  table = gtk_table_new (2, 3, FALSE);
+  table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
+  combo = gimp_int_combo_box_new (_("Sobel"),        SOBEL,
+                                  _("Prewitt"),      PREWITT,
+                                  _("Gradient"),     GRADIENT,
+                                  _("Roberts"),      ROBERTS,
+                                  _("Differential"), DIFFERENTIAL,
+                                  _("Laplace"),      LAPLACE,
+                                  NULL);
+
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                              evals.edgemode,
+                              G_CALLBACK (gimp_int_combo_box_get_active),
+                              &evals.edgemode);
+
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("_Algorithm:"), 0.0, 0.5,
+                             combo, 2, FALSE);
+
   /*  Label, scale, entry for evals.amount  */
-  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                     _("_Amount:"), 100, 0,
+  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+                                     _("A_mount:"), 100, 0,
                                      evals.amount, 1.0, 10.0, 0.1, 1.0, 1,
                                      TRUE, 0, 0,
                                      NULL, NULL);
@@ -713,7 +709,7 @@ edge_dialog (GimpDrawable *drawable)
   /*  Radio buttons WRAP, SMEAR, BLACK  */
 
   hbox = gtk_hbox_new (FALSE, 4);
-  gtk_table_attach (GTK_TABLE (table), hbox, 0, 3, 1, 2,
+  gtk_table_attach (GTK_TABLE (table), hbox, 0, 3, 2, 3,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (hbox);
 
@@ -772,24 +768,6 @@ edge_dialog (GimpDrawable *drawable)
     evals.wrapmode = GIMP_PIXEL_FETCHER_EDGE_BLACK;
 
   return run;
-}
-
-static void
-edge_radio_button_update (GtkWidget *widget,
-                          gpointer   data)
-{
-  gint *toggle_val;
-
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
-    {
-      toggle_val = (gint *) data;
-
-      *toggle_val = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-							"gimp-item-data"));
-    }
-
-  gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
-  edge_preview_update (drawable);
 }
 
 /* Preview stuff */
