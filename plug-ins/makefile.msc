@@ -38,9 +38,6 @@ COMMON4 = mapcolor max_rgb mblur newsprint nlfilt noisify normalize nova oilify 
 COMMON5 = sample_colorize scatter_hsv semiflatten sharpen shift sinus smooth_palette snoise sobel sparkle spheredesigner spread struc sunras tga threshold_alpha tiff tile tileit tiler uniteditor unsharp video vinvert vpropagate 
 COMMON6 = warp waves whirlpinch winclipboard wind winprint wiredebug wmf xbm xwd zealouscrop
 
-# not any longer supported ?
-DROPPED = gpb gdyntext 
-
 # These have own subdirectories each
 SEPARATE = FractalExplorer Lighting MapObject bmp dbbrowser faxg3 fits flame fp gfig gflare gfli gimpressionist helpbrowser ifscompose imagemap maze mosaic pagecurl rcm sel2path sgi twain webbrowser winsnap xjt
 
@@ -122,15 +119,6 @@ sub-separate-plugins :
 # We must handle script-fu separately because of the dash, sigh
 	@cd script-fu
 	@nmake -nologo -f ..\makefile.msc GIMPTOP=..\.. PLUGIN=script-fu EXTRA_script_fu=1 $(TARGET)
-	@cd ..
-
-not-any-more :
-# Also GAP is special
-	@cd gap
-	@nmake -nologo -f ..\makefile.msc GIMPTOP=..\.. PLUGIN=gap_filter EXTRA_gap_filter=1 $(TARGET)
-	@cd ..
-	@cd gap
-	@nmake -nologo -f ..\makefile.msc GIMPTOP=..\.. PLUGIN=gap_plugins EXTRA_gap_plugins=1 $(TARGET)
 	@cd ..
 
 
@@ -246,51 +234,6 @@ OBJECTS = \
 	fp_gdk.obj \
 	fp_gtk.obj \
 	fp_misc.obj
-!ENDIF
-
-!IFDEF EXTRA_gap_filter
-OBJECTS = \
-	gap_filter_main.obj \
-	gap_dbbrowser_utils.obj \
-	gap_filter_foreach.obj \
-	gap_filter_iterators.obj \
-	gap_filter_pdb.obj \
-	gap_filter_codegen.obj \
-	gap_arr_dialog.obj \
-	gap_pdb_calls.obj
-!ENDIF
-	
-!IFDEF EXTRA_gap_plugins
-OBJECTS = \
-	gap_main.obj \
-	gap_mov_exec.obj \
-	gap_range_ops.obj \
-	gap_arr_dialog.obj \
-	gap_mov_dialog.obj \
-	gap_layer_copy.obj \
-	gap_split.obj \
-	gap_resi_dialog.obj \
-	gap_mpege.obj \
-	gap_mod_layer.obj \
-	gap_filter_pdb.obj \
-	gap_filter_codegen.obj \
-	gap_dbbrowser_utils.obj \
-	gap_match.obj \
-	gap_lib.obj \
-	gap_exchange_image.obj \
-	gap_pdb_calls.obj \
-	resize.obj
-!ENDIF
-
-!IFDEF EXTRA_gdyntext
-OBJECTS = \
-	charmap.obj \
-	charmap_window.obj \
-	font_selection.obj \
-	gdyntext.obj \
-	gdyntext_ui.obj \
-	message_window.obj \
-	gdyntextcompat.obj
 !ENDIF
 
 !IFDEF EXTRA_gfli

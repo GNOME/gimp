@@ -1,3 +1,8 @@
+2003-07-04  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.skip: removed since the files it referred are no longer
+	in CVS.
+
 2003-06-30  Mohammad DAMT  <mdamt@bisnisweb.com>
 
 	* id.po: Added Indonesian translation

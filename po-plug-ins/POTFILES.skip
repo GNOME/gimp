@@ -1,7 +1,0 @@
-plug-ins/gdyntext/charmap.c
-plug-ins/gdyntext/charmap_window.c
-plug-ins/gdyntext/font_selection.c
-plug-ins/gdyntext/gdyntext.c
-plug-ins/gdyntext/gdyntext_ui.c
-plug-ins/gdyntext/gdyntextcompat.c
-plug-ins/gdyntext/message_window.c
