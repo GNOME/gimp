@@ -100,8 +100,7 @@ struct _GimpImage
                                             /*  "by color" selection dialog  */
 
   gboolean           qmask_state;           /*  TRUE if qmask is on          */
-  gdouble            qmask_opacity;         /*  opacity of the qmask channel */
-  guchar             qmask_color[3];        /*  rgb triplet of the color     */
+  GimpRGB            qmask_color;           /*  rgba triplet of the color    */
 
                                             /*  Undo apparatus  */
   GSList            *undo_stack;            /*  stack for undo operations    */

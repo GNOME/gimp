@@ -700,22 +700,21 @@ duplicate (GimpImage *gimage)
       switch (guide->orientation)
 	{
 	case ORIENTATION_HORIZONTAL:
-	  new_guide = gimp_image_add_hguide(new_gimage);
+	  new_guide = gimp_image_add_hguide (new_gimage);
 	  new_guide->position = guide->position;
 	  break;
 	case ORIENTATION_VERTICAL:
-	  new_guide = gimp_image_add_vguide(new_gimage);
+	  new_guide = gimp_image_add_vguide (new_gimage);
 	  new_guide->position = guide->position;
 	  break;
 	default:
-	  g_error("Unknown guide orientation.\n");
+	  g_error ("Unknown guide orientation.\n");
 	}
     }
+
   /* Copy the qmask info */
   new_gimage->qmask_state = gimage->qmask_state;
-  for (count=0;count<3;count++)
-    new_gimage->qmask_color[count] = gimage->qmask_color[count];
-  new_gimage->qmask_opacity = gimage->qmask_opacity;
+  new_gimage->qmask_color = gimage->qmask_color;
 
   /* Copy parasites */
   parasites = gimage->parasites;
@@ -726,9 +725,9 @@ duplicate (GimpImage *gimage)
   paths = gimp_image_get_paths (gimage);
   if (paths)
     {
-      GSList *plist = NULL;
-      GSList *new_plist = NULL;
-      Path *path;
+      GSList   *plist = NULL;
+      GSList   *new_plist = NULL;
+      Path     *path;
       PathList *new_paths;
       
       for (plist = paths->bz_paths; plist; plist = plist->next)

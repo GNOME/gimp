@@ -103,7 +103,14 @@ channel_new_invoker (Argument *args)
 
   if (success)
     {
-      channel = channel_new (gimage, width, height, name, opacity, color);
+      GimpRGB rgb_color;
+    
+      gimp_rgb_set_uchar (&rgb_color,
+			  color[0], color[1], color[2]);
+    
+      rgb_color.a = opacity / 100.0;
+    
+      channel = channel_new (gimage, width, height, name, &rgb_color);
       success = channel != NULL;
     }
 
@@ -594,7 +601,7 @@ channel_get_opacity_invoker (Argument *args)
   return_args = procedural_db_return_args (&channel_get_opacity_proc, success);
 
   if (success)
-    return_args[1].value.pdb_float = (channel->opacity * 100.0) / 255.0;
+    return_args[1].value.pdb_float = channel->color.a * 100.0;
 
   return return_args;
 }
@@ -649,7 +656,7 @@ channel_set_opacity_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    channel->opacity = (int) ((opacity * 255) / 100);
+    channel->color.a = opacity / 100.0;
 
   return procedural_db_return_args (&channel_set_opacity_proc, success);
 }
@@ -699,9 +706,11 @@ channel_get_color_invoker (Argument *args)
   if (success)
     {
       color = g_new (guchar, 3);
-      color[RED_PIX] = channel->col[RED_PIX];
-      color[GREEN_PIX] = channel->col[GREEN_PIX];
-      color[BLUE_PIX] = channel->col[BLUE_PIX];
+    
+      gimp_rgb_get_uchar (&channel->color,
+			  &color[RED_PIX],
+			  &color[GREEN_PIX],
+			  &color[BLUE_PIX]);
     }
 
   return_args = procedural_db_return_args (&channel_get_color_proc, success);
@@ -760,7 +769,17 @@ channel_set_color_invoker (Argument *args)
   color = (guchar *) args[1].value.pdb_pointer;
 
   if (success)
-    channel_set_color(channel, color);
+    {
+      GimpRGB rgb_color;
+    
+      gimp_rgba_set_uchar (&rgb_color,
+			   color[0],
+			   color[1],
+			   color[2],
+			   (guchar) (channel->color.a * 255.999));
+    
+      channel_set_color(channel, &rgb_color);
+    }
 
   return procedural_db_return_args (&channel_set_color_proc, success);
 }

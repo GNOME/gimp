@@ -1,5 +1,19 @@
 2001-01-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/channel.[ch]
+	* app/gimpimage.[ch]
+	* app/layer.[ch]: use GimpRGB for the Channel's, the QuickMask's
+	and the LayerMask's color.
+
+	* app/channel_cmds.c
+	* app/channel_ops.c
+	* app/channels_dialog.c
+	* app/qmask.c
+	* app/xcf.c
+	* tools/pdbgen/pdb/channel.pdb: changed accordingly.
+
+2001-01-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/color_notebook.[ch]
 	* app/color_panel.[ch]
 	* app/gimpcontext.[ch]

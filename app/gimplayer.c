@@ -500,7 +500,7 @@ layer_create_mask (Layer       *layer,
   PixelRegion  layerPR;
   LayerMask   *mask;
   gchar       *mask_name;
-  guchar       black[3] = {0, 0, 0};
+  GimpRGB      black = { 0.0, 0.0, 0.0, 1.0 };
   guchar       white_mask = OPAQUE_OPACITY;
   guchar       black_mask = TRANSPARENT_OPACITY;
 
@@ -511,7 +511,7 @@ layer_create_mask (Layer       *layer,
   mask = layer_mask_new (GIMP_DRAWABLE (layer)->gimage,
 			 GIMP_DRAWABLE (layer)->width,
 			 GIMP_DRAWABLE (layer)->height,
-			 mask_name, OPAQUE_OPACITY, black);
+			 mask_name, &black);
   GIMP_DRAWABLE (mask)->offset_x = GIMP_DRAWABLE (layer)->offset_x;
   GIMP_DRAWABLE (mask)->offset_y = GIMP_DRAWABLE (layer)->offset_y;
 
@@ -1708,15 +1708,13 @@ gimp_layer_mask_destroy (GtkObject *object)
 }
 
 LayerMask *
-layer_mask_new (GimpImage *gimage,
-		gint       width,
-		gint       height,
-		gchar     *name,
-		gint       opacity,
-		guchar    *col)
+layer_mask_new (GimpImage     *gimage,
+		gint           width,
+		gint           height,
+		const gchar   *name,
+		const GimpRGB *color)
 {
   LayerMask *layer_mask;
-  gint       i;
 
   layer_mask = gtk_type_new (GIMP_TYPE_LAYER_MASK);
 
@@ -1724,10 +1722,8 @@ layer_mask_new (GimpImage *gimage,
 			   gimage, width, height, GRAY_GIMAGE, name);
 
   /*  set the layer_mask color and opacity  */
-  for (i = 0; i < 3; i++)
-    GIMP_CHANNEL (layer_mask)->col[i]       = col[i];
+  GIMP_CHANNEL (layer_mask)->color          = *color;
 
-  GIMP_CHANNEL (layer_mask)->opacity        = opacity;
   GIMP_CHANNEL (layer_mask)->show_masked    = TRUE;
 
   /*  selection mask variables  */
@@ -1738,7 +1734,8 @@ layer_mask_new (GimpImage *gimage,
   GIMP_CHANNEL (layer_mask)->num_segs_out   = 0;
   GIMP_CHANNEL (layer_mask)->bounds_known   = TRUE;
   GIMP_CHANNEL (layer_mask)->boundary_known = TRUE;
-  GIMP_CHANNEL (layer_mask)->x1             = GIMP_CHANNEL (layer_mask)->y1 = 0;
+  GIMP_CHANNEL (layer_mask)->x1             = 0;
+  GIMP_CHANNEL (layer_mask)->y1             = 0;
   GIMP_CHANNEL (layer_mask)->x2             = width;
   GIMP_CHANNEL (layer_mask)->y2             = height;
 
@@ -1758,12 +1755,11 @@ layer_mask_copy (LayerMask *layer_mask)
 		     gimp_object_get_name (GIMP_OBJECT (layer_mask)));
 
   /*  allocate a new layer_mask object  */
-  new_layer_mask = layer_mask_new (GIMP_DRAWABLE(layer_mask)->gimage, 
-				   GIMP_DRAWABLE(layer_mask)->width, 
-				   GIMP_DRAWABLE(layer_mask)->height, 
-				   layer_mask_name, 
-				   GIMP_CHANNEL(layer_mask)->opacity, 
-				   GIMP_CHANNEL(layer_mask)->col);
+  new_layer_mask = layer_mask_new (GIMP_DRAWABLE (layer_mask)->gimage, 
+				   GIMP_DRAWABLE (layer_mask)->width, 
+				   GIMP_DRAWABLE (layer_mask)->height, 
+				   layer_mask_name,
+				   &GIMP_CHANNEL (layer_mask)->color);
   GIMP_DRAWABLE(new_layer_mask)->visible = 
     GIMP_DRAWABLE(layer_mask)->visible;
   GIMP_DRAWABLE(new_layer_mask)->offset_x = 

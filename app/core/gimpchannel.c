@@ -118,26 +118,24 @@ channel_validate (TileManager *tm,
 }
 
 Channel *
-channel_new (GimpImage    *gimage,
-	     gint          width,
-	     gint          height,
-	     const gchar  *name,
-	     gint          opacity,
-	     const guchar *col)
+channel_new (GimpImage     *gimage,
+	     gint           width,
+	     gint           height,
+	     const gchar   *name,
+	     const GimpRGB *color)
 {
-  Channel * channel;
-  gint i;
+  Channel *channel;
 
-  channel = gtk_type_new (gimp_channel_get_type ());
+  g_return_val_if_fail (color != NULL, NULL);
+
+  channel = gtk_type_new (GIMP_TYPE_CHANNEL);
 
   gimp_drawable_configure (GIMP_DRAWABLE (channel), 
 			   gimage, width, height, GRAY_GIMAGE, name);
 
   /*  set the channel color and opacity  */
-  for (i = 0; i < 3; i++)
-    channel->col[i] = col[i];
+  channel->color = *color;
 
-  channel->opacity     = opacity;
   channel->show_masked = TRUE;
 
   /*  selection mask variables  */
@@ -185,7 +183,8 @@ channel_copy (const Channel *channel)
   new_channel = channel_new (GIMP_DRAWABLE (channel)->gimage, 
 			     GIMP_DRAWABLE (channel)->width, 
 			     GIMP_DRAWABLE (channel)->height, 
-			     channel_name, channel->opacity, channel->col);
+			     channel_name,
+			     &channel->color);
   GIMP_DRAWABLE (new_channel)->visible = GIMP_DRAWABLE (channel)->visible;
   new_channel->show_masked = channel->show_masked;
 
@@ -223,36 +222,44 @@ channel_get_name (const Channel *channel)
 }
 
 void 
-channel_set_color (Channel      *channel,
-		   const guchar *color)
+channel_set_color (Channel       *channel,
+		   const GimpRGB *color)
 {
-  gint i;
+  g_return_if_fail (channel != NULL);
+  g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (color != NULL);
 
-  if (color)
-    {
-      for (i = 0; i < 3; i++)
-	channel->col[i] = color[i];
-    }
+  channel->color = *color;
 }
 
-const guchar *
+const GimpRGB *
 channel_get_color (const Channel *channel)
 {
-  return GIMP_CHANNEL (channel)->col;
+  g_return_val_if_fail (channel != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), NULL);
+
+  return &channel->color;
 }
  
 gint
 channel_get_opacity (const Channel *channel)
-{ 
-  return channel->opacity;
+{
+  g_return_val_if_fail (channel != NULL, 0);
+  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), 0);
+
+  return (gint) (channel->color.a * 100.999);
 }
 
 void 
 channel_set_opacity (Channel *channel,
 		     gint     opacity)
 {
-  if (opacity >=0 && opacity <= 100)
-    channel->opacity = (gint) (opacity * 255) / 100;
+  g_return_if_fail (channel != NULL);
+  g_return_if_fail (GIMP_IS_CHANNEL (channel));
+
+  opacity = CLAMP (opacity, 0, 100);
+
+  channel->color.a = opacity / 100.0;
 }
 
 void
@@ -579,12 +586,12 @@ channel_new_mask (GimpImage *gimage,
 		  gint       width,
 		  gint       height)
 {
-  guchar   black[3] = { 0, 0, 0 };
+  GimpRGB  black = { 0.0, 0.0, 0.0, 0.5 };
   Channel *new_channel;
 
   /*  Create the new channel  */
   new_channel = channel_new (gimage, width, height,
-			     _("Selection Mask"), 127, black);
+			     _("Selection Mask"), &black);
 
   /*  Set the validate procedure  */
   tile_manager_set_validate_proc (GIMP_DRAWABLE (new_channel)->tiles,
@@ -1381,8 +1388,8 @@ channel_clear (Channel *mask)
 void
 channel_invert (Channel *mask)
 {
-  PixelRegion maskPR;
-  GimpLut *lut;
+  PixelRegion  maskPR;
+  GimpLut     *lut;
 
   /*  push the current channel onto the undo stack  */
   channel_push_undo (mask);
@@ -1403,8 +1410,8 @@ channel_invert (Channel *mask)
 void
 channel_sharpen (Channel *mask)
 {
-  PixelRegion maskPR;
-  GimpLut *lut;
+  PixelRegion  maskPR;
+  GimpLut     *lut;
 
   /*  push the current channel onto the undo stack  */
   channel_push_undo (mask);
@@ -1424,7 +1431,7 @@ void
 channel_all (Channel *mask)
 {
   PixelRegion maskPR;
-  guchar bg = 255;
+  guchar      bg = 255;
 
   /*  push the current channel onto the undo stack  */
   channel_push_undo (mask);

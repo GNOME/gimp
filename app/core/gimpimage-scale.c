@@ -259,36 +259,67 @@ gimp_image_class_init (GimpImageClass *klass)
 static void 
 gimp_image_init (GimpImage *gimage)
 {
-  gimage->num_cols              = 0;
+  gimage->save_proc             = NULL;
+
+  gimage->width                 = 0;
+  gimage->height                = 0;
+  gimage->xresolution           = default_xresolution;
+  gimage->yresolution           = default_yresolution;
+  gimage->unit                  = default_units;
+  gimage->base_type             = RGB;
+
   gimage->cmap                  = NULL;
-  gimage->disp_count            = 0;
-  gimage->instance_count        = 0;
-  gimage->shadow                = NULL;
+  gimage->num_cols              = 0;
+
   gimage->dirty                 = 1;
   gimage->undo_on               = TRUE;
-  gimage->construct_flag        = -1;
+
+  gimage->instance_count        = 0;
+  gimage->disp_count            = 0;
+
   gimage->tattoo_state          = 0;
+
+  gimage->shadow                = NULL;
+
+  gimage->construct_flag        = -1;
+  gimage->proj_type             = RGBA_GIMAGE;
   gimage->projection            = NULL;
+
   gimage->guides                = NULL;
+
   gimage->layers                = NULL;
   gimage->channels              = NULL;
   gimage->layer_stack           = NULL;
+
+  gimage->active_layer          = NULL;
+  gimage->active_channel        = NULL;
+  gimage->floating_sel          = NULL;
+  gimage->selection_mask        = NULL;
+
+  gimage->parasites             = parasite_list_new ();
+
+  gimage->paths                 = NULL;
+
+  gimage->by_color_select       = FALSE;
+
+  gimage->qmask_state           = FALSE;
+  gimage->qmask_color.r         = 1.0;
+  gimage->qmask_color.g         = 0.0;
+  gimage->qmask_color.b         = 0.0;
+  gimage->qmask_color.a         = 0.5;
+
   gimage->undo_stack            = NULL;
   gimage->redo_stack            = NULL;
   gimage->undo_bytes            = 0;
   gimage->undo_levels           = 0;
   gimage->group_count           = 0;
   gimage->pushing_undo_group    = UNDO_NULL;
+  gimage->undo_history          = NULL;
+
+  gimage->comp_preview          = NULL;
   gimage->comp_preview_valid[0] = FALSE;
   gimage->comp_preview_valid[1] = FALSE;
   gimage->comp_preview_valid[2] = FALSE;
-  gimage->comp_preview          = NULL;
-  gimage->parasites             = parasite_list_new ();
-  gimage->xresolution           = default_xresolution;
-  gimage->yresolution           = default_yresolution;
-  gimage->unit                  = default_units;
-  gimage->save_proc             = NULL;
-  gimage->paths                 = NULL;
 }
 
 GtkType 
@@ -342,7 +373,8 @@ gimp_image_allocate_projection (GimpImage *gimage)
     }
 
   /*  allocate the new projection  */
-  gimage->projection = tile_manager_new (gimage->width, gimage->height, gimage->proj_bytes);
+  gimage->projection = tile_manager_new (gimage->width, gimage->height,
+					 gimage->proj_bytes);
   tile_manager_set_user_data (gimage->projection, (void *) gimage);
   tile_manager_set_validate_proc (gimage->projection, gimp_image_validate);
 }
@@ -395,11 +427,6 @@ gimp_image_new (gint               width,
       break;
     }
 
-  /*  configure the active pointers  */
-  gimage->active_layer   = NULL;
-  gimage->active_channel = NULL;  /* no default active channel */
-  gimage->floating_sel   = NULL;
-
   /*  set all color channels visible and active  */
   for (i = 0; i < MAX_CHANNELS; i++)
     {
@@ -411,12 +438,6 @@ gimp_image_new (gint               width,
   gimage->selection_mask = channel_new_mask (gimage,
 					     gimage->width, gimage->height);
 
-  /* set the qmask properties */
-  gimage->qmask_state    = FALSE;
-  gimage->qmask_opacity  = 50;
-  gimage->qmask_color[0] = 255; 
-  gimage->qmask_color[1] = 0; 
-  gimage->qmask_color[2] = 0; 
 
   return gimage;
 }
@@ -1524,20 +1545,27 @@ project_channel (GimpImage   *gimage,
 		 PixelRegion *src, 
 		 PixelRegion *src2)
 {
-  gint type;
+  guchar  col[3];
+  guchar  opacity;
+  gint    type;
+
+  gimp_rgba_get_uchar (&channel->color,
+		       &col[0], &col[1], &col[2], &opacity);
 
   if (! gimage->construct_flag)
     {
       type = (channel->show_masked) ?
 	INITIAL_CHANNEL_MASK : INITIAL_CHANNEL_SELECTION;
-      initial_region (src2, src, NULL, channel->col, channel->opacity,
+
+      initial_region (src2, src, NULL, col, opacity,
 		      NORMAL_MODE, NULL, type);
     }
   else
     {
       type = (channel->show_masked) ?
 	COMBINE_INTEN_A_CHANNEL_MASK : COMBINE_INTEN_A_CHANNEL_SELECTION;
-      combine_regions (src, src2, src, NULL, channel->col, channel->opacity,
+
+      combine_regions (src, src2, src, NULL, col, opacity,
 		       NORMAL_MODE, NULL, type);
     }
 }

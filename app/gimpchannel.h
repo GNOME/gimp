@@ -43,8 +43,7 @@ struct _GimpChannel
 {
   GimpDrawable  parent_instance;
 
-  guchar        col[3];            /*  RGB triplet for channel color  */
-  gint          opacity;           /*  Channel opacity                */
+  GimpRGB       color;             /*  Also stored the opacity        */
   gboolean      show_masked;       /*  Show masked areas--as          */
                                    /*  opposed to selected areas      */
 
@@ -95,21 +94,20 @@ Channel       * channel_new                 (GimpImage     *gimage,
 					     gint           width,
 					     gint           height,
 					     const gchar   *name,
-					     gint           opacity,
-					     const guchar  *col);
+					     const GimpRGB *color);
 Channel       * channel_copy                (const Channel *channel);
 
 const gchar   * channel_get_name            (const Channel *channel);
 void            channel_set_name            (Channel       *channel, 
 					     const gchar   *name);
 
-gint	        channel_get_opacity         (const Channel *channel);
-void            channel_set_opacity         (Channel       *channel, 
+gint            channel_get_opacity         (const Channel *channel);
+void            channel_set_opacity         (Channel       *channel,
 					     gint           opacity);
 
-const guchar  * channel_get_color           (const Channel *channel);
+const GimpRGB * channel_get_color           (const Channel *channel);
 void 		channel_set_color           (Channel       *channel, 
-					     const guchar  *color);
+					     const GimpRGB *color);
 
 void            channel_delete              (Channel       *channel);
 void            channel_scale               (Channel       *channel, 
@@ -219,6 +217,8 @@ void            channel_load                (Channel      *mask,
 
 void		channel_invalidate_bounds   (Channel      *channel);
 
+
 #define gimp_drawable_channel GIMP_IS_CHANNEL
+
 
 #endif /* __CHANNEL_H__ */

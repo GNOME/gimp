@@ -680,10 +680,17 @@ xcf_save_channel_props (XcfInfo *info,
   if (channel == gimage->selection_mask)
     xcf_save_prop (info, PROP_SELECTION);
 
-  xcf_save_prop (info, PROP_OPACITY, channel->opacity);
+  xcf_save_prop (info, PROP_OPACITY, (gint) (channel->color.a * 255.999));
   xcf_save_prop (info, PROP_VISIBLE, GIMP_DRAWABLE(channel)->visible);
   xcf_save_prop (info, PROP_SHOW_MASKED, channel->show_masked);
-  xcf_save_prop (info, PROP_COLOR, channel->col);
+
+  {
+    guchar col[3];
+
+    gimp_rgb_get_uchar (&channel->color, &col[0], &col[1], &col[2]);
+    xcf_save_prop (info, PROP_COLOR, col);
+  }
+
   xcf_save_prop (info, PROP_TATTOO, GIMP_DRAWABLE(channel)->tattoo);
   if (parasite_list_length (GIMP_DRAWABLE(channel)->parasites) > 0)
     xcf_save_prop (info, PROP_PARASITES, GIMP_DRAWABLE(channel)->parasites);
@@ -2135,7 +2142,12 @@ xcf_load_channel_props (XcfInfo *info,
 	  channel->bounds_known   = FALSE;
 	  break;
 	case PROP_OPACITY:
-	  info->cp += xcf_read_int32 (info->fp, (guint32*) &channel->opacity, 1);
+	  {
+	    guint32 opacity;
+
+	    info->cp += xcf_read_int32 (info->fp, &opacity, 1);
+	    channel->color.a = opacity / 255.0;
+	  }
 	  break;
 	case PROP_VISIBLE:
 	  info->cp += xcf_read_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(channel)->visible, 1);
@@ -2144,7 +2156,14 @@ xcf_load_channel_props (XcfInfo *info,
 	  info->cp += xcf_read_int32 (info->fp, (guint32*) &channel->show_masked, 1);
 	  break;
 	case PROP_COLOR:
-	  info->cp += xcf_read_int8 (info->fp, (guint8*) channel->col, 3);
+	  {
+	    guchar col[3];
+
+	    info->cp += xcf_read_int8 (info->fp, (guint8*) col, 3);
+
+	    gimp_rgb_set_uchar (&channel->color, col[0], col[1], col[2]);
+				
+	  }
 	  break;
 	case PROP_TATTOO:
 	  info->cp += xcf_read_int32 (info->fp, &GIMP_DRAWABLE(channel)->tattoo,
@@ -2273,7 +2292,7 @@ xcf_load_layer (XcfInfo *info,
       Layer *floating_sel;
 
       floating_sel = info->floating_sel;
-      floating_sel_attach (floating_sel, GIMP_DRAWABLE(layer));
+      floating_sel_attach (floating_sel, GIMP_DRAWABLE (layer));
     }
 
   return layer;
@@ -2288,12 +2307,12 @@ xcf_load_channel (XcfInfo *info,
 		  GImage  *gimage)
 {
   Channel *channel;
-  guint32 hierarchy_offset;
-  gint width;
-  gint height;
-  gint add_floating_sel;
-  gchar *name;
-  guchar color[3] = { 0, 0, 0 };
+  guint32  hierarchy_offset;
+  gint     width;
+  gint     height;
+  gint     add_floating_sel;
+  gchar   *name;
+  GimpRGB  color = { 0.0, 0.0, 0.0, 1.0 };
 
   /* check and see if this is the drawable the floating selection
    *  is attached to. if it is then we'll do the attachment at
@@ -2307,7 +2326,7 @@ xcf_load_channel (XcfInfo *info,
   info->cp += xcf_read_string (info->fp, &name, 1);
 
   /* create a new channel */
-  channel = channel_new (gimage, width, height, name, 255, color);
+  channel = channel_new (gimage, width, height, name, &color);
   g_free (name);
   if (!channel)
     return NULL;
@@ -2345,12 +2364,12 @@ xcf_load_layer_mask (XcfInfo *info,
 		     GImage  *gimage)
 {
   LayerMask *layer_mask;
-  guint32 hierarchy_offset;
-  gint width;
-  gint height;
-  gint add_floating_sel;
-  gchar *name;
-  guchar color[3] = { 0, 0, 0 };
+  guint32    hierarchy_offset;
+  gint       width;
+  gint       height;
+  gint       add_floating_sel;
+  gchar     *name;
+  GimpRGB    color = { 0.0, 0.0, 0.0, 1.0 };
 
   /* check and see if this is the drawable the floating selection
    *  is attached to. if it is then we'll do the attachment at
@@ -2364,7 +2383,7 @@ xcf_load_layer_mask (XcfInfo *info,
   info->cp += xcf_read_string (info->fp, &name, 1);
 
   /* create a new layer mask */
-  layer_mask = layer_mask_new (gimage, width, height, name, 255, color);
+  layer_mask = layer_mask_new (gimage, width, height, name, &color);
   g_free (name);
   if (!layer_mask)
     return NULL;

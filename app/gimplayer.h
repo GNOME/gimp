@@ -170,9 +170,8 @@ GtkType         gimp_layer_mask_get_type    (void);
 LayerMask     * layer_mask_new	            (GimpImage       *gimage,
 					     gint             width,
 					     gint             height,
-					     gchar           *name,
-					     gint             opacity,
-					     guchar          *col);
+					     const gchar     *name,
+					     const GimpRGB   *color);
 LayerMask     * layer_mask_copy	            (LayerMask       *layer_mask);
 void            layer_mask_delete           (LayerMask       *layer_mask);
 LayerMask     * layer_mask_ref              (LayerMask       *layer_mask);
