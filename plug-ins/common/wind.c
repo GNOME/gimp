@@ -115,13 +115,16 @@ static void render_wind_row  (guchar      *sb,
 static void get_derivative     (guchar  *pixel_R1, 
 				guchar  *pixel_R2,
 				edge_t   edge, 
+				gboolean has_alpha,
 				gint    *derivative_R,
 				gint    *derivative_G, 
-				gint    *derivative_B);
+				gint    *derivative_B,
+				gint    *derivative_A);
 static gint threshold_exceeded (guchar  *pixel_R1, 
 				guchar  *pixel_R2,
 				edge_t   edge, 
-				gint     threshold);
+				gint     threshold,
+				gboolean has_alpha);
 static void reverse_buffer     (guchar  *buffer, 
 				gint     length, 
 				gint     bytes);
@@ -170,8 +173,10 @@ config_t config =
 };
 
 static guchar    *preview_bits;
+static guchar    *preview_cache;
 static GtkWidget *preview;
-
+static gint       preview_cache_rowstride;
+static gint       preview_cache_bpp;
 
 MAIN ()
 
@@ -255,6 +260,7 @@ run (gchar   *name,
 	  break;
 	}
       g_free(preview_bits);
+      g_free(preview_cache);
       gimp_set_data("plug_in_wind", &config, sizeof(config_t));
       gimp_displays_flush();
       break;
@@ -301,6 +307,78 @@ render_effect (GDrawable *drawable,
 }
 
 static void
+preview_do_row(gint    row,
+	       gint    width,
+	       guchar *even,
+	       guchar *odd,
+	       guchar *src)
+{
+  gint    x;
+  
+  guchar *p0 = even;
+  guchar *p1 = odd;
+  
+  gdouble    r, g, b, a;
+  gdouble    c0, c1;
+  
+  for (x = 0; x < width; x++) 
+    {
+      if (preview_cache_bpp == 4)
+	{
+	  r = ((gdouble)src[x*4+0]) / 255.0;
+	  g = ((gdouble)src[x*4+1]) / 255.0;
+	  b = ((gdouble)src[x*4+2]) / 255.0;
+	  a = ((gdouble)src[x*4+3]) / 255.0;
+	}
+      else if (preview_cache_bpp == 3)
+	{
+	  r = ((gdouble)src[x*3+0]) / 255.0;
+	  g = ((gdouble)src[x*3+1]) / 255.0;
+	  b = ((gdouble)src[x*3+2]) / 255.0;
+	  a = 1.0;
+	}
+      else
+	{
+	  r = ((gdouble)src[x*preview_cache_bpp+0]) / 255.0;
+	  g = b = r;
+	  if (preview_cache_bpp == 2)
+		    a = ((gdouble)src[x*preview_cache_bpp+1]) / 255.0;
+	  else
+	    a = 1.0;
+	}
+      
+      if ((x / GIMP_CHECK_SIZE) & 1) 
+	{
+	  c0 = GIMP_CHECK_LIGHT;
+	  c1 = GIMP_CHECK_DARK;
+	} 
+      else 
+	{
+	  c0 = GIMP_CHECK_DARK;
+	  c1 = GIMP_CHECK_LIGHT;
+	}
+      
+      *p0++ = (c0 + (r - c0) * a) * 255.0;
+      *p0++ = (c0 + (g - c0) * a) * 255.0;
+      *p0++ = (c0 + (b - c0) * a) * 255.0;
+      
+      *p1++ = (c1 + (r - c1) * a) * 255.0;
+      *p1++ = (c1 + (g - c1) * a) * 255.0;
+      *p1++ = (c1 + (b - c1) * a) * 255.0;
+      
+    } /* for */
+  
+  if ((row / GIMP_CHECK_SIZE) & 1)
+    {
+      gtk_preview_draw_row (GTK_PREVIEW (preview), (guchar *)odd,  0, row, width); 
+    }
+  else
+    {
+      gtk_preview_draw_row (GTK_PREVIEW (preview), (guchar *)even, 0, row, width); 
+    }
+}
+
+static void
 render_blast (GDrawable   *drawable,
 	      gint         threshold,
 	      gint         strength,
@@ -318,18 +396,22 @@ render_blast (GDrawable   *drawable,
   gint row_stride;
   gint marker = 0;
   gint lpi;
-  
+  guchar *odd = NULL;
+  guchar *even = NULL;
+
   if (preview_mode) 
     {
       width  = GTK_PREVIEW (preview)->buffer_width;
       height = GTK_PREVIEW (preview)->buffer_height;
-      bytes  = GTK_PREVIEW (preview)->bpp;
+      bytes  = preview_cache_bpp;
 
       x1 = y1 = 0;
       x2 = width;
       y2 = height;
 
-      row_stride = GTK_PREVIEW (preview)->rowstride;
+      row_stride = preview_cache_rowstride;
+      even = g_malloc (width * 3);
+      odd  = g_malloc (width * 3);
     } 
   else 
     {
@@ -352,7 +434,7 @@ render_blast (GDrawable   *drawable,
   for (row = y1; row < y2; row++)
     {
       if (preview_mode)
-        memcpy (buffer, preview_bits + (row * row_stride), row_stride);
+        memcpy (buffer, preview_cache + (row * row_stride), row_stride);
       else
         gimp_pixel_rgn_get_row (&src_region, buffer, x1, row, width);
 
@@ -370,7 +452,7 @@ render_blast (GDrawable   *drawable,
 
       if (preview_mode) 
 	{
-	  memcpy (GTK_PREVIEW (preview)->buffer + (row_stride * row), buffer, row_stride);
+	  preview_do_row(row,width,even,odd,buffer);
 	} 
       else 
 	{
@@ -390,8 +472,8 @@ render_blast (GDrawable   *drawable,
 		{
                   if (preview_mode) 
 		    {
-		      memcpy (buffer, preview_bits + (row * row_stride), row_stride);
-		      memcpy (GTK_PREVIEW (preview)->buffer + (row_stride * row), buffer, row_stride);
+		      memcpy (buffer, preview_cache + (row * row_stride), row_stride);
+		      preview_do_row(row,width,even,odd,buffer);
 		    } 
 		  else 
 		    {
@@ -403,6 +485,12 @@ render_blast (GDrawable   *drawable,
 	  marker = 0;
 	}
     }
+
+ if(even)
+    g_free(even);
+
+  if(odd)
+    g_free(odd);
 
   g_free(buffer);
   
@@ -439,18 +527,22 @@ render_wind (GDrawable   *drawable,
   guchar *sb;
   gint lpi;
   gint x1, y1, x2, y2;
+  guchar *odd = NULL;
+  guchar *even = NULL;
 
   if (preview_mode) 
     {
       width  = GTK_PREVIEW (preview)->buffer_width;
       height = GTK_PREVIEW (preview)->buffer_height;
-      bytes  = GTK_PREVIEW (preview)->bpp;
+      bytes  = preview_cache_bpp;
 
       x1 = y1 = 0;
       x2 = width;
       y2 = height;
 
-      row_stride = GTK_PREVIEW (preview)->rowstride;
+      row_stride = preview_cache_rowstride;
+      even = g_malloc (width * 3);
+      odd  = g_malloc (width * 3);
     } 
   else 
     {
@@ -475,7 +567,7 @@ render_wind (GDrawable   *drawable,
   for (row = y1; row < y2; row++)
     {
       if (preview_mode) 
-	memcpy (sb, preview_bits + (row * row_stride), row_stride);
+	memcpy (sb, preview_cache + (row * row_stride), row_stride);
       else 
 	gimp_pixel_rgn_get_row (&src_region, sb, x1, row, width);
 
@@ -489,7 +581,7 @@ render_wind (GDrawable   *drawable,
 
       if (preview_mode) 
 	{
-	  memcpy (GTK_PREVIEW (preview)->buffer + (row_stride * row), sb, row_stride);
+	  preview_do_row(row,width,even,odd,sb);
 	} 
       else 
 	{
@@ -497,6 +589,12 @@ render_wind (GDrawable   *drawable,
 	  gimp_progress_update ((double) (row - y1)/ (double) (height));
 	}
     }
+
+  if(even)
+    g_free(even);
+
+  if(odd)
+    g_free(odd);
 
   g_free(sb);
 
@@ -523,7 +621,7 @@ render_blast_row (guchar *buffer,
 		  gint    strength,
 		  edge_t  edge)
 {
-  gint Ri, Gi, Bi;
+  gint Ri, Gi, Bi, Ai= 0;
   gint sbi, lbi;
   gint bleed_length;
   gint i, j;
@@ -533,8 +631,11 @@ render_blast_row (guchar *buffer,
   for (j = 0; j < lpi; j += bytes)
     {
       Ri = j; Gi = j + 1; Bi = j + 2;
+
+      if(bytes > 3)
+	Ai = j + 3;
 	  
-      if (threshold_exceeded(buffer+Ri, buffer+Ri+bytes, edge, threshold))
+      if (threshold_exceeded(buffer+Ri, buffer+Ri+bytes, edge, threshold, (bytes > 3)))
 	{
 	  /* we have found an edge, do bleeding */
 	  sbi = Ri;
@@ -580,6 +681,8 @@ render_blast_row (guchar *buffer,
 	      buffer[i] = buffer[Ri];
 	      buffer[i+1] = buffer[Gi];
 	      buffer[i+2] = buffer[Bi];
+	      if(bytes > 3)
+		buffer[i+3] = buffer[Ai];
 	    }
 	  j = lbi - bytes;
 	  if ((rand() % 10) > 7)
@@ -601,9 +704,9 @@ render_wind_row (guchar *sb,
 {
   gint i, j;
   gint bleed_length;
-  gint blend_amt_R, blend_amt_G, blend_amt_B;
-  gint blend_colour_R, blend_colour_G, blend_colour_B;
-  gint target_colour_R, target_colour_G, target_colour_B;
+  gint blend_amt_R, blend_amt_G, blend_amt_B, blend_amt_A = 0 ;
+  gint blend_colour_R, blend_colour_G, blend_colour_B, blend_colour_A = 0 ;
+  gint target_colour_R, target_colour_G, target_colour_B, target_colour_A = 0;
   gdouble bleed_length_max;
   gint bleed_variation;
   gint n;
@@ -617,8 +720,12 @@ render_wind_row (guchar *sb,
       gint Ri = j;
       gint Gi = j + 1;
       gint Bi = j + 2;
+      gint Ai = 0;
 
-      if (threshold_exceeded(sb+Ri, sb+Ri+comp_stride, edge, threshold))
+      if(bytes > 3)
+	Ai = j + 3;
+
+      if (threshold_exceeded(sb+Ri, sb+Ri+comp_stride, edge, threshold,(bytes > 3)))
 	{
 	  /* we have found an edge, do bleeding */
 	  sbi = Ri + comp_stride;
@@ -629,6 +736,12 @@ render_wind_row (guchar *sb,
 	  target_colour_G = sb[sbi+1];
 	  target_colour_B = sb[sbi+2];
 	  bleed_length_max = strength;
+
+	  if(bytes > 3)
+	    {
+	      blend_colour_A = sb[Ai];
+	      target_colour_A = sb[sbi+3];
+	    }
 
 	  if (rand() % 3) /* introduce weighted randomness */
 	    {
@@ -653,6 +766,10 @@ render_wind_row (guchar *sb,
 	  blend_amt_R = target_colour_R - blend_colour_R;
 	  blend_amt_G = target_colour_G - blend_colour_G;
 	  blend_amt_B = target_colour_B - blend_colour_B;
+	  if(bytes > 3)
+	    {
+	       blend_amt_A = target_colour_A - blend_colour_A;
+	    }
 	  denominator = bleed_length * bleed_length + bleed_length;
 	  denominator = 2.0 / denominator;
 	  n = bleed_length;
@@ -660,7 +777,7 @@ render_wind_row (guchar *sb,
 	    {
 
 	      /* check against original colour */
-	      if (!threshold_exceeded(sb+Ri, sb+i, edge, threshold)
+	      if (!threshold_exceeded(sb+Ri, sb+i, edge, threshold,(bytes>3))
 		  && (rand() % 2))
 		{
 		  break;
@@ -669,6 +786,13 @@ render_wind_row (guchar *sb,
 	      blend_colour_R += blend_amt_R * n * denominator;
 	      blend_colour_G += blend_amt_G * n * denominator;
 	      blend_colour_B += blend_amt_B * n * denominator;
+
+	      if(bytes > 3)
+		{
+		  blend_colour_A += blend_amt_A * n * denominator;
+		  if (blend_colour_A > 255) blend_colour_A = 255;
+		  else if (blend_colour_A < 0) blend_colour_A = 0;
+		}
 
 	      if (blend_colour_R > 255) blend_colour_R = 255;
 	      else if (blend_colour_R < 0) blend_colour_R = 0;
@@ -681,15 +805,22 @@ render_wind_row (guchar *sb,
 	      sb[i+1] = (blend_colour_G * 2 + sb[i+1]) / 3;
 	      sb[i+2] = (blend_colour_B * 2 + sb[i+2]) / 3;
 
+	      if(bytes > 3)
+		sb[i+3] = (blend_colour_A * 2 + sb[i+3]) / 3;
+
 	      if (threshold_exceeded(sb+i, sb+i+comp_stride, BOTH,
-				     threshold))
+				     threshold,(bytes>3)))
 		{
 		  target_colour_R = sb[i+comp_stride];
 		  target_colour_G = sb[i+comp_stride+1];
 		  target_colour_B = sb[i+comp_stride+2];
+		  if(bytes > 3)
+		    target_colour_A = sb[i+comp_stride+3];
 		  blend_amt_R = target_colour_R - blend_colour_R;
 		  blend_amt_G = target_colour_G - blend_colour_G;
 		  blend_amt_B = target_colour_B - blend_colour_B;
+		  if(bytes > 3)
+		    blend_amt_A = target_colour_A - blend_colour_A;
 		  denominator = n * n + n;
 		  denominator = 2.0 / denominator;
 		}
@@ -701,18 +832,22 @@ render_wind_row (guchar *sb,
 }
 
 static gint
-threshold_exceeded (guchar *pixel_R1,
-		    guchar *pixel_R2,
-		    edge_t  edge,
-		    gint    threshold)
+threshold_exceeded (guchar  *pixel_R1,
+		    guchar  *pixel_R2,
+		    edge_t   edge,
+		    gint     threshold,
+		    gboolean has_alpha)
 {
-  gint derivative_R, derivative_G, derivative_B;
+  gint derivative_R, derivative_G, derivative_B, derivative_A;
   gint return_value;
 
-  get_derivative(pixel_R1, pixel_R2, edge,
-		 &derivative_R, &derivative_G, &derivative_B);
+  get_derivative(pixel_R1, pixel_R2, edge, has_alpha,
+		 &derivative_R, &derivative_G, &derivative_B, &derivative_A);
 
-  if(((derivative_R + derivative_G + derivative_B) / 3) > threshold)
+  if(((derivative_R + 
+       derivative_G + 
+       derivative_B + 
+       derivative_A) / 4) > threshold)
     {
       return_value = 1;
     }
@@ -724,17 +859,32 @@ threshold_exceeded (guchar *pixel_R1,
 }
 
 static void
-get_derivative (guchar *pixel_R1,
-		guchar *pixel_R2,
-		edge_t  edge,
-		gint   *derivative_R,
-		gint   *derivative_G,
-		gint   *derivative_B)
+get_derivative (guchar  *pixel_R1,
+		guchar  *pixel_R2,
+		edge_t   edge,
+		gboolean has_alpha,
+		gint    *derivative_R,
+		gint    *derivative_G,
+		gint    *derivative_B,
+		gint    *derivative_A)
 {
   guchar *pixel_G1 = pixel_R1 + 1;
   guchar *pixel_B1 = pixel_R1 + 2;
   guchar *pixel_G2 = pixel_R2 + 1;
   guchar *pixel_B2 = pixel_R2 + 2;
+  guchar *pixel_A1;
+  guchar *pixel_A2;
+
+  if(has_alpha)
+    {
+      pixel_A1 = pixel_R1 + 3;
+      pixel_A2 = pixel_R2 + 3;
+      *derivative_A = *pixel_A2 - *pixel_A1;
+    }
+  else
+    {
+      *derivative_A = 0;
+    }
 
   *derivative_R = *pixel_R2 - *pixel_R1;
   *derivative_G = *pixel_G2 - *pixel_G1;
@@ -745,12 +895,14 @@ get_derivative (guchar *pixel_R1,
       *derivative_R = abs(*derivative_R);
       *derivative_G = abs(*derivative_G);
       *derivative_B = abs(*derivative_B);
+      *derivative_A = abs(*derivative_A);
     }
   else if (edge == LEADING)
     {
       *derivative_R = -(*derivative_R);
       *derivative_G = -(*derivative_G);
       *derivative_B = -(*derivative_B);
+      *derivative_A = -(*derivative_A);
     }
   else if (edge == TRAILING)
     {
@@ -818,7 +970,8 @@ radio_callback (GtkWidget *widget,
 
   gimp_radio_button_update (widget, data);
   drawable = gtk_object_get_data (GTK_OBJECT (widget), "drawable");
-  render_effect (drawable, TRUE);
+  if(drawable != NULL)
+    render_effect (drawable, TRUE);
 }
 
 static void
@@ -1064,10 +1217,14 @@ fill_preview (GtkWidget *widget,
   even = g_malloc (width * 3);
   odd  = g_malloc (width * 3);
   src  = g_malloc (width * bpp);
+  preview_cache = g_malloc(width * bpp * height);
+  preview_cache_rowstride = width * bpp;
+  preview_cache_bpp = bpp;
 
   for (y = 0; y < height; y++)
     {
       gimp_pixel_rgn_get_row (&srcPR, src, x1, y + y1, width);
+      memcpy(preview_cache + (y*width*bpp),src,width*bpp);
       p0 = even;
       p1 = odd;
       
