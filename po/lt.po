@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2\n"
 "POT-Creation-Date: 2001-10-10 02:11+0200\n"
-"PO-Revision-Date: 2001-10-09 16:37+0100\n"
+"PO-Revision-Date: 2001-10-10 02:44+0200\n"
 "Last-Translator: Mantas Kriauciunas <mantelis@centras.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -4994,7 +4994,7 @@ msgstr "Slenksèio ribos:"
 
 #: app/tips_dialog.c:75
 msgid "gimp_tips.txt"
-msgstr ""
+msgstr "gimp_tips.lt.txt"
 
 #: app/tips_dialog.c:87
 msgid "GIMP Tip of the Day"

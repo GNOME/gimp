@@ -1,3 +1,8 @@
+2001-10-10  Sven Neumann  <sven@gimp.org>
+
+	* lt.po: translate gimp_tips.txt with gimp_tips.lt.txt so the tips
+	file is actually used.
+
 2001-10-10  Mantas Kriauciunas <mantelis@centras.lt>
 
 	* lt.po: Updated Lithuanian translation
