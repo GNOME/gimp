@@ -7,8 +7,8 @@
 				  size
 				  bg-color)
   (let* ((border (/ size 5))
-	 (width (car (gimp-drawable-width logo-layer)))
-	 (height (car (gimp-drawable-height logo-layer)))
+	 (width (+ (car (gimp-drawable-width logo-layer)) border))
+	 (height (+ (car (gimp-drawable-height logo-layer)) border))
 	 (logo-layer-mask (car (gimp-layer-create-mask logo-layer ADD-BLACK-MASK)))
 	 (sparkle-layer (car (gimp-layer-new img width height RGBA-IMAGE "Sparkle" 100 NORMAL-MODE)))
 	 (matte-layer (car (gimp-layer-new img width height RGBA-IMAGE "Matte" 100 NORMAL-MODE)))
@@ -16,14 +16,21 @@
 	 (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
 	 (selection 0))
 
+    (define (for-each proc seq)
+      (if (not (null? seq))
+        (begin
+          (proc (car seq))
+          (for-each proc (cdr seq)))))
+
     (gimp-context-push)
 
     (gimp-layer-add-mask logo-layer logo-layer-mask)
-    (script-fu-util-image-resize-from-layer img logo-layer)
+    (script-fu-util-image-resize-from-layer img shadow-layer)
     (gimp-image-add-layer img sparkle-layer 2)
     (gimp-image-add-layer img matte-layer 3)
     (gimp-image-add-layer img shadow-layer 4)
     (gimp-image-add-layer img bg-layer 5)
+    (gimp-layer-translate logo-layer border border)
     (gimp-selection-none img)
     (gimp-edit-clear sparkle-layer)
     (gimp-edit-clear matte-layer)
@@ -65,8 +72,14 @@
     (gimp-edit-stroke logo-layer)
     (gimp-selection-none img)
     (gimp-image-remove-channel img selection)
+    (for-each (lambda (the-layer) 
+                (gimp-layer-resize the-layer (- width border) (- height border) (- border) (- border))
+                ; (gimp-layer-translate the-layer border border)
+                )
+              (list sparkle-layer matte-layer bg-layer))
+    (gimp-layer-resize shadow-layer (- width border) (- height border) 0 0)
     (gimp-layer-translate shadow-layer border border)
-
+    (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-context-pop)))
 
 (define (script-fu-frosty-logo-alpha img
