@@ -418,7 +418,7 @@ gimp_scale_tool_info_update (GimpTransformTool *tr_tool)
 
   tool = GIMP_TOOL (tr_tool);
 
-  unit = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (sizeentry));;
+  unit = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (sizeentry));
 
   /*  Find original sizes  */
   x1 = tr_tool->x1;

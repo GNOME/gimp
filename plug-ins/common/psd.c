@@ -2284,7 +2284,7 @@ unpack_pb_channel(FILE *fd, guchar *dst, gint32 unpackedlen, guint32 *offset)
 	  {		/* copy next n+1 guchars literally */
 	    for (b = ++n; b > 0; --b)
 	      {
-		*dst = getguchar(fd, "packbits3");;
+		*dst = getguchar(fd, "packbits3");
 		(*offset)++;
 		dst ++;
 		upremain--;

@@ -447,7 +447,7 @@ paths_dialog_create (void)
   paths_factory = gtk_item_factory_from_path ("<Paths>");
 
   paths_dialog->ops_menu    = paths_factory->widget;
-  paths_dialog->accel_group = paths_factory->accel_group;;
+  paths_dialog->accel_group = paths_factory->accel_group;
 
   paths_dialog_set_menu_sensitivity ();
 

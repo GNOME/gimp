@@ -305,7 +305,7 @@ run (gchar   *name,		/* I - Name of filter program. */
 	
     default:
       status = GIMP_PDB_CALLING_ERROR;
-      break;;
+      break;
     };
 
   /*

@@ -1926,7 +1926,7 @@ t_channel_props * p_new_channel_prop()
     l_new_prop->show_masked       = g_prop_table[p_get_property_index(PROP_SHOW_MASKED)].default_val1;
     l_new_prop->offx              = g_prop_table[p_get_property_index(PROP_OFFSETS)].default_val1;
     l_new_prop->offy              = g_prop_table[p_get_property_index(PROP_OFFSETS)].default_val2;
-    l_new_prop->color_r           = g_prop_table[p_get_property_index(PROP_COLOR)].default_val1;;
+    l_new_prop->color_r           = g_prop_table[p_get_property_index(PROP_COLOR)].default_val1;
     l_new_prop->color_g           = g_prop_table[p_get_property_index(PROP_COLOR)].default_val2;
     l_new_prop->color_b           = g_prop_table[p_get_property_index(PROP_COLOR)].default_val3;
     l_new_prop->tattoo            = g_prop_table[p_get_property_index(PROP_TATTOO)].default_val1;

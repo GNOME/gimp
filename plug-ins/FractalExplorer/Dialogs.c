@@ -566,7 +566,7 @@ explorer_dialog (void)
     gimp_radio_group_new2 (FALSE, NULL,
 			   G_CALLBACK (explorer_radio_update),
 			   &wvals.fractaltype,
-			   (gpointer) &wvals.fractaltype,
+			   (gpointer) wvals.fractaltype,
 
 			   _("Mandelbrot"), (gpointer) TYPE_MANDELBROT,
 			   &(elements->type[TYPE_MANDELBROT]),

@@ -374,7 +374,7 @@ gimp_list_item_set_reorderable (GimpListItem  *list_item,
   g_return_if_fail (! reorderable || container != NULL);
   g_return_if_fail (! container || GIMP_IS_CONTAINER (container));
 
-  list_item->reorderable = reorderable ? TRUE : FALSE;;
+  list_item->reorderable = reorderable ? TRUE : FALSE;
 
   if (reorderable)
     {
@@ -402,7 +402,7 @@ gimp_list_item_set_convertable  (GimpListItem *list_item,
 {
   g_return_if_fail (GIMP_IS_LIST_ITEM (list_item));
 
-  list_item->convertable = convertable ? TRUE : FALSE;;
+  list_item->convertable = convertable ? TRUE : FALSE;
 }
 
 void

@@ -255,7 +255,7 @@ run (gchar      *name,
 
     default:
       status = GIMP_PDB_CALLING_ERROR;
-      break;;
+      break;
     };
 
   /*

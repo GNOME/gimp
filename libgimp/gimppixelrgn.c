@@ -189,7 +189,7 @@ gimp_pixel_rgn_get_row (GimpPixelRgn *pr,
 	      (const void *)tile_data,
 	      inc = (bpp * 
 		     ( (min = MIN (end, boundary)) -x) ) );
-      x = min;;
+      x = min;
       buf += inc;
 #else
       for ( ; x < end && x < boundary; x++)

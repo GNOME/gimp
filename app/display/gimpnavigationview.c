@@ -292,7 +292,7 @@ gimp_navigation_view_popup (GimpDisplayShell *shell,
     }
   else
     {
-      view = GIMP_NAVIGATION_VIEW (GTK_BIN (GTK_BIN (shell->nav_popup)->child)->child);;
+      view = GIMP_NAVIGATION_VIEW (GTK_BIN (GTK_BIN (shell->nav_popup)->child)->child);
     }
 
   preview = GIMP_NAVIGATION_PREVIEW (view->preview);

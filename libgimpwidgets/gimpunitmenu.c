@@ -178,7 +178,7 @@ gimp_unit_menu_new (const gchar *format,
 
   g_return_val_if_fail (((unit >= GIMP_UNIT_PIXEL) &&
 			 (unit < gimp_unit_get_number_of_units ())) ||
-			 (unit == GIMP_UNIT_PERCENT), NULL);
+			(unit == GIMP_UNIT_PERCENT), NULL);
 
   if ((unit >= gimp_unit_get_number_of_built_in_units ()) &&
       (unit != GIMP_UNIT_PERCENT))

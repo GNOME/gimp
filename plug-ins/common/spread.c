@@ -311,7 +311,7 @@ spread (GimpDrawable *drawable)
 		}
 	      dest += bytes;
             }
-	  destrow += dest_rgn.rowstride;;
+	  destrow += dest_rgn.rowstride;
 	}
       progress += dest_rgn.w * dest_rgn.h;
       gimp_progress_update ((double) progress / (double) max_progress);

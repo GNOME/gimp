@@ -339,7 +339,7 @@ solid_noise (GimpDrawable *drawable)
                 *dest++ = 255;
             }
 
-          dest_row += dest_rgn.rowstride;;
+          dest_row += dest_rgn.rowstride;
         }
 
       /*  Update progress  */

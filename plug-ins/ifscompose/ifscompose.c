@@ -1468,7 +1468,7 @@ ifs_compose (GimpDrawable *drawable)
 		      break;
 		    }
 		}
-	      destrow += dest_rgn.rowstride;;
+	      destrow += dest_rgn.rowstride;
 	    }
 	  progress += dest_rgn.w * dest_rgn.h;
 	  gimp_progress_update ((gdouble) progress / (gdouble) max_progress);

@@ -1,5 +1,28 @@
 2003-01-14  Manish Singh  <yosh@gimp.org>
 
+	* app/core/gimpchannel.h
+	* app/core/gimpitem.c
+	* app/display/gimpnavigationview.c
+	* app/gui/paths-dialog.c
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimpscaletool.c
+	* app/widgets/gimplistitem.c
+	* libgimp/gimppixelrgn.c
+	* libgimpwidgets/gimpunitmenu.c
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/common/aa.c
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/psd.c
+	* plug-ins/common/sharpen.c
+	* plug-ins/common/snoise.c
+	* plug-ins/common/spread.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/xjt/xjt.c: some minor code cleanup
+
+	* plug-ins/common/csource.c: 64-bit cleanliness
+
+2003-01-14  Manish Singh  <yosh@gimp.org>
+
 	* configure.in: Oops, the configure.in change below didn't actually
 	work. Refactored so it does.
 
@@ -744,7 +767,9 @@
 
 2003-01-05  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
-	* plug-ins/script-fu/scripts/starscape-logo.scm (apply-starscape-logo-effect): fixes #73894. A channel was removed but never added to the image.
+	* plug-ins/script-fu/scripts/starscape-logo.scm
+	(apply-starscape-logo-effect): fixes #73894. A channel was removed
+	but never added to the image.
 
 2003-01-05  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 

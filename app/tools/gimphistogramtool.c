@@ -352,7 +352,7 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
                               NULL);
 
   vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);;
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (htd->shell)->vbox), vbox);
   gtk_widget_show (vbox);
 

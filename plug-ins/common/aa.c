@@ -233,7 +233,7 @@ save_aa (gint32  drawable_ID,
 {
   aa_savedata  savedata;
   aa_context  *context;
-  aa_format    format = *aa_formats[output_type];;
+  aa_format    format = *aa_formats[output_type];
 
   format.width  = gimp_drawable_width (drawable_ID)  / 2;
   format.height = gimp_drawable_height (drawable_ID) / 2;

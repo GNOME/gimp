@@ -505,7 +505,7 @@ save_image (Config *config,
 	       s_uint_8,
 	       config->use_rle ? "rle_" : "");
       if (config->use_rle)
-	fprintf (fp, "%u + 1];\n", img_buffer_end - img_buffer);
+	fprintf (fp, "%u + 1];\n", (guint) (img_buffer_end - img_buffer));
       else
 	fprintf (fp, "%u * %u * %u + 1];\n",
 		 drawable->width,
@@ -584,7 +584,7 @@ save_image (Config *config,
 	       macro_name,
 	       config->use_rle ? "rle_" : "");
       if (config->use_rle)
-	fprintf (fp, "%u] =\n", img_buffer_end - img_buffer);
+	fprintf (fp, "%u] =\n", (guint) (img_buffer_end - img_buffer));
       else
 	fprintf (fp, "%u * %u * %u + 1] =\n",
 		 drawable->width,
