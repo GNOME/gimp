@@ -1,3 +1,21 @@
+2004-02-17  Michael Natterer  <mitch@gimp.org>
+
+	Make sure each GimpItem emits "removed" when it is removed from
+	the image so dialogs have a chance to close themselves:
+
+	* app/core/gimplayer.c (gimp_layer_apply_mask): emit "removed"
+	from the mask.
+
+	(gimp_layer_removed): new function which emits "removed" from
+	the layer's mask when the layer gets removed from the image.
+
+	* app/core/gimpimage.c (gimp_image_dispose): emit "removed"
+	from all layers, channels and vectors.
+
+	* app/gui/layers-commands.c (layers_scale_layer_query)
+	(layers_resize_layer_query): removed recently added connections to
+	"removed" because GimpViewableDialog does this automatically.
+
 2004-02-16  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimptile.[ch] (_gimp_tile_cache_flush_drawable): new

@@ -71,6 +71,7 @@ static gint64     gimp_layer_get_memsize        (GimpObject         *object,
 
 static void       gimp_layer_invalidate_preview (GimpViewable       *viewable);
 
+static void       gimp_layer_removed            (GimpItem           *item);
 static gboolean   gimp_layer_is_attached        (GimpItem           *item);
 static GimpItem * gimp_layer_duplicate          (GimpItem           *item,
                                                  GType               new_type,
@@ -229,6 +230,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   viewable_class->default_stock_id    = "gimp-layer";
   viewable_class->invalidate_preview  = gimp_layer_invalidate_preview;
 
+  item_class->removed                 = gimp_layer_removed;
   item_class->is_attached             = gimp_layer_is_attached;
   item_class->duplicate               = gimp_layer_duplicate;
   item_class->convert                 = gimp_layer_convert;
@@ -372,6 +374,18 @@ gimp_layer_get_active_components (const GimpDrawable *drawable,
 
   if (gimp_drawable_has_alpha (drawable) && layer->preserve_trans)
     active[gimp_drawable_bytes (drawable) - 1] = FALSE;
+}
+
+static void
+gimp_layer_removed (GimpItem *item)
+{
+  GimpLayer *layer = GIMP_LAYER (item);
+
+  if (layer->mask)
+    gimp_item_removed (GIMP_ITEM (layer->mask));
+
+  if (GIMP_ITEM_CLASS (parent_class)->removed)
+    GIMP_ITEM_CLASS (parent_class)->removed (item);
 }
 
 static gboolean
@@ -1294,6 +1308,7 @@ gimp_layer_apply_mask (GimpLayer         *layer,
                                         gimp_layer_layer_mask_update,
                                         layer);
 
+  gimp_item_removed (GIMP_ITEM (layer->mask));
   g_object_unref (layer->mask);
   layer->mask = NULL;
 

@@ -595,10 +595,13 @@ gimp_image_dispose (GObject *object)
   g_signal_handlers_disconnect_by_func (gimage->channels,
                                         gimp_image_channel_add,
                                         gimage);
-
   g_signal_handlers_disconnect_by_func (gimage->channels,
                                         gimp_image_channel_remove,
                                         gimage);
+
+  gimp_container_foreach (gimage->layers,   (GFunc) gimp_item_removed, NULL);
+  gimp_container_foreach (gimage->channels, (GFunc) gimp_item_removed, NULL);
+  gimp_container_foreach (gimage->vectors,  (GFunc) gimp_item_removed, NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -696,14 +699,13 @@ gimp_image_finalize (GObject *object)
 static void
 gimp_image_name_changed (GimpObject *object)
 {
-  GimpImage   *gimage;
+  GimpImage   *gimage = GIMP_IMAGE (object);
   const gchar *name;
 
   if (GIMP_OBJECT_CLASS (parent_class)->name_changed)
     GIMP_OBJECT_CLASS (parent_class)->name_changed (object);
 
-  gimage = GIMP_IMAGE (object);
-  name   = gimp_object_get_name (object);
+  name = gimp_object_get_name (object);
 
   if (! (name && strlen (name)))
     {
@@ -716,10 +718,8 @@ static gint64
 gimp_image_get_memsize (GimpObject *object,
                         gint64     *gui_size)
 {
-  GimpImage *gimage;
+  GimpImage *gimage  = GIMP_IMAGE (object);
   gint64     memsize = 0;
-
-  gimage = GIMP_IMAGE (object);
 
   if (gimage->cmap)
     memsize += GIMP_IMAGE_COLORMAP_SIZE;

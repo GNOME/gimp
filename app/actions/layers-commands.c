@@ -1193,12 +1193,6 @@ layers_scale_layer_query (GimpDisplay *gdisp,
 		       G_CALLBACK (scale_layer_query_ok_callback),
                        options);
 
-  /*  FIXME: this doesn't catch all possibilities of the layer being deleted */
-  g_signal_connect_object (layer, "removed",
-                           G_CALLBACK (gtk_widget_destroy),
-                           options->resize->resize_shell,
-                           G_CONNECT_SWAPPED);
-
   g_object_weak_ref (G_OBJECT (options->resize->resize_shell),
 		     (GWeakNotify) g_free,
 		     options);
@@ -1292,12 +1286,6 @@ layers_resize_layer_query (GimpImage *gimage,
 		       TRUE,
 		       G_CALLBACK (resize_layer_query_ok_callback),
                        options);
-
-  /*  FIXME: this doesn't catch all possibilities of the layer being deleted */
-  g_signal_connect_object (layer, "removed",
-                           G_CALLBACK (gtk_widget_destroy),
-                           options->resize->resize_shell,
-                           G_CONNECT_SWAPPED);
 
   g_object_weak_ref (G_OBJECT (options->resize->resize_shell),
 		     (GWeakNotify) g_free,
