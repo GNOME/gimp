@@ -118,6 +118,21 @@ static gchar  * gimp_image_get_description       (GimpViewable   *viewable,
 static void     gimp_image_real_colormap_changed (GimpImage      *gimage,
 						  gint            ncol);
 
+static void     gimp_image_drawable_update       (GimpDrawable   *drawable,
+                                                  gint            x,
+                                                  gint            y,
+                                                  gint            width,
+                                                  gint            height,
+                                                  GimpImage      *gimage);
+static void     gimp_image_drawable_visibility   (GimpDrawable   *drawable,
+                                                  GimpImage      *gimage);
+static void     gimp_image_drawable_add          (GimpContainer  *container,
+                                                  GimpDrawable   *drawable,
+                                                  GimpImage      *gimage);
+static void     gimp_image_drawable_remove       (GimpContainer  *container,
+                                                  GimpDrawable   *drawable,
+                                                  GimpImage      *gimage);
+
 static void     gimp_image_get_active_components (const GimpImage    *gimage,
                                                   const GimpDrawable *drawable,
                                                   gboolean           *active);
@@ -478,6 +493,38 @@ gimp_image_init (GimpImage *gimage)
                                                  GIMP_CONTAINER_POLICY_STRONG);
   gimage->layer_stack           = NULL;
 
+  gimage->layer_update_handler =
+    gimp_container_add_handler (gimage->layers, "update",
+                                G_CALLBACK (gimp_image_drawable_update),
+                                gimage);
+  gimage->channel_update_handler =
+    gimp_container_add_handler (gimage->channels, "update",
+                                G_CALLBACK (gimp_image_drawable_update),
+                                gimage);
+
+  gimage->layer_visible_handler =
+    gimp_container_add_handler (gimage->layers, "visibility_changed",
+                                G_CALLBACK (gimp_image_drawable_visibility),
+                                gimage);
+  gimage->channel_visible_handler =
+    gimp_container_add_handler (gimage->channels, "visibility_changed",
+                                G_CALLBACK (gimp_image_drawable_visibility),
+                                gimage);
+
+  g_signal_connect (gimage->layers, "add",
+                    G_CALLBACK (gimp_image_drawable_add),
+                    gimage);
+  g_signal_connect (gimage->channels, "add",
+                    G_CALLBACK (gimp_image_drawable_add),
+                    gimage);
+
+  g_signal_connect (gimage->layers, "remove",
+                    G_CALLBACK (gimp_image_drawable_remove),
+                    gimage);
+  g_signal_connect (gimage->channels, "remove",
+                    G_CALLBACK (gimp_image_drawable_remove),
+                    gimage);
+
   gimage->active_layer          = NULL;
   gimage->active_channel        = NULL;
   gimage->active_vectors        = NULL;
@@ -507,11 +554,33 @@ gimp_image_init (GimpImage *gimage)
 static void
 gimp_image_dispose (GObject *object)
 {
-  GimpImage *gimage;
-
-  gimage = GIMP_IMAGE (object);
+  GimpImage *gimage = GIMP_IMAGE (object);
 
   gimp_image_undo_free (gimage);
+
+  gimp_container_remove_handler (gimage->layers,
+                                 gimage->layer_update_handler);
+  gimp_container_remove_handler (gimage->channels,
+                                 gimage->channel_update_handler);
+
+  gimp_container_remove_handler (gimage->layers,
+                                 gimage->layer_visible_handler);
+  gimp_container_remove_handler (gimage->channels,
+                                 gimage->channel_visible_handler);
+
+  g_signal_handlers_disconnect_by_func (gimage->layers,
+                                        gimp_image_drawable_add,
+                                        gimage);
+  g_signal_handlers_disconnect_by_func (gimage->channels,
+                                        gimp_image_drawable_add,
+                                        gimage);
+
+  g_signal_handlers_disconnect_by_func (gimage->layers,
+                                        gimp_image_drawable_remove,
+                                        gimage);
+  g_signal_handlers_disconnect_by_func (gimage->channels,
+                                        gimp_image_drawable_remove,
+                                        gimage);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -519,9 +588,7 @@ gimp_image_dispose (GObject *object)
 static void
 gimp_image_finalize (GObject *object)
 {
-  GimpImage *gimage;
-
-  gimage = GIMP_IMAGE (object);
+  GimpImage *gimage = GIMP_IMAGE (object);
 
   if (gimage->gimp && gimage->gimp->image_table)
     {
@@ -763,9 +830,69 @@ gimp_image_real_colormap_changed (GimpImage *gimage,
     {
       /* A colormap alteration affects the whole image */
       gimp_image_update (gimage, 0, 0, gimage->width, gimage->height);
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
 
       gimp_image_color_hash_invalidate (gimage, ncol);
     }
+}
+
+static void
+gimp_image_drawable_update (GimpDrawable *drawable,
+                            gint          x,
+                            gint          y,
+                            gint          width,
+                            gint          height,
+                            GimpImage    *gimage)
+{
+  if (gimp_drawable_get_visible (drawable))
+    {
+      gint offset_x;
+      gint offset_y;
+
+      gimp_item_offsets (GIMP_ITEM (drawable), &offset_x, &offset_y);
+      x += offset_x;
+      y += offset_y;
+
+      gimp_image_update (gimage, x, y, width, height);
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
+    }
+}
+
+static void
+gimp_image_drawable_visibility (GimpDrawable *drawable,
+                                GimpImage    *gimage)
+{
+  GimpItem *item;
+  gint      offset_x;
+  gint      offset_y;
+
+  item = GIMP_ITEM (drawable);
+
+  gimp_item_offsets (item, &offset_x, &offset_y);
+
+  gimp_image_update (gimage,
+                     offset_x, offset_y,
+                     gimp_item_width (item),
+                     gimp_item_height (item));
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
+}
+
+static void
+gimp_image_drawable_add (GimpContainer *container,
+                         GimpDrawable  *drawable,
+                         GimpImage     *gimage)
+{
+  if (gimp_drawable_get_visible (drawable))
+    gimp_image_drawable_visibility (drawable, gimage);
+}
+
+static void
+gimp_image_drawable_remove (GimpContainer *container,
+                            GimpDrawable  *drawable,
+                            GimpImage     *gimage)
+{
+  if (gimp_drawable_get_visible (drawable))
+    gimp_image_drawable_visibility (drawable, gimage);
 }
 
 static void
@@ -1236,6 +1363,7 @@ gimp_image_set_component_visible (GimpImage       *gimage,
 		     channel);
 
       gimp_image_update (gimage, 0, 0, gimage->width, gimage->height);
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
     }
 }
 
@@ -1820,8 +1948,6 @@ gimp_image_replace_image (GimpImage    *gimage,
   gint             x1, y1, x2, y2;
   gint             offset_x, offset_y;
   PixelRegion      src1PR, destPR;
-  PixelRegion      mask2PR, tempPR;
-  guchar          *temp_data;
   CombinationMode  operation;
   gboolean         active_components[MAX_CHANNELS];
 
@@ -1887,7 +2013,9 @@ gimp_image_replace_image (GimpImage    *gimage,
 
   if (mask)
     {
-      int mx, my;
+      PixelRegion  mask2PR, tempPR;
+      guchar      *temp_data;
+      gint         mx, my;
 
       /*  configure the mask pixel region
        *  don't use x1 and y1 because they are in layer
@@ -1902,30 +2030,29 @@ gimp_image_replace_image (GimpImage    *gimage,
 			 (x2 - x1), (y2 - y1),
 			 FALSE);
 
-      tempPR.bytes = 1;
-      tempPR.x = 0;
-      tempPR.y = 0;
-      tempPR.w = x2 - x1;
-      tempPR.h = y2 - y1;
+      tempPR.bytes     = 1;
+      tempPR.x         = 0;
+      tempPR.y         = 0;
+      tempPR.w         = x2 - x1;
+      tempPR.h         = y2 - y1;
       tempPR.rowstride = tempPR.w * tempPR.bytes;
-      temp_data = g_malloc (tempPR.h * tempPR.rowstride);
-      tempPR.data = temp_data;
+      tempPR.data      = temp_data = g_malloc (tempPR.h * tempPR.rowstride);
 
       copy_region (&mask2PR, &tempPR);
 
       /* apparently, region operations can mutate some PR data. */
-      tempPR.x = 0;
-      tempPR.y = 0;
-      tempPR.w = x2 - x1;
-      tempPR.h = y2 - y1;
+      tempPR.x    = 0;
+      tempPR.y    = 0;
+      tempPR.w    = x2 - x1;
+      tempPR.h    = y2 - y1;
       tempPR.data = temp_data;
 
       apply_mask_to_region (&tempPR, maskPR, OPAQUE_OPACITY);
 
-      tempPR.x = 0;
-      tempPR.y = 0;
-      tempPR.w = x2 - x1;
-      tempPR.h = y2 - y1;
+      tempPR.x    = 0;
+      tempPR.y    = 0;
+      tempPR.w    = x2 - x1;
+      tempPR.h    = y2 - y1;
       tempPR.data = temp_data;
 
       combine_regions_replace (&src1PR, src2PR, &destPR, &tempPR, NULL,
@@ -2569,12 +2696,6 @@ gimp_image_add_layer (GimpImage *gimage,
   /*  notify the layers dialog of the currently active layer  */
   gimp_image_set_active_layer (gimage, layer);
 
-  /*  update the new layer's area  */
-  gimp_drawable_update (GIMP_DRAWABLE (layer),
-			0, 0,
-			gimp_item_width  (GIMP_ITEM (layer)),
-			gimp_item_height (GIMP_ITEM (layer)));
-
   if (alpha_changed)
     gimp_image_alpha_changed (gimage);
 
@@ -2585,8 +2706,6 @@ void
 gimp_image_remove_layer (GimpImage *gimage,
 			 GimpLayer *layer)
 {
-  gint x, y, w, h;
-
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
@@ -2630,15 +2749,7 @@ gimp_image_remove_layer (GimpImage *gimage,
   /* Send out REMOVED signal from layer */
   gimp_item_removed (GIMP_ITEM (layer));
 
-  gimp_item_offsets (GIMP_ITEM (layer), &x, &y);
-  w = gimp_item_width  (GIMP_ITEM (layer));
-  h = gimp_item_height (GIMP_ITEM (layer));
-
   g_object_unref (layer);
-
-  gimp_image_update (gimage, x, y, w, h);
-
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
 
   if (gimp_container_num_children (gimage->layers) == 1 &&
       ! gimp_drawable_has_alpha (GIMP_LIST (gimage->layers)->list->data))
@@ -2755,7 +2866,6 @@ gimp_image_position_layer (GimpImage   *gimage,
 			   gboolean     push_undo,
                            const gchar *undo_desc)
 {
-  gint off_x, off_y;
   gint index;
   gint num_layers;
 
@@ -2800,14 +2910,18 @@ gimp_image_position_layer (GimpImage   *gimage,
 
   gimp_container_reorder (gimage->layers, GIMP_OBJECT (layer), new_index);
 
-  gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
+  if (gimp_drawable_get_visible (GIMP_DRAWABLE (layer)))
+    {
+      gint off_x, off_y;
 
-  gimp_image_update (gimage,
-		     off_x, off_y,
-		     gimp_item_width  (GIMP_ITEM (layer)),
-		     gimp_item_height (GIMP_ITEM (layer)));
+      gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
 
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
+      gimp_image_update (gimage,
+                         off_x, off_y,
+                         gimp_item_width  (GIMP_ITEM (layer)),
+                         gimp_item_height (GIMP_ITEM (layer)));
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
+    }
 
   return TRUE;
 }
@@ -2867,13 +2981,6 @@ gimp_image_add_channel (GimpImage   *gimage,
   /*  notify this gimage of the currently active channel  */
   gimp_image_set_active_channel (gimage, channel);
 
-  /*  if channel is visible, update the image  */
-  if (gimp_drawable_get_visible (GIMP_DRAWABLE (channel)))
-    gimp_drawable_update (GIMP_DRAWABLE (channel),
-			  0, 0,
-			  gimp_item_width  (GIMP_ITEM (channel)),
-			  gimp_item_height (GIMP_ITEM (channel)));
-
   return TRUE;
 }
 
@@ -2916,10 +3023,6 @@ gimp_image_remove_channel (GimpImage   *gimage,
     }
 
   g_object_unref (channel);
-
-  gimp_image_update (gimage, 0, 0, gimage->width, gimage->height);
-
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
 }
 
 gboolean
@@ -2971,7 +3074,7 @@ gimp_image_position_channel (GimpImage   *gimage,
                              gboolean     push_undo,
                              const gchar *undo_desc)
 {
-  gint index;
+ gint index;
   gint num_channels;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
@@ -2995,10 +3098,18 @@ gimp_image_position_channel (GimpImage   *gimage,
   gimp_container_reorder (gimage->channels,
 			  GIMP_OBJECT (channel), new_index);
 
-  gimp_drawable_update (GIMP_DRAWABLE (channel),
-			0, 0,
-			gimp_item_width  (GIMP_ITEM (channel)),
-			gimp_item_height (GIMP_ITEM (channel)));
+  if (gimp_drawable_get_visible (GIMP_DRAWABLE (channel)))
+    {
+      gint off_x, off_y;
+
+      gimp_item_offsets (GIMP_ITEM (channel), &off_x, &off_y);
+
+      gimp_image_update (gimage,
+                         off_x, off_y,
+                         gimp_item_width  (GIMP_ITEM (channel)),
+                         gimp_item_height (GIMP_ITEM (channel)));
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
+    }
 
   return TRUE;
 }

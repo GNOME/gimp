@@ -443,6 +443,11 @@ gimp_text_layer_render_now (GimpTextLayer *layer)
 
           drawable->tiles = tile_manager_new (width, height, drawable->bytes);
 
+          gimp_drawable_update (drawable,
+                                0, 0,
+                                gimp_item_width (item),
+                                gimp_item_height (item));
+
           gimp_viewable_size_changed (GIMP_VIEWABLE (layer));
         }
     }
@@ -508,5 +513,7 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
 
   tile_manager_unref (mask);
 
-  gimp_drawable_update (drawable, 0, 0, bitmap.width, bitmap.rows);
+  /*  no need to gimp_drawable_update() since gimp_drawable_fill()
+   *  did that for us.
+   */
 }

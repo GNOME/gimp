@@ -1563,11 +1563,6 @@ undo_pop_layer (GimpUndo            *undo,
 	  gimp_image_floating_selection_changed (undo->gimage);
 	}
 
-      gimp_drawable_update (GIMP_DRAWABLE (layer),
-			    0, 0,
-			    GIMP_ITEM (layer)->width,
-			    GIMP_ITEM (layer)->height);
-
       if (gimp_container_num_children (undo->gimage->layers) == 1 &&
           ! gimp_drawable_has_alpha (GIMP_LIST (undo->gimage->layers)->list->data))
         {
@@ -1607,11 +1602,6 @@ undo_pop_layer (GimpUndo            *undo,
 
       if (gimp_layer_is_floating_sel (layer))
 	gimp_image_floating_selection_changed (undo->gimage);
-
-      gimp_drawable_update (GIMP_DRAWABLE (layer),
-			    0, 0,
-			    GIMP_ITEM (layer)->width,
-			    GIMP_ITEM (layer)->height);
     }
 
   return TRUE;
@@ -1699,11 +1689,10 @@ undo_pop_layer_mod (GimpUndo            *undo,
   layer = GIMP_LAYER (GIMP_ITEM_UNDO (undo)->item);
 
   /*  Issue the first update  */
-  gimp_image_update (undo->gimage,
-                     GIMP_ITEM (layer)->offset_x,
-                     GIMP_ITEM (layer)->offset_y,
-                     GIMP_ITEM (layer)->width,
-                     GIMP_ITEM (layer)->height);
+  gimp_drawable_update (GIMP_DRAWABLE (layer),
+                        0, 0,
+                        GIMP_ITEM (layer)->width,
+                        GIMP_ITEM (layer)->height);
 
   tiles      = lmu->tiles;
   layer_type = lmu->type;
@@ -2237,12 +2226,6 @@ undo_pop_channel (GimpUndo            *undo,
           else
             gimp_image_unset_active_channel (undo->gimage);
         }
-
-      /*  update the area  */
-      gimp_drawable_update (GIMP_DRAWABLE (channel),
-			    0, 0,
-			    GIMP_ITEM (channel)->width,
-			    GIMP_ITEM (channel)->height);
     }
   else
     {
@@ -2257,12 +2240,6 @@ undo_pop_channel (GimpUndo            *undo,
       gimp_container_insert (undo->gimage->channels,
 			     GIMP_OBJECT (channel), cu->prev_position);
       gimp_image_set_active_channel (undo->gimage, channel);
-
-      /*  update the area  */
-      gimp_drawable_update (GIMP_DRAWABLE (channel),
-			    0, 0,
-			    GIMP_ITEM (channel)->width,
-			    GIMP_ITEM (channel)->height);
     }
 
   return TRUE;

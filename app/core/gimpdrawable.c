@@ -56,6 +56,7 @@
 
 enum
 {
+  UPDATE,
   VISIBILITY_CHANGED,
   ALPHA_CHANGED,
   LAST_SIGNAL
@@ -104,6 +105,12 @@ static void       gimp_drawable_transform          (GimpItem          *item,
                                                     gboolean           clip_result,
                                                     GimpProgressFunc   progress_callback,
                                                     gpointer           progress_data);
+
+static void       gimp_drawable_real_update        (GimpDrawable      *drawable,
+                                                    gint               x,
+                                                    gint               y,
+                                                    gint               width,
+                                                    gint               height);
 
 
 /*  private variables  */
@@ -156,6 +163,19 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  gimp_drawable_signals[UPDATE] =
+    g_signal_new ("update",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpDrawableClass, update),
+		  NULL, NULL,
+		  gimp_marshal_VOID__INT_INT_INT_INT,
+		  G_TYPE_NONE, 4,
+		  G_TYPE_INT,
+		  G_TYPE_INT,
+		  G_TYPE_INT,
+		  G_TYPE_INT);
+
   gimp_drawable_signals[VISIBILITY_CHANGED] =
     g_signal_new ("visibility_changed",
 		  G_TYPE_FROM_CLASS (klass),
@@ -190,6 +210,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   item_class->rotate                 = gimp_drawable_rotate;
   item_class->transform              = gimp_drawable_transform;
 
+  klass->update                      = gimp_drawable_real_update;
   klass->visibility_changed          = NULL;
   klass->alpha_changed               = NULL;
   klass->invalidate_boundary         = NULL;
@@ -247,7 +268,6 @@ static void
 gimp_drawable_invalidate_preview (GimpViewable *viewable)
 {
   GimpDrawable *drawable;
-  GimpImage    *gimage;
 
   if (GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview)
     GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview (viewable);
@@ -258,11 +278,6 @@ gimp_drawable_invalidate_preview (GimpViewable *viewable)
 
   if (drawable->preview_cache)
     gimp_preview_cache_invalidate (&drawable->preview_cache);
-
-  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  if (gimage)
-    gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
 }
 
 static GimpItem *
@@ -559,6 +574,16 @@ gimp_drawable_transform (GimpItem               *item,
     }
 }
 
+static void
+gimp_drawable_real_update (GimpDrawable *drawable,
+                           gint          x,
+                           gint          y,
+                           gint          width,
+                           gint          height)
+{
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (drawable));
+}
+
 void
 gimp_drawable_configure (GimpDrawable  *drawable,
 			 GimpImage     *gimage,
@@ -595,28 +620,13 @@ void
 gimp_drawable_update (GimpDrawable *drawable,
 		      gint          x,
 		      gint          y,
-		      gint          w,
-		      gint          h)
+		      gint          width,
+		      gint          height)
 {
-  GimpItem  *item;
-  GimpImage *gimage;
-  gint       offset_x;
-  gint       offset_y;
-
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
-  item   = GIMP_ITEM (drawable);
-  gimage = gimp_item_get_image (item);
-
-  g_return_if_fail (gimage != NULL);
-
-  gimp_item_offsets (item, &offset_x, &offset_y);
-  x += offset_x;
-  y += offset_y;
-
-  gimp_image_update (gimage, x, y, w, h);
-
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (drawable));
+  g_signal_emit (drawable, gimp_drawable_signals[UPDATE], 0,
+                 x, y, width, height);
 }
 
 void
@@ -947,8 +957,6 @@ gimp_drawable_set_visible (GimpDrawable *drawable,
       drawable->visible = visible ? TRUE : FALSE;
 
       g_signal_emit (drawable, gimp_drawable_signals[VISIBILITY_CHANGED], 0);
-
-      gimp_drawable_update (drawable, 0, 0, item->width, item->height);
     }
 }
 

@@ -170,7 +170,7 @@ gimp_layer_mask_new (GimpImage     *gimage,
 
   layer_mask = g_object_new (GIMP_TYPE_LAYER_MASK, NULL);
 
-  gimp_drawable_configure (GIMP_DRAWABLE (layer_mask), 
+  gimp_drawable_configure (GIMP_DRAWABLE (layer_mask),
 			   gimage,
                            0, 0, width, height,
                            GIMP_GRAY_IMAGE, name);
@@ -192,9 +192,15 @@ gimp_layer_mask_set_layer (GimpLayerMask *layer_mask,
 			   GimpLayer     *layer)
 {
   g_return_if_fail (GIMP_IS_LAYER_MASK (layer_mask));
-  g_return_if_fail (! layer || GIMP_IS_LAYER (layer));
+  g_return_if_fail (layer == NULL || GIMP_IS_LAYER (layer));
 
   layer_mask->layer = layer;
+
+  if (layer)
+    {
+      GIMP_ITEM (layer_mask)->offset_x = GIMP_ITEM (layer)->offset_x;
+      GIMP_ITEM (layer_mask)->offset_y = GIMP_ITEM (layer)->offset_y;
+    }
 }
 
 GimpLayer *

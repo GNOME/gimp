@@ -54,6 +54,11 @@ struct _GimpDrawableClass
   GimpItemClass  parent_class;
 
   /*  signals  */
+  void (* update)              (GimpDrawable *drawable,
+                                gint          x,
+                                gint          y,
+                                gint          width,
+                                gint          height);
   void (* visibility_changed)  (GimpDrawable *drawable);
   void (* alpha_changed)       (GimpDrawable *drawable);
 
@@ -78,8 +83,8 @@ void            gimp_drawable_configure          (GimpDrawable       *drawable,
 void            gimp_drawable_update             (GimpDrawable       *drawable,
 						  gint                x,
 						  gint                y,
-						  gint                w,
-						  gint                h);
+						  gint                width,
+						  gint                height);
 
 void            gimp_drawable_push_undo          (GimpDrawable       *drawable,
                                                   const gchar        *undo_desc,

@@ -704,6 +704,8 @@ static void
 ink_finish (GimpInkTool  *ink_tool,
 	    GimpDrawable *drawable)
 {
+  GimpImage *gimage;
+
   gimp_drawable_push_undo (drawable, _("Ink"),
                            ink_tool->x1, ink_tool->y1,
                            ink_tool->x2, ink_tool->y2,
@@ -712,10 +714,13 @@ ink_finish (GimpInkTool  *ink_tool,
   tile_manager_unref (undo_tiles);
   undo_tiles = NULL;
 
-  /*  invalidate the drawable--have to do it here, because
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  /*  invalidate the previews -- have to do it here, because
    *  it is not done during the actual painting.
    */
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (drawable));
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
 }
 
 static void
@@ -1029,9 +1034,9 @@ ink_paste (GimpInkTool  *ink_tool,
   ink_tool->x2 = MAX (ink_tool->x2, (canvas_buf->x + canvas_buf->width));
   ink_tool->y2 = MAX (ink_tool->y2, (canvas_buf->y + canvas_buf->height));
 
-  /*  Update the gimage--it is important to call gimp_image_update
-   *  instead of drawable_update because we don't want the drawable
-   *  preview to be constantly invalidated
+  /*  Update the gimage -- it is important to call gimp_image_update()
+   *  instead of gimp_drawable_update() because we don't want the
+   *  drawable and image previews to be constantly invalidated
    */
   gimp_item_offsets (GIMP_ITEM (drawable), &offx, &offy);
   gimp_image_update (gimage,

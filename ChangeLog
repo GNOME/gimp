@@ -1,3 +1,70 @@
+2003-09-06  Michael Natterer  <mitch@gimp.org>
+
+	To optimize duplicate and/or wrong image updates away, introduced
+	new policy that a child object must never explicitly update or
+	invalidate its parent object (just like the GUI is not updated
+	explicitly by the core):
+
+	* app/core/gimpdrawable.[ch]: added new signal
+	GimpDrawable::update(). Never update or invalidate the image when
+	the drawable is updated or invalidated.
+
+	(gimp_drawable_set_visible): don't gimp_drawable_update() the
+	drawable since its pixels have not changed.
+
+	* app/core/gimpimage.[ch]: connect to the "add" and "remove"
+	signals of the layers and channels containers. Also connect to the
+	"update" and "visibility_changed" signals of all drawables in
+	these containers (optimizes away updates issued by drawables which
+	are not yet added to the image and updates of the selection
+	mask). Also, don't propagate updates to the image if the emitting
+	drawable is invisible (optimizes away updates issued by invisible
+	drawables).
+
+	(gimp_image_add_layer,channel)
+	(gimp_image_remove_layer,channel): don't update the image since
+	that's done by our "add" and "remove" handlers now.
+
+	(gimp_image_position_layer,channel): update just the image, not
+	the drawable since its pixels have not changed.
+
+	(gimp_image_real_colormap_changed)
+	(gimp_image_set_component_visible): always call
+	gimp_image_update() *and* gimp_viewable_invalidate_preview() to
+	get everything updated, since update and invalidate of images are
+	not connected.
+
+	* app/core/gimpimage-undo-push.c (undo_pop_layer,channel): don't
+	update the drawable since (a) its pixels don't change and (b) the
+	image updates itself upon adding/removing now.
+
+	(undo_pop_layer_mod): replaced gimp_image_update() by
+	gimp_drawable_update() (just for consistency with other similar
+	functions).
+
+	* app/core/gimplayer.c: connect to "update" of the layer mask and
+	issue updates on the layer if the mask update has any effect on
+	the projection.
+	(gimp_layer_create_mask): don't set the mask's offsets here since
+	they may be different when we later add the mask to the layer.
+
+	* app/core/gimplayermask.c (gimp_layer_mask_set_layer): set the
+	mask offsets here instead.
+
+	* app/core/gimpchannel.c (gimp_channel_translate): update the
+	channel even if push_undo == FALSE.
+
+	* app/paint/gimppaintcore.c (gimp_paint_core_finish)
+	* app/tools/gimpinktool.c (ink_finish): invalidate both the
+	drawable and the image preview since invalidating the drawable
+	doesn't invalidate the image any more.
+
+	* app/text/gimptextlayer.c (gimp_text_layer_render_now): also
+	update the new extents of the text layer, not only the old one.
+
+	(gimp_text_layer_render_layout): don't update the drawable since
+	gimp_drawable_fill() already updated it.
+
 2003-09-06  Sven Neumann  <sven@gimp.org>
 
 	* app/vectors/gimpbezierstroke.c

@@ -362,19 +362,15 @@ gimp_channel_translate (GimpItem *item,
   height = y2 - y1;
 
   if (push_undo)
-    {
-      gimp_channel_push_undo (channel,
-                              GIMP_CHANNEL_GET_CLASS (channel)->translate_desc);
-
-      /*  update the old area  */
-      gimp_drawable_update (GIMP_DRAWABLE (item),
-                            x1, y1,
-                            x2 - x1, y2 - y1);
-    }
+    gimp_channel_push_undo (channel,
+                            GIMP_CHANNEL_GET_CLASS (channel)->translate_desc);
   else
-    {
-      gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (channel));
-    }
+    gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (channel));
+
+  /*  update the old area  */
+  gimp_drawable_update (GIMP_DRAWABLE (item),
+                        x1, y1,
+                        x2 - x1, y2 - y1);
 
   /*  make sure width and height are non-zero  */
   if (width != 0 && height != 0)
@@ -429,16 +425,11 @@ gimp_channel_translate (GimpItem *item,
       channel->y2 = y2;
     }
 
-  if (push_undo)
-    {
-      /*  update the new area  */
-      gimp_drawable_update (GIMP_DRAWABLE (item),
-                            channel->x1, channel->y1,
-                            channel->x2 - channel->x1,
-                            channel->y2 - channel->y1);
-
-      gimp_viewable_size_changed (GIMP_VIEWABLE (item));
-    }
+  /*  update the new area  */
+  gimp_drawable_update (GIMP_DRAWABLE (item),
+                        channel->x1, channel->y1,
+                        channel->x2 - channel->x1,
+                        channel->y2 - channel->y1);
 }
 
 static void

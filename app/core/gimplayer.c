@@ -63,6 +63,7 @@ enum
 static void       gimp_layer_class_init         (GimpLayerClass     *klass);
 static void       gimp_layer_init               (GimpLayer          *layer);
 
+static void       gimp_layer_dispose            (GObject            *object);
 static void       gimp_layer_finalize           (GObject            *object);
 
 static gsize      gimp_layer_get_memsize        (GimpObject         *object,
@@ -119,6 +120,13 @@ static void       gimp_layer_transform_color    (GimpImage          *gimage,
                                                  PixelRegion        *bufPR,
                                                  GimpDrawable       *drawable,
                                                  GimpImageBaseType   type);
+
+static void       gimp_layer_layer_mask_update  (GimpDrawable       *layer_mask,
+                                                 gint                x,
+                                                 gint                y,
+                                                 gint                width,
+                                                 gint                height,
+                                                 GimpLayer          *layer);
 
 
 static guint  layer_signals[LAST_SIGNAL] = { 0 };
@@ -207,6 +215,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
+  object_class->dispose               = gimp_layer_dispose;
   object_class->finalize              = gimp_layer_finalize;
 
   gimp_object_class->get_memsize      = gimp_layer_get_memsize;
@@ -253,6 +262,19 @@ gimp_layer_init (GimpLayer *layer)
 }
 
 static void
+gimp_layer_dispose (GObject *object)
+{
+  GimpLayer *layer = GIMP_LAYER (object);
+
+  if (layer->mask)
+    g_signal_handlers_disconnect_by_func (layer->mask,
+                                          gimp_layer_layer_mask_update,
+                                          layer);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
 gimp_layer_finalize (GObject *object)
 {
   GimpLayer *layer = GIMP_LAYER (object);
@@ -266,7 +288,8 @@ gimp_layer_finalize (GObject *object)
   if (layer->fs.segs)
     {
       g_free (layer->fs.segs);
-      layer->fs.segs = NULL;
+      layer->fs.segs     = NULL;
+      layer->fs.num_segs = 0;
     }
 
   /*  free the floating selection if it exists  */
@@ -303,9 +326,7 @@ gimp_layer_get_memsize (GimpObject *object,
 static void
 gimp_layer_invalidate_preview (GimpViewable *viewable)
 {
-  GimpLayer *layer;
-
-  layer = GIMP_LAYER (viewable);
+  GimpLayer *layer = GIMP_LAYER (viewable);
 
   if (GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview)
     GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview (viewable);
@@ -749,9 +770,25 @@ gimp_layer_transform_color (GimpImage         *gimage,
     }
 }
 
-/**************************/
-/*  Function definitions  */
-/**************************/
+static void
+gimp_layer_layer_mask_update (GimpDrawable *drawable,
+                              gint          x,
+                              gint          y,
+                              gint          width,
+                              gint          height,
+                              GimpLayer    *layer)
+{
+  GimpLayerMask *layer_mask = GIMP_LAYER_MASK (drawable);
+
+  if (layer_mask->apply_mask || layer_mask->show_mask)
+    {
+      gimp_drawable_update (GIMP_DRAWABLE (layer),
+                            x, y, width, height);
+    }
+}
+
+
+/*  public functions  */
 
 GimpLayer *
 gimp_layer_new (GimpImage            *gimage,
@@ -906,15 +943,20 @@ gimp_layer_add_mask (GimpLayer     *layer,
       return NULL;
     }
 
-  layer->mask = mask;
-  g_object_ref (layer->mask);
-
+  layer->mask = g_object_ref (mask);
   gimp_layer_mask_set_layer (mask, layer);
 
-  gimp_drawable_update (GIMP_DRAWABLE (layer),
-			0, 0,
-			GIMP_ITEM (layer)->width,
-			GIMP_ITEM (layer)->height);
+  if (mask->apply_mask || mask->show_mask)
+    {
+      gimp_drawable_update (GIMP_DRAWABLE (layer),
+                            0, 0,
+                            GIMP_ITEM (layer)->width,
+                            GIMP_ITEM (layer)->height);
+    }
+
+  g_signal_connect (mask, "update",
+                    G_CALLBACK (gimp_layer_layer_mask_update),
+                    layer);
 
   if (push_undo)
     gimp_image_undo_push_layer_mask_add (gimage, _("Add Layer Mask"),
@@ -953,9 +995,6 @@ gimp_layer_create_mask (const GimpLayer *layer,
 			      mask_name, &black);
 
   g_free (mask_name);
-
-  GIMP_ITEM (mask)->offset_x = item->offset_x;
-  GIMP_ITEM (mask)->offset_y = item->offset_y;
 
   switch (add_mask_type)
     {
@@ -1126,10 +1165,9 @@ gimp_layer_apply_mask (GimpLayer         *layer,
     }
 
   /*  check if applying the mask changes the projection  */
-  if ((mode == GIMP_MASK_APPLY && (! layer->mask->apply_mask ||
-                                   layer->mask->show_mask)) ||
-      (mode == GIMP_MASK_DISCARD && (layer->mask->apply_mask ||
-                                     layer->mask->show_mask)))
+  if (layer->mask->show_mask                                   ||
+      (mode == GIMP_MASK_APPLY   && ! layer->mask->apply_mask) ||
+      (mode == GIMP_MASK_DISCARD &&   layer->mask->apply_mask))
     {
       view_changed = TRUE;
     }
@@ -1157,6 +1195,10 @@ gimp_layer_apply_mask (GimpLayer         *layer,
 
       apply_mask_to_region (&srcPR, &maskPR, OPAQUE_OPACITY);
     }
+
+  g_signal_handlers_disconnect_by_func (layer->mask,
+                                        gimp_layer_layer_mask_update,
+                                        layer);
 
   g_object_unref (layer->mask);
   layer->mask = NULL;
