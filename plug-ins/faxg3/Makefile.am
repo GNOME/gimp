@@ -11,14 +11,10 @@ faxg3_SOURCES = @STRIP_BEGIN@ \
 	run_tbl.c	\
 @STRIP_END@
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
-	-DLOCALEDIR=\""$(localedir)"\"	\
-@STRIP_END@
-
 INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)			\
-	$(GLIB_CFLAGS)			\
-	-I$(includedir)			\
+	-I$(top_srcdir)		\
+	$(GLIB_CFLAGS)		\
+	-I$(includedir)		\
 @STRIP_END@
 
 LDADD = @STRIP_BEGIN@ \

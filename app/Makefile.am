@@ -97,8 +97,6 @@ endif
 gimp_1_3_LDFLAGS = -export-dynamic -export-symbols $(srcdir)/gimp.sym
 
 AM_CPPFLAGS = @STRIP_BEGIN@ \
-	-DLIBDIR=\""$(gimpplugindir)"\"	\
-	-DLOCALEDIR=\""$(localedir)"\"	\
 	-DG_LOG_DOMAIN=\"Gimp\"		\
 	@GIMP_THREAD_FLAGS@ 		\
 	@GIMP_MP_FLAGS@			\

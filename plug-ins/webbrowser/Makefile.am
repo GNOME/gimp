@@ -8,20 +8,14 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = webbrowser
 
-webbrowser_SOURCES = @STRIP_BEGIN@ \
-	webbrowser.c	\
-@STRIP_END@
+webbrowser_SOURCES = webbrowser.c
 
 EXTRA_DIST = $(scriptdata_DATA)
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
-	-DLOCALEDIR=\""$(localedir)"\"	\
-@STRIP_END@
-
 INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)			\
-	$(GTK_CFLAGS)			\
-	-I$(includedir)			\
+	-I$(top_srcdir)		\
+	$(GTK_CFLAGS)		\
+	-I$(includedir)		\
 @STRIP_END@
 
 LDADD = @STRIP_BEGIN@ \

@@ -13,14 +13,10 @@ gfig_SOURCES = @STRIP_BEGIN@ \
 
 EXTRA_DIST = README
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
-	-DLOCALEDIR=\""$(localedir)"\"	\
-@STRIP_END@
-
 INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)			\
-	$(GTK_CFLAGS)			\
-	-I$(includedir)			\
+	-I$(top_srcdir)		\
+	$(GTK_CFLAGS)		\
+	-I$(includedir)		\
 @STRIP_END@
 
 LDADD = @STRIP_BEGIN@ \
@@ -32,16 +28,3 @@ LDADD = @STRIP_BEGIN@ \
 	$(GTK_LIBS)							\
 	$(INTLLIBS)							\
 @STRIP_END@
-
-.PHONY: files
-
-files:
-	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
-	  echo $$p; \
-	done
-	@for subdir in $(SUBDIRS); do \
-	  files=`cd $$subdir; $(MAKE) files | grep -v "make\[[1-9]\]"`; \
-	  for file in $$files; do \
-	    echo $$subdir/$$file; \
-	  done; \
-	done

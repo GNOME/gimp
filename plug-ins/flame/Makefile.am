@@ -15,14 +15,10 @@ flame_SOURCES = @STRIP_BEGIN@ \
 	rect.h		\
 @STRIP_END@
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
-	-DLOCALEDIR=\""$(localedir)"\"	\
-@STRIP_END@
-
 INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)			\
-	$(GTK_CFLAGS)			\
-	-I$(includedir)			\
+	-I$(top_srcdir)		\
+	$(GTK_CFLAGS)		\
+	-I$(includedir)		\
 @STRIP_END@
 
 EXTRA_DIST = README

@@ -25,13 +25,15 @@
 #include "gimpintl.h"
 
 
-#define INIT_I18N()	G_STMT_START{                               \
-  setlocale (LC_ALL, "");                                           \
-  bindtextdomain(GETTEXT_PACKAGE"-libgimp", LOCALEDIR);             \
-  bind_textdomain_codeset (GETTEXT_PACKAGE"-libgimp", "UTF-8");     \
-  bindtextdomain(GETTEXT_PACKAGE"-std-plug-ins", LOCALEDIR);         \
+#define INIT_I18N()	G_STMT_START{                                \
+  setlocale (LC_ALL, "");                                            \
+  bindtextdomain (GETTEXT_PACKAGE"-libgimp",                         \
+                  gimp_locale_directory ());                         \
+  bind_textdomain_codeset (GETTEXT_PACKAGE"-libgimp", "UTF-8");      \
+  bindtextdomain (GETTEXT_PACKAGE"-std-plug-ins",                    \
+                  gimp_locale_directory ());                         \
   bind_textdomain_codeset (GETTEXT_PACKAGE"-std-plug-ins", "UTF-8"); \
-  textdomain(GETTEXT_PACKAGE"-std-plug-ins");		            \
+  textdomain (GETTEXT_PACKAGE"-std-plug-ins");		             \
 }G_STMT_END
 
 #define INIT_I18N_UI()	INIT_I18N()

@@ -1,5 +1,14 @@
 2002-05-11  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/stdplugins-intl.h
+	* plug-ins/script-fu/script-fu-intl.h: use the new function
+	gimp_locale_directory() instead of LOCALEDIR.
+
+	* app/Makefile.am
+	* plug-ins/*/Makefile.am: removed LOCALEDIR definition.
+
+2002-05-11  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpwidgets.c (gimp_radio_group_new2): applied a
 	patch from Maurits Rijk that enables mnemonics (bug #80804).
 	

@@ -29,10 +29,6 @@ Lighting_SOURCES = @STRIP_BEGIN@ \
 	specref2.xpm		\
 @STRIP_END@
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
-	-DLOCALEDIR=\""$(localedir)"\"	\
-@STRIP_END@
-
 INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)			\
 	-I$(top_srcdir)/plug-ins/libgck	\

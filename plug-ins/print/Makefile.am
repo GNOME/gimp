@@ -12,10 +12,6 @@ print_SOURCES = @STRIP_BEGIN@ \
         print_gimp.h		\
 @STRIP_END@
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
-        -DLOCALEDIR=\""$(localedir)"\"	\
-@STRIP_END@
-
 INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)		\
 	$(GTK_CFLAGS)		\

@@ -1,9 +1,5 @@
 libexecdir = $(gimpplugindir)/tool-plug-ins
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
-	-DLOCALEDIR=\""$(localedir)"\"	\
-@STRIP_END@
-
 INCLUDES = @STRIP_BEGIN@ \
 	-I$(top_srcdir)		  \
 	-I$(top_srcdir)/app/      \

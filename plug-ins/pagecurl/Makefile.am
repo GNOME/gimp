@@ -16,14 +16,10 @@ pagecurl_SOURCES = @STRIP_BEGIN@ \
 	curl7.xpm	\
 @STRIP_END@
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
-	-DLOCALEDIR=\""$(localedir)"\"	\
-@STRIP_END@
-
 INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)			\
-	$(GTK_CFLAGS)			\
-	-I$(includedir)			\
+	-I$(top_srcdir)		\
+	$(GTK_CFLAGS)		\
+	-I$(includedir)		\
 @STRIP_END@
 
 LDADD = @STRIP_BEGIN@ \

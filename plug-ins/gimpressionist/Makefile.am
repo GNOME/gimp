@@ -32,16 +32,13 @@ EXTRA_DIST = \
 	README		\
 	ChangeLog
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
-	-DDEFAULTPATH=\""~/$(gimpdir)/gimpressionist:$(gimpdatadir)/gimpressionist"\" \
-        -DLOCALEDIR=\""$(localedir)"\"	\
-@STRIP_END@
+AM_CPPFLAGS = -DDEFAULTPATH=\""~/$(gimpdir)/gimpressionist:$(gimpdatadir)/gimpressionist"\"
 
 
 INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)			\
-	$(GTK_CFLAGS)			\
-	-I$(includedir)			\
+	-I$(top_srcdir)		\
+	$(GTK_CFLAGS)		\
+	-I$(includedir)		\
 @STRIP_END@
 
 LDADD = @STRIP_BEGIN@ \

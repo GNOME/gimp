@@ -25,11 +25,13 @@
 
 #define INIT_I18N()	G_STMT_START{			          \
   setlocale (LC_ALL, ""); 				          \
-  bindtextdomain(GETTEXT_PACKAGE"-libgimp", LOCALEDIR);           \
+  bindtextdomain (GETTEXT_PACKAGE"-libgimp",                      \
+                  gimp_locale_directory ());                      \
   bind_textdomain_codeset (GETTEXT_PACKAGE"-libgimp", "UTF-8");   \
-  bindtextdomain(GETTEXT_PACKAGE"-script-fu", LOCALEDIR);         \
+  bindtextdomain (GETTEXT_PACKAGE"-script-fu",                    \
+                  gimp_locale_directory ());                      \
   bind_textdomain_codeset (GETTEXT_PACKAGE"-script-fu", "UTF-8"); \
-  textdomain(GETTEXT_PACKAGE"-script-fu");                        \
+  textdomain (GETTEXT_PACKAGE"-script-fu");                       \
 }G_STMT_END
 
 #endif /* __SCRIPT_FU_INTL_H__ */

@@ -15,9 +15,6 @@ tool_safe_mode_SOURCES = \
 	gimptoolcontrol.c		\
 	gimptoolcontrol.h
 
-AM_CPPFLAGS = \
-	-DLOCALEDIR=\""$(localedir)"\"
-
 INCLUDES = \
 	-I$(top_srcdir)			\
 	-I$(top_srcdir)/app		\

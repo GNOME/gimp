@@ -30,12 +30,10 @@ script_fu_SOURCES = @STRIP_BEGIN@ \
 	siod-wrapper.h		\
 @STRIP_END@
 
-AM_CPPFLAGS = -DLOCALEDIR=\""$(localedir)"\"
-
 INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)			\
-	$(GTK_CFLAGS)			\
-	-I$(includedir)			\
+	-I$(top_srcdir)		\
+	$(GTK_CFLAGS)		\
+	-I$(includedir)		\
 @STRIP_END@
 
 if HAVE_GLIBC_REGEX
