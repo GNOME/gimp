@@ -2689,7 +2689,7 @@ static void GIFEncodeCommentExt (FILE *fp, char *comment)
 {
   if (comment==NULL||strlen(comment)<1)
     {
-      g_message ("GIF: warning: no comment given - comment block not written.\n");
+      g_print ("GIF: warning: no comment given - comment block not written.\n");
       return;
     }
 

@@ -33,15 +33,12 @@
 extern char *prog_name;
 
 void
-message_console_func (char *str)
+message_func (char *str)
 {
-  fprintf (stderr, "%s: %s\n", prog_name, str);
-}
-
-void
-message_box_func (char *str)
-{
-  message_box (str, NULL, NULL);
+  if ((console_messages == FALSE) && (message_handler == MESSAGE_BOX))
+      message_box (str, NULL, NULL);
+  else
+      fprintf (stderr, "%s: %s\n", prog_name, str);
 }
 
 void

@@ -28,6 +28,11 @@
 #define MINIMUM(x,y) ((x < y) ? x : y)
 #define MAXIMUM(x,y) ((x > y) ? x : y)
 
+typedef enum {
+  MESSAGE_BOX,
+  CONSOLE
+} MessageHandlerType;
+
 extern int no_interface;
 extern int no_splash;
 extern int no_splash_image;
@@ -35,5 +40,7 @@ extern int no_data;
 extern int be_verbose;
 extern int use_debug_handler;
 extern int console_messages;
+
+extern MessageHandlerType message_handler;
 
 #endif /*  APPENV_H  */

@@ -48,6 +48,9 @@ int be_verbose;
 int use_shm;
 int use_debug_handler;
 int console_messages;
+
+MessageHandlerType message_handler;
+
 char *prog_name;		/* The path name we are invoked with */
 char **batch_cmds;
 
@@ -109,6 +112,9 @@ main (int argc, char **argv)
   use_shm = TRUE;
   use_debug_handler = FALSE;
   console_messages = FALSE;
+
+  message_handler = CONSOLE;
+
   batch_cmds = g_new (char*, argc);
   batch_cmds[0] = NULL;
 
@@ -207,8 +213,7 @@ main (int argc, char **argv)
   if (show_version || show_help)
     exit (0);
 
-  /* Print to console at first */
-  g_set_message_handler (&message_console_func);
+  g_set_message_handler (&message_func);
 
   /* Handle some signals */
   signal (SIGHUP, on_signal);

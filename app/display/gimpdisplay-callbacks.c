@@ -479,7 +479,7 @@ gdisplay_origin_button_press (GtkWidget      *widget,
       /* Stop the signal emission so the button doesn't grab the
        * pointer away from us
        */
-      gtk_signal_emit_stop_by_name (widget, "button_press_event");
+      gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), "button_press_event");
     }
 
   return FALSE;

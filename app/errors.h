@@ -18,8 +18,7 @@
 #ifndef __ERRORS_H__
 #define __ERRORS_H__
 
-void message_console_func (char *);
-void message_box_func (char *);
+void message_func (char *);
 void fatal_error (char *, ...);
 void terminate (char *, ...);
 

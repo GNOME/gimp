@@ -1,3 +1,14 @@
+Fri Jun 19 16:37:40 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/appenv.h
+	* app/app_procs.c
+	* app/errors.[ch]
+	* app/main.c
+	* app/plug_in.c: implemented PDB interface for changing
+	the g_message handler
+
+	* plug-ins/gif/gif.c: g_printized "no comment" warning
+
 Fri Jun 19 16:12:51 EDT 1998 Adrian Likins <adrain@gimp.org>
 	
 	* TODO: more updates

@@ -60,9 +60,7 @@ AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_CPP
 
-dnl Check for our required libraries
-AM_PATH_GLIB(1.1.0,,
-  AC_MSG_ERROR(Test for GLIB failed. See the file 'INSTALL' for help.))
+dnl Check for GTK+
 AM_PATH_GTK(1.1.0,,
   AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))
 
@@ -93,7 +91,6 @@ gimp_save_LDFLAGS="$LDFLAGS"
 gimp_save_LIBS="$LIBS"
 
 CPPFLAGS="$CPPFLAGS $GTK_CFLAGS"
-LDFLAGS="$LDFLAGS `echo $GLIB_LIBS | sed 's/\(.*\)\(-lglib.*\)/\1/'`"
 LDFLAGS="$LDFLAGS `echo $GTK_LIBS | sed 's/\(.*\)\(-lgtk.*\)/\1/'`"
 LIBS="$LIBS $GTK_LIBS"
 

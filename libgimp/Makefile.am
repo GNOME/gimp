@@ -49,7 +49,7 @@ CPPFLAGS = \
 
 INCLUDES = \
 	-I$(top_srcdir)		\
-	$(GLIB_CFLAGS)		\
+	$(GTK_CFLAGS)		\
 	-I$(includedir)
 
 libgimpui_1_1_la_INCLUDES = \
