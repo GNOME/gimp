@@ -98,6 +98,18 @@ WARNING: You are using perl version $]. This is an *ALPHA* version that is
 EOF
 }
 
+if ($Config{usethreads} or $Config{use5005threads}) {
+   print <<EOF;
+
+WARNING: Your perl has been built with multithreading enabled. The 5.005
+         threading model is utterly broken (and about to be removed),
+         while the 5.6 threading model is about to change very soon.
+         Since I suppose you know how to fix perl since you enabled
+         threading, I'll proceed with building gimp-perl.
+
+EOF
+}
+
 if ($] < 5.006 && $Config{usethreads}) {
    print <<EOF;
 

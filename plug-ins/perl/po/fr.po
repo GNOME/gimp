@@ -74,11 +74,11 @@ msgstr "Remet tous les paramètres à leur valeur par défaut."
 msgid "WARNING: client tried to unlock without holding a lock"
 msgstr ""
 
-msgid "required callback 'run' not found\n"
-msgstr "le callback \"run\" est obligatoire mais est absent\n"
-
 msgid "$_: illegal switch, try $0 --help\n"
 msgstr "$_ : option incorrecte, essayez $0 --help\n"
+
+msgid "required callback 'run' not found\n"
+msgstr "le callback \"run\" est obligatoire mais est absent\n"
 
 msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
 msgstr "<Toolbox>/Extensions/Synthèse/Logos/Acier et lueur"
@@ -163,10 +163,10 @@ msgstr ""
 msgid "<Image>/Filters/Noise/Ditherize"
 msgstr "<Image>/Filtres/Bruit/Tramer"
 
-msgid "expected perl-server at other end of socket, got @r\n"
+msgid "pdl height != region height"
 msgstr ""
 
-msgid "pdl height != region height"
+msgid "expected perl-server at other end of socket, got @r\n"
 msgstr ""
 
 msgid "received QUIT request"
@@ -238,9 +238,6 @@ msgstr "<Image>/Filtres/Synthèse/Souligner les contours"
 msgid "a color must have three components (array elements)"
 msgstr "une couleur doit avoir trois composantes (éléments de tableau)"
 
-msgid "<Toolbox>/Xtns/Render/Pixelgenerator"
-msgstr ""
-
 msgid "Spin Layer SRC (250ms)"
 msgstr ""
 
@@ -268,9 +265,6 @@ msgstr ""
 msgid "<Image>/Select/Round Rectangular Selection"
 msgstr ""
 
-msgid "<Image>/Filters/Map/Pixelmap"
-msgstr ""
-
 msgid "/Xtns/Perl"
 msgstr ""
 
@@ -286,11 +280,11 @@ msgstr ""
 msgid "Visual Scriptor"
 msgstr ""
 
-msgid "No horizontal or vertical guides found. Aborted."
-msgstr "Je n'ai trouvé aucun guide horizontal ou vertical. Opération annulée."
-
 msgid "<Image>/Filters/Map/Image Tile"
 msgstr "<Image>/Filtres/Carte/Carreler"
+
+msgid "No horizontal or vertical guides found. Aborted."
+msgstr "Je n'ai trouvé aucun guide horizontal ou vertical. Opération annulée."
 
 msgid "<Image>/Filters/Logulator/Comic Book"
 msgstr "<Image>/Filtres/Logomatic/Bande dessinée"
@@ -325,6 +319,10 @@ msgstr ""
 msgid "accepted tcp connection from "
 msgstr ""
 
+#, fuzzy
+msgid "<Toolbox>/Xtns/Render/Pixelgenerator..."
+msgstr "<Toolbox>/Extensions/Synthèse/Yin-Yang"
+
 msgid "illegal parasite specification, expected three array members"
 msgstr ""
 
@@ -337,14 +335,14 @@ msgstr ""
 msgid "Illegal default font description for $function: $val\n"
 msgstr ""
 
-msgid "<Image>/Filters/Render/Stampify"
-msgstr "<Image>/Filtres/Synthèse/Timbre-poste"
-
 msgid "<Image>/Filters/Logulator/Chalk"
 msgstr "<Image>/Filtres/Logomatic/Craie"
 
 msgid "unable to convert Gimp::Drawable into Gimp::GDrawable (id %d)"
 msgstr ""
+
+msgid "<Image>/Filters/Render/Stampify"
+msgstr "<Image>/Filtres/Synthèse/Timbre-poste"
 
 msgid ""
 "BLURB:\n"
@@ -376,19 +374,19 @@ msgstr ""
 msgid "<Image>/Filters/Render/Terral Text"
 msgstr "<Image>/Filtres/Synthèse/Texte à la Terral"
 
-msgid "Spin Layer DEST (250ms)"
-msgstr ""
-
 msgid "<Toolbox>/Xtns/Render/Povray/Texture"
 msgstr "<Toolbox>/Extensions/Synthèse/POV-Ray/Texture"
+
+msgid "Spin Layer DEST (250ms)"
+msgstr ""
 
 msgid "register called with too many or wrong arguments\n"
 msgstr ""
 
-msgid "params and return_vals must be array refs (even if empty)!"
+msgid "$_ is not a valid import tag for package $pkg"
 msgstr ""
 
-msgid "$_ is not a valid import tag for package $pkg"
+msgid "params and return_vals must be array refs (even if empty)!"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Render/Yin-Yang"
@@ -491,10 +489,10 @@ msgstr "<Image>/Filtres/Carte/Blocs (Xach)"
 msgid "Menu Path"
 msgstr ""
 
-msgid "Unable to grok '%s' as colour specifier"
+msgid "9x15bold"
 msgstr ""
 
-msgid "9x15bold"
+msgid "Unable to grok '%s' as colour specifier"
 msgstr ""
 
 msgid "Accelerator"
@@ -518,10 +516,10 @@ msgstr ""
 msgid "<Image>/Filters/Logulator/Glossy"
 msgstr ""
 
-msgid "argument is not of type %s"
+msgid "WARNING"
 msgstr ""
 
-msgid "WARNING"
+msgid "argument is not of type %s"
 msgstr ""
 
 msgid "Description"
@@ -554,6 +552,10 @@ msgstr ""
 msgid "Synopsis"
 msgstr ""
 
+#, fuzzy
+msgid "<Image>/Filters/Map/Pixelmap..."
+msgstr "<Image>/Filtres/Carte/Ombres (Xach)"
+
 msgid "Color"
 msgstr ""
 
@@ -566,12 +568,12 @@ msgstr ""
 msgid "<Image>/Filters/Apply Perl Expression..."
 msgstr ""
 
+msgid "DESCRIPTION"
+msgstr ""
+
 #, fuzzy
 msgid "<Image>/Filters/Logulator/Blended II"
 msgstr "<Image>/Filtres/Logomatic/Fondu"
-
-msgid "DESCRIPTION"
-msgstr ""
 
 msgid "Unable to open '$filename' for writing: $!\n"
 msgstr ""
@@ -606,10 +608,10 @@ msgstr ""
 msgid "perl-arrayref required as datatype for a gimp-array"
 msgstr ""
 
-msgid "required callback 'query' not found\n"
+msgid "<Toolbox>/Xtns/Create_Images"
 msgstr ""
 
-msgid "<Toolbox>/Xtns/Create_Images"
+msgid "required callback 'query' not found\n"
 msgstr ""
 
 msgid "Save $name"
@@ -684,10 +686,10 @@ msgstr ""
 msgid "Saving '$filename' as COLORHTML..."
 msgstr ""
 
-msgid "too many"
+msgid "required callback 'net' not found\n"
 msgstr ""
 
-msgid "required callback 'net' not found\n"
+msgid "too many"
 msgstr ""
 
 #, fuzzy
@@ -712,10 +714,10 @@ msgstr ""
 msgid "arguments to main not yet supported!"
 msgstr ""
 
-msgid "<Image>/Filters/Logulator/Newsprint text"
+msgid "Seth Spin..."
 msgstr ""
 
-msgid "Seth Spin..."
+msgid "<Image>/Filters/Logulator/Newsprint text"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Visual Scriptor"
@@ -751,10 +753,10 @@ msgstr ""
 msgid "<Image>/Select/Triangle"
 msgstr ""
 
-msgid "gimp_tile_get_data is not yet implemented\n"
+msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
 msgstr ""
 
-msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
+msgid "gimp_tile_get_data is not yet implemented\n"
 msgstr ""
 
 #, fuzzy
@@ -883,10 +885,10 @@ msgstr ""
 msgid "get current foreground colour from the gimp"
 msgstr ""
 
-msgid "You can't run this script without an ALPHA CHANNEL!!"
+msgid "<Toolbox>/Xtns/Perl Example Plug-in"
 msgstr ""
 
-msgid "<Toolbox>/Xtns/Perl Example Plug-in"
+msgid "You can't run this script without an ALPHA CHANNEL!!"
 msgstr ""
 
 msgid "<Image>/Filters/Logulator/Neon"
@@ -904,10 +906,10 @@ msgstr ""
 msgid "<Image>/Guides/To Selection"
 msgstr ""
 
-msgid "Help for "
+msgid "export failed"
 msgstr ""
 
-msgid "export failed"
+msgid "Help for "
 msgstr ""
 
 msgid "<Image>/Filters/Logulator/Chip Away"
@@ -952,12 +954,12 @@ msgstr ""
 msgid "<Image>/Filters/Logulator/Starscape"
 msgstr ""
 
+msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
+msgstr ""
+
 #, fuzzy
 msgid "<Image>/Layers/Stack/Reorder Layers..."
 msgstr "<Image>/Calques/Centrer"
-
-msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
-msgstr ""
 
 msgid ""
 "$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z "

@@ -46,6 +46,8 @@ Revision history for Gimp-Perl extension.
           have to install them manually.
         - changed logulator to use an imagetype of "RGBA,GRAYA,INDEXEDA" for all
           script-fu's.
+        - added warning when using known-to-be-broken experimental threading
+          feature. Maybe gimp-perl should refuse to build instead?
 
 1.19  Thu Jan  6 00:21:58 CET 2000
         - used N_ to mark all the menu paths, since gimp now tries to

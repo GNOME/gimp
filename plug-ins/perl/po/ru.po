@@ -65,10 +65,10 @@ msgstr "Сбросить все значения в исходные"
 msgid "WARNING: client tried to unlock without holding a lock"
 msgstr ""
 
-msgid "required callback 'run' not found\n"
+msgid "$_: illegal switch, try $0 --help\n"
 msgstr ""
 
-msgid "$_: illegal switch, try $0 --help\n"
+msgid "required callback 'run' not found\n"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
@@ -152,11 +152,11 @@ msgstr "попытка запуска Gimp с параметром \"$opt\"\n"
 msgid "<Image>/Filters/Noise/Ditherize"
 msgstr "<Image>/Фильтры/Шум/Клишировать"
 
-msgid "expected perl-server at other end of socket, got @r\n"
-msgstr "на другом конце сокета ожидался perl-сервер, получено @r\n"
-
 msgid "pdl height != region height"
 msgstr ""
+
+msgid "expected perl-server at other end of socket, got @r\n"
+msgstr "на другом конце сокета ожидался perl-сервер, получено @r\n"
 
 msgid "received QUIT request"
 msgstr ""
@@ -224,9 +224,6 @@ msgstr "<Image>/Фильтры/Визуализация/Яркие края"
 msgid "a color must have three components (array elements)"
 msgstr ""
 
-msgid "<Toolbox>/Xtns/Render/Pixelgenerator"
-msgstr "<Toolbox>/Расш./Визуализация/Точкогенератор"
-
 msgid "Spin Layer SRC (250ms)"
 msgstr ""
 
@@ -254,9 +251,6 @@ msgstr "Текст"
 msgid "<Image>/Select/Round Rectangular Selection"
 msgstr "<Image>/Выделение/Выделение скругленного прямоугольника"
 
-msgid "<Image>/Filters/Map/Pixelmap"
-msgstr "<Image>/Фильтры/Карта/Точечная карта"
-
 msgid "/Xtns/Perl"
 msgstr ""
 
@@ -272,12 +266,12 @@ msgstr ""
 msgid "Visual Scriptor"
 msgstr "Визуальный Scriptor"
 
+msgid "<Image>/Filters/Map/Image Tile"
+msgstr "<Image>/Фильтры/Карта/Image Tile"
+
 msgid "No horizontal or vertical guides found. Aborted."
 msgstr ""
 "Не найдено ни вертикальных ни горизонтальных направляющих. Выполнение прервано."
-
-msgid "<Image>/Filters/Map/Image Tile"
-msgstr "<Image>/Фильтры/Карта/Image Tile"
 
 msgid "<Image>/Filters/Logulator/Comic Book"
 msgstr "<Image>/Фильтры/Регистратор/Комикс"
@@ -312,6 +306,10 @@ msgstr ""
 msgid "accepted tcp connection from "
 msgstr "принято tcp-соединение с "
 
+#, fuzzy
+msgid "<Toolbox>/Xtns/Render/Pixelgenerator..."
+msgstr "<Toolbox>/Расш./Визуализация/Точкогенератор"
+
 msgid "illegal parasite specification, expected three array members"
 msgstr "неверная спецификация паразита, ожидались три элемента массива"
 
@@ -324,14 +322,14 @@ msgstr "Исследователь ПБД - olof-редакция (еще очень даже альфа-версия)"
 msgid "Illegal default font description for $function: $val\n"
 msgstr ""
 
-msgid "<Image>/Filters/Render/Stampify"
-msgstr "<Image>/Фильтры/Визуализация/Штамповать"
-
 msgid "<Image>/Filters/Logulator/Chalk"
 msgstr "<Image>/Фильтры/Регистратор/Мел"
 
 msgid "unable to convert Gimp::Drawable into Gimp::GDrawable (id %d)"
 msgstr ""
+
+msgid "<Image>/Filters/Render/Stampify"
+msgstr "<Image>/Фильтры/Визуализация/Штамповать"
 
 msgid ""
 "BLURB:\n"
@@ -373,19 +371,19 @@ msgstr ""
 msgid "<Image>/Filters/Render/Terral Text"
 msgstr "<Image>/Фильтры/Визуализация/Земляной текст"
 
-msgid "Spin Layer DEST (250ms)"
-msgstr ""
-
 msgid "<Toolbox>/Xtns/Render/Povray/Texture"
 msgstr "<Toolbox>/Расш./Визуализация/Povray/Текстура"
+
+msgid "Spin Layer DEST (250ms)"
+msgstr ""
 
 msgid "register called with too many or wrong arguments\n"
 msgstr ""
 
-msgid "params and return_vals must be array refs (even if empty)!"
+msgid "$_ is not a valid import tag for package $pkg"
 msgstr ""
 
-msgid "$_ is not a valid import tag for package $pkg"
+msgid "params and return_vals must be array refs (even if empty)!"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Render/Yin-Yang"
@@ -483,11 +481,11 @@ msgstr "<Image>/Фильтры/Карта/Xach-блоки..."
 msgid "Menu Path"
 msgstr "Путь меню"
 
-msgid "Unable to grok '%s' as colour specifier"
-msgstr ""
-
 msgid "9x15bold"
 msgstr "9x15bold"
+
+msgid "Unable to grok '%s' as colour specifier"
+msgstr ""
 
 msgid "Accelerator"
 msgstr "Ускоритель"
@@ -510,11 +508,11 @@ msgstr ""
 msgid "<Image>/Filters/Logulator/Glossy"
 msgstr "<Image>/Фильтры/Logulator/Глянец"
 
-msgid "argument is not of type %s"
-msgstr ""
-
 msgid "WARNING"
 msgstr "ВНИМАНИЕ"
+
+msgid "argument is not of type %s"
+msgstr ""
 
 msgid "Description"
 msgstr "Описание"
@@ -546,6 +544,10 @@ msgstr "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
 msgid "Synopsis"
 msgstr "Резюме"
 
+#, fuzzy
+msgid "<Image>/Filters/Map/Pixelmap..."
+msgstr "<Image>/Фильтры/Карта/Точечная карта"
+
 msgid "Color"
 msgstr "Цвет"
 
@@ -558,11 +560,11 @@ msgstr ""
 msgid "<Image>/Filters/Apply Perl Expression..."
 msgstr "<Image>/Фильтры/Применить выражение Perl..."
 
-msgid "<Image>/Filters/Logulator/Blended II"
-msgstr "<Image>/Фильтры/Регистратор/Смешанный II"
-
 msgid "DESCRIPTION"
 msgstr "ОПИСАНИЕ"
+
+msgid "<Image>/Filters/Logulator/Blended II"
+msgstr "<Image>/Фильтры/Регистратор/Смешанный II"
 
 msgid "Unable to open '$filename' for writing: $!\n"
 msgstr ""
@@ -597,11 +599,11 @@ msgstr ""
 msgid "perl-arrayref required as datatype for a gimp-array"
 msgstr ""
 
-msgid "required callback 'query' not found\n"
-msgstr ""
-
 msgid "<Toolbox>/Xtns/Create_Images"
 msgstr "<Toolbox>/Расш./Создать_изображения"
+
+msgid "required callback 'query' not found\n"
+msgstr ""
 
 msgid "Save $name"
 msgstr ""
@@ -674,11 +676,11 @@ msgstr ""
 msgid "Saving '$filename' as COLORHTML..."
 msgstr ""
 
-msgid "too many"
-msgstr "слишком много"
-
 msgid "required callback 'net' not found\n"
 msgstr ""
+
+msgid "too many"
+msgstr "слишком много"
 
 msgid "<Toolbox>/Xtns/Animation/Seth Spin"
 msgstr "<Toolbox>/Расш./Анимация/Seth Spin"
@@ -701,11 +703,11 @@ msgstr "Дальше..."
 msgid "arguments to main not yet supported!"
 msgstr ""
 
-msgid "<Image>/Filters/Logulator/Newsprint text"
-msgstr "<Image>/Фильтры/Регистратор/Газетный текст"
-
 msgid "Seth Spin..."
 msgstr ""
+
+msgid "<Image>/Filters/Logulator/Newsprint text"
+msgstr "<Image>/Фильтры/Регистратор/Газетный текст"
 
 msgid "<Toolbox>/Xtns/Visual Scriptor"
 msgstr "<Toolbox>/Расш./Visual Scriptor"
@@ -740,10 +742,10 @@ msgstr "шрифт не указан, используется установленный по умолчанию"
 msgid "<Image>/Select/Triangle"
 msgstr "<Image>/Выделение/Треугольник"
 
-msgid "gimp_tile_get_data is not yet implemented\n"
+msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
 msgstr ""
 
-msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
+msgid "gimp_tile_get_data is not yet implemented\n"
 msgstr ""
 
 msgid "<Image>/Filters/Map/Xach Shadows..."
@@ -870,11 +872,11 @@ msgstr ""
 msgid "get current foreground colour from the gimp"
 msgstr ""
 
-msgid "You can't run this script without an ALPHA CHANNEL!!"
-msgstr ""
-
 msgid "<Toolbox>/Xtns/Perl Example Plug-in"
 msgstr "<Toolbox>/Расш./Пример дополнения Perl"
+
+msgid "You can't run this script without an ALPHA CHANNEL!!"
+msgstr ""
 
 msgid "<Image>/Filters/Logulator/Neon"
 msgstr "<Image>/Фильтры/Logulator/Неон"
@@ -891,11 +893,11 @@ msgstr ""
 msgid "<Image>/Guides/To Selection"
 msgstr "<Image>/Направляющие/В выделение"
 
-msgid "Help for "
-msgstr "Справка о "
-
 msgid "export failed"
 msgstr ""
+
+msgid "Help for "
+msgstr "Справка о "
 
 msgid "<Image>/Filters/Logulator/Chip Away"
 msgstr "<Image>/Фильтры/Регистратор/Chip Away"
@@ -936,11 +938,11 @@ msgstr "Правка"
 msgid "<Image>/Filters/Logulator/Starscape"
 msgstr "<Image>/Фильтры/Регистратор/Starscape"
 
-msgid "<Image>/Layers/Stack/Reorder Layers..."
-msgstr "<Image>/Слои/Стопка/Переупорядочить"
-
 msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
 msgstr "<Image>/Фильтры/Улучшение/2х2 Улучшение контраста"
+
+msgid "<Image>/Layers/Stack/Reorder Layers..."
+msgstr "<Image>/Слои/Стопка/Переупорядочить"
 
 msgid ""
 "$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z "

@@ -66,10 +66,10 @@ msgstr ""
 msgid "WARNING: client tried to unlock without holding a lock"
 msgstr ""
 
-msgid "required callback 'run' not found\n"
+msgid "$_: illegal switch, try $0 --help\n"
 msgstr ""
 
-msgid "$_: illegal switch, try $0 --help\n"
+msgid "required callback 'run' not found\n"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
@@ -153,10 +153,10 @@ msgstr ""
 msgid "<Image>/Filters/Noise/Ditherize"
 msgstr ""
 
-msgid "expected perl-server at other end of socket, got @r\n"
+msgid "pdl height != region height"
 msgstr ""
 
-msgid "pdl height != region height"
+msgid "expected perl-server at other end of socket, got @r\n"
 msgstr ""
 
 msgid "received QUIT request"
@@ -225,9 +225,6 @@ msgstr "<Image>/フィルタ/下塗り/輪郭ハイライト"
 msgid "a color must have three components (array elements)"
 msgstr ""
 
-msgid "<Toolbox>/Xtns/Render/Pixelgenerator"
-msgstr ""
-
 msgid "Spin Layer SRC (250ms)"
 msgstr ""
 
@@ -255,9 +252,6 @@ msgstr ""
 msgid "<Image>/Select/Round Rectangular Selection"
 msgstr "<Image>/選択/面取り矩形"
 
-msgid "<Image>/Filters/Map/Pixelmap"
-msgstr "<Image>/フィルタ/マップ/ピクセルマップ"
-
 msgid "/Xtns/Perl"
 msgstr "/拡張/Perl"
 
@@ -273,10 +267,10 @@ msgstr ""
 msgid "Visual Scriptor"
 msgstr "ビジュアルスクリプタ"
 
-msgid "No horizontal or vertical guides found. Aborted."
+msgid "<Image>/Filters/Map/Image Tile"
 msgstr ""
 
-msgid "<Image>/Filters/Map/Image Tile"
+msgid "No horizontal or vertical guides found. Aborted."
 msgstr ""
 
 msgid "<Image>/Filters/Logulator/Comic Book"
@@ -312,6 +306,10 @@ msgstr ""
 msgid "accepted tcp connection from "
 msgstr ""
 
+#, fuzzy
+msgid "<Toolbox>/Xtns/Render/Pixelgenerator..."
+msgstr "<Toolbox>/拡張/下塗り/れんが"
+
 msgid "illegal parasite specification, expected three array members"
 msgstr ""
 
@@ -324,14 +322,14 @@ msgstr ""
 msgid "Illegal default font description for $function: $val\n"
 msgstr ""
 
-msgid "<Image>/Filters/Render/Stampify"
-msgstr "<Image>/フィルタ/下塗り/スタンプ"
-
 msgid "<Image>/Filters/Logulator/Chalk"
 msgstr ""
 
 msgid "unable to convert Gimp::Drawable into Gimp::GDrawable (id %d)"
 msgstr ""
+
+msgid "<Image>/Filters/Render/Stampify"
+msgstr "<Image>/フィルタ/下塗り/スタンプ"
 
 msgid ""
 "BLURB:\n"
@@ -363,19 +361,19 @@ msgstr ""
 msgid "<Image>/Filters/Render/Terral Text"
 msgstr ""
 
-msgid "Spin Layer DEST (250ms)"
+msgid "<Toolbox>/Xtns/Render/Povray/Texture"
 msgstr ""
 
-msgid "<Toolbox>/Xtns/Render/Povray/Texture"
+msgid "Spin Layer DEST (250ms)"
 msgstr ""
 
 msgid "register called with too many or wrong arguments\n"
 msgstr ""
 
-msgid "params and return_vals must be array refs (even if empty)!"
+msgid "$_ is not a valid import tag for package $pkg"
 msgstr ""
 
-msgid "$_ is not a valid import tag for package $pkg"
+msgid "params and return_vals must be array refs (even if empty)!"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Render/Yin-Yang"
@@ -473,10 +471,10 @@ msgstr "<Image>/フィルタ/マップ/Xach ブロック"
 msgid "Menu Path"
 msgstr ""
 
-msgid "Unable to grok '%s' as colour specifier"
+msgid "9x15bold"
 msgstr ""
 
-msgid "9x15bold"
+msgid "Unable to grok '%s' as colour specifier"
 msgstr ""
 
 msgid "Accelerator"
@@ -500,10 +498,10 @@ msgstr ""
 msgid "<Image>/Filters/Logulator/Glossy"
 msgstr ""
 
-msgid "argument is not of type %s"
+msgid "WARNING"
 msgstr ""
 
-msgid "WARNING"
+msgid "argument is not of type %s"
 msgstr ""
 
 msgid "Description"
@@ -536,6 +534,10 @@ msgstr ""
 msgid "Synopsis"
 msgstr ""
 
+#, fuzzy
+msgid "<Image>/Filters/Map/Pixelmap..."
+msgstr "<Image>/フィルタ/マップ/ピクセルマップ"
+
 msgid "Color"
 msgstr ""
 
@@ -548,11 +550,11 @@ msgstr ""
 msgid "<Image>/Filters/Apply Perl Expression..."
 msgstr "<Image>/フィルタ/Perl 表現適用..."
 
-msgid "<Image>/Filters/Logulator/Blended II"
-msgstr ""
-
 msgid "DESCRIPTION"
 msgstr "説明"
+
+msgid "<Image>/Filters/Logulator/Blended II"
+msgstr ""
 
 msgid "Unable to open '$filename' for writing: $!\n"
 msgstr ""
@@ -587,11 +589,11 @@ msgstr ""
 msgid "perl-arrayref required as datatype for a gimp-array"
 msgstr ""
 
-msgid "required callback 'query' not found\n"
-msgstr ""
-
 msgid "<Toolbox>/Xtns/Create_Images"
 msgstr "<Toolbox>/拡張/画像作成"
+
+msgid "required callback 'query' not found\n"
+msgstr ""
 
 msgid "Save $name"
 msgstr ""
@@ -664,10 +666,10 @@ msgstr "バンプマップ"
 msgid "Saving '$filename' as COLORHTML..."
 msgstr ""
 
-msgid "too many"
+msgid "required callback 'net' not found\n"
 msgstr ""
 
-msgid "required callback 'net' not found\n"
+msgid "too many"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Animation/Seth Spin"
@@ -691,10 +693,10 @@ msgstr ""
 msgid "arguments to main not yet supported!"
 msgstr ""
 
-msgid "<Image>/Filters/Logulator/Newsprint text"
+msgid "Seth Spin..."
 msgstr ""
 
-msgid "Seth Spin..."
+msgid "<Image>/Filters/Logulator/Newsprint text"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Visual Scriptor"
@@ -730,10 +732,10 @@ msgstr ""
 msgid "<Image>/Select/Triangle"
 msgstr "<Image>/選択/三角形"
 
-msgid "gimp_tile_get_data is not yet implemented\n"
+msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
 msgstr ""
 
-msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
+msgid "gimp_tile_get_data is not yet implemented\n"
 msgstr ""
 
 msgid "<Image>/Filters/Map/Xach Shadows..."
@@ -860,11 +862,11 @@ msgstr ""
 msgid "get current foreground colour from the gimp"
 msgstr ""
 
-msgid "You can't run this script without an ALPHA CHANNEL!!"
-msgstr ""
-
 msgid "<Toolbox>/Xtns/Perl Example Plug-in"
 msgstr "<Toolbox>/拡張/Perl プラグイン例"
+
+msgid "You can't run this script without an ALPHA CHANNEL!!"
+msgstr ""
 
 msgid "<Image>/Filters/Logulator/Neon"
 msgstr ""
@@ -881,10 +883,10 @@ msgstr ""
 msgid "<Image>/Guides/To Selection"
 msgstr "<Image>/ガイド/選択領域へ"
 
-msgid "Help for "
+msgid "export failed"
 msgstr ""
 
-msgid "export failed"
+msgid "Help for "
 msgstr ""
 
 msgid "<Image>/Filters/Logulator/Chip Away"
@@ -926,10 +928,10 @@ msgstr ""
 msgid "<Image>/Filters/Logulator/Starscape"
 msgstr ""
 
-msgid "<Image>/Layers/Stack/Reorder Layers..."
+msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
 msgstr ""
 
-msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
+msgid "<Image>/Layers/Stack/Reorder Layers..."
 msgstr ""
 
 msgid ""
