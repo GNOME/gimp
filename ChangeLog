@@ -1,3 +1,10 @@
+Tue Nov  2 22:40:31 MET 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-scripts.c: Fonts aren't free'd after
+	a gdk_font_load but unref'd of course. I just wonder why this has
+	ever worked before...
+	This should fix bugs #2554, #2774, #2798, #2963 and #3209. Whee!
+
 Mon Nov  1 09:28:46 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* Made 1.1.11 release

@@ -1516,7 +1516,7 @@ script_fu_font_preview (GtkWidget *preview,
 
   if (font != NULL)
     {
-      g_free (font);
+      gdk_font_unref (font);
 
       strtok (fontname, "-");
       family = strtok (NULL, "-");
@@ -1605,7 +1605,8 @@ script_fu_ok_callback (GtkWidget *widget,
 	    g_message (_("At least one font you've choosen is invalid.\nPlease check your settings.\n"));
 	    return;
 	  }
-	g_free (font);
+	else
+	  gdk_font_unref (font);
       }
   
   length = strlen (script->script_name) + 3;
@@ -2176,7 +2177,6 @@ script_fu_font_dialog_ok (GtkWidget *widget,
 
   font = (SFFont *) data;
 
-  
   fontname = gtk_font_selection_dialog_get_font_name (GTK_FONT_SELECTION_DIALOG (font->dialog));
   if (fontname != NULL)
     {
