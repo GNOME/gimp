@@ -127,8 +127,9 @@ init_generated_constants (void)
   setvar (cintern ("PDB-BOUNDARY"), flocons (18), NIL);
   setvar (cintern ("PDB-PATH"), flocons (19), NIL);
   setvar (cintern ("PDB-PARASITE"), flocons (20), NIL);
-  setvar (cintern ("PDB-STATUS"), flocons (21), NIL);
-  setvar (cintern ("PDB-END"), flocons (22), NIL);
+  setvar (cintern ("PDB-PALETTE"), flocons (21), NIL);
+  setvar (cintern ("PDB-STATUS"), flocons (22), NIL);
+  setvar (cintern ("PDB-END"), flocons (23), NIL);
 
   setvar (cintern ("INTERNAL"), flocons (0), NIL);
   setvar (cintern ("PLUGIN"), flocons (1), NIL);

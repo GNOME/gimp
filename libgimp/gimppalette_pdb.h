@@ -38,6 +38,10 @@ gboolean gimp_palette_set_background     (GimpRGB *background);
 gboolean gimp_palette_set_default_colors (void);
 gboolean gimp_palette_swap_colors        (void);
 gboolean gimp_palette_refresh            (void);
+gchar**  gimp_palette_list               (gint    *num_palettes);
+gchar*   gimp_palette_get_palette        (gint    *num_colors);
+gboolean gimp_palette_set_palette        (gchar   *name);
+GimpRGB* gimp_palette_get_entry          (gint     entry_num);
 
 
 #ifdef __cplusplus

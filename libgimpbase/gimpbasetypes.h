@@ -71,6 +71,7 @@ typedef enum /*< chop=GIMP_ >*/
   GIMP_PDB_BOUNDARY,
   GIMP_PDB_PATH,
   GIMP_PDB_PARASITE,
+  GIMP_PDB_PALETTE,
   GIMP_PDB_STATUS,
   GIMP_PDB_END
 } GimpPDBArgType;

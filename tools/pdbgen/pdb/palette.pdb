@@ -21,6 +21,35 @@ sub color_blurb {
     $blurb = "@{[shift]} the current GIMP @{[shift]}ground color.";
 }
 
+sub palette_arg () {{
+    name => 'name',
+    type => 'string',
+    desc => 'The palette name'
+}}
+
+sub dim_args () {
+    my @args;
+    foreach (qw(num_colors)) {
+        push @args, { name => $_, type => 'int32', desc => "The palette $_" };
+    }
+    @args;
+}
+
+sub palette_outargs {
+    foreach (@outargs) {
+        my $alias;
+        if ($_->{type} eq 'string') {
+            $alias = "GIMP_OBJECT (palette)->$_->{name}";
+        } else {
+            $alias = "palette->$_->{name}";
+        }
+        $alias = "g_strdup ($alias)" if $_->{type} eq 'string';
+        $alias =~ s/num_colors/n_colors/ if $_->{name} =~ /num_colors/;
+        $_->{alias} = $alias;
+        $_->{no_declare} = 1;
+    }
+}
+
 sub color_arg {
     my $ground = (shift) . "ground";
     {
@@ -166,13 +195,167 @@ CODE
     );
 }
 
+sub palette_list {
+	$blurb = 'Retrieves a list of all of the available patterns';
+
+	    $help = <<'HELP';
+This procedure returns a complete listing of available palettes. Each name
+returned can be used as input to the command 'gimp_palette_set_palette'.
+HELP
+
+    $author = 'Nathan Summers <rock@gimp.org>';
+    $copyright = 'Nathan Summers';
+    $date = '2001';
+
+    @outargs = (
+        { name => 'palette_list', type => 'stringarray',
+          desc => 'The list of palette names',
+          alias => 'palettes',
+          array => { name => 'num_palettes',
+                     desc => 'The number of palettes in the list',
+                     alias => 'gimp->palette_factory->container->num_children', no_declare => 1 } }
+    );
+
+    %invoke = (
+        vars => [ 'GList *list = NULL', 'gint i = 0' ],
+        code => <<'CODE'
+{
+  palettes = g_new (gchar *, gimp->palette_factory->container->num_children);
+
+  success = ((list = GIMP_LIST (gimp->palette_factory->container)->list) != NULL);
+
+  while (list)
+    {
+      palettes[i++] = g_strdup (GIMP_OBJECT (list->data)->name);
+      list = list->next;
+    }
+}
+CODE
+    );
+}
+
+sub palette_get_palette {
+    $blurb = 'Retrieve information about the currently active palette.';
+
+    $help = <<'HELP';
+This procedure retrieves information about the currently active palette. This
+includes the name, and the number of colors.
+HELP
+
+    $author = 'Nathan Summers <rock@gimp.org>';
+    $copyright = 'Nathan Summers';
+    $date = '2001';
+
+    @outargs = (
+        &palette_arg,
+        &dim_args,
+    );
+
+    &palette_outargs;
+
+    %invoke = (
+        vars => [ 'GimpPalette *palette' ],
+        code => 'success = (palette = gimp_context_get_palette (gimp_get_current_context (gimp))) != NULL;'
+    );
+}
+
+
+sub palette_set_palette {
+    $blurb = 'Set the specified palette as the active palette.';
+
+    $help = <<'HELP';
+This procedure allows the active palette to be set by specifying its name.
+The name is simply a string which corresponds to one of the names of the
+installed palettes. If no matching palette is found, this procedure will
+return an error. Otherwise, the specified palette becomes active and will be
+used in all subsequent palette operations.
+HELP
+
+    $author = 'Nathan Summers <rock@gimp.org>';
+    $copyright = 'Nathan Summers';
+    $date = '2001';
+
+    @inargs = ( &palette_arg );
+
+    %invoke = (
+        vars => [ 'GimpPalette *palette', 'GList *list' ],
+        code => <<'CODE'
+{
+  success = FALSE;
+
+  for (list = GIMP_LIST (gimp->palette_factory->container)->list;
+       list;
+       list = g_list_next (list))
+    {
+      palette = (GimpPalette *) list->data;
+
+      if (! strcmp (GIMP_OBJECT (palette)->name, name))
+        {
+          gimp_context_set_palette (gimp_get_current_context (gimp), palette);
+          success = TRUE;
+          break;
+        }
+    }
+}
+CODE
+    );
+}
+	
+sub palette_get_entry {
+    $blurb = 'Gets the specified palette entry from the currently active pallette.';
+
+    $help = <<'HELP';
+This procedure returns the color of the zero-based entry specifed for the current palette.
+It returns an error if the entry does not exist.
+HELP
+
+    $author = 'Nathan Summers <rock@gimp.org>';
+    $copyright = 'Nathan Summers';
+    $date = '2001';
+
+    @inargs = (
+        { name => 'entry_num', type => 'int32',
+          desc => 'The entry to retrieve',
+          alias => 'entry'}
+    );
+    @outargs = (
+        { name => 'color', type => 'color',
+          desc => 'The color requested',
+          alias => 'color'}
+    );
+
+    %invoke = (
+	vars => [ 'GimpPalette *palette'],
+	code => <<'CODE'
+{
+  success = TRUE;
+
+  palette = gimp_context_get_palette (gimp_get_current_context(gimp));
+
+  if (entry >= palette->n_colors) {
+    success = FALSE;
+  }
+  else
+  {
+    color=*(GimpRGB *) g_list_nth(palette->colors, entry)->data;
+  }
+}
+CODE
+    );
+}
+ 
+
+
 @headers = qw("core/gimp.h" "core/gimpcontext.h"
-              "core/gimpdatafactory.h");
+              "core/gimpdatafactory.h" "core/gimplist.h" "core/gimppalette.h");
 
 @procs = qw(palette_get_foreground palette_get_background
 	    palette_set_foreground palette_set_background
 	    palette_set_default_colors palette_swap_colors
-	    palette_refresh);
+	    palette_refresh
+	    palette_list
+	    palette_get_palette palette_set_palette
+	    palette_get_entry);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Palette';

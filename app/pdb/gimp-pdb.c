@@ -291,6 +291,8 @@ procedural_db_run_proc (Gimp        *gimp,
         case GIMP_PDB_STATUS:
 	  params[i].value.pdb_int = (gint32) va_arg (args, gint);
 	  break;
+	case GIMP_PDB_PALETTE:
+	  params[i].value.pdb_pointer = va_arg (args, gpointer);
 	case GIMP_PDB_END:
 	  break;
 	}
@@ -384,6 +386,7 @@ procedural_db_destroy_args (Argument *args,
 	case GIMP_PDB_PATH:
 	case GIMP_PDB_PARASITE:
 	case GIMP_PDB_STATUS:
+	case GIMP_PDB_PALETTE:
 	case GIMP_PDB_END:
 	  break;
 	}

@@ -453,6 +453,7 @@ gimp_run_procedure (gchar *name,
         case GIMP_PDB_SELECTION:
         case GIMP_PDB_BOUNDARY:
         case GIMP_PDB_PATH:
+        case GIMP_PDB_PALETTE:
         case GIMP_PDB_STATUS:
 	  (void) va_arg (args, gint);
 	  break;

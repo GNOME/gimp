@@ -3154,6 +3154,8 @@ plug_in_params_to_args (GPParam *params,
 	  else
 	    args[i].value.pdb_pointer = (gpointer) &(params[i].data.d_parasite);
 	  break;
+	case GIMP_PDB_PALETTE:
+	  args[i].value.pdb_int = params[i].data.d_palette;
 	case GIMP_PDB_STATUS:
 	  args[i].value.pdb_int = params[i].data.d_status;
 	  break;
@@ -3334,6 +3336,8 @@ plug_in_args_to_params (Argument *args,
 			sizeof (GimpParasite));
 	    }
 	  break;
+	case GIMP_PDB_PALETTE:
+	  params[i].data.d_palette = args[i].value.pdb_int;
 	case GIMP_PDB_STATUS:
 	  params[i].data.d_status = args[i].value.pdb_int;
 	  break;
@@ -3413,6 +3417,7 @@ plug_in_params_destroy (GPParam *params,
 	      params[i].data.d_parasite.data = 0;
 	    }
 	  break;
+	case GIMP_PDB_PALETTE:
 	case GIMP_PDB_STATUS:
 	  break;
 	case GIMP_PDB_END:
@@ -3494,6 +3499,7 @@ plug_in_args_destroy (Argument *args,
 	      args[i].value.pdb_pointer = NULL;
 	    }
 	  break;
+	case GIMP_PDB_PALETTE:
 	case GIMP_PDB_STATUS:
 	  break;
 	case GIMP_PDB_END:

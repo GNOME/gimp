@@ -49,7 +49,7 @@ package Gimp::CodeGen::enums;
 			  GIMP_PDB_IMAGE GIMP_PDB_LAYER GIMP_PDB_CHANNEL
 			  GIMP_PDB_DRAWABLE GIMP_PDB_SELECTION
 			  GIMP_PDB_BOUNDARY GIMP_PDB_PATH GIMP_PDB_PARASITE
-			  GIMP_PDB_STATUS GIMP_PDB_END) ],
+			  GIMP_PDB_PALETTE GIMP_PDB_STATUS GIMP_PDB_END) ],
 	  mapping => { GIMP_PDB_INT32 => '0',
 		       GIMP_PDB_INT16 => '1',
 		       GIMP_PDB_INT8 => '2',
@@ -71,8 +71,9 @@ package Gimp::CodeGen::enums;
 		       GIMP_PDB_BOUNDARY => '18',
 		       GIMP_PDB_PATH => '19',
 		       GIMP_PDB_PARASITE => '20',
-		       GIMP_PDB_STATUS => '21',
-		       GIMP_PDB_END => '22' },
+		       GIMP_PDB_PALETTE => '21',
+		       GIMP_PDB_STATUS => '22',
+		       GIMP_PDB_END => '23' },
 	  nicks   => { GIMP_PDB_INT32 => 'PDB_INT32',
 		       GIMP_PDB_INT16 => 'PDB_INT16',
 		       GIMP_PDB_INT8 => 'PDB_INT8',
@@ -94,6 +95,7 @@ package Gimp::CodeGen::enums;
 		       GIMP_PDB_BOUNDARY => 'PDB_BOUNDARY',
 		       GIMP_PDB_PATH => 'PDB_PATH',
 		       GIMP_PDB_PARASITE => 'PDB_PARASITE',
+		       GIMP_PDB_PALETTE => 'PDB_PALETTE',
 		       GIMP_PDB_STATUS => 'PDB_STATUS',
 		       GIMP_PDB_END => 'PDB_END' }
 	},
