@@ -62,21 +62,30 @@
  * Want to dynamically allocate this so we can save memory!
  */
 
-#define ERROR_ROWS 2
+/*  
+ *   First, you should not use error_t since this is already defined 
+ *       in some system headers; changed it to dither_error_t.
+ *   Second, this code is unused, so I have commented it out.
+ *                                2000-04-28  Sven Neumann  <sven@gimp.org>
+ */
 
-typedef union error
-{
-  struct
+/*
+  #define ERROR_ROWS 2
+
+  typedef union error
   {
-    int c[ERROR_ROWS];
-    int m[ERROR_ROWS];
-    int y[ERROR_ROWS];
-    int k[ERROR_ROWS];
-  } c;
-  int v[4][ERROR_ROWS];
-} error_t;
+    struct
+    {
+      int c[ERROR_ROWS];
+      int m[ERROR_ROWS];
+      int y[ERROR_ROWS];
+      int k[ERROR_ROWS];
+    } c;
+    int v[4][ERROR_ROWS];
+  } dither_error_t;
 
-error_t *nerror = 0;
+  dither_error_t *nerror = 0;
+*/
 
 int	error[2][4][14*2880+1];
 
