@@ -830,6 +830,7 @@ GIMP_PREVIEW_GET_CLASS
 <FILE>gimpscrolledpreview</FILE>
 <TITLE>GimpScrolledPreview</TITLE>
 GimpScrolledPreview
+gimp_scrolled_preview_set_position
 <SUBSECTION Standard>
 GimpScrolledPreviewClass
 GIMP_SCROLLED_PREVIEW

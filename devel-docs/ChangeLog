@@ -1,7 +1,16 @@
+2005-01-07  Sven Neumann  <neumann@jpk.com>
+
+	* app/app-docs.sgml
+	* app/app-sections.txt: updated.
+
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimpscrolledpreview.sgml: added
+	gimp_scrolled_preview_set_position().
+
 2004-12-31  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt
-	* libgimp/tmpl/gimpgradient.sgml: added gimp_brush_is_editable.
+	* libgimp/tmpl/gimpgradient.sgml: added gimp_brush_is_editable().
 
 2004-12-31  Sven Neumann  <sven@gimp.org>
 

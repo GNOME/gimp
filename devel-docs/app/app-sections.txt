@@ -1658,12 +1658,16 @@ gimp_display_shell_set_show_transform
 gimp_display_shell_get_show_transform
 gimp_display_shell_set_show_grid
 gimp_display_shell_get_show_grid
-gimp_display_shell_set_snap_to_grid
-gimp_display_shell_get_snap_to_grid
 gimp_display_shell_set_show_guides
 gimp_display_shell_get_show_guides
+gimp_display_shell_set_snap_to_grid
+gimp_display_shell_get_snap_to_grid
 gimp_display_shell_set_snap_to_guides
 gimp_display_shell_get_snap_to_guides
+gimp_display_shell_get_snap_to_canvas
+gimp_display_shell_set_snap_to_canvas
+gimp_display_shell_get_snap_to_vectors
+gimp_display_shell_set_snap_to_vectors
 gimp_display_shell_set_show_menubar
 gimp_display_shell_get_show_menubar
 gimp_display_shell_set_show_rulers
@@ -1691,6 +1695,15 @@ gimp_display_shell_origin_button_press
 gimp_display_shell_qmask_button_press
 gimp_display_shell_qmask_toggled
 gimp_display_shell_nav_button_press
+</SECTION>
+
+<SECTION>
+<FILE>gimpdisplayshell-coords</FILE>
+gimp_display_shell_get_event_coords
+gimp_display_shell_get_device_coords
+gimp_display_shell_get_time_coords
+gimp_display_shell_get_event_state
+gimp_display_shell_get_device_state
 </SECTION>
 
 <SECTION>
@@ -1802,6 +1815,12 @@ gimp_display_shell_scale_dialog
 <TITLE>GimpDisplayShell-scroll</TITLE>
 gimp_display_shell_scroll
 gimp_display_shell_scroll_clamp_offsets
+</SECTION>
+
+<SECTION>
+<FILE>gimpdisplayshell-autoscroll</FILE>
+gimp_display_shell_autoscroll_start
+gimp_display_shell_autoscroll_stop
 </SECTION>
 
 <SECTION>
@@ -2113,6 +2132,7 @@ GIMP_BRUSH_CORE_GET_CLASS
 KERNEL_WIDTH
 KERNEL_HEIGHT
 KERNEL_SUBSAMPLE
+KERNEL_SUM
 </SECTION>
 
 <SECTION>
@@ -8467,9 +8487,13 @@ tool_options_reset_all_cmd_callback
 
 <SECTION>
 <FILE>tools-commands</FILE>
+tools_lower_cmd_callback
+tools_lower_to_bottom_cmd_callback
+tools_raise_cmd_callback
+tools_raise_to_top_cmd_callback
+tools_reset_cmd_callback
 tools_select_cmd_callback
 tools_toggle_visibility_cmd_callback
-tools_reset_cmd_callback
 </SECTION>
 
 <SECTION>
@@ -8506,24 +8530,26 @@ view_zoom_fit_in_cmd_callback
 view_zoom_fit_to_cmd_callback
 view_zoom_cmd_callback
 view_zoom_other_cmd_callback
+view_shrink_wrap_cmd_callback
 view_dot_for_dot_cmd_callback
 view_scroll_horizontal_cmd_callback
 view_scroll_vertical_cmd_callback
 view_info_window_cmd_callback
 view_navigation_window_cmd_callback
 view_display_filters_cmd_callback
-view_toggle_selection_cmd_callback
+view_toggle_grid_cmd_callback
+view_toggle_guides_cmd_callback
 view_toggle_layer_boundary_cmd_callback
 view_toggle_menubar_cmd_callback
 view_toggle_rulers_cmd_callback
 view_toggle_scrollbars_cmd_callback
+view_toggle_selection_cmd_callback
 view_toggle_statusbar_cmd_callback
-view_toggle_guides_cmd_callback
-view_snap_to_guides_cmd_callback
-view_toggle_grid_cmd_callback
+view_snap_to_canvas_cmd_callback
 view_snap_to_grid_cmd_callback
+view_snap_to_guides_cmd_callback
+view_snap_to_vectors_cmd_callback
 view_padding_color_cmd_callback
-view_shrink_wrap_cmd_callback
 view_fullscreen_cmd_callback
 view_change_screen_cmd_callback
 </SECTION>

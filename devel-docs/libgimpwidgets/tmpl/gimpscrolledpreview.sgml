@@ -21,3 +21,13 @@ A widget providing a #GimpPreview enhanced by scrolling capabilities.
 
 @parent_instance: 
 
+<!-- ##### FUNCTION gimp_scrolled_preview_set_position ##### -->
+<para>
+
+</para>
+
+@scr: 
+@x: 
+@y: 
+
+

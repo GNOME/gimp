@@ -471,6 +471,7 @@
       <xi:include href="xml/gimpdisplayshell-appearance.xml" />
       <xi:include href="xml/gimpdisplayshell-callbacks.xml" />
       <xi:include href="xml/gimpdisplayshell-close.xml" />
+      <xi:include href="xml/gimpdisplayshell-coords.xml" />
       <xi:include href="xml/gimpdisplayshell-cursor.xml" />
       <xi:include href="xml/gimpdisplayshell-dnd.xml" />
       <xi:include href="xml/gimpdisplayshell-draw.xml" />
@@ -482,6 +483,7 @@
       <xi:include href="xml/gimpdisplayshell-render.xml" />
       <xi:include href="xml/gimpdisplayshell-scale.xml" />
       <xi:include href="xml/gimpdisplayshell-scroll.xml" />
+      <xi:include href="xml/gimpdisplayshell-autoscroll.xml" />
       <xi:include href="xml/gimpdisplayshell-selection.xml" />
       <xi:include href="xml/gimpdisplayshell-title.xml" />
       <xi:include href="xml/gimpdisplayshell-transform.xml" />
