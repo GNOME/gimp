@@ -42,7 +42,11 @@ if test -z "$*"; then
 fi
 
 echo processing...
-(aclocal; automake; autoconf)
+
+aclocal $ACLOCAL_FLAGS
+automake
+autoconf
+
 ./configure "$@"
 
 echo 
