@@ -222,13 +222,11 @@ gimp_container_list_view_insert_item (GimpContainerView *view,
   gtk_container_add (GTK_CONTAINER (list_item), hbox);
   gtk_widget_show (hbox);
 
-  preview = gimp_preview_new (viewable, NULL,
-			      FALSE,
-			      view->preview_width,
-			      view->preview_height,
-			      1,
-			      FALSE,
-			      FALSE);
+  preview = gimp_preview_new_full (viewable,
+				   view->preview_width,
+				   view->preview_height,
+				   1,
+				   FALSE, FALSE, FALSE);
   gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
 

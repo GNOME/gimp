@@ -1432,13 +1432,10 @@ container_view_new (gboolean       list,
 				NULL);
 
       preview =
-	gimp_preview_new (GIMP_VIEWABLE (gimp_context_get_brush (context)),
-			  context,
-			  FALSE,
-			  32, 32,
-			  1,
-			  TRUE,
-			  FALSE);
+	gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_brush (context)),
+			       32, 32, 1,
+			       FALSE, TRUE, FALSE);
+      gimp_preview_set_context (GIMP_PREVIEW (preview), context);
       gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area), preview,
 			  FALSE, FALSE, 0);
       gtk_widget_show (preview);
@@ -1454,13 +1451,10 @@ container_view_new (gboolean       list,
 	 GTK_OBJECT (preview));
 
       preview =
-	gimp_preview_new (GIMP_VIEWABLE (gimp_context_get_pattern (context)),
-			  context,
-			  FALSE,
-			  32, 32,
-			  1,
-			  TRUE,
-			  FALSE);
+	gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_pattern (context)),
+			       32, 32, 1,
+			       FALSE, TRUE, FALSE);
+      gimp_preview_set_context (GIMP_PREVIEW (preview), context);
       gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area), preview,
 			  FALSE, FALSE, 0);
       gtk_widget_show (preview);
@@ -1479,7 +1473,11 @@ container_view_new (gboolean       list,
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), view);
   gtk_widget_show (view);
 
-  adjustment = gtk_adjustment_new (preview_width, 16, 257, 16, 16, 16);
+  if (multi)
+    adjustment = gtk_adjustment_new (preview_width, 16, 64, 4, 4, 0);
+  else
+    adjustment = gtk_adjustment_new (preview_width, 16, 257, 16, 16, 16);
+
   scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), scale,
 		      FALSE, FALSE, 0);

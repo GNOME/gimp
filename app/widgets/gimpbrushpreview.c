@@ -28,6 +28,7 @@
 #include "gimpbrush.h"
 #include "gimpbrushpipe.h"
 #include "gimpbrushpreview.h"
+#include "gimpdnd.h"
 #include "temp_buf.h"
 
 
@@ -40,6 +41,8 @@ static GtkWidget * gimp_brush_preview_create_popup        (GimpPreview *preview)
 static gboolean    gimp_brush_preview_needs_popup         (GimpPreview *preview);
 
 static gboolean    gimp_brush_preview_render_timeout_func (GimpBrushPreview *preview);
+static GimpBrush * gimp_brush_preview_drag_brush          (GtkWidget        *widget,
+							   gpointer          data);
 
 
 static GimpPreviewClass *parent_class = NULL;
@@ -91,6 +94,21 @@ gimp_brush_preview_class_init (GimpBrushPreviewClass *klass)
 static void
 gimp_brush_preview_init (GimpBrushPreview *brush_preview)
 {
+  static GtkTargetEntry preview_target_table[] =
+  {
+    GIMP_TARGET_BRUSH
+  };
+  static guint preview_n_targets = (sizeof (preview_target_table) /
+				    sizeof (preview_target_table[0]));
+
+  gtk_drag_source_set (GTK_WIDGET (brush_preview),
+                       GDK_BUTTON2_MASK,
+                       preview_target_table, preview_n_targets,
+                       GDK_ACTION_COPY);
+  gimp_dnd_brush_source_set (GTK_WIDGET (brush_preview),
+			     gimp_brush_preview_drag_brush,
+			     brush_preview);
+
   brush_preview->pipe_timeout_id      = 0;
   brush_preview->pipe_animation_index = 0;
 }
@@ -291,12 +309,11 @@ gimp_brush_preview_create_popup (GimpPreview *preview)
   popup_width  = GIMP_BRUSH (preview->viewable)->mask->width;
   popup_height = GIMP_BRUSH (preview->viewable)->mask->height;
 
-  return gimp_preview_new (preview->viewable, NULL,
-			   TRUE,
-			   popup_width,
-			   popup_height,
-			   0,
-			   FALSE, FALSE);
+  return gimp_preview_new_full (preview->viewable,
+				popup_width,
+				popup_height,
+				0,
+				TRUE, FALSE, FALSE);
 }
 
 static gboolean
@@ -310,8 +327,8 @@ gimp_brush_preview_needs_popup (GimpPreview *preview)
   brush_width  = brush->mask->width;
   brush_height = brush->mask->height;
 
-  if (GIMP_IS_BRUSH_PIPE (brush) ||
-      brush_width  > preview->width       ||
+  if (GIMP_IS_BRUSH_PIPE (brush)    ||
+      brush_width  > preview->width ||
       brush_height > preview->height)
     return TRUE;
 
@@ -360,4 +377,15 @@ gimp_brush_preview_render_timeout_func (GimpBrushPreview *brush_preview)
   temp_buf_free (temp_buf);
 
   return TRUE;
+}
+
+static GimpBrush *
+gimp_brush_preview_drag_brush (GtkWidget *widget,
+			       gpointer   data)
+{
+  GimpPreview *preview;
+
+  preview = GIMP_PREVIEW (data);
+
+  return GIMP_BRUSH (preview->viewable);
 }

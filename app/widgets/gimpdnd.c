@@ -36,6 +36,7 @@
 #include "gimpdnd.h"
 #include "gimpdrawable.h"
 #include "gimppattern.h"
+#include "gimppreview.h"
 #include "gimprc.h"
 #include "gradient.h"
 #include "gradient_header.h"
@@ -603,12 +604,7 @@ gimp_dnd_get_brush_icon (GtkWidget     *widget,
   if (! brush)
     return NULL;
 
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), 
-                    DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);      
-
-  draw_brush (GTK_PREVIEW (preview), brush, 
-	      DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE, FALSE);
+  preview = gimp_preview_new (GIMP_VIEWABLE (brush), DRAG_PREVIEW_SIZE, 0);
 
   return preview;
 }
@@ -706,12 +702,7 @@ gimp_dnd_get_pattern_icon (GtkWidget     *widget,
   if (! pattern)
     return NULL;
 
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), 
-                    DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);      
-
-  draw_pattern (GTK_PREVIEW (preview), pattern,
-		DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);
+  preview = gimp_preview_new (GIMP_VIEWABLE (pattern), DRAG_PREVIEW_SIZE, 0);
 
   return preview;
 }
@@ -1000,7 +991,7 @@ gimp_dnd_set_tool_data (GtkWidget     *widget,
 			gint           length)
 {
   ToolType tool_type;
-  guint16 val;
+  guint16  val;
 
   if ((format != 16) || (length != 2))
     {

@@ -51,7 +51,7 @@ struct _GimpPreview
 
   gint          width;
   gint          height;
-  gint          border;
+  gint          border_width;
 
   /* TEMP HACK: */
   guchar        border_color[3];
@@ -79,11 +79,14 @@ struct _GimpPreviewClass
 
 GtkType      gimp_preview_get_type         (void);
 GtkWidget *  gimp_preview_new              (GimpViewable  *viewable,
-					    GimpContext   *context,
-					    gboolean       is_popup,
+					    gint           size,
+					    gint           border_width);
+
+GtkWidget *  gimp_preview_new_full         (GimpViewable  *viewable,
 					    gint           width,
 					    gint           height,
-					    gint           border,
+					    gint           border_width,
+					    gboolean       is_popup,
 					    gboolean       clickable,
 					    gboolean       show_popup);
 

@@ -25,10 +25,12 @@
 #include "gimpconstrainedhwrapbox.h"
 
 
-static void    gimp_constrained_hwrap_box_class_init   (GimpConstrainedHWrapBoxClass *klass);
-static void    gimp_constrained_hwrap_box_init         (GimpConstrainedHWrapBox      *hwbox);
-static void    gimp_constrained_hwrap_box_size_request (GtkWidget                    *widget,
-							GtkRequisition               *requisition);
+static void    gimp_constrained_hwrap_box_class_init    (GimpConstrainedHWrapBoxClass *klass);
+static void    gimp_constrained_hwrap_box_init          (GimpConstrainedHWrapBox      *hwbox);
+static void    gimp_constrained_hwrap_box_size_request  (GtkWidget                    *widget,
+							 GtkRequisition               *requisition);
+static void    gimp_constrained_hwrap_box_size_allocate (GtkWidget                    *widget,
+							 GtkAllocation                *allocation);
 
 
 static GtkHWrapBoxClass *parent_class = NULL;
@@ -71,7 +73,8 @@ gimp_constrained_hwrap_box_class_init (GimpConstrainedHWrapBoxClass *class)
   
   parent_class = gtk_type_class (GTK_TYPE_HWRAP_BOX);
 
-  widget_class->size_request = gimp_constrained_hwrap_box_size_request;
+  widget_class->size_request  = gimp_constrained_hwrap_box_size_request;
+  widget_class->size_allocate = gimp_constrained_hwrap_box_size_allocate;
 }
 
 static void
@@ -150,4 +153,62 @@ gimp_constrained_hwrap_box_size_request (GtkWidget      *widget,
       GIMP_CONSTRAINED_HWRAP_BOX (wbox)->columns = 1;
       GIMP_CONSTRAINED_HWRAP_BOX (wbox)->rows    = 1;
     }
+}
+
+static void
+gimp_constrained_hwrap_box_size_allocate (GtkWidget     *widget,
+					  GtkAllocation *allocation)
+{
+  GtkWrapBox *wbox = GTK_WRAP_BOX (widget);
+
+  g_return_if_fail (allocation != NULL);
+
+  if (widget->parent                                  &&
+      GTK_IS_VIEWPORT (widget->parent)                &&
+      widget->parent->parent                          &&
+      GTK_IS_SCROLLED_WINDOW (widget->parent->parent) &&
+      wbox->children                                  &&
+      wbox->children->widget)
+    {
+      GtkWidget *scrolled_win;
+      gint       child_width;
+      gint       child_height;
+      gint       viewport_width;
+      gint       columns;
+      gint       rows;
+
+      scrolled_win = widget->parent->parent;
+
+      child_width  = wbox->children->widget->requisition.width;
+      child_height = wbox->children->widget->requisition.height;
+
+      viewport_width =
+	(scrolled_win->allocation.width -
+	 GTK_SCROLLED_WINDOW (scrolled_win)->vscrollbar->allocation.width -
+	 GTK_SCROLLED_WINDOW_CLASS (GTK_OBJECT (scrolled_win)->klass)->scrollbar_spacing -
+	 scrolled_win->style->klass->xthickness * 2);
+
+      allocation->width = viewport_width;
+
+      columns = 
+	(viewport_width + wbox->hspacing) / (child_width + wbox->hspacing);
+
+      columns = MAX (1, columns);
+
+      rows = wbox->n_children / columns;
+
+      if (rows * columns < wbox->n_children)
+	rows++;
+
+      GIMP_CONSTRAINED_HWRAP_BOX (wbox)->columns = columns;
+      GIMP_CONSTRAINED_HWRAP_BOX (wbox)->rows    = rows;
+    }
+  else
+    {
+      GIMP_CONSTRAINED_HWRAP_BOX (wbox)->columns = 1;
+      GIMP_CONSTRAINED_HWRAP_BOX (wbox)->rows    = 1;
+    }
+
+  if (GTK_WIDGET_CLASS (parent_class)->size_allocate)
+      GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 }

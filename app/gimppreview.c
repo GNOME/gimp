@@ -189,27 +189,27 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 static void
 gimp_preview_init (GimpPreview *preview)
 {
-  preview->viewable   = NULL;
-  preview->context    = NULL;
+  preview->viewable     = NULL;
+  preview->context      = NULL;
 
-  preview->is_popup   = FALSE;
+  preview->is_popup     = FALSE;
 
-  preview->width      = 8;
-  preview->height     = 8;
-  preview->border     = 0;
+  preview->width        = 8;
+  preview->height       = 8;
+  preview->border_width = 0;
 
   preview->border_color[0] = 0;
   preview->border_color[1] = 0;
   preview->border_color[2] = 0;
 
-  preview->clickable  = FALSE;
-  preview->show_popup = FALSE;
+  preview->clickable    = FALSE;
+  preview->show_popup   = FALSE;
 
-  preview->in_button  = FALSE;
-  preview->idle_id    = 0;
-  preview->popup_id   = 0;
-  preview->popup_x    = 0;
-  preview->popup_y    = 0;
+  preview->in_button    = FALSE;
+  preview->idle_id      = 0;
+  preview->popup_id     = 0;
+  preview->popup_x      = 0;
+  preview->popup_y      = 0;
 
   GTK_PREVIEW (preview)->type   = GTK_PREVIEW_COLOR;
   GTK_PREVIEW (preview)->bpp    = 3;
@@ -240,22 +240,35 @@ gimp_preview_destroy (GtkObject *object)
 
 GtkWidget *
 gimp_preview_new (GimpViewable *viewable,
-		  GimpContext  *context,
-		  gboolean      is_popup,
-		  gint          width,
-		  gint          height,
-		  gint          border,
-		  gboolean      clickable,
-		  gboolean      show_popup)
+		  gint          size,
+		  gint          border_width)
+{
+  g_return_val_if_fail (viewable != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
+  g_return_val_if_fail (size > 0 && size <= 256, NULL);
+  g_return_val_if_fail (border_width >= 0 && border_width <= 16, NULL);
+
+  return gimp_preview_new_full (viewable,
+				size, size, border_width,
+				FALSE, FALSE, FALSE);
+}
+
+GtkWidget *
+gimp_preview_new_full (GimpViewable *viewable,
+		       gint          width,
+		       gint          height,
+		       gint          border_width,
+		       gboolean      is_popup,
+		       gboolean      clickable,
+		       gboolean      show_popup)
 {
   GimpPreview *preview;
 
   g_return_val_if_fail (viewable != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
-  g_return_val_if_fail (! context || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (width  > 0 && width  <= 256, NULL);
   g_return_val_if_fail (height > 0 && height <= 256, NULL);
-  g_return_val_if_fail (border >= 0 && border <= 16, NULL);
+  g_return_val_if_fail (border_width >= 0 && border_width <= 16, NULL);
 
   if (GIMP_IS_BRUSH (viewable))
     {
@@ -280,9 +293,9 @@ gimp_preview_new (GimpViewable *viewable,
 
   preview->is_popup   = is_popup;
 
-  preview->width      = width;
-  preview->height     = height;
-  preview->border     = border;
+  preview->width        = width;
+  preview->height       = height;
+  preview->border_width = border_width;
 
   preview->clickable  = clickable;
   preview->show_popup = show_popup;
@@ -290,11 +303,8 @@ gimp_preview_new (GimpViewable *viewable,
   gimp_preview_set_viewable (preview, viewable);
 
   gtk_preview_size (GTK_PREVIEW (preview),
-		    width  + 2 * border,
-		    height + 2 * border);
-
-  if (context)
-    gimp_preview_set_context (preview, context);
+		    width  + 2 * border_width,
+		    height + 2 * border_width);
 
   return GTK_WIDGET (preview);
 }
@@ -358,8 +368,8 @@ gimp_preview_set_size (GimpPreview *preview,
   preview->height = height;
 
   gtk_preview_size (GTK_PREVIEW (preview),
-		    width  + 2 * preview->border,
-		    height + 2 * preview->border);
+		    width  + 2 * preview->border_width,
+		    height + 2 * preview->border_width);
 }
 
 static gint
@@ -504,12 +514,11 @@ gimp_preview_real_create_popup (GimpPreview *preview)
   popup_width  = MIN (preview->width  * 2, 256);
   popup_height = MIN (preview->height * 2, 256);
 
-  return gimp_preview_new (preview->viewable, NULL,
-			   TRUE,
-			   popup_width,
-			   popup_height,
-			   0,
-			   FALSE, FALSE);
+  return gimp_preview_new_full (preview->viewable,
+				popup_width,
+				popup_height,
+				0,
+				TRUE, FALSE, FALSE);
 }
 
 static gboolean
@@ -677,7 +686,7 @@ gimp_preview_render_and_flush (GimpPreview *preview,
 
   width  = preview->width;
   height = preview->height;
-  border = preview->border;
+  border = preview->border_width;
 
   alpha = ALPHA_PIX;
 

@@ -1,5 +1,25 @@
 2001-02-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimppreview.[ch]: moved the constructor-parameter-overkill
+	to the new function gimp_preview_new_full() and made the
+	gimp_preview_new() interface simple.
+
+	* app/gimpbrushpreview.c
+	* app/gimppatternpreview.c: added DND support.
+
+	* app/gimpdnd.c: use the new preview system.
+
+	* app/gimpconstrainedhwrapbox.c: implement "size_allocate". Ok,
+	this is silly -- I will write an own widget which does the
+	"scrollable grid of whatever" stuff in one place...
+
+	* app/commands.c
+	* app/gimpcontainergridview.c
+	* app/gimpcontainerlistview.c
+	* app/gimpimagepreview.c: follow the GimpPreview constructor change.
+
+2001-02-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/commands.c: changed the test dialogs a bit.
 
 	* app/gimpconstrainedhwrapbox.[ch]: should be called

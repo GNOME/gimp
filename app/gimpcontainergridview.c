@@ -212,12 +212,11 @@ gimp_container_grid_view_insert_item (GimpContainerView *view,
 
   grid_view = GIMP_CONTAINER_GRID_VIEW (view);
 
-  preview = gimp_preview_new (viewable, NULL,
-			      FALSE,
-			      view->preview_width,
-			      view->preview_height,
-			      1,
-			      TRUE, TRUE);
+  preview = gimp_preview_new_full (viewable,
+				   view->preview_width,
+				   view->preview_height,
+				   1,
+				   FALSE, TRUE, TRUE);
 
   GIMP_PREVIEW (preview)->border_color[0] = 255;
   GIMP_PREVIEW (preview)->border_color[1] = 255;

@@ -25,6 +25,7 @@
 
 #include "apptypes.h"
 
+#include "gimpdnd.h"
 #include "gimppattern.h"
 #include "gimppatternpreview.h"
 #include "temp_buf.h"
@@ -33,9 +34,12 @@
 static void   gimp_pattern_preview_class_init (GimpPatternPreviewClass *klass);
 static void   gimp_pattern_preview_init       (GimpPatternPreview      *preview);
 
-static void        gimp_pattern_preview_render       (GimpPreview *preview);
-static GtkWidget * gimp_pattern_preview_create_popup (GimpPreview *preview);
-static gboolean    gimp_pattern_preview_needs_popup  (GimpPreview *preview);
+static void          gimp_pattern_preview_render       (GimpPreview *preview);
+static GtkWidget   * gimp_pattern_preview_create_popup (GimpPreview *preview);
+static gboolean      gimp_pattern_preview_needs_popup  (GimpPreview *preview);
+
+static GimpPattern * gimp_pattern_preview_drag_pattern (GtkWidget   *widget,
+							gpointer     data);
 
 
 static GimpPreviewClass *parent_class = NULL;
@@ -83,8 +87,22 @@ gimp_pattern_preview_class_init (GimpPatternPreviewClass *klass)
 }
 
 static void
-gimp_pattern_preview_init (GimpPatternPreview *preview)
+gimp_pattern_preview_init (GimpPatternPreview *pattern_preview)
 {
+  static GtkTargetEntry preview_target_table[] =
+  {
+    GIMP_TARGET_PATTERN
+  };
+  static guint preview_n_targets = (sizeof (preview_target_table) /
+				    sizeof (preview_target_table[0]));
+
+  gtk_drag_source_set (GTK_WIDGET (pattern_preview),
+                       GDK_BUTTON2_MASK,
+                       preview_target_table, preview_n_targets,
+                       GDK_ACTION_COPY);
+  gimp_dnd_pattern_source_set (GTK_WIDGET (pattern_preview),
+			       gimp_pattern_preview_drag_pattern,
+			       pattern_preview);
 }
 
 static void
@@ -142,12 +160,11 @@ gimp_pattern_preview_create_popup (GimpPreview *preview)
   popup_width  = GIMP_PATTERN (preview->viewable)->mask->width;
   popup_height = GIMP_PATTERN (preview->viewable)->mask->height;
 
-  return gimp_preview_new (preview->viewable, NULL,
-			   TRUE,
-			   popup_width,
-			   popup_height,
-			   0,
-			   FALSE, FALSE);
+  return gimp_preview_new_full (preview->viewable,
+				popup_width,
+				popup_height,
+				0,
+				TRUE, FALSE, FALSE);
 }
 
 static gboolean
@@ -165,4 +182,15 @@ gimp_pattern_preview_needs_popup (GimpPreview *preview)
     return TRUE;
 
   return FALSE;
+}
+
+static GimpPattern *
+gimp_pattern_preview_drag_pattern (GtkWidget *widget,
+				   gpointer   data)
+{
+  GimpPreview *preview;
+
+  preview = GIMP_PREVIEW (data);
+
+  return GIMP_PATTERN (preview->viewable);
 }
