@@ -1,3 +1,8 @@
+2004-01-05  Dov Grobgeld  <dov@imagic.weizmann.ac.il>
+
+	* plug-ins/common/CEL.c: Added read and write support for 
+	32-bit CEL files.
+
 2004-01-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/pdb/Makefile.am

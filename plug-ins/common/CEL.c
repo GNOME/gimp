@@ -55,6 +55,8 @@ static gint   save_image     (const gchar *file,
                               gint32       image,
                               gint32       layer);
 static void   palette_dialog (const gchar *title);
+static gboolean need_palette (const gchar *file);
+
 
 /* Globals... */
 
@@ -182,7 +184,9 @@ run (const gchar      *name,
       else if (run_mode == GIMP_RUN_INTERACTIVE)
         {
           /* Let user choose KCF palette (cancel ignores) */
-          palette_dialog (_("Load KISS Palette"));
+          if (need_palette(param[1].data.d_string)) 
+            palette_dialog (_("Load KISS Palette"));
+          
           gimp_set_data ("file_cel_save:length", &data_length, sizeof (size_t));
           gimp_set_data ("file_cel_save:data", palette_file, data_length);
         }
@@ -221,6 +225,19 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 }
 
+/* Peek into the file to determine whether we need a palette */
+static gboolean
+need_palette(const gchar *file)
+{
+  FILE *fp = fopen (file, "rb");
+  guchar header[32];
+
+  fread(header, 32, 1, fp);
+  fclose(fp);
+
+  return header[5] < 32;
+}
+
 /* Load CEL image into The GIMP */
 
 static gint32
@@ -232,7 +249,8 @@ load_image (const gchar *file,
   guchar     header[32];    /* File header */
   gint       height, width, /* Dimensions of image */
              offx, offy,    /* Layer offets */
-             colours;       /* Number of colours */
+             colours,       /* Number of colours */
+             bpp;           /* Bits per pixel */
 
   gint32     image,         /* Image */
              layer;         /* Layer */
@@ -266,6 +284,7 @@ load_image (const gchar *file,
   if (strncmp(header, "KiSS", 4))
     {
       colours= 16;
+      bpp = 4;
       width= header[0] + (256 * header[1]);
       height= header[2] + (256 * header[3]);
       offx= 0;
@@ -274,14 +293,21 @@ load_image (const gchar *file,
   else
     { /* New-style image file, read full header */
       fread (header, 28, 1, fp);
-      colours = (1 << header[1]);
+      bpp = header[1];
+      if (bpp == 24)
+        colours = -1;
+      else
+        colours = (1 << header[1]);
       width = header[4] + (256 * header[5]);
       height = header[6] + (256 * header[7]);
       offx = header[8] + (256 * header[9]);
       offy = header[10] + (256 * header[11]);
     }
 
-  image = gimp_image_new (width + offx, height + offy, GIMP_INDEXED);
+  if (bpp == 32)
+    image = gimp_image_new (width + offx, height + offy, GIMP_RGB);
+  else
+    image = gimp_image_new (width + offx, height + offy, GIMP_INDEXED);
 
   if (image == -1)
     {
@@ -292,9 +318,12 @@ load_image (const gchar *file,
   gimp_image_set_filename (image, file);
 
   /* Create an indexed-alpha layer to hold the image... */
-
-  layer = gimp_layer_new (image, _("Background"), width, height,
-                          GIMP_INDEXEDA_IMAGE, 100, GIMP_NORMAL_MODE);
+  if (bpp == 32)
+    layer = gimp_layer_new (image, _("Background"), width, height,
+                            GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
+  else
+    layer = gimp_layer_new (image, _("Background"), width, height,
+                            GIMP_INDEXEDA_IMAGE, 100, GIMP_NORMAL_MODE);
   gimp_image_add_layer (image, layer, 0);
   gimp_layer_set_offsets (layer, offx, offy);
 
@@ -306,15 +335,14 @@ load_image (const gchar *file,
                        drawable->height, TRUE, FALSE);
 
   /* Read the image in and give it to the GIMP a line at a time */
-
-  buffer = g_new (guchar, width);
-  line = g_new (guchar, (width+1) * 2);
+  buffer = g_new (guchar, width*4);
+  line = g_new (guchar, (width+1) * 4);
 
   for (i = 0; i < height && !feof(fp); ++i)
     {
-      switch (colours)
+      switch (bpp)
         {
-        case 16:
+        case 4:
           fread (buffer, (width+1)/2, 1, fp);
           for (j = 0, k = 0; j < width*2; j+= 4, ++k)
             {
@@ -341,7 +369,7 @@ load_image (const gchar *file,
             }
           break;
 
-        case 256:
+        case 8:
           fread (buffer, width, 1, fp);
           for (j = 0, k = 0; j < width*2; j+= 2, ++k)
             {
@@ -357,9 +385,22 @@ load_image (const gchar *file,
                 }
             }
           break;
+          
+        case 32:
+          fread (line, width*4, 1, fp);
+          /* The CEL file order is BGR so we need to swap B and R
+           * to get the Gimp RGB order.
+           */
+          for (j= 0; j < width; j++)
+            {
+              guint8 tmp = line[j*4];
+              line[j*4] = line[j*4+2];
+              line[j*4+2] = tmp;
+            }
+          break;
 
         default:
-          g_message (_("Unsupported number of colors (%d)"), colours);
+          g_message (_("Unsupported bit depth (%d)!"), bpp);
           return -1;
         }
 
@@ -373,37 +414,40 @@ load_image (const gchar *file,
   g_free (buffer);
   g_free (line);
 
-  /* Use palette from file or otherwise default grey palette */
-  palette = g_new (guchar, colours*3);
-
-  /* Open the file for reading if user picked one */
-  if (palette_file == NULL)
+  if (bpp != 32)
     {
-      fp = NULL;
-    }
-  else
-    {
-      fp = fopen (palette_file, "r");
-    }
-
-  if (fp != NULL)
-    {
-      colours = load_palette (fp, palette);
-      fclose (fp);
-    }
-  else
-    {
-      for (i= 0; i < colours; ++i)
+      /* Use palette from file or otherwise default grey palette */
+      palette = g_new (guchar, colours*3);
+      
+      /* Open the file for reading if user picked one */
+      if (palette_file == NULL)
         {
-          palette[i*3] = palette[i*3+1] = palette[i*3+2]= i * 256 / colours;
+          fp = NULL;
         }
+      else
+        {
+          fp = fopen (palette_file, "r");
+        }
+      
+      if (fp != NULL)
+        {
+          colours = load_palette (fp, palette);
+          fclose (fp);
+        }
+      else
+        {
+          for (i= 0; i < colours; ++i)
+            {
+              palette[i*3] = palette[i*3+1] = palette[i*3+2]= i * 256 / colours;
+            }
+        }
+      
+      gimp_image_set_cmap (image, palette + 3, colours - 1);
+      
+      /* Close palette file, give back allocated memory */
+      
+      g_free (palette);
     }
-
-  gimp_image_set_cmap (image, palette + 3, colours - 1);
-
-  /* Close palette file, give back allocated memory */
-
-  g_free (palette);
 
   /* Now get everything redrawn and hand back the finished image */
 
@@ -467,6 +511,7 @@ save_image (const gchar *file,
   FILE          *fp;            /* Write file pointer */
   char          *progress;      /* Title for progress display */
   guchar         header[32];    /* File header */
+  gint           bpp;           /* Bit per pixel */
   gint           colours, type; /* Number of colours, type of layer */
   gint           offx, offy;    /* Layer offsets */
 
@@ -480,11 +525,10 @@ save_image (const gchar *file,
   /* Check that this is an indexed image, fail otherwise */
   type = gimp_drawable_type (layer);
   if (type != GIMP_INDEXEDA_IMAGE)
-    {
-      g_message (_("Only an indexed-alpha image can be saved in CEL format"));
-      return FALSE;
-    }
-
+    bpp = 32;
+  else
+    bpp = 4;
+      
   /* Find out how offset this layer was */
   gimp_drawable_offsets (layer, &offx, &offy);
 
@@ -510,15 +554,20 @@ save_image (const gchar *file,
   header[4]= 0x20;
 
   /* Work out whether to save as 8bit or 4bit */
-  g_free (gimp_image_get_cmap (image, &colours));
-  if (colours > 15)
+  if (bpp < 32)
     {
-      header[5] = 8;
+      g_free (gimp_image_get_cmap (image, &colours));
+      if (colours > 15)
+        {
+          header[5] = 8;
+        }
+      else
+        {
+          header[5] = 4;
+        }
     }
   else
-    {
-      header[5] = 4;
-    }
+    header[5] = 32;
 
   /* Fill in the blanks ... */
   header[8]  = drawable->width % 256;
@@ -534,8 +583,8 @@ save_image (const gchar *file,
   /* Arrange for memory etc. */
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width,
                        drawable->height, TRUE, FALSE);
-  buffer = g_new (guchar, drawable->width);
-  line = g_new (guchar, (drawable->width+1) * 2);
+  buffer = g_new (guchar, drawable->width*4);
+  line = g_new (guchar, (drawable->width+1) * 4);
 
   /* Get the image from the GIMP one line at a time and write it out */
   for (i = 0; i < drawable->height; ++i)
@@ -543,7 +592,18 @@ save_image (const gchar *file,
       gimp_pixel_rgn_get_rect (&pixel_rgn, line, 0, i, drawable->width, 1);
       memset (buffer, 0, drawable->width);
 
-      if (colours > 16)
+      if (bpp == 32)
+        {
+          for (j = 0; j < drawable->width; j++)
+            {
+              buffer[4*j] = line[4*j+2];     /* B */
+              buffer[4*j+1] = line[4*j+1];   /* G */ 
+              buffer[4*j+2] = line[4*j+0];   /* R */
+              buffer[4*j+3] = line[4*j+3];   /* Alpha */
+            }
+          fwrite (buffer, drawable->width, 4, fp);
+        }
+      else if (colours > 16)
         {
           for (j = 0, k = 0; j < drawable->width*2; j+= 2, ++k)
             {
