@@ -1,3 +1,16 @@
+2003-12-20  Sven Neumann  <sven@gimp.org>
+
+	* app/app-docs.sgml
+	* libgimpbase/libgimpbase-docs.sgml
+	* libgimpcolor/libgimpcolor-docs.sgml
+	* libgimpmath/libgimpmath-docs.sgml
+	* libgimpmodule/libgimpmodule-docs.sgml
+	* libgimpthumb/libgimpthumb-docs.sgml
+	* libgimpwidgets/libgimpwidgets-docs.sgml: reverted the XInclude
+	namespace update. xsltproc crashes if the new namespace URL is
+	being used so we better continue to use the deprecated one until
+	this is fixed.
+
 2003-12-19  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/libgimp-sections.txt
