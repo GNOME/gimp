@@ -26,6 +26,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -407,6 +408,7 @@ gimp_get_mod_name_alt (void)
 
   return (const gchar *) mod_name_alt;
 }
+
 const gchar *
 gimp_get_mod_separator (void)
 {
@@ -424,6 +426,15 @@ gimp_get_mod_separator (void)
   return (const gchar *) mod_separator;
 }
 
+/**
+ * gimp_get_screen_resolution:
+ * @screen: a #GdkScreen or %NULL
+ * @xres: returns the horizontal screen resolution (in dpi)
+ * @yres: returns the vertical screen resolution (in dpi)
+ * 
+ * Retrieves the screen resolution from GDK. If @screen is %NULL, the
+ * default screen is used.
+ **/
 void
 gimp_get_screen_resolution (GdkScreen *screen,
                             gdouble   *xres,
@@ -476,4 +487,30 @@ gimp_get_screen_resolution (GdkScreen *screen,
   /*  round the value to full integers to give more pleasant results  */
   *xres = ROUND (x);
   *yres = ROUND (y);
+}
+
+
+/**
+ * gimp_rgb_get_gdk_color:
+ * @color: the source color as #GimpRGB
+ * @gdk_color: pointer to a #GdkColor
+ * 
+ * Initializes @gdk_color from a #GimpRGB. This function does not
+ * allocate the color for you. Depending on how you want to use it,
+ * you may have to call gdk_colormap_alloc_color().
+ **/
+void          
+gimp_rgb_get_gdk_color (const GimpRGB *color,
+                        GdkColor      *gdk_color)
+{
+  guchar r, g, b;
+
+  g_return_if_fail (color != NULL);
+  g_return_if_fail (gdk_color != NULL);
+  
+  gimp_rgb_get_uchar (color, &r, &g, &b);
+  
+  gdk_color->red   = (r << 8) | r;
+  gdk_color->green = (g << 8) | g;
+  gdk_color->blue  = (b << 8) | b;
 }

@@ -28,6 +28,7 @@
 #include "core/gimpimage.h"
 
 #include "widgets/gimpitemfactory.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -93,11 +94,7 @@ gimp_display_shell_set_padding (GimpDisplayShell       *shell,
       GdkColormap *colormap;
       GdkColor     color;
 
-      gimp_rgb_get_uchar (&shell->padding_color, &r, &g, &b);
-
-      color.red   = r + r * 256;
-      color.green = g + g * 256;
-      color.blue  = b + b * 256;
+      gimp_rgb_get_gdk_color (&shell->padding_color, &color);
 
       colormap = gdk_drawable_get_colormap (shell->canvas->window);
       g_return_if_fail (colormap != NULL);

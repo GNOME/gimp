@@ -423,14 +423,8 @@ gimp_preview_renderer_set_border_color (GimpPreviewRenderer *renderer,
       if (renderer->gc)
         {
           GdkColor gdk_color;
-          guchar   r, g, b;
 
-          gimp_rgb_get_uchar (&renderer->border_color, &r, &g, &b);
-
-          gdk_color.red   = r | r << 8;
-          gdk_color.green = g | g << 8;
-          gdk_color.blue  = b | b << 8;
-
+          gimp_rgb_get_gdk_color (&renderer->border_color, &gdk_color);
           gdk_gc_set_rgb_fg_color (renderer->gc, &gdk_color);
         }
 
@@ -986,13 +980,8 @@ gimp_preview_renderer_create_gc (GimpPreviewRenderer *renderer,
   GdkColormap     *colormap;
   GdkGCValues      values;
   GdkGCValuesMask  mask;
-  guchar           r, g, b;
 
-  gimp_rgb_get_uchar (&renderer->border_color, &r, &g, &b);
-  
-  values.foreground.red   = r | r << 8;
-  values.foreground.green = g | g << 8;
-  values.foreground.blue  = b | b << 8;
+  gimp_rgb_get_gdk_color (&renderer->border_color, &values.foreground);
 
   colormap = gdk_drawable_get_colormap (window);
   gdk_rgb_find_color (colormap, &values.foreground);

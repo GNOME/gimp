@@ -1,5 +1,15 @@
 2003-06-10  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpwidgets-utils.[ch]: added utility function
+	gimp_rgb_get_gdk_color(), documented gimp_get_screen_resolution().
+
+	* app/widgets/gimppreviewrenderer.c
+	(gimp_preview_renderer_set_border_color)
+	* app/display/gimpdisplayshell-appearance.c
+	(gimp_display_shell_set_padding): use the new function.
+
+2003-06-10  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/tools-commands.c (tools_select_cmd_callback): expects
 	the tool identifier as a GQuark now.
 
