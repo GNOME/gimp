@@ -1,5 +1,5 @@
 /*
- * PSD Plugin version 1.9.9.9e (BETA)
+ * PSD Plugin version 1.9.9.9f (BETA)
  * This GIMP plug-in is designed to load Adobe Photoshop(tm) files (.PSD)
  *
  * Adam D. Moss <adam@gimp.org> <adam@foxbox.org>
@@ -35,6 +35,9 @@
 
 /*
  * Revision history:
+ *
+ *  98.07.31 / v1.9.9.9f / Adam D. Moss
+ *       Use OVERLAY_MODE if available.
  *
  *  98.07.31 / v1.9.9.9e / Adam D. Moss
  *       Worked around some buggy PSD savers (suspect PS4 on Mac) - ugh.
@@ -424,14 +427,22 @@ psd_lmode_to_gimp_lmode (gchar modekey[4])
   if (strncmp(modekey, "scrn", 4)==0) return(SCREEN_MODE);
   if (strncmp(modekey, "diss", 4)==0) return(DISSOLVE_MODE);
   if (strncmp(modekey, "diff", 4)==0) return(DIFFERENCE_MODE);
+  if (strncmp(modekey, "lum ", 4)==0) return(VALUE_MODE);
 
-  if (strncmp(modekey, "lum ", 4)==0) return(VALUE_MODE);    /* ? */
+#if (GIMP_MAJOR_VERSION > 0) && (GIMP_MINOR_VERSION > 0)
+  if (strncmp(modekey, "over", 4)==0) return(OVERLAY_MODE);
 
-  printf("PSD: Warning - unsupported layer-blend mode '%c%c%c%c', using 'addition' mode\n", modekey[0], modekey[1], modekey[2], modekey[3]);
-
+  printf("PSD: Warning - unsupported layer-blend mode '%c%c%c%c', using "
+	 "'overlay' mode\n", modekey[0], modekey[1], modekey[2], modekey[3]);
+  if (strncmp(modekey, "hLit", 4)==0) return(/**/OVERLAY_MODE);
+  if (strncmp(modekey, "sLit", 4)==0) return(/**/OVERLAY_MODE);
+#else
+  printf("PSD: Warning - unsupported layer-blend mode '%c%c%c%c', using "
+	 "'addition' mode\n", modekey[0], modekey[1], modekey[2], modekey[3]);
   if (strncmp(modekey, "over", 4)==0) return(ADDITION_MODE); /* ? */
   if (strncmp(modekey, "hLit", 4)==0) return(/**/ADDITION_MODE);
   if (strncmp(modekey, "sLit", 4)==0) return(/**/ADDITION_MODE);
+#endif
 
   printf("PSD: Warning - UNKNOWN layer-blend mode, reverting to 'normal'\n");
 
@@ -1022,14 +1033,14 @@ do_layer_pixeldata(FILE *fd, guint32 *offset)
 		    
 		/* we throw this away because in theory we can trust the
 		   data to unpack to the right length... hmm... */
-		dumpchunk(height * 2,
+		throwchunk(height * 2,
 			   fd, "widthlist");
 		(*offset) += height * 2;
 
 		blockread = (*offset);
 		    
-		IFDBG {printf("\nHere comes the guitar solo...\n");
-		fflush(stdout);}
+		/*IFDBG {printf("\nHere comes the guitar solo...\n");
+		fflush(stdout);}*/
 
 		for (linei=0;
 		     linei<height;

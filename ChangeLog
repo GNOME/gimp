@@ -1,3 +1,10 @@
+Fri Jul 31 18:29:44 BST 1998  Adam D. Moss  <adam@gimp.org>
+
+	* app/layers_dialog.c: Removed an ancient kludge that was
+	seriously confusing the layer-mode menu.
+	
+	* plug-ins/psd/psd.c: Support OVERLAY_MODE where available
+
 Fri Jul 31 13:42:29 BST 1998  Adam D. Moss  <adam@gimp.org>
 
 	* plug-ins/psd/psd.c: Worked around some buggy PSD savers

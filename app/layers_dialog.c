@@ -2843,9 +2843,7 @@ layer_widget_layer_flush (GtkWidget *widget,
       layersD->opacity_data->value = (gfloat) layer_widget->layer->opacity / 2.55;
       gtk_signal_emit_by_name (GTK_OBJECT (layersD->opacity_data), "value_changed");
       gtk_option_menu_set_history (GTK_OPTION_MENU (layersD->mode_option_menu),
-				   /*  Kludge to deal with the absence of behind */
-				   ((layer_widget->layer->mode > BEHIND_MODE) ?
-				    layer_widget->layer->mode - 1 : layer_widget->layer->mode));
+				   layer_widget->layer->mode);
       gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (layersD->preserve_trans),
 				   (layer_widget->layer->preserve_trans) ?
 				   GTK_STATE_ACTIVE : GTK_STATE_NORMAL);
