@@ -182,8 +182,8 @@ gimp_hsv_to_rgb (const GimpHSV *hsv,
  * @rgb: A color value in the RGB colorspace
  * @hsl: The value converted to HSL
  *
- * Convert an RGB color value to a HSL (Hue, Saturation, Lightness) color
- * value.
+ * Convert an RGB color value to a HSL (Hue, Saturation, Lightness)
+ * color value.
  **/
 void
 gimp_rgb_to_hsl (const GimpRGB *rgb,
@@ -935,10 +935,10 @@ gimp_cmyk_to_rgb_int (gint *cyan,
 
 /**
  * gimp_rgb_to_hsv4:
- * @rgb:        RGB triplet, rgb[0] is red channel, rgb[1] is green, 
+ * @rgb:        RGB triplet, rgb[0] is red channel, rgb[1] is green,
  *              rgb[2] is blue (0..255)
  * @hue:        Pointer to hue channel (0..1)
- * @saturation: Pointer to saturation channel (0..1) 
+ * @saturation: Pointer to saturation channel (0..1)
  * @value:      Pointer to value channel (0..1)
  **/
 
@@ -1008,10 +1008,10 @@ gimp_rgb_to_hsv4 (guchar  *rgb,
 
 /**
  * gimp_hsv_to_rgb4:
- * @rgb:        RGB triplet, rgb[0] is red channel, rgb[1] is green, 
+ * @rgb:        RGB triplet, rgb[0] is red channel, rgb[1] is green,
  *              rgb[2] is blue (0..255)
  * @hue:        Hue channel (0..1)
- * @saturation: Saturation channel (0..1) 
+ * @saturation: Saturation channel (0..1)
  * @value:      Value channel (0..1)
  **/
 

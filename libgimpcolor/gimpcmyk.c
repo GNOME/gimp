@@ -32,78 +32,80 @@
 
 /**
  * gimp_cmyk_set:
- * @cmyk: A GimpCMYK structure which will hold the specified cmyk value.
- * @c:    The Cyan channel of the CMYK value 
- * @m:    The Magenta channel
- * @y:    The Yellow channel
- * @k:    The blacK channel
+ * @cmyk:    A #GimpCMYK structure which will hold the specified CMYK value.
+ * @cyan:    The Cyan channel of the CMYK value
+ * @magenta: The Magenta channel
+ * @yellow:  The Yellow channel
+ * @black:   The blacK channel
  *
- * Very basic initialiser for the internal GimpCMYK structure. Channel 
+ * Very basic initialiser for the internal #GimpCMYK structure. Channel
  * values are doubles in the range 0 to 1.
  **/
-
 void
 gimp_cmyk_set (GimpCMYK *cmyk,
-               gdouble   c,
-               gdouble   m,
-               gdouble   y,
-               gdouble   k)
+               gdouble   cyan,
+               gdouble   magenta,
+               gdouble   yellow,
+               gdouble   black)
 {
   g_return_if_fail (cmyk != NULL);
 
-  cmyk->c = c;
-  cmyk->m = m;
-  cmyk->y = y;
-  cmyk->k = k;
+  cmyk->c = cyan;
+  cmyk->m = magenta;
+  cmyk->y = yellow;
+  cmyk->k = black;
 }
 
 /**
  * gimp_cmyk_set_uchar:
+ * @cmyk:    A #GimpCMYK structure which will hold the specified CMYK value.
+ * @cyan:    The Cyan channel of the CMYK value
+ * @magenta: The Magenta channel
+ * @yellow:  The Yellow channel
+ * @black:   The blacK channel
  *
- * The same as gimp_cmyk_set, except that channel values are unsigned 
- * chars in the range 0 to 255.
+ * The same as gimp_cmyk_set(), except that channel values are
+ * unsigned chars in the range 0 to 255.
  **/
-
 void
 gimp_cmyk_set_uchar (GimpCMYK *cmyk,
-                     guchar   c,
-                     guchar   m,
-                     guchar   y,
-                     guchar   k)
+                     guchar    cyan,
+                     guchar    magenta,
+                     guchar    yellow,
+                     guchar    black)
 {
   g_return_if_fail (cmyk != NULL);
 
-  cmyk->c = (gdouble) c / 255.0;
-  cmyk->m = (gdouble) m / 255.0;
-  cmyk->y = (gdouble) y / 255.0;
-  cmyk->k = (gdouble) k / 255.0;
+  cmyk->c = (gdouble) cyan    / 255.0;
+  cmyk->m = (gdouble) magenta / 255.0;
+  cmyk->y = (gdouble) yellow  / 255.0;
+  cmyk->k = (gdouble) black   / 255.0;
 }
 
 /**
  * gimp_cmyk_get_uchar:
- * @cmyk: A GimpCMYK structure which will hold the specified cmyk value.
- * @c:    The Cyan channel of the CMYK value 
- * @m:    The Magenta channel
- * @y:    The Yellow channel
- * @k:    The blacK channel
+ * @cmyk:    A #GimpCMYK structure which will hold the specified CMYK value.
+ * @cyan:    The Cyan channel of the CMYK value
+ * @magenta: The Magenta channel
+ * @yellow:  The Yellow channel
+ * @black:   The blacK channel
  *
- * Retrieve individual channel values from a GimpCMYK structure. Channel 
+ * Retrieve individual channel values from a #GimpCMYK structure. Channel
  * values are pointers to unsigned chars in the range 0 to 255.
  **/
-
 void
 gimp_cmyk_get_uchar (const GimpCMYK *cmyk,
-                     guchar         *c,
-                     guchar         *m,
-                     guchar         *y,
-                     guchar         *k)
+                     guchar         *cyan,
+                     guchar         *magenta,
+                     guchar         *yellow,
+                     guchar         *black)
 {
   g_return_if_fail (cmyk != NULL);
 
-  if (c) *c = ROUND (CLAMP (cmyk->c, 0.0, 1.0) * 255.0);
-  if (m) *m = ROUND (CLAMP (cmyk->m, 0.0, 1.0) * 255.0);
-  if (y) *y = ROUND (CLAMP (cmyk->y, 0.0, 1.0) * 255.0);
-  if (k) *k = ROUND (CLAMP (cmyk->k, 0.0, 1.0) * 255.0);
+  if (cyan)    *cyan    = ROUND (CLAMP (cmyk->c, 0.0, 1.0) * 255.0);
+  if (magenta) *magenta = ROUND (CLAMP (cmyk->m, 0.0, 1.0) * 255.0);
+  if (yellow)  *yellow  = ROUND (CLAMP (cmyk->y, 0.0, 1.0) * 255.0);
+  if (black)   *black   = ROUND (CLAMP (cmyk->k, 0.0, 1.0) * 255.0);
 }
 
 
@@ -111,84 +113,86 @@ gimp_cmyk_get_uchar (const GimpCMYK *cmyk,
 
 /**
  * gimp_cmyka_set:
- * @cmyka: A GimpCMYK structure which will hold the specified cmyka value.
- * @c:    The Cyan channel of the CMYK value 
- * @m:    The Magenta channel
- * @y:    The Yellow channel
- * @k:    The blacK channel
- * @a:    The Alpha channel
+ * @cmyka:   A #GimpCMYK structure which will hold the specified CMYKA value.
+ * @cyan:    The Cyan channel of the CMYK value
+ * @magenta: The Magenta channel
+ * @yellow:  The Yellow channel
+ * @black:   The blacK channel
+ * @alpha:   The Alpha channel
  *
- * Initialiser for the internal GimpCMYK structure. Channel values are 
+ * Initialiser for the internal #GimpCMYK structure. Channel values are
  * doubles in the range 0 to 1.
  **/
-
 void
 gimp_cmyka_set (GimpCMYK *cmyka,
-                gdouble   c,
-                gdouble   m,
-                gdouble   y,
-                gdouble   k,
-                gdouble   a)
+                gdouble   cyan,
+                gdouble   magenta,
+                gdouble   yellow,
+                gdouble   black,
+                gdouble   alpha)
 {
   g_return_if_fail (cmyka != NULL);
 
-  cmyka->c = c;
-  cmyka->m = m;
-  cmyka->y = y;
-  cmyka->k = k;
-  cmyka->a = a;
+  cmyka->c = cyan;
+  cmyka->m = magenta;
+  cmyka->y = yellow;
+  cmyka->k = black;
+  cmyka->a = alpha;
 }
 
 /**
  * gimp_cmyka_set_uchar:
+ * @cmyka:   A #GimpCMYK structure which will hold the specified CMYKA value.
+ * @cyan:    The Cyan channel of the CMYK value
+ * @magenta: The Magenta channel
+ * @yellow:  The Yellow channel
+ * @black:   The blacK channel
+ * @alpha:   The Alpha channel
  *
- * The same as gimp_cmyka_set, except that channel values are unsigned chars
- * in the range 0 to 255.
+ * The same as gimp_cmyka_set(), except that channel values are
+ * unsigned chars in the range 0 to 255.
  **/
-
 void
 gimp_cmyka_set_uchar (GimpCMYK *cmyka,
-                      guchar    c,
-                      guchar    m,
-                      guchar    y,
-                      guchar    k,
-                      guchar    a)
+                      guchar    cyan,
+                      guchar    magenta,
+                      guchar    yellow,
+                      guchar    black,
+                      guchar    alpha)
 {
   g_return_if_fail (cmyka != NULL);
 
-  cmyka->c = (gdouble) c / 255.0;
-  cmyka->m = (gdouble) m / 255.0;
-  cmyka->y = (gdouble) y / 255.0;
-  cmyka->k = (gdouble) k / 255.0;
-  cmyka->a = (gdouble) a / 255.0;
+  cmyka->c = (gdouble) cyan    / 255.0;
+  cmyka->m = (gdouble) magenta / 255.0;
+  cmyka->y = (gdouble) yellow  / 255.0;
+  cmyka->k = (gdouble) black   / 255.0;
+  cmyka->a = (gdouble) alpha   / 255.0;
 }
-
 /**
  * gimp_cmyka_get_uchar:
- * @cmyk: A GimpCMYK structure which will hold the specified cmyka value.
- * @c:    The Cyan channel of the CMYK value 
- * @m:    The Magenta channel
- * @y:    The Yellow channel
- * @k:    The blacK channel
- * @a:    The Alpha channel
+ * @cmyka:   A #GimpCMYK structure which will hold the specified CMYKA value.
+ * @cyan:    The Cyan channel of the CMYK value
+ * @magenta: The Magenta channel
+ * @yellow:  The Yellow channel
+ * @black:   The blacK channel
+ * @alpha:   The Alpha channel
  *
- * Retrieve individual channel values from a GimpCMYK structure. Channel 
- * values are pointers to unsigned chars in the range 0 to 255.
+ * Retrieve individual channel values from a #GimpCMYK structure.
+ * Channel values are pointers to unsigned chars in the range 0 to 255.
  **/
-
 void
 gimp_cmyka_get_uchar (const GimpCMYK *cmyka,
-                      guchar         *c,
-                      guchar         *m,
-                      guchar         *y,
-                      guchar         *k,
-                      guchar         *a)
+                      guchar         *cyan,
+                      guchar         *magenta,
+                      guchar         *yellow,
+                      guchar         *black,
+                      guchar         *alpha)
 {
   g_return_if_fail (cmyka != NULL);
 
-  if (c) *c = ROUND (CLAMP (cmyka->c, 0.0, 1.0) * 255.0);
-  if (m) *m = ROUND (CLAMP (cmyka->m, 0.0, 1.0) * 255.0);
-  if (y) *y = ROUND (CLAMP (cmyka->y, 0.0, 1.0) * 255.0);
-  if (k) *k = ROUND (CLAMP (cmyka->k, 0.0, 1.0) * 255.0);
-  if (a) *a = ROUND (CLAMP (cmyka->a, 0.0, 1.0) * 255.0);
+  if (cyan)    *cyan    = ROUND (CLAMP (cmyka->c, 0.0, 1.0) * 255.0);
+  if (magenta) *magenta = ROUND (CLAMP (cmyka->m, 0.0, 1.0) * 255.0);
+  if (yellow)  *yellow  = ROUND (CLAMP (cmyka->y, 0.0, 1.0) * 255.0);
+  if (black)   *black   = ROUND (CLAMP (cmyka->k, 0.0, 1.0) * 255.0);
+  if (alpha)   *alpha   = ROUND (CLAMP (cmyka->a, 0.0, 1.0) * 255.0);
 }
