@@ -166,7 +166,7 @@
 #define DEFAULT_SUBSMP      0
 #define DEFAULT_RESTART     0
 #define DEFAULT_DCT         0
-#define DEFAULT_PREVIEW     1
+#define DEFAULT_PREVIEW     0
 
 /* sg - these should not be global... */
 static gint32 volatile  image_ID_global       = -1;
@@ -175,6 +175,7 @@ static gint32           drawable_ID_global    = -1;
 static gint32           layer_ID_global       = -1;
 static GtkWidget       *preview_size          = NULL;
 static GimpDrawable    *drawable_global       = NULL;
+static gboolean         undo_touched          = FALSE;
  
 typedef struct
 {
@@ -469,11 +470,16 @@ run (gchar      *name,
 	      gimp_parasite_free (parasite);
 	    }
 
-	  /* we start an undo_group and immediately freeze undo saving
-	     so that we can avoid sucking up tile cache with our unneeded
-	     preview steps. */
-      	  gimp_undo_push_group_start (image_ID);
-      	  gimp_image_undo_freeze (image_ID);
+          if (jsvals.preview)
+            {
+              /* we start an undo_group and immediately freeze undo saving
+                 so that we can avoid sucking up tile cache with our unneeded
+                 preview steps. */
+              gimp_undo_push_group_start (image_ID);
+              gimp_image_undo_freeze (image_ID);
+
+              undo_touched = TRUE;
+            }
 
 	  /* prepare for the preview */
 	  image_ID_global = image_ID;
@@ -483,9 +489,12 @@ run (gchar      *name,
 	  /*  First acquire information with a dialog  */
 	  err = save_dialog ();
  
-	  /* thaw undo saving and end the undo_group. */
-	  gimp_image_undo_thaw (image_ID);
-	  gimp_undo_push_group_end (image_ID); 
+          if (undo_touched)
+            {
+              /* thaw undo saving and end the undo_group. */
+              gimp_image_undo_thaw (image_ID);
+              gimp_undo_push_group_end (image_ID);
+            }
 
           if (!err)
 	    status = GIMP_PDB_CANCEL;
@@ -1512,6 +1521,17 @@ make_preview (void)
 
   if (jsvals.preview) 
     {
+      if (! undo_touched)
+        {
+          /* we start an undo_group and immediately freeze undo saving
+             so that we can avoid sucking up tile cache with our unneeded
+             preview steps. */
+          gimp_undo_push_group_start (image_ID_global);
+          gimp_image_undo_freeze (image_ID_global);
+
+          undo_touched = TRUE;
+        }
+
       tn = gimp_temp_name ("jpeg");
       save_image (tn, 
 		  image_ID_global,
@@ -1616,7 +1636,7 @@ save_dialog (void)
   gtk_container_add (GTK_CONTAINER (prv_frame), vbox);
   gtk_widget_show (vbox);
 
-  preview = gtk_check_button_new_with_label (_("Preview (in image window)"));
+  preview = gtk_check_button_new_with_label (_("Preview (in image window, will modify image's undo history!)"));
   gtk_box_pack_start (GTK_BOX (vbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
 
