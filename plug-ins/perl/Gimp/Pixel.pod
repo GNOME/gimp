@@ -17,9 +17,10 @@ plug-in. If you bug me enough I'll rewrite this document.
 
 =head1 DESCRIPTION
 
-You can access the pixels in a drawable through tiles or pixel regions. This
-manpage explains how this is done in perl. All classes (Gimp::GDrawable,
-Gimp::Tile, Gimp::PixelRgn) are available with and without the C<Gimp::> prefix.
+You can access the pixels in a drawable through tiles or pixel
+regions. This manpage explains how this is done in perl. All classes
+(Gimp::GDrawable, C<Gimp::Tile>, C<Gimp::PixelRgn>) are available with and
+without the C<Gimp::> prefix.
 
 =head1 GDRAWABLES
 

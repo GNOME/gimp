@@ -84,14 +84,14 @@ like your plug-in's name. As an example, the Gimp::Fu module uses
 This module might use a persistant implementation, i.e. your data might
 survive a restart of the Gimp application, but you cannot count on this.
 
-Gimp::Data will try to freeze your data when you pass in a reference. On
+C<Gimp::Data> will try to freeze your data when you pass in a reference. On
 retrieval, the data is thawed again. See L<Storable> for more info. This
 might be implemented through either Storable or Data::Dumper, or not
 implemented at all (i.e. silently fail) ;)
 
 =head1 PERSISTANCE
 
-Gimp::Data contains the following functions to ease applications where
+C<Gimp::Data> contains the following functions to ease applications where
 persistence for perl data structures is required:
 
 =over 4

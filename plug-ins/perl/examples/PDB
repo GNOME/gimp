@@ -199,13 +199,13 @@ sub complete_type {
    my($type,$name,$desc)=@_;
 
    if($type==PARAM_IMAGE) {
-      set_clist(map(("$$_: ".$_->get_filename,$$_),Gimp->list_images));
+      set_clist(map(("$$_: ".$_->get_filename,$$_),Gimp->image_list));
    } elsif($type==PARAM_LAYER) {
-      set_clist(map { my $i = $_; map(("$$_: ".$i->get_filename."/".$_->get_name,$$_),$i->get_layers)} Gimp->list_images);
+      set_clist(map { my $i = $_; map(("$$_: ".$i->get_filename."/".$_->get_name,$$_),$i->get_layers)} Gimp->image_list);
    } elsif($type==PARAM_CHANNEL) {
-      set_clist(map { my $i = $_; map(("$$_: ".$i->get_filename."/".$_->get_name,$$_),$i->get_channels)} Gimp->list_images);
+      set_clist(map { my $i = $_; map(("$$_: ".$i->get_filename."/".$_->get_name,$$_),$i->get_channels)} Gimp->image_list);
    } elsif($type==PARAM_DRAWABLE) {
-      set_clist(map { my $i = $_; map(("$$_: ".$i->get_filename."/".$_->get_name,$$_),($i->get_layers,$i->get_channels))} Gimp->list_images);
+      set_clist(map { my $i = $_; map(("$$_: ".$i->get_filename."/".$_->get_name,$$_),($i->get_layers,$i->get_channels))} Gimp->image_list);
    } elsif ($type==PARAM_INT32) {
       if ($name eq "run_mode") {
          set_clist("RUN_NONINTERACTIVE","RUN_NONINTERACTIVE",

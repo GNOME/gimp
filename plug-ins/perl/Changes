@@ -18,6 +18,7 @@ Revision history for Gimp-Perl extension.
           a gtk-perl release soon.
         - the :auto import tag is no longer the default. neither with nor without
           warning.
+        - sdf'ified pod documentation. more to come.
 
 1.17  Wed Nov 24 21:25:19 CET 1999
         - re-fitted i18n translation for most plug-ins.

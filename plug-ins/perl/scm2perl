@@ -29,8 +29,8 @@ scm2perl - convert script-fu to perl
 This program tries to convert Script-Fu (Scheme) scripts written for The
 Gimp into a Perl script.
 
-Don't expect too much from this version. To run it, you need the
-Parse::RecDescent module from CPAN.
+Don't expect too much from this version. To run it, you need
+the Parse::RecDescent module from CPAN.
 
 =head1 CONVERSION TIPS
 

@@ -37,6 +37,9 @@ register "plug_in_ditherize",
          sub {
    my($image,$drawable,$dither,$colours)=@_;
 
+   Gimp::set_trace(-1);
+   "Gimp::script-fu-add-bevel"->($drawable, 55, 0, 0);
+
    $drawable->is_layer or die "this plug-in only works for layers";
 
    $image->undo_push_group_start;

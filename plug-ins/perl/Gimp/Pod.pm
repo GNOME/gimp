@@ -123,7 +123,7 @@ Gimp::Pod - Evaluate pod documentation embedded in scripts.
 
 =head1 DESCRIPTION
 
-Gimp::Pod can be used to find and parse embedded pod documentation in
+C<Gimp::Pod> can be used to find and parse embedded pod documentation in
 gimp-perl scripts.  At the moment only the formatted text can be fetched,
 future versions might have more interesting features.
 

@@ -26,7 +26,7 @@ and debugging times.
 These functions try to preserve the current settings like colors, but not
 all do.
 
-Also: these functions are handled in exactly the same way as
+These functions can also be handled in exactly the same way as
 PDB-Functions, i.e. the (hypothetical) function C<gimp_image_xyzzy> can be
 called as $image->xyzzy, if the module is available.
 
