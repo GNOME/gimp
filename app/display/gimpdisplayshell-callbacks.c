@@ -44,6 +44,7 @@
 #include "tools/gimptoolcontrol.h"
 #include "tools/tool_manager.h"
 
+#include "widgets/gimpactiongroup.h"
 #include "widgets/gimpcursor.h"
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpitemfactory.h"
@@ -207,6 +208,7 @@ gimp_display_shell_events (GtkWidget        *widget,
 	GdkEventWindowState *sevent = (GdkEventWindowState *) event;
         GimpDisplayOptions  *options;
         gboolean             fullscreen;
+        GimpActionGroup     *group;
 
 	shell->window_state = sevent->new_window_state;
 
@@ -237,16 +239,19 @@ gimp_display_shell_events (GtkWidget        *widget,
                                                 options->padding_mode,
                                                 &options->padding_color);
 
-#if 0
-        FIXME
-        gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
-				      "/View/Fullscreen", fullscreen);
+        group = gimp_ui_manager_get_action_group (shell->menubar_manager,
+                                                  "view");
+        gimp_action_group_set_action_active (group, "view-fullscreen",
+                                             fullscreen);
 
         if (shell->gdisp ==
             gimp_context_get_display (gimp_get_user_context (gimp)))
-	gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-				      "/View/Fullscreen", fullscreen);
-#endif
+          {
+            group = gimp_ui_manager_get_action_group (shell->popup_manager,
+                                                      "view");
+            gimp_action_group_set_action_active (group, "view-fullscreen",
+                                                 fullscreen);
+          }
       }
       break;
 
