@@ -120,13 +120,13 @@ static void
 active_tool_free (void)
 {
   gtk_container_disable_resize (GTK_CONTAINER (options_shell));
-  
+
   if (!active_tool)
     return;
 
   if (tool_info[(int) active_tool->type].tool_options)
     gtk_widget_hide (tool_info[(int) active_tool->type].tool_options);
-  
+
   switch (active_tool->type)
     {
     case RECT_SELECT:
@@ -462,7 +462,7 @@ tools_initialize (ToolType type, GDisplay *gdisp_ptr)
     case BY_COLOR_SELECT:
       if (gdisp) {
 	active_tool = tools_new_by_color_select ();
-	by_color_select_initialize (gdisp);
+	by_color_select_initialize (gdisp->gimage);
       } else {
 	active_tool = tools_new_rect_select ();
       }
@@ -592,11 +592,11 @@ tools_options_dialog_show ()
      switching tools, the dialog will be empty.  recreate the active
      tool here if necessary to avoid this behavior */
 
-  if (!GTK_WIDGET_VISIBLE(options_shell)) 
+  if (!GTK_WIDGET_VISIBLE(options_shell))
     {
       gtk_widget_show (options_shell);
-    } 
-  else 
+    }
+  else
     {
       gdk_window_raise (options_shell->window);
     }
@@ -726,5 +726,3 @@ tools_options_dialog_callback (GtkWidget *w,
   shell = (GtkWidget *) client_data;
   gtk_widget_hide (shell);
 }
-
-

@@ -1,3 +1,8 @@
+Sun Jun 14 22:11:19 EDT 1998  Matthew Wilson  <msw@gimp.org>
+
+	* app/tools.c: fix the initialization for by color select
+	(from lewing)
+
 Sun Jun 14 01:01:49 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/gif/gif.c: don't pop up dialog for informational
