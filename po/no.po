@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.25\n"
-"POT-Creation-Date: 2000-12-24 12:22-0800\n"
-"PO-Revision-Date: 2000-12-05 13:21+01:00\n"
+"POT-Creation-Date: 2000-12-25 18:24+0100\n"
+"PO-Revision-Date: 2000-12-25 18:23+01:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -118,15 +118,14 @@ msgstr "Avslutt"
 #: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:571 app/file_new_dialog.c:212 app/file_new_dialog.c:362
-#: app/gdisplay_color_ui.c:160 app/gdisplay_ops.c:310 app/gimphelp.c:196
-#: app/gimpprogress.c:120 app/global_edit.c:779 app/gradient.c:1881
-#: app/gradient.c:4941 app/gradient.c:5502 app/hue_saturation.c:383
-#: app/interface.c:1047 app/layers_dialog.c:3555 app/layers_dialog.c:3739
-#: app/layers_dialog.c:3834 app/layers_dialog.c:4095 app/levels.c:350
-#: app/palette.c:1824 app/posterize.c:212 app/preferences_dialog.c:1485
-#: app/qmask.c:282 app/resize.c:225 app/resize.c:1398
-#: app/resolution_calibrate.c:116 app/threshold.c:285 app/user_install.c:552
-#: modules/cdisplay_gamma.c:332 modules/cdisplay_highcontrast.c:325
+#: app/gdisplay_ops.c:310 app/gimphelp.c:196 app/gimpprogress.c:120
+#: app/global_edit.c:779 app/gradient.c:1881 app/gradient.c:4941
+#: app/gradient.c:5502 app/hue_saturation.c:383 app/interface.c:1047
+#: app/layers_dialog.c:3555 app/layers_dialog.c:3739 app/layers_dialog.c:3834
+#: app/layers_dialog.c:4095 app/levels.c:350 app/palette.c:1824
+#: app/posterize.c:212 app/preferences_dialog.c:1485 app/qmask.c:282
+#: app/resize.c:225 app/resize.c:1398 app/resolution_calibrate.c:116
+#: app/threshold.c:285 app/user_install.c:552
 msgid "Cancel"
 msgstr "Avbryt"
 
@@ -279,13 +278,11 @@ msgstr "Lysstyrke-kontrast opererer ikke på indekserte tegneobjekter."
 #: app/channels_dialog.c:2539 app/channels_dialog.c:2702
 #: app/color_balance.c:282 app/color_notebook.c:125 app/convert.c:515
 #: app/curves.c:567 app/file_new_dialog.c:212 app/file_new_dialog.c:358
-#: app/gdisplay_color_ui.c:158 app/gimpui.c:126 app/hue_saturation.c:379
-#: app/layers_dialog.c:3553 app/layers_dialog.c:3737 app/layers_dialog.c:3832
-#: app/layers_dialog.c:4093 app/levels.c:346 app/module_db.c:319
-#: app/posterize.c:208 app/preferences_dialog.c:1481 app/qmask.c:280
-#: app/resize.c:219 app/resize.c:1398 app/resolution_calibrate.c:114
-#: app/threshold.c:281 modules/cdisplay_gamma.c:330
-#: modules/cdisplay_highcontrast.c:323
+#: app/gimpui.c:126 app/hue_saturation.c:379 app/layers_dialog.c:3553
+#: app/layers_dialog.c:3737 app/layers_dialog.c:3832 app/layers_dialog.c:4093
+#: app/levels.c:346 app/module_db.c:319 app/posterize.c:208
+#: app/preferences_dialog.c:1481 app/qmask.c:280 app/resize.c:219
+#: app/resize.c:1398 app/resolution_calibrate.c:114 app/threshold.c:281
 msgid "OK"
 msgstr "OK"
 
@@ -447,7 +444,6 @@ msgid "Replace"
 msgstr "Erstatt"
 
 #: app/by_color_select.c:791 app/colormap_dialog.i.c:130
-#: app/gdisplay_color_ui.c:145
 msgid "Add"
 msgstr "Legg til"
 
@@ -1471,34 +1467,6 @@ msgstr "indeksert-tom"
 msgid "indexed"
 msgstr "indeksert"
 
-#: app/gdisplay_color_ui.c:146
-msgid "Remove"
-msgstr "Fjern"
-
-#: app/gdisplay_color_ui.c:147
-msgid "Up"
-msgstr "Opp"
-
-#: app/gdisplay_color_ui.c:148
-msgid "Down"
-msgstr "Ned"
-
-#: app/gdisplay_color_ui.c:149
-msgid "Configure"
-msgstr "Konfigurér"
-
-#: app/gdisplay_color_ui.c:152
-msgid "Color Display Filters"
-msgstr "Filtre for fargevisning"
-
-#: app/gdisplay_color_ui.c:178
-msgid "Available Filters"
-msgstr "Tilgjengelige filtre"
-
-#: app/gdisplay_color_ui.c:204
-msgid "Active Filters"
-msgstr "Aktive filtre"
-
 #: app/gdisplay_ops.c:302
 #, c-format
 msgid ""
@@ -1545,28 +1513,28 @@ msgid "No selection to stroke!"
 msgstr "Ingen utvalg til stykning!"
 
 #: app/gimpbrush.c:294
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown brush format version #%d in \"%s\"."
-msgstr "Ukjent børsteformat versjon #%d i \"%s\"\n"
+msgstr "Ukjent børsteformat versjon #%d i \"%s\"."
 
 #: app/gimpbrush.c:314
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP brush file \"%s\"."
-msgstr "Feil i GIMP mønsterfil \"%s\""
+msgstr "Feil i GIMP børstefil \"%s\""
 
 #: app/gimpbrush.c:321 app/patterns.c:232
 msgid "Unnamed"
 msgstr "Uten navn"
 
 #: app/gimpbrush.c:334 app/gimpbrush.c:379
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP brush file appears to be truncated: \"%s\"."
-msgstr "GIMP penselfil ser ut til å være avkuttet."
+msgstr "GIMP penselfil ser ut til å være avkuttet: \"%s\"."
 
 #: app/gimpbrush.c:359
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP brush file appears to be corrupted: \"%s\"."
-msgstr "GIMP penselfil ser ut til å være avkuttet."
+msgstr "GIMP penselfil ser ut til å være korrupt: \"%s\"."
 
 #: app/gimpbrushlist.c:200 app/gimpbrushlist.c:209
 #, c-format
@@ -1578,27 +1546,31 @@ msgstr ""
 "\"%s\""
 
 #: app/gimpbrushlist.c:218
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to load brush pipe\n"
 "\"%s\""
 msgstr ""
-"Advarsel: Klarte ikke å lese børste\n"
+"Advarsel: Klarte ikke å lese penselrør\n"
 "\"%s\""
 
 #: app/gimpbrushpipe.c:292
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Brush pipes should have at least one brush:\n"
 "\"%s\""
-msgstr "Rør av pensler må ha minst en pensel."
+msgstr ""
+"Rør av pensler må ha minst en pensel.\n"
+"\"%s\""
 
 #: app/gimpbrushpipe.c:383
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to load one of the brushes in the brush pipe\n"
 "\"%s\""
-msgstr "Klarte ikke å laste en av penselene i penselrøret."
+msgstr ""
+"Klarte ikke å laste en av penselene i penselrøret.\n"
+"\"%s\""
 
 #: app/gimpdrawable.c:176
 msgid "Can't fill unknown image type."
@@ -3128,9 +3100,8 @@ msgid "/File/Save As..."
 msgstr "/Fil/Lagre som..."
 
 #: app/menus.c:219
-#, fuzzy
 msgid "/File/Revert..."
-msgstr "/Fil/Forkast"
+msgstr "/Fil/Forkast..."
 
 #: app/menus.c:224
 msgid "/File/Close"
@@ -3573,9 +3544,8 @@ msgid "/Filters/Combine"
 msgstr "/Filtre/Kombinér"
 
 #: app/menus.c:576
-#, fuzzy
 msgid "/Filters/Toys"
-msgstr "/Filtre/Støy"
+msgstr "/Filtre/Leketøy"
 
 #: app/menus.c:587
 msgid "/Automatic"
@@ -4172,19 +4142,19 @@ msgid "No Patterns available"
 msgstr "Ingen mønstre tilgjengelig"
 
 #: app/patterns.c:206
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown pattern format version #%d in \"%s\"."
-msgstr "Ukjent børsteformat versjon #%d i \"%s\"\n"
+msgstr "Ukjent mønsterformat versjon #%d i \"%s\"."
 
 #: app/patterns.c:225
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP pattern file \"%s\"."
-msgstr "Feil i GIMP mønsterfil \"%s\""
+msgstr "Feil i GIMP mønsterfil \"%s\"."
 
 #: app/patterns.c:241
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP pattern file appears to be truncated: \"%s\"."
-msgstr "GIMP mønsterfil \"%s\" ser ut til å være avkuttet."
+msgstr "GIMP mønsterfil ser ut til å være avkuttet: \"%s\"."
 
 #: app/perspective_tool.c:65
 msgid "Perspective Transform Information"
@@ -6366,30 +6336,6 @@ msgstr ""
 "lagret ikke indekserte fargekart riktig.\n"
 "Erstatter gråtonekart."
 
-#: modules/cdisplay_gamma.c:96
-msgid "Gamma color display filter"
-msgstr "Gamma fargevisningsfilter"
-
-#: modules/cdisplay_gamma.c:325
-msgid "Gamma"
-msgstr "Gamma"
-
-#: modules/cdisplay_gamma.c:344
-msgid "Gamma:"
-msgstr "Gamma:"
-
-#: modules/cdisplay_highcontrast.c:96
-msgid "High Contrast color display filter"
-msgstr "Høykontrast fargevisningsfilter"
-
-#: modules/cdisplay_highcontrast.c:318
-msgid "High Contrast"
-msgstr "Høy kontrast"
-
-#: modules/cdisplay_highcontrast.c:337
-msgid "Contrast Cycles:"
-msgstr "Kontrastomganger:"
-
 #: modules/colorsel_gtk.c:53
 msgid "GTK color selector as a pluggable color selector"
 msgstr "GTK fargevelger som en innsettbar fargevelger"
@@ -6414,28 +6360,41 @@ msgstr "Vannfarge"
 msgid "Color History"
 msgstr "Fargehistorikk"
 
-#~ msgid "Error in GIMP brush file...aborting."
-#~ msgstr "Feil i GIMP penselfil...avbryter."
+#~ msgid "Remove"
+#~ msgstr "Fjern"
 
-#~ msgid ""
-#~ "Warning: Failed to load pixmap brush\n"
-#~ "\"%s\""
-#~ msgstr ""
-#~ "Advarsel: Klarte ikke å lese bildebørste\n"
-#~ "\"%s\""
+#~ msgid "Up"
+#~ msgstr "Opp"
 
-#~ msgid ""
-#~ "Warning: Failed to load pixmap pipe\n"
-#~ "\"%s\""
-#~ msgstr ""
-#~ "Advarsel: Klarte ikke å lese bilderør\n"
-#~ "\"%s\""
+#~ msgid "Down"
+#~ msgstr "Ned"
 
-#~ msgid "Failed to load pixmap brush."
-#~ msgstr "Klarte ikke å lese bildebørste."
+#~ msgid "Configure"
+#~ msgstr "Konfigurér"
 
-#~ msgid "Unknown GIMP pattern version #%d in \"%s\"\n"
-#~ msgstr "Ukjent GIMP mønster versjon #%d i \"%s\"\n"
+#~ msgid "Color Display Filters"
+#~ msgstr "Filtre for fargevisning"
 
-#~ msgid "Error loading pattern \"%s\""
-#~ msgstr "Feil under lesing av mønster \"%s\""
+#~ msgid "Available Filters"
+#~ msgstr "Tilgjengelige filtre"
+
+#~ msgid "Active Filters"
+#~ msgstr "Aktive filtre"
+
+#~ msgid "Gamma color display filter"
+#~ msgstr "Gamma fargevisningsfilter"
+
+#~ msgid "Gamma"
+#~ msgstr "Gamma"
+
+#~ msgid "Gamma:"
+#~ msgstr "Gamma:"
+
+#~ msgid "High Contrast color display filter"
+#~ msgstr "Høykontrast fargevisningsfilter"
+
+#~ msgid "High Contrast"
+#~ msgstr "Høy kontrast"
+
+#~ msgid "Contrast Cycles:"
+#~ msgstr "Kontrastomganger:"
