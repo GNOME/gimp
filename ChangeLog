@@ -1,3 +1,15 @@
+2001-11-19  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/common/Makefile.am: Don't use if !OS_WIN32, automake
+	1.4 doesn't like that.
+
+	* plug-ins/common/xpm.c: On Win32, use the Xpm-noX library, and
+	don't call any X functions to be able to parse colors, but use
+	gdk_color_parse().
+
+	* plug-ins/script-fu/script-fu-scripts.c (script_fu_find_scripts):
+	Remove couple of leftover debugging g_print().
+
 2001-11-18  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimp/gimp.def: Added some missing entry points.

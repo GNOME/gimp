@@ -4,7 +4,8 @@ if OS_WIN32
 mwindows = -mwindows
 endif
 
-if !OS_WIN32
+if OS_WIN32
+else
 BZ2 = bz2
 MAIL = mail
 SCREENSHOT = screenshot

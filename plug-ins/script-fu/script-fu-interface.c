@@ -286,10 +286,7 @@ script_fu_find_scripts (void)
 
   /* Search through all directories in script-fu-path */
   
-  g_print ("path_str=%s\n", path_str);
-
   path_list = gimp_path_parse (path_str, 16, TRUE, NULL);
-  g_print ("path_list length:%d\n", g_list_length (path_list));
 
   list = path_list;
   while (list)
