@@ -1,3 +1,9 @@
+2000-05-05  Jay Cox  <jaycox@earthlink.net>
+
+	* app/pixel_processor.c: try to minimize the overhead of
+	multiprocessor support.  This should fix bug #9296
+	but it has not been tested on a dual processor machine.
+
 2000-05-04  Tor Lillqvist  <tml@iki.fi>
 
 	* gimprc.win32: Replace "color-cube" by "min-colors".

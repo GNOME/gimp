@@ -144,24 +144,80 @@ do_parallel_regions(PixelProcessor  *p_s)
   return NULL;
 }
 
+
+/*  do_parallel_regions_single is just like do_parallel_regions 
+ *   except that all the mutex and tile locks have been removed
+ *
+ * If we are processing with only a single thread we don't need to do the
+ * mutex locks etc. and aditional tile locks even if we were
+ * configured --with-mp
+ */
+
+static void *
+do_parallel_regions_single(PixelProcessor  *p_s)
+{
+  int cont = 1;
+
+  do
+  {
+    switch(p_s->n_regions)
+    {
+     case 1:
+       ((p1_func)p_s->f)(p_s->data,
+			 p_s->r[0]);
+       break;
+     case 2:
+       ((p2_func)p_s->f)(p_s->data,
+			 p_s->r[0],
+			 p_s->r[1]);
+       break;
+     case 3:
+       ((p3_func)p_s->f)(p_s->data,
+			 p_s->r[0],
+			 p_s->r[1],
+			 p_s->r[2]);
+       break;
+     case 4:
+       ((p4_func)p_s->f)(p_s->data,
+			 p_s->r[0],
+			 p_s->r[1],
+			 p_s->r[2],
+			 p_s->r[3]);
+       break;
+     default:
+       g_message("do_parallel_regions_single: Bad number of regions %d\n",
+		 p_s->n_regions);
+    }
+    if (p_s->progress_report_func)
+      if (!p_s->progress_report_func(p_s->progress_report_data,
+				     p_s->r[0]->x, p_s->r[0]->y, 
+				     p_s->r[0]->w, p_s->r[0]->h))
+	cont = 0;
+  } while (cont && p_s->PRI &&
+	   (p_s->PRI = (PixelRegionIterator*)pixel_regions_process(p_s->PRI)));
+  return NULL;
+}
+
 #define MAX_THREADS 30
 
 static void
 pixel_regions_do_parallel(PixelProcessor *p_s)
 {
-  IF_THREAD(int i;)
-  IF_THREAD(int nthreads;)
-  IF_THREAD(pthread_t threads[MAX_THREADS];)
-  IF_THREAD(pthread_attr_t pthread_attr;)
 
-  /*		 (p_s->PRI->region_width * p_s->PRI->region_height) /(64*64)); */
   IF_THREAD(
+    int nthreads;
     nthreads = MIN(num_processors, MAX_THREADS);
-    nthreads = MIN(nthreads, 1 + 
+
+    /* make sure we have at least one tile per thread */
+    nthreads = MIN(nthreads,
 		   (p_s->PRI->region_width * p_s->PRI->region_height)
 		   /(TILE_WIDTH*TILE_HEIGHT));
+
     if (nthreads > 1)
     {
+      int i;
+      pthread_t threads[MAX_THREADS];
+      pthread_attr_t pthread_attr;
       pthread_attr_init (&pthread_attr);
       for (i = 0; i < nthreads; i++)
       {
@@ -173,12 +229,12 @@ pixel_regions_do_parallel(PixelProcessor *p_s)
       {
 	pthread_join(threads[i], NULL);
       }
+      if (p_s->nthreads != 0)
+	fprintf(stderr, "pixel_regions_do_prarallel: we lost a thread\n");
     }
     else
     )
-    do_parallel_regions(p_s);
-  if (p_s->nthreads != 0)
-    fprintf(stderr, "Ack, we lost a thread\n");
+    do_parallel_regions_single(p_s);
 }
 
 static PixelProcessor *
