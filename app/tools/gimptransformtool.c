@@ -654,6 +654,8 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
   GimpTool             *tool;
   GimpTransformTool    *tr_tool;
   GimpTransformOptions *options;
+  gdouble z1, z2, z3, z4;
+
 
   tr_tool = GIMP_TRANSFORM_TOOL (draw_tool);
 
@@ -681,15 +683,26 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                             tr_tool->tx1, tr_tool->ty1,
                             FALSE);
 
+  /* We test if the transformed polygon is convex.
+   * if z1 and z2 have the same sign as well as z3 and z4
+   * the polygon is convex. */
+
+  z1 = (tr_tool->tx2-tr_tool->tx1)*(tr_tool->ty4-tr_tool->ty1)
+          -(tr_tool->tx4-tr_tool->tx1)*(tr_tool->ty2-tr_tool->ty1);
+  z2 = (tr_tool->tx4-tr_tool->tx1)*(tr_tool->ty3-tr_tool->ty1)
+          -(tr_tool->tx3-tr_tool->tx1)*(tr_tool->ty4-tr_tool->ty1);
+  z3 = (tr_tool->tx4-tr_tool->tx2)*(tr_tool->ty3-tr_tool->ty2)
+          -(tr_tool->tx3-tr_tool->tx2)*(tr_tool->ty4-tr_tool->ty2);
+  z4 = (tr_tool->tx3-tr_tool->tx2)*(tr_tool->ty1-tr_tool->ty2)
+          -(tr_tool->tx1-tr_tool->tx2)*(tr_tool->ty3-tr_tool->ty2);
+
   /*  Draw the grid (not for path transform since it looks ugly)  */
 
   if (tr_tool->type != GIMP_TRANSFORM_TYPE_PATH &&
       tr_tool->grid_coords                      &&
       tr_tool->tgrid_coords                     &&
-      tr_tool->transform.coeff[0][0] >=  0.0    &&
-      tr_tool->transform.coeff[1][1] >=  0.0    &&
-      tr_tool->transform.coeff[1][0] >= -1.0    &&
-      tr_tool->transform.coeff[0][1] >= -1.0)
+      z1 * z2 > 0                               &&
+      z3 * z4 > 0)
     {
       gint gci, i, k;
 

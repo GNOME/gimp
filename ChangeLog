@@ -1,3 +1,9 @@
+2003-08-28  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimptransformtool.c: Modified the test when to paint
+	the grid or not. It now checks for convexity of the bounding
+	polygon.
+
 2003-08-28  Ville Pätsi  <drc@gimp.org>
 
 	* Makefile.am: Add gimp.spec to EXTRA_DIST to add it to
