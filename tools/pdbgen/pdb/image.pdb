@@ -57,16 +57,16 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GSList *list = NULL', 'int i' ],
+	vars => [ 'GList *list', 'int i' ],
 	code => <<CODE
 {
-  list = gimage->${type}s;
-  num_${type}s = g_slist_length (list);
+  list = GIMP_LIST (gimage->${type}s)->list;
+  num_${type}s = g_list_length (list);
 
   if (num_${type}s)
     {
       ${type}_ids = g_new (gint32, num_${type}s);
-      for (i = 0; i < num_${type}s; i++, list = list->next)
+      for (i = 0; i < num_${type}s; i++, list = g_list_next (list))
 	${type}_ids[i] = gimp_drawable_get_ID (GIMP_DRAWABLE (list->data));
     }
 }
@@ -107,7 +107,7 @@ HELP
     }
 
     %invoke = (
-	code => "success = gimp_image_${op}_$type$extra (gimage, $type) != NULL;"
+	code => "success = gimp_image_${op}_$type$extra (gimage, $type);"
     );
 }
 
@@ -580,7 +580,7 @@ CODE
     $invoke{code} .= <<'CODE';
     success = FALSE;
   else
-    success = gimp_image_add_layer (gimage, layer, MAX (position, -1)) != NULL;
+    success = gimp_image_add_layer (gimage, layer, MAX (position, -1));
 }
 CODE
 }
@@ -684,7 +684,7 @@ HELP
 
     %invoke = (
 	code => <<'CODE'
-success = gimp_image_add_channel (gimage, channel, MAX (position, -1)) != NULL;
+success = gimp_image_add_channel (gimage, channel, MAX (position, -1));
 CODE
     );
 }
@@ -1434,7 +1434,8 @@ CODE
 
 
 @headers = qw(<string.h> "gimage.h" "context_manager.h" "gimpcontainer.h"
-              "libgimpmath/gimpmath.h" "temp_buf.h" "libgimp/gimplimits.h"
+	      "gimplist.h"  "temp_buf.h" 
+	      "libgimpmath/gimpmath.h" "libgimp/gimplimits.h"
               "libgimp/gimpintl.h");
 
 $extra{app}->{code} = <<'CODE';

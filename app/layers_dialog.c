@@ -35,9 +35,11 @@
 #include "gdisplay.h"
 #include "gimage.h"
 #include "gimage_mask.h"
+#include "gimpcontainer.h"
 #include "gimpdnd.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
+#include "gimplist.h"
 #include "gimprc.h"
 #include "image_render.h"
 #include "layers_dialog.h"
@@ -552,18 +554,12 @@ layers_dialog_free (void)
 void 
 layers_dialog_invalidate_previews (GimpImage *gimage)
 {
-  GSList    *list;
-  GimpLayer *layer;
-
   /*  Invalidate all previews ...
    *  This is called during loading the image
    */
-  for (list = gimage->layers; list; list = g_slist_next (list))
-    {
-      layer = (GimpLayer *) list->data;
-
-      GIMP_DRAWABLE (layer)->preview_valid = FALSE;
-    }
+  gimp_container_foreach (gimage->layers, 
+			  (GFunc) gimp_viewable_invalidate_preview,
+			  NULL);
 }
 
 void
@@ -571,7 +567,8 @@ layers_dialog_update (GimpImage* gimage)
 {
   GimpLayer   *layer;
   LayerWidget *lw;
-  GSList      *list;
+  GSList      *slist;
+  GList       *list;
   GList       *item_list;
 
   if (! layersD || layersD->gimage == gimage)
@@ -584,12 +581,13 @@ layers_dialog_update (GimpImage* gimage)
 
   /*  Free all elements in the layers listbox  */
   gtk_list_clear_items (GTK_LIST (layersD->layer_list), 0, -1);
-
-  list = layersD->layer_widgets;
-  while (list)
+  
+  for (slist = layersD->layer_widgets;
+       slist;
+       slist = g_slist_next (slist))
     {
-      lw = (LayerWidget *) list->data;
-      list = g_slist_next (list);
+      lw = (LayerWidget *) slist->data;
+      
       layer_widget_delete (lw);
     }
 
@@ -604,12 +602,13 @@ layers_dialog_update (GimpImage* gimage)
   layersD->active_channel = NULL;
   layersD->floating_sel   = NULL;
 
-  for (list = gimage->layers, item_list = NULL; 
+  for (list = GIMP_LIST (gimage->layers)->list, item_list = NULL; 
        list; 
-       list = g_slist_next (list))
+       list = g_list_next (list))
     {
       /*  create a layer list item  */
       layer = (GimpLayer *) list->data;
+
       lw = layer_widget_create (gimage, layer);
       layersD->layer_widgets = g_slist_append (layersD->layer_widgets, lw);
       item_list = g_list_append (item_list, lw->list_item);
@@ -628,7 +627,8 @@ layers_dialog_flush (void)
   GimpImage   *gimage;
   GimpLayer   *layer;
   LayerWidget *lw;
-  GSList      *list;
+  GList       *list;
+  GSList      *slist;
   gint         pos;
 
   if (!layersD || !(gimage = layersD->gimage))
@@ -647,14 +647,19 @@ layers_dialog_flush (void)
   else
     {
       /*  Set all current layer widgets to visited = FALSE  */
-      for (list = layersD->layer_widgets; list; list = g_slist_next (list))
+      for (slist = layersD->layer_widgets; 
+	   slist;
+	   slist = g_slist_next (slist))
         {
-          lw = (LayerWidget *) list->data;
+          lw = (LayerWidget *) slist->data;
+
           lw->visited = FALSE;
         }
 
       /*  Add any missing layers  */
-      for (list = gimage->layers; list; list = g_slist_next (list))
+      for (list = GIMP_LIST (gimage->layers)->list; 
+	   list; 
+	   list = g_list_next (list))
         {
           layer = (GimpLayer *) list->data;
           lw = layer_widget_get_ID (layer);
@@ -670,21 +675,22 @@ layers_dialog_flush (void)
         }
 
       /*  Remove any extraneous layers  */
-      list = layersD->layer_widgets;
-      while (list)
+      for (slist = layersD->layer_widgets; slist;)
         {
-          lw = (LayerWidget *) list->data;
-          list = g_slist_next (list);
+          lw = (LayerWidget *) slist->data;
+	  slist = g_slist_next (slist);
+
           if (lw->visited == FALSE)
 	    layers_dialog_remove_layer (lw->layer);
         }
 
       /*  Switch positions of items if necessary  */
-      for (list = gimage->layers, pos = 0; 
-	   list; 
-	   list = g_slist_next (list))
+      for (list = GIMP_LIST (gimage->layers)->list, pos = 0; 
+	   list;
+	   list = g_list_next (list))
         {
           layer = (GimpLayer *) list->data;
+
           layers_dialog_position_layer (layer, pos++);
         }
 
@@ -1029,9 +1035,9 @@ layers_dialog_set_menu_sensitivity (void)
   gboolean   alpha;      /*  alpha channel present  */
   gboolean   indexed;    /*  is indexed             */
   gboolean   next_alpha;
-  GSList    *list; 
-  GSList    *next;
-  GSList    *prev;
+  GList     *list; 
+  GList     *next;
+  GList     *prev;
   GimpLayer *layer;
 
   lp      = FALSE;
@@ -1052,30 +1058,29 @@ layers_dialog_set_menu_sensitivity (void)
 
   if (gimage)
     {
-      lp = (layersD->gimage->layers != NULL);
+      lp = ! gimp_image_is_empty (layersD->gimage);
       indexed = (gimp_image_base_type (layersD->gimage) == INDEXED);
     } 
      
-  list = layersD->gimage->layers;
   prev = NULL;
   next = NULL;
-  while (list)
+
+  for (list = GIMP_LIST (layersD->gimage->layers)->list;
+       list;
+       list = g_list_next (list)) 
     {
       layer = (GimpLayer *)list->data;
+
       if (layer == (layersD->active_layer))
 	{
-	  next = g_slist_next (list);
+	  prev = g_list_previous (list);
+	  next = g_list_next (list);
 	  break;
 	}
-      prev = list;
-      list = g_slist_next (list);
     }
 
   if (next)
-    {
-      layer = (GimpLayer *) next->data;
-      next_alpha = gimp_layer_has_alpha (layer);
-    }
+    next_alpha = gimp_layer_has_alpha (GIMP_LAYER (next->data));
   else
     next_alpha = FALSE;
 
@@ -1533,10 +1538,11 @@ layers_dialog_previous_layer_callback (GtkWidget *widget,
   if (!layersD || !(gimage = layersD->gimage))
     return;
 
-  current_layer =
-    gimp_image_get_layer_index (gimage, gimage->active_layer);
+  current_layer = gimp_image_get_layer_index (gimage, gimage->active_layer);
 
-  new_layer = gimp_image_get_layer_by_index (gimage, current_layer - 1);
+  new_layer = 
+    GIMP_LAYER (gimp_container_get_child_by_index (gimage->layers, 
+						   current_layer - 1));
 
   if (new_layer)
     {
@@ -1556,10 +1562,11 @@ layers_dialog_next_layer_callback (GtkWidget *widget,
   if (!layersD || !(gimage = layersD->gimage))
     return;
 
-  current_layer =
-    gimp_image_get_layer_index (gimage, gimage->active_layer);
+  current_layer = gimp_image_get_layer_index (gimage, gimage->active_layer);
 
-  new_layer = gimp_image_get_layer_by_index (gimage, current_layer + 1);
+  new_layer = 
+    GIMP_LAYER (gimp_container_get_child_by_index (gimage->layers, 
+						   current_layer + 1));
 
   if (new_layer)
     {

@@ -33,6 +33,7 @@
 #include "gimage.h"
 #include "gimage_mask.h"
 #include "gimpchannel.h"
+#include "gimpcontainer.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
 #include "gimpparasite.h"
@@ -1431,6 +1432,8 @@ undo_push_layer (GimpImage *gimage,
 
   if ((new = undo_push (gimage, size, type, TRUE)))
     {
+      gtk_object_ref (GTK_OBJECT (lu->layer));
+
       new->data      = lu_ptr;
       new->pop_func  = undo_pop_layer;
       new->free_func = undo_free_layer;
@@ -1439,10 +1442,6 @@ undo_push_layer (GimpImage *gimage,
     }
   else
     {
-      /*  if this is a remove layer, delete the layer  */
-      if (type == LAYER_REMOVE_UNDO)
-	gtk_object_unref (GTK_OBJECT (lu->layer));
-
       g_free (lu);
 
       return FALSE;
@@ -1470,7 +1469,7 @@ undo_pop_layer (GimpImage *gimage,
       gimp_image_set_active_layer (gimage, lu->prev_layer);
 
       /*  remove the layer  */
-      gimage->layers = g_slist_remove (gimage->layers, lu->layer);
+      gimp_container_remove (gimage->layers, GIMP_OBJECT (lu->layer));
       gimage->layer_stack = g_slist_remove (gimage->layer_stack, lu->layer);
 
       /*  reset the gimage values  */
@@ -1500,8 +1499,8 @@ undo_pop_layer (GimpImage *gimage,
 	gimage->floating_sel = lu->layer;
 
       /*  add the new layer  */
-      gimage->layers = g_slist_insert (gimage->layers, lu->layer,
-				       lu->prev_position);
+      gimp_container_insert (gimage->layers, 
+			     GIMP_OBJECT (lu->layer), lu->prev_position);
       gimage->layer_stack = g_slist_prepend (gimage->layer_stack, lu->layer);
       gimage->active_layer = lu->layer;
 
@@ -1523,14 +1522,7 @@ undo_free_layer (UndoState  state,
 
   lu = (LayerUndo *) lu_ptr;
 
-  /*  Only free the layer if we're freeing from the redo
-   *  stack and it's a layer add, or if we're freeing from
-   *  the undo stack and it's a layer remove
-   */
-  if ((state == REDO && type == LAYER_ADD_UNDO) ||
-      (state == UNDO && type == LAYER_REMOVE_UNDO))
-    gtk_object_unref (GTK_OBJECT (lu->layer));
-
+  gtk_object_unref (GTK_OBJECT (lu->layer));
   g_free (lu);
 }
 
@@ -1793,6 +1785,8 @@ undo_push_channel (GimpImage *gimage,
 
   if ((new = undo_push (gimage, size, type, TRUE)))
     {
+      gtk_object_ref (GTK_OBJECT (cu->channel));
+
       new->data      = cu_ptr;
       new->pop_func  = undo_pop_channel;
       new->free_func = undo_free_channel;
@@ -1801,9 +1795,8 @@ undo_push_channel (GimpImage *gimage,
     }
   else
     {
-      if (type == CHANNEL_REMOVE_UNDO)
-	gtk_object_unref (GTK_OBJECT (cu->channel));
       g_free (cu);
+
       return FALSE;
     }
 }
@@ -1827,7 +1820,7 @@ undo_pop_channel (GimpImage *gimage,
       cu->prev_position = gimp_image_get_channel_index (gimage, cu->channel);
 
       /*  remove the channel  */
-      gimage->channels = g_slist_remove (gimage->channels, cu->channel);
+      gimp_container_remove (gimage->channels, GIMP_OBJECT (cu->channel));
 
       /*  set the previous channel  */
       gimp_image_set_active_channel (gimage, cu->prev_channel);
@@ -1844,9 +1837,9 @@ undo_pop_channel (GimpImage *gimage,
       cu->prev_channel = gimage->active_channel;
 
       /*  add the new channel  */
-      gimage->channels = g_slist_insert (gimage->channels, cu->channel,
-					 cu->prev_position);
-
+      gimp_container_insert (gimage->channels, 
+			     GIMP_OBJECT (cu->channel),	cu->prev_position);
+ 
       /*  set the new channel  */
       gimp_image_set_active_channel (gimage, cu->channel);
 
@@ -1869,13 +1862,7 @@ undo_free_channel (UndoState  state,
 
   cu = (ChannelUndo *) cu_ptr;
 
-  /*  Only free the channel if we're freeing from the redo
-   *  stack and it's a channel add, or if we're freeing from
-   *  the undo stack and it's a channel remove
-   */
-  if ((state == REDO && type == CHANNEL_ADD_UNDO) ||
-      (state == UNDO && type == CHANNEL_REMOVE_UNDO))
-    gtk_object_unref (GTK_OBJECT (cu->channel));
+  gtk_object_unref (GTK_OBJECT (cu->channel));
 
   g_free (cu);
 }
@@ -2754,7 +2741,7 @@ undo_push_layer_reposition (GimpImage *gimage,
       new->free_func = undo_free_layer_reposition;
 
       data->layer        = layer;
-      data->old_position = g_slist_index (gimage->layers, layer);
+      data->old_position = gimp_image_get_layer_index (gimage, layer);
 
       return TRUE;
     }
@@ -2769,14 +2756,13 @@ undo_pop_layer_reposition (GimpImage *gimage,
 			   void      *data_ptr)
 {
   LayerRepositionUndo *data = data_ptr;
-  gint                 tmp;
+  gint                 pos;
 
   /* what's the layer's current index? */
-  tmp = g_slist_index (gimage->layers, data->layer);
-
+  pos = gimp_image_get_layer_index (gimage, data->layer);
   gimp_image_position_layer (gimage, data->layer, data->old_position, FALSE);
 
-  data->old_position = tmp;
+  data->old_position = pos;
 
   return TRUE;
 }

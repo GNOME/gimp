@@ -37,6 +37,7 @@
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
+#include "gimplist.h"
 #include "temp_buf.h"
 
 #include "libgimp/gimpintl.h"
@@ -183,16 +184,16 @@ image_list_invoker (Argument *args)
   Argument *return_args;
   gint32 num_images = 0;
   gint32 *image_ids = NULL;
-  GSList *list = NULL;
+  GList *list;
   int i;
 
   gimp_container_foreach (image_context, gimlist_cb, &list);
-  num_images = g_slist_length (list);
+  num_images = g_list_length (list);
 
   if (num_images)
     {
       image_ids = g_new (gint32, num_images);
-      for (i = 0; i < num_images; i++, list = list->next)
+      for (i = 0; i < num_images; i++, list = g_list_next (list))
 	image_ids[i] = pdb_image_to_id (GIMP_IMAGE (list->data));
     }
 
@@ -545,7 +546,7 @@ image_get_layers_invoker (Argument *args)
   GimpImage *gimage;
   gint32 num_layers = 0;
   gint32 *layer_ids = NULL;
-  GSList *list = NULL;
+  GList *list;
   int i;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
@@ -554,13 +555,13 @@ image_get_layers_invoker (Argument *args)
 
   if (success)
     {
-      list = gimage->layers;
-      num_layers = g_slist_length (list);
+      list = GIMP_LIST (gimage->layers)->list;
+      num_layers = g_list_length (list);
     
       if (num_layers)
 	{
 	  layer_ids = g_new (gint32, num_layers);
-	  for (i = 0; i < num_layers; i++, list = list->next)
+	  for (i = 0; i < num_layers; i++, list = g_list_next (list))
 	    layer_ids[i] = gimp_drawable_get_ID (GIMP_DRAWABLE (list->data));
 	}
     }
@@ -623,7 +624,7 @@ image_get_channels_invoker (Argument *args)
   GimpImage *gimage;
   gint32 num_channels = 0;
   gint32 *channel_ids = NULL;
-  GSList *list = NULL;
+  GList *list;
   int i;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
@@ -632,13 +633,13 @@ image_get_channels_invoker (Argument *args)
 
   if (success)
     {
-      list = gimage->channels;
-      num_channels = g_slist_length (list);
+      list = GIMP_LIST (gimage->channels)->list;
+      num_channels = g_list_length (list);
     
       if (num_channels)
 	{
 	  channel_ids = g_new (gint32, num_channels);
-	  for (i = 0; i < num_channels; i++, list = list->next)
+	  for (i = 0; i < num_channels; i++, list = g_list_next (list))
 	    channel_ids[i] = gimp_drawable_get_ID (GIMP_DRAWABLE (list->data));
 	}
     }
@@ -823,7 +824,7 @@ image_raise_layer_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    success = gimp_image_raise_layer (gimage, layer) != NULL;
+    success = gimp_image_raise_layer (gimage, layer);
 
   return procedural_db_return_args (&image_raise_layer_proc, success);
 }
@@ -874,7 +875,7 @@ image_lower_layer_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    success = gimp_image_lower_layer (gimage, layer) != NULL;
+    success = gimp_image_lower_layer (gimage, layer);
 
   return procedural_db_return_args (&image_lower_layer_proc, success);
 }
@@ -925,7 +926,7 @@ image_raise_layer_to_top_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    success = gimp_image_raise_layer_to_top (gimage, layer) != NULL;
+    success = gimp_image_raise_layer_to_top (gimage, layer);
 
   return procedural_db_return_args (&image_raise_layer_to_top_proc, success);
 }
@@ -976,7 +977,7 @@ image_lower_layer_to_bottom_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    success = gimp_image_lower_layer_to_bottom (gimage, layer) != NULL;
+    success = gimp_image_lower_layer_to_bottom (gimage, layer);
 
   return procedural_db_return_args (&image_lower_layer_to_bottom_proc, success);
 }
@@ -1243,7 +1244,7 @@ image_add_layer_invoker (Argument *args)
 	  (gimp_drawable_is_indexed (GIMP_DRAWABLE (layer)) && gimp_image_base_type (gimage) != INDEXED))
 	success = FALSE;
       else
-	success = gimp_image_add_layer (gimage, layer, MAX (position, -1)) != NULL;
+	success = gimp_image_add_layer (gimage, layer, MAX (position, -1));
     }
 
   return procedural_db_return_args (&image_add_layer_proc, success);
@@ -1473,7 +1474,7 @@ image_raise_channel_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    success = gimp_image_raise_channel (gimage, channel) != NULL;
+    success = gimp_image_raise_channel (gimage, channel);
 
   return procedural_db_return_args (&image_raise_channel_proc, success);
 }
@@ -1524,7 +1525,7 @@ image_lower_channel_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    success = gimp_image_lower_layer (gimage, layer) != NULL;
+    success = gimp_image_lower_layer (gimage, layer);
 
   return procedural_db_return_args (&image_lower_channel_proc, success);
 }
@@ -1578,7 +1579,7 @@ image_add_channel_invoker (Argument *args)
   position = args[2].value.pdb_int;
 
   if (success)
-    success = gimp_image_add_channel (gimage, channel, MAX (position, -1)) != NULL;
+    success = gimp_image_add_channel (gimage, channel, MAX (position, -1));
 
   return procedural_db_return_args (&image_add_channel_proc, success);
 }

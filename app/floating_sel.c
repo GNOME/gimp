@@ -29,6 +29,7 @@
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimpcontainer.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
@@ -161,7 +162,8 @@ floating_sel_reset (GimpLayer *layer)
   else if (GIMP_IS_CHANNEL (layer->fs.drawable))
     {
       gimp_image_set_active_channel (gimage, GIMP_CHANNEL (layer->fs.drawable));
-      if (gimage->layers)
+
+      if (gimp_container_num_children (gimage->layers))
 	gimage->active_layer = (((GimpLayer *) gimage->layer_stack->data));
       else
 	gimage->active_layer = NULL;

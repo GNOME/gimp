@@ -38,6 +38,7 @@
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimplayer.h"
+#include "gimplist.h"
 #include "paint_funcs.h"
 #include "parasitelist.h"
 #include "path.h"
@@ -573,8 +574,7 @@ duplicate (GimpImage *gimage)
   GimpLayer    *layer, *new_layer;
   GimpLayer    *floating_layer;
   GimpChannel  *channel, *new_channel;
-  GSList       *list;
-  GList        *glist;
+  GList        *list;
   Guide        *guide = NULL;
   GimpLayer    *active_layer = NULL;
   GimpChannel  *active_channel = NULL;
@@ -606,13 +606,11 @@ duplicate (GimpImage *gimage)
     }
 
   /*  Copy the layers  */
-  list = gimage->layers;
-  count = 0;
-  layer = NULL;
-  while (list)
+  for (list = GIMP_LIST (gimage->layers)->list, count = 0;
+       list;
+       list = g_list_next (list), count++)
     {
       layer = (GimpLayer *) list->data;
-      list = g_slist_next (list);
 
       new_layer = gimp_layer_copy (layer, FALSE);
 
@@ -635,22 +633,21 @@ duplicate (GimpImage *gimage)
       if (gimage->floating_sel == layer)
 	floating_layer = new_layer;
 
-      if (floating_sel_drawable == GIMP_DRAWABLE(layer))
-	new_floating_sel_drawable = GIMP_DRAWABLE(new_layer);
+      if (floating_sel_drawable == GIMP_DRAWABLE (layer))
+	new_floating_sel_drawable = GIMP_DRAWABLE (new_layer);
 
       /*  Add the layer  */
       if (floating_layer != new_layer)
-	gimp_image_add_layer (new_gimage, new_layer, count++);
+	gimp_image_add_layer (new_gimage, new_layer, count);
     }
 
   /*  Copy the channels  */
-  list = gimage->channels;
-  count = 0;
-  while (list)
+  for (list = GIMP_LIST (gimage->channels)->list, count = 0;
+       list;
+       list = g_list_next (list), count++)
     {
       channel = (GimpChannel *) list->data;
-      list = g_slist_next (list);
-
+ 
       new_channel = gimp_channel_copy (channel);
 
       gimp_drawable_set_gimage (GIMP_DRAWABLE (new_channel), new_gimage);
@@ -662,17 +659,19 @@ duplicate (GimpImage *gimage)
       if (gimage->active_channel == channel)
 	active_channel = (new_channel);
 
-      if (floating_sel_drawable == GIMP_DRAWABLE(channel))
-	new_floating_sel_drawable = GIMP_DRAWABLE(new_channel);
+      if (floating_sel_drawable == GIMP_DRAWABLE (channel))
+	new_floating_sel_drawable = GIMP_DRAWABLE (new_channel);
 
       /*  Add the channel  */
-      gimp_image_add_channel (new_gimage, new_channel, count++);
+      gimp_image_add_channel (new_gimage, new_channel, count);
     }
 
   /*  Copy the selection mask  */
-  pixel_region_init (&srcPR, gimp_drawable_data (GIMP_DRAWABLE (gimage->selection_mask)), 
+  pixel_region_init (&srcPR, 
+		     gimp_drawable_data (GIMP_DRAWABLE (gimage->selection_mask)), 
 		     0, 0, gimage->width, gimage->height, FALSE);
-  pixel_region_init (&destPR, gimp_drawable_data (GIMP_DRAWABLE (new_gimage->selection_mask)), 
+  pixel_region_init (&destPR, 
+		     gimp_drawable_data (GIMP_DRAWABLE (new_gimage->selection_mask)),
 		     0, 0, gimage->width, gimage->height, TRUE);
   copy_region (&srcPR, &destPR);
   new_gimage->selection_mask->bounds_known = FALSE;
@@ -697,13 +696,11 @@ duplicate (GimpImage *gimage)
     }
 
   /*  Copy any Guides  */
-  glist = gimage->guides;
-  while (glist)
+  for (list = gimage->guides; list; list = g_list_next (list))
     {
       Guide* new_guide;
 
-      guide = (Guide*) glist->data;
-      glist = g_list_next (glist);
+      guide = (Guide*) list->data;
 
       switch (guide->orientation)
 	{

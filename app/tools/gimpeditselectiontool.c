@@ -36,6 +36,7 @@
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimplayer.h"
+#include "gimplist.h"
 #include "gimpimage.h"
 #include "gimprc.h"
 #include "path_transform.h"
@@ -342,7 +343,7 @@ edit_selection_motion (Tool           *tool,
     gint       x, y;
     GimpLayer *layer;
     GimpLayer *floating_layer;
-    GSList    *layer_list;
+    GList     *layer_list;
 
     x = edit_select.x;
     y = edit_select.y;
@@ -371,11 +372,12 @@ edit_selection_motion (Tool           *tool,
 	      floating_sel_relax (floating_layer, TRUE);
       
 	    /*  translate the layer--and any "linked" layers as well  */
-	    for (layer_list = gdisp->gimage->layers;
+	    for (layer_list = GIMP_LIST (gdisp->gimage->layers)->list;
 		 layer_list;
-		 layer_list = g_slist_next (layer_list))
+		 layer_list = g_list_next (layer_list))
 	      {
 		layer = (GimpLayer *) layer_list->data;
+
 		if (layer == gdisp->gimage->active_layer || 
 		    gimp_layer_linked (layer))
 		  {
@@ -506,7 +508,7 @@ edit_selection_draw (Tool *tool)
   GDisplay   *gdisp;
   Selection  *select;
   GimpLayer  *layer;
-  GSList     *layer_list;
+  GList      *layer_list;
   gint        floating_sel;
   gint        x1, y1, x2, y2;
   gint        x3, y3, x4, y4;
@@ -574,11 +576,12 @@ edit_selection_draw (Tool *tool)
 	 &x2, &y2, TRUE);
 
       /*  Now, expand the rectangle to include all linked layers as well  */
-      for (layer_list= gdisp->gimage->layers;
+      for (layer_list= GIMP_LIST (gdisp->gimage->layers)->list;
 	   layer_list;
-	   layer_list = g_slist_next (layer_list))
+	   layer_list = g_list_next (layer_list))
 	{
 	  layer = (GimpLayer *) layer_list->data;
+
 	  if (((layer) != gdisp->gimage->active_layer) &&
 	      gimp_layer_linked (layer))
 	    {
@@ -768,7 +771,7 @@ edit_sel_arrow_keys_func (Tool        *tool,
   gint       inc_x, inc_y, mask_inc_x, mask_inc_y;
   GimpLayer *layer;
   GimpLayer *floating_layer;
-  GSList    *layer_list;
+  GList     *layer_list;
   EditType   edit_type;
 
   layer = NULL;
@@ -833,11 +836,12 @@ edit_sel_arrow_keys_func (Tool        *tool,
 	    floating_sel_relax (floating_layer, TRUE);
 	  
 	  /*  translate the layer -- and any "linked" layers as well  */
-	  for (layer_list = gdisp->gimage->layers; 
+	  for (layer_list = GIMP_LIST (gdisp->gimage->layers)->list;
 	       layer_list; 
-	       layer_list = g_slist_next (layer_list))
+	       layer_list = g_list_next (layer_list))
 	    {
 	      layer = (GimpLayer *) layer_list->data;
+
 	      if (((layer) == gdisp->gimage->active_layer) || 
 		  gimp_layer_linked (layer))
 		{

@@ -1,3 +1,28 @@
+2001-02-19  Sven Neumann  <sven@gimp.org>
+
+	* app/gimpimage.[ch]: converted gimage->layers and gimage->channels
+	to GimpLists.
+	
+	* app/channel_ops.c
+	* app/channels_dialog.c
+	* app/commands.c
+	* app/convert.c
+	* app/floating_sel.c
+	* app/gdisplay.c
+	* app/gimpdrawable.c
+	* app/layers_dialog.c
+	* app/resize.c
+	* app/undo.c
+	* app/xcf.c
+	* app/pdb/display_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/tools/crop.c
+	* app/tools/edit_selection.c
+	* tools/pdbgen/pdb/display.pdb
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/layer.pdb: changed accordingly
+
 2001-02-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpcontainer.[ch] (gimp_container_insert): new function.

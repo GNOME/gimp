@@ -43,7 +43,7 @@ HELP
 	vars => [ 'guint scale = 0x101' ],
 	code => <<'CODE'
 {
-  if (gimage->layers)
+  if (! gimp_image_is_empty (gimage))
     success = (gdisp = gdisplay_new (gimage, scale)) != NULL;
   else
     success = FALSE;

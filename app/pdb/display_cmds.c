@@ -56,7 +56,7 @@ display_new_invoker (Argument *args)
 
   if (success)
     {
-      if (gimage->layers)
+      if (! gimp_image_is_empty (gimage))
 	success = (gdisp = gdisplay_new (gimage, scale)) != NULL;
       else
 	success = FALSE;

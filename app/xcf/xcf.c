@@ -42,9 +42,11 @@
 #include "gimage.h"
 #include "gimage_mask.h"
 #include "gimpchannel.h"
+#include "gimpcontainer.h"
 #include "gimpdrawable.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
+#include "gimplist.h"
 #include "gimprc.h"
 #include "plug_in.h"
 #include "parasitelist.h"
@@ -468,7 +470,7 @@ xcf_save_image (XcfInfo *info,
   guint32      offset;
   guint        nlayers;
   guint        nchannels;
-  GSList      *list;
+  GList       *list;
   gboolean     have_selection;
   gint         t1, t2, t3, t4;
   gchar        version_tag[14];
@@ -494,8 +496,8 @@ xcf_save_image (XcfInfo *info,
   info->cp += xcf_write_int32 (info->fp, (guint32*) &gimage->base_type, 1);
 
   /* determine the number of layers and channels in the image */
-  nlayers = (guint) g_slist_length (gimage->layers);
-  nchannels = (guint) g_slist_length (gimage->channels);
+  nlayers   = (guint) gimp_container_num_children (gimage->layers);
+  nchannels = (guint) gimp_container_num_children (gimage->channels);
 
   /* check and see if we have to save out the selection */
   have_selection = gimage_mask_bounds (gimage, &t1, &t2, &t3, &t4);
@@ -514,11 +516,11 @@ xcf_save_image (XcfInfo *info,
   /* seek to after the offset lists */
   xcf_seek_pos (info, info->cp + (nlayers + nchannels + 2) * 4);
 
-  list = gimage->layers;
-  while (list)
+  for (list = GIMP_LIST (gimage->layers)->list;
+       list;
+       list = g_list_next (list))
     {
-      layer = list->data;
-      list = list->next;
+      layer = (GimpLayer *) list->data;
 
       /* save the start offset of where we are writing
        *  out the next layer.
@@ -554,14 +556,15 @@ xcf_save_image (XcfInfo *info,
   saved_pos = info->cp;
   xcf_seek_end (info);
 
+  list = GIMP_LIST (gimage->channels)->list;
 
-  list = gimage->channels;
   while (list || have_selection)
     {
       if (list)
 	{
-	  channel = list->data;
-	  list = list->next;
+	  channel = (GimpChannel *) list->data;
+
+	  list = g_list_next (list);
 	}
       else
 	{
@@ -1741,7 +1744,8 @@ xcf_load_image (XcfInfo *info)
 
       /* add the layer to the image if its not the floating selection */
       if (layer != info->floating_sel)
-	gimp_image_add_layer (gimage, layer, g_slist_length (gimage->layers));
+	gimp_image_add_layer (gimage, layer,
+			      gimp_container_num_children (gimage->layers));
 
       /* restore the saved position so we'll be ready to
        *  read the next offset.

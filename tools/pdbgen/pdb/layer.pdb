@@ -376,17 +376,18 @@ HELP
 
     &layer_change_invoke('LINKED_LAYER', <<'CODE');
 {
-  layer_list = gimage->layers;
-  while (layer_list)
+  for (layer_list = GIMP_LIST (gimage->layers)->list;
+       layer_list;
+       layer_list = g_list_next (layer_list))
     {
       tmp_layer = (GimpLayer *) layer_list->data;
+
       if ((tmp_layer == layer) || tmp_layer->linked)
 	gimp_layer_translate (tmp_layer, offx, offy);
-      layer_list = layer_list->next;
     }
 }
 CODE
-    push @{$invoke{vars}}, 'GimpLayer *tmp_layer', 'GSList *layer_list';
+    push @{$invoke{vars}}, 'GimpLayer *tmp_layer', 'GList *layer_list';
 }
 
 sub layer_add_alpha {
@@ -543,7 +544,7 @@ HELP
     $date = '1998';
 CODE
 
-@headers = qw("gimpimage.h" "pdb_glue.h");
+@headers = qw("gimpimage.h" "gimplist.h" "pdb_glue.h");
 
 unshift @procs, qw(layer_new layer_copy layer_create_mask layer_scale
 		   layer_resize layer_delete layer_translate layer_add_alpha

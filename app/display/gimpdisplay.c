@@ -37,6 +37,7 @@
 #include "gimage.h"
 #include "gimage_mask.h"
 #include "gimpchannel.h"
+#include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpdrawable.h"
 #include "gimplayer.h"
@@ -1738,7 +1739,7 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
 
       fs  = (gimp_image_floating_sel (gdisp->gimage) != NULL);
       aux = (gimp_image_get_active_channel (gdisp->gimage) != NULL);
-      lp  = (gdisp->gimage->layers != NULL);
+      lp  = ! gimp_image_is_empty (gdisp->gimage);
 
       drawable = gimp_image_active_drawable (gdisp->gimage);
       if (drawable)
@@ -1753,9 +1754,9 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
 	      alpha = gimp_layer_has_alpha (layer);
 	    }
 
-	  lind = gimp_image_get_layer_index (gdisp->gimage,
+	  lind = gimp_image_get_layer_index (gdisp->gimage, 
 					     gdisp->gimage->active_layer);
-	  lnum = g_slist_length (gdisp->gimage->layers);
+	  lnum = gimp_container_num_children (gdisp->gimage->layers);
 	}
     }
 

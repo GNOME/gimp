@@ -555,8 +555,7 @@ convert_to_indexed (GimpImage *gimage)
   if (dialog->num_cols == 256)
     {
       if ((! gimp_image_is_empty (gimage)) &&
-	  (gimage->layers->next ||
-	   gimp_layer_has_alpha ((GimpLayer *) gimage->layers->data)))
+	  GIMP_IMAGE_TYPE_HAS_ALPHA (gimage->base_type))
 	{
 	  dialog->num_cols = 255;
 	}      
@@ -753,9 +752,8 @@ convert_to_indexed (GimpImage *gimage)
   /* if the image isn't non-alpha/layered, set the default number of
      colours to one less than max, to leave room for a transparent index
      for transparent/animated GIFs */
-  if ((! gimp_image_is_empty (gimage)) &&
-      (gimage->layers->next ||
-       gimp_layer_has_alpha ((GimpLayer *) gimage->layers->data)))
+  if (! gimp_image_is_empty (gimage) &&
+      GIMP_IMAGE_TYPE_HAS_ALPHA (gimage->base_type))
     {
       frame = gtk_frame_new (_("[ Warning ]"));
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
@@ -1186,10 +1184,10 @@ convert_image (GImage		 *gimage,
   GimpLayer *layer;
   GimpLayer *floating_layer;
   GimpImageBaseType old_type;
-  GSList *list;
+  GList     *list;
   GimpImageType new_layer_type;
-  int new_layer_bytes;
-  int has_alpha;
+  gint       new_layer_bytes;
+  gboolean   has_alpha;
   TileManager *new_tiles;
 
   quantobj        = NULL;
@@ -1241,11 +1239,12 @@ convert_image (GImage		 *gimage,
 	  num_found_cols = 0;
 
 	  /*  Build the histogram  */
-	  list = gimage->layers;
-	  while (list)
+	  for (list = GIMP_LIST (gimage->layers)->list;
+	       list;
+	       list = g_list_next (list))
 	    {
 	      layer = (GimpLayer *) list->data;
-	      list = g_slist_next (list);
+	    
 	      if (old_type == GRAY)
 		generate_histogram_gray (quantobj->histogram, layer, alpha_dither);
 	      else
@@ -1307,11 +1306,11 @@ convert_image (GImage		 *gimage,
     }
 
   /*  Convert all layers  */
-  list = gimage->layers;
-  while (list)
+  for (list = GIMP_LIST (gimage->layers)->list;
+       list;
+       list = g_list_next (list))
     {
       layer = (GimpLayer *) list->data;
-      list = g_slist_next (list);
 
       has_alpha = gimp_layer_has_alpha (layer);
       switch (new_type)
@@ -1391,11 +1390,11 @@ convert_image (GImage		 *gimage,
 			    quantobj->index_used_count, remap_table, &num_entries);
 
 	  /*  Convert all layers  */
-	  list = gimage->layers;
-	  while (list)
+	  for (list = GIMP_LIST (gimage->layers)->list;
+	       list;
+	       list = g_list_next (list))
 	    {
 	      layer = (GimpLayer *) list->data;
-	      list = g_slist_next (list);
 	  
 	      remap_indexed_layer (layer, remap_table, num_entries);
 	    }

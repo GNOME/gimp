@@ -36,6 +36,7 @@
 #include "gimage_mask.h"
 #include "gimpchannel.h"
 #include "gimpdnd.h"
+#include "gimplist.h"
 #include "gimprc.h"
 #include "gimpui.h"
 #include "layers_dialogP.h"
@@ -443,7 +444,8 @@ channels_dialog_update (GimpImage* gimage)
 {
   GimpChannel   *channel;
   ChannelWidget *cw;
-  GSList        *list;
+  GSList        *slist;
+  GList         *list; 
   GList         *item_list;
 
   if (!channelsD || channelsD->gimage == gimage)
@@ -456,13 +458,14 @@ channels_dialog_update (GimpImage* gimage)
   gtk_list_clear_items (GTK_LIST (channelsD->channel_list), 0, -1);
   suspend_gimage_notify--;
 
-  list = channelsD->channel_widgets;
-  while (list)
+  for (slist = channelsD->channel_widgets; slist;)
     {
-      cw = (ChannelWidget *) list->data;
-      list = g_slist_next (list);
+      cw = (ChannelWidget *) slist->data;
+      slist = g_slist_next (slist);
+
       channel_widget_delete (cw);
     }
+
   channelsD->channel_widgets = NULL;
 
   /*  Find the preview extents  */
@@ -522,7 +525,9 @@ channels_dialog_update (GimpImage* gimage)
       channelsD->num_components++;
 
   /*  The auxillary image channels  */
-  for (list = gimage->channels; list; list = g_slist_next (list))
+  for (list = GIMP_LIST (gimage->channels)->list; 
+       list; 
+       list = g_list_next (list))
     {
       /*  create a channel list item  */
       channel = (GimpChannel *) list->data;
@@ -544,7 +549,8 @@ channels_dialog_flush (void)
   GimpImage     *gimage;
   GimpChannel   *channel;
   ChannelWidget *cw;
-  GSList        *list;
+  GList         *list;
+  GSList        *slist;
   gint           pos;
 
   if (!channelsD || !(gimage = channelsD->gimage))
@@ -561,14 +567,19 @@ channels_dialog_flush (void)
   else
     {
       /*  Set all current channel widgets to visited = FALSE  */
-      for (list = channelsD->channel_widgets; list; list = g_slist_next (list))
+      for (slist = channelsD->channel_widgets; 
+	   slist; 
+	   slist = g_slist_next (slist))
 	{
-	  cw = (ChannelWidget *) list->data;
+	  cw = (ChannelWidget *) slist->data;
+
 	  cw->visited = FALSE;
 	}
 
       /*  Add any missing channels  */
-      for (list = gimage->channels; list; list = g_slist_next (list))
+      for (list = GIMP_LIST (gimage->channels)->list; 
+	   list; 
+	   list = g_list_next (list))
 	{
 	  channel = (GimpChannel *) list->data;
 	  cw = channel_widget_get_ID (channel);
@@ -584,11 +595,11 @@ channels_dialog_flush (void)
 	}
 
       /*  Remove any extraneous auxillary channels  */
-      list = channelsD->channel_widgets;
-      while (list)
+      for (slist = channelsD->channel_widgets; slist;)
 	{
-	  cw = (ChannelWidget *) list->data;
-	  list = g_slist_next (list);
+	  cw = (ChannelWidget *) slist->data;
+	  slist = g_slist_next (slist);
+
 	  if (cw->visited == FALSE && cw->type == AUXILLARY_CHANNEL)
 	    {
 	      /*  will only be true for auxillary channels  */
@@ -598,7 +609,9 @@ channels_dialog_flush (void)
 
       /*  Switch positions of items if necessary  */
       pos = 0;
-      for (list = gimage->channels; list; list = g_slist_next (list))
+      for (list = GIMP_LIST (gimage->channels)->list; 
+	   list; 
+	   list = g_list_next (list))
 	{
 	  channel = (GimpChannel *) list->data;
 	  channels_dialog_position_channel (channel, pos++);

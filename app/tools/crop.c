@@ -36,6 +36,7 @@
 #include "gimpchannel.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
+#include "gimplist.h"
 #include "gimage_mask.h"
 #include "info_dialog.h"
 #include "pixel_region.h"
@@ -877,7 +878,7 @@ crop_image (GImage   *gimage,
   GimpLayer   *floating_layer;
   GimpChannel *channel;
   GList       *guide_list_ptr;
-  GSList      *list;
+  GList       *list;
   gint         width, height;
   gint         lx1, ly1, lx2, ly2;
   gint         off_x, off_y;
@@ -930,12 +931,13 @@ crop_image (GImage   *gimage,
 	  gimage->height = height;
 
 	  /*  Resize all channels  */
-	  list = gimage->channels;
-	  while (list)
+	  for (list = GIMP_LIST (gimage->channels)->list;
+	       list;
+	       list = g_list_next (list))
 	    {
 	      channel = (GimpChannel *) list->data;
+
 	      gimp_channel_resize (channel, width, height, -x1, -y1);
-	      list = g_slist_next (list);
 	    }
 
 	  /*  Don't forget the selection mask!  */
@@ -943,13 +945,15 @@ crop_image (GImage   *gimage,
 	  gimage_mask_invalidate (gimage);
 
 	  /*  crop all layers  */
-	  list = gimage->layers;
+	  list = GIMP_LIST (gimage->layers)->list;
+
 	  while (list)
 	    {
-	      GSList *next;
+	      GList *next;
 
 	      layer = (GimpLayer *) list->data;
-	      next = g_slist_next (list);
+
+	      next = g_list_next (list);
 
 	      gimp_layer_translate (layer, -x1, -y1);
 

@@ -31,6 +31,7 @@
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
+#include "gimplist.h"
 #include "pdb_glue.h"
 #include "undo.h"
 
@@ -595,7 +596,7 @@ layer_translate_invoker (Argument *args)
   GimpImage *gimage;
   GimpLayer *floating_layer;
   GimpLayer *tmp_layer;
-  GSList *layer_list;
+  GList *layer_list;
 
   layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (layer == NULL)
@@ -616,13 +617,14 @@ layer_translate_invoker (Argument *args)
 	  if (floating_layer)
 	    floating_sel_relax (floating_layer, TRUE);
     
-	  layer_list = gimage->layers;
-	  while (layer_list)
+	  for (layer_list = GIMP_LIST (gimage->layers)->list;
+	       layer_list;
+	       layer_list = g_list_next (layer_list))
 	    {
 	      tmp_layer = (GimpLayer *) layer_list->data;
+	
 	      if ((tmp_layer == layer) || tmp_layer->linked)
 		gimp_layer_translate (tmp_layer, offx, offy);
-	      layer_list = layer_list->next;
 	    }
     
 	  if (floating_layer)
@@ -723,7 +725,7 @@ layer_set_offsets_invoker (Argument *args)
   GimpImage *gimage;
   GimpLayer *floating_layer;
   GimpLayer *tmp_layer;
-  GSList *layer_list;
+  GList *layer_list;
 
   layer = (GimpLayer *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (layer == NULL)
@@ -744,15 +746,16 @@ layer_set_offsets_invoker (Argument *args)
 	  if (floating_layer)
 	    floating_sel_relax (floating_layer, TRUE);
     
-	  layer_list = gimage->layers;
-	  while (layer_list)
+	  for (layer_list = GIMP_LIST (gimage->layers)->list;
+	       layer_list;
+	       layer_list = g_list_next (layer_list))
 	    {
 	      tmp_layer = (GimpLayer *) layer_list->data;
+	
 	      if ((tmp_layer == layer) || tmp_layer->linked)
 		gimp_layer_translate (tmp_layer,
 				(offx - GIMP_DRAWABLE (layer)->offset_x),
 				(offy - GIMP_DRAWABLE (layer)->offset_y));
-	      layer_list = layer_list->next;
 	    }
     
 	  if (floating_layer)

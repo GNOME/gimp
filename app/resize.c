@@ -28,6 +28,7 @@
 #include "gdisplay.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
+#include "gimplist.h"
 #include "gimprc.h"
 #include "resize.h"
 #include "undo.h"
@@ -1364,7 +1365,7 @@ resize_check_layer_scaling (ImageResize *image_scale)
 
   gboolean   success = FALSE;
   GImage    *gimage  = NULL;
-  GSList    *list    = NULL;
+  GList     *list    = NULL;
   GimpLayer *layer   = NULL;
   GtkWidget *dialog  = NULL;
 
@@ -1375,16 +1376,17 @@ resize_check_layer_scaling (ImageResize *image_scale)
       /* Step through layers; test scaled dimensions. */
 
       success = TRUE;
-      list    = gimage->layers;
+      list    = GIMP_LIST (gimage->layers)->list;
+
       while (list && success == TRUE)
 	{
-	  layer   = (GimpLayer *)list->data;
+	  layer   = (GimpLayer *) list->data;
 	  success = gimp_layer_check_scaling (layer, 
 					      image_scale->resize->width,
 					      image_scale->resize->height);
-	  list   = g_slist_next (list);
-	  
+	  list   = g_list_next (list);
 	}
+
       /* Warn user on failure */
       if (success == FALSE)
 	{
@@ -1404,5 +1406,6 @@ resize_check_layer_scaling (ImageResize *image_scale)
 	  gtk_widget_show (dialog);
 	}
     }
+
   return success;
 }

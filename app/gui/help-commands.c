@@ -938,7 +938,8 @@ layers_previous_cmd_callback (GtkWidget *widget,
   current_layer =
     gimp_image_get_layer_index (gdisp->gimage, gdisp->gimage->active_layer);
 
-  new_layer = gimp_image_get_layer_by_index (gdisp->gimage, current_layer - 1);
+  new_layer = gimp_container_get_child_by_index (gdisp->gimage->layers, 
+						 current_layer - 1);
 
   if (new_layer)
     {
@@ -961,7 +962,8 @@ layers_next_cmd_callback (GtkWidget *widget,
   current_layer =
     gimp_image_get_layer_index (gdisp->gimage, gdisp->gimage->active_layer);
 
-  new_layer = gimp_image_get_layer_by_index (gdisp->gimage, current_layer + 1);
+  new_layer = gimp_container_get_child_by_index (gdisp->gimage->layers, 
+						 current_layer + 1);
 
   if (new_layer)
     {

@@ -35,6 +35,7 @@
 #include "gimpdrawable-preview.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
+#include "gimplist.h"
 #include "gimppreviewcache.h"
 #include "gimpparasite.h"
 #include "paint_funcs.h"
@@ -191,7 +192,7 @@ gimp_drawable_name_changed (GimpObject *object)
 {
   GimpDrawable *drawable;
   GimpDrawable *drawable2;
-  GSList       *list, *list2, *base_list;
+  GList        *list, *list2, *base_list;
   gint          unique_ext = 0;
   gchar        *ext;
   gchar        *new_name = NULL;
@@ -201,17 +202,20 @@ gimp_drawable_name_changed (GimpObject *object)
   drawable = GIMP_DRAWABLE (object);
 
   /*  if no other layers to check name against  */
-  if (drawable->gimage == NULL || drawable->gimage->layers == NULL)
+  if (drawable->gimage == NULL || 
+      gimp_image_is_empty (drawable->gimage))
     return;
 
   if (GIMP_IS_LAYER (drawable))
-    base_list = drawable->gimage->layers;
+    base_list = GIMP_LIST (drawable->gimage->layers)->list;
   else if (GIMP_IS_CHANNEL (drawable))
-    base_list = drawable->gimage->channels;
+    base_list = GIMP_LIST (drawable->gimage->channels)->list;
   else
     base_list = NULL;
 
-  for (list = base_list; list; list = g_slist_next (list))
+  for (list = base_list; 
+       list; 
+       list = g_list_next (list))
     {
       drawable2 = GIMP_DRAWABLE (list->data);
 
@@ -256,7 +260,7 @@ gimp_drawable_name_changed (GimpObject *object)
 					  GIMP_OBJECT (drawable)->name,
 					  unique_ext);
 
-              for (list2 = base_list; list2; list2 = g_slist_next (list2))
+              for (list2 = base_list; list2; list2 = g_list_next (list2))
                 {
 		  drawable2 = GIMP_DRAWABLE (list2->data);
 
