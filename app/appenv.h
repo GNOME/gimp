@@ -33,8 +33,9 @@
 /* limit a (0->511) int to 255 */
 #define MAX255(a)  (a | ((a & 256) - ((a & 256) >> 8)))
 
-/* clamp a int32-range int between 0 and 255 inclusive */
-#define CLAMP0255(a)  ((a&256)? (~(a>>31)) : a)
+/* clamp a >>int32<<-range int between 0 and 255 inclusive */
+/* broken! -> #define CLAMP0255(a)  ((a & 0xFFFFFF00)? (~(a>>31)) : a) */
+#define CLAMP0255(a)  CLAMP(a,0,255)
 
 
 typedef enum {

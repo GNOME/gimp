@@ -1,3 +1,12 @@
+Sun Feb  7 18:29:26 GMT 1999 Adam D. Moss <adam@gimp.org>
+
+	* app/fileops.c: A unidirectional error-spread makes
+	the saddest little thumbnails taste full of country
+	goodness.
+
+	* app/appenv.c: Wow, CLAMP0255() has a bug that I can't
+	quite see, or my compiler does.  Worked around it.
+
 Sun Feb  7 15:04:23 GMT 1999 Adam D. Moss <adam@gimp.org>
 
 	* app/fileops.c: More robust and kickin' thumbnail support.

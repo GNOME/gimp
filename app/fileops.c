@@ -983,28 +983,54 @@ file_save_thumbnail (GimpImage* gimage,
 	{
 	case INDEXED:
 	case RGB:
-	  for (i=0;i<w;i++)
+	  for (i=0; i<h; i++)
 	    {
-	      for (j=0;j<h;j++)
+	      /* Do a cheap unidirectional error-spread to look better */
+	      gint rerr=0, gerr=0, berr=0;
+
+	      for (j=0; j<w; j++)
 		{
-		  guchar r,g,b;
-		  r = *(tbd++);
-		  g = *(tbd++);
-		  b = *(tbd++);
+		  gint32 r,g,b;
+
+		  r = *(tbd++) + rerr;
+		  g = *(tbd++) + gerr;
+		  b = *(tbd++) + berr;
 		  tbd++;
+
+		  r = CLAMP0255 (r);
+		  g = CLAMP0255 (g);
+		  b = CLAMP0255 (b);
+
 		  fputc(((r>>5)<<5) | ((g>>5)<<2) | (b>>6), fp);
+
+		  rerr = r - ( (r>>5) * 255 ) / 7;
+		  gerr = g - ( (g>>5) * 255 ) / 7;
+		  berr = b - ( (b>>6) * 255 ) / 3;
 		}
 	    }
 	  break;
 	case GRAY:
-	  for (i=0;i<w;i++)
+	  for (i=0; i<h; i++)
 	    {
-	      for (j=0;j<h;j++)
+	      /* Do a cheap unidirectional error-spread to look better */
+	      gint b3err=0, b2err=0, v;
+
+	      for (j=0; j<w; j++)
 		{
-		  guchar v;
+		  gint32 b3, b2;
 		  v = *(tbd++);
 		  tbd++;
-		  fputc(((v>>5)<<5) | ((v>>5)<<2) | (v>>6), fp);
+		  
+		  b2 = v + b2err;
+		  b3 = v + b3err;
+
+		  b2 = CLAMP0255 (b2);
+		  b3 = CLAMP0255 (b3);
+
+		  fputc(((b3>>5)<<5) | ((b3>>5)<<2) | (b2>>6), fp);
+
+		  b2err = b2 - ( (b2>>6) * 255 ) / 3;
+		  b3err = b3 - ( (b3>>5) * 255 ) / 7;
 		}
 	    }
 	  break;
