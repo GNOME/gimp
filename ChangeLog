@@ -2,6 +2,8 @@
 
 	* libgimpbase/Makefile.am (EXTRA_HEADERS): added gimpwin32-io.h.
 
+	* libgimpbase/gimpdatafiles.c: properly include the new header.
+
 2003-07-28  Manish Singh  <yosh@gimp.org>
 
 	* libgimp/Makefile.am: add libgimpcolor to libgimpui's LIBADD,
