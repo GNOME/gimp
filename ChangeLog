@@ -1,5 +1,13 @@
 2004-03-13  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptextoptions.[ch]: use a GimpSizeEntry for the
+	font size.
+
+	* app/tools/gimptexttool.c: set the size entry's resolution to the
+	image resolution. Fixes bug #118356.
+
+2004-03-13  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimptexttool.[ch]: keep a pointer on the active text
 	layer and let the tool follow the active layer. Fixes bug #124970.
 

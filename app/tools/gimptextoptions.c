@@ -182,6 +182,7 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
 static void
 gimp_text_options_init (GimpTextOptions *options)
 {
+  options->size_entry = NULL;
 }
 
 static void
@@ -372,10 +373,9 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   GtkWidget         *button;
   GimpDialogFactory *dialog_factory;
   GtkWidget         *auto_button;
-  GtkWidget         *menu;
+  GtkWidget         *entry;
   GtkWidget         *box;
   GtkWidget         *spinbutton;
-  gint               digits;
   gint               row = 0;
 
   options = GIMP_TEXT_OPTIONS (tool_options);
@@ -403,19 +403,17 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
                              _("_Font:"), 1.0, 0.5,
                              button, 2, TRUE);
 
-  digits = gimp_unit_get_digits (options->unit);
-  spinbutton = gimp_prop_spin_button_new (config, "font-size",
-					  1.0, 10.0, digits);
+  entry = gimp_prop_size_entry_new (config,
+                                    "font-size", "font-size-unit", "%a",
+                                    GIMP_SIZE_ENTRY_UPDATE_SIZE, 72.0);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
                              _("_Size:"), 1.0, 0.5,
-                             spinbutton, 1, FALSE);
-
-  menu = gimp_prop_unit_menu_new (config, "font-size-unit", "%a");
-  g_object_set_data (G_OBJECT (menu), "set_digits", spinbutton);
-  gtk_table_attach (GTK_TABLE (table), menu, 2, 3, row, row + 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (menu);
+                             entry, 2, FALSE);
+  gtk_widget_show (entry);
   row++;
+
+  options->size_entry = GIMP_SIZE_ENTRY (entry);
 
   button = gimp_prop_check_button_new (config, "hinting", _("_Hinting"));
   gtk_table_attach (GTK_TABLE (table), button, 1, 3, row, row + 1,
