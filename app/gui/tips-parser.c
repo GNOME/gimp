@@ -38,7 +38,7 @@ typedef enum
   TIPS_IN_TIP,
   TIPS_IN_WELCOME,
   TIPS_IN_THETIP,
-  TIPS_UNKNOWN
+  TIPS_IN_UNKNOWN
 } TipsParserState;
 
 typedef enum
@@ -56,6 +56,7 @@ struct _TipsParser
   TipsParserState        last_known_state;
   const gchar           *locale;
   TipsParserLocaleState  locale_state;
+  gint                   markup_depth;
   gint                   unknown_depth;
   GString               *value;
 
@@ -83,6 +84,10 @@ static void  tips_parser_error         (GMarkupParseContext  *context,
                                         GError               *error,
                                         gpointer              user_data);
 
+static void tips_parser_start_markup   (TipsParser   *parser,
+                                        const gchar  *markup_name);
+static void tips_parser_end_markup     (TipsParser   *parser,
+                                        const gchar  *markup_name);
 static void tips_parser_start_unknown  (TipsParser   *parser);
 static void tips_parser_end_unknown    (TipsParser   *parser);
 static void tips_parser_parse_locale   (TipsParser   *parser,
@@ -262,7 +267,15 @@ tips_parser_start_element (GMarkupParseContext *context,
     
     case TIPS_IN_WELCOME:
     case TIPS_IN_THETIP:
-    case TIPS_UNKNOWN:
+      if (strcmp (element_name, "b"  ) == 0 || 
+          strcmp (element_name, "big") == 0 ||
+          strcmp (element_name, "tt" ) == 0)
+        tips_parser_start_markup (parser, element_name);
+      else
+        tips_parser_start_unknown (parser);
+      break;
+
+    case TIPS_IN_UNKNOWN:
       tips_parser_start_unknown (parser);
       break;
     }
@@ -287,28 +300,37 @@ tips_parser_end_element (GMarkupParseContext *context,
       break;
 
     case TIPS_IN_TIP:
-      parser->state = TIPS_IN_TIPS;
       parser->tips = g_list_prepend (parser->tips, parser->current_tip);
       parser->current_tip = NULL;
+      parser->state = TIPS_IN_TIPS;
       break;
       
     case TIPS_IN_WELCOME:
-      tips_parser_set_by_locale (parser, &parser->current_tip->welcome);
-      parser->state = TIPS_IN_TIP;
+      if (parser->markup_depth == 0)
+        {
+          tips_parser_set_by_locale (parser, &parser->current_tip->welcome);
+          g_string_assign (parser->value, "");
+          parser->state = TIPS_IN_TIP;
+        }
+      else
+        tips_parser_end_markup (parser, element_name);
       break;
 
     case TIPS_IN_THETIP:
-      tips_parser_set_by_locale (parser, &parser->current_tip->thetip);
-      parser->state = TIPS_IN_TIP;
+      if (parser->markup_depth == 0)
+        {
+          tips_parser_set_by_locale (parser, &parser->current_tip->thetip);
+          g_string_assign (parser->value, "");
+          parser->state = TIPS_IN_TIP;
+        }
+      else
+        tips_parser_end_markup (parser, element_name);
       break;
 
-      break;
-
-    case TIPS_UNKNOWN:
+    case TIPS_IN_UNKNOWN:
       tips_parser_end_unknown (parser);
+      break;
     }
-
-  g_string_assign (parser->value, "");
 }
 
 static void
@@ -331,7 +353,8 @@ tips_parser_characters (GMarkupParseContext *context,
           /* strip tabs, newlines and adjacent whitespace */ 
           for (i = 0; i < text_len; i++)
             {
-              if (text[i] != ' ' && text[i] != '\t' && text[i] != '\n')
+              if (text[i] != ' ' &&
+                  text[i] != '\t' && text[i] != '\n' && text[i] != '\r')
                 g_string_append_c (parser->value, text[i]);
               else if (parser->value->len > 0 &&
                        parser->value->str[parser->value->len - 1] != ' ')
@@ -355,19 +378,37 @@ tips_parser_error (GMarkupParseContext *context,
 }
 
 static void
+tips_parser_start_markup (TipsParser  *parser,
+                          const gchar *markup_name)
+{
+  parser->markup_depth++;
+  g_string_append_printf (parser->value, "<%s>", markup_name);
+}
+
+static void
+tips_parser_end_markup (TipsParser  *parser,
+                        const gchar *markup_name)
+{
+  g_assert (parser->markup_depth > 0);
+
+  parser->markup_depth--;
+  g_string_append_printf (parser->value, "</%s>", markup_name);
+}
+
+static void
 tips_parser_start_unknown (TipsParser *parser)
 {
   if (parser->unknown_depth == 0)
     parser->last_known_state = parser->state;
 
-  parser->state = TIPS_UNKNOWN;
+  parser->state = TIPS_IN_UNKNOWN;
   parser->unknown_depth++;
 }
 
 static void
 tips_parser_end_unknown (TipsParser *parser)
 {
-  g_assert (parser->unknown_depth > 0 && parser->state == TIPS_UNKNOWN);
+  g_assert (parser->unknown_depth > 0 && parser->state == TIPS_IN_UNKNOWN);
 
   parser->unknown_depth--;
   

@@ -38,6 +38,7 @@
 #include "libgimp/gimpintl.h"
 
 
+static void  tips_set_labels     (GimpTip     *tip);
 static void  tips_dialog_destroy (GtkWidget   *widget,
                                   gpointer     data);
 static void  tips_show_previous  (GtkWidget   *widget,
@@ -61,14 +62,13 @@ static gint       old_show_tips = 0;
 GtkWidget *
 tips_dialog_create (void)
 {
-  GtkWidget *vbox;
-  GtkWidget *vbox2;
-  GtkWidget *hbox;
-  GtkWidget *bbox;
-  GtkWidget *button;
-  GdkPixbuf *wilber;
-  GimpTip   *tip;
-  gchar     *filename;
+  GtkWidget  *vbox;
+  GtkWidget  *vbox2;
+  GtkWidget  *hbox;
+  GtkWidget  *bbox;
+  GtkWidget  *button;
+  GdkPixbuf  *wilber;
+  gchar      *filename;
 
   if (!tips)
     {
@@ -84,7 +84,7 @@ tips_dialog_create (void)
       if (error)
         {
           tips = g_list_prepend (tips, 
-                                 gimp_tip_new (_("The GIMP tips file could not be parsed correctly!"), error->message));
+                                 gimp_tip_new (_("<b>The GIMP tips file could not be parsed correctly!</b>"), error->message));
           g_error_free (error);
         }
     }
@@ -131,17 +131,13 @@ tips_dialog_create (void)
   gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, TRUE, 0);
   gtk_widget_show (vbox2);
 
-  tip = (GimpTip *) current_tip->data;
-
-  welcome_label = gtk_label_new (tip->welcome);
+  welcome_label = gtk_label_new (NULL);
   gtk_label_set_justify (GTK_LABEL (welcome_label), GTK_JUSTIFY_LEFT);
   gtk_label_set_line_wrap (GTK_LABEL (welcome_label), TRUE);
   gtk_misc_set_alignment (GTK_MISC (welcome_label), 0.5, 0.5);
   gtk_box_pack_start (GTK_BOX (vbox2), welcome_label, FALSE, FALSE, 0);
-  if (tip->welcome)
-    gtk_widget_show (welcome_label);
 
-  thetip_label = gtk_label_new (tip->thetip);
+  thetip_label = gtk_label_new (NULL);
   gtk_label_set_justify (GTK_LABEL (thetip_label), GTK_JUSTIFY_LEFT);
   gtk_label_set_line_wrap (GTK_LABEL (thetip_label), TRUE);
   gtk_misc_set_alignment (GTK_MISC (thetip_label), 0.5, 0.5);
@@ -230,6 +226,8 @@ tips_dialog_create (void)
 		     gimp_standard_help_func,
 		     "dialogs/tip_of_the_day.html");
 
+  tips_set_labels (current_tip->data);
+
   return tips_dialog;
 }
 
@@ -270,8 +268,8 @@ tips_set_labels (GimpTip *tip)
   else
     gtk_widget_hide (welcome_label);
     
-  gtk_label_set_text (GTK_LABEL (welcome_label), tip->welcome);
-  gtk_label_set_text (GTK_LABEL (thetip_label), tip->thetip);
+  gtk_label_set_markup (GTK_LABEL (welcome_label), tip->welcome);
+  gtk_label_set_markup (GTK_LABEL (thetip_label), tip->thetip);
 }
 
 static void

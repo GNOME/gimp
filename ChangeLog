@@ -1,3 +1,10 @@
+2002-02-26  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/tips-dialog.c
+	* app/gui/tips-parser.c: added support for simple text markup.
+
+	* tips/gimp-tips.xml.in: document and use the new markup tags.
+
 2002-02-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/app_procs.c: make absolute paths out of relative ones
