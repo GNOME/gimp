@@ -44,7 +44,7 @@ SUBDIRS = 			\
 ##	gap			\
 ##	gdyntext		\
 ##	gfig			\
-##	gflare			\
+	gflare			\
 	gfli			\
 ##	gimpressionist		\
 	$(HELPBROWSER)		\

@@ -1,3 +1,37 @@
+2001-09-02  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: added -DGDK_DISABLE_DEPRECATED.
+
+	* app/gui/about-dialog.c
+	* plug-ins/common/wmf.c
+	* plug-ins/ifscompose/ifscompose_utils.c: #undef it here (too lazy...)
+
+	* app/colormaps.[ch]
+	* app/gdisplay.c
+	* app/module_db.c
+	* app/plug_in.c
+	* app/gui/brush-editor.c
+	* app/gui/color-notebook.c
+	* app/gui/gradient-select.c
+	* app/gui/palette-select.c
+	* app/gui/paths-dialog.c
+	* app/gui/select-commands.c
+	* app/widgets/gimpdialogfactory.c
+	* app/widgets/gimpdock.c
+	* app/widgets/gimpdockbook.c: replaced deprecated stuff,
+	g_list_free() the return value of gtk_container_get_children().
+
+	* plug-ins/Makefile.am: build gflare again.
+
+	* plug-ins/gflare/asupsample.[ch]: removed because the same function
+	is already in libgimpcolor.
+
+	* plug-ins/gflare/gtkmultioptionmenu.[ch]: removed because Gtk+
+	handles menu_height > screen_height by scrolling now.
+
+	* plug-ins/gflare/Makefile.am
+	* plug-ins/gflare/gflare.c: changed accordingly, cleanups.
+
 2001-09-03  Sven Neumann  <sven@gimp.org>
 
 	* app/plug_in.c

@@ -22,6 +22,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef __GNUC__
+#warning FIXME: GDK_DISABLE_DEPRECATED
+#endif
+
+#undef GDK_DISABLE_DEPRECATED
+
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -58,7 +64,7 @@
 #define ALL           0xFF
 
 /*  NB: take care when changing these values: make sure the curve[] array in
- *  curves.h is large enough.
+ *  gimpcurvestool.h is large enough.
  */
 #define GRAPH_WIDTH    256
 #define GRAPH_HEIGHT   256

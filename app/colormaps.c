@@ -18,6 +18,12 @@
 
 #include "config.h"
 
+#ifdef __GNUC__
+#warning FIXME: GDK_DISABLE_DEPRECATED
+#endif
+
+#undef GDK_DISABLE_DEPRECATED
+
 #include <gtk/gtk.h>
 
 #include "core/core-types.h"
@@ -38,6 +44,7 @@ gulong g_active_guide_pixel;
 
 gulong marching_ants_pixels[8];
 
+
 static void
 set_app_colors (void)
 {
@@ -53,9 +60,9 @@ set_app_colors (void)
 }
 
 gulong
-get_color (int red,
-	   int green,
-	   int blue)
+get_color (gint red,
+	   gint green,
+	   gint blue)
 {
   return gdk_rgb_xpixel_from_rgb ((red << 16) | (green << 8) | blue);
 }
@@ -63,10 +70,7 @@ get_color (int red,
 void
 get_standard_colormaps (void)
 {
-  if (gtk_check_version (1, 2, 8))
-    gimprc.min_colors = CLAMP (gimprc.min_colors, 27, 216);
-  else
-    gimprc.min_colors = CLAMP (gimprc.min_colors, 27, 256);
+  gimprc.min_colors = CLAMP (gimprc.min_colors, 27, 256);
 
   gdk_rgb_set_min_colors (gimprc.min_colors);
   gdk_rgb_set_install (gimprc.install_cmap);

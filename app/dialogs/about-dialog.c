@@ -23,6 +23,12 @@
 #include <string.h>
 #include <time.h>
 
+#ifdef __GNUC__
+#warning FIXME: GDK_DISABLE_DEPRECATED
+#endif
+
+#undef GDK_DISABLE_DEPRECATED
+
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 

@@ -7,10 +7,6 @@ libexecdir = $(gimpplugindir)/plug-ins
 libexec_PROGRAMS = gflare
 
 gflare_SOURCES = @STRIP_BEGIN@ \
-	asupsample.h		\
-	asupsample.c		\
-	gtkmultioptionmenu.h	\
-	gtkmultioptionmenu.c	\
 	gflare.c		\
 @STRIP_END@
 

@@ -1046,37 +1046,37 @@ browser_info_add (GimpContainer *container,
 
 
 static void
-browser_info_remove (GimpContainer *container,
-		     GimpModuleInfoObj    *mod, 
-		     BrowserState  *st)
+browser_info_remove (GimpContainer     *container,
+		     GimpModuleInfoObj *mod, 
+		     BrowserState      *st)
 {
-  GList      *dlist;
-  GList      *free_list;
-  GtkWidget  *list_item;
+  GList             *dlist;
+  GList             *free_list;
+  GtkWidget         *list_item;
   GimpModuleInfoObj *info;
 
-  dlist = gtk_container_children (GTK_CONTAINER (st->list));
+  dlist = gtk_container_get_children (GTK_CONTAINER (st->list));
   free_list = dlist;
 
   while (dlist)
-  {
-    list_item = dlist->data;
-
-    info = g_object_get_data (G_OBJECT (list_item), "module_info");
-    g_return_if_fail (info != NULL);
-
-    if (info == mod)
     {
-      gtk_container_remove (GTK_CONTAINER (st->list), list_item);
-      g_list_free (free_list);
-      return;
+      list_item = dlist->data;
+
+      info = g_object_get_data (G_OBJECT (list_item), "module_info");
+      g_return_if_fail (info != NULL);
+
+      if (info == mod)
+	{
+	  gtk_container_remove (GTK_CONTAINER (st->list), list_item);
+	  g_list_free (free_list);
+	  return;
+	}
+
+      dlist = dlist->next;
     }
 
-    dlist = dlist->next;
-  }
-
   g_warning ("tried to remove module that wasn't in brower's list");
-  g_list_free(free_list);
+  g_list_free (free_list);
 }
 
 

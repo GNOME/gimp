@@ -36,10 +36,11 @@ extern gulong g_active_guide_pixel;
 /*  Colormap entries reserved for color cycled marching ants--optional  */
 extern gulong marching_ants_pixels[8];
 
-gulong get_color              (gint red,
-			       gint green,
-			       gint blue);
-void   get_standard_colormaps (void);
+
+gulong   get_color              (gint red,
+				 gint green,
+				 gint blue);
+void     get_standard_colormaps (void);
 
 
 #endif  /*  __COLORMAPS_H__  */

@@ -980,15 +980,16 @@ gimp_dialog_factories_save_foreach (gchar             *name,
 	  for (books = dock->dockbooks; books; books = g_list_next (books))
 	    {
 	      GimpDockbook *dockbook;
+	      GList        *children;
 	      GList        *pages;
 
 	      dockbook = (GimpDockbook *) books->data;
 
 	      fprintf (fp, "(");
 
-	      for (pages = gtk_container_children (GTK_CONTAINER (dockbook));
-		   pages;
-		   pages = g_list_next (pages))
+	      children = gtk_container_get_children (GTK_CONTAINER (dockbook));
+
+	      for (pages = children; pages; pages = g_list_next (pages))
 		{
 		  GimpDockable           *dockable;
 		  GimpDialogFactoryEntry *entry;
@@ -1002,6 +1003,8 @@ gimp_dialog_factories_save_foreach (gchar             *name,
 		    fprintf (fp, "\"%s\"%s",
 			     entry->identifier, pages->next ? " ": "");
 		}
+
+	      g_list_free (children);
 
 	      fprintf (fp, ")%s", books->next ? "\n          " : "");
 	    }

@@ -21,6 +21,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef __GNUC__
+#warning FIXME: GDK_DISABLE_DEPRECATED
+#endif
+
+#undef GDK_DISABLE_DEPRECATED
+
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -857,7 +863,8 @@ gdisplay_update_icon (GDisplay *gdisp)
   GtkStyle         *style;
   GdkGC		   *icongc, *iconmaskgc;
   GdkColormap	   *colormap;
-  GdkColor	   black, white;
+  GdkColor	    black, white;
+  gboolean          success;
 
   TempBuf *icondata;
   guchar  *data;
@@ -866,7 +873,6 @@ gdisplay_update_icon (GDisplay *gdisp)
 
   if (!gdisp->icon)
     {
-      gdk_rgb_init ();
       gdisp->icon = gdk_pixmap_new (gdisp->shell->window,
 				    gdisp->iconsize,
 				    gdisp->iconsize,
@@ -877,12 +883,19 @@ gdisplay_update_icon (GDisplay *gdisp)
 					1);
     }
 
-  icongc = gdk_gc_new (gdisp->icon);
+  icongc     = gdk_gc_new (gdisp->icon);
   iconmaskgc = gdk_gc_new (gdisp->iconmask);
-  colormap = gdk_colormap_get_system ();   /* or gdk_rgb_get_colormap ()  */
+  colormap   = gdk_colormap_get_system ();   /* or gdk_rgb_get_colormap ()  */
 
-  gdk_color_white (colormap, &white);
-  gdk_color_black (colormap, &black);
+  white.red   = 255;
+  white.green = 255;
+  white.blue  = 255;
+  gdk_colormap_alloc_colors (colormap, &white, 1, FALSE, TRUE, &success);
+
+  black.red   = 0;
+  black.green = 0;
+  black.blue  = 0;
+  gdk_colormap_alloc_colors (colormap, &black, 1, FALSE, TRUE, &success);
 
   if (! gdisp->icon_needs_update)
     return;
@@ -1490,7 +1503,9 @@ gdisplay_resize_cursor_label (GDisplay *gdisp)
     gdisp->cursor_label->allocation.width;
 
   gtk_widget_set_usize (gdisp->cursor_label, cursor_label_width, -1);
-  if (label_frame_size_difference) /* don't resize if this is a new display */
+
+  /* don't resize if this is a new display */
+  if (label_frame_size_difference)
     gtk_widget_set_usize (gdisp->cursor_label->parent,
 			  cursor_label_width + label_frame_size_difference, -1);
 

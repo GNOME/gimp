@@ -779,16 +779,25 @@ blob_pixmap (GdkColormap *colormap,
   GdkPixmap *pixmap;
   GdkGC     *black_gc, *white_gc;
   GdkColor   tmp_color;
+  gboolean   success;
   Blob      *blob;
 
   pixmap = gdk_pixmap_new (NULL, 22, 21, visual->depth);
 
+  tmp_color.red   = 0;
+  tmp_color.green = 0;
+  tmp_color.blue  = 0;
+  gdk_colormap_alloc_colors (colormap, &tmp_color, 1, FALSE, TRUE, &success);
+
   black_gc = gdk_gc_new (pixmap);
-  gdk_color_black (colormap, &tmp_color);
   gdk_gc_set_foreground (black_gc, &tmp_color);
 
+  tmp_color.red   = 255;
+  tmp_color.green = 255;
+  tmp_color.blue  = 255;
+  gdk_colormap_alloc_colors (colormap, &tmp_color, 1, FALSE, TRUE, &success);
+
   white_gc = gdk_gc_new (pixmap);
-  gdk_color_white (colormap, &tmp_color);
   gdk_gc_set_foreground (white_gc, &tmp_color);
 
   gdk_draw_rectangle (pixmap, white_gc, TRUE, 0, 0, 21, 20);

@@ -23,26 +23,40 @@
 #include <stdio.h>
 #include <string.h>
 
+#ifdef __GNUC__
+#warning FIXME: GDK_DISABLE_DEPRECATED
+#endif
+
+#undef GDK_DISABLE_DEPRECATED
+
 #include <gdk/gdk.h>
 
 #include <libgimp/gimp.h>
 
 #include "ifscompose.h"
 
-typedef struct {
+
+typedef struct
+{
   GdkPoint point;
   gdouble angle;
 } SortPoint;
 
+
 /* local functions */
-static void 
-aff_element_compute_click_boundary(AffElement *elem, int num_elements,
-				   gdouble *points_x, gdouble *points_y);
-static guchar *
-create_brush(IfsComposeVals *ifsvals, gint *brush_size, gdouble *brush_offset);
+static void     aff_element_compute_click_boundary (AffElement     *elem,
+						    gint            num_elements,
+						    gdouble        *points_x,
+						    gdouble        *points_y);
+static guchar * create_brush                       (IfsComposeVals *ifsvals,
+						    gint           *brush_size,
+						    gdouble        *brush_offset);
+
 
 void
-aff2_translate(Aff2 *naff, gdouble x, gdouble y)
+aff2_translate (Aff2    *naff,
+		gdouble  x,
+		gdouble  y)
 {
   naff->a11 = 1.0;
   naff->a12 = 0;
@@ -53,7 +67,8 @@ aff2_translate(Aff2 *naff, gdouble x, gdouble y)
 }
 
 void
-aff2_rotate(Aff2 *naff, gdouble theta)
+aff2_rotate (Aff2    *naff,
+	     gdouble  theta)
 {
   naff->a11 = cos(theta);
   naff->a12 = sin(theta);
@@ -64,7 +79,9 @@ aff2_rotate(Aff2 *naff, gdouble theta)
 }
 
 void
-aff2_scale(Aff2 *naff, gdouble s, gint flip)
+aff2_scale(Aff2    *naff,
+	   gdouble  s,
+	   gint     flip)
 {
   if (flip)
     naff->a11 = -s;
@@ -79,7 +96,9 @@ aff2_scale(Aff2 *naff, gdouble s, gint flip)
 
 /* Create a unitary transform with given x-y asymmetry and shear */
 void 
-aff2_distort(Aff2 *naff, gdouble asym, gdouble shear)
+aff2_distort (Aff2    *naff,
+	      gdouble  asym,
+	      gdouble  shear)
 {
   naff->a11 = asym;
   naff->a22 = 1/asym;
@@ -91,9 +110,11 @@ aff2_distort(Aff2 *naff, gdouble asym, gdouble shear)
 
 /* Find a pure stretch in some directon that brings xo,yo to xn,yn */
 void
-aff2_compute_stretch(Aff2 *naff,
-		     gdouble xo, gdouble yo,
-		     gdouble xn, gdouble yn)
+aff2_compute_stretch (Aff2    *naff,
+		      gdouble  xo,
+		      gdouble  yo,
+		      gdouble  xn,
+		      gdouble  yn)
 {
   gdouble denom = xo*xn + yo*yn;
   
@@ -116,7 +137,9 @@ aff2_compute_stretch(Aff2 *naff,
 }
 
 void 
-aff2_compose(Aff2 *naff, Aff2 *aff1, Aff2 *aff2)
+aff2_compose (Aff2 *naff,
+	      Aff2 *aff1,
+	      Aff2 *aff2)
 {
   naff->a11 = aff1->a11*aff2->a11 + aff1->a12*aff2->a21;
   naff->a12 = aff1->a11*aff2->a12 + aff1->a12*aff2->a22;
@@ -128,7 +151,8 @@ aff2_compose(Aff2 *naff, Aff2 *aff1, Aff2 *aff2)
 
 /* Returns the identity matrix if the original matrix was singular */
 void
-aff2_invert(Aff2 *naff, Aff2 *aff)
+aff2_invert (Aff2 *naff,
+	     Aff2 *aff)
 {
   gdouble det = aff->a11*aff->a22 - aff->a12*aff->a21;
   
@@ -148,8 +172,11 @@ aff2_invert(Aff2 *naff, Aff2 *aff)
 }
 
 void 
-aff2_apply(Aff2 *aff, gdouble x, gdouble y,
-		       gdouble *xf, gdouble *yf)
+aff2_apply (Aff2    *aff,
+	    gdouble  x,
+	    gdouble  y,
+	    gdouble *xf,
+	    gdouble *yf)
 {
   gdouble xt = aff->a11*x + aff->a12*y + aff->b1;
   gdouble yt = aff->a21*x + aff->a22*y + aff->b2;
@@ -161,7 +188,9 @@ aff2_apply(Aff2 *aff, gdouble x, gdouble y,
    (Will return garbage for pure translations) */
 
 void
-aff2_fixed_point(Aff2 *aff, gdouble *xf, gdouble *yf)
+aff2_fixed_point (Aff2    *aff,
+		  gdouble *xf,
+		  gdouble *yf)
 {
   Aff2 t1,t2;
 
@@ -177,8 +206,13 @@ aff2_fixed_point(Aff2 *aff, gdouble *xf, gdouble *yf)
 }
 
 void 
-aff3_apply (Aff3 *t, gdouble x, gdouble y, gdouble z,
-	    gdouble *xf, gdouble *yf, gdouble *zf)
+aff3_apply (Aff3    *t,
+	    gdouble  x,
+	    gdouble  y,
+	    gdouble  z,
+	    gdouble *xf,
+	    gdouble *yf,
+	    gdouble *zf)
 {
   double xt = t->vals[0][0]*x + t->vals[0][1]*y + t->vals[0][2]*z + t->vals[0][3];
   double yt = t->vals[1][0]*x + t->vals[1][1]*y + t->vals[1][2]*z + t->vals[1][3];
@@ -190,7 +224,8 @@ aff3_apply (Aff3 *t, gdouble x, gdouble y, gdouble z,
 }
 
 static int
-ipolygon_sort_func(const void *a, const void *b)
+ipolygon_sort_func (const void *a,
+		    const void *b)
 {
   if (((SortPoint *)a)->angle < ((SortPoint *)b)->angle)
     return -1;
@@ -210,7 +245,7 @@ ipolygon_sort_func(const void *a, const void *b)
 */
 
 IPolygon *
-ipolygon_convex_hull(IPolygon *poly)
+ipolygon_convex_hull (IPolygon *poly)
 {
   gint num_new = poly->npoints;
   GdkPoint *new_points = g_new(GdkPoint,num_new);
@@ -314,7 +349,9 @@ ipolygon_convex_hull(IPolygon *poly)
    */
 
 gint
-ipolygon_contains(IPolygon *poly, gint xt, gint yt)
+ipolygon_contains (IPolygon *poly,
+		   gint      xt,
+		   gint      yt)
 {
   gint xnew, ynew;
   gint xold, yold;
@@ -357,7 +394,7 @@ ipolygon_contains(IPolygon *poly, gint xt, gint yt)
 }
 
 void
-aff_element_compute_color_trans(AffElement *elem)
+aff_element_compute_color_trans (AffElement *elem)
 {
   int i,j;
 
@@ -465,8 +502,11 @@ aff_element_compute_color_trans(AffElement *elem)
 }
 
 void
-aff_element_compute_trans(AffElement *elem, gdouble width, gdouble height,
-			  gdouble center_x, gdouble center_y)
+aff_element_compute_trans (AffElement *elem,
+			   gdouble     width,
+			   gdouble     height,
+			   gdouble     center_x,
+			   gdouble     center_y)
 {
   Aff2 t1, t2, t3;
 
@@ -485,9 +525,12 @@ aff_element_compute_trans(AffElement *elem, gdouble width, gdouble height,
 }
 
 void
-aff_element_decompose_trans(AffElement *elem, Aff2 *aff, gdouble width,
-			    gdouble height, gdouble center_x,
-			    gdouble center_y)
+aff_element_decompose_trans (AffElement *elem,
+			     Aff2       *aff,
+			     gdouble     width,
+			     gdouble     height,
+			     gdouble     center_x,
+			     gdouble     center_y)
 {
   Aff2 t1,t2;
   gdouble det,scale,sign;
@@ -542,8 +585,10 @@ aff_element_decompose_trans(AffElement *elem, Aff2 *aff, gdouble width,
 }
 
 static void 
-aff_element_compute_click_boundary(AffElement *elem, int num_elements,
-				   gdouble *points_x, gdouble *points_y)
+aff_element_compute_click_boundary (AffElement *elem,
+				    int         num_elements,
+				    gdouble    *points_x,
+				    gdouble    *points_y)
 {
   gint i;
   gdouble xtot = 0;
@@ -628,10 +673,11 @@ aff_element_compute_click_boundary(AffElement *elem, int num_elements,
 }
 
 void 
-aff_element_compute_boundary(AffElement *elem, gint width,
-			     gint height,
-			     AffElement **elements, 
-			     int num_elements)
+aff_element_compute_boundary (AffElement  *elem,
+			      gint         width,
+			      gint         height,
+			      AffElement **elements, 
+			      gint         num_elements)
 {
   int i;
   IPolygon tmp_poly;
@@ -663,11 +709,14 @@ aff_element_compute_boundary(AffElement *elem, gint width,
 }
 
 void 
-aff_element_draw(AffElement *elem, gint selected,
-		 gint width, gint height, 
-		 GdkDrawable *win,
-		 GdkGC *normal_gc,GdkGC *selected_gc,
-		 GdkFont *font)
+aff_element_draw (AffElement  *elem,
+		  gint         selected,
+		  gint         width,
+		  gint         height, 
+		  GdkDrawable *win,
+		  GdkGC       *normal_gc,
+		  GdkGC       *selected_gc,
+		  GdkFont     *font)
 {
   GdkGC *gc;
   gint string_width = gdk_string_width (font,elem->name);
@@ -691,7 +740,10 @@ aff_element_draw(AffElement *elem, gint selected,
 }
 
 AffElement *
-aff_element_new (gdouble x, gdouble y, GimpRGB *color, gint count)
+aff_element_new (gdouble  x,
+		 gdouble  y,
+		 GimpRGB *color,
+		 gint     count)
 {
   AffElement *elem = g_new(AffElement, 1);
   gchar buffer[16];
@@ -729,7 +781,7 @@ aff_element_new (gdouble x, gdouble y, GimpRGB *color, gint count)
 }
 
 void
-aff_element_free(AffElement *elem)
+aff_element_free (AffElement *elem)
 {
   if (elem->click_boundary != elem->draw_boundary)
     g_free(elem->click_boundary);
@@ -742,7 +794,9 @@ static brush_chars[] = {' ',':','*','@'};
 #endif
 
 static guchar *
-create_brush(IfsComposeVals *ifsvals, gint *brush_size, gdouble *brush_offset)
+create_brush (IfsComposeVals *ifsvals,
+	      gint           *brush_size,
+	      gdouble        *brush_offset)
 {
   gint i,j;
   gint ii,jj;
@@ -793,10 +847,18 @@ create_brush(IfsComposeVals *ifsvals, gint *brush_size, gdouble *brush_offset)
 }
 
 void
-ifs_render(AffElement **elements, gint num_elements,
-	   gint width, gint height, gint nsteps,
-	   IfsComposeVals *vals, gint band_y, gint band_height,
-	   guchar *data, guchar *mask, guchar *nhits, gint preview)
+ifs_render (AffElement     **elements,
+	    gint             num_elements,
+	    gint             width,
+	    gint             height,
+	    gint             nsteps,
+	    IfsComposeVals  *vals,
+	    gint             band_y,
+	    gint             band_height,
+	    guchar          *data,
+	    guchar          *mask,
+	    guchar          *nhits,
+	    gint             preview)
 {
   gint i,k;
   gdouble x,y;

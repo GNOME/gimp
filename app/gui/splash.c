@@ -21,6 +21,12 @@
 #include <stdio.h>
 #include <string.h>
 
+#ifdef __GNUC__
+#warning FIXME: GDK_DISABLE_DEPRECATED
+#endif
+
+#undef GDK_DISABLE_DEPRECATED
+
 #include <gtk/gtk.h>
  
 #include "libgimpbase/gimpbase.h"

@@ -111,8 +111,7 @@ gradient_select_new (gchar *title,
 
 				NULL);
 
-  gtk_widget_hide (GTK_WIDGET (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_DIALOG (gsp->shell)->vbox)), 0)));
-
+  gtk_dialog_set_has_separator (GTK_DIALOG (gsp->shell), FALSE);
   gtk_widget_hide (GTK_DIALOG (gsp->shell)->action_area);
 
   if (title)

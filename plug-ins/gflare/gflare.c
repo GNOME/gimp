@@ -31,20 +31,11 @@
  * federico@nuclecu.unam.mx
  */
 
-/*
-  version 0.27
-  Changed so that it works with GIMP 1.1.x
-  Default problem solved
-  martweb@gmx.net
- */
-
 #ifdef RCSID
 static char rcsid[] = "$Id$";
 #endif
 
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -69,13 +60,12 @@ static char rcsid[] = "$Id$";
 #endif
 #endif
 
+#include <libgimpcolor/gimpcolor.h>
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
-
-#include "asupsample.h"
-#include "gtkmultioptionmenu.h"
 
 /* #define DEBUG */
 
@@ -107,7 +97,6 @@ static char rcsid[] = "$Id$";
 
 #define GM_PREVIEW_WIDTH  80
 #define GM_PREVIEW_HEIGHT 16
-#define GM_MENU_MAX       20
 
 #define SCALE_WIDTH 100
 #define ENTRY_WIDTH  40
@@ -335,10 +324,14 @@ struct _GradientMenu
   GradientName          gradient_name;
 };
 
-typedef gint (* PreviewInitFunc)   (Preview *preview, gpointer data);
-typedef void (* PreviewRenderFunc) (Preview *preview, guchar *buffer,
-				    gint y, gpointer data);
-typedef void (* PreviewDeinitFunc) (Preview *preview, gpointer data);
+typedef gint (* PreviewInitFunc)   (Preview  *preview,
+				    gpointer  data);
+typedef void (* PreviewRenderFunc) (Preview  *preview,
+				    guchar   *buffer,
+				    gint      y,
+				    gpointer  data);
+typedef void (* PreviewDeinitFunc) (Preview  *preview,
+				    gpointer  data);
 
 struct _Preview
 {
@@ -399,7 +392,9 @@ typedef struct
   gint  run;
 } PluginInterface;
 
-typedef void (*QueryFunc) (GtkWidget *, gpointer, gpointer);
+typedef void (* QueryFunc) (GtkWidget *,
+			    gpointer,
+			    gpointer);
 
 /***
  ***  Global Functions Prototypes
@@ -426,7 +421,7 @@ static void     gflare_name_copy        (gchar  *dest,
 					 gchar  *src);
 
 static gint     gflares_list_insert     (GFlare *gflare);
-static GFlare * gflares_list_lookup     (gchar *name);
+static GFlare * gflares_list_lookup     (gchar  *name);
 static gint     gflares_list_index      (GFlare *gflare);
 static gint     gflares_list_remove     (GFlare *gflare);
 static void     gflares_list_load_all   (void);
@@ -532,7 +527,7 @@ PluginValues pvals =
 
 PluginInterface pint =
 {
-  FALSE				/* run */
+  FALSE		/* run */
 };
 
 GFlare default_gflare =
@@ -636,59 +631,93 @@ static void plugin_do                   (void);
 
 static void plugin_do_non_asupsample    (void);
 static void plugin_do_asupsample        (void);
-static void plugin_render_func          (double x, double y,
-					 color_t *color, gpointer data);
-static void plugin_put_pixel_func       (int ix, int iy, color_t color,
-					 gpointer data);
-static void plugin_progress_func        (int y1, int y2, int curr_y,
-					 gpointer data);
+static void plugin_render_func          (gdouble       x,
+					 gdouble       y,
+					 GimpRGB      *color,
+					 gpointer      data);
+static void plugin_put_pixel_func       (gint          ix,
+					 gint          iy,
+					 GimpRGB      *color,
+					 gpointer      data);
+static void plugin_progress_func        (gint          y1,
+					 gint          y2,
+					 gint          curr_y,
+					 gpointer      data);
 
-static TileKeeper *tile_keeper_new      (gint shadow);
-static guchar *tile_keeper_provide      (TileKeeper *tk, gint ix, gint iy,
-					 gint dirty);
-static void tile_keeper_free            (TileKeeper *tk);
+static TileKeeper *tile_keeper_new      (gint          shadow);
+static guchar *tile_keeper_provide      (TileKeeper   *tk,
+					 gint          ix,
+					 gint          iy,
+					 gint          dirty);
+static void tile_keeper_free            (TileKeeper   *tk);
 
 static GFlare * gflare_new              (void);
-static void gflare_free                 (GFlare *gflare);
-static void gflare_read_int             (gint *intvar, GFlareFile *gf);
-static void gflare_read_double          (gdouble *dblvar, GFlareFile *gf);
-static void gflare_read_gradient_name   (gchar *name, GFlareFile *gf);
-static void gflare_read_shape           (GFlareShape *shape, GFlareFile *gf);
-static void gflare_read_mode            (GFlareMode *mode, GFlareFile *gf);
-static void gflare_write_gradient_name  (gchar *name, FILE *fp);
+static void gflare_free                 (GFlare       *gflare);
+static void gflare_read_int             (gint         *intvar,
+					 GFlareFile   *gf);
+static void gflare_read_double          (gdouble      *dblvar,
+					 GFlareFile   *gf);
+static void gflare_read_gradient_name   (gchar        *name,
+					 GFlareFile   *gf);
+static void gflare_read_shape           (GFlareShape  *shape,
+					 GFlareFile   *gf);
+static void gflare_read_mode            (GFlareMode   *mode,
+					 GFlareFile   *gf);
+static void gflare_write_gradient_name  (gchar        *name,
+					 FILE         *fp);
 
 static gint calc_sample_one_gradient    (void);
 static void calc_place_sflare           (void);
-static void calc_get_gradient           (guchar *pix, guchar *gradient,
-					 gdouble pos);
-static gdouble fmod_positive            (gdouble x, gdouble m);
-static void calc_paint_func             (guchar *dest,
-					 guchar *src1, guchar *src2,
-					 gint opacity, GFlareMode mode);
-static void calc_combine                (guchar *dest,
-					 guchar *src1, guchar *src2,
-					 gint opacity);
-static void calc_addition               (guchar *dest,
-					 guchar *src1, guchar *src2);
-static void calc_screen                 (guchar *dest,
-					 guchar *src1, guchar *src2);
-static void calc_overlay                (guchar *dest,
-				 	 guchar *src1, guchar *src2);
+static void calc_get_gradient           (guchar       *pix,
+					 guchar       *gradient,
+					 gdouble       pos);
+static gdouble fmod_positive            (gdouble       x,
+					 gdouble       m);
+static void calc_paint_func             (guchar       *dest,
+					 guchar       *src1,
+					 guchar       *src2,
+					 gint          opacity,
+					 GFlareMode    mode);
+static void calc_combine                (guchar       *dest,
+					 guchar       *src1,
+					 guchar       *src2,
+					 gint          opacity);
+static void calc_addition               (guchar       *dest,
+					 guchar       *src1,
+					 guchar       *src2);
+static void calc_screen                 (guchar       *dest,
+					 guchar       *src1,
+					 guchar       *src2);
+static void calc_overlay                (guchar       *dest,
+				 	 guchar       *src1,
+					 guchar       *src2);
 
-static void dlg_ok_callback             (GtkWidget *widget, gpointer data);
+static void dlg_ok_callback             (GtkWidget    *widget,
+					 gpointer      data);
 static void dlg_setup_gflare            (void);
-static void dlg_page_map_callback       (GtkWidget *widget, gpointer data);
-static gint dlg_preview_handle_event    (GtkWidget *widget, GdkEvent *event);
-static gint ed_preview_handle_event     (GtkWidget *widget, GdkEvent *event);
+static void dlg_page_map_callback       (GtkWidget    *widget,
+					 gpointer      data);
+static gint dlg_preview_handle_event    (GtkWidget    *widget,
+					 GdkEvent     *event);
+static gint ed_preview_handle_event     (GtkWidget    *widget,
+					 GdkEvent     *event);
 static void dlg_preview_update          (void);
-static gint dlg_preview_init_func       (Preview *preview, gpointer data);
-static void dlg_preview_render_func     (Preview *preview,
-					 guchar *dest, gint y, gpointer data);
-static void dlg_preview_deinit_func     (Preview *preview, gpointer data);
-static void dlg_make_page_settings      (GFlareDialog *dlg, GtkWidget *notebook);
-static void dlg_position_entry_callback (GtkWidget *widget, gpointer data);
-static void dlg_update_preview_callback (GtkWidget *widget, gpointer data);
-static void dlg_make_page_selector      (GFlareDialog *dlg, GtkWidget *notebook);
+static gint dlg_preview_init_func       (Preview      *preview,
+					 gpointer      data);
+static void dlg_preview_render_func     (Preview      *preview,
+					 guchar       *dest,
+					 gint          y,
+					 gpointer      data);
+static void dlg_preview_deinit_func     (Preview      *preview,
+					 gpointer      data);
+static void dlg_make_page_settings      (GFlareDialog *dlg,
+					 GtkWidget    *notebook);
+static void dlg_position_entry_callback (GtkWidget    *widget,
+					 gpointer      data);
+static void dlg_update_preview_callback (GtkWidget    *widget,
+					 gpointer      data);
+static void dlg_make_page_selector      (GFlareDialog *dlg,
+					 GtkWidget    *notebook);
 
 static void dlg_selector_setup_listbox      (void);
 static void dlg_selector_insert             (GFlare    *gflare,
@@ -720,19 +749,30 @@ static void dlg_selector_do_delete_callback (GtkWidget *widget,
 					     gboolean   delete,
 					     gpointer   data);
 
-static void ed_run                (GFlare *target_gflare,
-				   GFlareEditorCallback callback,
-				   gpointer calldata);
-static void ed_close_callback     (GtkWidget *widget, gpointer data);
-static void ed_ok_callback        (GtkWidget *widget, gpointer data);
-static void ed_rescan_callback    (GtkWidget *widget, gpointer data);
-static void ed_make_page_general  (GFlareEditor *ed, GtkWidget *notebook);
-static void ed_make_page_glow     (GFlareEditor *ed, GtkWidget *notebook);
-static void ed_make_page_rays     (GFlareEditor *ed, GtkWidget *notebook);
-static void ed_make_page_sflare   (GFlareEditor *ed, GtkWidget *notebook);
-static void ed_put_gradient_menu  (GtkWidget *table, gint x, gint y,
-				   gchar *caption, GradientMenu *gm);
-static void ed_mode_menu_callback (GtkWidget *widget, gpointer data);
+static void ed_run                (GFlare               *target_gflare,
+				   GFlareEditorCallback  callback,
+				   gpointer              calldata);
+static void ed_close_callback     (GtkWidget    *widget,
+				   gpointer      data);
+static void ed_ok_callback        (GtkWidget    *widget,
+				   gpointer      data);
+static void ed_rescan_callback    (GtkWidget    *widget,
+				   gpointer      data);
+static void ed_make_page_general  (GFlareEditor *ed,
+				   GtkWidget    *notebook);
+static void ed_make_page_glow     (GFlareEditor *ed,
+				   GtkWidget    *notebook);
+static void ed_make_page_rays     (GFlareEditor *ed,
+				   GtkWidget    *notebook);
+static void ed_make_page_sflare   (GFlareEditor *ed,
+				   GtkWidget    *notebook);
+static void ed_put_gradient_menu  (GtkWidget    *table,
+				   gint          x,
+				   gint          y,
+				   gchar        *caption,
+				   GradientMenu *gm);
+static void ed_mode_menu_callback (GtkWidget    *widget,
+				   gpointer      data);
 static void ed_gradient_menu_callback (gchar *gradient_name, gpointer data);
 static void ed_shape_radio_callback   (GtkWidget *widget, gpointer data);
 static void ed_ientry_callback        (GtkWidget *widget, gpointer data);
@@ -1127,20 +1167,20 @@ plugin_do_non_asupsample (void)
 }
 
 static void
-plugin_do_asupsample ()
+plugin_do_asupsample (void)
 {
   tk_read  = tile_keeper_new (FALSE);
   tk_write = tile_keeper_new (TRUE);
 
-  adaptive_supersample_area (dinfo.x1, dinfo.y1, dinfo.x2 - 1, dinfo.y2 - 1,
-			     pvals.asupsample_max_depth,
-			     pvals.asupsample_threshold,
-			     (render_func_t) plugin_render_func,
-			     NULL,
-			     (put_pixel_func_t) plugin_put_pixel_func,
-			     NULL,
-			     (progress_func_t) plugin_progress_func,
-			     NULL);
+  gimp_adaptive_supersample_area (dinfo.x1, dinfo.y1, dinfo.x2 - 1, dinfo.y2 - 1,
+				  pvals.asupsample_max_depth,
+				  pvals.asupsample_threshold,
+				  plugin_render_func,
+				  NULL,
+				  plugin_put_pixel_func,
+				  NULL,
+				  plugin_progress_func,
+				  NULL);
   tile_keeper_free (tk_read);
   tile_keeper_free (tk_write);
 }
@@ -1153,7 +1193,10 @@ plugin_do_asupsample ()
   guchar values. */
 
 static void
-plugin_render_func (double x, double y, color_t *color, gpointer data)
+plugin_render_func (gdouble   x,
+		    gdouble   y,
+		    GimpRGB  *color,
+		    gpointer  data)
 {
   guchar	src_pix[4];
   guchar	flare_pix[4];
@@ -1181,7 +1224,10 @@ plugin_render_func (double x, double y, color_t *color, gpointer data)
 }
 
 static void
-plugin_put_pixel_func (int ix, int iy, color_t color, gpointer data)
+plugin_put_pixel_func (gint      ix,
+		       gint      iy,
+		       GimpRGB  *color,
+		       gpointer  data)
 {
   guchar	*dest;
 
@@ -1189,19 +1235,22 @@ plugin_put_pixel_func (int ix, int iy, color_t color, gpointer data)
 
   if (dinfo.is_color)
     {
-      dest[0] = color.r * 255;
-      dest[1] = color.g * 255;
-      dest[2] = color.b * 255;
+      dest[0] = color->r * 255;
+      dest[1] = color->g * 255;
+      dest[2] = color->b * 255;
     }
   else
-    dest[0] = INTENSITY (color.r, color.g, color.b) * 255;
+    dest[0] = INTENSITY (color->r, color->g, color->b) * 255;
 
   if (dinfo.has_alpha)
-    dest[drawable->bpp - 1] = color.a * 255;
+    dest[drawable->bpp - 1] = color->a * 255;
 }
 
 static void
-plugin_progress_func (int y1, int y2, int curr_y, gpointer data)
+plugin_progress_func (gint     y1,
+		      gint     y2,
+		      gint     curr_y,
+		      gpointer data)
 {
   gimp_progress_update ((double) curr_y / (double) (y2 - y1));
 }
@@ -1459,7 +1508,8 @@ gflare_read_double (gdouble *dblvar, GFlareFile *gf)
 }
 
 static void
-gflare_read_gradient_name (GradientName name, GFlareFile *gf)
+gflare_read_gradient_name (GradientName  name,
+			   GFlareFile   *gf)
 {
   gchar		tmp[1024], dec[1024];
 
@@ -1480,7 +1530,8 @@ gflare_read_gradient_name (GradientName name, GFlareFile *gf)
 }
 
 static void
-gflare_read_shape (GFlareShape *shape, GFlareFile *gf)
+gflare_read_shape (GFlareShape *shape,
+		   GFlareFile  *gf)
 {
   gchar tmp[1024];
   gint	i;
@@ -1501,7 +1552,8 @@ gflare_read_shape (GFlareShape *shape, GFlareFile *gf)
 }
 
 static void
-gflare_read_mode (GFlareMode *mode, GFlareFile *gf)
+gflare_read_mode (GFlareMode *mode,
+		  GFlareFile *gf)
 {
   gchar tmp[1024];
   gint	i;
@@ -2533,8 +2585,10 @@ dlg_run (void)
    *	Make sure the selector page is realized
    *	This idea is from app/layers_dialog.c
    */
-  gtk_notebook_set_page (GTK_NOTEBOOK (notebook), 1);
-  gtk_notebook_set_page (GTK_NOTEBOOK (notebook), 0);
+#if 0 
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), 1);
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), 0);
+#endif
 
   /*
    *	Initialization done
@@ -4082,7 +4136,7 @@ ed_make_page_sflare (GFlareEditor *ed,
 
   entry = ed->polygon_entry = gtk_entry_new ();
   gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  sprintf (buf, "%d", gflare->sflare_nverts);
+  g_snprintf (buf, sizeof (buf), "%d", gflare->sflare_nverts);
   gtk_entry_set_text (GTK_ENTRY (entry), buf);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      (GtkSignalFunc) ed_ientry_callback,
@@ -4621,10 +4675,10 @@ gradient_menu_rescan ()
     {
       gm  = tmp->data;
       tmp = tmp->next;
-      menu = GTK_MULTI_OPTION_MENU (gm->option_menu)->menu;
+      menu = GTK_OPTION_MENU (gm->option_menu)->menu;
       if (menu)
 	{
-	  gtk_multi_option_menu_remove_menu (GTK_MULTI_OPTION_MENU (gm->option_menu));
+	  gtk_option_menu_remove_menu (GTK_OPTION_MENU (gm->option_menu));
 	}
     }
 
@@ -4649,21 +4703,22 @@ gradient_menu_rescan ()
 	GTK_WIDGET_VISIBLE)
        */
       parent = gm->option_menu->parent;
-      if (0 && (parent != NULL) && GTK_CHECK_TYPE (parent, gtk_container_get_type ()))
+      if (0 && (parent != NULL) &&
+	  GTK_CHECK_TYPE (parent, gtk_container_get_type ()))
 	{
-	    /*gtk_container_block_resize (GTK_CONTAINER (parent));*/
-	    gtk_multi_option_menu_set_menu (GTK_MULTI_OPTION_MENU (gm->option_menu), menu);
-	    /*gtk_container_unblock_resize (GTK_CONTAINER (parent));*/
+	  gtk_option_menu_set_menu (GTK_OPTION_MENU (gm->option_menu), menu);
 	}
       else
-	    gtk_multi_option_menu_set_menu (GTK_MULTI_OPTION_MENU (gm->option_menu), menu);
+	{
+	  gtk_option_menu_set_menu (GTK_OPTION_MENU (gm->option_menu), menu);
+	}
     }
 }
 
 GradientMenu *
 gradient_menu_new (GradientMenuCallback callback,
-		   gpointer			callback_data,
-		   gchar			*default_gradient_name)
+		   gpointer		callback_data,
+		   gchar	       *default_gradient_name)
 {
   GtkWidget	*menu;
   GradientMenu	*gm;
@@ -4678,18 +4733,19 @@ gradient_menu_new (GradientMenuCallback callback,
 		    GM_PREVIEW_WIDTH,
 		    GM_PREVIEW_HEIGHT);
 
-  gm->option_menu = gtk_multi_option_menu_new ();
+  gm->option_menu = gtk_option_menu_new ();
 
   /* @GRADIENT_NAME */
   menu = gm_menu_new (gm, default_gradient_name);
-  gtk_multi_option_menu_set_menu (GTK_MULTI_OPTION_MENU (gm->option_menu), menu);
+  gtk_option_menu_set_menu (GTK_OPTION_MENU (gm->option_menu), menu);
 
   gtk_widget_show (gm->preview);
   gtk_widget_show (gm->option_menu);
 
   gradient_menus = g_list_append (gradient_menus, gm);
   gtk_signal_connect (GTK_OBJECT (gm->option_menu), "destroy",
-		      (GtkSignalFunc) &gm_option_menu_destroy_callback, gm);
+		      GTK_SIGNAL_FUNC (gm_option_menu_destroy_callback),
+		      gm);
 
   return gm;
 }
@@ -4777,12 +4833,11 @@ gm_menu_create_sub_menus (GradientMenu  *gm,
 			  gchar        **active_name_ptr,
 			  gchar         *default_gradient_name)
 {
-  GtkWidget *menu, *sub_menu;
-  gchar     *sub_active_name;
+  GtkWidget *menu;
   GtkWidget *menuitem;
   gchar     *name;
   gint       active_i = 0;
-  gint       i, n;
+  gint       i;
 
   *active_name_ptr = NULL;
   if (start_n >= num_gradient_names)
@@ -4794,9 +4849,10 @@ gm_menu_create_sub_menus (GradientMenu  *gm,
      this menuitem lives */
 
   menu = gtk_menu_new ();
-  for (i = 0, n = start_n; i < GM_MENU_MAX && n < num_gradient_names; i++, n++)
+
+  for (i = 0; i < num_gradient_names; i++)
     {
-      name = gradient_names[n];
+      name = gradient_names[i];
       if (strcmp (name, default_gradient_name) == 0)
 	{
 	  active_i = i;
@@ -4804,38 +4860,16 @@ gm_menu_create_sub_menus (GradientMenu  *gm,
 	}
       menuitem = gtk_menu_item_new_with_label (name);
       gtk_object_set_user_data (GTK_OBJECT (menuitem), gm);
+      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+      gtk_widget_show (menuitem);
+
       gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			  GTK_SIGNAL_FUNC (gm_menu_item_callback),
 			  name);
-      gtk_menu_append (GTK_MENU (menu), menuitem);
-      gtk_widget_show (menuitem);
-    } /* for */
-
-  sub_menu = gm_menu_create_sub_menus (gm, n, &sub_active_name,
-				       default_gradient_name);
-  if (sub_menu)
-    {
-      active_i += 2;
-
-      /* hline */
-      menuitem = gtk_menu_item_new ();
-      gtk_widget_set_sensitive (menuitem, FALSE);
-      gtk_widget_show (menuitem);
-      gtk_menu_prepend (GTK_MENU (menu), menuitem);
-
-      menuitem = gtk_menu_item_new_with_label (_("More..."));
-      gtk_widget_show (menuitem);
-      gtk_menu_prepend (GTK_MENU (menu), menuitem);
-      gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), sub_menu);
-
-      if (sub_active_name)
-	{
-	  *active_name_ptr = sub_active_name;
-	  active_i = 0; /* "More ..." */
-	}
     }
 
   gtk_menu_set_active (GTK_MENU (menu), active_i);
+
   return menu;
 }
 
@@ -5347,7 +5381,7 @@ gradient_report (void)
 {
   double total = (double) get_values_external_clock / CLOCKS_PER_SEC;
 
-  printf("gradient_get_values_external %.2f sec. / %d times (ave %.2f sec.)\n",
+  printf ("gradient_get_values_external %.2f sec. / %d times (ave %.2f sec.)\n",
 	  total,
 	  get_values_external_count,
 	  total / get_values_external_count);

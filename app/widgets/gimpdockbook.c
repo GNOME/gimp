@@ -346,6 +346,8 @@ void
 gimp_dockbook_remove (GimpDockbook *dockbook,
 		      GimpDockable *dockable)
 {
+  GList *children;
+
   g_return_if_fail (GIMP_IS_DOCKBOOK (dockbook));
   g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
 
@@ -358,10 +360,14 @@ gimp_dockbook_remove (GimpDockbook *dockbook,
 
   gtk_container_remove (GTK_CONTAINER (dockbook), GTK_WIDGET (dockable));
 
-  if (! g_list_length (gtk_container_children (GTK_CONTAINER (dockbook))))
+  children = gtk_container_get_children (GTK_CONTAINER (dockbook));
+
+  if (! g_list_length (children))
     {
       gimp_dock_remove_book (dockbook->dock, dockbook);
     }
+
+  g_list_free (children);
 }
 
 static void

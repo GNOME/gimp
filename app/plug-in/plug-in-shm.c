@@ -910,7 +910,8 @@ plug_in_destroy (PlugIn *plug_in)
 {
   if (plug_in)
     {
-      plug_in_close (plug_in, TRUE);
+      if (plug_in->open)
+	plug_in_close (plug_in, TRUE);
 
       if (plug_in->args[0])
 	g_free (plug_in->args[0]);
@@ -1126,132 +1127,129 @@ plug_in_close (PlugIn   *plug_in,
   struct timeval tv;
 #endif
 
-  if (plug_in && plug_in->open)
+  g_return_if_fail (plug_in != NULL);
+  g_return_if_fail (plug_in->open == TRUE);
+
+  if (! plug_in->open)
+    return;
+
+  plug_in->open = FALSE;
+
+  /*  Ask the filter to exit gracefully  */
+  if (kill_it && plug_in->pid)
     {
-      plug_in->open = FALSE;
+      plug_in_push (plug_in);
+      gp_quit_write (current_writechannel);
+      plug_in_pop ();
 
-      /* Ask the filter to exit gracefully
-       */
-      if (kill_it && plug_in->pid)
-	{
-	  plug_in_push (plug_in);
-	  gp_quit_write (current_writechannel);
-	  plug_in_pop ();
-
-	  /*  give the plug-in some time (10 ms)  */
+      /*  give the plug-in some time (10 ms)  */
 #ifndef G_OS_WIN32
-	  tv.tv_sec = 0;
-	  tv.tv_usec = 100;	/* But this is 0.1 ms? */
-	  select (0, NULL, NULL, NULL, &tv);
+      tv.tv_sec  = 0;
+      tv.tv_usec = 100;	/* But this is 0.1 ms? */
+      select (0, NULL, NULL, NULL, &tv);
 #else
-	  Sleep (10);
+      Sleep (10);
 #endif
-	}
-
-      /* If necessary, kill the filter. */
-#ifndef G_OS_WIN32
-      if (kill_it && plug_in->pid)
-	status = kill (plug_in->pid, SIGKILL);
-
-      /* Wait for the process to exit. This will happen
-       *  immediately if it was just killed.
-       */
-      if (plug_in->pid)
-        waitpid (plug_in->pid, &status, 0);
-#else
-      if (kill_it && plug_in->pid)
-	{
-	  /* Trying to avoid TerminateProcess (does mostly work).
-	   * Otherwise some of our needed DLLs may get into an unstable state
-	   * (see Win32 API docs).
-	   */
-	  DWORD dwExitCode = STILL_ACTIVE;
-	  DWORD dwTries  = 10;
-	  while ((STILL_ACTIVE == dwExitCode)
-		 && GetExitCodeProcess((HANDLE) plug_in->pid, &dwExitCode)
-		 && (dwTries > 0))
-	    {
-	      Sleep(10);
-	      dwTries--;
-	    }
-	  if (STILL_ACTIVE == dwExitCode)
-	    {
-	      g_warning("Terminating %s ...", plug_in->args[0]);
-	      TerminateProcess ((HANDLE) plug_in->pid, 0);
-	    }
-	}
-#endif
-
-      /* Remove the input handler. */
-      if (plug_in->input_id)
-        gdk_input_remove (plug_in->input_id);
-
-      /* Close the pipes. */
-      if (plug_in->my_read != NULL)
-	{
-	  g_io_channel_unref (plug_in->my_read);
-	  plug_in->my_read = NULL;
-	}
-      if (plug_in->my_write != NULL)
-	{
-	  g_io_channel_unref (plug_in->my_write);
-	  plug_in->my_write = NULL;
-	}
-      if (plug_in->his_read != NULL)
-	{
-	  g_io_channel_unref (plug_in->his_read);
-	  plug_in->his_read = NULL;
-	}
-      if (plug_in->his_write != NULL)
-	{
-	  g_io_channel_unref (plug_in->his_write);
-	  plug_in->his_write = NULL;
-	}
-
-      wire_clear_error ();
-
-      /* Destroy the progress dialog if it exists. */
-      if (plug_in->progress)
-	progress_end (plug_in->progress);
-      plug_in->progress = NULL;
-
-      /* Set the fields to null values. */
-      plug_in->pid = 0;
-      plug_in->input_id = 0;
-      plug_in->my_read = NULL;
-      plug_in->my_write = NULL;
-      plug_in->his_read = NULL;
-      plug_in->his_write = NULL;
-
-      if (plug_in->recurse)
-	gtk_main_quit ();
-
-      plug_in->synchronous = FALSE;
-      plug_in->recurse     = FALSE;
-
-      /* Unregister any temporary procedures. */
-      if (plug_in->temp_proc_defs)
-	{
-	  GSList        *list;
-	  PlugInProcDef *proc_def;
-
-	  for (list = plug_in->temp_proc_defs; list; list = g_slist_next (list))
-	    {
-	      proc_def = (PlugInProcDef *) list->data;
-	      plug_in_proc_def_remove (proc_def);
-	    }
-
-	  g_slist_free (plug_in->temp_proc_defs);
-	  plug_in->temp_proc_defs = NULL;
-	}
-
-      /* Close any dialogs that this plugin might have opened */
-      brush_select_dialogs_check ();
-      pattern_select_dialogs_check ();
-      gradient_select_dialogs_check ();
-
-      open_plug_ins = g_slist_remove (open_plug_ins, plug_in);
     }
+
+  /* If necessary, kill the filter. */
+#ifndef G_OS_WIN32
+  if (kill_it && plug_in->pid)
+    status = kill (plug_in->pid, SIGKILL);
+
+  /* Wait for the process to exit. This will happen
+   *  immediately if it was just killed.
+   */
+  if (plug_in->pid)
+    waitpid (plug_in->pid, &status, 0);
+#else
+  if (kill_it && plug_in->pid)
+    {
+      /* Trying to avoid TerminateProcess (does mostly work).
+       * Otherwise some of our needed DLLs may get into an unstable state
+       * (see Win32 API docs).
+       */
+      DWORD dwExitCode = STILL_ACTIVE;
+      DWORD dwTries  = 10;
+      while ((STILL_ACTIVE == dwExitCode)
+	     && GetExitCodeProcess((HANDLE) plug_in->pid, &dwExitCode)
+	     && (dwTries > 0))
+	{
+	  Sleep(10);
+	  dwTries--;
+	}
+      if (STILL_ACTIVE == dwExitCode)
+	{
+	  g_warning("Terminating %s ...", plug_in->args[0]);
+	  TerminateProcess ((HANDLE) plug_in->pid, 0);
+	}
+    }
+#endif
+
+  plug_in->pid = 0;
+
+  /* Remove the input handler. */
+  if (plug_in->input_id)
+    {
+      g_source_remove (plug_in->input_id);
+      plug_in->input_id = 0;
+    }
+
+  /* Close the pipes. */
+  if (plug_in->my_read != NULL)
+    {
+      g_io_channel_unref (plug_in->my_read);
+      plug_in->my_read = NULL;
+    }
+  if (plug_in->my_write != NULL)
+    {
+      g_io_channel_unref (plug_in->my_write);
+      plug_in->my_write = NULL;
+    }
+  if (plug_in->his_read != NULL)
+    {
+      g_io_channel_unref (plug_in->his_read);
+      plug_in->his_read = NULL;
+    }
+  if (plug_in->his_write != NULL)
+    {
+      g_io_channel_unref (plug_in->his_write);
+      plug_in->his_write = NULL;
+    }
+
+  wire_clear_error ();
+
+  /* Destroy the progress dialog if it exists. */
+  if (plug_in->progress)
+    {
+      progress_end (plug_in->progress);
+      plug_in->progress = NULL;
+    }
+
+  if (plug_in->recurse)
+    {
+      gtk_main_quit ();
+      plug_in->recurse = FALSE;
+    }
+
+  plug_in->synchronous = FALSE;
+
+  /* Unregister any temporary procedures. */
+  if (plug_in->temp_proc_defs)
+    {
+      g_slist_foreach (plug_in->temp_proc_defs,
+		       (GFunc) plug_in_proc_def_remove,
+		       NULL);
+      g_slist_free (plug_in->temp_proc_defs);
+      plug_in->temp_proc_defs = NULL;
+    }
+
+  /* Close any dialogs that this plugin might have opened */
+  brush_select_dialogs_check ();
+  pattern_select_dialogs_check ();
+  gradient_select_dialogs_check ();
+
+  open_plug_ins = g_slist_remove (open_plug_ins, plug_in);
 }
 
 static Argument *

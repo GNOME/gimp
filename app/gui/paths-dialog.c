@@ -374,7 +374,8 @@ static void
 paths_dialog_realized (GtkWidget *widget)
 {
   GdkColormap *colormap;
-  gchar dash_list[2]= {3,3};
+  gchar        dash_list[2]= { 3, 3 };
+  gboolean     success;
 
   /* Help out small displays */
   if (gimprc.preview_size < 64)
@@ -383,10 +384,18 @@ paths_dialog_realized (GtkWidget *widget)
   paths_dialog->gc = gdk_gc_new (widget->window);
   gdk_gc_set_dashes (paths_dialog->gc, 2, dash_list, 2);
   colormap = gtk_widget_get_colormap (paths_dialog->paths_list);
-  gdk_color_parse ("black", &paths_dialog->black);
-  gdk_color_alloc (colormap, &paths_dialog->black);
-  gdk_color_parse ("white", &paths_dialog->white);
-  gdk_color_alloc (colormap, &paths_dialog->white);
+
+  paths_dialog->black.red   = 0;
+  paths_dialog->black.green = 0;
+  paths_dialog->black.blue  = 0;
+  gdk_colormap_alloc_colors (colormap, &paths_dialog->black, 1,
+			     FALSE, TRUE, &success);
+
+  paths_dialog->white.red   = 255;
+  paths_dialog->white.green = 255;
+  paths_dialog->white.blue  = 255;
+  gdk_colormap_alloc_colors (colormap, &paths_dialog->white, 1,
+			     FALSE, TRUE, &success);
 }
 
 /* Clears out row when list element is deleted/destroyed */

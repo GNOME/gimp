@@ -281,7 +281,7 @@ gimp_dock_remove_book (GimpDock     *dock,
   dockbook->dock  = NULL;
   dock->dockbooks = g_list_remove (dock->dockbooks, dockbook);
 
-  children   = gtk_container_children (GTK_CONTAINER (dock->vbox));
+  children   = gtk_container_get_children (GTK_CONTAINER (dock->vbox));
   book_index = g_list_index (children, dockbook);
 
   if (length != 1)
@@ -299,6 +299,8 @@ gimp_dock_remove_book (GimpDock     *dock,
 
       gtk_container_remove (GTK_CONTAINER (dock->vbox), separator);
     }
+
+  g_list_free (children);
 
   gtk_container_remove (GTK_CONTAINER (dock->vbox), GTK_WIDGET (dockbook));
 
