@@ -1,5 +1,10 @@
 2001-10-10  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/Lighting/lighting_image.c: merged fix for bug #22161
+	from HEAD.
+
+2001-10-10  Sven Neumann  <sven@gimp.org>
+
 	* app/fileops_cmds.c
 	* tools/pdbgen/app.pl
 	* tools/pdbgen/pdb/fileops.pdb: call mkdir() in the PDB function
