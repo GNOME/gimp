@@ -2,8 +2,6 @@
 ;  Thanks to Ed Mackey for this one
 ;   Written by Spencer Kimball
 
-(define (min a b) (if (< a b) a b))
-
 (define (apply-frosty-logo-effect img
 				  logo-layer
 				  size
