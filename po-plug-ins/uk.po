@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 2000-10-16 11:59-0700\n"
+"POT-Creation-Date: 2000-10-27 10:13+0300\n"
 "PO-Revision-Date: 2000-02-08 16:11+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -48,8 +48,8 @@ msgstr "Про"
 #: plug-ins/common/fractaltrace.c:725 plug-ins/common/gauss_iir.c:365
 #: plug-ins/common/gauss_iir.c:448 plug-ins/common/gauss_rle.c:361
 #: plug-ins/common/gauss_rle.c:444 plug-ins/common/gbr.c:456
-#: plug-ins/common/gicon.c:441 plug-ins/common/gif.c:1141
-#: plug-ins/common/gif.c:1212 plug-ins/common/glasstile.c:260
+#: plug-ins/common/gicon.c:441 plug-ins/common/gif.c:1147
+#: plug-ins/common/gif.c:1218 plug-ins/common/glasstile.c:260
 #: plug-ins/common/gpb.c:269 plug-ins/common/gqbist.c:640
 #: plug-ins/common/grid.c:659 plug-ins/common/gtm.c:375
 #: plug-ins/common/hot.c:589 plug-ins/common/illusion.c:561
@@ -57,7 +57,7 @@ msgstr "Про"
 #: plug-ins/common/jpeg.c:1595 plug-ins/common/lic.c:1021
 #: plug-ins/common/mail.c:465 plug-ins/common/mapcolor.c:558
 #: plug-ins/common/max_rgb.c:348 plug-ins/common/mblur.c:763
-#: plug-ins/common/newsprint.c:1211 plug-ins/common/nlfilt.c:365
+#: plug-ins/common/newsprint.c:1211 plug-ins/common/nlfilt.c:368
 #: plug-ins/common/noisify.c:489 plug-ins/common/nova.c:466
 #: plug-ins/common/oilify.c:458 plug-ins/common/papertile.c:250
 #: plug-ins/common/pat.c:412 plug-ins/common/pixelize.c:280
@@ -73,13 +73,13 @@ msgstr "Про"
 #: plug-ins/common/spheredesigner.c:2232 plug-ins/common/spread.c:382
 #: plug-ins/common/struc.c:1281 plug-ins/common/sunras.c:1589
 #: plug-ins/common/tga.c:1448 plug-ins/common/threshold_alpha.c:271
-#: plug-ins/common/tiff.c:1530 plug-ins/common/tile.c:383
+#: plug-ins/common/tiff.c:1582 plug-ins/common/tile.c:383
 #: plug-ins/common/tileit.c:386 plug-ins/common/uniteditor.c:173
 #: plug-ins/common/unsharp.c:786 plug-ins/common/video.c:2155
 #: plug-ins/common/vpropagate.c:935 plug-ins/common/warp.c:437
 #: plug-ins/common/waves.c:349 plug-ins/common/whirlpinch.c:808
 #: plug-ins/common/wind.c:1012 plug-ins/common/wmf.c:931
-#: plug-ins/common/xbm.c:1151 plug-ins/common/xpm.c:800
+#: plug-ins/common/xbm.c:1150 plug-ins/common/xpm.c:800
 #: plug-ins/fits/fits.c:987 plug-ins/flame/flame.c:631
 #: plug-ins/flame/flame.c:920 plug-ins/fp/fp_gtk.c:895
 #: plug-ins/gap/gap_arr_dialog.c:768 plug-ins/gap/gap_arr_dialog.c:1010
@@ -130,7 +130,7 @@ msgstr "Гаразд"
 #: plug-ins/common/gauss_iir.c:367 plug-ins/common/gauss_iir.c:450
 #: plug-ins/common/gauss_rle.c:363 plug-ins/common/gauss_rle.c:446
 #: plug-ins/common/gbr.c:458 plug-ins/common/gicon.c:443
-#: plug-ins/common/gif.c:1143 plug-ins/common/gif.c:1214
+#: plug-ins/common/gif.c:1149 plug-ins/common/gif.c:1220
 #: plug-ins/common/glasstile.c:262 plug-ins/common/gpb.c:271
 #: plug-ins/common/gqbist.c:642 plug-ins/common/grid.c:661
 #: plug-ins/common/gtm.c:377 plug-ins/common/hot.c:591
@@ -139,7 +139,7 @@ msgstr "Гаразд"
 #: plug-ins/common/lic.c:1023 plug-ins/common/mail.c:467
 #: plug-ins/common/mapcolor.c:560 plug-ins/common/max_rgb.c:350
 #: plug-ins/common/mblur.c:765 plug-ins/common/newsprint.c:1213
-#: plug-ins/common/nlfilt.c:367 plug-ins/common/noisify.c:491
+#: plug-ins/common/nlfilt.c:370 plug-ins/common/noisify.c:491
 #: plug-ins/common/nova.c:468 plug-ins/common/oilify.c:460
 #: plug-ins/common/papertile.c:252 plug-ins/common/pat.c:414
 #: plug-ins/common/pixelize.c:282 plug-ins/common/plasma.c:309
@@ -155,13 +155,13 @@ msgstr "Гаразд"
 #: plug-ins/common/spheredesigner.c:2236 plug-ins/common/spread.c:384
 #: plug-ins/common/struc.c:1283 plug-ins/common/sunras.c:1591
 #: plug-ins/common/tga.c:1450 plug-ins/common/threshold_alpha.c:273
-#: plug-ins/common/tiff.c:1532 plug-ins/common/tile.c:385
+#: plug-ins/common/tiff.c:1584 plug-ins/common/tile.c:385
 #: plug-ins/common/tileit.c:388 plug-ins/common/uniteditor.c:175
 #: plug-ins/common/unsharp.c:788 plug-ins/common/video.c:2157
 #: plug-ins/common/vpropagate.c:937 plug-ins/common/warp.c:439
 #: plug-ins/common/waves.c:351 plug-ins/common/whirlpinch.c:810
 #: plug-ins/common/wind.c:1014 plug-ins/common/wmf.c:933
-#: plug-ins/common/xbm.c:1153 plug-ins/common/xpm.c:802
+#: plug-ins/common/xbm.c:1152 plug-ins/common/xpm.c:802
 #: plug-ins/fits/fits.c:989 plug-ins/flame/flame.c:633
 #: plug-ins/flame/flame.c:922 plug-ins/fp/fp_gtk.c:899
 #: plug-ins/gap/gap_arr_dialog.c:1012 plug-ins/gap/gap_dbbrowser_utils.c:210
@@ -198,7 +198,7 @@ msgstr "В╕дм╕нити"
 #: plug-ins/common/glasstile.c:276 plug-ins/common/grid.c:680
 #: plug-ins/common/illusion.c:580 plug-ins/common/iwarp.c:1160
 #: plug-ins/common/jigsaw.c:2511 plug-ins/common/mapcolor.c:576
-#: plug-ins/common/max_rgb.c:364 plug-ins/common/nlfilt.c:584
+#: plug-ins/common/max_rgb.c:364 plug-ins/common/nlfilt.c:587
 #: plug-ins/common/noisify.c:506 plug-ins/common/plasma.c:326
 #: plug-ins/common/polar.c:935 plug-ins/common/ps.c:2938
 #: plug-ins/common/sharpen.c:550 plug-ins/common/sinus.c:2123
@@ -525,7 +525,7 @@ msgstr "Косинус"
 #: plug-ins/common/AlienMap.c:1518 plug-ins/common/CML_explorer.c:167
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
 #: plug-ins/common/ps.c:2722 plug-ins/common/ps.c:2735
-#: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1551
+#: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1603
 #: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:301
 msgid "None"
 msgstr "Нема╓"
@@ -924,7 +924,7 @@ msgstr "Позиц╕я джерела св╕тла по X в простор╕ XYZ"
 #: plug-ins/MapObject/mapobject_ui.c:1093
 #: plug-ins/MapObject/mapobject_ui.c:1189 plug-ins/common/flarefx.c:804
 #: plug-ins/common/nova.c:628 plug-ins/common/papertile.c:294
-#: plug-ins/common/xbm.c:1244 plug-ins/gap/gap_mov_dialog.c:2121
+#: plug-ins/common/xbm.c:1243 plug-ins/gap/gap_mov_dialog.c:2121
 #: plug-ins/gflare/gflare.c:2871 plug-ins/ifscompose/ifscompose.c:532
 msgid "Y:"
 msgstr "Y:"
@@ -1297,7 +1297,7 @@ msgid "Size"
 msgstr "Розм╕р"
 
 #: plug-ins/MapObject/mapobject_ui.c:1272 plug-ins/common/despeckle.c:745
-#: plug-ins/common/nlfilt.c:427 plug-ins/common/nova.c:504
+#: plug-ins/common/nlfilt.c:430 plug-ins/common/nova.c:504
 #: plug-ins/common/unsharp.c:811 plug-ins/common/whirlpinch.c:877
 #: plug-ins/gfig/gfig.c:3175 plug-ins/gflare/gflare.c:2902
 #: plug-ins/imagemap/imap_circle.c:273
@@ -1355,8 +1355,8 @@ msgstr ""
 #: plug-ins/common/pix.c:326 plug-ins/common/png.c:426
 #: plug-ins/common/png.c:428 plug-ins/common/pnm.c:414
 #: plug-ins/common/psd.c:1731 plug-ins/common/sunras.c:441
-#: plug-ins/common/tga.c:429 plug-ins/common/tiff.c:450
-#: plug-ins/common/xbm.c:735 plug-ins/common/xpm.c:334
+#: plug-ins/common/tga.c:429 plug-ins/common/tiff.c:455
+#: plug-ins/common/xbm.c:734 plug-ins/common/xpm.c:334
 #: plug-ins/common/xwd.c:430 plug-ins/faxg3/faxg3.c:196
 #: plug-ins/gfli/gfli.c:459 plug-ins/sgi/sgi.c:330 plug-ins/sgi/sgi.c:332
 #: plug-ins/xjt/xjt.c:3246
@@ -1400,9 +1400,9 @@ msgstr ""
 #: plug-ins/common/png.c:547 plug-ins/common/pnm.c:502
 #: plug-ins/common/psd.c:2114 plug-ins/common/smooth_palette.c:241
 #: plug-ins/common/sunras.c:931 plug-ins/common/tga.c:1014
-#: plug-ins/common/tiff.c:676 plug-ins/common/tile.c:268
+#: plug-ins/common/tiff.c:681 plug-ins/common/tile.c:268
 #: plug-ins/common/winclipboard.c:515 plug-ins/common/wmf.c:2350
-#: plug-ins/common/xbm.c:873 plug-ins/faxg3/faxg3.c:448
+#: plug-ins/common/xbm.c:872 plug-ins/faxg3/faxg3.c:448
 #: plug-ins/fits/fits.c:521 plug-ins/gfig/gfig.c:2832
 #: plug-ins/gfig/gfig.c:3185 plug-ins/sgi/sgi.c:378 plug-ins/twain/twain.c:722
 #: plug-ins/winsnap/winsnap.c:1235
@@ -1422,7 +1422,7 @@ msgstr "Неможливо в╕дкрити %s"
 
 #. init the progress meter
 #: plug-ins/bmp/bmpwrite.c:179 plug-ins/common/CEL.c:510
-#: plug-ins/common/gbr.c:387 plug-ins/common/gif.c:937
+#: plug-ins/common/gbr.c:387 plug-ins/common/gif.c:943
 #: plug-ins/common/gpb.c:768 plug-ins/common/gpb.c:808
 #: plug-ins/common/gtm.c:247 plug-ins/common/hrz.c:476
 #: plug-ins/common/jpeg.c:1196 plug-ins/common/pat.c:343
@@ -1430,7 +1430,7 @@ msgstr "Неможливо в╕дкрити %s"
 #: plug-ins/common/png.c:775 plug-ins/common/png.c:777
 #: plug-ins/common/pnm.c:786 plug-ins/common/ps.c:1003
 #: plug-ins/common/sunras.c:524 plug-ins/common/tga.c:1196
-#: plug-ins/common/tiff.c:1282 plug-ins/common/xbm.c:983
+#: plug-ins/common/tiff.c:1334 plug-ins/common/xbm.c:982
 #: plug-ins/common/xpm.c:653 plug-ins/common/xwd.c:534
 #: plug-ins/fits/fits.c:472 plug-ins/gfli/gfli.c:679 plug-ins/sgi/sgi.c:548
 #: plug-ins/sgi/sgi.c:550 plug-ins/xjt/xjt.c:1628
@@ -2165,7 +2165,7 @@ msgstr "Вир╕внювання видимих шар╕в"
 #: plug-ins/common/glasstile.c:294 plug-ins/common/grid.c:720
 #: plug-ins/common/illusion.c:597 plug-ins/common/jpeg.c:1643
 #: plug-ins/common/lic.c:1090 plug-ins/common/max_rgb.c:381
-#: plug-ins/common/nlfilt.c:406 plug-ins/common/noisify.c:524
+#: plug-ins/common/nlfilt.c:409 plug-ins/common/noisify.c:524
 #: plug-ins/common/nova.c:478 plug-ins/common/oilify.c:470
 #: plug-ins/common/pixelize.c:292 plug-ins/common/plasma.c:344
 #: plug-ins/common/png.c:1056 plug-ins/common/polar.c:955
@@ -2634,7 +2634,7 @@ msgstr ""
 msgid "RGBA"
 msgstr "RGBA"
 
-#: plug-ins/common/compose.c:127 plug-ins/common/nlfilt.c:418
+#: plug-ins/common/compose.c:127 plug-ins/common/nlfilt.c:421
 #: plug-ins/common/noisify.c:574 plug-ins/common/noisify.c:657
 msgid "Alpha:"
 msgstr "Альфа:"
@@ -2824,7 +2824,7 @@ msgid "Prefixed Name:"
 msgstr "Преф╕кс назви:"
 
 #: plug-ins/common/csource.c:689 plug-ins/common/mail.c:527
-#: plug-ins/common/tiff.c:1566 plug-ins/common/xbm.c:1203
+#: plug-ins/common/tiff.c:1618 plug-ins/common/xbm.c:1202
 msgid "Comment:"
 msgstr "Коментар:"
 
@@ -3360,7 +3360,7 @@ msgstr "Функц╕я"
 msgid "Bumpmap"
 msgstr "Рель╓ф"
 
-#: plug-ins/common/emboss.c:759 plug-ins/common/nlfilt.c:604
+#: plug-ins/common/emboss.c:759 plug-ins/common/nlfilt.c:607
 #: plug-ins/common/sinus.c:2143 plug-ins/common/waves.c:596
 msgid "Do Preview"
 msgstr "Робити перегляд"
@@ -3704,28 +3704,28 @@ msgstr "Зберегти як GIcon"
 msgid "Icon Name:"
 msgstr "Назва п╕ктограми:"
 
-#: plug-ins/common/gif.c:674
+#: plug-ins/common/gif.c:680
 msgid ""
 "GIF: Couldn't simply reduce colors further.\n"
 "Saving as opaque.\n"
 msgstr ""
 
-#: plug-ins/common/gif.c:929
+#: plug-ins/common/gif.c:935
 msgid ""
 "GIF: Sorry, can't save RGB images as GIFs - convert to INDEXED\n"
 "or GRAY first.\n"
 msgstr ""
 
-#: plug-ins/common/gif.c:947
+#: plug-ins/common/gif.c:953
 #, c-format
 msgid "GIF: can't open %s\n"
 msgstr "GIF: не вдалося в╕дкрити %s\n"
 
-#: plug-ins/common/gif.c:1136
+#: plug-ins/common/gif.c:1142
 msgid "GIF Warning"
 msgstr "Попередження GIF"
 
-#: plug-ins/common/gif.c:1162
+#: plug-ins/common/gif.c:1168
 msgid ""
 "The image which you are trying to save as a GIF\n"
 "contains layers which extend beyond the actual\n"
@@ -3736,61 +3736,61 @@ msgid ""
 "the image borders, or cancel this save."
 msgstr ""
 
-#: plug-ins/common/gif.c:1207
+#: plug-ins/common/gif.c:1213
 msgid "Save as GIF"
 msgstr "Зберегти як GIF"
 
 #. regular gif parameter settings
-#: plug-ins/common/gif.c:1229
+#: plug-ins/common/gif.c:1235
 msgid "GIF Options"
 msgstr "Параметри GIF"
 
-#: plug-ins/common/gif.c:1237
+#: plug-ins/common/gif.c:1243
 msgid "Interlace"
 msgstr "Черезрядков╕сть"
 
-#: plug-ins/common/gif.c:1248
+#: plug-ins/common/gif.c:1254
 msgid "GIF Comment:"
 msgstr "Коментар GIF:"
 
 #. additional animated gif parameter settings
-#: plug-ins/common/gif.c:1308
+#: plug-ins/common/gif.c:1314
 msgid "Animated GIF Options"
 msgstr "Параметри ан╕мац╕йного GIF"
 
-#: plug-ins/common/gif.c:1316
+#: plug-ins/common/gif.c:1322
 msgid "Loop forever"
 msgstr "В╕чний цикл"
 
-#: plug-ins/common/gif.c:1328
+#: plug-ins/common/gif.c:1334
 msgid "Delay between Frames where Unspecified:"
 msgstr "Затримка м╕ж кадрами де не вказано:"
 
-#: plug-ins/common/gif.c:1340
+#: plug-ins/common/gif.c:1346
 msgid "Milliseconds"
 msgstr "м╕л╕секунд"
 
-#: plug-ins/common/gif.c:1350
+#: plug-ins/common/gif.c:1356
 msgid "Frame Disposal where Unspecified: "
 msgstr "Розм╕щення кадру де не вказано:"
 
-#: plug-ins/common/gif.c:1359
+#: plug-ins/common/gif.c:1365
 msgid "I don't Care"
 msgstr "Неважливо"
 
-#: plug-ins/common/gif.c:1361
+#: plug-ins/common/gif.c:1367
 msgid "Cumulative Layers (Combine)"
 msgstr "Накладання шар╕в (об'╓днання)"
 
-#: plug-ins/common/gif.c:1363
+#: plug-ins/common/gif.c:1369
 msgid "One Frame per Layer (Replace)"
 msgstr "Один кадр на шар (зам╕на)"
 
-#: plug-ins/common/gif.c:2347
+#: plug-ins/common/gif.c:2353
 msgid "GIF: error writing output file\n"
 msgstr "GIF: помилка запису вих╕дного файлу\n"
 
-#: plug-ins/common/gif.c:2438
+#: plug-ins/common/gif.c:2444
 msgid "GIF save: Your comment string is too long.\n"
 msgstr "Збереження GIF: Ваш коментар надто довгий.\n"
 
@@ -4727,23 +4727,23 @@ msgstr ""
 msgid "<Image>/Filters/Enhance/NL Filter..."
 msgstr "<Image>/Ф╕льтри/Покращення/Нел╕н╕йний ф╕льтр..."
 
-#: plug-ins/common/nlfilt.c:277 plug-ins/common/nlfilt.c:360
+#: plug-ins/common/nlfilt.c:277 plug-ins/common/nlfilt.c:363
 msgid "NL Filter"
 msgstr "Нел╕н╕йний ф╕льтр"
 
-#: plug-ins/common/nlfilt.c:390
+#: plug-ins/common/nlfilt.c:393
 msgid "Filter"
 msgstr "Ф╕льтр"
 
-#: plug-ins/common/nlfilt.c:394
+#: plug-ins/common/nlfilt.c:397
 msgid "Alpha Trimmed Mean"
 msgstr ""
 
-#: plug-ins/common/nlfilt.c:396
+#: plug-ins/common/nlfilt.c:399
 msgid "Optimal Estimation"
 msgstr ""
 
-#: plug-ins/common/nlfilt.c:398
+#: plug-ins/common/nlfilt.c:401
 msgid "Edge Enhancement"
 msgstr "П╕дсилення гран╕"
 
@@ -5128,9 +5128,8 @@ msgid "PNM: Premature end of file."
 msgstr "PNM: Передчасне зак╕нчення файлу."
 
 #: plug-ins/common/pnm.c:452
-#, fuzzy
 msgid "PNM: Invalid file."
-msgstr "PNM: Нев╕рне максимальне значення."
+msgstr "PNM: Нев╕рний файл."
 
 #: plug-ins/common/pnm.c:465
 msgid "PNM: File not in a supported format."
@@ -5287,19 +5286,19 @@ msgstr ""
 
 #: plug-ins/common/ps.c:2718
 msgid "Text Antialiasing"
-msgstr ""
+msgstr "Згладжування тексту"
 
 #: plug-ins/common/ps.c:2723 plug-ins/common/ps.c:2736
 msgid "Weak"
-msgstr ""
+msgstr "Слабке"
 
 #: plug-ins/common/ps.c:2724 plug-ins/common/ps.c:2737
 msgid "Strong"
-msgstr ""
+msgstr "Сильне"
 
 #: plug-ins/common/ps.c:2730
 msgid "Graphic Antialiasing"
-msgstr ""
+msgstr "Згляджування граф╕ки"
 
 #: plug-ins/common/ps.c:2792
 msgid "Save as PostScript"
@@ -6288,31 +6287,31 @@ msgstr "Пор╕г альфа-каналу: Замальовування прозорост╕..."
 msgid "Threshold Alpha"
 msgstr "Пор╕г альфа-каналу"
 
-#: plug-ins/common/tiff.c:685
+#: plug-ins/common/tiff.c:690
 msgid "TIFF Channel"
 msgstr "Канал TIFF"
 
-#: plug-ins/common/tiff.c:1525
+#: plug-ins/common/tiff.c:1577
 msgid "Save as TIFF"
 msgstr "Зберегти TIFF"
 
-#: plug-ins/common/tiff.c:1547
+#: plug-ins/common/tiff.c:1599
 msgid "Compression"
 msgstr "Стиснення"
 
-#: plug-ins/common/tiff.c:1552
+#: plug-ins/common/tiff.c:1604
 msgid "LZW"
 msgstr "LZW"
 
-#: plug-ins/common/tiff.c:1553
+#: plug-ins/common/tiff.c:1605
 msgid "Pack Bits"
 msgstr "Впакован╕ б╕ти"
 
-#: plug-ins/common/tiff.c:1554
+#: plug-ins/common/tiff.c:1606
 msgid "Deflate"
 msgstr "Здути"
 
-#: plug-ins/common/tiff.c:1555
+#: plug-ins/common/tiff.c:1607
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -7016,30 +7015,30 @@ msgstr "Перетворення зображення"
 msgid "Created with The GIMP"
 msgstr "Створено в GIMP"
 
-#: plug-ins/common/xbm.c:731
+#: plug-ins/common/xbm.c:730
 #, c-format
 msgid "XBM: cannot open \"%s\"\n"
 msgstr "XBM: неможливо в╕дкрити \"%s\"\n"
 
-#: plug-ins/common/xbm.c:814
+#: plug-ins/common/xbm.c:813
 #, c-format
 msgid "XBM: cannot read header (ftell == %ld)\n"
 msgstr "XBM: неможливо зчитати заголовок (ftell == %ld)\n"
 
-#: plug-ins/common/xbm.c:820
+#: plug-ins/common/xbm.c:819
 msgid "XBM: no image width specified\n"
 msgstr "XBM: не вказано ширини зображення\n"
 
-#: plug-ins/common/xbm.c:826
+#: plug-ins/common/xbm.c:825
 msgid "XBM: no image height specified\n"
 msgstr "XBM: не вказано висоти зображення\n"
 
-#: plug-ins/common/xbm.c:832
+#: plug-ins/common/xbm.c:831
 msgid "XBM: no image data type specified\n"
 msgstr "XBM: не вказано типу даних зображення\n"
 
 #. The image is not black-and-white.
-#: plug-ins/common/xbm.c:965
+#: plug-ins/common/xbm.c:964
 msgid ""
 "The image which you are trying to save as\n"
 "an XBM contains more than two colors.\n"
@@ -7048,54 +7047,54 @@ msgid ""
 "(1-bit) indexed image and try again."
 msgstr ""
 
-#: plug-ins/common/xbm.c:976
+#: plug-ins/common/xbm.c:975
 msgid ""
 "You cannot save a cursor mask for an image\n"
 "which has no alpha channel."
 msgstr ""
 
-#: plug-ins/common/xbm.c:1005
+#: plug-ins/common/xbm.c:1004
 #, c-format
 msgid "XBM: cannot create \"%s\"\n"
 msgstr "XBM: неможливо створити \"%s\"\n"
 
-#: plug-ins/common/xbm.c:1146
+#: plug-ins/common/xbm.c:1145
 msgid "Save as XBM"
 msgstr "Зберегти як XBM"
 
 #. parameter settings
-#: plug-ins/common/xbm.c:1163
+#: plug-ins/common/xbm.c:1162
 msgid "XBM Options"
 msgstr "Параметри XBM"
 
 #. X10 format
-#: plug-ins/common/xbm.c:1174
+#: plug-ins/common/xbm.c:1173
 msgid "X10 Format Bitmap"
 msgstr ""
 
-#: plug-ins/common/xbm.c:1192
+#: plug-ins/common/xbm.c:1191
 msgid "Identifier Prefix:"
 msgstr ""
 
 #. hotspot toggle
-#: plug-ins/common/xbm.c:1210
+#: plug-ins/common/xbm.c:1209
 msgid "Write Hot Spot Values"
 msgstr ""
 
-#: plug-ins/common/xbm.c:1234
+#: plug-ins/common/xbm.c:1233
 msgid "Hot Spot X:"
 msgstr ""
 
 #. mask file
-#: plug-ins/common/xbm.c:1248
+#: plug-ins/common/xbm.c:1247
 msgid "Mask File"
 msgstr "Файл маски"
 
-#: plug-ins/common/xbm.c:1259
+#: plug-ins/common/xbm.c:1258
 msgid "Write Extra Mask File"
 msgstr ""
 
-#: plug-ins/common/xbm.c:1270
+#: plug-ins/common/xbm.c:1269
 msgid "Mask File Extension:"
 msgstr "Розширення файлу маски:"
 
@@ -9973,7 +9972,7 @@ msgstr ""
 msgid " Upgrading old GDynText layer to %s."
 msgstr ""
 
-#: plug-ins/gdyntext/message_window.c:114
+#: plug-ins/gdyntext/message_window.c:115
 msgid "Dismiss"
 msgstr ""
 
@@ -10413,7 +10412,7 @@ msgstr ""
 #: plug-ins/gfig/gfig.c:3929 plug-ins/imagemap/imap_cmd_clear.c:50
 #: plug-ins/imagemap/imap_menu.c:298
 msgid "Clear"
-msgstr ""
+msgstr "Очистити"
 
 #: plug-ins/gfig/gfig.c:3931 plug-ins/ifscompose/ifscompose.c:1188
 #: plug-ins/imagemap/imap_toolbar.c:120
@@ -10567,7 +10566,7 @@ msgstr ""
 #: plug-ins/gflare/gflare.c:1563
 #, c-format
 msgid "could not open \"%s\""
-msgstr ""
+msgstr "не вдалося в╕дкрити \"%s\""
 
 #: plug-ins/gflare/gflare.c:1753
 #, c-format
@@ -10914,7 +10913,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/general.c:281
 msgid "Drop Shadow"
-msgstr ""
+msgstr "В╕дкинути т╕нь"
 
 #: plug-ins/gimpressionist/general.c:285
 msgid "Adds a shadow effect to each brush stroke"
@@ -10935,7 +10934,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/general.c:319
 msgid "Shadow blur:"
-msgstr ""
+msgstr "Розмивання т╕н╕:"
 
 #: plug-ins/gimpressionist/general.c:330
 msgid "How much to blur the drop shadow"
@@ -12883,9 +12882,3 @@ msgstr "Помилка: неможливо зчитати файл властивостей XJT %s"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Помилка: файл властивостей XJT %s порожн╕й"
-
-#~ msgid "PNM: %s is not a valid file."
-#~ msgstr "PNM: %s - нев╕рний файл."
-
-#~ msgid "to"
-#~ msgstr "в"
