@@ -1,3 +1,8 @@
+2003-09-01  Manish Singh  <yosh@gimp.org>
+
+	* app/gui/preferences-dialog.c: added a shadow around the comment
+	entry box, looks nicer.
+
 2003-09-01  Michael Natterer  <mitch@gimp.org>
 
 	We really don't need that global variable overkill from appenv.h
