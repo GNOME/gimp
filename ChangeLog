@@ -1,3 +1,7 @@
+1999-10-04  Sven Neumann <sven@gimp.org>
+
+	* app/tool_options.c: fixed bug #2511
+
 1999-10-04 Olof S Kylander <olof@gimp.org>
 
 	* app/color_cmds.c

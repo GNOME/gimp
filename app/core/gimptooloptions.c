@@ -561,7 +561,7 @@ paint_options_init (PaintOptions         *options,
 			((tool_type == PAINTBRUSH) ?
 			 _("Paintbrush Options") :
 			 ((tool_type == ERASER) ?
-			  _("Erazer Options") :
+			  _("Eraser Options") :
 			  ((tool_type == AIRBRUSH) ?
 			   _("Airbrush Options") :
 			   ((tool_type == CLONE) ?
