@@ -879,7 +879,6 @@ msgid "Crop & Resize"
 msgstr "Rogner & Redimensionner"
 
 #: app/crop.c:189
-#, fuzzy
 msgid "Current Layer only"
 msgstr "Calque courant seulement"
 
@@ -1447,25 +1446,31 @@ msgid "Unknown brush format version #%d in \"%s\"\n"
 msgstr "Format de pinceau inconnu #%d dans \"%s\"\n"
 
 #: app/gimpbrushlist.c:188 app/gimpbrushlist.c:197
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to load brush\n"
 "\"%s\""
-msgstr "Échec de la lecture du pinceau pixmap."
+msgstr ""
+"Avertissement : échec du chargement du pinceau\n"
+"\"%s\""
 
 #: app/gimpbrushlist.c:206
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to load pixmap brush\n"
 "\"%s\""
-msgstr "Échec de la lecture du pinceau pixmap."
+msgstr ""
+"Échec de la lecture du pinceau pixmap\n"
+"\"%s\""
 
 #: app/gimpbrushlist.c:215
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to load pixmap pipe\n"
 "\"%s\""
-msgstr "Échec de la lecture du pinceau pixmap."
+msgstr ""
+"Échec de la lecture du pinceau animé\n"
+"\"%s\""
 
 #: app/gimpbrushpipe.c:308
 msgid "Brush pipes should have at least one brush."
@@ -1669,7 +1674,6 @@ msgid "Message repeated once"
 msgstr "Message répété une fois."
 
 #: app/gimpui.c:110
-#, fuzzy
 msgid ""
 "WARNING:\n"
 "Too many open message dialogs.\n"
@@ -1677,7 +1681,7 @@ msgid ""
 msgstr ""
 "AVERTISSEMENT :\n"
 "Trop de boîtes de messages à l'écran.\n"
-"Messages redirigés vers la sortie d'erreur texte.\n"
+"Messages redirigés vers la sortie d'erreur texte."
 
 #: app/gimpui.c:117
 msgid "GIMP Message"
@@ -2347,9 +2351,9 @@ msgstr "%d × %d pixels"
 
 #. image resolution
 #: app/info_window.c:520
-#, fuzzy, c-format
+#, c-format
 msgid "%g x %g dpi"
-msgstr "%d × %d pixels"
+msgstr "%d × %d pts par pouce"
 
 #: app/info_window.c:532
 msgid "RGB Color"
@@ -3141,9 +3145,8 @@ msgid "Clipped to bottom layer"
 msgstr "Rogné à la taille du calque le plus bas"
 
 #: app/lc_dialog.c:99
-#, fuzzy
 msgid "Layers, Channels & Paths"
-msgstr "Calques & Canaux"
+msgstr "Calques, canaux & chemins"
 
 #. The Auto-button
 #: app/lc_dialog.c:147 app/levels.c:588
@@ -3200,14 +3203,12 @@ msgid "Allow Window Resizing"
 msgstr "Permettre le changement de taille de la fenêtre"
 
 #: app/magnify.c:136
-#, fuzzy
 msgid "Zoom in"
-msgstr "Zoom avant & arrière"
+msgstr "Zoom avant"
 
 #: app/magnify.c:138
-#, fuzzy
 msgid "Zoom out"
-msgstr "Zoom avant & arrière"
+msgstr "Zoom arrière"
 
 #: app/main.c:271
 msgid "GIMP version"
@@ -3328,9 +3329,8 @@ msgstr "degrés"
 
 #. <Toolbox>/File
 #: app/menus.c:82
-#, fuzzy
 msgid "/_File"
-msgstr "/Fichier"
+msgstr "/_Fichier"
 
 #: app/menus.c:84 app/menus.c:191
 msgid "/File/New..."
@@ -3353,9 +3353,8 @@ msgid "/File/Dialogs"
 msgstr "/Fichier/Dialogues"
 
 #: app/menus.c:107
-#, fuzzy
 msgid "/File/Dialogs/Layers, Channels & Paths..."
-msgstr "/Fichier/Dialogues/Calques & Canaux..."
+msgstr "/Fichier/Dialogues/Calques, canaux & chemins...."
 
 #: app/menus.c:109
 msgid "/File/Dialogs/Tool Options..."
@@ -3407,9 +3406,8 @@ msgstr "/Fichier/Quitter"
 
 #. <Toolbox>/Xtns
 #: app/menus.c:153
-#, fuzzy
 msgid "/_Xtns"
-msgstr "/Extensions"
+msgstr "/E_xtensions"
 
 #: app/menus.c:155
 msgid "/Xtns/Module Browser..."
@@ -3417,9 +3415,8 @@ msgstr "/Extensions/Explorateur de Modules..."
 
 #. <Toolbox>/Help
 #: app/menus.c:163
-#, fuzzy
 msgid "/_Help"
-msgstr "/Aide"
+msgstr "/_Aide"
 
 #: app/menus.c:165
 msgid "/Help/Help..."
@@ -3751,9 +3748,8 @@ msgid "/Layers"
 msgstr "/Calques"
 
 #: app/menus.c:433
-#, fuzzy
 msgid "/Layers/Layers, Channels & Paths..."
-msgstr "/Calques/Calques & Canaux..."
+msgstr "/Calques/Calques, canaux & chemins..."
 
 #. <Image>/Layers/Stack
 #: app/menus.c:438
@@ -3852,9 +3848,8 @@ msgid "/Dialogs"
 msgstr "/Dialogues"
 
 #: app/menus.c:512
-#, fuzzy
 msgid "/Dialogs/Layers, Channels & Paths..."
-msgstr "/Dialogues/Calques & Canaux..."
+msgstr "/Dialogues/Calques, canaux & chemins..."
 
 #: app/menus.c:514
 msgid "/Dialogs/Tool Options..."
@@ -4056,14 +4051,12 @@ msgid "/Add Layer Mask..."
 msgstr "/Ajouter un masque de calque..."
 
 #: app/menus.c:693
-#, fuzzy
 msgid "/Apply Layer Mask"
-msgstr "/Appliquer le masque de calque..."
+msgstr "/Appliquer le masque de calque"
 
 #: app/menus.c:695
-#, fuzzy
 msgid "/Delete Layer Mask"
-msgstr "/Effacer Calque"
+msgstr "/Effacer le masque de calque"
 
 #: app/menus.c:697
 msgid "/Mask to Selection"
@@ -4633,9 +4626,9 @@ msgid "Extensions"
 msgstr "Extensions"
 
 #: app/plug_in.c:775
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to locate plug-in: \"%s\""
-msgstr "impossible de trouver l'extension: \"%s\""
+msgstr "Impossible de trouver l'appendice : \"%s\""
 
 #: app/posterize.c:147
 msgid "Posterize does not operate on indexed drawables."
@@ -5319,10 +5312,13 @@ msgid ""
 "some layers completely away.\n"
 "Is this what you want?"
 msgstr ""
+"La taille d'image choisie va\n"
+"éliminer certains calques.\n"
+"Est-ce cela que vous voulez ?"
 
 #: app/resize.c:1338
 msgid "Layer Too Small"
-msgstr ""
+msgstr "Calque trop petit"
 
 #: app/rotate_tool.c:83
 msgid "Rotation Information"
@@ -5382,14 +5378,14 @@ msgid "Use Dynamic Text"
 msgstr "Texte dynamique"
 
 #: app/text_tool.c:603
-#, fuzzy, c-format
+#, c-format
 msgid "Font '%s' not found."
-msgstr "Police '%s' non trouvée. %s"
+msgstr "Police \"%s\" non trouvée."
 
 #: app/text_tool.c:622
 #, c-format
 msgid "Font '%s' not found.%s"
-msgstr "Police '%s' non trouvée. %s"
+msgstr "Police \"%s\" non trouvée. %s"
 
 #: app/text_tool.c:625
 msgid ""
