@@ -1,3 +1,9 @@
+2004-06-02  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/libgimp-sections.txt: follow function renaming.
+
+	* libgimp/tmpl/gimpgradientedit.sgml: regenerated.
+
 2004-06-02  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-docs.sgml

@@ -9,12 +9,10 @@ gimpgradientedit
 
 </para>
 
-
 <!-- ##### SECTION See_Also ##### -->
 <para>
 
 </para>
-
 
 <!-- ##### FUNCTION gimp_gradient_segment_get_left_color ##### -->
 <para>
@@ -144,18 +142,6 @@ gimpgradientedit
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_gradient_segment_set_blending_function ##### -->
-<para>
-
-</para>
-
-@name: 
-@start_segment: 
-@end_segment: 
-@blending_function: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_gradient_segment_get_coloring_type ##### -->
 <para>
 
@@ -167,7 +153,19 @@ gimpgradientedit
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_gradient_segment_set_coloring_type ##### -->
+<!-- ##### FUNCTION gimp_gradient_segment_range_set_blending_function ##### -->
+<para>
+
+</para>
+
+@name: 
+@start_segment: 
+@end_segment: 
+@blending_function: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_gradient_segment_range_set_coloring_type ##### -->
 <para>
 
 </para>
