@@ -1,5 +1,9 @@
 2003-11-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/gui-vtable.c: #include "themes.h".
+
+2003-11-10  Michael Natterer  <mitch@gimp.org>
+
 	Made plug-ins honor the current GIMP theme:
 
 	* app/core/gimp.[ch]: added GimpGetThemeDirFunc to the GUI vtable.

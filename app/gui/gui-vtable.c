@@ -46,6 +46,7 @@
 #include "palette-select.h"
 #include "pattern-select.h"
 #include "plug-in-menus.h"
+#include "themes.h"
 
 
 /*  local function prototypes  */
