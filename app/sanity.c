@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
+#include <glib.h>
 #include <fontconfig/fontconfig.h>
 #include <pango/pangoft2.h>
 
@@ -26,74 +26,39 @@
 
 
 const gchar *
-sanity_check (gboolean no_interface)
+sanity_check (void)
 {
-  gchar *abort_message = NULL;
+  gchar *abort_message    = NULL;
 
-  if (! no_interface)
-    {
-      const gchar *mismatch;
-
-#define GTK_REQUIRED_MAJOR 2
-#define GTK_REQUIRED_MINOR 4
-#define GTK_REQUIRED_MICRO 1
-
-      mismatch = gtk_check_version (GTK_REQUIRED_MAJOR,
-                                    GTK_REQUIRED_MINOR,
-                                    GTK_REQUIRED_MICRO);
-
-      if (mismatch)
-        {
-          abort_message =
-            g_strdup_printf
-            ("%s\n\n"
-             "The GIMP requires Gtk+ version %d.%d.%d or later.\n"
-             "Installed Gtk+ version is %d.%d.%d.\n\n"
-             "Somehow you or your software packager managed\n"
-             "to install The GIMP with an older Gtk+ version.\n\n"
-             "Please upgrade to Gtk+ version %d.%d.%d or later.",
-             mismatch,
-             GTK_REQUIRED_MAJOR, GTK_REQUIRED_MINOR, GTK_REQUIRED_MICRO,
-             gtk_major_version, gtk_minor_version, gtk_micro_version,
-             GTK_REQUIRED_MAJOR, GTK_REQUIRED_MINOR, GTK_REQUIRED_MICRO);
-        }
-
-#undef GTK_REQUIRED_MAJOR
-#undef GTK_REQUIRED_MINOR
-#undef GTK_REQUIRED_MICRO
-    }
-
-  if (! abort_message)
-    {
-      gint fc_version       = FcGetVersion ();
-      gint fc_major_version = fc_version / 100 / 100;
-      gint fc_minor_version = fc_version / 100 % 100;
-      gint fc_micro_version = fc_version % 100;
+  gint   fc_version       = FcGetVersion ();
+  gint   fc_major_version = fc_version / 100 / 100;
+  gint   fc_minor_version = fc_version / 100 % 100;
+  gint   fc_micro_version = fc_version % 100;
 
 #define FC_REQUIRED_MAJOR 2
 #define FC_REQUIRED_MINOR 2
 #define FC_REQUIRED_MICRO 0
 
-      if (fc_version < ((FC_REQUIRED_MAJOR * 10000) +
-                        (FC_REQUIRED_MINOR *   100) +
-                        (FC_REQUIRED_MICRO *     1)))
-        {
-          abort_message =
-            g_strdup_printf
-            ("The Fontconfig version being used is too old!\n\n"
-             "The GIMP requires Fontconfig version %d.%d.%d or later.\n"
-             "The Fontconfig version loaded by The GIMP is %d.%d.%d.\n\n"
-             "This may be caused by another instance of libfontconfig.so.1\n"
-             "being installed in the system, probably in /usr/X11R6/lib.\n"
-             "Please correct the situation or report it to someone who can.",
-             FC_REQUIRED_MAJOR, FC_REQUIRED_MINOR, FC_REQUIRED_MICRO,
-             fc_major_version, fc_minor_version, fc_micro_version);
-        }
+  if (fc_version < ((FC_REQUIRED_MAJOR * 10000) +
+                    (FC_REQUIRED_MINOR *   100) +
+                    (FC_REQUIRED_MICRO *     1)))
+    {
+      abort_message =
+        g_strdup_printf
+        ("The Fontconfig version being used is too old!\n\n"
+         "The GIMP requires Fontconfig version %d.%d.%d or later.\n"
+         "The Fontconfig version loaded by The GIMP is %d.%d.%d.\n\n"
+         "This may be caused by another instance of libfontconfig.so.1\n"
+         "being installed in the system, probably in /usr/X11R6/lib.\n"
+         "Please correct the situation or report it to someone who can.",
+         FC_REQUIRED_MAJOR, FC_REQUIRED_MINOR, FC_REQUIRED_MICRO,
+         fc_major_version, fc_minor_version, fc_micro_version);
+    }
 
 #undef FC_REQUIRED_MAJOR
 #undef FC_REQUIRED_MINOR
 #undef FC_REQUIRED_MICRO
-    }
+
 
 #if 0
   /*  disabled until we definitely figured if and how freetype causes

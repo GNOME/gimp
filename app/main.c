@@ -226,7 +226,7 @@ main (int    argc,
       gimp_text_console_exit (EXIT_FAILURE);
     }
 
-  abort_message = sanity_check (no_interface);
+  abort_message = sanity_check ();
 
   if (abort_message)
     {

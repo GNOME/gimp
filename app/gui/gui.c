@@ -76,6 +76,7 @@
 
 /*  local function prototypes  */
 
+static gchar    * gui_sanity_check              (void);
 static void       gui_help_func                 (const gchar        *help_id,
                                                  gpointer            help_data);
 static gboolean   gui_get_background_func       (GimpRGB            *color);
@@ -122,11 +123,20 @@ gboolean
 gui_libs_init (gint    *argc,
 	       gchar ***argv)
 {
+  gchar *abort_message;
+
   g_return_val_if_fail (argc != NULL, FALSE);
   g_return_val_if_fail (argv != NULL, FALSE);
 
   if (! gtk_init_check (argc, argv))
     return FALSE;
+
+  abort_message = gui_sanity_check ();
+  if (abort_message)
+    {
+      gui_abort (abort_message);
+      exit (EXIT_FAILURE);
+    }
 
   gimp_widgets_init (gui_help_func,
                      gui_get_foreground_func,
@@ -210,6 +220,40 @@ gui_post_init (Gimp *gimp)
 
 
 /*  private functions  */
+
+static gchar *
+gui_sanity_check (void)
+{
+  const gchar *mismatch;
+
+#define GTK_REQUIRED_MAJOR 2
+#define GTK_REQUIRED_MINOR 4
+#define GTK_REQUIRED_MICRO 1
+
+  mismatch = gtk_check_version (GTK_REQUIRED_MAJOR,
+                                GTK_REQUIRED_MINOR,
+                                GTK_REQUIRED_MICRO);
+
+  if (mismatch)
+    return g_strdup_printf
+      ("%s\n\n"
+       "The GIMP requires Gtk+ version %d.%d.%d or later.\n"
+       "Installed Gtk+ version is %d.%d.%d.\n\n"
+       "Somehow you or your software packager managed\n"
+       "to install The GIMP with an older Gtk+ version.\n\n"
+       "Please upgrade to Gtk+ version %d.%d.%d or later.",
+       mismatch,
+       GTK_REQUIRED_MAJOR, GTK_REQUIRED_MINOR, GTK_REQUIRED_MICRO,
+       gtk_major_version, gtk_minor_version, gtk_micro_version,
+       GTK_REQUIRED_MAJOR, GTK_REQUIRED_MINOR, GTK_REQUIRED_MICRO);
+
+#undef GTK_REQUIRED_MAJOR
+#undef GTK_REQUIRED_MINOR
+#undef GTK_REQUIRED_MICRO
+
+  return NULL;
+}
+
 
 static void
 gui_help_func (const gchar *help_id,

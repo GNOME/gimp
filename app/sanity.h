@@ -24,7 +24,7 @@
 #endif
 
 
-const gchar * sanity_check (gboolean no_interface);
+const gchar * sanity_check (void);
 
 
 #endif /* __SANITY_H__ */
