@@ -16,13 +16,15 @@
   <section>
     <title>General</title>
 
-    <entry size="big" difficulty="advanced" status="80%" target="1.4">
+    <entry size="big" difficulty="advanced" status="90%" target="1.4">
       <title>Port to glib-2.0 and gtk+-2.0</title>
       <description>
 	<p>
-	  This is directly connected to the objectification task mentioned
-	  below and should probably be addressed after all objects have
-	  been reviewed.
+	  Most of the porting work is completed. By default all files
+	  are compiled with the DISABLE_DEPRECATED definitions that 
+	  prevent us from using deprecated API. Some files however still
+	  work around this. Mostly this is because they use legacy 
+	  widgets like GtkCList, GtkList or GtkPreview.
 	</p>
       </description>
       <contact>
@@ -126,7 +128,7 @@
       </contact>
     </entry>    
 
-    <entry size="medium" difficulty="medium" status="60%" target="1.4">
+    <entry size="medium" difficulty="medium" status="80%" target="1.4">
       <title>Cleanup existing internal objects</title>
       <description>
 	<p>
@@ -250,7 +252,7 @@
   <section>
     <title>LibGimp</title>
 
-    <entry size="medium" difficulty="medium" status="50%" target="1.4">
+    <entry size="medium" difficulty="medium" status="70%" target="1.4">
       <title>Restructure LibGimp</title>
       <description>
 	<p>
@@ -330,7 +332,9 @@
 	<p>
 	  A generic preview widget with functions like scrolling and zooming
 	  useable by effect filters. Should have adaptive supersampling, 
-	  progressive display (if possible) and other neat stuff. 
+	  progressive display (if possible) and other neat stuff. This
+	  would also fix the problem that many plug-ins still use the
+	  deprecated GtkPreview widget.
 	</p>
       </description>
       <contact>
@@ -378,7 +382,7 @@
       </contact>
     </entry>
 
-    <entry size="small" difficulty="easy" status="20%" target="1.4">
+    <entry size="small" difficulty="easy" status="50%" target="1.4">
       <title>Optionally set a different background for the image window</title>
       <description>
 	<p>
@@ -427,7 +431,9 @@
       <description>
 	<p>
 	  Think about a proper way to make all menus and dialogs accesible
-	  and navigationable without using a mouse.
+	  and navigationable without using a mouse. GTK+-2.0 has very much
+	  improved in this area. We need to go through all our dialogs and
+	  install the relevant hooks to get a reasonable focus chain.
 	</p>
       </description>
       <contact>
@@ -462,7 +468,7 @@
       </contact>
     </entry>
 
-    <entry size="small" difficulty="easy" status="0%" target="1.4">
+    <entry size="small" difficulty="easy" status="100%" target="1.4">
       <title>Add an Option to separately switch off the Layer Boundary</title>
       <description>
 	<p>
@@ -476,7 +482,7 @@
       </contact>
     </entry>
 
-    <entry size="small" difficulty="easy" status="0%" target="1.4">
+    <entry size="small" difficulty="easy" status="50%" target="1.4">
       <title>Display the Memory Consumption of the Image</title>
       <description>
 	<p>
