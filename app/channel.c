@@ -285,9 +285,9 @@ channel_scale (Channel *channel, int new_width, int new_height)
                   0, 0,
                   0, 0,
                   TRUE);
-
+  pixelarea_ref (&dest_area);
   scale_area (&src_area, &dest_area);
-
+  pixelarea_unref (&dest_area);
   /*  Push the channel on the undo stack  */
   undo_push_channel_mod (gimage_get_ID (GIMP_DRAWABLE(channel)->gimage_ID), channel);
 

@@ -110,7 +110,6 @@ void  hls_to_rgb            (int *, int *, int *);
 void paint_funcs_area_setup (void);
 void paint_funcs_area_free (void);
 
-
 #define AREA_FUNC_a_a(name) \
 void \
 name##_area ( \
@@ -118,13 +117,12 @@ name##_area ( \
              struct _PixelArea * \
             );
 
-AREA_FUNC_a_a (x_add);
-AREA_FUNC_a_a (x_sub);
-AREA_FUNC_a_a (x_min);
-AREA_FUNC_a_a (invert);
+AREA_FUNC_a_a (x_add)
+AREA_FUNC_a_a (x_sub)
+AREA_FUNC_a_a (x_min)
+AREA_FUNC_a_a (invert)
 
 #undef AREA_FUNC_a_a
-
 
 void
 absdiff_area (
@@ -193,17 +191,6 @@ extract_from_area  (
                     gint cut
                     );
 
-#if 0
-void
-convolve_area (
-	 	struct _PixelArea   *src_area,
-		struct _PixelArea   *dest_area,
-		gint         *matrix,
-		guint         matrix_size,
-		gint          divisor,
-		gint          mode
-		);
-#endif
 void
 convolve_area (
 	 	struct _PixelArea   *src_area,

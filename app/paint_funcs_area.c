@@ -318,10 +318,10 @@ name##_area ( \
 
 
 
-AREA_FUNC_a_a (x_add);
-AREA_FUNC_a_a (x_sub);
-AREA_FUNC_a_a (x_min);
-AREA_FUNC_a_a (invert);
+AREA_FUNC_a_a (x_add)
+AREA_FUNC_a_a (x_sub)
+AREA_FUNC_a_a (x_min)
+AREA_FUNC_a_a (invert)
 
 #undef AREA_FUNC_a_a
 
@@ -1402,7 +1402,6 @@ gaussian_blur_area  (
   guint bytes_per_channel = bytes_per_pixel / num_channels;
   gint src_x = pixelarea_x (src_area);
   gint src_y = pixelarea_y (src_area);
-
   /* add a tag check here to look for an alpha channel */
 
   gaussian_blur_area_funcs (src_tag);
@@ -1419,7 +1418,7 @@ gaussian_blur_area  (
     sum[i] = curve[i-length-1] + sum[i-1];
   sum += length;
   total = sum[length] - sum[-length];
-  
+
   /* create src column and row pixel rows */
   src_col_data = (guchar *) g_malloc (height * bytes_per_pixel);
   src_row_data = (guchar *) g_malloc (width * bytes_per_pixel);
@@ -1434,7 +1433,7 @@ gaussian_blur_area  (
   rle_values_tag = tag_new (tag_precision (src_tag), FORMAT_GRAY, ALPHA_NO); 
   rle_values_data = (guchar *) g_malloc (MAXIMUM (width, height) * bytes_per_channel); 
   pixelrow_init (&rle_values, rle_values_tag , rle_values_data, MAXIMUM(width, height));
-  
+ 
   /* first do the columns */
   for (col = 0; col < width; col++)
     {
@@ -1453,7 +1452,7 @@ gaussian_blur_area  (
       /*pixel_region_set_col (srcR, col + srcR->x, srcR->y, height, src);*/
       pixelarea_write_col (src_area, &src_col, src_x + col, src_y, height);
     }
-  
+
   /* do the rows next */
   for (row = 0; row < height; row++)
     {
@@ -1555,7 +1554,7 @@ rle_row_u8  (
 	    {
 	      *how_many++ = (i - j);
                for( b = 0; b < num_channels; b++)	
-	          values[b]  = last[b];
+	         values[b]  = last[b];
                values += num_channels;
 	    }
 	  start = i;
@@ -1567,9 +1566,9 @@ rle_row_u8  (
   for (j = start; j < i; j++)
     {
       *how_many++ = (i - j);
-      for( b = 0; b < num_channels; b++)	
-	values[b]  = last[b];
-      values += num_channels;
+       for( b = 0; b < num_channels; b++)	
+	 values[b]  = last[b];
+       values += num_channels;
     }
 }
 
@@ -1713,12 +1712,10 @@ gaussian_blur_row_u8  (
   guint8 *dp = dest_data + alpha;
   gint initial_p = sp[0];
   gint initial_m = sp[(width -1) * num_channels];
-  
   for (x = 0; x < width; x++)
     {
       start = (x < length) ? -x : -length;
       end = (width <= (x + length)) ? (width - x - 1) : length;
-      start = -x;
       val = 0;
       i = start;
       rle_count_ptr = rle_count + (x + i);
@@ -1776,7 +1773,6 @@ gaussian_blur_row_u16  (
     {
       start = (x < length) ? -x : -length;
       end = (width <= (x + length)) ? (width - x - 1) : length;
-      start = -x;
       val = 0;
       i = start;
       rle_count_ptr = rle_count + (x + i);
@@ -1834,7 +1830,6 @@ gaussian_blur_row_float  (
     {
       start = (x < length) ? -x : -length;
       end = (width <= (x + length)) ? (width - x - 1) : length;
-      start = -x;
       val = 0;
       i = start;
       rle_count_ptr = rle_count + (x + i);
@@ -2013,7 +2008,8 @@ scale_row_no_resample_u8  (
   gint x;
   guint8 *dest = (guint8*) pixelrow_data (dest_row);
   guint8 *src = (guint8*) pixelrow_data (src_row);		
-  gint row_num_channels = tag_num_channels (pixelrow_tag (dest_row));
+  gint num_channels = tag_num_channels (pixelrow_tag (dest_row));
+  gint row_num_channels = num_channels * pixelrow_width (dest_row);
   for (x = 0; x < row_num_channels ; x++)
     dest[x] = src[x_src_offsets[x]];
 }
@@ -2028,7 +2024,8 @@ scale_row_no_resample_u16  (
   gint x;
   guint16 *dest = (guint16*) pixelrow_data (dest_row);
   guint16 *src = (guint16*) pixelrow_data (src_row);		
-  gint row_num_channels = tag_num_channels (pixelrow_tag (dest_row));
+  gint num_channels = tag_num_channels (pixelrow_tag (dest_row));
+  gint row_num_channels = num_channels * pixelrow_width (dest_row);
   for (x = 0; x < row_num_channels ; x++)
     dest[x] = src[x_src_offsets[x]];
 }
@@ -2043,7 +2040,8 @@ scale_row_no_resample_float  (
   gint x;
   gfloat *dest = (gfloat*) pixelrow_data (dest_row);
   gfloat *src = (gfloat*) pixelrow_data (src_row);		
-  gint row_num_channels = tag_num_channels (pixelrow_tag (dest_row));
+  gint num_channels = tag_num_channels (pixelrow_tag (dest_row));
+  gint row_num_channels = num_channels * pixelrow_width (dest_row);
   for (x = 0; x < row_num_channels ; x++)
     dest[x] = src[x_src_offsets[x]];
 }
@@ -2112,7 +2110,7 @@ scale_area  (
   PixelRow src_row, src_m1_row, src_p1_row, src_p2_row;
   /* guchar *dest_row_data; */
   PixelRow dest_row;
-  guchar *src, *src_m1, *src_p1, *src_p2;
+  guchar *src, *src_m1, *src_p1, *src_p2, *s;
   gint orig_width = pixelarea_width (src_area);
   gint orig_height = pixelarea_height (src_area);
   gint width = pixelarea_width (dest_area);
@@ -2121,11 +2119,13 @@ scale_area  (
   Tag dest_tag = pixelarea_tag (dest_area);
   gint num_channels = tag_num_channels (dest_tag);
   gint bytes_per_pixel = tag_bytes (dest_tag);
+
  
   /* set up the function pointers for scale */ 
   ScaleRowResampleFunc scale_row_resample = scale_row_resample_funcs (src_tag);
   ScaleSetDestRowFunc  scale_set_dest_row = scale_set_dest_funcs (dest_tag);
 
+  printf("scale_area\n");  
   /* set up the src rows and data  */
   src_m1_row_data = (guchar *) g_malloc (orig_width * bytes_per_pixel);
   src_row_data    = (guchar *) g_malloc (orig_width * bytes_per_pixel);
@@ -2195,7 +2195,6 @@ scale_area  (
   if ((src_row_num + 1) < (orig_height - 1))
     /*pixel_region_get_row (srcPR, 0, (src_row_num + 2), orig_width, src_p2, 1);*/
     pixelarea_copy_row (src_area, &src_p2_row, 0, src_row_num + 2, orig_width, 1); 
-
   /*  Scale the selected region  */
   i = height;
   while (i)
@@ -2220,7 +2219,7 @@ scale_area  (
 
       /* set up generic guchar pointers to correct data */ 
       src = pixelrow_data (&src_row);
-      
+     
       if (src_row_num > 0)
 	src_m1 = pixelrow_data (&src_m1_row);
       else
@@ -2234,8 +2233,8 @@ scale_area  (
       if ((src_row_num + 1) < (orig_height - 1))
 	src_p2 = pixelrow_data (&src_p2_row);
       else
-	src_p2 = pixelrow_data (&src_p1_row);
-       
+        src_p2 = src_p1;
+      
       /* scale and accumulate into row_accum array */ 
       (*scale_row_resample)(src, src_m1, src_p1, src_p2, dy, x_frac, y_frac, x_rat, 
 			row_accum, num_channels, orig_width, width, scale_type); 
@@ -2246,7 +2245,7 @@ scale_area  (
 	  pixelarea_getdata (dest_area, &dest_row, dest_row_num);
 	  
           /*  copy row_accum to "dest"  */
-          for( x= 0; x < width; x++)
+          for( x= 0; x < width * num_channels; x++)
             row_accum[x] *= tot_frac; 
          
           /* this sets dest row from array row_accum */
@@ -2260,10 +2259,12 @@ scale_area  (
       else
 	{
 	  /*  Shuffle data in the rows  */
-          pixelrow_init (&src_m1_row, src_tag, src_row_data, orig_width);
-	  pixelrow_init (&src_row, src_tag, src_p1_row_data, orig_width);
-	  pixelrow_init (&src_p1_row, src_tag, src_p2_row_data, orig_width);
-	  pixelrow_init (&src_p2_row, src_tag, src_m1_row_data, orig_width);
+
+	  s = pixelrow_data (&src_m1_row); 
+	  pixelrow_init (&src_m1_row, src_tag, pixelrow_data (&src_row), orig_width);
+	  pixelrow_init (&src_row, src_tag, pixelrow_data (&src_p1_row), orig_width);
+	  pixelrow_init (&src_p1_row, src_tag, pixelrow_data (&src_p2_row), orig_width);
+	  pixelrow_init (&src_p2_row, src_tag, s, orig_width);
 	  
 	  src_row_num++;
   	  if ((src_row_num + 1) < (orig_height - 1))
@@ -2292,7 +2293,8 @@ scale_set_dest_row_u8  (
   gint x;
   guint8 *dest = (guint8*)pixelrow_data (dest_row);
   gint width = pixelrow_width (dest_row);
-  for (x = 0; x < width; x++)
+  gint num_channels = tag_num_channels (pixelrow_tag (dest_row));
+  for (x = 0; x < width * num_channels; x++)
     {
       dest[x] = (guint8) row_accum[x];
     }
@@ -2308,7 +2310,8 @@ scale_set_dest_row_u16  (
   gint x;
   guint16 *dest = (guint16*)pixelrow_data (dest_row);
   gint width = pixelrow_width (dest_row);
-  for (x = 0; x < width; x++)
+  gint num_channels = tag_num_channels (pixelrow_tag (dest_row));
+  for (x = 0; x < width * num_channels; x++)
     {
       dest[x] = (guint16) row_accum[x];
     }
@@ -2324,7 +2327,8 @@ scale_set_dest_row_float  (
   gint x;
   gfloat *dest = (gfloat*)pixelrow_data (dest_row);
   gint width = pixelrow_width (dest_row);
-  for (x = 0; x < width; x++)
+  gint num_channels = tag_num_channels (pixelrow_tag (dest_row));
+  for (x = 0; x < width * num_channels; x++)
     {
       dest[x] = (gfloat) row_accum[x];
     }
@@ -2414,6 +2418,7 @@ scale_row_resample_u8  (
 	    break;
 	  }
       else
+        {
 	switch (scale_type)
 	  {
 	  case MagnifyX_MagnifyY:
@@ -2434,6 +2439,7 @@ scale_row_resample_u8  (
 	      r[b] += s[b] * tot_frac;
 	    break;
 	  }
+	}
 
       if (advance_dest_x)
 	{
@@ -2845,6 +2851,7 @@ thin_area  (
 {
   guint i;
   int found_one;
+  guchar *temp_data;
 
   PixelRow prev_row;
   PixelRow cur_row;
@@ -2865,6 +2872,7 @@ thin_area  (
   
   /* get buffer for the dest row */
   guchar *dest_row_data = (guchar *) g_malloc (width  * bytes_per_pixel); 
+  pixelrow_init (&dest_row, src_tag, dest_row_data, width);
  
   thin_area_funcs (src_tag);
  
@@ -2889,16 +2897,18 @@ thin_area  (
         /*pixel_region_get_row (src,src->x,src->y + i + 1, src->w, cur_row, 1);*/
         pixelarea_copy_row (src_area, &next_row, src_x, src_y + i + 1, width,1);
       else
-        memset (next_row_data, 0, width  * bytes_per_pixel);
-       
+        memset (pixelrow_data (&next_row), 0, width  * bytes_per_pixel);
+      
       found_one = (*thin_row) (&cur_row, &next_row, &prev_row, &dest_row, type);
 
       pixelarea_write_row (src_area, &dest_row, src_x, src_y + i, width);
       
       /* shuffle prev, cur, next buffers around */
-      pixelrow_init (&prev_row, src_tag, cur_row_data+1, width);
-      pixelrow_init (&cur_row, src_tag, next_row_data+1, width);
-      pixelrow_init (&next_row, src_tag, prev_row_data+1, width);
+      
+      temp_data = pixelrow_data (&prev_row);
+      pixelrow_init (&prev_row, src_tag, pixelrow_data (&cur_row), width);
+      pixelrow_init (&cur_row, src_tag, pixelrow_data (&next_row), width);
+      pixelrow_init (&next_row, src_tag, temp_data, width);
     }
   g_free (prev_row_data);
   g_free (next_row_data);

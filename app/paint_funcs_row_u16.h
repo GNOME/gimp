@@ -27,10 +27,10 @@ name##_row_u16 ( \
                 struct _PixelRow * \
                );
 
-ROW_FUNC_a_a (x_add);
-ROW_FUNC_a_a (x_sub);
-ROW_FUNC_a_a (x_min);
-ROW_FUNC_a_a (invert);
+ROW_FUNC_a_a (x_add)
+ROW_FUNC_a_a (x_sub)
+ROW_FUNC_a_a (x_min)
+ROW_FUNC_a_a (invert)
 
 #undef ROW_FUNC_a_a
 

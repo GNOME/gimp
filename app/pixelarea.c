@@ -130,8 +130,6 @@ pixelarea_getdata  (
 }
 
 
-/* copies the data from the PixelArea to the PixelRow */
-#define PIXELAREA_C_1_cw
 void
 pixelarea_copy_row ( 
 		    PixelArea *pa,
@@ -176,8 +174,6 @@ pixelarea_copy_row (
 }
 
 
-/* copies the data from the PixelArea to the PixelRow col*/
-#define PIXELAREA_C_2_cw
 void
 pixelarea_copy_col ( 
 		    PixelArea *pa,
@@ -210,13 +206,12 @@ pixelarea_copy_col (
         b = bytes;
         while ( b --)
 	  *col_data++ = *area_data++;
-        area_data += rowstride;          	
+        area_data += rowstride - bytes;          	
       } 
     }
 }
 
 
-/* copies the data from the PixelRow to the PixelArea */
 void
 pixelarea_write_row ( 
 		    PixelArea *pa,
@@ -230,6 +225,7 @@ pixelarea_write_row (
   void *pag;
   PixelArea area;
   Tag pa_tag = pixelarea_tag (pa);  
+  int bytes = tag_bytes (pa_tag);
   
   /* check to see if we are off the end of canvas */ 
   if ( x + width > canvas_width (pa->canvas) ) 
@@ -244,13 +240,12 @@ pixelarea_write_row (
     {
       guchar *area_data = pixelarea_data (&area);
       int portion_width = pixelarea_width (&area);  
-      memcpy(area_data, pr_data, tag_bytes (pa_tag) * portion_width);
-      pr_data += portion_width * tag_bytes (pa_tag);
+      memcpy(area_data, pr_data, bytes * portion_width);
+      pr_data += portion_width * bytes;
     }
 }
 
 
-/* copies the data from the PixelRow col to the PixelArea */
 void
 pixelarea_write_col ( 
 		    PixelArea *pa,
@@ -285,8 +280,8 @@ pixelarea_write_col (
       { 
         b = bytes;
         while ( b --)
-	  *col_data++ = *area_data++;
-        area_data += rowstride;
+	  *area_data++ = *col_data++;
+        area_data += rowstride - bytes;
       } 
     }
 }
