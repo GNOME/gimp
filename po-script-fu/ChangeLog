@@ -1,3 +1,9 @@
+2004-01-20  Henrik Brix Andersen  <brix@gimp.org>
+
+	* POTFILES.in: added missing
+	plug-ins/script-fu/scripts/select-to-pattern.scm (fixes bug
+	#132029)
+
 2004-01-20  Christophe Merlet  <redfox@redfoxcenter.org>
 
 	* fr.po: Updated French translation from
