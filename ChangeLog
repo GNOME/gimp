@@ -1,3 +1,10 @@
+2005-01-23  Maurits Rijk  <m.rijk@chello.nl>
+
+	Merged from HEAD branch:
+
+	* plug-ins/imagemap/imap_file.c: removed redundant line that tried to
+	display a filename without calling gimp_filename_to_utf8.
+
 2005-01-22  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.2.4, interface_age 4.
@@ -7,7 +14,7 @@
 	* HACKING
 	* Makefile.am
 	* acinclude.m4
-	* autogen.sh: applied (modified) patch from Rapha√´l Quinet that
+	* autogen.sh: applied (modified) patch from RaphaÅ√Å´l Quinet that
 	allows to build GIMP from CVS without having gtk-doc installed.
 	If you need to do this, pass --disable-gtk-doc to autogen.sh.
 
@@ -508,7 +515,7 @@
 
 	* app/paint/gimpbrushcore.c (gimp_brush_core_subsample_mask):
 	don't set array outside its bounds.  Should fix bug #161323.
-	Credit to Robert √ñgren for figuring out what was wrong.
+	Credit to Robert Å√ñgren for figuring out what was wrong.
 	
 2004-12-27  Sven Neumann  <sven@gimp.org>
 

@@ -122,6 +122,7 @@ do_file_exists_dialog (GtkWidget *parent)
                                                GTK_MESSAGE_QUESTION,
                                                GTK_BUTTONS_YES_NO,
                                                message);
+  g_free (message);
   g_signal_connect (dialog, "response",
                     G_CALLBACK (really_overwrite_cb),
                     parent);
@@ -194,8 +195,6 @@ do_file_error_dialog (const char *error,
     alert = create_alert (GTK_STOCK_DIALOG_ERROR);
 
   alert_set_text(alert, error, gimp_filename_to_utf8 (filename));
-
-  alert_set_text (alert, error, filename);
 
   default_dialog_show (alert->dialog);
 }
