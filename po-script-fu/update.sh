@@ -22,7 +22,7 @@ xgettext --default-domain=$PACKAGE --directory=.. \
 	../plug-ins/script-fu/scripts/*.scm \
         ../plug-ins/gap/sel-to-anim-img.scm \
         ../plug-ins/webbrowser/web-browser.scm \
-        >> $PACKAGE..po \
+        >> $PACKAGE.po \
 && test ! -f $PACKAGE.po \
    || ( rm -f ./$PACKAGE.pot \
 && mv $PACKAGE.po ./$PACKAGE.pot );
