@@ -8,7 +8,7 @@ fi
 echo processing...
 
 aclocal $ACLOCAL_FLAGS &&
-automake --foreign &&
+automake -a --foreign &&
 autoconf &&
 ./configure "$@"
 
