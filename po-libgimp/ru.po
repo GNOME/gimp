@@ -1,21 +1,23 @@
+# translation of gimp.LIBGIMP.ru.po to russian
 # translation of gimp.LIBGIMP.po to russian
 # Copyright (C) 1999-2002, 2003, 2004 Free Software Foundation, Inc.
 # Valek Filippov <frob@df.ru>, 1999-2002.
 # Roxana Chernogolova <padavan@mail.ru>, 2003, 2004.
 # Anatoly A. Yakushin <jaa@altlinux.ru>, 2003, 2004.
+# AnatolyA. Yakushin <jaa@altlinux.ru>, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp.LIBGIMP\n"
+"Project-Id-Version: gimp.LIBGIMP.ru\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-03-20 23:20+0100\n"
-"PO-Revision-Date: 2004-03-24 20:29+0300\n"
-"Last-Translator: Anatoly A. Yakushin <jaa@altlinux.ru>\n"
+"PO-Revision-Date: 2004-04-12 21:52+0400\n"
+"Last-Translator: AnatolyA. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.0.2\n"
+"X-Generator: KBabel 1.3.1\n"
 
 #: libgimp/gimpbrushmenu.c:132
 msgid "Brush Selection"
@@ -28,7 +30,7 @@ msgstr "Выбрать..."
 #: libgimp/gimpexport.c:215 libgimp/gimpexport.c:251
 #, c-format
 msgid "%s can't handle layers"
-msgstr "%s неможет обработать слои"
+msgstr "%s не может обработать слои"
 
 #: libgimp/gimpexport.c:216 libgimp/gimpexport.c:225 libgimp/gimpexport.c:234
 msgid "Merge Visible Layers"
@@ -37,7 +39,7 @@ msgstr "Объединить видимые слои"
 #: libgimp/gimpexport.c:224
 #, c-format
 msgid "%s can't handle layer offsets, size or opacity"
-msgstr "%s неможет обработать смещение, размер или непрозрачность слоя"
+msgstr "%s не может обработать смещение, размер или непрозрачность слоя"
 
 #: libgimp/gimpexport.c:233 libgimp/gimpexport.c:242
 #, c-format
@@ -55,12 +57,12 @@ msgstr "Свести изображение"
 #: libgimp/gimpexport.c:260
 #, c-format
 msgid "%s can't handle transparency"
-msgstr "%s неможет обработать прозрачность"
+msgstr "%s не может обработать прозрачность"
 
 #: libgimp/gimpexport.c:269
 #, c-format
 msgid "%s can't handle layer masks"
-msgstr "%s неможет обработать маски слоя"
+msgstr "%s не может обработать маски слоя"
 
 #: libgimp/gimpexport.c:270
 msgid "Apply Layer Masks"
@@ -161,7 +163,7 @@ msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
 msgstr ""
-"Ваше изображение должно быть экспортированно до того, как оно будет "
+"Ваше изображение должно быть экспортировано до того, как оно будет "
 "сохранено %s по следующим причинам:"
 
 #: libgimp/gimpexport.c:563
@@ -379,7 +381,7 @@ msgstr "Альфа"
 
 #: libgimpwidgets/gimpcolorscales.c:254
 msgid "Hexadecimal color notation as used in HTML"
-msgstr "Шестнадцатиричная запись цвета используемая в HTML"
+msgstr "Шестнадцатеричная запись цвета используемая в HTML"
 
 #: libgimpwidgets/gimpcolorscales.c:268
 msgid "He_x Triplet:"
@@ -512,9 +514,7 @@ msgstr "Множитель"
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
-msgstr ""
-"Используйте это значение для генерации случайного зерна - это даст "
-"возможность повторить заданную \"случайную\" операцию"
+msgstr "Используйте это значение для инициализации генератора случайных чисел - это даст возможность повторить заданную \"случайную\" операцию"
 
 #: libgimpwidgets/gimpwidgets.c:1295
 msgid "_New Seed"
@@ -590,11 +590,11 @@ msgstr "Перцепционый"
 
 #: modules/cdisplay_proof.c:321
 msgid "Relative Colorimetric"
-msgstr "Отн. колометрический"
+msgstr "Отн. колориметрический"
 
 #: modules/cdisplay_proof.c:325
 msgid "Absolute Colorimetric"
-msgstr "Абсол. колометрический"
+msgstr "Абсол. колориметрический"
 
 #: modules/cdisplay_proof.c:331
 msgid "_Intent:"
@@ -654,7 +654,7 @@ msgstr "Чёрный"
 
 #: modules/colorsel_cmyk.c:193
 msgid "Black Pullout (%):"
-msgstr "Содержание черного (%)"
+msgstr "Содержание черного (%):"
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
