@@ -1,3 +1,8 @@
+2003-03-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/text/gimpfont.c: a nicer popup preview featuring five
+	dozen liquor jugs.
+
 2003-03-26  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimpfontlist.c: implemented gimp_font_list_restore().

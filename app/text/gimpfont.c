@@ -31,6 +31,14 @@
 
 #include "gimpfont.h"
 
+#include "gimp-intl.h"
+
+
+/* This is a so-called pangram; it's supposed to
+   contain all characters found in the alphabet. */
+#define GIMP_TEXT_PANGRAM N_("Pack my box with\nfive dozen liquor jugs.")
+
+
 enum
 {
   PROP_0,
@@ -43,6 +51,10 @@ struct _GimpFont
   GimpViewable  parent_instance;
 
   PangoContext *pango_context;
+
+  PangoLayout  *popup_layout;
+  gint          popup_width;
+  gint          popup_height;
 };
 
 struct _GimpFontClass
@@ -153,6 +165,12 @@ gimp_font_finalize (GObject *object)
       font->pango_context = NULL;
     }
 
+  if (font->popup_layout)
+    {
+      g_object_unref (font->popup_layout);
+      font->popup_layout = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -199,7 +217,42 @@ gimp_font_get_popup_size (GimpViewable *viewable,
                           gint         *popup_width,
                           gint         *popup_height)
 {
-  return FALSE;
+  GimpFont             *font;
+  PangoFontDescription *font_desc;
+  PangoRectangle        logical;
+  const gchar          *name;
+
+  font = GIMP_FONT (viewable);
+
+  if (!font->pango_context)
+    return FALSE;
+
+  name = gimp_object_get_name (GIMP_OBJECT (font));
+
+  font_desc = pango_font_description_from_string (name);
+  if (!font_desc)
+    return FALSE;
+
+  pango_font_description_set_size (font_desc,
+                                   PANGO_SCALE * MAX (12, height));
+
+  if (font->popup_layout)
+    g_object_unref (font->popup_layout);
+
+  font->popup_layout = pango_layout_new (font->pango_context);
+  pango_layout_set_font_description (font->popup_layout, font_desc);
+  pango_font_description_free (font_desc);
+
+  pango_layout_set_text (font->popup_layout, gettext (GIMP_TEXT_PANGRAM), -1);
+  pango_layout_get_pixel_extents (font->popup_layout, NULL, &logical);
+
+  *popup_width  = logical.width  + 6;
+  *popup_height = logical.height + 6;
+
+  font->popup_width  = *popup_width;
+  font->popup_height = *popup_height;
+
+  return TRUE;
 }
 
 static TempBuf *
@@ -208,10 +261,8 @@ gimp_font_get_new_preview (GimpViewable *viewable,
                            gint          height)
 {
   GimpFont             *font;
-  PangoFontDescription *font_desc;
   PangoLayout          *layout;
   PangoRectangle        logical;
-  const gchar          *name;
   TempBuf              *temp_buf;
   FT_Bitmap             bitmap;
   guchar               *p;
@@ -222,21 +273,33 @@ gimp_font_get_new_preview (GimpViewable *viewable,
   if (!font->pango_context)
     return NULL;
 
-  name = gimp_object_get_name (GIMP_OBJECT (font));
+  if (! font->popup_layout        ||
+      font->popup_width  != width ||
+      font->popup_height != height)
+    {
+      PangoFontDescription *font_desc;
+      const gchar          *name;
 
-  font_desc = pango_font_description_from_string (name);
-  g_return_val_if_fail (font_desc != NULL, NULL);
-  if (!font_desc)
-    return NULL;
+      name = gimp_object_get_name (GIMP_OBJECT (font));
 
-  pango_font_description_set_size (font_desc,
-                                   PANGO_SCALE * height * 2.0 / 3.0);
+      font_desc = pango_font_description_from_string (name);
+      g_return_val_if_fail (font_desc != NULL, NULL);
+      if (!font_desc)
+        return NULL;
 
-  layout = pango_layout_new (font->pango_context);
-  pango_layout_set_font_description (layout, font_desc);
-  pango_font_description_free (font_desc);
+      pango_font_description_set_size (font_desc,
+                                       PANGO_SCALE * height * 2.0 / 3.0);
 
-  pango_layout_set_text (layout, "Aa", -1);
+      layout = pango_layout_new (font->pango_context);
+      pango_layout_set_font_description (layout, font_desc);
+      pango_font_description_free (font_desc);
+
+      pango_layout_set_text (layout, "Aa", -1);
+    }
+  else
+    {
+      layout = g_object_ref (font->popup_layout);
+    }
 
   temp_buf = temp_buf_new (width, height, 1, 0, 0, &black);
 
@@ -244,19 +307,19 @@ gimp_font_get_new_preview (GimpViewable *viewable,
   bitmap.rows   = temp_buf->height;
   bitmap.pitch  = temp_buf->width;
   bitmap.buffer = temp_buf_data (temp_buf);
-  
+
   pango_layout_get_pixel_extents (layout, NULL, &logical);
 
   pango_ft2_render_layout (&bitmap,
                            layout,
                            (bitmap.width - logical.width)  / 2,
                            (bitmap.rows  - logical.height) / 2);
-  
+
   g_object_unref (layout);
 
   p = temp_buf_data (temp_buf);
 
-  for (height = temp_buf->width; height; height--)
+  for (height = temp_buf->height; height; height--)
     for (width = temp_buf->width; width; width--, p++)
       *p = 255 - *p;
 
