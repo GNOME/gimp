@@ -52,6 +52,7 @@
 #include "dialogs/grid-dialog.h"
 #include "dialogs/image-merge-layers-dialog.h"
 #include "dialogs/image-new-dialog.h"
+#include "dialogs/image-properties-dialog.h"
 #include "dialogs/image-scale-dialog.h"
 #include "dialogs/print-size-dialog.h"
 #include "dialogs/resize-dialog.h"
@@ -418,6 +419,29 @@ image_configure_grid_cmd_callback (GtkAction *action,
     }
 
   gtk_window_present (GTK_WINDOW (shell->grid_dialog));
+}
+
+void
+image_properties_cmd_callback (GtkAction *action,
+                               gpointer   data)
+{
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
+  GimpImage        *gimage;
+  GtkWidget        *dialog;
+  return_if_no_display (gdisp, data);
+
+  shell  = GIMP_DISPLAY_SHELL (gdisp->shell);
+  gimage = gdisp->gimage;
+
+  dialog = image_properties_dialog_new (gdisp->gimage, gdisp->shell);
+
+  gtk_window_set_transient_for (GTK_WINDOW (dialog),
+                                GTK_WINDOW (gdisp->shell));
+  gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog),
+                                      TRUE);
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 

@@ -163,6 +163,8 @@ libappwidgets_a_sources = \
 	gimpimagedock.h			\
 	gimpimageeditor.c		\
 	gimpimageeditor.h		\
+	gimpimagepropview.c		\
+	gimpimagepropview.h		\
 	gimpimageview.c			\
 	gimpimageview.h			\
 	gimpitemtreeview.c		\

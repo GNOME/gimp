@@ -123,6 +123,7 @@
 #define GIMP_HELP_IMAGE_MERGE_LAYERS              "gimp-image-merge-layers"
 #define GIMP_HELP_IMAGE_FLATTEN                   "gimp-image-flatten"
 #define GIMP_HELP_IMAGE_GRID                      "gimp-image-grid"
+#define GIMP_HELP_IMAGE_PROPERTIES                "gimp-image-properties"
 
 #define GIMP_HELP_LAYER_DIALOG                    "gimp-layer-dialog"
 #define GIMP_HELP_LAYER_DIALOG_PAINT_MODE_MENU    "gimp-layer-dialog-paint-mode-menu"

@@ -307,6 +307,7 @@
       <menu action="image-guides-menu" name="Guides">
       </menu>
       <menuitem action="image-configure-grid" />
+      <menuitem action="image-properties" />
       <separator />
     </menu>
 

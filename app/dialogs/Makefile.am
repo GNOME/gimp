@@ -40,6 +40,8 @@ libappdialogs_a_sources = \
 	image-merge-layers-dialog.h	\
 	image-new-dialog.c		\
 	image-new-dialog.h		\
+	image-properties-dialog.c	\
+	image-properties-dialog.h	\
 	image-scale-dialog.c		\
 	image-scale-dialog.h		\
 	info-dialog.c			\

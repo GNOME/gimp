@@ -1,3 +1,22 @@
+2005-04-05  Michael Natterer  <mitch@gimp.org>
+
+	More unfinished replacement for the info window:
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpimagepropview.[ch]: new widget showing an image's
+	size, resolution, mode, memsize etc.
+
+	* app/dialogs/Makefile.am
+	* app/dialogs/image-properties-dialog.[ch]: a dialog keeping the
+	widget.
+
+	* app/widgets/gimphelp-ids.h: a help ID for the dialog.
+
+	* app/actions/image-actions.c
+	* app/actions/image-commands.[ch]
+	* menus/image-menu.xml.in: action and menu entry for the dialog.
+
 2005-04-04  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpclonetool.c (gimp_clone_tool_oper_update): check

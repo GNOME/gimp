@@ -114,7 +114,12 @@ static GimpActionEntry image_actions[] =
   { "image-configure-grid", GIMP_STOCK_GRID,
     N_("Configure G_rid..."), NULL, NULL,
     G_CALLBACK (image_configure_grid_cmd_callback),
-    GIMP_HELP_IMAGE_GRID }
+    GIMP_HELP_IMAGE_GRID },
+
+  { "image-properties", GIMP_STOCK_INFO,
+    N_("Image Properties"), NULL, NULL,
+    G_CALLBACK (image_properties_cmd_callback),
+    GIMP_HELP_IMAGE_PROPERTIES }
 };
 
 static GimpEnumActionEntry image_convert_actions[] =
@@ -248,6 +253,7 @@ image_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("image-merge-layers",     gimage && !fs && !aux && lp);
   SET_SENSITIVE ("image-flatten",          gimage && !fs && !aux && lp);
   SET_SENSITIVE ("image-configure-grid",   gimage);
+  SET_SENSITIVE ("image-properties",       gimage);
 
 #undef SET_SENSITIVE
 }
