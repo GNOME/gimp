@@ -1,0 +1,52 @@
+
+1. Create a unit test program for  parse_gimprc ()
+   called parse_gimprc.c which is small and clean.
+   This program shall parse the gimprc file and output the result.
+   Without GTK things ! 
+   
+ Example:
+
+   #include "config.h"	
+   #include "../gimprc.c"	
+
+   int main (int argc, char **argv)
+   {	
+      int status;
+
+      status = parse_gimprc ();
+      printf("status=%d\n",status);
+      return 0;
+   }
+
+   This fantastic large program isn't easy to create
+   and test at present time.
+   What's input and what's output for parse_gimprc () isn't
+   easy to see at this top level either.
+
+
+2. Clean up the function parse_gimprc () in gimprc.c
+
+
+3. Clean up the function parse_gimprc_file(char *filename) in gimprc.c
+   The input(filename) is changing inside the function !!!!!
+   Nasty ! Nasty !
+
+gboolean  parse_gimprc_file (char *filename)
+{
+  int status;
+  char rfilename[MAXPATHLEN];
+
+  if (!g_path_is_absolute (filename))
+    {
+      if (g_get_home_dir () != NULL)
+	{
+	  g_snprintf (rfilename, sizeof (rfilename),
+		      "%s" G_DIR_SEPARATOR_S "%s",
+		      g_get_home_dir (), filename);
+	  filename = rfilename;     /* Nasty, nasty */
+	}
+    }
+...cut...
+}
+
+  
