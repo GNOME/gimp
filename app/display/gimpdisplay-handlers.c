@@ -39,11 +39,6 @@ static void   gimp_display_update_handler           (GimpImage   *gimage,
                                                      gint         w,
                                                      gint         h,
                                                      GimpDisplay *gdisp);
-static void   gimp_display_mode_changed_handler     (GimpImage   *gimage,
-                                                     GimpDisplay *gdisp);
-static void   gimp_display_colormap_changed_handler (GimpImage   *gimage,
-                                                     gint         ncol,
-                                                     GimpDisplay *gdisp);
 static void   gimp_display_size_changed_handler     (GimpImage   *gimage,
                                                      GimpDisplay *gdisp);
 static void   gimp_display_flush_handler            (GimpImage   *gimage,
@@ -76,12 +71,6 @@ gimp_display_connect (GimpDisplay *gdisp,
   g_signal_connect (gimage, "update",
                     G_CALLBACK (gimp_display_update_handler),
                     gdisp);
-  g_signal_connect (gimage, "mode_changed",
-                    G_CALLBACK (gimp_display_mode_changed_handler),
-                    gdisp);
-  g_signal_connect (gimage, "colormap_changed",
-                    G_CALLBACK (gimp_display_colormap_changed_handler),
-                    gdisp);
   g_signal_connect (gimage, "size_changed",
                     G_CALLBACK (gimp_display_size_changed_handler),
                     gdisp);
@@ -103,12 +92,6 @@ gimp_display_disconnect (GimpDisplay *gdisp)
                                         gdisp);
   g_signal_handlers_disconnect_by_func (gdisp->gimage,
                                         gimp_display_size_changed_handler,
-                                        gdisp);
-  g_signal_handlers_disconnect_by_func (gdisp->gimage,
-                                        gimp_display_colormap_changed_handler,
-                                        gdisp);
-  g_signal_handlers_disconnect_by_func (gdisp->gimage,
-                                        gimp_display_mode_changed_handler,
                                         gdisp);
   g_signal_handlers_disconnect_by_func (gdisp->gimage,
                                         gimp_display_update_handler,
@@ -143,30 +126,6 @@ gimp_display_update_handler (GimpImage   *gimage,
                              GimpDisplay *gdisp)
 {
   gimp_display_add_update_area (gdisp, x, y, w, h);
-}
-
-static void
-gimp_display_mode_changed_handler (GimpImage   *gimage,
-                                   GimpDisplay *gdisp)
-{
-  gimp_display_add_update_area (gdisp,
-                                0, 0,
-                                gdisp->gimage->width,
-                                gdisp->gimage->height);
-}
-
-static void
-gimp_display_colormap_changed_handler (GimpImage   *gimage,
-                                       gint         ncol,
-                                       GimpDisplay *gdisp)
-{
-  if (gimp_image_base_type (gdisp->gimage) == GIMP_INDEXED)
-    {
-      gimp_display_add_update_area (gdisp,
-                                    0, 0,
-                                    gdisp->gimage->width,
-                                    gdisp->gimage->height);
-    }
 }
 
 static void

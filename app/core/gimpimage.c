@@ -845,6 +845,7 @@ static void
 gimp_image_real_mode_changed (GimpImage *gimage)
 {
   gimp_image_projection_allocate (gimage);
+  gimp_image_update (gimage, 0, 0, gimage->width, gimage->height);
 }
 
 static void

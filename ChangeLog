@@ -1,3 +1,12 @@
+2004-04-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage.c (gimp_image_real_mode_changed): update the
+	whole image.
+
+	* app/display/gimpdisplay-handlers.c: removed obsolete
+	"mode_changed" and "colormap_changed" handlers because GimpImage's
+	default handlers already update the whole image.
+
 2004-04-05  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	Sanitize rectangle and ellipse selection handling (bug #138237
