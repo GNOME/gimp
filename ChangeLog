@@ -1,3 +1,10 @@
+2004-06-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcursor.c: changed create_cursor_foo() utility
+	functions to get_cursor_foo() and use them as accessors instead of
+	using cursor->member. Use gdk_pixbuf_copy() instead of compositing
+	the initial image onto an empty pixbuf.
+
 2004-06-04  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimptexteditor.c (gimp_text_editor_new): set the

@@ -506,30 +506,40 @@ static GimpBitmapCursor gimp_modifier_cursors[] =
 };
 
 
-static void
-create_cursor_bitmaps (GimpBitmapCursor *bmcursor)
+static GdkBitmap *
+get_cursor_bitmap (GimpBitmapCursor *bmcursor)
 {
-  if (bmcursor->bitmap == NULL)
+  if (! bmcursor->bitmap)
     bmcursor->bitmap = gdk_bitmap_create_from_data (NULL, bmcursor->bits,
 						    bmcursor->width,
 						    bmcursor->height);
-  g_return_if_fail (bmcursor->bitmap != NULL);
+  g_return_val_if_fail (bmcursor->bitmap != NULL, NULL);
 
-  if (bmcursor->mask == NULL)
+  return bmcursor->bitmap;
+}
+
+static GdkBitmap *
+get_cursor_mask (GimpBitmapCursor *bmcursor)
+{
+  if (! bmcursor->mask)
     bmcursor->mask = gdk_bitmap_create_from_data (NULL, bmcursor->mask_bits,
 						  bmcursor->width,
 						  bmcursor->height);
-  g_return_if_fail (bmcursor->mask != NULL);
+  g_return_val_if_fail (bmcursor->mask != NULL, NULL);
+
+  return bmcursor->mask;
 }
 
-static void
-create_cursor_pixbuf (GimpBitmapCursor *bmcursor)
+static const GdkPixbuf *
+get_cursor_pixbuf (GimpBitmapCursor *bmcursor)
 {
-  if (bmcursor->pixbuf == NULL)
+  if (! bmcursor->pixbuf)
     bmcursor->pixbuf = gdk_pixbuf_new_from_inline (-1, bmcursor->pixbuf_data,
                                                    FALSE, NULL);
 
-  g_return_if_fail (bmcursor->pixbuf != NULL);
+  g_return_val_if_fail (bmcursor->pixbuf != NULL, NULL);
+
+  return bmcursor->pixbuf;
 }
 
 GdkCursor *
@@ -589,41 +599,22 @@ gimp_cursor_new (GdkDisplay         *display,
     {
       GdkPixbuf *pixbuf;
 
-      if (! bmcursor->pixbuf)
-        create_cursor_pixbuf (bmcursor);
+      pixbuf = gdk_pixbuf_copy (get_cursor_pixbuf (bmcursor));
 
-      width  = gdk_pixbuf_get_width  (bmcursor->pixbuf);
-      height = gdk_pixbuf_get_height (bmcursor->pixbuf);
-
-      pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, width, height);
-      gdk_pixbuf_fill (pixbuf, 0);
-
-      gdk_pixbuf_composite (bmcursor->pixbuf, pixbuf,
-                            0, 0, width, height,
-                            0.0, 0.0, 1.0, 1.0,
-                            GDK_INTERP_NEAREST, 255);
+      width  = gdk_pixbuf_get_width  (pixbuf);
+      height = gdk_pixbuf_get_height (pixbuf);
 
       if (bmmodifier)
-        {
-          if (bmmodifier->pixbuf)
-            create_cursor_pixbuf (bmmodifier);
-
-          gdk_pixbuf_composite (bmmodifier->pixbuf, pixbuf,
-                                0, 0, width, height,
-                                0.0, 0.0, 1.0, 1.0,
-                                GDK_INTERP_NEAREST, 180);
-        }
+        gdk_pixbuf_composite (get_cursor_pixbuf (bmmodifier), pixbuf,
+                              0, 0, width, height,
+                              0.0, 0.0, 1.0, 1.0,
+                              GDK_INTERP_NEAREST, 180);
 
       if (bmtool)
-        {
-          if (! bmtool->pixbuf)
-            create_cursor_pixbuf (bmtool);
-
-          gdk_pixbuf_composite (bmtool->pixbuf, pixbuf,
-                                0, 0, width, height,
-                                0.0, 0.0, 1.0, 1.0,
-                                GDK_INTERP_NEAREST, 180);
-        }
+        gdk_pixbuf_composite (get_cursor_pixbuf (bmtool), pixbuf,
+                              0, 0, width, height,
+                              0.0, 0.0, 1.0, 1.0,
+                              GDK_INTERP_NEAREST, 180);
 
       cursor = gdk_cursor_new_from_pixbuf (display, pixbuf,
                                            bmcursor->x_hot,
@@ -638,19 +629,16 @@ gimp_cursor_new (GdkDisplay         *display,
       static GdkGC    *gc = NULL;
       static GdkColor  fg, bg;
 
-      if (! bmcursor->bitmap || ! bmcursor->mask)
-        create_cursor_bitmaps (bmcursor);
-
-      if (gc == NULL)
+      if (! gc)
         {
-          gc = gdk_gc_new (bmcursor->bitmap);
+          gc = gdk_gc_new (get_cursor_bitmap (bmcursor));
 
           /* should have a way to configure the mouse colors */
           gdk_color_parse ("#FFFFFF", &bg);
           gdk_color_parse ("#000000", &fg);
         }
 
-      gdk_drawable_get_size (bmcursor->bitmap, &width, &height);
+      gdk_drawable_get_size (get_cursor_bitmap (bmcursor), &width, &height);
 
       /*  new bitmap and mask for on-the-fly cursor creation  */
 
@@ -662,48 +650,42 @@ gimp_cursor_new (GdkDisplay         *display,
 
       /*  first draw the bitmap completely ... */
 
-      gdk_draw_drawable (bitmap, gc, bmcursor->bitmap,
+      gdk_draw_drawable (bitmap, gc, get_cursor_bitmap (bmcursor),
                          0, 0, 0, 0, width, height);
 
       if (bmmodifier)
         {
-          if (! bmmodifier->bitmap || ! bmmodifier->mask)
-            create_cursor_bitmaps (bmmodifier);
-
-          gdk_gc_set_clip_mask (gc, bmmodifier->bitmap);
-          gdk_draw_drawable (bitmap, gc, bmmodifier->bitmap,
+          gdk_gc_set_clip_mask (gc, get_cursor_bitmap (bmmodifier));
+          gdk_draw_drawable (bitmap, gc, get_cursor_bitmap (bmmodifier),
                              0, 0, 0, 0, width, height);
           gdk_gc_set_clip_mask (gc, NULL);
         }
 
       if (bmtool)
         {
-          if (! bmtool->bitmap || ! bmtool->mask)
-            create_cursor_bitmaps (bmtool);
-
-          gdk_gc_set_clip_mask (gc, bmtool->bitmap);
-          gdk_draw_drawable (bitmap, gc, bmtool->bitmap,
+          gdk_gc_set_clip_mask (gc, get_cursor_bitmap (bmtool));
+          gdk_draw_drawable (bitmap, gc, get_cursor_bitmap (bmtool),
                              0, 0, 0, 0, width, height);
           gdk_gc_set_clip_mask (gc, NULL);
         }
 
       /*  ... then the mask  */
 
-      gdk_draw_drawable (mask, gc, bmcursor->mask,
+      gdk_draw_drawable (mask, gc, get_cursor_mask (bmcursor),
                          0, 0, 0, 0, width, height);
 
       if (bmmodifier)
         {
-          gdk_gc_set_clip_mask (gc, bmmodifier->mask);
-          gdk_draw_drawable (mask, gc, bmmodifier->mask,
+          gdk_gc_set_clip_mask (gc, get_cursor_mask (bmmodifier));
+          gdk_draw_drawable (mask, gc, get_cursor_mask (bmmodifier),
                              0, 0, 0, 0, width, height);
           gdk_gc_set_clip_mask (gc, NULL);
         }
 
       if (bmtool)
         {
-          gdk_gc_set_clip_mask (gc, bmtool->mask);
-          gdk_draw_drawable (mask, gc, bmtool->mask,
+          gdk_gc_set_clip_mask (gc, get_cursor_mask (bmtool));
+          gdk_draw_drawable (mask, gc, get_cursor_mask (bmtool),
                              0, 0, 0, 0, width, height);
           gdk_gc_set_clip_mask (gc, NULL);
         }
