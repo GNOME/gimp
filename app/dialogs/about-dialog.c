@@ -193,9 +193,8 @@ about_dialog_create (int timeout)
       style->font = gdk_font_load (_("-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"));
       gtk_widget_push_style (style);
 
-      label_text=g_malloc(strlen(_("Version ")) + strlen(GIMP_VERSION) + 
-			  strlen(_(" brought to you by")) * sizeof(gchar));
-      sprintf(label_text, "%s%s%s", _("Version "), GIMP_VERSION, _(" brought to you by"));
+      label_text = g_strdup_printf("%s%s%s", _("Version "), GIMP_VERSION,
+					     _(" brought to you by"));
       label = gtk_label_new (label_text);
       g_free(label_text); label_text=NULL;
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);

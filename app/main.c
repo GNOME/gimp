@@ -269,7 +269,7 @@ main (int argc, char **argv)
   if (show_version || show_help)
     exit (0);
 
-  g_set_message_handler (&message_func);
+  g_set_message_handler ((GPrintFunc) message_func);
 
   /* Handle some signals */
   signal (SIGHUP, on_signal);

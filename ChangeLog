@@ -1,3 +1,11 @@
+Sat Aug 29 15:32:32 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* libgimp/gimp.c
+	* app/main.c: quell warning to g_set_message_handler
+
+	* app/about_dialog.c: fix off-by-one error for space for the about
+	text
+
 Fri Aug 28 15:56:41 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* acconfig.h
