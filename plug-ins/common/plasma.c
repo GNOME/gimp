@@ -83,63 +83,64 @@
 
 typedef struct
 {
-  guint32     seed;
-  gdouble  turbulence;
+  guint32   seed;
+  gdouble   turbulence;
 } PlasmaValues;
 
 typedef struct
 {
-  gint run;
+  gboolean  run;
 } PlasmaInterface;
 
 /*
  * Function prototypes.
  */
 
-static void	query	(void);
-static void	run	(gchar      *name,
+static void	  query	(void);
+static void	  run	(gchar      *name,
 			 gint        nparams,
 			 GimpParam  *param,
 			 gint       *nreturn_vals,
 			 GimpParam **return_vals);
 
-static GtkWidget *preview_widget         (GimpImageType drawable_type);
-static gint	plasma_dialog            (GimpDrawable *drawable,
-    					  GimpImageType drawable_type);
-static void     plasma_ok_callback       (GtkWidget *widget, 
-					  gpointer   data);
-static void     plasma_seed_changed_callback (GimpDrawable *drawable,
-                                              gpointer      data);
+static GtkWidget *preview_widget         (GimpImageType  drawable_type);
+static gboolean   plasma_dialog          (GimpDrawable  *drawable,
+    					  GimpImageType  drawable_type);
+static void       plasma_ok_callback     (GtkWidget     *widget, 
+					  gpointer       data);
+static void plasma_seed_changed_callback (GimpDrawable  *drawable,
+                                          gpointer       data);
 
 static void	plasma	     (GimpDrawable *drawable, 
-			      gboolean   preview_mode);
-static void     random_rgb   (GRand *gr, 
-                              guchar    *d);
-static void     add_random   (GRand *gr, 
-                              guchar    *d,
-			      gint       amnt);
+			      gboolean      preview_mode);
+static void     random_rgb   (GRand        *gr, 
+                              guchar       *pixel);
+static void     add_random   (GRand        *gr, 
+                              guchar       *pixel,
+			      gint          amount);
 static GimpPixelFetcher *init_plasma  (GimpDrawable *drawable, 
-				       gboolean   preview_mode,
-				       GRand *gr);
-static void     end_plasma   (GimpDrawable *drawable,
+				       gboolean      preview_mode,
+				       GRand        *gr);
+static void     end_plasma   (GimpDrawable     *drawable,
 			      GimpPixelFetcher *pft,
-                              GRand *gr);
+                              GRand            *gr);
 static void     get_pixel    (GimpPixelFetcher *pft,
-			      gint       x,
-			      gint       y,
-			      guchar    *pixel);
+			      gint              x,
+			      gint              y,
+			      guchar           *pixel);
 static void     put_pixel    (GimpPixelFetcher *pft,
-			      gint       x,
-			      gint       y,
-			      guchar    *pixel);
-static gint     do_plasma    (GimpPixelFetcher *pft,
-			      gint       x1,
-			      gint       y1,
-			      gint       x2,
-			      gint       y2,
-			      gint       depth,
-			      gint       scale_depth,
-                              GRand     *gr);
+			      gint              x,
+			      gint              y,
+			      guchar           *pixel);
+static gboolean do_plasma    (GimpPixelFetcher *pft,
+			      gint              x1,
+			      gint              y1,
+			      gint              x2,
+			      gint              y2,
+			      gint              depth,
+			      gint              scale_depth,
+                              GRand            *gr);
+
 
 /***** Local vars *****/
 
@@ -162,7 +163,7 @@ static PlasmaInterface pint =
   FALSE     /* run */
 };
 
-static guchar *work_buffer;
+static guchar    *work_buffer;
 static GtkWidget *preview;
 
 /***** Functions *****/
@@ -174,21 +175,19 @@ query (void)
 {
   static GimpParamDef args[]=
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "seed", "Random seed" },
-    { GIMP_PDB_FLOAT, "turbulence", "Turbulence of plasma" }
+    { GIMP_PDB_INT32,    "run_mode",   "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",      "Input image (unused)"         },
+    { GIMP_PDB_DRAWABLE, "drawable",   "Input drawable"               },
+    { GIMP_PDB_INT32,    "seed",       "Random seed"                  },
+    { GIMP_PDB_FLOAT,    "turbulence", "Turbulence of plasma"         }
   };
 
   gimp_install_procedure ("plug_in_plasma",
-			  "Create a plasma cloud like image to the specified drawable",
+			  "Create a plasma cloud like image on the specified drawable",
 			  "More help",
 			  "Stephen Norris & (ported to 1.0 by) Eiichi Takamori",
 			  "Stephen Norris",
 			  "May 2000",
-			  /* don't translate '<Image>', it's a special
-			   * keyword of the gtk toolkit */
 			  N_("<Image>/Filters/Render/Clouds/Plasma..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
@@ -293,8 +292,9 @@ run (gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
-static gint
-plasma_dialog (GimpDrawable *drawable, GimpImageType drawable_type)
+static gboolean
+plasma_dialog (GimpDrawable  *drawable,
+	       GimpImageType  drawable_type)
 {
   GtkWidget *dlg;
   GtkWidget *main_vbox;
@@ -325,7 +325,8 @@ plasma_dialog (GimpDrawable *drawable, GimpImageType drawable_type)
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
+		      main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
   /* make a nice preview frame */
@@ -408,19 +409,21 @@ static void
 plasma_seed_changed_callback (GimpDrawable *drawable,
                               gpointer      data)
 {
-  plasma(drawable, TRUE);
+  plasma (drawable, TRUE);
 }
 
-#define AVE(n, v1, v2) n[0] = ((gint)v1[0] + (gint)v2[0]) / 2;\
-	n[1] = ((gint)v1[1] + (gint)v2[1]) / 2;\
-	n[2] = ((gint)v1[2] + (gint)v2[2]) / 2;
+#define AVE(n, v1, v2) n[0] = ((gint)v1[0] + (gint)v2[0]) / 2; \
+	               n[1] = ((gint)v1[1] + (gint)v2[1]) / 2; \
+	               n[2] = ((gint)v1[2] + (gint)v2[2]) / 2;
+
 
 /*
- * Some glabals to save passing too many paramaters that don't change.
+ * Some globals to save passing too many paramaters that don't change.
  */
 
 static gint	ix1, iy1, ix2, iy2;	/* Selected image size. */
-static gint	bpp, has_alpha, alpha;
+static gint	bpp, alpha;
+static gboolean has_alpha;
 static gdouble	turbulence;
 static glong	max_progress, progress;
 
@@ -430,12 +433,12 @@ static glong	max_progress, progress;
 
 static void
 plasma (GimpDrawable *drawable, 
-	gboolean    preview_mode)
+	gboolean      preview_mode)
 {
   GimpPixelFetcher *pft;
-  gint  depth;
-  GRand *gr;
-  
+  gint              depth;
+  GRand            *gr;
+
   gr = g_rand_new ();
   
   pft = init_plasma (drawable, preview_mode, gr);
@@ -454,15 +457,16 @@ plasma (GimpDrawable *drawable,
   depth = 1;
   while (!do_plasma (pft, ix1, iy1, ix2 - 1, iy2 - 1, depth, 0, gr))
     {
-      depth ++;
+      depth++;
     }
+
   end_plasma (drawable, pft, gr);
 }
 
 static GimpPixelFetcher*
 init_plasma (GimpDrawable *drawable,
-	     gboolean   preview_mode,
-             GRand *gr)
+	     gboolean      preview_mode,
+             GRand        *gr)
 {
   GimpPixelFetcher *pft;
 
@@ -475,33 +479,41 @@ init_plasma (GimpDrawable *drawable,
       ix1 = iy1 = 0;
       ix2 = GTK_PREVIEW (preview)->buffer_width;
       iy2 = GTK_PREVIEW (preview)->buffer_height;
-      bpp = GTK_PREVIEW (preview)->bpp;
-      alpha = bpp;
-      has_alpha = 0;
+
+      bpp       = GTK_PREVIEW (preview)->bpp;
+      alpha     = bpp;
+      has_alpha = FALSE;
+
       work_buffer = g_malloc (GTK_PREVIEW (preview)->rowstride * iy2);
-      memcpy (work_buffer, GTK_PREVIEW (preview)->buffer, GTK_PREVIEW (preview)->rowstride * iy2);
+      memcpy (work_buffer,
+	      GTK_PREVIEW (preview)->buffer,
+	      GTK_PREVIEW (preview)->rowstride * iy2);
+
       pft = NULL;
     } 
   else 
     {
-      gimp_drawable_mask_bounds (drawable->drawable_id, &ix1, &iy1, &ix2, &iy2);
-      bpp = drawable->bpp;
+      gimp_drawable_mask_bounds (drawable->drawable_id,
+				 &ix1, &iy1, &ix2, &iy2);
+
+      bpp       = drawable->bpp;
       has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
-      alpha = (has_alpha) ? bpp - 1 : bpp;
+      alpha     = (has_alpha) ? bpp - 1 : bpp;
+
       pft = gimp_pixel_fetcher_new (drawable);
       gimp_pixel_fetcher_set_shadow (pft, TRUE);
     }
 
+  progress     = 0;
   max_progress = (ix2 - ix1) * (iy2 - iy1);
-  progress = 0;
 
   return pft;
 }
 
 static void
-end_plasma (GimpDrawable *drawable,
+end_plasma (GimpDrawable     *drawable,
 	    GimpPixelFetcher *pft,
-            GRand     *gr)
+            GRand            *gr)
 {
   if (pft)
     {
@@ -517,16 +529,18 @@ end_plasma (GimpDrawable *drawable,
       memcpy (GTK_PREVIEW (preview)->buffer, work_buffer, 
 	      GTK_PREVIEW (preview)->rowstride * iy2);
       g_free (work_buffer);
+
       gtk_widget_queue_draw (preview);
     }
+
   g_rand_free (gr);
 }
 
 static void
 get_pixel (GimpPixelFetcher *pft,
-	   gint       x,
-	   gint       y,
-	   guchar    *pixel)
+	   gint              x,
+	   gint              y,
+	   guchar           *pixel)
 {
   if (pft) 
     {
@@ -544,9 +558,9 @@ get_pixel (GimpPixelFetcher *pft,
 
 static void
 put_pixel (GimpPixelFetcher *pft,
-	   gint       x,
-	   gint       y,
-	   guchar    *pixel)
+	   gint              x,
+	   gint              y,
+	   guchar           *pixel)
 {
   if (pft)
     {
@@ -563,47 +577,43 @@ put_pixel (GimpPixelFetcher *pft,
 }
 
 static void
-random_rgb (GRand *gr, 
-            guchar *d)
+random_rgb (GRand  *gr, 
+            guchar *pixel)
 {
   gint i;
 
-  for(i = 0; i < alpha; i++)
-    {
-      d[i] = g_rand_int_range (gr, 0, 256);
-    }
+  for (i = 0; i < alpha; i++)
+    pixel[i] = g_rand_int_range (gr, 0, 256);
+
   if (has_alpha)
-    d[alpha] = 255;
+    pixel[alpha] = 255;
 }
 
 static void
-add_random (GRand *gr,
-            guchar *d,
-	    gint    amnt)
+add_random (GRand  *gr,
+            guchar *pixel,
+	    gint    amount)
 {
   gint i, tmp;
 
-  if (amnt == 0)
-    {
-      amnt = 1;
-    }
+  amount /= 2;
 
   for (i = 0; i < alpha; i++)
     {
-      tmp = d[i] + g_rand_int_range(gr, -amnt/2, amnt/2);
-      d[i] = CLAMP0255 (tmp);
+      tmp = pixel[i] + g_rand_int_range (gr, - amount, amount);
+      pixel[i] = CLAMP0255 (tmp);
     }
 }
 
-static gint
+static gboolean
 do_plasma (GimpPixelFetcher *pft,
-	   gint       x1,
-	   gint       y1,
-	   gint       x2,
-	   gint       y2,
-	   gint       depth,
-	   gint       scale_depth,
-           GRand     *gr)
+	   gint              x1,
+	   gint              y1,
+	   gint              x2,
+	   gint              y2,
+	   gint              depth,
+	   gint              scale_depth,
+           GRand            *gr)
 {
   guchar  tl[4], ml[4], bl[4], mt[4], mm[4], mb[4], tr[4], mr[4], br[4];
   guchar  tmp[4];
@@ -635,7 +645,7 @@ do_plasma (GimpPixelFetcher *pft,
       random_rgb (gr, ml);
       put_pixel (pft, (x1 + x2) / 2, y2, ml);
 
-      return 0;
+      return FALSE;
     }
 
   /*
@@ -644,8 +654,8 @@ do_plasma (GimpPixelFetcher *pft,
    */
   if (depth == 0)
     {
-      gdouble	rnd;
-      gint	xave, yave;
+      gdouble  rnd;
+      gint     xave, yave;
 
       get_pixel (pft, x1, y1, tl);
       get_pixel (pft, x1, y2, bl);
@@ -660,7 +670,7 @@ do_plasma (GimpPixelFetcher *pft,
 
       if (xave == x1 && xave == x2 && yave == y1 && yave == y2)
 	{
-	  return 0;
+	  return FALSE;
 	}
 
       if (xave != x1 || xave != x2)
@@ -709,18 +719,19 @@ do_plasma (GimpPixelFetcher *pft,
 	  put_pixel (pft, xave, yave, mm);
 	}
 
-      count ++;
+      count++;
 
       if (!(count % 2000) && pft)
 	{
-	  gimp_progress_update ((double) progress / (double) max_progress);
+	  gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
 	}
 
       if ((x2 - x1) < 3 && (y2 - y1) < 3)
 	{
-	  return 1;
+	  return TRUE;
 	}
-      return 0;
+
+      return FALSE;
     }
 
   xm = (x1 + x2) >> 1;
@@ -743,29 +754,36 @@ do_plasma (GimpPixelFetcher *pft,
 static GtkWidget *
 preview_widget (GimpImageType drawable_type)
 {
-  GtkWidget *preview;
-  guchar    *buf;
+  GtkWidget *preview = NULL;
+  guchar    *buf     = NULL;
   gint       y;
 
-  if (drawable_type == GIMP_GRAY_IMAGE || 
-           drawable_type == GIMP_GRAYA_IMAGE)
-  {
-    preview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
-    buf = g_malloc0 (PREVIEW_SIZE);
-  }
-  else /* Gray & colour are the only possibilities here */
-  {
-    preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-    buf = g_malloc0 (PREVIEW_SIZE * 3);
-  }
+  switch (drawable_type)
+    {
+    case GIMP_GRAY_IMAGE:
+    case GIMP_GRAYA_IMAGE:
+      preview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
+      buf     = g_malloc0 (PREVIEW_SIZE);
+      break;
+
+    case GIMP_RGB_IMAGE:
+    case GIMP_RGBA_IMAGE:
+      preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+      buf     = g_malloc0 (PREVIEW_SIZE * 3);
+      break;
+
+    default:
+      g_assert_not_reached ();
+      break;
+    }
 
   gtk_preview_size (GTK_PREVIEW (preview), PREVIEW_SIZE, PREVIEW_SIZE);
   
   for (y = 0; y < PREVIEW_SIZE; y++) 
     gtk_preview_draw_row (GTK_PREVIEW (preview), buf, 0, y, PREVIEW_SIZE);
-  
+
   g_free (buf);
-  
+
   return preview;
 }
 

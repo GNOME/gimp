@@ -1,3 +1,15 @@
+2003-02-03  Sven Neumann  <neo@wintermute>
+
+	Some code cleanup while trying to fix bug #105062:
+
+	* libgimp/gimpmisc.[ch]: moved the declaration of the
+	GimpPixelFetcher struct to the .c file since noone should ever
+	access it directly.
+
+	* libgimp/gimpmiscui.c: cosmetics.
+
+	* plug-ins/common/plasma.c: code cleanup, doesn't fix #105062.
+
 2003-02-02  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/ifscompose/ifscompose.c: fixed some issues (mainly

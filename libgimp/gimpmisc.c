@@ -23,16 +23,32 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
 #include <stdio.h>
 
 #include <glib.h>
 
-#include <gtk/gtk.h>
-
-#include "config.h"
-
 #include "gimp.h"
 #include "gimpmisc.h"
+
+
+struct _GimpPixelFetcher
+{
+  gint          col, row;
+  gint          img_width;
+  gint	        img_height;
+  gint 	        sel_x1, sel_y1, sel_x2, sel_y2;
+  gint	        img_bpp;
+  gint	        img_has_alpha;
+  gint          tile_width, tile_height;
+  guchar        bg_color[4];
+  GimpDrawable *drawable;
+  GimpTile     *tile;
+  gboolean      tile_dirty;
+  gboolean      shadow;
+};
+
 
 GimpPixelFetcher *
 gimp_pixel_fetcher_new (GimpDrawable *drawable)
@@ -47,9 +63,9 @@ gimp_pixel_fetcher_new (GimpDrawable *drawable)
 
   pf->col           = -1;
   pf->row           = -1;
-  pf->img_width     = gimp_drawable_width (drawable->drawable_id);
-  pf->img_height    = gimp_drawable_height (drawable->drawable_id);
-  pf->img_bpp       = gimp_drawable_bpp (drawable->drawable_id);
+  pf->img_width     = gimp_drawable_width     (drawable->drawable_id);
+  pf->img_height    = gimp_drawable_height    (drawable->drawable_id);
+  pf->img_bpp       = gimp_drawable_bpp       (drawable->drawable_id);
   pf->img_has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   pf->tile_width    = gimp_tile_width ();
   pf->tile_height   = gimp_tile_height ();
@@ -57,11 +73,13 @@ gimp_pixel_fetcher_new (GimpDrawable *drawable)
   pf->bg_color[1]   = 0;
   pf->bg_color[2]   = 0;
   pf->bg_color[3]   = 255;
+  pf->drawable      = drawable;
+  pf->tile          = NULL;
+  pf->tile_dirty    = FALSE;
+  pf->shadow	    = FALSE;
 
-  pf->drawable    = drawable;
-  pf->tile        = NULL;
-  pf->tile_dirty  = FALSE;
-  pf->shadow	  = FALSE;
+  /* this allows us to use (slightly faster) do-while loops */
+  g_assert (pf->img_bpp > 0);
 
   return pf;
 }
@@ -90,18 +108,18 @@ gimp_pixel_fetcher_set_bg_color (GimpPixelFetcher *pf)
 
 void		 
 gimp_pixel_fetcher_set_shadow (GimpPixelFetcher *pf,
-			       gboolean shadow)
+			       gboolean          shadow)
 {
   pf->shadow = shadow;
 }
 
-static guchar*
+static guchar *
 gimp_pixel_fetcher_provide_tile (GimpPixelFetcher *pf,
-				 gint             x,
-				 gint             y)
+				 gint              x,
+				 gint              y)
 {
-  gint    col, row;
-  gint    coloff, rowoff;
+  gint col, row;
+  gint coloff, rowoff;
 
   col    = x / pf->tile_width;
   coloff = x % pf->tile_width;
@@ -111,7 +129,7 @@ gimp_pixel_fetcher_provide_tile (GimpPixelFetcher *pf,
   if ((col != pf->col) || (row != pf->row) || (pf->tile == NULL))
     {
       if (pf->tile != NULL)
-	gimp_tile_unref(pf->tile, pf->tile_dirty);
+	gimp_tile_unref (pf->tile, pf->tile_dirty);
 
       pf->tile = gimp_drawable_get_tile (pf->drawable, pf->shadow, row, col);
       pf->tile_dirty = FALSE;
@@ -126,9 +144,9 @@ gimp_pixel_fetcher_provide_tile (GimpPixelFetcher *pf,
 
 void
 gimp_pixel_fetcher_get_pixel (GimpPixelFetcher *pf,
-			      gint             x,
-			      gint             y,
-			      guchar          *pixel)
+			      gint              x,
+			      gint              y,
+			      guchar           *pixel)
 {
   guchar *p;
   gint    i;
@@ -141,15 +159,17 @@ gimp_pixel_fetcher_get_pixel (GimpPixelFetcher *pf,
 
   p = gimp_pixel_fetcher_provide_tile (pf, x, y);
 
-  for (i = pf->img_bpp; i; i--)
+  i = pf->img_bpp;
+  do
     *pixel++ = *p++;
+  while (--i);
 }
 
 void
 gimp_pixel_fetcher_put_pixel (GimpPixelFetcher *pf,
-			      gint             x,
-			      gint             y,
-			      guchar          *pixel)
+			      gint              x,
+			      gint              y,
+			      guchar           *pixel)
 {
   guchar *p;
   gint    i;
@@ -162,18 +182,20 @@ gimp_pixel_fetcher_put_pixel (GimpPixelFetcher *pf,
 
   p = gimp_pixel_fetcher_provide_tile (pf, x, y);
 
-  for (i = pf->img_bpp; i; i--)
+  i = pf->img_bpp;
+  do
     *p++ = *pixel++;
+  while (--i);
 
   pf->tile_dirty = TRUE;
 }
 
 void
 gimp_pixel_fetcher_get_pixel2 (GimpPixelFetcher *pf,
-			       gint             x,
-			       gint             y,
-			       gint		wrapmode,
-			       guchar          *pixel)
+			       gint              x,
+			       gint              y,
+			       gint		 wrapmode,
+			       guchar           *pixel)
 {
   guchar *p;
   gint    i;
@@ -196,33 +218,41 @@ gimp_pixel_fetcher_get_pixel2 (GimpPixelFetcher *pf,
 	      y += pf->img_height;
 	  }
 	break;
+
       case PIXEL_SMEAR:
 	x = CLAMP (x, 0, pf->img_width - 1);
 	y = CLAMP (y, 0, pf->img_height - 1);
 	break;
+
       case PIXEL_BLACK:
 	if (x < 0 || x >= pf->img_width || 
 	    y < 0 || y >= pf->img_height)
 	  {
-	    for (i = 0; i < pf->img_bpp; i++)
+	    i = pf->img_bpp;
+	    do
 	      pixel[i] = 0;
+	    while (--i);
+
 	    return;
 	  }
 	break;
+
       default:
 	return;
       }
 
   p = gimp_pixel_fetcher_provide_tile (pf, x, y);
 
-  for (i = pf->img_bpp; i; i--)
+  i = pf->img_bpp;
+  do
     *pixel++ = *p++;
+  while (--i);
 }
 
 void
 gimp_pixel_fetcher_destroy (GimpPixelFetcher *pf)
 {
-  if (pf->tile != NULL)
+  if (pf->tile)
     gimp_tile_unref (pf->tile, pf->tile_dirty);
 
   g_free (pf);
@@ -230,8 +260,8 @@ gimp_pixel_fetcher_destroy (GimpPixelFetcher *pf)
 
 void		 
 gimp_get_bg_guchar (GimpDrawable *drawable,
-		    gboolean transparent,
-		    guchar *bg)
+		    gboolean      transparent,
+		    guchar       *bg)
 {
   GimpRGB  background;
 
@@ -265,12 +295,12 @@ gimp_get_bg_guchar (GimpDrawable *drawable,
 }
 
 static void
-gimp_rgn_render_row (guchar     *src,
-		     guchar     *dest,
-		     gint       col,       /* row width in pixels */
-		     gint 	bpp,
-		     GimpRgnFunc2 func,
-		     gpointer data)
+gimp_rgn_render_row (guchar       *src,
+		     guchar       *dest,
+		     gint          col,    /* row width in pixels */
+		     gint 	   bpp,
+		     GimpRgnFunc2  func,
+		     gpointer      data)
 {
   while (col--)
     {
@@ -283,9 +313,10 @@ gimp_rgn_render_row (guchar     *src,
 static void
 gimp_rgn_render_region (const GimpPixelRgn *srcPR,
 		        const GimpPixelRgn *destPR,
-		        GimpRgnFunc2 func, gpointer data)
+		        GimpRgnFunc2        func,
+			gpointer            data)
 {
-  gint row;
+  gint    row;
   guchar* src  = srcPR->data;
   guchar* dest = destPR->data;
   
@@ -299,8 +330,10 @@ gimp_rgn_render_region (const GimpPixelRgn *srcPR,
 }
 
 void
-gimp_rgn_iterate1 (GimpDrawable *drawable, GimpRunMode run_mode,
-		   GimpRgnFunc1 func, gpointer data)
+gimp_rgn_iterate1 (GimpDrawable *drawable,
+		   GimpRunMode   run_mode,
+		   GimpRgnFunc1  func,
+		   gpointer      data)
 {
   GimpPixelRgn srcPR;
   gint      x1, y1, x2, y2;
@@ -323,7 +356,7 @@ gimp_rgn_iterate1 (GimpDrawable *drawable, GimpRunMode run_mode,
        pr = gimp_pixel_rgns_process (pr))
     {
       guchar *src = srcPR.data;
-      gint y;
+      gint    y;
 
       for (y = 0; y < srcPR.h; y++)
 	{
@@ -343,14 +376,17 @@ gimp_rgn_iterate1 (GimpDrawable *drawable, GimpRunMode run_mode,
 	{
 	  area_so_far += srcPR.w * srcPR.h;
 	  if (((progress_skip++) % 10) == 0)
-	    gimp_progress_update ((double) area_so_far / (double) total_area);
+	    gimp_progress_update ((gdouble) area_so_far /
+				  (gdouble) total_area);
 	}
     }
 }
 
 void
-gimp_rgn_iterate2 (GimpDrawable *drawable, GimpRunMode run_mode, 
-		   GimpRgnFunc2 func, gpointer data)
+gimp_rgn_iterate2 (GimpDrawable *drawable,
+		   GimpRunMode   run_mode, 
+		   GimpRgnFunc2  func,
+		   gpointer      data)
 {
   GimpPixelRgn srcPR, destPR;
   gint      x1, y1, x2, y2;
@@ -381,7 +417,8 @@ gimp_rgn_iterate2 (GimpDrawable *drawable, GimpRunMode run_mode,
 	{
 	  area_so_far += srcPR.w * srcPR.h;
 	  if (((progress_skip++) % 10) == 0)
-	    gimp_progress_update ((double) area_so_far / (double) total_area);
+	    gimp_progress_update ((gdouble) area_so_far /
+				  (gdouble) total_area);
 	}
     }
 

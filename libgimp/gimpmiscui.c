@@ -23,25 +23,28 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
+#include <string.h>
+
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
 #endif
 #undef GTK_DISABLE_DEPRECATED
-
-#include <string.h>
-
 #include <gtk/gtk.h>
 
-#include "config.h"
-
 #include "gimp.h"
-#include "gimpintl.h"
 #include "gimpmiscui.h"
+
+#include "gimpintl.h"
+
 
 #define PREVIEW_SIZE  128 
 
+
 GimpFixMePreview*
-gimp_fixme_preview_new (GimpDrawable *drawable, gboolean has_frame)
+gimp_fixme_preview_new (GimpDrawable *drawable,
+			gboolean      has_frame)
 {
   GimpFixMePreview *preview = g_new0 (GimpFixMePreview, 1);
 
@@ -85,9 +88,9 @@ gimp_fixme_preview_free (GimpFixMePreview *preview)
 
 void
 gimp_fixme_preview_do_row (GimpFixMePreview *preview,
-			   gint    row,
-			   gint    width,
-			   guchar *src)
+			   gint              row,
+			   gint              width,
+			   guchar           *src)
 {
   gint    x;
   guchar *p0 = preview->even;
@@ -167,20 +170,20 @@ gimp_fixme_preview_do_row (GimpFixMePreview *preview,
 }
 
 void
-gimp_fixme_preview_update (GimpFixMePreview *preview,
-			   GimpFixeMePreviewFunc func,
-			   gpointer data)
+gimp_fixme_preview_update (GimpFixMePreview      *preview,
+			   GimpFixeMePreviewFunc  func,
+			   gpointer               data)
 {
   gint    x, y;
   guchar *buffer;
-  gint bpp;
+  gint    bpp;
 
-  bpp = preview->bpp;
-  buffer = (guchar*) g_malloc (preview->rowstride);
+  bpp    = preview->bpp;
+  buffer = g_new (guchar, preview->rowstride);
 
   for (y = 0; y < preview->height; y++)
     {
-      guchar *src = preview->cache + y * preview->rowstride;
+      guchar *src  = preview->cache + y * preview->rowstride;
       guchar *dest = buffer;
 
       for (x = 0; x < preview->width; x++)
@@ -190,16 +193,18 @@ gimp_fixme_preview_update (GimpFixMePreview *preview,
 	  src += bpp;
 	  dest += bpp;
 	}
-      gimp_fixme_preview_do_row(preview, y, preview->width, buffer);
+
+      gimp_fixme_preview_do_row (preview, y, preview->width, buffer);
     }
 
-  gtk_widget_queue_draw(preview->widget);
+  gtk_widget_queue_draw (preview->widget);
+
   g_free (buffer);
 }
 
 void 
 gimp_fixme_preview_fill_with_thumb (GimpFixMePreview *preview,
-				    gint32     drawable_ID)
+				    gint32            drawable_ID)
 {
   gint    bpp;
   gint    y;
@@ -244,21 +249,21 @@ gimp_fixme_preview_fill_with_thumb (GimpFixMePreview *preview,
     }
 
   preview->buffer = GTK_PREVIEW (preview->widget)->buffer;
-  preview->width = GTK_PREVIEW (preview->widget)->buffer_width;
+  preview->width  = GTK_PREVIEW (preview->widget)->buffer_width;
   preview->height = GTK_PREVIEW (preview->widget)->buffer_height;
 }
 
 void 
 gimp_fixme_preview_fill (GimpFixMePreview *preview, 
-			 GimpDrawable *drawable)
+			 GimpDrawable     *drawable)
 {
   GimpPixelRgn  srcPR;
-  gint       width;
-  gint       height;
-  gint       x1, x2, y1, y2;
-  gint       bpp;
-  gint       y;
-  guchar    *src;
+  gint          width;
+  gint          height;
+  gint          x1, x2, y1, y2;
+  gint          bpp;
+  gint          y;
+  guchar       *src;
   
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
@@ -306,7 +311,7 @@ gimp_fixme_preview_fill (GimpFixMePreview *preview,
     }
 
   preview->buffer = GTK_PREVIEW (preview->widget)->buffer;
-  preview->width = GTK_PREVIEW (preview->widget)->buffer_width;
+  preview->width  = GTK_PREVIEW (preview->widget)->buffer_width;
   preview->height = GTK_PREVIEW (preview->widget)->buffer_height;
 
   g_free (src);
@@ -314,19 +319,19 @@ gimp_fixme_preview_fill (GimpFixMePreview *preview,
 
 void 
 gimp_fixme_preview_fill_scaled (GimpFixMePreview *preview, 
-				GimpDrawable *drawable)
+				GimpDrawable     *drawable)
 {
-  gint    bpp;
-  gint    x1, y1, x2, y2;
-  gint    sel_width, sel_height;
-  gint    width, height;
-  gdouble px, py;
-  gdouble dx, dy;
-  gint    x, y;
-  guchar *dest;
+  gint     bpp;
+  gint     x1, y1, x2, y2;
+  gint     sel_width, sel_height;
+  gint     width, height;
+  gdouble  px, py;
+  gdouble  dx, dy;
+  gint     x, y;
+  guchar  *dest;
   GimpPixelFetcher *pft;
 
-  gimp_drawable_mask_bounds(drawable->drawable_id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   sel_width  = x2 - x1;
   sel_height = y2 - y1;
@@ -334,7 +339,7 @@ gimp_fixme_preview_fill_scaled (GimpFixMePreview *preview,
   /* Calculate preview size */
   if (sel_width > sel_height)
     {
-      width  = MIN(sel_width, PREVIEW_SIZE);
+      width  = MIN (sel_width, PREVIEW_SIZE);
       height = sel_height * width / sel_width;
     }
   else
@@ -360,11 +365,11 @@ gimp_fixme_preview_fill_scaled (GimpFixMePreview *preview,
 
   gtk_preview_size (GTK_PREVIEW (preview->widget), width, height);
 
-  preview->even = g_malloc (width * 3);
-  preview->odd  = g_malloc (width * 3);
-  preview->cache = g_malloc(width * bpp * height);
+  preview->even      = g_malloc (width * 3);
+  preview->odd       = g_malloc (width * 3);
+  preview->cache     = g_malloc (width * bpp * height);
   preview->rowstride = width * bpp;
-  preview->bpp = bpp;
+  preview->bpp       = bpp;
 
   dx = (gdouble) (x2 - x1 - 1) / (width - 1);
   dy = (gdouble) (y2 - y1 - 1) / (height - 1);
@@ -389,15 +394,15 @@ gimp_fixme_preview_fill_scaled (GimpFixMePreview *preview,
   gimp_pixel_fetcher_destroy (pft);
 
   preview->buffer = GTK_PREVIEW (preview->widget)->buffer;
-  preview->width = GTK_PREVIEW (preview->widget)->buffer_width;
+  preview->width  = GTK_PREVIEW (preview->widget)->buffer_width;
   preview->height = GTK_PREVIEW (preview->widget)->buffer_height;
 }
 
 GList*
-gimp_plug_in_parse_path (gchar *path_name, const gchar *dir_name)
+gimp_plug_in_parse_path (gchar       *path_name,
+			 const gchar *dir_name)
 {
   GList *path_list = NULL;
-  GList *fail_list = NULL;
   gchar *path;
 
   path = gimp_gimprc_query (path_name);
@@ -424,18 +429,13 @@ gimp_plug_in_parse_path (gchar *path_name, const gchar *dir_name)
       g_free (gimprc);
       g_free (full_path);
       g_free (esc_path);
+
       return NULL;
     }
 
-  path_list = gimp_path_parse (path, 16, TRUE, &fail_list);
+  path_list = gimp_path_parse (path, 16, TRUE, NULL);
 
   g_free (path);
-
-  if (fail_list)
-    {
-      /* We just ignore the fail_list */
-      gimp_path_free (fail_list);
-    }
 
   return path_list;
 }

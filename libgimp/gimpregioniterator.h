@@ -30,6 +30,7 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
+
 enum
 {
   PIXEL_WRAP,
@@ -37,59 +38,46 @@ enum
   PIXEL_BLACK,
 };
 
-typedef struct
-{
-  gint       col, row;
-  gint       img_width;
-  gint	     img_height;
-  gint 	     sel_x1, sel_y1, sel_x2, sel_y2;
-  gint	     img_bpp;
-  gint	     img_has_alpha;
-  gint       tile_width, tile_height;
-  guchar     bg_color[4];
-  GimpDrawable *drawable;
-  GimpTile     *tile;
-  gboolean   tile_dirty;
-  gboolean   shadow;
-} GimpPixelFetcher;
-
-GimpPixelFetcher *gimp_pixel_fetcher_new         (GimpDrawable *drawable);
-void             gimp_pixel_fetcher_set_bg_color (GimpPixelFetcher *pf);
-void		 gimp_pixel_fetcher_set_shadow	 (GimpPixelFetcher *pf,
-						  gboolean shadow);
-void             gimp_pixel_fetcher_get_pixel    (GimpPixelFetcher *pf, 
-						  gint x, 
-						  gint y, 
-						  guchar *pixel);
-void             gimp_pixel_fetcher_get_pixel2   (GimpPixelFetcher *pf, 
-						  gint x, 
-						  gint y, 
-						  gint wrapmode,
-						  guchar *pixel);
-void             gimp_pixel_fetcher_put_pixel    (GimpPixelFetcher *pf, 
-						  gint x, 
-						  gint y, 
-						  guchar *pixel);
-void             gimp_pixel_fetcher_destroy      (GimpPixelFetcher *pf);
+typedef struct _GimpPixelFetcher GimpPixelFetcher;
 
 
-void		 gimp_get_bg_guchar (GimpDrawable *drawable,
-				     gboolean transparent,
-				     guchar *bg);
+GimpPixelFetcher * gimp_pixel_fetcher_new          (GimpDrawable     *drawable);
+void               gimp_pixel_fetcher_set_bg_color (GimpPixelFetcher *pf);
+void		   gimp_pixel_fetcher_set_shadow   (GimpPixelFetcher *pf,
+						    gboolean          shadow);
+void               gimp_pixel_fetcher_get_pixel    (GimpPixelFetcher *pf, 
+						    gint              x,
+						    gint              y,
+						    guchar           *pixel);
+void               gimp_pixel_fetcher_get_pixel2   (GimpPixelFetcher *pf, 
+						    gint              x,
+						    gint              y,
+						    gint              wrapmode,
+						    guchar           *pixel);
+void               gimp_pixel_fetcher_put_pixel    (GimpPixelFetcher *pf, 
+						    gint              x,
+						    gint              y,
+						    guchar           *pixel);
+void               gimp_pixel_fetcher_destroy      (GimpPixelFetcher *pf);
 
 
-typedef void (*GimpRgnFunc1)(guchar *src, gint bpp, gpointer);
-typedef void (*GimpRgnFunc2)(guchar *src, guchar *dest, gint bpp, gpointer);
+void		   gimp_get_bg_guchar              (GimpDrawable *drawable,
+						    gboolean      transparent,
+						    guchar       *bg);
+
+
+typedef void (* GimpRgnFunc1) (guchar *src, gint bpp, gpointer);
+typedef void (* GimpRgnFunc2) (guchar *src, guchar *dest, gint bpp, gpointer);
 
 void gimp_rgn_iterate1 (GimpDrawable *drawable, 
-			GimpRunMode run_mode,
-			GimpRgnFunc1 func, 
-			gpointer data);
+			GimpRunMode   run_mode,
+			GimpRgnFunc1  func, 
+			gpointer      data);
 
 void gimp_rgn_iterate2 (GimpDrawable *drawable,
-			GimpRunMode run_mode, 
-			GimpRgnFunc2 func, 
-			gpointer data);
+			GimpRunMode   run_mode, 
+			GimpRgnFunc2  func, 
+			gpointer      data);
 
 G_END_DECLS
 
