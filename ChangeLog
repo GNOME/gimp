@@ -1,5 +1,11 @@
 2003-09-04  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/scripts/font-map.scm (script-fu-font-map):
+	Keep text layers instead of merging them down. Allow to specify a
+	text to render in place of the font names.
+
+2003-09-04  Sven Neumann  <sven@gimp.org>
+
 	* autogen.sh (LIBTOOL_WIN32): changed to 1.5 since win32 libtool
 	doesn't seem to be reporting the micro version number.
 
