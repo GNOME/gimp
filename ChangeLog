@@ -1,3 +1,13 @@
+Wed Oct  6 23:29:53 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* app/palette.c
+
+	Another attemp at fixing the palette dialog.
+	The number of columns are now fixed at sixteen (which 
+	means the nicely layed out palettes will be OK).
+	Expanding the dialog causes the width of the cells to change
+	where as the +/- buttons cause the height of the cells to change.	
+
 Wed Oct  6 14:24:46 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* libgimp/gimp.c

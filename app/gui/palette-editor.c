@@ -116,6 +116,8 @@ struct _PaletteDialog
   GdkGC *gc;
   guint entry_sig_id;
   gfloat zoom_factor;  /* range from 0.1 to 4.0 */
+  gfloat xzoom_factor;  
+  guint last_width;
   gint columns;
   gint freeze_update;
   gint columns_valid;
@@ -1098,7 +1100,7 @@ redraw_zoom (PaletteDialog *palette)
     }
   
   palette->columns = COLUMNS;
-
+  palette->columns_valid = FALSE;
   redraw_palette (palette); 
 
   palette_scroll_top_left (palette);
@@ -1492,7 +1494,7 @@ palette_color_area_events (GtkWidget     *widget,
       break;
     case GDK_BUTTON_PRESS:
       bevent = (GdkEventButton *) event;
-      entry_width = (ENTRY_WIDTH*palette->zoom_factor)+SPACING;
+      entry_width = (ENTRY_WIDTH*palette->xzoom_factor)+SPACING;
       entry_height = (ENTRY_HEIGHT*palette->zoom_factor)+SPACING;
       col = (bevent->x - 1) / entry_width;
       row = (bevent->y - 1) / entry_height;
@@ -1647,7 +1649,7 @@ palette_draw_color_row (guchar        **colors,
 
   width = preview->requisition.width;
   height = preview->requisition.height;
-  entry_width = (ENTRY_WIDTH * palette->zoom_factor);
+  entry_width = (ENTRY_WIDTH * palette->xzoom_factor);
   entry_height = (ENTRY_HEIGHT * palette->zoom_factor);
 
   if ((y >= 0) && ((y + SPACING) < height))
@@ -1794,7 +1796,7 @@ palette_draw_entries (PaletteDialog *palette,
       width = palette->color_area->requisition.width;
       height = palette->color_area->requisition.height;
 
-      entry_width = (ENTRY_WIDTH * palette->zoom_factor);
+      entry_width = (ENTRY_WIDTH * palette->xzoom_factor);
       entry_height = (ENTRY_HEIGHT * palette->zoom_factor);
 
       colors = g_malloc (sizeof (guchar *) * palette->columns * 3);
@@ -1882,17 +1884,17 @@ redraw_palette (PaletteDialog *palette)
   gint entry_width;
   guint width;
   gint ncols;
+  gfloat new_xzoom;
 
   width  = palette->color_area->parent->parent->allocation.width;
-  entry_width = (ENTRY_WIDTH*palette->zoom_factor)+SPACING;
-  ncols = width/entry_width;
+  new_xzoom = (gfloat)((gfloat)width/(gfloat)COLUMNS - SPACING)/(gfloat)ENTRY_WIDTH;
 
-  if(ncols <= 0 || 
-     (palette->columns_valid && palette->columns == ncols))
+  if((palette->columns_valid) && palette->last_width == width)
     return;
 
+  palette->last_width = width;
   palette->columns_valid = TRUE;
-  palette->columns = ncols;
+  palette->xzoom_factor = new_xzoom;
 
   n_entries = palette->entries->n_colors;
   nrows = n_entries / palette->columns;
@@ -1905,7 +1907,7 @@ redraw_palette (PaletteDialog *palette)
   gtk_widget_ref (palette->color_area);
   gtk_container_remove (GTK_CONTAINER (parent), palette->color_area);
 
-  new_pre_width = (gint) (ENTRY_WIDTH * palette->zoom_factor);
+  new_pre_width = (gint) (ENTRY_WIDTH * palette->xzoom_factor);
   new_pre_width = (new_pre_width + SPACING) * palette->columns + SPACING;
 
   gtk_preview_size (GTK_PREVIEW (palette->color_area),
@@ -2015,6 +2017,8 @@ create_palette_dialog (gint vert)
   palette->color_notebook = NULL;
   palette->color_notebook_active = FALSE;
   palette->zoom_factor = 1.0;
+  palette->xzoom_factor = 1.0;
+  palette->last_width = 0;
   palette->columns = COLUMNS;
   palette->columns_valid = TRUE;
   palette->freeze_update = FALSE;
@@ -2084,7 +2088,7 @@ create_palette_dialog (gint vert)
     scrolledwindow = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow),
 				  GTK_POLICY_AUTOMATIC, 
-				  GTK_POLICY_AUTOMATIC);
+				  GTK_POLICY_ALWAYS);
   gtk_box_pack_start (GTK_BOX (vbox), scrolledwindow, TRUE, TRUE, 0);
   gtk_widget_show (scrolledwindow);
 
