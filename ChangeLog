@@ -1,3 +1,7 @@
+2003-08-19  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* Removed wayward printf() of a debugging message.
+
 2003-08-19  Manish Singh  <yosh@gimp.org>
 
 	* tools/pdbgen/app.pl: Default all strings to validate UTF-8, use

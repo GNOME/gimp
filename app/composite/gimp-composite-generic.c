@@ -738,8 +738,6 @@ gimp_composite_hardlight_any_any_any_generic (GimpCompositeContext * ctx)
           if (src2[b] > 128)
             {
               tmp = ((gint) 255 - src1[b]) * ((gint) 255 - ((src2[b] - 128) << 1));
-														printf("tmp %04x\n", tmp);
-              printf("%d\n", ((gint) 255 - ((src2[b] - 128) << 1)));
               dest[b] = (guchar) CLAMP(255 - (tmp >> 8), 0, 255);
             }
           else
