@@ -442,7 +442,10 @@ polygon_fill_info_tab(Object_t *obj, gpointer data)
    for (p = polygon->points; p; p = p->next) {
       GdkPoint *point = (GdkPoint*) p->data;
       char x[16], y[16];
-      char *text[] = {x, y};
+      char *text[2];
+
+      text[0] = x;
+      text[1] = y;
 
       sprintf(x, "%d", point->x);
       sprintf(y, "%d", point->y);
