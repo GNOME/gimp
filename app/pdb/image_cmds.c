@@ -2255,8 +2255,8 @@ static ProcArg image_add_layer_mask_inargs[] =
 static ProcRecord image_add_layer_mask_proc =
 {
   "gimp_image_add_layer_mask",
-  "This procedure is deprecated! Use the procedure returned as 'help' instead.",
-  "gimp_layer_add_mask",
+  "This procedure is deprecated! Use 'gimp_layer_add_mask' instead.",
+  "This procedure is deprecated! Use 'gimp_layer_add_mask' instead.",
   "",
   "",
   "",
@@ -2317,8 +2317,8 @@ static ProcArg image_remove_layer_mask_inargs[] =
 static ProcRecord image_remove_layer_mask_proc =
 {
   "gimp_image_remove_layer_mask",
-  "This procedure is deprecated! Use the procedure returned as 'help' instead.",
-  "gimp_layer_remove_mask",
+  "This procedure is deprecated! Use 'gimp_layer_remove_mask' instead.",
+  "This procedure is deprecated! Use 'gimp_layer_remove_mask' instead.",
   "",
   "",
   "",

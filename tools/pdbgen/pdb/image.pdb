@@ -732,8 +732,7 @@ HELP
 }
 
 sub image_add_layer_mask {
-    $blurb = 'This procedure is deprecated! Use the procedure returned as \'help\' instead.';
-    $help = 'gimp_layer_add_mask';
+    $blurb = $help = 'This procedure is deprecated! Use \'gimp_layer_add_mask\' instead.';
     $author = $copyright = $date = '';
 
     @inargs = (
@@ -757,8 +756,7 @@ CODE
 }
 
 sub image_remove_layer_mask {
-    $blurb = 'This procedure is deprecated! Use the procedure returned as \'help\' instead.';
-    $help = 'gimp_layer_remove_mask';
+    $blurb = $help = 'This procedure is deprecated! Use \'gimp_layer_remove_mask\' instead.';
     $author = $copyright = $date = '';
 
     @inargs = (

@@ -255,7 +255,7 @@ HELP
 
     foreach (@outargs) {
         if ($_->{type} eq 'string') {
-            $_->{alias} = "g_strdup (strings.$_->{name})";
+            $_->{alias} = "strings.compat ? strings.$_->{name} : g_strdup (strings.$_->{name})";
         } else {
             $_->{alias} = "proc->$_->{name}";
         }
@@ -390,7 +390,7 @@ HELP
 @headers = qw(<string.h> "gimp-intl.h");
 
 $extra{app}->{decls} = <<'CODE';
-#define COMPAT_BLURB "This procedure is deprecated! Use the procedure returned as 'help' instead."
+#define COMPAT_BLURB "This procedure is deprecated! Use '%s' instead."
 
 
 /*  Query structure  */
@@ -418,11 +418,13 @@ typedef struct _PDBStrings PDBStrings;
 
 struct _PDBStrings
 {
-  const gchar *blurb;
-  const gchar *help;
-  const gchar *author;
-  const gchar *copyright;
-  const gchar *date;
+  gboolean  compat;
+
+  gchar    *blurb;
+  gchar    *help;
+  gchar    *author;
+  gchar    *copyright;
+  gchar    *date;
 };
 
 static gchar *proc_type_str[] =
@@ -459,10 +461,12 @@ get_pdb_strings (PDBStrings *strings,
                  ProcRecord *proc,
                  gboolean    compat)
 {
+  strings->compat = compat;
+
   if (compat)
     {
-      strings->blurb     = COMPAT_BLURB;
-      strings->help      = proc->name;
+      strings->blurb     = g_strdup_printf (COMPAT_BLURB, proc->name);
+      strings->help      = g_strdup (strings->blurb);
       strings->author    = NULL;
       strings->copyright = NULL;
       strings->date      = NULL;
@@ -515,6 +519,12 @@ procedural_db_query_entry (gpointer key,
       pdb_query->list_of_procs = g_renew (gchar *, pdb_query->list_of_procs,
                                           pdb_query->num_procs);
       pdb_query->list_of_procs[pdb_query->num_procs - 1] = g_strdup (proc_name);
+    }
+
+  if (strings.compat)
+    {
+      g_free (strings.blurb);
+      g_free (strings.help);
     }
 }
 

@@ -41,7 +41,7 @@
 #endif
 
 
-#define COMPAT_BLURB "This procedure is deprecated! Use the procedure returned as 'help' instead."
+#define COMPAT_BLURB "This procedure is deprecated! Use '%s' instead."
 
 
 /*  Query structure  */
@@ -69,11 +69,13 @@ typedef struct _PDBStrings PDBStrings;
 
 struct _PDBStrings
 {
-  const gchar *blurb;
-  const gchar *help;
-  const gchar *author;
-  const gchar *copyright;
-  const gchar *date;
+  gboolean  compat;
+
+  gchar    *blurb;
+  gchar    *help;
+  gchar    *author;
+  gchar    *copyright;
+  gchar    *date;
 };
 
 static gchar *proc_type_str[] =
@@ -148,10 +150,12 @@ get_pdb_strings (PDBStrings *strings,
                  ProcRecord *proc,
                  gboolean    compat)
 {
+  strings->compat = compat;
+
   if (compat)
     {
-      strings->blurb     = COMPAT_BLURB;
-      strings->help      = proc->name;
+      strings->blurb     = g_strdup_printf (COMPAT_BLURB, proc->name);
+      strings->help      = g_strdup (strings->blurb);
       strings->author    = NULL;
       strings->copyright = NULL;
       strings->date      = NULL;
@@ -204,6 +208,12 @@ procedural_db_query_entry (gpointer key,
       pdb_query->list_of_procs = g_renew (gchar *, pdb_query->list_of_procs,
                                           pdb_query->num_procs);
       pdb_query->list_of_procs[pdb_query->num_procs - 1] = g_strdup (proc_name);
+    }
+
+  if (strings.compat)
+    {
+      g_free (strings.blurb);
+      g_free (strings.help);
     }
 }
 
@@ -574,11 +584,11 @@ procedural_db_proc_info_invoker (Gimp     *gimp,
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = g_strdup (strings.blurb);
-      return_args[2].value.pdb_pointer = g_strdup (strings.help);
-      return_args[3].value.pdb_pointer = g_strdup (strings.author);
-      return_args[4].value.pdb_pointer = g_strdup (strings.copyright);
-      return_args[5].value.pdb_pointer = g_strdup (strings.date);
+      return_args[1].value.pdb_pointer = strings.compat ? strings.blurb : g_strdup (strings.blurb);
+      return_args[2].value.pdb_pointer = strings.compat ? strings.help : g_strdup (strings.help);
+      return_args[3].value.pdb_pointer = strings.compat ? strings.author : g_strdup (strings.author);
+      return_args[4].value.pdb_pointer = strings.compat ? strings.copyright : g_strdup (strings.copyright);
+      return_args[5].value.pdb_pointer = strings.compat ? strings.date : g_strdup (strings.date);
       return_args[6].value.pdb_int = proc->proc_type;
       return_args[7].value.pdb_int = proc->num_args;
       return_args[8].value.pdb_int = proc->num_values;

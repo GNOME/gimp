@@ -1,3 +1,15 @@
+2003-12-13  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/procedural_db.pdb: added a hack that allows to
+	dynamically allocate the strings returned by a PDB query. Construct
+	more useful "blurb" and "help" strings for deprecated procedures.
+
+	* tools/pdbgen/pdb/image.pdb: did the same change manually for
+	gimp_image_add,remove_layer_mask.
+
+	* app/pdb/procedural_db_cmds.c
+	* app/pdb/image_cmds.c: regenerated.
+
 2003-12-13  DindinX  <david@dindinx.org>
 
 	* plug-ins/libgimpoldpreview/gimpoldpreview.[ch]: fixed the header
