@@ -1,5 +1,10 @@
 2004-11-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdasheditor.c (gimp_dash_editor_finalize): don't
+	forget to g_free(editor->segments).
+
+2004-11-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpscalecombobox.c
 	(gimp_scale_combo_box_mru_remove_last)
 	* app/widgets/gimpeditor.c (gimp_editor_add_action_button)

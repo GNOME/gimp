@@ -179,6 +179,12 @@ gimp_dash_editor_finalize (GObject *object)
       editor->stroke_options = NULL;
     }
 
+  if (editor->segments)
+    {
+      g_free (editor->segments);
+      editor->segments = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
