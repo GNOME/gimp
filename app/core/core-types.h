@@ -138,20 +138,18 @@ typedef struct _GimpScanConvert     GimpScanConvert;
 
 /*  functions  */
 
-typedef void       (* GimpInitStatusFunc)       (const gchar         *text1,
-                                                 const gchar         *text2,
-                                                 gdouble              percentage);
+typedef void       (* GimpInitStatusFunc)   (const gchar         *text1,
+                                             const gchar         *text2,
+                                             gdouble              percentage);
 
-typedef GimpData * (* GimpDataObjectLoaderFunc) (const gchar         *filename);
+typedef gboolean   (* GimpObjectFilterFunc) (const GimpObject    *object,
+                                             gpointer             user_data);
 
-typedef gboolean   (* GimpObjectFilterFunc)     (const GimpObject    *object,
-                                                 gpointer             user_data);
-
-typedef gboolean   (* GimpUndoPopFunc)          (GimpUndo            *undo,
-                                                 GimpUndoMode         undo_mode,
-                                                 GimpUndoAccumulator *accum);
-typedef void       (* GimpUndoFreeFunc)         (GimpUndo            *undo,
-                                                 GimpUndoMode         undo_mode);
+typedef gboolean   (* GimpUndoPopFunc)      (GimpUndo            *undo,
+                                             GimpUndoMode         undo_mode,
+                                             GimpUndoAccumulator *accum);
+typedef void       (* GimpUndoFreeFunc)     (GimpUndo            *undo,
+                                             GimpUndoMode         undo_mode);
 
 
 /*  structs  */
