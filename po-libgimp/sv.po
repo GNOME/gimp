@@ -1,13 +1,15 @@
 # Swedish translations for GIMP.
-# Copyright (C) 1999 Free Software Foundation, Inc.
+# Copyright (C) 1999, 2000, 2001 Free Software Foundation, Inc.
 # Tomas Ögren <stric@ing.umu.se>, 1999.
-# Christian Rose <menthos@menthos.com>, 2000.
+# Christian Rose <menthos@menthos.com>, 2000, 2001.
+#
+# $Id$
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2001-07-26 14:09+0200\n"
-"PO-Revision-Date: 2000-09-24 01:50+0200\n"
+"Project-Id-Version: libgimp\n"
+"POT-Creation-Date: 2001-08-30 00:13+0200\n"
+"PO-Revision-Date: 2001-08-30 00:24+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -40,7 +42,7 @@ msgstr "Spara som animation"
 
 #: libgimp/gimpexport.c:179 libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
 msgid "Flatten Image"
-msgstr "Platta till bilden"
+msgstr "Platta till bild"
 
 #: libgimp/gimpexport.c:196
 msgid "can't handle transparency"
@@ -157,11 +159,11 @@ msgstr "Faktor"
 #. pseudo unit
 #: libgimp/gimpunit.c:49
 msgid "pixel"
-msgstr "pixel"
+msgstr "bildpunkt"
 
 #: libgimp/gimpunit.c:49
 msgid "pixels"
-msgstr "pixlar"
+msgstr "bildpunkter"
 
 #. standard units
 #: libgimp/gimpunit.c:52
@@ -206,7 +208,7 @@ msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
 msgstr ""
-"Om du inte trycker \"Tid\"-knappen kan du ange ett värde här för generering "
+"Om du inte trycker \"Tid\"-knappen kan du här ange ett värde för generering "
 "av ett slumptalsfrö - det låter dig upprepa en given \"slump\"-funktion"
 
 #: libgimp/gimpwidgets.c:720
