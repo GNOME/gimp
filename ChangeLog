@@ -1,3 +1,9 @@
+2003-11-24  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite-generic.c: Repaired an oversight on
+	  the application of hue/color/saturation/value on non-rgb images.
+	  Fixes bug #127669
+
 2003-11-24  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: (hopefully) fixed the check for the symbol prefix.
