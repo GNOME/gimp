@@ -1,5 +1,12 @@
 2003-07-24  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/gimpmenu.c: removed the GWeakNotify stuff again and free
+	the ID arrays after creating the menu. Pass the ID as user_data to
+	the "activate" callback using GINT_TO_POINTER().  Added previews
+	to gimp_image_menu_new(). More cleanup.
+
+2003-07-24  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimptooloptions.c (gimp_tool_options_serialize): 
 	add the name of the tool to the header and footer strings.
 
