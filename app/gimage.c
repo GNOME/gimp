@@ -2401,6 +2401,27 @@ gimage_add_channel (GImage *gimage, Channel *channel, int position)
 {
   ChannelUndo * cu;
 
+  if (GIMP_DRAWABLE(channel)->gimage_ID != 0 &&
+      GIMP_DRAWABLE(channel)->gimage_ID != gimage->ID)
+    {
+      warning("gimage_add_channel: attempt to add channel to wrong image");
+      return NULL;
+    }
+
+  {
+    link_ptr cc = gimage->channels;
+    while (cc) 
+      {
+	if (cc->data == channel) 
+	  {
+	    warning("gimage_add_channel: trying to add channel to image twice");
+	    return NULL;
+	  }
+	cc = next_item(cc);
+      }
+  }  
+
+
   /*  Prepare a channel undo and push it  */
   cu = (ChannelUndo *) g_malloc (sizeof (ChannelUndo));
   cu->channel = channel;

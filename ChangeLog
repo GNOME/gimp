@@ -1,3 +1,9 @@
+Wed Jan 28 13:17:06 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* app/gimage.c (gimage_add_channel): Added safety code for add
+	channel so you can't add a channel twice or to the wrong image.
+	(Same thing as I did for layers a few months ago.)
+
 Tue Jan 27 22:31:00 PST 1998 Raph Levien <raph@acm.org>
 
 	* app/gimage_mask.c: hacked around fractional pixel errors in
