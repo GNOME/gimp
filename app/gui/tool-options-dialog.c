@@ -88,7 +88,7 @@ tool_options_dialog_new (void)
 
 		     _("Reset"), tool_options_reset_callback,
 		     NULL, NULL, &options_reset_button, FALSE, FALSE,
-		     _("Close"), tool_options_close_callback,
+		     "_delete_event_", tool_options_close_callback,
 		     NULL, NULL, NULL, TRUE, TRUE,
 
 		     NULL);

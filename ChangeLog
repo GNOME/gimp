@@ -1,3 +1,15 @@
+2001-02-06  Simon Budig  <simon@gimp.org>
+
+	* libgimpwidgets/gimpdialog.c
+	* app/tools/tool_options_dialog.c
+
+	Implemented a way to connect the delete-event of a gimpdialog
+	without adding an extra button. If you pass "_delete_event_"
+	as button text (untranslated) the button will not be created.
+	
+	Removed the tool-options "Close" button. Lots of other Close-Buttons
+	wait for their removal.
+
 2001-02-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am
