@@ -2181,7 +2181,7 @@ msgstr "Вир╕внювання видимих шар╕в"
 #: plug-ins/common/xpm.c:812 plug-ins/maze/maze_face.c:204
 #: plug-ins/mosaic/mosaic.c:643 plug-ins/xjt/xjt.c:805
 msgid "Parameter Settings"
-msgstr "Установки параметр╕в"
+msgstr "Зм╕на параметр╕в"
 
 #: plug-ins/common/align_layers.c:454 plug-ins/common/align_layers.c:487
 msgid "Collect"
@@ -6274,23 +6274,23 @@ msgstr "<Image>/Зображення/Альфа/Пор╕г альфа-каналу..."
 
 #: plug-ins/common/threshold_alpha.c:147
 msgid "The layer preserves transparency."
-msgstr ""
+msgstr "Канал збер╕га╓ прозор╕сть."
 
 #: plug-ins/common/threshold_alpha.c:153
 msgid "RGBA/GRAYA drawable is not selected."
-msgstr ""
+msgstr "Малюнку RGBA/GRAYA не вибрано."
 
 #: plug-ins/common/threshold_alpha.c:222
 msgid "Threshold Alpha: Coloring Transparency..."
-msgstr ""
+msgstr "Пор╕г альфа-каналу: Замальовування прозорост╕..."
 
 #: plug-ins/common/threshold_alpha.c:266
 msgid "Threshold Alpha"
-msgstr ""
+msgstr "Пор╕г альфа-каналу"
 
 #: plug-ins/common/tiff.c:685
 msgid "TIFF Channel"
-msgstr ""
+msgstr "Канал TIFF"
 
 #: plug-ins/common/tiff.c:1525
 msgid "Save as TIFF"
@@ -6306,11 +6306,11 @@ msgstr "LZW"
 
 #: plug-ins/common/tiff.c:1553
 msgid "Pack Bits"
-msgstr ""
+msgstr "Впакован╕ б╕ти"
 
 #: plug-ins/common/tiff.c:1554
 msgid "Deflate"
-msgstr ""
+msgstr "Здути"
 
 #: plug-ins/common/tiff.c:1555
 msgid "JPEG"
@@ -6450,7 +6450,7 @@ msgstr ""
 
 #: plug-ins/common/uniteditor.c:541
 msgid "How many units make up an inch."
-msgstr ""
+msgstr "Ск╕льки одиниць припада╓ на дюйм."
 
 #: plug-ins/common/uniteditor.c:542
 msgid ""
@@ -6467,15 +6467,15 @@ msgstr ""
 
 #: plug-ins/common/uniteditor.c:551
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
-msgstr ""
+msgstr "Скорочення одиниц╕ (наприклад, \"см\" для сантиметр╕в)."
 
 #: plug-ins/common/uniteditor.c:553
 msgid "The unit's singular form."
-msgstr ""
+msgstr "Одиниця в однин╕."
 
 #: plug-ins/common/uniteditor.c:554
 msgid "The unit's plural form."
-msgstr ""
+msgstr "Одиниця в множин╕."
 
 #: plug-ins/common/uniteditor.c:570
 msgid "Saved"
@@ -6551,23 +6551,23 @@ msgstr "Неч╕тка маска"
 
 #: plug-ins/common/video.c:44
 msgid "Staggered"
-msgstr ""
+msgstr "Ших╕вниця"
 
 #: plug-ins/common/video.c:45
 msgid "Large staggered"
-msgstr ""
+msgstr "Велика шах╕вниця"
 
 #: plug-ins/common/video.c:46
 msgid "Striped"
-msgstr ""
+msgstr "Смуги"
 
 #: plug-ins/common/video.c:47
 msgid "Wide-striped"
-msgstr ""
+msgstr "Широк╕ смуги"
 
 #: plug-ins/common/video.c:48
 msgid "Long-staggered"
-msgstr ""
+msgstr "Довга шах╕вниця"
 
 #: plug-ins/common/video.c:49
 msgid "3x3"
@@ -6616,11 +6616,11 @@ msgstr "<Image>/Ф╕льтри/Кольори/╤вертувати значення"
 
 #: plug-ins/common/vpropagate.c:160
 msgid "More White (Larger Value)"
-msgstr ""
+msgstr "Св╕тл╕ше (б╕льш╕ значення)"
 
 #: plug-ins/common/vpropagate.c:163
 msgid "More Black (Smaller Value)"
-msgstr ""
+msgstr "Темн╕ше (менш╕ значення)"
 
 #: plug-ins/common/vpropagate.c:166
 msgid "Middle Value to Peaks"
@@ -6665,11 +6665,11 @@ msgstr "Режим розповсюдження"
 
 #: plug-ins/common/vpropagate.c:987
 msgid "Lower Threshold:"
-msgstr ""
+msgstr "Нижн╕й пор╕г:"
 
 #: plug-ins/common/vpropagate.c:996
 msgid "Upper Threshold:"
-msgstr ""
+msgstr "Верхн╕й пор╕г:"
 
 #: plug-ins/common/vpropagate.c:1005
 msgid "Propagating Rate:"
@@ -7024,19 +7024,19 @@ msgstr "XBM: неможливо в╕дкрити \"%s\"\n"
 #: plug-ins/common/xbm.c:814
 #, c-format
 msgid "XBM: cannot read header (ftell == %ld)\n"
-msgstr ""
+msgstr "XBM: неможливо зчитати заголовок (ftell == %ld)\n"
 
 #: plug-ins/common/xbm.c:820
 msgid "XBM: no image width specified\n"
-msgstr ""
+msgstr "XBM: не вказано ширини зображення\n"
 
 #: plug-ins/common/xbm.c:826
 msgid "XBM: no image height specified\n"
-msgstr ""
+msgstr "XBM: не вказано висоти зображення\n"
 
 #: plug-ins/common/xbm.c:832
 msgid "XBM: no image data type specified\n"
-msgstr ""
+msgstr "XBM: не вказано типу даних зображення\n"
 
 #. The image is not black-and-white.
 #: plug-ins/common/xbm.c:965
@@ -7105,19 +7105,19 @@ msgstr "Зберегти як XPM"
 
 #: plug-ins/common/xpm.c:825
 msgid "Alpha Threshold:"
-msgstr ""
+msgstr "Пор╕г альфа-каналу:"
 
 #: plug-ins/common/xwd.c:381
 msgid "can't open file for reading"
-msgstr ""
+msgstr "неможливо в╕дкрити файл для зчитування"
 
 #: plug-ins/common/xwd.c:388
 msgid "can't open file as XWD file"
-msgstr ""
+msgstr "неможливо в╕дкрити файл як XWD"
 
 #: plug-ins/common/xwd.c:402
 msgid "can't get memory for colormap"
-msgstr ""
+msgstr "неможливо вид╕лити пам'ять для мапи кольор╕в"
 
 #: plug-ins/common/xwd.c:421
 msgid "can't read color entries"
@@ -7149,7 +7149,7 @@ msgstr ""
 
 #: plug-ins/common/xwd.c:1322
 msgid "No memory for mapping colors"
-msgstr ""
+msgstr "Нема╓ пам'ят╕ для в╕дображення кольор╕в"
 
 #: plug-ins/common/xwd.c:2008
 msgid "Error during writing indexed/grey image"
@@ -7258,7 +7258,7 @@ msgstr ""
 
 #: plug-ins/fits/fits.c:1028
 msgid "Image Composing"
-msgstr ""
+msgstr "Складання зображення"
 
 #: plug-ins/flame/flame.c:144
 msgid "<Image>/Filters/Render/Nature/Flame..."
@@ -7361,11 +7361,11 @@ msgstr ""
 
 #: plug-ins/flame/flame.c:1096
 msgid "Colormap:"
-msgstr ""
+msgstr "Мапа кольор╕в:"
 
 #: plug-ins/flame/flame.c:1144
 msgid "Custom Gradient"
-msgstr ""
+msgstr "Нетиповий град╕╓нт:"
 
 #: plug-ins/flame/flame.c:1164
 msgid "Camera"
@@ -7385,7 +7385,7 @@ msgstr "Сперш перетвор╕ть зображення у RGB!"
 
 #: plug-ins/fp/fp.c:133
 msgid "Applying the Filter Pack..."
-msgstr ""
+msgstr "Застосування набору ф╕льтр╕в..."
 
 #: plug-ins/fp/fp_gtk.c:27
 msgid "Darker:"
@@ -7988,7 +7988,7 @@ msgstr "Перейти до кадру (%ld/%ld)"
 #: plug-ins/gap/gap_lib.c:1967
 #, c-format
 msgid "Destination Frame Number (%ld  - %ld)"
-msgstr ""
+msgstr "Номер кадру призначення (%ld  - %ld)"
 
 #: plug-ins/gap/gap_lib.c:1971 plug-ins/gap/gap_lib.c:2048
 #: plug-ins/gap/gap_lib.c:2236
@@ -8030,7 +8030,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_lib.c:2128
 msgid "Duplicate Frame Range"
-msgstr ""
+msgstr "Дублювати д╕апазон кадр╕в"
 
 #: plug-ins/gap/gap_lib.c:2231
 #, c-format
@@ -9113,7 +9113,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mpege.c:338
 msgid "IQSCALE:"
-msgstr ""
+msgstr "IQSCALE:"
 
 #: plug-ins/gap/gap_mpege.c:339
 msgid ""
@@ -9123,7 +9123,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mpege.c:346
 msgid "PQSCALE:"
-msgstr ""
+msgstr "PQSCALE:"
 
 #: plug-ins/gap/gap_mpege.c:347
 msgid ""
@@ -9133,7 +9133,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mpege.c:354
 msgid "BQSCALE:"
-msgstr ""
+msgstr "BQSCALE:"
 
 #: plug-ins/gap/gap_mpege.c:355
 msgid ""
@@ -9181,7 +9181,7 @@ msgstr "В╕деоформат: "
 
 #: plug-ins/gap/gap_mpege.c:405
 msgid "Videoformat"
-msgstr ""
+msgstr "В╕деоформат"
 
 #. framerates above 30 ar not allowed in mpeg2encode
 #: plug-ins/gap/gap_mpege.c:413
@@ -9232,15 +9232,15 @@ msgstr ""
 
 #: plug-ins/gap/gap_navigator_dialog.c:377
 msgid "Duplicate selected Frames"
-msgstr ""
+msgstr "Дублювати вибран╕ кадри"
 
 #: plug-ins/gap/gap_navigator_dialog.c:381
 msgid "Delete selected Frames"
-msgstr ""
+msgstr "Стерти вибран╕ кадри"
 
 #: plug-ins/gap/gap_navigator_dialog.c:390
 msgid "Goto 1st Frame"
-msgstr ""
+msgstr "Перейти на перший кадр"
 
 #: plug-ins/gap/gap_navigator_dialog.c:394
 msgid ""
@@ -9392,7 +9392,7 @@ msgstr "Тип пал╕три"
 
 #: plug-ins/gap/gap_range_ops.c:333
 msgid "Custom Palette"
-msgstr ""
+msgstr "Нетипова пал╕тра"
 
 #: plug-ins/gap/gap_range_ops.c:334
 msgid ""
@@ -9595,7 +9595,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:642
 msgid "Exclude BG-Layer"
-msgstr ""
+msgstr "Виключаючи шар тла"
 
 #: plug-ins/gap/gap_range_ops.c:643
 msgid ""
@@ -9614,19 +9614,19 @@ msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:969
 msgid "Frames to Image"
-msgstr ""
+msgstr "Кадри у зображення"
 
 #: plug-ins/gap/gap_range_ops.c:970
 msgid "Create Multilayer-Image from Frames"
-msgstr ""
+msgstr "Створити багатошарове зображення з кадр╕в"
 
 #: plug-ins/gap/gap_range_ops.c:1111
 msgid "Flattening Frames..."
-msgstr ""
+msgstr "Зведення кадр╕в..."
 
 #: plug-ins/gap/gap_range_ops.c:1112
 msgid "Converting Frames..."
-msgstr ""
+msgstr "Перетворення кадр╕в..."
 
 #: plug-ins/gap/gap_range_ops.c:1260
 msgid ""
@@ -10225,7 +10225,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:2975
 msgid "Fade out:"
-msgstr ""
+msgstr "Згасання:"
 
 #: plug-ins/gfig/gfig.c:2998
 msgid "Gradient:"
