@@ -737,7 +737,6 @@ plug-ins/sel2path/Makefile
 plug-ins/sgi/Makefile
 plug-ins/sinus/Makefile
 plug-ins/struc/Makefile
-plug-ins/unsharp/Makefile
 modules/Makefile
 docs/Makefile
 data/Makefile

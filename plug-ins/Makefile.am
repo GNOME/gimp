@@ -63,7 +63,6 @@ SUBDIRS = 			\
 	sel2path		\
 	sinus			\
 	struc			\
-	unsharp			\
 	$(WEBBROWSER)		\
 	$(XJT)			\
 	common

@@ -117,6 +117,7 @@ plug-ins/common/threshold_alpha.c
 plug-ins/common/tile.c
 plug-ins/common/tileit.c
 plug-ins/common/tiler.c
+plug-ins/common/unsharp.c
 plug-ins/common/url.c
 plug-ins/common/video.c
 plug-ins/common/vinvert.c
@@ -233,7 +234,6 @@ plug-ins/sel2path/sel2path.c
 plug-ins/sgi/sgi.c
 plug-ins/sinus/sinus.c
 plug-ins/struc/struc.c
-plug-ins/unsharp/unsharp.c
 plug-ins/webbrowser/webbrowser.c
 libgimp/gimpcolorbutton.c
 libgimp/gimpexport.c

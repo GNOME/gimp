@@ -1,3 +1,10 @@
+Fri Jan 14 11:43:09 PST 2000 Manish Singh <yosh@gimp.org>
+
+	* configure.in
+	* plug-ins/Makefile.am
+	* plug-ins/common/unsharp.c: move unsharp here, since it doesn't
+	have any support files anymore
+
 Fri Jan 14 19:43:01 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/paint_core.h: use ToolFlags enum instead of int
@@ -1364,14 +1371,15 @@ Sat Dec 25 23:15:46 PST 1999 Manish Singh <yosh@gimp.org>
         * MAINTAINERS
 
         MAINTAINERS: Updated my entry (it wasn't there ;)
-        app/paint_core.[ch] supplied new PaintTool states to clone_paint_func() so that
-        writes of temporary markings made directly to the window are not
-        clobbered by buffered writes stemming from gdisplay_flush_xxx()
+        app/paint_core.[ch] supplied new PaintTool states to clone_paint_func()
+	so that writes of temporary markings made directly to the window are
+	not clobbered by buffered writes stemming from gdisplay_flush_xxx()
         routines. clone_tool_paint_func() has been modified to take advantage
         of these new states, retiring bug #2184 in a way that does not change 
         user interface semantics. There are small additions to the PaintCore 
         interface that do not affect clientele unaware of added semantics. 
-        These changes are detailed at http://idt.net/~gosgood/gimp-patch/patch03.html.
+        These changes are detailed at
+	http://idt.net/~gosgood/gimp-patch/patch03.html.
 	
 Sat Dec 25 04:14:03 CET 1999  Marc Lehmann <pcg@goof.com>
 

@@ -107,6 +107,7 @@
     'tile' => { libdep => 'gtk', ui => 1 },
     'tileit' => { libdep => 'gtk', ui => 1 },
     'tiler' => { libdep => 'glib' },
+    'unsharp' => { libdep => 'gtk', ui => 1 },
     'url' => { libdep => 'glib' },
     'video' => { libdep => 'gtk', ui => 1 },
     'vinvert' => { libdep => 'glib' },

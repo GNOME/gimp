@@ -125,6 +125,7 @@ libexec_PROGRAMS = \
 	tile \
 	tileit \
 	tiler \
+	unsharp \
 	url \
 	video \
 	vinvert \
@@ -1120,6 +1121,15 @@ tiler_SOURCES = \
 tiler_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GLIB_LIBS)				\
+	$(INTLLIBS)
+
+unsharp_SOURCES = \
+	unsharp.c
+
+unsharp_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
+	$(top_builddir)/libgimp/libgimp.la	\
+	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
 url_SOURCES = \
