@@ -4,16 +4,16 @@
 # (sección Perl). Preguntas, consejos y correcciones
 # _constructivas_ son bienvenidos.
 #
-# Copyright (C) 2000 Free Software Foundation, Inc.
+# Copyright (C) 2000-2002 Free Software Foundation, Inc.
 # Oscar Cebellán Ramos <cebaman@bigfoot.com>
-# Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>
+# Rodrigo Sancho Senosiain <daisuke@wanadoo.es>
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.201\n"
-"POT-Creation-Date: Sun Jan 20 10:39:21 2002\n"
+"POT-Creation-Date: Wed Mar 27 20:44:23 2002\n"
 "PO-Revision-Date: 2000-09-30 02:20+02:00\n"
 "Last-Translator: Oscar Cebellán Ramos <cebaman@bigfoot.com>\n"
-"Language-Team: Spanish <es@li.org>\n"
+"Language-Team: GNOME-ES <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"

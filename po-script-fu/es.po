@@ -4,15 +4,16 @@
 # (sección script-fu) Preguntas, consejos y correcciones 
 # _constructivas_ son bienvenidos.
 #
-# Copyright (C) 1998-2000 Free Software Foundation, Inc.
+# Copyright (C) 1998-2004 Free Software Foundation, Inc.
 # Oscar Cebellán Ramos <cebaman@bigfoot.com>
+# Rodrigo Sancho Senosian <daisuke@wanadoo.es>
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.29\n"
-"POT-Creation-Date: 2002-02-03 17:56-0800\n"
-"PO-Revision-Date: 2000-12-27 16:46+0100\n"
-"Last-Translator: Óscar Cebellán Ramos <cebaman@bigfoot.com>\n"
-"Language-Team: Spanish <es@li.org>\n"
+"Project-Id-Version: GIMP 1.2.3\n"
+"POT-Creation-Date: 2002-03-27 21:35+0100\n"
+"PO-Revision-Date: 2002-03-27 21:41+0100\n"
+"Last-Translator: Rodrigo Sancho Senosiain <daisuke@wanadoo.es>\n"
+"Language-Team: GNOME-ES <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -198,68 +199,64 @@ msgstr "<Toolbox>/Exts/Script-Fu/Refrescar"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:148
 #: plug-ins/dbbrowser/dbbrowser_utils.c:167
-#, fuzzy
 msgid "DB Browser (init...)"
-msgstr "Ojear..."
+msgstr "Explorador de procedimientos (inicio...)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:153
 #: plug-ins/dbbrowser/dbbrowser_utils.c:172
 msgid "Search by Name"
-msgstr ""
+msgstr "Buscar por nombre"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:155
 #: plug-ins/dbbrowser/dbbrowser_utils.c:174
 msgid "Search by Blurb"
-msgstr ""
+msgstr "Buscar por descripción"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:157
 msgid "Apply"
-msgstr ""
+msgstr "Aplicar"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:226
 msgid "Search:"
-msgstr ""
+msgstr "Buscar:"
 
 #. show the name
 #: plug-ins/dbbrowser/dbbrowser_utils.c:344
-#, fuzzy
 msgid "Name:"
-msgstr "Fecha:"
+msgstr "Nombre:"
 
 #. show the description
 #: plug-ins/dbbrowser/dbbrowser_utils.c:360
-#, fuzzy
 msgid "Blurb:"
-msgstr "Desenfoque en Y"
+msgstr "Descripción:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:382
 msgid "In:"
-msgstr ""
+msgstr "Entrada:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:429
 msgid "Out:"
-msgstr ""
+msgstr "Salida:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:479
 msgid "Help:"
-msgstr ""
+msgstr "Ayuda:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:643
 msgid "DB Browser (by name - please wait)"
-msgstr ""
+msgstr "Explorador de procedimientos (por nombre - por favor espere)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:667
 msgid "DB Browser (by blurb - please wait)"
-msgstr ""
+msgstr "Explorador de procedimientos (por descripción - por favor espere)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:677
 msgid "DB Browser (please wait)"
-msgstr ""
+msgstr "Explorador de procedimientos (por favor espere)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:743
-#, fuzzy
 msgid "DB Browser"
-msgstr "Ojear..."
+msgstr "Explorador de procedimientos"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm:0
 msgid "<Image>/Edit/Copy Visible"
@@ -881,7 +878,7 @@ msgstr "Filtro-animación para todas las Copias"
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "Antialias"
-msgstr "Alisado"
+msgstr "Antialias"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Apply Generated Layermask"
@@ -955,7 +952,6 @@ msgid "Base Color"
 msgstr "Color Base"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
-#, fuzzy
 msgid "Base Radius (pixels)"
 msgstr "Radio Base (píxeles)"
 
@@ -1554,7 +1550,7 @@ msgstr "Altura"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Hexagons"
-msgstr ""
+msgstr "Hexágonos"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
@@ -1762,7 +1758,7 @@ msgstr "Número"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Octagons"
-msgstr ""
+msgstr "Octógonos"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Odd"
@@ -1982,9 +1978,8 @@ msgid "Scale Y"
 msgstr "Escala en Y"
 
 #: plug-ins/script-fu/scripts/land.scm:0
-#, fuzzy
 msgid "Sea Depth"
-msgstr "Profundidad de la Sombra"
+msgstr "Profundidad del mar"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "Seed"

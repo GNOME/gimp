@@ -4,15 +4,15 @@
 # (sección libgimp) Preguntas, consejos y correcciones 
 # _constructivas_ son bienvenidos.
 #
-# Copyright (C) 1998-2000 Free Software Foundation, Inc.
-# Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>
+# Copyright (C) 1998-2002 Free Software Foundation, Inc.
+# Rodrigo Sancho Senosiain <daisuke@wanadoo.es>
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.29\n"
-"POT-Creation-Date: 2001-11-12 22:34-0800\n"
-"PO-Revision-Date: 2000-12-27 16:28+01:00\n"
-"Last-Translator: Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>\n"
-"Language-Team: Spanish <es@li.org>\n"
+"Project-Id-Version: GIMP 1.2.3\n"
+"POT-Creation-Date: 2002-03-27 21:04+0100\n"
+"PO-Revision-Date: 2002-03-27 21:10+0100\n"
+"Last-Translator: Rodrigo Sancho Senosiain <daisuke@wanadoo.es>\n"
+"Language-Team: GNOME-ES <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -35,9 +35,8 @@ msgid "Merge Visible Layers"
 msgstr "Mezclar capas visibles"
 
 #: libgimp/gimpexport.c:179
-#, fuzzy
 msgid "can't handle layer offsets, size or opacity"
-msgstr "no puede manejar Capas"
+msgstr "no puedo manejar desplazamientos, tamaño u opacidad de capas"
 
 #: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
 msgid "can only handle layers as animation frames"
@@ -110,11 +109,11 @@ msgstr "Añadir canal alfa"
 #. the dialog
 #: libgimp/gimpexport.c:356
 msgid "Confirm Save"
-msgstr ""
+msgstr "Confirme guardar"
 
 #: libgimp/gimpexport.c:360
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmar"
 
 #: libgimp/gimpexport.c:362 libgimp/gimpexport.c:423
 #: libgimp/gimpquerybox.c:204 libgimp/gimpquerybox.c:260
@@ -129,6 +128,8 @@ msgid ""
 "You are about to save %s as %s.\n"
 "This will not save the visible layers."
 msgstr ""
+"Está a punto de guardar %s como %s.\n"
+"No se guardarán las capas visibles."
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -162,11 +163,11 @@ msgstr "La conversión de exportación no modificará su imagen original"
 
 #: libgimp/gimpexport.c:569
 msgid "a layer mask"
-msgstr ""
+msgstr "una máscara de capa"
 
 #: libgimp/gimpexport.c:571
 msgid "a channel (saved selection)"
-msgstr ""
+msgstr "un canal (una selección guardada)"
 
 #: libgimp/gimpfileselection.c:388
 msgid "Select File"
