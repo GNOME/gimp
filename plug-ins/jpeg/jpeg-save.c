@@ -387,7 +387,7 @@ query (void)
                           "S. Mukund <muks@mukund.org>, Sven Neumann <sven@gimp.org>",
                           "S. Mukund <muks@mukund.org>, Sven Neumann <sven@gimp.org>",
                           "November 15, 2004",
-                          N_("JPEG image"),
+                          NULL,
                           NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (thumb_args),
@@ -421,7 +421,7 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam   values[2];
+  static GimpParam   values[4];
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint32             image_ID;

@@ -522,7 +522,7 @@ query (void)
   };
   static GimpParamDef load_return_vals[] =
   {
-    { GIMP_PDB_IMAGE, "image", "Output image" },
+    { GIMP_PDB_IMAGE, "image", "Output image" }
   };
 
   static GimpParamDef set_load_args[] =
@@ -535,6 +535,16 @@ query (void)
     { GIMP_PDB_INT32, "coloring", "4: b/w, 5: grey, 6: colour image, 7: automatic" },
     { GIMP_PDB_INT32, "TextAlphaBits", "1, 2, or 4" },
     { GIMP_PDB_INT32, "GraphicsAlphaBits", "1, 2, or 4" }
+  };
+
+  static GimpParamDef thumb_args[] =
+  {
+    { GIMP_PDB_STRING, "filename",     "The name of the file to load"  },
+    { GIMP_PDB_INT32,  "thumb_size",   "Preferred thumbnail size"      }
+  };
+  static GimpParamDef thumb_return_vals[] =
+  {
+    { GIMP_PDB_IMAGE, "image",         "Output image" }
   };
 
   static GimpParamDef save_args[] =
@@ -626,6 +636,23 @@ query (void)
                           G_N_ELEMENTS (set_load_args), 0,
                           set_load_args, NULL);
 
+  gimp_install_procedure ("file_ps_load_thumb",
+                          "Loads a small preview from a Postscript or PDF document",
+                          "",
+                          "Peter Kirchgessner <peter@kirchgessner.net>",
+                          "Peter Kirchgessner",
+                          dversio,
+			  NULL,
+			  NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (thumb_args),
+                          G_N_ELEMENTS (thumb_return_vals),
+                          thumb_args, thumb_return_vals);
+
+  gimp_register_thumbnail_loader ("file_ps_load",  "file_ps_load_thumb");
+  gimp_register_thumbnail_loader ("file_eps_load", "file_ps_load_thumb");
+  gimp_register_thumbnail_loader ("file_pdf_load", "file_ps_load_thumb");
+
   gimp_install_procedure ("file_ps_save",
                           "save image as PostScript docuement",
                           "PostScript saving handles all image types except those with alpha channels.",
@@ -716,6 +743,7 @@ run (const gchar      *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
@@ -770,6 +798,41 @@ run (const gchar      *name,
       /*  Store plvals data  */
       if (status == GIMP_PDB_SUCCESS)
 	gimp_set_data ("file_ps_load", &plvals, sizeof (PSLoadVals));
+    }
+  else if (strcmp (name, "file_ps_load_thumb") == 0)
+    {
+      if (nparams < 2)
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
+      else
+        {
+          gint size = MAX (32, param[1].data.d_int32);
+
+          /*  We should look for an embedded preview but for now we
+           *  just load the document at a small resolution and the
+           *  first page only.
+           */
+
+          plvals.resolution = size / 8;
+          plvals.width      = size;
+          plvals.height     = size;
+          strcpy (plvals.pages, "1");
+
+          check_load_vals ();
+          image_ID = load_image (param[0].data.d_string);
+
+          if (image_ID != -1)
+            {
+	      *nreturn_vals = 2;
+	      values[1].type         = GIMP_PDB_IMAGE;
+	      values[1].data.d_image = image_ID;
+            }
+          else
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+        }
     }
   else if (strcmp (name, "file_ps_save")  == 0 ||
            strcmp (name, "file_eps_save") == 0)

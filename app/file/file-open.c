@@ -215,7 +215,7 @@ file_open_thumbnail (Gimp          *gimp,
 
   proc = procedural_db_lookup (gimp, file_proc->thumb_loader);
 
-  if (proc && proc->num_args >= 2)
+  if (proc && proc->num_args >= 2 && proc->num_values >= 2)
     {
       GimpPDBStatusType  status;
       Argument          *args;
@@ -242,8 +242,12 @@ file_open_thumbnail (Gimp          *gimp,
 
       status        = return_vals[0].value.pdb_int;
       image_id      = return_vals[1].value.pdb_int;
-      *image_width  = MAX (0, return_vals[2].value.pdb_int);
-      *image_height = MAX (0, return_vals[3].value.pdb_int);
+
+      if (proc->num_values >= 4)
+        {
+          *image_width  = MAX (0, return_vals[2].value.pdb_int);
+          *image_height = MAX (0, return_vals[3].value.pdb_int);
+        }
 
       procedural_db_destroy_args (return_vals, proc->num_values);
       g_free (args);
