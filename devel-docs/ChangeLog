@@ -1,5 +1,10 @@
 2005-01-25  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	libgimpconfig/version: oop, removed
+	libgimpconfig/.cvsignore: added
+
+2005-01-25  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	libgimpconfig/version:
 	libgimpconfig/version.in: added
 	
