@@ -1,5 +1,11 @@
 2005-03-21  Sven Neumann  <sven@gimp.org>
 
+	* app/paint/gimpink.c: changed time-smoother code to use guint32
+	time values externally, guint64 internally. Proper fix for bug
+	#164272.
+
+2005-03-21  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/dialogs-actions.h: bail out if
 	widgets/gimpactiongroup.h has not been included beforehand.
 
