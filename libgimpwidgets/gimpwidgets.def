@@ -171,6 +171,7 @@ EXPORTS
 	gimp_preview_get_update
 	gimp_preview_invalidate
 	gimp_preview_set_bounds
+	gimp_preview_set_default_cursor
 	gimp_preview_set_update
 	gimp_query_boolean_box
 	gimp_query_double_box
