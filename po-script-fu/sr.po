@@ -1,14 +1,22 @@
+# Serbian translation of gimp
+# Courtesy of Prevod.org team (http://www.prevod.org/) -- 2003.
+# 
+# This file is distributed under the same license as the gimp package.
+# 
+# Maintainer: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>
+#
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2003-08-13 20:42+0200\n"
-"PO-Revision-Date: 2003-08-05 05:04+0200\n"
+"POT-Creation-Date: 2003-08-31 21:25+0200\n"
+"PO-Revision-Date: 2003-08-31 21:25+0200\n"
 "Last-Translator: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@bogus.example.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: plug-ins/script-fu/script-fu-console.c:143
 #: plug-ins/script-fu/script-fu-text-console.c:66
@@ -102,17 +110,17 @@ msgid "Script-Fu Brush Selection"
 msgstr "Скрипт-Фу Избор Киста"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1864
-#: plug-ins/dbbrowser/dbbrowser_utils.c:488
+#: plug-ins/dbbrowser/dbbrowser_utils.c:492
 msgid "Author:"
 msgstr "Аутор:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1870
-#: plug-ins/dbbrowser/dbbrowser_utils.c:504
+#: plug-ins/dbbrowser/dbbrowser_utils.c:508
 msgid "Copyright:"
 msgstr "Ауторска права:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1876
-#: plug-ins/dbbrowser/dbbrowser_utils.c:496
+#: plug-ins/dbbrowser/dbbrowser_utils.c:500
 msgid "Date:"
 msgstr "Датум:"
 
@@ -144,12 +152,10 @@ msgid "Server Logfile:"
 msgstr "Дневник сервера:"
 
 #: plug-ins/script-fu/script-fu.c:120
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Console..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Конзола..."
 
 #: plug-ins/script-fu/script-fu.c:145
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Server..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Сервер..."
 
@@ -158,74 +164,71 @@ msgid "Re-read all available scripts"
 msgstr "Поново учитај све доступне скрипте"
 
 #: plug-ins/script-fu/script-fu.c:274
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh"
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Освежи"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:118
-#: plug-ins/dbbrowser/dbbrowser_utils.c:137
+#: plug-ins/dbbrowser/dbbrowser_utils.c:119
+#: plug-ins/dbbrowser/dbbrowser_utils.c:138
 msgid "DB Browser"
 msgstr "Претраживач базе"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:123
-#: plug-ins/dbbrowser/dbbrowser_utils.c:142
+#: plug-ins/dbbrowser/dbbrowser_utils.c:124
+#: plug-ins/dbbrowser/dbbrowser_utils.c:143
 msgid "Search by _Name"
-msgstr "Тражи по Имену"
+msgstr "Тражи по имену"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:125
-#: plug-ins/dbbrowser/dbbrowser_utils.c:144
+#: plug-ins/dbbrowser/dbbrowser_utils.c:126
+#: plug-ins/dbbrowser/dbbrowser_utils.c:145
 msgid "Search by _Blurb"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:205
+#: plug-ins/dbbrowser/dbbrowser_utils.c:211
 msgid "_Search:"
 msgstr "Тражи:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:347
+#: plug-ins/dbbrowser/dbbrowser_utils.c:351
 msgid "Name:"
 msgstr "Име:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:356
+#: plug-ins/dbbrowser/dbbrowser_utils.c:360
 msgid "Blurb:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:368
+#: plug-ins/dbbrowser/dbbrowser_utils.c:372
 msgid "In:"
 msgstr "У:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:416
+#: plug-ins/dbbrowser/dbbrowser_utils.c:420
 msgid "Out:"
-msgstr ""
+msgstr "Из:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:470
+#: plug-ins/dbbrowser/dbbrowser_utils.c:474
 msgid "Help:"
 msgstr "Помоћ:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:595
+#: plug-ins/dbbrowser/dbbrowser_utils.c:599
 msgid "Searching by name - please wait"
 msgstr "Тражим по имену - молим, сачекајте"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:618
+#: plug-ins/dbbrowser/dbbrowser_utils.c:622
 msgid "Searching by blurb - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:628
+#: plug-ins/dbbrowser/dbbrowser_utils.c:632
 msgid "Searching - please wait"
 msgstr "Тражим - молим Вас да сачекате"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:665
+#: plug-ins/dbbrowser/dbbrowser_utils.c:669
 msgid "No matches"
 msgstr "Без резултата"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/3D _Outline..."
-msgstr "<Image>/Скрипт-Фу/Алфа у Лого/3Д Оутлине..."
+msgstr "<Image>/Скрипт-Фу/Алфа у Лого/3D _Outline..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D _Outline..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/3Д Приказ..."
+msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/3D _Outline..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:3
 msgid "Bumpmap (Alpha Layer) Blur Radius"
@@ -389,9 +392,8 @@ msgid "Text"
 msgstr "Текст"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3_D Truchet..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Узорци/3Д Вијуге..."
+msgstr "<Toolbox>/Xtns/Скрипт-Фу/Узорци/3Д Кривине..."
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
@@ -462,7 +464,6 @@ msgid "Thickness"
 msgstr "Густоћа"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/Add B_evel..."
 msgstr "<Image>/Скрипт-Фу/Декор/Укошено..."
 
@@ -481,9 +482,8 @@ msgid "Work on Copy"
 msgstr "Рад на копији"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/Add _Border..."
-msgstr "<Image>/Скрипт-Фу/Декор/Додај Руб..."
+msgstr "<Image>/Скрипт-Фу/Декор/Додај Ивицу..."
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:2
 msgid "Border Color"
@@ -502,9 +502,8 @@ msgid "Delta Value on Color"
 msgstr "Делта Вредност Боје"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Wеб Теме/Алиен Глоw/Стрелица..."
+msgstr "<Toolbox>/Xtns/Скрипт-Фу/Веб Теме/Ванземаљско светло/Стрелица..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -559,9 +558,8 @@ msgid "Up"
 msgstr "Горе"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Hrule..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Wеб Теме/Алиен Глоw/Хор. Црта..."
+msgstr "<Toolbox>/Xtns/Скрипт-Фу/Веб Теме/Ванземаљско светло/Хор. Црта..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
 msgid "Bar Height"
@@ -572,9 +570,8 @@ msgid "Bar Length"
 msgstr "Дужина Линије"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Bullet..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Wеб Теме/Алиен Глоw/Куглица..."
+msgstr "<Toolbox>/Xtns/Скрипт-Фу/Веб Теме/Ванземаљско светло/Метак..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 #: plug-ins/script-fu/scripts/text-circle.scm.h:6
@@ -588,11 +585,12 @@ msgid ""
 "\n"
 "\t\t    SF-ADJUSTMENT _"
 msgstr ""
+"\n"
+"\t\t    SF-ADJUSTMENT _"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Wеб Теме/Алиен Глоw/Дугме..."
+msgstr "<Toolbox>/Xtns/Скрипт-Фу/Веб Теме/Ванземаљско светло/Дугме..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 msgid "Glow Radius"
@@ -625,14 +623,14 @@ msgid ""
 "\n"
 "\t\t    SF-COLOR      _"
 msgstr ""
+"\n"
+"\t\t    SF-COLOR      _"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien _Glow..."
 msgstr "<Image>/Скрипт-Фу/Алфа у Лого/Ванземаљско Светло..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Glow..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Ванземаљско Светло..."
 
@@ -641,12 +639,10 @@ msgid "Glow Size (pixels * 4)"
 msgstr "Величина Исијања (тачке * 4)"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien _Neon..."
 msgstr "<Image>/Скрипт-Фу/Алфа у Лого/Ванземаљска Неонка..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Neon..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Ванземаљска Неонка..."
 
@@ -671,7 +667,6 @@ msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
 msgstr "<Image>/Скрипт-Фу/Услужни/ASCII у слој слике..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Услужни/ASCII у Слику..."
 
@@ -693,29 +688,24 @@ msgid "Transparent Background"
 msgstr "Провидна Позадина"
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Basic I..."
-msgstr "<Image>/Скрипт-Фу/Аниматори/Основни 1..."
+msgstr "<Image>/Скрипт-Фу/Алфа у лого/Основни 1..."
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Basic I..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Основни 1..."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:3
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/B_asic II..."
 msgstr "<Image>/Скрипт-Фу/Алфа у Лого/Основни 2..."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:4
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/B_asic II..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Основни 2..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple _Beveled Button..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Дугмад/Једноставно Дугме..."
+msgstr "<Toolbox>/Xtns/Скрипт-Фу/Дугмад/Једноставно испупчено дугме..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:2
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
@@ -738,33 +728,28 @@ msgid "Upper-Left color"
 msgstr "Боја Горе-Лијево"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Arrow..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Wеб Теме/Бевелед Паттерн/Стрелица..."
+msgstr "<Toolbox>/Xtns/Скрипт-Фу/Веб Теме/Испупчени одсечак/Стрелица..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Bullet..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Wеб Теме/Бевелед Паттерн/Куглица..."
+msgstr "<Toolbox>/Xtns/Скрипт-Фу/Веб Теме/Испупчени одсечак/Метак..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
 msgstr "Промјер"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Wеб Теме/Бевелед Паттерн/Дугме..."
+msgstr "<Toolbox>/Xtns/Скрипт-Фу/Веб Теме/Испупчени одсечак/Дугме..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/H_eading..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Wеб Теме/Бевелед Паттерн/Заглавље..."
+msgstr "<Toolbox>/Xtns/Скрипт-Фу/Веб Теме/Испупчени одсечак/Заглавље..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Hrule..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Wеб Теме/Бевелед Паттерн/Хор. Црта..."
+msgstr "<Toolbox>/Xtns/Скрипт-Фу/Веб Теме/Испупчени одсечак/Хор. Црта..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
@@ -782,9 +767,8 @@ msgid "Width"
 msgstr "Ширина"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/_Blend..."
-msgstr "<Image>/Скрипт-Фу/Аниматори/Мешање..."
+msgstr "<Image>/Скрипт-Фу/Аниматори/Стапање..."
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:2
 msgid "Intermediate Frames"
@@ -799,12 +783,10 @@ msgid "Max. Blur Radius"
 msgstr "Макс. Полупречник Замућења"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Blen_ded..."
 msgstr "<Image>/Скрипт-Фу/Алфа у Лого/Стапање..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blen_ded..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Стапање..."
 
@@ -852,12 +834,10 @@ msgid "Offset (pixels)"
 msgstr "Одступање (тачака)"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Bo_vination..."
 msgstr "<Image>/Скрипт-Фу/Алфа у лого/Bovination..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bo_vination..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Bovination..."
 
@@ -902,9 +882,8 @@ msgid "Speed (pixels/frame)"
 msgstr "Брзина (тачака/слици)"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Camouflage..."
-msgstr "<toolbox>/Xtns/скрипт-Фу/Одсечци/Камуфлажа..."
+msgstr "<toolbox>/Xtns/Скрипт-Фу/Одсечци/Камуфлажа..."
 
 #: plug-ins/script-fu/scripts/camo.scm.h:2
 msgid "Color 1"
@@ -934,9 +913,8 @@ msgid "Smooth"
 msgstr "Углади"
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Stencil Ops/C_arve-It..."
-msgstr "<image>/Скрипт-Фу/Матрица/Изрезбари..."
+msgstr "<Image>/Скрипт-Фу/Матрица/Изр?езбари..."
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:2
 msgid "Carve White Areas"
@@ -964,12 +942,10 @@ msgid "Padding Around Text"
 msgstr "Подлога око текста"
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Chalk..."
 msgstr "<Image>/Скрипт-Фу/Алфа у лого/Креда..."
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Chalk..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Креда..."
 
@@ -978,12 +954,10 @@ msgid "Chalk Color"
 msgstr "Боја креде"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Chip Awa_y..."
 msgstr "<Image>/Скрипт-Фу/Алфа у лого/Chip Away..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Awa_y..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Chip Away..."
 
@@ -1012,39 +986,33 @@ msgid "Keep Background"
 msgstr "Задржи позадину"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Stencil Ops/C_hrome-It..."
-msgstr "<image>/Скрипт-Фу/матрица/chrome-it..."
+msgstr "<image>/Скрипт-Фу/Матрица/_Хромирај..."
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
-#, fuzzy
 msgid "Chrome Balance"
-msgstr "Баланс chrome-а"
+msgstr "Равнотежа хромирања"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:3
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:3
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
-#, fuzzy
 msgid "Chrome Factor"
-msgstr "Chrome фактор"
+msgstr "Чинилац хромирања"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:4
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
-#, fuzzy
 msgid "Chrome Lightness"
-msgstr "Chrome осветљење"
+msgstr "Осветљење хромирања"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:5
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
-#, fuzzy
 msgid "Chrome Saturation"
-msgstr "Chrome засићење"
+msgstr "Засићење хромирања"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:6
-#, fuzzy
 msgid "Chrome White Areas"
-msgstr "Chrome бела подручја"
+msgstr "Хромирај бела подручја"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:7
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:4
@@ -1058,21 +1026,18 @@ msgid "Highlight Balance"
 msgstr "Баланс осветљења"
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/C_hrome..."
-msgstr "<Image>/Скрипт-Фу/Алфа у Лого/Chrome..."
+msgstr "<Image>/Скрипт-Фу/Алфа у Лого/_Хромирај..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/C_hrome..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Chrome..."
+msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/_Хромирај..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:6
 msgid "Offsets (pixels * 2)"
 msgstr "Одступања (тачке * 2)"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Render/_Circuit..."
 msgstr "<image>/Скрипт-Фу/Рендер/Круг..."
 
@@ -1102,9 +1067,8 @@ msgid "Separate Layer"
 msgstr "Одвојени слој"
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Clothify..."
-msgstr "<image>/Скрипт-Фу/Алхемија/Прекривање..."
+msgstr "<Image>/Скрипт-Фу/Алхемија/Прекривање..."
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:2
 #: plug-ins/script-fu/scripts/swirltile.scm.h:2
@@ -1130,9 +1094,8 @@ msgid "Elevation"
 msgstr "Нагиб"
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Coffee Stain..."
-msgstr "<image>/Скрипт-Фу/Декор/Поливено кафом..."
+msgstr "<Image>/Скрипт-Фу/Декор/Поливено кафом..."
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:2
 msgid ""
@@ -1147,12 +1110,10 @@ msgid "Stains"
 msgstr "Флеке"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Comic Boo_k..."
 msgstr "<Image>/Скрипт-Фу/Алфа у лого/Стрип..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Boo_k..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Стрип..."
 
@@ -1166,12 +1127,10 @@ msgid "Outline Size"
 msgstr "Величина спољне линије"
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Cool _Metal..."
 msgstr "<Image>/Скрипт-Фу/Алфа у Лого/Хладни метал..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool _Metal..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Хладни метал..."
 
@@ -1181,18 +1140,16 @@ msgid "Effect Size (pixels)"
 msgstr "Ефективна величина (тачака)"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm.h:1
-#, fuzzy
 msgid "<Image>/Edit/Copy _Visible"
-msgstr "<image>/уреди/Умножи видљиво"
+msgstr "<Image>/Уреди/Умножи видљиво"
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
 msgstr "<toolbox>/xtns/Скрипт-Фу/Логотип/Кристал..."
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/_Distress Selection..."
-msgstr "<image>/Скрипт-Фу/Селекција/Оскудна селекција..."
+msgstr "<Image>/Скрипт-Фу/Селекција/Оскудна селекција..."
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:2
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
@@ -1216,9 +1173,8 @@ msgid "Threshold (Bigger 1<-->255 Smaller)"
 msgstr "Праг (већи 1<-->255 мањи)"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Shadow/_Drop-Shadow..."
-msgstr "<image>/Скрипт-Фу/Сенка/Бацање сенке..."
+msgstr "<Image>/Скрипт-Фу/Сенка/Бацање сенке..."
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:2
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
@@ -1256,9 +1212,8 @@ msgid "Opacity"
 msgstr "Непровидност"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Erase every other Row..."
-msgstr "<image>/Скрипт-Фу/Алхемија/Избриши сваки други ред..."
+msgstr "<Image>/Скрипт-Фу/Алхемија/Избриши сваки други ред..."
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:2
 msgid "Columns"
@@ -1297,9 +1252,8 @@ msgid "Rows/Cols"
 msgstr "Редова/Колона"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/_Fade Outline..."
-msgstr "<image>/Скрипт-Фу/Селекција/Ишчезавање..."
+msgstr "<Image>/Скрипт-Фу/Селекција/Ишчезавање..."
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:2
 msgid "Apply Generated Layermask"
@@ -1330,9 +1284,8 @@ msgid "Use Growing Selection"
 msgstr "Користи растућу селекцију"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Flatland..."
-msgstr "<toolbox>/xtns/Скрипт-Фу/Одсечци/Равница..."
+msgstr "<Toolbox>/Xtns/Скрипт-Фу/Одсечци/Равница..."
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:2
 #: plug-ins/script-fu/scripts/land.scm.h:2
@@ -1365,9 +1318,8 @@ msgid "Scale Y"
 msgstr "Размера x"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_Font Map..."
-msgstr "<toolbox>/xtns/Скрипт-Фу/Услужни/Мапа писама..."
+msgstr "<Toolbox>/Xtns/Скрипт-Фу/Услужни/Мапа писама..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
 msgid "Border"
@@ -1378,17 +1330,14 @@ msgid "Fonts"
 msgstr "Писмо"
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Frosty..."
 msgstr "<Image>/Скрипт-Фу/Алфа у лого/Ледени..."
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Frosty..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Ледени..."
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Fuzzy Border..."
 msgstr "<Image>/Скрипт-Фу/Декор/Нејасна ивица..."
 
@@ -1406,14 +1355,12 @@ msgid "Shadow Weight (%)"
 msgstr "Тежина сенке (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
-msgstr "<toolbox>/Xtns/Скрипт-Фу/Web теме/Gimp.оrg/Велико заглавље..."
+msgstr "<Toolbox>/Xtns/Скрипт-Фу/Вeb теме/Gimp.оrg/Велико заглавље..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
-msgstr "<toolbox>/Xtns/Скрипт-Фу/Web теме/Gimp.оrg/Мало заглавље..."
+msgstr "<Toolbox>/Xtns/Скрипт-Фу/Вeb теме/Gimp.оrg/Мало заглавље..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "AutoCrop"
@@ -1454,39 +1401,32 @@ msgid "Shadow Color"
 msgstr "Боја сенке"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
-msgstr "<toolbox>/Xtns/Скрипт-Фу/Web теме/Gimp.оrg/Ознака другог дугмета...."
+msgstr "<Toolbox>/Xtns/Скрипт-Фу/Вeb теме/Gimp.оrg/Ознака другог дугмета...."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
 "Label..."
-msgstr ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Ознака трећег дугмета..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Вeb Теме/Gimp.Org/Ознака трећег дугмета..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
-msgstr "<toolbox>/Xtns/Скрипт-Фу/Web теме/Gimp.оrg/Ваљци с ознаком..."
+msgstr "<Toolbox>/Xtns/Скрипт-Фу/Вeb теме/Gimp.оrg/Опште ознаке за ваљке..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
 msgstr "<toolbox>/Xtns/Скрипт-Фу/Web теме/Gimp.оrg/Ознака ваљк. дугмета..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
-msgstr "<Image>/Скрипт-Фу/Алфа у лого/Ванземаљско Светло..."
+msgstr "<Image>/Скрипт-Фу/Алфа у лого/Glo_ssy..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_ssy..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Ванземаљско Светло..."
+msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Glo_ssy..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:4
 msgid "Blend Gradient (Outline)"
@@ -1534,12 +1474,10 @@ msgid "Use Pattern for Text instead of Gradient"
 msgstr "Користи одсечак за текст уместо прелив"
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_wing Hot..."
 msgstr "<Image>/Скрипт-Фу/Алфа у лого/Сјајно вруће..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_wing Hot..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Сјајно вруће..."
 
@@ -1548,12 +1486,10 @@ msgid "Effect Size (pixels * 3)"
 msgstr "Ефективна величина (тачке * 3)"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Beve_l..."
 msgstr "<Image>/Скрипт-Фу/Алфа у лого/Постепено улегнуће..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Beve_l..."
 msgstr "<Tolbox>/xtns/Скрипт-Фу/Логотип/Постепено улегнуће..."
 
@@ -1568,12 +1504,10 @@ msgid "Border Size (pixels)"
 msgstr "Величина ивице (тачака)"
 
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom _Gradient..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Услужни/Посебни прелив..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Render/_Grid..."
 msgstr "<Image>/Скрипт-Фу/Рендер/Мрежа..."
 
@@ -1586,7 +1520,6 @@ msgid "Y Divisions"
 msgstr "Y одељци"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Utils/Draw _HSV Graph..."
 msgstr "<Image>/Скрипт-Фу/Услужни/Цртај hsv график..."
 
@@ -1595,7 +1528,6 @@ msgid "BG Opacity"
 msgstr "Непровидност позадине"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:3
-#, fuzzy
 msgid "End X"
 msgstr "Крај X"
 
@@ -1624,9 +1556,8 @@ msgid "Use Selection Bounds Instead of Belows"
 msgstr "Користи ограничења селекције..."
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
-msgstr "<toolbox>/Xtns/Скрипт-Фу/Логотип/Имигре-26..."
+msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Имигре-26..."
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
 msgid "Frame Color"
@@ -1637,9 +1568,8 @@ msgid "Frame Size"
 msgstr "Величина оквира"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Utils/Show Image _Structure..."
-msgstr "<image>/Скрипт-Фу/Услужни/Прикажи структуру слике..."
+msgstr "<Image>/Скрипт-Фу/Услужни/Прикажи структуру слике..."
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:2
 msgid "Apply Layer Mask (or discard)"
@@ -1682,7 +1612,6 @@ msgid "Space Between Layers"
 msgstr "Размак међу слојевима"
 
 #: plug-ins/script-fu/scripts/land.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Land..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Одсечци/Земља..."
 
@@ -1695,7 +1624,6 @@ msgid "Sea Depth"
 msgstr "Дубина мора"
 
 #: plug-ins/script-fu/scripts/lava.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Render/_Lava..."
 msgstr "<Image>/Скрипт-Фу/Рендер/Лава..."
 
@@ -1713,7 +1641,6 @@ msgid "Use Current Gradient"
 msgstr "Користи текући прелив"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Render/Line _Nova..."
 msgstr "<Image>/Скрипт-Фу/Рендер/Line Nova..."
 
@@ -1739,6 +1666,9 @@ msgid ""
 "     (filename (string-append data-dir\n"
 "\t\t\t      "
 msgstr ""
+")))\n"
+"     (filename (string-append data-dir\n"
+"\t\t\t      "
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:4
 msgid ""
@@ -1746,6 +1676,9 @@ msgid ""
 "     (filename (string-append data-dir\n"
 "               "
 msgstr ""
+")))\n"
+"     (filename (string-append data-dir\n"
+"               "
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:7
 msgid ""
@@ -1753,24 +1686,23 @@ msgid ""
 "    (filename (string-append data-dir\n"
 "               "
 msgstr ""
+")))\n"
+"    (filename (string-append data-dir\n"
+"               "
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:10
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elli_ptical, Feathered..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Направи четку/Елиптична, испуњена..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:11
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Re_ctangular, Feathered..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Направи четку/Правоугаона, испуњена..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:12
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Elliptical..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Направи четку/Елиптична..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:13
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Rectangular..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Направи четку/Правоугаона..."
 
@@ -1788,14 +1720,12 @@ msgid "Spacing"
 msgstr "Размак"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/N_eon..."
-msgstr "<Image>/Скрипт-Фу/Алфа у Лого/Ванземаљска Неонка..."
+msgstr "<Image>/Скрипт-Фу/Алфа у Лого/Неонка..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/N_eon..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Ванземаљска Неонка..."
+msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Неонка..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:4
 msgid "Create Shadow"
@@ -1820,7 +1750,6 @@ msgid "Density (%)"
 msgstr "Густина (%)"
 
 #: plug-ins/script-fu/scripts/old-photo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Old Photo..."
 msgstr "<Image>/Скрипт-Фу/Декор/Стара слика..."
 
@@ -1837,7 +1766,6 @@ msgid "Sepia"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Shadow/_Perspective..."
 msgstr "<Image>/Скрипт-Фу/Сенка/Перспектива..."
 
@@ -1858,7 +1786,6 @@ msgid "Relative Length of Shadow"
 msgstr "Релативна дужина сенке"
 
 #: plug-ins/script-fu/scripts/predator.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Predator..."
 msgstr "<Image>/Скрипт-Фу/Алхемија/Грабљивац..."
 
@@ -1875,7 +1802,6 @@ msgid "Pixelize"
 msgstr "Истачкај"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/_Round Button..."
 msgstr "<Image>/Xtns/Скрипт-Фу/Дугмад/Округло дугме..."
 
@@ -1920,7 +1846,6 @@ msgid "Upper Color (Active)"
 msgstr "Горња боја (текућа)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render _Map..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Одсечци/Рендеруј мапу..."
 
@@ -1937,7 +1862,6 @@ msgid "Tile"
 msgstr "Делић"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/_Rippling..."
 msgstr "<Image>/Скрипт-Фу/Аниматори/Мрешкање..."
 
@@ -1960,14 +1884,13 @@ msgstr "Јачина мрешкања"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:6
 msgid "Smear"
-msgstr ""
+msgstr "Замажи"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:7
 msgid "Wrap"
 msgstr "Умотај"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Round Corners..."
 msgstr "<Image>/Скрипт-Фу/Декор/Заобљени углови..."
 
@@ -1989,9 +1912,11 @@ msgid ""
 "    (set! filename2 (string-append data-dir\n"
 "\t\t\t\t   "
 msgstr ""
+")))\n"
+"    (set! filename2 (string-append data-dir\n"
+"\t\t\t\t   "
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/To _Brush..."
 msgstr "<Image>/Скрипт-Фу/Селекција/У четку..."
 
@@ -2000,12 +1925,10 @@ msgid "Brush Name"
 msgstr "Име четке"
 
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/To _Image"
 msgstr "<Image>/Скрипт-Фу/Селекција/У слику"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/_Round..."
 msgstr "<Image>/Скрипт-Фу/Селекција/Округло..."
 
@@ -2014,7 +1937,6 @@ msgid "Relative Radius"
 msgstr "Релативни полупречник"
 
 #: plug-ins/script-fu/scripts/slide.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/_Slide..."
 msgstr "<Image>/Скрипт-Фу/Декор/Укошено..."
 
@@ -2027,16 +1949,14 @@ msgid "Number"
 msgstr "Број"
 
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
-msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/SOTA Chrome..."
+msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/SOTA хромирање..."
 
 #: plug-ins/script-fu/scripts/speed-text.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Брзи Текст..."
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Misc/_Sphere..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Разно/Кугла..."
 
@@ -2053,7 +1973,6 @@ msgid "Sphere Color"
 msgstr "Боја кугле"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/_Spinning Globe..."
 msgstr "<Image>/Скрипт-Фу/Аниматори/Ротирајући глобус..."
 
@@ -2183,12 +2102,10 @@ msgid "Type"
 msgstr "Тип"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Starb_urst..."
 msgstr "<Image>/Скрипт-Фу/Алфа у лого/Експлозија звезде..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starb_urst..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Експлозија звезде..."
 
@@ -2201,12 +2118,10 @@ msgid "Effect Size (pixels * 30)"
 msgstr "Ефективна величина (тачака * 30)"
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Sta_rscape..."
 msgstr "<Image>/Скрипт-Фу/Алфа у лого/Starscape..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Sta_rscape..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Starscape..."
 
@@ -2215,7 +2130,6 @@ msgid "Effect Size (pixels * 4)"
 msgstr "Ефективна величина (тачака * 4)"
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-_Tile..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Одсечци/Завијутак..."
 
@@ -2224,7 +2138,6 @@ msgid "Whirl Amount"
 msgstr "Вредност завијања"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Одсечци/Увојци (растављиво)..."
 
@@ -2241,12 +2154,10 @@ msgid "Whirl Angle"
 msgstr "Угао завијања"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Particle Trace..."
 msgstr "<Image>/Скрипт-Фу/Алфа у лого/Праћење делова..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Particle Trace..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Праћење делова..."
 
@@ -2279,12 +2190,10 @@ msgid "Fill Angle"
 msgstr "Испуни угао"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/_Textured..."
 msgstr "<Image>/Скрипт-Фу/Алфа у Лого/Текстурисано..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:2
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Textured..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Текстурисано..."
 
@@ -2317,7 +2226,6 @@ msgid "Text Pattern"
 msgstr "Одсечак текста"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:1
-#, fuzzy
 msgid "<Image>/Filters/Blur/_Tileable Blur..."
 msgstr "<Image>/Филтери/Замућење/Плочасто замућење..."
 
@@ -2339,14 +2247,13 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:6
 msgid "RLE"
-msgstr ""
+msgstr "RLE"
 
 #: plug-ins/script-fu/scripts/title-header.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Логотип/Заглавље wеб наслова..."
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/T_ruchet..."
 msgstr "<Toolbox>/Xtns/Скрипт-Фу/Одсечци/Truchet..."
 
@@ -2355,7 +2262,6 @@ msgid "Foreground Color"
 msgstr "Боја четке"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Unsharp Mask..."
 msgstr "<Image>/Скрипт-Фу/Алхемија/Скини оштрину маске..."
 
@@ -2368,7 +2274,6 @@ msgid "Mask Size"
 msgstr "Величина маске"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/_Waves..."
 msgstr "<Image>/Скрипт-Фу/Аниматори/Таласи..."
 
@@ -2385,7 +2290,6 @@ msgid "Wavelength"
 msgstr "Таласна дуљина"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy/_Weave..."
 msgstr "<Image>/Скрипт-Фу/Алхемија/weave..."
 
@@ -2418,7 +2322,6 @@ msgid "Thread Length"
 msgstr "Дужина нити"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Shadow/_Xach-Effect..."
 msgstr "<Image>/Скрипт-Фу/Сенка/xach-effect..."
 
@@ -2510,15 +2413,15 @@ msgstr "<Toolbox>/Xtns/Web Browser/гимп.орг/ГИМП"
 msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
 msgstr "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
 
+# Бранко: овако се зове једна књига која се може бесплатно преузети — значи, баш нас брига шта значи ;-)
 #: plug-ins/webbrowser/web-browser.scm.h:15
 msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm.h:16
 msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
 msgstr "<Toolbox>/Xtns/Web Browser/Регистар за додатке"
 
 #: plug-ins/webbrowser/web-browser.scm.h:17
-#, fuzzy
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr "<Toolbox>/Xtns/Web Browser/Често постављана питања корисника"
