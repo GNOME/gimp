@@ -418,7 +418,7 @@ gimp_export_image (gint32 *image_ID_ptr,
   if (actions)
     dialog_return = export_dialog (actions, format);
   else
-    dialog_return = EXPORT_EXPORT;
+    dialog_return = EXPORT_IGNORE;
 
   if (dialog_return == EXPORT_EXPORT)
     {

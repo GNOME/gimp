@@ -1,3 +1,8 @@
+1999-10-04  Sven Neumann <sven@gimp.org>
+
+	* libgimp/gimpexport.c: if there aren't any changes needed,
+	the fall through should be to ignore the export and continue
+
 1999-10-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/brush_edit.c: name fix.
