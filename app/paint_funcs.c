@@ -613,9 +613,9 @@ blend_pixels (const unsigned char *src1,
 	      int            bytes,
 	      int            has_alpha)
 {
-  const guchar blend1 = (256 - blend);
-  const guchar blend2 = (blend + 1);
-  const guint  c      = bytes - 1;
+  const guint blend1 = 256 - blend;
+  const guint blend2 = blend + 1;
+  const guint  c     = bytes - 1;
   guint b;
 
   while (w--)

@@ -1,3 +1,8 @@
+2003-06-11  Sven Neumann  <sven@gimp.org>
+
+	* app/paint_funcs.c (blend_pixels): merged fix for bug #114882
+	from HEAD branch (was caused by my change below).
+
 2003-06-09  Sven Neumann  <sven@gimp.org>
 
 	* app/paint_funcs.c (blend_pixels): merged fix for bug #72879 from
