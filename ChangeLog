@@ -1,3 +1,10 @@
+2004-01-28  Dave Neary  <bolsh@gimp.org>
+
+	* plug-ins/common/tiff.c: Removed duplicate TIFF entry from save 
+	dialog, and made the save handler point to the one that doesn't 
+	pre-multiply by alpha. Reported on gimp-user by misfit-x. Also 
+	changed default value to not destroy data on save.
+
 2004-01-28  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* plug-ins/script-fu/scripts/grid-system.scm: Fix typo that prevented

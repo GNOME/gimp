@@ -159,7 +159,7 @@ GimpPlugInInfo PLUG_IN_INFO =
 static TiffSaveVals tsvals =
 {
   COMPRESSION_NONE,    /*  compression  */
-  FALSE,               /*  alpha handling */
+  TRUE,               /*  alpha handling */
 };
 
 
@@ -229,6 +229,8 @@ query (void)
                           G_N_ELEMENTS (save_args_old), 0,
                           save_args_old, NULL);
 
+  /* Add a save menu path for this procedure, since it is registered as a 
+   * save handler below. */
   gimp_install_procedure ("file_tiff_save2",
                           "saves files in the tiff file format",
                           "Saves files in the Tagged Image File Format.  "
@@ -237,7 +239,7 @@ query (void)
                           "Spencer Kimball & Peter Mattis",
                           "Spencer Kimball & Peter Mattis",
                           "1995-1996,2000-2003",
-                          "<Save>/Tiff",
+                          NULL,
 			  "RGB*, GRAY*, INDEXED",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
@@ -370,7 +372,7 @@ run (const gchar      *name,
               if (nparams == 7)
                 tsvals.save_transp_pixels = param[6].data.d_int32;
               else
-                tsvals.save_transp_pixels = FALSE;
+                tsvals.save_transp_pixels = TRUE;
 	    }
 	  break;
 
