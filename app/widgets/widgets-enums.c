@@ -28,6 +28,27 @@ gimp_aspect_type_get_type (void)
 }
 
 
+static const GEnumValue gimp_color_frame_mode_enum_values[] =
+{
+  { GIMP_COLOR_FRAME_MODE_PIXEL, N_("Pixel Values"), "pixel" },
+  { GIMP_COLOR_FRAME_MODE_RGB, N_("RGB"), "rgb" },
+  { GIMP_COLOR_FRAME_MODE_HSV, N_("HSV"), "hsv" },
+  { GIMP_COLOR_FRAME_MODE_CMYK, N_("CMYK"), "cmyk" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_color_frame_mode_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpColorFrameMode", gimp_color_frame_mode_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_help_browser_type_enum_values[] =
 {
   { GIMP_HELP_BROWSER_GIMP, N_("Internal"), "gimp" },

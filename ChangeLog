@@ -1,5 +1,20 @@
 2003-10-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/widgets-enums.[ch]: new enum GimpColorFrameMode.
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpcolorframe.[ch]: new widget GimpColorFrame which
+	shows a picked color in an optionmenu-selectable color space.
+	Helps getting rid in InfoDialog.
+
+	* app/gui/info-window.c: use it for the "extended" page. Cleaned
+	up that page a lot so it can be made dockable in the next step.
+
+	* app/tools/gimpcolorpickertool.[ch]: use it here too. Don't use
+	InfoDialog any more (and do not depend on gui/ any more).
+
+2003-10-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainerview.c
 	(gimp_container_view_get_preview): create tab widgets without
 	border for both the tools and templates views.

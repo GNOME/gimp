@@ -36,6 +36,19 @@ typedef enum
 } GimpAspectType;
 
 
+#define GIMP_TYPE_COLOR_FRAME_MODE (gimp_color_frame_mode_get_type ())
+
+GType gimp_color_frame_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_COLOR_FRAME_MODE_PIXEL,  /*< desc="Pixel Values" >*/
+  GIMP_COLOR_FRAME_MODE_RGB,    /*< desc="RGB"          >*/
+  GIMP_COLOR_FRAME_MODE_HSV,    /*< desc="HSV"          >*/
+  GIMP_COLOR_FRAME_MODE_CMYK    /*< desc="CMYK"         >*/
+} GimpColorFrameMode;
+
+
 #define GIMP_TYPE_HELP_BROWSER_TYPE (gimp_help_browser_type_get_type ())
 
 GType gimp_help_browser_type_get_type (void) G_GNUC_CONST;

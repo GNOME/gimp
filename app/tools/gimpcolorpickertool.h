@@ -38,8 +38,10 @@ struct _GimpColorPickerTool
 {
   GimpColorTool  parent_instance;
 
-  gint           centerx;    /*  starting x coord    */
-  gint           centery;    /*  starting y coord    */
+  GtkWidget     *dialog;
+  GtkWidget     *color_area;
+  GtkWidget     *color_frame1;
+  GtkWidget     *color_frame2;
 };
 
 struct _GimpColorPickerToolClass
