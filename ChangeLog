@@ -1,3 +1,8 @@
+2003-10-12  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimppaintcore.c: removed debugging output that shouldd
+	have never been committed.
+
 2003-10-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplay.c (gimp_display_reconnect): HALT the
@@ -144,7 +149,6 @@
 	* app/gui/stroke-dialog.c
 	* app/gui/templates-commands.c
 	* app/gui/tool-options-commands.c
-	* app/paint/gimppaintcore.c
 	* app/pdb/gimprc_cmds.c
 	* app/text/gimptext-parasite.c
 	* app/text/gimptext.c
