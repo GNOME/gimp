@@ -1,3 +1,9 @@
+2004-11-12  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig-dump.c better fix for bug #157971.
+
+	* docs/gimprc.5.in: regenerated.
+
 2004-11-12  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/gfig/images/stock-show-all.png

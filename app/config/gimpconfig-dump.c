@@ -496,7 +496,7 @@ dump_with_linebreaks (gint         fd,
 
       /*  groff doesn't like lines to start with a single quote  */
       if (*text == '\'')
-        write (fd, "\\", 1);
+        write (fd, "\\&", 2);  /*  this represents a zero width space  */
 
       for (t = text, i = 0, space = 0;
            *t != '\n' && (i <= LINE_LENGTH || space == 0) && i < len;
