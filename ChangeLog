@@ -1,9 +1,28 @@
+Mon Jul 13 17:48:21 EDT 1998 Adrian Likins <adrian@gimp.org>
+
+	* app/rect_select.[ch]: applied gimp-chap-980709-0
+	from  Chap Lovejoy  (chap@cc.gatech.edu)
+
+	From the README:
+
+	Adds fixed size and fixed ratio rectangular selections to the 
+	gimp.
+
+        Fixed size is enabled by filling in the height and width boxes in 
+        the rectangular selection tool options box and checking the 
+        "fixed size" checkbox.
+
+        Fixed ratio is enabled by enabling fixed size (set the height and
+        width to the desired ratio values) and holding shift after
+	starting the selection (holding shift while starting the selection
+	will change the selection operation to add).
+
 Tue Jul 14 00:26:49 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/fileops.c
 	* app/menus.c
 	* app/preferences_dialog.c: fixed a few bugs in the new MRU list
-	
+
 Mon Jul 13 03:00:46 PDT 1998 Jay Cox  <jaycox@earthlink.net>
 
 	* brush_select.c gimpbrushlist.c: fixed brush ref counting

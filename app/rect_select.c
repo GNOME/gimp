@@ -27,6 +27,9 @@
 #define NO  0
 #define YES 1
 
+#define FIXED_ENTRY_SIZE 50
+#define FIXED_ENTRY_MAX_CHARS 10
+
 extern SelectionOptions *ellipse_options;
 static SelectionOptions *rect_options = NULL;
 
@@ -52,6 +55,16 @@ selection_toggle_update (GtkWidget *w,
 }
 
 static void
+selection_entry_update (GtkWidget *w, gpointer data) {
+  int val;
+  val = atoi(gtk_entry_get_text(GTK_ENTRY(w)));
+  if( val <= 0 ) {
+	val = 1;
+  }
+  *(int *)data = val;
+}
+
+static void
 selection_scale_update (GtkAdjustment *adjustment,
 			double        *scale_val)
 {
@@ -71,6 +84,11 @@ create_selection_options (ToolType tool_type)
   GtkWidget *sample_merged_toggle;
   GtkWidget *bezier_toggle;
   GtkObject *feather_scale_data;
+  GtkWidget *fixed_size_toggle;
+  GtkWidget *fixed_height_entry;
+  GtkWidget *fixed_width_entry;
+
+  char buffer[FIXED_ENTRY_MAX_CHARS + 1];
 
   label = NULL;
 
@@ -80,6 +98,9 @@ create_selection_options (ToolType tool_type)
   options->feather = FALSE;
   options->feather_radius = 10.0;
   options->sample_merged = FALSE;
+  options->fixed_size = FALSE;
+  options->fixed_height = 1;
+  options->fixed_width = 1;
   options->sample_merged = TRUE;
 
   /*  the main vbox  */
@@ -162,6 +183,52 @@ create_selection_options (ToolType tool_type)
       gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (antialias_toggle), options->antialias);
       gtk_widget_show (antialias_toggle);
     }
+
+  /* Widgets for fixed size select */
+  if (tool_type == RECT_SELECT) {
+	fixed_size_toggle = gtk_check_button_new_with_label("Fixed size");
+	gtk_box_pack_start(GTK_BOX(vbox), fixed_size_toggle, FALSE, FALSE, 0);
+	gtk_signal_connect(GTK_OBJECT(fixed_size_toggle), "toggled",
+					   (GtkSignalFunc)selection_toggle_update,
+					   &options->fixed_size);
+	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(fixed_size_toggle),
+								options->fixed_size);
+	gtk_widget_show(fixed_size_toggle);
+	
+
+	hbox = gtk_hbox_new(FALSE, 5);
+ 	label = gtk_label_new(" Width: ");
+	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+   	fixed_width_entry = gtk_entry_new();
+	gtk_box_pack_start(GTK_BOX(hbox), fixed_width_entry, FALSE, FALSE, 0);
+	gtk_widget_set_usize(fixed_width_entry, FIXED_ENTRY_SIZE, 0);
+	snprintf(buffer, FIXED_ENTRY_MAX_CHARS, "%i", options->fixed_width);
+	gtk_entry_set_text(GTK_ENTRY(fixed_width_entry), buffer);
+	gtk_signal_connect(GTK_OBJECT(fixed_width_entry), "changed",
+					   (GtkSignalFunc)selection_entry_update,
+					   &options->fixed_width);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+	gtk_widget_show(label);
+	gtk_widget_show(fixed_width_entry);
+	gtk_widget_show(hbox);
+
+	hbox = gtk_hbox_new(FALSE, 5);
+ 	label = gtk_label_new("Height: ");
+	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+   	fixed_height_entry = gtk_entry_new();
+	gtk_box_pack_start(GTK_BOX(hbox), fixed_height_entry, FALSE, FALSE, 0);
+	gtk_widget_set_usize(fixed_height_entry, FIXED_ENTRY_SIZE, 0);
+	snprintf(buffer, FIXED_ENTRY_MAX_CHARS, "%i", options->fixed_height);
+	gtk_entry_set_text(GTK_ENTRY(fixed_height_entry), buffer);
+	gtk_signal_connect(GTK_OBJECT(fixed_height_entry), "changed",
+					   (GtkSignalFunc)selection_entry_update,
+					   &options->fixed_height);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+	gtk_widget_show(label);
+	gtk_widget_show(fixed_height_entry);
+	gtk_widget_show(hbox);
+
+  }
 
   /*  the feather toggle button  */
   feather_toggle = gtk_check_button_new_with_label ("Feather");
@@ -257,8 +324,13 @@ rect_select_button_press (Tool           *tool,
 
   rect_sel->x = x;
   rect_sel->y = y;
-  rect_sel->w = 0;
-  rect_sel->h = 0;
+  if(rect_options->fixed_size) {
+	rect_sel->w = rect_options->fixed_width;
+	rect_sel->h = rect_options->fixed_height;
+  } else {
+	rect_sel->w = 0;
+	rect_sel->h = 0;
+  }
 
   rect_sel->center = FALSE;
 
@@ -320,45 +392,44 @@ rect_select_button_release (Tool           *tool,
       w = (rect_sel->w < 0) ? -rect_sel->w : rect_sel->w;
       h = (rect_sel->h < 0) ? -rect_sel->h : rect_sel->h;
 
-      if (!w || !h)
-	{
-	  /*  If there is a floating selection, anchor it  */
-	  if (gimage_floating_sel (gdisp->gimage))
-	    floating_sel_anchor (gimage_floating_sel (gdisp->gimage));
-	  /*  Otherwise, clear the selection mask  */
-	  else
-	    gimage_mask_clear (gdisp->gimage);
-
-	  gdisplays_flush ();
-	  return;
-	}
+      if ((!w || !h) && !rect_options->fixed_width)
+		{
+		  /*  If there is a floating selection, anchor it  */
+		  if (gimage_floating_sel (gdisp->gimage))
+			floating_sel_anchor (gimage_floating_sel (gdisp->gimage));
+		  /*  Otherwise, clear the selection mask  */
+		  else
+			gimage_mask_clear (gdisp->gimage);
+		  
+		  gdisplays_flush ();
+		  return;
+		}
 
       x2 = x1 + w;
       y2 = y1 + h;
 
       switch (tool->type)
-	{
-	case RECT_SELECT:
-	  rect_select (gdisp->gimage,
-		       x1, y1, (x2 - x1), (y2 - y1),
-		       rect_sel->op,
-		       rect_options->feather,
-		       rect_options->feather_radius);
-	  break;
-
-	case ELLIPSE_SELECT:
-	  ellipse_select (gdisp->gimage,
-			  x1, y1, (x2 - x1), (y2 - y1),
-			  rect_sel->op,
-			  ellipse_options->antialias,
-			  ellipse_options->feather,
-			  ellipse_options->feather_radius);
-	  break;
-
-	default:
-	  break;
-	}
-
+		{
+		case RECT_SELECT:
+		  rect_select (gdisp->gimage,
+					   x1, y1, (x2 - x1), (y2 - y1),
+					   rect_sel->op,
+					   rect_options->feather,
+					   rect_options->feather_radius);
+		  break;
+		  
+		case ELLIPSE_SELECT:
+		  ellipse_select (gdisp->gimage,
+						  x1, y1, (x2 - x1), (y2 - y1),
+						  rect_sel->op,
+						  ellipse_options->antialias,
+						  ellipse_options->feather,
+						  ellipse_options->feather_radius);
+		  break;
+		default:
+		  break;
+		}
+	  
       /*  show selection on all views  */
       gdisplays_flush ();
     }
@@ -366,14 +437,16 @@ rect_select_button_release (Tool           *tool,
 
 void
 rect_select_motion (Tool           *tool,
-		    GdkEventMotion *mevent,
-		    gpointer        gdisp_ptr)
+					GdkEventMotion *mevent,
+					gpointer        gdisp_ptr)
 {
   RectSelect * rect_sel;
   GDisplay * gdisp;
   int ox, oy;
   int x, y;
   int w, h, s;
+  int tw, th;
+  double ratio;
 
   if (tool->state != ACTIVE)
     return;
@@ -397,36 +470,72 @@ rect_select_motion (Tool           *tool,
     }
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, 0);
-  w = (x - ox);
-  h = (y - oy);
+  if(rect_options->fixed_size) {
+	if(mevent->state & GDK_SHIFT_MASK) {
+
+	  ratio = (double)(rect_options->fixed_height /
+					   (double)rect_options->fixed_width);
+	  th = (int)((x - ox) * ratio);
+	  tw = (int)((y - oy) / ratio);
+
+	  /*******************************************************
+	   I'm currently not satisfied with the way that this algorithm
+	   decides which measurement (mouse position) to snap the selection
+	   box to.  If you have a better idea either tell me
+	   (email: chap@cc.gatech.edu) or patch this sucker and send it.
+	  *******************************************************/
+	  if(abs(tw - (x - oy)) < abs(th - (y - oy))) {
+		w = tw;
+		h = (int)(w * ratio);
+	  } else {
+		h = th;
+		w = (int)(h / ratio);
+	  }
+
+ 	} else {
+	  w = rect_options->fixed_width;
+	  h = rect_options->fixed_height;
+	  ox = x;
+	  oy = y;
+	}
+  } else {
+	w = (x - ox);
+	h = (y - oy);
+  }
 
   /*  If the shift key is down, then make the rectangle square (or ellipse circular) */
-  if (mevent->state & GDK_SHIFT_MASK)
+  if ((mevent->state & GDK_SHIFT_MASK) && !rect_options->fixed_size)
     {
       s = MAXIMUM(abs(w), abs(h));
-
+	  
       if (w < 0)
-	w = -s;
+		w = -s;
       else
-	w = s;
+		w = s;
 
       if (h < 0)
-	h = -s;
+		h = -s;
       else
-	h = s;
+		h = s;
     }
 
   /*  If the control key is down, create the selection from the center out */
   if (mevent->state & GDK_CONTROL_MASK)
     {
-      w = abs(w);
-      h = abs(h);
+	  if(rect_options->fixed_size) {
+		rect_sel->x = ox - w / 2;
+		rect_sel->y = oy - h / 2;
+		rect_sel->w = w;
+		rect_sel->h = h;
+	  } else {
+		w = abs(w);
+		h = abs(h);
 
-      rect_sel->x = ox - w;
-      rect_sel->y = oy - h;
-      rect_sel->w = 2 * w + 1;
-      rect_sel->h = 2 * h + 1;
-
+		rect_sel->x = ox - w;
+		rect_sel->y = oy - h;
+		rect_sel->w = 2 * w + 1;
+		rect_sel->h = 2 * h + 1;
+	  }
       rect_sel->center = TRUE;
     }
   else
