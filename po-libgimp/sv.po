@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-04 00:14+0100\n"
-"PO-Revision-Date: 2004-02-02 13:42+0900\n"
+"POT-Creation-Date: 2004-03-09 08:48+0900\n"
+"PO-Revision-Date: 2004-03-09 08:50+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -516,8 +516,8 @@ msgid "Seed random number generator with a generated random number"
 msgstr "Skapa slumptalsfrö till slumptalsgeneratorn med ett genererat slumptal"
 
 #: libgimpwidgets/gimpwidgets.c:1292
-msgid "Randomize"
-msgstr "Slumpa"
+msgid "_Randomize"
+msgstr "_Slumpa"
 
 #: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
