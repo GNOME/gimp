@@ -213,13 +213,13 @@ YACC=bison -y
 
 imap_cern_lex.c: imap_cern.l
 	@$(RM) $@
-	$(LEX) $(LFLAGS) -Pcern_ -t $< > $@
+	$(LEX) $(LFLAGS) -Pcern_ -i -t $< > $@
 imap_csim_lex.c: imap_csim.l
 	@$(RM) $@
-	$(LEX) $(LFLAGS) -Pcsim_ -t $< > $@
+	$(LEX) $(LFLAGS) -Pcsim_ -i -t $< > $@
 imap_ncsa_lex.c: imap_ncsa.l
 	@$(RM) $@
-	$(LEX) $(LFLAGS) -Pncsa_ -t $< > $@
+	$(LEX) $(LFLAGS) -Pncsa_ -i -t $< > $@
 
 imap_cern_parse.c: imap_cern.y
 	$(YACC) $(YFLAGS) -p cern_ $<

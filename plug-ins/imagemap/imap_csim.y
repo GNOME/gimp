@@ -4,7 +4,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,6 +57,8 @@ static MapInfo_t *_map_info;
 %token<value> FLOAT
 %token<id> STRING
 
+%type<val> integer_value
+
 %%
 
 csim_file	: image start_map comment_lines area_list end_map
@@ -74,20 +76,30 @@ image_tags	: /* Empty */
 
 image_tag	: image_width
 		| image_height
-		| BORDER '=' FLOAT {}
+		| BORDER '=' integer_value {}
 		| USEMAP '=' STRING {}
 		| ALT '=' STRING {}
 		;
 
-image_width	: WIDTH '=' FLOAT 
+image_width	: WIDTH '=' integer_value
 		{
-		   _map_info->old_image_width = (gint) $3;
+		   _map_info->old_image_width = $3;
 		}
 		;
 
-image_height	: HEIGHT '=' FLOAT 
+image_height	: HEIGHT '=' integer_value
 		{
-		   _map_info->old_image_height = (gint) $3;
+		   _map_info->old_image_height = $3;
+		}
+		;
+
+integer_value	: FLOAT
+		{
+		  $$ = (gint) $1;
+		}
+		| STRING
+		{
+		  $$ = (gint) atof($1);
 		}
 		;
 
