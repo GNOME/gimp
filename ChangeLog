@@ -1,5 +1,10 @@
 2004-05-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimppaintcore-stroke.c: check if we really have
+	a GimpBrushCore before casting and accessing its members.
+
+2004-05-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimpbrushcore.h
 	* app/paint/gimppaintcore.h: some cleanup.
 
