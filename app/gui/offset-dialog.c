@@ -253,7 +253,6 @@ offset_ok_callback (GtkWidget *widget,
     }
 
   gtk_widget_destroy (off_d->dlg);
-  g_free (off_d);
 }
 
 static void

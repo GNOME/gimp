@@ -1,3 +1,8 @@
+2002-10-22  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/offset-dialog.c (offset_ok_callback): don't free the
+	OffsetDialog structure twice. Fixes bug #96520.
+
 2002-10-21  Sven Neumann  <sven@gimp.org>
 
 	* libgimpmodule/gimpmodule.c: fixed some i18n glitches.
