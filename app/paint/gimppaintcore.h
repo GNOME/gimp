@@ -38,24 +38,6 @@ typedef enum
                      */
 } GimpPaintCoreState;
 
-typedef enum
-{
-  CORE_HANDLES_CHANGING_BRUSH = 0x1 << 0, /*  Set for tools that don't
-                                           *  mind if the brush
-                                           *  changes while painting.
-                                           */
-  CORE_TRACES_ON_WINDOW       = 0x1 << 1  /*  Set for tools that
-                                           *  perform temporary
-                                           *  rendering directly to
-                                           *  the window. These
-                                           *  require sequencing with
-                                           *  gdisplay_flush()
-                                           *  routines.  See
-                                           *  gimpclone.c for example.
-                                           */
-
-} GimpPaintCoreFlags;
-
 
 #define GIMP_TYPE_PAINT_CORE            (gimp_paint_core_get_type ())
 #define GIMP_PAINT_CORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PAINT_CORE, GimpPaintCore))
@@ -69,38 +51,42 @@ typedef struct _GimpPaintCoreClass GimpPaintCoreClass;
 
 struct _GimpPaintCore
 {
-  GimpObject          parent_instance;
+  GimpObject   parent_instance;
 
-  gint                ID;            /*  unique instance ID               */
+  gint         ID;            /*  unique instance ID               */
 
-  GimpCoords          start_coords;  /*  starting coords (for undo only)  */
+  GimpCoords   start_coords;  /*  starting coords (for undo only)  */
 
-  GimpCoords          cur_coords;    /*  current coords                   */
-  GimpCoords          last_coords;   /*  last coords                      */
+  GimpCoords   cur_coords;    /*  current coords                   */
+  GimpCoords   last_coords;   /*  last coords                      */
 
-  GimpVector2         last_paint;    /*  last point that was painted      */
+  GimpVector2  last_paint;    /*  last point that was painted      */
 
-  gdouble             distance;      /*  distance traveled by brush       */
-  gdouble             pixel_dist;    /*  distance in pixels               */
+  gdouble      distance;      /*  distance traveled by brush       */
+  gdouble      pixel_dist;    /*  distance in pixels               */
 
-  gint                x1, y1;        /*  undo extents in image coords     */
-  gint                x2, y2;        /*  undo extents in image coords     */
+  gint         x1, y1;        /*  undo extents in image coords     */
+  gint         x2, y2;        /*  undo extents in image coords     */
 
-  GimpPaintCoreFlags  flags;         /*  tool flags, see ToolFlags above  */
-  gboolean            use_pressure;  /*  look at coords->pressure         */
+  gboolean     use_pressure;  /*  look at coords->pressure         */
 
-  /*  undo blocks variables  */
-  TileManager        *undo_tiles;
-  TileManager        *canvas_tiles;
+  TileManager *undo_tiles;    /*  tiles which have been modified   */
+  TileManager *canvas_tiles;  /*  the mask used for painting       */
 
-  /*  paint buffers variables  */
-  TempBuf            *orig_buf;
-  TempBuf            *canvas_buf;
+  TempBuf     *orig_buf;      /*  the unmodified drawable pixels   */
+  TempBuf     *canvas_buf;    /*  the buffer to paint to           */
+
 };
 
 struct _GimpPaintCoreClass
 {
   GimpObjectClass  parent_class;
+
+  /*  Set for tools that perform temporary rendering directly to the
+   *  window. These require sequencing with gimp_display_flush().
+   *  See gimpclone.c for example.
+   */
+  gboolean traces_on_window;
 
   /*  virtual functions  */
   gboolean  (* start)          (GimpPaintCore      *core,

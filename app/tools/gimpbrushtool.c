@@ -431,7 +431,7 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   if (GIMP_IS_BRUSH_CORE (core))
     current_brush = GIMP_BRUSH_CORE (core)->brush;
 
-  if (core->flags & CORE_TRACES_ON_WINDOW)
+  if (GIMP_PAINT_CORE_GET_CLASS (core)->traces_on_window)
     gimp_paint_core_paint (core, drawable, paint_options, PRETRACE_PAINT, time);
 
   /*  Paint to the image  */
@@ -446,7 +446,7 @@ gimp_paint_tool_button_press (GimpTool        *tool,
 
   gimp_display_flush_now (gdisp);
 
-  if (core->flags & CORE_TRACES_ON_WINDOW)
+  if (GIMP_PAINT_CORE_GET_CLASS (core)->traces_on_window)
     gimp_paint_core_paint (core, drawable, paint_options, POSTTRACE_PAINT, time);
 
   /*  restore the current brush pointer  */
@@ -522,14 +522,14 @@ gimp_paint_tool_motion (GimpTool        *tool,
   if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
     return;
 
-  if (core->flags & CORE_TRACES_ON_WINDOW)
+  if (GIMP_PAINT_CORE_GET_CLASS (core)->traces_on_window)
     gimp_paint_core_paint (core, drawable, paint_options, PRETRACE_PAINT, time);
 
   gimp_paint_core_interpolate (core, drawable, paint_options, time);
 
   gimp_display_flush_now (gdisp);
 
-  if (core->flags & CORE_TRACES_ON_WINDOW)
+  if (GIMP_PAINT_CORE_GET_CLASS (core)->traces_on_window)
     gimp_paint_core_paint (core, drawable, paint_options, POSTTRACE_PAINT, time);
 }
 

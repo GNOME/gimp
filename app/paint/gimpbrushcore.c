@@ -162,6 +162,7 @@ gimp_brush_core_class_init (GimpBrushCoreClass *klass)
   paint_core_class->interpolate    = gimp_brush_core_interpolate;
   paint_core_class->get_paint_area = gimp_brush_core_get_paint_area;
 
+  klass->handles_changing_brush    = FALSE;
   klass->use_scale                 = TRUE;
 }
 
@@ -291,7 +292,7 @@ gimp_brush_core_pre_paint (GimpPaintCore      *paint_core,
           return FALSE;
         }
 
-      if (paint_core->flags & CORE_HANDLES_CHANGING_BRUSH)
+      if (GIMP_BRUSH_CORE_GET_CLASS (paint_core)->handles_changing_brush)
         {
           core->brush = gimp_brush_select_brush (core->brush,
                                                  &paint_core->last_coords,

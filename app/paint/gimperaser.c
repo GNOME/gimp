@@ -96,18 +96,18 @@ static void
 gimp_eraser_class_init (GimpEraserClass *klass)
 {
   GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
+  GimpBrushCoreClass *brush_core_class = GIMP_BRUSH_CORE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   paint_core_class->paint = gimp_eraser_paint;
+
+  brush_core_class->handles_changing_brush = TRUE;
 }
 
 static void
 gimp_eraser_init (GimpEraser *eraser)
 {
-  GimpPaintCore *paint_core = GIMP_PAINT_CORE (eraser);
-
-  paint_core->flags |= CORE_HANDLES_CHANGING_BRUSH;
 }
 
 static void

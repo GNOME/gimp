@@ -1,3 +1,23 @@
+2004-05-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimppaintcore.[ch]: removed enum GimpPaintCoreFlags
+	and member GimpPaintCore::flags. Added "gboolean traces_on_window"
+	to GimpPaintCoreClass (defaults to FALSE).
+
+	* app/paint/gimpclone.c: set traces_on_window = TRUE.
+
+	* app/paint/gimpbrushcore.[ch]: added
+	"gboolean handles_changing_brush" to GimpBrushCoreClass (defaults
+	to FALSE).
+
+	* app/paint/gimpclone.c
+	* app/paint/gimpdodgeburn.c
+	* app/paint/gimperaser.c
+	* app/paint/gimppaintbrush.c
+	* app/paint/gimppaintcore.c: set handles_changing_brush = TRUE.
+
+	* app/tools/gimppainttool.c: changed accordingly.
+
 2004-05-27  Maurits Rijk  <m.rijk@chello.nl>
 
 	* plug-ins/common/ccanalyze.c: code clean-up. Improved speed a lot

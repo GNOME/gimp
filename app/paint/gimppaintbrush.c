@@ -97,18 +97,18 @@ static void
 gimp_paintbrush_class_init (GimpPaintbrushClass *klass)
 {
   GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
+  GimpBrushCoreClass *brush_core_class = GIMP_BRUSH_CORE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   paint_core_class->paint = gimp_paintbrush_paint;
+
+  brush_core_class->handles_changing_brush = TRUE;
 }
 
 static void
 gimp_paintbrush_init (GimpPaintbrush *paintbrush)
 {
-  GimpPaintCore *paint_core = GIMP_PAINT_CORE (paintbrush);
-
-  paint_core->flags |= CORE_HANDLES_CHANGING_BRUSH;
 }
 
 static void

@@ -79,6 +79,10 @@ struct _GimpBrushCoreClass
 {
   GimpPaintCoreClass  parent_class;
 
+  /*  Set for tools that don't mind if the brush changes while painting  */
+  gboolean            handles_changing_brush;
+
+  /*  Scale the brush mask depending on pressure  */
   gboolean            use_scale;
 };
 

@@ -123,13 +123,14 @@ gimp_paint_core_class_init (GimpPaintCoreClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize = gimp_paint_core_finalize;
+  object_class->finalize  = gimp_paint_core_finalize;
 
-  klass->start           = gimp_paint_core_real_start;
-  klass->pre_paint       = gimp_paint_core_real_pre_paint;
-  klass->paint           = gimp_paint_core_real_paint;
-  klass->interpolate     = gimp_paint_core_real_interpolate;
-  klass->get_paint_area  = gimp_paint_core_real_get_paint_area;
+  klass->traces_on_window = FALSE;
+  klass->start            = gimp_paint_core_real_start;
+  klass->pre_paint        = gimp_paint_core_real_pre_paint;
+  klass->paint            = gimp_paint_core_real_paint;
+  klass->interpolate      = gimp_paint_core_real_interpolate;
+  klass->get_paint_area   = gimp_paint_core_real_get_paint_area;
 }
 
 static void
@@ -143,7 +144,6 @@ gimp_paint_core_init (GimpPaintCore *core)
   core->x2           = 0;
   core->y2           = 0;
 
-  core->flags        = 0;
   core->use_pressure = FALSE;
 
   core->undo_tiles   = NULL;

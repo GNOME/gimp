@@ -121,20 +121,19 @@ static void
 gimp_clone_class_init (GimpCloneClass *klass)
 {
   GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
+  GimpBrushCoreClass *brush_core_class = GIMP_BRUSH_CORE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  paint_core_class->paint = gimp_clone_paint;
+  paint_core_class->traces_on_window = TRUE;
+  paint_core_class->paint            = gimp_clone_paint;
+
+  brush_core_class->handles_changing_brush = TRUE;
 }
 
 static void
 gimp_clone_init (GimpClone *clone)
 {
-  GimpPaintCore *paint_core = GIMP_PAINT_CORE (clone);
-
-  paint_core->flags |= CORE_HANDLES_CHANGING_BRUSH;
-  paint_core->flags |= CORE_TRACES_ON_WINDOW;
-
   clone->set_source         = FALSE;
 
   clone->src_drawable       = NULL;

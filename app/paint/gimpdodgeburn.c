@@ -120,20 +120,20 @@ gimp_dodge_burn_class_init (GimpDodgeBurnClass *klass)
 {
   GObjectClass       *object_class     = G_OBJECT_CLASS (klass);
   GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
+  GimpBrushCoreClass *brush_core_class = GIMP_BRUSH_CORE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize  = gimp_dodge_burn_finalize;
 
   paint_core_class->paint = gimp_dodge_burn_paint;
+
+  brush_core_class->handles_changing_brush = TRUE;
 }
 
 static void
 gimp_dodge_burn_init (GimpDodgeBurn *dodgeburn)
 {
-  GimpPaintCore *paint_core = GIMP_PAINT_CORE (dodgeburn);
-
-  paint_core->flags |= CORE_HANDLES_CHANGING_BRUSH;
 }
 
 static void
