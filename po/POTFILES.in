@@ -35,6 +35,7 @@ app/core/gimpdrawable.c
 app/core/gimpedit.c
 app/core/gimpenvirontable.c
 app/core/gimpgradient.c
+app/core/gimpimage-colormap.c
 app/core/gimpimage-convert.c
 app/core/gimpimage-crop.c
 app/core/gimpimage-mask-select.c
@@ -228,6 +229,8 @@ app/tools/gimpvectortool.c
 app/tools/paint_options.c
 app/tools/tool_manager.c
 app/tools/tool_options.c
+
+app/vectors/gimpvectors.c
 
 app/widgets/widgets-enums.c
 app/widgets/gimpbrusheditor.c
