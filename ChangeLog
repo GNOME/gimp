@@ -1,3 +1,15 @@
+2004-02-20  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/common/lic.c: fixed crash when the effect image
+	is smaller than the target drawable. Major code overhaul (not
+	yet fully completed), removed global variables, removed
+	micro-functions that itself just invoke micro-functions, use
+	more libgimpcolor functions.
+
+	Slightly improved the algorithm by adding small random
+	distorsions to the effect image. This avoids artefacts in plain
+	areas.
+
 2004-02-19  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/Makefile.am

@@ -51,23 +51,22 @@
 /* Typedefs */
 /************/
 
-#define CHECKBOUNDS(x,y) (x>=0 && y>=0 && x<width && y<height)
-
 #define numx    40              /* Pseudo-random vector grid size */
 #define numy    40
 
-#define stepx   0.5
-#define stepy   0.5
-
 #define HELP_ID "plug-in-lic"
 
-#define TILE_CACHE_SIZE 16
+typedef enum
+{
+  LIC_HUE,
+  LIC_SATURATION,
+  LIC_BRIGHTNESS
+} LICEffectChannel;
+
 
 /*****************************/
 /* Global variables and such */
 /*****************************/
-
-static GimpRGB black = { 0.0, 0.0, 0.0 };
 
 static gdouble G[numx][numy][2];
 
@@ -93,15 +92,8 @@ static gdouble minv   = -2.5;
 static gdouble maxv   =  2.5;
 static gdouble isteps = 20.0;
 
-static GimpDrawable *input_drawable;
-static GimpDrawable *output_drawable;
-static GimpPixelRgn  source_region;
-static GimpPixelRgn  dest_region;
-
-static gint    width, height, in_channels;
+static gint    effect_width, effect_height;
 static gint    border_x1, border_y1, border_x2, border_y2;
-static glong   maxcounter;
-static guchar *scalarfield;
 
 static GtkWidget *dialog;
 
@@ -109,98 +101,44 @@ static GtkWidget *dialog;
 /* Convenience routines */
 /************************/
 
-static GimpRGB
-peek (gint x,
-      gint y)
+static void
+peek (GimpPixelRgn *src_rgn,
+      gint          x,
+      gint          y,
+      GimpRGB      *color)
 {
-  static guchar data[4];
-  GimpRGB color;
+  static guchar data[4] = { 0, };
 
-  gimp_pixel_rgn_get_pixel (&source_region, data, x, y);
-
-  color.r = (gdouble) data[0] / 255.0;
-  color.g = (gdouble) data[1] / 255.0;
-  color.b = (gdouble) data[2] / 255.0;
-
-  if (input_drawable->bpp == 4)
-    {
-      if (in_channels == 4)
-        color.a = (gdouble) data[3] / 255.0;
-      else
-        color.a = 1.0;
-    }
-  else
-    color.a = 1.0;
-
-  return color;
+  gimp_pixel_rgn_get_pixel (src_rgn, data, x, y);
+  gimp_rgba_set_uchar (color, data[0], data[1], data[2], data[3]);
 }
 
 static void
-poke (gint      x,
-      gint      y,
-      GimpRGB *color)
+poke (GimpPixelRgn *dest_rgn,
+      gint          x,
+      gint          y,
+      GimpRGB      *color)
 {
   static guchar data[4];
 
-  data[0] = (guchar) (color->r * 255.0);
-  data[1] = (guchar) (color->g * 255.0);
-  data[2] = (guchar) (color->b * 255.0);
-  data[3] = (guchar) (color->a * 255.0);
-
-  gimp_pixel_rgn_set_pixel (&dest_region, data, x, y);
+  gimp_rgba_get_uchar (color, &data[0], &data[1], &data[2], &data[3]);
+  gimp_pixel_rgn_set_pixel (dest_rgn, data, x, y);
 }
-
-/****************************************/
-/* Allocate memory for temporary images */
-/****************************************/
 
 static gint
-image_setup (GimpDrawable *drawable,
-	     gint       interactive)
-{
-  /* Get some useful info on the input drawable */
-  /* ========================================== */
-
-  input_drawable = drawable;
-  output_drawable = drawable;
-
-  gimp_drawable_mask_bounds (drawable->drawable_id,
-			     &border_x1, &border_y1, &border_x2, &border_y2);
-
-  width = input_drawable->width;
-  height = input_drawable->height;
-
-  gimp_pixel_rgn_init (&source_region, input_drawable,
-		       0, 0, width, height, FALSE, FALSE);
-
-  maxcounter = (glong) width * (glong) height;
-
-  /* Assume at least RGB */
-  /* =================== */
-
-  in_channels = 3;
-  if (gimp_drawable_has_alpha (input_drawable->drawable_id))
-    in_channels++;
-
-  if (interactive)
-    {
-      /* Allocate memory for temp. images */
-      /* ================================ */
-    }
-
-  return TRUE;
-}
-
-static guchar
 peekmap (guchar *image,
-	 gint    x,
-	 gint    y)
+         gint    x,
+         gint    y)
 {
-  glong index;
+  while (x < 0)
+    x += effect_width;
+  x %= effect_width;
 
-  index = (glong) x + (glong) width * (glong) y;
+  while (y < 0)
+    y += effect_height;
+  y %= effect_height;
 
-  return image[index] ;
+  return (gint) image[x + effect_width * y];
 }
 
 /*************/
@@ -223,20 +161,14 @@ gradx (guchar *image,
 {
   gint val=0;
 
-  if (CHECKBOUNDS (x-1, y-1))
-    val = val + (gint) peekmap (image, x-1, y-1);
-  if (CHECKBOUNDS (x+1, y-1))
-    val = val - (gint) peekmap (image, x+1, y-1);
+  val = val +     peekmap (image, x-1, y-1);
+  val = val -     peekmap (image, x+1, y-1);
 
-  if (CHECKBOUNDS (x-1, y))
-    val = val + 2 * (gint) peekmap (image, x-1, y);
-  if (CHECKBOUNDS (x+1, y))
-    val = val - 2 * (gint) peekmap (image, x+1, y);
+  val = val + 2 * peekmap (image, x-1, y);
+  val = val - 2 * peekmap (image, x+1, y);
 
-  if (CHECKBOUNDS (x-1, y+1))
-    val = val + (gint) peekmap (image, x-1, y+1);
-  if (CHECKBOUNDS (x+1, y+1))
-    val = val - (gint) peekmap (image, x+1, y+1);
+  val = val +     peekmap (image, x-1, y+1);
+  val = val -     peekmap (image, x+1, y+1);
 
   return val;
 }
@@ -248,19 +180,13 @@ grady (guchar *image,
 {
   gint val = 0;
 
-  if (CHECKBOUNDS (x-1, y-1))
-    val = val + (gint) peekmap (image, x-1, y-1);
-  if (CHECKBOUNDS (x, y-1))
-    val = val + 2 * (gint) peekmap (image, x, y-1);
-  if (CHECKBOUNDS (x+1, y-1))
-    val = val + (gint) peekmap (image, x+1, y-1);
+  val = val +     peekmap (image, x-1, y-1);
+  val = val + 2 * peekmap (image, x,   y-1);
+  val = val +     peekmap (image, x+1, y-1);
 
-  if (CHECKBOUNDS (x-1, y+1))
-    val = val - (gint) peekmap (image, x-1, y+1);
-  if (CHECKBOUNDS (x, y+1))
-    val = val - 2 * (gint) peekmap (image, x, y+1);
-  if (CHECKBOUNDS (x+1, y+1))
-    val = val - (gint) peekmap (image, x+1, y+1);
+  val = val -     peekmap (image, x-1, y+1);
+  val = val - 2 * peekmap (image, x,   y+1);
+  val = val -     peekmap (image, x+1, y+1);
 
   return val;
 }
@@ -315,8 +241,8 @@ noise (gdouble x,
     {
       for (j = stj; j <= stj + 1; j++)
         sum += omega ((x - (gdouble) i * dx) / dx,
-		      (y - (gdouble) j * dy) / dy,
-		      i, j);
+                      (y - (gdouble) j * dy) / dy,
+                      i, j);
     }
 
   return sum;
@@ -365,9 +291,9 @@ filter (gdouble u)
 
 static gdouble
 lic_noise (gint    x,
-	   gint    y,
-	   gdouble vx,
-	   gdouble vy)
+           gint    y,
+           gdouble vx,
+           gdouble vy)
 {
   gdouble i = 0.0;
   gdouble f1 = 0.0, f2 = 0.0;
@@ -403,12 +329,17 @@ lic_noise (gint    x,
 }
 
 static void
-getpixel (GimpRGB *p,
-	  gdouble   u,
-	  gdouble   v)
+getpixel (GimpPixelRgn *src_rgn,
+          GimpRGB      *p,
+          gdouble       u,
+          gdouble       v)
 {
   register gint x1, y1, x2, y2;
+  gint width, height;
   static GimpRGB pp[4];
+
+  width = src_rgn->w;
+  height = src_rgn->h;
 
   x1 = (gint)u;
   y1 = (gint)v;
@@ -426,25 +357,27 @@ getpixel (GimpRGB *p,
   x2 = (x1 + 1) % width;
   y2 = (y1 + 1) % height;
 
-  pp[0] = peek (x1, y1);
-  pp[1] = peek (x2, y1);
-  pp[2] = peek (x1, y2);
-  pp[3] = peek (x2, y2);
+  peek (src_rgn, x1, y1, &pp[0]);
+  peek (src_rgn, x2, y1, &pp[1]);
+  peek (src_rgn, x1, y2, &pp[2]);
+  peek (src_rgn, x2, y2, &pp[3]);
 
   *p = gimp_bilinear_rgb (u, v, pp);
 }
 
 static void
-lic_image (gint      x,
-	   gint      y,
-	   gdouble   vx,
-	   gdouble   vy,
-	   GimpRGB *color)
+lic_image (GimpPixelRgn *src_rgn,
+           gint          x,
+           gint          y,
+           gdouble       vx,
+           gdouble       vy,
+           GimpRGB      *color)
 {
   gdouble u, step = 2.0 * l / isteps;
   gdouble xx = (gdouble) x, yy = (gdouble) y;
   gdouble c, s;
-  GimpRGB col, col1, col2, col3;
+  GimpRGB col = { 0, 0, 0, 0 };
+  GimpRGB col1, col2, col3;
 
   /* Get vector at x,y */
   /* ================= */
@@ -455,13 +388,12 @@ lic_image (gint      x,
   /* Calculate integral numerically */
   /* ============================== */
 
-  col = black;
-  getpixel (&col1, xx + l * c, yy + l * s);
+  getpixel (src_rgn, &col1, xx + l * c, yy + l * s);
   gimp_rgb_multiply (&col1, filter (-l));
 
   for (u = -l + step; u <= l; u += step)
     {
-      getpixel (&col2, xx - u * c, yy - u * s);
+      getpixel (src_rgn, &col2, xx - u * c, yy - u * s);
       gimp_rgb_multiply (&col2, filter (u));
 
       col3 = col1;
@@ -478,101 +410,87 @@ lic_image (gint      x,
   *color = col;
 }
 
-static gdouble
-get_hue (const GimpRGB *col)
-{
-  GimpHSL hsl;
-
-  gimp_rgb_to_hsl (col, &hsl);
-  return hsl.h;
-}
-
-static gdouble
-get_saturation (const GimpRGB *col)
-{
-  GimpHSL hsl;
-
-  gimp_rgb_to_hsl (col, &hsl);
-  return hsl.s;
-}
-
-static gdouble
-get_brightness (const GimpRGB *col)
-{
-  GimpHSL hsl;
-
-  gimp_rgb_to_hsl (col, &hsl);
-  return hsl.l;
-}
-
 static guchar*
-rgb_to_hsl (GimpDrawable  *image,
-	    gdouble (*hsl_func)(const GimpRGB *col))
+rgb_to_hsl (GimpDrawable     *drawable,
+            LICEffectChannel  effect_channel)
 {
   guchar *themap, data[4];
-  gint w, h, x, y;
+  gint x, y;
   GimpRGB color;
+  GimpHSL color_hsl;
   gdouble val;
   glong maxc, index = 0;
   GimpPixelRgn region;
+  GRand *gr;
 
-  w = image->width;
-  h = image->height;
-  maxc = (glong) w * (glong) h;
+  gr = g_rand_new();
 
-  gimp_pixel_rgn_init (&region, image,  0, 0, w, h, FALSE, FALSE);
+  maxc = drawable->width * drawable->height;
+
+  gimp_pixel_rgn_init (&region, drawable, 0, 0,
+                       drawable->width, drawable->height, FALSE, FALSE);
 
   themap = g_new (guchar, maxc);
 
-  for (y = 0; y < h; y++)
+  for (y = 0; y < region.h; y++)
     {
-      for (x = 0; x < w; x++)
+      for (x = 0; x < region.w; x++)
         {
+          data[3] = 255;
+
           gimp_pixel_rgn_get_pixel (&region, data, x, y);
+          gimp_rgba_set_uchar (&color, data[0], data[1], data[2], data[3]);
+          gimp_rgb_to_hsl (&color, &color_hsl);
 
-          color.r = ((gdouble) data[0]) / 255.0;
-          color.g = ((gdouble) data[1]) / 255.0;
-          color.b = ((gdouble) data[2]) / 255.0;
-          color.a = 1.0;
+          switch (effect_channel)
+          {
+            case LIC_HUE:
+                val = color_hsl.h * 255;
+                break;
+            case LIC_SATURATION:
+                val = color_hsl.s * 255;
+                break;
+            case LIC_BRIGHTNESS:
+                val = color_hsl.l * 255;
+                break;
+          }
 
-          val = hsl_func (&color);
+          /* add some random to avoid unstructured areas. */
+          val += g_rand_double_range (gr, -1.0, 1.0);
 
-          themap[index++] = (guchar) (val * 255.0);
+          themap[index++] = (guchar) CLAMP0255 (RINT (val));
         }
     }
+
+  g_rand_free (gr);
 
   return themap;
 }
 
-static guchar*
-rgb_to_hue (GimpDrawable  *image)
-{
-  return rgb_to_hsl (image, get_hue);
-}
-
-static guchar*
-rgb_to_saturation (GimpDrawable  *image)
-{
-  return rgb_to_hsl (image, get_saturation);
-}
-
-static guchar*
-rgb_to_brightness (GimpDrawable  *image)
-{
-  return rgb_to_hsl (image, get_brightness);
-}
 
 static void
-compute_lic (gboolean rotate)
+compute_lic (GimpDrawable *drawable,
+             guchar       *scalarfield,
+             gboolean      rotate)
 {
   gint xcount, ycount;
-  glong counter = 0;
   GimpRGB color;
   gdouble vx, vy, tmp;
+  GimpPixelRgn src_rgn, dest_rgn;
 
-  for (ycount = 0; ycount < height; ycount++)
+  gimp_pixel_rgn_init (&src_rgn, drawable,
+                       0, 0,
+                       drawable->width,
+                       drawable->height, FALSE, FALSE);
+
+  gimp_pixel_rgn_init (&dest_rgn, drawable,
+                       0, 0,
+                       drawable->width,
+                       drawable->height, TRUE, TRUE);
+
+  for (ycount = 0; ycount < src_rgn.h; ycount++)
     {
-      for (xcount = 0; xcount < width; xcount++)
+      for (xcount = 0; xcount < src_rgn.w; xcount++)
         {
           /* Get derivative at (x,y) and normalize it */
           /* ============================================================== */
@@ -580,20 +498,20 @@ compute_lic (gboolean rotate)
           vx = gradx (scalarfield, xcount, ycount);
           vy = grady (scalarfield, xcount, ycount);
 
-	  /* Rotate if needed */
-	  if (rotate)
-	    {
-	      tmp = vy;
-	      vy = -vx;
-	      vx = tmp;
-	    }
+          /* Rotate if needed */
+          if (rotate)
+            {
+              tmp = vy;
+              vy = -vx;
+              vx = tmp;
+            }
 
           tmp = sqrt (vx * vx + vy * vy);
-          if (tmp != 0.0)
+          if (tmp >= 0.000001)
             {
               tmp = 1.0 / tmp;
               vx *= tmp;
-	      vy *= tmp;
+              vy *= tmp;
             }
 
           /* Convolve with the LIC at (x,y) */
@@ -601,30 +519,31 @@ compute_lic (gboolean rotate)
 
           if (licvals.effect_convolve == 0)
             {
-              color = peek (xcount, ycount);
+              peek (&src_rgn, xcount, ycount, &color);
               tmp = lic_noise (xcount, ycount, vx, vy);
               gimp_rgb_multiply (&color, tmp);
             }
           else
-            lic_image (xcount, ycount, vx, vy, &color);
+            lic_image (&src_rgn, xcount, ycount, vx, vy, &color);
 
-          poke (xcount, ycount, &color);
-
-          counter++;
-
-          if ((counter % width) == 0)
-            gimp_progress_update ((gfloat) counter / (gfloat) maxcounter);
+          poke (&dest_rgn, xcount, ycount, &color);
         }
+
+      gimp_progress_update ((gfloat) ycount / (gfloat) src_rgn.h);
     }
 }
 
 static void
-compute_image (void)
+compute_image (GimpDrawable *drawable)
 {
   GimpDrawable *effect;
+  guchar       *scalarfield;
 
-  gimp_pixel_rgn_init (&dest_region, output_drawable,
-		       0, 0, width, height, TRUE, TRUE);
+  /* Get some useful info on the input drawable */
+  /* ========================================== */
+
+  gimp_drawable_mask_bounds (drawable->drawable_id,
+                             &border_x1, &border_y1, &border_x2, &border_y2);
 
   gimp_progress_init (_("Van Gogh (LIC)..."));
 
@@ -639,29 +558,33 @@ compute_image (void)
 
   effect = gimp_drawable_get (licvals.effect_image_id);
 
+  effect_width = effect->width;
+  effect_height = effect->height;
+
   switch (licvals.effect_channel)
     {
       case 0:
-        scalarfield = rgb_to_hue (effect);
+        scalarfield = rgb_to_hsl (effect, LIC_HUE);
         break;
       case 1:
-        scalarfield = rgb_to_saturation (effect);
+        scalarfield = rgb_to_hsl (effect, LIC_SATURATION);
         break;
       case 2:
-        scalarfield = rgb_to_brightness (effect);
+        scalarfield = rgb_to_hsl (effect, LIC_BRIGHTNESS);
         break;
     }
 
-  compute_lic (licvals.effect_operator);
+  compute_lic (drawable, scalarfield, licvals.effect_operator);
 
   g_free (scalarfield);
 
   /* Update image */
   /* ============ */
 
-  gimp_drawable_flush (output_drawable);
-  gimp_drawable_merge_shadow (output_drawable->drawable_id, TRUE);
-  gimp_drawable_update (output_drawable->drawable_id, 0, 0, width, height);
+  gimp_drawable_flush (drawable);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, 0, 0,
+                        drawable->width, drawable->height);
 
   gimp_displays_flush ();
 }
@@ -671,9 +594,9 @@ compute_image (void)
 /**************************/
 
 static gint
-effect_image_constrain (gint32	 image_id,
-			gint32   drawable_id,
-			gpointer data)
+effect_image_constrain (gint32         image_id,
+                        gint32   drawable_id,
+                        gpointer data)
 {
   if (drawable_id == -1)
     return TRUE;
@@ -683,7 +606,7 @@ effect_image_constrain (gint32	 image_id,
 
 static void
 effect_image_callback (gint32   id,
-		       gpointer data)
+                       gpointer data)
 {
   licvals.effect_image_id = id;
 }
@@ -707,12 +630,12 @@ create_main_dialog (void)
 
   dialog = gimp_dialog_new (_("Van Gogh (LIC)"), "lic",
                             NULL, 0,
-			    gimp_standard_help_func, HELP_ID,
+                            gimp_standard_help_func, HELP_ID,
 
-			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			    NULL);
+                            NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -724,39 +647,39 @@ create_main_dialog (void)
   gtk_widget_show (hbox);
 
   frame = gimp_int_radio_group_new (TRUE, _("Effect Channel"),
-				    G_CALLBACK (gimp_radio_button_update),
-				    &licvals.effect_channel,
-				    licvals.effect_channel,
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &licvals.effect_channel,
+                                    licvals.effect_channel,
 
-				    _("_Hue"),        0, NULL,
-				    _("_Saturation"), 1, NULL,
-				    _("_Brightness"), 2, NULL,
+                                    _("_Hue"),        0, NULL,
+                                    _("_Saturation"), 1, NULL,
+                                    _("_Brightness"), 2, NULL,
 
-				    NULL);
+                                    NULL);
   gtk_container_add (GTK_CONTAINER (hbox), frame);
   gtk_widget_show (frame);
 
   frame = gimp_int_radio_group_new (TRUE, _("Effect Operator"),
-				    G_CALLBACK (gimp_radio_button_update),
-				    &licvals.effect_operator,
-				    licvals.effect_operator,
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &licvals.effect_operator,
+                                    licvals.effect_operator,
 
-				    _("_Derivative"), 0, NULL,
-				    _("_Gradient"),   1, NULL,
+                                    _("_Derivative"), 0, NULL,
+                                    _("_Gradient"),   1, NULL,
 
-				    NULL);
+                                    NULL);
   gtk_container_add (GTK_CONTAINER (hbox), frame);
   gtk_widget_show (frame);
 
   frame = gimp_int_radio_group_new (TRUE, _("Convolve"),
-				    G_CALLBACK (gimp_radio_button_update),
-				    &licvals.effect_convolve,
-				    licvals.effect_convolve,
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &licvals.effect_convolve,
+                                    licvals.effect_convolve,
 
-				    _("_With White Noise"),  0, NULL,
-				    _("W_ith Source Image"), 1, NULL,
+                                    _("_With White Noise"),  0, NULL,
+                                    _("W_ith Source Image"), 1, NULL,
 
-				    NULL);
+                                    NULL);
   gtk_container_add (GTK_CONTAINER (hbox), frame);
   gtk_widget_show (frame);
 
@@ -777,13 +700,13 @@ create_main_dialog (void)
 
   option_menu = gtk_option_menu_new ();
   menu = gimp_drawable_menu_new (effect_image_constrain,
-				 effect_image_callback,
-				 NULL,
-				 licvals.effect_image_id);
+                                 effect_image_callback,
+                                 NULL,
+                                 licvals.effect_image_id);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("_Effect Image:"), 1.0, 0.5,
-			     option_menu, 2, TRUE);
+                             _("_Effect Image:"), 1.0, 0.5,
+                             option_menu, 2, TRUE);
 
   sep = gtk_hseparator_new ();
   gtk_box_pack_start (GTK_BOX (vbox), sep, FALSE, FALSE, 0);
@@ -798,46 +721,46 @@ create_main_dialog (void)
   row = 0;
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-				     _("_Filter Length:"), 0, 6,
-				     licvals.filtlen, 0, 64, 1.0, 8.0, 1,
-				     TRUE, 0, 0,
-				     NULL, NULL);
+                                     _("_Filter Length:"), 0, 6,
+                                     licvals.filtlen, 0, 64, 1.0, 8.0, 1,
+                                     TRUE, 0, 0,
+                                     NULL, NULL);
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &licvals.filtlen);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-				     _("_Noise Magnitude:"), 0, 6,
-				     licvals.noisemag, 1, 5, 0.1, 1.0, 1,
-				     TRUE, 0, 0,
-				     NULL, NULL);
+                                     _("_Noise Magnitude:"), 0, 6,
+                                     licvals.noisemag, 1, 5, 0.1, 1.0, 1,
+                                     TRUE, 0, 0,
+                                     NULL, NULL);
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &licvals.noisemag);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-				     _("In_tegration Steps:"), 0, 6,
-				     licvals.intsteps, 1, 40, 1.0, 5.0, 1,
-				     TRUE, 0, 0,
-				     NULL, NULL);
+                                     _("In_tegration Steps:"), 0, 6,
+                                     licvals.intsteps, 1, 40, 1.0, 5.0, 1,
+                                     TRUE, 0, 0,
+                                     NULL, NULL);
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &licvals.intsteps);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-				     _("_Minimum Value:"), 0, 6,
-				     licvals.minv, -100, 0, 1, 10, 1,
-				     TRUE, 0, 0,
-				     NULL, NULL);
+                                     _("_Minimum Value:"), 0, 6,
+                                     licvals.minv, -100, 0, 1, 10, 1,
+                                     TRUE, 0, 0,
+                                     NULL, NULL);
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &licvals.minv);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-				     _("M_aximum Value:"), 0, 6,
-				     licvals.maxv, 0, 100, 1, 10, 1,
-				     TRUE, 0, 0,
-				     NULL, NULL);
+                                     _("M_aximum Value:"), 0, 6,
+                                     licvals.maxv, 0, 100, 1, 10, 1,
+                                     TRUE, 0, 0,
+                                     NULL, NULL);
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &licvals.maxv);
@@ -880,16 +803,16 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_lic",
-			  "Creates a Van Gogh effect (Line Integral Convolution)",
-			  "No help yet",
-			  "Tom Bech & Federico Mena Quintero",
-			  "Tom Bech & Federico Mena Quintero",
-			  "Version 0.14, September 24 1997",
-			  N_("<Image>/Filters/Map/_Van Gogh (LIC)..."),
-			  "RGB",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Creates a Van Gogh effect (Line Integral Convolution)",
+                          "No help yet",
+                          "Tom Bech & Federico Mena Quintero",
+                          "Tom Bech & Federico Mena Quintero",
+                          "Version 0.14, September 24 1997",
+                          N_("<Image>/Filters/Map/_Van Gogh (LIC)..."),
+                          "RGB",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 }
 
 static void
@@ -935,25 +858,22 @@ run (const gchar      *name,
       /* ================================================ */
 
       if (gimp_drawable_is_rgb (drawable->drawable_id))
-	{
-	  /* Set the tile cache size */
+        {
+          /* Set the tile cache size */
           /* ======================= */
 
-	  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
+          gimp_tile_cache_ntiles (2*(drawable->width / gimp_tile_width () + 1));
 
           switch (run_mode)
             {
               case GIMP_RUN_INTERACTIVE:
-                image_setup (drawable, TRUE);
-
                 if (create_main_dialog ())
-                  compute_image ();
+                  compute_image (drawable);
 
                 gimp_set_data ("plug_in_lic", &licvals, sizeof (LicValues));
               break;
               case GIMP_RUN_WITH_LAST_VALS:
-                image_setup (drawable, FALSE);
-                compute_image ();
+                compute_image (drawable);
                 break;
               default:
                 break;
