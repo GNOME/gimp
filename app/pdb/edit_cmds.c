@@ -62,8 +62,9 @@ register_edit_procs (Gimp *gimp)
 }
 
 static Argument *
-edit_cut_invoker (Gimp     *gimp,
-                  Argument *args)
+edit_cut_invoker (Gimp        *gimp,
+                  GimpContext *context,
+                  Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -78,7 +79,7 @@ edit_cut_invoker (Gimp     *gimp,
   if (success)
     {
       gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-      non_empty = gimp_edit_cut (gimage, drawable) != NULL;
+      non_empty = gimp_edit_cut (gimage, drawable, context) != NULL;
     }
 
   return_args = procedural_db_return_args (&edit_cut_proc, success);
@@ -124,8 +125,9 @@ static ProcRecord edit_cut_proc =
 };
 
 static Argument *
-edit_copy_invoker (Gimp     *gimp,
-                   Argument *args)
+edit_copy_invoker (Gimp        *gimp,
+                   GimpContext *context,
+                   Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -140,7 +142,7 @@ edit_copy_invoker (Gimp     *gimp,
   if (success)
     {
       gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-      non_empty = gimp_edit_copy (gimage, drawable) != NULL;
+      non_empty = gimp_edit_copy (gimage, drawable, context) != NULL;
     }
 
   return_args = procedural_db_return_args (&edit_copy_proc, success);
@@ -186,8 +188,9 @@ static ProcRecord edit_copy_proc =
 };
 
 static Argument *
-edit_paste_invoker (Gimp     *gimp,
-                    Argument *args)
+edit_paste_invoker (Gimp        *gimp,
+                    GimpContext *context,
+                    Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -264,8 +267,9 @@ static ProcRecord edit_paste_proc =
 };
 
 static Argument *
-edit_clear_invoker (Gimp     *gimp,
-                    Argument *args)
+edit_clear_invoker (Gimp        *gimp,
+                    GimpContext *context,
+                    Argument    *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -278,7 +282,7 @@ edit_clear_invoker (Gimp     *gimp,
   if (success)
     {
       gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-      success = gimp_edit_clear (gimage, drawable);
+      success = gimp_edit_clear (gimage, drawable, context);
     }
 
   return procedural_db_return_args (&edit_clear_proc, success);
@@ -310,8 +314,9 @@ static ProcRecord edit_clear_proc =
 };
 
 static Argument *
-edit_fill_invoker (Gimp     *gimp,
-                   Argument *args)
+edit_fill_invoker (Gimp        *gimp,
+                   GimpContext *context,
+                   Argument    *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -329,7 +334,7 @@ edit_fill_invoker (Gimp     *gimp,
   if (success)
     {
       gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-      success = gimp_edit_fill (gimage, drawable, (GimpFillType) fill_type);
+      success = gimp_edit_fill (gimage, drawable, context, (GimpFillType) fill_type);
     }
 
   return procedural_db_return_args (&edit_fill_proc, success);
@@ -366,8 +371,9 @@ static ProcRecord edit_fill_proc =
 };
 
 static Argument *
-edit_bucket_fill_invoker (Gimp     *gimp,
-                          Argument *args)
+edit_bucket_fill_invoker (Gimp        *gimp,
+                          GimpContext *context,
+                          Argument    *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -419,7 +425,7 @@ edit_bucket_fill_invoker (Gimp     *gimp,
 
           do_seed_fill = gimp_channel_is_empty (gimp_image_get_mask (gimage));
 
-          gimp_drawable_bucket_fill (drawable, fill_mode,
+          gimp_drawable_bucket_fill (drawable, context, fill_mode,
                                      paint_mode, opacity / 100.0,
                                      do_seed_fill,
                                      FALSE /* don't fill transparent */,
@@ -491,8 +497,9 @@ static ProcRecord edit_bucket_fill_proc =
 };
 
 static Argument *
-edit_blend_invoker (Gimp     *gimp,
-                    Argument *args)
+edit_blend_invoker (Gimp        *gimp,
+                    GimpContext *context,
+                    Argument    *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -571,6 +578,7 @@ edit_blend_invoker (Gimp     *gimp,
       else
         {
           gimp_drawable_blend (drawable,
+                               context,
                                blend_mode,
                                paint_mode,
                                gradient_type,
@@ -687,8 +695,9 @@ static ProcRecord edit_blend_proc =
 };
 
 static Argument *
-edit_stroke_invoker (Gimp     *gimp,
-                     Argument *args)
+edit_stroke_invoker (Gimp        *gimp,
+                     GimpContext *context,
+                     Argument    *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -704,7 +713,7 @@ edit_stroke_invoker (Gimp     *gimp,
 
       gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
-      tool_info = gimp_context_get_tool (gimp_get_current_context (gimp));
+      tool_info = gimp_context_get_tool (context);
 
       success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (gimage)),
                                   drawable,

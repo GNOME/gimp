@@ -308,7 +308,6 @@ gimp_init (Gimp *gimp)
   gimp->context_list        = NULL;
   gimp->default_context     = NULL;
   gimp->user_context        = NULL;
-  gimp->current_context     = NULL;
 }
 
 static void
@@ -342,7 +341,6 @@ gimp_finalize (GObject *object)
   if (gimp->be_verbose)
     g_print ("EXIT: gimp_finalize\n");
 
-  gimp_set_current_context (gimp, NULL);
   gimp_set_user_context (gimp, NULL);
   gimp_set_default_context (gimp, NULL);
 
@@ -654,8 +652,6 @@ gimp_real_initialize (Gimp               *gimp,
   context = gimp_context_new (gimp, "User", context);
   gimp_set_user_context (gimp, context);
   g_object_unref (context);
-
-  gimp_set_current_context (gimp, context);
 
   /*  add the builtin FG -> BG etc. gradients  */
   gimp_gradients_init (gimp);
@@ -1302,28 +1298,4 @@ gimp_get_user_context (Gimp *gimp)
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   return gimp->user_context;
-}
-
-void
-gimp_set_current_context (Gimp        *gimp,
-			  GimpContext *context)
-{
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
-
-  if (gimp->current_context)
-    g_object_unref (gimp->current_context);
-
-  gimp->current_context = context;
-
-  if (gimp->current_context)
-    g_object_ref (gimp->current_context);
-}
-
-GimpContext *
-gimp_get_current_context (Gimp *gimp)
-{
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-
-  return gimp->current_context;
 }

@@ -43,6 +43,7 @@
 
 void
 gimp_drawable_offset (GimpDrawable   *drawable,
+                      GimpContext    *context,
 		      gboolean        wrap_around,
 		      GimpOffsetType  fill_type,
 		      gint            offset_x,
@@ -57,6 +58,7 @@ gimp_drawable_offset (GimpDrawable   *drawable,
   guchar       fill[MAX_CHANNELS] = { 0 };
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   item = GIMP_ITEM (drawable);
 
@@ -231,12 +233,9 @@ gimp_drawable_offset (GimpDrawable   *drawable,
     {
       if (fill_type == GIMP_OFFSET_BACKGROUND)
 	{
-	  Gimp    *gimp;
-	  GimpRGB  color;
+	  GimpRGB color;
 
-	  gimp = gimp_item_get_image (item)->gimp;
-
-	  gimp_context_get_background (gimp_get_current_context (gimp), &color);
+	  gimp_context_get_background (context, &color);
 
 	  gimp_rgb_get_uchar (&color, &fill[0], &fill[1], &fill[2]);
 

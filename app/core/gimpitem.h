@@ -88,20 +88,24 @@ struct _GimpItemClass
                               GimpProgressFunc        progress_callback,
                               gpointer                progress_data);
   void       (* resize)      (GimpItem               *item,
+                              GimpContext            *context,
                               gint                    new_width,
                               gint                    new_height,
                               gint                    offset_x,
                               gint                    offset_y);
   void       (* flip)        (GimpItem               *item,
+                              GimpContext            *context,
                               GimpOrientationType     flip_type,
                               gdouble                 axis,
                               gboolean                clip_result);
   void       (* rotate)      (GimpItem               *item,
+                              GimpContext            *context,
                               GimpRotationType        rotate_type,
                               gdouble                 center_x,
                               gdouble                 center_y,
                               gboolean                clip_result);
   void       (* transform)   (GimpItem               *item,
+                              GimpContext            *context,
                               const GimpMatrix3      *matrix,
                               GimpTransformDirection  direction,
                               GimpInterpolationType   interpolation_type,
@@ -190,6 +194,7 @@ void            gimp_item_scale_by_origin  (GimpItem       *item,
                                             gpointer              progress_data,
                                             gboolean              local_origin);
 void            gimp_item_resize           (GimpItem       *item,
+                                            GimpContext    *context,
                                             gint            new_width,
                                             gint            new_height,
                                             gint            offset_x,
@@ -197,15 +202,18 @@ void            gimp_item_resize           (GimpItem       *item,
 void            gimp_item_resize_to_image  (GimpItem       *item);
 
 void            gimp_item_flip             (GimpItem       *item,
+                                            GimpContext    *context,
                                             GimpOrientationType flip_type,
                                             gdouble         axis,
                                             gboolean        flip_result);
 void            gimp_item_rotate           (GimpItem       *item,
+                                            GimpContext    *context,
                                             GimpRotationType rotate_type,
                                             gdouble         center_x,
                                             gdouble         center_y,
                                             gboolean        flip_result);
 void            gimp_item_transform        (GimpItem       *item,
+                                            GimpContext    *context,
                                             const GimpMatrix3 *matrix,
                                             GimpTransformDirection direction,
                                             GimpInterpolationType interpolation_type,

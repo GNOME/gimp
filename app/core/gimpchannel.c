@@ -80,20 +80,24 @@ static void       gimp_channel_scale         (GimpItem         *item,
                                               GimpProgressFunc      progress_callback,
                                               gpointer              progress_data);
 static void       gimp_channel_resize        (GimpItem         *item,
+                                              GimpContext      *context,
                                               gint              new_width,
                                               gint              new_height,
                                               gint              offx,
                                               gint              offy);
 static void       gimp_channel_flip          (GimpItem         *item,
+                                              GimpContext      *context,
                                               GimpOrientationType flip_type,
                                               gdouble           axis,
                                               gboolean          flip_result);
 static void       gimp_channel_rotate        (GimpItem         *item,
+                                              GimpContext      *context,
                                               GimpRotationType  flip_type,
                                               gdouble           center_x,
                                               gdouble           center_y,
                                               gboolean          flip_result);
 static void       gimp_channel_transform     (GimpItem         *item,
+                                              GimpContext      *context,
                                               const GimpMatrix3 *matrix,
                                               GimpTransformDirection direction,
                                               GimpInterpolationType interpolation_type,
@@ -499,13 +503,14 @@ gimp_channel_scale (GimpItem              *item,
 }
 
 static void
-gimp_channel_resize (GimpItem *item,
-                     gint      new_width,
-                     gint      new_height,
-                     gint      offset_x,
-                     gint      offset_y)
+gimp_channel_resize (GimpItem    *item,
+                     GimpContext *context,
+                     gint         new_width,
+                     gint         new_height,
+                     gint         offset_x,
+                     gint         offset_y)
 {
-  GIMP_ITEM_CLASS (parent_class)->resize (item, new_width, new_height,
+  GIMP_ITEM_CLASS (parent_class)->resize (item, context, new_width, new_height,
                                           offset_x, offset_y);
 
   if (G_TYPE_FROM_INSTANCE (item) == GIMP_TYPE_CHANNEL)
@@ -517,6 +522,7 @@ gimp_channel_resize (GimpItem *item,
 
 static void
 gimp_channel_flip (GimpItem            *item,
+                   GimpContext         *context,
                    GimpOrientationType  flip_type,
                    gdouble              axis,
                    gboolean             clip_result)
@@ -524,11 +530,13 @@ gimp_channel_flip (GimpItem            *item,
   if (G_TYPE_FROM_INSTANCE (item) == GIMP_TYPE_CHANNEL)
     clip_result = TRUE;
 
-  GIMP_ITEM_CLASS (parent_class)->flip (item, flip_type, axis, clip_result);
+  GIMP_ITEM_CLASS (parent_class)->flip (item, context, flip_type, axis,
+                                        clip_result);
 }
 
 static void
 gimp_channel_rotate (GimpItem         *item,
+                     GimpContext      *context,
                      GimpRotationType  rotate_type,
                      gdouble           center_x,
                      gdouble           center_y,
@@ -536,13 +544,14 @@ gimp_channel_rotate (GimpItem         *item,
 {
   /*  don't default to clip_result == TRUE here  */
 
-  GIMP_ITEM_CLASS (parent_class)->rotate (item,
+  GIMP_ITEM_CLASS (parent_class)->rotate (item, context,
                                           rotate_type, center_x, center_y,
                                           clip_result);
 }
 
 static void
 gimp_channel_transform (GimpItem               *item,
+                        GimpContext            *context,
                         const GimpMatrix3      *matrix,
                         GimpTransformDirection  direction,
                         GimpInterpolationType   interpolation_type,
@@ -555,7 +564,7 @@ gimp_channel_transform (GimpItem               *item,
   if (G_TYPE_FROM_INSTANCE (item) == GIMP_TYPE_CHANNEL)
     clip_result = TRUE;
 
-  GIMP_ITEM_CLASS (parent_class)->transform (item, matrix, direction,
+  GIMP_ITEM_CLASS (parent_class)->transform (item, context, matrix, direction,
                                              interpolation_type,
                                              supersample, recursion_level,
                                              clip_result,
@@ -615,7 +624,7 @@ gimp_channel_stroke (GimpItem     *item,
                                           GIMP_CONTEXT_PAINT_PROPS_MASK,
                                           FALSE);
           gimp_context_set_parent (GIMP_CONTEXT (paint_options),
-                                   gimp_get_current_context (gimage->gimp));
+                                   gimp_get_user_context (gimage->gimp));
         }
       else
         {

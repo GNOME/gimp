@@ -70,8 +70,9 @@ match_strings (regex_t *preg,
 }
 
 static Argument *
-progress_init_invoker (Gimp     *gimp,
-                       Argument *args)
+progress_init_invoker (Gimp        *gimp,
+                       GimpContext *context,
+                       Argument    *args)
 {
   gboolean success = TRUE;
   gchar *message;
@@ -128,8 +129,9 @@ static ProcRecord progress_init_proc =
 };
 
 static Argument *
-progress_update_invoker (Gimp     *gimp,
-                         Argument *args)
+progress_update_invoker (Gimp        *gimp,
+                         GimpContext *context,
+                         Argument    *args)
 {
   gboolean success = FALSE;
   gdouble percentage;
@@ -173,8 +175,9 @@ static ProcRecord progress_update_proc =
 };
 
 static Argument *
-plugins_query_invoker (Gimp     *gimp,
-                       Argument *args)
+plugins_query_invoker (Gimp        *gimp,
+                       GimpContext *context,
+                       Argument    *args)
 {
   Argument *return_args;
   gchar *search_str;
@@ -371,8 +374,9 @@ static ProcRecord plugins_query_proc =
 };
 
 static Argument *
-plugin_domain_register_invoker (Gimp     *gimp,
-                                Argument *args)
+plugin_domain_register_invoker (Gimp        *gimp,
+                                GimpContext *context,
+                                Argument    *args)
 {
   gboolean success = TRUE;
   gchar *domain_name;
@@ -429,8 +433,9 @@ static ProcRecord plugin_domain_register_proc =
 };
 
 static Argument *
-plugin_help_register_invoker (Gimp     *gimp,
-                              Argument *args)
+plugin_help_register_invoker (Gimp        *gimp,
+                              GimpContext *context,
+                              Argument    *args)
 {
   gboolean success = TRUE;
   gchar *domain_name;

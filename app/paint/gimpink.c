@@ -992,7 +992,7 @@ ink_paste (GimpInkTool  *ink_tool,
   if (!canvas_buf)
     return;
 
-  gimp_image_get_foreground (gimage, drawable, col);
+  gimp_image_get_foreground (gimage, drawable, context, col);
 
   /*  set the alpha channel  */
   col[canvas_buf->bytes - 1] = OPAQUE_OPACITY;

@@ -52,6 +52,7 @@
 
 static const GimpBuffer * gimp_edit_extract       (GimpImage    *gimage,
                                                    GimpDrawable *drawable,
+                                                   GimpContext  *context,
                                                    gboolean      cut_pixels);
 static gboolean           gimp_edit_fill_internal (GimpImage    *gimage,
                                                    GimpDrawable *drawable,
@@ -64,22 +65,26 @@ static gboolean           gimp_edit_fill_internal (GimpImage    *gimage,
 
 const GimpBuffer *
 gimp_edit_cut (GimpImage    *gimage,
-	       GimpDrawable *drawable)
+	       GimpDrawable *drawable,
+               GimpContext  *context)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  return gimp_edit_extract (gimage, drawable, TRUE);
+  return gimp_edit_extract (gimage, drawable, context, TRUE);
 }
 
 const GimpBuffer *
 gimp_edit_copy (GimpImage    *gimage,
-		GimpDrawable *drawable)
+		GimpDrawable *drawable,
+                GimpContext  *context)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  return gimp_edit_extract (gimage, drawable, FALSE);
+  return gimp_edit_extract (gimage, drawable, context, FALSE);
 }
 
 GimpLayer *
@@ -245,13 +250,14 @@ gimp_edit_paste_as_new (Gimp       *gimp,
 
 gboolean
 gimp_edit_clear (GimpImage    *gimage,
-		 GimpDrawable *drawable)
+		 GimpDrawable *drawable,
+                 GimpContext  *context)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
 
-  return gimp_edit_fill_internal (gimage, drawable,
-                                  gimp_get_current_context (gimage->gimp),
+  return gimp_edit_fill_internal (gimage, drawable, context,
                                   GIMP_TRANSPARENT_FILL,
                                   _("Clear"));
 }
@@ -259,12 +265,14 @@ gimp_edit_clear (GimpImage    *gimage,
 gboolean
 gimp_edit_fill (GimpImage    *gimage,
 		GimpDrawable *drawable,
+                GimpContext  *context,
 		GimpFillType  fill_type)
 {
   const gchar *undo_desc;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
 
   switch (fill_type)
     {
@@ -298,8 +306,7 @@ gimp_edit_fill (GimpImage    *gimage,
       break;
     }
 
-  return gimp_edit_fill_internal (gimage, drawable,
-                                  gimp_get_current_context (gimage->gimp),
+  return gimp_edit_fill_internal (gimage, drawable, context,
                                   fill_type, undo_desc);
 }
 
@@ -309,6 +316,7 @@ gimp_edit_fill (GimpImage    *gimage,
 const GimpBuffer *
 gimp_edit_extract (GimpImage    *gimage,
                    GimpDrawable *drawable,
+                   GimpContext  *context,
                    gboolean      cut_pixels)
 {
   TileManager *tiles;
@@ -322,7 +330,7 @@ gimp_edit_extract (GimpImage    *gimage,
 
   /*  Cut/copy the mask portion from the gimage  */
   tiles = gimp_selection_extract (gimp_image_get_mask (gimage),
-                                  drawable, cut_pixels, FALSE, TRUE);
+                                  drawable, context, cut_pixels, FALSE, TRUE);
 
   if (cut_pixels)
     gimp_image_undo_group_end (gimage);
@@ -377,12 +385,12 @@ gimp_edit_fill_internal (GimpImage    *gimage,
   switch (fill_type)
     {
     case GIMP_FOREGROUND_FILL:
-      gimp_image_get_foreground (gimage, drawable, col);
+      gimp_image_get_foreground (gimage, drawable, context, col);
       break;
 
     case GIMP_BACKGROUND_FILL:
     case GIMP_TRANSPARENT_FILL:
-      gimp_image_get_background (gimage, drawable, col);
+      gimp_image_get_background (gimage, drawable, context, col);
       break;
 
     case GIMP_WHITE_FILL:

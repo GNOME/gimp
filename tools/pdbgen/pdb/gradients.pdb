@@ -88,11 +88,11 @@ HELP
     @outargs = (
 	{ name  => 'name', type  => 'string',
 	  desc  => 'The name of the active gradient',
-	  alias => 'g_strdup (GIMP_OBJECT (gimp_context_get_gradient (gimp_get_current_context (gimp)))->name)',
+	  alias => 'g_strdup (GIMP_OBJECT (gimp_context_get_gradient (context))->name)',
 	  no_declare => 1 }
     );
 
-    %invoke = ( code => 'success = gimp_context_get_gradient (gimp_get_current_context (gimp)) != NULL;' );
+    %invoke = ( code => 'success = gimp_context_get_gradient (context) != NULL;' );
 }
 
 sub gradients_set_gradient {
@@ -121,7 +121,7 @@ HELP
     gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
   if (gradient)
-    gimp_context_set_gradient (gimp_get_current_context (gimp), gradient);
+    gimp_context_set_gradient (context, gradient);
   else
     success = FALSE;
 }
@@ -180,7 +180,7 @@ HELP
 
   pv = color_samples = g_new (gdouble, array_length);
 
-  gradient = gimp_context_get_gradient (gimp_get_current_context (gimp));
+  gradient = gimp_context_get_gradient (context);
 
   while (i--)
     {
@@ -231,7 +231,7 @@ HELP
 
   pv = color_samples = g_new (gdouble, array_length);
 
-  gradient = gimp_context_get_gradient (gimp_get_current_context (gimp));
+  gradient = gimp_context_get_gradient (context);
 
   while (i--)
     {
@@ -300,7 +300,7 @@ HELP
     }
   else
     {
-      gradient = gimp_context_get_gradient (gimp_get_current_context (gimp));
+      gradient = gimp_context_get_gradient (context);
     }
 
   if (gradient)

@@ -34,6 +34,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "gimp.h"
+#include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimptemplate.h"
@@ -381,7 +382,8 @@ gimp_template_set_from_image (GimpTemplate *template,
 
 GimpImage *
 gimp_template_create_image (Gimp         *gimp,
-                            GimpTemplate *template)
+                            GimpTemplate *template,
+                            GimpContext  *context)
 {
   GimpImage     *gimage;
   GimpLayer     *layer;
@@ -390,6 +392,7 @@ gimp_template_create_image (Gimp         *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_TEMPLATE (template), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   gimage = gimp_create_image (gimp,
 			      template->width, template->height,
@@ -435,8 +438,7 @@ gimp_template_create_image (Gimp         *gimp,
 
   gimp_image_add_layer (gimage, layer, 0);
 
-  gimp_drawable_fill_by_type (GIMP_DRAWABLE (layer),
-                              gimp_get_current_context (gimp),
+  gimp_drawable_fill_by_type (GIMP_DRAWABLE (layer), context,
                               template->fill_type);
 
   gimp_image_undo_enable (gimage);

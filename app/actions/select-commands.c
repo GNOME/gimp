@@ -162,6 +162,7 @@ select_float_cmd_callback (GtkWidget *widget,
 
   gimp_selection_float (gimp_image_get_mask (gimage),
                         gimp_image_active_drawable (gimage),
+                        gimp_get_user_context (gimage->gimp),
                         TRUE, 0, 0);
   gimp_image_flush (gimage);
 }

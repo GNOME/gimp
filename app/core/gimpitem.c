@@ -90,6 +90,7 @@ static void       gimp_item_real_scale     (GimpItem      *item,
                                             GimpProgressFunc       progress_callback,
                                             gpointer               progress_data);
 static void       gimp_item_real_resize    (GimpItem      *item,
+                                            GimpContext   *context,
                                             gint           new_width,
                                             gint           new_height,
                                             gint           offset_x,
@@ -384,11 +385,12 @@ gimp_item_real_scale (GimpItem              *item,
 }
 
 static void
-gimp_item_real_resize (GimpItem *item,
-                       gint      new_width,
-                       gint      new_height,
-                       gint      offset_x,
-                       gint      offset_y)
+gimp_item_real_resize (GimpItem    *item,
+                       GimpContext *context,
+                       gint         new_width,
+                       gint         new_height,
+                       gint         offset_x,
+                       gint         offset_y)
 {
   item->offset_x = item->offset_x - offset_x;
   item->offset_y = item->offset_y - offset_y;
@@ -785,16 +787,18 @@ gimp_item_scale_by_origin (GimpItem              *item,
 }
 
 void
-gimp_item_resize (GimpItem *item,
-                  gint      new_width,
-                  gint      new_height,
-                  gint      offset_x,
-                  gint      offset_y)
+gimp_item_resize (GimpItem    *item,
+                  GimpContext *context,
+                  gint         new_width,
+                  gint         new_height,
+                  gint         offset_x,
+                  gint         offset_y)
 {
   GimpItemClass *item_class;
   GimpImage     *gimage;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   if (new_width < 1 || new_height < 1)
     return;
@@ -805,13 +809,14 @@ gimp_item_resize (GimpItem *item,
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_RESIZE,
                                item_class->resize_desc);
 
-  item_class->resize (item, new_width, new_height, offset_x, offset_y);
+  item_class->resize (item, context, new_width, new_height, offset_x, offset_y);
 
   gimp_image_undo_group_end (gimage);
 }
 
 void
 gimp_item_flip (GimpItem            *item,
+                GimpContext         *context,
                 GimpOrientationType  flip_type,
                 gdouble              axis,
                 gboolean             clip_result)
@@ -820,6 +825,7 @@ gimp_item_flip (GimpItem            *item,
   GimpImage     *gimage;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   item_class = GIMP_ITEM_GET_CLASS (item);
   gimage     = gimp_item_get_image (item);
@@ -827,13 +833,14 @@ gimp_item_flip (GimpItem            *item,
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
                                item_class->flip_desc);
 
-  item_class->flip (item, flip_type, axis, clip_result);
+  item_class->flip (item, context, flip_type, axis, clip_result);
 
   gimp_image_undo_group_end (gimage);
 }
 
 void
 gimp_item_rotate (GimpItem         *item,
+                  GimpContext      *context,
                   GimpRotationType  rotate_type,
                   gdouble           center_x,
                   gdouble           center_y,
@@ -843,6 +850,7 @@ gimp_item_rotate (GimpItem         *item,
   GimpImage     *gimage;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   item_class = GIMP_ITEM_GET_CLASS (item);
   gimage     = gimp_item_get_image (item);
@@ -850,13 +858,15 @@ gimp_item_rotate (GimpItem         *item,
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
                                item_class->rotate_desc);
 
-  item_class->rotate (item, rotate_type, center_x, center_y, clip_result);
+  item_class->rotate (item, context, rotate_type, center_x, center_y,
+                      clip_result);
 
   gimp_image_undo_group_end (gimage);
 }
 
 void
 gimp_item_transform (GimpItem               *item,
+                     GimpContext            *context,
                      const GimpMatrix3      *matrix,
                      GimpTransformDirection  direction,
                      GimpInterpolationType   interpolation,
@@ -870,6 +880,7 @@ gimp_item_transform (GimpItem               *item,
   GimpImage     *gimage;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   item_class = GIMP_ITEM_GET_CLASS (item);
   gimage     = gimp_item_get_image (item);
@@ -877,7 +888,7 @@ gimp_item_transform (GimpItem               *item,
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
                                item_class->transform_desc);
 
-  item_class->transform (item, matrix, direction, interpolation,
+  item_class->transform (item, context, matrix, direction, interpolation,
                          supersample, recursion_level,
                          clip_result,
                          progress_callback, progress_data);

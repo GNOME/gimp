@@ -27,6 +27,7 @@
 #include "base/pixel-region.h"
 
 #include "gimp.h"
+#include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimpimage-crop.h"
 #include "gimpimage-guides.h"
@@ -77,17 +78,19 @@ static gint         gimp_image_crop_colors_alpha  (guchar       *col1,
 /*  public functions  */
 
 void
-gimp_image_crop (GimpImage *gimage,
-		 gint       x1,
-		 gint       y1,
-		 gint       x2,
-		 gint       y2,
-		 gboolean   active_layer_only,
-		 gboolean   crop_layers)
+gimp_image_crop (GimpImage   *gimage,
+                 GimpContext *context,
+		 gint         x1,
+		 gint         y1,
+		 gint         x2,
+		 gint         y2,
+		 gboolean     active_layer_only,
+		 gboolean     crop_layers)
 {
   gint width, height;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   width  = x2 - x1;
   height = y2 - y1;
@@ -110,7 +113,7 @@ gimp_image_crop (GimpImage *gimage,
       off_x -= x1;
       off_y -= y1;
 
-      gimp_item_resize (GIMP_ITEM (layer), width, height, off_x, off_y);
+      gimp_item_resize (GIMP_ITEM (layer), context, width, height, off_x, off_y);
     }
   else
     {
@@ -138,7 +141,7 @@ gimp_image_crop (GimpImage *gimage,
         {
           item = (GimpItem *) list->data;
 
-          gimp_item_resize (item, width, height, -x1, -y1);
+          gimp_item_resize (item, context, width, height, -x1, -y1);
         }
 
       /*  Resize all vectors  */
@@ -148,11 +151,11 @@ gimp_image_crop (GimpImage *gimage,
         {
           item = (GimpItem *) list->data;
 
-          gimp_item_resize (item, width, height, -x1, -y1);
+          gimp_item_resize (item, context, width, height, -x1, -y1);
         }
 
       /*  Don't forget the selection mask!  */
-      gimp_item_resize (GIMP_ITEM (gimp_image_get_mask (gimage)),
+      gimp_item_resize (GIMP_ITEM (gimp_image_get_mask (gimage)), context,
                         width, height, -x1, -y1);
 
       /*  crop all layers  */
@@ -184,7 +187,7 @@ gimp_image_crop (GimpImage *gimage,
               height = ly2 - ly1;
 
               if (width > 0 && height > 0)
-                gimp_item_resize (item, width, height,
+                gimp_item_resize (item, context, width, height,
                                   -(lx1 - off_x),
                                   -(ly1 - off_y));
               else

@@ -70,6 +70,7 @@ static GSList *palette_active_dialogs = NULL;
 
 PaletteSelect *
 palette_select_new (Gimp        *gimp,
+                    GimpContext *context,
                     const gchar *title,
 		    const gchar *initial_palette,
                     const gchar *callback_name)
@@ -78,6 +79,7 @@ palette_select_new (Gimp        *gimp,
   GimpPalette   *active = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (title != NULL, NULL);
 
   if (gimp->no_data)
@@ -98,7 +100,7 @@ palette_select_new (Gimp        *gimp,
     }
 
   if (! active)
-    active = gimp_context_get_palette (gimp_get_current_context (gimp));
+    active = gimp_context_get_palette (context);
 
   if (! active)
     return NULL;
@@ -239,6 +241,7 @@ palette_select_change_callbacks (PaletteSelect *psp,
 
       return_vals =
 	procedural_db_run_proc (psp->context->gimp,
+                                psp->context,
 				psp->callback_name,
 				&nreturn_vals,
 				GIMP_PDB_STRING, GIMP_OBJECT (palette)->name,

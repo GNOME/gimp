@@ -50,8 +50,9 @@ register_text_tool_procs (Gimp *gimp)
 }
 
 static Argument *
-text_fontname_invoker (Gimp     *gimp,
-                       Argument *args)
+text_fontname_invoker (Gimp        *gimp,
+                       GimpContext *context,
+                       Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -108,7 +109,8 @@ text_fontname_invoker (Gimp     *gimp,
         {
           gchar *real_fontname = g_strdup_printf ("%s %d", fontname, (gint) size);
 
-          text_layer = text_render (gimage, drawable, x, y, real_fontname, text,
+          text_layer = text_render (gimage, drawable, context,
+                                    x, y, real_fontname, text,
                                     border, antialias);
           if (text_layer == NULL)
             success = FALSE;
@@ -205,8 +207,9 @@ static ProcRecord text_fontname_proc =
 };
 
 static Argument *
-text_get_extents_fontname_invoker (Gimp     *gimp,
-                                   Argument *args)
+text_get_extents_fontname_invoker (Gimp        *gimp,
+                                   GimpContext *context,
+                                   Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -325,8 +328,9 @@ static ProcRecord text_get_extents_fontname_proc =
 };
 
 static Argument *
-text_invoker (Gimp     *gimp,
-              Argument *args)
+text_invoker (Gimp        *gimp,
+              GimpContext *context,
+              Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -418,7 +422,8 @@ text_invoker (Gimp     *gimp,
         {
           gchar *real_fontname = g_strdup_printf ("%s %d", family, (gint) size);
 
-          text_layer = text_render (gimage, drawable, x, y, real_fontname, text,
+          text_layer = text_render (gimage, drawable, context,
+                                    x, y, real_fontname, text,
                                     border, antialias);
           if (text_layer == NULL)
             success = FALSE;
@@ -551,8 +556,9 @@ static ProcRecord text_proc =
 };
 
 static Argument *
-text_get_extents_invoker (Gimp     *gimp,
-                          Argument *args)
+text_get_extents_invoker (Gimp        *gimp,
+                          GimpContext *context,
+                          Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;

@@ -128,7 +128,7 @@ HELP
 
     %invoke = (
         vars => [ 'GimpPalette *palette' ],
-        code => 'success = (palette = gimp_context_get_palette (gimp_get_current_context (gimp))) != NULL;'
+        code => 'success = (palette = gimp_context_get_palette (context)) != NULL;'
     );
 }
 
@@ -155,7 +155,7 @@ HELP
     gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   if (palette)
-    gimp_context_set_palette (gimp_get_current_context (gimp), palette);
+    gimp_context_set_palette (context, palette);
   else
     success = FALSE;
 }
@@ -202,7 +202,7 @@ HELP
     }
   else
     {
-      palette = gimp_context_get_palette (gimp_get_current_context (gimp));
+      palette = gimp_context_get_palette (context);
     }
 
   if (palette)

@@ -102,6 +102,7 @@ static void     sample_linear     (PixelSurround *surround,
 
 TileManager *
 gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
+                                      GimpContext            *context,
                                       TileManager            *orig_tiles,
                                       const GimpMatrix3      *matrix,
                                       GimpTransformDirection  direction,
@@ -144,6 +145,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
   guchar       bg_color[MAX_CHANNELS];
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (orig_tiles != NULL, NULL);
   g_return_val_if_fail (matrix != NULL, NULL);
 
@@ -161,7 +163,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
     interpolation_type = GIMP_INTERPOLATION_NONE;
 
   /*  Get the background color  */
-  gimp_image_get_background (gimage, drawable, bg_color);
+  gimp_image_get_background (gimage, drawable, context, bg_color);
 
   switch (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable)))
     {
@@ -455,6 +457,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
 
 TileManager *
 gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
+                                    GimpContext         *context,
                                     TileManager         *orig_tiles,
                                     GimpOrientationType  flip_type,
                                     gdouble              axis,
@@ -471,6 +474,7 @@ gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
   gint         i;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (orig_tiles != NULL, NULL);
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
@@ -513,7 +517,7 @@ gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
 
       tile_manager_set_offsets (new_tiles, orig_x, orig_y);
 
-      gimp_image_get_background (gimage, drawable, bg_color);
+      gimp_image_get_background (gimage, drawable, context, bg_color);
 
       /*  "Outside" a channel is transparency, not the bg color  */
       if (GIMP_IS_CHANNEL (drawable))
@@ -614,6 +618,7 @@ gimp_drawable_transform_rotate_point (gint              x,
 
 TileManager *
 gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
+                                      GimpContext      *context,
                                       TileManager      *orig_tiles,
                                       GimpRotationType  rotate_type,
                                       gdouble           center_x,
@@ -632,6 +637,7 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
   gint         i, j, k;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (orig_tiles != NULL, NULL);
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
@@ -689,7 +695,7 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
 
       tile_manager_set_offsets (new_tiles, orig_x, orig_y);
 
-      gimp_image_get_background (gimage, drawable, bg_color);
+      gimp_image_get_background (gimage, drawable, context, bg_color);
 
       /*  "Outside" a channel is transparency, not the bg color  */
       if (GIMP_IS_CHANNEL (drawable))
@@ -832,6 +838,7 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
 
 gboolean
 gimp_drawable_transform_affine (GimpDrawable           *drawable,
+                                GimpContext            *context,
                                 const GimpMatrix3      *matrix,
                                 GimpTransformDirection  direction,
                                 GimpInterpolationType   interpolation_type,
@@ -845,6 +852,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
   gboolean     success = FALSE;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (matrix != NULL, FALSE);
 
@@ -855,7 +863,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
 			       GIMP_UNDO_GROUP_TRANSFORM, _("Transform"));
 
   /* Cut/Copy from the specified drawable */
-  orig_tiles = gimp_drawable_transform_cut (drawable, &new_layer);
+  orig_tiles = gimp_drawable_transform_cut (drawable, context, &new_layer);
 
   if (orig_tiles)
     {
@@ -866,7 +874,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
         clip_result = TRUE;
 
       /* transform the buffer */
-      new_tiles = gimp_drawable_transform_tiles_affine (drawable,
+      new_tiles = gimp_drawable_transform_tiles_affine (drawable, context,
                                                         orig_tiles,
                                                         matrix,
                                                         GIMP_TRANSFORM_FORWARD,
@@ -895,6 +903,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
 
 gboolean
 gimp_drawable_transform_flip (GimpDrawable        *drawable,
+                              GimpContext         *context,
                               GimpOrientationType  flip_type)
 {
   GimpImage   *gimage;
@@ -903,6 +912,7 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
   gboolean     success = FALSE;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
@@ -911,7 +921,7 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM, _("Flip"));
 
   /* Cut/Copy from the specified drawable */
-  orig_tiles = gimp_drawable_transform_cut (drawable, &new_layer);
+  orig_tiles = gimp_drawable_transform_cut (drawable, context, &new_layer);
 
   if (orig_tiles)
     {
@@ -939,7 +949,8 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
         }
 
       /* transform the buffer */
-      new_tiles = gimp_drawable_transform_tiles_flip (drawable, orig_tiles,
+      new_tiles = gimp_drawable_transform_tiles_flip (drawable, context,
+                                                      orig_tiles,
                                                       flip_type, axis, FALSE);
 
       /* Free the cut/copied buffer */
@@ -961,6 +972,7 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
 
 gboolean
 gimp_drawable_transform_rotate (GimpDrawable     *drawable,
+                                GimpContext      *context,
                                 GimpRotationType  rotate_type)
 {
   GimpImage   *gimage;
@@ -969,6 +981,7 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
   gboolean     success = FALSE;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
@@ -977,7 +990,7 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM, _("Rotate"));
 
   /* Cut/Copy from the specified drawable */
-  orig_tiles = gimp_drawable_transform_cut (drawable, &new_layer);
+  orig_tiles = gimp_drawable_transform_cut (drawable, context, &new_layer);
 
   if (orig_tiles)
     {
@@ -994,7 +1007,8 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
       center_y = (gdouble) off_y + (gdouble) height / 2.0;
 
       /* transform the buffer */
-      new_tiles = gimp_drawable_transform_tiles_rotate (drawable, orig_tiles,
+      new_tiles = gimp_drawable_transform_tiles_rotate (drawable, context,
+                                                        orig_tiles,
                                                         rotate_type,
                                                         center_x, center_y,
                                                         FALSE);
@@ -1018,12 +1032,14 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
 
 TileManager *
 gimp_drawable_transform_cut (GimpDrawable *drawable,
+                             GimpContext  *context,
                              gboolean     *new_layer)
 {
   GimpImage   *gimage;
   TileManager *tiles;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (new_layer != NULL, NULL);
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
@@ -1038,7 +1054,7 @@ gimp_drawable_transform_cut (GimpDrawable *drawable,
        * are either RGB or GRAY.  Eeek!!!              (Sven)
        */
       tiles = gimp_selection_extract (gimp_image_get_mask (gimage),
-                                      drawable, TRUE, FALSE, TRUE);
+                                      drawable, context, TRUE, FALSE, TRUE);
 
       *new_layer = TRUE;
     }
@@ -1046,10 +1062,10 @@ gimp_drawable_transform_cut (GimpDrawable *drawable,
     {
       if (GIMP_IS_LAYER (drawable))
         tiles = gimp_selection_extract (gimp_image_get_mask (gimage),
-                                        drawable, FALSE, TRUE, TRUE);
+                                        drawable, context, FALSE, TRUE, TRUE);
       else
         tiles = gimp_selection_extract (gimp_image_get_mask (gimage),
-                                        drawable, FALSE, TRUE, FALSE);
+                                        drawable, context, FALSE, TRUE, FALSE);
 
       *new_layer = FALSE;
     }

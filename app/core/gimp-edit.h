@@ -21,9 +21,11 @@
 
 
 const GimpBuffer * gimp_edit_cut          (GimpImage    *gimage,
-                                           GimpDrawable *drawable);
+                                           GimpDrawable *drawable,
+                                           GimpContext  *context);
 const GimpBuffer * gimp_edit_copy         (GimpImage    *gimage,
-                                           GimpDrawable *drawable);
+                                           GimpDrawable *drawable,
+                                           GimpContext  *context);
 GimpLayer        * gimp_edit_paste        (GimpImage    *gimage,
                                            GimpDrawable *drawable,
                                            GimpBuffer   *paste,
@@ -36,9 +38,11 @@ GimpImage        * gimp_edit_paste_as_new (Gimp         *gimp,
                                            GimpImage    *gimage,
                                            GimpBuffer   *paste);
 gboolean           gimp_edit_clear        (GimpImage    *gimage,
-                                           GimpDrawable *drawable);
+                                           GimpDrawable *drawable,
+                                           GimpContext  *context);
 gboolean           gimp_edit_fill         (GimpImage    *gimage,
                                            GimpDrawable *drawable,
+                                           GimpContext  *context,
                                            GimpFillType  fill_type);
 
 

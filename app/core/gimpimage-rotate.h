@@ -21,6 +21,7 @@
 
 
 void   gimp_image_rotate (GimpImage        *gimage,
+                          GimpContext      *context,
                           GimpRotationType  rotate_type,
                           GimpProgressFunc  progress_func,
                           gpointer          progress_data);

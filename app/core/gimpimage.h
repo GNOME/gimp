@@ -328,14 +328,20 @@ void            gimp_image_flush                 (GimpImage          *gimage);
 
 void            gimp_image_get_foreground        (const GimpImage    *gimage,
                                                   const GimpDrawable *drawable,
+                                                  GimpContext        *context,
                                                   guchar             *fg);
 void            gimp_image_get_background        (const GimpImage    *gimage,
                                                   const GimpDrawable *drawable,
+                                                  GimpContext        *context,
                                                   guchar             *bg);
 void            gimp_image_get_color             (const GimpImage    *src_gimage,
                                                   GimpImageType       src_type,
                                                   const guchar       *src,
                                                   guchar             *rgba);
+void            gimp_image_transform_rgb         (const GimpImage    *dest_gimage,
+                                                  const GimpDrawable *dest_drawable,
+                                                  const GimpRGB      *rgb,
+                                                  guchar             *color);
 void            gimp_image_transform_color       (const GimpImage    *dest_gimage,
                                                   const GimpDrawable *dest_drawable,
                                                   guchar             *dest,

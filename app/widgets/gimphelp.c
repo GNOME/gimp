@@ -316,6 +316,7 @@ gimp_help_call (Gimp        *gimp,
 
       return_vals =
         procedural_db_run_proc (gimp,
+                                gimp_get_user_context (gimp),
 				"extension_gimp_help_temp",
                                 &n_return_vals,
                                 GIMP_PDB_STRING, procedure,

@@ -120,7 +120,7 @@ HELP
 
     %invoke = (
 	vars => [ 'GimpPattern *pattern' ],
-	code => 'success = (pattern = gimp_context_get_pattern (gimp_get_current_context (gimp))) != NULL;'
+	code => 'success = (pattern = gimp_context_get_pattern (context)) != NULL;'
     );
 }
 
@@ -147,7 +147,7 @@ HELP
     gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
 
   if (success)
-    gimp_context_set_pattern (gimp_get_current_context (gimp), pattern);
+    gimp_context_set_pattern (context, pattern);
   else
     success = FALSE;
 }
@@ -199,7 +199,7 @@ HELP
     }
   else
     {
-      pattern = gimp_context_get_pattern (gimp_get_current_context (gimp));
+      pattern = gimp_context_get_pattern (context);
     }
 
   if (pattern)

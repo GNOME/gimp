@@ -48,8 +48,9 @@ register_palette_select_procs (Gimp *gimp)
 }
 
 static Argument *
-palettes_popup_invoker (Gimp     *gimp,
-                        Argument *args)
+palettes_popup_invoker (Gimp        *gimp,
+                        GimpContext *context,
+                        Argument    *args)
 {
   gboolean success = TRUE;
   gchar *palette_callback;
@@ -74,9 +75,8 @@ palettes_popup_invoker (Gimp     *gimp,
       if (! gimp->no_interface &&
           (proc = procedural_db_lookup (gimp, palette_callback)))
         {
-          palette_select_new (gimp, popup_title,
-                              initial_palette,
-                              palette_callback);
+          palette_select_new (gimp, context, popup_title,
+                              initial_palette, palette_callback);
         }
       else
         success = FALSE;
@@ -121,8 +121,9 @@ static ProcRecord palettes_popup_proc =
 };
 
 static Argument *
-palettes_close_popup_invoker (Gimp     *gimp,
-                              Argument *args)
+palettes_close_popup_invoker (Gimp        *gimp,
+                              GimpContext *context,
+                              Argument    *args)
 {
   gboolean success = TRUE;
   gchar *palette_callback;
@@ -174,8 +175,9 @@ static ProcRecord palettes_close_popup_proc =
 };
 
 static Argument *
-palettes_set_popup_invoker (Gimp     *gimp,
-                            Argument *args)
+palettes_set_popup_invoker (Gimp        *gimp,
+                            GimpContext *context,
+                            Argument    *args)
 {
   gboolean success = TRUE;
   gchar *palette_callback;

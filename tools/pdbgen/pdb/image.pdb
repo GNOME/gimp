@@ -329,7 +329,8 @@ HELP
 	headers => [ qw("core/gimpimage-resize.h") ],
 	code => <<'CODE'
 {
-  gimp_image_resize (gimage, new_width, new_height, offx, offy, NULL, NULL);
+  gimp_image_resize (gimage, context,
+                     new_width, new_height, offx, offy, NULL, NULL);
 }
 CODE
     );
@@ -400,7 +401,8 @@ HELP
       offy > (gimage->height - new_height))
     success = FALSE;
   else
-    gimp_image_crop (gimage, offx, offy, offx + new_width, offy + new_height,
+    gimp_image_crop (gimage, context,
+                     offx, offy, offx + new_width, offy + new_height,
 		     FALSE, TRUE);
 }
 CODE
@@ -426,7 +428,7 @@ HELP
 	headers => [ qw("core/gimpimage-flip.h") ],
 	code => <<'CODE'
 {
-  gimp_image_flip (gimage, flip_type, NULL, NULL);
+  gimp_image_flip (gimage, context, flip_type, NULL, NULL);
 }
 CODE
     );
@@ -448,7 +450,7 @@ sub image_rotate {
 	headers => [ qw("core/gimpimage-rotate.h") ],
 	code => <<'CODE'
 {
-  gimp_image_rotate (gimage, rotate_type, NULL, NULL);
+  gimp_image_rotate (gimage, context, rotate_type, NULL, NULL);
 }
 CODE
     );
@@ -652,7 +654,7 @@ HELP
 	headers => [ qw("core/gimpimage-merge.h") ],
 	code => <<'CODE'
 {
-  layer = gimp_image_merge_visible_layers (gimage, merge_type);
+  layer = gimp_image_merge_visible_layers (gimage, context, merge_type);
   success = layer != NULL;
 }
 CODE
@@ -692,7 +694,7 @@ HELP
 	headers => [ qw("core/gimpimage-merge.h") ],
 	code => <<'CODE'
 {
-  layer = gimp_image_merge_down (gimage, merge_layer, merge_type);
+  layer = gimp_image_merge_down (gimage, merge_layer, context, merge_type);
   success = layer != NULL;
 }
 CODE
@@ -721,7 +723,7 @@ HELP
 
     %invoke = (
 	headers => [ qw("core/gimpimage-merge.h") ],
-	code => 'success = (layer = gimp_image_flatten (gimage)) != NULL;'
+	code => 'success = (layer = gimp_image_flatten (gimage, context)) != NULL;'
     );
 }
 

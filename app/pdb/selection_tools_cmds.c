@@ -52,8 +52,9 @@ register_selection_tools_procs (Gimp *gimp)
 }
 
 static Argument *
-by_color_select_invoker (Gimp     *gimp,
-                         Argument *args)
+by_color_select_invoker (Gimp        *gimp,
+                         GimpContext *context,
+                         Argument    *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -168,8 +169,9 @@ static ProcRecord by_color_select_proc =
 };
 
 static Argument *
-ellipse_select_invoker (Gimp     *gimp,
-                        Argument *args)
+ellipse_select_invoker (Gimp        *gimp,
+                        GimpContext *context,
+                        Argument    *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -287,8 +289,9 @@ static ProcRecord ellipse_select_proc =
 };
 
 static Argument *
-free_select_invoker (Gimp     *gimp,
-                     Argument *args)
+free_select_invoker (Gimp        *gimp,
+                     GimpContext *context,
+                     Argument    *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -391,8 +394,9 @@ static ProcRecord free_select_proc =
 };
 
 static Argument *
-fuzzy_select_invoker (Gimp     *gimp,
-                      Argument *args)
+fuzzy_select_invoker (Gimp        *gimp,
+                      GimpContext *context,
+                      Argument    *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -517,8 +521,9 @@ static ProcRecord fuzzy_select_proc =
 };
 
 static Argument *
-rect_select_invoker (Gimp     *gimp,
-                     Argument *args)
+rect_select_invoker (Gimp        *gimp,
+                     GimpContext *context,
+                     Argument    *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;

@@ -48,9 +48,8 @@ sub palettes_popup {
   if (! gimp->no_interface &&
       (proc = procedural_db_lookup (gimp, palette_callback)))
     {
-      palette_select_new (gimp, popup_title,
-                          initial_palette,
-                          palette_callback);
+      palette_select_new (gimp, context, popup_title,
+                          initial_palette, palette_callback);
     }
   else
     success = FALSE;

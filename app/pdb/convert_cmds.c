@@ -48,8 +48,9 @@ register_convert_procs (Gimp *gimp)
 }
 
 static Argument *
-image_convert_rgb_invoker (Gimp     *gimp,
-                           Argument *args)
+image_convert_rgb_invoker (Gimp        *gimp,
+                           GimpContext *context,
+                           Argument    *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -95,8 +96,9 @@ static ProcRecord image_convert_rgb_proc =
 };
 
 static Argument *
-image_convert_grayscale_invoker (Gimp     *gimp,
-                                 Argument *args)
+image_convert_grayscale_invoker (Gimp        *gimp,
+                                 GimpContext *context,
+                                 Argument    *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -142,8 +144,9 @@ static ProcRecord image_convert_grayscale_proc =
 };
 
 static Argument *
-image_convert_indexed_invoker (Gimp     *gimp,
-                               Argument *args)
+image_convert_indexed_invoker (Gimp        *gimp,
+                               GimpContext *context,
+                               Argument    *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;

@@ -88,6 +88,7 @@ register_paint_tools_procs (Gimp *gimp)
 
 static gboolean
 paint_tools_stroke (Gimp             *gimp,
+                    GimpContext      *context,
                     GType             core_type,
                     GimpPaintOptions *options,
                     GimpDrawable     *drawable,
@@ -105,8 +106,7 @@ paint_tools_stroke (Gimp             *gimp,
   gimp_context_define_properties (GIMP_CONTEXT (options),
                                   GIMP_CONTEXT_PAINT_PROPS_MASK,
                                   FALSE);
-  gimp_context_set_parent (GIMP_CONTEXT (options),
-                           gimp_get_current_context (gimp));
+  gimp_context_set_parent (GIMP_CONTEXT (options), context);
 
   core = g_object_new (core_type, NULL);
 
@@ -134,8 +134,9 @@ paint_tools_stroke (Gimp             *gimp,
 }
 
 static Argument *
-airbrush_invoker (Gimp     *gimp,
-                  Argument *args)
+airbrush_invoker (Gimp        *gimp,
+                  GimpContext *context,
+                  Argument    *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -166,7 +167,7 @@ airbrush_invoker (Gimp     *gimp,
 
       GIMP_AIRBRUSH_OPTIONS (options)->pressure = pressure;
 
-      success = paint_tools_stroke (gimp,
+      success = paint_tools_stroke (gimp, context,
                                     GIMP_TYPE_AIRBRUSH,
                                     options,
                                     drawable,
@@ -217,8 +218,9 @@ static ProcRecord airbrush_proc =
 };
 
 static Argument *
-airbrush_default_invoker (Gimp     *gimp,
-                          Argument *args)
+airbrush_default_invoker (Gimp        *gimp,
+                          GimpContext *context,
+                          Argument    *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -242,7 +244,7 @@ airbrush_default_invoker (Gimp     *gimp,
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_AIRBRUSH_OPTIONS);
 
-      success = paint_tools_stroke (gimp,
+      success = paint_tools_stroke (gimp, context,
                                     GIMP_TYPE_AIRBRUSH,
                                     options,
                                     drawable,
@@ -288,8 +290,9 @@ static ProcRecord airbrush_default_proc =
 };
 
 static Argument *
-clone_invoker (Gimp     *gimp,
-               Argument *args)
+clone_invoker (Gimp        *gimp,
+               GimpContext *context,
+               Argument    *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -342,7 +345,7 @@ clone_invoker (Gimp     *gimp,
       core->src_y        = src_y;
     #endif
 
-      success = paint_tools_stroke (gimp,
+      success = paint_tools_stroke (gimp, context,
                                     GIMP_TYPE_CLONE,
                                     options,
                                     drawable,
@@ -408,8 +411,9 @@ static ProcRecord clone_proc =
 };
 
 static Argument *
-clone_default_invoker (Gimp     *gimp,
-                       Argument *args)
+clone_default_invoker (Gimp        *gimp,
+                       GimpContext *context,
+                       Argument    *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -433,7 +437,7 @@ clone_default_invoker (Gimp     *gimp,
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_CLONE_OPTIONS);
 
-      success = paint_tools_stroke (gimp,
+      success = paint_tools_stroke (gimp, context,
                                     GIMP_TYPE_CLONE,
                                     options,
                                     drawable,
@@ -479,8 +483,9 @@ static ProcRecord clone_default_proc =
 };
 
 static Argument *
-convolve_invoker (Gimp     *gimp,
-                  Argument *args)
+convolve_invoker (Gimp        *gimp,
+                  GimpContext *context,
+                  Argument    *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -519,7 +524,7 @@ convolve_invoker (Gimp     *gimp,
                     "rate", pressure,
                     NULL);
 
-      success = paint_tools_stroke (gimp,
+      success = paint_tools_stroke (gimp, context,
                                     GIMP_TYPE_CONVOLVE,
                                     options,
                                     drawable,
@@ -575,8 +580,9 @@ static ProcRecord convolve_proc =
 };
 
 static Argument *
-convolve_default_invoker (Gimp     *gimp,
-                          Argument *args)
+convolve_default_invoker (Gimp        *gimp,
+                          GimpContext *context,
+                          Argument    *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -600,7 +606,7 @@ convolve_default_invoker (Gimp     *gimp,
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_CONVOLVE_OPTIONS);
 
-      success = paint_tools_stroke (gimp,
+      success = paint_tools_stroke (gimp, context,
                                     GIMP_TYPE_CONVOLVE,
                                     options,
                                     drawable,
@@ -646,8 +652,9 @@ static ProcRecord convolve_default_proc =
 };
 
 static Argument *
-dodgeburn_invoker (Gimp     *gimp,
-                   Argument *args)
+dodgeburn_invoker (Gimp        *gimp,
+                   GimpContext *context,
+                   Argument    *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -692,7 +699,7 @@ dodgeburn_invoker (Gimp     *gimp,
                     "exposure", exposure,
                     NULL);
 
-      success = paint_tools_stroke (gimp,
+      success = paint_tools_stroke (gimp, context,
                                     GIMP_TYPE_DODGE_BURN,
                                     options,
                                     drawable,
@@ -753,8 +760,9 @@ static ProcRecord dodgeburn_proc =
 };
 
 static Argument *
-dodgeburn_default_invoker (Gimp     *gimp,
-                           Argument *args)
+dodgeburn_default_invoker (Gimp        *gimp,
+                           GimpContext *context,
+                           Argument    *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -778,7 +786,7 @@ dodgeburn_default_invoker (Gimp     *gimp,
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_DODGE_BURN_OPTIONS);
 
-      success = paint_tools_stroke (gimp,
+      success = paint_tools_stroke (gimp, context,
                                     GIMP_TYPE_DODGE_BURN,
                                     options,
                                     drawable,
@@ -824,8 +832,9 @@ static ProcRecord dodgeburn_default_proc =
 };
 
 static Argument *
-eraser_invoker (Gimp     *gimp,
-                Argument *args)
+eraser_invoker (Gimp        *gimp,
+                GimpContext *context,
+                Argument    *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -864,7 +873,7 @@ eraser_invoker (Gimp     *gimp,
                     "hard",             hardness,
                     NULL);
 
-      success = paint_tools_stroke (gimp,
+      success = paint_tools_stroke (gimp, context,
                                     GIMP_TYPE_ERASER,
                                     options,
                                     drawable,
@@ -920,8 +929,9 @@ static ProcRecord eraser_proc =
 };
 
 static Argument *
-eraser_default_invoker (Gimp     *gimp,
-                        Argument *args)
+eraser_default_invoker (Gimp        *gimp,
+                        GimpContext *context,
+                        Argument    *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -945,7 +955,7 @@ eraser_default_invoker (Gimp     *gimp,
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_ERASER_OPTIONS);
 
-      success = paint_tools_stroke (gimp,
+      success = paint_tools_stroke (gimp, context,
                                     GIMP_TYPE_ERASER,
                                     options,
                                     drawable,
@@ -991,8 +1001,9 @@ static ProcRecord eraser_default_proc =
 };
 
 static Argument *
-paintbrush_invoker (Gimp     *gimp,
-                    Argument *args)
+paintbrush_invoker (Gimp        *gimp,
+                    GimpContext *context,
+                    Argument    *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1039,7 +1050,7 @@ paintbrush_invoker (Gimp     *gimp,
                     "gradient-length",  gradient_length,
                     NULL);
 
-      success = paint_tools_stroke (gimp,
+      success = paint_tools_stroke (gimp, context,
                                     GIMP_TYPE_PAINTBRUSH,
                                     options,
                                     drawable,
@@ -1100,8 +1111,9 @@ static ProcRecord paintbrush_proc =
 };
 
 static Argument *
-paintbrush_default_invoker (Gimp     *gimp,
-                            Argument *args)
+paintbrush_default_invoker (Gimp        *gimp,
+                            GimpContext *context,
+                            Argument    *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1125,7 +1137,7 @@ paintbrush_default_invoker (Gimp     *gimp,
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_PAINT_OPTIONS);
 
-      success = paint_tools_stroke (gimp,
+      success = paint_tools_stroke (gimp, context,
                                     GIMP_TYPE_PAINTBRUSH,
                                     options,
                                     drawable,
@@ -1171,8 +1183,9 @@ static ProcRecord paintbrush_default_proc =
 };
 
 static Argument *
-pencil_invoker (Gimp     *gimp,
-                Argument *args)
+pencil_invoker (Gimp        *gimp,
+                GimpContext *context,
+                Argument    *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1196,7 +1209,7 @@ pencil_invoker (Gimp     *gimp,
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_PENCIL_OPTIONS);
 
-      success = paint_tools_stroke (gimp,
+      success = paint_tools_stroke (gimp, context,
                                     GIMP_TYPE_PENCIL,
                                     options,
                                     drawable,
@@ -1242,8 +1255,9 @@ static ProcRecord pencil_proc =
 };
 
 static Argument *
-smudge_invoker (Gimp     *gimp,
-                Argument *args)
+smudge_invoker (Gimp        *gimp,
+                GimpContext *context,
+                Argument    *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1276,7 +1290,7 @@ smudge_invoker (Gimp     *gimp,
                     "rate", pressure,
                     NULL);
 
-      success = paint_tools_stroke (gimp,
+      success = paint_tools_stroke (gimp, context,
                                     GIMP_TYPE_SMUDGE,
                                     options,
                                     drawable,
@@ -1327,8 +1341,9 @@ static ProcRecord smudge_proc =
 };
 
 static Argument *
-smudge_default_invoker (Gimp     *gimp,
-                        Argument *args)
+smudge_default_invoker (Gimp        *gimp,
+                        GimpContext *context,
+                        Argument    *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1352,7 +1367,7 @@ smudge_default_invoker (Gimp     *gimp,
     {
       options = gimp_paint_options_new (gimp, GIMP_TYPE_SMUDGE_OPTIONS);
 
-      success = paint_tools_stroke (gimp,
+      success = paint_tools_stroke (gimp, context,
                                     GIMP_TYPE_SMUDGE,
                                     options,
                                     drawable,

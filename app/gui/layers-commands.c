@@ -290,7 +290,9 @@ layers_merge_down_cmd_callback (GtkWidget *widget,
   GimpLayer *active_layer;
   return_if_no_layer (gimage, active_layer, data);
 
-  gimp_image_merge_down (gimage, active_layer, GIMP_EXPAND_AS_NECESSARY);
+  gimp_image_merge_down (gimage, active_layer,
+                         gimp_get_user_context (gimage->gimp),
+                         GIMP_EXPAND_AS_NECESSARY);
   gimp_image_flush (gimage);
 }
 
@@ -341,7 +343,8 @@ layers_resize_to_image_cmd_callback (GtkWidget *widget,
   GimpLayer *active_layer;
   return_if_no_layer (gimage, active_layer, data);
 
-  gimp_layer_resize_to_image (active_layer);
+  gimp_layer_resize_to_image (active_layer,
+                              gimp_get_user_context (gimage->gimp));
   gimp_image_flush (gimage);
 }
 
@@ -382,7 +385,9 @@ layers_crop_cmd_callback (GtkWidget *widget,
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_RESIZE,
                                _("Crop Layer"));
 
-  gimp_item_resize (GIMP_ITEM (active_layer), x2 - x1, y2 - y1, off_x, off_y);
+  gimp_item_resize (GIMP_ITEM (active_layer),
+                    gimp_get_user_context (gimage->gimp),
+                    x2 - x1, y2 - y1, off_x, off_y);
 
   gimp_image_undo_group_end (gimage);
 
@@ -510,7 +515,7 @@ layers_flatten_image_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  gimp_image_flatten (gimage);
+  gimp_image_flatten (gimage, gimp_get_user_context (gimage->gimp));
   gimp_image_flush (gimage);
 }
 
@@ -566,7 +571,7 @@ layers_text_tool (GimpLayer *layer,
 
       if (GIMP_IS_TOOL_INFO (tool_info))
         {
-          gimp_context_set_tool (gimp_get_current_context (gimage->gimp),
+          gimp_context_set_tool (gimp_get_user_context (gimage->gimp),
                                  tool_info);
 
           active_tool = tool_manager_get_active (gimage->gimp);
@@ -1250,6 +1255,7 @@ resize_layer_query_ok_callback (GtkWidget *widget,
       gtk_widget_set_sensitive (options->resize->resize_shell, FALSE);
 
       gimp_item_resize (GIMP_ITEM (layer),
+                        gimp_get_user_context (gimage->gimp),
                         options->resize->width,
                         options->resize->height,
                         options->resize->offset_x,

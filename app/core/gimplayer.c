@@ -35,14 +35,15 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "gimp-utils.h"
-#include "gimpdrawable-invert.h"
+#include "gimpcontext.h"
 #include "gimpcontainer.h"
-#include "gimpimage.h"
+#include "gimpdrawable-invert.h"
 #include "gimpimage-convert.h"
-#include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
-#include "gimplayer.h"
+#include "gimpimage-undo.h"
+#include "gimpimage.h"
 #include "gimplayer-floating-sel.h"
+#include "gimplayer.h"
 #include "gimplayermask.h"
 #include "gimpmarshal.h"
 
@@ -96,20 +97,24 @@ static void       gimp_layer_scale              (GimpItem           *item,
                                                  GimpProgressFunc       progress_callback,
                                                  gpointer               progress_data);
 static void       gimp_layer_resize             (GimpItem           *item,
+                                                 GimpContext        *context,
                                                  gint                new_width,
                                                  gint                new_height,
                                                  gint                offset_x,
                                                  gint                offset_y);
 static void       gimp_layer_flip               (GimpItem           *item,
+                                                 GimpContext        *context,
                                                  GimpOrientationType flip_type,
                                                  gdouble             axis,
                                                  gboolean            clip_result);
 static void       gimp_layer_rotate             (GimpItem           *item,
+                                                 GimpContext        *context,
                                                  GimpRotationType    rotate_type,
                                                  gdouble             center_x,
                                                  gdouble             center_y,
                                                  gboolean            clip_result);
 static void       gimp_layer_transform          (GimpItem           *item,
+                                                 GimpContext        *context,
                                                  const GimpMatrix3  *matrix,
                                                  GimpTransformDirection direction,
                                                  GimpInterpolationType  interpolation_type,
@@ -667,39 +672,43 @@ gimp_layer_scale (GimpItem              *item,
 }
 
 static void
-gimp_layer_resize (GimpItem *item,
-		   gint      new_width,
-		   gint      new_height,
-		   gint      offset_x,
-		   gint      offset_y)
+gimp_layer_resize (GimpItem    *item,
+                   GimpContext *context,
+		   gint         new_width,
+		   gint         new_height,
+		   gint         offset_x,
+		   gint         offset_y)
 {
   GimpLayer *layer  = GIMP_LAYER (item);
 
-  GIMP_ITEM_CLASS (parent_class)->resize (item, new_width, new_height,
+  GIMP_ITEM_CLASS (parent_class)->resize (item, context, new_width, new_height,
                                           offset_x, offset_y);
 
   if (layer->mask)
-    gimp_item_resize (GIMP_ITEM (layer->mask),
+    gimp_item_resize (GIMP_ITEM (layer->mask), context,
                       new_width, new_height, offset_x, offset_y);
 }
 
 static void
 gimp_layer_flip (GimpItem            *item,
+                 GimpContext         *context,
                  GimpOrientationType  flip_type,
                  gdouble              axis,
                  gboolean             clip_result)
 {
   GimpLayer *layer = GIMP_LAYER (item);
 
-  GIMP_ITEM_CLASS (parent_class)->flip (item, flip_type, axis, clip_result);
+  GIMP_ITEM_CLASS (parent_class)->flip (item, context, flip_type, axis,
+                                        clip_result);
 
   if (layer->mask)
-    gimp_item_flip (GIMP_ITEM (layer->mask),
+    gimp_item_flip (GIMP_ITEM (layer->mask), context,
                     flip_type, axis, clip_result);
 }
 
 static void
 gimp_layer_rotate (GimpItem         *item,
+                   GimpContext      *context,
                    GimpRotationType  rotate_type,
                    gdouble           center_x,
                    gdouble           center_y,
@@ -707,17 +716,18 @@ gimp_layer_rotate (GimpItem         *item,
 {
   GimpLayer *layer = GIMP_LAYER (item);
 
-  GIMP_ITEM_CLASS (parent_class)->rotate (item,
+  GIMP_ITEM_CLASS (parent_class)->rotate (item, context,
                                           rotate_type, center_x, center_y,
                                           clip_result);
 
   if (layer->mask)
-    gimp_item_rotate (GIMP_ITEM (layer->mask),
+    gimp_item_rotate (GIMP_ITEM (layer->mask), context,
                       rotate_type, center_x, center_y, clip_result);
 }
 
 static void
 gimp_layer_transform (GimpItem               *item,
+                      GimpContext            *context,
                       const GimpMatrix3      *matrix,
                       GimpTransformDirection  direction,
                       GimpInterpolationType   interpolation_type,
@@ -729,14 +739,14 @@ gimp_layer_transform (GimpItem               *item,
 {
   GimpLayer *layer = GIMP_LAYER (item);
 
-  GIMP_ITEM_CLASS (parent_class)->transform (item, matrix, direction,
+  GIMP_ITEM_CLASS (parent_class)->transform (item, context, matrix, direction,
                                              interpolation_type,
                                              supersample, recursion_level,
                                              clip_result,
                                              progress_callback, progress_data);
 
   if (layer->mask)
-    gimp_item_transform (GIMP_ITEM (layer->mask),
+    gimp_item_transform (GIMP_ITEM (layer->mask), context,
                          matrix, direction,
                          interpolation_type,
                          supersample, recursion_level,
@@ -1353,13 +1363,15 @@ gimp_layer_add_alpha (GimpLayer *layer)
 }
 
 void
-gimp_layer_resize_to_image (GimpLayer *layer)
+gimp_layer_resize_to_image (GimpLayer   *layer,
+                            GimpContext *context)
 {
   GimpImage *gimage;
   gint       offset_x;
   gint       offset_y;
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   if (! (gimage = gimp_item_get_image (GIMP_ITEM (layer))))
     return;
@@ -1367,9 +1379,9 @@ gimp_layer_resize_to_image (GimpLayer *layer)
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_RESIZE,
                                _("Layer to Image Size"));
 
-   gimp_item_offsets (GIMP_ITEM (layer), &offset_x, &offset_y);
-   gimp_item_resize (GIMP_ITEM (layer), gimage->width, gimage->height,
-                     offset_x, offset_y);
+  gimp_item_offsets (GIMP_ITEM (layer), &offset_x, &offset_y);
+  gimp_item_resize (GIMP_ITEM (layer), context,
+                    gimage->width, gimage->height, offset_x, offset_y);
 
   gimp_image_undo_group_end (gimage);
 }

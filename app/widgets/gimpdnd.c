@@ -1285,7 +1285,9 @@ gimp_dnd_open_files (GtkWidget *widget,
         GimpImage         *gimage;
         GimpPDBStatusType  status;
 
-        gimage = file_open_with_display (the_dnd_gimp, uri, &status, &error);
+        gimage = file_open_with_display (the_dnd_gimp,
+                                         gimp_get_user_context (the_dnd_gimp),
+                                         uri, &status, &error);
 
         if (! gimage && status != GIMP_PDB_CANCEL)
           {

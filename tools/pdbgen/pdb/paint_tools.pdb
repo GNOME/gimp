@@ -76,7 +76,7 @@ HELP
 
   GIMP_AIRBRUSH_OPTIONS (options)->pressure = pressure;
 
-  success = paint_tools_stroke (gimp,
+  success = paint_tools_stroke (gimp, context,
                                 GIMP_TYPE_AIRBRUSH,
                                 options,
                                 drawable,
@@ -113,7 +113,7 @@ HELP
 {
   options = gimp_paint_options_new (gimp, GIMP_TYPE_AIRBRUSH_OPTIONS);
 
-  success = paint_tools_stroke (gimp,
+  success = paint_tools_stroke (gimp, context,
                                 GIMP_TYPE_AIRBRUSH,
                                 options,
                                 drawable,
@@ -177,7 +177,7 @@ HELP
   core->src_y        = src_y;
 #endif
 
-  success = paint_tools_stroke (gimp,
+  success = paint_tools_stroke (gimp, context,
                                 GIMP_TYPE_CLONE,
                                 options,
                                 drawable,
@@ -215,7 +215,7 @@ HELP
 {
   options = gimp_paint_options_new (gimp, GIMP_TYPE_CLONE_OPTIONS);
 
-  success = paint_tools_stroke (gimp,
+  success = paint_tools_stroke (gimp, context,
                                 GIMP_TYPE_CLONE,
                                 options,
                                 drawable,
@@ -252,7 +252,7 @@ HELP
 {
   options = gimp_paint_options_new (gimp, GIMP_TYPE_CONVOLVE_OPTIONS);
 
-  success = paint_tools_stroke (gimp,
+  success = paint_tools_stroke (gimp, context,
                                 GIMP_TYPE_CONVOLVE,
                                 options,
                                 drawable,
@@ -295,7 +295,7 @@ HELP
                 "rate", pressure,
                 NULL);
 
-  success = paint_tools_stroke (gimp,
+  success = paint_tools_stroke (gimp, context,
                                 GIMP_TYPE_CONVOLVE,
                                 options,
                                 drawable,
@@ -330,7 +330,7 @@ HELP
 {
   options = gimp_paint_options_new (gimp, GIMP_TYPE_ERASER_OPTIONS);
 
-  success = paint_tools_stroke (gimp,
+  success = paint_tools_stroke (gimp, context,
                                 GIMP_TYPE_ERASER,
                                 options,
                                 drawable,
@@ -374,7 +374,7 @@ HELP
                 "hard",             hardness,
                 NULL);
 
-  success = paint_tools_stroke (gimp,
+  success = paint_tools_stroke (gimp, context,
                                 GIMP_TYPE_ERASER,
                                 options,
                                 drawable,
@@ -419,7 +419,7 @@ HELP
                 "anti-erase",       TRUE,
                 NULL);
 
-  success = paint_tools_stroke (gimp,
+  success = paint_tools_stroke (gimp, context,
                                 GIMP_TYPE_ERASER,
                                 options,
                                 drawable,
@@ -474,7 +474,7 @@ HELP
                 "gradient-length",  gradient_length,
                 NULL);
 
-  success = paint_tools_stroke (gimp,
+  success = paint_tools_stroke (gimp, context,
                                 GIMP_TYPE_PAINTBRUSH,
                                 options,
                                 drawable,
@@ -519,7 +519,7 @@ HELP
 {
   options = gimp_paint_options_new (gimp, GIMP_TYPE_PAINT_OPTIONS);
 
-  success = paint_tools_stroke (gimp,
+  success = paint_tools_stroke (gimp, context,
                                 GIMP_TYPE_PAINTBRUSH,
                                 options,
                                 drawable,
@@ -554,7 +554,7 @@ HELP
 {
   options = gimp_paint_options_new (gimp, GIMP_TYPE_PENCIL_OPTIONS);
 
-  success = paint_tools_stroke (gimp,
+  success = paint_tools_stroke (gimp, context,
                                 GIMP_TYPE_PENCIL,
                                 options,
                                 drawable,
@@ -594,7 +594,7 @@ HELP
                 "rate", pressure,
                 NULL);
 
-  success = paint_tools_stroke (gimp,
+  success = paint_tools_stroke (gimp, context,
                                 GIMP_TYPE_SMUDGE,
                                 options,
                                 drawable,
@@ -631,7 +631,7 @@ HELP
 {
   options = gimp_paint_options_new (gimp, GIMP_TYPE_SMUDGE_OPTIONS);
 
-  success = paint_tools_stroke (gimp,
+  success = paint_tools_stroke (gimp, context,
                                 GIMP_TYPE_SMUDGE,
                                 options,
                                 drawable,
@@ -678,7 +678,7 @@ HELP
                 "exposure", exposure,
                 NULL);
 
-  success = paint_tools_stroke (gimp,
+  success = paint_tools_stroke (gimp, context,
                                 GIMP_TYPE_DODGE_BURN,
                                 options,
                                 drawable,
@@ -714,7 +714,7 @@ HELP
 {
   options = gimp_paint_options_new (gimp, GIMP_TYPE_DODGE_BURN_OPTIONS);
 
-  success = paint_tools_stroke (gimp,
+  success = paint_tools_stroke (gimp, context,
                                 GIMP_TYPE_DODGE_BURN,
                                 options,
                                 drawable,
@@ -746,6 +746,7 @@ sub ink {
 $extra{app}->{code} = <<'CODE';
 static gboolean
 paint_tools_stroke (Gimp             *gimp,
+                    GimpContext      *context,
                     GType             core_type,
                     GimpPaintOptions *options,
                     GimpDrawable     *drawable,
@@ -763,8 +764,7 @@ paint_tools_stroke (Gimp             *gimp,
   gimp_context_define_properties (GIMP_CONTEXT (options),
                                   GIMP_CONTEXT_PAINT_PROPS_MASK,
                                   FALSE);
-  gimp_context_set_parent (GIMP_CONTEXT (options),
-                           gimp_get_current_context (gimp));
+  gimp_context_set_parent (GIMP_CONTEXT (options), context);
 
   core = g_object_new (core_type, NULL);
 

@@ -228,7 +228,8 @@ image_flip_cmd_callback (GtkWidget *widget,
 
   progress = gimp_progress_start (gdisp, _("Flipping..."), TRUE, NULL, NULL);
 
-  gimp_image_flip (gdisp->gimage, (GimpOrientationType) action,
+  gimp_image_flip (gdisp->gimage, gimp_get_user_context (gdisp->gimage->gimp),
+                   (GimpOrientationType) action,
                    gimp_progress_update_and_flush, progress);
 
   gimp_progress_end (progress);
@@ -247,7 +248,8 @@ image_rotate_cmd_callback (GtkWidget *widget,
 
   progress = gimp_progress_start (gdisp, _("Rotating..."), TRUE, NULL, NULL);
 
-  gimp_image_rotate (gdisp->gimage, (GimpRotationType) action,
+  gimp_image_rotate (gdisp->gimage, gimp_get_user_context (gdisp->gimage->gimp),
+                     (GimpRotationType) action,
                      gimp_progress_update_and_flush, progress);
 
   gimp_progress_end (progress);
@@ -270,7 +272,8 @@ image_crop_cmd_callback (GtkWidget *widget,
       return;
     }
 
-  gimp_image_crop (gdisp->gimage, x1, y1, x2, y2, FALSE, TRUE);
+  gimp_image_crop (gdisp->gimage, gimp_get_user_context (gdisp->gimage->gimp),
+                   x1, y1, x2, y2, FALSE, TRUE);
   gimp_image_flush (gdisp->gimage);
 }
 
@@ -306,7 +309,7 @@ image_flatten_image_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  gimp_image_flatten (gimage);
+  gimp_image_flatten (gimage, gimp_get_user_context (gimage->gimp));
   gimp_image_flush (gimage);
 }
 
@@ -366,7 +369,9 @@ image_layers_merge_query_response (GtkWidget         *widget,
   if (response_id == GTK_RESPONSE_OK)
     {
       if (options->merge_visible)
-        gimp_image_merge_visible_layers (gimage, options->merge_type);
+        gimp_image_merge_visible_layers (gimage,
+                                         gimp_get_user_context (gimage->gimp),
+                                         options->merge_type);
 
       gimp_image_flush (gimage);
     }
@@ -471,6 +476,7 @@ image_resize_callback (GtkWidget *widget,
                                       TRUE, NULL, NULL);
 
       gimp_image_resize (image_resize->gimage,
+                         gimp_get_user_context (image_resize->gimage->gimp),
 			 image_resize->resize->width,
 			 image_resize->resize->height,
 			 image_resize->resize->offset_x,

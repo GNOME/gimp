@@ -30,6 +30,7 @@
 #include "base/tile.h"
 #include "base/tile-manager.h"
 
+#include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
@@ -58,15 +59,18 @@ static void       gimp_selection_scale         (GimpItem        *item,
                                                 GimpProgressFunc      progress_callback,
                                                 gpointer              progress_data);
 static void       gimp_selection_resize        (GimpItem        *item,
+                                                GimpContext     *context,
                                                 gint             new_width,
                                                 gint             new_height,
                                                 gint             off_x,
                                                 gint             off_y);
 static void       gimp_selection_flip          (GimpItem        *item,
+                                                GimpContext     *context,
                                                 GimpOrientationType flip_type,
                                                 gdouble          axis,
                                                 gboolean         clip_result);
 static void       gimp_selection_rotate        (GimpItem        *item,
+                                                GimpContext     *context,
                                                 GimpRotationType rotation_type,
                                                 gdouble          center_x,
                                                 gdouble          center_y,
@@ -247,13 +251,14 @@ gimp_selection_scale (GimpItem              *item,
 }
 
 static void
-gimp_selection_resize (GimpItem *item,
-                       gint      new_width,
-                       gint      new_height,
-                       gint      off_x,
-                       gint      off_y)
+gimp_selection_resize (GimpItem    *item,
+                       GimpContext *context,
+                       gint         new_width,
+                       gint         new_height,
+                       gint         off_x,
+                       gint         off_y)
 {
-  GIMP_ITEM_CLASS (parent_class)->resize (item, new_width, new_height,
+  GIMP_ITEM_CLASS (parent_class)->resize (item, context, new_width, new_height,
                                           off_x, off_y);
 
   item->offset_x = 0;
@@ -262,21 +267,23 @@ gimp_selection_resize (GimpItem *item,
 
 static void
 gimp_selection_flip (GimpItem            *item,
+                     GimpContext         *context,
                      GimpOrientationType  flip_type,
                      gdouble              axis,
                      gboolean             clip_result)
 {
-  GIMP_ITEM_CLASS (parent_class)->flip (item, flip_type, axis, TRUE);
+  GIMP_ITEM_CLASS (parent_class)->flip (item, context, flip_type, axis, TRUE);
 }
 
 static void
-gimp_selection_rotate (GimpItem        *item,
-                       GimpRotationType rotation_type,
-                       gdouble          center_x,
-                       gdouble          center_y,
-                       gboolean         clip_result)
+gimp_selection_rotate (GimpItem         *item,
+                       GimpContext      *context,
+                       GimpRotationType  rotation_type,
+                       gdouble           center_x,
+                       gdouble           center_y,
+                       gboolean          clip_result)
 {
-  GIMP_ITEM_CLASS (parent_class)->rotate (item, rotation_type,
+  GIMP_ITEM_CLASS (parent_class)->rotate (item, context, rotation_type,
                                           center_x, center_y,
                                           clip_result);
 }
@@ -643,6 +650,7 @@ gimp_selection_save (GimpChannel *selection)
 TileManager *
 gimp_selection_extract (GimpChannel  *selection,
                         GimpDrawable *drawable,
+                        GimpContext  *context,
                         gboolean      cut_image,
                         gboolean      keep_indexed,
                         gboolean      add_alpha)
@@ -659,6 +667,7 @@ gimp_selection_extract (GimpChannel  *selection,
 
   g_return_val_if_fail (GIMP_IS_SELECTION (selection), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   gimage = gimp_item_get_image (GIMP_ITEM (selection));
 
@@ -707,7 +716,7 @@ gimp_selection_extract (GimpChannel  *selection,
       break;
     }
 
-  gimp_image_get_background (gimage, drawable, bg_color);
+  gimp_image_get_background (gimage, drawable, context, bg_color);
 
   /*  If a cut was specified, and the selection mask is not empty,
    *  push an undo
@@ -796,6 +805,7 @@ gimp_selection_extract (GimpChannel  *selection,
 GimpLayer *
 gimp_selection_float (GimpChannel  *selection,
                       GimpDrawable *drawable,
+                      GimpContext  *context,
                       gboolean      cut_image,
                       gint          off_x,
                       gint          off_y)
@@ -809,6 +819,7 @@ gimp_selection_float (GimpChannel  *selection,
 
   g_return_val_if_fail (GIMP_IS_SELECTION (selection), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
 
   gimage = gimp_item_get_image (GIMP_ITEM (selection));
@@ -827,7 +838,8 @@ gimp_selection_float (GimpChannel  *selection,
                                _("Float Selection"));
 
   /*  Cut or copy the selected region  */
-  tiles = gimp_selection_extract (selection, drawable, cut_image, FALSE, TRUE);
+  tiles = gimp_selection_extract (selection, drawable, context,
+                                  cut_image, FALSE, TRUE);
 
   /*  Clear the selection as if we had cut the pixels  */
   if (! cut_image)

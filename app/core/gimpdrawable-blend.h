@@ -21,6 +21,7 @@
 
 
 void   gimp_drawable_blend (GimpDrawable         *drawable,
+                            GimpContext          *context,
                             GimpBlendMode         blend_mode,
                             GimpLayerModeEffects  paint_mode,
                             GimpGradientType      gradient_type,

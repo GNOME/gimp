@@ -71,7 +71,8 @@ void           gimp_template_set_from_image  (GimpTemplate   *template,
                                               GimpImage      *gimage);
 
 GimpImage    * gimp_template_create_image    (Gimp           *gimp,
-                                              GimpTemplate   *template);
+                                              GimpTemplate   *template,
+                                              GimpContext    *context);
 
 
 #endif /* __GIMP_TEMPLATE__ */

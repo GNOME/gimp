@@ -49,8 +49,9 @@ register_gradient_select_procs (Gimp *gimp)
 }
 
 static Argument *
-gradients_popup_invoker (Gimp     *gimp,
-                         Argument *args)
+gradients_popup_invoker (Gimp        *gimp,
+                         GimpContext *context,
+                         Argument    *args)
 {
   gboolean success = TRUE;
   gchar *gradient_callback;
@@ -80,9 +81,8 @@ gradients_popup_invoker (Gimp     *gimp,
       if (! gimp->no_interface &&
           (proc = procedural_db_lookup (gimp, gradient_callback)))
         {
-          gradient_select_new (gimp, popup_title,
-                               initial_gradient,
-                               gradient_callback,
+          gradient_select_new (gimp, context, popup_title,
+                               initial_gradient, gradient_callback,
                                sample_size);
         }
       else
@@ -133,8 +133,9 @@ static ProcRecord gradients_popup_proc =
 };
 
 static Argument *
-gradients_close_popup_invoker (Gimp     *gimp,
-                               Argument *args)
+gradients_close_popup_invoker (Gimp        *gimp,
+                               GimpContext *context,
+                               Argument    *args)
 {
   gboolean success = TRUE;
   gchar *gradient_callback;
@@ -186,8 +187,9 @@ static ProcRecord gradients_close_popup_proc =
 };
 
 static Argument *
-gradients_set_popup_invoker (Gimp     *gimp,
-                             Argument *args)
+gradients_set_popup_invoker (Gimp        *gimp,
+                             GimpContext *context,
+                             Argument    *args)
 {
   gboolean success = TRUE;
   gchar *gradient_callback;

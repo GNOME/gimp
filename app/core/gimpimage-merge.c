@@ -35,6 +35,7 @@
 #include "vectors/gimpvectors.h"
 
 #include "gimp.h"
+#include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimpimage-colorhash.h"
 #include "gimpimage-merge.h"
@@ -55,6 +56,7 @@
 
 GimpLayer *
 gimp_image_merge_visible_layers (GimpImage     *gimage,
+                                 GimpContext   *context,
 				 GimpMergeType  merge_type)
 {
   GList     *list;
@@ -63,6 +65,7 @@ gimp_image_merge_visible_layers (GimpImage     *gimage,
   GimpLayer *layer            = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   /* if there's a floating selection, anchor it */
   if (gimp_image_floating_sel (gimage))
@@ -85,7 +88,7 @@ gimp_image_merge_visible_layers (GimpImage     *gimage,
     {
       gimp_set_busy (gimage->gimp);
 
-      layer = gimp_image_merge_layers (gimage, merge_list, merge_type,
+      layer = gimp_image_merge_layers (gimage, merge_list, context, merge_type,
                                        _("Merge Visible Layers"));
       g_slist_free (merge_list);
 
@@ -110,13 +113,15 @@ gimp_image_merge_visible_layers (GimpImage     *gimage,
 }
 
 GimpLayer *
-gimp_image_flatten (GimpImage *gimage)
+gimp_image_flatten (GimpImage   *gimage,
+                    GimpContext *context)
 {
   GList     *list;
   GSList    *merge_list = NULL;
   GimpLayer *layer;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   gimp_set_busy (gimage->gimp);
 
@@ -134,8 +139,8 @@ gimp_image_flatten (GimpImage *gimage)
 	merge_list = g_slist_append (merge_list, layer);
     }
 
-  layer = gimp_image_merge_layers (gimage, merge_list, GIMP_FLATTEN_IMAGE,
-                                   _("Flatten Image"));
+  layer = gimp_image_merge_layers (gimage, merge_list, context,
+                                   GIMP_FLATTEN_IMAGE, _("Flatten Image"));
   g_slist_free (merge_list);
 
   gimp_image_alpha_changed (gimage);
@@ -148,6 +153,7 @@ gimp_image_flatten (GimpImage *gimage)
 GimpLayer *
 gimp_image_merge_down (GimpImage     *gimage,
 		       GimpLayer     *current_layer,
+                       GimpContext   *context,
 		       GimpMergeType  merge_type)
 {
   GimpLayer *layer;
@@ -156,6 +162,7 @@ gimp_image_merge_down (GimpImage     *gimage,
   GSList    *merge_list;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   for (list = GIMP_LIST (gimage->layers)->list, layer_list = NULL;
        list && !layer_list;
@@ -183,7 +190,7 @@ gimp_image_merge_down (GimpImage     *gimage,
 
       gimp_set_busy (gimage->gimp);
 
-      layer = gimp_image_merge_layers (gimage, merge_list, merge_type,
+      layer = gimp_image_merge_layers (gimage, merge_list, context, merge_type,
                                        _("Merge Down"));
       g_slist_free (merge_list);
 
@@ -201,6 +208,7 @@ gimp_image_merge_down (GimpImage     *gimage,
 GimpLayer *
 gimp_image_merge_layers (GimpImage     *gimage,
 			 GSList        *merge_list,
+                         GimpContext   *context,
 			 GimpMergeType  merge_type,
                          const gchar   *undo_desc)
 {
@@ -223,6 +231,7 @@ gimp_image_merge_layers (GimpImage     *gimage,
   gchar           *name;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   layer        = NULL;
   type         = GIMP_RGBA_IMAGE;
@@ -325,7 +334,8 @@ gimp_image_merge_layers (GimpImage     *gimage,
       GIMP_ITEM (merge_layer)->offset_y = y1;
 
       /*  get the background for compositing  */
-      gimp_image_get_background (gimage, GIMP_DRAWABLE (merge_layer), bg);
+      gimp_image_get_background (gimage, GIMP_DRAWABLE (merge_layer),
+                                 context, bg);
 
       /*  init the pixel region  */
       pixel_region_init (&src1PR,

@@ -52,13 +52,14 @@ register_palette_procs (Gimp *gimp)
 }
 
 static Argument *
-palette_get_foreground_invoker (Gimp     *gimp,
-                                Argument *args)
+palette_get_foreground_invoker (Gimp        *gimp,
+                                GimpContext *context,
+                                Argument    *args)
 {
   Argument *return_args;
   GimpRGB color;
 
-  gimp_context_get_foreground (gimp_get_current_context (gimp), &color);
+  gimp_context_get_foreground (context, &color);
 
   return_args = procedural_db_return_args (&palette_get_foreground_proc, TRUE);
   return_args[1].value.pdb_color = color;
@@ -92,13 +93,14 @@ static ProcRecord palette_get_foreground_proc =
 };
 
 static Argument *
-palette_get_background_invoker (Gimp     *gimp,
-                                Argument *args)
+palette_get_background_invoker (Gimp        *gimp,
+                                GimpContext *context,
+                                Argument    *args)
 {
   Argument *return_args;
   GimpRGB color;
 
-  gimp_context_get_background (gimp_get_current_context (gimp), &color);
+  gimp_context_get_background (context, &color);
 
   return_args = procedural_db_return_args (&palette_get_background_proc, TRUE);
   return_args[1].value.pdb_color = color;
@@ -132,15 +134,16 @@ static ProcRecord palette_get_background_proc =
 };
 
 static Argument *
-palette_set_foreground_invoker (Gimp     *gimp,
-                                Argument *args)
+palette_set_foreground_invoker (Gimp        *gimp,
+                                GimpContext *context,
+                                Argument    *args)
 {
   GimpRGB color;
 
   color = args[0].value.pdb_color;
 
   gimp_rgb_set_alpha (&color, 1.0);
-  gimp_context_set_foreground (gimp_get_current_context (gimp), &color);
+  gimp_context_set_foreground (context, &color);
 
   return procedural_db_return_args (&palette_set_foreground_proc, TRUE);
 }
@@ -171,15 +174,16 @@ static ProcRecord palette_set_foreground_proc =
 };
 
 static Argument *
-palette_set_background_invoker (Gimp     *gimp,
-                                Argument *args)
+palette_set_background_invoker (Gimp        *gimp,
+                                GimpContext *context,
+                                Argument    *args)
 {
   GimpRGB color;
 
   color = args[0].value.pdb_color;
 
   gimp_rgb_set_alpha (&color, 1.0);
-  gimp_context_set_background (gimp_get_current_context (gimp), &color);
+  gimp_context_set_background (context, &color);
 
   return procedural_db_return_args (&palette_set_background_proc, TRUE);
 }
@@ -210,10 +214,11 @@ static ProcRecord palette_set_background_proc =
 };
 
 static Argument *
-palette_set_default_colors_invoker (Gimp     *gimp,
-                                    Argument *args)
+palette_set_default_colors_invoker (Gimp        *gimp,
+                                    GimpContext *context,
+                                    Argument    *args)
 {
-  gimp_context_set_default_colors (gimp_get_current_context (gimp));
+  gimp_context_set_default_colors (context);
   return procedural_db_return_args (&palette_set_default_colors_proc, TRUE);
 }
 
@@ -234,10 +239,11 @@ static ProcRecord palette_set_default_colors_proc =
 };
 
 static Argument *
-palette_swap_colors_invoker (Gimp     *gimp,
-                             Argument *args)
+palette_swap_colors_invoker (Gimp        *gimp,
+                             GimpContext *context,
+                             Argument    *args)
 {
-  gimp_context_swap_colors (gimp_get_current_context (gimp));
+  gimp_context_swap_colors (context);
   return procedural_db_return_args (&palette_swap_colors_proc, TRUE);
 }
 

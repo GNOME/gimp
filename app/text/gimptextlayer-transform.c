@@ -48,15 +48,13 @@ gimp_text_layer_scale (GimpItem               *item,
 
 void
 gimp_text_layer_flip (GimpItem            *item,
+                      GimpContext         *context,
 		      GimpOrientationType  flip_type,
 		      gdouble              axis,
 		      gboolean             clip_result)
 {
-  GimpLayer *layer;
-  GimpImage *gimage;
-
-  layer  = GIMP_LAYER (item);
-  gimage = gimp_item_get_image (item);
+  GimpLayer *layer  = GIMP_LAYER (item);
+  GimpImage *gimage = gimp_item_get_image (item);
 
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
                                _("Flip Text Layer"));
@@ -85,7 +83,7 @@ gimp_text_layer_flip (GimpItem            *item,
 
   /*  If there is a layer mask, make sure it gets flipped as well  */
   if (layer->mask)
-    gimp_item_flip (GIMP_ITEM (layer->mask),
+    gimp_item_flip (GIMP_ITEM (layer->mask), context,
                     flip_type, axis, clip_result);
 
   gimp_image_undo_group_end (gimage);
@@ -96,18 +94,16 @@ gimp_text_layer_flip (GimpItem            *item,
 
 void
 gimp_text_layer_rotate (GimpItem         *item,
+                        GimpContext      *context,
                         GimpRotationType  rotate_type,
                         gdouble           center_x,
                         gdouble           center_y,
                         gboolean          clip_result)
 {
-  GimpLayer   *layer;
-  GimpImage   *gimage;
-  gdouble      cos = 1.0;
-  gdouble      sin = 0.0;
-
-  layer  = GIMP_LAYER (item);
-  gimage = gimp_item_get_image (item);
+  GimpLayer   *layer  = GIMP_LAYER (item);
+  GimpImage   *gimage = gimp_item_get_image (item);
+  gdouble      cos    = 1.0;
+  gdouble      sin    = 0.0;
 
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
                                _("Rotate Text Layer"));
@@ -143,7 +139,7 @@ gimp_text_layer_rotate (GimpItem         *item,
 
   /*  If there is a layer mask, make sure it gets rotates as well  */
   if (layer->mask)
-    gimp_item_rotate (GIMP_ITEM (layer->mask),
+    gimp_item_rotate (GIMP_ITEM (layer->mask), context,
                       rotate_type, center_x, center_y, clip_result);
 
   gimp_image_undo_group_end (gimage);
@@ -154,6 +150,7 @@ gimp_text_layer_rotate (GimpItem         *item,
 
 void
 gimp_text_layer_transform (GimpItem               *item,
+                           GimpContext            *context,
 			   const GimpMatrix3      *matrix,
 			   GimpTransformDirection  direction,
 			   GimpInterpolationType   interpolation_type,

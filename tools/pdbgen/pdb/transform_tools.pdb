@@ -71,7 +71,7 @@ HELP
   success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
   if (success)
-    success = gimp_drawable_transform_flip (drawable, flip_type);
+    success = gimp_drawable_transform_flip (drawable, context, flip_type);
 }
 CODE
     );
@@ -150,7 +150,7 @@ HELP
         interpolation_type = GIMP_INTERPOLATION_NONE;
 
       /* Perspective the selection */
-      success = gimp_drawable_transform_affine (drawable,
+      success = gimp_drawable_transform_affine (drawable, context,
                                                 &matrix, GIMP_TRANSFORM_FORWARD,
                                                 interpolation_type, TRUE, 3,
                                                 FALSE);
@@ -210,7 +210,7 @@ HELP
         interpolation_type = GIMP_INTERPOLATION_NONE;
 
       /* Rotate the selection */
-      success = gimp_drawable_transform_affine (drawable,
+      success = gimp_drawable_transform_affine (drawable, context,
                                                 &matrix, GIMP_TRANSFORM_FORWARD,
                                                 interpolation_type, FALSE, 3,
                                                 FALSE);
@@ -284,7 +284,7 @@ HELP
         interpolation_type = GIMP_INTERPOLATION_NONE;
 
       /* Scale the selection */
-      success = gimp_drawable_transform_affine (drawable,
+      success = gimp_drawable_transform_affine (drawable, context,
                                                 &matrix, GIMP_TRANSFORM_FORWARD,
                                                 interpolation_type, TRUE, 3,
                                                 FALSE);
@@ -351,7 +351,7 @@ HELP
         interpolation_type = GIMP_INTERPOLATION_NONE;
 
       /* Shear the selection */
-      success = gimp_drawable_transform_affine (drawable,
+      success = gimp_drawable_transform_affine (drawable, context,
                                                 &matrix, GIMP_TRANSFORM_FORWARD,
                                                 interpolation_type, FALSE, 3,
                                                 FALSE);
@@ -427,7 +427,7 @@ HELP
         interpolation_type = GIMP_INTERPOLATION_NONE;
 
       /* Transform the selection */
-      success = gimp_drawable_transform_affine (drawable,
+      success = gimp_drawable_transform_affine (drawable, context,
                                                 &matrix, GIMP_TRANSFORM_FORWARD,
                                                 interpolation_type, TRUE, 3,
                                                 FALSE);

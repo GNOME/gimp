@@ -34,6 +34,7 @@ struct _GradientSelect
 
 
 GradientSelect * gradient_select_new             (Gimp           *gimp,
+                                                  GimpContext    *context,
                                                   const gchar    *title,
                                                   const gchar    *initial_gradient,
                                                   const gchar    *callback_name,

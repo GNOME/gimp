@@ -394,7 +394,9 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
   /*  Execute the procedure even if procedural_db_lookup() returned NULL,
    *  procedural_db_execute() will return appropriate error return_vals.
    */
-  return_vals = procedural_db_execute (plug_in->gimp, proc_name, args);
+  return_vals = procedural_db_execute (plug_in->gimp,
+                                       gimp_get_user_context (plug_in->gimp),
+                                       proc_name, args);
 
   plug_in_pop (plug_in->gimp);
 

@@ -271,7 +271,9 @@ app_run (const gchar         *full_prog_name,
                   GimpImage         *gimage;
                   GimpPDBStatusType  status;
 
-                  gimage = file_open_with_display (gimp, uri,
+                  gimage = file_open_with_display (gimp,
+                                                   gimp_get_user_context (gimp),
+                                                   uri,
                                                    &status, &error);
 
                   if (! gimage && status != GIMP_PDB_CANCEL)

@@ -46,8 +46,9 @@ register_message_procs (Gimp *gimp)
 }
 
 static Argument *
-message_invoker (Gimp     *gimp,
-                 Argument *args)
+message_invoker (Gimp        *gimp,
+                 GimpContext *context,
+                 Argument    *args)
 {
   gboolean success = TRUE;
   gchar *message;
@@ -97,8 +98,9 @@ static ProcRecord message_proc =
 };
 
 static Argument *
-message_get_handler_invoker (Gimp     *gimp,
-                             Argument *args)
+message_get_handler_invoker (Gimp        *gimp,
+                             GimpContext *context,
+                             Argument    *args)
 {
   Argument *return_args;
 
@@ -134,8 +136,9 @@ static ProcRecord message_get_handler_proc =
 };
 
 static Argument *
-message_set_handler_invoker (Gimp     *gimp,
-                             Argument *args)
+message_set_handler_invoker (Gimp        *gimp,
+                             GimpContext *context,
+                             Argument    *args)
 {
   gboolean success = TRUE;
   gint32 handler;

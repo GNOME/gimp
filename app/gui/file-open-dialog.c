@@ -227,6 +227,7 @@ file_open_dialog_open_image (GtkWidget     *open_dialog,
   GError            *error = NULL;
 
   gimage = file_open_with_proc_and_display (gimp,
+                                            gimp_get_user_context (gimp),
                                             uri,
                                             entered_filename,
                                             load_proc,

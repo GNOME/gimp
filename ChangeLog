@@ -1,3 +1,106 @@
+2004-04-15  Michael Natterer  <mitch@gimp.org>
+
+	Get rid of the "current_context" which was in fact just a bunch of
+	global variables. Instead, pass the needed context all the way
+	from the GUI and the PDB to the core. This is a prerequisite for
+	macro recording and generally helps separating the various
+	subsystems from each other. Work in progress...
+
+	* app/core/gimp.[ch]: removed member "current_context" and
+	gimp_[get|set]_current_context().
+
+	* app/core/gimp-edit.[ch]
+	* app/core/gimpdrawable-blend.[ch]
+	* app/core/gimpdrawable-bucket-fill.[ch]
+	* app/core/gimpdrawable-offset.[ch]
+	* app/core/gimpdrawable-transform.[ch]
+	* app/core/gimpimage-crop.[ch]
+	* app/core/gimpimage-flip.[ch]
+	* app/core/gimpimage-merge.[ch]
+	* app/core/gimpimage-resize.[ch]
+	* app/core/gimpimage-rotate.[ch]
+	* app/core/gimpimage.[ch]
+	* app/core/gimpimagefile.[ch]
+	* app/core/gimpitem-linked.[ch]
+	* app/core/gimpitem.[ch]
+	* app/core/gimplayer.[ch]
+	* app/core/gimpselection.[ch]
+	* app/core/gimptemplate.[ch]
+	* app/file/file-open.[ch]
+	* app/file/file-save.[ch]
+	* app/pdb/procedural_db.[ch]
+	* app/text/gimptext-compat.[ch]
+	* app/text/gimptextlayer-transform.[ch]
+	* app/gui/brush-select.[ch]
+	* app/gui/font-select.[ch]
+	* app/gui/gradient-select.[ch]
+	* app/gui/palette-select.[ch]
+	* app/gui/pattern-select.[ch]: added tons of "GimpContext *context"
+	parameters and use the passed context instead of
+	gimp_get_current_context().
+
+	* app/app_procs.c
+	* app/batch.c
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable.c
+	* app/paint/gimperaser.c
+	* app/paint/gimppaintbrush.c
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-ins.c
+	* app/text/gimptextlayer.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimptransformtool.c
+	* app/vectors/gimpvectors.c
+	* app/gui/convert-dialog.c
+	* app/gui/drawable-commands.c
+	* app/gui/edit-commands.c
+	* app/gui/file-commands.c
+	* app/gui/file-new-dialog.c
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c
+	* app/gui/image-commands.c
+	* app/gui/layers-commands.c
+	* app/gui/offset-dialog.c
+	* app/gui/select-commands.c
+	* app/gui/vectors-commands.c
+	* app/widgets/gimpdnd.c
+	* app/widgets/gimpdocumentview.c
+	* app/widgets/gimphelp.c
+	* app/widgets/gimpthumbbox.c: pass gimp_get_user_context() or
+	GIMP_CONTEXT(tool_options) or whatever is the right context
+	to the changed core functions.
+
+	* tools/pdbgen/app.pl: pass "GimpContext *context" to all
+	generated PDB invokers.
+
+	* tools/pdbgen/pdb/brush_select.pdb
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/font_select.pdb
+	* tools/pdbgen/pdb/gradient_select.pdb
+	* tools/pdbgen/pdb/gradients.pdb
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/layer.pdb
+	* tools/pdbgen/pdb/paint_tools.pdb
+	* tools/pdbgen/pdb/palette.pdb
+	* tools/pdbgen/pdb/palette_select.pdb
+	* tools/pdbgen/pdb/palettes.pdb
+	* tools/pdbgen/pdb/paths.pdb
+	* tools/pdbgen/pdb/pattern_select.pdb
+	* tools/pdbgen/pdb/patterns.pdb
+	* tools/pdbgen/pdb/selection.pdb
+	* tools/pdbgen/pdb/text_tool.pdb
+	* tools/pdbgen/pdb/transform_tools.pdb: pass the new context
+	parameter to the changed core functions.
+
+	* app/pdb/*_cmds.c: regenerated.
+
 2004-04-14  Raphaël Quinet  <quinet@gamers.org>
 
 	* plug-ins/script-fu/scripts/copy-visible.scm: New version of the

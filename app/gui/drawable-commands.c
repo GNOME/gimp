@@ -133,6 +133,7 @@ drawable_flip_cmd_callback (GtkWidget *widget,
   GimpImage    *gimage;
   GimpDrawable *active_drawable;
   GimpItem     *item;
+  GimpContext  *context;
   gint          off_x, off_y;
   gdouble       axis = 0.0;
   return_if_no_drawable (gimage, active_drawable, data);
@@ -155,15 +156,18 @@ drawable_flip_cmd_callback (GtkWidget *widget,
       break;
     }
 
+  context = gimp_get_user_context (gimage->gimp);
+
   if (gimp_item_get_linked (item))
     gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
                                  _("Flip Layer"));
 
-  gimp_item_flip (item, (GimpOrientationType) action, axis, FALSE);
+  gimp_item_flip (item, context, (GimpOrientationType) action, axis, FALSE);
 
   if (gimp_item_get_linked (item))
     {
-      gimp_item_linked_flip (item, (GimpOrientationType) action, axis, FALSE);
+      gimp_item_linked_flip (item, context, (GimpOrientationType) action, axis,
+                             FALSE);
       gimp_image_undo_group_end (gimage);
     }
 
@@ -178,6 +182,7 @@ drawable_rotate_cmd_callback (GtkWidget *widget,
   GimpImage    *gimage;
   GimpDrawable *active_drawable;
   GimpItem     *item;
+  GimpContext  *context;
   gint          off_x, off_y;
   gdouble       center_x, center_y;
   return_if_no_drawable (gimage, active_drawable, data);
@@ -189,15 +194,18 @@ drawable_rotate_cmd_callback (GtkWidget *widget,
   center_x = ((gdouble) off_x + (gdouble) gimp_item_width  (item) / 2.0);
   center_y = ((gdouble) off_y + (gdouble) gimp_item_height (item) / 2.0);
 
+  context = gimp_get_user_context (gimage->gimp);
+
   if (gimp_item_get_linked (item))
     gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_TRANSFORM,
                                  _("Rotate Layer"));
 
-  gimp_item_rotate (item, (GimpRotationType) action, center_x, center_y, FALSE);
+  gimp_item_rotate (item, context, (GimpRotationType) action,
+                    center_x, center_y, FALSE);
 
   if (gimp_item_get_linked (item))
     {
-      gimp_item_linked_rotate (item, (GimpRotationType) action,
+      gimp_item_linked_rotate (item, context, (GimpRotationType) action,
                                center_x, center_y, FALSE);
       gimp_image_undo_group_end (gimage);
     }
@@ -210,8 +218,8 @@ drawable_offset_cmd_callback (GtkWidget *widget,
                               gpointer   data)
 {
   GimpImage    *gimage;
-  GimpDrawable *active_drawable;
-  return_if_no_drawable (gimage, active_drawable, data);
+  GimpDrawable *drawable;
+  return_if_no_drawable (gimage, drawable, data);
 
-  offset_dialog_create (active_drawable, widget);
+  offset_dialog_create (drawable, widget);
 }

@@ -51,8 +51,9 @@ register_floating_sel_procs (Gimp *gimp)
 }
 
 static Argument *
-floating_sel_remove_invoker (Gimp     *gimp,
-                             Argument *args)
+floating_sel_remove_invoker (Gimp        *gimp,
+                             GimpContext *context,
+                             Argument    *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
@@ -98,8 +99,9 @@ static ProcRecord floating_sel_remove_proc =
 };
 
 static Argument *
-floating_sel_anchor_invoker (Gimp     *gimp,
-                             Argument *args)
+floating_sel_anchor_invoker (Gimp        *gimp,
+                             GimpContext *context,
+                             Argument    *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
@@ -145,8 +147,9 @@ static ProcRecord floating_sel_anchor_proc =
 };
 
 static Argument *
-floating_sel_to_layer_invoker (Gimp     *gimp,
-                               Argument *args)
+floating_sel_to_layer_invoker (Gimp        *gimp,
+                               GimpContext *context,
+                               Argument    *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
@@ -192,8 +195,9 @@ static ProcRecord floating_sel_to_layer_proc =
 };
 
 static Argument *
-floating_sel_attach_invoker (Gimp     *gimp,
-                             Argument *args)
+floating_sel_attach_invoker (Gimp        *gimp,
+                             GimpContext *context,
+                             Argument    *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -249,8 +253,9 @@ static ProcRecord floating_sel_attach_proc =
 };
 
 static Argument *
-floating_sel_rigor_invoker (Gimp     *gimp,
-                            Argument *args)
+floating_sel_rigor_invoker (Gimp        *gimp,
+                            GimpContext *context,
+                            Argument    *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;
@@ -304,8 +309,9 @@ static ProcRecord floating_sel_rigor_proc =
 };
 
 static Argument *
-floating_sel_relax_invoker (Gimp     *gimp,
-                            Argument *args)
+floating_sel_relax_invoker (Gimp        *gimp,
+                            GimpContext *context,
+                            Argument    *args)
 {
   gboolean success = TRUE;
   GimpLayer *floating_sel;

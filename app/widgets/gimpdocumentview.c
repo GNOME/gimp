@@ -356,17 +356,17 @@ static void
 gimp_document_view_refresh_clicked (GtkWidget        *widget,
                                     GimpDocumentView *view)
 {
-  GimpContainerEditor *editor;
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
   GimpImagefile       *imagefile;
-
-  editor = GIMP_CONTAINER_EDITOR (view);
 
   imagefile = gimp_context_get_imagefile (editor->view->context);
 
   if (imagefile && gimp_container_have (editor->view->container,
                                         GIMP_OBJECT (imagefile)))
     {
-      gimp_imagefile_create_thumbnail (imagefile, editor->view->preview_size);
+      gimp_imagefile_create_thumbnail (imagefile,
+                                       editor->view->context,
+                                       editor->view->preview_size);
     }
 }
 
@@ -457,7 +457,8 @@ gimp_document_view_open_image (GimpDocumentView *view,
 
   uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
 
-  gimage = file_open_with_display (gimp, uri, &status, &error);
+  gimage = file_open_with_display (gimp, gimp_get_user_context (gimp),
+                                   uri, &status, &error);
 
   if (! gimage && status != GIMP_PDB_CANCEL)
     {

@@ -36,7 +36,7 @@ sub invoke_get {
     %invoke = (
 	code => <<CODE
 {
-  gimp_context_get_@{[shift]}ground (gimp_get_current_context (gimp), &color);
+  gimp_context_get_@{[shift]}ground (context, &color);
 }
 CODE
     );
@@ -47,7 +47,7 @@ sub invoke_set {
 	code => <<CODE
 {
   gimp_rgb_set_alpha (&color, 1.0);
-  gimp_context_set_@{[shift]}ground (gimp_get_current_context (gimp), &color);
+  gimp_context_set_@{[shift]}ground (context, &color);
 }
 CODE
     );
@@ -121,7 +121,7 @@ HELP
 
     &std_pdb_misc;
 
-    %invoke = ( code => 'gimp_context_set_default_colors (gimp_get_current_context (gimp));' );
+    %invoke = ( code => 'gimp_context_set_default_colors (context);' );
 }
 
 sub palette_swap_colors {
@@ -134,7 +134,7 @@ HELP
 
     &std_pdb_misc;
 
-    %invoke = ( code => 'gimp_context_swap_colors (gimp_get_current_context (gimp));' );
+    %invoke = ( code => 'gimp_context_swap_colors (context);' );
 }
 
 

@@ -64,6 +64,7 @@ static GSList *font_active_dialogs = NULL;
 
 FontSelect *
 font_select_new (Gimp        *gimp,
+                 GimpContext *context,
                  const gchar *title,
                  const gchar *initial_font,
                  const gchar *callback_name)
@@ -72,6 +73,7 @@ font_select_new (Gimp        *gimp,
   GimpFont   *active = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (title != NULL, NULL);
 
   if (initial_font && strlen (initial_font))
@@ -81,7 +83,7 @@ font_select_new (Gimp        *gimp,
     }
 
   if (! active)
-    active = gimp_context_get_font (gimp_get_current_context (gimp));
+    active = gimp_context_get_font (context);
 
   if (! active)
     return NULL;
@@ -224,6 +226,7 @@ font_select_change_callbacks (FontSelect *font_select,
 
       return_vals =
 	procedural_db_run_proc (font_select->context->gimp,
+                                font_select->context,
 				font_select->callback_name,
 				&nreturn_vals,
 				GIMP_PDB_STRING, GIMP_OBJECT (font)->name,

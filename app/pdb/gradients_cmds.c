@@ -58,8 +58,9 @@ register_gradients_procs (Gimp *gimp)
 }
 
 static Argument *
-gradients_refresh_invoker (Gimp     *gimp,
-                           Argument *args)
+gradients_refresh_invoker (Gimp        *gimp,
+                           GimpContext *context,
+                           Argument    *args)
 {
   gimp_data_factory_data_save (gimp->gradient_factory);
   gimp_data_factory_data_init (gimp->gradient_factory, FALSE);
@@ -83,8 +84,9 @@ static ProcRecord gradients_refresh_proc =
 };
 
 static Argument *
-gradients_get_list_invoker (Gimp     *gimp,
-                            Argument *args)
+gradients_get_list_invoker (Gimp        *gimp,
+                            GimpContext *context,
+                            Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -150,18 +152,19 @@ static ProcRecord gradients_get_list_proc =
 };
 
 static Argument *
-gradients_get_gradient_invoker (Gimp     *gimp,
-                                Argument *args)
+gradients_get_gradient_invoker (Gimp        *gimp,
+                                GimpContext *context,
+                                Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
 
-  success = gimp_context_get_gradient (gimp_get_current_context (gimp)) != NULL;
+  success = gimp_context_get_gradient (context) != NULL;
 
   return_args = procedural_db_return_args (&gradients_get_gradient_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (gimp_context_get_gradient (gimp_get_current_context (gimp)))->name);
+    return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (gimp_context_get_gradient (context))->name);
 
   return return_args;
 }
@@ -192,8 +195,9 @@ static ProcRecord gradients_get_gradient_proc =
 };
 
 static Argument *
-gradients_set_gradient_invoker (Gimp     *gimp,
-                                Argument *args)
+gradients_set_gradient_invoker (Gimp        *gimp,
+                                GimpContext *context,
+                                Argument    *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -209,7 +213,7 @@ gradients_set_gradient_invoker (Gimp     *gimp,
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient)
-        gimp_context_set_gradient (gimp_get_current_context (gimp), gradient);
+        gimp_context_set_gradient (context, gradient);
       else
         success = FALSE;
     }
@@ -243,8 +247,9 @@ static ProcRecord gradients_set_gradient_proc =
 };
 
 static Argument *
-gradients_sample_uniform_invoker (Gimp     *gimp,
-                                  Argument *args)
+gradients_sample_uniform_invoker (Gimp        *gimp,
+                                  GimpContext *context,
+                                  Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -272,7 +277,7 @@ gradients_sample_uniform_invoker (Gimp     *gimp,
 
       pv = color_samples = g_new (gdouble, array_length);
 
-      gradient = gimp_context_get_gradient (gimp_get_current_context (gimp));
+      gradient = gimp_context_get_gradient (context);
 
       while (i--)
         {
@@ -343,8 +348,9 @@ static ProcRecord gradients_sample_uniform_proc =
 };
 
 static Argument *
-gradients_sample_custom_invoker (Gimp     *gimp,
-                                 Argument *args)
+gradients_sample_custom_invoker (Gimp        *gimp,
+                                 GimpContext *context,
+                                 Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -371,7 +377,7 @@ gradients_sample_custom_invoker (Gimp     *gimp,
 
       pv = color_samples = g_new (gdouble, array_length);
 
-      gradient = gimp_context_get_gradient (gimp_get_current_context (gimp));
+      gradient = gimp_context_get_gradient (context);
 
       while (i--)
         {
@@ -447,8 +453,9 @@ static ProcRecord gradients_sample_custom_proc =
 };
 
 static Argument *
-gradients_get_gradient_data_invoker (Gimp     *gimp,
-                                     Argument *args)
+gradients_get_gradient_data_invoker (Gimp        *gimp,
+                                     GimpContext *context,
+                                     Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -478,7 +485,7 @@ gradients_get_gradient_data_invoker (Gimp     *gimp,
         }
       else
         {
-          gradient = gimp_context_get_gradient (gimp_get_current_context (gimp));
+          gradient = gimp_context_get_gradient (context);
         }
 
       if (gradient)

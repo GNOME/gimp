@@ -38,6 +38,7 @@
 
 #include "gimp.h"
 #include "gimpcontainer.h"
+#include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimpimagefile.h"
 #include "gimpmarshal.h"
@@ -231,11 +232,13 @@ gimp_imagefile_update (GimpImagefile *imagefile)
 
 void
 gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
+                                 GimpContext   *context,
                                  gint           size)
 {
   GimpThumbnail *thumbnail;
 
   g_return_if_fail (GIMP_IS_IMAGEFILE (imagefile));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   if (! imagefile->gimp->config->layer_previews)
     return;
@@ -256,6 +259,7 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
       GError            *error = NULL;
 
       gimage = file_open_image (imagefile->gimp,
+                                context,
                                 thumbnail->image_uri,
                                 thumbnail->image_uri,
                                 NULL,

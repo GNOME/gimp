@@ -202,6 +202,7 @@ gimp_bucket_fill_tool_button_release (GimpTool        *tool,
   if (! (state & GDK_BUTTON3_MASK))
     {
       gimp_drawable_bucket_fill (gimp_image_active_drawable (gdisp->gimage),
+                                 context,
                                  options->fill_mode,
                                  gimp_context_get_paint_mode (context),
                                  gimp_context_get_opacity (context),

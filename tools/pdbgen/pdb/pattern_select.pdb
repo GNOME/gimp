@@ -47,9 +47,8 @@ sub patterns_popup {
   if (! gimp->no_interface &&
       (proc = procedural_db_lookup (gimp, pattern_callback)))
     {
-      pattern_select_new (gimp, popup_title,
-                          initial_pattern,
-                          pattern_callback);
+      pattern_select_new (gimp, context, popup_title,
+                          initial_pattern, pattern_callback);
     }
   else
     success = FALSE;

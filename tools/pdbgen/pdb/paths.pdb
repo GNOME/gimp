@@ -308,9 +308,7 @@ HELP
 
   if (vectors && drawable)
     {
-      GimpToolInfo *tool_info;
-
-      tool_info = gimp_context_get_tool (gimp_get_current_context (gimp));
+      GimpToolInfo *tool_info = gimp_context_get_tool (context);
 
       success = gimp_item_stroke (GIMP_ITEM (vectors), drawable,
                                   GIMP_OBJECT (tool_info->paint_info),

@@ -66,8 +66,9 @@ register_brushes_procs (Gimp *gimp)
 }
 
 static Argument *
-brushes_refresh_invoker (Gimp     *gimp,
-                         Argument *args)
+brushes_refresh_invoker (Gimp        *gimp,
+                         GimpContext *context,
+                         Argument    *args)
 {
   gimp_data_factory_data_save (gimp->brush_factory);
   gimp_data_factory_data_init (gimp->brush_factory, FALSE);
@@ -91,8 +92,9 @@ static ProcRecord brushes_refresh_proc =
 };
 
 static Argument *
-brushes_get_list_invoker (Gimp     *gimp,
-                          Argument *args)
+brushes_get_list_invoker (Gimp        *gimp,
+                          GimpContext *context,
+                          Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -158,14 +160,15 @@ static ProcRecord brushes_get_list_proc =
 };
 
 static Argument *
-brushes_get_brush_invoker (Gimp     *gimp,
-                           Argument *args)
+brushes_get_brush_invoker (Gimp        *gimp,
+                           GimpContext *context,
+                           Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
   GimpBrush *brush;
 
-  success = (brush = gimp_context_get_brush (gimp_get_current_context (gimp))) != NULL;
+  success = (brush = gimp_context_get_brush (context)) != NULL;
 
   return_args = procedural_db_return_args (&brushes_get_brush_proc, success);
 
@@ -221,8 +224,9 @@ static ProcRecord brushes_get_brush_proc =
 };
 
 static Argument *
-brushes_set_brush_invoker (Gimp     *gimp,
-                           Argument *args)
+brushes_set_brush_invoker (Gimp        *gimp,
+                           GimpContext *context,
+                           Argument    *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -238,7 +242,7 @@ brushes_set_brush_invoker (Gimp     *gimp,
         gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
       if (brush)
-        gimp_context_set_brush (gimp_get_current_context (gimp), brush);
+        gimp_context_set_brush (context, brush);
       else
         success = FALSE;
     }
@@ -272,13 +276,14 @@ static ProcRecord brushes_set_brush_proc =
 };
 
 static Argument *
-brushes_get_opacity_invoker (Gimp     *gimp,
-                             Argument *args)
+brushes_get_opacity_invoker (Gimp        *gimp,
+                             GimpContext *context,
+                             Argument    *args)
 {
   Argument *return_args;
 
   return_args = procedural_db_return_args (&brushes_get_opacity_proc, TRUE);
-  return_args[1].value.pdb_float = gimp_context_get_opacity (gimp_get_current_context (gimp)) * 100.0;
+  return_args[1].value.pdb_float = gimp_context_get_opacity (context) * 100.0;
 
   return return_args;
 }
@@ -309,8 +314,9 @@ static ProcRecord brushes_get_opacity_proc =
 };
 
 static Argument *
-brushes_set_opacity_invoker (Gimp     *gimp,
-                             Argument *args)
+brushes_set_opacity_invoker (Gimp        *gimp,
+                             GimpContext *context,
+                             Argument    *args)
 {
   gboolean success = TRUE;
   gdouble opacity;
@@ -320,7 +326,7 @@ brushes_set_opacity_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_context_set_opacity (gimp_get_current_context (gimp), opacity / 100.0);
+    gimp_context_set_opacity (context, opacity / 100.0);
 
   return procedural_db_return_args (&brushes_set_opacity_proc, success);
 }
@@ -351,13 +357,14 @@ static ProcRecord brushes_set_opacity_proc =
 };
 
 static Argument *
-brushes_get_spacing_invoker (Gimp     *gimp,
-                             Argument *args)
+brushes_get_spacing_invoker (Gimp        *gimp,
+                             GimpContext *context,
+                             Argument    *args)
 {
   Argument *return_args;
 
   return_args = procedural_db_return_args (&brushes_get_spacing_proc, TRUE);
-  return_args[1].value.pdb_int = gimp_brush_get_spacing (gimp_context_get_brush (gimp_get_current_context (gimp)));
+  return_args[1].value.pdb_int = gimp_brush_get_spacing (gimp_context_get_brush (context));
 
   return return_args;
 }
@@ -388,8 +395,9 @@ static ProcRecord brushes_get_spacing_proc =
 };
 
 static Argument *
-brushes_set_spacing_invoker (Gimp     *gimp,
-                             Argument *args)
+brushes_set_spacing_invoker (Gimp        *gimp,
+                             GimpContext *context,
+                             Argument    *args)
 {
   gboolean success = TRUE;
   gint32 spacing;
@@ -399,7 +407,7 @@ brushes_set_spacing_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_brush_set_spacing (gimp_context_get_brush (gimp_get_current_context (gimp)), spacing);
+    gimp_brush_set_spacing (gimp_context_get_brush (context), spacing);
 
   return procedural_db_return_args (&brushes_set_spacing_proc, success);
 }
@@ -430,13 +438,14 @@ static ProcRecord brushes_set_spacing_proc =
 };
 
 static Argument *
-brushes_get_paint_mode_invoker (Gimp     *gimp,
-                                Argument *args)
+brushes_get_paint_mode_invoker (Gimp        *gimp,
+                                GimpContext *context,
+                                Argument    *args)
 {
   Argument *return_args;
 
   return_args = procedural_db_return_args (&brushes_get_paint_mode_proc, TRUE);
-  return_args[1].value.pdb_int = gimp_context_get_paint_mode (gimp_get_current_context (gimp));
+  return_args[1].value.pdb_int = gimp_context_get_paint_mode (context);
 
   return return_args;
 }
@@ -467,8 +476,9 @@ static ProcRecord brushes_get_paint_mode_proc =
 };
 
 static Argument *
-brushes_set_paint_mode_invoker (Gimp     *gimp,
-                                Argument *args)
+brushes_set_paint_mode_invoker (Gimp        *gimp,
+                                GimpContext *context,
+                                Argument    *args)
 {
   gboolean success = TRUE;
   gint32 paint_mode;
@@ -478,7 +488,7 @@ brushes_set_paint_mode_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_context_set_paint_mode (gimp_get_current_context (gimp), paint_mode);
+    gimp_context_set_paint_mode (context, paint_mode);
 
   return procedural_db_return_args (&brushes_set_paint_mode_proc, success);
 }
@@ -509,8 +519,9 @@ static ProcRecord brushes_set_paint_mode_proc =
 };
 
 static Argument *
-brushes_get_brush_data_invoker (Gimp     *gimp,
-                                Argument *args)
+brushes_get_brush_data_invoker (Gimp        *gimp,
+                                GimpContext *context,
+                                Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -532,7 +543,7 @@ brushes_get_brush_data_invoker (Gimp     *gimp,
         }
       else
         {
-          brush = gimp_context_get_brush (gimp_get_current_context (gimp));
+          brush = gimp_context_get_brush (context);
         }
 
       if (brush)

@@ -48,7 +48,8 @@ sub fonts_popup {
   if (! gimp->no_interface &&
       (proc = procedural_db_lookup (gimp, font_callback)))
     {
-      font_select_new (gimp, popup_title, initial_font, font_callback);
+      font_select_new (gimp, context, popup_title,
+                       initial_font, font_callback);
     }
   else
     success = FALSE;

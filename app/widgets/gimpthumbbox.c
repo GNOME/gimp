@@ -457,7 +457,9 @@ gimp_thumb_box_create_thumbnail (GimpThumbBox      *box,
           gimp_thumbnail_peek_thumb (box->imagefile->thumbnail, size)
           < GIMP_THUMB_STATE_FAILED)
         {
-          gimp_imagefile_create_thumbnail (box->imagefile, size);
+          gimp_imagefile_create_thumbnail (box->imagefile,
+                                           gimp_get_user_context (box->imagefile->gimp),
+                                           size);
         }
     }
 

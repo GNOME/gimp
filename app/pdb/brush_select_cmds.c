@@ -49,8 +49,9 @@ register_brush_select_procs (Gimp *gimp)
 }
 
 static Argument *
-brushes_popup_invoker (Gimp     *gimp,
-                       Argument *args)
+brushes_popup_invoker (Gimp        *gimp,
+                       GimpContext *context,
+                       Argument    *args)
 {
   gboolean success = TRUE;
   gchar *brush_callback;
@@ -90,7 +91,7 @@ brushes_popup_invoker (Gimp     *gimp,
       if (! gimp->no_interface &&
           (proc = procedural_db_lookup (gimp, brush_callback)))
         {
-          brush_select_new (gimp, popup_title,
+          brush_select_new (gimp, context, popup_title,
                             initial_brush,
                             opacity / 100.0,
                             paint_mode,
@@ -155,8 +156,9 @@ static ProcRecord brushes_popup_proc =
 };
 
 static Argument *
-brushes_close_popup_invoker (Gimp     *gimp,
-                             Argument *args)
+brushes_close_popup_invoker (Gimp        *gimp,
+                             GimpContext *context,
+                             Argument    *args)
 {
   gboolean success = TRUE;
   gchar *brush_callback;
@@ -208,8 +210,9 @@ static ProcRecord brushes_close_popup_proc =
 };
 
 static Argument *
-brushes_set_popup_invoker (Gimp     *gimp,
-                           Argument *args)
+brushes_set_popup_invoker (Gimp        *gimp,
+                           GimpContext *context,
+                           Argument    *args)
 {
   gboolean success = TRUE;
   gchar *brush_callback;

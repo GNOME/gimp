@@ -21,6 +21,7 @@
 
 
 void   gimp_drawable_offset (GimpDrawable   *drawable,
+                             GimpContext    *context,
 			     gboolean        wrap_around,
 			     GimpOffsetType  fill_type,
 			     gint            offset_x,

@@ -33,6 +33,7 @@ struct _FontSelect
 
 
 FontSelect * font_select_new             (Gimp        *gimp,
+                                          GimpContext *context,
                                           const gchar *title,
                                           const gchar *initial_font,
                                           const gchar *callback_name);

@@ -514,6 +514,7 @@ indexed_custom_palette_button_callback (GtkWidget     *widget,
     {
       dialog->palette_select =
 	palette_select_new (dialog->gimage->gimp,
+                            gimp_get_user_context (dialog->gimage->gimp),
                             _("Select Custom Palette"),
 			    GIMP_OBJECT (theCustomPalette)->name,
                             NULL);

@@ -52,8 +52,9 @@ register_guides_procs (Gimp *gimp)
 }
 
 static Argument *
-image_add_hguide_invoker (Gimp     *gimp,
-                          Argument *args)
+image_add_hguide_invoker (Gimp        *gimp,
+                          GimpContext *context,
+                          Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -129,8 +130,9 @@ static ProcRecord image_add_hguide_proc =
 };
 
 static Argument *
-image_add_vguide_invoker (Gimp     *gimp,
-                          Argument *args)
+image_add_vguide_invoker (Gimp        *gimp,
+                          GimpContext *context,
+                          Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -206,8 +208,9 @@ static ProcRecord image_add_vguide_proc =
 };
 
 static Argument *
-image_delete_guide_invoker (Gimp     *gimp,
-                            Argument *args)
+image_delete_guide_invoker (Gimp        *gimp,
+                            GimpContext *context,
+                            Argument    *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -271,8 +274,9 @@ static ProcRecord image_delete_guide_proc =
 };
 
 static Argument *
-image_find_next_guide_invoker (Gimp     *gimp,
-                               Argument *args)
+image_find_next_guide_invoker (Gimp        *gimp,
+                               GimpContext *context,
+                               Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -375,8 +379,9 @@ static ProcRecord image_find_next_guide_proc =
 };
 
 static Argument *
-image_get_guide_orientation_invoker (Gimp     *gimp,
-                                     Argument *args)
+image_get_guide_orientation_invoker (Gimp        *gimp,
+                                     GimpContext *context,
+                                     Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -457,8 +462,9 @@ static ProcRecord image_get_guide_orientation_proc =
 };
 
 static Argument *
-image_get_guide_position_invoker (Gimp     *gimp,
-                                  Argument *args)
+image_get_guide_position_invoker (Gimp        *gimp,
+                                  GimpContext *context,
+                                  Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;

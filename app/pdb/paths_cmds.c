@@ -79,8 +79,9 @@ register_paths_procs (Gimp *gimp)
 }
 
 static Argument *
-path_list_invoker (Gimp     *gimp,
-                   Argument *args)
+path_list_invoker (Gimp        *gimp,
+                   GimpContext *context,
+                   Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -146,8 +147,9 @@ static ProcRecord path_list_proc =
 };
 
 static Argument *
-path_get_current_invoker (Gimp     *gimp,
-                          Argument *args)
+path_get_current_invoker (Gimp        *gimp,
+                          GimpContext *context,
+                          Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -212,8 +214,9 @@ static ProcRecord path_get_current_proc =
 };
 
 static Argument *
-path_set_current_invoker (Gimp     *gimp,
-                          Argument *args)
+path_set_current_invoker (Gimp        *gimp,
+                          GimpContext *context,
+                          Argument    *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -272,8 +275,9 @@ static ProcRecord path_set_current_proc =
 };
 
 static Argument *
-path_delete_invoker (Gimp     *gimp,
-                     Argument *args)
+path_delete_invoker (Gimp        *gimp,
+                     GimpContext *context,
+                     Argument    *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -332,8 +336,9 @@ static ProcRecord path_delete_proc =
 };
 
 static Argument *
-path_get_points_invoker (Gimp     *gimp,
-                         Argument *args)
+path_get_points_invoker (Gimp        *gimp,
+                         GimpContext *context,
+                         Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -462,8 +467,9 @@ static ProcRecord path_get_points_proc =
 };
 
 static Argument *
-path_set_points_invoker (Gimp     *gimp,
-                         Argument *args)
+path_set_points_invoker (Gimp        *gimp,
+                         GimpContext *context,
+                         Argument    *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -578,8 +584,9 @@ static ProcRecord path_set_points_proc =
 };
 
 static Argument *
-path_stroke_current_invoker (Gimp     *gimp,
-                             Argument *args)
+path_stroke_current_invoker (Gimp        *gimp,
+                             GimpContext *context,
+                             Argument    *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -597,9 +604,7 @@ path_stroke_current_invoker (Gimp     *gimp,
 
       if (vectors && drawable)
         {
-          GimpToolInfo *tool_info;
-
-          tool_info = gimp_context_get_tool (gimp_get_current_context (gimp));
+          GimpToolInfo *tool_info = gimp_context_get_tool (context);
 
           success = gimp_item_stroke (GIMP_ITEM (vectors), drawable,
                                       GIMP_OBJECT (tool_info->paint_info),
@@ -638,8 +643,9 @@ static ProcRecord path_stroke_current_proc =
 };
 
 static Argument *
-path_get_point_at_dist_invoker (Gimp     *gimp,
-                                Argument *args)
+path_get_point_at_dist_invoker (Gimp        *gimp,
+                                GimpContext *context,
+                                Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -731,8 +737,9 @@ static ProcRecord path_get_point_at_dist_proc =
 };
 
 static Argument *
-path_get_tattoo_invoker (Gimp     *gimp,
-                         Argument *args)
+path_get_tattoo_invoker (Gimp        *gimp,
+                         GimpContext *context,
+                         Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -807,8 +814,9 @@ static ProcRecord path_get_tattoo_proc =
 };
 
 static Argument *
-path_set_tattoo_invoker (Gimp     *gimp,
-                         Argument *args)
+path_set_tattoo_invoker (Gimp        *gimp,
+                         GimpContext *context,
+                         Argument    *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -875,8 +883,9 @@ static ProcRecord path_set_tattoo_proc =
 };
 
 static Argument *
-get_path_by_tattoo_invoker (Gimp     *gimp,
-                            Argument *args)
+get_path_by_tattoo_invoker (Gimp        *gimp,
+                            GimpContext *context,
+                            Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -949,8 +958,9 @@ static ProcRecord get_path_by_tattoo_proc =
 };
 
 static Argument *
-path_get_locked_invoker (Gimp     *gimp,
-                         Argument *args)
+path_get_locked_invoker (Gimp        *gimp,
+                         GimpContext *context,
+                         Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1025,8 +1035,9 @@ static ProcRecord path_get_locked_proc =
 };
 
 static Argument *
-path_set_locked_invoker (Gimp     *gimp,
-                         Argument *args)
+path_set_locked_invoker (Gimp        *gimp,
+                         GimpContext *context,
+                         Argument    *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -1093,8 +1104,9 @@ static ProcRecord path_set_locked_proc =
 };
 
 static Argument *
-path_to_selection_invoker (Gimp     *gimp,
-                           Argument *args)
+path_to_selection_invoker (Gimp        *gimp,
+                           GimpContext *context,
+                           Argument    *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -1202,8 +1214,9 @@ static ProcRecord path_to_selection_proc =
 };
 
 static Argument *
-path_import_invoker (Gimp     *gimp,
-                     Argument *args)
+path_import_invoker (Gimp        *gimp,
+                     GimpContext *context,
+                     Argument    *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;

@@ -23,6 +23,7 @@
 #include "core-types.h"
 
 #include "gimp.h"
+#include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimpimage-guides.h"
 #include "gimpimage-resize.h"
@@ -36,6 +37,7 @@
 
 void
 gimp_image_resize (GimpImage        *gimage,
+                   GimpContext      *context,
 		   gint              new_width,
 		   gint              new_height,
 		   gint              offset_x,
@@ -48,6 +50,7 @@ gimp_image_resize (GimpImage        *gimage,
   gint   progress_current = 1;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (new_width > 0 && new_height > 0);
 
   gimp_set_busy (gimage->gimp);
@@ -74,7 +77,8 @@ gimp_image_resize (GimpImage        *gimage,
     {
       GimpItem *item = list->data;
 
-      gimp_item_resize (item, new_width, new_height, offset_x, offset_y);
+      gimp_item_resize (item, context,
+                        new_width, new_height, offset_x, offset_y);
 
       if (progress_func)
         (* progress_func) (0, progress_max, progress_current++, progress_data);
@@ -87,14 +91,15 @@ gimp_image_resize (GimpImage        *gimage,
     {
       GimpItem *item = list->data;
 
-      gimp_item_resize (item, new_width, new_height, offset_x, offset_y);
+      gimp_item_resize (item, context,
+                        new_width, new_height, offset_x, offset_y);
 
       if (progress_func)
         (* progress_func) (0, progress_max, progress_current++, progress_data);
     }
 
   /*  Don't forget the selection mask!  */
-  gimp_item_resize (GIMP_ITEM (gimp_image_get_mask (gimage)),
+  gimp_item_resize (GIMP_ITEM (gimp_image_get_mask (gimage)), context,
                     new_width, new_height, offset_x, offset_y);
 
   if (progress_func)

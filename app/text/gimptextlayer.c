@@ -38,6 +38,7 @@
 #include "config/gimpconfig-utils.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
@@ -588,8 +589,15 @@ gimp_text_layer_render (GimpTextLayer *layer)
       tile_manager_unref (new_tiles);
 
       if (GIMP_LAYER (layer)->mask)
-        gimp_item_resize (GIMP_ITEM (GIMP_LAYER (layer)->mask),
-                          width, height, 0, 0);
+        {
+          static GimpContext *unused_eek = NULL;
+
+          if (! unused_eek)
+            unused_eek = gimp_context_new (image->gimp, "eek", NULL);
+
+          gimp_item_resize (GIMP_ITEM (GIMP_LAYER (layer)->mask), unused_eek,
+                            width, height, 0, 0);
+        }
     }
 
   if (layer->auto_rename)

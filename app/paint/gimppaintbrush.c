@@ -206,7 +206,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
     }
   else
     {
-      gimp_image_get_foreground (gimage, drawable, col);
+      gimp_image_get_foreground (gimage, drawable, context, col);
       col[area->bytes - 1] = OPAQUE_OPACITY;
       color_pixels (temp_buf_data (area), col,
                     area->width * area->height,

@@ -31,6 +31,7 @@
 
 #include "base/boundary.h"
 
+#include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-undo.h"
@@ -708,6 +709,7 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 	  case EDIT_MASK_COPY_TO_LAYER_TRANSLATE:
 	    if (! gimp_selection_float (gimp_image_get_mask (gdisp->gimage),
                                         GIMP_DRAWABLE (active_item),
+                                        gimp_get_user_context (gdisp->gimage->gimp),
                                         edit_select->edit_type ==
                                         EDIT_MASK_TO_LAYER_TRANSLATE,
                                         0, 0))

@@ -23,6 +23,7 @@
 #include "core-types.h"
 
 #include "gimp.h"
+#include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimpimage-rotate.h"
 #include "gimpimage-guides.h"
@@ -43,6 +44,7 @@ static void  gimp_image_rotate_guides      (GimpImage        *gimage,
 
 void
 gimp_image_rotate (GimpImage        *gimage,
+                   GimpContext      *context,
                    GimpRotationType  rotate_type,
                    GimpProgressFunc  progress_func,
                    gpointer          progress_data)
@@ -58,6 +60,7 @@ gimp_image_rotate (GimpImage        *gimage,
   gboolean  size_changed;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   gimp_set_busy (gimage->gimp);
 
@@ -99,7 +102,7 @@ gimp_image_rotate (GimpImage        *gimage,
     {
       item = (GimpItem *) list->data;
 
-      gimp_item_rotate (item, rotate_type, center_x, center_y, FALSE);
+      gimp_item_rotate (item, context, rotate_type, center_x, center_y, FALSE);
 
       item->offset_x = 0;
       item->offset_y = 0;
@@ -115,7 +118,7 @@ gimp_image_rotate (GimpImage        *gimage,
     {
       item = (GimpItem *) list->data;
 
-      gimp_item_rotate (item, rotate_type, center_x, center_y, FALSE);
+      gimp_item_rotate (item, context, rotate_type, center_x, center_y, FALSE);
 
       item->width    = new_image_width;
       item->height   = new_image_height;
@@ -132,7 +135,7 @@ gimp_image_rotate (GimpImage        *gimage,
     }
 
   /*  Don't forget the selection mask!  */
-  gimp_item_rotate (GIMP_ITEM (gimp_image_get_mask (gimage)),
+  gimp_item_rotate (GIMP_ITEM (gimp_image_get_mask (gimage)), context,
                     rotate_type, center_x, center_y, FALSE);
 
   GIMP_ITEM (gimage->selection_mask)->offset_x = 0;
@@ -152,7 +155,7 @@ gimp_image_rotate (GimpImage        *gimage,
 
       gimp_item_offsets (item, &off_x, &off_y);
 
-      gimp_item_rotate (item, rotate_type, center_x, center_y, FALSE);
+      gimp_item_rotate (item, context, rotate_type, center_x, center_y, FALSE);
 
       gimp_image_rotate_item_offset (gimage, rotate_type, item, off_x, off_y);
 

@@ -59,8 +59,9 @@ register_channel_procs (Gimp *gimp)
 }
 
 static Argument *
-channel_new_invoker (Gimp     *gimp,
-                     Argument *args)
+channel_new_invoker (Gimp        *gimp,
+                     GimpContext *context,
+                     Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -171,8 +172,9 @@ static ProcRecord channel_new_proc =
 };
 
 static Argument *
-channel_copy_invoker (Gimp     *gimp,
-                      Argument *args)
+channel_copy_invoker (Gimp        *gimp,
+                      GimpContext *context,
+                      Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -233,8 +235,9 @@ static ProcRecord channel_copy_proc =
 };
 
 static Argument *
-channel_combine_masks_invoker (Gimp     *gimp,
-                               Argument *args)
+channel_combine_masks_invoker (Gimp        *gimp,
+                               GimpContext *context,
+                               Argument    *args)
 {
   gboolean success = TRUE;
   GimpChannel *channel1;
@@ -313,8 +316,9 @@ static ProcRecord channel_combine_masks_proc =
 };
 
 static Argument *
-channel_get_show_masked_invoker (Gimp     *gimp,
-                                 Argument *args)
+channel_get_show_masked_invoker (Gimp        *gimp,
+                                 GimpContext *context,
+                                 Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -367,8 +371,9 @@ static ProcRecord channel_get_show_masked_proc =
 };
 
 static Argument *
-channel_set_show_masked_invoker (Gimp     *gimp,
-                                 Argument *args)
+channel_set_show_masked_invoker (Gimp        *gimp,
+                                 GimpContext *context,
+                                 Argument    *args)
 {
   gboolean success = TRUE;
   GimpChannel *channel;
@@ -417,8 +422,9 @@ static ProcRecord channel_set_show_masked_proc =
 };
 
 static Argument *
-channel_get_opacity_invoker (Gimp     *gimp,
-                             Argument *args)
+channel_get_opacity_invoker (Gimp        *gimp,
+                             GimpContext *context,
+                             Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -471,8 +477,9 @@ static ProcRecord channel_get_opacity_proc =
 };
 
 static Argument *
-channel_set_opacity_invoker (Gimp     *gimp,
-                             Argument *args)
+channel_set_opacity_invoker (Gimp        *gimp,
+                             GimpContext *context,
+                             Argument    *args)
 {
   gboolean success = TRUE;
   GimpChannel *channel;
@@ -523,8 +530,9 @@ static ProcRecord channel_set_opacity_proc =
 };
 
 static Argument *
-channel_get_color_invoker (Gimp     *gimp,
-                           Argument *args)
+channel_get_color_invoker (Gimp        *gimp,
+                           GimpContext *context,
+                           Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -581,8 +589,9 @@ static ProcRecord channel_get_color_proc =
 };
 
 static Argument *
-channel_set_color_invoker (Gimp     *gimp,
-                           Argument *args)
+channel_set_color_invoker (Gimp        *gimp,
+                           GimpContext *context,
+                           Argument    *args)
 {
   gboolean success = TRUE;
   GimpChannel *channel;

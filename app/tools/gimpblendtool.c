@@ -245,6 +245,7 @@ gimp_blend_tool_button_release (GimpTool        *tool,
                                       NULL, NULL);
 
       gimp_drawable_blend (gimp_image_active_drawable (gimage),
+                           context,
                            GIMP_CUSTOM_MODE,
                            gimp_context_get_paint_mode (context),
                            options->gradient_type,

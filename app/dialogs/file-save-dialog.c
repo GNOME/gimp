@@ -325,6 +325,7 @@ file_save_dialog_save_image (GtkWidget     *save_dialog,
   GError            *error = NULL;
 
   status = file_save_as (gimage,
+                         gimp_get_user_context (gimage->gimp),
                          uri,
                          raw_filename,
                          save_proc,

@@ -187,9 +187,6 @@ struct _Gimp
 
   /*  the context used by the interface  */
   GimpContext            *user_context;
-
-  /*  the currently active context  */
-  GimpContext            *current_context;
 };
 
 struct _GimpClass
@@ -292,10 +289,6 @@ GimpContext * gimp_get_default_context  (Gimp               *gimp);
 void          gimp_set_user_context     (Gimp               *gimp,
 					 GimpContext        *context);
 GimpContext * gimp_get_user_context     (Gimp               *gimp);
-
-void          gimp_set_current_context  (Gimp               *gimp,
-					 GimpContext        *context);
-GimpContext * gimp_get_current_context  (Gimp               *gimp);
 
 
 #endif  /* __GIMP_H__ */

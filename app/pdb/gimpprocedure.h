@@ -35,8 +35,9 @@ struct _Argument
 
 
 /*  Argument marshalling procedures  */
-typedef Argument * (* ArgMarshal) (Gimp     *gimp,
-				   Argument *args);
+typedef Argument * (* ArgMarshal) (Gimp        *gimp,
+                                   GimpContext *context,
+				   Argument    *args);
 
 
 /*  Execution types  */
@@ -134,9 +135,11 @@ ProcRecord   * procedural_db_lookup        (Gimp               *gimp,
                                             const gchar        *name);
 
 Argument     * procedural_db_execute       (Gimp               *gimp,
+                                            GimpContext        *context,
                                             const gchar        *name,
                                             Argument           *args);
 Argument     * procedural_db_run_proc      (Gimp               *gimp,
+                                            GimpContext        *context,
                                             const gchar        *name,
                                             gint               *nreturn_vals,
                                             ...);

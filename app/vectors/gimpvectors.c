@@ -86,20 +86,24 @@ static void       gimp_vectors_scale        (GimpItem         *item,
                                              GimpProgressFunc       progress_callback,
                                              gpointer               progress_data);
 static void       gimp_vectors_resize       (GimpItem         *item,
+                                             GimpContext      *context,
                                              gint              new_width,
                                              gint              new_height,
                                              gint              offset_x,
                                              gint              offset_y);
 static void       gimp_vectors_flip         (GimpItem         *item,
+                                             GimpContext      *context,
                                              GimpOrientationType  flip_type,
                                              gdouble           axis,
                                              gboolean          clip_result);
 static void       gimp_vectors_rotate       (GimpItem         *item,
+                                             GimpContext      *context,
                                              GimpRotationType  rotate_type,
                                              gdouble           center_x,
                                              gdouble           center_y,
                                              gboolean          clip_result);
 static void       gimp_vectors_transform    (GimpItem         *item,
+                                             GimpContext      *context,
                                              const GimpMatrix3 *matrix,
                                              GimpTransformDirection direction,
                                              GimpInterpolationType interp_type,
@@ -393,7 +397,7 @@ gimp_vectors_scale (GimpItem              *item,
                     gpointer               progress_data)
 {
   GimpVectors *vectors = GIMP_VECTORS (item);
-  GimpImage   *image = gimp_item_get_image (item);
+  GimpImage   *image   = gimp_item_get_image (item);
   GList       *list;
 
   gimp_vectors_freeze (vectors);
@@ -418,14 +422,15 @@ gimp_vectors_scale (GimpItem              *item,
 }
 
 static void
-gimp_vectors_resize (GimpItem *item,
-                     gint      new_width,
-                     gint      new_height,
-                     gint      offset_x,
-                     gint      offset_y)
+gimp_vectors_resize (GimpItem    *item,
+                     GimpContext *context,
+                     gint         new_width,
+                     gint         new_height,
+                     gint         offset_x,
+                     gint         offset_y)
 {
   GimpVectors *vectors = GIMP_VECTORS (item);
-  GimpImage   *image = gimp_item_get_image (item);
+  GimpImage   *image   = gimp_item_get_image (item);
   GList       *list;
 
   gimp_vectors_freeze (vectors);
@@ -439,14 +444,15 @@ gimp_vectors_resize (GimpItem *item,
       gimp_stroke_translate (stroke, offset_x, offset_y);
     }
 
-  GIMP_ITEM_CLASS (parent_class)->resize (item, image->width, image->width,
-                                          0, 0);
+  GIMP_ITEM_CLASS (parent_class)->resize (item, context,
+                                          image->width, image->width, 0, 0);
 
   gimp_vectors_thaw (vectors);
 }
 
 static void
 gimp_vectors_flip (GimpItem            *item,
+                   GimpContext         *context,
                    GimpOrientationType  flip_type,
                    gdouble              axis,
                    gboolean             clip_result)
@@ -475,6 +481,7 @@ gimp_vectors_flip (GimpItem            *item,
 
 static void
 gimp_vectors_rotate (GimpItem         *item,
+                     GimpContext      *context,
                      GimpRotationType  rotate_type,
                      gdouble           center_x,
                      gdouble           center_y,
@@ -518,6 +525,7 @@ gimp_vectors_rotate (GimpItem         *item,
 
 static void
 gimp_vectors_transform (GimpItem               *item,
+                        GimpContext            *context,
                         const GimpMatrix3      *matrix,
                         GimpTransformDirection  direction,
                         GimpInterpolationType   interpolation_type,
@@ -594,7 +602,7 @@ gimp_vectors_stroke (GimpItem     *item,
                                           GIMP_CONTEXT_PAINT_PROPS_MASK,
                                           FALSE);
           gimp_context_set_parent (GIMP_CONTEXT (paint_options),
-                                   gimp_get_current_context (gimage->gimp));
+                                   gimp_get_user_context (gimage->gimp));
         }
       else
         {

@@ -83,6 +83,7 @@ static GSList *brush_active_dialogs = NULL;
 
 BrushSelect *
 brush_select_new (Gimp                 *gimp,
+                  GimpContext          *context,
                   const gchar          *title,
 		  const gchar          *initial_brush,
 		  gdouble               initial_opacity,
@@ -96,6 +97,7 @@ brush_select_new (Gimp                 *gimp,
   GimpBrush     *active = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (title != NULL, NULL);
 
   if (gimp->no_data)
@@ -116,7 +118,7 @@ brush_select_new (Gimp                 *gimp,
     }
 
   if (! active)
-    active = gimp_context_get_brush (gimp_get_current_context (gimp));
+    active = gimp_context_get_brush (context);
 
   if (! active)
     return NULL;
@@ -304,6 +306,7 @@ brush_select_change_callbacks (BrushSelect *bsp,
 
       return_vals =
 	procedural_db_run_proc (bsp->context->gimp,
+                                bsp->context,
 				bsp->callback_name,
 				&nreturn_vals,
 				GIMP_PDB_STRING,    GIMP_OBJECT (brush)->name,

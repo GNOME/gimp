@@ -20,24 +20,25 @@
 #define __GIMP_IMAGE_CROP_H__
 
 
-void       gimp_image_crop             (GimpImage *gimage,
-					gint       x1,
-					gint       y1,
-					gint       x2,
-					gint       y2,
-					gboolean   active_layer_only,
-					gboolean   crop_layers);
+void       gimp_image_crop             (GimpImage   *gimage,
+                                        GimpContext *context,
+					gint         x1,
+					gint         y1,
+					gint         x2,
+					gint         y2,
+					gboolean     active_layer_only,
+					gboolean     crop_layers);
 
-gboolean   gimp_image_crop_auto_shrink (GimpImage *gimage,
-					gint       x1,
-					gint       y1,
-					gint       x2,
-					gint       y2,
-					gboolean   active_drawable_only,
-					gint      *shrunk_x1,
-					gint      *shrunk_y1,
-					gint      *shrunk_x2,
-					gint      *shrunk_y2);
+gboolean   gimp_image_crop_auto_shrink (GimpImage   *gimage,
+					gint         x1,
+					gint         y1,
+					gint         x2,
+					gint         y2,
+					gboolean     active_drawable_only,
+					gint        *shrunk_x1,
+					gint        *shrunk_y1,
+					gint        *shrunk_x2,
+					gint        *shrunk_y2);
 
 
 #endif  /* __GIMP_IMAGE_CROP_H__ */

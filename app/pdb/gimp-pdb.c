@@ -29,6 +29,7 @@
 #include "pdb-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 
 #include "plug-in/plug-in-run.h"
 
@@ -230,6 +231,7 @@ procedural_db_lookup (Gimp        *gimp,
 
 Argument *
 procedural_db_execute (Gimp        *gimp,
+                       GimpContext *context,
                        const gchar *name,
                        Argument    *args)
 {
@@ -237,6 +239,7 @@ procedural_db_execute (Gimp        *gimp,
   GList    *list;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
   list = g_hash_table_lookup (gimp->procedural_ht, name);
@@ -300,7 +303,8 @@ procedural_db_execute (Gimp        *gimp,
         {
         case GIMP_INTERNAL:
           return_args =
-            (* procedure->exec_method.internal.marshal_func) (gimp, args);
+            (* procedure->exec_method.internal.marshal_func) (gimp, context,
+                                                              args);
           break;
 
         case GIMP_PLUGIN:
@@ -349,6 +353,7 @@ procedural_db_execute (Gimp        *gimp,
 
 Argument *
 procedural_db_run_proc (Gimp        *gimp,
+                        GimpContext *context,
                         const gchar *name,
                         gint        *nreturn_vals,
                         ...)
@@ -360,6 +365,7 @@ procedural_db_run_proc (Gimp        *gimp,
   gint        i;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (nreturn_vals != NULL, NULL);
 
@@ -451,7 +457,7 @@ procedural_db_run_proc (Gimp        *gimp,
 
   *nreturn_vals = proc->num_values;
 
-  return_vals = procedural_db_execute (gimp, name, params);
+  return_vals = procedural_db_execute (gimp, context, name, params);
 
   g_free (params);
 

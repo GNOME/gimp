@@ -21,6 +21,7 @@
 
 
 void   gimp_drawable_bucket_fill      (GimpDrawable       *drawable,
+                                       GimpContext        *context,
                                        GimpBucketFillMode  fill_mode,
                                        gint                paint_mode,
                                        gdouble             opacity,

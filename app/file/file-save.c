@@ -43,6 +43,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpdocumentlist.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -63,6 +64,7 @@
 
 GimpPDBStatusType
 file_save (GimpImage    *gimage,
+           GimpContext  *context,
            GimpRunMode   run_mode,
            GError      **error)
 {
@@ -70,6 +72,7 @@ file_save (GimpImage    *gimage,
   PlugInProcDef *file_proc;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), GIMP_PDB_CALLING_ERROR);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (error == NULL || *error == NULL,
                         GIMP_PDB_CALLING_ERROR);
 
@@ -79,12 +82,13 @@ file_save (GimpImage    *gimage,
 
   file_proc = gimp_image_get_save_proc (gimage);
 
-  return file_save_as (gimage, uri, uri, file_proc, run_mode,
+  return file_save_as (gimage, context, uri, uri, file_proc, run_mode,
                        FALSE, TRUE, error);
 }
 
 GimpPDBStatusType
 file_save_as (GimpImage      *gimage,
+              GimpContext    *context,
               const gchar    *uri,
               const gchar    *raw_filename,
               PlugInProcDef  *file_proc,
@@ -101,6 +105,7 @@ file_save_as (GimpImage      *gimage,
   gchar             *filename;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), GIMP_PDB_CALLING_ERROR);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (uri != NULL, GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (raw_filename != NULL, GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (error == NULL || *error == NULL,
@@ -160,7 +165,7 @@ file_save_as (GimpImage      *gimage,
   args[3].value.pdb_pointer = (gpointer) (filename ? filename : uri);
   args[4].value.pdb_pointer = (gpointer) raw_filename;
 
-  return_vals = procedural_db_execute (gimage->gimp, proc->name, args);
+  return_vals = procedural_db_execute (gimage->gimp, context, proc->name, args);
 
   if (filename)
     g_free (filename);

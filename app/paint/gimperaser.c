@@ -159,7 +159,7 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
 
   pressure_options = paint_options->pressure_options;
 
-  gimp_image_get_background (gimage, drawable, col);
+  gimp_image_get_background (gimage, drawable, context, col);
 
   if (pressure_options->size)
     scale = paint_core->cur_coords.pressure;

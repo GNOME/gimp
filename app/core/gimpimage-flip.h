@@ -21,6 +21,7 @@
 
 
 void   gimp_image_flip (GimpImage           *gimage,
+                        GimpContext         *context,
                         GimpOrientationType  flip_type,
                         GimpProgressFunc     progress_func,
                         gpointer             progress_data);

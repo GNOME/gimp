@@ -23,6 +23,7 @@
 #include "core-types.h"
 
 #include "gimp.h"
+#include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimpimage-flip.h"
 #include "gimpimage-guides.h"
@@ -34,6 +35,7 @@
 
 void
 gimp_image_flip (GimpImage           *gimage,
+                 GimpContext         *context,
                  GimpOrientationType  flip_type,
                  GimpProgressFunc     progress_func,
                  gpointer             progress_data)
@@ -45,6 +47,7 @@ gimp_image_flip (GimpImage           *gimage,
   gint      progress_current = 1;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   gimp_set_busy (gimage->gimp);
 
@@ -77,7 +80,7 @@ gimp_image_flip (GimpImage           *gimage,
     {
       item = (GimpItem *) list->data;
 
-      gimp_item_flip (item, flip_type, axis, TRUE);
+      gimp_item_flip (item, context, flip_type, axis, TRUE);
 
       if (progress_func)
         (* progress_func) (0, progress_max, progress_current++, progress_data);
@@ -90,14 +93,14 @@ gimp_image_flip (GimpImage           *gimage,
     {
       item = (GimpItem *) list->data;
 
-      gimp_item_flip (item, flip_type, axis, FALSE);
+      gimp_item_flip (item, context, flip_type, axis, FALSE);
 
       if (progress_func)
         (* progress_func) (0, progress_max, progress_current++, progress_data);
     }
 
   /*  Don't forget the selection mask!  */
-  gimp_item_flip (GIMP_ITEM (gimp_image_get_mask (gimage)),
+  gimp_item_flip (GIMP_ITEM (gimp_image_get_mask (gimage)), context,
                   flip_type, axis, TRUE);
 
   if (progress_func)
@@ -110,7 +113,7 @@ gimp_image_flip (GimpImage           *gimage,
     {
       item = (GimpItem *) list->data;
 
-      gimp_item_flip (item, flip_type, axis, FALSE);
+      gimp_item_flip (item, context, flip_type, axis, FALSE);
 
       if (progress_func)
         (* progress_func) (0, progress_max, progress_current++, progress_data);

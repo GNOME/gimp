@@ -25,6 +25,7 @@
 
 #include "gui-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-offset.h"
@@ -252,6 +253,7 @@ offset_response (GtkWidget    *widget,
                                               1));
 
           gimp_drawable_offset (drawable,
+                                gimp_get_user_context (gimage->gimp),
                                 off_d->wrap_around, off_d->fill_type,
                                 offset_x, offset_y);
           gimp_image_flush (gimage);

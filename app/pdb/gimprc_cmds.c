@@ -56,8 +56,9 @@ register_gimprc_procs (Gimp *gimp)
 }
 
 static Argument *
-gimprc_query_invoker (Gimp     *gimp,
-                      Argument *args)
+gimprc_query_invoker (Gimp        *gimp,
+                      GimpContext *context,
+                      Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -120,8 +121,9 @@ static ProcRecord gimprc_query_proc =
 };
 
 static Argument *
-gimprc_set_invoker (Gimp     *gimp,
-                    Argument *args)
+gimprc_set_invoker (Gimp        *gimp,
+                    GimpContext *context,
+                    Argument    *args)
 {
   gboolean success = TRUE;
   gchar *token;
@@ -175,8 +177,9 @@ static ProcRecord gimprc_set_proc =
 };
 
 static Argument *
-get_default_comment_invoker (Gimp     *gimp,
-                             Argument *args)
+get_default_comment_invoker (Gimp        *gimp,
+                             GimpContext *context,
+                             Argument    *args)
 {
   Argument *return_args;
   gchar *comment;
@@ -215,8 +218,9 @@ static ProcRecord get_default_comment_proc =
 };
 
 static Argument *
-get_monitor_resolution_invoker (Gimp     *gimp,
-                                Argument *args)
+get_monitor_resolution_invoker (Gimp        *gimp,
+                                GimpContext *context,
+                                Argument    *args)
 {
   Argument *return_args;
   gdouble xres;
@@ -264,8 +268,9 @@ static ProcRecord get_monitor_resolution_proc =
 };
 
 static Argument *
-get_theme_dir_invoker (Gimp     *gimp,
-                       Argument *args)
+get_theme_dir_invoker (Gimp        *gimp,
+                       GimpContext *context,
+                       Argument    *args)
 {
   Argument *return_args;
   gchar *theme_dir;
@@ -304,8 +309,9 @@ static ProcRecord get_theme_dir_proc =
 };
 
 static Argument *
-get_module_load_inhibit_invoker (Gimp     *gimp,
-                                 Argument *args)
+get_module_load_inhibit_invoker (Gimp        *gimp,
+                                 GimpContext *context,
+                                 Argument    *args)
 {
   Argument *return_args;
   gchar *load_inhibit;

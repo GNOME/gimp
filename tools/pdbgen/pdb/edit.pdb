@@ -74,7 +74,7 @@ HELP
     &std_pdb_misc;
     &inargs('cut from');
     &outargs('cut');
-    &invoke('non_empty = gimp_edit_cut (gimage, drawable) != NULL');
+    &invoke('non_empty = gimp_edit_cut (gimage, drawable, context) != NULL');
 }
 
 sub edit_copy {
@@ -91,7 +91,7 @@ HELP
     &std_pdb_misc;
     &inargs('copy from');
     &outargs('copy');
-    &invoke('non_empty = gimp_edit_copy (gimage, drawable) != NULL');
+    &invoke('non_empty = gimp_edit_copy (gimage, drawable, context) != NULL');
 }
 
 sub edit_paste {
@@ -157,7 +157,7 @@ HELP
 
     &std_pdb_misc;
     &inargs('clear from');
-    &invoke('success = gimp_edit_clear (gimage, drawable)');
+    &invoke('success = gimp_edit_clear (gimage, drawable, context)');
 }
 
 sub edit_fill {
@@ -180,7 +180,7 @@ HELP
 	{ name => 'fill_type', type => 'enum GimpFillType',
 	  desc => 'The type of fill: %%desc%%' }
     );
-    &invoke('success = gimp_edit_fill (gimage, drawable, (GimpFillType) fill_type)');
+    &invoke('success = gimp_edit_fill (gimage, drawable, context, (GimpFillType) fill_type)');
 }
 
 sub edit_bucket_fill {
@@ -247,7 +247,7 @@ HELP
 
       do_seed_fill = gimp_channel_is_empty (gimp_image_get_mask (gimage));
 
-      gimp_drawable_bucket_fill (drawable, fill_mode,
+      gimp_drawable_bucket_fill (drawable, context, fill_mode,
                                  paint_mode, opacity / 100.0,
                                  do_seed_fill,
                                  FALSE /* don't fill transparent */,
@@ -321,6 +321,7 @@ HELP
   else
     {
       gimp_drawable_blend (drawable,
+                           context,
                            blend_mode,
                            paint_mode,
                            gradient_type,
@@ -357,7 +358,7 @@ HELP
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  tool_info = gimp_context_get_tool (gimp_get_current_context (gimp));
+  tool_info = gimp_context_get_tool (context);
 
   success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (gimage)),
                               drawable,

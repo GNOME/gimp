@@ -58,12 +58,14 @@ GimpChannel * gimp_selection_save       (GimpChannel  *selection);
 
 TileManager * gimp_selection_extract    (GimpChannel  *selection,
                                          GimpDrawable *drawable,
+                                         GimpContext  *context,
                                          gboolean      cut_image,
                                          gboolean      keep_indexed,
                                          gboolean      add_alpha);
 
 GimpLayer   * gimp_selection_float      (GimpChannel  *selection,
                                          GimpDrawable *drawable,
+                                         GimpContext  *context,
                                          gboolean      cut_image,
                                          gint          off_x,
                                          gint          off_y);

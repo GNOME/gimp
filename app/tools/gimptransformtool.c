@@ -807,10 +807,12 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
 {
   GimpTool             *tool = GIMP_TOOL (tr_tool);
   GimpTransformOptions *options;
+  GimpContext          *context;
   GimpProgress         *progress;
   TileManager          *ret  = NULL;
 
   options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
+  context = GIMP_CONTEXT (options);
 
   if (tr_tool->info_dialog)
     gtk_widget_set_sensitive (GTK_WIDGET (tr_tool->info_dialog->shell), FALSE);
@@ -819,7 +821,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                   NULL, NULL);
 
   if (gimp_item_get_linked (active_item))
-    gimp_item_linked_transform (active_item,
+    gimp_item_linked_transform (active_item, context,
                                 &tr_tool->transform,
                                 options->direction,
                                 options->interpolation,
@@ -846,6 +848,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
 
         ret =
           gimp_drawable_transform_tiles_affine (GIMP_DRAWABLE (active_item),
+                                                context,
                                                 tr_tool->original,
                                                 &tr_tool->transform,
                                                 options->direction,
@@ -861,7 +864,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:
-      gimp_item_transform (active_item,
+      gimp_item_transform (active_item, context,
                            &tr_tool->transform,
                            options->direction,
                            options->interpolation,
@@ -887,11 +890,13 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
 {
   GimpTool             *tool        = GIMP_TOOL (tr_tool);
   GimpTransformOptions *options;
+  GimpContext          *context;
   GimpItem             *active_item = NULL;
   TileManager          *new_tiles;
   gboolean              new_layer;
 
   options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
+  context = GIMP_CONTEXT (options);
 
   switch (options->type)
     {
@@ -938,6 +943,7 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
     {
     case GIMP_TRANSFORM_TYPE_LAYER:
       tr_tool->original = gimp_drawable_transform_cut (tool->drawable,
+                                                       context,
                                                        &new_layer);
       break;
 

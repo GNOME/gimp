@@ -32,7 +32,6 @@
 #include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
@@ -48,6 +47,7 @@
 GimpLayer *
 text_render (GimpImage    *gimage,
 	     GimpDrawable *drawable,
+             GimpContext  *context,
 	     gint          text_x,
 	     gint          text_y,
 	     const gchar  *fontname,
@@ -66,6 +66,7 @@ text_render (GimpImage    *gimage,
   g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), FALSE);
   g_return_val_if_fail (drawable == NULL ||
                         gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (fontname != NULL, FALSE);
   g_return_val_if_fail (text != NULL, FALSE);
 
@@ -80,8 +81,7 @@ text_render (GimpImage    *gimage,
 
   pango_font_description_free (desc);
 
-  gimp_context_get_foreground (gimp_get_current_context (gimage->gimp),
-                               &color);
+  gimp_context_get_foreground (context, &color);
 
   gtext = g_object_new (GIMP_TYPE_TEXT,
                         "text",      text,

@@ -27,6 +27,7 @@
 
 GimpLayer * text_render      (GimpImage    *gimage,
 			      GimpDrawable *drawable,
+                              GimpContext  *context,
 			      gint          text_x,
 			      gint          text_y,
 			      const gchar  *fontname,

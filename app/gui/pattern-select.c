@@ -66,6 +66,7 @@ static GSList *pattern_active_dialogs = NULL;
 
 PatternSelect *
 pattern_select_new (Gimp        *gimp,
+                    GimpContext *context,
                     const gchar *title,
 		    const gchar *initial_pattern,
                     const gchar *callback_name)
@@ -74,6 +75,7 @@ pattern_select_new (Gimp        *gimp,
   GimpPattern   *active = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (title != NULL, NULL);
 
   if (gimp->no_data)
@@ -94,7 +96,7 @@ pattern_select_new (Gimp        *gimp,
     }
 
   if (! active)
-    active = gimp_context_get_pattern (gimp_get_current_context (gimp));
+    active = gimp_context_get_pattern (context);
 
   if (! active)
     return NULL;
@@ -235,6 +237,7 @@ pattern_select_change_callbacks (PatternSelect *psp,
 
       return_vals =
 	procedural_db_run_proc (psp->context->gimp,
+                                psp->context,
 				psp->callback_name,
 				&nreturn_vals,
 				GIMP_PDB_STRING,    GIMP_OBJECT (pattern)->name,

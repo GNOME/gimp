@@ -136,6 +136,7 @@ static void     gradient_put_pixel          (gint          x,
 
 static void     gradient_fill_region        (GimpImage        *gimage,
                                              GimpDrawable     *drawable,
+                                             GimpContext      *context,
                                              PixelRegion      *PR,
                                              gint              width,
                                              gint              height,
@@ -174,6 +175,7 @@ static PixelRegion distR =
 
 void
 gimp_drawable_blend (GimpDrawable         *drawable,
+                     GimpContext          *context,
                      GimpBlendMode         blend_mode,
                      GimpLayerModeEffects  paint_mode,
                      GimpGradientType      gradient_type,
@@ -199,6 +201,7 @@ gimp_drawable_blend (GimpDrawable         *drawable,
   gint         x1, y1, x2, y2;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -219,7 +222,7 @@ gimp_drawable_blend (GimpDrawable         *drawable,
   buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1), bytes);
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
 
-  gradient_fill_region (gimage, drawable,
+  gradient_fill_region (gimage, drawable, context,
 			&bufPR, (x2 - x1), (y2 - y1),
 			blend_mode, gradient_type, offset, repeat, reverse,
 			supersample, max_depth, threshold, dither,
@@ -897,6 +900,7 @@ gradient_put_pixel (gint      x,
 static void
 gradient_fill_region (GimpImage        *gimage,
 		      GimpDrawable     *drawable,
+                      GimpContext      *context,
 		      PixelRegion      *PR,
 		      gint              width,
 		      gint              height,
@@ -922,10 +926,7 @@ gradient_fill_region (GimpImage        *gimage,
   gpointer         pr;
   guchar          *data;
   GimpRGB          color;
-  GimpContext     *context;
   GRand           *dither_rand = NULL;
-
-  context = gimp_get_current_context (gimage->gimp);
 
   rbd.gradient = gimp_context_get_gradient (context);
   rbd.reverse  = reverse;

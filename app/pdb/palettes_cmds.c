@@ -55,8 +55,9 @@ register_palettes_procs (Gimp *gimp)
 }
 
 static Argument *
-palettes_refresh_invoker (Gimp     *gimp,
-                          Argument *args)
+palettes_refresh_invoker (Gimp        *gimp,
+                          GimpContext *context,
+                          Argument    *args)
 {
   gimp_data_factory_data_save (gimp->palette_factory);
   gimp_data_factory_data_init (gimp->palette_factory, FALSE);
@@ -80,8 +81,9 @@ static ProcRecord palettes_refresh_proc =
 };
 
 static Argument *
-palettes_get_list_invoker (Gimp     *gimp,
-                           Argument *args)
+palettes_get_list_invoker (Gimp        *gimp,
+                           GimpContext *context,
+                           Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -147,14 +149,15 @@ static ProcRecord palettes_get_list_proc =
 };
 
 static Argument *
-palettes_get_palette_invoker (Gimp     *gimp,
-                              Argument *args)
+palettes_get_palette_invoker (Gimp        *gimp,
+                              GimpContext *context,
+                              Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
   GimpPalette *palette;
 
-  success = (palette = gimp_context_get_palette (gimp_get_current_context (gimp))) != NULL;
+  success = (palette = gimp_context_get_palette (context)) != NULL;
 
   return_args = procedural_db_return_args (&palettes_get_palette_proc, success);
 
@@ -198,8 +201,9 @@ static ProcRecord palettes_get_palette_proc =
 };
 
 static Argument *
-palettes_set_palette_invoker (Gimp     *gimp,
-                              Argument *args)
+palettes_set_palette_invoker (Gimp        *gimp,
+                              GimpContext *context,
+                              Argument    *args)
 {
   gboolean success = TRUE;
   gchar *name;
@@ -215,7 +219,7 @@ palettes_set_palette_invoker (Gimp     *gimp,
         gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
       if (palette)
-        gimp_context_set_palette (gimp_get_current_context (gimp), palette);
+        gimp_context_set_palette (context, palette);
       else
         success = FALSE;
     }
@@ -249,8 +253,9 @@ static ProcRecord palettes_set_palette_proc =
 };
 
 static Argument *
-palettes_get_palette_entry_invoker (Gimp     *gimp,
-                                    Argument *args)
+palettes_get_palette_entry_invoker (Gimp        *gimp,
+                                    GimpContext *context,
+                                    Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -275,7 +280,7 @@ palettes_get_palette_entry_invoker (Gimp     *gimp,
         }
       else
         {
-          palette = gimp_context_get_palette (gimp_get_current_context (gimp));
+          palette = gimp_context_get_palette (context);
         }
 
       if (palette)

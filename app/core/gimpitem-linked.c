@@ -22,6 +22,7 @@
 
 #include "core-types.h"
 
+#include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimpitem.h"
 #include "gimpitem-linked.h"
@@ -58,6 +59,7 @@ gimp_item_linked_translate (GimpItem *item,
 
 void
 gimp_item_linked_flip (GimpItem            *item,
+                       GimpContext         *context,
                        GimpOrientationType  flip_type,
                        gdouble              axis,
                        gboolean             clip_result)
@@ -67,6 +69,7 @@ gimp_item_linked_flip (GimpItem            *item,
   GList     *list;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (gimp_item_get_linked (item) == TRUE);
 
   gimage = gimp_item_get_image (item);
@@ -76,7 +79,7 @@ gimp_item_linked_flip (GimpItem            *item,
   linked_list = gimp_item_linked_get_list (gimage, item, GIMP_ITEM_LINKED_ALL);
 
   for (list = linked_list; list; list = g_list_next (list))
-    gimp_item_flip (GIMP_ITEM (list->data),
+    gimp_item_flip (GIMP_ITEM (list->data), context,
                     flip_type, axis, clip_result);
 
   g_list_free (linked_list);
@@ -84,6 +87,7 @@ gimp_item_linked_flip (GimpItem            *item,
 
 void
 gimp_item_linked_rotate (GimpItem         *item,
+                         GimpContext      *context,
                          GimpRotationType  rotate_type,
                          gdouble           center_x,
                          gdouble           center_y,
@@ -94,6 +98,7 @@ gimp_item_linked_rotate (GimpItem         *item,
   GList     *list;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (gimp_item_get_linked (item) == TRUE);
 
   gimage = gimp_item_get_image (item);
@@ -105,7 +110,7 @@ gimp_item_linked_rotate (GimpItem         *item,
                                            GIMP_ITEM_LINKED_VECTORS);
 
   for (list = linked_list; list; list = g_list_next (list))
-    gimp_item_rotate (GIMP_ITEM (list->data),
+    gimp_item_rotate (GIMP_ITEM (list->data), context,
                       rotate_type, center_x, center_y, clip_result);
 
   g_list_free (linked_list);
@@ -114,7 +119,7 @@ gimp_item_linked_rotate (GimpItem         *item,
                                            GIMP_ITEM_LINKED_CHANNELS);
 
   for (list = linked_list; list; list = g_list_next (list))
-    gimp_item_rotate (GIMP_ITEM (list->data),
+    gimp_item_rotate (GIMP_ITEM (list->data), context,
                       rotate_type, center_x, center_y, TRUE);
 
   g_list_free (linked_list);
@@ -122,6 +127,7 @@ gimp_item_linked_rotate (GimpItem         *item,
 
 void
 gimp_item_linked_transform (GimpItem               *item,
+                            GimpContext            *context,
                             const GimpMatrix3      *matrix,
                             GimpTransformDirection  direction,
                             GimpInterpolationType   interpolation_type,
@@ -136,6 +142,7 @@ gimp_item_linked_transform (GimpItem               *item,
   GList     *list;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (gimp_item_get_linked (item) == TRUE);
 
   gimage = gimp_item_get_image (item);
@@ -145,7 +152,7 @@ gimp_item_linked_transform (GimpItem               *item,
   linked_list = gimp_item_linked_get_list (gimage, item, GIMP_ITEM_LINKED_ALL);
 
   for (list = linked_list; list; list = g_list_next (list))
-    gimp_item_transform (GIMP_ITEM (list->data),
+    gimp_item_transform (GIMP_ITEM (list->data), context,
                          matrix, direction,
                          interpolation_type,
                          supersample, recursion_level,
@@ -160,11 +167,11 @@ gimp_item_linked_transform (GimpItem               *item,
  * @gimage: The image @item is part of.
  * @item:   An @item to skip in the returned list.
  * @which:  Which items to return.
- * 
+ *
  * This function returns a #GList og #GimpItem's for which the
- * "linked" property is #TRUE. Note that the passed in @item 
+ * "linked" property is #TRUE. Note that the passed in @item
  * must be linked too.
- * 
+ *
  * Return value: The list of linked items, excluding the passed @item.
  **/
 GList *

@@ -47,6 +47,7 @@
 
 void
 gimp_drawable_bucket_fill (GimpDrawable       *drawable,
+                           GimpContext        *context,
                            GimpBucketFillMode  fill_mode,
                            gint                paint_mode,
                            gdouble             opacity,
@@ -62,6 +63,7 @@ gimp_drawable_bucket_fill (GimpDrawable       *drawable,
   GimpPattern *pattern = NULL;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -69,18 +71,15 @@ gimp_drawable_bucket_fill (GimpDrawable       *drawable,
 
   if (fill_mode == GIMP_FG_BUCKET_FILL)
     {
-      gimp_context_get_foreground (gimp_get_current_context (gimage->gimp),
-                                   &color);
+      gimp_context_get_foreground (context, &color);
     }
   else if (fill_mode == GIMP_BG_BUCKET_FILL)
     {
-      gimp_context_get_background (gimp_get_current_context (gimage->gimp),
-                                   &color);
+      gimp_context_get_background (context, &color);
     }
   else if (fill_mode == GIMP_PATTERN_BUCKET_FILL)
     {
-      pattern =
-        gimp_context_get_pattern (gimp_get_current_context (gimage->gimp));
+      pattern = gimp_context_get_pattern (context);
 
       if (! pattern)
 	{

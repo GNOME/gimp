@@ -47,8 +47,9 @@ register_font_select_procs (Gimp *gimp)
 }
 
 static Argument *
-fonts_popup_invoker (Gimp     *gimp,
-                     Argument *args)
+fonts_popup_invoker (Gimp        *gimp,
+                     GimpContext *context,
+                     Argument    *args)
 {
   gboolean success = TRUE;
   gchar *font_callback;
@@ -73,7 +74,8 @@ fonts_popup_invoker (Gimp     *gimp,
       if (! gimp->no_interface &&
           (proc = procedural_db_lookup (gimp, font_callback)))
         {
-          font_select_new (gimp, popup_title, initial_font, font_callback);
+          font_select_new (gimp, context, popup_title,
+                           initial_font, font_callback);
         }
       else
         success = FALSE;
@@ -118,8 +120,9 @@ static ProcRecord fonts_popup_proc =
 };
 
 static Argument *
-fonts_close_popup_invoker (Gimp     *gimp,
-                           Argument *args)
+fonts_close_popup_invoker (Gimp        *gimp,
+                           GimpContext *context,
+                           Argument    *args)
 {
   gboolean success = TRUE;
   gchar *font_callback;
@@ -171,8 +174,9 @@ static ProcRecord fonts_close_popup_proc =
 };
 
 static Argument *
-fonts_set_popup_invoker (Gimp     *gimp,
-                         Argument *args)
+fonts_set_popup_invoker (Gimp        *gimp,
+                         GimpContext *context,
+                         Argument    *args)
 {
   gboolean success = TRUE;
   gchar *font_callback;

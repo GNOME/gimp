@@ -239,11 +239,13 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
 {
   GimpTransformOptions *tr_options;
   GimpFlipOptions      *options;
+  GimpContext          *context;
   gdouble               axis = 0.0;
   TileManager          *ret  = NULL;
 
   options = GIMP_FLIP_OPTIONS (GIMP_TOOL (trans_tool)->tool_info->tool_options);
   tr_options = GIMP_TRANSFORM_OPTIONS (options);
+  context    = GIMP_CONTEXT (options);
 
   switch (options->flip_type)
     {
@@ -262,20 +264,22 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
     }
 
   if (gimp_item_get_linked (active_item))
-    gimp_item_linked_flip (active_item, options->flip_type, axis, FALSE);
+    gimp_item_linked_flip (active_item, context, options->flip_type, axis,
+                           FALSE);
 
   switch (tr_options->type)
     {
     case GIMP_TRANSFORM_TYPE_LAYER:
     case GIMP_TRANSFORM_TYPE_SELECTION:
       ret = gimp_drawable_transform_tiles_flip (GIMP_DRAWABLE (active_item),
+                                                context,
                                                 trans_tool->original,
                                                 options->flip_type, axis,
                                                 FALSE);
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:
-      gimp_item_flip (active_item, options->flip_type, axis, FALSE);
+      gimp_item_flip (active_item, context, options->flip_type, axis, FALSE);
       break;
     }
 

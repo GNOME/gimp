@@ -44,8 +44,9 @@ register_fonts_procs (Gimp *gimp)
 }
 
 static Argument *
-fonts_refresh_invoker (Gimp     *gimp,
-                       Argument *args)
+fonts_refresh_invoker (Gimp        *gimp,
+                       GimpContext *context,
+                       Argument    *args)
 {
   gimp_fonts_load (gimp);
   return procedural_db_return_args (&fonts_refresh_proc, TRUE);
@@ -68,8 +69,9 @@ static ProcRecord fonts_refresh_proc =
 };
 
 static Argument *
-fonts_get_list_invoker (Gimp     *gimp,
-                        Argument *args)
+fonts_get_list_invoker (Gimp        *gimp,
+                        GimpContext *context,
+                        Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;

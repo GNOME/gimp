@@ -56,8 +56,9 @@ register_transform_tools_procs (Gimp *gimp)
 }
 
 static Argument *
-flip_invoker (Gimp     *gimp,
-              Argument *args)
+flip_invoker (Gimp        *gimp,
+              GimpContext *context,
+              Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -77,7 +78,7 @@ flip_invoker (Gimp     *gimp,
       success = gimp_item_is_attached (GIMP_ITEM (drawable));
 
       if (success)
-        success = gimp_drawable_transform_flip (drawable, flip_type);
+        success = gimp_drawable_transform_flip (drawable, context, flip_type);
     }
 
   return_args = procedural_db_return_args (&flip_proc, success);
@@ -128,8 +129,9 @@ static ProcRecord flip_proc =
 };
 
 static Argument *
-perspective_invoker (Gimp     *gimp,
-                     Argument *args)
+perspective_invoker (Gimp        *gimp,
+                     GimpContext *context,
+                     Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -185,7 +187,7 @@ perspective_invoker (Gimp     *gimp,
             interpolation_type = GIMP_INTERPOLATION_NONE;
 
           /* Perspective the selection */
-          success = gimp_drawable_transform_affine (drawable,
+          success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
                                                     interpolation_type, TRUE, 3,
                                                     FALSE);
@@ -281,8 +283,9 @@ static ProcRecord perspective_proc =
 };
 
 static Argument *
-rotate_invoker (Gimp     *gimp,
-                Argument *args)
+rotate_invoker (Gimp        *gimp,
+                GimpContext *context,
+                Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -319,7 +322,7 @@ rotate_invoker (Gimp     *gimp,
             interpolation_type = GIMP_INTERPOLATION_NONE;
 
           /* Rotate the selection */
-          success = gimp_drawable_transform_affine (drawable,
+          success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
                                                     interpolation_type, FALSE, 3,
                                                     FALSE);
@@ -379,8 +382,9 @@ static ProcRecord rotate_proc =
 };
 
 static Argument *
-scale_invoker (Gimp     *gimp,
-               Argument *args)
+scale_invoker (Gimp        *gimp,
+               GimpContext *context,
+               Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -428,7 +432,7 @@ scale_invoker (Gimp     *gimp,
             interpolation_type = GIMP_INTERPOLATION_NONE;
 
           /* Scale the selection */
-          success = gimp_drawable_transform_affine (drawable,
+          success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
                                                     interpolation_type, TRUE, 3,
                                                     FALSE);
@@ -503,8 +507,9 @@ static ProcRecord scale_proc =
 };
 
 static Argument *
-shear_invoker (Gimp     *gimp,
-               Argument *args)
+shear_invoker (Gimp        *gimp,
+               GimpContext *context,
+               Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -548,7 +553,7 @@ shear_invoker (Gimp     *gimp,
             interpolation_type = GIMP_INTERPOLATION_NONE;
 
           /* Shear the selection */
-          success = gimp_drawable_transform_affine (drawable,
+          success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
                                                     interpolation_type, FALSE, 3,
                                                     FALSE);
@@ -613,8 +618,9 @@ static ProcRecord shear_proc =
 };
 
 static Argument *
-transform_2d_invoker (Gimp     *gimp,
-                      Argument *args)
+transform_2d_invoker (Gimp        *gimp,
+                      GimpContext *context,
+                      Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -670,7 +676,7 @@ transform_2d_invoker (Gimp     *gimp,
             interpolation_type = GIMP_INTERPOLATION_NONE;
 
           /* Transform the selection */
-          success = gimp_drawable_transform_affine (drawable,
+          success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
                                                     interpolation_type, TRUE, 3,
                                                     FALSE);

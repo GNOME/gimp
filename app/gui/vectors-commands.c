@@ -366,7 +366,7 @@ vectors_vectors_tool (GimpVectors *vectors)
 
       if (GIMP_IS_TOOL_INFO (tool_info))
         {
-          gimp_context_set_tool (gimp_get_current_context (gimage->gimp),
+          gimp_context_set_tool (gimp_get_user_context (gimage->gimp),
                                  tool_info);
 
           active_tool = tool_manager_get_active (gimage->gimp);

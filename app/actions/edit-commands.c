@@ -124,7 +124,7 @@ edit_cut_cmd_callback (GtkWidget *widget,
   GimpDrawable *drawable;
   return_if_no_drawable (gimage, drawable, data);
 
-  if (gimp_edit_cut (gimage, drawable))
+  if (gimp_edit_cut (gimage, drawable, gimp_get_user_context (gimage->gimp)))
     gimp_image_flush (gimage);
 }
 
@@ -136,7 +136,7 @@ edit_copy_cmd_callback (GtkWidget *widget,
   GimpDrawable *drawable;
   return_if_no_drawable (gimage, drawable, data);
 
-  if (gimp_edit_copy (gimage, drawable))
+  if (gimp_edit_copy (gimage, drawable, gimp_get_user_context (gimage->gimp)))
     gimp_image_flush (gimage);
 }
 
@@ -240,7 +240,7 @@ edit_clear_cmd_callback (GtkWidget *widget,
   GimpDrawable *drawable;
   return_if_no_drawable (gimage, drawable, data);
 
-  gimp_edit_clear (gimage, drawable);
+  gimp_edit_clear (gimage, drawable, gimp_get_user_context (gimage->gimp));
   gimp_image_flush (gimage);
 }
 
@@ -256,7 +256,8 @@ edit_fill_cmd_callback (GtkWidget *widget,
 
   fill_type = (GimpFillType) action;
 
-  gimp_edit_fill (gimage, drawable, fill_type);
+  gimp_edit_fill (gimage, drawable, gimp_get_user_context (gimage->gimp),
+                  fill_type);
   gimp_image_flush (gimage);
 }
 
@@ -317,7 +318,8 @@ cut_named_buffer_callback (GtkWidget   *widget,
       return;
     }
 
-  cut_buffer = gimp_edit_cut (gimage, active_drawable);
+  cut_buffer = gimp_edit_cut (gimage, active_drawable,
+                              gimp_get_user_context (gimage->gimp));
 
   if (cut_buffer)
     {
@@ -353,7 +355,8 @@ copy_named_buffer_callback (GtkWidget   *widget,
       return;
     }
 
-  copy_buffer = gimp_edit_copy (gimage, active_drawable);
+  copy_buffer = gimp_edit_copy (gimage, active_drawable,
+                                gimp_get_user_context (gimage->gimp));
 
   if (copy_buffer)
     {

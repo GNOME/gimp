@@ -114,6 +114,7 @@ static void   gimp_crop_tool_draw           (GimpDrawTool    *draw_tool);
 
 /*  Crop helper functions  */
 static void   crop_tool_crop_image          (GimpImage       *gimage,
+                                             GimpContext     *context,
 					     gint             x1,
 					     gint             y1,
 					     gint             x2,
@@ -325,6 +326,7 @@ gimp_crop_tool_button_release (GimpTool        *tool,
       if (crop->function == CROPPING)
 	{
           crop_tool_crop_image (gdisp->gimage,
+                                GIMP_CONTEXT (options),
                                 crop->x1, crop->y1,
                                 crop->x2, crop->y2,
                                 options->layer_only,
@@ -820,6 +822,7 @@ gimp_crop_tool_draw (GimpDrawTool *draw)
 
 static void
 crop_tool_crop_image (GimpImage    *gimage,
+                      GimpContext  *context,
 		      gint          x1,
 		      gint          y1,
 		      gint          x2,
@@ -830,7 +833,7 @@ crop_tool_crop_image (GimpImage    *gimage,
   if ((x1 == x2) || (y1 == y2))
     return;
 
-  gimp_image_crop (gimage,
+  gimp_image_crop (gimage, context,
 		   x1, y1, x2, y2,
 		   layer_only,
 		   crop_mode == GIMP_CROP_MODE_CROP);
@@ -1077,6 +1080,7 @@ crop_response (GtkWidget    *widget,
     case GIMP_CROP_MODE_CROP:
     case GIMP_CROP_MODE_RESIZE:
       crop_tool_crop_image (tool->gdisp->gimage,
+                            GIMP_CONTEXT (options),
                             crop->x1, crop->y1,
                             crop->x2, crop->y2,
                             options->layer_only,

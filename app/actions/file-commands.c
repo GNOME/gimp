@@ -175,7 +175,8 @@ file_last_opened_cmd_callback (GtkWidget *widget,
       GimpPDBStatusType  status;
       GError            *error = NULL;
 
-      gimage = file_open_with_display (gimp, GIMP_OBJECT (imagefile)->name,
+      gimage = file_open_with_display (gimp, gimp_get_user_context (gimp),
+                                       GIMP_OBJECT (imagefile)->name,
                                        &status, &error);
 
       if (! gimage && status != GIMP_PDB_CANCEL)
@@ -221,7 +222,9 @@ file_save_cmd_callback (GtkWidget *widget,
 	  GimpPDBStatusType  status;
           GError            *error = NULL;
 
-	  status = file_save (gdisp->gimage, GIMP_RUN_WITH_LAST_VALS, &error);
+	  status = file_save (gdisp->gimage,
+                              gimp_get_user_context (gdisp->gimage->gimp),
+                              GIMP_RUN_WITH_LAST_VALS, &error);
 
 	  if (status != GIMP_PDB_SUCCESS &&
 	      status != GIMP_PDB_CANCEL)
@@ -422,7 +425,8 @@ file_revert_confirm_callback (GtkWidget *widget,
 
       uri = gimp_object_get_name (GIMP_OBJECT (old_gimage));
 
-      new_gimage = file_open_image (gimp, uri, uri, NULL,
+      new_gimage = file_open_image (gimp, gimp_get_user_context (gimp),
+                                    uri, uri, NULL,
 				    GIMP_RUN_INTERACTIVE,
 				    &status, &error);
 

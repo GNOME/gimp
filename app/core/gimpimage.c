@@ -1691,12 +1691,10 @@ gimp_image_flush (GimpImage *gimage)
 
 /*  color transforms / utilities  */
 
-
-/* Get rid of these! A "foreground" is an UI concept.. */
-
 void
 gimp_image_get_foreground (const GimpImage    *gimage,
 			   const GimpDrawable *drawable,
+                           GimpContext        *context,
 			   guchar             *fg)
 {
   GimpRGB  color;
@@ -1704,10 +1702,10 @@ gimp_image_get_foreground (const GimpImage    *gimage,
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (! drawable || GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (fg != NULL);
 
-  gimp_context_get_foreground (gimp_get_current_context (gimage->gimp),
-                               &color);
+  gimp_context_get_foreground (context, &color);
 
   gimp_rgb_get_uchar (&color, &pfg[0], &pfg[1], &pfg[2]);
 
@@ -1717,6 +1715,7 @@ gimp_image_get_foreground (const GimpImage    *gimage,
 void
 gimp_image_get_background (const GimpImage    *gimage,
 			   const GimpDrawable *drawable,
+                           GimpContext        *context,
 			   guchar             *bg)
 {
   GimpRGB  color;
@@ -1724,10 +1723,10 @@ gimp_image_get_background (const GimpImage    *gimage,
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (! drawable || GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (bg != NULL);
 
-  gimp_context_get_background (gimp_get_current_context (gimage->gimp),
-                               &color);
+  gimp_context_get_background (context, &color);
 
   gimp_rgb_get_uchar (&color, &pbg[0], &pbg[1], &pbg[2]);
 
@@ -1785,6 +1784,24 @@ gimp_image_get_color (const GimpImage *src_gimage,
     *rgba = *src;
   else
     *rgba = OPAQUE_OPACITY;
+}
+
+void
+gimp_image_transform_rgb (const GimpImage    *dest_gimage,
+                          const GimpDrawable *dest_drawable,
+                          const GimpRGB      *rgb,
+                          guchar             *color)
+{
+  guchar col[3];
+
+  g_return_if_fail (GIMP_IS_IMAGE (dest_gimage));
+  g_return_if_fail (! dest_drawable || GIMP_IS_DRAWABLE (dest_drawable));
+  g_return_if_fail (rgb != NULL);
+  g_return_if_fail (color != NULL);
+
+  gimp_rgb_get_uchar (rgb, &col[0], &col[1], &col[2]);
+
+  gimp_image_transform_color (dest_gimage, dest_drawable, color, GIMP_RGB, col);
 }
 
 void

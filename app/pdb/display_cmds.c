@@ -50,8 +50,9 @@ register_display_procs (Gimp *gimp)
 }
 
 static Argument *
-display_new_invoker (Gimp     *gimp,
-                     Argument *args)
+display_new_invoker (Gimp        *gimp,
+                     GimpContext *context,
+                     Argument    *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -116,8 +117,9 @@ static ProcRecord display_new_proc =
 };
 
 static Argument *
-display_delete_invoker (Gimp     *gimp,
-                        Argument *args)
+display_delete_invoker (Gimp        *gimp,
+                        GimpContext *context,
+                        Argument    *args)
 {
   gboolean success = TRUE;
   GimpDisplay *display;
@@ -158,8 +160,9 @@ static ProcRecord display_delete_proc =
 };
 
 static Argument *
-displays_flush_invoker (Gimp     *gimp,
-                        Argument *args)
+displays_flush_invoker (Gimp        *gimp,
+                        GimpContext *context,
+                        Argument    *args)
 {
   gimp_container_foreach (gimp->images, (GFunc) gimp_image_flush, NULL);
   return procedural_db_return_args (&displays_flush_proc, TRUE);
@@ -182,8 +185,9 @@ static ProcRecord displays_flush_proc =
 };
 
 static Argument *
-displays_reconnect_invoker (Gimp     *gimp,
-                            Argument *args)
+displays_reconnect_invoker (Gimp        *gimp,
+                            GimpContext *context,
+                            Argument    *args)
 {
   gboolean success = TRUE;
   GimpImage *old_image;

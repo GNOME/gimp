@@ -43,8 +43,9 @@ register_misc_procs (Gimp *gimp)
 }
 
 static Argument *
-version_invoker (Gimp     *gimp,
-                 Argument *args)
+version_invoker (Gimp        *gimp,
+                 GimpContext *context,
+                 Argument    *args)
 {
   Argument *return_args;
 
@@ -80,8 +81,9 @@ static ProcRecord version_proc =
 };
 
 static Argument *
-quit_invoker (Gimp     *gimp,
-              Argument *args)
+quit_invoker (Gimp        *gimp,
+              GimpContext *context,
+              Argument    *args)
 {
   gboolean force;
 

@@ -33,6 +33,7 @@ struct _PaletteSelect
 
 
 PaletteSelect * palette_select_new             (Gimp          *gimp,
+                                                GimpContext   *context,
                                                 const gchar   *title,
                                                 const gchar   *initial_palette,
                                                 const gchar   *callback_name);

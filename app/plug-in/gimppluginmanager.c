@@ -909,8 +909,11 @@ plug_ins_init_file (const GimpDatafileData *file_data,
 static void
 plug_ins_add_to_db (Gimp *gimp)
 {
+  GimpContext   *context;
   PlugInProcDef *proc_def;
   GSList        *list;
+
+  context = gimp_context_new (gimp, "temp", NULL);
 
   for (list = gimp->plug_in_proc_defs; list; list = g_slist_next (list))
     {
@@ -947,7 +950,7 @@ plug_ins_add_to_db (Gimp *gimp)
           if (proc_def->image_types)
             {
               return_vals =
-		procedural_db_execute (gimp,
+		procedural_db_execute (gimp, context,
 				       "gimp_register_save_handler",
 				       args);
               g_free (return_vals);
@@ -955,13 +958,15 @@ plug_ins_add_to_db (Gimp *gimp)
           else
             {
               return_vals =
-		procedural_db_execute (gimp,
+		procedural_db_execute (gimp, context,
 				       "gimp_register_magic_load_handler",
 				       args);
               g_free (return_vals);
             }
 	}
     }
+
+  g_object_unref (context);
 }
 
 static PlugInProcDef *

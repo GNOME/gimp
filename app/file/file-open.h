@@ -21,6 +21,7 @@
 
 
 GimpImage * file_open_image                 (Gimp               *gimp,
+                                             GimpContext        *context,
                                              const gchar        *uri,
                                              const gchar        *entered_filename,
                                              PlugInProcDef      *file_proc,
@@ -29,11 +30,13 @@ GimpImage * file_open_image                 (Gimp               *gimp,
                                              GError            **error);
 
 GimpImage * file_open_with_display          (Gimp               *gimp,
+                                             GimpContext        *context,
                                              const gchar        *uri,
                                              GimpPDBStatusType  *status,
                                              GError            **error);
 
 GimpImage * file_open_with_proc_and_display (Gimp               *gimp,
+                                             GimpContext        *context,
                                              const gchar        *uri,
                                              const gchar        *entered_filename,
                                              PlugInProcDef      *file_proc,

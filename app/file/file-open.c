@@ -41,6 +41,7 @@
 #include "core/core-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimagefile.h"
@@ -61,6 +62,7 @@
 
 GimpImage *
 file_open_image (Gimp               *gimp,
+                 GimpContext        *context,
 		 const gchar        *uri,
 		 const gchar        *entered_filename,
 		 PlugInProcDef      *file_proc,
@@ -76,6 +78,7 @@ file_open_image (Gimp               *gimp,
   gchar            *filename;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (status != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
@@ -127,7 +130,7 @@ file_open_image (Gimp               *gimp,
   args[1].value.pdb_pointer = filename ? filename : (gchar *) uri;
   args[2].value.pdb_pointer = (gchar *) entered_filename;
 
-  return_vals = procedural_db_execute (gimp, proc->name, args);
+  return_vals = procedural_db_execute (gimp, context, proc->name, args);
 
   if (filename)
     g_free (filename);
@@ -179,15 +182,18 @@ file_open_image (Gimp               *gimp,
 
 GimpImage *
 file_open_with_display (Gimp               *gimp,
+                        GimpContext        *context,
                         const gchar        *uri,
                         GimpPDBStatusType  *status,
                         GError            **error)
 {
-  return file_open_with_proc_and_display (gimp, uri, uri, NULL, status, error);
+  return file_open_with_proc_and_display (gimp, context,
+                                          uri, uri, NULL, status, error);
 }
 
 GimpImage *
 file_open_with_proc_and_display (Gimp               *gimp,
+                                 GimpContext        *context,
                                  const gchar        *uri,
                                  const gchar        *entered_filename,
                                  PlugInProcDef      *file_proc,
@@ -197,9 +203,10 @@ file_open_with_proc_and_display (Gimp               *gimp,
   GimpImage *gimage;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (status != NULL, NULL);
 
-  gimage = file_open_image (gimp,
+  gimage = file_open_image (gimp, context,
                             uri,
                             entered_filename,
                             file_proc,

@@ -85,20 +85,24 @@ static void       gimp_drawable_scale              (GimpItem          *item,
                                                     GimpProgressFunc    progress_callback,
                                                     gpointer            progress_data);
 static void       gimp_drawable_resize             (GimpItem          *item,
+                                                    GimpContext       *context,
                                                     gint               new_width,
                                                     gint               new_height,
                                                     gint               offset_x,
                                                     gint               offset_y);
 static void       gimp_drawable_flip               (GimpItem          *item,
+                                                    GimpContext       *context,
                                                     GimpOrientationType  flip_type,
                                                     gdouble            axis,
                                                     gboolean           clip_result);
 static void       gimp_drawable_rotate             (GimpItem          *item,
+                                                    GimpContext       *context,
                                                     GimpRotationType   rotate_type,
                                                     gdouble            center_x,
                                                     gdouble            center_y,
                                                     gboolean           clip_result);
 static void       gimp_drawable_transform          (GimpItem          *item,
+                                                    GimpContext       *context,
                                                     const GimpMatrix3 *matrix,
                                                     GimpTransformDirection  direction,
                                                     GimpInterpolationType   interpolation_type,
@@ -415,11 +419,12 @@ gimp_drawable_scale (GimpItem              *item,
 }
 
 static void
-gimp_drawable_resize (GimpItem *item,
-                      gint      new_width,
-                      gint      new_height,
-                      gint      offset_x,
-                      gint      offset_y)
+gimp_drawable_resize (GimpItem    *item,
+                      GimpContext *context,
+                      gint         new_width,
+                      gint         new_height,
+                      gint         offset_x,
+                      gint         offset_y)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
   PixelRegion   srcPR, destPR;
@@ -453,7 +458,8 @@ gimp_drawable_resize (GimpItem *item,
                          TRUE);
 
       if (! gimp_drawable_has_alpha (drawable) && ! GIMP_IS_CHANNEL (drawable))
-        gimp_image_get_background (gimp_item_get_image (item), drawable, bg);
+        gimp_image_get_background (gimp_item_get_image (item), drawable,
+                                   context, bg);
 
       color_region (&destPR, bg);
     }
@@ -482,6 +488,7 @@ gimp_drawable_resize (GimpItem *item,
 
 static void
 gimp_drawable_flip (GimpItem            *item,
+                    GimpContext         *context,
                     GimpOrientationType  flip_type,
                     gdouble              axis,
                     gboolean             clip_result)
@@ -496,7 +503,7 @@ gimp_drawable_flip (GimpItem            *item,
   tile_manager_get_offsets (drawable->tiles, &old_off_x, &old_off_y);
   tile_manager_set_offsets (drawable->tiles, off_x, off_y);
 
-  tiles = gimp_drawable_transform_tiles_flip (drawable,
+  tiles = gimp_drawable_transform_tiles_flip (drawable, context,
                                               drawable->tiles,
                                               flip_type, axis,
                                               clip_result);
@@ -512,6 +519,7 @@ gimp_drawable_flip (GimpItem            *item,
 
 static void
 gimp_drawable_rotate (GimpItem         *item,
+                      GimpContext      *context,
                       GimpRotationType  rotate_type,
                       gdouble           center_x,
                       gdouble           center_y,
@@ -527,7 +535,7 @@ gimp_drawable_rotate (GimpItem         *item,
   tile_manager_get_offsets (drawable->tiles, &old_off_x, &old_off_y);
   tile_manager_set_offsets (drawable->tiles, off_x, off_y);
 
-  tiles = gimp_drawable_transform_tiles_rotate (drawable,
+  tiles = gimp_drawable_transform_tiles_rotate (drawable, context,
                                                 drawable->tiles,
                                                 rotate_type, center_x, center_y,
                                                 clip_result);
@@ -543,6 +551,7 @@ gimp_drawable_rotate (GimpItem         *item,
 
 static void
 gimp_drawable_transform (GimpItem               *item,
+                         GimpContext            *context,
                          const GimpMatrix3      *matrix,
                          GimpTransformDirection  direction,
                          GimpInterpolationType   interpolation_type,
@@ -562,7 +571,7 @@ gimp_drawable_transform (GimpItem               *item,
   tile_manager_get_offsets (drawable->tiles, &old_off_x, &old_off_y);
   tile_manager_set_offsets (drawable->tiles, off_x, off_y);
 
-  tiles = gimp_drawable_transform_tiles_affine (drawable,
+  tiles = gimp_drawable_transform_tiles_affine (drawable, context,
                                                 drawable->tiles,
                                                 matrix, direction,
                                                 interpolation_type,

@@ -36,9 +36,10 @@ struct _BrushSelect
 
 
 BrushSelect * brush_select_new             (Gimp                 *gimp,
+                                            GimpContext          *context,
                                             const gchar          *title,
                                             const gchar          *initial_brush,
-                                            gdouble               initial_opacity, 
+                                            gdouble               initial_opacity,
                                             GimpLayerModeEffects  initial_mode,
                                             gint                  initial_spacing,
                                             const gchar          *callback_name);
