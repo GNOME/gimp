@@ -1,5 +1,9 @@
 2004-10-17  DindinX  <dindinx@gimp.org>
 
+	* plug-ins/common/colortoalpha.c: Added a preview.
+
+2004-10-17  DindinX  <dindinx@gimp.org>
+
 	* plug-ins/common/glasstile.c: use a GimpDrawablePreview.
 
 2004-10-17  DindinX  <dindinx@gimp.org>

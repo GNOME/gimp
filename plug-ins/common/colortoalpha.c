@@ -39,24 +39,31 @@
 typedef struct
 {
   GimpRGB  color;
+  gboolean preview;
 } C2AValues;
 
 
 /* Declare local functions.
  */
-static void        query               (void);
-static void        run                 (const gchar       *name,
-                                        gint               nparams,
-                                        const GimpParam   *param,
-                                        gint              *nreturn_vals,
-                                        GimpParam        **return_vals);
+static void        query                  (void);
+static void        run                    (const gchar       *name,
+                                           gint               nparams,
+                                           const GimpParam   *param,
+                                           gint              *nreturn_vals,
+                                           GimpParam        **return_vals);
 
-static void inline colortoalpha        (GimpRGB           *src,
-                                        const GimpRGB     *color);
-static void        toalpha             (GimpDrawable      *drawable);
+static void inline color_to_alpha         (GimpRGB           *src,
+                                           const GimpRGB     *color);
+static void        to_alpha               (GimpDrawable      *drawable);
+static void        to_alpha_func          (const guchar      *src,
+                                           guchar            *dest,
+                                           gint               bpp,
+                                           gpointer           data);
 
 /* UI stuff */
-static gboolean    colortoalpha_dialog (GimpDrawable      *drawable);
+static gboolean    color_to_alpha_dialog  (GimpDrawable      *drawable);
+static void        color_to_alpha_preview (GimpPreview       *preview,
+                                           GimpDrawable      *drawable);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -69,7 +76,8 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 static C2AValues pvals =
 {
-  { 1.0, 1.0, 1.0, 1.0 } /* white default */
+  { 1.0, 1.0, 1.0, 1.0 }, /* white default */
+  TRUE                    /* preview       */
 };
 
 
@@ -87,18 +95,18 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_colortoalpha",
-			  "Convert the color in an image to alpha",
-			  "This replaces as much of a given color as possible "
-			  "in each pixel with a corresponding amount of alpha, "
-			  "then readjusts the color accordingly.",
-			  "Seth Burgess",
-			  "Seth Burgess <sjburges@gimp.org>",
-			  "7th Aug 1999",
-			  N_("Color to _Alpha..."),
-			  "RGB*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Convert the color in an image to alpha",
+                          "This replaces as much of a given color as possible "
+                          "in each pixel with a corresponding amount of alpha, "
+                          "then readjusts the color accordingly.",
+                          "Seth Burgess",
+                          "Seth Burgess <sjburges@gimp.org>",
+                          "7th Aug 1999",
+                          N_("Color to _Alpha..."),
+                          "RGB*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register ("plug_in_colortoalpha",
                              "<Image>/Filters/Colors");
@@ -137,20 +145,19 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data ("plug_in_colortoalpha", &pvals);
-      gimp_context_get_foreground (&pvals.color);
-      if (! colortoalpha_dialog (drawable))
-	{
-	  gimp_drawable_detach (drawable);
-	  return;
-	}
+      if (! color_to_alpha_dialog (drawable))
+        {
+          gimp_drawable_detach (drawable);
+          return;
+        }
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       if (nparams != 4)
-	status = GIMP_PDB_CALLING_ERROR;
+        status = GIMP_PDB_CALLING_ERROR;
 
       if (status == GIMP_PDB_SUCCESS)
-	pvals.color = param[3].data.d_color;
+        pvals.color = param[3].data.d_color;
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -171,11 +178,11 @@ run (const gchar      *name,
 
       /*  Make sure that the drawable is RGB color  */
       if (gimp_drawable_is_rgb (drawable->drawable_id) &&
-	  gimp_drawable_is_layer (drawable->drawable_id))
-	{
+          gimp_drawable_is_layer (drawable->drawable_id))
+        {
           gimp_progress_init (_("Removing color..."));
-	  toalpha (drawable);
-	}
+          to_alpha (drawable);
+        }
 
       gimp_drawable_detach (drawable);
 
@@ -196,8 +203,8 @@ run (const gchar      *name,
 }
 
 static inline void
-colortoalpha (GimpRGB       *src,
-	      const GimpRGB *color)
+color_to_alpha (GimpRGB       *src,
+                const GimpRGB *color)
 {
   GimpRGB alpha;
 
@@ -230,13 +237,13 @@ colortoalpha (GimpRGB       *src,
   if (alpha.r > alpha.g)
     {
       if (alpha.r > alpha.b)
-	{
-	  src->a = alpha.r;
-	}
+        {
+          src->a = alpha.r;
+        }
       else
-	{
-	  src->a = alpha.b;
-	}
+        {
+          src->a = alpha.b;
+        }
     }
   else if (alpha.g > alpha.b)
     {
@@ -261,7 +268,7 @@ colortoalpha (GimpRGB       *src,
   <clahey>   so if a1 > c1, a2 > c2, and a3 > c2 and a1 - c1 > a2-c2, a3-c3,
              then a1 = b1 * alpha + c1 * (1-alpha)
              So, maximizing alpha without taking b1 above 1 gives
-	     a1 = alpha + c1(1-alpha) and therefore alpha = (a1-c1) / (1-c1).
+             a1 = alpha + c1(1-alpha) and therefore alpha = (a1-c1) / (1-c1).
   <sjburges> clahey: btw, the ordering of that a2, a3 in the white->alpha didn't
              matter
   <clahey>   sjburges: You mean that it could be either a1, a2, a3 or a1, a3, a2?
@@ -285,28 +292,68 @@ colortoalpha (GimpRGB       *src,
 */
 
 static void
-toalpha_func (const guchar *src,
+to_alpha_func (const guchar *src,
               guchar       *dest,
               gint          bpp,
               gpointer      data)
 {
   GimpRGB color;
 
-  gimp_rgba_set_uchar (&color, src[0], src[1], src[2], src[3]);
-  colortoalpha (&color, &pvals.color);
+  if (bpp == 3)
+    gimp_rgba_set_uchar (&color, src[0], src[1], src[2], 255);
+  else
+    gimp_rgba_set_uchar (&color, src[0], src[1], src[2], src[3]);
+  color_to_alpha (&color, &pvals.color);
   gimp_rgba_get_uchar (&color, &dest[0], &dest[1], &dest[2], &dest[3]);
 }
 
 static void
-toalpha (GimpDrawable *drawable)
+to_alpha (GimpDrawable *drawable)
 {
-  gimp_rgn_iterate2 (drawable, 0 /* unused */, toalpha_func, NULL);
+  gimp_rgn_iterate2 (drawable, 0 /* unused */, to_alpha_func, NULL);
+}
+
+static void
+color_to_alpha_preview (GimpPreview  *preview,
+                        GimpDrawable *drawable)
+{
+  GimpPixelRgn  src_rgn;
+  gint          x, y;
+  gint          width, height;
+  gint          bpp;
+  gint          i;
+  guchar       *src, *dest;
+
+  bpp = drawable->bpp;
+  gimp_preview_get_position (preview, &x, &y);
+  gimp_preview_get_size (preview, &width, &height);
+
+  src = g_new (guchar, width * height * bpp);
+  dest = g_new (guchar, width * height * 4);
+
+  gimp_pixel_rgn_init (&src_rgn, drawable,
+                       x, y, width, height,
+                       FALSE, FALSE);
+  gimp_pixel_rgn_get_rect (&src_rgn, src, x, y, width, height);
+
+  for (i = 0; i < width * height; i++)
+    to_alpha_func (src + i * bpp, dest + i * 4, bpp, NULL);
+
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview->area),
+                          0, 0, width, height,
+                          GIMP_RGBA_IMAGE,
+                          dest,
+                          width * 4);
+  g_free (src);
+  g_free (dest);
 }
 
 static gboolean
-colortoalpha_dialog (GimpDrawable *drawable)
+color_to_alpha_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dlg;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
+  GtkWidget *preview;
   GtkWidget *hbox;
   GtkWidget *button;
   GtkWidget *label;
@@ -314,20 +361,29 @@ colortoalpha_dialog (GimpDrawable *drawable)
 
   gimp_ui_init ("colortoalpha", TRUE);
 
-  dlg = gimp_dialog_new (_("Color to Alpha"), "colortoalpha",
-                         NULL, 0,
-			 gimp_standard_help_func, "plug-in-colortoalpha",
+  dialog = gimp_dialog_new (_("Color to Alpha"), "colortoalpha",
+                            NULL, 0,
+                            gimp_standard_help_func, "plug-in-colortoalpha",
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
+                            NULL);
+
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
+
+  preview = gimp_drawable_preview_new (drawable, &pvals.preview);
+  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
+  gtk_widget_show (preview);
+  g_signal_connect (preview, "invalidated",
+                    G_CALLBACK (color_to_alpha_preview),
+                    drawable);
 
   hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
-		      hbox, FALSE, FALSE, 0);
-
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   label = gtk_label_new (_("From:"));
@@ -335,25 +391,28 @@ colortoalpha_dialog (GimpDrawable *drawable)
   gtk_widget_show (label);
 
   button = gimp_color_button_new (_("Color to Alpha Color Picker"),
-				  PRV_WIDTH, PRV_HEIGHT,
-				  &pvals.color,
-				  GIMP_COLOR_AREA_FLAT);
+                                  PRV_WIDTH, PRV_HEIGHT,
+                                  &pvals.color,
+                                  GIMP_COLOR_AREA_FLAT);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "color_changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     &pvals.color);
+  g_signal_connect_swapped (button, "color_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   label = gtk_label_new (_("to alpha"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }
