@@ -1,3 +1,8 @@
+Thu Jul 23 10:30:12 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/fileops.c: tell the PDB that gimp_register_magic_load_handler
+	takes 4 args
+
 Thu Jul 23 01:53:09 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/rect_select.c: Display the selection-mode in the statusbar.
