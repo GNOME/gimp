@@ -104,6 +104,7 @@
     (image-type rgb)
     (fill-type background-fill))
 (GimpTemplate "Web Banner Common 468x60"
+    (stock-id "gimp-web")
     (width 468)
     (height 60)
     (unit inches)
@@ -113,6 +114,7 @@
     (image-type rgb)
     (fill-type background-fill))
 (GimpTemplate "Web Banner Huge 728x90"
+    (stock-id "gimp-web")
     (width 728)
     (height 90)
     (unit inches)

@@ -208,6 +208,22 @@ size).
 
 
 
+<!-- ##### MACRO GIMP_STOCK_VIDEO ##### -->
+<para>
+<inlinegraphic fileref="stock-video-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-video-24.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_WEB ##### -->
+<para>
+<inlinegraphic fileref="stock-web-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-web-24.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_SELECTION_ALL ##### -->
 <para>
 <inlinegraphic fileref="stock-selection-all-16.png" format="png"></inlinegraphic>
@@ -559,6 +575,7 @@ size).
 
 <!-- ##### MACRO GIMP_STOCK_TEMPLATE ##### -->
 <para>
+<inlinegraphic fileref="stock-template-24.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-template-16.png" format="png"></inlinegraphic>
 </para>
 

@@ -78,8 +78,10 @@ STOCK_MENU_IMAGES = \
 	stock-template-16.png			\
 	stock-text-layer-16.png			\
 	stock-tool-options-16.png		\
+	stock-video-16.png			\
 	stock-warning-16.png			\
-	stock-wilber-16.png
+	stock-wilber-16.png			\
+	stock-web-16.png
 
 STOCK_BUTTON_IMAGES = \
 	stock-anchor-16.png			\
@@ -133,10 +135,13 @@ STOCK_BUTTON_IMAGES = \
 	stock-selection-to-path-16.png		\
 	stock-text-dir-ltr-24.png		\
 	stock-text-dir-rtl-24.png		\
+	stock-template-24.png			\
 	stock-text-layer-24.png			\
 	stock-vchain-24.png			\
 	stock-vchain-broken-24.png		\
-	stock-warning-24.png
+	stock-video-24.png			\
+	stock-warning-24.png			\
+	stock-web-24.png
 
 STOCK_DND_IMAGES = \
 	stock-channel-32.png			\

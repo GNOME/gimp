@@ -204,6 +204,9 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_PORTRAIT,                 NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_LANDSCAPE,                NULL,        0, 0, LIBGIMP_DOMAIN },
 
+  { GIMP_STOCK_WEB,                      NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_VIDEO,                    NULL,        0, 0, LIBGIMP_DOMAIN },
+
   { GIMP_STOCK_ERROR,                    NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_INFO,                     NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_QUESTION,                 NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -316,6 +319,7 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_IMAGE,                    stock_image_24                    },
   { GIMP_STOCK_LAYER,                    stock_layer_24                    },
   { GIMP_STOCK_TEXT_LAYER,               stock_text_layer_24               },
+  { GIMP_STOCK_TEMPLATE,                 stock_template_24                 },
 
   { GIMP_STOCK_LINKED,                   stock_linked_20                   },
   { GIMP_STOCK_VISIBLE,                  stock_eye_20                      },
@@ -361,7 +365,9 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_TOOL_PATH,                stock_tool_path_22                },
 
   { GIMP_STOCK_INFO,                     stock_info_24                     },
-  { GIMP_STOCK_WARNING,                  stock_warning_24                  }
+  { GIMP_STOCK_WARNING,                  stock_warning_24                  },
+  { GIMP_STOCK_WEB,                      stock_web_24                      },
+  { GIMP_STOCK_VIDEO,                    stock_video_24                    }
 };
 
 static struct
@@ -476,7 +482,9 @@ gimp_stock_menu_pixbufs[] =
 
   { GIMP_STOCK_INFO,                     stock_info_16                     },
   { GIMP_STOCK_WARNING,                  stock_warning_16                  },
-  { GIMP_STOCK_WILBER,                   stock_wilber_16                   }
+  { GIMP_STOCK_WILBER,                   stock_wilber_16                   },
+  { GIMP_STOCK_WEB,                      stock_web_16                      },
+  { GIMP_STOCK_VIDEO,                    stock_video_16                    }
 };
 
 static struct

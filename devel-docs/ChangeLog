@@ -1,3 +1,8 @@
+2003-04-11  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimpstock.sgml: web and video icons.
+
 2003-04-04  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt

@@ -183,6 +183,9 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_PORTRAIT             "gimp-portrait"
 #define GIMP_STOCK_LANDSCAPE            "gimp-landscape"
 
+#define GIMP_STOCK_WEB                  "gimp-web"
+#define GIMP_STOCK_VIDEO                "gimp-video"
+
 /*  in dialog size:  */
 
 #define GIMP_STOCK_ERROR                "gimp-error"
