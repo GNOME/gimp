@@ -1,3 +1,8 @@
+2003-11-21  Sven Neumann  <sven@gimp.org>
+
+	* sk.po: reverted the last change since the new version had fatal
+	errors and appeared truncated.
+
 2003-11-21  Stanislav Visnovsky <visnovsky@nenya.ms.mff.cuni.cz>
 
 	* sk.po: Updated Slovak translation by Zdenko Podobny.
