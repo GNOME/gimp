@@ -272,9 +272,7 @@ gimp_core_config_init (GimpCoreConfig *config)
 static void
 gimp_core_config_finalize (GObject *object)
 {
-  GimpCoreConfig *core_config;
-
-  core_config = GIMP_CORE_CONFIG (object);
+  GimpCoreConfig *core_config = GIMP_CORE_CONFIG (object);
 
   g_free (core_config->plug_in_path);
   g_free (core_config->module_path);
@@ -306,9 +304,7 @@ gimp_core_config_set_property (GObject      *object,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpCoreConfig *core_config;
-
-  core_config = GIMP_CORE_CONFIG (object);
+  GimpCoreConfig *core_config = GIMP_CORE_CONFIG (object);
 
   switch (property_id)
     {
@@ -415,9 +411,7 @@ gimp_core_config_get_property (GObject    *object,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpCoreConfig *core_config;
-
-  core_config = GIMP_CORE_CONFIG (object);
+  GimpCoreConfig *core_config = GIMP_CORE_CONFIG (object);
 
   switch (property_id)
     {

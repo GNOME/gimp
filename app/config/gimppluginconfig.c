@@ -59,7 +59,7 @@ enum
 static GObjectClass *parent_class = NULL;
 
 
-GType 
+GType
 gimp_plugin_config_get_type (void)
 {
   static GType config_type = 0;
@@ -79,8 +79,8 @@ gimp_plugin_config_get_type (void)
 	NULL            /* instance_init  */
       };
 
-      config_type = g_type_register_static (GIMP_TYPE_GUI_CONFIG, 
-                                            "GimpPluginConfig", 
+      config_type = g_type_register_static (GIMP_TYPE_GUI_CONFIG,
+                                            "GimpPluginConfig",
                                             &config_info, 0);
     }
 
@@ -138,10 +138,8 @@ gimp_plugin_config_class_init (GimpPluginConfigClass *klass)
 static void
 gimp_plugin_config_finalize (GObject *object)
 {
-  GimpPluginConfig *plugin_config;
+  GimpPluginConfig *plugin_config = GIMP_PLUGIN_CONFIG (object);
 
-  plugin_config = GIMP_PLUGIN_CONFIG (object);
-  
   g_free (plugin_config->fractalexplorer_path);
   g_free (plugin_config->gfig_path);
   g_free (plugin_config->gflare_path);
@@ -157,9 +155,7 @@ gimp_plugin_config_set_property (GObject      *object,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpPluginConfig *plugin_config;
-
-  plugin_config = GIMP_PLUGIN_CONFIG (object);
+  GimpPluginConfig *plugin_config = GIMP_PLUGIN_CONFIG (object);
 
   switch (property_id)
     {
@@ -200,9 +196,7 @@ gimp_plugin_config_get_property (GObject    *object,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpPluginConfig *plugin_config;
-
-  plugin_config = GIMP_PLUGIN_CONFIG (object);
+  GimpPluginConfig *plugin_config = GIMP_PLUGIN_CONFIG (object);
 
   switch (property_id)
     {

@@ -926,7 +926,7 @@ gimp_prop_adjustment_notify (GObject       *config,
 
       value = int64_value;
     }
-  else if (G_IS_PARAM_SPEC_ULONG (param_spec))
+  else if (G_IS_PARAM_SPEC_UINT64 (param_spec))
     {
       guint64 uint64_value;
 
@@ -948,6 +948,8 @@ gimp_prop_adjustment_notify (GObject       *config,
     }
   else
     {
+      g_warning ("%s: unhandled param spec of type %s",
+                 G_STRLOC, G_PARAM_SPEC_TYPE_NAME (param_spec));
       return;
     }
 
@@ -997,9 +999,9 @@ gimp_prop_memsize_entry_new (GObject     *config,
   uint64_spec = G_PARAM_SPEC_UINT64 (param_spec);
 
 #ifndef _MSC_VER
-  /* avoid getting gimppropwidgets.c(999) : warning C4056: 
+  /* avoid getting gimppropwidgets.c(999) : warning C4056:
    *   overflow in floating-point constant arithmetic
-   * and runtime failing (the check seems not the useful to me anyway) 
+   * and runtime failing (the check seems not useful to me anyway)
    */
   g_return_val_if_fail (uint64_spec->minimum <= (guint64) G_MAXDOUBLE, NULL);
   g_return_val_if_fail (uint64_spec->maximum <= (guint64) G_MAXDOUBLE, NULL);

@@ -208,7 +208,6 @@ themes_apply_theme (Gimp        *gimp,
   gchar       *gtkrc_user;
   gchar       *themerc;
   FILE        *file;
-  gchar       *name;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -255,8 +254,9 @@ themes_apply_theme (Gimp        *gimp,
              "include \"%s\"\n"
              "\n"
              "# end of themerc\n",
-             gtkrc_user, 
-             esc_gtkrc_theme, esc_gtkrc_user);
+             gtkrc_user,
+             esc_gtkrc_theme,
+             esc_gtkrc_user);
 
     g_free (esc_gtkrc_theme);
     g_free (esc_gtkrc_user);

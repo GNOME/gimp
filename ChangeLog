@@ -1,32 +1,43 @@
+2003-11-16  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/themes.c (themes_apply_theme): removed an unused
+	variable and trailing whitespace.
+
+	* app/widgets/gimppropwidgets.c (gimp_prop_adjustment_notify):
+	fixed a cut'n'paste error and added a warning which would have
+	caught it.
+
+	* app/config/gimpbaseconfig.c
+	* app/config/gimpcoreconfig.c
+	* app/config/gimpguiconfig.c
+	* app/config/gimppluginconfig.c: cosmetics.
+
 2003-11-16  Hans Breuer  <hans@breuer.org>
 
-	* app/text/*.c : still unacceptable patched to compile 
-	without FT2, see bug #113681
+	* **makefile.msc: updated
 
-	* **makefile.msc : updated
+	* app/config/gimpconfig-dump.c: include gimpwin32-io.h
 
-	* app/config/gimpconfig-dump.c : include gimpwin32-io.h
-
-	* app/plug-in/plug-ins.c : don't depend on g_print handling
-	%s with NULL pointers, it doesn't anymore with glib cvs at
-	least not on win32
+	* app/plug-in/plug-ins.c: don't depend on g_print handling %s with
+	NULL pointers, it doesn't anymore with glib cvs at least not on
+	win32
 
 	* app/widgets/gimppropwidgets.c
-	  libgimpbase/gimputils.c 
-	  libgimpwidgets/gimpmemsizeentry.c :
-	sorry about the mess, need to work-around a stupi not able
-	to cast from guint64 to double
+	* libgimpbase/gimputils.c 
+	* libgimpwidgets/gimpmemsizeentry.c:	
+	sorry about the mess, need to work-around a stupid compiler not
+	able to cast from guint64 to double
 
 	* app/widgets/gimppropwidgets.c (gimp_prop_memsize_entry_new) :
 	avoid 'overflow in floating-point constant arithmetic' by disabling
 	an imho alays questionable g_return_val_if_fail() for _MSC_VER only
 
-	* libgimpmodule/gimpmodule.def : sorted
+	* libgimpmodule/gimpmodule.def: sorted
 
-	* libgimpwidgets/gimpfileselection.c : removed unused S_ISDIR 
+	* libgimpwidgets/gimpfileselection.c: removed unused S_ISDIR 
 	definition
 
-	* app/gui/themes.c : filenames in rc files need to be escaped
+	* app/gui/themes.c: filenames in rc files need to be escaped
 	
 2003-11-16  Michael Natterer  <mitch@gimp.org>
 

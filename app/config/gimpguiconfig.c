@@ -226,9 +226,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
 static void
 gimp_gui_config_finalize (GObject *object)
 {
-  GimpGuiConfig *gui_config;
-
-  gui_config = GIMP_GUI_CONFIG (object);
+  GimpGuiConfig *gui_config = GIMP_GUI_CONFIG (object);
 
   g_free (gui_config->theme_path);
   g_free (gui_config->theme);
@@ -243,9 +241,7 @@ gimp_gui_config_set_property (GObject      *object,
                               const GValue *value,
                               GParamSpec   *pspec)
 {
-  GimpGuiConfig *gui_config;
-
-  gui_config = GIMP_GUI_CONFIG (object);
+  GimpGuiConfig *gui_config = GIMP_GUI_CONFIG (object);
 
   switch (property_id)
     {
@@ -328,9 +324,7 @@ gimp_gui_config_get_property (GObject    *object,
                               GValue     *value,
                               GParamSpec *pspec)
 {
-  GimpGuiConfig *gui_config;
-
-  gui_config = GIMP_GUI_CONFIG (object);
+  GimpGuiConfig *gui_config = GIMP_GUI_CONFIG (object);
 
   switch (property_id)
     {

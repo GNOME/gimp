@@ -129,9 +129,7 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
 static void
 gimp_base_config_finalize (GObject *object)
 {
-  GimpBaseConfig *base_config;
-
-  base_config = GIMP_BASE_CONFIG (object);
+  GimpBaseConfig *base_config = GIMP_BASE_CONFIG (object);
 
   g_free (base_config->temp_path);
   g_free (base_config->swap_path);
@@ -145,9 +143,7 @@ gimp_base_config_set_property (GObject      *object,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpBaseConfig *base_config;
-
-  base_config = GIMP_BASE_CONFIG (object);
+  GimpBaseConfig *base_config = GIMP_BASE_CONFIG (object);
 
   switch (property_id)
     {
@@ -180,9 +176,7 @@ gimp_base_config_get_property (GObject    *object,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpBaseConfig *base_config;
-
-  base_config = GIMP_BASE_CONFIG (object);
+  GimpBaseConfig *base_config = GIMP_BASE_CONFIG (object);
 
   switch (property_id)
     {
