@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "POT-Creation-Date: 2002-10-31 05:33+0100\n"
-"PO-Revision-Date: 2002-11-24 11:00+EDT\n"
+"PO-Revision-Date: 2002-12-12 15:52+EDT\n"
 "Last-Translator: Ge'ez Frontier Foundation <locales@geez.org>\n"
 "Language-Team: Amharic <locales@geez.org>\n"
 "MIME-Version: 1.0\n"
@@ -82,7 +82,7 @@ msgstr ""
 
 #: app/main.c:329
 msgid "GIMP version"
-msgstr ""
+msgstr "የGIMP ዝርያ"
 
 #: app/main.c:334
 #, c-format
@@ -94,7 +94,7 @@ msgstr ""
 
 #: app/main.c:335
 msgid "Options:\n"
-msgstr ""
+msgstr "ምርጫዎች፦\n"
 
 #: app/main.c:336
 msgid "  -b, --batch <commands>   Run in batch mode.\n"
@@ -309,11 +309,11 @@ msgstr ""
 
 #: app/undo.c:3632 app/gui/layers-commands.c:601 app/gui/layers-commands.c:633
 msgid "New Layer"
-msgstr ""
+msgstr "አዲስ ደረጃ"
 
 #: app/undo.c:3633
 msgid "Delete Layer"
-msgstr ""
+msgstr "ደረጃ ሰረዝ"
 
 #: app/undo.c:3634
 msgid "Layer Mod"
@@ -417,7 +417,7 @@ msgstr "ትንሽ"
 #: app/base/base-enums.c:71 app/core/core-enums.c:195
 #: app/gui/preferences-dialog.c:2083
 msgid "Medium"
-msgstr "መካከል"
+msgstr "መሀከለኛ"
 
 #: app/base/base-enums.c:72 app/core/core-enums.c:196
 #: app/gui/preferences-dialog.c:2086
@@ -594,7 +594,7 @@ msgstr ""
 
 #: app/core/core-enums.c:98
 msgid "Foreground"
-msgstr ""
+msgstr "ፊት ለፊት"
 
 #: app/core/core-enums.c:99 app/core/gimpimage-new.c:177
 msgid "Background"
@@ -623,7 +623,7 @@ msgstr ""
 
 #: app/core/core-enums.c:123
 msgid "Square"
-msgstr ""
+msgstr "አደባባይ"
 
 #: app/core/core-enums.c:124
 msgid "Conical (symmetric)"
@@ -686,7 +686,7 @@ msgstr "ትናንሽ"
 
 #: app/core/core-enums.c:193
 msgid "Very Small"
-msgstr ""
+msgstr "በጣም ትንሽ"
 
 #: app/core/core-enums.c:197
 msgid "Very Large"
@@ -1044,12 +1044,12 @@ msgstr ""
 
 #: app/core/gimpimagefile.c:728
 msgid "1 Layer"
-msgstr ""
+msgstr "1 ደረጃ"
 
 #: app/core/gimpimagefile.c:730
 #, c-format
 msgid "%d Layers"
-msgstr ""
+msgstr "%d ደረጃዎች"
 
 #: app/core/gimpimagefile.c:809
 #, c-format
@@ -1267,7 +1267,7 @@ msgstr "ፒካ"
 
 #: app/core/gimpunit.c:63
 msgid "picas"
-msgstr ""
+msgstr "ፒካዎች"
 
 #: app/core/gimpunit.c:70
 msgid "percent"
@@ -1411,7 +1411,7 @@ msgstr "ከቅርበት እይታ"
 
 #: app/display/gimpnavigationview.c:388
 msgid "Zoom 1:1"
-msgstr "ቅርበትና ርቀት 1:1"
+msgstr "በቅርበት አሳይ 1:1"
 
 #: app/display/gimpnavigationview.c:396
 msgid "Zoom to fit window"
@@ -2657,7 +2657,7 @@ msgstr "/ምረጥ/ሁሉንም"
 
 #: app/gui/menus.c:454
 msgid "/Select/None"
-msgstr ""
+msgstr "/ምረጥ/ምንም"
 
 #: app/gui/menus.c:459
 msgid "/Select/Float"
@@ -3917,7 +3917,7 @@ msgstr ""
 
 #: app/gui/paths-dialog.c:185
 msgid "Delete Path"
-msgstr "መንገድ ሰረዝ"
+msgstr "መተላለፊያ ሰረዝ"
 
 #: app/gui/paths-dialog.c:194
 msgid "New Point"
@@ -3938,7 +3938,7 @@ msgstr ""
 #: app/gui/paths-dialog.c:437
 #, c-format
 msgid "Path %d"
-msgstr "መንገድ %d"
+msgstr "መተላለፊያ %d"
 
 #: app/gui/paths-dialog.c:990 app/gui/vectors-commands.c:558
 msgid "Edit Path Attributes"
@@ -4209,7 +4209,7 @@ msgstr ""
 
 #: app/gui/preferences-dialog.c:2313
 msgid "Show Statusbar"
-msgstr "ስታተስ ባር አሳይ"
+msgstr "ስታተስባር አሳይ"
 
 #: app/gui/preferences-dialog.c:2321
 msgid "Marching Ants Speed:"
@@ -4433,7 +4433,7 @@ msgstr "የተጨማሪው ፕሮግራም ዶሴዎች "
 
 #: app/gui/preferences-dialog.c:2789
 msgid "Select Plug-In Folders"
-msgstr "የተጨማሪው ፕሮግራም ዶሴዎች  ምረጥ"
+msgstr "የተጨማሪው ፕሮግራም ዶሴዎች ምረጥ"
 
 #: app/gui/preferences-dialog.c:2791
 msgid "Tool Plug-Ins"
@@ -4541,7 +4541,7 @@ msgstr ""
 
 #: app/gui/resize-dialog.c:500
 msgid "Center"
-msgstr "መሐከል"
+msgstr "መሀከል"
 
 #: app/gui/resize-dialog.c:537
 msgid "Print Size & Display Unit"
@@ -4657,7 +4657,7 @@ msgstr ""
 
 #: app/gui/tool-options-dialog.c:130
 msgid "Reset"
-msgstr "እንደገና አስተካክል"
+msgstr "እንደነበረ አድረግ"
 
 #: app/gui/user-install-dialog.c:128
 msgid ""
@@ -5017,7 +5017,7 @@ msgstr ""
 
 #: app/gui/vectors-commands.c:442
 msgid "New Path Options"
-msgstr "አዲስ መንገድ መርጫዎች"
+msgstr "አዲስ መተላለፊያ መርጫዎች"
 
 #. The name entry hbox, label and entry
 #: app/gui/vectors-commands.c:475 app/gui/vectors-commands.c:591
@@ -6203,7 +6203,7 @@ msgstr ""
 
 #: app/tools/gimppathtool.c:116 app/tools/path_tool.c:1413
 msgid "Path Tool"
-msgstr "የመንገድ መሣሪያዎች"
+msgstr "የመተላለፊያ መሣሪያዎች"
 
 #: app/tools/gimppathtool.c:117
 msgid "Path tool prototype"
@@ -6211,7 +6211,7 @@ msgstr ""
 
 #: app/tools/gimppathtool.c:118
 msgid "/Tools/Path"
-msgstr "/መሣሪያዎች/መንገድ"
+msgstr "/መሣሪያዎች/መተላለፊያ"
 
 #: app/tools/gimppenciltool.c:52
 msgid "Pencil"
@@ -6327,7 +6327,7 @@ msgstr ""
 
 #: app/tools/gimprotatetool.c:209
 msgid "Center X:"
-msgstr "መሐከል"
+msgstr ""
 
 #: app/tools/gimprotatetool.c:288
 msgid "Rotating..."
@@ -6623,7 +6623,7 @@ msgstr ""
 #. the show_path toggle button
 #: app/tools/transform_options.c:185
 msgid "Show Path"
-msgstr ""
+msgstr "መተላለፊያ አሳይ"
 
 #. the constraints frame
 #: app/tools/transform_options.c:197
@@ -6766,7 +6766,7 @@ msgstr "_ቤተሰብ፦"
 
 #: app/widgets/gimpfontselection-dialog.c:239
 msgid "_Style:"
-msgstr "_ዘዴ፦"
+msgstr "_ዘይቤ፦"
 
 #: app/widgets/gimpgradienteditor.c:384 app/widgets/gimppaletteeditor.c:269
 msgid "Zoom All"
@@ -7120,4 +7120,4 @@ msgstr ""
 
 #: libgimptool/gimptoolenums.c:15
 msgid "Resize"
-msgstr ""
+msgstr "እንደገና መጧን ማስተሥከል"
