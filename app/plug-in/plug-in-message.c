@@ -116,6 +116,9 @@ static Argument* progress_update_invoker (Argument *args);
 
 static Argument* message_invoker         (Argument *args);
 
+static Argument* message_handler_get_invoker (Argument *args);
+static Argument* message_handler_set_invoker (Argument *args);
+
 
 static GSList *plug_in_defs = NULL;
 static GSList *gimprc_proc_defs = NULL;
@@ -210,6 +213,53 @@ static ProcRecord message_proc =
 };
 
 
+static ProcArg message_handler_get_out_args[] =
+{
+  { PDB_INT32,
+    "handler",
+    "the current handler type: { MESSAGE_BOX (0), CONSOLE (1) }" }
+};
+
+static ProcRecord message_handler_get_proc =
+{
+  "gimp_message_handler_get",
+  "Returns the current state of where warning messages are displayed.",
+  "This procedure returns the way g_message warnings are displayed. They can be shown in a dialog box or printed on the console where gimp was started.",
+  "Manish Singh",
+  "Manish Singh",
+  "1998",
+  PDB_INTERNAL,
+  0,
+  NULL,
+  1,
+  message_handler_get_out_args,
+  { { message_handler_get_invoker } },
+};
+
+static ProcArg message_handler_set_args[] =
+{
+  { PDB_INT32,
+    "handler",
+    "the new handler type: { MESSAGE_BOX (0), CONSOLE (1) }" }
+};
+
+static ProcRecord message_handler_set_proc =
+{
+  "gimp_message_handler_set",
+  "Controls where warning messages are displayed.",
+  "This procedure controls how g_message warnings are displayed. They can be shown in a dialog box or printed on the console where gimp was started.",
+  "Manish Singh",
+  "Manish Singh",
+  "1998",
+  PDB_INTERNAL,
+  1,
+  message_handler_set_args,
+  0,
+  NULL,
+  { { message_handler_set_invoker } },
+};
+
+
 void
 plug_in_init ()
 {
@@ -226,6 +276,8 @@ plug_in_init ()
 
   /* initialize the message box procedural db calls */
   procedural_db_register (&message_proc);
+  procedural_db_register (&message_handler_get_proc);
+  procedural_db_register (&message_handler_set_proc);
 
   /* initialize the gimp protocol library and set the read and
    *  write handlers.
@@ -3008,4 +3060,28 @@ message_invoker (Argument *args)
 {
   g_message (args[0].value.pdb_pointer, NULL, NULL);
   return procedural_db_return_args (&message_proc, TRUE);
+}
+
+static Argument*
+message_handler_get_invoker (Argument *args)
+{
+  Argument *return_args;
+
+  return_args = procedural_db_return_args (&message_handler_get_proc, TRUE);
+  return_args[1].value.pdb_int = message_handler;
+  return return_args;
+}
+
+static Argument*
+message_handler_set_invoker (Argument *args)
+{
+  int success = TRUE;
+ 
+  if ((args[0].value.pdb_int >= MESSAGE_BOX) &&
+      (args[0].value.pdb_int <= CONSOLE))
+    message_handler = args[0].value.pdb_int;
+  else
+    success = FALSE;
+ 
+  return procedural_db_return_args (&message_handler_set_proc, success);
 }

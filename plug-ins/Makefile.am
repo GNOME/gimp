@@ -4,20 +4,20 @@ SUBDIRS = 			\
 	libgck			\
 	megawidget		\
 	gpc			\
-	MapObject		\
-	AlienMap		\
 	dbbrowser		\
 	script-fu		\
-	struc			\
-	@WEBBROWSER@		\
 	@AA@			\
-	@TIFF@			\
 	@JPEG@			\
-	@PNG@			\
 	@MPEG@			\
+	@PNG@			\
+	@TIFF@			\
+	@WEBBROWSER@		\
 	@XD@			\
 	@XPM@			\
+	AlienMap		\
+	CEL			\
 	CML_explorer		\
+	MapObject		\
 	align_layers		\
 	animoptimize		\
 	apply_lens		\
@@ -30,7 +30,6 @@ SUBDIRS = 			\
 	bumpmap			\
 	bz2			\
 	c_astretch		\
-	CEL			\
 	checkerboard		\
 	colorify		\
 	compose			\
@@ -114,6 +113,7 @@ SUBDIRS = 			\
 	sobel			\
 	sparkle			\
 	spread			\
+	struc			\
 	sunras			\
 	tga			\
 	threshold_alpha		\

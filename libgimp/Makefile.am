@@ -12,6 +12,8 @@ libgimpi_a_SOURCES =	gimpprotocol.c	\
 			gimpwire.c	\
 			gimpwire.h
 
+libgimpi_a_DEPENDENCIES = libgimp.la
+
 libgimp_la_SOURCES =	gimp.c		\
 			gimpchannel.c	\
 			gimpdisplay.c	\
