@@ -14,6 +14,7 @@
 
 #include "gimpressionist.h"
 #include "ppmtool.h"
+#include "paper.h"
 
 #include "libgimp/stdplugins-intl.h"
 

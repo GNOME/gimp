@@ -127,7 +127,6 @@ extern gboolean img_has_alpha;
 GList *parsepath(void);
 void free_parsepath_cache(void);
 
-void create_paperpage(GtkNotebook *);
 void create_orientationpage(GtkNotebook *);
 void create_colorpage(GtkNotebook *);
 
@@ -145,8 +144,6 @@ void readdirintolist_extended(char *subdir, GtkWidget *view, char *selected,
                               (gchar *dir, gchar *filename, void *context),
                               void * context);
 void orientation_restore(void);
-void paper_store(void);
-void paper_restore(void);
 
 GtkWidget *createonecolumnlist(GtkWidget *parent,
 			       void (*changed_cb)
