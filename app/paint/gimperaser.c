@@ -197,6 +197,7 @@ tools_new_eraser (void)
 
   private = (PaintCore *) tool->private;
   private->paint_func = eraser_paint_func;
+  private->flags |= TOOL_CAN_HANDLE_CHANGING_BRUSH; 
   tool->modifier_key_func = eraser_modifier_key_func;
 
   return tool;
