@@ -1,5 +1,5 @@
 /*
- * PSD Plugin version 3.0.9
+ * PSD Plugin version 3.0.10
  * This GIMP plug-in is designed to load Adobe Photoshop(tm) files (.PSD)
  *
  * Adam D. Moss <adam@gimp.org> <adam@foxbox.org>
@@ -35,88 +35,93 @@
 /*
  * Revision history:
  *
+ *  2003-11-27 / v3.0.10 / Adam D. Moss
+ *       GIMP 1.3/2.0 needs its layer/channel names to be UTF8 or it
+ *       fails wackily, so convert the strings from the PSD file to
+ *       UTF8 instead of using them raw.
+ *
  *  2003-10-05 / v3.0.9 / Morten Eriksen
  *       Fixed memory corruption bug: too little memory was allocated
  *       for the bitmap image buffer if (imgwidth % 8 != 0) for
  *       monocolor PSD images.
  *
- *  2003.08.31 / v3.0.8 / applied (modified) patch from Andy Wallis
+ *  2003-08-31 / v3.0.8 / applied (modified) patch from Andy Wallis
  *       Fix for handling of layer masks. See bug #68538.
  *
- *  2003.06.16 / v3.0.7 / Adam D. Moss
+ *  2003-06-16 / v3.0.7 / Adam D. Moss
  *       Avoid memory corruption when things get shot to hell in the
  *       image unpacking phase.  Major version bumped to distinguish
  *       GIMP 1.3 development thread.
  *
- *  2000.08.23 / v2.0.6 / Adam D. Moss
+ *  2000-08-23 / v2.0.6 / Adam D. Moss
  *       Eliminate more debugging output (don't people have more
  *       substantial problems to report?  I'm poised at my keyboard).
  *
- *  1999.11.14 / v2.0.5 / Adam D. Moss
+ *  1999-11-14 / v2.0.5 / Adam D. Moss
  *       Applied patch by Andy Hefner to load 1-bit images.
  *
- *  1999.08.13 / v2.0.4 / Adam D. Moss
+ *  1999-08-13 / v2.0.4 / Adam D. Moss
  *       Allowed NULL layer names again, whee.  (Also fixed the time machine.)
  *
- *  1999.08.20 / v2.0.3 / Adam D. Moss
+ *  1999-08-20 / v2.0.3 / Adam D. Moss
  *       Ensure that NULL name does not get passed to gimp_layer_new(),
  *       or it will fail to create the layer and cause problems down
  *       the line (only since April 1999).
  *
- *  1999.01.18 / v2.0.2 / Adam D. Moss
+ *  1999-01-18 / v2.0.2 / Adam D. Moss
  *       Better guess at how PSD files store Guide position precision.
  *
- *  1999.01.10 / v2.0.1 / Adam D. Moss
+ *  1999-01-10 / v2.0.1 / Adam D. Moss
  *       Greatly reduced memory requirements for layered image loading -
  *       we now do just-in-time channel unpacking.  Some little
  *       cleanups too.
  *
- *  1998.09.04 / v2.0.0 / Adam D. Moss
+ *  1998-09-04 / v2.0.0 / Adam D. Moss
  *       Now recognises and loads the new Guides extensions written
  *       by Photoshop 4 and 5.
  *
- *  1998.07.31 / v1.9.9.9f / Adam D. Moss
+ *  1998-07-31 / v1.9.9.9f / Adam D. Moss
  *       Use GIMP_OVERLAY_MODE if available.
  *
- *  1998.07.31 / v1.9.9.9e / Adam D. Moss
+ *  1998-07-31 / v1.9.9.9e / Adam D. Moss
  *       Worked around some buggy PSD savers (suspect PS4 on Mac) - ugh.
  *       Fixed a bug when loading layer masks of certain dimensions.
  *
- *  1998.05.04 / v1.9.9.9b / Adam D. Moss
+ *  1998-05-04 / v1.9.9.9b / Adam D. Moss
  *       Changed the Pascal-style string-reading stuff.  That fixed
  *       some file-padding problems.  Made all debugging output
  *       compile-time optional (please leave it enabled for now).
  *       Reduced memory requirements; still much room for improvement.
  *
- *  1998.04.28 / v1.9.9.9 / Adam D. Moss
+ *  1998-04-28 / v1.9.9.9 / Adam D. Moss
  *       Fixed the correct channel interlacing of 'raw' flat images.
  *       Thanks to Christian Kirsch and Jay Cox for spotting this.
  *       Changed some of the I/O routines.
  *
- *  1998.04.26 / v1.9.9.8 / Adam D. Moss
+ *  1998-04-26 / v1.9.9.8 / Adam D. Moss
  *       Implemented Aux-channels for layered files.  Got rid
  *       of <endian.h> nonsense.  Improved Layer Mask padding.
  *       Enforced num_layers/num_channels limit checks.
  *
- *  1998.04.23 / v1.9.9.5 / Adam D. Moss
+ *  1998-04-23 / v1.9.9.5 / Adam D. Moss
  *       Got Layer Masks working, got Aux-channels working
  *       for unlayered files, fixed 'raw' channel loading, fixed
  *       some other mini-bugs, slightly better progress meters.
  *       Thanks to everyone who is helping with the testing!
  *
- *  1998.04.21 / v1.9.9.1 / Adam D. Moss
+ *  1998-04-21 / v1.9.9.1 / Adam D. Moss
  *       A little cleanup.  Implemented Layer Masks but disabled
  *       them again - PS masks can be a different size to their
  *       owning layer, unlike those in GIMP.
  *
- *  1998.04.19 / v1.9.9.0 / Adam D. Moss
+ *  1998-04-19 / v1.9.9.0 / Adam D. Moss
  *       Much happier now.
  *
- *  1997.03.13 / v1.9.0 / Adam D. Moss
+ *  1997-03-13 / v1.9.0 / Adam D. Moss
  *       Layers, channels and masks, oh my.
  *       + Bugfixes & rearchitecturing.
  *
- *  1997.01.30 / v1.0.12 / Torsten Martinsen
+ *  1997-01-30 / v1.0.12 / Torsten Martinsen
  *       Flat PSD image loading.
  */
 
@@ -454,6 +459,20 @@ run (const gchar      *name,
     }
 }
 
+
+static char *
+sanitise_string(char *old_name)
+{
+  if (old_name) {
+    char *rtn = gimp_any_to_utf8(old_name, -1,
+				 _("Invalid UTF-8 string in PSD file"));
+    g_free(old_name);
+    return rtn;
+  } else {
+    return NULL;
+  }
+}
+
 static GimpImageType
 psd_type_to_gimp_type (psd_imagetype psdtype)
 {
@@ -618,6 +637,8 @@ dispatch_resID(guint ID, FILE *fd, guint32 *offset, guint32 Size)
 		  if (slen)
 		    {
 		      sname = getstring(slen, fd, "alpha channel name");
+
+		      sname = sanitise_string(sname);
 
 		      psd_image.aux_channel[psd_image.num_aux_channels].name =
 			sname;
@@ -1055,6 +1076,7 @@ do_layer_record(FILE *fd, guint32 *offset, gint layernum)
     }
 
   layer->name = getpascalstring(fd, "layer name");
+  layer->name = sanitise_string(layer->name);
   (*offset)++;
 
   if (layer->name)

@@ -1,3 +1,9 @@
+2003-12-05  Adam D. Moss  <adam@gimp.org>
+
+	* plug-ins/common/psd.c: GIMP 1.3/2.0 needs its layer/channel
+	names to be UTF8 or it fails wackily, so convert the strings from
+	the PSD file to UTF8 instead of using them raw.
+
 2003-12-05  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/resize-dialog.c: added mnemonics.
