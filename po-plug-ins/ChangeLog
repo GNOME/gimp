@@ -1,3 +1,7 @@
+2000-05-07  Michael Natterer  <mitch@gimp.org>
+
+	* da.po: made it compile.
+
 2000-05-04  Kjartan Maraas  <kmaraas@online.no>
 
 	* no.po: Updated Norwegian translation.

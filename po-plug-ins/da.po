@@ -746,7 +746,7 @@ msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
 msgstr ""
-"Benyt linær afbildning i stedet for enhver trigonometrischer funktion for
+"Benyt linær afbildning i stedet for enhver trigonometrischer funktion for "
 "denne farvekanal"
 
 #: plug-ins/FractalExplorer/Dialogs.c:740
