@@ -150,11 +150,12 @@ gimp_gradient_select_run_callback (GimpPdbDialog *dialog,
                                    gboolean       closing,
                                    gint          *n_return_vals)
 {
-  GimpGradient *gradient = GIMP_GRADIENT (object);
-  gdouble      *values, *pv;
-  gdouble       pos, delta;
-  GimpRGB       color;
-  gint          i;
+  GimpGradient        *gradient = GIMP_GRADIENT (object);
+  GimpGradientSegment *seg      = NULL;
+  gdouble             *values, *pv;
+  gdouble              pos, delta;
+  GimpRGB              color;
+  gint                 i;
 
   i      = GIMP_GRADIENT_SELECT (dialog)->sample_size;
   pos    = 0.0;
@@ -165,7 +166,7 @@ gimp_gradient_select_run_callback (GimpPdbDialog *dialog,
 
   while (i--)
     {
-      gimp_gradient_get_color_at (gradient, pos, FALSE, &color);
+      seg = gimp_gradient_get_color_at (gradient, seg, pos, FALSE, &color);
 
       *pv++ = color.r;
       *pv++ = color.g;

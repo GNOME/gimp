@@ -62,10 +62,11 @@ gimp_palette_import_from_gradient (GimpGradient *gradient,
 				   const gchar  *palette_name,
 				   gint          n_colors)
 {
-  GimpPalette *palette;
-  gdouble      dx, cur_x;
-  GimpRGB      color;
-  gint         loop;
+  GimpPalette         *palette;
+  GimpGradientSegment *seg = NULL;
+  gdouble              dx, cur_x;
+  GimpRGB              color;
+  gint                 i;
 
   g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);
@@ -75,9 +76,9 @@ gimp_palette_import_from_gradient (GimpGradient *gradient,
 
   dx = 1.0 / (n_colors - 1);
 
-  for (loop = 0, cur_x = 0; loop < n_colors; loop++, cur_x += dx)
+  for (i = 0, cur_x = 0; i < n_colors; i++, cur_x += dx)
     {
-      gimp_gradient_get_color_at (gradient, cur_x, reverse, &color);
+      seg = gimp_gradient_get_color_at (gradient, seg, cur_x, reverse, &color);
       gimp_palette_add_entry (palette, -1, NULL, &color);
     }
 

@@ -775,8 +775,6 @@ gradient_editor_replace_selection (GimpGradientEditor  *editor,
 
   editor->control_sel_l = replace_seg;
   editor->control_sel_r = replace_last;
-
-  gradient->last_visited = NULL; /* Force re-search */
 }
 
 static void

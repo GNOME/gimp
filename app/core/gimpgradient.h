@@ -57,9 +57,6 @@ struct _GimpGradient
   GimpData             parent_instance;
 
   GimpGradientSegment *segments;
-
-  /*< private >*/
-  GimpGradientSegment *last_visited;
 };
 
 struct _GimpGradientClass
@@ -68,18 +65,19 @@ struct _GimpGradientClass
 };
 
 
-GType                 gimp_gradient_get_type         (void) G_GNUC_CONST;
+GType                 gimp_gradient_get_type       (void) G_GNUC_CONST;
 
-GimpData            * gimp_gradient_new              (const gchar   *name,
-                                                      gboolean       stingy_memory_use);
-GimpData            * gimp_gradient_get_standard     (void);
+GimpData            * gimp_gradient_new            (const gchar   *name,
+                                                    gboolean       stingy_memory_use);
+GimpData            * gimp_gradient_get_standard   (void);
 
-void                  gimp_gradient_get_color_at     (GimpGradient  *gradient,
-						      gdouble        pos,
-                                                      gboolean       reverse,
-						      GimpRGB       *color);
-GimpGradientSegment * gimp_gradient_get_segment_at   (GimpGradient  *grad,
-						      gdouble        pos);
+GimpGradientSegment * gimp_gradient_get_color_at   (GimpGradient        *gradient,
+                                                    GimpGradientSegment *seg,
+                                                    gdouble              pos,
+                                                    gboolean             reverse,
+                                                    GimpRGB             *color);
+GimpGradientSegment * gimp_gradient_get_segment_at (GimpGradient  *grad,
+                                                    gdouble        pos);
 
 
 /*  gradient segment functions  */

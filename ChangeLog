@@ -1,3 +1,21 @@
+2005-02-27  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpgradient.[ch]: removed the "last_visited" field
+	from GimpGradient. Instead added the new function
+	gimp_gradient_get_color_at_segment() that allows the caller to do
+	the same optimization.
+
+	* app/actions/gradient-editor-commands.c
+	* app/core/gimpdrawable-blend.c
+	* app/core/gimppalette-import.c
+	* app/paint/gimppaintoptions.c
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimpgradientselect.c
+	* app/widgets/gimpviewrenderergradient.c: changed accordingly.
+
+	* app/pdb/gradient_cmds.c
+	* app/pdb/gradients_cmds.c: regenerated.
+
 2005-02-26  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/png.c: revert change to read images one row at a

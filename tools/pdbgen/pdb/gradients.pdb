@@ -110,6 +110,8 @@ sub gradients_sample_uniform {
                   'GimpRGB color', 'gdouble *pv' ],
 	code => <<'CODE'
 {
+  GimpGradientSegment *seg = NULL;
+
   pos   = 0.0;
   delta = 1.0 / (i - 1);
 
@@ -121,7 +123,7 @@ sub gradients_sample_uniform {
 
   while (i--)
     {
-      gimp_gradient_get_color_at (gradient, pos, reverse, &color);
+      seg = gimp_gradient_get_color_at (gradient, seg, pos, reverse, &color);
 
       *pv++ = color.r;
       *pv++ = color.g;
@@ -153,6 +155,8 @@ sub gradients_sample_custom {
 	vars => [ 'GimpGradient *gradient', 'GimpRGB color', 'gdouble *pv' ],
 	code => <<'CODE'
 {
+  GimpGradientSegment *seg = NULL;
+
   array_length = i * 4;
 
   pv = color_samples = g_new (gdouble, array_length);
@@ -161,7 +165,7 @@ sub gradients_sample_custom {
 
   while (i--)
     {
-      gimp_gradient_get_color_at (gradient, *pos, reverse, &color);
+      seg = gimp_gradient_get_color_at (gradient, seg, *pos, reverse, &color);
 
       *pv++ = color.r;
       *pv++ = color.g;
@@ -223,10 +227,11 @@ sub gradients_get_gradient_data {
 
   if (gradient)
     {
-      gdouble *pv;
-      gdouble  pos, delta;
-      GimpRGB  color;
-      gint     i;
+      GimpGradientSegment *seg = NULL;
+      gdouble             *pv;
+      gdouble              pos, delta;
+      GimpRGB              color;
+      gint                 i;
 
       i     = sample_size;
       pos   = 0.0;
@@ -236,7 +241,7 @@ sub gradients_get_gradient_data {
 
       while (i--)
 	{
-	  gimp_gradient_get_color_at (gradient, pos, reverse, &color);
+	  seg = gimp_gradient_get_color_at (gradient, seg, pos, reverse, &color);
 
 	  *pv++ = color.r;
 	  *pv++ = color.g;

@@ -173,6 +173,8 @@ gradients_sample_uniform_invoker (Gimp         *gimp,
 
   if (success)
     {
+      GimpGradientSegment *seg = NULL;
+
       pos   = 0.0;
       delta = 1.0 / (i - 1);
 
@@ -184,7 +186,7 @@ gradients_sample_uniform_invoker (Gimp         *gimp,
 
       while (i--)
         {
-          gimp_gradient_get_color_at (gradient, pos, reverse, &color);
+          seg = gimp_gradient_get_color_at (gradient, seg, pos, reverse, &color);
 
           *pv++ = color.r;
           *pv++ = color.g;
@@ -278,6 +280,8 @@ gradients_sample_custom_invoker (Gimp         *gimp,
 
   if (success)
     {
+      GimpGradientSegment *seg = NULL;
+
       array_length = i * 4;
 
       pv = color_samples = g_new (gdouble, array_length);
@@ -286,7 +290,7 @@ gradients_sample_custom_invoker (Gimp         *gimp,
 
       while (i--)
         {
-          gimp_gradient_get_color_at (gradient, *pos, reverse, &color);
+          seg = gimp_gradient_get_color_at (gradient, seg, *pos, reverse, &color);
 
           *pv++ = color.r;
           *pv++ = color.g;
@@ -397,10 +401,11 @@ gradients_get_gradient_data_invoker (Gimp         *gimp,
 
       if (gradient)
         {
-          gdouble *pv;
-          gdouble  pos, delta;
-          GimpRGB  color;
-          gint     i;
+          GimpGradientSegment *seg = NULL;
+          gdouble             *pv;
+          gdouble              pos, delta;
+          GimpRGB              color;
+          gint                 i;
 
           i     = sample_size;
           pos   = 0.0;
@@ -410,7 +415,7 @@ gradients_get_gradient_data_invoker (Gimp         *gimp,
 
           while (i--)
             {
-              gimp_gradient_get_color_at (gradient, pos, reverse, &color);
+              seg = gimp_gradient_get_color_at (gradient, seg, pos, reverse, &color);
 
               *pv++ = color.r;
               *pv++ = color.g;

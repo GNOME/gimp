@@ -121,14 +121,14 @@ static void     gradient_precalc_shapeburst (GimpImage        *gimage,
                                              gdouble           dist,
                                              GimpProgress     *progress);
 
-static void     gradient_render_pixel       (gdouble       x,
-                                             gdouble       y,
-                                             GimpRGB      *color,
-                                             gpointer      render_data);
-static void     gradient_put_pixel          (gint          x,
-                                             gint          y,
-                                             GimpRGB      *color,
-					     gpointer      put_pixel_data);
+static void     gradient_render_pixel       (gdouble           x,
+                                             gdouble           y,
+                                             GimpRGB          *color,
+                                             gpointer          render_data);
+static void     gradient_put_pixel          (gint              x,
+                                             gint              y,
+                                             GimpRGB          *color,
+					     gpointer          put_pixel_data);
 
 static void     gradient_fill_region        (GimpImage        *gimage,
                                              GimpDrawable     *drawable,
@@ -653,8 +653,8 @@ gradient_precalc_shapeburst (GimpImage    *gimage,
 
 
 static void
-gradient_render_pixel (double    x,
-		       double    y,
+gradient_render_pixel (gdouble   x,
+		       gdouble   y,
 		       GimpRGB  *color,
 		       gpointer  render_data)
 {
@@ -715,13 +715,13 @@ gradient_render_pixel (double    x,
     case GIMP_GRADIENT_SPIRAL_CLOCKWISE:
       factor = gradient_calc_spiral_factor (rbd->dist,
                                             rbd->vec, rbd->offset,
-					    x - rbd->sx, y - rbd->sy,TRUE);
+					    x - rbd->sx, y - rbd->sy, TRUE);
       break;
 
     case GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE:
       factor = gradient_calc_spiral_factor (rbd->dist,
                                             rbd->vec, rbd->offset,
-					    x - rbd->sx, y - rbd->sy,FALSE);
+					    x - rbd->sx, y - rbd->sy, FALSE);
       break;
 
     default:
@@ -761,7 +761,8 @@ gradient_render_pixel (double    x,
 
   if (rbd->blend_mode == GIMP_CUSTOM_MODE)
     {
-      gimp_gradient_get_color_at (rbd->gradient, factor, rbd->reverse, color);
+      gimp_gradient_get_color_at (rbd->gradient, NULL,
+                                  factor, rbd->reverse, color);
     }
   else
     {

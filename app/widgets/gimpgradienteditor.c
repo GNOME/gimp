@@ -797,7 +797,7 @@ view_set_hint (GimpGradientEditor *editor,
 
   xpos = control_calc_g_pos (editor, x);
 
-  gimp_gradient_get_color_at (GIMP_GRADIENT (data_editor->data),
+  gimp_gradient_get_color_at (GIMP_GRADIENT (data_editor->data), NULL,
                               xpos, FALSE, &rgb);
 
   gimp_rgb_to_hsv (&rgb, &hsv);
@@ -838,7 +838,7 @@ view_set_foreground (GimpGradientEditor *editor,
 
   xpos = control_calc_g_pos (editor, x);
 
-  gimp_gradient_get_color_at (gradient, xpos, FALSE, &color);
+  gimp_gradient_get_color_at (gradient, NULL, xpos, FALSE, &color);
 
   gimp_context_set_foreground (user_context, &color);
 
@@ -873,7 +873,7 @@ view_set_background (GimpGradientEditor *editor,
 
   xpos = control_calc_g_pos (editor, x);
 
-  gimp_gradient_get_color_at (gradient, xpos, FALSE, &color);
+  gimp_gradient_get_color_at (gradient, NULL, xpos, FALSE, &color);
 
   gimp_context_set_background (user_context, &color);
 
