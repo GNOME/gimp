@@ -21,6 +21,7 @@
 #include <glib-object.h>
 
 #include "libgimpproxy/gimpproxytypes.h"
+#include "gimptooltypes.h"
 
 #include "gimptoolmodule.h"
 

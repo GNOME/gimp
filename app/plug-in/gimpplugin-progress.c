@@ -22,6 +22,7 @@
 
 #include "plug-in-types.h"
 
+#warning FIXME #include "display/display-types.h"
 #include "display/display-types.h"
 
 #include "display/gimpdisplay.h"

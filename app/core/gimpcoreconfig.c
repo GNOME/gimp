@@ -21,7 +21,6 @@
 #include <glib-object.h>
 
 #include "core-types.h"
-#include "libgimptool/gimptooltypes.h"
 
 #include "gimp.h"
 #include "gimpcoreconfig.h"

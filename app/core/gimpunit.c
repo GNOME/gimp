@@ -26,7 +26,6 @@
 #include "libgimpbase/gimpbase.h"
 
 #include "core-types.h"
-#include "libgimptool/gimptooltypes.h"
 
 #include "gimp.h"
 #include "gimpunit.h"

@@ -24,9 +24,6 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
-#include "display/display-types.h"
-#include "libgimptool/gimptooltypes.h"
 #include "tools-types.h"
 
 #include "core/gimpchannel.h"

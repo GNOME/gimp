@@ -31,8 +31,6 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
-#include "libgimptool/gimptooltypes.h"
 #include "tools-types.h"
 
 #include "base/pixel-region.h"

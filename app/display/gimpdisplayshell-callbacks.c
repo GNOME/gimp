@@ -27,6 +27,7 @@
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "display-types.h"
+#include "tools/tools-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
@@ -36,7 +37,6 @@
 #include "core/gimplayer.h"
 #include "core/gimptoolinfo.h"
 
-#include "libgimptool/gimptooltypes.h"
 #include "libgimptool/gimptoolcontrol.h"
 
 #include "tools/gimpmovetool.h"

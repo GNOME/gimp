@@ -26,6 +26,8 @@
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
+
+#warning FIXME #include "gui/gui-types.h"
 #include "gui/gui-types.h"
 
 #include "base/tile-manager.h"

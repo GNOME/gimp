@@ -19,9 +19,9 @@
 #ifndef __GIMP_TOOL_CONTROL_H__
 #define __GIMP_TOOL_CONTROL_H__
 
-#include "tools-types.h"
 
 #include "core/gimpobject.h"
+
 
 #define GIMP_TYPE_TOOL_CONTROL            (gimp_tool_control_get_type ())
 #define GIMP_TOOL_CONTROL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_CONTROL, GimpToolControl))

@@ -17,11 +17,22 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __TOOL_SAVE_MODE_H__
-#define __TOOL_SAVE_MODE_H__
+#ifndef __PLUGIN_HELPER_H__
+#define __PLUGIN_HELPER_H__
+
+extern void plugin_module_install_procedure (gchar * name,
+					     gchar * blurb,
+					     gchar * help,
+					     gchar * author,
+					     gchar * copyright,
+					     gchar * date,
+					     gchar * menu_path,
+					     gchar * image_types,
+					     gint nparams,
+					     gint nreturn_vals,
+					     GimpParamDef * params,
+					     GimpParamDef * return_vals,
+					     GimpRunProc run_proc);
 
 
-void   tool_safe_mode_init (const gchar *tool_plug_in_path);
-
-
-#endif /* __TOOL_SAFE_MODE_H__ */
+#endif /* __PLUGIN_HELPER_H__ */

@@ -23,8 +23,7 @@
 
 #include <glib-object.h>
 
-#include "libgimpbase/gimpbasetypes.h"
-#include "libgimpbase/gimpunit.h"
+#include "libgimpbase/gimpbase.h"
 
 #include "gimpconfig-params.h"
 #include "gimpconfig-types.h"

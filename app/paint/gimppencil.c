@@ -22,9 +22,6 @@
 
 #include "libgimpcolor/gimpcolor.h"
 
-#include "core/core-types.h"
-#include "libgimptool/gimptooltypes.h"
-
 #include "paint-types.h"
 
 #include "base/temp-buf.h"

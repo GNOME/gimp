@@ -22,6 +22,7 @@
 
 #include "paint/paint-types.h"
 #include "display/display-types.h"
+#include "libgimptool/gimptooltypes.h"
 
 
 /*  tools  */

@@ -28,6 +28,9 @@
 
 #include "display-types.h"
 
+#warning FIXME #include "gui/gui-types.h"
+#include "gui/gui-types.h"
+
 #include "core/gimp.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpcontext.h"
@@ -47,8 +50,6 @@
 #include "widgets/gimpdnd.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-utils.h"
-
-#include "gui/gui-types.h" /* FIXME */
 
 #include "gui/info-window.h"
 #include "gui/plug-in-menus.h"

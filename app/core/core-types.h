@@ -116,8 +116,8 @@ typedef struct _GimpItem            GimpItem;
 
 typedef struct _GimpBuffer          GimpBuffer;
 
-typedef struct _GimpToolInfo        GimpToolInfo; /*< proxy-include >*/
 typedef struct _GimpPaintInfo       GimpPaintInfo;
+typedef struct _GimpToolInfo        GimpToolInfo; /*< proxy-include >*/
 
 typedef struct _GimpImagefile       GimpImagefile;
 
@@ -181,6 +181,12 @@ typedef struct _GimpPaletteEntry    GimpPaletteEntry;
 typedef struct _Path                Path;
 typedef struct _PathPoint           PathPoint;
 typedef struct _PathList            PathList;
+
+/*  stuff which is forward declared here so we don't need to cross-include it
+ */
+
+typedef struct _GimpToolOptions     GimpToolOptions;  /*< proxy-include >*/
+
 
 /*  functions  */
 

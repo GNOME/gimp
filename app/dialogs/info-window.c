@@ -23,8 +23,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "tools/tools-types.h"
-#include "widgets/widgets-types.h"
+#include "gui-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"

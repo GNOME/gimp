@@ -25,7 +25,6 @@
 #include "libgimpbase/gimpbase.h"
 
 #include "core-types.h"
-#include "libgimptool/gimptooltypes.h"
 
 #include "paint-funcs/paint-funcs.h"
 

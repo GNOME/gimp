@@ -26,7 +26,6 @@
 #include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
-#include "libgimptool/gimptooltypes.h"
 
 #include "base/pixel-region.h"
 

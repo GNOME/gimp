@@ -8,6 +8,7 @@ EXTRA_DIST = \
 	README.gtkdoc	\
 	gih.txt  	\
 	gpb.txt  	\
+	includes.txt	\
 	parasites.txt	\
 	undo.txt	\
 	xcf.txt

@@ -23,11 +23,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
-#include "display/display-types.h"
-#include "libgimptool/gimptooltypes.h"
 #include "tools-types.h"
-
 
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
@@ -39,8 +35,6 @@
 #include "gimpeditselectiontool.h"
 #include "gimpselectiontool.h"
 #include "selection_options.h"
-
-
 
 
 static void   gimp_selection_tool_class_init    (GimpSelectionToolClass *klass);

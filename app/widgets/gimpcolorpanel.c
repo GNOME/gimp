@@ -26,10 +26,12 @@
 
 #include "widgets-types.h"
 
+#warning FIXME #include "gui/gui-types.h"
+#include "gui/gui-types.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 
-#include "gui/gui-types.h"
 #include "gui/color-notebook.h"
 
 #include "gimpcolorpanel.h"

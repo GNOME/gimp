@@ -119,7 +119,8 @@ the common methods there.
 
 Don't include headers in headers except where unavoidable (e.g. for
 deriving objects). Opaque typedefs go to app/base/base-types.h,
-app/core/core-types.h etc.
+app/core/core-types.h etc. See devel-docs/includes.txt for a
+detailed description of the include policy.
 
 Don't use the GTK wrappers around the GLib object and signal system.
 

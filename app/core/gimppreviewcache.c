@@ -20,7 +20,7 @@
 
 #include <glib-object.h>
 
-#include "base/base-types.h"
+#include "core-types.h"
 
 #include "base/temp-buf.h"
 

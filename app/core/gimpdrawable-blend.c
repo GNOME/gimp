@@ -19,13 +19,13 @@
 #include "config.h"
 
 #include <stdlib.h>
+
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
-#include "libgimptool/gimptooltypes.h"
 
 #include "base/pixel-region.h"
 #include "base/tile.h"

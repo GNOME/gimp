@@ -18,17 +18,16 @@
 
 #include "config.h"
 
-#include <glib-object.h>
-
 #include <stdio.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
+#include <glib-object.h>
+
 #include "libgimpbase/gimpbase.h"
 
 #include "core-types.h"
-#include "libgimptool/gimptooltypes.h"
 
 #include "config/gimpscanner.h"
 

@@ -22,7 +22,10 @@
 #include <gtk/gtk.h>
 
 #include "display-types.h"
-#include "gui/gui-types.h" /* FIXME */
+#include "tools/tools-types.h"
+
+#warning FIXME #include "gui/gui-types.h"
+#include "gui/gui-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
@@ -30,7 +33,6 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-projection.h"
 
-#include "libgimptool/gimptooltypes.h"
 #include "libgimptool/gimptool.h"
 
 #include "tools/tool_manager.h"

@@ -27,10 +27,7 @@
 
 #include "libgimpcolor/gimpcolor.h"
 
-
 #include "core-types.h"
-#include "libgimptool/gimptooltypes.h"
-
 
 #include "base/base-config.h"
 #include "base/temp-buf.h"
@@ -51,6 +48,7 @@
 #include "gimptoolinfo.h"
 
 #include "libgimp/gimpintl.h" 
+
 
 typedef void (* GimpContextCopyPropFunc) (GimpContext *src,
 					  GimpContext *dest);

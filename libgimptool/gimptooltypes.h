@@ -29,7 +29,6 @@ G_BEGIN_DECLS
 
 typedef struct _GimpTool            GimpTool;
 typedef struct _GimpToolModule      GimpToolModule;
-typedef struct _GimpToolOptions     GimpToolOptions;
 typedef struct _GimpToolControl     GimpToolControl;
 
 typedef struct _GimpPaintTool       GimpPaintTool;

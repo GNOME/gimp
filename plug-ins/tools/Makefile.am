@@ -6,21 +6,23 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = tool-safe-mode 
 
-tool_safe_mode_SOURCES =  \
-	tool-safe-mode.c  \
-	tool-safe-mode.h  \
-	gimptool.c	  \
-	gimptoolcontrol.c \
+tool_safe_mode_SOURCES = \
+	tool-safe-mode.c		\
+	tool-safe-mode.h		\
+	tool-safe-mode-plug-in.c	\
+	tool-safe-mode-plug-in.h	\
+	gimptool.c			\
+	gimptoolcontrol.c		\
 	gimptoolcontrol.h
 
 AM_CPPFLAGS = \
 	-DLOCALEDIR=\""$(localedir)"\"
 
 INCLUDES = \
-	-I$(top_srcdir)		\
-	-I$(top_srcdir)/app/    \
-	-I$(top_srcdir)/app/core\
-	$(GTK_CFLAGS)		\
+	-I$(top_srcdir)			\
+	-I$(top_srcdir)/app		\
+	-I$(top_srcdir)/app/core	\
+	$(GTK_CFLAGS)			\
 	-I$(includedir)
 
 LDADD = \

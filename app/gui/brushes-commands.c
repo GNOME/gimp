@@ -20,7 +20,7 @@
 
 #include <gtk/gtk.h>
 
-#include "widgets/widgets-types.h"
+#include "gui-types.h"
 
 #include "core/gimpbrushgenerated.h"
 #include "core/gimpcontext.h"

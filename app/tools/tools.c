@@ -20,8 +20,6 @@
 
 #include <gtk/gtk.h>
 
-#include "core/core-types.h"
-#include "libgimptool/gimptooltypes.h"
 #include "tools-types.h"
 
 /*FIXME: remove when proper module loading is in place */

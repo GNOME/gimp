@@ -24,7 +24,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "widgets/widgets-types.h"
+#include "gui-types.h"
 
 #include "core/gimpgradient.h"
 #include "core/gimpcontext.h"

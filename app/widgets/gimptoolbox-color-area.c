@@ -31,14 +31,15 @@
 
 #include "widgets-types.h"
 
+#warning FIXME #include "gui/gui-types.h"
+#include "gui/gui-types.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 
 #include "gimpdnd.h"
 #include "gimptoolbox.h"
 #include "gimptoolbox-color-area.h"
-
-#include "gui/gui-types.h" /* temp hack */
 
 #include "gui/color-notebook.h"
 

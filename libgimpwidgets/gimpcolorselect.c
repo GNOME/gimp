@@ -34,7 +34,7 @@
 #include "libgimpwidgets/gimpwidgets.h"
 #include "libgimp/gimpcolorselector.h"
 
-#include "core/core-types.h"
+#include "gui-types.h"
 
 #include "widgets/gimpdnd.h"
 

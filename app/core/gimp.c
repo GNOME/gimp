@@ -24,8 +24,7 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "core-types.h" /* must come before gimptooltypes */
-#include "libgimptool/gimptooltypes.h"
+#include "core-types.h"
 
 #include "pdb/procedural_db.h"
 #include "pdb/internal_procs.h"

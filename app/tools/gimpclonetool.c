@@ -22,8 +22,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
-#include "libgimptool/gimptooltypes.h"
+#include "tools-types.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -161,6 +160,8 @@ gimp_clone_tool_init (GimpCloneTool *clone)
 
   gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_EXACT);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_CLONE_TOOL_CURSOR);
+
+  clone_core = g_object_new (GIMP_TYPE_CLONE, NULL);
 
   clone_core->init_callback      = gimp_clone_init_callback;
   clone_core->finish_callback    = gimp_clone_finish_callback;

@@ -26,8 +26,7 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include "display/display-types.h"
-#include "libgimptool/gimptooltypes.h"
+#include "tools-types.h"
 
 #include "base/boundary.h"
 #include "base/pixel-region.h"

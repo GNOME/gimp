@@ -19,8 +19,9 @@
 #ifndef __GIMP_TOOL_MODULE_H__
 #define __GIMP_TOOL_MODULE_H__
 
+
 #include <gmodule.h>
-#include "gimptooltypes.h"
+
 
 #define GIMP_TOOL_MODULE_ABI_VERSION 0x1
 

@@ -30,35 +30,18 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#include <gtk/gtk.h>
-
 
 #include <gtk/gtk.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include "libgimpbase/gimpbase.h"
+#include "libgimpproxy/gimpproxytypes.h"
 
-#include "libgimp/stdplugins-intl.h"
-
-/* EEEEEEEK! */
-typedef struct _GimpToolInfo GimpToolInfo;
+#include "libgimptool/gimptooltypes.h"
 
 #include "libgimptool/gimptoolmodule.h"
 
+#include "libgimp/stdplugins-intl.h"
 
-/* Declare local functions */
-static void safe_mode_init (void);
-
-
-GimpPlugInInfo PLUG_IN_INFO = {
-  safe_mode_init,		/* init_proc */
-  NULL,				/* query_proc  */
-  NULL,				/* quit_proc  */
-  NULL,				/* run_proc   */
-};
-
-
-MAIN ()
 
 static void
 safe_mode_register_tool ()
@@ -70,24 +53,11 @@ safe_mode_register_tool ()
  * why isn't that function available in libgimp? It would be
  * better than the ad-hoc stuff in gimpressionist, gflare, etc.
  */
-static void 
-safe_mode_init (void)
+void
+tool_safe_mode_init (const gchar *tool_plug_in_path)
 {
-  gchar *tool_plug_in_path, *free_me;
-
-  g_type_init();
-
   g_message ("tool-safe-mode init called");
 
-  free_me = tool_plug_in_path = gimp_gimprc_query ("tool-plug-in-path");
-
-  /* FIXME: why does it return the string with quotes around it?
-   * gflare-path does not
-   */
-
-  tool_plug_in_path++;
-  tool_plug_in_path[strlen(tool_plug_in_path)-1] = 0;
-  
   if (g_module_supported () && tool_plug_in_path) 
     {
       GList         *path;
@@ -150,7 +120,6 @@ safe_mode_init (void)
         }
 
       gimp_path_free (path);
-      g_free (free_me);
    }
 
   g_message ("tool-safe-mode init done");

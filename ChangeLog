@@ -1,3 +1,177 @@
+2002-05-03  Michael Natterer  <mitch@gimp.org>
+
+	* devel-docs/Makefile.am
+	* devel-docs/includes.txt: new file documenting the core's
+	include policy.
+
+	* HACKING: mention it here.
+
+	* libgimptool/gimptooltypes.h: removed GimpToolOptions here.
+
+	* app/core/core-types.h: and added it here. This is a temp hack
+	needed because GimpToolInfo needs to know the GimpToolOptions
+	type.
+
+	* libgimpproxy/gimpproxytypes.h: regenerated.
+
+	* libgimptool/gimptoolmodule.h: don't include gimptooltypes.h here...
+	* libgimptool/gimptoolmodule.c: ...but here.
+
+	* app/config/gimpconfig-params.c: include "libgimpbase/gimpbase.h"
+	entirely, not single files from it.
+
+	* app/core/gimp.c
+	* app/core/gimpcontext.c
+	* app/core/gimpcoreconfig.c
+	* app/core/gimpdatafactory.c
+	* app/core/gimpdocuments.c
+	* app/core/gimpdrawable-blend.c
+	* app/core/gimpdrawable-bucket-fill.c
+	* app/core/gimpdrawable-offset.c
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpedit.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-guides.c
+	* app/core/gimpimage-mask.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-new.c
+	* app/core/gimpimage-projection.c
+	* app/core/gimpimage-qmask.c
+	* app/core/gimpimage-resize.c
+	* app/core/gimpimage-scale.c
+	* app/core/gimpimage.c
+	* app/core/gimpitem.c
+	* app/core/gimpmodules.c
+	* app/core/gimppaintinfo.c
+	* app/core/gimpparasite.c
+	* app/core/gimppreviewcache.c
+	* app/core/gimptoolinfo.c
+	* app/core/gimpunit.c: include "core-types.h" and no other types file.
+
+	* app/display/gimpdisplay.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell.c: include "tools/tools-types.h"
+	instead of "libgimptool/gimptooltypes.h", warn about inclusion
+	on "gui/gui-types.h"
+
+	* app/file/file-open.c
+	* app/file/file-save.c: don't include "libgimptool/gimptooltypes.h".
+
+	* app/gui/about-dialog.c
+	* app/gui/brush-select.c
+	* app/gui/brushes-commands.c
+	* app/gui/color-select.c
+	* app/gui/data-commands.c
+	* app/gui/device-status-dialog.c
+	* app/gui/dialogs.c
+	* app/gui/gradients-commands.c
+	* app/gui/help-commands.c
+	* app/gui/info-window.c
+	* app/gui/palettes-commands.c
+	* app/gui/patterns-commands.c
+	* app/gui/resize-dialog.c
+	* app/gui/tips-dialog.c
+	* app/gui/tool-options-dialog.c: include "gui-types.h" and no
+	other types file.
+
+	* app/paint/gimpairbrush.c
+	* app/paint/gimpclone.c
+	* app/paint/gimpconvolve.c
+	* app/paint/gimpdodgeburn.c
+	* app/paint/gimperaser.c
+	* app/paint/gimppaintbrush.c
+	* app/paint/gimppaintcore-stroke.c
+	* app/paint/gimppaintcore.c
+	* app/paint/gimppaintoptions.c
+	* app/paint/gimppencil.c
+	* app/paint/gimpsmudge.c
+	* app/paint/paint.c: include "paint-types.h" and no other types file.
+
+	* app/pdb/pdb-types.h: don't include "libgimptool/gimptooltypes.h".
+
+	* app/plug-in/plug-in-progress.c: warn about inclusion of
+	"display/display-types.h"
+
+	* app/tools/tools-types.h: include "libgimptool/gimptooltypes.h".
+
+	* app/tools/gimpairbrushtool.c
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimpdrawtool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpellipseselecttool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppaintbrushtool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimppathtool.c
+	* app/tools/gimppenciltool.c
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimprectselecttool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpselectiontool.c
+	* app/tools/gimpsheartool.c
+	* app/tools/gimpsmudgetool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimpthresholdtool.c
+	* app/tools/gimptoolcontrol.c
+	* app/tools/gimptoolcontrol.h
+	* app/tools/gimptransformtool.c
+	* app/tools/gimpvectortool.c
+	* app/tools/tools.c: include "tools-types.h" and no other types file,
+	warn about inclusion of "gui/gui-types.h".
+
+	* app/widgets/gimpcolorpanel.c
+	* app/widgets/gimptoolbox-color-area.c: warn about inclusion of
+	"gui/gui-types.h".
+
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf.c: don't include "libgimptool/gimptooltypes.h".
+
+	Split tool-safe-mode up in two files, one including libgimpproxy,
+	one libgimp.
+	
+	* plug-ins/tools/Makefile.am
+	* plug-ins/tools/tool-safe-mode-plug-in.[ch]: new files including
+	libgimp/ stuff only.
+
+	* plug-ins/tools/tool-safe-mode.[ch]: include libgimpproxy/ and
+	libgimptool/ but don't include libgimp/ because of conflicting
+	declarations.
+
+	Unrelated:
+
+	* app/tools/gimpclonetool.c: create the clone core so we don't crash.
+
+	* app/gui/file-open-dialog.c: changed the way we create previews
+	so that only out-of-date previews are created on a click in the
+	preview area. Unconditional creation can still be forced by
+	<Ctrl>+click. Changed the tooltip to document this.
+
 2002-05-03  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpairbrushtool.[ch]

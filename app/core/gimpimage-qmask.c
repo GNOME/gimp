@@ -25,7 +25,6 @@
 #include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
-#include "libgimptool/gimptooltypes.h"
 
 #include "gimp.h"
 #include "gimpchannel.h"
