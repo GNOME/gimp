@@ -1,3 +1,14 @@
+2002-02-07  Nathan Summers  <rock@gimp.org>
+
+	* app/gimprc.c
+        * app/config/gimpcoreconfig.[ch]
+        * app/core/gimpcoreconfig.[ch]
+        * app/gui/preferences-dialog.[ch]
+        * etc/gimprc.in: add a preferences option for tool plug-ins,
+        in anticipation of future work on them. Tool plug-ins should be 
+        in a separate directory so that the plug-in codecan distinguish 
+        them.  
+        
 2002-02-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-new.[ch]: renamed the image size utility
