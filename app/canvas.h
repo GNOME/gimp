@@ -72,8 +72,4 @@ guint          canvas_portion_alloc     (Canvas *, int x, int y);
 guint          canvas_portion_unalloc   (Canvas *, int x, int y);
 
 
-
-/* temporary evil */
-void canvas_init (Canvas *, Canvas *, int x, int y);
-
 #endif /* __CANVAS_H__ */

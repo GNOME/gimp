@@ -30,13 +30,14 @@ typedef struct _PixelAreaGroup PixelAreaGroup;
 struct _PixelAreaGroup
 {
   GList * pixelareas;
+  int     autoref;
   int     region_width;
   int     region_height;
   int     portion_width;
   int     portion_height;
 };
 
-static PixelAreaGroup * pixelareagroup_new            (void);
+static PixelAreaGroup * pixelareagroup_new            (int);
 static void             pixelareagroup_delete         (PixelAreaGroup *);
 static void             pixelareagroup_addarea        (PixelAreaGroup *, PixelArea *);
 static PixelAreaGroup * pixelareagroup_configure      (PixelAreaGroup *);
@@ -270,35 +271,6 @@ pixelarea_write_col (
 }
 
 
-Paint *
-pixelarea_convert_paint (
-                         PixelArea * pa,
-                         Paint * paint
-                         )
-{
-  Paint * new = paint;
-
-  if (! tag_equal (paint_tag (paint), pixelarea_tag (pa)))
-    {
-      Precision precision = tag_precision (pixelarea_tag (pa));
-      Format format = tag_format (pixelarea_tag (pa));
-      Alpha alpha = tag_alpha (pixelarea_tag (pa));
-      
-      new = paint_clone (paint);
-      
-      if ((paint_set_precision (new, precision) != precision) ||
-          (paint_set_format (new, format) != format) ||
-          (paint_set_alpha (new, alpha) != alpha))
-        {
-          paint_delete (new);
-          return NULL;
-        }
-    }
-  
-  return new;
-}
-
-
 Tag 
 pixelarea_tag  (
                 PixelArea * pa
@@ -388,7 +360,33 @@ pixelarea_register (
   if (num_areas < 1)
     return NULL;
   
-  pag = pixelareagroup_new ();
+  pag = pixelareagroup_new (TRUE);
+
+  va_start (ap, num_areas);
+  while (num_areas --)
+    {
+      PixelArea * pa = va_arg (ap, PixelArea *);      
+      pixelareagroup_addarea (pag, pa);
+    }
+  va_end (ap);
+
+  return (void *) pixelareagroup_configure (pag);
+}
+
+
+void * 
+pixelarea_register_noref  (
+                           int num_areas,
+                           ...
+                           )
+{
+  PixelAreaGroup *pag;
+  va_list ap;
+
+  if (num_areas < 1)
+    return NULL;
+  
+  pag = pixelareagroup_new (FALSE);
 
   va_start (ap, num_areas);
   while (num_areas --)
@@ -420,7 +418,10 @@ pixelarea_process  (
           PixelArea * pa = (PixelArea *) list->data;
           if (pa != NULL)
             {
-              pixelarea_unref (pa);
+              if (pag->autoref)
+                {
+                  pixelarea_unref (pa);
+                }
               pa->x += pag->portion_width;
               if ((pa->x - pa->startx) >= pag->region_width)
                 {
@@ -449,7 +450,7 @@ pixelarea_process_stop (
       while (list)
         {
           PixelArea * pa = (PixelArea *) list->data;
-          if (pa != NULL)
+          if ((pa != NULL) && pag->autoref)
             {
               pixelarea_unref (pa);
             }
@@ -468,10 +469,7 @@ pixelarea_ref (
                )
 {
   if (pa)
-    if (canvas_portion_ref (pa->canvas, pa->x, pa->y) == TRUE)
-      {
-        canvas_init (pa->canvas, pa->init, pa->x, pa->y);
-      }
+    canvas_portion_ref (pa->canvas, pa->x, pa->y);
 }
 
 
@@ -495,7 +493,7 @@ pixelarea_unref (
   
 static PixelAreaGroup *
 pixelareagroup_new (
-                    void
+                    int autoref
                     )
 {
   PixelAreaGroup *pag;
@@ -503,6 +501,7 @@ pixelareagroup_new (
   pag = (PixelAreaGroup *) g_malloc (sizeof (PixelAreaGroup));
 
   pag->pixelareas = NULL;
+  pag->autoref = autoref;
   pag->region_width = G_MAXINT;
   pag->region_height = G_MAXINT;
   pag->portion_width = 0;
@@ -570,7 +569,10 @@ pixelareagroup_configure (
           PixelArea * pa = (PixelArea *) list->data;
           if (pa)
             {
-              pixelarea_ref (pa);
+              if (pag->autoref)
+                {
+                  pixelarea_ref (pa);
+                }
               pa->w = pag->portion_width;
               pa->h = pag->portion_height;
             }

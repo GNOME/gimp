@@ -21,6 +21,7 @@
 #include "appenv.h"
 #include "drawable.h"
 #include "general.h"
+#include "gimage.h"
 #include "undo.h"
 #include "undo_cmds.h"
 

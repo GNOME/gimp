@@ -18,7 +18,6 @@
 #ifndef __PIXEL_AREA_H__
 #define __PIXEL_AREA_H__
 
-#include "glib.h"
 #include "tag.h"
 
 
@@ -68,8 +67,6 @@ void              pixelarea_write_row     (PixelArea *, struct _PixelRow *,
                                            int, int, int);
 void              pixelarea_write_col     (PixelArea *, struct _PixelRow *,
                                            int, int, int);
-struct _Paint *   pixelarea_convert_paint (PixelArea *, struct _Paint *);
-
 Tag               pixelarea_tag           (PixelArea *);
 int               pixelarea_width         (PixelArea *);
 int               pixelarea_height        (PixelArea *);
@@ -80,8 +77,9 @@ int               pixelarea_rowstride     (PixelArea *);
 
 
 /* pixel area iterators */
-void *            pixelarea_register      (int, ...);
-void *            pixelarea_process       (void *);
-void              pixelarea_process_stop  (void *);
+void *            pixelarea_register       (int, ...);
+void *            pixelarea_register_noref (int, ...);
+void *            pixelarea_process        (void *);
+void              pixelarea_process_stop   (void *);
 
 #endif /* __PIXELAREA_H__ */

@@ -453,20 +453,3 @@ canvas_portion_unalloc  (
 
 
 
-/* temporary evil */
-void
-canvas_init  (
-              Canvas * c,
-              Canvas * src,
-              int x,
-              int y
-              )
-{
-  if (c && src)
-    if ((c->tile_data) && (src->tile_data))
-      tilebuf_init (c->tile_data, src->tile_data, x, y);
-    else if ((c->flat_data) && (src->flat_data))
-      flatbuf_init (c->flat_data, src->flat_data, x, y);
-    else
-      g_warning ("canvas_init() failed to init");
-}

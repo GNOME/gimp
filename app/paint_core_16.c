@@ -188,7 +188,8 @@ paint_core_16_init  (
                            drawable_width (drawable),
                            drawable_height (drawable),
                            STORAGE_FLAT);
-
+  canvas_set_autoalloc (undo_tiles, FALSE);
+  
 
   /*  Allocate the cumulative brush stroke mask  */
   if (canvas_tiles)
@@ -290,15 +291,12 @@ paint_core_16_finish  (
 
   /*  push an undo  */
   {
-#if 0
-    /* assign ownership of undo_tiles to undo system */
-    drawable_apply_image (drawable, paint_core->x1, paint_core->y1,
-                          paint_core->x2, paint_core->y2, undo_tiles, TRUE);
-#else
-    /* destroy undo tiles immediately */
-    canvas_delete (undo_tiles);
-#endif
-   undo_tiles = NULL;
+    /* drawable_apply_image  assign ownership of undo_tiles to undo system */
+    drawable_apply_image_16 (drawable,
+                             paint_core->x1, paint_core->y1,
+                             paint_core->x2, paint_core->y2,
+                             undo_tiles);
+    undo_tiles = NULL;
   }
 
   /*  push the group end  */
@@ -668,7 +666,6 @@ paint_core_16_area_original  (
                   0, 0, (x2 - x1), (y2 - y1), TRUE);
 
 
-  canvas_set_autoalloc (undo_tiles, FALSE);  
   {
     void * pag;
     for (pag = pixelarea_register (3, &srcPR, &undoPR, &destPR);
@@ -681,7 +678,6 @@ paint_core_16_area_original  (
           copy_area (&srcPR, &destPR);
       }
   }
-  canvas_set_autoalloc (undo_tiles, TRUE);
   
   return orig_buf;
 }
@@ -772,22 +768,42 @@ painthit_init  (
                 int h
                 )
 {
-  PixelArea a;
-  Canvas *c;
+  PixelArea undo;
+  PixelArea canvas;
+  PixelArea src;
+  PixelArea dst;
+  void * pag;
 
-  /* initialize the undo tiles by using the drawable data as the
-     pixelarea initializer and touching each tile */
-  c = drawable_data_canvas (drawable);
-  pixelarea_init (&a, undo_tiles, c, x, y, w, h, TRUE);
-  {
-    void * pag;
-    for (pag = pixelarea_register (1, &a);
-         pag != NULL;
-         pag = pixelarea_process (pag))
-      {
-        /* do nothing */
-      }
-  }
+  pixelarea_init (&undo, undo_tiles, NULL,
+                  x, y, w, h, TRUE);
+  pixelarea_init (&canvas, drawable_data_canvas (drawable), NULL,
+                  x, y, w, h, FALSE);
+
+  for (pag = pixelarea_register_noref (2, &undo, &canvas);
+       pag != NULL;
+       pag = pixelarea_process (pag))
+    {
+      int x = pixelarea_x (&undo);
+      int y = pixelarea_y (&undo);
+
+      if (canvas_portion_alloced (undo_tiles, x, y) == FALSE)
+        {
+          int t = canvas_portion_top (undo_tiles, x, y);
+          int l = canvas_portion_left (undo_tiles, x, y);
+          int w = canvas_portion_width (undo_tiles, t, l);
+          int h = canvas_portion_height (undo_tiles, t, l);
+
+          /* alloc the portion of the undo tiles */
+          canvas_portion_alloc (undo_tiles, x, y);
+
+          /* init the undo section from the original image */
+          pixelarea_init (&src, drawable_data_canvas (drawable), NULL,
+                          t, l, w, h, FALSE);
+          pixelarea_init (&dst, undo_tiles, NULL,
+                          t, l, w, h, TRUE);
+          copy_area (&src, &dst);
+        }
+    }
 }
 
 

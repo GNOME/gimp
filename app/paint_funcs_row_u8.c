@@ -716,7 +716,7 @@ swap_row_u8 (
 {
   guint8 *dest = (guint8*)pixelrow_data (dest_row);
   guint8 *src  = (guint8*)pixelrow_data (src_row);
-  gint    width = pixelrow_width (dest_row) * tag_bytes (pixelrow_tag (dest_row));
+  gint    width = pixelrow_width (dest_row);
   
   while (width--)
     {
