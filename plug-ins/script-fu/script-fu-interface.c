@@ -111,6 +111,9 @@ static void       script_fu_preview_changed  (GtkWidget *widget,
 					      gpointer   data);
 static void       script_fu_preview_cancel   (GtkWidget *widget,
 					      gpointer   data);
+static gint       script_fu_preview_delete   (GtkWidget *widget,
+					      GdkEvent  *event,
+					      gpointer   data);
 
 /*
  *  Local variables
@@ -1095,12 +1098,12 @@ script_fu_preview_callback (GtkWidget *widget,
   SFColor *color;
 
   color = (SFColor *) data;
+  color->old_color[0] = color->color[0];
+  color->old_color[1] = color->color[1];
+  color->old_color[2] = color->color[2];
+      
   if (!color->dialog)
     {
-      color->old_color[0] = color->color[0];
-      color->old_color[1] = color->color[1];
-      color->old_color[2] = color->color[2];
-      
       color->dialog = gtk_color_selection_dialog_new ("Script-Fu Color Picker");
       csd = GTK_COLOR_SELECTION_DIALOG (color->dialog);
 
@@ -1109,6 +1112,9 @@ script_fu_preview_callback (GtkWidget *widget,
       gtk_signal_connect_object (GTK_OBJECT (csd->ok_button), "clicked",
 				 (GtkSignalFunc) gtk_widget_hide,
 				 GTK_OBJECT (color->dialog));
+      gtk_signal_connect (GTK_OBJECT (csd), "delete_event",
+			  (GtkSignalFunc) script_fu_preview_delete,
+			  color);
       gtk_signal_connect (GTK_OBJECT (csd->cancel_button), "clicked",
 			  (GtkSignalFunc) script_fu_preview_cancel,
 			  color);
@@ -1157,4 +1163,13 @@ script_fu_preview_cancel (GtkWidget *widget,
   color->color[2] = color->old_color[2];
 
   script_fu_color_preview (color->preview, color->color);
+}
+
+static gint
+script_fu_preview_delete (GtkWidget *widget,
+			  GdkEvent *event,
+			  gpointer data)
+{
+  script_fu_preview_cancel (widget, data);
+  return TRUE;
 }

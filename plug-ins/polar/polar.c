@@ -63,6 +63,10 @@
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
+#ifndef M_PI
+#define M_PI    3.14159265358979323846
+#endif /* M_PI */
+
 #define sqr(x)	((x) * (x))
 #define WITHIN(a, b, c) ((((a) <= (b)) && ((b) <= (c))) ? 1 : 0)
 
@@ -199,9 +203,9 @@ query(void)
 		{ PARAM_DRAWABLE, "drawable",  "Input drawable" },
 		{ PARAM_FLOAT,    "circle",    "Circle depth in %" },
 		{ PARAM_FLOAT,    "angle",     "Offset angle" },
-		{ PARAM_INT8,    "backwards",    "Map backwards?" },
-		{ PARAM_INT8,    "inverse",     "Map from top?" },
-		{ PARAM_INT8,    "polrec",     "Polar to rectangular?" },
+		{ PARAM_INT32,    "backwards",    "Map backwards?" },
+		{ PARAM_INT32,    "inverse",     "Map from top?" },
+		{ PARAM_INT32,    "polrec",     "Polar to rectangular?" },
 	}; /* args */
 
 	static GParamDef *return_vals  = NULL;
@@ -319,9 +323,9 @@ run(char    *name,
 			if (status == STATUS_SUCCESS) {
 				pcvals.circle  = param[3].data.d_float;
 				pcvals.angle  = param[4].data.d_float;
-				pcvals.backwards  = param[5].data.d_int8;
-				pcvals.inverse  = param[6].data.d_int8;
-				pcvals.polrec  = param[7].data.d_int8;
+				pcvals.backwards  = param[5].data.d_int32;
+				pcvals.inverse  = param[6].data.d_int32;
+				pcvals.polrec  = param[7].data.d_int32;
 			} /* if */
 
 			break;
@@ -954,7 +958,7 @@ polarize_dialog(void)
 
 	toggle = gtk_check_button_new_with_label("Map Backwards");
 	gtk_toggle_button_set_state( GTK_TOGGLE_BUTTON(toggle), pcvals.backwards);
-	gtk_signal_connect(GTK_OBJECT(toggle), "clicked", 
+	gtk_signal_connect(GTK_OBJECT(toggle), "toggled", 
 			   (GtkSignalFunc) polar_toggle_callback,
 			   &pcvals.backwards);
 	gtk_box_pack_start( GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
@@ -963,7 +967,7 @@ polarize_dialog(void)
 
 	toggle = gtk_check_button_new_with_label("Map from Top");
 	gtk_toggle_button_set_state( GTK_TOGGLE_BUTTON(toggle), pcvals.inverse);
-	gtk_signal_connect( GTK_OBJECT(toggle), "clicked", 
+	gtk_signal_connect( GTK_OBJECT(toggle), "toggled", 
 			    (GtkSignalFunc) polar_toggle_callback,
 			    &pcvals.inverse);
 	gtk_box_pack_start( GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
@@ -972,7 +976,7 @@ polarize_dialog(void)
 
 	toggle = gtk_check_button_new_with_label("Polar to Rectangular");
 	gtk_toggle_button_set_state( GTK_TOGGLE_BUTTON(toggle), pcvals.polrec);
-	gtk_signal_connect( GTK_OBJECT(toggle), "clicked", 
+	gtk_signal_connect( GTK_OBJECT(toggle), "toggled", 
 			    (GtkSignalFunc) polar_toggle_callback,
 			    &pcvals.polrec);
 	gtk_box_pack_start( GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
@@ -1237,9 +1241,9 @@ dialog_cancel_callback(GtkWidget *widget, gpointer data)
 
 static void polar_toggle_callback (GtkWidget *widget, gpointer   data)
 {
-  int *toggle_val;
+  gint *toggle_val;
 
-  toggle_val = (int *) data;
+  toggle_val = (gint *) data;
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
     *toggle_val = TRUE;

@@ -1,6 +1,12 @@
+Thu Mar 19 03:28:29 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/script-fu/script-fu-scripts.c: handle delete
+	event for colorsel correctly
+	* plug-ins/polar/polar.c: minor cleanups
+
 Thu Mar 19 01:04:56 PST 1998 Manish Singh <yosh@gimp.org>
 
-	* applied gimp-jbuhler-980315-0
+	* applied gimp-jbuhler-980315-0 (quelled warnings)
 
 Wed Mar 18 20:57:55 EST 1998 Adrian Likins <adrian@gimp.org>
 
