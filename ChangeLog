@@ -1,3 +1,8 @@
+1999-07-10  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/disp_callbacks.c (gdisplay_canvas_events): added wheelmouse
+	scrolling support for the canvas (cut & paste from gtkmain.c).
+	CTRL+wheel scrolls horizontally.
 
 Fri Jul  9 22:24:53 BST 1999 Andy Thomas <alt@gimp.org>
 

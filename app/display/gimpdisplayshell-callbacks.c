@@ -284,6 +284,33 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  return_val = TRUE;
 	  break;
 
+	  /*  wheelmouse support  */
+	case 4:
+	  state |= GDK_BUTTON4_MASK;
+	  {
+	    GtkAdjustment *adj =
+	      (state & GDK_CONTROL_MASK) ? gdisp->hsbdata : gdisp->vsbdata;
+	    gfloat new_value = adj->value - adj->page_increment / 2;
+	    new_value =
+	      CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
+	    gtk_adjustment_set_value (adj, new_value);
+	  }
+	  return_val = TRUE;
+	  break;
+
+	case 5:
+	  state |= GDK_BUTTON5_MASK;
+	  {
+	    GtkAdjustment *adj =
+	      (state & GDK_CONTROL_MASK) ? gdisp->hsbdata : gdisp->vsbdata;
+	    gfloat new_value = adj->value + adj->page_increment / 2;
+	    new_value = CLAMP (new_value,
+			       adj->lower, adj->upper - adj->page_size);
+	    gtk_adjustment_set_value (adj, new_value);
+	  }
+	  return_val = TRUE;
+	  break;
+
 	default:
 	  break;
 	}
@@ -335,6 +362,17 @@ gdisplay_canvas_events (GtkWidget *canvas,
 
 	case 3:
 	  state &= ~GDK_BUTTON3_MASK;
+	  break;
+
+	  /*  wheelmouse support  */
+	case 4:
+	  state &= ~GDK_BUTTON4_MASK;
+	  return_val = TRUE;
+	  break;
+
+	case 5:
+	  state &= ~GDK_BUTTON5_MASK;
+	  return_val = TRUE;
 	  break;
 
 	default:
