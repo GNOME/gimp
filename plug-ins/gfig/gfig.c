@@ -3309,7 +3309,7 @@ options_page (void)
 			   _("Grey"),       (gpointer) GFIG_GREY_GC, NULL,
 			   _("Darker"),     (gpointer) GTK_STATE_ACTIVE, NULL,
 			   _("Lighter"),    (gpointer) GTK_STATE_PRELIGHT, NULL,
-			   _("Vewry Dark"), (gpointer) GTK_STATE_SELECTED, NULL,
+			   _("Very Dark"),  (gpointer) GTK_STATE_SELECTED, NULL,
 
 			   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
@@ -3336,7 +3336,7 @@ options_page (void)
 		      (gpointer) 1);
   gtk_widget_show (toggle); 
 
-  toggle = gtk_check_button_new_with_label (_("Hide Cntr Pnts "));
+  toggle = gtk_check_button_new_with_label (_("Hide Cntr Pnts"));
   gtk_table_attach (GTK_TABLE (table), toggle, 1, 2, 4, 5,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -3684,7 +3684,7 @@ gfig_pos_labels (void)
   gtk_widget_show (hbox);
 
   /* Position labels */
-  label = gtk_label_new (_("XY Pos: "));
+  label = gtk_label_new (_("XY Pos:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -4094,8 +4094,7 @@ gfig_ok_callback (GtkWidget *widget,
       gchar     *message;
 
       message =
-	g_strdup_printf (_("Unsaved Gfig objects - continue with exiting?\n"
-			   "Number of objects unsaved = %d"), count);
+	g_strdup_printf (_("%d unsaved Gfig objects.\nContinue with exiting?"), count);
 
       dialog = gimp_query_boolean_box (_("Warning"),
 				       gimp_plugin_help_func,
