@@ -7,12 +7,26 @@ bin_SCRIPTS = gimptool
 EXTRA_DIST = \
 	cursors/bigcirc		\
 	cursors/bigcircmsk	\
+	cursors/dropper		\
+	cursors/droppermsk	\
 	cursors/mouse1		\
 	cursors/mouse1msk	\
+	cursors/mouse1_ap	\
+	cursors/mouse1_apmsk	\
+	cursors/mouse1_cp	\
+	cursors/mouse1_cpmsk	\
 	cursors/mouse1_m	\
 	cursors/mouse1_mmsk	\
+	cursors/mouse1_mm	\
+	cursors/mouse1_mmmsk	\
 	cursors/mouse1_p	\
         cursors/mouse1_pmsk     \
+	cursors/mouse1_sel	\
+	cursors/mouse1_selmsk	\
+	cursors/mouse1_selm	\
+	cursors/mouse1_selmmsk	\
+	cursors/mouse1_selp	\
+	cursors/mouse1_selpmsk	\
 	cursors/picker		\
         cursors/pickermsk	\
 	pixmaps/anchor.xpm	 \

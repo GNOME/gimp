@@ -1,3 +1,53 @@
+Thu May 13 22:41:26 BST 1999 Andy Thomas <alt@gimp.org>
+
+	Changed:-
+	* app/bezier_select.c
+	* app/bezier_selectP.h
+	* app/cursorutil.c
+	* app/cursorutil.h
+	* app/curves.c
+	* app/paths_dialog.c
+
+	New:- 
+	* cursor/mouse1_ap
+	* cursor/mouse1_apmsk
+	* cursor/mouse1_cp
+	* cursor/mouse1_cpmsk
+	* cursor/mouse1_mm
+	* cursor/mouse1_mmmsk
+	* cursor/mouse1_sel
+	* cursor/mouse1_selm
+	* cursor/mouse1_selmmsk
+	* cursor/mouse1_selmsk
+	* cursor/mouse1_selp
+	* cursor/mouse1_selpmsk
+
+	Paths changes:-
+	Implemented multi-part paths. 
+	(Import the path (RMB in paths dialog brings menu up) 
+	http://www.picnic.demon.co.uk/tmp/gimp.path 
+	into a 600x256 (WxH) for an example).
+
+	Can copy/paste paths. 
+	Fully custom cursors when using the Bezier tool. A number of bug 
+	fixes re boundary problems also fixed.
+
+	Note that heavy use is made of the modifier keys in the bezier tool.
+	MB1 inside a closed curve converts it to a selection. The modifiers
+	change how the selection interacts with any current selection (in
+	much the same way as the selection tool does).
+
+	MB1 + ALT on control point will move a curve, if shift modifier active
+	then single curve is moved.
+	
+	
+	Curves:-
+
+	In curves dialog you can now press MB1 + shift will add point to 
+	curves dialog corresponding to the current position in 
+	the currently selected channel. MB1 + CNTRL will add the point
+	to all channels. (Thanks to Carey Bunks for the initial idea).
+
 1999-05-12  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* configure.in: fixed variable clobber for thread & MP options 

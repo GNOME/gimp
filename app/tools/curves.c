@@ -232,8 +232,34 @@ curves_colour_update(Tool           *tool,
   curves_dialog->col_value[HISTOGRAM_VALUE] = MAXIMUM(maxval,color[BLUE_PIX]);
 
   g_free(color);
+}
 
-  curves_update (curves_dialog, GRAPH | DRAW);
+static void
+curves_add_point(GimpDrawable * drawable,gint x, gint y,gint cchan)
+{
+  /* Add point onto the curve */
+  int closest_point = 0;
+  int distance;
+  int curvex;
+  int i;
+
+  curvex = curves_dialog->col_value[cchan];
+  distance = G_MAXINT;
+  for (i = 0; i < 17; i++)
+    {
+      if (curves_dialog->points[cchan][i][0] != -1)
+	if (abs (curvex - curves_dialog->points[cchan][i][0]) < distance)
+	  {
+	    distance = abs (curvex - curves_dialog->points[cchan][i][0]);
+	    closest_point = i;
+	  }
+    }
+
+  if (distance > MIN_DISTANCE)
+    closest_point = (curvex + 8) / 16;
+  
+  curves_dialog->points[cchan][closest_point][0] = curvex;
+  curves_dialog->points[cchan][closest_point][1] = curves_dialog->curve[cchan][curvex];
 }
 
 static void
@@ -254,6 +280,23 @@ curves_button_release (Tool           *tool,
 
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, FALSE, FALSE);
   curves_colour_update(tool,gdisp,drawable,x,y);
+
+  if(bevent->state & GDK_SHIFT_MASK)
+    {
+      curves_add_point(drawable,x,y,curves_dialog->channel);
+      curves_calculate_curve(curves_dialog);
+    }
+  else if(bevent->state & GDK_CONTROL_MASK)
+    {
+      curves_add_point(drawable,x,y,HISTOGRAM_VALUE);
+      curves_add_point(drawable,x,y,HISTOGRAM_RED);
+      curves_add_point(drawable,x,y,HISTOGRAM_GREEN);
+      curves_add_point(drawable,x,y,HISTOGRAM_BLUE);
+      curves_add_point(drawable,x,y,HISTOGRAM_ALPHA);
+      curves_calculate_curve(curves_dialog);
+    }
+
+  curves_update (curves_dialog, GRAPH | DRAW);
 }
 
 static void
@@ -274,6 +317,7 @@ curves_motion (Tool           *tool,
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, FALSE, FALSE);
   curves_colour_update(tool,gdisp,drawable,x,y);
+  curves_update (curves_dialog, GRAPH | DRAW);
 }
 
 static void
@@ -732,8 +776,8 @@ curves_update (CurvesDialog *cd,
 
       /* draw the colour line */
       gdk_draw_line(cd->pixmap, cd->graph->style->black_gc,
-		    cd->col_value[cd->channel],RADIUS,
-		    cd->col_value[cd->channel],GRAPH_HEIGHT + RADIUS);
+		    cd->col_value[cd->channel]+RADIUS,RADIUS,
+		    cd->col_value[cd->channel]+RADIUS,GRAPH_HEIGHT + RADIUS);
 
       gdk_draw_pixmap (cd->graph->window, cd->graph->style->black_gc, cd->pixmap,
 		       0, 0, 0, 0, GRAPH_WIDTH + RADIUS * 2, GRAPH_HEIGHT + RADIUS * 2);
@@ -1006,7 +1050,11 @@ curves_free_callback (GtkWidget *w,
   if (cd->curve_type != GFREE)
     {
       cd->curve_type = GFREE;
+      curves_calculate_curve (cd);
       curves_update (cd, GRAPH | DRAW);
+
+      if (cd->preview)
+	curves_preview (cd);
     }
 }
 
@@ -1034,6 +1082,7 @@ curves_reset_callback (GtkWidget *widget,
   cd->points[cd->channel][16][0] = 255;
   cd->points[cd->channel][16][1] = 255;
 
+  curves_calculate_curve (cd);
   curves_update (cd, GRAPH | XRANGE_TOP | DRAW);
   if (cd->preview)
     curves_preview (cd);

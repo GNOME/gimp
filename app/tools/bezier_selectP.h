@@ -26,6 +26,7 @@
 
 #define BEZIER_ANCHOR    1
 #define BEZIER_CONTROL   2
+#define BEZIER_MOVE      3
 
 #define IMAGE_COORDS    1
 #define AA_IMAGE_COORDS 2
@@ -39,11 +40,12 @@ typedef struct _bezier_point BezierPoint;
 
 struct _bezier_point
 {
-  int type;                   /* type of point (anchor or control) */
-  int x, y;                   /* location of point in image space  */
+  int type;                   /* type of point (anchor/control/move) */
+  double x, y;                   /* location of point in image space  */
   int sx, sy;                 /* location of point in screen space */
   BezierPoint *next;          /* next point on curve               */
   BezierPoint *prev;          /* prev point on curve               */
+  BezierPoint *next_curve;    /* Next curve segment                */
 };
 
 typedef struct _bezier_select BezierSelect;
@@ -52,7 +54,7 @@ struct _bezier_select
 {
   int state;                 /* start, add, edit or drag          */
   int draw;                  /* all or part                       */
-  int closed;                /* is the curve closed               */
+  int closed;                /* is the last curve closed          */
   DrawCore *core;            /* Core drawing object               */
   BezierPoint *points;       /* the curve                         */
   BezierPoint *cur_anchor;   /* the current active anchor point   */
@@ -63,13 +65,21 @@ struct _bezier_select
   GSList **scanlines;        /* used in converting a curve        */
 };
 
+/* All udata that are passed to the bezier_draw_curve must
+ * have this structure as the first element.
+ */
+
+typedef struct {
+  gint count;
+} CountCurves;
+
 typedef void (*BezierPointsFunc) (BezierSelect *, GdkPoint *, int,gpointer);
 
 /*  Functions  */
 int   bezier_select_load                   (void *, BezierPoint *, int, int);
 void  bezier_draw_curve                    (BezierSelect *,BezierPointsFunc, int,gpointer);
 void  bezier_select_reset                  (BezierSelect *);
-void  bezier_add_point                     (BezierSelect *, int, int, int);
+void  bezier_add_point                     (BezierSelect *, int, gdouble, gdouble);
 void  bezier_paste_bezierselect_to_current (GDisplay *,BezierSelect *);
 void  bezier_select_mode                   (gint);
 void  bezier_stroke 		           (BezierSelect *, GDisplay *, int, int);

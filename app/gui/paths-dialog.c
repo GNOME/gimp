@@ -98,6 +98,7 @@ typedef struct {
 } PATHSLIST, *PATHSLISTP;
 
 static PATHSLISTP paths_dialog = NULL;
+static PATHP copy_pp = NULL;
 
 typedef struct {
   GdkPixmap   *paths_pixmap;
@@ -109,6 +110,11 @@ typedef struct {
   Tattoo tattoo;
   PATHP  copy_path;
 } PATHUNDO;
+
+typedef struct {
+  CountCurves  c_count;             /* Must be the first element */
+  gint         total_count;         /* Total number of curves    */
+} PATHCOUNTS, *PATHCOUNTSP;
 
 static gchar * unique_name(GimpImage *,gchar *);
 
@@ -122,6 +128,8 @@ static void paths_dialog_delete_path_callback (GtkWidget *, gpointer);
 static void paths_dialog_map_callback  (GtkWidget *w,gpointer client_data);
 static void paths_dialog_unmap_callback(GtkWidget *w,gpointer client_data);
 static void paths_dialog_dup_path_callback(GtkWidget *w,gpointer client_data);
+static void paths_dialog_copy_path_callback(GtkWidget *w,gpointer client_data);
+static void paths_dialog_paste_path_callback(GtkWidget *w,gpointer client_data);
 static void paths_dialog_stroke_path_callback(GtkWidget *w,gpointer client_data);
 static void paths_dialog_path_to_sel_callback(GtkWidget *w,gpointer client_data);
 static void paths_dialog_destroy_cb (GimpImage *image);
@@ -136,18 +144,14 @@ static void paths_dialog_delete_point_callback (GtkWidget *, gpointer);
 static void paths_dialog_edit_point_callback (GtkWidget *, gpointer);
 static void paths_dialog_import_path_callback (GtkWidget *, gpointer);
 static void paths_dialog_export_path_callback (GtkWidget *, gpointer);
+static void path_close(PATHP);
 
-#define NEW_PATH_BUTTON 1
-#define DUP_PATH_BUTTON 2
-#define PATH_TO_SEL_BUTTON 3
-#define STROKE_PATH_BUTTON 4
-#define DEL_PATH_BUTTON 5
 
 static MenuItem paths_ops[] =
 {
   { N_("New Path"), 'N', GDK_CONTROL_MASK,
     paths_dialog_new_path_callback, NULL, NULL, NULL },
-  { N_("Duplicate Path"), 'C', GDK_CONTROL_MASK,
+  { N_("Duplicate Path"), 'U', GDK_CONTROL_MASK,
     paths_dialog_dup_path_callback, NULL, NULL, NULL },
   { N_("Path to Selection"), 'S', GDK_CONTROL_MASK,
     paths_dialog_path_to_sel_callback, NULL, NULL, NULL },
@@ -159,8 +163,20 @@ static MenuItem paths_ops[] =
     paths_dialog_import_path_callback, NULL, NULL, NULL },
   { N_("Export Path"), 'E', GDK_CONTROL_MASK,
     paths_dialog_export_path_callback, NULL, NULL, NULL },
+  { N_("Copy Path"), 'C', GDK_CONTROL_MASK,
+    paths_dialog_copy_path_callback, NULL, NULL, NULL },
+  { N_("Paste Path"), 'P', GDK_CONTROL_MASK,
+    paths_dialog_paste_path_callback, NULL, NULL, NULL },
   { NULL, 0, 0, NULL, NULL, NULL, NULL }
 };
+
+#define NEW_PATH_BUTTON 1
+#define DUP_PATH_BUTTON 2
+#define PATH_TO_SEL_BUTTON 3
+#define STROKE_PATH_BUTTON 4
+#define DEL_PATH_BUTTON 5
+#define COPY_PATH_BUTTON 8
+#define PASTE_PATH_BUTTON 9
 
 static OpsButton paths_ops_buttons[] =
 {
@@ -210,6 +226,12 @@ paths_ops_button_set_sensitive(gint but,gboolean sensitive)
     case DEL_PATH_BUTTON:
       gtk_widget_set_sensitive(paths_ops[4].widget,sensitive);
       gtk_widget_set_sensitive(paths_ops_buttons[4].widget,sensitive);
+      break;
+    case COPY_PATH_BUTTON:
+      gtk_widget_set_sensitive(paths_ops[7].widget,sensitive);
+      break;
+    case PASTE_PATH_BUTTON:
+      gtk_widget_set_sensitive(paths_ops[8].widget,sensitive);
       break;
     default:
       g_warning(_("paths_ops_button_set_sensitive:: invalid button specified"));
@@ -342,6 +364,8 @@ GtkWidget * paths_dialog_create()
       paths_ops_button_set_sensitive(DEL_PATH_BUTTON,FALSE);
       paths_ops_button_set_sensitive(STROKE_PATH_BUTTON,FALSE);
       paths_ops_button_set_sensitive(PATH_TO_SEL_BUTTON,FALSE);
+      paths_ops_button_set_sensitive(COPY_PATH_BUTTON,FALSE);
+      paths_ops_button_set_sensitive(PASTE_PATH_BUTTON,FALSE);
       point_ops_button_set_sensitive(POINT_ADD_BUTTON,FALSE);
       point_ops_button_set_sensitive(POINT_DEL_BUTTON,FALSE);
       point_ops_button_set_sensitive(POINT_NEW_BUTTON,FALSE);
@@ -528,6 +552,23 @@ path_copy(GimpImage *gimage,PATHP p)
   return p_copy;
 }
 
+static PATHPOINTP
+path_start_last_seg(GSList *plist)
+{
+  PATHPOINTP retp = plist->data;
+  while(plist)
+    {
+      if(((PATHPOINTP)(plist->data))->type == BEZIER_MOVE &&
+	 g_slist_next(plist))
+	{
+	  plist = g_slist_next(plist);
+	  retp = plist->data;
+	}
+      plist = g_slist_next(plist);
+    }  
+  return retp;
+}
+
 static void
 path_close(PATHP bzp)
 {
@@ -552,11 +593,13 @@ path_close(PATHP bzp)
 	}
     }
   pathpoint = g_new0(PATHPOINT,1);
-  pdata = (PATHPOINTP)bzp->path_details->data;
+  pdata = path_start_last_seg(bzp->path_details);
   pathpoint->type = BEZIER_CONTROL;
   pathpoint->x = pdata->x;
   pathpoint->y = pdata->y;
+/*   printf("Closing to x,y %d,%d\n",(gint)pdata->x,(gint)pdata->y); */
   bzp->path_details = g_slist_append(bzp->path_details,pathpoint);
+  bzp->state = BEZIER_EDIT;
 }
 
 static void
@@ -570,7 +613,8 @@ static BezierSelect *
 path_to_beziersel(PATHP bzp)
 {
   BezierSelect *bezier_sel;
-  GSList *list;
+  BezierPoint  *bpnt = NULL;
+  GSList       *list;
 
   if(!bzp)
     {
@@ -592,14 +636,28 @@ path_to_beziersel(PATHP bzp)
     {
       PATHPOINTP pdata;
       pdata = (PATHPOINTP)list->data;
-      bezier_add_point(bezier_sel,(gint)pdata->type,(gint)pdata->x,pdata->y);
+      if(pdata->type == BEZIER_MOVE)
+	{
+/* 	  printf("Close last curve off\n"); */
+	  bezier_sel->last_point->next = bpnt;
+	  bpnt->prev = bezier_sel->last_point;
+	  bezier_sel->cur_anchor = NULL;
+	  bezier_sel->cur_control = NULL;
+	  bpnt = NULL;
+	}
+      bezier_add_point(bezier_sel,
+		       (gint)pdata->type,
+		       rint(pdata->x), /* ALT add rint() */
+		       rint(pdata->y));
+      if(bpnt == NULL)
+	bpnt = bezier_sel->last_point;
       list = g_slist_next(list);
     }
   
   if ( bezier_sel->closed )
     {
-      bezier_sel->last_point->next = bezier_sel->points;
-      bezier_sel->points->prev = bezier_sel->last_point;
+      bezier_sel->last_point->next = bpnt;
+      bpnt->prev = bezier_sel->last_point;
       bezier_sel->cur_anchor = bezier_sel->points;
       bezier_sel->cur_control = bezier_sel-> points->next;
     }
@@ -975,6 +1033,8 @@ paths_dialog_update (GimpImage* gimage)
       paths_ops_button_set_sensitive(DEL_PATH_BUTTON,FALSE);
       paths_ops_button_set_sensitive(STROKE_PATH_BUTTON,FALSE);
       paths_ops_button_set_sensitive(PATH_TO_SEL_BUTTON,FALSE);
+      paths_ops_button_set_sensitive(COPY_PATH_BUTTON,FALSE);
+      paths_ops_button_set_sensitive(PASTE_PATH_BUTTON,FALSE);
       point_ops_button_set_sensitive(POINT_ADD_BUTTON,FALSE);
       point_ops_button_set_sensitive(POINT_DEL_BUTTON,FALSE);
       point_ops_button_set_sensitive(POINT_NEW_BUTTON,FALSE);
@@ -1013,6 +1073,8 @@ paths_dialog_update (GimpImage* gimage)
       paths_ops_button_set_sensitive(DEL_PATH_BUTTON,FALSE);
       paths_ops_button_set_sensitive(STROKE_PATH_BUTTON,FALSE);
       paths_ops_button_set_sensitive(PATH_TO_SEL_BUTTON,FALSE);
+      paths_ops_button_set_sensitive(COPY_PATH_BUTTON,FALSE);
+      paths_ops_button_set_sensitive(PASTE_PATH_BUTTON,FALSE);
       point_ops_button_set_sensitive(POINT_ADD_BUTTON,FALSE);
       point_ops_button_set_sensitive(POINT_DEL_BUTTON,FALSE);
       point_ops_button_set_sensitive(POINT_NEW_BUTTON,FALSE);
@@ -1025,6 +1087,8 @@ paths_dialog_update (GimpImage* gimage)
       paths_ops_button_set_sensitive(DEL_PATH_BUTTON,TRUE);
       paths_ops_button_set_sensitive(STROKE_PATH_BUTTON,TRUE);
       paths_ops_button_set_sensitive(PATH_TO_SEL_BUTTON,TRUE);
+      paths_ops_button_set_sensitive(COPY_PATH_BUTTON,TRUE);
+      paths_ops_button_set_sensitive(PASTE_PATH_BUTTON,(copy_pp)?TRUE:FALSE); 
       point_ops_button_set_sensitive(POINT_ADD_BUTTON,TRUE);
       point_ops_button_set_sensitive(POINT_DEL_BUTTON,TRUE);
       point_ops_button_set_sensitive(POINT_NEW_BUTTON,TRUE);
@@ -1255,6 +1319,8 @@ paths_dialog_new_path_callback (GtkWidget * widget, gpointer udata)
   paths_ops_button_set_sensitive(DEL_PATH_BUTTON,TRUE);
   paths_ops_button_set_sensitive(STROKE_PATH_BUTTON,TRUE);
   paths_ops_button_set_sensitive(PATH_TO_SEL_BUTTON,TRUE);
+  paths_ops_button_set_sensitive(COPY_PATH_BUTTON,TRUE);
+  paths_ops_button_set_sensitive(PASTE_PATH_BUTTON,(copy_pp)?TRUE:FALSE); 
   point_ops_button_set_sensitive(POINT_NEW_BUTTON,TRUE);
   point_ops_button_set_sensitive(POINT_DEL_BUTTON,TRUE);
   point_ops_button_set_sensitive(POINT_ADD_BUTTON,TRUE);
@@ -1302,10 +1368,102 @@ paths_dialog_delete_path_callback (GtkWidget * widget, gpointer udata)
   paths_ops_button_set_sensitive(DEL_PATH_BUTTON,new_sz);
   paths_ops_button_set_sensitive(STROKE_PATH_BUTTON,new_sz);
   paths_ops_button_set_sensitive(PATH_TO_SEL_BUTTON,new_sz);
+  paths_ops_button_set_sensitive(COPY_PATH_BUTTON,new_sz);
+  paths_ops_button_set_sensitive(PASTE_PATH_BUTTON,new_sz);
   point_ops_button_set_sensitive(POINT_ADD_BUTTON,new_sz);
   point_ops_button_set_sensitive(POINT_DEL_BUTTON,new_sz);
   point_ops_button_set_sensitive(POINT_NEW_BUTTON,new_sz);
   point_ops_button_set_sensitive(POINT_EDIT_BUTTON,new_sz);
+}
+
+
+static void 
+paths_dialog_paste_path_callback (GtkWidget * widget, gpointer udata)
+{
+  PATHP bzp;
+  PATHIMAGELISTP plp;
+  PATHPOINTP pp;
+  BezierSelect * bezier_sel;
+  gint tmprow;
+  GDisplay *gdisp;
+
+  gint row = paths_dialog->selected_row_num;
+
+  g_return_if_fail(paths_dialog->current_path_list != NULL);
+
+  if(!copy_pp)
+    return;
+
+  /* Get current selection... ignore if none */
+  if(paths_dialog->selected_row_num < 0)
+    return;
+  
+  /* Get bzpath structure  */
+  plp = paths_dialog->current_path_list;
+  if(!plp)
+    return;
+  bzp = (PATHP)g_slist_nth_data(plp->bz_paths,row); 
+
+  if(bzp->path_details)
+    {
+      pp = bzp->path_details->data;
+      pp->type = BEZIER_MOVE;
+      bzp->path_details = g_slist_concat(copy_pp->path_details,bzp->path_details);
+    }
+  else
+    {
+      bzp->closed = TRUE;
+      bzp->path_details = copy_pp->path_details;
+      bzp->state = copy_pp->state;
+    }
+
+  /* First point on new curve is a moveto */
+  copy_pp->path_details = NULL;
+  path_free(copy_pp,NULL);
+  copy_pp = NULL;
+
+  paths_ops_button_set_sensitive(PASTE_PATH_BUTTON,FALSE);
+
+  /* Now fudge the drawing....*/
+  bezier_sel = path_to_beziersel(bzp);
+  tmprow = paths_dialog->current_path_list->last_selected_row;
+  paths_dialog->current_path_list->last_selected_row = row;
+  gdisp = gdisplays_check_valid(paths_dialog->current_path_list->gdisp,
+				paths_dialog->gimage);
+  bezier_paste_bezierselect_to_current(gdisp,bezier_sel);
+  paths_update_preview(bezier_sel);
+  beziersel_free(bezier_sel);
+  paths_dialog->current_path_list->last_selected_row = tmprow;
+}
+
+static void 
+paths_dialog_copy_path_callback (GtkWidget * widget, gpointer udata)
+{
+  PATHP bzp;
+  PATHIMAGELISTP plp;
+  gint row = paths_dialog->selected_row_num;
+
+  g_return_if_fail(paths_dialog->current_path_list != NULL);
+
+  /* Get current selection... ignore if none */
+  if(paths_dialog->selected_row_num < 0)
+    return;
+  
+  /* Get bzpath structure  */
+  plp = paths_dialog->current_path_list;
+  bzp = (PATHP)g_slist_nth_data(plp->bz_paths,row);
+
+  if(!bzp->path_details || g_slist_length(bzp->path_details) <= 5)
+    return;
+
+  /* And store in static array */
+  copy_pp = path_copy(paths_dialog->gimage,bzp);
+
+  /* All paths that are in the cut buffer must be closed */
+  if(!copy_pp->closed)
+    path_close(copy_pp);
+  
+  paths_ops_button_set_sensitive(PASTE_PATH_BUTTON,TRUE);
 }
 
 static void 
@@ -1483,12 +1641,29 @@ pathpoints_create(BezierSelect *sel)
   GSList *list = NULL;
   PATHPOINTP pathpoint;
   BezierPoint *pts = (BezierPoint *) sel->points;
+  BezierPoint *start_pnt = pts;
+  gint need_move = 0;
 
   for (i=0; i< sel->num_points; i++)
     {
-      pathpoint = pathpoint_new(pts->type,(gdouble)pts->x,(gdouble)pts->y);
+      pathpoint = pathpoint_new((need_move)?BEZIER_MOVE:pts->type,
+                                (gdouble)pts->x,(gdouble)pts->y);
+      need_move = 0;
       list = g_slist_append(list,pathpoint);
-      pts = pts->next;
+      if(pts->next_curve)
+      {
+	/* The curve must loop back on itself */
+  	if(start_pnt != pts->next)
+	  g_warning("Curve of of sync");
+	
+	need_move = 1;
+	pts = pts->next_curve;
+	start_pnt = pts;
+      }
+      else
+      {
+      	pts = pts->next;
+      }
     }
   return(list);
 }
@@ -1541,6 +1716,22 @@ paths_replaced_current(PATHIMAGELISTP plp,BezierSelect *bezier_sel)
   return FALSE;
 }
 
+static gint 
+number_curves_in_path(GSList *plist)
+{
+  gint count = 0;
+  while(plist)
+    {
+      if(((PATHPOINTP)(plist->data))->type == BEZIER_MOVE &&
+	 g_slist_next(plist))
+	{
+	  count++;
+	}
+      plist = g_slist_next(plist);
+    }  
+  return count;
+}
+
 static void 
 paths_draw_segment_points(BezierSelect *bezier_sel, 
 			  GdkPoint     *pnt, 
@@ -1558,6 +1749,7 @@ paths_draw_segment_points(BezierSelect *bezier_sel,
   GdkPoint * last_pnt  = NULL;
   PATHWIDGETP pwidget;
   gint row;
+  PATHCOUNTSP curve_count = (PATHCOUNTSP)udata;
 
   /* we could remove duplicate points here */
 
@@ -1591,8 +1783,12 @@ paths_draw_segment_points(BezierSelect *bezier_sel,
 
   g_return_if_fail(pwidget != NULL);
 
-  paths_set_dash_line(paths_dialog->gc,!bezier_sel->closed);
-
+  if(curve_count->c_count.count < curve_count->total_count || 
+     bezier_sel->closed)
+    paths_set_dash_line(paths_dialog->gc,FALSE);
+  else
+    paths_set_dash_line(paths_dialog->gc,TRUE);
+  
   gdk_draw_lines (pwidget->paths_pixmap,
 		   paths_dialog->gc, copy_pnt, pcount);
 
@@ -1603,6 +1799,8 @@ static void
 paths_update_preview(BezierSelect *bezier_sel)
 {
   gint row;
+  PATHCOUNTS curve_count;
+
   if(paths_dialog &&
      paths_dialog->current_path_list &&
      (row = paths_dialog->current_path_list->last_selected_row) >= 0 &&
@@ -1614,8 +1812,9 @@ paths_update_preview(BezierSelect *bezier_sel)
       /* Clear pixmap */
       clear_pixmap_preview(pwidget);
 
+      curve_count.total_count = number_curves_in_path(pwidget->bzp->path_details);
       /* update .. */
-      bezier_draw_curve (bezier_sel,paths_draw_segment_points,IMAGE_COORDS,NULL);
+      bezier_draw_curve (bezier_sel,paths_draw_segment_points,IMAGE_COORDS,&curve_count);
 
       /* update the pixmap */
 
@@ -1713,6 +1912,8 @@ paths_newpoint_current(BezierSelect *bezier_sel,GDisplay * gdisp)
       paths_ops_button_set_sensitive(DEL_PATH_BUTTON,TRUE);
       paths_ops_button_set_sensitive(STROKE_PATH_BUTTON,TRUE);
       paths_ops_button_set_sensitive(PATH_TO_SEL_BUTTON,TRUE);
+      paths_ops_button_set_sensitive(COPY_PATH_BUTTON,TRUE);
+      paths_ops_button_set_sensitive(PASTE_PATH_BUTTON,(copy_pp)?TRUE:FALSE); 
       point_ops_button_set_sensitive(POINT_NEW_BUTTON,TRUE);
       point_ops_button_set_sensitive(POINT_DEL_BUTTON,TRUE);
       point_ops_button_set_sensitive(POINT_ADD_BUTTON,TRUE);
@@ -1846,17 +2047,24 @@ static void file_ok_callback(GtkWidget * widget, gpointer client_data)
   if (load_store) 
     {
       f = fopen(filename, "rb");
+
+      if(!f)
+	{
+	  g_message(_("Unable to open file %s"),filename);
+	  return;
+	}
       
       while(!feof(f))
 	{
 	  gchar *txt = g_new(gchar,512);
 	  gchar *txtstart = txt;
 	  gint readfields = 0;
-	  int val, x, y, type, closed, i, draw, state;
+	  int val, type, closed, i, draw, state;
+	  double x,y;
 
 	  if(!fgets(txt,512,f) || strlen(txt) < 7)
 	    {
-	      g_warning("Failed to read from %s",filename);
+	      g_message(_("Failed to read from %s"),filename);
 	      gtk_widget_hide (file_dlg);  
 	      return;
 	    }
@@ -1871,7 +2079,14 @@ static void file_ok_callback(GtkWidget * widget, gpointer client_data)
 
 	  if(readfields != 4)
 	    {
-	      g_warning("Failed to read path from %s",filename);
+	      g_message(_("Failed to read path from %s"),filename);
+	      gtk_widget_hide (file_dlg);  
+	      return;
+	    }
+
+	  if(val <= 0)
+	    {
+	      g_message(_("No points specified in path file %s"),filename);
 	      gtk_widget_hide (file_dlg);  
 	      return;
 	    }
@@ -1879,10 +2094,10 @@ static void file_ok_callback(GtkWidget * widget, gpointer client_data)
 	  for(i=0; i< val; i++)
 	    {
 	      PATHPOINTP bpt;
-	      readfields = fscanf(f,"TYPE: %d X: %d Y: %d\n", &type, &x, &y);
+	      readfields = fscanf(f,"TYPE: %d X: %lg Y: %lg\n", &type, &x, &y);
 	      if(readfields != 3)
 		{
-		  g_warning("Failed to read path points from %s",filename);
+		  g_message(_("Failed to read path points from %s"),filename);
 		  gtk_widget_hide (file_dlg);  
 		  return;
 		}
@@ -1916,6 +2131,8 @@ static void file_ok_callback(GtkWidget * widget, gpointer client_data)
 	  paths_ops_button_set_sensitive(DEL_PATH_BUTTON,val);
 	  paths_ops_button_set_sensitive(STROKE_PATH_BUTTON,val);
 	  paths_ops_button_set_sensitive(PATH_TO_SEL_BUTTON,val);
+	  paths_ops_button_set_sensitive(COPY_PATH_BUTTON,val);
+	  paths_ops_button_set_sensitive(PASTE_PATH_BUTTON,(copy_pp)?TRUE:FALSE); 
 	  point_ops_button_set_sensitive(POINT_ADD_BUTTON,val);
 	  point_ops_button_set_sensitive(POINT_DEL_BUTTON,val);
 	  point_ops_button_set_sensitive(POINT_NEW_BUTTON,val);
@@ -2129,7 +2346,9 @@ paths_transform_do_undo(GimpImage *gimage,void *data)
       plist = plp->bz_paths;
       loop = 0;
       
-      while(plist)
+      while(plist && 
+	    g_slist_length(plist) &&
+	    paths_dialog->current_path_list)
 	{
 	  bezier_sel = path_to_beziersel(plist->data);
 	  tmprow = paths_dialog->current_path_list->last_selected_row;
@@ -2143,7 +2362,7 @@ paths_transform_do_undo(GimpImage *gimage,void *data)
 	}
 
       /* Force selection .. it may have changed */
-      if(bezier_tool_selected())
+      if(bezier_tool_selected() && paths_dialog->current_path_list)
 	{
 	  gtk_clist_select_row(GTK_CLIST(paths_dialog->paths_list),
 			       paths_dialog->current_path_list->last_selected_row,
@@ -2208,7 +2427,13 @@ paths_transform_current_path(GimpImage  *gimage,
 	      points_list = points_list->next;
 	    }
 	  
-	  if(paths_dialog)
+	  /* Only update if we have a dialog, we have a currently 
+	   * selected path and its the showing the same image.
+	   */
+
+	  if(paths_dialog && 
+	     paths_dialog->current_path_list &&
+	     paths_dialog->gimage == gimage)
 	    {
 	      /* Now fudge the drawing....*/
 	      bezier_sel = path_to_beziersel(p_copy);
@@ -2420,6 +2645,8 @@ paths_set_path_points(GimpImage * gimage,
       paths_ops_button_set_sensitive(DEL_PATH_BUTTON,TRUE);
       paths_ops_button_set_sensitive(STROKE_PATH_BUTTON,TRUE);
       paths_ops_button_set_sensitive(PATH_TO_SEL_BUTTON,TRUE);
+      paths_ops_button_set_sensitive(COPY_PATH_BUTTON,TRUE);
+      paths_ops_button_set_sensitive(PASTE_PATH_BUTTON,(copy_pp)?TRUE:FALSE); 
       point_ops_button_set_sensitive(POINT_ADD_BUTTON,TRUE);
       point_ops_button_set_sensitive(POINT_DEL_BUTTON,TRUE);
       point_ops_button_set_sensitive(POINT_NEW_BUTTON,TRUE);

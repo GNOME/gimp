@@ -29,6 +29,18 @@
 #include "../cursors/bigcircmsk"
 #include "../cursors/dropper"
 #include "../cursors/droppermsk"
+#include "../cursors/mouse1_ap"
+#include "../cursors/mouse1_apmsk"
+#include "../cursors/mouse1_cp"
+#include "../cursors/mouse1_cpmsk"
+#include "../cursors/mouse1_mm"
+#include "../cursors/mouse1_mmmsk"
+#include "../cursors/mouse1_sel"
+#include "../cursors/mouse1_selmsk"
+#include "../cursors/mouse1_selm"
+#include "../cursors/mouse1_selmmsk"
+#include "../cursors/mouse1_selp"
+#include "../cursors/mouse1_selpmsk"
 
 typedef struct
 {
@@ -52,6 +64,18 @@ static BM_Cursor gimp_cursors[] =
     bigcirc_x_hot, bigcirc_y_hot, NULL},
   { dropper_bits, droppermsk_bits, dropper_width, dropper_height,
     dropper_x_hot, dropper_y_hot, NULL},
+  { mouse1_ap_bits, mouse1_apmsk_bits, mouse1_ap_width, mouse1_ap_height,
+    mouse1_ap_x_hot, mouse1_ap_y_hot, NULL},
+  { mouse1_cp_bits, mouse1_cpmsk_bits, mouse1_cp_width, mouse1_cp_height,
+    mouse1_cp_x_hot, mouse1_cp_y_hot, NULL},
+  { mouse1_mm_bits, mouse1_mmmsk_bits, mouse1_mm_width, mouse1_mm_height,
+    mouse1_mm_x_hot, mouse1_mm_y_hot, NULL},
+  { mouse1_selp_bits, mouse1_selpmsk_bits, mouse1_selp_width, mouse1_selp_height,
+    mouse1_selp_x_hot, mouse1_selp_y_hot, NULL},
+  { mouse1_selm_bits, mouse1_selmmsk_bits, mouse1_selm_width, mouse1_selm_height,
+    mouse1_selm_x_hot, mouse1_selm_y_hot, NULL},
+  { mouse1_sel_bits, mouse1_selmsk_bits, mouse1_sel_width, mouse1_sel_height,
+    mouse1_sel_x_hot, mouse1_sel_y_hot, NULL},
 };
 
 
