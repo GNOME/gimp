@@ -152,7 +152,6 @@ plug-ins/faxg3/faxg3.c
 plug-ins/fits/fits.c
 plug-ins/flame/flame.c
 plug-ins/fp/fp.c
-plug-ins/fp/fp_gtk.c
 plug-ins/gfig/gfig.c
 plug-ins/gfig/gfig-bezier.c
 plug-ins/gfig/gfig-dobject.c
