@@ -576,6 +576,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkWidget      *vbox;
   GtkWidget      *hbbox;
   GtkWidget      *frame;
+  GtkWidget      *menu;
   GtkWidget      *table;
   GtkWidget      *button;
 
@@ -598,11 +599,15 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
 
   /*  The option menu for selecting channels  */
   hbox = gtk_hbox_new (FALSE, 4);
-  c_tool->channel_menu = gimp_enum_option_menu_new (GIMP_TYPE_HISTOGRAM_CHANNEL,
-						    G_CALLBACK (curves_channel_callback),
-						    c_tool);
-  gtk_box_pack_start (GTK_BOX (hbox), c_tool->channel_menu, FALSE, FALSE, 0);
-  gtk_widget_show (c_tool->channel_menu);
+  menu = gimp_enum_option_menu_new (GIMP_TYPE_HISTOGRAM_CHANNEL,
+                                    G_CALLBACK (curves_channel_callback),
+                                    c_tool);
+  gimp_enum_option_menu_set_stock_prefix (GTK_OPTION_MENU (menu),
+                                          "gimp-channel");
+  gtk_box_pack_start (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
+  gtk_widget_show (menu);
+
+  c_tool->channel_menu = menu;
 
   button = gtk_button_new_with_mnemonic (_("R_eset Channel"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);

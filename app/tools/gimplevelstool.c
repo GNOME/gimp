@@ -446,6 +446,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkWidget      *hbox;
   GtkWidget      *hbox2;
   GtkWidget      *label;
+  GtkWidget      *menu;
   GtkWidget      *frame;
   GtkWidget      *channel_hbox;
   GtkWidget      *hbbox;
@@ -474,13 +475,15 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (channel_hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  l_tool->channel_menu = 
-    gimp_enum_option_menu_new (GIMP_TYPE_HISTOGRAM_CHANNEL,
-                               G_CALLBACK (levels_channel_callback),
-                               l_tool);
-  gtk_box_pack_start (GTK_BOX (channel_hbox), 
-                      l_tool->channel_menu, FALSE, FALSE, 0);
-  gtk_widget_show (l_tool->channel_menu);
+  menu = gimp_enum_option_menu_new (GIMP_TYPE_HISTOGRAM_CHANNEL,
+                                    G_CALLBACK (levels_channel_callback),
+                                    l_tool);
+  gimp_enum_option_menu_set_stock_prefix (GTK_OPTION_MENU (menu),
+                                          "gimp-channel");
+  gtk_box_pack_start (GTK_BOX (channel_hbox), menu, FALSE, FALSE, 0);
+  gtk_widget_show (menu);
+
+  l_tool->channel_menu = menu;
 
   button = gtk_button_new_with_mnemonic (_("R_eset Channel"));
   gtk_box_pack_start (GTK_BOX (channel_hbox), button, FALSE, FALSE, 0);

@@ -375,6 +375,8 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
   htd->channel_menu =
     gimp_prop_enum_option_menu_new (G_OBJECT (htd->histogram_box->histogram),
 				    "channel", 0, 0);
+  gimp_enum_option_menu_set_stock_prefix (GTK_OPTION_MENU (htd->channel_menu),
+                                          "gimp-channel");
   gtk_box_pack_start (GTK_BOX (hbox), htd->channel_menu, FALSE, FALSE, 0);
   gtk_widget_show (htd->channel_menu);
 

@@ -1,3 +1,14 @@
+2003-03-24  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpenummenu.[ch]: added new functions
+	gimp_enum_menu_set_stock_prefix() and
+	gimp_enum_option_menu_set_stock_prefix() that allow to
+	conveniently add stock icons to enum menus.
+
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimplevelstool.c: use the new functions here.
+
 2003-03-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdock.c (gimp_dock_separator_drag_drop): don't

@@ -158,7 +158,7 @@ gimp_enum_menu_new_with_range (GType      enum_type,
       if (value->value < minimum || value->value > maximum)
         continue;
 
-      menu_item = gtk_menu_item_new_with_mnemonic (gettext (value->value_name));
+      menu_item = gtk_image_menu_item_new_with_mnemonic (gettext (value->value_name));
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
       gtk_widget_show (menu_item);
 
@@ -223,7 +223,7 @@ gimp_enum_menu_new_with_values_valist (GType      enum_type,
       if (value)
         {
           menu_item =
-            gtk_menu_item_new_with_mnemonic (gettext (value->value_name));
+            gtk_image_menu_item_new_with_mnemonic (gettext (value->value_name));
           gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
           gtk_widget_show (menu_item);
 
@@ -239,6 +239,49 @@ gimp_enum_menu_new_with_values_valist (GType      enum_type,
 
   return GTK_WIDGET (menu);
 }
+
+/**
+ * gimp_enum_menu_set_stock_prefix:
+ * @enum_menu: a #GimpEnumMenu
+ * @stock_prefix: the prefix of the group of stock ids to use.
+ * 
+ * Adds stock icons to the items in @enum_menu.  The stock_id for each
+ * icon is created by appending the enum_value's nick to the given
+ * @stock_prefix.  If no such stock_id exists, no icon is displayed.
+ **/
+void
+gimp_enum_menu_set_stock_prefix (GimpEnumMenu *enum_menu,
+                                 const gchar  *stock_prefix)
+{
+  GtkWidget  *image;
+  GEnumValue *enum_value;
+  GList      *list;
+  gchar      *stock_id;
+  gint        value;
+
+  g_return_if_fail (GIMP_IS_ENUM_MENU (enum_menu));
+  g_return_if_fail (stock_prefix != NULL);
+
+  for (list = GTK_MENU_SHELL (enum_menu)->children; list; list = list->next)
+    {
+      GtkImageMenuItem *item = list->data;
+
+      value = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (item),
+                                                  "gimp-item-data"));
+
+      enum_value = g_enum_get_value (enum_menu->enum_class, value);
+      if (!enum_value)
+        continue;
+
+      stock_id = g_strconcat (stock_prefix, "-", enum_value->value_nick, NULL);
+      image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_MENU);
+      g_free (stock_id);
+
+      gtk_image_menu_item_set_image (item, image);
+      gtk_widget_show (image);
+    }
+}
+
 
 /**
  * gimp_enum_option_menu_new:
@@ -335,6 +378,29 @@ gimp_enum_option_menu_new_with_values_valist (GType      enum_type,
     }
   
   return option_menu;
+}
+
+/**
+ * gimp_enum_option_menu_set_stock_prefix:
+ * @option_menu: a #GtkOptionMenu created using gtk_enum_option_menu_new().
+ * @stock_prefix: the prefix of the group of stock ids to use.
+ * 
+ * A convenience function that calls gimp_enum_menu_set_stock_prefix()
+ * with the enum menu used by @option_menu.
+ **/
+void
+gimp_enum_option_menu_set_stock_prefix (GtkOptionMenu *option_menu,
+                                        const gchar   *stock_prefix)
+{
+  GtkWidget *enum_menu;
+
+  g_return_if_fail (GTK_IS_OPTION_MENU (option_menu));
+  g_return_if_fail (stock_prefix != NULL);
+
+  enum_menu = gtk_option_menu_get_menu (option_menu);
+
+  if (enum_menu && GIMP_IS_ENUM_MENU (enum_menu))
+    gimp_enum_menu_set_stock_prefix (GIMP_ENUM_MENU (enum_menu), stock_prefix);
 }
 
 /**
