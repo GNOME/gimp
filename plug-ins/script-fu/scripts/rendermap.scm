@@ -72,9 +72,9 @@
  "28th April 1998"
  "Chris Gutteridge / ECS @ University of Southampton, England"
  ""
- SF-ADJUSTMENT _"Image Size" '(256 0 2048 1 10 0 0)
+ SF-ADJUSTMENT _"Image Size"  '(256 0 2048 1 10 0 0)
  SF-ADJUSTMENT _"Granularity" '(4 0 15 1 1 0 0)
- SF-GRADIENT   _"Gradient" "Land_and_Sea"
- SF-OPTION     _"Behaviour" '(_"Tile" _"Detail in Middle")
+ SF-GRADIENT   _"Gradient"    "Land and Sea"
+ SF-OPTION     _"Behaviour"   '(_"Tile" _"Detail in Middle")
 )
 

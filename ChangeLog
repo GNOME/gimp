@@ -1,3 +1,9 @@
+2003-07-20  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/rendermap.scm: applied patch from
+	Alastair M. Robinson that fixes the name of the default gradient
+	(bug #117851).
+
 2003-07-19  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpcolornotebook.c: added style properties
