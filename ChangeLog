@@ -1,3 +1,12 @@
+2004-03-08  Dave Neary  <bolsh@gimp.org>
+
+	* app/display/gimpdisplayshell.c: First attempt to resolve bug 
+	#107009. This changes the wording on the buttons to "Discard 
+	changes" and "Cancel" when closing an insaved image. However I 
+	think the absence of icons is a but ugly. I would like to add 
+	respectively the icons from GTK_STOCK_DELETE and GTK_STOCK_CANCEL 
+	to these two buttons.
+
 2004-03-08  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/svg.c (run): added missing call to INIT_I18N()

@@ -25,6 +25,7 @@
 
 #include "display-types.h"
 #include "tools/tools-types.h"
+#include "widgets/widgets-types.h"
 
 #ifdef __GNUC__
 #warning FIXME #include "gui/gui-types.h"
@@ -59,6 +60,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpmenufactory.h"
+#include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gui/info-window.h"
@@ -111,7 +113,7 @@ static void      gimp_display_shell_real_scaled        (GimpDisplayShell *shell)
 
 static void  gimp_display_shell_close_warning_dialog   (GimpDisplayShell *shell,
                                                         GimpImage        *gimage);
-static void  gimp_display_shell_close_warning_callback (GtkWidget        *widget,
+static void  gimp_display_shell_close_warning_response (GtkWidget        *widget,
                                                         gboolean          close,
                                                         gpointer          data);
 
@@ -1388,9 +1390,29 @@ gimp_display_shell_close_warning_dialog (GimpDisplayShell *shell,
   title = g_strdup_printf (_("Close %s?"), name);
 
   warning = g_strdup_printf (_("Changes were made to '%s'. "
-                               "Close anyway?"), name);
+                               "Unsaved changes will be lost."), name);
 
   shell->warning_dialog =
+    gimp_viewable_dialog_new (GIMP_VIEWABLE (shell->gdisp->gimage), 
+		              title,
+			      "gimp-display-shell-close",
+			      GIMP_STOCK_QUESTION,
+			      warning,
+			      GTK_WIDGET (shell),
+			      gimp_standard_help_func,
+			      GIMP_HELP_FILE_CLOSE_CONFIRM,
+			      
+			      _("Discard changes"), GTK_RESPONSE_CLOSE,
+			      _("Cancel"), GTK_RESPONSE_CANCEL,
+			      
+			      NULL);
+
+  g_signal_connect (shell->warning_dialog, "response",
+                    G_CALLBACK (gimp_display_shell_close_warning_response),
+                    shell);
+                                                                                  
+  
+#if 0
     gimp_query_boolean_box (title,
                             GTK_WIDGET (shell),
 			    gimp_standard_help_func,
@@ -1401,7 +1423,7 @@ gimp_display_shell_close_warning_dialog (GimpDisplayShell *shell,
 			    NULL, NULL,
 			    gimp_display_shell_close_warning_callback,
 			    shell);
-
+#endif
   g_free (name);
   g_free (title);
   g_free (warning);
@@ -1410,16 +1432,17 @@ gimp_display_shell_close_warning_dialog (GimpDisplayShell *shell,
 }
 
 static void
-gimp_display_shell_close_warning_callback (GtkWidget *widget,
-                                           gboolean   close,
+gimp_display_shell_close_warning_response (GtkWidget *widget,
+                                           gint       response_id,
                                            gpointer   data)
 {
   GimpDisplayShell *shell;
 
   shell = GIMP_DISPLAY_SHELL (data);
 
-  shell->warning_dialog = NULL;
-
-  if (close)
+  gtk_widget_destroy (GTK_WIDGET (shell->warning_dialog));
+  
+  if (response_id == GTK_RESPONSE_CLOSE)
     gimp_display_delete (shell->gdisp);
 }
+
