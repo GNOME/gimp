@@ -1174,7 +1174,7 @@ gimp_vector_tool_status_update (GimpTool    *tool,
 {
   GimpVectorTool   *vector_tool = GIMP_VECTOR_TOOL (tool);
   GimpDisplayShell *shell;
-  gchar            *new_status  = NULL;
+  const gchar      *new_status  = NULL;
 
   shell = tool->gdisp ? GIMP_DISPLAY_SHELL (tool->gdisp->shell) : NULL;
 
@@ -1245,24 +1245,20 @@ gimp_vector_tool_status_set (GimpTool    *tool,
                              const gchar *message)
 {
   GimpVectorTool *vector_tool = GIMP_VECTOR_TOOL (tool);
-  gboolean        msg_differs = TRUE;
 
-  if (vector_tool->status_msg && message)
-    msg_differs = strcmp (vector_tool->status_msg, message);
-
-  if (tool->gdisp && msg_differs)
+  if (tool->gdisp &&
+      vector_tool->status_msg != message)
     {
       if (vector_tool->status_msg)
         {
           gimp_tool_pop_status (tool);
-          g_free (vector_tool->status_msg);
           vector_tool->status_msg = NULL;
         }
 
       if (message)
         {
           gimp_tool_push_status (tool, message);
-          vector_tool->status_msg = g_strdup (message);
+          vector_tool->status_msg = message;
         }
     }
 }

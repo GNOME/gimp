@@ -63,7 +63,7 @@ struct _GimpVectorTool
 {
   GimpDrawTool          parent_instance;
 
-  gchar                *status_msg;     /* keep track of the status message  */
+  const gchar          *status_msg;     /* current status message            */
 
   GimpVectorFunction    function;       /* function we're performing         */
   GimpAnchorFeatureType restriction;    /* movement restriction              */
