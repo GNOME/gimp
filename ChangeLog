@@ -25,6 +25,11 @@
 	* devel-docs/parasites.txt: documented the new "gimp-image-grid"
 	parasite.
 
+	* app/core/gimpdrawable-bucket-fill.c
+	(gimp_drawable_bucket_fill_full): applied a patch from Pedro
+	Gimeno <pggimeno@wanadoo.es> which fixes segmentation fault when
+	using <Image>/Edit/Fill with [FB]G Color.
+
 2003-07-04  Sven Neumann  <sven@gimp.org>
 
 	* configure.in

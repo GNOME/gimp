@@ -313,7 +313,8 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
 	  has_alpha = TRUE;
 	}
     }
-  else if (pat_buf->bytes == 2 || pat_buf->bytes == 4)
+  else if (fill_mode == GIMP_PATTERN_BUCKET_FILL &&
+           (pat_buf->bytes == 2 || pat_buf->bytes == 4))
     {
       /* If pattern being applied has an alpha channel, 
        * add one to the temp buffer from the image too.
