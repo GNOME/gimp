@@ -114,6 +114,7 @@ file_open_location_dialog_new (Gimp *gimp)
                                        file_open_location_completion,
                                        NULL, NULL);
 
+  gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
   gtk_widget_set_size_request (entry, 400, -1);
   gtk_box_pack_start (GTK_BOX (vbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);

@@ -1,3 +1,9 @@
+2005-02-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/file-open-location-dialog.c
+	(file_open_location_dialog_new): set "activates-default" on the
+	URI entry.
+
 2005-02-07  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/help/domain.c
