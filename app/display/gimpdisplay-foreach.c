@@ -23,6 +23,7 @@
 #include "display-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
 
@@ -107,8 +108,6 @@ gimp_displays_get_dirty_images (Gimp *gimp)
 void
 gimp_displays_delete (Gimp *gimp)
 {
-  GimpDisplay *gdisp;
-
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   /*  this removes the GimpDisplay from the list, so do a while loop
@@ -116,7 +115,7 @@ gimp_displays_delete (Gimp *gimp)
    */
   while (GIMP_LIST (gimp->displays)->list)
     {
-      gdisp = (GimpDisplay *) GIMP_LIST (gimp->displays)->list->data;
+      GimpDisplay *gdisp = GIMP_LIST (gimp->displays)->list->data;
 
       gimp_display_delete (gdisp);
     }
@@ -127,29 +126,44 @@ gimp_displays_reconnect (Gimp      *gimp,
                          GimpImage *old,
                          GimpImage *new)
 {
-  GList       *list;
-  GimpDisplay *gdisp;
+  GList *contexts = NULL;
+  GList *list;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_IMAGE (old));
   g_return_if_fail (GIMP_IS_IMAGE (new));
 
+  /*  remember which contexts refer to old_gimage  */
+  for (list = gimp->context_list; list; list = g_list_next (list))
+    {
+      GimpContext *context = list->data;
+
+      if (gimp_context_get_image (context) == old)
+        contexts = g_list_prepend (contexts, list->data);
+    }
+
   for (list = GIMP_LIST (gimp->displays)->list;
        list;
        list = g_list_next (list))
     {
-      gdisp = list->data;
+      GimpDisplay *gdisp = list->data;
 
       if (gdisp->gimage == old)
 	gimp_display_reconnect (gdisp, new);
     }
+
+  /*  set the new_gimage on the remembered contexts (in reverse
+   *  order, since older contexts are usually the parents of
+   *  newer ones)
+   */
+  g_list_foreach (contexts, (GFunc) gimp_context_set_image, new);
+  g_list_free (contexts);
 }
 
 void
 gimp_displays_set_busy (Gimp *gimp)
 {
-  GList            *list;
-  GimpDisplayShell *shell;
+  GList *list;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -157,7 +171,8 @@ gimp_displays_set_busy (Gimp *gimp)
        list;
        list = g_list_next (list))
     {
-      shell = GIMP_DISPLAY_SHELL (GIMP_DISPLAY (list->data)->shell);
+      GimpDisplayShell *shell =
+        GIMP_DISPLAY_SHELL (GIMP_DISPLAY (list->data)->shell);
 
       gimp_display_shell_set_override_cursor (shell, GDK_WATCH);
     }
@@ -166,8 +181,7 @@ gimp_displays_set_busy (Gimp *gimp)
 void
 gimp_displays_unset_busy (Gimp *gimp)
 {
-  GList            *list;
-  GimpDisplayShell *shell;
+  GList *list;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -175,7 +189,8 @@ gimp_displays_unset_busy (Gimp *gimp)
        list;
        list = g_list_next (list))
     {
-      shell = GIMP_DISPLAY_SHELL (GIMP_DISPLAY (list->data)->shell);
+      GimpDisplayShell *shell =
+        GIMP_DISPLAY_SHELL (GIMP_DISPLAY (list->data)->shell);
 
       gimp_display_shell_unset_override_cursor (shell);
     }

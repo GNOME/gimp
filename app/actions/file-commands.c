@@ -30,7 +30,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpprogress.h"
 #include "core/gimptemplate.h"
@@ -474,27 +473,8 @@ file_revert_confirm_callback (GtkWidget *widget,
 
       if (new_gimage)
         {
-          GList *contexts = NULL;
-          GList *list;
-
-          /*  remember which contexts refer to old_gimage  */
-          for (list = gimp->context_list; list; list = g_list_next (list))
-            {
-              GimpContext *context = list->data;
-
-              if (gimp_context_get_image (context) == old_gimage)
-                contexts = g_list_prepend (contexts, list->data);
-            }
-
           gimp_displays_reconnect (gimp, old_gimage, new_gimage);
           gimp_image_flush (new_gimage);
-
-          /*  set the new_gimage on the remembered contexts (in reverse
-           *  order, since older contexts are usually the parents of
-           *  newer ones)
-           */
-          g_list_foreach (contexts, (GFunc) gimp_context_set_image, new_gimage);
-          g_list_free (contexts);
 
           /*  the displays own the image now  */
           g_object_unref (new_gimage);
