@@ -1,3 +1,8 @@
+2004-03-09  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphelp.c (gimp_help_internal): call
+	procedural_db_destroy_args() with the correct nargs.
+
 2004-03-09  Simon Budig  <simon@gimp.org>
 
 	* app/gui/preferences-dialog.c: Resurrect the "Save"-Button

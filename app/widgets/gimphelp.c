@@ -213,7 +213,7 @@ gimp_help_internal (Gimp *gimp)
 
       plug_in_run (gimp, proc_rec, args, 1, FALSE, TRUE, -1);
 
-      procedural_db_destroy_args (args, 5);
+      procedural_db_destroy_args (args, 1);
     }
 
   /*  Check if the help browser started properly  */
@@ -274,6 +274,7 @@ gimp_help_call (Gimp        *gimp,
       n_domains = plug_ins_help_domains (gimp, &help_domains, &help_uris);
 
       args = g_new (Argument, 4);
+
       args[0].arg_type          = GIMP_PDB_INT32;
       args[0].value.pdb_int     = n_domains;
       args[1].arg_type          = GIMP_PDB_STRINGARRAY;
