@@ -1,3 +1,10 @@
+2004-10-19  Jay Cox  <jaycox@gimp.org>
+
+	* plug-ins/common/psd_save.c: don't try to save psd files that are
+	larger than 30000 pixels in either direction.  Fixed the rle code
+	to compress more compactly.  Fixed a memmory leak in
+	save_channel_data.
+
 2004-10-18  Michael Natterer  <mitch@gimp.org>
 
 	Action code review and pre-release consistency cleanup:

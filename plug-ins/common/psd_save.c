@@ -485,7 +485,8 @@ pack_pb_line (guchar *start, guchar *end,
           i = 0;
           while ((i < 128) &&
                  (start + i + 1 <= end) &&
-                 (start[i] != start[i + 1]))
+                 (start[i] != start[i + 1] || 
+		  start + i + 2 >= end || start[i] != start[i+2]))
             i++;
 
           /* If there's only 1 remaining, the previous WHILE stmt doesn't
@@ -1024,6 +1025,8 @@ save_channel_data (FILE *fd,
 
       xfwrite (fd, channel_data, channel_length, why); /* Save raw data */
     }
+  g_free (remdata);
+  g_free (LengthsTable);
 }
 
 
@@ -1549,8 +1552,36 @@ save_image (const gchar *filename,
 {
   FILE  *fd;
   gchar *name_buf;
+  gint32 *layers;
+  int nlayers;
+  int i;
+  GimpDrawable *drawable;
 
   IFDBG printf (" Function: save_image\n");
+
+  if (gimp_image_width (image_id) > 30000 ||
+      gimp_image_height(image_id) > 30000)
+  {
+      g_message (_("Unable to save '%s'.  The psd file format does not support images that are more than 30000 pixels wide or tall."),
+                 gimp_filename_to_utf8 (filename));
+      return FALSE;
+    }
+  
+ /* Need to check each of the layers size individually also */
+  layers = gimp_image_get_layers (image_id, &nlayers);
+  for (i = 0; i < nlayers; i++)
+    {
+      drawable = gimp_drawable_get (layers[i]);
+      if (drawable->width > 30000 || drawable->height > 30000)
+        {
+	  g_message (_("Unable to save '%s'.  The psd file format does not support images with layers that are more than 30000 pixels wide or tall."),
+		     gimp_filename_to_utf8 (filename));
+	  g_free (layers);
+	  return FALSE;
+	}
+    }
+  g_free (layers);
+
 
   fd = fopen (filename, "wb");
   if (fd == NULL)
