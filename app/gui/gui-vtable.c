@@ -288,16 +288,18 @@ gui_get_display_name (Gimp *gimp,
                       gint  gdisp_ID,
                       gint *monitor_number)
 {
-  GimpDisplay *gdisp;
+  GimpDisplay *gdisp = NULL;
   GdkScreen   *screen;
   gint         monitor;
 
-  gdisp = gimp_display_get_by_ID (gimp, gdisp_ID);
+  if (gdisp_ID > 0)
+    gdisp = gimp_display_get_by_ID (gimp, gdisp_ID);
 
   if (gdisp)
     {
       screen  = gtk_widget_get_screen (gdisp->shell);
-      monitor = gdk_screen_get_monitor_at_window (screen, gdisp->shell->window);
+      monitor = gdk_screen_get_monitor_at_window (screen,
+                                                  gdisp->shell->window);
     }
   else
     {

@@ -122,12 +122,6 @@ plug_in_run_cmd_callback (GtkWidget *widget,
                     }
                 }
             }
-          else
-            {
-              g_warning ("Uh-oh, no active display for the plug-in!");
-              g_free (args);
-              return;
-            }
 	}
       break;
 

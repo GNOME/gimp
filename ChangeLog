@@ -1,3 +1,18 @@
+2004-01-12  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpmenu.c (gimp_image_menu_new): call the callback with
+	the selected image which is not necessarily the requested one
+	(fixes bug #92586).
+	Also changed all menu constructors to always call the registered
+	callback even when the value is -1 because the menu is empty.
+
+	* app/gui/plug-in-commands.c (plug_in_run_cmd_callback): run the
+	procedure even if there's no active GIMP display. The display and
+	screen is then taken from the current cursor position.
+
+	* app/gui/gui-vtable.c (gui_get_display_name): don't call
+	gimp_display_get_by_ID() unless gdisp_ID is > 0.
+
 2004-01-12  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: we need at least pygtk 1.99.15 for pygimp. Enforce

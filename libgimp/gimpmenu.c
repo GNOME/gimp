@@ -94,7 +94,9 @@ gimp_image_menu_new (GimpConstraintFunc constraint,
             gtk_menu_set_active (GTK_MENU (menu), k);
           }
         else if (image == -1)
-          image = images[i];
+          {
+            image = images[i];
+          }
 
 	k += 1;
       }
@@ -102,8 +104,7 @@ gimp_image_menu_new (GimpConstraintFunc constraint,
   if (k == 0)
     gimp_menu_add_none (menu);
 
-  if (image != -1)
-    (* callback) (active_image, data);
+  (* callback) (image, data);
 
   g_free (images);
 
@@ -155,7 +156,9 @@ gimp_layer_menu_new (GimpConstraintFunc constraint,
 		  gtk_menu_set_active (GTK_MENU (menu), k);
 		}
 	      else if (layer == -1)
-		layer = layers[j];
+                {
+                  layer = layers[j];
+                }
 
 	      k += 1;
 	    }
@@ -169,8 +172,7 @@ gimp_layer_menu_new (GimpConstraintFunc constraint,
   if (k == 0)
     gimp_menu_add_none (menu);
 
-  if (layer != -1)
-    (* callback) (layer, data);
+  (* callback) (layer, data);
 
   return menu;
 }
@@ -222,7 +224,9 @@ gimp_channel_menu_new (GimpConstraintFunc constraint,
 		  gtk_menu_set_active (GTK_MENU (menu), k);
 		}
 	      else if (channel == -1)
-		channel = channels[j];
+                {
+                  channel = channels[j];
+                }
 
 	      k += 1;
 	    }
@@ -236,8 +240,7 @@ gimp_channel_menu_new (GimpConstraintFunc constraint,
   if (k == 0)
     gimp_menu_add_none (menu);
 
-  if (channel != -1)
-    (* callback) (channel, data);
+  (* callback) (channel, data);
 
   return menu;
 }
@@ -289,7 +292,9 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
 		  gtk_menu_set_active (GTK_MENU (menu), k);
 		}
 	      else if (drawable == -1)
-		drawable = layers[j];
+                {
+                  drawable = layers[j];
+                }
 
 	      k += 1;
 	    }
@@ -307,7 +312,9 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
 		  gtk_menu_set_active (GTK_MENU (menu), k);
 		}
 	      else if (drawable == -1)
-		drawable = channels[j];
+                {
+                  drawable = channels[j];
+                }
 
 	      k += 1;
 	    }
@@ -322,8 +329,7 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
   if (k == 0)
     gimp_menu_add_none (menu);
 
-  if (drawable != -1)
-    (* callback) (drawable, data);
+  (* callback) (drawable, data);
 
   return menu;
 }
