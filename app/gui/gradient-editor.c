@@ -475,7 +475,8 @@ static void       cpopup_get_color_selection_color(GtkColorSelection *cs,
 static void       cpopup_create_color_dialog(char *title, double r, double g, double b, double a,
 					     GtkSignalFunc color_changed_callback,
 					     GtkSignalFunc ok_callback,
-					     GtkSignalFunc cancel_callback);
+					     GtkSignalFunc cancel_callback,
+					     GtkSignalFunc delete_callback);
 
 static grad_segment_t *cpopup_save_selection(void);
 static void            cpopup_free_selection(grad_segment_t *seg);
@@ -485,10 +486,12 @@ static void       cpopup_set_left_color_callback(GtkWidget *widget, gpointer dat
 static void       cpopup_left_color_changed(GtkWidget *widget, gpointer client_data);
 static void       cpopup_left_color_dialog_ok(GtkWidget *widget, gpointer client_data);
 static void       cpopup_left_color_dialog_cancel(GtkWidget *widget, gpointer client_data);
+static int        cpopup_left_color_dialog_delete(GtkWidget *widget, GdkEvent *event, gpointer data);
 static void       cpopup_set_right_color_callback(GtkWidget *widget, gpointer data);
 static void       cpopup_right_color_changed(GtkWidget *widget, gpointer client_data);
 static void       cpopup_right_color_dialog_ok(GtkWidget *widget, gpointer client_data);
 static void       cpopup_right_color_dialog_cancel(GtkWidget *widget, gpointer client_data);
+static int        cpopup_right_color_dialog_delete(GtkWidget *widget, GdkEvent *event, gpointer data);
 
 static void       cpopup_split_midpoint_callback(GtkWidget *widget, gpointer data);
 static void       cpopup_split_uniform_callback(GtkWidget *widget, gpointer data);
@@ -4015,7 +4018,8 @@ static void
 cpopup_create_color_dialog(char *title, double r, double g, double b, double a,
 			   GtkSignalFunc color_changed_callback,
 			   GtkSignalFunc ok_callback,
-			   GtkSignalFunc cancel_callback)
+			   GtkSignalFunc cancel_callback,
+			   GtkSignalFunc delete_callback)
 {
 	GtkWidget               *window;
 	GtkColorSelection       *cs;
@@ -4039,6 +4043,9 @@ cpopup_create_color_dialog(char *title, double r, double g, double b, double a,
 
 	cpopup_set_color_selection_color(cs, r, g, b, a);
 	cpopup_set_color_selection_color(cs, r, g, b, a);
+
+	gtk_signal_connect(GTK_OBJECT(csd), "delete_event",
+			   delete_callback, NULL);
 
 	gtk_signal_connect(GTK_OBJECT(cs), "color_changed",
 			   color_changed_callback, window);
@@ -4154,7 +4161,8 @@ cpopup_set_left_color_callback(GtkWidget *widget, gpointer data)
 				   g_editor->control_sel_l->a0,
 				   (GtkSignalFunc) cpopup_left_color_changed,
 				   (GtkSignalFunc) cpopup_left_color_dialog_ok,
-				   (GtkSignalFunc) cpopup_left_color_dialog_cancel);
+				   (GtkSignalFunc) cpopup_left_color_dialog_cancel,
+				   (GtkSignalFunc) cpopup_left_color_dialog_delete);
 
 	gtk_widget_set_sensitive(g_editor->shell, FALSE);
 } /* cpopup_set_left_color_callback */
@@ -4224,6 +4232,21 @@ cpopup_left_color_dialog_cancel(GtkWidget *widget, gpointer client_data)
 	gtk_widget_set_sensitive(g_editor->shell, TRUE);
 } /* cpopup_left_color_dialog_cancel */
 
+
+/*****/
+
+static int
+cpopup_left_color_dialog_delete(GtkWidget *widget, GdkEvent *event,
+				gpointer data)
+{
+	curr_gradient->dirty = g_editor->left_saved_dirty;
+	cpopup_replace_selection(g_editor->left_saved_segments);
+	ed_update_editor(GRAD_UPDATE_PREVIEW);
+
+	gtk_widget_set_sensitive(g_editor->shell, TRUE);
+	return FALSE;
+} /* cpopup_left_color_dialog_delete */
+
 /*****/
 
 static void
@@ -4239,7 +4262,8 @@ cpopup_set_right_color_callback(GtkWidget *widget, gpointer data)
 				   g_editor->control_sel_r->a1,
 				   (GtkSignalFunc) cpopup_right_color_changed,
 				   (GtkSignalFunc) cpopup_right_color_dialog_ok,
-				   (GtkSignalFunc) cpopup_right_color_dialog_cancel);
+				   (GtkSignalFunc) cpopup_right_color_dialog_cancel,
+				   (GtkSignalFunc) cpopup_right_color_dialog_delete);
 
 	gtk_widget_set_sensitive(g_editor->shell, FALSE);
 } /* cpopup_set_right_color_callback */
@@ -4308,6 +4332,21 @@ cpopup_right_color_dialog_cancel(GtkWidget *widget, gpointer client_data)
 	gtk_widget_destroy(GTK_WIDGET(client_data));
 	gtk_widget_set_sensitive(g_editor->shell, TRUE);
 } /* cpopup_right_color_dialog_cancel */
+
+
+/*****/
+
+static int
+cpopup_right_color_dialog_delete(GtkWidget *widget, GdkEvent *event,
+				 gpointer data)
+{
+	curr_gradient->dirty = g_editor->right_saved_dirty;
+	cpopup_replace_selection(g_editor->right_saved_segments);
+	ed_update_editor(GRAD_UPDATE_PREVIEW);
+
+	gtk_widget_set_sensitive(g_editor->shell, TRUE);
+	return FALSE;
+} /* cpopup_right_color_dialog_delete */
 
 
 /*****/

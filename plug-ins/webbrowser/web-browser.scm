@@ -131,11 +131,11 @@
 		    "Link to http://abattoir.cc.ndsu.nodak.edu/~nem/gimp/tuts/")
 
 (define (script-fu-bookmark-16)
-    (script-fu-bookmark "http://www.wilberworks.com/bugs.html"))
+    (script-fu-bookmark "http://www.wilberworks.com/bugs.cgi"))
 
 (bookmark-register  "script-fu-bookmark-16"
 		    "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-		    "Link to http://www.wilberworks.com/bugs.html")
+		    "Link to http://www.wilberworks.com/bugs.cgi")
 
 
 

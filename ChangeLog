@@ -1,3 +1,10 @@
+Tue Apr 14 13:40:07 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* gradient.c: handle delete_event for color selector properly
+
+	* plug-ins/webbrowser/web-browser.scm: updated link to the bugs
+	page
+
 Tue Apr 14 20:36:26 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* gimp_tips.txt: applied gimp-quinet-980414-0; adds new tips
