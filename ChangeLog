@@ -1,3 +1,10 @@
+2000-02-16  Tuomas Kuosmanen  <tigert@gimp.org>
+
+	* gimp1_1_splash.ppm: New splash, valentine is over.
+	This one is to show the respect to all of you great
+	people hacking on Gimp. You are making my day :)
+	Thanks. Let the bugs die!
+
 Wed Feb 16 03:49:40 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/unsharp.c: removed warnings
