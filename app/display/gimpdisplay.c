@@ -55,17 +55,6 @@ GSList *               display_list = NULL;
 static int             display_num  = 1;
 static GdkCursorType   default_gdisplay_cursor = GDK_TOP_LEFT_ARROW;
 
-static char *image_type_strs[] =
-{
-  "RGB",
-  "RGB-alpha",
-  "grayscale",
-  "grayscale-alpha",
-  "indexed",
-  "indexed-alpha"
-};
-
-
 /*  Local functions  */
 static void       gdisplay_format_title     (GimpImage *, char *);
 static void       gdisplay_delete           (GDisplay *);
@@ -160,23 +149,20 @@ gdisplay_format_title (GimpImage *gimage,
 
   empty = gimage_is_empty (gimage);
 
-  if (gimage_is_flat (gimage))
-    image_type_str = image_type_strs[drawable_type (gimage_active_drawable (gimage))];
-  else
-    switch (gimage_base_type (gimage))
-      {
-      case RGB:
-	image_type_str = (empty) ? "RGB-empty" : "RGB-layered";
-	break;
-      case GRAY:
-	image_type_str = (empty) ? "grayscale-empty" : "grayscale-layered";
-	break;
-      case INDEXED:
-	image_type_str = (empty) ? "indexed-empty" : "indexed-layered";
-	break;
-      default:
-	image_type_str = NULL;
-      }
+  switch (gimage_base_type (gimage))
+    {
+    case RGB:
+      image_type_str = (empty) ? "RGB-empty" : "RGB";
+      break;
+    case GRAY:
+      image_type_str = (empty) ? "grayscale-empty" : "grayscale";
+      break;
+    case INDEXED:
+      image_type_str = (empty) ? "indexed-empty" : "indexed";
+      break;
+    default:
+      image_type_str = NULL;
+    }
 
   g_snprintf (title, MAX_TITLE_BUF, "%s-%d.%d (%s)",
 	      prune_filename (gimage_filename (gimage)),

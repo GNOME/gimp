@@ -799,13 +799,14 @@ create_image_menu (GimpImage**          def,
 		   int              *default_index,
 		   MenuItemCallback  callback)
 {
-  IMCBData data = {
-    def,
-    default_index,
-    callback,
-    gtk_menu_new (),
-    0,
-    NULL};
+  IMCBData data;
+
+  data.def = def;
+  data.default_index = default_index;
+  data.callback = callback;
+  data.menu = gtk_menu_new ();
+  data.num_items = 0;
+  data.id = NULL;
   
   *default_index = -1;
 

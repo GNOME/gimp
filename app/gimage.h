@@ -95,9 +95,6 @@ gimage_foreach (GFunc func, gpointer user_data);
 #define gimage_construct gimp_image_construct
 #define gimage_invalidate gimp_image_invalidate
 #define gimage_validate gimp_image_validate
-#define gimage_inflate gimp_image_inflate
-#define gimage_deflate gimp_image_deflate
-#define gimage_is_flat gimp_image_is_flat
 #define gimage_is_empty gimp_image_is_empty
 #define gimage_active_drawable gimp_image_active_drawable
 #define gimage_base_type gimp_image_base_type

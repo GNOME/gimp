@@ -158,13 +158,10 @@ Channel *       gimp_image_remove_channel         (GimpImage *, Channel *);
 void            gimp_image_construct              (GimpImage *, int, int, int, int);
 void            gimp_image_invalidate             (GimpImage *, int, int, int, int, int, int, int, int);
 void            gimp_image_validate               (TileManager *, Tile *);
-void            gimp_image_inflate                (GimpImage *);
-void            gimp_image_deflate                (GimpImage *);
 
 
 /*  Access functions  */
 
-int             gimp_image_is_flat                (GimpImage *);
 int             gimp_image_is_empty               (GimpImage *);
 GimpDrawable *  gimp_image_active_drawable        (GimpImage *);
 int             gimp_image_base_type              (GimpImage *);

@@ -152,7 +152,7 @@ airbrush_paint_func (PaintCore *paint_core,
   switch (state)
     {
     case INIT_PAINT :
-      //      timer_state = OFF;
+      /* timer_state = OFF; */
       if (timer_state == ON)
 	{
 	  g_warning ("killing stray timer, please report to lewing@gimp.org");

@@ -2343,6 +2343,7 @@ render_image_init_info (RenderInfo *info,
 			int         h)
 {
   info->gdisp = gdisp;
+  info->src_tiles = gimage_projection (gdisp->gimage);
   info->x = x + gdisp->offset_x;
   info->y = y + gdisp->offset_y;
   info->w = w;
@@ -2357,7 +2358,6 @@ render_image_init_info (RenderInfo *info,
   info->dest_bpl = gximage_get_bpl ();
   info->dest_width = info->w * info->dest_bpp;
   info->byte_order = gximage_get_byte_order ();
-  info->src_tiles = gimage_projection (gdisp->gimage);
   info->scale = render_image_accelerate_scaling (w, info->x, info->src_bpp, info->scalesrc, info->scaledest);
   info->alpha = NULL;
 

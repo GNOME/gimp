@@ -184,7 +184,6 @@ info_window_update (InfoDialog *info_win,
   GDisplay *gdisp;
   InfoWinData *iwd;
   int type;
-  int flat;
 
   gdisp = (GDisplay *) gdisp_ptr;
   iwd = (InfoWinData *) info_win->user_data;
@@ -198,21 +197,14 @@ info_window_update (InfoDialog *info_win,
 	   SCALEDEST (gdisp), SCALESRC (gdisp));
 
   type = gimage_base_type (gdisp->gimage);
-  flat = gimage_is_flat (gdisp->gimage);
 
   /*  color type  */
-  if (type == RGB && flat)
+  if (type == RGB)
     sprintf (iwd->color_type_str, "%s", "RGB Color");
-  else if (type == GRAY && flat)
+  else if (type == GRAY)
     sprintf (iwd->color_type_str, "%s", "Grayscale");
-  else if (type == INDEXED && flat)
+  else if (type == INDEXED)
     sprintf (iwd->color_type_str, "%s", "Indexed Color");
-  if (type == RGB && !flat)
-    sprintf (iwd->color_type_str, "%s", "RGB-alpha Color");
-  else if (type == GRAY && !flat)
-    sprintf (iwd->color_type_str, "%s", "Grayscale-alpha");
-  else if (type == INDEXED && !flat)
-    sprintf (iwd->color_type_str, "%s", "Indexed-alpha Color");
 
   /*  visual class  */
   if (type == RGB ||

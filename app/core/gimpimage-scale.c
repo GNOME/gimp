@@ -129,7 +129,6 @@ static void gimp_image_init (GimpImage *gimage)
   gimage->shadow = NULL;
   gimage->dirty = 1;
   gimage->undo_on = TRUE;
-  gimage->flat = TRUE;
   gimage->construct_flag = -1;
   gimage->projection = NULL;
   gimage->guides = NULL;
@@ -1177,27 +1176,23 @@ gimp_image_get_active_channels (GimpImage *gimage, GimpDrawable *drawable, int *
 void
 gimp_image_construct (GimpImage *gimage, int x, int y, int w, int h)
 {
-  /*  if the gimage is not flat, construction is necessary.  */
-  if (! gimp_image_is_flat (gimage))
-    {
-      /*  set the construct flag, used to determine if anything
-       *  has been written to the gimage raw image yet.
-       */
-      gimage->construct_flag = 0;
-
-      /*  First, determine if the projection image needs to be
-       *  initialized--this is the case when there are no visible
-       *  layers that cover the entire canvas--either because layers
-       *  are offset or only a floating selection is visible
-       */
-      gimp_image_initialize_projection (gimage, x, y, w, h);
-
-      /*  call functions which process the list of layers and
-       *  the list of channels
-       */
-      gimp_image_construct_layers (gimage, x, y, w, h);
-      gimp_image_construct_channels (gimage, x, y, w, h);
-    }
+  /*  set the construct flag, used to determine if anything
+   *  has been written to the gimage raw image yet.
+   */
+  gimage->construct_flag = 0;
+  
+  /*  First, determine if the projection image needs to be
+   *  initialized--this is the case when there are no visible
+   *  layers that cover the entire canvas--either because layers
+   *  are offset or only a floating selection is visible
+   */
+  gimp_image_initialize_projection (gimage, x, y, w, h);
+  
+  /*  call functions which process the list of layers and
+   *  the list of channels
+   */
+  gimp_image_construct_layers (gimage, x, y, w, h);
+  gimp_image_construct_channels (gimage, x, y, w, h);
 }
 
 void
@@ -1210,9 +1205,7 @@ gimp_image_invalidate (GimpImage *gimage, int x, int y, int w, int h, int x1, in
   int startx, starty;
   int endx, endy;
   int tilex, tiley;
-  int flat;
 
-  flat = gimp_image_is_flat (gimage);
   tm = gimp_image_projection (gimage);
 
   startx = x;
@@ -1231,47 +1224,44 @@ gimp_image_invalidate (GimpImage *gimage, int x, int y, int w, int h, int x1, in
 	/*  invalidate all lower level tiles  */
 	/*tile_manager_invalidate_tiles (gimp_image_projection (gimage), tile);*/
 
-	if (! flat)
-	  {
-	    /*  check if the tile is outside the bounds  */
-	    if ((MIN ((j + tile_ewidth(tile)), x2) - MAX (j, x1)) <= 0)
-	      {
-		tile_invalidate_tile (&tile, tm, j, i);
-		if (j < x1)
-		  startx = MAX (startx, (j + tile_ewidth(tile)));
-		else
-		  endx = MIN (endx, j);
-	      }
-	    else if (MIN ((i + tile_eheight(tile)), y2) - MAX (i, y1) <= 0)
-	      {
-		tile_invalidate_tile (&tile, tm, j, i);
-		if (i < y1)
-		  starty = MAX (starty, (i + tile_eheight(tile)));
-		else
-		  endy = MIN (endy, i);
-	      }
-	    else
-	      {
-		/*  If the tile is not valid, make sure we get the entire tile
-		 *   in the construction extents
-		 */
-		if (tile_is_valid(tile) == FALSE)
-		  {
-		    tilex = j - (j % TILE_WIDTH);
-		    tiley = i - (i % TILE_HEIGHT);
-
-		    startx = MIN (startx, tilex);
-		    endx = MAX (endx, tilex + tile_ewidth(tile));
-		    starty = MIN (starty, tiley);
-		    endy = MAX (endy, tiley + tile_eheight(tile));
-
-		    tile_mark_valid (tile); /* hmmmmmmm..... */
-		  }
-	      }
-	  }
+        /*  check if the tile is outside the bounds  */
+        if ((MIN ((j + tile_ewidth(tile)), x2) - MAX (j, x1)) <= 0)
+          {
+            tile_invalidate_tile (&tile, tm, j, i);
+            if (j < x1)
+              startx = MAX (startx, (j + tile_ewidth(tile)));
+            else
+              endx = MIN (endx, j);
+          }
+        else if (MIN ((i + tile_eheight(tile)), y2) - MAX (i, y1) <= 0)
+          {
+            tile_invalidate_tile (&tile, tm, j, i);
+            if (i < y1)
+              starty = MAX (starty, (i + tile_eheight(tile)));
+            else
+              endy = MIN (endy, i);
+          }
+        else
+          {
+            /*  If the tile is not valid, make sure we get the entire tile
+             *   in the construction extents
+             */
+            if (tile_is_valid(tile) == FALSE)
+              {
+                tilex = j - (j % TILE_WIDTH);
+                tiley = i - (i % TILE_HEIGHT);
+                
+                startx = MIN (startx, tilex);
+                endx = MAX (endx, tilex + tile_ewidth(tile));
+                starty = MIN (starty, tiley);
+                endy = MAX (endy, tiley + tile_eheight(tile));
+                
+                tile_mark_valid (tile); /* hmmmmmmm..... */
+              }
+          }
       }
 
-  if (! flat && (endx - startx) > 0 && (endy - starty) > 0)
+  if ((endx - startx) > 0 && (endy - starty) > 0)
     gimp_image_construct (gimage, startx, starty, (endx - startx), (endy - starty));
 }
 
@@ -2374,68 +2364,6 @@ gimp_image_remove_channel (GimpImage *gimage, Channel *channel)
 /************************************************************/
 
 int
-gimp_image_is_flat (GimpImage *gimage)
-{
-  Layer *layer;
-  int ac_visible = TRUE;
-  int flat = TRUE;
-  int off_x, off_y;
-
-  /*  Are there no layers?  */
-  if (gimp_image_is_empty (gimage))
-    flat = FALSE;
-  /*  Is there more than one layer?  */
-  else if (gimage->layers->next)
-    flat = FALSE;
-  else
-    {
-      /*  determine if all channels are visible  */
-      int a, b;
-
-      layer = gimage->layers->data;
-      a = layer_has_alpha (layer) ? drawable_bytes (GIMP_DRAWABLE(layer)) - 1 : drawable_bytes (GIMP_DRAWABLE(layer));
-      for (b = 0; b < a; b++)
-	if (gimage->visible[b] == FALSE)
-	  ac_visible = FALSE;
-
-      /*  What makes a flat image?
-       *  1) the solitary layer is exactly gimage-sized and placed
-       *  2) no layer mask
-       *  3) opacity == OPAQUE_OPACITY
-       *  4) all channels must be visible
-       */
-      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
-      if ((drawable_width (GIMP_DRAWABLE(layer)) != gimage->width) ||
-	  (drawable_height (GIMP_DRAWABLE(layer)) != gimage->height) ||
-	  (off_x != 0) ||
-	  (off_y != 0) ||
-	  (layer->mask != NULL) ||
-	  (layer->opacity != OPAQUE_OPACITY) ||
-	  (ac_visible == FALSE))
-	flat = FALSE;
-    }
-
-  /*  Are there any channels?  */
-  if (gimage->channels)
-    flat = FALSE;
-
-  /* AUGH! This is supposed to be a _predicate_ function */
-  if (gimage->flat != flat)
-    {
-	    if (flat)
-		    gimp_image_free_projection (gimage);
-	    else
-		    gimp_image_allocate_projection (gimage);
-	    gimage->flat=flat;
-	    gtk_signal_emit(GTK_OBJECT(gimage),
-			    gimp_image_signals[RESTRUCTURE]);
-    }
-
-
-  return gimage->flat;
-}
-
-int
 gimp_image_is_empty (GimpImage *gimage)
 {
   return (! gimage->layers);
@@ -2561,90 +2489,36 @@ gimp_image_cmap (GimpImage *gimage)
 TileManager *
 gimp_image_projection (GimpImage *gimage)
 {
-  Layer * layer;
-
-  /*  If the gimage is flat, we simply want the data of the
-   *  first layer...Otherwise, we'll pass back the projection
-   */
-  if (gimp_image_is_flat (gimage))
-    {
-      if ((layer = gimage->active_layer))
-	return drawable_data (GIMP_DRAWABLE(layer));
-      else
-	return NULL;
-    }
-  else
-    {
-      if ((tile_manager_level_width (gimage->projection) != gimage->width) ||
-	  (tile_manager_level_height (gimage->projection) != gimage->height))
-	gimp_image_allocate_projection (gimage);
-
-      return gimage->projection;
-    }
+  if ((gimage->projection == NULL) ||
+      (tile_manager_level_width (gimage->projection) != gimage->width) ||
+      (tile_manager_level_height (gimage->projection) != gimage->height))
+    gimp_image_allocate_projection (gimage);
+  
+  return gimage->projection;
 }
 
 int
 gimp_image_projection_type (GimpImage *gimage)
 {
-  Layer * layer;
-
-  /*  If the gimage is flat, we simply want the type of the
-   *  first layer...Otherwise, we'll pass back the proj_type
-   */
-  if (gimp_image_is_flat (gimage))
-    {
-      if ((layer =  (gimage->active_layer)))
-	return drawable_type (GIMP_DRAWABLE(layer));
-      else
-	return -1;
-    }
-  else
-    return gimage->proj_type;
+  return gimage->proj_type;
 }
 
 int
 gimp_image_projection_bytes (GimpImage *gimage)
 {
-  Layer * layer;
-
-  /*  If the gimage is flat, we simply want the bytes in the
-   *  first layer...Otherwise, we'll pass back the proj_bytes
-   */
-  if (gimp_image_is_flat (gimage))
-    {
-      if ((layer =  (gimage->active_layer)))
-	return drawable_bytes (GIMP_DRAWABLE(layer));
-      else
-	return -1;
-    }
-  else
-    return gimage->proj_bytes;
+  return gimage->proj_bytes;
 }
 
 int
 gimp_image_projection_opacity (GimpImage *gimage)
 {
-  Layer * layer;
-
-  /*  If the gimage is flat, return the opacity of the active layer
-   *  Otherwise, we'll pass back OPAQUE_OPACITY
-   */
-  if (gimp_image_is_flat (gimage))
-    {
-      if ((layer =  (gimage->active_layer)))
-	return layer->opacity;
-      else
-	return OPAQUE_OPACITY;
-    }
-  else
-    return OPAQUE_OPACITY;
+  return OPAQUE_OPACITY;
 }
 
 void
 gimp_image_projection_realloc (GimpImage *gimage)
 {
-  if (! gimp_image_is_flat (gimage))
-    gimp_image_allocate_projection (gimage);
+  gimp_image_allocate_projection (gimage);
 }
 
 /************************************************************/

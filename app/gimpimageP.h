@@ -33,7 +33,6 @@ struct _GimpImage
   TileManager *shadow;                /*  shadow buffer tiles          */
 
                                       /*  Projection attributes  */
-  int flat;                           /*  Is the gimp_image flat?          */
   int construct_flag;                 /*  flag for construction        */
   int proj_type;                      /*  type of the projection image */
   int proj_bytes;                     /*  bpp in projection image      */
