@@ -189,10 +189,6 @@ gimp_tool_options_editor_init (GimpToolOptionsEditor *editor)
   gtk_widget_show (editor->options_vbox);
 
   /*  dnd stuff  */
-  gtk_drag_dest_set (GTK_WIDGET (editor),
-                     GTK_DEST_DEFAULT_ALL,
-                     NULL, 0,
-                     GDK_ACTION_COPY);
   gimp_dnd_viewable_dest_add (GTK_WIDGET (editor),
                               GIMP_TYPE_TOOL_INFO,
                               gimp_tool_options_editor_drop_tool,

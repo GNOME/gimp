@@ -1,5 +1,10 @@
 2003-10-17  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimptooloptionseditor.c: gimp_dnd_viewable_dest_add()
+	calls gtk_drag_dest_set() for us so we don't need to do it here.
+
+2003-10-17  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpdnd.c: some minor code cleanup.
 
 	* libgimpcolor/gimpcolorspace.c: removed trailing whitespace.

@@ -1832,8 +1832,7 @@ gimp_dnd_set_tool_data (GtkWidget *widget,
     tool_info = gimp_tool_info_get_standard (the_gimp);
   else
     tool_info = (GimpToolInfo *)
-      gimp_container_get_child_by_name (the_gimp->tool_info_list,
-					name);
+      gimp_container_get_child_by_name (the_gimp->tool_info_list, name);
 
   if (tool_info)
     (* (GimpDndDropViewableFunc) set_tool_func) (widget,
