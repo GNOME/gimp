@@ -24,6 +24,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -137,8 +138,6 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-
-
   gimp_install_procedure ("file_dicom_load",
                           "loads files of the dicom file format",
                           "Load a file in the DICOM standard format."
@@ -170,13 +169,14 @@ static void
 run (const gchar      *name,
      gint              nparams,
      const GimpParam  *param,
-     gint*             nreturn_vals,
+     gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
   static GimpParam   values[2];
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  gint32             image_ID, drawable_ID;
+  gint32             image_ID;
+  gint32             drawable_ID;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
 
   INIT_I18N ();
@@ -209,19 +209,14 @@ run (const gchar      *name,
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
-      /*  eventually export the image */
-      image_ID    = param[1].data.d_int32;
-      drawable_ID = param[2].data.d_int32;
-
-      /*  eventually export the image */
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("dicom", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "DICOM",
-				      (GIMP_EXPORT_CAN_HANDLE_RGB |
-				       GIMP_EXPORT_CAN_HANDLE_GRAY ));
+				      GIMP_EXPORT_CAN_HANDLE_RGB |
+                                      GIMP_EXPORT_CAN_HANDLE_GRAY);
           if (export == GIMP_EXPORT_CANCEL)
             {
               values[0].data.d_status = GIMP_PDB_CANCEL;
@@ -286,7 +281,7 @@ load_image (const gchar *filename)
   guint8         *pix_buf           = NULL;
   gboolean        toggle_endian     = FALSE;
 
-  temp = g_strdup_printf (_("Loading %s:"), filename);
+  temp = g_strdup_printf (_("Opening '%s'..."), filename);
   gimp_progress_init (temp);
   g_free (temp);
 
@@ -295,12 +290,12 @@ load_image (const gchar *filename)
 
   if (!DICOM)
     {
-      g_message (_("Can't open file '%s'."), filename);
+      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
       return -1;
     }
 
   /* allocate the necessary structures */
-  dicominfo = (DicomInfo *) g_malloc (sizeof (DicomInfo));
+  dicominfo = g_new0 (DicomInfo, 1);
 
   /* Parse the file */
   fread (buf, 1, 128, DICOM); /* skip past buffer */
@@ -641,6 +636,14 @@ save_image (const gchar  *filename,
 
   /* Open the output file. */
   DICOM = fopen (filename, "wb");
+
+  if (!DICOM)
+    {
+      g_message (_("Can't open '%s' for writing:\n%s"),
+                 filename, g_strerror (errno));
+      gimp_drawable_detach (drawable);
+      return FALSE;
+    }
 
   /* Print dicom header */
   {

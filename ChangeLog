@@ -1,3 +1,10 @@
+2003-11-11  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/dicom.c: removed doubly pasted code. Changed
+	error/progress messages to use the "standard" string many plug-ins
+	use. Added error message if opening for wriring fails. Minor
+	cleanups.
+
 2003-11-11  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/Makefile.am
