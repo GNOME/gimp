@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu/gnome-cvs\n"
 "POT-Creation-Date: 2000-05-09 20:27-0700\n"
-"PO-Revision-Date: 2000-05-17 11:41+01:00\n"
+"PO-Revision-Date: 2000-05-18 11:41+01:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish <sslug-locale@sslug.dk>\n"
 "MIME-Version: 1.0\n"
@@ -758,6 +758,10 @@ msgstr "Grundfarve"
 msgid "Base Radius (pixel)"
 msgstr "Grundradius (Pixler)"
 
+#: plug-ins/script-fu/scripts/rendermap.scm:0
+msgid "Behaviour"
+msgstr "Opførsel"
+
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 msgid "Bevel Height (Sharpness)"
 msgstr "Højde på skråkant (skarphed)"
@@ -982,6 +986,10 @@ msgstr "Beskrivelse"
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Detail Level"
 msgstr "Detaljerigdom"
+
+#: plug-ins/script-fu/scripts/rendermap.scm:0
+msgid "Detail in Middle"
+msgstr "Detaljer i midten"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
 msgid "Diameter"
@@ -1247,15 +1255,12 @@ msgstr "Glødradius"
 msgid "Gradient"
 msgstr "Farveforløb"
 
-#: plug-ins/script-fu/scripts/camo.scm:0
-msgid "Granularity (0-15)"
-msgstr "Kornethed (0-15)"
-
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Granularity (1 is Low)"
 msgstr "Kornethed (1 er lav)"
 
+#: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Granularity"
 msgstr "Kornethed"
@@ -1424,12 +1429,8 @@ msgid "Max. Blur Radius"
 msgstr "Max. slørings-radius"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid ""
-"Mosaic Tile Type\n"
-"Squares 0, Hex 1, Oct 2"
-msgstr ""
-"Type for mosaiksten\n"
-"Firkanter 0, sekskanter 1, ottekanter 2"
+msgid "Mosaic Tile Type"
+msgstr "Mosaik flisetype"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Mottle"
@@ -1794,6 +1795,10 @@ msgstr "Kuglefarve"
 msgid "Spread"
 msgstr "Spredning"
 
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Squares"
+msgstr "Firkanter"
+
 #: plug-ins/script-fu/scripts/coffee.scm:0
 msgid "Stains"
 msgstr "Pletter"
@@ -1822,10 +1827,6 @@ msgstr "Starter farveblanding"
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 msgid "Supersample"
 msgstr "Superprøve"
-
-#: plug-ins/script-fu/scripts/rendermap.scm:0
-msgid "TRUE = Detail in Middle, FALSE = Tile"
-msgstr "TRUE = Detaljer i midten, FALSE = kakler"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Text Color (Active)"
@@ -1912,6 +1913,10 @@ msgstr "Trådlængde"
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Threshold (Bigger 1<-->255 Smaller)"
 msgstr "Tærskel (større 1<-->255 mindre)"
+
+#: plug-ins/script-fu/scripts/rendermap.scm:0
+msgid "Tile"
+msgstr "Flise"
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
@@ -2008,6 +2013,3 @@ msgstr "Bredde"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "Arbejd på kopi"
-
-#~ msgid "Blur Type: TRUE=RLE, FALSE=IIR"
-#~ msgstr "Sløringstype: TRUE=RLE, FALSE=IIR"
