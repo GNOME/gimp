@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.15\n"
-"POT-Creation-Date: 2000-02-01 22:45+0100\n"
+"POT-Creation-Date: 2000-02-02 10:54+0100\n"
 "PO-Revision-Date: 2000-02-01 22:50+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -31,7 +31,7 @@ msgstr "Mehr Informationen finden sie auf http://www.gimp.org/"
 msgid "Rate:"
 msgstr "Geschwindigkeit:"
 
-#: app/airbrush.c:155
+#: app/airbrush.c:155 modules/colorsel_water.c:691
 msgid "Pressure:"
 msgstr "Druck:"
 
@@ -92,7 +92,7 @@ msgstr "Beenden"
 #: app/layers_dialog.c:3633 app/layers_dialog.c:3735 app/layers_dialog.c:3998
 #: app/levels.c:355 app/palette.c:1852 app/posterize.c:201
 #: app/preferences_dialog.c:1468 app/qmask.c:281 app/resize.c:193
-#: app/threshold.c:275
+#: app/threshold.c:275 modules/cdisplay_gamma.c:358
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -259,6 +259,7 @@ msgstr "Helligkeit-Kontrast funktioniert nicht bei indizierten Bildern."
 #: app/layers_dialog.c:3631 app/layers_dialog.c:3996 app/levels.c:351
 #: app/module_db.c:281 app/posterize.c:197 app/preferences_dialog.c:1464
 #: app/qmask.c:279 app/resize.c:191 app/threshold.c:271
+#: modules/cdisplay_gamma.c:351
 msgid "OK"
 msgstr "OK"
 
@@ -266,6 +267,7 @@ msgstr "OK"
 #: app/color_balance.c:273 app/curves.c:582 app/file_new_dialog.c:368
 #: app/hue_saturation.c:375 app/levels.c:353 app/posterize.c:199
 #: app/threshold.c:273 app/tools.c:991 app/transform_core.c:413
+#: modules/colorsel_water.c:634
 msgid "Reset"
 msgstr "Zurücksetzen"
 
@@ -344,6 +346,7 @@ msgid "Mode:"
 msgstr "Modus:"
 
 #: app/brush_select.c:468 app/palette.c:1191 app/palette.c:2302
+#: modules/colorsel_water.c:629
 msgid "New"
 msgstr "Neu"
 
@@ -1293,26 +1296,6 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nein"
 
-#: app/fileops_cmds.c:463
-#, c-format
-msgid "load handler \"%s\" does not take the standard load handler args"
-msgstr ""
-
-#: app/fileops_cmds.c:472
-#, c-format
-msgid "attempt to register non-existant load handler \"%s\""
-msgstr ""
-
-#: app/fileops_cmds.c:608
-#, c-format
-msgid "save handler \"%s\" does not take the standard save handler args"
-msgstr ""
-
-#: app/fileops_cmds.c:617
-#, c-format
-msgid "attempt to register non-existant save handler \"%s\""
-msgstr ""
-
 #: app/flip_tool.c:82
 msgid "Flip Tool"
 msgstr "Spiegel"
@@ -1448,16 +1431,16 @@ msgid "Unknown brush format version #%d in \"%s\"\n"
 msgstr "Unbekanntes Pinselformat Version #%d in \"%s\"\n"
 
 #: app/gimpbrushpipe.c:300
-msgid "pixmap brush pipe should have at least one brush"
+msgid "Image hoses should have at least one brush."
 msgstr ""
 
 #: app/gimpbrushpipe.c:396
-msgid "failed to load one of the pixmap brushes in the pipe"
+msgid "Failed to load one of the brushes in the image hose."
 msgstr ""
 
 #: app/gimpbrushpipe.c:456
 #, fuzzy
-msgid "failed to load pixmap brush"
+msgid "Failed to load pixmap brush."
 msgstr "Konnte keinen Pfad aus %s lesen"
 
 #: app/gimpdrawable.c:168
@@ -4701,10 +4684,6 @@ msgstr "Erweiterungen"
 msgid "unable to locate plug-in: \"%s\""
 msgstr "Kann Plugin \"%s\" nicht finden"
 
-#: app/plug_in_cmds.c:249
-msgid "Internal error counting plugins"
-msgstr "Interner Fehler beim Zählen der Plugins"
-
 #: app/posterize.c:147
 msgid "Posterize does not operate on indexed drawables."
 msgstr "Posterisieren funktioniert nicht mit indizierten Bildern."
@@ -6287,32 +6266,44 @@ msgstr "Min. Höhe:"
 msgid "Max Height:"
 msgstr "Max. Höhe:"
 
+#: modules/cdisplay_gamma.c:91
+msgid "Gamma color display filter"
+msgstr "Gamma Anzeigenfarbfilter"
+
+#: modules/cdisplay_gamma.c:326
+msgid "Gamma"
+msgstr "Gamma"
+
+#: modules/cdisplay_gamma.c:336
+msgid "Gamma:"
+msgstr "Gamma:"
+
+#: modules/colorsel_gtk.c:48
+msgid "GTK color selector as a pluggable color selector"
+msgstr "Standard GTK Farbauswahl als ladbares Modul"
+
+#: modules/colorsel_triangle.c:78
+msgid "Painter-style color selector as a pluggable color selector"
+msgstr "Farbauswahl im Stil von Painter als ladbares Modul"
+
+#: modules/colorsel_triangle.c:147 modules/colorsel_triangle.c:149
+msgid "Triangle"
+msgstr "Dreieck"
+
+#: modules/colorsel_water.c:76
+msgid "Watercolor style color selector as a pluggable module"
+msgstr "Farbauswahl im Stil von Wasserfarben als ladbares Modul"
+
+#: modules/colorsel_water.c:97 modules/colorsel_water.c:100
+msgid "Watercolor"
+msgstr "Wasserfarbe"
+
+#: modules/colorsel_water.c:640
+msgid "Color History"
+msgstr "Farbliste"
+
+#~ msgid "Internal error counting plugins"
+#~ msgstr "Interner Fehler beim Zählen der Plugins"
+
 #~ msgid "Rename path"
 #~ msgstr "Pfad umbenennen"
-
-#~ msgid "Gamma color display filter"
-#~ msgstr "Gamma Anzeigenfarbfilter"
-
-#~ msgid "Gamma"
-#~ msgstr "Gamma"
-
-#~ msgid "Gamma:"
-#~ msgstr "Gamma:"
-
-#~ msgid "GTK color selector as a pluggable color selector"
-#~ msgstr "Standard GTK Farbauswahl als ladbares Modul"
-
-#~ msgid "Painter-style color selector as a pluggable color selector"
-#~ msgstr "Farbauswahl im Stil von Painter als ladbares Modul"
-
-#~ msgid "Triangle"
-#~ msgstr "Dreieck"
-
-#~ msgid "Watercolor style color selector as a pluggable module"
-#~ msgstr "Farbauswahl im Stil von Wasserfarben als ladbares Modul"
-
-#~ msgid "Watercolor"
-#~ msgstr "Wasserfarbe"
-
-#~ msgid "Color History"
-#~ msgstr "Farbliste"

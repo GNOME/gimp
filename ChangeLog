@@ -1,3 +1,10 @@
+Wed Feb  2 11:02:44 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* po/POTFILES.in: accidentally removed the files in the modules dir
+	yesterday. Sorry about that, here they are again.
+
+	* app/gimpbrushpipe.c: no, we don't
+
 Wed Feb  2 00:35:02 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/gfli.c: added gettext support

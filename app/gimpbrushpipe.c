@@ -297,7 +297,7 @@ gimp_brush_pipe_load (char *filename)
   num_of_brushes = strtol(buf, &paramstring, 10);
   if (num_of_brushes < 1)
     {
-      g_message (_("Image hoses should have at least one brush."));
+      g_message (_("Brush pipes should have at least one brush."));
       fclose (fp);
       gimp_object_destroy (pipe);
       return NULL;
@@ -393,7 +393,8 @@ gimp_brush_pipe_load (char *filename)
 				  fp, filename)
 	  || !pattern_load (pattern, fp, filename))
        {
-	  g_message (_("Failed to load one of the brushes in the image hose."));
+	  g_message (_("Failed to load one of the\n"
+                       "brushes in the brush pipe."));
 	  fclose (fp);
 	  pattern_free (pattern);
 	  gimp_object_destroy (pipe);
