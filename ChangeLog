@@ -1,3 +1,7 @@
+2003-03-27  Jakub Steiner <jimmac@ximian.com>
+
+	* data/images/gimp_splash.png: lighten up a bit
+
 2003-03-27  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimptext.[ch]: added hinting and antialias properties.
