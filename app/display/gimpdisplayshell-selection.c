@@ -624,11 +624,14 @@ selection_start_marching (gpointer data)
                                select->segs_layer, select->num_segs_layer);
 
   /*  Draw the ants  */
-  selection_draw (select);
+  if (! select->hidden)
+    {
+      selection_draw (select);
 
-  if (select->segs_out)
-    gimp_canvas_draw_segments (canvas, GIMP_CANVAS_STYLE_SELECTION_OUT,
-                               select->segs_out, select->num_segs_out);
+      if (select->segs_out)
+        gimp_canvas_draw_segments (canvas, GIMP_CANVAS_STYLE_SELECTION_OUT,
+                                   select->segs_out, select->num_segs_out);
+    }
 
   /*  Reset the timer  */
   select->timeout_id = g_timeout_add (config->marching_ants_speed,

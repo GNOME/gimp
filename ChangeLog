@@ -1,5 +1,10 @@
 2004-01-26  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-selection.c: don't draw the
+	outbounds selection when the selection is hidden (bug #132595).
+
+2004-01-26  Sven Neumann  <sven@gimp.org>
+
 	* app/text/gimptext-xlfd.c (gimp_text_font_size_from_xlfd):
 	account for the fact that XLFD stores point sizes in decipoints.
 
