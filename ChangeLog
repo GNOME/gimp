@@ -1,3 +1,9 @@
+1999-09-15    <xach@mint.net>
+
+	* plug-ins/script-fu/scripts/truchet.scm,coolmetal-logo.scm:
+	Changed gimp-flip parameters to match new OrientationType enum
+	values. Fixes bug #2156.
+
 Wed Sep 15 12:43:39 MEST 1999 Simon Budig <Simon.Budig@unix-ag.org>
 
 	* app/tools.c
