@@ -241,13 +241,13 @@ gimp_image_new_create_image (Gimp               *gimp,
     case FOREGROUND_FILL:
     case BACKGROUND_FILL:
     case WHITE_FILL:
-      type = (values->type == GIMP_RGB) ? RGB_GIMAGE : GRAY_GIMAGE;
+      type = (values->type == GIMP_RGB) ? GIMP_RGB_IMAGE : GIMP_GRAY_IMAGE;
       break;
     case TRANSPARENT_FILL:
-      type = (values->type == GIMP_RGB) ? RGBA_GIMAGE : GRAYA_GIMAGE;
+      type = (values->type == GIMP_RGB) ? GIMP_RGBA_IMAGE : GIMP_GRAYA_IMAGE;
       break;
     default:
-      type = RGB_GIMAGE;
+      type = GIMP_RGB_IMAGE;
       break;
     }
 

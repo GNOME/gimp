@@ -168,7 +168,7 @@ gimp_channel_new (GimpImage     *gimage,
   channel = g_object_new (GIMP_TYPE_CHANNEL, NULL);
 
   gimp_drawable_configure (GIMP_DRAWABLE (channel),
-			   gimage, width, height, GRAY_GIMAGE, name);
+			   gimage, width, height, GIMP_GRAY_IMAGE, name);
 
   /*  set the channel color and opacity  */
   channel->color = *color;

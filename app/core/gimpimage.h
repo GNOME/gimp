@@ -25,9 +25,9 @@
 
 #define COLORMAP_SIZE 768
 
-#define GIMP_IMAGE_TYPE_HAS_ALPHA(t) ((t) == RGBA_GIMAGE  || \
-				      (t) == GRAYA_GIMAGE || \
-				      (t) == INDEXEDA_GIMAGE)
+#define GIMP_IMAGE_TYPE_HAS_ALPHA(t) ((t) == GIMP_RGBA_IMAGE  || \
+				      (t) == GIMP_GRAYA_IMAGE || \
+				      (t) == GIMP_INDEXEDA_IMAGE)
 
 
 struct _GimpGuide

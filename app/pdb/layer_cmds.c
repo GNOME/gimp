@@ -29,6 +29,7 @@
 #include "procedural_db.h"
 
 #include "base/base-enums.h"
+#include "core/core-enums.h"
 #include "core/core-types.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
@@ -135,7 +136,7 @@ layer_new_invoker (Gimp     *gimp,
     success = FALSE;
 
   type = args[3].value.pdb_int;
-  if (type < RGB_GIMAGE || type > INDEXEDA_GIMAGE)
+  if (type < GIMP_RGB_IMAGE || type > GIMP_INDEXEDA_IMAGE)
     success = FALSE;
 
   name = (gchar *) args[4].value.pdb_pointer;
@@ -185,7 +186,7 @@ static ProcArg layer_new_inargs[] =
   {
     GIMP_PDB_INT32,
     "type",
-    "The layer type: { RGB_IMAGE (0), RGBA_IMAGE (1), GRAY_IMAGE (2), GRAYA_IMAGE (3), INDEXED_IMAGE (4), INDEXEDA_IMAGE (5) }"
+    "The layer type: { GIMP_RGB_IMAGE (0), GIMP_RGBA_IMAGE (1), GIMP_GRAY_IMAGE (2), GIMP_GRAYA_IMAGE (3), GIMP_INDEXED_IMAGE (4), GIMP_INDEXEDA_IMAGE (5) }"
   },
   {
     GIMP_PDB_STRING,

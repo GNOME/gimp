@@ -114,17 +114,17 @@ static void     gimp_image_real_colormap_changed (GimpImage      *gimage,
 
 static gint valid_combinations[][MAX_CHANNELS + 1] =
 {
-  /* RGB GIMAGE */
+  /* GIMP_RGB_IMAGE */
   { -1, -1, -1, COMBINE_INTEN_INTEN, COMBINE_INTEN_INTEN_A },
-  /* RGBA GIMAGE */
+  /* GIMP_RGBA_IMAGE */
   { -1, -1, -1, COMBINE_INTEN_A_INTEN, COMBINE_INTEN_A_INTEN_A },
-  /* GRAY GIMAGE */
+  /* GIMP_GRAY_IMAGE */
   { -1, COMBINE_INTEN_INTEN, COMBINE_INTEN_INTEN_A, -1, -1 },
-  /* GRAYA GIMAGE */
+  /* GIMP_GRAYA_IMAGE */
   { -1, COMBINE_INTEN_A_INTEN, COMBINE_INTEN_A_INTEN_A, -1, -1 },
-  /* INDEXED GIMAGE */
+  /* GIMP_INDEXED_IMAGE */
   { -1, COMBINE_INDEXED_INDEXED, COMBINE_INDEXED_INDEXED_A, -1, -1 },
-  /* INDEXEDA GIMAGE */
+  /* GIMP_INDEXEDA_IMAGE */
   { -1, -1, COMBINE_INDEXED_A_INDEXED_A, -1, -1 },
 };
 
@@ -408,7 +408,7 @@ gimp_image_init (GimpImage *gimage)
   gimage->shadow                = NULL;
 
   gimage->construct_flag        = FALSE;
-  gimage->proj_type             = RGBA_GIMAGE;
+  gimage->proj_type             = GIMP_RGBA_IMAGE;
   gimage->projection            = NULL;
 
   gimage->guides                = NULL;
@@ -765,7 +765,7 @@ gimp_image_get_new_preview (GimpViewable *viewable,
        */
       switch (gimp_drawable_type (GIMP_DRAWABLE (layer)))
 	{
-	case RGB_GIMAGE: case GRAY_GIMAGE: case INDEXED_GIMAGE:
+	case GIMP_RGB_IMAGE: case GIMP_GRAY_IMAGE: case GIMP_INDEXED_IMAGE:
 	  if (! construct_flag)
 	    initial_region (&src2PR, &src1PR, 
 			    mask, NULL, layer->opacity,
@@ -776,7 +776,7 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 			     layer->mode, visible, COMBINE_INTEN_A_INTEN);
 	  break;
 
-	case RGBA_GIMAGE: case GRAYA_GIMAGE: case INDEXEDA_GIMAGE:
+	case GIMP_RGBA_IMAGE: case GIMP_GRAYA_IMAGE: case GIMP_INDEXEDA_IMAGE:
 	  if (! construct_flag)
 	    initial_region (&src2PR, &src1PR, 
 			    mask, NULL, layer->opacity,
@@ -888,14 +888,14 @@ gimp_image_base_type_with_alpha (const GimpImage *gimage)
   switch (gimage->base_type)
     {
     case GIMP_RGB:
-      return RGBA_GIMAGE;
+      return GIMP_RGBA_IMAGE;
     case GIMP_GRAY:
-      return GRAYA_GIMAGE;
+      return GIMP_GRAYA_IMAGE;
     case GIMP_INDEXED:
-      return INDEXEDA_GIMAGE;
+      return GIMP_INDEXEDA_IMAGE;
     }
 
-  return RGB_GIMAGE;
+  return GIMP_RGB_IMAGE;
 }
 
 CombinationMode
@@ -1531,13 +1531,13 @@ gimp_image_get_color (const GimpImage *gimage,
 
   switch (d_type)
     {
-    case RGB_GIMAGE: case RGBA_GIMAGE:
+    case GIMP_RGB_IMAGE: case GIMP_RGBA_IMAGE:
       map_to_color (0, NULL, src, rgb);
       break;
-    case GRAY_GIMAGE: case GRAYA_GIMAGE:
+    case GIMP_GRAY_IMAGE: case GIMP_GRAYA_IMAGE:
       map_to_color (1, NULL, src, rgb);
       break;
-    case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
+    case GIMP_INDEXED_IMAGE: case GIMP_INDEXEDA_IMAGE:
       map_to_color (2, gimage->cmap, src, rgb);
       break;
     }
@@ -1562,19 +1562,19 @@ gimp_image_transform_color (const GimpImage    *gimage,
     case GIMP_RGB:
       switch (d_type)
 	{
-	case RGB_GIMAGE: case RGBA_GIMAGE:
+	case GIMP_RGB_IMAGE: case GIMP_RGBA_IMAGE:
 	  /*  Straight copy  */
 	  *dest++ = *src++;
 	  *dest++ = *src++;
 	  *dest++ = *src++;
 	  break;
-	case GRAY_GIMAGE: case GRAYA_GIMAGE:
+	case GIMP_GRAY_IMAGE: case GIMP_GRAYA_IMAGE:
 	  /*  NTSC conversion  */
 	  *dest = INTENSITY (src[RED_PIX],
 			     src[GREEN_PIX],
 			     src[BLUE_PIX]);
 	  break;
-	case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
+	case GIMP_INDEXED_IMAGE: case GIMP_INDEXEDA_IMAGE:
 	  /*  Least squares method  */
 	  *dest = gimp_image_color_hash_rgb_to_indexed (gimage,
 							src[RED_PIX],
@@ -1587,17 +1587,17 @@ gimp_image_transform_color (const GimpImage    *gimage,
     case GIMP_GRAY:
       switch (d_type)
 	{
-	case RGB_GIMAGE: case RGBA_GIMAGE:
+	case GIMP_RGB_IMAGE: case GIMP_RGBA_IMAGE:
 	  /*  Gray to RG&B */
 	  *dest++ = *src;
 	  *dest++ = *src;
 	  *dest++ = *src;
 	  break;
-	case GRAY_GIMAGE: case GRAYA_GIMAGE:
+	case GIMP_GRAY_IMAGE: case GIMP_GRAYA_IMAGE:
 	  /*  Straight copy  */
 	  *dest = *src;
 	  break;
-	case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
+	case GIMP_INDEXED_IMAGE: case GIMP_INDEXEDA_IMAGE:
 	  /*  Least squares method  */
 	  *dest = gimp_image_color_hash_rgb_to_indexed (gimage,
 							src[GRAY_PIX],

@@ -36,16 +36,6 @@
 
 typedef enum
 {
-  RGB_GIMAGE,		/*< nick=RGB_IMAGE >*/
-  RGBA_GIMAGE,		/*< nick=RGBA_IMAGE >*/
-  GRAY_GIMAGE,		/*< nick=GRAY_IMAGE >*/
-  GRAYA_GIMAGE,		/*< nick=GRAYA_IMAGE >*/
-  INDEXED_GIMAGE,	/*< nick=INDEXED_IMAGE >*/
-  INDEXEDA_GIMAGE	/*< nick=INDEXEDA_IMAGE >*/
-} GimpImageType;
-
-typedef enum
-{
   RED_CHANNEL,
   GREEN_CHANNEL,
   BLUE_CHANNEL,
@@ -92,15 +82,6 @@ typedef enum /*< chop=CHANNEL_OP_ >*/
   CHANNEL_OP_INTERSECT
 } ChannelOps;
 
-typedef enum /*< pdb-skip >*/
-{
-  GIMP_SELECTION_OFF,
-  GIMP_SELECTION_LAYER_OFF,
-  GIMP_SELECTION_ON,
-  GIMP_SELECTION_PAUSE,
-  GIMP_SELECTION_RESUME
-} GimpSelectionControl;
-
 typedef enum
 {
   FOREGROUND_FILL,	/*< nick=FG_IMAGE_FILL >*/
@@ -109,13 +90,6 @@ typedef enum
   TRANSPARENT_FILL,	/*< nick=TRANS_IMAGE_FILL >*/
   NO_FILL		/*< nick=NO_IMAGE_FILL >*/
 } GimpFillType;
-
-typedef enum
-{
-  GIMP_SHADOWS,
-  GIMP_MIDTONES,
-  GIMP_HIGHLIGHTS
-} GimpTransferMode;
 
 typedef enum
 {
@@ -202,12 +176,6 @@ typedef enum
   REPEAT_SAWTOOTH,
   REPEAT_TRIANGULAR
 } RepeatMode;
-
-typedef enum /*< pdb-skip >*/
-{
-  GIMP_TRANSFORM_FORWARD,
-  GIMP_TRANSFORM_BACKWARD
-} GimpTransformDirection;
 
 
 /*  base objects  */

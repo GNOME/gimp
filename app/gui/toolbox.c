@@ -479,11 +479,11 @@ toolbox_drop_drawable (GtkWidget    *widget,
 
   switch (gimp_drawable_type (drawable))
     {
-    case RGB_GIMAGE: case RGBA_GIMAGE:
+    case GIMP_RGB_IMAGE: case GIMP_RGBA_IMAGE:
       type = GIMP_RGB; break;
-    case GRAY_GIMAGE: case GRAYA_GIMAGE:
+    case GIMP_GRAY_IMAGE: case GIMP_GRAYA_IMAGE:
       type = GIMP_GRAY; break;
-    case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
+    case GIMP_INDEXED_IMAGE: case GIMP_INDEXEDA_IMAGE:
       type = GIMP_INDEXED; break;
     default:
       type = GIMP_RGB; break;

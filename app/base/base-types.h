@@ -39,37 +39,7 @@
 #define ALPHA_I_PIX      1
 
 
-/*  enums  */
-
-/* Types of convolutions  */
-typedef enum 
-{
-  GIMP_NORMAL_CONVOL,      /*  Negative numbers truncated  */
-  GIMP_ABSOLUTE_CONVOL,    /*  Absolute value              */
-  GIMP_NEGATIVE_CONVOL     /*  add 127 to values           */
-} GimpConvolutionType;
-
-typedef enum
-{
-  GIMP_VALUE_LUT,
-  GIMP_RED_LUT,
-  GIMP_GREEN_LUT,
-  GIMP_BLUE_LUT,
-  GIMP_ALPHA_LUT,
-  GIMP_GRAY_LUT = 0  /*< skip >*/
-} GimpChannelLutType;
-
-typedef enum /*< pdb-skip >*/
-{
-  GIMP_HISTOGRAM_VALUE = 0,
-  GIMP_HISTOGRAM_RED   = 1,
-  GIMP_HISTOGRAM_GREEN = 2,
-  GIMP_HISTOGRAM_BLUE  = 3,
-  GIMP_HISTOGRAM_ALPHA = 4
-} GimpHistogramChannel;
-
-
-/*  types  */
+/* types */
 
 typedef struct _BoundSeg            BoundSeg;
 

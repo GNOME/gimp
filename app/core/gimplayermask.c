@@ -139,7 +139,7 @@ gimp_layer_mask_new (GimpImage     *gimage,
   layer_mask = g_object_new (GIMP_TYPE_LAYER_MASK, NULL);
 
   gimp_drawable_configure (GIMP_DRAWABLE (layer_mask), 
-			   gimage, width, height, GRAY_GIMAGE, name);
+			   gimage, width, height, GIMP_GRAY_IMAGE, name);
 
   /*  set the layer_mask color and opacity  */
   GIMP_CHANNEL (layer_mask)->color          = *color;

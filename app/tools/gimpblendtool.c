@@ -240,7 +240,7 @@ gimp_blend_tool_button_press (GimpTool        *tool,
 
   switch (gimp_drawable_type (gimp_image_active_drawable (gdisp->gimage)))
     {
-    case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
+    case GIMP_INDEXED_IMAGE: case GIMP_INDEXEDA_IMAGE:
       g_message (_("Blend: Invalid for indexed images."));
       return;
 
@@ -466,8 +466,8 @@ gimp_blend_tool_cursor_update (GimpTool        *tool,
 
   switch (gimp_drawable_type (gimp_image_active_drawable (gdisp->gimage)))
     {
-    case INDEXED_GIMAGE:
-    case INDEXEDA_GIMAGE:
+    case GIMP_INDEXED_IMAGE:
+    case GIMP_INDEXEDA_IMAGE:
       gimp_display_shell_install_tool_cursor (shell,
                                               GIMP_BAD_CURSOR,
                                               GIMP_BLEND_TOOL_CURSOR,

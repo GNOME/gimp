@@ -224,7 +224,7 @@ gimp_image_merge_layers (GimpImage *gimage,
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   layer        = NULL;
-  type         = RGBA_GIMAGE;
+  type         = GIMP_RGBA_IMAGE;
   x1 = y1      = 0;
   x2 = y2      = 0;
   bottom_layer = NULL;
@@ -303,13 +303,13 @@ gimp_image_merge_layers (GimpImage *gimage,
   name = g_strdup (gimp_object_get_name (GIMP_OBJECT (layer)));
 
   if (merge_type == FLATTEN_IMAGE ||
-      gimp_drawable_type (GIMP_DRAWABLE (layer)) == INDEXED_GIMAGE)
+      gimp_drawable_type (GIMP_DRAWABLE (layer)) == GIMP_INDEXED_IMAGE)
     {
       switch (gimp_image_base_type (gimage))
 	{
-	case GIMP_RGB: type = RGB_GIMAGE; break;
-	case GIMP_GRAY: type = GRAY_GIMAGE; break;
-	case GIMP_INDEXED: type = INDEXED_GIMAGE; break;
+	case GIMP_RGB: type = GIMP_RGB_IMAGE; break;
+	case GIMP_GRAY: type = GIMP_GRAY_IMAGE; break;
+	case GIMP_INDEXED: type = GIMP_INDEXED_IMAGE; break;
 	}
 
       merge_layer = gimp_layer_new (gimage, (x2 - x1), (y2 - y1),

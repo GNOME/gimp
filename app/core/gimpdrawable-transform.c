@@ -132,15 +132,15 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
 
   switch (gimp_drawable_type (drawable))
     {
-    case RGB_GIMAGE: case RGBA_GIMAGE:
+    case GIMP_RGB_IMAGE: case GIMP_RGBA_IMAGE:
       bg_col[ALPHA_PIX] = TRANSPARENT_OPACITY;
       alpha = ALPHA_PIX;
       break;
-    case GRAY_GIMAGE: case GRAYA_GIMAGE:
+    case GIMP_GRAY_IMAGE: case GIMP_GRAYA_IMAGE:
       bg_col[ALPHA_G_PIX] = TRANSPARENT_OPACITY;
       alpha = ALPHA_G_PIX;
       break;
-    case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
+    case GIMP_INDEXED_IMAGE: case GIMP_INDEXEDA_IMAGE:
       bg_col[ALPHA_I_PIX] = TRANSPARENT_OPACITY;
       alpha = ALPHA_I_PIX;
       /*  If the gimage is indexed color, ignore smoothing value  */

@@ -258,7 +258,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   /* Currently, only RGBA and GRAYA projection types are used - the rest
    * are in case of future need.  -- austin, 28th Nov 1998.
    */
-  if (image_type != RGBA_GIMAGE && image_type != GRAYA_GIMAGE)
+  if (image_type != GIMP_RGBA_IMAGE && image_type != GIMP_GRAYA_IMAGE)
     g_warning ("using untested projection type %d", image_type);
 
   (* render_funcs[image_type]) (&info);
@@ -794,9 +794,9 @@ render_image_init_info (RenderInfo       *info,
 
   switch (gimp_image_projection_type (shell->gdisp->gimage))
     {
-    case RGBA_GIMAGE:
-    case GRAYA_GIMAGE:
-    case INDEXEDA_GIMAGE:
+    case GIMP_RGBA_IMAGE:
+    case GIMP_GRAYA_IMAGE:
+    case GIMP_INDEXEDA_IMAGE:
       info->alpha =
 	render_image_init_alpha (gimp_image_projection_opacity (shell->gdisp->gimage));
       break;

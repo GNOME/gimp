@@ -281,7 +281,7 @@ gimp_palette_import_from_image (GimpImage   *gimage,
   bytes     = gimp_image_projection_bytes (gimage);
   d_type    = gimp_image_projection_type (gimage);
   has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (d_type);
-  indexed   = d_type == INDEXEDA_GIMAGE || d_type == INDEXED_GIMAGE;
+  indexed   = d_type == GIMP_INDEXEDA_IMAGE || d_type == GIMP_INDEXED_IMAGE;
   width     = gimage->width;
   height    = gimage->height;
 

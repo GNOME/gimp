@@ -107,11 +107,11 @@ gimp_image_projection_allocate (GimpImage *gimage)
     case GIMP_RGB:
     case GIMP_INDEXED:
       gimage->proj_bytes = 4;
-      gimage->proj_type = RGBA_GIMAGE;
+      gimage->proj_type = GIMP_RGBA_IMAGE;
       break;
     case GIMP_GRAY:
       gimage->proj_bytes = 2;
-      gimage->proj_type = GRAYA_GIMAGE;
+      gimage->proj_type = GIMP_GRAYA_IMAGE;
       break;
     default:
       g_assert_not_reached ();
@@ -439,21 +439,21 @@ gimp_image_construct_layers (GimpImage *gimage,
 	   */
 	  switch (gimp_drawable_type (GIMP_DRAWABLE (layer)))
 	    {
-	    case RGB_GIMAGE: case GRAY_GIMAGE:
+	    case GIMP_RGB_IMAGE: case GIMP_GRAY_IMAGE:
 	      /* no mask possible */
 	      project_intensity (gimage, layer, &src2PR, &src1PR, mask);
 	      break;
 
-	    case RGBA_GIMAGE: case GRAYA_GIMAGE:
+	    case GIMP_RGBA_IMAGE: case GIMP_GRAYA_IMAGE:
 	      project_intensity_alpha (gimage, layer, &src2PR, &src1PR, mask);
 	      break;
 
-	    case INDEXED_GIMAGE:
+	    case GIMP_INDEXED_IMAGE:
 	      /* no mask possible */
 	      project_indexed (gimage, layer, &src2PR, &src1PR);
 	      break;
 
-	    case INDEXEDA_GIMAGE:
+	    case GIMP_INDEXEDA_IMAGE:
 	      project_indexed_alpha (gimage, layer, &src2PR, &src1PR, mask);
 	      break;
 

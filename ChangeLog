@@ -1,5 +1,46 @@
 2001-12-11  Sven Neumann  <sven@gimp.org>
 
+	* app/base/base-enums.h
+	* app/base/base-types.h: moved all remaining enums to base-enums.h
+	
+	* app/core/core-enums.h
+	* app/core/core-types.h: moved GimpImageType to core-enums.h and
+	changed the values from RGB_GIMAGE to GIMP_RGB_IMAGE and the like.
+	
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable-preview.c
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpimage-contiguous-region.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage-mask.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-new.c
+	* app/core/gimpimage-projection.c
+	* app/core/gimpimage.[ch]
+	* app/core/gimplayer.c
+	* app/core/gimplayermask.c
+	* app/core/gimppalette-import.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/display/gimpdisplayshell-render.c
+	* app/gui/file-save-dialog.c
+	* app/gui/toolbox.c
+	* app/plug-in/plug-in.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpdodgeburntool.c: changed accordingly.
+
+	* tools/pdbgen/Makefile.am: no need to parse app/base/base-types.h
+	any longer.
+
+	* app/pdb/color_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/paint_tools_cmds.c
+	* tools/pdbgen/enums.pl: regenerated.
+
+2001-12-11  Sven Neumann  <sven@gimp.org>
+
 	* app/core/core-types.h: removed GimpImageBaseType enum ...
 
 	* app/core/core-enums.h: and added it here with proper namespace

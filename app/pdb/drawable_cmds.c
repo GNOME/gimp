@@ -32,6 +32,7 @@
 #include "base/temp-buf.h"
 #include "base/tile-manager.h"
 #include "base/tile.h"
+#include "core/core-enums.h"
 #include "core/core-types.h"
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
@@ -450,7 +451,7 @@ static ProcArg drawable_type_outargs[] =
   {
     GIMP_PDB_INT32,
     "type",
-    "The drawable's type: { RGB_IMAGE (0), RGBA_IMAGE (1), GRAY_IMAGE (2), GRAYA_IMAGE (3), INDEXED_IMAGE (4), INDEXEDA_IMAGE (5) }"
+    "The drawable's type: { GIMP_RGB_IMAGE (0), GIMP_RGBA_IMAGE (1), GIMP_GRAY_IMAGE (2), GIMP_GRAYA_IMAGE (3), GIMP_INDEXED_IMAGE (4), GIMP_INDEXEDA_IMAGE (5) }"
   }
 };
 
@@ -558,7 +559,7 @@ static ProcArg drawable_type_with_alpha_outargs[] =
   {
     GIMP_PDB_INT32,
     "type_with_alpha",
-    "The drawable's type with alpha: { RGBA_IMAGE (1), GRAYA_IMAGE (3), INDEXEDA_IMAGE (5) }"
+    "The drawable's type with alpha: { GIMP_RGB_IMAGE (0), GIMP_RGBA_IMAGE (1), GIMP_GRAY_IMAGE (2), GIMP_GRAYA_IMAGE (3), GIMP_INDEXED_IMAGE (4), GIMP_INDEXEDA_IMAGE (5) }"
   }
 };
 

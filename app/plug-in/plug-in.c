@@ -1400,22 +1400,22 @@ plug_in_set_menu_sensitivity (GimpImageType type)
 	{
 	  switch (type)
 	    {
-	    case RGB_GIMAGE:
+	    case GIMP_RGB_IMAGE:
 	      sensitive = proc_def->image_types_val & PLUG_IN_RGB_IMAGE;
 	      break;
-	    case RGBA_GIMAGE:
+	    case GIMP_RGBA_IMAGE:
 	      sensitive = proc_def->image_types_val & PLUG_IN_RGBA_IMAGE;
 	      break;
-	    case GRAY_GIMAGE:
+	    case GIMP_GRAY_IMAGE:
 	      sensitive = proc_def->image_types_val & PLUG_IN_GRAY_IMAGE;
 	      break;
-	    case GRAYA_GIMAGE:
+	    case GIMP_GRAYA_IMAGE:
 	      sensitive = proc_def->image_types_val & PLUG_IN_GRAYA_IMAGE;
 	      break;
-	    case INDEXED_GIMAGE:
+	    case GIMP_INDEXED_IMAGE:
 	      sensitive = proc_def->image_types_val & PLUG_IN_INDEXED_IMAGE;
 	      break;
-	    case INDEXEDA_GIMAGE:
+	    case GIMP_INDEXEDA_IMAGE:
 	      sensitive = proc_def->image_types_val & PLUG_IN_INDEXEDA_IMAGE;
 	      break;
 	    default:

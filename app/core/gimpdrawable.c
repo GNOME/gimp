@@ -348,17 +348,17 @@ gimp_drawable_configure (GimpDrawable  *drawable,
 
   switch (type)
     {
-    case RGB_GIMAGE:
+    case GIMP_RGB_IMAGE:
       bpp = 3; alpha = FALSE; break;
-    case GRAY_GIMAGE:
+    case GIMP_GRAY_IMAGE:
       bpp = 1; alpha = FALSE; break;
-    case RGBA_GIMAGE:
+    case GIMP_RGBA_IMAGE:
       bpp = 4; alpha = TRUE; break;
-    case GRAYA_GIMAGE:
+    case GIMP_GRAYA_IMAGE:
       bpp = 2; alpha = TRUE; break;
-    case INDEXED_GIMAGE:
+    case GIMP_INDEXED_IMAGE:
       bpp = 1; alpha = FALSE; break;
-    case INDEXEDA_GIMAGE:
+    case GIMP_INDEXEDA_IMAGE:
       bpp = 2; alpha = TRUE; break;
     default:
       g_warning ("%s: Layer type %d not supported.", 
@@ -522,34 +522,34 @@ gimp_drawable_fill (GimpDrawable  *drawable,
 
   switch (gimp_drawable_type (drawable))
     {
-    case RGB_GIMAGE: case RGBA_GIMAGE:
+    case GIMP_RGB_IMAGE: case GIMP_RGBA_IMAGE:
       gimp_rgba_get_uchar (color,
 			   &c[RED_PIX],
 			   &c[GREEN_PIX],
 			   &c[BLUE_PIX],
 			   &c[ALPHA_PIX]);
-      if (gimp_drawable_type (drawable) != RGBA_GIMAGE)
+      if (gimp_drawable_type (drawable) != GIMP_RGBA_IMAGE)
 	c[ALPHA_PIX] = 255;
       break;
 
-    case GRAY_GIMAGE: case GRAYA_GIMAGE:
+    case GIMP_GRAY_IMAGE: case GIMP_GRAYA_IMAGE:
       gimp_rgba_get_uchar (color,
 			   &c[GRAY_PIX],
 			   NULL,
 			   NULL,
 			   &c[ALPHA_G_PIX]);
-      if (gimp_drawable_type (drawable) != GRAYA_GIMAGE)
+      if (gimp_drawable_type (drawable) != GIMP_GRAYA_IMAGE)
 	c[ALPHA_G_PIX] = 255;
       break;
 
-    case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
+    case GIMP_INDEXED_IMAGE: case GIMP_INDEXEDA_IMAGE:
       gimp_rgb_get_uchar (color,
 			  &c[RED_PIX],
 			  &c[GREEN_PIX],
 			  &c[BLUE_PIX]);
       gimp_image_transform_color (gimage, drawable, c, &i, GIMP_RGB);
       c[INDEXED_PIX] = i;
-      if (gimp_drawable_type (drawable) == INDEXEDA_GIMAGE)
+      if (gimp_drawable_type (drawable) == GIMP_INDEXEDA_IMAGE)
 	gimp_rgba_get_uchar (color,
 			     NULL,
 			     NULL,
@@ -697,14 +697,14 @@ gimp_drawable_type_with_alpha (const GimpDrawable *drawable)
     {
       switch (type)
 	{
-	case RGB_GIMAGE:
-	  return RGBA_GIMAGE;
+	case GIMP_RGB_IMAGE:
+	  return GIMP_RGBA_IMAGE;
 	  break;
-	case GRAY_GIMAGE:
-	  return GRAYA_GIMAGE;
+	case GIMP_GRAY_IMAGE:
+	  return GIMP_GRAYA_IMAGE;
 	  break;
-	case INDEXED_GIMAGE:
-	  return INDEXEDA_GIMAGE;
+	case GIMP_INDEXED_IMAGE:
+	  return GIMP_INDEXEDA_IMAGE;
 	  break;
 	default:
 	  g_assert_not_reached ();
@@ -908,8 +908,8 @@ gimp_drawable_is_rgb (const GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
-  if (gimp_drawable_type (drawable) == RGBA_GIMAGE ||
-      gimp_drawable_type (drawable) == RGB_GIMAGE)
+  if (gimp_drawable_type (drawable) == GIMP_RGBA_IMAGE ||
+      gimp_drawable_type (drawable) == GIMP_RGB_IMAGE)
     return TRUE;
   else
     return FALSE;
@@ -920,8 +920,8 @@ gimp_drawable_is_gray (const GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
-  if (gimp_drawable_type (drawable) == GRAYA_GIMAGE ||
-      gimp_drawable_type (drawable) == GRAY_GIMAGE)
+  if (gimp_drawable_type (drawable) == GIMP_GRAYA_IMAGE ||
+      gimp_drawable_type (drawable) == GIMP_GRAY_IMAGE)
     return TRUE;
   else
     return FALSE;
@@ -932,8 +932,8 @@ gimp_drawable_is_indexed (const GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
-  if (gimp_drawable_type (drawable) == INDEXEDA_GIMAGE ||
-      gimp_drawable_type (drawable) == INDEXED_GIMAGE)
+  if (gimp_drawable_type (drawable) == GIMP_INDEXEDA_IMAGE ||
+      gimp_drawable_type (drawable) == GIMP_INDEXED_IMAGE)
     return TRUE;
   else
     return FALSE;

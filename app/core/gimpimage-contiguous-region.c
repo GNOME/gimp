@@ -102,9 +102,9 @@ gimp_image_contiguous_region_by_seed (GimpImage    *gimage,
       pixel_region_init (&srcPR, gimp_image_projection (gimage), 0, 0,
 			 gimage->width, gimage->height, FALSE);
       type = gimp_image_projection_type (gimage);
-      has_alpha = (type == RGBA_GIMAGE ||
-		   type == GRAYA_GIMAGE ||
-		   type == INDEXEDA_GIMAGE);
+      has_alpha = (type == GIMP_RGBA_IMAGE ||
+		   type == GIMP_GRAYA_IMAGE ||
+		   type == GIMP_INDEXEDA_IMAGE);
     }
   else
     {
@@ -181,10 +181,10 @@ gimp_image_contiguous_region_by_color (GimpImage     *gimage,
     {
       bytes  = gimp_image_projection_bytes (gimage);
       d_type = gimp_image_projection_type (gimage);
-      has_alpha = (d_type == RGBA_GIMAGE ||
-		   d_type == GRAYA_GIMAGE ||
-		   d_type == INDEXEDA_GIMAGE);
-      indexed = d_type == INDEXEDA_GIMAGE || d_type == INDEXED_GIMAGE;
+      has_alpha = (d_type == GIMP_RGBA_IMAGE ||
+		   d_type == GIMP_GRAYA_IMAGE ||
+		   d_type == GIMP_INDEXEDA_IMAGE);
+      indexed = d_type == GIMP_INDEXEDA_IMAGE || d_type == GIMP_INDEXED_IMAGE;
       width = gimage->width;
       height = gimage->height;
       pixel_region_init (&imagePR, gimp_image_projection (gimage),

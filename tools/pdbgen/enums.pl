@@ -152,7 +152,7 @@ package Gimp::CodeGen::enums;
 	},
     GimpConvolutionType =>
 	{ contig => 1,
-	  header => 'base/base-types.h',
+	  header => 'base/base-enums.h',
 	  symbols => [ qw(GIMP_NORMAL_CONVOL GIMP_ABSOLUTE_CONVOL
 			  GIMP_NEGATIVE_CONVOL) ],
 	  mapping => { GIMP_NORMAL_CONVOL => '0',
@@ -161,7 +161,7 @@ package Gimp::CodeGen::enums;
 	},
     GimpChannelLutType =>
 	{ contig => 1,
-	  header => 'base/base-types.h',
+	  header => 'base/base-enums.h',
 	  symbols => [ qw(GIMP_VALUE_LUT GIMP_RED_LUT GIMP_GREEN_LUT
 			  GIMP_BLUE_LUT GIMP_ALPHA_LUT) ],
 	  mapping => { GIMP_VALUE_LUT => '0',
@@ -169,24 +169,6 @@ package Gimp::CodeGen::enums;
 		       GIMP_GREEN_LUT => '2',
 		       GIMP_BLUE_LUT => '3',
 		       GIMP_ALPHA_LUT => '4' }
-	},
-    GimpImageType =>
-	{ contig => 1,
-	  header => 'core/core-types.h',
-	  symbols => [ qw(RGB_GIMAGE RGBA_GIMAGE GRAY_GIMAGE GRAYA_GIMAGE
-			  INDEXED_GIMAGE INDEXEDA_GIMAGE) ],
-	  mapping => { RGB_GIMAGE => '0',
-		       RGBA_GIMAGE => '1',
-		       GRAY_GIMAGE => '2',
-		       GRAYA_GIMAGE => '3',
-		       INDEXED_GIMAGE => '4',
-		       INDEXEDA_GIMAGE => '5' },
-	  nicks   => { RGB_GIMAGE => 'RGB_IMAGE',
-		       RGBA_GIMAGE => 'RGBA_IMAGE',
-		       GRAY_GIMAGE => 'GRAY_IMAGE',
-		       GRAYA_GIMAGE => 'GRAYA_IMAGE',
-		       INDEXED_GIMAGE => 'INDEXED_IMAGE',
-		       INDEXEDA_GIMAGE => 'INDEXEDA_IMAGE' }
 	},
     ChannelType =>
 	{ contig => 1,
@@ -260,14 +242,6 @@ package Gimp::CodeGen::enums;
 		       WHITE_FILL => 'WHITE_IMAGE_FILL',
 		       TRANSPARENT_FILL => 'TRANS_IMAGE_FILL',
 		       NO_FILL => 'NO_IMAGE_FILL' }
-	},
-    GimpTransferMode =>
-	{ contig => 1,
-	  header => 'core/core-types.h',
-	  symbols => [ qw(GIMP_SHADOWS GIMP_MIDTONES GIMP_HIGHLIGHTS) ],
-	  mapping => { GIMP_SHADOWS => '0',
-		       GIMP_MIDTONES => '1',
-		       GIMP_HIGHLIGHTS => '2' }
 	},
     GimpOffsetType =>
 	{ contig => 1,
@@ -364,6 +338,27 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_RGB => '0',
 		       GIMP_GRAY => '1',
 		       GIMP_INDEXED => '2' }
+	},
+    GimpImageType =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_RGB_IMAGE GIMP_RGBA_IMAGE GIMP_GRAY_IMAGE
+			  GIMP_GRAYA_IMAGE GIMP_INDEXED_IMAGE
+			  GIMP_INDEXEDA_IMAGE) ],
+	  mapping => { GIMP_RGB_IMAGE => '0',
+		       GIMP_RGBA_IMAGE => '1',
+		       GIMP_GRAY_IMAGE => '2',
+		       GIMP_GRAYA_IMAGE => '3',
+		       GIMP_INDEXED_IMAGE => '4',
+		       GIMP_INDEXEDA_IMAGE => '5' }
+	},
+    GimpTransferMode =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_SHADOWS GIMP_MIDTONES GIMP_HIGHLIGHTS) ],
+	  mapping => { GIMP_SHADOWS => '0',
+		       GIMP_MIDTONES => '1',
+		       GIMP_HIGHLIGHTS => '2' }
 	},
     RunModeType =>
 	{ contig => 1,

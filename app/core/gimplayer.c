@@ -341,14 +341,14 @@ gimp_layer_copy (GimpLayer *layer,
     {
       switch (GIMP_DRAWABLE (layer)->type)
 	{
-	case RGB_GIMAGE:
-	  new_type = RGBA_GIMAGE;
+	case GIMP_RGB_IMAGE:
+	  new_type = GIMP_RGBA_IMAGE;
 	  break;
-	case GRAY_GIMAGE:
-	  new_type = GRAYA_GIMAGE;
+	case GIMP_GRAY_IMAGE:
+	  new_type = GIMP_GRAYA_IMAGE;
 	  break;
-	case INDEXED_GIMAGE:
-	  new_type = INDEXEDA_GIMAGE;
+	case GIMP_INDEXED_IMAGE:
+	  new_type = GIMP_INDEXEDA_IMAGE;
 	  break;
 	default:
 	  new_type = GIMP_DRAWABLE (layer)->type;
@@ -483,9 +483,9 @@ gimp_layer_new_from_tiles (GimpImage            *gimage,
 		     FALSE);
 
   if ((tile_manager_bpp (tiles) == 4 &&
-       GIMP_DRAWABLE (new_layer)->type == RGBA_GIMAGE) ||
+       GIMP_DRAWABLE (new_layer)->type == GIMP_RGBA_IMAGE) ||
       (tile_manager_bpp (tiles) == 2 &&
-       GIMP_DRAWABLE (new_layer)->type == GRAYA_GIMAGE))
+       GIMP_DRAWABLE (new_layer)->type == GIMP_GRAYA_IMAGE))
     /*  If we want a layer the same type as the buffer  */
     copy_region (&bufPR, &layerPR);
   else
@@ -805,18 +805,18 @@ gimp_layer_add_alpha (GimpLayer *layer)
   /*  Don't bother if the layer already has alpha  */
   switch (GIMP_DRAWABLE (layer)->type)
     {
-    case RGB_GIMAGE:
-      type = RGBA_GIMAGE;
+    case GIMP_RGB_IMAGE:
+      type = GIMP_RGBA_IMAGE;
       break;
-    case GRAY_GIMAGE:
-      type = GRAYA_GIMAGE;
+    case GIMP_GRAY_IMAGE:
+      type = GIMP_GRAYA_IMAGE;
       break;
-    case INDEXED_GIMAGE:
-      type = INDEXEDA_GIMAGE;
+    case GIMP_INDEXED_IMAGE:
+      type = GIMP_INDEXEDA_IMAGE;
       break;
-    case RGBA_GIMAGE:
-    case GRAYA_GIMAGE:
-    case INDEXEDA_GIMAGE:
+    case GIMP_RGBA_IMAGE:
+    case GIMP_GRAYA_IMAGE:
+    case GIMP_INDEXEDA_IMAGE:
     default:
       return;
       break;
@@ -896,8 +896,8 @@ gimp_layer_scale_lowlevel (GimpLayer *layer,
    *   resampling because that doesn't necessarily make sense for INDEXED
    *   images.
    */
-  if ((GIMP_DRAWABLE (layer)->type == INDEXED_GIMAGE) || 
-      (GIMP_DRAWABLE (layer)->type == INDEXEDA_GIMAGE))
+  if ((GIMP_DRAWABLE (layer)->type == GIMP_INDEXED_IMAGE) || 
+      (GIMP_DRAWABLE (layer)->type == GIMP_INDEXEDA_IMAGE))
     scale_region_no_resample (&srcPR, &destPR);
   else
     scale_region (&srcPR, &destPR);

@@ -116,17 +116,17 @@ gimp_drawable_preview_private (GimpDrawable *drawable,
     {
       switch (gimp_drawable_type (drawable))
 	{
-	case RGB_GIMAGE: case RGBA_GIMAGE:
+	case GIMP_RGB_IMAGE: case GIMP_RGBA_IMAGE:
 	  type  = GIMP_RGB;
 	  bytes = gimp_drawable_bytes (drawable);
 	  break;
-	case GRAY_GIMAGE: case GRAYA_GIMAGE:
+	case GIMP_GRAY_IMAGE: case GIMP_GRAYA_IMAGE:
 	  type  = GIMP_GRAY;
 	  bytes = gimp_drawable_bytes (drawable);
 	  break;
-	case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
+	case GIMP_INDEXED_IMAGE: case GIMP_INDEXEDA_IMAGE:
 	  type  = GIMP_INDEXED;
-	  bytes = (gimp_drawable_type (drawable) == INDEXED_GIMAGE) ? 3 : 4;
+	  bytes = (gimp_drawable_type (drawable) == GIMP_INDEXED_IMAGE) ? 3 : 4;
 	  break;
 	}
 

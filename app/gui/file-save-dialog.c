@@ -174,22 +174,22 @@ file_save_dialog_show (GimpImage *gimage)
 
   switch (gimp_drawable_type (gimp_image_active_drawable (gimage)))
     {
-    case RGB_GIMAGE:
+    case GIMP_RGB_IMAGE:
       file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_RGB_IMAGE);
       break;
-    case RGBA_GIMAGE:
+    case GIMP_RGBA_IMAGE:
       file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_RGBA_IMAGE);
       break;
-    case GRAY_GIMAGE:
+    case GIMP_GRAY_IMAGE:
       file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_GRAY_IMAGE);
       break;
-    case GRAYA_GIMAGE:
+    case GIMP_GRAYA_IMAGE:
       file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_GRAYA_IMAGE);
       break;
-    case INDEXED_GIMAGE:
+    case GIMP_INDEXED_IMAGE:
       file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_INDEXED_IMAGE);
       break;
-    case INDEXEDA_GIMAGE:
+    case GIMP_INDEXEDA_IMAGE:
       file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_INDEXEDA_IMAGE);
       break;
     }
@@ -229,22 +229,22 @@ file_save_a_copy_dialog_show (GimpImage *gimage)
 
   switch (gimp_drawable_type (gimp_image_active_drawable (gimage)))
     {
-    case RGB_GIMAGE:
+    case GIMP_RGB_IMAGE:
       file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_RGB_IMAGE);
       break;
-    case RGBA_GIMAGE:
+    case GIMP_RGBA_IMAGE:
       file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_RGBA_IMAGE);
       break;
-    case GRAY_GIMAGE:
+    case GIMP_GRAY_IMAGE:
       file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_GRAY_IMAGE);
       break;
-    case GRAYA_GIMAGE:
+    case GIMP_GRAYA_IMAGE:
       file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_GRAYA_IMAGE);
       break;
-    case INDEXED_GIMAGE:
+    case GIMP_INDEXED_IMAGE:
       file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_INDEXED_IMAGE);
       break;
-    case INDEXEDA_GIMAGE:
+    case GIMP_INDEXEDA_IMAGE:
       file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_INDEXEDA_IMAGE);
       break;
     }

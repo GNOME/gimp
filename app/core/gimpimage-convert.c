@@ -688,7 +688,7 @@ gimp_image_convert (GimpImage          *gimage,
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   quantobj        = NULL;
-  new_layer_type  = RGBA_GIMAGE;
+  new_layer_type  = GIMP_RGBA_IMAGE;
   new_layer_bytes = 4;
 
   theCustomPalette = custom_palette;
@@ -816,15 +816,15 @@ gimp_image_convert (GimpImage          *gimage,
       switch (new_type)
 	{
 	case GIMP_RGB:
-	  new_layer_type = (has_alpha) ? RGBA_GIMAGE : RGB_GIMAGE;
+	  new_layer_type = (has_alpha) ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
 	  new_layer_bytes = (has_alpha) ? 4 : 3;
 	  break;
 	case GIMP_GRAY:
-	  new_layer_type = (has_alpha) ? GRAYA_GIMAGE : GRAY_GIMAGE;
+	  new_layer_type = (has_alpha) ? GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE;
 	  new_layer_bytes = (has_alpha) ? 2 : 1;
 	  break;
 	case GIMP_INDEXED:
-	  new_layer_type = (has_alpha) ? INDEXEDA_GIMAGE : INDEXED_GIMAGE;
+	  new_layer_type = (has_alpha) ? GIMP_INDEXEDA_IMAGE : GIMP_INDEXED_IMAGE;
 	  new_layer_bytes = (has_alpha) ? 2 : 1;
 	  break;
 	default:

@@ -375,8 +375,8 @@ gimp_dodgeburn_tool_motion (GimpPaintTool        *paint_tool,
     return;
 
   /*  If the image type is indexed, don't dodgeburn  */
-  if ((gimp_drawable_type (drawable) == INDEXED_GIMAGE) ||
-      (gimp_drawable_type (drawable) == INDEXEDA_GIMAGE))
+  if ((gimp_drawable_type (drawable) == GIMP_INDEXED_IMAGE) ||
+      (gimp_drawable_type (drawable) == GIMP_INDEXEDA_IMAGE))
     return;
 
   if (pressure_options->size)
