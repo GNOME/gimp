@@ -1,3 +1,8 @@
+2001-11-14  Abel Cheung  <maddog@linux.org.hk>
+
+	* zh_TW.Big5.po -> zh_TW.po: Trying to replace original translation
+	  from stable branch, but messed up CVS. Will clean up soon.
+
 2001-11-13  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: removed modules/colorsel_gtk.c
