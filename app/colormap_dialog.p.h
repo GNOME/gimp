@@ -21,6 +21,7 @@ struct _GimpColormapDialog {
 	GtkDialog parent;
 	GimpImage* image;
 	gint col_index;
+        gint dnd_col_index;
 	GtkWidget* vbox;
 	GtkPreview* palette;
 	GtkWidget* image_menu;
@@ -30,7 +31,8 @@ struct _GimpColormapDialog {
 	gint xn;
 	gint yn;
 	gint cellsize;
-	GtkEntry* index_entry;
+	GtkWidget* index_spinbutton;
+	GtkAdjustment* index_adjustment;
 	GtkEntry* color_entry;
 	GimpSetHandlerId rename_handler;
 	GimpSetHandlerId cmap_changed_handler;

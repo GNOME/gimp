@@ -336,7 +336,7 @@ gimp_radio_group_new (gboolean  in_frame,
 		      ...)
 {
   GtkWidget *vbox;
-  GtkWidget *frame;
+  GtkWidget *frame = NULL;
   GtkWidget *button;
   GSList    *group;
 

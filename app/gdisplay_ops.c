@@ -349,7 +349,7 @@ gdisplay_close_warning_dialog (char     *image_name,
 		     gimp_standard_help_func,
 		     "dialogs/really_close.html",
 		     GTK_WIN_POS_MOUSE,
-		     FALSE, TRUE, FALSE,
+		     FALSE, FALSE, FALSE,
 
 		     _("Close"), gdisplay_close_warning_callback,
 		     NULL, NULL, FALSE, FALSE,

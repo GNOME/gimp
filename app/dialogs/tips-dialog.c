@@ -1,3 +1,20 @@
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
 #include "config.h"
 
 #include <stdio.h>
@@ -14,21 +31,24 @@
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpenv.h"
 
-#define TIPS_DIR_NAME	"tips"
+#define TIPS_DIR_NAME   "tips"
 
-static int  tips_dialog_hide (GtkWidget *widget, gpointer data);
-static int  tips_show_next (GtkWidget *widget, gpointer data);
-static void tips_toggle_update (GtkWidget *widget, gpointer data);
-static void read_tips_file(char *filename);
+static gint   tips_dialog_delete (GtkWidget *widget, GdkEvent *event,
+				  gpointer data);
+static void   tips_dialog_hide   (GtkWidget *widget, gpointer data);
+static void   tips_show_previous (GtkWidget *widget, gpointer data);
+static void   tips_show_next     (GtkWidget *widget, gpointer data);
+static void   tips_toggle_update (GtkWidget *widget, gpointer data);
+static void   read_tips_file     (gchar *filename);
 
-static GtkWidget *tips_dialog = NULL;
-static GtkWidget *tips_label;
-static char **    tips_text = NULL;
-static int        tips_count = 0;
-static int        old_show_tips;
+static GtkWidget  *tips_dialog = NULL;
+static GtkWidget  *tips_label;
+static gchar     **tips_text = NULL;
+static gint        tips_count = 0;
+static gint        old_show_tips;
 
 void
-tips_dialog_create ()
+tips_dialog_create (void)
 {
   GtkWidget *vbox;
   GtkWidget *hbox1;
@@ -43,12 +63,12 @@ tips_dialog_create ()
   GtkWidget *button_prev;
   GtkWidget *vbox_check;
   GtkWidget *button_check;
-  gchar  *   temp;
-  guchar *   utemp;
-  guchar *   src;
-  guchar *   dest;
-  int        x;
-  int        y;
+  gchar     *temp;
+  guchar    *utemp;
+  guchar    *src;
+  guchar    *dest;
+  gint       x;
+  gint       y;
 
   if (tips_count == 0)
     {
@@ -69,8 +89,12 @@ tips_dialog_create ()
       gtk_window_set_wmclass (GTK_WINDOW (tips_dialog), "tip_of_the_day", "Gimp");
       gtk_window_set_title (GTK_WINDOW (tips_dialog), _("GIMP Tip of the Day"));
       gtk_window_set_position (GTK_WINDOW (tips_dialog), GTK_WIN_POS_CENTER);
+      gtk_window_set_policy (GTK_WINDOW (tips_dialog), FALSE, FALSE, FALSE);
+
       gtk_signal_connect (GTK_OBJECT (tips_dialog), "delete_event",
-			  GTK_SIGNAL_FUNC (tips_dialog_hide), NULL);
+			  GTK_SIGNAL_FUNC (tips_dialog_delete),
+			  NULL);
+
       /* destroy the tips window if the mainlevel gtk_main() function is left */
       gtk_quit_add_destroy (1, GTK_OBJECT (tips_dialog));
 
@@ -131,8 +155,8 @@ tips_dialog_create ()
       button_prev = gtk_button_new_with_label (_("Previous Tip"));
       GTK_WIDGET_UNSET_FLAGS (button_prev, GTK_RECEIVES_DEFAULT);
       gtk_signal_connect (GTK_OBJECT (button_prev), "clicked",
-			  GTK_SIGNAL_FUNC (tips_show_next),
-			  (gpointer) "prev");
+			  GTK_SIGNAL_FUNC (tips_show_previous),
+			  NULL);
       gtk_container_add (GTK_CONTAINER (bbox2), button_prev);
       gtk_widget_show (button_prev);
 
@@ -140,7 +164,7 @@ tips_dialog_create ()
       GTK_WIDGET_UNSET_FLAGS (button_next, GTK_RECEIVES_DEFAULT);
       gtk_signal_connect (GTK_OBJECT (button_next), "clicked",
 			  GTK_SIGNAL_FUNC (tips_show_next),
-			  (gpointer) "next");
+			  NULL);
       gtk_container_add (GTK_CONTAINER (bbox2), button_next);
       gtk_widget_show (button_next);
 
@@ -148,7 +172,8 @@ tips_dialog_create ()
       GTK_WIDGET_SET_FLAGS (button_close, GTK_CAN_DEFAULT);
       gtk_window_set_default (GTK_WINDOW (tips_dialog), button_close);
       gtk_signal_connect (GTK_OBJECT (button_close), "clicked",
-			  GTK_SIGNAL_FUNC (tips_dialog_hide), NULL);
+			  GTK_SIGNAL_FUNC (tips_dialog_hide),
+			  NULL);
       gtk_container_add (GTK_CONTAINER (bbox), button_close);
       gtk_widget_show (button_close);
 
@@ -183,9 +208,19 @@ tips_dialog_create ()
     }
 }
 
-static int
+static gint
+tips_dialog_delete (GtkWidget *widget,
+		    GdkEvent  *event,
+		    gpointer   data)
+{
+  tips_dialog_hide (NULL, NULL);
+
+  return TRUE;
+}
+
+static void
 tips_dialog_hide (GtkWidget *widget,
-		  gpointer data)
+		  gpointer   data)
 {
   GList *update = NULL; /* options that should be updated in .gimprc */
   GList *remove = NULL; /* options that should be commented out */
@@ -203,37 +238,39 @@ tips_dialog_hide (GtkWidget *widget,
     }
   g_list_free (update);
   g_list_free (remove);
-
-  return TRUE;
 }
 
-static int
+static void
+tips_show_previous (GtkWidget *widget,
+		    gpointer  data)
+{
+  last_tip--;
+
+  if (last_tip < 0)
+    last_tip = tips_count - 1;
+
+  gtk_label_set (GTK_LABEL (tips_label), tips_text[last_tip]);
+}
+
+static void
 tips_show_next (GtkWidget *widget,
 		gpointer  data)
 {
-  if (!strcmp ((char *)data, "prev"))
-    {
-      last_tip--;
-      if (last_tip < 0)
-	last_tip = tips_count - 1;
-    }
-  else
-    {
-      last_tip++;
-      if (last_tip >= tips_count)
-	last_tip = 0;
-    }
+  last_tip++;
+
+  if (last_tip >= tips_count)
+    last_tip = 0;
+
   gtk_label_set (GTK_LABEL (tips_label), tips_text[last_tip]);
-  return FALSE;
 }
 
 static void
 tips_toggle_update (GtkWidget *widget,
 		    gpointer   data)
 {
-  int *toggle_val;
+  gint *toggle_val;
 
-  toggle_val = (int *) data;
+  toggle_val = (gint *) data;
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
     *toggle_val = TRUE;
@@ -242,19 +279,19 @@ tips_toggle_update (GtkWidget *widget,
 }
 
 static void
-store_tip (char *str)
+store_tip (gchar *str)
 {
   tips_count++;
-  tips_text = g_realloc(tips_text, sizeof(char *) * tips_count);
+  tips_text = g_realloc (tips_text, sizeof (gchar *) * tips_count);
   tips_text[tips_count - 1] = str;
 }
 
 static void
-read_tips_file (char *filename)
+read_tips_file (gchar *filename)
 {
   FILE *fp;
-  char *tip = NULL;
-  char *str = NULL;
+  gchar *tip = NULL;
+  gchar *str = NULL;
 
   fp = fopen (filename, "rt");
   if (!fp)
@@ -270,7 +307,7 @@ read_tips_file (char *filename)
     {
       if (!fgets (str, 1024, fp))
 	continue;
-      
+   
       if (str[0] == '#' || str[0] == '\n')
 	{
 	  if (tip != NULL)

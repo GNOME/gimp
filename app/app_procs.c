@@ -739,7 +739,7 @@ really_quit_dialog (void)
 			    gimp_standard_help_func,
 			    "dialogs/really_quit.html",
 			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
+			    FALSE, FALSE, FALSE,
 
 			    _("Quit"), really_quit_callback,
 			    NULL, NULL, FALSE, FALSE,

@@ -1,3 +1,18 @@
+1999-12-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/app_procs.c
+	* app/gdisplay_ops.c: Set "allow_grow" to FALSE for "Really Quit?" and
+	"Changes were made to ... Close Anyway?".
+
+	* app/gimpui.c: fixed a compiler warning.
+
+	* app/tips_dialog.c: Same as above and did some code cleanup.
+
+	* app/colormap_dialog.i.c
+	* app/colormap_dialog.p.h: Allow dragging a color with mouse2
+	without changing the active color. Replaced the "index" entry with
+	a spinbutton. Code & UI cleanup.
+
 1999-12-18  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* app/transform_tool.c: Fixed typo.
