@@ -114,8 +114,8 @@ gimp_2_3_LDADD = \
 	$(libgimpcolor)			\
 	$(libgimpthumb)			\
 	$(libgimpmath)			\
-	$(libgimpbase)			\
 	$(libgimpconfig)		\
+	$(libgimpbase)			\
 	$(REGEXREPL)			\
 	$(GTK_LIBS)			\
 	$(LIBART_LIBS)			\
@@ -158,8 +158,8 @@ gimp_console_2_3_LDADD = \
 	$(libgimpcolor)			\
 	$(libgimpthumb)			\
 	$(libgimpmath)			\
-	$(libgimpbase)			\
 	$(libgimpconfig)		\
+	$(libgimpbase)			\
 	$(REGEXREPL)			\
 	$(GDK_PIXBUF_LIBS)		\
 	$(LIBART_LIBS)			\

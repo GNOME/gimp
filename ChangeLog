@@ -1,5 +1,18 @@
 2005-03-19  Manish Singh  <yosh@gimp.org>
 
+	* app/config/Makefile.am: actually link test program with
+	libgimpconfig.
+
+	* app/Makefile.am
+	* libgimpwidgets/Makefile.am: reordered library link order to be
+	consistent with shared library dependencies.
+
+	* plug-ins/common/mkgen.pl: Cosmetic fix to the generated Makefile.am.
+
+	* plug-ins/common/Makefile.am: regenerated.
+
+2005-03-19  Manish Singh  <yosh@gimp.org>
+
 	* gimp.spec.in: Remove outdated file.
 
 2005-03-19  Manish Singh  <yosh@gimp.org>

@@ -1,6 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
 libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
 libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
 
@@ -68,8 +69,8 @@ test_config_LDADD = \
 	libappconfig.a		\
 	$(libgimpcolor)		\
 	$(libgimpmath)		\
-	$(libgimpbase)		\
 	$(libgimpconfig)	\
+	$(libgimpbase)		\
 	$(GLIB_LIBS)
 
 

@@ -100,8 +100,8 @@ foreach (sort keys %plugins) {
     if (exists $plugins{$_}->{ui}) {
         $libgimp .= "\$(libgimpui)";
         $libgimp .= "\t\t\\\n\t\$(libgimpconfig)";
-        $libgimp .= "\t\t\\\n\t\$(libgimpwidgets)";
-	$libgimp .= "\t\\\n\t\$(libgimp)";
+        $libgimp .= "\t\\\n\t\$(libgimpwidgets)";
+        $libgimp .= "\t\\\n\t\$(libgimp)";
         $libgimp .= "\t\t\\\n\t\$(libgimpcolor)";
         $libgimp .= "\t\t\\\n\t\$(libgimpmath)";
         $libgimp .= "\t\t\\\n\t\$(libgimpbase)";

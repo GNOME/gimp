@@ -208,9 +208,9 @@ libgimpwidgets_2_0_la_LDFLAGS = \
 	$(libgimpwidgets_export_symbols)
 
 libgimpwidgets_2_0_la_LIBADD = \
-	$(libgimpbase)	\
 	$(libgimpcolor) \
 	$(libgimpconfig) \
+	$(libgimpbase)	\
 	$(GTK_LIBS) 	\
 	$(libm)
 
