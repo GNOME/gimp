@@ -1,3 +1,10 @@
+2004-11-01  Øyvind Kolås  <pippin@gimp.org>
+
+	* app/xcf/xcf-load.c: applied patch from David Gowers, extra sanity
+	checking for the xcf loader, colormaps read from non indexed images
+	are discarded. Does not fix bug #134097, but prevents gimp from
+	reloading an impossible state.
+
 2004-11-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable-transform.[ch]
