@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
 "POT-Creation-Date: 2000-10-30 21:56-0800\n"
-"PO-Revision-Date: 2000-09-27 10:34+01:00\n"
+"PO-Revision-Date: 2000-11-30 10:34+01:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish/Dansk <sslug-locale@sslug.dk>\n"
 "MIME-Version: 1.0\n"
@@ -2256,9 +2256,8 @@ msgid "Bottom Edge"
 msgstr "Nedre kant"
 
 #: plug-ins/common/align_layers.c:511
-#, fuzzy
 msgid "Vertical Base:"
-msgstr "Lodret:"
+msgstr "Lodret base:"
 
 #: plug-ins/common/align_layers.c:516
 msgid "Ignore the Bottom Layer even if Visible"
@@ -5148,9 +5147,8 @@ msgid "PNM: Premature end of file."
 msgstr "PNM: For tidlig slutning på fil."
 
 #: plug-ins/common/pnm.c:452
-#, fuzzy
 msgid "PNM: Invalid file."
-msgstr "PNM: Ugyldig maksimumværdi."
+msgstr "PNM: Ugyldig fil."
 
 #: plug-ins/common/pnm.c:465
 msgid "PNM: File not in a supported format."
@@ -5635,20 +5633,17 @@ msgid "Grab"
 msgstr "Fang"
 
 #: plug-ins/common/screenshot.c:392
-#, fuzzy
 msgid "Single Window"
-msgstr "Fang et enkelt vindue"
+msgstr "Enkelt vindue"
 
 #: plug-ins/common/screenshot.c:406
-#, fuzzy
 msgid "With Decorations"
-msgstr "Inkludér udsmykning"
+msgstr "Med udsmykninger"
 
 #. root window
 #: plug-ins/common/screenshot.c:422
-#, fuzzy
 msgid "Whole Screen"
-msgstr "Fang hele skærmen"
+msgstr "Hele skærmen"
 
 #: plug-ins/common/screenshot.c:438 plug-ins/winsnap/winsnap.c:1011
 msgid "after"
@@ -6195,15 +6190,15 @@ msgstr "Fordelings mængde"
 
 #: plug-ins/common/struc.c:1156
 msgid "<Image>/Filters/Artistic/Apply Canvas..."
-msgstr "<Image>/Filter/Kunstnerisk/Anvend canvas..."
+msgstr "<Image>/Filter/Kunstnerisk/Anvend kanvas..."
 
 #: plug-ins/common/struc.c:1242
 msgid "Applying Canvas..."
-msgstr "Anvender canvas..."
+msgstr "Anvender kanvas..."
 
 #: plug-ins/common/struc.c:1276
 msgid "Apply Canvas"
-msgstr "Anvend canvas"
+msgstr "Anvend kanvas"
 
 #. *****************************************************
 #. radio buttons for choosing LEFT or RIGHT
@@ -12714,9 +12709,8 @@ msgid "Print Color Adjust"
 msgstr "Indstil printerfarve"
 
 #: plug-ins/print/gimp_color_window.c:140
-#, fuzzy
 msgid "Set Defaults"
-msgstr "Gendan standarder"
+msgstr "Sæt standarder"
 
 #: plug-ins/print/gimp_color_window.c:269
 msgid "Density:"
@@ -12767,14 +12761,12 @@ msgid "cm"
 msgstr "cm"
 
 #: plug-ins/print/gimp_main_window.c:420
-#, fuzzy
 msgid "Right Border:"
-msgstr "Kant:"
+msgstr "Højre kant:"
 
 #: plug-ins/print/gimp_main_window.c:443
-#, fuzzy
 msgid "Bottom Border:"
-msgstr "Nedre kant"
+msgstr "Nedre kant:"
 
 #: plug-ins/print/gimp_main_window.c:455
 msgid "Portrait"
@@ -12786,12 +12778,11 @@ msgstr "Landskab"
 
 #: plug-ins/print/gimp_main_window.c:461
 msgid "Upside down"
-msgstr ""
+msgstr "Ovenfra ned"
 
 #: plug-ins/print/gimp_main_window.c:464
-#, fuzzy
 msgid "Seascape"
-msgstr "Landskab"
+msgstr "Havskab"
 
 #.
 #. *  Printer settings frame...
@@ -12820,9 +12811,8 @@ msgstr "Blæktype:"
 #. * Scaling...
 #.
 #: plug-ins/print/gimp_main_window.c:540
-#, fuzzy
 msgid "Scaling"
-msgstr "Skalering:"
+msgstr "Skalering"
 
 #: plug-ins/print/gimp_main_window.c:580 plug-ins/print/gimp_main_window.c:589
 msgid "Scaling:"
@@ -12844,9 +12834,8 @@ msgstr "Sæt billedskala"
 #. * Image type
 #.
 #: plug-ins/print/gimp_main_window.c:669
-#, fuzzy
 msgid "Image Settings"
-msgstr "Indstillinger for glød"
+msgstr "Indstillinger for billed"
 
 #: plug-ins/print/gimp_main_window.c:689
 msgid "Line Art"
@@ -12891,9 +12880,8 @@ msgstr "Opsætning"
 #. * Printer driver option menu...
 #.
 #: plug-ins/print/gimp_main_window.c:853
-#, fuzzy
 msgid "Printer Model:"
-msgstr "Tegnemodus:"
+msgstr "Printermodel:"
 
 #.
 #. * PPD file...
@@ -12932,14 +12920,12 @@ msgid "<Image>/File/Print..."
 msgstr "<Image>/Filer/Udskriv..."
 
 #: plug-ins/print/print.c:241
-#, fuzzy
 msgid "<Image>/File/Print (Gtk)..."
-msgstr "<Image>/Filer/Udskriv..."
+msgstr "<Image>/Filer/Udskriv (Gtk)..."
 
 #: plug-ins/print/print.c:249
-#, fuzzy
 msgid "<Image>/File/Print (Gimp)..."
-msgstr "<Image>/Filer/Udskriv..."
+msgstr "<Image>/Filer/Udskriv (Gimp)..."
 
 #: plug-ins/rcm/rcm.c:118
 msgid "<Image>/Image/Colors/Colormap Rotation..."
