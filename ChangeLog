@@ -1,3 +1,15 @@
+2004-05-13  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/lib.pl
+	* tools/pdbgen/pdbgen.pl: added new procedure variable 'since'
+	that allows to specify when a new function was added. Use that
+	info to generate an appropriate gtk-doc comment.
+
+	* tools/pdbgen/pdb/plug_in.pdb: set since = '2.2' for the new
+	function gimp_plugin_menu_register().
+
+	* libgimp/gimpplugin_pdb.c: regenerated.
+
 2004-05-13  Michael Natterer  <mitch@gimp.org>
 
 	* menus/tool-options-menu.xml: added "name" attributes to all

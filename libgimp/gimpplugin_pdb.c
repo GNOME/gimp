@@ -171,6 +171,8 @@ gimp_plugin_help_register (const gchar *domain_name,
  * procedure.
  *
  * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
  */
 gboolean
 gimp_plugin_menu_register (const gchar *procedure_name,

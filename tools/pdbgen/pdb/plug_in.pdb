@@ -311,6 +311,7 @@ HELP
 
     $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
     $date = '2004';
+    $since = '2.2';
 
     @inargs = (
 	{ name => 'procedure_name', type => 'string',

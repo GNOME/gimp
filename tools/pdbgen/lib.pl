@@ -116,7 +116,7 @@ sub generate {
 
 	# The parameters to the function
 	my $arglist = ""; my $argpass = ""; my $privatevars = 0; 
-	my $argdesc = "";
+	my $argdesc = ""; my $sincedesc = "";
 	foreach (@inargs) {
 	    my ($type) = &arg_parse($_->{type});
 	    my $desc = &desc_clean($_->{desc});
@@ -442,6 +442,10 @@ CODE
 
         unless ($retdesc =~ /[\.\!\?]$/) { $retdesc .= '.' }
 
+        if ($proc->{since}) {
+	    $sincedesc = "\n *\n * Since: GIMP $proc->{since}";
+	}
+
 	$out->{code} .= <<CODE;
 
 /**
@@ -451,7 +455,7 @@ $argdesc *
  *
 @{[ &desc_wrap($proc->{help}) ]}
  *
- * Returns: $retdesc
+ * Returns: $retdesc$sincedesc
  */
 $rettype
 $wrapped$funcname ($clist)
