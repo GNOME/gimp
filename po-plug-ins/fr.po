@@ -1,4 +1,4 @@
-# French translation of gimp-plug-ins.
+# French translation of Gimp.
 # Copyright (C) 1998-2004 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
@@ -10,11 +10,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-plug-ins 2.0.1\n"
+"Project-Id-Version: gimp-plug-ins 2.0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-17 15:31+0200\n"
-"PO-Revision-Date: 2004-04-24 19:52+0200\n"
-"Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
+"POT-Creation-Date: 2004-07-20 02:03+0200\n"
+"PO-Revision-Date: 2004-07-19 23:56+0200\n"
+"Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -69,7 +69,7 @@ msgstr "À propos"
 #: plug-ins/common/destripe.c:573 plug-ins/common/emboss.c:705
 #: plug-ins/common/fractaltrace.c:760 plug-ins/common/grid.c:654
 #: plug-ins/common/iwarp.c:1225 plug-ins/common/mapcolor.c:551
-#: plug-ins/common/nlfilt.c:450 plug-ins/common/polar.c:604
+#: plug-ins/common/nlfilt.c:450 plug-ins/common/polar.c:609
 #: plug-ins/common/sharpen.c:523 plug-ins/common/sinus.c:1040
 #: plug-ins/common/spheredesigner.c:2508 plug-ins/common/tileit.c:390
 #: plug-ins/common/waves.c:438 plug-ins/common/whirlpinch.c:676
@@ -786,7 +786,7 @@ msgstr "_Ambiant :"
 #: plug-ins/Lighting/lighting_ui.c:720 plug-ins/MapObject/mapobject_ui.c:887
 msgid "Amount of original color to show where no direct light falls"
 msgstr ""
-"Proportion de la couleur originelle à afficher là où aucune lumière directe "
+"Proportion de la couleur d'origine à afficher là où aucune lumière directe "
 "ne parvient"
 
 #: plug-ins/Lighting/lighting_ui.c:732
@@ -796,12 +796,12 @@ msgstr "_Diffusion :"
 #: plug-ins/Lighting/lighting_ui.c:750 plug-ins/MapObject/mapobject_ui.c:913
 msgid "Intensity of original color when lit by a light source"
 msgstr ""
-"Intensité de la couleur originelle lors de l'éclairage par une source "
+"Intensité de la couleur d'origine lors de l'éclairage par une source "
 "lumineuse"
 
 #: plug-ins/Lighting/lighting_ui.c:758 plug-ins/MapObject/mapobject_ui.c:921
 msgid "Reflectivity"
-msgstr "Réflexivité"
+msgstr "Réflectivité"
 
 #: plug-ins/Lighting/lighting_ui.c:776
 msgid "D_iffuse:"
@@ -809,7 +809,7 @@ msgstr "Di_ffusion :"
 
 #: plug-ins/Lighting/lighting_ui.c:795 plug-ins/MapObject/mapobject_ui.c:953
 msgid "Higher values makes the object reflect more light (appear lighter)"
-msgstr "Plus la valeur est élevé, plus l'objet apparaît réflexif"
+msgstr "Plus la valeur est élevé, plus l'objet apparaît réfléchissant"
 
 #: plug-ins/Lighting/lighting_ui.c:807
 msgid "_Specular:"
@@ -821,7 +821,7 @@ msgstr "Contrôle l'intensité des taches lumineuses"
 
 #: plug-ins/Lighting/lighting_ui.c:838
 msgid "_Highlight:"
-msgstr "Sur_brillance :"
+msgstr "_Tache lumineuse :"
 
 #: plug-ins/Lighting/lighting_ui.c:856 plug-ins/MapObject/mapobject_ui.c:1005
 msgid "Higher values makes the highlights more focused"
@@ -837,7 +837,7 @@ msgstr "(Dés)activer le repoussage d'après carte (relief)"
 
 #: plug-ins/Lighting/lighting_ui.c:922
 msgid "Bumpm_ap Image:"
-msgstr "Image de c_arte du relief :"
+msgstr "Image à _repousser :"
 
 #: plug-ins/Lighting/lighting_ui.c:929 plug-ins/flame/flame.c:706
 msgid "Linear"
@@ -869,7 +869,7 @@ msgstr "Hauteur maximum des bosses"
 
 #: plug-ins/Lighting/lighting_ui.c:976
 msgid "E_nable Environment Mapping"
-msgstr "Activer le mappage d'envir_onnement"
+msgstr "Activer le mappage de l'envir_onnement"
 
 #: plug-ins/Lighting/lighting_ui.c:990
 msgid "Enable/disable environment-mapping (reflection)"
@@ -929,23 +929,20 @@ msgid "Preview Options"
 msgstr "Options d'aperçu"
 
 #: plug-ins/MapObject/mapobject_apply.c:273
-#, fuzzy
 msgid "Map to Plane..."
-msgstr "Laplace..."
+msgstr "Plaquer sur un plan..."
 
 #: plug-ins/MapObject/mapobject_apply.c:276
 msgid "Map to Sphere..."
-msgstr ""
+msgstr "Plaquer sur une sphère"
 
 #: plug-ins/MapObject/mapobject_apply.c:279
-#, fuzzy
 msgid "Map to Box..."
-msgstr "Max RVB..."
+msgstr "Plaquer sur une boîte..."
 
 #: plug-ins/MapObject/mapobject_apply.c:282
-#, fuzzy
 msgid "Map to Cylinder..."
-msgstr "Cylindre"
+msgstr "Plaquer sur un cylindre..."
 
 #: plug-ins/MapObject/mapobject_main.c:200
 msgid "<Image>/Filters/Map/Map _Object..."
@@ -2049,7 +2046,7 @@ msgstr "Aligner les calques visibles"
 #: plug-ins/common/mosaic.c:602 plug-ins/common/nlfilt.c:361
 #: plug-ins/common/noisify.c:331 plug-ins/common/nova.c:328
 #: plug-ins/common/oilify.c:452 plug-ins/common/pixelize.c:319
-#: plug-ins/common/plasma.c:328 plug-ins/common/polar.c:623
+#: plug-ins/common/plasma.c:328 plug-ins/common/polar.c:628
 #: plug-ins/common/randomize.c:725 plug-ins/common/ripple.c:516
 #: plug-ins/common/scatter_hsv.c:388 plug-ins/common/sel_gauss.c:238
 #: plug-ins/common/sharpen.c:582 plug-ins/common/shift.c:327
@@ -2217,23 +2214,23 @@ msgstr "Effet de lentille optique"
 
 #: plug-ins/common/apply_lens.c:389
 msgid "_Keep Original Surroundings"
-msgstr "_Garder l'environnement original"
+msgstr "_Garder l'entourage original"
 
 #: plug-ins/common/apply_lens.c:401
 msgid "_Set Surroundings to Index 0"
-msgstr "_Définir l'Environnement à l'Index 0"
+msgstr "_Définir l'Environnement à l'index 0"
 
 #: plug-ins/common/apply_lens.c:402
 msgid "_Set Surroundings to Background Color"
-msgstr "_Régler l'environnement à la couleur d'arrière-plan"
+msgstr "_Régler l'entourage à la couleur d'arrière-plan"
 
 #: plug-ins/common/apply_lens.c:414
 msgid "_Make Surroundings Transparent"
-msgstr "R_endre l'environnement transparent"
+msgstr "R_endre l'entourage transparent"
 
 #: plug-ins/common/apply_lens.c:432
 msgid "_Lens Refraction Index:"
-msgstr "Indice de réfraction de la _Lentille: "
+msgstr "Indice de réfraction de la _lentille: "
 
 #: plug-ins/common/autocrop.c:75
 msgid "<Image>/Image/Transform/_Autocrop"
@@ -2387,7 +2384,6 @@ msgid "_Spherical Map"
 msgstr "Carte _sphérique"
 
 #: plug-ins/common/bumpmap.c:966
-#, fuzzy
 msgid "S_inusoidal Map"
 msgstr "Carte s_inusoïdale"
 
@@ -2412,7 +2408,7 @@ msgstr "_Repoussage d'après une carte :"
 
 #: plug-ins/common/bumpmap.c:1052 plug-ins/common/emboss.c:536
 msgid "_Azimuth:"
-msgstr "_Azimuth :"
+msgstr "_Azimut :"
 
 #: plug-ins/common/bumpmap.c:1061
 msgid "_Elevation:"
@@ -2543,7 +2539,7 @@ msgid "Save Channel Mixer Settings"
 msgstr "Enregistrer les réglages pour Canal mixer"
 
 #: plug-ins/common/channel_mixer.c:1223
-#, fuzzy, c-format
+#, c-format
 msgid "Parameters were saved to '%s'"
 msgstr "Les paramètres ont été enregistrés dans « %s »"
 
@@ -2949,9 +2945,8 @@ msgstr ""
 "masque). "
 
 #: plug-ins/common/curve_bend.c:727
-#, fuzzy
 msgid "Cannot operate on layers with masks."
-msgstr "Impossible d'opérer sur des images en couleur indexées."
+msgstr "Impossible d'opérer sur des calques avec des masques."
 
 #: plug-ins/common/curve_bend.c:742
 msgid "Cannot operate on empty selections."
@@ -2966,7 +2961,7 @@ msgstr "Déformer selon une courbe"
 #. The preview button
 #: plug-ins/common/curve_bend.c:1310
 msgid "_Preview Once"
-msgstr "Aperçu _unique"
+msgstr "Lancer l'_aperçu"
 
 #. The preview toggle
 #: plug-ins/common/curve_bend.c:1319
@@ -3000,7 +2995,7 @@ msgstr "_Lissage"
 #. The wor_on_copy toggle
 #: plug-ins/common/curve_bend.c:1382
 msgid "Work on Cop_y"
-msgstr "Travail sur co_pie"
+msgstr "Travailler sur une co_pie"
 
 #. The curves graph
 #: plug-ins/common/curve_bend.c:1392
@@ -3430,7 +3425,6 @@ msgid "Sc_attering:"
 msgstr "_Diffusion :"
 
 #: plug-ins/common/diffraction.c:637
-#, fuzzy
 msgid "Po_larization:"
 msgstr "Po_larisation :"
 
@@ -3767,7 +3761,7 @@ msgstr "Centre de l'effet"
 #. show / hide cursor
 #: plug-ins/common/flarefx.c:808
 msgid "_Show Cursor"
-msgstr "_Afficher le curseur"
+msgstr "_Afficher le réticule"
 
 #: plug-ins/common/fractaltrace.c:131
 msgid "<Image>/Filters/Map/_Fractal Trace..."
@@ -4393,11 +4387,11 @@ msgstr "Quantité d'espacement entre les cellules."
 
 #: plug-ins/common/guillotine.c:79
 msgid "<Image>/Image/Transform/_Guillotine"
-msgstr "<Image>/Image/Transformations/_Guillotine"
+msgstr "<Image>/Image/Transformations/_Massicot"
 
 #: plug-ins/common/guillotine.c:109
 msgid "Guillotine..."
-msgstr "Guillotine..."
+msgstr "Massicot..."
 
 #: plug-ins/common/hot.c:217
 msgid "<Image>/Filters/Colors/_Hot..."
@@ -4639,7 +4633,7 @@ msgstr "Exporter l'aperçu"
 
 #: plug-ins/common/jpeg.c:758
 msgid "EXIF data will be ignored."
-msgstr ""
+msgstr "Les données EXIF seront ignorées."
 
 #: plug-ins/common/jpeg.c:972
 msgid "JPEG preview"
@@ -4964,8 +4958,6 @@ msgstr "Paramètres de flou"
 msgid "_Angle:"
 msgstr "_Angle :"
 
-#. Inform the user that we couldn't losslessly save the
-#. * transparency & just use the full palette
 #: plug-ins/common/mng.c:442 plug-ins/common/png.c:1558
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
@@ -5089,20 +5081,20 @@ msgstr "Mosaïque"
 
 #: plug-ins/common/mosaic.c:543
 msgid "Co_lor Averaging"
-msgstr "Mo_yenne de couleur"
+msgstr "_Moyenne des couleurs"
 
 #: plug-ins/common/mosaic.c:553
 msgid "Allo_w Tile splitting"
-msgstr "Aut_orise le découpage en morceaux"
+msgstr "_Autoriser le découpage des carreaux"
 
 # bof
 #: plug-ins/common/mosaic.c:563
 msgid "_Pitted Surfaces"
-msgstr "Surfaces endo_mmagées"
+msgstr "_Surfaces piquées"
 
 #: plug-ins/common/mosaic.c:573
 msgid "_FG/BG Lighting"
-msgstr "Éclairage de l'_AV/AR Plan"
+msgstr "_Éclairage de l'AV/AR plan"
 
 #. tiling primitive
 #: plug-ins/common/mosaic.c:587
@@ -5115,11 +5107,11 @@ msgstr "_Carrés"
 
 #: plug-ins/common/mosaic.c:592
 msgid "He_xagons"
-msgstr "He_xagones"
+msgstr "_Hexagones"
 
 #: plug-ins/common/mosaic.c:593
 msgid "Oc_tagons & Squares"
-msgstr "Oc_togones et carrés"
+msgstr "_Octogones et carrés"
 
 #: plug-ins/common/mosaic.c:612
 msgid "T_ile Size:"
@@ -5361,16 +5353,16 @@ msgstr "Ra_yonnement :"
 
 #: plug-ins/common/nova.c:391
 msgid "R_andom Hue:"
-msgstr "Teinte _aléatoire :"
+msgstr "_Teinte aléatoire :"
 
 #. to avoid side effects while initialization
 #: plug-ins/common/nova.c:449
 msgid "Center of SuperNova"
-msgstr "Centre de la Supernova"
+msgstr "Centre de la supernova"
 
 #: plug-ins/common/nova.c:531
 msgid "S_how Cursor"
-msgstr "Affic_her le curseur"
+msgstr "_Afficher le réticule"
 
 #: plug-ins/common/oilify.c:106
 msgid "<Image>/Filters/Artistic/Oili_fy..."
@@ -5764,37 +5756,37 @@ msgstr "Ascii"
 msgid "<Image>/Filters/Distorts/P_olar Coords..."
 msgstr "<Image>/Filtres/Distorsions/Coordo_nnées polaires..."
 
-#: plug-ins/common/polar.c:353
+#: plug-ins/common/polar.c:358
 msgid "Polarizing..."
 msgstr "Polarisation en cours..."
 
-#: plug-ins/common/polar.c:588
+#: plug-ins/common/polar.c:593
 msgid "Polarize"
 msgstr "Coordonnées polaires"
 
-#: plug-ins/common/polar.c:639
+#: plug-ins/common/polar.c:644
 msgid "Circle _Depth in Percent:"
 msgstr "Profon_deur du cercle en Pourcentage :"
 
-#: plug-ins/common/polar.c:648
+#: plug-ins/common/polar.c:653
 msgid "Offset _Angle:"
 msgstr "_Angle de décalage :"
 
-#: plug-ins/common/polar.c:660
+#: plug-ins/common/polar.c:665
 msgid "_Map Backwards"
 msgstr "Sens _inverse"
 
-#: plug-ins/common/polar.c:666
+#: plug-ins/common/polar.c:671
 msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
 msgstr "Si coché, le tracé commencera du coté droit et non du coté gauche.."
 
-#: plug-ins/common/polar.c:674
+#: plug-ins/common/polar.c:679
 msgid "Map from _Top"
 msgstr "Tracer à partir du hau_t"
 
-#: plug-ins/common/polar.c:680
+#: plug-ins/common/polar.c:685
 msgid ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
@@ -5802,11 +5794,11 @@ msgstr ""
 "Si non coché, le bas de l'image originale apparaîtra au milieu de la "
 "nouvelle image et le haut sur le dehors. Si coché, ce sera l'opposé."
 
-#: plug-ins/common/polar.c:689
+#: plug-ins/common/polar.c:694
 msgid "To _Polar"
 msgstr "En _Polaires"
 
-#: plug-ins/common/polar.c:695
+#: plug-ins/common/polar.c:700
 msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
@@ -5834,7 +5826,6 @@ msgstr "Erreur au lancement de Ghostscript (%s)"
 #: plug-ins/common/postscript.c:2579 plug-ins/common/postscript.c:2707
 #: plug-ins/common/sunras.c:1453 plug-ins/common/sunras.c:1561
 #: plug-ins/fits/fits.c:827 plug-ins/fits/fits.c:951
-#, fuzzy
 msgid "Write error occurred"
 msgstr "Une erreur d'écriture est survenue"
 
@@ -6031,11 +6022,11 @@ msgstr "Bordures"
 #. Wave toggle box
 #: plug-ins/common/ripple.c:501
 msgid "Wave Type"
-msgstr "Type de vague"
+msgstr "Type d'ondes"
 
 #: plug-ins/common/ripple.c:505
 msgid "Saw_tooth"
-msgstr "_Dent de Scie"
+msgstr "_Dent de scie"
 
 #: plug-ins/common/ripple.c:506
 msgid "S_ine"
@@ -6298,15 +6289,15 @@ msgstr "Déplacer"
 
 #: plug-ins/common/shift.c:331
 msgid "Shift _Horizontally"
-msgstr "Déplacer _Horizontalement"
+msgstr "Déplacer _horizontalement"
 
 #: plug-ins/common/shift.c:332
 msgid "Shift _Vertically"
-msgstr "Déplacer _Verticalement"
+msgstr "Déplacer _verticalement"
 
 #: plug-ins/common/shift.c:363
 msgid "Shift _Amount:"
-msgstr "Quantité de dépl_acement :"
+msgstr "_Distance du déplacement :"
 
 #: plug-ins/common/sinus.c:196
 msgid "<Image>/Filters/Render/Pattern/_Sinus..."
@@ -6520,15 +6511,15 @@ msgstr "_Seuil de luminosité :"
 
 #: plug-ins/common/sparkle.c:371
 msgid "Adjust the Luminosity Threshold"
-msgstr "Ajuster le seuil de luminosité"
+msgstr "Ajuste le seuil de luminosité"
 
 #: plug-ins/common/sparkle.c:378
 msgid "F_lare Intensity:"
-msgstr "Intensité de l'éb_louissement :"
+msgstr "Intensité du s_cintillement :"
 
 #: plug-ins/common/sparkle.c:381
 msgid "Adjust the Flare Intensity"
-msgstr "Ajuster l'intensité de l'éblouissement :"
+msgstr "Ajuste l'intensité de l'éblouissement :"
 
 #: plug-ins/common/sparkle.c:388
 msgid "_Spike Length:"
@@ -6536,7 +6527,7 @@ msgstr "L_ongueur des pointes :"
 
 #: plug-ins/common/sparkle.c:391
 msgid "Adjust the Spike Length"
-msgstr "Réglage de la longueur des pointes"
+msgstr "Régle la longueur des pointes"
 
 #: plug-ins/common/sparkle.c:398
 msgid "Sp_ike Points:"
@@ -6544,17 +6535,16 @@ msgstr "Nb de po_intes :"
 
 #: plug-ins/common/sparkle.c:401
 msgid "Adjust the Number of Spikes"
-msgstr "Régler le nombre de pointes"
+msgstr "Régle le nombre de pointes"
 
 #: plug-ins/common/sparkle.c:408
 msgid "Spi_ke Angle (-1: Random):"
 msgstr "An_gle des pointes (-1 : aléatoire) :"
 
 #: plug-ins/common/sparkle.c:411
-#, fuzzy
 msgid "Adjust the Spike Angle (-1 means a Random Angle is chosen)"
 msgstr ""
-"Réglage de l'angle des pointes (-1 signifie qu'un angle aléatoire est choisi)"
+"Régle l'angle des pointes (-1 signifie qu'un angle aléatoire est choisi)"
 
 #: plug-ins/common/sparkle.c:419
 msgid "Spik_e Density:"
@@ -6562,11 +6552,11 @@ msgstr "Densité des point_es"
 
 #: plug-ins/common/sparkle.c:422
 msgid "Adjust the Spike Density"
-msgstr "Réglage de la densité de pointes"
+msgstr "Régle la densité de pointes"
 
 #: plug-ins/common/sparkle.c:432
 msgid "Adjust the Opacity of the Spikes"
-msgstr "Réglage de l'opacité des pointes"
+msgstr "Régle l'opacité des pointes"
 
 #: plug-ins/common/sparkle.c:439
 msgid "_Random Hue:"
@@ -6575,7 +6565,8 @@ msgstr "Teinte al_éatoire :"
 #: plug-ins/common/sparkle.c:442
 msgid "Adjust the Value how much the Hue should be changed randomly"
 msgstr ""
-"Ajuster la valeur d'autant que la teinte doit être modifiée aléatoirement"
+"Ajuste l'amplitude de la valeur sur laquelle la teinte doit être modifiée "
+"aléatoirement"
 
 #: plug-ins/common/sparkle.c:450
 msgid "Rando_m Saturation:"
@@ -6584,8 +6575,8 @@ msgstr "Sat_uration aléatoire :"
 #: plug-ins/common/sparkle.c:453
 msgid "Adjust the Value how much the Saturation should be changed randomly"
 msgstr ""
-"Ajuste la valeur d'autant que doit être changée la valeur de la saturation "
-"aléatoire"
+"Ajuste l'amplitude de la valeur sur laquelle la saturation doit être "
+"modifiée aléatoirement"
 
 #: plug-ins/common/sparkle.c:471
 msgid "_Preserve Luminosity"
@@ -6593,7 +6584,7 @@ msgstr "_Préserver la luminosité"
 
 #: plug-ins/common/sparkle.c:478
 msgid "Should the Luminosity be preserved?"
-msgstr "La luminosité doit elle être préservée"
+msgstr "La luminosité doit elle être préservée ?"
 
 #: plug-ins/common/sparkle.c:484
 msgid "In_verse"
@@ -6605,7 +6596,7 @@ msgstr "Un effet d'inversion doit il être fait ?"
 
 #: plug-ins/common/sparkle.c:496
 msgid "A_dd Border"
-msgstr "A_jouter un bord"
+msgstr "A_jouter une bordure"
 
 #: plug-ins/common/sparkle.c:502
 msgid "Draw a Border of Spikes around the Image"
@@ -7271,9 +7262,8 @@ msgid "Create a new unit from scratch."
 msgstr "Crée une nouvelle unité (à partir de rien)."
 
 #: plug-ins/common/uniteditor.c:563
-#, fuzzy
 msgid "Create a new unit with the currently selected unit as template."
-msgstr "Crée une nouvelle unité avec l'unité actuelle comme patron."
+msgstr "Créer une nouvelle unité avec l'unité actuelle comme modèle."
 
 #: plug-ins/common/unsharp.c:149
 msgid "<Image>/Filters/Enhance/_Unsharp Mask..."
@@ -7865,7 +7855,6 @@ msgstr ""
 "« %s » :\n"
 "Type d'image non spécifiée"
 
-#. The image is not black-and-white.
 #: plug-ins/common/xbm.c:959
 msgid ""
 "The image which you are trying to save as an XBM contains more than two "
@@ -8932,13 +8921,12 @@ msgid "XY Position:"
 msgstr "Position XY :"
 
 #: plug-ins/gfig/gfig-spiral.c:57
-#, fuzzy
 msgid "Spiral Number of Turns"
-msgstr "Spirale : nombre de points"
+msgstr "Nombre de tours de la spirale"
 
 #: plug-ins/gfig/gfig-star.c:56
 msgid "Star Number of Points"
-msgstr "Étoile : nombre de points"
+msgstr "Nombre de points de l'étoile"
 
 #: plug-ins/gflare/gflare.c:566
 msgid "Addition"
@@ -8954,7 +8942,7 @@ msgstr "<Image>/Filtres/Effets de lumière/Éb_louissement GIMP..."
 
 #: plug-ins/gflare/gflare.c:967
 msgid "Gradient Flare..."
-msgstr "Éblouissement Dégradé..."
+msgstr "Éblouissement dégradé..."
 
 #: plug-ins/gflare/gflare.c:1269
 #, c-format
@@ -8964,7 +8952,7 @@ msgstr "Échec d'ouverture du fichier d'éblouissement GIMP « %s » : %s"
 #: plug-ins/gflare/gflare.c:1277
 #, c-format
 msgid "'%s' is not a valid GFlare file."
-msgstr "« %s » n'est pas un fichier valide."
+msgstr "« %s » n'est pas un fichier d'éblouissement GIMP valide."
 
 #: plug-ins/gflare/gflare.c:1331
 #, c-format
@@ -9025,7 +9013,7 @@ msgstr "Ro_tation :"
 
 #: plug-ins/gflare/gflare.c:2710
 msgid "_Hue Rotation:"
-msgstr "R_otation de la Teinte :"
+msgstr "R_otation de la teinte :"
 
 #: plug-ins/gflare/gflare.c:2722
 msgid "Vector _Angle:"
@@ -9148,7 +9136,7 @@ msgstr "Dégradé angulaire :"
 
 #: plug-ins/gflare/gflare.c:3474 plug-ins/gflare/gflare.c:3581
 msgid "Angular Size Gradient:"
-msgstr "Dégradé angulaire de taille :"
+msgstr "Dégradé de taille angulaire :"
 
 #: plug-ins/gflare/gflare.c:3495 plug-ins/gflare/gflare.c:3602
 #: plug-ins/gflare/gflare.c:3741
@@ -9163,7 +9151,7 @@ msgstr "Rotation :"
 #: plug-ins/gflare/gflare.c:3519 plug-ins/gflare/gflare.c:3627
 #: plug-ins/gflare/gflare.c:3766
 msgid "Hue Rotation:"
-msgstr "Rotation de la Teinte :"
+msgstr "Rotation de la teinte :"
 
 #: plug-ins/gflare/gflare.c:3533
 msgid "G_low"
@@ -9194,7 +9182,7 @@ msgstr "Dégradé probabilité :"
 #.
 #: plug-ins/gflare/gflare.c:3783
 msgid "Shape of Second Flares"
-msgstr "Ombre des Deuxièmes Éblouissement"
+msgstr "Ombre des reflets secondaires"
 
 #: plug-ins/gflare/gflare.c:3792 plug-ins/imagemap/imap_menu.c:369
 #: plug-ins/imagemap/imap_popup.c:140 plug-ins/imagemap/imap_tools.c:158
@@ -9212,7 +9200,7 @@ msgstr "Graine aléatoire :"
 
 #: plug-ins/gflare/gflare.c:3856
 msgid "_Second Flares"
-msgstr "Deuxième Ébloui_ssement"
+msgstr "_Reflets secondaires"
 
 #: plug-ins/gflare/gflare.c:4456
 msgid "none"
@@ -9380,7 +9368,7 @@ msgstr "Ajoute un effet d'ombre portée à chaque trait de brosse"
 
 #: plug-ins/gimpressionist/general.c:174
 msgid "Edge darken:"
-msgstr "Assombrissement des bords :"
+msgstr "Assombrir les bords :"
 
 #: plug-ins/gimpressionist/general.c:178
 msgid "How much to \"darken\" the edges of each brush stroke"
@@ -9390,7 +9378,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/general.c:183
 msgid "Shadow darken:"
-msgstr "Profondeur d'ombre :"
+msgstr "Intensité de l'ombre :"
 
 #: plug-ins/gimpressionist/general.c:187
 msgid "How much to \"darken\" the drop shadow"
@@ -9398,12 +9386,12 @@ msgstr "À quel point l'ombre portée doit être sombre"
 
 #: plug-ins/gimpressionist/general.c:192
 msgid "Shadow depth:"
-msgstr "Profondeur d'ombre :"
+msgstr "Portée de l'ombre :"
 
 #: plug-ins/gimpressionist/general.c:196
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
-msgstr "La distance de l'objet à laquelle l'ombre portée doit apparaître"
+msgstr "La distance depuis l'objet à laquelle l'ombre doit porter"
 
 #: plug-ins/gimpressionist/general.c:201
 msgid "Shadow blur:"
@@ -9430,7 +9418,6 @@ msgstr "<Image>/Filtres/Artistique/_GIMPressionnist..."
 msgid "Painting..."
 msgstr "Peinture..."
 
-#. don't translate the gimprc entry
 #: plug-ins/gimpressionist/gimpressionist.c:64
 #, c-format
 msgid ""
@@ -9471,18 +9458,16 @@ msgid "Start angle:"
 msgstr "Angle de départ :"
 
 #: plug-ins/gimpressionist/orientation.c:78
-#, fuzzy
 msgid "The starting angle of the first brush to create"
-msgstr "L'angle de la première brosse à créer"
+msgstr "L'angle de départ de la première brosse à créer"
 
 #: plug-ins/gimpressionist/orientation.c:86
 msgid "Angle span:"
 msgstr "Intervalle d'angles :"
 
 #: plug-ins/gimpressionist/orientation.c:90
-#, fuzzy
 msgid "The angle span of the first brush to create"
-msgstr "L'angle de la première brosse à créer"
+msgstr "L'angle d'écartement de la première brosse à créer"
 
 #: plug-ins/gimpressionist/orientation.c:114
 msgid ""
@@ -9505,7 +9490,7 @@ msgstr "La distance au centre de l'image détermine la direction du tracé"
 
 #: plug-ins/gimpressionist/orientation.c:134
 msgid "Selects a random direction of each stroke"
-msgstr "Sélectionne une direction aléatoire à tracé"
+msgstr "Sélectionne une direction aléatoire pour chaque tracé"
 
 #: plug-ins/gimpressionist/orientation.c:138
 #: plug-ins/gimpressionist/size.c:127
@@ -9551,11 +9536,11 @@ msgstr "Spécifier manuellement la direction du tracé"
 
 #: plug-ins/gimpressionist/orientation.c:204
 msgid "Opens up the Orientation Map Editor"
-msgstr "Ouvre l'éditeur de carte d'orientation"
+msgstr "Ouvre l'éditeur de la carte d'orientation"
 
 #: plug-ins/gimpressionist/orientmap.c:446
 msgid "Orientation Map Editor"
-msgstr "Éditeur de carte d'orientation"
+msgstr "Éditeur de la carte d'orientation"
 
 #: plug-ins/gimpressionist/orientmap.c:468
 msgid "Vectors"
@@ -9567,7 +9552,7 @@ msgid ""
 "it towards mouse, Middle-click to add a new vector."
 msgstr ""
 "Le champ de vecteurs :\n"
-"* <bouton gauche> pour bouger le vecteur sélectioné\n"
+"* <bouton gauche> pour bouger le vecteur sélectionné\n"
 "* <bouton droit> pour le diriger vers la souris\n"
 "* <bouton du milieu> pour ajouter un nouveau vecteur"
 
@@ -9722,7 +9707,7 @@ msgstr "La densité relative des tracés de la brosse"
 
 #: plug-ins/gimpressionist/placement.c:91
 msgid "Centerize"
-msgstr "Centré"
+msgstr "Centrer"
 
 #: plug-ins/gimpressionist/placement.c:95
 msgid "Focus the brush strokes around the center of the image"
@@ -9821,26 +9806,24 @@ msgstr "La plus grosse brosse à créer"
 #: plug-ins/gimpressionist/size.c:111
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
-msgstr ""
-"La valeur (luminosité) de la région détermine la longueur du de la brosse"
+msgstr "La valeur (luminosité) de la région détermine la taille du tracé"
 
 #: plug-ins/gimpressionist/size.c:118
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
-msgstr ""
-"La distance au centre de l'image détermine la longueur du tracé de la brosse"
+msgstr "La distance depuis le centre de l'image détermine la taille du tracé"
 
 #: plug-ins/gimpressionist/size.c:125
 msgid "Selects a random size for each stroke"
-msgstr "Une longueur aléatoire est choisie pour tracé"
+msgstr "Sélectionne une taille aléatoire pour chaque tracé"
 
 #: plug-ins/gimpressionist/size.c:132
 msgid "Let the direction from the center determine the size of the stroke"
-msgstr "La direction du centre de l'image détermine la longueur du tracé"
+msgstr "La direction depuis le centre de l'image détermine la taille du tracé"
 
 #: plug-ins/gimpressionist/size.c:152
 msgid "The hue of the region determines the size of the stroke"
-msgstr "La teinte de la région détermine la longueur du tracé"
+msgstr "La teinte de la région détermine la taille du tracé"
 
 #: plug-ins/gimpressionist/size.c:160
 msgid "The brush-size that matches the original image the closest is selected"
@@ -9852,11 +9835,11 @@ msgstr "La taille des tracés est choisie manuellement"
 
 #: plug-ins/gimpressionist/size.c:181
 msgid "Opens up the Size Map Editor"
-msgstr "Ouvre l'éditeur de carte de longueurs"
+msgstr "Ouvre l'éditeur de carte de tailles"
 
 #: plug-ins/gimpressionist/sizemap.c:404
 msgid "Size Map Editor"
-msgstr "Éditeur de carte de longueurs"
+msgstr "Éditeur de carte de tailles"
 
 #: plug-ins/gimpressionist/sizemap.c:426
 msgid "Smvectors"
@@ -10435,7 +10418,7 @@ msgstr "Lien _relatif"
 #: plug-ins/imagemap/imap_edit_area_info.c:269
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
 msgstr ""
-"Nom/ID du cadre de destination : (optionnel - uniquement utilisé pour les "
+"Nom/ID du _cadre de destination : (optionnel - uniquement utilisé pour les "
 "cadres)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:272
@@ -10935,9 +10918,8 @@ msgstr "Dessin du labyrinthe en cours..."
 
 #. $Id$
 #: plug-ins/maze/maze.h:2
-#, fuzzy
 msgid "Maze"
-msgstr "Marbre"
+msgstr "Labyrinthe"
 
 #. entscale == Entry and Scale pair function found in pixelize.c
 #: plug-ins/maze/maze_face.c:217
@@ -11504,9 +11486,8 @@ msgid "Set the scale (size) of the image"
 msgstr "Régler l'échelle (taille) de l'image"
 
 #: plug-ins/print/gimp_main_window.c:1170
-#, fuzzy
 msgid "Scale by:"
-msgstr "Échelle en Z :"
+msgstr "Échelle de :"
 
 #: plug-ins/print/gimp_main_window.c:1175
 msgid ""

@@ -11,11 +11,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 2.0.1\n"
+"Project-Id-Version: gimp 2.0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-17 15:30+0200\n"
-"PO-Revision-Date: 2004-04-24 19:17+0200\n"
-"Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
+"POT-Creation-Date: 2004-07-19 23:55+0200\n"
+"PO-Revision-Date: 2004-07-19 21:03+0200\n"
+"Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -41,7 +41,7 @@ msgid ""
 "(currently \"%s\")."
 msgstr ""
 "Impossible d'ouvrir un fichier d'échanges de test. Pour éviter de perdre des "
-"données, veillez vérifier l'emplacement et les permissions du répertoire "
+"données, veuillez vérifier l'emplacement et les permissions du répertoire "
 "d'échanges défini dans vos préférences (actuellement « %s »)."
 
 #: app/app_procs.c:281
@@ -61,7 +61,7 @@ msgstr ""
 #: app/main.c:237 app/widgets/gimptoolbox.c:439
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP"
-msgstr "Le GIMP"
+msgstr "GIMP"
 
 #.
 #. *  anything else starting with a '-' is an error.
@@ -301,6 +301,11 @@ msgid ""
 "using different filenames, restart the Gimp and check the location of the "
 "swap directory in your Preferences."
 msgstr ""
+"Impossible d'ouvrir le fichier d'échanges. Gimp a déjà utilisé toute la "
+"mémoire et ne peut utiliser le fichier d'échange. Certaines parties de votre "
+"image peuvent être corrompues. Essayer d'enregistrer votre travail sous "
+"différents noms de fichier, relancez Gimp et vérifiez l'emplacement du "
+"répertoire du fichier d'échanges dans vos Préférences."
 
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
@@ -485,7 +490,6 @@ msgstr ""
 "grille."
 
 #: app/config/gimprc-blurbs.h:74
-#, fuzzy
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
 "algorithm.  The seed fill starts at the initially selected pixel and "
@@ -494,9 +498,9 @@ msgid ""
 "the default threshold."
 msgstr ""
 "Des outils comme la sélection floue et le remplissage utilisent un "
-"algorithme de  recherche dit « à germe ». Le remplissage se fait à partir du "
+"algorithme de recherche dit « à germe ». Le remplissage se fait à partir du "
 "pixel initial et progresse dans toutes les directions jusqu'à ce que la "
-"différence de couleur avec le pixel initial dépasse un seuil déterminé.  "
+"différence de couleur avec le pixel initial dépasse un seuil déterminé. "
 "Cette option permet de contrôler la valeur par défaut de ce seuil."
 
 #: app/config/gimprc-blurbs.h:87
@@ -602,6 +606,9 @@ msgid ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
+"Détermine la résolution horizontale du moniteur en points par pouce. "
+"Lorsqu'elle est définie à 0, cela force l'interrogation du serveur X pour "
+"les informations de résolution horizontale et verticale."
 
 #: app/config/gimprc-blurbs.h:198
 msgid ""
@@ -609,6 +616,9 @@ msgid ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
+"Détermine la résolution vertitale du moniteur en points par pouce. "
+"Lorsqu'elle est définie à 0, cela force l'interrogation du serveur X pour "
+"les informations de résolution horizontale et verticale."
 
 #: app/config/gimprc-blurbs.h:203
 msgid ""
@@ -749,7 +759,7 @@ msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
 msgstr ""
-"Si cette option est activée, le contour du calque sera visible par défaut. "
+"Si cette option est activée, les bords du calque seront visibles par défaut. "
 "Cela peut aussi être activé ou désactivé via le menu « Affichage/Afficher "
 "les bords du calque »."
 
@@ -859,11 +869,11 @@ msgid ""
 "swap space, but will also cause the GIMP to use more memory. Conversely, a "
 "smaller cache size causes the GIMP to use more swap space and less memory."
 msgstr ""
-"Le tampon d'image est utilisé afin que GIMP ne perde aucune partie entre la "
+"Le cache d'image est utilisé afin que GIMP ne perde aucune partie entre la "
 "mémoire et le disque dur. Augmenter cette valeur demandera à  GIMP "
-"d'utiliser moins d'espace tampon, et d'utiliser plus de mémoire. "
-"Inversement, une petite taille de cache demandera à  GIMP d'utiliser plus "
-"d'espace tampon et moins de mémoire."
+"d'utiliser moins d'espace cache, et d'utiliser plus de mémoire. Inversement, "
+"une petite taille de cache demandera à GIMP d'utiliser plus d'espace cache "
+"et moins de mémoire."
 
 #: app/config/gimprc-blurbs.h:355
 msgid ""
@@ -1489,7 +1499,7 @@ msgstr "Nouveau canal"
 
 #: app/core/core-enums.c:642 app/widgets/gimpchanneltreeview.c:125
 msgid "Delete Channel"
-msgstr "Supprime le canal"
+msgstr "Supprimer le canal"
 
 #: app/core/core-enums.c:643
 msgid "Reposition Channel"
@@ -1533,7 +1543,7 @@ msgstr "Arrgh : Impossible d'annuler"
 
 #: app/core/gimp-edit.c:118 app/core/gimp-edit.c:227
 msgid "Pasted Layer"
-msgstr "Calque Copié"
+msgstr "Calque copié"
 
 #: app/core/gimp-edit.c:256
 msgid "Clear"
@@ -2358,7 +2368,6 @@ msgstr ""
 "Chargement de la palette « %s » : nombre de colonnes invalide à la ligne %d. "
 "Utilisation de la valeur par défaut."
 
-#. maybe we should just abort?
 #: app/core/gimppalette.c:493
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
@@ -2492,13 +2501,12 @@ msgstr ""
 "point."
 
 #: app/core/gimptemplate.c:150
-#, fuzzy
 msgid "The horizontal image resolution."
-msgstr "La résolution horizontale de l'image"
+msgstr "La résolution horizontale de l'image."
 
 #: app/core/gimptemplate.c:155
 msgid "The vertical image resolution."
-msgstr "La résolution verticale de l'image"
+msgstr "La résolution verticale de l'image."
 
 #. pseudo unit
 #: app/core/gimpunit.c:55
@@ -2637,11 +2645,11 @@ msgstr "Déposer un nouveau chemin"
 
 #: app/display/gimpdisplayshell-filter-dialog.c:73
 msgid "Color Display Filters"
-msgstr "Filtres d'affichage couleur"
+msgstr "Filtres de couleur d'affichage"
 
 #: app/display/gimpdisplayshell-filter-dialog.c:76
 msgid "Configure Color Display Filters"
-msgstr "Configurer les filtres d'affichage couleur"
+msgstr "Configurer les filtres de couleur d'affichage"
 
 #: app/display/gimpdisplayshell-layer-select.c:123
 msgid "Layer Select"
@@ -2843,7 +2851,7 @@ msgstr "Copie du canal %s"
 
 #: app/gui/channels-commands.c:322
 msgid "Empty Channel"
-msgstr "Vider le canal"
+msgstr "Canal vide"
 
 #: app/gui/channels-commands.c:338
 msgid "New Channel Color"
@@ -3680,7 +3688,6 @@ msgid "/blendingfunction/_Curved"
 msgstr "/Type de mélange/_Courbe"
 
 #: app/gui/gradient-editor-menu.c:178
-#, fuzzy
 msgid "/blendingfunction/_Sinusoidal"
 msgstr "/Type de mélange/_Sinusoïdal"
 
@@ -4215,7 +4222,7 @@ msgstr "/Affichage/Fenêtre de na_vigation"
 
 #: app/gui/image-menu.c:444
 msgid "/View/Display _Filters..."
-msgstr "/Affichage/Afficher les _filtres..."
+msgstr "/Affichage/_Filtres d'affichage..."
 
 #: app/gui/image-menu.c:452
 msgid "/View/Show _Selection"
@@ -4918,7 +4925,7 @@ msgstr "Fenêtre d'informations"
 
 #: app/gui/info-window.c:234
 msgid "Image Information"
-msgstr "Informations de l'image"
+msgstr "Informations sur l'image"
 
 #. add the information fields
 #: app/gui/info-window.c:251
@@ -4994,7 +5001,7 @@ msgstr "Masque de calque vers Sélection"
 
 #: app/gui/layers-commands.c:717
 msgid "Empty Layer"
-msgstr "Vider le calque"
+msgstr "Calque vide"
 
 #: app/gui/layers-commands.c:741
 msgid "Create a New Layer"
@@ -5537,7 +5544,7 @@ msgstr "Vous devez relancer GIMP pour que ces changements prennent effet."
 
 #: app/gui/preferences-dialog.c:895
 msgid "Show _Menubar"
-msgstr "Afficher la barre de _menu"
+msgstr "Afficher la barre de _menus"
 
 #: app/gui/preferences-dialog.c:898
 msgid "Show _Rulers"
@@ -5790,9 +5797,8 @@ msgid "Fit to Window"
 msgstr "Ajuster à la fenêtre"
 
 #: app/gui/preferences-dialog.c:1512
-#, fuzzy
 msgid "Initial Zoom Ratio:"
-msgstr "Facteur d'échelle initial :"
+msgstr "Facteur de zoom initial :"
 
 #. Pointer Movement Feedback
 #: app/gui/preferences-dialog.c:1516
@@ -6224,11 +6230,11 @@ msgstr "Dimensions en pixels"
 
 #: app/gui/resize-dialog.c:227
 msgid "Layer Boundary Size"
-msgstr "Taille du calque"
+msgstr "Taille des bords du calque"
 
 #: app/gui/resize-dialog.c:228
 msgid "Set Layer Boundary Size"
-msgstr "Changer la taille du calque"
+msgstr "Changer la taille des bords du calque"
 
 #: app/gui/resize-dialog.c:234
 msgid "Canvas Size"
@@ -6268,7 +6274,7 @@ msgstr "_Centrer"
 
 #: app/gui/resize-dialog.c:549
 msgid "Print Size & Display Unit"
-msgstr "Afficher la taille & afficher l'unité"
+msgstr "Unité d'impression et d'affichage"
 
 #. the resolution labels
 #: app/gui/resize-dialog.c:631 app/widgets/gimptemplateeditor.c:374
@@ -6910,7 +6916,7 @@ msgid ""
 "Copyright (C) 1995-2004\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
-"<b>Le GIMP - Le programme de manipulation d'images GNU</b>\n"
+"<b>GIMP - Le programme de manipulation d'images GNU</b>\n"
 "Copyright © 1995-2004\n"
 "Spencer Kimball, Peter Mattis et l'équipe de développement de GIMP."
 
@@ -7094,7 +7100,7 @@ msgstr "Calibrer"
 
 #: app/gui/vectors-commands.c:444
 msgid "Empty Path"
-msgstr "Vider le chemin"
+msgstr "Chemin vide"
 
 #: app/gui/vectors-commands.c:458 app/gui/vectors-commands.c:506
 msgid "New Path"
@@ -7476,7 +7482,7 @@ msgstr ""
 #: app/plug-in/plug-in-rc.c:155
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
-msgstr "Ignore « %s » : version de protocole GIMP erronée"
+msgstr "Ignore « %s » : mauvaise version du protocole GIMP."
 
 #: app/plug-in/plug-ins.c:131
 msgid "Resource configuration"
@@ -10199,4 +10205,4 @@ msgstr "Erreur XCF : Version %d non supportée du format XCF rencontrée"
 
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
-msgstr "Crée et modifier des images ou des photographies"
+msgstr "Crée et modifie des images ou des photographies"
