@@ -23,14 +23,14 @@
 struct _Selection
 {
   /*  This information is for maintaining the selection's appearance  */
-  GdkWindow        *win;              /*  Window to draw to                    */
-  GimpDisplayShell *shell;            /*  GimpDisplay that owns the selection  */
-  GdkGC            *gc_in;            /*  GC for drawing selection outline     */
-  GdkGC            *gc_out;           /*  GC for selected regions outside
-                                       *  current layer */
-  GdkGC            *gc_layer;         /*  GC for current layer outline         */
+  GdkWindow        *win;              /*  Window to draw to                   */
+  GimpDisplayShell *shell;            /*  GimpDisplay that owns the selection */
+  GdkGC            *gc_in;            /*  GC for drawing selection outline    */
+  GdkGC            *gc_out;           /*  GC for selected regions outside     *
+                                       *  current layer                       */
+  GdkGC            *gc_layer;         /*  GC for current layer outline        */
 
-  /*  This information is for drawing the marching ants around the border  */
+  /*  This information is for drawing the marching ants around the border   */
   GdkSegment       *segs_in;          /*  gdk segments of area boundary     */
   GdkSegment       *segs_out;         /*  gdk segments of area boundary     */
   GdkSegment       *segs_layer;       /*  gdk segments of area boundary     */
@@ -49,7 +49,7 @@ struct _Selection
   gint              cycle;            /*  color cycling turned on           */
   GdkPixmap        *cycle_pix;        /*  cycling pixmap                    */
 
-  /* These are used only if USE_XDRAWPOINTS is defined. */
+  /* These are used only if USE_XDRAWPOINTS is defined.                     */
   GdkPoint         *points_in[8];     /*  points of segs_in for fast ants   */
   gint              num_points_in[8]; /*  number of points in points_in     */
   GdkGC            *gc_white;         /*  gc for drawing white points       */
@@ -71,8 +71,8 @@ void        gimp_display_shell_selection_start        (Selection    *select,
 void        gimp_display_shell_selection_invis        (Selection    *select);
 void        gimp_display_shell_selection_layer_invis  (Selection    *select);
 
-void        gimp_display_shell_selection_toggle       (Selection     *select);
-void        gimp_display_shell_selection_toggle_layer (Selection     *select);
+void        gimp_display_shell_selection_toggle       (Selection    *select);
+void        gimp_display_shell_selection_toggle_layer (Selection    *select);
 
 
 #endif  /*  __GIMP_DISPLAY_SHELL_SELECTION_H__  */

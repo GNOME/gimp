@@ -194,7 +194,9 @@ gimp_threshold_tool_initialize (GimpTool    *tool,
 
   t_tool = GIMP_THRESHOLD_TOOL (tool);
 
-  if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
+  drawable = gimp_image_active_drawable (gdisp->gimage);
+
+  if (gimp_drawable_is_indexed (drawable))
     {
       g_message (_("Threshold does not operate on indexed drawables."));
       return;
@@ -206,8 +208,6 @@ gimp_threshold_tool_initialize (GimpTool    *tool,
 
       t_tool->hist = gimp_histogram_new (GIMP_BASE_CONFIG (gimp->config));
     }
-
-  drawable = gimp_image_active_drawable (gdisp->gimage);
 
   t_tool->threshold->color          = gimp_drawable_is_rgb (drawable);
   t_tool->threshold->low_threshold  = 127;

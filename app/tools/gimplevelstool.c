@@ -274,7 +274,9 @@ gimp_levels_tool_initialize (GimpTool    *tool,
 
   l_tool = GIMP_LEVELS_TOOL (tool);
 
-  if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
+  drawable = gimp_image_active_drawable (gdisp->gimage);
+
+  if (gimp_drawable_is_indexed (drawable))
     {
       g_message (_("Levels for indexed drawables cannot be adjusted."));
       return;
@@ -286,8 +288,6 @@ gimp_levels_tool_initialize (GimpTool    *tool,
 
       l_tool->hist = gimp_histogram_new (GIMP_BASE_CONFIG (gimp->config));
     }
-
-  drawable = gimp_image_active_drawable (gdisp->gimage);
 
   levels_init (l_tool->levels);
 

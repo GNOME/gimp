@@ -127,7 +127,7 @@ gimp_text_class_init (GimpTextClass *klass)
 				   0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FONT_SIZE,
 				   "font-size", NULL,
-				   0.0, 1024.0, 18.0,
+				   0.0, 8192.0, 18.0,
 				   0);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_FONT_SIZE_UNIT,
 				 "font-size-unit", NULL,

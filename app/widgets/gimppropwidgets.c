@@ -383,53 +383,6 @@ gimp_prop_spin_button_new (GObject     *config,
   return spinbutton;
 }
 
-void
-gimp_prop_scale_entry_new (GObject     *config,
-			   const gchar *property_name,
-			   GtkTable    *table,
-			   gint         column,
-			   gint         row,
-			   const gchar *text,
-			   gdouble      step_increment,
-			   gdouble      page_increment,
-			   gint         digits)
-{
-  GtkWidget     *label;
-  GtkWidget     *scale;
-  GtkWidget     *spinbutton;
-  GtkAdjustment *adj;
-
-  label = gtk_label_new_with_mnemonic (text);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label,
-                    column, column + 1, row, row + 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  spinbutton = gimp_prop_spin_button_new (config, property_name,
-					  step_increment, page_increment,
-					  digits);
-
-  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 4 + digits);
-
-  gtk_table_attach (GTK_TABLE (table), spinbutton,
-		    column + 2, column + 3, row, row + 1,
-		    GTK_SHRINK, GTK_SHRINK, 0, 0);
-  gtk_widget_show (spinbutton);
-
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
-
-  adj = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
-  scale = gtk_hscale_new (adj);
-
-  gtk_scale_set_digits (GTK_SCALE (scale), digits);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-  gtk_table_attach (GTK_TABLE (table), scale,
-		    column + 1, column + 2, row, row + 1,
-		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-  gtk_widget_show (scale);
-}
-
 static void
 gimp_prop_adjustment_callback (GtkAdjustment *adjustment,
                                GObject       *config)
@@ -1656,6 +1609,108 @@ gimp_prop_color_button_notify (GObject    *config,
                                      gimp_prop_color_button_callback,
                                      config);
 }
+
+
+/***************/
+/*  unit menu  */
+/***************/
+
+static void   gimp_prop_unit_menu_callback (GtkWidget  *menu,
+					    GObject    *config);
+static void   gimp_prop_unit_menu_notify   (GObject    *config,
+					    GParamSpec *param_spec,
+					    GtkWidget  *menu);
+
+GtkWidget *
+gimp_prop_unit_menu_new (GObject     *config,
+			 const gchar *property_name,
+			 const gchar *unit_format)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *menu;
+  GimpUnit    unit;
+  GValue      value = { 0, };
+  gboolean    show_pixels;
+
+  param_spec = check_param_spec (config, property_name,
+                                 GIMP_TYPE_PARAM_UNIT, G_STRLOC);
+  if (! param_spec)
+    return NULL;
+
+  g_value_init (&value, param_spec->value_type);
+  g_value_set_int (&value, GIMP_UNIT_PIXEL);
+
+  show_pixels = (g_param_value_validate (param_spec, &value) == FALSE);
+
+  g_value_unset (&value);
+
+  g_object_get (config,
+                property_name, &unit,
+                NULL);
+
+  menu = gimp_unit_menu_new (unit_format, unit, show_pixels, FALSE, TRUE);
+
+  set_param_spec (G_OBJECT (menu), menu, param_spec);
+
+  g_signal_connect (menu, "unit_changed",
+		    G_CALLBACK (gimp_prop_unit_menu_callback),
+		    config);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_unit_menu_notify),
+                  menu);
+
+  return menu;
+}
+
+static void
+gimp_prop_unit_menu_callback (GtkWidget *menu,
+			      GObject   *config)
+{
+  GParamSpec *param_spec;
+  GimpUnit    unit;
+
+  param_spec = get_param_spec (G_OBJECT (menu));
+  if (! param_spec)
+    return;
+
+  gimp_unit_menu_update (menu, &unit);
+
+  g_signal_handlers_block_by_func (config,
+                                   gimp_prop_unit_menu_notify,
+                                   menu);
+
+  g_object_set (config,
+                param_spec->name, unit,
+                NULL);
+
+  g_signal_handlers_unblock_by_func (config,
+                                     gimp_prop_unit_menu_notify,
+                                     menu);
+}
+
+static void
+gimp_prop_unit_menu_notify (GObject    *config,
+			    GParamSpec *param_spec,
+			    GtkWidget  *menu)
+{
+  GimpUnit  unit;
+
+  g_object_get (config,
+                param_spec->name, &unit,
+                NULL);
+
+  g_signal_handlers_block_by_func (menu,
+                                   gimp_prop_unit_menu_callback,
+                                   config);
+
+  gimp_unit_menu_set_unit (GIMP_UNIT_MENU (menu), unit);
+
+  g_signal_handlers_unblock_by_func (menu,
+                                     gimp_prop_unit_menu_callback,
+                                     config);
+}
+
 
 
 /*******************************/

@@ -225,11 +225,14 @@ gimp_blend_tool_button_press (GimpTool        *tool,
                               GimpDisplay     *gdisp)
 {
   GimpBlendTool *blend_tool;
+  GimpDrawable  *drawable;
   gint           off_x, off_y;
 
   blend_tool = GIMP_BLEND_TOOL (tool);
 
-  switch (gimp_drawable_type (gimp_image_active_drawable (gdisp->gimage)))
+  drawable = gimp_image_active_drawable (gdisp->gimage);
+
+  switch (gimp_drawable_type (drawable))
     {
     case GIMP_INDEXED_IMAGE: case GIMP_INDEXEDA_IMAGE:
       g_message (_("Blend: Invalid for indexed images."));
@@ -240,8 +243,7 @@ gimp_blend_tool_button_press (GimpTool        *tool,
       break;
     }
 
-  gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
-                         &off_x, &off_y);
+  gimp_drawable_offsets (drawable, &off_x, &off_y);
 
   blend_tool->endx = blend_tool->startx = coords->x - off_x;
   blend_tool->endy = blend_tool->starty = coords->y - off_y;

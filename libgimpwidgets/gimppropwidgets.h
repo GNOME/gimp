@@ -49,15 +49,6 @@ GtkWidget     * gimp_prop_spin_button_new         (GObject     *config,
                                                    gdouble      step_increment,
                                                    gdouble      page_increment,
                                                    gint         digits);
-void            gimp_prop_scale_entry_new         (GObject     *config,
-						   const gchar *property_name,
-						   GtkTable    *table,
-						   gint         column,
-						   gint         row,
-						   const gchar *text,
-						   gdouble      step_increment,
-						   gdouble      page_increment,
-						   gint         digits);
 
 
 /*  GimpParamMemsize  */
@@ -111,6 +102,13 @@ GtkWidget     * gimp_prop_color_button_new        (GObject     *config,
                                                    gint         width,
                                                    gint         height,
                                                    GimpColorAreaType  type);
+
+
+/*  GimpParamUnit  */
+
+GtkWidget     * gimp_prop_unit_menu_new           (GObject     *config,
+                                                   const gchar *property_name,
+                                                   const gchar *unit_format);
 
 
 #endif /* __GIMP_PROP_WIDGETS_H__ */

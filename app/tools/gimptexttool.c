@@ -370,7 +370,8 @@ text_tool_options_new (GimpToolInfo *tool_info)
   GtkWidget   *button;
   GtkWidget   *unit_menu;
   GtkWidget   *font_selection;
-  GtkWidget   *spin_button;
+  GtkWidget   *spinbutton;
+  gint         digits;
 
   options = g_new0 (TextOptions, 1);
 
@@ -387,7 +388,7 @@ text_tool_options_new (GimpToolInfo *tool_info)
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;
 
-  table = gtk_table_new (4, 5, FALSE);
+  table = gtk_table_new (4, 4, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacing  (GTK_TABLE (table), 3, 12);
@@ -399,40 +400,33 @@ text_tool_options_new (GimpToolInfo *tool_info)
                              _("Font:"), 1.0, 0.5,
                              font_selection, 2, FALSE);
 
-  gimp_prop_scale_entry_new (text, "font-size",
-			     GTK_TABLE (table), 0, 1,
-			     _("_Size:"), 1.0, 50.0, 1);
+  digits = gimp_unit_get_digits (GIMP_TEXT (text)->font_size_unit);
+  spinbutton = gimp_prop_spin_button_new (text, "font-size",
+					  1.0, 10.0, digits); 
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                             _("Size:"), 1.0, 0.5,
+                             spinbutton, 1, FALSE);
 
-  unit_menu = gimp_unit_menu_new ("%a", GIMP_TEXT (text)->font_size_unit,
-				  TRUE, FALSE, TRUE);
-
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("Unit:"), 1.0, 0.5, unit_menu, 2, TRUE);
-  gtk_widget_set_sensitive (unit_menu, FALSE);
-
-#if 0
-  g_object_set_data (G_OBJECT (unit_menu), "set_digits",
-                     size_spinbutton);
-
-  g_signal_connect (options->unit_w, "unit_changed",
-                    G_CALLBACK (gimp_unit_menu_update),
-                    &unit);
-#endif
+  unit_menu = gimp_prop_unit_menu_new (text, "font-size-unit", "%a");
+  g_object_set_data (G_OBJECT (unit_menu), "set_digits", spinbutton);
+  gtk_table_attach (GTK_TABLE (table), unit_menu, 2, 3, 1, 2,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (unit_menu);
 
   button = gimp_prop_color_button_new (text, "color", _("Text Color"),
 				       48, 24, GIMP_COLOR_AREA_FLAT); 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("Color:"), 1.0, 0.5, button, 2, TRUE);
 
-  spin_button = gimp_prop_spin_button_new (text, "letter-spacing", 0.1, 1.0, 2);
-  gtk_entry_set_width_chars (GTK_ENTRY (spin_button), 5);
-  gimp_table_attach_stock (GTK_TABLE (table), 0, 4,
-                           GIMP_STOCK_LETTER_SPACING, spin_button);
+  spinbutton = gimp_prop_spin_button_new (text, "letter-spacing", 0.1, 1.0, 2);
+  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
+  gimp_table_attach_stock (GTK_TABLE (table), 0, 3,
+                           GIMP_STOCK_LETTER_SPACING, spinbutton);
 
-  spin_button = gimp_prop_spin_button_new (text, "line-spacing", 0.1, 1.0, 2);
-  gtk_entry_set_width_chars (GTK_ENTRY (spin_button), 5);
-  gimp_table_attach_stock (GTK_TABLE (table), 0, 5,
-                           GIMP_STOCK_LINE_SPACING, spin_button);
+  spinbutton = gimp_prop_spin_button_new (text, "line-spacing", 0.1, 1.0, 2);
+  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
+  gimp_table_attach_stock (GTK_TABLE (table), 0, 4,
+                           GIMP_STOCK_LINE_SPACING, spinbutton);
 
   return (GimpToolOptions *) options;
 }

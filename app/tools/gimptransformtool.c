@@ -736,6 +736,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                     GimpDisplay       *gdisp)
 {
   GimpTool         *tool;
+  GimpDrawable     *drawable;
   TransformOptions *options;
   GimpProgress     *progress;
   TileManager      *ret;
@@ -750,7 +751,9 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
   progress = gimp_progress_start (gdisp, tr_tool->progress_text, FALSE,
                                   NULL, NULL);
 
-  ret = gimp_drawable_transform_tiles_affine (gimp_image_active_drawable (tool->gdisp->gimage),
+  drawable = gimp_image_active_drawable (gdisp->gimage);
+
+  ret = gimp_drawable_transform_tiles_affine (drawable,
                                               tr_tool->original,
                                               options->interpolation,
                                               options->clip,

@@ -83,6 +83,7 @@ gimp_display_shell_selection_create (GdkWindow        *win,
                                      gint              size,
                                      gint              width)
 {
+  GimpImage *gimage;
   GdkColor   fg, bg;
   Selection *new;
   gint       base_type;
@@ -91,9 +92,11 @@ gimp_display_shell_selection_create (GdkWindow        *win,
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
 
   new = g_new0 (Selection, 1);
-  base_type = gimp_image_base_type (shell->gdisp->gimage);
 
-  if (GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config)->colormap_cycling)
+  gimage    = shell->gdisp->gimage;
+  base_type = gimp_image_base_type (gimage);
+
+  if (GIMP_DISPLAY_CONFIG (gimage->gimp->config)->colormap_cycling)
     {
       new->cycle = TRUE;
 

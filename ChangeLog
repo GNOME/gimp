@@ -1,3 +1,21 @@
+2003-02-04  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-selection.[ch]
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpthresholdtool.c
+	* app/tools/gimptransformtool.c: misc trivial changes and cleanup.
+
+	* app/widgets/gimppropwidgets.[ch]: added gimp_prop_unit_menu_new()
+	and removed the scale widget again.
+
+	* app/tools/gimptexttool.c: replaced the size scale entry with a
+	spinbutton and made the unit menu working.
+
+	* app/text/gimptext.c: increased the upper boundary for the font
+	size again now that we don't use a scale any longer.
+
 2003-02-03  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpfontselection-dialog.c: changed the text used in
