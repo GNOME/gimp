@@ -1,5 +1,10 @@
 2004-11-27  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/tiff.c (save_image): tell the user that we can't
+	handle indexed images with alpha channel (bug #159600).
+
+2004-11-27  Sven Neumann  <sven@gimp.org>
+
 	* app/main.c
 	* app/widgets/gimpenumstore.h
 	* app/widgets/gimpunitstore.c

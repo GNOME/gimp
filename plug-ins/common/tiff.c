@@ -1874,6 +1874,7 @@ save_image (const gchar *filename,
         }
       break;
     case GIMP_INDEXEDA_IMAGE:
+      g_message ("TIFF save cannot handle indexed images with alpha channel.");
     default:
        return FALSE;
     }
