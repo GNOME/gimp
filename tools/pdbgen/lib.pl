@@ -437,7 +437,7 @@ HEADER
     }
 
     my $hfile = "$destdir/gimpenums.h$FILE_EXT";
-    open HFILE, "> $hfile" or die "Can't open $cfile: $!\n";
+    open HFILE, "> $hfile" or die "Can't open $hfile: $!\n";
     print HFILE $lgpl;
     my $guard = "__GIMP_ENUMS_H__";
     print HFILE <<HEADER;
@@ -448,17 +448,21 @@ HEADER
 HEADER
 
     foreach (sort keys %enums) {
-	print HFILE "typedef enum\n(\n";
+	print HFILE "typedef enum\n{\n";
 
 	my $enum = $enums{$_}; my $body = "";
 	foreach $symbol (@{$enum->{symbols}}) {
-	    $body .= "  $symbol";
+	    my $sym = $symbol;
+	    $sym = $enum->{nicks}->{$sym} if exists $enum->{nicks}->{$sym};
+	    $body .= "  $sym";
 	    $body .= " = $enum->{mapping}->{$symbol}" if !$enum->{contig};
 	    $body .= ",\n";
 	}
 
 	$body =~ s/,\n$//s;
-	$body .= "\n} Gimp$_;\n\n";
+	$body .= "\n} ";
+	$body .= "Gimp" if !/^Gimp/;
+	$body .= "$_;\n\n";
 	print HFILE $body
     }
 

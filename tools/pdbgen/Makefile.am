@@ -42,6 +42,7 @@ EXTRA_DIST = \
 	lib.pl		\
 	pdb.pl		\
 	pdbgen.pl	\
+	script-fu.pl	\
 	stddefs.pdb	\
 	util.pl		\
 	$(pdb_sources)
@@ -111,4 +112,12 @@ stamp-app: $(srcdir)/app.pl $(pdb_scripts) $(pdb_sources)
 	   $(PERL) pdbgen.pl app \
 	&& echo timestamp > $$rootme/stamp-app
 
-all-local: stamp-app
+stamp-script-fu: $(srcdir)/script-fu.pl enums.pl util.pl
+	rootme=`pwd`; \
+	destdir=`cd $(top_srcdir)/plug-ins/script-fu && pwd`; export destdir; \
+	cd $(srcdir) && \
+	  PDBGEN_BACKUP=$(PDBGEN_BACKUP) \	
+	  $(PERL) script-fu.pl \
+	 && echo timestamp > $$rootme/stamp-script-fu
+
+all-local: stamp-app stamp-script-fu

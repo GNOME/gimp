@@ -20,13 +20,6 @@
 #    else
 #        define N_(String) (String)
 #    endif
-
-#define INIT_LOCALE( domain )			\
-	gtk_set_locale ();			\
-	setlocale (LC_NUMERIC, "C");		\
-	bindtextdomain (domain, LOCALEDIR);	\
-	textdomain (domain);								
-	
 #else
 /* Stubs that do something close enough.  */
 #    define textdomain(String) (String)
@@ -38,5 +31,9 @@
 #    define N_(String) (String)
 #endif
 
-
+#define INIT_LOCALE( domain )			\
+	gtk_set_locale ();			\
+	setlocale (LC_NUMERIC, "C");		\
+	bindtextdomain (domain, LOCALEDIR);	\
+	textdomain (domain);								
 #endif

@@ -68,7 +68,7 @@ HELP
     );
 
     @outargs = (
-	{ name => "${type}_type", type => 'enum PDBArgType',
+	{ name => "${type}_type", type => 'enum PDBArgType (no PDB_END)',
 	  desc => "The type of $long_type { %%desc%% }",
 	  alias => "${type}->arg_type", no_declare => 1 },
 	{ name => "${type}_name", type => 'string',

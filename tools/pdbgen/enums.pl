@@ -283,15 +283,6 @@ package Gimp::CodeGen::enums;
 		       DODGEBURN_MIDTONES => '1',
 		       DODGEBURN_SHADOWS => '2' }
 	},
-    InternalOrientationType =>
-	{ contig => 1,
-	  header => 'gimpimage.h',
-	  symbols => [ qw(ORIENTATION_UNKNOWN ORIENTATION_HORIZONTAL
-			  ORIENTATION_VERTICAL) ],
-	  mapping => { ORIENTATION_UNKNOWN => '0',
-		       ORIENTATION_HORIZONTAL => '1',
-		       ORIENTATION_VERTICAL => '2' }
-	},
     OrientationType =>
 	{ contig => 1,
 	  header => 'gimpimage.h',
@@ -368,7 +359,8 @@ package Gimp::CodeGen::enums;
 			  PDB_FLOATARRAY PDB_STRINGARRAY PDB_COLOR
 			  PDB_REGION PDB_DISPLAY PDB_IMAGE PDB_LAYER
 			  PDB_CHANNEL PDB_DRAWABLE PDB_SELECTION
-			  PDB_BOUNDARY PDB_PATH PDB_PARASITE PDB_STATUS) ],
+			  PDB_BOUNDARY PDB_PATH PDB_PARASITE PDB_STATUS
+			  PDB_END) ],
 	  mapping => { PDB_INT32 => '0',
 		       PDB_INT16 => '1',
 		       PDB_INT8 => '2',
@@ -390,7 +382,8 @@ package Gimp::CodeGen::enums;
 		       PDB_BOUNDARY => '18',
 		       PDB_PATH => '19',
 		       PDB_PARASITE => '20',
-		       PDB_STATUS => '21' }
+		       PDB_STATUS => '21',
+		       PDB_END => '22' }
 	},
     PDBStatusType =>
 	{ contig => 1,

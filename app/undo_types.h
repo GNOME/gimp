@@ -20,7 +20,8 @@
 
 
 /*  Undo types  */
-typedef enum {
+typedef enum
+{
     /* Type 0 is special - in the gimpimage structure it means
      * there is no undo group currently being added to. */
     IMAGE_UNDO = 1,
@@ -61,7 +62,7 @@ typedef enum {
     QMASK_UNDO,		   /*  34 */
 
     MISC_UNDO = 100
-} undo_type;
+} UndoType;
 
 
 #endif /* __UNDO_TYPES_H__ */

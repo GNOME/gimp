@@ -47,7 +47,7 @@ typedef enum
   PDB_PATH,
   PDB_PARASITE,
   PDB_STATUS,
-  PDB_END       /*< skip >*/
+  PDB_END
 } PDBArgType;
 
 /*  Error types  */

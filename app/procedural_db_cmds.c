@@ -90,7 +90,8 @@ static const char * const type_str[] =
   "PDB_BOUNDARY",
   "PDB_PATH",
   "PDB_PARASITE",
-  "PDB_STATUS"
+  "PDB_STATUS",
+  "PDB_END"
 };
 
 static ProcRecord procedural_db_dump_proc;

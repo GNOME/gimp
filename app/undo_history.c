@@ -208,7 +208,10 @@ static void
 undo_history_append_special (GtkCList *clist)
 {
     char *name = _("[ base image ]");
-    char *namelist[] = { NULL, name };
+    char *namelist[2];
+
+    namelist[0] = NULL;
+    namelist[1] = name;
 
     gtk_clist_append (clist, namelist);
 }

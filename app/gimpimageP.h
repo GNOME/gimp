@@ -99,7 +99,7 @@ struct _GimpImage
   gint    undo_bytes;                 /*  bytes in undo stack          */
   gint    undo_levels;                /*  levels in undo stack         */
   gint    group_count;		      /*  nested undo groups           */
-  undo_type pushing_undo_group;       /*  undo group status flag       */
+  UndoType pushing_undo_group;        /*  undo group status flag       */
   GtkWidget *undo_history;	      /*  history viewer, or NULL      */
 
                                       /*  Composite preview  */

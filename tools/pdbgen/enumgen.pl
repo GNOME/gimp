@@ -73,7 +73,8 @@ my $footer = <<'FOOTER';
 :1;
 FOOTER
 
-my ($enumname, $contig, $symbols, @nicks, @mapping, $before, $chop);
+my ($enumname, $contig, $symbols, @nicks, @mapping, $before);
+my ($chop, $skip, $xform);
 
 # Most of this enum parsing stuff was swiped from makeenums.pl in GTK+
 sub parse_options {
@@ -150,6 +151,11 @@ sub parse_entries {
 		$nick =~ s/$chop//;
 		push @nicks, $name, $nick;
 	    }
+	    elsif (defined $xform) {
+		my $nick = $name;
+		eval "\$nick =~ $xform";
+		push @nicks, $name, $nick;
+	    }
 
 	    $symbols .= $name . ' ';
 
@@ -194,8 +200,12 @@ while (<>) {
         if (defined $2) {
             my %options = parse_options($2);
 	    $chop = $options{"chop"};
+	    $skip = $options{"skip"};
+	    $xform = $options{"xform"};
 	} else {
 	    $chop = undef;
+	    $skip = undef;
+	    $xform = undef;
 	}	    
 	# Didn't have trailing '{' look on next lines
 	if (!defined $1) {
@@ -232,7 +242,7 @@ while (<>) {
 
 	$ARGV =~ m@([^/]*)$@;
 
-	$code .= <<ENTRY;
+	$code .= <<ENTRY if !$skip;
 :    $enumname =>
 :	{ contig => $contig,
 :	  header => '$1',

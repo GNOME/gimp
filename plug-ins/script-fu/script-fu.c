@@ -107,12 +107,12 @@ extern gint server_mode;
 MAIN ()
 
 static void
-sfquit ()
+sfquit (void)
 {
 }
 
 static void
-query ()
+query (void)
 {
   static GParamDef console_args[] =
   {
@@ -278,14 +278,14 @@ init_interp (void)
 }
 
 static void
-init_gimp ()
+init_gimp (void)
 {
   init_procedures ();
   init_constants ();
 }
 
 static void
-init_procedures ()
+init_procedures (void)
 {
   char **proc_list;
   char *proc_name;
@@ -365,7 +365,7 @@ init_procedures ()
 }
 
 static void
-init_constants ()
+init_constants (void)
 {
   GParam *return_vals = NULL;
   gint nreturn_vals;
@@ -387,6 +387,10 @@ init_constants ()
     setvar (cintern ("gimp-plugin-dir"), strcons (-1, return_vals[1].data.d_string), NIL);
   gimp_destroy_params (return_vals, nreturn_vals);
 
+  /* Generated constants */
+  init_generated_constants ();
+
+  /* These are for backwards compatibility; they should be removed sometime */
   setvar (cintern ("NORMAL"), flocons (0), NIL);
   setvar (cintern ("DISSOLVE"), flocons (1), NIL);
   setvar (cintern ("BEHIND"), flocons (2), NIL);
@@ -404,40 +408,8 @@ init_constants ()
   setvar (cintern ("VALUE"), flocons (14), NIL);
   setvar (cintern ("DIVIDE"), flocons (15), NIL);
 
-  setvar (cintern ("FG-BG-RGB"), flocons (0), NIL);
-  setvar (cintern ("FG-BG-HSV"), flocons (1), NIL);
-  setvar (cintern ("FG-TRANS"), flocons (2), NIL);
-  setvar (cintern ("CUSTOM"), flocons (3), NIL);
-
-  setvar (cintern ("LINEAR"), flocons (0), NIL);
-  setvar (cintern ("BILINEAR"), flocons (1), NIL);
-  setvar (cintern ("RADIAL"), flocons (2), NIL);
-  setvar (cintern ("SQUARE"), flocons (3), NIL);
-  setvar (cintern ("CONICAL-SYMMETRIC"), flocons (4), NIL);
-  setvar (cintern ("CONICAL-ASYMMETRIC"), flocons (5), NIL);
-  setvar (cintern ("SHAPEBURST-ANGULAR"), flocons (6), NIL);
-  setvar (cintern ("SHAPEBURST-SPHERICAL"), flocons (7), NIL);
-  setvar (cintern ("SHAPEBURST-DIMPLED"), flocons (8), NIL);
-  setvar (cintern ("SPIRAL-CLOCKWISE"), flocons (9), NIL);
-  setvar (cintern ("SPIRAL-ANTICLOCKWISE"), flocons (10), NIL);
-
-  setvar (cintern ("REPEAT-NONE"), flocons(0), NIL);
-  setvar (cintern ("REPEAT-SAWTOOTH"), flocons(1), NIL);
-  setvar (cintern ("REPEAT-TRIANGULAR"), flocons(2), NIL);
-
-  setvar (cintern ("FG-BUCKET-FILL"), flocons (0), NIL);
-  setvar (cintern ("BG-BUCKET-FILL"), flocons (1), NIL);
-  setvar (cintern ("PATTERN-BUCKET-FILL"), flocons (2), NIL);
-
-  setvar (cintern ("FG-IMAGE-FILL"), flocons (FG_IMAGE_FILL), NIL);
-  setvar (cintern ("BG-IMAGE-FILL"), flocons (BG_IMAGE_FILL), NIL);
-  setvar (cintern ("WHITE-IMAGE-FILL"), flocons (WHITE_IMAGE_FILL), NIL);
-  setvar (cintern ("TRANS-IMAGE-FILL"), flocons (TRANS_IMAGE_FILL), NIL);
-  setvar (cintern ("NO-IMAGE-FILL"), flocons (NO_IMAGE_FILL), NIL);
-
-  setvar (cintern ("RGB"), flocons (0), NIL);
-  setvar (cintern ("GRAY"), flocons (1), NIL);
-  setvar (cintern ("INDEXED"), flocons (2), NIL);
+  setvar (cintern ("BLUR"), flocons (0), NIL);
+  setvar (cintern ("SHARPEN"), flocons (1), NIL);
 
   setvar (cintern ("RGB_IMAGE"), flocons (0), NIL);
   setvar (cintern ("RGBA_IMAGE"), flocons (1), NIL);
@@ -446,37 +418,7 @@ init_constants ()
   setvar (cintern ("INDEXED_IMAGE"), flocons (4), NIL);
   setvar (cintern ("INDEXEDA_IMAGE"), flocons (5), NIL);
 
-  setvar (cintern ("RED-CHANNEL"), flocons (0), NIL);
-  setvar (cintern ("GREEN-CHANNEL"), flocons (1), NIL);
-  setvar (cintern ("BLUE-CHANNEL"), flocons (2), NIL);
-  setvar (cintern ("GRAY-CHANNEL"), flocons (3), NIL);
-  setvar (cintern ("INDEXED-CHANNEL"), flocons (4), NIL);
-
-  setvar (cintern ("WHITE-MASK"), flocons (0), NIL);
-  setvar (cintern ("BLACK-MASK"), flocons (1), NIL);
-  setvar (cintern ("ALPHA-MASK"), flocons (2), NIL);
-
-  setvar (cintern ("APPLY"), flocons (0), NIL);
-  setvar (cintern ("DISCARD"), flocons (1), NIL);
-
-  setvar (cintern ("EXPAND-AS-NECESSARY"), flocons (0), NIL);
-  setvar (cintern ("CLIP-TO-IMAGE"), flocons (1), NIL);
-  setvar (cintern ("CLIP-TO-BOTTOM-LAYER"), flocons (2), NIL);
-
-  setvar (cintern ("ADD"), flocons (0), NIL);
-  setvar (cintern ("SUB"), flocons (1), NIL);
-  setvar (cintern ("REPLACE"), flocons (2), NIL);
-  setvar (cintern ("INTERSECT"), flocons (3), NIL);
-
-  setvar (cintern ("PIXELS"), flocons (0), NIL);
-  setvar (cintern ("POINTS"), flocons (1), NIL);
-
-  setvar (cintern ("IMAGE-CLONE"), flocons (0), NIL);
-  setvar (cintern ("PATTERN-CLONE"), flocons (1), NIL);
-
-  setvar (cintern ("BLUR"), flocons (0), NIL);
-  setvar (cintern ("SHARPEN"), flocons (1), NIL);
-
+  /* Useful misc stuff */
   setvar (cintern ("TRUE"), flocons (1), NIL);
   setvar (cintern ("FALSE"), flocons (0), NIL);
 

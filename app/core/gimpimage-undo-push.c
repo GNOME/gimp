@@ -51,17 +51,17 @@
 typedef enum {
     UNDO = 0,
     REDO = 1
-} undo_state;
+} UndoState;
 
 
-typedef int   (* UndoPopFunc)  (GImage *, undo_state, undo_type, void *);
-typedef void  (* UndoFreeFunc) (undo_state, void *);
+typedef int   (* UndoPopFunc)  (GImage *, UndoState, UndoType, void *);
+typedef void  (* UndoFreeFunc) (UndoState, void *);
 
 typedef struct _undo Undo;
 
 struct _undo
 {
-  undo_type     type;          /* undo type                           */
+  UndoType      type;          /* undo type                           */
   void *        data;          /* data to implement the undo, NULL for group */
   long          bytes;         /* size of undo item                   */
   gboolean      dirties_image; /* TRUE if undo mutates image */
@@ -72,55 +72,55 @@ struct _undo
 
 /*  Pop functions  */
 
-static int undo_pop_image            (GImage *, undo_state, undo_type, void *);
-static int undo_pop_mask             (GImage *, undo_state, undo_type, void *);
-static int undo_pop_layer_displace   (GImage *, undo_state, undo_type, void *);
-static int undo_pop_transform        (GImage *, undo_state, undo_type, void *);
-static int undo_pop_paint            (GImage *, undo_state, undo_type, void *);
-static int undo_pop_layer            (GImage *, undo_state, undo_type, void *);
-static int undo_pop_layer_mod        (GImage *, undo_state, undo_type, void *);
-static int undo_pop_layer_mask       (GImage *, undo_state, undo_type, void *);
-static int undo_pop_channel          (GImage *, undo_state, undo_type, void *);
-static int undo_pop_channel_mod      (GImage *, undo_state, undo_type, void *);
-static int undo_pop_fs_to_layer      (GImage *, undo_state, undo_type, void *);
-static int undo_pop_fs_rigor         (GImage *, undo_state, undo_type, void *);
-static int undo_pop_fs_relax         (GImage *, undo_state, undo_type, void *);
-static int undo_pop_gimage_mod       (GImage *, undo_state, undo_type, void *);
-static int undo_pop_guide            (GImage *, undo_state, undo_type, void *);
-static int undo_pop_parasite         (GImage *, undo_state, undo_type, void *);
-static int undo_pop_qmask            (GImage *, undo_state, undo_type, void *);
-static int undo_pop_layer_rename     (GImage *, undo_state, undo_type, void *);
-static int undo_pop_cantundo         (GImage *, undo_state, undo_type, void *);
+static int undo_pop_image            (GImage *, UndoState, UndoType, void *);
+static int undo_pop_mask             (GImage *, UndoState, UndoType, void *);
+static int undo_pop_layer_displace   (GImage *, UndoState, UndoType, void *);
+static int undo_pop_transform        (GImage *, UndoState, UndoType, void *);
+static int undo_pop_paint            (GImage *, UndoState, UndoType, void *);
+static int undo_pop_layer            (GImage *, UndoState, UndoType, void *);
+static int undo_pop_layer_mod        (GImage *, UndoState, UndoType, void *);
+static int undo_pop_layer_mask       (GImage *, UndoState, UndoType, void *);
+static int undo_pop_channel          (GImage *, UndoState, UndoType, void *);
+static int undo_pop_channel_mod      (GImage *, UndoState, UndoType, void *);
+static int undo_pop_fs_to_layer      (GImage *, UndoState, UndoType, void *);
+static int undo_pop_fs_rigor         (GImage *, UndoState, UndoType, void *);
+static int undo_pop_fs_relax         (GImage *, UndoState, UndoType, void *);
+static int undo_pop_gimage_mod       (GImage *, UndoState, UndoType, void *);
+static int undo_pop_guide            (GImage *, UndoState, UndoType, void *);
+static int undo_pop_parasite         (GImage *, UndoState, UndoType, void *);
+static int undo_pop_qmask            (GImage *, UndoState, UndoType, void *);
+static int undo_pop_layer_rename     (GImage *, UndoState, UndoType, void *);
+static int undo_pop_cantundo         (GImage *, UndoState, UndoType, void *);
 
 
 /*  Free functions  */
 
-static void     undo_free_image           (undo_state, void *);
-static void     undo_free_mask            (undo_state, void *);
-static void     undo_free_layer_displace  (undo_state, void *);
-static void     undo_free_transform       (undo_state, void *);
-static void     undo_free_paint           (undo_state, void *);
-static void     undo_free_layer           (undo_state, void *);
-static void     undo_free_layer_mod       (undo_state, void *);
-static void     undo_free_layer_mask      (undo_state, void *);
-static void     undo_free_channel         (undo_state, void *);
-static void     undo_free_channel_mod     (undo_state, void *);
-static void     undo_free_fs_to_layer     (undo_state, void *);
-static void     undo_free_fs_rigor        (undo_state, void *);
-static void     undo_free_fs_relax        (undo_state, void *);
-static void     undo_free_gimage_mod      (undo_state, void *);
-static void     undo_free_guide           (undo_state, void *);
-static void     undo_free_parasite        (undo_state, void *);
-static void     undo_free_qmask           (undo_state, void *);
-static void     undo_free_layer_rename    (undo_state, void *);
-static void     undo_free_cantundo        (undo_state, void *);
+static void     undo_free_image           (UndoState, void *);
+static void     undo_free_mask            (UndoState, void *);
+static void     undo_free_layer_displace  (UndoState, void *);
+static void     undo_free_transform       (UndoState, void *);
+static void     undo_free_paint           (UndoState, void *);
+static void     undo_free_layer           (UndoState, void *);
+static void     undo_free_layer_mod       (UndoState, void *);
+static void     undo_free_layer_mask      (UndoState, void *);
+static void     undo_free_channel         (UndoState, void *);
+static void     undo_free_channel_mod     (UndoState, void *);
+static void     undo_free_fs_to_layer     (UndoState, void *);
+static void     undo_free_fs_rigor        (UndoState, void *);
+static void     undo_free_fs_relax        (UndoState, void *);
+static void     undo_free_gimage_mod      (UndoState, void *);
+static void     undo_free_guide           (UndoState, void *);
+static void     undo_free_parasite        (UndoState, void *);
+static void     undo_free_qmask           (UndoState, void *);
+static void     undo_free_layer_rename    (UndoState, void *);
+static void     undo_free_cantundo        (UndoState, void *);
 
 
 /*  Sizing functions  */
 static int   layer_size            (Layer *);
 static int   channel_size          (Channel *);
 
-static const char *undo_type_to_name (undo_type);
+static const char *undo_type_to_name (UndoType);
 
 static int   shrink_wrap = FALSE;
 
@@ -155,7 +155,7 @@ channel_size (Channel *channel)
 
 static void
 undo_free_list (GImage     *gimage,
-		undo_state  state,
+		UndoState  state,
 		GSList     *list)
 {
   GSList * orig;
@@ -251,7 +251,7 @@ undo_free_up_space (GImage *gimage)
 static Undo *
 undo_push (GImage   *gimage,
 	   long      size,
-	   undo_type type,
+	   UndoType type,
 	   gboolean  dirties_image)
 {
   Undo * new;
@@ -312,7 +312,7 @@ static int
 pop_stack (GImage      *gimage,
 	   GSList     **stack_ptr,
 	   GSList     **unstack_ptr,
-	   undo_state   state)
+	   UndoState   state)
 {
   Undo * object;
   GSList *stack;
@@ -573,7 +573,7 @@ undo_free (GImage *gimage)
 
 int
 undo_push_group_start (GImage    *gimage,
-		       undo_type  type)
+		       UndoType  type)
 {
   if (! gimage->undo_on)
     return FALSE;
@@ -765,8 +765,8 @@ undo_push_image_mod (GImage       *gimage,
 
 static int
 undo_pop_image (GImage    *gimage,
-		undo_state state,
-		undo_type  type,
+		UndoState state,
+		UndoType  type,
 		void      *image_undo_ptr)
 {
   ImageUndo *image_undo;
@@ -846,7 +846,7 @@ undo_pop_image (GImage    *gimage,
 
 
 static void
-undo_free_image (undo_state  state,
+undo_free_image (UndoState  state,
 		 void       *image_undo_ptr)
 {
   ImageUndo *image_undo;
@@ -895,8 +895,8 @@ undo_push_mask (GImage *gimage,
 
 static int
 undo_pop_mask (GImage     *gimage,
-	       undo_state  state,
-	       undo_type   type,
+	       UndoState  state,
+	       UndoType   type,
 	       void       *mask_ptr)
 {
   MaskUndo *mask_undo;
@@ -980,7 +980,7 @@ undo_pop_mask (GImage     *gimage,
 
 
 static void
-undo_free_mask (undo_state state,
+undo_free_mask (UndoState state,
 		void      *mask_ptr)
 {
   MaskUndo *mask_undo;
@@ -1022,8 +1022,8 @@ undo_push_layer_displace (GImage    *gimage,
 
 static int
 undo_pop_layer_displace (GImage     *gimage,
-			 undo_state  state,
-			 undo_type   type,
+			 UndoState  state,
+			 UndoType   type,
 			 void       *info_ptr)
 {
   Layer * layer;
@@ -1070,7 +1070,7 @@ undo_pop_layer_displace (GImage     *gimage,
 
 
 static void
-undo_free_layer_displace (undo_state state,
+undo_free_layer_displace (UndoState state,
 			  void      *info_ptr)
 {
   g_free (info_ptr);
@@ -1107,8 +1107,8 @@ undo_push_transform (GImage *gimage,
 
 static int
 undo_pop_transform (GImage    *gimage,
-		    undo_state state,
-		    undo_type  type,
+		    UndoState state,
+		    UndoType  type,
 		    void      *tu_ptr)
 {
   TransformCore * tc;
@@ -1156,7 +1156,7 @@ undo_pop_transform (GImage    *gimage,
 
 
 static void
-undo_free_transform (undo_state  state,
+undo_free_transform (UndoState  state,
 		     void       *tu_ptr)
 {
   TransformUndo * tu;
@@ -1199,8 +1199,8 @@ undo_push_paint (GImage *gimage,
 
 static int
 undo_pop_paint (GImage    *gimage,
-		undo_state state,
-		undo_type  type,
+		UndoState state,
+		UndoType  type,
 		void      *pu_ptr)
 {
   PaintCore * pc;
@@ -1244,7 +1244,7 @@ undo_pop_paint (GImage    *gimage,
 
 
 static void
-undo_free_paint (undo_state state,
+undo_free_paint (UndoState state,
 		 void      *pu_ptr)
 {
   PaintUndo * pu;
@@ -1293,8 +1293,8 @@ undo_push_layer (GImage *gimage,
 
 static int
 undo_pop_layer (GImage    *gimage,
-		undo_state state,
-		undo_type  type,
+		UndoState state,
+		UndoType  type,
 		void      *lu_ptr)
 {
   LayerUndo *lu;
@@ -1366,7 +1366,7 @@ undo_pop_layer (GImage    *gimage,
 
 
 static void
-undo_free_layer (undo_state state,
+undo_free_layer (UndoState state,
 		 void      *lu_ptr)
 {
   LayerUndo *lu;
@@ -1433,8 +1433,8 @@ undo_push_layer_mod (GImage *gimage,
 
 static int
 undo_pop_layer_mod (GImage    *gimage,
-		    undo_state state,
-		    undo_type  type,
+		    UndoState state,
+		    UndoType  type,
 		    void      *data_ptr)
 {
   void **data;
@@ -1502,7 +1502,7 @@ undo_pop_layer_mod (GImage    *gimage,
 
 
 static void
-undo_free_layer_mod (undo_state state,
+undo_free_layer_mod (UndoState state,
 		     void      *data_ptr)
 {
   void ** data;
@@ -1551,8 +1551,8 @@ undo_push_layer_mask (GImage *gimage,
 
 static int
 undo_pop_layer_mask (GImage    *gimage,
-		     undo_state state,
-		     undo_type  type,
+		     UndoState state,
+		     UndoType  type,
 		     void      *lmu_ptr)
 {
   LayerMaskUndo *lmu;
@@ -1611,7 +1611,7 @@ undo_pop_layer_mask (GImage    *gimage,
 
 
 static void
-undo_free_layer_mask (undo_state state,
+undo_free_layer_mask (UndoState state,
 		      void      *lmu_ptr)
 {
   LayerMaskUndo *lmu;
@@ -1668,8 +1668,8 @@ undo_push_channel (GImage *gimage,
 
 static int
 undo_pop_channel (GImage    *gimage,
-		  undo_state state,
-		  undo_type  type,
+		  UndoState state,
+		  UndoType  type,
 		  void      *cu_ptr)
 {
   ChannelUndo *cu;
@@ -1725,7 +1725,7 @@ undo_pop_channel (GImage    *gimage,
 
 
 static void
-undo_free_channel (undo_state state,
+undo_free_channel (UndoState state,
 		   void      *cu_ptr)
 {
   ChannelUndo *cu;
@@ -1788,8 +1788,8 @@ undo_push_channel_mod (GImage *gimage,
 
 static int
 undo_pop_channel_mod (GImage    *gimage,
-		      undo_state state,
-		      undo_type  type,
+		      UndoState state,
+		      UndoType  type,
 		      void      *data_ptr)
 {
   void **data;
@@ -1833,7 +1833,7 @@ undo_pop_channel_mod (GImage    *gimage,
 
 
 static void
-undo_free_channel_mod (undo_state state,
+undo_free_channel_mod (UndoState state,
 		       void      *data_ptr)
 {
   void ** data;
@@ -1881,8 +1881,8 @@ undo_push_fs_to_layer (GImage *gimage,
 
 static int
 undo_pop_fs_to_layer (GImage    *gimage,
-		      undo_state state,
-		      undo_type  type,
+		      UndoState state,
+		      UndoType  type,
 		      void      *fsu_ptr)
 {
   FStoLayerUndo *fsu;
@@ -1952,7 +1952,7 @@ undo_pop_fs_to_layer (GImage    *gimage,
 
 
 static void
-undo_free_fs_to_layer (undo_state state,
+undo_free_fs_to_layer (UndoState state,
 		       void      *fsu_ptr)
 {
   FStoLayerUndo *fsu;
@@ -1994,8 +1994,8 @@ undo_push_fs_rigor (GImage *gimage,
 
 static int
 undo_pop_fs_rigor (GImage    *gimage,
-		   undo_state state,
-		   undo_type  type,
+		   UndoState state,
+		   UndoType  type,
 		   void      *layer_ptr)
 {
   int layer_id;
@@ -2036,7 +2036,7 @@ undo_pop_fs_rigor (GImage    *gimage,
 
 
 static void
-undo_free_fs_rigor (undo_state state,
+undo_free_fs_rigor (UndoState state,
 		    void      *layer_ptr)
 {
   g_free (layer_ptr);
@@ -2072,8 +2072,8 @@ undo_push_fs_relax (GImage *gimage,
 
 static int
 undo_pop_fs_relax (GImage    *gimage,
-		   undo_state state,
-		   undo_type  type,
+		   UndoState state,
+		   UndoType  type,
 		   void      *layer_ptr)
 {
   int layer_id;
@@ -2114,7 +2114,7 @@ undo_pop_fs_relax (GImage    *gimage,
 
 
 static void
-undo_free_fs_relax (undo_state state,
+undo_free_fs_relax (UndoState state,
 		    void       *layer_ptr)
 {
   g_free (layer_ptr);
@@ -2153,8 +2153,8 @@ undo_push_gimage_mod (GImage *gimage)
 
 static int
 undo_pop_gimage_mod (GImage    *gimage,
-		     undo_state state,
-		     undo_type  type,
+		     UndoState state,
+		     UndoType  type,
 		     void       *data_ptr)
 {
   int *data;
@@ -2190,7 +2190,7 @@ undo_pop_gimage_mod (GImage    *gimage,
 
 
 static void
-undo_free_gimage_mod (undo_state state,
+undo_free_gimage_mod (UndoState state,
 		      void       *data_ptr)
 {
   g_free (data_ptr);
@@ -2238,8 +2238,8 @@ undo_push_qmask (GImage *gimage,
 
 static int
 undo_pop_qmask (GImage    *gimage,
-		undo_state state,
-		undo_type  type,
+		UndoState state,
+		UndoType  type,
 		void      *data_ptr)
 {
   QmaskUndo *data;
@@ -2258,7 +2258,7 @@ undo_pop_qmask (GImage    *gimage,
 
 
 static void
-undo_free_qmask (undo_state state,
+undo_free_qmask (UndoState state,
 		 void       *data_ptr)
 {
   g_free (data_ptr);
@@ -2307,8 +2307,8 @@ undo_push_guide (GImage *gimage,
 
 static int
 undo_pop_guide (GImage    *gimage,
-		undo_state state,
-		undo_type  type,
+		UndoState state,
+		UndoType  type,
 		void      *data_ptr)
 {
   GuideUndo *data;
@@ -2331,7 +2331,7 @@ undo_pop_guide (GImage    *gimage,
 
 
 static void
-undo_free_guide (undo_state state,
+undo_free_guide (UndoState state,
 		 void      *data_ptr)
 {
   GuideUndo *data;
@@ -2474,8 +2474,8 @@ undo_push_drawable_parasite_remove (GImage       *gimage,
 
 static int
 undo_pop_parasite (GImage    *gimage,
-		   undo_state state,
-		   undo_type  type,
+		   UndoState state,
+		   UndoType  type,
 		   void      *data_ptr)
 {
   ParasiteUndo *data;
@@ -2520,7 +2520,7 @@ undo_pop_parasite (GImage    *gimage,
 
 
 static void
-undo_free_parasite (undo_state state,
+undo_free_parasite (UndoState state,
 		    void      *data_ptr)
 {
   ParasiteUndo *data;
@@ -2576,8 +2576,8 @@ undo_push_layer_rename (GImage *gimage, Layer *layer)
 
 static int
 undo_pop_layer_rename (GImage    *gimage,
-		       undo_state state,
-		       undo_type  type,
+		       UndoState state,
+		       UndoType  type,
 		       void      *data_ptr)
 {
     LayerRenameUndo *data = data_ptr;
@@ -2602,7 +2602,7 @@ undo_pop_layer_rename (GImage    *gimage,
 }
 
 static void
-undo_free_layer_rename (undo_state state,
+undo_free_layer_rename (UndoState state,
 			void      *data_ptr)
 {
     LayerRenameUndo *data = data_ptr;
@@ -2642,8 +2642,8 @@ undo_push_cantundo (GImage     *gimage,
 
 static int
 undo_pop_cantundo (GImage    *gimage,
-		   undo_state state,
-		   undo_type  type,
+		   UndoState state,
+		   UndoType  type,
 		   void      *data_ptr)
 {
     char *action = data_ptr;
@@ -2663,13 +2663,13 @@ undo_pop_cantundo (GImage    *gimage,
 }
 
 static void
-undo_free_cantundo (undo_state state, void *data_ptr)
+undo_free_cantundo (UndoState state, void *data_ptr)
 {
 }
 
 
 static struct undo_name_t {
-    undo_type type;
+    UndoType type;
     const char *name;
 } undo_name[] = {
     {0,			N_("<<invalid>>")},
@@ -2712,7 +2712,7 @@ static struct undo_name_t {
 
 
 static const char *
-undo_type_to_name (undo_type type)
+undo_type_to_name (UndoType type)
 {
     int i;
 

@@ -46,17 +46,18 @@ GtkType gimp_layer_mask_get_type (void);
 
 /*  Special undo types  */
 
-typedef enum {
+typedef enum /*< skip >*/
+{
     LAYER_ADD_UNDO = 0,
     LAYER_REMOVE_UNDO = 1
-} layer_undo_type;
+} LayerUndoType;
 
 struct _layer_undo
 {
   Layer          *layer;              /*  the actual layer          */
   gint            prev_position;      /*  former position in list   */
   Layer          *prev_layer;         /*  previous active layer     */
-  layer_undo_type undo_type;          /*  is this a new layer undo  *
+  LayerUndoType undo_type;            /*  is this a new layer undo  *
 				       *  or a remove layer undo?   */
 };
 
@@ -68,7 +69,7 @@ struct _layer_mask_undo
   gboolean        show_mask;     /*  show the mask?            */
   LayerMask      *mask;          /*  the layer mask            */
   gint            mode;          /*  the application mode      */
-  layer_undo_type undo_type;     /*  is this a new layer mask  */
+  LayerUndoType   undo_type;     /*  is this a new layer mask  */
                   	         /*  or a remove layer mask    */
 };
 

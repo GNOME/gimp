@@ -1,3 +1,35 @@
+Thu Sep 23 16:29:09 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/channel.h
+	* app/gimpimage.h
+	* app/gimpimageP.h 
+	* app/layer.h
+	* app/undo.[ch]
+	* app/undo_types.h: use proper naming convention for undo enums,
+	and hide them from the pdbgen stuff 
+
+	* app/procedural_db.h: don't skip PDB_END
+
+	* app/undo_history.c: remove gccism from undo_history_append_special
+
+	* libgimp/gimpintl.h: INIT_LOCALE should be defined in all cases
+
+	* plug-ins/script-fu/Makefile.am: add script-fu-constants.[ch]
+
+	* plug-ins/script-fu/script-fu.c: use init_generated_constants
+
+	* plug-ins/script-fu/siod.h: #include <stdio.h> for FILE *
+
+	* tools/pdbgen/script-fu.pl: new file
+
+	* tools/pdbgen/Makefile.am: add rule for constant script-fu gen
+
+	* tools/pdbgen/enumgen.pl: add enum skip feature
+
+	* tools/pdbgen/lib.pl: use nicks for gimpenums.h
+
+	* tools/pdbgen/pdb/procedural_db.pdb: ignore PDB_END
+
 1999-09-23  Zach Beane  <xach@mint.net>
 
 	* app/fileops.c: Check trust_dirty_flag preference; if we don't

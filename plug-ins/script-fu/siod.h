@@ -11,6 +11,8 @@
 #ifndef __SIOD_H__
 #define __SIOD_H__
 
+#include <stdio.h>
+
 struct obj
   {
     short gc_mark;

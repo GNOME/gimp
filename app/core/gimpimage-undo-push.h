@@ -26,7 +26,7 @@
 
 /*  Undo interface functions  */
 
-int      undo_push_group_start       (GImage *, undo_type);
+int      undo_push_group_start       (GImage *, UndoType);
 int      undo_push_group_end         (GImage *);
 int      undo_push_image             (GImage *, GimpDrawable *, int, int, int, int);
 int      undo_push_image_mod         (GImage *, GimpDrawable *, int, int, int, int, void *, int);

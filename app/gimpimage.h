@@ -50,13 +50,15 @@
 
 #define COLORMAP_SIZE    768
 
-typedef enum {
+typedef enum /*< skip >*/
+{ 
   ORIENTATION_UNKNOWN,
   ORIENTATION_HORIZONTAL,
   ORIENTATION_VERTICAL
 } InternalOrientationType;
 
-typedef enum {
+typedef enum
+{
   HORIZONTAL,
   VERTICAL,
   UNKNOWN
