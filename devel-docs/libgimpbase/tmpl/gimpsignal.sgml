@@ -15,13 +15,6 @@ Portable signal handling.
 signal(2), signal(5 or 7), sigaction(2).
 </para>
 
-<!-- ##### MACRO SA_RESTART ##### -->
-<para>
-This is just an alias for systems which do not define SA_RESTART.
-</para>
-
-
-
 <!-- ##### USER_FUNCTION GimpSignalHandlerFunc ##### -->
 <para>
 A prototype for signal handler functions. Note that each function which
