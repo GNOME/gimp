@@ -4,6 +4,7 @@
 app/app_procs.c
 app/main.c
 
+app/actions/actions.c
 app/actions/brushes-actions.c
 app/actions/buffers-actions.c
 app/actions/channels-actions.c
@@ -90,7 +91,8 @@ app/core/gimpdrawable-stroke.c
 app/core/gimpdrawable-transform.c
 app/core/gimpdrawable.c
 app/core/gimpenvirontable.c
-app/core/gimpgradient.c
+app/core/gimpgradient-load.c
+app/core/gimpgradient-save.c
 app/core/gimpgrid.c
 app/core/gimpimage-colormap.c
 app/core/gimpimage-convert.c
@@ -161,6 +163,8 @@ app/gui/themes.c
 app/gui/tips-dialog.c
 app/gui/tips-parser.c
 app/gui/user-install-dialog.c
+
+app/menus/menus.c
 
 app/paint/gimpairbrush.c
 app/paint/gimpbrushcore.c
@@ -267,10 +271,12 @@ app/vectors/gimpvectors-export.c
 app/vectors/gimpvectors-import.c
 
 app/widgets/gimpactiongroup.c
+app/widgets/gimpactionview.c
 app/widgets/gimpbrusheditor.c
 app/widgets/gimpbrushfactoryview.c
 app/widgets/gimpbrushselect.c
 app/widgets/gimpbufferview.c
+app/widgets/gimpcellrendereraccel.c
 app/widgets/gimpchanneltreeview.c
 app/widgets/gimpclipboard.c
 app/widgets/gimpcolordisplayeditor.c
@@ -282,6 +288,7 @@ app/widgets/gimpcontainerpopup.c
 app/widgets/gimpcontrollerkeyboard.c
 app/widgets/gimpcontrollerwheel.c
 app/widgets/gimpdataeditor.c
+app/widgets/gimpdevices.c
 app/widgets/gimpdevicestatus.c
 app/widgets/gimpdnd.c
 app/widgets/gimpdock.c

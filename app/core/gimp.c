@@ -58,6 +58,7 @@
 #include "gimpdocumentlist.h"
 #include "gimpenvirontable.h"
 #include "gimpgradient.h"
+#include "gimpgradient-load.h"
 #include "gimpimage.h"
 #include "gimpimagefile.h"
 #include "gimplist.h"

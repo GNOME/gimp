@@ -24,7 +24,7 @@
 
 #include "actions-types.h"
 
-#include "core/gimpgradient.h"
+#include "core/gimpgradient-save.h"
 #include "core/gimpcontext.h"
 
 #include "widgets/gimpcontainereditor.h"

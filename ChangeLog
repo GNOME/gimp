@@ -1,3 +1,16 @@
+2004-07-22  Sven Neumann  <sven@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/gimpgradient-load.[ch]
+	* app/core/gimpgradient-save.[ch]
+	* app/core/gimpgradient.[ch]: moved gradient file handling out of
+	gimpgradient.c to new files.
+
+	* app/core/gimp.c
+	* app/actions/gradients-commands.c: changed accordingly.
+
+	* libgimpcolor/gimpcolor.def: added gimp_rgb_parse_name.
+
 2004-07-22  Michael Natterer  <mitch@gimp.org>
 
 	* data/misc/gimp.desktop.in.in (MimeType): image/g -> image/g3fax.

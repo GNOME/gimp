@@ -1,3 +1,7 @@
+2004-07-22  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: updated.
+
 2004-07-17  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: removed some files that disappeared.

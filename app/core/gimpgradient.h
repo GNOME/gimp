@@ -23,9 +23,9 @@
 #include "gimpdata.h"
 
 
-#define GIMP_GRADIENT_FILE_EXTENSION ".ggr"
+#define GIMP_GRADIENT_FILE_EXTENSION       ".ggr"
 
-#define GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE 40
+#define GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE  40
 
 
 struct _GimpGradientSegment
@@ -72,13 +72,6 @@ GType                 gimp_gradient_get_type         (void) G_GNUC_CONST;
 GimpData            * gimp_gradient_new              (const gchar   *name,
                                                       gboolean       stingy_memory_use);
 GimpData            * gimp_gradient_get_standard     (void);
-GimpData            * gimp_gradient_load             (const gchar   *filename,
-                                                      gboolean       stingy_memory_use,
-                                                      GError       **error);
-
-gboolean              gimp_gradient_save_as_pov      (GimpGradient  *gradient,
-                                                      const gchar   *filename,
-                                                      GError       **error);
 
 void                  gimp_gradient_get_color_at     (GimpGradient  *gradient,
 						      gdouble        pos,

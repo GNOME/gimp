@@ -101,6 +101,10 @@ libappcore_a_sources = \
 	gimpenvirontable.c		\
 	gimpgradient.c			\
 	gimpgradient.h			\
+	gimpgradient-load.c		\
+	gimpgradient-load.h		\
+	gimpgradient-save.c		\
+	gimpgradient-save.h		\
 	gimpgrid.c                      \
 	gimpgrid.h                      \
 	gimpimage.c			\
