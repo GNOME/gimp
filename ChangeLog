@@ -1,5 +1,11 @@
 2003-12-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimphistogramview.c (gimp_histogram_view_expose):
+	render the selection in "light" histograms correctly (unused and
+	untested).
+
+2003-12-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpitemtreeview.c: reset container_view->dnd_widget
 	in gimp_item_tree_view_constructor() instead of
 	gimp_item_tree_view_new().

@@ -357,11 +357,19 @@ gimp_histogram_view_expose (GtkWidget      *widget,
 	}
 
       if (in_selection)
-        spike_gc = widget->style->text_gc[GTK_STATE_SELECTED];
-      else if (view->light_histogram)
-        spike_gc = widget->style->mid_gc[GTK_STATE_NORMAL];
+        {
+          if (view->light_histogram)
+            spike_gc = widget->style->mid_gc[GTK_STATE_SELECTED];
+          else
+            spike_gc = widget->style->text_gc[GTK_STATE_SELECTED];
+        }
       else
-        spike_gc = widget->style->text_gc[GTK_STATE_NORMAL];
+        {
+          if (view->light_histogram)
+            spike_gc = widget->style->mid_gc[GTK_STATE_NORMAL];
+          else
+            spike_gc = widget->style->text_gc[GTK_STATE_NORMAL];
+        }
 
       gdk_draw_line (widget->window,
                      spike_gc,
