@@ -7,10 +7,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP cvs\n"
-"POT-Creation-Date: 2000-10-04 16:01-0700\n"
-"PO-Revision-Date: 2000-08-15 15:09+02:00\n"
-"Last-Translator: Christian Meyer <linux@chrisime.de>\n"
+"Project-Id-Version: GIMP 1.1.27\n"
+"POT-Creation-Date: 2000-10-05 13:18+0200\n"
+"PO-Revision-Date: 2000-10-05 13:19+02:00\n"
+"Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -835,7 +835,6 @@ msgid "High Quality Preview"
 msgstr "Vorschau in hoher Qualität"
 
 #: plug-ins/Lighting/lighting_ui.c:465
-#, fuzzy
 msgid "Enable/disable high quality preview"
 msgstr "Vorschau in hoher Qualität an/ausschalten"
 
@@ -849,7 +848,6 @@ msgid "Enable Antialiasing"
 msgstr "Kantenglättung benutzen"
 
 #: plug-ins/Lighting/lighting_ui.c:488
-#, fuzzy
 msgid "Enable/disable jagged edges removal(antialiasing)"
 msgstr "De-/Aktiviere Entfernung von Treppeneffekten (Kantenglättung)"
 
@@ -879,18 +877,16 @@ msgid "Light Settings"
 msgstr "Licht-Eigenschaften"
 
 #: plug-ins/Lighting/lighting_ui.c:574
-#, fuzzy
 msgid "Directional"
-msgstr "Richtung"
+msgstr "Gerichtet"
 
 #: plug-ins/Lighting/lighting_ui.c:576
-#, fuzzy
 msgid "Point"
-msgstr "Malen"
+msgstr "Punkt"
 
 #: plug-ins/Lighting/lighting_ui.c:578
 msgid "Spot"
-msgstr "Punkt"
+msgstr "Spot"
 
 #: plug-ins/Lighting/lighting_ui.c:583
 msgid "Light Type:"
@@ -1072,39 +1068,34 @@ msgid "Maximum Height:"
 msgstr "Maximale Höhe:"
 
 #: plug-ins/Lighting/lighting_ui.c:962
-#, fuzzy
 msgid "Maximum height for bumps"
-msgstr "Maximale Höhe:"
+msgstr "Maximale Höhe für Bumps:"
 
 #: plug-ins/Lighting/lighting_ui.c:968
 msgid "Minimum Height:"
 msgstr "Minimale Höhe:"
 
 #: plug-ins/Lighting/lighting_ui.c:975
-#, fuzzy
 msgid "Minimum height for bumps"
-msgstr "Minimale Höhe:"
+msgstr "Minimale Höhe für Bumps:"
 
 #: plug-ins/Lighting/lighting_ui.c:978
 msgid "Autostretch to Fit Value Range"
 msgstr "Automat. strecken um Wertebereich auszunutzen"
 
 #: plug-ins/Lighting/lighting_ui.c:988
-#, fuzzy
 msgid "Fit into value range"
-msgstr "Ziel-Farbbereich"
+msgstr "An Wertebereich anpassen"
 
 #: plug-ins/Lighting/lighting_ui.c:1009
 msgid "Environment Settings"
 msgstr "Umgebungs-Einstellungen"
 
 #: plug-ins/Lighting/lighting_ui.c:1018
-#, fuzzy
 msgid "Enable Environment Mapping"
 msgstr "Benutze Environmentmapping"
 
 #: plug-ins/Lighting/lighting_ui.c:1028
-#, fuzzy
 msgid "Enable/disable environment-mapping (reflection)"
 msgstr "Environment-mapping (Reflexionen) an/ausschalten"
 
@@ -1113,7 +1104,6 @@ msgid "Environment Image:"
 msgstr "Umgebungs-Bild:"
 
 #: plug-ins/Lighting/lighting_ui.c:1049
-#, fuzzy
 msgid "Environment image to use"
 msgstr "Umgebungs-Bild:"
 
@@ -1138,7 +1128,6 @@ msgid "Bump Map"
 msgstr "Bumpmap"
 
 #: plug-ins/Lighting/lighting_ui.c:1088
-#, fuzzy
 msgid "Environment Map"
 msgstr "Environmentmapping"
 
@@ -2272,9 +2261,8 @@ msgid "Bottom Edge"
 msgstr "Unterer Rand"
 
 #: plug-ins/common/align_layers.c:511
-#, fuzzy
 msgid "Vertical Base:"
-msgstr "Vertikal:"
+msgstr "Vertikale Basis:"
 
 #: plug-ins/common/align_layers.c:516
 msgid "Ignore the Bottom Layer even if Visible"
@@ -12843,9 +12831,8 @@ msgid "Print Color Adjust"
 msgstr "Drucken Farbeinstellung"
 
 #: plug-ins/print/gimp_color_window.c:140
-#, fuzzy
 msgid "Set Defaults"
-msgstr "Auf Standardwerte zurücksetzen"
+msgstr "Standardwerte setzen"
 
 # (Pinsel-)~ ?
 #: plug-ins/print/gimp_color_window.c:269
@@ -12897,14 +12884,12 @@ msgid "cm"
 msgstr "cm"
 
 #: plug-ins/print/gimp_main_window.c:420
-#, fuzzy
 msgid "Right Border:"
-msgstr "Rand:"
+msgstr "Rechter Rand:"
 
 #: plug-ins/print/gimp_main_window.c:443
-#, fuzzy
 msgid "Bottom Border:"
-msgstr "Unterer Rand"
+msgstr "Unterer Rand:"
 
 #: plug-ins/print/gimp_main_window.c:455
 msgid "Portrait"
@@ -12912,23 +12897,22 @@ msgstr "Portrait"
 
 #: plug-ins/print/gimp_main_window.c:458
 msgid "Landscape"
-msgstr "Landscape"
+msgstr "Landschaft"
 
 #: plug-ins/print/gimp_main_window.c:461
 msgid "Upside down"
-msgstr ""
+msgstr "Kopfüber"
 
 #: plug-ins/print/gimp_main_window.c:464
-#, fuzzy
 msgid "Seascape"
-msgstr "Landscape"
+msgstr "Landschaft kopfüber"
 
 #.
 #. *  Printer settings frame...
 #.
 #: plug-ins/print/gimp_main_window.c:476
 msgid "Printer Settings"
-msgstr "Drucker"
+msgstr "Drucker Einstellungen"
 
 #: plug-ins/print/gimp_main_window.c:498
 msgid "Media Size:"
@@ -12950,9 +12934,8 @@ msgstr "Tintensorte:"
 #. * Scaling...
 #.
 #: plug-ins/print/gimp_main_window.c:540
-#, fuzzy
 msgid "Scaling"
-msgstr "Skalierung:"
+msgstr "Skalierung"
 
 #: plug-ins/print/gimp_main_window.c:567 plug-ins/print/gimp_main_window.c:576
 msgid "Scaling:"
@@ -12974,9 +12957,8 @@ msgstr "Bildauflösung nutzen"
 #. * Image type
 #.
 #: plug-ins/print/gimp_main_window.c:656
-#, fuzzy
 msgid "Image Settings"
-msgstr "Farbton Einstellungen"
+msgstr "Bild Einstellungen"
 
 #: plug-ins/print/gimp_main_window.c:676
 msgid "Line Art"
@@ -13007,7 +12989,7 @@ msgstr "Ausgabetyp:"
 
 #: plug-ins/print/gimp_main_window.c:755
 msgid "B&W"
-msgstr "S&W"
+msgstr "S/W"
 
 #: plug-ins/print/gimp_main_window.c:789
 msgid "Printer:"
@@ -13022,16 +13004,15 @@ msgstr "Einstellungen"
 #. * Printer driver option menu...
 #.
 #: plug-ins/print/gimp_main_window.c:840
-#, fuzzy
 msgid "Printer Model:"
-msgstr "Zeichenmodus:"
+msgstr "Drucker:"
 
 #.
 #. * PPD file...
 #.
 #: plug-ins/print/gimp_main_window.c:876
 msgid "PPD File:"
-msgstr "PPD-Datei"
+msgstr "PPD-Datei:"
 
 #: plug-ins/print/gimp_main_window.c:891
 msgid "Browse"
@@ -13063,14 +13044,12 @@ msgid "<Image>/File/Print..."
 msgstr "<Image>/Datei/Drucken..."
 
 #: plug-ins/print/print.c:241
-#, fuzzy
 msgid "<Image>/File/Print (Gtk)..."
-msgstr "<Image>/Datei/Drucken..."
+msgstr "<Image>/Datei/Drucken (GTK)..."
 
 #: plug-ins/print/print.c:249
-#, fuzzy
 msgid "<Image>/File/Print (Gimp)..."
-msgstr "<Image>/Datei/Drucken..."
+msgstr "<Image>/Datei/Drucken (Gimp)..."
 
 #: plug-ins/rcm/rcm.c:118
 msgid "<Image>/Image/Colors/Colormap Rotation..."
@@ -13082,14 +13061,11 @@ msgstr "Drehe Farben..."
 
 #: plug-ins/rcm/rcm_callback.c:151 plug-ins/rcm/rcm_dialog.c:261
 msgid "Switch to clockwise"
-msgstr "Uhrzeigersinn einschalten"
+msgstr "Im Uhrzeigersinn"
 
 #: plug-ins/rcm/rcm_callback.c:151 plug-ins/rcm/rcm_dialog.c:261
 msgid "Switch to c/clockwise"
-msgstr ""
-"Tauscht zwei Farbreichweiten aus. Basierend auf code von Pavel Grinfeld\n"
-"(pavel@ml.com). Diese Version ist von Sven Anders geschrieben\n"
-"(anderss@fmi.uni-passau.de)."
+msgstr "Gegen den Uhrzeigersinn"
 
 #: plug-ins/rcm/rcm_dialog.c:269
 msgid "Change order of arrows"
@@ -13105,11 +13081,7 @@ msgid "From"
 msgstr "Von"
 
 #. spinbutton 2
-#: plug-ins/rcm/rcm_dialog.c:307
-msgid "to"
-msgstr "nach"
-
-#: plug-ins/rcm/rcm_dialog.c:357
+#: plug-ins/rcm/rcm_dialog.c:307 plug-ins/rcm/rcm_dialog.c:357
 msgid "To"
 msgstr "Nach"
 
@@ -13344,21 +13316,3 @@ msgstr "Fehler: Kann XJT Eigenschaften-Datei %s nicht lesen"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Fehler: XJT Eigenschaften-Datei %s ist leer"
-
-#~ msgid "Output Level:"
-#~ msgstr "Ausgabelevel:"
-
-#~ msgid "Normal Scale"
-#~ msgstr "Normale Skalierung"
-
-#~ msgid "Experimental Linear Scale"
-#~ msgstr "Experimentelle lineare Skalierung"
-
-#~ msgid "Image Type"
-#~ msgstr "Bildtyp"
-
-#~ msgid "Scaling and Color Settings"
-#~ msgstr "Skalierung und Farbe"
-
-#~ msgid "Driver:"
-#~ msgstr "Treiber"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl\n"
 "POT-Creation-Date: Wed Oct  4 16:01:46 2000\n"
-"PO-Revision-Date: 2000-05-23 11:33+02:00\n"
+"PO-Revision-Date: 2000-10-05 13:26+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -417,9 +417,8 @@ msgid "<Toolbox>/Xtns/Animation/Billboard..."
 msgstr "<Toolbox>/Xtns/Animation/Billboard..."
 
 #: examples/sethspin:0
-#, fuzzy
 msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
-msgstr "<Toolbox>/Xtns/Animation/Billboard..."
+msgstr "<Toolbox>/Xtns/Animation/Seths Dreher..."
 
 #: examples/Create_Images:0
 msgid "<Toolbox>/Xtns/Create_Images"
@@ -962,7 +961,7 @@ msgstr "Export fehlgeschlagen"
 
 #: Gimp/Fu.pm:0
 msgid "function '$exe' not found in this script (must be one of "
-msgstr ""
+msgstr "Funktion '$exe' nicht in diesem Skript gefunden (muss eine sein von \""
 
 #: Gimp/Fu.pm:0
 msgid "function name contains dashes instead of underscores"
@@ -992,7 +991,7 @@ msgstr "Die Gimp-perl-Pixelfunktionen benötigen das PDL::Core-Modul"
 msgid ""
 "gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to "
 "gimp-1.1 and report this error"
-msgstr ""
+msgstr "gimp_pixel_rgns_register unterstützt nur 1, 2 oder 3 Argumente"
 
 #: Gimp/Lib.xs:0
 msgid "gimp_tile_get_data is not yet implemented\n"
@@ -1180,9 +1179,8 @@ msgid "unable to accept unix connection: $!\n"
 msgstr "Konnte Unix-Verbindung nicht annehmen: $!\n"
 
 #: Gimp/Lib.xs:0
-#, fuzzy
 msgid "unable to convert Gimp::Drawable into Gimp::GimpDrawable (id %d)"
-msgstr "Konnte Gimp::Drawable nicht in Gimp::GDrawable konvertieren (id %d)"
+msgstr "Konnte Gimp::Drawable nicht in Gimp::GimpDrawable konvertieren (id %d)"
 
 #: UI/UI.pm:0
 msgid "unable to create '$fn': $!"
@@ -1239,66 +1237,3 @@ msgstr "Falscher Autorisierungscode, Verbindung wird abgebrochen"
 #: Gimp/Compat.pm:0
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
 msgstr "xlfd_unpack: Kann keine Schrift zu XLFD '$fontname' finden\n"
-
-#~ msgid "<Image>/Filters/Logulator/Bovination"
-#~ msgstr "<Image>/Filter/Logulator/Bovination"
-
-#~ msgid "<Image>/Filters/Logulator/Blended"
-#~ msgstr "<Image>/Filter/Logulator/Blended"
-
-#~ msgid "<Image>/Filters/Logulator/Basic I"
-#~ msgstr "<Image>/Filter/Logulator/Einfach I"
-
-#~ msgid "<Image>/Filters/Logulator/3D Outline..."
-#~ msgstr "<Image>/Filter/Logulator/3D-Umriß..."
-
-#~ msgid "<Image>/Filters/Logulator/Glowing Hot"
-#~ msgstr "<Image>/Filter/Logulator/Glühend heiß"
-
-#~ msgid "<Image>/Filters/Logulator/Basic II"
-#~ msgstr "<Image>/Filter/Logulator/Einfach II"
-
-#~ msgid "<Image>/Filters/Logulator/Starburst"
-#~ msgstr "<Image>/Filter/Logulator/Sternenexplosion"
-
-#~ msgid "<Image>/Filters/Logulator/Comic Book"
-#~ msgstr "<Image>/Filter/Logulator/Comic-Heft"
-
-#~ msgid "<Image>/Filters/Logulator/Chalk"
-#~ msgstr "<Image>/Filter/Logulator/Kreide"
-
-#~ msgid "<Image>/Filters/Logulator/Glossy"
-#~ msgstr "<Image>/Filter/Logulator/Glatt"
-
-#~ msgid "<Image>/Filters/Logulator/Particle Trace"
-#~ msgstr "<Image>/Filter/Logulator/Partikelspur"
-
-#~ msgid "<Image>/Filters/Logulator/Alien Glow"
-#~ msgstr "<Image>/Filter/Logulator/Alien Glow"
-
-#~ msgid "<Image>/Filters/Logulator/Cool Metal"
-#~ msgstr "<Image>/Filter/Logulator/Cool Metal"
-
-#~ msgid "<Image>/Filters/Logulator/Textured"
-#~ msgstr "<Image>/Filter/Logulator/Texturiert"
-
-#~ msgid "<Image>/Filters/Logulator/Gradient Bevel"
-#~ msgstr "<Image>/Filter/Logulator/Farbverlauf"
-
-#~ msgid "<Image>/Filters/Logulator/Frosty"
-#~ msgstr "<Image>/Filter/Logulator/Frostig"
-
-#~ msgid "<Image>/Filters/Logulator/Neon"
-#~ msgstr "<Image>/Filter/Logulator/Neon"
-
-#~ msgid "<Image>/Filters/Logulator/Chrome"
-#~ msgstr "<Image>/Filter/Logulator/Chrom"
-
-#~ msgid "<Image>/Filters/Logulator/Chip Away"
-#~ msgstr "<Image>/Filter/Logulator/Chip Away"
-
-#~ msgid "<Image>/Filters/Logulator/Starscape"
-#~ msgstr "<Image>/Filter/Logulator/Starscape"
-
-#~ msgid "<Image>/Filters/Animation/Seth Spin..."
-#~ msgstr "<Image>/Filter/Animation/Seths Dreher..."
