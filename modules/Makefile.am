@@ -21,6 +21,7 @@ EXTRA_DIST = \
 	makefile.msc
 
 if HAVE_LCMS
+cdisplay_lcms_module = libcdisplay_lcms.la
 cdisplay_proof_module = libcdisplay_proof.la
 endif
 
@@ -35,10 +36,10 @@ lib_LTLIBRARIES = \
 	libcdisplay_colorblind.la	\
 	libcdisplay_gamma.la		\
 	libcdisplay_highcontrast.la	\
+	$(cdisplay_lcms_module)		\
 	$(cdisplay_proof_module)	\
 	libcontroller_midi.la		\
 	$(controller_linux_input_module)
-
 
 
 modules_libadd = $(libgimpmodule) $(libgimpwidgets) $(GTK_LIBS)
@@ -70,6 +71,10 @@ libcdisplay_gamma_la_LIBADD = $(cdisplay_libadd)
 libcdisplay_highcontrast_la_SOURCES = cdisplay_highcontrast.c
 libcdisplay_highcontrast_la_LDFLAGS = -avoid-version -module $(no_undefined)
 libcdisplay_highcontrast_la_LIBADD = $(cdisplay_libadd)
+
+libcdisplay_lcms_la_SOURCES = cdisplay_lcms.c
+libcdisplay_lcms_la_LDFLAGS = -avoid-version -module $(no_undefined)
+libcdisplay_lcms_la_LIBADD = $(cdisplay_libadd) $(LCMS_LIBS)
 
 libcdisplay_proof_la_SOURCES = cdisplay_proof.c
 libcdisplay_proof_la_LDFLAGS = -avoid-version -module $(no_undefined)

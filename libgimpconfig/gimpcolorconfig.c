@@ -68,9 +68,12 @@ enum
   PROP_PRINTER_PROFILE,
   PROP_DISPLAY_RENDERING_INTENT,
   PROP_SIMULATION_RENDERING_INTENT,
+  PROP_DISPLAY_MODULE
+#if 0
   PROP_OPEN_BEHAVIOUR_NO_PROFILE,
   PROP_OPEN_BEHAVIOUR_RGB_PROFILE,
   PROP_OPEN_BEHAVIOUR_CMYK_PROFILE
+#endif
 };
 
 
@@ -173,6 +176,10 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
                                  GIMP_TYPE_COLOR_RENDERING_INTENT,
                                  GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
                                  0);
+  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DISPLAY_MODULE,
+                                   "display-module", NULL,
+                                   "CdisplayLcms",
+                                   0);
 #if 0
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_OPEN_BEHAVIOUR_NO_PROFILE,
                                  "open-behaviour-no-profile",
@@ -243,6 +250,9 @@ gimp_color_config_set_property (GObject      *object,
     case PROP_SIMULATION_RENDERING_INTENT:
       color_config->simulation_intent = g_value_get_enum (value);
       break;
+    case PROP_DISPLAY_MODULE:
+      color_config->display_module = g_value_dup_string (value);
+      break;
 #if 0
     case PROP_OPEN_BEHAVIOUR_NO_PROFILE:
       color_config->open_behaviour_no_profile = g_value_get_enum (value);
@@ -290,6 +300,9 @@ gimp_color_config_get_property (GObject    *object,
       break;
     case PROP_SIMULATION_RENDERING_INTENT:
       g_value_set_enum (value, color_config->simulation_intent);
+      break;
+    case PROP_DISPLAY_MODULE:
+      g_value_set_string (value, color_config->display_module);
       break;
 #if 0
     case PROP_OPEN_BEHAVIOUR_NO_PROFILE:

@@ -44,6 +44,8 @@ struct _GimpColorConfig
   gchar                      *printer_profile;
   GimpColorRenderingIntent    display_intent;
   GimpColorRenderingIntent    simulation_intent;
+
+  gchar                      *display_module;
 };
 
 struct _GimpColorConfigClass

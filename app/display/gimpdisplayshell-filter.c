@@ -20,9 +20,12 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "display-types.h"
+
+#include "config/gimpcoreconfig.h"
 
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-filter.h"
@@ -67,6 +70,37 @@ gimp_display_shell_filter_set (GimpDisplayShell      *shell,
     }
 
   gimp_display_shell_filter_changed (NULL, shell);
+}
+
+GimpColorDisplayStack *
+gimp_display_shell_filter_new (GimpColorConfig *config)
+{
+  g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), NULL);
+
+  if (config->display_module)
+    {
+      GType type = g_type_from_name (config->display_module);
+
+      if (g_type_is_a (type, GIMP_TYPE_COLOR_DISPLAY))
+        {
+          GimpColorDisplay *display = gimp_color_display_new (type);
+
+          if (display)
+            {
+              GimpColorDisplayStack *stack = gimp_color_display_stack_new ();
+
+              g_object_set (display, "config", config, NULL);
+
+              gimp_color_display_stack_add (stack, display);
+
+              g_object_unref (display);
+
+              return stack;
+            }
+        }
+    }
+
+  return NULL;
 }
 
 

@@ -25,6 +25,11 @@ GimpColorConfig
 
 </para>
 
+<!-- ##### ARG GimpColorConfig:display-module ##### -->
+<para>
+
+</para>
+
 <!-- ##### ARG GimpColorConfig:display-profile ##### -->
 <para>
 

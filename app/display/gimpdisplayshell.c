@@ -29,6 +29,7 @@
 #include "display-types.h"
 #include "tools/tools-types.h"
 
+#include "config/gimpcoreconfig.h"
 #include "config/gimpdisplayconfig.h"
 
 #include "core/gimp.h"
@@ -569,6 +570,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 {
   GimpDisplayShell  *shell;
   GimpDisplayConfig *display_config;
+  GimpColorConfig   *color_config;
   GtkWidget         *main_vbox;
   GtkWidget         *disp_vbox;
   GtkWidget         *upper_hbox;
@@ -1006,6 +1008,10 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
     gtk_widget_show (shell->statusbar);
 
   gtk_widget_show (main_vbox);
+
+  color_config = gdisp->gimage->gimp->config->color_management;
+  gimp_display_shell_filter_set (shell,
+                                 gimp_display_shell_filter_new (color_config));
 
   gimp_display_shell_connect (shell);
 

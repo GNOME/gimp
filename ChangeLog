@@ -1,3 +1,21 @@
+2005-02-21  Sven Neumann  <sven@gimp.org>
+
+	Another step towards color management:
+
+	* modules/Makefile.am
+	* modules/cdisplay_lcms.c: added new color display module that
+	implements color management for the image displays. Still work
+	in progress...
+
+	* modules/cdisplay_proof.c: no need to include <string.h> here.
+
+	* libgimpconfig/gimpcolorconfig.[ch]: added new property
+	"display-module" to configure the display color management module.
+
+	* app/display/gimpdisplayshell-filter.[ch]
+	* app/display/gimpdisplayshell.c: create the configured color
+	management display filter for each display.
+
 2005-02-20  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gimpressionist/presets.c (get_object_name): use

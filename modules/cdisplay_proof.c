@@ -18,8 +18,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #ifdef HAVE_LCMS_LCMS_H
 #include <lcms/lcms.h>
 #else
