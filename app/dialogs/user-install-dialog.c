@@ -584,6 +584,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
   GtkWidget *eek_box;
   GdkPixbuf *wilber;
   gchar     *filename;
+  gint       i;
 
   gimprc = gimp_rc_new (alternate_system_gimprc, alternate_gimprc, verbose);
 
@@ -628,20 +629,21 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
   page_style = gtk_widget_get_modifier_style (dialog);
   g_object_ref (page_style);
 
-  page_style->fg[GTK_STATE_NORMAL]   = black_color;
-  page_style->bg[GTK_STATE_NORMAL]   = white_color;
+  for (i = 0; i < 5; i++)
+    {
+      page_style->fg[i] = black_color;
+      page_style->bg[i] = white_color;
+
+      page_style->color_flags[i] = (GTK_RC_FG | GTK_RC_BG);
+    }
 
   page_style->text[GTK_STATE_NORMAL] = black_color;
   page_style->base[GTK_STATE_NORMAL] = white_color;
 
-  page_style->color_flags[GTK_STATE_NORMAL] |= (GTK_RC_FG   | GTK_RC_BG   |
-                                                GTK_RC_TEXT | GTK_RC_BASE);
+  page_style->color_flags[GTK_STATE_NORMAL] |= (GTK_RC_TEXT | GTK_RC_BASE);
 
-  page_style->fg[GTK_STATE_ACTIVE]   = black_color;
-  page_style->bg[GTK_STATE_ACTIVE]   = white_color;
-
-  page_style->color_flags[GTK_STATE_ACTIVE] |= (GTK_RC_FG | GTK_RC_BG);
-
+  g_free (page_style->bg_pixmap_name[GTK_STATE_NORMAL]);
+  page_style->bg_pixmap_name[GTK_STATE_NORMAL] = g_strdup ("<none>");
 
   /*  B/Colored Style for the page title  */
   title_style = gtk_rc_style_copy (page_style);

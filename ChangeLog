@@ -1,5 +1,11 @@
 2004-04-01  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/user-install-dialog.c: unset the bg_pixmap and tweak
+	style colors for all states. Sort of ugly but makes the dialog
+	work better with more obscure themes (bug #138379).
+
+2004-04-01  Sven Neumann  <sven@gimp.org>
+
 	* tools/kernelgen.c: updated a comment.
 
 2004-04-01  Michael Natterer  <mitch@gimp.org>
