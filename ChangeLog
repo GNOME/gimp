@@ -1,5 +1,13 @@
 2004-08-24  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpmessagebox.c: put the icon to the right for RTL
+	layouts.
+
+	* app/display/gimpdisplayshell-close.c
+	* app/gui/quit-dialog.c: use a GimpMessageBox.
+
+2004-08-24  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpmessagebox.[ch]: added API to change the labels.
 	Modeled after the proposed new API for GtkMessageDialog.
 

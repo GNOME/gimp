@@ -34,20 +34,21 @@
 #include "display/gimpdisplay-foreach.h"
 
 #include "widgets/gimpactiongroup.h"
-#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpcontainertreeview.h"
+#include "widgets/gimphelp-ids.h"
+#include "widgets/gimpmessagebox.h"
 
 #include "quit-dialog.h"
 
 #include "gimp-intl.h"
 
 
-static void  quit_dialog_response          (GtkWidget     *dialog,
-                                            gint           response_id,
-                                            Gimp          *gimp);
-static void  quit_dialog_container_changed (GimpContainer *images,
-                                            GimpObject    *image,
-                                            GtkWidget     *label);
+static void  quit_dialog_response          (GtkWidget      *dialog,
+                                            gint            response_id,
+                                            Gimp           *gimp);
+static void  quit_dialog_container_changed (GimpContainer  *images,
+                                            GimpObject     *image,
+                                            GimpMessageBox *box);
 
 
 GtkWidget *
@@ -55,9 +56,7 @@ quit_dialog_new (Gimp *gimp)
 {
   GimpContainer *images;
   GtkWidget     *dialog;
-  GtkWidget     *hbox;
-  GtkWidget     *vbox;
-  GtkWidget     *image;
+  GtkWidget     *box;
   GtkWidget     *label;
   GtkWidget     *view;
   GList         *list;
@@ -91,40 +90,20 @@ quit_dialog_new (Gimp *gimp)
                     G_CALLBACK (quit_dialog_response),
                     gimp);
 
-  hbox = gtk_hbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
-  gtk_widget_show (hbox);
-
-  image = gtk_image_new_from_stock (GIMP_STOCK_WILBER_EEK,
-                                    GTK_ICON_SIZE_DIALOG);
-  gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
-  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
-
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
-
-  label = gtk_label_new ("");
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-  gimp_label_set_attributes (GTK_LABEL (label),
-                             PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
-                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
-                             -1);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  box = gimp_message_box_new (GIMP_STOCK_WILBER_EEK);
+  gtk_container_set_border_width (GTK_CONTAINER (box), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), box);
+  gtk_widget_show (box);
 
   g_signal_connect_object (images, "remove",
                            G_CALLBACK (quit_dialog_container_changed),
-                           label, 0);
-  quit_dialog_container_changed (images, NULL, label);
+                           box, 0);
+  quit_dialog_container_changed (images, NULL, GIMP_MESSAGE_BOX (box));
 
   preview_size = gimp->config->layer_preview_size;
 
   view = gimp_container_tree_view_new (images, NULL, preview_size, 1);
-  gtk_box_pack_start (GTK_BOX (vbox), view, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (box), view, TRUE, TRUE, 0);
   gtk_widget_show (view);
 
   rows = CLAMP (gimp_container_num_children (images), 3, 6);
@@ -136,7 +115,7 @@ quit_dialog_new (Gimp *gimp)
                            "these changes will be lost."));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   return dialog;
@@ -163,24 +142,18 @@ quit_dialog_response (GtkWidget *dialog,
 }
 
 static void
-quit_dialog_container_changed (GimpContainer *images,
-                               GimpObject    *image,
-                               GtkWidget     *label)
+quit_dialog_container_changed (GimpContainer  *images,
+                               GimpObject     *image,
+                               GimpMessageBox *box)
 {
-  gint   num_images = gimp_container_num_children (images);
-  gchar *text;
+  gint  num_images = gimp_container_num_children (images);
 
   if (num_images == 1)
-    {
-      text = g_strdup_printf (_("There is one image with unsaved changes:"));
-    }
+    gimp_message_box_set_primary_text (box,
+                                       _("There is one image with unsaved changes:"));
   else
-    {
-      text = g_strdup_printf (_("There are %d images with unsaved changes:"),
-                              num_images);
-    }
-
-  gtk_label_set_text (GTK_LABEL (label), text);
-  g_free (text);
+    gimp_message_box_set_primary_text (box,
+                                       _("There are %d images with unsaved changes:"),
+                                       num_images);
 }
 

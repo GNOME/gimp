@@ -277,6 +277,9 @@ gimp_message_box_size_allocate (GtkWidget     *widget,
   GimpMessageBox *box       = GIMP_MESSAGE_BOX (widget);
   GtkContainer   *container = GTK_CONTAINER (widget);
   gint            width     = 0;
+  gboolean        rtl;
+
+  rtl = (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL);
 
   if (box->image)
     {
@@ -287,13 +290,19 @@ gimp_message_box_size_allocate (GtkWidget     *widget,
       gtk_widget_size_request (box->image, &child_requisition);
 
       width  = MIN (allocation->width - 2 * container->border_width,
-                    child_requisition.width);
+                    child_requisition.width + GIMP_MESSAGE_BOX_SPACING);
       width  = MAX (1, width);
 
       height = allocation->height - 2 * container->border_width;
       height = MAX (1, height);
 
-      child_allocation.x      = allocation->x + container->border_width;
+      if (rtl)
+        child_allocation.x  = (allocation->width       -
+                               container->border_width -
+                               child_requisition.width);
+      else
+        child_allocation.x  = allocation->x + container->border_width;
+
       child_allocation.y      = allocation->y + container->border_width;
       child_allocation.width  = width;
       child_allocation.height = height;
@@ -301,12 +310,12 @@ gimp_message_box_size_allocate (GtkWidget     *widget,
       gtk_widget_size_allocate (box->image, &child_allocation);
     }
 
-  allocation->x      += width;
-  allocation->width  -= width;
+  allocation->x     += rtl ? 0 : width;
+  allocation->width -= width;
 
   GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
-  allocation->x      -= width;
+  allocation->x      -= rtl ? 0 : width;
   allocation->width  += width;
 
   widget->allocation = *allocation;

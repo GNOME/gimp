@@ -32,6 +32,7 @@
 #include "file/file-utils.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpmessagebox.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -92,13 +93,9 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
                                  GimpImage        *gimage)
 {
   GtkWidget *dialog;
-  GtkWidget *hbox;
-  GtkWidget *vbox;
-  GtkWidget *image;
-  GtkWidget *label;
+  GtkWidget *box;
   gchar     *name;
   gchar     *title;
-  gchar     *message;
 
   if (shell->close_dialog)
     {
@@ -132,39 +129,18 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
                     G_CALLBACK (gimp_display_shell_close_response),
                     shell);
 
-  hbox = gtk_hbox_new (FALSE, 10);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 10);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
-  gtk_widget_show (hbox);
+  box = gimp_message_box_new (GIMP_STOCK_WARNING);
+  gtk_container_set_border_width (GTK_CONTAINER (box), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), box);
+  gtk_widget_show (box);
 
-  image = gtk_image_new_from_stock (GIMP_STOCK_WARNING, GTK_ICON_SIZE_DIALOG);
-  gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
-  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
+  gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (box),
+                                     _("Changes were made to '%s'."), name);
 
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
-
-  message = g_strdup_printf (_("Changes were made to '%s'."), name);
-
-  label = gtk_label_new (message);
-
-  g_free (message);
   g_free (name);
 
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gimp_label_set_attributes (GTK_LABEL (label),
-                             PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
-                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
-                             -1);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  label = gtk_label_new (_("Unsaved changes will be lost."));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gimp_message_box_set_text (GIMP_MESSAGE_BOX (box),
+                             _("Unsaved changes will be lost."));
 
   gtk_widget_show (dialog);
 }
