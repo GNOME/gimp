@@ -33,8 +33,7 @@
 
 void
 error_console_clear_cmd_callback (GtkWidget *widget,
-                                  gpointer   data,
-                                  guint      action)
+                                  gpointer   data)
 {
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
 
@@ -44,8 +43,7 @@ error_console_clear_cmd_callback (GtkWidget *widget,
 
 void
 error_console_save_all_cmd_callback (GtkWidget *widget,
-                                     gpointer   data,
-                                     guint      action)
+                                     gpointer   data)
 {
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
 
@@ -55,8 +53,7 @@ error_console_save_all_cmd_callback (GtkWidget *widget,
 
 void
 error_console_save_selection_cmd_callback (GtkWidget *widget,
-                                           gpointer   data,
-                                           guint      action)
+                                           gpointer   data)
 {
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
 

@@ -58,8 +58,7 @@ static void   tool_options_rename_callback (GtkWidget   *widget,
 
 void
 tool_options_save_to_cmd_callback (GtkWidget *widget,
-                                   gpointer   data,
-                                   guint      action)
+                                   gpointer   data)
 {
   GimpToolOptions *options = GIMP_TOOL_OPTIONS (data);
   gchar           *name;
@@ -75,8 +74,7 @@ tool_options_save_to_cmd_callback (GtkWidget *widget,
 
 void
 tool_options_save_new_cmd_callback (GtkWidget *widget,
-                                    gpointer   data,
-                                    guint      action)
+                                    gpointer   data)
 {
   GimpEditor   *editor = GIMP_EDITOR (data);
   GimpContext  *context;
@@ -99,8 +97,7 @@ tool_options_save_new_cmd_callback (GtkWidget *widget,
 
 void
 tool_options_restore_from_cmd_callback (GtkWidget *widget,
-                                        gpointer   data,
-                                        guint      action)
+                                        gpointer   data)
 {
   GimpToolOptions *options = GIMP_TOOL_OPTIONS (data);
 
@@ -110,8 +107,7 @@ tool_options_restore_from_cmd_callback (GtkWidget *widget,
 
 void
 tool_options_rename_saved_cmd_callback (GtkWidget *widget,
-                                        gpointer   data,
-                                        guint      action)
+                                        gpointer   data)
 {
   GimpToolOptions *options = GIMP_TOOL_OPTIONS (data);
   GtkWidget       *qbox;
@@ -129,8 +125,7 @@ tool_options_rename_saved_cmd_callback (GtkWidget *widget,
 
 void
 tool_options_delete_saved_cmd_callback (GtkWidget *widget,
-                                        gpointer   data,
-                                        guint      action)
+                                        gpointer   data)
 {
   GimpToolOptions *options = GIMP_TOOL_OPTIONS (data);
 
@@ -140,8 +135,7 @@ tool_options_delete_saved_cmd_callback (GtkWidget *widget,
 
 void
 tool_options_reset_cmd_callback (GtkWidget *widget,
-                                 gpointer   data,
-                                 guint      action)
+                                 gpointer   data)
 {
   GimpToolOptionsEditor *editor = GIMP_TOOL_OPTIONS_EDITOR (data);
 
@@ -151,8 +145,7 @@ tool_options_reset_cmd_callback (GtkWidget *widget,
 
 void
 tool_options_reset_all_cmd_callback (GtkWidget *widget,
-                                     gpointer   data,
-                                     guint      action)
+                                     gpointer   data)
 {
   GimpToolOptionsEditor *editor = GIMP_TOOL_OPTIONS_EDITOR (data);
 

@@ -21,14 +21,12 @@
 
 
 void   qmask_toggle_cmd_callback    (GtkWidget *widget,
-                                     gpointer   data,
-                                     guint      action);
+                                     gpointer   data);
 void   qmask_invert_cmd_callback    (GtkWidget *widget,
                                      gpointer   data,
                                      guint      action);
 void   qmask_configure_cmd_callback (GtkWidget *widget,
-                                     gpointer   data,
-                                     guint      action);
+                                     gpointer   data);
 
 
 #endif /* __QMASK_COMMANDS_H__ */

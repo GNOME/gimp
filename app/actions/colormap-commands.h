@@ -21,8 +21,7 @@
 
 
 void   colormap_editor_edit_color_cmd_callback (GtkWidget *widget,
-                                                gpointer   data,
-                                                guint      action);
+                                                gpointer   data);
 void   colormap_editor_add_color_cmd_callback  (GtkWidget *widget,
                                                 gpointer   data,
                                                 guint      action);

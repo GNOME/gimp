@@ -1,3 +1,16 @@
+2004-04-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/colormap-editor-commands.[ch]
+	* app/gui/debug-commands.[ch]
+	* app/gui/dockable-commands.[ch]
+	* app/gui/error-console-commands.[ch]
+	* app/gui/file-commands.[ch]
+	* app/gui/gradient-editor-commands.[ch]
+	* app/gui/help-commands.[ch]
+	* app/gui/qmask-commands.[ch]
+	* app/gui/tool-options-commands.[ch]: removed "guint action"
+	parameter from all callbacks which don't need it.
+
 2004-04-19  Sven Neumann  <sven@gimp.org>
 
 	* menus/Makefile.am

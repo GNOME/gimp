@@ -33,8 +33,7 @@
 
 void
 colormap_editor_edit_color_cmd_callback (GtkWidget *widget,
-                                         gpointer   data,
-                                         guint      action)
+                                         gpointer   data)
 {
   GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (data);
 

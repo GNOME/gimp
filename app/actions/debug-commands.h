@@ -26,12 +26,12 @@
 
 
 #ifdef ENABLE_DEBUG_MENU
-void   debug_dump_menus_cmd_callback  (GtkWidget       *widget,
-                                       gpointer         data,
-                                       guint            action);
-void   debug_mem_profile_cmd_callback (GtkWidget       *widget,
-                                       gpointer         data,
-                                       guint            action);
+
+void   debug_dump_menus_cmd_callback  (GtkWidget *widget,
+                                       gpointer   data);
+void   debug_mem_profile_cmd_callback (GtkWidget *widget,
+                                       gpointer   data);
+
 #endif /* ENABLE_DEBUG_MENU */
 
 

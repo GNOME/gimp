@@ -21,14 +21,11 @@
 
 
 void   error_console_clear_cmd_callback          (GtkWidget *widget,
-                                                  gpointer   data,
-                                                  guint      action);
+                                                  gpointer   data);
 void   error_console_save_all_cmd_callback       (GtkWidget *widget,
-                                                  gpointer   data,
-                                                  guint      action);
+                                                  gpointer   data);
 void   error_console_save_selection_cmd_callback (GtkWidget *widget,
-                                                  gpointer   data,
-                                                  guint      action);
+                                                  gpointer   data);
 
 
 #endif /* __ERROR_CONSOLE_COMMANDS_H__ */

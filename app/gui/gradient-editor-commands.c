@@ -68,8 +68,7 @@ static void   gradient_editor_replicate_response     (GtkWidget           *widge
 
 void
 gradient_editor_left_color_cmd_callback (GtkWidget *widget,
-                                         gpointer   data,
-                                         guint      action)
+                                         gpointer   data)
 {
   GimpGradientEditor *editor;
   GimpGradient       *gradient;
@@ -185,8 +184,7 @@ gradient_editor_save_left_cmd_callback (GtkWidget *widget,
 
 void
 gradient_editor_right_color_cmd_callback (GtkWidget *widget,
-                                          gpointer   data,
-                                          guint      action)
+                                          gpointer   data)
 {
   GimpGradientEditor *editor;
   GimpGradient       *gradient;
@@ -368,8 +366,7 @@ gradient_editor_coloring_type_cmd_callback (GtkWidget *widget,
 
 void
 gradient_editor_flip_cmd_callback (GtkWidget *widget,
-                                   gpointer   data,
-                                   guint      action)
+                                   gpointer   data)
 {
   GimpGradientEditor  *editor;
   GimpGradient        *gradient;
@@ -495,8 +492,7 @@ gradient_editor_flip_cmd_callback (GtkWidget *widget,
 
 void
 gradient_editor_replicate_cmd_callback (GtkWidget *widget,
-                                        gpointer   data,
-                                        guint      action)
+                                        gpointer   data)
 {
   GimpGradientEditor *editor;
   GtkWidget          *dialog;
@@ -573,8 +569,7 @@ gradient_editor_replicate_cmd_callback (GtkWidget *widget,
 
 void
 gradient_editor_split_midpoint_cmd_callback (GtkWidget *widget,
-                                             gpointer   data,
-                                             guint      action)
+                                             gpointer   data)
 {
   GimpGradientEditor  *editor;
   GimpGradient        *gradient;
@@ -601,8 +596,7 @@ gradient_editor_split_midpoint_cmd_callback (GtkWidget *widget,
 
 void
 gradient_editor_split_uniformly_cmd_callback (GtkWidget *widget,
-                                              gpointer   data,
-                                              guint      action)
+                                              gpointer   data)
 {
   GimpGradientEditor *editor;
   GtkWidget          *dialog;
@@ -681,8 +675,7 @@ gradient_editor_split_uniformly_cmd_callback (GtkWidget *widget,
 
 void
 gradient_editor_delete_cmd_callback (GtkWidget *widget,
-                                     gpointer   data,
-                                     guint      action)
+                                     gpointer   data)
 {
   GimpGradientEditor  *editor;
   GimpGradient        *gradient;
@@ -768,8 +761,7 @@ gradient_editor_delete_cmd_callback (GtkWidget *widget,
 
 void
 gradient_editor_recenter_cmd_callback (GtkWidget *widget,
-                                       gpointer   data,
-                                       guint      action)
+                                       gpointer   data)
 {
   GimpGradientEditor  *editor;
   GimpGradient        *gradient;
@@ -796,8 +788,7 @@ gradient_editor_recenter_cmd_callback (GtkWidget *widget,
 
 void
 gradient_editor_redistribute_cmd_callback (GtkWidget *widget,
-                                           gpointer   data,
-                                           guint      action)
+                                           gpointer   data)
 {
   GimpGradientEditor  *editor;
   GimpGradient        *gradient;
@@ -855,8 +846,7 @@ gradient_editor_redistribute_cmd_callback (GtkWidget *widget,
 
 void
 gradient_editor_blend_color_cmd_callback (GtkWidget *widget,
-                                          gpointer   data,
-                                          guint      action)
+                                          gpointer   data)
 {
   GimpGradientEditor *editor;
 
@@ -873,8 +863,7 @@ gradient_editor_blend_color_cmd_callback (GtkWidget *widget,
 
 void
 gradient_editor_blend_opacity_cmd_callback (GtkWidget *widget,
-                                            gpointer   data,
-                                            guint      action)
+                                            gpointer   data)
 {
   GimpGradientEditor *editor;
 

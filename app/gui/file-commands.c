@@ -125,8 +125,7 @@ file_new_cmd_callback (GtkWidget *widget,
 
 void
 file_type_cmd_callback (GtkWidget *widget,
-                        gpointer   data,
-                        guint      action)
+                        gpointer   data)
 {
   gimp_file_dialog_set_file_proc (GIMP_FILE_DIALOG (data),
                                   g_object_get_data (G_OBJECT (widget),
@@ -197,8 +196,7 @@ file_last_opened_cmd_callback (GtkWidget *widget,
 
 void
 file_save_cmd_callback (GtkWidget *widget,
-			gpointer   data,
-                        guint      action)
+			gpointer   data)
 {
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
@@ -215,7 +213,7 @@ file_save_cmd_callback (GtkWidget *widget,
 
       if (! uri)
 	{
-	  file_save_as_cmd_callback (widget, data, action);
+	  file_save_as_cmd_callback (widget, data);
 	}
       else
 	{
@@ -245,8 +243,7 @@ file_save_cmd_callback (GtkWidget *widget,
 
 void
 file_save_as_cmd_callback (GtkWidget *widget,
-			   gpointer   data,
-                           guint      action)
+			   gpointer   data)
 {
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
@@ -256,8 +253,7 @@ file_save_as_cmd_callback (GtkWidget *widget,
 
 void
 file_save_a_copy_cmd_callback (GtkWidget *widget,
-                               gpointer   data,
-                               guint      action)
+                               gpointer   data)
 {
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
@@ -267,8 +263,7 @@ file_save_a_copy_cmd_callback (GtkWidget *widget,
 
 void
 file_save_template_cmd_callback (GtkWidget *widget,
-                                 gpointer   data,
-                                 guint      action)
+                                 gpointer   data)
 {
   GimpDisplay *gdisp;
   GtkWidget   *qbox;
@@ -287,8 +282,7 @@ file_save_template_cmd_callback (GtkWidget *widget,
 
 void
 file_revert_cmd_callback (GtkWidget *widget,
-			  gpointer   data,
-                          guint      action)
+			  gpointer   data)
 {
   GimpDisplay *gdisp;
   GtkWidget   *query_box;
@@ -348,8 +342,7 @@ file_revert_cmd_callback (GtkWidget *widget,
 
 void
 file_close_cmd_callback (GtkWidget *widget,
-			 gpointer   data,
-                         guint      action)
+			 gpointer   data)
 {
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
@@ -359,8 +352,7 @@ file_close_cmd_callback (GtkWidget *widget,
 
 void
 file_quit_cmd_callback (GtkWidget *widget,
-			gpointer   data,
-                        guint      action)
+			gpointer   data)
 {
   Gimp *gimp;
   return_if_no_gimp (gimp, data);

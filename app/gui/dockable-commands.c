@@ -74,8 +74,7 @@ dockable_add_tab_cmd_callback (GtkWidget *widget,
 
 void
 dockable_close_tab_cmd_callback (GtkWidget *widget,
-                                 gpointer   data,
-                                 guint      action)
+                                 gpointer   data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
   GimpDockable *dockable;
@@ -92,8 +91,7 @@ dockable_close_tab_cmd_callback (GtkWidget *widget,
 
 void
 dockable_detach_tab_cmd_callback (GtkWidget *widget,
-                                  gpointer   data,
-                                  guint      action)
+                                  gpointer   data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
   GimpDockable *dockable;
@@ -265,8 +263,7 @@ dockable_tab_style_cmd_callback (GtkWidget *widget,
 
 void
 dockable_toggle_image_menu_cmd_callback (GtkWidget *widget,
-                                         gpointer   data,
-                                         guint      action)
+                                         gpointer   data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
 
@@ -277,8 +274,7 @@ dockable_toggle_image_menu_cmd_callback (GtkWidget *widget,
 
 void
 dockable_toggle_auto_cmd_callback (GtkWidget *widget,
-                                   gpointer   data,
-                                   guint      action)
+                                   gpointer   data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
 
@@ -310,8 +306,7 @@ dockable_change_screen_destroy_callback (GtkWidget *query_box,
 
 void
 dockable_change_screen_cmd_callback (GtkWidget *widget,
-                                     gpointer   data,
-                                     guint      action)
+                                     gpointer   data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
   GtkWidget    *dock;

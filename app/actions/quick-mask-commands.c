@@ -70,8 +70,7 @@ static void   qmask_query_color_changed (GimpColorButton  *button,
 
 void
 qmask_toggle_cmd_callback (GtkWidget *widget,
-                           gpointer   data,
-                           guint      action)
+                           gpointer   data)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
 
@@ -106,8 +105,7 @@ qmask_invert_cmd_callback (GtkWidget *widget,
 
 void
 qmask_configure_cmd_callback (GtkWidget *widget,
-                              gpointer   data,
-                              guint      action)
+                              gpointer   data)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
 

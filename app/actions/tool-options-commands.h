@@ -21,26 +21,19 @@
 
 
 void   tool_options_save_to_cmd_callback      (GtkWidget *widget,
-                                               gpointer   data,
-                                               guint      action);
+                                               gpointer   data);
 void   tool_options_save_new_cmd_callback     (GtkWidget *widget,
-                                               gpointer   data,
-                                               guint      action);
+                                               gpointer   data);
 void   tool_options_restore_from_cmd_callback (GtkWidget *widget,
-                                               gpointer   data,
-                                               guint      action);
+                                               gpointer   data);
 void   tool_options_rename_saved_cmd_callback (GtkWidget *widget,
-                                               gpointer   data,
-                                               guint      action);
+                                               gpointer   data);
 void   tool_options_delete_saved_cmd_callback (GtkWidget *widget,
-                                               gpointer   data,
-                                               guint      action);
+                                               gpointer   data);
 void   tool_options_reset_cmd_callback        (GtkWidget *widget,
-                                               gpointer   data,
-                                               guint      action);
+                                               gpointer   data);
 void   tool_options_reset_all_cmd_callback    (GtkWidget *widget,
-                                               gpointer   data,
-                                               guint      action);
+                                               gpointer   data);
 
 
 #endif /* __TOOL_OPTIONS_COMMANDS_H__ */

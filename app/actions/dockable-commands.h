@@ -24,11 +24,9 @@ void   dockable_add_tab_cmd_callback           (GtkWidget *widget,
                                                 gpointer   data,
                                                 guint      action);
 void   dockable_close_tab_cmd_callback         (GtkWidget *widget,
-                                                gpointer   data,
-                                                guint      action);
+                                                gpointer   data);
 void   dockable_detach_tab_cmd_callback        (GtkWidget *widget,
-                                                gpointer   data,
-                                                guint      action);
+                                                gpointer   data);
 
 void   dockable_toggle_view_cmd_callback       (GtkWidget *widget,
                                                 gpointer   data,
@@ -41,14 +39,11 @@ void   dockable_tab_style_cmd_callback         (GtkWidget *widget,
                                                 guint      action);
 
 void   dockable_toggle_image_menu_cmd_callback (GtkWidget *widget,
-                                                gpointer   data,
-                                                guint      action);
+                                                gpointer   data);
 void   dockable_toggle_auto_cmd_callback       (GtkWidget *widget,
-                                                gpointer   data,
-                                                guint      action);
+                                                gpointer   data);
 void   dockable_change_screen_cmd_callback     (GtkWidget *widget,
-                                                gpointer   data,
-                                                guint      action);
+                                                gpointer   data);
 
 
 #endif /* __DOCKABLE_COMMANDS_H__ */

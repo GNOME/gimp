@@ -29,16 +29,14 @@
 
 void
 help_help_cmd_callback (GtkWidget *widget,
-			gpointer   data,
-                        guint      action)
+			gpointer   data)
 {
   gimp_standard_help_func (NULL, NULL);
 }
 
 void
 help_context_help_cmd_callback (GtkWidget *widget,
-				gpointer   data,
-                                guint      action)
+				gpointer   data)
 {
   gimp_context_help (widget);
 }

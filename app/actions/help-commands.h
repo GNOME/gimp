@@ -21,11 +21,9 @@
 
 
 void   help_help_cmd_callback         (GtkWidget *widget,
-				       gpointer   data,
-                                       guint      action);
+				       gpointer   data);
 void   help_context_help_cmd_callback (GtkWidget *widget,
-				       gpointer   data,
-                                       guint      action);
+				       gpointer   data);
 
 
 #endif /* __HELP_COMMANDS_H__ */

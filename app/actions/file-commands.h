@@ -25,8 +25,7 @@ void   file_new_cmd_callback           (GtkWidget   *widget,
                                         guint        action);
 
 void   file_type_cmd_callback          (GtkWidget   *widget,
-                                        gpointer     data,
-                                        guint        action);
+                                        gpointer     data);
 
 void   file_open_cmd_callback          (GtkWidget   *widget,
                                         gpointer     data,
@@ -36,30 +35,20 @@ void   file_last_opened_cmd_callback   (GtkWidget   *widget,
                                         guint        action);
 
 void   file_save_cmd_callback          (GtkWidget   *widget,
-                                        gpointer     data,
-                                        guint        action);
+                                        gpointer     data);
 void   file_save_as_cmd_callback       (GtkWidget   *widget,
-                                        gpointer     data,
-                                        guint        action);
+                                        gpointer     data);
 void   file_save_a_copy_cmd_callback   (GtkWidget   *widget,
-                                        gpointer     data,
-                                        guint        action);
+                                        gpointer     data);
 void   file_save_template_cmd_callback (GtkWidget   *widget,
-                                        gpointer     data,
-                                        guint        action);
+                                        gpointer     data);
 
 void   file_revert_cmd_callback        (GtkWidget   *widget,
-                                        gpointer     data,
-                                        guint        action);
-void   file_pref_cmd_callback          (GtkWidget   *widget,
-                                        gpointer     data,
-                                        guint        action);
+                                        gpointer     data);
 void   file_close_cmd_callback         (GtkWidget   *widget,
-                                        gpointer     data,
-                                        guint        action);
+                                        gpointer     data);
 void   file_quit_cmd_callback          (GtkWidget   *widget,
-                                        gpointer     data,
-                                        guint        action);
+                                        gpointer     data);
 
 void   file_file_open_dialog           (Gimp        *gimp,
                                         const gchar *uri,

@@ -48,8 +48,7 @@ static void   debug_dump_menus_recurse_menu (GtkWidget *menu,
 
 void
 debug_dump_menus_cmd_callback (GtkWidget *widget,
-                               gpointer   data,
-                               guint      action)
+                               gpointer   data)
 {
   GList *list;
 
@@ -86,8 +85,7 @@ debug_dump_menus_cmd_callback (GtkWidget *widget,
 
 void
 debug_mem_profile_cmd_callback (GtkWidget *widget,
-                                gpointer   data,
-                                guint      action)
+                                gpointer   data)
 {
   extern gboolean gimp_debug_memsize;
 
