@@ -1,12 +1,12 @@
-# Czech translation of GIMP plugins 1.1.25.
+# Czech translation of GIMP plugins 1.1.26.
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Stanislav Brabec <utx@k332.feld.cvut.cz>, 2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-std-plugins 1.1.25\n"
-"POT-Creation-Date: 2000-09-22 11:39-0700\n"
-"PO-Revision-Date: 2000-09-02 21:49+02:00\n"
+"Project-Id-Version: gimp-std-plugins 1.1.26\n"
+"POT-Creation-Date: 2000-09-26 13:48+0200\n"
+"PO-Revision-Date: 2000-09-26 13:53+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -10476,9 +10476,8 @@ msgid "Fade out:"
 msgstr "Dobìh:"
 
 #: plug-ins/gfig/gfig.c:2998
-#, fuzzy
 msgid "Gradient:"
-msgstr "Pøechod"
+msgstr "Pøechod:"
 
 #: plug-ins/gfig/gfig.c:3018
 msgid "Pressure:"

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.1.25\n"
-"POT-Creation-Date: Wed Aug 30 00:31:39 2000\n"
-"PO-Revision-Date: 2000-09-02 21:41+02:00\n"
+"POT-Creation-Date: Sat Sep  2 20:50:30 2000\n"
+"PO-Revision-Date: 2000-09-11 11:14+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1172,7 +1172,6 @@ msgid "unable to accept unix connection: $!\n"
 msgstr "nepodaøilo se pøijmout unixové spojení $!\n"
 
 #: Gimp/Lib.xs:0
-#, fuzzy
 msgid "unable to convert Gimp::Drawable into Gimp::GimpDrawable (id %d)"
 msgstr "nepodaøilo se pøevést Gimp::Drawable do Gimp::GimpDrawable (id %d)"
 
