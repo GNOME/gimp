@@ -302,13 +302,9 @@ vectors_selection_to_vectors (GimpImage *gimage,
 {
   ProcRecord   *proc_rec;
   Argument     *args;
-  GimpDrawable *drawable;
   GimpDisplay  *gdisp;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  drawable = gimp_image_active_drawable (gimage);
-  gdisp    = gimp_context_get_display (gimp_get_user_context (gimage->gimp));
 
   if (advanced)
     proc_rec = procedural_db_lookup (gimage->gimp,
@@ -323,6 +319,8 @@ vectors_selection_to_vectors (GimpImage *gimage,
       return;
     }
 
+  gdisp = gimp_context_get_display (gimp_get_user_context (gimage->gimp));
+
   /*  plug-in arguments as if called by <Image>/Filters/...  */
   args = g_new (Argument, 3);
 
@@ -331,7 +329,7 @@ vectors_selection_to_vectors (GimpImage *gimage,
   args[1].arg_type      = GIMP_PDB_IMAGE;
   args[1].value.pdb_int = (gint32) gimp_image_get_ID (gimage);
   args[2].arg_type      = GIMP_PDB_DRAWABLE;
-  args[2].value.pdb_int = (gint32) gimp_item_get_ID (GIMP_ITEM (drawable));
+  args[2].value.pdb_int = -1;  /*  unused  */
 
   plug_in_run (gimage->gimp,
                proc_rec, args, 3, FALSE, TRUE,

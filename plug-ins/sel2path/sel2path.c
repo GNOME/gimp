@@ -67,8 +67,7 @@ static void      sel2path_response       (GtkWidget *widget,
                                           gint       response_id,
 					  gpointer   data);
 static void      dialog_print_selVals    (SELVALS   *sels);
-gboolean         do_sel2path             (gint32     drawable_ID,
-					  gint32     image_ID);
+gboolean         do_sel2path             (gint32     image_ID);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -93,15 +92,15 @@ query (void)
   static GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)" },
   };
 
   static GimpParamDef advanced_args[] =
   {
     { GIMP_PDB_INT32,    "run_mode",                    "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",                       "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable",                    "Input drawable" },
+    { GIMP_PDB_IMAGE,    "image",                       "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",                    "Input drawable (unused)" },
     { GIMP_PDB_FLOAT,    "align_threshold",             "align_threshold"},
     { GIMP_PDB_FLOAT,    "corner_always_threshold",     "corner_always_threshold"},
     { GIMP_PDB_INT8,     "corner_surround",             "corner_surround"},
@@ -157,8 +156,6 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam   values[1];
-  GimpDrawable      *drawable;
-  gint32             drawable_ID;
   gint32             image_ID;
   GimpRunMode        run_mode;
   GimpPDBStatusType  status    = GIMP_PDB_SUCCESS;
@@ -176,19 +173,20 @@ run (const gchar      *name,
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  drawable_ID = param[2].data.d_drawable;
-  drawable = gimp_drawable_get (drawable_ID);
-
-  image_ID = gimp_drawable_image_id (drawable_ID);
+  image_ID = param[1].data.d_image;
+  if (image_ID < 0)
+    {
+      g_warning ("plug_in_sel2path needs a valid image ID");
+      return;
+    }
 
   if (gimp_selection_is_empty (image_ID))
     {
       g_message (_("No selection to convert"));
-      gimp_drawable_detach (drawable);
       return;
     }
 
-  fit_set_default_params(&selVals);
+  fit_set_default_params (&selVals);
 
   if (!no_dialog)
     {
@@ -201,10 +199,8 @@ run (const gchar      *name,
 	    }
 
 	  if (!sel2path_dialog (&selVals))
-	    {
-	      gimp_drawable_detach (drawable);
-	      return;
-	    }
+            return;
+
 	  /* Get the current settings */
 	  fit_set_params (&selVals);
 	  break;
@@ -254,7 +250,7 @@ run (const gchar      *name,
 	}
     }
 
-  do_sel2path (drawable_ID,image_ID);
+  do_sel2path (image_ID);
   values[0].data.d_status = status;
 
   if (status == GIMP_PDB_SUCCESS)
@@ -263,8 +259,6 @@ run (const gchar      *name,
       if (run_mode == GIMP_RUN_INTERACTIVE && !no_dialog)
 	gimp_set_data ("plug_in_sel2path_advanced", &selVals, sizeof(SELVALS));
     }
-
-  gimp_drawable_detach (drawable);
 }
 
 static void
@@ -531,13 +525,12 @@ do_points (spline_list_array_type in_splines,
 
 
 gboolean
-do_sel2path (gint32 drawable_ID,
-	     gint32 image_ID)
+do_sel2path (gint32 image_ID)
 {
-  gint32      selection_ID;
-  GimpDrawable  *sel_drawable;
-  pixel_outline_list_type olt;
-  spline_list_array_type splines;
+  gint32                   selection_ID;
+  GimpDrawable            *sel_drawable;
+  pixel_outline_list_type  olt;
+  spline_list_array_type   splines;
 
   gimp_selection_bounds (image_ID, &has_sel,
 			 &sel_x1, &sel_y1, &sel_x2, &sel_y2);
@@ -547,13 +540,10 @@ do_sel2path (gint32 drawable_ID,
 
   /* Now get the selection channel */
 
-  selection_ID = gimp_image_get_selection(image_ID);
+  selection_ID = gimp_image_get_selection (image_ID);
 
   if (selection_ID < 0)
-    {
-      g_warning ("gimp_image_get_selection failed");
-      return FALSE;
-    }
+    return FALSE;
 
   sel_drawable = gimp_drawable_get (selection_ID);
 
@@ -575,6 +565,8 @@ do_sel2path (gint32 drawable_ID,
   splines = fitted_splines (olt);
 
   do_points (splines, image_ID);
+
+  gimp_drawable_detach (sel_drawable);
 
   gimp_displays_flush ();
 

@@ -1,5 +1,20 @@
 2003-11-22  Sven Neumann  <sven@gimp.org>
 
+	Fixed some selection editor problems (bug #127644):
+
+	* plug-ins/sel2path/sel2path.c: use the given image_ID, ignore the
+	drawable_ID. This plug-in doesn't operate on a drawable at all.
+
+	* plug-ins/imagemap/imap_main.c: pass a valid image_ID to sel2path.
+
+	* app/gui/vectors-commands.c: don't attempt to create a valid
+	drawable_ID for the call to sel2path since it isn't used anyway.
+
+	* app/core/gimpdrawable-stroke.c (gimp_drawable_stroke_boundary):
+	just return when being called with an empty boundary.
+
+2003-11-22  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpwidgets.def: added symbols for
 	GimpColorDisplayStack.
 

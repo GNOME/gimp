@@ -416,13 +416,14 @@ set_arrow_func(void)
 }
 
 static gboolean
-fuzzy_select_on_button_press(GtkWidget *widget, GdkEventButton *event,
-			     gpointer data)
+fuzzy_select_on_button_press (GtkWidget      *widget,
+                              GdkEventButton *event,
+                              gpointer        data)
 {
    if (event->button == 1) {
       gdouble rx = get_real_coord((gint) event->x);
       gdouble ry = get_real_coord((gint) event->y);
-      gint32 image_ID = gimp_drawable_image(_drawable->drawable_id);
+      gint32 image_ID = gimp_drawable_image (_drawable->drawable_id);
       gint32 channel_ID;
 
       /* Save the old selection first */
@@ -433,16 +434,17 @@ fuzzy_select_on_button_press(GtkWidget *widget, GdkEventButton *event,
 			    GIMP_CHANNEL_OP_REPLACE,
 			    FALSE, FALSE, 0, FALSE)) {
 	 GimpParam *return_vals;
-	 gint nreturn_vals;
+	 gint       nreturn_vals;
 
-	 return_vals = gimp_run_procedure("plug_in_sel2path",
-					  &nreturn_vals,
-					  GIMP_PDB_INT32, TRUE,
-					  GIMP_PDB_IMAGE, 0,
-					  GIMP_PDB_DRAWABLE,
-					  _drawable->drawable_id,
-					  GIMP_PDB_END);
-	 if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS) {
+	 return_vals = gimp_run_procedure ("plug_in_sel2path",
+                                           &nreturn_vals,
+                                           GIMP_PDB_INT32,    TRUE,
+                                           GIMP_PDB_IMAGE,    image_ID,
+                                           GIMP_PDB_DRAWABLE, -1,
+                                           GIMP_PDB_END);
+
+	 if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+           {
 	    gdouble distance;
 	    gchar *path_name = gimp_path_get_current(image_ID);
 	    Object_t *object = create_polygon(NULL);
