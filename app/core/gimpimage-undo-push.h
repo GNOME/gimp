@@ -37,8 +37,8 @@ int      undo_push_paint             (GImage *, void *);
 int      undo_push_layer             (GImage *, UndoType, void *);
 int      undo_push_layer_mod         (GImage *, void *);
 int      undo_push_layer_mask        (GImage *, UndoType, void *);
-int      undo_push_layer_change      (GImage *, int);
-int      undo_push_layer_position    (GImage *, int);
+int      undo_push_layer_change      (GImage *, GimpLayer *);
+int      undo_push_layer_reposition  (GImage *, GimpLayer *);
 int      undo_push_channel           (GImage *, UndoType, void *);
 int      undo_push_channel_mod       (GImage *, void *);
 int      undo_push_fs_to_layer       (GImage *, void *);
@@ -53,7 +53,7 @@ int      undo_push_drawable_parasite_remove (GImage *, GimpDrawable *,
 					     const char *);
 int      undo_push_qmask	     (GImage *);
 int      undo_push_resolution	     (GImage *);
-int      undo_push_layer_rename      (GImage *, Layer *);
+int      undo_push_layer_rename      (GImage *, GimpLayer *);
 int      undo_push_cantundo          (GImage *, const char *);
 
 int      undo_pop                    (GImage *);

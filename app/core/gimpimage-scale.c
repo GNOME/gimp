@@ -2078,320 +2078,122 @@ gimp_image_pick_correlate_layer (GimpImage *gimage,
   return NULL;
 }
 
+
+
 Layer *
 gimp_image_raise_layer (GimpImage *gimage, 
 			Layer     *layer_arg)
 {
-  Layer *layer;
-  Layer *prev_layer;
-  GSList *list;
-  GSList *prev;
-  gint x1, y1, x2, y2;
-  gint index = -1;
-  gint off_x, off_y;
-  gint off2_x, off2_y;
+    GSList *list;
+    gint curpos;
 
-  list = gimage->layers;
-  prev = NULL;
-  prev_layer = NULL;
+    list = gimage->layers;
 
-  while (list)
+    curpos = g_slist_index (list, layer_arg);
+    if (curpos < 0)
+	return NULL;  /* invalid "layer_arg" */
+
+    /* is this the top layer already? */
+    if (curpos == 0)
     {
-      layer = (Layer *) list->data;
-      if (prev)
-	prev_layer = (Layer *) prev->data;
-
-      if (layer == layer_arg)
-	{
-	  /*  We can only raise a layer if it has an alpha channel &&
-	   *  If it's not already the top layer
-	   */
-	  if (prev && layer_has_alpha (layer) && layer_has_alpha (prev_layer))
-	    {
-	      list->data = prev_layer;
-	      prev->data = layer;
-	      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
-	      drawable_offsets (GIMP_DRAWABLE(prev_layer), &off2_x, &off2_y);
-
-	      /*  calculate minimum area to update  */
-	      x1 = MAX (off_x, off2_x);
-	      y1 = MAX (off_y, off2_y);
-	      x2 = MIN (off_x + drawable_width (GIMP_DRAWABLE(layer)),
-			off2_x + drawable_width (GIMP_DRAWABLE(prev_layer)));
-	      y2 = MIN (off_y + drawable_height (GIMP_DRAWABLE(layer)),
-			off2_y + drawable_height (GIMP_DRAWABLE(prev_layer)));
-
-	      if ((x2 - x1) > 0 && (y2 - y1) > 0)
-		gtk_signal_emit (GTK_OBJECT (gimage),
-				 gimp_image_signals[REPAINT],
-				 x1, y1, x2-x1, y2-y1);
-
-	      /*  invalidate the composite preview  */
-	      gimp_image_invalidate_preview (gimage);
-
- 	      /* Dirty the image, but we're too lazy to provide a
-	       * proper undo. */
- 	      undo_push_cantundo (gimage, _("raise layer"));
-
-	      return prev_layer;
-	    }
-	  else
-	    {
-	      g_message (_("Layer cannot be raised any further"));
-	      return NULL;
-	    }
-	}
-
-      prev = list;
-      index++;
-      list = g_slist_next (list);
+	g_message (_("Layer cannot be raised any further"));
+	return NULL;
     }
 
-  return NULL;
+    return gimp_image_position_layer (gimage, layer_arg, curpos-1, TRUE);
 }
+
 
 Layer *
 gimp_image_lower_layer (GimpImage *gimage, 
 			Layer     *layer_arg)
 {
-  Layer *layer;
-  Layer *next_layer;
-  GSList *list;
-  GSList *next;
-  gint x1, y1, x2, y2;
-  gint index = 0;
-  gint off_x, off_y;
-  gint off2_x, off2_y;
+    GSList *list;
+    gint curpos;
+    guint length;
 
-  next_layer = NULL;
+    list = gimage->layers;
 
-  list = gimage->layers;
+    curpos = g_slist_index (list, layer_arg);
+    if (curpos < 0)
+	return NULL;  /* invalid "layer_arg" */
 
-  while (list)
+    /* is this the bottom layer already? */
+    length = g_slist_length (list);
+    if (curpos == length-1)
     {
-      layer = (Layer *) list->data;
-      next = g_slist_next (list);
-
-      if (next)
-	next_layer = (Layer *) next->data;
-      index++;
-
-      if (layer == layer_arg)
-	{
-	  /*  We can only lower a layer if it has an alpha channel &&
-	   *  The layer beneath it has an alpha channel &&
-	   *  If it's not already the bottom layer
-	   */
-	  if (next && layer_has_alpha (layer) && layer_has_alpha (next_layer))
-	    {
-	      list->data = next_layer;
-	      next->data = layer;
-	      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
-	      drawable_offsets (GIMP_DRAWABLE(next_layer), &off2_x, &off2_y);
-	      
-	      /*  calculate minimum area to update  */
-	      x1 = MAX (off_x, off2_x);
-	      y1 = MAX (off_y, off2_y);
-	      x2 = MIN (off_x + drawable_width (GIMP_DRAWABLE(layer)),
-			off2_x + drawable_width (GIMP_DRAWABLE(next_layer)));
-	      y2 = MIN (off_y + drawable_height (GIMP_DRAWABLE(layer)),
-			off2_y + drawable_height (GIMP_DRAWABLE(next_layer)));
-
-	      if ((x2 - x1) > 0 && (y2 - y1) > 0)
-		gtk_signal_emit (GTK_OBJECT (gimage),
-				 gimp_image_signals[REPAINT],
-				 x1, y1, x2-x1, y2-y1);
-	      
-	      /*  invalidate the composite preview  */
-	      gimp_image_invalidate_preview (gimage);
-
-	      undo_push_cantundo (gimage, _("lower layer"));
-
-	      return next_layer;
-	    }
-	  else
-	    {
-	      g_message (_("Layer cannot be lowered any further"));
-	      return NULL;
-	    }
-	}
-
-      list = next;
+	g_message (_("Layer cannot be lowered any further"));
+	return NULL;
     }
 
-  return NULL;
+    return gimp_image_position_layer (gimage, layer_arg, curpos+1, TRUE);
 }
+
 
 
 Layer *
 gimp_image_raise_layer_to_top (GimpImage *gimage, 
 			       Layer     *layer_arg)
 {
-  Layer *layer;
-  GSList *list;
-  gint x_min, y_min, x_max, y_max;
-  gint off_x, off_y;
+    GSList *list;
+    gint curpos;
 
-  list = gimage->layers;
-  if (list == NULL)
-    {
-      /* the layers list is empty */
-      return NULL;
-    }
-  layer = (Layer *) list->data;
-  if (layer == layer_arg)
-    {
-      /* layer_arg is already the top_layer */
-      g_message (_("Layer is already on top"));
-      return NULL;
-    }
-  if (! layer_has_alpha (layer_arg))
-    {
-      g_message (_("Can't raise Layer without alpha"));
-      return NULL;
-    }
-  
-  list = g_slist_next (list);
+    list = gimage->layers;
 
-  /* search for layer_arg */
-  while (list)
-    {
-      layer = (Layer *) list->data;
-      if (layer == layer_arg)
-	{
-	  break;
-	}
-      list = g_slist_next (list);
-    }
-  
-  if (layer != layer_arg)
-    {
-      /* The requested layer was not found in the layerstack
-       * Return without changing anything
-       */
-      return NULL;
-    }
-  
-  list = g_slist_remove (gimage->layers, layer_arg);
-  gimage->layers = g_slist_prepend (list, layer_arg);
-  
-  /* update the affected area (== area of layer_arg) */
-  drawable_offsets (GIMP_DRAWABLE(layer_arg), &off_x, &off_y);
-  x_min = off_x;
-  y_min = off_y;
-  x_max = off_x + drawable_width (GIMP_DRAWABLE(layer_arg));
-  y_max = off_y + drawable_height (GIMP_DRAWABLE(layer_arg));
-  gtk_signal_emit (GTK_OBJECT (gimage),
-		   gimp_image_signals[REPAINT],
-		   x_min, y_min, x_max, y_max);
-  
-  /*  invalidate the composite preview  */
-  gimp_image_invalidate_preview (gimage);
+    curpos = g_slist_index (list, layer_arg);
+    if (curpos < 0)
+	return NULL;
 
-  undo_push_cantundo (gimage, _("raise layer to top"));
-  
-  return layer;
+    if (curpos == 0)
+    {
+	g_message (_("Layer is already on top"));
+	return NULL;
+    }
+
+    if (! layer_has_alpha (layer_arg))
+    {
+	g_message (_("Can't raise Layer without alpha"));
+	return NULL;
+    }
+
+    return gimp_image_position_layer (gimage, layer_arg, 0, TRUE);
 }
+
+
 
 Layer *
 gimp_image_lower_layer_to_bottom (GimpImage *gimage, 
 				  Layer     *layer_arg)
 {
-  Layer *layer;
-  GSList *list;
-  GSList *next;
-  GSList *pos;
-  gint x_min, y_min, x_max, y_max;
-  gint off_x, off_y;
-  gint index;
-  gint ex_flag;
-  
-  list = gimage->layers;
-  next = NULL; layer = NULL;
-  ex_flag = 0;
-  index = 0;
-  
-  /* 1. loop find layer_arg */
-  while (list)
+    GSList *list;
+    gint curpos;
+    guint length;
+
+    list = gimage->layers;
+
+    curpos = g_slist_index (list, layer_arg);
+    if (curpos < 0)
+	return NULL;
+
+    length = g_slist_length (list);
+
+    if (curpos == length-1)
     {
-      layer = (Layer *) list->data;
-      if (layer == layer_arg)
-	{
-	  break;
-	}
-      list = g_slist_next (list);
-      index++;
-    }
-  
-  if (layer != layer_arg)
-    {
-      /* The requested layer was not found in the layerstack
-       * Return without changing anything
-       */
-      return NULL;
-    }
-  pos = list;
-  
-  /* 2. loop: search for the bottom layer and check for alpha */
-  while (list)
-    {
-      next = g_slist_next (list);
-      if (next == NULL)
-	{
-	  if (layer == layer_arg)
-	    {
-	      /* there is no next layer below layer_arg */
-	      g_message (_("Layer is already on bottom"));
-	    }
-	  /* bottom is reached, we can stop now */
-	  break;
-	}
-      
-      layer = (Layer *) next->data;
-      if (layer_has_alpha (layer))
-	{
-	  ex_flag = 1;
-	}
-      else
-	{
-	  g_message (_("BG has no alpha, layer was placed above"));
-	  break;
-	}
-      
-      list = next;
-      index++;
-    }
-  
-  if (ex_flag == 0)
-    {
-      return NULL;
+	g_message (_("Layer is already on bottom"));
+	return NULL;
     }
 
-  list = g_slist_remove (gimage->layers, layer_arg);
-  gimage->layers = g_slist_insert (list, layer_arg, index);
-
-  /* update the affected area (== area of layer_arg) */
-  drawable_offsets (GIMP_DRAWABLE(layer_arg), &off_x, &off_y);
-  x_min = off_x;
-  y_min = off_y;
-  x_max = off_x + drawable_width (GIMP_DRAWABLE(layer_arg));
-  y_max = off_y + drawable_height (GIMP_DRAWABLE(layer_arg));
-  gtk_signal_emit (GTK_OBJECT (gimage),
-		   gimp_image_signals[REPAINT],
-		   x_min, y_min, x_max, y_max);
-
-  /*  invalidate the composite preview  */
-  gimp_image_invalidate_preview (gimage);
-
-  undo_push_cantundo (gimage, _("lower layer to bottom"));
-
-  return layer_arg;
+    return gimp_image_position_layer (gimage, layer_arg, length-1, TRUE);
 }
+
+
+
 
 Layer *
 gimp_image_position_layer (GimpImage *gimage, 
 			   Layer     *layer_arg,
-			   gint       new_index)
+			   gint       new_index,
+			   gboolean   push_undo)
 {
   Layer *layer;
   GSList *list;
@@ -2409,18 +2211,8 @@ gimp_image_position_layer (GimpImage *gimage,
   index = 0;
 
   /* find layer_arg */
-  while (list)
-    {
-      layer = (Layer *) list->data;
-      if (layer == layer_arg)
-	{
-	  break;
-	}
-      list = g_slist_next (list);
-      index++;
-    }
-
-  if (layer != layer_arg)
+  index = g_slist_index (list, layer_arg);
+  if (index < 0)
     {
       /* The requested layer was not found in the layerstack
        * Return without changing anything
@@ -2446,6 +2238,9 @@ gimp_image_position_layer (GimpImage *gimage,
       new_index--;
     }
 
+  if (push_undo)
+      undo_push_layer_reposition (gimage, layer_arg);
+
   list = g_slist_remove (gimage->layers, layer_arg);
   gimage->layers = g_slist_insert (list, layer_arg, new_index);
 
@@ -2461,8 +2256,6 @@ gimp_image_position_layer (GimpImage *gimage,
 
   /*  invalidate the composite preview  */
   gimp_image_invalidate_preview (gimage);
-
-  undo_push_cantundo (gimage, _("re-position layer"));
 
   return layer_arg;
 }

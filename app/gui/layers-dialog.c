@@ -2240,7 +2240,8 @@ layer_widget_drag_drop_callback (GtkWidget      *widget,
 
 	  if (src_index != dest_index)
 	    {
-	      gimage_position_layer (layersD->gimage, src->layer, dest_index);
+	      gimp_image_position_layer (layersD->gimage, src->layer,
+					 dest_index, TRUE);
 	      gdisplays_flush ();
 
 	      return_val = TRUE;

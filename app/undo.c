@@ -100,6 +100,7 @@ static int undo_pop_parasite         (GImage *, UndoState, UndoType, void *);
 static int undo_pop_qmask            (GImage *, UndoState, UndoType, void *);
 static int undo_pop_resolution       (GImage *, UndoState, UndoType, void *);
 static int undo_pop_layer_rename     (GImage *, UndoState, UndoType, void *);
+static int undo_pop_layer_reposition (GImage *, UndoState, UndoType, void *);
 static int undo_pop_cantundo         (GImage *, UndoState, UndoType, void *);
 
 
@@ -124,6 +125,7 @@ static void     undo_free_parasite        (UndoState, UndoType, void *);
 static void     undo_free_qmask           (UndoState, UndoType, void *);
 static void     undo_free_resolution      (UndoState, UndoType, void *);
 static void     undo_free_layer_rename    (UndoState, UndoType, void *);
+static void     undo_free_layer_reposition(UndoState, UndoType, void *);
 static void     undo_free_cantundo        (UndoState, UndoType, void *);
 
 
@@ -2592,24 +2594,84 @@ undo_free_parasite (UndoState state,
 
 
 
+/*************/
+/* Layer re-position */
+
+typedef struct {
+    GimpLayer *layer;
+    gint old_position;
+} LayerRepositionUndo;
+
+int
+undo_push_layer_reposition (GImage *gimage, GimpLayer *layer)
+{
+    Undo *new;
+    LayerRepositionUndo *data;
+    long size;
+
+    size = sizeof (LayerRepositionUndo);
+
+    if ((new = undo_push (gimage, size, LAYER_REPOSITION_UNDO, TRUE)))
+    {
+	data               = g_new (LayerRepositionUndo, 1);
+	new->data          = data;
+	new->pop_func      = undo_pop_layer_reposition;
+	new->free_func     = undo_free_layer_reposition;
+      
+	data->layer        = layer;
+	data->old_position = g_slist_index (gimage->layers, layer);
+
+	return TRUE;
+    }
+
+    return FALSE;
+}
+
+static int
+undo_pop_layer_reposition (GImage    *gimage,
+			   UndoState state,
+			   UndoType  type,
+			   void      *data_ptr)
+{
+    LayerRepositionUndo *data = data_ptr;
+    gint tmp;
+
+    /* what's the layer's current index? */
+    tmp = g_slist_index (gimage->layers, data->layer);
+
+    gimp_image_position_layer (gimage, data->layer, data->old_position, FALSE);
+
+    data->old_position = tmp;
+
+    return TRUE;
+}
+
+static void
+undo_free_layer_reposition (UndoState state,
+			    UndoType  type,
+			    void      *data_ptr)
+{
+    g_free (data_ptr);
+}
+
+
+
+
 
 /*************/
 /* Layer name change */
 
 typedef struct {
-    Layer *layer;
+    GimpLayer *layer;
     gchar *old_name;
 } LayerRenameUndo;
 
 int
-undo_push_layer_rename (GImage *gimage, Layer *layer)
+undo_push_layer_rename (GImage *gimage, GimpLayer *layer)
 {
   Undo *new;
   LayerRenameUndo *data;
   long size;
-
-  /*  increment the dirty flag for this gimage  */
-  gimage_dirty (gimage);
 
   size = sizeof (LayerRenameUndo);
 
@@ -2643,16 +2705,6 @@ undo_pop_layer_rename (GImage    *gimage,
     g_free (data->old_name);
     data->old_name = tmp;
 
-    switch (state) {
-    case UNDO:
-	gimp_image_clean (gimage);
-	break;
-
-    case REDO:
-	gimp_image_dirty (gimage);
-	break;
-    }
-
     return TRUE;
 }
 
@@ -2683,7 +2735,6 @@ undo_push_cantundo (GImage     *gimage,
     /* This is the sole purpose of this type of undo: the ability to
      * mark an image as having been mutated, without really providing
      * any adequate undo facility. */
-    gimp_image_dirty (gimage);
 
     new = undo_push (gimage, 0, GIMAGE_MOD, TRUE);
     if (!new)
@@ -2707,16 +2758,15 @@ undo_pop_cantundo (GImage    *gimage,
     switch (state) {
     case UNDO:
 	g_message (_("Can't undo %s"), action);
-	gimp_image_clean (gimage);
 	break;
 
     case REDO:
-	gimp_image_dirty (gimage);
 	break;
     }
 
     return TRUE;
 }
+
 
 static void
 undo_free_cantundo (UndoState state,
@@ -2748,7 +2798,7 @@ static struct undo_name_t {
     {LAYER_MASK_ADD_UNDO,	N_("add layer mask")},  /* ok */
     {LAYER_MASK_REMOVE_UNDO,	N_("delete layer mask")}, /* ok */
     {LAYER_RENAME_UNDO,		N_("rename layer")},
-    {LAYER_POSITION,		N_("layer position")}, /* unused? */
+    {LAYER_REPOSITION_UNDO,	N_("layer reposition")}, /* ok */
     {CHANNEL_ADD_UNDO,		N_("new channel")},
     {CHANNEL_REMOVE_UNDO,	N_("delete channel")},
     {CHANNEL_MOD,		N_("channel mod")},

@@ -1,3 +1,17 @@
+Fri Oct  1 19:05:04 EDT 1999  Austin Donnelly  <austin@gimp.org>
+
+	* app/gimpimage.c: Factored out common code from 
+	    gimp_image_{raise,lower}_layer and
+	    gimp_image_{raise_layer_to_top,lower_layer_to_bottom}.  They
+	    now call gimp_image_position_layer() to do the real work.
+	* app/gimpimage.h: gimp_image_position_layer() takes extra arg to
+	    tell whether an undo should be pushed.
+	* app/layers_dialog.c: reposition layer with undo.
+	* app/undo.c: new undo type for layer reposition.  Layer rename
+	    shouldn't dirty and clean the image twice!
+	* app/undo.h: prototype for undo_push_layer_reposition().
+	* app/undo_types.h: LAYER_REPOSITION_UNDO type.
+
 Fri Oct  1 15:18:34 EDT 1999  Austin Donnelly  <austin@gimp.org>
 
 	* app/channel.h: don't want sub-undo type
