@@ -1,7 +1,7 @@
 2005-03-30  Sven Neumann  <sven@gimp.org>
 
-	* app/widgets/gimpclipboard.c: allow to store the clipboard content
-	in a clipboard manager when GIMP exits.
+	* app/widgets/gimpclipboard.c: when GIMP exits and a clipboard
+	manager is available, store the clipboard content.
 
 2005-03-28  Sven Neumann  <sven@gimp.org>
 
@@ -200,7 +200,7 @@
 2005-03-24  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpstatusbar.c (gimp_statusbar_push_coords) 
-	(gimp_statusbar_set_cursor): use RINT() instead or ROUND() to get
+	(gimp_statusbar_set_cursor): use RINT() instead of ROUND() to get
 	proper rounding of negative values. Fixes bug #171497.
 
 2005-03-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
