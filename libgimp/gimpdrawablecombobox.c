@@ -53,7 +53,7 @@ static gint  gimp_drawable_combo_box_model_add (GtkListStore               *stor
  * each drawable and only if the function returns %TRUE, the drawable
  * is added to the combobox.
  *
- * You should use gimp_int_combo_connect() to initialize and connect
+ * You should use gimp_int_combo_box_connect() to initialize and connect
  * the combo.  Use gimp_int_combo_box_set_active() to get the active
  * drawable ID and gimp_int_combo_box_get_active() to retrieve the ID
  * of the selected drawable.
