@@ -33,7 +33,7 @@ static void paper_update_preview(void)
   gdouble sc;
   ppm_t   p = {0,0,NULL};
 
-  ppm_load(pcvals.selectedpaper, &p);
+  ppm_load(pcvals.selected_paper, &p);
   sc = p.width > p.height ? p.width : p.height;
   sc = 100.0 / sc;
   resize(&p, p.width*sc,p.height*sc);
@@ -69,8 +69,8 @@ static void paper_select(GtkTreeSelection *selection, gpointer data)
         {
           gchar *fname = g_build_filename ("Paper", paper, NULL);
 
-          g_strlcpy (pcvals.selectedpaper,
-                     fname, sizeof (pcvals.selectedpaper));
+          g_strlcpy (pcvals.selected_paper,
+                     fname, sizeof (pcvals.selected_paper));
 
           paper_update_preview ();
 
@@ -82,9 +82,9 @@ static void paper_select(GtkTreeSelection *selection, gpointer data)
 
 void paper_restore(void)
 {
-  reselect(paper_list, pcvals.selectedpaper);
-  gtk_adjustment_set_value(GTK_ADJUSTMENT(paper_relief_adjust), pcvals.paperrelief);
-  gtk_adjustment_set_value(GTK_ADJUSTMENT(paper_scale_adjust), pcvals.paperscale);
+  reselect(paper_list, pcvals.selected_paper);
+  gtk_adjustment_set_value(GTK_ADJUSTMENT(paper_relief_adjust), pcvals.paper_relief);
+  gtk_adjustment_set_value(GTK_ADJUSTMENT(paper_scale_adjust), pcvals.paper_scale);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(paper_invert), pcvals.paper_invert);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(paper_overlay), pcvals.paper_overlay);
 }
@@ -160,32 +160,32 @@ void create_paperpage(GtkNotebook *notebook)
   paper_scale_adjust =
     gimp_scale_entry_new (GTK_TABLE(table), 0, 0,
 			  _("Scale:"),
-			  150, -1, pcvals.paperscale,
+			  150, -1, pcvals.paper_scale,
 			  3.0, 150.0, 1.0, 10.0, 1,
 			  TRUE, 0, 0,
 			  _("Specifies the scale of the texture (in percent of original file)"),
 			  NULL);
   g_signal_connect (paper_scale_adjust, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
-                    &pcvals.paperscale);
+                    &pcvals.paper_scale);
 
   paper_relief_adjust =
     gimp_scale_entry_new (GTK_TABLE(table), 0, 1,
 			  _("Relief:"),
-			  150, -1, pcvals.paperrelief,
+			  150, -1, pcvals.paper_relief,
 			  0.0, 100.0, 1.0, 10.0, 1,
 			  TRUE, 0, 0,
 			  _("Specifies the amount of embossing to apply to the image (in percent)"),
 			  NULL);
   g_signal_connect (paper_relief_adjust, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
-                    &pcvals.paperrelief);
+                    &pcvals.paper_relief);
 
 
   if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL(paper_store_list), &iter))
     gtk_tree_selection_select_iter (selection, &iter);
 
   paper_select(selection, NULL);
-  readdirintolist("Paper", view, pcvals.selectedpaper);
+  readdirintolist("Paper", view, pcvals.selected_paper);
   gtk_notebook_append_page_menu (notebook, thispage, label, NULL);
 }

@@ -19,8 +19,8 @@ static GtkObject *colornoiseadjust = NULL;
 void color_restore(void)
 {
   gtk_toggle_button_set_active
-    (GTK_TOGGLE_BUTTON(colorradio[pcvals.colortype]), TRUE);
-  gtk_adjustment_set_value(GTK_ADJUSTMENT(colornoiseadjust), pcvals.colornoise);
+    (GTK_TOGGLE_BUTTON(colorradio[pcvals.color_type]), TRUE);
+  gtk_adjustment_set_value(GTK_ADJUSTMENT(colornoiseadjust), pcvals.color_noise);
 }
 
 int color_type_input (int in)
@@ -42,7 +42,7 @@ void create_colorpage(GtkNotebook *notebook)
 
   frame = gimp_int_radio_group_new (TRUE, _("Color"),
 				    G_CALLBACK (gimp_radio_button_update),
-				    &pcvals.colortype, 0,
+				    &pcvals.color_type, 0,
 
 				    _("A_verage under brush"),
 				    COLOR_TYPE_AVERAGE, &colorradio[COLOR_TYPE_AVERAGE],
@@ -69,14 +69,14 @@ void create_colorpage(GtkNotebook *notebook)
   colornoiseadjust =
     gimp_scale_entry_new (GTK_TABLE(table), 0, 0,
 			  _("Color _noise:"),
-			  100, -1, pcvals.colornoise,
+			  100, -1, pcvals.color_noise,
 			  0.0, 100.0, 1.0, 5.0, 0,
 			  TRUE, 0, 0,
 			  _("Adds random noise to the color"),
 			  NULL);
   g_signal_connect (colornoiseadjust, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
-                    &pcvals.colornoise);
+                    &pcvals.color_noise);
 
   color_restore();
 

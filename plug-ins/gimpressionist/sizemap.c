@@ -37,7 +37,7 @@ static GtkObject *smvectprevbrightadjust = NULL;
 static GtkObject *sizadjust = NULL;
 static GtkObject *smstradjust = NULL;
 static GtkObject *smstrexpadjust = NULL;
-static GtkWidget *sizevoronoi = NULL;
+static GtkWidget *size_voronoi = NULL;
 
 #define OMWIDTH 150
 #define OMHEIGHT 150
@@ -49,7 +49,7 @@ static double getsiz_from_gui(double x, double y)
 {
     return getsiz_proto(x,y, numsmvect, smvector,
                         GTK_ADJUSTMENT(smstrexpadjust)->value,
-                        GTK_TOGGLE_BUTTON(sizevoronoi)->active);
+                        GTK_TOGGLE_BUTTON(size_voronoi)->active);
 }
 
 static void updatesmpreviewprev(void)
@@ -287,11 +287,11 @@ smresponse (GtkWidget *widget,
         gint i;
 
         for (i = 0; i < numsmvect; i++)
-          pcvals.sizevector[i] = smvector[i];
+          pcvals.size_vectors[i] = smvector[i];
 
-        pcvals.numsizevector = numsmvect;
-        pcvals.sizestrexp  = GTK_ADJUSTMENT (smstrexpadjust)->value;
-        pcvals.sizevoronoi = GTK_TOGGLE_BUTTON (sizevoronoi)->active;
+        pcvals.num_size_vectors = numsmvect;
+        pcvals.size_strength_exponent  = GTK_ADJUSTMENT (smstrexpadjust)->value;
+        pcvals.size_voronoi = GTK_TOGGLE_BUTTON (size_voronoi)->active;
       }
       break;
     }
@@ -302,14 +302,14 @@ smresponse (GtkWidget *widget,
 
 static void initsmvectors(void)
 {
-  if (pcvals.numsizevector)
+  if (pcvals.num_size_vectors)
     {
       gint i;
 
-      numsmvect = pcvals.numsizevector;
+      numsmvect = pcvals.num_size_vectors;
       for (i = 0; i < numsmvect; i++)
          {
-           smvector[i] = pcvals.sizevector[i];
+           smvector[i] = pcvals.size_vectors[i];
          }
     }
   else
@@ -333,9 +333,9 @@ static void update_sizemap_dialog(void)
       initsmvectors();
 
       gtk_adjustment_set_value(GTK_ADJUSTMENT(smstrexpadjust),
-                                  pcvals.sizestrexp);
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(sizevoronoi),
-                                       pcvals.sizevoronoi);
+                                  pcvals.size_strength_exponent);
+      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(size_voronoi),
+                                       pcvals.size_voronoi);
 
       updatesmvectorprev();
       updatesmpreviewprev();
@@ -496,11 +496,11 @@ void create_sizemap_dialog(void)
   g_signal_connect (smstrexpadjust, "value_changed",
                       G_CALLBACK(smstrexpsmadjmove), NULL);
 
-  sizevoronoi = tmpw = gtk_check_button_new_with_mnemonic( _("_Voronoi"));
+  size_voronoi = tmpw = gtk_check_button_new_with_mnemonic( _("_Voronoi"));
   gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 3, 4, 0, 1);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), FALSE);
   gtk_widget_show (tmpw);
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), pcvals.sizevoronoi);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), pcvals.size_voronoi);
   g_signal_connect(tmpw, "clicked",
                      G_CALLBACK(smstrexpsmadjmove), NULL);
   gimp_help_set_help_data (tmpw, _("Voronoi-mode makes only the smvector closest to the given point have any influence"), NULL);

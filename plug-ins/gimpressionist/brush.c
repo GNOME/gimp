@@ -41,10 +41,10 @@ static ppm_t brushppm  = {0, 0, NULL};
 
 void brush_restore(void)
 {
-  reselect (brush_list, pcvals.selectedbrush);
+  reselect (brush_list, pcvals.selected_brush);
   gtk_adjustment_set_value (GTK_ADJUSTMENT(brush_gamma_adjust), pcvals.brushgamma);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT(brush_relief_adjust), pcvals.brushrelief);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT(brush_aspect_adjust), pcvals.brushaspect);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT(brush_relief_adjust), pcvals.brush_relief);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT(brush_aspect_adjust), pcvals.brush_aspect);
 }
 
 void brush_store(void)
@@ -60,7 +60,7 @@ void brush_free(void)
 void brush_get_selected (ppm_t *p)
 {
   if(brush_from_file)
-    brush_reload (pcvals.selectedbrush, p);
+    brush_reload (pcvals.selected_brush, p);
   else
     ppm_copy (&brushppm, p);
 }
@@ -74,7 +74,7 @@ static gboolean file_is_color (const char *fn)
 
 void set_colorbrushes (const gchar *fn)
 {
-  pcvals.colorbrushes = file_is_color(fn);
+  pcvals.color_brushes = file_is_color(fn);
 }
 
 static void
@@ -158,8 +158,8 @@ brushdmenuselect (GtkWidget *widget,
   }
   g_free (src_row);
 
-  if(bpp >= 3) pcvals.colorbrushes = 1;
-  else pcvals.colorbrushes = 0;
+  if(bpp >= 3) pcvals.color_brushes = 1;
+  else pcvals.color_brushes = 0;
 
   brush_from_file = 0;
   update_brush_preview(NULL);
@@ -394,8 +394,8 @@ brush_select (GtkTreeSelection *selection)
         {
           fname = g_build_filename ("Brushes", brush, NULL);
 
-          g_strlcpy (pcvals.selectedbrush,
-                     fname, sizeof (pcvals.selectedbrush));
+          g_strlcpy (pcvals.selected_brush,
+                     fname, sizeof (pcvals.selected_brush));
 
           update_brush_preview (fname);
 
@@ -420,7 +420,7 @@ static void
 brush_asepct_adjust_cb (GtkWidget *w, gpointer data)
 {
   gimp_double_adjustment_update (GTK_ADJUSTMENT(w), data);
-  update_brush_preview (pcvals.selectedbrush);
+  update_brush_preview (pcvals.selected_brush);
 }
 
 void
@@ -483,7 +483,7 @@ create_brushpage(GtkNotebook *notebook)
   gtk_box_pack_start (GTK_BOX (box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
   g_signal_connect_swapped (brush_gamma_adjust, "value_changed",
-			    G_CALLBACK(update_brush_preview), pcvals.selectedbrush);
+			    G_CALLBACK(update_brush_preview), pcvals.selected_brush);
 
   gimp_help_set_help_data
     (tmpw, _("Changes the gamma (brightness) of the selected brush"), NULL);
@@ -524,7 +524,7 @@ create_brushpage(GtkNotebook *notebook)
   brush_aspect_adjust =
     gimp_scale_entry_new (GTK_TABLE(table), 0, 0,
 			  _("Aspect ratio:"),
-			  150, -1, pcvals.brushaspect,
+			  150, -1, pcvals.brush_aspect,
 			  -1.0, 1.0, 0.1, 0.1, 2,
 			  TRUE, 0, 0,
 			  _("Specifies the aspect ratio of the brush"),
@@ -532,12 +532,12 @@ create_brushpage(GtkNotebook *notebook)
   gtk_size_group_add_widget (group,
                              GIMP_SCALE_ENTRY_LABEL (brush_aspect_adjust));
   g_signal_connect (brush_aspect_adjust, "value_changed",
-                    G_CALLBACK (brush_asepct_adjust_cb), &pcvals.brushaspect);
+                    G_CALLBACK (brush_asepct_adjust_cb), &pcvals.brush_aspect);
 
   brush_relief_adjust =
     gimp_scale_entry_new (GTK_TABLE(table), 0, 1,
 			  _("Relief:"),
-			  150, -1, pcvals.brushrelief,
+			  150, -1, pcvals.brush_relief,
 			  0.0, 100.0, 1.0, 10.0, 1,
 			  TRUE, 0, 0,
 			  _("Specifies the amount of embossing to apply to the image (in percent)"),
@@ -546,10 +546,10 @@ create_brushpage(GtkNotebook *notebook)
                              GIMP_SCALE_ENTRY_LABEL (brush_relief_adjust));
   g_signal_connect (brush_relief_adjust, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
-                    &pcvals.brushrelief);
+                    &pcvals.brush_relief);
 
   brush_select (selection);
-  readdirintolist ("Brushes", view, pcvals.selectedbrush);
+  readdirintolist ("Brushes", view, pcvals.selected_brush);
 
   /* 
    * This is so the "changed signal won't get sent to the brushes' list

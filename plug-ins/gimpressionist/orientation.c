@@ -19,7 +19,7 @@ static GtkObject *orient_last_adjust = NULL;
 
 static void orientation_store (GtkWidget *wg, void *d)
 {
-    pcvals.orienttype = GPOINTER_TO_INT (d);
+    pcvals.orient_type = GPOINTER_TO_INT (d);
 }
 
 int orientation_type_input (int in)
@@ -30,20 +30,20 @@ int orientation_type_input (int in)
 void orientation_restore(void)
 {
   gtk_toggle_button_set_active (
-      GTK_TOGGLE_BUTTON (orient_radio[pcvals.orienttype]),
+      GTK_TOGGLE_BUTTON (orient_radio[pcvals.orient_type]),
       TRUE
       );
   gtk_adjustment_set_value (
       GTK_ADJUSTMENT (orient_num_adjust),
-      pcvals.orientnum
+      pcvals.orient_num
       );
   gtk_adjustment_set_value (
       GTK_ADJUSTMENT (orient_first_adjust),
-      pcvals.orientfirst
+      pcvals.orient_first
       );
   gtk_adjustment_set_value (
       GTK_ADJUSTMENT (orient_last_adjust),
-      pcvals.orientlast
+      pcvals.orient_last
       );
 }
 
@@ -55,12 +55,12 @@ static void create_orientmap_dialog_helper (void)
 }
 
 
-static void create_orientradio_button (GtkWidget *box, int orienttype,
+static void create_orientradio_button (GtkWidget *box, int orient_type,
                                        gchar *label, gchar *help_string,
                                        GSList **radio_group
                                        )
 {
-  create_radio_button (box, orienttype, orientation_store, label,
+  create_radio_button (box, orient_type, orientation_store, label,
                        help_string, radio_group, orient_radio);
   return;
 }
@@ -87,38 +87,38 @@ create_orientationpage (GtkNotebook *notebook)
   orient_num_adjust =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			  _("Directions:"),
-			  150, -1, pcvals.orientnum,
+			  150, -1, pcvals.orient_num,
 			  1.0, 30.0, 1.0, 1.0, 0,
 			  TRUE, 0, 0,
 			  _("The number of directions (i.e. brushes) to use"),
 			  NULL);
   g_signal_connect (orient_num_adjust, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
-                    &pcvals.orientnum);
+                    &pcvals.orient_num);
 
   orient_first_adjust =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			  _("Start angle:"),
-			  150, -1, pcvals.orientfirst,
+			  150, -1, pcvals.orient_first,
 			  0.0, 360.0, 1.0, 10.0, 0,
 			  TRUE, 0, 0,
 			  _("The starting angle of the first brush to create"),
 			  NULL);
   g_signal_connect (orient_first_adjust, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
-                    &pcvals.orientfirst);
+                    &pcvals.orient_first);
 
   orient_last_adjust =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			  _("Angle span:"),
-			  150, -1, pcvals.orientlast,
+			  150, -1, pcvals.orient_last,
 			  0.0, 360.0, 1.0, 10.0, 0,
 			  TRUE, 0, 0,
 			  _("The angle span of the first brush to create"),
 			  NULL);
   g_signal_connect (orient_last_adjust, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
-                    &pcvals.orientlast);
+                    &pcvals.orient_last);
 
   box2 = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (thispage), box2, FALSE, FALSE, 0);

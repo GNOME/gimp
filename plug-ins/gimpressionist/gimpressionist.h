@@ -37,53 +37,53 @@ typedef struct smvector
 
 typedef struct
 {
-  int        orientnum;
-  double     orientfirst;
-  double     orientlast;
-  int        orienttype;
-  double     brushrelief;
-  double     brushscale;
-  double     brushdensity;
+  int        orient_num;
+  double     orient_first;
+  double     orient_last;
+  int        orient_type;
+  double     brush_relief;
+  double     brush_scale;
+  double     brush_density;
   double     brushgamma;
-  int        generalbgtype;
-  double     generaldarkedge;
-  double     paperrelief;
-  double     paperscale;
+  int        general_background_type;
+  double     general_dark_edge;
+  double     paper_relief;
+  double     paper_scale;
   int        paper_invert;
   int        run;
-  char       selectedbrush[200];
-  char       selectedpaper[200];
+  char       selected_brush[200];
+  char       selected_paper[200];
   GimpRGB    color;
   int        general_paint_edges;
-  int        placetype;
-  vector_t   orientvector[MAXORIENTVECT];
-  int        numorientvector;
+  int        place_type;
+  vector_t   orient_vectors[MAXORIENTVECT];
+  int        num_orient_vectors;
   int        placement_center;
-  double     brushaspect;
-  double     orientangoff;
-  double     orientstrexp;
+  double     brush_aspect;
+  double     orient_angle_offset;
+  double     orient_strength_exponent;
   int        general_tileable;
   int        paper_overlay;
   int        orient_voronoi;
-  int        colorbrushes;
+  int        color_brushes;
   int        general_drop_shadow;
-  double     generalshadowdarkness;
-  int        sizenum;
-  double     sizefirst;
-  double     sizelast;
-  int        sizetype;
+  double     general_shadow_darkness;
+  int        size_num;
+  double     size_first;
+  double     size_last;
+  int        size_type;
   double     devthresh;
 
-  smvector_t sizevector[MAXSIZEVECT];
-  int        numsizevector;
-  double     sizestrexp;
-  int        sizevoronoi;
+  smvector_t size_vectors[MAXSIZEVECT];
+  int        num_size_vectors;
+  double     size_strength_exponent;
+  int        size_voronoi;
 
   int        general_shadow_depth;
   int        general_shadow_blur;
 
-  int        colortype;
-  double     colornoise;
+  int        color_type;
+  double     color_noise;
 } gimpressionist_vals_t;
 
 /* Enumerations */
@@ -147,7 +147,7 @@ double dist (double x, double y, double dx, double dy);
 
 void restore_default_values (void);
 
-GtkWidget *create_radio_button (GtkWidget *box, int orienttype,
+GtkWidget *create_radio_button (GtkWidget *box, int orient_type,
                                 void (*callback)(GtkWidget *wg, void *d),
                                 gchar *label, gchar *help_string,
                                 GSList **radio_group,
@@ -157,4 +157,5 @@ GtkWidget *create_radio_button (GtkWidget *box, int orienttype,
 #define CLAMP_UP_TO(x, max) (CLAMP((x),(0),(max-1)))
 
 #endif /* #ifndef __GIMPRESSIONIST_H */
+
 

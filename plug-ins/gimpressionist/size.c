@@ -20,7 +20,7 @@ static GtkWidget *sizeradio[NUMSIZERADIO];
 
 static void size_store(GtkWidget *wg, void *d)
 {
-  pcvals.sizetype = GPOINTER_TO_INT (d);
+  pcvals.size_type = GPOINTER_TO_INT (d);
 }
 
 int size_type_input (int in)
@@ -31,7 +31,7 @@ int size_type_input (int in)
 static void size_type_restore(void)
 {
   gtk_toggle_button_set_active (
-    GTK_TOGGLE_BUTTON(sizeradio[pcvals.sizetype]),
+    GTK_TOGGLE_BUTTON(sizeradio[pcvals.size_type]),
     TRUE
     );
 }
@@ -39,9 +39,9 @@ static void size_type_restore(void)
 void size_restore(void)
 {
   size_type_restore();
-  gtk_adjustment_set_value(GTK_ADJUSTMENT(sizenumadjust), pcvals.sizenum);
-  gtk_adjustment_set_value(GTK_ADJUSTMENT(sizefirstadjust), pcvals.sizefirst);
-  gtk_adjustment_set_value(GTK_ADJUSTMENT(sizelastadjust), pcvals.sizelast);
+  gtk_adjustment_set_value(GTK_ADJUSTMENT(sizenumadjust), pcvals.size_num);
+  gtk_adjustment_set_value(GTK_ADJUSTMENT(sizefirstadjust), pcvals.size_first);
+  gtk_adjustment_set_value(GTK_ADJUSTMENT(sizelastadjust), pcvals.size_last);
 }
 
 static void create_sizemap_dialog_helper(void)
@@ -50,12 +50,12 @@ static void create_sizemap_dialog_helper(void)
     create_sizemap_dialog();
 }
 
-static void create_size_radio_button (GtkWidget *box, int orienttype,
+static void create_size_radio_button (GtkWidget *box, int orient_type,
                                       gchar *label, gchar *help_string,
                                       GSList **radio_group
                                      )
 {
-  create_radio_button (box, orienttype, size_store, label,
+  create_radio_button (box, orient_type, size_store, label,
                        help_string, radio_group, sizeradio);
 }
 
@@ -81,38 +81,38 @@ void create_sizepage(GtkNotebook *notebook)
   sizenumadjust =
     gimp_scale_entry_new (GTK_TABLE(table), 0, 0,
 			  _("Sizes:"),
-			  150, -1, pcvals.sizenum,
+			  150, -1, pcvals.size_num,
 			  1.0, 30.0, 1.0, 1.0, 0,
 			  TRUE, 0, 0,
 			  _("The number of sizes of brushes to use"),
 			  NULL);
   g_signal_connect (sizenumadjust, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
-                    &pcvals.sizenum);
+                    &pcvals.size_num);
 
   sizefirstadjust =
     gimp_scale_entry_new (GTK_TABLE(table), 0, 1,
 			  _("Minimum size:"),
-			  150, -1, pcvals.sizefirst,
+			  150, -1, pcvals.size_first,
 			  0.0, 360.0, 1.0, 10.0, 0,
 			  TRUE, 0, 0,
 			  _("The smallest brush to create"),
 			  NULL);
   g_signal_connect (sizefirstadjust, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
-                    &pcvals.sizefirst);
+                    &pcvals.size_first);
 
   sizelastadjust =
     gimp_scale_entry_new (GTK_TABLE(table), 0, 2,
 			  _("Maximum size:"),
-			  150, -1, pcvals.sizelast,
+			  150, -1, pcvals.size_last,
 			  0.0, 360.0, 1.0, 10.0, 0,
 			  TRUE, 0, 0,
 			  _("The largest brush to create"),
 			  NULL);
   g_signal_connect (sizelastadjust, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
-                    &pcvals.sizelast);
+                    &pcvals.size_last);
 
   box2 = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start(GTK_BOX(thispage), box2,FALSE,FALSE,0);

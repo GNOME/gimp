@@ -39,14 +39,14 @@ double getsiz_proto (double x, double y, int n, smvector_t *vec,
       n = numsmvect;
       vec = smvector;
       smstrexp = GTK_ADJUSTMENT(smstrexpadjust)->value;
-      voronoi = GTK_TOGGLE_BUTTON(sizevoronoi)->active;
+      voronoi = GTK_TOGGLE_BUTTON(size_voronoi)->active;
     }
   else
     {
-      n = pcvals.numsizevector;
-      vec = pcvals.sizevector;
-      smstrexp = pcvals.sizestrexp;
-      voronoi = pcvals.sizevoronoi;
+      n = pcvals.num_size_vectors;
+      vec = pcvals.size_vectors;
+      smstrexp = pcvals.size_strength_exponent;
+      voronoi = pcvals.size_voronoi;
     }
 #endif
 
@@ -350,7 +350,7 @@ void readdirintolist (char *subdir, GtkWidget *view, char *selected)
 /*
  * Creates a radio button.
  * box - the containing box.
- * orienttype - The orientation ID
+ * orient_type - The orientation ID
  * label, help_string - self-describing
  * radio_group -
  *      A pointer to a radio group. The function assigns its value
@@ -359,7 +359,7 @@ void readdirintolist (char *subdir, GtkWidget *view, char *selected)
  *      This is useful to group buttons. Just reset the variable to NULL,
  *      to create a new group.
  * */
-GtkWidget *create_radio_button (GtkWidget *box, int orienttype,
+GtkWidget *create_radio_button (GtkWidget *box, int orient_type,
                                 void (*callback)(GtkWidget *wg, void *d),
                                 gchar *label, gchar *help_string,
                                 GSList **radio_group,
@@ -367,12 +367,12 @@ GtkWidget *create_radio_button (GtkWidget *box, int orienttype,
                                )
 {
   GtkWidget *tmpw;
-  buttons_array[orienttype] = tmpw =
+  buttons_array[orient_type] = tmpw =
       gtk_radio_button_new_with_label ((*radio_group), label);
   gtk_box_pack_start (GTK_BOX (box), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked",
-		    G_CALLBACK (callback), GINT_TO_POINTER (orienttype));
+		    G_CALLBACK (callback), GINT_TO_POINTER (orient_type));
   gimp_help_set_help_data (tmpw, help_string, NULL);
   *radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (tmpw));
   return tmpw;

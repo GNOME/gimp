@@ -23,8 +23,8 @@ static gimpressionist_vals_t runningvals;
 
 static double get_siz_from_pcvals(double x, double y)
 {
-    return getsiz_proto(x,y, pcvals.numsizevector, pcvals.sizevector,
-            pcvals.sizestrexp, pcvals.sizevoronoi);
+    return getsiz_proto(x,y, pcvals.num_size_vectors, pcvals.size_vectors,
+            pcvals.size_strength_exponent, pcvals.size_voronoi);
 }
 
 static int get_pixel_value (double dir)
@@ -64,6 +64,9 @@ static double sum_brush (ppm_t *p)
   return sum;
 }
 
+/* TODO : Use r = rgb[0]; g = rgb[1] ; b = rgb[2]; instead of 
+ * the direct references here.
+ * */
 static int get_hue (guchar *rgb)
 {
   double h, v, temp, diff;
@@ -107,6 +110,7 @@ static int choose_best_brush (ppm_t *p, ppm_t *a, int tx, int ty,
 #endif
     thissum = brushes_sum[i];
 
+/* TODO: Pointer-arithmeticize this code */
     r = g = b = 0.0;
     for(y = 0; y < brush->height; y++) {
       guchar *row = p->col + (ty+y)*p->width*3;
@@ -181,8 +185,8 @@ static void apply_brush (ppm_t *brush,
   ppm_t atmp;
   double v, h;
   int x, y;
-  double edgedarken = 1.0 - runningvals.generaldarkedge;
-  double relief = runningvals.brushrelief / 100.0;
+  double edgedarken = 1.0 - runningvals.general_dark_edge;
+  double relief = runningvals.brush_relief / 100.0;
   int shadowdepth = pcvals.general_shadow_depth;
   int shadowblur = pcvals.general_shadow_blur;
 
@@ -205,7 +209,7 @@ static void apply_brush (ppm_t *brush,
         if((sx + x) >= tmp.width) break;
         h = shadow->col[y*shadow->width*3+x*3+2];
         if(!h) continue;
-        v = 1.0 - (h / 255.0 * runningvals.generalshadowdarkness / 100.0);
+        v = 1.0 - (h / 255.0 * runningvals.general_shadow_darkness / 100.0);
         row[k+0] *= v;
         row[k+1] *= v;
         row[k+2] *= v;
@@ -223,7 +227,7 @@ static void apply_brush (ppm_t *brush,
       h = brush->col[y*brush->width*3+x*3];
       if(!h) continue;
 
-      if(runningvals.colorbrushes) {
+      if(runningvals.color_brushes) {
         v = 1.0 - brush->col[y*brush->width*3+x*3+2] / 255.0;
         row[k+0] *= v;
         row[k+1] *= v;
@@ -299,13 +303,13 @@ void repaint(ppm_t *p, ppm_t *a)
       return;
     }
 
-  num_brushes = runningvals.orientnum * runningvals.sizenum;
-  startangle = runningvals.orientfirst;
-  anglespan = runningvals.orientlast;
+  num_brushes = runningvals.orient_num * runningvals.size_num;
+  startangle = runningvals.orient_first;
+  anglespan = runningvals.orient_last;
 
-  density = runningvals.brushdensity;
+  density = runningvals.brush_density;
 
-  if(runningvals.placetype == PLACEMENT_TYPE_EVEN_DIST)
+  if(runningvals.place_type == PLACEMENT_TYPE_EVEN_DIST)
       density /= 3.0;
 
   bgamma = runningvals.brushgamma;
@@ -321,8 +325,8 @@ void repaint(ppm_t *p, ppm_t *a)
   brushes[0].col = NULL;
   brush_get_selected (&brushes[0]);
 
-  resize(&brushes[0], brushes[0].width, brushes[0].height * pow(10,runningvals.brushaspect));
-  scale = runningvals.sizelast / MAX(brushes[0].width, brushes[0].height);
+  resize(&brushes[0], brushes[0].width, brushes[0].height * pow(10,runningvals.brush_aspect));
+  scale = runningvals.size_last / MAX(brushes[0].width, brushes[0].height);
 
   if(bgamma != 1.0)
     ppm_apply_gamma(&brushes[0], 1.0/bgamma, 1,1,1);
@@ -338,16 +342,16 @@ void repaint(ppm_t *p, ppm_t *a)
     ppm_copy(&brushes[0], &brushes[i]);
   }
 
-  for(i = 0; i < runningvals.sizenum; i++) {
+  for(i = 0; i < runningvals.size_num; i++) {
     double sv;
-    if(runningvals.sizenum > 1)
-      sv = i / (runningvals.sizenum - 1.0);
+    if(runningvals.size_num > 1)
+      sv = i / (runningvals.size_num - 1.0);
     else sv = 1.0;
-    for(j = 0; j < runningvals.orientnum; j++) {
-      h = j + i * runningvals.orientnum;
+    for(j = 0; j < runningvals.orient_num; j++) {
+      h = j + i * runningvals.orient_num;
       free_rotate(&brushes[h],
-                 startangle + j * anglespan / runningvals.orientnum);
-      rescale(&brushes[h], (sv * runningvals.sizefirst + (1.0-sv) * runningvals.sizelast) / runningvals.sizelast);
+                 startangle + j * anglespan / runningvals.orient_num);
+      rescale(&brushes[h], (sv * runningvals.size_first + (1.0-sv) * runningvals.size_last) / runningvals.size_last);
       autocrop(&brushes[h],1);
     }
   }
@@ -362,7 +366,7 @@ void repaint(ppm_t *p, ppm_t *a)
 #endif
 
   for(i = 0; i < num_brushes; i++) {
-    if(!runningvals.colorbrushes)
+    if(!runningvals.color_brushes)
       prepare_brush(&brushes[i]);
     brushes_sum[i] = sum_brush(&brushes[i]);
   }
@@ -420,7 +424,7 @@ void repaint(ppm_t *p, ppm_t *a)
 
   if(img_has_alpha) {
     /* Initially fully transparent */
-    if(runningvals.generalbgtype == BG_TYPE_TRANSPARENT) {
+    if(runningvals.general_background_type == BG_TYPE_TRANSPARENT) {
       guchar tmpcol[3] = {255,255,255};
       ppm_new(&atmp, a->width, a->height);
       fill(&atmp, tmpcol);
@@ -429,17 +433,17 @@ void repaint(ppm_t *p, ppm_t *a)
     }
   }
 
-  if(runningvals.generalbgtype == BG_TYPE_SOLID) {
+  if(runningvals.general_background_type == BG_TYPE_SOLID) {
     guchar tmpcol[3];
     ppm_new(&tmp, p->width, p->height);
     gimp_rgb_get_uchar(&runningvals.color, &tmpcol[0], &tmpcol[1], &tmpcol[2]);
     fill(&tmp, tmpcol);
-  } else if(runningvals.generalbgtype == BG_TYPE_KEEP_ORIGINAL) {
+  } else if(runningvals.general_background_type == BG_TYPE_KEEP_ORIGINAL) {
     ppm_copy(p, &tmp);
   } else {
-    scale = runningvals.paperscale / 100.0;
+    scale = runningvals.paper_scale / 100.0;
     ppm_new(&tmp, p->width, p->height);
-    ppm_load(runningvals.selectedpaper, &paper_ppm);
+    ppm_load(runningvals.selected_paper, &paper_ppm);
     resize(&paper_ppm, paper_ppm.width * scale, paper_ppm.height * scale);
     if(runningvals.paper_invert)
       ppm_apply_gamma(&paper_ppm, -1.0, 1, 1, 1);
@@ -456,7 +460,7 @@ void repaint(ppm_t *p, ppm_t *a)
   cy = p->height / 2;
   maxdist = sqrt(cx*cx+cy*cy);
 
-  switch(runningvals.orienttype)
+  switch(runningvals.orient_type)
   {
     case ORIENTATION_VALUE:
     ppm_new(&dirmap, p->width, p->height);
@@ -527,7 +531,7 @@ void repaint(ppm_t *p, ppm_t *a)
     break;
   }
 
-  if(runningvals.sizetype == SIZE_TYPE_VALUE)
+  if(runningvals.size_type == SIZE_TYPE_VALUE)
   {
     ppm_new(&sizmap, p->width, p->height);
     for(y = 0; y < sizmap.height; y++) {
@@ -538,7 +542,7 @@ void repaint(ppm_t *p, ppm_t *a)
       }
     }
   }
-  else if(runningvals.sizetype == SIZE_TYPE_RADIUS)
+  else if(runningvals.size_type == SIZE_TYPE_RADIUS)
   {
     ppm_new(&sizmap, p->width, p->height);
     for(y = 0; y < sizmap.height; y++) {
@@ -549,7 +553,7 @@ void repaint(ppm_t *p, ppm_t *a)
       }
     }
   }
-  else if(runningvals.sizetype == SIZE_TYPE_RADIAL)
+  else if(runningvals.size_type == SIZE_TYPE_RADIAL)
   {
     ppm_new(&sizmap, p->width, p->height);
     for(y = 0; y < sizmap.height; y++) {
@@ -559,7 +563,7 @@ void repaint(ppm_t *p, ppm_t *a)
       }
     }
   }
-  else if(runningvals.sizetype == SIZE_TYPE_FLOWING)
+  else if(runningvals.size_type == SIZE_TYPE_FLOWING)
   {
     ppm_new(&sizmap, p->width / 6 + 5, p->height / 6 + 5);
     mkgrayplasma(&sizmap, 15);
@@ -570,7 +574,7 @@ void repaint(ppm_t *p, ppm_t *a)
     if(runningvals.general_paint_edges)
       edgepad(&sizmap, maxbrushwidth, maxbrushheight,maxbrushwidth, maxbrushheight);
   }
-  else if(runningvals.sizetype == SIZE_TYPE_HUE)
+  else if(runningvals.size_type == SIZE_TYPE_HUE)
   {
     ppm_new(&sizmap, p->width, p->height);
     for(y = 0; y < sizmap.height; y++) {
@@ -581,14 +585,14 @@ void repaint(ppm_t *p, ppm_t *a)
       }
     }
   }
-  else if(runningvals.sizetype == SIZE_TYPE_ADAPTIVE)
+  else if(runningvals.size_type == SIZE_TYPE_ADAPTIVE)
   {
     guchar tmpcol[3] = {0,0,0};
     ppm_new(&sizmap, p->width, p->height);
     fill(&sizmap, tmpcol);
 
   }
-  else if(runningvals.sizetype == SIZE_TYPE_MANUAL)
+  else if(runningvals.size_type == SIZE_TYPE_MANUAL)
   {
     ppm_new(&sizmap, p->width-maxbrushwidth*2, p->height-maxbrushheight*2);
     for(y = 0; y < sizmap.height; y++) {
@@ -603,10 +607,10 @@ void repaint(ppm_t *p, ppm_t *a)
 #if 0
   ppm_save(&sizmap, "/tmp/_sizmap.ppm");
 #endif
-  if(runningvals.placetype == PLACEMENT_TYPE_RANDOM) {
+  if(runningvals.place_type == PLACEMENT_TYPE_RANDOM) {
     i = tmp.width * tmp.height / (maxbrushwidth * maxbrushheight);
     i *= density;
-  } else if(runningvals.placetype == PLACEMENT_TYPE_EVEN_DIST) {
+  } else if(runningvals.place_type == PLACEMENT_TYPE_EVEN_DIST) {
     i = (int)(tmp.width * density / maxbrushwidth) *
       (int)(tmp.height * density / maxbrushheight);
     step = i;
@@ -620,7 +624,7 @@ void repaint(ppm_t *p, ppm_t *a)
   progstep = max_progress / 30;
   if(progstep < 10) progstep = 10;
 
-  if(runningvals.placetype == PLACEMENT_TYPE_EVEN_DIST) {
+  if(runningvals.place_type == PLACEMENT_TYPE_EVEN_DIST) {
     int j;
     xpos = g_new (int, i);
     ypos = g_new (int, i);
@@ -653,12 +657,12 @@ void repaint(ppm_t *p, ppm_t *a)
       }
     }
 
-    if(runningvals.placetype == PLACEMENT_TYPE_RANDOM) {
+    if(runningvals.place_type == PLACEMENT_TYPE_RANDOM) {
       tx = g_rand_int_range (random_generator, maxbrushwidth/2,
                              tmp.width - maxbrushwidth/2);
       ty = g_rand_int_range (random_generator, maxbrushheight/2,
                              tmp.height - maxbrushheight/2);
-    } else if(runningvals.placetype == PLACEMENT_TYPE_EVEN_DIST) {
+    } else if(runningvals.place_type == PLACEMENT_TYPE_EVEN_DIST) {
       tx = xpos[i-1];
       ty = ypos[i-1];
     }
@@ -684,9 +688,9 @@ void repaint(ppm_t *p, ppm_t *a)
 
     n = sn = on = 0;
 
-    switch(runningvals.orienttype) {
+    switch(runningvals.orient_type) {
     case ORIENTATION_RANDOM:
-      on = g_rand_int_range (random_generator, 0, runningvals.orientnum);
+      on = g_rand_int_range (random_generator, 0, runningvals.orient_num);
       break;
     case ORIENTATION_VALUE:
     case ORIENTATION_RADIUS:
@@ -694,7 +698,7 @@ void repaint(ppm_t *p, ppm_t *a)
     case ORIENTATION_FLOWING:
     case ORIENTATION_HUE:
     case ORIENTATION_MANUAL:
-      on = runningvals.orientnum * dirmap.col[ty*dirmap.width*3+tx*3] / 256;
+      on = runningvals.orient_num * dirmap.col[ty*dirmap.width*3+tx*3] / 256;
       break;
     case ORIENTATION_ADAPTIVE:
       break; /* Handled below */
@@ -704,9 +708,9 @@ void repaint(ppm_t *p, ppm_t *a)
       break;
     }
 
-    switch(runningvals.sizetype) {
+    switch(runningvals.size_type) {
     case SIZE_TYPE_RANDOM:
-      sn = g_rand_int_range (random_generator, 0, runningvals.sizenum);
+      sn = g_rand_int_range (random_generator, 0, runningvals.size_num);
       break;
     case SIZE_TYPE_VALUE:
     case SIZE_TYPE_RADIUS:
@@ -714,41 +718,41 @@ void repaint(ppm_t *p, ppm_t *a)
     case SIZE_TYPE_FLOWING:
     case SIZE_TYPE_HUE:
     case SIZE_TYPE_MANUAL:
-      sn = runningvals.sizenum * sizmap.col[ty*sizmap.width*3+tx*3] / 256;
+      sn = runningvals.size_num * sizmap.col[ty*sizmap.width*3+tx*3] / 256;
       break;
     case SIZE_TYPE_ADAPTIVE:
       break; /* Handled below */
     default:
-      g_printerr("Internal error; Unknown sizetype\n");
+      g_printerr("Internal error; Unknown size_type\n");
       sn = 0;
       break;
     }
 
     /* Handle Adaptive selections */
-    if (runningvals.orienttype == ORIENTATION_ADAPTIVE)
+    if (runningvals.orient_type == ORIENTATION_ADAPTIVE)
       {
-        if (runningvals.sizetype == SIZE_TYPE_ADAPTIVE)
+        if (runningvals.size_type == SIZE_TYPE_ADAPTIVE)
           n = choose_best_brush (p, a, tx-maxbrushwidth/2,
                                  ty-maxbrushheight/2, brushes,
                                  num_brushes, brushes_sum, 0, 1);
         else
           {
-            int st = sn * runningvals.orientnum;
+            int st = sn * runningvals.orient_num;
             n = choose_best_brush (p, a, tx-maxbrushwidth/2,
                                    ty-maxbrushheight/2, brushes,
-                                   st+runningvals.orientnum, brushes_sum,
+                                   st+runningvals.orient_num, brushes_sum,
                                    st, 1);
           }
       }
     else
       {
-         if (runningvals.sizetype == SIZE_TYPE_ADAPTIVE)
+         if (runningvals.size_type == SIZE_TYPE_ADAPTIVE)
            n = choose_best_brush (p, a, tx-maxbrushwidth/2,
                                   ty-maxbrushheight/2, brushes,
                                   num_brushes, brushes_sum,
-                                  on, runningvals.orientnum);
+                                  on, runningvals.orient_num);
          else
-           n = sn * runningvals.orientnum + on;
+           n = sn * runningvals.orient_num + on;
       }
     /* Should never happen, but hey... */
     if(n < 0) n = 0;
@@ -763,7 +767,7 @@ void repaint(ppm_t *p, ppm_t *a)
     thissum = brushes_sum[n];
 
     /* Calculate color - avg. of in-brush pixels */
-    if(runningvals.colortype == 0) {
+    if(runningvals.color_type == 0) {
       r = g = b = 0;
       for(y = 0; y < brush->height; y++) {
         guchar *row = &p->col[(ty+y)*p->width*3];
@@ -781,7 +785,7 @@ void repaint(ppm_t *p, ppm_t *a)
       r = r * 255.0 / thissum;
       g = g * 255.0 / thissum;
       b = b * 255.0 / thissum;
-    } else if(runningvals.colortype == 1) {
+    } else if(runningvals.color_type == 1) {
       guchar *pixel;
       y = ty + (brush->height / 2);
       x = tx + (brush->width / 2);
@@ -790,11 +794,11 @@ void repaint(ppm_t *p, ppm_t *a)
       g = pixel[1];
       b = pixel[2];
     } else {
-      /* No such colortype! */
+      /* No such color_type! */
       r = g = b = 0;
     }
-    if(runningvals.colornoise > 0.0) {
-      double v = runningvals.colornoise;
+    if(runningvals.color_noise > 0.0) {
+      double v = runningvals.color_noise;
 #define BOUNDS(a) (((a) < 0) ? (a) : ((a) > 255) ? 255 : (a))
 #define MYASSIGN(a) \
     { \
@@ -863,16 +867,16 @@ void repaint(ppm_t *p, ppm_t *a)
     a->col = atmp.col;
   }
 
-  relief = runningvals.paperrelief / 100.0;
+  relief = runningvals.paper_relief / 100.0;
   if(relief > 0.001) {
-    scale = runningvals.paperscale / 100.0;
+    scale = runningvals.paper_scale / 100.0;
 
     if (PPM_IS_INITED (&paper_ppm)) {
       tmp = paper_ppm;
       paper_ppm.col = NULL;
     } else {
       tmp.col = NULL;
-      ppm_load(runningvals.selectedpaper, &tmp);
+      ppm_load(runningvals.selected_paper, &tmp);
       resize(&tmp, tmp.width * scale, tmp.height * scale);
       if(runningvals.paper_invert)
         ppm_apply_gamma(&tmp, -1.0, 1,1,1);

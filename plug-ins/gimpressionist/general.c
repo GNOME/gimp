@@ -35,16 +35,16 @@ static int normalize_bg(int n)
 
 static void general_bg_callback(GtkWidget *wg, void *d)
 {
-  pcvals.generalbgtype = normalize_bg (GPOINTER_TO_INT (d));
+  pcvals.general_background_type = normalize_bg (GPOINTER_TO_INT (d));
 }
 
 void general_store(void)
 {
   pcvals.general_paint_edges = GTK_TOGGLE_BUTTON(general_paint_edges)->active;
-  pcvals.generaldarkedge = GTK_ADJUSTMENT(general_dark_edge_adjust)->value;
+  pcvals.general_dark_edge = GTK_ADJUSTMENT(general_dark_edge_adjust)->value;
   pcvals.general_tileable = GTK_TOGGLE_BUTTON(general_tileable)->active;
   pcvals.general_drop_shadow = GTK_TOGGLE_BUTTON(general_drop_shadow)->active;
-  pcvals.generalshadowdarkness = GTK_ADJUSTMENT(general_shadow_adjust)->value;
+  pcvals.general_shadow_darkness = GTK_ADJUSTMENT(general_shadow_adjust)->value;
   pcvals.general_shadow_depth = GTK_ADJUSTMENT(general_shadow_depth)->value;
   pcvals.general_shadow_blur = GTK_ADJUSTMENT(general_shadow_blur)->value;
   pcvals.devthresh = GTK_ADJUSTMENT(dev_thresh_adjust)->value;
@@ -58,7 +58,7 @@ int general_bg_type_input (int in)
 void general_restore(void)
 {
   gtk_toggle_button_set_active (
-    GTK_TOGGLE_BUTTON (general_bg_radio[normalize_bg (pcvals.generalbgtype)]
+    GTK_TOGGLE_BUTTON (general_bg_radio[normalize_bg (pcvals.general_background_type)]
                       ),
     TRUE
     );
@@ -66,9 +66,9 @@ void general_restore(void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (general_paint_edges),
                                 pcvals.general_paint_edges);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (general_dark_edge_adjust),
-                            pcvals.generaldarkedge);
+                            pcvals.general_dark_edge);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (general_shadow_adjust),
-                            pcvals.generalshadowdarkness);
+                            pcvals.general_shadow_darkness);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (general_drop_shadow),
                                 pcvals.general_drop_shadow);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (general_shadow_depth),
@@ -163,7 +163,7 @@ void create_generalpage(GtkNotebook *notebook)
     gtk_widget_set_sensitive (tmpw, FALSE);
 
   gtk_toggle_button_set_active
-    (GTK_TOGGLE_BUTTON (general_bg_radio[pcvals.generalbgtype]), TRUE);
+    (GTK_TOGGLE_BUTTON (general_bg_radio[pcvals.general_background_type]), TRUE);
 
   box1 = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start(GTK_BOX(thispage), box1, FALSE, FALSE, 0);
@@ -208,7 +208,7 @@ void create_generalpage(GtkNotebook *notebook)
   general_dark_edge_adjust =
     gimp_scale_entry_new (GTK_TABLE(table), 0, 0,
 			  _("Edge darken:"),
-			  150, 6, pcvals.generaldarkedge,
+			  150, 6, pcvals.general_dark_edge,
 			  0.0, 1.0, 0.01, 0.1, 2,
 			  TRUE, 0, 0,
 			  _("How much to \"darken\" the edges of each brush stroke"),
@@ -217,7 +217,7 @@ void create_generalpage(GtkNotebook *notebook)
   general_shadow_adjust =
     gimp_scale_entry_new (GTK_TABLE(table), 0, 1,
 			  _("Shadow darken:"),
-			  150, 6, pcvals.generalshadowdarkness,
+			  150, 6, pcvals.general_shadow_darkness,
 			  0.0, 99.0, 0.1, 1, 2,
 			  TRUE, 0, 0,
 			  _("How much to \"darken\" the drop shadow"),

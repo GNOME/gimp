@@ -19,9 +19,9 @@ static GtkObject *brush_density_adjust = NULL;
 
 void place_restore()
 {
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (placement_radio[pcvals.placetype]), TRUE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (placement_radio[pcvals.place_type]), TRUE);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (placement_center), pcvals.placement_center);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (brush_density_adjust), pcvals.brushdensity);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (brush_density_adjust), pcvals.brush_density);
 }
 
 int place_type_input (int in)
@@ -47,7 +47,7 @@ void create_placementpage(GtkNotebook *notebook)
 
   frame = gimp_int_radio_group_new (TRUE, _("Placement"),
 				    G_CALLBACK (gimp_radio_button_update),
-				    &pcvals.placetype, 0,
+				    &pcvals.place_type, 0,
 
 				    _("Randomly"), PLACEMENT_TYPE_RANDOM, 
                         &placement_radio[PLACEMENT_TYPE_RANDOM],
@@ -67,7 +67,7 @@ void create_placementpage(GtkNotebook *notebook)
   gtk_widget_show (frame);
 
   gtk_toggle_button_set_active
-    (GTK_TOGGLE_BUTTON (placement_radio[pcvals.placetype]), TRUE);
+    (GTK_TOGGLE_BUTTON (placement_radio[pcvals.place_type]), TRUE);
 
   table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE(table), 6);
@@ -77,14 +77,14 @@ void create_placementpage(GtkNotebook *notebook)
   brush_density_adjust =
     gimp_scale_entry_new (GTK_TABLE(table), 0, 0,
 			  _("Stroke _density:"),
-			  100, -1, pcvals.brushdensity,
+			  100, -1, pcvals.brush_density,
 			  1.0, 50.0, 1.0, 5.0, 0,
 			  TRUE, 0, 0,
 			  _("The relative density of the brush strokes"),
 			  NULL);
   g_signal_connect (brush_density_adjust, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
-                    &pcvals.brushdensity);
+                    &pcvals.brush_density);
 
   placement_center = tmpw = gtk_check_button_new_with_mnemonic( _("Centerize"));
   gtk_box_pack_start(GTK_BOX (vbox), tmpw, FALSE, FALSE, 0);

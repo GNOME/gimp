@@ -254,25 +254,25 @@ static void set_orient_vector (const gchar *str)
   n = atoi(tmps);
 
   if(!(tmps = strchr(tmps, ','))) return;
-  pcvals.orientvector[n].x = g_ascii_strtod (++tmps, NULL);
+  pcvals.orient_vectors[n].x = g_ascii_strtod (++tmps, NULL);
 
   if(!(tmps = strchr(tmps, ','))) return;
-  pcvals.orientvector[n].y = g_ascii_strtod (++tmps, NULL);
+  pcvals.orient_vectors[n].y = g_ascii_strtod (++tmps, NULL);
 
   if(!(tmps = strchr(tmps, ','))) return;
-  pcvals.orientvector[n].dir = g_ascii_strtod (++tmps, NULL);
+  pcvals.orient_vectors[n].dir = g_ascii_strtod (++tmps, NULL);
 
   if(!(tmps = strchr(tmps, ','))) return;
-  pcvals.orientvector[n].dx = g_ascii_strtod (++tmps, NULL);
+  pcvals.orient_vectors[n].dx = g_ascii_strtod (++tmps, NULL);
 
   if(!(tmps = strchr(tmps, ','))) return;
-  pcvals.orientvector[n].dy = g_ascii_strtod (++tmps, NULL);
+  pcvals.orient_vectors[n].dy = g_ascii_strtod (++tmps, NULL);
 
   if(!(tmps = strchr(tmps, ','))) return;
-  pcvals.orientvector[n].str = g_ascii_strtod (++tmps, NULL);
+  pcvals.orient_vectors[n].str = g_ascii_strtod (++tmps, NULL);
 
   if(!(tmps = strchr(tmps, ','))) return;
-  pcvals.orientvector[n].type = atoi (++tmps);
+  pcvals.orient_vectors[n].type = atoi (++tmps);
 
 }
 
@@ -284,16 +284,16 @@ static void set_size_vector (const gchar *str)
   n = atoi(tmps);
 
   if(!(tmps = strchr(tmps, ','))) return;
-  pcvals.sizevector[n].x = g_ascii_strtod (++tmps, NULL);
+  pcvals.size_vectors[n].x = g_ascii_strtod (++tmps, NULL);
 
   if(!(tmps = strchr(tmps, ','))) return;
-  pcvals.sizevector[n].y = g_ascii_strtod (++tmps, NULL);
+  pcvals.size_vectors[n].y = g_ascii_strtod (++tmps, NULL);
 
   if(!(tmps = strchr(tmps, ','))) return;
-  pcvals.sizevector[n].siz = g_ascii_strtod (++tmps, NULL);
+  pcvals.size_vectors[n].siz = g_ascii_strtod (++tmps, NULL);
 
   if(!(tmps = strchr(tmps, ','))) return;
-  pcvals.sizevector[n].str = g_ascii_strtod (++tmps, NULL);
+  pcvals.size_vectors[n].str = g_ascii_strtod (++tmps, NULL);
 
 }
 
@@ -311,41 +311,41 @@ static void set_values (const gchar *key, const gchar *val)
   if(!strcmp(key, "desc"))
     parse_desc(val, presetdesc, sizeof (presetdesc));
   else if(!strcmp(key, "orientnum"))
-    pcvals.orientnum = atoi(val);
+    pcvals.orient_num = atoi(val);
   else if(!strcmp(key, "orientfirst"))
-    pcvals.orientfirst = g_ascii_strtod (val, NULL);
+    pcvals.orient_first = g_ascii_strtod (val, NULL);
   else if(!strcmp(key, "orientlast"))
-    pcvals.orientlast = g_ascii_strtod (val, NULL);
+    pcvals.orient_last = g_ascii_strtod (val, NULL);
   else if(!strcmp(key, "orienttype"))
-   pcvals.orienttype = orientation_type_input (atoi (val));
+   pcvals.orient_type = orientation_type_input (atoi (val));
 
   else if(!strcmp(key, "sizenum"))
-    pcvals.sizenum = atoi(val);
+    pcvals.size_num = atoi(val);
   else if(!strcmp(key, "sizefirst"))
-    pcvals.sizefirst = g_ascii_strtod (val, NULL);
+    pcvals.size_first = g_ascii_strtod (val, NULL);
   else if(!strcmp(key, "sizelast"))
-    pcvals.sizelast = g_ascii_strtod (val, NULL);
+    pcvals.size_last = g_ascii_strtod (val, NULL);
   else if(!strcmp(key, "sizetype"))
-   pcvals.sizetype = size_type_input (atoi (val));
+   pcvals.size_type = size_type_input (atoi (val));
 
   else if(!strcmp(key, "brushrelief"))
-    pcvals.brushrelief = g_ascii_strtod (val, NULL);
+    pcvals.brush_relief = g_ascii_strtod (val, NULL);
   else if(!strcmp(key, "brushscale")) {
     /* For compatibility */
-    pcvals.sizenum = 1;
-    pcvals.sizefirst = pcvals.sizelast = g_ascii_strtod (val, NULL);
+    pcvals.size_num = 1;
+    pcvals.size_first = pcvals.size_last = g_ascii_strtod (val, NULL);
   }
   else if(!strcmp(key, "brushdensity"))
-    pcvals.brushdensity = g_ascii_strtod (val, NULL);
+    pcvals.brush_density = g_ascii_strtod (val, NULL);
   else if(!strcmp(key, "brushgamma"))
     pcvals.brushgamma = g_ascii_strtod (val, NULL);
   else if(!strcmp(key, "brushaspect"))
-    pcvals.brushaspect = g_ascii_strtod (val, NULL);
+    pcvals.brush_aspect = g_ascii_strtod (val, NULL);
 
   else if(!strcmp(key, "generalbgtype"))
-    pcvals.generalbgtype = general_bg_type_input (atoi(val));
+    pcvals.general_background_type = general_bg_type_input (atoi(val));
   else if(!strcmp(key, "generaldarkedge"))
-    pcvals.generaldarkedge = g_ascii_strtod (val, NULL);
+    pcvals.general_dark_edge = g_ascii_strtod (val, NULL);
   else if(!strcmp(key, "generalpaintedges"))
     pcvals.general_paint_edges = atoi(val);
   else if(!strcmp(key, "generaltileable"))
@@ -353,7 +353,7 @@ static void set_values (const gchar *key, const gchar *val)
   else if(!strcmp(key, "generaldropshadow"))
     pcvals.general_drop_shadow = atoi(val);
   else if(!strcmp(key, "generalshadowdarkness"))
-    pcvals.generalshadowdarkness = g_ascii_strtod (val, NULL);
+    pcvals.general_shadow_darkness = g_ascii_strtod (val, NULL);
   else if(!strcmp(key, "generalshadowdepth"))
     pcvals.general_shadow_depth = atoi(val);
   else if(!strcmp(key, "generalshadowblur"))
@@ -362,23 +362,23 @@ static void set_values (const gchar *key, const gchar *val)
     pcvals.devthresh = g_ascii_strtod (val, NULL);
 
   else if(!strcmp(key, "paperrelief"))
-    pcvals.paperrelief = g_ascii_strtod (val, NULL);
+    pcvals.paper_relief = g_ascii_strtod (val, NULL);
   else if(!strcmp(key, "paperscale"))
-    pcvals.paperscale = g_ascii_strtod (val, NULL);
+    pcvals.paper_scale = g_ascii_strtod (val, NULL);
   else if(!strcmp(key, "paperinvert"))
     pcvals.paper_invert = atoi(val);
   else if(!strcmp(key, "paperoverlay"))
     pcvals.paper_overlay = atoi(val);
 
   else if(!strcmp(key, "placetype"))
-    pcvals.placetype = place_type_input (atoi (val));
+    pcvals.place_type = place_type_input (atoi (val));
   else if(!strcmp(key, "placecenter"))
     pcvals.placement_center = atoi(val);
 
   else if(!strcmp(key, "selectedbrush"))
-    g_strlcpy (pcvals.selectedbrush, val, sizeof (pcvals.selectedbrush));
+    g_strlcpy (pcvals.selected_brush, val, sizeof (pcvals.selected_brush));
   else if(!strcmp(key, "selectedpaper"))
-    g_strlcpy (pcvals.selectedpaper, val, sizeof (pcvals.selectedpaper));
+    g_strlcpy (pcvals.selected_paper, val, sizeof (pcvals.selected_paper));
 
   else if(!strcmp(key, "color")){
     char *c = parse_rgb_string(val);
@@ -386,29 +386,29 @@ static void set_values (const gchar *key, const gchar *val)
   }
 
   else if(!strcmp(key, "numorientvector"))
-    pcvals.numorientvector = atoi(val);
+    pcvals.num_orient_vectors = atoi(val);
   else if(!strcmp(key, "orientvector"))
     set_orient_vector(val);
   else if(!strcmp(key, "orientangoff"))
-   pcvals.orientangoff = g_ascii_strtod (val, NULL);
+   pcvals.orient_angle_offset = g_ascii_strtod (val, NULL);
   else if(!strcmp(key, "orientstrexp"))
-   pcvals.orientstrexp = g_ascii_strtod (val, NULL);
+   pcvals.orient_strength_exponent = g_ascii_strtod (val, NULL);
   else if(!strcmp(key, "orientvoronoi"))
    pcvals.orient_voronoi = atoi(val);
 
   else if(!strcmp(key, "numsizevector"))
-    pcvals.numsizevector = atoi(val);
+    pcvals.num_size_vectors = atoi(val);
   else if(!strcmp(key, "sizevector"))
     set_size_vector(val);
   else if(!strcmp(key, "sizestrexp"))
-   pcvals.sizestrexp = g_ascii_strtod (val, NULL);
+   pcvals.size_strength_exponent = g_ascii_strtod (val, NULL);
   else if(!strcmp(key, "sizevoronoi"))
-   pcvals.sizevoronoi = atoi(val);
+   pcvals.size_voronoi = atoi(val);
 
   else if(!strcmp(key, "colortype"))
-    pcvals.colortype = color_type_input (atoi (val));
+    pcvals.color_type = color_type_input (atoi (val));
   else if(!strcmp(key, "colornoise"))
-    pcvals.colornoise = g_ascii_strtod (val, NULL);
+    pcvals.color_noise = g_ascii_strtod (val, NULL);
 }
 
 static int load_preset(const gchar *fn)
@@ -476,7 +476,7 @@ int select_preset(const gchar *preset)
         /* This is so the colorbrushes param (that is not stored in the
          * preset will be set correctly upon the preset loading.
          * */
-        set_colorbrushes (pcvals.selectedbrush);
+        set_colorbrushes (pcvals.selected_brush);
       }
 
     return ret;
@@ -704,96 +704,98 @@ static void save_preset(void)
   preset_name_escaped = g_strescape (preset_name, NULL);
   fprintf(f, "name=%s\n", preset_name_escaped);
   g_free (preset_name_escaped);
-  fprintf(f, "orientnum=%d\n", pcvals.orientnum);
+  fprintf(f, "orientnum=%d\n", pcvals.orient_num);
   fprintf(f, "orientfirst=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orientfirst));
+          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orient_first));
   fprintf(f, "orientlast=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orientlast));
-  fprintf(f, "orienttype=%d\n", pcvals.orienttype);
+          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orient_last));
+  fprintf(f, "orienttype=%d\n", pcvals.orient_type);
 
-  fprintf(f, "sizenum=%d\n", pcvals.sizenum);
+  fprintf(f, "sizenum=%d\n", pcvals.size_num);
   fprintf(f, "sizefirst=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.sizefirst));
+          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.size_first));
   fprintf(f, "sizelast=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.sizelast));
-  fprintf(f, "sizetype=%d\n", pcvals.sizetype);
+          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.size_last));
+  fprintf(f, "sizetype=%d\n", pcvals.size_type);
 
   fprintf(f, "brushrelief=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.brushrelief));
+          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.brush_relief));
   fprintf(f, "brushdensity=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.brushdensity));
+          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.brush_density));
   fprintf(f, "brushgamma=%s\n",
           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.brushgamma));
   fprintf(f, "brushaspect=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.brushaspect));
+          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.brush_aspect));
 
-  fprintf(f, "generalbgtype=%d\n", pcvals.generalbgtype);
+  fprintf(f, "generalbgtype=%d\n", pcvals.general_background_type);
   fprintf(f, "generaldarkedge=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.generaldarkedge));
+          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.general_dark_edge));
   fprintf(f, "generalpaintedges=%d\n", pcvals.general_paint_edges);
   fprintf(f, "generaltileable=%d\n", pcvals.general_tileable);
   fprintf(f, "generaldropshadow=%d\n", pcvals.general_drop_shadow);
   fprintf(f, "generalshadowdarkness=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.generalshadowdarkness));
+          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.general_shadow_darkness));
   fprintf(f, "generalshadowdepth=%d\n", pcvals.general_shadow_depth);
   fprintf(f, "generalshadowblur=%d\n", pcvals.general_shadow_blur);
   fprintf(f, "devthresh=%s\n",
           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.devthresh));
 
   fprintf(f, "paperrelief=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.paperrelief));
+          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.paper_relief));
   fprintf(f, "paperscale=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.paperscale));
+          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.paper_scale));
   fprintf(f, "paperinvert=%d\n", pcvals.paper_invert);
   fprintf(f, "paperoverlay=%d\n", pcvals.paper_overlay);
 
-  fprintf(f, "selectedbrush=%s\n", pcvals.selectedbrush);
-  fprintf(f, "selectedpaper=%s\n", pcvals.selectedpaper);
+  fprintf(f, "selectedbrush=%s\n", pcvals.selected_brush);
+  fprintf(f, "selectedpaper=%s\n", pcvals.selected_paper);
 
   gimp_rgb_get_uchar(&pcvals.color, &color[0], &color[1], &color[2]);
   fprintf(f, "color=%02x%02x%02x\n", color[0], color[1], color[2]);
 
-  fprintf(f, "placetype=%d\n", pcvals.placetype);
+  fprintf(f, "placetype=%d\n", pcvals.place_type);
   fprintf(f, "placecenter=%d\n", pcvals.placement_center);
 
-  fprintf(f, "numorientvector=%d\n", pcvals.numorientvector);
-  for(i = 0; i < pcvals.numorientvector; i++)
+  fprintf(f, "numorientvector=%d\n", pcvals.num_orient_vectors);
+  for(i = 0; i < pcvals.num_orient_vectors; i++)
     {
-      g_ascii_formatd (vbuf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orientvector[i].x);
-      g_ascii_formatd (vbuf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orientvector[i].y);
-      g_ascii_formatd (vbuf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orientvector[i].dir);
-      g_ascii_formatd (vbuf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orientvector[i].dx);
-      g_ascii_formatd (vbuf[4], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orientvector[i].dy);
-      g_ascii_formatd (vbuf[5], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orientvector[i].str);
+      g_ascii_formatd (vbuf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orient_vectors[i].x);
+      g_ascii_formatd (vbuf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orient_vectors[i].y);
+      g_ascii_formatd (vbuf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orient_vectors[i].dir);
+      g_ascii_formatd (vbuf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orient_vectors[i].dx);
+      g_ascii_formatd (vbuf[4], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orient_vectors[i].dy);
+      g_ascii_formatd (vbuf[5], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orient_vectors[i].str);
 
       fprintf (f, "orientvector=%d,%s,%s,%s,%s,%s,%s,%d\n", i,
                vbuf[0], vbuf[1], vbuf[2], vbuf[3], vbuf[4], vbuf[5],
-               pcvals.orientvector[i].type);
+               pcvals.orient_vectors[i].type);
     }
 
   fprintf(f, "orientangoff=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orientangoff));
+          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                           pcvals.orient_angle_offset));
   fprintf(f, "orientstrexp=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orientstrexp));
+          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                           pcvals.orient_strength_exponent));
   fprintf(f, "orientvoronoi=%d\n", pcvals.orient_voronoi);
 
-  fprintf(f, "numsizevector=%d\n", pcvals.numsizevector);
-  for (i = 0; i < pcvals.numsizevector; i++)
+  fprintf(f, "numsizevector=%d\n", pcvals.num_size_vectors);
+  for (i = 0; i < pcvals.num_size_vectors; i++)
     {
-      g_ascii_formatd (vbuf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.sizevector[i].x);
-      g_ascii_formatd (vbuf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.sizevector[i].y);
-      g_ascii_formatd (vbuf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.sizevector[i].siz);
-      g_ascii_formatd (vbuf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.sizevector[i].str);
+      g_ascii_formatd (vbuf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.size_vectors[i].x);
+      g_ascii_formatd (vbuf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.size_vectors[i].y);
+      g_ascii_formatd (vbuf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.size_vectors[i].siz);
+      g_ascii_formatd (vbuf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.size_vectors[i].str);
       fprintf (f, "sizevector=%d,%s,%s,%s,%s\n", i,
                vbuf[0], vbuf[1], vbuf[2], vbuf[3]);
     }
   fprintf(f, "sizestrexp=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.sizestrexp));
-  fprintf(f, "sizevoronoi=%d\n", pcvals.sizevoronoi);
+          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.size_strength_exponent));
+  fprintf(f, "sizevoronoi=%d\n", pcvals.size_voronoi);
 
-  fprintf(f, "colortype=%d\n", pcvals.colortype);
+  fprintf(f, "colortype=%d\n", pcvals.color_type);
   fprintf(f, "colornoise=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.colornoise));
+          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.color_noise));
 
   fclose (f);
   preset_refresh_presets ();
