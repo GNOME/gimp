@@ -1,3 +1,7 @@
+2004-09-23  Marco Ciampa  <ciampix@libero.it>
+
+	* it.po: updated italian translation.
+	
 2004-09-23  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: dialogs/color-dialog.c -> widgets/gimpcolordialog.c
