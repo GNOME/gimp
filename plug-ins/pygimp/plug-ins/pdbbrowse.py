@@ -22,10 +22,10 @@ import gimpenums
 import gtk
 import string
 
-pars = filter(lambda x: x[:6] == 'PDB_', dir(gimpenums))
+pars = filter(lambda x: x[:4] == 'PDB_', dir(gimpenums))
 partypes = [''] * len(pars)
 for i in pars:
-	partypes[gimpenums.__dict__[i]] = i[6:]
+	partypes[gimpenums.__dict__[i]] = i[4:]
 del pars, i
 
 class BrowseWin(gtk.GtkWindow):

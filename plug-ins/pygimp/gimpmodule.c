@@ -73,7 +73,7 @@ typedef struct {
 	*proc_copyright, *proc_date, *proc_type, *py_params,
 	*py_return_vals;
     int nparams, nreturn_vals;
-    GParamDef *params, *return_vals;
+    GimpParamDef *params, *return_vals;
 } pfobject;
 
 staticforward PyTypeObject Pftype;
@@ -113,7 +113,7 @@ static dispobject *newdispobject(gint32);
 typedef struct {
     PyObject_HEAD
     gint32 ID;
-    GDrawable *drawable;
+    GimpDrawable *drawable;
 } drwobject, layobject, chnobject;
 
 staticforward PyTypeObject Laytype;
@@ -126,7 +126,7 @@ static chnobject *newchnobject(gint32);
 
 /* The drawable type isn't really a type -- it can be a channel or layer */
 #define drw_check(v) ((v)->ob_type == &Laytype || (v)->ob_type == &Chntype)
-static drwobject *newdrwobject(GDrawable *, gint32);
+static drwobject *newdrwobject(GimpDrawable *, gint32);
 
 /* ---------------------------------------------------------------- */
 
@@ -134,13 +134,13 @@ static drwobject *newdrwobject(GDrawable *, gint32);
 
 typedef struct {
     PyObject_HEAD
-    GTile *tile;
+    GimpTile *tile;
     drwobject *drawable; /* we keep a reference to the drawable */
 } tileobject;
 
 staticforward PyTypeObject Tiletype;
 #define tile_check(v) ((v)->ob_type == &Tiletype)
-static tileobject *newtileobject(GTile *, drwobject *drw);
+static tileobject *newtileobject(GimpTile *, drwobject *drw);
 
 /* ---------------------------------------------------------------- */
 
@@ -148,7 +148,7 @@ static tileobject *newtileobject(GTile *, drwobject *drw);
 
 typedef struct {
     PyObject_HEAD
-    GPixelRgn pr;
+    GimpPixelRgn pr;
     drwobject *drawable; /* keep the drawable around */
 } probject;
 
@@ -159,25 +159,25 @@ static probject *newprobject(drwobject *drw, int, int, int, int, int, int);
 /* ---------------------------------------------------------------- */
 
 #ifdef GIMP_HAVE_PARASITES
-/* Declarations for objects of type Parasite */
+/* Declarations for objects of type GimpParasite */
 
 typedef struct {
     PyObject_HEAD
-    Parasite *para;
+    GimpParasite *para;
 } paraobject;
 
 staticforward PyTypeObject Paratype;
 #define para_check(v) ((v)->ob_type == &Paratype)
-static paraobject *newparaobject(Parasite *para);
+static paraobject *newparaobject(GimpParasite *para);
 
 #endif
 /* ---------------------------------------------------------------- */
 
-/* routines to convert between Python tuples and gimp GParam's */
+/* routines to convert between Python tuples and gimp GimpParam's */
 
 #if PG_DEBUG > 0
 
-static void print_GParam(int nparams, GParam *params) {
+static void print_GParam(int nparams, GimpParam *params) {
     int i;
 
     for (i = 0; i < nparams; i++) {
@@ -226,7 +226,7 @@ static void print_GParam(int nparams, GParam *params) {
 #endif
 
 static PyObject *
-GParam_to_tuple(int nparams, GParam *params) {
+GParam_to_tuple(int nparams, GimpParam *params) {
     PyObject *args, *tmp;
     int i, j, n;
 
@@ -425,7 +425,7 @@ GParam_to_tuple(int nparams, GParam *params) {
 #ifdef GIMP_HAVE_PARASITES
 	case GIMP_PDB_PARASITE:
 	    PyTuple_SetItem(args, i,
-		(PyObject *)newparaobject(parasite_copy(
+		(PyObject *)newparaobject(gimp_parasite_copy(
 					&(params[i].data.d_parasite))));
 	    break;
 #endif
@@ -440,10 +440,10 @@ GParam_to_tuple(int nparams, GParam *params) {
     return args;
 }
 
-static GParam *
-tuple_to_GParam(PyObject *args, GParamDef *ptype, int nparams) {
+static GimpParam *
+tuple_to_GParam(PyObject *args, GimpParamDef *ptype, int nparams) {
     PyObject *tuple, *item, *r, *g, *b, *x, *y, *w, *h;
-    GParam *ret;
+    GimpParam *ret;
     int i, j, len;
     gint32 *i32a; gint16 *i16a; gint8 *i8a; gdouble *fa; gchar **sa;
 
@@ -465,7 +465,7 @@ tuple_to_GParam(PyObject *args, GParamDef *ptype, int nparams) {
 	return NULL;
     }
 
-    ret = g_new(GParam, nparams+1);
+    ret = g_new(GimpParam, nparams+1);
     for (i = 0; i <= nparams; i++)
 	ret[i].type = GIMP_PDB_STATUS;
 #define check(expr) if (expr) { \
@@ -651,7 +651,7 @@ tuple_to_GParam(PyObject *args, GParamDef *ptype, int nparams) {
 	    break;
 #ifdef GIMP_HAVE_PARASITES
 	case GIMP_PDB_PARASITE:
-	    /* can't do anything, since size of Parasite is not known */
+	    /* can't do anything, since size of GimpParasite is not known */
 	    break;
 #endif
 	case GIMP_PDB_STATUS:
@@ -760,7 +760,7 @@ pdb_query(self, args)
     if (!PyArg_ParseTuple(args, "|zzzzzzz:pdb.query", &n, &b, &h, &a,
 			  &c, &d, &t))
 	return NULL;
-    gimp_query_database(n, b, h, a, c, d, t, &num, &names);
+    gimp_procedural_db_query(n, b, h, a, c, d, t, &num, &names);
     ret = PyList_New(num);
     for (i = 0; i < num; i++)
 	PyList_SetItem(ret, i, PyString_FromString(names[i]));
@@ -1019,7 +1019,7 @@ pf_call(self, args, kwargs)
      PyObject *args;
      PyObject *kwargs;
 {
-    GParam *params, *ret;
+    GimpParam *params, *ret;
     int nret;
     PyObject *t = NULL, *r;
 
@@ -1031,7 +1031,7 @@ pf_call(self, args, kwargs)
 	if (params == NULL)
 	    return NULL;
 	params[0].type = self->params[0].type;
-	params[0].data.d_int32 = RUN_NONINTERACTIVE;
+	params[0].data.d_int32 = GIMP_RUN_NONINTERACTIVE;
 #if PG_DEBUG > 1
 	print_GParam(self->nparams, params);
 #endif
@@ -1056,7 +1056,7 @@ pf_call(self, args, kwargs)
 	return NULL;
     }
     switch(ret[0].data.d_status) {
-    case STATUS_EXECUTION_ERROR:
+    case GIMP_PDB_EXECUTION_ERROR:
 #if PG_DEBUG > 0
 	fprintf(stderr, "execution error\n");
 #endif
@@ -1064,7 +1064,7 @@ pf_call(self, args, kwargs)
 	PyErr_SetString(PyExc_RuntimeError, "execution error");
 	return NULL;
 	break;
-    case STATUS_CALLING_ERROR:
+    case GIMP_PDB_CALLING_ERROR:
 #if PG_DEBUG > 0
 	fprintf(stderr, "calling error\n");
 #endif
@@ -1072,7 +1072,7 @@ pf_call(self, args, kwargs)
 	PyErr_SetString(PyExc_TypeError, "invalid arguments");
 	return NULL;
 	break;
-    case STATUS_SUCCESS:
+    case GIMP_PDB_SUCCESS:
 #if PG_DEBUG > 0
 	fprintf(stderr, "success\n");
 #endif
@@ -1204,7 +1204,7 @@ img_disable_undo(self, args)
      imgobject *self;
      PyObject *args;
 {
-    /*GParam *return_vals;
+    /*GimpParam *return_vals;
     int nreturn_vals;*/
 
     if (!PyArg_ParseTuple(args, ":disable_undo"))
@@ -1224,7 +1224,7 @@ img_enable_undo(self, args)
      imgobject *self;
      PyObject *args;
 {
-    /*GParam *return_vals;
+    /*GimpParam *return_vals;
     int nreturn_vals;*/
 
     if (!PyArg_ParseTuple(args, ":enable_undo"))
@@ -2054,7 +2054,7 @@ drw_get_tile(self, args)
      drwobject *self;
      PyObject *args;
 {
-    GTile *t;
+    GimpTile *t;
     int shadow, r, c;
     if (!PyArg_ParseTuple(args, "iii:get_tile", &shadow, &r, &c))
 	return NULL;
@@ -2068,7 +2068,7 @@ drw_get_tile2(self, args)
      drwobject *self;
      PyObject *args;
 {
-    GTile *t;
+    GimpTile *t;
     int shadow, x, y;
     if (!PyArg_ParseTuple(args, "iii:get_tile2", &shadow, &x ,&y))
 	return NULL;
@@ -2174,7 +2174,7 @@ drw_parasite_detach(self, args)
 
 
 static drwobject *
-newdrwobject(GDrawable *d, gint32 ID)
+newdrwobject(GimpDrawable *d, gint32 ID)
 {
     drwobject *self;
 
@@ -2208,7 +2208,7 @@ lay_copy(self, args)
      PyObject *args;
 {
     int add_alpha = 0, nreturn_vals;
-    GParam *return_vals;
+    GimpParam *return_vals;
     gint32 id;
 
     /* start of long convoluted (working) layer_copy */
@@ -2220,7 +2220,7 @@ lay_copy(self, args)
 				     GIMP_PDB_LAYER, self->ID,
 				     GIMP_PDB_INT32, add_alpha,
 				     GIMP_PDB_END);
-    if (return_vals[0].data.d_status != STATUS_SUCCESS) {
+    if (return_vals[0].data.d_status != GIMP_PDB_SUCCESS) {
 	PyErr_SetString(ErrorObject, "can't create new layer");
 	return NULL;
     }	
@@ -2395,11 +2395,11 @@ lay_getattr(self, name)
     if (!strcmp(name, "ID"))
 	return PyInt_FromLong(self->ID);
     if (!strcmp(name, "bpp"))
-	return PyInt_FromLong((long) gimp_layer_bpp(self->ID));
+	return PyInt_FromLong((long) gimp_drawable_bpp(self->ID));
     if (!strcmp(name, "has_alpha"))
 	return PyInt_FromLong(gimp_drawable_has_alpha(self->ID));
     if (!strcmp(name, "height"))
-	return PyInt_FromLong((long) gimp_layer_height(self->ID));
+	return PyInt_FromLong((long) gimp_drawable_height(self->ID));
     if (!strcmp(name, "image")) {
 	id = gimp_layer_get_image_id(self->ID);
 	if (id == -1) {
@@ -2456,11 +2456,11 @@ lay_getattr(self, name)
 	return PyInt_FromLong((long) gimp_layer_get_show_mask(
 							      self->ID));
     if (!strcmp(name, "type"))
-	return PyInt_FromLong((long) gimp_layer_type(self->ID));
+	return PyInt_FromLong((long) gimp_drawable_type(self->ID));
     if (!strcmp(name, "visible"))
 	return PyInt_FromLong((long) gimp_layer_get_visible(self->ID));
     if (!strcmp(name, "width"))
-	return PyInt_FromLong((long) gimp_layer_width(self->ID));
+	return PyInt_FromLong((long) gimp_drawable_width(self->ID));
     return Py_FindMethod(lay_methods, (PyObject *)self, name);
 }
 
@@ -2496,7 +2496,7 @@ lay_setattr(self, name, v)
 	    PyErr_SetString(PyExc_TypeError, "type mis-match.");
 	    return -1;
 	}
-	gimp_layer_set_mode(self->ID, (GLayerMode)PyInt_AsLong(v));
+	gimp_layer_set_mode(self->ID, (GimpLayerModeEffects)PyInt_AsLong(v));
 	return 0;
     }
     if (!strcmp(name, "name")) {
@@ -2699,7 +2699,7 @@ chn_getattr(self, name)
     if (!strcmp(name, "has_alpha"))
 	return PyInt_FromLong(gimp_drawable_has_alpha(self->ID));
     if (!strcmp(name, "height"))
-	return PyInt_FromLong((long)gimp_channel_height(self->ID));
+	return PyInt_FromLong((long)gimp_drawable_height(self->ID));
     if (!strcmp(name, "image")) {
 	id = gimp_channel_get_image_id(self->ID);
 	if (id == -1) {
@@ -2758,7 +2758,7 @@ chn_getattr(self, name)
     if (!strcmp(name, "visible"))
 	return PyInt_FromLong(gimp_channel_get_visible(self->ID));
     if (!strcmp(name, "width"))
-	return PyInt_FromLong(gimp_channel_width(self->ID));
+	return PyInt_FromLong(gimp_drawable_width(self->ID));
     return Py_FindMethod(chn_methods, (PyObject *)self, name);
 }
 
@@ -2912,7 +2912,7 @@ static struct PyMethodDef tile_methods[] = {
 
 static tileobject *
 newtileobject(t, drw)
-     GTile *t;
+     GimpTile *t;
      drwobject *drw;
 {
     tileobject *self;
@@ -2939,7 +2939,7 @@ tile_dealloc(self)
     PyMem_DEL(self);
 }
 
-#define OFF(x) offsetof(GTile, x)
+#define OFF(x) offsetof(GimpTile, x)
 
 static struct memberlist tile_memberlist[] = {
     {"ewidth",	T_UINT,		OFF(ewidth),	RO},
@@ -3001,7 +3001,7 @@ tile_subscript(self, sub)
      tileobject *self;
      PyObject *sub;
 {
-    GTile *tile = self->tile;
+    GimpTile *tile = self->tile;
     int bpp = tile->bpp;
     long x, y;
 
@@ -3032,7 +3032,7 @@ tile_ass_sub(self, v, w)
      tileobject *self;
      PyObject *v, *w;
 {
-    GTile *tile = self->tile;
+    GimpTile *tile = self->tile;
     int bpp = tile->bpp, i;
     long x, y;
     char *pix, *data;
@@ -3176,7 +3176,7 @@ pr_subscript(self, key)
      probject *self;
      PyObject *key;
 {
-    GPixelRgn *pr = &(self->pr);
+    GimpPixelRgn *pr = &(self->pr);
     int bpp = pr->bpp;
     PyObject *x, *y;
     int x1, y1, x2, y2, xs, ys;
@@ -3284,7 +3284,7 @@ pr_ass_sub(self, v, w)
      probject *self;
      PyObject *v, *w;
 {
-    GPixelRgn *pr = &(self->pr);
+    GimpPixelRgn *pr = &(self->pr);
     int bpp = pr->bpp;
     PyObject *x, *y;
     char *buf;
@@ -3407,7 +3407,7 @@ static PyMappingMethods pr_as_mapping = {
 
 /* -------------------------------------------------------- */
 
-#define OFF(x) offsetof(GPixelRgn, x)
+#define OFF(x) offsetof(GimpPixelRgn, x)
 
 static struct memberlist pr_memberlist[] = {
     {"drawable",  T_INT,  OFF(drawable),  RO},
@@ -3491,7 +3491,7 @@ para_copy(self, args)
 {
     if (!PyArg_ParseTuple(args, ":copy"))
 	return NULL;
-    return (PyObject *)newparaobject(parasite_copy(self->para));
+    return (PyObject *)newparaobject(gimp_parasite_copy(self->para));
 }
 
 static PyObject *
@@ -3502,7 +3502,7 @@ para_is_type(self, args)
     char *name;
     if (!PyArg_ParseTuple(args, "s:is_type", &name))
 	return NULL;
-    return PyInt_FromLong(parasite_is_type(self->para, name));
+    return PyInt_FromLong(gimp_parasite_is_type(self->para, name));
 }
 
 static PyObject *
@@ -3513,7 +3513,7 @@ para_has_flag(self, args)
     int flag;
     if (!PyArg_ParseTuple(args, "i:has_flag", &flag))
 	return NULL;
-    return PyInt_FromLong(parasite_has_flag(self->para, flag));
+    return PyInt_FromLong(gimp_parasite_has_flag(self->para, flag));
 }
 
 
@@ -3528,7 +3528,7 @@ static struct PyMethodDef para_methods[] = {
 
 static paraobject *
 newparaobject(para)
-     Parasite *para;
+     GimpParasite *para;
 {
     paraobject *self;
 
@@ -3548,7 +3548,7 @@ static void
 para_dealloc(self)
      paraobject *self;
 {
-    parasite_free(self->para);
+    gimp_parasite_free(self->para);
     PyMem_DEL(self);
 }
 
@@ -3567,18 +3567,18 @@ para_getattr(self, name)
 #endif
     }
     if (!strcmp(name, "is_persistent"))
-	return PyInt_FromLong(parasite_is_persistent(self->para));
+	return PyInt_FromLong(gimp_parasite_is_persistent(self->para));
 #if GIMP_CHECK_VERSION(1,1,5)
     if (!strcmp(name, "is_undoable"))
-	return PyInt_FromLong(parasite_is_undoable(self->para));
+	return PyInt_FromLong(gimp_parasite_is_undoable(self->para));
 #endif
     if (!strcmp(name, "flags"))
-	return PyInt_FromLong(parasite_flags(self->para));
+	return PyInt_FromLong(gimp_parasite_flags(self->para));
     if (!strcmp(name, "name"))
-	return PyString_FromString(parasite_name(self->para));
+	return PyString_FromString(gimp_parasite_name(self->para));
     if (!strcmp(name, "data"))
-	return PyString_FromStringAndSize(parasite_data(self->para),
-					  parasite_data_size(self->para));
+	return PyString_FromStringAndSize(gimp_parasite_data(self->para),
+					  gimp_parasite_data_size(self->para));
     return Py_FindMethod(para_methods, (PyObject *)self, name);
 }
 
@@ -3588,7 +3588,7 @@ para_repr(self)
 {
     PyObject *s;
     s = PyString_FromString("<parasite ");
-    PyString_ConcatAndDel(&s, PyString_FromString(parasite_name(self->para)));
+    PyString_ConcatAndDel(&s, PyString_FromString(gimp_parasite_name(self->para)));
     PyString_ConcatAndDel(&s, PyString_FromString(">"));
     return s;
 }
@@ -3597,14 +3597,14 @@ static PyObject *
 para_str(self)
      paraobject *self;
 {
-    return PyString_FromStringAndSize(parasite_data(self->para),
-				      parasite_data_size(self->para));
+    return PyString_FromStringAndSize(gimp_parasite_data(self->para),
+				      gimp_parasite_data_size(self->para));
 }
 
 static PyTypeObject Paratype = {
     PyObject_HEAD_INIT(&PyType_Type)
     0,				/*ob_size*/
-    "Parasite",			/*tp_name*/
+    "GimpParasite",			/*tp_name*/
     sizeof(paraobject),		/*tp_basicsize*/
     0,				/*tp_itemsize*/
     /* methods */
@@ -3626,11 +3626,11 @@ static PyTypeObject Paratype = {
     NULL /* Documentation string */
 };
 
-/* End of code for Parasite objects */
+/* End of code for GimpParasite objects */
 /* -------------------------------------------------------- */
 #endif
 
-GPlugInInfo PLUG_IN_INFO = {
+GimpPlugInInfo PLUG_IN_INFO = {
     NULL, /* init_proc */
     NULL, /* quit_proc */
     NULL, /* query_proc */
@@ -3674,14 +3674,14 @@ static void pygimp_query_proc() {
     Py_DECREF(r);
 }
 
-static void pygimp_run_proc(char *name, int nparams, GParam *params,
-			    int *nreturn_vals, GParam **return_vals) {
+static void pygimp_run_proc(char *name, int nparams, GimpParam *params,
+			    int *nreturn_vals, GimpParam **return_vals) {
     PyObject *args, *ret;
     GimpParamDef *pd, *rv;
     char *b, *h, *a, *c, *d;
     int t, np, nrv;
 
-    gimp_query_procedure(name, &b, &h, &a, &c, &d, &t, &np, &nrv,
+    gimp_procedural_db_proc_info(name, &b, &h, &a, &c, &d, &t, &np, &nrv,
 			 &pd, &rv);
     g_free(b); g_free(h); g_free(a); g_free(c); g_free(d); g_free(pd);
 
@@ -3693,9 +3693,9 @@ static void pygimp_run_proc(char *name, int nparams, GParam *params,
     if (args == NULL) {
 	PyErr_Clear();
 	*nreturn_vals = 1;
-	*return_vals = g_new(GParam, 1);
+	*return_vals = g_new(GimpParam, 1);
 	(*return_vals)[0].type = GIMP_PDB_STATUS;
-	(*return_vals)[0].data.d_status = STATUS_CALLING_ERROR;
+	(*return_vals)[0].data.d_status = GIMP_PDB_CALLING_ERROR;
 	return;
     }
     ret = PyObject_CallFunction(callbacks[3], "(sO)", name, args);
@@ -3704,9 +3704,9 @@ static void pygimp_run_proc(char *name, int nparams, GParam *params,
 	PyErr_Print();
 	PyErr_Clear();
 	*nreturn_vals = 1;
-	*return_vals = g_new(GParam, 1);
+	*return_vals = g_new(GimpParam, 1);
 	(*return_vals)[0].type = GIMP_PDB_STATUS;
-	(*return_vals)[0].data.d_status = STATUS_EXECUTION_ERROR;
+	(*return_vals)[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	return;
     }
     *return_vals = tuple_to_GParam(ret, rv, nrv);
@@ -3714,15 +3714,15 @@ static void pygimp_run_proc(char *name, int nparams, GParam *params,
     if (*return_vals == NULL) {
 	PyErr_Clear();
 	*nreturn_vals = 1;
-	*return_vals = g_new(GParam, 1);
+	*return_vals = g_new(GimpParam, 1);
 	(*return_vals)[0].type = GIMP_PDB_STATUS;
-	(*return_vals)[0].data.d_status = STATUS_EXECUTION_ERROR;
+	(*return_vals)[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	return;
     }
     Py_DECREF(ret);
     *nreturn_vals = nrv + 1;
     (*return_vals)[0].type = GIMP_PDB_STATUS;
-    (*return_vals)[0].data.d_status = STATUS_SUCCESS;
+    (*return_vals)[0].data.d_status = GIMP_PDB_SUCCESS;
 }
 
 static PyObject *
@@ -3777,7 +3777,7 @@ gimp_Main(self, args)
 
 #ifdef G_OS_WIN32
     {
-	extern void set_gimp_PLUG_IN_INFO_PTR(GPlugInInfo *);
+	extern void set_gimp_PLUG_IN_INFO_PTR(GimpPlugInInfo *);
 	set_gimp_PLUG_IN_INFO_PTR(&PLUG_IN_INFO);
     }
 #endif
@@ -3815,14 +3815,14 @@ gimp_Set_data(self, args)
 {
     char *id, *data;
     int bytes, nreturn_vals;
-    GParam *return_vals;
+    GimpParam *return_vals;
 
     if (!PyArg_ParseTuple(args, "ss#:set_data", &id, &data, &bytes))
 	return NULL;
     return_vals = gimp_run_procedure("gimp_procedural_db_set_data",
 				     &nreturn_vals, GIMP_PDB_STRING, id, GIMP_PDB_INT32, bytes,
 				     GIMP_PDB_INT8ARRAY, data, GIMP_PDB_END);
-    if (return_vals[0].data.d_status != STATUS_SUCCESS) {
+    if (return_vals[0].data.d_status != GIMP_PDB_SUCCESS) {
 	PyErr_SetString(ErrorObject, "error occurred while storing");
 	return NULL;
     }
@@ -3838,7 +3838,7 @@ gimp_Get_data(self, args)
 {
     char *id;
     int nreturn_vals;
-    GParam *return_vals;
+    GimpParam *return_vals;
     PyObject *s;
 
     if (!PyArg_ParseTuple(args, "s:get_data", &id))
@@ -3847,7 +3847,7 @@ gimp_Get_data(self, args)
     return_vals = gimp_run_procedure("gimp_procedural_db_get_data",
 				     &nreturn_vals, GIMP_PDB_STRING, id, GIMP_PDB_END);
 
-    if (return_vals[0].data.d_status != STATUS_SUCCESS) {
+    if (return_vals[0].data.d_status != GIMP_PDB_SUCCESS) {
 	PyErr_SetString(ErrorObject, "no data for id");
 	return NULL;
     }
@@ -3893,7 +3893,7 @@ gimp_Query_images(self, args)
     PyObject *ret;
     if (!PyArg_ParseTuple(args, ":query_images"))
 	return NULL;
-    imgs = gimp_query_images(&nimgs);
+    imgs = gimp_image_list(&nimgs);
     ret = PyList_New(nimgs);
     for (i = 0; i < nimgs; i++)
 	PyList_SetItem(ret, i, (PyObject *)newimgobject(imgs[i]));
@@ -3907,7 +3907,7 @@ gimp_Install_procedure(self, args)
 {
     char *name, *blurb, *help, *author, *copyright, *date, *menu_path,
 	*image_types, *n, *d;
-    GParamDef *params, *return_vals;
+    GimpParamDef *params, *return_vals;
     int type, nparams, nreturn_vals, i;
     PyObject *pars, *rets;
 
@@ -3923,7 +3923,7 @@ gimp_Install_procedure(self, args)
     }
     nparams = PySequence_Length(pars);
     nreturn_vals = PySequence_Length(rets);
-    params = g_new(GParamDef, nparams);
+    params = g_new(GimpParamDef, nparams);
     for (i = 0; i < nparams; i++) {
 	if (!PyArg_ParseTuple(PySequence_GetItem(pars, i), "iss",
 			      &(params[i].type), &n, &d)) {
@@ -3933,7 +3933,7 @@ gimp_Install_procedure(self, args)
 	params[i].name = g_strdup(n);
 	params[i].description = g_strdup(d);
     }
-    return_vals = g_new(GParamDef, nreturn_vals);
+    return_vals = g_new(GimpParamDef, nreturn_vals);
     for (i = 0; i < nreturn_vals; i++) {
 	if (!PyArg_ParseTuple(PySequence_GetItem(rets, i), "iss",
 			      &(return_vals[i].type), &n, &d)) {
@@ -3957,7 +3957,7 @@ gimp_Install_temp_proc(self, args)
 {
     char *name, *blurb, *help, *author, *copyright, *date, *menu_path,
 	*image_types, *n, *d;
-    GParamDef *params, *return_vals;
+    GimpParamDef *params, *return_vals;
     int type, nparams, nreturn_vals, i;
     PyObject *pars, *rets;
 
@@ -3973,7 +3973,7 @@ gimp_Install_temp_proc(self, args)
     }
     nparams = PySequence_Length(pars);
     nreturn_vals = PySequence_Length(rets);
-    params = g_new(GParamDef, nparams);
+    params = g_new(GimpParamDef, nparams);
     for (i = 0; i < nparams; i++) {
 	if (!PyArg_ParseTuple(PySequence_GetItem(pars, i), "iss",
 			      &(params[i].type), &n, &d)) {
@@ -3983,7 +3983,7 @@ gimp_Install_temp_proc(self, args)
 	params[i].name = g_strdup(n);
 	params[i].description = g_strdup(d);
     }
-    return_vals = g_new(GParamDef, nreturn_vals);
+    return_vals = g_new(GimpParamDef, nreturn_vals);
     for (i = 0; i < nreturn_vals; i++) {
 	if (!PyArg_ParseTuple(PySequence_GetItem(rets, i), "iss",
 			      &(return_vals[i].type), &n, &d)) {
@@ -4265,7 +4265,7 @@ gimp_image(self, args)
      PyObject *self, *args;
 {
     unsigned int width, height;
-    GImageType type;
+    GimpImageBaseType type;
 
     if (!PyArg_ParseTuple(args, "iii:image", &width, &height, &type))
 	return NULL;
@@ -4280,9 +4280,9 @@ gimp_layer(self, args)
     imgobject *img;
     char *name;
     unsigned int width, height;
-    GDrawableType type;
+    GimpImageType type;
     double opacity;
-    GLayerMode mode;
+    GimpLayerModeEffects mode;
 	
 
     if (!PyArg_ParseTuple(args, "O!siiidi:layer", &Imgtype, &img, &name,
@@ -4437,7 +4437,7 @@ new_parasite(self, args)
     if (!PyArg_ParseTuple(args, "sis#:parasite", &name, &flags,
 			  &data, &size))
 	return NULL;
-    return (PyObject *)newparaobject(parasite_new(name, flags, size, data));
+    return (PyObject *)newparaobject(gimp_parasite_new(name, flags, size, data));
 }
 
 static PyObject *
