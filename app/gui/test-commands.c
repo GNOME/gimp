@@ -65,6 +65,7 @@ container_view_scale_callback (GtkAdjustment     *adj,
 
 static void
 brushes_callback (GtkWidget         *widget,
+                  GdkModifierType    state,
 		  GimpContainerView *view)
 {
   gimp_container_view_set_container (view, view->context->gimp->brush_factory->container);
@@ -72,6 +73,7 @@ brushes_callback (GtkWidget         *widget,
 
 static void
 patterns_callback (GtkWidget         *widget,
+                   GdkModifierType    state,
 		   GimpContainerView *view)
 {
   gimp_container_view_set_container (view, view->context->gimp->pattern_factory->container);
@@ -79,6 +81,7 @@ patterns_callback (GtkWidget         *widget,
 
 static void
 gradients_callback (GtkWidget         *widget,
+                    GdkModifierType    state,
 		    GimpContainerView *view)
 {
   gimp_container_view_set_container (view, view->context->gimp->gradient_factory->container);
@@ -86,6 +89,7 @@ gradients_callback (GtkWidget         *widget,
 
 static void
 palettes_callback (GtkWidget         *widget,
+                   GdkModifierType    state,
 		   GimpContainerView *view)
 {
   gimp_container_view_set_container (view, view->context->gimp->palette_factory->container);
@@ -93,6 +97,7 @@ palettes_callback (GtkWidget         *widget,
 
 static void
 images_callback (GtkWidget         *widget,
+                 GdkModifierType    state,
 		 GimpContainerView *view)
 {
   gimp_container_view_set_container (view, view->context->gimp->images);

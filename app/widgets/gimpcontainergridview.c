@@ -59,6 +59,7 @@ static void     gimp_container_grid_view_select_item  (GimpContainerView      *v
 static void     gimp_container_grid_view_clear_items  (GimpContainerView      *view);
 static void gimp_container_grid_view_set_preview_size (GimpContainerView      *view);
 static void    gimp_container_grid_view_item_selected (GtkWidget              *widget,
+                                                       GdkModifierType         state,
 						       gpointer                data);
 static void   gimp_container_grid_view_item_activated (GtkWidget              *widget,
 						       gpointer                data);
@@ -342,8 +343,9 @@ gimp_container_grid_view_set_preview_size (GimpContainerView *view)
 }
 
 static void
-gimp_container_grid_view_item_selected (GtkWidget *widget,
-					gpointer   data)
+gimp_container_grid_view_item_selected (GtkWidget       *widget,
+                                        GdkModifierType  state,
+					gpointer         data)
 {
   gimp_container_view_item_selected (GIMP_CONTAINER_VIEW (data),
 				     GIMP_PREVIEW (widget)->viewable);

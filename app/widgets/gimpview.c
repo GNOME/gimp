@@ -51,7 +51,6 @@ enum
 {
   CLICKED,
   DOUBLE_CLICKED,
-  EXTENDED_CLICKED,
   CONTEXT,
   LAST_SIGNAL
 };
@@ -133,8 +132,9 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpPreviewClass, clicked),
 		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+		  gimp_marshal_VOID__FLAGS,
+		  G_TYPE_NONE, 1,
+		  GDK_TYPE_MODIFIER_TYPE);
 
   preview_signals[DOUBLE_CLICKED] = 
     g_signal_new ("double_clicked",
@@ -144,16 +144,6 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 		  NULL, NULL,
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
-
-  preview_signals[EXTENDED_CLICKED] = 
-    g_signal_new ("extended_clicked",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpPreviewClass, extended_clicked),
-		  NULL, NULL,
-		  gimp_marshal_VOID__FLAGS,
-		  G_TYPE_NONE, 1,
-		  GDK_TYPE_MODIFIER_TYPE);
 
   preview_signals[CONTEXT] = 
     g_signal_new ("context",
@@ -177,7 +167,6 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 
   klass->clicked                     = NULL;
   klass->double_clicked              = NULL;
-  klass->extended_clicked            = NULL;
   klass->context                     = NULL;
 }
 
@@ -443,17 +432,8 @@ gimp_preview_button_release_event (GtkWidget      *widget,
 
       if (preview->clickable && preview->in_button)
 	{
-	  if (preview->press_state &
-	      (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK))
-	    {
-	      g_signal_emit (widget,
-                             preview_signals[EXTENDED_CLICKED], 0,
-                             preview->press_state);
-	    }
-	  else
-	    {
-	      g_signal_emit (widget, preview_signals[CLICKED], 0);
-	    }
+          g_signal_emit (widget, preview_signals[CLICKED], 0,
+                         preview->press_state);
 	}
     }
   else

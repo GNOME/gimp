@@ -62,11 +62,10 @@ struct _GimpPreviewClass
   GtkDrawingAreaClass  parent_class;
 
   /*  signals  */
-  void        (* clicked)          (GimpPreview *preview);
-  void        (* double_clicked)   (GimpPreview *preview);
-  void        (* extended_clicked) (GimpPreview *preview,
-				    guint        modifier_state);
-  void        (* context)          (GimpPreview *preview);
+  void        (* clicked)          (GimpPreview     *preview,
+                                    GdkModifierType  modifier_state);
+  void        (* double_clicked)   (GimpPreview     *preview);
+  void        (* context)          (GimpPreview     *preview);
 };
 
 

@@ -48,8 +48,9 @@
 
 
 static void
-brush_preview_clicked (GtkWidget   *widget, 
-		       GimpToolbox *toolbox)
+brush_preview_clicked (GtkWidget       *widget,
+                       GdkModifierType  state,
+		       GimpToolbox     *toolbox)
 {
   gimp_dialog_factory_dialog_raise (GIMP_DOCK (toolbox)->dialog_factory,
 				    "gimp-brush-grid", -1);
@@ -68,8 +69,9 @@ brush_preview_drop_brush (GtkWidget    *widget,
 }
 
 static void
-pattern_preview_clicked (GtkWidget   *widget, 
-			 GimpToolbox *toolbox)
+pattern_preview_clicked (GtkWidget       *widget,
+                         GdkModifierType  state,
+			 GimpToolbox     *toolbox)
 {
   gimp_dialog_factory_dialog_raise (GIMP_DOCK (toolbox)->dialog_factory,
 				    "gimp-pattern-grid", -1);
@@ -88,8 +90,9 @@ pattern_preview_drop_pattern (GtkWidget    *widget,
 }
 
 static void
-gradient_preview_clicked (GtkWidget   *widget, 
-			  GimpToolbox *toolbox)
+gradient_preview_clicked (GtkWidget       *widget,
+                          GdkModifierType  state,
+			  GimpToolbox     *toolbox)
 {
   gimp_dialog_factory_dialog_raise (GIMP_DOCK (toolbox)->dialog_factory,
 				    "gimp-gradient-list", -1);

@@ -76,9 +76,7 @@ static gboolean    file_open_thumbnail_button_press (GtkWidget        *widget,
                                                      GdkEventButton   *bevent,
                                                      GtkWidget        *open_dialog);
 static void        file_open_thumbnail_clicked      (GtkWidget        *widget,
-                                                     GtkWidget        *open_dialog);
-static void        file_open_thumbnail_ext_clicked  (GtkWidget        *widget,
-                                                     guint             state,
+                                                     GdkModifierType   state,
                                                      GtkWidget        *open_dialog);
 static void        file_open_ok_callback            (GtkWidget        *widget,
                                                      GtkWidget        *open_dialog);
@@ -292,9 +290,6 @@ file_open_dialog_create (Gimp            *gimp,
 
       g_signal_connect (open_options_preview, "clicked",
                         G_CALLBACK (file_open_thumbnail_clicked),
-                        open_dialog);
-      g_signal_connect (open_options_preview, "extended_clicked",
-                        G_CALLBACK (file_open_thumbnail_ext_clicked),
                         open_dialog);
 
       open_options_title = gtk_label_new (_("No Selection"));
@@ -578,16 +573,9 @@ file_open_thumbnail_button_press (GtkWidget      *widget,
 }
 
 static void
-file_open_thumbnail_clicked (GtkWidget *widget,
-                             GtkWidget *open_dialog)
-{
-  file_open_create_thumbnails (open_dialog, FALSE);
-}
-
-static void
-file_open_thumbnail_ext_clicked (GtkWidget *widget,
-                                 guint      state,
-                                 GtkWidget *open_dialog)
+file_open_thumbnail_clicked (GtkWidget       *widget,
+                             GdkModifierType  state,
+                             GtkWidget       *open_dialog)
 {
   gboolean always_create;
 
