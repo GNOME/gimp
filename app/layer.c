@@ -25,6 +25,7 @@
 #include "canvas.h"
 #include "drawable.h"
 #include "errors.h"
+#include "float16.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gimage.h"
@@ -984,16 +985,15 @@ layer_pick_correlate (layer, x, y)
           break;
           
         case PRECISION_FLOAT16:
-#define FIXME /* what data type? */
           {
-            guint8 * d = (guint8*) c_data;
-            guint8 val = d[alpha];
+            guint16 * d = (guint16*) c_data;
+            gfloat val = d[alpha];
             if (layer->mask)
               {
-                guint8 * m = (guint8*) m_data;
-                val = (val * *m) / 255;
+                guint16 * m = (guint16*) m_data;
+                val = val * FLT (*m);
               }
-            if (val > 63)
+            if (val > .25)
               rc = TRUE;
           }
           break;

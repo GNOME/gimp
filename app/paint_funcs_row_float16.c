@@ -198,9 +198,9 @@ absdiff_row_float16  (
   while (width--)
     {
       /*  if there is an alpha channel, never select transparent regions  */
-      if ((has_alpha && src[src_channels]) == FLT16 (0.0))
+      if (has_alpha && src[src_channels] == ZERO_FLOAT16)
         {
-          *dest = FLT16 (0.0);
+          *dest = ZERO_FLOAT16;
         }
       else
         {
@@ -224,18 +224,18 @@ absdiff_row_float16  (
 
               aa = 1.5 - ((float) max / threshold);
               if (aa <= 0)
-                *dest = FLT16 (0.0);
+                *dest = ZERO_FLOAT16;
               else if (aa < 0.5)
                 *dest = FLT16 (aa * 2.0);
               else
-                *dest = FLT16 (1.0);
+                *dest = ONE_FLOAT16;
             }
           else
             {
               if (max > threshold)
-                *dest = FLT16 (0.0);
+                *dest = ZERO_FLOAT16;
               else
-                *dest = FLT16 (1.0);
+                *dest = ONE_FLOAT16;
             }
           
           src += src_channels;
