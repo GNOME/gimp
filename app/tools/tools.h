@@ -100,6 +100,9 @@ typedef void (* ArrowKeysFunc)     (Tool *, GdkEventKey *, gpointer);
 typedef void (* CursorUpdateFunc)  (Tool *, GdkEventMotion *, gpointer);
 typedef void (* ToolCtlFunc)       (Tool *, int, gpointer);
 
+/* ToolInfo function declarations */
+typedef Tool *(* ToolInfoNewFunc)  (void);
+typedef void  (* ToolInfoFreeFunc) (Tool *);
 
 struct _tool
 {
@@ -132,6 +135,8 @@ struct _ToolInfo
   GtkWidget *tool_options;
   char *tool_name;
   int toolbar_position;
+  ToolInfoNewFunc new_func;
+  ToolInfoFreeFunc free_func;
 };
 
 

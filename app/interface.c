@@ -384,7 +384,7 @@ create_tool_pixmap (GtkWidget *parent, ToolType type)
   else if (type == FLIP_VERT)
     type = FLIP_HORZ;
 
-  for (i=0; i<21; i++)
+  for (i=0; i<22; i++)
     {
       if ((ToolType)tool_data[i].callback_data == type)
 	  return create_pixmap (parent->window, NULL,
@@ -451,7 +451,7 @@ create_tools (GtkWidget *parent)
     }
 
   /*  The non-visible tool buttons  */
-  for (i = 21; i < NUM_TOOLS; i++)
+  for (i = 22; i < NUM_TOOLS; i++)
     {
       tool_widgets[i] = button = gtk_radio_button_new (group);
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
@@ -653,7 +653,7 @@ toolbox_free ()
   int i;
 
   gtk_widget_destroy (toolbox_shell);
-  for (i = 21; i < NUM_TOOLS; i++)
+  for (i = 22; i < NUM_TOOLS; i++)
     {
       gtk_object_sink    (GTK_OBJECT (tool_widgets[i]));
     }

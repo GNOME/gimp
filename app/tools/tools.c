@@ -71,43 +71,43 @@ static int global_tool_ID = 0;
 
 ToolInfo tool_info[] =
 {
-  { NULL, "Rect Select", 0 },
-  { NULL, "Ellipse Select", 1 },
-  { NULL, "Free Select", 2 },
-  { NULL, "Fuzzy Select", 3 },
-  { NULL, "Bezier Select", 4 },
-  { NULL, "Intelligent Scissors", 5 },
-  { NULL, "Move", 6 },
-  { NULL, "Magnify", 7 },
-  { NULL, "Crop", 8 },
-  { NULL, "Transform", 9 }, /* rotate */
-  { NULL, "Transform", 9 }, /* scale */
-  { NULL, "Transform", 9 }, /* shear */
-  { NULL, "Transform", 9 }, /* perspective */
-  { NULL, "Flip", 10 }, /* horizontal */
-  { NULL, "Flip", 10 }, /* vertical */
-  { NULL, "Text", 11 },
-  { NULL, "Color Picker", 12 },
-  { NULL, "Bucket Fill", 13 },
-  { NULL, "Blend", 14 },
-  { NULL, "Pencil", 15 },
-  { NULL, "Paintbrush", 16 },
-  { NULL, "Eraser", 17 },
-  { NULL, "Airbrush", 18 },
-  { NULL, "Clone", 19 },
-  { NULL, "Convolve", 20 },
-  { NULL, "Ink", 21 },
+  { NULL, "Rect Select", 0, tools_new_rect_select, tools_free_rect_select },
+  { NULL, "Ellipse Select", 1, tools_new_ellipse_select, tools_free_ellipse_select },
+  { NULL, "Free Select", 2, tools_new_free_select, tools_free_free_select },
+  { NULL, "Fuzzy Select", 3, tools_new_fuzzy_select, tools_free_fuzzy_select },
+  { NULL, "Bezier Select", 4, tools_new_bezier_select, tools_free_bezier_select },
+  { NULL, "Intelligent Scissors", 5, tools_new_iscissors, tools_free_iscissors },
+  { NULL, "Move", 6, tools_new_move_tool, tools_free_move_tool },
+  { NULL, "Magnify", 7, tools_new_magnify, tools_free_magnify },
+  { NULL, "Crop", 8, tools_new_crop, tools_free_crop },
+  { NULL, "Transform", 9, tools_new_transform_tool, tools_free_transform_tool}, /* rotate */
+  { NULL, "Transform", 9, tools_new_transform_tool, tools_free_transform_tool }, /* scale */
+  { NULL, "Transform", 9, tools_new_transform_tool, tools_free_transform_tool }, /* shear */
+  { NULL, "Transform", 9, tools_new_transform_tool, tools_free_transform_tool }, /* perspective */
+  { NULL, "Flip", 10, tools_new_flip, tools_free_flip_tool }, /* horizontal */
+  { NULL, "Flip", 10, tools_new_flip, tools_free_flip_tool }, /* vertical */
+  { NULL, "Text", 11, tools_new_text, tools_free_text },
+  { NULL, "Color Picker", 12, tools_new_color_picker, tools_free_color_picker },
+  { NULL, "Bucket Fill", 13, tools_new_bucket_fill, tools_free_bucket_fill },
+  { NULL, "Blend", 14, tools_new_blend, tools_free_blend },
+  { NULL, "Pencil", 15, tools_new_pencil, tools_free_pencil },
+  { NULL, "Paintbrush", 16, tools_new_paintbrush, tools_free_paintbrush },
+  { NULL, "Eraser", 17, tools_new_eraser, tools_free_eraser },
+  { NULL, "Airbrush", 18, tools_new_airbrush, tools_free_airbrush },
+  { NULL, "Clone", 19, tools_new_clone, tools_free_clone },
+  { NULL, "Convolve", 20, tools_new_convolve, tools_free_convolve },
+  { NULL, "Ink", 21, tools_new_ink, tools_free_ink },
 
   /*  Non-toolbox tools  */
-  { NULL, "By Color Select", 22 },
-  { NULL, "Color Balance", 23 },
-  { NULL, "Brightness-Contrast", 24 },
-  { NULL, "Hue-Saturation", 25 },
-  { NULL, "Posterize", 26 },
-  { NULL, "Threshold", 27 },
-  { NULL, "Curves", 28 },
-  { NULL, "Levels", 29 },
-  { NULL, "Histogram", 30 }
+  { NULL, "By Color Select", 22, tools_new_by_color_select, tools_free_by_color_select },
+  { NULL, "Color Balance", 23, tools_new_color_balance, tools_free_color_balance },
+  { NULL, "Brightness-Contrast", 24, tools_new_brightness_contrast, tools_free_brightness_contrast },
+  { NULL, "Hue-Saturation", 25, tools_new_hue_saturation, tools_free_hue_saturation },
+  { NULL, "Posterize", 26, tools_new_posterize, tools_free_posterize },
+  { NULL, "Threshold", 27, tools_new_threshold, tools_free_threshold },
+  { NULL, "Curves", 28, tools_new_curves, tools_free_curves },
+  { NULL, "Levels", 29, tools_new_levels, tools_free_levels },
+  { NULL, "Histogram", 30, tools_new_histogram_tool, tools_free_histogram_tool }
 };
 
 
@@ -130,116 +130,7 @@ active_tool_free (void)
   if (tool_info[(int) active_tool->type].tool_options)
     gtk_widget_hide (tool_info[(int) active_tool->type].tool_options);
   
-  switch (active_tool->type)
-    {
-    case RECT_SELECT:
-      tools_free_rect_select (active_tool);
-      break;
-    case ELLIPSE_SELECT:
-      tools_free_ellipse_select (active_tool);
-      break;
-    case FREE_SELECT:
-      tools_free_free_select (active_tool);
-      break;
-    case FUZZY_SELECT:
-      tools_free_fuzzy_select (active_tool);
-      break;
-    case BEZIER_SELECT:
-      tools_free_bezier_select (active_tool);
-      break;
-    case ISCISSORS:
-      tools_free_iscissors (active_tool);
-      break;
-    case CROP:
-      tools_free_crop (active_tool);
-      break;
-    case MOVE:
-      tools_free_move_tool (active_tool);
-      break;
-    case MAGNIFY:
-      tools_free_magnify (active_tool);
-      break;
-    case ROTATE:
-      tools_free_transform_tool (active_tool);
-      break;
-    case SCALE:
-      tools_free_transform_tool (active_tool);
-      break;
-    case SHEAR:
-      tools_free_transform_tool (active_tool);
-      break;
-    case PERSPECTIVE:
-      tools_free_transform_tool (active_tool);
-      break;
-    case FLIP_HORZ:
-      tools_free_flip_tool (active_tool);
-      break;
-    case FLIP_VERT:
-      tools_free_flip_tool (active_tool);
-      break;
-    case TEXT:
-      tools_free_text (active_tool);
-      break;
-    case COLOR_PICKER:
-      tools_free_color_picker (active_tool);
-      break;
-    case BUCKET_FILL:
-      tools_free_bucket_fill (active_tool);
-      break;
-    case BLEND:
-      tools_free_blend (active_tool);
-      break;
-    case PENCIL:
-      tools_free_pencil (active_tool);
-      break;
-    case PAINTBRUSH:
-      tools_free_paintbrush (active_tool);
-      break;
-    case ERASER:
-      tools_free_eraser (active_tool);
-      break;
-    case AIRBRUSH:
-      tools_free_airbrush (active_tool);
-      break;
-    case CLONE:
-      tools_free_clone (active_tool);
-      break;
-    case CONVOLVE:
-      tools_free_convolve (active_tool);
-      break;
-    case INK:
-      tools_free_ink (active_tool);
-      break;
-    case BY_COLOR_SELECT:
-      tools_free_by_color_select (active_tool);
-      break;
-    case COLOR_BALANCE:
-      tools_free_color_balance (active_tool);
-      break;
-    case BRIGHTNESS_CONTRAST:
-      tools_free_brightness_contrast (active_tool);
-      break;
-    case HUE_SATURATION:
-      tools_free_hue_saturation (active_tool);
-      break;
-    case POSTERIZE:
-      tools_free_posterize (active_tool);
-      break;
-    case THRESHOLD:
-      tools_free_threshold (active_tool);
-      break;
-    case CURVES:
-      tools_free_curves (active_tool);
-      break;
-    case LEVELS:
-      tools_free_levels (active_tool);
-      break;
-    case HISTOGRAM:
-      tools_free_histogram_tool (active_tool);
-      break;
-    default:
-      return;
-    }
+  (* tool_info[(int) active_tool->type].free_func) (active_tool);
 
   g_free (active_tool);
   active_tool = NULL;
@@ -253,116 +144,7 @@ tools_select (ToolType type)
   if (active_tool)
     active_tool_free ();
 
-  switch (type)
-    {
-    case RECT_SELECT:
-      active_tool = tools_new_rect_select ();
-      break;
-    case ELLIPSE_SELECT:
-      active_tool = tools_new_ellipse_select ();
-      break;
-    case FREE_SELECT:
-      active_tool = tools_new_free_select ();
-      break;
-    case FUZZY_SELECT:
-      active_tool = tools_new_fuzzy_select ();
-      break;
-    case BEZIER_SELECT:
-      active_tool = tools_new_bezier_select ();
-      break;
-    case ISCISSORS:
-      active_tool = tools_new_iscissors ();
-      break;
-    case MOVE:
-      active_tool = tools_new_move_tool ();
-      break;
-    case MAGNIFY:
-      active_tool = tools_new_magnify ();
-      break;
-    case CROP:
-      active_tool = tools_new_crop ();
-      break;
-    case ROTATE:
-      active_tool = tools_new_transform_tool ();
-      break;
-    case SCALE:
-      active_tool = tools_new_transform_tool ();
-      break;
-    case SHEAR:
-      active_tool = tools_new_transform_tool ();
-      break;
-    case PERSPECTIVE:
-      active_tool = tools_new_transform_tool ();
-      break;
-    case FLIP_HORZ:
-      active_tool = tools_new_flip ();
-      break;
-    case FLIP_VERT:
-      active_tool = tools_new_flip ();
-      break;
-    case TEXT:
-      active_tool = tools_new_text ();
-      break;
-    case COLOR_PICKER:
-      active_tool = tools_new_color_picker ();
-      break;
-    case BUCKET_FILL:
-      active_tool = tools_new_bucket_fill ();
-      break;
-    case BLEND:
-      active_tool = tools_new_blend ();
-      break;
-    case PENCIL:
-      active_tool = tools_new_pencil ();
-      break;
-    case PAINTBRUSH:
-      active_tool = tools_new_paintbrush ();
-      break;
-    case ERASER:
-      active_tool = tools_new_eraser ();
-      break;
-    case AIRBRUSH:
-      active_tool = tools_new_airbrush ();
-      break;
-    case CLONE:
-      active_tool = tools_new_clone ();
-      break;
-    case CONVOLVE:
-      active_tool = tools_new_convolve ();
-      break;
-    case INK:
-      active_tool = tools_new_ink ();
-      break;
-    case BY_COLOR_SELECT:
-      active_tool = tools_new_by_color_select ();
-      break;
-    case COLOR_BALANCE:
-      active_tool = tools_new_color_balance ();
-      break;
-    case BRIGHTNESS_CONTRAST:
-      active_tool = tools_new_brightness_contrast ();
-      break;
-    case HUE_SATURATION:
-      active_tool = tools_new_hue_saturation ();
-      break;
-    case POSTERIZE:
-      active_tool = tools_new_posterize ();
-      break;
-    case THRESHOLD:
-      active_tool = tools_new_threshold ();
-      break;
-    case CURVES:
-      active_tool = tools_new_curves ();
-      break;
-    case LEVELS:
-      active_tool = tools_new_levels ();
-      break;
-    case HISTOGRAM:
-      active_tool = tools_new_histogram_tool ();
-      break;
-    default:
-      return;
-    }
+  active_tool = (* tool_info[(int) type].new_func) ();
 
   /*  Show the options for the active tool
    */
@@ -397,88 +179,10 @@ tools_initialize (ToolType type, GDisplay *gdisp_ptr)
 
   switch (type)
     {
-    case RECT_SELECT:
-      active_tool = tools_new_rect_select ();
-      break;
-    case ELLIPSE_SELECT:
-      active_tool = tools_new_ellipse_select ();
-      break;
-    case FREE_SELECT:
-      active_tool = tools_new_free_select ();
-      break;
-    case FUZZY_SELECT:
-      active_tool = tools_new_fuzzy_select ();
-      break;
-    case BEZIER_SELECT:
-      active_tool = tools_new_bezier_select ();
-      break;
-    case ISCISSORS:
-      active_tool = tools_new_iscissors ();
-      break;
-    case MOVE:
-      active_tool = tools_new_move_tool ();
-      break;
-    case MAGNIFY:
-      active_tool = tools_new_magnify ();
-      break;
-    case CROP:
-      active_tool = tools_new_crop ();
-      break;
-    case ROTATE:
-      active_tool = tools_new_transform_tool ();
-      break;
-    case SCALE:
-      active_tool = tools_new_transform_tool ();
-      break;
-    case SHEAR:
-      active_tool = tools_new_transform_tool ();
-      break;
-    case PERSPECTIVE:
-      active_tool = tools_new_transform_tool ();
-      break;
-    case FLIP_HORZ:
-      active_tool = tools_new_flip ();
-      break;
-    case FLIP_VERT:
-      active_tool = tools_new_flip ();
-      break;
-    case TEXT:
-      active_tool = tools_new_text ();
-      break;
-    case COLOR_PICKER:
-      active_tool = tools_new_color_picker ();
-      break;
-    case BUCKET_FILL:
-      active_tool = tools_new_bucket_fill ();
-      break;
-    case BLEND:
-      active_tool = tools_new_blend ();
-      break;
-    case PENCIL:
-      active_tool = tools_new_pencil ();
-      break;
-    case PAINTBRUSH:
-      active_tool = tools_new_paintbrush ();
-      break;
-    case ERASER:
-      active_tool = tools_new_eraser ();
-      break;
-    case AIRBRUSH:
-      active_tool = tools_new_airbrush ();
-      break;
-    case CLONE:
-      active_tool = tools_new_clone ();
-      break;
-    case CONVOLVE:
-      active_tool = tools_new_convolve ();
-      break;
-    case INK:
-      active_tool = tools_new_ink ();
-      break;
     case BY_COLOR_SELECT:
       if (gdisp) {
 	active_tool = tools_new_by_color_select ();
-	by_color_select_initialize (gdisp);
+	by_color_select_initialize (gdisp->gimage);
       } else {
 	active_tool = tools_new_rect_select ();
       }
@@ -548,6 +252,7 @@ tools_initialize (ToolType type, GDisplay *gdisp_ptr)
       }
       break;
     default:
+      active_tool = (* tool_info[(int) type].new_func) ();
       break;
     }
 

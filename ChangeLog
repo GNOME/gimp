@@ -1,3 +1,12 @@
+Tue Jun 16 15:06:19 CDT 1998 Larry Ewing <lewing@gimp.org>
+
+	* app/interface.c:
+	* app/menus.c: added menu entry and changed loop bounds to get the
+	new ink tool functioning properly
+
+	* app/tools.[ch]: added new and free funcs to the ToolInfo struct,
+	and began small cleanup of tools
+
 Mon Jun 15 12:42:43 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/plug_in.c: initialize progress_gdisp_ID field in

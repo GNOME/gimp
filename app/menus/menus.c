@@ -173,6 +173,7 @@ static GtkItemFactoryEntry image_entries[] =
   { "/Tools/Airbrush", "A", tools_select_cmd_callback, AIRBRUSH },
   { "/Tools/Clone", "C", tools_select_cmd_callback, CLONE },
   { "/Tools/Convolve", "V", tools_select_cmd_callback, CONVOLVE },
+  { "/Tools/Ink", "K", tools_select_cmd_callback, INK },
   { "/Tools/Default Colors", "D", tools_default_colors_cmd_callback, 0 },
   { "/Tools/Swap Colors", "X", tools_swap_colors_cmd_callback, 0 },  
   { "/Tools/---", NULL, NULL, 0, "<Separator>" },
