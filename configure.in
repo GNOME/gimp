@@ -329,6 +329,8 @@ if test x$gimp_broken_gtk = xyes; then
 fi
 
 PKG_CHECK_MODULES(GDK_PIXBUF, gdk-pixbuf-2.0 >= $GDKPIXBUF_REQUIRED_VERSION)
+AC_SUBST(GDK_PIXBUF_CFLAGS)
+AC_SUBST(GDK_PIXBUF_LIBS)
 
 AC_PATH_PROG(GDK_PIXBUF_CSOURCE, gdk-pixbuf-csource, no)
 if test x$GDK_PIXBUF_CSOURCE = xno; then
