@@ -7,6 +7,15 @@ GIMP 1.3 is the development branch of The GIMP. Here's where the
 development takes place on the road to the next stable release
 GIMP version 2.0.
 
+Bugs fixed since the last release
+=================================
+- 136124: count animation frames starting with 1 (Simon)
+- 122519: allow to share paint options between tools (Mitch)
+- 136227: allow to toggle the histogram scale from the tool dialogs (Sven)
+- 136303: fixed translation of preview widget (Sven)
+- 136321: fixed bug in Plasma plug-in (Sven)
+- 136371: fixed a crash caused by gimp_query_boolean_box (Sven)
+
 
 Bugs fixed in GIMP 2.0pre4
 ==========================
