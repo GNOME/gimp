@@ -240,6 +240,7 @@ EXPORTS
 	gimp_size_entry_get_value
 	gimp_size_entry_grab_focus
 	gimp_size_entry_new
+	gimp_size_entry_show_unit_menu
 	gimp_size_entry_set_activates_default
 	gimp_size_entry_set_pixel_digits
 	gimp_size_entry_set_refval

@@ -1186,6 +1186,8 @@ gimp_size_entry_unit_callback (GtkWidget     *widget,
  *
  * Controls whether a unit menu is shown in the size entry.  If
  * @show is #TRUE, the menu is shown; otherwise it is hidden.
+ *
+ * Since: GIMP 2.4
  **/
 void
 gimp_size_entry_show_unit_menu (GimpSizeEntry *gse,

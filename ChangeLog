@@ -1,3 +1,10 @@
+2005-03-10  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpsizeentry.c (gimp_size_entry_show_unit_menu):
+	added "Since: GIMP 2.4" to the docs.
+
+	* libgimpwidgets/gimpwidgets.def: added the new symbol.
+
 2005-03-09  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* libgimpwidgets/gimpsizeentry.[ch]: added function
