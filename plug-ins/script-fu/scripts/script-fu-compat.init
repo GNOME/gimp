@@ -207,5 +207,6 @@
 (define fopen open-input-file)
 (define mapcar map)
 (define nreverse reverse)
+(define pow expt)
 (define symbol-bound? defined?)
 (define trunc truncate)
