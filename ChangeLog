@@ -1,5 +1,10 @@
 2004-05-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/tool-options-actions.c: added icons to the Save,
+	Load, Rename and Delete submenus.
+
+2004-05-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/edit-actions.c (edit_actions_update): don't forget
 	to set the sensitivity of "edit-named-copy".
 

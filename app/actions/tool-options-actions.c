@@ -56,10 +56,14 @@ static GimpActionEntry tool_options_actions[] =
     NULL, NULL, NULL,
     GIMP_HELP_TOOL_OPTIONS_DIALOG },
 
-  { "tool-options-save-menu",    NULL, N_("_Save Options to")      },
-  { "tool-options-restore-menu", NULL, N_("_Restore Options from") },
-  { "tool-options-rename-menu",  NULL, N_("Re_name Saved Options") },
-  { "tool-options-delete-menu",  NULL, N_("_Delete Saved Options") },
+  { "tool-options-save-menu", GTK_STOCK_SAVE,
+    N_("_Save Options to"), "", NULL },
+  { "tool-options-restore-menu", GTK_STOCK_REVERT_TO_SAVED,
+    N_("_Restore Options from"), "", NULL },
+  { "tool-options-rename-menu", GIMP_STOCK_EDIT,
+    N_("Re_name Saved Options"), NULL, NULL },
+  { "tool-options-delete-menu", GTK_STOCK_DELETE,
+    N_("_Delete Saved Options"), "", NULL },
 
   { "tool-options-save-new", GTK_STOCK_NEW,
     N_("_New Entry..."), "", NULL,
