@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
 "POT-Creation-Date: 2000-12-09 11:19-0800\n"
-"PO-Revision-Date: 2000-11-30 10:34+01:00\n"
+"PO-Revision-Date: 2000-12-09 19:34+01:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish/Dansk <sslug-locale@sslug.dk>\n"
 "MIME-Version: 1.0\n"
@@ -4390,7 +4390,6 @@ msgid "Subsampling:"
 msgstr "Undersampling:"
 
 #: plug-ins/common/jpeg.c:1801
-#, fuzzy
 msgid "Fast Integer"
 msgstr "Hurtigt heltal"
 
@@ -4399,9 +4398,8 @@ msgid "Integer"
 msgstr "Heltal"
 
 #: plug-ins/common/jpeg.c:1803
-#, fuzzy
 msgid "Floating-Point"
-msgstr "Flydende tal"
+msgstr "Kommatal"
 
 #: plug-ins/common/jpeg.c:1807
 msgid "DCT method (Speed/quality tradeoff):"
@@ -6279,19 +6277,19 @@ msgid "RunLength Encoded"
 msgstr "RL kodet"
 
 #: plug-ins/common/tga.c:425
-#, fuzzy, c-format
+#, c-format
 msgid "TGA: can't open \"%s\"\n"
-msgstr "kan ikke åbne \"%s\"\n"
+msgstr "TGA: Kan ikke åbne \"%s\"\n"
 
 #: plug-ins/common/tga.c:435
-#, fuzzy, c-format
+#, c-format
 msgid "TGA: Cannot read footer from \"%s\"\n"
-msgstr "XBM: kan ikke oprette \"%s\"\n"
+msgstr "TGA: Kan ikke læse bundtekst fra \"%s\"\n"
 
 #: plug-ins/common/tga.c:446
-#, fuzzy, c-format
+#, c-format
 msgid "TGA: Cannot read extension from \"%s\"\n"
-msgstr "XBM: kan ikke oprette \"%s\"\n"
+msgstr "TGA: Kan ikke læse udvidelse fra \"%s\"\n"
 
 #: plug-ins/common/tga.c:1178
 msgid "Save as TGA"
@@ -8185,6 +8183,9 @@ msgid ""
 "on the same AnimFrame Image at the same time\n"
 "LOCK ID:%s\n"
 msgstr ""
+"Kan ikke udføre mere end 1 videofunktion\n"
+"på det samme AnimFrame billede på samme tid\n"
+"LOCK ID:%s\n"
 
 #: plug-ins/gap/gap_main.c:482
 msgid "<Image>/Video/Goto/Next Frame"
@@ -8552,7 +8553,7 @@ msgstr "Øverst til højre"
 
 #: plug-ins/gap/gap_mov_dialog.c:285
 msgid "Right Bottom"
-msgstr "Neders til højre"
+msgstr "Nederst til højre"
 
 #: plug-ins/gap/gap_mov_dialog.c:294
 msgid "Loop"
@@ -8575,34 +8576,28 @@ msgid "PingPong"
 msgstr "Ping-Pong"
 
 #: plug-ins/gap/gap_mov_dialog.c:300
-#, fuzzy
 msgid "Frame Loop"
-msgstr "Ramme %d"
+msgstr "Rammesløjfe"
 
 #: plug-ins/gap/gap_mov_dialog.c:301
-#, fuzzy
 msgid "Frame Loop Reverse"
-msgstr "Omvendt sløjfe"
+msgstr "Rammesløjfe baglæns"
 
 #: plug-ins/gap/gap_mov_dialog.c:302
-#, fuzzy
 msgid "Frame Once"
-msgstr "Ramme %d"
+msgstr "Ramme én gang"
 
 #: plug-ins/gap/gap_mov_dialog.c:303
-#, fuzzy
 msgid "Frame OnceReverse"
-msgstr "En gang - omvendt"
+msgstr "Ramme én gang baglæns"
 
 #: plug-ins/gap/gap_mov_dialog.c:304
-#, fuzzy
 msgid "Frame PingPong"
-msgstr "Ping-Pong"
+msgstr "Ramme ping-pong"
 
 #: plug-ins/gap/gap_mov_dialog.c:305
-#, fuzzy
 msgid "Frame None"
-msgstr "Ramme %d"
+msgstr "Ramme intet"
 
 #: plug-ins/gap/gap_mov_dialog.c:480
 msgid "Move Path"
