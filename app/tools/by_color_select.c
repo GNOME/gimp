@@ -80,6 +80,7 @@ static void by_color_select_cursor_update  (Tool *, GdkEventMotion *, gpointer);
 static void by_color_select_control        (Tool *, ToolAction,       gpointer);
 
 static ByColorDialog * by_color_select_new_dialog (void);
+
 static void   by_color_select_render          (ByColorDialog *, GImage *);
 static void   by_color_select_draw            (ByColorDialog *, GImage *);
 static gint   by_color_select_preview_events  (GtkWidget *, GdkEventButton *,
@@ -428,10 +429,6 @@ by_color_select_control (Tool       *tool,
 			 ToolAction  action,
 			 gpointer    gdisp_ptr)
 {
-  ByColorSelect * by_color_sel;
-
-  by_color_sel = (ByColorSelect *) tool->private;
-
   switch (action)
     {
     case PAUSE :
@@ -442,13 +439,7 @@ by_color_select_control (Tool       *tool,
 
     case HALT :
       if (by_color_dialog)
-	{
-	  if (by_color_dialog->gimage &&
-	      gimp_set_have (image_context, by_color_dialog->gimage))
-	    by_color_dialog->gimage->by_color_select = FALSE;
-	  by_color_dialog->gimage = NULL;
-	  by_color_select_close_callback (NULL, (gpointer) by_color_dialog);
-	}
+	by_color_select_close_callback (NULL, (gpointer) by_color_dialog);
       break;
 
     default:
@@ -515,11 +506,7 @@ tools_free_by_color_select (Tool *tool)
 
   /*  Close the color select dialog  */
   if (by_color_dialog)
-    {
-      if (by_color_dialog->gimage)
-	by_color_dialog->gimage->by_color_select = FALSE;
-      by_color_select_close_callback (NULL, (gpointer) by_color_dialog);
-    }
+    by_color_select_close_callback (NULL, (gpointer) by_color_dialog);
 
   g_free (by_color_sel);
 }
@@ -565,14 +552,16 @@ by_color_select_new_dialog ()
   GtkObject *data;
   GSList *group = NULL;
   int i;
-  char *button_names[4] =
+
+  char *button_names[] =
   {
     N_("Replace"),
     N_("Add"),
     N_("Subtract"),
     N_("Intersect")
   };
-  int button_values[4] =
+
+  int button_values[] =
   {
     REPLACE,
     ADD,
@@ -898,6 +887,13 @@ by_color_select_close_callback (GtkWidget *widget,
   bcd = (ByColorDialog *) client_data;
   if (GTK_WIDGET_VISIBLE (bcd->shell))
     gtk_widget_hide (bcd->shell);
+
+  if (bcd->gimage &&
+      gimp_set_have (image_context, bcd->gimage))
+    {
+      bcd->gimage->by_color_select = FALSE;
+      bcd->gimage = NULL;
+    }
 }
 
 static void

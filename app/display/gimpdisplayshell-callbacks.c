@@ -259,6 +259,8 @@ gdisplay_canvas_events (GtkWidget *canvas,
 		   /* ...and doesn't want to preserve it */
 		   ! active_tool->preserve))
 		{
+		  g_print ("disp_callbacks: call tools_initialize()\n");
+
 		  tools_initialize (active_tool->type, gdisp);
 		}
 

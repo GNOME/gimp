@@ -231,6 +231,7 @@ tools_new_histogram_tool ()
   tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = histogram_tool_cursor_update;
   tool->control_func = histogram_tool_control;
+
   tool->preserve = FALSE;
 
   return tool;
@@ -310,7 +311,8 @@ histogram_tool_new_dialog ()
   {
     { N_("Close"), histogram_tool_close_callback, NULL, NULL }
   };
-  static char * histogram_info_names[7] =
+
+  static char * histogram_info_names[] =
   {
     N_("Mean:"),
     N_("Std Dev:"),
@@ -320,6 +322,7 @@ histogram_tool_new_dialog ()
     N_("Count:"),
     N_("Percentile:")
   };
+
   static MenuItem color_option_items[] =
   {
     { N_("Value"), 0, 0, histogram_tool_value_callback, NULL, NULL, NULL },

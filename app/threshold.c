@@ -56,6 +56,7 @@ static void   threshold_cursor_update  (Tool *, GdkEventMotion *, gpointer);
 static void   threshold_control        (Tool *, ToolAction,       gpointer);
 
 static ThresholdDialog * threshold_new_dialog (void);
+
 static void   threshold_preview                    (ThresholdDialog *);
 static void   threshold_ok_callback                (GtkWidget *, gpointer);
 static void   threshold_cancel_callback            (GtkWidget *, gpointer);
@@ -198,10 +199,6 @@ threshold_control (Tool       *tool,
 		   ToolAction  action,
 		   gpointer    gdisp_ptr)
 {
-  Threshold * thresh;
-
-  thresh = (Threshold *) tool->private;
-
   switch (action)
     {
     case PAUSE:
@@ -212,13 +209,7 @@ threshold_control (Tool       *tool,
 
     case HALT:
       if (threshold_dialog)
-	{
-	  active_tool->preserve = TRUE;
-	  image_map_abort (threshold_dialog->image_map);
-	  active_tool->preserve = FALSE;
-	  threshold_dialog->image_map = NULL;
-	  threshold_cancel_callback (NULL, (gpointer) threshold_dialog);
-	}
+	threshold_cancel_callback (NULL, (gpointer) threshold_dialog);
       break;
 
     default:
@@ -315,16 +306,9 @@ threshold_initialize (GDisplay *gdisp)
 }
 
 
-/****************************/
-/*  Select by Color dialog  */
-/****************************/
-
-/*  the action area structure  */
-static ActionAreaItem action_items[] =
-{
-  { N_("OK"), threshold_ok_callback, NULL, NULL },
-  { N_("Cancel"), threshold_cancel_callback, NULL, NULL }
-};
+/**********************/
+/*  Threshold dialog  */
+/**********************/
 
 static ThresholdDialog *
 threshold_new_dialog ()
@@ -335,6 +319,12 @@ threshold_new_dialog ()
   GtkWidget *label;
   GtkWidget *frame;
   GtkWidget *toggle;
+
+  static ActionAreaItem action_items[] =
+  {
+    { N_("OK"), threshold_ok_callback, NULL, NULL },
+    { N_("Cancel"), threshold_cancel_callback, NULL, NULL }
+  };
 
   td = g_malloc (sizeof (ThresholdDialog));
   td->preview = TRUE;
@@ -490,10 +480,10 @@ threshold_cancel_callback (GtkWidget *widget,
       active_tool->preserve = TRUE;
       image_map_abort (td->image_map);
       active_tool->preserve = FALSE;
+
+      td->image_map = NULL;
       gdisplays_flush ();
     }
-
-  td->image_map = NULL;
 }
 
 static void

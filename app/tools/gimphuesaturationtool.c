@@ -270,10 +270,6 @@ hue_saturation_control (Tool       *tool,
 			ToolAction  action,
 			gpointer    gdisp_ptr)
 {
-  HueSaturation * color_bal;
-
-  color_bal = (HueSaturation *) tool->private;
-
   switch (action)
     {
     case PAUSE:
@@ -284,13 +280,7 @@ hue_saturation_control (Tool       *tool,
 
     case HALT:
       if (hue_saturation_dialog)
-	{
-	  active_tool->preserve = TRUE;
-	  image_map_abort (hue_saturation_dialog->image_map);
-	  active_tool->preserve = FALSE;
-	  hue_saturation_dialog->image_map = NULL;
-	  hue_saturation_cancel_callback (NULL, (gpointer) hue_saturation_dialog);
-	}
+	hue_saturation_cancel_callback (NULL, (gpointer) hue_saturation_dialog);
       break;
 
     default:
@@ -394,9 +384,9 @@ hue_saturation_free ()
     }
 }
 
-/****************************/
-/*  Select by Color dialog  */
-/****************************/
+/***************************/
+/*  Hue-Saturation dialog  */
+/***************************/
 
 static HueSaturationDialog *
 hue_saturation_new_dialog ()
@@ -421,7 +411,8 @@ hue_saturation_new_dialog ()
     { N_("OK"), hue_saturation_ok_callback, NULL, NULL },
     { N_("Cancel"), hue_saturation_cancel_callback, NULL, NULL }
   };
-  char *hue_partition_names[7] =
+
+  char *hue_partition_names[] =
   {
     N_("Master"),
     N_("R"),
@@ -431,7 +422,8 @@ hue_saturation_new_dialog ()
     N_("B"),
     N_("M")
   };
-  ActionCallback hue_partition_callbacks[7] =
+
+  ActionCallback hue_partition_callbacks[] =
   {
     hue_saturation_master_callback,
     hue_saturation_R_callback,
@@ -779,10 +771,10 @@ hue_saturation_cancel_callback (GtkWidget *widget,
       active_tool->preserve = TRUE;
       image_map_abort (hsd->image_map);
       active_tool->preserve = FALSE;
+
+      hsd->image_map = NULL;
       gdisplays_flush ();
     }
-
-  hsd->image_map = NULL;
 }
 
 static void

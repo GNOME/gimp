@@ -123,30 +123,33 @@ static void   levels_motion         (Tool *, GdkEventMotion *, gpointer);
 static void   levels_cursor_update  (Tool *, GdkEventMotion *, gpointer);
 static void   levels_control        (Tool *, ToolAction,       gpointer);
 
-static LevelsDialog *  levels_new_dialog              (void);
-static void            levels_calculate_transfers     (LevelsDialog *);
-static void            levels_update                  (LevelsDialog *, int);
-static void            levels_preview                 (LevelsDialog *);
-static void            levels_value_callback          (GtkWidget *, gpointer);
-static void            levels_red_callback            (GtkWidget *, gpointer);
-static void            levels_green_callback          (GtkWidget *, gpointer);
-static void            levels_blue_callback           (GtkWidget *, gpointer);
-static void            levels_alpha_callback          (GtkWidget *, gpointer);
-static void            levels_auto_levels_callback    (GtkWidget *, gpointer);
-static void            levels_ok_callback             (GtkWidget *, gpointer);
-static void            levels_cancel_callback         (GtkWidget *, gpointer);
-static gint            levels_delete_callback         (GtkWidget *, GdkEvent *, gpointer);
-static void            levels_preview_update          (GtkWidget *, gpointer);
-static void            levels_low_input_spin_update   (GtkWidget *, gpointer);
-static void            levels_gamma_text_update       (GtkWidget *, gpointer);
-static void            levels_high_input_spin_update  (GtkWidget *, gpointer);
-static void            levels_low_output_spin_update  (GtkWidget *, gpointer);
-static void            levels_high_output_spin_update (GtkWidget *, gpointer);
-static gint            levels_input_da_events         (GtkWidget *, GdkEvent *, LevelsDialog *);
-static gint            levels_output_da_events        (GtkWidget *, GdkEvent *, LevelsDialog *);
+static LevelsDialog * levels_new_dialog (void);
 
-static void       levels_histogram_range (HistogramWidget *, int, int,
-					  void *);
+static void   levels_calculate_transfers     (LevelsDialog *);
+static void   levels_update                  (LevelsDialog *, int);
+static void   levels_preview                 (LevelsDialog *);
+static void   levels_value_callback          (GtkWidget *, gpointer);
+static void   levels_red_callback            (GtkWidget *, gpointer);
+static void   levels_green_callback          (GtkWidget *, gpointer);
+static void   levels_blue_callback           (GtkWidget *, gpointer);
+static void   levels_alpha_callback          (GtkWidget *, gpointer);
+static void   levels_auto_levels_callback    (GtkWidget *, gpointer);
+static void   levels_ok_callback             (GtkWidget *, gpointer);
+static void   levels_cancel_callback         (GtkWidget *, gpointer);
+static gint   levels_delete_callback         (GtkWidget *, GdkEvent *, gpointer);
+static void   levels_preview_update          (GtkWidget *, gpointer);
+static void   levels_low_input_spin_update   (GtkWidget *, gpointer);
+static void   levels_gamma_text_update       (GtkWidget *, gpointer);
+static void   levels_high_input_spin_update  (GtkWidget *, gpointer);
+static void   levels_low_output_spin_update  (GtkWidget *, gpointer);
+static void   levels_high_output_spin_update (GtkWidget *, gpointer);
+static gint   levels_input_da_events         (GtkWidget *, GdkEvent *,
+					      LevelsDialog *);
+static gint   levels_output_da_events        (GtkWidget *, GdkEvent *,
+					      LevelsDialog *);
+
+static void   levels_histogram_range         (HistogramWidget *,
+					      int, int, void *);
 
 static void
 levels_histogram_range (HistogramWidget *h,
@@ -204,10 +207,6 @@ levels_control (Tool       *tool,
 		ToolAction  action,
 		gpointer    gdisp_ptr)
 {
-  Levels * _levels;
-
-  _levels = (Levels *) tool->private;
-
   switch (action)
     {
     case PAUSE:
@@ -218,13 +217,7 @@ levels_control (Tool       *tool,
 
     case HALT:
       if (levels_dialog)
-	{
-	  active_tool->preserve = TRUE;
-	  image_map_abort (levels_dialog->image_map);
-	  active_tool->preserve = FALSE;
-	  levels_dialog->image_map = NULL;
-	  levels_cancel_callback (NULL, (gpointer) levels_dialog);
-	}
+	levels_cancel_callback (NULL, (gpointer) levels_dialog);
       break;
 
     default:
@@ -368,17 +361,9 @@ levels_free ()
     }
 }
 
-/****************************/
-/*  Select by Color dialog  */
-/****************************/
-
-/*  the action area structure  */
-static ActionAreaItem action_items[] =
-{
-  { N_("Auto Levels"), levels_auto_levels_callback, NULL, NULL },
-  { N_("OK"), levels_ok_callback, NULL, NULL },
-  { N_("Cancel"), levels_cancel_callback, NULL, NULL }
-};
+/*******************/
+/*  Levels dialog  */
+/*******************/
 
 static LevelsDialog *
 levels_new_dialog ()
@@ -393,6 +378,13 @@ levels_new_dialog ()
   GtkWidget *channel_hbox;
   GtkWidget *menu;
   int i;
+
+  static ActionAreaItem action_items[] =
+  {
+    { N_("Auto Levels"), levels_auto_levels_callback, NULL, NULL },
+    { N_("OK"), levels_ok_callback, NULL, NULL },
+    { N_("Cancel"), levels_cancel_callback, NULL, NULL }
+  };
 
   ld = g_malloc (sizeof (LevelsDialog));
   ld->preview = TRUE;
@@ -1005,11 +997,12 @@ levels_cancel_callback (GtkWidget *widget,
     {
       active_tool->preserve = TRUE;
       image_map_abort (ld->image_map);
-      active_tool->preserve = TRUE;
+      active_tool->preserve = FALSE;
+
+      ld->image_map = NULL;
       gdisplays_flush ();
     }
 
-  ld->image_map = NULL;
 }
 
 static void

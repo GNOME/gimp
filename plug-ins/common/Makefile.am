@@ -104,7 +104,6 @@ pluginlib_PROGRAMS = \
 	sobel		\
 	sparkle		\
 	spread		\
-	struc		\
 	sunras		\
 	tga		\
 	threshold_alpha		\
@@ -906,14 +905,6 @@ spread_SOURCES = \
 	spread.c
 
 spread_LDADD = \
-	$(top_builddir)/libgimp/libgimp.la	\
-	$(GTK_LIBS)				\
-	$(INTLLIBS)
-
-struc_SOURCES = \
-	struc.c
-
-struc_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)

@@ -88,7 +88,8 @@ static void   brightness_contrast_motion         (Tool *, GdkEventMotion *, gpoi
 static void   brightness_contrast_cursor_update  (Tool *, GdkEventMotion *, gpointer);
 static void   brightness_contrast_control        (Tool *, ToolAction,       gpointer);
 
-static BrightnessContrastDialog *  brightness_contrast_new_dialog  (void);
+static BrightnessContrastDialog *  brightness_contrast_new_dialog (void);
+
 static void   brightness_contrast_update                  (BrightnessContrastDialog *, int);
 static void   brightness_contrast_preview                 (BrightnessContrastDialog *);
 static void   brightness_contrast_ok_callback             (GtkWidget *, gpointer);
@@ -154,13 +155,7 @@ brightness_contrast_control (Tool       *tool,
 
     case HALT:
       if (brightness_contrast_dialog)
-	{
-	  active_tool->preserve = TRUE;
-	  image_map_abort (brightness_contrast_dialog->image_map);
-	  active_tool->preserve = TRUE;
-	  brightness_contrast_dialog->image_map = NULL;
-	  brightness_contrast_cancel_callback (NULL, (gpointer) brightness_contrast_dialog);
-	}
+	brightness_contrast_cancel_callback (NULL, (gpointer) brightness_contrast_dialog);
       break;
 
     default:
@@ -252,13 +247,6 @@ brightness_contrast_initialize (GDisplay *gdisp)
 /*  Brightness Contrast dialog  */
 /********************************/
 
-/*  the action area structure  */
-static ActionAreaItem action_items[] =
-{
-  { N_("OK"), brightness_contrast_ok_callback, NULL, NULL },
-  { N_("Cancel"), brightness_contrast_cancel_callback, NULL, NULL }
-};
-
 static BrightnessContrastDialog *
 brightness_contrast_new_dialog ()
 {
@@ -270,6 +258,12 @@ brightness_contrast_new_dialog ()
   GtkWidget *slider;
   GtkWidget *toggle;
   GtkObject *data;
+
+  static ActionAreaItem action_items[] =
+  {
+    { N_("OK"), brightness_contrast_ok_callback, NULL, NULL },
+    { N_("Cancel"), brightness_contrast_cancel_callback, NULL, NULL }
+  };
 
   bcd = g_malloc (sizeof (BrightnessContrastDialog));
   bcd->preview = TRUE;
@@ -487,10 +481,10 @@ brightness_contrast_cancel_callback (GtkWidget *widget,
       active_tool->preserve = TRUE;
       image_map_abort (bcd->image_map);
       active_tool->preserve = FALSE;
+
+      bcd->image_map = NULL;
       gdisplays_flush ();
     }
-
-  bcd->image_map = NULL;
 }
 
 static void

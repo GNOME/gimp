@@ -42,8 +42,9 @@
 #define DRAW               0x10
 #define ALL                0xFF
 
- /* NB: take care when changing these values: make sure the curve[] array in
- * curves.h is large enough. */
+/*  NB: take care when changing these values: make sure the curve[] array in
+ *  curves.h is large enough.
+ */
 #define GRAPH_WIDTH      256
 #define GRAPH_HEIGHT     256
 #define XRANGE_WIDTH     256
@@ -98,26 +99,27 @@ static void   curves_motion         (Tool *, GdkEventMotion *, gpointer);
 static void   curves_cursor_update  (Tool *, GdkEventMotion *, gpointer);
 static void   curves_control        (Tool *, ToolAction,       gpointer);
 
-static CurvesDialog *  curves_new_dialog      (void);
-static void            curves_update          (CurvesDialog *, int);
-static void            curves_plot_curve      (CurvesDialog *, int, int, int, int);
-static void            curves_preview         (CurvesDialog *);
-static void            curves_value_callback  (GtkWidget *, gpointer);
-static void            curves_red_callback    (GtkWidget *, gpointer);
-static void            curves_green_callback  (GtkWidget *, gpointer);
-static void            curves_blue_callback   (GtkWidget *, gpointer);
-static void            curves_alpha_callback  (GtkWidget *, gpointer);
-static void            curves_smooth_callback (GtkWidget *, gpointer);
-static void            curves_free_callback   (GtkWidget *, gpointer);
-static void            curves_reset_callback  (GtkWidget *, gpointer);
-static void            curves_ok_callback     (GtkWidget *, gpointer);
-static void            curves_cancel_callback (GtkWidget *, gpointer);
-static gint            curves_delete_callback (GtkWidget *, GdkEvent *, gpointer);
-static void            curves_preview_update  (GtkWidget *, gpointer);
-static gint            curves_xrange_events   (GtkWidget *, GdkEvent *, CurvesDialog *);
-static gint            curves_yrange_events   (GtkWidget *, GdkEvent *, CurvesDialog *);
-static gint            curves_graph_events    (GtkWidget *, GdkEvent *, CurvesDialog *);
-static void            curves_CR_compose      (CRMatrix, CRMatrix, CRMatrix);
+static CurvesDialog * curves_new_dialog (void);
+
+static void   curves_update          (CurvesDialog *, int);
+static void   curves_plot_curve      (CurvesDialog *, int, int, int, int);
+static void   curves_preview         (CurvesDialog *);
+static void   curves_value_callback  (GtkWidget *, gpointer);
+static void   curves_red_callback    (GtkWidget *, gpointer);
+static void   curves_green_callback  (GtkWidget *, gpointer);
+static void   curves_blue_callback   (GtkWidget *, gpointer);
+static void   curves_alpha_callback  (GtkWidget *, gpointer);
+static void   curves_smooth_callback (GtkWidget *, gpointer);
+static void   curves_free_callback   (GtkWidget *, gpointer);
+static void   curves_reset_callback  (GtkWidget *, gpointer);
+static void   curves_ok_callback     (GtkWidget *, gpointer);
+static void   curves_cancel_callback (GtkWidget *, gpointer);
+static gint   curves_delete_callback (GtkWidget *, GdkEvent *, gpointer);
+static void   curves_preview_update  (GtkWidget *, gpointer);
+static gint   curves_xrange_events   (GtkWidget *, GdkEvent *, CurvesDialog *);
+static gint   curves_yrange_events   (GtkWidget *, GdkEvent *, CurvesDialog *);
+static gint   curves_graph_events    (GtkWidget *, GdkEvent *, CurvesDialog *);
+static void   curves_CR_compose      (CRMatrix, CRMatrix, CRMatrix);
 
 
 /*  curves machinery  */
@@ -338,27 +340,17 @@ curves_control (Tool       *tool,
 		ToolAction  action,
 		gpointer    gdisp_ptr)
 {
-  Curves * _curves;
-
-  _curves = (Curves *) tool->private;
-
   switch (action)
     {
-    case PAUSE :
+    case PAUSE:
       break;
 
-    case RESUME :
+    case RESUME:
       break;
 
-    case HALT :
+    case HALT:
       if (curves_dialog)
-	{
-	  active_tool->preserve = TRUE;
-	  image_map_abort (curves_dialog->image_map);
-	  active_tool->preserve = FALSE;
-	  curves_dialog->image_map = NULL;
-	  curves_cancel_callback (NULL, (gpointer) curves_dialog);
-	}
+	curves_cancel_callback (NULL, (gpointer) curves_dialog);
       break;
 
     default:
@@ -395,9 +387,8 @@ tools_new_curves ()
   tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = curves_cursor_update;
   tool->control_func = curves_control;
-  tool->preserve = TRUE;
-  tool->gdisp_ptr = NULL;
-  tool->drawable = NULL;
+
+  tool->preserve = FALSE;
 
   return tool;
 }
@@ -416,14 +407,6 @@ tools_free_curves (Tool *tool)
   g_free (_curves);
 }
 
-/*  the action area structure  */
-static ActionAreaItem action_items[] =
-{
-  { N_("Reset"), curves_reset_callback, NULL, NULL },
-  { N_("OK"), curves_ok_callback, NULL, NULL },
-  { N_("Cancel"), curves_cancel_callback, NULL, NULL }
-};
-
 static MenuItem channel_items[] =
 {
   { N_("Value"), 0, 0, curves_value_callback, NULL, NULL, NULL },
@@ -431,13 +414,6 @@ static MenuItem channel_items[] =
   { N_("Green"), 0, 0, curves_green_callback, NULL, NULL, NULL },
   { N_("Blue"), 0, 0, curves_blue_callback, NULL, NULL, NULL },
   { N_("Alpha"), 0, 0, curves_alpha_callback, NULL, NULL, NULL },
-  { NULL, 0, 0, NULL, NULL, NULL, NULL }
-};
-
-static MenuItem curve_type_items[] =
-{
-  { N_("Smooth"), 0, 0, curves_smooth_callback, NULL, NULL, NULL },
-  { N_("Free"), 0, 0, curves_free_callback, NULL, NULL, NULL },
   { NULL, 0, 0, NULL, NULL, NULL, NULL }
 };
 
@@ -514,10 +490,13 @@ curves_free ()
 	  active_tool->preserve = TRUE;
 	  image_map_abort (curves_dialog->image_map);
 	  active_tool->preserve = FALSE;
+
 	  curves_dialog->image_map = NULL;
 	}
+
       if (curves_dialog->pixmap)
 	gdk_pixmap_unref (curves_dialog->pixmap);
+
       gtk_widget_destroy (curves_dialog->shell);
     }
 }
@@ -540,6 +519,20 @@ curves_new_dialog ()
   GtkWidget *menu;
   GtkWidget *table;
   int i, j;
+
+  static ActionAreaItem action_items[] =
+  {
+    { N_("Reset"), curves_reset_callback, NULL, NULL },
+    { N_("OK"), curves_ok_callback, NULL, NULL },
+    { N_("Cancel"), curves_cancel_callback, NULL, NULL }
+  };
+
+  static MenuItem curve_type_items[] =
+  {
+    { N_("Smooth"), 0, 0, curves_smooth_callback, NULL, NULL, NULL },
+    { N_("Free"), 0, 0, curves_free_callback, NULL, NULL, NULL },
+    { NULL, 0, 0, NULL, NULL, NULL, NULL }
+  };
 
   cd = g_malloc (sizeof (CurvesDialog));
   cd->preview = TRUE;
@@ -1198,10 +1191,10 @@ curves_cancel_callback (GtkWidget *widget,
       active_tool->preserve = TRUE;
       image_map_abort (cd->image_map);
       active_tool->preserve = FALSE;
+
+      cd->image_map = NULL;
       gdisplays_flush ();
     }
-
-  cd->image_map = NULL;
 }
 
 static gint 

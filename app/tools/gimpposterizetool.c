@@ -131,10 +131,6 @@ posterize_control (Tool       *tool,
 		   ToolAction  action,
 		   gpointer    gdisp_ptr)
 {
-  Posterize * post;
-
-  post = (Posterize *) tool->private;
-
   switch (action)
     {
     case PAUSE:
@@ -145,13 +141,7 @@ posterize_control (Tool       *tool,
 
     case HALT:
       if (posterize_dialog)
-	{
-	  active_tool->preserve = TRUE;
-	  image_map_abort (posterize_dialog->image_map);
-	  active_tool->preserve = FALSE;
-	  posterize_dialog->image_map = NULL;
-	  posterize_cancel_callback (NULL, (gpointer) posterize_dialog);
-	}
+	posterize_cancel_callback (NULL, (gpointer) posterize_dialog);
       break;
 
     default:
@@ -239,16 +229,9 @@ posterize_initialize (GDisplay *gdisp)
 }
 
 
-/****************************/
-/*  Select by Color dialog  */
-/****************************/
-
-/*  the action area structure  */
-static ActionAreaItem action_items[] =
-{
-  { N_("OK"), posterize_ok_callback, NULL, NULL },
-  { N_("Cancel"), posterize_cancel_callback, NULL, NULL }
-};
+/**********************/
+/*  Posterize dialog  */
+/**********************/
 
 static PosterizeDialog *
 posterize_new_dialog ()
@@ -258,6 +241,12 @@ posterize_new_dialog ()
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *toggle;
+
+  static ActionAreaItem action_items[] =
+  {
+    { N_("OK"), posterize_ok_callback, NULL, NULL },
+    { N_("Cancel"), posterize_cancel_callback, NULL, NULL }
+  };
 
   pd = g_malloc (sizeof (PosterizeDialog));
   pd->preview = TRUE;
@@ -387,10 +376,10 @@ posterize_cancel_callback (GtkWidget *widget,
       active_tool->preserve = TRUE;
       image_map_abort (pd->image_map);
       active_tool->preserve = FALSE;
+
+      pd->image_map = NULL;
       gdisplays_flush ();
     }
-
-  pd->image_map = NULL;
 }
 
 static void

@@ -1,3 +1,28 @@
+1999-06-23  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/brightness_contrast.c
+	* app/by_color_select.c
+	* app/curves.c
+	* app/disp_callbacks.c
+	* app/histogram_tool.c
+	* app/hue_saturation.c
+	* app/levels.c
+	* app/posterize.c
+	* app/threshold.c:
+
+	Factored out the cleaning up code to the tool dialog's "cancel"
+	callbacks because they are called from every function which is
+	aborting the tool. This should fix the remaining segfaults.
+
+	I probably killed a feature of "Levels". The tool wanted to
+	preserve it's drawable all the time, so it was possible to select
+	colors from other displays. If this was the intended behaviour,
+	please flame me and I will try to set the "preserve" flag
+	correctly.
+
+	* plug-ins/common/Makefile.am: "struc" was in the Makefile but not
+	in the directory.
+
 Wed Jun 23 02:00:23 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* plugin reorganization
