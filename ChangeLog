@@ -1,3 +1,11 @@
+2001-04-24  Michael Natterer  <mitch@gimp.org>
+
+	Plugged some memleaks:
+
+	* app/gimpbrush.c: don't leak all pixmaps.
+
+	* app/gimpbrushpipe.c: free all the pipe's brushes here.
+
 2001-04-23  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/perl/examples/terral_text: fixed syngin's fix
