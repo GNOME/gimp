@@ -4,14 +4,15 @@
 # David Monniaux <monniaux@ens.fr>, 1999.
 # Joaquim Fellmann <joaquim@hrnet.fr>, 2000.
 # maintainer: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>, 2000-2003.
+# Raymond Ostertag <r.ostertag@caramail.com>, 2003.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp 1.3.16\n"
+"Project-Id-Version: gimp-libgimp 1.3.18\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-25 01:21+0200\n"
-"PO-Revision-Date: 2003-06-29 14:59+0200\n"
-"Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
+"POT-Creation-Date: 2003-07-31 22:17+0200\n"
+"PO-Revision-Date: 2003-07-31 22:12+0200\n"
+"Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -153,21 +154,22 @@ msgid "The export conversion won't modify your original image."
 msgstr "La conversion exporter ne modifiera pas l'image d'origine."
 
 #: libgimp/gimpexport.c:611
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"Vous êtes sur le point d'enregistrer %s comme %s.\n"
+"Vous êtes sur le point d'enregistrer un masque de calque comme %s.\n"
 "Cela ne sauvegardera pas les calques visibles."
 
 #: libgimp/gimpexport.c:617
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"Vous êtes sur le point d'enregistrer %s comme %s.\n"
+"Vous êtes sur le point d'enregistrer un canal (sélection enregistrée) comme %"
+"s.\n"
 "Cela ne sauvegardera pas les calques visibles."
 
 #: libgimp/gimpfontmenu.c:89
@@ -194,6 +196,10 @@ msgid ""
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
+"Pas de %s dans gimprc :\n"
+"Vous devez ajouter une entrée telle\n"
+"(%s \"%s\")\n"
+"à votre fichier %s."
 
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
@@ -379,6 +385,8 @@ msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
+"Cliquez sur la pipette, ensuite cliquez sur une couleur n'importe où dans "
+"votre écranpour sélectionner cette couleur."
 
 #: libgimpwidgets/gimpstock.c:101
 msgid "Anchor"
@@ -461,57 +469,53 @@ msgid "Factor"
 msgstr "Facteur"
 
 #: libgimpwidgets/gimpwidgets.c:943
-#, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Si le bouton « Heure » n'est pas coché, utiliser cette valeur comme graine "
-"du générateur de nombres aléatoires. Cela vous permet d'avoir une séquence "
-"aléatoire reproductible en fournissant la même graine."
+"Utiliser cette valeur comme graine du générateur de nombres aléatoires - "
+"cela vous permet de répéter une opération « aléatoire » donnée."
 
 #: libgimpwidgets/gimpwidgets.c:947
 msgid "_Randomize"
-msgstr ""
+msgstr "Aléatoi_re"
 
 #: libgimpwidgets/gimpwidgets.c:958
-#, fuzzy
 msgid "Seed random number generator with a generated random number"
-msgstr ""
-"Prend l'heure actuelle comme graine du générateur de nombres aléatoires. "
-"Cela garanti un aléa raisonnable."
+msgstr "Initialise le générateur de nombre aléatoire avec un nombre aléatoire"
 
 #: modules/cdisplay_colorblind.c:122
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr ""
+"Filtre simulateur de déficience de couleur (algorithme Brettel-Vienot-Mollon)"
 
 #: modules/cdisplay_colorblind.c:188
 msgid "Color Deficient Vision"
-msgstr ""
+msgstr "Vision des couleurs déficiente"
 
 #: modules/cdisplay_colorblind.c:473
 msgid "Color Deficiency Type:"
-msgstr ""
+msgstr "Type de déficience de couleur :"
 
 #: modules/cdisplay_colorblind.c:483
 msgid "None (normal vision)"
-msgstr ""
+msgstr "Aucune (vision normale)"
 
 #: modules/cdisplay_colorblind.c:487
 msgid "Protanopia (insensitivity to red)"
-msgstr ""
+msgstr "Protanopia (insensible au rouge)"
 
 #: modules/cdisplay_colorblind.c:491
 msgid "Deuteranopia (insensitivity to green)"
-msgstr ""
+msgstr "Deuteranopia (insensible au vert)"
 
 #: modules/cdisplay_colorblind.c:495
 msgid "Tritanopia (insensitivity to blue)"
-msgstr ""
+msgstr "Tritanopia (insensible au bleu)"
 
 #: modules/cdisplay_gamma.c:90
 msgid "Gamma color display filter"
-msgstr ""
+msgstr "Filtre d'affichage couleur Gamma"
 
 #: modules/cdisplay_gamma.c:156
 msgid "Gamma"
@@ -523,7 +527,7 @@ msgstr "Gamma :"
 
 #: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
-msgstr ""
+msgstr "Filtre d'affichage couleur Contraste élevé"
 
 #: modules/cdisplay_highcontrast.c:156
 msgid "Contrast"
@@ -531,66 +535,63 @@ msgstr "Contraste"
 
 #: modules/cdisplay_highcontrast.c:318
 msgid "Contrast Cycles:"
-msgstr ""
+msgstr "Cycles de contraste :"
 
 #: modules/colorsel_cmyk.c:70
 msgid "CMYK color selector"
-msgstr ""
+msgstr "Sélecteur de couleurs CMJN"
 
 #: modules/colorsel_cmyk.c:129
 msgid "CMYK"
-msgstr ""
+msgstr "CMJN"
 
 #: modules/colorsel_cmyk.c:143
 msgid "_C"
-msgstr ""
+msgstr "_C"
 
 #: modules/colorsel_cmyk.c:144
 msgid "_M"
-msgstr ""
+msgstr "_M"
 
 #: modules/colorsel_cmyk.c:145
 msgid "_Y"
-msgstr ""
+msgstr "_J"
 
 #: modules/colorsel_cmyk.c:146
 msgid "_K"
-msgstr ""
+msgstr "_N"
 
 #: modules/colorsel_cmyk.c:150
-#, fuzzy
 msgid "Cyan"
-msgstr "Annuler"
+msgstr "Cyan"
 
 #: modules/colorsel_cmyk.c:151
 msgid "Magenta"
-msgstr ""
+msgstr "Magenta"
 
 #: modules/colorsel_cmyk.c:152
 msgid "Yellow"
-msgstr ""
+msgstr "Jaune"
 
 #: modules/colorsel_cmyk.c:153
-#, fuzzy
 msgid "Black"
-msgstr "/Noir"
+msgstr "Noir"
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
-msgstr ""
+msgstr "Sélecteur de couleurs style Triangle de peintre"
 
 #: modules/colorsel_triangle.c:182
-#, fuzzy
 msgid "Triangle"
-msgstr "_Triangle"
+msgstr "Triangle"
 
 #: modules/colorsel_water.c:104
 msgid "Watercolor style color selector"
-msgstr ""
+msgstr "Sélecteur de couleurs style Aquarelle"
 
 #: modules/colorsel_water.c:176
 msgid "Watercolor"
-msgstr ""
+msgstr "Aquarelle"
 
 #: modules/colorsel_water.c:251
 msgid "Pressure"

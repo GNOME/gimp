@@ -2,15 +2,15 @@
 # Copyright (C) 2000-2003 Free Software Foundation, Inc.
 # David Monniaux <monniaux@arbouse.ens.fr>, 2000.
 # maintainer: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>, 2000-2003.
-# Raymond Ostertag <raymond@linuxgraphic.org>, 2002.
+# Raymond Ostertag <raymond@linuxgraphic.org>, 2002-2003.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu 1.3.16\n"
+"Project-Id-Version: gimp-script-fu 1.3.18\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-25 01:21+0200\n"
-"PO-Revision-Date: 2003-06-29 13:45+0200\n"
-"Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
+"POT-Creation-Date: 2003-07-31 22:32+0200\n"
+"PO-Revision-Date: 2003-07-31 22:29+0200\n"
+"Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -837,33 +837,31 @@ msgstr "Densité de points en Y"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
 msgid "Add Glowing"
-msgstr ""
+msgstr "Ajouter rayonnement"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
 msgid "After Glow"
-msgstr ""
+msgstr "Rougeoiement"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
 msgid "Burn-In: Need two layers in total!"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
-#, fuzzy
 msgid "Corona Width"
-msgstr "Largeur des bandes"
+msgstr "Largeur de la couronne"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Fadeout"
-msgstr ""
+msgstr "Fondu"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
-#, fuzzy
 msgid "Fadeout Width"
-msgstr "Largeur des bords"
+msgstr "Largeur du fondu"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 msgid "Prepare for GIF"
-msgstr ""
+msgstr "Préparer pour GIF"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
 msgid "Speed (pixels/frame)"
@@ -1826,34 +1824,32 @@ msgstr "Carreau"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:1
 msgid "<Image>/Script-Fu/Animators/Rippling..."
-msgstr "<Image>/Script-Fu/Animators/Rippling..."
+msgstr "<Image>/Script-Fu/Animators/Onduler..."
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
 msgid "Black"
 msgstr "Noir"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
-#, fuzzy
 msgid "Edge Behaviour"
-msgstr "Comportement"
+msgstr "Comportement du bord"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:4
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:4
 msgid "Number of Frames"
-msgstr "Nombre de trames"
+msgstr "Nombre d'images"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:5
 msgid "Rippling Strength"
 msgstr "Vigueur de l'ondulation"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:6
-#, fuzzy
 msgid "Smear"
-msgstr "_Rechercher :"
+msgstr "Trace"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:7
 msgid "Wrap"
-msgstr ""
+msgstr "Enrouler"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:1
 msgid "<Image>/Script-Fu/Decor/Round Corners..."
@@ -1945,7 +1941,7 @@ msgstr "Tourne de gauche à droite"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
 msgid "Airbrush"
-msgstr ""
+msgstr "Aérographe"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Brush"
@@ -1956,57 +1952,52 @@ msgid "Circle"
 msgstr "Cercle"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:5
-#, fuzzy
 msgid "Color Method"
-msgstr "Couleur 3"
+msgstr "Méthode de coloration"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
 msgid "Epitrochoid"
-msgstr ""
+msgstr "Épitrochoide"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
-#, fuzzy
 msgid "Frame"
-msgstr "Trames"
+msgstr "Cadre"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
 msgid "Gradient: Loop Sawtooth"
-msgstr ""
+msgstr "Dégradé : rebouclage en dents de scie"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:10
 msgid "Gradient: Loop Triangle"
-msgstr ""
+msgstr "Dégradé : rebouclage en triangle"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
 msgid "Hexagon"
 msgstr "Hexagone"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
-#, fuzzy
 msgid "Hole Ratio"
-msgstr "Taux de nuance"
+msgstr "Ratio du trou"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
 msgid "Inner Teeth"
-msgstr ""
+msgstr "Denture intérieure"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
 msgid "Lissajous"
-msgstr ""
+msgstr "Lissajous"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
-#, fuzzy
 msgid "Margin (pixels)"
-msgstr "Rayon (pixels)"
+msgstr "Marge (pixels)"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:16
-#, fuzzy
 msgid "Outer Teeth"
-msgstr "Contour"
+msgstr "Denture extérieure"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:17
 msgid "Pencil"
-msgstr ""
+msgstr "Crayon"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
 msgid "Pentagon"
@@ -2014,23 +2005,23 @@ msgstr "Pentagone"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
 msgid "Polygon: 10 sides"
-msgstr ""
+msgstr "Polygone : 10 cotés"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:20
 msgid "Polygon: 7 sides"
-msgstr ""
+msgstr "Polygone : 7 cotés"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:21
 msgid "Polygon: 8 sides"
-msgstr ""
+msgstr "Polygone : 8 cotés"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:22
 msgid "Polygon: 9 sides"
-msgstr ""
+msgstr "polygone : 9 cotés"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:23
 msgid "Shape"
-msgstr ""
+msgstr "Forme"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:24
 msgid "Solid Color"
@@ -2038,7 +2029,7 @@ msgstr "Couleur unie"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:25
 msgid "Spyrograph"
-msgstr ""
+msgstr "Spyrographe"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:26
 msgid "Square"
@@ -2384,6 +2375,15 @@ msgstr "<Toolbox>/Exts/Navigateur Web/Base de greffons"
 #: plug-ins/webbrowser/web-browser.scm.h:17
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr "<Toolbox>/Exts/Navigateur Web/FAQ utilisateur"
+
+#~ msgid ""
+#~ "Burn-In: Need two layers in total!\n"
+#~ "        A foreground text layer with transparency\n"
+#~ "        and a background layer."
+#~ msgstr ""
+#~ "Brûler : a besoin de deux calques au total !\n"
+#~ "        Un texte d'avant-plan dans un calque avec trabsprence\n"
+#~ "        et un calque d'arrière-plan."
 
 #~ msgid "<Image>/Script-Fu/Render/Make Grid System..."
 #~ msgstr "<Image>/Script-Fu/Rendu/Créer un système de grille..."
