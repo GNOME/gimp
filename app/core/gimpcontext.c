@@ -1119,12 +1119,16 @@ gimp_context_serialize_property (GimpConfig       *config,
                                  GParamSpec       *pspec,
                                  GimpConfigWriter *writer)
 {
+#if 0
   GimpContext *context = GIMP_CONTEXT (config);
+#endif
   GimpObject  *serialize_obj;
 
+#if 0
   /*  serialize nothing if the property is not defined  */
   if (! ((1 << property_id) & context->defined_props))
     return TRUE;
+#endif
 
   switch (property_id)
     {
