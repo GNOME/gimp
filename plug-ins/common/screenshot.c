@@ -398,7 +398,7 @@ shoot_dialog (void)
   gtk_signal_connect ( GTK_OBJECT (shootint.single_button), "toggled",
 		       (GtkSignalFunc) shoot_toggle_update,
 		       &radio_pressed[0]); 
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (shootint.single_button), 
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shootint.single_button), 
 				   radio_pressed[0]);
   gtk_widget_show (shootint.single_button);
   label = gtk_label_new ( "Grab a single window" );
@@ -470,10 +470,10 @@ shoot_dialog (void)
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
  
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (shootint.decor_button), 
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shootint.decor_button), 
 			       decorations);
   gtk_widget_set_sensitive (shootint.decor_button, radio_pressed[0]);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (shootint.root_button), 
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shootint.root_button), 
 			       radio_pressed[1]);
   gtk_widget_set_sensitive (shootint.delay_box, radio_pressed[1]);
 

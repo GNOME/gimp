@@ -2118,7 +2118,7 @@ save_dialog ( gint32 image_ID )
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) save_toggle_update,
 		      &gsvals.interlace);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), gsvals.interlace);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gsvals.interlace);
   gtk_widget_show (toggle);
 
   hbox = gtk_hbox_new(FALSE, 5);
@@ -2130,7 +2130,7 @@ save_dialog ( gint32 image_ID )
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) save_toggle_update,
 		      &globalusecomment);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), 1);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), 1);
   gtk_widget_show (toggle);
 
   entry = gtk_entry_new ();
@@ -2183,7 +2183,7 @@ save_dialog ( gint32 image_ID )
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) save_toggle_update,
 		      &gsvals.loop);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), gsvals.loop);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gsvals.loop);
   gtk_widget_show (toggle);
 
 

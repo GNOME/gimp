@@ -838,7 +838,7 @@ mblur_dialog(void)
            (button==NULL)? NULL :
 	      gtk_radio_button_group(GTK_RADIO_BUTTON(button)), 
 	   name[i]);
-	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), 
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), 
 				    (mbvals.mblur_type==i));
 
 	gtk_signal_connect (GTK_OBJECT (button), "toggled",

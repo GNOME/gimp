@@ -958,7 +958,7 @@ save_dialog ()
   gtk_table_attach(GTK_TABLE(table), toggle, 0, 2, 2, 3, GTK_FILL, 0, 0, 0);
   gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
                      (GtkSignalFunc)save_optimize_update, NULL);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), jsvals.optimize);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle), jsvals.optimize);
   gtk_widget_show(toggle);
 
 
@@ -967,8 +967,8 @@ save_dialog ()
 		   GTK_FILL, 0, 0, 0);
   gtk_signal_connect(GTK_OBJECT(progressive), "toggled",
                      (GtkSignalFunc)save_progressive_toggle, NULL);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(progressive),
-			      jsvals.progressive);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(progressive),
+			       jsvals.progressive);
   gtk_widget_show(progressive);
 
 #ifndef HAVE_PROGRESSIVE_JPEG

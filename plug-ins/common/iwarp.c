@@ -892,7 +892,7 @@ iwarp_settings_dialog(GtkWidget* dlg, GtkWidget* notebook)
  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) iwarp_toggle_update,
 		      &iwarp_vals.do_move);
- gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), iwarp_vals.do_move);
+ gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle), iwarp_vals.do_move);
  gtk_widget_show(toggle);  
  
  toggle = gtk_radio_button_new_with_label(group,"Shrink");
@@ -901,7 +901,7 @@ iwarp_settings_dialog(GtkWidget* dlg, GtkWidget* notebook)
  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) iwarp_toggle_update,
 		      &iwarp_vals.do_shrink);
- gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), iwarp_vals.do_shrink);
+ gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle), iwarp_vals.do_shrink);
  gtk_widget_show(toggle);  
  
  toggle = gtk_radio_button_new_with_label(group,"Grow");
@@ -910,7 +910,7 @@ iwarp_settings_dialog(GtkWidget* dlg, GtkWidget* notebook)
  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 	      (GtkSignalFunc) iwarp_toggle_update,
 		      &iwarp_vals.do_grow);
- gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), iwarp_vals.do_grow);
+ gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle), iwarp_vals.do_grow);
  gtk_widget_show(toggle);  
 
  toggle = gtk_radio_button_new_with_label(group,"Remove");
@@ -919,7 +919,7 @@ iwarp_settings_dialog(GtkWidget* dlg, GtkWidget* notebook)
  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) iwarp_toggle_update,
 		      &iwarp_vals.do_remove);
- gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), iwarp_vals.do_remove);
+ gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle), iwarp_vals.do_remove);
  gtk_widget_show(toggle);  
 
  toggle = gtk_radio_button_new_with_label(group,"Swirl CW");
@@ -928,7 +928,7 @@ iwarp_settings_dialog(GtkWidget* dlg, GtkWidget* notebook)
  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) iwarp_toggle_update,
 		      &iwarp_vals.do_swirl_cw);
- gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), iwarp_vals.do_swirl_cw);
+ gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle), iwarp_vals.do_swirl_cw);
  gtk_widget_show(toggle);  
  
  toggle = gtk_radio_button_new_with_label(group,"Swirl CCW");
@@ -937,7 +937,7 @@ iwarp_settings_dialog(GtkWidget* dlg, GtkWidget* notebook)
  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) iwarp_toggle_update,
 		      &iwarp_vals.do_swirl_ccw);
- gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), iwarp_vals.do_swirl_ccw);
+ gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle), iwarp_vals.do_swirl_ccw);
  gtk_widget_show(toggle);  
 
 
@@ -947,7 +947,7 @@ iwarp_settings_dialog(GtkWidget* dlg, GtkWidget* notebook)
   
 
  button = gtk_check_button_new_with_label ("Bilinear");
- gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), iwarp_vals.do_bilinear);
+ gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), iwarp_vals.do_bilinear);
  gtk_table_attach (GTK_TABLE (table), button, 1, 2, 7, 8, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0); 
  gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) iwarp_toggle_update,
@@ -968,7 +968,7 @@ iwarp_settings_dialog(GtkWidget* dlg, GtkWidget* notebook)
   
 
  button = gtk_check_button_new_with_label ("Adaptive Supersample");
- gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), iwarp_vals.do_supersample);
+ gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), iwarp_vals.do_supersample);
  gtk_table_attach (GTK_TABLE (table), button, 0, 1, 9, 10, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0); 
  gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) iwarp_supersample_toggle,

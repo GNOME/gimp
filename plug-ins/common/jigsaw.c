@@ -2504,7 +2504,7 @@ dialog_box(void)
 
   rbutton = gtk_radio_button_new_with_label(NULL, "Square");
   list = gtk_radio_button_group((GtkRadioButton *) rbutton);
-  gtk_toggle_button_set_state((GtkToggleButton *) rbutton,
+  gtk_toggle_button_set_active((GtkToggleButton *) rbutton,
 			      config.style == BEZIER_1 ? TRUE : FALSE);
   gtk_signal_connect(GTK_OBJECT(rbutton), "toggled",
 		     GTK_SIGNAL_FUNC(radio_button_primitive_callback),
@@ -2515,7 +2515,7 @@ dialog_box(void)
 
   rbutton = gtk_radio_button_new_with_label(list, "Curved");
   list = gtk_radio_button_group((GtkRadioButton *) rbutton);
-  gtk_toggle_button_set_state((GtkToggleButton *) rbutton,
+  gtk_toggle_button_set_active((GtkToggleButton *) rbutton,
 			      config.style == BEZIER_2 ? TRUE : FALSE);
   gtk_signal_connect(GTK_OBJECT(rbutton), "toggled",
 		     GTK_SIGNAL_FUNC(radio_button_primitive_callback),
@@ -2532,7 +2532,7 @@ dialog_box(void)
   gtk_box_pack_start(GTK_BOX(hbox), table, TRUE, TRUE, 0);
   
   cbutton = gtk_check_button_new_with_label("Disable Tooltips");
-  gtk_toggle_button_set_state((GtkToggleButton *) cbutton,
+  gtk_toggle_button_set_active((GtkToggleButton *) cbutton,
 			      globals.tooltips ? FALSE : TRUE);
   gtk_signal_connect(GTK_OBJECT(cbutton), "toggled",
 		     (GtkSignalFunc) check_button_callback,

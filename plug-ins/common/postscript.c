@@ -2052,7 +2052,7 @@ load_dialog (void)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                       (GtkSignalFunc) load_toggle_update,
                       &(vals->use_bbox));
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), vals->use_bbox);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), vals->use_bbox);
   gtk_widget_show (toggle);
 
   gtk_widget_show (vbox);
@@ -2077,7 +2077,7 @@ load_dialog (void)
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                         (GtkSignalFunc) load_toggle_update,
                         &(vals->dataformat[j]));
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                  vals->dataformat[j]);
     gtk_widget_show (toggle);
   }
@@ -2114,7 +2114,7 @@ load_dialog (void)
                             : (plvals.textalpha == (1 << j));
       gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                           (GtkSignalFunc) load_toggle_update, alpha_bits+j);
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), alpha_bits[j]);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), alpha_bits[j]);
       gtk_widget_show (toggle);
     }
 
@@ -2322,7 +2322,7 @@ save_dialog (void)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                       (GtkSignalFunc) save_toggle_update,
                       &(vals->keep_ratio));
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), vals->keep_ratio);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), vals->keep_ratio);
   gtk_widget_show (toggle);
 
   /* Unit */
@@ -2346,7 +2346,7 @@ save_dialog (void)
                         (GtkSignalFunc) save_mm_toggle_update,
                         (j == 0) ? (gpointer)(&(vals->unit[j])) :
                         (gpointer)vals);
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                  vals->unit[j]);
     gtk_widget_show (toggle);
   }
@@ -2375,7 +2375,7 @@ save_dialog (void)
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                         (GtkSignalFunc) save_toggle_update,
                         &(vals->rot[j]));
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                  vals->rot[j]);
     gtk_widget_show (toggle);
   }
@@ -2398,7 +2398,7 @@ save_dialog (void)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                       (GtkSignalFunc) save_toggle_update,
                       &(vals->eps));
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), vals->eps);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), vals->eps);
   gtk_widget_show (toggle);
 
   toggle = gtk_check_button_new_with_label ("Preview");
@@ -2407,7 +2407,7 @@ save_dialog (void)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                       (GtkSignalFunc) save_toggle_update,
                       &(vals->preview));
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), vals->preview);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), vals->preview);
   gtk_widget_show (toggle);
 
   /* Preview size label/entry */

@@ -734,7 +734,7 @@ alienmap_dialog(void)
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
         		(GtkSignalFunc) alienmap_toggle_update,
         		&do_redsinus);
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_redsinus);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_redsinus);
     gtk_widget_show (toggle);
    
     set_tooltip(tips,toggle,"Use sine-function for red component");
@@ -745,7 +745,7 @@ alienmap_dialog(void)
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
         		(GtkSignalFunc) alienmap_toggle_update,
         		&do_redcosinus);
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_redcosinus);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_redcosinus);
     gtk_widget_show (toggle);
     set_tooltip(tips,toggle,"Use cosine-function for red component");
 
@@ -755,7 +755,7 @@ alienmap_dialog(void)
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
         		(GtkSignalFunc) alienmap_toggle_update,
         		&do_rednone);
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_rednone);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_rednone);
     gtk_widget_show (toggle);
     set_tooltip(tips,toggle,"Red channel: use linear mapping instead of any trigonometrical function");
 
@@ -777,7 +777,7 @@ alienmap_dialog(void)
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
         		(GtkSignalFunc) alienmap_toggle_update,
         		&do_greensinus);
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_greensinus);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_greensinus);
     gtk_widget_show (toggle);
     set_tooltip(tips,toggle,"Use sine-function for green component");
 
@@ -787,7 +787,7 @@ alienmap_dialog(void)
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
         		(GtkSignalFunc) alienmap_toggle_update,
         		&do_greencosinus);
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_greencosinus);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_greencosinus);
     gtk_widget_show (toggle);
     set_tooltip(tips,toggle,"Use cosine-function for green component");
 
@@ -797,7 +797,7 @@ alienmap_dialog(void)
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
         		(GtkSignalFunc) alienmap_toggle_update,
         		&do_greennone);
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_greennone);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_greennone);
     gtk_widget_show (toggle);
     set_tooltip(tips,toggle,"Green channel: use linear mapping instead of any trigonometrical function");
 
@@ -819,7 +819,7 @@ alienmap_dialog(void)
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
         		(GtkSignalFunc) alienmap_toggle_update,
         		&do_bluesinus);
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_bluesinus);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_bluesinus);
     gtk_widget_show (toggle);
     set_tooltip(tips,toggle,"Use sine-function for blue component");
 
@@ -829,7 +829,7 @@ alienmap_dialog(void)
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
         		(GtkSignalFunc) alienmap_toggle_update,
         		&do_bluecosinus);
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_bluecosinus);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_bluecosinus);
     gtk_widget_show (toggle);
     set_tooltip(tips,toggle,"Use cosine-function for blue component");
 
@@ -839,7 +839,7 @@ alienmap_dialog(void)
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
         		(GtkSignalFunc) alienmap_toggle_update,
         		&do_bluenone);
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_bluenone);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_bluenone);
     gtk_widget_show (toggle);
     set_tooltip(tips,toggle,"Blue channel: use linear mapping instead of any trigonometrical function");
 

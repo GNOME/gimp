@@ -1185,7 +1185,7 @@ script_fu_interface (SFScript *script)
 	case SF_TOGGLE:
 	  gtk_label_set_text (GTK_LABEL (label), "Script Toggle");
 	  script->args_widgets[i] = gtk_check_button_new_with_label (script->arg_labels[i]);
-	  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (script->args_widgets[i]),
+	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (script->args_widgets[i]),
 				       script->arg_values[i].sfa_toggle);
 	  gtk_signal_connect (GTK_OBJECT (script->args_widgets[i]), "toggled",
 			      (GtkSignalFunc) script_fu_toggle_update,
@@ -1904,7 +1904,7 @@ script_fu_reset_callback (GtkWidget *widget,
 	break;
       case SF_TOGGLE:
 	script->arg_values[i].sfa_toggle = script->arg_defaults[i].sfa_toggle;
-	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (script->args_widgets[i]),
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (script->args_widgets[i]),
 				     script->arg_values[i].sfa_toggle);
 	break;
       case SF_VALUE:

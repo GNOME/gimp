@@ -489,7 +489,7 @@ void Check_Button_In_A_Box       (GtkWidget  *vbox,
 		      (GtkSignalFunc) function,
 		      data);
   gtk_box_pack_start (GTK_BOX(vbox),button, TRUE, TRUE, 0);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),clicked);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),clicked);
 
   gtk_widget_show(button);
 }

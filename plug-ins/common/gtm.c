@@ -401,7 +401,7 @@ static gint save_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) gtm_toggle_callback, 
 		      &gtmvals.fulldoc);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), gtmvals.fulldoc);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gtmvals.fulldoc);
   gtk_widget_show (toggle);
   set_tooltip(tips,toggle,"If checked GTM will output a full HTML document with <HTML>, <BODY>, etc. tags instead of just the table html.");
 
@@ -423,7 +423,7 @@ static gint save_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		     (GtkSignalFunc) gtm_toggle_callback, 
 		     &gtmvals.spantags);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), gtmvals.spantags);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gtmvals.spantags);
   gtk_widget_show (toggle);
   set_tooltip(tips,toggle,"If checked GTM will replace any rectangular sections of identically colored blocks with one large cell with ROWSPAN and COLSPAN values.");
 
@@ -432,7 +432,7 @@ static gint save_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		     (GtkSignalFunc) gtm_toggle_callback, 
 		     &gtmvals.tdcomp);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), gtmvals.tdcomp);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gtmvals.tdcomp);
   gtk_widget_show (toggle);
   set_tooltip(tips,toggle,"Checking this tag will cause GTM to leave no whitespace between the TD tags and the cellcontent.  This is only necessary for pixel level positioning control.");
 
@@ -441,7 +441,7 @@ static gint save_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		     (GtkSignalFunc) gtm_toggle_callback, 
 		     &gtmvals.caption);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), gtmvals.caption);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gtmvals.caption);
   gtk_widget_show (toggle);
   set_tooltip(tips,toggle,"Check if you would like to have the table captioned.");
 

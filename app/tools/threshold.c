@@ -457,7 +457,7 @@ threshold_new_dialog ()
 
   /*  The preview toggle  */
   toggle = gtk_check_button_new_with_label (_("Preview"));
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), td->preview);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), td->preview);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) threshold_preview_update,

@@ -353,7 +353,7 @@ noisify_dialog (gint channels)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) noisify_toggle_update,
 		      &nvals.independent);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), nvals.independent);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), nvals.independent);
   gtk_widget_show (toggle);
 
   /*  for (i = 0; i < channels; i++)

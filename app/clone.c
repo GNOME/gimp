@@ -158,7 +158,7 @@ create_clone_options (void)
   gtk_signal_connect (GTK_OBJECT (aligned_toggle), "toggled",
 		      (GtkSignalFunc) clone_toggle_update,
 		      &options->aligned);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (aligned_toggle), options->aligned);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (aligned_toggle), options->aligned);
   gtk_widget_show (aligned_toggle);
 
   /*  Register this selection options widget with the main tools options dialog  */

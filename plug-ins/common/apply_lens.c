@@ -444,7 +444,7 @@ lens_dialog(GDrawable *drawable)
   gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
                      (GtkSignalFunc) lens_toggle_update,
 		     &lvals.keep_surr);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), lvals.keep_surr);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle), lvals.keep_surr);
   gtk_widget_show(toggle);
 
   toggle =
@@ -458,7 +458,7 @@ lens_dialog(GDrawable *drawable)
   gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
                      (GtkSignalFunc) lens_toggle_update,
 		     &lvals.use_bkgr);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), lvals.use_bkgr);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle), lvals.use_bkgr);
   gtk_widget_show(toggle);
 
   if((drawtype == INDEXEDA_IMAGE) ||
@@ -471,8 +471,8 @@ lens_dialog(GDrawable *drawable)
     gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
 		       (GtkSignalFunc) lens_toggle_update,
 		       &lvals.set_transparent);
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle),
-				lvals.set_transparent);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle),
+				 lvals.set_transparent);
     gtk_widget_show(toggle);
   }
 

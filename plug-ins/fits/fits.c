@@ -1026,8 +1026,8 @@ load_dialog (void)
       gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                           (GtkSignalFunc) load_toggle_update,
                           &(vals->toggle_val[k*2+j]));
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
-                                   vals->toggle_val[k*2+j]);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				    vals->toggle_val[k*2+j]);
       gtk_widget_show (toggle);
     }
     gtk_widget_show (toggle_vbox);

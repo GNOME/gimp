@@ -176,7 +176,7 @@ channel_ops_offset (GimpImage* gimage)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) offset_toggle_update,
 		      &off_d->background);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), off_d->background);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), off_d->background);
   gtk_widget_show (toggle);
 
   if (drawable_has_alpha (drawable))
@@ -187,7 +187,7 @@ channel_ops_offset (GimpImage* gimage)
       gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 			  (GtkSignalFunc) offset_toggle_update,
 			  &off_d->transparent);
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), off_d->transparent);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), off_d->transparent);
       gtk_widget_show (toggle);
     }
 
@@ -205,7 +205,7 @@ channel_ops_offset (GimpImage* gimage)
   gtk_signal_connect (GTK_OBJECT (check), "toggled",
 		      (GtkSignalFunc) offset_wraparound_update,
 		      off_d);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (check), off_d->wrap_around);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), off_d->wrap_around);
 
   /* Hook up the by half */
   gtk_signal_connect (GTK_OBJECT (push), "clicked",

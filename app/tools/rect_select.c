@@ -154,7 +154,7 @@ create_selection_options (ToolType tool_type)
       gtk_signal_connect (GTK_OBJECT (sample_merged_toggle), "toggled",
 			  (GtkSignalFunc) selection_toggle_update,
 			  &options->sample_merged);
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (sample_merged_toggle), options->sample_merged);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (sample_merged_toggle), options->sample_merged);
       gtk_widget_show (sample_merged_toggle);
       break;
     default:
@@ -168,7 +168,7 @@ create_selection_options (ToolType tool_type)
       gtk_signal_connect (GTK_OBJECT (bezier_toggle), "toggled",
 			  (GtkSignalFunc) selection_toggle_update,
 			  &options->extend);
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (bezier_toggle), options->extend);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (bezier_toggle), options->extend);
       gtk_widget_show (bezier_toggle);
 
     }
@@ -181,7 +181,7 @@ create_selection_options (ToolType tool_type)
       gtk_signal_connect (GTK_OBJECT (antialias_toggle), "toggled",
 			  (GtkSignalFunc) selection_toggle_update,
 			  &options->antialias);
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (antialias_toggle), options->antialias);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (antialias_toggle), options->antialias);
       gtk_widget_show (antialias_toggle);
     }
 
@@ -193,8 +193,8 @@ create_selection_options (ToolType tool_type)
       gtk_signal_connect (GTK_OBJECT(fixed_size_toggle), "toggled",
 			  (GtkSignalFunc)selection_toggle_update,
 			  &options->fixed_size);
-      gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(fixed_size_toggle),
-				  options->fixed_size);
+      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(fixed_size_toggle),
+				   options->fixed_size);
       gtk_widget_show(fixed_size_toggle);
       
       hbox = gtk_hbox_new (TRUE, 5);
@@ -240,7 +240,7 @@ create_selection_options (ToolType tool_type)
   gtk_signal_connect (GTK_OBJECT (feather_toggle), "toggled",
 		      (GtkSignalFunc) selection_toggle_update,
 		      &options->feather);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (feather_toggle), options->feather);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (feather_toggle), options->feather);
   gtk_widget_show (feather_toggle);
 
   /*  the feather radius scale  */

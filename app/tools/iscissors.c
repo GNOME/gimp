@@ -324,8 +324,8 @@ iscissors_selection_options (void)
 
   /*  the antialias toggle button  */
   antialias_toggle = gtk_check_button_new_with_label (_("Antialiasing"));
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON(antialias_toggle),
-			       options->antialias);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(antialias_toggle),
+				options->antialias);
   gtk_box_pack_start (GTK_BOX (vbox), antialias_toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (antialias_toggle), "toggled",
 		      (GtkSignalFunc) selection_toggle_update,
@@ -334,8 +334,8 @@ iscissors_selection_options (void)
 
   /*  the feather toggle button  */
   feather_toggle = gtk_check_button_new_with_label (_("Feather"));
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON(feather_toggle),
-			       options->feather);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(feather_toggle),
+				options->feather);
   gtk_box_pack_start (GTK_BOX (vbox), feather_toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (feather_toggle), "toggled",
 		      (GtkSignalFunc) selection_toggle_update,

@@ -139,8 +139,8 @@ init_crop_options()
   gtk_signal_connect(GTK_OBJECT(checkbutton), "toggled",
 		     (GtkSignalFunc) crop_checkbutton_update,
 		     &options.layer_only);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(checkbutton),
-			      options.layer_only);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(checkbutton),
+			       options.layer_only);
   gtk_widget_show(checkbutton);
 
   /* Register this selection options widget with the main tools

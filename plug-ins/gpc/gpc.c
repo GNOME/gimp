@@ -184,7 +184,7 @@ gpc_add_radio_button(GSList **group, char *label, GtkWidget *box,
     gtk_box_pack_start(GTK_BOX(box), toggle, FALSE, FALSE, 0);
     gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
         (GtkSignalFunc) gpc_toggle_update, value);
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), *value);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle), *value);
     gtk_widget_show(toggle);
     gtk_widget_show(box);
     gpc_set_tooltip(toggle, tip);

@@ -421,7 +421,7 @@ shift_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) shift_toggle_update,
 		      &do_horizontal);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_horizontal);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_horizontal);
   gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (group, "Shift Vertically");
@@ -430,7 +430,7 @@ shift_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) shift_toggle_update,
 		      &do_vertical);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_vertical);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_vertical);
   gtk_widget_show (toggle);
 
 

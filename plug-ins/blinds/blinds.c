@@ -391,7 +391,7 @@ blinds_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) blinds_toggle_update,
 		      &do_horizontal);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_horizontal);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_horizontal);
   gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (orientation_group, "Vertical");
@@ -400,7 +400,7 @@ blinds_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) blinds_toggle_update,
 		      &do_vertical);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_vertical);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_vertical);
   gtk_widget_show (toggle);
 
   gtk_widget_show (toggle_vbox);
@@ -419,12 +419,12 @@ blinds_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) blinds_button_update,
 		      &do_trans);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_trans);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_trans);
 
   if(!has_alpha)
     {
       gtk_widget_set_sensitive(toggle,FALSE);
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), FALSE);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), FALSE);
     }
 
   gtk_widget_show (toggle);

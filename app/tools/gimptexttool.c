@@ -175,8 +175,8 @@ init_text_options(TextToolOptions *options)
   gtk_signal_connect(GTK_OBJECT(antialias_toggle), "toggled",
 		     (GtkSignalFunc) text_antialias_update,
 		     &options->antialias);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(antialias_toggle),
-			      options->antialias);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(antialias_toggle),
+			       options->antialias);
   gtk_widget_show(antialias_toggle);
 
   /* Create the border hbox, border spinner, and label  */

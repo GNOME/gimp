@@ -109,7 +109,7 @@ create_color_picker_options (void)
 
   /*  the sample merged toggle button  */
   sample_merged_toggle = gtk_check_button_new_with_label (_("Sample Merged"));
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (sample_merged_toggle), options->sample_merged);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (sample_merged_toggle), options->sample_merged);
   gtk_box_pack_start (GTK_BOX (vbox), sample_merged_toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (sample_merged_toggle), "toggled",
 		      (GtkSignalFunc) color_picker_toggle_update,

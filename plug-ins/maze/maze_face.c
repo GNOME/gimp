@@ -252,7 +252,7 @@ gint maze_dialog()
 
   /* Tileable checkbox */
   tilecheck = gtk_check_button_new_with_label ("Tileable?");
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tilecheck), mvals.tile);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tilecheck), mvals.tile);
   gtk_signal_connect (GTK_OBJECT (tilecheck), "clicked",
 		      GTK_SIGNAL_FUNC (toggle_callback), &mvals.tile);
   gtk_table_attach (GTK_TABLE (table), tilecheck, 0, 2, trow, trow+1, 
@@ -388,7 +388,7 @@ gint maze_dialog()
   gtk_widget_show (seed_entry);
 
   time_button = gtk_toggle_button_new_with_label ("Time");
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(time_button),mvals.timeseed);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(time_button),mvals.timeseed);
   gtk_signal_connect (GTK_OBJECT (time_button), "clicked",
 		      (GtkSignalFunc) toggle_callback,
 		      &mvals.timeseed);
@@ -411,7 +411,7 @@ gint maze_dialog()
   gtk_signal_connect(GTK_OBJECT(alg_button),"toggled",
 		     GTK_SIGNAL_FUNC(alg_radio_callback), (gpointer)DEPTH_FIRST);
   if(mvals.algorithm==DEPTH_FIRST)
-       gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(alg_button), TRUE);
+       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(alg_button), TRUE);
   gtk_container_add(GTK_CONTAINER(alg_box),alg_button);
   gtk_widget_show(alg_button);
 
@@ -420,7 +420,7 @@ gint maze_dialog()
   gtk_signal_connect(GTK_OBJECT(alg_button),"toggled",
 		     GTK_SIGNAL_FUNC(alg_radio_callback), (gpointer)PRIMS_ALGORITHM);
   if(mvals.algorithm==PRIMS_ALGORITHM)
-       gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(alg_button), TRUE);
+       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(alg_button), TRUE);
 
   gtk_container_add(GTK_CONTAINER(alg_box),alg_button);
   gtk_widget_show(alg_button);

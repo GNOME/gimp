@@ -906,7 +906,7 @@ save_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) save_toggle_update,
 		      &use_raw);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_raw);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_raw);
   gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (group, "Ascii");
@@ -915,7 +915,7 @@ save_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) save_toggle_update,
 		      &use_ascii);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_ascii);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_ascii);
   gtk_widget_show (toggle);
 
   gtk_widget_show (toggle_vbox);

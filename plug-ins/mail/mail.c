@@ -586,9 +586,9 @@ save_dialog ()
   group = gtk_radio_button_group( GTK_RADIO_BUTTON( button1 ) );
   button2 = gtk_radio_button_new_with_label( group, "MIME" );
   if( mail_info.encapsulation == ENCAPSULATION_UUENCODE ) {
-      gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button1),TRUE);
+      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button1),TRUE);
   } else {
-      gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button2),TRUE);
+      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button2),TRUE);
   }
   gtk_signal_connect (GTK_OBJECT (button1), "toggled",
 		      (GtkSignalFunc) encap_callback,

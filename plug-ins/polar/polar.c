@@ -958,7 +958,7 @@ polarize_dialog(void)
 							GTK_FILL, 0 , 0, 0);
 
 	toggle = gtk_check_button_new_with_label("Map Backwards");
-	gtk_toggle_button_set_state( GTK_TOGGLE_BUTTON(toggle), pcvals.backwards);
+	gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(toggle), pcvals.backwards);
 	gtk_signal_connect(GTK_OBJECT(toggle), "toggled", 
 			   (GtkSignalFunc) polar_toggle_callback,
 			   &pcvals.backwards);
@@ -967,7 +967,7 @@ polarize_dialog(void)
 	set_tooltip(tips,toggle,"If checked the mapping will begin at the right side, as opposed to beginning at the left.");
 
 	toggle = gtk_check_button_new_with_label("Map from Top");
-	gtk_toggle_button_set_state( GTK_TOGGLE_BUTTON(toggle), pcvals.inverse);
+	gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(toggle), pcvals.inverse);
 	gtk_signal_connect( GTK_OBJECT(toggle), "toggled", 
 			    (GtkSignalFunc) polar_toggle_callback,
 			    &pcvals.inverse);
@@ -976,7 +976,7 @@ polarize_dialog(void)
 	set_tooltip(tips,toggle,"If unchecked the mapping will put the bottom row in the middle and the top row on the outside.  If checked it will be the opposite.");
 
 	toggle = gtk_check_button_new_with_label("Polar to Rectangular");
-	gtk_toggle_button_set_state( GTK_TOGGLE_BUTTON(toggle), pcvals.polrec);
+	gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(toggle), pcvals.polrec);
 	gtk_signal_connect( GTK_OBJECT(toggle), "toggled", 
 			    (GtkSignalFunc) polar_toggle_callback,
 			    &pcvals.polrec);

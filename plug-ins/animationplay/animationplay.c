@@ -1808,7 +1808,7 @@ rewind_callback (GtkWidget *widget,
   if (playing)
     {
       playstop_callback(NULL, NULL); /* GTK weirdness workaround */
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (psbutton), FALSE);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (psbutton), FALSE);
       playing = FALSE;
       remove_timer();
     }
@@ -1825,7 +1825,7 @@ step_callback (GtkWidget *widget,
   if (playing)
     {
       playstop_callback(NULL, NULL); /* GTK weirdness workaround */
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (psbutton), FALSE);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (psbutton), FALSE);
       playing = FALSE;
       remove_timer();
     }

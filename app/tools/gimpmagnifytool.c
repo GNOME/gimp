@@ -146,7 +146,7 @@ create_magnify_options (void)
 		      (GtkSignalFunc) magnify_toggle_update,
 		      &allow_resize_windows);
   gtk_widget_show (allow_resize_toggle);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (allow_resize_toggle), allow_resize_windows);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (allow_resize_toggle), allow_resize_windows);
 
   /*  Register this selection options widget with the main tools options dialog  */
   tools_register_options (MAGNIFY, vbox);

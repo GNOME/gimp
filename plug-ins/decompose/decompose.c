@@ -922,8 +922,8 @@ decompose_dialog (void)
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                         (GtkSignalFunc) decompose_toggle_update,
                         &(decoint.extract_flag[j]));
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
-                                 decoint.extract_flag[j]);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				  decoint.extract_flag[j]);
     gtk_widget_show (toggle);
   }
   gtk_widget_show (vbox);

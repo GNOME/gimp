@@ -837,7 +837,7 @@ static gint dialog_show( void )
     gtk_widget_show( button );
     if( parameters.outside_type == OUTSIDE_TYPE_WRAP ){
       gtk_toggle_button_toggled( GTK_TOGGLE_BUTTON( button ) );
-      gtk_toggle_button_set_state( GTK_TOGGLE_BUTTON( button ), TRUE );
+      gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( button ), TRUE );
     }
     group = gtk_radio_button_group( GTK_RADIO_BUTTON( button ) );
 
@@ -849,7 +849,7 @@ static gint dialog_show( void )
     gtk_widget_show( button );
     if( parameters.outside_type == OUTSIDE_TYPE_TRANSPARENT ){
       gtk_toggle_button_toggled( GTK_TOGGLE_BUTTON( button ) );
-      gtk_toggle_button_set_state( GTK_TOGGLE_BUTTON( button ), TRUE );
+      gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( button ), TRUE );
     }
     if( !image.alpha ){
       gtk_widget_set_sensitive( button, FALSE );
@@ -864,7 +864,7 @@ static gint dialog_show( void )
     gtk_widget_show( button );
     if( parameters.outside_type == OUTSIDE_TYPE_BLACK ){
       gtk_toggle_button_toggled( GTK_TOGGLE_BUTTON( button ) );
-      gtk_toggle_button_set_state( GTK_TOGGLE_BUTTON( button ), TRUE );
+      gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( button ), TRUE );
     }
     group = gtk_radio_button_group( GTK_RADIO_BUTTON( button ) );
     
@@ -876,7 +876,7 @@ static gint dialog_show( void )
     gtk_widget_show( button );
     if( parameters.outside_type == OUTSIDE_TYPE_WHITE ){
       gtk_toggle_button_toggled( GTK_TOGGLE_BUTTON( button ) );
-      gtk_toggle_button_set_state( GTK_TOGGLE_BUTTON( button ), TRUE );
+      gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( button ), TRUE );
     }
     group = gtk_radio_button_group( GTK_RADIO_BUTTON( button ) );
     

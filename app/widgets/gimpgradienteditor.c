@@ -799,7 +799,7 @@ grad_create_gradient_editor_init(gint need_show)
 	gtk_signal_connect(GTK_OBJECT(button), "toggled",
 			   (GtkSignalFunc) ed_instant_update_update,
 			   g_editor);
-	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), TRUE);
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
 	gtk_widget_show(button);
 
 	/* hbox for that holds the frame for gradient preview and gradient control; 

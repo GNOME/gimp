@@ -1008,7 +1008,7 @@ void create_main_dialog(void)
   
   button = gtk_check_button_new_with_label("Create new image");
   if (licvals.create_new_image==TRUE)
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button),TRUE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button),TRUE);
   gtk_container_add(GTK_CONTAINER(hbox2),button);
   gtk_widget_show(button);
 
@@ -1025,7 +1025,7 @@ void create_main_dialog(void)
   button = gtk_radio_button_new_with_label(NULL,"Hue");
   group  = gtk_radio_button_group(GTK_RADIO_BUTTON(button));
   if (licvals.effect_channel==0)
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), TRUE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
 
   gtk_signal_connect(GTK_OBJECT(button), "toggled",
     (GtkSignalFunc)effect_channel_callback,
@@ -1036,7 +1036,7 @@ void create_main_dialog(void)
 
   button = gtk_radio_button_new_with_label(group,"Saturation");
   if (licvals.effect_channel==1)
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), TRUE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
 
   gtk_signal_connect(GTK_OBJECT(button), "toggled",
     (GtkSignalFunc)effect_channel_callback,
@@ -1047,7 +1047,7 @@ void create_main_dialog(void)
 
   button = gtk_radio_button_new_with_label(group,"Brightness");
   if (licvals.effect_channel==2)
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), TRUE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
 
   gtk_signal_connect(GTK_OBJECT(button), "toggled",
     (GtkSignalFunc)effect_channel_callback,
@@ -1069,7 +1069,7 @@ void create_main_dialog(void)
   button = gtk_radio_button_new_with_label(NULL,"Derivative");
   group  = gtk_radio_button_group(GTK_RADIO_BUTTON(button));
   if (licvals.effect_operator==0)
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), TRUE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
 
   gtk_signal_connect(GTK_OBJECT(button), "toggled",
     (GtkSignalFunc)effect_operator_callback,
@@ -1080,7 +1080,7 @@ void create_main_dialog(void)
 
   button = gtk_radio_button_new_with_label(group,"Gradient");
   if (licvals.effect_operator==1)
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), TRUE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
 
   gtk_signal_connect(GTK_OBJECT(button), "toggled",
     (GtkSignalFunc)effect_operator_callback,
@@ -1102,7 +1102,7 @@ void create_main_dialog(void)
   button = gtk_radio_button_new_with_label(NULL,"With white noise");
   group  = gtk_radio_button_group(GTK_RADIO_BUTTON(button));
   if (licvals.effect_convolve==0)
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), TRUE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
 
   gtk_signal_connect(GTK_OBJECT(button), "toggled",
     (GtkSignalFunc)effect_convolve_callback,
@@ -1113,7 +1113,7 @@ void create_main_dialog(void)
 
   button = gtk_radio_button_new_with_label(group,"With source image");
   if (licvals.effect_convolve==1)
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), TRUE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
 
   gtk_signal_connect(GTK_OBJECT(button), "toggled",
     (GtkSignalFunc)effect_convolve_callback,

@@ -362,7 +362,7 @@ cubism_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) cubism_toggle_update,
 		      &cvals.bg_color);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), (cvals.bg_color == BG));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), (cvals.bg_color == BG));
   gtk_widget_show (toggle);
 
   label = gtk_label_new ("Tile Size");

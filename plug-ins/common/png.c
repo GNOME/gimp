@@ -37,6 +37,12 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.13  1999/01/15 17:34:20  unammx
+ *   1999-01-15  Federico Mena Quintero  <federico@nuclecu.unam.mx>
+ *
+ *   	* Updated gtk_toggle_button_set_state() to
+ *   	gtk_toggle_button_set_active() in all the files.
+ *
  *   Revision 1.12  1999/01/02 23:47:48  yosh
  *   Doh, thinko.
  *
@@ -930,7 +936,7 @@ save_dialog(void)
   gtk_table_attach(GTK_TABLE(table), toggle, 0, 2, 0, 1, GTK_FILL, 0, 0, 0);
   gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
                      (GtkSignalFunc)save_interlace_update, NULL);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), pngvals.interlaced);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle), pngvals.interlaced);
   gtk_widget_show(toggle);
 
   label = gtk_label_new("Compression level");

@@ -1029,7 +1029,7 @@ vpropagate_dialog (GImageType image_type)
 					&propagate_alpha);
 	if (gimp_layer_get_preserve_transparency (drawable_id))
 	  {
-	    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), 0);
+	    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), 0);
 	    gtk_widget_set_sensitive (toggle, FALSE);
 	  }
       }
@@ -1198,7 +1198,7 @@ gtkW_table_add_toggle (GtkWidget	*table,
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) update,
 		      value);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), *value);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), *value);
   gtk_widget_show (toggle);
   return toggle;
 }
@@ -1217,7 +1217,7 @@ gtkW_vbox_add_radio_button (GtkWidget *vbox,
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) update, value);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), *value);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), *value);
   gtk_widget_show (toggle);
   return group;
 }

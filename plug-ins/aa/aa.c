@@ -324,9 +324,9 @@ static gint type_dialog(int selected) {
 												 (GtkSignalFunc) type_dialog_toggle_update,
 												 (*p)->formatname);
 			if (current == selected)
-				gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), 1);
+				gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle), 1);
 			else
-				gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), 0);
+				gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle), 0);
 
 			gtk_widget_show(toggle);
 			p++;

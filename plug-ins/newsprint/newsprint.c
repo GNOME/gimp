@@ -1344,7 +1344,7 @@ newsprint_dialog (GDrawable *drawable)
 	group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
 	gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
 	gtk_object_set_user_data(GTK_OBJECT(toggle), &st);
-	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				     (pvals.colourspace == CS_RGB));
 	gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 			    (GtkSignalFunc) newsprint_cspace_update,
@@ -1355,7 +1355,7 @@ newsprint_dialog (GDrawable *drawable)
 	group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
 	gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
 	gtk_object_set_user_data(GTK_OBJECT(toggle), &st);
-	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				     (pvals.colourspace == CS_CMYK));
 	gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 			    (GtkSignalFunc) newsprint_cspace_update,
@@ -1366,7 +1366,7 @@ newsprint_dialog (GDrawable *drawable)
 	group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
 	gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
 	gtk_object_set_user_data(GTK_OBJECT(toggle), &st);
-	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				     (pvals.colourspace == CS_INTENSITY));
 	gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 			    (GtkSignalFunc) newsprint_cspace_update,
@@ -1399,7 +1399,7 @@ newsprint_dialog (GDrawable *drawable)
 			   (GtkSignalFunc) newsprint_toggle_update,
 			   &pvals_ui.lock_channels);
 	gtk_object_set_user_data(GTK_OBJECT(toggle), NULL);
-	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON (toggle),
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON (toggle),
 				    pvals_ui.lock_channels);
 	gtk_box_pack_start(GTK_BOX(hbox), toggle, TRUE, TRUE, 0);
 	gtk_widget_show(toggle);
@@ -1422,7 +1422,7 @@ newsprint_dialog (GDrawable *drawable)
     /* Make the channels appropriate for this colourspace and
      * currently selected defaults.  They may have already been
      * created as a result of callbacks to cspace_update from
-     * gtk_toggle_button_set_state().  Other channel frames are
+     * gtk_toggle_button_set_active().  Other channel frames are
      * created lazily the first time they are required. */
     if (!st.chst[pvals.colourspace][0])
     {

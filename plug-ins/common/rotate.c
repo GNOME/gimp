@@ -641,7 +641,7 @@ rotate_dialog (void)
   gtk_signal_connect ( GTK_OBJECT (radio_button), "toggled",
 		       (GtkSignalFunc) rotate_toggle_update,
 		       &radio_pressed[0]);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (radio_button), 
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_button), 
 				   radio_pressed[0]);
   gtk_widget_show (radio_button);
 
@@ -655,7 +655,7 @@ rotate_dialog (void)
   gtk_signal_connect ( GTK_OBJECT (radio_button), "toggled",
 		       (GtkSignalFunc) rotate_toggle_update,
 		       &radio_pressed[1]);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (radio_button), 
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_button), 
 				   radio_pressed[1]);
   gtk_widget_show (radio_button);
 
@@ -669,7 +669,7 @@ rotate_dialog (void)
   gtk_signal_connect ( GTK_OBJECT (radio_button), "toggled",
 		       (GtkSignalFunc) rotate_toggle_update,
 		       &radio_pressed[2]);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (radio_button), 
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_button), 
 				   radio_pressed[2]);
   gtk_widget_show (radio_button);
 
@@ -683,7 +683,7 @@ rotate_dialog (void)
   gtk_signal_connect ( GTK_OBJECT (radio_button), "toggled",
 		       (GtkSignalFunc) rotate_toggle_update,
 		       &radio_pressed[3]);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (radio_button), 
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_button), 
 				   radio_pressed[3]);
   gtk_widget_show (radio_button);
 
@@ -708,7 +708,7 @@ rotate_dialog (void)
   gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
 		      (GtkSignalFunc) rotate_toggle_update,
 		      &everything);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (check_button), 
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), 
 			       rotvals.everything);
   gtk_widget_show (check_button);
   gtk_widget_show (hbox);

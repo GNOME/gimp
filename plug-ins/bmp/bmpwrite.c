@@ -451,7 +451,7 @@ save_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                       (GtkSignalFunc) save_toggle_update,
                       &encoded);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), encoded);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), encoded);
   gtk_widget_show (toggle);
 
   gtk_widget_show (vbox);

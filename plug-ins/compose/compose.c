@@ -708,8 +708,8 @@ compose_dialog (char *compose_type,
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                         (GtkSignalFunc) compose_type_toggle_update,
                         &(composeint.compose_flag[j]));
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
-                                 composeint.compose_flag[j]);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				  composeint.compose_flag[j]);
     gtk_widget_show (toggle);
   }
 

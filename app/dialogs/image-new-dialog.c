@@ -703,7 +703,7 @@ file_new_cmd_callback (GtkWidget           *widget,
 		      (GtkSignalFunc) file_new_toggle_callback,
 		      &vals->type);
   if (vals->type == RGB)
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
   gtk_widget_show (button);
 
   button = gtk_radio_button_new_with_label (group, _("Grayscale"));
@@ -714,7 +714,7 @@ file_new_cmd_callback (GtkWidget           *widget,
 		      (GtkSignalFunc) file_new_toggle_callback,
 		      &vals->type);
   if (vals->type == GRAY)
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
   gtk_widget_show (button);
 
 
@@ -736,7 +736,7 @@ file_new_cmd_callback (GtkWidget           *widget,
 		      (GtkSignalFunc) file_new_toggle_callback,
 		      &vals->fill_type);
   if (vals->fill_type == FOREGROUND_FILL)
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
   gtk_widget_show (button);
 
   button = gtk_radio_button_new_with_label (group, _("Background"));
@@ -747,7 +747,7 @@ file_new_cmd_callback (GtkWidget           *widget,
 		      (GtkSignalFunc) file_new_toggle_callback,
 		      &vals->fill_type);
   if (vals->fill_type == BACKGROUND_FILL)
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
   gtk_widget_show (button);
 
   button = gtk_radio_button_new_with_label (group, _("White"));
@@ -758,7 +758,7 @@ file_new_cmd_callback (GtkWidget           *widget,
 		      (GtkSignalFunc) file_new_toggle_callback,
 		      &vals->fill_type);
   if (vals->fill_type == WHITE_FILL)
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
   gtk_widget_show (button);
 
   button = gtk_radio_button_new_with_label (group, _("Transparent"));
@@ -769,7 +769,7 @@ file_new_cmd_callback (GtkWidget           *widget,
 		      (GtkSignalFunc) file_new_toggle_callback,
 		      &vals->fill_type);
   if (vals->fill_type == TRANSPARENT_FILL)
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
   gtk_widget_show (button);
 
   gtk_widget_show (vals->dlg);

@@ -883,7 +883,7 @@ ifs_compose_dialog (GDrawable *drawable)
 				     (GtkSignalFunc)design_op_callback,
 				     (gpointer)((long)OP_STRETCH));
 
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ifsD->move_button),TRUE);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ifsD->move_button),TRUE);
 
   gtk_widget_show (util_hbox);
 
@@ -912,7 +912,7 @@ ifs_compose_dialog (GDrawable *drawable)
   check_button = gtk_check_button_new_with_label ("Auto");
   gtk_box_pack_start (GTK_BOX (util_hbox), check_button,
 		      FALSE, FALSE, 0);
-  gtk_toggle_button_set_state ( GTK_TOGGLE_BUTTON(check_button) ,
+  gtk_toggle_button_set_active ( GTK_TOGGLE_BUTTON(check_button) ,
 				ifsD->auto_preview );
   gtk_signal_connect ( GTK_OBJECT (check_button), "toggled",
 		       (GtkSignalFunc) auto_preview_callback,
@@ -1496,12 +1496,12 @@ update_values()
   value_pair_update(ifsD->hue_scale_pair);
   value_pair_update(ifsD->value_scale_pair);
   if (elements[ifsD->current_element]->v.simple_color)
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (ifsD->simple_button),
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ifsD->simple_button),
 				 TRUE);
   else
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (ifsD->full_button),
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ifsD->full_button),
 				 TRUE);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ifsD->flip_check_button),
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ifsD->flip_check_button),
 			      elements[ifsD->current_element]->v.flip);
 
   ifsD->in_update = FALSE;
@@ -2369,7 +2369,7 @@ design_op_callback (GtkWidget *widget, gpointer data)
 	case OP_TRANSLATE:
 	  gtk_signal_handler_block(GTK_OBJECT(ifsD->move_button),
 				   ifsD->move_handler);
-	  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ifsD->move_button),
+	  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ifsD->move_button),
 				      FALSE);
 	  gtk_signal_handler_unblock(GTK_OBJECT(ifsD->move_button),
 				     ifsD->move_handler);
@@ -2377,7 +2377,7 @@ design_op_callback (GtkWidget *widget, gpointer data)
 	case OP_ROTATE:
 	  gtk_signal_handler_block(GTK_OBJECT(ifsD->rotate_button),
 				   ifsD->rotate_handler);
-	  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ifsD->rotate_button),
+	  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ifsD->rotate_button),
 				      FALSE);
 	  gtk_signal_handler_unblock(GTK_OBJECT(ifsD->rotate_button),
 				     ifsD->rotate_handler);
@@ -2385,7 +2385,7 @@ design_op_callback (GtkWidget *widget, gpointer data)
 	case OP_STRETCH:
 	  gtk_signal_handler_block(GTK_OBJECT(ifsD->stretch_button),
 				   ifsD->stretch_handler);
-	  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ifsD->stretch_button),
+	  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ifsD->stretch_button),
 				      FALSE);
 	  gtk_signal_handler_unblock(GTK_OBJECT(ifsD->stretch_button),
 				     ifsD->stretch_handler);
@@ -2409,15 +2409,15 @@ design_op_update_callback (GtkWidget *widget, gpointer data)
       switch (op)
 	{
 	case OP_TRANSLATE:
-	  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ifsD->move_button),
-				      TRUE);
+	  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ifsD->move_button),
+				       TRUE);
 	  break;
 	case OP_ROTATE:
-	  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ifsD->rotate_button),
+	  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ifsD->rotate_button),
 				      TRUE);
 	  break;
 	case OP_STRETCH:
-	  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ifsD->stretch_button),
+	  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ifsD->stretch_button),
 				      TRUE);
 	  break;
 	}

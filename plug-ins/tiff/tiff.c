@@ -1308,7 +1308,7 @@ save_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) save_toggle_update,
 		      &use_none);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_none);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_none);
   gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (group, "LZW");
@@ -1317,7 +1317,7 @@ save_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) save_toggle_update,
 		      &use_lzw);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_lzw);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_lzw);
   gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (group, "Pack Bits");
@@ -1326,7 +1326,7 @@ save_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) save_toggle_update,
 		      &use_packbits);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_packbits);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_packbits);
   gtk_widget_show (toggle);
 
   gtk_widget_show (toggle_vbox);
@@ -1348,7 +1348,7 @@ save_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) save_toggle_update,
 		      &use_lsb2msb);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_lsb2msb);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_lsb2msb);
   gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (group, "MSB to LSB");
@@ -1357,7 +1357,7 @@ save_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) save_toggle_update,
 		      &use_msb2lsb);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_msb2lsb);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_msb2lsb);
   gtk_widget_show (toggle);
 
   gtk_widget_show (toggle_vbox);

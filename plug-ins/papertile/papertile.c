@@ -440,7 +440,7 @@ static int dialog( void )
       gtk_box_pack_start( GTK_BOX( vbox ),
 			  button_transparent, TRUE, TRUE, 0 );
       if( parameters.bg_type == BG_TYPE_TRANSPARENT )
-	gtk_toggle_button_set_state( GTK_TOGGLE_BUTTON( button_transparent ),
+	gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( button_transparent ),
 				     TRUE );
       gtk_widget_show( button_transparent );
       group = gtk_radio_button_group( GTK_RADIO_BUTTON( button_transparent ) );
@@ -450,7 +450,7 @@ static int dialog( void )
     button_black = gtk_radio_button_new_with_label( group, "Black" );
     gtk_box_pack_start( GTK_BOX( vbox ), button_black, TRUE, TRUE, 0 );
     if( parameters.bg_type == BG_TYPE_BLACK )
-      gtk_toggle_button_set_state( GTK_TOGGLE_BUTTON( button_black ), TRUE );
+      gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( button_black ), TRUE );
     gtk_widget_show( button_black );
     group = gtk_radio_button_group( GTK_RADIO_BUTTON( button_black ) );
 
@@ -458,7 +458,7 @@ static int dialog( void )
     button_white = gtk_radio_button_new_with_label( group, "White" );
     gtk_box_pack_start( GTK_BOX( vbox ), button_white, TRUE, TRUE, 0 );
     if( parameters.bg_type == BG_TYPE_WHITE )
-      gtk_toggle_button_set_state( GTK_TOGGLE_BUTTON( button_white ), TRUE );
+      gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON( button_white ), TRUE );
     gtk_widget_show( button_white );
   }
 

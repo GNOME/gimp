@@ -354,7 +354,7 @@ displace_dialog (GDrawable *drawable)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) displace_x_toggle_update,
 		      &dvals.do_x);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), dvals.do_x);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dvals.do_x);
   gtk_widget_show (toggle);
 
   toggle = gtk_check_button_new_with_label ("Y Displacement: ");
@@ -362,7 +362,7 @@ displace_dialog (GDrawable *drawable)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) displace_y_toggle_update,
 		      &dvals.do_y);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), dvals.do_y);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dvals.do_y);
   gtk_widget_show (toggle);
 
   /*  amount_x, amount_y  */
@@ -423,7 +423,7 @@ displace_dialog (GDrawable *drawable)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) displace_toggle_update,
 		      &use_wrap);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_wrap);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_wrap);
   gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (group, "Smear");
@@ -432,7 +432,7 @@ displace_dialog (GDrawable *drawable)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) displace_toggle_update,
 		      &use_smear);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_smear);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_smear);
   gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (group, "Black");
@@ -441,7 +441,7 @@ displace_dialog (GDrawable *drawable)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) displace_toggle_update,
 		      &use_black);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_black);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_black);
   gtk_widget_show (toggle);
 
   gtk_widget_show (toggle_hbox);

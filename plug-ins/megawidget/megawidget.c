@@ -204,7 +204,7 @@ mw_radio_new(GSList *gsl, GtkWidget *parent, gchar *name,
    
    button=gtk_radio_button_new_with_label(gsl, name);
    rv=gtk_radio_button_group(GTK_RADIO_BUTTON(button));
-   gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), init);
+   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), init);
    gtk_signal_connect(GTK_OBJECT(button), "toggled",
                       (GtkSignalFunc) ui_toggle_callback,
                       varp);
@@ -256,7 +256,7 @@ mw_value_radio_group_new(GtkWidget *parent, gchar *name,
    for(c=rg; c->name!=NULL; c++) {
      button=gtk_radio_button_new_with_label(lst, c->name);
      lst=gtk_radio_button_group(GTK_RADIO_BUTTON(button));
-     gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), (c->val==value));
+     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), (c->val==value));
      gtk_signal_connect(GTK_OBJECT(button), "toggled",
 			(GtkSignalFunc) ui_value_toggle_callback,
 			(gpointer)var);
@@ -280,7 +280,7 @@ mw_toggle_button_new(GtkWidget *parent, gchar *fname,
      gtk_box_pack_start(GTK_BOX(parent), frame, FALSE, TRUE, 0);
      gtk_widget_show(frame);
      button=gtk_check_button_new_with_label(label);
-     gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), *varp);
+     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), *varp);
      gtk_signal_connect(GTK_OBJECT(button), "toggled",
                         (GtkSignalFunc) ui_toggle_callback,
                         varp);
@@ -293,7 +293,7 @@ mw_toggle_button_new(GtkWidget *parent, gchar *fname,
    } else { /*Name == NULL */
 
      button=gtk_check_button_new_with_label(label);
-     gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), *varp);
+     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), *varp);
      gtk_signal_connect(GTK_OBJECT(button), "toggled",
                         (GtkSignalFunc) ui_toggle_callback,
                         varp);
@@ -450,7 +450,7 @@ mw_preview_new(GtkWidget *parent, struct mwPreview *mwp, mw_preview_t *fcn){
    mw_do_preview = fcn;
 
    button=gtk_check_button_new_with_label("Do Preview");
-   gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), do_preview);
+   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), do_preview);
    gtk_signal_connect(GTK_OBJECT(button), "toggled",
                       (GtkSignalFunc) ui_toggle_callback,
                       &do_preview);

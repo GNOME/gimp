@@ -39,6 +39,12 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.11  1999/01/15 17:34:25  unammx
+ *   1999-01-15  Federico Mena Quintero  <federico@nuclecu.unam.mx>
+ *
+ *   	* Updated gtk_toggle_button_set_state() to
+ *   	gtk_toggle_button_set_active() in all the files.
+ *
  *   Revision 1.10  1998/05/17 07:16:50  yosh
  *   0.99.31 fun
  *
@@ -871,7 +877,7 @@ do_print_dialog(void)
   output_gray = button = gtk_radio_button_new_with_label(NULL, "B&W");
   group = gtk_radio_button_group(GTK_RADIO_BUTTON(button));
   if (vars.output_type == 0)
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), TRUE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
   gtk_signal_connect(GTK_OBJECT(button), "toggled",
 		     (GtkSignalFunc)output_type_callback,
 		     (gpointer)OUTPUT_GRAY);
@@ -880,7 +886,7 @@ do_print_dialog(void)
 
   output_color = button = gtk_radio_button_new_with_label(group, "Color");
   if (vars.output_type == 1)
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), TRUE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
   gtk_signal_connect(GTK_OBJECT(button), "toggled",
 		     (GtkSignalFunc)output_type_callback,
 		     (gpointer)OUTPUT_COLOR);
@@ -929,7 +935,7 @@ do_print_dialog(void)
   scaling_percent = button = gtk_radio_button_new_with_label(NULL, "Percent");
   group = gtk_radio_button_group(GTK_RADIO_BUTTON(button));
   if (vars.scaling > 0.0)
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), TRUE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
   gtk_signal_connect(GTK_OBJECT(button), "toggled",
                      (GtkSignalFunc)scaling_callback, NULL);
   gtk_box_pack_start(GTK_BOX(box), button, FALSE, FALSE, 0);
@@ -937,7 +943,7 @@ do_print_dialog(void)
 
   scaling_ppi = button = gtk_radio_button_new_with_label(group, "PPI");
   if (vars.scaling < 0.0)
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), TRUE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
   gtk_signal_connect(GTK_OBJECT(button), "toggled",
                      (GtkSignalFunc)scaling_callback, NULL);
   gtk_box_pack_start(GTK_BOX(box), button, FALSE, FALSE, 0);
@@ -1417,9 +1423,9 @@ plist_callback(GtkWidget *widget,	/* I - Driver option menu */
   strcpy(vars.output_to, p->command);
 
   if (p->output_type == OUTPUT_GRAY)
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(output_gray), TRUE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(output_gray), TRUE);
   else
-    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(output_color), TRUE);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(output_color), TRUE);
 
  /*
   * Now get option parameters...

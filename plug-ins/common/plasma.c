@@ -330,7 +330,7 @@ plasma_dialog()
   gtk_widget_show (entry);
 
   time_button = gtk_toggle_button_new_with_label ("Time");
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(time_button),pvals.timeseed);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(time_button),pvals.timeseed);
   gtk_signal_connect (GTK_OBJECT (time_button), "clicked",
 		      (GtkSignalFunc) toggle_callback,
 		      &pvals.timeseed);

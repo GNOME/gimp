@@ -609,7 +609,7 @@ static int do_dialog (void) {
 	 button = gtk_radio_button_new_with_label (
 		     (button == NULL) ? NULL : gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
 		     name[i]);
-	 gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
+	 gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 	       (i == 0 ? curl.do_upper_left : i == 1 ? curl.do_upper_right :
 		i == 2 ? curl.do_lower_left : curl.do_lower_right));
 
@@ -647,7 +647,7 @@ static int do_dialog (void) {
 	 button = gtk_radio_button_new_with_label (
 		     (button == NULL) ? NULL : gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
 		     name[i]);
-	 gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
+	 gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 			  (i == 0 ? curl.do_horizontal : curl.do_vertical));
 
 	 gtk_signal_connect (GTK_OBJECT (button), "toggled",
@@ -663,7 +663,7 @@ static int do_dialog (void) {
    gtk_widget_show (orient_frame);
 
    shade_button = gtk_check_button_new_with_label ("Shade under curl");
-   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (shade_button),
+   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shade_button),
 				curl.do_shade_under ? TRUE : FALSE);
    gtk_signal_connect (GTK_OBJECT (shade_button), "toggled",
 		       (GtkSignalFunc) dialog_toggle_update, (gpointer) 8);
@@ -671,7 +671,7 @@ static int do_dialog (void) {
    gtk_widget_show (shade_button);
 
    gradient_button = gtk_check_button_new_with_label ("Use current Gradient\n instead of FG/BG-Color");
-   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (gradient_button),
+   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gradient_button),
 				curl.do_curl_gradient ? TRUE : FALSE);
    gtk_signal_connect (GTK_OBJECT (gradient_button), "toggled",
 		       (GtkSignalFunc) dialog_toggle_update, (gpointer) 9);

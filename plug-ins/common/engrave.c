@@ -258,7 +258,7 @@ engrave_dialog()
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 			(GtkSignalFunc) engrave_toggle_update,
 			&pvals.limit);
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), pvals.limit);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pvals.limit);
     gtk_widget_show (toggle);
 
     dialog_create_value("Height", GTK_TABLE(table), 1, &pvals.height, 2.0, 16.0);

@@ -228,7 +228,7 @@ resize_widget_new (ResizeType type,
 
   /*  the constrain toggle button  */
   constrain = gtk_check_button_new_with_label (_("Constrain Ratio"));
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (constrain), private->constrain);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (constrain), private->constrain);
   gtk_box_pack_start (GTK_BOX (vbox), constrain, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (constrain), "toggled",
 		      (GtkSignalFunc) constrain_update,

@@ -1,9 +1,24 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
 msgid ""
 msgstr ""
-"POT-Creation-Date: 1998-12-24 15:46+0100\n"
-"Content-Type: text/plain; charset=\n"
-"Date: 1998-12-19 21:24:18+0200\n"
-"From: Daniel Egger <Daniel.Egger@t-online.de>\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: ENCODING\n"
+
+#~ msgid ""
+#~ msgstr ""
+#~ "POT-Creation-Date: 1998-12-24 15:46+0100\n"
+#~ "Content-Type: text/plain; charset=\n"
+#~ "Date: 1998-12-19 21:24:18+0200\n"
+#~ "From: Daniel Egger <Daniel.Egger@t-online.de>\n"
 
 #: app/about_dialog.c:153
 msgid "About the GIMP"

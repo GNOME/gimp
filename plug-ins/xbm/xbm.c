@@ -1009,7 +1009,7 @@ save_dialog (gint32  drawable_ID)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) save_toggle_update,
 		      &xsvals.x10_format);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), xsvals.x10_format);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), xsvals.x10_format);
   gtk_widget_show (toggle);
 
   /* prefix */

@@ -982,7 +982,7 @@ dialog_box(void)
   text_label = "Wind";
   rbutton = gtk_radio_button_new_with_label(NULL, text_label);
   list = gtk_radio_button_group((GtkRadioButton *) rbutton);
-  gtk_toggle_button_set_state((GtkToggleButton *) rbutton,
+  gtk_toggle_button_set_active((GtkToggleButton *) rbutton,
 			      config.alg == RENDER_WIND ? TRUE : FALSE);
   gtk_signal_connect(GTK_OBJECT(rbutton), "toggled",
 		     GTK_SIGNAL_FUNC (radio_button_alg_callback),
@@ -994,7 +994,7 @@ dialog_box(void)
   text_label = "Blast";
   rbutton = gtk_radio_button_new_with_label(list, text_label);
   list = gtk_radio_button_group((GtkRadioButton *) rbutton);
-  gtk_toggle_button_set_state((GtkToggleButton *) rbutton,
+  gtk_toggle_button_set_active((GtkToggleButton *) rbutton,
 			      config.alg == RENDER_BLAST ? TRUE : FALSE);
   gtk_signal_connect(GTK_OBJECT(rbutton), "toggled",
 		     GTK_SIGNAL_FUNC (radio_button_alg_callback),
@@ -1021,7 +1021,7 @@ dialog_box(void)
 		     
   rbutton = gtk_radio_button_new_with_label(NULL, "Left");
   list = gtk_radio_button_group((GtkRadioButton *) rbutton);
-  gtk_toggle_button_set_state((GtkToggleButton *) rbutton,
+  gtk_toggle_button_set_active((GtkToggleButton *) rbutton,
 			      config.direction == LEFT ? TRUE : FALSE);
   gtk_signal_connect(GTK_OBJECT(rbutton), "toggled",
 		     GTK_SIGNAL_FUNC(radio_button_direction_callback),
@@ -1031,7 +1031,7 @@ dialog_box(void)
   gtk_tooltips_set_tip(tooltips, rbutton, LEFT_TEXT, NULL);
 
   rbutton = gtk_radio_button_new_with_label(list, "Right");
-  gtk_toggle_button_set_state((GtkToggleButton *) rbutton,
+  gtk_toggle_button_set_active((GtkToggleButton *) rbutton,
 			      config.direction == RIGHT ? TRUE : FALSE);
   gtk_signal_connect(GTK_OBJECT(rbutton), "toggled",
 		     GTK_SIGNAL_FUNC(radio_button_direction_callback),
@@ -1059,7 +1059,7 @@ dialog_box(void)
   
   rbutton = gtk_radio_button_new_with_label(NULL, "Leading");
   list = gtk_radio_button_group((GtkRadioButton *) rbutton);
-  gtk_toggle_button_set_state((GtkToggleButton *) rbutton,
+  gtk_toggle_button_set_active((GtkToggleButton *) rbutton,
 			      config.edge == LEADING ? TRUE : FALSE);
   gtk_signal_connect(GTK_OBJECT(rbutton), "toggled",
 		     GTK_SIGNAL_FUNC(radio_button_edge_callback),
@@ -1070,7 +1070,7 @@ dialog_box(void)
   
   rbutton = gtk_radio_button_new_with_label(list, "Trailing");
   list = gtk_radio_button_group((GtkRadioButton *) rbutton);
-  gtk_toggle_button_set_state((GtkToggleButton *) rbutton,
+  gtk_toggle_button_set_active((GtkToggleButton *) rbutton,
 			      config.edge == TRAILING ? TRUE : FALSE);
   gtk_signal_connect(GTK_OBJECT(rbutton), "toggled",
 		     GTK_SIGNAL_FUNC(radio_button_edge_callback),
@@ -1080,7 +1080,7 @@ dialog_box(void)
   gtk_tooltips_set_tip(tooltips, rbutton, TRAILING_TEXT, NULL);
 
   rbutton = gtk_radio_button_new_with_label(list, "Both");
-  gtk_toggle_button_set_state((GtkToggleButton *) rbutton,
+  gtk_toggle_button_set_active((GtkToggleButton *) rbutton,
 			      config.edge == BOTH ? TRUE : FALSE);
   gtk_signal_connect(GTK_OBJECT(rbutton), "toggled",
 		     GTK_SIGNAL_FUNC(radio_button_edge_callback),

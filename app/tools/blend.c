@@ -481,7 +481,7 @@ create_blend_options ()
   gtk_signal_connect(GTK_OBJECT(button), "toggled",
 		     (GtkSignalFunc) supersample_toggle_update,
 		     NULL);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), FALSE);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), FALSE);
   gtk_widget_show(button);
 
   /* frame for supersampling options */

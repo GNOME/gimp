@@ -457,7 +457,7 @@ tile_dialog (gint width, gint height)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) tile_toggle_update,
 		      &tvals.constrain);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), tvals.constrain);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), tvals.constrain);
   gtk_widget_show (toggle);
 
   toggle = gtk_check_button_new_with_label ("New Image");
@@ -466,7 +466,7 @@ tile_dialog (gint width, gint height)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) tile_toggle_update,
 		      &tvals.new_image);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), tvals.new_image);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), tvals.new_image);
   gtk_widget_show (toggle);
 
   gtk_widget_show (table);

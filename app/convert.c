@@ -351,7 +351,7 @@ convert_to_indexed (GimpImage *gimage)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) indexed_radio_update,
 		      &(dialog->makepal_flag));
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), dialog->makepal_flag);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dialog->makepal_flag);
   gtk_widget_show (toggle);
   label = gtk_label_new (_("# of colors: "));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
@@ -412,8 +412,8 @@ convert_to_indexed (GimpImage *gimage)
           gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 			      (GtkSignalFunc) indexed_radio_update,
 			      &(dialog->custompal_flag));
-          gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
-				   dialog->custompal_flag);
+          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+					dialog->custompal_flag);
           gtk_widget_show (toggle);
 
           palette_option_menu = gtk_option_menu_new();
@@ -445,7 +445,7 @@ convert_to_indexed (GimpImage *gimage)
 	  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 			      (GtkSignalFunc) indexed_radio_update,
 			      &(dialog->webpal_flag));
-	  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), dialog->webpal_flag);
+	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dialog->webpal_flag);
 	}
 	gtk_widget_show (toggle);
       }
@@ -462,7 +462,7 @@ convert_to_indexed (GimpImage *gimage)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) indexed_radio_update,
 		      &(dialog->monopal_flag));
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), dialog->monopal_flag);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dialog->monopal_flag);
   gtk_widget_show (toggle);
   gtk_widget_show (hbox);
 
@@ -481,7 +481,7 @@ convert_to_indexed (GimpImage *gimage)
     gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
     
     toggle = gtk_check_button_new_with_label (_("Enable Floyd-Steinberg dithering"));
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), dialog->dither);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dialog->dither);
     gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, FALSE, 0);
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) indexed_dither_update,

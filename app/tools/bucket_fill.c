@@ -243,7 +243,7 @@ create_bucket_options (void)
   gtk_signal_connect (GTK_OBJECT (sample_merged_toggle), "toggled",
 		      (GtkSignalFunc) bucket_fill_toggle_update,
 		      &options->sample_merged);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (sample_merged_toggle), FALSE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (sample_merged_toggle), FALSE);
   gtk_box_pack_start (GTK_BOX (vbox), sample_merged_toggle, FALSE, FALSE, 0);
   gtk_widget_show (sample_merged_toggle);
 

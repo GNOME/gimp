@@ -631,7 +631,7 @@ ripple_dialog ()
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                         (GtkSignalFunc) ripple_toggle_update,
                         &rvals.antialias);
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), rvals.antialias);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), rvals.antialias);
     gtk_widget_show (toggle);
 
     toggle = gtk_check_button_new_with_label ("Retain Tilability");
@@ -639,7 +639,7 @@ ripple_dialog ()
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                         (GtkSignalFunc) ripple_toggle_update,
                         &rvals.tile);
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), (rvals.tile));
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), (rvals.tile));
     gtk_widget_show (toggle);
 
     gtk_widget_show (toggle_vbox);
@@ -661,7 +661,7 @@ ripple_dialog ()
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                         (GtkSignalFunc) ripple_toggle_update,
                         &do_horizontal);
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_horizontal);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_horizontal);
     gtk_widget_show (toggle);
 
     toggle = gtk_radio_button_new_with_label (orientation_group, "Vertical");
@@ -670,7 +670,7 @@ ripple_dialog ()
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                         (GtkSignalFunc) ripple_toggle_update,
                         &do_vertical);
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_vertical);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_vertical);
     gtk_widget_show (toggle);
 
     gtk_widget_show (toggle_vbox);
@@ -696,7 +696,7 @@ ripple_dialog ()
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                         (GtkSignalFunc) ripple_toggle_update,
                         &do_wrap);
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_wrap);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_wrap);
     gtk_widget_show (toggle);
 
     toggle = gtk_radio_button_new_with_label (edges_group, "Smear");
@@ -705,7 +705,7 @@ ripple_dialog ()
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                         (GtkSignalFunc) ripple_toggle_update,
                         &do_smear);
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_smear);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_smear);
     gtk_widget_show (toggle);
 
     toggle = gtk_radio_button_new_with_label (edges_group, "Black");
@@ -714,7 +714,7 @@ ripple_dialog ()
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                         (GtkSignalFunc) ripple_toggle_update,
                         &do_black);
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_black);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_black);
     gtk_widget_show (toggle);
 
     gtk_widget_show (toggle_vbox);
@@ -735,7 +735,7 @@ ripple_dialog ()
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                         (GtkSignalFunc) ripple_toggle_update,
                         &do_sawtooth);
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_sawtooth);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_sawtooth);
     gtk_widget_show (toggle);
 
     toggle = gtk_radio_button_new_with_label (waveform_group, "Sine");
@@ -744,7 +744,7 @@ ripple_dialog ()
     gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                         (GtkSignalFunc) ripple_toggle_update,
                         &do_sine);
-    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), do_sine);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), do_sine);
     gtk_widget_show (toggle);
 
     gtk_widget_show (toggle_vbox);

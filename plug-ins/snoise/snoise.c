@@ -524,7 +524,7 @@ solid_noise_dialog (void)
   gtk_widget_show (entry);
 
   time_button = gtk_toggle_button_new_with_label ("Time");
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON(time_button), snvals.timeseed);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(time_button), snvals.timeseed);
   gtk_signal_connect (GTK_OBJECT (time_button), "toggled",
 		      (GtkSignalFunc) dialog_toggle_update,
 		      &snvals.timeseed);
@@ -553,7 +553,7 @@ solid_noise_dialog (void)
   toggle = gtk_check_button_new_with_label ("Turbulent");
   gtk_table_attach (GTK_TABLE (table), toggle, 2, 3, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 1, 0);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), snvals.turbulent);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), snvals.turbulent);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                       (GtkSignalFunc) dialog_toggle_update, &snvals.turbulent);
   gtk_widget_show (toggle);
@@ -562,7 +562,7 @@ solid_noise_dialog (void)
   toggle = gtk_check_button_new_with_label ("Tilable");
   gtk_table_attach (GTK_TABLE (table), toggle, 2, 3, 1, 2,
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 1, 0);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), snvals.tilable);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), snvals.tilable);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                       (GtkSignalFunc) dialog_toggle_update, &snvals.tilable);
   gtk_widget_show (toggle);

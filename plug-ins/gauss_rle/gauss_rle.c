@@ -289,7 +289,7 @@ gauss_rle_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) gauss_toggle_update,
 		      &bvals.horizontal);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), bvals.horizontal);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.horizontal);
   gtk_widget_show (toggle);
 
   toggle = gtk_check_button_new_with_label ("Blur Vertically");
@@ -297,7 +297,7 @@ gauss_rle_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) gauss_toggle_update,
 		      &bvals.vertical);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), bvals.vertical);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.vertical);
   gtk_widget_show (toggle);
 
   hbox = gtk_hbox_new (FALSE, 5);

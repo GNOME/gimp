@@ -624,7 +624,7 @@ mosaic_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) mosaic_toggle_update,
 		      &mvals.antialiasing);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), mvals.antialiasing);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), mvals.antialiasing);
   gtk_widget_show (toggle);
 
   toggle = gtk_check_button_new_with_label ("Color Averaging");
@@ -632,7 +632,7 @@ mosaic_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) mosaic_toggle_update,
 		      &mvals.color_averaging);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), mvals.color_averaging);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), mvals.color_averaging);
   gtk_widget_show (toggle);
 
   toggle = gtk_check_button_new_with_label ("Pitted Surfaces");
@@ -640,7 +640,7 @@ mosaic_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) mosaic_toggle_update,
 		      &mvals.tile_surface);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), (mvals.tile_surface == ROUGH));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), (mvals.tile_surface == ROUGH));
   gtk_widget_show (toggle);
 
   toggle = gtk_check_button_new_with_label ("FG/BG Lighting");
@@ -648,7 +648,7 @@ mosaic_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) mosaic_toggle_update,
 		      &mvals.grout_color);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), (mvals.grout_color == FG_BG));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), (mvals.grout_color == FG_BG));
   gtk_widget_show (toggle);
 
   gtk_widget_show (toggle_vbox);
@@ -669,7 +669,7 @@ mosaic_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) mosaic_toggle_update,
 		      &use_squares);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_squares);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_squares);
   gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (group, "Hexagons");
@@ -678,7 +678,7 @@ mosaic_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) mosaic_toggle_update,
 		      &use_hexagons);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_hexagons);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_hexagons);
   gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (group, "Octagons & Squares");
@@ -687,7 +687,7 @@ mosaic_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) mosaic_toggle_update,
 		      &use_octagons);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_octagons);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_octagons);
   gtk_widget_show (toggle);
 
   gtk_widget_show (toggle_vbox);

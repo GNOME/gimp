@@ -402,7 +402,7 @@ check_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) check_toggle_update,
 		      &cvals.mode);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), cvals.mode);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), cvals.mode);
   gtk_widget_show (toggle);
 
   label = gtk_label_new ("Check Size");

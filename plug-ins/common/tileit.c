@@ -940,8 +940,8 @@ tileit_reset(GtkWidget *widget, gpointer data)
 
   gtk_signal_handler_block_by_data(GTK_OBJECT(r->htoggle),&do_horz);
   gtk_signal_handler_block_by_data(GTK_OBJECT(r->vtoggle),&do_vert);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(r->htoggle),FALSE);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(r->vtoggle),FALSE);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(r->htoggle),FALSE);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(r->vtoggle),FALSE);
   gtk_signal_handler_unblock_by_data(GTK_OBJECT(r->htoggle),&do_horz);
   gtk_signal_handler_unblock_by_data(GTK_OBJECT(r->vtoggle),&do_vert);
   do_horz = do_vert = FALSE; 

@@ -481,7 +481,7 @@ oilify_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                       (GtkSignalFunc) oilify_toggle_update,
                       &ovals.mode);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), ovals.mode);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), ovals.mode);
   gtk_widget_show (toggle);
 
   dialog_create_value("Mask Size", GTK_TABLE(table), 1, &ovals.mask_size, 3.0, 50.0);

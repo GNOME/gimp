@@ -1335,19 +1335,19 @@ update_options(GFIGOBJ *old_obj)
     }
   if(selvals.opts.drawgrid != current_obj->opts.drawgrid)
     {
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (gfig_opt_widget.drawgrid),current_obj->opts.drawgrid);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gfig_opt_widget.drawgrid),current_obj->opts.drawgrid);
     }
   if(selvals.opts.snap2grid != current_obj->opts.snap2grid)
     {
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (gfig_opt_widget.snap2grid),current_obj->opts.snap2grid);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gfig_opt_widget.snap2grid),current_obj->opts.snap2grid);
     }
   if(selvals.opts.lockongrid != current_obj->opts.lockongrid)
     {
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (gfig_opt_widget.lockongrid),current_obj->opts.lockongrid);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gfig_opt_widget.lockongrid),current_obj->opts.lockongrid);
     }
   if(selvals.opts.showcontrol != current_obj->opts.showcontrol)
     {
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (gfig_opt_widget.showcontrol),current_obj->opts.showcontrol);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gfig_opt_widget.showcontrol),current_obj->opts.showcontrol);
     }
   if(selvals.opts.gridtype != current_obj->opts.gridtype)
     {
@@ -2387,7 +2387,7 @@ bezier_dialog (void)
 		      (GtkSignalFunc) gfig_toggle_update,
 		      (gpointer)&bezier_closed);
   gtk_tooltips_set_tip(gfig_tooltips,toggle,"Close curve on completion",NULL);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),bezier_closed);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),bezier_closed);
   gtk_widget_show(toggle);
   gtk_box_pack_start(GTK_BOX(vbox),toggle, TRUE, TRUE, 0);
 
@@ -2396,7 +2396,7 @@ bezier_dialog (void)
 		      (GtkSignalFunc) gfig_toggle_update,
 		      (gpointer)&bezier_line_frame);
   gtk_tooltips_set_tip(gfig_tooltips,toggle,"Draws lines between the control points. Only during curve creation",NULL);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),bezier_line_frame);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),bezier_line_frame);
   gtk_widget_show(toggle);
   gtk_box_pack_start(GTK_BOX(vbox),toggle, TRUE, TRUE, 0);
 
@@ -3291,7 +3291,7 @@ paint_page()
 
   toggle = gtk_check_button_new_with_label ("Scale to image ");
   gtk_table_attach(GTK_TABLE(table), toggle, 1, 2, 3, 4, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle),selvals.scaletoimage);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle),selvals.scaletoimage);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) gfig_scale2img_update,
 		      (gpointer)&selvals.scaletoimage);
@@ -4174,7 +4174,7 @@ options_page()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) toggle_tooltips,
 		      (gpointer)&selvals.showtooltips);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle),selvals.showtooltips);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle),selvals.showtooltips);
   gtk_widget_show(toggle); 
 
   toggle = gtk_check_button_new_with_label ("Show pos");

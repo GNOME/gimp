@@ -737,7 +737,7 @@ edge_dialog(GDrawable *drawable)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) edge_toggle_update,
 		      &use_wrap);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_wrap);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_wrap);
   gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (group, "Smear");
@@ -746,7 +746,7 @@ edge_dialog(GDrawable *drawable)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) edge_toggle_update,
 		      &use_smear);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_smear);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_smear);
   gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (group, "Black");
@@ -755,7 +755,7 @@ edge_dialog(GDrawable *drawable)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) edge_toggle_update,
 		      &use_black);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), use_black);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_black);
   gtk_widget_show (toggle);
   gtk_widget_show (hbox);
 

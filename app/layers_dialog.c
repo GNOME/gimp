@@ -2933,9 +2933,9 @@ layer_widget_layer_flush (GtkWidget *widget,
       gtk_signal_emit_by_name (GTK_OBJECT (layersD->opacity_data), "value_changed");
       gtk_option_menu_set_history (GTK_OPTION_MENU (layersD->mode_option_menu),
 				   paint_mode_menu_get_position (layer_widget->layer->mode));
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (layersD->preserve_trans),
-				   (layer_widget->layer->preserve_trans) ?
-				   GTK_STATE_ACTIVE : GTK_STATE_NORMAL);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (layersD->preserve_trans),
+				    (layer_widget->layer->preserve_trans) ?
+				    GTK_STATE_ACTIVE : GTK_STATE_NORMAL);
     }
 
   if (layer_is_floating_sel (layer_widget->layer))
@@ -3247,7 +3247,7 @@ layers_dialog_new_layer_query (GimpImage* gimage)
 
       /*  set the correct radio button  */
       if (i == options->fill_type)
-	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (radio_button), TRUE);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_button), TRUE);
 
       gtk_widget_show (radio_button);
     }

@@ -125,7 +125,7 @@ create_paint_options (void)
   gtk_signal_connect (GTK_OBJECT (incremental_toggle), "toggled",
 		      (GtkSignalFunc) paintbrush_toggle_update,
 		      &options->incremental);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (incremental_toggle), options->incremental);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (incremental_toggle), options->incremental);
   gtk_widget_show (incremental_toggle);
   
   /*  Register this selection options widget with the main tools options dialog  */

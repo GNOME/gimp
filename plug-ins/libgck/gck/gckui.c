@@ -805,7 +805,7 @@ GtkWidget *gck_checkbutton_new(char *name, GtkWidget *container,
         gtk_container_add(GTK_CONTAINER(container), button);
     }
 
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button),value);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button),value);
 
   if (status_changed_func!=NULL)
     gtk_signal_connect_object(GTK_OBJECT(button),"toggled",status_changed_func,(gpointer)button);

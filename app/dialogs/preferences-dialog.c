@@ -977,7 +977,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
       gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) RGB);
       if (default_type == RGB)
-	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
 			  (GtkSignalFunc) file_prefs_toggle_callback,
 			  &default_type);
@@ -987,7 +987,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
       gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) GRAY);
       if (last_type == GRAY) 
-	  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
                          (GtkSignalFunc) file_prefs_toggle_callback,
 			  &default_type);
@@ -1019,8 +1019,8 @@ file_pref_cmd_callback (GtkWidget *widget,
 	  gtk_option_menu_set_history(GTK_OPTION_MENU (optionmenu),i);
 	  
       button = gtk_check_button_new_with_label(_("Cubic interpolation"));
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
-                                   cubic_interpolation);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				    cubic_interpolation);
       gtk_box_pack_start (GTK_BOX (vbox), button, TRUE, TRUE, 0);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
                           (GtkSignalFunc) file_prefs_toggle_callback,
@@ -1049,7 +1049,7 @@ file_pref_cmd_callback (GtkWidget *widget,
           gtk_object_set_user_data (GTK_OBJECT (button),
 				    (gpointer) ((long) transparency_vals[i]));
           if (transparency_vals[i] == transparency_type)
-            gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+            gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
           gtk_signal_connect (GTK_OBJECT (button), "toggled",
                               (GtkSignalFunc) file_prefs_toggle_callback,
                               &transparency_type);
@@ -1073,7 +1073,7 @@ file_pref_cmd_callback (GtkWidget *widget,
           gtk_object_set_user_data (GTK_OBJECT (button),
 				    (gpointer) ((long) check_vals[i]));
           if (check_vals[i] == transparency_size)
-            gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+            gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
           gtk_signal_connect (GTK_OBJECT (button), "toggled",
                               (GtkSignalFunc) file_prefs_toggle_callback,
                               &transparency_size);
@@ -1094,8 +1094,8 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_widget_show (vbox);
 
       button = gtk_check_button_new_with_label(_("Resize window on zoom"));
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
-                                   allow_resize_windows);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				    allow_resize_windows);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
                           (GtkSignalFunc) file_prefs_toggle_callback,
@@ -1103,8 +1103,8 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_widget_show (button);
       
       button = gtk_check_button_new_with_label(_("Perfect-but-slow pointer tracking"));
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
-                                   perfectmouse);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				    perfectmouse);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
                           (GtkSignalFunc) file_prefs_toggle_callback,
@@ -1115,8 +1115,8 @@ file_pref_cmd_callback (GtkWidget *widget,
 	 have auto-saving in the gimp.
       
 	 button = gtk_check_button_new_with_label(_("Auto save"));
-	 gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
-                                   auto_save);
+	 gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                       auto_save);
 	 gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 	 gtk_signal_connect (GTK_OBJECT (button), "toggled",
 	                           (GtkSignalFunc) file_prefs_toggle_callback,
@@ -1125,7 +1125,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       */
 
       button = gtk_check_button_new_with_label(_("Disable cursor updating"));
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                    no_cursor_updating);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
@@ -1134,8 +1134,8 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_widget_show (button);
 
       button = gtk_check_button_new_with_label(_("Show tool tips"));
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
-                                   show_tool_tips);
+      gtk_toggle_button_set_activd (GTK_TOGGLE_BUTTON (button),
+				    show_tool_tips);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
                           (GtkSignalFunc) file_prefs_toggle_callback,
@@ -1143,8 +1143,8 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_widget_show (button);
 
       button = gtk_check_button_new_with_label(_("Show rulers"));
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
-                                   show_rulers);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				    show_rulers);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
                           (GtkSignalFunc) file_prefs_toggle_callback,
@@ -1152,8 +1152,8 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_widget_show (button);
 
       button = gtk_check_button_new_with_label(_("Show statusbar"));
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
-                                   show_statusbar);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				    show_statusbar);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
                           (GtkSignalFunc) file_prefs_toggle_callback,
@@ -1235,8 +1235,8 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_widget_show (vbox);
       
       button = gtk_check_button_new_with_label(_("Conservative memory usage"));
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
-                                   stingy_memory_use);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				    stingy_memory_use);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
 			  (GtkSignalFunc) file_prefs_toggle_callback,
@@ -1284,8 +1284,8 @@ file_pref_cmd_callback (GtkWidget *widget,
 	  gtk_option_menu_set_history(GTK_OPTION_MENU (optionmenu),i);
       
       button = gtk_check_button_new_with_label(_("Install colormap (8-bit only)"));
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
-				   install_cmap);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				    install_cmap);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
                           (GtkSignalFunc) file_prefs_toggle_callback,
                           &edit_install_cmap);
@@ -1295,8 +1295,8 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_widget_show (button);
 
       button = gtk_check_button_new_with_label(_("Colormap cycling (8-bit only)"));
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
-                                   cycled_marching_ants);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				    cycled_marching_ants);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
                           (GtkSignalFunc) file_prefs_toggle_callback,
                           &edit_cycled_marching_ants);
@@ -1320,8 +1320,8 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_widget_show (vbox);
 
       button = gtk_check_button_new_with_label (_("Save window positions on exit"));
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
-                                   save_session_info);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				    save_session_info);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
                           (GtkSignalFunc) file_prefs_toggle_callback,
@@ -1341,8 +1341,8 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_widget_show (button);
 
       button = gtk_check_button_new_with_label (_("Always try to restore session"));
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
-                                   always_restore_session);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				    always_restore_session);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
                           (GtkSignalFunc) file_prefs_toggle_callback,
@@ -1350,8 +1350,8 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_widget_show (button);
 
       button = gtk_check_button_new_with_label (_("Save device status on exit"));
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
-                                   save_device_status);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				    save_device_status);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
                           (GtkSignalFunc) file_prefs_toggle_callback,
@@ -1445,7 +1445,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
       if (!using_xserver_resolution)
-	  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
       abox = gtk_alignment_new (0.5, 0.5, 0.0, 1.0);
       gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);

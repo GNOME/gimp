@@ -179,8 +179,8 @@ create_transform_options (void)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) transform_toggle_update,
 		      &options->smoothing);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
-                      options->smoothing);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				options->smoothing);
   gtk_widget_show (toggle);
 
   gtk_widget_show (vbox);
@@ -215,8 +215,8 @@ create_transform_options (void)
   /* the show grid toggle button */
   toggle = gtk_check_button_new_with_label (_("Show grid"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
-                      options->show_grid);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				options->show_grid);
   /* important: connect the signal after setting the state, because calling
      transform_show_grid_update before the tool is created will fail */
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -246,8 +246,8 @@ create_transform_options (void)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) transform_toggle_update,
 		      &options->clip);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
-                      options->clip);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				options->clip);
   gtk_widget_show (toggle);
 
   gtk_widget_show (vbox);

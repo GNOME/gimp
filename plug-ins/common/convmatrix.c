@@ -516,15 +516,15 @@ static void redraw_matrix(void){
 static void redraw_channels(void){
 	int i;
 	for(i=0;i<5;i++)
-	    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(my_widgets.channels[i]),
-					my_config.channels[i]>0);
+	    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(my_widgets.channels[i]),
+					 my_config.channels[i]>0);
 }
 
 static void redraw_autoset(void){
-	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(my_widgets.autoset),my_config.autoset);
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(my_widgets.autoset),my_config.autoset);
 }
 static void redraw_alpha_alg(void){
-	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(my_widgets.alpha_alg),my_config.alpha_alg>0);
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(my_widgets.alpha_alg),my_config.alpha_alg>0);
 }
 
 static void redraw_off_and_div(void){
@@ -536,7 +536,7 @@ static void redraw_off_and_div(void){
 }
 
 static void redraw_bmode(void){
-	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(my_widgets.bmode[my_config.bmode]),TRUE);
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(my_widgets.bmode[my_config.bmode]),TRUE);
 }
 
 static void redraw_all(void){

@@ -34,6 +34,12 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.10  1999/01/15 17:34:37  unammx
+ *   1999-01-15  Federico Mena Quintero  <federico@nuclecu.unam.mx>
+ *
+ *   	* Updated gtk_toggle_button_set_state() to
+ *   	gtk_toggle_button_set_active() in all the files.
+ *
  *   Revision 1.9  1998/06/06 23:22:19  yosh
  *   * adding Lighting plugin
  *
@@ -727,7 +733,7 @@ save_dialog(void)
     button = gtk_radio_button_new_with_label(group, types[i]);
     group  = gtk_radio_button_group(GTK_RADIO_BUTTON(button));
     if (i == compression)
-      gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), TRUE);
+      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
 
     gtk_signal_connect(GTK_OBJECT(button), "toggled",
   		       (GtkSignalFunc)save_compression_callback,

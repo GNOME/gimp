@@ -2262,7 +2262,7 @@ video_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) video_toggle_update,
 		      &vvals.additive);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), vvals.additive);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), vvals.additive);
   gtk_widget_show (toggle);
 
   toggle = gtk_check_button_new_with_label ("Rotated");
@@ -2270,7 +2270,7 @@ video_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) video_toggle_update,
 		      &vvals.rotated);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), vvals.rotated);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), vvals.rotated);
   gtk_widget_show (toggle);
 
 
@@ -2308,7 +2308,7 @@ video_dialog ()
       gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 			  (GtkSignalFunc) video_toggle_update,
 			  &radio_pressed[y]);
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), radio_pressed[y]);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), radio_pressed[y]);
       gtk_widget_show (toggle);
     }
 
@@ -2318,7 +2318,7 @@ video_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) video_toggle_update,
 		      &radio_pressed[0]);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), radio_pressed[0]);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), radio_pressed[0]);
   gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (group,"Large staggered");
@@ -2327,7 +2327,7 @@ video_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) video_toggle_update,
 		      &radio_pressed[1]);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), radio_pressed[1]);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), radio_pressed[1]);
   gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (group,"Striped");
@@ -2336,7 +2336,7 @@ video_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) video_toggle_update,
 		      &radio_pressed[2]);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), radio_pressed[2]);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), radio_pressed[2]);
   gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (group,"Wide-striped");
@@ -2345,7 +2345,7 @@ video_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) video_toggle_update,
 		      &radio_pressed[3]);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), radio_pressed[3]);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), radio_pressed[3]);
   gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (group,"Long-staggered");
@@ -2354,7 +2354,7 @@ video_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) video_toggle_update,
 		      &radio_pressed[4]);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), radio_pressed[4]);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), radio_pressed[4]);
   gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (group,"3x3");
@@ -2363,7 +2363,7 @@ video_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) video_toggle_update,
 		      &radio_pressed[5]);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), radio_pressed[5]);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), radio_pressed[5]);
   gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (group,"Large 3x3");
@@ -2372,7 +2372,7 @@ video_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) video_toggle_update,
 		      &radio_pressed[6]);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), radio_pressed[6]);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), radio_pressed[6]);
   gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (group,"Hex");
@@ -2381,7 +2381,7 @@ video_dialog ()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) video_toggle_update,
 		      &radio_pressed[7]);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), radio_pressed[7]);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), radio_pressed[7]);
   gtk_widget_show (toggle);*/
 
 

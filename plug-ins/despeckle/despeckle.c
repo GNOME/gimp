@@ -43,6 +43,12 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.14  1999/01/15 17:33:24  unammx
+ *   1999-01-15  Federico Mena Quintero  <federico@nuclecu.unam.mx>
+ *
+ *   	* Updated gtk_toggle_button_set_state() to
+ *   	gtk_toggle_button_set_active() in all the files.
+ *
  *   Revision 1.13  1998/06/06 23:22:16  yosh
  *   * adding Lighting plugin
  *
@@ -795,8 +801,8 @@ despeckle_dialog(void)
   button = gtk_check_button_new_with_label("Adaptive");
   gtk_table_attach(GTK_TABLE(ftable), button, 0, 1, 0, 1,
 		   GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button),
-                              (filter_type & FILTER_ADAPTIVE) ? TRUE : FALSE);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button),
+			       (filter_type & FILTER_ADAPTIVE) ? TRUE : FALSE);
   gtk_signal_connect(GTK_OBJECT(button), "toggled",
 		     (GtkSignalFunc)dialog_adaptive_callback,
 		     NULL);
@@ -805,8 +811,8 @@ despeckle_dialog(void)
   button = gtk_check_button_new_with_label("Recursive");
   gtk_table_attach(GTK_TABLE(ftable), button, 0, 1, 1, 2,
 		   GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button),
-                              (filter_type & FILTER_RECURSIVE) ? TRUE : FALSE);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button),
+			       (filter_type & FILTER_RECURSIVE) ? TRUE : FALSE);
   gtk_signal_connect(GTK_OBJECT(button), "toggled",
 		     (GtkSignalFunc)dialog_recursive_callback,
 		     NULL);

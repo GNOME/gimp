@@ -124,8 +124,8 @@ tips_dialog_create ()
       gtk_widget_show (button_prev);
 
       button_check = gtk_check_button_new_with_label (_("Show tip next time"));
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button_check),
-				   show_tips);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button_check),
+				    show_tips);
       gtk_signal_connect (GTK_OBJECT (button_check), "toggled",
 			  GTK_SIGNAL_FUNC (tips_toggle_update),
 			  (gpointer) &show_tips);
