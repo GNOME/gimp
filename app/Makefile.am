@@ -55,11 +55,9 @@ symprefix = _
 endif
 
 gimp_1_3_LDFLAGS = \
-	$(mwindows)						\
-	-u $(symprefix)gimp_container_get_filtered_name_array	\
-	-u $(symprefix)gimp_xml_parser_new			\
-	-u $(symprefix)gimp_xml_parser_parse_file		\
-	-u $(symprefix)gimp_xml_parser_free
+	$(mwindows)				\
+	-u $(symprefix)gimp_container_filter	\
+	-u $(symprefix)gimp_xml_parser_new
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp\"		\

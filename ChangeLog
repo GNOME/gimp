@@ -1,5 +1,10 @@
 2003-09-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am (gimp_1_3_LDFLAGS): specifying one symbol per
+	object file we force to be linked in is sufficient.
+
+2003-09-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdatafactoryview.[ch]
 	* app/widgets/gimpitemtreeview.[ch]
 	* app/widgets/gimppaletteeditor.[ch]
