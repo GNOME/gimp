@@ -43,6 +43,7 @@ EXTRA_DIST = \
 	README		\
 	app.pl		\
 	enumcode.pl	\
+	enumcode-py.pl	\
 	enumgen.pl	\
 	groups.pl	\
 	lib.pl		\
