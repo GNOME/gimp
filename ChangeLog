@@ -1,3 +1,28 @@
+Sun Nov 14 21:37:51 CET 1999 Olof S Kylander <olof@gimp.org>
+	
+	Update of the Xinput airbrush, fixed some bugs.
+	It's a bit closer to a real tool now ;-).
+
+	Test it out but be aware that you have to have at least
+	a tablet with tilt support. Preferibly you should have 
+	a Wacom Airbrush and a patched version of GTK.
+
+	Well it still has preformance problems with big brushes 
+	i.e big  virtual height and big tilt.
+
+	All sensitives are not yet implemented, but it starts
+	to work like a real airbrush. It's as hard to 
+	master as the real thing (beside that your ink will
+	not streem).
+
+	PS: There is a lot of printf and experimental code 
+	in the tool at the moment please don't remove it.
+
+ 	* app/airbrush_blob.c
+ 	* app/airbrush_blob.h
+ 	* app/xinput_airbrush.c
+
+
 Sun Nov 14 16:38:21 GMT 1999  Adam D. Moss  <adam@gimp.org>
 
 	* plug-ins/common/psd.c: Patch from Andy Hefner

@@ -138,7 +138,6 @@ struct _AirBrush {
 AirBlob *create_air_blob (double xc, double yc, double xt, double yt, double xr, double yr, double xb, double yb, double xl, double yl, double direction_abs, double direction);
 AirBlob *trans_air_blob(AirBlob *airblob_last, AirBlob *airblob_present, double dist, int xc, int yc);
 AirLine *create_air_line(AirBlob *airblob);
-int number_of_steps(int x0, int y0, int x1, int y1);
 
 
 

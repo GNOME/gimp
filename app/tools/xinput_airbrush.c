@@ -83,6 +83,8 @@ struct _XinputAirbrushTool
 
     gboolean   init_velocity;
     gboolean   init_prepre;
+    
+    double     last_value;
 
   };
 
@@ -92,13 +94,17 @@ struct _XinputAirbrushOptions
   {
     PaintOptions  paint_options;
 
-    double        size;
-    double        size_d;
-    GtkObject    *size_w;
+    double        flow;
+    double        flow_d;
+    GtkObject    *flow_w;
 
     double        sensitivity;
     double        sensitivity_d;
     GtkObject    *sensitivity_w;
+
+    double        starttilt;
+    double        starttilt_d;
+    GtkObject    *starttilt_w;
 
     double        vel_sensitivity;
     double        vel_sensitivity_d;
@@ -108,10 +114,20 @@ struct _XinputAirbrushOptions
     double        tilt_sensitivity_d;
     GtkObject    *tilt_sensitivity_w;
 
+#ifdef GTK_HAVE_SIX_VALUATORS
+    double        minheight;
+    double        minheight_d;
+    GtkObject    *minheight_w;
 
-    double        tilt_angle;
-    double        tilt_angle_d;
-    GtkObject    *tilt_angle_w;
+
+    double        maxheight;
+    double        maxheight_d;
+    GtkObject    *maxheight_w;
+#else /* !GTK_HAVE_SIX_VALUATORS */
+    double        height;
+    double        height_d;
+    GtkObject    *height_w;
+#endif /* GTK_HAVE_SIX_VALUATORS */
 
   };
 
@@ -247,16 +263,26 @@ static void
 
     paint_options_reset ((PaintOptions *) options);
 
-    gtk_adjustment_set_value (GTK_ADJUSTMENT (options->size_w),
-                              options->size_d);
+    gtk_adjustment_set_value (GTK_ADJUSTMENT (options->flow_w),
+                              options->flow_d);
     gtk_adjustment_set_value (GTK_ADJUSTMENT (options->sensitivity_w),
                               options->sensitivity_d);
+    gtk_adjustment_set_value (GTK_ADJUSTMENT (options->starttilt_w),
+			      options->starttilt_d);
     gtk_adjustment_set_value (GTK_ADJUSTMENT (options->tilt_sensitivity_w),
                               options->tilt_sensitivity_d);
     gtk_adjustment_set_value (GTK_ADJUSTMENT (options->vel_sensitivity_w),
                               options->vel_sensitivity_d);
-    gtk_adjustment_set_value (GTK_ADJUSTMENT (options->tilt_angle_w),
-                              options->tilt_angle_d);
+#ifdef GTK_HAVE_SIX_VALUATORS
+    gtk_adjustment_set_value (GTK_ADJUSTMENT (options->minheight_w),
+                              options->minheight_d);
+    gtk_adjustment_set_value (GTK_ADJUSTMENT (options->maxheight_w),
+                              options->maxheight_d);
+#else /* !GTK_HAVE_SIX_VALUATORS */
+    gtk_adjustment_set_value (GTK_ADJUSTMENT (options->height_w),
+                              options->height_d);
+#endif /* GTK_HAVE_SIX_VALUATORS */
+
   }
 
 static XinputAirbrushOptions *
@@ -274,11 +300,17 @@ static XinputAirbrushOptions *
     paint_options_init ((PaintOptions *) options,
                         XINPUT_AIRBRUSH,
                         xinput_airbrush_options_reset);
-    options->size             = options->size_d             = 4.4;
-    options->sensitivity      = options->sensitivity_d      = 1.0;
-    options->vel_sensitivity  = options->vel_sensitivity_d  = 0.8;
-    options->tilt_sensitivity = options->tilt_sensitivity_d = 0.4;
-    options->tilt_angle       = options->tilt_angle_d       = 0.0;
+    options->flow               = options->flow_d                = 100;
+    options->sensitivity        = options->sensitivity_d         = 1.0;
+    options->starttilt          = options->starttilt_d           = 90;
+    options->vel_sensitivity    = options->vel_sensitivity_d     = 0.8;
+    options->tilt_sensitivity   = options->tilt_sensitivity_d    = 0.4;
+#ifdef GTK_HAVE_SIX_VALUATORS
+    options->minheight          = options->minheight_d           = 25.0;
+    options->maxheight          = options->maxheight_d           = 50.0;
+#else /* !GTK_HAVE_SIX_VALUATORS */
+    options->height             = options->height_d              = 35.0;
+#endif /* GTK_HAVE_SIX_VALUATORS */
 
     /*the main table*/  
 
@@ -286,26 +318,27 @@ static XinputAirbrushOptions *
     gtk_box_pack_start (GTK_BOX (((ToolOptions *) options)->main_vbox), table,
                         FALSE, FALSE, 0);
 
-    /*size slider*/ 
-    label = gtk_label_new (_("Size:"));
+    /*flow slider*/ 
+    label = gtk_label_new (_("Flow Relation:"));
     gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
     gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
                       GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
     gtk_widget_show (label);
 
-    options->size_w =
-      gtk_adjustment_new (options->size_d, 0.0, 20.0, 1.0, 5.0, 0.0);
-    slider = gtk_hscale_new (GTK_ADJUSTMENT (options->size_w));
+    options->flow_w =
+      gtk_adjustment_new (options->flow_d, 50.0, 201.0, 1.0, 10.0, 1.0);
+    slider = gtk_hscale_new (GTK_ADJUSTMENT (options->flow_w));
     gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
     gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, 0, 1);
     gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
-    gtk_signal_connect (GTK_OBJECT (options->size_w), "value_changed",
+    gtk_signal_connect (GTK_OBJECT (options->flow_w), "value_changed",
                         (GtkSignalFunc) tool_options_double_adjustment_update,
-                        &options->size);
+                        &options->flow);
     gtk_widget_show (slider);
+    gtk_scale_set_digits (GTK_SCALE (slider), 0);
 
-    /*sens slider*/
-    label = gtk_label_new (_("Sensitivity:"));
+    /*flow sens slider*/
+    label = gtk_label_new (_("Flow Sensitivity:"));
     gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
     gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
                       GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
@@ -322,21 +355,40 @@ static XinputAirbrushOptions *
                         &options->sensitivity);
     gtk_widget_show (slider);
 
-    /*tilt sens slider*/
-    label = gtk_label_new (_("Tilt"));
-    gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
+
+    /*base tilt slider*/
+
+    label = gtk_label_new (_("Base Tilt:"));
+    gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
     gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
-                      GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+                      GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
     gtk_widget_show (label);
 
-    label = gtk_label_new (_("Sensitivity:"));
+    options->starttilt_w =
+      gtk_adjustment_new (options->starttilt_d, 30.0 , 91.0, 1.0, 1.0, 1.0);
+    slider = gtk_hscale_new (GTK_ADJUSTMENT (options->starttilt_w));
+    gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
+    gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, 2, 3);
+    gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+    gtk_signal_connect (GTK_OBJECT (options->starttilt_w), "value_changed",
+                        (GtkSignalFunc) tool_options_double_adjustment_update,
+                        &options->starttilt);
+    gtk_widget_show (slider);
+    gtk_scale_set_digits (GTK_SCALE (slider), 0);
+    
+
+
+    /*tilt sens slider*/
+
+
+    label = gtk_label_new (_("Tilt Sensitivity:"));
     gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
     gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
-                      GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+                      GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
     gtk_widget_show (label);
 
     abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
-    gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 2, 4,
+    gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 3, 4,
                       GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
     gtk_widget_show (abox);
 
@@ -353,20 +405,16 @@ static XinputAirbrushOptions *
 
 
     /*velocity sens slider*/
-    label = gtk_label_new (_("Speed"));
-    gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
-    gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
-                      GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
-    gtk_widget_show (label);
 
-    label = gtk_label_new (_("Sensitivity:"));
+
+    label = gtk_label_new (_("Speed Sensitivity:"));
     gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
     gtk_table_attach (GTK_TABLE (table), label, 0, 1, 5, 6,
-                      GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+                      GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
     gtk_widget_show (label);
 
     abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
-    gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 4, 6,
+    gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 5, 6,
                       GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
     gtk_widget_show (abox);
 
@@ -381,37 +429,72 @@ static XinputAirbrushOptions *
                         &options->vel_sensitivity);
     gtk_widget_show (slider);
 
+#ifdef GTK_HAVE_SIX_VALUATORS
 
-    /*angle adjust slider*/ 
-    label = gtk_label_new (_("Angle"));
-    gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
-    gtk_table_attach (GTK_TABLE (table), label, 0, 1, 6, 7,
-                      GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
-    gtk_widget_show (label);
 
-    label = gtk_label_new (_("Adjust:"));
+    /*min height slider*/
+
+    label = gtk_label_new (_("Min Height:"));
     gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
     gtk_table_attach (GTK_TABLE (table), label, 0, 1, 7, 8,
-                      GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+                      GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
     gtk_widget_show (label);
 
-    abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
-    gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 6, 8,
-                      GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-    gtk_widget_show (abox);
-
-    options->tilt_angle_w =
-      gtk_adjustment_new (options->tilt_angle_d, -90.0, 90.0, 1, 10.0, 0.0);
-    slider = gtk_hscale_new (GTK_ADJUSTMENT (options->tilt_angle_w));
+    options->minheight_w =
+      gtk_adjustment_new (options->minheight_d, 25.0 , 41.0, 1.0, 1.0, 1.0);
+    slider = gtk_hscale_new (GTK_ADJUSTMENT (options->minheight_w));
     gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
-    gtk_container_add (GTK_CONTAINER (abox), slider);
+    gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, 7, 8);
     gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
-    gtk_signal_connect (GTK_OBJECT (options->tilt_angle_w), "value_changed",
+    gtk_signal_connect (GTK_OBJECT (options->minheight_w), "value_changed",
                         (GtkSignalFunc) tool_options_double_adjustment_update,
-                        &options->tilt_angle);
+                        &options->minheight);
+    gtk_widget_show (slider);
+    gtk_scale_set_digits (GTK_SCALE (slider), 0);
 
-  
-    
+
+    /*max height slider*/
+
+    label = gtk_label_new (_("Max Height:"));
+    gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+    gtk_table_attach (GTK_TABLE (table), label, 0, 1, 9, 10,
+                      GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+    gtk_widget_show (label);
+
+    options->maxheight_w =
+      gtk_adjustment_new (options->maxheight_d, 41.0 , 81.0, 1.0, 1.0, 1.0);
+    slider = gtk_hscale_new (GTK_ADJUSTMENT (options->maxheight_w));
+    gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
+    gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, 9, 10);
+    gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+    gtk_signal_connect (GTK_OBJECT (options->maxheight_w), "value_changed",
+                        (GtkSignalFunc) tool_options_double_adjustment_update,
+                        &options->maxheight);
+    gtk_widget_show (slider);
+    gtk_scale_set_digits (GTK_SCALE (slider), 0);
+
+
+#else /* !GTK_HAVE_SIX_VALUATORS */
+
+    label = gtk_label_new (_("Height:"));
+    gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+    gtk_table_attach (GTK_TABLE (table), label, 0, 1, 7, 8,
+                      GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+    gtk_widget_show (label);
+
+    options->height_w =
+      gtk_adjustment_new (options->minheight_d, 5.0 , 61.0, 1.0, 1.0, 1.0);
+    slider = gtk_hscale_new (GTK_ADJUSTMENT (options->height_w));
+    gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
+    gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, 7, 8);
+    gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+    gtk_signal_connect (GTK_OBJECT (options->height_w), "value_changed",
+                        (GtkSignalFunc) tool_options_double_adjustment_update,
+                        &options->height);
+    gtk_widget_show (slider);
+    gtk_scale_set_digits (GTK_SCALE (slider), 0);
+
+#endif /* GTK_HAVE_SIX_VALUATORS */
 
     gtk_widget_show_all (table);
 
@@ -419,14 +502,27 @@ static XinputAirbrushOptions *
   }
 
 
-
+#ifdef GTK_HAVE_SIX_VALUATORS
 static AirBlob *
-xinput_airbrush_pen_ellipse (XinputAirbrushTool      *xinput_airbrush_tool, gdouble x_center, gdouble y_center,
-                               gdouble pressure, gdouble xtiltv, gdouble ytiltv)
+xinput_airbrush_pen_ellipse (XinputAirbrushTool      *xinput_airbrush_tool, 
+			     gdouble x_center, gdouble y_center,
+			     gdouble pressure, gdouble xtiltv,
+			     gdouble ytiltv, gdouble wheel)
+#else /* !GTK_HAVE_SIX_VALUATORS */
+xinput_airbrush_pen_ellipse (XinputAirbrushTool      *xinput_airbrush_tool, 
+			     gdouble x_center, gdouble y_center,
+			     gdouble pressure, gdouble xtiltv,
+			     gdouble ytiltv)
+#endif /* GTK_HAVE_SIX_VALUATORS */
 {
 
     gdouble xtilt, ytilt;
     double height;
+#ifdef GTK_HAVE_SIX_VALUATORS
+    double inter_height;
+    double min_height;
+    double max_height;
+#endif /* GTK_HAVE_SIX_VALUATORS */
     double tanx, tany;
     double tanytop, tanxright, tanybot, tanxleft;
     double sprayangle;
@@ -435,15 +531,50 @@ xinput_airbrush_pen_ellipse (XinputAirbrushTool      *xinput_airbrush_tool, gdou
 
 
 
-    /*Fix av tilt negative when it should be positive*/
 
-    xtilt = xtiltv * -1.0;
-    ytilt = ytiltv * -1.0;
 
-    /*Values that should be adjust able*/
+    /* Virtual height over the drawing */
 
-    height = 50.;
-    sprayangle = G_PI/12;
+#ifdef GTK_HAVE_SIX_VALUATORS
+    min_height=xinput_airbrush_options->minheight;
+    max_height=xinput_airbrush_options->maxheight;
+
+    inter_height = CLAMP(wheel, 0.0, 1.0) * (max_height - min_height);
+    height = min_height + inter_height;
+
+    /*
+      printf("Height: %f\n", height);
+    */
+
+#else /* !GTK_HAVE_SIX_VALUATORS */
+    height = xinput_airbrush_options->height;
+#endif /* GTK_HAVE_SIX_VALUATORS */
+
+
+    /*
+
+      Fix av tilt negative when it should be positive
+      Also a clamp of to big tilts compared to the height
+      i.e you will not get big brushes
+
+    */
+
+    xtilt = xtiltv * -1.0 * (1 - ((0.5 * (height - 15))/100));
+    ytilt = ytiltv * -1.0 * (1 - ((0.5 * (height - 15))/100));
+
+
+
+    /* The airflow controls the spray angel 
+       High airflow renders in a big spray angel
+       but if the inkflow is low the blob will be 
+       very thin.
+    */
+
+    sprayangle = G_PI/6 * (xinput_airbrush_options->flow/100.0) * MAX(pressure, 0.1);
+
+    sprayangle = MAX(sprayangle, 0.0);
+
+    /*printf("Angle: %f\n", sprayangle);*/
 
     /*Tan of x and y tilt plus spray angles x r/l and y t/b tan*/
 
@@ -538,14 +669,22 @@ xinput_airbrush_button_press (Tool           *tool,
 
   /* Get the AirBlob from xinput_airbrush_pen_ellipse */
   
+#ifdef GTK_HAVE_SIX_VALUATORS
+
+  airblob = xinput_airbrush_pen_ellipse (xinput_airbrush_tool, x, y,
+					 bevent->pressure, bevent->xtilt,
+					 bevent->ytilt, bevent->wheel);
+#else /* !GTK_HAVE_SIX_VALUATORS */  
+
   airblob = xinput_airbrush_pen_ellipse (xinput_airbrush_tool, x, y,
 					 bevent->pressure, bevent->xtilt,
 					 bevent->ytilt);
-  
+#endif /* GTK_HAVE_SIX_VALUATORS */
+
 
   /* Make the AirBlob mask */
 
-  value = 150;
+  value = 256 * bevent->pressure;
     
   airline = create_air_line(airblob);
   x_min = airline->min_x;
@@ -574,6 +713,7 @@ xinput_airbrush_button_press (Tool           *tool,
   xinput_airbrush_tool->init_prepre = FALSE;
   xinput_airbrush_tool->lastx = xinput_airbrush_tool->xcenter;
   xinput_airbrush_tool->lasty = xinput_airbrush_tool->ycenter;
+  xinput_airbrush_tool->last_value = value;
   
   /*Free the maks_buf and airline*/
   
@@ -709,8 +849,11 @@ static void
 
     gboolean turn_around;
 
-
-    last_value = present_value = 150;
+    /*test*/
+    double min_height;
+    double max_height;
+    double inter_height;
+    double height;
 
     gdisp = (GDisplay *) gdisp_ptr;
     xinput_airbrush_tool = (XinputAirbrushTool *) tool->private;
@@ -720,7 +863,11 @@ static void
 
     pressure = mevent->pressure;
 
+#ifdef GTK_HAVE_SIX_VALUATORS
+    airblob = xinput_airbrush_pen_ellipse (xinput_airbrush_tool, x, y, pressure, mevent->xtilt, mevent->ytilt, mevent->wheel);
+#else /* !GTK_HAVE_SIX_VALUATORS */
     airblob = xinput_airbrush_pen_ellipse (xinput_airbrush_tool, x, y, pressure, mevent->xtilt, mevent->ytilt);
+#endif /* GTK_HAVE_SIX_VALUATORS */
 
     x = xinput_airbrush_tool->xcenter;
     y = xinput_airbrush_tool->ycenter;
@@ -775,7 +922,31 @@ static void
 
     velocity = 10.0 * sqrt((dist) / (double)(thistime - lasttime));
 
-    
+
+    /* Normal Speed is 2.0, Break point for zero ink is 18.
+       Slow speed is between 2.0 and 0.5 */
+
+
+    /*printf("Speed: %f\n", velocity);*/
+
+#ifdef GTK_HAVE_SIX_VALUATORS
+    min_height=xinput_airbrush_options->minheight;
+    max_height=xinput_airbrush_options->maxheight;
+
+    inter_height = CLAMP(mevent->wheel, 0.0, 1.0) * (max_height - min_height);
+    height = min_height + inter_height;
+
+    /*
+      printf("Height: %f\n", height);
+    */
+
+#else /* !GTK_HAVE_SIX_VALUATORS */
+    height = xinput_airbrush_options->height;
+#endif /* GTK_HAVE_SIX_VALUATORS */
+
+    last_value =  xinput_airbrush_tool->last_value; 
+
+    present_value = 256 * pressure * (1 - ((height - 25)/100));
     
     make_stroke(airblob, xinput_airbrush_tool, drawable, last_value, present_value);
 
@@ -783,6 +954,7 @@ static void
     xinput_airbrush_tool->last_lasty = xinput_airbrush_tool->lasty;
     xinput_airbrush_tool->lastx = x;
     xinput_airbrush_tool->lasty = y;
+    xinput_airbrush_tool->last_value = present_value;
 
     g_free(xinput_airbrush_tool->last_airblob);
     xinput_airbrush_tool->last_airblob = airblob;
@@ -925,6 +1097,28 @@ static void
  * to learn this stuff, so I've kept it simple.
  */
 
+static inline int
+number_of_steps(int x0, int y0, int x1, int y1)
+{
+
+
+  int dx, dy;
+
+  dx = abs(x0 - x1);
+  
+  dy = abs(y0 - y1);
+
+  if (dy > dx)
+    {
+      return dy + 1;
+    }
+  else
+    {
+      return dx + 1;
+    }
+}
+
+
 
 static void
 make_stroke(AirBlob *airblob,
@@ -983,7 +1177,11 @@ make_stroke(AirBlob *airblob,
   last_airblob = xinput_airbrush_tool->last_airblob;
 
   steps = number_of_steps(x0, y0, x1, y1);
-  
+
+  /*
+    printf("Stoke Steps: %d\n", steps);
+  */
+
   ypoints = g_new(int, steps);
   xpoints = g_new(int, steps);
   
@@ -1433,6 +1631,65 @@ make_stroke(AirBlob *airblob,
 	}
     } 
 
+  if(!something)
+    {
+      /*
+	printf("Nothing \n");
+      */
+      number = 0;
+
+      dist = 1.0;			    
+
+      trans_blob = trans_air_blob(last_airblob, airblob, 0.5 , x1, y1);
+      air_line = create_air_line(trans_blob);
+      
+      x_min = air_line->min_x;
+      y_min = air_line->min_y;
+      width = air_line->width;
+      height = air_line->height;
+		  
+      bufs[number] =  mask_buf_new(width, height);
+      ypoints[number] = y_min;
+      xpoints[number] = x_min;
+      make_mask(air_line, bufs[number], pv);
+      /*
+	print_mask(bufs[number]);
+      */
+      brush_mask = mask_buf_new(width, height);
+      dest = brush_mask->data;
+      source = bufs[number]->data;
+
+
+      for(k = 0; k < bufs[number]->height; k++)
+	{	   
+	  for(j = 0; j < bufs[number]->width; j++ )
+	    {
+	      if(((int)dest[k * width + j] + (int)source[k * bufs[number]->width + j]) > 255)
+		{
+		  dest[k * width + j] = 255;
+		}
+	      else
+		{
+		  dest[k * width + j] += source[k * bufs[number]->width + j];
+		}
+	    }
+	}
+
+
+      xinput_airbrush_paste (xinput_airbrush_tool, drawable, brush_mask, x_min, y_min, width, height);
+
+      /*
+	print_mask(brush_mask);
+      */
+      mask_buf_free(brush_mask);
+
+      mask_buf_free(bufs[number]);
+      g_free(bufs);
+      /*
+	printf("Nothing again\n");
+      */
+    }
+
   if(something)
     {
 
@@ -1489,11 +1746,11 @@ make_stroke(AirBlob *airblob,
 
 	  source = bufs[i]->data;
 
-	  for(k = 0; k < bufs[i]->height; k++)
+ 	  for(k = 0; k < bufs[i]->height; k++)
 	    {	   
 	      for(j = 0; j < bufs[i]->width; j++ )
 		{
-		  if((dest[y + k * width + xstart + j] + source[k * bufs[i]->width + j]) > 255)
+		  if(((int)dest[y + k * width + xstart + j] + (int)source[k * bufs[i]->width + j]) > 255)
 		    {
 		      dest[y + k * width + xstart + j] = 255;
 		    }
@@ -1519,7 +1776,9 @@ make_stroke(AirBlob *airblob,
     }
   else
     {
-      printf("Hmm somthing was FALSE\n");
+      /*
+	printf("Hmm something was FALSE\n");
+      */
     }
 
 }
@@ -1538,6 +1797,7 @@ make_mask (AirLine *airline,
 {
 
   int steps;
+  int total_steps;
   int i;
   int j;
 
@@ -1563,6 +1823,20 @@ make_mask (AirLine *airline,
 
   nothing = TRUE;
 
+
+  total_steps=0;
+
+  for (i=0; i < airline->nlines ; i++)
+    {
+
+      steps = number_of_steps(airline->xcenter, airline->ycenter,
+			      airline->line[i].x, airline->line[i].y);
+      total_steps += steps;
+    }
+
+  /*
+    printf("Total Steps: %d\n", total_steps);
+  */
 
   for (i=0; i < airline->nlines ; i++)
     {
@@ -1595,15 +1869,9 @@ make_mask (AirLine *airline,
 	look for the three special cases.
       */
 
-      /*  if (i >= 3)
-	{
-	  midvalue = 0;
-	}
-      else
-      {*/
-	  midvalue = value;
-	  /*	}*/
-
+     
+      midvalue = value;
+	 
 
       if (dy > dx)
 	{
@@ -1618,6 +1886,7 @@ make_mask (AirLine *airline,
 		  /*
 		    We have to x--
 		  */
+
 		  s = dest->data;
 
 		  x = x0;
@@ -1625,8 +1894,15 @@ make_mask (AirLine *airline,
 
 		  s += y * rowlength + x;
 		  
-		  *s = midvalue;
-		  
+		  if (((int)*s + (int)midvalue) > 255)
+		    {
+		      *s = 255;
+		    }
+		  else
+		    {
+		      *s = midvalue + *s;
+		    }
+
 		  slopeterm = dx;
 		  
 		  j = 1;
@@ -1651,8 +1927,16 @@ make_mask (AirLine *airline,
 		      s += y * rowlength + x;
 		      
 		      ivalue = value * (1.0 - (double)j/(double)steps);
+		      
+		      if(((int)*s + ivalue) > 255)
+			{
+			  *s = 255;  
+			}
+		      else
+			{
+			*s = *s + ivalue;
+			}
 
-		      *s = ivalue;
 		      nothing = FALSE;
 		    }
 
@@ -1669,8 +1953,15 @@ make_mask (AirLine *airline,
 
 		  s += y * rowlength + x;
 		  
-		  *s = midvalue;
 		  
+		  if (((int)*s + (int)midvalue) > 255)
+		    {
+		      *s = 255;
+		    }
+		  else
+		    {
+		      *s = midvalue + *s;
+ 		    }
 		  slopeterm = dx;
 		  
 		  j = 1;
@@ -1696,7 +1987,14 @@ make_mask (AirLine *airline,
 		      
 		      ivalue = value * (1.0 - (double)j/(double)steps);
 
-		      *s = ivalue;
+		      if(((int)*s + ivalue) > 255)
+			{
+			  *s = 255;  
+			}
+		      else
+			{
+			*s = *s + ivalue;
+			}
 		      nothing = FALSE;
 		    }
 		}
@@ -1715,9 +2013,17 @@ make_mask (AirLine *airline,
 		  y = y0;
 
 		  s += y * rowlength + x;
+
 		  
-		  *s = midvalue;
-		  
+		  if (((int)*s + (int)midvalue) > 255)
+		    {
+		      *s = 255;
+		    }
+		  else
+		    {
+		      *s = midvalue + *s;
+		    }
+
 		  slopeterm = dx;
 		  
 		  j = 1;
@@ -1743,7 +2049,14 @@ make_mask (AirLine *airline,
 		      
 		      ivalue = value * (1.0 - (double)j/(double)steps);
 
-		      *s = ivalue;
+		      if(((int)*s + ivalue) > 255)
+			{
+			  *s = 255;  
+			}
+		      else
+			{
+			*s = *s + ivalue;
+			}
 		      nothing = FALSE;
 
 		    }
@@ -1760,7 +2073,16 @@ make_mask (AirLine *airline,
 
 		  s += y * rowlength + x;
 		  
-		  *s = midvalue;
+
+		  
+		  if (((int)*s + (int)midvalue) > 255)
+		    {
+		      *s = 255;
+		    }
+		  else
+		    {
+		      *s = midvalue + *s;
+		    }
 		  
 		  slopeterm = dx;
 		  
@@ -1787,7 +2109,15 @@ make_mask (AirLine *airline,
 		      
 		      ivalue = value * (1.0 - (double)j/(double)steps);
 
-		      *s = ivalue;
+		      if(((int)*s + ivalue) > 255)
+			{
+			  *s = 255;  
+			}
+		      else
+			{
+			*s = *s + ivalue;
+			}
+
 		      nothing = FALSE;
 		    }
 		}
@@ -1812,8 +2142,16 @@ make_mask (AirLine *airline,
 
 		  s += y * rowlength + x;
 		  
-		  *s = midvalue;
+
 		  
+		  if (((int)*s + (int)midvalue) > 255)
+		    {
+		      *s = 255;
+		    }
+		  else
+		    {
+		      *s = midvalue + *s;
+		    }
 		  slopeterm = dy;
 		  
 		  j = 1;
@@ -1839,7 +2177,14 @@ make_mask (AirLine *airline,
 		      
 		      ivalue = value * (1.0 - (double)j/(double)steps);
 
-		      *s = ivalue;
+		      if(((int)*s + ivalue) > 255)
+			{
+			  *s = 255;  
+			}
+		      else
+			{
+			*s = *s + ivalue;
+			}
 		      nothing = FALSE;
 		    }
 
@@ -1856,7 +2201,17 @@ make_mask (AirLine *airline,
 
 		  s += y * rowlength + x;
 		  
-		  *s = midvalue;
+
+		  
+		  if (((int)*s + (int)midvalue) > 255)
+		    {
+		      *s = 255;
+		    }
+		  else
+		    {
+		      *s = midvalue + *s;
+		    }
+
 		  
 		  slopeterm = dy;
 		  
@@ -1883,7 +2238,15 @@ make_mask (AirLine *airline,
 		      
   		      ivalue = value * (1.0 - (double)j/(double)steps);
 
-		      *s = ivalue;
+		      if(((int)*s + ivalue) > 255)
+			{
+			  *s = 255;  
+			}
+		      else
+			{
+			*s = *s + ivalue;
+			}
+
 		      nothing = FALSE;
 		    }
 		}
@@ -1903,8 +2266,16 @@ make_mask (AirLine *airline,
 
 		  s += y * rowlength + x;
 		  
-		  *s = midvalue;
-		  
+		  if (((int)*s + (int)midvalue) > 255)
+		    {
+		      *s = 255;
+		    }
+		  else
+		    {
+		      *s = midvalue + *s;
+		    }
+
+
 		  slopeterm = dy;
 		  
 		  j = 1;
@@ -1930,7 +2301,15 @@ make_mask (AirLine *airline,
 		      
   		      ivalue = value * (1.0 - (double)j/(double)steps);
 
-		      *s = ivalue;
+		      if(((int)*s + ivalue) > 255)
+			{
+			  *s = 255;  
+			}
+		      else
+			{
+			*s = *s + ivalue;
+			}
+
 		      nothing = FALSE;
 		    }
 		}
@@ -1946,8 +2325,15 @@ make_mask (AirLine *airline,
 
 		  s += y * rowlength + x;
 		  
-		  *s = midvalue;
 		  
+		  if (((int)*s + (int)midvalue) > 255)
+		    {
+		      *s = 255;
+		    }
+		  else
+		    {
+		      *s = midvalue + *s;
+		    }
 		  slopeterm = dy;
 		  
 		  j = 1;
@@ -1973,7 +2359,15 @@ make_mask (AirLine *airline,
 		      
   		      ivalue = value * (1.0 - (double)j/(double)steps);
 
-		      *s = ivalue;
+		      if(((int)*s + ivalue) > 255)
+			{
+			  *s = 255;  
+			}
+		      else
+			{
+			*s = *s + ivalue;
+			}
+
 		      nothing = FALSE;
 		    }
 
@@ -2291,9 +2685,9 @@ print_mask(MaskBuf *dest)
     }
    printf("\n");
 }
-/*
+
 static inline MaskBuf * 
-blur_mask(MaskBuf *mask)
+blur_mask_1(MaskBuf *mask)
 {
   MaskBuf *retur;
   int y, x;
@@ -2330,10 +2724,10 @@ blur_mask(MaskBuf *mask)
   mask_buf_free(mask);
   return retur;
 }
-*/
-/*
+
+
 static inline MaskBuf * 
-blur_mask(MaskBuf *mask)
+blur_mask_2(MaskBuf *mask)
 {
   MaskBuf *retur;
   int y, x;
@@ -2397,10 +2791,10 @@ blur_mask(MaskBuf *mask)
   return retur;
   }
 
-  */
+ 
 
 static inline MaskBuf * 
-blur_mask(MaskBuf *mask)
+blur_mask_3(MaskBuf *mask)
 {
   MaskBuf *retur;
   int y, x, y_3, y_2, y_1, y1, y2, y3, x_3, x_2,x_1, x1, x2,  x3;
@@ -2501,9 +2895,9 @@ blur_mask(MaskBuf *mask)
   return retur;
 }
 
-/*
+
 MaskBuf *
-blur_mask(MaskBuf *mask)
+blur_mask_4(MaskBuf *mask)
 {
   MaskBuf *retur;
   int y, x, x_4, x_3, x_2,x_1, x1, x2, x3, x4,x5;
@@ -2552,7 +2946,7 @@ blur_mask(MaskBuf *mask)
   
   mask_buf_free(mask);
   return retur;
-}*/
+}
 
 static void
 xinput_airbrush_paste (XinputAirbrushTool      *xinput_airbrush_tool,
@@ -2566,6 +2960,7 @@ xinput_airbrush_paste (XinputAirbrushTool      *xinput_airbrush_tool,
   GImage *gimage;
   PixelRegion srcPR;
   int offx, offy;
+  int size;
   unsigned char col[MAX_CHANNELS];
   MaskBuf *brush_mask1;
   MaskBuf *brush_mask3; 
@@ -2573,37 +2968,69 @@ xinput_airbrush_paste (XinputAirbrushTool      *xinput_airbrush_tool,
   MaskBuf *brush_mask;
   int i;
 
- 
-  /*print_mask(brush_mask);*/
-
 
   if (! (gimage = drawable_gimage (drawable)))
     return;
 
-  /*print_mask(brush_mask_in);*/
-
   
+  size = height * width;
+  brush_mask1 = mask_buf_new(brush_mask_in->width, brush_mask_in->height);
+  brush_mask1 = temp_buf_copy(brush_mask_in, brush_mask1); 
 
-  brush_mask1 =  mask_buf_new(brush_mask_in->width, brush_mask_in->height);
+  /* printf("Size: %d\n", size); */
 
-  brush_mask1 = temp_buf_copy(brush_mask_in, brush_mask1);
-
-  for(i = 0 ; i < 2; i++)
+  if (size <= 40)
     {
-       brush_mask2 = blur_mask(brush_mask1);
-       brush_mask3 = blur_mask(brush_mask2);
-       brush_mask1 = blur_mask(brush_mask3);
+      brush_mask1 = blur_mask_1(brush_mask1);
     }
-  
-  
-  brush_mask = brush_mask1;
+  else if ((size >= 40) && (size <= 90))
+    {
+   
+   
+      for(i = 0 ; i < 2; i++)
+	{
+	  brush_mask2 = blur_mask_1(brush_mask1);
+	  brush_mask3 = blur_mask_1(brush_mask2);
+	  brush_mask1 = blur_mask_1(brush_mask3);
+	}
+    }
+  else if ((size >= 91) && (size <= 1000))
+    {  
+      
+      
+      for(i = 0 ; i < 2; i++)
+	{
+	  brush_mask2 = blur_mask_3(brush_mask1);
+	  brush_mask3 = blur_mask_3(brush_mask2);
+	  brush_mask1 = blur_mask_3(brush_mask3);
+	  	
+	}
+      
+    }
+  else if ((size >= 1001) && (size <= 5000))
+    {
+      for(i = 0 ; i < 4; i++)
+	{
+	  brush_mask2 = blur_mask_4(brush_mask1);
+	  brush_mask3 = blur_mask_4(brush_mask2);
+	  brush_mask1 = blur_mask_3(brush_mask3);
+	  	
+	}
+    }
 
-  /*mask_buf_free(brush_mask2);
-    mask_buf_free(brush_mask3);*/
+  else if (size >= 5001)
+    {
+      for(i = 0 ; i < 5; i++)
+	{
+	  brush_mask2 = blur_mask_3(brush_mask1);
+	  brush_mask3 = blur_mask_4(brush_mask2);
+	  brush_mask1 = blur_mask_3(brush_mask3);
+	  	
+	}
+    }
+	 
 
-  /*print_mask(brush_mask);*/
-
-  
+  brush_mask = brush_mask1;  
 
   /* Get the the buffer */
   xinput_airbrush_set_paint_area (xinput_airbrush_tool, drawable, x - 1, y - 1, width, height);

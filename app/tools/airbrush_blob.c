@@ -1265,7 +1265,8 @@ create_air_line(AirBlob *airblob)
 
   AirLine *airline;
 
-  /* Yes I know I can do a cal of number of lines, but it is for
+  /* 
+     Yes I know I can do a cal of number of lines, but it is for
      the moment much easier to just set a side mem for 16 lines
   */
 
@@ -1278,6 +1279,28 @@ create_air_line(AirBlob *airblob)
   airline->ycenter = ycenter/SUBSAMPLE;
 
   direction = airblob->direction_abs;
+
+  /*
+    printf("Direction: %f\n", direction);
+    printf("Xcenter: %f\n",xcenter/SUBSAMPLE);
+    printf("Ycenter: %f\n",ycenter/SUBSAMPLE);
+    printf("MaCr.dist: %f\n",airblob->maincross_line.dist);
+    printf("MaCr.size: %f\n",airblob->maincross_line.size);
+    printf("MiCr.dist: %f\n",airblob->minorcross_line.dist);
+    printf("MiCr.size: %f\n",airblob->minorcross_line.size);
+    printf("Ma.size: %f\n",airblob->main_line.size);
+    printf("Mi.size: %f\n",airblob->minor_line.size);
+  */
+
+  if (direction == M_PI_H || direction == M_PI)
+    {
+    direction = direction - 0.001;
+    }
+
+  if (direction == -M_PI_H || direction == -M_PI)
+    {
+      direction = direction + 0.001;
+    }
 
   if(direction == 0.0)
 
@@ -1323,6 +1346,7 @@ create_air_line(AirBlob *airblob)
 	airline->line[5].y = (ycenter + airblob->minorcross_line.size/2)/SUBSAMPLE;
 
 	airline->nlines = 6;
+	printf("Hmm bummer M_PI_H\n");
 
       }
 
@@ -1347,6 +1371,9 @@ create_air_line(AirBlob *airblob)
 
 	airline->nlines = 6;
 
+	printf("Hmm bummer M_PI\n");
+
+
     }
 
   else if(direction == -M_PI_H)
@@ -1366,6 +1393,13 @@ create_air_line(AirBlob *airblob)
 	airline->line[4].y = (ycenter + airblob->maincross_line.size/2)/SUBSAMPLE;
 	airline->line[5].x = (xcenter - airblob->minorcross_line.dist)/SUBSAMPLE;
 	airline->line[5].y = (ycenter - airblob->minorcross_line.size/2)/SUBSAMPLE;
+
+	airline->nlines = 6;
+
+	printf("Hmm bummer -M_PI_H\n");
+
+
+
     }
 
 
@@ -1388,6 +1422,9 @@ create_air_line(AirBlob *airblob)
 	airline->line[5].y = (ycenter + airblob->minorcross_line.size/2)/SUBSAMPLE;
 
 	airline->nlines = 6;
+
+	printf("Hmm bummer -M_PI\n");
+
        
     }
 
@@ -1575,16 +1612,17 @@ create_air_line(AirBlob *airblob)
   min_y = max_y = airline->ycenter;
 
   /*
+  
     for (i=0; i < airline->nlines ; i++)
     {
-    printf("x%d, value %d\n", i, airline->line[i].x);
-    printf("y%d, value %d\n", i, airline->line[i].y);
+      printf("x%d, value %d\n", i, airline->line[i].x);
+      printf("y%d, value %d\n", i, airline->line[i].y);
     }
 
-    printf("The xcenter %d\n",airline->xcenter);  
-    printf("The ycenter %d\n",airline->ycenter);
+  printf("The xcenter %d\n",airline->xcenter);  
+  printf("The ycenter %d\n",airline->ycenter);
+  
   */
-
 
   for (i=0; i < airline->nlines ; i++)
     {
@@ -1794,26 +1832,6 @@ trans_air_blob(AirBlob *airblob_last, AirBlob *airblob_present, double dist, int
 
 }
 
-int
-number_of_steps(int x0, int y0, int x1, int y1)
-{
-
-
-  int dx, dy;
-
-  dx = abs(x0 - x1);
-  
-  dy = abs(y0 - y1);
-
-  if (dy > dx)
-    {
-      return dy + 1;
-    }
-  else
-    {
-      return dx + 1;
-    }
-}
    
  
 
