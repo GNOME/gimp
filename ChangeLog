@@ -1,5 +1,75 @@
 2002-03-20  Michael Natterer  <mitch@gimp.org>
 
+	./mitch --sanitize-identifier-namespace
+
+	* app/core/gimpcontext.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/gui/dialogs-commands.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/dialogs.c
+	* app/gui/edit-commands.c
+	* app/gui/gui.c
+	* app/gui/menus.c
+	* app/gui/vectors-commands.c
+	* app/gui/view-commands.c
+	* app/tools/gimpairbrushtool.c
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimpellipseselecttool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppaintbrushtool.c
+	* app/tools/gimppathtool.c
+	* app/tools/gimppenciltool.c
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimprectselecttool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c
+	* app/tools/gimpsmudgetool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimpthresholdtool.c
+	* app/tools/gimpvectortool.c
+	* app/widgets/gimpdnd.c
+	* app/widgets/gimptoolbox-indicator-area.c
+	* app/widgets/gimptoolbox.c: s/gimp:/gimp-/g and s/_/-/g for all
+	identifier strings (e.g. gimp:eraser_tool -> gimp-eraser-tool,
+	gimp:layer-list -> gimp-layer-list, ...)
+
+	* plug-ins/tools/common/gimpbrushselecttool.c:
+	s/gimp:brush_select_tool/gimp-brush-select-tool-module/
+
+	Don't quite remember why I introduced the "gimp:" prefix in the
+	first place, but we can always add it back if we need it (for
+	whatever reason)
+
+	You may want to edit your ~/.gimp-1.3/sessionrc and devicerc or
+	all session settings will be lost due to parse errors.
+
+2002-03-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/Makefile.am
 	* app/gui/commands.[ch]: removed...
 

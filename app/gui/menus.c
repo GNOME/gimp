@@ -140,7 +140,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
   { { N_("/File/Preferences..."), NULL,
       dialogs_create_toplevel_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_PREFERENCES },
-    "gimp:preferences-dialog",
+    "gimp-preferences-dialog",
     "file/dialogs/preferences/preferences.html", NULL },
 
   /*  <Toolbox>/File/Dialogs  */
@@ -155,55 +155,55 @@ static GimpItemFactoryEntry toolbox_entries[] =
     NULL, NULL },
   { { N_("/File/Dialogs/Tool Options..."), "<control><shift>T",
       dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:tool-options",
+    "gimp-tool-options",
     "file/dialogs/tool_options.html", NULL },
   { { N_("/File/Dialogs/Device Status..."), NULL,
       dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:device-status-dialog",
+    "gimp-device-status-dialog",
     "file/dialogs/device_status.html", NULL },
 
   SEPARATOR ("/File/Dialogs/---"),
 
   { { N_("/File/Dialogs/Brushes..."), "<control><shift>B",
       dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:brush-grid",
+    "gimp-brush-grid",
     "file/dialogs/brush_selection.html", NULL },
   { { N_("/File/Dialogs/Patterns..."), "<control><shift>P",
       dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:pattern-grid",
+    "gimp-pattern-grid",
     "file/dialogs/pattern_selection.html", NULL },
   { { N_("/File/Dialogs/Gradients..."), "<control>G",
       dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:gradient-list",
+    "gimp-gradient-list",
     "file/dialogs/gradient_selection.html", NULL },
   { { N_("/File/Dialogs/Palettes..."), "<control>P",
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_SELECT_COLOR },
-    "gimp:palette-list",
+    "gimp-palette-list",
     "file/dialogs/palette_selection.html", NULL },
   { { N_("/File/Dialogs/Indexed Palette..."), NULL,
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_SELECT_COLOR },
-    "gimp:indexed-palette",
+    "gimp-indexed-palette",
     "file/dialogs/indexed_palette.html", NULL },
   { { N_("/File/Dialogs/Buffers..."), NULL,
       dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:buffer-list",
+    "gimp-buffer-list",
     NULL, NULL },
   { { N_("/File/Dialogs/Images..."), NULL,
       dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:image-list",
+    "gimp-image-list",
     NULL, NULL },
 
   SEPARATOR ("/File/Dialogs/---"),
 
   { { N_("/File/Dialogs/Document History..."), NULL,
       dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:document-history",
+    "gimp-document-history",
     "file/dialogs/document_index.html", NULL },
   { { N_("/File/Dialogs/Error Console..."), NULL,
       dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:error-console",
+    "gimp-error-console",
     "file/dialogs/error_console.html", NULL },
 
 #ifdef ENABLE_DEBUG_ENTRIES
@@ -236,7 +236,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
 
   { { N_("/Xtns/Module Browser..."), NULL,
       dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:module-browser-dialog",
+    "gimp-module-browser-dialog",
     "dialogs/module_browser.html", NULL },
 
   SEPARATOR ("/Xtns/---"),
@@ -257,11 +257,11 @@ static GimpItemFactoryEntry toolbox_entries[] =
     "help/context_help.html", NULL },
   { { N_("/Help/Tip of the Day..."), NULL,
       dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:tips-dialog",
+    "gimp-tips-dialog",
     "help/dialogs/tip_of_the_day.html", NULL },
   { { N_("/Help/About..."), NULL,
       dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:about-dialog",
+    "gimp-about-dialog",
     "help/dialogs/about.html", NULL }
 };
 
@@ -657,7 +657,7 @@ static GimpItemFactoryEntry image_entries[] =
 
   { { N_("/Image/Undo History..."), NULL,
       dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:undo-history-dialog",
+    "gimp-undo-history-dialog",
     "dialogs/undo_history.html", NULL },
 
  /*  <Image>/Layer  */
@@ -849,55 +849,55 @@ static GimpItemFactoryEntry image_entries[] =
     NULL, NULL },
   { { N_("/Dialogs/Tool Options..."), NULL,
       dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:tool-options",
+    "gimp-tool-options",
     "dialogs/tool_options.html", NULL },
   { { N_("/Dialogs/Device Status..."), NULL,
       dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:device-status-dialog",
+    "gimp-device-status-dialog",
     "dialogs/device_status.html", NULL },
 
   SEPARATOR ("/Dialogs/---"),
 
   { { N_("/Dialogs/Brushes..."), "<control><shift>B",
       dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:brush-grid",
+    "gimp-brush-grid",
     "dialogs/brush_selection.html", NULL },
   { { N_("/Dialogs/Patterns..."), "<control><shift>P",
       dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:pattern-grid",
+    "gimp-pattern-grid",
     "dialogs/pattern_selection.html", NULL },
   { { N_("/Dialogs/Gradients..."), "<control>G",
       dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:gradient-list",
+    "gimp-gradient-list",
     "dialogs/gradient_selection.html", NULL },
   { { N_("/Dialogs/Palettes..."), "<control>P",
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_SELECT_COLOR },
-    "gimp:palette-list",
+    "gimp-palette-list",
     "dialogs/palette_selection.html", NULL },
   { { N_("/Dialogs/Indexed Palette..."), NULL,
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_SELECT_COLOR },
-    "gimp:indexed-palette",
+    "gimp-indexed-palette",
     "dialogs/indexed_palette.html", NULL },
   { { N_("/Dialogs/Buffers..."), NULL,
       dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:buffer-list",
+    "gimp-buffer-list",
     NULL, NULL },
   { { N_("/Dialogs/Images..."), NULL,
       dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:image-list",
+    "gimp-image-list",
     NULL, NULL },
 
   SEPARATOR ("/Dialogs/---"),
 
   { { N_("/Dialogs/Document History..."), NULL,
       dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:document-history",
+    "gimp-document-history",
     "dialogs/document_index.html", NULL },
   { { N_("/Dialogs/Error Console..."), NULL,
       dialogs_create_dockable_cmd_callback, 0 },
-    "gimp:error-console",
+    "gimp-error-console",
     "dialogs/error_console.html", NULL },
 
   SEPARATOR ("/---"),
@@ -1340,28 +1340,28 @@ static GimpItemFactoryEntry dialogs_entries[] =
     NULL, NULL },
 
 
-  ADD_TAB (N_("/Add Tab/Layers..."),           "gimp:layer-list", NULL, NULL),
-  ADD_TAB (N_("/Add Tab/Channels..."),         "gimp:channel-list", NULL, NULL),
-  ADD_TAB (N_("/Add Tab/Paths..."),            "gimp:vectors-list", NULL, NULL),
-  ADD_TAB (N_("/Add Tab/Old Paths..."),        "gimp:path-list", NULL, NULL),
-  ADD_TAB (N_("/Add Tab/Document History..."), "gimp:document-history", NULL, NULL),
-  ADD_TAB (N_("/Add Tab/Error Console..."),    "gimp:error-console", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Layers..."),           "gimp-layer-list", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Channels..."),         "gimp-channel-list", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Paths..."),            "gimp-vectors-list", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Old Paths..."),        "gimp-path-list", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Document History..."), "gimp-document-history", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Error Console..."),    "gimp-error-console", NULL, NULL),
 
   SEPARATOR ("/Add Tab/---"),
 
-  ADD_TAB (N_("/Add Tab/Brushes..."),         "gimp:brush-grid", NULL, NULL),
-  ADD_TAB (N_("/Add Tab/Patterns..."),        "gimp:pattern-grid", NULL, NULL),
-  ADD_TAB (N_("/Add Tab/Gradients..."),       "gimp:gradient-list", NULL, NULL),
-  ADD_TAB (N_("/Add Tab/Palettes..."),        "gimp:palette-list",
+  ADD_TAB (N_("/Add Tab/Brushes..."),         "gimp-brush-grid", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Patterns..."),        "gimp-pattern-grid", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Gradients..."),       "gimp-gradient-list", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Palettes..."),        "gimp-palette-list",
            "<StockItem>",                     GTK_STOCK_SELECT_COLOR),
-  ADD_TAB (N_("/Add Tab/Indexed Palette..."), "gimp:indexed-palette",
+  ADD_TAB (N_("/Add Tab/Indexed Palette..."), "gimp-indexed-palette",
            "<StockItem>",                     GTK_STOCK_SELECT_COLOR),
-  ADD_TAB (N_("/Add Tab/Buffers..."),         "gimp:buffer-list", NULL, NULL),
-  ADD_TAB (N_("/Add Tab/Images..."),          "gimp:image-list", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Buffers..."),         "gimp-buffer-list", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Images..."),          "gimp-image-list", NULL, NULL),
 
   SEPARATOR ("/Add Tab/---"),
 
-  ADD_TAB (N_("/Add Tab/Tools..."), "gimp:tool-list", NULL, NULL),
+  ADD_TAB (N_("/Add Tab/Tools..."), "gimp-tool-list", NULL, NULL),
 
   SEPARATOR ("/---"),
 
@@ -2076,12 +2076,12 @@ menus_init (Gimp *gimp)
 
   /*  create tool menu items  */
   {
-    static const gchar *color_tools[] = { "gimp:color_balance_tool",
-                                          "gimp:hue_saturation_tool",
-                                          "gimp:brightness_contrast_tool",
-                                          "gimp:threshold_tool",
-                                          "gimp:levels_tool",
-                                          "gimp:curves_tool" };
+    static const gchar *color_tools[] = { "gimp-color-balance-tool",
+                                          "gimp-hue-saturation-tool",
+                                          "gimp-brightness-contrast-tool",
+                                          "gimp-threshold-tool",
+                                          "gimp-levels-tool",
+                                          "gimp-curves-tool" };
     GtkWidget    *menu_item;
     GimpToolInfo *tool_info;
     GList        *list;
@@ -2118,7 +2118,7 @@ menus_init (Gimp *gimp)
     /*  reorder <Image>/Image/Colors  */
     tool_info = (GimpToolInfo *)
       gimp_container_get_child_by_name (gimp->tool_info_list,
-                                        "gimp:posterize_tool");
+                                        "gimp-posterize-tool");
 
     menu_item = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (image_factory),
                                              tool_info->menu_path);

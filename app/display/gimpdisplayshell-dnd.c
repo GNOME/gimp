@@ -100,7 +100,7 @@ gimp_display_shell_bucket_fill (GimpImage          *gimage,
   /*  Get the bucket fill context  */
   tool_info = (GimpToolInfo *)
     gimp_container_get_child_by_name (gimage->gimp->tool_info_list,
-                                      "gimp:bucket_fill_tool");
+                                      "gimp-bucket-fill-tool");
 
   if (tool_info && tool_info->context)
     {

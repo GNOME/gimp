@@ -305,10 +305,10 @@ dialogs_create_lc_cmd_callback (GtkWidget *widget,
 
   const gchar *tabs[] =
   {
-    "gimp:layer-list",
-    "gimp:channel-list",
-    "gimp:vectors-list",
-    "gimp:indexed-palette"
+    "gimp-layer-list",
+    "gimp-channel-list",
+    "gimp-vectors-list",
+    "gimp-indexed-palette"
   };
   gint i;
 
@@ -343,13 +343,13 @@ dialogs_create_stuff_cmd_callback (GtkWidget *widget,
 
   const gchar *tabs[] =
   {
-    "gimp:brush-grid",
-    "gimp:pattern-grid",
-    "gimp:gradient-list",
-    "gimp:palette-list",
-    "gimp:buffer-list",
-    "gimp:image-list",
-    "gimp:document-history"
+    "gimp-brush-grid",
+    "gimp-pattern-grid",
+    "gimp-gradient-list",
+    "gimp-palette-list",
+    "gimp-buffer-list",
+    "gimp-image-list",
+    "gimp-document-history"
   };
   gint i;
 

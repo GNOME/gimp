@@ -160,7 +160,7 @@ view_display_filters_cmd_callback (GtkWidget *widget,
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   gimp_dialog_factory_dialog_new (global_dialog_factory,
-                                  "gimp:display-filters-dialog", -1);
+                                  "gimp-display-filters-dialog", -1);
 }
 
 void

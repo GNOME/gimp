@@ -267,7 +267,7 @@ gui_post_init (Gimp *gimp)
   if (gimprc.show_tips)
     {
       gimp_dialog_factory_dialog_new (global_dialog_factory,
-                                      "gimp:tips-dialog", -1);
+                                      "gimp-tips-dialog", -1);
     }
 }
 
@@ -411,7 +411,7 @@ gui_message (Gimp        *gimp,
 
     case GIMP_ERROR_CONSOLE:
       gimp_dialog_factory_dialog_raise (global_dock_factory,
-                                        "gimp:error-console", -1);
+                                        "gimp-error-console", -1);
       error_console_add (gimp, message);
       break;
 

@@ -839,7 +839,7 @@ void
 dialogs_edit_brush_func (GimpData *data)
 {
   gimp_dialog_factory_dialog_raise (global_dock_factory,
-                                    "gimp:brush-editor",
+                                    "gimp-brush-editor",
                                     -1);
 
   gimp_data_editor_set_data (brush_editor, data);
@@ -866,7 +866,7 @@ void
 dialogs_edit_gradient_func (GimpData *data)
 {
   gimp_dialog_factory_dialog_raise (global_dock_factory,
-				    "gimp:gradient-editor",
+				    "gimp-gradient-editor",
                                     -1);
 
   gimp_data_editor_set_data (gradient_editor, data);
@@ -893,7 +893,7 @@ void
 dialogs_edit_palette_func (GimpData *data)
 {
   gimp_dialog_factory_dialog_raise (global_dock_factory,
-				    "gimp:palette-editor",
+				    "gimp-palette-editor",
                                     -1);
 
   gimp_data_editor_set_data (palette_editor, data);

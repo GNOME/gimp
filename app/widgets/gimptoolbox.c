@@ -234,7 +234,7 @@ gimp_toolbox_size_allocate (GtkWidget     *widget,
 
   tool_info = (GimpToolInfo *)
     gimp_container_get_child_by_name (gimp->tool_info_list,
-                                      "gimp:rect_select_tool");
+                                      "gimp-rect-select-tool");
   tool_button = g_object_get_data (G_OBJECT (tool_info), "toolbox-button");
 
   if (tool_button)
@@ -334,7 +334,7 @@ gimp_toolbox_style_set (GtkWidget *widget,
 
   tool_info = (GimpToolInfo *)
     gimp_container_get_child_by_name (gimp->tool_info_list,
-                                      "gimp:rect_select_tool");
+                                      "gimp-rect-select-tool");
   tool_button = g_object_get_data (G_OBJECT (tool_info), "toolbox-button");
 
   if (tool_button)
@@ -649,7 +649,7 @@ toolbox_tool_button_press (GtkWidget      *widget,
   if ((event->type == GDK_2BUTTON_PRESS) && (event->button == 1))
     {
       gimp_dialog_factory_dialog_raise (GIMP_DOCK (toolbox)->dialog_factory,
-                                        "gimp:tool-options",
+                                        "gimp-tool-options",
                                         -1);
     }
 

@@ -1484,7 +1484,7 @@ gimp_context_tool_list_thaw (GimpContainer *container,
   GimpToolInfo *tool_info;
 
   if (! context->tool_name)
-    context->tool_name = g_strdup ("gimp:rect-select-tool");
+    context->tool_name = g_strdup ("gimp-rect-select-tool");
 
   if ((tool_info = (GimpToolInfo *)
        gimp_container_get_child_by_name (container,

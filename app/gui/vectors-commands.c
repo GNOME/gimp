@@ -302,7 +302,7 @@ vectors_stroke_vectors (GimpVectors *vectors)
         {
           tool_info = (GimpToolInfo *)
             gimp_container_get_child_by_name (gimage->gimp->tool_info_list,
-                                              "gimp:paintbrush_tool");
+                                              "gimp-paintbrush-tool");
         }
 
       paint_options = (GimpPaintOptions *) tool_info->tool_options;

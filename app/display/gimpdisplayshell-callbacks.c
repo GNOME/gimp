@@ -1033,7 +1033,7 @@ gimp_display_shell_hruler_button_press (GtkWidget        *widget,
 
       tool_info = (GimpToolInfo *)
         gimp_container_get_child_by_name (gdisp->gimage->gimp->tool_info_list,
-                                          "gimp:move_tool");
+                                          "gimp-move-tool");
 
       if (tool_info)
 	{
@@ -1077,7 +1077,7 @@ gimp_display_shell_vruler_button_press (GtkWidget        *widget,
 
       tool_info = (GimpToolInfo *)
         gimp_container_get_child_by_name (gdisp->gimage->gimp->tool_info_list,
-                                          "gimp:move_tool");
+                                          "gimp-move-tool");
 
       if (tool_info)
 	{

@@ -1512,7 +1512,7 @@ gimp_dnd_set_tool_data (GtkWidget *widget,
 
   g_print ("gimp_dnd_set_tool_data() got >>%s<<\n", name);
 
-  if (strcmp (name, "gimp:standard_tool") == 0)
+  if (strcmp (name, "gimp-standard-tool") == 0)
     tool_info = gimp_tool_info_get_standard (the_gimp);
   else
     tool_info = (GimpToolInfo *)
