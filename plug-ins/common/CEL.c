@@ -229,7 +229,7 @@ run (const gchar      *name,
 static gboolean
 need_palette (const gchar *file)
 {
-  FILE   *fp
+  FILE   *fp;
   guchar  header[32];
 
   fp = fopen (file, "rb");
