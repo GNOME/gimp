@@ -1,7 +1,7 @@
 /* GTK - The GIMP Toolkit
  * Copyright (C) 1995-1997 Peter Mattis, Spencer Kimball and Josh MacDonald
  *
- * GtkHWrapBox: Horizontal wrapping box widget
+ * GtkVWrapBox: Vertical wrapping box widget
  * Copyright (C) 1999 Tim Janik
  *
  * This library is free software; you can redistribute it and/or
@@ -19,8 +19,8 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
-#ifndef __GTK_HWRAP_BOX_H__
-#define __GTK_HWRAP_BOX_H__
+#ifndef __GTK_VWRAP_BOX_H__
+#define __GTK_VWRAP_BOX_H__
 
 
 #include "gtkwrapbox.h"
@@ -32,21 +32,21 @@ extern "C" {
 
 
 /* --- type macros --- */
-#define GTK_TYPE_HWRAP_BOX	      (gtk_hwrap_box_get_type ())
-#define GTK_HWRAP_BOX(obj)	      (GTK_CHECK_CAST ((obj), GTK_TYPE_HWRAP_BOX, GtkHWrapBox))
-#define GTK_HWRAP_BOX_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GTK_TYPE_HWRAP_BOX, GtkHWrapBoxClass))
-#define GTK_IS_HWRAP_BOX(obj)	      (GTK_CHECK_TYPE ((obj), GTK_TYPE_HWRAP_BOX))
-#define GTK_IS_HWRAP_BOX_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GTK_TYPE_HWRAP_BOX))
-#define GTK_HWRAP_BOX_GET_CLASS(obj)  (GTK_HWRAP_BOX_CLASS (((GtkObject*) (obj))->klass))
+#define GTK_TYPE_VWRAP_BOX	      (gtk_vwrap_box_get_type ())
+#define GTK_VWRAP_BOX(obj)	      (GTK_CHECK_CAST ((obj), GTK_TYPE_VWRAP_BOX, GtkVWrapBox))
+#define GTK_VWRAP_BOX_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GTK_TYPE_VWRAP_BOX, GtkVWrapBoxClass))
+#define GTK_IS_VWRAP_BOX(obj)	      (GTK_CHECK_TYPE ((obj), GTK_TYPE_VWRAP_BOX))
+#define GTK_IS_VWRAP_BOX_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GTK_TYPE_VWRAP_BOX))
+#define GTK_VWRAP_BOX_GET_CLASS(obj)  (GTK_VWRAP_BOX_CLASS (((GtkObject*) (obj))->klass))
 
 
 /* --- typedefs --- */
-typedef struct _GtkHWrapBox      GtkHWrapBox;
-typedef struct _GtkHWrapBoxClass GtkHWrapBoxClass;
+typedef struct _GtkVWrapBox      GtkVWrapBox;
+typedef struct _GtkVWrapBoxClass GtkVWrapBoxClass;
 
 
-/* --- GtkHWrapBox --- */
-struct _GtkHWrapBox
+/* --- GtkVWrapBox --- */
+struct _GtkVWrapBox
 {
   GtkWrapBox parent_widget;
   
@@ -56,15 +56,15 @@ struct _GtkHWrapBox
   /*<h2v-on>*/
 };
 
-struct _GtkHWrapBoxClass
+struct _GtkVWrapBoxClass
 {
   GtkWrapBoxClass parent_class;
 };
 
 
 /* --- prototypes --- */
-GtkType	   gtk_hwrap_box_get_type           (void);
-GtkWidget* gtk_hwrap_box_new                (gboolean homogeneous);
+GtkType	   gtk_vwrap_box_get_type           (void);
+GtkWidget* gtk_vwrap_box_new                (gboolean homogeneous);
 
 
 #ifdef __cplusplus
@@ -72,4 +72,4 @@ GtkWidget* gtk_hwrap_box_new                (gboolean homogeneous);
 #endif /* __cplusplus */
 
 
-#endif /* __GTK_HWRAP_BOX_H__ */
+#endif /* __GTK_VWRAP_BOX_H__ */

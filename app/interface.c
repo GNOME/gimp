@@ -36,6 +36,7 @@
 #include "gimpdnd.h"
 #include "gimprc.h"
 #include "gtkhwrapbox.h"
+#include "gtkvwrapbox.h"
 #include "indicator_area.h"
 #include "interface.h"
 #include "menus.h"
@@ -179,7 +180,7 @@ toolbox_delete (GtkWidget *widget,
 }
 
 static void
-toolbox_destroy ()
+toolbox_destroy (void)
 {
   app_exit_finish ();
 }
@@ -263,7 +264,7 @@ create_indicator_area (GtkWidget *parent)
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-  gtk_box_pack_start (GTK_BOX (parent), frame, FALSE, FALSE, 0);
+  gtk_wrap_box_pack (GTK_WRAP_BOX (parent), frame, FALSE, TRUE, FALSE, TRUE);
   gtk_widget_realize (frame);
 
   alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
@@ -295,7 +296,7 @@ create_color_area (GtkWidget *parent)
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-  gtk_box_pack_start (GTK_BOX (parent), frame, FALSE, FALSE, 0);
+  gtk_wrap_box_pack (GTK_WRAP_BOX (parent), frame, FALSE, TRUE, FALSE, TRUE);
   gtk_widget_realize (frame);
 
   alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
@@ -351,7 +352,8 @@ create_tools (GtkWidget *parent)
   /*create_logo (parent);*/
   wbox = gtk_hwrap_box_new (FALSE);
   gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (wbox), .36);
-  gtk_box_pack_start (GTK_BOX (parent), wbox, TRUE, TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (wbox), 0);
+  gtk_wrap_box_pack (GTK_WRAP_BOX (parent), wbox, TRUE, TRUE, TRUE, TRUE);
 
   gtk_widget_realize (gtk_widget_get_toplevel (wbox));
 
@@ -510,11 +512,11 @@ create_pixmap_widget (GdkWindow  *parent,
 }
 
 void
-create_toolbox ()
+create_toolbox (void)
 {
   GtkWidget *window;
   GtkWidget *main_vbox;
-  GtkWidget *vbox;
+  GtkWidget *wbox;
   GtkWidget *menubar;
   GList *device_list;
   GtkAccelGroup *table;
@@ -585,17 +587,18 @@ create_toolbox ()
   /*  Install the accelerator table in the main window  */
   gtk_window_add_accel_group (GTK_WINDOW (window), table);
 
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, TRUE, TRUE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 0);
-  gtk_widget_show (vbox);
+  wbox = gtk_vwrap_box_new (FALSE);
+  gtk_wrap_box_set_justify (GTK_WRAP_BOX (wbox), GTK_JUSTIFY_FILL);
+  gtk_container_set_border_width (GTK_CONTAINER (wbox), 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), wbox, TRUE, TRUE, 0);
+  gtk_widget_show (wbox);
 
-  create_tools (vbox);
+  create_tools (wbox);
   /*create_tool_label (vbox);*/
   /*create_progress_area (vbox);*/
-  create_color_area (vbox);
+  create_color_area (wbox);
   if (show_indicators && (!no_data) )
-      create_indicator_area (vbox);
+      create_indicator_area (wbox);
   gtk_widget_show (window);
   toolbox_set_drag_dest (window);
 
@@ -603,7 +606,7 @@ create_toolbox ()
 }
 
 void
-toolbox_free ()
+toolbox_free (void)
 {
   int i;
 

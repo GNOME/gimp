@@ -50,9 +50,12 @@ struct _GtkHWrapBox
 {
   GtkWrapBox parent_widget;
   
+  /*<h2v-off>*/
   guint16    max_child_width;
   guint16    max_child_height;
+  /*<h2v-on>*/
 };
+
 struct _GtkHWrapBoxClass
 {
   GtkWrapBoxClass parent_class;
@@ -70,7 +73,3 @@ GtkWidget* gtk_hwrap_box_new                (gboolean homogeneous);
 
 
 #endif /* __GTK_HWRAP_BOX_H__ */
-
-
-
-

@@ -231,6 +231,8 @@ gimp_SOURCES = \
 	gtkwrapbox.h		\
 	gtkhwrapbox.c		\
 	gtkhwrapbox.h		\
+	gtkvwrapbox.c		\
+	gtkvwrapbox.h		\
 	guides_cmds.c		\
 	gximage.c		\
 	gximage.h		\
