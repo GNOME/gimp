@@ -189,8 +189,6 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   gimp_object_class->get_memsize     = gimp_drawable_get_memsize;
 
   viewable_class->invalidate_preview = gimp_drawable_invalidate_preview;
-  viewable_class->get_preview_size   = gimp_drawable_get_preview_size;
-  viewable_class->get_popup_size     = gimp_drawable_get_popup_size;
   viewable_class->get_preview        = gimp_drawable_get_preview;
 
   item_class->duplicate              = gimp_drawable_duplicate;

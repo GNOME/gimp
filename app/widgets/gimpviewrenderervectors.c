@@ -97,69 +97,53 @@ gimp_preview_renderer_vectors_draw (GimpPreviewRenderer *renderer,
                                     const GdkRectangle  *expose_area)
 {
   GimpVectors  *vectors;
-  GimpItem     *item;
   GimpStroke   *stroke;
-  GimpImage    *gimage;
-  GdkRectangle  area, rect;
-  GArray       *coordinates;
-  GdkPoint     *points;
+  GdkRectangle  rect, area;
   gboolean      closed;
-  gint          i;
-  gint          width, height;
   gdouble       xscale, yscale;
 
-  if (! gdk_rectangle_intersect ((GdkRectangle *) draw_area,
-                                 (GdkRectangle *) expose_area, &rect))
-    return;
+  rect.x      = draw_area->x + renderer->border_width;
+  rect.y      = draw_area->y + renderer->border_width;
+  rect.width  = draw_area->width  - 2 * renderer->border_width;
+  rect.height = draw_area->height - 2 * renderer->border_width;
 
-  vectors = GIMP_VECTORS (renderer->viewable);
-  item    = GIMP_ITEM (vectors);
-  gimage  = gimp_item_get_image (item);
+  if (rect.width > renderer->width)
+    {
+      rect.x += (rect.width - renderer->width) / 2;
+      rect.width  = renderer->width;
+    }
+  if (rect.height > renderer->height)
+    {
+      rect.y += (rect.height - renderer->height) / 2;
+      rect.height  = renderer->height;
+    }
 
-  width  = renderer->width;
-  height = renderer->height;
-
-  width  = MAX (1, ROUND (((gdouble) width / (gdouble) gimage->width) *
-                           (gdouble) item->width));
-  height = MAX (1, ROUND (((gdouble) height / (gdouble) gimage->height) *
-                          (gdouble) item->height));
-
-  gimp_viewable_calc_preview_size (renderer->viewable,
-                                   item->width,
-                                   item->height,
-                                   width,
-                                   height,
-                                   renderer->dot_for_dot,
-                                   gimage ? gimage->xresolution : 1.0,
-                                   gimage ? gimage->yresolution : 1.0,
-                                   &(area.width),
-                                   &(area.height),
-                                   NULL);
-
-  area.x = (renderer->width  - area.width ) / 2
-                     + draw_area->x + renderer->border_width;
-  area.y = (renderer->height - area.height) / 2
-                     + draw_area->y + renderer->border_width;
-
-  if (! gdk_rectangle_intersect (&rect, &area, &rect))
+  if (! gdk_rectangle_intersect (&rect, (GdkRectangle *) expose_area, &area))
     return;
 
   gdk_draw_rectangle (window, widget->style->white_gc, TRUE,
-                      rect.x, rect.y, rect.width, rect.height);
+                      area.x, area.y, area.width, area.height);
 
-  xscale = (gdouble) item->width  / (gdouble) area.width;
-  yscale = (gdouble) item->height / (gdouble) area.height;
+  vectors = GIMP_VECTORS (renderer->viewable);
 
-  gdk_gc_set_clip_rectangle (widget->style->black_gc, &rect);
+  xscale = (gdouble) GIMP_ITEM (vectors)->width  / (gdouble) rect.width;
+  yscale = (gdouble) GIMP_ITEM (vectors)->height / (gdouble) rect.height;
+
+  gdk_gc_set_clip_rectangle (widget->style->black_gc, &area);
 
   for (stroke = gimp_vectors_stroke_get_next (vectors, NULL);
        stroke != NULL;
        stroke = gimp_vectors_stroke_get_next (vectors, stroke))
     {
-      coordinates = gimp_stroke_interpolate (stroke, MIN (xscale, yscale),
-                                             &closed);
+      GArray   *coordinates;
+      GdkPoint *points;
+      gint      i;
 
-      if (!coordinates) continue;
+      coordinates = gimp_stroke_interpolate (stroke,
+                                             MIN (xscale, yscale) / 2,
+                                             &closed);
+      if (!coordinates)
+        continue;
 
       if (coordinates->len > 0)
         {
@@ -167,11 +151,12 @@ gimp_preview_renderer_vectors_draw (GimpPreviewRenderer *renderer,
 
           for (i = 0; i < coordinates->len; i++)
             {
-              GimpCoords *coords = &(g_array_index (coordinates,
-                                                    GimpCoords, i));
+              GimpCoords *coords;
 
-              points[i].x = area.x + ROUND (coords->x / xscale);
-              points[i].y = area.y + ROUND (coords->y / yscale);
+              coords = &(g_array_index (coordinates, GimpCoords, i));
+
+              points[i].x = rect.x + ROUND (coords->x / xscale);
+              points[i].y = rect.y + ROUND (coords->y / yscale);
             }
 
           if (closed)
@@ -179,10 +164,11 @@ gimp_preview_renderer_vectors_draw (GimpPreviewRenderer *renderer,
 
           gdk_draw_lines (window, widget->style->black_gc,
                           points, coordinates->len);
+
+          g_free (points);
         }
 
       g_array_free (coordinates, TRUE);
-      g_free (points);
     }
 
   gdk_gc_set_clip_rectangle (widget->style->black_gc, NULL);

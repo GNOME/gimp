@@ -1,3 +1,18 @@
+2003-09-29  Sven Neumann  <sven@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/gimpitem-preview.[ch]: new files with preview code
+	factored out of GimpDrawable.
+
+	* app/core/gimpdrawable-preview.[ch]: code removed here.
+
+	* app/core/gimpdrawable.c
+	* app/core/gimpitem.c: let GimpItem implement
+	GimpViewable::get_preview_size and GimpViewable::get_popup_size.
+
+	* app/widgets/gimppreviewrenderervectors.c: simple scale to the
+	renderer's size; it already respects the aspect ratio.
+
 2003-09-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimptooloptionseditor.c: connect to the "add" and
@@ -88,10 +103,11 @@
 	by "GimpCropMode crop_mode". Makes its callers simpler and more
 	readable.
 
+>>>>>>> 1.6581
 2003-09-29  Simon Budig  <simon@gimp.org>
 
-	* app/widgets/gimppreviewrenderervectors.c: Fixed a bad
-	crash (Thanks to Sven for spotting that). Minor cleanups.
+	* app/widgets/gimppreviewrenderervectors.c: Fixed a bad crash
+	(Thanks to Sven for spotting that). Minor cleanups.
 
 2003-09-29  Simon Budig  <simon@gimp.org>
 

@@ -35,6 +35,7 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpitem.h"
+#include "gimpitem-preview.h"
 #include "gimplayer.h"
 #include "gimplist.h"
 #include "gimpmarshal.h"
@@ -132,11 +133,13 @@ gimp_item_get_type (void)
 static void
 gimp_item_class_init (GimpItemClass *klass)
 {
-  GObjectClass    *object_class;
-  GimpObjectClass *gimp_object_class;
+  GObjectClass      *object_class;
+  GimpObjectClass   *gimp_object_class;
+  GimpViewableClass *viewable_class;
 
   object_class      = G_OBJECT_CLASS (klass);
   gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -167,25 +170,28 @@ gimp_item_class_init (GimpItemClass *klass)
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  object_class->finalize          = gimp_item_finalize;
+  object_class->finalize           = gimp_item_finalize;
 
-  gimp_object_class->name_changed = gimp_item_name_changed;
-  gimp_object_class->get_memsize  = gimp_item_get_memsize;
+  gimp_object_class->name_changed  = gimp_item_name_changed;
+  gimp_object_class->get_memsize   = gimp_item_get_memsize;
 
-  klass->removed                  = NULL;
-  klass->visibility_changed       = NULL;
-  klass->linked_changed           = NULL;
+  viewable_class->get_preview_size = gimp_item_get_preview_size;
+  viewable_class->get_popup_size   = gimp_item_get_popup_size;
 
-  klass->duplicate                = gimp_item_real_duplicate;
-  klass->convert                  = gimp_item_real_convert;
-  klass->rename                   = gimp_item_real_rename;
-  klass->translate                = gimp_item_real_translate;
-  klass->scale                    = gimp_item_real_scale;
-  klass->resize                   = gimp_item_real_resize;
-  klass->flip                     = NULL;
-  klass->rotate                   = NULL;
-  klass->transform                = NULL;
-  klass->stroke                   = NULL;
+  klass->removed                   = NULL;
+  klass->visibility_changed        = NULL;
+  klass->linked_changed            = NULL;
+
+  klass->duplicate                 = gimp_item_real_duplicate;
+  klass->convert                   = gimp_item_real_convert;
+  klass->rename                    = gimp_item_real_rename;
+  klass->translate                 = gimp_item_real_translate;
+  klass->scale                     = gimp_item_real_scale;
+  klass->resize                    = gimp_item_real_resize;
+  klass->flip                      = NULL;
+  klass->rotate                    = NULL;
+  klass->transform                 =  NULL;
+  klass->stroke                    = NULL;
 }
 
 static void
