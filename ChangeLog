@@ -1,3 +1,8 @@
+2005-01-08  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/scale-dialog.c: use a GimpMessageBox to display the
+	informative message when scaling an indexed image.
+
 2005-01-07  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcontainertreeview.c
