@@ -576,6 +576,7 @@ plug-ins/url/Makefile
 plug-ins/video/Makefile
 plug-ins/vinvert/Makefile
 plug-ins/vpropagate/Makefile
+plug-ins/waterselect/Makefile
 plug-ins/waves/Makefile
 plug-ins/whirlpinch/Makefile
 plug-ins/xwd/Makefile

@@ -1,3 +1,7 @@
+Wed Jul  1 14:55:21 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* added waterselect plug-in
+
 Wed Jul  1 14:13:45 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/jpeg/jpeg.c: fix for non-interactive mode

@@ -125,6 +125,7 @@ SUBDIRS = 			\
 	video			\
 	vinvert			\
 	vpropagate		\
+	waterselect		\
 	waves			\
 	whirlpinch		\
 	xwd			\
