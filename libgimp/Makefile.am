@@ -14,7 +14,9 @@ libgimpi_a_SOURCES =	gimpprotocol.c	\
 			gimpwire.c	\
 			gimpwire.h
 
+if STATICLIBS
 libgimpi_a_DEPENDENCIES = libgimp.la
+endif
 
 libgimp_la_SOURCES =	gimp.c		\
 			gimpchannel.c	\

@@ -128,7 +128,7 @@ gimp_main (int   argc,
   return 0;
 }
 
-void
+void G_GNUC_NORETURN
 gimp_quit ()
 {
   if (PLUG_IN_INFO.quit_proc)

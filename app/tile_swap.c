@@ -265,6 +265,8 @@ tile_swap_command (Tile *tile,
 	  return;
       }
   } while ((* swap_file->swap_func) (swap_file->fd, tile, command, swap_file->user_data));
+
+  write_err_msg = read_err_msg = seek_err_msg = TRUE;
 }
 
 static void
@@ -386,7 +388,6 @@ tile_swap_default_in (DefSwapFile *def_swap_file,
   /*  Do not delete the swap from the file  */
   /*  tile_swap_default_delete (def_swap_file, fd, tile);  */
 
-  read_err_msg = seek_err_msg = TRUE;
 }
 
 static void
@@ -440,8 +441,6 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
 
   g_free (tile->data);
   tile->data = NULL;
-
-  write_err_msg = seek_err_msg = TRUE;
 }
 
 static void

@@ -1,3 +1,5 @@
+SUBDIRS = white-paper
+
 EXTRA_DIST = \
 	gimp.txt	 		pdb_self_doc.el \
 	pdb_dump 			xcf.doc \

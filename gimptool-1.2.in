@@ -215,7 +215,7 @@ while test $# -gt 0; do
           ;;
         --install-script)
           install_cmd="@INSTALL_DATA@"
-          install_dir="$HOME/.gimp/scripts"
+          install_dir="$HOME/@gimpdir@/scripts"
           ;;
         --install-admin-script)
           install_cmd="@INSTALL_DATA@"
@@ -270,7 +270,8 @@ while test $# -gt 0; do
       shift
       if test "x$1" != "x"; then
         if test -r "$1"; then
-          cmd="$cc $cflags $gimp_cflags -o $install_dir/`echo $1 | sed 's/\.[^\.]*$//'` $1 $ldflags $gimp_libs $libs"
+          dest=`echo $1 | sed -e 's#.*/\([^/].*\)$#\1#' -e 's/\.[^.]*$//'`
+          cmd="$cc $cflags $gimp_cflags -o $install_dir/$dest $1 $ldflags $gimp_libs $libs"
           test $quiet = "yes" || echo $cmd
           test $donothing = "yes" || exec $cmd
         else

@@ -30,8 +30,7 @@ if eval "test x$enable_debug = xyes"; then
   DEBUGFLAG="-g"
 fi)
 
-AC_ARG_ENABLE(ansi, [  --enable-ansi           turn on strict ansi [default=no]],
-		    , enable_ansi=no)
+AC_ARG_ENABLE(ansi, [  --enable-ansi           turn on strict ansi [default=no]], , enable_ansi=no)
 
 dnl Possibly change default gimpdir from .gimp
 gimpdir=.gimp
@@ -44,7 +43,7 @@ fi)
 
 AC_DEFUN(AC_GIMP_CHECK,
 [
-	AM_PATH_GTK(1.0.1,,
+	AM_PATH_GTK(1.0.3,,
  	  AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))
         X_LIBS=$GTK_LIBS
         X_CFLAGS=$GTK_CFLAGS
@@ -438,6 +437,14 @@ if test $ac_cv_path_LPC_COMMAND != ":"; then
   LPC_DEF="-DLPC_COMMAND=\\\"$ac_cv_path_LPC_COMMAND\\\""
 fi
 
+GIMPDOCS=
+if test -n "$DISTMAKE"; then
+  WEBBROWSER=webbrowser TIFF=tiff JPEG=jpeg PNG=png AA=aa MPEG=mpeg
+  XD=xd XPM=xpm GIMPDOCS=docs
+fi
+
+AM_CONDITIONAL(STATICLIBS, test x$enable_static = xyes)
+
 AC_SUBST(GIMP_MAJOR_VERSION)
 AC_SUBST(GIMP_MINOR_VERSION)
 AC_SUBST(GIMP_MICRO_VERSION)
@@ -472,6 +479,7 @@ AC_SUBST(LPSTAT_DEF)
 AC_SUBST(LPR_DEF)
 AC_SUBST(LPC_DEF)
 AC_SUBST(MAILER)
+AC_SUBST(GIMPDOCS)
 
 dnl Output the Makefiles
 

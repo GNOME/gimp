@@ -1,3 +1,29 @@
+Sun Nov  8 18:19:37 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* Makefile.am
+	* configure.in: check for GTK+ 1.0.3 or higher, we use stuff
+	from it. Add a convenience configure option for me.
+
+	* gimptool.in: sync with 1.1
+
+	* tile_swap.c: ok, a further attempt to get rid of a bunch o'
+	dialogs
+
+	* docs/Makefile.am
+	* docs/white-paper/Makefile.am: helpers for make dist
+
+	* libgimp/gimp.c: match header declaration
+
+	* checkerboard.c: avoid a FP exception in psychobilly mode
+
+	* plug-ins/cubism/cubism.c
+	* plug-ins/mosaic/mosaic.c: speedups from 1.1
+
+	* plug-ins/png/png.c: bugfix for indexed image, default to level 6
+	compression
+
+	* plug-ins/tiff/tiff.c: 1.1 sync
+
 Wed Oct 14 20:11:29 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* Made 1.0.2 release

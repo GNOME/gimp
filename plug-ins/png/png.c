@@ -37,6 +37,31 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.7.2.2  1998/11/09 02:26:44  yosh
+ *   * Makefile.am
+ *   * configure.in: check for GTK+ 1.0.3 or higher, we use stuff
+ *   from it. Add a convenience configure option for me.
+ *
+ *   * gimptool.in: sync with 1.1
+ *
+ *   * tile_swap.c: ok, a further attempt to get rid of a bunch o'
+ *   dialogs
+ *
+ *   * docs/Makefile.am
+ *   * docs/white-paper/Makefile.am: helpers for make dist
+ *
+ *   * libgimp/gimp.c: match header declaration
+ *
+ *   * checkerboard.c: avoid a FP exception in psychobilly mode
+ *
+ *   * plug-ins/cubism/cubism.c
+ *   * plug-ins/mosaic/mosaic.c: speedups from 1.1
+ *
+ *   * plug-ins/png/png.c: bugfix for indexed image, default to level 6
+ *   compression
+ *
+ *   -Yosh
+ *
  *   Revision 1.7.2.1  1998/06/06 23:28:13  yosh
  *   * updated despeckle, png, sgi, and sharpen
  *
@@ -163,7 +188,7 @@ GPlugInInfo	PLUG_IN_INFO =
 PngSaveVals	pngvals = 
 {
   FALSE,
-  9
+  6
 };
 
 int		runme = FALSE;
@@ -418,13 +443,20 @@ load_image(char *filename)	/* I - File to load */
 
   png_read_info(pp, info);
 
-  if (info->bit_depth < 8)
+ /*
+  * I have no idea why this used to be the way it was, luckily
+  * most people don't use 2bit or 4bit indexed images with PNG
+  */
+
+  if (info->bit_depth < 8) 
   {
     png_set_packing(pp);
-    png_set_expand(pp);
+    if (info->color_type != PNG_COLOR_TYPE_PALETTE) {
+      png_set_expand(pp);
 
-    if (info->valid & PNG_INFO_sBIT)
-      png_set_shift(pp, &(info->sig_bit));
+      if (info->valid & PNG_INFO_sBIT)
+        png_set_shift(pp, &(info->sig_bit));
+    }
   }
   else if (info->bit_depth == 16)
     png_set_strip_16(pp);
