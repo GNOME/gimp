@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.21\n"
-"POT-Creation-Date: 2000-05-09 20:27-0700\n"
-"PO-Revision-Date: 2000-05-08 15:47+02:00\n"
+"Project-Id-Version: GIMP 1.1.22\n"
+"POT-Creation-Date: 2000-05-17 17:41+0200\n"
+"PO-Revision-Date: 2000-05-17 17:39+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -764,6 +764,10 @@ msgstr "Grundfarbe"
 msgid "Base Radius (pixel)"
 msgstr "Grundradius (Pixel)"
 
+#: plug-ins/script-fu/scripts/rendermap.scm:0
+msgid "Behaviour"
+msgstr "Verhalten"
+
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 msgid "Bevel Height (Sharpness)"
 msgstr "Höhe der Schräge (Schärfe)"
@@ -988,6 +992,10 @@ msgstr "Beschreibung"
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Detail Level"
 msgstr "Detailreichtum"
+
+#: plug-ins/script-fu/scripts/rendermap.scm:0
+msgid "Detail in Middle"
+msgstr "Details in der Mitte"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
 msgid "Diameter"
@@ -1253,15 +1261,12 @@ msgstr "Radius des Glühens"
 msgid "Gradient"
 msgstr "Farbverlauf"
 
-#: plug-ins/script-fu/scripts/camo.scm:0
-msgid "Granularity (0 - 15)"
-msgstr "Körnigkeit (0 - 15)"
-
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Granularity (1 is Low)"
 msgstr "Körnigkeit (1 ist wenig)"
 
+#: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Granularity"
 msgstr "Körnigkeit"
@@ -1430,12 +1435,8 @@ msgid "Max. Blur Radius"
 msgstr "Max. Weichzeichner-Radius"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid ""
-"Mosaic Tile Type\n"
-"Squares 0, Hex 1, Oct 2"
-msgstr ""
-"Art der Mosaiksteine\n"
-"Quadrate 0, Hexagone 1, Oktaeder 2"
+msgid "Mosaic Tile Type"
+msgstr "Art der Mosaiksteine"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Mottle"
@@ -1801,6 +1802,10 @@ msgstr "Kugelfarbe"
 msgid "Spread"
 msgstr "Verteilen"
 
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Squares"
+msgstr "Quadrate"
+
 #: plug-ins/script-fu/scripts/coffee.scm:0
 msgid "Stains"
 msgstr "Flecken"
@@ -1829,10 +1834,6 @@ msgstr "Start Farbübergang"
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 msgid "Supersample"
 msgstr "Hochrechnung"
-
-#: plug-ins/script-fu/scripts/rendermap.scm:0
-msgid "TRUE = Detail in Middle, FALSE = Tile"
-msgstr "TRUE = Details in der Mitte, FALSE = Kacheln"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Text Color (Active)"
@@ -1919,6 +1920,10 @@ msgstr "Fadenlänge"
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Threshold (Bigger 1<-->255 Smaller)"
 msgstr "Schwellwert (Größer 1<-->255 Kleiner)"
+
+#: plug-ins/script-fu/scripts/rendermap.scm:0
+msgid "Tile"
+msgstr "Kacheln"
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0

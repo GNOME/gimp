@@ -35,7 +35,7 @@
         (gimp-image-add-layer theImage theLayer 0)
         (plug-in-solid-noise TRUE theImage theLayer 1 0 (rand 65536) inGrain inGrain inGrain)
 
-	(if (= inWiden TRUE) (begin
+	(if (= inWiden 1) (begin
         	(set! thinLayer (car (gimp-layer-new theImage theWidth theHeight RGBA_IMAGE "Camo Thin Layer" 100 NORMAL)))
         	(gimp-image-add-layer theImage thinLayer 0)
 		(let 	((theBigGrain (min 15 (* 2 inGrain))))
@@ -75,6 +75,6 @@
  SF-ADJUSTMENT _"Image Size" '(256 0 2048 1 10 0 0)
  SF-ADJUSTMENT _"Granularity" '(4 0 15 1 1 0 0)
  SF-GRADIENT   _"Gradient" "Land_and_Sea"
- SF-TOGGLE     _"TRUE = Detail in Middle, FALSE = Tile" FALSE
+ SF-OPTION     _"Behaviour" '(_"Tile" _"Detail in Middle")
 )
 

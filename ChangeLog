@@ -1,3 +1,11 @@
+2000-05-17  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/camo.scm: no need to mention the
+	ranges in the label, we use a slider anyway...
+
+	* plug-ins/script-fu/scripts/rendermap.scm
+	* plug-ins/script-fu/scripts/textured-logo.scm: use SF-OPTION
+	
 2000-05-17  Asbjorn Pettersen  <asbjornP@dualog.no>
 
 	* app/module_db.c: 
