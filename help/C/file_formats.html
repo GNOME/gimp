@@ -71,10 +71,7 @@ NAME="FILE-FORMATS"
 >File Formats</A
 ></H1
 ><A
-NAME="AEN304"
-></A
-><A
-NAME="AEN306"
+NAME="AEN298"
 ></A
 ><P
 >    The <SPAN
@@ -88,7 +85,7 @@ CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN310"
+NAME="AEN302"
 >Supported Formats</A
 ></H2
 ><P
@@ -101,7 +98,7 @@ CLASS="APPLICATION"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN314"
+NAME="AEN306"
 ></A
 ><P
 ><B
@@ -256,8 +253,8 @@ ALIGN="LEFT"
 VALIGN="TOP"
 >GIF - Graphics Interchange Format
 	      <A
-NAME="AEN356"
-HREF="#FTN.AEN356"
+NAME="AEN348"
+HREF="#FTN.AEN348"
 >[a]</A
 >
 	    </TD
@@ -651,7 +648,7 @@ VALIGN="TOP"
 ><TD
 COLSPAN="3"
 >Notes:<BR><A
-NAME="FTN.AEN356"
+NAME="FTN.AEN348"
 >a. </A
 > 
 		  You need a license from Unisys to legally save files
@@ -666,13 +663,13 @@ CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN448"
->What Format Should I Use?</A
+NAME="AEN440"
+>What Format Should Be Used?</A
 ></H2
 ><P
->      When saving a file, you need to decide which file format to use.
-      There are descriptions of some important and popular formats
-      below to help you choose the right one for your images.
+>      When saving an image, an appropriate decision should be made with
+      regards to the file format chosen to do so. Some of the more
+      popular formats are mentioned below.
     </P
 ><P
 ></P
@@ -683,68 +680,51 @@ CLASS="VARIABLELIST"
 ><SPAN
 CLASS="ACRONYM"
 >XCF</SPAN
->: <SPAN
+>: The native file format of The
+    <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
->'s 
-	  Native Format</DT
+></DT
 ><DD
 ><P
->	    If you're saving an image that's not
-	    <SPAN
-CLASS="QUOTE"
->"finished"</SPAN
-> and intend to continue working on
-	    the image in <SPAN
+>      When saving images that are not yet complete and there is intent
+      to continue working later, the most appropriate file format to
+      choose is <SPAN
+CLASS="ACRONYM"
+>XCF</SPAN
+>. This file format is the native
+      file format that The <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
-> later, you
-	    should always save it as <SPAN
+> uses.
+      <SPAN
 CLASS="ACRONYM"
 >XCF</SPAN
->.
-	    <SPAN
-CLASS="ACRONYM"
->XCF</SPAN
-> preserves all of your image's
-	    layers, channels, and masks, as well as your paths,
-	    guides, selections, and other important details.
+> supports many features including
+      compression.
 	  </P
 ><P
->	    However, <SPAN
+>      While <SPAN
 CLASS="ACRONYM"
 >XCF</SPAN
-> is only suitable for
-	    <SPAN
+> is an excellent choice in file
+      format, it is not as portable as one might like. It is wise to
+      save images that are not for use exclusively from within The
+      <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
->. If you want to share your
-	    image or put the image on the web, you should probably use
-	    another file format <I
-CLASS="EMPHASIS"
->as well as
-	    <SPAN
-CLASS="ACRONYM"
->XCF</SPAN
-></I
-> because most web
-	    browsers, image viewers, and other software packages
-	    cannot read <SPAN
-CLASS="ACRONYM"
->XCF</SPAN
->.
+> using a differing format.
 	  </P
 ><P
->      See also:
-      <A
+>	    See also: <A
 HREF="glossary.html#GLOSSARY-XCF"
->        <SPAN
+> <SPAN
 CLASS="ACRONYM"
 >XCF</SPAN
-> Glossary entry
-      </A
 >
-    </P
+	    Glossary entry </A
+>
+	  </P
 ></DD
 ><DT
 ><SPAN
@@ -757,22 +737,23 @@ CLASS="ACRONYM"
 CLASS="ACRONYM"
 >PNG</SPAN
 > can preserve all the transparency
-	    and color of your original image and uses powerful
+	    and color of an image and uses powerful
 	    lossless compression to reduce file sizes. In particular,
 	    computer-generated images usually compress very well.
 	  </P
 ><P
->	    Although <SPAN
+>      <SPAN
 CLASS="ACRONYM"
 >PNG</SPAN
-> supports smooth transparency,
-	    today's most popular web browsers still don't. While we wait for
-	    Microsoft to catch up, you'll probably want to stick with
-	    non-transparent <SPAN
+> supports smooth 8-bit transparency which
+      can make for exceptional zero loss web graphics, but a caveat.
+      Some browsers do not fully support all of the features that
+      <SPAN
 CLASS="ACRONYM"
 >PNG</SPAN
-> files on web pages. You can
-	    use transparency effectively elsewhere though.
+> offers. As always, check compatibility
+      between the viewer and the format before commiting to a particular
+      format.
 	  </P
 ></DD
 ><DT
@@ -788,23 +769,37 @@ CLASS="ACRONYM"
 	    <SPAN
 CLASS="ACRONYM"
 >JPEG</SPAN
->.  Usually screenshots, logos, and
-	    computer generated images will not benefit from
-	    <SPAN
-CLASS="ACRONYM"
->JPEG</SPAN
 >.
 	  </P
 ><P
->	    The <SPAN
+>      <SPAN
 CLASS="ACRONYM"
 >JPEG</SPAN
-> method is lossy, which means
-	    that, although the saved image will appear almost
-	    identical to the original, it will actually have hidden
-	    detail removed. You should not use it on images that you
-	    intend to do additional processing on later because the
-	    loss is exaggerated by repeated use.
+> images are compressed using a semi
+      intelligent lossy algorithm that is very good at fooling the human
+      eye. This format is excellent for saving on space and preserving
+      viewable quality, but there are many situations where
+      <SPAN
+CLASS="ACRONYM"
+>JPEG</SPAN
+> is an unsuitable format to choose. If the
+      image contains broad bands of single color or is mechanical in
+      nature (many broad straight single color areas),
+      <SPAN
+CLASS="ACRONYM"
+>JPEG</SPAN
+> is a bad choice of format. Another note to
+      make is that repeated saving of images that are
+      <SPAN
+CLASS="ACRONYM"
+>JPEG</SPAN
+> encoded will result in degredation to
+      quality over each save. As with any powerful option, be aware of
+      this format's lossy compression method, and ensure the choice of
+      <SPAN
+CLASS="ACRONYM"
+>JPEG</SPAN
+> is not made lightly.
 	  </P
 ><P
 >	    The <SPAN
@@ -818,9 +813,9 @@ CLASS="APPLICATION"
 CLASS="ACRONYM"
 >JFIF</SPAN
 > compression
-	    for compatability with most existing software. It allows you to
-	    adjust the quality of the image and see immediately
-	    how the saved image will look and how big the file will be.
+	    for compatibility with most existing software. It allows you to
+	    adjust the quality of the image and see immediately how the
+	    saved image will look and how big the file will be.
 	  </P
 ></DD
 ><DT
@@ -836,10 +831,10 @@ CLASS="ACRONYM"
 >GIF</SPAN
 > requires the use of a colormap. This means
 	    that a maximum of 256 different colors will be preserved in the
-	    saved image. <SPAN
+	    saved image. The <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
-> can handle the
+> can perform the
 	    conversion automatically, but the results may sometimes be
 	    disappointing due to this limitation of <SPAN
 CLASS="ACRONYM"
@@ -847,21 +842,24 @@ CLASS="ACRONYM"
 >.
 	  </P
 ><P
->	    Despite the poor compression and limited number of colors,
-	    there are two desirable features of <SPAN
+>      Despite the poor compression and limited number of colors, there
+      are two desirable features of <SPAN
 CLASS="ACRONYM"
 >GIF</SPAN
->
-	    for web designers. They are simple forms of transparency
-	    and animation. <SPAN
+> for web
+      designers. <SPAN
+CLASS="ACRONYM"
+>GIF</SPAN
+> is non lossy, so no image data
+      is lost over saves, and <SPAN
+CLASS="ACRONYM"
+>GIF</SPAN
+> supports animation
+      and transparency. The <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
->'s
-	    <SPAN
-CLASS="ACRONYM"
->GIF</SPAN
-> filter supports both of these
-	    features.
+> supports
+      both of these features fully.
 	  </P
 ><DIV
 CLASS="WARNING"
@@ -877,7 +875,7 @@ WIDTH="25"
 ALIGN="CENTER"
 VALIGN="TOP"
 ><IMG
-SRC="../images/warning.png"
+SRC="stylesheet-images/warning.gif"
 HSPACE="5"
 ALT="Warning"></TD
 ><TD
@@ -885,7 +883,7 @@ ALIGN="LEFT"
 VALIGN="TOP"
 ><P
 >	      Support for creating GIFs may not be included in your
-	      version of <SPAN
+	      version of The <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
 > due to patent
@@ -906,26 +904,26 @@ CLASS="APPLICATION"
 > Bitmap</DT
 ><DD
 ><P
->	    This format is often used by applications for Microsoft
-	    <SPAN
+>      This format is often used by applications for Microsoft
+      <SPAN
 CLASS="APPLICATION"
 >Windows</SPAN
 >. Full color images can be
-	    stored in this format, but shortcomings of the compression
-	    scheme mean that the resulting files may be quite large. Image
-	    resolution is preserved, but no other metadata is stored in the
-	    <SPAN
+      stored in this format, but shortcomings of the compression scheme
+      mean that the resulting files may be quite large. Image resolution
+      is preserved, but no other metadata is stored in the
+      <SPAN
 CLASS="ABBREV"
 >BMP</SPAN
 > format.
 	  </P
 ><P
->	    Some web browsers have included support for viewing
-	    <SPAN
+>      Some web browsers have included support for viewing
+      <SPAN
 CLASS="ABBREV"
 >BMP</SPAN
 > images but this is not common, so you should
-	    avoid using them on the web.
+      avoid using them on the web.
 	  </P
 ></DD
 ><DT
@@ -935,23 +933,22 @@ CLASS="ABBREV"
 >: X Pixmap</DT
 ><DD
 ><P
->	    This format is sometimes used by applications for the
-	    <SPAN
+>      This format is sometimes used by applications for the
+      <SPAN
 CLASS="APPLICATION"
 >X Window System</SPAN
->. The files
-	    created can be compiled directly into a program by a
-	    software developer, but this convenience comes at a price
-	    of much increased file size. You will probably already
-	    know if this feature is useful to you.
+>. The files created can
+      be compiled directly into a program by a software developer, but
+      this convenience comes at a price of much increased file size. You
+      will probably already know if this feature is useful to you.
 	  </P
 ><P
->	    Some web browsers have included support for viewing
-	    <SPAN
+>      Some web browsers have included support for viewing
+      <SPAN
 CLASS="ABBREV"
 >XPM</SPAN
 > images but this is not common, so you should
-	    avoid using them on the web.
+      avoid using them on the web.
 	  </P
 ></DD
 ><DT
@@ -961,33 +958,33 @@ CLASS="ACRONYM"
 >: Tagged Image File Format</DT
 ><DD
 ><P
->	    One of the oldest formats still commonly in use today,
-	    <SPAN
+>      One of the oldest formats still commonly in use today,
+      <SPAN
 CLASS="ACRONYM"
 >TIFF</SPAN
-> is a very powerful but complicated
-	    format. If you need to export images from
-	    <SPAN
+> is a very powerful but complicated format.
+      If the need to export images from The
+      <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
-> to a package which doesn't
-	    support any of the other formats mentioned earlier in this
-	    section, it will probably accept <SPAN
+> to a package which doesn't support
+      any of the other formats mentioned earlier in this section, it
+      will probably accept <SPAN
 CLASS="ACRONYM"
 >TIFF</SPAN
 >.
 	  </P
 ><P
->	    <SPAN
+>      <SPAN
 CLASS="ACRONYM"
 >TIFF</SPAN
-> can preserve all the transparency
-	    and color of your original image, but you may lose some of
-	    this information when importing the
-	    <SPAN
+> can preserve all the transparency and
+      color of your original image, but you may lose some of this
+      information when importing the <SPAN
 CLASS="ACRONYM"
 >TIFF</SPAN
-> into another package.
+> into
+      another package.
 	  </P
 ></DD
 ></DL

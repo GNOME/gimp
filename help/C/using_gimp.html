@@ -99,38 +99,32 @@ NAME="FIRST-TIME"
 >Starting for the First Time</A
 ></H1
 ><A
-NAME="AEN191"
+NAME="AEN195"
 ></A
 ><P
->    When you launch <SPAN
+>    When The <SPAN
 CLASS="APPLICATION"
->The GIMP</SPAN
-> for the first time, you
-    will see a special dialog box. This allows you to setup <SPAN
+>GIMP</SPAN
+> is launched for the first
+    time, a special dialog window is presented to the user. This dialog
+    allows the user to setup The <SPAN
 CLASS="APPLICATION"
->The
-    GIMP</SPAN
-> to your personal settings, without affecting the way
-    <SPAN
-CLASS="APPLICATION"
->The GIMP</SPAN
-> runs for other users. The first thing
-    you'll see is the license to <SPAN
-CLASS="APPLICATION"
->The GIMP</SPAN
-> &mdash;
-    the <A
+>GIMP</SPAN
+>. The
+    first item shown to the user is the license which is a
+    <A
 HREF="gimp_license.html"
-> <SPAN
+>      <SPAN
 CLASS="ACRONYM"
 >GNU</SPAN
-> General Public
-    License</A
->. Click <SPAN
+> General Public License
+    </A
+>.
+    Click <SPAN
 CLASS="GUIBUTTON"
->continue</SPAN
-> if you accept the
-    license.
+>Continue</SPAN
+> if the license is
+    acceptable.
   </P
 ><DIV
 CLASS="SECT2"
@@ -141,19 +135,29 @@ NAME="FIRST-TIME-USERDIR"
 >User Directory</A
 ></H2
 ><P
->      <SPAN
+>      The <SPAN
 CLASS="APPLICATION"
->The GIMP</SPAN
-> now needs to create a directory to
-      hold your personal settings. Under UNIX, Linux, and UNIX-like systems,
-      the directory will be <TT
+>GIMP</SPAN
+> then requires a directory
+      structure to store the users personal settings. If the operating
+      system is a UNIX or
+      <SPAN
+CLASS="PRODUCTNAME"
+><SPAN
+CLASS="ACRONYM"
+>GNU</SPAN
+>/Linux</SPAN
+> style
+      system, the structure will be created in
+      <TT
 CLASS="FILENAME"
->~/.gimp-1.2</TT
->,
-      the <SPAN
-CLASS="KEYSYM"
->tilde</SPAN
-> represents your home directory &mdash; often
+>        ~/.gimp-1.2
+      </TT
+>
+      where <SPAN
+CLASS="QUOTE"
+>"~"</SPAN
+> expands to
       <TT
 CLASS="FILENAME"
 >        /home/<TT
@@ -164,26 +168,33 @@ CLASS="REPLACEABLE"
 >
       </TT
 >.
-      Under <SPAN
+      Other operating systems, such as <SPAN
 CLASS="PRODUCTNAME"
->Microsoft Windows</SPAN
-> the directory location
-      will vary. All the files and directories which will be created are listed
-      on the left-hand side. Click on any of the entries to see what it is for.
-      If you want these files and directories to be created, click
-      <SPAN
+>Microsoft
+      Windows</SPAN
+>, or <SPAN
+CLASS="PRODUCTNAME"
+>OS/2</SPAN
+> will
+      have differing directory structures. The files and directories
+      that will be created are listed on the left side of the dialog.
+      Clicking any of these entries will help reveal that directories
+      use.
+    </P
+><P
+>      Clicking <SPAN
 CLASS="GUIBUTTON"
 >Continue</SPAN
->.  <SPAN
+> will create the directory
+      structure. Upon completion, The <SPAN
 CLASS="APPLICATION"
->The GIMP</SPAN
+>GIMP</SPAN
 >
-      will give you a list of what was done.  You should check this list for
-      any errors and if there are no problems you may click
+      will display a list of everything that was performed. Click
       <SPAN
 CLASS="GUIBUTTON"
 >Continue</SPAN
-> again.
+> to complete this task fully.
     </P
 ></DIV
 ><DIV
@@ -195,71 +206,67 @@ NAME="FIRST-TIME-PERFORMANCETUNING"
 >Performance Tuning</A
 ></H2
 ><P
->      To make <SPAN
+>      In order to ensure top performance from the newly installed
+      version of The <SPAN
 CLASS="APPLICATION"
->The GIMP</SPAN
-> perform as well as possible,
-      you can adjust several settings. For storing data about images which are
-      being edited, <SPAN
+>GIMP</SPAN
+>, there are several
+      adjustable settings. The <SPAN
 CLASS="APPLICATION"
->The GIMP</SPAN
-> uses a section of
-      memory called the Tile Cache. A good way to decide on a good size for
-      your Tile Cache is to use two-thirds of the <SPAN
-CLASS="ACRONYM"
->RAM</SPAN
->
-      available in your system. For example, 32<SPAN
-CLASS="ACRONYM"
->MB</SPAN
-> would be a
-      good size if your system has 48<SPAN
-CLASS="ACRONYM"
->MB</SPAN
->
-      <SPAN
+>GIMP</SPAN
+> stores
+      all image data which are currently being edited in a block of
+      computer memory referred to as the Tile Cache. A good Tile Cache
+      size is no less than two thirds of system <SPAN
 CLASS="ACRONYM"
 >RAM</SPAN
 >.
+      For example, a system with 32<SPAN
+CLASS="ACRONYM"
+>MB</SPAN
+> of
+      <SPAN
+CLASS="ACRONYM"
+>RAM</SPAN
+> would do well to have a Tile Cache of
+      21<SPAN
+CLASS="ACRONYM"
+>MB</SPAN
+>.
     </P
 ><P
->      Some images are just too big to fit into this cache, and so
+>      When editing images that are larger than than this cache, The
       <SPAN
 CLASS="APPLICATION"
->The GIMP</SPAN
-> can use your hard disk as a type of
-      additional memory. You should set your swap directory to an area on your
-      hard disk which has enough free space &mdash; around
+>GIMP</SPAN
+> can utilize space on the system's
+      hard disk drive to store information. The swap directory should be
+      located on a fast hard disk with no less than
       200<SPAN
 CLASS="ACRONYM"
 >MB</SPAN
->. To enhance performance when you have several
-      hard disks, you can set the swap file to the fastest one. To locate a
-      directory, click on the <SPAN
+> free. Once the directory has been chosen,
+      either by manually entering the path in the input box, or by
+      browsing to the desired location with the
+      <SPAN
 CLASS="GUIBUTTON"
 >...</SPAN
-> button or enter it
-      directly into the box. You should make sure that <SPAN
+> button, The
+      <SPAN
 CLASS="APPLICATION"
->The
-      GIMP</SPAN
-> shows you a <SPAN
-CLASS="GUIICON"
->checkmark</SPAN
-> next to the
-      box, otherwise <SPAN
-CLASS="APPLICATION"
->The GIMP</SPAN
-> can't access the
-      directory.
+>GIMP</SPAN
+> should display a green tick to the
+      left of the directory. If not, then there is a problem either with
+      writing to the specified directory or with permissions. The time
+      to rectify this situation is now.
     </P
 ><P
->      Once you have made your settings, click
-      <SPAN
+>      Once all is well, click <SPAN
 CLASS="GUIBUTTON"
 >Continue</SPAN
 >.
-      <DIV
+    </P
+><DIV
 CLASS="NOTE"
 ><P
 ></P
@@ -273,30 +280,28 @@ WIDTH="25"
 ALIGN="CENTER"
 VALIGN="TOP"
 ><IMG
-SRC="../images/note.png"
+SRC="stylesheet-images/note.gif"
 HSPACE="5"
 ALT="Note"></TD
 ><TD
 ALIGN="LEFT"
 VALIGN="TOP"
 ><P
->	  You can change these settings later in
-	  <SPAN
+>        The settings can be changed at any time by utilizing The
+        <SPAN
 CLASS="APPLICATION"
->The GIMP</SPAN
->'s 
-	  <A
+>GIMP</SPAN
+>'s
+        <A
 HREF="dialogs/preferences/preferences.html"
->  	    Preferences Dialog
-	  </A
+>          Preferences Dialog
+        </A
 >.
-	</P
+      </P
 ></TD
 ></TR
 ></TABLE
 ></DIV
->
-    </P
 ></DIV
 ><DIV
 CLASS="SECT2"
@@ -307,64 +312,54 @@ NAME="FIRST-TIME-MONITORRES"
 >Monitor Resolution</A
 ></H2
 ><P
->      Every monitor is slightly different, and, to make images look correct,
+>      Every monitor is different, and as such, in order for The
       <SPAN
 CLASS="APPLICATION"
->The GIMP</SPAN
-> needs to know the resolution of your
-      monitor. You may find information on your monitor's resolution in its
-      manual. If you are not sure, click <SPAN
+>GIMP</SPAN
+> to correctly display images, the
+      <SPAN
+CLASS="ACRONYM"
+>DPI</SPAN
+> of each monitor should be correctly
+      entered. The best way to ascertain the <SPAN
+CLASS="ACRONYM"
+>DPI</SPAN
+>
+      setting for the monitor in question is to click the
+      <SPAN
 CLASS="GUIBUTTON"
 >Calibrate</SPAN
->. You
-      need to then find a ruler and measure the length of the white bars.
-      Enter their measurements in the <SPAN
-CLASS="GUILABEL"
->horizontal</SPAN
-> and
+> button and measure with a ruler,
+      the monitor calibration rulers displayed on the screen and enter
+      the measurement in the input box. The monitor
       <SPAN
-CLASS="GUILABEL"
->vertical</SPAN
-> boxes. You can select the units used for
-      measuring the bars from the drop-down list. Click
-      <SPAN
-CLASS="GUIBUTTON"
->OK</SPAN
-> when you have finished calibrating.
+CLASS="ACRONYM"
+>DPI</SPAN
+> may also be found in the monitor manual.
     </P
 ><P
->      When you are ready, click <SPAN
+>      Clicking <SPAN
 CLASS="GUIBUTTON"
 >Continue</SPAN
-> to finish the
-      configuration and start <SPAN
-CLASS="APPLICATION"
->The GIMP</SPAN
->.
+> will move on to the final
+      screen, and clicking <SPAN
+CLASS="GUIBUTTON"
+>Continue</SPAN
+> once more
+      will complete the installation setup.
     </P
 ><P
->      <SPAN
+>      The <SPAN
 CLASS="APPLICATION"
->The GIMP</SPAN
-> will show a splash-screen with a
-      progress-bar at the bottom showing what <SPAN
-CLASS="APPLICATION"
->The
-      GIMP</SPAN
-> is doing. When <SPAN
-CLASS="APPLICATION"
->The GIMP</SPAN
->
-      starts, it looks through all your personal directories for items such as
-      plug-ins and patterns. The first time <SPAN
-CLASS="APPLICATION"
->The GIMP</SPAN
->
-      starts, this process will take much longer than future times because
+>GIMP</SPAN
+> displays a splash screen when
+      starting and a progress bar at the bottom of the start up dialog.
+      The progress bar indicates what files and filters are being
+      loaded. This process will take a little while when The
       <SPAN
 CLASS="APPLICATION"
->The GIMP</SPAN
-> creates a cache of the files.
+>GIMP</SPAN
+> is first run.
     </P
 ></DIV
 ></DIV

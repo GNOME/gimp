@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = dialogs tools layers channels paths toolbox image images open save filters file 
+SUBDIRS = dialogs tools layers channels paths toolbox image images open save stylesheet-images filters file 
 
 helpdatadir = $(gimpdatadir)/help/C
 
