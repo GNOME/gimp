@@ -1,13 +1,14 @@
+# Slovak translation of 
 # Slovak translation of gimp-libgimp.HEAD.pot
-# Copyright (C) 2002,2003 Free Software Foundation, Inc.
-# Zdenko Podobný <zdpo@mailbox.sk>, 2002,2003.
+# Copyright (C) 2002,2003, 2004 Free Software Foundation, Inc.
+# Zdenko Podobný <zdpo@mailbox.sk>, 2002,2003, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp.HEAD.sk.po \n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-07 02:24+0100\n"
-"PO-Revision-Date: 2003-11-25 17:17+0100\n"
+"POT-Creation-Date: 2004-01-07 04:04+0100\n"
+"PO-Revision-Date: 2004-01-07 22:08+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -294,7 +295,7 @@ msgstr "Nenačítané"
 #: libgimpthumb/gimpthumb-utils.c:195
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr ""
+msgstr "Nepodarilo sa vytvoriť priečinok s náhľadmi '%s'."
 
 #: libgimpwidgets/gimpcolorbutton.c:93
 msgid "/_Foreground Color"
@@ -677,3 +678,4 @@ msgstr "Tlak"
 
 #~ msgid "Parameter Settings"
 #~ msgstr "Nastavenie parametrov"
+
