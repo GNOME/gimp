@@ -1,3 +1,11 @@
+2001-09-24 Nathan Summers <rock@gimp.org>
+        
+        * plug-ins/Lighting/lighting_image.c
+        * plug-ins/Lighting/lighting_shade.c: fixed off-by-one error that 
+        caused segfaults on images with a width of exactly 64.  Bug is present 
+        in 1.2.2; fix should be committed to stable after it is tested.
+
+
 2001-09-23  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/Makefile.am: reenabled build of ifscompose. We should port 
