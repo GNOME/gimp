@@ -1,3 +1,25 @@
+2002-11-28  Sven Neumann  <sven@gimp.org>
+
+	* app/config/Makefile.am
+	* app/config/gimpconfig-params-blurbs.h: removed ...
+	* app/config/gimpconfig-blurbs.h: ... and readded under this name.
+	Defined all missing blurb definitions to NULL.
+
+	* app/config/gimpconfig-params.h: added a blurb parameter to all
+	GIMP_CONFIG_INSTALL_PROP_* macros.
+	
+	* app/config/gimpbaseconfig.c
+	* app/config/gimpcoreconfig.c
+	* app/config/gimpdisplayconfig.c
+	* app/config/gimpguiconfig.c: register blurbs with the GimpRc
+	properties.
+
+	* app/config/gimpconfig-serialize.c: do proper line-breaking for
+	comments.
+
+	* app/core/gimpcontext.c
+	* app/widgets/gimpdeviceinfo.c: register NULL blurbs here.
+
 2002-11-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/config/Makefile.am

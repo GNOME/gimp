@@ -1,3 +1,7 @@
+#ifndef __GIMP_CONFIG_BLURBS_H__
+#define __GIMP_CONFIG_BLURBS_H__
+
+
 #define TEMP_PATH_BLURB \
 "Set the temporary storage directory. Files will appear here " \
 "during the course of running the gimp.  Most files will disappear " \
@@ -16,32 +20,30 @@
 "be desirable to put your swap file in \"/tmp\"."
 
 #define BRUSH_PATH_BLURB \
-"Set the brush search path. This is a colon-separated list of " \
-"directories to be searched for brushes."
+"Set the brush search path."
 
 #define PATTERN_PATH_BLURB \
-"Set the pattern search path.  This is a colon-separated list of " \
-"directories to be searched for patterns."
+"Set the pattern search path."
 
 #define PLUG_IN_PATH_BLURB \
-"Set the plug-in search path. This is a colon-separated list of " \
-"directories which will be scanned at startup to register new plugins."
+"Set the plug-in search path."
 
 #define PALETTE_PATH_BLURB \
-"Set the palette search path.  This is a colon-separated list of " \
-"directories to be searched for palettes."
+"Set the palette search path."
 
 #define GRADIENT_PATH_BLURB \
-"Set the gradient search path.  This is a colon-separated list of " \
-"directories to be searched for gradients."
+"Set the gradient search path."
 
 #define MODULE_PATH_BLURB \
-"Set the module search path. This is a colon-separated list of " \
-"directories which will be scanned at startup for modules to be loaded."
+"Set the module search path."
 
 #define DEFAULT_BRUSH_BLURB \
-"Specify a default brush.  This doesn't actually do anything any more, " \
-"since the default brush is set as part of the saved device status."
+"Specify a default brush.  The brush is searched for in the " \
+"specified brush path."
+
+#define DEFAULT_GRADIENT_BLURB \
+"Specify a default gradient.  The gradient is searched for in the " \
+"specified gradient path."
 
 #define DEFAULT_PATTERN_BLURB \
 "Specify a default pattern. The pattern is searched for in the " \
@@ -51,39 +53,26 @@
 "Specify a default palette.  The palette is searched for in the " \
 "specified palette path."
 
-#define DEGAULT_GRADIENT_BLURB \
-"Specify a default gradient. The gradient is searched for in the " \
-"specified gradient path."
-
 #define GAMMA_CORRECTION_BLURB \
-"Set the gamma correction value for the display.  1.0 corresponds to no " \
+"Set the gamma correction value for the display. 1.0 corresponds to no " \
 "gamma correction.  For most displays, gamma correction should be set " \
-"to between 2.0 and 2.6 Run the utility \"gamma_correct\" to determine " \
-"appropriate values for your display.  XXX is this valid info?  One " \
-"important item to keep in mind: Many images that you might get from " \
-"outside sources will in all likelihood already be gamma-corrected.  In " \
-"these cases, the image will look washed-out if the gimp has " \
-"gamma-correction turned on.  If you are going to work with images of " \
-"this sort, turn gamma correction off by setting the value to 1.0."
+"to between 2.0 and 2.6. One important thing to keep in mind: Many images "\
+"that you might get from outside sources will in all likelihood already "\
+"be gamma-corrected.  In these cases, the image will look washed-out if "\
+"the gimp has gamma-correction turned on.  If you are going to work with "\
+"images of this sort, turn gamma correction off by setting the value to 1.0."
 
 #define INSTALL_COLORMAP_BLURB \
-"Install a private colormap by default - not actually used anymore since " \
-"the introduction of GdkRgb."
+"Install a private colormap; might be useful on pseudocolor visuals."
 
 #define TILE_CACHE_SIZE_BLURB \
 "The tile cache is used to make sure the gimp doesn't thrash " \
 "tiles between memory and disk. Setting this value higher will " \
 "cause the gimp to use less swap space, but will also cause " \
 "the gimp to use more memory. Conversely, a smaller cache size " \
-"causes the gimp to use more swap space and less memory. " \
-"Note: the gimp will still run even if `tile-cache-size' is " \
-"set to 0. The actual size can contain a suffix of 'm', 'M', " \
-"'k', 'K', 'b' or 'B', which makes the gimp interpret the " \
-"size as being specified in megabytes, kilobytes and bytes " \
-"respectively. If no suffix is specified the size defaults to " \
-"being specified in kilobytes."
+"causes the gimp to use more swap space and less memory."
 
-#define MARCHING_ANTS_SPEED \
+#define MARCHING_ANTS_SPEED_BLURB \
 "Speed of marching ants in the selection outline.  This value is in " \
 "milliseconds (less time indicates faster marching)."
 
@@ -94,12 +83,10 @@
 "Set the number of operations kept on the undo stack."
 
 #define TRANSPARENCY_TYPE_BLURB \
-"Set the manner in which transparency is displayed in images. " \
-"Transparency type can be one of 0 - Light Checks, 1 - Mid-Tone Checks, " \
-"2 - Dark Checks, 3 - White Only, 4 - Gray Only, or 5 - Black Only."
+"Set the manner in which transparency is displayed in images."
 
 #define TRANSPARENCY_SIZE_BLURB \
-"Check size can be one of 0 - Small, 1 - Medium, or 2 - Large"
+"Sets the size of the checkerboard used to display transparency."
 
 #define PERFECT_MOUSE_BLURB \
 "If set to true, the X server is queried for the mouse's current " \
@@ -138,26 +125,21 @@
 "However, they require overhead that you may want to do without."
 
 #define PREVIEW_SIZE_BLURB \
-"Set the layer preview size."
+"Set the default preview size."
 
 #define SHOW_RULERS_BLURB \
-"Set the ruler visibility. The default behavior is for rulers to be on. " \
-"This can also be toggled with the View->Toggle Rulers command or " \
-"shift+control+r."
+"Set the ruler visibility. This can also be toggled with the "\
+"View->Toggle Rulers command or Shift+Control+R."
 
 #define SHOW_STATUSBAR_BLURB \
-"Controlling statusbar visibility. The default behavior is to show the " \
-"statusbar.  This can also be toggled with the View->Toggle Statusbar " \
-"command or shift+control+s."
+"Controlling statusbar visibility. This can also be toggled with "\
+"the View->Toggle Statusbar command or Shift+Control+S."
 
-#define INTERPOLATION_MODE_BLURB \
-"Set the level of interpolation.  If set, this option enables cubic " \
-"interpolation when scaling or transforming.  By default, GIMP uses " \
-"linear interpolation, which is faster, but has poorer quality."
+#define INTERPOLATION_TYPE_BLURB \
+"Set the level of interpolation used for scaling and other transformations."
 
 #define CONFIRM_ON_CLOSE_BLURB \
-"Ask for confirmation before closing an image without saving. This is " \
-"the default."
+"Ask for confirmation before closing an image without saving."
 
 #define SAVE_SESSION_INFO_BLURB \
 "Remember the positions and sizes of the main dialogs and asks your " \
@@ -177,18 +159,21 @@
 #define SHOW_TOOL_TIPS_BLURB \
 "Set to display tooltips."
 
-#define DEFAULT_IMAGE_SIZE_BLURB \
-"Set the default image size in the File/New dialog."
-
 #define DEFAULT_IMAGE_WIDTH_BLURB \
+"Set the default image width in the File/New dialog."
+
+#define DEFAULT_IMAGE_HEIGHT_BLURB \
+"Set the default image height in the File/New dialog."
+
+#define DEFAULT_IMAGE_TYPE_BLURB \
 "Set the default image type in the File/New dialog."
 
 #define DEFAULT_UNIT_BLURB \
-"Set the default units for new images and for the File/New dialog. " \
+"Set the default unit for new images and for the File/New dialog. " \
 "This units will be used for coordinate display when not in dot-for-dot " \
-"mode. The default units can be one of inches , millimeters, points or " \
+"mode. The default unit can be one of inches , millimeters, points or " \
 "picas or the identifier of one of the units defined in your user units " \
-"database. The default is inches."
+"database."
 
 #define DEFAULT_XRESOLUTION_BLURB \
 "Set the default horizontal resolution for new images and for the " \
@@ -198,7 +183,7 @@
 "Set the default vertical resolution for new images and for the " \
 "File/New dialog. This value is always in dpi (dots per inch)."
 
-#define DEFAULT_RESOLUTION_UNIT \
+#define DEFAULT_RESOLUTION_UNIT_BLURB \
 "Set the units for the display of the default resolution in the " \
 "File/New dialog. The default resolution units can be one of inches, " \
 "millimeters, points or picas or the identifier of one of the units " \
@@ -231,10 +216,8 @@
 "%z  zoom factor as a percentage\n" \
 "%s  source scale factor\n" \
 "%d  destination scale factor\n" \
-"%Dx expands to x if the image is dirty, the empty string " \
-"otherwise.  The x can be any character, eg %D*.\n" \
-"%Cx expands to x if the image is clean, the empty string " \
-"otherwise.  The x can be any character, eg %Co.\n" \
+"%Dx expands to x if the image is dirty, the empty string otherwise\n" \
+"%Cx expands to x if the image is clean, the empty string otherwise\n" \
 "%m  memory used by the image\n" \
 "%l  the number of layers\n" \
 "%L  the name of the active layer/channel\n" \
@@ -243,11 +226,34 @@
 "%h  image height in pixels\n" \
 "%H  image height in real-world units\n" \
 "%u  unit symbol\n" \
-"%U  unit abbreviation\n" \
-"The default title format string is \"%f-%p.%i (%t)\"."
+"%U  unit abbreviation\n"
 
 #define IMAGE_STATUS_FORMAT_BLURB \
-"Set the text to appear in image window status bars.  See image-title-format " \
-"for the list of possible % sequences.\n" \
-"\n" \
-"The default status format string is \"%f-%p.%i (%t)\"."
+"Set the text to appear in image window status bars. See image-title-format " \
+"for the list of possible % sequences."
+
+#define TOOL_PLUG_IN_PATH_BLURB        NULL
+#define ENVIRON_PATH_BLURB             NULL
+#define PLUGINRC_PATH_BLURB            NULL
+#define MONITOR_RES_FROM_GDK_BLURB     NULL
+#define THEME_PATH_BLURB               NULL
+#define DEFAULT_COMMENT_BLURB          NULL
+#define DEFAULT_DOT_FOR_DOT_BLURB      NULL
+#define MODULE_LOAD_INHIBIT_BLURB      NULL
+#define INFO_WINDOW_PER_DISPLAY_BLURB  NULL
+#define TRUST_DIRTY_FLAG_BLURB         NULL
+#define RESTORE_SESSION_BLURB          NULL
+#define TEAROFF_MENUS_BLURB            NULL
+#define THEME_BLURB                    NULL
+#define USE_HELP_BLURB                 NULL
+#define THUMBNAIL_SIZE_BLURB           NULL
+#define MIN_COLORS_BLURB               NULL
+#define CURSOR_MODE_BLURB              NULL
+#define NAVIGATION_PREVIEW_SIZE_BLURB  NULL
+#define CANVAS_PADDING_MODE_BLURB      NULL
+#define CANVAS_PADDING_COLOR_BLURB     NULL
+#define HELP_BROWSER_BLURB             NULL
+#define MAX_NEW_IMAGE_SIZE_BLURB       NULL
+
+
+#endif  /* __GIMP_CONFIG_BLURBS_H__ */

@@ -46,7 +46,7 @@ main (int   argc,
 
   rc = g_object_new (GIMP_TYPE_RC, NULL);
 
-  g_print ("# Dump of the GIMP default configuration\n");
+  g_print ("# Dump of the GIMP default configuration\n\n");
 
   gimp_config_serialize_properties (rc, 1, 0);
 

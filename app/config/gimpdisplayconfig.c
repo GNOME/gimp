@@ -28,6 +28,7 @@
 
 #include "config-types.h"
 
+#include "gimpconfig-blurbs.h"
 #include "gimpconfig-params.h"
 #include "gimpconfig-types.h"
 #include "gimpconfig-utils.h"
@@ -123,81 +124,93 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_MARCHING_ANTS_SPEED,
                                 "marching-ants-speed",
+                                MARCHING_ANTS_SPEED_BLURB,
                                 50, G_MAXINT, 300,
                                 0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_COLORMAP_CYCLING,
-                                    "colormap-cycling",
+                                    "colormap-cycling", COLORMAP_CYCLING_BLURB,
                                     FALSE,
                                     GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RESIZE_WINDOWS_ON_ZOOM,
                                     "resize-windows-on-zoom",
+                                    RESIZE_WINDOWS_ON_ZOOM_BLURB,
                                     FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RESIZE_WINDOWS_ON_RESIZE,
                                     "resize-windows-on-resize",
+                                    RESIZE_WINDOWS_ON_RESIZE_BLURB,
                                     FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DEFAULT_DOT_FOR_DOT,
                                     "default-dot-for-dot",
+                                    DEFAULT_DOT_FOR_DOT_BLURB,
                                     TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PERFECT_MOUSE,
-                                    "perfect-mouse",
+                                    "perfect-mouse", PERFECT_MOUSE_BLURB,
                                     FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CURSOR_MODE,
-                                 "cursor-mode",
+                                 "cursor-mode", CURSOR_MODE_BLURB,
                                  GIMP_TYPE_CURSOR_MODE,
                                  GIMP_CURSOR_MODE_TOOL_ICON,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CURSOR_UPDATING,
-                                    "cursor-updating",
+                                    "cursor-updating", CURSOR_UPDATING_BLURB,
                                     TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_IMAGE_TITLE_FORMAT,
                                    "image-title-format",
+                                   IMAGE_TITLE_FORMAT_BLURB,
                                    DEFAULT_IMAGE_TITLE_FORMAT,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_IMAGE_STATUS_FORMAT,
                                    "image-status-format",
+                                   IMAGE_STATUS_FORMAT_BLURB,
                                    DEFAULT_IMAGE_STATUS_FORMAT,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_RULERS,
-                                    "show-rulers",
+                                    "show-rulers", SHOW_RULERS_BLURB,
                                     TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_STATUSBAR,
-                                    "show-statusbar",
+                                    "show-statusbar", SHOW_STATUSBAR_BLURB,
                                     TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONFIRM_ON_CLOSE,
-                                    "confirm-on-close",
+                                    "confirm-on-close", CONFIRM_ON_CLOSE_BLURB,
                                     TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_MONITOR_XRESOLUTION,
                                    "monitor-xresolution",
+                                   MONITOR_XRESOLUTION_BLURB,
                                    GIMP_MIN_RESOLUTION, G_MAXDOUBLE, 72.0,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_MONITOR_YRESOLUTION,
                                    "monitor-yresolution",
+                                   MONITOR_YRESOLUTION_BLURB,
                                    GIMP_MIN_RESOLUTION, G_MAXDOUBLE, 72.0,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MONITOR_RES_FROM_GDK,
                                     "monitor-resolution-from-windowing-system",
+                                    MONITOR_RES_FROM_GDK_BLURB,
                                     TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_NAV_PREVIEW_SIZE,
                                  "navigation-preview-size",
+                                 NAVIGATION_PREVIEW_SIZE_BLURB,
                                  GIMP_TYPE_PREVIEW_SIZE,
                                  GIMP_PREVIEW_SIZE_MEDIUM,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CANVAS_PADDING_MODE,
                                  "canvas-padding-mode",
+                                 CANVAS_PADDING_MODE_BLURB,
                                  GIMP_TYPE_DISPLAY_PADDING_MODE,
                                  GIMP_DISPLAY_PADDING_MODE_DEFAULT,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_CANVAS_PADDING_COLOR,
                                   "canvas-padding-color",
+                                  CANVAS_PADDING_COLOR_BLURB,
                                   &white,
                                   0);
 }

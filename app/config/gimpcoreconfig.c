@@ -27,6 +27,7 @@
 
 #include "config-types.h"
 
+#include "gimpconfig-blurbs.h"
 #include "gimpconfig-params.h"
 #include "gimpconfig-types.h"
 #include "gimpconfig-utils.h"
@@ -125,124 +126,134 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_INTERPOLATION_TYPE,
                                  "interpolation-type",
+                                 INTERPOLATION_TYPE_BLURB,
                                  GIMP_TYPE_INTERPOLATION_TYPE, 
                                  GIMP_INTERPOLATION_LINEAR,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PLUG_IN_PATH,
-                                 "plug-in-path",
+                                 "plug-in-path", PLUG_IN_PATH_BLURB,
                                  gimp_config_build_plug_in_path ("plug-ins"),
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_TOOL_PLUG_IN_PATH,
-                                 "tool-plug-in-path",
+                                 "tool-plug-in-path", TOOL_PLUG_IN_PATH_BLURB,
                                  gimp_config_build_plug_in_path ("tool-plug-ins"),
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_MODULE_PATH,
-                                 "module-path",
+                                 "module-path", MODULE_PATH_BLURB,
                                  gimp_config_build_plug_in_path ("modules"),
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_ENVIRON_PATH,
-                                 "environ-path",
+                                 "environ-path", ENVIRON_PATH_BLURB,
                                  gimp_config_build_plug_in_path ("environ"),
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_BRUSH_PATH,
-                                 "brush-path",
+                                 "brush-path", BRUSH_PATH_BLURB,
                                  gimp_config_build_data_path ("brushes"),
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PATTERN_PATH,
-                                 "pattern-path",
+                                 "pattern-path", PATTERN_PATH_BLURB,
                                  gimp_config_build_data_path ("patterns"),
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PALETTE_PATH,
-                                 "palette-path",
+                                 "palette-path", PALETTE_PATH_BLURB,
                                  gimp_config_build_data_path ("palettes"),
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_GRADIENT_PATH,
-                                 "gradient-path",
+                                 "gradient-path", GRADIENT_PATH_BLURB,
                                  gimp_config_build_data_path ("gradients"),
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_BRUSH,
-                                   "default-brush",
+                                   "default-brush", DEFAULT_BRUSH_BLURB,
                                    NULL,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_PATTERN,
-                                   "default-pattern",
+                                   "default-pattern", DEFAULT_PATTERN_BLURB,
                                    NULL,
                                    0);
-  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_PATTERN,
-                                   "default-palette",
+  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_PALETTE,
+                                   "default-palette", DEFAULT_PALETTE_BLURB,
                                    NULL,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_GRADIENT,
-                                   "default-gradient",
+                                   "default-gradient", DEFAULT_GRADIENT_BLURB,
                                    NULL,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_COMMENT,
-                                   "default-comment",
+                                   "default-comment", DEFAULT_COMMENT_BLURB,
                                    "Created with The GIMP",
                                    0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DEFAULT_IMAGE_TYPE,
                                  "default-image-type",
+                                 DEFAULT_IMAGE_TYPE_BLURB,
                                  GIMP_TYPE_IMAGE_BASE_TYPE, GIMP_RGB,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_DEFAULT_IMAGE_WIDTH,
                                 "default-image-width",
+                                DEFAULT_IMAGE_WIDTH_BLURB,
                                 1, 0x8000, 256,
                                 0);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_DEFAULT_IMAGE_HEIGHT,
                                 "default-image-height",
+                                DEFAULT_IMAGE_HEIGHT_BLURB,
                                 1, 0x8000, 256,
                                 0);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_DEFAULT_UNIT,
-                                "default-unit",
+                                 "default-unit", DEFAULT_UNIT_BLURB,
                                  GIMP_UNIT_INCH,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_DEFAULT_XRESOLUTION,
                                    "default-xresolution",
+                                   DEFAULT_XRESOLUTION_BLURB,
                                    GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
                                    72.0,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_DEFAULT_YRESOLUTION,
                                    "default-yresolution",
+                                   DEFAULT_YRESOLUTION_BLURB,
                                    GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
                                    72.0,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_DEFAULT_RESOLUTION_UNIT,
                                  "default-resolution-unit",
+                                 DEFAULT_RESOLUTION_UNIT_BLURB,
                                  GIMP_UNIT_INCH,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_UNDO_LEVELS,
-                                "undo-levels",
+                                "undo-levels", UNDO_LEVELS_BLURB,
                                 0, G_MAXINT, 5,
                                 GIMP_PARAM_CONFIRM);
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PLUGINRC_PATH,
-                                 "pluginrc-path",
+  GIMP_CONFIG_INSTALL_PROP_PATH (object_class,
+                                 PROP_PLUGINRC_PATH,
+                                 "pluginrc-path", PLUGINRC_PATH_BLURB,
                                  g_build_filename (gimp_directory (), 
                                                    "pluginrc", NULL),
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_MODULE_LOAD_INHIBIT,
                                    "module-load-inhibit",
+                                   MODULE_LOAD_INHIBIT_BLURB,
                                    NULL,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PREVIEW_SIZE,
-                                 "preview-size",
+                                 "preview-size", PREVIEW_SIZE_BLURB,
                                  GIMP_TYPE_PREVIEW_SIZE,
                                  GIMP_PREVIEW_SIZE_SMALL,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_THUMBNAIL_SIZE,
-                                 "thumbnail-size",
+                                 "thumbnail-size", THUMBNAIL_SIZE_BLURB,
                                  GIMP_TYPE_THUMBNAIL_SIZE,
                                  GIMP_THUMBNAIL_SIZE_NORMAL,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_GAMMA_CORRECTION,
                                    "gamma-correction",
+                                   GAMMA_CORRECTION_BLURB,
                                    0.0, 100.0, 1.0,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INSTALL_COLORMAP,
-                                    "install-colormap",
+                                    "install-colormap", INSTALL_COLORMAP_BLURB,
                                     FALSE,
                                     GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_MIN_COLORS,
-                                "min-colors",
+                                "min-colors", MIN_COLORS_BLURB,
                                 27, 256, 144,
                                 GIMP_PARAM_RESTART);
 }

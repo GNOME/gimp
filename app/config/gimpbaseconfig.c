@@ -27,6 +27,7 @@
 
 #include "config-types.h"
 
+#include "gimpconfig-blurbs.h"
 #include "gimpconfig-params.h"
 #include "gimpconfig-types.h"
 
@@ -100,24 +101,24 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
   object_class->get_property = gimp_base_config_get_property;
 
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_TEMP_PATH,
-                                 "temp-path", 
+                                 "temp-path", TEMP_PATH_BLURB,
                                  g_build_filename (gimp_directory (), 
                                                    "tmp", NULL),
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_SWAP_PATH,
-                                 "swap-path", 
+                                 "swap-path", SWAP_PATH_BLURB,
                                  g_strdup (gimp_directory ()),
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_STINGY_MEMORY_USE,
-                                    "stingy-memory-use",
+                                    "stingy-memory-use", STINGY_MEMORY_USE_BLURB,
                                     FALSE,
                                     GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_UINT (object_class, PROP_NUM_PROCESSORS,
-                                 "num-processors",
+                                 "num-processors", NUM_PROCESSORS_BLURB,
                                  1, 30, 1,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_TILE_CACHE_SIZE,
-                                    "tile-cache-size",
+                                    "tile-cache-size", TILE_CACHE_SIZE_BLURB,
                                     0, G_MAXULONG, 1 << 25,
                                     GIMP_PARAM_CONFIRM);
 }

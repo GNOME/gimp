@@ -47,6 +47,8 @@ static gboolean   gimp_config_serialize_property (GObject      *object,
                                                   GParamSpec   *param_spec,
                                                   GString      *str,
                                                   gboolean      escaped);
+static void       gimp_config_serialize_comment  (GString      *str,
+                                                  const gchar  *comment);
 static void       serialize_unknown_token        (const gchar  *key,
                                                   const gchar  *value,
                                                   gpointer      data);
@@ -98,7 +100,7 @@ gimp_config_serialize_properties (GObject  *object,
         g_string_assign (str, "");
 
       if ((blurb = g_param_spec_get_blurb (prop_spec)) != NULL)
-        g_string_append_printf (str, "# %s\n", blurb);
+        gimp_config_serialize_comment (str, blurb);
 
       gimp_config_string_indent (str, indent_level);
 
@@ -106,7 +108,7 @@ gimp_config_serialize_properties (GObject  *object,
 
       if (gimp_config_serialize_property (object, prop_spec, str, TRUE))
         {
-          g_string_append (str, ")");
+          g_string_append (str, ")\n");
           property_written = TRUE;
 
           if (write (fd, str->str, str->len) == -1)
@@ -178,6 +180,9 @@ gimp_config_serialize_changed_properties (GObject *new,
         g_string_assign (str, "\n");
       else
         g_string_assign (str, "");
+
+      if ((blurb = g_param_spec_get_blurb (prop_spec)) != NULL)
+        gimp_config_serialize_comment (str, blurb);
 
       gimp_config_string_indent (str, indent_level);
 
@@ -435,6 +440,41 @@ gimp_config_serialize_property (GObject      *object,
   g_value_unset (&value);
 
   return retval;
+}
+
+static void
+gimp_config_serialize_comment (GString     *str,
+                               const gchar *comment)
+{
+  const gchar *s;
+  gint         i, len, space;
+
+  len = strlen (comment);
+
+  while (len > 0)
+    {
+      for (s = comment, i = 0, space = 0;
+           *s != '\n' && (i <= 76 || space == 0) && i < len;
+           s++, i++)
+        {
+          if (g_ascii_isspace (*s))
+            space = i;
+        }
+
+      if (i > 76 && space && *s != '\n')
+        i = space;
+
+      g_string_append_len (str, "# ", 2);
+      g_string_append_len (str, comment, i);
+      g_string_append_c (str, '\n');
+
+      i++;
+
+      comment += i;
+      len     -= i;
+    }
+
+  g_string_append_printf (str, "#\n");
 }
 
 static void

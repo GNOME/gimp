@@ -597,22 +597,25 @@ gimp_context_class_init (GimpContextClass *klass)
                                                         G_PARAM_READWRITE));
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_TOOL,
-                                   gimp_context_prop_names[TOOL_CHANGED],
+                                   gimp_context_prop_names[TOOL_CHANGED], NULL,
                                    GIMP_TYPE_TOOL_INFO,
                                    0);
 
   GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_FOREGROUND,
                                   gimp_context_prop_names[FOREGROUND_CHANGED],
+                                  NULL,
                                   &black,
                                   0);
 
   GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_BACKGROUND,
                                   gimp_context_prop_names[BACKGROUND_CHANGED],
+                                  NULL,
                                   &white,
                                   0);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OPACITY,
 				   gimp_context_prop_names[OPACITY_CHANGED],
+                                   NULL,
                                    GIMP_OPACITY_TRANSPARENT,
                                    GIMP_OPACITY_OPAQUE,
                                    GIMP_OPACITY_OPAQUE,
@@ -620,27 +623,32 @@ gimp_context_class_init (GimpContextClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PAINT_MODE,
 				 gimp_context_prop_names[PAINT_MODE_CHANGED],
+                                 NULL,
                                  GIMP_TYPE_LAYER_MODE_EFFECTS,
                                  GIMP_NORMAL_MODE,
                                  0);
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_BRUSH,
                                    gimp_context_prop_names[BRUSH_CHANGED],
+                                   NULL,
                                    GIMP_TYPE_BRUSH,
                                    0);
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_PATTERN,
                                    gimp_context_prop_names[PATTERN_CHANGED],
+                                   NULL,
                                    GIMP_TYPE_PATTERN,
                                    0);
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_GRADIENT,
                                    gimp_context_prop_names[GRADIENT_CHANGED],
+                                   NULL,
                                    GIMP_TYPE_GRADIENT,
                                    0);
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_PALETTE,
                                    gimp_context_prop_names[PALETTE_CHANGED],
+                                   NULL,
                                    GIMP_TYPE_PALETTE,
                                    0);
 

@@ -128,7 +128,7 @@ gimp_device_info_class_init (GimpDeviceInfoClass *klass)
   object_class->set_property = gimp_device_info_set_property;
   object_class->get_property = gimp_device_info_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_MODE, "mode",
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_MODE, "mode", NULL,
                                  GDK_TYPE_INPUT_MODE,
                                  GDK_MODE_DISABLED,
                                  0);
