@@ -24,13 +24,6 @@
 #ifndef _IMAP_MISC_H
 #define _IMAP_MISC_H
 
-void toolbar_add_space (GtkWidget *toolbar);
-GtkWidget *make_toolbar_stock_icon(GtkWidget *toolbar, const gchar *stock_id, 
-				   const char *identifier, 
-				   const char *tooltip, 
-				   void (*callback)(GtkWidget*, gpointer), 
-				   gpointer udata);
-
 void set_sash_size(gboolean double_size);
 void draw_sash(GdkWindow *window, GdkGC *gc, gint x, gint y);
 gboolean near_sash(gint sash_x, gint sash_y, gint x, gint y);

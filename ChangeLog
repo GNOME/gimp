@@ -1,3 +1,19 @@
+2005-01-23    <maurits@Mau>
+
+	* plug-ins/imagemap/imap_toolbar.[ch]
+	* plug-ins/imagemap/imap_tools.[ch]: removed
+
+	* plug-ins/imagemap/Makefile.am
+	* po-plug-ins/POTFILES.in: changed accordingly
+
+	* plug-ins/imagemap/imap_grid.c
+	* plug-ins/imagemap/imap_main.[ch]
+	* plug-ins/imagemap/imap_menu.[ch]
+	* plug-ins/imagemap/imap_misc.[ch]
+	* plug-ins/imagemap/imap_object_popup.c
+	* plug-ins/imagemap/imap_selection.c: more conversion to action based
+	menus. Still have to attach some actions.
+
 2005-01-23  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/Makefile.am

@@ -59,4 +59,8 @@ void menu_shapes_selected(gint count);
 
 void do_main_popup_menu(GdkEventButton *event);
 
+GtkWidget *make_toolbar(GtkWidget *main_vbox, GtkWidget *window);
+GtkWidget *make_tools(GtkWidget *window);
+GtkWidget *make_selection_toolbar(void);
+
 #endif /* _IMAP_MENU_H */

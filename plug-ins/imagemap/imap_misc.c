@@ -28,42 +28,6 @@
 #include "imap_main.h"
 #include "imap_misc.h"
 
-static GtkWidget*
-make_toolbar_icon (GtkWidget *toolbar, GtkToolItem *item,
-		   const char *identifier, const char *tooltip,
-		   void (*callback)(GtkWidget*, gpointer), gpointer udata)
-{
-  static GtkTooltips *tips;
-  if (!tips)
-    {
-      tips = gtk_tooltips_new ();
-    }
-  gtk_tool_item_set_tooltip (item, tips, tooltip, identifier);
-  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, -1);
-  gtk_widget_show (GTK_WIDGET (item));
-  return GTK_WIDGET (item);
-}
-
-void
-toolbar_add_space (GtkWidget *toolbar)
-{
-  GtkToolItem *item = gtk_separator_tool_item_new ();
-  gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item), FALSE);
-  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, -1);
-  gtk_widget_show (GTK_WIDGET (item));
-}
-
-GtkWidget*
-make_toolbar_stock_icon(GtkWidget *toolbar, const gchar *stock_id,
-			const char *identifier, const char *tooltip,
-			void (*callback)(GtkWidget*, gpointer), gpointer udata)
-{
-   GtkToolItem *item = gtk_tool_button_new_from_stock (stock_id);
-   g_signal_connect (item, "clicked", G_CALLBACK (callback), udata);
-   return make_toolbar_icon (toolbar, item, identifier, tooltip,
-			     callback, udata);
-}
-
 #define SASH_SIZE 8
 
 static gint _sash_size = SASH_SIZE;

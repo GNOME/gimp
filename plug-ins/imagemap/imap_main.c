@@ -54,8 +54,6 @@
 #include "imap_statusbar.h"
 #include "imap_stock.h"
 #include "imap_string.h"
-#include "imap_toolbar.h"
-#include "imap_tools.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -81,7 +79,6 @@ static GtkWidget   *_dlg;
 static Preview_t   *_preview;
 static Selection_t *_selection;
 static StatusBar_t *_statusbar;
-static ToolBar_t   *_toolbar;
 static ObjectList_t *_shapes;
 static gint	    _zoom_factor = 1;
 static gboolean (*_button_press_func)(GtkWidget*, GdkEventButton*, gpointer);
@@ -408,7 +405,21 @@ get_filename(void)
    return _filename;
 }
 
-void
+static gboolean
+arrow_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
+{
+   if (event->button == 1) {
+      if (event->type == GDK_2BUTTON_PRESS)
+	 edit_shape((gint) event->x, (gint) event->y);
+      else
+	 select_shape(widget, event);
+   } else {
+      do_popup_menu(event);
+   }
+   return FALSE;
+}
+
+static void
 set_arrow_func(void)
 {
    _button_press_func = arrow_on_button_press;
@@ -555,8 +566,8 @@ update_shape(Object_t *obj)
    object_list_update(_shapes, obj);
 }
 
-static void
-edit_selected_shape(void)
+void
+do_edit_selected_shape(void)
 {
    object_list_edit_selected(_shapes);
 }
@@ -684,15 +695,15 @@ edit_shape(gint x, gint y)
    }
 }
 
-static void
-menu_zoom_in(void)
+void
+do_zoom_in(void)
 {
    gint factor = zoom_in();
    menu_set_zoom_sensitivity(factor);
 }
 
-static void
-menu_zoom_out(void)
+void
+do_zoom_out(void)
 {
    gint factor = zoom_out();
    menu_set_zoom_sensitivity(factor);
@@ -1202,24 +1213,6 @@ imap_help (void)
   gimp_standard_help_func ("plug-in-imagemap", NULL);
 }
 
-static Command_t*
-factory_preferences_dialog(void)
-{
-   return command_new(do_preferences_dialog);
-}
-
-static Command_t*
-factory_undo(void)
-{
-   return command_new(do_undo);
-}
-
-static Command_t*
-factory_redo(void)
-{
-   return command_new(do_redo);
-}
-
 void 
 do_cut (void)
 {
@@ -1256,22 +1249,30 @@ do_clear(void)
   command_execute (clear_command_new(_shapes));
 }
 
-static Command_t*
-factory_edit(void)
+void
+do_move_up(void)
 {
-   return command_new(edit_selected_shape);
+  /* Fix me!
+   Command_t *command = object_up_command_new(_current_obj->list,
+					      _current_obj);
+   command_execute(command);
+  */
+}
+
+void
+do_move_down(void)
+{
+  /* Fix me!
+   Command_t *command = object_down_command_new(_current_obj->list,
+						_current_obj);
+   command_execute(command);
+  */
 }
 
 static Command_t*
 factory_toggle_area_list(void)
 {
    return command_new(toggle_area_list);
-}
-
-static Command_t*
-factory_source_dialog(void)
-{
-   return command_new(do_source_dialog);
 }
 
 static Command_t*
@@ -1284,36 +1285,6 @@ static Command_t*
 factory_preview_gray(void)
 {
    return command_new(set_preview_gray);
-}
-
-static Command_t*
-factory_menu_zoom_in(void)
-{
-   return command_new(menu_zoom_in);
-}
-
-static Command_t*
-factory_menu_zoom_out(void)
-{
-   return command_new(menu_zoom_out);
-}
-
-static Command_t*
-factory_zoom_in(void)
-{
-  return command_new((void (*)(void)) zoom_in);
-}
-
-static Command_t*
-factory_zoom_out(void)
-{
-   return command_new((void (*)(void)) zoom_out);
-}
-
-static Command_t*
-factory_settings_dialog(void)
-{
-   return command_new(do_settings_dialog);
 }
 
 static Command_t*
@@ -1352,15 +1323,13 @@ factory_move_down(void)
    return move_down_command_new(_shapes);
 }
 
-
-
 static gint
 dialog(GimpDrawable *drawable)
 {
    GtkWidget 	*dlg;
    GtkWidget 	*hbox;
    GtkWidget 	*main_vbox;
-   Tools_t	*tools;
+   GtkWidget	*tools;
    Menu_t	*menu;
 
    gimp_ui_init ("imagemap", TRUE);
@@ -1395,7 +1364,7 @@ dialog(GimpDrawable *drawable)
    menu = make_menu(main_vbox, dlg);
 
    /* Create toolbar */
-   _toolbar = make_toolbar(main_vbox, dlg);
+   make_toolbar(main_vbox, dlg);
 
    /*  Dialog area  */
    hbox = gtk_hbox_new(FALSE, 1);
@@ -1404,7 +1373,7 @@ dialog(GimpDrawable *drawable)
 
    tools = make_tools(dlg);
    // selection_set_edit_command(tools, factory_edit);
-   gtk_box_pack_start(GTK_BOX(hbox), tools->container, FALSE, FALSE, 0);
+   gtk_box_pack_start(GTK_BOX(hbox), tools, FALSE, FALSE, 0);
 
    _preview = make_preview(drawable);
    add_preview_motion_event(_preview, (GtkSignalFunc) preview_move);

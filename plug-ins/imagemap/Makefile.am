@@ -120,11 +120,7 @@ imagemap_SOURCES = \
 	imap_table.c			\
 	imap_table.h			\
 	imap_taglist.c			\
-	imap_taglist.h			\
-	imap_toolbar.c			\
-	imap_toolbar.h			\
-	imap_tools.c			\
-	imap_tools.h
+	imap_taglist.h
 
 INCLUDES = \
 	-I$(top_srcdir)	\

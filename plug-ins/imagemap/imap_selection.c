@@ -30,9 +30,8 @@
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "imap_commands.h"
-#include "imap_edit_area_info.h"
 #include "imap_main.h"
-#include "imap_misc.h"
+#include "imap_menu.h"
 #include "imap_selection.h"
 
 #include "libgimp/stdplugins-intl.h"
@@ -40,6 +39,7 @@
 static void
 set_buttons(Selection_t *data)
 {
+#ifdef _OLD_
   if (gtk_tree_selection_count_selected_rows (data->selection)) {
 #ifdef _OLD_
     gtk_widget_set_sensitive(data->arrow_up,
@@ -57,6 +57,7 @@ set_buttons(Selection_t *data)
     gtk_widget_set_sensitive(data->remove, FALSE);
     gtk_widget_set_sensitive(data->edit, FALSE);
   }
+#endif
 }
 
 static void
@@ -135,46 +136,6 @@ button_release_cb(GtkWidget *widget, GdkEventButton *event, Selection_t *data)
   if (event->button == 1)
     data->doubleclick = FALSE;
   return FALSE;
-}
-
-static void
-selection_command(GtkWidget *widget, gpointer data)
-{
-  CommandFactory_t *factory = (CommandFactory_t*) data;
-  Command_t *command = (*factory)();
-  command_execute(command);
-}
-
-static GtkWidget*
-make_selection_toolbar(Selection_t *data)
-{
-  GtkWidget *toolbar;
-
-  toolbar = gtk_toolbar_new();
-  gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_ICONS);
-  gtk_toolbar_set_orientation(GTK_TOOLBAR(toolbar), GTK_ORIENTATION_VERTICAL);
-  gtk_container_set_border_width(GTK_CONTAINER(toolbar), 0);
-
-  data->arrow_up = make_toolbar_stock_icon(toolbar, GTK_STOCK_GO_UP,
-					   "MoveUp", _("Move Up"),
-					   selection_command,
-					   &data->cmd_move_up);
-  data->arrow_down = make_toolbar_stock_icon(toolbar, GTK_STOCK_GO_DOWN,
-					     "MoveDown", _("Move Down"),
-					     selection_command,
-					     &data->cmd_move_down);
-  toolbar_add_space(toolbar);
-  data->edit = make_toolbar_stock_icon(toolbar, GTK_STOCK_PROPERTIES,
-				       "Edit", _("Edit"), selection_command,
-				       &data->cmd_edit);
-  toolbar_add_space(toolbar);
-  data->remove = make_toolbar_stock_icon(toolbar, GTK_STOCK_DELETE, "Delete",
-					 _("Delete"), selection_command,
-					 &data->cmd_delete);
-
-  gtk_widget_show(toolbar);
-
-  return toolbar;
 }
 
 static void
@@ -393,7 +354,7 @@ make_selection(ObjectList_t *object_list)
   gtk_container_add(GTK_CONTAINER(frame), hbox);
   gtk_widget_show(hbox);
 
-  toolbar = make_selection_toolbar(data);
+  toolbar = make_selection_toolbar();
   gtk_container_add(GTK_CONTAINER(hbox), toolbar);
 
   /* Create selection */

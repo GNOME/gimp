@@ -39,7 +39,6 @@
 #include "imap_settings.h"
 #include "imap_stock.h"
 #include "imap_source.h"
-#include "imap_tools.h"
 
 #include "libgimp/stdplugins-intl.h"
 #include "libgimpwidgets/gimpstock.h"
@@ -54,6 +53,9 @@ void do_clear();
 void do_select_all();
 void do_deselect_all();
 void do_grid_settings_dialog();
+void do_zoom_in();
+void do_zoom_out();
+void do_edit_selected_shape();
 void imap_help();
 void set_func(int func);
 
@@ -173,18 +175,20 @@ static GtkActionEntry entries[] = {
   { "SelectAll", NULL, "Select _All", "<control>A", NULL, do_select_all},
   { "DeselectAll", NULL, "Deselect _All", "<shift><control>A", NULL, 
     do_deselect_all},
-  { "EditAreaInfo", NULL, "Edit Area Info...", NULL, NULL, NULL},
-  { "Preferences", GTK_STOCK_PREFERENCES, NULL, NULL, "Preferences", NULL},
+  { "EditAreaInfo", GTK_STOCK_PROPERTIES, "Edit Area Info...", NULL, 
+    "Edit selected area info", do_edit_selected_shape},
+  { "Preferences", GTK_STOCK_PREFERENCES, NULL, NULL, "Preferences", 
+    do_preferences_dialog},
   { "MoveToFront", IMAP_STOCK_TO_FRONT, NULL, NULL, "Move to Front", NULL},
   { "SendToBack", IMAP_STOCK_TO_BACK, NULL, NULL, "Send to Back", NULL},
   { "DeleteArea", NULL, "Delete Area", NULL, NULL, NULL},
-  { "MoveUp", NULL, "Move Up", NULL, NULL, NULL},
-  { "MoveDown", NULL, "Move Down", NULL, NULL, NULL},
+  { "MoveUp", GTK_STOCK_GO_UP, "Move Up", NULL, NULL, NULL},
+  { "MoveDown", GTK_STOCK_GO_DOWN, "Move Down", NULL, NULL, NULL},
 
   { "ViewMenu", NULL, "_View" },
-  { "Source", NULL, "Source...", NULL, NULL, NULL},
-  { "ZoomIn", GTK_STOCK_ZOOM_IN, NULL, "plus", "Zoom in", NULL},
-  { "ZoomOut", GTK_STOCK_ZOOM_OUT, NULL, "minus", "Zoom out", NULL},
+  { "Source", NULL, "Source...", NULL, NULL, do_source_dialog},
+  { "ZoomIn", GTK_STOCK_ZOOM_IN, NULL, "plus", "Zoom in", do_zoom_in},
+  { "ZoomOut", GTK_STOCK_ZOOM_OUT, NULL, "minus", "Zoom out", do_zoom_out},
   { "ZoomToMenu", NULL, "_Zoom To" },
 
   { "MappingMenu", NULL, "_Mapping" },
@@ -351,6 +355,15 @@ static const char *ui_description =
 "    <toolitem action='Rectangle'/>"
 "    <toolitem action='Circle'/>"
 "    <toolitem action='Polygon'/>"
+"    <separator/>"
+"    <toolitem action='EditAreaInfo'/>"
+"  </toolbar>"
+""
+"  <toolbar name='Selection'>"
+"    <toolitem action='MoveUp'/>"
+"    <toolitem action='MoveDown'/>"
+"    <toolitem action='EditAreaInfo'/>"
+"    <toolitem action='Clear'/>"
 "  </toolbar>"
 "</ui>";
 
@@ -459,3 +472,56 @@ menu_set_zoom(gint factor)
   menu_set_zoom_sensitivity (factor);
 }
 
+GtkWidget*
+make_toolbar(GtkWidget *main_vbox, GtkWidget *window)
+{
+  GtkWidget *handlebox, *toolbar;
+  
+  handlebox = gtk_handle_box_new ();
+  gtk_box_pack_start (GTK_BOX (main_vbox), handlebox, FALSE, FALSE, 0);
+  toolbar = gtk_ui_manager_get_widget (ui_manager, "/Toolbar");
+
+  gtk_toolbar_set_style (GTK_TOOLBAR (toolbar), GTK_TOOLBAR_ICONS);
+  gtk_container_set_border_width (GTK_CONTAINER (toolbar), 0);
+
+  gtk_container_add (GTK_CONTAINER (handlebox), toolbar);
+  gtk_widget_show (toolbar);
+  gtk_widget_show (handlebox);
+  
+  return handlebox;
+}
+
+GtkWidget*
+make_tools(GtkWidget *window)
+{
+  GtkWidget *handlebox, *toolbar;
+
+  handlebox = gtk_handle_box_new ();
+  toolbar = gtk_ui_manager_get_widget (ui_manager, "/Tools");
+  gtk_toolbar_set_orientation (GTK_TOOLBAR (toolbar), 
+			       GTK_ORIENTATION_VERTICAL);
+
+  gtk_toolbar_set_style (GTK_TOOLBAR (toolbar), GTK_TOOLBAR_ICONS);
+  gtk_container_set_border_width (GTK_CONTAINER (toolbar), 0);
+
+  gtk_container_add (GTK_CONTAINER (handlebox), toolbar);
+  gtk_widget_show (toolbar);
+  gtk_widget_show (handlebox);
+
+  return handlebox;
+}
+
+GtkWidget*
+make_selection_toolbar(void)
+{
+  GtkWidget *toolbar;
+
+  toolbar = gtk_ui_manager_get_widget (ui_manager, "/Selection");
+
+  gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_ICONS);
+  gtk_toolbar_set_orientation(GTK_TOOLBAR(toolbar), GTK_ORIENTATION_VERTICAL);
+  gtk_container_set_border_width(GTK_CONTAINER(toolbar), 0);
+
+  gtk_widget_show (toolbar);
+  return toolbar;
+}

@@ -237,8 +237,6 @@ plug-ins/imagemap/imap_selection.c
 plug-ins/imagemap/imap_settings.c
 plug-ins/imagemap/imap_source.c
 plug-ins/imagemap/imap_stock.c
-plug-ins/imagemap/imap_toolbar.c
-plug-ins/imagemap/imap_tools.c
 plug-ins/jpeg/jpeg.c
 plug-ins/jpeg/jpeg-load.c
 plug-ins/jpeg/jpeg-save.c

@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2005 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,57 +39,6 @@ Object_t*
 get_popup_object(void)
 {
    return _current_obj;
-}
-
-static void
-popup_edit_area_info(GtkWidget *widget, gpointer data)
-{
-   object_edit(_current_obj, TRUE);
-}
-
-static void
-popup_delete_area(GtkWidget *widget, gpointer data)
-{
-   if (_current_obj->locked) {
-      do_object_locked_dialog();
-   } else {
-      object_remove(_current_obj);
-      redraw_preview();
-   }
-}
-
-static void
-popup_move_up(GtkWidget *widget, gpointer data)
-{
-   Command_t *command = object_up_command_new(_current_obj->list,
-					      _current_obj);
-   command_execute(command);
-}
-
-static void
-popup_move_down(GtkWidget *widget, gpointer data)
-{
-   Command_t *command = object_down_command_new(_current_obj->list,
-						_current_obj);
-   command_execute(command);
-}
-
-static void
-popup_cut(GtkWidget *widget, gpointer data)
-{
-   if (_current_obj->locked) {
-      do_object_locked_dialog();
-   } else {
-      Command_t *command = cut_object_command_new(_current_obj);
-      command_execute(command);
-   }
-}
-
-static void
-popup_copy(GtkWidget *widget, gpointer data)
-{
-   Command_t *command = copy_object_command_new(_current_obj);
-   command_execute(command);
 }
 
 extern GtkUIManager *ui_manager;
