@@ -8,15 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-27 23:44-0500\n"
-"PO-Revision-Date: 2004-11-27 14:31-0400\n"
+"POT-Creation-Date: 2004-11-28 17:37-0500\n"
+"PO-Revision-Date: 2004-11-28 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/FractalExplorer/Dialogs.c:523 plug-ins/gfig/gfig-dialog.c:290
+#: plug-ins/FractalExplorer/Dialogs.c:523 plug-ins/gfig/gfig-dialog.c:284
 #: plug-ins/gflare/gflare.c:891
 #, c-format
 msgid ""
@@ -387,7 +387,7 @@ msgstr "_Fractals"
 #: plug-ins/common/sunras.c:513 plug-ins/common/tga.c:1030
 #: plug-ins/common/tiff.c:1810 plug-ins/common/xbm.c:996
 #: plug-ins/common/xwd.c:577 plug-ins/fits/fits.c:450
-#: plug-ins/flame/flame.c:443 plug-ins/gfig/gfig.c:790
+#: plug-ins/flame/flame.c:443 plug-ins/gfig/gfig.c:793
 #: plug-ins/gfli/gfli.c:715 plug-ins/ifscompose/ifscompose.c:2395
 #: plug-ins/winicon/icosave.c:243 plug-ins/xjt/xjt.c:1263
 #: plug-ins/xjt/xjt.c:1702
@@ -428,7 +428,7 @@ msgstr "Save Fractal Parameters"
 #: plug-ins/common/tiff.c:510 plug-ins/common/xbm.c:719
 #: plug-ins/common/xwd.c:422 plug-ins/faxg3/faxg3.c:220
 #: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:412
-#: plug-ins/gfig/gfig.c:428 plug-ins/gfli/gfli.c:424 plug-ins/gfli/gfli.c:460
+#: plug-ins/gfig/gfig.c:431 plug-ins/gfli/gfli.c:424 plug-ins/gfli/gfli.c:460
 #: plug-ins/help/domain.c:419 plug-ins/winicon/icoload.c:126
 #: plug-ins/xjt/xjt.c:2526 plug-ins/xjt/xjt.c:2534
 #, c-format
@@ -1222,7 +1222,7 @@ msgstr "Unrecognized or invalid BMP compression format."
 #: plug-ins/common/tga.c:929 plug-ins/common/tiff.c:833
 #: plug-ins/common/tile.c:266 plug-ins/common/winclipboard.c:579
 #: plug-ins/common/xbm.c:867 plug-ins/faxg3/faxg3.c:465
-#: plug-ins/fits/fits.c:506 plug-ins/gfig/gfig-dialog.c:1266
+#: plug-ins/fits/fits.c:506 plug-ins/gfig/gfig-dialog.c:1284
 #: plug-ins/gimpressionist/general.c:121 plug-ins/sgi/sgi.c:376
 #: plug-ins/twain/twain.c:571 plug-ins/winsnap/winsnap.c:1152
 msgid "Background"
@@ -1873,7 +1873,7 @@ msgstr "Fill (right to left)"
 
 #. "snap to grid" checkbutton at bottom of style frame
 #: plug-ins/common/align_layers.c:420 plug-ins/common/align_layers.c:451
-#: plug-ins/gfig/gfig-dialog.c:504
+#: plug-ins/gfig/gfig-dialog.c:495
 msgid "Snap to grid"
 msgstr "Snap to grid"
 
@@ -2774,7 +2774,7 @@ msgstr "Automatic pre_view"
 #. the vertical box and its toggle buttons
 #. Options section
 #: plug-ins/common/curve_bend.c:1326 plug-ins/common/mosaic.c:529
-#: plug-ins/common/ripple.c:501 plug-ins/gfig/gfig-dialog.c:1203
+#: plug-ins/common/ripple.c:501 plug-ins/gfig/gfig-dialog.c:1207
 msgid "Options"
 msgstr "Options"
 
@@ -4139,7 +4139,7 @@ msgstr "_Grid..."
 msgid "Drawing Grid..."
 msgstr "Drawing Grid..."
 
-#: plug-ins/common/grid.c:621 plug-ins/gfig/gfig-dialog.c:1329
+#: plug-ins/common/grid.c:621 plug-ins/gfig/gfig-dialog.c:1353
 #: plug-ins/imagemap/imap_menu.c:385 plug-ins/imagemap/imap_popup.c:153
 #: plug-ins/imagemap/imap_toolbar.c:168
 msgid "Grid"
@@ -5202,7 +5202,7 @@ msgid "_Factory defaults"
 msgstr "_Factory defaults"
 
 #. anti-alias control
-#: plug-ins/common/newsprint.c:1445 plug-ins/gfig/gfig-dialog.c:1239
+#: plug-ins/common/newsprint.c:1445 plug-ins/gfig/gfig-dialog.c:1256
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
@@ -7563,7 +7563,7 @@ msgid "Smear"
 msgstr "Smear"
 
 #: plug-ins/common/warp.c:509 plug-ins/fits/fits.c:988
-#: plug-ins/flame/flame.c:1131 plug-ins/gfig/gfig-dialog.c:1382
+#: plug-ins/flame/flame.c:1131 plug-ins/gfig/gfig-dialog.c:1419
 msgid "Black"
 msgstr "Black"
 
@@ -8255,8 +8255,8 @@ msgstr "Load FITS File"
 msgid "BLANK/NaN Pixel Replacement"
 msgstr "BLANK/NaN Pixel Replacement"
 
-#: plug-ins/fits/fits.c:989 plug-ins/gfig/gfig-dialog.c:1268
-#: plug-ins/gfig/gfig-dialog.c:1383
+#: plug-ins/fits/fits.c:989 plug-ins/gfig/gfig-dialog.c:1286
+#: plug-ins/gfig/gfig-dialog.c:1420
 msgid "White"
 msgstr "White"
 
@@ -8326,7 +8326,7 @@ msgstr "Swirl"
 msgid "Horseshoe"
 msgstr "Horseshoe"
 
-#: plug-ins/flame/flame.c:738 plug-ins/gfig/gfig-dialog.c:1366
+#: plug-ins/flame/flame.c:738 plug-ins/gfig/gfig-dialog.c:1401
 msgid "Polar"
 msgstr "Polar"
 
@@ -8407,179 +8407,187 @@ msgid "Draws lines between the control points. Only during curve creation"
 msgstr "Draws lines between the control points. Only during curve creation"
 
 #. Start building the dialog up
-#: plug-ins/gfig/gfig-dialog.c:302
+#: plug-ins/gfig/gfig-dialog.c:296
 msgid "Gfig"
 msgstr "Gfig"
 
 #. Tool options notebook
-#: plug-ins/gfig/gfig-dialog.c:351
+#: plug-ins/gfig/gfig-dialog.c:342
 msgid "Tool options"
 msgstr "Tool options"
 
-#: plug-ins/gfig/gfig-dialog.c:368
+#: plug-ins/gfig/gfig-dialog.c:359
 msgid "_Stroke"
 msgstr "_Stroke"
 
 #. Fill frame on right side
-#: plug-ins/gfig/gfig-dialog.c:414
+#: plug-ins/gfig/gfig-dialog.c:405
 msgid "Fill"
 msgstr "Fill"
 
-#: plug-ins/gfig/gfig-dialog.c:428
+#: plug-ins/gfig/gfig-dialog.c:419
 msgid "No fill"
 msgstr "No fill"
 
-#: plug-ins/gfig/gfig-dialog.c:429
+#: plug-ins/gfig/gfig-dialog.c:420
 msgid "Color fill"
 msgstr "Colour fill"
 
-#: plug-ins/gfig/gfig-dialog.c:430
+#: plug-ins/gfig/gfig-dialog.c:421
 msgid "Pattern fill"
 msgstr "Pattern fill"
 
-#: plug-ins/gfig/gfig-dialog.c:431
+#: plug-ins/gfig/gfig-dialog.c:422
 msgid "Gradient fill"
 msgstr "Gradient fill"
 
 #. "show image" checkbutton at bottom of style frame
-#: plug-ins/gfig/gfig-dialog.c:491
+#: plug-ins/gfig/gfig-dialog.c:482
 msgid "Show image"
 msgstr "Show image"
 
 #. "show grid" checkbutton at bottom of style frame
-#: plug-ins/gfig/gfig-dialog.c:513
+#: plug-ins/gfig/gfig-dialog.c:504
 msgid "Show grid"
 msgstr "Show grid"
 
-#: plug-ins/gfig/gfig-dialog.c:666
+#: plug-ins/gfig/gfig-dialog.c:641
 msgid "Load Gfig object collection"
 msgstr "Load Gfig object collection"
 
-#: plug-ins/gfig/gfig-dialog.c:782
-msgid "First Gfig"
-msgstr "First Gfig"
-
-#: plug-ins/gfig/gfig-dialog.c:807
+#: plug-ins/gfig/gfig-dialog.c:685
 msgid "Save Gfig Drawing"
 msgstr "Save Gfig Drawing"
 
-#: plug-ins/gfig/gfig-dialog.c:870
+#: plug-ins/gfig/gfig-dialog.c:821
+msgid "First Gfig"
+msgstr "First Gfig"
+
+#: plug-ins/gfig/gfig-dialog.c:860
+msgid "_Undo"
+msgstr "_Undo"
+
+#: plug-ins/gfig/gfig-dialog.c:864
+msgid "_Clear"
+msgstr "_Clear"
+
+#: plug-ins/gfig/gfig-dialog.c:868
 msgid "_Grid"
 msgstr "_Grid"
 
-#: plug-ins/gfig/gfig-dialog.c:878
+#: plug-ins/gfig/gfig-dialog.c:876
 msgid "Raise selected object"
 msgstr "Raise selected object"
 
-#: plug-ins/gfig/gfig-dialog.c:882
+#: plug-ins/gfig/gfig-dialog.c:880
 msgid "Lower selected object"
 msgstr "Lower selected object"
 
-#: plug-ins/gfig/gfig-dialog.c:886
+#: plug-ins/gfig/gfig-dialog.c:884
 msgid "Raise selected object to top"
 msgstr "Raise selected object to top"
 
-#: plug-ins/gfig/gfig-dialog.c:890
+#: plug-ins/gfig/gfig-dialog.c:888
 msgid "Lower selected object to bottom"
 msgstr "Lower selected object to bottom"
 
-#: plug-ins/gfig/gfig-dialog.c:894
+#: plug-ins/gfig/gfig-dialog.c:892
 msgid "Show previous object"
 msgstr "Show previous object"
 
-#: plug-ins/gfig/gfig-dialog.c:898
+#: plug-ins/gfig/gfig-dialog.c:896
 msgid "Show next object"
 msgstr "Show next object"
 
-#: plug-ins/gfig/gfig-dialog.c:902
+#: plug-ins/gfig/gfig-dialog.c:900
 msgid "Show all objects"
 msgstr "Show all objects"
 
-#: plug-ins/gfig/gfig-dialog.c:908
+#: plug-ins/gfig/gfig-dialog.c:906
 msgid "Create line"
 msgstr "Create line"
 
-#: plug-ins/gfig/gfig-dialog.c:911
+#: plug-ins/gfig/gfig-dialog.c:909
 msgid "Create circle"
 msgstr "Create circle"
 
-#: plug-ins/gfig/gfig-dialog.c:914
+#: plug-ins/gfig/gfig-dialog.c:912
 msgid "Create ellipse"
 msgstr "Create ellipse"
 
-#: plug-ins/gfig/gfig-dialog.c:917
+#: plug-ins/gfig/gfig-dialog.c:915
 msgid "Create arc"
 msgstr "Create arc"
 
-#: plug-ins/gfig/gfig-dialog.c:920
+#: plug-ins/gfig/gfig-dialog.c:918
 msgid "Create reg polygon"
 msgstr "Create reg polygon"
 
-#: plug-ins/gfig/gfig-dialog.c:923
+#: plug-ins/gfig/gfig-dialog.c:921
 msgid "Create star"
 msgstr "Create star"
 
-#: plug-ins/gfig/gfig-dialog.c:926
+#: plug-ins/gfig/gfig-dialog.c:924
 msgid "Create spiral"
 msgstr "Create spiral"
 
-#: plug-ins/gfig/gfig-dialog.c:929
+#: plug-ins/gfig/gfig-dialog.c:927
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr "Create bezier curve. Shift + Button ends object creation."
 
-#: plug-ins/gfig/gfig-dialog.c:933
+#: plug-ins/gfig/gfig-dialog.c:931
 msgid "Move an object"
 msgstr "Move an object"
 
-#: plug-ins/gfig/gfig-dialog.c:936
+#: plug-ins/gfig/gfig-dialog.c:934
 msgid "Move a single point"
 msgstr "Move a single point"
 
-#: plug-ins/gfig/gfig-dialog.c:939
+#: plug-ins/gfig/gfig-dialog.c:937
 msgid "Copy an object"
 msgstr "Copy an object"
 
-#: plug-ins/gfig/gfig-dialog.c:942
+#: plug-ins/gfig/gfig-dialog.c:940
 msgid "Delete an object"
 msgstr "Delete an object"
 
-#: plug-ins/gfig/gfig-dialog.c:945
+#: plug-ins/gfig/gfig-dialog.c:943
 msgid "Select an object"
 msgstr "Select an object"
 
-#: plug-ins/gfig/gfig-dialog.c:1023
+#: plug-ins/gfig/gfig-dialog.c:1024
 msgid "This tool has no options"
 msgstr "This tool has no options"
 
 #. Put buttons in
-#: plug-ins/gfig/gfig-dialog.c:1216
+#: plug-ins/gfig/gfig-dialog.c:1228
 msgid "Show position"
 msgstr "Show position"
 
-#: plug-ins/gfig/gfig-dialog.c:1227
+#: plug-ins/gfig/gfig-dialog.c:1240
 msgid "Show control points"
 msgstr "Show control points"
 
-#: plug-ins/gfig/gfig-dialog.c:1257
+#: plug-ins/gfig/gfig-dialog.c:1274
 msgid "Max undo:"
 msgstr "Max undo:"
 
-#: plug-ins/gfig/gfig-dialog.c:1265 plug-ins/gimpressionist/general.c:166
+#: plug-ins/gfig/gfig-dialog.c:1283 plug-ins/gimpressionist/general.c:166
 msgid "Transparent"
 msgstr "Transparent"
 
-#: plug-ins/gfig/gfig-dialog.c:1267
+#: plug-ins/gfig/gfig-dialog.c:1285
 msgid "Foreground"
 msgstr "Foreground"
 
-#: plug-ins/gfig/gfig-dialog.c:1269 plug-ins/imagemap/imap_cmd_copy.c:54
+#: plug-ins/gfig/gfig-dialog.c:1287 plug-ins/imagemap/imap_cmd_copy.c:54
 #: plug-ins/imagemap/imap_cmd_copy_object.c:55
 #: plug-ins/imagemap/imap_object_popup.c:113
 #: plug-ins/imagemap/imap_toolbar.c:131
 msgid "Copy"
 msgstr "Copy"
 
-#: plug-ins/gfig/gfig-dialog.c:1278
+#: plug-ins/gfig/gfig-dialog.c:1296
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
@@ -8587,77 +8595,77 @@ msgstr ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
 
-#: plug-ins/gfig/gfig-dialog.c:1283
+#: plug-ins/gfig/gfig-dialog.c:1302
 msgid "Background:"
 msgstr "Background:"
 
-#: plug-ins/gfig/gfig-dialog.c:1287
+#: plug-ins/gfig/gfig-dialog.c:1305
 msgid "Feather"
 msgstr "Feather"
 
-#: plug-ins/gfig/gfig-dialog.c:1311
+#: plug-ins/gfig/gfig-dialog.c:1329
 msgid "Radius:"
 msgstr "Radius:"
 
-#: plug-ins/gfig/gfig-dialog.c:1352
+#: plug-ins/gfig/gfig-dialog.c:1384
 msgid "Grid spacing:"
 msgstr "Grid spacing:"
 
-#: plug-ins/gfig/gfig-dialog.c:1365 plug-ins/imagemap/imap_menu.c:369
+#: plug-ins/gfig/gfig-dialog.c:1400 plug-ins/imagemap/imap_menu.c:369
 #: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:161
 msgid "Rectangle"
 msgstr "Rectangle"
 
-#: plug-ins/gfig/gfig-dialog.c:1367
+#: plug-ins/gfig/gfig-dialog.c:1402
 msgid "Isometric"
 msgstr "Isometric"
 
-#: plug-ins/gfig/gfig-dialog.c:1376
+#: plug-ins/gfig/gfig-dialog.c:1411
 msgid "Grid type:"
 msgstr "Grid type:"
 
-#: plug-ins/gfig/gfig-dialog.c:1381 plug-ins/gflare/gflare.c:559
+#: plug-ins/gfig/gfig-dialog.c:1418 plug-ins/gflare/gflare.c:559
 msgid "Normal"
 msgstr "Normal"
 
-#: plug-ins/gfig/gfig-dialog.c:1384
+#: plug-ins/gfig/gfig-dialog.c:1421
 msgid "Grey"
 msgstr "Grey"
 
-#: plug-ins/gfig/gfig-dialog.c:1385
+#: plug-ins/gfig/gfig-dialog.c:1422
 msgid "Darker"
 msgstr "Darker"
 
-#: plug-ins/gfig/gfig-dialog.c:1386
+#: plug-ins/gfig/gfig-dialog.c:1423
 msgid "Lighter"
 msgstr "Lighter"
 
-#: plug-ins/gfig/gfig-dialog.c:1387
+#: plug-ins/gfig/gfig-dialog.c:1424
 msgid "Very dark"
 msgstr "Very dark"
 
-#: plug-ins/gfig/gfig-dialog.c:1396
+#: plug-ins/gfig/gfig-dialog.c:1433
 msgid "Grid color:"
 msgstr "Grid colour:"
 
-#: plug-ins/gfig/gfig-dialog.c:1593
+#: plug-ins/gfig/gfig-dialog.c:1636
 msgid "Sides:"
 msgstr "Sides:"
 
-#: plug-ins/gfig/gfig-dialog.c:1603
+#: plug-ins/gfig/gfig-dialog.c:1646
 msgid "Right"
 msgstr "Right"
 
-#: plug-ins/gfig/gfig-dialog.c:1604
+#: plug-ins/gfig/gfig-dialog.c:1647
 msgid "Left"
 msgstr "Left"
 
-#: plug-ins/gfig/gfig-dialog.c:1614 plug-ins/gimpressionist/orientation.c:130
+#: plug-ins/gfig/gfig-dialog.c:1657 plug-ins/gimpressionist/orientation.c:130
 #: plug-ins/print/gimp_main_window.c:500
 msgid "Orientation:"
 msgstr "Orientation:"
 
-#: plug-ins/gfig/gfig-dialog.c:1839
+#: plug-ins/gfig/gfig-dialog.c:1884
 #, c-format
 msgid "Gfig layer %d"
 msgstr "Gfig layer %d"
@@ -8670,7 +8678,7 @@ msgstr "Hey where has the object gone ?"
 msgid "Error reading file"
 msgstr "Error reading file"
 
-#: plug-ins/gfig/gfig-dobject.c:1073
+#: plug-ins/gfig/gfig-dobject.c:1072
 msgid "Editing read-only object - you will not be able to save it"
 msgstr "Editing read-only object - you will not be able to save it"
 
@@ -8699,7 +8707,7 @@ msgstr "Star Number of Points"
 msgid "_Gfig..."
 msgstr "_Gfig..."
 
-#: plug-ins/gfig/gfig.c:731
+#: plug-ins/gfig/gfig.c:734
 msgid ""
 "Error trying to save figure as a parasite: can't attach parasite to "
 "drawable.\n"
@@ -8707,7 +8715,7 @@ msgstr ""
 "Error trying to save figure as a parasite: can't attach parasite to "
 "drawable.\n"
 
-#: plug-ins/gfig/gfig.c:752
+#: plug-ins/gfig/gfig.c:755
 #, c-format
 msgid "Error trying to open temp file '%s'for parasite loading.\n"
 msgstr "Error trying to open temp file '%s'for parasite loading.\n"
