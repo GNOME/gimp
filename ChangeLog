@@ -1,6 +1,6 @@
 2003-04-17  Michael Natterer  <mitch@gimp.org>
 
-	* app/core/gimpimage-guides.c (gimp_image_add_x,y): new functions
+	* app/core/gimpimage-guides.c (gimp_image_snap_x,y): new functions
 	snapping to one axis only.
 	(gimp_image_snap_rectangle): use them to enable snapping the
 	rectangle to all its corners, not just the NW and SE one.
