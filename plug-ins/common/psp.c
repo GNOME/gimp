@@ -370,12 +370,11 @@ query ()
 
   gimp_install_procedure ("file_psp_load",
                           "loads images from the Paint Shop Pro PSP file format",
-                          "This filter loads and saves images in "
+                          "This plug-in loads and saves images in "
 			  "Paint Shop Pro's native PSP format. "
-			  "These images may be of any type supported by GIMP, "
-			  "with or without layers, layer masks, "
-			  "or aux channels.",
-                          "Tor Lillqvist",
+			  "Vector layers aren't handled. Saving isn't "
+			  "yet implemented.",
+			  "Tor Lillqvist",
                           "Tor Lillqvist",
                           "1999",
                           "<Load>/PSP",
@@ -386,11 +385,10 @@ query ()
 
   gimp_install_procedure ("file_psp_save",
                           "saves images in the Paint Shop Pro PSP file format",
-                          "This filter loads and saves images in "
+                          "This plug-in loads and saves images in "
 			  "Paint Shop Pro's native PSP format. "
-			  "These images may be of any type supported by GIMP, "
-			  "with or without layers, layer masks, "
-			  "or aux channels.",
+			  "Vector layers aren't handled. Saving isn't "
+			  "yet implemented.",
                           "Tor Lillqvist",
                           "Tor Lillqvist",
                           "1999",
