@@ -70,7 +70,9 @@ gimp_get_monitor_resolution (gdouble *xres,
 				    &nreturn_vals,
 				    PARAM_END);
 
-  *xres = *yres = 1.0;
+  *xres = 0.0;
+  *yres = 0.0;
+
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
     {
       *xres = return_vals[1].data.d_float;

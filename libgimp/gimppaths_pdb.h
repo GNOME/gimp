@@ -35,8 +35,8 @@ gchar** gimp_path_list              (gint32    image_ID,
 				     gint     *num_paths);
 gint    gimp_path_get_points        (gint32    image_ID,
 				     gchar    *pathname,
-				     gint     *num_path_point_details,
 				     gint     *path_closed,
+				     gint     *num_path_point_details,
 				     gdouble **points_pairs);
 gchar*  gimp_path_get_current       (gint32    image_ID);
 void    gimp_path_set_current       (gint32    image_ID,

@@ -320,6 +320,3 @@ gimp_channel_set_tattoo (gint32 channel_ID,
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
-
-
-

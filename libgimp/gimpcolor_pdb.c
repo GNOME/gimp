@@ -214,7 +214,13 @@ gimp_histogram (gint32              drawable_ID,
 				    PARAM_INT32, end_range,
 				    PARAM_END);
 
-  *mean = *std_dev = *median = *pixels = *count = *percentile = 0;
+  *mean = 0.0;
+  *std_dev = 0.0;
+  *median = 0.0;
+  *pixels = 0.0;
+  *count = 0.0;
+  *percentile = 0.0;
+
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
     {
       *mean = return_vals[1].data.d_float;

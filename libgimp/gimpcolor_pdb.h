@@ -31,54 +31,54 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-void    gimp_brightness_contrast (gint32              drawable_ID,
-				  gint                brightness,
-				  gint                contrast);
-void    gimp_levels              (gint32              drawable_ID,
-				  GimpChannelLutType  channel,
-				  gint                low_input,
-				  gint                high_input,
-				  gdouble             gamma,
-				  gint                low_output,
-				  gint                high_output);
-void    gimp_posterize           (gint32              drawable_ID,
-				  gint                levels);
-void    gimp_desaturate          (gint32              drawable_ID);
-void    gimp_equalize            (gint32              drawable_ID,
-				  gboolean            mask_only);
-void    gimp_invert              (gint32              drawable_ID);
-void    gimp_curves_spline       (gint32              drawable_ID,
-				  GimpChannelLutType  channel,
-				  gint                num_points,
-				  guint8             *control_pts);
-void    gimp_curves_explicit     (gint32              drawable_ID,
-				  GimpChannelLutType  channel,
-				  gint                num_bytes,
-				  guint8             *curve);
-void    gimp_color_balance       (gint32              drawable_ID,
-				  GimpTransferMode    transfer_mode,
-				  gboolean            preserve_lum,
-				  gdouble             cyan_red,
-				  gdouble             magenta_green,
-				  gdouble             yellow_blue);
-void    gimp_histogram           (gint32              drawable_ID,
-				  GimpChannelLutType  channel,
-				  gint                start_range,
-				  gint                end_range,
-				  gdouble            *mean,
-				  gdouble            *std_dev,
-				  gdouble            *median,
-				  gdouble            *pixels,
-				  gdouble            *count,
-				  gdouble            *percentile);
-void    gimp_hue_saturation      (gint32              drawable_ID,
-				  GimpHueRange        hue_range,
-				  gdouble             hue_offset,
-				  gdouble             lightness,
-				  gdouble             saturation);
-void    gimp_threshold           (gint32              drawable_ID,
-				  gint                low_threshold,
-				  gint                high_threshold);
+void gimp_brightness_contrast (gint32              drawable_ID,
+			       gint                brightness,
+			       gint                contrast);
+void gimp_levels              (gint32              drawable_ID,
+			       GimpChannelLutType  channel,
+			       gint                low_input,
+			       gint                high_input,
+			       gdouble             gamma,
+			       gint                low_output,
+			       gint                high_output);
+void gimp_posterize           (gint32              drawable_ID,
+			       gint                levels);
+void gimp_desaturate          (gint32              drawable_ID);
+void gimp_equalize            (gint32              drawable_ID,
+			       gboolean            mask_only);
+void gimp_invert              (gint32              drawable_ID);
+void gimp_curves_spline       (gint32              drawable_ID,
+			       GimpChannelLutType  channel,
+			       gint                num_points,
+			       guint8             *control_pts);
+void gimp_curves_explicit     (gint32              drawable_ID,
+			       GimpChannelLutType  channel,
+			       gint                num_bytes,
+			       guint8             *curve);
+void gimp_color_balance       (gint32              drawable_ID,
+			       GimpTransferMode    transfer_mode,
+			       gboolean            preserve_lum,
+			       gdouble             cyan_red,
+			       gdouble             magenta_green,
+			       gdouble             yellow_blue);
+void gimp_histogram           (gint32              drawable_ID,
+			       GimpChannelLutType  channel,
+			       gint                start_range,
+			       gint                end_range,
+			       gdouble            *mean,
+			       gdouble            *std_dev,
+			       gdouble            *median,
+			       gdouble            *pixels,
+			       gdouble            *count,
+			       gdouble            *percentile);
+void gimp_hue_saturation      (gint32              drawable_ID,
+			       GimpHueRange        hue_range,
+			       gdouble             hue_offset,
+			       gdouble             lightness,
+			       gdouble             saturation);
+void gimp_threshold           (gint32              drawable_ID,
+			       gint                low_threshold,
+			       gint                high_threshold);
 
 
 #ifdef __cplusplus

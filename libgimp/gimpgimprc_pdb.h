@@ -31,11 +31,11 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-gchar*  gimp_gimprc_query           (gchar   *token);
-void    gimp_gimprc_set             (gchar   *token,
-				     gchar   *value);
-void    gimp_get_monitor_resolution (gdouble *xres,
-				     gdouble *yres);
+gchar* gimp_gimprc_query           (gchar   *token);
+void   gimp_gimprc_set             (gchar   *token,
+				    gchar   *value);
+void   gimp_get_monitor_resolution (gdouble *xres,
+				    gdouble *yres);
 
 
 #ifdef __cplusplus

@@ -1,3 +1,19 @@
+Thu Jun 22 13:02:01 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* tools/pdbgen/lib.pl
+	* libgimp/gimpchannel_pdb.c
+	* libgimp/gimpcolor_pdb.[ch]
+	* libgimp/gimpdrawable_pdb.[ch]
+	* libgimp/gimpgimprc_pdb.[ch]
+	* libgimp/gimpgradientselect_pdb.c
+	* libgimp/gimpimage_pdb.c
+	* libgimp/gimppaths_pdb.[ch]
+	* libgimp/gimpselection_pdb.[ch]
+	* libgimp/gimptexttool_pdb.c
+	* libgimp/gimptools_pdb.c: landed the genned files from the changes
+	below. Minimal code changes (some failure case return values changed,
+	hopefully this won't break anything)
+
 Wed Jun 21 20:18:16 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* tools/pdbgen/lib.pl

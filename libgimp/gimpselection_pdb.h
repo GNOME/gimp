@@ -31,8 +31,8 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_selection_bounds   (gint32    image_ID,
-				  gboolean *none_empty,
+void     gimp_selection_bounds   (gint32    image_ID,
+				  gboolean *non_empty,
 				  gint     *x1,
 				  gint     *y1,
 				  gint     *x2,

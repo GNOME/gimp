@@ -93,7 +93,6 @@ gimp_drawable_mask_bounds (gint32  drawable_ID,
 				    PARAM_DRAWABLE, drawable_ID,
 				    PARAM_END);
 
-  *x1 = *y1 = *x2 = *y2 = 0;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
     {
       non_empty = return_vals[1].data.d_int32;
@@ -153,7 +152,7 @@ gimp_drawable_has_alpha (gint32 drawable_ID)
 {
   GParam *return_vals;
   gint nreturn_vals;
-  gboolean has_alpha = TRUE;
+  gboolean has_alpha = FALSE;
 
   return_vals = gimp_run_procedure ("gimp_drawable_has_alpha",
 				    &nreturn_vals,
@@ -321,7 +320,9 @@ gimp_drawable_offsets (gint32  drawable_ID,
 				    PARAM_DRAWABLE, drawable_ID,
 				    PARAM_END);
 
-  *offset_x = *offset_y = 0;
+  *offset_x = 0;
+  *offset_y = 0;
+
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
     {
       *offset_x = return_vals[1].data.d_int32;
@@ -413,8 +414,10 @@ _gimp_drawable_thumbnail (gint32   drawable_ID,
 
   *ret_width = 0;
   *ret_height = 0;
+  *bpp = 0;
   *thumbnail_data_count = 0;
   *thumbnail_data = NULL;
+
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
     {
       *ret_width = return_vals[1].data.d_int32;

@@ -31,44 +31,44 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-void          gimp_drawable_merge_shadow    (gint32        drawable_ID,
-					     gboolean      undo);
-void          gimp_drawable_fill            (gint32        drawable_ID,
-					     GimpFillType  fill_type);
-void          gimp_drawable_update          (gint32        drawable_ID,
-					     gint          x,
-					     gint          y,
-					     gint          width,
-					     gint          height);
-gboolean      gimp_drawable_mask_bounds     (gint32        drawable_ID,
-					     gint         *x1,
-					     gint         *y1,
-					     gint         *x2,
-					     gint         *y2);
-gint32        gimp_drawable_image           (gint32        drawable_ID);
-GimpImageType gimp_drawable_type            (gint32        drawable_ID);
-gboolean      gimp_drawable_has_alpha       (gint32        drawable_ID);
-GimpImageType gimp_drawable_type_with_alpha (gint32        drawable_ID);
-gboolean      gimp_drawable_is_rgb          (gint32        drawable_ID);
-gboolean      gimp_drawable_is_gray         (gint32        drawable_ID);
-gboolean      gimp_drawable_is_indexed      (gint32        drawable_ID);
-gint          gimp_drawable_bytes           (gint32        drawable_ID);
-gint          gimp_drawable_width           (gint32        drawable_ID);
-gint          gimp_drawable_height          (gint32        drawable_ID);
-void          gimp_drawable_offsets         (gint32        drawable_ID,
-					     gint         *offset_x,
-					     gint         *offset_y);
-gboolean      gimp_drawable_is_layer        (gint32        drawable_ID);
-gboolean      gimp_drawable_is_layer_mask   (gint32        drawable_ID);
-gboolean      gimp_drawable_is_channel      (gint32        drawable_ID);
-void          _gimp_drawable_thumbnail      (gint32        drawable_ID,
-					     gint          width,
-					     gint          height,
-					     gint         *ret_width,
-					     gint         *ret_height,
-					     gint         *bpp,
-					     gint         *thumbnail_data_count,
-					     guint8      **thumbnail_data);
+void          gimp_drawable_merge_shadow    (gint32         drawable_ID,
+					     gboolean       undo);
+void          gimp_drawable_fill            (gint32         drawable_ID,
+					     GimpFillType   fill_type);
+void          gimp_drawable_update          (gint32         drawable_ID,
+					     gint           x,
+					     gint           y,
+					     gint           width,
+					     gint           height);
+gboolean      gimp_drawable_mask_bounds     (gint32         drawable_ID,
+					     gint          *x1,
+					     gint          *y1,
+					     gint          *x2,
+					     gint          *y2);
+gint32        gimp_drawable_image           (gint32         drawable_ID);
+GimpImageType gimp_drawable_type            (gint32         drawable_ID);
+gboolean      gimp_drawable_has_alpha       (gint32         drawable_ID);
+GimpImageType gimp_drawable_type_with_alpha (gint32         drawable_ID);
+gboolean      gimp_drawable_is_rgb          (gint32         drawable_ID);
+gboolean      gimp_drawable_is_gray         (gint32         drawable_ID);
+gboolean      gimp_drawable_is_indexed      (gint32         drawable_ID);
+gint          gimp_drawable_bytes           (gint32         drawable_ID);
+gint          gimp_drawable_width           (gint32         drawable_ID);
+gint          gimp_drawable_height          (gint32         drawable_ID);
+void          gimp_drawable_offsets         (gint32         drawable_ID,
+					     gint          *offset_x,
+					     gint          *offset_y);
+gboolean      gimp_drawable_is_layer        (gint32         drawable_ID);
+gboolean      gimp_drawable_is_layer_mask   (gint32         drawable_ID);
+gboolean      gimp_drawable_is_channel      (gint32         drawable_ID);
+void          _gimp_drawable_thumbnail      (gint32         drawable_ID,
+					     gint           width,
+					     gint           height,
+					     gint          *ret_width,
+					     gint          *ret_height,
+					     gint          *bpp,
+					     gint          *thumbnail_data_count,
+					     guint8       **thumbnail_data);
 
 
 #ifdef __cplusplus

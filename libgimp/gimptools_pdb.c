@@ -426,14 +426,14 @@ gimp_flip (gint32              drawable_ID,
 {
   GParam *return_vals;
   gint nreturn_vals;
- 
+  gint32 drawable_ID = -1;
+
   return_vals = gimp_run_procedure ("gimp_flip",
 				    &nreturn_vals,
 				    PARAM_DRAWABLE, drawable_ID,
 				    PARAM_INT32, flip_type,
 				    PARAM_END);
 
-  drawable_ID = -1;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
     drawable_ID = return_vals[1].data.d_drawable;
 
@@ -572,6 +572,7 @@ gimp_perspective (gint32   drawable_ID,
 {
   GParam *return_vals;
   gint nreturn_vals;
+  gint32 drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp_perspective",
 				    &nreturn_vals,
@@ -587,7 +588,6 @@ gimp_perspective (gint32   drawable_ID,
 				    PARAM_FLOAT, y3,
 				    PARAM_END);
 
-  drawable_ID = -1;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
     drawable_ID = return_vals[1].data.d_drawable;
 
@@ -631,6 +631,7 @@ gimp_rotate (gint32   drawable_ID,
 {
   GParam *return_vals;
   gint nreturn_vals;
+  gint32 drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp_rotate",
 				    &nreturn_vals,
@@ -639,7 +640,6 @@ gimp_rotate (gint32   drawable_ID,
 				    PARAM_FLOAT, angle,
 				    PARAM_END);
 
-  drawable_ID = -1;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
     drawable_ID = return_vals[1].data.d_drawable;
 
@@ -658,6 +658,7 @@ gimp_scale (gint32   drawable_ID,
 {
   GParam *return_vals;
   gint nreturn_vals;
+  gint32 drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp_scale",
 				    &nreturn_vals,
@@ -669,7 +670,6 @@ gimp_scale (gint32   drawable_ID,
 				    PARAM_FLOAT, y1,
 				    PARAM_END);
 
-  drawable_ID = -1;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
     drawable_ID = return_vals[1].data.d_drawable;
 
@@ -686,6 +686,7 @@ gimp_shear (gint32              drawable_ID,
 {
   GParam *return_vals;
   gint nreturn_vals;
+  gint32 drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp_shear",
 				    &nreturn_vals,
@@ -695,7 +696,6 @@ gimp_shear (gint32              drawable_ID,
 				    PARAM_FLOAT, magnitude,
 				    PARAM_END);
 
-  drawable_ID = -1;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
     drawable_ID = return_vals[1].data.d_drawable;
 
@@ -755,6 +755,7 @@ gimp_transform_2d (gint32   drawable_ID,
 {
   GParam *return_vals;
   gint nreturn_vals;
+  gint32 drawable_ID = -1;
 
   return_vals = gimp_run_procedure ("gimp_transform_2d",
 				    &nreturn_vals,
@@ -768,7 +769,7 @@ gimp_transform_2d (gint32   drawable_ID,
 				    PARAM_FLOAT, dest_x,
 				    PARAM_FLOAT, dest_y,
 				    PARAM_END);
-  drawable_ID = -1;
+
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
     drawable_ID = return_vals[1].data.d_drawable;
 

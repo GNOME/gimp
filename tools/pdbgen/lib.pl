@@ -58,7 +58,7 @@ sub generate {
 	my @inargs = @{$proc->{inargs}} if exists $proc->{inargs};
 	my @outargs = @{$proc->{outargs}} if exists $proc->{outargs};
 
-	my $funcname = "gimp_$name"; my $wrapped = "";
+	my $funcname = "gimp_$name"; my $wrapped = ""; my %usednames;
 
 	# The 'color' argument is special cased to accept and return the
 	# individual color components. This is to maintain backwards
@@ -108,6 +108,8 @@ sub generate {
 	    my $id = exists $arg->{id_func} || $_->{type} =~ /guide/;
 
 	    $wrapped = "_" if exists $_->{wrap};
+
+	    $usednames{$_->{name}}++;
 
 	    if (exists $_->{implicit_fill}) {
 		$privatevars++;
@@ -167,9 +169,12 @@ CODE
 
 		$wrapped = "_" if exists $_->{wrap};
 
+		$_->{libname} = exists $usednames{$_->{name}} ? "ret_$_->{name}"
+							      : $_->{name};
+		$_->{libname} = $_->{name} if exists $_->{retval};
+
 	        if (exists $_->{num}) {
 		    if (!exists $_->{no_lib}) {
-			$arglist .= "gint \*$_->{name}, ";
 			push @initnums, $_;
 		    }
 		}
@@ -178,7 +183,7 @@ CODE
 		    $return_args .= &libtype($_);
 
 		    # The return value variable
-		    $var = $_->{name};
+		    $var = $_->{libname};
 		    $var .= '_ID' if $id;
 		    $return_args .= $var;
 
@@ -217,7 +222,7 @@ CODE
 
 	    if (scalar(@initnums)) {
 		foreach (@initnums) {
-		    $return_marshal .= "\*$_->{name} = ";
+		    $return_marshal .= "\*$_->{libname} = ";
 		    my ($type) = &arg_parse($_->{type});
 		    for ($arg_types{$type}->{type}) {
 			/\*$/     && do { $return_marshal .= "NULL";  last };
@@ -259,16 +264,19 @@ CODE
 		if (exists $_->{num}) {
 		    $numpos = $argc;
 		    $numtype = $type;
+		    if (!exists $_->{no_lib}) {
+			$arglist .= "gint \*$_->{libname}, ";
+		    }
 		}
 		elsif (exists $_->{array}) {
 		    my $datatype = $arg->{type};
 		    chop $datatype;
 		    $datatype =~ s/ *$//;
 
-		    my $var = $_->{name}; my $dh = ""; my $df = "";
+		    my $var = $_->{libname}; my $dh = ""; my $df = "";
 		    unless (exists $_->{retval}) {
 			$var = "*$var"; $dh = "(*"; $df = ")";
-			$arglist .= "$datatype **$_->{name}";
+			$arglist .= "$datatype **$_->{libname}";
 		    }
 
 		    if ($ch || $cf) {
@@ -296,13 +304,13 @@ CP2
 		    unless (exists $_->{retval}) {
 			$var .= '*';
 			$arglist .= &libtype($_);
-			$arglist .= "*$_->{name}";
+			$arglist .= "*$_->{libname}";
 			$arglist .= '_ID' if $id;
 			$arglist .= ', ';
 		    }
 
 		    $var = exists $_->{retval} ? "" : '*';
-		    $var .= $_->{name};
+		    $var .= $_->{libname};
 		    $var .= '_ID' if $id;
 
 		    $return_marshal .= ' ' x 2 if $#outargs;

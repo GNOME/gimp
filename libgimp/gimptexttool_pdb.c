@@ -82,7 +82,11 @@ gimp_text_get_extents_fontname (gchar        *text,
 				    PARAM_STRING, fontname,
 				    PARAM_END);
 
-  *width = *height = *ascent = *descent = 0;
+  *width = 0;
+  *height = 0;
+  *ascent = 0;
+  *descent = 0;
+
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
     {
       *width = return_vals[1].data.d_int32;
@@ -181,7 +185,11 @@ gimp_text_get_extents (gchar        *text,
 				    PARAM_STRING, encoding,
 				    PARAM_END);
 
-  *width = *height = *ascent = *descent = 0;
+  *width = 0;
+  *height = 0;
+  *ascent = 0;
+  *descent = 0;
+
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
     {
       *width = return_vals[1].data.d_int32;

@@ -23,7 +23,7 @@
 
 #include "gimp.h"
 
-gboolean
+void
 gimp_selection_bounds (gint32    image_ID,
 		       gboolean *non_empty,
 		       gint     *x1,
@@ -33,27 +33,28 @@ gimp_selection_bounds (gint32    image_ID,
 {
   GParam *return_vals;
   gint nreturn_vals;
-  gboolean success;
 
   return_vals = gimp_run_procedure ("gimp_selection_bounds",
 				    &nreturn_vals,
 				    PARAM_IMAGE, image_ID,
 				    PARAM_END);
 
-  success = FALSE;
+  *non_empty = FALSE;
+  *x1 = 0;
+  *y1 = 0;
+  *x2 = 0;
+  *y2 = 0;
+
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
     {
-      success = TRUE;
-
       *non_empty = return_vals[1].data.d_int32;
       *x1 = return_vals[2].data.d_int32;
       *y1 = return_vals[3].data.d_int32;
       *x2 = return_vals[4].data.d_int32;
       *y2 = return_vals[5].data.d_int32;
     }
-  gimp_destroy_params (return_vals, nreturn_vals);
 
-  return success;
+  gimp_destroy_params (return_vals, nreturn_vals);
 }
 
 gboolean
@@ -61,7 +62,7 @@ gimp_selection_is_empty (gint32 image_ID)
 {
   GParam *return_vals;
   gint nreturn_vals;
-  gboolean is_empty = TRUE;
+  gboolean is_empty = FALSE;
 
   return_vals = gimp_run_procedure ("gimp_selection_is_empty",
 				    &nreturn_vals,

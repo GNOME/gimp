@@ -1780,13 +1780,13 @@ layer_set_linked_invoker (Argument *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
-  gint32 linked;
+  gboolean linked;
 
   layer = layer_get_ID (args[0].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
-  linked = args[1].value.pdb_int;
+  linked = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
     layer->linked = linked;

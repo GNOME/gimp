@@ -55,8 +55,8 @@ gimp_path_list (gint32  image_ID,
 gint
 gimp_path_get_points (gint32    image_ID,
 		      gchar    *pathname,
-		      gint     *num_path_point_details,
 		      gint     *path_closed,
+		      gint     *num_path_point_details,
 		      gdouble **points_pairs)
 {
   GParam *return_vals;
