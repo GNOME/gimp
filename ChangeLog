@@ -1,3 +1,12 @@
+Thu Feb 9 20:21:01 CET 2000  Daniel Egger <Daniel.Egger@suse.de>
+
+	(applied by pcg@goof.com)
+
+	* app/paint_core.c: Redraw guiding lines only when
+	in visible area of gdisplay. This avoids rubbish to
+	be drawn when using a Ctrl-Shift-<something> shortcut.
+	Fixes bug #2331.
+
 Thu Feb 10 02:55:53 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/about_dialog.c

@@ -601,25 +601,31 @@ paint_core_draw (Tool *tool)
       gdisplay_transform_coords (gdisp, paint_core->curx, paint_core->cury,
 				 &tx2, &ty2, 1);
 
-      /*  Draw start target  */
-      gdk_draw_line (gdisp->canvas->window, paint_core->core->gc,
-		     tx1 - (TARGET_WIDTH >> 1), ty1,
-		     tx1 + (TARGET_WIDTH >> 1), ty1);
-      gdk_draw_line (gdisp->canvas->window, paint_core->core->gc,
-		     tx1, ty1 - (TARGET_HEIGHT >> 1),
-		     tx1, ty1 + (TARGET_HEIGHT >> 1));
+      /* Only draw line if it's in the visible area
+         thus preventing from drawing rubbish		*/
+
+      if (tx2>0 && ty2>0)
+        {
+	  /*  Draw start target  */
+	  gdk_draw_line (gdisp->canvas->window, paint_core->core->gc,
+			tx1 - (TARGET_WIDTH >> 1), ty1,
+			tx1 + (TARGET_WIDTH >> 1), ty1);
+	  gdk_draw_line (gdisp->canvas->window, paint_core->core->gc,
+			tx1, ty1 - (TARGET_HEIGHT >> 1),
+			tx1, ty1 + (TARGET_HEIGHT >> 1));
+
+	  /*  Draw end target  */
+	  gdk_draw_line (gdisp->canvas->window, paint_core->core->gc,
+			tx2 - (TARGET_WIDTH >> 1), ty2,
+			tx2 + (TARGET_WIDTH >> 1), ty2);
+	  gdk_draw_line (gdisp->canvas->window, paint_core->core->gc,
+			tx2, ty2 - (TARGET_HEIGHT >> 1),
+			tx2, ty2 + (TARGET_HEIGHT >> 1));
       
-      /*  Draw end target  */
-      gdk_draw_line (gdisp->canvas->window, paint_core->core->gc,
-		     tx2 - (TARGET_WIDTH >> 1), ty2,
-		     tx2 + (TARGET_WIDTH >> 1), ty2);
-      gdk_draw_line (gdisp->canvas->window, paint_core->core->gc,
-		     tx2, ty2 - (TARGET_HEIGHT >> 1),
-		     tx2, ty2 + (TARGET_HEIGHT >> 1));
-      
-      /*  Draw the line between the start and end coords  */
-      gdk_draw_line (gdisp->canvas->window, paint_core->core->gc,
-		     tx1, ty1, tx2, ty2);
+	  /*  Draw the line between the start and end coords  */
+	  gdk_draw_line (gdisp->canvas->window, paint_core->core->gc,
+			tx1, ty1, tx2, ty2);
+	}
     }
   return;
 }	      
