@@ -1,3 +1,9 @@
+Thu Mar 26 12:00:47 MST 1998 Nathan Summers <rock@gimp.org>
+
+	* iscissors.c: This should hopefully fix most of the UMRs
+	(uninitialized memory reads) found with Purify.  No noticable
+	change in iscissors's behavior, unfortunately.
+
 Thu Mar 26 13:03:18 EST 1998 Adrian Likins <adrian@gimp.org>
 
 	* app/app_procs.c app/brush_select.c app/brushes.c 

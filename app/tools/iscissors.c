@@ -458,6 +458,7 @@ tools_new_iscissors ()
   tool->arrow_keys_func = standard_arrow_keys_func;
   tool->cursor_update_func = rect_select_cursor_update;
   tool->control_func = iscissors_control;
+  tool->auto_snap_to = 0;
   
   last_tool = tool;
   
@@ -1889,7 +1890,13 @@ calculate_edge_map (GImage *gimage,
   destPR.data = conv1 + MAX_CHANNELS * (CONV_WIDTH * offy + offx);
   destPR.rowstride = CONV_WIDTH * MAX_CHANNELS;
   destPR.tiles = NULL;
-
+  destPR.bytes = 1;
+  destPR.x = x1;
+  destPR.y = y1;
+  destPR.w = w;
+  destPR.h = h;
+  destPR.dirty = 1;
+  
   for (pr =pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
     gaussian_deriv (&srcPR, &destPR, HORIZONTAL, std_dev);
 
