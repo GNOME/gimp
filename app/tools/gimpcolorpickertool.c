@@ -83,7 +83,7 @@ static GtkWidget          *color_area                  = NULL;
 static gchar               red_buf  [MAX_INFO_BUF];
 static gchar               green_buf[MAX_INFO_BUF];
 static gchar               blue_buf [MAX_INFO_BUF];
-static gchar               alpha_buf[MAX_INFO_BUF];
+static gchar               alpha_buf[3 * MAX_INFO_BUF];
 static gchar               index_buf[MAX_INFO_BUF];
 static gchar               hex_buf  [MAX_INFO_BUF];
 
@@ -357,7 +357,8 @@ gimp_color_picker_tool_info_update (GimpImageType  sample_type,
   g_snprintf (blue_buf,  MAX_INFO_BUF, "%d", b);
   
   if (GIMP_IMAGE_TYPE_HAS_ALPHA (sample_type))
-    g_snprintf (alpha_buf, MAX_INFO_BUF, "%d", a);
+    g_snprintf (alpha_buf, sizeof (alpha_buf),
+		"%d (%d %%)", a, (gint) (color->a * 100.0));
   else
     g_snprintf (alpha_buf, MAX_INFO_BUF, _("N/A"));
   

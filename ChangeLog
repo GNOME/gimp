@@ -1,3 +1,8 @@
+2003-07-08  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpcolorpickertool.c: show the alpha value in percent
+	as well (as suggested in bug #116384).
+
 2003-07-07  Sven Neumann  <sven@gimp.org>
 
 	* libgimpmath/gimpmatrix.[ch]: added gimp_matrix2_mult().
