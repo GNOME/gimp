@@ -1,4 +1,10 @@
-2004-10-29 Kevin Cozens <kcozens@cvs.gimp.org>
+2004-10-29  Øyvind Kolås  <pippin@gimp.org>
+
+	* app/actions/drawable-commands.[ch]
+	* app/actions/drawable-actions.[ch]: alphabetized file pending
+	addition.
+
+2004-10-29  Kevin Cozens  <kcozens@cvs.gimp.org>
 
 	* plug-ins/script-fu/scripts/test-sphere.scm: Added notes about
 	use of SF-PALETTE.

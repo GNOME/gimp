@@ -46,15 +46,15 @@ static GimpActionEntry drawable_actions[] =
     G_CALLBACK (drawable_desaturate_cmd_callback),
     GIMP_HELP_LAYER_DESATURATE },
 
-  { "drawable-invert", GIMP_STOCK_INVERT,
-    N_("In_vert"), NULL, NULL,
-    G_CALLBACK (drawable_invert_cmd_callback),
-    GIMP_HELP_LAYER_INVERT },
-
   { "drawable-equalize", NULL,
     N_("_Equalize"), NULL, NULL,
     G_CALLBACK (drawable_equalize_cmd_callback),
     GIMP_HELP_LAYER_EQUALIZE },
+
+  { "drawable-invert", GIMP_STOCK_INVERT,
+    N_("In_vert"), NULL, NULL,
+    G_CALLBACK (drawable_invert_cmd_callback),
+    GIMP_HELP_LAYER_INVERT },
 
   { "drawable-offset", NULL,
     N_("_Offset..."), "<control><shift>O", NULL,
@@ -64,17 +64,17 @@ static GimpActionEntry drawable_actions[] =
 
 static GimpToggleActionEntry drawable_toggle_actions[] =
 {
-  { "drawable-visible", GIMP_STOCK_VISIBLE,
-    N_("_Visible"), NULL, NULL,
-    G_CALLBACK (drawable_visible_cmd_callback),
-    FALSE,
-    GIMP_HELP_LAYER_VISIBLE },
-
   { "drawable-linked", GIMP_STOCK_LINKED,
     N_("_Linked"), NULL, NULL,
     G_CALLBACK (drawable_linked_cmd_callback),
     FALSE,
-    GIMP_HELP_LAYER_LINKED }
+    GIMP_HELP_LAYER_LINKED },
+  
+  { "drawable-visible", GIMP_STOCK_VISIBLE,
+    N_("_Visible"), NULL, NULL,
+    G_CALLBACK (drawable_visible_cmd_callback),
+    FALSE,
+    GIMP_HELP_LAYER_VISIBLE }
 };
 
 static GimpEnumActionEntry drawable_flip_actions[] =
@@ -174,8 +174,8 @@ drawable_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
   SET_SENSITIVE ("drawable-desaturate", drawable &&   is_rgb);
-  SET_SENSITIVE ("drawable-invert",     drawable && ! is_indexed);
   SET_SENSITIVE ("drawable-equalize",   drawable && ! is_indexed);
+  SET_SENSITIVE ("drawable-invert",     drawable && ! is_indexed);
   SET_SENSITIVE ("drawable-offset",     drawable);
 
   SET_SENSITIVE ("drawable-visible", drawable);
