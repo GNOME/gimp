@@ -2003,6 +2003,32 @@ gdisplays_delete ()
   g_slist_free (display_list);
 }
 
+GDisplay *
+gdisplays_check_valid (GDisplay *gtest, GimpImage *gimage)
+{
+  /* Give a gdisp check that it is still valid and points to the require
+   * GimpImage. If not return the first gDisplay that does point to the 
+   * gimage. If none found return NULL;
+   */
+
+  GSList *list = display_list;
+  GDisplay *gdisp;
+  GDisplay *gdisp_found = NULL;
+
+  /*  traverse the linked list of displays  */
+  while (list)
+    {
+      gdisp = (GDisplay *) list->data;
+      if(gdisp == gtest)
+	return (gtest);
+      if(!gdisp_found && gdisp->gimage == gimage)
+	gdisp_found = gdisp;
+      list = g_slist_next (list);
+    }
+
+  return (gdisp_found);
+}
+
 
 static void
 gdisplays_flush_whenever (gboolean now)

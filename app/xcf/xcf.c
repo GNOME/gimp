@@ -38,6 +38,7 @@
 #include <libgimp/parasiteP.h>
 #include <libgimp/parasite.h>
 #include "parasitelist.h"
+#include "pathsP.h"
 #include <libgimp/gimpunit.h>
 
 /* #define SWAP_FROM_FILE */
@@ -67,7 +68,8 @@ typedef enum
   PROP_RESOLUTION = 19,
   PROP_TATTOO = 20,
   PROP_PARASITES = 21,
-  PROP_UNIT = 22
+  PROP_UNIT = 22,
+  PROP_PATHS = 23
 } PropType;
 
 typedef enum
@@ -612,6 +614,8 @@ xcf_save_image_props (XcfInfo *info,
 
   xcf_save_prop (info, PROP_UNIT, gimage->unit);
 
+  xcf_save_prop (info, PROP_PATHS, gimage->paths);
+
   xcf_save_prop (info, PROP_END);
 }
 
@@ -688,6 +692,138 @@ static Parasite *read_a_parasite(XcfInfo *info)
   p->data = g_new (char, p->size);
   info->cp += xcf_read_int8(info->fp, p->data, p->size);
   return p;
+}
+
+static void write_bz_point(gpointer pptr, gpointer iptr)
+{
+  BZPOINTP bpt = (BZPOINTP)pptr;
+  XcfInfo *info = (XcfInfo *)iptr;
+  
+  /* (all gint)
+   * type
+   * x
+   * y
+   */
+
+  info->cp += xcf_write_int32(info->fp, &bpt->type,1);
+  info->cp += xcf_write_int32(info->fp, &bpt->x,1);
+  info->cp += xcf_write_int32(info->fp, &bpt->y,1);
+}
+
+static BZPOINTP read_bz_point(XcfInfo *info)
+{
+  BZPOINTP ptr;
+  gint type;
+  gint x;
+  gint y;
+
+  info->cp += xcf_read_int32(info->fp, &type,1);
+  info->cp += xcf_read_int32(info->fp, &x,1);
+  info->cp += xcf_read_int32(info->fp, &y,1);
+
+  ptr = bzpoint_new(type,x,y);
+
+  return (ptr);
+}
+
+static void write_one_path(gpointer pptr, gpointer iptr)
+{
+  BZPATHP bzp = (BZPATHP)pptr;
+  XcfInfo *info = (XcfInfo *)iptr;
+  gchar state = (gchar)bzp->state;
+  gint num_points;
+  gint num_paths;
+
+  /*
+   * name (string)
+   * locked (gint)
+   * state (gchar)
+   * closed (gint)
+   * number points (gint)
+   * number paths (gint unused)
+   * then each point.
+   */
+ 
+  info->cp += xcf_write_string(info->fp, &bzp->name->str, 1);
+  info->cp += xcf_write_int32(info->fp, &bzp->locked,1);
+  info->cp += xcf_write_int8(info->fp, &state,1);
+  info->cp += xcf_write_int32(info->fp, &bzp->closed,1);
+  num_points = g_slist_length(bzp->bezier_details);
+  info->cp += xcf_write_int32(info->fp, &num_points,1);
+  num_paths = 1;
+  info->cp += xcf_write_int32(info->fp, &num_paths,1);
+  g_slist_foreach(bzp->bezier_details,write_bz_point,info);
+}
+
+static BZPATHP read_one_path(XcfInfo *info)
+{
+  BZPATHP bzp;
+  gchar *name;
+  gint locked;
+  gchar state;
+  gint closed;
+  gint num_points;
+  gint num_paths;
+  GSList *pts_list = NULL;
+
+  info->cp += xcf_read_string(info->fp, &name, 1);
+  info->cp += xcf_read_int32(info->fp, &locked,1);
+  info->cp += xcf_read_int8(info->fp, &state,1);
+  info->cp += xcf_read_int32(info->fp, &closed,1);
+  info->cp += xcf_read_int32(info->fp, &num_points,1);
+  info->cp += xcf_read_int32(info->fp, &num_paths,1);
+
+  while(num_points-- > 0)
+    {
+      BZPOINTP bpt;
+      /* Read in a path */
+      bpt = read_bz_point(info);
+      pts_list = g_slist_append(pts_list,bpt);
+    }
+
+  bzp = bzpath_new(pts_list,closed,(gint)state,locked,name);
+
+  return(bzp);
+}
+
+static void write_bzpaths(PathsList *paths, XcfInfo *info)
+{
+  gint num_paths;
+  /* Write out the following:-
+   *
+   * last_selected_row (gint)
+   * number_of_paths (gint)
+   *
+   * then each path:-
+   */
+  
+  info->cp += xcf_write_int32(info->fp,&paths->last_selected_row,1);
+  num_paths = g_slist_length(paths->bz_paths);
+  info->cp += xcf_write_int32(info->fp,&num_paths,1);
+  g_slist_foreach(paths->bz_paths,write_one_path,info);  
+}
+
+static PathsList * read_bzpaths(GImage *gimage, XcfInfo *info)
+{
+  gint num_paths;
+  gint last_selected_row;
+  PathsList *paths;
+  GSList *bzp_list = NULL;
+
+  info->cp += xcf_read_int32(info->fp,&last_selected_row,1);
+  info->cp += xcf_read_int32(info->fp,&num_paths,1);
+
+  while(num_paths-- > 0)
+    {
+      BZPATHP bzp;
+      /* Read in a path */
+      bzp = read_one_path(info);
+      bzp_list = g_slist_append(bzp_list,bzp);
+    }
+
+  paths = pathsList_new(gimage,last_selected_row,bzp_list);
+
+  return(paths);
 }
 
 static void
@@ -983,6 +1119,31 @@ xcf_save_prop (XcfInfo  *info,
 	info->cp += xcf_write_int32 (info->fp, (guint32*) &prop_type, 1);
 	info->cp += xcf_write_int32 (info->fp, &size, 1);
 	info->cp += xcf_write_int32 (info->fp, &unit, 1);
+      }
+      break;
+    case PROP_PATHS:
+      {
+	PathsList *paths_list;
+	guint32 base, length;
+	long pos;
+	paths_list =  va_arg (args, PathsList *);
+	if (paths_list)
+	{
+ 	  info->cp += xcf_write_int32 (info->fp, (guint32*) &prop_type, 1);
+	  /* because we don't know how much room the paths list will take
+	     we save the file position and write the length later 
+	     ALT. OK I copied the code from above...
+	  */
+	  pos = ftell(info->fp);
+ 	  info->cp += xcf_write_int32 (info->fp, &length, 1);
+	  base = info->cp;
+	  write_bzpaths(paths_list,info);
+	  length = info->cp - base;
+	  /* go back to the saved position and write the length */
+	  fseek(info->fp, pos, SEEK_SET);
+	  xcf_write_int32 (info->fp, &length, 1);
+	  fseek(info->fp, 0, SEEK_END);
+	}
       }
       break;
     }
@@ -1629,6 +1790,13 @@ xcf_load_image_props (XcfInfo *info,
 	   gimage->unit = unit;
 	 }
 	 break;
+	case PROP_PATHS:
+	{
+	  PathsList *paths = read_bzpaths(gimage,info);
+	  /* add to gimage */
+	  gimp_image_set_paths(gimage,paths);
+	}
+	break;
 	default:
 	  g_message (_("unexpected/unknown image property: %d (skipping)"), prop_type);
 

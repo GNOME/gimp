@@ -24,7 +24,6 @@
 #include <string.h>
 #include <math.h>
 #include "appenv.h"
-#include "bezier_selectP.h"
 #include "draw_core.h"
 #include "channel_pvt.h"
 #include "drawable.h"
@@ -38,6 +37,7 @@
 #include "rect_select.h"
 #include "temp_buf.h"
 #include "tools.h"
+#include "bezier_selectP.h"
 
 #include "libgimp/gimpintl.h"
 

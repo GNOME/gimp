@@ -272,6 +272,9 @@ gimp_SOURCES = \
 	parasitelist.h		\
 	parasitelistF.h		\
 	parasitelistP.h		\
+	paths_dialog.h		\
+	paths_dialog.c		\
+	pathsP.h		\
 	pattern_header.h	\
 	pattern_select.c	\
 	pattern_select.h	\
@@ -360,7 +363,14 @@ EXTRA_DIST = \
 	tools/lower.xpm		\
 	tools/mask.xbm		\
 	tools/new.xpm		\
-	tools/raise.xpm
+	tools/raise.xpm		\
+	tools/penadd.xpm	\
+	tools/pendel.xpm	\
+	tools/penedit.xpm	\
+	tools/pennorm.xpm	\
+	tools/penstroke.xpm	\
+	tools/ptoselection.xpm
+
 
 CPPFLAGS = \
 	-DLIBDIR=\""$(gimpplugindir)"\"	\

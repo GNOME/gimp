@@ -31,6 +31,7 @@
 #include "undo.h"
 #include "gimpsignal.h"
 #include "gimpparasite.h"
+#include "pathsP.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
@@ -173,6 +174,7 @@ static void gimp_image_init (GimpImage *gimage)
   gimage->yresolution = default_yresolution;
   gimage->unit = default_units;
   gimage->save_proc= NULL;
+  gimage->paths = NULL;
 }
 
 GtkType gimp_image_get_type(void){
@@ -1035,6 +1037,18 @@ gimp_image_colormap_changed (GimpImage *image, gint col)
   gtk_signal_emit (GTK_OBJECT(image),
 			 gimp_image_signals[COLORMAP_CHANGED],
 			 col);
+}
+
+void
+gimp_image_set_paths(GimpImage *gimage,PathsList *paths)
+{
+  gimage->paths = paths;
+}
+
+PathsList *
+gimp_image_get_paths(GimpImage *gimage)
+{
+  return gimage->paths;
 }
 	
 /************************************************************/

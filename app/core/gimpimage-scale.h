@@ -13,6 +13,7 @@
 #include "plug_in.h"
 #include "temp_buf.h"
 #include "tile_manager.h"
+#include "pathsP.h"
 
 
 #define GIMP_TYPE_IMAGE gimp_image_get_type()
@@ -152,6 +153,9 @@ void            gimp_image_attach_parasite        (GimpImage *, Parasite *);
 void            gimp_image_detach_parasite        (GimpImage *, const char *);
 
 Tattoo          gimp_image_get_new_tattoo         (GimpImage *);
+
+void            gimp_image_set_paths              (GimpImage *,PathsList *);
+PathsList *     gimp_image_get_paths              (GimpImage *);
 
 /* Temporary hack till colormap manipulation is encapsulated in functions.
    Call this whenever you modify an image's colormap. The ncol argument

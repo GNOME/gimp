@@ -25,7 +25,8 @@
 
 GtkWidget *ops_button_box_new (GtkWidget   *parent,
 			       GtkTooltips *tool_tips,
-			       OpsButton   *ops_buttons)   
+			       OpsButton   *ops_buttons,
+			       OpsButtonType ops_type)   
 {
   GtkWidget *button;
   GtkWidget *button_box;
@@ -34,6 +35,7 @@ GtkWidget *ops_button_box_new (GtkWidget   *parent,
   GdkPixmap *pixmap;
   GdkBitmap *mask;
   GtkStyle *style;
+  GSList *group = NULL;
 
   gtk_widget_realize (parent);
   style = gtk_widget_get_style (parent);
@@ -54,8 +56,24 @@ GtkWidget *ops_button_box_new (GtkWidget   *parent,
       gtk_box_pack_start (GTK_BOX (box), pixmapwid, TRUE, TRUE, 3);
       gtk_widget_show (pixmapwid);
       gtk_widget_show (box);
+      
+      switch(ops_type)
+	{
+	case OPS_BUTTON_NORMAL :
+	  button = gtk_button_new ();
+	  break;
+	case OPS_BUTTON_RADIO :
+	  button = gtk_radio_button_new (group);
+	  group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+	  gtk_container_border_width (GTK_CONTAINER (button), 0);
+	  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
+	  break;
+	default :
+	  button = NULL; /*stop compiler complaints */
+	  g_error("ops_button_box_new:: unknown type %d\n",ops_type);
+	  break;
+	}
 
-      button = gtk_button_new ();
       gtk_container_add (GTK_CONTAINER (button), box);
       gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 				 (GtkSignalFunc) ops_buttons->callback,
@@ -64,7 +82,8 @@ GtkWidget *ops_button_box_new (GtkWidget   *parent,
       if (tool_tips != NULL)
 	gtk_tooltips_set_tip (tool_tips, button, gettext(ops_buttons->tooltip), NULL);
 
-      gtk_box_pack_start (GTK_BOX(button_box), button, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX(button_box), button, TRUE, TRUE, 0); 
+
       gtk_widget_show (button);
 
       ops_buttons->widget = button;

@@ -1,3 +1,71 @@
+Fri Mar  5 21:45:39 GMT 1999 Andy Thomas <alt@picnic.demon.co.uk>
+
+	This is a bit of a biggy. Added paths to layers & channels 
+	dialog. This is not complete yet (it still has some rough edges ;-)
+
+	New:-
+
+	* paths_dialog.c
+	* paths_dialog.h
+	* pathsP.h
+
+	These are the core parts of the paths dialog & interaction.
+
+	* tools/penadd.xpm 
+	* tools/pendel.xpm 
+	* tools/pennorm.xpm
+	* tools/penedit.xpm
+	* tools/penstroke.xpm
+
+	New images found in the dialog. Maybe someone with a better
+	artistic flair could replace these?
+
+	Changed:-
+
+	* Makefile.am
+
+	Added new files for build
+
+	* layers_dialog.c
+	
+	Added new tab for paths.
+
+	* bezier_select.h
+	* bezier_selectP.h
+	* bezier_select.c
+
+	Rearrangement & fixes. Not finished yet.
+
+	* iscissors.c
+
+	Header file changes. (Need to include more headers).
+
+	* gdisplay.c
+	* gdisplay.h
+
+	Hmmm... Added a function that did a mapping from gimage to gdisp.
+	This is a little bit of a "hack", but it was needed.. really.
+
+	* ops_buttons.h
+	* ops_buttons.c
+
+	Enhanced to create more types of button ops. Used in the paths dialog.
+
+	* channels_dialog.c
+
+	Header file changes?
+
+	* xcf.c
+
+	Paths stored in new PROP. Yosh.. I did as you and Adam suggested. 
+
+	* gimpimage.c
+	* gimpimage.h
+	* gimpimageP.h
+
+	Added paths items to the image structures.
+
+
 1999-03-04  Tomas Ogren  <stric@ing.umu.se>
 
 	* app/gimprc.c: Added a g_strdup() on DEFAULT_IMAGE_TITLE_FORMAT,

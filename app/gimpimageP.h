@@ -9,6 +9,7 @@
 #include "channel.h"
 #include "layer.h"
 #include "parasitelistF.h"
+#include "pathsP.h"
 #include "libgimp/gimpmatrix.h"
 
 
@@ -61,6 +62,8 @@ struct _GimpImage
   Channel * selection_mask;           /*  selection mask channel       */
 
   ParasiteList *parasites;            /*  Plug-in parasite data        */
+
+  PathsList *paths;                   /*  Paths data for this image    */
 
   GimpMatrix transform;               /* a matrix describing all of the
 					 transformations this image

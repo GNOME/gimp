@@ -35,12 +35,18 @@ struct _OpsButton
   GtkWidget *widget;         /* the button widget */
 };
 
+typedef enum {
+  OPS_BUTTON_NORMAL,
+  OPS_BUTTON_RADIO,
+} OpsButtonType;
+    
 
 /* Function declarations */
 
 GtkWidget * ops_button_box_new        (GtkWidget *,      /* parent widget */
 				       GtkTooltips *,    
-				       OpsButton *);
+				       OpsButton *,
+				       OpsButtonType);
 void ops_button_box_set_insensitive   (OpsButton *);
 
 #endif /* __OPS_BUTTONS_H__ */

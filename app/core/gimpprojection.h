@@ -185,6 +185,7 @@ void       gdisplay_snap_rectangle         (GDisplay *, int, int, int, int, int 
 void	   gdisplay_update_cursor	   (GDisplay *, int, int);
 void	   gdisplay_set_dot_for_dot	   (GDisplay *, int);
 void       gdisplay_resize_cursor_label    (GDisplay *);
+GDisplay * gdisplays_check_valid           (GDisplay *, GimpImage *);
 
 /*  function declarations  */
 

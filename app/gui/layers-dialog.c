@@ -20,6 +20,7 @@
 #include <string.h>
 #include "gdk/gdkkeysyms.h"
 #include "appenv.h"
+#include "draw_core.h"
 #include "actionarea.h"
 #include "buildmenu.h"
 #include "colormaps.h"
@@ -39,6 +40,8 @@
 #include "ops_buttons.h"
 #include "paint_funcs.h"
 #include "palette.h"
+#include "bezier_selectP.h"
+#include "paths_dialog.h"
 #include "resize.h"
 #include "session.h"
 #include "undo.h"
@@ -371,6 +374,12 @@ lc_dialog_create (GimpImage* gimage)
 				label);
       gtk_widget_show (label);
 
+      label = gtk_label_new (_("Paths"));
+      gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
+				paths_dialog_create (),
+				label);
+      gtk_widget_show (label);
+
       gtk_widget_show (notebook);
 
       gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG(lc_shell)->action_area), 1);
@@ -404,6 +413,7 @@ lc_dialog_create (GimpImage* gimage)
       
       layers_dialog_update (gimage);
       channels_dialog_update (gimage);
+      paths_dialog_update (gimage);
 
       gtk_widget_show (lc_subshell);
       gtk_widget_show (lc_shell);
@@ -419,6 +429,7 @@ lc_dialog_create (GimpImage* gimage)
 
       layers_dialog_update (gimage);
       channels_dialog_update (gimage);
+      paths_dialog_update (gimage);
       lc_dialog_update_image_list ();
       gdisplays_flush ();
     }
@@ -448,6 +459,7 @@ lc_dialog_update_image_list ()
 	{
 	  layers_dialog_update (default_gimage);
 	  channels_dialog_update (default_gimage);
+	  paths_dialog_update (default_gimage);
 	  gdisplays_flush ();
 	}
     }
@@ -744,7 +756,7 @@ layers_dialog_create ()
 
       /* The ops buttons */
 
-      button_box = ops_button_box_new (lc_shell, tool_tips, layers_ops_buttons);
+      button_box = ops_button_box_new (lc_shell, tool_tips, layers_ops_buttons,OPS_BUTTON_NORMAL);
 
       gtk_box_pack_start (GTK_BOX (vbox), button_box, FALSE, FALSE, 2);
       gtk_widget_show (button_box);
@@ -1479,6 +1491,7 @@ image_menu_callback (GtkWidget *w,
     return;
   layers_dialog_update (GIMP_IMAGE(client_data));
   channels_dialog_update (GIMP_IMAGE(client_data));
+  paths_dialog_update (GIMP_IMAGE(client_data));
   gdisplays_flush ();
 }
 

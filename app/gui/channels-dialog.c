@@ -234,7 +234,7 @@ channels_dialog_create ()
 
       /* The ops buttons */
 
-      button_box = ops_button_box_new (lc_shell, tool_tips, channels_ops_buttons);
+      button_box = ops_button_box_new (lc_shell, tool_tips, channels_ops_buttons,OPS_BUTTON_NORMAL);
 
       gtk_box_pack_start (GTK_BOX (vbox), button_box, FALSE, FALSE, 2);
       gtk_widget_show (button_box);

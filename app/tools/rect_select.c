@@ -161,18 +161,6 @@ create_selection_options (ToolType tool_type)
       break;
     }
 
-  if (tool_type == BEZIER_SELECT)
-    {
-      bezier_toggle = gtk_check_button_new_with_label (_("Bezier Extends"));
-      gtk_box_pack_start (GTK_BOX (vbox), bezier_toggle, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (bezier_toggle), "toggled",
-			  (GtkSignalFunc) selection_toggle_update,
-			  &options->extend);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (bezier_toggle), options->extend);
-      gtk_widget_show (bezier_toggle);
-
-    }
-
   /*  the antialias toggle button  */
   if (tool_type != RECT_SELECT)
     {
