@@ -1,3 +1,15 @@
+2004-03-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdialogfactory.[ch]: made enum
+	GimpDialogVisibilityState and GIMP_DIALOG_VISIBILITY_KEY public.
+
+	* app/widgets/gimpsessioninfo.c (gimp_session_info_get_geometry):
+	only look at GTK_WIDGET_VISIBLE(info->widget) if the dialog's
+	visibility state is GIMP_DIALOG_VISIBILITY_UNKNOWN and map the
+	visibility state to info->open otherwise.
+
+	Fixes bug #137076.
+
 2004-03-13  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdrawable-blend.c (gradient_calc_shapeburst_*):

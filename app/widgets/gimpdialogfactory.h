@@ -26,6 +26,16 @@
 #include "core/gimpobject.h"
 
 
+#define GIMP_DIALOG_VISIBILITY_KEY "gimp-dialog-visibility"
+
+typedef enum
+{
+  GIMP_DIALOG_VISIBILITY_UNKNOWN = 0,
+  GIMP_DIALOG_VISIBILITY_INVISIBLE,
+  GIMP_DIALOG_VISIBILITY_VISIBLE
+} GimpDialogVisibilityState;
+
+
 typedef GtkWidget * (* GimpDialogNewFunc) (GimpDialogFactory *factory,
 					   GimpContext       *context,
                                            gint               preview_size);

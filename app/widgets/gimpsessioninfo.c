@@ -734,10 +734,31 @@ gimp_session_info_get_geometry (GimpSessionInfo *info)
 	}
     }
 
+  info->open = FALSE;
+
   if (! info->toplevel_entry || info->toplevel_entry->remember_if_open)
-    info->open = GTK_WIDGET_VISIBLE (info->widget);
-  else
-    info->open = FALSE;
+    {
+      GimpDialogVisibilityState visibility;
+
+      visibility =
+        GPOINTER_TO_INT (g_object_get_data (G_OBJECT (info->widget),
+                                            GIMP_DIALOG_VISIBILITY_KEY));
+
+      switch (visibility)
+        {
+        case GIMP_DIALOG_VISIBILITY_UNKNOWN:
+          info->open = GTK_WIDGET_VISIBLE (info->widget);
+          break;
+
+        case GIMP_DIALOG_VISIBILITY_INVISIBLE:
+          info->open = FALSE;
+          break;
+
+        case GIMP_DIALOG_VISIBILITY_VISIBLE:
+          info->open = TRUE;
+          break;
+        }
+    }
 
   info->screen = DEFAULT_SCREEN;
 

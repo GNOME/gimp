@@ -52,13 +52,6 @@
 
 typedef enum
 {
-  GIMP_DIALOG_VISIBILITY_UNKNOWN = 0,
-  GIMP_DIALOG_VISIBILITY_INVISIBLE,
-  GIMP_DIALOG_VISIBILITY_VISIBLE
-} GimpDialogVisibilityState;
-
-typedef enum
-{
   GIMP_DIALOG_SHOW_ALL,
   GIMP_DIALOG_HIDE_ALL,
   GIMP_DIALOG_SHOW_TOOLBOX
@@ -1300,9 +1293,6 @@ gimp_dialog_factories_clear_foreach (gconstpointer      key,
 #endif
     }
 }
-
-
-#define GIMP_DIALOG_VISIBILITY_KEY "gimp-dialog-visibility"
 
 static void
 gimp_dialog_factories_hide_foreach (gconstpointer      key,
