@@ -1,3 +1,15 @@
+2004-04-29  Simon Budig  <simon@gimp.org>
+
+	* app/main.c: when glibc is used, call mallopt, so that memory
+	chunks >= 4k (= 64*64 pixels, 1bpp - the smallest full tile)
+	get allocated via mmap. This ensures that after closing an image
+	the memory allocated for image data gets returned to the system.
+
+	Thanks to Phil Blundell <pb@nexus.co.uk> for bringing mallopt
+	to my attention.
+
+	Please watch closely for performance problems.
+
 2004-04-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/Makefile.am

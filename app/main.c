@@ -32,6 +32,10 @@
 #include <unistd.h>
 #endif
 
+#ifdef __GLIBC__
+#include <malloc.h>
+#endif
+
 #ifndef  WAIT_ANY
 #define  WAIT_ANY -1
 #endif
@@ -238,6 +242,13 @@ main (int    argc,
 
 #if defined (USE_SYSV_SHM) || defined (USE_POSIX_SHM) || defined (G_OS_WIN32)
   use_shm = TRUE;
+#endif
+
+#ifdef __GLIBC__
+  /* Tweak memory allocation so that memory allocated in chunks >= 4k
+   * (64x64 pixel 1bpp tile) gets returned to the system when free'd ().
+   */
+  mallopt (M_MMAP_THRESHOLD, 64 * 64 - 1);
 #endif
 
   batch_cmds    = g_new (gchar *, argc);
