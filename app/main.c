@@ -41,6 +41,8 @@ static void       init (void);
 /* GLOBAL data */
 int no_interface;
 int no_data;
+int no_splash;
+int no_splash_image;
 int be_verbose;
 int use_shm;
 char *prog_name;		/* The path name we are invoked with */
@@ -96,6 +98,8 @@ main (int argc, char **argv)
 
   no_interface = FALSE;
   no_data = FALSE;
+  no_splash = FALSE;
+  no_splash_image = FALSE;
   use_shm = TRUE;
   batch_cmds = g_new (char*, argc);
   batch_cmds[0] = NULL;
@@ -136,6 +140,14 @@ main (int argc, char **argv)
 	{
 	  no_data = TRUE;
 	}
+      else if (strcmp (argv[i], "--no-splash") == 0)
+	{
+	  no_splash = TRUE;
+	}
+      else if (strcmp (argv[i], "--no-splash-image") == 0)
+	{
+	  no_splash_image = TRUE;
+	}
       else if (strcmp (argv[i], "--verbose") == 0)
 	{
 	  be_verbose = TRUE;
@@ -166,6 +178,8 @@ main (int argc, char **argv)
       g_print ("  -n --no-interface      Run without a user interface.\n");
       g_print ("  --no-data              Do not load patterns, gradients, palettes, brushes.\n");
       g_print ("  --verbose              Show startup messages.\n");
+      g_print ("  --no-splash            Do not show the startup window.\n");
+      g_print ("  --no-splash-image      Do not add an image to the startup window.\n");
       g_print ("  --no-shm               Do not use shared memory between GIMP and its plugins.\n");
       g_print ("  --no-xshm              Do not use the X Shared Memory extension.\n");
       g_print ("  --display <display>    Use the designated X display.\n\n");

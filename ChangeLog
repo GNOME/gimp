@@ -1,3 +1,16 @@
+Tue Feb 17 20:55:12 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* gimp_splash.ppm: added the splash-screen image drawn 
+	by Jens Lauterbacher to the distribution 
+
+	* app/appenv.h
+	* app/app_procs.c
+	* app/main.c: added the splash-image to the startup-window;
+	new command-line options: --no-splash, --no-splash-image
+	
+	* ps_menurc: changed to reflect changes to the 
+	menu-structure
+	
 Tue Feb 17 09:24:44 EST 1998 Adrian Likins <adrian@gimp.org>
 
 	* updated all of Sven Neumanns scripts. Including 
