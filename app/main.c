@@ -237,21 +237,6 @@ static const GOptionEntry main_entries[] =
   { NULL }
 };
 
-/*  These options are checked before gtk_init() is being called.  */
-static const GOptionEntry pre_entries[] =
-{
-  {
-    "no-interface", 'i', 0,
-    G_OPTION_ARG_NONE, &no_interface,
-    NULL, NULL
-  },
-  { "version", 'v', 0,
-    G_OPTION_ARG_CALLBACK, (GOptionArgFunc) gimp_show_version,
-    NULL, NULL
-  },
-  { NULL }
-};
-
 
 int
 main (int    argc,
@@ -260,6 +245,7 @@ main (int    argc,
   GOptionContext *context;
   GError         *error = NULL;
   const gchar    *abort_message;
+  gint            i;
 
   gimp_init_malloc ();
 
@@ -274,12 +260,23 @@ main (int    argc,
     app_abort (no_interface, abort_message);
 
   /* Check argv[] for "--no-interface" before trying to initialize gtk+. */
-  context = g_option_context_new ("[FILE...]");
-  g_option_context_add_main_entries (context, pre_entries, GETTEXT_PACKAGE);
-  g_option_context_set_help_enabled (context, FALSE);
-  g_option_context_set_ignore_unknown_options (context, TRUE);
-  g_option_context_parse (context, &argc, &argv, NULL);
-  g_option_context_free (context);
+  for (i = 1; i < argc; i++)
+    {
+      const gchar *arg = argv[i];
+
+      if (arg[0] != '-')
+        continue;
+
+      if ((strcmp (arg, "--no-interface") == 0) || (strcmp (arg, "-i") == 0))
+	{
+	  no_interface = TRUE;
+	}
+      else if ((strcmp (arg, "--version") == 0) || (strcmp (arg, "-v") == 0))
+	{
+	  gimp_show_version ();
+	  app_exit (EXIT_SUCCESS);
+	}
+    }
 
   /* initialize some libraries (depending on the --no-interface option) */
   if (! app_libs_init (&no_interface, &argc, &argv))
@@ -294,7 +291,7 @@ main (int    argc,
     }
 
   /* parse the command-line options */
-  context = g_option_context_new ("[FILE...]");
+  context = g_option_context_new ("[FILE|URI...]");
   g_option_context_add_main_entries (context, main_entries, GETTEXT_PACKAGE);
 
 #ifdef __GNUC__
