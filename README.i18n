@@ -186,7 +186,14 @@ Actually this one is maintained by me, that is Daniel Egger
  msgid "gimp_tips.txt"
  msgstr "gimp_tips.<lang>.txt"
 
-9. And more?
+9. How to contribute
+
+ Any help with translations is appreciated. If you want to help, please get
+ in contact with the people from the GNOME Translation Project who coordinate
+ all translation efforts in the GNOME CVS tree. They have a nice web-page at
+ http://developer.gnome.org/projects/gtp/. 
+
+10. And more?
 
  I hope I mentioned everything that is worth it and hope that this document
  will clarify some things. If it doesn't please write me a mail and tell me
@@ -199,5 +206,5 @@ Happy Gimping. Yours,
 
 
 
-Sections (6) and (7) were added by Sven Neumann <sven@gimp.org>. He is the one
-to blame for errors in there...
+Sections (6), (7) and (9) were added by Sven Neumann <sven@gimp.org>. 
+He is the one to blame for errors in there...

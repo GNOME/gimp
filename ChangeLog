@@ -1,3 +1,8 @@
+2001-08-29  Sven Neumann  <sven@gimp.org>
+
+	* README.i18n: added a section that mentions the GNOME translation
+	project that coordinates translation efforts in the GNOME CVS tree.
+
 2001-08-14  Andras Timar <timar@gnome.hu>
 
 	* tips/gimp_tips.hu.txt: Fixing typos.
