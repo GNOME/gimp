@@ -4914,7 +4914,7 @@ msgstr ""
 
 #: plug-ins/common/plasma.c:187
 msgid "<Image>/Filters/Render/Clouds/Plasma..."
-msgstr "<Kép>/Szûrõk/Megjelenítés/Felhõk/Plazma..."
+msgstr "<Image>/Szûrõk/Megjelenítés/Felhõk/Plazma..."
 
 #: plug-ins/common/plasma.c:265
 msgid "Plasma..."
