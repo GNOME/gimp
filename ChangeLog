@@ -1,3 +1,8 @@
+2003-03-27  Sven Neumann  <sven@gimp.org>
+
+	* app/core/core-enums.[ch]
+	* app/core/gimpimage.c: fixed typos spotted by Janne (bug #109322).
+
 2003-03-27  Michael Natterer  <mitch@gimp.org>
 
 	More great icons from Jimmac:

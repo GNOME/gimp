@@ -955,7 +955,7 @@ gimp_image_set_resolution (GimpImage *gimage,
       (ABS (gimage->yresolution - yresolution) >= 1e-5))
     {
       gimp_image_undo_push_image_resolution (gimage,
-                                             _("Change Image Reolution"));
+                                             _("Change Image Resolution"));
 
       gimage->xresolution = xresolution;
       gimage->yresolution = yresolution;
