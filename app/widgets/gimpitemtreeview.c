@@ -37,7 +37,6 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
-#include "core/gimplayer-floating-sel.h"
 #include "core/gimpmarshal.h"
 
 #include "vectors/gimpvectors.h"
@@ -701,12 +700,7 @@ gimp_item_list_view_delete_clicked (GtkWidget        *widget,
 
   viewable = view->get_item_func (view->gimage);
 
-  /* EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEK */
-  if (GIMP_IS_LAYER (viewable) &&
-      gimp_layer_is_floating_sel (GIMP_LAYER (viewable)))
-    floating_sel_remove (GIMP_LAYER (viewable));
-  else
-    view->remove_item_func (view->gimage, viewable);
+  view->remove_item_func (view->gimage, viewable);
 
   gdisplays_flush ();
 }

@@ -70,8 +70,11 @@ void   layers_edit_attributes_cmd_callback   (GtkWidget *widet,
 void   layers_menu_update                    (GtkItemFactory *factory,
                                               gpointer        data);
 
+void   layers_remove_layer                   (GimpImage *gimage,
+                                              GimpLayer *layer);
+void   layers_anchor_layer                   (GimpLayer *layer);
 void   layers_new_layer_query                (GimpImage *gimage,
-                                              GimpLayer *tamplate);
+                                              GimpLayer *template);
 void   layers_edit_layer_query               (GimpLayer *layer);
 
 

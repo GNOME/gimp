@@ -26,6 +26,9 @@
 #include "gimpdrawablelistview.h"
 
 
+typedef void (* GimpAnchorItemFunc) (GimpLayer *layer);
+
+
 #define GIMP_TYPE_LAYER_LIST_VIEW            (gimp_layer_list_view_get_type ())
 #define GIMP_LAYER_LIST_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_LAYER_LIST_VIEW, GimpLayerListView))
 #define GIMP_LAYER_LIST_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LAYER_LIST_VIEW, GimpLayerListViewClass))
@@ -39,6 +42,8 @@ typedef struct _GimpLayerListViewClass  GimpLayerListViewClass;
 struct _GimpLayerListView
 {
   GimpDrawableListView  parent_instance;
+
+  GimpAnchorItemFunc    anchor_item_func;
 
   GtkWidget            *options_box;
 

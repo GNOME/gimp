@@ -156,6 +156,10 @@ gimp_dialog_factory_dispose (GObject *object)
 
   factory = GIMP_DIALOG_FACTORY (object);
 
+  /*  start iterating from the beginning each time we destroyed a
+   *  toplevel because destroying a dock may cause lots of items
+   *  to be removed from factory->open_dialogs
+   */
   while (factory->open_dialogs)
     {
       for (list = factory->open_dialogs; list; list = g_list_next (list))
@@ -167,9 +171,12 @@ gimp_dialog_factory_dispose (GObject *object)
             }
         }
 
+      /*  the list being non-empty without any toplevel is an error,
+       *  so eek and chain up
+       */
       if (! list)
         {
-          g_warning ("%s: stale entries in factory->open_dialogs",
+          g_warning ("%s: stale non-toplevel entries in factory->open_dialogs",
                      G_GNUC_FUNCTION);
           break;
         }

@@ -340,9 +340,9 @@ gimp_layer_list_view_anchor_clicked (GtkWidget         *widget,
 
   layer = (GimpLayer *) item_view->get_item_func (item_view->gimage);
 
-  if (GIMP_IS_LAYER (layer))
+  if (view->anchor_item_func)
     {
-      g_print ("anchor \"%s\"\n", GIMP_OBJECT (layer)->name);
+      view->anchor_item_func (layer);
     }
 }
 

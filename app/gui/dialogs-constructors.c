@@ -52,6 +52,7 @@
 #include "widgets/gimpdockbook.h"
 #include "widgets/gimpdocumentview.h"
 #include "widgets/gimpgradienteditor.h"
+#include "widgets/gimplayerlistview.h"
 #include "widgets/gimplistitem.h"
 #include "widgets/gimppaletteeditor.h"
 #include "widgets/gimppreview.h"
@@ -636,9 +637,10 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
 			     GimpContext       *context,
                              gint               preview_size)
 {
-  GimpImage *gimage;
-  GtkWidget *view;
-  GtkWidget *dockable;
+  GimpImage         *gimage;
+  GimpLayerListView *layer_view;
+  GtkWidget         *view;
+  GtkWidget         *dockable;
 
   gimage = gimp_context_get_image (context);
 
@@ -652,13 +654,17 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
                              (GimpSetItemFunc)      gimp_image_set_active_layer,
                              (GimpReorderItemFunc)  gimp_image_position_layer,
                              (GimpAddItemFunc)      gimp_image_add_layer,
-                             (GimpRemoveItemFunc)   gimp_image_remove_layer,
+                             (GimpRemoveItemFunc)   layers_remove_layer,
                              (GimpCopyItemFunc)     gimp_layer_copy,
                              (GimpConvertItemFunc)  gimp_layer_new_from_drawable,
                              (GimpNewItemFunc)      layers_new_layer_query,
                              (GimpEditItemFunc)     layers_edit_layer_query,
                              (GimpActivateItemFunc) layers_edit_layer_query,
                              gimp_item_factory_from_path ("<Layers>"));
+
+  layer_view = GIMP_LAYER_LIST_VIEW (view);
+
+  layer_view->anchor_item_func = layers_anchor_layer;
 
   dockable = dialogs_dockable_new (view,
 				   "Layer List", "Layers",

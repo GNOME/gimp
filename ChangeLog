@@ -1,3 +1,23 @@
+2002-03-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimplayerlistview.[ch]: added a GimpAnchorItemFunc
+	and use it if it's set.
+
+	* app/widgets/gimpitemlistview.c: removed the floating selection
+	special case hack from the remove_item callback.
+
+	* app/gui/layers-commands.[ch]: added layers_remove_layer() and
+	layers_anchor_layer(). Fixed sensitive setting of the "Anchor"
+	menu item.
+
+	* app/gui/dialogs-constructors.c: use the new functions when
+	constructing the layers dialog. Makes deleting and anchoring
+	floating selections from the layers dialog work without hacking
+	or code duplication.
+
+	* app/widgets/gimpdialogfactory.c: added comments about dialog
+	destruction in dispose().
+
 2002-03-10  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpwidgets.h: removed type checking casts from

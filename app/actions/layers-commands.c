@@ -209,11 +209,7 @@ layers_anchor_cmd_callback (GtkWidget *widget,
   GimpLayer *active_layer;
   return_if_no_layer (gimage, active_layer);
 
-  if (gimp_layer_is_floating_sel (active_layer))
-    {
-      floating_sel_anchor (active_layer);
-      gdisplays_flush ();
-    }
+  layers_anchor_layer (active_layer);
 }
 
 void
@@ -382,6 +378,31 @@ layers_edit_attributes_cmd_callback (GtkWidget *widget,
   return_if_no_layer (gimage, active_layer);
 
   layers_edit_layer_query (active_layer);
+}
+
+void
+layers_remove_layer (GimpImage *gimage,
+                     GimpLayer *layer)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+
+  if (gimp_layer_is_floating_sel (layer))
+    floating_sel_remove (layer);
+  else
+    gimp_image_remove_layer (gimage, layer);
+}
+
+void
+layers_anchor_layer (GimpLayer *layer)
+{
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+
+  if (gimp_layer_is_floating_sel (layer))
+    {
+      floating_sel_anchor (layer);
+      gdisplays_flush ();
+    }
 }
 
 
@@ -1140,30 +1161,27 @@ layers_menu_update (GtkItemFactory *factory,
 
   SET_SENSITIVE ("/New Layer...", gimage);
 
-  SET_SENSITIVE ("/Raise Layer", !fs && !ac && gimage && lp && alpha && prev);
-  SET_SENSITIVE ("/Layer to Top", !fs && !ac && gimage && lp && alpha && prev);
+  SET_SENSITIVE ("/Raise Layer",     !fs && !ac && gimage && lp && alpha && prev);
+  SET_SENSITIVE ("/Layer to Top",    !fs && !ac && gimage && lp && alpha && prev);
 
-  SET_SENSITIVE ("/Lower Layer",
-                 !fs && !ac && gimage && lp && next && next_alpha);
-  SET_SENSITIVE ("/Layer to Bottom",
-		 !fs && !ac && gimage && lp && next && next_alpha);
+  SET_SENSITIVE ("/Lower Layer",     !fs && !ac && gimage && lp && next && next_alpha);
+  SET_SENSITIVE ("/Layer to Bottom", !fs && !ac && gimage && lp && next && next_alpha);
 
   SET_SENSITIVE ("/Duplicate Layer", !fs && !ac && gimage && lp);
-  SET_SENSITIVE ("/Anchor Layer", !fs && !ac && gimage && lp);
-  SET_SENSITIVE ("/Merge Down", !fs && !ac && gimage && lp && next);
-  SET_SENSITIVE ("/Delete Layer", !ac && gimage && lp);
+  SET_SENSITIVE ("/Anchor Layer",     fs && !ac && gimage && lp);
+  SET_SENSITIVE ("/Merge Down",      !fs && !ac && gimage && lp && next);
+  SET_SENSITIVE ("/Delete Layer",    !ac && gimage && lp);
 
   SET_SENSITIVE ("/Layer Boundary Size...", !ac && gimage && lp);
-  SET_SENSITIVE ("/Layer to Imagesize", !ac && gimage && lp);
-  SET_SENSITIVE ("/Scale Layer...", !ac && gimage && lp);
+  SET_SENSITIVE ("/Layer to Imagesize",     !ac && gimage && lp);
+  SET_SENSITIVE ("/Scale Layer...",         !ac && gimage && lp);
 
-  SET_SENSITIVE ("/Add Layer Mask...", 
-		 !fs && !ac && gimage && !lm && lp && alpha && !indexed);
-  SET_SENSITIVE ("/Apply Layer Mask", !fs && !ac && gimage && lm && lp);
+  SET_SENSITIVE ("/Add Layer Mask...", !fs && !ac && gimage && !lm && lp && alpha && !indexed);
+  SET_SENSITIVE ("/Apply Layer Mask",  !fs && !ac && gimage && lm && lp);
   SET_SENSITIVE ("/Delete Layer Mask", !fs && !ac && gimage && lm && lp);
   SET_SENSITIVE ("/Mask to Selection", !fs && !ac && gimage && lm && lp);
 
-  SET_SENSITIVE ("/Add Alpha Channel", !fs && !alpha);
+  SET_SENSITIVE ("/Add Alpha Channel",  !fs && !alpha);
   SET_SENSITIVE ("/Alpha to Selection", !fs && !ac && gimage && lp && alpha);
 
   SET_SENSITIVE ("/Edit Layer Attributes...", !fs && !ac && gimage && lp);
