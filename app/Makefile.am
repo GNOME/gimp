@@ -8,6 +8,8 @@ gimp.exp : gimp.def
 
 mwindows = -mwindows
 
+gimp_win32_resource = gimp-win32res.o
+
 INTLLIBS =
 
 noinst_DATA = .libs/libgimpapp.a
@@ -461,13 +463,17 @@ INCLUDES = \
 	-I$(includedir)
 
 gimp_LDADD = \
-	$(gimp_exp) \
-	libgimpim.a \
+	$(gimp_exp)				\
+	$(gimp_win32_resource)			\
+	libgimpim.a				\
 	$(top_builddir)/libgimp/libgimpi.a	\
 	$(GTK_LIBS)				\
 	$(GIMP_THREAD_LIBS)			\
 	$(GIMP_MP_LIBS)				\
 	$(INTLLIBS)
+
+gimp-win32res.o : gimp.rc
+	$(top_srcdir)/build/win32/compile-resource gimp.rc gimp-win32res.o
 
 .PHONY: files
 

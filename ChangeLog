@@ -1,5 +1,13 @@
 2001-11-09  Tor Lillqvist  <tml@iki.fi>
 
+	* app/gimp.rc
+	* app/gimp.rc.in: Replace gimp.rc with gimp.rc.in, containing also
+	version information.
+	
+	* app/Makefile.am: Link with compiled resource file on Windows.
+
+2001-11-09  Tor Lillqvist  <tml@iki.fi>
+
 	More changes for autoconfiscated build on Win32, and to use same
 	directory structure in the installation directory as on Unix.
 
