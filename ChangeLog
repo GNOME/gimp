@@ -1,3 +1,8 @@
+2003-06-11  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpcolorselect.c: handle all mouse buttons
+	equally, cleaned up code, fixed return values from event handlers.
+
 2003-06-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable.c (gimp_drawable_mask_bounds): added some

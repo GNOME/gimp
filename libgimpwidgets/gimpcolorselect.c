@@ -50,11 +50,11 @@
 #define Z_DEF_WIDTH      GIMP_COLOR_SELECTOR_BAR_SIZE
 #define Z_DEF_HEIGHT     GIMP_COLOR_SELECTOR_SIZE
 
-#define COLOR_AREA_MASK (GDK_EXPOSURE_MASK       | \
-                         GDK_BUTTON_PRESS_MASK   | \
-                         GDK_BUTTON_RELEASE_MASK | \
-			 GDK_BUTTON1_MOTION_MASK | \
-                         GDK_ENTER_NOTIFY_MASK)
+#define COLOR_AREA_EVENT_MASK (GDK_EXPOSURE_MASK       | \
+                               GDK_BUTTON_PRESS_MASK   | \
+                               GDK_BUTTON_RELEASE_MASK | \
+			       GDK_BUTTON_MOTION_MASK  | \
+                               GDK_ENTER_NOTIFY_MASK)
 
 
 typedef enum
@@ -299,7 +299,7 @@ gimp_color_select_init (GimpColorSelect *select)
   gtk_preview_set_dither (GTK_PREVIEW (select->xy_color), GDK_RGB_DITHER_MAX);
   gtk_preview_size (GTK_PREVIEW (select->xy_color),
                     XY_DEF_WIDTH, XY_DEF_HEIGHT);
-  gtk_widget_set_events (select->xy_color, COLOR_AREA_MASK);
+  gtk_widget_set_events (select->xy_color, COLOR_AREA_EVENT_MASK);
   gtk_container_add (GTK_CONTAINER (xy_frame), select->xy_color);
   gtk_widget_show (select->xy_color);
 
@@ -328,7 +328,7 @@ gimp_color_select_init (GimpColorSelect *select)
   select->z_color = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_set_dither (GTK_PREVIEW (select->z_color), GDK_RGB_DITHER_MAX);
   gtk_preview_size (GTK_PREVIEW (select->z_color), Z_DEF_WIDTH, Z_DEF_HEIGHT);
-  gtk_widget_set_events (select->z_color, COLOR_AREA_MASK);
+  gtk_widget_set_events (select->z_color, COLOR_AREA_EVENT_MASK);
   gtk_container_add (GTK_CONTAINER (z_frame), select->z_color);
   gtk_widget_show (select->z_color);
 
@@ -697,91 +697,65 @@ gimp_color_select_xy_events (GtkWidget       *widget,
 {
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
-  gint            tx, ty;
+  gint            x, y;
 
   switch (event->type)
     {
     case GDK_BUTTON_PRESS:
       bevent = (GdkEventButton *) event;
-
-      gimp_color_select_draw_xy_marker (select, NULL);
-
-      select->pos[0] = (bevent->x * 255) / (XY_DEF_WIDTH - 1);
-      select->pos[1] = 255 - (bevent->y * 255) / (XY_DEF_HEIGHT - 1);
-
-      if (select->pos[0] < 0)
-	select->pos[0] = 0;
-      if (select->pos[0] > 255)
-	select->pos[0] = 255;
-      if (select->pos[1] < 0)
-	select->pos[1] = 0;
-      if (select->pos[1] > 255)
-	select->pos[1] = 255;
+      x = bevent->x;
+      y = bevent->y;
 
       gdk_pointer_grab (select->xy_color->window, FALSE,
 			GDK_POINTER_MOTION_HINT_MASK |
-			GDK_BUTTON1_MOTION_MASK      |
+			GDK_BUTTON_MOTION_MASK       |
 			GDK_BUTTON_RELEASE_MASK,
 			NULL, NULL, bevent->time);
-      gimp_color_select_draw_xy_marker (select, NULL);
-
-      gimp_color_select_update (select, UPDATE_VALUES | UPDATE_CALLER);
       break;
 
     case GDK_BUTTON_RELEASE:
       bevent = (GdkEventButton *) event;
-
-      gimp_color_select_draw_xy_marker (select, NULL);
-
-      select->pos[0] = (bevent->x * 255) / (XY_DEF_WIDTH - 1);
-      select->pos[1] = 255 - (bevent->y * 255) / (XY_DEF_HEIGHT - 1);
-
-      if (select->pos[0] < 0)
-	select->pos[0] = 0;
-      if (select->pos[0] > 255)
-	select->pos[0] = 255;
-      if (select->pos[1] < 0)
-	select->pos[1] = 0;
-      if (select->pos[1] > 255)
-	select->pos[1] = 255;
+      x = bevent->x;
+      y = bevent->y;
 
       gdk_pointer_ungrab (bevent->time);
-      gimp_color_select_draw_xy_marker (select, NULL);
-      gimp_color_select_update (select, UPDATE_VALUES | UPDATE_CALLER);
       break;
 
     case GDK_MOTION_NOTIFY:
       mevent = (GdkEventMotion *) event;
       if (mevent->is_hint)
 	{
-	  gdk_window_get_pointer (widget->window, &tx, &ty, NULL);
-	  mevent->x = tx;
-	  mevent->y = ty;
+	  gdk_window_get_pointer (widget->window, &x, &y, NULL);
 	}
-
-      gimp_color_select_draw_xy_marker (select, NULL);
-
-      select->pos[0] = (mevent->x * 255) / (XY_DEF_WIDTH - 1);
-      select->pos[1] = 255 - (mevent->y * 255) / (XY_DEF_HEIGHT - 1);
-
-      if (select->pos[0] < 0)
-	select->pos[0] = 0;
-      if (select->pos[0] > 255)
-	select->pos[0] = 255;
-      if (select->pos[1] < 0)
-	select->pos[1] = 0;
-      if (select->pos[1] > 255)
-	select->pos[1] = 255;
-
-      gimp_color_select_draw_xy_marker (select, NULL);
-      gimp_color_select_update (select, UPDATE_VALUES | UPDATE_CALLER);
+      else
+        {
+          x = mevent->x;
+          y = mevent->y;
+        }
       break;
 
     default:
-      break;
+      return FALSE;
     }
 
-  return FALSE;
+  gimp_color_select_draw_xy_marker (select, NULL);
+
+  select->pos[0] = (x * 255) / (XY_DEF_WIDTH - 1);
+  select->pos[1] = 255 - (y * 255) / (XY_DEF_HEIGHT - 1);
+  
+  if (select->pos[0] < 0)
+    select->pos[0] = 0;
+  if (select->pos[0] > 255)
+    select->pos[0] = 255;
+  if (select->pos[1] < 0)
+    select->pos[1] = 0;
+  if (select->pos[1] > 255)
+    select->pos[1] = 255;
+  
+  gimp_color_select_draw_xy_marker (select, NULL);
+  gimp_color_select_update (select, UPDATE_VALUES | UPDATE_CALLER);
+
+  return TRUE;
 }
 
 static gboolean
@@ -804,67 +778,53 @@ gimp_color_select_z_events (GtkWidget       *widget,
 {
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
-  gint            tx, ty;
+  gint            z;
 
   switch (event->type)
     {
     case GDK_BUTTON_PRESS:
       bevent = (GdkEventButton *) event;
-
-      gimp_color_select_draw_z_marker (select, NULL);
-
-      select->pos[2] = 255 - (bevent->y * 255) / (Z_DEF_HEIGHT - 1);
-
-      select->pos[2] = CLAMP (select->pos[2], 0, 255);
+      z = bevent->y;
 
       gdk_pointer_grab (select->z_color->window, FALSE,
 			GDK_POINTER_MOTION_HINT_MASK |
-			GDK_BUTTON1_MOTION_MASK |
+			GDK_BUTTON_MOTION_MASK       |
 			GDK_BUTTON_RELEASE_MASK,
 			NULL, NULL, bevent->time);
-      gimp_color_select_draw_z_marker (select, NULL);
-      gimp_color_select_update (select, UPDATE_VALUES | UPDATE_CALLER);
       break;
 
     case GDK_BUTTON_RELEASE:
       bevent = (GdkEventButton *) event;
-
-      gimp_color_select_draw_z_marker (select, NULL);
-
-      select->pos[2] = 255 - (bevent->y * 255) / (Z_DEF_HEIGHT - 1);
-
-      select->pos[2] = CLAMP (select->pos[2], 0, 255);
+      z = bevent->y;
 
       gdk_pointer_ungrab (bevent->time);
-      gimp_color_select_draw_z_marker (select, NULL);
-      gimp_color_select_update (select,
-                                UPDATE_VALUES | UPDATE_XY_COLOR | UPDATE_CALLER);
       break;
 
     case GDK_MOTION_NOTIFY:
       mevent = (GdkEventMotion *) event;
       if (mevent->is_hint)
 	{
-	  gdk_window_get_pointer (widget->window, &tx, &ty, NULL);
-	  mevent->x = tx;
-	  mevent->y = ty;
+	  gdk_window_get_pointer (widget->window, NULL, &z, NULL);
 	}
-
-      gimp_color_select_draw_z_marker (select, NULL);
-
-      select->pos[2] = 255 - (mevent->y * 255) / (Z_DEF_HEIGHT - 1);
-
-      select->pos[2] = CLAMP (select->pos[2], 0, 255);
-
-      gimp_color_select_draw_z_marker (select, NULL);
-      gimp_color_select_update (select, UPDATE_VALUES | UPDATE_CALLER);
+      else
+        {
+          z = mevent->y;
+        }
       break;
 
     default:
-      break;
+      return FALSE;
     }
 
-  return FALSE;
+  gimp_color_select_draw_z_marker (select, NULL);
+  
+  select->pos[2] = 255 - (z * 255) / (Z_DEF_HEIGHT - 1);
+  select->pos[2] = CLAMP (select->pos[2], 0, 255);
+
+  gimp_color_select_draw_z_marker (select, NULL);
+  gimp_color_select_update (select, UPDATE_VALUES | UPDATE_CALLER);
+
+  return TRUE;
 }
 
 static void
@@ -932,7 +892,8 @@ gimp_color_select_draw_z_marker (GimpColorSelect *select,
   if (y >= miny && y < height)
     {
       gdk_gc_set_function (select->gc, GDK_INVERT);
-      gdk_draw_line (select->z_color->window, select->gc, minx, y, width - 1, y);
+      gdk_draw_line (select->z_color->window,
+                     select->gc, minx, y, width - 1, y);
       gdk_gc_set_function (select->gc, GDK_COPY);
     }
 }
@@ -969,10 +930,12 @@ gimp_color_select_draw_xy_marker (GimpColorSelect *select,
     }
 
   if (y >= miny && y < height)
-    gdk_draw_line (select->xy_color->window, select->gc, minx, y, width - 1, y);
+    gdk_draw_line (select->xy_color->window,
+                   select->gc, minx, y, width - 1, y);
 
   if (x >= minx && x < width)
-    gdk_draw_line (select->xy_color->window, select->gc, x, miny, x, height - 1);
+    gdk_draw_line (select->xy_color->window,
+                   select->gc, x, miny, x, height - 1);
 
   gdk_gc_set_function (select->gc, GDK_COPY);
 }
