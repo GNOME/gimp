@@ -1,5 +1,11 @@
 2003-06-09  Sven Neumann  <sven@gimp.org>
 
+	* app/paint/gimpsmudge.c (gimp_smudge_start): now that
+	blend_pixels() behaves correctly, we can simply initialize the
+	smudge buffer with transparent pixels.
+
+2003-06-09  Sven Neumann  <sven@gimp.org>
+
 	* app/paint-funcs/paint-funcs-generic.h (blend_pixels): weight
 	pixels by their alpha value. Fixes the smudge tool (bug #72879).
 
