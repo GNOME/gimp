@@ -28,7 +28,7 @@ INTL = ../../intl
 
 CFLAGS = $(OPTIMIZE) -DREGEX_MALLOC -DHAVE_CONFIG_H -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)/gdk/win32 -I$(GTK) -I$(INTL)
 
-GCG = ../tools/gcg/gcg -I. -I../tools/gcg/gh
+# GCG = ../tools/gcg/gcg -I. -I../tools/gcg/gh
 
 all : \
 	../config.h	\
@@ -121,7 +121,6 @@ gimp_OBJECTS = \
 	floating_sel.o		\
 	floating_sel_cmds.o	\
 	file_new_dialog.o	\
-	frac.o			\
 	free_select.o		\
 	fuzzy_select.o		\
 	gdisplay.o		\
@@ -243,10 +242,10 @@ gimp_OBJECTS = \
 	vector2d.o		\
 	xcf.o
 
-.SUFFIXES: .gc
+# .SUFFIXES: .gc
 
-.gc.c:
-	$(GCG) -o $@ $<
+# .gc.c:
+#	$(GCG) -o $@ $<
 
 gimpres.o : gimp.rc wilber.ico
 	windres gimp.rc gimpres.o

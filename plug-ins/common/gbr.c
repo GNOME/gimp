@@ -322,7 +322,7 @@ static gint save_image (char *filename, gint32 image_ID, gint32 drawable_ID) {
 	fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0644);
 
 	if (fd == -1) {
-		printf("Unable to open %s\n", filename);
+		g_message("Unable to open %s", filename);
 		return 0;
 	}
 
@@ -346,10 +346,6 @@ static gint save_image (char *filename, gint32 image_ID, gint32 drawable_ID) {
 	}
 
 	buffer = g_malloc(drawable->width * drawable->bpp);
-	if (buffer == NULL) {
-		close(fd);
-		return 0;
-	}
 	for (line = 0; line < drawable->height; line++) {
 		gimp_pixel_rgn_get_row(&pixel_rgn, buffer, 0, line, drawable->width);
 		if (write(fd, buffer, drawable->width * drawable->bpp) !=

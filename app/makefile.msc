@@ -35,7 +35,7 @@ INTL = ..\..\intl
 
 CFLAGS = -DREGEX_MALLOC -DHAVE_CONFIG_H -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)\gdk\win32 -I$(GTK) -I$(INTL)
 
-GCG = ..\tools\gcg\gcg -I. -I ..\tools\gcg\gh
+# GCG = ..\tools\gcg\gcg -I. -I ..\tools\gcg\gh
 
 all : \
 	..\config.h	\
@@ -128,7 +128,6 @@ gimp_OBJECTS = \
 	floating_sel.obj	\
 	floating_sel_cmds.obj	\
 	file_new_dialog.obj	\
-	frac.obj		\
 	free_select.obj		\
 	fuzzy_select.obj	\
 	gdisplay.obj		\
@@ -250,10 +249,10 @@ gimp_OBJECTS = \
 	vector2d.obj		\
 	xcf.obj
 
-.SUFFIXES: .gc
+# .SUFFIXES: .gc
 
-.gc.c:
-	$(GCG) -o $@ $<
+# .gc.c:
+# 	$(GCG) -o $@ $<
 
 gimp.res : gimp.rc wilber.ico
 	rc -r -fo gimp.res gimp.rc

@@ -1,3 +1,19 @@
+1999-08-22  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/common/psp.c: Use g_message, not gimp_message.
+	g_message calls gimp_message eventually.
+
+	* plug-ins/common/gpb.c: New plug-in for saving Adrian's gpb files
+	(pixmap brushes) from an RGBA image. Probably just of temporary
+	value.
+
+	* plug-ins/makefile.{cygwin,msc}: Add it.
+
+	* plug-ins/common/gbr.c: Use g_message instead of printf.
+
+	* app/makefile.{cygwin,msc}: Comment out the gcg stuff here,
+	too. Remove frac.o.
+	
 1999-08-22  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/color_area.[ch]
