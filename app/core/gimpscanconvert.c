@@ -41,7 +41,7 @@ struct _GimpScanConvert
   guint        width;
   guint        height;
 
-  gdouble      pixel_xy_ratio;
+  gdouble      ratio_xy;
   
   gboolean     antialias;   /* do we want antialiasing? */
 
@@ -76,10 +76,10 @@ gimp_scan_convert_new (guint    width,
 
   sc = g_new0 (GimpScanConvert, 1);
 
-  sc->width          = width;
-  sc->height         = height;
-  sc->pixel_xy_ratio = 1.0;
-  sc->antialias      = antialias;
+  sc->width     = width;
+  sc->height    = height;
+  sc->ratio_xy  = 1.0;
+  sc->antialias = antialias;
 
   return sc;
 }
@@ -97,18 +97,16 @@ gimp_scan_convert_free (GimpScanConvert *sc)
   g_free (sc);
 }
 
-/* set the X- and Y-resolution for the ScanConvert.
- * Only gets used for stroking.
+/* set the Pixel-Ratio (width / height) for the pixels.
  */
 void
-gimp_scan_convert_set_resolution (GimpScanConvert *sc,
-                                  gdouble          xresolution,
-                                  gdouble          yresolution)
+gimp_scan_convert_set_pixel_ratio (GimpScanConvert *sc,
+                                   gdouble          ratio_xy)
 {
   g_return_if_fail (sc != NULL);
 
   /* we only need the relative resolution */
-  sc->pixel_xy_ratio = xresolution / yresolution;
+  sc->ratio_xy = ratio_xy;
 }
 
 
@@ -300,12 +298,12 @@ gimp_scan_convert_stroke (GimpScanConvert *sc,
         break;
     }
 
-  if (sc->pixel_xy_ratio != 1.0)
+  if (sc->ratio_xy != 1.0)
     {
       gint i;
       for (i = 0; i < sc->num_nodes; i++)
         {
-          sc->vpath[i].y *= sc->pixel_xy_ratio;
+          sc->vpath[i].x *= sc->ratio_xy;
         }
     }
 
@@ -336,7 +334,7 @@ gimp_scan_convert_stroke (GimpScanConvert *sc,
   stroke = art_svp_vpath_stroke (sc->vpath, artjoin, artcap,
                                  width, miter, 0.2);
 
-  if (sc->pixel_xy_ratio != 1.0)
+  if (sc->ratio_xy != 1.0)
     {
       ArtSVPSeg *segment;
       ArtPoint *point;
@@ -345,13 +343,13 @@ gimp_scan_convert_stroke (GimpScanConvert *sc,
       for (i = 0; i < stroke->n_segs; i++)
         {
           segment = stroke->segs + i;
-          segment->bbox.y0 /= sc->pixel_xy_ratio;
-          segment->bbox.y1 /= sc->pixel_xy_ratio;
+          segment->bbox.x0 /= sc->ratio_xy;
+          segment->bbox.x1 /= sc->ratio_xy;
 
           for (j=0; j < segment->n_points  ; j++)
             {
               point = segment->points + j;
-              point->y /= sc->pixel_xy_ratio;
+              point->x /= sc->ratio_xy;
             }
         }
     }

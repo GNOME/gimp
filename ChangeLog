@@ -1,3 +1,14 @@
+2003-09-30  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimpscanconvert.[ch]: replaced
+	gimp_scan_convert_set_resolution with 
+	gimp_scan_convert_set_pixel_ratio where you specify the pixel
+	ratio (width/height). Also made the stroke-width consistent
+	with other places in the gimp by using the Y-Resolution as
+	the base for the calculations.
+
+	* app/core/gimpdrawable-stroke.c: changed accordingly.
+
 2003-09-30  Sven Neumann  <sven@gimp.org>
 
 	* NEWS: updated.

@@ -32,14 +32,10 @@ GimpScanConvert * gimp_scan_convert_new        (guint            width,
 
 void              gimp_scan_convert_free       (GimpScanConvert *scan_converter);
 
-/* set the X- and Y-resolution for the ScanConvert.
- * Only gets used for stroking.
- * The stroke width has to be given in X-Resolution.
+/* set the Pixel-Ratio (width / height) for the pixels.
  */
-void
-gimp_scan_convert_set_resolution (GimpScanConvert *sc,
-                                  gdouble          xresolution,
-                                  gdouble          yresolution);
+void         gimp_scan_convert_set_pixel_ratio (GimpScanConvert *sc,
+                                                gdouble          ratio_xy);
 
 /* Add "npoints" from "pointlist" to the polygon currently being
  * described by "scan_converter". DEPRECATED.
