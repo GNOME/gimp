@@ -1,3 +1,12 @@
+2004-01-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/user-install-dialog.c: removed explicit newlines from
+	all multi-line texts except where neccessary to do paragraph
+	breaks. Instead, configure the resp. GtkLabels to do automatic
+	line wrapping. Tweaked layout slightly to look better with long
+	one-line strings. Fixes bug #130916 and prevents similar bugs to
+	occur in the future.
+
 2004-01-08  Dave Neary  <bolsh@gimp.org>
 
 	* etc/templaterc: Add some templates for screen sizes, as i
