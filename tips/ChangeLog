@@ -1,6 +1,8 @@
 2004-03-05  Sven Neumann  <sven@gimp.org>
 
-	* Makefile.am: fixed the dependency.
+	* Makefile.am: fixed the newly added dependency.
+
+	* *.po: updated based on an uptodate gimp-tips.xml.in.
 
 2004-03-04  Sven Neumann  <sven@gimp.org>
 
