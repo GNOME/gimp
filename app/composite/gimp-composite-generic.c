@@ -30,9 +30,9 @@
 
 #include <glib-object.h>
 
-#include "base/base-types.h"
-
 #include "libgimpcolor/gimpcolor.h"
+
+#include "base/base-types.h"
 
 #include "gimp-composite.h"
 

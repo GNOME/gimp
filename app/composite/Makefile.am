@@ -11,9 +11,9 @@ AM_CCASFLAGS = \
 	-I$(top_srcdir)/app
 
 INCLUDES = \
-	-I$(top_srcdir)/app		\
-	-I$(top_srcdir)/app/composite	\
-	$(GLIB_CFLAGS)			\
+	-I$(top_srcdir)		\
+	-I$(top_srcdir)/app	\
+	$(GLIB_CFLAGS)		\
 	-I$(includedir)
 
 noinst_LIBRARIES = libappcomposite.a
