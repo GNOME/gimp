@@ -98,6 +98,7 @@ static void  bezier_draw_segment_points    (BezierSelect *, GdkPoint *, int);
 static void  bezier_compose                (BezierMatrix, BezierMatrix, BezierMatrix);
 
 static void  bezier_convert                (BezierSelect *, GDisplay *, int, int);
+static void  bezier_convert_helper         (BezierSelect *, int, int, int);
 static void  bezier_convert_points         (BezierSelect *, GdkPoint *, int);
 static void  bezier_convert_line           (GSList **, int, int, int, int);
 static GSList *  bezier_insert_in_list     (GSList *, int);
@@ -1044,17 +1045,11 @@ bezier_convert (BezierSelect *bezier_sel,
 		int           subdivisions,
 		int           antialias)
 {
-  PixelArea maskPR;
   BezierPoint * points;
   BezierPoint * start_pt;
-  GSList * list;
-  unsigned char *buf, *b;
   int draw_type;
-  int * vals, val;
-  int start, end;
-  int x, x2, w;
-  int i, j;
-
+  int i;
+  
   if (!bezier_sel->closed)
     fatal_error ("tried to convert an open bezier curve");
 
@@ -1068,27 +1063,22 @@ bezier_convert (BezierSelect *bezier_sel,
   /* get the new mask's maximum extents */
   if (antialias)
     {
-      buf = (unsigned char *) g_malloc (width);
       width = gdisp->gimage->width * SUPERSAMPLE;
       height = gdisp->gimage->height * SUPERSAMPLE;
       draw_type = AA_IMAGE_COORDS;
-      /* allocate value array  */
-      vals = (int *) g_malloc (sizeof (int) * width);
     }
   else
     {
-      buf = NULL;
       width = gdisp->gimage->width;
       height = gdisp->gimage->height;
       draw_type = IMAGE_COORDS;
-      vals = NULL;
     }
 
   /* create a new mask */
   bezier_sel->mask = channel_ref (channel_new_mask (gdisp->gimage->ID, 
                                                     gdisp->gimage->width,
                                                     gdisp->gimage->height,
-                                                    default_precision));
+                                                    tag_precision (gimage_tag (gdisp->gimage))));
 
   /* allocate room for the scanlines */
   bezier_sel->scanlines = g_malloc (sizeof (GSList *) * height);
@@ -1121,80 +1111,14 @@ bezier_convert (BezierSelect *bezier_sel,
     bezier_convert_line (bezier_sel->scanlines, lastx, lasty,
 			 bezier_sel->points->x, bezier_sel->points->y);
 
-  pixelarea_init    (&maskPR, drawable_data (GIMP_DRAWABLE(bezier_sel->mask)), 
-		     0, 0,
-		     drawable_width (GIMP_DRAWABLE(bezier_sel->mask)),
-		     drawable_height (GIMP_DRAWABLE(bezier_sel->mask)), TRUE);
-  for (i = 0; i < height; i++)
-    {
-      list = bezier_sel->scanlines[i];
-
-      /*  zero the vals array  */
-      if (antialias && !(i % SUPERSAMPLE))
-	memset (vals, 0, width * sizeof (int));
-
-      while (list)
-        {
-          x = (long) list->data;
-          list = list->next;
-          if (!list)
-	    g_message ("cannot properly scanline convert bezier curve: %d", i);
-          else
-            {
-	      /*  bounds checking  */
-	      x = BOUNDS (x, 0, width);
-	      x2 = BOUNDS ((long) list->data, 0, width);
-
-	      w = x2 - x;
-
-	      if (!antialias)
-		channel_add_segment (bezier_sel->mask, x, i, w, 1.0);
-	      else
-		for (j = 0; j < w; j++)
-		  vals[j + x] += 255;
-
-              list = g_slist_next (list);
-            }
-        }
-
-      if (antialias && !((i+1) % SUPERSAMPLE))
-	{
-	  b = buf;
-	  start = 0;
-	  end = width;
-	  for (j = start; j < end; j += SUPERSAMPLE)
-	    {
-	      val = 0;
-	      for (x = 0; x < SUPERSAMPLE; x++)
-		val += vals[j + x];
-
-	      *b++ = (unsigned char) (val / SUPERSAMPLE2);
-	    }
-
-          {
-            int w = drawable_width (GIMP_DRAWABLE(bezier_sel->mask));
-            PixelRow row;
-
-            pixelrow_init (&row, tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_NO),
-                           buf, w);
-            pixelarea_write_row (&maskPR, &row, 0, (i / SUPERSAMPLE), w);
-          }
-        }
-
-      g_slist_free (bezier_sel->scanlines[i]);
-    }
-
-  if (antialias)
-    {
-      g_free (vals);
-      g_free (buf);
-    }
-
+  bezier_convert_helper (bezier_sel, antialias, width, height);
+  
   g_free (bezier_sel->scanlines);
   bezier_sel->scanlines = NULL;
 
   channel_invalidate_bounds (bezier_sel->mask);
 }
+
 
 static void
 bezier_convert_points (BezierSelect *bezier_sel,
@@ -1366,3 +1290,230 @@ bezier_insert_in_list (GSList * list,
 
   return orig;
 }
+
+
+static void
+bezier_convert_helper_u8 (
+                          BezierSelect * bezier_sel,
+                          int antialias,
+                          int width,
+                          int height
+                          )
+{
+  PixelArea maskPR;
+  unsigned char *buf, *b;
+  int * vals, val;
+  int start, end;
+  GSList * list;
+  int x, x2, w;
+  int i, j;
+
+  if (antialias)
+    {
+      buf = (unsigned char *) g_malloc (width/SUPERSAMPLE);
+      vals = (int *) g_malloc (sizeof (int) * width);
+    }
+  else
+    {
+      buf = NULL;
+      vals = NULL;
+    }
+
+  pixelarea_init (&maskPR, drawable_data (GIMP_DRAWABLE(bezier_sel->mask)), 
+                  0, 0,
+                  0, 0,
+                  TRUE);
+
+  for (i = 0; i < height; i++)
+    {
+      list = bezier_sel->scanlines[i];
+
+      /*  zero the vals array  */
+      if (antialias && !(i % SUPERSAMPLE))
+	memset (vals, 0, width * sizeof (int));
+
+      while (list)
+        {
+          x = (long) list->data;
+          list = list->next;
+          if (!list)
+	    g_message ("cannot properly scanline convert bezier curve: %d", i);
+          else
+            {
+	      /*  bounds checking  */
+	      x = BOUNDS (x, 0, width);
+	      x2 = BOUNDS ((long) list->data, 0, width);
+
+	      w = x2 - x;
+
+	      if (!antialias)
+		channel_add_segment (bezier_sel->mask, x, i, w, 1.0);
+	      else
+		for (j = 0; j < w; j++)
+		  vals[j + x] += 255;
+
+              list = g_slist_next (list);
+            }
+        }
+
+      if (antialias && !((i+1) % SUPERSAMPLE))
+	{
+	  b = buf;
+	  start = 0;
+	  end = width;
+	  for (j = start; j < end; j += SUPERSAMPLE)
+	    {
+	      val = 0;
+	      for (x = 0; x < SUPERSAMPLE; x++)
+		val += vals[j + x];
+
+	      *b++ = (unsigned char) (val / SUPERSAMPLE2);
+	    }
+
+          {
+            int w = drawable_width (GIMP_DRAWABLE(bezier_sel->mask));
+            PixelRow row;
+
+            pixelrow_init (&row, pixelarea_tag (&maskPR), (guchar*) buf, w);
+            pixelarea_write_row (&maskPR, &row, 0, (i / SUPERSAMPLE), w);
+          }
+        }
+
+      g_slist_free (bezier_sel->scanlines[i]);
+    }
+
+  if (antialias)
+    {
+      g_free (vals);
+      g_free (buf);
+    }
+}
+
+
+
+static void
+bezier_convert_helper_u16 (
+                           BezierSelect * bezier_sel,
+                           int antialias,
+                           int width,
+                           int height
+                           )
+{
+  PixelArea maskPR;
+  guint16 *buf, *b;
+  int * vals, val;
+  int start, end;
+  GSList * list;
+  int x, x2, w;
+  int i, j;
+
+  if (antialias)
+    {
+      buf = (guint16 *) g_malloc (width/SUPERSAMPLE*sizeof (guint16));
+      vals = (int *) g_malloc (sizeof (int) * width);
+    }
+  else
+    {
+      buf = NULL;
+      vals = NULL;
+    }
+
+  pixelarea_init (&maskPR, drawable_data (GIMP_DRAWABLE(bezier_sel->mask)), 
+                  0, 0,
+                  0, 0,
+                  TRUE);
+
+  for (i = 0; i < height; i++)
+    {
+      list = bezier_sel->scanlines[i];
+
+      /*  zero the vals array  */
+      if (antialias && !(i % SUPERSAMPLE))
+	memset (vals, 0, width * sizeof (int));
+
+      while (list)
+        {
+          x = (long) list->data;
+          list = list->next;
+          if (!list)
+	    g_message ("cannot properly scanline convert bezier curve: %d", i);
+          else
+            {
+	      /*  bounds checking  */
+	      x = BOUNDS (x, 0, width);
+	      x2 = BOUNDS ((long) list->data, 0, width);
+
+	      w = x2 - x;
+
+	      if (!antialias)
+		channel_add_segment (bezier_sel->mask, x, i, w, 1.0);
+	      else
+		for (j = 0; j < w; j++)
+		  vals[j + x] += 65535;
+
+              list = g_slist_next (list);
+            }
+        }
+
+      if (antialias && !((i+1) % SUPERSAMPLE))
+	{
+	  b = buf;
+	  start = 0;
+	  end = width;
+	  for (j = start; j < end; j += SUPERSAMPLE)
+	    {
+	      val = 0;
+	      for (x = 0; x < SUPERSAMPLE; x++)
+		val += vals[j + x];
+
+	      *b++ = (guint16) (val / SUPERSAMPLE2);
+	    }
+
+          {
+            int w = drawable_width (GIMP_DRAWABLE(bezier_sel->mask));
+            PixelRow row;
+            pixelrow_init (&row, pixelarea_tag (&maskPR), (guchar*) buf, w);
+            pixelarea_write_row (&maskPR, &row, 0, (i / SUPERSAMPLE), w);
+          }
+        }
+
+      g_slist_free (bezier_sel->scanlines[i]);
+    }
+
+  if (antialias)
+    {
+      g_free (vals);
+      g_free (buf);
+    }
+}
+
+
+static void
+bezier_convert_helper (
+                       BezierSelect * bezier_sel,
+                       int antialias,
+                       int width,
+                       int height
+                       )
+{
+  switch (tag_precision (drawable_tag (GIMP_DRAWABLE (bezier_sel->mask))))
+    {
+    case PRECISION_U8:
+      bezier_convert_helper_u8 (bezier_sel,
+                                antialias,
+                                width,
+                                height);
+      break;
+    case PRECISION_U16:
+      bezier_convert_helper_u16 (bezier_sel,
+                                 antialias,
+                                 width,
+                                 height);
+      break;
+    case PRECISION_FLOAT:
+    case PRECISION_NONE:
+      g_warning ("bezier_convert_helper bad precision");
+      break;
+    }
+}
+
