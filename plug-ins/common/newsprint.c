@@ -476,7 +476,8 @@ static void     cellsize_callback           (GtkAdjustment *adjustment,
 static void     newsprint_defaults_callback (GtkWidget     *widget,
                                              gpointer       data);
 
-static void     newsprint                   (GimpDrawable  *drawable);
+static void     newsprint                   (GimpDrawable  *drawable,
+                                             GimpPreview   *preview);
 static guchar * spot2thresh                 (gint           type,
                                              gint           width);
 
@@ -639,7 +640,7 @@ run (const gchar      *name,
           gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
           /*  run the newsprint effect  */
-          newsprint (drawable);
+          newsprint (drawable, NULL);
 
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
             gimp_displays_flush ();
@@ -980,7 +981,7 @@ newsprint_defaults_callback (GtkWidget *widget,
  * Return the channel state, so caller can find the vbox and place it
  * in the notebook. */
 static channel_st *
-new_channel (const chan_tmpl *ct)
+new_channel (const chan_tmpl *ct, GtkWidget *preview)
 {
   GtkSizeGroup *group;
   GtkWidget    *table;
@@ -1020,6 +1021,9 @@ new_channel (const chan_tmpl *ct)
   g_signal_connect (chst->angle_adj, "value_changed",
                     G_CALLBACK (angle_callback),
                     chst);
+  g_signal_connect_swapped (chst->angle_adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /* spot function popup */
   hbox = gtk_hbox_new (FALSE, 6);
@@ -1055,6 +1059,9 @@ new_channel (const chan_tmpl *ct)
   g_signal_connect (chst->combo, "changed",
                     G_CALLBACK (newsprint_menu_callback),
                     chst);
+  g_signal_connect_swapped (chst->combo, "changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_box_pack_start (GTK_BOX (hbox2), chst->combo, FALSE, FALSE, 0);
   gtk_widget_show (chst->combo);
@@ -1103,7 +1110,8 @@ new_channel (const chan_tmpl *ct)
  * the respective channel state fields in "st". */
 static void
 gen_channels (NewsprintDialog_st *st,
-              gint                colourspace)
+              gint                colourspace,
+              GtkWidget          *preview)
 {
   const chan_tmpl  *ct;
   channel_st      **chst;
@@ -1123,7 +1131,7 @@ gen_channels (NewsprintDialog_st *st,
 
   while (ct->name)
     {
-      chst[i] = new_channel (ct);
+      chst[i] = new_channel (ct, preview);
 
       if (i)
         chst[i-1]->next = chst[i];
@@ -1150,6 +1158,7 @@ newsprint_dialog (GimpDrawable *drawable)
   /* widgets we need from callbacks stored here */
   NewsprintDialog_st st;
   GtkWidget *main_vbox;
+  GtkWidget *preview;
   GtkWidget *frame;
   GtkWidget *table;
   GtkObject *adj;
@@ -1198,6 +1207,13 @@ newsprint_dialog (GimpDrawable *drawable)
                       TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
+  preview = gimp_drawable_preview_new (drawable, NULL); // FIXME
+  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
+  gtk_widget_show (preview);
+  g_signal_connect_swapped (preview, "invalidated",
+                            G_CALLBACK (newsprint),
+                            drawable);
+
   /* resolution settings  */
   frame = gimp_frame_new (_("Resolution"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
@@ -1226,6 +1242,9 @@ newsprint_dialog (GimpDrawable *drawable)
   g_signal_connect (st.input_spi, "value_changed",
                     G_CALLBACK (spi_callback),
                     &st);
+  g_signal_connect_swapped (st.input_spi, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   st.output_lpi =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
@@ -1237,6 +1256,9 @@ newsprint_dialog (GimpDrawable *drawable)
   g_signal_connect (st.output_lpi, "value_changed",
                     G_CALLBACK (lpi_callback),
                     &st);
+  g_signal_connect_swapped (st.output_lpi, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   st.cellsize = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
                                       _("C_ell size:"), SCALE_WIDTH, 7,
@@ -1247,6 +1269,9 @@ newsprint_dialog (GimpDrawable *drawable)
   g_signal_connect (st.cellsize, "value_changed",
                     G_CALLBACK (cellsize_callback),
                     &st);
+  g_signal_connect_swapped (st.cellsize, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /* screen settings */
   frame = gimp_frame_new (_("Screen"));
@@ -1279,6 +1304,9 @@ newsprint_dialog (GimpDrawable *drawable)
       g_signal_connect (st.pull, "value_changed",
                         G_CALLBACK (gimp_int_adjustment_update),
                         &pvals.k_pullout);
+      g_signal_connect_swapped (st.pull, "value_changed",
+                                G_CALLBACK (gimp_preview_invalidate),
+                                preview);
 
       /* RGB / CMYK / Intensity select */
       hbox = gtk_hbox_new (FALSE, 6);
@@ -1299,10 +1327,14 @@ newsprint_dialog (GimpDrawable *drawable)
       gtk_widget_show (toggle);
 
       g_object_set_data (G_OBJECT (toggle), "dialog", &st);
+      g_object_set_data (G_OBJECT (toggle), "preview", preview);
 
       g_signal_connect (toggle, "toggled",
                         G_CALLBACK (newsprint_cspace_update),
                         GINT_TO_POINTER (CS_RGB));
+      g_signal_connect_swapped (toggle, "toggled",
+                                G_CALLBACK (gimp_preview_invalidate),
+                                preview);
 
       toggle = gtk_radio_button_new_with_mnemonic (group, _("C_MYK"));
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
@@ -1312,10 +1344,14 @@ newsprint_dialog (GimpDrawable *drawable)
       gtk_widget_show (toggle);
 
       g_object_set_data (G_OBJECT (toggle), "dialog", &st);
+      g_object_set_data (G_OBJECT (toggle), "preview", preview);
 
       g_signal_connect (toggle, "toggled",
                         G_CALLBACK (newsprint_cspace_update),
                         GINT_TO_POINTER (CS_CMYK));
+      g_signal_connect_swapped (toggle, "toggled",
+                                G_CALLBACK (gimp_preview_invalidate),
+                                preview);
 
       toggle = gtk_radio_button_new_with_mnemonic (group, _("I_ntensity"));
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
@@ -1325,10 +1361,14 @@ newsprint_dialog (GimpDrawable *drawable)
       gtk_widget_show (toggle);
 
       g_object_set_data (G_OBJECT (toggle), "dialog", &st);
+      g_object_set_data (G_OBJECT (toggle), "preview", preview);
 
       g_signal_connect (toggle, "toggled",
                         G_CALLBACK (newsprint_cspace_update),
                         GINT_TO_POINTER (CS_INTENSITY));
+      g_signal_connect_swapped (toggle, "toggled",
+                                G_CALLBACK (gimp_preview_invalidate),
+                                preview);
 
       gtk_widget_show (hbox);
 
@@ -1347,6 +1387,9 @@ newsprint_dialog (GimpDrawable *drawable)
       g_signal_connect (toggle, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &pvals_ui.lock_channels);
+      g_signal_connect_swapped (toggle, "toggled",
+                                G_CALLBACK (gimp_preview_invalidate),
+                                preview);
 
       button = gtk_button_new_with_mnemonic (_("_Factory defaults"));
       gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
@@ -1355,6 +1398,9 @@ newsprint_dialog (GimpDrawable *drawable)
       g_signal_connect (button, "clicked",
                         G_CALLBACK (newsprint_defaults_callback),
                         &st);
+      g_signal_connect_swapped (button, "clicked",
+                                G_CALLBACK (gimp_preview_invalidate),
+                                preview);
     }
 
   /*  Make the channels appropriate for this colourspace and
@@ -1364,7 +1410,7 @@ newsprint_dialog (GimpDrawable *drawable)
    */
   if (!st.chst[pvals.colourspace][0])
     {
-      gen_channels (&st, pvals.colourspace);
+      gen_channels (&st, pvals.colourspace, preview);
     }
 
   gtk_widget_show (st.vbox);
@@ -1387,6 +1433,9 @@ newsprint_dialog (GimpDrawable *drawable)
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pvals.oversample);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_widget_show (table);
   gtk_widget_show (frame);
@@ -1408,11 +1457,13 @@ static void
 newsprint_cspace_update (GtkWidget *widget,
                          gpointer   data)
 {
-  NewsprintDialog_st  *st;
-  gint new_cs = GPOINTER_TO_INT (data);
-  gint old_cs = pvals.colourspace;
+  NewsprintDialog_st *st;
+  gint                new_cs = GPOINTER_TO_INT (data);
+  gint                old_cs = pvals.colourspace;
+  GtkWidget          *preview;
 
   st = g_object_get_data (G_OBJECT (widget), "dialog");
+  preview = g_object_get_data (G_OBJECT (widget), "preview");
 
   if (!st)
     printf ("newsprint: cspace_update: no state, can't happen!\n");
@@ -1435,7 +1486,7 @@ newsprint_cspace_update (GtkWidget *widget,
       /* make sure we have the necessary channels for the new
        * colourspace */
       if (!st->chst[new_cs][0])
-        gen_channels (st, new_cs);
+        gen_channels (st, new_cs, preview);
 
       /* hide the old channels (if any) */
       if (st->channel_notebook[old_cs])
@@ -1694,7 +1745,8 @@ spot2thresh (gint type,
 
 /* This function operates on the image, striding across it in tiles. */
 static void
-newsprint (GimpDrawable *drawable)
+newsprint (GimpDrawable *drawable,
+           GimpPreview  *preview)
 {
   GimpPixelRgn  src_rgn, dest_rgn;
   guchar    *src_row, *dest_row;
@@ -1711,12 +1763,14 @@ newsprint (GimpDrawable *drawable)
   gint       row, col;
   gint       x, y, x_step, y_step;
   gint       x1, y1, x2, y2;
+  gint       preview_width, preview_height;
   gint       rx, ry;
   gint       progress, max_progress;
   gint       oversample;
   gint       colourspace;
   gpointer   pr;
   gint       w002;
+  guchar    *preview_buffer = NULL;
 
 #ifdef TIMINGS
   GTimer    *timer = g_timer_new ();
@@ -1735,9 +1789,21 @@ newsprint (GimpDrawable *drawable)
 
   tile_width = gimp_tile_width ();
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-
   bpp        = gimp_drawable_bpp (drawable->drawable_id);
+
+  if (preview)
+    {
+      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_size (preview, &preview_width, &preview_height);
+      x2 = x1 + preview_width;
+      y2 = y1 + preview_height;
+      preview_buffer = g_new (guchar, preview_width * preview_height * bpp);
+    }
+  else
+    {
+      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+    }
+
   has_alpha  = gimp_drawable_has_alpha (drawable->drawable_id);
   colour_bpp = has_alpha ? bpp-1 : bpp;
   colourspace= pvals.colourspace;
@@ -1827,15 +1893,15 @@ do {                                                            \
           x_step = tile_width - (x % tile_width);
           y_step = tile_width - (y % tile_width);
           /* don't step off the end of the image */
-          x_step = MIN (x_step, x2-x);
-          y_step = MIN (y_step, y2-y);
+          x_step = MIN (x_step, x2 - x);
+          y_step = MIN (y_step, y2 - y);
 
           /* set up the source and dest regions */
           gimp_pixel_rgn_init (&src_rgn, drawable, x, y, x_step, y_step,
                                FALSE/*dirty*/, FALSE/*shadow*/);
 
           gimp_pixel_rgn_init (&dest_rgn, drawable, x, y, x_step, y_step,
-                               TRUE/*dirty*/, TRUE/*shadow*/);
+                               TRUE, TRUE/*shadow*/);
 
           /* page in the image, one tile at a time */
           for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
@@ -1843,7 +1909,11 @@ do {                                                            \
                pr = gimp_pixel_rgns_process (pr))
             {
               src_row  = src_rgn.data;
-              dest_row = dest_rgn.data;
+              if (preview)
+                dest_row = preview_buffer +
+                   ((src_rgn.y - y1) * preview_width + src_rgn.x - x1) * bpp;
+              else
+                dest_row = dest_rgn.data;
 
               for (row = 0; row < src_rgn.h; row++)
                 {
@@ -1968,12 +2038,16 @@ do {                                                            \
                       dest += dest_rgn.bpp;
                     }
                   src_row  += src_rgn.rowstride;
-                  dest_row += dest_rgn.rowstride;
+                  if (preview)
+                    dest_row += preview_width * bpp;
+                  else
+                    dest_row += dest_rgn.rowstride;
                 }
 
               /* Update progress */
               progress += src_rgn.w * src_rgn.h;
-              gimp_progress_update ((double) progress / (double) max_progress);
+              if (!preview)
+                gimp_progress_update ((double) progress / (double) max_progress);
             }
         }
     }
@@ -1986,8 +2060,17 @@ do {                                                            \
   /* We don't free the threshold matrices, since we're about to
    * exit, and the OS should clean up after us. */
 
-  /* update the affected region */
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  if (preview)
+    {
+      gimp_preview_draw_buffer (preview, preview_buffer, preview_width * bpp);
+
+      g_free (preview_buffer);
+    }
+  else
+    {
+      /* update the affected region */
+      gimp_drawable_flush (drawable);
+      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+      gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+    }
 }
