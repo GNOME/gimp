@@ -17,6 +17,13 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
+sub bill_misc {
+    $author = 'Bill Skaggs <weskaggs@primate.ucdavis.edu';
+    $copyright = 'Bill Skaggs';
+    $date = '2004';
+    $since = '2.4';
+}
+
 sub mitch_misc {
     $author = 'Michael Natterer <mitch@gimp.org>';
     $copyright = 'Michael Natterer';
@@ -80,7 +87,7 @@ sub palette_is_editable {
     $blurb = "Tests if palette can be edited";
     $help  = "Returns True if you have permission to change the palette";
 
-    &mitch_misc;
+    &bill_misc;
 
     @inargs = (
         &palette_arg

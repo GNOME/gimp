@@ -165,7 +165,7 @@ gimp_palette_delete (const gchar *name)
  *
  * Returns: True if the palette can be edited.
  *
- * Since: GIMP 2.2
+ * Since: GIMP 2.4
  */
 gboolean
 gimp_palette_is_editable (const gchar *name)

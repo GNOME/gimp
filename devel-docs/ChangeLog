@@ -1,6 +1,11 @@
 2004-12-31  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpgradient.sgml: added gimp_brush_is_editable.
+
+2004-12-31  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt
 	* libgimp/tmpl/gimpbrush.sgml
 	* libgimp/tmpl/gimppalette.sgml: updated for new brush API.
 

@@ -1,5 +1,18 @@
 2004-12-31  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
+	* tools/pdbgen/pdb/gradient.pdb: added gradient-is-editable
+
+	* tools/pdbgen/pdb/brush.pdb
+	* tools/pdbgen/pdb/palette.pdb: changed mitch_misc to bill_misc
+	where correct.
+
+	* app/pdb/brush_cmds.c
+	* app/pdb/palette_cmds.c
+	* libgimp/gimpbrush_pdb.c
+	* libgimp/gimppalette_pdb.c: regenerated.
+
+2004-12-31  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
 	* app/paint/gimpbrushcore.c: make previously committed change
 	in pressure-size relationship apply only to airbrush, as
 	intended.

@@ -24,6 +24,13 @@ sub mitch_misc {
     $since = '2.2';
 }
 
+sub bill_misc {
+    $author = 'Bill Skaggs <weskaggs@primate.ucdavis.edu';
+    $copyright = 'Bill Skaggs';
+    $date = '2004';
+    $since = '2.4';
+}
+
 sub brush_arg () {{
     name => 'name',
     type => 'string',
@@ -113,7 +120,7 @@ sub brush_is_generated {
     $blurb = "Tests if generated";
     $help  = "Returns True if this brush is parametric, False for other types";
 
-    &mitch_misc;
+    &bill_misc;
 
     @inargs = (
         &brush_arg
@@ -146,7 +153,7 @@ sub brush_is_editable {
     $blurb = "Tests if brush can be edited";
     $help  = "Returns True if you have permission to change the brush";
 
-    &mitch_misc;
+    &bill_misc;
 
     @inargs = (
         &brush_arg
@@ -400,7 +407,7 @@ Square (GIMP_BRUSH_GENERATED_SQUARE), and Diamond
 added in the future. 
 HELP
 
-    &mitch_misc;
+    &bill_misc;
 
     @inargs = (
         &brush_arg
@@ -434,7 +441,7 @@ This procedure gets the radius value for a generated brush.  If
 called for any other type of brush, it does not succeed.
 HELP
 
-    &mitch_misc;
+    &bill_misc;
 
     @inargs = (
         &brush_arg
@@ -468,7 +475,7 @@ This procedure gets the number of spikes for a generated brush.
 If called for any other type of brush, it does not succeed.
 HELP
 
-    &mitch_misc;
+    &bill_misc;
 
     @inargs = (
         &brush_arg
@@ -504,7 +511,7 @@ outside edge. If called for any other type of brush, the function
  does not succeed.
 HELP
 
-    &mitch_misc;
+    &bill_misc;
 
     @inargs = (
         &brush_arg
@@ -538,7 +545,7 @@ This procedure gets the aspect ratio of a generated brush.
 If called for any other type of brush, it does not succeed.
 HELP
 
-    &mitch_misc;
+    &bill_misc;
 
     @inargs = (
         &brush_arg
@@ -572,7 +579,7 @@ This procedure gets the angle of rotation for a generated brush.
 If called for any other type of brush, it does not succeed.
 HELP
 
-    &mitch_misc;
+    &bill_misc;
 
     @inargs = (
         &brush_arg
@@ -606,7 +613,7 @@ This procedure modifies the spacing setting for the specified brush.
 The value should be a integer between 0 and 1000.
 HELP
 
-    &mitch_misc;
+    &bill_misc;
 
     @inargs = (
         &brush_arg,
@@ -642,7 +649,7 @@ Square (GIMP_BRUSH_GENERATED_SQUARE), and Diamond
 added in the future. 
 HELP
 
-    &mitch_misc;
+    &bill_misc;
 
     @inargs = (
         &brush_arg,
@@ -681,7 +688,7 @@ This procedure sets the radius for a generated brush.  If
 called for any other type of brush, it does not succeed.
 HELP
 
-    &mitch_misc;
+    &bill_misc;
 
     @inargs = (
         &brush_arg,
@@ -720,7 +727,7 @@ This procedure sets the number of spikes for a generated brush.  If
 called for any other type of brush, it does not succeed.
 HELP
 
-    &mitch_misc;
+    &bill_misc;
 
     @inargs = (
         &brush_arg,
@@ -759,7 +766,7 @@ This procedure sets the hardness for a generated brush.  If
 called for any other type of brush, it does not succeed.
 HELP
 
-    &mitch_misc;
+    &bill_misc;
 
     @inargs = (
         &brush_arg,
@@ -798,7 +805,7 @@ This procedure sets the aspect ratio for a generated brush.  If
 called for any other type of brush, it does not succeed.
 HELP
 
-    &mitch_misc;
+    &bill_misc;
 
     @inargs = (
         &brush_arg,
@@ -837,7 +844,7 @@ This procedure sets the rotation angle for a generated brush.  If
 called for any other type of brush, it does not succeed.
 HELP
 
-    &mitch_misc;
+    &bill_misc;
 
     @inargs = (
         &brush_arg,

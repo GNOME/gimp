@@ -428,6 +428,7 @@ gimp_gradient_new
 gimp_gradient_duplicate
 gimp_gradient_rename
 gimp_gradient_delete
+gimp_gradient_is_editable
 gimp_gradient_get_uniform_samples
 gimp_gradient_get_custom_samples
 gimp_gradient_segment_get_left_color

@@ -15,6 +15,13 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
+sub bill_misc {
+    $author = 'Bill Skaggs <weskaggs@primate.ucdavis.edu';
+    $copyright = 'Bill Skaggs';
+    $date = '2004';
+    $since = '2.4';
+}
+
 sub shlomi_misc {
     $author = $copyright = 'Shlomi Fish';
     $date   = '2003';
@@ -310,6 +317,39 @@ sub gradient_duplicate {
 
       success = (gradient_copy != NULL);
     }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_is_editable {
+    $blurb = "Tests if gradient can be edited";
+    $help  = "Returns True if you have permission to change the gradient";
+
+    &bill_misc;
+
+    @inargs = (
+        &gradient_arg
+    );
+
+    @outargs = (
+	{ name => 'editable', type => 'boolean',
+	  desc => "True if the gradient can be edited",
+	  alias => 'GIMP_DATA (gradient)->writable',
+          no_declare => 1 }
+    );
+
+    %invoke = (
+	vars => [ 'GimpGradient *gradient = NULL' ],
+        code => <<'CODE'
+{
+  gradient = (GimpGradient *)
+    gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+
+  if (gradient)
+    success = TRUE;
   else
     success = FALSE;
 }

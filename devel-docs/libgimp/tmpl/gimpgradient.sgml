@@ -51,6 +51,15 @@ Functions operating on a single gradient.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_gradient_is_editable ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_gradient_get_uniform_samples ##### -->
 <para>
 
