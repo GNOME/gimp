@@ -34,6 +34,7 @@ lib_LTLIBRARIES = \
 	libcdisplay_gamma.la		\
 	libcdisplay_highcontrast.la	\
 	$(cdisplay_proof_module)	\
+	libcontroller_midi.la		\
 	$(controller_linux_input_module)
 
 
@@ -68,3 +69,7 @@ libcdisplay_proof_la_LIBADD = $(libgimpbase) $(libgimpwidgets) $(GTK_LIBS) $(LCM
 libcontroller_linux_input_la_SOURCES = controller_linux_input.c
 libcontroller_linux_input_la_LDFLAGS = -avoid-version -module $(no_undefined)
 libcontroller_linux_input_la_LIBADD = $(libgimpwidgets) $(GTK_LIBS)
+
+libcontroller_midi_la_SOURCES = controller_midi.c
+libcontroller_midi_la_LDFLAGS = -avoid-version -module $(no_undefined)
+libcontroller_midi_la_LIBADD = $(libgimpwidgets) $(GTK_LIBS)

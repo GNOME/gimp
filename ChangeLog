@@ -1,3 +1,11 @@
+2004-06-19  Michael Natterer  <mitch@gimp.org>
+
+	* modules/Makefile.am
+	* modules/controller_midi.c: new controller for MIDI input. Maps
+	all note on and note off events and all MIDI controllers to
+	GimpContollerEvents. Should parse any MIDI stream. Code based on
+	blinkenmedia stuff from Daniel Mack.
+
 2004-06-19  Sven Neumann  <sven@gimp.org>
 
 	Applied a patch from Geert Jordaens that implements the
