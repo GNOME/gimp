@@ -1,5 +1,9 @@
 2000-10-03  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/align_layers.c: Fixed cut'n'paste bug #26203.
+
+2000-10-03  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/gdyntext/gdyntext.c: added a missing "break". Fixes #26268.
 
 Tue Oct  3 18:05:53 CEST 2000  Marc Lehmann <pcg@goof.com>

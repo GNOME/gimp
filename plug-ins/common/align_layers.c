@@ -508,7 +508,7 @@ align_layers_dialog (void)
 
 			   NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-			     _("Horizontal Base:"), 1.0, 0.5,
+			     _("Vertical Base:"), 1.0, 0.5,
 			     optionmenu, 1, FALSE);
 
   toggle =
