@@ -26,7 +26,7 @@
 
 /* Is the plug-in hidden?  Hey, if you can read this, you may
    as well comment-out the next line...! */
-#define HIDDEN
+//#define HIDDEN
 
 
 /* Declare local functions. */
@@ -81,8 +81,6 @@ static GtkWidget *eventbox;
 static GtkWidget  *drawing_area;
 
 static gint32      image_id;
-static gint32      total_frames;
-static gint32     *layers;
 static GimpDrawable      *drawable;
 static GimpImageBaseType  imagetype;
 static guchar     *palette;
@@ -96,7 +94,7 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Always interactive" },
+    { GIMP_PDB_INT32, "run_mode", "Must be interactive (1)" },
     { GIMP_PDB_IMAGE, "image", "Input Image" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input Drawable" },
   };
@@ -145,10 +143,22 @@ run (gchar      *name,
   
   if (status == GIMP_PDB_SUCCESS)
     {
-      drawable = gimp_drawable_get (param[2].data.d_drawable);
       image_id = param[1].data.d_image;
+      drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-      do_fun();
+#if 0
+      fprintf(stderr, "Got these: %d, %d, %d(%p)\n",
+	      (int)param[0].data.d_int32,
+	      (int)param[1].data.d_image,
+	      (int)param[2].data.d_drawable,
+	      drawable
+	      );
+#endif
+
+      if (drawable)
+	do_fun();
+      else
+	status = GIMP_PDB_CALLING_ERROR;
     }
 
   values[0].type = GIMP_PDB_STATUS;
@@ -287,7 +297,6 @@ gen_llut(void)
 static void 
 do_fun (void)
 {
-  layers    = gimp_image_get_layers (image_id, &total_frames);
   imagetype = gimp_image_base_type(image_id);
 
   if (imagetype == GIMP_INDEXED)

@@ -105,8 +105,6 @@ static GtkWidget  *drawing_area;
 static GtkPreview *preview = NULL;
 #endif
 static gint32      image_id;
-static gint32      total_frames;
-static gint32     *layers;
 static GimpDrawable      *drawable;
 static GimpImageBaseType  imagetype;
 static guchar     *palette;
@@ -126,7 +124,7 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Always interactive" },
+    { GIMP_PDB_INT32, "run_mode", "Must be interactive (1)" },
     { GIMP_PDB_IMAGE, "image", "Input Image" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input Drawable" },
   };
@@ -171,10 +169,13 @@ run (gchar      *name,
   
   if (status == GIMP_PDB_SUCCESS)
     {
-      drawable = gimp_drawable_get (param[2].data.d_drawable);
       image_id = param[1].data.d_image;
+      drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-      do_fun();
+      if (drawable)
+	do_fun();
+      else
+	status = GIMP_PDB_CALLING_ERROR;
     }
 
   values[0].type = GIMP_PDB_STATUS;
@@ -311,7 +312,6 @@ init_lut (void)
 static void 
 do_fun (void)
 {
-  layers    = gimp_image_get_layers (image_id, &total_frames);
   imagetype = gimp_image_base_type(image_id);
 
   if (imagetype == GIMP_INDEXED)
