@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.1.18\n"
-"POT-Creation-Date: 2001-01-05 17:11-0800\n"
-"PO-Revision-Date: 2000-12-21 19:32+03:00\n"
+"POT-Creation-Date: 2001-06-26 19:38+0400\n"
+"PO-Revision-Date: 2001-06-26 19:39+0400\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1439,6 +1439,10 @@ msgstr "Сетка Y"
 msgid "Height"
 msgstr "Высота"
 
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Hexagons"
+msgstr "Шестиугольники"
+
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Highlight Balance"
@@ -1641,6 +1645,10 @@ msgstr "Число разрезов по Y"
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Number"
 msgstr "Число"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Octagons"
+msgstr "Восьмиугольники"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Odd"
@@ -1856,6 +1864,10 @@ msgstr "Масштаб X"
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Scale Y"
 msgstr "Масштаб Y"
+
+#: plug-ins/script-fu/scripts/land.scm:0
+msgid "Sea Depth"
+msgstr "Глубина моря"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "Seed"
