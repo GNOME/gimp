@@ -1,3 +1,8 @@
+2004-10-13  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-close.c
+	(gimp_display_shell_close_dialog): changed button label.
+
 2004-10-12  Kevin Cozens  <kcozens@cvs.gimp.org>
 
 	* plug-ins/script-fu/scripts/asc2img.scm: Fixed error in name of

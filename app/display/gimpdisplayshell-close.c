@@ -128,9 +128,9 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
                               GTK_DIALOG_DESTROY_WITH_PARENT,
                               gimp_standard_help_func, NULL,
 
-                              _("Close _without Saving"), GTK_RESPONSE_CLOSE,
-                              GTK_STOCK_CANCEL,           GTK_RESPONSE_CANCEL,
-                              GTK_STOCK_SAVE,             RESPONSE_SAVE,
+                              _("Do_n't save"), GTK_RESPONSE_CLOSE,
+                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                              GTK_STOCK_SAVE,   RESPONSE_SAVE,
 
                               NULL);
 
@@ -166,7 +166,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
   g_source_attach (source, NULL);
 
   /*  The dialog is destroyed with the shell, so it should be safe
-   *  to keep a gimage pointer for the lifetime of the dialog.
+   *  to hold an image pointer for the lifetime of the dialog.
    */
   g_object_set_data (G_OBJECT (box), "gimp-image", gimage);
 
@@ -257,12 +257,10 @@ gimp_display_shell_close_response (GtkWidget        *widget,
 static gchar *
 gimp_time_since (guint  then)
 {
-  guint  now = time (NULL);
-  guint  diff;
+  guint  now  = time (NULL);
+  guint  diff = 1 + now - then;
 
   g_return_val_if_fail (now >= then, NULL);
-
-  diff = 1 + now - then;
 
   if (diff == 1)
     /* one second, the time period  */
@@ -271,5 +269,11 @@ gimp_time_since (guint  then)
   if (diff < 60)
     return g_strdup_printf (_("%d seconds"), diff);
 
-  return g_strdup_printf (_("%d minutes"), diff / 60);
+  /*  round to the nearest minute  */
+  diff = (diff + 30) / 60;
+
+  if (diff == 1)
+    return g_strdup (_("minute"));
+
+  return g_strdup_printf (_("%d minutes"), diff);
 }
