@@ -117,6 +117,7 @@
                                           "movd   %%eax,%%" #divisor ";"    \
                                             "psllq  $32,%%" #divisor ";"    \
                                             "por    %%" #divisor ",%%" #quotient ";"
+#define pdivwuqX_clobber pdivwqX_clobber
 
 #define xmm_pdivwqX(dividend,divisor,quotient,scratch) "movd   %%" #dividend ",%%eax; " \
                                                        "movd   %%" #divisor  ",%%ecx; " \

@@ -1,3 +1,11 @@
+2004-07-19  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite-mmx.c (xxxgimp_composite_dodge_rgba8_rgba8_rgba8_mmx)
+	* app/composite/gimp-composite-mmx.c (xxxgimp_composite_divide_rgba8_rgba8_rgba8_mmx)
+	* app/composite/gimp-composite-mmx.c (gimp_composite_difference_rgba8_rgba8_rgba8_mmx)
+	* app/composite/gimp-composite-mmx.c (gimp_composite_darken_rgba8_rgba8_rgba8_mmx):
+	More clobber register corrections.
+
 2004-07-20  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.1.2 release.
