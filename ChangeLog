@@ -1,3 +1,8 @@
+2000-12-07  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/MapObject/mapobject_image.c: set the background using 
+	gimp_palette_get_background() in non-interactive mode too.
+
 2000-12-03  Sven Neumann  <sven@gimp.org>
 
 	* app/gimpimage.c: when merging layers, do not set the layer mode 

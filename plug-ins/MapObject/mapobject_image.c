@@ -329,7 +329,8 @@ gint
 image_setup (GimpDrawable *drawable,
 	     gint       interactive)
 {
-  glong numbytes;
+  glong  numbytes;
+  guchar r,g,b;
 
   /* Set the tile cache size */
   /* ======================= */
@@ -353,6 +354,17 @@ image_setup (GimpDrawable *drawable,
 		       0, 0, width, height, FALSE, FALSE);
 
   maxcounter=(glong)width*(glong)height;
+
+  if (mapvals.transparent_background==TRUE)
+    gck_rgba_set(&background,0.0,0.0,0.0,0.0);
+  else
+    {
+      gimp_palette_get_background(&r,&g,&b);
+      background.r=(gdouble)r/255.0;
+      background.g=(gdouble)g/255.0;
+      background.b=(gdouble)b/255.0;
+      background.a=1.0;
+    }
 
   /* Assume at least RGB */
   /* =================== */
