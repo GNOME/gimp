@@ -30,6 +30,7 @@
 
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimplayer.h"
@@ -40,6 +41,7 @@
 #include "gimpchanneltreeview.h"
 #include "gimpcellrenderertoggle.h"
 #include "gimpdnd.h"
+#include "gimpdocked.h"
 #include "gimpitemtreeview.h"
 #include "gimpitemfactory.h"
 #include "gimplayertreeview.h"
@@ -58,9 +60,14 @@ enum
 };
 
 
-static void   gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass);
-static void   gimp_item_tree_view_init       (GimpItemTreeView      *view,
-                                              GimpItemTreeViewClass *view_class);
+static void   gimp_item_tree_view_class_init   (GimpItemTreeViewClass *klass);
+static void   gimp_item_tree_view_init         (GimpItemTreeView      *view,
+                                                GimpItemTreeViewClass *view_class);
+
+static void  gimp_item_tree_view_docked_iface_init  (GimpDockedIface   *docked_iface);
+static void  gimp_item_tree_view_set_docked_context (GimpDocked        *docked,
+                                                     GimpContext       *context,
+                                                     GimpContext       *prev_context);
 
 static GObject * gimp_item_tree_view_constructor    (GType              type,
                                                      guint              n_params,
@@ -155,9 +162,9 @@ static GimpContainerTreeViewClass *parent_class = NULL;
 GType
 gimp_item_tree_view_get_type (void)
 {
-  static GType view_type = 0;
+  static GType type = 0;
 
-  if (! view_type)
+  if (! type)
     {
       static const GTypeInfo view_info =
       {
@@ -171,13 +178,22 @@ gimp_item_tree_view_get_type (void)
         0,              /* n_preallocs */
         (GInstanceInitFunc) gimp_item_tree_view_init,
       };
+      static const GInterfaceInfo docked_iface_info =
+      {
+        (GInterfaceInitFunc) gimp_item_tree_view_docked_iface_init,
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
 
-      view_type = g_type_register_static (GIMP_TYPE_CONTAINER_TREE_VIEW,
-                                          "GimpItemTreeView",
-                                          &view_info, 0);
+      type = g_type_register_static (GIMP_TYPE_CONTAINER_TREE_VIEW,
+                                     "GimpItemTreeView",
+                                     &view_info, 0);
+
+      g_type_add_interface_static (type, GIMP_TYPE_DOCKED,
+                                   &docked_iface_info);
     }
 
-  return view_type;
+  return type;
 }
 
 static void
@@ -335,6 +351,45 @@ gimp_item_tree_view_init (GimpItemTreeView      *view,
 
   view->visible_changed_handler_id = 0;
   view->linked_changed_handler_id  = 0;
+}
+
+static void
+gimp_item_tree_view_docked_iface_init (GimpDockedIface *docked_iface)
+{
+  docked_iface->set_context = gimp_item_tree_view_set_docked_context;
+}
+
+static void
+gimp_item_tree_view_docked_context_changed (GimpContext      *context,
+                                            GimpImage        *gimage,
+                                            GimpItemTreeView *view)
+{
+  gimp_item_tree_view_set_image (view, gimage);
+}
+
+static void
+gimp_item_tree_view_set_docked_context (GimpDocked  *docked,
+                                        GimpContext *context,
+                                        GimpContext *prev_context)
+{
+  GimpItemTreeView *view   = GIMP_ITEM_TREE_VIEW (docked);
+  GimpImage        *gimage = NULL;
+
+  if (prev_context)
+    g_signal_handlers_disconnect_by_func (prev_context,
+                                          gimp_item_tree_view_docked_context_changed,
+                                          view);
+
+  if (context)
+    {
+      g_signal_connect (context, "image_changed",
+                        G_CALLBACK (gimp_item_tree_view_docked_context_changed),
+                        view);
+
+      gimage = gimp_context_get_image (context);
+    }
+
+  gimp_item_tree_view_set_image (view, gimage);
 }
 
 static GObject *

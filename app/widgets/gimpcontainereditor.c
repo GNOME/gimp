@@ -34,13 +34,15 @@
 #include "gimpcontainereditor.h"
 #include "gimpcontainergridview.h"
 #include "gimpcontainertreeview.h"
+#include "gimpdocked.h"
 #include "gimpitemfactory.h"
 #include "gimpmenufactory.h"
 #include "gimppreviewrenderer.h"
 
 
-static void   gimp_container_editor_class_init (GimpContainerEditorClass *klass);
-static void   gimp_container_editor_init       (GimpContainerEditor      *view);
+static void   gimp_container_editor_class_init        (GimpContainerEditorClass *klass);
+static void   gimp_container_editor_init              (GimpContainerEditor      *view);
+static void   gimp_container_editor_docked_iface_init (GimpDockedIface          *docked_iface);
 
 static gboolean gimp_container_editor_select_item    (GtkWidget           *widget,
 						      GimpViewable        *viewable,
@@ -57,6 +59,15 @@ static void   gimp_container_editor_context_item     (GtkWidget           *widge
 static void   gimp_container_editor_real_context_item(GimpContainerEditor *editor,
 						      GimpViewable        *viewable);
 
+static GtkWidget    * gimp_container_editor_get_preview (GimpDocked       *docked,
+                                                         GimpContext      *context,
+                                                         GtkIconSize       size);
+static void           gimp_container_editor_set_context (GimpDocked       *docked,
+                                                         GimpContext      *context,
+                                                         GimpContext      *prev_context);
+static GimpItemFactory * gimp_container_editor_get_menu (GimpDocked       *docked,
+                                                         gpointer         *item_factory_data);
+
 
 static GtkVBoxClass *parent_class = NULL;
 
@@ -64,9 +75,9 @@ static GtkVBoxClass *parent_class = NULL;
 GType
 gimp_container_editor_get_type (void)
 {
-  static GType view_type = 0;
+  static GType type = 0;
 
-  if (! view_type)
+  if (! type)
     {
       static const GTypeInfo view_info =
       {
@@ -80,13 +91,22 @@ gimp_container_editor_get_type (void)
         0,              /* n_preallocs */
         (GInstanceInitFunc) gimp_container_editor_init,
       };
+      static const GInterfaceInfo docked_iface_info =
+      {
+        (GInterfaceInitFunc) gimp_container_editor_docked_iface_init,
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
 
-      view_type = g_type_register_static (GTK_TYPE_VBOX,
-                                          "GimpContainerEditor",
-                                          &view_info, 0);
+      type = g_type_register_static (GTK_TYPE_VBOX,
+                                     "GimpContainerEditor",
+                                     &view_info, 0);
+
+      g_type_add_interface_static (type, GIMP_TYPE_DOCKED,
+                                   &docked_iface_info);
     }
 
-  return view_type;
+  return type;
 }
 
 static void
@@ -103,6 +123,14 @@ static void
 gimp_container_editor_init (GimpContainerEditor *view)
 {
   view->view = NULL;
+}
+
+static void
+gimp_container_editor_docked_iface_init (GimpDockedIface *docked_iface)
+{
+  docked_iface->get_preview = gimp_container_editor_get_preview;
+  docked_iface->set_context = gimp_container_editor_set_context;
+  docked_iface->get_menu    = gimp_container_editor_get_menu;
 }
 
 gboolean
@@ -238,4 +266,36 @@ gimp_container_editor_real_context_item (GimpContainerEditor *editor,
                                            gimp_editor->item_factory_data,
                                            NULL, NULL, NULL);
     }
+}
+
+static GtkWidget *
+gimp_container_editor_get_preview (GimpDocked   *docked,
+                                   GimpContext  *context,
+                                   GtkIconSize   size)
+{
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (docked);
+
+  return gimp_docked_get_preview (GIMP_DOCKED (editor->view),
+                                  context, size);
+}
+
+static void
+gimp_container_editor_set_context (GimpDocked  *docked,
+                                   GimpContext *context,
+                                   GimpContext *prev_context)
+{
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (docked);
+
+  gimp_docked_set_context (GIMP_DOCKED (editor->view),
+                           context, prev_context);
+}
+
+static GimpItemFactory *
+gimp_container_editor_get_menu (GimpDocked *docked,
+                                gpointer   *item_factory_data)
+{
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (docked);
+
+  return gimp_docked_get_menu (GIMP_DOCKED (editor->view),
+                               item_factory_data);
 }

@@ -32,14 +32,20 @@
 #include "core/gimpcontext.h"
 
 #include "gimpcoloreditor.h"
+#include "gimpdocked.h"
 
 #include "gimp-intl.h"
 
 
-static void   gimp_color_editor_class_init   (GimpColorEditorClass *klass);
-static void   gimp_color_editor_init         (GimpColorEditor      *editor);
+static void   gimp_color_editor_class_init        (GimpColorEditorClass *klass);
+static void   gimp_color_editor_init              (GimpColorEditor      *editor);
+static void   gimp_color_editor_docked_iface_init (GimpDockedIface      *docked_iface);
 
 static void   gimp_color_editor_destroy         (GtkObject         *object);
+
+static void gimp_color_editor_set_docked_context (GimpDocked       *docked,
+                                                  GimpContext      *context,
+                                                  GimpContext      *prev_context);
 
 static void   gimp_color_editor_fg_changed      (GimpContext       *context,
                                                  const GimpRGB     *rgb,
@@ -68,9 +74,9 @@ static GimpEditorClass *parent_class = NULL;
 GType
 gimp_color_editor_get_type (void)
 {
-  static GType editor_type = 0;
+  static GType type = 0;
 
-  if (! editor_type)
+  if (! type)
     {
       static const GTypeInfo editor_info =
       {
@@ -84,13 +90,22 @@ gimp_color_editor_get_type (void)
 	0,              /* n_preallocs    */
 	(GInstanceInitFunc) gimp_color_editor_init,
       };
+      static const GInterfaceInfo docked_iface_info =
+      {
+        (GInterfaceInitFunc) gimp_color_editor_docked_iface_init,
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
 
-      editor_type = g_type_register_static (GIMP_TYPE_EDITOR,
-                                            "GimpColorEditor",
-                                            &editor_info, 0);
+      type = g_type_register_static (GIMP_TYPE_EDITOR,
+                                     "GimpColorEditor",
+                                     &editor_info, 0);
+
+      g_type_add_interface_static (type, GIMP_TYPE_DOCKED,
+                                   &docked_iface_info);
     }
 
-  return editor_type;
+  return type;
 }
 
 static void
@@ -271,6 +286,12 @@ gimp_color_editor_init (GimpColorEditor *editor)
 }
 
 static void
+gimp_color_editor_docked_iface_init (GimpDockedIface *docked_iface)
+{
+  docked_iface->set_context = gimp_color_editor_set_docked_context;
+}
+
+static void
 gimp_color_editor_destroy (GtkObject *object)
 {
   GimpColorEditor *editor;
@@ -281,6 +302,14 @@ gimp_color_editor_destroy (GtkObject *object)
     gimp_color_editor_set_context (editor, NULL);
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+gimp_color_editor_set_docked_context (GimpDocked  *docked,
+                                      GimpContext *context,
+                                      GimpContext *prev_context)
+{
+  gimp_color_editor_set_context (GIMP_COLOR_EDITOR (docked), context);
 }
 
 

@@ -34,6 +34,7 @@
 #include "core/gimptooloptions.h"
 
 #include "gimpdnd.h"
+#include "gimpdocked.h"
 #include "gimphelp-ids.h"
 #include "gimpitemfactory.h"
 #include "gimpmenufactory.h"
@@ -43,10 +44,16 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_tool_options_editor_class_init (GimpToolOptionsEditorClass *klass);
-static void   gimp_tool_options_editor_init       (GimpToolOptionsEditor      *editor);
+static void   gimp_tool_options_editor_class_init        (GimpToolOptionsEditorClass *klass);
+static void   gimp_tool_options_editor_init              (GimpToolOptionsEditor      *editor);
+static void   gimp_tool_options_editor_docked_iface_init (GimpDockedIface            *docked_iface);
 
 static void   gimp_tool_options_editor_destroy         (GtkObject             *object);
+
+static GtkWidget *gimp_tool_options_editor_get_preview (GimpDocked            *docked,
+                                                        GimpContext           *context,
+                                                        GtkIconSize            size);
+
 
 static void   gimp_tool_options_editor_save_clicked    (GtkWidget             *widget,
                                                         GimpToolOptionsEditor *editor);
@@ -79,9 +86,9 @@ static GimpEditorClass *parent_class = NULL;
 GType
 gimp_tool_options_editor_get_type (void)
 {
-  static GType editor_type = 0;
+  static GType type = 0;
 
-  if (! editor_type)
+  if (! type)
     {
       static const GTypeInfo editor_info =
       {
@@ -95,13 +102,22 @@ gimp_tool_options_editor_get_type (void)
         0,              /* n_preallocs */
         (GInstanceInitFunc) gimp_tool_options_editor_init,
       };
+      static const GInterfaceInfo docked_iface_info =
+      {
+        (GInterfaceInitFunc) gimp_tool_options_editor_docked_iface_init,
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
 
-      editor_type = g_type_register_static (GIMP_TYPE_EDITOR,
-                                            "GimpToolOptionsEditor",
-                                            &editor_info, 0);
+      type = g_type_register_static (GIMP_TYPE_EDITOR,
+                                     "GimpToolOptionsEditor",
+                                     &editor_info, 0);
+
+      g_type_add_interface_static (type, GIMP_TYPE_DOCKED,
+                                   &docked_iface_info);
     }
 
-  return editor_type;
+  return type;
 }
 
 static void
@@ -184,6 +200,12 @@ gimp_tool_options_editor_init (GimpToolOptionsEditor *editor)
 }
 
 static void
+gimp_tool_options_editor_docked_iface_init (GimpDockedIface *docked_iface)
+{
+  docked_iface->get_preview = gimp_tool_options_editor_get_preview;
+}
+
+static void
 gimp_tool_options_editor_destroy (GtkObject *object)
 {
   GimpToolOptionsEditor *editor = GIMP_TOOL_OPTIONS_EDITOR (object);
@@ -208,6 +230,66 @@ gimp_tool_options_editor_destroy (GtkObject *object)
     }
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+gimp_tool_options_preview_tool_changed (GimpContext  *context,
+                                        GimpToolInfo *tool_info,
+                                        GtkLabel     *label)
+{
+  GtkImage *image;
+
+  if ((image = g_object_get_data (G_OBJECT (label), "tool-icon")))
+    {
+      const gchar *stock_id;
+
+      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+      gtk_image_set_from_stock (image, stock_id, image->icon_size);
+    }
+
+  gtk_label_set_text (label, tool_info->blurb);
+
+  gimp_help_set_help_data (GTK_WIDGET (label)->parent->parent,
+                           tool_info->help, tool_info->help_id);
+}
+
+static GtkWidget *
+gimp_tool_options_editor_get_preview (GimpDocked   *docked,
+                                      GimpContext  *context,
+                                      GtkIconSize   size)
+{
+  GimpToolInfo *tool_info;
+  GtkWidget    *hbox;
+  GtkWidget    *image;
+  GtkWidget    *label;
+  gint          width;
+  gint          height;
+  const gchar  *stock_id;
+
+  gtk_icon_size_lookup (size, &width, &height);
+
+  tool_info = gimp_context_get_tool (context);
+
+  hbox = gtk_hbox_new (FALSE, 2);
+
+  stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+  image = gtk_image_new_from_stock (stock_id, size);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_show (image);
+
+  label = gtk_label_new (tool_info->blurb);
+
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  g_object_set_data (G_OBJECT (label), "tool-icon", image);
+
+  g_signal_connect_object (context, "tool_changed",
+			   G_CALLBACK (gimp_tool_options_preview_tool_changed),
+			   label,
+			   0);
+
+  return hbox;
 }
 
 GtkWidget *

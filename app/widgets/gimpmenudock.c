@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -56,6 +58,9 @@ static void   gimp_image_dock_style_set               (GtkWidget      *widget,
 
 static void   gimp_image_dock_setup                   (GimpDock       *dock,
                                                        const GimpDock *template);
+static void   gimp_image_dock_set_aux_info            (GimpDock       *dock,
+                                                       GList          *aux_info);
+static GList *gimp_image_dock_get_aux_info            (GimpDock       *dock);
 static void   gimp_image_dock_book_added              (GimpDock       *dock,
                                                        GimpDockbook   *dockbook);
 static void   gimp_image_dock_book_removed            (GimpDock       *dock,
@@ -128,6 +133,8 @@ gimp_image_dock_class_init (GimpImageDockClass *klass)
   widget_class->style_set  = gimp_image_dock_style_set;
 
   dock_class->setup        = gimp_image_dock_setup;
+  dock_class->set_aux_info = gimp_image_dock_set_aux_info;
+  dock_class->get_aux_info = gimp_image_dock_get_aux_info;
   dock_class->book_added   = gimp_image_dock_book_added;
   dock_class->book_removed = gimp_image_dock_book_removed;
 
@@ -281,6 +288,56 @@ gimp_image_dock_setup (GimpDock       *dock,
       gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dock),
                                            show_image_menu);
     }
+}
+
+static void
+gimp_image_dock_set_aux_info (GimpDock *dock,
+                              GList    *aux_info)
+{
+  GimpImageDock *image_dock = GIMP_IMAGE_DOCK (dock);
+  GList         *aux;
+  gboolean       menu_shown  = image_dock->show_image_menu;
+  gboolean       auto_follow = image_dock->auto_follow_active;
+
+  for (aux = aux_info; aux; aux = g_list_next (aux))
+    {
+      gchar *str = (gchar *) aux->data;
+
+      if (! strcmp (str, "menu-shown"))
+        menu_shown = TRUE;
+      else if (! strcmp (str, "menu-hidden"))
+        menu_shown = FALSE;
+
+      else if (! strcmp (str, "follow-active-image"))
+        auto_follow = TRUE;
+      else if (! strcmp (str, "dont-follow-active-image"))
+        auto_follow = FALSE;
+    }
+
+  if (menu_shown != image_dock->show_image_menu)
+    gimp_image_dock_set_show_image_menu (image_dock, menu_shown);
+
+  if (auto_follow != image_dock->auto_follow_active)
+    gimp_image_dock_set_auto_follow_active (image_dock, auto_follow);
+}
+
+static GList *
+gimp_image_dock_get_aux_info (GimpDock *dock)
+{
+  GimpImageDock *image_dock = GIMP_IMAGE_DOCK (dock);
+  GList         *aux        = NULL;
+
+  aux = g_list_append (aux,
+                       image_dock->show_image_menu ?
+                       g_strdup ("menu-shown") :
+                       g_strdup ("menu-hidden"));
+
+  aux = g_list_append (aux,
+                       image_dock->auto_follow_active ?
+                       g_strdup ("follow-active-image") :
+                       g_strdup ("dont-follow-active-image"));
+
+  return aux;
 }
 
 static void

@@ -33,8 +33,10 @@
 #include "config/gimpdisplayconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
+#include "widgets/gimpdocked.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpnavigationpreview.h"
 #include "widgets/gimppreviewrenderer.h"
@@ -53,6 +55,11 @@
 
 static void   gimp_navigation_view_class_init (GimpNavigationViewClass *klass);
 static void   gimp_navigation_view_init       (GimpNavigationView      *view);
+
+static void   gimp_navigation_view_docked_iface_init  (GimpDockedIface  *docked_iface);
+static void   gimp_navigation_view_set_docked_context (GimpDocked       *docked,
+                                                       GimpContext      *context,
+                                                       GimpContext      *prev_context);
 
 static void   gimp_navigation_view_destroy          (GtkObject          *object);
 
@@ -103,9 +110,9 @@ static GimpEditorClass *parent_class = NULL;
 GType
 gimp_navigation_view_get_type (void)
 {
-  static GType view_type = 0;
+  static GType type = 0;
 
-  if (! view_type)
+  if (! type)
     {
       static const GTypeInfo view_info =
       {
@@ -119,13 +126,22 @@ gimp_navigation_view_get_type (void)
         0,              /* n_preallocs */
         (GInstanceInitFunc) gimp_navigation_view_init,
       };
+      static const GInterfaceInfo docked_iface_info =
+      {
+        (GInterfaceInitFunc) gimp_navigation_view_docked_iface_init,
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
 
-      view_type = g_type_register_static (GIMP_TYPE_EDITOR,
-                                          "GimpNavigationView",
-                                          &view_info, 0);
+      type = g_type_register_static (GIMP_TYPE_EDITOR,
+                                     "GimpNavigationView",
+                                     &view_info, 0);
+
+      g_type_add_interface_static (type, GIMP_TYPE_DOCKED,
+                                   &docked_iface_info);
     }
 
-  return view_type;
+  return type;
 }
 
 static void
@@ -171,6 +187,54 @@ gimp_navigation_view_init (GimpNavigationView *view)
                     view);
 
   gtk_widget_set_sensitive (GTK_WIDGET (view), FALSE);
+}
+
+static void
+gimp_navigation_view_docked_iface_init (GimpDockedIface *docked_iface)
+{
+  docked_iface->set_context = gimp_navigation_view_set_docked_context;
+}
+
+static void
+gimp_navigation_view_docked_context_changed (GimpContext        *context,
+                                             GimpDisplay        *gdisp,
+                                             GimpNavigationView *view)
+{
+  GimpDisplayShell *shell = NULL;
+
+  if (gdisp)
+    shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  gimp_navigation_view_set_shell (view, shell);
+}
+
+static void
+gimp_navigation_view_set_docked_context (GimpDocked  *docked,
+                                         GimpContext *context,
+                                         GimpContext *prev_context)
+{
+  GimpNavigationView *view  = GIMP_NAVIGATION_VIEW (docked);
+  GimpDisplay        *gdisp = NULL;
+  GimpDisplayShell   *shell = NULL;
+
+  if (prev_context)
+    g_signal_handlers_disconnect_by_func (prev_context,
+                                          gimp_navigation_view_docked_context_changed,
+                                          view);
+
+  if (context)
+    {
+      g_signal_connect (context, "display_changed",
+                        G_CALLBACK (gimp_navigation_view_docked_context_changed),
+                        view);
+
+      gdisp = gimp_context_get_display (context);
+    }
+
+  if (gdisp)
+    shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  gimp_navigation_view_set_shell (view, shell);
 }
 
 static void

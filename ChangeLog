@@ -1,5 +1,40 @@
 2003-10-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpdocked.[ch]: new files implementing
+	GimpDockedInterface, a GTypeInterface which must be implemented by
+	all widgets which want to be packed into a GimpDockable. Has
+	virtual functions similar to the ones GimpDockable had.
+
+	* app/widgets/gimpdockable.[ch]: removed all virtual functions and
+	all function pointers from the instance struct (also the ones just
+	added in the commit below). Make sure only widgets implementing
+	the GimpDockedIface are added and simply call the child's
+	GimpDocked functions where we used to call our own virtual
+	functions and function pointers.
+
+	* app/widgets/gimpcoloreditor.c
+	* app/widgets/gimpcontainereditor.c
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainerview.c
+	* app/widgets/gimpeditor.c
+	* app/widgets/gimpimageeditor.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimpsessioninfo.c
+	* app/widgets/gimptooloptionseditor.c
+	* app/display/gimpnavigationview.c: implement GimpDockedIface.
+
+	* app/gui/dialogs-constructors.c: removed all that get_preview_func(),
+	set_context_func() etc. cruft since that's done by GimpDockedIface.
+	It's really a file of constructors now.
+
+	* app/gui/dialogs-menu.c: changed accordingly.
+
+	* app/widgets/gimpimagedock.c: forgotten in the commit below.
+
+2003-10-10  Michael Natterer  <mitch@gimp.org>
+
 	Cleaned up session management and changed the format of sessionrc
 	in a way that allows extensions without changing the format during
 	the 2.0 cycle:

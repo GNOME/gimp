@@ -22,13 +22,20 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
+#include "gimpdocked.h"
 #include "gimpimageeditor.h"
 
 
 static void   gimp_image_editor_class_init     (GimpImageEditorClass *klass);
 static void   gimp_image_editor_init           (GimpImageEditor      *editor);
+
+static void   gimp_image_editor_docked_iface_init  (GimpDockedIface  *docked_iface);
+static void   gimp_image_editor_set_docked_context (GimpDocked       *docked,
+                                                    GimpContext      *context,
+                                                    GimpContext      *prev_context);
 
 static void   gimp_image_editor_destroy        (GtkObject            *object);
 
@@ -42,9 +49,9 @@ static GimpEditorClass *parent_class = NULL;
 GType
 gimp_image_editor_get_type (void)
 {
-  static GType editor_type = 0;
+  static GType type = 0;
 
-  if (! editor_type)
+  if (! type)
     {
       static const GTypeInfo editor_info =
       {
@@ -58,13 +65,22 @@ gimp_image_editor_get_type (void)
 	0,              /* n_preallocs    */
 	(GInstanceInitFunc) gimp_image_editor_init,
       };
+      static const GInterfaceInfo docked_iface_info =
+      {
+        (GInterfaceInitFunc) gimp_image_editor_docked_iface_init,
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
 
-      editor_type = g_type_register_static (GIMP_TYPE_EDITOR,
-                                            "GimpImageEditor",
-                                            &editor_info, 0);
+      type = g_type_register_static (GIMP_TYPE_EDITOR,
+                                     "GimpImageEditor",
+                                     &editor_info, 0);
+
+      g_type_add_interface_static (type, GIMP_TYPE_DOCKED,
+                                   &docked_iface_info);
     }
 
-  return editor_type;
+  return type;
 }
 
 static void
@@ -87,6 +103,45 @@ gimp_image_editor_init (GimpImageEditor *editor)
   editor->gimage = NULL;
 
   gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
+}
+
+static void
+gimp_image_editor_docked_iface_init (GimpDockedIface *docked_iface)
+{
+  docked_iface->set_context = gimp_image_editor_set_docked_context;
+}
+
+static void
+gimp_image_editor_docked_context_changed (GimpContext     *context,
+                                          GimpImage       *gimage,
+                                          GimpImageEditor *editor)
+{
+  gimp_image_editor_set_image (editor, gimage);
+}
+
+static void
+gimp_image_editor_set_docked_context (GimpDocked  *docked,
+                                      GimpContext *context,
+                                      GimpContext *prev_context)
+{
+  GimpImageEditor *editor = GIMP_IMAGE_EDITOR (docked);
+  GimpImage       *gimage = NULL;
+
+  if (prev_context)
+    g_signal_handlers_disconnect_by_func (prev_context,
+                                          gimp_image_editor_docked_context_changed,
+                                          editor);
+
+  if (context)
+    {
+      g_signal_connect (context, "image_changed",
+                        G_CALLBACK (gimp_image_editor_docked_context_changed),
+                        editor);
+
+      gimage = gimp_context_get_image (context);
+    }
+
+  gimp_image_editor_set_image (editor, gimage);
 }
 
 static void

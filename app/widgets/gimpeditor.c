@@ -27,6 +27,7 @@
 
 #include "widgets-types.h"
 
+#include "gimpdocked.h"
 #include "gimpeditor.h"
 #include "gimpdnd.h"
 #include "gimpenummenu.h"
@@ -40,10 +41,14 @@
 
 static void        gimp_editor_class_init        (GimpEditorClass *klass);
 static void        gimp_editor_init              (GimpEditor      *editor);
+static void        gimp_editor_docked_iface_init (GimpDockedIface *docked_iface);
 
 static void        gimp_editor_destroy           (GtkObject       *object);
 static void        gimp_editor_style_set         (GtkWidget       *widget,
                                                   GtkStyle        *prev_style);
+
+static GimpItemFactory * gimp_editor_get_menu    (GimpDocked      *docked,
+                                                  gpointer        *item_factory_data);
 
 static GtkIconSize gimp_editor_ensure_button_box (GimpEditor      *editor);
 
@@ -70,10 +75,19 @@ gimp_editor_get_type (void)
         0,              /* n_preallocs */
         (GInstanceInitFunc) gimp_editor_init,
       };
+      static const GInterfaceInfo docked_iface_info =
+      {
+        (GInterfaceInitFunc) gimp_editor_docked_iface_init,
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
 
       type = g_type_register_static (GTK_TYPE_VBOX,
                                      "GimpEditor",
                                      &info, 0);
+
+      g_type_add_interface_static (type, GIMP_TYPE_DOCKED,
+                                   &docked_iface_info);
     }
 
   return type;
@@ -125,6 +139,12 @@ gimp_editor_init (GimpEditor *editor)
   editor->item_factory      = NULL;
   editor->item_factory_data = NULL;
   editor->button_box        = NULL;
+}
+
+static void
+gimp_editor_docked_iface_init (GimpDockedIface *docked_iface)
+{
+  docked_iface->get_menu = gimp_editor_get_menu;
 }
 
 static void
@@ -189,6 +209,17 @@ gimp_editor_style_set (GtkWidget *widget,
 
   if (GTK_WIDGET_CLASS (parent_class)->style_set)
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+}
+
+static GimpItemFactory *
+gimp_editor_get_menu (GimpDocked *docked,
+                      gpointer   *item_factory_data)
+{
+  GimpEditor *editor = GIMP_EDITOR (docked);
+
+  *item_factory_data = editor->item_factory_data;
+
+  return editor->item_factory;
 }
 
 GtkWidget *

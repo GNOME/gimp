@@ -36,6 +36,7 @@
 #include "gimpdock.h"
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
+#include "gimpdocked.h"
 #include "gimpsessioninfo.h"
 
 
@@ -541,7 +542,7 @@ gimp_session_info_restore (GimpSessionInfo   *info,
               if (! dockable)
                 continue;
 
-              if (! GIMP_DOCKABLE (dockable)->get_preview_func)
+              if (! GIMP_DOCKED_GET_INTERFACE (GTK_BIN (dockable)->child)->get_preview)
                 {
                   switch (dockable_info->tab_style)
                     {

@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -34,7 +36,10 @@
 
 #include "gimpcontainerview.h"
 #include "gimpdnd.h"
+#include "gimpdocked.h"
+#include "gimppreview.h"
 #include "gimppreviewrenderer.h"
+#include "gimppropwidgets.h"
 
 
 enum
@@ -46,9 +51,10 @@ enum
 };
 
 
-static void   gimp_container_view_class_init  (GimpContainerViewClass *klass);
-static void   gimp_container_view_init        (GimpContainerView      *view,
-                                               GimpContainerViewClass *klass);
+static void   gimp_container_view_class_init        (GimpContainerViewClass *klass);
+static void   gimp_container_view_init              (GimpContainerView      *view,
+                                                     GimpContainerViewClass *klass);
+static void   gimp_container_view_docked_iface_init (GimpDockedIface        *docked_iface);
 
 static void   gimp_container_view_destroy     (GtkObject              *object);
 
@@ -71,6 +77,13 @@ static void   gimp_container_view_reorder     (GimpContainerView      *view,
 					       gint                    new_index,
 					       GimpContainer          *container);
 
+static GtkWidget * gimp_container_view_get_preview (GimpDocked         *docked,
+                                                    GimpContext        *context,
+                                                    GtkIconSize         size);
+static void gimp_container_view_set_docked_context (GimpDocked         *docked,
+                                                    GimpContext        *context,
+                                                    GimpContext        *prev_context);
+
 static void   gimp_container_view_context_changed  (GimpContext        *context,
 						    GimpViewable       *viewable,
 						    GimpContainerView  *view);
@@ -90,9 +103,9 @@ static GimpEditorClass *parent_class = NULL;
 GType
 gimp_container_view_get_type (void)
 {
-  static GType view_type = 0;
+  static GType type = 0;
 
-  if (! view_type)
+  if (! type)
     {
       static const GTypeInfo view_info =
       {
@@ -106,13 +119,22 @@ gimp_container_view_get_type (void)
         0,              /* n_preallocs */
         (GInstanceInitFunc) gimp_container_view_init,
       };
+      static const GInterfaceInfo docked_iface_info =
+      {
+        (GInterfaceInitFunc) gimp_container_view_docked_iface_init,
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
 
-      view_type = g_type_register_static (GIMP_TYPE_EDITOR,
-                                          "GimpContainerView",
-                                          &view_info, 0);
+      type = g_type_register_static (GIMP_TYPE_EDITOR,
+                                     "GimpContainerView",
+                                     &view_info, 0);
+
+      g_type_add_interface_static (type, GIMP_TYPE_DOCKED,
+                                   &docked_iface_info);
     }
 
-  return view_type;
+  return type;
 }
 
 static void
@@ -217,6 +239,13 @@ gimp_container_view_destroy (GtkObject *object)
     }
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+gimp_container_view_docked_iface_init (GimpDockedIface *docked_iface)
+{
+  docked_iface->get_preview = gimp_container_view_get_preview;
+  docked_iface->set_context = gimp_container_view_set_docked_context;
 }
 
 void
@@ -686,6 +715,41 @@ gimp_container_view_reorder (GimpContainerView *view,
 							  new_index,
 							  insert_data);
     }
+}
+
+static void
+gimp_container_view_set_docked_context (GimpDocked  *docked,
+                                        GimpContext *context,
+                                        GimpContext *prev_context)
+{
+  gimp_container_view_set_context (GIMP_CONTAINER_VIEW (docked), context);
+}
+
+static GtkWidget *
+gimp_container_view_get_preview (GimpDocked   *docked,
+                                 GimpContext  *context,
+                                 GtkIconSize   size)
+{
+  GimpContainerView *view = GIMP_CONTAINER_VIEW (docked);
+  GtkWidget         *preview;
+  gint               width;
+  gint               height;
+  const gchar       *prop_name;
+  gboolean           is_tool;
+
+  gtk_icon_size_lookup (size, &width, &height);
+
+  prop_name = gimp_context_type_to_prop_name (view->container->children_type);
+
+  is_tool = (strcmp (prop_name, "tool") == 0);
+
+  preview = gimp_prop_preview_new (G_OBJECT (context), prop_name, height);
+  GIMP_PREVIEW (preview)->renderer->size = -1;
+  gimp_preview_renderer_set_size_full (GIMP_PREVIEW (preview)->renderer,
+                                       width, height,
+                                       is_tool ? 0 : 1);
+
+  return preview;
 }
 
 static void

@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpdockable.h
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2003 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,16 +24,6 @@
 
 
 #include <gtk/gtkbin.h>
-
-
-typedef GtkWidget       * (* GimpDockableGetPreviewFunc) (GimpDockable *dockable,
-                                                          GimpContext  *context,
-                                                          GtkIconSize   size,
-                                                          gpointer      get_preview_data);
-typedef void              (* GimpDockableSetContextFunc) (GimpDockable *dockable,
-                                                          GimpContext  *context);
-typedef GimpItemFactory * (* GimpDockableGetMenuFunc)    (GimpDockable *dockable,
-                                                          gpointer     *item_factory_data);
 
 
 #define GIMP_TYPE_DOCKABLE            (gimp_dockable_get_type ())
@@ -64,42 +54,20 @@ struct _GimpDockable
   GdkWindow    *title_window;
   GtkWidget    *menu_button;
   GtkWidget    *close_button;
-
-  GimpDockableGetPreviewFunc  get_preview_func;
-  gpointer                    get_preview_data;
-  GimpDockableSetContextFunc  set_context_func;
-  GimpDockableGetMenuFunc     get_menu_func;
 };
 
 struct _GimpDockableClass
 {
   GtkBinClass  parent_class;
-
-  void              (* set_aux_info)   (GimpDockable *dockable,
-                                        GList        *aux_info);
-  GList           * (* get_aux_info)   (GimpDockable *dockable);
-
-  GtkWidget       * (* get_tab_widget) (GimpDockable *dockable,
-                                        GimpContext  *context,
-                                        GimpTabStyle  tab_style,
-                                        GtkIconSize   size);
-  void              (* set_context)    (GimpDockable *dockable,
-                                        GimpContext  *context);
-  GimpItemFactory * (* get_menu)       (GimpDockable *dockable,
-                                        gpointer     *item_factory_data);
 };
 
 
-GType       gimp_dockable_get_type (void) G_GNUC_CONST;
+GType             gimp_dockable_get_type       (void) G_GNUC_CONST;
 
-GtkWidget * gimp_dockable_new      (const gchar                *name,
-				    const gchar                *blurb,
-                                    const gchar                *stock_id,
-                                    const gchar                *help_id,
-				    GimpDockableGetPreviewFunc  get_preview_func,
-                                    gpointer                    get_preview_data,
-				    GimpDockableSetContextFunc  set_context_func,
-                                    GimpDockableGetMenuFunc     get_menu_func);
+GtkWidget       * gimp_dockable_new            (const gchar    *name,
+                                                const gchar    *blurb,
+                                                const gchar    *stock_id,
+                                                const gchar    *help_id);
 
 void              gimp_dockable_set_aux_info   (GimpDockable   *dockable,
                                                 GList          *aux_info);

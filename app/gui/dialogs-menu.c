@@ -31,6 +31,7 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
+#include "widgets/gimpdocked.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpimagedock.h"
 #include "widgets/gimpitemfactory.h"
@@ -325,8 +326,10 @@ dialogs_menu_update (GtkItemFactory *factory,
   else if (tab_style == GIMP_TAB_STYLE_PREVIEW_NAME)
     SET_ACTIVE ("/Tab Style/Status & Text", TRUE);
 
-  SET_SENSITIVE ("/Tab Style/Current Status", dockable->get_preview_func);
-  SET_SENSITIVE ("/Tab Style/Status & Text",  dockable->get_preview_func);
+  SET_SENSITIVE ("/Tab Style/Current Status",
+                 GIMP_DOCKED_GET_INTERFACE (GTK_BIN (dockable)->child)->get_preview);
+  SET_SENSITIVE ("/Tab Style/Status & Text",
+                 GIMP_DOCKED_GET_INTERFACE (GTK_BIN (dockable)->child)->get_preview);
 
   SET_VISIBLE ("/View as Grid", view_type != -1);
   SET_VISIBLE ("/View as List", view_type != -1);
