@@ -1,3 +1,16 @@
+2004-04-15  Tor Lillqvist  <tml@iki.fi>
+
+	* app/plug-in/plug-in-message.c (plug_in_handle_proc_install)
+	* app/plug-in/plug-in-proc.h (struct _PlugInProcDef)
+	* app/plug-in/plug-in-rc.c (plug_in_rc_write)
+	* app/plug-in/plug-ins.c (plug_ins_init): Make PDB procedures
+	(including their menu entries) installed during a plug-ins init()
+	phase show up. Add a flag to PlugInProcDef that tells whether the
+	proc was installed during the init() phase. Such procs aren't
+	saved to the pluginrc. Move the code that initializes plug-ins
+	that need initialization earlier, before the procs are added to
+	the PDB and menus are built. Fixes bug #139969.
+
 2004-04-16  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/Makefile.am

@@ -757,6 +757,9 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
   /* Install temp one use todays time */
   proc_def->mtime           = time (NULL);
 
+  /* Remember if this proc was installed while initing a plug-in */
+  proc_def->installed_during_init = plug_in->init;
+
   /*  The procedural database procedure  */
 
   proc = &proc_def->db_info;

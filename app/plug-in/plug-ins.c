@@ -174,6 +174,32 @@ plug_ins_init (Gimp               *gimp,
 
   (* status_callback) (NULL, NULL, 1.0);
 
+  /* initialize the plug-ins */
+  (* status_callback) (_("Initializing Plug-ins"), "", 0);
+
+  for (tmp = gimp->plug_in_defs, nth = 0;
+       tmp;
+       tmp = g_slist_next (tmp), nth++)
+    {
+      PlugInDef *plug_in_def = tmp->data;
+
+      basename = g_path_get_basename (plug_in_def->prog);
+      (* status_callback) (NULL, gimp_filename_to_utf8 (basename),
+			   nth / n_plugins);
+      g_free (basename);
+
+      if (plug_in_def->has_init)
+	{
+	  if (gimp->be_verbose)
+	    g_print (_("Initializing plug-in: '%s'\n"),
+                     gimp_filename_to_utf8 (plug_in_def->prog));
+
+	  plug_in_call_init (gimp, context, plug_in_def);
+	}
+    }
+
+  (* status_callback) (NULL, NULL, 1.0);
+
   /* insert the proc defs */
   for (tmp = gimp->plug_in_defs; tmp; tmp = g_slist_next (tmp))
     {
@@ -299,32 +325,6 @@ plug_ins_init (Gimp               *gimp,
 
   if (! gimp->no_interface)
     gimp_menus_init (gimp, gimp->plug_in_defs, STD_PLUGINS_DOMAIN);
-
-  /* initial the plug-ins */
-  (* status_callback) (_("Initializing Plug-ins"), "", 0);
-
-  for (tmp = gimp->plug_in_defs, nth = 0;
-       tmp;
-       tmp = g_slist_next (tmp), nth++)
-    {
-      PlugInDef *plug_in_def = tmp->data;
-
-      basename = g_path_get_basename (plug_in_def->prog);
-      (* status_callback) (NULL, gimp_filename_to_utf8 (basename),
-			   nth / n_plugins);
-      g_free (basename);
-
-      if (plug_in_def->has_init)
-	{
-	  if (gimp->be_verbose)
-	    g_print (_("Initializing plug-in: '%s'\n"),
-                     gimp_filename_to_utf8 (plug_in_def->prog));
-
-	  plug_in_call_init (gimp, context, plug_in_def);
-	}
-    }
-
-  (* status_callback) (NULL, NULL, 1.0);
 
   /* build list of automatically started extensions */
   for (tmp = gimp->plug_in_proc_defs, nth = 0;

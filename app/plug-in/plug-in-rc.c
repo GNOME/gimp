@@ -455,6 +455,9 @@ plug_in_rc_write (GSList       *plug_in_defs,
 	    {
 	      proc_def = list2->data;
 
+	      if (proc_def->installed_during_init)
+		continue;
+
               gimp_config_writer_open (writer, "proc-def");
               gimp_config_writer_printf (writer, "\"%s\" %d",
                                          proc_def->db_info.name,
