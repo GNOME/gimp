@@ -86,17 +86,26 @@
 
 /*  local function prototypes  */
 
-static void   gimp_levels_tool_class_init (GimpLevelsToolClass *klass);
-static void   gimp_levels_tool_init       (GimpLevelsTool      *tool);
-static void   gimp_levels_tool_finalize   (GObject             *object);
+static void   gimp_levels_tool_class_init  (GimpLevelsToolClass *klass);
+static void   gimp_levels_tool_init        (GimpLevelsTool      *tool);
+static void   gimp_levels_tool_finalize    (GObject             *object);
 
-static void   gimp_levels_tool_initialize    (GimpTool         *tool,
-                                              GimpDisplay      *gdisp);
-
-static void   gimp_levels_tool_cursor_update (GimpTool         *tool,
-                                              GimpCoords       *coords,
-                                              GdkModifierType   state,
-                                              GimpDisplay      *gdisp);
+static void   gimp_levels_tool_initialize     (GimpTool         *tool,
+					       GimpDisplay      *gdisp);
+static void   gimp_levels_tool_button_press   (GimpTool         *tool,
+                                               GimpCoords       *coords,
+                                               guint32           time,
+					       GdkModifierType   state,
+					       GimpDisplay      *gdisp);
+static void   gimp_levels_tool_motion         (GimpTool         *tool,
+                                               GimpCoords       *coords,
+                                               guint32           time,
+					       GdkModifierType   state,
+					       GimpDisplay      *gdisp);
+static void   gimp_levels_tool_cursor_update  (GimpTool         *tool,
+					       GimpCoords       *coords,
+					       GdkModifierType   state,
+					       GimpDisplay      *gdisp);
 
 static void   gimp_levels_tool_map        (GimpImageMapTool *image_map_tool);
 static void   gimp_levels_tool_dialog     (GimpImageMapTool *image_map_tool);
@@ -134,6 +143,9 @@ static gint   levels_input_da_events               (GtkWidget      *widget,
 static gint   levels_output_da_events              (GtkWidget      *widget,
 						    GdkEvent       *event,
 						    GimpLevelsTool *l_tool);
+static void   levels_input_color_pick              (GimpTool       *tool,
+						    GimpDrawable   *drawable,
+						    GimpCoords     *coords);
 
 static void      file_dialog_create                (GimpLevelsTool *l_tool);
 static void      file_dialog_ok_callback           (GimpLevelsTool *l_tool);
@@ -212,6 +224,8 @@ gimp_levels_tool_class_init (GimpLevelsToolClass *klass)
   object_class->finalize = gimp_levels_tool_finalize;
 
   tool_class->initialize     = gimp_levels_tool_initialize;
+  tool_class->button_press   = gimp_levels_tool_button_press;
+  tool_class->motion         = gimp_levels_tool_motion;
   tool_class->cursor_update  = gimp_levels_tool_cursor_update;
 
   image_map_tool_class->map    = gimp_levels_tool_map;
@@ -315,6 +329,26 @@ gimp_levels_tool_initialize (GimpTool    *tool,
 }
 
 static void
+gimp_levels_tool_button_press (GimpTool         *tool,
+			       GimpCoords       *coords,
+			       guint32           time,
+			       GdkModifierType   state,
+			       GimpDisplay      *gdisp)
+{
+  levels_input_color_pick (tool, tool->drawable, coords);
+}
+
+static void
+gimp_levels_tool_motion (GimpTool         *tool,
+			 GimpCoords       *coords,
+			 guint32           time,
+			 GdkModifierType   state,
+			 GimpDisplay      *gdisp)
+{
+  levels_input_color_pick (tool, tool->drawable, coords);
+}
+
+static void
 gimp_levels_tool_cursor_update (GimpTool         *tool,
                                 GimpCoords       *coords,
                                 GdkModifierType   state,
@@ -322,7 +356,8 @@ gimp_levels_tool_cursor_update (GimpTool         *tool,
 {
   if (GIMP_LEVELS_TOOL (tool)->active_picker)
     {
-      gimp_tool_control_set_tool_cursor (tool->control, GIMP_COLOR_PICKER_TOOL_CURSOR);
+      gimp_tool_control_set_tool_cursor (tool->control,
+					 GIMP_COLOR_PICKER_TOOL_CURSOR);
       gimp_tool_control_set_cursor (tool->control,
                                     gimp_display_coords_in_active_drawable (gdisp,
                                                                             coords) ?
@@ -491,7 +526,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_object_set_data (G_OBJECT (button), "pick-value",
+  g_object_set_data (G_OBJECT (button), "pick_value",
                      GUINT_TO_POINTER (LOW_INPUT));
   g_signal_connect (button, "toggled",
                     G_CALLBACK (levels_input_picker_toggled),
@@ -523,7 +558,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_object_set_data (G_OBJECT (button), "pick-value",
+  g_object_set_data (G_OBJECT (button), "pick_value",
                      GUINT_TO_POINTER (GAMMA));
   g_signal_connect (button, "toggled",
                     G_CALLBACK (levels_input_picker_toggled),
@@ -556,7 +591,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_object_set_data (G_OBJECT (button), "pick-value",
+  g_object_set_data (G_OBJECT (button), "pick_value",
                      GUINT_TO_POINTER (HIGH_INPUT));
   g_signal_connect (button, "toggled",
                     G_CALLBACK (levels_input_picker_toggled),
@@ -1090,22 +1125,22 @@ levels_high_output_adjustment_update (GtkAdjustment  *adjustment,
 
 static void
 levels_input_picker_toggled (GtkWidget      *widget,
-                             GimpLevelsTool *l_tool)
+                             GimpLevelsTool *tool)
 {
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
-      if (l_tool->active_picker == widget)
+      if (tool->active_picker == widget)
         return;
 
-      if (l_tool->active_picker)
-        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (l_tool->active_picker), 
+      if (tool->active_picker)
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tool->active_picker), 
                                       FALSE);
 
-      l_tool->active_picker = widget;
+      tool->active_picker = widget;
     }
-  else if (l_tool->active_picker == widget)
+  else if (tool->active_picker == widget)
     {
-      l_tool->active_picker = NULL;
+      tool->active_picker = NULL;
     }      
 }
 
@@ -1299,6 +1334,60 @@ levels_output_da_events (GtkWidget      *widget,
     }
 
   return FALSE;
+}
+
+static void
+levels_input_color_pick (GimpTool     *tool,
+			 GimpDrawable *drawable,
+			 GimpCoords   *coords)
+{
+  GimpLevelsTool *l_tool;
+  guchar         *color;
+  guint           value;
+  gint            x;
+  gint            y;
+
+  l_tool = GIMP_LEVELS_TOOL (tool);
+
+  if (! l_tool->active_picker || !drawable)
+    return;
+
+  gimp_drawable_offsets (drawable, &x, &y);
+
+  x = RINT (coords->x) - x;
+  y = RINT (coords->y) - y;
+
+  color = gimp_image_map_get_color_at (GIMP_IMAGE_MAP_TOOL (tool)->image_map,
+                                       x, y);
+  if (!color)
+    return;
+
+  value = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (l_tool->active_picker),
+					       "pick_value"));
+
+  switch (value)
+    {
+    case LOW_INPUT:
+      levels_adjust_by_colors (l_tool->levels,
+			       l_tool->channel, color, NULL, NULL);
+      break;
+    case GAMMA:
+      levels_adjust_by_colors (l_tool->levels,
+			       l_tool->channel, NULL, color, NULL);
+      break;
+    case HIGH_INPUT:
+      levels_adjust_by_colors (l_tool->levels,
+			       l_tool->channel, NULL, NULL, color);
+      break;
+    default:
+      break;
+    }
+
+  levels_update (l_tool, ALL);
+
+  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (l_tool));
+
+  g_free (color);
 }
 
 static void

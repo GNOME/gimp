@@ -1,5 +1,14 @@
 2003-03-15  Sven Neumann  <sven@gimp.org>
 
+	* app/base/levels.c (levels_adjust_by_colors): implemented this
+	function which used to be a an empty stub.
+
+	* app/tools/gimplevelstool.c: implemented the missing
+	functionality behind the color picker buttons I added some time
+	ago.
+
+2003-03-15  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpitemfactory.c (gimp_item_factory_translate_func):
 	simplified.
 

@@ -144,6 +144,28 @@ levels_channel_auto (Levels               *levels,
     }
 }
 
+static gint
+levels_input_from_color (GimpHistogramChannel  channel,
+			 guchar               *color)
+{
+  switch (channel)
+    {
+    case GIMP_HISTOGRAM_VALUE:
+      return MAX (MAX (color[RED_PIX], color[GREEN_PIX]), color[BLUE_PIX]);
+    case GIMP_HISTOGRAM_RED:
+      return color[RED_PIX];
+    case GIMP_HISTOGRAM_GREEN:
+      return color[GREEN_PIX];
+    case GIMP_HISTOGRAM_BLUE:
+      return color[BLUE_PIX];
+    case GIMP_HISTOGRAM_ALPHA:
+      return color[ALPHA_PIX];
+    default:
+      g_assert_not_reached ();
+      return 0;
+    }
+}
+
 void
 levels_adjust_by_colors (Levels               *levels,
                          GimpHistogramChannel  channel,
@@ -154,12 +176,31 @@ levels_adjust_by_colors (Levels               *levels,
   g_return_if_fail (levels != NULL);
 
   if (black)
-    levels->low_input[channel] = black[channel];
-
-  /* FIXME: gray adjustment */
+    levels->low_input[channel] = levels_input_from_color (channel, black);
 
   if (white)
-    levels->high_input[channel] = white[channel];
+    levels->high_input[channel] = levels_input_from_color (channel, white);
+
+  if (gray)
+    {
+      gint    input;
+      gint    range;
+      gdouble inten;
+
+      input = levels_input_from_color (channel, gray);
+
+      range = levels->high_input[channel] - levels->low_input[channel];
+      if (range <= 0)
+	return;
+
+      input -= levels->low_input[channel];
+      if (input < 0)
+	return;
+
+      inten = (gdouble) input / (gdouble) range;
+
+      levels->gamma[channel] = log (inten) / log (0.5); 
+    }
 }
 
 void
