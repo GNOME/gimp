@@ -45,6 +45,7 @@
 #include "buffers-actions.h"
 #include "channels-actions.h"
 #include "colormap-editor-actions.h"
+#include "context-actions.h"
 #include "debug-actions.h"
 #include "dialogs-actions.h"
 #include "dockable-actions.h"
@@ -96,6 +97,9 @@ static GimpActionFactoryEntry action_groups[] =
   { "colormap-editor",
     colormap_editor_actions_setup,
     colormap_editor_actions_update },
+  { "context",
+    context_actions_setup,
+    context_actions_update },
   { "debug",
     debug_actions_setup,
     debug_actions_update },

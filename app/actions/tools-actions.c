@@ -52,16 +52,6 @@ static GimpActionEntry tools_actions[] =
   { "tools-transform-menu", NULL, N_("_Transform Tools") },
   { "tools-color-menu",     NULL, N_("_Color Tools")     },
 
-  { "tools-default-colors", GIMP_STOCK_DEFAULT_COLORS,
-    N_("_Default Colors"), "D", NULL,
-    G_CALLBACK (tools_default_colors_cmd_callback),
-    GIMP_HELP_TOOLBOX_DEFAULT_COLORS },
-
-  { "tools-swap-colors", GIMP_STOCK_SWAP_COLORS,
-    N_("S_wap Colors"), "X", NULL,
-    G_CALLBACK (tools_swap_colors_cmd_callback),
-    GIMP_HELP_TOOLBOX_SWAP_COLORS },
-
   { "tools-reset", GIMP_STOCK_RESET,
     N_("_Reset Order & Visibility"), NULL,
     N_("Reset tool order and visibility"),

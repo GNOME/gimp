@@ -1,3 +1,25 @@
+2004-06-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/Makefile.am
+	* app/actions/context-actions.[ch]
+	* app/actions/context-commands.[ch]: added new action group to
+	modify all GimpContext properties. So far there are actions to
+	cycle through the lists of brushes, patterns etc., to change the
+	opacity, to swap and default colors and to edit generated brushes.
+
+	* app/actions/actions.c: register the new "context" action group.
+
+	* app/actions/tools-actions.c
+	* app/actions/tools-commands.[ch]: removed "tools-default-colors"
+	and "tools-swap-colors" actions and callbacks because they are
+	in the "context" action group now.
+
+	* app/menus/menus.c: add the "context" group to the <Image> and
+	<Dock> UI managers.
+
+	* menus/image-menu.xml.in: changed accordingly. Added a temporary
+	"Context" menu to test and debug the new actions.
+
 2004-06-15  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* app/tools/gimpcroptool.c (crop_selection_callback): Force

@@ -1,0 +1,402 @@
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#include "config.h"
+
+#include <gtk/gtk.h>
+
+#include "libgimpwidgets/gimpwidgets.h"
+
+#include "actions-types.h"
+
+#include "core/gimp.h"
+#include "core/gimpbrushgenerated.h"
+#include "core/gimpcontext.h"
+#include "core/gimplist.h"
+
+#include "widgets/gimpactiongroup.h"
+#include "widgets/gimphelp-ids.h"
+
+#include "actions.h"
+#include "context-actions.h"
+#include "context-commands.h"
+
+#include "gimp-intl.h"
+
+
+/*  local function prototypes  */
+
+static GimpActionEntry context_actions[] =
+{
+  { "context-menu",          NULL,                      N_("_Context")  },
+  { "context-colors-menu",   GIMP_STOCK_DEFAULT_COLORS, N_("_Colors")   },
+  { "context-opacity-menu",  GIMP_STOCK_TRANSPARENCY,   N_("_Opacity")  },
+  { "context-brush-menu",    GIMP_STOCK_BRUSH,          N_("_Brush")    },
+  { "context-pattern-menu",  GIMP_STOCK_PATTERN,        N_("_Pattern")  },
+  { "context-palette-menu",  GIMP_STOCK_PALETTE,        N_("_Palette")  },
+  { "context-gradient-menu", GIMP_STOCK_GRADIENT,       N_("_Gradient") },
+  { "context-font-menu",     GIMP_STOCK_FONT,           N_("_Font")     },
+
+  { "context-colors-default", GIMP_STOCK_DEFAULT_COLORS,
+    N_("_Default Colors"), "D", NULL,
+    G_CALLBACK (context_colors_default_cmd_callback),
+    GIMP_HELP_TOOLBOX_DEFAULT_COLORS },
+
+  { "context-colors-swap", GIMP_STOCK_SWAP_COLORS,
+    N_("S_wap Colors"), "X", NULL,
+    G_CALLBACK (context_colors_swap_cmd_callback),
+    GIMP_HELP_TOOLBOX_SWAP_COLORS }
+};
+
+static GimpEnumActionEntry context_opacity_actions[] =
+{
+  { "context-opacity-transparent", GTK_STOCK_GOTO_FIRST,
+    "Completely Transparent", NULL, NULL,
+    GIMP_CONTEXT_SELECT_FIRST,
+    NULL },
+  { "context-opacity-opaque", GTK_STOCK_GOTO_LAST,
+    "Completely Opaque", NULL, NULL,
+    GIMP_CONTEXT_SELECT_LAST,
+    NULL },
+  { "context-opacity-decrease", GTK_STOCK_REMOVE,
+    "More Transparent", NULL, NULL,
+    GIMP_CONTEXT_SELECT_PREVIOUS,
+    NULL },
+  { "context-opacity-increase", GTK_STOCK_ADD,
+    "More Opaque", NULL, NULL,
+    GIMP_CONTEXT_SELECT_NEXT,
+    NULL }
+};
+
+static GimpEnumActionEntry context_brush_select_actions[] =
+{
+  { "context-brush-first", GTK_STOCK_GOTO_FIRST,
+    "First Brush", NULL, NULL,
+    GIMP_CONTEXT_SELECT_FIRST,
+    NULL },
+  { "context-brush-last", GTK_STOCK_GOTO_LAST,
+    "Last Brush", NULL, NULL,
+    GIMP_CONTEXT_SELECT_LAST,
+    NULL },
+  { "context-brush-previous", GTK_STOCK_GO_BACK,
+    "Previous Brush", NULL, NULL,
+    GIMP_CONTEXT_SELECT_PREVIOUS,
+    NULL },
+  { "context-brush-next", GTK_STOCK_GO_FORWARD,
+    "Next Brush", NULL, NULL,
+    GIMP_CONTEXT_SELECT_NEXT,
+    NULL }
+};
+
+static GimpEnumActionEntry context_pattern_select_actions[] =
+{
+  { "context-pattern-first", GTK_STOCK_GOTO_FIRST,
+    "First Pattern", NULL, NULL,
+    GIMP_CONTEXT_SELECT_FIRST,
+    NULL },
+  { "context-pattern-last", GTK_STOCK_GOTO_LAST,
+    "Last Pattern", NULL, NULL,
+    GIMP_CONTEXT_SELECT_LAST,
+    NULL },
+  { "context-pattern-previous", GTK_STOCK_GO_BACK,
+    "Previous Pattern", NULL, NULL,
+    GIMP_CONTEXT_SELECT_PREVIOUS,
+    NULL },
+  { "context-pattern-next", GTK_STOCK_GO_FORWARD,
+    "Next Pattern", NULL, NULL,
+    GIMP_CONTEXT_SELECT_NEXT,
+    NULL }
+};
+
+static GimpEnumActionEntry context_palette_select_actions[] =
+{
+  { "context-palette-first", GTK_STOCK_GOTO_FIRST,
+    "First Palette", NULL, NULL,
+    GIMP_CONTEXT_SELECT_FIRST,
+    NULL },
+  { "context-palette-last", GTK_STOCK_GOTO_LAST,
+    "Last Palette", NULL, NULL,
+    GIMP_CONTEXT_SELECT_LAST,
+    NULL },
+  { "context-palette-previous", GTK_STOCK_GO_BACK,
+    "Previous Palette", NULL, NULL,
+    GIMP_CONTEXT_SELECT_PREVIOUS,
+    NULL },
+  { "context-palette-next", GTK_STOCK_GO_FORWARD,
+    "Next Palette", NULL, NULL,
+    GIMP_CONTEXT_SELECT_NEXT,
+    NULL }
+};
+
+static GimpEnumActionEntry context_gradient_select_actions[] =
+{
+  { "context-gradient-first", GTK_STOCK_GOTO_FIRST,
+    "First Gradient", NULL, NULL,
+    GIMP_CONTEXT_SELECT_FIRST,
+    NULL },
+  { "context-gradient-last", GTK_STOCK_GOTO_LAST,
+    "Last Gradient", NULL, NULL,
+    GIMP_CONTEXT_SELECT_LAST,
+    NULL },
+  { "context-gradient-previous", GTK_STOCK_GO_BACK,
+    "Previous Gradient", NULL, NULL,
+    GIMP_CONTEXT_SELECT_PREVIOUS,
+    NULL },
+  { "context-gradient-next", GTK_STOCK_GO_FORWARD,
+    "Next Gradient", NULL, NULL,
+    GIMP_CONTEXT_SELECT_NEXT,
+    NULL }
+};
+
+static GimpEnumActionEntry context_font_select_actions[] =
+{
+  { "context-font-first", GTK_STOCK_GOTO_FIRST,
+    "First Font", NULL, NULL,
+    GIMP_CONTEXT_SELECT_FIRST,
+    NULL },
+  { "context-font-last", GTK_STOCK_GOTO_LAST,
+    "Last Font", NULL, NULL,
+    GIMP_CONTEXT_SELECT_LAST,
+    NULL },
+  { "context-font-previous", GTK_STOCK_GO_BACK,
+    "Previous Font", NULL, NULL,
+    GIMP_CONTEXT_SELECT_PREVIOUS,
+    NULL },
+  { "context-font-next", GTK_STOCK_GO_FORWARD,
+    "Next Font", NULL, NULL,
+    GIMP_CONTEXT_SELECT_NEXT,
+    NULL }
+};
+
+static GimpEnumActionEntry context_brush_radius_actions[] =
+{
+  { "context-brush-radius-minimum", GTK_STOCK_GOTO_FIRST,
+    "Minumum Radius", NULL, NULL,
+    GIMP_CONTEXT_SELECT_FIRST,
+    NULL },
+  { "context-brush-radius-maximum", GTK_STOCK_GOTO_LAST,
+    "Maximum Radius", NULL, NULL,
+    GIMP_CONTEXT_SELECT_LAST,
+    NULL },
+  { "context-brush-radius-decrease", GTK_STOCK_GO_BACK,
+    "Decrease Radius", NULL, NULL,
+    GIMP_CONTEXT_SELECT_PREVIOUS,
+    NULL },
+  { "context-brush-radius-increase", GTK_STOCK_GO_FORWARD,
+    "Increase Radius", NULL, NULL,
+    GIMP_CONTEXT_SELECT_NEXT,
+    NULL },
+  { "context-brush-radius-decrease-skip", GTK_STOCK_GO_BACK,
+    "Decrease Radius More", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SKIP_PREVIOUS,
+    NULL },
+  { "context-brush-radius-increase-skip", GTK_STOCK_GO_FORWARD,
+    "Increase Radius More", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SKIP_NEXT,
+    NULL },
+};
+
+static GimpEnumActionEntry context_brush_hardness_actions[] =
+{
+  { "context-brush-hardness-minimum", GTK_STOCK_GOTO_FIRST,
+    "Minumum Hardness", NULL, NULL,
+    GIMP_CONTEXT_SELECT_FIRST,
+    NULL },
+  { "context-brush-hardness-maximum", GTK_STOCK_GOTO_LAST,
+    "Maximum Hardness", NULL, NULL,
+    GIMP_CONTEXT_SELECT_LAST,
+    NULL },
+  { "context-brush-hardness-decrease", GTK_STOCK_GO_BACK,
+    "Decrease Hardness", NULL, NULL,
+    GIMP_CONTEXT_SELECT_PREVIOUS,
+    NULL },
+  { "context-brush-hardness-increase", GTK_STOCK_GO_FORWARD,
+    "Increase Hardness", NULL, NULL,
+    GIMP_CONTEXT_SELECT_NEXT,
+    NULL },
+  { "context-brush-hardness-decrease-skip", GTK_STOCK_GO_BACK,
+    "Decrease Hardness More", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SKIP_PREVIOUS,
+    NULL },
+  { "context-brush-hardness-increase-skip", GTK_STOCK_GO_FORWARD,
+    "Increase Hardness More", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SKIP_NEXT,
+    NULL },
+};
+
+static GimpEnumActionEntry context_brush_aspect_actions[] =
+{
+  { "context-brush-aspect-minimum", GTK_STOCK_GOTO_FIRST,
+    "Minumum Aspect", NULL, NULL,
+    GIMP_CONTEXT_SELECT_FIRST,
+    NULL },
+  { "context-brush-aspect-maximum", GTK_STOCK_GOTO_LAST,
+    "Maximum Aspect", NULL, NULL,
+    GIMP_CONTEXT_SELECT_LAST,
+    NULL },
+  { "context-brush-aspect-decrease", GTK_STOCK_GO_BACK,
+    "Decrease Aspect", NULL, NULL,
+    GIMP_CONTEXT_SELECT_PREVIOUS,
+    NULL },
+  { "context-brush-aspect-increase", GTK_STOCK_GO_FORWARD,
+    "Increase Aspect", NULL, NULL,
+    GIMP_CONTEXT_SELECT_NEXT,
+    NULL },
+  { "context-brush-aspect-decrease-skip", GTK_STOCK_GO_BACK,
+    "Decrease Aspect More", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SKIP_PREVIOUS,
+    NULL },
+  { "context-brush-aspect-increase-skip", GTK_STOCK_GO_FORWARD,
+    "Increase Aspect More", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SKIP_NEXT,
+    NULL },
+};
+
+static GimpEnumActionEntry context_brush_angle_actions[] =
+{
+  { "context-brush-angle-minimum", GIMP_STOCK_FLIP_HORIZONTAL,
+    "Horizontal", NULL, NULL,
+    GIMP_CONTEXT_SELECT_FIRST,
+    NULL },
+  { "context-brush-angle-maximum", GIMP_STOCK_FLIP_VERTICAL,
+    "Vertical", NULL, NULL,
+    GIMP_CONTEXT_SELECT_LAST,
+    NULL },
+  { "context-brush-angle-decrease", GIMP_STOCK_ROTATE_90,
+    "Rotate Right", NULL, NULL,
+    GIMP_CONTEXT_SELECT_PREVIOUS,
+    NULL },
+  { "context-brush-angle-increase", GIMP_STOCK_ROTATE_270,
+    "Rotate Left", NULL, NULL,
+    GIMP_CONTEXT_SELECT_NEXT,
+    NULL },
+  { "context-brush-angle-decrease-skip", GIMP_STOCK_ROTATE_90,
+    "Rotate Right 15 degrees", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SKIP_PREVIOUS,
+    NULL },
+  { "context-brush-angle-increase-skip", GIMP_STOCK_ROTATE_270,
+    "Rotate Left 15 degrees", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SKIP_NEXT,
+    NULL },
+};
+
+
+void
+context_actions_setup (GimpActionGroup *group)
+{
+  gimp_action_group_add_actions (group,
+                                 context_actions,
+                                 G_N_ELEMENTS (context_actions));
+
+  gimp_action_group_add_enum_actions (group,
+                                      context_opacity_actions,
+                                      G_N_ELEMENTS (context_opacity_actions),
+                                      G_CALLBACK (context_opacity_cmd_callback));
+
+  gimp_action_group_add_enum_actions (group,
+                                      context_brush_select_actions,
+                                      G_N_ELEMENTS (context_brush_select_actions),
+                                      G_CALLBACK (context_brush_select_cmd_callback));
+  gimp_action_group_add_enum_actions (group,
+                                      context_pattern_select_actions,
+                                      G_N_ELEMENTS (context_pattern_select_actions),
+                                      G_CALLBACK (context_pattern_select_cmd_callback));
+  gimp_action_group_add_enum_actions (group,
+                                      context_palette_select_actions,
+                                      G_N_ELEMENTS (context_palette_select_actions),
+                                      G_CALLBACK (context_palette_select_cmd_callback));
+  gimp_action_group_add_enum_actions (group,
+                                      context_gradient_select_actions,
+                                      G_N_ELEMENTS (context_gradient_select_actions),
+                                      G_CALLBACK (context_gradient_select_cmd_callback));
+  gimp_action_group_add_enum_actions (group,
+                                      context_font_select_actions,
+                                      G_N_ELEMENTS (context_font_select_actions),
+                                      G_CALLBACK (context_font_select_cmd_callback));
+
+  gimp_action_group_add_enum_actions (group,
+                                      context_brush_radius_actions,
+                                      G_N_ELEMENTS (context_brush_radius_actions),
+                                      G_CALLBACK (context_brush_radius_cmd_callback));
+  gimp_action_group_add_enum_actions (group,
+                                      context_brush_hardness_actions,
+                                      G_N_ELEMENTS (context_brush_hardness_actions),
+                                      G_CALLBACK (context_brush_hardness_cmd_callback));
+  gimp_action_group_add_enum_actions (group,
+                                      context_brush_aspect_actions,
+                                      G_N_ELEMENTS (context_brush_aspect_actions),
+                                      G_CALLBACK (context_brush_aspect_cmd_callback));
+  gimp_action_group_add_enum_actions (group,
+                                      context_brush_angle_actions,
+                                      G_N_ELEMENTS (context_brush_angle_actions),
+                                      G_CALLBACK (context_brush_angle_cmd_callback));
+}
+
+void
+context_actions_update (GimpActionGroup *group,
+                        gpointer         data)
+{
+  GimpContext *context;
+  gboolean     generated = FALSE;
+  gboolean     radius    = 0.0;
+  gboolean     hardness  = 0.0;
+  gboolean     aspect    = 0.0;
+  gboolean     angle     = 0.0;
+
+  context = action_data_get_context (data);
+
+  if (context)
+    {
+      GimpBrush *brush = gimp_context_get_brush (context);
+
+      if (GIMP_IS_BRUSH_GENERATED (brush))
+        {
+          GimpBrushGenerated *gen = GIMP_BRUSH_GENERATED (brush);
+
+          generated = TRUE;
+
+          radius   = gimp_brush_generated_get_radius       (gen);
+          hardness = gimp_brush_generated_get_hardness     (gen);
+          aspect   = gimp_brush_generated_get_aspect_ratio (gen);
+          angle    = gimp_brush_generated_get_angle        (gen);
+        }
+    }
+
+#define SET_SENSITIVE(action,condition) \
+        gimp_action_group_set_action_sensitive (group, "context-" action, (condition) != 0)
+
+#if 0
+  SET_SENSITIVE ("brush-radius-minimum",       generated && radius > 1.0);
+  SET_SENSITIVE ("brush-radius-decrease",      generated && radius > 1.0);
+  SET_SENSITIVE ("brush-radius-decrease-skip", generated && radius > 1.0);
+
+  SET_SENSITIVE ("brush-radius-maximum",       generated && radius < 4096.0);
+  SET_SENSITIVE ("brush-radius-increase",      generated && radius < 4096.0);
+  SET_SENSITIVE ("brush-radius-increase-skip", generated && radius < 4096.0);
+
+  SET_SENSITIVE ("brush-angle-minimum",       generated);
+  SET_SENSITIVE ("brush-angle-decrease",      generated);
+  SET_SENSITIVE ("brush-angle-decrease-skip", generated);
+
+  SET_SENSITIVE ("brush-angle-maximum",       generated);
+  SET_SENSITIVE ("brush-angle-increase",      generated);
+  SET_SENSITIVE ("brush-angle-increase-skip", generated);
+#endif
+
+#undef SET_SENSITIVE
+}

@@ -43,26 +43,6 @@
 
 
 void
-tools_default_colors_cmd_callback (GtkAction *action,
-				   gpointer   data)
-{
-  GimpContext *context;
-  return_if_no_context (context, data);
-
-  gimp_context_set_default_colors (context);
-}
-
-void
-tools_swap_colors_cmd_callback (GtkAction *action,
-				gpointer   data)
-{
-  GimpContext *context;
-  return_if_no_context (context, data);
-
-  gimp_context_swap_colors (context);
-}
-
-void
 tools_select_cmd_callback (GtkAction   *action,
                            const gchar *value,
 			   gpointer     data)

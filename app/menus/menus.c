@@ -77,6 +77,7 @@ menus_init (Gimp *gimp)
 
   gimp_menu_factory_manager_register (global_menu_factory, "<Image>",
                                       "file",
+                                      "context",
                                       "debug",
                                       "help",
                                       "edit",
@@ -104,6 +105,7 @@ menus_init (Gimp *gimp)
 
   gimp_menu_factory_manager_register (global_menu_factory, "<Dock>",
                                       "file",
+                                      "context",
                                       "edit",
                                       "select",
                                       "image",

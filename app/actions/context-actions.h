@@ -16,17 +16,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __TOOLS_COMMANDS_H__
-#define __TOOLS_COMMANDS_H__
+#ifndef __CONTEXT_ACTIONS_H__
+#define __CONTEXT_ACTIONS_H__
 
 
-void   tools_select_cmd_callback            (GtkAction   *action,
-                                             const gchar *value,
-                                             gpointer     data);
-void   tools_toggle_visibility_cmd_callback (GtkAction   *action,
-                                             gpointer     data);
-void   tools_reset_cmd_callback             (GtkAction   *action,
-                                             gpointer     data);
+void   context_actions_setup  (GimpActionGroup *group);
+void   context_actions_update (GimpActionGroup *group,
+                               gpointer         data);
 
 
-#endif /* __TOOLS_COMMANDS_H__ */
+#endif /* __CONTEXT_ACTIONS_H__ */

@@ -21,6 +21,10 @@ libappactions_a_SOURCES = \
 	colormap-editor-actions.h	\
 	colormap-editor-commands.c	\
 	colormap-editor-commands.h	\
+	context-actions.c		\
+	context-actions.h		\
+	context-commands.c		\
+	context-commands.h		\
 	data-commands.c			\
 	data-commands.h			\
 	debug-actions.c			\
