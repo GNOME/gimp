@@ -93,8 +93,10 @@ gimp_coordinates_new()
 
 </para>
 
-@gum: 
+@menu: 
 @unit: 
+<!-- # Unused Parameters # -->
+@gum: 
 
 
 <!-- ##### FUNCTION gimp_unit_menu_get_unit ##### -->
@@ -102,8 +104,10 @@ gimp_coordinates_new()
 
 </para>
 
-@gum: 
+@menu: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@gum: 
 
 
 <!-- ##### SIGNAL GimpUnitMenu::unit-changed ##### -->

@@ -1,5 +1,12 @@
 2003-02-10  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/vpropagate.c: applied a patch from David Necas
+	<yeti@physics.muni.cz> that fixes bug #105741.
+
+	* plug-ins/common/uniteditor.c: cosmetics.
+	
+2003-02-10  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/gifload.c (DoExtension)
 	* plug-ins/common/jpeg.c (load_image): UTF-8 validate the comment
 	before setting it as a parasite.

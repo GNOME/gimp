@@ -345,15 +345,13 @@ new_unit (GtkWidget *main_dialog,
 static void
 list_init (GtkTreeView *tv)
 {
-  GtkListStore     *list_store;
-  GtkTreeSelection *sel;
-  GtkTreeIter       iter;
-  gint              num_units;
-  GimpUnit          unit;
-  GdkColor          color;
+  GtkListStore *list_store;
+  GtkTreeIter   iter;
+  gint          num_units;
+  GimpUnit      unit;
+  GdkColor      color;
 
   list_store = GTK_LIST_STORE (gtk_tree_view_get_model (tv));
-  sel        = gtk_tree_view_get_selection (tv);
 
   gtk_list_store_clear (list_store);
 
@@ -388,7 +386,7 @@ list_init (GtkTreeView *tv)
     }
 
   if (gtk_tree_model_get_iter_root (GTK_TREE_MODEL (list_store), &iter))
-    gtk_tree_selection_select_iter (sel, &iter);
+    gtk_tree_selection_select_iter (gtk_tree_view_get_selection (tv), &iter);
 }
 
 static void
@@ -577,7 +575,8 @@ unit_editor_dialog (void)
                                        NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
 
-  gimp_help_set_help_data (col->button, gettext (help_strings[SAVE]), NULL);
+  gimp_help_set_help_data (col->button,
+			   gettext (help_strings[SAVE]), NULL);
 
   g_signal_connect (rend, "toggled",
                     G_CALLBACK (saved_toggled_callback),
@@ -590,7 +589,8 @@ unit_editor_dialog (void)
                                                    NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
 
-  gimp_help_set_help_data (col->button, gettext (help_strings[IDENTIFIER]), NULL);
+  gimp_help_set_help_data (col->button,
+			   gettext (help_strings[IDENTIFIER]), NULL);
 
   rend = gtk_cell_renderer_text_new ();
   col  = gtk_tree_view_column_new_with_attributes (_("Factor"), rend,
@@ -598,7 +598,8 @@ unit_editor_dialog (void)
                                                    NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
 
-  gimp_help_set_help_data (col->button, gettext (help_strings[FACTOR]), NULL);
+  gimp_help_set_help_data (col->button,
+			   gettext (help_strings[FACTOR]), NULL);
 
   rend = gtk_cell_renderer_text_new ();
   col  = gtk_tree_view_column_new_with_attributes (_("Digits"), rend,
@@ -606,7 +607,8 @@ unit_editor_dialog (void)
                                                    NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
 
-  gimp_help_set_help_data (col->button, gettext (help_strings[DIGITS]), NULL);
+  gimp_help_set_help_data (col->button,
+			   gettext (help_strings[DIGITS]), NULL);
 
   rend = gtk_cell_renderer_text_new ();
   col  = gtk_tree_view_column_new_with_attributes (_("Symbol"), rend,
@@ -614,7 +616,8 @@ unit_editor_dialog (void)
                                                    NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
 
-  gimp_help_set_help_data (col->button, gettext (help_strings[SYMBOL]), NULL);
+  gimp_help_set_help_data (col->button,
+			   gettext (help_strings[SYMBOL]), NULL);
 
   rend = gtk_cell_renderer_text_new ();
   col  = gtk_tree_view_column_new_with_attributes (_("Abbreviation"), rend,
@@ -622,7 +625,8 @@ unit_editor_dialog (void)
                                                    NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
 
-  gimp_help_set_help_data (col->button, gettext (help_strings[ABBREVIATION]), NULL);
+  gimp_help_set_help_data (col->button,
+			   gettext (help_strings[ABBREVIATION]), NULL);
 
   rend = gtk_cell_renderer_text_new ();
   col  = gtk_tree_view_column_new_with_attributes (_("Singular"), rend,
@@ -630,7 +634,8 @@ unit_editor_dialog (void)
                                                    NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
 
-  gimp_help_set_help_data (col->button, gettext (help_strings[SINGULAR]), NULL);
+  gimp_help_set_help_data (col->button,
+			   gettext (help_strings[SINGULAR]), NULL);
 
   rend = gtk_cell_renderer_text_new ();
   col  = gtk_tree_view_column_new_with_attributes (_("Plural"), rend,
@@ -638,7 +643,8 @@ unit_editor_dialog (void)
                                                    NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
 
-  gimp_help_set_help_data (col->button, gettext (help_strings[PLURAL]), NULL);
+  gimp_help_set_help_data (col->button,
+			   gettext (help_strings[PLURAL]), NULL);
 
   list_init (GTK_TREE_VIEW (tv));
 

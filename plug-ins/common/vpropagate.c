@@ -374,7 +374,7 @@ run (gchar      *name,
       strcmp(name, DEFAULT_PLUG_IN_NAME) != 0)
     gimp_displays_flush();
   if (run_mode == GIMP_RUN_INTERACTIVE && status == GIMP_PDB_SUCCESS 
-      && strcmp(name, DEFAULT_PLUG_IN_NAME) != 0)
+      && strcmp(name, DEFAULT_PLUG_IN_NAME) == 0)
     gimp_set_data (DEFAULT_PLUG_IN_NAME, &vpvals, sizeof (VPValueType));
 
   values[0].type = GIMP_PDB_STATUS;
@@ -518,9 +518,9 @@ prepare_row (GimpPixelRgn *pixel_rgn,
 {
   gint b;
 
-  if (y == 0)
+  if (y <= 0)
     gimp_pixel_rgn_get_row (pixel_rgn, data, x, (y + 1), w);
-  else if (y == pixel_rgn->h)
+  else if (y >= pixel_rgn->h)
     gimp_pixel_rgn_get_row (pixel_rgn, data, x, (y - 1), w);
   else
     gimp_pixel_rgn_get_row (pixel_rgn, data, x, y, w);
