@@ -71,10 +71,7 @@ NAME="TOOLS-RECT-SELECT"
 >Rectangular Selection</A
 ></H1
 ><A
-NAME="AEN3650"
-></A
-><A
-NAME="AEN3652"
+NAME="AEN3793"
 ></A
 ><DIV
 CLASS="SECT2"
@@ -85,7 +82,14 @@ NAME="TOOLS-RECT-SELECT-OVERVIEW"
 >Overview</A
 ></H2
 ><P
->      The <SPAN
+>      <SPAN
+CLASS="INLINEMEDIAOBJECT"
+><IMG
+SRC="../images/tools/tool_rect_sel.png"
+></IMG
+></SPAN
+>
+      The <SPAN
 CLASS="GUIBUTTON"
 >Rectangular Selection</SPAN
 > tool allows
@@ -135,7 +139,7 @@ CLASS="GUIBUTTON"
 >Antialiasing</SPAN
 > button toggles the
             rendering of aliased edges on the selection boundary.
-            Aliasing produces smoother curves and angles and is
+            Antialiasing produces smoother curves and angles and is
             recommended for most uses.
           </P
 ></DD
@@ -155,98 +159,88 @@ CLASS="GUIBUTTON"
 ></DD
 ></DL
 ></DIV
-><H2
-CLASS="BRIDGEHEAD"
->Additional Information</H2
+><DIV
+CLASS="SIMPLESECT"
+><H3
+CLASS="SIMPLESECT"
+><A
+NAME="AEN3822"
+>Additional Information</A
+></H3
 ><P
->      Default Keyboard Shortcut: <B
+>        Default Keyboard Shortcut: <B
 CLASS="KEYCAP"
 >R</B
 >
-    </P
+      </P
 ><P
+>	Key modifiers:
+	<P
 ></P
 ><UL
 ><LI
 ><P
->          The key combination:
-          <B
+>	      <B
 CLASS="KEYCAP"
->Shift</B
->-<SPAN
+>Ctrl</B
+> is used to subtract from existing
+	      selections and constrain the origin of the selection such
+	      that the initial click determines the center of the
+	      selection. Simply release <B
+CLASS="KEYCAP"
+>Ctrl</B
+> prior to
+	      releasing <SPAN
 CLASS="MOUSEBUTTON"
 >Button1</SPAN
->
-          is used to add to existing selections or to constrain the
-          selection shape such that the height and width remain equal. If
-          needs require addition without constraint, simply release
-          <B
+> if non
+	      constrained selection subtraction is required.
+	    </P
+></LI
+><LI
+><P
+>	      <B
+CLASS="KEYCAP"
+>Alt</B
+> is used to move an existing selection.
+	    </P
+></LI
+><LI
+><P
+>	      <B
 CLASS="KEYCAP"
 >Shift</B
-> prior to releasing
-          <SPAN
+> is used to add to existing selections
+	      or to constrain the selection shape such that the height and
+	      width remain equal. If needs require addition without
+	      constraint, simply release <B
+CLASS="KEYCAP"
+>Shift</B
+> prior to
+	      releasing <SPAN
 CLASS="MOUSEBUTTON"
 >Button1</SPAN
 >.
-        </P
+	    </P
 ></LI
 ><LI
 ><P
->          The key combination:
-          <B
-CLASS="KEYCAP"
->Ctrl</B
->-<SPAN
-CLASS="MOUSEBUTTON"
->Button1</SPAN
->
-          is used to subtract from existing selections and constrain the
-          origin of the selection such that the initial click determines
-          the center of the selection. Simply release
-          <B
-CLASS="KEYCAP"
->Ctrl</B
-> prior to releasing
-          <SPAN
-CLASS="MOUSEBUTTON"
->Button1</SPAN
-> if non constrained selection
-          subtraction is required.
-        </P
-></LI
-><LI
-><P
->          The key combination:
-          <B
-CLASS="KEYCAP"
->Alt</B
->-<SPAN
-CLASS="MOUSEBUTTON"
->Button1</SPAN
->
-          is used to move an existing selection.
-        </P
-></LI
-><LI
-><P
->          The key combination:
-          <B
+>	      <B
 CLASS="KEYCAP"
 >Shift</B
 >-<B
 CLASS="KEYCAP"
 >Ctrl</B
->-<SPAN
-CLASS="MOUSEBUTTON"
->Button1</SPAN
 >
-          can be used to constrain the selection generation to equal
-          height and width, as well as forcing the selection to generate
-          from the point first clicked. It also serves the purpose of
-          intersection selections.
-        </P
+	      can be used to constrain the selection generation to equal
+	      height and width, as well as forcing the selection to generate
+	      from the point first clicked. It also serves the purpose of
+	      intersection selections.
+	    </P
 ></LI
 ></UL
+>
+      </P
 ><DIV
 CLASS="WARNING"
 ><P
@@ -261,21 +255,22 @@ WIDTH="25"
 ALIGN="CENTER"
 VALIGN="TOP"
 ><IMG
-SRC="../../images/warning.png"
+SRC="../stylesheet-images/warning.gif"
 HSPACE="5"
 ALT="Warning"></TD
 ><TD
 ALIGN="LEFT"
 VALIGN="TOP"
 ><P
->        When moving selections beyond the boundaries of the image, the
-        selection area will be cropped to the image area. Selections
-        cannot exist outside image areas. Selection movements and
-        changes are kept in the undo history just in case.
-      </P
+>	  When moving selections beyond the boundaries of the image, the
+	  selection area will be cropped to the image area. Selections
+	  cannot exist outside image areas. Selection movements and
+	  changes are kept in the undo history just in case.
+	</P
 ></TD
 ></TR
 ></TABLE
+></DIV
 ></DIV
 ></DIV
 ></DIV

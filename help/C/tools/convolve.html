@@ -71,7 +71,7 @@ NAME="TOOLS-CONVOLVE"
 >Convolver</A
 ></H1
 ><A
-NAME="AEN2594"
+NAME="AEN2688"
 ></A
 ><DIV
 CLASS="SECT2"
@@ -82,7 +82,14 @@ NAME="TOOLS-CONVOLVE-OVERVIEW"
 >Overview</A
 ></H2
 ><P
->      The <SPAN
+>      <SPAN
+CLASS="INLINEMEDIAOBJECT"
+><IMG
+SRC="../images/tools/tool_convolver.png"
+></IMG
+></SPAN
+>
+      The <SPAN
 CLASS="GUIBUTTON"
 >convolve</SPAN
 > tool uses the current brush to
@@ -114,6 +121,19 @@ CLASS="VARIABLELIST"
 >Convolve Settings</B
 ></P
 ><DL
+><DT
+>Opacity</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Opacity</SPAN
+> slider sets the
+            transparency level for the operation. A higher opacity
+            setting results in a more opaque render and a lower setting
+            results in a more transparent one.
+          </P
+></DD
 ><DT
 >Pressure Sensitivity</DT
 ><DD
@@ -159,10 +179,10 @@ CLASS="GUIBUTTON"
 >                <SPAN
 CLASS="GUIBUTTON"
 >Blur</SPAN
-> mode blurs the image colours
+> mode blurs the image colors
                 into each other. The result will be a smooth transition
-                between colours, but will always be darker than the
-                original colours.
+                between colors, but will always be darker than the
+                original colors.
               </P
 ></LI
 ><LI
@@ -170,8 +190,8 @@ CLASS="GUIBUTTON"
 >                <SPAN
 CLASS="GUIBUTTON"
 >Sharpen</SPAN
-> mode causes neighbouring
-                pixels with similar colours to converge. Used
+> mode causes neighboring
+                pixels with similar colors to converge. Used
                 judiciously, blurry edges can be sharpened somewhat, but
                 if applied repeatedly it can produce unusual results.
               </P
@@ -181,64 +201,75 @@ CLASS="GUIBUTTON"
 HREF="../filters/sharpen.html"
 >                  Sharpen Filter
                 </A
-> 
+> and
+                <A
+HREF="../filters/unsharp.html"
+>                  Unsharp Mask Filter
+                </A
+>.
               </P
 ></LI
 ></UL
 ></DD
 ></DL
 ></DIV
-><H2
-CLASS="BRIDGEHEAD"
->Additional Information</H2
+><DIV
+CLASS="SIMPLESECT"
+><H3
+CLASS="SIMPLESECT"
+><A
+NAME="AEN2734"
+>Additional Information</A
+></H3
 ><P
->      Default Keyboard Shortcut: <B
+>        Default Keyboard Shortcut:
+        <B
 CLASS="KEYCAP"
 >V</B
 >
-    </P
+      </P
 ><P
+>	Key modifiers:
+	<P
 ></P
 ><UL
 ><LI
 ><P
->          The key modifier:
-          <B
+>	      <B
 CLASS="KEYCAP"
->Shift</B
+>Ctrl</B
 >
-          places the convolve tool into straight line mode. Holding
-          <B
+	      will switch between blur and sharpen modes. The mode will
+	      remain switched until <B
 CLASS="KEYCAP"
->Shift</B
-> while clicking
-          <SPAN
-CLASS="MOUSEBUTTON"
->Button1</SPAN
-> will convolve in a straight
-          line. Consecutive clicks will continue convolving in straight
-          lines that originate from the end of the last line.
-        </P
+>Ctrl</B
+> is released.
+	    </P
 ></LI
 ><LI
 ><P
->          The key combination:
-          <B
+>	      <B
 CLASS="KEYCAP"
->Ctrl</B
->-<SPAN
-CLASS="MOUSEBUTTON"
->Button1</SPAN
+>Shift</B
 >
-          will switch between blur and sharpen modes. The mode will
-          change back when
-          <SPAN
+	      places the convolve tool into straight line mode. Holding
+	      <B
+CLASS="KEYCAP"
+>Shift</B
+> while clicking
+	      <SPAN
 CLASS="MOUSEBUTTON"
 >Button1</SPAN
-> is released.
-        </P
+> will convolve in a
+	      straight line. Consecutive clicks will continue convolving
+	      in straight lines that originate from the end of the last
+	      line.
+	    </P
 ></LI
 ></UL
+>
+      </P
+></DIV
 ></DIV
 ></DIV
 ><DIV

@@ -1,7 +1,7 @@
 <HTML
 ><HEAD
 ><TITLE
->Transform</TITLE
+>Transform Tools</TITLE
 ><META
 NAME="GENERATOR"
 CONTENT="Modular DocBook HTML Stylesheet Version 1.64
@@ -68,13 +68,10 @@ CLASS="SECT1"
 CLASS="SECT1"
 ><A
 NAME="TOOLS-TRANSFORM"
->Transform</A
+>Transform Tools</A
 ></H1
 ><A
-NAME="AEN3812"
-></A
-><A
-NAME="AEN3814"
+NAME="AEN3963"
 ></A
 ><DIV
 CLASS="SECT2"
@@ -85,7 +82,14 @@ NAME="TOOLS-TRANSFORM-OVERVIEW"
 >Overview</A
 ></H2
 ><P
->      The <SPAN
+>      <SPAN
+CLASS="INLINEMEDIAOBJECT"
+><IMG
+SRC="../images/tools/tool_transform.png"
+></IMG
+></SPAN
+>
+      The <SPAN
 CLASS="GUIBUTTON"
 >Transform</SPAN
 > tool is used to modify the
@@ -136,54 +140,54 @@ CLASS="VARIABLELIST"
 >Rotation</DT
 ><DD
 ><P
->                This mode rotates the layer or selelction.
-                See:
-                <A
+>                  This mode rotates the layer or selection.
+                  See:
+                  <A
 HREF="../tools/transform.html#TOOLS-TRANSFORM-ROTATION"
->                  Rotation
-                </A
+>                    Rotation
+                  </A
 >.
-              </P
+                </P
 ></DD
 ><DT
 >Scaling</DT
 ><DD
 ><P
->                This mode scales the active layer or selection.
-                See:
-                <A
+>                  This mode scales the active layer or selection.
+                  See:
+                  <A
 HREF="../tools/transform.html#TOOLS-TRANSFORM-SCALING"
->                  Scaling
-                </A
+>                    Scaling
+                  </A
 >.
-              </P
+                </P
 ></DD
 ><DT
 >Shearing</DT
 ><DD
 ><P
->                This mode shears the active layer or selection.
-                See:
-                <A
+>		  This mode shears the active layer or selection.
+		  See:
+		  <A
 HREF="../tools/transform.html#TOOLS-TRANSFORM-SHEARING"
->                  Shearing
-                </A
+>		    Shearing
+		  </A
 >.
-              </P
+		</P
 ></DD
 ><DT
 >Perspective</DT
 ><DD
 ><P
->                This mode changes the perspective of the active layer or
-                selection.
-                See:
-                <A
+>		  This mode changes the perspective of the active layer or
+		  selection.
+		  See:
+		  <A
 HREF="../tools/transform.html#TOOLS-TRANSFORM-PERSPECTIVE"
->                  Perspective
-                </A
+>		    Perspective
+		  </A
 >
-              </P
+		</P
 ></DD
 ></DL
 ></DIV
@@ -197,7 +201,7 @@ HREF="../tools/transform.html#TOOLS-TRANSFORM-PERSPECTIVE"
 CLASS="GUIBUTTON"
 >Traditional</SPAN
 >, is the default rendering
-            mechanism for the transform tool and will render the tranform
+            mechanism for the transform tool and will render the transform
             normally. The second, <SPAN
 CLASS="GUIBUTTON"
 >Corrective</SPAN
@@ -213,7 +217,7 @@ CLASS="GUIBUTTON"
 CLASS="GUIBUTTON"
 >Show Grid</SPAN
 > checkbox toggles the
-            visiblity of the grid during the transform.
+            visibility of the grid during the transform.
           </P
 ><P
 >            The <SPAN
@@ -258,10 +262,7 @@ NAME="TOOLS-TRANSFORM-ROTATION"
 >Rotation</A
 ></H2
 ><A
-NAME="AEN3877"
-></A
-><A
-NAME="AEN3879"
+NAME="AEN4029"
 ></A
 ><P
 >      <SPAN
@@ -298,7 +299,7 @@ CLASS="GUIBUTTON"
 >
       in the <SPAN
 CLASS="GUILABEL"
->Roatation Information</SPAN
+>Rotation Information</SPAN
 > window.
     </P
 ><P
@@ -391,6 +392,23 @@ CLASS="GUIBUTTON"
             were present prior to modification.
           </P
 ></DD
+><DT
+>Key modifiers</DT
+><DD
+><P
+></P
+><UL
+><LI
+><P
+>		<B
+CLASS="KEYCAP"
+>Ctrl</B
+> constrains the rotation angle to 15
+		degree increments.
+              </P
+></LI
+></UL
+></DD
 ></DL
 ></DIV
 ></DIV
@@ -403,16 +421,13 @@ NAME="TOOLS-TRANSFORM-SCALING"
 >Scaling</A
 ></H2
 ><A
-NAME="AEN3924"
-></A
-><A
-NAME="AEN3926"
+NAME="AEN4081"
 ></A
 ><P
 >      The <SPAN
 CLASS="GUIBUTTON"
 >Scaling</SPAN
-> trasform mode is used to scale
+> transform mode is used to scale
       the active layer or selection. This is achieved by
       <SPAN
 CLASS="MOUSEBUTTON"
@@ -423,38 +438,6 @@ CLASS="HARDWARE"
 >mouse</SPAN
 >.
     </P
-><DIV
-CLASS="WARNING"
-><P
-></P
-><TABLE
-CLASS="WARNING"
-WIDTH="100%"
-BORDER="0"
-><TR
-><TD
-WIDTH="25"
-ALIGN="CENTER"
-VALIGN="TOP"
-><IMG
-SRC="../../images/warning.png"
-HSPACE="5"
-ALT="Warning"></TD
-><TD
-ALIGN="LEFT"
-VALIGN="TOP"
-><P
->        The <SPAN
-CLASS="GUIBUTTON"
->Scaling</SPAN
-> mode does not constrain
-        aspect ratio. This means that after scaling, the image may not
-        have the same aspect ratio as before.
-      </P
-></TD
-></TR
-></TABLE
-></DIV
 ><P
 >      Changes are finalized by <SPAN
 CLASS="MOUSEBUTTON"
@@ -487,7 +470,7 @@ CLASS="GUILABEL"
 >Scaling
             Information</SPAN
 > window shows the height and width of
-            the orginal layer / selection.
+            the original layer or selection.
           </P
 ></DD
 ><DT
@@ -551,6 +534,42 @@ CLASS="GUIBUTTON"
             values to their previous settings.
           </P
 ></DD
+><DT
+>Key modifiers</DT
+><DD
+><P
+></P
+><UL
+><LI
+><P
+>		<B
+CLASS="KEYCAP"
+>Ctrl</B
+> constrains the horizontal aspect.
+              </P
+></LI
+><LI
+><P
+>		<B
+CLASS="KEYCAP"
+>Alt</B
+> constrains the vertical aspect.
+              </P
+></LI
+><LI
+><P
+>                <B
+CLASS="KEYCAP"
+>Ctrl</B
+>-<B
+CLASS="KEYCAP"
+>Alt</B
+>
+                constrains both the horizontal and vertical aspects.
+              </P
+></LI
+></UL
+></DD
 ></DL
 ></DIV
 ></DIV
@@ -563,10 +582,7 @@ NAME="TOOLS-TRANSFORM-SHEARING"
 >Shearing</A
 ></H2
 ><A
-NAME="AEN3974"
-></A
-><A
-NAME="AEN3976"
+NAME="AEN4141"
 ></A
 ><P
 >      The <SPAN
@@ -602,7 +618,7 @@ CLASS="GUIBUTTON"
 >Shear Magnitude Y</SPAN
 > input boxes display
             the vertical (Y) or horizontal (X) magnitude of the current
-            shear. The magnitude can aslo be manually entered here.
+            shear. The magnitude can also be manually entered here.
           </P
 ></DD
 ><DT
@@ -639,27 +655,24 @@ NAME="TOOLS-TRANSFORM-PERSPECTIVE"
 >Perspective</A
 ></H2
 ><A
-NAME="AEN4001"
-></A
-><A
-NAME="AEN4003"
+NAME="AEN4166"
 ></A
 ><P
->    The <SPAN
+>      The <SPAN
 CLASS="GUIBUTTON"
 >Perspective</SPAN
 > tool changes the visual
-    perspective angles of the current layer or selection.
-    <SPAN
+      perspective angles of the current layer or selection.
+      <SPAN
 CLASS="GUIBUTTON"
 >Perspective</SPAN
 > can be altered for each of the
-    four corners of the area. Simply <SPAN
+      four corners of the area. Simply <SPAN
 CLASS="MOUSEBUTTON"
 >click</SPAN
 >
-    and drag the corner grid to the required location.
-  </P
+      and drag the corner grid to the required location.
+    </P
 ><P
 ></P
 ><DIV
@@ -673,60 +686,67 @@ CLASS="VARIABLELIST"
 >Matrix</DT
 ><DD
 ><P
->          The <SPAN
+>	    The <SPAN
 CLASS="GUILABEL"
 >Matrix</SPAN
 > information describes the
-          <SPAN
+	    <SPAN
 CLASS="GUIBUTTON"
 >Perspective</SPAN
 > transformation using matrix
-          based mathematics.
-        </P
+	    based mathematics.
+	  </P
 ></DD
 ><DT
 >Transform</DT
 ><DD
 ><P
->          The <SPAN
+>	    The <SPAN
 CLASS="GUIBUTTON"
 >Transform</SPAN
 > button tells the tool to
-          perform the <SPAN
+	    perform the <SPAN
 CLASS="GUIBUTTON"
 >Perspective</SPAN
 > adjustments.
-        </P
+	  </P
 ></DD
 ><DT
 >Reset</DT
 ><DD
 ><P
->          The <SPAN
+>	    The <SPAN
 CLASS="GUIBUTTON"
 >Reset</SPAN
-> button will reest the
-          <SPAN
+> button will reset the
+	    <SPAN
 CLASS="GUIBUTTON"
 >Perspective</SPAN
 > settings to the original
-          layer or selection values.
-        </P
+	    layer or selection values.
+	  </P
 ></DD
 ></DL
 ></DIV
-><H2
-CLASS="BRIDGEHEAD"
->Additional Information</H2
+><DIV
+CLASS="SIMPLESECT"
+><H3
+CLASS="SIMPLESECT"
+><A
+NAME="AEN4192"
+>Additional Information</A
+></H3
 ><P
->    Default Keyboard Shortcut: <B
+>        Default Keyboard Shortcut:
+        <B
 CLASS="KEYCAP"
 >Shift</B
 >-<B
 CLASS="KEYCAP"
 >T</B
 >
-  </P
+      </P
+></DIV
 ></DIV
 ></DIV
 ><DIV

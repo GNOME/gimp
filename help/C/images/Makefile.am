@@ -1,18 +1,53 @@
 ## Process this file with automake to produce Makefile.in
 
+SUBDIRS = examples glossary tools
+
 helpdatadir = $(gimpdatadir)/help/C/images
 
 helpdata_DATA = \
-	image_menu.png		\
-	image_window.png	\
-	layers_dialog.png	\
-	layers_menu.png		\
-	tool_options.png	\
-	toolbox.png		\
-	\
-	print_color.png		\
-	print_main.png		\
-	print_setup.png
+		add_point.png \
+		anchor_layer.png \
+		channel_to_selection.png \
+		delete_channel.png \
+		delete_directory.png \
+		delete_layer.png \
+		delete_path.png \
+		dotted_square.png \
+		duplicate_channel.png \
+		duplicate_layer.png \
+		duplicate_path.png \
+		edit_point.png \
+		eye.png \
+		geezoom.png \
+		image_menu.png \
+		image_window.png \
+		layers_dialog.png \
+		layers_example.png \
+		layers_menu.png \
+		layers_overview.png \
+		lower_channel.png \
+		lower_directory.png \
+		lower_layer.png \
+		new_channel.png \
+		new_directory.png \
+		new_path.png \
+		new_point.png \
+		path_to_selection.png \
+		preview_box.png \
+		print_color.png \
+		print_main.png \
+		print_setup.png \
+		raise_channel.png \
+		raise_directory.png \
+		raise_layer.png \
+		red_square.png \
+		remove_point.png \
+		selection_to_path.png \
+		stroke_path.png \
+		toolbox.png \
+		tool_options.png \
+		triangle.png \
+		wilber.png
 
 EXTRA_DIST = $(helpdata_DATA)
 
