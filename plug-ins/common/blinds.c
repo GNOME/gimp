@@ -54,11 +54,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -69,8 +64,6 @@
 
 /***** Magic numbers *****/
 
-/* Don't make preview >255!!! It won't work for horizontal blinds */
-#define PREVIEW_SIZE 128 
 #define SCALE_WIDTH  150
 
 #define MAX_FANS      10
@@ -87,21 +80,17 @@ typedef struct data
   gint bg_trans;
 } BlindVals;
 
+static GimpFixMePreview *preview;
+
 typedef struct
 {
-  GtkWidget *preview;
-  guchar     preview_row[PREVIEW_SIZE * 4];
   gboolean   run;
-  guchar    *pv_cache;
   gint       img_bpp;
 } BlindsInterface;
 
 static BlindsInterface bint =
 {
-  NULL,          /* Preview */
-  { '4', 'u' },  /* Preview_row */
   FALSE,         /* run */
-  NULL,
   4              /* bpp of drawable */
 };
 
@@ -109,9 +98,9 @@ static BlindsInterface bint =
  * same size (rounding errors...)
  */
 
-gint fanwidths[MAX_FANS];
+static gint fanwidths[MAX_FANS];
 
-GimpDrawable *blindsdrawable;
+static GimpDrawable *blindsdrawable;
 
 static void      query  (void);
 static void      run    (const gchar      *name,
@@ -152,11 +141,7 @@ static BlindVals bvals =
 };
 
 /* Stuff for the preview bit */
-static gint  sel_x1, sel_y1, sel_x2, sel_y2;
-static gint  sel_width, sel_height;
-static gint  preview_width, preview_height;
 static gint  has_alpha;
-
 
 MAIN ()
 
@@ -201,8 +186,6 @@ run (const gchar      *name,
   GimpRunMode run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
-  gint pwidth, pheight;
-
   run_mode = param[0].data.d_int32;
 
   INIT_I18N ();
@@ -215,27 +198,6 @@ run (const gchar      *name,
 
   blindsdrawable = drawable = 
     gimp_drawable_get (param[2].data.d_drawable);
-
-  gimp_drawable_mask_bounds (drawable->drawable_id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
-
-  sel_width  = sel_x2 - sel_x1;
-  sel_height = sel_y2 - sel_y1;
-  
-  /* Calculate preview size */
-  
-  if (sel_width > sel_height)
-    {
-      pwidth  = MIN (sel_width, PREVIEW_SIZE);
-      pheight = sel_height * pwidth / sel_width;
-    }
-  else
-    {
-      pheight = MIN (sel_height, PREVIEW_SIZE);
-      pwidth  = sel_width * pheight / sel_height;
-    }
-
-  preview_width  = MAX (pwidth, 2);  /* Min size is 2 */
-  preview_height = MAX (pheight, 2); 
 
   switch (run_mode)
     {
@@ -302,7 +264,6 @@ blinds_dialog (void)
   GtkWidget *vbox;
   GtkWidget *frame;
   GtkWidget *toggle_vbox;
-  GtkWidget *xframe;
   GtkWidget *table;
   GtkObject *size_data;
   GtkWidget *toggle;
@@ -336,26 +297,10 @@ blinds_dialog (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  frame = gtk_frame_new (_("Preview"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  table = gtk_table_new (1, 1, FALSE); 
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4); 
-  gtk_container_add (GTK_CONTAINER (frame), table); 
-  gtk_widget_show (table); 
-
-  xframe = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (xframe), GTK_SHADOW_IN);
-  gtk_table_attach (GTK_TABLE (table), xframe, 0, 1, 0, 1,
-		    GTK_EXPAND, GTK_EXPAND, 0, 0);
-  gtk_widget_show (xframe);
-
-  bint.preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (bint.preview), preview_width, preview_height);
-  gtk_container_add (GTK_CONTAINER (xframe), bint.preview);
-  gtk_widget_show(bint.preview);
+  preview = gimp_fixme_preview_new (NULL, TRUE);
+  gimp_fixme_preview_fill_scaled (preview, blindsdrawable);
+  gtk_box_pack_start (GTK_BOX (hbox), preview->frame, FALSE, FALSE, 0);
+  gtk_widget_show (preview->widget);
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
@@ -481,17 +426,7 @@ blinds_scale_update (GtkAdjustment *adjustment,
 static void
 cache_preview (void)
 {
-  GimpPixelRgn src_rgn;
-  int y,x;
-  guchar *src_rows;
-  guchar *p;
-  gboolean isgrey;
-
-  gimp_pixel_rgn_init (&src_rgn, blindsdrawable,
-		       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
-
-  src_rows = g_new (guchar, sel_width * 4); 
-  p = bint.pv_cache = g_new (guchar, preview_width * preview_height * 4);
+  gboolean has_alpha;
 
   bint.img_bpp = gimp_drawable_bpp (blindsdrawable->drawable_id);   
 
@@ -501,33 +436,6 @@ cache_preview (void)
     {
       bint.img_bpp = 3 + has_alpha;
     }
-
-  isgrey = gimp_drawable_is_gray (blindsdrawable->drawable_id);
-
-  for (y = 0; y < preview_height; y++)
-    {
-      gimp_pixel_rgn_get_row (&src_rgn,
-			      src_rows,
-			      sel_x1,
-			      sel_y1 + (y * sel_height) / preview_height,
-			      sel_width);
-
-      for (x = 0; x < preview_width; x++)
-	{
-	  /* Get the pixels of each col */
-	  gint i;
-	  for (i = 0 ; i < 3; i++)
-	    p[x * bint.img_bpp + i] =
-	      src_rows[((x * sel_width) / preview_width) * src_rgn.bpp +
-		      ((isgrey) ? 0 : i)]; 
-	  if (has_alpha)
-	    p[x * bint.img_bpp + 3] =
-	      src_rows[((x * sel_width) / preview_width) * src_rgn.bpp +
-		      ((isgrey) ? 1 : 3)];
-	}
-      p += (preview_width * bint.img_bpp);
-    }
-  g_free (src_rows);
 }
 
 static void 
@@ -567,7 +475,7 @@ blindsapply (guchar *srow,
   /* Apply it */
 
   available = width;
-  for ( i = 0 ; i < bvals.numsegs; i++)
+  for (i = 0; i < bvals.numsegs; i++)
     {
       /* Width of segs are variable */
       fanwidths[i] = available / (bvals.numsegs - i);
@@ -639,62 +547,22 @@ static void
 dialog_update_preview (void)
 {
   gint    y;
-  guchar *p;
+  guchar *p, *buffer;
   guchar  bg[4];
-  gint    check, check_0, check_1;
   
-  p = bint.pv_cache;
+  p = preview->cache;
 
-  /*  blinds_get_bg (bg); */
   gimp_get_bg_guchar (blindsdrawable, bvals.bg_trans, bg);
+
+  buffer = (guchar*) g_malloc (preview->rowstride);
 
   if (bvals.orientation)
     {
-      for (y = 0; y < preview_height; y++)
+      for (y = 0; y < preview->height; y++)
 	{
-	  /* bint.preview_row - this row contains the row to apply the action to */
-	  blindsapply (p, bint.preview_row, preview_width, bint.img_bpp, bg);
-
-	  if ((y / GIMP_CHECK_SIZE) & 1)
-	    {
-	      check_0 = GIMP_CHECK_DARK  * 255.0;
-	      check_1 = GIMP_CHECK_LIGHT * 255.0;
-	    }
-	  else
-	    {
-	      check_0 = GIMP_CHECK_LIGHT * 255.0;
-	      check_1 = GIMP_CHECK_DARK  * 255.0;
-	    }
-
-	  if (bint.img_bpp > 3)
-	    {
-	      gint i,j;
-
-	      for (i = 0, j = 0 ; 
-		   i < sizeof(bint.preview_row); 
-		   i += 4, j += 3 )
-		{
-		  gint alphaval;
-		  if (((i/4) / GIMP_CHECK_SIZE) & 1)
-		    check = check_0;
-		  else
-		    check = check_1;
-		  
-		  alphaval = bint.preview_row[i + 3];
-		  
-		  bint.preview_row[j] = 
-		    check + (((bint.preview_row[i] - check) * alphaval) / 255);
-		  bint.preview_row[j + 1] = 
-		    check + (((bint.preview_row[i + 1] - check) * alphaval) / 255);
-		  bint.preview_row[j + 2] = 
-		    check + (((bint.preview_row[i + 2] - check) * alphaval) / 255);
-		}
-	    }
-	
-	  gtk_preview_draw_row (GTK_PREVIEW (bint.preview),
-				bint.preview_row, 0, y, preview_width);
-	
-	  p += preview_width * bint.img_bpp;
+	  blindsapply (p, buffer, preview->width, bint.img_bpp, bg);
+	  gimp_fixme_preview_do_row (preview, y, preview->width, buffer);
+	  p += preview->width * bint.img_bpp;
 	} 
     }
   else
@@ -705,23 +573,17 @@ dialog_update_preview (void)
        * rows. Make row 0 invalid so we can find it again!
        */
       gint i;
-      gint loop1,loop2;
-      guchar *sr = g_new (guchar, preview_height * 4);
-      guchar *dr = g_new (guchar, preview_height * 4);
-      guchar dummybg[4];
-      /* Copy into here after translation*/
-      guchar copy_row[PREVIEW_SIZE*4]; 
-
-      memset (dummybg, 0, 4);
-      memset (dr, 0, (preview_height) * 4); /* all dr rows are background rows */
+      guchar *sr = g_new (guchar, preview->height * 4);
+      guchar *dr = g_new0 (guchar, preview->height * 4);
+      guchar dummybg[4] = {0, 0, 0, 0};
 
       /* Fill in with background color ? */
-      for (i = 0 ; i < preview_width ; i++)
+      for (i = 0 ; i < preview->width ; i++)
 	{
 	  gint j;
 	  gint bd = bint.img_bpp;
 	  guchar *dst;
-	  dst = &bint.preview_row[i*bd];
+	  dst = &buffer[i * bd];
 	  
 	  for (j = 0 ; j < bd; j++)
 	    {
@@ -729,7 +591,7 @@ dialog_update_preview (void)
 	    }
 	}
 
-      for ( y = 0 ; y < preview_height; y++)
+      for ( y = 0 ; y < preview->height; y++)
 	{
 	  sr[y] = y+1;
 	}
@@ -738,64 +600,31 @@ dialog_update_preview (void)
        * row not a set of bytes. - preview can't be > 255
        * or must make dr sr int rows. 
        */
-      blindsapply (sr, dr, preview_height, 1, dummybg);
+      blindsapply (sr, dr, preview->height, 1, dummybg);
 
-      for (y = 0; y < preview_height; y++)
+      for (y = 0; y < preview->height; y++)
 	{
-	  if ((y / GIMP_CHECK_SIZE) & 1)
-	    {
-	      check_0 = GIMP_CHECK_DARK * 255;
-	      check_1 = GIMP_CHECK_LIGHT * 255;
-	    }
-	  else
-	    {
-	      check_0 = GIMP_CHECK_LIGHT * 255;
-	      check_1 = GIMP_CHECK_DARK * 255;
-	    }
-
 	  if (dr[y] == 0)
 	    {
 	      /* Draw background line */
-	      p = bint.preview_row;
+	      p = buffer;
 	    }
 	  else
 	    {
 	      /* Draw line from src */
-	      p = bint.pv_cache + (preview_width * bint.img_bpp * (dr[y] - 1));
+	      p = preview->cache + 
+		(preview->width * bint.img_bpp * (dr[y] - 1));
 	    }
 
-	  if (bint.img_bpp > 3)
-	    {
-	      /* Take account of alpha channel HERE*/
-	      for (loop1 = 0, loop2 = 0 ; 
-		   loop1 < preview_width*bint.img_bpp; 
-		   loop1 += 4, loop2 += 3)
-		{
-		  gint alphaval;
-		  if (((loop1/4) / GIMP_CHECK_SIZE) & 1)
-		    check = check_0;
-		  else
-		    check = check_1;
-
-		  alphaval = p[loop1 + 3];
-
-		  copy_row[loop2] = 
-		    check + (((p[loop1] - check) * alphaval) / 255);
-		  copy_row[loop2 + 1] = 
-		    check + (((p[loop1 + 1] - check) * alphaval) / 255);
-		  copy_row[loop2 + 2] = 
-		    check + (((p[loop1 + 2] - check) * alphaval) / 255);
-		}
-	      p = &copy_row[0];
-	    }
-	  gtk_preview_draw_row (GTK_PREVIEW (bint.preview),
-				p, 0, y, preview_width);
+	  gimp_fixme_preview_do_row (preview, y, preview->width, p);
 	} 
       g_free (sr);
       g_free (dr);
     }
 
-  gtk_widget_queue_draw (bint.preview);
+  g_free (buffer);
+
+  gtk_widget_queue_draw (preview->widget);
   gdk_flush ();
 }
 
@@ -811,11 +640,19 @@ apply_blinds (void)
 {
   GimpPixelRgn des_rgn;
   GimpPixelRgn src_rgn;
-  guchar *src_rows,*des_rows;
-  int x,y;
+  guchar *src_rows, *des_rows;
+  gint x,y;
   guchar bg[4];
+  gint sel_x1, sel_y1, sel_x2, sel_y2;
+  gint sel_width, sel_height;
 
   gimp_get_bg_guchar (blindsdrawable, bvals.bg_trans, bg);
+
+  gimp_drawable_mask_bounds (blindsdrawable->drawable_id, &sel_x1, &sel_y1, 
+			     &sel_x2, &sel_y2);
+
+  sel_width  = sel_x2 - sel_x1;
+  sel_height = sel_y2 - sel_y1;
 
   gimp_pixel_rgn_init (&src_rgn, blindsdrawable,
 		       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);

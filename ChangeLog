@@ -1,3 +1,8 @@
+2003-08-08  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/blinds.c: fix for #83970 (blinds filter: strange 
+	behaviour after changing selection)
+
 2003-08-08  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig-deserialize.c
