@@ -18,7 +18,8 @@
 #ifndef __LAYERS_DIALOG_P_H__
 #define __LAYERS_DIALOG_P_H__
 
-void render_fs_preview (GtkWidget *, GdkPixmap *);
-void render_preview    (TempBuf *, GtkWidget *, int, int, int);
+void render_fs_preview                 (GtkWidget *, GdkPixmap *);
+void render_preview                    (TempBuf *, GtkWidget *, int, int, int);
+void layers_dialog_invalidate_previews (GimpImage *gimage);
 
 #endif /* __LAYERS_DIALOG_P_H__ */

@@ -426,6 +426,91 @@ HELP
     %invoke = ( code => 'gimp_drawable_set_gimage (drawable, gimage);' );
 }
 
+
+sub dim_args () {
+    my @args;
+    foreach (qw(width height bpp)) {
+	push @args, { name => $_, type => 'int32', desc => "The previews $_", init => 1 };
+    }
+    @args;
+}
+
+sub drawable_thumbnail {
+    $blurb = 'Get a thumbnail of a drawable.';
+
+    $help = <<'HELP';
+This function gets data from which a thumbnail of a drawable preview can be 
+created. Maximum x or y dimension is 128 pixels. The pixles are returned 
+in the RGB[A] format. The bpp return value gives the number of bytes in 
+the image. The alpha channel also returned if the drawable has one.
+HELP
+
+    $author = $copyright = 'Andy Thomas';
+    $date = '1999';
+
+    @inargs = (
+    	{ name => 'drawable',
+    	  type => 'drawable',
+    	  desc => 'The drawable' },
+	{ name => 'width', type => '0 < int32',
+	  desc => 'The thumbnail width',
+	  alias => 'req_width' },
+	{ name => 'height', type => '0 < int32',
+	  desc => 'The thumbnail height',
+	  alias => 'req_height' }
+    );
+
+    @outargs = (
+	&dim_args,
+        { name => 'thumbnail_data', type => 'int8array',
+	  desc => 'The thumbnail data', init => 1,
+	  array => { name => 'thumbnail_data_count',
+		     desc => 'The number of pixels in thumbnail data',
+		     alias => 'num_pixels', init => 1 } }
+    );
+
+    %invoke = (
+	headers => [ qw(<glib.h> <string.h>) ],
+	code => <<'CODE'
+{
+	TempBuf * buf;
+        gint dwidth,dheight;
+
+	if(req_width <= 128 && req_height <= 128)
+        {	
+
+	  /* Adjust the width/height ratio */
+	    
+	  dwidth = drawable_width(GIMP_DRAWABLE(drawable));
+	  dheight = drawable_height(GIMP_DRAWABLE(drawable));
+
+  	  if(dwidth > dheight)
+	  {
+	      req_height = (req_width*dheight)/dwidth;
+	  }
+	  else
+	  {
+	      req_width = (req_height*dwidth)/dheight;
+	  }
+
+	  if(GIMP_IS_LAYER(drawable))
+	      buf = layer_preview(GIMP_LAYER(drawable),req_width,req_height);
+	  else
+	      buf = channel_preview(GIMP_CHANNEL(drawable),req_width,req_height);
+
+	  num_pixels = buf->height * buf->width * buf->bytes;
+	  thumbnail_data = (gint8 *)g_new (gint8, num_pixels);
+          g_memmove (thumbnail_data, temp_buf_data (buf), num_pixels);
+	  width = buf->width;	
+	  height = buf->height;
+	  bpp = buf->bytes;
+	}
+}
+CODE
+    );
+}
+
+
 @headers = qw("drawable.h");
 
 @procs = qw(drawable_merge_shadow drawable_fill drawable_update
@@ -434,7 +519,7 @@ HELP
 	    drawable_gray drawable_indexed drawable_bytes drawable_width
 	    drawable_height drawable_offsets drawable_layer
 	    drawable_layer_mask drawable_channel drawable_get_pixel
-	    drawable_set_pixel drawable_set_image);
+	    drawable_set_pixel drawable_set_image drawable_thumbnail);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Drawable procedures';

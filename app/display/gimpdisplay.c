@@ -151,6 +151,8 @@ gdisplay_new (GimpImage    *gimage,
   gimage->instance_count++;
   gimage->ref_count++;
 
+  lc_dialog_preview_update(gimage);
+
   return gdisp;
 }
 

@@ -28,9 +28,18 @@
 #include "image_render.h"
 #include "lc_dialog.h"
 #include "lc_dialogP.h"
+#include "layers_dialogP.h"
 #include "session.h"
 
 #include "libgimp/gimpintl.h"
+
+#define GRAD_CHECK_SIZE_SM 4
+
+#define GRAD_CHECK_DARK  (1.0 / 3.0)
+#define GRAD_CHECK_LIGHT (2.0 / 3.0)
+
+#define MENU_THUMBNAIL_WIDTH 24
+#define MENU_THUMBNAIL_HEIGHT 24
 
 /*  local function prototypes  */
 static void  lc_dialog_update              (GimpImage *);
@@ -42,6 +51,12 @@ static void  lc_dialog_remove_cb           (GimpSet *, GimpImage *, gpointer);
 static void  lc_dialog_destroy_cb          (GimpImage *, gpointer);
 static void  lc_dialog_change_image        (GimpContext *, GimpImage *,
 					    gpointer);
+static void  lc_dialog_image_menu_preview_update_cb (GtkWidget *,gpointer);
+static void  lc_dialog_fill_preview_with_thumb(GtkWidget *,
+					       GimpImage *,
+					       gint       ,
+					       gint       );
+
 
 /*  FIXME: move these to a better place  */
 static GtkWidget * lc_dialog_create_image_menu    (GimpImage **, int *,
@@ -262,6 +277,56 @@ lc_dialog_flush ()
   paths_dialog_flush ();
 }
 
+static gint 
+image_menu_preview_update_do(GimpImage *gimage)
+{
+  if(lc_dialog)
+    {
+      gtk_container_foreach (GTK_CONTAINER (lc_dialog->image_menu),
+			     lc_dialog_image_menu_preview_update_cb, (gpointer)gimage);
+    }
+  return FALSE;
+}
+
+static void
+menu_preview_dirty (GtkObject *obj,
+		    gpointer   client_data)
+{
+  /* Update preview at a less busy time */
+  /*   printf("menu_preview_dirty:: adding %p to obj %p\n",client_data,obj); */
+  gtk_idle_add((GtkFunction)image_menu_preview_update_do,(gpointer)obj); 
+}
+    
+void 
+lc_dialog_preview_update(GimpImage *gimage)
+{
+  layers_dialog_invalidate_previews(gimage);
+  gtk_idle_add((GtkFunction)image_menu_preview_update_do,gimage);
+}
+
+static void
+lc_dialog_image_menu_preview_update_cb (GtkWidget *widget,
+					gpointer   client_data)
+{
+  GtkWidget *menu_preview;
+  GimpImage *gimage;
+  GimpImage *gimage_to_update = GIMP_IMAGE((GimpImage *)client_data);
+
+  menu_preview = (GtkWidget *)gtk_object_get_data(GTK_OBJECT(widget),"menu_preview");
+  gimage = GIMP_IMAGE((GimpImage *)gtk_object_get_data(GTK_OBJECT(widget),"menu_preview_gimage"));
+/*    printf("image_menu_preview_update::menu_preview = %p gimage %p gimage_to_update %d\n",menu_preview,gimage,gimage_to_update);  */
+
+  if(menu_preview && gimage && gimage_to_update == gimage)
+    {
+      /* Must update the preview? */
+      lc_dialog_fill_preview_with_thumb(menu_preview,
+					gimage,
+					MENU_THUMBNAIL_WIDTH,
+					MENU_THUMBNAIL_HEIGHT);
+      gtk_widget_draw(GTK_WIDGET(menu_preview),NULL);
+    }
+}
+
 void
 lc_dialog_update_image_list ()
 {
@@ -335,6 +400,131 @@ typedef struct
 } IMCBData;
 
 static void
+lc_dialog_fill_preview_with_thumb(GtkWidget *w,
+				  GimpImage *gimage,
+				  gint       width,
+				  gint       height)
+{
+  guchar    *drawable_data;
+  TempBuf   *buf;
+  gint       bpp;
+  gint       dwidth;
+  gint       dheight;
+  
+  bpp = 0; /* Only returned */
+  
+  dwidth = gimage->width;
+  dheight = gimage->height;
+  
+  /* Get right aspect ratio */  
+  if(dwidth > dheight)
+    {
+      height = (width*dheight)/dwidth;
+    }
+  else
+    {
+      width = (height*dwidth)/dheight;
+    }
+  
+  buf = gimp_image_construct_composite_preview(gimage,
+ 					       width,
+ 					       height);
+  
+  drawable_data = temp_buf_data(buf);
+  bpp = buf->bytes;
+  
+  gtk_preview_size(GTK_PREVIEW(w),width,height);
+  
+  /* First greyscale and non-alpha */
+  if(bpp < 4)
+    {
+      guchar *buf;
+      guchar *src;
+      gint x,y;
+      
+      /*  Draw the image  */
+      buf = g_new (gchar, width * 3);
+      src = drawable_data;
+      for (y = 0; y < height; y++)
+ 	{
+ 	  if (bpp == 1)
+ 	    for (x = 0; x < width; x++)
+ 	      {
+ 		buf[x*3+0] = src[x];
+ 		buf[x*3+1] = src[x];
+ 		buf[x*3+2] = src[x];
+ 	      }
+ 	  else
+ 	    for (x = 0; x < width; x++)
+ 	      {
+ 		buf[x*3+0] = src[x*3+0];
+ 		buf[x*3+1] = src[x*3+1];
+ 		buf[x*3+2] = src[x*3+2];
+ 	      }
+ 	  gtk_preview_draw_row (GTK_PREVIEW (w), (guchar *)buf, 0, y, width);
+ 	  src += width * bpp;
+ 	}
+      g_free(buf);
+    }
+  else /* Has alpha channel */
+    {
+      gint     x,y;
+      guchar  *src;
+      gdouble  r, g, b, a;
+      gdouble  c0, c1;
+      guchar  *p0, *p1,*even,*odd;
+      
+      /*  Draw the thumbnail with checks  */
+      src = drawable_data;
+      
+      even = g_malloc(width*3);
+      odd = g_malloc(width*3);
+      
+      for (y = 0; y < height; y++)
+ 	{
+ 	  p0 = even;
+ 	  p1 = odd;
+ 	  
+ 	  for (x = 0; x < width; x++) {
+ 	    r =  ((gdouble)src[x*4+0])/255.0;
+ 	    g = ((gdouble)src[x*4+1])/255.0;
+ 	    b = ((gdouble)src[x*4+2])/255.0;
+ 	    a = ((gdouble)src[x*4+3])/255.0;
+ 	    
+ 	    if ((x / GRAD_CHECK_SIZE_SM) & 1) {
+ 	      c0 = GRAD_CHECK_LIGHT;
+ 	      c1 = GRAD_CHECK_DARK;
+ 	    } else {
+ 	      c0 = GRAD_CHECK_DARK;
+ 	      c1 = GRAD_CHECK_LIGHT;
+ 	    } /* else */
+ 	    
+ 	    *p0++ = (c0 + (r - c0) * a) * 255.0;
+ 	    *p0++ = (c0 + (g - c0) * a) * 255.0;
+ 	    *p0++ = (c0 + (b - c0) * a) * 255.0;
+ 	    
+ 	    *p1++ = (c1 + (r - c1) * a) * 255.0;
+ 	    *p1++ = (c1 + (g - c1) * a) * 255.0;
+ 	    *p1++ = (c1 + (b - c1) * a) * 255.0;
+ 	    
+ 	  } /* for */
+ 	  
+ 	  if ((y / GRAD_CHECK_SIZE_SM) & 1)
+ 	    {
+ 	      gtk_preview_draw_row (GTK_PREVIEW (w), (guchar *)odd, 0, y, width);
+ 	    }
+ 	  else
+ 	    {
+ 	      gtk_preview_draw_row (GTK_PREVIEW (w), (guchar *)even, 0, y, width);
+	    }
+ 	  src += width * bpp;
+ 	}
+      g_free(even);
+      g_free(odd);
+    }
+}
+
+static void
 lc_dialog_create_image_menu_cb (gpointer im,
 				gpointer d)
 {
@@ -343,6 +533,10 @@ lc_dialog_create_image_menu_cb (gpointer im,
   char      *image_name;
   char      *menu_item_label;
   GtkWidget *menu_item;
+  GtkWidget *hbox;
+  GtkWidget *vbox;
+  GtkWidget *wcolor_box;
+  GtkWidget *wlabel;
 
   /*  make sure the default index gets set to _something_, if possible  */
   if (*data->default_index == -1)
@@ -360,12 +554,50 @@ lc_dialog_create_image_menu_cb (gpointer im,
   image_name = g_basename (gimage_filename (gimage));
   menu_item_label =
     g_strdup_printf ("%s-%d", image_name, pdb_image_to_id (gimage));
-  menu_item = gtk_menu_item_new_with_label (menu_item_label);
+  menu_item = gtk_menu_item_new();
   gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
 		      (GtkSignalFunc) data->callback, gimage);
+  hbox = gtk_hbox_new(FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (menu_item), hbox);
+  gtk_widget_show(hbox);
+  
+  vbox = gtk_vbox_new(FALSE, 0);
+  gtk_box_pack_start(GTK_BOX(hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show(vbox);
+  
+  wcolor_box = gtk_preview_new(GTK_PREVIEW_COLOR);
+  gtk_preview_set_dither (GTK_PREVIEW (wcolor_box), GDK_RGB_DITHER_MAX);
+  
+  lc_dialog_fill_preview_with_thumb(wcolor_box,
+				    gimage,
+				    MENU_THUMBNAIL_WIDTH,
+				    MENU_THUMBNAIL_HEIGHT);
+  
+  gtk_widget_set_usize( GTK_WIDGET (wcolor_box) , 
+ 			MENU_THUMBNAIL_WIDTH , 
+ 			MENU_THUMBNAIL_HEIGHT);
+  
+  gtk_container_add(GTK_CONTAINER(vbox), wcolor_box);
+  gtk_widget_show(wcolor_box);
+  
+  wlabel = gtk_label_new(menu_item_label);
+  gtk_misc_set_alignment(GTK_MISC(wlabel), 0.0, 0.5);
+  gtk_box_pack_start(GTK_BOX(hbox), wlabel, TRUE, TRUE, 4);
+  gtk_widget_show(wlabel);
+ 
   gtk_container_add (GTK_CONTAINER (data->menu), menu_item);
+  if(gtk_object_get_data(GTK_OBJECT (gimage),"menu_preview_dirty") == NULL)
+    {
+      /* Only add this signal once */
+      gtk_object_set_data(GTK_OBJECT (gimage),"menu_preview_dirty",(gpointer)1);
+      gtk_signal_connect_after (GTK_OBJECT (gimage), "dirty",
+ 				GTK_SIGNAL_FUNC(menu_preview_dirty),NULL);
+    }
+  gtk_object_set_data(GTK_OBJECT(menu_item),"menu_preview",wcolor_box);
+  gtk_object_set_data(GTK_OBJECT(menu_item),"menu_preview_gimage",gimage);
+  
   gtk_widget_show (menu_item);
-
+  
   g_free (menu_item_label);
   data->num_items ++;  
 }

@@ -21,6 +21,7 @@
 #include "gimpobjectP.h"
 #include "gimpdrawable.h"
 #include "parasitelistF.h"
+#include "gimppreviewcache.h"
 
 struct _GimpDrawable
 {
@@ -43,7 +44,7 @@ struct _GimpDrawable
   ParasiteList *parasites;              /* Plug-in parasite data   */
 
   /*  Preview variables  */
-  TempBuf *preview;			/* preview of the channel */
+  GSList *preview_cache;	       	/* preview caches of the channel */
   int preview_valid;			/* is the preview valid? */
 };
 

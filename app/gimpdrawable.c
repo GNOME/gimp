@@ -650,7 +650,7 @@ gimp_drawable_init (GimpDrawable *drawable)
   drawable->gimage = NULL;
   drawable->type = -1;
   drawable->has_alpha = FALSE;
-  drawable->preview = NULL;
+  drawable->preview_cache = NULL;
   drawable->preview_valid = FALSE;
   drawable->parasites = parasite_list_new();
   drawable->tattoo = 0;
@@ -679,8 +679,8 @@ gimp_drawable_destroy (GtkObject *object)
   if (drawable->tiles)
     tile_manager_destroy (drawable->tiles);
 
-  if (drawable->preview)
-    temp_buf_free (drawable->preview);
+  if (drawable->preview_cache)
+    gimp_preview_cache_invalidate(&drawable->preview_cache);
 
   if (drawable->parasites)
     gtk_object_unref(GTK_OBJECT(drawable->parasites));
@@ -740,7 +740,7 @@ gimp_drawable_configure (GimpDrawable *drawable,
   gimp_drawable_set_name(drawable, name);
 
   /*  preview variables  */
-  drawable->preview = NULL;
+  drawable->preview_cache = NULL;
   drawable->preview_valid = FALSE;
 }
   

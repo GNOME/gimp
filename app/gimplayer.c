@@ -33,6 +33,8 @@
 #include "parasitelist.h"
 #include "undo.h"
 #include "gimpsignal.h"
+#include "gimppreviewcache.h"
+
 
 #include "libgimp/gimpintl.h"
 #include "libgimp/parasite.h"
@@ -1114,15 +1116,16 @@ layer_preview (layer, w, h)
   int type;
   int bytes;
   int subsample;
+  TempBuf *ret_buf;
 
   type  = 0;
   bytes = 0;
 
   /*  The easy way  */
   if (GIMP_DRAWABLE(layer)->preview_valid &&
-      GIMP_DRAWABLE(layer)->preview->width == w &&
-      GIMP_DRAWABLE(layer)->preview->height == h)
-    return GIMP_DRAWABLE(layer)->preview;
+      (ret_buf = gimp_preview_cache_get(&(GIMP_DRAWABLE(layer)->preview_cache),
+					w,h)))
+    return ret_buf;
   /*  The hard way  */
   else
     {
@@ -1163,13 +1166,13 @@ layer_preview (layer, w, h)
 
       layer_preview_scale (type, gimage->cmap, &srcPR, &destPR, subsample);
 
-      if (GIMP_DRAWABLE(layer)->preview)
-	temp_buf_free (GIMP_DRAWABLE(layer)->preview);
+      if (!GIMP_DRAWABLE(layer)->preview_valid)
+	gimp_preview_cache_invalidate(&(GIMP_DRAWABLE(layer)->preview_cache));
 
-      GIMP_DRAWABLE(layer)->preview = preview_buf;
       GIMP_DRAWABLE(layer)->preview_valid = TRUE;
 
-      return GIMP_DRAWABLE(layer)->preview;
+      gimp_preview_cache_add(&(GIMP_DRAWABLE(layer)->preview_cache),preview_buf);
+      return preview_buf;
     }
 }
 
@@ -1183,6 +1186,7 @@ layer_mask_preview (layer, w, h)
   LayerMask *mask;
   PixelRegion srcPR, destPR;
   int subsample;
+  TempBuf *ret_buf;
 
   mask = layer->mask;
   if (!mask)
@@ -1190,9 +1194,9 @@ layer_mask_preview (layer, w, h)
 
   /*  The easy way  */
   if (GIMP_DRAWABLE(mask)->preview_valid &&
-      GIMP_DRAWABLE(mask)->preview->width == w &&
-      GIMP_DRAWABLE(mask)->preview->height == h)
-    return GIMP_DRAWABLE(mask)->preview;
+      (ret_buf = gimp_preview_cache_get(&(GIMP_DRAWABLE(mask)->preview_cache),
+					w,h)))
+    return ret_buf;
   /*  The hard way  */
   else
     {
@@ -1215,13 +1219,13 @@ layer_mask_preview (layer, w, h)
 
       layer_preview_scale (1 /* GRAY */, NULL, &srcPR, &destPR, subsample);
 
-      if (GIMP_DRAWABLE(mask)->preview)
-	temp_buf_free (GIMP_DRAWABLE(mask)->preview);
+      if(!GIMP_DRAWABLE(mask)->preview_valid)
+	gimp_preview_cache_invalidate(&(GIMP_DRAWABLE(mask)->preview_cache));
 
-      GIMP_DRAWABLE(mask)->preview = preview_buf;
       GIMP_DRAWABLE(mask)->preview_valid = TRUE;
+      gimp_preview_cache_add(&(GIMP_DRAWABLE(mask)->preview_cache),preview_buf);
 
-      return GIMP_DRAWABLE(mask)->preview;
+      return preview_buf;
     }
 }
 

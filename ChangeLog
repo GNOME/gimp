@@ -1,3 +1,45 @@
+Wed Jun 23 23:52:54 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* gimp/app/gimppreviewcache.c  	
+	* gimp/app/gimppreviewcache.h  	
+	* gimp/app/drawable_cmds.c  	
+	* gimp/app/gdisplay.c  		
+	* gimp/app/gimpdrawableP.h 	
+	* gimp/app/gimage_cmds.c
+	* gimp/app/Makefile.am 		
+	* gimp/app/layers_dialog.c 	
+	* gimp/app/channel.c 		
+	* gimp/app/lc_dialog.c 		
+	* gimp/app/lc_dialog.h 		
+	* gimp/app/lc_dialogP.h 		
+	* gimp/app/layer.c 		
+	* gimp/app/gimpdrawable.c 	
+	* gimp/app/internal_procs.c
+	* gimp/libgimp/gimp.h 		
+	* gimp/libgimp/gimpimage.c 	
+	* gimp/libgimp/gimpdrawable.c 	
+	* gimp/libgimp/gimpmenu.c 	
+	* gimp/tools/pdbgen/pdb/drawable.pdb
+	* gimp/tools/pdbgen/pdb/gimage.pdb
+
+	Added thumbnail image preview functions. 
+	Previews are visible on the L&C&P dialogs as well as in the 
+	drawables/channels/ menus generated for plugins 
+	(see the bumpmap & Mapobject plugins). 
+
+	PDB interface exists to simply extract a thumbnail preview 
+	of a given size. This is much quicker & more efficient
+	than getting the image data tile-by-tile if you only need a small
+	image since a "preview cache" has been implemented. This cache also
+	reduces the number of times the tiles cached is scanned since smaller
+	previews are always generated from large ones if they exists and
+	are valid.
+
+	Some possible usages (I don't intend to implement these ideas. Just 
+	suggestions). More plugins using the thumbnail preview (ie any that 
+	use multiple images). Indication of "active image" somewhere.....
+	Actually almost anywhere a drawable/image name appears.
+
 1999-06-23  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/brightness_contrast.c

@@ -1132,3 +1132,35 @@ gimp_image_get_channel_by_tattoo (gint32  image_ID, gint32 tattoo)
   return channel;
 }
 
+guchar *
+gimp_image_get_thumbnail_data (gint32 image_ID,
+			       gint  *width,
+			       gint  *height,
+			       gint  *bytes)
+{
+  GParam *return_vals;
+  int     nreturn_vals;
+  gchar  *image_data = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_image_thumbnail",
+				    &nreturn_vals,
+				    PARAM_DRAWABLE, image_ID,
+				    PARAM_INT32, *width,
+				    PARAM_INT32, *height,
+				    PARAM_END);
+
+  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+    {
+      *width = return_vals[1].data.d_int32;
+      *height = return_vals[2].data.d_int32;
+      *bytes = return_vals[3].data.d_int32;
+      image_data = g_new (gchar,return_vals[4].data.d_int32);
+      g_memmove (image_data, return_vals[5].data.d_int32array,return_vals[4].data.d_int32);
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return image_data;
+
+}
+

@@ -18,6 +18,8 @@ libgimpim_a_SOURCES = \
 	gimpobject.h	\
 	gimpobjectF.h	\
 	gimpobjectP.h	\
+	gimppreviewcache.h \
+	gimppreviewcache.c \
 	gimpset.c	\
 	gimpset.h	\
 	gimpsetF.h	\

@@ -527,6 +527,10 @@ gint32     gimp_image_get_layer_by_tattoo   (gint32  image_ID,
 gint32     gimp_image_get_channel_by_tattoo (gint32  image_ID,
 					     gint32 tattoo);
 
+guchar *   gimp_image_get_thumbnail_data    (gint32 image_ID,
+					     gint  *width,
+					     gint  *height,
+					     gint  *bytes);
 
 /****************************************
  *              Guides                  *
@@ -719,7 +723,10 @@ void       gimp_layer_attach_new_parasite(gint32      drawable,
 					  int size, const void *data);
 void       gimp_drawable_detach_parasite (gint32      drawable,
 					  const char *name);
-
+guchar *   gimp_drawable_get_thumbnail_data (gint32 drawable_ID,
+					     gint  *width,
+					     gint  *height,
+					     gint  *bytes);
 
 /****************************************
  *               GTiles                  *

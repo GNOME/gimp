@@ -1,5 +1,5 @@
 /* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ * Copyright (C) 1999 Andy Thomas alt@gimp.org
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,20 +15,28 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#ifndef  __LC_DIALOG_H__
-#define  __LC_DIALOG_H__
 
-#include "gimpimageF.h"
+#ifndef __GIMPPREVIEWCACHE_H__
+#define __GIMPPREVIEWCACHE_H__
 
-void   lc_dialog_create            (GimpImage *gimage);
-void   lc_dialog_free              (void);
+#include "temp_buf.h"
 
-void   lc_dialog_rebuild           (int);  /*  implies free & create  */
+typedef struct _PreviewCache {
+  TempBuf* preview;
+  gint     width;
+  gint     height;
+} PreviewCache;
 
-void   lc_dialog_flush             (void);
+typedef struct _PreviewNearest {
+  PreviewCache *pc;
+  gint   width;
+  gint   height;
+} PreviewNearest;
 
-void   lc_dialog_update_image_list (void);
-void   lc_dialog_preview_update    (GimpImage *gimage);
+#define MAX_CACHE_PREVIEWS 5
+TempBuf * gimp_preview_cache_get(GSList **,gint,gint);
+void      gimp_preview_cache_add(GSList **,TempBuf *);
+void      gimp_preview_cache_invalidate(GSList **);
 
 
-#endif  /*  __LC_DIALOG_H__  */
+#endif /* __GIMPPREVIEWCACHE_H__ */

@@ -20,6 +20,9 @@
 
 #include "procedural_db.h"
 
+#include <glib.h>
+#include <string.h>
+
 #include "drawable.h"
 #include "gimpdrawable.h"
 #include "gimpimage.h"
@@ -45,6 +48,7 @@ static ProcRecord drawable_channel_proc;
 static ProcRecord drawable_get_pixel_proc;
 static ProcRecord drawable_set_pixel_proc;
 static ProcRecord drawable_set_image_proc;
+static ProcRecord drawable_thumbnail_proc;
 
 void
 register_drawable_procs (void)
@@ -70,6 +74,7 @@ register_drawable_procs (void)
   procedural_db_register (&drawable_get_pixel_proc);
   procedural_db_register (&drawable_set_pixel_proc);
   procedural_db_register (&drawable_set_image_proc);
+  procedural_db_register (&drawable_thumbnail_proc);
 }
 
 static Argument *
@@ -1269,4 +1274,144 @@ static ProcRecord drawable_set_image_proc =
   0,
   NULL,
   { { drawable_set_image_invoker } }
+};
+
+static Argument *
+drawable_thumbnail_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpDrawable *drawable;
+  gint32 req_width;
+  gint32 req_height;
+  gint32 width = 0;
+  gint32 height = 0;
+  gint32 bpp = 0;
+  gint32 num_pixels = 0;
+  gint8 *thumbnail_data = NULL;
+
+  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  if (drawable == NULL)
+    success = FALSE;
+
+  req_width = args[1].value.pdb_int;
+  if (req_width <= 0)
+    success = FALSE;
+
+  req_height = args[2].value.pdb_int;
+  if (req_height <= 0)
+    success = FALSE;
+
+  if (success)
+    {
+	    TempBuf * buf;
+	    gint dwidth,dheight;
+    
+	    if(req_width <= 128 && req_height <= 128)
+	    {        
+    
+	      /* Adjust the width/height ratio */
+		
+	      dwidth = drawable_width(GIMP_DRAWABLE(drawable));
+	      dheight = drawable_height(GIMP_DRAWABLE(drawable));
+    
+		if(dwidth > dheight)
+	      {
+		  req_height = (req_width*dheight)/dwidth;
+	      }
+	      else
+	      {
+		  req_width = (req_height*dwidth)/dheight;
+	      }
+    
+	      if(GIMP_IS_LAYER(drawable))
+		  buf = layer_preview(GIMP_LAYER(drawable),req_width,req_height);
+	      else
+		  buf = channel_preview(GIMP_CHANNEL(drawable),req_width,req_height);
+    
+	      num_pixels = buf->height * buf->width * buf->bytes;
+	      thumbnail_data = (gint8 *)g_new (gint8, num_pixels);
+	      g_memmove (thumbnail_data, temp_buf_data (buf), num_pixels);
+	      width = buf->width;        
+	      height = buf->height;
+	      bpp = buf->bytes;
+	    }
+    }
+
+  return_args = procedural_db_return_args (&drawable_thumbnail_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_int = width;
+      return_args[2].value.pdb_int = height;
+      return_args[3].value.pdb_int = bpp;
+      return_args[4].value.pdb_int = num_pixels;
+      return_args[5].value.pdb_pointer = thumbnail_data;
+    }
+
+  return return_args;
+}
+
+static ProcArg drawable_thumbnail_inargs[] =
+{
+  {
+    PDB_DRAWABLE,
+    "drawable",
+    "The drawable"
+  },
+  {
+    PDB_INT32,
+    "width",
+    "The thumbnail width"
+  },
+  {
+    PDB_INT32,
+    "height",
+    "The thumbnail height"
+  }
+};
+
+static ProcArg drawable_thumbnail_outargs[] =
+{
+  {
+    PDB_INT32,
+    "width",
+    "The previews width"
+  },
+  {
+    PDB_INT32,
+    "height",
+    "The previews height"
+  },
+  {
+    PDB_INT32,
+    "bpp",
+    "The previews bpp"
+  },
+  {
+    PDB_INT32,
+    "thumbnail_data_count",
+    "The number of pixels in thumbnail data"
+  },
+  {
+    PDB_INT8ARRAY,
+    "thumbnail_data",
+    "The thumbnail data"
+  }
+};
+
+static ProcRecord drawable_thumbnail_proc =
+{
+  "gimp_drawable_thumbnail",
+  "Get a thumbnail of a drawable.",
+  "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 128 pixels. The pixles are returned in the RGB[A] format. The bpp return value gives the number of bytes in the image. The alpha channel also returned if the drawable has one.",
+  "Andy Thomas",
+  "Andy Thomas",
+  "1999",
+  PDB_INTERNAL,
+  3,
+  drawable_thumbnail_inargs,
+  5,
+  drawable_thumbnail_outargs,
+  { { drawable_thumbnail_invoker } }
 };

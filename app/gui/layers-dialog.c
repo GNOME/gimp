@@ -78,6 +78,8 @@
 #define SELECTED    1
 #define INSENSITIVE 2
 
+
+
 typedef struct _LayersDialog LayersDialog;
 
 struct _LayersDialog
@@ -257,7 +259,6 @@ static OpsButton layers_ops_buttons[] =
   { NULL, NULL, NULL, NULL, NULL, 0 }
 };
 
-
 /************************************/
 /*  Public layers dialog functions  */
 /************************************/
@@ -424,6 +425,22 @@ layers_dialog_free ()
   layersD = NULL;
 }
 
+void 
+layers_dialog_invalidate_previews(GimpImage *gimage)
+{
+  GSList *list = gimage->layers;
+  Layer * layer;
+  /* Invalidate all previews ... */
+  /* This is called during loading the image */
+
+  while (list)
+    {
+      layer = (Layer *) list->data;
+      GIMP_DRAWABLE(layer)->preview_valid = FALSE;
+      list = g_slist_next (list);
+    }
+}
+
 void
 layers_dialog_update (GimpImage* gimage)
 {
@@ -582,6 +599,7 @@ layers_dialog_flush ()
 
   gtk_container_foreach (GTK_CONTAINER (layersD->layer_list),
 			 layer_widget_layer_flush, NULL);
+
 }
 
 void
@@ -1221,7 +1239,6 @@ opacity_scale_update (GtkAdjustment *adjustment,
       gdisplays_flush ();
     }
 }
-
 
 static void
 preserve_trans_update (GtkWidget *w,

@@ -30,6 +30,7 @@
 #include "parasitelist.h"
 #include "temp_buf.h"
 #include "undo.h"
+#include "gimppreviewcache.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -425,12 +426,13 @@ channel_preview (Channel *channel, int width, int height)
   MaskBuf * preview_buf;
   PixelRegion srcPR, destPR;
   int subsample;
+  TempBuf *ret_buf;
 
   /*  The easy way  */
   if (GIMP_DRAWABLE(channel)->preview_valid &&
-      GIMP_DRAWABLE(channel)->preview->width == width &&
-      GIMP_DRAWABLE(channel)->preview->height == height)
-    return GIMP_DRAWABLE(channel)->preview;
+      (ret_buf = gimp_preview_cache_get(&(GIMP_DRAWABLE(channel)->preview_cache),
+					width,height)))
+    return ret_buf;
   /*  The hard way  */
   else
     {
@@ -455,13 +457,11 @@ channel_preview (Channel *channel, int width, int height)
 
       subsample_region (&srcPR, &destPR, subsample);
 
-      if (GIMP_DRAWABLE(channel)->preview_valid)
-	mask_buf_free (GIMP_DRAWABLE(channel)->preview);
-
-      GIMP_DRAWABLE(channel)->preview = preview_buf;
+      if(!GIMP_DRAWABLE(channel)->preview_valid)
+	gimp_preview_cache_invalidate(&(GIMP_DRAWABLE(channel)->preview_cache));
       GIMP_DRAWABLE(channel)->preview_valid = 1;
-
-      return GIMP_DRAWABLE(channel)->preview;
+      gimp_preview_cache_add(&(GIMP_DRAWABLE(channel)->preview_cache),preview_buf);
+      return preview_buf;
     }
 }
 

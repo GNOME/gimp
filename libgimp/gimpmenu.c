@@ -22,6 +22,13 @@
 #include "gimp.h"
 #include "gimpui.h"
 
+#define GRAD_CHECK_SIZE_SM 4
+
+#define GRAD_CHECK_DARK  (1.0 / 3.0)
+#define GRAD_CHECK_LIGHT (2.0 / 3.0)
+
+#define MENU_THUMBNAIL_WIDTH 24
+#define MENU_THUMBNAIL_HEIGHT 24
 
 /* Copy data from temp_PDB call */
 struct _GBrushData {
@@ -84,7 +91,10 @@ static gboolean input_callback	     (GIOChannel       *channel,
 				      gpointer		data);
 static void    gimp_setup_callbacks  (void);
 static gchar*  gen_temp_plugin_name  (void);
-
+static void    fill_preview_with_thumb(GtkWidget *,
+				       gint32,
+				       gint,
+				       gint);
 /* From gimp.c */
 void gimp_run_temp (void);
 
@@ -94,7 +104,6 @@ static GHashTable *ggradient_ht = NULL;
 static GBrushData *active_brush_pdb = NULL;
 static GPatternData *active_pattern_pdb = NULL;
 static GGradientData *active_gradient_pdb = NULL;
-
 
 GtkWidget*
 gimp_image_menu_new (GimpConstraintFunc constraint,
@@ -156,6 +165,8 @@ gimp_image_menu_new (GimpConstraintFunc constraint,
   return menu;
 }
 
+
+
 GtkWidget*
 gimp_layer_menu_new (GimpConstraintFunc constraint,
 		     GimpMenuCallback   callback,
@@ -193,15 +204,49 @@ gimp_layer_menu_new (GimpConstraintFunc constraint,
 	for (j = 0; j < nlayers; j++)
 	  if (!constraint || (* constraint) (images[i], layers[j], data))
 	    {
+	      GtkWidget *hbox;
+	      GtkWidget *vbox;
+	      GtkWidget *wcolor_box;
+	      GtkWidget *wlabel;
+
 	      name = gimp_layer_get_name (layers[j]);
 	      label = g_new (char, strlen (image_label) + strlen (name) + 2);
 	      sprintf (label, "%s/%s", image_label, name);
 	      g_free (name);
 
-	      menuitem = gtk_menu_item_new_with_label (label);
+	      menuitem = gtk_menu_item_new();
 	      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 				  (GtkSignalFunc) gimp_menu_callback,
 				  &layers[j]);
+
+	      hbox = gtk_hbox_new(FALSE, 0);
+	      gtk_container_add(GTK_CONTAINER(menuitem), hbox);
+	      gtk_widget_show(hbox);
+
+	      vbox = gtk_vbox_new(FALSE, 0);
+	      gtk_box_pack_start(GTK_BOX(hbox), vbox, FALSE, FALSE, 0);
+	      gtk_widget_show(vbox);
+	      
+	      wcolor_box = gtk_preview_new(GTK_PREVIEW_COLOR);
+	      gtk_preview_set_dither (GTK_PREVIEW (wcolor_box), GDK_RGB_DITHER_MAX);
+
+	      fill_preview_with_thumb(wcolor_box,
+				      layers[j],
+				      MENU_THUMBNAIL_WIDTH,
+				      MENU_THUMBNAIL_HEIGHT);
+
+	      gtk_widget_set_usize( GTK_WIDGET (wcolor_box) , 
+				    MENU_THUMBNAIL_WIDTH , 
+				    MENU_THUMBNAIL_HEIGHT);
+
+	      gtk_container_add(GTK_CONTAINER(vbox), wcolor_box);
+	      gtk_widget_show(wcolor_box);
+
+	      wlabel = gtk_label_new(label);
+	      gtk_misc_set_alignment(GTK_MISC(wlabel), 0.0, 0.5);
+	      gtk_box_pack_start(GTK_BOX(hbox), wlabel, TRUE, TRUE, 4);
+	      gtk_widget_show(wlabel);
+
 	      gtk_menu_append (GTK_MENU (menu), menuitem);
 	      gtk_widget_show (menuitem);
 
@@ -273,15 +318,49 @@ gimp_channel_menu_new (GimpConstraintFunc constraint,
 	for (j = 0; j < nchannels; j++)
 	  if (!constraint || (* constraint) (images[i], channels[j], data))
 	    {
+	      GtkWidget *hbox;
+	      GtkWidget *vbox;
+	      GtkWidget *wcolor_box;
+	      GtkWidget *wlabel;
+
 	      name = gimp_channel_get_name (channels[j]);
 	      label = g_new (char, strlen (image_label) + strlen (name) + 2);
 	      sprintf (label, "%s/%s", image_label, name);
 	      g_free (name);
 
-	      menuitem = gtk_menu_item_new_with_label (label);
+	      menuitem = gtk_menu_item_new();
 	      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 				  (GtkSignalFunc) gimp_menu_callback,
 				  &channels[j]);
+	      
+	      hbox = gtk_hbox_new(FALSE, 0);
+	      gtk_container_add(GTK_CONTAINER(menuitem), hbox);
+	      gtk_widget_show(hbox);
+
+	      vbox = gtk_vbox_new(FALSE, 0);
+	      gtk_box_pack_start(GTK_BOX(hbox), vbox, FALSE, FALSE, 0);
+	      gtk_widget_show(vbox);
+	      
+	      wcolor_box = gtk_preview_new(GTK_PREVIEW_COLOR);
+	      gtk_preview_set_dither (GTK_PREVIEW (wcolor_box), GDK_RGB_DITHER_MAX);
+
+ 	      fill_preview_with_thumb(wcolor_box, 
+ 				      channels[j], 
+ 				      MENU_THUMBNAIL_WIDTH, 
+ 				      MENU_THUMBNAIL_HEIGHT); 
+
+	      gtk_widget_set_usize( GTK_WIDGET (wcolor_box) , 
+				    MENU_THUMBNAIL_WIDTH , 
+				    MENU_THUMBNAIL_HEIGHT);
+
+	      gtk_container_add(GTK_CONTAINER(vbox), wcolor_box);
+	      gtk_widget_show(wcolor_box);
+
+	      wlabel = gtk_label_new(label);
+	      gtk_misc_set_alignment(GTK_MISC(wlabel), 0.0, 0.5);
+	      gtk_box_pack_start(GTK_BOX(hbox), wlabel, TRUE, TRUE, 4);
+	      gtk_widget_show(wlabel);
+
 	      gtk_menu_append (GTK_MENU (menu), menuitem);
 	      gtk_widget_show (menuitem);
 
@@ -355,15 +434,49 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
 	for (j = 0; j < nlayers; j++)
 	  if (!constraint || (* constraint) (images[i], layers[j], data))
 	    {
+	      GtkWidget *hbox;
+	      GtkWidget *vbox;
+	      GtkWidget *wcolor_box;
+	      GtkWidget *wlabel;
+
 	      name = gimp_layer_get_name (layers[j]);
 	      label = g_new (char, strlen (image_label) + strlen (name) + 2);
 	      sprintf (label, "%s/%s", image_label, name);
 	      g_free (name);
 
-	      menuitem = gtk_menu_item_new_with_label (label);
+	      menuitem = gtk_menu_item_new();
 	      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 				  (GtkSignalFunc) gimp_menu_callback,
 				  &layers[j]);
+
+	      hbox = gtk_hbox_new(FALSE, 0);
+	      gtk_container_add(GTK_CONTAINER(menuitem), hbox);
+	      gtk_widget_show(hbox);
+
+	      vbox = gtk_vbox_new(FALSE, 0);
+	      gtk_box_pack_start(GTK_BOX(hbox), vbox, FALSE, FALSE, 0);
+	      gtk_widget_show(vbox);
+	      
+	      wcolor_box = gtk_preview_new(GTK_PREVIEW_COLOR);
+	      gtk_preview_set_dither (GTK_PREVIEW (wcolor_box), GDK_RGB_DITHER_MAX);
+
+	      fill_preview_with_thumb(wcolor_box,
+				      layers[j],
+				      MENU_THUMBNAIL_WIDTH,
+				      MENU_THUMBNAIL_HEIGHT);
+
+	      gtk_widget_set_usize( GTK_WIDGET (wcolor_box) , 
+				    MENU_THUMBNAIL_WIDTH , 
+				    MENU_THUMBNAIL_HEIGHT);
+
+	      gtk_container_add(GTK_CONTAINER(vbox), wcolor_box);
+	      gtk_widget_show(wcolor_box);
+
+	      wlabel = gtk_label_new(label);
+	      gtk_misc_set_alignment(GTK_MISC(wlabel), 0.0, 0.5);
+	      gtk_box_pack_start(GTK_BOX(hbox), wlabel, TRUE, TRUE, 4);
+	      gtk_widget_show(wlabel);
+
 	      gtk_menu_append (GTK_MENU (menu), menuitem);
 	      gtk_widget_show (menuitem);
 
@@ -384,15 +497,49 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
 	for (j = 0; j < nchannels; j++)
 	  if (!constraint || (* constraint) (images[i], channels[j], data))
 	    {
+	      GtkWidget *hbox;
+	      GtkWidget *vbox;
+	      GtkWidget *wcolor_box;
+	      GtkWidget *wlabel;
+
 	      name = gimp_channel_get_name (channels[j]);
 	      label = g_new (char, strlen (image_label) + strlen (name) + 2);
 	      sprintf (label, "%s/%s", image_label, name);
 	      g_free (name);
 
-	      menuitem = gtk_menu_item_new_with_label (label);
+	      menuitem = gtk_menu_item_new();
 	      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 				  (GtkSignalFunc) gimp_menu_callback,
 				  &channels[j]);
+
+	      hbox = gtk_hbox_new(FALSE, 0);
+	      gtk_container_add(GTK_CONTAINER(menuitem), hbox);
+	      gtk_widget_show(hbox);
+
+	      vbox = gtk_vbox_new(FALSE, 0);
+	      gtk_box_pack_start(GTK_BOX(hbox), vbox, FALSE, FALSE, 0);
+	      gtk_widget_show(vbox);
+	      
+	      wcolor_box = gtk_preview_new(GTK_PREVIEW_COLOR);
+	      gtk_preview_set_dither (GTK_PREVIEW (wcolor_box), GDK_RGB_DITHER_MAX);
+
+ 	      fill_preview_with_thumb(wcolor_box, 
+ 				      channels[j], 
+ 				      MENU_THUMBNAIL_WIDTH, 
+ 				      MENU_THUMBNAIL_HEIGHT); 
+
+	      gtk_widget_set_usize( GTK_WIDGET (wcolor_box) , 
+				    MENU_THUMBNAIL_WIDTH , 
+				    MENU_THUMBNAIL_HEIGHT);
+
+	      gtk_container_add(GTK_CONTAINER(vbox), wcolor_box);
+	      gtk_widget_show(wcolor_box);
+
+	      wlabel = gtk_label_new(label);
+	      gtk_misc_set_alignment(GTK_MISC(wlabel), 0.0, 0.5);
+	      gtk_box_pack_start(GTK_BOX(hbox), wlabel, TRUE, TRUE, 4);
+	      gtk_widget_show(wlabel);
+
 	      gtk_menu_append (GTK_MENU (menu), menuitem);
 	      gtk_widget_show (menuitem);
 
@@ -439,6 +586,107 @@ gimp_menu_callback (GtkWidget *w,
   callback_data = gtk_object_get_data (GTK_OBJECT (w->parent), "gimp_callback_data");
 
   (* callback) (*id, callback_data);
+}
+
+static void
+fill_preview_with_thumb(GtkWidget *w,gint32 drawableId,gint width,gint height)
+{
+  guchar    *drawable_data;
+  gint       bpp;
+
+  bpp = 0; /* Only returned */
+  
+  drawable_data = gimp_drawable_get_thumbnail_data(drawableId,&width,&height,&bpp);
+
+  gtk_preview_size(GTK_PREVIEW(w),width,height);
+
+  /* First greyscale and non-alpha */
+  if(bpp < 4)
+    {
+      guchar *buf;
+      guchar *src;
+      gint x,y;
+      
+      /*  Draw the image  */
+      buf = g_new (gchar, width * 3);
+      src = drawable_data;
+      for (y = 0; y < height; y++)
+	{
+	  if (bpp == 1)
+	    for (x = 0; x < width; x++)
+	      {
+		buf[x*3+0] = src[x];
+		buf[x*3+1] = src[x];
+		buf[x*3+2] = src[x];
+	      }
+	  else
+	    for (x = 0; x < width; x++)
+	      {
+		buf[x*3+0] = src[x*3+0];
+		buf[x*3+1] = src[x*3+1];
+		buf[x*3+2] = src[x*3+2];
+	      }
+	  gtk_preview_draw_row (GTK_PREVIEW (w), (guchar *)buf, 0, y, width);
+	  src += width * bpp;
+	}
+      g_free(buf);
+    }
+  else /* Has alpha channel */
+    {
+      gint     x,y;
+      guchar  *src;
+      gdouble  r, g, b, a;
+      gdouble  c0, c1;
+      guchar  *p0, *p1,*even,*odd;
+      
+      /*  Draw the thumbnail with checks  */
+      src = drawable_data;
+      
+      even = g_malloc(width*3);
+      odd = g_malloc(width*3);
+      
+      for (y = 0; y < height; y++)
+	{
+	  p0 = even;
+	  p1 = odd;
+	  
+	  for (x = 0; x < width; x++) {
+	    r =  ((gdouble)src[x*4+0])/255.0;
+	    g = ((gdouble)src[x*4+1])/255.0;
+	    b = ((gdouble)src[x*4+2])/255.0;
+	    a = ((gdouble)src[x*4+3])/255.0;
+	    
+	    if ((x / GRAD_CHECK_SIZE_SM) & 1) {
+	      c0 = GRAD_CHECK_LIGHT;
+	      c1 = GRAD_CHECK_DARK;
+	    } else {
+	      c0 = GRAD_CHECK_DARK;
+	      c1 = GRAD_CHECK_LIGHT;
+	    } /* else */
+	    
+	    *p0++ = (c0 + (r - c0) * a) * 255.0;
+	    *p0++ = (c0 + (g - c0) * a) * 255.0;
+	    *p0++ = (c0 + (b - c0) * a) * 255.0;
+	    
+	    *p1++ = (c1 + (r - c1) * a) * 255.0;
+	    *p1++ = (c1 + (g - c1) * a) * 255.0;
+	    *p1++ = (c1 + (b - c1) * a) * 255.0;
+	    
+	  } /* for */
+	  
+	  if ((y / GRAD_CHECK_SIZE_SM) & 1)
+	    {
+	      gtk_preview_draw_row (GTK_PREVIEW (w), (guchar *)odd, 0, y, width);
+	    }
+	  else
+	    {
+	      gtk_preview_draw_row (GTK_PREVIEW (w), (guchar *)even, 0, y, width);
+			}
+	  src += width * bpp;
+	}
+      g_free(even);
+      g_free(odd);
+    }
 }
 
 
@@ -733,7 +981,6 @@ gen_temp_plugin_name (void)
 
   return result;
 }
-
 
 /* Can only be used in conjuction with gdk since we need to tie into the input 
  * selection mech.

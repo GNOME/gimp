@@ -20,6 +20,7 @@
 
 #include "procedural_db.h"
 
+#include <glib.h>
 #include <string.h>
 
 #include "channel.h"
@@ -65,6 +66,7 @@ static ProcRecord image_disable_undo_proc;
 static ProcRecord image_clean_all_proc;
 static ProcRecord image_floating_selection_proc;
 static ProcRecord image_floating_sel_attached_to_proc;
+static ProcRecord image_thumbnail_proc;
 static ProcRecord image_width_proc;
 static ProcRecord image_height_proc;
 static ProcRecord image_get_active_layer_proc;
@@ -122,6 +124,7 @@ register_gimage_procs (void)
   procedural_db_register (&image_clean_all_proc);
   procedural_db_register (&image_floating_selection_proc);
   procedural_db_register (&image_floating_sel_attached_to_proc);
+  procedural_db_register (&image_thumbnail_proc);
   procedural_db_register (&image_width_proc);
   procedural_db_register (&image_height_proc);
   procedural_db_register (&image_get_active_layer_proc);
@@ -2176,6 +2179,142 @@ static ProcRecord image_floating_sel_attached_to_proc =
   1,
   image_floating_sel_attached_to_outargs,
   { { image_floating_sel_attached_to_invoker } }
+};
+
+static Argument *
+image_thumbnail_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+  gint32 req_width;
+  gint32 req_height;
+  gint32 width = 0;
+  gint32 height = 0;
+  gint32 bpp = 0;
+  gint32 num_pixels = 0;
+  gint8 *thumbnail_data = NULL;
+
+  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  if (gimage == NULL)
+    success = FALSE;
+
+  req_width = args[1].value.pdb_int;
+  if (req_width <= 0)
+    success = FALSE;
+
+  req_height = args[2].value.pdb_int;
+  if (req_height <= 0)
+    success = FALSE;
+
+  if (success)
+    {
+	    TempBuf * buf;
+	    gint dwidth,dheight;
+    
+	    if(req_width <= 128 && req_height <= 128)
+	    {        
+    
+	      /* Adjust the width/height ratio */
+		
+	      dwidth = gimage->width;
+	      dheight = gimage->height;
+    
+		if(dwidth > dheight)
+	      {
+		  req_height = (req_width*dheight)/dwidth;
+	      }
+	      else
+	      {
+		  req_width = (req_height*dwidth)/dheight;
+	      }
+    
+	      buf = gimp_image_construct_composite_preview(gimage,req_width,req_height);
+	      num_pixels = buf->height * buf->width * buf->bytes;
+	      thumbnail_data = (gint8 *)g_new (gint8, num_pixels);
+	      g_memmove (thumbnail_data, temp_buf_data (buf), num_pixels);
+	      width = buf->width;        
+	      height = buf->height;
+	      bpp = buf->bytes;
+	    }
+    }
+
+  return_args = procedural_db_return_args (&image_thumbnail_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_int = width;
+      return_args[2].value.pdb_int = height;
+      return_args[3].value.pdb_int = bpp;
+      return_args[4].value.pdb_int = num_pixels;
+      return_args[5].value.pdb_pointer = thumbnail_data;
+    }
+
+  return return_args;
+}
+
+static ProcArg image_thumbnail_inargs[] =
+{
+  {
+    PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    PDB_INT32,
+    "width",
+    "The thumbnail width"
+  },
+  {
+    PDB_INT32,
+    "height",
+    "The thumbnail height"
+  }
+};
+
+static ProcArg image_thumbnail_outargs[] =
+{
+  {
+    PDB_INT32,
+    "width",
+    "The previews width"
+  },
+  {
+    PDB_INT32,
+    "height",
+    "The previews height"
+  },
+  {
+    PDB_INT32,
+    "bpp",
+    "The previews bpp"
+  },
+  {
+    PDB_INT32,
+    "thumbnail_data_count",
+    "The number of pixels in thumbnail data"
+  },
+  {
+    PDB_INT8ARRAY,
+    "thumbnail_data",
+    "The thumbnail data"
+  }
+};
+
+static ProcRecord image_thumbnail_proc =
+{
+  "gimp_image_thumbnail",
+  "Get a thumbnail of an image.",
+  "This function gets data from which a thumbnail of an image preview can be created. Maximum x or y dimension is 128 pixels. The pixles are returned in the RGB[A] format. The bpp return value gives the number of bytes in the image. The alpha channel also returned if the image has one.",
+  "Andy Thomas",
+  "Andy Thomas",
+  "1999",
+  PDB_INTERNAL,
+  3,
+  image_thumbnail_inargs,
+  5,
+  image_thumbnail_outargs,
+  { { image_thumbnail_invoker } }
 };
 
 static Argument *
