@@ -20,6 +20,10 @@
 #define  __BOUNDARY_H__
 
 
+/* half intensity for mask */
+#define HALF_WAY 127
+
+
 typedef enum
 {
   WithinBounds,
@@ -44,9 +48,10 @@ BoundSeg * find_mask_boundary (PixelRegion  *maskPR,
 			       gint          x1,
 			       gint          y1,
 			       gint          x2,
-			       gint          y2);
-BoundSeg * sort_boundary      (BoundSeg     *segs, 
-			       gint          num_segs, 
+			       gint          y2,
+                               guchar        threshold);
+BoundSeg * sort_boundary      (BoundSeg     *segs,
+			       gint          num_segs,
 			       gint         *num_groups);
 
 

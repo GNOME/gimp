@@ -30,9 +30,6 @@
 #include "tile-manager.h"
 
 
-/* half intensity for mask */
-#define HALF_WAY 127
-
 /* BoundSeg array growth parameter */
 #define MAX_SEGS_INC  2048
 
@@ -62,7 +59,8 @@ static void find_empty_segs     (PixelRegion  *maskPR,
 				 gint          x1,
 				 gint          y1,
 				 gint          x2,
-				 gint          y2);
+				 gint          y2,
+                                 guchar        threshold);
 static void make_seg            (gint          x1,
 				 gint          y1,
 				 gint          x2,
@@ -86,7 +84,8 @@ static void generate_boundary   (PixelRegion  *PR,
 				 gint          x1,
 				 gint          y1,
 				 gint          x2,
-				 gint          y2);
+				 gint          y2,
+                                 guchar        threshold);
 
 
 /*  Function definitions  */
@@ -101,7 +100,8 @@ find_empty_segs (PixelRegion  *maskPR,
 		 gint          x1,
 		 gint          y1,
 		 gint          x2,
-		 gint          y2)
+		 gint          y2,
+                 guchar        threshold)
 {
   unsigned char *data;
   int x;
@@ -135,12 +135,12 @@ find_empty_segs (PixelRegion  *maskPR,
 	}
 
       start = x1;
-      end = x2;
+      end   = x2;
     }
   else if (type == IgnoreBounds)
     {
       start = maskPR->x;
-      end = maskPR->x + maskPR->w;
+      end   = maskPR->x + maskPR->w;
       if (scanline < y1 || scanline >= y2)
 	x2 = -1;
     }
@@ -151,40 +151,53 @@ find_empty_segs (PixelRegion  *maskPR,
 
   l_num_empty = *num_empty;
 
+  if (! maskPR->tiles)
+    {
+      data  = maskPR->data + scanline * maskPR->rowstride;
+      dstep = maskPR->bytes;
+
+      endx = end;
+    }
+
   for (x = start; x < end;)
     {
       /*  Check to see if we must advance to next tile  */
-      if ((x / TILE_WIDTH) != tilex)
-	{
-	  if (tile)
-	    tile_release (tile, FALSE);
-	  tile = tile_manager_get_tile (maskPR->tiles, x, scanline, TRUE, FALSE);
-	  data = (guchar *) tile_data_pointer (tile, 
-					       x % TILE_WIDTH, 
-					       scanline % TILE_HEIGHT) + (tile_bpp(tile) - 1);
+      if (maskPR->tiles)
+        {
+          if ((x / TILE_WIDTH) != tilex)
+            {
+              if (tile)
+                tile_release (tile, FALSE);
+              tile = tile_manager_get_tile (maskPR->tiles, x, scanline, TRUE, FALSE);
+              data = (guchar *) tile_data_pointer (tile,
+                                                   x % TILE_WIDTH,
+                                                   scanline % TILE_HEIGHT) + (tile_bpp(tile) - 1);
 
-	  tilex = x / TILE_WIDTH;
-	  dstep = tile_bpp (tile);
-	}
-      endx = x + (TILE_WIDTH - (x%TILE_WIDTH));
-      endx = MIN (end, endx);
+              tilex = x / TILE_WIDTH;
+              dstep = tile_bpp (tile);
+            }
+
+          endx = x + (TILE_WIDTH - (x%TILE_WIDTH));
+          endx = MIN (end, endx);
+        }
+
       if (type == IgnoreBounds && (endx > x1 || x < x2))
 	{
 	  for (; x < endx; x++)
 	    {
-	      if (*data > HALF_WAY)
+	      if (*data > threshold)
 		if (x >= x1 && x < x2)
 		  val = -1;
 		else
 		  val = 1;
 	      else
 		val = -1;
-	      
+
 	      data += dstep;
-	      
+
 	      if (last != val)
 		empty_segs[l_num_empty++] = x;
-	      
+
 	      last = val;
 	    }
 	}
@@ -192,16 +205,16 @@ find_empty_segs (PixelRegion  *maskPR,
 	{
 	  for (; x < endx; x++)
 	    {
-	      if (*data > HALF_WAY)
+	      if (*data > threshold)
 		val = 1;
 	      else
 		val = -1;
-	      
+
 	      data += dstep;
-	      
+
 	      if (last != val)
 		empty_segs[l_num_empty++] = x;
-	      
+
 	      last = val;
 	    }
 	}
@@ -334,7 +347,8 @@ generate_boundary (PixelRegion  *PR,
 		   gint          x1,
 		   gint          y1,
 		   gint          x2,
-		   gint          y2)
+		   gint          y2,
+                   guchar        threshold)
 {
   gint  scanline;
   gint  i;
@@ -370,17 +384,20 @@ generate_boundary (PixelRegion  *PR,
   /*  Find the empty segments for the previous and current scanlines  */
   find_empty_segs (PR, start - 1, empty_segs_l,
 		   max_empty_segs, &num_empty_l,
-		   type, x1, y1, x2, y2);
+		   type, x1, y1, x2, y2,
+                   threshold);
   find_empty_segs (PR, start, empty_segs_c,
 		   max_empty_segs, &num_empty_c,
-		   type, x1, y1, x2, y2);
+		   type, x1, y1, x2, y2,
+                   threshold);
 
   for (scanline = start; scanline < end; scanline++)
     {
       /*  find the empty segment list for the next scanline  */
       find_empty_segs (PR, scanline + 1, empty_segs_n,
 		       max_empty_segs, &num_empty_n,
-		       type, x1, y1, x2, y2);
+		       type, x1, y1, x2, y2,
+                       threshold);
 
       /*  process the segments on the current scanline  */
       for (i = 1; i < num_empty_c - 1; i += 2)
@@ -409,7 +426,8 @@ find_mask_boundary (PixelRegion  *maskPR,
 		    int           x1,
 		    int           y1,
 		    int           x2,
-		    int           y2)
+		    int           y2,
+                    guchar        threshold)
 {
   BoundSeg *new_segs = NULL;
 
@@ -419,7 +437,7 @@ find_mask_boundary (PixelRegion  *maskPR,
    */
 
   /*  Calculate the boundary  */
-  generate_boundary (maskPR, type, x1, y1, x2, y2);
+  generate_boundary (maskPR, type, x1, y1, x2, y2, threshold);
 
   /*  Set the number of X segments  */
   *num_elems = num_segs;

@@ -760,7 +760,8 @@ gimp_channel_boundary (GimpChannel  *mask,
 	  mask->segs_out = find_mask_boundary (&bPR, &mask->num_segs_out,
 					       IgnoreBounds,
 					       x1, y1,
-					       x2, y2);
+					       x2, y2,
+                                               HALF_WAY);
 	  x1 = MAX (x1, x3);
 	  y1 = MAX (y1, y3);
 	  x2 = MIN (x2, x4);
@@ -775,7 +776,8 @@ gimp_channel_boundary (GimpChannel  *mask,
 	      mask->segs_in =  find_mask_boundary (&bPR, &mask->num_segs_in,
 						   WithinBounds,
 						   x1, y1,
-						   x2, y2);
+						   x2, y2,
+                                                   HALF_WAY);
 	    }
 	  else
 	    {
