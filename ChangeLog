@@ -1,5 +1,11 @@
 2001-11-05  Daniel Egger  <degger@fhm.edu>
 
+	* plug-ins/common/gauss_iir.c: Unconditionally premultiply
+	alpha into source and seperate it from the dest. Fixes
+	bug #57853.
+
+2001-11-05  Daniel Egger  <degger@fhm.edu>
+
 	* app/gimpimage.c
 	* app/gimpimage.h
 	* app/paint_funcs.c
