@@ -70,7 +70,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <string.h>
 #include <setjmp.h>
 #include <signal.h>
@@ -82,6 +81,8 @@
 #if HAVE_SYS_TIMES_H
 #include <sys/times.h>
 #endif
+
+#include <glib/gstdio.h>
 
 #include <glib.h>
 
@@ -3063,7 +3064,7 @@ fopen_cg (FILE * (*fcn) (const char *, const char *), char *name, char *how)
 LISP
 fopen_c (char *name, char *how)
 {
-  return (fopen_cg (fopen, name, how));
+  return (fopen_cg (g_fopen, name, how));
 }
 
 LISP
@@ -3107,8 +3108,9 @@ vload (char *fname, long cflag, long rflag)
     {
       int iflag;
       iflag = no_interrupt (1);
-      if ((f = fopen (fname, "r")))
+      if ((f = g_fopen (fname, "r")))
 	fclose (f);
+#if 0
       else if ((fname[0] != '/') &&
 	       ((strlen (siod_lib) + strlen (fname) + 1)
 		< sizeof (buffer)))
@@ -3116,12 +3118,13 @@ vload (char *fname, long cflag, long rflag)
 	  strcpy (buffer, siod_lib);
 	  strcat (buffer, "/");
 	  strcat (buffer, fname);
-	  if ((f = fopen (buffer, "r")))
+	  if ((f = g_fopen (buffer, "r")))
 	    {
 	      fname = buffer;
 	      fclose (f);
 	    }
 	}
+#endif
       no_interrupt (iflag);
     }
   if (siod_verbose_level >= 3)

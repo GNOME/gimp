@@ -1,5 +1,11 @@
 2005-03-04  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/siod/slib.c (vload) (fopen_c): ported to
+	g_stdio. Also disabled code that attempts to load scripts from
+	SIOD_LIB.
+
+2005-03-04  Sven Neumann  <sven@gimp.org>
+
 	* libgimpconfig/gimpconfig-path.c (gimp_config_path_expand_only):
 	handle g_get_home_dir() returning NULL and enable it for the Win32
 	platform as well.
