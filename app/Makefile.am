@@ -1,17 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 if OS_WIN32
-gimp_exp = gimp.exp
-
-gimp.exp : gimp.def
-	dlltool --output-exp $@ --input-def gimp.def
-
-gimp.def: gimp.sym
-	echo EXPORTS >$@
-	cat $< >>$@
-
 mwindows = -mwindows
-
 endif
 
 SUBDIRS = \
@@ -51,7 +41,6 @@ gimp_1_3_SOURCES = \
 EXTRA_DIST = \
 	makefile.msc			\
 	gimp.rc				\
-	gimp.sym			\
 	wilber.ico			\
 	arch/i386/mmx/detect_mmx.S	\
 	arch/i386/mmx/paint_funcs_mmx.S
@@ -62,7 +51,7 @@ else
 REGEXREPL = $(top_builddir)/regexrepl/libregex.a
 endif
 
-gimp_1_3_LDFLAGS = -export-dynamic -export-symbols $(srcdir)/gimp.sym $(mwindows)
+gimp_1_3_LDFLAGS = -export-dynamic $(mwindows)
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp\"		\
@@ -76,7 +65,6 @@ INCLUDES = \
 	-I$(includedir)
 
 gimp_1_3_LDADD = \
-	$(gimp_exp)							\
 	config/libappconfig.a						\
 	gui/libappgui.a							\
 	display/libappdisplay.a						\
