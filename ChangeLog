@@ -1,3 +1,8 @@
+2003-10-01  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimptext-compat.c (text_get_extents): set a default
+	resolution on the fontmap since Pango doesn't seem to do this for us.
+
 2003-10-01  Simon Budig  <simon@gimp.org>
 
 	* app/base/boundary.[ch]: a little bit of tweaking.

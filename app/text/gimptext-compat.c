@@ -149,6 +149,7 @@ text_get_extents (const gchar *fontname,
 
   /* FIXME: resolution */
   fontmap = pango_ft2_font_map_new ();
+  pango_ft2_font_map_set_resolution (PANGO_FT2_FONT_MAP (fontmap), 72.0, 72.0);
   context = pango_ft2_font_map_create_context (PANGO_FT2_FONT_MAP (fontmap));
   g_object_unref (fontmap);
 
