@@ -429,7 +429,7 @@ typedef struct _GdiCommentRecord
   DWORD   Size;          /* Total size of the record in WORDs */
   DWORD   SizeOfData;    /* Size of comment data in bytes */
 #if DOCUMENTATION_ONLY_ILLEGAL_C
-  BYTE    Data[];        /* Comment data */        
+  BYTE    Data[];        /* Comment data */
 #endif
 } GDICOMMENTRECORD;
 
@@ -451,7 +451,7 @@ typedef struct _GdiCommentBeginGroup
   LONG  BoundsRight;      /* Right side of bounding rectangle */
   LONG  BoundsTop;        /* Top side of bounding rectangle */
   LONG  BoundsBottom;     /* Bottom side of bounding rectangle */
-  DWORD SizeOfDescrip;    /* Number of characters in the description */     
+  DWORD SizeOfDescrip;    /* Number of characters in the description */
 } GDICOMMENTBEGINGROUP;
 
 typedef struct _GdiCommentEndGroup
@@ -837,7 +837,7 @@ query (void)
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (load_setargs_args), 0,
 			  load_setargs_args, NULL);
-  
+
   gimp_register_magic_load_handler ("file_wmf_load",
 				    "wmf,apm",
 				    "",
@@ -875,7 +875,7 @@ run (const gchar      *name,
 	  if (!load_dialog (param[1].data.d_string))
 	    status = GIMP_PDB_CANCEL;
 	  break;
-	  
+
 	case GIMP_RUN_NONINTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_get_data ("file_wmf_load", &load_vals);
@@ -887,13 +887,13 @@ run (const gchar      *name,
       if (status == GIMP_PDB_SUCCESS)
 	{
 	  check_load_vals ();
-      
+
 	  image_ID = load_image (param[1].data.d_string);
-	  
+
 	  if (image_ID != -1)
 	    {
 	      gimp_set_data ("file_wmf_load", &load_vals, sizeof (load_vals));
-	      
+
 	      *nreturn_vals = 2;
 	      values[1].type         = GIMP_PDB_IMAGE;
 	      values[1].data.d_image = image_ID;
@@ -968,7 +968,7 @@ make_canvas (OrgAndExt *window,
     }
 
   canvas->scalex = canvas->scaley = load_vals.scale;
-  
+
   if (!viewport->valid)
     {
 #ifdef DEBUG
@@ -981,18 +981,18 @@ make_canvas (OrgAndExt *window,
     }
 #ifdef DEBUG
   g_print ("make_canvas: w: (%d,%d)--(%d,%d), vp: (%d,%d)--(%d,%d)\n",
-	   window->org_x, window->org_y, window->org_x + window->ext_x, window->org_y + window->ext_y, 
+	   window->org_x, window->org_y, window->org_x + window->ext_x, window->org_y + window->ext_y,
 	   viewport->org_x, viewport->org_y,
 	   viewport->org_x + viewport->ext_x, viewport->org_y + viewport->ext_y);
 #endif
 
-  canvas->colormap = gdk_colormap_get_system ();
+  canvas->colormap = gdk_screen_get_system_colormap (gdk_screen_get_default ());
 
   canvas->width = viewport->ext_x;
   canvas->height = viewport->ext_y;
 
   canvas->pixmap = gdk_pixmap_new (NULL, viewport->ext_x, viewport->ext_y,
-				   gdk_visual_get_system ()->depth);
+				   gdk_colormap_get_visual (canvas->colormap)->depth);
 
   canvas->dc.gc = gdk_gc_new (canvas->pixmap);
 
@@ -1504,7 +1504,7 @@ load_image (const gchar *filename)
 	    case PS_INSIDEFRAME:
 	      objp->u.pen.style = GDK_LINE_SOLID;
 	      break;
-	      
+
 	    case PS_DASH:
 	    case PS_DOT:
 	    case PS_DASHDOT:
@@ -1538,7 +1538,7 @@ load_image (const gchar *filename)
 		      "???"))),
 		   objp->u.pen.color.red,
 		   objp->u.pen.color.green,
-		   objp->u.pen.color.blue); 
+		   objp->u.pen.color.blue);
 #endif
 	  if (!gdk_color_alloc (canvas->colormap, &objp->u.pen.color))
 	    {
@@ -1572,7 +1572,7 @@ load_image (const gchar *filename)
 		   (objp->u.brush.invisible ? " invisible" : ""),
 		   objp->u.brush.color.red,
 		   objp->u.brush.color.green,
-		   objp->u.brush.color.blue); 
+		   objp->u.brush.color.blue);
 #endif
 	  if (canvas == NULL)
 	    canvas = make_canvas (&window, &viewport, have_bbox, &bbox, units_per_in);
@@ -1588,7 +1588,7 @@ load_image (const gchar *filename)
 	  objp->u.brush.hatch = GUINT16_FROM_LE (params[3]);
 	  sync_record (record.Size, 4, fp);
 	  break;
-	  
+
 	case DibCreatePatternBrush:
 	  if ((objp = new_object (OBJ_PATTERNBRUSH, objects, nobjects)) == NULL)
 	    {
@@ -1601,7 +1601,7 @@ load_image (const gchar *filename)
 	  /* Ignored for now */
 	  sync_record (record.Size, 0, fp);
 	  break;
-	  
+
 	case CreatePalette:
 	  if ((objp = new_object (OBJ_PALETTE, objects, nobjects)) == NULL)
 	    {
@@ -1614,7 +1614,7 @@ load_image (const gchar *filename)
 	  /* XXX */
 	  sync_record (record.Size, 0, fp);
 	  break;
-	  
+
 	case CreateFontIndirect:
 	  if (!readparams (record.Size, 9, fp, params))
 	    return -1;
@@ -1701,7 +1701,7 @@ load_image (const gchar *filename)
 	      name2 = "courier";
 	    else
 	      name2 = name;
-	    fontname = 
+	    fontname =
 	      g_strdup_printf ("-*-%s-%s-%s-%s-*-%d-*-*-*-%s-*-*-*",
 			       name2,
 			       (weight >= 700 ? "bold" :
@@ -1744,7 +1744,7 @@ load_image (const gchar *filename)
 	    g_free (fontname);
 	  }
 	  break;
-	  
+
 	case SelectObject:
 	  if (!readparams (record.Size, 1, fp, params))
 	    return -1;
@@ -1862,7 +1862,7 @@ load_image (const gchar *filename)
 	  g_free (objp);
 	  objects[k] = NULL;
 	  break;
-	  
+
 	case MoveTo:
 	  if (!readparams (record.Size, 2, fp, params))
 	    return -1;
@@ -1881,7 +1881,7 @@ load_image (const gchar *filename)
 	  x = XMAPPAR (params[1]);
 	  y = YMAPPAR (params[0]);
 #ifdef DEBUG
-	  g_print ("LineTo: (%d,%d)--(%d,%d)\n", 
+	  g_print ("LineTo: (%d,%d)--(%d,%d)\n",
 		   (gint) canvas->curx, (gint) canvas->cury,
 		   (gint) x, (gint) y);
 #endif
@@ -1912,7 +1912,7 @@ load_image (const gchar *filename)
 	  gdk_draw_lines (canvas->pixmap, canvas->dc.gc, points, npoints);
 	  g_free (points);
 	  break;
-	  
+
 	case Rectangle:
 	  if (!readparams (record.Size, 4, fp, params))
 	    return -1;
@@ -2127,14 +2127,14 @@ load_image (const gchar *filename)
 	    gdk_gc_set_clip_rectangle (canvas->dc.gc, NULL);
 	  sync_record (record.Size, j, fp);
 	  break;
-	      
+
 	case EndOfFile:
 	  fclose (fp);
 	  gimp_progress_update (1.0);
-	  
+
 	  if (canvas->height >= 100)
 	    gimp_progress_init (_("Transferring image"));
-	  
+
 	  image_ID = gimp_image_new (canvas->width, canvas->height, GIMP_RGB);
 	  gimp_image_set_filename (image_ID, filename);
 	  layer_ID = gimp_layer_new (image_ID, _("Background"),
@@ -2149,7 +2149,7 @@ load_image (const gchar *filename)
 			       TRUE, FALSE);
 	  if (pixel_rgn.bpp != 3)
 	    abort ();
-	  visual = gdk_visual_get_system ();
+	  visual = gdk_screen_get_system_visual (gdk_screen_get_default ());
 	  switch (visual->type)
 	    {
 	    case GDK_VISUAL_PSEUDO_COLOR:
@@ -2173,7 +2173,7 @@ load_image (const gchar *filename)
 			  pixelp++;
 			}
 		    }
-		  
+
 		  gimp_pixel_rgn_set_rect (&pixel_rgn, buf, 0, j, canvas->width, scanlines);
 		  if (canvas->height >= 100)
 		    gimp_progress_update ((double) j / canvas->height);
@@ -2212,7 +2212,7 @@ load_image (const gchar *filename)
 	      rshift = visual->red_shift;
 	      gshift = visual->green_shift;
 	      bshift = visual->blue_shift;
-	      
+
 	      if ((image->depth > 8 && image->bpp == 1)
 		  || image->bpp > 4)
 		{
@@ -2268,7 +2268,7 @@ load_image (const gchar *filename)
 			  else
 			    for (k = 0; k < image->bpp; k++)
 			      pixel |= (pixelp[image->bpp - k - 1] << (k*8));
-			  
+
 			  *bufp++ = rtbl[(pixel & rmask) >> rshift];
 			  *bufp++ = gtbl[(pixel & gmask) >> gshift];
 			  *bufp++ = btbl[(pixel & bmask) >> bshift];
@@ -2293,7 +2293,7 @@ load_image (const gchar *filename)
 	      return -1;
 	    }
 	  gimp_drawable_flush (drawable);
-	  
+
 	  return image_ID;
 
 	default:
@@ -2327,7 +2327,7 @@ readparams (DWORD size,
   if (size != 0)
     {
       nwords = GUINT32_FROM_LE (size) - WORDSIZE_WMFRECORD;
-      
+
       if (nwords < nparams)
 	{
 	  fclose (fp);
@@ -2342,7 +2342,7 @@ readparams (DWORD size,
       g_message ("Too large record?");
       return 0;
     }
-      
+
   if (nparams > 0 && !ReadOK (fp, params, nparams  * sizeof (WORD)))
     {
       fclose (fp);
