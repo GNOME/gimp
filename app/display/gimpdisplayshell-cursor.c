@@ -27,7 +27,7 @@
 #endif
 #include "gui/gui-types.h"
 
-#include "config/gimpdisplayconfig.h"
+#include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
@@ -82,6 +82,7 @@ gimp_display_shell_set_override_cursor (GimpDisplayShell *shell,
       shell->using_override_cursor = TRUE;
 
       gimp_cursor_set (shell->canvas,
+                       GIMP_GUI_CONFIG (shell->gdisp->gimage->gimp->config)->cursor_format,
                        cursor_type,
                        GIMP_TOOL_CURSOR_NONE,
                        GIMP_CURSOR_MODIFIER_NONE);
@@ -220,6 +221,8 @@ gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
       shell->tool_cursor     = tool_cursor;
       shell->cursor_modifier = modifier;
 
-      gimp_cursor_set (shell->canvas, cursor_type, tool_cursor, modifier);
+      gimp_cursor_set (shell->canvas,
+                       GIMP_GUI_CONFIG (config)->cursor_format,
+                       cursor_type, tool_cursor, modifier);
     }
 }

@@ -30,6 +30,7 @@
 #include "tools-types.h"
 
 #include "config/gimpbaseconfig.h"
+#include "config/gimpguiconfig.h"
 
 #include "base/curves.h"
 #include "base/gimphistogram.h"
@@ -1069,6 +1070,7 @@ curves_graph_events (GtkWidget      *widget,
 	  cursor_type = new_cursor;
 
           gimp_cursor_set (tool->graph,
+                           GIMP_GUI_CONFIG (GIMP_TOOL (tool)->tool_info->gimp->config)->cursor_format,
                            cursor_type,
                            GIMP_TOOL_CURSOR_NONE,
                            GIMP_CURSOR_MODIFIER_NONE);

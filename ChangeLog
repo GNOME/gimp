@@ -1,3 +1,21 @@
+2004-06-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/widgets-enums.[ch]: added enum GimpCursorFormat
+	which can be one of { BITMAP, PIXBUF, PIXBUF-PREMULTIPLY } to
+	work around broken X servers.
+
+	* app/config/gimpguiconfig.[ch]
+	* app/config/gimprc-blurbs.h: added GimpGuiConfig::cursor-format.
+
+	* app/gui/preferences-dialog.c: added a GUI for the new option.
+
+	* app/widgets/gimpcursor.[ch]: added cursor_format parameter
+	to gimp_cursor_new() and _set().
+
+	* app/display/gimpdisplayshell-cursor.c
+	* app/tools/gimpcurvestool.c
+	* app/widgets/gimpdialogfactory.c: pass an appropriate cursor_mode.
+
 2004-06-12  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* app/core/gimpdrawable-blend.c: added missing semicolon.

@@ -29,6 +29,9 @@ N_("Sets the canvas padding color used if the padding mode is set to " \
 #define CONFIRM_ON_CLOSE_BLURB \
 N_("Ask for confirmation before closing an image without saving.")
 
+#define CURSOR_FORMAT_BLURB \
+N_("Sets the pixel format of cursors the GIMP will use.")
+
 #define CURSOR_MODE_BLURB \
 N_("Sets the mode of cursor the GIMP will use.")
 

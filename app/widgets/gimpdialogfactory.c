@@ -1376,6 +1376,7 @@ gimp_dialog_factories_set_busy_foreach (gconstpointer      key,
                 gdk_cursor_unref (cursor);
 
               cursor = gimp_cursor_new (display,
+                                        GIMP_CURSOR_FORMAT_BITMAP,
                                         GDK_WATCH,
                                         GIMP_TOOL_CURSOR_NONE,
                                         GIMP_CURSOR_MODIFIER_NONE);

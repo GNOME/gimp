@@ -60,6 +60,18 @@ typedef enum
 } GimpColorFrameMode;
 
 
+#define GIMP_TYPE_CURSOR_FORMAT (gimp_cursor_format_get_type ())
+
+GType gimp_cursor_format_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_CURSOR_FORMAT_BITMAP,            /*< desc="Black & White"      >*/
+  GIMP_CURSOR_FORMAT_PIXBUF,            /*< desc="RGBA"               >*/
+  GIMP_CURSOR_FORMAT_PIXBUF_PREMULTIPLY /*< desc="RGBA Premultiplied" >*/
+} GimpCursorFormat;
+
+
 #define GIMP_TYPE_HELP_BROWSER_TYPE (gimp_help_browser_type_get_type ())
 
 GType gimp_help_browser_type_get_type (void) G_GNUC_CONST;

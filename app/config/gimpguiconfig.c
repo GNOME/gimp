@@ -89,7 +89,8 @@ enum
   PROP_HELP_BROWSER,
   PROP_WEB_BROWSER,
   PROP_TOOLBOX_WINDOW_HINT,
-  PROP_DOCK_WINDOW_HINT
+  PROP_DOCK_WINDOW_HINT,
+  PROP_CURSOR_FORMAT
 };
 
 static GObjectClass *parent_class = NULL;
@@ -263,6 +264,11 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                  GIMP_TYPE_WINDOW_HINT,
                                  GIMP_WINDOW_HINT_NORMAL,
                                  GIMP_PARAM_RESTART);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CURSOR_FORMAT,
+                                 "cursor-format", CURSOR_FORMAT_BLURB,
+                                 GIMP_TYPE_CURSOR_FORMAT,
+                                 GIMP_CURSOR_FORMAT_PIXBUF,
+                                 0);
 }
 
 static void
@@ -376,6 +382,9 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_DOCK_WINDOW_HINT:
       gui_config->dock_window_hint = g_value_get_enum (value);
       break;
+    case PROP_CURSOR_FORMAT:
+      gui_config->cursor_format = g_value_get_enum (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -476,6 +485,9 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_DOCK_WINDOW_HINT:
       g_value_set_enum (value, gui_config->dock_window_hint);
+      break;
+    case PROP_CURSOR_FORMAT:
+      g_value_set_enum (value, gui_config->cursor_format);
       break;
 
     default:

@@ -21,10 +21,12 @@
 
 
 GdkCursor * gimp_cursor_new (GdkDisplay         *display,
+                             GimpCursorFormat    cursor_format,
                              GimpCursorType      cursor_type,
                              GimpToolCursorType  tool_cursor,
                              GimpCursorModifier  modifier);
 void        gimp_cursor_set (GtkWidget          *widget,
+                             GimpCursorFormat    cursor_format,
                              GimpCursorType      cursor_type,
                              GimpToolCursorType  tool_cursor,
                              GimpCursorModifier  modifier);

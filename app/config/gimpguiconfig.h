@@ -68,6 +68,7 @@ struct _GimpGuiConfig
   gchar               *web_browser;
   GimpWindowHint       toolbox_window_hint;
   GimpWindowHint       dock_window_hint;
+  GimpCursorFormat     cursor_format;
 
   gint                 last_tip;  /* saved in sessionrc */
 };

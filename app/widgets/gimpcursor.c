@@ -499,6 +499,7 @@ get_cursor_pixbuf (GimpCursor *cursor)
 
 GdkCursor *
 gimp_cursor_new (GdkDisplay         *display,
+                 GimpCursorFormat    cursor_format,
                  GimpCursorType      cursor_type,
                  GimpToolCursorType  tool_cursor,
                  GimpCursorModifier  modifier)
@@ -557,7 +558,8 @@ gimp_cursor_new (GdkDisplay         *display,
   if (modifier != GIMP_CURSOR_MODIFIER_NONE)
     bmmodifier = &gimp_cursor_modifiers[modifier];
 
-  if (gdk_display_supports_cursor_alpha (display) &&
+  if (cursor_format != GIMP_CURSOR_FORMAT_BITMAP  &&
+      gdk_display_supports_cursor_alpha (display) &&
       gdk_display_supports_cursor_color (display))
     {
       GdkPixbuf *pixbuf;
@@ -571,13 +573,37 @@ gimp_cursor_new (GdkDisplay         *display,
         gdk_pixbuf_composite (get_cursor_pixbuf (bmmodifier), pixbuf,
                               0, 0, width, height,
                               0.0, 0.0, 1.0, 1.0,
-                              GDK_INTERP_NEAREST, 180);
+                              GDK_INTERP_NEAREST, 200);
 
       if (bmtool)
         gdk_pixbuf_composite (get_cursor_pixbuf (bmtool), pixbuf,
                               0, 0, width, height,
                               0.0, 0.0, 1.0, 1.0,
-                              GDK_INTERP_NEAREST, 180);
+                              GDK_INTERP_NEAREST, 200);
+
+      if (cursor_format == GIMP_CURSOR_FORMAT_PIXBUF_PREMULTIPLY)
+        {
+          guint   rowstride;
+          guchar *pixels, *p;
+          gint    x, y;
+
+          rowstride = gdk_pixbuf_get_rowstride (pixbuf);
+          pixels    = gdk_pixbuf_get_pixels (pixbuf);
+
+          for (y = 0; y < height; y++)
+            {
+              p = pixels + y * rowstride;
+
+              for (x = 0; x < width; x++)
+                {
+                  p[0] = (p[0] * p[3]) >> 8;
+                  p[1] = (p[1] * p[3]) >> 8;
+                  p[2] = (p[2] * p[3]) >> 8;
+
+                  p += 4;
+                }
+            }
+        }
 
       cursor = gdk_cursor_new_from_pixbuf (display, pixbuf,
                                            bmcursor->x_hot,
@@ -654,6 +680,7 @@ gimp_cursor_new (GdkDisplay         *display,
 
 void
 gimp_cursor_set (GtkWidget          *widget,
+                 GimpCursorFormat    cursor_format,
                  GimpCursorType      cursor_type,
                  GimpToolCursorType  tool_cursor,
                  GimpCursorModifier  modifier)
@@ -664,6 +691,7 @@ gimp_cursor_set (GtkWidget          *widget,
   g_return_if_fail (GTK_WIDGET_REALIZED (widget));
 
   cursor = gimp_cursor_new (gtk_widget_get_display (widget),
+                            cursor_format,
                             cursor_type,
                             tool_cursor,
                             modifier);
