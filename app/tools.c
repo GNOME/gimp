@@ -552,6 +552,8 @@ tools_initialize (ToolType type, GDisplay *gdisp_ptr)
    */
   if (gdisp)
     active_tool->drawable = gimage_active_drawable (gdisp->gimage);
+  else
+    active_tool->drawable = NULL;
   active_tool->gdisp_ptr = NULL;
   active_tool->ID = global_tool_ID++;
   active_tool_type = active_tool->type;

@@ -1,3 +1,12 @@
+Thu Apr  2 01:49:34 EST 1998 Matthew Wilson <msw@gimp.org>
+
+	* app/transform_core.c: added a change to make a note of the
+	current drawable in the button_release.  This prevents the tool
+	from being restarted when the transform_core makes a floating
+	selection.
+	* app/tools.c: Initialize the current drawable to NULL if
+	there is gdisp == NULL.
+
 Thu Apr  2 23:52:54 EST 1998 Matthew Wilson <msw@gimp.org
 
 	* app/gimage.c

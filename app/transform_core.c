@@ -268,6 +268,11 @@ transform_core_button_release (tool, bevent, gdisp_ptr)
 	  tu->first = first_transform;
 	  tu->original = NULL;
 
+	  /* Make a note of the new current drawable (since we may have
+	     a floating selection, etc now. */
+	  
+	  tool->drawable = gimage_active_drawable (gdisp->gimage);
+
 	  undo_push_transform (gdisp->gimage, (void *) tu);
 	}
 
