@@ -1,3 +1,10 @@
+2004-06-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-dnd.c
+	(gimp_display_shell_drop_files): copy the merged layer, not the
+	first one. Preserve the type of the layer to make e.g. dropping an
+	XCF with a single text layer work.
+
 2004-06-02  Sven Neumann  <sven@gimp.org>
 
 	* NEWS

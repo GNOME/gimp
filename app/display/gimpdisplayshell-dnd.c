@@ -296,18 +296,23 @@ gimp_display_shell_drop_files (GtkWidget *widget,
           gimp_image_undo_disable (new_image);
 
           if (gimp_container_num_children (new_image->layers) > 1)
-            gimp_image_merge_visible_layers (new_image, context,
-                                             GIMP_CLIP_TO_IMAGE);
-
-          layer = (GimpLayer *)
-            gimp_container_get_child_by_index (new_image->layers, 0);
+            {
+              layer = gimp_image_merge_visible_layers (new_image, context,
+                                                       GIMP_CLIP_TO_IMAGE);
+            }
+          else
+            {
+              layer = (GimpLayer *)
+                gimp_container_get_child_by_index (new_image->layers, 0);
+            }
 
           if (layer)
             {
               GimpItem *new_item;
 
               new_item = gimp_item_convert (GIMP_ITEM (layer), gimage,
-                                            GIMP_TYPE_LAYER, TRUE);
+                                            G_TYPE_FROM_INSTANCE (layer),
+                                            TRUE);
 
               if (new_item)
                 {
