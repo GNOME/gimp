@@ -20,11 +20,11 @@ msgstr "Über GIMP"
 #: app/about_dialog.c:234
 #, c-format
 msgid "Version %s brought to you by"
-msgstr "Version %s zu Euch gebracht von"
+msgstr "Version %s wurde Euch gebracht von"
 
 #: app/about_dialog.c:274
 msgid "Please visit http://www.gimp.org/ for more info"
-msgstr "Siehe http://www.gimp.org/ für mehr Informationen"
+msgstr "Mehr Informationen finden sie auf http://www.gimp.org/"
 
 #: app/airbrush.c:142 app/convolve.c:154 app/smudge.c:117
 msgid "Rate:"
@@ -222,7 +222,7 @@ msgstr "Schwellwert:"
 
 #: app/blend.c:449
 msgid "Blend: Invalid for indexed images."
-msgstr "Übergang: Nicht möglich für indizierte Bilder."
+msgstr "Übergang: Bei indizierten Bildern nicht möglich."
 
 #: app/blend.c:474
 msgid "Blend: 0, 0"
@@ -511,7 +511,7 @@ msgid ""
 "<Shift> Add          <Ctrl> Subtract      <Shift><Ctrl> Intersect"
 msgstr ""
 "Kanal zur Auswahl  \n"
-"<Shift> Hinzufügen   <Ctrl> Abziehen      <Shift><Ctrl> Schnittmenge"
+"<Shift> Hinzufügen   <Strg> Abziehen      <Shift><Strg> Schnittmenge"
 
 #: app/channels_dialog.c:211
 msgid "Delete Channel"
@@ -519,7 +519,7 @@ msgstr "Lösche Kanal"
 
 #: app/channels_dialog.c:1154
 msgid "Empty Channel Copy"
-msgstr "Leerer Kanal Kopie"
+msgstr "Leere Kanal Kopie"
 
 #: app/channels_dialog.c:1386 app/color_balance.c:341 app/curves.c:414
 #: app/histogram_tool.c:272 app/levels.c:243
@@ -594,7 +594,7 @@ msgstr "Ausrichtung"
 
 #: app/clone.c:321
 msgid "No patterns available for this operation."
-msgstr "Keine Muster vorhanden für diese Funktion."
+msgstr "Für diese Funktion sind keine Muster vorhanden."
 
 #: app/color_balance.c:166
 msgid "Color Balance Options"
@@ -943,7 +943,7 @@ msgstr "Alpha"
 
 #: app/curves.c:428
 msgid "Curves for indexed drawables cannot be adjusted."
-msgstr "Kurven verändern funktioniert nicht mit indizierten Bildern"
+msgstr "Kurven können bei indizierten Bildern nicht angepasst werden."
 
 #: app/curves.c:528
 msgid "Smooth"
@@ -1087,7 +1087,7 @@ msgstr "Harte Kanten"
 #. the anti_erase toggle
 #: app/eraser.c:117 app/paint_funcs.c:100
 msgid "Anti Erase"
-msgstr "Zurückradieren"
+msgstr "Un-radieren"
 
 #: app/errorconsole.c:170
 #, c-format
@@ -1140,13 +1140,12 @@ msgstr ""
 "Sie versuchen, ein Bild mit einer anfänglichen\n"
 "Größe von %s zu erzeugen.\n"
 "\n"
-"OK um das Bild trotzdem zu erzeugen.\n"
-"Abbrechen wenn Sie kein so großes Bild\n"
-"erzeugten wollen.\n"
+"Wählen Sie \"OK\", um dieses Bild trotzdem zu erzeugen.\n"
+"Wählen Sie \"Abbrechen\", wenn Sie jetzt kein so großes\n"
+"Bild erzeugten möchten.\n"
 "\n"
-"Um zu verhindern, daß dieser Dialog\n"
-"beim nächsten Mal wieder angezeigt wird,\n"
-"erhöhen Die die \"Maximale Bildgröße\"\n"
+"Wenn Sie verhindern wollen, daß dieser Dialog wieder\n"
+"angezeigt wird, erhöhen Sie den Wert \"Maximale Bildgröße\"\n"
 "im Einstellungen-Dialog."
 
 #: app/file_new_dialog.c:313
@@ -1469,20 +1468,23 @@ msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
 msgstr ""
-"Es gibt nicht genügend sichtbare Ebenen zum Vereinen.\n"
+"Es sind nicht genügend Ebenen als \"Sichtbar\" markiert, um\n"
+"den Vorgang \"Sichtbare Ebenen vereinen\" auszuführen.\n"
 "Es müssen mindestens zwei sein."
 
 #: app/gimpimage.c:2383
 msgid "There are not enough visible layers for a merge down."
-msgstr "Es gibt nicht genügend sichtbare Ebenen zum nach unten Vereinen."
+msgstr ""
+"Es sind nicht genügend Ebenen unter dieser Ebene als \"Sichtbar\"\n"
+"markiert, um den Vorgang \"Nach unten vereinen\" auszuführen."
 
 #: app/gimpimage.c:2786
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
 msgstr ""
-"Kann keine Ebenenenmaske hinzufügen\n"
-"da die Ebene bereits eine Maske hat."
+"Kann keine Ebenenenmaske hinzufügen, da\n"
+"diese Ebene bereits eine Maske hat."
 
 #: app/gimpimage.c:2790
 msgid ""
@@ -1524,6 +1526,9 @@ msgid ""
 "# This file will be entirely rewritten every time you quit the gimp.\n"
 "\n"
 msgstr ""
+"# GIMP parasiterc\n"
+"# Diese Datei wird jedesmal neu geschrieben, wenn Sie GIMP beenden.\n"
+"\n"
 
 #: app/gimpprogress.c:109
 msgid "Progress"
@@ -1702,7 +1707,7 @@ msgstr "HSV (Farbton im Uhrzeigersinn)"
 
 #: app/gradient.c:883
 msgid "Gradient Editor"
-msgstr "Farbverläufe Editor"
+msgstr "Farbverlaufs Editor"
 
 #: app/gradient.c:916 app/gradient_select.c:206 app/paintbrush.c:286
 #: app/palette.c:3160
@@ -1871,7 +1876,7 @@ msgstr "Rechter Endpunkt"
 
 #: app/gradient.c:3536 app/gradient.c:3578
 msgid "Save to"
-msgstr "Sichere nach"
+msgstr "Sichern unter"
 
 #: app/gradient.c:3552 app/gradient.c:4645
 msgid "Right endpoint's color"
@@ -1931,7 +1936,7 @@ msgstr "Farbverlaufsfunktion für Auswahl"
 
 #: app/gradient.c:3874
 msgid "Coloring type for selection"
-msgstr "Färbeart für Auswahl"
+msgstr "Färbungsart für Auswahl"
 
 #: app/gradient.c:3876
 msgid "Split segments at midpoints"
@@ -1951,7 +1956,7 @@ msgstr "Mittelpunkte in Auswahl zentrieren"
 
 #: app/gradient.c:3884
 msgid "Re-distribute handles in selection"
-msgstr "Punkte gleuichmäßig in Auswahl verteilen"
+msgstr "Punkte gleichmäßig in Auswahl verteilen"
 
 #: app/gradient.c:3886
 msgid "Flip selection"
@@ -3925,7 +3930,7 @@ msgstr "/Filter/Verbessern"
 
 #: app/menus.c:576
 msgid "/Filters/Generic"
-msgstr "/Filter/Generisch"
+msgstr "/Filter/Allgemein"
 
 #: app/menus.c:581
 msgid "/Filters/Glass Effects"
@@ -4359,7 +4364,7 @@ msgid ""
 msgstr ""
 "Lade Palette %s:\n"
 "Palette korrupt:\n"
-"Fehlerder Spezialkopf\n"
+"Fehlender magic header\n"
 "Muß diese Datei erst von DOS konvertiert werden?"
 
 #: app/palette.c:431
@@ -4369,7 +4374,7 @@ msgid ""
 "Corrupt palette: missing magic header"
 msgstr ""
 "Lade Palette %s:\n"
-"Datei korrupt: Kein magic header"
+"Datei korrupt: Fehlender magic header"
 
 #: app/palette.c:444
 #, c-format
@@ -4420,7 +4425,7 @@ msgstr ""
 #: app/palette.c:531
 #, c-format
 msgid "can't save palette \"%s\"\n"
-msgstr ""
+msgstr "kann Palette \"%s\" nicht speichern\n"
 
 #: app/palette.c:1174
 msgid "Black"
@@ -5339,7 +5344,7 @@ msgstr "Rotiere..."
 
 #: app/scale_tool.c:74
 msgid "Scaling Information"
-msgstr "Skalierung  Informationen"
+msgstr "Skalierungs Informationen"
 
 #: app/scale_tool.c:83
 msgid "Current Width:"
@@ -5367,7 +5372,7 @@ msgstr ""
 
 #: app/shear_tool.c:74
 msgid "Shear Information"
-msgstr "Scherung Informationen"
+msgstr "Scherungs Informationen"
 
 #: app/shear_tool.c:78
 msgid "Shear Magnitude X:"
@@ -6291,7 +6296,7 @@ msgstr "Verschiedenes"
 #: app/xcf.c:364
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr ""
+msgstr "XCF Fehler: nicht unterstützte XCF Dateiversion %d aufgetreten"
 
 #: app/xcf.c:1477 app/xcf.c:2483
 msgid "xcf: zlib compression unimplemented"
