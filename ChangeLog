@@ -1,3 +1,15 @@
+2003-03-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage.c: use GIMP_STOCK_IMAGE as default_stock_id.
+
+	* app/widgets/gimppreviewrendererimage.[ch]: use GimpChannelType
+	to specify the channel to render and convert it to the pixel index
+	using gimp_image_get_component_index() when needed. Use the new
+	red, green, blue, gray and alpha icons when layer_previews is
+	FALSE.
+
+	* app/widgets/gimpcomponenteditor.c: changed accordingly.
+
 2003-03-24  Sven Neumann  <sven@gimp.org>
 
 	* themes/Default/images/Makefile.am

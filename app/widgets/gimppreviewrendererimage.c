@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "widgets-types.h"
 
 #include "base/temp-buf.h"
@@ -92,11 +94,14 @@ static void
 gimp_preview_renderer_image_render (GimpPreviewRenderer *renderer,
                                     GtkWidget           *widget)
 {
-  GimpImage *gimage;
-  gint       preview_width;
-  gint       preview_height;
-  gboolean   scaling_up;
-  TempBuf   *render_buf = NULL;
+  GimpPreviewRendererImage *rendererimage;
+  GimpImage                *gimage;
+  gint                      preview_width;
+  gint                      preview_height;
+  gboolean                  scaling_up;
+  TempBuf                  *render_buf = NULL;
+
+  rendererimage = GIMP_PREVIEW_RENDERER_IMAGE (renderer);
 
   gimage = GIMP_IMAGE (renderer->viewable);
 
@@ -136,6 +141,8 @@ gimp_preview_renderer_image_render (GimpPreviewRenderer *renderer,
 
   if (render_buf)
     {
+      gint component_index = -1;
+
       /*  xresolution != yresolution */
       if (preview_width > renderer->width || preview_height > renderer->height)
         {
@@ -154,8 +161,12 @@ gimp_preview_renderer_image_render (GimpPreviewRenderer *renderer,
       if (preview_height < renderer->height)
         render_buf->y = (renderer->height - preview_height) / 2;
 
+      if (rendererimage->channel != -1)
+        component_index =
+          gimp_image_get_component_index (gimage, rendererimage->channel);
+
       gimp_preview_renderer_render_buffer (renderer, render_buf,
-                                           GIMP_PREVIEW_RENDERER_IMAGE (renderer)->channel,
+                                           component_index,
                                            GIMP_PREVIEW_BG_CHECKS,
                                            GIMP_PREVIEW_BG_WHITE);
 
@@ -165,7 +176,19 @@ gimp_preview_renderer_image_render (GimpPreviewRenderer *renderer,
     {
       const gchar *stock_id;
 
-      stock_id = gimp_viewable_get_stock_id (renderer->viewable);
+      switch (rendererimage->channel)
+        {
+        case GIMP_RED_CHANNEL:     stock_id = GIMP_STOCK_CHANNEL_RED;   break;
+        case GIMP_GREEN_CHANNEL:   stock_id = GIMP_STOCK_CHANNEL_GREEN; break;
+        case GIMP_BLUE_CHANNEL:    stock_id = GIMP_STOCK_CHANNEL_BLUE;  break;
+        case GIMP_GRAY_CHANNEL:    stock_id = GIMP_STOCK_CHANNEL_GRAY;  break;
+        case GIMP_INDEXED_CHANNEL: stock_id = GIMP_STOCK_QUESTION;      break;
+        case GIMP_ALPHA_CHANNEL:   stock_id = GIMP_STOCK_CHANNEL_ALPHA; break;
+
+        default:
+          stock_id = gimp_viewable_get_stock_id (renderer->viewable);
+          break;
+        }
 
       gimp_preview_renderer_default_render_stock (renderer, widget, stock_id);
     }

@@ -38,7 +38,7 @@ struct _GimpPreviewRendererImage
 {
   GimpPreviewRenderer parent_instance;
 
-  gint                channel;
+  GimpChannelType     channel;
 };
 
 struct _GimpPreviewRendererImageClass

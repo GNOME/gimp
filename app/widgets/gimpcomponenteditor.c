@@ -355,8 +355,7 @@ gimp_component_editor_create_components (GimpComponentEditor *editor)
       gimp_preview_renderer_set_viewable (renderer, GIMP_VIEWABLE (gimage));
       gimp_preview_renderer_remove_idle (renderer);
 
-      GIMP_PREVIEW_RENDERER_IMAGE (renderer)->channel =
-        gimp_image_get_component_index (gimage, components[i]);
+      GIMP_PREVIEW_RENDERER_IMAGE (renderer)->channel = components[i];
 
       g_signal_connect (renderer, "update",
                         G_CALLBACK (gimp_component_editor_renderer_update),
@@ -508,7 +507,7 @@ gimp_component_editor_get_iter (GimpComponentEditor *editor,
                                 GimpChannelType      channel,
                                 GtkTreeIter         *iter)
 {
-  gint index = -1;
+  gint index;
 
   index = gimp_image_get_component_index (GIMP_IMAGE_EDITOR (editor)->gimage,
                                           channel);
@@ -524,11 +523,12 @@ gimp_component_editor_renderer_update (GimpPreviewRenderer *renderer,
                                        GimpComponentEditor *editor)
 {
   GtkTreeIter iter;
-  gint        pixel;
+  gint        index;
 
-  pixel = GIMP_PREVIEW_RENDERER_IMAGE (renderer)->channel;
+  index = gimp_image_get_component_index (GIMP_IMAGE (renderer->viewable),
+                                          GIMP_PREVIEW_RENDERER_IMAGE (renderer)->channel);
 
-  if (gtk_tree_model_iter_nth_child (editor->model, &iter, NULL, pixel))
+  if (gtk_tree_model_iter_nth_child (editor->model, &iter, NULL, index))
     {
       GtkTreePath *path;
 

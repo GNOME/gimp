@@ -390,6 +390,7 @@ gimp_image_class_init (GimpImageClass *klass)
   gimp_object_class->name_changed     = gimp_image_name_changed;
   gimp_object_class->get_memsize      = gimp_image_get_memsize;
 
+  viewable_class->default_stock_id    = "gimp-image";
   viewable_class->invalidate_preview  = gimp_image_invalidate_preview;
   viewable_class->size_changed        = gimp_image_size_changed;
   viewable_class->get_preview_size    = gimp_image_get_preview_size;
