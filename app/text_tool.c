@@ -606,13 +606,20 @@ text_render (GimpImage    *gimage,
   /* load the font in */
   gdk_error_warnings = 0;
   gdk_error_code = 0;
+
 #ifndef GDK_WINDOWING_WIN32
   font = gdk_font_load (fontname);
+
   if (!font)
     {
-      g_message (_("Font '%s' not found."), fontname);
+      g_message (_("Font '%s' not found.%s"),
+		 fontname,
+		 antialias > 1 ?
+		 _("\nIf you don't have scalable fonts, "
+		   "try turning off antialiasing in the tool options.") : "");
       return NULL;
     }
+
   xfs = GDK_FONT_XFONT (font);
   if (xfs->min_byte1 != 0 || xfs->max_byte1 != 0) 
     {
@@ -629,7 +636,9 @@ text_render (GimpImage    *gimage,
    */
   font = gdk_fontset_load (fontname);
 #endif
+
   gdk_error_warnings = 1;
+
   if (!font || (gdk_error_code == -1))
     {
       g_message (_("Font '%s' not found.%s"),
