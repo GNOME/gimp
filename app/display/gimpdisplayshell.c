@@ -52,8 +52,8 @@
 #include "widgets/gimpdnd.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpmenufactory.h"
+#include "widgets/gimpwidgets-utils.h"
 
-#include "gui/gui.h"
 #include "gui/info-window.h"
 
 #include "tools/tool_manager.h"
@@ -416,9 +416,9 @@ gimp_display_shell_realize (GtkWidget *widget)
    */
   if (GIMP_DISPLAY_CONFIG (config)->monitor_res_from_gdk)
     {
-      gui_get_screen_resolution (gtk_widget_get_screen (widget),
-                                 &shell->monitor_xres,
-                                 &shell->monitor_yres);
+      gimp_get_screen_resolution (gtk_widget_get_screen (widget),
+                                  &shell->monitor_xres,
+                                  &shell->monitor_yres);
     }
   else
     {

@@ -1,5 +1,28 @@
 2003-05-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/main.c (main): removed the calls to g_log_set_handler().
+
+	* app/app_procs.[ch] (app_init): added the g_log_set_handler()
+	calls and pass them the global Gimp instance as user_data.
+	Renamed app_gui_init() to app_gui_libs_init().
+
+	* app/errors.c: use the passed Gimp pointer instead of using
+	"the_gimp". Don't #include "app_procs.h".
+
+	* app/gui/gui.[ch]: removed gui_get_screen_resolution().
+
+	* app/widgets/gimpwidgets-utils.[ch]: added
+	gimp_get_screen_resolution().
+
+	* app/display/gimpdisplayshell-handlers.c
+	* app/display/gimpdisplayshell.c
+	* app/gui/preferences-dialog.c
+	* app/gui/user-install-dialog.c: changed accordingly.
+
+	* app/display/gimpdisplayshell.c: don't #include "gui/gui.h".
+
+2003-05-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainertreeview.c
 	(gimp_container_tree_view_button_press): remove
 	main_column->editable_widget on each button_press_event. Should

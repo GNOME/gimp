@@ -25,6 +25,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -421,4 +422,58 @@ gimp_get_mod_separator (void)
     }
 
   return (const gchar *) mod_separator;
+}
+
+void
+gimp_get_screen_resolution (GdkScreen *screen,
+                            gdouble   *xres,
+                            gdouble   *yres)
+{
+  gint    width, height;
+  gint    width_mm, height_mm;
+  gdouble x = 0.0;
+  gdouble y = 0.0;
+
+  g_return_if_fail (screen == NULL || GDK_IS_SCREEN (screen));
+  g_return_if_fail (xres != NULL);
+  g_return_if_fail (yres != NULL);
+
+  if (!screen)
+    screen = gdk_screen_get_default ();
+
+  width  = gdk_screen_get_width (screen);
+  height = gdk_screen_get_height (screen);
+
+  width_mm  = gdk_screen_get_width_mm (screen);
+  height_mm = gdk_screen_get_height_mm (screen);
+
+  /*
+   * From xdpyinfo.c:
+   *
+   * there are 2.54 centimeters to an inch; so there are 25.4 millimeters.
+   *
+   *     dpi = N pixels / (M millimeters / (25.4 millimeters / 1 inch))
+   *         = N pixels / (M inch / 25.4)
+   *         = N * 25.4 pixels / M inch
+   */
+
+  if (width_mm > 0 && height_mm > 0)
+    {
+      x = (width  * 25.4) / (gdouble) width_mm;
+      y = (height * 25.4) / (gdouble) height_mm;
+    }
+
+  if (x < GIMP_MIN_RESOLUTION || x > GIMP_MAX_RESOLUTION ||
+      y < GIMP_MIN_RESOLUTION || y > GIMP_MAX_RESOLUTION)
+    {
+      g_warning ("GDK returned bogus values for the screen resolution, "
+                 "using 75 dpi instead.");
+
+      x = 75.0;
+      y = 75.0;
+    }
+
+  /*  round the value to full integers to give more pleasant results  */
+  *xres = ROUND (x);
+  *yres = ROUND (y);
 }

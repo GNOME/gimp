@@ -20,22 +20,18 @@
 #define __GUI_H__
 
 
-gboolean      gui_libs_init             (gint      *argc,
-                                         gchar   ***argv);
+gboolean      gui_libs_init            (gint      *argc,
+                                        gchar   ***argv);
 
-void          gui_environ_init          (Gimp      *gimp);
+void          gui_environ_init         (Gimp      *gimp);
 
-void          gui_themes_init           (Gimp      *gimp);
-const gchar * gui_themes_get_theme_dir  (Gimp      *gimp);
+void          gui_themes_init          (Gimp      *gimp);
+const gchar * gui_themes_get_theme_dir (Gimp      *gimp);
 
-void          gui_init                  (Gimp      *gimp);
-void          gui_restore               (Gimp      *gimp,
-                                         gboolean   restore_session);
-void          gui_post_init             (Gimp      *gimp);
-
-void          gui_get_screen_resolution (GdkScreen *screen,
-                                         gdouble   *xres,
-                                         gdouble   *yres);
+void          gui_init                 (Gimp      *gimp);
+void          gui_restore              (Gimp      *gimp,
+                                        gboolean   restore_session);
+void          gui_post_init            (Gimp      *gimp);
 
 
 #endif /* __GUI_H__ */

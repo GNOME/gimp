@@ -29,6 +29,8 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 
+#include "widgets/gimpwidgets-utils.h"
+
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
@@ -164,6 +166,10 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
   g_signal_connect (gimage->gimp->config,
                     "notify::navigation-preview-size",
                     G_CALLBACK (gimp_display_shell_nav_size_notify_handler),
+                    shell);
+  g_signal_connect (gimage->gimp->config,
+                    "notify::monitor-resolution-from-windowing-system",
+                    G_CALLBACK (gimp_display_shell_monitor_res_notify_handler),
                     shell);
   g_signal_connect (gimage->gimp->config,
                     "notify::monitor-xresolution",
@@ -424,9 +430,9 @@ gimp_display_shell_monitor_res_notify_handler (GObject          *config,
 {
   if (GIMP_DISPLAY_CONFIG (config)->monitor_res_from_gdk)
     {
-      gui_get_screen_resolution (gtk_widget_get_screen (shell),
-                                 &shell->monitor_xres,
-                                 &shell->monitor_yres);
+      gimp_get_screen_resolution (gtk_widget_get_screen (GTK_WIDGET (shell)),
+                                  &shell->monitor_xres,
+                                  &shell->monitor_yres);
     }
   else
     {

@@ -32,7 +32,6 @@
 
 #include "core/gimp.h"
 
-#include "app_procs.h"
 #include "appenv.h"
 #include "errors.h"
 
@@ -57,9 +56,11 @@ gimp_message_log_func (const gchar    *log_domain,
 		       const gchar    *message,
 		       gpointer        data)
 {
-  if (! console_messages && GIMP_IS_GIMP (the_gimp))
+  Gimp *gimp = *((Gimp **) data);
+
+  if (! console_messages && GIMP_IS_GIMP (gimp))
     {
-      gimp_message (the_gimp, message);
+      gimp_message (gimp, message);
       return;
     }
 

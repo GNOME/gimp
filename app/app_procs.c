@@ -57,6 +57,7 @@
 #include "appenv.h"
 #include "app_procs.h"
 #include "batch.h"
+#include "errors.h"
 
 #include "gimp-intl.h"
 
@@ -79,6 +80,13 @@ Gimp *the_gimp = NULL;
 
 /*  public functions  */
 
+gboolean
+app_gui_libs_init (gint    *argc,
+                   gchar ***argv)
+{
+  return gui_libs_init (argc, argv);
+}
+
 void
 app_init (gint    gimp_argc,
 	  gchar **gimp_argv)
@@ -96,6 +104,60 @@ app_init (gint    gimp_argc,
                        stack_trace_mode);
 
   gimp_object_set_name (GIMP_OBJECT (the_gimp), prog_name);
+
+  g_log_set_handler ("Gimp",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_log_func,
+		     &the_gimp);
+  g_log_set_handler ("Gimp-Base",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_log_func,
+		     &the_gimp);
+  g_log_set_handler ("Gimp-Paint-Funcs",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_log_func,
+		     &the_gimp);
+  g_log_set_handler ("Gimp-Core",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_log_func,
+		     &the_gimp);
+  g_log_set_handler ("Gimp-PDB",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_log_func,
+		     &the_gimp);
+  g_log_set_handler ("Gimp-Plug-In",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_log_func,
+		     &the_gimp);
+  g_log_set_handler ("Gimp-File",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_log_func,
+		     &the_gimp);
+  g_log_set_handler ("Gimp-XCF",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_log_func,
+		     &the_gimp);
+  g_log_set_handler ("Gimp-Widgets",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_log_func,
+		     &the_gimp);
+  g_log_set_handler ("Gimp-Display",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_log_func,
+		     &the_gimp);
+  g_log_set_handler ("Gimp-Tools",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_log_func,
+		     &the_gimp);
+  g_log_set_handler ("Gimp-GUI",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_log_func,
+		     &the_gimp);
+
+  g_log_set_handler (NULL,
+		     G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
+		     gimp_error_log_func,
+		     &the_gimp);
 
   /*  Check if the user's gimp_directory exists
    */
@@ -279,12 +341,6 @@ app_init (gint    gimp_argc,
     }
 }
 
-gboolean
-app_gui_init (gint    *argc,
-              gchar ***argv)
-{
-  return gui_libs_init (argc, argv);
-}
 
 /*  private functions  */
 

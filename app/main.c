@@ -167,7 +167,7 @@ main (int    argc,
     }
   else
     {
-      if (! app_gui_init (&argc, &argv))
+      if (! app_gui_libs_init (&argc, &argv))
 	{
           const gchar *msg;
 
@@ -348,60 +348,6 @@ main (int    argc,
       gimp_show_help (argv[0]);
       gimp_text_console_exit (TRUE);
     }
-
-  g_log_set_handler ("Gimp",
-		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     NULL);
-  g_log_set_handler ("Gimp-Base",
-		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     NULL);
-  g_log_set_handler ("Gimp-Paint-Funcs",
-		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     NULL);
-  g_log_set_handler ("Gimp-Core",
-		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     NULL);
-  g_log_set_handler ("Gimp-PDB",
-		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     NULL);
-  g_log_set_handler ("Gimp-Plug-In",
-		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     NULL);
-  g_log_set_handler ("Gimp-File",
-		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     NULL);
-  g_log_set_handler ("Gimp-XCF",
-		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     NULL);
-  g_log_set_handler ("Gimp-Widgets",
-		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     NULL);
-  g_log_set_handler ("Gimp-Display",
-		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     NULL);
-  g_log_set_handler ("Gimp-Tools",
-		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     NULL);
-  g_log_set_handler ("Gimp-GUI",
-		     G_LOG_LEVEL_MESSAGE,
-		     gimp_message_log_func,
-		     NULL);
-
-  g_log_set_handler (NULL,
-		     G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
-		     gimp_error_log_func,
-		     NULL);
 
 #ifndef G_OS_WIN32
 

@@ -44,8 +44,8 @@
 #include "config/gimprc.h"
 
 #include "widgets/gimppropwidgets.h"
+#include "widgets/gimpwidgets-utils.h"
 
-#include "gui.h"
 #include "resolution-calibrate-dialog.h"
 #include "user-install-dialog.h"
 
@@ -1240,7 +1240,7 @@ user_install_resolution (GimpRc *gimprc)
   gchar             *pixels_per_unit;
   gchar             *str;
 
-  gui_get_screen_resolution (NULL, &xres, &yres);
+  gimp_get_screen_resolution (NULL, &xres, &yres);
 
   add_label (GTK_BOX (resolution_page),
 	     _("GIMP can obtain this information from the windowing system.\n"
