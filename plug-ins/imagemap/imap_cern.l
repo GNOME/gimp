@@ -22,6 +22,8 @@
  *
  */
 
+#include <string.h>
+
 #include "imap_cern_parse.h"
 
 #ifdef FLEX_SCANNER

@@ -1,5 +1,17 @@
 2003-12-26  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/imagemap/imap_edit_area_info.c (create_info_tab):
+	removed an unused variable.
+
+	* plug-ins/imagemap/imap_cern.l: include <string.h> for strcpy().
+
+	* plug-ins/imagemap/imap_csim.l: include <unistd.h> for isatty().
+
+	* plug-ins/imagemap/imap_cern_lex.c
+	* plug-ins/imagemap/imap_csim_lex.c: regenerated.
+
+2003-12-26  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/imagemap/imap_cern.y
 	* plug-ins/imagemap/imap_csim.y
 	* plug-ins/imagemap/imap_ncsa.y

@@ -299,7 +299,7 @@ toggle_preview_cb(GtkWidget *widget, AreaInfoDialog_t *param)
 static void
 create_info_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
 {
-   GtkWidget *vbox, *frame, *preview, *label;
+   GtkWidget *vbox, *frame, *preview;
    Object_t *obj = dialog->obj;
    
    vbox = gtk_vbox_new(FALSE, 1);
