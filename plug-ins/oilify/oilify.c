@@ -29,7 +29,6 @@
 #define ENTRY_WIDTH     30
 #define SCALE_WIDTH     125
 #define HISTSIZE	256
-#define BOUNDS(a,x,y)  ((a < x) ? x : ((a > y) ? y : a))
 
 #define MODE_RGB        0
 #define MODE_INTEN      1
@@ -227,7 +226,7 @@ oilify_rgb (GDrawable *drawable)
   gint width, height;
   guchar *src_row, *src;
   guchar *dest_row, *dest;
-  gint x, y, c, b, i, px, xx, yy, n;
+  gint x, y, c, b, xx, yy, n;
   gint x1, y1, x2, y2;
   gint x3, y3, x4, y4;
   gint Val[4];
@@ -235,6 +234,8 @@ oilify_rgb (GDrawable *drawable)
   gint Hist[4][HISTSIZE];
   gpointer pr1, pr2;
   gint progress, max_progress;
+  gint *tmp1, *tmp2;
+  guchar *guc_tmp1;
 
   /*  get the selection bounds  */
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
@@ -259,18 +260,14 @@ oilify_rgb (GDrawable *drawable)
  
 	  for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
 	    {
-	      for (b = 0; b < bytes; b++)
-		{
-		  Cnt[b] = 0;
-		  Val[b] = 0;
-		  for (i = 0; i < HISTSIZE; i++)
-		    Hist[b][i] = 0;
-		}
-	      
-	      x3 = BOUNDS ((x - n), x1, x2);
-	      y3 = BOUNDS ((y - n), y1, y2);
-	      x4 = BOUNDS ((x + n + 1), x1, x2);
-	      y4 = BOUNDS ((y + n + 1), y1, y2);
+	      memset(Cnt, 0, sizeof(Cnt));
+	      memset(Val, 0, sizeof(Val));
+	      memset(Hist, 0, sizeof(Hist));
+
+	      x3 = CLAMP ((x - n), x1, x2);
+	      y3 = CLAMP ((y - n), y1, y2);
+	      x4 = CLAMP ((x + n + 1), x1, x2);
+	      y4 = CLAMP ((y + n + 1), y1, y2);
  
 	      gimp_pixel_rgn_init (&src_rgn, drawable, x3, y3, (x4 - x3), (y4 - y3), FALSE, FALSE);
  
@@ -284,12 +281,17 @@ oilify_rgb (GDrawable *drawable)
 		      
 		      for (xx = 0; xx < src_rgn.w; xx++)
 			{
-			  for (b = 0; b < bytes; b++)
+			  for (b = 0,
+				 tmp1 = Val,
+				 tmp2 = Cnt,
+				 guc_tmp1 = src;
+			       b < bytes;
+			       b++, tmp1++, tmp2++, guc_tmp1++)
 			    {
-			      if ((c = ++Hist[b][px = src[b]]) > Cnt[b])
+			      if ((c = ++Hist[b][*guc_tmp1]) > *tmp2)
 				{
-				  Val[b] = px;
-				  Cnt[b] = c;
+				  *tmp1 = *guc_tmp1;
+				  *tmp2 = c;
 				}
 			    }
 			  
@@ -300,15 +302,16 @@ oilify_rgb (GDrawable *drawable)
 		    }
 		}
 	      
-	      for (b = 0; b < bytes; b++)
-		*dest++ = Val[b];
+	      for (b = 0, tmp1 = Val; b < bytes; b++)
+		*dest++ = *tmp1++;
 	    }
 	  
 	  dest_row += dest_rgn.rowstride;
 	}
       
       progress += dest_rgn.w * dest_rgn.h;
-      gimp_progress_update ((double) progress / (double) max_progress);
+      if ((progress % 5) == 0)
+	gimp_progress_update ((double) progress / (double) max_progress);
     }
   
   /*  update the oil-painted region  */
@@ -330,7 +333,7 @@ oilify_intensity (GDrawable *drawable)
   gint width, height;
   guchar *src_row, *src;
   guchar *dest_row, *dest;
-  gint x, y, c, b, i, xx, yy, n;
+  gint x, y, c, b, xx, yy, n;
   gint x1, y1, x2, y2;
   gint x3, y3, x4, y4;
   gint Val[4];
@@ -338,7 +341,9 @@ oilify_intensity (GDrawable *drawable)
   gint Hist[HISTSIZE];
   gpointer pr1, pr2;
   gint progress, max_progress;
-  
+  gint *tmp1;
+  guchar *guc_tmp1;
+
   /*  get the selection bounds  */
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
   progress = 0;
@@ -363,17 +368,13 @@ oilify_intensity (GDrawable *drawable)
 	  for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
 	    {
 	      Cnt = 0;
-	      for (b = 0; b < bytes; b++)
-		{
-		  Val[b] = 0;
-		  for (i = 0; i < HISTSIZE; i++)
-		    Hist[i] = 0;
-		}
-	      
-	      x3 = BOUNDS ((x - n), x1, x2);
-	      y3 = BOUNDS ((y - n), y1, y2);
-	      x4 = BOUNDS ((x + n + 1), x1, x2);
-	      y4 = BOUNDS ((y + n + 1), y1, y2);
+	      memset(Val, 0, sizeof(Val));
+	      memset(Hist, 0, sizeof(Hist));
+
+	      x3 = CLAMP ((x - n), x1, x2);
+	      y3 = CLAMP ((y - n), y1, y2);
+	      x4 = CLAMP ((x + n + 1), x1, x2);
+	      y4 = CLAMP ((y + n + 1), y1, y2);
 	      
 	      gimp_pixel_rgn_init (&src_rgn, drawable, x3, y3, (x4 - x3), (y4 - y3), FALSE, FALSE);
 	      
@@ -390,8 +391,12 @@ oilify_intensity (GDrawable *drawable)
 			  if ((c = ++Hist[INTENSITY(src)]) > Cnt)
 			    {
 			      Cnt = c;
-			      for (b = 0; b < bytes; b++)
-				Val[b] = src[b];
+			      for (b = 0,
+				     tmp1 = Val,
+				     guc_tmp1 = src;
+				   b < bytes;
+				   b++, tmp1++, guc_tmp1++)
+				*tmp1 = *guc_tmp1;
 			    }
 			  
 			  src += src_rgn.bpp;
@@ -401,15 +406,15 @@ oilify_intensity (GDrawable *drawable)
 		    }
 		}
 	      
-	      for (b = 0; b < bytes; b++)
-		*dest++ = Val[b];
+	      for (b = 0, tmp1 = Val; b < bytes; b++)
+		*dest++ = *tmp1++;
 	    }
 	  
 	  dest_row += dest_rgn.rowstride;
 	}
       
       progress += dest_rgn.w * dest_rgn.h;
-      if((progress % 5) == 0)
+      if ((progress % 5) == 0)
 	gimp_progress_update ((double) progress / (double) max_progress);
     }
   

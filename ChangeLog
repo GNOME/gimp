@@ -1,3 +1,7 @@
+Sun Apr 26 15:11:06 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/oilify/oilify.c: folded optimizations back in
+
 Sun Apr 26 18:14:28 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* gimp_tips.txt: added yet another tip
