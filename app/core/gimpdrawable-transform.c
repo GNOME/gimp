@@ -1367,23 +1367,23 @@ get_sample (TileManager *tm,
          thus using a bilinear interpolation,. almost as good as
          doing the perspective transform for each subpixel coordinate*/
 
-      tx  = (x0 + x1) / 2;
-      tlx = (x0 + xc) / 2;
-      trx = (x1 + xc) / 2;
-      lx  = (x0 + x3) / 2;
-      rx  = (x1 + x2) / 2;
-      blx = (x3 + xc) / 2;
-      brx = (x2 + xc) / 2;
-      bx  = (x3 + x2) / 2;
+      tx  = x0 / 2 + x1 / 2;
+      tlx = x0 / 2 + xc / 2;
+      trx = x1 / 2 + xc / 2;
+      lx  = x0 / 2 + x3 / 2;
+      rx  = x1 / 2 + x2 / 2;
+      blx = x3 / 2 + xc / 2;
+      brx = x2 / 2 + xc / 2;
+      bx  = x3 / 2 + x2 / 2;
 
-      ty  = (y0 + y1) / 2;
-      tly = (y0 + yc) / 2;
-      try = (y1 + yc) / 2;
-      ly  = (y0 + y3) / 2;
-      ry  = (y1 + y2) / 2;
-      bly = (y3 + yc) / 2;
-      bry = (y2 + yc) / 2;
-      by  = (y3 + y2) / 2;
+      ty  = y0 / 2 + y1 / 2;
+      tly = y0 / 2 + yc / 2;
+      try = y1 / 2 + yc / 2;
+      ly  = y0 / 2 + y3 / 2;
+      ry  = y1 / 2 + y2 / 2;
+      bly = y3 / 2 + yc / 2;
+      bry = y2 / 2 + yc / 2;
+      by  = y3 / 2 + y2 / 2;
 
       get_sample (tm,
                   tlx,tly,

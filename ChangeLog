@@ -1,3 +1,9 @@
+2004-07-29  Dave Neary  <bolsh@gimp.org>
+
+	* app/core/gimpdrawable-transform.c: Stop signed ints overflowing 
+	while getting the mean by replacing (a + b) / 2 with a / 2 + b / 2. 
+	Fixes bug #128594 for drawables less than 32K wide.
+
 2004-07-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/preferences-dialog.c: renamed "Cleared saved foobar now"
