@@ -412,9 +412,13 @@ gimp_brush_generated_dirty (GimpData *data)
     }
 
   if (brush->spikes > 2)
-    /* could be optimized by respecting the angle */
-    width = height = ceil (sqrt (brush->radius * brush->radius +
-                                 short_radius * short_radius));
+    {
+      /* could be optimized by respecting the angle */
+      width = height = ceil (sqrt (brush->radius * brush->radius +
+                                   short_radius * short_radius));
+      gbrush->y_axis.x =        s * brush->radius;
+      gbrush->y_axis.y =        c * brush->radius;
+    }
 
   gbrush->mask = temp_buf_new (width  * 2 + 1,
                                height * 2 + 1,
@@ -468,7 +472,7 @@ gimp_brush_generated_dirty (GimpData *data)
   cs = cos (- 2 * G_PI / brush->spikes);
   ss = sin (- 2 * G_PI / brush->spikes);
 
-  /*for an even number of spikes compute one half and mirror it */
+  /* for an even number of spikes compute one half and mirror it */
   for (y = (brush->spikes % 2 ? -height : 0); y <= height; y++)
     {
       for (x = -width; x <= width; x++)
