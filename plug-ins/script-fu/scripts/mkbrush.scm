@@ -69,7 +69,7 @@
 		    SF-ADJUSTMENT _"Spacing" '(25 1 100 1 10 1 0))
 
 (script-fu-menu-register "script-fu-make-brush-rectangular"
-			 _"<Toolbox>/Xtns/Script-Fu/Make Brush")
+			 "<Toolbox>/Xtns/Script-Fu/Make Brush")
 
 
 (define (script-fu-make-brush-rectangular-feathered name width height
@@ -130,7 +130,7 @@
 		    SF-ADJUSTMENT _"Spacing"    '(25 1 100 1 10 1 0))
 
 (script-fu-menu-register "script-fu-make-brush-rectangular-feathered"
-			 _"<Toolbox>/Xtns/Script-Fu/Make Brush")
+			 "<Toolbox>/Xtns/Script-Fu/Make Brush")
 
 
 (define (script-fu-make-brush-elliptical name width height spacing)
@@ -179,7 +179,7 @@
 		    SF-ADJUSTMENT _"Spacing" '(25 1 100 1 10 1 0))
 
 (script-fu-menu-register "script-fu-make-brush-elliptical"
-			 _"<Toolbox>/Xtns/Script-Fu/Make Brush")
+			 "<Toolbox>/Xtns/Script-Fu/Make Brush")
 
 
 (define (script-fu-make-brush-elliptical-feathered name width height
@@ -242,4 +242,4 @@
 		    SF-ADJUSTMENT _"Spacing"    '(25 1 100 1 10 1 0))
 
 (script-fu-menu-register "script-fu-make-brush-elliptical-feathered"
-			 _"<Toolbox>/Xtns/Script-Fu/Make Brush")
+			 "<Toolbox>/Xtns/Script-Fu/Make Brush")

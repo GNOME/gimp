@@ -86,4 +86,4 @@
 		    SF-TOGGLE     _"Darken only\n(Better, but only for images with alot of white)" TRUE)
 
 (script-fu-menu-register "script-fu-coffee-stain"
-			 _"<Image>/Script-Fu/Decor")
+			 "<Image>/Script-Fu/Decor")

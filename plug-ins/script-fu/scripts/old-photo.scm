@@ -99,4 +99,4 @@
 		    SF-TOGGLE     _"Work on copy" TRUE)
 
 (script-fu-menu-register "script-fu-old-photo"
-			 _"<Image>/Script-Fu/Decor")
+			 "<Image>/Script-Fu/Decor")

@@ -1,3 +1,9 @@
+2005-03-24  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/*.scm: don't mark menu branches for
+	translation; the translatable branch name is registered by the
+	Script-Fu extension.
+
 2005-03-24  Michael Natterer  <mitch@gimp.org>
 
 	Added API to explicitly register dynamic menu items hierarchies.

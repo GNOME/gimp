@@ -115,4 +115,4 @@
 		    SF-TOGGLE     _"Use current gradient" FALSE)
 
 (script-fu-menu-register "script-fu-lava"
-			 _"<Image>/Script-Fu/Render")
+			 "<Image>/Script-Fu/Render")

@@ -71,4 +71,4 @@
 		    SF-ADJUSTMENT _"Scale Y"      '(4 0.1 16 0.1 2 1 1))
 
 (script-fu-menu-register "script-fu-flatland"
-			 _"<Toolbox>/Xtns/Script-Fu/Patterns")
+			 "<Toolbox>/Xtns/Script-Fu/Patterns")

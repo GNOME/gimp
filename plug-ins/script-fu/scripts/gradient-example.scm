@@ -67,4 +67,4 @@
 		    SF-TOGGLE     _"Gradient reverse" FALSE)
 
 (script-fu-menu-register "script-fu-gradient-example"
-			 _"<Toolbox>/Xtns/Script-Fu/Utils")
+			 "<Toolbox>/Xtns/Script-Fu/Utils")

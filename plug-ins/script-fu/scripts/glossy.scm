@@ -199,7 +199,7 @@
                     SF-ADJUSTMENT _"Shadow Y offset"          '(8 0 100 1 10 0 1))
 
 (script-fu-menu-register "script-fu-glossy-logo-alpha"
-			 _"<Image>/Script-Fu/Alpha to Logo")
+			 "<Image>/Script-Fu/Alpha to Logo")
 
 
 (define (script-fu-glossy-logo text
@@ -266,4 +266,4 @@
                     SF-ADJUSTMENT _"Shadow Y offset"          '(8 0 100 1 10 0 1))
 
 (script-fu-menu-register "script-fu-glossy-logo"
-			 _"<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Script-Fu/Logos")

@@ -191,4 +191,4 @@
                     SF-TOGGLE     _"Keep bump layer" FALSE)
 
 (script-fu-menu-register "script-fu-add-bevel"
-			 _"<Image>/Script-Fu/Decor")
+			 "<Image>/Script-Fu/Decor")

@@ -125,4 +125,4 @@
 		    SF-ADJUSTMENT _"Spacing"     '(25 0 1000 1 1 1 0))
 
 (script-fu-menu-register "script-fu-selection-to-brush"
-			 _"<Image>/Script-Fu/Selection")
+			 "<Image>/Script-Fu/Selection")

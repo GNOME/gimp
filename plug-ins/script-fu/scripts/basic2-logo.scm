@@ -80,7 +80,7 @@
 		    SF-COLOR      _"Text color" '(206 6 50))
 
 (script-fu-menu-register "script-fu-basic2-logo-alpha"
-			 _"<Image>/Script-Fu/Alpha to Logo")
+			 "<Image>/Script-Fu/Alpha to Logo")
 
 
 (define (script-fu-basic2-logo text
@@ -110,4 +110,4 @@
 		    SF-COLOR      _"Text color"         '(206 6 50))
 
 (script-fu-menu-register "script-fu-basic2-logo"
-			 _"<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Script-Fu/Logos")

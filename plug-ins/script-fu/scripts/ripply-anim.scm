@@ -125,4 +125,4 @@
 							   _"Black"))
 
 (script-fu-menu-register "script-fu-ripply-anim"
-			 _"<Image>/Script-Fu/Animators")
+			 "<Image>/Script-Fu/Animators")

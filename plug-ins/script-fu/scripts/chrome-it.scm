@@ -199,4 +199,4 @@
 		    SF-TOGGLE     _"Chrome white areas" TRUE)
 
 (script-fu-menu-register "script-fu-sota-chrome-it"
-			 _"<Image>/Script-Fu/Stencil Ops")
+			 "<Image>/Script-Fu/Stencil Ops")

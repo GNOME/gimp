@@ -85,4 +85,4 @@
 		    SF-GRADIENT   _"Gradient"     "Land 1")
 
 (script-fu-menu-register "script-fu-land"
-			 _"<Toolbox>/Xtns/Script-Fu/Patterns")
+			 "<Toolbox>/Xtns/Script-Fu/Patterns")

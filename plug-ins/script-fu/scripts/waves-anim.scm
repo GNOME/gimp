@@ -101,4 +101,4 @@
 		    SF-TOGGLE     _"Invert direction" FALSE)
 
 (script-fu-menu-register "script-fu-waves-anim"
-			 _"<Image>/Script-Fu/Animators")
+			 "<Image>/Script-Fu/Animators")

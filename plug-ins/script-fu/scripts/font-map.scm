@@ -143,4 +143,4 @@
 							      _"Active colors"))
 
 (script-fu-menu-register "script-fu-font-map"
-			 _"<Toolbox>/Xtns/Script-Fu/Utils")
+			 "<Toolbox>/Xtns/Script-Fu/Utils")

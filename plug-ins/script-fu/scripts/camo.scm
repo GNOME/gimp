@@ -102,4 +102,4 @@
 		    SF-TOGGLE     _"Flatten image" TRUE)
 
 (script-fu-menu-register "script-fu-camo-pattern"
-			 _"<Toolbox>/Xtns/Script-Fu/Patterns")
+			 "<Toolbox>/Xtns/Script-Fu/Patterns")

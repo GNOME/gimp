@@ -102,7 +102,7 @@
 		    SF-COLOR      _"Background color"         '(255 255 255))
 
 (script-fu-menu-register "script-fu-gradient-bevel-logo-alpha"
-			 _"<Image>/Script-Fu/Alpha to Logo")
+			 "<Image>/Script-Fu/Alpha to Logo")
 
 
 (define (script-fu-gradient-bevel-logo text
@@ -136,4 +136,4 @@
 		    SF-COLOR      _"Background color"         '(255 255 255))
 
 (script-fu-menu-register "script-fu-gradient-bevel-logo"
-			 _"<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Script-Fu/Logos")

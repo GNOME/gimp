@@ -80,4 +80,4 @@
 		    SF-ADJUSTMENT _"Mask opacity"      '(50 0 100 1 1 0 1))
 
 (script-fu-menu-register "script-fu-unsharp-mask"
-			 _"<Image>/Script-Fu/Alchemy")
+			 "<Image>/Script-Fu/Alchemy")

@@ -193,4 +193,4 @@
 		    SF-TOGGLE     _"Allow resizing" FALSE)
 
 (script-fu-menu-register "script-fu-perspective-shadow"
-			 _"<Image>/Script-Fu/Shadow")
+			 "<Image>/Script-Fu/Shadow")

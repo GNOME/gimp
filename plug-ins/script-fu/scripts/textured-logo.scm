@@ -129,7 +129,7 @@
 		    SF-COLOR      _"Ending blend"         '(0 0 106))
 
 (script-fu-menu-register "script-fu-textured-logo-alpha"
-			 _"<Image>/Script-Fu/Alpha to Logo")
+			 "<Image>/Script-Fu/Alpha to Logo")
 
 
 (define (script-fu-textured-logo text
@@ -169,4 +169,4 @@
 		    SF-COLOR      _"Ending blend"       '(0 0 106))
 
 (script-fu-menu-register "script-fu-textured-logo"
-			 _"<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Script-Fu/Logos")

@@ -201,4 +201,4 @@
 		    SF-VALUE    _"Speed (pixels/frame)" "50")
 
 (script-fu-menu-register "script-fu-burn-in-anim"
-			 _"<Image>/Script-Fu/Animators")
+			 "<Image>/Script-Fu/Animators")

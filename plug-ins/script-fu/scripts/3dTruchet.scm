@@ -228,4 +228,4 @@
 		    SF-ADJUSTMENT _"Number of Y tiles" '(5 1 1000 1 10 0 1))
 
 (script-fu-menu-register "script-fu-3dtruchet"
-			 _"<Toolbox>/Xtns/Script-Fu/Patterns")
+			 "<Toolbox>/Xtns/Script-Fu/Patterns")

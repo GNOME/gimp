@@ -186,4 +186,4 @@
 		    SF-TOGGLE   _"Carve white areas" TRUE)
 
 (script-fu-menu-register "script-fu-carve-it"
-			 _"<Image>/Script-Fu/Stencil Ops")
+			 "<Image>/Script-Fu/Stencil Ops")

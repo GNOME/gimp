@@ -361,4 +361,4 @@
                     SF-GRADIENT   _"Gradient"       "Deep Sea")
 
 (script-fu-menu-register "script-fu-spyrogimp"
-                         _"<Image>/Script-Fu/Render")
+                         "<Image>/Script-Fu/Render")

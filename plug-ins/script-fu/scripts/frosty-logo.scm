@@ -106,7 +106,7 @@
 		    SF-COLOR      _"Background color"     '(255 255 255))
 
 (script-fu-menu-register "script-fu-frosty-logo-alpha"
-			 _"<Image>/Script-Fu/Alpha to Logo")
+			 "<Image>/Script-Fu/Alpha to Logo")
 
 (define (script-fu-frosty-logo text
 			       size
@@ -133,4 +133,4 @@
 		    SF-COLOR      _"Background color"   '(255 255 255))
 
 (script-fu-menu-register "script-fu-frosty-logo"
-			 _"<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Script-Fu/Logos")

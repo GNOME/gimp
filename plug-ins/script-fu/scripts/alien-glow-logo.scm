@@ -67,7 +67,7 @@
 		    SF-COLOR      _"Glow color"             '(63 252 0))
 
 (script-fu-menu-register "script-fu-alien-glow-logo-alpha"
-			 _"<Image>/Script-Fu/Alpha to Logo")
+			 "<Image>/Script-Fu/Alpha to Logo")
 
 
 (define (script-fu-alien-glow-logo text
@@ -102,4 +102,4 @@
 		    SF-COLOR      _"Glow color"         '(63 252 0))
 
 (script-fu-menu-register "script-fu-alien-glow-logo"
-			 _"<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Script-Fu/Logos")

@@ -86,7 +86,7 @@
 		    SF-COLOR      _"Background color" '(255 255 255))
 
 (script-fu-menu-register "script-fu-starburst-logo-alpha"
-			 _"<Image>/Script-Fu/Alpha to Logo")
+			 "<Image>/Script-Fu/Alpha to Logo")
 
 
 (define (script-fu-starburst-logo text size fontname burst-color bg-color)
@@ -114,4 +114,4 @@
 		    SF-COLOR      _"Background color"   '(255 255 255))
 
 (script-fu-menu-register "script-fu-starburst-logo"
-			 _"<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Script-Fu/Logos")

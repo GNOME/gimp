@@ -161,4 +161,4 @@
 		    SF-COLOR      _"Background color" script-fu-show-image-structure-background-color)
 
 (script-fu-menu-register "script-fu-show-image-structure"
-			 _"<Image>/Script-Fu/Utils")
+			 "<Image>/Script-Fu/Utils")

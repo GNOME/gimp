@@ -143,4 +143,4 @@
 		    SF-TOGGLE     _"Separate layer"   TRUE)
 
 (script-fu-menu-register "script-fu-circuit"
-			 _"<Image>/Script-Fu/Render")
+			 "<Image>/Script-Fu/Render")

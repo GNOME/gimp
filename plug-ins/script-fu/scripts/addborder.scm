@@ -180,4 +180,4 @@
                     SF-ADJUSTMENT _"Delta value on color" '(25 1 255 1 10 0 1))
 
 (script-fu-menu-register "script-fu-addborder"
-                         _"<Image>/Script-Fu/Decor")
+                         "<Image>/Script-Fu/Decor")

@@ -77,7 +77,7 @@
                     SF-COLOR    _"Background color" '(0 0 0))
 
 (script-fu-menu-register "script-fu-chalk-logo-alpha"
-			 _"<Image>/Script-Fu/Alpha to Logo")
+			 "<Image>/Script-Fu/Alpha to Logo")
 
 
 (define (script-fu-chalk-logo text
@@ -115,4 +115,4 @@
                     SF-COLOR      _"Chalk color"        '(255 255 255))
 
 (script-fu-menu-register "script-fu-chalk-logo"
-			 _"<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Script-Fu/Logos")

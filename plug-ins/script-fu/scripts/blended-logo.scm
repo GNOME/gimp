@@ -135,7 +135,7 @@
 		    SF-TOGGLE     _"Gradient reverse" FALSE)
 
 (script-fu-menu-register "script-fu-blended-logo-alpha"
-			 _"<Image>/Script-Fu/Alpha to Logo")
+			 "<Image>/Script-Fu/Alpha to Logo")
 
 
 (define (script-fu-blended-logo text
@@ -189,4 +189,4 @@
 		    SF-TOGGLE     _"Gradient reverse"   FALSE)
 
 (script-fu-menu-register "script-fu-blended-logo"
-			 _"<Toolbox>/Xtns/Script-Fu/Logos")
+			 "<Toolbox>/Xtns/Script-Fu/Logos")
