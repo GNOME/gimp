@@ -83,7 +83,7 @@
     Not all effects can be applied to all kinds of images.  This is
     indicated by a grayed-out menu-entry.  You may need to change
     the image mode to RGB (Image-&gt;Mode-&gt;RGB), add an alpha-channel
-    (Layers-&gt;Transparency-&gt;Add Alpha Channel) or flatten it
+    (Layer-&gt;Transparency-&gt;Add Alpha Channel) or flatten it
     (Image-&gt;Flatten Image).
     </_thetip>
   </tip>
