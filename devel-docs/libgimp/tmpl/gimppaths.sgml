@@ -53,6 +53,7 @@ gimppaths
 
 @image_ID: 
 @set_current_path_name: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_path_set_points ##### -->
@@ -65,6 +66,7 @@ gimppaths
 @ptype: 
 @num_path_points: 
 @points_pairs: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_path_stroke_current ##### -->
@@ -73,6 +75,7 @@ gimppaths
 </para>
 
 @image_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_path_get_point_at_dist ##### -->
@@ -114,6 +117,7 @@ gimppaths
 
 @image_ID: 
 @path_name_to_del: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_path_get_locked ##### -->
@@ -134,6 +138,7 @@ gimppaths
 @image_ID: 
 @pathname: 
 @lockstatus: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_path_set_tattoo ##### -->
@@ -144,5 +149,6 @@ gimppaths
 @image_ID: 
 @pathname: 
 @tattovalue: 
+@Returns: 
 
 

@@ -21,6 +21,7 @@ gimphelp
 
 @prog_name: 
 @help_page: 
+@Returns: 
 <!-- # Unused Parameters # -->
 @help_data: 
 

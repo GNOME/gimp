@@ -29,6 +29,7 @@ gimpdisplay
 </para>
 
 @display_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_displays_flush ##### -->
@@ -36,5 +37,6 @@ gimpdisplay
 
 </para>
 
+@Returns: 
 
 

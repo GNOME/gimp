@@ -1,12 +1,17 @@
+2000-08-24  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/*: updated after libgimp API cleanup, moved all
+	compatibility definitions into gimpcompat.sgml.
+
 2000-07-29  Michael Natterer  <mitch@gimp.org>
 
-	* libgimp-decl.txt
-	* libgimp-sections.txt
-	* tmpl/gimp.sgml
-	* tmpl/gimpdrawable.sgml
-	* tmpl/gimpenums.sgml
-	* tmpl/gimpimage.sgml
-	* tmpl/gimplayer.sgml: updated from the libgimp sources.
+	* libgimp/libgimp-decl.txt
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimp.sgml
+	* libgimp/tmpl/gimpdrawable.sgml
+	* libgimp/tmpl/gimpenums.sgml
+	* libgimp/tmpl/gimpimage.sgml
+	* libgimp/tmpl/gimplayer.sgml: updated from the libgimp sources.
 
 2000-06-24  Sven Neumann  <sven@gimp.org>
 
@@ -25,13 +30,13 @@
 
 2000-06-09  Sven Neumann  <sven@gimp.org>
 
-	* libgimp/libgimp-decl.txt
-	* libgimp/libgimp-sections.txt
-	* tmpl/gimp.sgml
-	* tmpl/gimpchannel.sgml
-	* tmpl/gimpdrawable.sgml
-	* tmpl/gimpimage.sgml
-	* tmpl/gimplayer.sgml: relocated defines as happened to
+	* libgimp/libgimp/libgimp-decl.txt
+	* libgimp/libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimp.sgml
+	* libgimp/tmpl/gimpchannel.sgml
+	* libgimp/tmpl/gimpdrawable.sgml
+	* libgimp/tmpl/gimpimage.sgml
+	* libgimp/tmpl/gimplayer.sgml: relocated defines as happened to
 	reflect changes in libgimp
 
 2000-06-08  Sven Neumann  <sven@gimp.org>

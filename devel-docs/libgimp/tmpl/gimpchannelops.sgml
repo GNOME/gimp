@@ -24,6 +24,7 @@ gimpchannelops
 @fill_type: 
 @offset_x: 
 @offset_y: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_channel_ops_duplicate ##### -->

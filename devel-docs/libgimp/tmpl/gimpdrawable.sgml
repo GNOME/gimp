@@ -134,6 +134,7 @@ gimpdrawable
 
 @drawable_ID: 
 @undo: 
+@Returns: 
 <!-- # Unused Parameters # -->
 @undoable: 
 
@@ -145,6 +146,7 @@ gimpdrawable
 
 @drawable_ID: 
 @fill_type: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_drawable_update ##### -->
@@ -157,6 +159,7 @@ gimpdrawable
 @y: 
 @width: 
 @height: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_drawable_mask_bounds ##### -->
@@ -270,6 +273,7 @@ gimpdrawable
 @drawable_ID: 
 @offset_x: 
 @offset_y: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_drawable_is_layer ##### -->
@@ -306,21 +310,23 @@ gimpdrawable
 
 
 
-<!-- ##### FUNCTION gimp_drawable_image_id ##### -->
+<!-- ##### MACRO gimp_drawable_image_id ##### -->
 <para>
 
 </para>
 
-@drawable_ID: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@drawable_ID: 
 
 
-<!-- ##### FUNCTION gimp_drawable_bpp ##### -->
+<!-- ##### MACRO gimp_drawable_bpp ##### -->
 <para>
 
 </para>
 
-@drawable_ID: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@drawable_ID: 
 
 

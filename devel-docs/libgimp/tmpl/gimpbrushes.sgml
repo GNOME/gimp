@@ -25,6 +25,7 @@ gimpbrushes
 @opacity: 
 @spacing: 
 @paint_mode: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_brushes_close_popup ##### -->
@@ -33,6 +34,7 @@ gimpbrushes
 </para>
 
 @brush_callback: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_brushes_set_popup ##### -->
@@ -45,6 +47,7 @@ gimpbrushes
 @opacity: 
 @spacing: 
 @paint_mode: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_brushes_get_brush_data ##### -->
@@ -52,16 +55,18 @@ gimpbrushes
 
 </para>
 
-@brush_name: 
+@name: 
 @opacity: 
 @spacing: 
 @paint_mode: 
 @width: 
 @height: 
-@mask_data_size: 
+@length: 
 @mask_data: 
 @Returns: 
 <!-- # Unused Parameters # -->
+@brush_name: 
+@mask_data_size: 
 @pname: 
 
 

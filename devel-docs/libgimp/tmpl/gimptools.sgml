@@ -23,6 +23,7 @@ gimptools
 @pressure: 
 @num_strokes: 
 @strokes: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_airbrush_default ##### -->
@@ -33,6 +34,7 @@ gimptools
 @drawable_ID: 
 @num_strokes: 
 @strokes: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_blend ##### -->
@@ -54,6 +56,7 @@ gimptools
 @y1: 
 @x2: 
 @y2: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_bucket_fill ##### -->
@@ -69,6 +72,7 @@ gimptools
 @sample_merged: 
 @x: 
 @y: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_by_color_select ##### -->
@@ -86,6 +90,7 @@ gimptools
 @feather: 
 @feather_radius: 
 @sample_merged: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_clone ##### -->
@@ -100,6 +105,7 @@ gimptools
 @src_y: 
 @num_strokes: 
 @strokes: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_clone_default ##### -->
@@ -110,6 +116,7 @@ gimptools
 @drawable_ID: 
 @num_strokes: 
 @strokes: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_color_picker ##### -->
@@ -128,6 +135,7 @@ gimptools
 @red: 
 @green: 
 @blue: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_convolve ##### -->
@@ -140,6 +148,7 @@ gimptools
 @convolve_type: 
 @num_strokes: 
 @strokes: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_convolve_default ##### -->
@@ -150,6 +159,7 @@ gimptools
 @drawable_ID: 
 @num_strokes: 
 @strokes: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_crop ##### -->
@@ -162,6 +172,7 @@ gimptools
 @new_height: 
 @offx: 
 @offy: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_dodgeburn ##### -->
@@ -175,6 +186,7 @@ gimptools
 @dodgeburn_mode: 
 @num_strokes: 
 @strokes: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_dodgeburn_default ##### -->
@@ -185,6 +197,7 @@ gimptools
 @drawable_ID: 
 @num_strokes: 
 @strokes: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_ellipse_select ##### -->
@@ -201,6 +214,7 @@ gimptools
 @antialias: 
 @feather: 
 @feather_radius: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_eraser ##### -->
@@ -213,6 +227,7 @@ gimptools
 @strokes: 
 @hardness: 
 @method: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_eraser_default ##### -->
@@ -223,6 +238,7 @@ gimptools
 @drawable_ID: 
 @num_strokes: 
 @strokes: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_flip ##### -->
@@ -247,6 +263,7 @@ gimptools
 @antialias: 
 @feather: 
 @feather_radius: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_fuzzy_select ##### -->
@@ -263,6 +280,7 @@ gimptools
 @feather: 
 @feather_radius: 
 @sample_merged: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_paintbrush ##### -->
@@ -276,6 +294,7 @@ gimptools
 @strokes: 
 @method: 
 @gradient_length: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_paintbrush_default ##### -->
@@ -286,6 +305,7 @@ gimptools
 @drawable_ID: 
 @num_strokes: 
 @strokes: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_pencil ##### -->
@@ -296,6 +316,7 @@ gimptools
 @drawable_ID: 
 @num_strokes: 
 @strokes: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_perspective ##### -->
@@ -329,6 +350,7 @@ gimptools
 @operation: 
 @feather: 
 @feather_radius: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_rotate ##### -->
@@ -377,6 +399,7 @@ gimptools
 @pressure: 
 @num_strokes: 
 @strokes: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_smudge_default ##### -->
@@ -387,6 +410,7 @@ gimptools
 @drawable_ID: 
 @num_strokes: 
 @strokes: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_transform_2d ##### -->

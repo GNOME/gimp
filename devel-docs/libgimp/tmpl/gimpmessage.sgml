@@ -20,6 +20,7 @@ gimpmessage
 </para>
 
 @message: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_message_get_handler ##### -->
@@ -36,5 +37,6 @@ gimpmessage
 </para>
 
 @handler: 
+@Returns: 
 
 

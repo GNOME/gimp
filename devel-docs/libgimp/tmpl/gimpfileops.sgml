@@ -23,6 +23,7 @@ gimpfileops
 @extensions: 
 @prefixes: 
 @magics: 
+@Returns: 
 <!-- # Unused Parameters # -->
 @name: 
 
@@ -35,6 +36,7 @@ gimpfileops
 @procedure_name: 
 @extensions: 
 @prefixes: 
+@Returns: 
 <!-- # Unused Parameters # -->
 @name: 
 
@@ -47,6 +49,7 @@ gimpfileops
 @procedure_name: 
 @extensions: 
 @prefixes: 
+@Returns: 
 <!-- # Unused Parameters # -->
 @name: 
 

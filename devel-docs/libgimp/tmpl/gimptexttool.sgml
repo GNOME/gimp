@@ -45,6 +45,7 @@ gimptexttool
 @height: 
 @ascent: 
 @descent: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_text ##### -->
@@ -92,5 +93,6 @@ gimptexttool
 @height: 
 @ascent: 
 @descent: 
+@Returns: 
 
 

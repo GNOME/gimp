@@ -20,6 +20,7 @@ gimpplugin
 </para>
 
 @message: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_progress_update ##### -->
@@ -28,6 +29,7 @@ gimpplugin
 </para>
 
 @percentage: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_temp_PDB_name ##### -->
@@ -45,6 +47,7 @@ gimpplugin
 
 @domain_name: 
 @domain_path: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_plugin_help_register ##### -->
@@ -53,5 +56,6 @@ gimpplugin
 </para>
 
 @help_path: 
+@Returns: 
 
 

@@ -30,6 +30,7 @@ gimpgimprc
 
 @token: 
 @value: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_get_monitor_resolution ##### -->
@@ -39,5 +40,6 @@ gimpgimprc
 
 @xres: 
 @yres: 
+@Returns: 
 
 

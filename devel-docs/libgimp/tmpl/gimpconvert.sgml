@@ -20,6 +20,7 @@ gimpconvert
 </para>
 
 @image_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_convert_grayscale ##### -->
@@ -28,6 +29,7 @@ gimpconvert
 </para>
 
 @image_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_convert_indexed ##### -->
@@ -42,5 +44,6 @@ gimpconvert
 @alpha_dither: 
 @remove_unused: 
 @palette: 
+@Returns: 
 
 

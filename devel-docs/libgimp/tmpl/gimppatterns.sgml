@@ -23,9 +23,11 @@ gimppatterns
 @width: 
 @height: 
 @mask_bpp: 
-@mask_data_size: 
+@length: 
 @mask_data: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@mask_data_size: 
 
 
 <!-- ##### FUNCTION gimp_patterns_popup ##### -->
@@ -36,6 +38,7 @@ gimppatterns
 @pattern_callback: 
 @popup_title: 
 @initial_pattern: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_patterns_close_popup ##### -->
@@ -44,6 +47,7 @@ gimppatterns
 </para>
 
 @pattern_callback: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_patterns_set_popup ##### -->
@@ -53,5 +57,6 @@ gimppatterns
 
 @pattern_callback: 
 @pattern_name: 
+@Returns: 
 
 

@@ -44,6 +44,7 @@ gimpimage
 @new_height: 
 @offx: 
 @offy: 
+@Returns: 
 <!-- # Unused Parameters # -->
 @offset_x: 
 @offset_y: 
@@ -57,6 +58,7 @@ gimpimage
 @image_ID: 
 @new_width: 
 @new_height: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_image_delete ##### -->
@@ -65,6 +67,7 @@ gimpimage
 </para>
 
 @image_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_image_free_shadow ##### -->
@@ -73,6 +76,7 @@ gimpimage
 </para>
 
 @image_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_image_get_layers ##### -->
@@ -105,6 +109,7 @@ gimpimage
 </para>
 
 @image_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_image_pick_correlate_layer ##### -->
@@ -125,6 +130,7 @@ gimpimage
 
 @image_ID: 
 @layer_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_image_lower_layer ##### -->
@@ -134,6 +140,7 @@ gimpimage
 
 @image_ID: 
 @layer_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_image_raise_layer_to_top ##### -->
@@ -143,6 +150,7 @@ gimpimage
 
 @image_ID: 
 @layer_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_image_lower_layer_to_bottom ##### -->
@@ -152,6 +160,7 @@ gimpimage
 
 @image_ID: 
 @layer_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_image_merge_visible_layers ##### -->
@@ -192,6 +201,7 @@ gimpimage
 @image_ID: 
 @layer_ID: 
 @position: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_image_remove_layer ##### -->
@@ -201,6 +211,7 @@ gimpimage
 
 @image_ID: 
 @layer_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_image_add_layer_mask ##### -->
@@ -211,6 +222,7 @@ gimpimage
 @image_ID: 
 @layer_ID: 
 @mask_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_image_remove_layer_mask ##### -->
@@ -221,6 +233,7 @@ gimpimage
 @image_ID: 
 @layer_ID: 
 @mode: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_image_raise_channel ##### -->
@@ -230,6 +243,7 @@ gimpimage
 
 @image_ID: 
 @channel_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_image_lower_channel ##### -->
@@ -239,6 +253,7 @@ gimpimage
 
 @image_ID: 
 @layer_ID: 
+@Returns: 
 <!-- # Unused Parameters # -->
 @channel_ID: 
 
@@ -251,6 +266,7 @@ gimpimage
 @image_ID: 
 @channel_ID: 
 @position: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_image_remove_channel ##### -->
@@ -260,6 +276,7 @@ gimpimage
 
 @image_ID: 
 @channel_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_image_active_drawable ##### -->
@@ -331,6 +348,7 @@ gimpimage
 </para>
 
 @image_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_image_floating_selection ##### -->
@@ -358,6 +376,7 @@ gimpimage
 
 @image_ID: 
 @tattoo: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_image_get_tattoo_state ##### -->
@@ -403,6 +422,7 @@ gimpimage
 
 @image_ID: 
 @active_layer_ID: 
+@Returns: 
 <!-- # Unused Parameters # -->
 @layer_ID: 
 
@@ -423,6 +443,7 @@ gimpimage
 
 @image_ID: 
 @active_channel_ID: 
+@Returns: 
 <!-- # Unused Parameters # -->
 @channel_ID: 
 
@@ -454,6 +475,7 @@ gimpimage
 @image_ID: 
 @component: 
 @active: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_image_get_component_visible ##### -->
@@ -474,6 +496,7 @@ gimpimage
 @image_ID: 
 @component: 
 @visible: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_image_get_filename ##### -->
@@ -492,6 +515,7 @@ gimpimage
 
 @image_ID: 
 @filename: 
+@Returns: 
 <!-- # Unused Parameters # -->
 @name: 
 
@@ -504,6 +528,7 @@ gimpimage
 @image_ID: 
 @xresolution: 
 @yresolution: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_image_set_resolution ##### -->
@@ -514,6 +539,7 @@ gimpimage
 @image_ID: 
 @xresolution: 
 @yresolution: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_image_get_unit ##### -->
@@ -532,6 +558,7 @@ gimpimage
 
 @image_ID: 
 @unit: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_image_get_layer_by_tattoo ##### -->
@@ -574,6 +601,7 @@ gimpimage
 @image_ID: 
 @cmap: 
 @num_colors: 
+@Returns: 
 <!-- # Unused Parameters # -->
 @ncolors: 
 
@@ -592,27 +620,30 @@ gimpimage
 @bytes: 
 
 
-<!-- ##### FUNCTION gimp_image_convert_rgb ##### -->
+<!-- ##### MACRO gimp_image_convert_rgb ##### -->
 <para>
 
 </para>
 
+<!-- # Unused Parameters # -->
 @image_ID: 
 
 
-<!-- ##### FUNCTION gimp_image_convert_grayscale ##### -->
+<!-- ##### MACRO gimp_image_convert_grayscale ##### -->
 <para>
 
 </para>
 
+<!-- # Unused Parameters # -->
 @image_ID: 
 
 
-<!-- ##### FUNCTION gimp_image_convert_indexed ##### -->
+<!-- ##### MACRO gimp_image_convert_indexed ##### -->
 <para>
 
 </para>
 
+<!-- # Unused Parameters # -->
 @image_ID: 
 @dither_type: 
 @palette_type: 
@@ -622,12 +653,13 @@ gimpimage
 @palette: 
 
 
-<!-- ##### FUNCTION gimp_image_duplicate ##### -->
+<!-- ##### MACRO gimp_image_duplicate ##### -->
 <para>
 
 </para>
 
-@image_ID: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@image_ID: 
 
 

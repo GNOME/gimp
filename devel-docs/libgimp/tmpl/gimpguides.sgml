@@ -41,6 +41,7 @@ gimpguides
 
 @image_ID: 
 @guide_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_image_find_next_guide ##### -->

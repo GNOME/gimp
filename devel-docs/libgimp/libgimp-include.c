@@ -6,7 +6,7 @@
 #include <glib.h>
 #include <libgimp/gimp.h>
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,
   NULL, 

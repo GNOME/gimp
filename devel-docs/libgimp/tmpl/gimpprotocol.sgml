@@ -206,12 +206,3 @@ The communication protocol between GIMP and it's plug-ins.
 @Returns: 
 
 
-<!-- ##### FUNCTION gp_request_wakeups_write ##### -->
-<para>
-
-</para>
-
-@channel: 
-@Returns: 
-
-

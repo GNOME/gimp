@@ -20,6 +20,7 @@ gimpfloatingsel
 </para>
 
 @floating_sel_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_floating_sel_anchor ##### -->
@@ -28,6 +29,7 @@ gimpfloatingsel
 </para>
 
 @floating_sel_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_floating_sel_to_layer ##### -->
@@ -36,6 +38,7 @@ gimpfloatingsel
 </para>
 
 @floating_sel_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_floating_sel_attach ##### -->
@@ -45,6 +48,7 @@ gimpfloatingsel
 
 @layer_ID: 
 @drawable_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_floating_sel_rigor ##### -->
@@ -54,6 +58,7 @@ gimpfloatingsel
 
 @floating_sel_ID: 
 @undo: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_floating_sel_relax ##### -->
@@ -63,5 +68,6 @@ gimpfloatingsel
 
 @floating_sel_ID: 
 @undo: 
+@Returns: 
 
 

@@ -57,6 +57,7 @@ gimplayer
 @new_width: 
 @new_height: 
 @local_origin: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_layer_resize ##### -->
@@ -69,6 +70,7 @@ gimplayer
 @new_height: 
 @offx: 
 @offy: 
+@Returns: 
 <!-- # Unused Parameters # -->
 @offset_x: 
 @offset_y: 
@@ -80,6 +82,7 @@ gimplayer
 </para>
 
 @layer_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_layer_translate ##### -->
@@ -90,6 +93,7 @@ gimplayer
 @layer_ID: 
 @offx: 
 @offy: 
+@Returns: 
 <!-- # Unused Parameters # -->
 @offset_x: 
 @offset_y: 
@@ -101,6 +105,7 @@ gimplayer
 </para>
 
 @layer_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_layer_set_offsets ##### -->
@@ -111,6 +116,7 @@ gimplayer
 @layer_ID: 
 @offx: 
 @offy: 
+@Returns: 
 <!-- # Unused Parameters # -->
 @offset_x: 
 @offset_y: 
@@ -150,6 +156,7 @@ gimplayer
 
 @layer_ID: 
 @name: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_layer_get_visible ##### -->
@@ -168,6 +175,7 @@ gimplayer
 
 @layer_ID: 
 @visible: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_layer_get_preserve_trans ##### -->
@@ -186,6 +194,7 @@ gimplayer
 
 @layer_ID: 
 @preserve_trans: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_layer_get_apply_mask ##### -->
@@ -204,6 +213,7 @@ gimplayer
 
 @layer_ID: 
 @apply_mask: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_layer_get_show_mask ##### -->
@@ -222,6 +232,7 @@ gimplayer
 
 @layer_ID: 
 @show_mask: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_layer_get_edit_mask ##### -->
@@ -240,6 +251,7 @@ gimplayer
 
 @layer_ID: 
 @edit_mask: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_layer_get_opacity ##### -->
@@ -258,6 +270,7 @@ gimplayer
 
 @layer_ID: 
 @opacity: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_layer_get_mode ##### -->
@@ -276,6 +289,7 @@ gimplayer
 
 @layer_ID: 
 @mode: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_layer_get_linked ##### -->
@@ -294,6 +308,7 @@ gimplayer
 
 @layer_ID: 
 @linked: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_layer_get_tattoo ##### -->
@@ -312,49 +327,55 @@ gimplayer
 
 @layer_ID: 
 @tattoo: 
-
-
-<!-- ##### FUNCTION gimp_layer_get_mask_id ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_layer_get_image_id ##### -->
+<!-- ##### MACRO gimp_layer_get_mask_id ##### -->
 <para>
 
 </para>
 
-@layer_ID: 
 @Returns: 
-
-
-<!-- ##### FUNCTION gimp_layer_is_floating_selection ##### -->
-<para>
-
-</para>
-
+<!-- # Unused Parameters # -->
 @layer_ID: 
-@Returns: 
 
 
-<!-- ##### FUNCTION gimp_layer_get_preserve_transparency ##### -->
+<!-- ##### MACRO gimp_layer_get_image_id ##### -->
 <para>
 
 </para>
 
+@Returns: 
+<!-- # Unused Parameters # -->
 @layer_ID: 
-@Returns: 
 
 
-<!-- ##### FUNCTION gimp_layer_set_preserve_transparency ##### -->
+<!-- ##### MACRO gimp_layer_is_floating_selection ##### -->
 <para>
 
 </para>
 
+@Returns: 
+<!-- # Unused Parameters # -->
+@layer_ID: 
+
+
+<!-- ##### MACRO gimp_layer_get_preserve_transparency ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@layer_ID: 
+
+
+<!-- ##### MACRO gimp_layer_set_preserve_transparency ##### -->
+<para>
+
+</para>
+
+<!-- # Unused Parameters # -->
 @layer_ID: 
 @preserve_transparency: 
 

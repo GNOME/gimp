@@ -43,6 +43,7 @@ gimpchannel
 </para>
 
 @channel_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_channel_get_name ##### -->
@@ -61,6 +62,7 @@ gimpchannel
 
 @channel_ID: 
 @name: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_channel_get_visible ##### -->
@@ -79,6 +81,7 @@ gimpchannel
 
 @channel_ID: 
 @visible: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_channel_get_show_masked ##### -->
@@ -97,6 +100,7 @@ gimpchannel
 
 @channel_ID: 
 @show_masked: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_channel_get_opacity ##### -->
@@ -115,6 +119,7 @@ gimpchannel
 
 @channel_ID: 
 @opacity: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_channel_get_color ##### -->
@@ -126,6 +131,7 @@ gimpchannel
 @red: 
 @green: 
 @blue: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_channel_set_color ##### -->
@@ -137,6 +143,7 @@ gimpchannel
 @red: 
 @green: 
 @blue: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_channel_get_tattoo ##### -->
@@ -155,6 +162,7 @@ gimpchannel
 
 @channel_ID: 
 @tattoo: 
+@Returns: 
 
 
 <!-- ##### MACRO gimp_channel_get_image_id ##### -->
@@ -162,8 +170,5 @@ gimpchannel
 
 </para>
 
-@Returns: 
-<!-- # Unused Parameters # -->
-@channel_ID: 
 
 

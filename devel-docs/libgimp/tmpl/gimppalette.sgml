@@ -22,6 +22,7 @@ gimppalette
 @red: 
 @green: 
 @blue: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_palette_get_background ##### -->
@@ -32,6 +33,7 @@ gimppalette
 @red: 
 @green: 
 @blue: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_palette_set_foreground ##### -->
@@ -42,6 +44,7 @@ gimppalette
 @red: 
 @green: 
 @blue: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_palette_set_background ##### -->
@@ -52,6 +55,7 @@ gimppalette
 @red: 
 @green: 
 @blue: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_palette_set_default_colors ##### -->
@@ -59,6 +63,7 @@ gimppalette
 
 </para>
 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_palette_swap_colors ##### -->
@@ -66,6 +71,7 @@ gimppalette
 
 </para>
 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_palette_refresh ##### -->
@@ -73,5 +79,6 @@ gimppalette
 
 </para>
 
+@Returns: 
 
 

@@ -22,6 +22,7 @@ gimpcolor
 @drawable_ID: 
 @brightness: 
 @contrast: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_levels ##### -->
@@ -36,6 +37,7 @@ gimpcolor
 @gamma: 
 @low_output: 
 @high_output: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_posterize ##### -->
@@ -45,6 +47,7 @@ gimpcolor
 
 @drawable_ID: 
 @levels: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_desaturate ##### -->
@@ -53,6 +56,7 @@ gimpcolor
 </para>
 
 @drawable_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_equalize ##### -->
@@ -62,6 +66,7 @@ gimpcolor
 
 @drawable_ID: 
 @mask_only: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_invert ##### -->
@@ -70,6 +75,7 @@ gimpcolor
 </para>
 
 @drawable_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_curves_spline ##### -->
@@ -81,6 +87,7 @@ gimpcolor
 @channel: 
 @num_points: 
 @control_pts: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_curves_explicit ##### -->
@@ -92,6 +99,7 @@ gimpcolor
 @channel: 
 @num_bytes: 
 @curve: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_color_balance ##### -->
@@ -105,6 +113,7 @@ gimpcolor
 @cyan_red: 
 @magenta_green: 
 @yellow_blue: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_histogram ##### -->
@@ -122,6 +131,7 @@ gimpcolor
 @pixels: 
 @count: 
 @percentile: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_hue_saturation ##### -->
@@ -134,6 +144,7 @@ gimpcolor
 @hue_offset: 
 @lightness: 
 @saturation: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_threshold ##### -->
@@ -144,5 +155,6 @@ gimpcolor
 @drawable_ID: 
 @low_threshold: 
 @high_threshold: 
+@Returns: 
 
 

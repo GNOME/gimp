@@ -20,6 +20,7 @@ gimpundo
 </para>
 
 @image_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_undo_push_group_end ##### -->
@@ -28,5 +29,6 @@ gimpundo
 </para>
 
 @image_ID: 
+@Returns: 
 
 

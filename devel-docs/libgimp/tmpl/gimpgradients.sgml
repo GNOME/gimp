@@ -37,6 +37,7 @@ gimpgradients
 </para>
 
 @name: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_gradients_sample_uniform ##### -->
@@ -79,6 +80,7 @@ gimpgradients
 @popup_title: 
 @initial_gradient: 
 @sample_size: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_gradients_close_popup ##### -->
@@ -87,6 +89,7 @@ gimpgradients
 </para>
 
 @gradients_callback: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_gradients_set_popup ##### -->
@@ -96,5 +99,6 @@ gimpgradients
 
 @gradients_callback: 
 @gradient_name: 
+@Returns: 
 
 

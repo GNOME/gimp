@@ -40,9 +40,9 @@ gimpselection
 @y1: 
 @x2: 
 @y2: 
+@Returns: 
 <!-- # Unused Parameters # -->
 @none_empty: 
-@Returns: 
 
 
 <!-- ##### FUNCTION gimp_selection_is_empty ##### -->
@@ -60,5 +60,6 @@ gimpselection
 </para>
 
 @image_ID: 
+@Returns: 
 
 

@@ -144,14 +144,6 @@ all other GIMP Library headers.
 </para>
 
 
-<!-- ##### FUNCTION set_gimp_PLUG_IN_INFO_PTR ##### -->
-<para>
-
-</para>
-
-@Param1: 
-
-
 <!-- ##### MACRO MAIN ##### -->
 <para>
 
@@ -305,13 +297,6 @@ all other GIMP Library headers.
 </para>
 
 @Returns: 
-
-
-<!-- ##### FUNCTION gimp_request_wakeups ##### -->
-<para>
-
-</para>
-
 
 
 <!-- ##### FUNCTION gimp_get_progname ##### -->

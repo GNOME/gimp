@@ -20,6 +20,7 @@ gimpedit
 </para>
 
 @drawable_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_edit_copy ##### -->
@@ -28,6 +29,7 @@ gimpedit
 </para>
 
 @drawable_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_edit_paste ##### -->
@@ -46,6 +48,7 @@ gimpedit
 </para>
 
 @drawable_ID: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_edit_fill ##### -->
@@ -55,6 +58,7 @@ gimpedit
 
 @drawable_ID: 
 @fill_type: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_edit_stroke ##### -->
@@ -63,5 +67,6 @@ gimpedit
 </para>
 
 @drawable_ID: 
+@Returns: 
 
 

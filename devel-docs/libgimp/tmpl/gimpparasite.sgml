@@ -206,6 +206,7 @@ gimp_parasite_attach() and their related functions.
 </para>
 
 @parasite: 
+@Returns: 
 <!-- # Unused Parameters # -->
 @p: 
 
@@ -216,6 +217,7 @@ gimp_parasite_attach() and their related functions.
 </para>
 
 @name: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_parasite_list ##### -->
@@ -225,6 +227,7 @@ gimp_parasite_attach() and their related functions.
 
 @num_parasites: 
 @parasites: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_drawable_parasite_find ##### -->
@@ -246,6 +249,7 @@ gimp_parasite_attach() and their related functions.
 
 @drawable_ID: 
 @parasite: 
+@Returns: 
 <!-- # Unused Parameters # -->
 @drawable: 
 @p: 
@@ -258,6 +262,7 @@ gimp_parasite_attach() and their related functions.
 
 @drawable_ID: 
 @name: 
+@Returns: 
 <!-- # Unused Parameters # -->
 @drawable: 
 
@@ -270,6 +275,7 @@ gimp_parasite_attach() and their related functions.
 @drawable_ID: 
 @num_parasites: 
 @parasites: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_image_parasite_find ##### -->
@@ -289,6 +295,7 @@ gimp_parasite_attach() and their related functions.
 
 @image_ID: 
 @parasite: 
+@Returns: 
 <!-- # Unused Parameters # -->
 @p: 
 
@@ -300,6 +307,7 @@ gimp_parasite_attach() and their related functions.
 
 @image_ID: 
 @name: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_image_parasite_list ##### -->
@@ -310,6 +318,7 @@ gimp_parasite_attach() and their related functions.
 @image_ID: 
 @num_parasites: 
 @parasites: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_attach_new_parasite ##### -->
