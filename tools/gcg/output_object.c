@@ -36,17 +36,26 @@ void pr_object_decl(File* s, ObjectDef* o){
 }
 
 void pr_class_member(File* s, Member* m){
-#if 0
+	ParamOptions o=PARAMS_TYPES;
 	if(m->kind!=KIND_ABSTRACT)
 		return;
-	pr(s, "\t%1 %1%5;\n",
-	   pr_type, m->type,
-	   (m->method?pr_nil:pr), m->name
-	   (m->method?pr:pr_nil), "(*%s) (%2)",
-	   m->name,
-	   pr_params, m->params, ptrue);
-#endif
+	if(m->membertype==MEMBER_DATA){
+		DataMember* d=(DataMember*)m;
+		pr(s, "\t%1 %s;\n",
+		   pr_type, &d->type,
+		   m->name);
+	}else if (m->membertype==MEMBER_METHOD){
+		Method* d=(Method*)m;
+		pr(s, "\t%1 (*%s) (%1%2);\n",
+		   pr_type, &d->ret_type,
+		   m->name,
+		   pr_type, &m->my_class->self_type[d->self_const],
+		   pr_params, d->params, &o);
+	}
 }
+
+
+
 
 void pr_class_name(File* s, PrimType* o){
 	pr(s, "%1Class",
@@ -77,25 +86,10 @@ void pr_class_decl(File* s, ObjectDef* o){
 	   pr_class_name, DEF(o)->type);
 }
 
-void pr_class_cast(File* s, ObjectDef* t, const gchar* format, ...){
-	va_list args;
-	va_start (args, format);
-	pr(s, "%3 (%2)",
-	   pr_macro_name, DEF(t)->type, NULL, "CLASS_CAST",
-	   prv, format, args);
-}
-		   
-
-void pr_abstract_member(File* s, Id varname, ObjectDef* klass, Id membername){
-	pr(s,
-	   "(%3->%s)",
-	   pr_class_cast, klass, "GTK_OBJECT(%s)->klass", varname,
-	   membername);
-}
-
-void output_method_funcs(Method* m){
+void output_abstract_method(Method* m){
 	PrimType* t=DEF(MEMBER(m)->my_class)->type;
 	Id name=MEMBER(m)->name;
+	ParamOptions o=PARAMS_NAMES;
 	output_func
 	(t,
 	 name,
@@ -105,25 +99,66 @@ void output_method_funcs(Method* m){
 	 MEMBER(m)->my_class,
 	 m->self_const,
 	 FALSE,
-	 "\t%?s%?5%%%%",
+	 "\t%?s%3(GTK_OBJECT(self)->klass)->%s(self%2);\n",
 	 !!m->ret_type.prim, "return ",
-	 MEMBER(m)->kind==KIND_ABSTRACT,
-	 pr, "%2%2", pr_abstract_member, "self", t, name
-	 );
+	 pr_macro_name, t, NULL, "CLASS",
+	 name,
+	 pr_params, m->params, &o);
 }
-	 
 
-/*
-void pr_accessor_def(...){
-	Param p;
-	GSList l;
-	l.data=&p;
-	mk_self_param(
-	pr_func(m->klass, m->name, ,
-		"\treturn self->%s;\n");
-*/
+void output_data_member(DataMember* m){
+	Id name=MEMBER(m)->name;
+	PrimType* t=DEF(MEMBER(m)->my_class)->type;
+	switch(m->prot){
+	case DATA_READWRITE: {
+		Id set_name=g_strconcat("set_", name, NULL);
+		Param p;
+		GSList l;
+		p.type=m->type;
+		p.name="value";
+		l.data=&p;
+		l.next=NULL;
+		output_func(t,
+			    set_name,
+			    &l,
+			    NULL,
+			    func_hdr,
+			    MEMBER(m)->my_class,
+			    FALSE,
+			    FALSE,
+			    "\tself->%s=value;\n",
+			    name);
+		g_free(set_name);
+	}
+	/* fall through */
+	case DATA_READONLY:
+		output_func(t,
+			    name,
+			    NULL,
+			    &m->type,
+			    func_hdr,
+			    MEMBER(m)->my_class,
+			    TRUE,
+			    FALSE,
+			    "\treturn self->%s;\n",
+			    name);
+	case DATA_PROTECTED:
+	}
+}
 
-
+void output_member(Member* m, gpointer dummy){
+	switch(m->membertype){
+	case MEMBER_METHOD:
+		if(m->kind==KIND_ABSTRACT)
+			output_abstract_method((Method*)m);
+		break;
+	case MEMBER_DATA:
+		if(m->kind==KIND_DIRECT)
+			output_data_member((DataMember*)m);
+		break;
+	}
+}
+			    
 void pr_class_macros(File* s, ObjectDef* o ){
 	PrimType* t=DEF(o)->type;
 	pr(s, "#define %3(o) GTK_CHECK_CAST(o, %3, %1)\n",
@@ -153,7 +188,7 @@ void output_object_type_init(ObjectDef* o){
 		    "\treturn %2;\n",
 		    pr_primtype, t,
 		    pr_primtype, t,
-		    pr_class_name, o,
+		    pr_class_name, DEF(o)->type,
 		    pr_varname, t, "class_init",
 		    pr_varname, t, "init",
 		    pr_internal_varname, t, "type",
@@ -161,17 +196,6 @@ void output_object_type_init(ObjectDef* o){
 		    pr_internal_varname, t, "type");
 }
 
-void pr_gtype(File* s, Type* t){
-	if((t->indirection==0 && t->prim->kind==TYPE_TRANSPARENT)
-	   || (t->indirection==1 && t->prim->kind==TYPE_CLASS))
-		pr_macro_name(s, t->prim, "TYPE", NULL);
-	else if(t->indirection)
-		pr(s, "GTK_TYPE_POINTER");
-	else
-		g_error("Illegal non-pointer type %s%s\n",
-			t->prim->name.module,
-			t->prim->name.type);
-}
 
 void output_object(ObjectDef* o){
 	output_def(DEF(o));
@@ -180,6 +204,7 @@ void output_object(ObjectDef* o){
 	pr_class_decl(prot_hdr, o);
 	pr_object_decl(type_hdr, o);
 	pr_object_body(prot_hdr, o);
+	g_slist_foreach(o->members, output_member, NULL);
 }
 
 

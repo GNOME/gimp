@@ -1,3 +1,4 @@
+// this is just a simple test input file
 
 module g {
 	header <glib.h> {
@@ -27,7 +28,10 @@ module Gimp{
 	  foo, bar, baz, quux
 	};
 	class Image : Gimp.Object{
-		g.int x;
+		read-write g.int x;
 		read-only g.int y;
+		public abstract g.int foo(g.int bar);
+		abstract g.int name;
+		public abstract g.int baz(Object* o, Image*& i) const;
 	};
 };

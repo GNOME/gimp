@@ -2,18 +2,26 @@
 #include "output.h"
 #include <stdarg.h>
 
-void pr_param(File* s, Param* p, PBool first){
-	pr(s, "%?s%1 %s",
-	   !first, ", ",
-	   pr_type, p->type,
-	   p->name);
+void pr_param(File* s, Param* p, ParamOptions* opt){
+	pr(s, "%?s%?1%?s%?s",
+	   !(*opt & PARAMS_FIRST), ", ",
+	   !!(*opt & PARAMS_TYPES), pr_type, &p->type,
+	   (*opt & PARAMS_TYPES) && (*opt & PARAMS_NAMES), " ",
+	   !!(*opt & PARAMS_NAMES), p->name);
 }
 
-void pr_params(File* s, GSList* args){
-	pr(s, "%?s%?2%3",
-	   !args, "void",
-	   !!args, pr_param, args?args->data:NULL, ptrue,
-	   pr_list_foreach, (args?args->next:NULL), pr_param, pfalse);
+void pr_params(File* s, GSList* args, ParamOptions* opt){
+	ParamOptions o=*opt;
+	if(args)
+		if(o & PARAMS_FIRST){
+			pr_param(s, args->data, &o);
+			o &= ~PARAMS_FIRST;
+			pr_list_foreach(s, args->next, pr_param, &o);
+		}else
+			pr_list_foreach(s, args, pr_param, &o);
+	else
+		if(o & PARAMS_FIRST)
+			pr(s, "void");
 }
 
 void pr_primtype(File* s, PrimType* t){
@@ -23,8 +31,8 @@ void pr_primtype(File* s, PrimType* t){
 }
 
 void pr_type(File* s, Type* t){
-	gint i=t->indirection;
-	if(t->prim){
+	if(t && t->prim){
+		gint i=t->indirection;
 		pr(s, "%?s%1",
 		   t->is_const, "const ",
 		   pr_primtype, t->prim);
@@ -59,28 +67,40 @@ void pr_internal_varname(File* s, PrimType* t, Id name){
 
 void pr_prototype(File* s, PrimType* type, Id funcname,
 		  GSList* params, Type* rettype, gboolean internal){
-	pr(s, "%1 %2 (%1)",
+	ParamOptions o=PARAMS_NAMES | PARAMS_TYPES | PARAMS_FIRST;
+	pr(s, "%1 %2 (%2)",
 	   pr_type, rettype,
 	   (internal?pr_internal_varname:pr_varname), type, funcname,
-	   pr_params, params);
+	   pr_params, params, &o);
+}
+
+void pr_gtype(File* s, Type* t){
+	if((t->indirection==0 && t->prim->kind==TYPE_TRANSPARENT)
+	   || (t->indirection==1 && t->prim->kind==TYPE_CLASS))
+		pr_macro_name(s, t->prim, "TYPE", NULL);
+	else if(t->indirection)
+		pr(s, "GTK_TYPE_POINTER");
+	else
+		g_error("Illegal non-pointer type %s%s\n",
+			t->prim->name.module,
+			t->prim->name.type);
 }
 
 void pr_type_guard(File* s, Param* p){
 	Type* t=&p->type;
 	if(t->indirection==1 && t->prim->kind == TYPE_CLASS)
 		/* A direct object pointer is checked for its type */
-		pr(s, "\tg_assert(%?2%3(%s));",
+		pr(s, "\tg_assert(%?2%3(%s));\n",
 		   !t->notnull, pr, "!%s || ", p->name,
-		   pr_macro_name, t->prim->name, "IS", NULL,
+		   pr_macro_name, t->prim, "IS", NULL,
 		   p->name);
 	else if(t->indirection && t->notnull)
 		/* Other pointers are just possibly checked for nullness */
-		pr(s, "\tg_assert(%s);",
+		pr(s, "\tg_assert(%s);\n",
 		   p->name);
 	/* todo (low priority): range checks for enums */
 }
 	
-
 void output_func(PrimType* type, Id funcname, GSList* params, Type* rettype,
 		 File* hdr, ObjectDef* self, gboolean self_const,
 		 gboolean internal, const gchar* body, ...){

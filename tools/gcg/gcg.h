@@ -80,6 +80,7 @@ extern DefClass object_class;
 struct _ObjectDef {
 	Def def;
 	PrimType* parent;
+	Type self_type[2]; /* both non-const and const */
 	GSList* members; 
 };
 

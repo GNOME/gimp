@@ -294,6 +294,10 @@ flagsdef: T_FLAGS primtype T_OPEN_B idlist T_CLOSE_B docstring T_END {
 classdef: T_CLASS object_type T_INHERITANCE object_type docstring T_OPEN_B {
 	current_class=g_new(ObjectDef, 1);
 } classbody T_CLOSE_B T_END {
+	Type t={FALSE, 1, TRUE, $2};
+	current_class->self_type[0]=t;
+	t.is_const=TRUE;
+	current_class->self_type[1]=t;
 	current_class->parent = $4;
 	current_class->members = $8;
 	$$=DEF(current_class);
@@ -321,7 +325,6 @@ data_member_def: dataprot kinddef type T_IDENT emitdef docstring T_END {
 method_def: methprot kinddef typeorvoid T_IDENT T_OPEN_P {
 	current_method = g_new(Method, 1);
 } paramlist T_CLOSE_P const_def emitdef docstring T_END {
-	current_method = NULL;
 	current_method->prot = $1;
 	current_method->ret_type = $3;
 	current_method->self_const = $9;
@@ -344,6 +347,7 @@ const_def: T_CONST {
 classbody: /* empty */ {
 	$$ = NULL;
 } | classbody member_def{
+	$2->my_class=current_class;
 	$$ = g_slist_prepend($1, $2);
 };
 

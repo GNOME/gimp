@@ -36,7 +36,16 @@ void pr_up(File* s, const gchar* str);
 extern const gconstpointer no_data;
 
 void pr_list_foreach(File* s, GSList* l, void (*f)(), gpointer arg);
-void pr_params(File* s, GSList* args);
+
+
+typedef enum{
+	PARAMS_FIRST = 1<<0,
+	PARAMS_NAMES = 1<<1,
+	PARAMS_TYPES = 1<<2,
+	PARAMS_DOCS = 1<<3
+} ParamOptions;
+
+void pr_params(File* s, GSList* args, ParamOptions* opt);
 void pr_primtype(File* s, PrimType* t);
 void pr_type(File* s, Type* t);
 void pr_self_type(File* s, ObjectDef* c, PBool const_self);
