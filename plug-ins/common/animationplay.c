@@ -1,5 +1,5 @@
 /*
- * Animation Playback plug-in version 0.98.2
+ * Animation Playback plug-in version 0.98.4
  *
  * Adam D. Moss : 1997-98 : adam@gimp.org : adam@foxbox.org
  *
@@ -10,6 +10,9 @@
 
 /*
  * REVISION HISTORY:
+ *
+ * 98.07.20 : version 0.98.4
+ *            User interface improvements.
  *
  * 98.07.19 : version 0.98.2
  *            Another speedup for some kinds of shaped animations.
@@ -191,6 +194,7 @@ int        timer = 0;
 GImageType imagetype;
 guchar*    palette;
 gint       ncolours;
+GtkWidget *psbutton;
 
 
 
@@ -597,6 +601,7 @@ build_dialog(GImageType basetype,
 
   gchar* windowname;
   CursorOffset* icon_pos;
+  GtkAdjustment *adj;
 
   GtkWidget* dlg;
   GtkWidget* button;
@@ -678,22 +683,16 @@ build_dialog(GImageType basetype,
 	gtk_container_add (GTK_CONTAINER (hbox), vbox);
 	
 	{
-	  progress = GTK_PROGRESS_BAR (gtk_progress_bar_new ());
-	  gtk_widget_set_usize (GTK_WIDGET (progress), 150, 15);
-	  gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (progress),
-			      TRUE, TRUE, 0);
-	  gtk_widget_show (GTK_WIDGET (progress));
-
 	  hbox2 = gtk_hbox_new (FALSE, 0);
 	  gtk_container_border_width (GTK_CONTAINER (hbox2), 0);
 	  gtk_box_pack_start (GTK_BOX (vbox), hbox2, TRUE, TRUE, 0);
 	  
 	  {
-	    button = gtk_button_new_with_label ("Play/Stop");
-	    gtk_signal_connect (GTK_OBJECT (button), "clicked",
+	    psbutton = gtk_toggle_button_new_with_label ("Play/Stop");
+	    gtk_signal_connect (GTK_OBJECT (psbutton), "toggled",
 				(GtkSignalFunc) playstop_callback, NULL);
-	    gtk_box_pack_start (GTK_BOX (hbox2), button, TRUE, TRUE, 0);
-	    gtk_widget_show (button);
+	    gtk_box_pack_start (GTK_BOX (hbox2), psbutton, TRUE, TRUE, 0);
+	    gtk_widget_show (psbutton);
 	    
 	    button = gtk_button_new_with_label ("Rewind");
 	    gtk_signal_connect (GTK_OBJECT (button), "clicked",
@@ -748,6 +747,21 @@ build_dialog(GImageType basetype,
 	    gtk_widget_show(frame2);
 	  }
 	  gtk_widget_show(hbox2);
+
+
+	  adj = (GtkAdjustment *) gtk_adjustment_new (1, 1, total_frames,
+						      1, 1, 1);
+	  progress = GTK_PROGRESS_BAR (gtk_progress_bar_new_with_adjustment
+				       (adj));
+	  {
+	    gtk_progress_set_format_string (GTK_PROGRESS (progress),
+					    "Frame %v of %u");
+	    gtk_progress_set_show_text (GTK_PROGRESS (progress), TRUE);
+	    /*	  gtk_widget_set_usize (GTK_WIDGET (progress), 150, 15);*/
+	    gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (progress),
+				TRUE, TRUE, 0);
+	  }
+	  gtk_widget_show (GTK_WIDGET (progress));
 	}
 	gtk_widget_show(vbox);
 	
@@ -1725,16 +1739,11 @@ advance_frame_callback (GtkWidget *widget,
 {
   remove_timer();
 
-#ifdef RAPH_IS_HOME
   timer = gtk_timeout_add (get_frame_duration((frame_number+1)%total_frames),
 			   (GtkFunction) advance_frame_callback, NULL);
-#else
-  timer = gtk_timeout_add (get_frame_duration(frame_number),
-			   (GtkFunction) advance_frame_callback, NULL);
-#endif
 
-  show_frame();
   do_step();
+  show_frame();
 
   return FALSE;
 }
@@ -1760,8 +1769,13 @@ static void
 rewind_callback (GtkWidget *widget,
 		 gpointer   data)
 {
-  playing = FALSE;
-  remove_timer();
+  if (playing)
+    {
+      playstop_callback(NULL, NULL); /* GTK weirdness workaround */
+      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (psbutton), FALSE);
+      playing = FALSE;
+      remove_timer();
+    }
 
   frame_number = 0;
   render_frame(frame_number);
@@ -1772,8 +1786,13 @@ static void
 step_callback (GtkWidget *widget,
 	       gpointer   data)
 {
-  playing = FALSE;
-  remove_timer();
+  if (playing)
+    {
+      playstop_callback(NULL, NULL); /* GTK weirdness workaround */
+      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (psbutton), FALSE);
+      playing = FALSE;
+      remove_timer();
+    }
 
   do_step();
   show_frame();
