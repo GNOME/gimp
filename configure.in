@@ -4,7 +4,7 @@ AC_INIT(gimprc.in)
 dnl Initialize automake stuff
 GIMP_MAJOR_VERSION=1
 GIMP_MINOR_VERSION=1
-GIMP_MICRO_VERSION=11
+GIMP_MICRO_VERSION=12
 GIMP_INTERFACE_AGE=0
 GIMP_BINARY_AGE=0
 GIMP_VERSION=$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION.$GIMP_MICRO_VERSION
@@ -512,6 +512,12 @@ dnl This is for the help browser
 AC_PATH_PROG(GNOME_CONFIG,gnome-config,no)
 if test "$GNOME_CONFIG" = "no"; then
   HELPBROWSER=
+  dnl Test for standalone GtkXMHTML widget
+  AC_CHECK_LIB(gtkxmhtml, gtk_xmhtml_new,
+    GTKXMHTML_CFLAGS=$GLIB_CFLAGS
+    GTKXMHTML_LIBS="$GLIB_LIBS -lgtkxmhtml"
+    HELPBROWSER=helpbrowser,
+    AC_MSG_WARN(*** Help browser plug-in will not be built (GtkXMHTML library not found) ***))
 else
   GTKXMHTML_CFLAGS=`$GNOME_CONFIG --cflags gnomeui`
   GTKXMHTML_LIBS=`$GNOME_CONFIG --libs gtkxmhtml`

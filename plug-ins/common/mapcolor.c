@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * mapcolor plugin
  * Copyright (C) 1998 Peter Kirchgessner
- * (email: pkirchg@aol.com, WWW: http://members.aol.com/pkirchg)
+ * email: peter@kirchgessner.net, WWW: http://www.kirchgessner.net)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,10 +22,12 @@
 
 /* Event history:
  * V 1.00, PK, 26-Oct-98: Creation.
+ * V 1.01, PK, 21-Nov-99: Fix problem with working on layered images
+ *                        Internationalization
  */
-#define VERSIO                                     1.00
-static char dversio[] =                          "v1.00  26-Oct-98";
-static char ident[] = "@(#) GIMP mapcolor plug-in v1.00  26-Oct-98";
+#define VERSIO                                     1.01
+static char dversio[] =                          "v1.01  21-Nov-99";
+static char ident[] = "@(#) GIMP mapcolor plug-in v1.01  21-Nov-99";
 
 #include "config.h"
 #include <stdio.h>
@@ -131,6 +133,8 @@ query (void)
   };
   static int nmap_args = sizeof (map_args) / sizeof (map_args[0]);
 
+  INIT_I18N ();
+
   gimp_install_procedure ("plug_in_color_adjust",
                           _("Adjust current foreground/background color in the\
  drawable to black/white"),
@@ -176,12 +180,12 @@ run (char    *name,
   guchar *c = (guchar *)ident;
   int j;
 
+  INIT_I18N_UI();
+
   l_run_mode = run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals = values;
-
-  INIT_I18N_UI();
 
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = status;
@@ -268,7 +272,7 @@ run (char    *name,
       }
 
       if (run_mode != RUN_NONINTERACTIVE)
-        gimp_progress_init ("Mapping colors");
+        gimp_progress_init (_("Mapping colors"));
 
       color_mapping (drawable);
 
@@ -319,7 +323,7 @@ dialog ()
   gtk_widget_set_default_colormap(gtk_preview_get_cmap());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Map colors");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Map colors"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
                       (GtkSignalFunc) mapcolor_close_callback,
@@ -478,7 +482,7 @@ color_mapping (GDrawable *drawable)
 
 {
   int processed, total;
-  gint x, y, xmin, xmax, ymin, ymax;
+  gint x, y, xmin, xmax, ymin, ymax, bpp = (gint)drawable->bpp;
   unsigned char *src, *dest;
   GPixelRgn src_rgn, dest_rgn;
   gpointer pr;
@@ -521,8 +525,9 @@ color_mapping (GDrawable *drawable)
         dest[0] = redmap[src[0]];
         dest[1] = greenmap[src[1]];
         dest[2] = bluemap[src[2]];
-        src += drawable->bpp;
-        dest += drawable->bpp;
+	if (bpp > 3) dest[3] = src[3];
+	src += bpp;
+	dest += bpp;
         processed++;
       }
     }

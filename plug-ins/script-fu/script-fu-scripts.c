@@ -1088,14 +1088,11 @@ script_fu_interface (SFScript *script)
 
   if (!gtk_initted)
     {
-      argc = 1;
-      argv = g_new (gchar *, 1);
-      argv[0] = g_strdup ("script-fu");
+      INIT_I18N_UI();
 
       gtk_init (&argc, &argv);
+      g_set_prgname ("script-fu");
       gtk_rc_parse (gimp_gtkrc ());
-
-      INIT_I18N_UI();
       
       gdk_set_use_xshm (gimp_use_xshm ());
   

@@ -236,9 +236,15 @@ gimp_preview_cache_get(GSList **plist,
       pc = g_new0(PreviewCache,1);
       pc->preview = temp_buf_new(width,height,pn.pc->preview->bytes,0,0,NULL);
       /* preview from nearest bigger one */
-      
-      x_ratio = (gdouble)pwidth/(gdouble)width;
-      y_ratio = (gdouble)pheight/(gdouble)height;
+
+      if (width)
+        x_ratio = (gdouble)pwidth/(gdouble)width;
+      else
+        x_ratio = 0.0;
+      if (height)
+        y_ratio = (gdouble)pheight/(gdouble)height;
+      else
+        y_ratio = 0.0;
       src_data = temp_buf_data(pn.pc->preview);
       dest_data = temp_buf_data(pc->preview);
 

@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * SUN raster reading and writing code Copyright (C) 1996 Peter Kirchgessner
- * (email: pkirchg@aol.com, WWW: http://members.aol.com/pkirchg)
+ * (email: peter@kirchgessner.net, WWW: http://www.kirchgessner.net)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 /* This program was written using pages 625-629 of the book
  * "Encyclopedia of Graphics File Formats", Murray/van Ryper,
  * O'Reilly & Associates Inc.
- * Bug reports or suggestions should be e-mailed to Pkirchg@aol.com
+ * Bug reports or suggestions should be e-mailed to peter@kirchgessner.net
  */
 
 /* Event history:
@@ -33,8 +33,9 @@
  * V 1.93, PK, 05-Oct-97: Parse rc file
  * V 1.94, PK, 12-Oct-97: No progress bars for non-interactive mode
  * V 1.95, nn, 20-Dec-97: Initialize some variable
+ * V 1.96, PK, 21-Nov-99: Internationalization
  */
-static char ident[] = "@(#) GIMP SunRaster file-plugin v1.95  20-Dec-97";
+static char ident[] = "@(#) GIMP SunRaster file-plugin v1.96  21-Nov-99";
 
 #include "config.h"
 
@@ -48,6 +49,7 @@ static char ident[] = "@(#) GIMP SunRaster file-plugin v1.95  20-Dec-97";
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
+#include "libgimp/stdplugins-intl.h"
 
 typedef int WRITE_FUN(void*,size_t,size_t,FILE*);
 
@@ -214,9 +216,11 @@ query (void)
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("file_sunras_load",
-                          "load file of the SunRaster file format",
-                          "load file of the SunRaster file format",
+                          _("load file of the SunRaster file format"),
+                          _("load file of the SunRaster file format"),
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
                           "1996",
@@ -227,9 +231,9 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_sunras_save",
-                          "save file in the SunRaster file format",
-                          "SUNRAS saving handles all image types except \
-those with alpha channels.",
+                          _("save file in the SunRaster file format"),
+                          _("SUNRAS saving handles all image types except \
+those with alpha channels."),
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
                           "1996",
@@ -274,6 +278,8 @@ run (char    *name,
 
   if (strcmp (name, "file_sunras_load") == 0)
     {
+      INIT_I18N_UI();
+
       image_ID = load_image (param[1].data.d_string);
 
       *nreturn_vals = 2;
@@ -284,6 +290,8 @@ run (char    *name,
     }
   else if (strcmp (name, "file_sunras_save") == 0)
     {
+      INIT_I18N_UI();
+
       image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
     
@@ -371,7 +379,7 @@ load_image (char *filename)
   ifp = fopen (filename, "rb");
   if (!ifp)
   {
-    show_message ("can't open file for reading");
+    show_message (_("cant open file for reading"));
     return (-1);
   }
 
@@ -380,14 +388,14 @@ load_image (char *filename)
   read_sun_header (ifp, &sunhdr);
   if (sunhdr.l_ras_magic != RAS_MAGIC)
   {
-    show_message("can't open file as SUN-raster-file");
+    show_message(_("cant open file as SUN-raster-file"));
     fclose (ifp);
     return (-1);
   }
 
   if ((sunhdr.l_ras_type < 0) || (sunhdr.l_ras_type > 5))
   {
-    show_message ("the type of this SUN-rasterfile\nis not supported");
+    show_message (_("the type of this SUN-rasterfile is not supported"));
     fclose (ifp);
     return (-1);
   }
@@ -422,15 +430,15 @@ load_image (char *filename)
   }
   else if (sunhdr.l_ras_maplength > 0)
   {
-    show_message ("type of colourmap not supported");
+    show_message (_("type of colourmap not supported"));
     fseek (ifp, (sizeof (L_SUNFILEHEADER)/sizeof (L_CARD32))
                *4 + sunhdr.l_ras_maplength, SEEK_SET);
   }
 
   if (l_run_mode != RUN_NONINTERACTIVE)
   {
-    temp = g_malloc (strlen (filename) + 11);
-    sprintf (temp, "Loading %s:", filename);
+    temp = g_malloc (strlen (filename) + 64);
+    sprintf (temp, _("Loading %s:"), filename);
     gimp_progress_init (temp);
     g_free (temp);
   }
@@ -464,7 +472,7 @@ load_image (char *filename)
 
   if (image_ID == -1)
   {
-    show_message ("this image depth is not supported");
+    show_message (_("this image depth is not supported"));
     return (-1);
   }
 
@@ -488,7 +496,7 @@ save_image (char *filename,
   /*  Make sure we're not saving an image with an alpha channel  */
   if (gimp_drawable_has_alpha (drawable_ID))
   {
-    show_message ("SUNRAS save cannot handle images with alpha channels");
+    show_message (_("SUNRAS save cannot handle images with alpha channels"));
     return FALSE;
   }
 
@@ -499,7 +507,7 @@ save_image (char *filename,
     case RGB_IMAGE:
       break;
     default:
-      show_message ("cannot operate on unknown image types");
+      show_message (_("cant operate on unknown image types"));
       return (FALSE);
       break;
   }
@@ -508,14 +516,14 @@ save_image (char *filename,
   ofp = fopen (filename, "wb");
   if (!ofp)
   {
-    show_message ("cant open file for writing");
+    show_message (_("cant open file for writing"));
     return (FALSE);
   }
 
   if (l_run_mode != RUN_NONINTERACTIVE)
   {
-    temp = g_malloc (strlen (filename) + 11);
-    sprintf (temp, "Saving %s:", filename);
+    temp = g_malloc (strlen (filename) + 64);
+    sprintf (temp, _("Saving %s:"), filename);
     gimp_progress_init (temp);
     g_free (temp);
   }
@@ -921,7 +929,7 @@ create_new_image (char       *filename,
   image_ID = gimp_image_new (width, height, type);
   gimp_image_set_filename (image_ID, filename);
   
-  *layer_ID = gimp_layer_new (image_ID, "Background", width, height,
+  *layer_ID = gimp_layer_new (image_ID, _("Background"), width, height,
                             gdtype, 100, NORMAL_MODE);
   gimp_image_add_layer (image_ID, *layer_ID, 0);
   
@@ -1029,7 +1037,7 @@ load_sun_d1 (char            *filename,
   g_free (data);
   
   if (err)
-    show_message ("EOF encountered on reading");
+    show_message (_("EOF encountered on reading"));
   
   gimp_drawable_flush (drawable);
   
@@ -1121,7 +1129,7 @@ load_sun_d8 (char            *filename,
   g_free (data);
   
   if (err)
-    show_message ("EOF encountered on reading");
+    show_message (_("EOF encountered on reading"));
   
   gimp_drawable_flush (drawable);
   
@@ -1203,7 +1211,7 @@ load_sun_d24 (char             *filename,
   g_free (data);
   
   if (err)
-    show_message ("EOF encountered on reading");
+    show_message (_("EOF encountered on reading"));
   
   gimp_drawable_flush (drawable);
   
@@ -1299,7 +1307,7 @@ load_sun_d32 (char            *filename,
   g_free (data);
   
   if (err)
-    show_message ("EOF encountered on reading");
+    show_message (_("EOF encountered on reading"));
   
   gimp_drawable_flush (drawable);
   
@@ -1455,7 +1463,7 @@ save_index (FILE    *ofp,
 
   if (ferror (ofp))
     {
-      show_message ("write error occured");
+      show_message (_("write error occured"));
       return (FALSE);
     }
   return (TRUE);
@@ -1564,7 +1572,7 @@ save_rgb (FILE   *ofp,
   
   if (ferror (ofp))
     {
-      show_message ("write error occured");
+      show_message (_("write error occured"));
       return (FALSE);
     }
   return (TRUE);
@@ -1603,14 +1611,14 @@ save_dialog (void)
   gint use_std = (psvals.rle == FALSE);
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Save as SUNRAS");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Save as SUNRAS"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
                       (GtkSignalFunc) save_close_callback,
                       NULL);
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) save_ok_callback,
@@ -1620,7 +1628,7 @@ save_dialog (void)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
                              (GtkSignalFunc) gtk_widget_destroy,
@@ -1630,7 +1638,7 @@ save_dialog (void)
   gtk_widget_show (button);
 
   /*  file save type  */
-  frame = gtk_frame_new ("Data Formatting");
+  frame = gtk_frame_new (_("Data Formatting"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, TRUE, 0);
@@ -1639,7 +1647,7 @@ save_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
   group = NULL;
-  toggle = gtk_radio_button_new_with_label (group, "RLE");
+  toggle = gtk_radio_button_new_with_label (group, _("RunLengthEncoded"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -1648,7 +1656,7 @@ save_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_rle);
   gtk_widget_show (toggle);
 
-  toggle = gtk_radio_button_new_with_label (group, "Standard");
+  toggle = gtk_radio_button_new_with_label (group, _("Standard"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -1715,7 +1723,7 @@ show_message (char *message)
   if (l_run_mode == RUN_INTERACTIVE)
     gimp_message (message);
   else
-    fprintf (stderr, "sunras: %s\n", message);
+    fprintf (stderr, _("sunras: %s\n"), message);
 }
 
 static int 

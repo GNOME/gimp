@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * FITS file plugin
  * reading and writing code Copyright (C) 1997 Peter Kirchgessner
- * e-mail: pkirchg@aol.com, WWW: http://members.aol.com/pkirchg
+ * e-mail: peter@kirchgessner.net, WWW: http://www.kirchgessner.net
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,8 +27,11 @@
  * V 1.03, PK, 05-Oct-97: Parse rc-file
  * V 1.04, PK, 12-Oct-97: No progress bars for non-interactive mode
  * V 1.05, nn, 20-Dec-97: Initialize image_ID in run()
+ * V 1.06, PK, 21-Nov-99: Internationalization
+ *                        Fix bug with gimp_export_image()
+ *                        (moved it from load to save)
  */
-static char ident[] = "@(#) GIMP FITS file-plugin v1.05  20-Dec-97";
+static char ident[] = "@(#) GIMP FITS file-plugin v1.06  21-Nov-99";
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -36,6 +39,7 @@ static char ident[] = "@(#) GIMP FITS file-plugin v1.05  20-Dec-97";
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
+#include "libgimp/stdplugins-intl.h"
 #include "fitsrw.h"
 
 /* Load info */
@@ -174,12 +178,14 @@ query (void)
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("file_fits_load",
-                          "load file of the FITS file format",
-                          "load file of the FITS file format (Flexible Image\
- Transport System)",
+                          _("load file of the FITS file format"),
+                          _("load file of the FITS file format (Flexible Image\
+ Transport System)"),
                           "Peter Kirchgessner",
-                          "Peter Kirchgessner (pkirchg@aol.com)",
+                          "Peter Kirchgessner (peter@kirchgessner.net)",
                           "1997",
                           "<Load>/FITS",
                           NULL,
@@ -188,11 +194,11 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_fits_save",
-                          "save file in the FITS file format",
-                          "FITS saving handles all image types except \
-those with alpha channels.",
+                          _("save file in the FITS file format"),
+                          _("FITS saving handles all image types except \
+those with alpha channels."),
                           "Peter Kirchgessner",
-                          "Peter Kirchgessner (pkirchg@aol.com)",
+                          "Peter Kirchgessner (peter@kirchgessner.net)",
                           "1997",
                           "<Save>/FITS",
                           "RGB, GRAY, INDEXED",
@@ -220,7 +226,6 @@ run (char    *name,
   GStatusType status = STATUS_SUCCESS;
   gint32 image_ID;
   gint32 drawable_ID;
-  GimpExportReturnType export = EXPORT_CANCEL;
 
   /* initialize */
 
@@ -235,28 +240,11 @@ run (char    *name,
 
   if (strcmp (name, "file_fits_load") == 0)
     {
+      INIT_I18N_UI();
+
       *nreturn_vals = 2;
       values[1].type = PARAM_IMAGE;
       values[1].data.d_image = -1;
-
-    /*  eventually export the image */ 
-    switch (run_mode)
-      {
-      case RUN_INTERACTIVE:
-      case RUN_WITH_LAST_VALS:
-	init_gtk ();
-	export = gimp_export_image (&image_ID, &drawable_ID, "FITS", 
-				    (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED));
-	if (export == EXPORT_CANCEL)
-	  {
-	    *nreturn_vals = 1;
-	    values[0].data.d_status = STATUS_EXECUTION_ERROR;
-	    return;
-	  }
-	break;
-      default:
-	break;
-      }
 
       switch (run_mode)
       {
@@ -301,9 +289,32 @@ run (char    *name,
     }
   else if (strcmp (name, "file_fits_save") == 0)
     {
+      GimpExportReturnType export = EXPORT_CANCEL;
+
+      INIT_I18N_UI();
+
       image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
       *nreturn_vals = 1;
+
+    /*  eventually export the image */
+    switch (run_mode)
+      {
+      case RUN_INTERACTIVE:
+      case RUN_WITH_LAST_VALS:
+	init_gtk ();
+	export = gimp_export_image (&image_ID, &drawable_ID, "FITS",
+                  (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED));
+	if (export == EXPORT_CANCEL)
+	  {
+	    *nreturn_vals = 1;
+	    values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	    return;
+	  }
+	break;
+      default:
+	break;
+      }
 
       switch (run_mode)
         {
@@ -348,7 +359,7 @@ load_image (char *filename)
  fp = fopen (filename, "rb");
  if (!fp)
  {
-   show_message ("can't open file for reading");
+   show_message (_("can't open file for reading"));
    return (-1);
  }
  fclose (fp);
@@ -356,12 +367,12 @@ load_image (char *filename)
  ifp = fits_open (filename, "r");
  if (ifp == NULL)
  {
-   show_message ("error during open of FITS file");
+   show_message (_("error during open of FITS file"));
    return (-1);
  }
  if (ifp->n_pic <= 0)
  {
-   show_message ("FITS file keeps no displayable images");
+   show_message (_("FITS file keeps no displayable images"));
    fits_close (ifp);
    return (-1);
  }
@@ -369,7 +380,7 @@ load_image (char *filename)
  image_list = (gint32 *)g_malloc (10 * sizeof (gint32));
  if (image_list == NULL)
  {
-   show_message ("out of memory");
+   show_message (_("out of memory"));
    return (-1);
  }
  n_images = 0;
@@ -446,7 +457,7 @@ save_image (char *filename,
   /*  Make sure we're not saving an image with an alpha channel  */
   if (gimp_drawable_has_alpha (drawable_ID))
   {
-    show_message ("FITS save cannot handle images with alpha channels");
+    show_message (_("FITS save cannot handle images with alpha channels"));
     return FALSE;
   }
 
@@ -457,7 +468,7 @@ save_image (char *filename,
     case RGB_IMAGE:     case RGBA_IMAGE:
       break;
     default:
-      show_message ("cannot operate on unknown image types");
+      show_message (_("cannot operate on unknown image types"));
       return (FALSE);
       break;
   }
@@ -466,14 +477,14 @@ save_image (char *filename,
   ofp = fits_open (filename, "w");
   if (!ofp)
   {
-    show_message ("cant open file for writing");
+    show_message (_("cant open file for writing"));
     return (FALSE);
   }
 
   if (l_run_mode != RUN_NONINTERACTIVE)
   {
-    temp = g_malloc (strlen (filename) + 11);
-    sprintf (temp, "Saving %s:", filename);
+    temp = g_malloc (strlen (filename) + 64);
+    sprintf (temp, _("Saving %s:"), filename);
     gimp_progress_init (temp);
     g_free (temp);
   }
@@ -514,7 +525,7 @@ create_new_image (char *filename,
  char *tmp;
 
  image_ID = gimp_image_new (width, height, itype);
- if ((tmp = g_malloc (strlen (filename) + 32)) != NULL)
+ if ((tmp = g_malloc (strlen (filename) + 64)) != NULL)
  {
    sprintf (tmp, "%s-img%ld", filename, (long)pagenum);
    gimp_image_set_filename (image_ID, tmp);
@@ -523,7 +534,7 @@ create_new_image (char *filename,
  else
    gimp_image_set_filename (image_ID, filename);
 
- *layer_ID = gimp_layer_new (image_ID, "Background", width, height,
+ *layer_ID = gimp_layer_new (image_ID, _("Background"), width, height,
                              dtype, 100, NORMAL_MODE);
  gimp_image_add_layer (image_ID, *layer_ID, 0);
 
@@ -688,7 +699,7 @@ load_fits (char *filename,
  g_free (data);
 
  if (err)
-   show_message ("EOF encountered on reading");
+   show_message (_("EOF encountered on reading"));
 
  gimp_drawable_flush (drawable);
 
@@ -743,11 +754,11 @@ create_fits_header (FITS_FILE *ofp,
   "HISTORY THIS FITS FILE WAS GENERATED BY GIMP USING FITSRW");
  fits_add_card (hdulist, "");
  fits_add_card (hdulist,
-  "COMMENT FitsRW is (C) Peter Kirchgessner (pkirchg@aol.com), but available");
+  "COMMENT FitsRW is (C) Peter Kirchgessner (peter@kirchgessner.net), but available");
  fits_add_card (hdulist,
   "COMMENT under the GNU general public licence."),
  fits_add_card (hdulist,
-  "COMMENT For sources see ftp://members.aol.com/pkirchg/pub/gimp");
+  "COMMENT For sources see http://www.kirchgessner.net");
  fits_add_card (hdulist, "");
  fits_add_card (hdulist, ctype3_card[bpp*3]);
  if (ctype3_card[bpp*3+1] != NULL)
@@ -839,7 +850,7 @@ save_direct  (FITS_FILE *ofp,
 
   if (ferror (ofp->fp))
   {
-    show_message ("write error occured");
+    show_message (_("write error occured"));
     return (FALSE);
   }
   return (TRUE);
@@ -960,7 +971,7 @@ save_index (FITS_FILE *ofp,
 
   if (ferror (ofp->fp))
   {
-    show_message ("write error occured");
+    show_message (_("write error occured"));
     return (FALSE);
   }
   return (TRUE);
@@ -968,7 +979,7 @@ save_index (FITS_FILE *ofp,
 }
 
 
-static void 
+static void
 init_gtk ()
 {
   gchar **argv;
@@ -977,7 +988,7 @@ init_gtk ()
   argc = 1;
   argv = g_new (gchar *, 1);
   argv[0] = g_strdup ("fits");
-  
+
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 }
@@ -998,9 +1009,9 @@ load_dialog (void)
   gint k, j;
   char **textptr;
   static char *toggle_text[] = {
-    "BLANK/NaN pixel replacement", "Black", "White",
-    "Pixel value scaling", "Automatic", "by DATAMIN/DATAMAX",
-    "Image composing", "None", "NAXIS=3, NAXIS3=2,...,4"
+    N_("BLANK/NaN pixel replacement"), N_("Black"), N_("White"),
+    N_("Pixel value scaling"), N_("Automatic"), N_("by DATAMIN/DATAMAX"),
+    N_("Image composing"), N_("None"), "NAXIS=3, NAXIS3=2,...,4"
   };
 
   init_gtk ();
@@ -1015,14 +1026,14 @@ load_dialog (void)
   vals->toggle_val[5] = !(vals->toggle_val[4]);
 
   vals->dialog = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (vals->dialog), "Load FITS");
+  gtk_window_set_title (GTK_WINDOW (vals->dialog), _("Load FITS File"));
   gtk_window_position (GTK_WINDOW (vals->dialog), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (vals->dialog), "destroy",
                       (GtkSignalFunc) load_close_callback,
                       NULL);
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) load_ok_callback,
@@ -1032,7 +1043,7 @@ load_dialog (void)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
                              (GtkSignalFunc) gtk_widget_destroy,
@@ -1044,7 +1055,8 @@ load_dialog (void)
   textptr = toggle_text;
   for (k = 0; k < LOAD_FITS_TOGGLES; k++)
   {
-    frame = gtk_frame_new (*(textptr++));
+    frame = gtk_frame_new (gettext (*textptr));
+    textptr++;
     gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
     gtk_container_border_width (GTK_CONTAINER (frame), 10);
     gtk_box_pack_start (GTK_BOX (GTK_DIALOG (vals->dialog)->vbox),
@@ -1056,7 +1068,8 @@ load_dialog (void)
     group = NULL;
     for (j = 0; j < 2; j++)
     {
-      toggle = gtk_radio_button_new_with_label (group, *(textptr++));
+      toggle = gtk_radio_button_new_with_label (group, gettext (*textptr));
+      textptr++;
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (toggle), "toggled",

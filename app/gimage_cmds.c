@@ -61,6 +61,7 @@ static ProcRecord image_active_drawable_proc;
 static ProcRecord image_base_type_proc;
 static ProcRecord image_get_cmap_proc;
 static ProcRecord image_set_cmap_proc;
+static ProcRecord image_undo_is_enabled_proc;
 static ProcRecord image_undo_enable_proc;
 static ProcRecord image_undo_disable_proc;
 static ProcRecord image_undo_freeze_proc;
@@ -121,6 +122,7 @@ register_gimage_procs (void)
   procedural_db_register (&image_base_type_proc);
   procedural_db_register (&image_get_cmap_proc);
   procedural_db_register (&image_set_cmap_proc);
+  procedural_db_register (&image_undo_is_enabled_proc);
   procedural_db_register (&image_undo_enable_proc);
   procedural_db_register (&image_undo_disable_proc);
   procedural_db_register (&image_undo_freeze_proc);
@@ -1908,6 +1910,63 @@ static ProcRecord image_set_cmap_proc =
   0,
   NULL,
   { { image_set_cmap_invoker } }
+};
+
+static Argument *
+image_undo_is_enabled_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+  gboolean enabled;
+
+  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  if (gimage == NULL)
+    success = FALSE;
+
+  if (success)
+    enabled = gimp_image_undo_is_enabled (gimage);
+
+  return_args = procedural_db_return_args (&image_undo_is_enabled_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = enabled;
+
+  return return_args;
+}
+
+static ProcArg image_undo_is_enabled_inargs[] =
+{
+  {
+    PDB_IMAGE,
+    "image",
+    "The image"
+  }
+};
+
+static ProcArg image_undo_is_enabled_outargs[] =
+{
+  {
+    PDB_INT32,
+    "enabled",
+    "True if undo is enabled for this image"
+  }
+};
+
+static ProcRecord image_undo_is_enabled_proc =
+{
+  "gimp_image_undo_is_enabled",
+  "Check if the image's undo stack is enabled.",
+  "This procedure checks if the image's undo stack is currently enabled or disabled. This is useful when several plugins or scripts call each other and want to check if their caller has already used 'gimp_image_undo_disable' or 'gimp_image_undo_freeze'.",
+  "Raphael Quinet",
+  "Raphael Quinet",
+  "1999",
+  PDB_INTERNAL,
+  1,
+  image_undo_is_enabled_inargs,
+  1,
+  image_undo_is_enabled_outargs,
+  { { image_undo_is_enabled_invoker } }
 };
 
 static Argument *

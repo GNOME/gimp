@@ -1,3 +1,19 @@
+Wed Nov 24 15:26:21 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* configure.in: version number bump; add check for standalone
+	gtkxmhtml from Sesse
+
+	* app/gimppreviewcache.c: applied gimp-yasuhiro-19991122-1, prevents
+	div by zero error
+
+	* plug-ins/script-fu/script-fu-scripts.c: INIT_I18N_UI before
+	gtk_init, reported by yasuhiro
+
+	* plug-ins/common/mapcolor.c
+	* plug-ins/common/sunras.c
+	* plug-ins/fits/fits.c: applied gimpkirchgessner-991121-[0-2],
+	i18n and sundry bug fixes
+
 1999-11-24  Tuomas Kuosmanen  <tigert@gimp.org>
 
 	* plug-ins/perl/examples/perlotine: Fixed some changed stuff, 
