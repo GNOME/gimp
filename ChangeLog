@@ -1,3 +1,9 @@
+2001-11-19  Sven Neumann  <sven@gimp.org>
+
+	* app/paint_funcs.c (paint_funcs_setup): applied a patch from Daniel
+	Egger <degger@fhm.edu> that reduces our memory footprint by about
+	1/4 MB.
+
 2001-11-19  Stanislav Brabec  <utx@penguin.cz>
 
 	* tips/gimp_tips.cs.txt: Update and fixes.

@@ -123,7 +123,7 @@ static int color_hash_hits;
 static unsigned char * tmp_buffer;  /* temporary buffer available upon request */
 static int tmp_buffer_size;
 static unsigned char no_mask = OPAQUE_OPACITY;
-static int add_lut[256][256];
+static guchar add_lut[511];
 
 /*******************************/
 /*  Local function prototypes  */
@@ -435,8 +435,6 @@ void
 paint_funcs_setup ()
 {
   int i;
-  int j,k;
-  int tmp_sum;
 
   /*  allocate the temporary buffer  */
   tmp_buffer = (unsigned char *) g_malloc (STD_BUF_SIZE);
@@ -467,16 +465,11 @@ paint_funcs_setup ()
       random_table[swap] = tmp;
     }
 
-  for (j = 0; j < 256; j++)
-    {    /* rows */
-      for (k = 0; k < 256; k++)
-	{   /* column */
-	  tmp_sum = j + k;
-	  if(tmp_sum > 255)
-	    tmp_sum = 255;
-	  add_lut[j][k] = tmp_sum; 
-	}
-    }
+  for (i = 0; i < 256; i++)
+    add_lut[i] = i; 
+     
+  for (i = 256; i <= 510; i++)
+    add_lut[i] = 255; 
 }
 
 
@@ -1030,10 +1023,7 @@ add_pixels (const unsigned char *src1,
   while (length --)
     {
       for (b = 0; b < alpha; b++)
-	{
-	  /* TODO: wouldn't it be better use a 1 dimensional lut ie. add_lut[src1+src2]; */
-	  dest[b] = add_lut[(src1[b])] [(src2[b])];
-	}
+	dest[b] = add_lut[src1[b] + src2[b]];
 
       if (has_alpha1 && has_alpha2)
 	dest[alpha] = MIN (src1[alpha], src2[alpha]);
