@@ -1,3 +1,8 @@
+2005-01-09  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/sparkle.c: added a preview. This will need more
+	testing.  Shlomi Fish, can you please try to test this plug-in again?
+
 2005-01-09  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpactionview.c (gimp_action_view_new): connect to
