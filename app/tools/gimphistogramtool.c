@@ -360,7 +360,7 @@ histogram_tool_dialog_new (void)
 				GTK_WIN_POS_NONE,
 				FALSE, TRUE, FALSE,
 
-				_("Close"), histogram_tool_close_callback,
+				GTK_STOCK_CLOSE, histogram_tool_close_callback,
 				htd, NULL, NULL, TRUE, TRUE,
 
 				NULL);

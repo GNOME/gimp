@@ -844,7 +844,7 @@ by_color_select_dialog_new (void)
 
 				_("Reset"), by_color_select_reset_callback,
 				bcd, NULL, NULL, FALSE, FALSE,
-				_("Close"), by_color_select_close_callback,
+				GTK_STOCK_CLOSE, by_color_select_close_callback,
 				bcd, NULL, NULL, TRUE, TRUE,
 
 				NULL);

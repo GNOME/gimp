@@ -367,11 +367,11 @@ threshold_dialog_new (void)
 		     GTK_WIN_POS_NONE,
 		     FALSE, TRUE, FALSE,
 
-		     _("OK"), threshold_ok_callback,
+		     GTK_STOCK_OK, threshold_ok_callback,
 		     td, NULL, NULL, TRUE, FALSE,
 		     _("Reset"), threshold_reset_callback,
 		     td, NULL, NULL, TRUE, FALSE,
-		     _("Cancel"), threshold_cancel_callback,
+		     GTK_STOCK_CANCEL, threshold_cancel_callback,
 		     td, NULL, NULL, FALSE, TRUE,
 
 		     NULL);

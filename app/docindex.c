@@ -790,7 +790,7 @@ open_idea_window (void)
 				   GTK_WIN_POS_MOUSE,
 				   FALSE, TRUE, FALSE,
 
-				   _("Close"), idea_hide_callback,
+				   GTK_STOCK_CLOSE, idea_hide_callback,
 				   NULL, NULL, NULL, TRUE, TRUE,
 
 				   NULL);

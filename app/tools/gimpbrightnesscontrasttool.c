@@ -299,11 +299,11 @@ brightness_contrast_dialog_new (void)
 		     GTK_WIN_POS_NONE,
 		     FALSE, TRUE, FALSE,
 
-		     _("OK"), brightness_contrast_ok_callback,
+		     GTK_STOCK_OK, brightness_contrast_ok_callback,
 		     bcd, NULL, NULL, TRUE, FALSE,
 		     _("Reset"), brightness_contrast_reset_callback,
 		     bcd, NULL, NULL, TRUE, FALSE,
-		     _("Cancel"), brightness_contrast_cancel_callback,
+		     GTK_STOCK_CANCEL, brightness_contrast_cancel_callback,
 		     bcd, NULL, NULL, FALSE, TRUE,
 
 		     NULL);

@@ -121,7 +121,7 @@ progress_start (GDisplay   *gdisp,
 				   GTK_WIN_POS_NONE,
 				   FALSE, TRUE, FALSE,
 
-				   _("Cancel"), NULL,
+				   GTK_STOCK_CANCEL, NULL,
 				   NULL, NULL, &p->cancelbutton, TRUE, TRUE,
 
 				   NULL);

@@ -155,7 +155,7 @@ tips_dialog_create (void)
   gtk_box_pack_end (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
 
-  button = gtk_button_new_with_label (_("Close"));
+  button = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_window_set_default (GTK_WINDOW (tips_dialog), button);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",

@@ -1,3 +1,57 @@
+2001-08-03  Michael Natterer  <mitch@gimp.org>
+
+	* gtkrc: set style properties for dockables.
+
+	* app/main.c: some #if 0'ed code for mem profiling.
+
+	* app/gui/commands.[ch]
+	* app/gui/menus.c: added a mem profiling menu entry + callback.
+
+	* app/gui/palette-editor.c: added a #warning as reminder, use
+	gtk_dialog_set_has_separator().
+
+	* app/widgets/gimpcontainereditor.[ch]
+	* app/widgets/gimpcontainerview.[ch]
+	* app/widgets/gimpdockable.[ch]
+	* app/widgets/gimpdrawablelistview.[ch]: added some style
+	properties to set GimpDockable and friends' borders and spacings.
+
+	* libgimpwidgets/gimppixmap.[ch]
+	* libgimpwidgets/gimpsizeentry.[ch]
+	* libgimpwidgets/gimpunitmenu.[ch]: GObject stuff, cleanup.
+
+	* app/docindex.c
+	* app/errorconsole.c
+	* app/gdisplay_color_ui.c
+	* app/gimpprogress.c
+	* app/module_db.c
+	* app/undo_history.c
+	* app/user_install.c
+	* app/gui/channels-commands.c
+	* app/gui/gradient-editor.c
+	* app/gui/info-window.c
+	* app/gui/tips-dialog.c
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimpthresholdtool.c
+	* app/widgets/gimpdatafactoryview.c
+	* libgimp/gimpexport.c
+	* modules/cdisplay_gamma.c
+	* modules/cdisplay_highcontrast.c
+	* plug-ins/[lots of files]:
+
+	Some perl mass processing applying s/_("Foo")/GTK_STOCK_FOO/g,
+	minor manual cleanup in some files.
+
 2001-08-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptexttool.c:

@@ -62,6 +62,12 @@ struct _GimpDockable
 struct _GimpDockableClass
 {
   GtkVBoxClass  parent_class;
+
+  GtkWidget * (* get_tab_widget) (GimpDockable *dockable,
+				  GimpDockbook *dockbook,
+				  gint          size);
+  void        (* set_context)    (GimpDockable *dockable,
+				  GimpContext  *context);
 };
 
 

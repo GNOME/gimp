@@ -315,7 +315,7 @@ module_db_browser_new (void)
 			   GTK_WIN_POS_NONE,
 			   FALSE, TRUE, FALSE,
 
-			   _("OK"), browser_popdown_callback,
+			   GTK_STOCK_OK, browser_popdown_callback,
 			   NULL, NULL, NULL, TRUE, TRUE,
 
 			   NULL);

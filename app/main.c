@@ -109,7 +109,10 @@ main (int    argc,
   gchar    *display_env;
 #endif
 
+#if 0
+  g_mem_set_vtable (glib_mem_profiler_table);
   g_atexit (g_mem_profile);
+#endif
 
   /* Initialize variables */
 

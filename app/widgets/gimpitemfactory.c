@@ -285,6 +285,14 @@ static GimpItemFactoryEntry toolbox_entries[] =
       dialogs_create_toplevel_cmd_callback, 0 },
     "gimp:about-dialog",
     "help/dialogs/about.html", NULL },
+
+  SEPARATOR ("/Help/---"),
+
+  { { N_("/Help/Mem Profile"), NULL,
+      mem_profile_cmd_callback, 0 },
+    NULL,
+    NULL, NULL },
+
 #ifdef ENABLE_DEBUG_ENTRY
   { { "/Help/Dump Items (Debug)", NULL,
       menus_debug_cmd_callback, 0 },

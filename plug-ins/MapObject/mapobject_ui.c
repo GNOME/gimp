@@ -1384,9 +1384,9 @@ main_dialog (GimpDrawable *drawable)
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 
-			    _("OK"), apply_callback,
+			    GTK_STOCK_OK, apply_callback,
 			    NULL, NULL, NULL, TRUE, FALSE,
-			    _("Cancel"), gtk_main_quit,
+			    GTK_STOCK_CANCEL, gtk_main_quit,
 			    NULL, NULL, NULL, FALSE, TRUE,
 
 			    NULL);

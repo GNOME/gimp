@@ -31,13 +31,21 @@
 #include "gimpdockbook.h"
 
 
-static void   gimp_dockable_class_init (GimpDockableClass *klass);
-static void   gimp_dockable_init       (GimpDockable      *dockable);
+static void        gimp_dockable_class_init     (GimpDockableClass *klass);
+static void        gimp_dockable_init           (GimpDockable      *dockable);
 
-static void   gimp_dockable_destroy    (GtkObject         *object);
+static void        gimp_dockable_destroy             (GtkObject    *object);
+static void        gimp_dockable_style_set           (GtkWidget    *widget,
+						      GtkStyle     *prev_style);
+
+static GtkWidget * gimp_dockable_real_get_tab_widget (GimpDockable *dockable,
+						      GimpDockbook *dockbook,
+						      gint          size);
+static void        gimp_dockable_real_set_context    (GimpDockable *dockable,
+						      GimpContext  *context);
 
 
-static GtkBinClass *parent_class = NULL;
+static GtkVBoxClass *parent_class = NULL;
 
 
 GType
@@ -69,12 +77,35 @@ static void
 gimp_dockable_class_init (GimpDockableClass *klass)
 {
   GtkObjectClass *object_class;
+  GtkWidgetClass *widget_class;
 
   object_class = (GtkObjectClass *) klass;
+  widget_class = (GtkWidgetClass *) klass;
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy = gimp_dockable_destroy;
+  object_class->destroy   = gimp_dockable_destroy;
+
+  widget_class->style_set = gimp_dockable_style_set;
+
+  klass->get_tab_widget   = gimp_dockable_real_get_tab_widget;
+  klass->set_context      = gimp_dockable_real_set_context;
+
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_int ("content_border",
+                                                             NULL, NULL,
+                                                             0,
+                                                             G_MAXINT,
+                                                             0,
+                                                             G_PARAM_READABLE));
+
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_int ("content_spacing",
+                                                             NULL, NULL,
+                                                             0,
+                                                             G_MAXINT,
+                                                             0,
+                                                             G_PARAM_READABLE));
 }
 
 static void
@@ -114,6 +145,27 @@ gimp_dockable_destroy (GtkObject *object)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
+static void
+gimp_dockable_style_set (GtkWidget *widget,
+			 GtkStyle  *prev_style)
+{
+  gint content_border;
+  gint content_spacing;
+
+  gtk_widget_style_get (widget,
+                        "content_border",
+                        &content_border,
+                        "content_spacing",
+                        &content_spacing,
+			NULL);
+
+  gtk_container_set_border_width (GTK_CONTAINER (widget), content_border);
+  gtk_box_set_spacing (GTK_BOX (widget), content_spacing);
+
+  if (GTK_WIDGET_CLASS (parent_class)->style_set)
+    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+}
+
 GtkWidget *
 gimp_dockable_new (const gchar                *name,
 		   const gchar                *short_name,
@@ -145,12 +197,9 @@ gimp_dockable_get_tab_widget (GimpDockable *dockable,
   g_return_val_if_fail (GIMP_IS_DOCKBOOK (dockbook), NULL);
   g_return_val_if_fail (size >= -1 && size < 64, NULL);
 
-  if (dockable->get_tab_func)
-    {
-      return dockable->get_tab_func (dockable, dockbook, size);
-    }
-
-  return gtk_label_new (dockable->short_name);
+  return GIMP_DOCKABLE_GET_CLASS (dockable)->get_tab_widget (dockable,
+							     dockbook,
+							     size);
 }
 
 void
@@ -162,11 +211,39 @@ gimp_dockable_set_context (GimpDockable *dockable,
 
   if (context != dockable->context)
     {
-      if (dockable->set_context_func)
-	{
-	  dockable->set_context_func (dockable, context);
-	}
-
-      dockable->context = context;
+      GIMP_DOCKABLE_GET_CLASS (dockable)->set_context (dockable,
+						       context);
     }
+}
+
+static GtkWidget *
+gimp_dockable_real_get_tab_widget (GimpDockable *dockable,
+				   GimpDockbook *dockbook,
+				   gint          size)
+{
+  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
+  g_return_val_if_fail (GIMP_IS_DOCKBOOK (dockbook), NULL);
+  g_return_val_if_fail (size >= -1 && size < 64, NULL);
+
+  if (dockable->get_tab_func)
+    {
+      return dockable->get_tab_func (dockable, dockbook, size);
+    }
+
+  return gtk_label_new (dockable->short_name);
+}
+
+static void
+gimp_dockable_real_set_context (GimpDockable *dockable,
+				GimpContext  *context)
+{
+  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
+  g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
+
+  if (dockable->set_context_func)
+    {
+      dockable->set_context_func (dockable, context);
+    }
+
+  dockable->context = context;
 }

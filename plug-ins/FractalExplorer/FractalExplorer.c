@@ -738,7 +738,7 @@ delete_fractal_callback (GtkWidget *widget,
 					  "filters/fractalexplorer.html", 
 					  FALSE,
 					  str, 
-					  _("Delete"), _("Cancel"),
+					  GTK_STOCK_DELETE, GTK_STOCK_CANCEL,
 					  G_OBJECT (widget), "destroy",
 					  delete_dialog_callback,
 					  data);
@@ -844,7 +844,7 @@ fractalexplorer_dialog_edit_list (GtkWidget          *lwidget,
   gtk_widget_show (options->name_entry);
   gtk_widget_show (hbox);
 
-  button = gtk_button_new_with_label (_("OK"));
+  button = gtk_button_new_from_stock (GTK_STOCK_OK);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc)fractalexplorer_list_ok_callback,
                       options);
@@ -853,7 +853,7 @@ fractalexplorer_dialog_edit_list (GtkWidget          *lwidget,
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label (_("Cancel"));
+  button = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc)fractalexplorer_list_cancel_callback,
                       options);
@@ -1463,9 +1463,9 @@ fractalexplorer_rescan_list (void)
                          GTK_WIN_POS_MOUSE,
                          FALSE, TRUE, FALSE,
 
-                         _("OK"), fractalexplorer_rescan_ok_callback,
+                         GTK_STOCK_OK, fractalexplorer_rescan_ok_callback,
                          NULL, NULL, NULL, TRUE, FALSE,
-                         _("Cancel"), gtk_widget_destroy,
+                         GTK_STOCK_CANCEL, gtk_widget_destroy,
                          NULL, 1, NULL, FALSE, TRUE,
 
                          NULL);

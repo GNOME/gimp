@@ -246,8 +246,6 @@ text_clicked_callback (GtkWidget      *widget,
       break;
 
     case 3:
-      g_signal_stop_emission_by_name (G_OBJECT (text_view),
-				      "button_press_event");
       gtk_menu_popup (menu, NULL, NULL, NULL, NULL, event->button, event->time);
 
       /*  wheelmouse support  */
@@ -296,7 +294,7 @@ error_console_create (void)
 
 				   _("Clear"), error_console_clear_callback,
 				   text_buffer, NULL, NULL, FALSE, FALSE,
-				   _("Close"), error_console_close_callback,
+				   GTK_STOCK_CLOSE, error_console_close_callback,
 				   text_buffer, NULL, NULL, TRUE, TRUE,
 
 				   NULL);
@@ -317,17 +315,19 @@ error_console_create (void)
 
   menuitem = gtk_menu_item_new_with_label (_("Write all errors to file..."));
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+  gtk_widget_show (menuitem);
+
   g_signal_connect_swapped (G_OBJECT (menuitem), "activate",
 			    G_CALLBACK (error_console_menu_callback),
 			    GINT_TO_POINTER (ERRORS_ALL));
-  gtk_widget_show (menuitem);
   
   menuitem = gtk_menu_item_new_with_label (_("Write selection to file..."));
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+  gtk_widget_show (menuitem);
+
   g_signal_connect_swapped (G_OBJECT (menuitem), "activate",
 			   G_CALLBACK (error_console_menu_callback),
 			   GINT_TO_POINTER (ERRORS_SELECTION));
-  gtk_widget_show (menuitem);
 
   /*  The output text widget  */
   text_view = gtk_text_view_new_with_buffer (text_buffer);

@@ -173,7 +173,10 @@ palette_set_active_color (gint r,
 			  gint b,
 			  gint state)
 {
-  /*
+#ifdef __GNUC__
+#warning FIXME: palette_set_active_color()
+#endif
+#if 0
   GimpPalette *palette;
   GimpRGB      color;
 
@@ -213,7 +216,7 @@ palette_set_active_color (gint r,
     gimp_context_set_foreground (gimp_get_user_context (the_gimp), &color);
   else if (active_color == BACKGROUND)
     gimp_context_set_background (gimp_get_user_context (the_gimp), &color);
-  */
+#endif
 }
 
 /*  called from palette_select.c  ********************************************/
@@ -265,8 +268,7 @@ palette_editor_new (Gimp *gimp)
 
 		     NULL);
 
-  gtk_widget_hide (GTK_WIDGET (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_DIALOG (palette_editor->shell)->vbox)), 0)));
-
+  gtk_dialog_set_has_separator (GTK_DIALOG (palette_editor->shell), FALSE);
   gtk_widget_hide (GTK_DIALOG (palette_editor->shell)->action_area);
 
   main_vbox = gtk_vbox_new (FALSE, 1);
@@ -300,10 +302,11 @@ palette_editor_new (Gimp *gimp)
   eventbox = gtk_event_box_new ();
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolledwindow),
 					 eventbox);
+  gtk_widget_show (eventbox);
+
   gtk_signal_connect (GTK_OBJECT (eventbox), "button_press_event",
 		      GTK_SIGNAL_FUNC (palette_editor_eventbox_button_press),
 		      palette_editor);
-  gtk_widget_show (eventbox);
 
   alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0); 
   gtk_container_add (GTK_CONTAINER (eventbox), alignment);
@@ -316,12 +319,12 @@ palette_editor_new (Gimp *gimp)
   gtk_preview_size (GTK_PREVIEW (palette_region), PREVIEW_WIDTH, PREVIEW_HEIGHT);
 
   gtk_widget_set_events (palette_region, PALETTE_EVENT_MASK);
+  gtk_container_add (GTK_CONTAINER (alignment), palette_region);
+  gtk_widget_show (palette_region);
+
   gtk_signal_connect (GTK_OBJECT (palette_editor->color_area), "event",
 		      GTK_SIGNAL_FUNC (palette_editor_color_area_events),
 		      palette_editor);
-
-  gtk_container_add (GTK_CONTAINER (alignment), palette_region);
-  gtk_widget_show (palette_region);
 
   /*  dnd stuff  */
   gtk_drag_source_set (palette_region,
@@ -351,6 +354,7 @@ palette_editor_new (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
   gtk_entry_set_text (GTK_ENTRY (entry), _("Undefined"));
   gtk_widget_set_sensitive (entry, FALSE);
+
   palette_editor->entry_sig_id =
     gtk_signal_connect (GTK_OBJECT (entry), "changed",
 			GTK_SIGNAL_FUNC (palette_editor_color_name_changed),
@@ -359,17 +363,19 @@ palette_editor_new (Gimp *gimp)
   /*  + and - buttons  */
   button = gimp_pixmap_button_new (zoom_in_xpm, NULL);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (palette_editor_zoomin_callback),
 		      palette_editor);
-  gtk_widget_show (button);
 
   button = gimp_pixmap_button_new (zoom_out_xpm, NULL);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (palette_editor_zoomout_callback),
 		      palette_editor);
-  gtk_widget_show (button);
 
   gtk_signal_connect (GTK_OBJECT (palette_editor->context), "palette_changed",
 		      GTK_SIGNAL_FUNC (palette_editor_palette_changed),
@@ -424,27 +430,29 @@ palette_editor_create_popup_menu (PaletteEditor *palette_editor)
 
   menu_item = gtk_menu_item_new_with_label (_("New"));
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
+  gtk_widget_show (menu_item);
+
   gtk_signal_connect (GTK_OBJECT (menu_item), "activate", 
 		      GTK_SIGNAL_FUNC (palette_editor_new_entry_callback),
 		      palette_editor);
-  gtk_widget_show (menu_item);
 
   menu_item = gtk_menu_item_new_with_label (_("Edit"));
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
+  gtk_widget_show (menu_item);
 
   gtk_signal_connect (GTK_OBJECT (menu_item), "activate", 
 		      GTK_SIGNAL_FUNC (palette_editor_edit_entry_callback),
 		      palette_editor);
-  gtk_widget_show (menu_item);
 
   palette_editor->edit_menu_item = menu_item;
 
   menu_item = gtk_menu_item_new_with_label (_("Delete"));
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
+  gtk_widget_show (menu_item);
+
   gtk_signal_connect (GTK_OBJECT (menu_item), "activate", 
 		      GTK_SIGNAL_FUNC (palette_editor_delete_entry_callback),
 		      palette_editor);
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
-  gtk_widget_show (menu_item);
 
   palette_editor->delete_menu_item = menu_item;
 }
@@ -537,7 +545,7 @@ palette_editor_color_notebook_callback (ColorNotebook      *color_notebook,
   GimpContext   *user_context;
   GimpPalette   *palette;
 
-  palette_editor = data;
+  palette_editor = (PaletteEditor *) data;
 
   palette = gimp_context_get_palette (palette_editor->context);
 

@@ -64,6 +64,8 @@ enum
 static void   gimp_drawable_list_view_class_init (GimpDrawableListViewClass *klass);
 static void   gimp_drawable_list_view_init       (GimpDrawableListView      *view);
 static void   gimp_drawable_list_view_destroy    (GtkObject                 *object);
+static void   gimp_drawable_list_view_style_set  (GtkWidget                 *widget,
+						  GtkStyle                  *prev_style);
 
 static void   gimp_drawable_list_view_real_set_image    (GimpDrawableListView *view,
 							 GimpImage            *gimage);
@@ -169,9 +171,11 @@ static void
 gimp_drawable_list_view_class_init (GimpDrawableListViewClass *klass)
 {
   GtkObjectClass         *object_class;
+  GtkWidgetClass         *widget_class;
   GimpContainerViewClass *container_view_class;
 
   object_class         = (GtkObjectClass *) klass;
+  widget_class         = (GtkWidgetClass *) klass;
   container_view_class = (GimpContainerViewClass *) klass;
 
   parent_class = g_type_class_peek_parent (klass);
@@ -187,6 +191,8 @@ gimp_drawable_list_view_class_init (GimpDrawableListViewClass *klass)
 		  GIMP_TYPE_OBJECT);
 
   object_class->destroy               = gimp_drawable_list_view_destroy;
+
+  widget_class->style_set             = gimp_drawable_list_view_style_set;
 
   container_view_class->insert_item   = gimp_drawable_list_view_insert_item;
   container_view_class->select_item   = gimp_drawable_list_view_select_item;
@@ -347,6 +353,24 @@ gimp_drawable_list_view_destroy (GtkObject *object)
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+gimp_drawable_list_view_style_set (GtkWidget *widget,
+				   GtkStyle  *prev_style)
+{
+  gint button_spacing;
+
+  gtk_widget_style_get (widget,
+                        "button_spacing",
+                        &button_spacing,
+			NULL);
+
+  gtk_box_set_spacing (GTK_BOX (GIMP_DRAWABLE_LIST_VIEW (widget)->button_box),
+		       button_spacing);
+
+  if (GTK_WIDGET_CLASS (parent_class)->style_set)
+    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 }
 
 GtkWidget *

@@ -52,7 +52,10 @@ enum
 
 static void   gimp_container_view_class_init  (GimpContainerViewClass *klass);
 static void   gimp_container_view_init        (GimpContainerView      *panel);
+
 static void   gimp_container_view_destroy     (GtkObject              *object);
+static void   gimp_container_view_style_set   (GtkWidget              *widget,
+					       GtkStyle               *prev_style);
 
 static void   gimp_container_view_real_set_container (GimpContainerView *view,
 						      GimpContainer     *container);
@@ -115,8 +118,10 @@ static void
 gimp_container_view_class_init (GimpContainerViewClass *klass)
 {
   GtkObjectClass *object_class;
+  GtkWidgetClass *widget_class;
 
   object_class = (GtkObjectClass *) klass;
+  widget_class = (GtkWidgetClass *) klass;
   
   parent_class = g_type_class_peek_parent (klass);
 
@@ -217,6 +222,8 @@ gimp_container_view_class_init (GimpContainerViewClass *klass)
 
   object_class->destroy   = gimp_container_view_destroy;
 
+  widget_class->style_set = gimp_container_view_style_set;
+
   klass->set_container    = gimp_container_view_real_set_container;
   klass->insert_item      = NULL;
   klass->remove_item      = NULL;
@@ -226,6 +233,22 @@ gimp_container_view_class_init (GimpContainerViewClass *klass)
   klass->context_item     = NULL;
   klass->clear_items      = gimp_container_view_real_clear_items;
   klass->set_preview_size = NULL;
+
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_int ("content_spacing",
+                                                             NULL, NULL,
+                                                             0,
+                                                             G_MAXINT,
+                                                             0,
+                                                             G_PARAM_READABLE));
+
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_int ("button_spacing",
+                                                             NULL, NULL,
+                                                             0,
+                                                             G_MAXINT,
+                                                             0,
+                                                             G_PARAM_READABLE));
 }
 
 static void
@@ -260,6 +283,23 @@ gimp_container_view_destroy (GtkObject *object)
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+gimp_container_view_style_set (GtkWidget *widget,
+			       GtkStyle  *prev_style)
+{
+  gint content_spacing;
+
+  gtk_widget_style_get (widget,
+                        "content_spacing",
+                        &content_spacing,
+			NULL);
+
+  gtk_box_set_spacing (GTK_BOX (widget), content_spacing);
+
+  if (GTK_WIDGET_CLASS (parent_class)->style_set)
+    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 }
 
 void

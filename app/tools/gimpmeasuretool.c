@@ -396,7 +396,7 @@ gimp_measure_tool_button_press (GimpTool       *tool,
 
       gimp_dialog_create_action_area (GTK_DIALOG (measure_tool_info->shell),
 
-				      _("Close"),
+				      GTK_STOCK_CLOSE,
 				      measure_tool_info_window_close_callback,
 				      measure_tool_info, NULL, NULL, TRUE, FALSE,
 

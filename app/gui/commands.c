@@ -54,3 +54,10 @@ help_context_help_cmd_callback (GtkWidget *widget,
 {
   gimp_context_help ();
 }
+
+void
+mem_profile_cmd_callback (GtkWidget *widget,
+			  gpointer   data)
+{
+  g_mem_profile ();
+}

@@ -462,11 +462,11 @@ hue_saturation_dialog_new (void)
 				GTK_WIN_POS_NONE,
 				FALSE, TRUE, FALSE,
 
-				_("OK"), hue_saturation_ok_callback,
+				GTK_STOCK_OK, hue_saturation_ok_callback,
 				hsd, NULL, NULL, TRUE, FALSE,
 				_("Reset"), hue_saturation_reset_callback,
 				hsd, NULL, NULL, FALSE, FALSE,
-				_("Cancel"), hue_saturation_cancel_callback,
+				GTK_STOCK_CANCEL, hue_saturation_cancel_callback,
 				hsd, NULL, NULL, FALSE, TRUE,
 
 				NULL);

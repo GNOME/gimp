@@ -529,7 +529,7 @@ user_install_dialog_create (Gimp *gimp)
 
 		     _("Continue"), user_install_continue_callback,
 		     gimp, NULL, &continue_button, TRUE, FALSE,
-		     _("Cancel"), user_install_cancel_callback,
+		     GTK_STOCK_CANCEL, user_install_cancel_callback,
 		     gimp, 1, &cancel_button, FALSE, TRUE,
 
 		     NULL);

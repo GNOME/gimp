@@ -897,7 +897,7 @@ crop_info_create (GimpTool *tool)
 				  NULL, NULL, NULL, TRUE, FALSE,
 				  _("Resize"), crop_resize_callback,
 				  NULL, NULL, NULL, FALSE, FALSE,
-				  _("Close"), crop_close_callback,
+				  GTK_STOCK_CLOSE, crop_close_callback,
 				  NULL, NULL, NULL, FALSE, FALSE,
 
 				  NULL);

@@ -805,7 +805,7 @@ undo_history_new (GimpImage *gimage)
 				 GTK_WIN_POS_NONE,
 				 FALSE, TRUE, FALSE,
 
-				 _("Close"), undo_history_close_callback,
+				 GTK_STOCK_CLOSE, undo_history_close_callback,
 				 st, NULL, NULL, TRUE, TRUE,
 
 				 NULL);

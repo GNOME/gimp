@@ -279,11 +279,11 @@ posterize_dialog_new (void)
 		     GTK_WIN_POS_NONE,
 		     FALSE, TRUE, FALSE,
 
-		     _("OK"), posterize_ok_callback,
+		     GTK_STOCK_OK, posterize_ok_callback,
 		     pd, NULL, NULL, TRUE, FALSE,
 		     _("Reset"), posterize_reset_callback,
 		     pd, NULL, NULL, TRUE, FALSE,
-		     _("Cancel"), posterize_cancel_callback,
+		     GTK_STOCK_CANCEL, posterize_cancel_callback,
 		     pd, NULL, NULL, FALSE, TRUE,
 
 		     NULL);

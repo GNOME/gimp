@@ -44,6 +44,18 @@ style "gimp-ruler"
 class "*Ruler*" style "gimp-ruler"
 
 
+style "gimp-dock-style"
+{
+  GimpDockable::content_border         = 2
+  GimpContainerView::content_spacing   = 2
+  GimpContainerView::button_spacing    = 2
+  GimpContainerEditor::content_spacing = 2
+  GimpContainerEditor::button_spacing  = 2
+}
+
+widget "*GimpDock*" style "gimp-dock-style"
+
+
 style "gimp-tooltips"
 {
   fg[NORMAL] = { 0.0,  0.0,  0.0  }

@@ -3715,7 +3715,7 @@ cpopup_split_uniform_callback (GtkWidget      *widget,
 
 		     _("Split"), cpopup_split_uniform_split_callback,
 		     gradient_editor, NULL, NULL, TRUE, FALSE,
-		     _("Cancel"), cpopup_split_uniform_cancel_callback,
+		     GTK_STOCK_CANCEL, cpopup_split_uniform_cancel_callback,
 		     gradient_editor, NULL, NULL, FALSE, TRUE,
 
 		     NULL);
@@ -4275,7 +4275,7 @@ cpopup_replicate_callback (GtkWidget      *widget,
 
 		     _("Replicate"), cpopup_do_replicate_callback,
 		     gradient_editor, NULL, NULL, FALSE, FALSE,
-		     _("Cancel"), cpopup_replicate_cancel_callback,
+		     GTK_STOCK_CANCEL, cpopup_replicate_cancel_callback,
 		     gradient_editor, NULL, NULL, TRUE, TRUE,
 
 		     NULL);
