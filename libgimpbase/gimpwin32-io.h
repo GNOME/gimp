@@ -26,6 +26,9 @@
 #include <io.h>
 #include <direct.h>
 
+G_BEGIN_DECLS
+
+
 #define mkdir(n,a)  _mkdir(n)
 #define chmod(n,f)  _chmod(n,f)
 #define access(f,p) _access(f,p)
@@ -66,5 +69,8 @@
 #ifndef X_OK
 #define X_OK 0 /* not really */
 #endif
+
+
+G_END_DECLS
 
 #endif /* __GIMP_WIN32_IO_H__ */

@@ -26,6 +26,8 @@
 #ifndef __GIMP_THUMB_ENUMS_H__
 #define __GIMP_THUMB_ENUMS_H__
 
+G_BEGIN_DECLS
+
 
 #define GIMP_TYPE_THUMB_FILE_TYPE (gimp_thumb_file_type_get_type ())
 
@@ -69,5 +71,7 @@ typedef enum
   GIMP_THUMB_STATE_OK
 } GimpThumbState;
 
+
+G_END_DECLS
 
 #endif  /* __GIMP_THUMB_ENUMS_H__ */

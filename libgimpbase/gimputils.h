@@ -20,6 +20,8 @@
 #ifndef __GIMP_UTILS_H__
 #define __GIMP_UTILS_H__
 
+G_BEGIN_DECLS
+
 
 gchar         * gimp_utf8_strtrim         (const gchar  *str,
                                            gint          max_chars);
@@ -60,5 +62,7 @@ const gchar   * gimp_flags_value_get_desc (GFlagsClass  *flags_class,
 const gchar   * gimp_flags_value_get_help (GFlagsClass  *flags_class,
                                            GFlagsValue  *flags_value);
 
+
+G_END_DECLS
 
 #endif  /* __GIMP_UTILS_H__ */

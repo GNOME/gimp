@@ -23,6 +23,8 @@
 #ifndef __GIMP_UNIT_CACHE_H__
 #define __GIMP_UNIT_CACHE_H__
 
+G_BEGIN_DECLS
+
 
 gint          _gimp_unit_cache_get_number_of_units          (void);
 gint          _gimp_unit_cache_get_number_of_built_in_units (void);
@@ -45,5 +47,7 @@ const gchar * _gimp_unit_cache_get_abbreviation  (GimpUnit unit);
 const gchar * _gimp_unit_cache_get_singular      (GimpUnit unit);
 const gchar * _gimp_unit_cache_get_plural        (GimpUnit unit);
 
+
+G_END_DECLS
 
 #endif /*  __GIMP_UNIT_CACHE_H__ */

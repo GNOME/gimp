@@ -25,6 +25,8 @@
 
 #include <time.h>
 
+G_BEGIN_DECLS
+
 
 struct _GimpDatafileData
 {
@@ -46,5 +48,7 @@ void       gimp_datafiles_read_directories (const gchar            *path_str,
 					    GimpDatafileLoaderFunc  loader_func,
 					    gpointer                user_data);
 
+
+G_END_DECLS
 
 #endif  /*  __GIMP_DATAFILES_H__ */

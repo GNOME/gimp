@@ -23,6 +23,8 @@
 #ifndef __GIMP_LIMITS_H__
 #define __GIMP_LIMITS_H__
 
+G_BEGIN_DECLS
+
 
 /*  pixel sizes
  */
@@ -41,5 +43,7 @@
                                                   *  and must be < G_MAXDOUBLE
                                                   */
 
+
+G_END_DECLS
 
 #endif /* __GIMP_LIMITS_H__ */

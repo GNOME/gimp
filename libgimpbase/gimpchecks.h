@@ -20,6 +20,8 @@
 #ifndef __GIMP_CHECKS_H__
 #define __GIMP_CHECKS_H__
 
+G_BEGIN_DECLS
+
 
 /*  the default size of the checks which indicate transparency ...
  */
@@ -36,5 +38,7 @@ void  gimp_checks_get_shades (GimpCheckType  type,
                               guchar        *light,
                               guchar        *dark);
 
+
+G_END_DECLS
 
 #endif  /* __GIMP_CHECKS_H__ */

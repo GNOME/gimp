@@ -22,6 +22,8 @@
 
 #include <gtk/gtkdrawingarea.h>
 
+G_BEGIN_DECLS
+
 
 #define GIMP_TYPE_PREVIEW_AREA            (gimp_preview_area_get_type ())
 #define GIMP_PREVIEW_AREA(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PREVIEW_AREA, GimpPreviewArea))
@@ -121,5 +123,7 @@ void        gimp_preview_area_set_max_size   (GimpPreviewArea *area,
 void        gimp_preview_area_menu_popup     (GimpPreviewArea *area,
                                               GdkEventButton  *event);
 
+
+G_END_DECLS
 
 #endif /* __GIMP_PREVIEW_AREA_H__ */

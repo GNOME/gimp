@@ -20,6 +20,8 @@
 #ifndef __GIMP_MEMSIZE_H__
 #define __GIMP_MEMSIZE_H__
 
+G_BEGIN_DECLS
+
 
 #define GIMP_TYPE_MEMSIZE               (gimp_memsize_get_type ())
 #define GIMP_VALUE_HOLDS_MEMSIZE(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_MEMSIZE))
@@ -32,5 +34,7 @@ gboolean   gimp_memsize_deserialize      (const gchar *string,
 
 gchar    * gimp_memsize_to_string        (guint64      memsize);
 
+
+G_END_DECLS
 
 #endif  /* __GIMP_MEMSIZE_H__ */

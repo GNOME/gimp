@@ -1,5 +1,18 @@
 2004-11-04  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/gimpunitcache.h
+	* libgimpbase/gimpchecks.h
+	* libgimpbase/gimpdatafiles.h
+	* libgimpbase/gimplimits.h
+	* libgimpbase/gimpmemsize.h
+	* libgimpbase/gimputils.h
+	* libgimpbase/gimpwin32-io.h
+	* libgimpthumb/gimpthumb-enums.h
+	* libgimpthumb/gimpthumb-error.h
+	* libgimpwidgets/gimppreviewarea.h: added G_BEGIN_DECLS / G_END_DECLS.
+
+2004-11-04  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/ccanalyze.c
 	* plug-ins/common/uniteditor.c
 	* plug-ins/gfig/gfig-dialog.c
