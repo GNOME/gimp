@@ -1208,6 +1208,16 @@ AC_SUBST(LCMS_LIBS)
 AM_CONDITIONAL(HAVE_LCMS, test $have_lcms = yes)
 
 
+#######################
+# Check for linux input
+#######################
+
+have_linux_input=no
+AC_CHECK_HEADER(linux/input.h, have_linux_input=yes)
+
+AM_CONDITIONAL(HAVE_LINUX_INPUT, test $have_linux_input = yes)
+
+
 ############################################################
 # GIF compression: Allow builder to specify at compile time
 # which compression style she wants to use for GIFs.

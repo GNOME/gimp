@@ -22,6 +22,10 @@ if HAVE_LCMS
 cdisplay_proof_module = libcdisplay_proof.la
 endif
 
+if HAVE_LINUX_INPUT
+controller_linux_input_module = libcontroller_linux_input.la
+endif
+
 lib_LTLIBRARIES = \
 	libcolorsel_cmyk.la		\
 	libcolorsel_triangle.la		\
@@ -29,7 +33,8 @@ lib_LTLIBRARIES = \
 	libcdisplay_colorblind.la	\
 	libcdisplay_gamma.la		\
 	libcdisplay_highcontrast.la	\
-	$(cdisplay_proof_module)
+	$(cdisplay_proof_module)	\
+	$(controller_linux_input_module)
 
 
 libcolorsel_cmyk_la_SOURCES = colorsel_cmyk.c
@@ -59,3 +64,7 @@ libcdisplay_highcontrast_la_LIBADD = $(libgimpbase) $(libgimpwidgets) $(GTK_LIBS
 libcdisplay_proof_la_SOURCES = cdisplay_proof.c
 libcdisplay_proof_la_LDFLAGS = -avoid-version -module $(no_undefined)
 libcdisplay_proof_la_LIBADD = $(libgimpbase) $(libgimpwidgets) $(GTK_LIBS) $(LCMS_LIBS)
+
+libcontroller_linux_input_la_SOURCES = controller_linux_input.c
+libcontroller_linux_input_la_LDFLAGS = -avoid-version -module $(no_undefined)
+libcontroller_linux_input_la_LIBADD = $(libgimpwidgets) $(GTK_LIBS)

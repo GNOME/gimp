@@ -14,3 +14,17 @@
     (mapping 10 "context-pattern-previous")
     (mapping 11 "context-brush-previous")
     (mapping 12 "context-opacity-decreas-skip"))
+
+(controller "ControllerLinuxInput"
+    (options
+	(name   "USB Device")
+	(device "/dev/input/event2"))
+    (mapping 0 "tools-rect-select")
+    (mapping 1 "tools-ellipse-select")
+    (mapping 2 "tools-bucket-fill")
+    (mapping 3 "tools-blend")
+    (mapping 4 "tools-pencil")
+    (mapping 5 "tools-paintbrush")
+    (mapping 6 "tools-eraser")
+    (mapping 7 "tools-airbrush"))
+

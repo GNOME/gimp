@@ -438,7 +438,8 @@ gimp_controller_deserialize (GimpControllerManager *manager,
   else
     {
     error:
-      gimp_controller_info_free (info);
+      if (info)
+        gimp_controller_info_free (info);
     }
 
   return token;
