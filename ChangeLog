@@ -1,4 +1,4 @@
-2003-08-18  Manish Singh  <yosh@gimp.org>
+2003-08-19  Manish Singh  <yosh@gimp.org>
 
 	* tools/pdbgen/app.pl: Default all strings to validate UTF-8, use
 	no_validate to disable. Also added a null_ok parameter which does
