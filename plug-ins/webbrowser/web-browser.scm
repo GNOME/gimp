@@ -89,11 +89,11 @@
 		    "Link to http://www.gtk.org/")
 
 (define (script-fu-bookmark-10)
-    (script-fu-bookmark "http://www.xach.com/gimp/news/"))
+    (script-fu-bookmark "http://news.gimp.org/"))
 
 (bookmark-register  "script-fu-bookmark-10"
 		    _"<Toolbox>/Xtns/Web Browser/GIMP News"
-		    "Link to http://xach.dorknet.com/gimp/news/")
+		    "Link to http://news.gimp.org/")
 
 (define (script-fu-bookmark-11)
     (script-fu-bookmark "http://registry.gimp.org/"))
@@ -131,11 +131,11 @@
 		    "Link to http://abattoir.cc.ndsu.nodak.edu/~nem/gimp/tuts/")
 
 (define (script-fu-bookmark-16)
-    (script-fu-bookmark "http://www.xach.com/gimp/news/bugreport.html"))
+    (script-fu-bookmark "http://bugzilla.gnome.org/"))
 
 (bookmark-register  "script-fu-bookmark-16"
 		    _"<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-		    "Link to http://www.xach.com/gimp/news/bugreport.html")
+		    "Link to http://bugzilla.gnome.org/")
 
 (define (script-fu-bookmark-17)
     (script-fu-bookmark "http://gimp-savvy.com/"))

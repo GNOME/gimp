@@ -1,3 +1,9 @@
+2001-10-29  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/webbrowser/web-browser.scm: updated links
+
+	* tools/pdbgen/lib.pl: cosmetic change (if (!x) -> unless (x)).
+	
 2001-10-28  Hans Breuer  <hans@breuer.org>
 
 	* config.h.win32 : define HAVE_DIRENT_H, it's from build/win32/dirent

@@ -325,7 +325,7 @@ CP1
       memcpy ($var, return_vals[$argc].data.d_$type,
 	      $numvar * sizeof ($datatype));
 CP2
-		    $out->{headers} = "#include <string.h>\n" if (!($ch || $cf));
+		    $out->{headers} = "#include <string.h>\n" unless ($ch || $cf);
                 }
 		else {
 		    # The return value variable
