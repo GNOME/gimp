@@ -4,9 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-04 00:15+0100\n"
-"PO-Revision-Date: 2004-02-05 23:47+CET\n"
+"POT-Creation-Date: 2004-03-20 14:50+0100\n"
+"PO-Revision-Date: 2004-03-20 14:50+CET\n"
 "Last-Translator: auto\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
 "MIME-Version: 1.0\n"
@@ -69,7 +68,7 @@ msgid "Script Arguments"
 msgstr "Argumenti Skripte"
 
 #. we add a colon after the label;
-#. some languages want an extra space here
+#.  some languages want an extra space here
 #: plug-ins/script-fu/script-fu-scripts.c:1202
 #, c-format
 msgid "%s:"
@@ -123,12 +122,15 @@ msgid "Image Types:"
 msgstr "Vrste Slika:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1991
-#, fuzzy, c-format
+#, , c-format
 msgid ""
 "Error while executing\n"
 "%s\n"
 "%s"
-msgstr "Script-Fu Odabir Datoteke"
+msgstr ""
+"Greška kod izvršavanja\n"
+"%s\n"
+"%s"
 
 #: plug-ins/script-fu/script-fu-server.c:602
 msgid "Script-Fu Server Options"
@@ -493,8 +495,7 @@ msgstr "Delta Vrijednost Boje"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
-msgstr ""
-"<Toolbox>/Proširenja/Script-Fu/Web teme/Izvanzemaljsko svjetlo/Strelica..."
+msgstr "<Toolbox>/Proširenja/Script-Fu/Web teme/Izvanzemaljsko svjetlo/Strelica..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -550,8 +551,7 @@ msgstr "Gore"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Hrule..."
-msgstr ""
-"<Toolbox>/Proširenja/Script-Fu/Web teme/Izvanzemaljsko svjetlo/Hor. Crta..."
+msgstr "<Toolbox>/Proširenja/Script-Fu/Web teme/Izvanzemaljsko svjetlo/Hor. Crta..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
 msgid "Bar Height"
@@ -563,8 +563,7 @@ msgstr "Širina Linije"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Bullet..."
-msgstr ""
-"<Toolbox>/Proširenja/Script-Fu/Web teme/Izvanzemaljsko svjetlo/Metak..."
+msgstr "<Toolbox>/Proširenja/Script-Fu/Web teme/Izvanzemaljsko svjetlo/Metak..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 #: plug-ins/script-fu/scripts/text-circle.scm.h:6
@@ -739,13 +738,11 @@ msgstr "<Toolbox>/Proširenja/Script-Fu/Web teme/Ispupčeni odsječak/Gumb..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/H_eading..."
-msgstr ""
-"<Toolbox>/Proširenja/Script-Fu/Web teme/Ispupčeni odsječak/Zaglavlje..."
+msgstr "<Toolbox>/Proširenja/Script-Fu/Web teme/Ispupčeni odsječak/Zaglavlje..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Hrule..."
-msgstr ""
-"<Toolbox>/Proširenja/Script-Fu/Web teme/Ispupčeni odsječak/Hor. Crta..."
+msgstr "<Toolbox>/Proširenja/Script-Fu/Web teme/Ispupčeni odsječak/Hor. Crta..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
@@ -859,7 +856,7 @@ msgstr "Naknadni sjaj"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid "Burn-In: Need two layers in total!"
-msgstr "Zagori: Neophodno je ukupno dva sloja!"
+msgstr "Zagorijevanje: Neophodno je ukupno dva sloja!"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
@@ -1433,28 +1430,22 @@ msgid "Shadow Color"
 msgstr "Boja Sjene"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
-msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
-msgstr ""
-"<Toolbox>/Proširenja/Script-Fu/Web teme/Gimp.org/Oznaka drugog gumba...."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+msgstr "<Toolbox>/Proširenja/Script-Fu/Web teme/Gimp.org/Oznaka drugog gumba...."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
 "Label..."
-msgstr ""
-"<Toolbox>/Proširenja/Script-Fu/Web Teme/Gimp.Org/Oznaka trećeg gumba..."
+msgstr "<Toolbox>/Proširenja/Script-Fu/Web Teme/Gimp.Org/Oznaka trećeg gumba..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
-msgstr ""
-"<Toolbox>/Proširenja/Script-Fu/Web teme/Gimp.org/Općte oznake za valjkove..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
+msgstr "<Toolbox>/Proširenja/Script-Fu/Web teme/Gimp.org/Općte oznake za valjkove..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
-msgstr ""
-"<Toolbox>/Proširenja/Script-Fu/Web teme/Gimp.org/Oznaka valjkastog gumba..."
+msgstr "<Toolbox>/Proširenja/Script-Fu/Web teme/Gimp.org/Oznaka valjkastog gumba..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
@@ -1970,6 +1961,9 @@ msgid ""
 "  (set! filename2 (string-append data-dir\n"
 "\t\t\t\t "
 msgstr ""
+")))\n"
+"  (postavi! ime_datoteke2 (dodani_niz_znakova mapa_podataka\n"
+"\t\t\t\t "
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
 msgid "<Image>/Script-Fu/Selection/To _Pattern..."
@@ -2064,8 +2058,8 @@ msgid ""
 "Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
 "netword.com/*spyrogimp"
 msgstr ""
-"Iscrtaj spirografe, epitrohoide i Lissajousove krivulje. Više podataka na "
-"http://netword.com/*spyrogimp"
+"Iscrtaj spirografe, epitrohoide i Lissajousove krivulje. Više podataka na http://"
+"netword.com/*spyrogimp"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
 msgid "Epitrochoid"
@@ -2431,3 +2425,4 @@ msgstr "Osvijetli X ofset"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight Y Offset"
 msgstr "Osvijetli Y ofset"
+

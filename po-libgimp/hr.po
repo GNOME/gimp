@@ -4,9 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-04 00:14+0100\n"
-"PO-Revision-Date: 2004-02-05 23:46+CET\n"
+"POT-Creation-Date: 2004-03-20 14:49+0100\n"
+"PO-Revision-Date: 2004-03-20 14:49+CET\n"
 "Last-Translator: auto\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
 "MIME-Version: 1.0\n"
@@ -23,23 +22,23 @@ msgid "_Browse..."
 msgstr "_Pretraži..."
 
 #: libgimp/gimpexport.c:215 libgimp/gimpexport.c:251
-#, fuzzy, c-format
+#, , c-format
 msgid "%s can't handle layers"
-msgstr "ne mogu obrađivati slojeve"
+msgstr "%s ne može rukovati sa slojeva"
 
 #: libgimp/gimpexport.c:216 libgimp/gimpexport.c:225 libgimp/gimpexport.c:234
 msgid "Merge Visible Layers"
 msgstr "Stopi Vidljive Slojeve"
 
 #: libgimp/gimpexport.c:224
-#, fuzzy, c-format
+#, , c-format
 msgid "%s can't handle layer offsets, size or opacity"
-msgstr "ne mogu obrađivati slojeve"
+msgstr "%s ne može rukovati sa pomakom slojeva, veličinom  ili prozirnošću"
 
 #: libgimp/gimpexport.c:233 libgimp/gimpexport.c:242
-#, fuzzy, c-format
+#, , c-format
 msgid "%s can only handle layers as animation frames"
-msgstr "Slojeve mogu obrađivati samo kao okvire animacije"
+msgstr "%s može rukovati sa slojevima samo kao okvirima animacije"
 
 #: libgimp/gimpexport.c:234 libgimp/gimpexport.c:243
 msgid "Save as Animation"
@@ -50,41 +49,41 @@ msgid "Flatten Image"
 msgstr "Izravnaj sliku"
 
 #: libgimp/gimpexport.c:260
-#, fuzzy, c-format
+#, , c-format
 msgid "%s can't handle transparency"
-msgstr "ne mogu obrađivati prozirnost"
+msgstr "%s ne može rukovati prozirnost"
 
 #: libgimp/gimpexport.c:269
-#, fuzzy, c-format
+#, , c-format
 msgid "%s can't handle layer masks"
-msgstr "ne mogu obrađivati slojeve"
+msgstr "%s ne može rukovati s maskama slojeva"
 
 #: libgimp/gimpexport.c:270
 msgid "Apply Layer Masks"
 msgstr "Primijeni maske slojeva"
 
 #: libgimp/gimpexport.c:278
-#, fuzzy, c-format
+#, , c-format
 msgid "%s can only handle RGB images"
-msgstr "radim samo sa RGB slikama"
+msgstr "%s može rukovati samo sa RGB slikama"
 
 #: libgimp/gimpexport.c:279 libgimp/gimpexport.c:317 libgimp/gimpexport.c:326
 msgid "Convert to RGB"
 msgstr "Konverzija u RGB"
 
 #: libgimp/gimpexport.c:287
-#, fuzzy, c-format
+#, , c-format
 msgid "%s can only handle grayscale images"
-msgstr "mogu raditi samo sa sivim slikama"
+msgstr "%s može rukovati samo sa sivim slikama"
 
 #: libgimp/gimpexport.c:288 libgimp/gimpexport.c:317 libgimp/gimpexport.c:338
 msgid "Convert to Grayscale"
 msgstr "Konverzija u Skalu Sive"
 
 #: libgimp/gimpexport.c:296
-#, fuzzy, c-format
+#, , c-format
 msgid "%s can only handle indexed images"
-msgstr "%s može obrađivati samo indeksirane slike"
+msgstr "%s može rukovati samo indeksirane slike"
 
 #: libgimp/gimpexport.c:297 libgimp/gimpexport.c:326 libgimp/gimpexport.c:336
 msgid ""
@@ -95,9 +94,9 @@ msgstr ""
 "postavke.(Najbolje je ručno podešavanje)"
 
 #: libgimp/gimpexport.c:306
-#, fuzzy, c-format
+#, , c-format
 msgid "%s can only handle bitmap (two color) indexed images"
-msgstr "mogu raditi samo s RGB i indeksiranim slikama"
+msgstr "%s može rukovati samo s indeksiranim slikama kao bitmapa (dvije boje)"
 
 #: libgimp/gimpexport.c:307
 msgid ""
@@ -108,24 +107,24 @@ msgstr ""
 "(Napravite to ručno da namještavanje rezultata)"
 
 #: libgimp/gimpexport.c:316
-#, fuzzy, c-format
+#, , c-format
 msgid "%s can only handle RGB or grayscale images"
-msgstr "mogu raditi samo s RGB i Sivim slikama"
+msgstr "%s može rukovati samo s RGB i sivim slikama"
 
 #: libgimp/gimpexport.c:325
-#, fuzzy, c-format
+#, , c-format
 msgid "%s can only handle RGB or indexed images"
-msgstr "mogu raditi samo s RGB i indeksiranim slikama"
+msgstr "%s može rukovati samo s RGB ili indeksiranim slikama"
 
 #: libgimp/gimpexport.c:335
-#, fuzzy, c-format
+#, , c-format
 msgid "%s can only handle grayscale or indexed images"
-msgstr "mogu obrađivati samo Sive ili Indeksirane Slike"
+msgstr "%s može rukovati samo sa sivim ili indeksirane slikama"
 
 #: libgimp/gimpexport.c:346
-#, fuzzy, c-format
+#, , c-format
 msgid "%s needs an alpha channel"
-msgstr "trebam neki alfa kanal"
+msgstr "%s treba alfa kanal"
 
 #: libgimp/gimpexport.c:347
 msgid "Add Alpha Channel"
@@ -151,20 +150,18 @@ msgstr "_Zanemari"
 msgid "_Export"
 msgstr "_Izvoz"
 
-#. the headline
 #: libgimp/gimpexport.c:485
-#, fuzzy, c-format
+#, , c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
-msgstr "Vaša slika mora biti izvežena prije spremanja iz sljedećihrazloga:"
+msgstr "Vaša slika mora biti izvežena prije spremanja kao %s iz sljedećih razloga:"
 
 #: libgimp/gimpexport.c:563
 msgid "The export conversion won't modify your original image."
 msgstr "Izvozna konverzija neće modificirati originalnu sliku."
 
 #: libgimp/gimpexport.c:665
-#, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
@@ -173,7 +170,6 @@ msgstr ""
 "Ovo neće sačuvati vidljive slojeve"
 
 #: libgimp/gimpexport.c:671
-#, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
@@ -206,7 +202,6 @@ msgid "(invalid UTF-8 string)"
 msgstr "(neispravan UTF-8 string)"
 
 #: libgimpbase/gimputils.c:244
-#, fuzzy, c-format
 msgid "%d Bytes"
 msgstr "%d bajtova"
 
@@ -236,39 +231,35 @@ msgid "%.1f MB"
 msgstr "%.1f MB"
 
 #: libgimpbase/gimputils.c:272
-#, fuzzy, c-format
 msgid "%d MB"
-msgstr "%d KB"
+msgstr "%d MB"
 
 #: libgimpbase/gimputils.c:279
-#, fuzzy, c-format
+#, , c-format
 msgid "%.2f GB"
-msgstr "%.2f MB"
+msgstr "%.2f GB"
 
 #: libgimpbase/gimputils.c:283
-#, fuzzy, c-format
 msgid "%.1f GB"
-msgstr "%.1f MB"
+msgstr "%.1f GB"
 
 #: libgimpbase/gimputils.c:287
-#, fuzzy, c-format
+#, , c-format
 msgid "%d GB"
-msgstr "%d KB"
+msgstr "%d GB"
 
 #: libgimpmodule/gimpmodule.c:177
-#, c-format
 msgid "Loading module: '%s'\n"
-msgstr "Učitavam modul: „%s“\n"
+msgstr "Učitavam modul: \"%s\"\n"
 
 #: libgimpmodule/gimpmodule.c:194 libgimpmodule/gimpmodule.c:213
 #: libgimpmodule/gimpmodule.c:328 libgimpmodule/gimpmodule.c:356
 #: libgimpmodule/gimpmodule.c:450
-#, fuzzy, c-format
+#, , c-format
 msgid "Module '%s' load error: %s"
-msgstr "pogreška kod učit. modula: %s: %s"
+msgstr "Greška kod učitavanja modula '%s': %s"
 
 #: libgimpmodule/gimpmodule.c:283
-#, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "Preskačem modul: '%s'\n"
 
@@ -406,6 +397,14 @@ msgstr "Megabajta"
 msgid "GigaBytes"
 msgstr "gigabajta"
 
+#: libgimpwidgets/gimppatheditor.c:243
+msgid "Writable"
+msgstr "Promjenjivo"
+
+#: libgimpwidgets/gimppatheditor.c:252
+msgid "Folder"
+msgstr "Mapu"
+
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
@@ -501,18 +500,19 @@ msgid ""
 msgstr ""
 "Upotrebite ovu vrijednost za sjeme slučajno generiranog broja -- ovo će vam "
 "omogućiti ponavljanje date  slučajne operacije"
+""
 
 #: libgimpwidgets/gimpwidgets.c:1275
 msgid "_New Seed"
-msgstr ""
+msgstr "_Novi Zametak"
 
 #: libgimpwidgets/gimpwidgets.c:1288
 msgid "Seed random number generator with a generated random number"
 msgstr "Sjeme slučajno generiranog broja sa slučajno generiranim brojem"
 
 #: libgimpwidgets/gimpwidgets.c:1292
-msgid "Randomize"
-msgstr ""
+msgid "_Randomize"
+msgstr "Nasumično"
 
 #: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
@@ -661,3 +661,4 @@ msgstr "Vodena boja"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Pritisak"
+
