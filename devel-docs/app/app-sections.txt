@@ -23,6 +23,8 @@ GIMP_PARAM_DEFAULTS
 GIMP_PARAM_IGNORE
 GIMP_CONFIG_PARAM_FLAGS
 GIMP_TYPE_PARAM_COLOR
+GIMP_IS_PARAM_SPEC_COLOR
+gimp_param_color_get_type
 gimp_param_spec_color
 GIMP_TYPE_PARAM_MATRIX2
 GIMP_IS_PARAM_SPEC_MATRIX2
@@ -56,8 +58,6 @@ GIMP_CONFIG_INSTALL_PROP_UINT
 GIMP_CONFIG_INSTALL_PROP_UNIT
 GIMP_CONFIG_INSTALL_PROP_OBJECT
 <SUBSECTION Standard>
-GIMP_IS_PARAM_SPEC_COLOR
-gimp_param_color_get_type
 </SECTION>
 
 <SECTION>
@@ -3866,7 +3866,9 @@ GIMP_CONTAINER_COMBO_BOX_GET_CLASS
 <SECTION>
 <FILE>gimpcontainerview</FILE>
 <TITLE>GimpContainerView</TITLE>
+GIMP_CONTAINER_VIEW_GET_INTERFACE
 GimpContainerView
+GimpContainerViewInterface
 gimp_container_view_get_container
 gimp_container_view_set_container
 gimp_container_view_get_context
@@ -3888,12 +3890,10 @@ gimp_container_view_item_context
 gimp_container_view_set_property
 gimp_container_view_get_property
 <SUBSECTION Standard>
-GimpContainerViewInterface
 GIMP_CONTAINER_VIEW
 GIMP_IS_CONTAINER_VIEW
 GIMP_TYPE_CONTAINER_VIEW
 gimp_container_view_interface_get_type
-GIMP_CONTAINER_VIEW_GET_INTERFACE
 </SECTION>
 
 <SECTION>
@@ -4062,7 +4062,9 @@ GIMP_DOCKABLE_GET_CLASS
 <SECTION>
 <FILE>gimpdocked</FILE>
 <TITLE>GimpDocked</TITLE>
+GIMP_DOCKED_GET_INTERFACE
 GimpDocked
+GimpDockedInterface
 gimp_docked_set_aux_info
 gimp_docked_get_aux_info
 gimp_docked_get_preview
@@ -4071,12 +4073,10 @@ gimp_docked_get_menu
 gimp_docked_get_title
 gimp_docked_title_changed
 <SUBSECTION Standard>
-GimpDockedInterface
 GIMP_DOCKED
 GIMP_IS_DOCKED
 GIMP_TYPE_DOCKED
 gimp_docked_interface_get_type
-GIMP_DOCKED_GET_INTERFACE
 </SECTION>
 
 <SECTION>
@@ -5600,8 +5600,9 @@ gimp_config_file_backup_on_error
 <FILE>gimpconfig</FILE>
 GimpConfigForeachFunc
 <TITLE>GimpConfig</TITLE>
+GIMP_CONFIG_GET_INTERFACE
 GimpConfig
-gimp_config_interface_get_type
+GimpConfigInterface
 gimp_config_serialize_to_file
 gimp_config_serialize_to_fd
 gimp_config_serialize_to_string
@@ -5618,8 +5619,7 @@ gimp_config_foreach_unknown_token
 GIMP_CONFIG
 GIMP_IS_CONFIG
 GIMP_TYPE_CONFIG
-GimpConfigInterface
-GIMP_CONFIG_GET_INTERFACE
+gimp_config_interface_get_type
 </SECTION>
 
 <SECTION>
