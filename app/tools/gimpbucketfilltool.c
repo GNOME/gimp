@@ -18,7 +18,6 @@
 #include <stdlib.h>
 #include "gdk/gdkkeysyms.h"
 #include "appenv.h"
-#include "brush_select.h"
 #include "bucket_fill.h"
 #include "cursorutil.h"
 #include "drawable.h"

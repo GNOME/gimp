@@ -91,7 +91,7 @@ GimpBrushGenerated *gimp_brush_generated_new(float radius, float hardness,
 /* set up normal brush data */
   brush = GIMP_BRUSH_GENERATED(gimp_type_new(gimp_brush_generated_get_type ()));
 
-  GIMP_BRUSH(brush)->name = g_strdup ("AAAGenerated");
+  GIMP_BRUSH(brush)->name = g_strdup ("Untitled");
   GIMP_BRUSH(brush)->spacing = 20;
 
 /* set up gimp_brush_generated data */
@@ -178,15 +178,15 @@ gimp_brush_generated_save (GimpBrushGenerated *brush,
 /* write name */
   fprintf(fp, "%.255s\n", GIMP_BRUSH(brush)->name);
 /* write brush spacing */
-  fprintf(fp, "%f ", (float)GIMP_BRUSH(brush)->spacing);
+  fprintf(fp, "%f\n", (float)GIMP_BRUSH(brush)->spacing);
 /* write brush radius */
-  fprintf(fp, "%f ", brush->radius);
+  fprintf(fp, "%f\n", brush->radius);
 /* write brush hardness */
-  fprintf(fp, "%f ", brush->hardness);
+  fprintf(fp, "%f\n", brush->hardness);
 /* write brush aspect_ratio */
-  fprintf(fp, "%f ", brush->aspect_ratio);
+  fprintf(fp, "%f\n", brush->aspect_ratio);
 /* write brush angle */
-  fprintf(fp, "%f", brush->angle);
+  fprintf(fp, "%f\n", brush->angle);
 
   fclose(fp);
 }
@@ -214,7 +214,8 @@ gimp_brush_generated_thaw(GimpBrushGenerated *brush)
 
 static
 double gauss(double f)
-{ /* this aint' a real gauss function */
+{ 
+    /* this aint' a real gauss function */
     if (f < -.5)
     {
       f = -1.0-f;
@@ -337,7 +338,6 @@ gimp_brush_generated_generate(GimpBrushGenerated *brush)
   }
   g_free (lookup);
   gtk_signal_emit_by_name(GTK_OBJECT(brush), "dirty");
-/*  brush_changed_notify(GIMP_BRUSH(brush)); */
 }
 
 float

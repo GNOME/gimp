@@ -640,6 +640,7 @@ app_exit_finish (void)
   named_buffers_free ();
   swapping_free ();
   context_manager_free ();
+  brush_select_dialog_free ();
   brushes_free ();
   patterns_free ();
   palettes_free ();
@@ -648,7 +649,6 @@ app_exit_finish (void)
   hue_saturation_free ();
   curves_free ();
   levels_free ();
-  brush_select_dialog_free ();
   pattern_select_dialog_free ();
   palette_free ();
   paint_funcs_free ();

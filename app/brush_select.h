@@ -44,6 +44,7 @@ struct _BrushSelect {
   GtkAdjustment *opacity_data;
   GtkAdjustment *spacing_data;
   GtkWidget *edit_button;
+  GtkWidget *delete_button;
   GtkWidget *option_menu;
 
   /*  Brush preview  */
@@ -71,6 +72,9 @@ struct _BrushSelect {
   int  old_col;
   gint NUM_BRUSH_COLUMNS;
   gint NUM_BRUSH_ROWS;
+
+  int freeze; /* so we don't waste so much time during refresh */
+
 };
 
 BrushSelectP  brush_select_new (gchar        *title,

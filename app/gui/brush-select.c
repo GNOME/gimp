@@ -17,6 +17,7 @@
  */
 
 #include <string.h>
+#include <unistd.h>
 #include "appenv.h"
 #include "actionarea.h"
 #include "brush_scale.h"
@@ -66,7 +67,10 @@ static void preview_calc_scrollbar        (BrushSelectP);
 static void brush_select_show_selected    (BrushSelectP, int, int);
 static void update_active_brush_field     (BrushSelectP);
 static void edit_active_brush             ();
+static void delete_active_brush           ();
 static gint edit_brush_callback		  (GtkWidget *w, GdkEvent *e,
+					   gpointer data);
+static gint delete_brush_callback	  (GtkWidget *w, GdkEvent *e,
 					   gpointer data);
 static gint new_brush_callback		  (GtkWidget *w, GdkEvent *e,
 					   gpointer data);
@@ -149,6 +153,8 @@ brush_select_new (gchar   *title,
   bsp->popup_timeout_tag = 0;
   bsp->NUM_BRUSH_COLUMNS = STD_BRUSH_COLUMNS;
   bsp->NUM_BRUSH_ROWS = STD_BRUSH_ROWS;
+
+  bsp->freeze = FALSE;
 
   /*  The shell and main vbox  */
   bsp->shell = gtk_dialog_new ();
@@ -316,11 +322,6 @@ brush_select_new (gchar   *title,
   /*  Create the edit/new buttons  */
   util_box = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_end (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 4);
-  bsp->edit_button =  gtk_button_new_with_label (_("Edit Brush"));
-  gtk_signal_connect (GTK_OBJECT (bsp->edit_button), "clicked",
-		      (GtkSignalFunc) edit_brush_callback,
-		      NULL);
-  gtk_box_pack_start (GTK_BOX (util_box), bsp->edit_button, TRUE, TRUE, 5);
 
   button2 =  gtk_button_new_with_label (_("New Brush"));
   gtk_signal_connect (GTK_OBJECT (button2), "clicked",
@@ -328,14 +329,28 @@ brush_select_new (gchar   *title,
 		      NULL);
   gtk_box_pack_start (GTK_BOX (util_box), button2, TRUE, TRUE, 6);
 
+  bsp->edit_button =  gtk_button_new_with_label (_("Edit Brush"));
+  gtk_signal_connect (GTK_OBJECT (bsp->edit_button), "clicked",
+		      (GtkSignalFunc) edit_brush_callback,
+		      NULL);
+  gtk_box_pack_start (GTK_BOX (util_box), bsp->edit_button, TRUE, TRUE, 5);
+
+  bsp->delete_button =  gtk_button_new_with_label (_("Delete Brush"));
+  gtk_signal_connect (GTK_OBJECT (bsp->delete_button), "clicked",
+		      (GtkSignalFunc) delete_brush_callback,
+		      bsp);
+  gtk_box_pack_start (GTK_BOX (util_box), bsp->delete_button, TRUE, TRUE, 5);
+
   gtk_widget_show (bsp->edit_button);    
   gtk_widget_show (button2);
+  gtk_widget_show (bsp->delete_button);    
   gtk_widget_show (util_box);
 
   /*  We can only edit in the main window! (for now)  */
   if (title)
     {
       gtk_widget_set_sensitive (bsp->edit_button, FALSE);
+      gtk_widget_set_sensitive (bsp->delete_button, FALSE);
       gtk_widget_set_sensitive (button2, FALSE);
     }
 
@@ -445,9 +460,15 @@ brush_select_new (gchar   *title,
 	}
       bsp->redraw = old_value;
       if (GIMP_IS_BRUSH_GENERATED (active))
+      {
 	gtk_widget_set_sensitive (bsp->edit_button, 1);
+	gtk_widget_set_sensitive (bsp->delete_button, 1);
+      }
       else
+      {
 	gtk_widget_set_sensitive (bsp->edit_button, 0); 
+	gtk_widget_set_sensitive (bsp->delete_button, 0);
+      }
     }
 
   /*  Finally, show the dialog  */
@@ -462,8 +483,11 @@ brush_select_select (BrushSelectP bsp,
 		     int          index)
 {
   int row, col;
-  if (index < 0)
+  if (index >= gimp_brush_list_length(brush_list))
+    index = gimp_brush_list_length(brush_list) - 1;
+  if (index < 0 || index >= gimp_brush_list_length(brush_list))
     return;
+
   update_active_brush_field (bsp);
   row = index / bsp->NUM_BRUSH_COLUMNS;
   col = index - row * (bsp->NUM_BRUSH_COLUMNS);
@@ -493,6 +517,12 @@ brush_select_free (BrushSelectP bsp)
 
       /* remove from active list */
       brush_active_dialogs = g_slist_remove (brush_active_dialogs, bsp);
+
+      gimp_list_foreach (GIMP_LIST (brush_list),
+			 (GFunc) disconnect_signals_from_brush,
+			 bsp);
+      gtk_signal_disconnect_by_data (GTK_OBJECT (brush_list),
+				     bsp);
 
       g_free (bsp);
     }
@@ -626,7 +656,6 @@ brush_select_brush_dirty_callback (GimpBrushP   brush,
 				   BrushSelectP bsp)
 {
   brush_select_brush_changed (bsp, brush);
-  update_active_brush_field (bsp);
   return TRUE;
 }
 
@@ -656,8 +685,11 @@ brush_added_callback (GimpBrushList *list,
 		      BrushSelectP   bsp)
 {
   connect_signals_to_brush (brush, bsp);
+  if (bsp->freeze)
+    return;
   preview_calc_scrollbar (bsp);
   brush_select_brush_changed (bsp, brush);
+  display_brushes (bsp);
 }
 
 static void
@@ -666,7 +698,12 @@ brush_removed_callback (GimpBrushList *list,
 			BrushSelectP   bsp)
 {
   disconnect_signals_from_brush (brush, bsp);
+  if (bsp->freeze)
+    return;
+/* This doesn't all seem right, but it does keep the display synchronized */
   preview_calc_scrollbar (bsp);
+  brush_select_brush_changed (bsp, brush);
+  display_brushes (bsp); 
 }
 
 
@@ -1182,6 +1219,25 @@ edit_active_brush()
 		 "please write your own or try back tomorrow\n"));
 }
 
+static void
+delete_active_brush(BrushSelectP  bsp)
+{
+  if (GIMP_IS_BRUSH_GENERATED (get_active_brush ()))
+  {
+    GimpBrush *brush = get_active_brush ();
+    int index;
+    if (brush->filename)
+    {
+      unlink(brush->filename);
+    }
+    index = gimp_brush_list_get_brush_index(brush_list, brush);
+    gimp_brush_list_remove(brush_list, GIMP_BRUSH (brush));
+    select_brush (gimp_brush_list_get_brush_by_index(brush_list, index));
+  }
+  else
+    g_message ("Wilber says: \"I don\'t know how to delete that brush.\"");
+}
+
 static gint
 brush_select_events (GtkWidget    *widget,
 		     GdkEvent     *event,
@@ -1236,9 +1292,15 @@ brush_select_events (GtkWidget    *widget,
 		
 
 	      if (GIMP_IS_BRUSH_GENERATED (brush) && bsp == brush_select_dialog)
+	      {
 		gtk_widget_set_sensitive (bsp->edit_button, 1);
+		gtk_widget_set_sensitive (bsp->delete_button, 1);
+	      }
 	      else
+	      {
 		gtk_widget_set_sensitive (bsp->edit_button, 0);
+		gtk_widget_set_sensitive (bsp->delete_button, 0);
+	      }
 	      
 	      if (brush_edit_generated_dialog)
 		brush_edit_generated_set_brush (brush_edit_generated_dialog,
@@ -1307,6 +1369,15 @@ edit_brush_callback (GtkWidget *w,
 }
 
 static gint
+delete_brush_callback (GtkWidget *w,
+		       GdkEvent  *e,
+		       gpointer   data)
+{
+  delete_active_brush(data);
+  return TRUE;
+}
+
+static gint
 new_brush_callback (GtkWidget *w,
 		    GdkEvent  *e,
 		    gpointer   data)
@@ -1364,7 +1435,9 @@ brush_select_refresh_callback (GtkWidget *w,
   bsp = (BrushSelectP) client_data;
 
   /*  re-init the brush list  */
+  bsp->freeze = TRUE;
   brushes_init (FALSE);
+  bsp->freeze = FALSE;
 
   /*  recalculate scrollbar extents  */
   preview_calc_scrollbar (bsp);
@@ -1374,9 +1447,11 @@ brush_select_refresh_callback (GtkWidget *w,
 
   /*  update the active selection  */
   active = get_active_brush ();
-  if (active)
-    brush_select_select (bsp, gimp_brush_list_get_brush_index (brush_list, 
-							       active));
+/*  if (active)
+    select_brush (bsp, active); */
+/*    brush_select_select (bsp, gimp_brush_list_get_brush_index (brush_list, 
+							       active)); */
+  select_brush(gimp_brush_list_get_brush_by_index (brush_list, 0));
 
   /*  update the display  */
   if (bsp->redraw)

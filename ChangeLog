@@ -1,3 +1,16 @@
+Thu Sep  2 02:12:20 1999  Jay Cox  (jaycox@earthlink.net)
+
+	* app/app_procs.c: free the brush dialog before freeing the brushes.
+
+	* app/blend.c, app/bucket_fill.c: don't include brush_select.h
+
+	* app/brush_select.[ch]: add the ability to delete generated brushes.
+
+	* app/gimpbrushgenerated.c: save the brush parameters on seperate lines.
+
+	* app/gimpbrushlist.c: make sure we don't overwrite other brush
+	files when saving newly created brushes.
+
 Wed Sep  1 14:50:29 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* libgimp/Makefile.am: add gimpmath.h

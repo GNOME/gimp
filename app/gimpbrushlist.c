@@ -217,6 +217,8 @@ brushes_free ()
 	      char *first_token;
 	      char *token;
 	      char *path;
+	      FILE *tmp_fp;
+	      int  unum = 0;
 
 	      if (brush_vbr_path)
 		{
@@ -239,6 +241,15 @@ brushes_free ()
 			path = g_strdup (token);
 									 
 		      filename = g_strconcat (path, G_DIR_SEPARATOR_S, b->name, ".vbr", NULL);
+		      while ((tmp_fp = fopen(filename, "r")))
+		      { /* make sure we don't overite an existing brush */
+			fclose(tmp_fp);
+			g_free(filename);
+			filename = g_strdup_printf("%s%s%s_%d.vbr", path,
+						   G_DIR_SEPARATOR_S, b->name,
+						   unum);
+			unum++;
+		      }
 		      g_free (path);
 		    }
 		  g_free (local_path);
@@ -427,7 +438,14 @@ gimp_brush_list_add (GimpBrushList *brush_list, GimpBrush * brush)
 void
 gimp_brush_list_remove (GimpBrushList *brush_list, GimpBrush * brush)
 {
+/*  if (active_brush == brush)
+  {
+    select_brush(gimp_brush_list_get_brush_by_index(
+      brush_list, gimp_brush_list_get_brush_get_index(brush_list, brush) - 1));
+  } 
+  */
   gtk_signal_disconnect_by_data(GTK_OBJECT(brush), brush_list);
+  
   gimp_list_remove(GIMP_LIST(brush_list), brush);
 }
 

@@ -22,7 +22,6 @@
 #include "appenv.h"
 #include "asupsample.h"
 #include "blend.h"
-#include "brush_select.h"
 #include "cursorutil.h"
 #include "draw_core.h"
 #include "drawable.h"
