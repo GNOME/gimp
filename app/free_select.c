@@ -553,8 +553,10 @@ scan_convert_helper (
       break;
     case PRECISION_FLOAT:
       scan_convert_helper_float (mask, scanlines, width, height, antialias);
+      break;
     case PRECISION_FLOAT16:
       scan_convert_helper_float16 (mask, scanlines, width, height, antialias);
+      break;
     case PRECISION_NONE:
       g_warning ("scan_convert_helper bad precision");
       break;

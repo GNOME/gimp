@@ -898,19 +898,15 @@ layer_invalidate_boundary (layer)
 }
 
 
-#define FIXME /* precision wrappers */
 int
 layer_pick_correlate (layer, x, y)
      Layer *layer;
      int x, y;
 {
-  Canvas *canvas;
-  Canvas *mask;
-  Tag layer_tag = drawable_tag (GIMP_DRAWABLE(layer));
-  int val;
-  guchar *data;
-  guint8 *d;
+  Canvas * canvas, * mask;
+  guchar * c_data, * m_data;
   gint alpha;
+  guint rc = FALSE;
 
   /*  Is the point inside the layer?
    *  First transform the point to layer coordinates...
@@ -930,32 +926,86 @@ layer_pick_correlate (layer, x, y)
       /*  Otherwise, determine if the alpha value at
        *  the given point is non-zero
        */
-      alpha = tag_num_channels (layer_tag); 
+      alpha = tag_num_channels (drawable_tag (GIMP_DRAWABLE(layer))); 
+
       canvas = drawable_data (GIMP_DRAWABLE(layer));
-      
-      canvas_portion_refro (canvas, x, y); 
-      data = canvas_portion_data (canvas, x, y);
-      d = (guint8*)data;
-      val = d[alpha]; 
-      canvas_portion_unref (canvas, x, y);
-      
-      
+      canvas_portion_refro (canvas, x, y);
+      c_data = canvas_portion_data (canvas, x, y);
 
       if (layer->mask)
 	{
 	  mask = GIMP_DRAWABLE(layer->mask)->tiles;
           canvas_portion_refro (mask, x, y);
-          data = canvas_portion_data (mask, x, y);
-          d = (guint8*)data;
-	  val = (val * *d ) / 255;
-          canvas_portion_unref (mask, x, y);
-	}
-
-      if (val > 63)
-	return TRUE;
+          m_data = canvas_portion_data (mask, x, y);
+        }
+      
+      switch (tag_precision (canvas_tag (canvas)))
+        {
+        case PRECISION_U8:
+          {
+            guint8 * d = (guint8*) c_data;
+            guint8 val = d[alpha];
+            if (layer->mask)
+              {
+                guint8 * m = (guint8*) m_data;
+                val = (val * *m) / 255;
+              }
+            if (val > (256/4))
+              rc = TRUE;
+          }
+          break;
+          
+        case PRECISION_U16:
+          {
+            guint16 * d = (guint16*) c_data;
+            guint16 val = d[alpha];
+            if (layer->mask)
+              {
+                guint16 * m = (guint16*) m_data;
+                val = (val * *m) / 65535;
+              }
+            if (val > (65536/4))
+              rc = TRUE;
+          }
+          break;
+          
+        case PRECISION_FLOAT:
+          {
+            gfloat * d = (gfloat*) c_data;
+            gfloat val = d[alpha];
+            if (layer->mask)
+              {
+                gfloat * m = (gfloat*) m_data;
+                val = (val * *m);
+              }
+            if (val > 0.25)
+              rc = TRUE;
+          }
+          break;
+          
+        case PRECISION_FLOAT16:
+#define FIXME /* what data type? */
+          {
+            guint8 * d = (guint8*) c_data;
+            guint8 val = d[alpha];
+            if (layer->mask)
+              {
+                guint8 * m = (guint8*) m_data;
+                val = (val * *m) / 255;
+              }
+            if (val > 63)
+              rc = TRUE;
+          }
+          break;
+          
+        }
+      
+      canvas_portion_unref (canvas, x, y);
+      if (layer->mask)
+        canvas_portion_unref (mask, x, y);
     }
 
-  return FALSE;
+  return rc;
 }
 
 

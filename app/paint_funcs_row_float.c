@@ -171,13 +171,13 @@ absdiff_row_float  (
       else
         {
           gint b;
-          gfloat diff;
+          gdouble diff;
           gfloat max = 0;
           
           for (b = 0; b < src_channels; b++)
             {
               diff = src[b] - color[b];
-              diff = abs (diff);
+              diff = fabs (diff);
               if (diff > max)
                 max = diff;
             }

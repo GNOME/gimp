@@ -205,7 +205,7 @@ absdiff_row_float16  (
       else
         {
           gint b;
-          gfloat diff;
+          gdouble diff;
           gfloat max = 0;
           
           for (b = 0; b < src_channels; b++)
@@ -213,7 +213,7 @@ absdiff_row_float16  (
 	      sb = FLT (src[b]);
 	      cb = FLT (color[b]);
               diff = sb - cb;
-              diff = abs (diff);
+              diff = fabs (diff);
               if (diff > max)
                 max = diff;
             }
