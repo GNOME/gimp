@@ -1,3 +1,10 @@
+2004-01-11  DindinX  <david@dindinx.org>
+
+	* plug-ins/common/plugindetails.c: converted GtkCList and GTKCTree to
+	GtkTreeModels/Views.  Fixed some memory leaks while I was at it.
+	Please note that this is a work in progress. This plug-in was very
+	broken, and still needs some work to be useful and less ugly.
+
 2004-01-11  Tor Lillqvist  <tml@iki.fi>
 
 	* app/config/gimpconfig-path.c: Convert to native encoding (if
