@@ -34,12 +34,32 @@
 #endif
 
 /* prototypes */
-static GtkWidget * colorsel_triangle_new (int, int, int,
-					  GimpColorSelector_Callback, void *,
-					  void **);
-static void        colorsel_triangle_free (void *);
-static void        colorsel_triangle_setcolor (void *, int, int, int, int);
+static GtkWidget * colorsel_triangle_new         (int, int, int,
+						  GimpColorSelector_Callback, void *,
+						  void **);
+static void        colorsel_triangle_free        (void *);
+static void        colorsel_triangle_setcolor    (void *, int, int, int, int);
 
+static void        colorsel_triangle_drag_begin  (GtkWidget          *widget,
+						  GdkDragContext     *context,
+						  gpointer            data);
+static void        colorsel_triangle_drag_end    (GtkWidget          *widget,
+						  GdkDragContext     *context,
+						  gpointer            data);
+static void        colorsel_triangle_drop_handle (GtkWidget          *widget, 
+						  GdkDragContext     *context,
+						  gint                x,
+						  gint                y,
+						  GtkSelectionData   *selection_data,
+						  guint               info,
+						  guint               time,
+						  gpointer            data);
+static void        colorsel_triangle_drag_handle (GtkWidget        *widget, 
+						  GdkDragContext   *context,
+						  GtkSelectionData *selection_data,
+						  guint             info,
+						  guint             time,
+						  gpointer          data);
 
 
 /* local methods */
@@ -60,6 +80,9 @@ static GimpModuleInfo info = {
     "17 Jan 1999"
 };
 
+static const GtkTargetEntry targets[] = {
+  { "application/x-color", 0 }
+};
 
 
 #define COLORWHEELRADIUS 100
@@ -97,14 +120,16 @@ struct _ColorSelect {
   gfloat                      oldval;
   gint                        mode;
   GtkWidget                  *preview;
+  GtkWidget                  *color_preview;
   GimpColorSelector_Callback  callback;
   void                       *data;
 };
 
 
+static GtkWidget * create_preview (ColorSelectP);
 static GtkWidget * create_color_preview (ColorSelectP);
 static void color_select_update_rgb_values (ColorSelectP);
-static void update_color_preview (ColorSelectP, GtkWidget *, gint);
+static void update_previews (ColorSelectP, gint);
 static void color_select_update_hsv_values (ColorSelectP);
 
 
@@ -116,7 +141,7 @@ struct main_funcs_struc {
 struct main_funcs_struc *gimp_main_funcs = NULL;
 
 static gpointer
-get_main_func(gchar *name)
+get_main_func (gchar *name)
 {
   struct main_funcs_struc *x;
   if (gimp_main_funcs == NULL)
@@ -185,14 +210,16 @@ module_unload (void *shutdown_data,
 /*************************************************************/
 /* methods */
 
-static GtkWidget * colorsel_triangle_new (int r, int g, int b,
-					  GimpColorSelector_Callback callback,
-					  void *callback_data,
-					  /* RETURNS: */
-					  void **selector_data)
+static GtkWidget * 
+colorsel_triangle_new (int r, int g, int b,
+		       GimpColorSelector_Callback callback,
+		       void *callback_data,
+		       /* RETURNS: */
+		       void **selector_data)
 {
   ColorSelectP coldata;
   GtkWidget *preview;
+  GtkWidget *color_preview;
   GtkWidget *frame;
   GtkWidget *hbox;
   GtkWidget *vbox;
@@ -213,21 +240,30 @@ static GtkWidget * colorsel_triangle_new (int r, int g, int b,
 
   /* gtk_rc_parse ("colorselrc"); */
 
-  preview = create_color_preview (coldata);
+  preview = create_preview (coldata);
   coldata->preview = preview;
+
+  color_preview = create_color_preview (coldata);
+  coldata->color_preview = color_preview;
+
+  update_previews (coldata, TRUE);
 
   *selector_data = coldata;
 
   vbox = gtk_vbox_new (FALSE, 0);
   hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, FALSE, 0);
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER (frame), preview);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, FALSE, 0); 
-  gtk_widget_show_all (hbox);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, FALSE, 0); 
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_container_add (GTK_CONTAINER (frame), color_preview);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, FALSE, 0); 
+  gtk_widget_show_all (vbox);
 
-  return vbox;
+  return hbox;
 }
 
 
@@ -240,7 +276,8 @@ colorsel_triangle_free (void *selector_data)
 
 
 static void
-colorsel_triangle_setcolor (void *selector_data, int r, int g, int b,
+colorsel_triangle_setcolor (void *selector_data, 
+			    int r, int g, int b,
 			    int set_current)
 {
   ColorSelectP coldata;
@@ -250,11 +287,9 @@ colorsel_triangle_setcolor (void *selector_data, int r, int g, int b,
   coldata->values[RED] = r;
   coldata->values[GREEN] = g;
   coldata->values[BLUE] = b;
-  color_select_update_hsv_values(coldata);
-  update_color_preview(coldata, coldata->preview, 1);
+  color_select_update_hsv_values (coldata);
+  update_previews (coldata, TRUE);
 }
-
-
 
 
 /*************************************************************/
@@ -263,7 +298,14 @@ colorsel_triangle_setcolor (void *selector_data, int r, int g, int b,
 
 /* Conversion hsv->rgb */
 
-static void color_hsv_to_rgb (gfloat hue, gfloat sat, gfloat val, guchar* red, guchar *green, guchar *blue) {
+static void 
+color_hsv_to_rgb (gfloat  hue, 
+		  gfloat  sat, 
+		  gfloat  val, 
+		  guchar *red, 
+		  guchar *green, 
+		  guchar *blue) 
+{
   gfloat f, p, q, t;
 
   if (sat == 0) {
@@ -319,8 +361,9 @@ static void color_hsv_to_rgb (gfloat hue, gfloat sat, gfloat val, guchar* red, g
     }
 }
 
-
-static void color_select_update_rgb_values (ColorSelectP csp) {
+static void 
+color_select_update_rgb_values (ColorSelectP csp) 
+{
   gfloat h, s, v;
   gfloat f, p, q, t;
 
@@ -455,9 +498,11 @@ color_select_update_hsv_values (ColorSelectP csp)
 }
 
 
-
-static void update_color_preview (ColorSelectP coldata,
-				  GtkWidget *preview, gint hue_changed) {
+static void 
+update_previews (ColorSelectP  coldata,
+		 gint          hue_changed) 
+{
+  GtkWidget *preview;
   guchar buf[3*PREVIEWSIZE];
   gint x, y, k, r2, dx, col;
   gint x0, y0;
@@ -476,6 +521,7 @@ static void update_color_preview (ColorSelectP coldata,
   vy = cos(hue + 2*M_PI/3) * COLORTRIANGLERADIUS;
 
   hue = (float) coldata->values[HUE];
+  preview = coldata->preview;
 
   if (hue_changed) {
     for (y = COLORWHEELRADIUS; y > -COLORWHEELRADIUS; y--) {
@@ -584,38 +630,28 @@ static void update_color_preview (ColorSelectP coldata,
     }
     gtk_preview_draw_row (GTK_PREVIEW (preview), buf, COLORWHEELRADIUS + x0-4, COLORWHEELRADIUS - 1 - y, 9);
   }
+  gtk_widget_draw (preview, NULL);
 
+  preview = coldata->color_preview;
   for (k=0; k < (PREVIEWSIZE * 3); k+=3) {
     buf[k]=coldata->values[RED];
     buf[k+1]=coldata->values[GREEN];
     buf[k+2]=coldata->values[BLUE];
   }
   for (y=0; y < 30; y++) {
-    gtk_preview_draw_row (GTK_PREVIEW (preview), buf, 0, y+PREVIEWSIZE, PREVIEWSIZE);
+    gtk_preview_draw_row (GTK_PREVIEW (preview), buf, 0, y, PREVIEWSIZE);
   }
-
-  gtk_widget_draw (preview, NULL);
-
-}
-
-static void
-init_color_preview (GtkWidget *preview)
-{
-  guchar buf[3*PREVIEWSIZE];
-  gint i;
-  for (i=0; i < 3*PREVIEWSIZE; i+=3)
-    buf[i]=buf[i+1]=buf[i+2]=BGCOLOR;
-  for (i=0; i < PREVIEWSIZE; i++) 
-    gtk_preview_draw_row (GTK_PREVIEW (preview), buf, 0, i, PREVIEWSIZE);
   gtk_widget_draw (preview, NULL);
 }
+
 
 /*
  * Color Preview
  */
 
 static gint
-color_selection_callback(GtkWidget *widget, GdkEvent *event)
+color_selection_callback (GtkWidget *widget, 
+			  GdkEvent  *event)
 {
   ColorSelectP coldata;
   gint x,y, mousex, mousey;
@@ -646,13 +682,13 @@ color_selection_callback(GtkWidget *widget, GdkEvent *event)
       break;
 
     default:
-      gtk_widget_get_pointer(widget, &x, &y);
+      gtk_widget_get_pointer (widget, &x, &y);
       x = x - COLORWHEELRADIUS - 1;
       y = - y + COLORWHEELRADIUS + 1;
       break;
   }
 
-  gtk_widget_get_pointer(widget, &mousex, &mousey);
+  gtk_widget_get_pointer (widget, &mousex, &mousey);
   if ((event->type == GDK_MOTION_NOTIFY &&
         (mousex != event->motion.x || mousey != event->motion.y)))
      return FALSE;
@@ -660,7 +696,7 @@ color_selection_callback(GtkWidget *widget, GdkEvent *event)
   if (coldata->mode == 1) {
     coldata->values[HUE] = ( (int) (atan2 (x, y) / M_PI * 180) + 360 ) %360;
     color_select_update_rgb_values(coldata);
-    update_color_preview(coldata, widget, 1);
+    update_previews (coldata, TRUE);
   }
   if (coldata->mode == 2) {
     hue = (float) coldata->values[HUE] * M_PI / 180;
@@ -695,11 +731,10 @@ color_selection_callback(GtkWidget *widget, GdkEvent *event)
       }
     }
 
-    coldata->values[SATURATION]=100*sat+0.5;
-    coldata->values[VALUE]=100*val+0.5;
-    color_select_update_rgb_values(coldata);
-    update_color_preview(coldata, widget, 0);
-
+    coldata->values[SATURATION] = 100*sat+0.5;
+    coldata->values[VALUE] = 100*val+0.5;
+    color_select_update_rgb_values (coldata);
+    update_previews (coldata, FALSE);
   }
 
   /* callback the user */
@@ -712,14 +747,16 @@ color_selection_callback(GtkWidget *widget, GdkEvent *event)
 }
 
 static GtkWidget *
-create_color_preview (ColorSelectP coldata)
+create_preview (ColorSelectP coldata)
 {
   GtkWidget *preview;
+  guchar buf[3*PREVIEWSIZE];
+  gint i;
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_set_dither (GTK_PREVIEW (preview), GDK_RGB_DITHER_MAX);
   gtk_widget_set_events( GTK_WIDGET(preview), PREVIEW_MASK );
-  gtk_preview_size (GTK_PREVIEW (preview), PREVIEWSIZE, PREVIEWSIZE + 30 /* BAD! */);
+  gtk_preview_size (GTK_PREVIEW (preview), PREVIEWSIZE, PREVIEWSIZE);
 
   gtk_object_set_user_data (GTK_OBJECT (preview), coldata);
 
@@ -729,10 +766,150 @@ create_color_preview (ColorSelectP coldata)
 		      GTK_SIGNAL_FUNC(color_selection_callback), NULL);
   gtk_signal_connect (GTK_OBJECT(preview), "button_release_event",
 		      GTK_SIGNAL_FUNC(color_selection_callback), NULL);
-  init_color_preview (preview);
-  update_color_preview (coldata, preview, 1);
+
+  for (i=0; i < 3*PREVIEWSIZE; i+=3)
+    buf[i]=buf[i+1]=buf[i+2] = BGCOLOR;
+  for (i=0; i < PREVIEWSIZE; i++) 
+    gtk_preview_draw_row (GTK_PREVIEW (preview), buf, 0, i, PREVIEWSIZE);
+  gtk_widget_draw (preview, NULL);
 
   return preview;
 }
 
+static GtkWidget *
+create_color_preview (ColorSelectP coldata)
+{
+  GtkWidget *preview;
+
+  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_set_dither (GTK_PREVIEW (preview), GDK_RGB_DITHER_MAX);
+  gtk_preview_size (GTK_PREVIEW (preview), PREVIEWSIZE, 30 /* BAD! */);
+
+  gtk_drag_dest_set (preview,
+		     GTK_DEST_DEFAULT_HIGHLIGHT |
+		     GTK_DEST_DEFAULT_MOTION |
+		     GTK_DEST_DEFAULT_DROP,
+		     targets, 1,
+		     GDK_ACTION_COPY);
+  gtk_drag_source_set (preview, 
+		       GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
+		       targets, 1,
+		       GDK_ACTION_COPY | GDK_ACTION_MOVE);
+  gtk_signal_connect (GTK_OBJECT (preview),
+		      "drag_begin",
+		      GTK_SIGNAL_FUNC (colorsel_triangle_drag_begin),
+		      coldata);
+  gtk_signal_connect (GTK_OBJECT (preview),
+		      "drag_end",
+		      GTK_SIGNAL_FUNC (colorsel_triangle_drag_end),
+		      coldata);
+  gtk_signal_connect (GTK_OBJECT (preview),
+		      "drag_data_get",
+		      GTK_SIGNAL_FUNC (colorsel_triangle_drag_handle),
+		      coldata);
+  gtk_signal_connect (GTK_OBJECT (preview),
+		      "drag_data_received",
+		      GTK_SIGNAL_FUNC (colorsel_triangle_drop_handle),
+		      coldata);  
+  return preview;
+}
+
+
+static void        
+colorsel_triangle_drag_begin (GtkWidget      *widget,
+			      GdkDragContext *context,
+			      gpointer        data)
+{
+  GtkWidget *window;
+  GdkColor bg;
+  ColorSelectP coldata;
+
+  coldata = (ColorSelectP) data;
+
+  window = gtk_window_new (GTK_WINDOW_POPUP);
+  gtk_widget_set_app_paintable (GTK_WIDGET (window), TRUE);
+  gtk_widget_set_usize (window, 32, 32);
+  gtk_widget_realize (window);
+  gtk_object_set_data_full (GTK_OBJECT (widget),
+			    "gimp-color-drag-window",
+			    window,
+			    (GtkDestroyNotify) gtk_widget_destroy);
+
+  bg.red = 0xff * coldata->values[RED];
+  bg.green = 0xff * coldata->values[GREEN];
+  bg.blue = 0xff *coldata->values[BLUE];
+
+  gdk_color_alloc (gtk_widget_get_colormap (window), &bg);
+  gdk_window_set_background (window->window, &bg);
+
+  gtk_drag_set_icon_widget (context, window, -2, -2);
+}
+
+
+static void        
+colorsel_triangle_drag_end (GtkWidget      *widget,
+			 GdkDragContext *context,
+			 gpointer        data)
+{
+  gtk_object_set_data (GTK_OBJECT (widget),
+		       "gimp-color-drag-window", NULL);
+}
+
+static void        
+colorsel_triangle_drop_handle (GtkWidget        *widget, 
+			    GdkDragContext   *context,
+			    gint              x,
+			    gint              y,
+			    GtkSelectionData *selection_data,
+			    guint             info,
+			    guint             time,
+			    gpointer          data)
+{
+  guint16 *vals;
+  ColorSelectP coldata;
+
+  coldata = (ColorSelectP) data;
+
+  if (selection_data->length < 0)
+    return;
+
+  if ((selection_data->format != 16) || 
+      (selection_data->length != 8))
+    {
+      g_warning ("Received invalid color data\n");
+      return;
+    }
+  
+  vals = (guint16 *)selection_data->data;
+
+  coldata->values[RED]   = vals[0] / 0xff;
+  coldata->values[GREEN] = vals[1] / 0xff;
+  coldata->values[BLUE]  = vals[2] / 0xff;
+  
+  color_select_update_hsv_values (coldata);
+  update_previews (coldata, TRUE);
+}
+
+static void        
+colorsel_triangle_drag_handle (GtkWidget        *widget, 
+			       GdkDragContext   *context,
+			       GtkSelectionData *selection_data,
+			       guint             info,
+			       guint             time,
+			       gpointer          data)
+{
+  guint16 vals[4];
+  ColorSelectP coldata;
+
+  coldata = (ColorSelectP) data;
+
+  vals[0] = coldata->values[RED] * 0xff;
+  vals[1] = coldata->values[GREEN] * 0xff;
+  vals[2] = coldata->values[BLUE] * 0xff;
+  vals[3] = 0xffff;
+
+  gtk_selection_data_set (selection_data,
+			  gdk_atom_intern ("application/x-color", FALSE),
+			  16, (guchar *)vals, 8);
+}
 

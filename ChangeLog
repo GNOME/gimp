@@ -1,3 +1,7 @@
+Sun Sep  5 22:55:52 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* modules/colorsel_triangle.c: color dnd for the triangle selector.
+
 1999-09-05  James Henstridge  <james@daa.com.au>
 
 	* plug-ins/pygimp/*: added pygimp to tree, as organised with Marc
