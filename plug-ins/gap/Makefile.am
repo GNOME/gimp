@@ -2,6 +2,8 @@
 
 pluginlibdir = $(gimpplugindir)/plug-ins
 
+SUBDIRS = gimp_1.0.2_src iter_ALT
+
 EXTRA_DIST = README README_developers TESTPROT_iter_ALT
 
 pluginlib_PROGRAMS = gap_plugins  gap_filter
@@ -39,7 +41,9 @@ gap_plugins_SOURCES = \
 	gap_exchange_image.h	\
 	gap_pdb_calls.c		\
 	gap_pdb_calls.h		\
-	resize.c
+	resize.c		\
+	resize.h		\
+	appenv.h		
 
 
 gap_filter_SOURCES = \
@@ -87,4 +91,8 @@ files:
 	    echo $$subdir/$$file; \
 	  done; \
 	done
+
+
+
+
 

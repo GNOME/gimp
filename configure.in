@@ -720,6 +720,11 @@ plug-ins/flarefx/Makefile
 plug-ins/fp/Makefile
 plug-ins/fractaltrace/Makefile
 plug-ins/gap/Makefile
+plug-ins/gap/gimp_1.0.2_src/Makefile
+plug-ins/gap/iter_ALT/Makefile
+plug-ins/gap/iter_ALT/Makefile/gen
+plug-ins/gap/iter_ALT/Makefile/mod
+plug-ins/gap/iter_ALT/Makefile/old
 plug-ins/gauss_iir/Makefile
 plug-ins/gauss_rle/Makefile
 plug-ins/gbr/Makefile
