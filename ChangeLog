@@ -1,5 +1,26 @@
 2003-09-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpitem-linked.[ch]: made gimp_item_linked_get_list()
+	and the GimpItemLinkedMask enum public. Hiding them just causes
+	code duplication.
+
+	* app/tools/gimpdrawtool.[ch]: added a GList of GimpVectors and a
+	GimpMatrix3 transformation matrix for them. Just set them with
+	gimp_draw_tool_set_vectors() and gimp_draw_tool_set_transform()
+	and chain up in your tools's GimpdrawTool::draw() implementation
+	to get the vectors drawn.
+
+	* app/tools/gimpeditselectiontool.c: use
+	gimp_item_linked_get_list() instead of traversing image->layers,
+	->channels and ->vectors manually to find the linked items.
+	Use gimp_draw_tool_set_vectors() and _set_transform() to show
+	the linked vectors while moving.
+
+	(gimp_edit_selection_tool_arrow_key): transform all linked items,
+	not just the linked layers.
+
+2003-09-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/brushes-menu.c
 	* app/gui/buffers-menu.c
 	* app/gui/channels-menu.c

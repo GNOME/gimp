@@ -26,6 +26,9 @@
 
 #include "base/boundary.h"
 
+#include "vectors/gimpstroke.h"
+#include "vectors/gimpvectors.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
@@ -43,6 +46,7 @@ static void          gimp_draw_tool_control    (GimpTool          *tool,
                                                 GimpDisplay       *gdisp);
 
 static void          gimp_draw_tool_draw       (GimpDrawTool      *draw_tool);
+static void          gimp_draw_tool_real_draw  (GimpDrawTool      *draw_tool);
 
 static inline void   gimp_draw_tool_shift_to_north_west
                                                (gdouble            x,
@@ -108,7 +112,7 @@ gimp_draw_tool_class_init (GimpDrawToolClass *klass)
 
   tool_class->control    = gimp_draw_tool_control;
 
-  klass->draw            = NULL;
+  klass->draw            = gimp_draw_tool_real_draw;
 }
 
 static void
@@ -137,6 +141,19 @@ gimp_draw_tool_finalize (GObject *object)
     {
       g_object_unref (draw_tool->gc);
       draw_tool->gc = NULL;
+    }
+
+  if (draw_tool->vectors)
+    {
+      g_list_foreach (draw_tool->vectors, (GFunc) g_object_unref, NULL);
+      g_list_free (draw_tool->vectors);
+      draw_tool->vectors = NULL;
+    }
+
+  if (draw_tool->transform)
+    {
+      g_free (draw_tool->transform);
+      draw_tool->transform = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -178,6 +195,53 @@ gimp_draw_tool_draw (GimpDrawTool *draw_tool)
   if (draw_tool->paused_count == 0 && draw_tool->gdisp)
     {
       GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
+    }
+}
+
+static void
+gimp_draw_tool_real_draw (GimpDrawTool *draw_tool)
+{
+  GList *list;
+
+  if (! draw_tool->vectors)
+    return;
+
+  for (list = draw_tool->vectors; list; list = g_list_next (list))
+    {
+      GimpVectors *vectors = list->data;
+      GimpStroke  *stroke  = NULL;
+
+      while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
+        {
+          GArray   *coords;
+          gboolean  closed;
+
+          coords = gimp_stroke_interpolate (stroke, 1.0, &closed);
+
+          if (coords->len)
+            {
+              if (draw_tool->transform)
+                {
+                  gint i;
+
+                  for (i = 0; i < coords->len; i++)
+                    {
+                      GimpCoords *curr = &g_array_index (coords, GimpCoords, i);
+
+                      gimp_matrix3_transform_point (draw_tool->transform,
+                                                    curr->x, curr->y,
+                                                    &curr->x, &curr->y);
+                    }
+                }
+
+              gimp_draw_tool_draw_strokes (draw_tool,
+                                           &g_array_index (coords,
+                                                           GimpCoords, 0),
+                                           coords->len, FALSE, FALSE);
+            }
+
+          g_array_free (coords, TRUE);
+        }
     }
 }
 
@@ -264,6 +328,50 @@ gimp_draw_tool_resume (GimpDrawTool *draw_tool)
       g_warning ("gimp_draw_tool_resume(): "
                  "called with draw_tool->paused_count == 0");
     }
+}
+
+void
+gimp_draw_tool_set_vectors (GimpDrawTool *draw_tool,
+                            GList        *vectors)
+{
+  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+
+  gimp_draw_tool_pause (draw_tool);
+
+  if (draw_tool->vectors)
+    {
+      g_list_foreach (draw_tool->vectors, (GFunc) g_object_unref, NULL);
+      g_list_free (draw_tool->vectors);
+      draw_tool->vectors = NULL;
+    }
+
+  if (vectors)
+    {
+      draw_tool->vectors = g_list_copy (vectors);
+      g_list_foreach (draw_tool->vectors, (GFunc) g_object_ref, NULL);
+    }
+
+  gimp_draw_tool_resume (draw_tool);
+}
+
+void
+gimp_draw_tool_set_transform (GimpDrawTool *draw_tool,
+                              GimpMatrix3  *transform)
+{
+  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+
+  gimp_draw_tool_pause (draw_tool);
+
+  if (draw_tool->transform)
+    {
+      g_free (draw_tool->transform);
+      draw_tool->transform = NULL;
+    }
+
+  if (transform)
+    draw_tool->transform = g_memdup (transform, sizeof (GimpMatrix3));
+
+  gimp_draw_tool_resume (draw_tool);
 }
 
 gdouble

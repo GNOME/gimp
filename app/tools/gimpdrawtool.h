@@ -59,6 +59,9 @@ struct _GimpDrawTool
   GdkLineStyle  line_style;   /**/
   GdkCapStyle   cap_style;    /**/
   GdkJoinStyle  join_style;   /**/
+
+  GList        *vectors;      /*  GimpVectors to render                  */
+  GimpMatrix3  *transform;    /*  Transformation matrix fof the vectors  */
 };
 
 struct _GimpDrawToolClass
@@ -81,6 +84,11 @@ gboolean   gimp_draw_tool_is_active                (GimpDrawTool   *draw_tool);
 
 void       gimp_draw_tool_pause                    (GimpDrawTool   *draw_tool);
 void       gimp_draw_tool_resume                   (GimpDrawTool   *draw_tool);
+
+void       gimp_draw_tool_set_vectors              (GimpDrawTool   *draw_tool,
+                                                    GList          *vectors);
+void       gimp_draw_tool_set_transform            (GimpDrawTool   *draw_tool,
+                                                    GimpMatrix3    *transform);
 
 gdouble    gimp_draw_tool_calc_distance            (GimpDrawTool   *draw_tool,
                                                     GimpDisplay    *gdisp,

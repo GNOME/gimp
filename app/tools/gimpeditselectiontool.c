@@ -36,9 +36,9 @@
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-undo.h"
+#include "core/gimpitem-linked.h"
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
-#include "core/gimplist.h"
 #include "core/gimpundostack.h"
 
 #include "display/gimpdisplay.h"
@@ -315,35 +315,42 @@ init_edit_selection (GimpTool    *tool,
 
         if (gimp_item_get_linked (GIMP_ITEM (active_drawable)))
           {
+            GList *linked;
             GList *list;
 
+            linked = gimp_item_linked_get_list (gdisp->gimage,
+                                                GIMP_ITEM (active_drawable),
+                                                GIMP_ITEM_LINKED_LAYERS);
+
             /*  Expand the rectangle to include all linked layers as well  */
-            for (list = GIMP_LIST (gdisp->gimage->layers)->list;
-                 list;
-                 list = g_list_next (list))
+            for (list = linked; list; list = g_list_next (list))
               {
                 GimpItem *item = list->data;
+                gint      x3, y3;
+                gint      x4, y4;
 
-                if ((item != (GimpItem *) active_drawable) &&
-                    gimp_item_get_linked (item))
-                  {
-                    gint x3, y3, x4, y4;
+                gimp_item_offsets (item, &x3, &y3);
 
-                    gimp_item_offsets (item, &x3, &y3);
+                x4 = x3 + gimp_item_width  (item);
+                y4 = y3 + gimp_item_height (item);
 
-                    x4 = x3 + gimp_item_width  (item);
-                    y4 = y3 + gimp_item_height (item);
-
-                    if (x3 < x1)
-                      x1 = x3;
-                    if (y3 < y1)
-                      y1 = y3;
-                    if (x4 > x2)
-                      x2 = x4;
-                    if (y4 > y2)
-                      y2 = y4;
-                  }
+                if (x3 < x1)
+                  x1 = x3;
+                if (y3 < y1)
+                  y1 = y3;
+                if (x4 > x2)
+                  x2 = x4;
+                if (y4 > y2)
+                  y2 = y4;
               }
+
+            g_list_free (linked);
+
+            linked = gimp_item_linked_get_list (gdisp->gimage,
+                                                GIMP_ITEM (active_drawable),
+                                                GIMP_ITEM_LINKED_VECTORS);
+            gimp_draw_tool_set_vectors (GIMP_DRAW_TOOL (edit_select), linked);
+            g_list_free (linked);
           }
         break;
       }
@@ -433,35 +440,27 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
           edit_select->edit_type == EDIT_LAYER_TRANSLATE &&
           gimp_item_get_linked (GIMP_ITEM (layer)))
         {
-          GList    *list;
-          GimpItem *item;
-
           /*  translate all linked channels and vectors as well  */
-          for (list = GIMP_LIST (gdisp->gimage->channels)->list;
-               list;
-               list = g_list_next (list))
-            {
-              item = (GimpItem *) list->data;
 
-              if (gimp_item_get_linked (item))
-                gimp_item_translate (item,
-                                     edit_select->cumlx,
-                                     edit_select->cumly,
-                                     TRUE);
+          GList *linked;
+          GList *list;
+
+          linked = gimp_item_linked_get_list (gdisp->gimage,
+                                              GIMP_ITEM (layer),
+                                              GIMP_ITEM_LINKED_CHANNELS |
+                                              GIMP_ITEM_LINKED_VECTORS);
+
+          for (list = linked; list; list = g_list_next (list))
+            {
+              GimpItem *item = list->data;
+
+              gimp_item_translate (item,
+                                   edit_select->cumlx,
+                                   edit_select->cumly,
+                                   TRUE);
             }
 
-          for (list = GIMP_LIST (gdisp->gimage->vectors)->list;
-               list;
-               list = g_list_next (list))
-            {
-              item = (GimpItem *) list->data;
-
-              if (gimp_item_get_linked (item))
-                gimp_item_translate (item,
-                                     edit_select->cumlx,
-                                     edit_select->cumly,
-                                     TRUE);
-            }
+          g_list_free (linked);
         }
 
       gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
@@ -564,18 +563,23 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 
               if (gimp_item_get_linked (active_item))
                 {
+                  /*  translate all linked layers as well  */
+
+                  GList *linked;
                   GList *list;
 
-                  /*  translate all linked items as well  */
-                  for (list = GIMP_LIST (gdisp->gimage->layers)->list;
-                       list;
-                       list = g_list_next (list))
+                  linked = gimp_item_linked_get_list (gdisp->gimage,
+                                                      active_item,
+                                                      GIMP_ITEM_LINKED_LAYERS);
+
+                  for (list = linked; list; list = g_list_next (list))
                     {
                       GimpItem *item = list->data;
 
-                      if (item != active_item && gimp_item_get_linked (item))
-                        gimp_item_translate (item, xoffset, yoffset, TRUE);
+                      gimp_item_translate (item, xoffset, yoffset, TRUE);
                     }
+
+                  g_list_free (linked);
                 }
 
               if (floating_layer)
@@ -654,6 +658,16 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
                                 ", ",
                                 edit_select->cumly);
 
+  {
+    GimpMatrix3 transform;
+
+    gimp_matrix3_identity (&transform);
+    gimp_matrix3_translate (&transform,
+                            edit_select->cumlx, edit_select->cumly);
+
+    gimp_draw_tool_set_transform (GIMP_DRAW_TOOL (tool), &transform);
+  }
+
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
@@ -713,34 +727,36 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 
         if (gimp_item_get_linked (active_item))
           {
+            /*  Expand the rectangle to include all linked layers as well  */
+
+            GList *linked;
             GList *list;
 
-            /*  Expand the rectangle to include all linked layers as well  */
-            for (list = GIMP_LIST (gdisp->gimage->layers)->list;
-                 list;
-                 list = g_list_next (list))
+            linked = gimp_item_linked_get_list (gdisp->gimage, active_item,
+                                                GIMP_ITEM_LINKED_LAYERS);
+
+            for (list = linked; list; list = g_list_next (list))
               {
                 GimpItem *item = list->data;
+                gint      x3, y3;
+                gint      x4, y4;
 
-                if (item != active_item && gimp_item_get_linked (item))
-                  {
-                    gint x3, y3, x4, y4;
+                gimp_item_offsets (item, &x3, &y3);
 
-                    gimp_item_offsets (item, &x3, &y3);
+                x4 = x3 + gimp_item_width  (item);
+                y4 = y3 + gimp_item_height (item);
 
-                    x4 = x3 + gimp_item_width  (item);
-                    y4 = y3 + gimp_item_height (item);
-
-                    if (x3 < x1)
-                      x1 = x3;
-                    if (y3 < y1)
-                      y1 = y3;
-                    if (x4 > x2)
-                      x2 = x4;
-                    if (y4 > y2)
-                      y2 = y4;
-                  }
+                if (x3 < x1)
+                  x1 = x3;
+                if (y3 < y1)
+                  y1 = y3;
+                if (x4 > x2)
+                  x2 = x4;
+                if (y4 > y2)
+                  y2 = y4;
               }
+
+            g_list_free (linked);
           }
 
         gimp_draw_tool_draw_rectangle (draw_tool,
@@ -759,6 +775,8 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
                                     edit_select->cumly);
       break;
     }
+
+  GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
 }
 
 /* could move this function to a more central location
@@ -1043,21 +1061,9 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
 
             gimp_item_translate (active_item, inc_x, inc_y, push_undo);
 
+            /*  translate all linked items as well  */
             if (gimp_item_get_linked (active_item))
-              {
-                GList *list;
-
-                /*  translate all linked items as well  */
-                for (list = GIMP_LIST (gdisp->gimage->layers)->list;
-                     list;
-                     list = g_list_next (list))
-                  {
-                    GimpItem *item = list->data;
-
-                    if (item != active_item && gimp_item_get_linked (item))
-                      gimp_item_translate (item, inc_x, inc_y, push_undo);
-                  }
-              }
+              gimp_item_linked_translate (active_item, inc_x, inc_y, push_undo);
 
             if (floating_layer)
               floating_sel_rigor (floating_layer, push_undo);
