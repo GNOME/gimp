@@ -72,6 +72,8 @@ safe_mode_init (void)
 {
   gchar *tool_plug_in_path, *free_me;
 
+  g_type_init();
+
   g_message ("tool-safe-mode init called");
 
   free_me = tool_plug_in_path = gimp_gimprc_query ("tool-plug-in-path");

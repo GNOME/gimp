@@ -22,6 +22,8 @@
 #include <gmodule.h>
 #include "gimptooltypes.h"
 
+#define GIMP_TOOL_MODULE_ABI_VERSION 0x1
+
 #define GIMP_TYPE_TOOL_MODULE            (gimp_tool_module_get_type ())
 #define GIMP_TOOL_MODULE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_MODULE, GimpToolModule))
 #define GIMP_TOOL_MODULE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_MODULE, GimpToolModuleClass))
@@ -44,6 +46,7 @@ struct _GimpToolModule
   				gpointer                  register_data);
                           
   gboolean   (* register_type) (GimpToolModule           *module);
+  guint      (* abi_version)   (void);
 
 };
 
