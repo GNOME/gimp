@@ -1,12 +1,12 @@
 # Norwegian translation of gimp-modules.
-# Copyright (C) 1999,2000 Free Software Foundation, Inc.
-# Kjartan Maraas <kmaraas@gnome.org>, 1999,2000.
+# Copyright (C) 1999-2001 Free Software Foundation, Inc.
+# Kjartan Maraas <kmaraas@gnome.org>, 1999-2001.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.25\n"
-"POT-Creation-Date: 2000-12-18 23:30-0800\n"
-"PO-Revision-Date: 2000-09-04 22:34+0200\n"
+"Project-Id-Version: GIMP 1.2.1\n"
+"POT-Creation-Date: 2001-01-02 11:59+0100\n"
+"PO-Revision-Date: 2001-01-02 12:01+01:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -39,7 +39,7 @@ msgstr "Lagre som en animasjon"
 
 #: libgimp/gimpexport.c:179 libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
 msgid "Flatten Image"
-msgstr "Flate ut bilde"
+msgstr "Flat ut bilde"
 
 #: libgimp/gimpexport.c:196
 msgid "can't handle transparency"
@@ -70,7 +70,7 @@ msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Konverter til indeksert og bruk standard\n"
+"Konvertér til indeksert og bruk standard\n"
 "innstillinger (Gjør det manuelt for å\n"
 "finjustere resultatet)"
 
@@ -101,15 +101,15 @@ msgstr "Legg til alfakanal"
 #. the dialog
 #: libgimp/gimpexport.c:333
 msgid "Export File"
-msgstr "Eksporter fil"
+msgstr "Eksportér fil"
 
 #: libgimp/gimpexport.c:338
 msgid "Export"
-msgstr "Eksporter"
+msgstr "Eksportér"
 
 #: libgimp/gimpexport.c:340
 msgid "Ignore"
-msgstr "Ignorer"
+msgstr "Ignorér"
 
 #: libgimp/gimpexport.c:342 libgimp/gimpquerybox.c:204
 #: libgimp/gimpquerybox.c:260 libgimp/gimpquerybox.c:318
@@ -205,10 +205,7 @@ msgstr "prosent"
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
-msgstr ""
-"Hvis \"Tid\" knappen ikke er trykket ned, bruker du denne verdieb som "
-"startverdi for generering av tilfeldige tall - dette lar deg gjenta en gitt "
-"\"tilfeldig\" operasjon"
+msgstr "Hvis \"Tid\" knappen ikke er trykket ned, bruker du denne verdien som startverdi for generering av tilfeldige tall - dette lar deg gjenta en gitt \"tilfeldig\" operasjon"
 
 #: libgimp/gimpwidgets.c:720
 msgid "Time"
