@@ -1,5 +1,8 @@
 Sun Mar 15 06:15:37 1998  Tim Janik  <timj@gimp.org>
 
+	* app/gimage.c (gimage_remove_layer): check whether the removed layer
+	is floating_sel *and* check whether it is active_layer.
+
 	* plug-ins/exchange/exchange.c (doDialog): also destroy the main dialog
 	if the "Cancel" button is clicked.
 

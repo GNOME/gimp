@@ -2193,7 +2193,7 @@ gimage_remove_layer (GImage *gimage, Layer * layer)
 
 	  floating_sel_reset (layer);
 	}
-      else if (gimage->active_layer == layer)
+      if (gimage->active_layer == layer)
 	{
 	  if (gimage->layers)
 	    gimage->active_layer = (Layer *) gimage->layer_stack->data;
