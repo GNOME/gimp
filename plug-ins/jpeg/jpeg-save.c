@@ -184,6 +184,7 @@
 #define DEFAULT_RESTART     0
 #define DEFAULT_DCT         0
 #define DEFAULT_PREVIEW     0
+#define DEFAULT_EXIF        1
 
 /* sg - these should not be global... */
 static gint32 volatile  image_ID_global       = -1;
@@ -205,6 +206,7 @@ typedef struct
   gint    restart;
   gint    dct;
   gint    preview;
+  gint    save_exif;
 } JpegSaveVals;
 
 typedef struct
@@ -284,7 +286,8 @@ static JpegSaveVals jsvals =
   DEFAULT_SUBSMP,
   DEFAULT_RESTART,
   DEFAULT_DCT,
-  DEFAULT_PREVIEW
+  DEFAULT_PREVIEW,
+  DEFAULT_EXIF
 };
 
 static JpegSaveInterface jsint =
@@ -477,6 +480,7 @@ run (const gchar      *name,
       jsvals.restart     = DEFAULT_RESTART;
       jsvals.dct         = DEFAULT_DCT;
       jsvals.preview     = DEFAULT_PREVIEW;
+      jsvals.save_exif   = DEFAULT_EXIF;
 
       switch (run_mode)
 	{
@@ -498,6 +502,7 @@ run (const gchar      *name,
 	      jsvals.restart     = ((JpegSaveVals *)parasite->data)->restart;
 	      jsvals.dct         = ((JpegSaveVals *)parasite->data)->dct;
 	      jsvals.preview     = ((JpegSaveVals *)parasite->data)->preview;
+	      jsvals.save_exif   = ((JpegSaveVals *)parasite->data)->save_exif;
 	      gimp_parasite_free (parasite);
 	    }
 
@@ -1450,16 +1455,19 @@ save_image (const gchar *filename,
   jpeg_start_compress (&cinfo, TRUE);
 
 #ifdef HAVE_EXIF
-  if (exif_data)
-    {
-      guchar *exif_buf;
-      guint   exif_buf_len;
+  if (jsvals.save_exif)
+  {
+    if (exif_data)
+      {
+        guchar *exif_buf;
+        guint   exif_buf_len;
 
-      exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
-      jpeg_write_marker (&cinfo, 0xe1,
-                         exif_buf, exif_buf_len);
-      free (exif_buf);
-    }
+        exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
+        jpeg_write_marker (&cinfo, 0xe1,
+                           exif_buf, exif_buf_len);
+        free (exif_buf);
+      }
+  }
 #endif
 
   /* Step 4.1: Write the comment out - pw */
@@ -1647,6 +1655,9 @@ save_dialog (void)
   GtkWidget     *toggle;
   GtkWidget     *abox;
   GtkObject     *scale_data;
+#ifdef HAVE_EXIF
+  GtkWidget     *exif_toggle;
+#endif
 
   GtkWidget     *progressive;
   GtkWidget     *baseline;
@@ -1719,7 +1730,7 @@ save_dialog (void)
 
   make_preview ();
 
-  table = gimp_parameter_settings_new (main_vbox, 9, 3);
+  table = gimp_parameter_settings_new (main_vbox, 10, 3);
 
   label = gtk_label_new (_("Quality:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
@@ -1857,6 +1868,17 @@ save_dialog (void)
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (baseline),
 				jsvals.baseline);
+
+#ifdef HAVE_EXIF
+  exif_toggle = gtk_check_button_new_with_label (_("Save EXIF data"));
+  gtk_table_attach (GTK_TABLE (table), exif_toggle, 0, 2, 7, 8,
+		    GTK_FILL, 0, 0, 0);
+  gtk_widget_show (exif_toggle);
+
+  g_signal_connect (exif_toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &jsvals.save_exif);
+#endif
 
   /* Subsampling */
   menu = 
