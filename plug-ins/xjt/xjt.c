@@ -1644,7 +1644,7 @@ save_xjt_image (gchar   *filename,
    l_fp_prp = fopen(l_prop_file, "w");
    if(l_fp_prp == NULL)
    {
-     g_message (_("Can't open : %s"), l_prop_file);
+     g_message (_("Can't open: %s"), l_prop_file);
      goto cleanup;
    }
    
@@ -3121,7 +3121,7 @@ t_image_props * p_load_prop_file(gchar *prop_filename)
   }
   if(l_filesize == 0)
   {
-    g_message(_("Error, XJT propertyfile %s is empty"), prop_filename);
+    g_message(_("Error: XJT propertyfile %s is empty"), prop_filename);
     goto cleanup;
   }
 

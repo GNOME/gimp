@@ -147,6 +147,7 @@ typedef struct
   SFArgValue  *arg_defaults;
   SFArgValue  *arg_values;
   gint32       image_based;
+  GParamDef   *args;     /*  used only temporary until installed  */
 } SFScript;
 
 typedef struct
@@ -164,6 +165,12 @@ extern long  nlength (LISP obj);
  *  Local Functions
  */
 
+static gint      script_fu_install_script    (gpointer  foo,
+					      SFScript *script,
+					      gpointer  bar);
+static gint      script_fu_remove_script     (gpointer  foo,
+					      SFScript *script,
+					      gpointer  bar);
 static void       script_fu_script_proc      (gchar     *name,
 					      gint       nparams,
 					      GParam    *params,
@@ -245,7 +252,7 @@ static gboolean     current_command_enabled = FALSE;
 static gint         command_count           = 0;
 static gint         consec_command_count    = 0;
 static gchar       *last_command            = NULL;
-static GList       *script_list             = NULL;
+static GTree       *script_list             = NULL;
 
 extern gchar        siod_err_msg[];
 
@@ -273,21 +280,16 @@ script_fu_find_scripts (void)
   /*  Make sure to clear any existing scripts  */
   if (script_list != NULL)
     {
-      GList *list;
-      SFScript *script;
-
-      list = script_list;
-      while (list)
-	{
-	  script = (SFScript *) list->data;
-	  script_fu_free_script (script);
-	  list = list->next;
-	}
-
-      if (script_list)
-	g_list_free (script_list);
-      script_list = NULL;
+      g_tree_traverse (script_list, 
+		       (GTraverseFunc)script_fu_remove_script, G_IN_ORDER, NULL);
+      g_tree_destroy (script_list);
     }
+
+#ifdef ENABLE_NLS
+  script_list = g_tree_new ((GCompareFunc)strcoll);
+#else
+  script_list = g_tree_new ((GCompareFunc)strcmp);
+#endif
 
   return_vals = gimp_run_procedure ("gimp_gimprc_query",
 				    &nreturn_vals,
@@ -381,17 +383,21 @@ script_fu_find_scripts (void)
 	  token = strtok (NULL, G_SEARCHPATH_SEPARATOR_S);
 	} /* while */
 
-      g_free(local_path);
+      g_free (local_path);
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
+
+  /*  now that all scripts are read in and sorted, tell gimp about them  */
+  g_tree_traverse (script_list, 
+		   (GTraverseFunc)script_fu_install_script, G_IN_ORDER, NULL);
 }
 
 LISP
 script_fu_add_script (LISP a)
 {
-  SFScript *script;
   GParamDef *args;
+  SFScript  *script;
   gchar *val;
   gint i;
   guchar color[3];
@@ -400,7 +406,6 @@ script_fu_add_script (LISP a)
   LISP brush_list;
   LISP option_list;
   gchar *s;
-  gchar *menu_path = NULL;
 
   /*  Check the length of a  */
   if (nlength (a) < 7)
@@ -427,10 +432,6 @@ script_fu_add_script (LISP a)
   val = get_c_string (car (a));
   script->description = g_strdup (val);
   a = cdr (a);
-
-  /* Allow scripts with no menus */
-  if (strncmp (val, "<None>", 6) != 0)
-      menu_path = script->description;
 
   /*  Find the script help  */
   val = get_c_string (car (a));
@@ -475,7 +476,7 @@ script_fu_add_script (LISP a)
 
   script->args_widgets = NULL;
   script->arg_types    = g_new (SFArgType, script->num_args);
-  script->arg_labels   = g_new (char *, script->num_args);
+  script->arg_labels   = g_new (gchar *, script->num_args);
   script->arg_defaults = g_new0 (SFArgValue, script->num_args);
   script->arg_values   = g_new0 (SFArgValue, script->num_args);
 
@@ -682,7 +683,6 @@ script_fu_add_script (LISP a)
 		   * in the values area. We could free it later but the
 		   * default one must hang around.
 		   */
-
 		  script->arg_values[i].sfa_brush.name = g_strdup(script->arg_defaults[i].sfa_brush.name);
 
 		  args[i + 1].type = PARAM_STRING;
@@ -729,22 +729,8 @@ script_fu_add_script (LISP a)
 	}
     }
 
-  gimp_install_temp_proc (script->pdb_name,
-                          script->description,
-                          script->help,
-                          script->author,
-                          script->copyright,
-                          script->date,
-                          menu_path,
-                          script->img_types,
-                          PROC_TEMPORARY,
-                          script->num_args + 1, 0,
-                          args, NULL,
-                          script_fu_script_proc);
-
-  g_free (args);
-
-  script_list = g_list_append (script_list, script);
+  script->args = args;
+  g_tree_insert (script_list, gettext (script->description), script);
 
   return NIL;
 }
@@ -779,6 +765,55 @@ script_fu_report_cc (gchar *command)
   if (current_command_enabled == TRUE)
     gdk_flush ();
 }
+
+
+/* 
+ *  The following function is a GTraverseFunction, Please 
+ *  note that it frees the script->args strcuture.  --Sven 
+ */
+static gint
+script_fu_install_script (gpointer  foo,
+			  SFScript *script,
+			  gpointer  bar)
+{
+  gchar *menu_path = NULL;
+
+  /* Allow scripts with no menus */
+  if (strncmp (script->description, "<None>", 6) != 0)
+    menu_path = script->description;
+
+  gimp_install_temp_proc (script->pdb_name,
+                          script->description,
+                          script->help,
+                          script->author,
+                          script->copyright,
+                          script->date,
+                          menu_path,
+                          script->img_types,
+                          PROC_TEMPORARY,
+                          script->num_args + 1, 0,
+                          script->args, NULL,
+                          script_fu_script_proc);
+  g_free (script->args);
+  script->args = NULL;
+
+  return FALSE;
+}
+
+/* 
+ *  The following function is a GTraverseFunction.
+ */
+static gint
+script_fu_remove_script (gpointer  foo,
+			 SFScript *script,
+			 gpointer  bar)
+{
+  script_fu_free_script (script);
+
+  return FALSE;
+}
+
+
 
 static void
 script_fu_script_proc (gchar    *name,
@@ -970,23 +1005,34 @@ script_fu_script_proc (gchar    *name,
   values[0].data.d_status = status;
 }
 
+/* this is a GTraverseFunction */
+static gint
+script_fu_lookup_script (gpointer  *foo,
+			 SFScript  *script,
+			 gchar    **name)
+{
+  if (strcmp (script->pdb_name, *name) == 0)
+    {  
+      /* store the script in the name pointer and stop the traversal */
+      *name = (gchar *)script;
+      return TRUE;
+    }
+  else
+    return FALSE;
+}
+
 static SFScript *
 script_fu_find_script (gchar *pdb_name)
 {
-  GList *list;
-  SFScript *script;
-
-  list = script_list;
-  while (list)
-    {
-      script = (SFScript *) list->data;
-      if (! strcmp (script->pdb_name, pdb_name))
-	return script;
-
-      list = list->next;
-    }
-
-  return NULL;
+  gchar *script;
+  
+  script = pdb_name;
+  g_tree_traverse (script_list, 
+		   (GTraverseFunc)script_fu_lookup_script, G_IN_ORDER, &script);
+  if (script == pdb_name)
+    return NULL;
+  else
+    return (SFScript *)script;
 }
 
 static void

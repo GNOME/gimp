@@ -557,8 +557,6 @@ static GimpItemFactoryEntry image_entries[] =
     NULL, NULL },
   { { N_("/Filters/Toys"), NULL, NULL, 0, "<Branch>" },
     NULL, NULL },
-  /*  <Image>/Script-Fu  */
-
 };
 static guint n_image_entries = (sizeof (image_entries) /
 				sizeof (image_entries[0]));
@@ -1020,11 +1018,31 @@ menus_reorder_plugins (void)
 	}
     }
 
-  /*  Move "<Image>/Filters/Filter all Layers..." before the separator  */
+  /*  Move all menu items under "<Image>/Filters" which are not submenus or
+   *  separators to the top of the menu
+   */
+  pos = 3;
   menu_item = gtk_item_factory_get_widget (image_factory,
 					   "/Filters/Filter all Layers...");
-  if (menu_item && menu_item->parent)
-    gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, 3);
+  if (menu_item && menu_item->parent && GTK_IS_MENU (menu_item->parent))
+    {
+      menu = menu_item->parent;
+
+      for (list = g_list_nth (GTK_MENU_SHELL (menu)->children, pos); list;
+	   list = g_list_next (list))
+	{
+	  menu_item = GTK_WIDGET (list->data);
+
+	  if (! GTK_MENU_ITEM (menu_item)->submenu &&
+	      GTK_IS_LABEL (GTK_BIN (menu_item)->child))
+	    {
+	      gtk_menu_reorder_child (GTK_MENU (menu_item->parent),
+				      menu_item, pos);
+	      list = g_list_nth (GTK_MENU_SHELL (menu)->children, pos);
+	      pos++;
+	    }
+	}
+    }
 
   /*  Reorder Rotate plugin menu entries */
   pos = 2;
@@ -1144,6 +1162,9 @@ static void
 menus_tools_create (ToolInfo *tool_info)
 {
   GimpItemFactoryEntry entry;
+
+  if (tool_info->menu_path == NULL)
+    return;
 
   entry.entry.path            = tool_info->menu_path;
   entry.entry.accelerator     = tool_info->menu_accel;
@@ -1642,9 +1663,7 @@ menus_init (void)
 
   for (i = 0; i < num_tools; i++)
     {
-      /* FIXME this need to use access functions to check a flag */
-      if (tool_info[i].menu_path)
-	menus_tools_create (&tool_info[i]);
+      menus_tools_create (&tool_info[i]);
     }
 
   /*  reorder <Image>/Image/Colors  */

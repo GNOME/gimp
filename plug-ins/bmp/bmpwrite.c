@@ -101,7 +101,7 @@ WriteBMP (gchar  *filename,
     case INDEXED_IMAGE:
       break;
     default:
-      g_message(_("bmp: cannot operate on unknown image types or alpha images"));
+      g_message(_("BMP: cannot operate on unknown image types or alpha images"));
       return STATUS_EXECUTION_ERROR;
       break;
     }
@@ -164,7 +164,7 @@ WriteBMP (gchar  *filename,
   outfile = fopen (filename, "wb");
   if (!outfile)
     {
-      g_message (_("can't open %s\n"), filename);
+      g_message (_("Can't open %s"), filename);
       return STATUS_EXECUTION_ERROR;
     }
 

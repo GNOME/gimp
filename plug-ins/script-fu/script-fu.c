@@ -337,7 +337,6 @@ init_procedures (void)
 	  convert_string (proc_name);
 
 	  /*  create a new scheme func that calls gimp-proc-db-call  */
-
 	  for (j = 0; j < nparams; j++)
 	    {
 	      arg_name = g_strdup (params[j].name);
@@ -516,7 +515,9 @@ marshall_proc_db_call (LISP a)
 
   /*  Make sure there are arguments  */
   if (a == NIL)
-    return my_err ("Procedure database argument marshaller was called with no arguments.  The procedure to be executed and the arguments it requires (possibly none) must be specified.", NIL);
+    return my_err ("Procedure database argument marshaller was called with no arguments. "
+		   "The procedure to be executed and the arguments it requires "
+		   "(possibly none) must be specified.", NIL);
 
   /*  Derive the pdb procedure name from the argument or first argument of a list  */
   if (TYPEP (a, tc_cons))

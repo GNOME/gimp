@@ -109,6 +109,15 @@ struct _PlugInBlocked
 };
 
 
+typedef struct _PlugInMenuEntry PlugInMenuEntry;
+
+struct _PlugInMenuEntry
+{
+  PlugInProcDef *proc_def;
+  gchar         *domain;
+};
+
+
 static gboolean plug_in_write             (GIOChannel	     *channel,
 					   guint8            *buf,
 				           gulong             count);
@@ -131,6 +140,9 @@ static void plug_in_query                 (gchar             *filename,
 				           PlugInDef         *plug_in_def);
 static void plug_in_add_to_db             (void);
 static void plug_in_make_menu             (void);
+static gint plug_in_make_menu_entry       (gpointer           foo,
+					   PlugInMenuEntry   *menu_entry,
+					   gpointer           bar);
 static void plug_in_callback              (GtkWidget         *widget,
 					   gpointer           client_data);
 static void plug_in_proc_def_insert       (PlugInProcDef     *proc_def,
@@ -1726,8 +1738,8 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
   PlugInDef *plug_in_def = NULL;
   PlugInProcDef *proc_def;
   ProcRecord *proc = NULL;
+  PlugInMenuEntry *menu_entry;
   GSList *tmp = NULL;
-  GimpItemFactoryEntry entry;
   gchar *prog = NULL;
   gboolean add_proc_def;
   gint i;
@@ -1879,7 +1891,7 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
   proc_def->image_types = g_strdup (proc_install->image_types);
   proc_def->image_types_val = plug_in_image_types_parse (proc_def->image_types);
   /* Install temp one use todays time */
-  proc_def->mtime = time(NULL);
+  proc_def->mtime = time (NULL);
 
   proc = &proc_def->db_info;
 
@@ -1924,7 +1936,8 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 
     case PDB_TEMPORARY:
       if (add_proc_def)
-	current_plug_in->temp_proc_defs = g_slist_prepend (current_plug_in->temp_proc_defs, proc_def);
+	current_plug_in->temp_proc_defs = 
+	  g_slist_prepend (current_plug_in->temp_proc_defs, proc_def);
 
       proc_defs = g_slist_append (proc_defs, proc_def);
       proc->exec_method.temporary.plug_in = (void *) current_plug_in;
@@ -1933,32 +1946,21 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
       /*  If there is a menu path specified, create a menu entry  */
       if (proc_install->menu_path)
 	{
-	  gchar *help_page;
-
-	  help_page = g_strconcat ("filters/",
-				   g_basename (proc_def->prog),
-				   ".html",
-				   NULL);
-	  g_strdown (help_page);
-
-	  entry.entry.path = proc_install->menu_path;
-	  entry.entry.accelerator = NULL;
-	  entry.entry.callback = plug_in_callback;
-	  entry.entry.callback_action = 0;
-	  entry.entry.item_type = NULL;
-	  entry.help_page = help_page;
-	  entry.description = NULL;
+	  menu_entry = g_new (PlugInMenuEntry, 1);
+	  menu_entry->proc_def = proc_def;
 
 	  /* Below we use a hack to allow translations of Script-Fu paths.
              Would be nice if we could solve this properly, but I haven't 
              found a way yet ...  (Sven) */
-
 	  if (plug_in_def && plug_in_def->locale_domain)
-	    menus_create_item_from_full_path (&entry, plug_in_def->locale_domain, proc);
+	    menu_entry->domain = plug_in_def->locale_domain;
 	  else if (strncmp (proc_def->db_info.name, "script_fu", 9) == 0)
-	    menus_create_item_from_full_path (&entry, "gimp-script-fu", proc);
+	    menu_entry->domain = "gimp-script-fu";
 	  else
-	    menus_create_item_from_full_path (&entry, std_plugins_domain, proc);
+	    menu_entry->domain = std_plugins_domain;
+
+	  /* plug_in_make_menu_entry frees the menu_entry for us */
+	  plug_in_make_menu_entry (NULL, menu_entry, NULL);  
 	}
       break;
     }
@@ -2379,20 +2381,62 @@ plug_in_add_to_db (void)
     }
 }
 
+/* 
+ *  The following function has to be a GTraverseFunction, 
+ *  but is also called directly. Please note that it frees the
+ *  menu_entry strcuture.                --Sven 
+ */ 
+static gint
+plug_in_make_menu_entry (gpointer         foo,
+			 PlugInMenuEntry *menu_entry,
+			 gpointer         bar)
+{
+  GimpItemFactoryEntry  entry;
+  gchar                *help_page;
+  
+  help_page = g_strconcat ("filters/",
+			   g_basename (menu_entry->proc_def->prog),
+			   ".html",
+			   NULL);
+  g_strdown (help_page);
+  
+  entry.entry.path            = menu_entry->proc_def->menu_path;
+  entry.entry.accelerator     = menu_entry->proc_def->accelerator;
+  entry.entry.callback        = plug_in_callback;
+  entry.entry.callback_action = 0;
+  entry.entry.item_type       = NULL;
+  entry.help_page             = help_page;
+  entry.description           = NULL;
+
+  menus_create_item_from_full_path (&entry, 
+				    menu_entry->domain, 
+				    &menu_entry->proc_def->db_info);
+  g_free (menu_entry);
+  
+  return FALSE;
+}
+
 static void
 plug_in_make_menu (void)
 {
-  GimpItemFactoryEntry entry;
-  PlugInDef *plug_in_def;
-  PlugInProcDef *proc_def;
+  PlugInDef       *plug_in_def;
+  PlugInProcDef   *proc_def;
+  PlugInMenuEntry *menu_entry;
   GSList *domains = NULL;
   GSList *procs;
   GSList *tmp;
+  GTree  *menu_entries;
 
 #ifdef ENABLE_NLS
   bindtextdomain (std_plugins_domain, LOCALEDIR);
   domains = g_slist_append (domains, std_plugins_domain);
-#endif 
+#endif
+
+#ifdef ENABLE_NLS
+  menu_entries = g_tree_new ((GCompareFunc)strcoll);
+#else
+  menu_entries = g_tree_new ((GCompareFunc)strcmp);
+#endif
 
   tmp = plug_in_defs;
   while (tmp)
@@ -2440,31 +2484,22 @@ plug_in_make_menu (void)
 							!proc_def->prefixes &&
 							!proc_def->magics))
 	    {
-	      gchar *help_page;
-	      
-	      help_page = g_strconcat ("filters/",
-				       g_basename (proc_def->prog),
-				       ".html",
-				       NULL);
-	      g_strdown (help_page);
-	      
-	      entry.entry.path = proc_def->menu_path;
-	      entry.entry.accelerator = proc_def->accelerator;
-	      entry.entry.callback = plug_in_callback;
-	      entry.entry.callback_action = 0;
-	      entry.entry.item_type = NULL;
-	      entry.help_page = help_page;
-	      entry.description = NULL;
-	      
-	      if (plug_in_def->locale_domain)
-		menus_create_item_from_full_path (&entry, plug_in_def->locale_domain, 
-						  &proc_def->db_info);
-	      else
-		menus_create_item_from_full_path (&entry, std_plugins_domain, 
-						  &proc_def->db_info);
+	      menu_entry = g_new (PlugInMenuEntry, 1);
+	      menu_entry->proc_def = proc_def;
+	      menu_entry->domain   = plug_in_def->locale_domain ? 
+		plug_in_def->locale_domain : std_plugins_domain;
+
+	      g_tree_insert (menu_entries, 
+			     dgettext (menu_entry->domain, proc_def->menu_path),
+			     menu_entry);
 	    }
 	}
     }
+
+  g_tree_traverse (menu_entries, 
+		   (GTraverseFunc)plug_in_make_menu_entry, G_IN_ORDER, NULL);
+  g_tree_destroy (menu_entries);
+
   g_slist_free (domains);
 }
 

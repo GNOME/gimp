@@ -1,3 +1,26 @@
+2000-05-07  Sven Neumann  <sven@gimp.org>
+
+	* app/menus.c: in Image/Filters move all entries that are not 
+	submenus to the top of the menu. 
+	
+	* app/plug_in.c: order all plugin menu-entries alphabetically 
+	(in the current locale) before sending them to menus.c. This does 
+	not yet work perfectly since gimp-perl i18n seems to be broken 
+	(at least on my box). This was already the case _before_ this 
+	change and I have checked carefully, that the gimp-perl domain 
+	gets passed through to menus_create_item_...() correctly.
+	
+	* plug-ins/script-fu/script-fu-scripts.c: order all script-fu
+	menu-entries alphabetically (in the current locale) before
+	registering them.
+	
+	* plug-ins/script-fu/script-fu.c: minor cleanups
+
+	* plug-ins/bmp/bmpread.c
+	* plug-ins/bmp/bmpwrite.c
+	* plug-ins/xjt/xjt.c: strings used with g_message do not need
+	a trailing newline
+
 2000-05-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/app_procs.c

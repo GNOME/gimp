@@ -6,7 +6,7 @@
 # ist. Fühlt Euch frei, diese Datei entsprechend zu ändern ;-)
  
                             Willkommen bei GIMP !
-
+        
 Fast alle Operationen werden durch Drücken der rechten Maustaste
 in einem Bild ausgeführt. Keine Angst, fast alle Fehler können 
 rückgängig gemacht werden... 
@@ -92,7 +92,7 @@ Wird beim Erstellen einer Selektion während des Mausklicks die
 Shift-Taste gedrückt, so wird die neue Selektion einer bestehenden
 hinzugefügt. Wird die Ctrl-Taste (bzw. Strg-Taste) gedrückt, so
 wird die neue Selektion von der bestehenden subtrahiert.
-  
+
 Durch Drücken der Shift- bzw. der Ctrl-Taste während des Erstellens
 einer Selektion kann ein Quadrat oder ein Kreis erzeugt werden,
 beziehungsweise die Selektion auf den Startpunkt zentriert werden.

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.20\n"
 "POT-Creation-Date: 2000-04-30 11:43-0700\n"
-"PO-Revision-Date: 2000-04-28 01:58+02:00\n"
+"PO-Revision-Date: 2000-05-07 23:09+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -219,7 +219,7 @@ msgstr "<Image>/Skript-Fu/Animationen/Überblenden..."
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Rippling..."
-msgstr "<Image>/Script-Fu/Animation/Flattern..."
+msgstr "<Image>/Skript-Fu/Animation/Flattern..."
 
 #: plug-ins/gap/sel-to-anim-img.scm:0
 msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
@@ -227,7 +227,7 @@ msgstr "<Image>/Skript-Fu/Animation/Auswahl zu Animation..."
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
-msgstr "<Image>/Script-Fu/Animation/Drehender Globus..."
+msgstr "<Image>/Skript-Fu/Animation/Drehender Globus..."
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Waves..."

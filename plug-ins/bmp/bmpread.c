@@ -61,7 +61,7 @@ ReadBMP (gchar *name)
   
   if (!fd)
     {
-      g_message (_("%s: can't open \"%s\"\n"), prog_name, filename);
+      g_message (_("%s: can't open \"%s\""), prog_name, filename);
       return -1;
     }
 
@@ -69,7 +69,7 @@ ReadBMP (gchar *name)
   
   if (!ReadOK(fd, buffer, 18) || (strncmp(buffer,"BM",2)))
     {
-      g_message (_("%s: %s is not a valid BMP file\n"), prog_name, filename);
+      g_message (_("%s: %s is not a valid BMP file"), prog_name, filename);
       return -1;
     }
 
@@ -87,7 +87,7 @@ ReadBMP (gchar *name)
     {
       if (!ReadOK (fd, buffer, 8))
         {
-          g_message (_("%s: error reading BMP file header\n"), prog_name);
+          g_message (_("%s: error reading BMP file header"), prog_name);
           return -1;
         }
 
@@ -101,7 +101,7 @@ ReadBMP (gchar *name)
     {
       if (!ReadOK (fd, buffer, Bitmap_File_Head.biSize - 4))
         {
-          g_message (_("%s: error reading BMP file header\n"), prog_name);
+          g_message (_("%s: error reading BMP file header"), prog_name);
           return -1;
         }
       Bitmap_Head.biWidth   =ToL (&buffer[0x00]);	/* 12 */
@@ -121,7 +121,7 @@ ReadBMP (gchar *name)
     {
       if (!ReadOK (fd, buffer, Bitmap_File_Head.biSize - 4))
         {
-          g_message (_("%s: error reading BMP file header\n"), prog_name);
+          g_message (_("%s: error reading BMP file header"), prog_name);
           return -1;
         }
       Bitmap_Head.biWidth   =ToL (&buffer[0x00]);       /* 12 */
@@ -139,7 +139,7 @@ ReadBMP (gchar *name)
     }
   else
     {
-      g_message (_("%s: error reading BMP file header\n"), prog_name);
+      g_message (_("%s: error reading BMP file header"), prog_name);
       return -1;
     }
 
@@ -227,7 +227,7 @@ ReadColorMap (FILE   *fd,
     {
       if (!ReadOK (fd, rgb, size))
 	{
-	  g_message (_("%s: bad colormap\n"), prog_name);
+	  g_message (_("%s: bad colormap"), prog_name);
 	  return -1;
 	}
       
