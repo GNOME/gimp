@@ -340,10 +340,10 @@ gimp_color_picker_tool_options_new (void)
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
   gtk_container_add (GTK_CONTAINER (abox), scale);
   gtk_widget_set_sensitive (scale, options->sample_average_d);
-  gtk_object_set_data (GTK_OBJECT (options->sample_average_w), "set_sensitive",
+  g_object_set_data (G_OBJECT (options->sample_average_w), "set_sensitive",
 		       scale);
   gtk_widget_set_sensitive (label, options->sample_average_d);
-  gtk_object_set_data (GTK_OBJECT (scale), "set_sensitive",
+  g_object_set_data (G_OBJECT (scale), "set_sensitive",
 		       label);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);

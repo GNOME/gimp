@@ -596,7 +596,7 @@ iscissors_convert (GimpIscissorsTool *iscissors,
     }
 
   if (iscissors->mask)
-    gtk_object_unref (GTK_OBJECT (iscissors->mask));
+    g_object_unref (G_OBJECT (iscissors->mask));
 
   iscissors->mask = gimp_scan_convert_to_channel (sc, gdisp->gimage);
   gimp_scan_convert_free (sc);
@@ -1156,7 +1156,7 @@ gimp_iscissors_tool_reset (GimpIscissorsTool *iscissors)
   /*  free mask  */
   if (iscissors->mask)
     {
-      gtk_object_unref (GTK_OBJECT (iscissors->mask));
+      g_object_unref (G_OBJECT (iscissors->mask));
       iscissors->mask = NULL;
     }
 

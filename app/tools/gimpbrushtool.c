@@ -863,8 +863,8 @@ gimp_paint_tool_paint (GimpPaintTool *tool,
 		       GimpDrawable  *drawable,
 		       PaintState     state)
 {
-  gtk_signal_emit (GTK_OBJECT(tool), gimp_paint_tool_signals[PAINT],
-		   drawable, state);
+  g_signal_emit (G_OBJECT(tool), gimp_paint_tool_signals[PAINT], 0,
+                 drawable, state);
 }
 
 gboolean
@@ -898,10 +898,10 @@ gimp_paint_tool_start (GimpPaintTool *paint_tool,
   /*  Each buffer is the same size as the maximum bounds of the active brush... */
   if (brush && brush != gimp_context_get_brush (context))
     {
-      gtk_signal_disconnect_by_func (GTK_OBJECT (brush),
-				     GTK_SIGNAL_FUNC (gimp_paint_tool_invalidate_cache),
-				     NULL);
-      gtk_object_unref (GTK_OBJECT (brush));
+      g_signal_handlers_disconnect_by_func (G_OBJECT (brush),
+                                            G_CALLBACK (gimp_paint_tool_invalidate_cache),
+                                            NULL);
+      g_object_unref (G_OBJECT (brush));
     }
   if (!(brush = gimp_context_get_brush (context)))
     {
@@ -909,10 +909,10 @@ gimp_paint_tool_start (GimpPaintTool *paint_tool,
       return FALSE;
     }
 
-  gtk_object_ref (GTK_OBJECT (brush));
-  gtk_signal_connect (GTK_OBJECT (brush), "invalidate_preview",
-		      GTK_SIGNAL_FUNC (gimp_paint_tool_invalidate_cache),
-		      NULL);
+  g_object_ref (G_OBJECT (brush));
+  g_signal_connect (G_OBJECT (brush), "invalidate_preview",
+                    G_CALLBACK (gimp_paint_tool_invalidate_cache),
+                    NULL);
 
   paint_tool->spacing = (double) gimp_brush_get_spacing (brush) / 100.0;
 

@@ -154,7 +154,7 @@ tool_manager_exit (Gimp *gimp)
 
   tool_manager = tool_manager_get (gimp);
 
-  gtk_object_unref (GTK_OBJECT (tool_manager->global_tool_context));
+  g_object_unref (G_OBJECT (tool_manager->global_tool_context));
 
   gimp_container_remove_handler (gimp->images,
 				 tool_manager->image_dirty_handler_id);
@@ -233,7 +233,7 @@ tool_manager_select_tool (Gimp     *gimp,
   tool_manager = tool_manager_get (gimp);
 
   if (tool_manager->active_tool)
-    gtk_object_unref (GTK_OBJECT (tool_manager->active_tool));
+    g_object_unref (G_OBJECT (tool_manager->active_tool));
 
   tool_manager->active_tool = tool;
 }
@@ -251,7 +251,7 @@ tool_manager_push_tool (Gimp     *gimp,
 
   if (tool_manager->active_tool)
     {
-      gtk_object_ref (GTK_OBJECT (tool_manager->active_tool));
+      g_object_ref (G_OBJECT (tool_manager->active_tool));
 
       tool_manager->tool_stack = g_slist_prepend (tool_manager->tool_stack,
 						  tool_manager->active_tool);
@@ -376,7 +376,7 @@ tool_manager_control_active (Gimp       *gimp,
               break;
 
             case DESTROY:
-              gtk_object_unref (GTK_OBJECT (tool_manager->active_tool));
+              g_object_unref (G_OBJECT (tool_manager->active_tool));
 	      tool_manager->active_tool = NULL;
               break;
 
@@ -589,14 +589,14 @@ tool_manager_help_func (const gchar *help_data)
 static GimpToolManager *
 tool_manager_get (Gimp *gimp)
 {
-  return gtk_object_get_data (GTK_OBJECT (gimp), TOOL_MANAGER_DATA_KEY);
+  return g_object_get_data (G_OBJECT (gimp), TOOL_MANAGER_DATA_KEY);
 }
 
 static void
 tool_manager_set (Gimp            *gimp,
 		  GimpToolManager *tool_manager)
 {
-  gtk_object_set_data (GTK_OBJECT (gimp), TOOL_MANAGER_DATA_KEY,
+  g_object_set_data (G_OBJECT (gimp), TOOL_MANAGER_DATA_KEY,
 		       tool_manager);
 }
 

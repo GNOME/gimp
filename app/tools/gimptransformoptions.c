@@ -266,9 +266,9 @@ transform_options_init (TransformOptions     *options,
   gtk_widget_show (grid_density);
   gtk_widget_set_sensitive (label, options->show_grid_d);
   gtk_widget_set_sensitive (grid_density, options->show_grid_d);
-  gtk_object_set_data (GTK_OBJECT (options->show_grid_w), "set_sensitive",
+  g_object_set_data (G_OBJECT (options->show_grid_w), "set_sensitive",
 		       grid_density);
-  gtk_object_set_data (GTK_OBJECT (grid_density), "set_sensitive", label);  
+  g_object_set_data (G_OBJECT (grid_density), "set_sensitive", label);  
 
   gtk_widget_show (fbox);
   gtk_widget_show (frame);

@@ -417,7 +417,7 @@ fuzzy_select (GimpImage    *gimage,
     gimp_channel_combine_mask (gimp_image_get_mask (gimage),
 			       fuzzy_mask, op, off_x, off_y);
 
-  gtk_object_unref (GTK_OBJECT (fuzzy_mask));
+  g_object_unref (G_OBJECT (fuzzy_mask));
   fuzzy_mask = NULL;
 }
 
@@ -644,7 +644,7 @@ fuzzy_select_calculate (GimpFuzzySelectTool *fuzzy_sel,
 				fuzzy_options->sample_merged);
 
   if (fuzzy_mask)
-    gtk_object_unref (GTK_OBJECT (fuzzy_mask));
+    g_object_unref (G_OBJECT (fuzzy_mask));
 
   fuzzy_mask = new;
 

@@ -182,7 +182,7 @@ gimp_draw_tool_start (GimpDrawTool *core,
   gdk_gc_set_line_attributes (core->gc, core->line_width, core->line_style,
 			      core->cap_style, core->join_style);
 
-  gtk_signal_emit (GTK_OBJECT(core), gimp_draw_tool_signals[DRAW]);
+  g_signal_emit (G_OBJECT(core), gimp_draw_tool_signals[DRAW], 0);
 
   core->draw_state = VISIBLE;
 }
@@ -194,7 +194,7 @@ gimp_draw_tool_stop (GimpDrawTool *core)
   if (core->draw_state == INVISIBLE)
     return;
 
-  gtk_signal_emit (GTK_OBJECT(core), gimp_draw_tool_signals[DRAW]);
+  g_signal_emit (G_OBJECT(core), gimp_draw_tool_signals[DRAW], 0);
 
   core->draw_state = INVISIBLE;
 }
@@ -209,7 +209,7 @@ gimp_draw_tool_resume (GimpDrawTool *core)
     {
       core->draw_state = VISIBLE;
 
-      gtk_signal_emit(GTK_OBJECT(core), gimp_draw_tool_signals[DRAW]);
+      g_signal_emit(G_OBJECT(core), gimp_draw_tool_signals[DRAW], 0);
     }
 }
 
@@ -221,7 +221,7 @@ gimp_draw_tool_pause (GimpDrawTool *core)
     {
       core->draw_state = INVISIBLE;
 
-      gtk_signal_emit (GTK_OBJECT(core), gimp_draw_tool_signals[DRAW]);
+      g_signal_emit (G_OBJECT(core), gimp_draw_tool_signals[DRAW], 0);
     }
 
   core->paused_count++;

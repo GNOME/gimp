@@ -258,8 +258,7 @@ nav_dialog_create (GDisplay *gdisp)
 		      button_area, FALSE, FALSE, 0);
   gtk_widget_show (button_area);
 
-  if (! gtk_object_get_data (GTK_OBJECT (gdisp->gimage), 
-			     "nav_handlers_installed"))
+  if (! g_object_get_data (G_OBJECT (gdisp->gimage), "nav_handlers_installed"))
     {
       gtk_signal_connect_after (GTK_OBJECT (gdisp->gimage), "dirty",
 				GTK_SIGNAL_FUNC (nav_image_need_update),
@@ -268,9 +267,9 @@ nav_dialog_create (GDisplay *gdisp)
 				GTK_SIGNAL_FUNC (nav_image_need_update),
 				nav_dialog);
 
-      gtk_object_set_data (GTK_OBJECT (gdisp->gimage), 
-			   "nav_handlers_installed",
-			   nav_dialog);
+      g_object_set_data (G_OBJECT (gdisp->gimage), 
+                         "nav_handlers_installed",
+                         nav_dialog);
     }
   
   return nav_dialog;
@@ -590,7 +589,7 @@ nav_dialog_new (GDisplay   *gdisp,
 static gchar *
 nav_dialog_title (GDisplay *gdisp)
 {
-  gchar *basename;
+  const gchar *basename;
   gchar *title;
 
   basename = g_basename (gimp_image_filename (gdisp->gimage));
@@ -1646,8 +1645,7 @@ nav_dialog_display_changed (GimpContext *context,
       /* Tie into the dirty signal so we can update the preview
        * provided we haven't already
        */
-      if (! gtk_object_get_data (GTK_OBJECT (gimage),
-				 "nav_handlers_installed"))
+      if (! g_object_get_data (G_OBJECT (gimage), "nav_handlers_installed"))
 	{
 	  gtk_signal_connect_after (GTK_OBJECT (gimage), "dirty",
 				    GTK_SIGNAL_FUNC (nav_image_need_update),
@@ -1656,9 +1654,9 @@ nav_dialog_display_changed (GimpContext *context,
 				    GTK_SIGNAL_FUNC (nav_image_need_update),
 				    nav_dialog);
 
-	  gtk_object_set_data (GTK_OBJECT (gimage),
-			       "nav_handlers_installed",
-			       nav_dialog);
+	  g_object_set_data (G_OBJECT (gimage),
+                             "nav_handlers_installed",
+                             nav_dialog);
 	}
     }
 }

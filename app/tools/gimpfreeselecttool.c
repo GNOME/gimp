@@ -159,7 +159,7 @@ free_select (GimpImage   *gimage,
 	gimp_channel_combine_mask (gimp_image_get_mask (gimage),
 				   mask, op, 0, 0);
 
-      gtk_object_unref (GTK_OBJECT (mask));
+      g_object_unref (G_OBJECT (mask));
     }
 }
 

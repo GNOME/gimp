@@ -269,8 +269,8 @@ gimp_tool_initialize (GimpTool   *tool,
   g_return_if_fail (tool);
   g_return_if_fail (GIMP_IS_TOOL (tool));
 
-  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[INITIALIZE],
-		   gdisp);
+  g_signal_emit (G_OBJECT (tool), gimp_tool_signals[INITIALIZE], 0,
+                 gdisp);
 }
 
 void
@@ -281,8 +281,8 @@ gimp_tool_control (GimpTool   *tool,
   g_return_if_fail (tool);
   g_return_if_fail (GIMP_IS_TOOL (tool));
 
-  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[CONTROL],
-		   action, gdisp);
+  g_signal_emit (G_OBJECT (tool), gimp_tool_signals[CONTROL], 0,
+                 action, gdisp);
 }
 
 void
@@ -293,8 +293,8 @@ gimp_tool_button_press (GimpTool       *tool,
   g_return_if_fail (tool);
   g_return_if_fail (GIMP_IS_TOOL (tool));
 
-  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[BUTTON_PRESS],
-		   bevent, gdisp); 
+  g_signal_emit (G_OBJECT (tool), gimp_tool_signals[BUTTON_PRESS], 0,
+                 bevent, gdisp); 
 }
 
 void
@@ -305,8 +305,8 @@ gimp_tool_button_release (GimpTool       *tool,
   g_return_if_fail (tool);
   g_return_if_fail (GIMP_IS_TOOL (tool));
 
-  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[BUTTON_RELEASE],
-		   bevent, gdisp);
+  g_signal_emit (G_OBJECT (tool), gimp_tool_signals[BUTTON_RELEASE], 0,
+                 bevent, gdisp);
 }
 
 void
@@ -317,8 +317,8 @@ gimp_tool_motion (GimpTool       *tool,
   g_return_if_fail (tool);
   g_return_if_fail (GIMP_IS_TOOL (tool));
 
-  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[MOTION],
-		   mevent, gdisp);
+  g_signal_emit (G_OBJECT (tool), gimp_tool_signals[MOTION], 0,
+                 mevent, gdisp);
 }
 
 void
@@ -329,8 +329,8 @@ gimp_tool_arrow_key (GimpTool    *tool,
   g_return_if_fail (tool);
   g_return_if_fail (GIMP_IS_TOOL (tool));
 
-  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[ARROW_KEY],
-		   kevent, gdisp);
+  g_signal_emit (G_OBJECT (tool), gimp_tool_signals[ARROW_KEY], 0,
+                 kevent, gdisp);
 }
 
 void
@@ -341,8 +341,8 @@ gimp_tool_modifier_key (GimpTool    *tool,
   g_return_if_fail (tool);
   g_return_if_fail (GIMP_IS_TOOL (tool));
 
-  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[MODIFIER_KEY],
-		   kevent, gdisp);  
+  g_signal_emit (G_OBJECT (tool), gimp_tool_signals[MODIFIER_KEY], 0,
+                 kevent, gdisp);  
 }
 
 void
@@ -353,8 +353,8 @@ gimp_tool_cursor_update (GimpTool       *tool,
   g_return_if_fail (tool);
   g_return_if_fail (GIMP_IS_TOOL (tool));
 
-  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[CURSOR_UPDATE],
-		   mevent, gdisp);
+  g_signal_emit (G_OBJECT (tool), gimp_tool_signals[CURSOR_UPDATE], 0,
+                 mevent, gdisp);
 }
 
 void
@@ -365,8 +365,8 @@ gimp_tool_oper_update (GimpTool       *tool,
   g_return_if_fail (tool);
   g_return_if_fail (GIMP_IS_TOOL (tool));
 
-  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[OPER_UPDATE],
-		   mevent, gdisp);
+  g_signal_emit (G_OBJECT (tool), gimp_tool_signals[OPER_UPDATE], 0,
+                 mevent, gdisp);
 }
 
 

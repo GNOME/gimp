@@ -124,8 +124,8 @@ selection_options_init (SelectionOptions     *options,
   /*  grey out label & scale if feather is off  */
   gtk_widget_set_sensitive (scale, options->feather_d);
   gtk_widget_set_sensitive (label, options->feather_d);
-  gtk_object_set_data (GTK_OBJECT (options->feather_w), "set_sensitive", scale);
-  gtk_object_set_data (GTK_OBJECT (scale), "set_sensitive", label);
+  g_object_set_data (G_OBJECT (options->feather_w), "set_sensitive", scale);
+  g_object_set_data (G_OBJECT (scale), "set_sensitive", label);
 
   gtk_widget_show (table);
 
@@ -240,7 +240,7 @@ selection_options_init (SelectionOptions     *options,
 
       /*  grey out the table if fixed size is off  */
       gtk_widget_set_sensitive (table, options->fixed_size_d);
-      gtk_object_set_data (GTK_OBJECT (options->fixed_size_w), "set_sensitive",
+      g_object_set_data (G_OBJECT (options->fixed_size_w), "set_sensitive",
 			   table);
 
       options->fixed_width_w =
@@ -276,9 +276,9 @@ selection_options_init (SelectionOptions     *options,
       gtk_signal_connect (GTK_OBJECT (options->fixed_unit_w), "unit_changed",
                           GTK_SIGNAL_FUNC (gimp_unit_menu_update),
                           &options->fixed_unit);
-      gtk_object_set_data (GTK_OBJECT (options->fixed_unit_w), "set_digits",
+      g_object_set_data (G_OBJECT (options->fixed_unit_w), "set_digits",
 			   width_spinbutton);
-      gtk_object_set_data (GTK_OBJECT (width_spinbutton), "set_digits",
+      g_object_set_data (G_OBJECT (width_spinbutton), "set_digits",
 			   height_spinbutton);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 				 _("Unit:"), 1.0, 0.5,
@@ -349,12 +349,12 @@ selection_options_reset (GimpToolOptions *tool_options)
 	  (MIN (6, MAX (3, gimp_unit_get_digits (options->fixed_unit_d))))));
 
       spinbutton =
-	gtk_object_get_data (GTK_OBJECT (options->fixed_unit_w), "set_digits");
+	g_object_get_data (G_OBJECT (options->fixed_unit_w), "set_digits");
       while (spinbutton)
 	{
 	  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (spinbutton), digits);
 	  spinbutton =
-	    gtk_object_get_data (GTK_OBJECT (spinbutton), "set_digits");
+	    g_object_get_data (G_OBJECT (spinbutton), "set_digits");
 	}
     }
 

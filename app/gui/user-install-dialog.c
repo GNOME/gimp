@@ -298,8 +298,8 @@ user_install_notebook_set_page (GtkNotebook *notebook,
   
   page = gtk_notebook_get_nth_page (notebook, index);
   
-  title  = gtk_object_get_data (GTK_OBJECT (page), "title");
-  footer = gtk_object_get_data (GTK_OBJECT (page), "footer");
+  title  = g_object_get_data (G_OBJECT (page), "title");
+  footer = g_object_get_data (G_OBJECT (page), "footer");
 
   gtk_label_set_text (GTK_LABEL (title_label), title);
   gtk_label_set_text (GTK_LABEL (footer_label), footer);
@@ -466,8 +466,8 @@ user_install_notebook_append_page (GtkNotebook *notebook,
   GtkWidget *page;
   
   page = gtk_vbox_new (FALSE, 6);
-  gtk_object_set_data (GTK_OBJECT (page), "title", title);
-  gtk_object_set_data (GTK_OBJECT (page), "footer", footer);
+  g_object_set_data (G_OBJECT (page), "title", title);
+  g_object_set_data (G_OBJECT (page), "footer", footer);
   gtk_notebook_append_page (notebook, page, NULL);
   gtk_widget_show (page);
 
@@ -763,9 +763,9 @@ user_install_dialog_create (Gimp *gimp)
 				       NULL, NULL, NULL, NULL,
 				       FALSE, TRUE);	  
 
-    gtk_signal_connect (GTK_OBJECT (ctree), "select_row",
-			GTK_SIGNAL_FUNC (user_install_ctree_select_row),
-			notebook2);
+    g_signal_connect (G_OBJECT (ctree), "select_row",
+                      G_CALLBACK (user_install_ctree_select_row),
+                      notebook2);
 
     file_pixmap = gdk_pixmap_create_from_xpm_d (dialog->window,
 						&file_mask,
@@ -1058,8 +1058,8 @@ user_install_run (void)
 
   if (executable)
     {
-      gtk_object_set_data (GTK_OBJECT (log_page), "footer",
-           _("Click \"Continue\" to complete GIMP installation."));
+      g_object_set_data (G_OBJECT (log_page), "footer",
+                         _("Click \"Continue\" to complete GIMP installation."));
     }
   else
     {
@@ -1211,7 +1211,7 @@ user_install_resolution (void)
   chain = GIMP_COORDINATES_CHAINBUTTON (resolution_entry);
   PAGE_STYLE (GTK_WIDGET (chain->line1));
   PAGE_STYLE (GTK_WIDGET (chain->line2));
-  gtk_object_set_data (GTK_OBJECT (resolution_entry), "chain_button", chain);
+  g_object_set_data (G_OBJECT (resolution_entry), "chain_button", chain);
 
   for (list = GTK_TABLE (resolution_entry)->children;
        list;
@@ -1241,18 +1241,18 @@ user_install_resolution (void)
   button = gtk_button_new_with_label (_("Calibrate"));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 4, 0);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (user_install_resolution_calibrate),
-		      NULL);
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (user_install_resolution_calibrate),
+                    NULL);
   gtk_widget_show (button);
   
-  gtk_object_set_data (GTK_OBJECT (xserver_toggle), "inverse_sensitive",
-		       resolution_entry);
-  gtk_object_set_data (GTK_OBJECT (resolution_entry), "inverse_sensitive",
-		       button);
-  gtk_signal_connect (GTK_OBJECT (xserver_toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_sensitive_update),
-		      NULL);
+  g_object_set_data (G_OBJECT (xserver_toggle), "inverse_sensitive",
+                     resolution_entry);
+  g_object_set_data (G_OBJECT (resolution_entry), "inverse_sensitive",
+                     button);
+  g_signal_connect (G_OBJECT (xserver_toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_sensitive_update),
+                    NULL);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (xserver_toggle),
 				gimprc.using_xserver_resolution);
 }

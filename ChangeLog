@@ -1,5 +1,36 @@
 2001-07-25  Sven Neumann  <sven@gimp.org>
 
+	* app/nav_window.c
+	* app/user_install.c
+	* app/pdb/color_cmds.c
+	* app/pdb/selection_cmds.c
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpdrawtool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpellipseselecttool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimprectselecttool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimptool.c
+	* app/tools/paint_options.c
+	* app/tools/selection_options.c
+	* app/tools/tool_manager.c
+	* app/tools/transform_options.c
+	* app/widgets/gimpdnd.c
+	* tools/pdbgen/pdb/color.pdb
+	* tools/pdbgen/pdb/selection.pdb: use GObject functions.
+
+2001-07-25  Sven Neumann  <sven@gimp.org>
+
 	* app/gximage.c: replaced some deprecated gdk functions.
 	
 	* app/widgets/gimpcontainergridview.c

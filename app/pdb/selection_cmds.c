@@ -1030,7 +1030,7 @@ selection_combine_invoker (Gimp     *gimp,
 				     operation, 
 				     0, 0);  /* off x/y */
 	  gimage_mask_load (gimage, new_channel);
-	  gtk_object_unref (GTK_OBJECT (new_channel));
+	  g_object_unref (G_OBJECT (new_channel));
 	}
       else
 	success = FALSE;

@@ -396,7 +396,7 @@ gimp_dnd_data_drag_begin (GtkWidget      *widget,
     return;
 
   get_data_func = (GCallback) g_object_get_data (G_OBJECT (widget),
-                                                     "gimp_dnd_get_data_func");
+                                                 "gimp_dnd_get_data_func");
   get_data_data = (gpointer) g_object_get_data (G_OBJECT (widget),
                                                 "gimp_dnd_get_data_data");
 

@@ -254,14 +254,18 @@ clone_set_src_drawable (GimpDrawable *drawable)
 {
   if (src_drawable_ == drawable)
     return;
+
   if (src_drawable_)
-    gtk_signal_disconnect_by_data (GTK_OBJECT (src_drawable_), &src_drawable_);
+    g_signal_handlers_disconnect_by_func (G_OBJECT (src_drawable_),
+                                          G_CALLBACK (clone_src_drawable_destroyed_cb), 
+                                          &src_drawable_);
+
   src_drawable_ = drawable;
   if (drawable)
     {
-      gtk_signal_connect (GTK_OBJECT (drawable), "destroy",
-			  GTK_SIGNAL_FUNC (clone_src_drawable_destroyed_cb),
-			  &src_drawable_);
+      g_signal_connect (G_OBJECT (drawable), "destroy",
+                        G_CALLBACK (clone_src_drawable_destroyed_cb),
+                        &src_drawable_);
     }
 }
 

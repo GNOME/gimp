@@ -582,7 +582,7 @@ paint_gradient_options_new (GtkType       tool_type,
       gtk_signal_connect (GTK_OBJECT (gradient->fade_unit_w), "unit_changed",
                           GTK_SIGNAL_FUNC (gimp_unit_menu_update),
                           &gradient->fade_unit);
-      gtk_object_set_data (GTK_OBJECT (gradient->fade_unit_w), "set_digits",
+      g_object_set_data (G_OBJECT (gradient->fade_unit_w), "set_digits",
                            spinbutton);
       gtk_table_attach (GTK_TABLE (table), gradient->fade_unit_w, 2, 3, 0, 1,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
@@ -591,9 +591,9 @@ paint_gradient_options_new (GtkType       tool_type,
       /*  automatically set the sensitive state of the fadeout stuff  */
       gtk_widget_set_sensitive (spinbutton, gradient->use_fade_d);
       gtk_widget_set_sensitive (gradient->fade_unit_w, gradient->use_fade_d);
-      gtk_object_set_data (GTK_OBJECT (gradient->use_fade_w),
+      g_object_set_data (G_OBJECT (gradient->use_fade_w),
                            "set_sensitive", spinbutton);
-      gtk_object_set_data (GTK_OBJECT (spinbutton),
+      g_object_set_data (G_OBJECT (spinbutton),
                            "set_sensitive", gradient->fade_unit_w);
     }
 
@@ -635,7 +635,7 @@ paint_gradient_options_new (GtkType       tool_type,
       gtk_signal_connect (GTK_OBJECT (gradient->gradient_unit_w), "unit_changed",
                           GTK_SIGNAL_FUNC (gimp_unit_menu_update),
                           &gradient->gradient_unit);
-      gtk_object_set_data (GTK_OBJECT (gradient->gradient_unit_w), "set_digits",
+      g_object_set_data (G_OBJECT (gradient->gradient_unit_w), "set_digits",
                            spinbutton);
       gtk_table_attach (GTK_TABLE (table), gradient->gradient_unit_w, 2, 3, 1, 2,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
@@ -684,18 +684,18 @@ paint_gradient_options_new (GtkType       tool_type,
       gtk_widget_set_sensitive (type_label, gradient->use_gradient_d);
       gtk_widget_set_sensitive (paint_options->incremental_w,
                                 ! gradient->use_gradient_d);
-      gtk_object_set_data (GTK_OBJECT (gradient->use_gradient_w),
+      g_object_set_data (G_OBJECT (gradient->use_gradient_w),
                            "set_sensitive",
                            spinbutton);
-      gtk_object_set_data (GTK_OBJECT (spinbutton), "set_sensitive",
+      g_object_set_data (G_OBJECT (spinbutton), "set_sensitive",
                            gradient->gradient_unit_w);
-      gtk_object_set_data (GTK_OBJECT (gradient->gradient_unit_w),
+      g_object_set_data (G_OBJECT (gradient->gradient_unit_w),
                            "set_sensitive",
                            gradient->gradient_type_w);
-      gtk_object_set_data (GTK_OBJECT (gradient->gradient_type_w),
+      g_object_set_data (G_OBJECT (gradient->gradient_type_w),
                            "set_sensitive",
                            type_label);
-      gtk_object_set_data (GTK_OBJECT (gradient->use_gradient_w),
+      g_object_set_data (G_OBJECT (gradient->use_gradient_w),
                            "inverse_sensitive",
                            paint_options->incremental_w);
     }
@@ -721,7 +721,7 @@ paint_gradient_options_reset (PaintGradientOptions *gradient,
       digits = ((gradient->fade_unit_d == GIMP_UNIT_PIXEL) ? 0 :
                 ((gradient->fade_unit_d == GIMP_UNIT_PERCENT) ? 2 :
                  (MIN (6, MAX (3, gimp_unit_get_digits (gradient->fade_unit_d))))));
-      spinbutton = gtk_object_get_data (GTK_OBJECT (gradient->fade_unit_w),
+      spinbutton = g_object_get_data (G_OBJECT (gradient->fade_unit_w),
                                         "set_digits");
       gtk_spin_button_set_digits (GTK_SPIN_BUTTON (spinbutton), digits);
     }
@@ -737,7 +737,7 @@ paint_gradient_options_reset (PaintGradientOptions *gradient,
       digits = ((gradient->gradient_unit_d == GIMP_UNIT_PIXEL) ? 0 :
                 ((gradient->gradient_unit_d == GIMP_UNIT_PERCENT) ? 2 :
                  (MIN (6, MAX (3, gimp_unit_get_digits (gradient->gradient_unit_d))))));
-      spinbutton = gtk_object_get_data (GTK_OBJECT (gradient->gradient_unit_w),
+      spinbutton = g_object_get_data (G_OBJECT (gradient->gradient_unit_w),
                                         "set_digits");
       gtk_spin_button_set_digits (GTK_SPIN_BUTTON (spinbutton), digits);
 

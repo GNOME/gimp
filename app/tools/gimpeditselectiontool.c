@@ -292,7 +292,7 @@ init_edit_selection (GimpTool       *tool,
   GIMP_TOOL (edit_select)->gdisp = gdisp;
   GIMP_TOOL (edit_select)->state = ACTIVE;
 
-  gtk_object_ref (GTK_OBJECT (edit_select));
+  g_object_ref (G_OBJECT (edit_select));
 
   tool_manager_push_tool (gdisp->gimage->gimp,
 			  GIMP_TOOL (edit_select));
@@ -402,7 +402,7 @@ gimp_edit_selection_tool_button_release (GimpTool       *tool,
 
   gdisplays_flush ();
 
-  gtk_object_unref (GTK_OBJECT (edit_select));
+  g_object_unref (G_OBJECT (edit_select));
 }
 
 

@@ -801,7 +801,7 @@ blend_options_new (void)
 
   /*  automatically set the sensitive state of the table  */
   gtk_widget_set_sensitive (table, options->supersample_d);
-  gtk_object_set_data (GTK_OBJECT (options->supersample_w), "set_sensitive",
+  g_object_set_data (G_OBJECT (options->supersample_w), "set_sensitive",
 		       table);
 
   /*  max depth scale  */

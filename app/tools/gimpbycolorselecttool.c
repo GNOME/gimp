@@ -255,7 +255,7 @@ gimp_by_color_select_tool_select (GimpImage    *gimage,
     gimp_channel_combine_mask (gimp_image_get_mask (gimage),
 			       new_mask, op, off_x, off_y);
 
-  gtk_object_unref (GTK_OBJECT (new_mask));
+  g_object_unref (G_OBJECT (new_mask));
 }
 
 void

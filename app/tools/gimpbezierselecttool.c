@@ -1078,7 +1078,7 @@ bezier_select_reset  (GimpBezierSelectTool *bezier_sel)
     }
 
   if (bezier_sel->mask)
-    gtk_object_unref (GTK_OBJECT (bezier_sel->mask));
+    g_object_unref (G_OBJECT (bezier_sel->mask));
 
   bezier_sel->state       = BEZIER_START;     /* we are starting the curve */
   bezier_sel->draw_mode   = BEZIER_DRAW_ALL;  /* draw everything by default */
@@ -2873,7 +2873,7 @@ bezier_convert (GimpBezierSelectTool *bezier_sel,
   /* destroy previous mask */
   if (bezier_sel->mask)
     {
-      gtk_object_unref (GTK_OBJECT (bezier_sel->mask));
+      g_object_unref (G_OBJECT (bezier_sel->mask));
       bezier_sel->mask = NULL;
     }
 

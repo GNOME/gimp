@@ -160,7 +160,7 @@ rect_select (GimpImage *gimage,
 			    feather_radius,
 			    feather_radius,
 			    op, 0, 0);
-      gtk_object_unref (GTK_OBJECT (new_mask));
+      g_object_unref (G_OBJECT (new_mask));
     }
   else if (op == SELECTION_INTERSECT)
     {
@@ -168,7 +168,7 @@ rect_select (GimpImage *gimage,
       gimp_channel_combine_rect (new_mask, CHANNEL_OP_ADD, x, y, w, h);
       gimp_channel_combine_mask (gimp_image_get_mask (gimage), new_mask,
 				 op, 0, 0);
-      gtk_object_unref (GTK_OBJECT (new_mask));
+      g_object_unref (G_OBJECT (new_mask));
     }
   else
     {
@@ -643,6 +643,6 @@ gimp_rect_select_tool_rect_select (GimpRectSelectTool *rect_tool,
   g_return_if_fail (rect_tool != NULL);
   g_return_if_fail (GIMP_IS_RECT_SELECT_TOOL (rect_tool));
 
-  gtk_signal_emit (GTK_OBJECT (rect_tool), rect_select_signals[RECT_SELECT],
-                   x, y, w, h);
+  g_signal_emit (G_OBJECT (rect_tool), rect_select_signals[RECT_SELECT], 0,
+                 x, y, w, h);
 }
