@@ -1,3 +1,9 @@
+2000-11-05  Jay Cox  <jaycox@gimp.org>
+
+	* app/paint_funcs.c:  Add some comments.  Delete some commented code.
+	* app/gimpbrushlist.c:  Make sure that we are not using bad file names
+	for generated brushes.
+
 2000-11-04 Garry R. Osgood <gosgood@idt.net>
 	* app/convolve.c
 	* app/convolve.h

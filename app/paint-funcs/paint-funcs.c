@@ -447,7 +447,7 @@ paint_funcs_setup ()
   /*  generate a table of random seeds  */
   srand (RANDOM_SEED);
 
-  /* FIXME: Why creating an array of random values and shuffly it randomly
+  /* FIXME: Why creating an array of random values and shuffle it randomly
    * afterwards??? 
    */
   
@@ -468,24 +468,11 @@ paint_funcs_setup ()
       for (k = 0; k < 256; k++)
 	{   /* column */
 	  tmp_sum = j + k;
-	  /* printf("tmp_sum: %d", tmp_sum); */
 	  if(tmp_sum > 255)
 	    tmp_sum = 255;
-	  /* printf("  max: %d  \n", add_lut[j][k]); */
 	  add_lut[j][k] = tmp_sum; 
 	}
     }
-
-/*   for (j = 0; j < 255; j++) */
-/*     {    rows */
-/*       for (k = 0; k < 255; k++) */
-/* 	{   column */
-/* 	  printf ("%d",add_lut[j][k]); */
-/* 	  printf(" "); */
-/* 	} */
-/*       printf("\n"); */
-/*     } */
-  
 }
 
 
@@ -1003,13 +990,6 @@ overlay_pixels (const unsigned char *src1,
 
   while (length --)
     {
-/*      for (b = 0; b < alpha; b++)
-	{
-	  screen = 255 - INT_MULT((255 - src1[b]), (255 - src2[b]), tmp);
-	  mult = INT_MULT(src1[b] ,src2[b], tmp);
-	  dest[b] = INT_BLEND(screen , mult, src1[b], tmp);
-	}
-	*/
       for (b = 0; b < alpha; b++)
 	{
 	  dest[b] = INT_MULT(src1[b], src1[b] + INT_MULT(2 * src2[b],
@@ -1040,7 +1020,6 @@ add_pixels (const unsigned char *src1,
 	    int            has_alpha2)
 {
   int alpha, b;
-  /* int sum; */
 
   alpha = (has_alpha1 || has_alpha2) ? MAX (bytes1, bytes2) - 1 : bytes1;
 
@@ -1048,11 +1027,8 @@ add_pixels (const unsigned char *src1,
     {
       for (b = 0; b < alpha; b++)
 	{
-	  /* sum = src1[b] + src2[b]; */
-	  dest[b] = add_lut[ (src1[b])] [(src2[b])];
-	  /* dest[b] = MAX255 (sum); */
-	  /* dest[b] = sum | ((sum&256) - ((sum&256) >> 8)); */
-	  /* dest[b] = (sum > 255) ? 255 : sum; */ /* older, little slower */
+	  /* TODO: wouldn't it be better use a 1 dimensional lut ie. add_lut[src1+src2]; */
+	  dest[b] = add_lut[(src1[b])] [(src2[b])];
 	}
 
       if (has_alpha1 && has_alpha2)
@@ -4165,7 +4141,6 @@ scale_region (PixelRegion *srcPR,
     }      
     else if (height > orig_height)
     {
-      /* new_y = floor((y - 0.5) * y_rat); */
       new_y = floor((y) * y_rat - .5);
     
       while (old_y <= new_y)
@@ -4180,7 +4155,6 @@ scale_region (PixelRegion *srcPR,
        case CUBIC_INTERPOLATION:
        {
 	 double p0, p1, p2, p3;
-	 /* double dy = ((y - 0.5) * y_rat) - new_y; */
 	 double dy = ((y) * y_rat - .5) - new_y;
 	 p0 = cubic(dy, 1, 0, 0, 0);
 	 p1 = cubic(dy, 0, 1, 0, 0);
@@ -4583,7 +4557,7 @@ fatten_region(PixelRegion *src, gint16 xradius, gint16 yradius)
 {
 /*
   Any bugs in this fuction are probably also in thin_region  
-  Blame all bugs in this function on jaycox@earthlink.net
+  Blame all bugs in this function on jaycox@gimp.org
 */
   register gint32 i, j, x, y;
   guchar **buf; /* caches the region's pixel data */
@@ -4616,11 +4590,17 @@ fatten_region(PixelRegion *src, gint16 xradius, gint16 yradius)
     for (j = 0 ; j < xradius + 1; j++)
       max[i][j] = 0;
   }
+ /* offset the max pointer by xradius so the range of the array 
+    is [-xradius] to [src->w + xradius] */
   max += xradius;
+
   out =  (guchar *)g_malloc (src->w * sizeof(guchar));
 
   circ = (short *)g_malloc ((2*xradius + 1) * sizeof(gint16));
   compute_border (circ, xradius, yradius);
+
+ /* offset the circ pointer by xradius so the range of the array 
+    is [-xradius] to [xradius] */
   circ += xradius;
 
   memset (buf[0], 0, src->w);
@@ -4688,8 +4668,10 @@ fatten_region(PixelRegion *src, gint16 xradius, gint16 yradius)
     }
     pixel_region_set_row (src, src->x, src->y + y, src->w, out);
   }
+  /* undo the offsets to the pointers so we can free the malloced memmory */
   circ -= xradius;
   max -= xradius;
+
   g_free (circ);
   g_free (buffer);
   g_free (max);
@@ -4704,7 +4686,7 @@ thin_region(PixelRegion *src, gint16 xradius, gint16 yradius, int edge_lock)
 {
 /*
   pretty much the same as fatten_region only different
-  blame all bugs in this function on jaycox@earthlink.net
+  blame all bugs in this function on jaycox@gimp.org
 */
   /* If edge_lock is true  we assume that pixels outside the region
      we are passed are identical to the edge pixels.
@@ -4751,11 +4733,18 @@ thin_region(PixelRegion *src, gint16 xradius, gint16 yradius, int edge_lock)
   if (!edge_lock)
     for (j = 0 ; j < xradius+1; j++)
       max[0][j] = 0;
+
+ /* offset the max pointer by xradius so the range of the array 
+    is [-xradius] to [src->w + xradius] */
   max += xradius;
+
   out = (guchar *)g_malloc(src->w);
 
   circ = (short *)g_malloc((2*xradius + 1)*sizeof(gint16));
   compute_border(circ, xradius, yradius);
+
+ /* offset the circ pointer by xradius so the range of the array 
+    is [-xradius] to [xradius] */
   circ += xradius;
 
   for (i = 0; i < yradius && i < src->h; i++) /* load top of image */
@@ -4895,7 +4884,7 @@ border_region(PixelRegion *src, gint16 xradius, gint16 yradius)
 {
 /*
   This function has no bugs, but if you imagine some you can
-  blame them on jaycox@earthlink.net
+  blame them on jaycox@gimp.org
 */
   register gint32 i, j, x, y;
   guchar **buf, *out;
