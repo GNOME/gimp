@@ -93,6 +93,7 @@ static char *scroll_text[] =
   "Tristan Tarrant",
   "Owen Taylor",
   "Ian Tester",
+  "Andy Thomas",
   "James Wang",
   "Kris Wehner",
   "Matthew Wilson",

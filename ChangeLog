@@ -1,3 +1,8 @@
+Tue Apr 14 16:15:52 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/iscissors.c: partially applied gimp-monniaux-980413-0,
+	corrects nonfunctional interface elements
+
 Tue Apr 14 18:01:50 EDT 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/gdisplay.c: Set active_tool->drawable to NULL when destroying

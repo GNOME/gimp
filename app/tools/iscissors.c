@@ -57,6 +57,7 @@ struct _IScissorsOptions
   double feather_radius;
   double resolution;
   double threshold;
+  double elasticity;
 };
 
 typedef struct _kink Kink;
@@ -153,9 +154,6 @@ static Point *     pts = NULL;
 static int         max_pts = 0;
 
 /*  boundary resolution variables  */
-static int         resolution = 20;     /* in pixels */
-static int         threshold  = 15;     /* in intensity */
-static double      elasticity = 0.30;   /* between 0.0 -> 1.0 */
 static double      kink_thres = 0.33;   /* between 0.0 -> 1.0 */
 static double      std_dev    = 1.0;    /* in pixels */
 static int         miss_thres = 4;      /* in intensity */
@@ -290,8 +288,8 @@ iscissors_selection_options (void)
 {
   IScissorsOptions *options;
   GtkWidget *vbox;
-  GtkWidget *hbox;
   GtkWidget *label;
+  GtkWidget *hbox;
   GtkWidget *antialias_toggle;
   GtkWidget *feather_toggle;
   GtkWidget *feather_scale;
@@ -311,7 +309,8 @@ iscissors_selection_options (void)
   options->feather_radius = 10.0;
   options->resolution = 40.0;
   options->threshold = 15.0;
-  
+  options->elasticity = 0.30;
+
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
 
@@ -322,7 +321,9 @@ iscissors_selection_options (void)
   gtk_widget_show (label);
 
   /*  the antialias toggle button  */
-  antialias_toggle = gtk_check_button_new_with_label ("Antialiasing");
+  antialias_toggle = gtk_toggle_button_new_with_label ("Antialiasing");
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON(antialias_toggle),
+			       options->antialias);
   gtk_box_pack_start (GTK_BOX (vbox), antialias_toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (antialias_toggle), "toggled",
 		      (GtkSignalFunc) selection_toggle_update,
@@ -330,7 +331,9 @@ iscissors_selection_options (void)
   gtk_widget_show (antialias_toggle);
 
   /*  the feather toggle button  */
-  feather_toggle = gtk_check_button_new_with_label ("Feather");
+  feather_toggle = gtk_toggle_button_new_with_label ("Feather");
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON(feather_toggle),
+			       options->feather);
   gtk_box_pack_start (GTK_BOX (vbox), feather_toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (feather_toggle), "toggled",
 		      (GtkSignalFunc) selection_toggle_update,
@@ -345,7 +348,8 @@ iscissors_selection_options (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  feather_scale_data = gtk_adjustment_new (10.0, 0.0, 100.0, 1.0, 1.0, 0.0);
+  feather_scale_data = gtk_adjustment_new (options->feather_radius,
+					   0.0, 100.0, 1.0, 1.0, 0.0);
   feather_scale = gtk_hscale_new (GTK_ADJUSTMENT (feather_scale_data));
   gtk_box_pack_start (GTK_BOX (hbox), feather_scale, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (feather_scale), GTK_POS_TOP);
@@ -364,7 +368,8 @@ iscissors_selection_options (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  resolution_scale_data = gtk_adjustment_new (4.0, 1.0, 200.0, 1.0, 1.0, 0.0);
+  resolution_scale_data = gtk_adjustment_new (options->resolution,
+					      1.0, 200.0, 1.0, 1.0, 0.0);
   resolution_scale = gtk_hscale_new (GTK_ADJUSTMENT (resolution_scale_data));
   gtk_box_pack_start (GTK_BOX (hbox), resolution_scale, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (resolution_scale), GTK_POS_TOP);
@@ -383,7 +388,8 @@ iscissors_selection_options (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  threshold_scale_data = gtk_adjustment_new (15.0, 1.0, 255.0, 1.0, 1.0, 0.0);
+  threshold_scale_data = gtk_adjustment_new (options->threshold,
+					     1.0, 255.0, 1.0, 1.0, 0.0);
   threshold_scale = gtk_hscale_new (GTK_ADJUSTMENT (threshold_scale_data));
   gtk_box_pack_start (GTK_BOX (hbox), threshold_scale, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (threshold_scale), GTK_POS_TOP);
@@ -402,14 +408,15 @@ iscissors_selection_options (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  elasticity_scale_data = gtk_adjustment_new (.01, 0.0, 1.0, 0.05, 0.05, 0.0);
+  elasticity_scale_data = gtk_adjustment_new (options->elasticity,
+					      0.0, 1.0, 0.05, 0.05, 0.0);
   elasticity_scale = gtk_hscale_new (GTK_ADJUSTMENT (elasticity_scale_data));
   gtk_box_pack_start (GTK_BOX (hbox), elasticity_scale, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (elasticity_scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (elasticity_scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (elasticity_scale_data), "value_changed",
 		      (GtkSignalFunc) selection_scale_update,
-		      &elasticity);
+		      &options -> elasticity);
   gtk_widget_show (elasticity_scale);
   gtk_widget_show (hbox);
 
@@ -422,7 +429,7 @@ iscissors_selection_options (void)
 			NULL);
   gtk_widget_show (convert_button);
 
-
+  
   /*  Register this selection options widget with the main tools options dialog  */
   tools_register_options (ISCISSORS, vbox);
 
@@ -1189,6 +1196,7 @@ find_edge_xy (TempBuf *edge_buf,
   int d11, d12, d21, d22;
   unsigned char * data;
   int b;
+  int threshold = (int) iscissors_options->threshold;
 
   bytes = edge_buf->bytes;
   rowstride = bytes * edge_buf->width;
@@ -1296,6 +1304,7 @@ shape_of_boundary (Tool *tool)
   double weight;
   int left, right;
   int i, j;
+  int resolution = (int) iscissors_options->resolution;
   /* int x, y; */
 
   /*  This function determines the kinkiness at each point in the
@@ -1437,6 +1446,7 @@ initial_boundary (Tool *tool)
   double x, y;
   double dist;
   double res;
+  double i_resolution = 1.0 / iscissors_options->resolution;
   int i, n, this, next, k;
   int num_pts = 0;
 
@@ -1464,7 +1474,7 @@ initial_boundary (Tool *tool)
 	  /*  Find the number of segments that should be created
 	   *  to fill the void
 	   */
-	  n = (int) (dist / resolution);
+	  n = (int) (dist * i_resolution);
 	  res = dist / (double) (n + 1);
 
 	  add_point (&num_pts, 1, kinks[this].x, kinks[this].y, kinks[this].normal);
@@ -1676,6 +1686,7 @@ localize_boundary (Tool *tool)
   double edge[EDGE_WIDTH];
   int i, left, right;
   int moved = 0;
+  double elasticity = iscissors_options->elasticity + 1.0;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   iscissors = (Iscissors *) tool->private;
@@ -1707,7 +1718,7 @@ localize_boundary (Tool *tool)
 
 	  dx = pts[left].dx - pts[right].dx;
 	  dy = pts[left].dy - pts[right].dy;
-	  max = (sqrt (SQR (dx) + SQR (dy)) / 2.0) * (1.0 + elasticity);
+	  max = (sqrt (SQR (dx) + SQR (dy)) / 2.0) * elasticity;
 
 	  /*  If moving the point along it's directional vector
 	   *  still satisfies the elasticity constraints (OR)
