@@ -1,5 +1,14 @@
 2004-05-04  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpframe.c: added a style property to control
+	boldening of the frame title.
+	
+	* themes/Default/gtkrc
+	* themes/Small/gtkrc: suppress the bold title for GimpFrames in
+	GimpDockables,
+
+2004-05-04  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpframe.c (gimp_frame_size_allocate): allocate
 	the full width for the label widget, looks better and is more
 	convenient to use with activatable widgets such as toggle buttons.

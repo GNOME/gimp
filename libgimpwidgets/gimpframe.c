@@ -32,6 +32,8 @@
 
 
 #define DEFAULT_LABEL_SPACING       6
+#define DEFAULT_LABEL_BOLD          TRUE
+
 #define GIMP_FRAME_INDENT_KEY       "gimp-frame-indent"
 #define GIMP_FRAME_IN_EXPANDER_KEY  "gimp-frame-in-expander"
 
@@ -103,6 +105,11 @@ gimp_frame_class_init (GimpFrameClass *klass)
 
   frame_class->compute_child_allocation = gimp_frame_child_allocate;
 
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_boolean ("label_bold",
+                                                                 NULL, NULL,
+                                                                 DEFAULT_LABEL_BOLD,
+                                                                 G_PARAM_READABLE));
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("label_spacing",
                                                              NULL, NULL,
@@ -230,7 +237,12 @@ static void
 gimp_frame_style_set (GtkWidget *widget,
                       GtkStyle  *previous)
 {
+  /*  for "label_spacing"  */
   g_object_set_data (G_OBJECT (widget), GIMP_FRAME_INDENT_KEY, NULL);
+  gtk_widget_queue_resize (widget);
+
+  /*  for "label_bold"  */
+  gimp_frame_label_widget_notify (GTK_FRAME (widget));
 }
 
 static gboolean
@@ -271,12 +283,15 @@ gimp_frame_label_widget_notify (GtkFrame *frame)
 
       if (label)
         {
-          PangoAttrList  *attrs;
+          PangoAttrList  *attrs = pango_attr_list_new ();
           PangoAttribute *attr;
+          gboolean        bold;
 
-          attrs = pango_attr_list_new ();
+          gtk_widget_style_get (GTK_WIDGET (frame), "label_bold", &bold, NULL);
 
-          attr = pango_attr_weight_new (PANGO_WEIGHT_BOLD);
+          attr = pango_attr_weight_new (bold ?
+                                        PANGO_WEIGHT_BOLD :
+                                        PANGO_WEIGHT_NORMAL);
           attr->start_index = 0;
           attr->end_index   = -1;
           pango_attr_list_insert (attrs, attr);
