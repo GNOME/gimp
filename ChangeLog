@@ -1,3 +1,7 @@
+2002-06-16  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/menus.c: use the new paste icons in the menu.
+
 2002-06-15  Jakub Steiner <jimmac@ximian.com>
 
 	replaced
@@ -5,7 +9,7 @@
 	with
 	* themes/Default/images/stock-swap-colors-12.png:
 
-     eek, now I know why the wicked 12x12 size ;)
+	eek, now I know why the wicked 12x12 size ;)
 
 	* libgimpwidgets/gimpstock.c: 
 	* themes/Default/images/Makefile.am: 
