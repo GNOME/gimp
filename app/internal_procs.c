@@ -428,4 +428,5 @@ internal_procs_init ()
   procedural_db_register (&procedural_db_proc_val_proc); pcount++;
   procedural_db_register (&procedural_db_get_data_proc); pcount++;
   procedural_db_register (&procedural_db_set_data_proc); pcount++;
+  procedural_db_register (&procedural_db_get_data_size_proc); pcount++;
 }

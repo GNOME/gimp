@@ -361,7 +361,7 @@ ProcRecord procedural_db_get_data_size_proc =
   procedural_db_get_data_size_args,
 
   /*  Output arguments  */
-  2,
+  1,
   procedural_db_get_data_size_out_args,
 
   /*  Exec method  */

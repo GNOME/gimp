@@ -177,6 +177,7 @@ extern ProcRecord procedural_db_proc_arg_proc;
 extern ProcRecord procedural_db_proc_val_proc;
 extern ProcRecord procedural_db_get_data_proc;
 extern ProcRecord procedural_db_set_data_proc;
+extern ProcRecord procedural_db_get_data_size_proc;
 
 /*  Functions  */
 void          procedural_db_init         (void);
