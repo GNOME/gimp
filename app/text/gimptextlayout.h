@@ -41,9 +41,6 @@ gboolean         gimp_text_layout_get_size    (GimpTextLayout *layout,
 void             gimp_text_layout_get_offsets (GimpTextLayout *layout,
                                                gint           *x,
                                                gint           *y);
-TileManager    * gimp_text_layout_render      (GimpTextLayout *layout,
-                                               gint            width,
-                                               gint            height);
 
 
 #endif /* __GIMP_TEXT_LAYOUT_H__ */

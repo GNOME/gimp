@@ -39,6 +39,7 @@
 #include "gimptext.h"
 #include "gimptextlayer.h"
 #include "gimptextlayout.h"
+#include "gimptextlayout-render.h"
 
 #include "gimp-intl.h"
 

@@ -1,4 +1,15 @@
 2003-07-06  Sven Neumann  <sven@gimp.org>
+	
+	* app/text/Makefile.am
+	* app/text/gimptextlayout-private.h
+	* app/text/gimptextlayout-render.[ch]: new files that implement
+	text rendering. Right now it's basically code copied from PangoFT2
+	but having it here will allow me to implement text transformations.
+
+	* app/text/gimptextlayout.[ch]
+	* app/text/gimptextlayer.c: changed accordingly.
+
+2003-07-06  Sven Neumann  <sven@gimp.org>
 
 	* etc/ps-menurc: an updated version from Eric Pierce.
 

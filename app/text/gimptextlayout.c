@@ -28,28 +28,11 @@
 
 #include "text-types.h"
 
-#include "base/pixel-region.h"
-#include "base/tile-manager.h"
-
 #include "core/gimpimage.h"
 
 #include "gimptext.h"
 #include "gimptextlayout.h"
-
-
-struct _GimpTextLayout
-{
-  GObject         object;
-
-  GimpText       *text;
-  PangoLayout    *layout;
-  PangoRectangle  extents;
-};
-
-struct _GimpTextLayoutClass
-{
-  GObjectClass   parent_class;
-};
+#include "gimptextlayout-private.h"
 
 
 static void   gimp_text_layout_class_init  (GimpTextLayoutClass *klass);
@@ -261,43 +244,6 @@ gimp_text_layout_get_offsets (GimpTextLayout *layout,
     *y = layout->extents.y;
 }
 
-TileManager *
-gimp_text_layout_render (GimpTextLayout *layout,
-                         gint            width,
-                         gint            height)
-{
-  TileManager  *mask;
-  FT_Bitmap     bitmap;
-  PixelRegion   maskPR;
-  gint          i;
-  gint          x, y;
-
-  g_return_val_if_fail (GIMP_IS_TEXT_LAYOUT (layout), NULL);
-
-  gimp_text_layout_get_offsets (layout, &x, &y);
-
-  bitmap.width = width;
-  bitmap.rows  = height;
-  bitmap.pitch = width;
-  if (bitmap.pitch & 3)
-    bitmap.pitch += 4 - (bitmap.pitch & 3);
-
-  bitmap.buffer = g_malloc0 (bitmap.rows * bitmap.pitch);
-  
-  pango_ft2_render_layout (&bitmap, layout->layout, x, y);
-
-  mask = tile_manager_new (width, height, 1);
-  pixel_region_init (&maskPR, mask, 0, 0, width, height, TRUE);
-
-  for (i = 0; i < height; i++)
-    pixel_region_set_row (&maskPR,
-			  0, i, width, bitmap.buffer + i * bitmap.pitch);
-
-  g_free (bitmap.buffer);
-
-  return mask;
-}
-
 static void
 gimp_text_layout_position (GimpTextLayout *layout)
 {
@@ -310,7 +256,7 @@ gimp_text_layout_position (GimpTextLayout *layout)
   layout->extents.x      = 0;
   layout->extents.width  = 0;
   layout->extents.height = 0;
-  
+
   pango_layout_get_pixel_extents (layout->layout, &ink, &logical);
 
 #ifdef VERBOSE
