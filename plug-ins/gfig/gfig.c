@@ -4416,36 +4416,6 @@ gfig_pos_enable(GtkWidget *widget, gpointer data)
   gtk_widget_set_sensitive(GTK_WIDGET(y_pos_label),enable);
 }
 
-void
-my_gtk_label_set (GtkLabel *label,
-               const char *str)
-{
-  char* p;
-  g_return_if_fail (label != NULL);
-  g_return_if_fail (GTK_IS_LABEL (label));
-  g_return_if_fail (str != NULL);
-  if (label->label)
-    g_free (label->label);
-  label->label = g_strdup (str);
-  if (label->row)
-    g_slist_free (label->row);
-  label->row = NULL;
-  label->row = g_slist_append (label->row, label->label);
-  p = label->label;
-  while ((p = strchr(p, '\n')))
-    label->row = g_slist_append (label->row, ++p);
-  if (GTK_WIDGET_VISIBLE (label))
-    {
-      gdk_window_clear_area (GTK_WIDGET (label)->window,
-			     GTK_WIDGET (label)->allocation.x,
-			     GTK_WIDGET (label)->allocation.y,
-			     GTK_WIDGET (label)->allocation.width,
-			     GTK_WIDGET (label)->allocation.height);  
-      gtk_widget_draw(GTK_WIDGET(label),NULL);
-    }
-}      
-
-
 static void
 gfig_pos_update_labels(gpointer data)
 {
@@ -4459,14 +4429,14 @@ gfig_pos_update_labels(gpointer data)
   else
     sprintf(buf," X:  %.3d ",x_pos_val);
 
-  my_gtk_label_set(GTK_LABEL(x_pos_label),buf);
+  gtk_label_set(GTK_LABEL(x_pos_label),buf);
 
   if(y_pos_val < 0)
     sprintf(buf," Y:%.3d ",y_pos_val);
   else
     sprintf(buf," Y:  %.3d ",y_pos_val);
 
-  my_gtk_label_set(GTK_LABEL(y_pos_label),buf);
+  gtk_label_set(GTK_LABEL(y_pos_label),buf);
 }
 
 static void
@@ -4496,7 +4466,7 @@ gfig_obj_size_update(gint sz)
   static gchar buf[256];
   
   sprintf(buf,"%6d",sz);
-  my_gtk_label_set(GTK_LABEL(obj_size_label),buf);
+  gtk_label_set(GTK_LABEL(obj_size_label),buf);
 }  
 
 static GtkWidget *
