@@ -331,8 +331,7 @@ image_map_get_color_at (ImageMap *image_map,
 			gint      x, 
 			gint      y)
 {
-  Tile      *tile;
-  guchar    *src;
+  guchar    src[5];
   guchar    *dest;
 
   g_return_val_if_fail (image_map != NULL, NULL);
@@ -355,11 +354,8 @@ image_map_get_color_at (ImageMap *image_map,
 	}
 
       dest = g_new (guchar, 5);
-
-      tile = tile_manager_get_tile (image_map->undo_tiles, x, y,
-				    TRUE, FALSE);
-
-      src = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+      
+      read_pixel_data_1 (image_map->undo_tiles, x, y, src);
 
       gimp_image_get_color (gimp_drawable_gimage (image_map->drawable),
 			    gimp_drawable_type (image_map->drawable),
@@ -374,8 +370,6 @@ image_map_get_color_at (ImageMap *image_map,
 	dest[4] = src[0];
       else
 	dest[4] = 0;
-
-      tile_release (tile, FALSE);
 
       return dest;
     }

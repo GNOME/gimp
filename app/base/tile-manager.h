@@ -19,6 +19,14 @@
 #ifndef __TILE_MANAGER_H__
 #define __TILE_MANAGER_H__
 
+struct _PixelDataHandle 
+{
+  guchar                 *data;
+  gint                    width;
+  gint	                  height;
+  gint                    stride;
+  gint			  bpp;
+};
 
 /* Creates a new tile manager with the specified
  *  width for the toplevel. The toplevel sizes is
@@ -123,5 +131,40 @@ void          tile_manager_map_over_tile        (TileManager *tm,
 						 Tile        *tile,
 						 Tile        *srctile);
 
+PixelDataHandle * request_pixel_data (TileManager *tm,
+				      gint         x1,
+				      gint	   y1,
+				      gint	   x2,
+				      gint	   y2,
+				      gboolean     wantread,
+				      gboolean     wantwrite);
+
+void              release_pixel_data (PixelDataHandle *pdh);
+
+void              read_pixel_data (TileManager *tm,
+				   gint         x1,
+				   gint         y1,
+				   gint         x2,
+				   gint         y2,
+				   guchar      *buffer,
+				   guint        stride);
+
+void              write_pixel_data (TileManager *tm,
+				    gint         x1,
+				    gint         y1,
+				    gint         x2,
+				    gint         y2,
+				    guchar      *buffer,
+				    guint        stride);
+
+void		  read_pixel_data_1 (TileManager *tm,
+				     gint	  x,
+				     gint	  y,
+				     guchar      *buffer);
+
+void		  write_pixel_data_1 (TileManager *tm,
+				      gint	   x,
+				      gint	   y,
+				      guchar      *buffer);
 
 #endif /* __TILE_MANAGER_H__ */

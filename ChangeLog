@@ -1,3 +1,23 @@
+2001-11-28  Kelly Martin  <kmartin@pyrzqxgl.org>
+
+	* app/undo.c: Fixed another use of array of gpointer in place of a
+	proper struct, this time in undo_(push|pop)_channel_mod.
+
+	* base/base-types.h
+	* base/tile-manager.h
+	* base/tile-manager-private.h
+	* base/tile-manager.c: added PixelDataHandle as an abstraction
+	on top of tiles.  PixelDataHandles either return a pointer into
+	the tile data, or create a temporary buffer so the calling
+	function can access data from disparate tiles using a single
+	buffer.  This is a step in reducing the dependence of core
+	image functions being aware of tiles as well as a step toward
+	having a single abstraction for pixel data.
+
+	* app/image_map.c: changed to use read_pixel_data_1
+	* app/pixel-region.c: changed to use the read_pixel_data and
+	write_pixel_data where practical.  
+
 2001-11-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-mask.[ch]: s/gimage_mask/gimp_image_mask/g

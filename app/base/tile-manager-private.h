@@ -39,5 +39,18 @@ struct _TileManager
   gpointer           user_data;     /*  hook for hanging data off of         */
 };
 
+typedef struct _PixelDataHandlePrivate PixelDataHandlePrivate;
+
+struct _PixelDataHandlePrivate 
+{
+  PixelDataHandle  public;
+  TileManager     *tm;
+  gint		   x1, x2, y1, y2;
+  gboolean	   readable;
+  gboolean         writeable;
+  gboolean         local_buffer;
+  Tile            *tile;
+};
+
 
 #endif /* __TILE_MANAGER_PVT_H__ */

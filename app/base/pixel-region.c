@@ -123,35 +123,34 @@ pixel_region_get_row (PixelRegion *PR,
 
   pixel_region_get_async (PR, x, y, end, y);
 
-  while (x < end)
+  tilebpp = tile_manager_bpp (PR->tiles);
+  inc = subsample * tilebpp;
+
+  if (subsample == 1)
     {
-      tile = tile_manager_get_tile (PR->tiles, x, y, TRUE, FALSE);
-      tilebpp = tile_bpp (tile);
-      tile_data = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
-      npixels = tile_ewidth (tile) - (x % TILE_WIDTH);
-
-      if ((x + npixels) > end) /* make sure we don't write past the end */
-	npixels = end - x;
-
-      if (subsample == 1) /* optimize for the common case */
+      read_pixel_data (PR->tiles, x, y, end, y, data, w);
+    }
+  else 
+    {
+      while (x < end)
 	{
-	  memcpy (data, tile_data, tilebpp * npixels);
-	  data += tilebpp * npixels;
-	  x += npixels;
-	}
-      else
-	{
+	  tile = tile_manager_get_tile (PR->tiles, x, y, TRUE, FALSE);
+	  tile_data = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+	  npixels = tile_ewidth (tile) - (x % TILE_WIDTH);
+	  
+	  if ((x + npixels) > end) /* make sure we don't write past the end */
+	    npixels = end - x;
+	  
 	  boundary = x + npixels;
-	  inc = subsample * tilebpp;
 	  for ( ; x < boundary; x += subsample)
 	    {
 	      for (b = 0; b < tilebpp; b++)
 		*data++ = tile_data[b];
-
+	      
 	      tile_data += inc;
 	    }
+	  tile_release (tile, FALSE);
 	}
-      tile_release (tile, FALSE);
     }
 }
 
@@ -162,32 +161,13 @@ pixel_region_set_row (PixelRegion *PR,
 		      gint         w, 
 		      guchar      *data)
 {
-  Tile   *tile;
-  guchar *tile_data;
   gint    end;
-  gint    npixels;
 
   end = x + w;
 
   pixel_region_get_async (PR, x, y, end, y);
 
-  while (x < end)
-    {
-      tile = tile_manager_get_tile (PR->tiles, x, y, TRUE, TRUE);
-      tile_data = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
-
-      npixels = tile_ewidth (tile) - (x % TILE_WIDTH);
-
-      if ((x + npixels) > end) /* make sure we don't write past the end */
-	npixels = end - x;
-
-      memcpy (tile_data, data, tile_bpp (tile) * npixels);
-
-      data += tile_bpp (tile) * npixels;
-      x += npixels;
-
-      tile_release (tile, TRUE);
-    }
+  write_pixel_data (PR->tiles, x, y, end, y, data, w);
 }
 
 
@@ -211,10 +191,11 @@ pixel_region_get_col (PixelRegion *PR,
 
   pixel_region_get_async (PR, x, y, x, end);
 
+  tilebpp = tile_manager_bpp (PR->tiles);
+
   while (y < end)
     {
       tile = tile_manager_get_tile (PR->tiles, x, y, TRUE, FALSE);
-      tilebpp = tile_bpp (tile);
       tile_data = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
       boundary = y + (tile_eheight(tile) - (y % TILE_HEIGHT));
 
@@ -243,39 +224,16 @@ pixel_region_set_col (PixelRegion *PR,
 		      gint         h, 
 		      guchar      *data)
 {
-  Tile   *tile;
-  guchar *tile_data;
   gint    tilebpp;
-  gint    inc;
   gint    end;
-  gint    boundary;
-  gint    b;
 
   end = y + h;
 
   pixel_region_get_async (PR, x, y, x, end);
 
-  while (y < end)
-    {
-      tile = tile_manager_get_tile (PR->tiles, x, y, TRUE, TRUE);
-      tilebpp = tile_bpp (tile);
-      tile_data = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
-      boundary = y + (tile_eheight (tile) - (y % TILE_HEIGHT));
-      inc = tilebpp * tile_ewidth (tile);
+  tilebpp = tile_manager_bpp (PR->tiles);
 
-      if (boundary > end) /* make sure we don't write past the end */
-	boundary = end;
-
-      for ( ; y < boundary; y++)
-	{
-	  for (b = 0; b < tilebpp; b++)
-	    tile_data[b] = *data++;
-
-	  tile_data += inc;
-	}
-
-      tile_release (tile, TRUE);
-    }
+  write_pixel_data (PR->tiles, x, y, x, end, data, tilebpp);
 }
 
 gboolean

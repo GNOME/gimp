@@ -137,6 +137,7 @@ typedef struct _TempBuf             MaskBuf;
 typedef struct _Tile                Tile;
 typedef struct _TileManager         TileManager;
 
+typedef struct _PixelDataHandle     PixelDataHandle;
 
 /*  functions  */
 

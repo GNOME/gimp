@@ -1907,31 +1907,39 @@ undo_free_channel (UndoState  state,
 /*********************************/
 /*  Channel Mod Undo               */
 
+typedef struct _ChannelModUndo ChannelModUndo;
+
+struct _ChannelModUndo
+{
+  GimpChannel  *channel;
+  TileManager  *tiles;
+};
+
 gboolean
 undo_push_channel_mod (GimpImage *gimage,
 		       gpointer   channel_ptr)
 {
-  GimpChannel *channel;
-  TileManager *tiles;
-  Undo        *new;
-  gpointer    *data;
-  gint         size;
+  GimpChannel    *channel;
+  TileManager    *tiles;
+  Undo           *new;
+  ChannelModUndo *data;
+  gint            size;
 
   channel = (GimpChannel *) channel_ptr;
 
   tiles = GIMP_DRAWABLE (channel)->tiles;
   size  = GIMP_DRAWABLE (channel)->width * GIMP_DRAWABLE (channel)->height +
-    sizeof (gpointer) * 2;
+    sizeof (ChannelModUndo);
 
   if ((new = undo_push (gimage, size, CHANNEL_MOD, TRUE)))
     {
-      data           = g_new (gpointer, 2);
+      data           = g_new (ChannelModUndo, 1);
       new->data      = data;
       new->pop_func  = undo_pop_channel_mod;
       new->free_func = undo_free_channel_mod;
 
-      data[0] = channel_ptr;
-      data[1] = (gpointer) tiles;
+      data->channel = channel;
+      data->tiles   = tiles;
 
       return TRUE;
     }
@@ -1949,15 +1957,14 @@ undo_pop_channel_mod (GimpImage *gimage,
 		      UndoType   type,
 		      gpointer   data_ptr)
 {
-  gpointer    *data;
-  TileManager *tiles;
-  TileManager *temp;
-  GimpChannel *channel;
+  ChannelModUndo *data;
+  TileManager    *tiles;
+  TileManager    *temp;
+  GimpChannel    *channel;
 
-  data = (gpointer *) data_ptr;
-  channel = (GimpChannel *) data[0];
-
-  tiles = (TileManager *) data[1];
+  data = (ChannelModUndo *) data_ptr;
+  channel = data->channel;
+  tiles = data->tiles;
 
   /*  Issue the first update  */
   gimp_drawable_update (GIMP_DRAWABLE (channel),
@@ -1974,7 +1981,7 @@ undo_pop_channel_mod (GimpImage *gimage,
                                    reflect previous tile set */
 
   /*  Set the new buffer  */
-  data[1] = temp;
+  data->tiles = temp;
 
   /*  Issue the second update  */
   gimp_drawable_update (GIMP_DRAWABLE (channel),
