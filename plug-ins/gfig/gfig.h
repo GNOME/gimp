@@ -27,7 +27,7 @@
 #define __GFIG_H__
 
 #include "gfig-types.h"
-#include "gfig-dobject.h"
+#include "gfig-style.h"
 
 #define MAX_UNDO         10
 #define MIN_UNDO         1

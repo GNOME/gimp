@@ -34,6 +34,7 @@
 
 #include "gfig.h"
 #include "gfig-grid.h"
+#include "gfig-dobject.h"
 #include "gfig-preview.h"
 
 #include "libgimp/stdplugins-intl.h"

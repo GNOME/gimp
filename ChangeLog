@@ -1,3 +1,13 @@
+2004-11-02  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/gfig-dobject.c
+	* plug-ins/gfig/gfig-dobject.h
+	* plug-ins/gfig/gfig-preview.c
+	* plug-ins/gfig/gfig-style.h
+	* plug-ins/gfig/gfig-types.h
+	* plug-ins/gfig/gfig.h: some more cleanups. The current_style bug is
+	still there :(
+
 2004-11-01  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/xcf/xcf-load.c: applied patch from David Gowers, extra sanity

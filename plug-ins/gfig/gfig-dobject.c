@@ -378,6 +378,7 @@ object_operation_start (GdkPoint *pnt,
           d_draw_bezier (operation_obj);
         }
       break;
+
     case MOVE_POINT:
       if (operation_obj->type == BEZIER)
         {
@@ -405,6 +406,7 @@ object_operation_start (GdkPoint *pnt,
           scan_obj_points (operation_obj->points, pnt);
         }
       break;
+
     case COPY_OBJ:
       /* Copy the "operation object" */
       /* Then bung us into "copy/move" mode */
@@ -420,12 +422,15 @@ object_operation_start (GdkPoint *pnt,
           new_obj->class->drawfunc (new_obj);
         }
       break;
+
     case DEL_OBJ:
       remove_obj_from_list (gfig_context->current_obj, operation_obj);
       break;
+
     case SELECT_OBJ:
       /* don't need to do anything */
       break;
+
     case MOVE_COPY_OBJ: /* Never when button down */
     default:
       g_warning ("Internal error selvals.otype object operation start");

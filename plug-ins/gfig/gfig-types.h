@@ -108,6 +108,9 @@ typedef enum
   NULL_OPER
 } DobjType;
 
-typedef struct _GFigObj GFigObj;
+typedef struct _GFigObj  GFigObj;
+typedef struct _DAllObjs DAllObjs;
+typedef struct _Dobject  Dobject;
+typedef struct _Style    Style;
 
 #endif /* __GFIG_ENUMS_H__ */

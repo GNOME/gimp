@@ -28,7 +28,7 @@
 
 #include <libgimp/gimpui.h>
 
-typedef struct
+struct _Style
 {
   gchar        *name;
   gchar        *brush_name;
@@ -47,7 +47,7 @@ typedef struct
   GimpRGB       foreground;
   GimpRGB       background;
   gboolean      reverselines;
-} Style;
+};
 
 void     set_foreground_callback           (GimpColorButton      *button,
                                             gpointer              data);

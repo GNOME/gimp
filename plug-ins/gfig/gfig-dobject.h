@@ -28,13 +28,11 @@
 #include "gfig-types.h"
 #include "gfig-style.h"
 
-struct Dobject; /* fwd declaration for DobjFunc */
-
-typedef void            (*DobjFunc)     (struct Dobject *);
-typedef struct Dobject *(*DobjGenFunc)  (struct Dobject *);
-typedef struct Dobject *(*DobjLoadFunc) (FILE *);
-typedef void            (*DobjSaveFunc) (struct Dobject *, GString *);
-typedef struct Dobject *(*DobjCreateFunc) (gint, gint);
+typedef void     (*DobjFunc)       (Dobject *);
+typedef Dobject *(*DobjGenFunc)    (Dobject *);
+typedef Dobject *(*DobjLoadFunc)   (FILE *);
+typedef void     (*DobjSaveFunc)   (Dobject *, GString *);
+typedef Dobject *(*DobjCreateFunc) (gint, gint);
 
 typedef struct DobjPoints
 {
@@ -55,7 +53,7 @@ typedef struct
 DobjClass dobj_class[10];
 
 /* The object itself */
-typedef struct Dobject
+struct _Dobject
 {
   DobjType      type;       /* What is the type? */
   DobjClass    *class;      /* What class does it belong to? */
@@ -63,13 +61,13 @@ typedef struct Dobject
   DobjPoints   *points;     /* List of points */
   Style         style;      /* this object's individual style settings */
   gint          style_no;   /* style index of this specific object */
-} Dobject;
+};
 
-typedef struct DAllObjs
+struct _DAllObjs
 {
-  struct DAllObjs *next;
-  Dobject         *obj; /* Object on list */
-} DAllObjs;
+  DAllObjs *next;
+  Dobject  *obj; /* Object on list */
+};
 
 /* States of the object */
 #define GFIG_OK       0x0
