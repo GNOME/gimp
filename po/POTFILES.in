@@ -3,8 +3,6 @@
 
 app/app_procs.c
 app/devices.c
-app/file-open.c
-app/file-save.c
 app/floating_sel.c
 app/gdisplay_color_ui.c
 app/gimphelp.c
@@ -40,6 +38,9 @@ app/display/gimpdisplay-callbacks.c
 app/display/gimpdisplay-ops.c
 app/display/gimpdisplay.c
 app/display/gimpdisplayshell.c
+
+app/file/file-open.c
+app/file/file-save.c
 
 app/gui/about-dialog.c
 app/gui/brush-editor.c

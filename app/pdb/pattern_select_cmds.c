@@ -48,23 +48,6 @@ register_pattern_select_procs (Gimp *gimp)
   procedural_db_register (gimp, &patterns_set_popup_proc);
 }
 
-static PatternSelect *
-pattern_get_patternselect (gchar *name)
-{
-  GSList *list;
-  PatternSelect *psp;
-
-  for (list = pattern_active_dialogs; list; list = g_slist_next (list))
-    {
-      psp = (PatternSelect *) list->data;
-      
-      if (psp->callback_name && !strcmp (name, psp->callback_name))
-	return psp;
-    }
-
-  return NULL;
-}
-
 static Argument *
 patterns_popup_invoker (Gimp     *gimp,
                         Argument *args)
@@ -91,15 +74,14 @@ patterns_popup_invoker (Gimp     *gimp,
       if ((prec = procedural_db_lookup (gimp, name)))
 	{
 	  if (pattern && strlen (pattern))
-	    newdialog = pattern_select_new (title, pattern);
+	    newdialog = pattern_select_new (gimp, title, pattern, name);
 	  else
-	    newdialog = pattern_select_new (title, NULL);
-    
-	  /* The callback procedure to run when pattern changes */
-	  newdialog->callback_name = g_strdup (name);
+	    newdialog = pattern_select_new (gimp, title, NULL, name);
 	}
       else
-	success = FALSE;
+	{
+	  success = FALSE;
+	}
     }
 
   return procedural_db_return_args (&patterns_popup_proc, success);
@@ -156,20 +138,14 @@ patterns_close_popup_invoker (Gimp     *gimp,
   if (success)
     {
       if ((prec = procedural_db_lookup (gimp, name)) &&
-	  (psp = pattern_get_patternselect (name)))
+	  (psp = pattern_select_get_by_callback (name)))
 	{
-	  if (GTK_WIDGET_VISIBLE (psp->shell))
-	    gtk_widget_hide (psp->shell);
-    
-	  /* Free memory if poping down dialog which is not the main one */
-	  if (psp != pattern_select_dialog)
-	    {
-	      gtk_widget_destroy (psp->shell);
-	      pattern_select_free (psp);
-	    }
+	  pattern_select_free (psp);
 	}
       else
-	success = FALSE;
+	{
+	  success = FALSE;
+	}
     }
 
   return procedural_db_return_args (&patterns_close_popup_proc, success);
@@ -221,7 +197,7 @@ patterns_set_popup_invoker (Gimp     *gimp,
   if (success)
     {
       if ((prec = procedural_db_lookup (gimp, name)) &&
-	  (psp = pattern_get_patternselect (name)))
+	  (psp = pattern_select_get_by_callback (name)))
 	{
 	  GimpPattern *active = (GimpPattern *)
 	    gimp_container_get_child_by_name (gimp->pattern_factory->container,

@@ -57,8 +57,6 @@
 #include "tool-options-dialog.h"
 #include "toolbox.h"
 
-#include "appenv.h"
-#include "app_procs.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
@@ -107,11 +105,6 @@ static void   gui_image_selection_control     (GimpImage            *gimage,
                                                gpointer              data);
 
 
-/*  global variables  */
-
-extern GSList *display_list;  /*  from gdisplay.c  */
-
-
 /*  private variables  */
 
 static GQuark image_disconnect_handler_id        = 0;
@@ -132,17 +125,17 @@ static void
 gui_themes_dir_foreach_func (const gchar *filename,
 			     gpointer     loader_data)
 {
-  GHashTable *hash;
-  gchar      *basename;
+  Gimp  *gimp;
+  gchar *basename;
 
-  hash = (GHashTable *) loader_data;
+  gimp = (Gimp *) loader_data;
 
   basename = g_path_get_basename (filename);
 
-  if (be_verbose)
+  if (gimp->be_verbose)
     g_print (_("adding theme \"%s\" (%s)\n"), basename, filename);
 
-  g_hash_table_insert (hash,
+  g_hash_table_insert (themes_hash,
 		       basename,
 		       g_strdup (filename));
 }
@@ -169,7 +162,7 @@ gui_libs_init (Gimp    *gimp,
       gimp_datafiles_read_directories (gimprc.theme_path,
 				       TYPE_DIRECTORY,
 				       gui_themes_dir_foreach_func,
-				       themes_hash);
+				       gimp);
     }
 
   if (gimprc.theme)
@@ -188,7 +181,7 @@ gui_libs_init (Gimp    *gimp,
       gtkrc = g_strdup (gimp_gtkrc ());
     }
 
-  if (be_verbose)
+  if (gimp->be_verbose)
     g_print (_("parsing \"%s\"\n"), gtkrc);
 
   gtk_rc_parse (gtkrc);
@@ -199,7 +192,7 @@ gui_libs_init (Gimp    *gimp,
 
   gtkrc = gimp_personal_rc_file ("gtkrc");
 
-  if (be_verbose)
+  if (gimp->be_verbose)
     g_print (_("parsing \"%s\"\n"), gtkrc);
 
   gtk_rc_parse (gtkrc);
@@ -215,9 +208,6 @@ gui_init (Gimp *gimp)
   gimp->create_display_func = gui_display_new;
   gimp->gui_set_busy_func   = gui_set_busy;
   gimp->gui_unset_busy_func = gui_unset_busy;
-
-  if (gimprc.always_restore_session)
-    restore_session = TRUE;
 
   image_disconnect_handler_id =
     gimp_container_add_handler (gimp->images, "disconnect",
@@ -289,7 +279,8 @@ gui_init (Gimp *gimp)
 }
 
 void
-gui_restore (Gimp *gimp)
+gui_restore (Gimp     *gimp,
+             gboolean  restore_session)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -304,7 +295,7 @@ gui_restore (Gimp *gimp)
 
   devices_restore ();
 
-  if (restore_session)
+  if (gimprc.always_restore_session || restore_session)
     session_restore (gimp);
 }
 
@@ -348,7 +339,7 @@ gui_exit (Gimp *gimp)
 
   /*  handle this in the dialog factory:  */
   tool_options_dialog_free ();
-  toolbox_free ();
+  toolbox_free (gimp);
 
   gimp_help_free ();
 
@@ -378,7 +369,7 @@ gui_exit (Gimp *gimp)
 }
 
 void
-gui_really_quit_dialog (void)
+gui_really_quit_dialog (GCallback quit_func)
 {
   GtkWidget *dialog;
 
@@ -393,13 +384,15 @@ gui_really_quit_dialog (void)
 				   GTK_STOCK_QUIT, GTK_STOCK_CANCEL,
 				   NULL, NULL,
 				   gui_really_quit_callback,
-				   NULL);
+				   quit_func);
 
   gtk_widget_show (dialog);
 }
 
 
 /*  private functions  */
+
+gboolean double_speed = FALSE;
 
 static void
 gui_display_new (GimpImage *gimage)
@@ -419,36 +412,14 @@ gui_display_new (GimpImage *gimage)
 static void
 gui_set_busy (Gimp *gimp)
 {
-  GDisplay *gdisp;
-  GSList   *list;
-
-  /* Canvases */
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GDisplay *) list->data;
-      gdisplay_install_override_cursor (gdisp, GDK_WATCH);
-    }
-
-  /* Dialogs */
+  gdisplays_set_busy ();
   gimp_dialog_factories_idle ();
-
-  gdk_flush ();
 }
 
 static void
 gui_unset_busy (Gimp *gimp)
 {
-  GDisplay *gdisp;
-  GSList   *list;
-
-  /* Canvases */
-  for (list = display_list; list; list = g_slist_next (list))
-    {
-      gdisp = (GDisplay *) list->data;
-      gdisplay_remove_override_cursor (gdisp);
-    }
-
-  /* Dialogs */
+  gdisplays_unset_busy ();
   gimp_dialog_factories_unidle ();
 }
 
@@ -505,9 +476,13 @@ gui_really_quit_callback (GtkWidget *button,
 			  gboolean   quit,
 			  gpointer   data)
 {
+  GCallback quit_func;
+
+  quit_func = G_CALLBACK (data);
+
   if (quit)
     {
-      app_exit_finish ();
+      (* quit_func) ();
     }
   else
     {

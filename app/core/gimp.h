@@ -45,6 +45,7 @@ struct _Gimp
   GimpCoreConfig        *config;
 
   gboolean               be_verbose;
+  gboolean               no_data;
 
   GimpCreateDisplayFunc  create_display_func;
   GimpSetBusyFunc        gui_set_busy_func;
@@ -115,7 +116,8 @@ struct _GimpClass
 
 GType         gimp_get_type             (void);
 
-Gimp        * gimp_new                  (gboolean            be_verbose);
+Gimp        * gimp_new                  (gboolean            be_verbose,
+                                         gboolean            no_data);
 
 void          gimp_initialize           (Gimp               *gimp,
                                          GimpInitStatusFunc  status_callback);

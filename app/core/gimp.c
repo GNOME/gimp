@@ -118,6 +118,7 @@ gimp_init (Gimp *gimp)
   gimp_core_config_init (gimp);
 
   gimp->be_verbose          = FALSE;
+  gimp->no_data             = FALSE;
 
   gimp->create_display_func = NULL;
   gimp->gui_set_busy_func   = NULL;
@@ -300,13 +301,15 @@ gimp_finalize (GObject *object)
 }
 
 Gimp *
-gimp_new (gboolean be_verbose)
+gimp_new (gboolean be_verbose,
+          gboolean no_data)
 {
   Gimp *gimp;
 
   gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
 
   gimp->be_verbose = be_verbose ? TRUE : FALSE;
+  gimp->no_data    = no_data    ? TRUE : FALSE;
 
   return gimp;
 }

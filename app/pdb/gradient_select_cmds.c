@@ -51,23 +51,6 @@ register_gradient_select_procs (Gimp *gimp)
   procedural_db_register (gimp, &gradients_get_gradient_data_proc);
 }
 
-static GradientSelect *
-gradients_get_gradientselect (gchar *name)
-{
-  GSList *list;
-  GradientSelect *gsp;
-
-  for (list = gradient_active_dialogs; list; list = g_slist_next (list))
-    {
-      gsp = (GradientSelect *) list->data;
-      
-      if (gsp->callback_name && !strcmp (name, gsp->callback_name))
-	return gsp;
-    }
-
-  return NULL;
-}
-
 static Argument *
 gradients_popup_invoker (Gimp     *gimp,
                          Argument *args)
@@ -99,15 +82,16 @@ gradients_popup_invoker (Gimp     *gimp,
       if ((prec = procedural_db_lookup (gimp, name)))
 	{
 	  if (initial_gradient && strlen (initial_gradient))
-	    newdialog = gradient_select_new (title, initial_gradient);
+	    newdialog = gradient_select_new (gimp, title, initial_gradient,
+					     name, sample_size);
 	  else
-	    newdialog = gradient_select_new (title, NULL);
-    
-	  newdialog->callback_name = g_strdup (name);
-	  newdialog->sample_size   = sample_size;
+	    newdialog = gradient_select_new (gimp, title, NULL,
+					     name, sample_size);
 	}
       else
-	success = FALSE;
+	{
+	  success = FALSE;
+	}
     }
 
   return procedural_db_return_args (&gradients_popup_proc, success);
@@ -169,21 +153,14 @@ gradients_close_popup_invoker (Gimp     *gimp,
   if (success)
     {
       if ((prec = procedural_db_lookup (gimp, name)) &&
-	  (gsp = gradients_get_gradientselect (name)))
+	  (gsp = gradient_select_get_by_callback (name)))
 	{
-	  if (GTK_WIDGET_VISIBLE (gsp->shell))
-	    gtk_widget_hide (gsp->shell);
-    
-	  /* Free memory if poping down dialog which is not the main one */
-	  if (gsp != gradient_select_dialog)
-	    {
-	      /* Send data back */
-	      gtk_widget_destroy (gsp->shell);
-	      gradient_select_free (gsp);
-	    }
+	  gradient_select_free (gsp);
 	}
       else
-	success = FALSE;
+	{
+	  success = FALSE;
+	}
     }
 
   return procedural_db_return_args (&gradients_close_popup_proc, success);
@@ -235,7 +212,7 @@ gradients_set_popup_invoker (Gimp     *gimp,
   if (success)
     {
       if ((prec = procedural_db_lookup (gimp, pdbname)) &&
-	  (gsp = gradients_get_gradientselect (pdbname)))
+	  (gsp = gradient_select_get_by_callback (pdbname)))
 	{
 	  GimpGradient *active = NULL;
     

@@ -37,13 +37,15 @@ struct _PaletteSelect
 };
 
 
-PaletteSelect * palette_select_new    (const gchar   *title,
-				       const gchar   *initial_palette);
+PaletteSelect * palette_select_new    (Gimp          *gimp,
+                                       const gchar   *title,
+				       const gchar   *initial_palette,
+                                       const gchar   *callback_name);
 void            palette_select_free   (PaletteSelect *palette_select);
 
 
 /*  the main palette selection  */
-GtkWidget     * palette_dialog_create (void);
+GtkWidget     * palette_dialog_create (Gimp          *gimp);
 void            palette_dialog_free   (void);
 
 

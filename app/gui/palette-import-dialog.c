@@ -97,7 +97,7 @@ palette_import_select_grad_callback (GtkWidget *widget,
 				     gpointer   data)
 {
   /*  Popup grad edit box ....  */
-  gradient_dialog_create ();
+  gradient_dialog_create (the_gimp);
 }
 
 static void

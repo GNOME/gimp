@@ -40,9 +40,6 @@
 #include "palette-editor.h"
 #include "palette-select.h"
 
-#include "appenv.h"
-#include "app_procs.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -63,17 +60,19 @@ static void   palette_select_close_callback (GtkWidget      *widget,
 static GSList *palette_active_dialogs = NULL;
 
 /*  the main palette selection dialog  */
-PaletteSelect *palette_select_dialog = NULL;
+static PaletteSelect *palette_select_dialog = NULL;
 
 
 /*  public functions  */
 
 GtkWidget *
-palette_dialog_create (void)
+palette_dialog_create (Gimp *gimp)
 {
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
   if (! palette_select_dialog)
     {
-      palette_select_dialog = palette_select_new (NULL, NULL);
+      palette_select_dialog = palette_select_new (gimp, NULL, NULL, NULL);
     }
 
   return palette_select_dialog->shell;
@@ -90,8 +89,10 @@ palette_dialog_free (void)
 }
 
 PaletteSelect *
-palette_select_new (const gchar *title,
-		    const gchar *initial_palette)
+palette_select_new (Gimp        *gimp,
+                    const gchar *title,
+		    const gchar *initial_palette,
+                    const gchar *callback_name)
 {
   PaletteSelect *psp;
   GtkWidget     *vbox;
@@ -99,9 +100,11 @@ palette_select_new (const gchar *title,
 
   static gboolean first_call = TRUE;
 
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
   psp = g_new0 (PaletteSelect, 1);
 
-  psp->callback_name = NULL;
+  psp->callback_name = g_strdup (callback_name);
   
   /*  The shell and main vbox  */
   psp->shell = gimp_dialog_new (title ? title : _("Palette Selection"),
@@ -121,31 +124,31 @@ palette_select_new (const gchar *title,
 
   if (title)
     {
-      psp->context = gimp_create_context (the_gimp, title, NULL);
+      psp->context = gimp_create_context (gimp, title, NULL);
     }
   else
     {
-      psp->context = gimp_get_user_context (the_gimp);
+      psp->context = gimp_get_user_context (gimp);
     }
 
-  if (no_data && first_call)
-    gimp_data_factory_data_init (the_gimp->palette_factory, FALSE);
+  if (gimp->no_data && first_call)
+    gimp_data_factory_data_init (gimp->palette_factory, FALSE);
 
   first_call = FALSE;
 
   if (title && initial_palette && strlen (initial_palette))
     {
       active = (GimpPalette *)
-	gimp_container_get_child_by_name (the_gimp->palette_factory->container,
+	gimp_container_get_child_by_name (gimp->palette_factory->container,
 					  initial_palette);
     }
   else
     {
-      active = gimp_context_get_palette (gimp_get_user_context (the_gimp));
+      active = gimp_context_get_palette (gimp_get_user_context (gimp));
     }
 
   if (!active)
-    active = gimp_context_get_palette (gimp_get_standard_context (the_gimp));
+    active = gimp_context_get_palette (gimp_get_standard_context (gimp));
 
   if (title)
     gimp_context_set_palette (psp->context, active);
@@ -157,7 +160,7 @@ palette_select_new (const gchar *title,
 
   /*  The Palette List  */
   psp->view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
-					  the_gimp->palette_factory,
+					  gimp->palette_factory,
 					  dialogs_edit_palette_func,
 					  psp->context,
 					  32,

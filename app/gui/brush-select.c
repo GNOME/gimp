@@ -42,8 +42,6 @@
 #include "brush-select.h"
 #include "dialogs-constructors.h"
 
-#include "appenv.h"
-#include "app_procs.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
@@ -80,20 +78,22 @@ static void     brush_select_close_callback         (GtkWidget       *widget,
 
 
 /*  list of active dialogs  */
-GSList *brush_active_dialogs = NULL;
+static GSList *brush_active_dialogs = NULL;
 
 /*  the main brush selection dialog  */
-BrushSelect *brush_select_dialog = NULL;
+static BrushSelect *brush_select_dialog = NULL;
 
 
 /*  public functions  */
 
 GtkWidget *
-brush_dialog_create (void)
+brush_dialog_create (Gimp *gimp)
 {
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
   if (! brush_select_dialog)
     {
-      brush_select_dialog = brush_select_new (NULL, NULL, 0.0, 0, 0);
+      brush_select_dialog = brush_select_new (gimp, NULL, NULL, 0.0, 0, 0, NULL);
     }
 
   return brush_select_dialog->shell;
@@ -112,14 +112,16 @@ brush_dialog_free (void)
 
 /*  If title == NULL then it is the main brush dialog  */
 BrushSelect *
-brush_select_new (gchar   *title,
+brush_select_new (Gimp        *gimp,
+                  const gchar *title,
 		  /*  These are the required initial vals
 		   *  If init_name == NULL then use current brush
 		   */
-		  gchar   *init_name,
-		  gdouble  init_opacity,
-		  gint     init_spacing,
-		  gint     init_mode)
+		  const gchar *init_name,
+		  gdouble      init_opacity,
+		  gint         init_spacing,
+		  gint         init_mode,
+                  const gchar *callback_name)
 {
   BrushSelect *bsp;
   GtkWidget   *main_vbox;
@@ -131,7 +133,11 @@ brush_select_new (gchar   *title,
 
   static gboolean first_call = TRUE;
 
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
   bsp = g_new0 (BrushSelect, 1);
+
+  bsp->callback_name = g_strdup (callback_name);
 
   /*  The shell  */
   bsp->shell = gimp_dialog_new (title ? title : _("Brush Selection"),
@@ -146,37 +152,36 @@ brush_select_new (gchar   *title,
 
 				NULL);
 
-  gtk_widget_hide (GTK_WIDGET (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_DIALOG (bsp->shell)->vbox)), 0)));
-
+  gtk_dialog_set_has_separator (GTK_DIALOG (bsp->shell), FALSE);
   gtk_widget_hide (GTK_DIALOG (bsp->shell)->action_area);
 
   if (title)
     {
-      bsp->context = gimp_create_context (the_gimp, title, NULL);
+      bsp->context = gimp_create_context (gimp, title, NULL);
     }
   else
     {
-      bsp->context = gimp_get_user_context (the_gimp);
+      bsp->context = gimp_get_user_context (gimp);
     }
 
-  if (no_data && first_call)
-    gimp_data_factory_data_init (the_gimp->brush_factory, FALSE);
+  if (gimp->no_data && first_call)
+    gimp_data_factory_data_init (gimp->brush_factory, FALSE);
 
   first_call = FALSE;
 
   if (title && init_name && strlen (init_name))
     {
       active = (GimpBrush *)
-	gimp_container_get_child_by_name (the_gimp->brush_factory->container,
+	gimp_container_get_child_by_name (gimp->brush_factory->container,
 					  init_name);
     }
   else
     {
-      active = gimp_context_get_brush (gimp_get_user_context (the_gimp));
+      active = gimp_context_get_brush (gimp_get_user_context (gimp));
     }
 
   if (!active)
-    active = gimp_context_get_brush (gimp_get_standard_context (the_gimp));
+    active = gimp_context_get_brush (gimp_get_standard_context (gimp));
 
   if (title)
     {
@@ -193,7 +198,7 @@ brush_select_new (gchar   *title,
 
   /*  The Brush Grid  */
   bsp->view = gimp_brush_factory_view_new (GIMP_VIEW_TYPE_GRID,
-					   the_gimp->brush_factory,
+					   gimp->brush_factory,
 					   dialogs_edit_brush_func,
 					   bsp->context,
 					   title ? FALSE : TRUE,
@@ -296,8 +301,9 @@ brush_select_new (gchar   *title,
 void
 brush_select_free (BrushSelect *bsp)
 {
-  if (!bsp)
-    return;
+  g_return_if_fail (bsp != NULL);
+
+  gtk_widget_destroy (bsp->shell); 
 
   /* remove from active list */
   brush_active_dialogs = g_slist_remove (brush_active_dialogs, bsp);
@@ -390,6 +396,23 @@ brush_select_change_callbacks (BrushSelect *bsp,
       procedural_db_destroy_args (return_vals, nreturn_vals);
     }
   busy = FALSE;
+}
+
+BrushSelect *
+brush_select_get_by_callback (const gchar *callback_name)
+{
+  GSList      *list;
+  BrushSelect *bsp;
+
+  for (list = brush_active_dialogs; list; list = g_slist_next (list))
+    {
+      bsp = (BrushSelect *) list->data;
+
+      if (bsp->callback_name && ! strcmp (callback_name, bsp->callback_name))
+	return bsp;
+    }
+
+  return NULL;
 }
 
 /* Close active dialogs that no longer have PDB registered for them */
@@ -536,7 +559,6 @@ brush_select_close_callback (GtkWidget *widget,
     {
       /* Send data back */
       brush_select_change_callbacks (bsp, TRUE);
-      gtk_widget_destroy (bsp->shell); 
       brush_select_free (bsp); 
     }
 }

@@ -75,7 +75,6 @@ gchar          **batch_cmds              = NULL;
 /*  other global variables  */
 gchar              *prog_name       = NULL;  /* our executable name */
 MessageHandlerType  message_handler = CONSOLE;
-gboolean            double_speed    = FALSE;
 
 
 /*
@@ -344,15 +343,23 @@ main (int    argc,
 		     G_LOG_LEVEL_MESSAGE,
 		     gimp_message_log_func,
 		     NULL);
+  g_log_set_handler ("Gimp-Paint-Funcs",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_log_func,
+		     NULL);
   g_log_set_handler ("Gimp-Core",
 		     G_LOG_LEVEL_MESSAGE,
 		     gimp_message_log_func,
 		     NULL);
-  g_log_set_handler ("Gimp-PDB",
+  g_log_set_handler ("Gimp-File",
 		     G_LOG_LEVEL_MESSAGE,
 		     gimp_message_log_func,
 		     NULL);
   g_log_set_handler ("Gimp-XCF",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_log_func,
+		     NULL);
+  g_log_set_handler ("Gimp-PDB",
 		     G_LOG_LEVEL_MESSAGE,
 		     gimp_message_log_func,
 		     NULL);
@@ -361,6 +368,10 @@ main (int    argc,
 		     gimp_message_log_func,
 		     NULL);
   g_log_set_handler ("Gimp-Tools",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_log_func,
+		     NULL);
+  g_log_set_handler ("Gimp-Display",
 		     G_LOG_LEVEL_MESSAGE,
 		     gimp_message_log_func,
 		     NULL);
@@ -407,10 +418,6 @@ main (int    argc,
   /* Initialize the application */
   app_init (argc - 1,
 	    argv + 1);
-
-  /* Main application loop */
-  if (! app_exit_finish_done ())
-    gtk_main ();
 
   return 0;
 }

@@ -161,7 +161,7 @@ GtkWidget *
 dialogs_toolbox_get (GimpDialogFactory *factory,
 		     GimpContext       *context)
 {
-  return toolbox_create ();
+  return toolbox_create (context->gimp);
 }
 
 GtkWidget *
@@ -182,28 +182,28 @@ GtkWidget *
 dialogs_brush_select_get (GimpDialogFactory *factory,
 			  GimpContext       *context)
 {
-  return brush_dialog_create ();
+  return brush_dialog_create (context->gimp);
 }
 
 GtkWidget *
 dialogs_pattern_select_get (GimpDialogFactory *factory,
 			    GimpContext       *context)
 {
-  return pattern_dialog_create ();
+  return pattern_dialog_create (context->gimp);
 }
 
 GtkWidget *
 dialogs_gradient_select_get (GimpDialogFactory *factory,
 			     GimpContext       *context)
 {
-  return gradient_dialog_create ();
+  return gradient_dialog_create (context->gimp);
 }
 
 GtkWidget *
 dialogs_palette_select_get (GimpDialogFactory *factory,
 			    GimpContext       *context)
 {
-  return palette_dialog_create ();
+  return palette_dialog_create (context->gimp);
 }
 
 GtkWidget *

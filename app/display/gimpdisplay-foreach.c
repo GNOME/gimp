@@ -355,3 +355,31 @@ gdisplays_reconnect (GimpImage *old,
 	gdisplay_reconnect (gdisp, new);
     }
 }
+
+void
+gdisplays_set_busy (void)
+{
+  GSList      *list;
+  GimpDisplay *gdisp;
+
+  for (list = display_list; list; list = g_slist_next (list))
+    {
+      gdisp = list->data;
+      
+      gdisplay_install_override_cursor (gdisp, GDK_WATCH);
+    }
+}
+
+void
+gdisplays_unset_busy (void)
+{
+  GSList      *list;
+  GimpDisplay *gdisp;
+
+  for (list = display_list; list; list = g_slist_next (list))
+    {
+      gdisp = list->data;
+      
+      gdisplay_remove_override_cursor (gdisp);
+    }
+}

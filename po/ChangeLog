@@ -1,3 +1,7 @@
+2001-10-25  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: app/file-*.c -> app/file/file-*.c
+
 2001-10-23  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: updated.

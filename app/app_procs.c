@@ -66,22 +66,20 @@
 #include "libgimp/gimpintl.h"
 
 
+/*  local prototypes  */
+
+static void   app_init_update_status (const gchar *text1,
+                                      const gchar *text2,
+                                      gdouble      percentage);
+static void   app_exit_finish        (void);
+
+
+/*  global variables  */
+
 Gimp *the_gimp = NULL;
 
 
-static gboolean is_app_exit_finish_done = FALSE;
-
-
-static void
-app_init_update_status (const gchar *text1,
-		        const gchar *text2,
-		        gdouble      percentage)
-{
-  if (! no_interface && ! no_splash)
-    {
-      splash_update (text1, text2, percentage);
-    }
-}
+/*  public functions  */
 
 void
 app_init (gint    gimp_argc,
@@ -93,7 +91,7 @@ app_init (gint    gimp_argc,
   /*  Create an instance of the "Gimp" object which is the root of the
    *  core object system
    */
-  the_gimp = gimp_new (be_verbose);
+  the_gimp = gimp_new (be_verbose, no_data);
 
   /*  Check if the user's gimp_directory exists
    */
@@ -182,7 +180,7 @@ app_init (gint    gimp_argc,
       /*  FIXME: This needs to go in preferences  */
       message_handler = MESSAGE_BOX;
 
-      gui_restore (the_gimp);
+      gui_restore (the_gimp, restore_session);
     }
 
   /*  Parse the rest of the command line arguments as images to load
@@ -201,6 +199,8 @@ app_init (gint    gimp_argc,
     {
       gui_post_init (the_gimp);
     }
+
+  gtk_main ();
 }
 
 void
@@ -208,19 +208,28 @@ app_exit (gboolean kill_it)
 {
   /*  If it's the user's perogative, and there are dirty images  */
   if (! kill_it && gdisplays_dirty () && ! no_interface)
-    gui_really_quit_dialog ();
+    gui_really_quit_dialog (G_CALLBACK (app_exit_finish));
   else
     app_exit_finish ();
 }
 
-void
+
+/*  private functions  */
+
+static void
+app_init_update_status (const gchar *text1,
+		        const gchar *text2,
+		        gdouble      percentage)
+{
+  if (! no_interface && ! no_splash)
+    {
+      splash_update (text1, text2, percentage);
+    }
+}
+
+static void
 app_exit_finish (void)
 {
-  if (app_exit_finish_done ())
-    return;
-
-  is_app_exit_finish_done = TRUE;
-
   message_handler = CONSOLE;
 
   if (! no_interface)
@@ -248,10 +257,4 @@ app_exit_finish (void)
    *  that gtk_main() was never called before we reach this point. --Sven  
    */
   gtk_exit (0);
-}
-
-gboolean
-app_exit_finish_done (void)
-{
-  return is_app_exit_finish_done;
 }

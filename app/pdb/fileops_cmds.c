@@ -43,9 +43,9 @@
 
 #include "base/base-config.h"
 #include "core/gimpimage.h"
-#include "file-open.h"
-#include "file-save.h"
-#include "file-utils.h"
+#include "file/file-open.h"
+#include "file/file-save.h"
+#include "file/file-utils.h"
 #include "plug_in.h"
 
 static ProcRecord file_load_proc;

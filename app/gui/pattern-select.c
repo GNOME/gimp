@@ -40,9 +40,6 @@
 
 #include "pattern-select.h"
 
-#include "appenv.h"
-#include "app_procs.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -64,20 +61,20 @@ static void  pattern_select_close_callback   (GtkWidget     *widget,
 
 
 /*  The main pattern selection dialog  */
-PatternSelect   *pattern_select_dialog = NULL;
-
-/*  local variables  */
+static PatternSelect *pattern_select_dialog = NULL;
 
 /*  List of active dialogs  */
-GSList *pattern_active_dialogs = NULL;
+static GSList *pattern_active_dialogs = NULL;
 
 
 GtkWidget *
-pattern_dialog_create (void)
+pattern_dialog_create (Gimp *gimp)
 {
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
   if (! pattern_select_dialog)
     {
-      pattern_select_dialog = pattern_select_new (NULL, NULL);
+      pattern_select_dialog = pattern_select_new (gimp, NULL, NULL, NULL);
     }
 
   return pattern_select_dialog->shell;
@@ -96,8 +93,10 @@ pattern_dialog_free (void)
 
 /*  If title == NULL then it is the main pattern dialog  */
 PatternSelect *
-pattern_select_new (gchar *title,
-		    gchar *initial_pattern)
+pattern_select_new (Gimp        *gimp,
+                    const gchar *title,
+		    const gchar *initial_pattern,
+                    const gchar *callback_name)
 {
   PatternSelect *psp;
   GtkWidget     *vbox;
@@ -106,7 +105,11 @@ pattern_select_new (gchar *title,
 
   static gboolean first_call = TRUE;
 
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
   psp = g_new0 (PatternSelect, 1);
+
+  psp->callback_name = g_strdup (callback_name);
 
   /*  The shell  */
   psp->shell = 	gimp_dialog_new (title ? title : _("Pattern Selection"),
@@ -121,37 +124,36 @@ pattern_select_new (gchar *title,
 
 				 NULL);
 
-  gtk_widget_hide (GTK_WIDGET (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_DIALOG (psp->shell)->vbox)), 0)));
-
+  gtk_dialog_set_has_separator (GTK_DIALOG (psp->shell), FALSE);
   gtk_widget_hide (GTK_DIALOG (psp->shell)->action_area);
 
   if (title)
     {
-      psp->context = gimp_create_context (the_gimp, title, NULL);
+      psp->context = gimp_create_context (gimp, title, NULL);
     }
   else
     {
-      psp->context = gimp_get_user_context (the_gimp);
+      psp->context = gimp_get_user_context (gimp);
     }
 
-  if (no_data && first_call)
-    gimp_data_factory_data_init (the_gimp->pattern_factory, FALSE);
+  if (gimp->no_data && first_call)
+    gimp_data_factory_data_init (gimp->pattern_factory, FALSE);
 
   first_call = FALSE;
 
   if (title && initial_pattern && strlen (initial_pattern))
     {
       active = (GimpPattern *)
-	gimp_container_get_child_by_name (the_gimp->pattern_factory->container,
+	gimp_container_get_child_by_name (gimp->pattern_factory->container,
 					  initial_pattern);
     }
   else
     {
-      active = gimp_context_get_pattern (gimp_get_user_context (the_gimp));
+      active = gimp_context_get_pattern (gimp_get_user_context (gimp));
     }
 
   if (!active)
-    active = gimp_context_get_pattern (gimp_get_standard_context (the_gimp));
+    active = gimp_context_get_pattern (gimp_get_standard_context (gimp));
 
   if (title)
     gimp_context_set_pattern (psp->context, active);
@@ -163,7 +165,7 @@ pattern_select_new (gchar *title,
 
   /*  The Brush Grid  */
   psp->view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
-					  the_gimp->pattern_factory,
+					  gimp->pattern_factory,
 					  NULL,
 					  psp->context,
 					  MIN_CELL_SIZE,
@@ -190,8 +192,9 @@ pattern_select_new (gchar *title,
 void
 pattern_select_free (PatternSelect *psp)
 {
-  if (!psp)
-    return;
+  g_return_if_fail (psp != NULL);
+
+  gtk_widget_destroy (psp->shell); 
 
   /* remove from active list */
   pattern_active_dialogs = g_slist_remove (pattern_active_dialogs, psp);
@@ -262,6 +265,23 @@ pattern_select_change_callbacks (PatternSelect *psp,
   busy = FALSE;
 }
 
+PatternSelect *
+pattern_select_get_by_callback (const gchar *callback_name)
+{
+  GSList        *list;
+  PatternSelect *psp;
+
+  for (list = pattern_active_dialogs; list; list = g_slist_next (list))
+    {
+      psp = (PatternSelect *) list->data;
+
+      if (psp->callback_name && ! strcmp (callback_name, psp->callback_name))
+	return psp;
+    }
+
+  return NULL;
+}
+
 /*  Close active dialogs that no longer have PDB registered for them  */
 
 void
@@ -326,7 +346,6 @@ pattern_select_close_callback (GtkWidget *widget,
     {
       /* Send data back */
       pattern_select_change_callbacks (psp, TRUE);
-      gtk_widget_destroy (psp->shell); 
       pattern_select_free (psp); 
     }
 }

@@ -618,13 +618,15 @@ static void
 indexed_custom_palette_button_callback (GtkWidget *widget,
 					gpointer   data)
 {
-  IndexedDialog *dialog = (IndexedDialog *)data;
+  IndexedDialog *dialog = (IndexedDialog *) data;
 
   if (dialog->palette_select == NULL)
     {
       dialog->palette_select =
-	palette_select_new (_("Select Custom Palette"), 
-			    GIMP_OBJECT (theCustomPalette)->name);
+	palette_select_new (the_gimp,
+                            _("Select Custom Palette"), 
+			    GIMP_OBJECT (theCustomPalette)->name,
+                            NULL);
 
       g_signal_connect (G_OBJECT (dialog->palette_select->shell), "destroy", 
 			G_CALLBACK (indexed_palette_select_destroy_callback), 

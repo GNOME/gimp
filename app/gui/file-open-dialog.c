@@ -48,13 +48,14 @@
 #include "core/gimpdocuments.h"
 #include "core/gimpimage.h"
 
+#include "file/file-open.h"
+#include "file/file-utils.h"
+
 #include "file-dialog-utils.h"
 #include "file-open-dialog.h"
 #include "menus.h"
 
 #include "app_procs.h"
-#include "file-open.h"
-#include "file-utils.h"
 #include "plug_in.h"
 #include "undo.h"
 

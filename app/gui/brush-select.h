@@ -40,24 +40,23 @@ struct _BrushSelect
   gint           spacing_value;
 };
 
-/*  list of active dialogs  */
-extern GSList *brush_active_dialogs;
 
-/*  the main brush dialog */
-extern BrushSelect *brush_select_dialog;
+BrushSelect * brush_select_new                (Gimp        *gimp,
+                                               const gchar *title,
+                                               /*  These are the required
+                                                *   initial vals
+                                                *  If init_name == NULL then use
+                                                *  current brush
+                                                */
+                                               const gchar *init_name,
+                                               gdouble      init_opacity, 
+                                               gint         init_spacing,
+                                               gint         init_mode,
+                                               const gchar *callback_name);
+void          brush_select_free               (BrushSelect *bsp);
 
-
-BrushSelect * brush_select_new           (gchar       *title,
-					  /*  These are the required initial vals
-					   *  If init_name == NULL then use
-					   *  current brush
-					   */
-					  gchar       *init_name,
-					  gdouble      init_opacity, 
-					  gint         init_spacing,
-					  gint         init_mode);
-void          brush_select_free          (BrushSelect *bsp);
-void          brush_select_dialogs_check (void);
+BrushSelect * brush_select_get_by_callback    (const gchar *callback_name);
+void          brush_select_dialogs_check      (void);
 
 
 /*  show/hide paint options (main brush dialog if bsp == NULL)  */
@@ -66,8 +65,8 @@ void          brush_select_show_paint_options (BrushSelect *bsp,
 
 
 /*  the main brush selection  */
-GtkWidget   * brush_dialog_create (void);
-void          brush_dialog_free   (void);
+GtkWidget   * brush_dialog_create             (Gimp        *gimp);
+void          brush_dialog_free               (void);
 
 
 #endif  /*  __BRUSH_SELECT_H__  */

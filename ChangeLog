@@ -1,3 +1,71 @@
+2001-10-25  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: generate app/file/Makefile
+
+	* app/Makefile.am
+	* app/file-open.[ch]
+	* app/file-save.[ch]
+	* app/file-utils.[ch]: removed...
+
+	* app/file/Makefile.am
+	* app/file/file-open.[ch]
+	* app/file/file-save.[ch]
+	* app/file/file-utils.[ch]: ...and added here.
+
+	* app/gui/file-commands.c
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c
+	* tools/pdbgen/pdb/fileops.pdb: changed includes accordingly.
+
+	* app/app_procs.[ch]: removed app_exit_finish() and
+	app_exit_finish_done() from the public API, call gtk_main() here,
+	pass "no_data" to gimp_new() and "restore_session" to
+	gui_restore().
+
+	* app/main.c: removed global variable "double_speed", don't
+	call gtk_main() in main.c. Added some missing log domains.
+
+	* app/appenv.h: removed "double_speed".
+
+	* app/core/gimp.[ch]: added "gboolean no_data" property which
+	must be passed to gimp_new().
+
+	* app/display/gimpdisplay-foreach.[ch]: added gdisplays_set_busy()
+	and gdisplays_unset_busy().
+
+	* app/gui/about-dialog.c: don't include "appenv.h", declare
+	"double_speed" extern.
+
+	* app/gui/brush-select.[ch]
+	* app/gui/gradient-select.[ch]
+	* app/gui/palette-select.[ch]
+	* app/gui/pattern-select.[ch]: made the list of dialogs and the
+	global selection dialogs private. Added functions which get a
+	dialog by PDB callback_name. Pass a "Gimp" and the callback_name
+	to the constructors. Don't include "app_procs.h" for "the_gimp"
+	and "appenv.h" for "no_data" any more. Use the passed "Gimp"
+	instead and look at gimp->no_data.
+
+	* app/gui/toolbox.[ch]: pass a "Gimp" to the constructor.
+
+	* app/gui/gui.[ch]: use the new gdisplays_[un]set_busy() functions,
+	use the passed "Gimp" all over the place, don't include
+	"appenv.h" and "app_procs.h". gui_really_quit_dialog() takes
+	a "quit_func" callback now and calls it instead of calling
+	app_exit_finish() (which is now private) directly.
+
+	* app/gui/convert-dialog.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/palette-import-dialog.c
+	* tools/pdbgen/pdb/brush_select.pdb
+	* tools/pdbgen/pdb/gradient_select.pdb
+	* tools/pdbgen/pdb/pattern_select.pdb: changed accordingly.
+
+	* app/pdb/brush_select_cmds.c
+	* app/pdb/fileops_cmds.c
+	* app/pdb/gradient_select_cmds.c
+	* app/pdb/pattern_select_cmds.c: regenerated.
+
 2001-10-24  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/perl/examples/glowing_steel: merged Raphaels patch for 

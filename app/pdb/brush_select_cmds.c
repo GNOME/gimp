@@ -51,23 +51,6 @@ register_brush_select_procs (Gimp *gimp)
   procedural_db_register (gimp, &brushes_set_popup_proc);
 }
 
-static BrushSelect *
-brush_get_brushselect (gchar *name)
-{
-  GSList *list;
-  BrushSelect *bsp;
-
-  for (list = brush_active_dialogs; list; list = g_slist_next (list))
-    {
-      bsp = (BrushSelect *) list->data;
-
-      if (bsp->callback_name && !strcmp (name, bsp->callback_name))
-	return bsp;
-    }
-
-  return NULL;
-}
-
 static Argument *
 brushes_popup_invoker (Gimp     *gimp,
                        Argument *args)
@@ -105,16 +88,15 @@ brushes_popup_invoker (Gimp     *gimp,
       if ((prec = procedural_db_lookup (gimp, name)))
 	{
 	  if (brush && strlen (brush))
-	    newdialog = brush_select_new (title, brush, opacity, spacing,
-					  paint_mode);
+	    newdialog = brush_select_new (gimp, title, brush, opacity, spacing,
+					  paint_mode, name);
 	  else
-	    newdialog = brush_select_new (title, NULL, 0.0, 0, 0);
-    
-	  /* The callback procedure to run when brush changes */
-	  newdialog->callback_name = g_strdup (name);
+	    newdialog = brush_select_new (gimp, title, NULL, 0.0, 0, 0, name);
 	}
       else
-	success = FALSE;
+	{
+	  success = FALSE;
+	}
     }
 
   return procedural_db_return_args (&brushes_popup_proc, success);
@@ -186,20 +168,14 @@ brushes_close_popup_invoker (Gimp     *gimp,
   if (success)
     {
       if ((prec = procedural_db_lookup (gimp, name)) &&
-	  (bsp = brush_get_brushselect (name)))
+	  (bsp = brush_select_get_by_callback (name)))
 	{
-	  if (GTK_WIDGET_VISIBLE (bsp->shell))
-	    gtk_widget_hide (bsp->shell);
-    
-	  /* Free memory if poping down dialog which is not the main one */
-	  if (bsp != brush_select_dialog)
-	    {
-	      gtk_widget_destroy (bsp->shell);
-	      brush_select_free (bsp);
-	    }
+	  brush_select_free (bsp);
 	}
       else
-	success = FALSE;
+	{
+	  success = FALSE;
+	}
     }
 
   return procedural_db_return_args (&brushes_close_popup_proc, success);
@@ -262,7 +238,7 @@ brushes_set_popup_invoker (Gimp     *gimp,
   if (success)
     {
       if ((prec = procedural_db_lookup (gimp, name)) &&
-	  (bsp = brush_get_brushselect (name)))
+	  (bsp = brush_select_get_by_callback (name)))
 	{
 	  GimpObject *object =
 	    gimp_container_get_child_by_name (gimp->brush_factory->container,

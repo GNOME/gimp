@@ -40,9 +40,6 @@
 #include "dialogs-constructors.h"
 #include "gradient-select.h"
 
-#include "appenv.h"
-#include "app_procs.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -56,20 +53,22 @@ static void gradient_select_close_callback       (GtkWidget      *widget,
 
 
 /*  list of active dialogs   */
-GSList *gradient_active_dialogs = NULL;
+static GSList *gradient_active_dialogs = NULL;
 
 /*  the main gradient selection dialog  */
-GradientSelect *gradient_select_dialog = NULL;
+static GradientSelect *gradient_select_dialog = NULL;
 
 
 /*  public functions  */
 
 GtkWidget *
-gradient_dialog_create (void)
+gradient_dialog_create (Gimp *gimp)
 {
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
   if (! gradient_select_dialog)
     {
-      gradient_select_dialog = gradient_select_new (NULL, NULL);
+      gradient_select_dialog = gradient_select_new (gimp, NULL, NULL, NULL, 0);
     }
 
   return gradient_select_dialog->shell;
@@ -87,8 +86,11 @@ gradient_dialog_free (void)
 
 /*  If title == NULL then it is the main gradient select dialog  */
 GradientSelect *
-gradient_select_new (gchar *title,
-		     gchar *initial_gradient)
+gradient_select_new (Gimp        *gimp,
+                     const gchar *title,
+		     const gchar *initial_gradient,
+                     const gchar *callback_name,
+                     gint         sample_size)
 {
   GradientSelect  *gsp;
   GtkWidget       *vbox;
@@ -96,7 +98,12 @@ gradient_select_new (gchar *title,
 
   static gboolean  first_call = TRUE;
 
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
   gsp = g_new0 (GradientSelect, 1);
+
+  gsp->callback_name = g_strdup (callback_name);
+  gsp->sample_size   = sample_size;
   
   /*  The shell  */
   gsp->shell = gimp_dialog_new (title ? title : _("Gradient Selection"),
@@ -116,14 +123,14 @@ gradient_select_new (gchar *title,
 
   if (title)
     {
-      gsp->context = gimp_create_context (the_gimp, title, NULL);
+      gsp->context = gimp_create_context (gimp, title, NULL);
     }
   else
     {
-      gsp->context = gimp_get_user_context (the_gimp);
+      gsp->context = gimp_get_user_context (gimp);
     }
 
-  if (no_data && first_call)
+  if (gimp->no_data && first_call)
     gimp_data_factory_data_init (gsp->context->gimp->gradient_factory, FALSE);
 
   first_call = FALSE;
@@ -136,11 +143,11 @@ gradient_select_new (gchar *title,
     }
   else
     {
-      active = gimp_context_get_gradient (gimp_get_user_context (the_gimp));
+      active = gimp_context_get_gradient (gimp_get_user_context (gimp));
     }
 
   if (!active)
-    active = gimp_context_get_gradient (gimp_get_standard_context (the_gimp));
+    active = gimp_context_get_gradient (gimp_get_standard_context (gimp));
 
   if (title)
     gimp_context_set_gradient (gsp->context, active);
@@ -177,8 +184,9 @@ gradient_select_new (gchar *title,
 void
 gradient_select_free (GradientSelect *gsp)
 {
-  if (!gsp)
-    return;
+  g_return_if_fail (gsp != NULL);
+
+  gtk_widget_destroy (gsp->shell);
 
   /* remove from active list */
   gradient_active_dialogs = g_slist_remove (gradient_active_dialogs, gsp);
@@ -265,6 +273,23 @@ gradient_select_change_callbacks (GradientSelect *gsp,
   busy = FALSE;
 }
 
+GradientSelect *
+gradient_select_get_by_callback (const gchar *callback_name)
+{
+  GSList         *list;
+  GradientSelect *gsp;
+
+  for (list = gradient_active_dialogs; list; list = g_slist_next (list))
+    {
+      gsp = (GradientSelect *) list->data;
+      
+      if (gsp->callback_name && ! strcmp (callback_name, gsp->callback_name))
+	return gsp;
+    }
+
+  return NULL;
+}
+
 /*  Close active dialogs that no longer have PDB registered for them  */
 
 void
@@ -324,7 +349,6 @@ gradient_select_close_callback (GtkWidget *widget,
   if (gsp != gradient_select_dialog)
     {
       gradient_select_change_callbacks (gsp, TRUE);
-      gtk_widget_destroy (gsp->shell);
       gradient_select_free (gsp);
     }
 }

@@ -57,15 +57,16 @@ sub gradients_popup {
   if ((prec = procedural_db_lookup (gimp, name)))
     {
       if (initial_gradient && strlen (initial_gradient))
-	newdialog = gradient_select_new (title, initial_gradient);
+	newdialog = gradient_select_new (gimp, title, initial_gradient,
+                                         name, sample_size);
       else
-	newdialog = gradient_select_new (title, NULL);
-
-      newdialog->callback_name = g_strdup (name);
-      newdialog->sample_size   = sample_size;
+	newdialog = gradient_select_new (gimp, title, NULL,
+                                         name, sample_size);
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
     );
@@ -88,21 +89,14 @@ sub gradients_close_popup {
 	code => <<'CODE'
 {
   if ((prec = procedural_db_lookup (gimp, name)) &&
-      (gsp = gradients_get_gradientselect (name)))
+      (gsp = gradient_select_get_by_callback (name)))
     {
-      if (GTK_WIDGET_VISIBLE (gsp->shell))
-	gtk_widget_hide (gsp->shell);
-
-      /* Free memory if poping down dialog which is not the main one */
-      if (gsp != gradient_select_dialog)
-	{
-	  /* Send data back */
-	  gtk_widget_destroy (gsp->shell);
-	  gradient_select_free (gsp);
-	}
+      gradient_select_free (gsp);
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
     );
@@ -127,7 +121,7 @@ sub gradients_set_popup {
 	code => <<'CODE'
 {
   if ((prec = procedural_db_lookup (gimp, pdbname)) &&
-      (gsp = gradients_get_gradientselect (pdbname)))
+      (gsp = gradient_select_get_by_callback (pdbname)))
     {
       GimpGradient *active = NULL;
 
@@ -231,25 +225,6 @@ CODE
 	      "core/gimpcontainer.h" "core/gimpdatafactory.h"
               "core/gimpgradient.h"
 	      "gui/gui-types.h" "gui/gradient-select.h");
-
-$extra{app}->{code} = <<'CODE';
-static GradientSelect *
-gradients_get_gradientselect (gchar *name)
-{
-  GSList *list;
-  GradientSelect *gsp;
-
-  for (list = gradient_active_dialogs; list; list = g_slist_next (list))
-    {
-      gsp = (GradientSelect *) list->data;
-      
-      if (gsp->callback_name && !strcmp (name, gsp->callback_name))
-	return gsp;
-    }
-
-  return NULL;
-}
-CODE
 
 @procs = qw(gradients_popup gradients_close_popup gradients_set_popup
 	    gradients_get_gradient_data);

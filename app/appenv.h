@@ -52,7 +52,6 @@ extern gchar          **batch_cmds;
 /*  other global variables  */
 extern gchar              *prog_name;
 extern MessageHandlerType  message_handler;
-extern gboolean            double_speed;
 
 
 #endif /*  __APPENV_H__  */

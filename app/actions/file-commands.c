@@ -30,6 +30,9 @@
 #include "core/gimpimage.h"
 #include "core/gimpobject.h"
 
+#include "file/file-open.h"
+#include "file/file-save.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplay-ops.h"
@@ -40,8 +43,6 @@
 #include "file-save-dialog.h"
 
 #include "app_procs.h"
-#include "file-open.h"
-#include "file-save.h"
 #include "gimprc.h"
 #include "undo.h"
 

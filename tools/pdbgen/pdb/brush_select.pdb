@@ -58,16 +58,15 @@ sub brushes_popup {
   if ((prec = procedural_db_lookup (gimp, name)))
     {
       if (brush && strlen (brush))
-	newdialog = brush_select_new (title, brush, opacity, spacing,
-				      paint_mode);
+	newdialog = brush_select_new (gimp, title, brush, opacity, spacing,
+				      paint_mode, name);
       else
-	newdialog = brush_select_new (title, NULL, 0.0, 0, 0);
-
-      /* The callback procedure to run when brush changes */
-      newdialog->callback_name = g_strdup (name);
+	newdialog = brush_select_new (gimp, title, NULL, 0.0, 0, 0, name);
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
     );
@@ -90,20 +89,14 @@ sub brushes_close_popup {
 	code => <<'CODE'
 {
   if ((prec = procedural_db_lookup (gimp, name)) &&
-      (bsp = brush_get_brushselect (name)))
+      (bsp = brush_select_get_by_callback (name)))
     {
-      if (GTK_WIDGET_VISIBLE (bsp->shell))
-	gtk_widget_hide (bsp->shell);
-
-      /* Free memory if poping down dialog which is not the main one */
-      if (bsp != brush_select_dialog)
-	{
-	  gtk_widget_destroy (bsp->shell);
-	  brush_select_free (bsp);
-	}
+      brush_select_free (bsp);
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
     );
@@ -132,7 +125,7 @@ sub brushes_set_popup {
 	code => <<'CODE'
 {
   if ((prec = procedural_db_lookup (gimp, name)) &&
-      (bsp = brush_get_brushselect (name)))
+      (bsp = brush_select_get_by_callback (name)))
     {
       GimpObject *object =
         gimp_container_get_child_by_name (gimp->brush_factory->container,
@@ -165,25 +158,6 @@ CODE
 
 @headers = qw(<string.h> "core/gimp.h" "core/gimpcontext.h"
 	      "core/gimpdatafactory.h" "gui/brush-select.h");
-
-$extra{app}->{code} = <<'CODE';
-static BrushSelect *
-brush_get_brushselect (gchar *name)
-{
-  GSList *list;
-  BrushSelect *bsp;
-
-  for (list = brush_active_dialogs; list; list = g_slist_next (list))
-    {
-      bsp = (BrushSelect *) list->data;
-
-      if (bsp->callback_name && !strcmp (name, bsp->callback_name))
-	return bsp;
-    }
-
-  return NULL;
-}
-CODE
 
 @procs = qw(brushes_popup brushes_close_popup brushes_set_popup);
 %exports = (app => [@procs], lib => [@procs]);

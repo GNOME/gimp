@@ -39,8 +39,6 @@
 #include "about-dialog.h"
 #include "authors.h"
 
-#include "appenv.h"
-
 #include "libgimp/gimpintl.h"
 
 #include "pixmaps/wilber2.xpm"
@@ -70,6 +68,8 @@ static void      about_dialog_tool_drop   (GtkWidget      *widget,
 static gboolean  about_dialog_timer       (gpointer        data);
 
 
+extern gboolean     double_speed;
+
 static GtkWidget   *about_dialog     = NULL;
 static GtkWidget   *logo_area        = NULL;
 static GtkWidget   *scroll_area      = NULL;
@@ -95,7 +95,6 @@ static gint         cur_scroll_text  = 0;
 static gint         cur_scroll_index = 0;
 static gint         shuffle_array[G_N_ELEMENTS (authors)];
 
-
 static gchar *drop_text[] = 
 { 
   "We are The GIMP." ,
@@ -109,6 +108,7 @@ static gchar *hadja_text[] =
   "Nej!",
   "Tvärtom!"
 };
+
 
 GtkWidget *
 about_dialog_create (void)

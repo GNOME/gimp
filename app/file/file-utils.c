@@ -51,6 +51,7 @@
 #include "core/gimpimage.h"
 
 #include "file-utils.h"
+
 #include "plug_in.h"
 
 

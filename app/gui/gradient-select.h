@@ -37,26 +37,20 @@ struct _GradientSelect
 };
 
 
-/*  list of active dialogs  */
-extern GSList *gradient_active_dialogs;
+GradientSelect * gradient_select_new             (Gimp           *gimp,
+                                                  const gchar    *title,
+                                                  const gchar    *initial_gradient,
+                                                  const gchar    *callback_name,
+                                                  gint            sample_size);
 
-/*  the main gradient selection dialog  */
-extern GradientSelect *gradient_select_dialog;
+void             gradient_select_free            (GradientSelect *gsp);
 
-
-GradientSelect * gradient_select_new           (gchar          *title,
-						gchar          *initial_gradient);
-
-void             gradient_select_free          (GradientSelect *gsp);
-
-void             gradient_select_update_all    (GimpGradient   *gradient);
-
-void             gradient_select_dialogs_check (void);
-
+GradientSelect * gradient_select_get_by_callback (const gchar    *callback_name);
+void             gradient_select_dialogs_check   (void);
 
 /*  the main gradient selection  */
-GtkWidget      * gradient_dialog_create        (void);
-void             gradient_dialog_free          (void);
+GtkWidget      * gradient_dialog_create          (Gimp           *gimp);
+void             gradient_dialog_free            (void);
 
 
 #endif  /*  __GRADIENT_SELECT_H__  */

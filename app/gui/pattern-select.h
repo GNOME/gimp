@@ -36,21 +36,18 @@ struct _PatternSelect
 };
 
 
-/*  list of active dialogs  */
-extern GSList *pattern_active_dialogs;
+PatternSelect * pattern_select_new             (Gimp          *gimp,
+                                                const gchar   *title,
+                                                const gchar   *initial_pattern,
+                                                const gchar   *callback_name);
+void            pattern_select_free            (PatternSelect *psp);
 
-/*  the main pattern dialog  */
-extern PatternSelect *pattern_select_dialog;
-
-
-PatternSelect * pattern_select_new           (gchar         *title,
-					      gchar         *initial_pattern);
-void            pattern_select_free          (PatternSelect *psp);
-void            pattern_select_dialogs_check (void);
+PatternSelect * pattern_select_get_by_callback (const gchar   *callback_name);
+void            pattern_select_dialogs_check   (void);
 
 
 /*  the main pattern selection  */
-GtkWidget     * pattern_dialog_create        (void);
+GtkWidget     * pattern_dialog_create        (Gimp          *gimp);
 void            pattern_dialog_free          (void);
 
 

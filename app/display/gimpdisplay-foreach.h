@@ -47,6 +47,8 @@ void          gdisplays_delete                  (void);
 void          gdisplays_flush                   (void);
 void          gdisplays_flush_now               (void);
 void          gdisplays_nav_preview_resized     (void);
+void          gdisplays_set_busy                (void);
+void          gdisplays_unset_busy              (void);
 
 
 #endif /*  __GIMP_DISPLAY_FOREACH_H__  */

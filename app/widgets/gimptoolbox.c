@@ -69,7 +69,6 @@ static gint   toolbox_tool_button_press   (GtkWidget      *widget,
 					   GdkEventButton *bevent,
 					   gpointer        data);
 
-static void   toolbox_destroy            (void);
 static gint   toolbox_delete             (GtkWidget      *widget,
 					  GdkEvent       *event,
 					  gpointer        data);
@@ -147,12 +146,6 @@ toolbox_delete (GtkWidget *widget,
   app_exit (FALSE);
 
   return TRUE;
-}
-
-static void
-toolbox_destroy (void)
-{
-  app_exit_finish ();
 }
 
 static gint
@@ -317,7 +310,7 @@ create_tools (GtkWidget   *wbox,
 }
 
 GtkWidget *
-toolbox_create (void)
+toolbox_create (Gimp *gimp)
 {
   GimpContext    *context;
   GtkItemFactory *toolbox_factory;
@@ -326,7 +319,9 @@ toolbox_create (void)
   GtkWidget      *wbox;
   GList          *list;
 
-  context = gimp_get_user_context (the_gimp);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  context = gimp_get_user_context (gimp);
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_wmclass (GTK_WINDOW (window), "toolbox", "Gimp");
@@ -335,10 +330,6 @@ toolbox_create (void)
 
   g_signal_connect (G_OBJECT (window), "delete_event",
 		    G_CALLBACK (toolbox_delete),
-		    NULL);
-
-  g_signal_connect (G_OBJECT (window), "destroy",
-		    G_CALLBACK (toolbox_destroy),
 		    NULL);
 
   g_signal_connect (G_OBJECT (window), "style_set",
@@ -437,8 +428,10 @@ toolbox_create (void)
 }
 
 void
-toolbox_free (void)
+toolbox_free (Gimp *gimp)
 {
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
   gtk_widget_destroy (toolbox_shell);
 }
 
