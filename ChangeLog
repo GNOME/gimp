@@ -1,3 +1,9 @@
+2004-10-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/view-actions.c (view_zoom_actions): removed
+	duplicate "view-zoom-in" action (cut'n'paste error) and fixed the
+	swapped "zoom in/out a lot" actions. Fixes bug #155446.
+
 2004-10-15  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.1.7 release.

@@ -194,36 +194,38 @@ static GimpEnumActionEntry view_zoom_actions[] =
     "Set zoom factor", NULL, NULL,
     GIMP_ACTION_SELECT_SET,
     NULL },
-  { "view-zoom-minimum", NULL,
+
+  { "view-zoom-minimum", GTK_STOCK_ZOOM_OUT,
     "Zoom out as far as possible", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST,
-    NULL },
-  { "view-zoom-maximum", NULL,
+    GIMP_HELP_VIEW_ZOOM_OUT },
+
+  { "view-zoom-maximum", GTK_STOCK_ZOOM_IN,
     "Zoom in as far as possible", NULL, NULL,
     GIMP_ACTION_SELECT_LAST,
-    NULL },
+    GIMP_HELP_VIEW_ZOOM_IN },
+
   { "view-zoom-out", GTK_STOCK_ZOOM_OUT,
     N_("Zoom _Out"), "minus",
     N_("Zoom out"),
     GIMP_ACTION_SELECT_PREVIOUS,
     GIMP_HELP_VIEW_ZOOM_OUT },
+
   { "view-zoom-in", GTK_STOCK_ZOOM_IN,
     N_("Zoom _In"), "plus",
     N_("Zoom in"),
     GIMP_ACTION_SELECT_NEXT,
     GIMP_HELP_VIEW_ZOOM_IN },
-  { "view-zoom-in", NULL,
-    "Zoom out", NULL, NULL,
-    GIMP_ACTION_SELECT_NEXT,
-    NULL },
-  { "view-zoom-out-skip", NULL,
-    "Zoom in a lot", NULL, NULL,
-    GIMP_ACTION_SELECT_SKIP_PREVIOUS,
-    NULL },
-  { "view-zoom-in-skip", NULL,
+
+  { "view-zoom-out-skip", GTK_STOCK_ZOOM_OUT,
     "Zoom out a lot", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS,
+    GIMP_HELP_VIEW_ZOOM_OUT },
+
+  { "view-zoom-in-skip", GTK_STOCK_ZOOM_IN,
+    "Zoom in a lot", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT,
-    NULL }
+    GIMP_HELP_VIEW_ZOOM_IN }
 };
 
 static GimpRadioActionEntry view_zoom_explicit_actions[] =
@@ -314,26 +316,32 @@ static GimpEnumActionEntry view_scroll_horizontal_actions[] =
     "Set horizontal scroll offset", NULL, NULL,
     GIMP_ACTION_SELECT_SET,
     NULL },
+
   { "view-scroll-left-border", NULL,
     "Scroll to left border", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST,
     NULL },
+
   { "view-scroll-right-border", NULL,
     "Scroll to right border", NULL, NULL,
     GIMP_ACTION_SELECT_LAST,
     NULL },
+
   { "view-scroll-left", NULL,
     "Scroll left", NULL, NULL,
     GIMP_ACTION_SELECT_PREVIOUS,
     NULL },
+
   { "view-scroll-right", NULL,
     "Scroll right", NULL, NULL,
     GIMP_ACTION_SELECT_NEXT,
     NULL },
+
   { "view-scroll-page-left", NULL,
     "Scroll page left", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_PREVIOUS,
     NULL },
+
   { "view-scroll-page-right", NULL,
     "Scroll page right", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT,
@@ -346,26 +354,32 @@ static GimpEnumActionEntry view_scroll_vertical_actions[] =
     "Set vertical scroll offset", NULL, NULL,
     GIMP_ACTION_SELECT_SET,
     NULL },
+
   { "view-scroll-top-border", NULL,
     "Scroll to top border", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST,
     NULL },
+
   { "view-scroll-bottom-border", NULL,
     "Scroll to bottom border", NULL, NULL,
     GIMP_ACTION_SELECT_LAST,
     NULL },
+
   { "view-scroll-up", NULL,
     "Scroll up", NULL, NULL,
     GIMP_ACTION_SELECT_PREVIOUS,
     NULL },
+
   { "view-scroll-down", NULL,
     "Scroll down", NULL, NULL,
     GIMP_ACTION_SELECT_NEXT,
     NULL },
+
   { "view-scroll-page-up", NULL,
     "Scroll page up", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_PREVIOUS,
     NULL },
+
   { "view-scroll-page-down", NULL,
     "Scroll page down", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT,
