@@ -133,12 +133,18 @@ eraser_modifier_key_func (Tool        *tool,
 {
   switch (kevent->keyval)
     {
-    case GDK_Alt_L: case GDK_Alt_R:
+    case GDK_Alt_L: 
+    case GDK_Alt_R:
       break;
-    case GDK_Shift_L: case GDK_Shift_R:
+    case GDK_Shift_L: 
+    case GDK_Shift_R:
+      if (kevent->state & GDK_CONTROL_MASK)    /* reset tool toggle */
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (eraser_options->anti_erase_w), ! eraser_options->anti_erase);
       break;
-    case GDK_Control_L: case GDK_Control_R:
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (eraser_options->anti_erase_w), ! eraser_options->anti_erase);
+    case GDK_Control_L: 
+    case GDK_Control_R:
+      if ( !(kevent->state & GDK_SHIFT_MASK) ) /* shift enables line draw mode */
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (eraser_options->anti_erase_w), ! eraser_options->anti_erase);
       break;
     }
 }

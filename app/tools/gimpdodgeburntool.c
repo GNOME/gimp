@@ -288,21 +288,41 @@ dodgeburn_modifier_key_func (Tool        *tool,
 {
   switch (kevent->keyval)
     {
-    case GDK_Alt_L: case GDK_Alt_R:
+    case GDK_Alt_L: 
+    case GDK_Alt_R:
       break;
-    case GDK_Shift_L: case GDK_Shift_R:
-      break;
-    case GDK_Control_L: case GDK_Control_R:
-      switch (dodgeburn_options->type)
+    case GDK_Shift_L: 
+    case GDK_Shift_R:
+      if (kevent->state & GDK_CONTROL_MASK)    /* reset tool toggle */
 	{
-	case BURN:
-	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dodgeburn_options->type_w[DODGE]), TRUE);
-	  break;
-	case DODGE:
-	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dodgeburn_options->type_w[BURN]), TRUE);
-	  break;
-	default:
-	  break;
+	  switch (dodgeburn_options->type)
+	    {
+	    case BURN:
+	      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dodgeburn_options->type_w[DODGE]), TRUE);
+	      break;
+	    case DODGE:
+	      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dodgeburn_options->type_w[BURN]), TRUE);
+	      break;
+	    default:
+	      break;
+	    }
+	}
+      break;
+    case GDK_Control_L: 
+    case GDK_Control_R:
+      if ( !(kevent->state & GDK_SHIFT_MASK) ) /* shift enables line draw mode */
+	{
+	  switch (dodgeburn_options->type)
+	    {
+	    case BURN:
+	      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dodgeburn_options->type_w[DODGE]), TRUE);
+	      break;
+	    case DODGE:
+	      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dodgeburn_options->type_w[BURN]), TRUE);
+	      break;
+	    default:
+	      break;
+	    }
 	}
       break; 
     }
