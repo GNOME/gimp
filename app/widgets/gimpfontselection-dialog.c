@@ -343,11 +343,11 @@ void
 gimp_font_selection_dialog_set_font_desc (GimpFontSelectionDialog *dialog,
                                           PangoFontDescription    *desc)
 {
-  PangoFontFamily  *new_family = NULL;
   GtkTreeModel     *model;
   GtkTreeSelection *select;
   GtkTreeIter       iter;
   gboolean          valid;
+  gboolean          found = FALSE;
   const gchar      *name;
 
   g_return_if_fail (dialog != NULL);
@@ -359,7 +359,7 @@ gimp_font_selection_dialog_set_font_desc (GimpFontSelectionDialog *dialog,
 
   model = gtk_tree_view_get_model (GTK_TREE_VIEW (dialog->family_list));
   for (valid = gtk_tree_model_get_iter_root (model, &iter);
-       valid && !new_family;
+       valid;
        valid = gtk_tree_model_iter_next (model, &iter))
     {
       PangoFontFamily *family;
@@ -367,12 +367,16 @@ gimp_font_selection_dialog_set_font_desc (GimpFontSelectionDialog *dialog,
       gtk_tree_model_get (model, &iter, FAMILY_COLUMN, &family, -1);
       
       if (g_ascii_strcasecmp (pango_font_family_get_name (family), name) == 0)
-        new_family = family;
-      
+        {
+          found = TRUE;
+          g_object_unref (family);
+          break;
+        }
+
       g_object_unref (family);
     }
 
-  if (!new_family && !gtk_tree_model_get_iter_root (model, &iter))
+  if (!found && !gtk_tree_model_get_iter_root (model, &iter))
      return;
 
   select = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->family_list));

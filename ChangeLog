@@ -1,5 +1,11 @@
 2003-03-26  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpfontselection-dialog.c
+	(gimp_font_selection_dialog_set_font_desc): fixed braino that
+	caused the wrong family to be selected.
+
+2003-03-26  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimptextoptions.c: connect the preview on the
 	context's font object with the font property of the text object
 	associated to the text tool options.
