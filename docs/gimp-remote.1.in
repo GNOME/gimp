@@ -44,7 +44,7 @@ a GIMP toolbox window has been found on this display.
 
 .SH EXAMPLES
 .TP
-.BI gimp-remote\ http://www.gimp.org/icons/frontpage-small.gif
+.BI gimp-remote\ http://www.gimp.org/images/wilber_the_gimp.png
 Loads the image from the GIMP website into a running GIMP or starts
 a new one.
 .TP

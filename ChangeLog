@@ -1,3 +1,7 @@
+2004-04-10  Sven Neumann  <sven@gimp.org>
+
+	* docs/gimp-remote.1.in: updated example URL.
+
 2004-04-10  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* app/core/gimpdrawable-transform.c
