@@ -198,7 +198,7 @@ gimp_item_init (GimpItem *item)
   item->height    = 0;
   item->offset_x  = 0;
   item->offset_y  = 0;
-  item->visible   = FALSE;
+  item->visible   = TRUE;
   item->linked    = FALSE;
 }
 

@@ -1,5 +1,15 @@
 2003-09-13  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpitemtreeview.c: moved the visibility toggle
+	before the linked toggle again.
+
+	* app/core/gimpdrawable.c (gimp_drawable_configure)
+	* app/core/gimpitem.c (gimp_item_init): quick fix for bug #122153:
+	don't make the item visible in gimp_drawable_configure() since that
+	breaks duplicate(); instead create all items as visible.
+	
+2003-09-13  Sven Neumann  <sven@gimp.org>
+
 	* app/vectors/gimpvectors-import.c: rewrote large parts of the SVG
 	parser. It now handles nested groups and transformations. Still not
 	perfect but close.

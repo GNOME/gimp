@@ -595,8 +595,6 @@ gimp_drawable_configure (GimpDrawable  *drawable,
 
   drawable->tiles = tile_manager_new (width, height, drawable->bytes);
 
-  GIMP_ITEM (drawable)->visible = TRUE;
-
   /*  preview variables  */
   drawable->preview_cache = NULL;
   drawable->preview_valid = FALSE;

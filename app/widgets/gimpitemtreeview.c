@@ -363,23 +363,6 @@ gimp_item_tree_view_constructor (GType                  type,
   column = gtk_tree_view_column_new ();
   gtk_tree_view_insert_column (tree_view->view, column, 0);
 
-  item_view->eye_cell = gimp_cell_renderer_toggle_new (GIMP_STOCK_VISIBLE);
-  gtk_tree_view_column_pack_start (column, item_view->eye_cell, FALSE);
-  gtk_tree_view_column_set_attributes (column, item_view->eye_cell,
-                                       "active",
-                                       item_view->model_column_visible,
-                                       NULL);
-
-  tree_view->toggle_cells = g_list_prepend (tree_view->toggle_cells,
-                                            item_view->eye_cell);
-
-  g_signal_connect (item_view->eye_cell, "clicked",
-                    G_CALLBACK (gimp_item_tree_view_eye_clicked),
-                    item_view);
-
-  column = gtk_tree_view_column_new ();
-  gtk_tree_view_insert_column (tree_view->view, column, 0);
-
   item_view->chain_cell = gimp_cell_renderer_toggle_new (GIMP_STOCK_LINKED);
   gtk_tree_view_column_pack_start (column, item_view->chain_cell, FALSE);
   gtk_tree_view_column_set_attributes (column, item_view->chain_cell,
@@ -392,6 +375,23 @@ gimp_item_tree_view_constructor (GType                  type,
 
   g_signal_connect (item_view->chain_cell, "clicked",
                     G_CALLBACK (gimp_item_tree_view_chain_clicked),
+                    item_view);
+
+  column = gtk_tree_view_column_new ();
+  gtk_tree_view_insert_column (tree_view->view, column, 0);
+
+  item_view->eye_cell = gimp_cell_renderer_toggle_new (GIMP_STOCK_VISIBLE);
+  gtk_tree_view_column_pack_start (column, item_view->eye_cell, FALSE);
+  gtk_tree_view_column_set_attributes (column, item_view->eye_cell,
+                                       "active",
+                                       item_view->model_column_visible,
+                                       NULL);
+
+  tree_view->toggle_cells = g_list_prepend (tree_view->toggle_cells,
+                                            item_view->eye_cell);
+
+  g_signal_connect (item_view->eye_cell, "clicked",
+                    G_CALLBACK (gimp_item_tree_view_eye_clicked),
                     item_view);
 
   return object;
