@@ -54,7 +54,8 @@ static void   gimp_display_shell_undo_event_handler         (GimpImage        *g
                                                              GimpUndoEvent     event,
                                                              GimpUndo         *undo,
                                                              GimpDisplayShell *shell);
-static void   gimp_display_shell_grid_changed_handler       (GimpImage        *gimage,
+static void   gimp_display_shell_grid_notify_handler        (GimpGrid         *grid,
+                                                             GParamSpec       *pspec,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_name_changed_handler       (GimpImage        *gimage,
                                                              GimpDisplayShell *shell);
@@ -135,8 +136,8 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
   g_signal_connect (gimage, "undo_event",
                     G_CALLBACK (gimp_display_shell_undo_event_handler),
                     shell);
-  g_signal_connect (gimage, "grid_changed",
-                    G_CALLBACK (gimp_display_shell_grid_changed_handler),
+  g_signal_connect (gimage->grid, "notify",
+                    G_CALLBACK (gimp_display_shell_grid_notify_handler),
                     shell);
   g_signal_connect (gimage, "name_changed",
                     G_CALLBACK (gimp_display_shell_name_changed_handler),
@@ -314,8 +315,8 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
   g_signal_handlers_disconnect_by_func (gimage,
                                         gimp_display_shell_name_changed_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (gimage,
-                                        gimp_display_shell_grid_changed_handler,
+  g_signal_handlers_disconnect_by_func (gimage->grid,
+                                        gimp_display_shell_grid_notify_handler,
                                         shell);
   g_signal_handlers_disconnect_by_func (gimage,
                                         gimp_display_shell_undo_event_handler,
@@ -345,8 +346,9 @@ gimp_display_shell_undo_event_handler (GimpImage        *gimage,
 }
 
 static void
-gimp_display_shell_grid_changed_handler (GimpImage        *gimage,
-                                         GimpDisplayShell *shell)
+gimp_display_shell_grid_notify_handler (GimpGrid         *grid,
+                                        GParamSpec       *pspec,
+                                        GimpDisplayShell *shell)
 {
   gimp_display_shell_expose_full (shell);
 

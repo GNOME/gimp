@@ -31,7 +31,6 @@
 #include "gimpgrid.h"
 #include "gimpimage.h"
 #include "gimpimage-grid.h"
-#include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 
 #include "gimp-intl.h"
@@ -60,6 +59,4 @@ gimp_image_set_grid (GimpImage *gimage,
     gimp_image_undo_push_image_grid (gimage, _("Grid"), gimage->grid);
 
   gimp_config_sync (GIMP_CONFIG (grid), GIMP_CONFIG (gimage->grid), 0);
-
-  gimp_image_grid_changed (gimage);
 }

@@ -1,5 +1,15 @@
 2003-10-14  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage-grid.c
+	* app/core/gimpimage.[ch]
+	* app/gui/grid-dialog.c: removed the "grid_changed" signal from
+	GimpImage.
+
+	* app/display/gimpdisplayshell-handlers.c: connect to
+	notifications from the image grid instead.
+
+2003-10-14  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig-utils.[ch]: removed
 	gimp_config_copy_properties() and added the more intelligent
 	gimp_config_sync() instead.

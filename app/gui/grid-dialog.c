@@ -54,10 +54,6 @@
 
 /*  local functions  */
 
-
-static void  grid_notify_callback (GtkWidget  *widget,
-                                   GParamSpec *pspec,
-                                   gpointer    data);
 static void  reset_callback       (GtkWidget   *widget,
                                    GtkWidget   *dialog);
 static void  cancel_callback      (GtkWidget   *widget,
@@ -107,10 +103,6 @@ grid_dialog_new (GimpImage *gimage)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox),
 		     editor);
 
-  g_signal_connect (grid, "notify",
-                    G_CALLBACK (grid_notify_callback),
-                    gimage);
-
   gtk_widget_show (editor);
 
   g_object_set_data (G_OBJECT (dialog), "gimage", gimage);
@@ -127,14 +119,6 @@ grid_dialog_new (GimpImage *gimage)
 
 
 static void
-grid_notify_callback (GtkWidget  *widget,
-                      GParamSpec *pspec,
-                      gpointer    data)
-{
-  gimp_image_grid_changed (GIMP_IMAGE (data));
-}
-
-static void
 reset_callback (GtkWidget  *widget,
                 GtkWidget  *dialog)
 {
@@ -146,7 +130,6 @@ reset_callback (GtkWidget  *widget,
 
   gimp_config_sync (GIMP_CONFIG (gimage->gimp->config->default_grid),
                     GIMP_CONFIG (grid), 0);
-  gimp_image_grid_changed (GIMP_IMAGE (gimage));
 }
 
 static void

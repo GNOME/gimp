@@ -181,7 +181,6 @@ struct _GimpImageClass
 					 GimpChannelType       channel);
   void (* component_active_changed)     (GimpImage            *gimage,
 					 GimpChannelType       channel);
-  void (* grid_changed)                 (GimpImage            *gimage);
   void (* mask_changed)                 (GimpImage            *gimage);
   void (* resolution_changed)           (GimpImage            *gimage);
   void (* unit_changed)                 (GimpImage            *gimage);
@@ -277,7 +276,6 @@ void            gimp_image_set_component_visible (GimpImage          *gimage,
 gboolean        gimp_image_get_component_visible (const GimpImage    *gimage,
 						  GimpChannelType     type);
 
-void            gimp_image_grid_changed          (GimpImage          *gimage);
 void            gimp_image_mode_changed          (GimpImage          *gimage);
 void            gimp_image_alpha_changed         (GimpImage          *gimage);
 void            gimp_image_update                (GimpImage          *gimage,

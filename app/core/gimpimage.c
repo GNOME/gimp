@@ -81,7 +81,6 @@ enum
   ACTIVE_VECTORS_CHANGED,
   COMPONENT_VISIBILITY_CHANGED,
   COMPONENT_ACTIVE_CHANGED,
-  GRID_CHANGED,
   MASK_CHANGED,
   RESOLUTION_CHANGED,
   UNIT_CHANGED,
@@ -280,15 +279,6 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_TYPE_NONE, 1,
 		  GIMP_TYPE_CHANNEL_TYPE);
 
-  gimp_image_signals[GRID_CHANGED] =
-    g_signal_new ("grid_changed",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, grid_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
-                  G_TYPE_NONE, 0);
-
   gimp_image_signals[MASK_CHANGED] =
     g_signal_new ("mask_changed",
 		  G_TYPE_FROM_CLASS (klass),
@@ -430,7 +420,6 @@ gimp_image_class_init (GimpImageClass *klass)
   viewable_class->get_new_preview     = gimp_image_get_new_preview;
   viewable_class->get_description     = gimp_image_get_description;
 
-  klass->grid_changed                 = NULL;
   klass->mode_changed                 = NULL;
   klass->alpha_changed                = NULL;
   klass->floating_selection_changed   = NULL;
@@ -1380,14 +1369,6 @@ gimp_image_get_component_visible (const GimpImage *gimage,
     return gimage->visible[index];
 
   return FALSE;
-}
-
-void
-gimp_image_grid_changed (GimpImage *gimage)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  g_signal_emit (gimage, gimp_image_signals[GRID_CHANGED], 0);
 }
 
 void
