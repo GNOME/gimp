@@ -42,6 +42,14 @@ static void gimp_bezier_stroke_init       (GimpBezierStroke      *bezier_stroke)
 
 static void gimp_bezier_stroke_finalize   (GObject               *object);
 
+static void gimp_bezier_coords_average    (GimpCoords            *a,
+                                           GimpCoords            *b,
+                                           GimpCoords            *ret_average);
+
+static void gimp_bezier_coords_subdivide  (GimpCoords            *beziercoords,
+                                           const gdouble          precision,
+                                           gint                  *ret_ncoords,
+                                           GimpCoords            *ret_coords);
 
 GType
 gimp_bezier_stroke_get_type (void)
@@ -128,9 +136,39 @@ gimp_bezier_stroke_new (const GimpCoords *start)
 }
 
 
+GimpStroke *
+gimp_bezier_stroke_new_from_coords (const GimpCoords *coords,
+                                    const gint        ncoords)
+{
+  GimpBezierStroke *bezier_stroke;
+  GimpStroke       *stroke = NULL;
+  GimpAnchor       *last_anchor;
+
+  gint              count;
+
+  if (ncoords >= 1)
+    {
+      stroke = gimp_bezier_stroke_new (coords);
+      bezier_stroke = GIMP_BEZIER_STROKE (stroke);
+      last_anchor = (GimpAnchor *) (stroke->anchors->data);
+
+      count = 1;
+      while (count < ncoords)
+        {
+          last_anchor = gimp_bezier_stroke_extend (bezier_stroke,
+                                                   &(coords[count]),
+                                                   last_anchor);
+        }
+
+    }
+
+  return stroke;
+}
+
+
 GimpAnchor *
 gimp_bezier_stroke_extend (GimpBezierStroke *bezier_stroke,
-                           GimpCoords       *coords,
+                           const GimpCoords *coords,
                            GimpAnchor       *neighbor)
 {
   GimpAnchor       *anchor;
@@ -191,6 +229,7 @@ gimp_bezier_stroke_extend (GimpBezierStroke *bezier_stroke,
   return anchor;
 }
 
+
 GimpCoords *
 gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
                                 gdouble            precision,
@@ -233,3 +272,101 @@ gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
 }
 
 
+/* local helper functions for bezier subdivision */
+
+static void
+gimp_bezier_coords_average (GimpCoords *a,
+                            GimpCoords *b,
+                            GimpCoords *ret_average)
+{
+  ret_average->x        = (a->x        + b->x       ) / 2.0;
+  ret_average->y        = (a->y        + b->y       ) / 2.0;
+  ret_average->pressure = (a->pressure + b->pressure) / 2.0;
+  ret_average->xtilt    = (a->xtilt    + b->xtilt   ) / 2.0;
+  ret_average->ytilt    = (a->ytilt    + b->ytilt   ) / 2.0;
+  ret_average->wheel    = (a->wheel    + b->wheel   ) / 2.0;
+}
+
+
+static void
+gimp_bezier_coords_subdivide (GimpCoords    *beziercoords,
+                              const gdouble  precision,
+                              gint          *ret_ncoords,
+                              GimpCoords    *ret_coords)
+{
+  /*
+   * beziercoords has to contain four GimpCoords with the four control points
+   * of the bezier segment. We subdivide it at the parameter 0.5.
+   */
+
+  GimpCoords subdivided[8];
+  gint i, good_enough = 1;
+
+  subdivided[0] = beziercoords[0];
+  subdivided[6] = beziercoords[3];
+
+  gimp_bezier_coords_average (&(beziercoords[0]), &(beziercoords[1]),
+                              &(subdivided[1]));
+
+  gimp_bezier_coords_average (&(beziercoords[1]), &(beziercoords[2]),
+                              &(subdivided[7]));
+
+  gimp_bezier_coords_average (&(beziercoords[2]), &(beziercoords[3]),
+                              &(subdivided[5]));
+
+  gimp_bezier_coords_average (&(subdivided[1]), &(subdivided[7]),
+                              &(subdivided[2]));
+
+  gimp_bezier_coords_average (&(subdivided[7]), &(subdivided[5]),
+                              &(subdivided[4]));
+
+  gimp_bezier_coords_average (&(subdivided[2]), &(subdivided[4]),
+                              &(subdivided[3]));
+
+  /*
+   * We now have the coordinates of the two bezier segments in
+   * subdivided [0-3] and subdivided [3-6]
+   */
+
+  /*
+   * Here we need to check, if we have sufficiently subdivided, i.e.
+   * if the stroke is sufficiently close to a straight line.
+   */
+
+  if ( good_enough /* stroke 1 */ )
+    {
+      for (i=0; i < 3; i++)
+        {
+          /* if necessary, allocate new memory for return coords */
+          ret_coords[*ret_ncoords] = subdivided[i];
+          (*ret_ncoords)++;
+        }
+    }
+  else
+    {
+      gimp_bezier_coords_subdivide (&(subdivided[0]), precision,
+                                    ret_ncoords, ret_coords);
+    }
+
+  if ( good_enough /* stroke 2 */ )
+    {
+      for (i=0; i < 3; i++)
+        {
+          /* if necessary, allocate new memory for return coords */
+          ret_coords[*ret_ncoords] = subdivided[i+3];
+          (*ret_ncoords)++;
+        }
+    }
+  else
+    {
+      gimp_bezier_coords_subdivide (&(subdivided[3]), precision,
+                                    ret_ncoords, ret_coords);
+    }
+  
+  if ( /* last iteration */ 0)
+    {
+      /* if necessary, allocate new memory for return coords */
+      ret_coords[*ret_ncoords] = subdivided[6];
+      (*ret_ncoords)++;
+    }
+}

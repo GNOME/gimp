@@ -1,3 +1,17 @@
+2002-09-30  Simon Budig  <simon@gimp.org>
+
+	* data/brushes/1circle.gbr: fixed the default spacing, so that
+	lines actually look like 1 pixel lines...
+
+	* themes/Default/images/tools/.cvsignore: Added some files.
+
+	* app/vectors/gimpanchor.h
+	* app/vectors/gimpbezierstroke.[ch]
+	* app/vectors/gimpstroke.h
+	* app/vectors/gimpvectors.h: Added some stuff, mostly unused
+	code that otherwise would just rot on my harddisk. Mitch: I
+	need to discuss the data structures with you...
+
 2002-09-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell.[ch]: added new signal "reconnect"

@@ -27,7 +27,7 @@ struct _GimpAnchor
 {
   GimpCoords        position;
 
-  gint	            type;
+  gint	            type;  /* Interpretation dependant on GimpStroke type */
 };
 
 #endif /* __GIMP_ANCHOR_H__ */

@@ -58,9 +58,11 @@ GType        gimp_bezier_stroke_get_type    (void) G_GNUC_CONST;
                 
 GimpStroke * gimp_bezier_stroke_new         (const GimpCoords   *start);
 
+GimpStroke * gimp_bezier_stroke_new_from_coords (const GimpCoords *coords,
+                                                 const gint        ncoords);
 
 GimpAnchor * gimp_bezier_stroke_extend      (GimpBezierStroke *bezier_stroke,
-                                             GimpCoords       *coords,
+                                             const GimpCoords *coords,
                                              GimpAnchor       *neighbor);
 
 GimpCoords * gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
