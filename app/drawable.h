@@ -18,56 +18,37 @@
 #ifndef __DRAWABLE_H__
 #define __DRAWABLE_H__
 
-#include <gtk/gtkdata.h>
-#include "tile_manager.h"
-#include "temp_buf.h"
-#include "gimpimageF.h"
+#include "gimpdrawable.h"
 
-#define GIMP_TYPE_DRAWABLE                  (gimp_drawable_get_type ())
-#define GIMP_DRAWABLE(obj)                  (GTK_CHECK_CAST ((obj), GIMP_TYPE_DRAWABLE, GimpDrawable))
-#define GIMP_DRAWABLE_CLASS(klass)          (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DRAWABLE, GimpDrawableClass))
-#define GIMP_IS_DRAWABLE(obj)               (GTK_CHECK_TYPE ((obj), GIMP_TYPE_DRAWABLE))
-#define GIMP_IS_DRAWABLE_CLASS(klass)       (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DRAWABLE))
+int drawable_ID		     (GimpDrawable *);
+void drawable_fill (GimpDrawable *drawable, int fill_type);
+void drawable_update (GimpDrawable *drawable, int x, int y, int w, int h);
 
-typedef struct _GimpDrawable      GimpDrawable;
-typedef struct _GimpDrawableClass GimpDrawableClass;
 
-GtkType gimp_drawable_get_type (void);
+#define drawable_apply_image gimp_drawable_apply_image
+#define drawable_merge_shadow gimp_drawable_merge_shadow
+#define drawable_mask_bounds gimp_drawable_mask_bounds
+#define drawable_invalidate_preview gimp_drawable_invalidate_preview
+#define drawable_dirty gimp_drawable_dirty
+#define drawable_clean gimp_drawable_clean
+#define drawable_type gimp_drawable_type
+#define drawable_has_alpha gimp_drawable_has_alpha
+#define drawable_type_with_alpha gimp_drawable_type_with_alpha
+#define drawable_color gimp_drawable_color
+#define drawable_gray gimp_drawable_gray
+#define drawable_indexed gimp_drawable_indexed
+#define drawable_data gimp_drawable_data
+#define drawable_shadow gimp_drawable_shadow
+#define drawable_bytes gimp_drawable_bytes
+#define drawable_width gimp_drawable_width
+#define drawable_height gimp_drawable_height
+#define drawable_visible gimp_drawable_visible	
+#define drawable_offsets gimp_drawable_offsets
+#define drawable_cmap gimp_drawable_cmap
+#define drawable_name gimp_drawable_name		
 
-/*  drawable access functions  */
-int		 drawable_ID		     (GimpDrawable *);
-void             drawable_apply_image        (GimpDrawable *, 
-					      int, int, int, int, 
-					      TileManager *, int);
-void             drawable_merge_shadow       (GimpDrawable *, int);
-void             drawable_fill               (GimpDrawable *, int);
-void             drawable_update             (GimpDrawable *, 
-					      int, int, int, int);
-int              drawable_mask_bounds        (GimpDrawable *,
-					      int *, int *, int *, int *);
-void             drawable_invalidate_preview (GimpDrawable *);
-int              drawable_dirty              (GimpDrawable *);
-int              drawable_clean              (GimpDrawable *);
-int              drawable_type               (GimpDrawable *);
-int              drawable_has_alpha          (GimpDrawable *);
-int              drawable_type_with_alpha    (GimpDrawable *);
-int              drawable_color              (GimpDrawable *);
-int              drawable_gray               (GimpDrawable *);
-int              drawable_indexed            (GimpDrawable *);
-TileManager *    drawable_data               (GimpDrawable *);
-TileManager *    drawable_shadow             (GimpDrawable *);
-int              drawable_bytes              (GimpDrawable *);
-int              drawable_width              (GimpDrawable *);
-int              drawable_height             (GimpDrawable *);
-int		 drawable_visible	     (GimpDrawable *);
-void             drawable_offsets            (GimpDrawable *, int *, int *);
-unsigned char *  drawable_cmap               (GimpDrawable *);
-char *		 drawable_name		     (GimpDrawable *);
-
-GimpDrawable *   drawable_get_ID             (int);
-void		 drawable_deallocate	     (GimpDrawable *);
-void		 gimp_drawable_configure     (GimpDrawable *,
-					      GimpImage*,
-					      int, int, int, char *);
+#define drawable_get_ID gimp_drawable_get_ID
+#define drawable_deallocate gimp_drawable_deallocate	
+#define drawable_gimage gimp_drawable_gimage
 
 #endif /* __DRAWABLE_H__ */

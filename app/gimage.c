@@ -8,7 +8,7 @@
 
 #include "drawable.h"
 #include "gdisplay.h"
-
+#include "procedural_db.h"
 
 #include "palette.h"
 #include "undo.h"
@@ -23,18 +23,6 @@
    to proper places. That is, the handlers should be moved to
    layers_dialog, gdisplay, tools, etc.. */
 
-/* Todo: obliterate the idiotic id system. We get rid of lotsa list
-   lookups, and it clears the code.. */
-
-static int global_gimage_ID = 1;
-
-/* Any global vars like this are damn well app-specific, and don't
-   belong in class implementations */
-
-/* To do: a more generic "set" class */
-
-GSList* image_list;
-
 static void gimage_dirty_handler (GimpImage* gimage);
 static void gimage_destroy_handler (GimpImage* gimage);
 static void gimage_rename_handler (GimpImage* gimage);
@@ -42,7 +30,10 @@ static void gimage_resize_handler (GimpImage* gimage);
 static void gimage_restructure_handler (GimpImage* gimage);
 static void gimage_repaint_handler (GimpImage* gimage, gint, gint, gint, gint);
 
+/* This is the app's global context of "all images".. This should be
+   unglobalized, too */
 
+static GSList* image_list;
 
 GImage*
 gimage_new(int width, int height, GimpImageBaseType base_type)
@@ -61,11 +52,9 @@ gimage_new(int width, int height, GimpImageBaseType base_type)
 		      GTK_SIGNAL_FUNC(gimage_restructure_handler), NULL);
   gtk_signal_connect (GTK_OBJECT (gimage), "repaint",
 		      GTK_SIGNAL_FUNC(gimage_repaint_handler), NULL);
-  
-  gimage->ref_count = 0;
-  gimage->ID = global_gimage_ID ++;
-  image_list = g_slist_append (image_list, gimage);
-  
+
+  image_list=g_slist_prepend(image_list, gimage);
+  pdb_add_image(gimage);
   lc_dialog_update_image_list ();
   indexed_palette_update_image_list ();
   return gimage;
@@ -74,20 +63,7 @@ gimage_new(int width, int height, GimpImageBaseType base_type)
 GImage*
 gimage_get_ID (gint ID)
 {
-  GSList *tmp = image_list;
-  GimpImage *gimage;
-
-  while (tmp)
-    {
-      gimage = (GimpImage *) tmp->data;
-      if (gimage->ID == ID)
-	return gimage;
-
-      tmp = g_slist_next (tmp);
-    }
-
-  return NULL;
-  
+	return pdb_id_to_image(ID);
 }
 
 
@@ -121,7 +97,7 @@ gimage_dirty_handler (GimpImage* gimage){
   if (active_tool && !active_tool->preserve) {
     GDisplay* gdisp = active_tool->gdisp_ptr;
     if (gdisp) {
-      if (gdisp->gimage->ID == gimage->ID)
+      if (gdisp->gimage == gimage)
         tools_initialize (active_tool->type, gdisp);
       else
         tools_initialize (active_tool->type, NULL);
@@ -132,10 +108,12 @@ gimage_dirty_handler (GimpImage* gimage){
 static void
 gimage_destroy_handler (GimpImage* gimage)
 {
+
   /*  free the undo list  */
   undo_free (gimage);
 
-  image_list = g_slist_remove (image_list, (void *) gimage);
+  pdb_remove_image(gimage);
+  image_list=g_slist_remove(image_list, gimage);
   lc_dialog_update_image_list ();
 
   indexed_palette_update_image_list ();

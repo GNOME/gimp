@@ -33,7 +33,6 @@ static int int_value;
 static int success;
 static Argument *return_args;
 
-extern GSList * image_list;
 
 static GImage * duplicate  (GImage *gimage);
 
@@ -41,37 +40,40 @@ static Argument * channel_ops_duplicate_invoker  (Argument *args);
 /************************/
 /*  GIMAGE_LIST_IMAGES  */
 
+/* Yuup, this is somewhat unsmooth, to say the least */
+
+static void
+gimlist_cb(gpointer im, gpointer data){
+	GSList** l=(GSList**)data;
+	*l=g_slist_prepend(*l, im);
+}
+
 static Argument *
 gimage_list_images_invoker (Argument *args)
 {
-  GSList *list;
+  GSList *list=NULL;
   int num_images;
   int *image_ids;
   Argument *return_args;
 
-  success = TRUE;
-  return_args = procedural_db_return_args (&gimage_get_layers_proc, success);
+  return_args = procedural_db_return_args (&gimage_get_layers_proc, TRUE);
 
-  if (success)
+  gimage_foreach(gimlist_cb, &list);
+  
+  num_images = g_slist_length (list);
+  image_ids = NULL;
+
+  if (num_images)
     {
-      list = image_list;
-      num_images = g_slist_length (list);
-      image_ids = NULL;
-
-      if (num_images)
-	{
-	  int i;
-
-	  image_ids = (int *) g_malloc (sizeof (int) * num_images);
-
-	  for (i = 0; i < num_images; i++, list = g_slist_next (list))
-	    image_ids[i] = ((GImage *) list->data)->ID;
-	}
-
-      return_args[1].value.pdb_int = num_images;
-      return_args[2].value.pdb_pointer = image_ids;
+       int i;
+       image_ids = (int *) g_malloc (sizeof (int) * num_images);
+       for (i = 0; i < num_images; i++, list = g_slist_next (list))
+	       image_ids[i] = pdb_image_to_id(GIMP_IMAGE(list->data));
+       
     }
-
+  return_args[1].value.pdb_int = num_images;
+  return_args[2].value.pdb_pointer = image_ids;
+  g_slist_free(list);
   return return_args;
 }
 
@@ -160,7 +162,7 @@ gimage_new_invoker (Argument *args)
   return_args = procedural_db_return_args (&gimage_new_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimage->ID;
+    return_args[1].value.pdb_int = pdb_image_to_id(gimage);
 
   return return_args;
 }
@@ -3399,7 +3401,7 @@ channel_ops_duplicate_invoker (Argument *args)
   return_args = procedural_db_return_args (&channel_ops_duplicate_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = new_gimage->ID;
+    return_args[1].value.pdb_int = pdb_image_to_id(new_gimage);
 
   return return_args;
 }

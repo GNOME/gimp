@@ -48,7 +48,7 @@ image_invert (gimage_ptr)
 
   return_vals = procedural_db_run_proc ("gimp_invert",
 					&nreturn_vals,
-					PDB_IMAGE, gimage->ID,
+					PDB_IMAGE, pdb_image_to_id(gimage),
 					PDB_DRAWABLE, drawable_ID (drawable),
 					PDB_END);
 

@@ -343,7 +343,7 @@ xcf_load_invoker (Argument *args)
   return_args = procedural_db_return_args (&xcf_plug_in_load_proc.db_info, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimage->ID;
+    return_args[1].value.pdb_int = pdb_image_to_id(gimage);
 
   return return_args;
 }

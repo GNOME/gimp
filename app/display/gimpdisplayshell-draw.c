@@ -542,7 +542,7 @@ toolbox_raise_callback (GtkWidget *widget,
 
 
 void
-create_display_shell (int   gdisp_id,
+create_display_shell (GDisplay* gdisp,
 		      int   width,
 		      int   height,
 		      char *title,
@@ -550,7 +550,6 @@ create_display_shell (int   gdisp_id,
 {
   static GtkWidget *image_popup_menu = NULL;
   static GtkAccelGroup *image_accel_group = NULL;
-  GDisplay *gdisp;
   GtkWidget *vbox;
   GtkWidget *table;
   GtkWidget *table_inner;
@@ -560,10 +559,6 @@ create_display_shell (int   gdisp_id,
   int s_width, s_height;
   int scalesrc, scaledest;
   int contextid;
-
-  /*  Get the gdisplay  */
-  if (! (gdisp = gdisplay_get_ID (gdisp_id)))
-    return;
 
   /*  adjust the initial scale -- so that window fits on screen */
   {

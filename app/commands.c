@@ -70,7 +70,7 @@ typedef struct
 {
   GtkWidget * shell;
   Resize *    resize;
-  int         gimage_id;
+  GimpImage*  gimage;
 } ImageResize;
 
 /*  external functions  */
@@ -724,7 +724,7 @@ image_resize_cmd_callback (GtkWidget *widget,
 
   /*  the ImageResize structure  */
   image_resize = (ImageResize *) g_malloc (sizeof (ImageResize));
-  image_resize->gimage_id = gdisp->gimage->ID;
+  image_resize->gimage = gdisp->gimage;
   image_resize->resize = resize_widget_new (ResizeWidget, gdisp->gimage->width, gdisp->gimage->height);
 
   /*  the dialog  */
@@ -771,7 +771,7 @@ image_scale_cmd_callback (GtkWidget *widget,
 
   /*  the ImageResize structure  */
   image_scale = (ImageResize *) g_malloc (sizeof (ImageResize));
-  image_scale->gimage_id = gdisp->gimage->ID;
+  image_scale->gimage = gdisp->gimage;
   image_scale->resize = resize_widget_new (ScaleWidget, gdisp->gimage->width, gdisp->gimage->height);
 
   /*  the dialog  */
@@ -1052,7 +1052,7 @@ image_resize_callback (GtkWidget *w,
   GImage *gimage;
 
   image_resize = (ImageResize *) client_data;
-  if ((gimage = gimage_get_ID (image_resize->gimage_id)) != NULL)
+  if ((gimage = image_resize->gimage) != NULL)
     {
       if (image_resize->resize->width > 0 &&
 	  image_resize->resize->height > 0) 
@@ -1084,7 +1084,7 @@ image_scale_callback (GtkWidget *w,
   GImage *gimage;
 
   image_scale = (ImageResize *) client_data;
-  if ((gimage = gimage_get_ID (image_scale->gimage_id)) != NULL)
+  if ((gimage = image_scale->gimage) != NULL)
     {
       if (image_scale->resize->width > 0 &&
 	  image_scale->resize->height > 0) 

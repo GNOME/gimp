@@ -131,7 +131,6 @@ floating_sel_reset (layer)
      Layer *layer;
 {
   GImage *gimage;
-  LayerMask *lm;
 
   if (! (gimage = drawable_gimage (GIMP_DRAWABLE(layer))))
     return;
@@ -139,8 +138,10 @@ floating_sel_reset (layer)
   /*  set the underlying drawable to active  */
   if (drawable_layer ( (layer->fs.drawable)))
     gimage_set_active_layer (gimage, GIMP_LAYER (layer->fs.drawable));
-  else if ((lm = drawable_layer_mask ( (layer->fs.drawable))))
-    gimage_set_active_layer (gimage, lm->layer);
+  else if (GIMP_IS_LAYER_MASK(layer->fs.drawable))
+	  gimage_set_active_layer (gimage,
+				   GIMP_LAYER_MASK(layer->fs.drawable)
+				   ->layer);
   else if (drawable_channel ( (layer->fs.drawable)))
     {
       gimage_set_active_channel (gimage, GIMP_CHANNEL(layer->fs.drawable));

@@ -1260,8 +1260,10 @@ transform_core_paste (gimage, drawable, tiles, new_layer)
     }
   else
     {
-      if ((layer = drawable_layer ( (drawable))) == NULL)
-	return NULL;
+	    if (GIMP_IS_LAYER(drawable))
+		    layer=GIMP_LAYER(drawable);
+	    else
+		    return NULL;
 
       layer_add_alpha (layer);
       floating_layer = gimage_floating_sel (gimage);

@@ -19,6 +19,7 @@
 #define __INTERFACE_H__
 
 #include "tools.h"
+#include "gdisplay.h"
 
 /* typedefs */
 typedef void (*QueryFunc) (GtkWidget *, gpointer, gpointer);
@@ -34,7 +35,7 @@ GdkPixmap *  create_tool_pixmap (GtkWidget *, ToolType);
 void         create_toolbox (void);
 void	     toolbox_free (void);
 void         toolbox_raise_callback (GtkWidget *, gpointer);
-void         create_display_shell (int, int, int, char *, int);
+void         create_display_shell (GDisplay* , int, int, char *, int);
 void         position_dialog (GtkWidget *, gpointer, gpointer);
 void         center_dialog (GtkWidget *, gpointer, gpointer);
 GtkWidget *  query_string_box (char *, char *, char *, QueryFunc, gpointer);

@@ -776,7 +776,7 @@ create_image_menu_cb (gpointer im, gpointer d)
 
   image_name = prune_filename (gimage_filename (gimage));
   menu_item_label = (char *) g_malloc (strlen (image_name) + 15);
-  sprintf (menu_item_label, "%s-%d", image_name, gimage->ID);
+  sprintf (menu_item_label, "%s-%p", image_name, gimage);
   menu_item = gtk_menu_item_new_with_label (menu_item_label);
   gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
 		      (GtkSignalFunc) data->callback,

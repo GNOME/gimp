@@ -122,7 +122,6 @@ void		channel_invalidate_bounds (Channel *);
 
 extern int channel_get_count;
 
-/* from drawable.c */
-Channel *        drawable_channel       (GimpDrawable *);
+#define drawable_channel GIMP_IS_CHANNEL
 
 #endif /* __CHANNEL_H__ */

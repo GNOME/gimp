@@ -138,9 +138,11 @@ TempBuf *       layer_mask_preview (Layer *, int, int);
 void            layer_invalidate_previews  (GimpImage*);
 
 
-/* from drawable.c */
-Layer *          drawable_layer              (GimpDrawable *);
-LayerMask *      drawable_layer_mask         (GimpDrawable *);
+/* temp thingies.. dynamic downcast. GTK_NO_CHECK_CASTS must not be
+   defined */
+
+#define drawable_layer GIMP_IS_LAYER
+#define drawable_layer_mask GIMP_IS_LAYER_MASK
 
 /* from channel.c */
 void            channel_layer_alpha     (Channel *, Layer *);

@@ -1157,7 +1157,7 @@ plug_in_repeat (int with_interface)
 
       /* initialize the first 3 plug-in arguments  */
       args[0].value.pdb_int = (with_interface ? RUN_INTERACTIVE : RUN_WITH_LAST_VALS);
-      args[1].value.pdb_int = gdisplay->gimage->ID;
+      args[1].value.pdb_int = pdb_image_to_id(gdisplay->gimage);
       args[2].value.pdb_int = drawable_ID (gimage_active_drawable (gdisplay->gimage));
 
       /* run the plug-in procedure */
@@ -2211,7 +2211,7 @@ plug_in_callback (GtkWidget *widget,
 
 	  /* initialize the first 3 plug-in arguments  */
 	  args[0].value.pdb_int = RUN_INTERACTIVE;
-	  args[1].value.pdb_int = gdisplay->gimage->ID;
+	  args[1].value.pdb_int = pdb_image_to_id(gdisplay->gimage);
 	  args[2].value.pdb_int = drawable_ID (gimage_active_drawable (gdisplay->gimage));
 	}
       else
@@ -2232,7 +2232,7 @@ plug_in_callback (GtkWidget *widget,
 	    {
 	      gdisp_ID = gdisplay->ID;
 
-	      args[1].value.pdb_int = gdisplay->gimage->ID;
+	      args[1].value.pdb_int = pdb_image_to_id(gdisplay->gimage);
 	      args[2].value.pdb_int = drawable_ID (gimage_active_drawable (gdisplay->gimage));
 	    }
 	  else

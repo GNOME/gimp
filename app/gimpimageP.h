@@ -32,8 +32,6 @@ struct _GimpImage
 
   TileManager *shadow;                /*  shadow buffer tiles          */
 
-  int ID;                             /*  Unique gimp_image identifier     */
-
                                       /*  Projection attributes  */
   int flat;                           /*  Is the gimp_image flat?          */
   int construct_flag;                 /*  flag for construction        */

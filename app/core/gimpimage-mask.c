@@ -297,8 +297,8 @@ gimage_mask_extract (gimage, drawable, cut_gimage, keep_indexed)
        */
       if (cut_gimage && drawable_layer (drawable))
 	{
-	  if (layer_is_floating_sel (drawable_layer (drawable)))
-	    floating_sel_remove (drawable_layer (drawable));
+	  if (layer_is_floating_sel (GIMP_LAYER (drawable)))
+	    floating_sel_remove (GIMP_LAYER (drawable));
 	  else
 	    gimage_remove_layer (gimage, GIMP_LAYER (drawable));
 	}

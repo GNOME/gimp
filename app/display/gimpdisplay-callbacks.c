@@ -208,7 +208,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 		/*
 		if (active_tool->gdisp_ptr) {
 		  tool_gdisp = active_tool->gdisp_ptr;
-		  if (tool_gdisp->ID != gdisp->ID) {
+		  if (tool_gdisp != gdisp) {
 		    tools_initialize (active_tool->type, gdisp);
 		    active_tool->drawable = gimage_active_drawable(gdisp->gimage);
 		  }

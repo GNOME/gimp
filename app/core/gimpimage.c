@@ -1156,16 +1156,18 @@ gimp_image_get_active_channels (GimpImage *gimage, GimpDrawable *drawable, int *
   /*  If the drawable is a channel (a saved selection, etc.)
    *  make sure that the alpha channel is not valid
    */
-  if (drawable_channel (drawable) != NULL)
+  if (GIMP_IS_CHANNEL (drawable))
     active[ALPHA_G_PIX] = 0;  /*  no alpha values in channels  */
   else
     {
       /*  otherwise, check whether preserve transparency is
        *  enabled in the layer and if the layer has alpha
        */
-      if ((layer = drawable_layer (drawable)))
-	if (layer_has_alpha (layer) && layer->preserve_trans)
-	  active[drawable_bytes (GIMP_DRAWABLE(layer)) - 1] = 0;
+      if (GIMP_IS_LAYER (drawable)){
+	      layer=GIMP_LAYER(drawable);
+	      if (layer_has_alpha (layer) && layer->preserve_trans)
+		      active[drawable_bytes (drawable) - 1] = 0;
+      }
     }
 }
 

@@ -72,7 +72,7 @@ static int          offset_x = 0;             /*                         */
 static int          offset_y = 0;             /*  offset for cloning     */
 static int          first = TRUE;
 static int          trans_tx, trans_ty;       /*  transformed target  */
-static int          src_gdisp_ID = -1;        /*  ID of source gdisplay  */
+static GDisplay*    the_src_gdisp = NULL;        /*  ID of source gdisplay  */
 static GimpDrawable * src_drawable_ = NULL;   /*  source drawable */
 static CloneOptions *clone_options = NULL;
 
@@ -217,7 +217,7 @@ clone_paint_func (PaintCore *paint_core,
     case INIT_PAINT :
       if (paint_core->state & ControlMask)
 	{
-	  src_gdisp_ID = gdisp->ID;
+	  the_src_gdisp = gdisp;
 	  src_drawable_ = drawable;
 	  src_x = paint_core->curx;
 	  src_y = paint_core->cury;
@@ -241,11 +241,11 @@ clone_paint_func (PaintCore *paint_core,
     }
 
   /*  Calculate the coordinates of the target  */
-  src_gdisp = gdisplay_get_ID (src_gdisp_ID);
+  src_gdisp = the_src_gdisp;
   if (!src_gdisp)
     {
-      src_gdisp_ID = gdisp->ID;
-      src_gdisp = gdisplay_get_ID (src_gdisp_ID);
+      the_src_gdisp = gdisp;
+      src_gdisp = the_src_gdisp;
     }
 
   /*  Find the target cursor's location onscreen  */

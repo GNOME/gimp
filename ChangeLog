@@ -1,3 +1,51 @@
+Tue Jun 30 18:08:01 EEST 1998  Lauri Alanko  <nether@gimp.org>
+	    
+	* app/Makefile.am: start collecting some core stuff to libgimpim.a
+	* app/gdisplay.c (gdisplays_update_area): remove an (apparently)
+	redundant display area
+
+	* app/drawable.c:
+	* app/drawable.h:
+	* app/gimpdrawable.c:
+	* app/gimpdrawable.h:
+	* app/gimpdrawableF.h:
+	* app/gimpdrawableP.h:
+
+	Started separating crud out of drawables.	
+		
+	* app/blend.c:
+	* app/bucket_fill.c:
+	* app/channel.h:
+	* app/clone.c:
+	* app/commands.c:
+	* app/disp_callbacks.c:
+	* app/drawable_cmds.c:
+	* app/drawable_pvt.h:
+	* app/fileops.c:
+	* app/floating_sel.c:
+	* app/gimage.c:
+	* app/gimage_cmds.c:
+	* app/gimage_mask.c:
+	* app/gimpimage.c:
+	* app/gimpimage.h:
+	* app/gimpimageP.h:
+	* app/indexed_palette.c:
+	* app/interface.c:
+	* app/interface.h:
+	* app/invert.c:
+	* app/layer.c:
+	* app/layer.h:
+	* app/layers_dialog.c:
+	* app/plug_in.c:
+	* app/procedural_db.c:
+	* app/procedural_db.h:
+	* app/transform_core.c:
+	* app/xcf.c:
+
+	Isolated the id system of images entirely within pdb. Even the
+	window titles and menus use pointers instead of ids. Should at
+	least remind people that this is a developers' version. :)
+
 Tue Jun 30 04:00:38 EEST 1998  Lauri Alanko  <nether@gimp.org>
 
 	* app/commands.c:

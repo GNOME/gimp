@@ -18,6 +18,8 @@
 #ifndef __PROCEDURAL_DB_H__
 #define __PROCEDURAL_DB_H__
 
+#include "gimpimageF.h"
+
 /*  Procedural database types  */
 typedef enum
 {
@@ -190,5 +192,11 @@ Argument *    procedural_db_return_args  (ProcRecord *,
 					  int);
 void          procedural_db_destroy_args (Argument   *,
 					  int);
+void pdb_add_image(GimpImage* gimage);
+gint pdb_image_to_id(GimpImage* gimage);
+GimpImage* pdb_id_to_image(gint id);
+void pdb_remove_image(GimpImage* image);
+
+
 
 #endif  /*  __PROCEDURAL_DB_H__  */

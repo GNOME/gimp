@@ -4,7 +4,6 @@
 #include <gtk/gtktypeutils.h>
 #include "gimpobjectF.h"
 
-	                  
 #define GIMP_TYPE_OBJECT gimp_object_get_type()
 
 #define GIMP_OBJECT(obj) GTK_CHECK_CAST (obj, GIMP_TYPE_OBJECT, GimpObject)

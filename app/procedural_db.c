@@ -69,6 +69,7 @@ static Argument * procedural_db_query (Argument *);
 static void       procedural_db_query_entry (gpointer, gpointer, gpointer);
 static int        match_strings (regex_t *, char *);
 static guint      procedural_db_hash_func (gconstpointer key);
+static void	  pdb_id_init (void);
 
 
 /*  Local data  */
@@ -528,6 +529,7 @@ procedural_db_init ()
   if (!procedural_ht)
     procedural_ht = g_hash_table_new (procedural_db_hash_func,
 				      g_str_equal);
+  pdb_id_init ();
 }
 
 void
@@ -1244,3 +1246,53 @@ procedural_db_hash_func (gconstpointer key)
 
   return result;
 }
+
+
+/* The id system's remnants ... */
+
+static gint next_image_id;
+static gint next_drawable_id;
+static gint next_display_id;
+
+static GHashTable* image_hash;
+static GHashTable* drawable_hash;
+static GHashTable* display_hash;
+
+static guint id_hash_func(gconstpointer id){
+	return *((guint*)id);
+}
+
+static gboolean id_cmp_func(gconstpointer id1, gconstpointer id2){
+	return (*((guint*)id1)==*((guint*)id2));
+}
+
+static void pdb_id_init (void){
+	image_hash=g_hash_table_new(id_hash_func, id_cmp_func);
+	drawable_hash=g_hash_table_new(id_hash_func, id_cmp_func);
+	display_hash=g_hash_table_new(id_hash_func, id_cmp_func);
+}
+
+void pdb_add_image(GimpImage* gimage){
+	guint* id=g_new(gint,1);
+	*id=next_image_id++;
+	gtk_object_set_data(GTK_OBJECT(gimage), "pdb_id", id);
+	g_hash_table_insert(image_hash, id, gimage);
+}
+
+gint pdb_image_to_id(GimpImage* gimage){
+	guint *id=gtk_object_get_data(GTK_OBJECT(gimage), "pdb_id");
+	return id?(gint)*id:-1;
+}
+	
+GimpImage* pdb_id_to_image(gint id){
+	return g_hash_table_lookup(image_hash, &id);
+}
+
+	
+void pdb_remove_image(GimpImage* image){
+	guint* id=gtk_object_get_data(GTK_OBJECT(image), "pdb_id");
+	gtk_object_remove_data(GTK_OBJECT(image), "pdb_id");
+	g_hash_table_remove(image_hash, id);
+	g_free(id);
+}
+	 

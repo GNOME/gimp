@@ -50,14 +50,6 @@ typedef enum
 } GimpImageBaseType;
 
 
-
-
-/* the image fill types */
-#define BACKGROUND_FILL  0
-#define WHITE_FILL       1
-#define TRANSPARENT_FILL 2
-#define NO_FILL          3
-
 #define COLORMAP_SIZE    768
 
 #define HORIZONTAL_GUIDE 1
@@ -207,9 +199,6 @@ void            gimp_image_invalidate_preview     (GimpImage *);
 
 void            gimp_image_invalidate_previews    (void);
 
-/* from drawable.c */
-/* Ugly! */
-GimpImage *        drawable_gimage               (GimpDrawable*);
 
 
 #endif

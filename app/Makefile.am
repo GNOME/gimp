@@ -3,6 +3,9 @@
 scriptdata =
 
 bin_PROGRAMS = gimp
+noinst_LIBRARIES = libgimpim.a
+
+libgimpim_a_SOURCES = gimpobject.c gimpimage.c gimpsignal.c gimpdrawable.c
 
 gimp_SOURCES = \
 	about_dialog.c		\
@@ -139,14 +142,8 @@ gimp_SOURCES = \
 	gimage_mask.h		\
 	gimage_mask_cmds.c	\
 	gimage_mask_cmds.h	\
-	gimpimage.c		\
-	gimpimage.h		\
-	gimpobject.c		\
-	gimpobject.h		\
 	gimprc.c		\
 	gimprc.h		\
-	gimpsignal.c		\
-	gimpsignal.h		\
 	global_edit.c		\
 	global_edit.h		\
 	gradient.c		\
@@ -313,6 +310,7 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
+	libgimpim.a \
 	$(top_builddir)/libgimp/libgimpi.a	\
 	$(GTK_LIBS)				\
 	$(THREAD_LIBS)				\

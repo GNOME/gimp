@@ -336,7 +336,7 @@ drawable_gimage_invoker (Argument *args)
   return_args = procedural_db_return_args (&drawable_gimage_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimage->ID;
+    return_args[1].value.pdb_int = pdb_image_to_id(gimage);
 
   return return_args;
 }

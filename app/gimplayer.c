@@ -655,10 +655,8 @@ layer_add_alpha (layer)
   GIMP_DRAWABLE(layer)->bytes = GIMP_DRAWABLE(layer)->bytes + 1;
   GIMP_DRAWABLE(layer)->has_alpha = TYPE_HAS_ALPHA (type);
 
-  /*  update gdisplay titles to reflect the possibility of
-   *  this layer being the only layer in the gimage
-   */
-  gdisplays_update_title (GIMP_DRAWABLE(layer)->gimage);
+  gtk_signal_emit_by_name(GTK_OBJECT(gimp_drawable_gimage(GIMP_DRAWABLE(layer))),
+			 "restructure");
 }
 
 
@@ -893,7 +891,7 @@ layer_invalidate_boundary (layer)
   Channel *mask;
 
   /*  first get the selection mask channel  */
-  if (! (gimage = GIMP_DRAWABLE(layer)->gimage))
+  if (! (gimage = drawable_gimage(GIMP_DRAWABLE(layer))))
     return;
 
   /*  Turn the current selection off  */
@@ -909,7 +907,8 @@ layer_invalidate_boundary (layer)
     }
 
   /*  clear the affected region surrounding the layer  */
-  gdisplays_selection_visibility (GIMP_DRAWABLE(layer)->gimage, SelectionLayerOff);
+  /* gdisplays_selection_visibility (GIMP_DRAWABLE(layer)->gimage,
+     SelectionLayerOff); */
 }
 
 

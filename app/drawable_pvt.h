@@ -18,37 +18,6 @@
 #ifndef __DRAWABLE_PVT_H__
 #define __DRAWABLE_PVT_H__
 
-#include <gtk/gtkdata.h>
-#include "tile_manager.h"
-#include "temp_buf.h"
-
-struct _GimpDrawable
-{
-  GtkData data;
-
-  char *name;				/* name of drawable */
-  TileManager *tiles;			/* tiles for drawable data */
-  int visible;				/* controls visibility */
-  int width, height;			/* size of drawable */
-  int offset_x, offset_y;		/* offset of layer in image */
-
-  int bytes;				/* bytes per pixel */
-  int dirty;				/* dirty bit */
-  int ID;				/* provides a unique ID */
-  GimpImage* gimage;			/* gimage owner */
-  int type;				/* type of drawable */
-  int has_alpha;			/* drawable has alpha */
-
-  /*  Preview variables  */
-  TempBuf *preview;			/* preview of the channel */
-  int preview_valid;			/* is the preview valid? */
-};
-
-struct _GimpDrawableClass
-{
-  GtkDataClass parent_class;
-
-  void (*invalidate_preview) (GtkObject *);
-};
+#include "gimpdrawableP.h"
 
 #endif /* __DRAWABLE_PVT_H__ */

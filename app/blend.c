@@ -602,7 +602,7 @@ blend_button_release (Tool           *tool,
     {
       return_vals = procedural_db_run_proc ("gimp_blend",
 					    &nreturn_vals,
-					    PDB_IMAGE, gimage->ID,
+					    PDB_IMAGE, pdb_image_to_id(gimage),
 					    PDB_DRAWABLE, drawable_ID (gimage_active_drawable (gimage)),
 					    PDB_INT32, (gint32) blend_options->blend_mode,
 					    PDB_INT32, (gint32) blend_options->paint_mode,

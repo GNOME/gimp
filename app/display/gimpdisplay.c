@@ -131,7 +131,7 @@ gdisplay_new (GimpImage       *gimage,
   display_list = g_slist_append (display_list, (void *) gdisp);
 
   /*  create the shell for the image  */
-  create_display_shell (gdisp->ID, gimage->width, gimage->height,
+  create_display_shell (gdisp, gimage->width, gimage->height,
 			title, gimage_base_type (gimage));
 
   /*  set the gdisplay colormap type and install the appropriate colormap  */
@@ -178,9 +178,9 @@ gdisplay_format_title (GimpImage *gimage,
 	image_type_str = NULL;
       }
 
-  sprintf (title, "%s" "-%d" ".%d (%s)",
+  sprintf (title, "%s" "-%p" ".%d (%s)",
 	   prune_filename (gimage_filename (gimage)),
-	   /*gimage->ID,*/
+	   gimage,
 	   gimage->instance_count,
 	   image_type_str);
 }
@@ -201,7 +201,7 @@ gdisplay_delete (GDisplay *gdisp)
 
   if (active_tool && active_tool->gdisp_ptr) {
     tool_gdisp = active_tool->gdisp_ptr;
-    if (gdisp->ID == tool_gdisp->ID) {
+    if (gdisp == tool_gdisp) {
       active_tool->drawable = NULL;
       active_tool->gdisp_ptr = NULL;
     }
@@ -1289,9 +1289,12 @@ gdisplays_update_area (GimpImage* gimage,
 	  */
 
 	  gdisplay_add_update_area (gdisp, x, y, w, h);
+	  /* Seems like this isn't needed, it's done in
+	     gdisplay_flush. -la
 	  gdisplay_transform_coords (gdisp, x, y, &x1, &y1, 0);
 	  gdisplay_transform_coords (gdisp, x + w, y + h, &x2, &y2, 0);
 	  gdisplay_add_display_area (gdisp, x1, y1, (x2 - x1), (y2 - y1));
+	  */
 	}
       list = g_slist_next (list);
     }

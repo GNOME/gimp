@@ -313,7 +313,8 @@ bucket_fill_button_release (tool, bevent, gdisp_ptr)
 
       return_vals = procedural_db_run_proc ("gimp_bucket_fill",
 					    &nreturn_vals,
-					    PDB_IMAGE, gdisp->gimage->ID,
+					    PDB_IMAGE,
+					    pdb_image_to_id(gdisp->gimage),
 					    PDB_DRAWABLE, drawable_ID (gimage_active_drawable (gdisp->gimage)),
 					    PDB_INT32, (gint32) fill_mode,
 					    PDB_INT32, (gint32) bucket_options->paint_mode,
