@@ -101,7 +101,7 @@ query ()
                           "Tim Newsome",
                           "1997",
                           "<Save>/PAT",
-                          "RGB*, GRAY*",
+                          "RGB*, GRAY*, U16_RGB*, U16_GRAY*, FLOAT_RGB, FLOAT_RGB*",
                           PROC_PLUG_IN,
                           nsave_args, 0,
                           save_args, NULL);
@@ -178,7 +178,9 @@ static gint32 load_image (char *filename) {
 	GDrawable *drawable;
 	gint line;
 	GPixelRgn pixel_rgn;
-
+	gint bytes;
+	gint layer_type, image_type;
+	
 	temp = g_malloc(strlen (filename) + 11);
 	sprintf(temp, "Loading %s:", filename);
 	gimp_progress_init(temp);
@@ -194,15 +196,17 @@ static gint32 load_image (char *filename) {
 		return -1;
 	}
 
-  /*  rearrange the bytes in each unsigned int  */
+        /*  rearrange the bytes in each unsigned int  */
 	ph.header_size = ntohl(ph.header_size);
 	ph.version = ntohl(ph.version);
 	ph.width = ntohl(ph.width);
 	ph.height = ntohl(ph.height);
-	ph.bytes = ntohl(ph.bytes);
+	ph.type = ntohl(ph.type);
 	ph.magic_number = ntohl(ph.magic_number);
 
-	if (ph.magic_number != GPATTERN_MAGIC || ph.version != 1 ||
+	if (ph.magic_number != GPATTERN_MAGIC || 
+			ph.version > 2 || 
+			ph.version < 1 ||
 			ph.header_size <= sizeof(ph)) {
 		close(fd);
 		return -1;
@@ -214,26 +218,97 @@ static gint32 load_image (char *filename) {
 		return -1;
 	}
 
+	/* In version 1 the type field was bytes */ 
+	if (ph.version == 1) 
+	{ 
+		if (ph.type == 1)      /*in version 1, 1 byte is 8bit gray*/
+		{
+			ph.type = GRAY_IMAGE;
+		}
+		else if (ph.type == 3) /*in version 1, 3 bytes is 8bit color */
+		{
+			ph.type = RGB_IMAGE;
+		}
+		else
+		{
+			close(fd);
+			return -1; 
+		}
+	}
+
+	switch (ph.type)
+	{
+		case RGB_IMAGE:
+			image_type = RGB;
+			layer_type = RGB_IMAGE;
+			break;
+		case RGBA_IMAGE:
+			image_type = RGB;
+			layer_type = RGBA_IMAGE;
+			break;
+		case GRAY_IMAGE:
+			image_type = GRAY;
+			layer_type = GRAY_IMAGE;
+			break;
+		case GRAYA_IMAGE:
+			image_type = GRAY;
+			layer_type = GRAYA_IMAGE;
+			break;
+		case U16_RGB_IMAGE:
+			image_type = U16_RGB;
+			layer_type = U16_RGB_IMAGE;
+			break;
+		case U16_RGBA_IMAGE:
+			image_type = U16_RGB;
+			layer_type = U16_RGBA_IMAGE;
+			break;
+		case U16_GRAY_IMAGE:
+			image_type = U16_GRAY;
+			layer_type = U16_GRAY_IMAGE;
+			break;
+		case U16_GRAYA_IMAGE:
+			image_type = U16_GRAY;
+			layer_type = U16_GRAYA_IMAGE;
+			break;
+		case FLOAT_RGB_IMAGE:
+			image_type = FLOAT_RGB;
+			layer_type = FLOAT_RGB_IMAGE;
+			break;
+		case FLOAT_RGBA_IMAGE:
+			image_type = FLOAT_RGB;
+			layer_type = FLOAT_RGBA_IMAGE;
+			break;
+		case FLOAT_GRAY_IMAGE:
+			image_type = FLOAT_GRAY;
+			layer_type = FLOAT_GRAY_IMAGE;
+			break;
+		case FLOAT_GRAYA_IMAGE:
+			image_type = FLOAT_GRAY;
+			layer_type = FLOAT_GRAYA_IMAGE;
+			break;
+		default:
+			close (fd);
+			return -1;
+	}
 	/* Now there's just raw data left. */
 
-  /*
-	 * Create a new image of the proper size and associate the filename with it.
-   */
-  image_ID = gimp_image_new(ph.width, ph.height, (ph.bytes >= 3) ? RGB : GRAY);
-  gimp_image_set_filename(image_ID, filename);
+	/* Create a new image of the proper size and associate the filename with it. */
+  	image_ID = gimp_image_new(ph.width, ph.height, image_type);
+  	gimp_image_set_filename(image_ID, filename);
 
-  layer_ID = gimp_layer_new(image_ID, "Background", ph.width, ph.height,
-			(ph.bytes >= 3) ? RGB_IMAGE : GRAY_IMAGE, 100, NORMAL_MODE);
+  	layer_ID = gimp_layer_new(image_ID, "Background", ph.width, ph.height,
+			layer_type, 100, NORMAL_MODE);
 	gimp_image_add_layer(image_ID, layer_ID, 0);
 
-  drawable = gimp_drawable_get(layer_ID);
-  gimp_pixel_rgn_init(&pixel_rgn, drawable, 0, 0, drawable->width,
+  	drawable = gimp_drawable_get(layer_ID);
+  	gimp_pixel_rgn_init(&pixel_rgn, drawable, 0, 0, drawable->width,
 			drawable->height, TRUE, FALSE);
 
-	buffer = g_malloc(ph.width * ph.bytes);
+	bytes = gimp_drawable_bpp (layer_ID);
+	buffer = g_malloc(ph.width * bytes);
 
 	for (line = 0; line < ph.height; line++) {
-		if (read(fd, buffer, ph.width * ph.bytes) != ph.width * ph.bytes) {
+		if (read(fd, buffer, ph.width * bytes) != ph.width * bytes) {
 			close(fd);
 			g_free(buffer);
 			return -1;
@@ -241,7 +316,6 @@ static gint32 load_image (char *filename) {
 		gimp_pixel_rgn_set_row(&pixel_rgn, buffer, 0, line, ph.width);
 		gimp_progress_update((double) line / (double) ph.height);
 	}
-
 	gimp_drawable_flush(drawable);
 
 	return image_ID;
@@ -271,10 +345,10 @@ static gint save_image (char *filename, gint32 image_ID, gint32 drawable_ID) {
 	}
 
 	ph.header_size = htonl(sizeof(ph) + strlen(description) + 1);
-	ph.version = htonl(1);
+	ph.version = htonl(2);
 	ph.width = htonl(drawable->width);
 	ph.height = htonl(drawable->height);
-	ph.bytes = htonl(drawable->bpp);
+	ph.type = htonl(gimp_drawable_type (drawable_ID));
 	ph.magic_number = htonl(GPATTERN_MAGIC);
 
 	if (write(fd, &ph, sizeof(ph)) != sizeof(ph)) {
