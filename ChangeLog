@@ -1,5 +1,11 @@
 2004-07-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpactiongroup.c
+	(gimp_action_group_set_action_label): forgot to strip mnemonics
+	here.
+
+2004-07-28  Michael Natterer  <mitch@gimp.org>
+
 	Enabled disabling all menu mnemonics. Addresses bug #120034:
 
 	* app/config/gimpguiconfig.[ch]

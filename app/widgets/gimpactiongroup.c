@@ -788,6 +788,7 @@ gimp_action_group_set_action_label (GimpActionGroup *group,
                                     const gchar     *label)
 {
   GtkAction *action;
+  gchar     *stripped;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
@@ -802,7 +803,15 @@ gimp_action_group_set_action_label (GimpActionGroup *group,
       return;
     }
 
-  g_object_set (action, "label", label, NULL);
+  if (! group->mnemonics)
+    stripped = gimp_strip_uline (label);
+  else
+    stripped = (gchar *) label;
+
+  g_object_set (action, "label", stripped, NULL);
+
+  if (! group->mnemonics)
+    g_free (stripped);
 }
 
 void
