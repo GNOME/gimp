@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 1999-10-15 00:57-0400\n"
-"PO-Revision-Date: 1999-09-16 20:01+02:00\n"
+"POT-Creation-Date: 1999-10-21 20:31-0400\n"
+"PO-Revision-Date: 1999-10-21 22:40-04:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -15,40 +15,39 @@ msgstr ""
 
 #: plug-ins/AlienMap/AlienMap.c:189
 msgid "AlienMap Color Transformation Plug-In"
-msgstr ""
+msgstr "AlienMap tillegg for fargetransformering"
 
 #: plug-ins/AlienMap/AlienMap.c:190 plug-ins/AlienMap2/AlienMap2.c:213
 msgid "No help yet. Just try it and you'll see!"
-msgstr ""
+msgstr "Ingen hjelp ennå. Bare prøv så får du se!"
 
 #: plug-ins/AlienMap/AlienMap.c:193
 msgid "1th May 1997"
-msgstr ""
+msgstr "Første mai 1997"
 
 #: plug-ins/AlienMap/AlienMap.c:194
-#, fuzzy
 msgid "<Image>/Filters/Colors/Alien Map"
-msgstr "<Image>/Filtre/Glass-effekter/Påfør linse"
+msgstr "<Image>/Filter/Farger/Alien Map"
 
 #: plug-ins/AlienMap/AlienMap.c:379
 msgid "AlienMap: Transforming ..."
-msgstr ""
+msgstr "AlienMap: Transformerer ..."
 
 #: plug-ins/AlienMap/AlienMap.c:666
 msgid "AlienMap"
-msgstr ""
+msgstr "AlienMap"
 
 #: plug-ins/AlienMap/AlienMap.c:710
 msgid "Change intensity of the red channel"
-msgstr ""
+msgstr "Endre intensiteten for rød kanal"
 
 #: plug-ins/AlienMap/AlienMap.c:718
 msgid "Change intensity of the green channel"
-msgstr ""
+msgstr "Endre intensiteten for grønn kanal"
 
 #: plug-ins/AlienMap/AlienMap.c:726
 msgid "Change intensity of the blue channel"
-msgstr ""
+msgstr "Endre intensiteten for blå kanal"
 
 #. Redmode toggle box
 #: plug-ins/AlienMap/AlienMap.c:729 plug-ins/common/compose.c:125
@@ -58,23 +57,21 @@ msgstr "Rød:"
 
 #: plug-ins/AlienMap/AlienMap.c:736 plug-ins/AlienMap/AlienMap.c:779
 #: plug-ins/AlienMap/AlienMap.c:821
-#, fuzzy
 msgid "Sine"
-msgstr "Maskestørrelse"
+msgstr "Sinus"
 
 #: plug-ins/AlienMap/AlienMap.c:745
 msgid "Use sine-function for red component"
-msgstr ""
+msgstr "Bruk sinusfunksjonen for rød komponent"
 
 #: plug-ins/AlienMap/AlienMap.c:747 plug-ins/AlienMap/AlienMap.c:789
 #: plug-ins/AlienMap/AlienMap.c:831
-#, fuzzy
 msgid "Cosine"
-msgstr "Farge"
+msgstr "Kosinus"
 
 #: plug-ins/AlienMap/AlienMap.c:755
 msgid "Use cosine-function for red component"
-msgstr ""
+msgstr "Bruk kosinusfunksjonen for rød komponent"
 
 #: plug-ins/AlienMap/AlienMap.c:757 plug-ins/AlienMap/AlienMap.c:799
 #: plug-ins/AlienMap/AlienMap.c:841 plug-ins/common/CML_explorer.c:253
@@ -87,18 +84,18 @@ msgid "Red channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 
 #. Greenmode toggle box
-#: plug-ins/AlienMap/AlienMap.c:772
-#, fuzzy
+#: plug-ins/AlienMap/AlienMap.c:772 plug-ins/common/compose.c:125
+#: plug-ins/common/compose.c:127
 msgid "Green:"
-msgstr "Grønn:     "
+msgstr "Grønn:"
 
 #: plug-ins/AlienMap/AlienMap.c:787
 msgid "Use sine-function for green component"
-msgstr ""
+msgstr "Bruk sinusfunksjonen for grønn komponent"
 
 #: plug-ins/AlienMap/AlienMap.c:797
 msgid "Use cosine-function for green component"
-msgstr ""
+msgstr "Bruk kosinusfunksjonen for grønn komponent"
 
 #: plug-ins/AlienMap/AlienMap.c:807
 msgid ""
@@ -113,11 +110,11 @@ msgstr "Blå:"
 
 #: plug-ins/AlienMap/AlienMap.c:829
 msgid "Use sine-function for blue component"
-msgstr ""
+msgstr "Bruk sinusfunksjonen for blå komponent"
 
 #: plug-ins/AlienMap/AlienMap.c:839
 msgid "Use cosine-function for blue component"
-msgstr ""
+msgstr "Bruk kosinusfunksjonen for blå komponent"
 
 #: plug-ins/AlienMap/AlienMap.c:849
 msgid ""
@@ -131,8 +128,8 @@ msgstr ""
 #: plug-ins/common/CML_explorer.c:2679 plug-ins/common/CML_explorer.c:2775
 #: plug-ins/common/apply_lens.c:416 plug-ins/common/blur.c:619
 #: plug-ins/common/bumpmap.c:965 plug-ins/common/checkerboard.c:381
-#: plug-ins/common/compose.c:816 plug-ins/common/convmatrix.c:706
-#: plug-ins/common/cubism.c:329 plug-ins/common/decompose.c:914
+#: plug-ins/common/compose.c:819 plug-ins/common/convmatrix.c:706
+#: plug-ins/common/cubism.c:329 plug-ins/common/decompose.c:985
 #: plug-ins/common/depthmerge.c:746 plug-ins/common/destripe.c:695
 #: plug-ins/common/film.c:1251 plug-ins/common/gif.c:1285
 #: plug-ins/common/jpeg.c:1566 plug-ins/common/lic.c:1246
@@ -141,15 +138,16 @@ msgstr ""
 #: plug-ins/common/ps.c:2373 plug-ins/common/rotate.c:688
 #: plug-ins/common/threshold_alpha.c:467 plug-ins/common/threshold_alpha.c:500
 #: plug-ins/common/warp.c:508 plug-ins/common/xbm.c:983
-#: plug-ins/common/xpm.c:790 plug-ins/gap/gap_arr_dialog.c:947
+#: plug-ins/common/xpm.c:789 plug-ins/gap/gap_arr_dialog.c:947
 #: plug-ins/gap/gap_arr_dialog.c:1171 plug-ins/gap/gap_mod_layer.c:149
 #: plug-ins/gap/gap_mov_dialog.c:461 plug-ins/gap/gap_mpege.c:190
 #: plug-ins/gap/gap_resi_dialog.c:136
 #: plug-ins/gimpressionist/gimpressionist.c:361
+#: plug-ins/gimpressionist/gimpressionist.c:483
 #: plug-ins/gimpressionist/orientmap.c:626
 #: plug-ins/gimpressionist/presets.c:392 plug-ins/gimpressionist/sizemap.c:485
 #: plug-ins/mosaic/mosaic.c:564 plug-ins/print/print.c:1143
-#: plug-ins/script-fu/script-fu-scripts.c:1383
+#: plug-ins/script-fu/script-fu-scripts.c:1392
 #: plug-ins/script-fu/script-fu-server.c:559 plug-ins/sel2path/sel2path.c:350
 #: plug-ins/struc/struc.c:239
 msgid "OK"
@@ -166,8 +164,8 @@ msgstr "Aksepter innstillingene og påfør filteret på bildet"
 #: plug-ins/common/CML_explorer.c:2688 plug-ins/common/apply_lens.c:426
 #: plug-ins/common/blur.c:621 plug-ins/common/bumpmap.c:974
 #: plug-ins/common/checkerboard.c:390 plug-ins/common/colorify.c:323
-#: plug-ins/common/compose.c:825 plug-ins/common/convmatrix.c:723
-#: plug-ins/common/cubism.c:338 plug-ins/common/decompose.c:924
+#: plug-ins/common/compose.c:828 plug-ins/common/convmatrix.c:723
+#: plug-ins/common/cubism.c:338 plug-ins/common/decompose.c:995
 #: plug-ins/common/depthmerge.c:756 plug-ins/common/destripe.c:704
 #: plug-ins/common/film.c:1260 plug-ins/common/gif.c:1194
 #: plug-ins/common/jpeg.c:1575 plug-ins/common/lic.c:1255
@@ -176,15 +174,16 @@ msgstr "Aksepter innstillingene og påfør filteret på bildet"
 #: plug-ins/common/ps.c:2383 plug-ins/common/rotate.c:698
 #: plug-ins/common/threshold_alpha.c:476 plug-ins/common/warp.c:517
 #: plug-ins/common/xbm.c:729 plug-ins/common/xbm.c:993
-#: plug-ins/common/xpm.c:799 plug-ins/gap/gap_arr_dialog.c:1173
+#: plug-ins/common/xpm.c:798 plug-ins/gap/gap_arr_dialog.c:1173
 #: plug-ins/gap/gap_dbbrowser_utils.c:211
 #: plug-ins/gap/gap_filter_foreach.c:127 plug-ins/gap/gap_mod_layer.c:151
 #: plug-ins/gap/gap_mod_layer.c:265 plug-ins/gap/gap_mov_dialog.c:470
 #: plug-ins/gap/gap_mpege.c:240 plug-ins/gap/gap_resi_dialog.c:145
+#: plug-ins/gimpressionist/gimpressionist.c:492
 #: plug-ins/gimpressionist/orientmap.c:640
 #: plug-ins/gimpressionist/presets.c:400 plug-ins/gimpressionist/sizemap.c:499
 #: plug-ins/mosaic/mosaic.c:573 plug-ins/print/print.c:1030
-#: plug-ins/print/print.c:1136 plug-ins/script-fu/script-fu-scripts.c:1392
+#: plug-ins/print/print.c:1136 plug-ins/script-fu/script-fu-scripts.c:1401
 #: plug-ins/script-fu/script-fu-server.c:568 plug-ins/sel2path/sel2path.c:359
 #: plug-ins/struc/struc.c:248
 msgid "Cancel"
@@ -192,24 +191,24 @@ msgstr "Avbryt"
 
 #: plug-ins/AlienMap/AlienMap.c:878 plug-ins/AlienMap2/AlienMap2.c:801
 msgid "Reject any changes and close plug-in"
-msgstr ""
+msgstr "Forkast alle endringer og lukk tillegget"
 
 #: plug-ins/AlienMap/AlienMap.c:880 plug-ins/AlienMap2/AlienMap2.c:803
-#, fuzzy
+#: plug-ins/gimpressionist/gimpressionist.c:499
 msgid "About..."
-msgstr "Auto"
+msgstr "Om..."
 
 #: plug-ins/AlienMap/AlienMap.c:888 plug-ins/AlienMap2/AlienMap2.c:811
 msgid "Show information about this plug-in and the author"
-msgstr ""
+msgstr "Vis informasjon om dette tillegget og forfatteren"
 
 #: plug-ins/AlienMap/AlienMap.c:1151
 msgid "About Alien Map"
-msgstr ""
+msgstr "Om Alien Map"
 
 #: plug-ins/AlienMap/AlienMap.c:1172 plug-ins/AlienMap2/AlienMap2.c:1077
 msgid "This closes the information box"
-msgstr ""
+msgstr "Dette lukker informasjonsboksen"
 
 #: plug-ins/AlienMap/AlienMap.c:1214
 msgid ""
@@ -1148,7 +1147,7 @@ msgstr "Lyseffekter"
 #. ==================================================
 #: plug-ins/Lighting/lighting_ui.c:1061
 #: plug-ins/gimpressionist/orientmap.c:633
-#: plug-ins/gimpressionist/sizemap.c:492
+#: plug-ins/gimpressionist/presets.c:644 plug-ins/gimpressionist/sizemap.c:492
 msgid "Apply"
 msgstr "Bruk"
 
@@ -1195,7 +1194,7 @@ msgstr ""
 #. Action area - 'close' button only.
 #: plug-ins/common/animationplay.c:676
 #: plug-ins/script-fu/script-fu-console.c:205
-#: plug-ins/script-fu/script-fu-scripts.c:1903
+#: plug-ins/script-fu/script-fu-scripts.c:1916
 #, fuzzy
 msgid "Close"
 msgstr "Farge"
@@ -1293,7 +1292,7 @@ msgstr "Linseeffekt"
 #: plug-ins/common/checkerboard.c:399 plug-ins/common/cubism.c:347
 #: plug-ins/common/jpeg.c:1610 plug-ins/common/oilify.c:478
 #: plug-ins/common/png.c:944 plug-ins/common/threshold_alpha.c:352
-#: plug-ins/common/xpm.c:808 plug-ins/mosaic/mosaic.c:698
+#: plug-ins/common/xpm.c:807 plug-ins/mosaic/mosaic.c:698
 msgid "Parameter Settings"
 msgstr "Innstillinger for parametere"
 
@@ -1486,8 +1485,8 @@ msgstr "%s: ugyldig fargekart\n"
 #. Create a "normal" layer
 #. =======================
 #: plug-ins/bmp/bmpread.c:210 plug-ins/bmp/bmpread.c:218
-#: plug-ins/bmp/bmpread.c:224 plug-ins/common/compose.c:562
-#: plug-ins/common/decompose.c:472 plug-ins/common/film.c:985
+#: plug-ins/bmp/bmpread.c:224 plug-ins/common/compose.c:563
+#: plug-ins/common/decompose.c:475 plug-ins/common/film.c:985
 #: plug-ins/common/gifload.c:828 plug-ins/common/jpeg.c:885
 #: plug-ins/common/lic.c:848 plug-ins/common/png.c:515
 #: plug-ins/common/xbm.c:634
@@ -1506,7 +1505,7 @@ msgstr "kan ikke åpne %s\n"
 #: plug-ins/bmp/bmpwrite.c:154 plug-ins/common/jpeg.c:1170
 #: plug-ins/common/png.c:687 plug-ins/common/png.c:689
 #: plug-ins/common/ps.c:748 plug-ins/common/xbm.c:799
-#: plug-ins/common/xpm.c:636 plug-ins/common/xwd.c:550
+#: plug-ins/common/xpm.c:635 plug-ins/common/xwd.c:550
 #, c-format
 msgid "Saving %s:"
 msgstr "Lagrer %s:"
@@ -1613,37 +1612,37 @@ msgstr "Vann-nivå"
 msgid "Ambient"
 msgstr ""
 
-#: plug-ins/common/bz2.c:293 plug-ins/common/bz2.c:358
+#: plug-ins/common/bz2.c:292 plug-ins/common/bz2.c:357
 #, c-format
 msgid "bz2: fork failed: %s\n"
 msgstr "bz2: fork feilet: %s\n"
 
-#: plug-ins/common/bz2.c:300 plug-ins/common/bz2.c:365
+#: plug-ins/common/bz2.c:299 plug-ins/common/bz2.c:364
 #, c-format
 msgid "bz2: fopen failed: %s\n"
 msgstr "bz2: fopen feilet: %s\n"
 
-#: plug-ins/common/bz2.c:306 plug-ins/common/bz2.c:371
+#: plug-ins/common/bz2.c:305 plug-ins/common/bz2.c:370
 #, c-format
 msgid "bz2: dup2 failed: %s\n"
 msgstr "bz2: dup feilet: %s\n"
 
-#: plug-ins/common/bz2.c:310
+#: plug-ins/common/bz2.c:309
 #, c-format
 msgid "bz2: exec failed: bzip2: %s\n"
 msgstr "bz2: exec feilet: bzip2: %s\n"
 
-#: plug-ins/common/bz2.c:324 plug-ins/common/bz2.c:389
+#: plug-ins/common/bz2.c:323 plug-ins/common/bz2.c:388
 #, c-format
 msgid "bz2: bzip2 exited abnormally on file %s\n"
 msgstr "bz2: bzip2 avsluttet unormalt på fil %s\n"
 
-#: plug-ins/common/bz2.c:375
+#: plug-ins/common/bz2.c:374
 #, c-format
 msgid "bz2: exec failed: bunzip2: %s\n"
 msgstr "bz2: exec feilet: bunzip2: %s\n"
 
-#: plug-ins/common/bz2.c:443
+#: plug-ins/common/bz2.c:442
 msgid "bz2: can't open bzip2ed file without a sensible extension\n"
 msgstr "bz2: kan ikke åpne bzip2-fil uten et fornuftig etternavn\n"
 
@@ -1763,10 +1762,6 @@ msgstr ""
 msgid "RGB"
 msgstr "RGB"
 
-#: plug-ins/common/compose.c:125 plug-ins/common/compose.c:127
-msgid "Green:     "
-msgstr "Grønn:     "
-
 #: plug-ins/common/compose.c:126
 msgid "rgb-compose"
 msgstr ""
@@ -1812,7 +1807,7 @@ msgid "Cyan:"
 msgstr ""
 
 #: plug-ins/common/compose.c:131 plug-ins/common/compose.c:133
-msgid "Magenta:   "
+msgid "Magenta:"
 msgstr ""
 
 #: plug-ins/common/compose.c:131 plug-ins/common/compose.c:133
@@ -1883,16 +1878,16 @@ msgstr ""
 msgid "compose: image is not a gray image (bpp=%d)"
 msgstr ""
 
-#: plug-ins/common/compose.c:483 plug-ins/common/compose.c:498
+#: plug-ins/common/compose.c:483 plug-ins/common/compose.c:499
 msgid "compose: not enough memory"
 msgstr ""
 
-#: plug-ins/common/compose.c:809
+#: plug-ins/common/compose.c:812
 msgid "Compose"
 msgstr ""
 
 #. The left frame keeps the compose type toggles
-#: plug-ins/common/compose.c:841
+#: plug-ins/common/compose.c:844
 msgid "Compose channels:"
 msgstr ""
 
@@ -1900,7 +1895,7 @@ msgstr ""
 #. Because the labels within this frame will change when a toggle
 #. in the left frame is changed, fill in the right part first.
 #. Otherwise it can occur, that a non-existing label might be changed.
-#: plug-ins/common/compose.c:855
+#: plug-ins/common/compose.c:858
 msgid "Channel representations:"
 msgstr ""
 
@@ -2123,11 +2118,11 @@ msgstr ""
 msgid "Decomposing..."
 msgstr ""
 
-#: plug-ins/common/decompose.c:374
+#: plug-ins/common/decompose.c:373
 msgid "decompose: not an RGB image"
 msgstr ""
 
-#: plug-ins/common/decompose.c:380
+#: plug-ins/common/decompose.c:379
 msgid "decompose: No alpha channel available"
 msgstr ""
 
@@ -2135,12 +2130,12 @@ msgstr ""
 msgid "decompose: out of memory"
 msgstr ""
 
-#: plug-ins/common/decompose.c:901 plug-ins/common/decompose.c:907
+#: plug-ins/common/decompose.c:972 plug-ins/common/decompose.c:978
 msgid "Decompose"
 msgstr ""
 
 #. parameter settings
-#: plug-ins/common/decompose.c:934
+#: plug-ins/common/decompose.c:1005
 msgid "Extract channels:"
 msgstr ""
 
@@ -4476,27 +4471,13 @@ msgstr ""
 msgid "The GIMPressionist!"
 msgstr ""
 
-#: plug-ins/gimpressionist/gimpressionist.c:483
-#, fuzzy
-msgid " OK "
-msgstr "Ok"
-
 #: plug-ins/gimpressionist/gimpressionist.c:490
 #, fuzzy
 msgid "Run with the selected settings"
 msgstr "Selektive instillinger for lasting"
 
-#: plug-ins/gimpressionist/gimpressionist.c:492
-#, fuzzy
-msgid " Cancel "
-msgstr "Avbryt"
-
 #: plug-ins/gimpressionist/gimpressionist.c:497
 msgid "Quit the program"
-msgstr ""
-
-#: plug-ins/gimpressionist/gimpressionist.c:499
-msgid " About... "
 msgstr ""
 
 #: plug-ins/gimpressionist/gimpressionist.c:504
@@ -4884,33 +4865,29 @@ msgid "Presets"
 msgstr ""
 
 #: plug-ins/gimpressionist/presets.c:600
-msgid " Save current "
-msgstr ""
+#, fuzzy
+msgid "Save current"
+msgstr "Alternativer for lagring"
 
 #: plug-ins/gimpressionist/presets.c:606
 msgid "Save the current settings to the specified file"
 msgstr ""
-
-#. gtk_container_border_width (GTK_CONTAINER (box2), 5);
-#: plug-ins/gimpressionist/presets.c:644
-#, fuzzy
-msgid " Apply "
-msgstr "Bruk"
 
 #: plug-ins/gimpressionist/presets.c:650
 msgid "Reads the selected Preset into memory"
 msgstr ""
 
 #: plug-ins/gimpressionist/presets.c:652
-msgid " Delete "
-msgstr ""
+#, fuzzy
+msgid "Delete"
+msgstr "Seed"
 
 #: plug-ins/gimpressionist/presets.c:658
 msgid "Deletes the selected Preset"
 msgstr ""
 
 #: plug-ins/gimpressionist/presets.c:660
-msgid " Refresh "
+msgid "Refresh"
 msgstr ""
 
 #: plug-ins/gimpressionist/presets.c:666
@@ -4932,7 +4909,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/preview.c:117 plug-ins/gimpressionist/repaint.c:863
 #: plug-ins/gimpressionist/repaint.c:865
-msgid " Update "
+msgid "Update"
 msgstr ""
 
 #: plug-ins/gimpressionist/preview.c:122
@@ -4940,8 +4917,9 @@ msgid "Refresh the Preview window"
 msgstr ""
 
 #: plug-ins/gimpressionist/preview.c:124
-msgid " Reset "
-msgstr ""
+#, fuzzy
+msgid "Reset"
+msgstr "Gjenta:"
 
 #: plug-ins/gimpressionist/preview.c:129
 #, fuzzy
@@ -6473,11 +6451,11 @@ msgstr "laster filer i xpm filformat"
 msgid "saves files in the xpm file format (if you're on a 16 bit display...)"
 msgstr "lagrer filer i xpm filformat (hvis du har 16 bit skjerm...)"
 
-#: plug-ins/common/xpm.c:783
+#: plug-ins/common/xpm.c:782
 msgid "Save as Xpm"
 msgstr "Lagre som Xpm"
 
-#: plug-ins/common/xpm.c:817
+#: plug-ins/common/xpm.c:816
 msgid "Alpha Threshold"
 msgstr "Alfa terskel"
 
@@ -6612,72 +6590,72 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1156
+#: plug-ins/script-fu/script-fu-scripts.c:1162
 msgid "Script Arguments"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1237
+#: plug-ins/script-fu/script-fu-scripts.c:1244
 msgid "Script Toggle"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1290
+#: plug-ins/script-fu/script-fu-scripts.c:1297
 msgid "Script-Fu File Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1318
+#: plug-ins/script-fu/script-fu-scripts.c:1326
 msgid "Script-fu Pattern Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1324
+#: plug-ins/script-fu/script-fu-scripts.c:1332
 msgid "Script-Fu Gradient Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1332
+#: plug-ins/script-fu/script-fu-scripts.c:1340
 msgid "Script-Fu Brush Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1366
+#: plug-ins/script-fu/script-fu-scripts.c:1375
 msgid " Reset to Defaults "
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1400
+#: plug-ins/script-fu/script-fu-scripts.c:1409
 #, fuzzy
 msgid "About"
 msgstr "Auto"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1524
+#: plug-ins/script-fu/script-fu-scripts.c:1529
 msgid "NOT SET"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1598
+#: plug-ins/script-fu/script-fu-scripts.c:1605
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1856
+#: plug-ins/script-fu/script-fu-scripts.c:1869
 #, fuzzy
 msgid "Author: "
 msgstr "Auto"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1866
+#: plug-ins/script-fu/script-fu-scripts.c:1879
 msgid "Copyright: "
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1876
+#: plug-ins/script-fu/script-fu-scripts.c:1889
 msgid "Date: "
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1888
+#: plug-ins/script-fu/script-fu-scripts.c:1901
 #, fuzzy
 msgid "Image types: "
 msgstr "Bildestørrelse"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2032
+#: plug-ins/script-fu/script-fu-scripts.c:2048
 msgid "Script-Fu Color Picker"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:2127
+#: plug-ins/script-fu/script-fu-scripts.c:2146
 msgid "Script-Fu Font Selection"
 msgstr ""
 
@@ -6784,3 +6762,18 @@ msgstr ""
 #, fuzzy
 msgid "Numbers color Color Picker"
 msgstr "Antall farger"
+
+#~ msgid "Green:     "
+#~ msgstr "Grønn:     "
+
+#, fuzzy
+#~ msgid " OK "
+#~ msgstr "Ok"
+
+#, fuzzy
+#~ msgid " Cancel "
+#~ msgstr "Avbryt"
+
+#, fuzzy
+#~ msgid " Apply "
+#~ msgstr "Bruk"

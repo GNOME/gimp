@@ -1,3 +1,7 @@
+1999-10-21  Kjartan Maraas  <kmaraas@online.no>
+
+	* no.po: Updated Norwegian translation.
+	
 1999-10-20  Tor Lillqvist  <tml@iki.fi>
 
 	* makefile.msc: Improve, add Shift-JIS version of Japanese.
