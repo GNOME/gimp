@@ -70,7 +70,7 @@ add_point (int num_pts,
       global_pts = (GdkPoint *) g_realloc ((void *) global_pts, sizeof (GdkPoint) * max_segs);
 
       if (!global_pts)
-	gimp_fatal_error (_("add_point(): Unable to reallocate points array in free_select."));
+	gimp_fatal_error ("add_point(): Unable to reallocate points array in free_select.");
     }
 
   global_pts[num_pts].x = x;

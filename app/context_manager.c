@@ -159,6 +159,7 @@ context_manager_init (void)
 	case INK:
 	case DODGEBURN:
 	case SMUDGE:
+	case XINPUT_AIRBRUSH:
 	  tool_info[i].tool_context =
 	    gimp_context_new (tool_info[i].private_tip, global_tool_context);
 	  break;
@@ -170,11 +171,16 @@ context_manager_init (void)
     }
 
   if (! global_paint_options &&
-      active_tool && tool_info[active_tool->type].tool_context)
-    gimp_context_set_parent (tool_info[active_tool->type].tool_context,
-			     user_context);
+      active_tool &&
+      tool_info[active_tool->type].tool_context)
+    {
+      gimp_context_set_parent (tool_info[active_tool->type].tool_context,
+			       user_context);
+    }
   else if (global_paint_options)
-    gimp_context_set_parent (global_tool_context, user_context);
+    {
+      gimp_context_set_parent (global_tool_context, user_context);
+    }
 }
 
 void

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.11\n"
-"POT-Creation-Date: 1999-11-24 14:35-0800\n"
+"POT-Creation-Date: 1999-11-25 11:46+0100\n"
 "PO-Revision-Date: 1999-11-19 11:30+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -18,11 +18,8 @@ msgid "About the GIMP"
 msgstr "O programu GIMP"
 
 #: app/about_dialog.c:234
-msgid "Version "
-msgstr "Verzi "
-
-#: app/about_dialog.c:235
-msgid " brought to you by"
+#, fuzzy, c-format
+msgid "Version %s brought to you by"
 msgstr " pro vás napsali"
 
 #: app/about_dialog.c:274
@@ -88,8 +85,8 @@ msgstr "Konec"
 #: app/color_balance.c:273 app/color_notebook.c:115 app/convert.c:500
 #: app/curves.c:564 app/file_new_dialog.c:199 app/file_new_dialog.c:381
 #: app/gdisplay_color_ui.c:117 app/gdisplay_ops.c:356 app/gimpprogress.c:114
-#: app/global_edit.c:720 app/gradient.c:1876 app/gradient.c:4956
-#: app/gradient.c:5517 app/hue_saturation.c:375 app/interface.c:965
+#: app/global_edit.c:720 app/gradient.c:1872 app/gradient.c:4949
+#: app/gradient.c:5510 app/hue_saturation.c:375 app/interface.c:965
 #: app/layers_dialog.c:3334 app/layers_dialog.c:3540 app/layers_dialog.c:3665
 #: app/layers_dialog.c:3779 app/layers_dialog.c:4066 app/levels.c:368
 #: app/posterize.c:200 app/preferences_dialog.c:1198 app/qmask.c:257
@@ -235,7 +232,7 @@ msgstr "Mísení selhalo."
 msgid "Blending..."
 msgstr "Mísení..."
 
-#: app/blend.c:672 app/blend.c:682
+#: app/blend.c:620 app/blend.c:630
 msgid "Blend: "
 msgstr "Mísení: "
 
@@ -335,10 +332,6 @@ msgstr "Zaktualizovat"
 msgid "No Brushes available"
 msgstr "®ádný ¹tìtec není k dispozici"
 
-#: app/brush_select.c:407
-msgid "(0 X 0)"
-msgstr "(0 × 0)"
-
 #: app/brush_select.c:446 app/layers_dialog.c:393 app/tool_options.c:595
 msgid "Opacity:"
 msgstr "Krytí:"
@@ -358,7 +351,7 @@ msgstr "Nový"
 msgid "Edit"
 msgstr "Úpravy"
 
-#: app/brush_select.c:479 app/global_edit.c:718 app/gradient.c:1874
+#: app/brush_select.c:479 app/global_edit.c:718 app/gradient.c:1870
 #: app/palette.c:1197 app/palette.c:2206
 msgid "Delete"
 msgstr "Smazat"
@@ -366,12 +359,6 @@ msgstr "Smazat"
 #: app/brush_select.c:510
 msgid "Spacing:"
 msgstr "Skok:"
-
-#. Set brush size
-#: app/brush_select.c:1423
-#, c-format
-msgid "(%d X %d)"
-msgstr "(%d × %d)"
 
 #: app/brush_select.c:1794
 msgid ""
@@ -453,7 +440,7 @@ msgid "copy"
 msgstr "kopie"
 
 #. formulate the new layer_mask name
-#: app/channel.c:195 app/gradient.c:1700 app/layer.c:318 app/layer.c:1522
+#: app/channel.c:195 app/gradient.c:1699 app/layer.c:318 app/layer.c:1522
 #, c-format
 msgid "%s copy"
 msgstr "%s kopie"
@@ -1077,10 +1064,6 @@ msgstr "Typ"
 msgid "Mode"
 msgstr "Re¾im"
 
-#: app/drawable.c:68
-msgid "drawable_fill called with unknown fill type"
-msgstr "drawable_fill volán s neznámým typem vyplòování"
-
 #: app/edit_selection.c:168
 msgid "Move: 0, 0"
 msgstr "Pøesun: 0, 0"
@@ -1131,11 +1114,6 @@ msgstr "Zapsat v¹echny chyby do souboru..."
 #: app/errorconsole.c:305
 msgid "Write selection to file..."
 msgstr "Zapsat výbìr do souboru..."
-
-#: app/errors.c:80
-#, c-format
-msgid "%s: fatal error: %s\n"
-msgstr "%s: fatální chyba: %s\n"
 
 #: app/file_new_dialog.c:191
 msgid "Confirm Image Size"
@@ -1323,11 +1301,6 @@ msgid ""
 msgstr ""
 "Nelze vytvoøit novou vrstvu z plovoucího výbìru\n"
 "proto¾e patøí do masky výbìru nebo kanálu."
-
-#: app/free_select.c:73
-msgid "add_point(): Unable to reallocate points array in free_select."
-msgstr ""
-"add_point(): Nepodaøilo se pøemístit v pamìti pole bodù pøi free_select."
 
 #: app/gdisplay.c:215
 msgid "RGB-empty"
@@ -1605,7 +1578,7 @@ msgstr "Nelze zapisovat do %s; %s"
 msgid "pixel"
 msgstr "pixel"
 
-#: app/gimpunit.c:58 app/measure.c:430 app/measure.c:434 app/paint_core.c:477
+#: app/gimpunit.c:58 app/measure.c:430 app/measure.c:434 app/paint_core.c:486
 msgid "pixels"
 msgstr "pixely"
 
@@ -1729,16 +1702,6 @@ msgstr "HSV (odstín proti smìru hodinových ruèièek)"
 msgid "HSV (clockwise hue)"
 msgstr "HSV (odstín ve smìru hodinových ruèièek)"
 
-#: app/gradient.c:776
-#, c-format
-msgid "gradient_get_color_at(): Unknown gradient type %d"
-msgstr "gradient_get_color_at(): Neznámý typ pøechodu %d"
-
-#: app/gradient.c:833
-#, c-format
-msgid "gradient_get_color_at(): Unknown coloring mode %d"
-msgstr "gradient_get_color_at(): Neznámý re¾im vybarvení %d"
-
 #: app/gradient.c:880
 msgid "Gradient Editor"
 msgstr "Editor pøechodù"
@@ -1775,7 +1738,7 @@ msgstr "Smazat pøechod"
 msgid "Rename Gradient"
 msgstr "Pøejmenovat pøechod"
 
-#: app/gradient.c:991 app/gradient.c:1977
+#: app/gradient.c:991 app/gradient.c:1972
 msgid "Save as POV-Ray"
 msgstr "Zapsat jako POV-Ray"
 
@@ -1788,7 +1751,7 @@ msgstr "Zvìt¹it v¹e"
 msgid "Instant update"
 msgstr "Rychlá aktualizace"
 
-#: app/gradient.c:1207 app/gradient.c:2098
+#: app/gradient.c:1207 app/gradient.c:2092
 msgid "Default"
 msgstr "Implicitní"
 
@@ -1804,44 +1767,27 @@ msgstr "Zadejte jméno nového pøechodu"
 msgid "untitled"
 msgstr "bez názvu"
 
-#: app/gradient.c:1661
-msgid "ed_do_new_gradient_callback(): oops, received NULL in call_data"
-msgstr "ed_do_new_gradient_callback(): ouha, pøijato NULL v call_data"
-
-#: app/gradient.c:1702
+#: app/gradient.c:1701
 msgid "Copy gradient"
 msgstr "Kopírovat pøechod"
 
-#: app/gradient.c:1705
+#: app/gradient.c:1704
 msgid "Enter a name for the copied gradient"
 msgstr "Zadejte jméno kopie pøechodu"
 
-#: app/gradient.c:1728
-msgid "ed_do_copy_gradient_callback(): oops, received NULL in call_data"
-msgstr "ed_do_copy_gradient_callback(): ouha, pøijato NULL v call_data"
-
-#: app/gradient.c:1789
+#: app/gradient.c:1787
 msgid "Rename gradient"
 msgstr "Pøejmenovat pøechod"
 
-#: app/gradient.c:1792
+#: app/gradient.c:1790
 msgid "Enter a new name for the gradient"
 msgstr "Zadejte nové jméno pøechodu"
 
-#: app/gradient.c:1815
-msgid "ed_do_rename_gradient_callback(): oops, received NULL in call_data"
-msgstr "ed_do_rename_gradient_callback(): ouha, pøijato NULL v call_data"
-
-#: app/gradient.c:1830
-msgid "ed_do_rename_gradient_callback(): oops, can't find gradient to rename"
-msgstr ""
-"ed_do_rename_gradient_callback(): ouha, nelze nalézt pøechod k pøejmenování"
-
-#: app/gradient.c:1868
+#: app/gradient.c:1864
 msgid "Delete gradient"
 msgstr "Smazat pøechod"
 
-#: app/gradient.c:1887
+#: app/gradient.c:1883
 #, c-format
 msgid ""
 "Are you sure you want to delete\n"
@@ -1850,21 +1796,17 @@ msgstr ""
 "Urèitì chcete smazat\n"
 "\"%s\" ze seznamu a z disku?"
 
-#: app/gradient.c:1932
-msgid "ed_do_delete_gradient_callback(): Could not find gradient to delete!"
-msgstr "ed_do_delete_gradient_callback(): Nelze nalézt pøechod ke smazání!"
+#: app/gradient.c:2008
+#, fuzzy, c-format
+msgid "Could not open \"%s\""
+msgstr "Nelze znovu otevøít %s\n"
 
-#: app/gradient.c:2013
-#, c-format
-msgid "ed_do_save_pov_callback(): oops, could not open \"%s\""
-msgstr "ed_do_save_pov_callback(): ouha, nelze otevøít \"%s\""
-
-#: app/gradient.c:2136
+#: app/gradient.c:2130
 #, c-format
 msgid "Zoom factor: %d:1    Displaying [%0.6f, %0.6f]"
 msgstr "Zvìt¹ení: %d:1    Zobrazuje se [%0.6f, %0.6f]"
 
-#: app/gradient.c:2378
+#: app/gradient.c:2372
 #, c-format
 msgid ""
 "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
@@ -1873,30 +1815,30 @@ msgstr ""
 "Poloha: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
 "Krytí: %0.3f"
 
-#: app/gradient.c:2403
+#: app/gradient.c:2397
 #, c-format
 msgid "Foreground color set to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr "Barva popøedí nastavena na RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:2427
+#: app/gradient.c:2421
 #, c-format
 msgid "Background color to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr "Barva pozadí nastavena na RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:2732
+#: app/gradient.c:2726
 msgid "Drag: move    Shift+drag: move & compress"
 msgstr "Táhnutí: posun    Pøeøaïovaè+táhnutí: posun a komprese"
 
-#: app/gradient.c:2734 app/gradient.c:2737
+#: app/gradient.c:2728 app/gradient.c:2731
 msgid "Click: select    Shift+click: extend selection"
 msgstr "Klepnutí: vybrat    Pøeøaïovaè+klepnutí: roz¹íøit výbìr"
 
-#: app/gradient.c:2742
+#: app/gradient.c:2736
 msgid "Click: select    Shift+click: extend selection    Drag: move"
 msgstr ""
 "Klepnutí: vybrat    Pøeøaïovaè+klepnutí: roz¹íøit výbìr    Táhnutí: posun"
 
-#: app/gradient.c:2754
+#: app/gradient.c:2748
 msgid ""
 "Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
 "move & compress"
@@ -1904,190 +1846,185 @@ msgstr ""
 "Klepnutí: vybrat    Pøeøaïovaè+klepnutí: roz¹íøit výbìr    Táhnutí: posun    "
 "Pøeøaïovaè+táhnutí: posun a komprese"
 
-#: app/gradient.c:2997 app/gradient.c:3006
+#: app/gradient.c:2990 app/gradient.c:2999
 #, c-format
 msgid "Handle position: %0.6f"
 msgstr "Poloha øídícího bodu: %0.6f"
 
-#: app/gradient.c:3024
+#: app/gradient.c:3017
 #, c-format
 msgid "Distance: %0.6f"
 msgstr "Vzdálenost: %0.6f"
 
-#: app/gradient.c:3031
-#, c-format
-msgid "control_motion(): Attempt to move bogus handle %d"
-msgstr "control_motion(): Pokus o posun zmateného øídícího bodu %d"
-
-#: app/gradient.c:3508 app/gradient.c:4565
+#: app/gradient.c:3501 app/gradient.c:4558
 msgid "Left endpoint's color"
 msgstr "Barva levého koncového bodu"
 
-#: app/gradient.c:3519 app/gradient.c:3561
+#: app/gradient.c:3512 app/gradient.c:3554
 msgid "Load from"
 msgstr "Naèíst..."
 
-#: app/gradient.c:3523
+#: app/gradient.c:3516
 msgid "Left neighbor's right endpoint"
 msgstr "Pravý koncový bod levého souseda"
 
-#: app/gradient.c:3524
+#: app/gradient.c:3517
 msgid "Right endpoint"
 msgstr "Pravý koncový bod"
 
-#: app/gradient.c:3534 app/gradient.c:3576
+#: app/gradient.c:3527 app/gradient.c:3569
 msgid "Save to"
 msgstr "Zapsat jako..."
 
-#: app/gradient.c:3550 app/gradient.c:4643
+#: app/gradient.c:3543 app/gradient.c:4636
 msgid "Right endpoint's color"
 msgstr "Barva pravého koncového bodu"
 
-#: app/gradient.c:3565
+#: app/gradient.c:3558
 msgid "Right neighbor's left endpoint"
 msgstr "Levý koncový bod pravého souseda"
 
-#: app/gradient.c:3566
+#: app/gradient.c:3559
 msgid "Left endpoint"
 msgstr "Levý koncový bod"
 
-#: app/gradient.c:3677
+#: app/gradient.c:3670
 msgid "Selection operations"
 msgstr "Operace výbìru"
 
-#: app/gradient.c:3849
+#: app/gradient.c:3842
 msgid "Blending function for segment"
 msgstr "Funkce mísení pro segment"
 
-#: app/gradient.c:3851
+#: app/gradient.c:3844
 msgid "Coloring type for segment"
 msgstr "Typ vybarvení pro segment"
 
-#: app/gradient.c:3853
+#: app/gradient.c:3846
 msgid "Split segment at midpoint"
 msgstr "Rozdìlit segment ve støedním bodì"
 
-#: app/gradient.c:3855 app/gradient.c:4946
+#: app/gradient.c:3848 app/gradient.c:4939
 msgid "Split segment uniformly"
 msgstr "Rozdìlit segment stejnomìrnì"
 
-#: app/gradient.c:3857
+#: app/gradient.c:3850
 msgid "Delete segment"
 msgstr "Smazat segment"
 
-#: app/gradient.c:3859
+#: app/gradient.c:3852
 msgid "Re-center segment's midpoint"
 msgstr "Pøecentrovat støedový bod segmentu"
 
-#: app/gradient.c:3861
+#: app/gradient.c:3854
 msgid "Re-distribute handles in segment"
 msgstr "Pøerozdìlit øídící body v segmentu"
 
-#: app/gradient.c:3863
+#: app/gradient.c:3856
 msgid "Flip segment"
 msgstr "Pøevrátit segment"
 
-#: app/gradient.c:3865 app/gradient.c:5507
+#: app/gradient.c:3858 app/gradient.c:5500
 msgid "Replicate segment"
 msgstr "Replikovat segment"
 
-#: app/gradient.c:3870
+#: app/gradient.c:3863
 msgid "Blending function for selection"
 msgstr "Funkce mísení pro výbìr"
 
-#: app/gradient.c:3872
+#: app/gradient.c:3865
 msgid "Coloring type for selection"
 msgstr "Typ vybarvení pro výbìr"
 
-#: app/gradient.c:3874
+#: app/gradient.c:3867
 msgid "Split segments at midpoints"
 msgstr "Rozdìlit segmenty ve støedních bodech"
 
-#: app/gradient.c:3876 app/gradient.c:4947
+#: app/gradient.c:3869 app/gradient.c:4940
 msgid "Split segments uniformly"
 msgstr "Rozdìlit segmenty stejnomìrnì"
 
-#: app/gradient.c:3878
+#: app/gradient.c:3871
 msgid "Delete selection"
 msgstr "Smazat výbìr"
 
-#: app/gradient.c:3880
+#: app/gradient.c:3873
 msgid "Re-center midpoints in selection"
 msgstr "Pøecentrovat støedové body ve výbìru"
 
-#: app/gradient.c:3882
+#: app/gradient.c:3875
 msgid "Re-distribute handles in selection"
 msgstr "Pøerozdìlit øídící body ve výbìru"
 
-#: app/gradient.c:3884
+#: app/gradient.c:3877
 msgid "Flip selection"
 msgstr "Pøevrátit výbìr"
 
-#: app/gradient.c:3886 app/gradient.c:5508
+#: app/gradient.c:3879 app/gradient.c:5501
 msgid "Replicate selection"
 msgstr "Replikovat výbìr"
 
-#: app/gradient.c:4170
+#: app/gradient.c:4163
 msgid "FG color"
 msgstr "Barva popøedí"
 
-#: app/gradient.c:4219
+#: app/gradient.c:4212
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:4732 app/gradient.c:4802
+#: app/gradient.c:4725 app/gradient.c:4795
 msgid "(Varies)"
 msgstr "(Promìnná)"
 
-#: app/gradient.c:4954
+#: app/gradient.c:4947
 msgid "Split"
 msgstr "Rozdìlit"
 
 #. Instructions
-#: app/gradient.c:4968
+#: app/gradient.c:4961
 msgid "Please select the number of uniform parts"
 msgstr "Prosím zvolte poèet stejných èástí"
 
-#: app/gradient.c:4974
+#: app/gradient.c:4967
 msgid "in which you want to split the selected segment"
 msgstr "na které chcete rozdìlit zvolený segment"
 
-#: app/gradient.c:4975
+#: app/gradient.c:4968
 msgid "in which you want to split the segments in the selection"
 msgstr "na které chcete rozdìlit segmenty ve výbìru"
 
-#: app/gradient.c:5335
+#: app/gradient.c:5328
 msgid "Blend endpoints' colors"
 msgstr "Barvy koncových bodù mísení"
 
-#: app/gradient.c:5347
+#: app/gradient.c:5340
 msgid "Blend endpoints' opacity"
 msgstr "Krytí koncových bodù mísení"
 
-#: app/gradient.c:5515
+#: app/gradient.c:5508
 msgid "Replicate"
 msgstr "Replikovat"
 
 #. Instructions
-#: app/gradient.c:5528
+#: app/gradient.c:5521
 msgid "Please select the number of times"
 msgstr "Prosím vyberte kolikrát"
 
-#: app/gradient.c:5533
+#: app/gradient.c:5526
 msgid "you want to replicate the selected segment"
 msgstr "chcete replikovat zvolený segment"
 
-#: app/gradient.c:5534
+#: app/gradient.c:5527
 msgid "you want to replicate the selection"
 msgstr "chcete replikovat výbìr"
 
-#: app/gradient.c:5886
+#: app/gradient.c:5879
 #, c-format
 msgid "grad_load_gradient(): invalid number of segments in \"%s\""
 msgstr "grad_load_gradient(): neplatný poèet segmentù v \"%s\""
 
-#: app/gradient.c:5912
+#: app/gradient.c:5905
 #, c-format
 msgid ""
 "grad_load_gradient(): badly formatted gradient segment %d in \"%s\" --- bad "
@@ -2096,16 +2033,16 @@ msgstr ""
 "grad_load_gradient(): ¹patnì formátovaný segment pøechodu %d v \"%s\" --- "
 "brzy mohou nastat ¹patné vìci"
 
-#: app/gradient.c:5944
+#: app/gradient.c:5937
 msgid "grad_save_gradient(): can not save gradient with NULL filename"
 msgstr "grad_save_gradient(): nelze zapsat gradient s NULLovým jménem souboru"
 
-#: app/gradient.c:5952
+#: app/gradient.c:5945
 #, c-format
 msgid "grad_save_gradient(): can't open \"%s\""
 msgstr "grad_save_gradient(): nelze otevøít \"%s\""
 
-#: app/gradient.c:6162
+#: app/gradient.c:6155
 #, c-format
 msgid "seg_get_segment_at(): No matching segment for position %0.15f"
 msgstr "seg_get_segment_at(): není odpovídající segment pro polohu %0.15f"
@@ -2288,10 +2225,6 @@ msgid ""
 msgstr ""
 "Aktivní pøechod.\n"
 "Dialog pøechodù otevøete klepnutím."
-
-#: app/info_dialog.c:125
-msgid "Unknown info_dialog field type."
-msgstr "Neznámý typ pole info_dialog."
 
 #: app/info_dialog.c:180 app/preferences_dialog.c:1461
 #: app/preferences_dialog.c:1561
@@ -3428,878 +3361,888 @@ msgid "degrees"
 msgstr "stupnì"
 
 #: app/menus.c:69
-msgid "/File/MRU00 "
-msgstr "/Soubor/MRU00 "
+#, fuzzy
+msgid "/Filters/Render/Clouds"
+msgstr "/Filtry/Opakovat minulý"
 
 #: app/menus.c:70
-msgid "/File/Dialogs"
-msgstr "/Soubor/Dialogy"
+#, fuzzy
+msgid "/Filters/Render/Nature"
+msgstr "/Filtry/Opakovat minulý"
 
 #: app/menus.c:71
-msgid "/View/Zoom"
-msgstr "/Zobrazení/Zvìt¹ení"
+#, fuzzy
+msgid "/Filters/Render/Pattern"
+msgstr "/Filtry/Opakovat minulý"
 
 #: app/menus.c:72
-msgid "/Stack"
-msgstr "/Zásobník"
+#, fuzzy
+msgid "/Filters/Colors/Map"
+msgstr "/Soubor/Zavøít"
+
+#: app/menus.c:73
+#, fuzzy
+msgid "/Filters/Misc"
+msgstr "/Filtry"
 
 #. <Toolbox>/File
-#: app/menus.c:83 app/menus.c:195
-msgid "/File/tearoff1"
-msgstr "/Soubor/tearoff1"
+#: app/menus.c:84 app/menus.c:194
+msgid "/File"
+msgstr "/Soubor"
 
-#: app/menus.c:85 app/menus.c:197
+#: app/menus.c:86 app/menus.c:196
 #, fuzzy
 msgid "/File/New..."
 msgstr "/Soubor/Nový"
 
-#: app/menus.c:87 app/menus.c:199
+#: app/menus.c:88 app/menus.c:198
 #, fuzzy
 msgid "/File/Open..."
 msgstr "/Soubor/Otevøít"
 
-#. <Toolbox>/File/Acquire
-#: app/menus.c:92 app/menus.c:97 app/menus.c:104 app/menus.c:142
-#: app/menus.c:144 app/menus.c:179 app/menus.c:208
-msgid "/File/---"
-msgstr "/Soubor/---"
+#: app/menus.c:95
+msgid "/File/Acquire"
+msgstr "/Soubor/Získat"
 
-#: app/menus.c:94
-msgid "/File/Acquire/tearoff1"
-msgstr "/Soubor/Získat/tearoff1"
-
-#: app/menus.c:99
+#: app/menus.c:100
 msgid "/File/Preferences..."
 msgstr "/Soubor/Pøedvolby..."
 
-#: app/menus.c:106
-msgid "/File/Dialogs/tearoff1"
-msgstr "/Soubor/Dialogy/tearoff1"
+#: app/menus.c:107
+msgid "/File/Dialogs"
+msgstr "/Soubor/Dialogy"
 
-#: app/menus.c:108
+#: app/menus.c:109
 msgid "/File/Dialogs/Layers & Channels..."
 msgstr "/Soubor/Dialogy/Vrstvy a kanály..."
 
-#: app/menus.c:110
+#: app/menus.c:111
 msgid "/File/Dialogs/Tool Options..."
 msgstr "/Soubor/Dialogy/Volby nástrojù..."
 
-#: app/menus.c:113 app/menus.c:126 app/menus.c:133
-#, fuzzy
-msgid "/File/Dialogs/---"
-msgstr "/Soubor/Dialogy"
-
-#: app/menus.c:115
+#: app/menus.c:116
 msgid "/File/Dialogs/Brushes..."
 msgstr "/Soubor/Dialogy/©tìtce..."
 
-#: app/menus.c:117
+#: app/menus.c:118
 msgid "/File/Dialogs/Patterns..."
 msgstr "/Soubor/Dialogy/Vzorky..."
 
-#: app/menus.c:119
+#: app/menus.c:120
 msgid "/File/Dialogs/Gradients..."
 msgstr "/Soubor/Dialogy/Pøechody..."
 
-#: app/menus.c:121
+#: app/menus.c:122
 msgid "/File/Dialogs/Palette..."
 msgstr "/Soubor/Dialogy/Paleta..."
 
-#: app/menus.c:123
+#: app/menus.c:124
 msgid "/File/Dialogs/Indexed Palette..."
 msgstr "/Soubor/Dialogy/Indexovaná paleta..."
 
-#: app/menus.c:128
+#: app/menus.c:129
 msgid "/File/Dialogs/Input Devices..."
 msgstr "/Soubor/Dialogy/Vstupní zaøízení..."
 
-#: app/menus.c:130
+#: app/menus.c:131
 msgid "/File/Dialogs/Device Status..."
 msgstr "/Soubor/Dialogy/Stav zaøízení..."
 
-#: app/menus.c:135
+#: app/menus.c:136
 msgid "/File/Dialogs/Document Index..."
 msgstr "/Soubor/Dialogy/Seznam dokumentù..."
 
-#: app/menus.c:137
+#: app/menus.c:138
 msgid "/File/Dialogs/Error Console..."
 msgstr "/Soubor/Dialogy/Chybová konzole..."
 
-#: app/menus.c:139
+#: app/menus.c:140
 msgid "/File/Dialogs/Display Filters..."
 msgstr "/Soubor/Dialogy/Zobrazovací filtry..."
 
 #. <Toolbox>/Xtns
-#: app/menus.c:149
-msgid "/Xtns/tearoff1"
-msgstr "/Doplòky/tearoff1"
+#: app/menus.c:150
+#, fuzzy
+msgid "/Xtns"
+msgstr "/Úpravy/---"
 
-#: app/menus.c:151
+#: app/menus.c:152
 #, fuzzy
 msgid "/Xtns/Module Browser..."
 msgstr "/Doplòky/Dialogy/Prohlí¾eè modulù"
 
-#: app/menus.c:154
-#, fuzzy
-msgid "/Xtns/---"
-msgstr "/Úpravy/---"
-
 #. <Toolbox>/Help
-#: app/menus.c:159
+#: app/menus.c:160
 msgid "/Help"
 msgstr ""
 
-#: app/menus.c:161
-#, fuzzy
-msgid "/Help/tearoff1"
-msgstr "/Výbìr/tearoff1"
-
-#: app/menus.c:163
+#: app/menus.c:162
 #, fuzzy
 msgid "/Help/Help..."
 msgstr "/Soubor/Nápovìda..."
 
-#: app/menus.c:165
+#: app/menus.c:164
 msgid "/Help/Context Help..."
 msgstr ""
 
-#: app/menus.c:167
+#: app/menus.c:166
 #, fuzzy
 msgid "/Help/Tip of the day..."
 msgstr "/Soubor/Tip dne"
 
-#: app/menus.c:169
+#: app/menus.c:168
 #, fuzzy
 msgid "/Help/About..."
 msgstr "/Soubor/O programu..."
 
-#: app/menus.c:171
+#: app/menus.c:170
 msgid "/Help/Dump Items (Debug)"
 msgstr ""
 
-#: app/menus.c:183 app/menus.c:212
+#: app/menus.c:182 app/menus.c:211
 msgid "/File/Quit"
 msgstr "/Soubor/Konec"
 
-#: app/menus.c:190
-msgid "/tearoff1"
-msgstr "/tearoff1"
-
-#: app/menus.c:201
+#: app/menus.c:200
 msgid "/File/Save"
 msgstr "/Soubor/Zapsat"
 
-#: app/menus.c:203
+#: app/menus.c:202
 #, fuzzy
 msgid "/File/Save as..."
 msgstr "/Soubor/Zapsat jako"
 
-#: app/menus.c:205
+#: app/menus.c:204
 msgid "/File/Revert"
 msgstr "/Soubor/Navrátit"
 
-#: app/menus.c:210
+#: app/menus.c:209
 msgid "/File/Close"
 msgstr "/Soubor/Zavøít"
 
-#: app/menus.c:215
-msgid "/File/---moved"
-msgstr "/Soubor/---pøestìhováno"
-
 #. <Image>/Edit
-#: app/menus.c:220
-msgid "/Edit/tearoff1"
-msgstr "/Úpravy/tearoff1"
+#: app/menus.c:219
+msgid "/Edit"
+msgstr "/Úpravy"
 
-#: app/menus.c:222
+#: app/menus.c:221
 msgid "/Edit/Undo"
 msgstr "/Úpravy/Vrátit"
 
-#: app/menus.c:224
+#: app/menus.c:223
 msgid "/Edit/Redo"
 msgstr "/Úpravy/Zru¹it vrácení"
 
-#: app/menus.c:227 app/menus.c:251 app/menus.c:260
-msgid "/Edit/---"
-msgstr "/Úpravy/---"
-
-#: app/menus.c:229
+#: app/menus.c:228
 msgid "/Edit/Cut"
 msgstr "/Úpravy/Vyøíznout"
 
-#: app/menus.c:231
+#: app/menus.c:230
 msgid "/Edit/Copy"
 msgstr "/Úpravy/Kopírovat"
 
-#: app/menus.c:233
+#: app/menus.c:232
 msgid "/Edit/Paste"
 msgstr "/Úpravy/Vlo¾it"
 
-#: app/menus.c:235
+#: app/menus.c:234
 msgid "/Edit/Paste Into"
 msgstr "/Úpravy/Vlo¾it do"
 
-#: app/menus.c:237
+#: app/menus.c:236
 msgid "/Edit/Paste As New"
 msgstr "/Úpravy/Vlo¾it jako nové"
 
 #. <Image>/Edit/Buffer
-#: app/menus.c:242
+#: app/menus.c:241
 #, fuzzy
-msgid "/Edit/Buffer/tearoff1"
+msgid "/Edit/Buffer"
 msgstr "/Úpravy/tearoff1"
 
-#: app/menus.c:244
+#: app/menus.c:243
 #, fuzzy
 msgid "/Edit/Buffer/Cut Named..."
 msgstr "/Úpravy/Vyøíznout pojmenované"
 
-#: app/menus.c:246
+#: app/menus.c:245
 #, fuzzy
 msgid "/Edit/Buffer/Copy Named..."
 msgstr "/Úpravy/Kopírovat pojmenované"
 
-#: app/menus.c:248
+#: app/menus.c:247
 #, fuzzy
 msgid "/Edit/Buffer/Paste Named..."
 msgstr "/Úpravy/Vlo¾it pojmenované"
 
-#: app/menus.c:253
+#: app/menus.c:252
 msgid "/Edit/Clear"
 msgstr "/Úpravy/Vymazat"
 
-#: app/menus.c:255
+#: app/menus.c:254
 msgid "/Edit/Fill"
 msgstr "/Úpravy/Vyplnit"
 
-#: app/menus.c:257
+#: app/menus.c:256
 msgid "/Edit/Stroke"
 msgstr "/Úpravy/Tahy"
 
 #. <Image>/Select
-#: app/menus.c:265
-msgid "/Select/tearoff1"
-msgstr "/Výbìr/tearoff1"
+#: app/menus.c:264
+msgid "/Select"
+msgstr "/Výbìr"
 
-#: app/menus.c:267
+#: app/menus.c:266
 msgid "/Select/Invert"
 msgstr "/Výbìr/Invertovat"
 
-#: app/menus.c:269
+#: app/menus.c:268
 msgid "/Select/All"
 msgstr "/Výbìr/V¹e"
 
-#: app/menus.c:271
+#: app/menus.c:270
 msgid "/Select/None"
 msgstr "/Výbìr/Nic"
 
-#: app/menus.c:273
+#: app/menus.c:272
 msgid "/Select/Float"
 msgstr "/Výbìr/Plovoucí"
 
-#: app/menus.c:276 app/menus.c:289
-msgid "/Select/---"
-msgstr "/Výbìr/---"
-
-#: app/menus.c:278
+#: app/menus.c:277
 #, fuzzy
 msgid "/Select/Feather..."
 msgstr "/Výbìr/Zaoblení"
 
-#: app/menus.c:280
+#: app/menus.c:279
 msgid "/Select/Sharpen"
 msgstr "/Výbìr/Zaostøení"
 
-#: app/menus.c:282
+#: app/menus.c:281
 #, fuzzy
 msgid "/Select/Shrink..."
 msgstr "/Výbìr/Zmen¹it"
 
-#: app/menus.c:284
+#: app/menus.c:283
 #, fuzzy
 msgid "/Select/Grow..."
 msgstr "/Výbìr/Zvìt¹it"
 
-#: app/menus.c:286
+#: app/menus.c:285
 #, fuzzy
 msgid "/Select/Border..."
 msgstr "/Výbìr/Obvod"
 
-#: app/menus.c:291
+#: app/menus.c:290
 msgid "/Select/Save To Channel"
 msgstr "/Výbìr/Ulo¾it do kanálu"
 
 #. <Image>/View
-#: app/menus.c:296
-msgid "/View/tearoff1"
-msgstr "/Zobrazení/tearoff1"
+#: app/menus.c:295
+msgid "/View"
+msgstr "/Zobrazení"
 
-#: app/menus.c:298
+#: app/menus.c:297
 msgid "/View/Zoom In"
 msgstr "/Zobrazení/Pøiblí¾it"
 
-#: app/menus.c:300
+#: app/menus.c:299
 msgid "/View/Zoom Out"
 msgstr "/Zobrazení/Vzdálit"
 
 #. <Image>/View/Zoom
-#: app/menus.c:305
-#, fuzzy
-msgid "/View/Zoom/tearoff1"
-msgstr "/Zobrazení/tearoff1"
+#: app/menus.c:304
+msgid "/View/Zoom"
+msgstr "/Zobrazení/Zvìt¹ení"
 
-#: app/menus.c:307
+#: app/menus.c:306
 msgid "/View/Zoom/16:1"
 msgstr "/Zobrazení/Zvìt¹ení/16:1"
 
-#: app/menus.c:309
+#: app/menus.c:308
 msgid "/View/Zoom/8:1"
 msgstr "/Zobrazení/Zvìt¹ení/8:1"
 
-#: app/menus.c:311
+#: app/menus.c:310
 msgid "/View/Zoom/4:1"
 msgstr "/Zobrazení/Zvìt¹ení/4:1"
 
-#: app/menus.c:313
+#: app/menus.c:312
 msgid "/View/Zoom/2:1"
 msgstr "/Zobrazení/Zvìt¹ení/2:1"
 
-#: app/menus.c:315
+#: app/menus.c:314
 msgid "/View/Zoom/1:1"
 msgstr "/Zobrazení/Zvìt¹ení/1:1"
 
-#: app/menus.c:317
+#: app/menus.c:316
 msgid "/View/Zoom/1:2"
 msgstr "/Zobrazení/Zvìt¹ení/1:2"
 
-#: app/menus.c:319
+#: app/menus.c:318
 msgid "/View/Zoom/1:4"
 msgstr "/Zobrazení/Zvìt¹ení/1:4"
 
-#: app/menus.c:321
+#: app/menus.c:320
 msgid "/View/Zoom/1:8"
 msgstr "/Zobrazení/Zvìt¹ení/1:8"
 
-#: app/menus.c:323
+#: app/menus.c:322
 msgid "/View/Zoom/1:16"
 msgstr "/Zobrazení/Zvìt¹ení/1:16"
 
-#: app/menus.c:326
+#: app/menus.c:325
 msgid "/View/Dot for dot"
 msgstr "/Zobrazení/Bod na bod"
 
-#: app/menus.c:329 app/menus.c:338 app/menus.c:351 app/menus.c:358
-msgid "/View/---"
-msgstr "/Zobrazení/---"
-
-#: app/menus.c:331
+#: app/menus.c:330
 msgid "/View/Info Window..."
 msgstr "/Zobrazení/Informaèní okno..."
 
-#: app/menus.c:333
+#: app/menus.c:332
 msgid "/View/Nav. Window..."
 msgstr "/Zobrazení/Navigaèní okno..."
 
-#: app/menus.c:335
+#: app/menus.c:334
 #, fuzzy
 msgid "/View/Undo history..."
 msgstr "/Úpravy/Historie vracení..."
 
-#: app/menus.c:340
+#: app/menus.c:339
 msgid "/View/Toggle Selection"
 msgstr "/Zobrazení/Pøepnout výbìr"
 
-#: app/menus.c:342
+#: app/menus.c:341
 msgid "/View/Toggle Rulers"
 msgstr "/Zobrazení/Pøepnout pravítka"
 
-#: app/menus.c:344
+#: app/menus.c:343
 msgid "/View/Toggle Statusbar"
 msgstr "/Zobrazení/Pøepnout stavovou li¹tu"
 
-#: app/menus.c:346
+#: app/menus.c:345
 msgid "/View/Toggle Guides"
 msgstr "/Zobrazení/Pøepnout vodítka"
 
-#: app/menus.c:348
+#: app/menus.c:347
 msgid "/View/Snap To Guides"
 msgstr "/Zobrazení/Chytat na vodítka"
 
-#: app/menus.c:353
+#: app/menus.c:352
 msgid "/View/New View"
 msgstr "/Zobrazení/Nové zobrazení"
 
-#: app/menus.c:355
+#: app/menus.c:354
 msgid "/View/Shrink Wrap"
 msgstr "/Zobrazení/Zmen¹it obalení"
 
 #. <Image>/Image
-#: app/menus.c:363
-msgid "/Image/tearoff1"
-msgstr "/Obrázek/tearoff1"
+#: app/menus.c:362
+msgid "/Image"
+msgstr "/Obrázek"
 
 #. <Image>/Image/Mode
-#: app/menus.c:368
+#: app/menus.c:367
 #, fuzzy
-msgid "/Image/Mode/tearoff1"
-msgstr "/Obrázek/tearoff1"
+msgid "/Image/Mode"
+msgstr "/Obrázek/RGB barvy"
 
-#: app/menus.c:370
+#: app/menus.c:369
 #, fuzzy
 msgid "/Image/Mode/RGB"
 msgstr "/Obrázek/RGB barvy"
 
-#: app/menus.c:372
+#: app/menus.c:371
 #, fuzzy
 msgid "/Image/Mode/Grayscale"
 msgstr "/Obrázek/Odstíny ¹edi"
 
-#: app/menus.c:374
+#: app/menus.c:373
 #, fuzzy
 msgid "/Image/Mode/Indexed..."
 msgstr "/Obrázek/Indexovaný"
 
-#: app/menus.c:377
-#, fuzzy
-msgid "/Image/Mode/---"
-msgstr "/Obrázek/---"
-
 #. <Image>/Image/Colors
-#: app/menus.c:382
-msgid "/Image/Colors/tearoff1"
-msgstr "/Obrázek/Barvy/tearoff1"
+#: app/menus.c:381
+msgid "/Image/Colors"
+msgstr "/Obrázek/Barvy"
 
-#: app/menus.c:385 app/menus.c:392 app/menus.c:402
-msgid "/Image/Colors/---"
-msgstr "/Obrázek/Barvy/---"
-
-#: app/menus.c:387
+#: app/menus.c:386
 msgid "/Image/Colors/Desaturate"
 msgstr "/Obrázek/Barvy/Odbarvit"
 
-#: app/menus.c:389
+#: app/menus.c:388
 msgid "/Image/Colors/Invert"
 msgstr "/Obrázek/Barvy/Invertovat"
 
 #. <Image>/Image/Colors/Auto
-#: app/menus.c:397
+#: app/menus.c:396
 #, fuzzy
-msgid "/Image/Colors/Auto/tearoff1"
-msgstr "/Obrázek/Barvy/tearoff1"
+msgid "/Image/Colors/Auto"
+msgstr "/Obrázek/Barvy"
 
-#: app/menus.c:399
+#: app/menus.c:398
 #, fuzzy
 msgid "/Image/Colors/Auto/Equalize"
 msgstr "/Obrázek/Barvy/Ekvalizace"
 
 #. <Image>/Image/Alpha
-#: app/menus.c:407
-msgid "/Image/Alpha/tearoff1"
-msgstr "/Obrázek/Alfa/tearoff1"
+#: app/menus.c:406
+msgid "/Image/Alpha"
+msgstr "/Obrázek/Alfa"
 
-#: app/menus.c:409
+#: app/menus.c:408
 msgid "/Image/Alpha/Add Alpha Channel"
 msgstr "/Obrázek/Alfa/Pøidat alfa kanál"
 
 #. <Image>/Image/Transforms
-#: app/menus.c:414
-msgid "/Image/Transforms/tearoff1"
-msgstr "/Obrázek/Transformace/tearoff1"
+#: app/menus.c:413
+#, fuzzy
+msgid "/Image/Transforms"
+msgstr "/Obrázek/Transformace"
 
-#: app/menus.c:416
+#: app/menus.c:415
 #, fuzzy
 msgid "/Image/Transforms/Offset..."
 msgstr "/Obrázek/Transformace/Posun"
 
-#: app/menus.c:418
+#: app/menus.c:417
 #, fuzzy
-msgid "/Image/Transforms/Rotate/tearoff1"
+msgid "/Image/Transforms/Rotate"
 msgstr "/Obrázek/Transformace/tearoff1"
 
-#: app/menus.c:420
-#, fuzzy
-msgid "/Image/Transforms/---"
-msgstr "/Obrázek/Transformace"
-
-#: app/menus.c:423 app/menus.c:432
-msgid "/Image/---"
-msgstr "/Obrázek/---"
-
-#: app/menus.c:425
+#: app/menus.c:424
 #, fuzzy
 msgid "/Image/Canvas Size..."
 msgstr "/Obrázek/Rozmìry plátna"
 
-#: app/menus.c:427
+#: app/menus.c:426
 #, fuzzy
 msgid "/Image/Scale Image..."
 msgstr "/Obrázek/Velikost"
 
-#: app/menus.c:429
+#: app/menus.c:428
 msgid "/Image/Duplicate"
 msgstr "/Obrázek/Kanály/Duplikovat"
 
 #. <Image>/Layers
-#: app/menus.c:437
-msgid "/Layers/tearoff1"
-msgstr "/Vrstvy/tearoff1"
+#: app/menus.c:436
+msgid "/Layers"
+msgstr "/Vrstvy"
 
-#: app/menus.c:439
+#: app/menus.c:438
 msgid "/Layers/Layers & Channels..."
 msgstr "/Vrstvy/Vrstvy a kanály..."
 
 #. <Image>/Layers/Stack
-#: app/menus.c:444
-msgid "/Layers/Stack/tearoff1"
-msgstr "/Vrstvy/Zásobník/tearoff1"
+#: app/menus.c:443
+#, fuzzy
+msgid "/Layers/Stack"
+msgstr "/Vrstvy/Zásobník"
 
-#: app/menus.c:446
+#: app/menus.c:445
 msgid "/Layers/Stack/Previous Layer"
 msgstr "/Vrstvy/Zásobník/Pøedchozí vrstva"
 
-#: app/menus.c:448
+#: app/menus.c:447
 msgid "/Layers/Stack/Next Layer"
 msgstr "/Vrstvy/Zásobník/Následující vrstva"
 
-#: app/menus.c:450
+#: app/menus.c:449
 msgid "/Layers/Stack/Raise Layer"
 msgstr "/Vrstvy/Zásobník/Vrstvu vý¹"
 
-#: app/menus.c:452
+#: app/menus.c:451
 msgid "/Layers/Stack/Lower Layer"
 msgstr "/Vrstvy/Zásobník/Vrstvu ní¾"
 
-#: app/menus.c:454
+#: app/menus.c:453
 msgid "/Layers/Stack/Layer to Top"
 msgstr "/Vrstvy/Zásobník/Vrstvu navrch"
 
-#: app/menus.c:456
+#: app/menus.c:455
 msgid "/Layers/Stack/Layer to Bottom"
 msgstr "/Vrstvy/Zásobník/Vrstvu dospod"
 
-#: app/menus.c:458
-#, fuzzy
-msgid "/Layers/Stack/---"
-msgstr "/Vrstvy/Zásobník"
-
 #. <Image>/Layers/Rotate
-#: app/menus.c:463
+#: app/menus.c:462
 #, fuzzy
-msgid "/Layers/Rotate/tearoff1"
+msgid "/Layers/Rotate"
 msgstr "/Vrstvy/Zásobník/tearoff1"
 
-#: app/menus.c:466 app/menus.c:475 app/menus.c:480 app/menus.c:487
-msgid "/Layers/---"
-msgstr "/Vrstvy/---"
-
-#: app/menus.c:468
+#: app/menus.c:467
 msgid "/Layers/Anchor Layer"
 msgstr "/Vrstvy/Pohltit vrstvu"
 
-#: app/menus.c:470
+#: app/menus.c:469
 #, fuzzy
 msgid "/Layers/Merge Visible Layers..."
 msgstr "/Vrstvy/Slouèit viditelné vrstvy"
 
-#: app/menus.c:472
+#: app/menus.c:471
 msgid "/Layers/Flatten Image"
 msgstr "/Vrstvy/Slouèit obraz"
 
-#: app/menus.c:477
+#: app/menus.c:476
 msgid "/Layers/Mask To Selection"
 msgstr "/Vrstvy/Maska do výbìru"
 
-#: app/menus.c:482
+#: app/menus.c:481
 msgid "/Layers/Add Alpha Channel"
 msgstr "/Vrstvy/Pøidat alfa kanál"
 
-#: app/menus.c:484
+#: app/menus.c:483
 msgid "/Layers/Alpha To Selection"
 msgstr "/Vrstvy/Alfa do výbìru"
 
 #. <Image>/Tools
-#: app/menus.c:492
-msgid "/Tools/tearoff1"
-msgstr "/Nástroje/tearoff1"
+#: app/menus.c:491
+msgid "/Tools"
+msgstr "/Nástroje"
 
-#: app/menus.c:494
+#: app/menus.c:493
 msgid "/Tools/Toolbox"
 msgstr "/Nástroje/Panel nástrojù"
 
-#: app/menus.c:496
+#: app/menus.c:495
 msgid "/Tools/Default Colors"
 msgstr "/Nástroje/Implicitní Barvy"
 
-#: app/menus.c:498
+#: app/menus.c:497
 msgid "/Tools/Swap Colors"
 msgstr "/Nástroje/Prohodit Barvy"
 
-#: app/menus.c:501
-msgid "/Tools/---"
-msgstr "/Nástroje/---"
-
 #. <Image>/Filters
-#: app/menus.c:506
-msgid "/Filters/tearoff1"
-msgstr "/Filtry/tearoff1"
+#: app/menus.c:505
+msgid "/Filters"
+msgstr "/Filtry"
 
-#: app/menus.c:508
+#: app/menus.c:507
 msgid "/Filters/Repeat last"
 msgstr "/Filtry/Opakovat minulý"
 
-#: app/menus.c:510
+#: app/menus.c:509
 msgid "/Filters/Re-show last"
 msgstr "/Filtry/Zobrazit minulý"
 
-#: app/menus.c:513
-msgid "/Filters/---"
-msgstr "/Filtry/---"
+#: app/menus.c:515
+#, fuzzy
+msgid "/Filters/Blur"
+msgstr "/Filtry"
 
-#. <Image>/Script-Fu
 #: app/menus.c:518
-msgid "/Script-Fu/tearoff1"
-msgstr "/Script-Fu/tearoff1"
+#, fuzzy
+msgid "/Filters/Colors"
+msgstr "/Soubor/Zavøít"
 
-#. <Image>/Dialogs
 #: app/menus.c:523
-msgid "/Dialogs/tearoff1"
-msgstr "/Dialogy/tearoff1"
+#, fuzzy
+msgid "/Filters/Noise"
+msgstr "/Filtry"
 
 #: app/menus.c:525
+#, fuzzy
+msgid "/Filters/Edge-Detect"
+msgstr "/Filtry/Opakovat minulý"
+
+#: app/menus.c:527
+#, fuzzy
+msgid "/Filters/Enhance"
+msgstr "/Filtry"
+
+#: app/menus.c:529
+#, fuzzy
+msgid "/Filters/Generic"
+msgstr "/Filtry/tearoff1"
+
+#: app/menus.c:534
+#, fuzzy
+msgid "/Filters/Glass Effects"
+msgstr "/Filtry/Opakovat minulý"
+
+#: app/menus.c:536
+#, fuzzy
+msgid "/Filters/Light Effects"
+msgstr "/Filtry/tearoff1"
+
+#: app/menus.c:538
+#, fuzzy
+msgid "/Filters/Distorts"
+msgstr "/Soubor/Dialogy"
+
+#: app/menus.c:540
+#, fuzzy
+msgid "/Filters/Artistic"
+msgstr "/Filtry/Opakovat minulý"
+
+#: app/menus.c:542
+#, fuzzy
+msgid "/Filters/Map"
+msgstr "/Filtry"
+
+#: app/menus.c:544
+#, fuzzy
+msgid "/Filters/Render"
+msgstr "/Soubor/Navrátit"
+
+#: app/menus.c:546
+#, fuzzy
+msgid "/Filters/Web"
+msgstr "/Filtry"
+
+#: app/menus.c:551
+#, fuzzy
+msgid "/Filters/Animation"
+msgstr "/Filtry/tearoff1"
+
+#: app/menus.c:553
+#, fuzzy
+msgid "/Filters/Combine"
+msgstr "/Soubor/Zavøít"
+
+#: app/menus.c:558
+#, fuzzy
+msgid "/Filters/Toys"
+msgstr "/Filtry"
+
+#. <Image>/Script-Fu
+#: app/menus.c:563
+msgid "/Script-Fu"
+msgstr "/Script-Fu"
+
+#. <Image>/Dialogs
+#: app/menus.c:568
+#, fuzzy
+msgid "/Dialogs"
+msgstr "/Dialogy"
+
+#: app/menus.c:570
 msgid "/Dialogs/Layers & Channels..."
 msgstr "/Dialogy/Vrstvy a kanály..."
 
-#: app/menus.c:527
+#: app/menus.c:572
 msgid "/Dialogs/Tool Options..."
 msgstr "/Dialogy/Volby nástrojù..."
 
-#: app/menus.c:530 app/menus.c:543 app/menus.c:550
-#, fuzzy
-msgid "/Dialogs/---"
-msgstr "/Dialogy"
-
-#: app/menus.c:532
+#: app/menus.c:577
 msgid "/Dialogs/Brushes..."
 msgstr "/Dialogy/©tìtce..."
 
-#: app/menus.c:534
+#: app/menus.c:579
 msgid "/Dialogs/Patterns..."
 msgstr "/Dialogy/Vzorky..."
 
-#: app/menus.c:536
+#: app/menus.c:581
 msgid "/Dialogs/Gradients..."
 msgstr "/Dialogy/Pøechody..."
 
-#: app/menus.c:538
+#: app/menus.c:583
 msgid "/Dialogs/Palette..."
 msgstr "/Dialogy/Paleta..."
 
-#: app/menus.c:540
+#: app/menus.c:585
 msgid "/Dialogs/Indexed Palette..."
 msgstr "/Dialogy/Indexovaná paleta..."
 
-#: app/menus.c:545
+#: app/menus.c:590
 msgid "/Dialogs/Input Devices..."
 msgstr "/Dialogy/Vstupní zaøízení..."
 
-#: app/menus.c:547
+#: app/menus.c:592
 msgid "/Dialogs/Device Status..."
 msgstr "/Dialogy/Stav zaøízení..."
 
-#: app/menus.c:552
+#: app/menus.c:597
 msgid "/Dialogs/Document Index..."
 msgstr "/Dialogy/Seznam dokumentù..."
 
-#: app/menus.c:554
+#: app/menus.c:599
 msgid "/Dialogs/Error Console..."
 msgstr "/Dialogy/Chybová konzole..."
 
-#: app/menus.c:556
+#: app/menus.c:601
 msgid "/Dialogs/Display Filters..."
 msgstr "/Dialogy/Zobrazovací filtry..."
 
-#: app/menus.c:567
+#: app/menus.c:612
 msgid "/Automatic"
 msgstr "/Automatické"
 
-#: app/menus.c:581
+#: app/menus.c:626
 msgid "/By extension"
 msgstr "/Podle pøípony"
 
-#: app/menus.c:595
+#: app/menus.c:640
 #, fuzzy
 msgid "/New Layer..."
 msgstr "/Nová vrstva"
 
 #. <Layers>/Stack
-#: app/menus.c:600
+#: app/menus.c:645
+msgid "/Stack"
+msgstr "/Zásobník"
+
+#: app/menus.c:647
 msgid "/Stack/Previous Layer"
 msgstr "/Zásobník/Pøedchozí vrstva"
 
-#: app/menus.c:602
+#: app/menus.c:649
 msgid "/Stack/Next Layer"
 msgstr "/Zásobník/Následující vrstva"
 
-#: app/menus.c:604
+#: app/menus.c:651
 msgid "/Stack/Raise Layer"
 msgstr "/Zásobník/Vrstvu vý¹"
 
-#: app/menus.c:606
+#: app/menus.c:653
 msgid "/Stack/Lower Layer"
 msgstr "/Zásobník/Vrstvu ní¾"
 
-#: app/menus.c:608
+#: app/menus.c:655
 msgid "/Stack/Layer to Top"
 msgstr "/Zásobník/Vrstvu navrch"
 
-#: app/menus.c:610
+#: app/menus.c:657
 msgid "/Stack/Layer to Bottom"
 msgstr "/Zásobník/Vrstvu dospod"
 
-#: app/menus.c:613
+#: app/menus.c:660
 msgid "/Duplicate Layer"
 msgstr "/Duplikovat vrstvu"
 
-#: app/menus.c:615
+#: app/menus.c:662
 msgid "/Anchor Layer"
 msgstr "/Pohltit vrstvu"
 
-#: app/menus.c:617
+#: app/menus.c:664
 msgid "/Delete Layer"
 msgstr "/Smazat vrstvu"
 
-#: app/menus.c:622
+#: app/menus.c:669
 msgid "/Layer Boundary Size..."
 msgstr ""
 
-#: app/menus.c:624
+#: app/menus.c:671
 #, fuzzy
 msgid "/Scale Layer..."
 msgstr "/Velikost vrstvy"
 
-#: app/menus.c:629
+#: app/menus.c:676
 #, fuzzy
 msgid "/Merge Visible Layers..."
 msgstr "/Slouèit viditelné vrstvy"
 
-#: app/menus.c:631
+#: app/menus.c:678
 msgid "/Merge Down"
 msgstr "/Slouèit dolù"
 
-#: app/menus.c:633
+#: app/menus.c:680
 msgid "/Flatten Image"
 msgstr "/Slouèit obraz"
 
-#: app/menus.c:638
+#: app/menus.c:685
 #, fuzzy
 msgid "/Add Layer Mask..."
 msgstr "/Pøidat masku vrstvy"
 
-#: app/menus.c:640
+#: app/menus.c:687
 #, fuzzy
 msgid "/Apply Layer Mask..."
 msgstr "/Pou¾ít masku vrstvy"
 
-#: app/menus.c:642
+#: app/menus.c:689
 msgid "/Mask to Selection"
 msgstr "/Maska do výbìru"
 
-#: app/menus.c:647
+#: app/menus.c:694
 msgid "/Add Alpha Channel"
 msgstr "/Pøidat alfa kanál"
 
-#: app/menus.c:649
+#: app/menus.c:696
 msgid "/Alpha to Selection"
 msgstr "/Alfa do výbìru"
 
-#: app/menus.c:660
+#: app/menus.c:707
 #, fuzzy
 msgid "/New Channel..."
 msgstr "/Nový kanál"
 
-#: app/menus.c:662
+#: app/menus.c:709
 msgid "/Raise Channel"
 msgstr "/Kanál vý¹"
 
-#: app/menus.c:664
+#: app/menus.c:711
 msgid "/Lower Channel"
 msgstr "/Kanál ní¾"
 
-#: app/menus.c:666
+#: app/menus.c:713
 msgid "/Duplicate Channel"
 msgstr "/Duplikovat kanál"
 
-#: app/menus.c:671
+#: app/menus.c:718
 msgid "/Channel to Selection"
 msgstr "/Kanál do výbìru"
 
-#: app/menus.c:673
+#: app/menus.c:720
 msgid "/Add to Selection"
 msgstr "/Pøidat do výbìru"
 
-#: app/menus.c:675
+#: app/menus.c:722
 msgid "/Subtract From Selection"
 msgstr "/Ubrat z výbìru"
 
-#: app/menus.c:677
+#: app/menus.c:724
 msgid "/Intersect With Selection"
 msgstr "/Prùnik s výbìrem"
 
-#: app/menus.c:682
+#: app/menus.c:729
 msgid "/Delete Channel"
 msgstr "/Smazat kanál"
 
-#: app/menus.c:693
+#: app/menus.c:740
 msgid "/New Path"
 msgstr "/Nová cesta"
 
-#: app/menus.c:695
+#: app/menus.c:742
 msgid "/Duplicate Path"
 msgstr "/Duplikovat cestu"
 
-#: app/menus.c:697
+#: app/menus.c:744
 msgid "/Path to Selection"
 msgstr "/Cesta do výbìru"
 
-#: app/menus.c:699
+#: app/menus.c:746
 msgid "/Selection to Path"
 msgstr "/Výbìr do cesty"
 
-#: app/menus.c:701
+#: app/menus.c:748
 msgid "/Stroke Path"
 msgstr "/Vykreslit cestu"
 
-#: app/menus.c:703
+#: app/menus.c:750
 msgid "/Delete Path"
 msgstr "/Smazat cestu"
 
-#: app/menus.c:708
+#: app/menus.c:755
 msgid "/Copy Path"
 msgstr "/Kopírovat cestu"
 
-#: app/menus.c:710
+#: app/menus.c:757
 msgid "/Paste Path"
 msgstr "/Vlo¾it cestu"
 
-#: app/menus.c:712
+#: app/menus.c:759
 #, fuzzy
 msgid "/Import Path..."
 msgstr "/Import cesty"
 
-#: app/menus.c:714
+#: app/menus.c:761
 #, fuzzy
 msgid "/Export Path..."
 msgstr "/Export cesty"
 
-#: app/menus.c:1124
+#: app/menus.c:1210
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr "Chyba pøi otvírání souboru: %s\n"
-
-#: app/menus.c:1147 app/menus.c:1235
-#, c-format
-msgid "/File/MRU%02d"
-msgstr "/Soubor/MRU%02d"
 
 #: app/module_db.c:58
 msgid "Module error"
@@ -4407,7 +4350,7 @@ msgstr "%s: Navigaèní okno"
 msgid "No image: Window Navigation"
 msgstr "%s: Navigaèní okno"
 
-#: app/paint_core.c:690
+#: app/paint_core.c:699
 msgid "No brushes available for use with this tool."
 msgstr "Nejsou dostupné ¾ádné ¹tìtce pro pou¾ití s tímto nástrojem."
 
@@ -4757,7 +4700,7 @@ msgstr "Spou¹tí se roz¹íøení: "
 msgid "Extensions"
 msgstr "Roz¹íøení"
 
-#: app/plug_in.c:746
+#: app/plug_in.c:735
 #, c-format
 msgid "unable to locate plug-in: \"%s\""
 msgstr "nepodaøilo se nalézt zásuvný modul: \"%s\""
@@ -5648,10 +5591,6 @@ msgstr "Volby inteligentních nù¾ek"
 msgid "By-Color Select Options"
 msgstr "Volby výbìru podle barvy"
 
-#: app/tool_options.c:248
-msgid "ERROR: Unknown Selection Type"
-msgstr "CHYBA: Neznámý druh výbìru"
-
 #: app/tool_options.c:278
 msgid "Feather"
 msgstr "Zaoblení"
@@ -5707,10 +5646,6 @@ msgstr "Volby rozmazávání"
 #: app/tool_options.c:560
 msgid "Xinput Airbrush Options"
 msgstr "Americké retu¹ Xinput"
-
-#: app/tool_options.c:561
-msgid "ERROR: Unknown Paint Type"
-msgstr "CHYBA: Neznámý druh kreslení"
 
 #: app/tool_options.c:672
 msgid "Incremental"
@@ -6482,38 +6417,182 @@ msgid "unable to read tile data from xcf file: %d ( %d ) bytes read"
 msgstr ""
 "nepodaøilo se naèíst data dla¾dice z xcf souboru: naèteno %d (%d)  bytù"
 
+#~ msgid "Version "
+#~ msgstr "Verzi "
+
+#~ msgid "(0 X 0)"
+#~ msgstr "(0 × 0)"
+
+#~ msgid "(%d X %d)"
+#~ msgstr "(%d × %d)"
+
+#~ msgid "drawable_fill called with unknown fill type"
+#~ msgstr "drawable_fill volán s neznámým typem vyplòování"
+
+#~ msgid "%s: fatal error: %s\n"
+#~ msgstr "%s: fatální chyba: %s\n"
+
+#~ msgid "add_point(): Unable to reallocate points array in free_select."
+#~ msgstr ""
+#~ "add_point(): Nepodaøilo se pøemístit v pamìti pole bodù pøi free_select."
+
+#~ msgid "gradient_get_color_at(): Unknown gradient type %d"
+#~ msgstr "gradient_get_color_at(): Neznámý typ pøechodu %d"
+
+#~ msgid "gradient_get_color_at(): Unknown coloring mode %d"
+#~ msgstr "gradient_get_color_at(): Neznámý re¾im vybarvení %d"
+
+#~ msgid "ed_do_new_gradient_callback(): oops, received NULL in call_data"
+#~ msgstr "ed_do_new_gradient_callback(): ouha, pøijato NULL v call_data"
+
+#~ msgid "ed_do_copy_gradient_callback(): oops, received NULL in call_data"
+#~ msgstr "ed_do_copy_gradient_callback(): ouha, pøijato NULL v call_data"
+
+#~ msgid "ed_do_rename_gradient_callback(): oops, received NULL in call_data"
+#~ msgstr "ed_do_rename_gradient_callback(): ouha, pøijato NULL v call_data"
+
+#~ msgid ""
+#~ "ed_do_rename_gradient_callback(): oops, can't find gradient to rename"
+#~ msgstr ""
+#~ "ed_do_rename_gradient_callback(): ouha, nelze nalézt pøechod k pøejmenování"
+
+#~ msgid "ed_do_delete_gradient_callback(): Could not find gradient to delete!"
+#~ msgstr "ed_do_delete_gradient_callback(): Nelze nalézt pøechod ke smazání!"
+
+#~ msgid "ed_do_save_pov_callback(): oops, could not open \"%s\""
+#~ msgstr "ed_do_save_pov_callback(): ouha, nelze otevøít \"%s\""
+
+#~ msgid "control_motion(): Attempt to move bogus handle %d"
+#~ msgstr "control_motion(): Pokus o posun zmateného øídícího bodu %d"
+
+#~ msgid "Unknown info_dialog field type."
+#~ msgstr "Neznámý typ pole info_dialog."
+
+#~ msgid "/File/MRU00 "
+#~ msgstr "/Soubor/MRU00 "
+
+#~ msgid "/File/tearoff1"
+#~ msgstr "/Soubor/tearoff1"
+
+#~ msgid "/File/---"
+#~ msgstr "/Soubor/---"
+
+#~ msgid "/File/Acquire/tearoff1"
+#~ msgstr "/Soubor/Získat/tearoff1"
+
+#~ msgid "/File/Dialogs/tearoff1"
+#~ msgstr "/Soubor/Dialogy/tearoff1"
+
+#, fuzzy
+#~ msgid "/File/Dialogs/---"
+#~ msgstr "/Soubor/Dialogy"
+
+#~ msgid "/Xtns/tearoff1"
+#~ msgstr "/Doplòky/tearoff1"
+
+#, fuzzy
+#~ msgid "/Help/tearoff1"
+#~ msgstr "/Výbìr/tearoff1"
+
+#~ msgid "/tearoff1"
+#~ msgstr "/tearoff1"
+
+#~ msgid "/File/---moved"
+#~ msgstr "/Soubor/---pøestìhováno"
+
+#~ msgid "/Edit/tearoff1"
+#~ msgstr "/Úpravy/tearoff1"
+
+#~ msgid "/Edit/---"
+#~ msgstr "/Úpravy/---"
+
+#~ msgid "/Select/tearoff1"
+#~ msgstr "/Výbìr/tearoff1"
+
+#~ msgid "/Select/---"
+#~ msgstr "/Výbìr/---"
+
+#~ msgid "/View/tearoff1"
+#~ msgstr "/Zobrazení/tearoff1"
+
+#, fuzzy
+#~ msgid "/View/Zoom/tearoff1"
+#~ msgstr "/Zobrazení/tearoff1"
+
+#~ msgid "/View/---"
+#~ msgstr "/Zobrazení/---"
+
+#~ msgid "/Image/tearoff1"
+#~ msgstr "/Obrázek/tearoff1"
+
+#, fuzzy
+#~ msgid "/Image/Mode/tearoff1"
+#~ msgstr "/Obrázek/tearoff1"
+
+#, fuzzy
+#~ msgid "/Image/Mode/---"
+#~ msgstr "/Obrázek/---"
+
+#~ msgid "/Image/Colors/tearoff1"
+#~ msgstr "/Obrázek/Barvy/tearoff1"
+
+#~ msgid "/Image/Colors/---"
+#~ msgstr "/Obrázek/Barvy/---"
+
+#, fuzzy
+#~ msgid "/Image/Colors/Auto/tearoff1"
+#~ msgstr "/Obrázek/Barvy/tearoff1"
+
+#~ msgid "/Image/Alpha/tearoff1"
+#~ msgstr "/Obrázek/Alfa/tearoff1"
+
+#~ msgid "/Image/Transforms/tearoff1"
+#~ msgstr "/Obrázek/Transformace/tearoff1"
+
+#~ msgid "/Image/---"
+#~ msgstr "/Obrázek/---"
+
+#~ msgid "/Layers/tearoff1"
+#~ msgstr "/Vrstvy/tearoff1"
+
+#~ msgid "/Layers/Stack/tearoff1"
+#~ msgstr "/Vrstvy/Zásobník/tearoff1"
+
+#~ msgid "/Layers/---"
+#~ msgstr "/Vrstvy/---"
+
+#~ msgid "/Tools/tearoff1"
+#~ msgstr "/Nástroje/tearoff1"
+
+#~ msgid "/Tools/---"
+#~ msgstr "/Nástroje/---"
+
+#~ msgid "/Filters/---"
+#~ msgstr "/Filtry/---"
+
+#~ msgid "/Script-Fu/tearoff1"
+#~ msgstr "/Script-Fu/tearoff1"
+
+#~ msgid "/Dialogs/tearoff1"
+#~ msgstr "/Dialogy/tearoff1"
+
+#~ msgid "/File/MRU%02d"
+#~ msgstr "/Soubor/MRU%02d"
+
+#~ msgid "ERROR: Unknown Selection Type"
+#~ msgstr "CHYBA: Neznámý druh výbìru"
+
+#~ msgid "ERROR: Unknown Paint Type"
+#~ msgstr "CHYBA: Neznámý druh kreslení"
+
 #~ msgid "killing stray timer, please report to lewing@gimp.org"
 #~ msgstr "ru¹í se zbloudilý èasovaè, prosím ohlaste na lewing@gimp.org"
 
 #~ msgid "devices_rc_update called multiple times for not present device\n"
 #~ msgstr "devices_rc_update bylo voláno vícekrát pro nepøítomné zaøízení\n"
 
-#~ msgid "/Edit"
-#~ msgstr "/Úpravy"
-
-#~ msgid "/Select"
-#~ msgstr "/Výbìr"
-
-#~ msgid "/View"
-#~ msgstr "/Zobrazení"
-
-#~ msgid "/Image"
-#~ msgstr "/Obrázek"
-
-#~ msgid "/Image/Colors"
-#~ msgstr "/Obrázek/Barvy"
-
 #~ msgid "/Image/Channels"
 #~ msgstr "/Obrázek/Kanály"
-
-#~ msgid "/Image/Alpha"
-#~ msgstr "/Obrázek/Alfa"
-
-#~ msgid "/Filters"
-#~ msgstr "/Filtry"
-
-#~ msgid "/Script-Fu"
-#~ msgstr "/Script-Fu"
 
 #~ msgid "/Resize Layer"
 #~ msgstr "/Rozmìry plátna vrstvy"
@@ -6666,15 +6745,6 @@ msgstr ""
 
 #~ msgid "get_active_pattern(): Specified default pattern not found!"
 #~ msgstr "get_active_pattern(): Zadaný implicitní vzorek nebyl nalezen!"
-
-#~ msgid "/File"
-#~ msgstr "/Soubor"
-
-#~ msgid "/Layers"
-#~ msgstr "/Vrstvy"
-
-#~ msgid "/Tools"
-#~ msgstr "/Nástroje"
 
 #~ msgid "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
 #~ msgstr "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
@@ -6837,9 +6907,6 @@ msgstr ""
 #~ msgstr ""
 #~ "new_layer_query_ok_callback():\n"
 #~ "nelze umístit v pamìti novou vrstvu"
-
-#~ msgid "/File/Acquire"
-#~ msgstr "/Soubor/Získat"
 
 #~ msgid "/View/Window Info..."
 #~ msgstr "/Zobrazení/Informaèní okno..."

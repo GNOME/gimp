@@ -65,7 +65,7 @@ drawable_fill (GimpDrawable *drawable,
       return;
 
     default:
-      g_warning (_("drawable_fill called with unknown fill type"));
+      g_warning ("unknown fill type");
       a = r = g = b = 0;
       break;
     }

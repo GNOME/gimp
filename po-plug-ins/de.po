@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.10\n"
-"POT-Creation-Date: 1999-11-24 15:16-0800\n"
+"POT-Creation-Date: 1999-11-25 10:23+0100\n"
 "PO-Revision-Date: 1999-11-22 23:17+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -26,9 +26,8 @@ msgid "1th May 1997"
 msgstr ""
 
 #: plug-ins/AlienMap/AlienMap.c:194
-#, fuzzy
 msgid "<Image>/Filters/Colors/Map/Alien Map..."
-msgstr "<Image>/Filter/Farben/Abbilden/Alien Map"
+msgstr "<Image>/Filter/Farben/Abbilden/Alien Map..."
 
 #: plug-ins/AlienMap/AlienMap.c:379
 msgid "AlienMap: Transforming ..."
@@ -198,7 +197,7 @@ msgstr "Abbrechen"
 
 #: plug-ins/AlienMap/AlienMap.c:878 plug-ins/AlienMap2/AlienMap2.c:801
 msgid "Reject any changes and close plug-in"
-msgstr ""
+msgstr "Alle Änderungen verwerfen und Plug-In beenden"
 
 #: plug-ins/AlienMap/AlienMap.c:880 plug-ins/AlienMap2/AlienMap2.c:803
 #: plug-ins/gimpressionist/gimpressionist.c:506
@@ -240,9 +239,8 @@ msgid "24th April 1998"
 msgstr ""
 
 #: plug-ins/AlienMap2/AlienMap2.c:217
-#, fuzzy
 msgid "<Image>/Filters/Colors/Map/Alien Map 2..."
-msgstr "<Image>/Filter/Farben/Abbilden/Alien Map 2"
+msgstr "<Image>/Filter/Farben/Abbilden/Alien Map 2..."
 
 #: plug-ins/AlienMap2/AlienMap2.c:392
 msgid "AlienMap2: Transforming ..."
@@ -369,9 +367,8 @@ msgid "No help yet"
 msgstr "Keine Hilfe vorhanden"
 
 #: plug-ins/Lighting/lighting_main.c:177
-#, fuzzy
 msgid "<Image>/Filters/Light Effects/Lighting Effects..."
-msgstr "<Image>/Filter/Licht-Effekte/Lichteffekte"
+msgstr "<Image>/Filter/Licht-Effekte/Lichteffekte..."
 
 #: plug-ins/Lighting/lighting_ui.c:34
 msgid "Point light"
@@ -433,7 +430,7 @@ msgstr "Transparenter Hintergrund"
 
 #: plug-ins/Lighting/lighting_ui.c:580 plug-ins/common/lic.c:1009
 msgid "Create new image"
-msgstr "Erstelle neues Bild"
+msgstr "Neues Bild erzeugen"
 
 #: plug-ins/Lighting/lighting_ui.c:582
 msgid "High preview quality"
@@ -796,9 +793,8 @@ msgid "Borderaverage"
 msgstr "Rand"
 
 #: plug-ins/borderaverage/borderaverage.c:98
-#, fuzzy
 msgid "<Image>/Filters/Colors/Border Average..."
-msgstr "<Image>/Filter/Farben/Randmittelwert"
+msgstr "<Image>/Filter/Farben/Randmittelwert..."
 
 #: plug-ins/borderaverage/borderaverage.c:350
 msgid "Border Size"
@@ -1056,9 +1052,8 @@ msgstr ""
 "einer Parameter-Datei, womit man den CML_explorer steuern kann."
 
 #: plug-ins/common/CML_explorer.c:494
-#, fuzzy
 msgid "<Image>/Filters/Render/Pattern/CML explorer..."
-msgstr "<Image>/Filter/Render/Muster/Gitter"
+msgstr "<Image>/Filter/Render/Muster/CML Exlorer..."
 
 #: plug-ins/common/CML_explorer.c:796
 msgid "CML_explorer: evoluting..."
@@ -1333,9 +1328,8 @@ msgstr ""
 "abzuspielen."
 
 #: plug-ins/common/animationplay.c:252
-#, fuzzy
 msgid "<Image>/Filters/Animation/Animation Playback..."
-msgstr "<Image>/Filter/Animation/Animation abspielen"
+msgstr "<Image>/Filter/Animation/Animation abspielen..."
 
 #: plug-ins/common/animationplay.c:664
 msgid "Animation Playback: "
@@ -1386,7 +1380,7 @@ msgstr "Dieses plug-in optimiert eine Ebenen-basierte Animation."
 
 #: plug-ins/common/animoptimize.c:136
 msgid "<Image>/Filters/Animation/Animation Optimize"
-msgstr "<Image>/Filter/Animation/Animation Optimieren"
+msgstr "<Image>/Filter/Animation/Animation optimieren"
 
 #: plug-ins/common/animoptimize.c:143
 msgid ""
@@ -1400,7 +1394,7 @@ msgstr ""
 
 #: plug-ins/common/animoptimize.c:152
 msgid "<Image>/Filters/Animation/Animation UnOptimize"
-msgstr "<Image>/Filter/Animation/Animation Deoptimieren"
+msgstr "<Image>/Filter/Animation/Animation deoptimieren"
 
 #: plug-ins/common/animoptimize.c:296
 msgid "Optimizing Animation..."
@@ -1425,9 +1419,8 @@ msgstr ""
 "(Lupe) über das Bild zu zeichnen"
 
 #: plug-ins/common/apply_lens.c:137
-#, fuzzy
 msgid "<Image>/Filters/Glass Effects/Apply Lens..."
-msgstr "<Image>/Filter/Glas-Effekte/Lupeneffekt"
+msgstr "<Image>/Filter/Glas-Effekte/Lupeneffekt..."
 
 #: plug-ins/common/apply_lens.c:196
 msgid "Applying lens..."
@@ -1534,9 +1527,8 @@ msgstr ""
 "indizierten Bildern."
 
 #: plug-ins/common/blur.c:208
-#, fuzzy
 msgid "<Image>/Filters/Blur/Blur..."
-msgstr "<Image>/Filter/Aufweichen/Aufweichen"
+msgstr "<Image>/Filter/Weichzeichnen/Weichzeichnen..."
 
 #: plug-ins/common/blur.c:627
 msgid "Accept settings and apply filter to image"
@@ -1639,9 +1631,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/bumpmap.c:348
-#, fuzzy
 msgid "<Image>/Filters/Map/Bump Map..."
-msgstr "<Image>/Filter/Abbilden/Bumpmap"
+msgstr "<Image>/Filter/Abbilden/Bumpmap..."
 
 #: plug-ins/common/bumpmap.c:494
 msgid "Bump-mapping..."
@@ -1761,9 +1752,8 @@ msgid "Adds a checkerboard pattern to an image"
 msgstr "Fügt einem Bild ein Schachbrett-Muster hinzu"
 
 #: plug-ins/common/checkerboard.c:102
-#, fuzzy
 msgid "<Image>/Filters/Render/Pattern/Checkerboard..."
-msgstr "<Image>/Filter/Render/Muster/Schachbrett"
+msgstr "<Image>/Filter/Render/Muster/Schachbrett..."
 
 #: plug-ins/common/checkerboard.c:164
 msgid "Adding Checkerboard..."
@@ -1827,9 +1817,8 @@ msgid "Makes an average of the RGB channels and uses it to set the color"
 msgstr "Berechnet den Durchschnitt der RGB-Kanäle und setzt damit die Farbe"
 
 #: plug-ins/common/colorify.c:126
-#, fuzzy
 msgid "<Image>/Filters/Colors/Colorify..."
-msgstr "<Image>/Filter/Farben/Einfärben"
+msgstr "<Image>/Filter/Farben/Einfärben..."
 
 #: plug-ins/common/colorify.c:195
 msgid "Colorifying..."
@@ -1868,9 +1857,8 @@ msgid "7th Aug 1999"
 msgstr ""
 
 #: plug-ins/common/colortoalpha.c:114
-#, fuzzy
 msgid "<Image>/Filters/Colors/Color To Alpha..."
-msgstr "<Image>/Filter/Farben/Farbe zu Transparenz"
+msgstr "<Image>/Filter/Farben/Farbe zu Transparenz..."
 
 #: plug-ins/common/colortoalpha.c:404
 msgid "Color To Alpha"
@@ -2066,9 +2054,8 @@ msgid "A generic 5x5 convolution matrix"
 msgstr "Ein generisches 5x5 Verwickelungs-Matrix (convolution-matrix)"
 
 #: plug-ins/common/convmatrix.c:178
-#, fuzzy
 msgid "<Image>/Filters/Generic/Convolution Matrix..."
-msgstr "<Image>/Filter/Generisch/Verwickelungs-Matrix"
+msgstr "<Image>/Filter/Generisch/Verwicklungs-Matrix..."
 
 #: plug-ins/common/convmatrix.c:239
 msgid "Applying convolution"
@@ -2128,9 +2115,8 @@ msgid "Help not yet written for this plug-in"
 msgstr "Die Hilfe für diese plug-in wurde noch nicht geschrieben"
 
 #: plug-ins/common/cubism.c:177
-#, fuzzy
 msgid "<Image>/Filters/Artistic/Cubism..."
-msgstr "<Image>/Filter/Künstlerisch/Kubismus"
+msgstr "<Image>/Filter/Künstlerisch/Kubismus..."
 
 #: plug-ins/common/cubism.c:289
 msgid "Cubistic Transformation"
@@ -2294,9 +2280,8 @@ msgstr ""
 "Tiefen-Map-Wert an der Stelle hat."
 
 #: plug-ins/common/depthmerge.c:202
-#, fuzzy
 msgid "<Image>/Filters/Combine/Depth Merge..."
-msgstr "<Image>/Filter/Kombinieren/TiefenKombination"
+msgstr "<Image>/Filter/Kombinieren/TiefenKombination..."
 
 #: plug-ins/common/depthmerge.c:369
 msgid "Depth-merging..."
@@ -2351,9 +2336,8 @@ msgstr ""
 "Dieses plug-in versucht, vertikale Streifen aus einem Bild zu entfernen."
 
 #: plug-ins/common/destripe.c:153
-#, fuzzy
 msgid "<Image>/Filters/Enhance/Destripe..."
-msgstr "<Image>/Filter/Verbessern/Streifen entfernen"
+msgstr "<Image>/Filter/Verbessern/Streifen entfernen..."
 
 #: plug-ins/common/destripe.c:356
 msgid "Destriping..."
@@ -2389,9 +2373,8 @@ msgid "Compose several images to a roll film"
 msgstr ""
 
 #: plug-ins/common/film.c:229
-#, fuzzy
 msgid "<Image>/Filters/Combine/Film..."
-msgstr "<Image>/Filter/Kombinieren/Film"
+msgstr "<Image>/Filter/Kombinieren/Film..."
 
 #: plug-ins/common/film.c:316
 msgid "Composing Images..."
@@ -2737,13 +2720,12 @@ msgid "no help available"
 msgstr ""
 
 #: plug-ins/common/grid.c:128
-#, fuzzy
 msgid "<Image>/Filters/Render/Pattern/Grid..."
-msgstr "<Image>/Filter/Render/Muster/Gitter"
+msgstr "<Image>/Filter/Render/Muster/Gitter..."
 
 #: plug-ins/common/grid.c:214
 msgid "Drawing Grid..."
-msgstr ""
+msgstr "Zeichne Gitter..."
 
 #: plug-ins/common/grid.c:444 plug-ins/imagemap/imap_toolbar.c:164
 msgid "Grid"
@@ -3026,9 +3008,8 @@ msgid "Creates a Van Gogh effect (Line Integral Convolution)"
 msgstr "Erstellt einen Van Gogh-Effekt (Line Integral Convolution)"
 
 #: plug-ins/common/lic.c:1319
-#, fuzzy
 msgid "<Image>/Filters/Map/Van Gogh (LIC)..."
-msgstr "<Image>/Filter/Abbilden/Van Gogh (LIC)"
+msgstr "<Image>/Filter/Abbilden/Van Gogh (LIC)..."
 
 #: plug-ins/common/lic.c:1441
 msgid "Noninteractive not yet implemented! Sorry.\n"
@@ -3105,7 +3086,6 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/mapcolor.c:146
-#, fuzzy
 msgid "<Image>/Filters/Colors/Map/Adjust FG-BG"
 msgstr "<Image>/Filter/Farben/Abbilden/VG-HG vertauschen"
 
@@ -3116,9 +3096,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/mapcolor.c:160
-#, fuzzy
 msgid "<Image>/Filters/Colors/Map/Color Mapping..."
-msgstr "<Image>/Filter/Farben/Abbilden/Farben vertauschen"
+msgstr "<Image>/Filter/Farben/Abbilden/Farben vertauschen..."
 
 #: plug-ins/common/mapcolor.c:205
 msgid ""
@@ -3141,9 +3120,8 @@ msgid "Map colors"
 msgstr "Farbe"
 
 #: plug-ins/common/mapcolor.c:399
-#, fuzzy
 msgid "To:"
-msgstr "Bis :"
+msgstr "Bis:"
 
 #: plug-ins/common/normalize.c:78
 msgid ""
@@ -3171,7 +3149,7 @@ msgstr ""
 
 #: plug-ins/common/normalize.c:83
 msgid "<Image>/Image/Colors/Auto/Normalize"
-msgstr "<Image>/Farben/Auto/Normalisieren"
+msgstr "<Image>/Image/Farben/Auto/Normalisieren"
 
 #: plug-ins/common/normalize.c:115
 msgid "Normalizing..."
@@ -3193,9 +3171,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/nova.c:246
-#, fuzzy
 msgid "<Image>/Filters/Light Effects/SuperNova..."
-msgstr "<Image>/Filter/Licht-Effekte/Lichteffekte"
+msgstr "<Image>/Filter/Licht-Effekte/SuperNova..."
 
 #: plug-ins/common/nova.c:326
 msgid "Rendering SuperNova..."
@@ -3248,9 +3225,8 @@ msgstr ""
 "'mask_size' gesteuert."
 
 #: plug-ins/common/oilify.c:127
-#, fuzzy
 msgid "<Image>/Filters/Artistic/Oilify..."
-msgstr "<Image>/Filter/Künstlerisch/Ölgemälde"
+msgstr "<Image>/Filter/Künstlerisch/Ölgemälde..."
 
 #: plug-ins/common/oilify.c:198
 msgid "Oil Painting..."
@@ -3355,9 +3331,8 @@ msgid "September 31, 1999"
 msgstr ""
 
 #: plug-ins/common/papertile.c:942
-#, fuzzy
 msgid "<Image>/Filters/Map/Paper Tile..."
-msgstr "<Image>/Filter/Abbilden/Papierschnipsel"
+msgstr "<Image>/Filter/Abbilden/Papierschnipsel..."
 
 #: plug-ins/common/png.c:156
 msgid "Loads files in PNG file format"
@@ -3573,13 +3548,11 @@ msgid "Preview size"
 msgstr "Grösse der Vorschau"
 
 #: plug-ins/common/psp.c:462
-#, fuzzy
 msgid "Save as PSP"
-msgstr "Als BMP sichern"
+msgstr "Als PSP sichern"
 
 #. file save type
 #: plug-ins/common/psp.c:494
-#, fuzzy
 msgid "Data Compression"
 msgstr "Kompressionsgrad"
 
@@ -3756,9 +3729,8 @@ msgstr ""
 "oder Akrylfarbe."
 
 #: plug-ins/common/warp.c:306
-#, fuzzy
 msgid "<Image>/Filters/Map/Warp..."
-msgstr "<Image>/Filter/Abbilden/Warp"
+msgstr "<Image>/Filter/Abbilden/Warp..."
 
 #: plug-ins/common/warp.c:477
 msgid "Warp"
@@ -4543,18 +4515,16 @@ msgid "This plugin duplicates the current frames on disk n-times."
 msgstr "Dieses plug-in dupliziert die Datei des momentanen Frame n-mal."
 
 #: plug-ins/gap/gap_main.c:422
-#, fuzzy
 msgid "<Image>/Video/Duplicate Frames..."
-msgstr "<Image>/Video/Frames duplizieren"
+msgstr "<Image>/Video/Frames duplizieren..."
 
 #: plug-ins/gap/gap_main.c:429
 msgid "This plugin exchanges content of the current with destination frame."
 msgstr "Dieses plug-in tauscht den momentanen Frame mit dem Ziel-Frame aus."
 
 #: plug-ins/gap/gap_main.c:434
-#, fuzzy
 msgid "<Image>/Video/Exchange Frame..."
-msgstr "<Image>/Video/Frames austauschen"
+msgstr "<Image>/Video/Frames austauschen..."
 
 #: plug-ins/gap/gap_main.c:441
 msgid ""
@@ -4566,9 +4536,8 @@ msgstr ""
 "variieren."
 
 #: plug-ins/gap/gap_main.c:446
-#, fuzzy
 msgid "<Image>/Video/Move Path..."
-msgstr "<Image>/Video/Pfad verschieben"
+msgstr "<Image>/Video/Pfad verschieben..."
 
 #: plug-ins/gap/gap_main.c:453
 msgid ""
@@ -4582,9 +4551,8 @@ msgstr ""
 
 # besser ?
 #: plug-ins/gap/gap_main.c:458
-#, fuzzy
 msgid "<Image>/Video/Frames to Image..."
-msgstr "<Image>/Video/Frames zu Bild"
+msgstr "<Image>/Video/Frames zu Bild..."
 
 #: plug-ins/gap/gap_main.c:465
 msgid "This plugin flattens the given range of frame-images (on disk)"
@@ -4592,11 +4560,9 @@ msgstr ""
 "Dieses plug-in fügt in den angegebenen Frames die Ebenen zusammen\n"
 "(Auf Festplatte)."
 
-# ;-) TODO!
 #: plug-ins/gap/gap_main.c:470
-#, fuzzy
 msgid "<Image>/Video/Frames Flatten..."
-msgstr "<Image>/Video/Frames plattmachen"
+msgstr "<Image>/Video/Frames plattmachen..."
 
 #: plug-ins/gap/gap_main.c:477
 msgid ""
@@ -4607,9 +4573,8 @@ msgstr ""
 "(auf Festplatte). Ausnahme: die letzte verbliebene Ebene wird nicht entfernt."
 
 #: plug-ins/gap/gap_main.c:482
-#, fuzzy
 msgid "<Image>/Video/Frames LayerDel..."
-msgstr "<Image>/Video/Frames Ebene entfernen"
+msgstr "<Image>/Video/Frames Ebene entfernen..."
 
 #: plug-ins/gap/gap_main.c:489 plug-ins/gap/gap_main.c:501
 msgid ""
@@ -4620,9 +4585,8 @@ msgstr ""
 "(auf Festplatte), abhängig von der Erweiterung."
 
 #: plug-ins/gap/gap_main.c:506
-#, fuzzy
 msgid "<Image>/Video/Frames Convert..."
-msgstr "<Image>/Video/Frames konvertieren"
+msgstr "<Image>/Video/Frames konvertieren..."
 
 #: plug-ins/gap/gap_main.c:513
 msgid ""
@@ -4633,9 +4597,8 @@ msgstr ""
 "Eingabewerten 'new_width/new_height' (auf Festplatte)."
 
 #: plug-ins/gap/gap_main.c:518
-#, fuzzy
 msgid "<Image>/Video/Frames Resize..."
-msgstr "<Image>/Video/Frames Grösse verändern"
+msgstr "<Image>/Video/Frames Grösse verändern..."
 
 #: plug-ins/gap/gap_main.c:525
 msgid ""
@@ -4646,9 +4609,8 @@ msgstr ""
 "'new_width/new_height' festgelegte Grösse zu (auf Festplatte)."
 
 #: plug-ins/gap/gap_main.c:530
-#, fuzzy
 msgid "<Image>/Video/Frames Crop..."
-msgstr "<Image>/Video/Frames zuschneiden"
+msgstr "<Image>/Video/Frames zuschneiden..."
 
 #: plug-ins/gap/gap_main.c:537
 msgid ""
@@ -4659,9 +4621,8 @@ msgstr ""
 "durch die Eingabewerte 'new_width/new_height' (auf Festplatte)."
 
 #: plug-ins/gap/gap_main.c:542
-#, fuzzy
 msgid "<Image>/Video/Frames Scale..."
-msgstr "<Image>/Video/Frames skalieren"
+msgstr "<Image>/Video/Frames skalieren..."
 
 #: plug-ins/gap/gap_main.c:549
 msgid ""
@@ -4672,11 +4633,9 @@ msgstr ""
 "Festplatte).\n"
 "Jede Ebene wird als ein Frame gespeichert."
 
-# zu lang ?
 #: plug-ins/gap/gap_main.c:554
-#, fuzzy
 msgid "<Image>/Video/Split Img to Frames..."
-msgstr "<Image>/Video/Teile Bild in Frames"
+msgstr "<Image>/Video/Teile Bild in Frames..."
 
 #: plug-ins/gap/gap_main.c:561
 msgid ""
@@ -4689,9 +4648,8 @@ msgstr ""
 "(mpeg_encode muss auf ihrem System installiert sein)"
 
 #: plug-ins/gap/gap_main.c:566
-#, fuzzy
 msgid "<Image>/Video/Encode/MPEG1..."
-msgstr "<Image>/Video/Frames MPEG2-kodieren"
+msgstr "<Image>/Video/Kodieren//MPEG1..."
 
 #: plug-ins/gap/gap_main.c:574
 msgid ""
@@ -4705,9 +4663,8 @@ msgstr ""
 "(mpeg2encode muss auf ihrem System installiert sein)"
 
 #: plug-ins/gap/gap_main.c:579
-#, fuzzy
 msgid "<Image>/Video/Encode/MPEG2 mpeg2encode...)"
-msgstr "<Image>/Video/Frames MPEG2-kodieren"
+msgstr "<Image>/Video/Kodieren/MPEG2..."
 
 #: plug-ins/gap/gap_main.c:587
 msgid ""
@@ -4718,9 +4675,8 @@ msgstr ""
 "Festplatte; frame_0001.xcf->frame_0002.xcf,2->3,...,n->1)."
 
 #: plug-ins/gap/gap_main.c:592
-#, fuzzy
 msgid "<Image>/Video/Framesequence Shift..."
-msgstr "<Image>/Video/Frame-Reihenfolge verschieben"
+msgstr "<Image>/Video/Frame-Reihenfolge verschieben..."
 
 #: plug-ins/gap/gap_main.c:599
 msgid ""
@@ -4731,9 +4687,8 @@ msgstr ""
 "gegebenen Frames."
 
 #: plug-ins/gap/gap_main.c:604
-#, fuzzy
 msgid "<Image>/Video/Frames Modify..."
-msgstr "<Image>/Video/Frames modifizieren"
+msgstr "<Image>/Video/Frames modifizieren..."
 
 #. Layer select modes
 #: plug-ins/gap/gap_mod_layer.c:84 plug-ins/gap/gap_range_ops.c:552
@@ -5742,7 +5697,6 @@ msgstr ""
 "(nur relevant für indizierte Bilder)"
 
 #: plug-ins/gap/gap_range_ops.c:337
-#, fuzzy
 msgid "Dither Options"
 msgstr "Dithering Einstellungen"
 
@@ -6129,9 +6083,8 @@ msgid "GIMP Dynamic Text"
 msgstr ""
 
 #: plug-ins/gdyntext/gdyntext.c:153
-#, fuzzy
 msgid "<Image>/Filters/Render/Dynamic Text..."
-msgstr "<Image>/Filter/Render/Sinus"
+msgstr "<Image>/Filter/Render/Dynamischer Text..."
 
 #: plug-ins/gdyntext/gdyntext.c:304
 msgid ""
@@ -6380,9 +6333,8 @@ msgid "Performs various artistic operations on an image"
 msgstr "Wendet verschiedene künstlerische Effekte auf ein Bild an"
 
 #: plug-ins/gimpressionist/gimp.c:105
-#, fuzzy
 msgid "<Image>/Filters/Artistic/GIMPressionist..."
-msgstr "<Image>/Filter/Künstlerisch/GIMPressionist"
+msgstr "<Image>/Filter/Künstlerisch/GIMPressionist..."
 
 #: plug-ins/gimpressionist/gimp.c:294
 msgid "Painting..."
@@ -7090,19 +7042,18 @@ msgid ""
 msgstr ""
 
 #: plug-ins/ifscompose/ifscompose.c:354
-#, fuzzy
 msgid "<Image>/Filters/Render/Nature/IfsCompose..."
-msgstr "<Image>/Filter/Render/Natur/IfsCompose"
+msgstr "<Image>/Filter/Render/Natur/IfsCompose..."
 
 #. X
 #: plug-ins/ifscompose/ifscompose.c:503
 msgid "X"
-msgstr ""
+msgstr "X"
 
 #. Y
 #: plug-ins/ifscompose/ifscompose.c:517
 msgid "Y"
-msgstr ""
+msgstr "Y"
 
 #. Asym
 #: plug-ins/ifscompose/ifscompose.c:559
@@ -7543,9 +7494,8 @@ msgid "Creates a clickable imagemap."
 msgstr "Erstelle neues Bild"
 
 #: plug-ins/imagemap/imap_main.c:142
-#, fuzzy
-msgid "<Image>/Filters/Misc/ImageMap..."
-msgstr "<Image>/Datei/Verschicke Bild..."
+msgid "<Image>/Filters/Web/ImageMap..."
+msgstr "<Image>/Filter/Web/ImageMap..."
 
 #: plug-ins/imagemap/imap_main.c:669
 msgid "Data changed"
@@ -7699,9 +7649,8 @@ msgid "Convert the input drawable into a collection of tiles"
 msgstr "Konvertiere das angegebene Bild in eine Sammlung von Kacheln"
 
 #: plug-ins/mosaic/mosaic.c:331
-#, fuzzy
 msgid "<Image>/Filters/Artistic/Mosaic..."
-msgstr "<Image>/Filter/Künstlerisch/Mosaik"
+msgstr "<Image>/Filter/Künstlerisch/Mosaik..."
 
 #. progress bar for gradient finding
 #: plug-ins/mosaic/mosaic.c:452
@@ -8234,9 +8183,8 @@ msgid "Provides an interface which allows interactive scheme development."
 msgstr ""
 
 #: plug-ins/script-fu/script-fu.c:158
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
-msgstr "Skript-Fu Konsole"
+msgstr "<Toolbox>/Xtns/Script-Fu/Skript-Fu/Konsole..."
 
 #: plug-ins/script-fu/script-fu.c:165 plug-ins/script-fu/script-fu.c:166
 msgid "Provides a server for remote script-fu operation"
@@ -8244,7 +8192,7 @@ msgstr ""
 
 #: plug-ins/script-fu/script-fu.c:170
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Script-Fu/Server..."
 
 #: plug-ins/script-fu/script-fu.c:178
 msgid "Evaluate scheme code"
@@ -8297,9 +8245,8 @@ msgid "Generates a texture with sinus functions"
 msgstr ""
 
 #: plug-ins/sinus/sinus.c:173
-#, fuzzy
 msgid "<Image>/Filters/Render/Sinus..."
-msgstr "<Image>/Filter/Render/Sinus"
+msgstr "<Image>/Filter/Render/Sinus..."
 
 #. Create Main window with a vbox
 #. ==============================
@@ -8343,7 +8290,7 @@ msgstr "Farben"
 #. if in grey scale, the colors are necessarily black and white
 #: plug-ins/sinus/sinus.c:740
 msgid "The colors are white and black."
-msgstr ""
+msgstr "Die Fraben sind schwarz und weiss."
 
 #: plug-ins/sinus/sinus.c:754
 msgid "First Color"
@@ -8377,7 +8324,7 @@ msgstr "Verlauf Einstellungen"
 
 #: plug-ins/sinus/sinus.c:857
 msgid "Exponent "
-msgstr "Exponent"
+msgstr "Exponent "
 
 #: plug-ins/struc/struc.c:107
 msgid "Adds a canvas texture map to the picture"
@@ -8388,11 +8335,9 @@ msgid "This function applies a canvas texture map to the drawable."
 msgstr "Diese Funktion fügt dem Bild einen Leinwand-Effekt hinzu."
 
 #: plug-ins/struc/struc.c:112
-#, fuzzy
 msgid "<Image>/Filters/Artistic/Apply Canvas..."
-msgstr "<Image>/Filter/Künstlerisch/Leinwand anwenden"
+msgstr "<Image>/Filter/Künstlerisch/Leinwand anwenden..."
 
-# ?????? TODO
 #: plug-ins/struc/struc.c:233
 msgid "Struc"
 msgstr "Leinwand anwenden"
@@ -8570,7 +8515,7 @@ msgstr "Mehr..."
 
 #: libgimp/gimpunitmenu.c:452
 msgid "Unit Selection"
-msgstr "Einheit Auswahl"
+msgstr "Einheit auswählen"
 
 #: libgimp/gimpunitmenu.c:478
 msgid "Unit "

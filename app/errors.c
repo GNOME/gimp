@@ -77,7 +77,7 @@ gimp_fatal_error (gchar *fmt, ...)
   va_list args;
 
   va_start (args, fmt);
-  printf (_("%s: fatal error: %s\n"), prog_name, g_strdup_vprintf (fmt, args));
+  g_print ("%s: fatal error: %s\n", prog_name, g_strdup_vprintf (fmt, args));
   va_end (args);
   g_on_error_query (prog_name);
 #else
@@ -103,9 +103,9 @@ gimp_terminate (gchar *fmt, ...)
   va_list args;
 
   va_start (args, fmt);
-  printf ("%s terminated: ", prog_name);
+  g_print ("%s terminated: ", prog_name);
   vprintf (fmt, args);
-  printf ("\n");
+  g_print ("\n");
   va_end (args);
 
   if (use_debug_handler)

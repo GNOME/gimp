@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.13\n"
-"POT-Creation-Date: 1999-11-24 16:01+0900\n"
+"POT-Creation-Date: 1999-11-25 10:23+0100\n"
 "PO-Revision-Date: 1999-11-24 16:13+09:00\n"
 "Last-Translator: Çòºê ÂÙ¹° <yasuhiro@awa.tohoku.ac.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -135,7 +135,7 @@ msgstr "ÀÄ¥Á¥ã¥ó¥Í¥ë: »°³Ñ´Ø¿ô¤Ç¤Ï¤Ê¤¯Àþ·Á¥Þ¥Ã¥Ô¥ó¥°¤ò»ÈÍÑ¤¹¤ë"
 #: plug-ins/common/film.c:1238 plug-ins/common/gif.c:1293
 #: plug-ins/common/grid.c:461 plug-ins/common/jpeg.c:1569
 #: plug-ins/common/lic.c:1251 plug-ins/common/mail.c:502
-#: plug-ins/common/mapcolor.c:336 plug-ins/common/nova.c:410
+#: plug-ins/common/mapcolor.c:340 plug-ins/common/nova.c:410
 #: plug-ins/common/oilify.c:468 plug-ins/common/png.c:978
 #: plug-ins/common/ps.c:2123 plug-ins/common/ps.c:2387
 #: plug-ins/common/psp.c:476 plug-ins/common/threshold_alpha.c:474
@@ -149,7 +149,7 @@ msgstr "ÀÄ¥Á¥ã¥ó¥Í¥ë: »°³Ñ´Ø¿ô¤Ç¤Ï¤Ê¤¯Àþ·Á¥Þ¥Ã¥Ô¥ó¥°¤ò»ÈÍÑ¤¹¤ë"
 #: plug-ins/gimpressionist/orientmap.c:626
 #: plug-ins/gimpressionist/presets.c:392 plug-ins/gimpressionist/sizemap.c:485
 #: plug-ins/ifscompose/ifscompose.c:813 plug-ins/mosaic/mosaic.c:572
-#: plug-ins/print/print.c:1147 plug-ins/script-fu/script-fu-scripts.c:1358
+#: plug-ins/print/print.c:1147 plug-ins/script-fu/script-fu-scripts.c:1355
 #: plug-ins/script-fu/script-fu-server.c:559 plug-ins/sel2path/sel2path.c:350
 #: plug-ins/struc/struc.c:247
 msgid "OK"
@@ -172,7 +172,7 @@ msgstr "ÀßÄê¤Ë´ð¤Å¤¤¤Æ¥Õ¥£¥ë¥¿¤ò²èÁü¤ËÅ¬ÍÑ¤¹¤ë"
 #: plug-ins/common/film.c:1247 plug-ins/common/gif.c:1194
 #: plug-ins/common/gif.c:1302 plug-ins/common/grid.c:470
 #: plug-ins/common/jpeg.c:1578 plug-ins/common/lic.c:1260
-#: plug-ins/common/mail.c:511 plug-ins/common/mapcolor.c:345
+#: plug-ins/common/mail.c:511 plug-ins/common/mapcolor.c:349
 #: plug-ins/common/nova.c:419 plug-ins/common/oilify.c:477
 #: plug-ins/common/papertile.c:524 plug-ins/common/png.c:987
 #: plug-ins/common/ps.c:2132 plug-ins/common/ps.c:2396
@@ -189,7 +189,7 @@ msgstr "ÀßÄê¤Ë´ð¤Å¤¤¤Æ¥Õ¥£¥ë¥¿¤ò²èÁü¤ËÅ¬ÍÑ¤¹¤ë"
 #: plug-ins/gimpressionist/presets.c:400 plug-ins/gimpressionist/sizemap.c:499
 #: plug-ins/ifscompose/ifscompose.c:822 plug-ins/mosaic/mosaic.c:581
 #: plug-ins/print/print.c:1044 plug-ins/print/print.c:1155
-#: plug-ins/script-fu/script-fu-scripts.c:1367
+#: plug-ins/script-fu/script-fu-scripts.c:1364
 #: plug-ins/script-fu/script-fu-server.c:568 plug-ins/sel2path/sel2path.c:359
 #: plug-ins/struc/struc.c:256
 msgid "Cancel"
@@ -1342,7 +1342,7 @@ msgstr "¥¢¥Ë¥á¡¼¥·¥ç¥óºÆÀ¸: "
 #: plug-ins/helpbrowser/helpbrowser.c:787
 #: plug-ins/ifscompose/ifscompose.c:1249
 #: plug-ins/script-fu/script-fu-console.c:205
-#: plug-ins/script-fu/script-fu-scripts.c:1858
+#: plug-ins/script-fu/script-fu-scripts.c:1855
 msgid "Close"
 msgstr "ÊÄ¤¸¤ë"
 
@@ -1844,7 +1844,7 @@ msgstr "<Image>/¥Õ¥£¥ë¥¿/¿§/¿§¤òÆ©ÌÀÅÙ¤Ø..."
 msgid "Color To Alpha"
 msgstr "¿§¤òÆ©ÌÀÅÙ¤Ø"
 
-#: plug-ins/common/colortoalpha.c:436 plug-ins/common/mapcolor.c:395
+#: plug-ins/common/colortoalpha.c:436 plug-ins/common/mapcolor.c:399
 msgid "From:"
 msgstr "¸µ:"
 
@@ -3022,58 +3022,68 @@ msgstr "MIME"
 msgid "mail: some sort of error with the file extension or lack thereof \n"
 msgstr "mail: ¥Õ¥¡¥¤¥ë³ÈÄ¥»Ò¤Ë´Ø¤¹¤ë¥¨¥é¡¼¤¬È¯À¸¤·¤Þ¤·¤¿\n"
 
-#: plug-ins/common/mapcolor.c:98
+#: plug-ins/common/mapcolor.c:100
 msgid "First source color"
 msgstr ""
 
-#: plug-ins/common/mapcolor.c:99
+#: plug-ins/common/mapcolor.c:101
 msgid "Second source color"
 msgstr ""
 
-#: plug-ins/common/mapcolor.c:100
+#: plug-ins/common/mapcolor.c:102
 msgid "First destination color"
 msgstr ""
 
-#: plug-ins/common/mapcolor.c:101
+#: plug-ins/common/mapcolor.c:103
 msgid "Second destination color"
 msgstr ""
 
-#: plug-ins/common/mapcolor.c:135
+#: plug-ins/common/mapcolor.c:139
 msgid ""
 "Adjust current foreground/background color in the drawable to black/white"
 msgstr ""
 
-#: plug-ins/common/mapcolor.c:137
+#: plug-ins/common/mapcolor.c:141
 msgid ""
 "The current foreground color is mapped to black, the current background "
 "color is mapped to white."
 msgstr ""
 
-#: plug-ins/common/mapcolor.c:142
+#: plug-ins/common/mapcolor.c:146
 msgid "<Image>/Filters/Colors/Map/Adjust FG-BG"
 msgstr ""
 
-#: plug-ins/common/mapcolor.c:149 plug-ins/common/mapcolor.c:151
+#: plug-ins/common/mapcolor.c:153 plug-ins/common/mapcolor.c:155
 msgid ""
 "Map two source colors to two destination colors. Other colors are mapped by "
 "interpolation."
 msgstr ""
 
-#: plug-ins/common/mapcolor.c:156
+#: plug-ins/common/mapcolor.c:160
 msgid "<Image>/Filters/Colors/Map/Color Mapping..."
 msgstr ""
 
-#: plug-ins/common/mapcolor.c:201
+#: plug-ins/common/mapcolor.c:205
 msgid ""
 "Color Mapping / Adjust FG/BG:\n"
 "Cannot operate on grey/indexed images"
 msgstr ""
 
-#: plug-ins/common/mapcolor.c:225
+#: plug-ins/common/mapcolor.c:229
 msgid "Adjusting Foreground/Background"
 msgstr ""
 
-#: plug-ins/common/mapcolor.c:395
+#: plug-ins/common/mapcolor.c:275
+#, fuzzy
+msgid "Mapping colors"
+msgstr "¿§¤ò¥Þ¥Ã¥×¤¹¤ë¤¿¤á¤Î¥á¥â¥ê¤¬Ìµ¤¤"
+
+#: plug-ins/common/mapcolor.c:326
+#, fuzzy
+msgid "Map colors"
+msgstr "¥«¥é¡¼"
+
+#: plug-ins/common/mapcolor.c:399
 msgid "To:"
 msgstr ""
 
@@ -3096,8 +3106,8 @@ msgstr ""
 "¸Ä¡¹¤Î¥Á¥ã¥ó¥Í¥ë¤ËÂÐ¤·¤ÆÁàºî¤ò¹Ô¤¦¤è¤¦¤Ê¤³¤È¤Ï¤·¤Þ¤»¤ó. "
 "Â¿¤¯¤Î¿Í¤Ï¥³¥ó¥È¥é¥¹¥È¼«Æ°¿­Ä¹¤Ç¤Ï¤Ê¤¯, "
 "¤³¤Á¤é¤Îµ¡Ç½¤ÎÊý¤òË¾¤ó¤Ç¤¤¤ë¤è¤¦¤Ç¤¹. ¥³¥ó¥È¥é¥¹¥È¼«Æ°¿­Ä¹¤ÎÊý¤òÍÑ¤¤¤ë¤Î¤Ï, "
-"¸µ²èÁü¤¬ËÜÍèÇò¹õ¤Ê¤Î¤Ë²èÁü¤Ë¿§¤¬Ãå¤¤¤Æ¤·¤Þ¤Ã¤Æ¤¤¤ë¾ì¹ç¤Ë¤½¤ì¤ò¼è¤ê½ü¤¯¤¿¤á¤À¤±"
-"¤Ç¤·¤ç¤¦."
+"¸µ²èÁü¤¬ËÜÍèÇò¹õ¤Ê¤Î¤Ë²èÁü¤Ë¿§¤¬Ãå¤¤¤Æ¤·¤Þ¤Ã¤Æ¤¤¤ë¾ì¹ç¤Ë¤½¤ì¤ò¼è¤ê½ü¤¯¤¿¤á¤À¤"
+"±¤Ç¤·¤ç¤¦."
 
 #: plug-ins/common/normalize.c:83
 msgid "<Image>/Image/Colors/Auto/Normalize"
@@ -6874,7 +6884,7 @@ msgid "Copying IFS to image (%d/%d)..."
 msgstr ""
 
 #: plug-ins/imagemap/imap_about.c:33
-#: plug-ins/script-fu/script-fu-scripts.c:1375
+#: plug-ins/script-fu/script-fu-scripts.c:1372
 msgid "About"
 msgstr ""
 
@@ -7167,7 +7177,8 @@ msgid "Creates a clickable imagemap."
 msgstr "¥¯¥ê¥Ã¥«¥Ö¥ë¥Þ¥Ã¥×²èÁüºîÀ®."
 
 #: plug-ins/imagemap/imap_main.c:142
-msgid "<Image>/Filters/Misc/ImageMap..."
+#, fuzzy
+msgid "<Image>/Filters/Web/ImageMap..."
 msgstr "<Image>/¥Õ¥£¥ë¥¿/¤½¤ÎÂ¾/¥¤¥á¡¼¥¸¥Þ¥Ã¥×..."
 
 #: plug-ins/imagemap/imap_main.c:669
@@ -7758,65 +7769,65 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1140
+#: plug-ins/script-fu/script-fu-scripts.c:1137
 msgid "Script Arguments"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1203
+#: plug-ins/script-fu/script-fu-scripts.c:1200
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu ¿§ÁªÂò"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1210
+#: plug-ins/script-fu/script-fu-scripts.c:1207
 msgid "Script Toggle"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1263
+#: plug-ins/script-fu/script-fu-scripts.c:1260
 msgid "Script-Fu File Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1292
+#: plug-ins/script-fu/script-fu-scripts.c:1289
 msgid "Script-fu Pattern Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1298
+#: plug-ins/script-fu/script-fu-scripts.c:1295
 msgid "Script-Fu Gradient Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1306
+#: plug-ins/script-fu/script-fu-scripts.c:1303
 msgid "Script-Fu Brush Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1341
+#: plug-ins/script-fu/script-fu-scripts.c:1338
 msgid " Reset to Defaults "
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1475
+#: plug-ins/script-fu/script-fu-scripts.c:1472
 msgid "NOT SET"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1546
+#: plug-ins/script-fu/script-fu-scripts.c:1543
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1811
+#: plug-ins/script-fu/script-fu-scripts.c:1808
 msgid "Author: "
 msgstr "ºî¼Ô: "
 
-#: plug-ins/script-fu/script-fu-scripts.c:1821
+#: plug-ins/script-fu/script-fu-scripts.c:1818
 msgid "Copyright: "
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1831
+#: plug-ins/script-fu/script-fu-scripts.c:1828
 msgid "Date: "
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1843
+#: plug-ins/script-fu/script-fu-scripts.c:1840
 msgid "Image types: "
 msgstr "²èÁü¼ï: "
 
-#: plug-ins/script-fu/script-fu-scripts.c:1999
+#: plug-ins/script-fu/script-fu-scripts.c:1996
 msgid "Script-Fu Font Selection"
 msgstr ""
 

@@ -139,7 +139,7 @@ static void query()
 			  "Maurits Rijk",
 			  "Maurits Rijk",
 			  "1998-1999",
-			  N_("<Image>/Filters/Misc/ImageMap..."),
+			  N_("<Image>/Filters/Web/ImageMap..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

@@ -1,3 +1,42 @@
+1999-11-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/menus.c: Removed the definitions of the tearoff menu items
+	and build them on the fly. Added N_()-marked submenus instead so
+	they get properly translated. Removed N_() from all separators.
+
+	Hacked menu_translate(): Don't try to translate separators,
+	tearoffs and the /File/MRUxx entries. Avoid multiple lookups in
+	the "gimp-std-plugins" domain. Translating plug-in menu entries is
+	still broken.
+
+	Defined all filter categories for proper translation and a first
+	try to order them and to add separators (please comment...).
+
+	New Category /Filters/Web.
+
+	(Did 'make update-po' in the po* directories and updated the
+	german translations.)
+
+	* app/about_dialog.c
+	* app/brush_select.c
+	* app/drawable.c
+	* app/errors.c
+	* app/free_select.c
+	* app/gradient.c
+	* app/info_dialog.c
+	* app/plug_in.c
+	* app/tool_options.c: minor i18n updates like removing _() from
+	some error messages.
+
+	* app/context_manager.c: a private context for the Xinput Airbrush.
+
+	* plug-ins/common/video.c: Register under /Filters/Distorts
+
+	* plug-ins/imagemap/imap_main.c: Register under /Filters/Web
+	(Marc, what about putting "prepare for gif" and "webify" there?)
+
+	* plug-ins/perl/po/de.po: s/Xtn/Xtns/g
+
 Thu Nov 25 02:56:01 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* app/blend.c

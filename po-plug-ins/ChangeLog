@@ -1,3 +1,11 @@
+1999-11-25  Michael Natterer  <mitch@gimp.org>
+
+	* de.po
+	*jp.po: did a 'make update-po' to get the new menu paths. All
+	other *.po files seems to be somehow broken.
+
+	* de.po: updated some "..." in the plug-ins menu paths.
+
 1999-11-25  Yukihiro Nakai <nakai@gnome.gr.jp>
 
 	* ja.po: Update from SHIRASAKI Yasuhiro

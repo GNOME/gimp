@@ -245,7 +245,7 @@ selection_options_init (SelectionOptions     *options,
 			   _("Intelligent Scissors Options") :
 			   ((tool_type == BY_COLOR_SELECT) ?
 			    _("By-Color Select Options") :
-			    _("ERROR: Unknown Selection Type")))))))),
+			    "ERROR: Unknown Selection Type"))))))),
 		     reset_func);
 
   /*  the main vbox  */
@@ -558,7 +558,7 @@ paint_options_init (PaintOptions         *options,
 				_("Smudge Options") :
 				((tool_type == XINPUT_AIRBRUSH) ?
 				 _("Xinput Airbrush Options") :
-				 _("ERROR: Unknown Paint Type"))))))))))))),
+				 "ERROR: Unknown Paint Type")))))))))))),
 		     reset_func);
 
   /*  initialize the paint options structure  */

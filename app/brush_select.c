@@ -404,7 +404,7 @@ brush_select_new (gchar   *title,
 
   bsp->brush_name = gtk_label_new (_("No Brushes available"));
   gtk_box_pack_start (GTK_BOX (util_box), bsp->brush_name, FALSE, FALSE, 4);
-  bsp->brush_size = gtk_label_new (_("(0 X 0)"));
+  bsp->brush_size = gtk_label_new ("(0 x 0)");
   gtk_box_pack_start (GTK_BOX (util_box), bsp->brush_size, FALSE, FALSE, 2);
 
   gtk_widget_show (bsp->brush_name);
@@ -1420,7 +1420,7 @@ update_active_brush_field (BrushSelect *bsp)
   gtk_label_set_text (GTK_LABEL (bsp->brush_name), brush->name);
 
   /*  Set brush size  */
-  g_snprintf (buf, sizeof (buf), _("(%d X %d)"),
+  g_snprintf (buf, sizeof (buf), "(%d x %d)",
 	      brush->mask->width, brush->mask->height);
   gtk_label_set_text (GTK_LABEL (bsp->brush_size), buf);
 

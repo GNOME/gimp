@@ -642,23 +642,20 @@ plug_in_def_add (PlugInDef *plug_in_def)
    * of one of these things, but Nick Lamb's alien/unknown format
    * loader needs to be able to register no extensions, prefixes or
    * magics. -- austin 13/Feb/99 */
-  tmp = plug_in_def->proc_defs;
-  while (tmp)
-  {
-    proc_def = tmp->data;
-    if (!proc_def->extensions && !proc_def->prefixes && !proc_def->magics &&
-	proc_def->menu_path &&
-	(!strncmp (proc_def->menu_path, "<Load>", 6) ||
-	 !strncmp (proc_def->menu_path, "<Save>", 6)))
+  for (tmp = plug_in_def->proc_defs; tmp; tmp = g_slist_next (tmp))
     {
-      proc_def->extensions = g_strdup("");
+      proc_def = tmp->data;
+
+      if (!proc_def->extensions && !proc_def->prefixes && !proc_def->magics &&
+	  proc_def->menu_path &&
+	  (!strncmp (proc_def->menu_path, "<Load>", 6) ||
+	   !strncmp (proc_def->menu_path, "<Save>", 6)))
+	{
+	  proc_def->extensions = g_strdup("");
+	}
     }
-    tmp = tmp->next;
-  }
 
-
-  tmp = plug_in_defs;
-  while (tmp)
+  for (tmp = plug_in_defs; tmp; tmp = g_slist_next (tmp))
     {
       tplug_in_def = tmp->data;
 
@@ -685,8 +682,6 @@ plug_in_def_add (PlugInDef *plug_in_def)
 	    }
 	  return;
 	}
-
-      tmp = tmp->next;
     }
 
   write_pluginrc = TRUE;
@@ -695,35 +690,29 @@ plug_in_def_add (PlugInDef *plug_in_def)
   g_free (plug_in_def);
 }
 
-char*
-plug_in_menu_path (char *name)
+gchar *
+plug_in_menu_path (gchar *name)
 {
   PlugInDef *plug_in_def;
   PlugInProcDef *proc_def;
   GSList *tmp, *tmp2;
 
-  tmp = plug_in_defs;
-  while (tmp)
+  for (tmp = plug_in_defs; tmp; tmp = g_slist_next (tmp))
     {
       plug_in_def = tmp->data;
-      tmp = tmp->next;
 
-      tmp2 = plug_in_def->proc_defs;
-      while (tmp2)
+      for (tmp2 = plug_in_def->proc_defs; tmp2; tmp2 = g_slist_next (tmp2))
 	{
 	  proc_def = tmp2->data;
-	  tmp2 = tmp2->next;
 
 	  if (strcmp (proc_def->db_info.name, name) == 0)
 	    return proc_def->menu_path;
 	}
     }
 
-  tmp = proc_defs;
-  while (tmp)
+  for (tmp = proc_defs; tmp; tmp = g_slist_next (tmp))
     {
       proc_def = tmp->data;
-      tmp = tmp->next;
 
       if (strcmp (proc_def->db_info.name, name) == 0)
 	return proc_def->menu_path;
@@ -733,10 +722,10 @@ plug_in_menu_path (char *name)
 }
 
 PlugIn*
-plug_in_new (char *name)
+plug_in_new (gchar *name)
 {
   PlugIn *plug_in;
-  char *path;
+  gchar *path;
 
   if (!g_path_is_absolute (name))
     {
@@ -813,7 +802,7 @@ plug_in_destroy (PlugIn *plug_in)
     }
 }
 
-int
+gint
 plug_in_open (PlugIn *plug_in)
 {
   int my_read[2];
@@ -950,17 +939,17 @@ plug_in_open (PlugIn *plug_in)
 	}
 
       plug_in->open = TRUE;
-      return 1;
+      return TRUE;
     }
 
-  return 0;
+  return FALSE;
 }
 
 void
 plug_in_close (PlugIn *plug_in,
-	       int     kill_it)
+	       gint    kill_it)
 {
-  int status;
+  gint status;
 #ifndef G_OS_WIN32
   struct timeval tv;
 #endif
@@ -1244,13 +1233,11 @@ plug_in_set_menu_sensitivity (GimpImageType type)
 {
   PlugInProcDef *proc_def;
   GSList *tmp;
-  int sensitive = FALSE;
+  gboolean sensitive = FALSE;
 
-  tmp = proc_defs;
-  while (tmp)
+  for (tmp = proc_defs; tmp; tmp = g_slist_next (tmp))
     {
       proc_def = tmp->data;
-      tmp = tmp->next;
 
       if (proc_def->image_types_val && proc_def->menu_path)
 	{
@@ -1280,6 +1267,7 @@ plug_in_set_menu_sensitivity (GimpImageType type)
 	    }
 
 	  menus_set_sensitive (proc_def->menu_path, sensitive);
+
           if (last_plug_in && (last_plug_in == &(proc_def->db_info)))
 	    {
 	      menus_set_sensitive ("<Image>/Filters/Repeat last", sensitive);
@@ -2478,7 +2466,7 @@ plug_in_proc_def_remove (PlugInProcDef *proc_def)
 {
   /*  Destroy the menu item  */
   if (proc_def->menu_path)
-    menus_destroy (gettext(proc_def->menu_path));
+    menus_destroy (proc_def->menu_path);
 
   /*  Unregister the procedural database entry  */
   procedural_db_unregister (proc_def->db_info.name);

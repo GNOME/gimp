@@ -773,7 +773,7 @@ gradient_get_color_at (gradient_t *gradient,
 
     default:
       grad_dump_gradient (gradient, stderr);
-      gimp_fatal_error (_("gradient_get_color_at(): Unknown gradient type %d"),
+      gimp_fatal_error ("gradient_get_color_at(): Unknown gradient type %d",
 			(int) seg->type);
       break;
     }
@@ -830,7 +830,7 @@ gradient_get_color_at (gradient_t *gradient,
 
 	default:
 	  grad_dump_gradient (gradient, stderr);
-	  gimp_fatal_error (_("gradient_get_color_at(): Unknown coloring mode %d"),
+	  gimp_fatal_error ("gradient_get_color_at(): Unknown coloring mode %d",
 			    (int) seg->color);
 	  break;
 	}
@@ -1658,8 +1658,7 @@ ed_do_new_gradient_callback (GtkWidget *widget,
 
   if (!gradient_name)
     {
-      g_message (_("ed_do_new_gradient_callback(): "
-		   "oops, received NULL in call_data"));
+      g_warning ("received NULL in call_data");
       return;
     }
 
@@ -1725,8 +1724,7 @@ ed_do_copy_gradient_callback (GtkWidget *widget,
 
   if (!gradient_name)
     {
-      g_message (_("ed_do_copy_gradient_callback(): "
-		   "oops, received NULL in call_data"));
+      g_warning ("received NULL in call_data");
       return;
     }
 
@@ -1812,8 +1810,7 @@ ed_do_rename_gradient_callback (GtkWidget *widget,
 
   if (!gradient_name)
     {
-      g_message (_("ed_do_rename_gradient_callback(): "
-		   "oops, received NULL in call_data"));
+      g_warning ("received NULL in call_data");
       return;
     }
 
@@ -1827,8 +1824,7 @@ ed_do_rename_gradient_callback (GtkWidget *widget,
 
   if (!grad || !grad_list)
     {
-      g_message (_("ed_do_rename_gradient_callback(): "
-		   "oops, can't find gradient to rename"));
+      g_warning ("can't find gradient to rename");
       return;
     }
 
@@ -1929,8 +1925,7 @@ ed_do_delete_gradient_callback (GtkWidget *widget,
     }
 
   if (tmp == NULL)
-    gimp_fatal_error (_("ed_do_delete_gradient_callback(): "
-			"Could not find gradient to delete!"));
+    gimp_fatal_error ("Could not find gradient to delete!");
 
   /* Delete gradient from gradients list */
   gradients_list = g_slist_remove (gradients_list, curr_gradient);
@@ -2010,8 +2005,7 @@ ed_do_save_pov_callback (GtkWidget *widget,
   file = fopen (filename, "wb");
 
   if (!file)
-    g_message (_("ed_do_save_pov_callback(): oops, could not open \"%s\""),
-	       filename);
+    g_message (_("Could not open \"%s\""), filename);
   else
     {
       fprintf (file, "/* color_map file created by the GIMP */\n");
@@ -2745,8 +2739,8 @@ control_do_hint (gint x,
 	  break;
 
 	default:
-	  g_message ("control_do_hint: oops, in_handle is true "
-		     "yet we got handle type %d", (int) handle);
+	  g_warning ("in_handle is true yet we got handle type %d",
+		     (int) handle);
 	  break;
 	}
     }
@@ -2883,8 +2877,8 @@ control_button_press (gint  x,
 	  return;
 
 	default:
-	  g_message ("control_button_press(): oops, in_handle is true "
-		     "yet we got handle type %d", (int) handle);
+	  g_warning ("in_handle is true yet we got handle type %d",
+		     (int) handle);
 	  return;
 	}
     }
@@ -2933,8 +2927,7 @@ control_point_in_handle (gint                 x,
       break;
 
     default:
-      g_message ("control_point_in_handle(): oops, can not handle drag mode %d",
-		 (int) handle);
+      g_warning ("can not handle drag mode %d", (int) handle);
       return FALSE;
     }
 
@@ -3028,7 +3021,7 @@ control_motion (gint x)
       break;
 
     default:
-      gimp_fatal_error (_("control_motion(): Attempt to move bogus handle %d"),
+      gimp_fatal_error ("Attempt to move bogus handle %d",
 			(int) g_editor->control_drag_mode);
       break;
     }

@@ -1,3 +1,9 @@
+1999-11-25  Michael Natterer  <mitch@gimp.org>
+
+	* *.po: did a 'make update-po' to get the new menus paths.
+
+	* de.po: translated the menus paths. Various cleanups.
+
 1999-11-25  Yukihiro Nakai <nakai@gnome.gr.jp>
 
 	* ja.po: Update from SHIRASAKI Yasuhiro.

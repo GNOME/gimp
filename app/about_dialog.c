@@ -231,8 +231,8 @@ about_dialog_create (gint timeout)
       gtk_widget_push_style (style);
       gtk_style_unref (style);
 
-      label_text = g_strdup_printf("%s%s%s", _("Version "), GIMP_VERSION,
-					     _(" brought to you by"));
+      label_text = g_strdup_printf (_("Version %s brought to you by"),
+				    GIMP_VERSION);
       label = gtk_label_new (label_text);
       g_free(label_text); 
       label_text=NULL;
