@@ -111,25 +111,23 @@ PangoColor backgr0und = { 0, 0, 0 };
 static GimpAboutInfo about_info = { 0 };
 static gboolean pp = FALSE;
 
-static gboolean  about_dialog_load_logo   (GtkWidget      *window);
-static void      about_dialog_destroy     (GtkObject      *object,
-                                           gpointer        data);
-static void      about_dialog_unmap       (GtkWidget      *widget,
-                                           gpointer        data);
-static gint      about_dialog_logo_expose (GtkWidget      *widget,
-                                           GdkEventExpose *event,
-                                           gpointer        data);
-static gint      about_dialog_button      (GtkWidget      *widget,
-                                           GdkEventButton *event,
-                                           gpointer        data);
-static gint      about_dialog_key         (GtkWidget      *widget,
-                                           GdkEventKey    *event,
-                                           gpointer        data);
+static gboolean  about_dialog_load_logo   (GtkWidget         *window);
+static void      about_dialog_destroy     (GtkObject         *object,
+                                           gpointer           data);
+static void      about_dialog_unmap       (GtkWidget         *widget,
+                                           gpointer           data);
+static gint      about_dialog_logo_expose (GtkWidget         *widget,
+                                           GdkEventExpose    *event,
+                                           gpointer           data);
+static gint      about_dialog_button      (GtkWidget         *widget,
+                                           GdkEventButton    *event,
+                                           gpointer           data);
+static gint      about_dialog_key         (GtkWidget         *widget,
+                                           GdkEventKey       *event,
+                                           gpointer           data);
 static void      reshuffle_array          (void);
-static gboolean  about_dialog_timer       (gpointer        data);
+static gboolean  about_dialog_timer       (gpointer           data);
 
-
-static gboolean     double_speed     = FALSE;
 
 static PangoFontDescription *font_desc = NULL;
 static gchar      **scroll_text      = authors;
@@ -142,28 +140,24 @@ about_dialog_create (void)
 {
   if (! about_info.about_dialog)
     {
-      GtkWidget *widget;
-      GdkGCValues shape_gcv;
+      GtkWidget   *widget;
+      GdkScreen   *screen;
+      GdkGCValues  shape_gcv;
 
       about_info.visible = FALSE;
       about_info.state = 0;
       about_info.animstep = -1;
 
-      widget = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+      widget = g_object_new (GTK_TYPE_WINDOW,
+                             "type",            GTK_WINDOW_POPUP,
+                             "title",           _("About The GIMP"),
+                             "window_position", GTK_WIN_POS_CENTER,
+                             "resizable",       FALSE,
+                             NULL);
+
       about_info.about_dialog = widget;
 
-      gtk_window_set_type_hint (GTK_WINDOW (widget),
-                                GDK_WINDOW_TYPE_HINT_SPLASHSCREEN);
-      gtk_window_set_wmclass (GTK_WINDOW (widget), "about_dialog", "Gimp");
-      gtk_window_set_title (GTK_WINDOW (widget), _("About The GIMP"));
-      gtk_window_set_position (GTK_WINDOW (widget), GTK_WIN_POS_CENTER);
-
-      /* The window must not be resizeable, since otherwise
-       * the copying of nonexisting parts of the image pixmap
-       * would result in an endless loop due to the X-Server
-       * generating expose events on the pixmap. */
-
-      gtk_window_set_resizable (GTK_WINDOW (widget), FALSE);
+      gtk_window_set_role (GTK_WINDOW (widget), "about-dialog");
 
       g_signal_connect (widget, "destroy",
                         G_CALLBACK (about_dialog_destroy),
@@ -186,6 +180,14 @@ about_dialog_create (void)
 	  about_info.about_dialog = NULL;
 	  return NULL;
 	}
+
+      /*  move the window to the middle of the screen  */
+      screen = gtk_widget_get_screen (widget);
+      gtk_window_move (GTK_WINDOW (widget),
+                       (gdk_screen_get_width (screen) -
+                        about_info.pixmaparea.width)  / 2,
+                       (gdk_screen_get_height (screen) -
+                        about_info.pixmaparea.height) / 2);
 
       /* place the scrolltext at the bottom of the image */
       about_info.textarea.width = about_info.pixmaparea.width;
@@ -254,14 +256,11 @@ about_dialog_create (void)
 
   if (! GTK_WIDGET_VISIBLE (about_info.about_dialog))
     {
-      if (! double_speed)
-	{
-          about_info.state = 0;
-          about_info.index = 0;
+      about_info.state = 0;
+      about_info.index = 0;
 
-          reshuffle_array ();
-          pango_layout_set_text (about_info.layout, "", -1);
-	}
+      reshuffle_array ();
+      pango_layout_set_text (about_info.layout, "", -1);
     }
 
   gtk_window_present (GTK_WINDOW (about_info.about_dialog));

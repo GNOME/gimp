@@ -1,5 +1,11 @@
 2004-03-14  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/about-dialog.c: don't abuse the SPLASHSCREEN window type
+	hint, instead make the about dialog a popup window and center it
+	explicitely.
+
+2004-03-14  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimptooldialog.c (gimp_tool_dialog_new): allow to
 	pass NULL as parent widget.
 
