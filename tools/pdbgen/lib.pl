@@ -530,7 +530,7 @@ LGPL
 	    }
 
 	    foreach (split(/,/, $arglist->[2])) {
-		/(\w+) \S+/;
+		next if !/(\w+) \S+/;
 		$len = length($1) + 1;
 		my $num = scalar @{[ /\*/g ]};
 		$seen = $num if $seen < $num;
