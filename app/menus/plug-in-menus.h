@@ -28,7 +28,8 @@ void   plug_in_menus_setup        (GimpUIManager   *manager,
                                    const gchar     *ui_path);
 void   plug_in_menus_add_proc     (GimpUIManager   *manager,
                                    const gchar     *ui_path,
-                                   PlugInProcDef   *proc_def);
+                                   PlugInProcDef   *proc_def,
+                                   const gchar     *menu_path);
 void   plug_in_menus_remove_proc  (GimpUIManager   *manager,
                                    PlugInProcDef   *proc_def);
 

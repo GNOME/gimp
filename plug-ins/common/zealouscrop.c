@@ -66,7 +66,7 @@ query (void)
 			  "Adam D. Moss",
 			  "Adam D. Moss",
 			  "1997",
-			  N_("<Image>/Layer/Transform/_Zealous Crop"),
+			  N_("<Image>/Layer/Crop/_Zealous Crop"),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

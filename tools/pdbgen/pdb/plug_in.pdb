@@ -147,14 +147,14 @@ sub plugins_query {
     {
       proc_def = (PlugInProcDef *) list->data;
 
-      if (proc_def->prog && proc_def->menu_path)
+      if (proc_def->prog && proc_def->menu_paths)
 	{
-	  gchar *name = strrchr (proc_def->menu_path, '/');
+	  gchar *name = strrchr (proc_def->menu_paths->data, '/');
 
 	  if (name)
 	    name = name + 1;
 	  else
-	    name = proc_def->menu_path;
+	    name = proc_def->menu_paths->data;
 
 	  if (search_str && match_strings (&sregex, name))
 	    continue;
@@ -177,21 +177,21 @@ sub plugins_query {
 
       proc_def = (PlugInProcDef *) list->data;
 
-      if (proc_def->prog && proc_def->menu_path)
+      if (proc_def->prog && proc_def->menu_paths)
 	{
 	  ProcRecord *pr = &proc_def->db_info;
 
-	  gchar *name = strrchr (proc_def->menu_path, '/');
+	  gchar *name = strrchr (proc_def->menu_paths->data, '/');
 
 	  if (name)
 	    name = name + 1;
 	  else
-	    name = proc_def->menu_path;
+	    name = proc_def->menu_paths->data;
 
 	  if (search_str && match_strings (&sregex,name))
 	    continue;
 
-	  menu_strs[i]     = gimp_strip_uline (proc_def->menu_path);
+	  menu_strs[i]     = gimp_strip_uline (proc_def->menu_paths->data);
 	  accel_strs[i]    = g_strdup (proc_def->accelerator);
 	  prog_strs[i]     = g_strdup (proc_def->prog);
 	  types_strs[i]    = g_strdup (proc_def->image_types);
@@ -286,6 +286,54 @@ CODE
     );
 }
 
+sub plugin_menu_add {
+    $blurb = "Register an additional menu path for a plug-in procedure.";
+
+    $help = <<HELP;
+This procedure installs an additional menu entry for the given procedure.
+HELP
+
+    $author = $copyright = 'Michael Natterer <mitch@gimp.org>';
+    $date = '2004';
+
+    @inargs = (
+	{ name => 'procedure_name', type => 'string',
+	  desc => 'The procedure for which to install the menu path' },
+	{ name => 'menu_path', type => 'string',
+	  desc => 'The procedure\'s additional menu path' }
+    );
+
+    %invoke = (
+        success => 'TRUE',
+        code => <<'CODE',
+{
+  if (gimp->current_plug_in && gimp->current_plug_in->query)
+    {
+      GSList *list;
+
+      for (list = gimp->current_plug_in->plug_in_def->proc_defs;
+           list;
+           list = g_slist_next (list))
+        {
+          PlugInProcDef *proc_def = list->data;
+
+          if (! strcmp (procedure_name, proc_def->db_info.name))
+            {
+              proc_def->menu_paths = g_list_append (proc_def->menu_paths,
+                                                    g_strdup (menu_path));
+
+              break;
+            }
+        }
+
+      if (! list)
+        success = FALSE;
+    }
+}
+CODE
+    );
+}
+
 
 $extra{app}->{code} = <<'CODE';
 static int
@@ -302,8 +350,8 @@ CODE
               "plug-in/plug-in-progress.h");
 
 @procs = qw(progress_init progress_update plugins_query
-	    plugin_domain_register plugin_help_register);
-%exports = (app => [@procs], lib => [@procs[0,1,3,4]]);
+	    plugin_domain_register plugin_help_register plugin_menu_add);
+%exports = (app => [@procs], lib => [@procs[0,1,3,4,5]]);
 
 $desc = 'Plug-in';
 

@@ -73,7 +73,10 @@ plug_in_proc_def_free (PlugInProcDef *proc_def)
   g_free (proc_def->db_info.values);
 
   g_free (proc_def->prog);
-  g_free (proc_def->menu_path);
+
+  g_list_foreach (proc_def->menu_paths, (GFunc) g_free, NULL);
+  g_list_free (proc_def->menu_paths);
+
   g_free (proc_def->accelerator);
   g_free (proc_def->extensions);
   g_free (proc_def->prefixes);
@@ -149,7 +152,7 @@ plug_in_proc_def_compare_menu_path (gconstpointer  a,
   const PlugInProcDef *proc_def_a = a;
   const PlugInProcDef *proc_def_b = b;
 
-  if (proc_def_a->menu_path && proc_def_b->menu_path)
+  if (proc_def_a->menu_paths && proc_def_b->menu_paths)
     {
       const gchar *progname_a;
       const gchar *progname_b;
@@ -166,9 +169,9 @@ plug_in_proc_def_compare_menu_path (gconstpointer  a,
       domain_b = plug_ins_locale_domain (gimp, progname_b, NULL);
 
       menu_path_a = gimp_strip_uline (dgettext (domain_a,
-                                                proc_def_a->menu_path));
+                                                proc_def_a->menu_paths->data));
       menu_path_b = gimp_strip_uline (dgettext (domain_b,
-                                                proc_def_b->menu_path));
+                                                proc_def_b->menu_paths->data));
 
       retval = g_utf8_collate (menu_path_a, menu_path_b);
 
@@ -177,9 +180,9 @@ plug_in_proc_def_compare_menu_path (gconstpointer  a,
 
       return retval;
     }
-  else if (proc_def_a->menu_path)
+  else if (proc_def_a->menu_paths)
     return 1;
-  else if (proc_def_b->menu_path)
+  else if (proc_def_b->menu_paths)
     return -1;
 
   return 0;

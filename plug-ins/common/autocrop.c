@@ -6,8 +6,8 @@
 
 /* 1999/04/09 -- Sven Neumann <sven@gimp.org>
  * Fixed bad crash that occured when running on an entirely blank image.
- * Cleaned up the code a bit, while I was at it. 
- */ 
+ * Cleaned up the code a bit, while I was at it.
+ */
 
 #include "config.h"
 
@@ -72,7 +72,7 @@ query (void)
                           "Tim Newsome",
                           "Tim Newsome",
                           "1997",
-                          N_("<Image>/Image/Transform/_Autocrop"),
+                          N_("<Image>/Image/Crop/_Autocrop"),
                           "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
@@ -95,12 +95,12 @@ run (const gchar      *name,
 
   *nreturn_vals = 1;
   *return_vals = values;
-  
+
   run_mode = param[0].data.d_int32;
   interactive = (run_mode != GIMP_RUN_NONINTERACTIVE);
 
   INIT_I18N();
-  
+
   if (n_params != 3)
     {
       status = GIMP_PDB_CALLING_ERROR;
@@ -114,7 +114,7 @@ run (const gchar      *name,
   /*  Make sure that the drawable is gray or RGB color  */
   if (gimp_drawable_is_rgb (drawable->drawable_id) ||
       gimp_drawable_is_gray (drawable->drawable_id)  ||
-      gimp_drawable_is_indexed (drawable->drawable_id)) 
+      gimp_drawable_is_indexed (drawable->drawable_id))
   {
     if (interactive)
       gimp_progress_init (_("Cropping..."));
@@ -125,8 +125,8 @@ run (const gchar      *name,
 
     if (interactive)
       gimp_displays_flush ();
-  } 
-  else 
+  }
+  else
   {
       status = GIMP_PDB_EXECUTION_ERROR;
   }
@@ -147,24 +147,24 @@ doit (GimpDrawable *drawable,
   gint32        nx, ny, nw, nh;
   guchar       *buffer;
   guchar        color[4] = {0, 0, 0, 0};
-  
+
   width  = drawable->width;
   height = drawable->height;
   bytes  = drawable->bpp;
-  
+
   nx = 0;
   ny = 0;
   nw = width;
   nh = height;
-  
+
   /*  initialize the pixel regions  */
   gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
-  
+
   /* First, let's figure out what exactly to crop. */
   buffer = g_malloc ((width > height ? width : height) * bytes);
-  
+
   guess_bgcolor (&srcPR, width, height, bytes, color);
-  
+
   /* Check how many of the top lines are uniform. */
   abort = 0;
   for (y = 0; y < height && !abort; y++)
@@ -187,7 +187,7 @@ doit (GimpDrawable *drawable,
 
   if (show_progress)
     gimp_progress_update (0.25);
-  
+
   /* Check how many of the bottom lines are uniform. */
   abort = 0;
   for (y = height - 1; y >= 0 && !abort; y--)
@@ -199,10 +199,10 @@ doit (GimpDrawable *drawable,
         }
     }
   nh = y - ny + 2;
-  
+
   if (show_progress)
     gimp_progress_update (0.5);
-  
+
   /* Check how many of the left lines are uniform. */
   abort = 0;
   for (x = 0; x < width && !abort; x++)
@@ -216,10 +216,10 @@ doit (GimpDrawable *drawable,
   x--;
   nx = x;
   nw = width - x;
-  
+
   if (show_progress)
     gimp_progress_update (0.75);
-  
+
   /* Check how many of the right lines are uniform. */
   abort = 0;
   for (x = width - 1; x >= 0 && !abort; x--)
@@ -231,9 +231,9 @@ doit (GimpDrawable *drawable,
         }
     }
   nw = x - nx + 2;
-  
+
   g_free (buffer);
-  
+
   gimp_drawable_detach (drawable);
 
   if (nw != width || nh != height)
@@ -251,12 +251,12 @@ guess_bgcolor (GimpPixelRgn *pr,
                guchar       *color)
 {
   guchar tl[4], tr[4], bl[4], br[4];
-  
+
   gimp_pixel_rgn_get_pixel (pr, tl, 0, 0);
   gimp_pixel_rgn_get_pixel (pr, tr, width - 1, 0);
   gimp_pixel_rgn_get_pixel (pr, bl, 0, height - 1);
   gimp_pixel_rgn_get_pixel (pr, br, width - 1, height - 1);
-  
+
   /* Algorithm pinched from pnmcrop.
    * To guess the background, first see if 3 corners are equal.
    * Then if two are equal.
@@ -309,7 +309,7 @@ guess_bgcolor (GimpPixelRgn *pr,
     }
 }
 
-static gint 
+static gint
 colors_equal (guchar *col1,
               guchar *col2,
               gint    bytes)
@@ -323,7 +323,7 @@ colors_equal (guchar *col1,
     {
       return 1;                         /* handle zero alpha */
     }
-  
+
   for (b = 0; b < bytes; b++)
     {
       if (col1[b] != col2[b])
@@ -332,6 +332,6 @@ colors_equal (guchar *col1,
           break;
         }
     }
-  
+
   return equal;
 }

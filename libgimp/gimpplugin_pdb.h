@@ -35,6 +35,8 @@ gboolean gimp_plugin_domain_register (const gchar *domain_name,
 				      const gchar *domain_path);
 gboolean gimp_plugin_help_register   (const gchar *domain_name,
 				      const gchar *domain_uri);
+gboolean gimp_plugin_menu_add        (const gchar *procedure_name,
+				      const gchar *menu_path);
 
 
 G_END_DECLS

@@ -27,7 +27,7 @@
 struct _PlugInProcDef
 {
   gchar           *prog;
-  gchar           *menu_path;
+  GList           *menu_paths;
   gchar           *accelerator;
   gchar           *extensions;
   gchar           *prefixes;

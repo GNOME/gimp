@@ -239,14 +239,22 @@ gui_menus_create_entry (Gimp          *gimp,
        list;
        list = g_list_next (list))
     {
-      if (! strncmp (proc_def->menu_path, "<Toolbox>", 9))
+      GList *path;
+
+      for (path = proc_def->menu_paths; path; path = g_list_next (path))
         {
-          plug_in_menus_add_proc (list->data, "/toolbox-menubar", proc_def);
-        }
-      else if (! strncmp (proc_def->menu_path, "<Image>", 7))
-        {
-          plug_in_menus_add_proc (list->data, "/image-menubar", proc_def);
-          plug_in_menus_add_proc (list->data, "/image-popup",   proc_def);
+          if (! strncmp (path->data, "<Toolbox>", 9))
+            {
+              plug_in_menus_add_proc (list->data, "/toolbox-menubar", proc_def,
+                                      path->data);
+            }
+          else if (! strncmp (path->data, "<Image>", 7))
+            {
+              plug_in_menus_add_proc (list->data, "/image-menubar", proc_def,
+                                      path->data);
+              plug_in_menus_add_proc (list->data, "/image-popup",   proc_def,
+                                      path->data);
+            }
         }
     }
 }

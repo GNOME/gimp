@@ -51,6 +51,7 @@ static ProcRecord progress_update_proc;
 static ProcRecord plugins_query_proc;
 static ProcRecord plugin_domain_register_proc;
 static ProcRecord plugin_help_register_proc;
+static ProcRecord plugin_menu_add_proc;
 
 void
 register_plug_in_procs (Gimp *gimp)
@@ -60,6 +61,7 @@ register_plug_in_procs (Gimp *gimp)
   procedural_db_register (gimp, &plugins_query_proc);
   procedural_db_register (gimp, &plugin_domain_register_proc);
   procedural_db_register (gimp, &plugin_help_register_proc);
+  procedural_db_register (gimp, &plugin_menu_add_proc);
 }
 
 static int
@@ -208,14 +210,14 @@ plugins_query_invoker (Gimp        *gimp,
     {
       proc_def = (PlugInProcDef *) list->data;
 
-      if (proc_def->prog && proc_def->menu_path)
+      if (proc_def->prog && proc_def->menu_paths)
         {
-          gchar *name = strrchr (proc_def->menu_path, '/');
+          gchar *name = strrchr (proc_def->menu_paths->data, '/');
 
           if (name)
             name = name + 1;
           else
-            name = proc_def->menu_path;
+            name = proc_def->menu_paths->data;
 
           if (search_str && match_strings (&sregex, name))
             continue;
@@ -238,21 +240,21 @@ plugins_query_invoker (Gimp        *gimp,
 
       proc_def = (PlugInProcDef *) list->data;
 
-      if (proc_def->prog && proc_def->menu_path)
+      if (proc_def->prog && proc_def->menu_paths)
         {
           ProcRecord *pr = &proc_def->db_info;
 
-          gchar *name = strrchr (proc_def->menu_path, '/');
+          gchar *name = strrchr (proc_def->menu_paths->data, '/');
 
           if (name)
             name = name + 1;
           else
-            name = proc_def->menu_path;
+            name = proc_def->menu_paths->data;
 
           if (search_str && match_strings (&sregex,name))
             continue;
 
-          menu_strs[i]     = gimp_strip_uline (proc_def->menu_path);
+          menu_strs[i]     = gimp_strip_uline (proc_def->menu_paths->data);
           accel_strs[i]    = g_strdup (proc_def->accelerator);
           prog_strs[i]     = g_strdup (proc_def->prog);
           types_strs[i]    = g_strdup (proc_def->image_types);
@@ -491,4 +493,80 @@ static ProcRecord plugin_help_register_proc =
   0,
   NULL,
   { { plugin_help_register_invoker } }
+};
+
+static Argument *
+plugin_menu_add_invoker (Gimp        *gimp,
+                         GimpContext *context,
+                         Argument    *args)
+{
+  gboolean success = TRUE;
+  gchar *procedure_name;
+  gchar *menu_path;
+
+  procedure_name = (gchar *) args[0].value.pdb_pointer;
+  if (procedure_name == NULL || !g_utf8_validate (procedure_name, -1, NULL))
+    success = FALSE;
+
+  menu_path = (gchar *) args[1].value.pdb_pointer;
+  if (menu_path == NULL || !g_utf8_validate (menu_path, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      if (gimp->current_plug_in && gimp->current_plug_in->query)
+        {
+          GSList *list;
+
+          for (list = gimp->current_plug_in->plug_in_def->proc_defs;
+               list;
+               list = g_slist_next (list))
+            {
+              PlugInProcDef *proc_def = list->data;
+
+              if (! strcmp (procedure_name, proc_def->db_info.name))
+                {
+                  proc_def->menu_paths = g_list_append (proc_def->menu_paths,
+                                                        g_strdup (menu_path));
+
+                  break;
+                }
+            }
+
+          if (! list)
+            success = FALSE;
+        }
+    }
+
+  return procedural_db_return_args (&plugin_menu_add_proc, success);
+}
+
+static ProcArg plugin_menu_add_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "procedure_name",
+    "The procedure for which to install the menu path"
+  },
+  {
+    GIMP_PDB_STRING,
+    "menu_path",
+    "The procedure's additional menu path"
+  }
+};
+
+static ProcRecord plugin_menu_add_proc =
+{
+  "gimp_plugin_menu_add",
+  "Register an additional menu path for a plug-in procedure.",
+  "This procedure installs an additional menu entry for the given procedure.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer <mitch@gimp.org>",
+  "2004",
+  GIMP_INTERNAL,
+  2,
+  plugin_menu_add_inargs,
+  0,
+  NULL,
+  { { plugin_menu_add_invoker } }
 };

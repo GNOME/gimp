@@ -1064,19 +1064,22 @@ query(void)
   static GimpParamDef return_vals[] = { OUT_ARGS };
 
   /* the installation of the plugin */
-  gimp_install_procedure(PLUG_IN_NAME,
-			 PLUG_IN_DESCRIPTION,
-			 PLUG_IN_HELP,
-			 PLUG_IN_AUTHOR,
-			 PLUG_IN_COPYRIGHT,
-			 PLUG_IN_VERSION,
-			 N_("<Toolbox>/File/Acquire/_Screen Shot..."),
-			 NULL,
-			 GIMP_PLUGIN,
-			 NUMBER_IN_ARGS,
-			 NUMBER_OUT_ARGS,
-			 args,
-			 return_vals);
+  gimp_install_procedure (PLUG_IN_NAME,
+                          PLUG_IN_DESCRIPTION,
+                          PLUG_IN_HELP,
+                          PLUG_IN_AUTHOR,
+                          PLUG_IN_COPYRIGHT,
+                          PLUG_IN_VERSION,
+                          N_("<Toolbox>/File/Acquire/_Screen Shot..."),
+                          NULL,
+                          GIMP_PLUGIN,
+                          NUMBER_IN_ARGS,
+                          NUMBER_OUT_ARGS,
+                          args,
+                          return_vals);
+
+  gimp_plugin_menu_add (PLUG_IN_NAME,
+                        N_("<Image>/File/Acquire/_Screen Shot..."));
 }
 
 /* Return values storage */

@@ -747,7 +747,11 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
   proc_def = plug_in_proc_def_new ();
 
   proc_def->prog            = g_strdup (prog);
-  proc_def->menu_path       = g_strdup (proc_install->menu_path);
+
+  if (proc_install->menu_path)
+    proc_def->menu_paths    = g_list_append (proc_def->menu_paths,
+                                             g_strdup (proc_install->menu_path));
+
   proc_def->accelerator     = NULL;
   proc_def->extensions      = NULL;
   proc_def->prefixes        = NULL;

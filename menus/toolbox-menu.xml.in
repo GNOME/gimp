@@ -5,10 +5,14 @@
   <menubar action="toolbox-menubar">
 
     <menu action="file-menu" name="File">
-      <menuitem action="file-new" />
-      <menuitem action="file-open" />
+      <placeholder name="New">
+        <menuitem action="file-new" />
+      </placeholder>
+      <placeholder name="Open">
+        <menuitem action="file-open" />
+      </placeholder>
       <menu action="file-open-recent-menu" name="Open Recent">
-        <placeholder name="file-open-recent-placeholder" />
+        <placeholder name="Files" />
         <separator />
         <menuitem action="dialogs-document-history" />
       </menu>

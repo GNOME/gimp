@@ -51,6 +51,8 @@ static GTokenType plug_in_def_deserialize        (Gimp          *gimp,
                                                   GScanner      *scanner);
 static GTokenType plug_in_proc_def_deserialize   (GScanner      *scanner,
                                                   PlugInProcDef *proc_def);
+static GTokenType plug_in_menu_path_deserialize  (GScanner      *scanner,
+                                                  PlugInProcDef *proc_def);
 static GTokenType plug_in_proc_arg_deserialize   (GScanner      *scanner,
                                                   ProcArg       *arg);
 static GTokenType plug_in_locale_def_deserialize (GScanner      *scanner,
@@ -69,7 +71,8 @@ enum
   LOCALE_DEF,
   HELP_DEF,
   HAS_INIT,
-  PROC_ARG
+  PROC_ARG,
+  MENU_PATH
 };
 
 
@@ -107,6 +110,8 @@ plug_in_rc_parse (Gimp         *gimp,
                               "has-init", GINT_TO_POINTER (HAS_INIT));
   g_scanner_scope_add_symbol (scanner, PLUG_IN_DEF,
                               "proc-arg", GINT_TO_POINTER (PROC_ARG));
+  g_scanner_scope_add_symbol (scanner, PLUG_IN_DEF,
+                              "menu-path", GINT_TO_POINTER (MENU_PATH));
 
   token = G_TOKEN_LEFT_PAREN;
 
@@ -264,6 +269,7 @@ plug_in_proc_def_deserialize (GScanner      *scanner,
                               PlugInProcDef *proc_def)
 {
   GTokenType token;
+  gint       n_menu_paths;
   gint       i;
 
   if (! gimp_scanner_parse_string (scanner, &proc_def->db_info.name))
@@ -280,8 +286,17 @@ plug_in_proc_def_deserialize (GScanner      *scanner,
     return G_TOKEN_STRING;
   if (! gimp_scanner_parse_string (scanner, &proc_def->db_info.date))
     return G_TOKEN_STRING;
-  if (! gimp_scanner_parse_string (scanner, &proc_def->menu_path))
+
+  if (! gimp_scanner_parse_int (scanner, &n_menu_paths))
     return G_TOKEN_STRING;
+
+  for (i = 0; i < n_menu_paths; i++)
+    {
+      token = plug_in_menu_path_deserialize (scanner, proc_def);
+      if (token != G_TOKEN_LEFT_PAREN)
+        return token;
+    }
+
   if (! gimp_scanner_parse_string (scanner, &proc_def->extensions))
     return G_TOKEN_STRING;
   if (! gimp_scanner_parse_string (scanner, &proc_def->prefixes))
@@ -320,6 +335,30 @@ plug_in_proc_def_deserialize (GScanner      *scanner,
       if (token != G_TOKEN_LEFT_PAREN)
         return token;
     }
+
+  if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
+    return G_TOKEN_RIGHT_PAREN;
+
+  return G_TOKEN_LEFT_PAREN;
+}
+
+static GTokenType
+plug_in_menu_path_deserialize (GScanner      *scanner,
+                               PlugInProcDef *proc_def)
+{
+  gchar *menu_path;
+
+  if (! gimp_scanner_parse_token (scanner, G_TOKEN_LEFT_PAREN))
+    return G_TOKEN_LEFT_PAREN;
+
+  if (! gimp_scanner_parse_token (scanner, G_TOKEN_SYMBOL) ||
+      GPOINTER_TO_INT (scanner->value.v_symbol) != MENU_PATH)
+    return G_TOKEN_SYMBOL;
+
+  if (! gimp_scanner_parse_string (scanner, &menu_path))
+    return G_TOKEN_STRING;
+
+  proc_def->menu_paths = g_list_append (proc_def->menu_paths, menu_path);
 
   if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
     return G_TOKEN_RIGHT_PAREN;
@@ -424,6 +463,7 @@ plug_in_rc_write (GSList       *plug_in_defs,
   PlugInProcDef    *proc_def;
   GSList           *list;
   GSList           *list2;
+  GList            *list3;
   gint              i;
 
   writer = gimp_config_writer_new_file (filename,
@@ -473,8 +513,17 @@ plug_in_rc_write (GSList       *plug_in_defs,
 	      gimp_config_writer_linefeed (writer);
 	      gimp_config_writer_string (writer, proc_def->db_info.date);
 	      gimp_config_writer_linefeed (writer);
-	      gimp_config_writer_string (writer, proc_def->menu_path);
-	      gimp_config_writer_linefeed (writer);
+
+              gimp_config_writer_printf (writer, "%d",
+                                         g_list_length (proc_def->menu_paths));
+              for (list3 = proc_def->menu_paths; list3; list3 = list3->next)
+                {
+                  gimp_config_writer_open (writer, "menu-path");
+                  gimp_config_writer_string (writer, list3->data);
+                  gimp_config_writer_close (writer);
+                }
+              gimp_config_writer_linefeed (writer);
+
 	      gimp_config_writer_string (writer, proc_def->extensions);
 	      gimp_config_writer_linefeed (writer);
 	      gimp_config_writer_string (writer, proc_def->prefixes);

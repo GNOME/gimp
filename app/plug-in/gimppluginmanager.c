@@ -527,9 +527,9 @@ plug_ins_def_add_from_rc (Gimp      *gimp,
       if (! proc_def->extensions &&
           ! proc_def->prefixes   &&
           ! proc_def->magics     &&
-	  proc_def->menu_path    &&
-	  (! strncmp (proc_def->menu_path, "<Load>", 6) ||
-	   ! strncmp (proc_def->menu_path, "<Save>", 6)))
+	  proc_def->menu_paths   &&
+	  (! strncmp (proc_def->menu_paths->data, "<Load>", 6) ||
+	   ! strncmp (proc_def->menu_paths->data, "<Save>", 6)))
 	{
 	  proc_def->extensions = g_strdup ("");
 	}
@@ -589,7 +589,7 @@ plug_ins_temp_proc_def_add (Gimp          *gimp,
 
   if (! gimp->no_interface)
     {
-      if (proc_def->menu_path)
+      if (proc_def->menu_paths)
         gimp_menus_create_entry (gimp, proc_def);
     }
 
@@ -609,7 +609,7 @@ plug_ins_temp_proc_def_remove (Gimp          *gimp,
 
   if (! gimp->no_interface)
     {
-      if (proc_def->menu_path)
+      if (proc_def->menu_paths)
         gimp_menus_delete_entry (gimp, proc_def);
     }
 

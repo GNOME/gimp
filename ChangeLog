@@ -1,3 +1,57 @@
+2004-05-06  Michael Natterer  <mitch@gimp.org>
+
+	Enabled multiple menu entries per plug-in procedure:
+
+	* app/plug-in/plug-in-proc.[ch]: changed "gchar *menu_path" to
+	"GList *menu_paths".
+
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-in-rc.c
+	* app/plug-in/plug-in.c
+	* app/plug-in/plug-ins.c
+	* app/menus/menus.c
+	* app/widgets/gimpfiledialog.c
+	* app/xcf/xcf.c: changed accordingly.
+
+	* app/actions/file-dialog-actions.c
+	* app/actions/plug-in-actions.c: create an action for the first
+	element of proc_def->menu_paths.
+
+	* app/gui/gui-vtable.c
+	* app/menus/plug-in-menus.[ch]: create proxy widgets for each
+	element of proc_def->menu_paths.
+
+	* tools/pdbgen/pdb/plug_in.pdb: added new function
+	gimp_plugin_menu_add() which can be called during query() and adds
+	a menu path to a procedure registered by the calling plugin.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/plug_in_cmds.c
+	* libgimp/gimpplugin_pdb.[ch]: regenerated.
+
+	* menus/image-menu.xml.in
+	* menus/toolbox-menu.xml.in: added lots of <placeholder>s for
+	logical groups (like Image/Resize, Image/Scale, Image/Crop
+	etc.). Added empty placeholder File/Send for stuff like print and
+	mail. Added an "Acquire" menu under <Image>/File
+
+	* plug-ins/common/mail.c
+	* plug-ins/print/print.c
+	* plug-ins/common/winprint.c: register under File/Send.
+
+	* plug-ins/common/screenshot.c
+	* plug-ins/winsnap/winsnap.c: also register under
+	<Image>/File/Acquire.
+
+	* plug-ins/common/autocrop.c
+	* plug-ins/common/ccanalyze.c
+	* plug-ins/common/colortoalpha.c
+	* plug-ins/common/threshold_alpha.c
+	* plug-ins/common/zealouscrop.c: register additional menu entries
+	under placeholders in the "Image" and "Layer" menus. This is not
+	meant to be final but just a hint to keep in mind when
+	reorganizing the plug-in menus.
+
 2004-05-06  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/resize-dialog.[ch]: cleaned up variable names and

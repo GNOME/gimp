@@ -904,14 +904,14 @@ plug_in_get_undo_desc (PlugIn *plug_in)
   else
     proc_def = NULL;
 
-  if (proc_def && proc_def->menu_path)
+  if (proc_def && proc_def->menu_paths)
     {
       const gchar *path;
       gchar       *ellipses;
 
       path = dgettext (plug_ins_locale_domain (plug_in->gimp,
                                                plug_in->prog, NULL),
-                       proc_def->menu_path);
+                       proc_def->menu_paths->data);
 
       stripped  = gimp_strip_uline (path);
       undo_desc = g_path_get_basename (stripped);

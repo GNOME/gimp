@@ -41,7 +41,7 @@
 
 /*  local function prototypes  */
 
-static gboolean plug_in_menus_tree_traverse (gpointer       foo,
+static gboolean plug_in_menus_tree_traverse (const gchar   *menu_path,
                                              PlugInProcDef *proc_def,
                                              GimpUIManager *manager);
 static void     plug_in_menus_build_path    (GimpUIManager *manager,
@@ -123,29 +123,33 @@ plug_in_menus_setup (GimpUIManager *manager,
       PlugInProcDef *proc_def = list->data;
 
       if (proc_def->prog         &&
-          proc_def->menu_path    &&
+          proc_def->menu_paths   &&
           ! proc_def->extensions &&
           ! proc_def->prefixes   &&
           ! proc_def->magics)
         {
-          if ((! strncmp (proc_def->menu_path, "<Toolbox>", 9) &&
-               ! strcmp (ui_path, "/toolbox-menubar")) ||
-              (! strncmp (proc_def->menu_path, "<Image>", 7) &&
-               (! strcmp (ui_path, "/image-menubar") ||
-                ! strcmp (ui_path, "/image-popup"))))
+          GList *path;
+
+          for (path = proc_def->menu_paths; path; path = g_list_next (path))
             {
-              const gchar *progname;
-              const gchar *locale_domain;
-              gchar       *key;
+              if ((! strncmp (path->data, "<Toolbox>", 9) &&
+                   ! strcmp (ui_path, "/toolbox-menubar")) ||
+                  (! strncmp (path->data, "<Image>", 7) &&
+                   (! strcmp (ui_path, "/image-menubar") ||
+                    ! strcmp (ui_path, "/image-popup"))))
+                {
+                  const gchar *progname;
+                  const gchar *locale_domain;
+                  gchar       *key;
 
-              progname = plug_in_proc_def_get_progname (proc_def);
+                  progname = plug_in_proc_def_get_progname (proc_def);
 
-              locale_domain = plug_ins_locale_domain (manager->gimp,
-                                                      progname, NULL);
+                  locale_domain = plug_ins_locale_domain (manager->gimp,
+                                                          progname, NULL);
 
-              key = gimp_strip_uline (dgettext (locale_domain,
-                                                proc_def->menu_path));
-              g_tree_insert (menu_entries, key, proc_def);
+                  key = gimp_strip_uline (dgettext (locale_domain, path->data));
+                  g_tree_insert (menu_entries, key, proc_def);
+                }
             }
         }
     }
@@ -164,7 +168,8 @@ plug_in_menus_setup (GimpUIManager *manager,
 void
 plug_in_menus_add_proc (GimpUIManager *manager,
                         const gchar   *ui_path,
-                        PlugInProcDef *proc_def)
+                        PlugInProcDef *proc_def,
+                        const gchar   *menu_path)
 {
   gchar *path;
   gchar *p;
@@ -173,7 +178,7 @@ plug_in_menus_add_proc (GimpUIManager *manager,
   g_return_if_fail (ui_path != NULL);
   g_return_if_fail (proc_def != NULL);
 
-  path = g_strdup (proc_def->menu_path);
+  path = g_strdup (menu_path);
 
   p = strrchr (path, '/');
 
@@ -185,7 +190,19 @@ plug_in_menus_add_proc (GimpUIManager *manager,
 
       *p = '\0';
 
-      merge_id = gtk_ui_manager_new_merge_id (GTK_UI_MANAGER (manager));
+      merge_key = g_strdup_printf ("%s-merge-id", proc_def->db_info.name);
+
+      merge_id = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (manager),
+                                                      merge_key));
+
+      if (! merge_id)
+        {
+          merge_id = gtk_ui_manager_new_merge_id (GTK_UI_MANAGER (manager));
+          g_object_set_data (G_OBJECT (manager), merge_key,
+                             GUINT_TO_POINTER (merge_id));
+        }
+
+      g_free (merge_key);
 
       plug_in_menus_build_path (manager, ui_path, merge_id, path);
 
@@ -204,11 +221,6 @@ plug_in_menus_add_proc (GimpUIManager *manager,
                              FALSE);
 
       g_free (action_path);
-
-      merge_key = g_strdup_printf ("%s-merge-id", proc_def->db_info.name);
-      g_object_set_data (G_OBJECT (manager), merge_key,
-                         GUINT_TO_POINTER (merge_id));
-      g_free (merge_key);
     }
 
   g_free (path);
@@ -237,13 +249,13 @@ plug_in_menus_remove_proc (GimpUIManager *manager,
 /*  private functions  */
 
 static gboolean
-plug_in_menus_tree_traverse (gpointer       foo,
+plug_in_menus_tree_traverse (const gchar   *menu_path,
                              PlugInProcDef *proc_def,
                              GimpUIManager *manager)
 {
   const gchar *ui_path = g_object_get_data (G_OBJECT (manager), "ui-path");
 
-  plug_in_menus_add_proc (manager, ui_path, proc_def);
+  plug_in_menus_add_proc (manager, ui_path, proc_def, menu_path);
 
   return FALSE;
 }

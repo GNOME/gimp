@@ -117,7 +117,7 @@ plug_in_actions_setup (GimpActionGroup *group)
       PlugInProcDef *proc_def = list->data;
 
       if (proc_def->prog         &&
-          proc_def->menu_path    &&
+          proc_def->menu_paths   &&
           ! proc_def->extensions &&
           ! proc_def->prefixes   &&
           ! proc_def->magics)
@@ -150,7 +150,7 @@ plug_in_actions_update (GimpActionGroup *group,
     {
       PlugInProcDef *proc_def = list->data;
 
-      if (proc_def->menu_path       &&
+      if (proc_def->menu_paths      &&
           proc_def->image_types_val &&
           ! proc_def->extensions    &&
           ! proc_def->prefixes      &&
@@ -202,7 +202,7 @@ plug_in_actions_update (GimpActionGroup *group,
 
               path = dgettext (plug_ins_locale_domain (group->gimp,
                                                        progname, NULL),
-                               proc_def->menu_path);
+                               proc_def->menu_paths->data);
 
               stripped = gimp_strip_uline (path);
               basename = g_path_get_basename (stripped);
@@ -269,7 +269,7 @@ plug_in_actions_add_proc (GimpActionGroup *group,
 
   help_id = plug_in_proc_def_get_help_id (proc_def, help_domain);
 
-  path_original   = g_strdup (proc_def->menu_path);
+  path_original   = g_strdup (proc_def->menu_paths->data);
   path_translated = g_strdup (dgettext (locale_domain, path_original));
 
   p1 = strrchr (path_original, '/');

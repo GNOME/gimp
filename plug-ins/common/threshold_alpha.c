@@ -94,7 +94,7 @@ query (void)
 			  "Shuji Narazaki (narazaki@InetQ.or.jp)",
 			  "Shuji Narazaki",
 			  "1997",
-			  N_("<Image>/Layer/Transparency/_Threshold Alpha..."),
+			  N_("<Image>/Layer/Transparency/Modify/_Threshold Alpha..."),
 			  "RGBA,GRAYA",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

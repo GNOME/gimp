@@ -5,10 +5,14 @@
   <menubar-and-popup action-name="image">
 
     <menu action="file-menu" name="File">
-      <menuitem action="file-new" />
-      <menuitem action="file-open" />
+      <placeholder name="New">
+        <menuitem action="file-new" />
+      </placeholder>
+      <placeholder name="Open">
+        <menuitem action="file-open" />
+      </placeholder>
       <menu action="file-open-recent-menu" name="Open Recent">
-        <placeholder name="file-open-recent-placeholder" />
+        <placeholder name="Files" />
         <separator />
         <menuitem action="dialogs-document-history" />
       </menu>
@@ -19,18 +23,21 @@
 	<menuitem action="file-save-as" />
 	<menuitem action="file-save-a-copy" />
 	<menuitem action="file-save-as-template" />
-	<menuitem action="file-revert" />
-	<separator />
       </placeholder>
+      <menuitem action="file-revert" />
+      <separator />
+      <placeholder name="Send" />
       <separator />
       <menuitem action="view-close" />
       <menuitem action="file-quit" />
     </menu>
 
     <menu action="edit-menu" name="Edit">
-      <menuitem action="edit-undo" />
-      <menuitem action="edit-redo" />
-      <menuitem action="dialogs-undo-history" />
+      <placeholder name="Undo">
+        <menuitem action="edit-undo" />
+        <menuitem action="edit-redo" />
+        <menuitem action="dialogs-undo-history" />
+      </placeholder>
       <separator />
       <placeholder name="Cut">
 	<menuitem action="edit-cut" />
@@ -49,12 +56,18 @@
 	<menuitem action="edit-named-paste" />
       </menu>
       <separator />
-      <menuitem action="edit-clear" />
-      <menuitem action="edit-fill-fg" />
-      <menuitem action="edit-fill-bg" />
-      <menuitem action="edit-fill-pattern" />
-      <menuitem action="edit-stroke" />
-      <menuitem action="vectors-stroke" />
+      <placeholder name="Clear">
+        <menuitem action="edit-clear" />
+      </placeholder>
+      <placeholder name="Fill">
+        <menuitem action="edit-fill-fg" />
+        <menuitem action="edit-fill-bg" />
+        <menuitem action="edit-fill-pattern" />
+      </placeholder>
+      <placeholder name="Stroke">
+        <menuitem action="edit-stroke" />
+        <menuitem action="vectors-stroke" />
+      </placeholder>
       <separator />
     </menu>
 
@@ -66,11 +79,13 @@
       <menuitem action="select-float" />
       <menuitem action="tools-by-color-select-short" />
       <separator />
-      <menuitem action="select-feather" />
-      <menuitem action="select-sharpen" />
-      <menuitem action="select-shrink" />
-      <menuitem action="select-grow" />
-      <menuitem action="select-border" />
+      <placeholder name="Outline">
+        <menuitem action="select-feather" />
+        <menuitem action="select-sharpen" />
+        <menuitem action="select-shrink" />
+        <menuitem action="select-grow" />
+        <menuitem action="select-border" />
+      </placeholder>
       <separator />
       <menuitem action="qmask-toggle" />
       <menuitem action="select-save" />
@@ -122,6 +137,9 @@
     </menu>
 
     <menu action="image-menu" name="Image">
+      <placeholder name="New">
+        <menuitem action="image-duplicate" />
+      </placeholder>
       <menu action="image-mode-menu" name="Mode">
         <menuitem action="image-convert-rgb" />
         <menuitem action="image-convert-grayscale" />
@@ -129,45 +147,64 @@
 	<separator />
       </menu>
       <menu action="image-transform-menu" name="Transform">
-        <menuitem action="image-flip-horizontal" />
-        <menuitem action="image-flip-vertical" />
+        <placeholder name="Flip">
+          <menuitem action="image-flip-horizontal" />
+          <menuitem action="image-flip-vertical" />
+        </placeholder>
 	<separator />
-        <menuitem action="image-rotate-90" />
-        <menuitem action="image-rotate-270" />
-        <menuitem action="image-rotate-180" />
+        <placeholder name="Rotate">
+          <menuitem action="image-rotate-90" />
+          <menuitem action="image-rotate-270" />
+          <menuitem action="image-rotate-180" />
+        </placeholder>
 	<separator />
       </menu>
       <separator />
-      <menuitem action="image-resize" />
-      <menuitem action="image-scale" />
-      <menuitem action="image-crop" />
-      <menuitem action="image-duplicate" />
+      <placeholder name="Resize">
+        <menuitem action="image-resize" />
+      </placeholder>
+      <placeholder name="Scale">
+        <menuitem action="image-scale" />
+      </placeholder>
+      <placeholder name="Crop">
+        <menuitem action="image-crop" />
+      </placeholder>
       <separator />
-      <menuitem action="image-merge-layers" />
-      <menuitem action="image-flatten" />
+      <placeholder name="Structure">
+        <menuitem action="image-merge-layers" />
+        <menuitem action="image-flatten" />
+      </placeholder>
       <separator />
       <menuitem action="image-configure-grid" />
       <separator />
     </menu>
 
     <menu action="layers-menu" name="Layer">
-      <menuitem action="layers-new" />
-      <menuitem action="layers-duplicate" />
-      <menuitem action="layers-anchor" />
-      <menuitem action="layers-merge-down" />
-      <menuitem action="layers-delete" />
-      <menuitem action="layers-text-discard" />
+      <placeholder name="New">
+        <menuitem action="layers-new" />
+        <menuitem action="layers-duplicate" />
+      </placeholder>
+      <placeholder name="Structure">
+        <menuitem action="layers-anchor" />
+        <menuitem action="layers-merge-down" />
+        <menuitem action="layers-delete" />
+        <menuitem action="layers-text-discard" />
+      </placeholder>
       <separator />
       <menu action="layers-stack-menu" name="Stack">
-        <menuitem action="layers-select-previous" />
-        <menuitem action="layers-select-next" />
-        <menuitem action="layers-select-top" />
-        <menuitem action="layers-select-bottom" />
+        <placeholder name="Select">
+          <menuitem action="layers-select-previous" />
+          <menuitem action="layers-select-next" />
+          <menuitem action="layers-select-top" />
+          <menuitem action="layers-select-bottom" />
+        </placeholder>
 	<separator />
-        <menuitem action="layers-raise" />
-        <menuitem action="layers-lower" />
-        <menuitem action="layers-raise-to-top" />
-        <menuitem action="layers-lower-to-bottom" />
+        <placeholder name="Position">
+          <menuitem action="layers-raise" />
+          <menuitem action="layers-lower" />
+          <menuitem action="layers-raise-to-top" />
+          <menuitem action="layers-lower-to-bottom" />
+        </placeholder>
         <separator />
       </menu>
       <menu action="layers-colors-menu" name="Colors">
@@ -186,44 +223,65 @@
 	  <menuitem action="drawable-equalize" />
 	</menu>
 	<separator />
-        <menuitem action="dialogs-histogram" />
+        <placeholder name="Info">
+          <menuitem action="dialogs-histogram" />
+        </placeholder>
+        <separator />
       </menu>
       <menu action="layers-mask-menu" name="Mask">
-        <menuitem action="layers-mask-add" />
-        <menuitem action="layers-mask-apply" />
-        <menuitem action="layers-mask-delete" />
+        <placeholder name="Modify">
+          <menuitem action="layers-mask-add" />
+          <menuitem action="layers-mask-apply" />
+          <menuitem action="layers-mask-delete" />
+        </placeholder>
 	<separator />
-        <menuitem action="layers-mask-selection-replace" />
-        <menuitem action="layers-mask-selection-add" />
-        <menuitem action="layers-mask-selection-subtract" />
-        <menuitem action="layers-mask-selection-intersect" />
+        <placeholder name="Selection">
+          <menuitem action="layers-mask-selection-replace" />
+          <menuitem action="layers-mask-selection-add" />
+          <menuitem action="layers-mask-selection-subtract" />
+          <menuitem action="layers-mask-selection-intersect" />
+        </placeholder>
         <separator />
       </menu>
       <menu action="layers-transparency-menu" name="Transparency">
-        <menuitem action="layers-alpha-add" />
+        <placeholder name="Modify">
+          <menuitem action="layers-alpha-add" />
+        </placeholder>
 	<separator />
-	<menuitem action="layers-alpha-selection-replace" />
-	<menuitem action="layers-alpha-selection-add" />
-	<menuitem action="layers-alpha-selection-subtract" />
-	<menuitem action="layers-alpha-selection-intersect" />
+        <placeholder name="Selection">
+          <menuitem action="layers-alpha-selection-replace" />
+	  <menuitem action="layers-alpha-selection-add" />
+	  <menuitem action="layers-alpha-selection-subtract" />
+	  <menuitem action="layers-alpha-selection-intersect" />
+        </placeholder>
 	<separator />
       </menu>
       <menu action="layers-transform-menu" name="Transform">
-        <menuitem action="drawable-flip-horizontal" />
-        <menuitem action="drawable-flip-vertical" />
+        <placeholder name="Flip">
+          <menuitem action="drawable-flip-horizontal" />
+          <menuitem action="drawable-flip-vertical" />
+        </placeholder>
 	<separator />
-        <menuitem action="drawable-rotate-90" />
-        <menuitem action="drawable-rotate-270" />
-        <menuitem action="drawable-rotate-180" />
-        <menuitem action="tools-rotate-arbitrary" />
+        <placeholder name="Rotate">
+          <menuitem action="drawable-rotate-90" />
+          <menuitem action="drawable-rotate-270" />
+          <menuitem action="drawable-rotate-180" />
+          <menuitem action="tools-rotate-arbitrary" />
+        </placeholder>
 	<separator />
         <menuitem action="drawable-offset" />
       </menu>
       <separator />
-      <menuitem action="layers-resize" />
-      <menuitem action="layers-resize-to-image" />
-      <menuitem action="layers-scale" />
-      <menuitem action="layers-crop" />
+      <placeholder name="Resize">
+        <menuitem action="layers-resize" />
+        <menuitem action="layers-resize-to-image" />
+      </placeholder>
+      <placeholder name="Scale">
+        <menuitem action="layers-scale" />
+      </placeholder>
+      <placeholder name="Crop">
+        <menuitem action="layers-crop" />
+      </placeholder>
       <separator />
     </menu>
 
