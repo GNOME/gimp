@@ -10,6 +10,19 @@
 
 2004-02-18  Sven Neumann  <sven@gimp.org>
 
+	* tile-cache.c
+	* tile-private.h
+	* tile.[ch]: removed trailing whitespace, added some newlines,
+	let tile_is_valid() return a gboolean instead of a gint.
+
+	* app/core/gimpimage-projection.c
+	* app/core/gimpimage-undo-push.c
+	* app/paint/gimppaintcore.c
+	* app/tools/gimpinktool.c: use the return value from tile_is_valid()
+	as a boolean.
+
+2004-02-18  Sven Neumann  <sven@gimp.org>
+
 	* app/base/tile.h: exchanged TILEROWHINT_UNKNOWN and
 	TILEROWHINT_BROKEN so that TILEROWHINT_UNKNOWN becomes 0. This
 	allows to use calloc() to allocate and initialize the rowhint

@@ -257,7 +257,7 @@ undo_pop_image (GimpUndo            *undo,
 	    {
 	      src_tile = tile_manager_get_tile (tiles, j, i, FALSE, FALSE);
 
-	      if (tile_is_valid (src_tile) == TRUE)
+	      if (tile_is_valid (src_tile))
 		{
 		  /* swap tiles, not pixels! */
 

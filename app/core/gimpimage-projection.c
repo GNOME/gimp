@@ -282,7 +282,7 @@ gimp_image_invalidate (GimpImage *gimage,
             /*  If the tile is not valid, make sure we get the entire tile
              *   in the construction extents
              */
-            if (tile_is_valid (tile) == FALSE)
+            if (! tile_is_valid (tile))
               {
                 tilex = j - (j % TILE_WIDTH);
                 tiley = i - (i % TILE_HEIGHT);
