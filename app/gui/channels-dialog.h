@@ -15,10 +15,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#ifndef  __CHANNELS_DIALOG_H__
-#define  __CHANNELS_DIALOG_H__
+#ifndef __CHANNELS_DIALOG_H__
+#define __CHANNELS_DIALOG_H__
 
-void   channels_dialog_update_image_list (void);
-void   channels_dialog_flush (void);
+void channels_dialog_new_channel_callback               (GtkWidget *, gpointer);
+void channels_dialog_raise_channel_callback             (GtkWidget *, gpointer);
+void channels_dialog_lower_channel_callback             (GtkWidget *, gpointer);
+void channels_dialog_duplicate_channel_callback         (GtkWidget *, gpointer);
+void channels_dialog_delete_channel_callback            (GtkWidget *, gpointer);
+void channels_dialog_channel_to_sel_callback            (GtkWidget *, gpointer);
+void channels_dialog_add_channel_to_sel_callback        (GtkWidget *, gpointer);
+void channels_dialog_sub_channel_from_sel_callback      (GtkWidget *, gpointer);
+void channels_dialog_intersect_channel_with_sel_callback(GtkWidget *, gpointer);
 
-#endif  /*  __CHANNELS_DIALOG_H__  */
+#endif /* __CHANNELS_DIALOG_H__ */

@@ -1,5 +1,5 @@
 /* The GIMP -- an image manipulation program
- * Copyright (C) 1999 Andy Thomas alt@picnic.demon.co.uk
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,17 +15,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#ifndef  __PATHS_DIALOG_H__
-#define  __PATHS_DIALOG_H__
+#ifndef  __LC_DIALOG_H__
+#define  __LC_DIALOG_H__
 
-void paths_dialog_new_path_callback    (GtkWidget *, gpointer);
-void paths_dialog_delete_path_callback (GtkWidget *, gpointer);
-void paths_dialog_dup_path_callback    (GtkWidget *, gpointer);
-void paths_dialog_copy_path_callback   (GtkWidget *, gpointer);
-void paths_dialog_paste_path_callback  (GtkWidget *, gpointer);
-void paths_dialog_stroke_path_callback (GtkWidget *, gpointer);
-void paths_dialog_path_to_sel_callback (GtkWidget *, gpointer);
-void paths_dialog_import_path_callback (GtkWidget *, gpointer);
-void paths_dialog_export_path_callback (GtkWidget *, gpointer);
+#include "gimpimageF.h"
 
-#endif  /*  __PATHS_DIALOG_H__  */
+void   lc_dialog_create            (GimpImage *gimage);
+void   lc_dialog_free              (void);
+
+void   lc_dialog_rebuild           (int);  /*  implies free & create  */
+
+void   lc_dialog_flush             (void);
+
+void   lc_dialog_update_image_list (void);
+
+#endif  /*  __LC_DIALOG_H__  */

@@ -21,14 +21,12 @@
 #include <math.h>
 #include "appenv.h"
 #include "gimpbrushlist.h"
-#include "channels_dialog.h"
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimprc.h"
 #include "gradient.h"  /* for grad_get_color_at() */
-#include "layers_dialog.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
 #include "palette.h"

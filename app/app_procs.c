@@ -62,7 +62,7 @@
 #include "image_render.h"
 #include "interface.h"
 #include "internal_procs.h"
-#include "layers_dialog.h"
+#include "lc_dialog.h"
 #include "levels.h"
 #include "menus.h"
 #include "paint_funcs.h"

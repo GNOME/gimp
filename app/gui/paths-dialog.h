@@ -15,18 +15,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
-
 #ifndef  __PATHS_DIALOG_H__
 #define  __PATHS_DIALOG_H__
 
-GtkWidget * paths_dialog_create(void);
-void        paths_dialog_update (GimpImage*);
-void        paths_newpoint_current(BezierSelect *, GDisplay *);
-void        paths_first_button_press(BezierSelect *,GDisplay *);
-void        paths_new_bezier_select_tool(void);
-PATHP       paths_get_bzpaths(void);
-void        paths_set_bzpaths(GImage*,PATHP);
-void        paths_dialog_flush(void);
+void paths_dialog_new_path_callback    (GtkWidget *, gpointer);
+void paths_dialog_delete_path_callback (GtkWidget *, gpointer);
+void paths_dialog_dup_path_callback    (GtkWidget *, gpointer);
+void paths_dialog_copy_path_callback   (GtkWidget *, gpointer);
+void paths_dialog_paste_path_callback  (GtkWidget *, gpointer);
+void paths_dialog_stroke_path_callback (GtkWidget *, gpointer);
+void paths_dialog_path_to_sel_callback (GtkWidget *, gpointer);
+void paths_dialog_import_path_callback (GtkWidget *, gpointer);
+void paths_dialog_export_path_callback (GtkWidget *, gpointer);
 
 #endif  /*  __PATHS_DIALOG_H__  */

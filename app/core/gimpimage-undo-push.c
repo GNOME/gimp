@@ -20,7 +20,6 @@
 #include "appenv.h"
 #include "by_color_select.h"
 #include "channel.h"
-#include "channels_dialog.h"
 #include "drawable.h"
 #include "errors.h"
 #include "floating_sel.h"

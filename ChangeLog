@@ -1,3 +1,47 @@
+1999-06-06  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/Makefile.am
+	* app/lc_dialog.[ch]
+	* app/lc_dialogP.h
+	* app/paths_dialogP.h: new files
+
+	* app/channels_dialog.[ch]
+	* app/layers_dialog.[ch]
+	* app/layers_dialogP.h
+	* app/paths_dialog.[ch]
+	* app/menus.[ch]
+	* app/file_new_dialog.c: modified
+
+	- Moved the toplevel L&C dialog code to lc_dialog.[ch]. Only
+	  these files need knowledge about how to create/update/...
+	  the sub-dialogs, so the corresp. functions are defined in
+	  lc_dialogP.h.
+	- The popup menus are now created by menus.c. The command
+	  callbacks are defined in [layers|channels|paths]_dialog.h.
+	- Private functions to be used by "friend files" are defined in
+	  [layers|paths]_dialogP.h.
+	- Changed the order of the ops_buttons in the paths dialog to
+	  match the order in the layers and channels dialogs.
+	- The paint mode menu and preview stuff still needs to go out of
+	  layers_dialog.[ch].
+	- I'm not sure about the keybindings in the layer dialog's "Stack"
+	  submenu because the list widget has it's own idea of PageUp/Down.
+	- Hopefully fixed the update problem with new images by calling
+	  lc_dialog_flush() after creating a new image.
+
+	* app/app_procs.c
+	* app/bezier_select.c
+	* app/commands.c
+	* app/floating_sel.c
+	* app/gdisplay.c
+	* app/gimage.c
+	* app/gimage_mask.c
+	* app/paint_core.c
+	* app/preferences_dialog.c
+	* app/transform_core.c
+	* app/undo.c: changed #include's according to the new L&C file
+	structure.
+
 Sun Jun  6 17:22:16 BST 1999 Adam D. Moss <adam@gimp.org>
 
 	* fileops.c gimprc.c gimprc.h preferences_dialog.c:

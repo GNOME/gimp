@@ -20,7 +20,6 @@
 #include <string.h>
 #include "appenv.h"
 #include "buildmenu.h"
-#include "channels_dialog.h"
 #include "colormaps.h"
 #include "cursorutil.h"
 #include "disp_callbacks.h"
@@ -35,11 +34,10 @@
 #include "image_render.h"
 #include "info_window.h"
 #include "interface.h"
-#include "layers_dialog.h"
+#include "lc_dialog.h"
 #include "menus.h"
 #include "draw_core.h"
 #include "bezier_selectP.h"
-#include "paths_dialog.h"
 #include "plug_in.h"
 #include "scale.h"
 #include "scroll.h"
@@ -2073,12 +2071,8 @@ gdisplays_flush_whenever (gboolean now)
       list = g_slist_next (list);
     }
 
-  /*  for convenience, we call the layers dialog flush here  */
-  layers_dialog_flush ();
-  /*  for convenience, we call the channels dialog flush here  */
-  channels_dialog_flush ();
-  /*  for convenience, we call the paths dialog flush here  */
-  paths_dialog_flush();
+  /*  for convenience, we call the L&C flush here  */
+  lc_dialog_flush ();
 
   flushing = FALSE;
 }

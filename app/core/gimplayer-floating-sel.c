@@ -19,7 +19,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "appenv.h"
-#include "channels_dialog.h"
 #include "drawable.h"
 #include "layer.h"
 #include "errors.h"

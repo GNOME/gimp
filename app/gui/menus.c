@@ -19,13 +19,16 @@
 #include <stdlib.h>
 #include <string.h>
 #include "appenv.h"
+#include "channels_dialog.h"
 #include "colormaps.h"
 #include "commands.h"
 #include "fileops.h"
 #include "general.h"
 #include "gimprc.h"
 #include "interface.h"
+#include "layers_dialog.h"
 #include "menus.h"
+#include "paths_dialog.h"
 #include "paint_funcs.h"
 #include "procedural_db.h"
 #include "scale.h"
@@ -168,6 +171,7 @@ static const GtkItemFactoryEntry image_entries[] =
   { N_("/Layers/Alpha To Selection"), NULL, layers_alpha_select_cmd_callback, 0 },
   { N_("/Layers/Mask To Selection"), NULL, layers_mask_select_cmd_callback, 0 },
   { N_("/Layers/Add Alpha Channel"), NULL, layers_add_alpha_channel_cmd_callback, 0 },
+  { N_("/Layers/---"), NULL, NULL, 0, "<Separator>" },
   
 /* these are built on the fly */
 
@@ -240,13 +244,74 @@ static const GtkItemFactoryEntry save_entries[] =
 static guint n_save_entries = sizeof (save_entries) / sizeof (save_entries[0]);
 static GtkItemFactory *save_factory = NULL;
 
+static const GtkItemFactoryEntry layers_entries[] =
+{
+  { N_("/New Layer"), "<control>N", layers_dialog_new_layer_callback, 0 },
+  { N_("/Stack/Previous Layer"), "Prior", layers_dialog_previous_layer_callback, 0 },
+  { N_("/Stack/Next Layer"), "Next", layers_dialog_next_layer_callback, 0 },
+  { N_("/Stack/Raise Layer"), "<shift>Prior", layers_dialog_raise_layer_callback, 0 },
+  { N_("/Stack/Lower Layer"), "<shift>Next", layers_dialog_lower_layer_callback, 0 },
+  { N_("/Stack/Layer to Top"), "<control>Prior", layers_dialog_raise_layer_to_top_callback, 0 },
+  { N_("/Stack/Layer to Bottom"), "<control>Next", layers_dialog_lower_layer_to_bottom_callback, 0 },
+  { N_("/Duplicate Layer"), "<control>C", layers_dialog_duplicate_layer_callback, 0 },
+  { N_("/Delete Layer"), "<control>X", layers_dialog_delete_layer_callback, 0 },
+  { N_("/Anchor Layer"), "<control>H", layers_dialog_anchor_layer_callback, 0 },
+  { "/---", NULL, NULL, 0, "<Separator>" },
+  { N_("/Scale Layer"), "<control>S", layers_dialog_scale_layer_callback, 0 },
+  { N_("/Resize Layer"), "<control>R", layers_dialog_resize_layer_callback, 0 },
+  { "/---", NULL, NULL, 0, "<Separator>" },
+  { N_("/Merge Visible Layers"), "<control>M", layers_dialog_merge_layers_callback, 0 },
+  { N_("/Merge Down"), "<control><shift>M", layers_dialog_merge_down_callback, 0 },
+  { N_("/Flatten Image"), NULL, layers_dialog_flatten_image_callback, 0 },
+  { "/---", NULL, NULL, 0, "<Separator>" },
+  { N_("/Add Layer Mask"), NULL, layers_dialog_add_layer_mask_callback, 0 },
+  { N_("/Apply Layer Mask"), NULL, layers_dialog_apply_layer_mask_callback, 0 },
+  { N_("/Alpha to Selection"), NULL, layers_dialog_alpha_select_callback, 0 },
+  { N_("/Mask to Selection"), NULL, layers_dialog_mask_select_callback, 0 },
+  { N_("/Add Alpha Channel"), NULL, layers_dialog_add_alpha_channel_callback, 0 }
+};
+static guint n_layers_entries = sizeof (layers_entries) / sizeof (layers_entries[0]);
+static GtkItemFactory *layers_factory = NULL;
+
+static const GtkItemFactoryEntry channels_entries[] =
+{
+  { N_("/New Channel"), "<control>N", channels_dialog_new_channel_callback, 0 },
+  { N_("/Raise Channel"), "<control>F", channels_dialog_raise_channel_callback, 0 },
+  { N_("/Lower Channel"), "<control>B", channels_dialog_lower_channel_callback, 0 },
+  { N_("/Duplicate Channel"), "<control>C", channels_dialog_duplicate_channel_callback, 0 },
+  { N_("/Delete Channel"), "<control>X", channels_dialog_delete_channel_callback, 0 },
+  { "/---", NULL, NULL, 0, "<Separator>" },
+  { N_("/Channel to Selection"), "<control>S", channels_dialog_channel_to_sel_callback, 0 },
+  { N_("/Add to Selection"), NULL, channels_dialog_add_channel_to_sel_callback, 0 },
+  { N_("/Subtract From Selection"), NULL, channels_dialog_sub_channel_from_sel_callback, 0 },
+  { N_("/Intersect With Selection"), NULL, channels_dialog_sub_channel_from_sel_callback, 0 }
+};
+static guint n_channels_entries = sizeof (channels_entries) / sizeof (channels_entries[0]);
+static GtkItemFactory *channels_factory = NULL;
+
+static const GtkItemFactoryEntry paths_entries[] =
+{
+  { N_("/New Path"), "<control>N", paths_dialog_new_path_callback, 0 },
+  { N_("/Duplicate Path"), "<control>U", paths_dialog_dup_path_callback, 0 },
+  { N_("/Delete Path"), "<control>X", paths_dialog_delete_path_callback, 0 },
+  { N_("/Path to Selection"), "<control>S", paths_dialog_path_to_sel_callback, 0 },
+  { N_("/Stroke Path"), "<control>T", paths_dialog_stroke_path_callback, 0 },
+  { "/---", NULL, NULL, 0, "<Separator>" },
+  { N_("/Copy Path"), "<control>C", paths_dialog_copy_path_callback, 0 },
+  { N_("/Paste Path"), "<control>V", paths_dialog_paste_path_callback, 0 },
+  { N_("/Import Path"), "<control>I", paths_dialog_import_path_callback, 0 },
+  { N_("/Export Path"), "<control>E", paths_dialog_export_path_callback, 0 }
+};
+static guint n_paths_entries = sizeof (paths_entries) / sizeof (paths_entries[0]);
+static GtkItemFactory *paths_factory = NULL;
+
 static int initialize = TRUE;
 
 extern int num_tools;
 
 void
-menus_get_toolbox_menubar (GtkWidget           **menubar,
-			   GtkAccelGroup       **accel_group)
+menus_get_toolbox_menubar (GtkWidget     **menubar,
+			   GtkAccelGroup **accel_group)
 {
   if (initialize)
     menus_init ();
@@ -258,8 +323,8 @@ menus_get_toolbox_menubar (GtkWidget           **menubar,
 }
 
 void
-menus_get_image_menu (GtkWidget           **menu,
-		      GtkAccelGroup	  **accel_group)
+menus_get_image_menu (GtkWidget     **menu,
+		      GtkAccelGroup **accel_group)
 {
   if (initialize)
     menus_init ();
@@ -271,8 +336,8 @@ menus_get_image_menu (GtkWidget           **menu,
 }
 
 void
-menus_get_load_menu (GtkWidget           **menu,
-		     GtkAccelGroup	 **accel_group)
+menus_get_load_menu (GtkWidget     **menu,
+		     GtkAccelGroup **accel_group)
 {
   if (initialize)
     menus_init ();
@@ -284,8 +349,8 @@ menus_get_load_menu (GtkWidget           **menu,
 }
 
 void
-menus_get_save_menu (GtkWidget           **menu,
-		     GtkAccelGroup	 **accel_group)
+menus_get_save_menu (GtkWidget     **menu,
+		     GtkAccelGroup **accel_group)
 {
   if (initialize)
     menus_init ();
@@ -297,8 +362,47 @@ menus_get_save_menu (GtkWidget           **menu,
 }
 
 void
+menus_get_layers_menu (GtkWidget     **menu,
+		       GtkAccelGroup **accel_group)
+{
+  if (initialize)
+    menus_init ();
+
+  if (menu)
+    *menu = layers_factory->widget;
+  if (accel_group)
+    *accel_group = layers_factory->accel_group;
+}
+
+void
+menus_get_channels_menu (GtkWidget     **menu,
+			 GtkAccelGroup **accel_group)
+{
+  if (initialize)
+    menus_init ();
+
+  if (menu)
+    *menu = channels_factory->widget;
+  if (accel_group)
+    *accel_group = channels_factory->accel_group;
+}
+
+void
+menus_get_paths_menu (GtkWidget     **menu,
+		      GtkAccelGroup **accel_group)
+{
+  if (initialize)
+    menus_init ();
+
+  if (menu)
+    *menu = paths_factory->widget;
+  if (accel_group)
+    *accel_group = paths_factory->accel_group;
+}
+
+void
 menus_create (GtkMenuEntry *entries,
-	      int           nmenu_entries)
+	      int           n_menu_entries)
 {
   GtkItemFactory *ifactory;
   GtkWidget *menu_item;
@@ -308,10 +412,10 @@ menus_create (GtkMenuEntry *entries,
   if (initialize)
     menus_init ();
 
-  gtk_item_factory_create_menu_entries (nmenu_entries, entries);
+  gtk_item_factory_create_menu_entries (n_menu_entries, entries);
 
-  for (i = 0; i < nmenu_entries; i++)
-      if (!strncmp(entries[i].path, "<Image>", 7))
+  for (i = 0; i < n_menu_entries; i++)
+      if (! strncmp (entries[i].path, "<Image>", 7))
         redo_image_menu = TRUE;
 
   if (redo_image_menu)
@@ -344,7 +448,6 @@ menus_tools_create (ToolInfo *tool_info)
 				&entry,
 				(gpointer)tool_info,
 				2);
-
 }
 
 void
@@ -418,6 +521,9 @@ menus_quit (void)
       gtk_object_unref (GTK_OBJECT (image_factory));
       gtk_object_unref (GTK_OBJECT (load_factory));
       gtk_object_unref (GTK_OBJECT (save_factory));
+      gtk_object_unref (GTK_OBJECT (layers_factory));
+      gtk_object_unref (GTK_OBJECT (channels_factory));
+      gtk_object_unref (GTK_OBJECT (paths_factory));
     }
 
 }
@@ -586,27 +692,29 @@ translate_entries (const GtkItemFactoryEntry *entries, gint n)
   gint i;
   GtkItemFactoryEntry *ret;
 
-  ret=g_malloc( sizeof(GtkItemFactoryEntry) * n );
-  for (i=0; i<n; i++) {
-    /* Translation. Note the explicit use of gettext(). */
-    ret[i].path=g_strdup( gettext(entries[i].path) );
-    /* accelerator and item_type are not duped, only referenced */
-    ret[i].accelerator=entries[i].accelerator;
-    ret[i].callback=entries[i].callback;
-    ret[i].callback_action=entries[i].callback_action;
-    ret[i].item_type=entries[i].item_type;
-  }
+  ret = g_malloc (sizeof (GtkItemFactoryEntry) * n);
+  for (i=0; i<n; i++)
+    {
+      /* Translation. Note the explicit use of gettext(). */
+      ret[i].path = g_strdup (gettext (entries[i].path));
+      /* accelerator and item_type are not duped, only referenced */
+      ret[i].accelerator = entries[i].accelerator;
+      ret[i].callback = entries[i].callback;
+      ret[i].callback_action = entries[i].callback_action;
+      ret[i].item_type = entries[i].item_type;
+    }
   return ret;
 }
 
 static void 
-free_translated_entries(GtkItemFactoryEntry *entries, gint n)
+free_translated_entries (GtkItemFactoryEntry *entries, gint n)
 {
   gint i;
 
-  for (i=0; i<n; i++)
-    g_free(entries[i].path);
-  g_free(entries);
+  for (i = 0; i < n; i++)
+    g_free (entries[i].path);
+
+  g_free (entries);
 }
 
 
@@ -625,32 +733,60 @@ menus_init ()
       menus_init_toolbox ();
 
       image_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Image>", NULL);
-      translated_entries=translate_entries(image_entries, n_image_entries);
+      translated_entries = translate_entries (image_entries, n_image_entries);
       gtk_item_factory_create_items_ac (image_factory,
 					n_image_entries,
 					translated_entries,
 					NULL, 2);
-      free_translated_entries(translated_entries, n_image_entries);
+      free_translated_entries (translated_entries, n_image_entries);
+
       load_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Load>", NULL);
-      translated_entries=translate_entries(load_entries, n_load_entries);
+      translated_entries = translate_entries (load_entries, n_load_entries);
       gtk_item_factory_create_items_ac (load_factory,
 					n_load_entries,
 					translated_entries,
 					NULL, 2);
-      free_translated_entries(translated_entries, n_load_entries);
+      free_translated_entries (translated_entries, n_load_entries);
+
       save_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Save>", NULL);
-      translated_entries=translate_entries(load_entries, n_save_entries);
+      translated_entries = translate_entries (load_entries, n_save_entries);
       gtk_item_factory_create_items_ac (save_factory,
 					n_save_entries,
 					translated_entries,
 					NULL, 2);
-      free_translated_entries(translated_entries, n_save_entries);
+      free_translated_entries (translated_entries, n_save_entries);
+
+      layers_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Layers>", NULL);
+      translated_entries = translate_entries (layers_entries, n_layers_entries);
+      gtk_item_factory_create_items_ac (layers_factory,
+					n_layers_entries,
+					translated_entries,
+					NULL, 2);
+      free_translated_entries (translated_entries, n_layers_entries);
+
+      channels_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Channels>", NULL);
+      translated_entries = translate_entries (channels_entries, n_channels_entries);
+      gtk_item_factory_create_items_ac (channels_factory,
+					n_channels_entries,
+					translated_entries,
+					NULL, 2);
+      free_translated_entries (translated_entries, n_channels_entries);
+
+      paths_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Paths>", NULL);
+      translated_entries = translate_entries (paths_entries, n_paths_entries);
+      gtk_item_factory_create_items_ac (paths_factory,
+					n_paths_entries,
+					translated_entries,
+					NULL, 2);
+      free_translated_entries (translated_entries, n_paths_entries);
+
       for (i = 0; i < num_tools; i++)
 	{
 	  /* FIXME this need to use access functions to check a flag */
 	  if (tool_info[i].menu_path)
 	    menus_tools_create (tool_info+i);
 	}
+
       filename = gimp_personal_rc_file ("menurc");
       gtk_item_factory_parse_rc (filename);
       g_free (filename);

@@ -22,6 +22,7 @@
 #include "gimprc.h"
 #include "global_edit.h"
 #include "interface.h"
+#include "lc_dialog.h"
 #include "plug_in.h"
 #include "tile_manager_pvt.h"
 #include "gdisplay.h"
@@ -144,6 +145,13 @@ file_new_create_image (NewImageValues *vals)
       gimage_clean_all (gimage);
       
       gdisplay = gdisplay_new (gimage, 0x0101);
+
+      /*  Update L&C because the last automatic update at image creation
+       *  time happened when the new image had no layers at all
+       *
+       *  TODO: make L&C aware of the image's "repaint" signal
+       */
+      lc_dialog_flush ();
     }
 
   g_free (vals);

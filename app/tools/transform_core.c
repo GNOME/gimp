@@ -29,7 +29,6 @@
 #include "gimprc.h"
 #include "info_dialog.h"
 #include "interface.h"
-#include "layers_dialog.h"
 #include "palette.h"
 #include "transform_core.h"
 #include "transform_tool.h"

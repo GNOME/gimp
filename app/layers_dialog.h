@@ -15,15 +15,28 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#ifndef  __LAYERS_DIALOG_H__
-#define  __LAYERS_DIALOG_H__
+#ifndef __LAYERS_DIALOG_H__
+#define __LAYERS_DIALOG_H__
 
-#include "gimpimageF.h"
+void  layers_dialog_previous_layer_callback        (GtkWidget *, gpointer);
+void  layers_dialog_next_layer_callback            (GtkWidget *, gpointer);
+void  layers_dialog_raise_layer_callback           (GtkWidget *, gpointer);
+void  layers_dialog_lower_layer_callback           (GtkWidget *, gpointer);
+void  layers_dialog_raise_layer_to_top_callback    (GtkWidget *, gpointer);
+void  layers_dialog_lower_layer_to_bottom_callback (GtkWidget *, gpointer);
+void  layers_dialog_new_layer_callback             (GtkWidget *, gpointer);
+void  layers_dialog_duplicate_layer_callback       (GtkWidget *, gpointer);
+void  layers_dialog_delete_layer_callback          (GtkWidget *, gpointer);
+void  layers_dialog_scale_layer_callback           (GtkWidget *, gpointer);
+void  layers_dialog_resize_layer_callback          (GtkWidget *, gpointer);
+void  layers_dialog_add_layer_mask_callback        (GtkWidget *, gpointer);
+void  layers_dialog_apply_layer_mask_callback      (GtkWidget *, gpointer);
+void  layers_dialog_anchor_layer_callback          (GtkWidget *, gpointer);
+void  layers_dialog_merge_layers_callback          (GtkWidget *, gpointer);
+void  layers_dialog_merge_down_callback            (GtkWidget *, gpointer);
+void  layers_dialog_flatten_image_callback         (GtkWidget *, gpointer);
+void  layers_dialog_alpha_select_callback          (GtkWidget *, gpointer);
+void  layers_dialog_mask_select_callback           (GtkWidget *, gpointer);
+void  layers_dialog_add_alpha_channel_callback     (GtkWidget *, gpointer);
 
-void   lc_dialog_create             (GimpImage*);
-void   lc_dialog_update_image_list  (void);
-void   lc_dialog_free               (void);
-void   lc_dialog_rebuild            (int);
-void   layers_dialog_flush          (void);
-
-#endif  /*  __LAYERS_DIALOG_H__  */
+#endif /* __LAYERS_DIALOG_H__ */

@@ -34,7 +34,7 @@
 #include "actionarea.h"
 #include "bezier_select.h"
 #include "bezier_selectP.h"
-#include "paths_dialog.h"
+#include "paths_dialogP.h"
 #include "selection_options.h"
 
 #include "libgimp/gimpintl.h"

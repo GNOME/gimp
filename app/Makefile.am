@@ -250,7 +250,10 @@ gimp_SOURCES = \
 	layer_select.h		\
 	layers_dialog.c		\
 	layers_dialog.h		\
-	layers_dialogP.h	\
+	layers_dialogP.h		\
+	lc_dialog.c		\
+	lc_dialog.h		\
+	lc_dialogP.h		\
 	levels.c		\
 	levels.h		\
 	lut_funcs.c		\
@@ -287,8 +290,9 @@ gimp_SOURCES = \
 	parasitelistF.h		\
 	parasitelistP.h		\
 	paths_cmds.c		\
-	paths_dialog.h		\
 	paths_dialog.c		\
+	paths_dialog.h		\
+	paths_dialogP.h		\
 	pathsP.h		\
 	pattern_header.h	\
 	pattern_select.c	\

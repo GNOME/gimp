@@ -18,27 +18,34 @@
 #ifndef __MENUS_H__
 #define __MENUS_H__
 
-
 #include "gtk/gtk.h"
 
+void menus_get_toolbox_menubar (GtkWidget     **menubar,
+				GtkAccelGroup **accel_group);
+void menus_get_image_menu      (GtkWidget     **menu,
+				GtkAccelGroup **accel_group);
+void menus_get_load_menu       (GtkWidget     **menu,
+				GtkAccelGroup **accel_group);
+void menus_get_save_menu       (GtkWidget     **menu,
+				GtkAccelGroup **accel_group);
+void menus_get_layers_menu     (GtkWidget     **menu,
+				GtkAccelGroup **accel_group);
+void menus_get_channels_menu   (GtkWidget     **menu,
+				GtkAccelGroup **accel_group);
+void menus_get_paths_menu      (GtkWidget     **menu,
+				GtkAccelGroup **accel_group);
 
-void menus_get_toolbox_menubar (GtkWidget           **menubar,
-				GtkAccelGroup	    **accel_group);
-void menus_get_image_menu      (GtkWidget           **menu,
-				GtkAccelGroup	    **accel_group);
-void menus_get_load_menu       (GtkWidget           **menu,
-				GtkAccelGroup	    **accel_group);
-void menus_get_save_menu       (GtkWidget           **menu,
-				GtkAccelGroup	    **accel_group);
-void menus_create              (GtkMenuEntry         *entries,
-				int                   nmenu_entries);
-void menus_set_sensitive       (char                 *path,
-				int                   sensitive);
-void menus_set_state           (char                 *path,
-				int                   state);
-void menus_destroy             (char                 *path);
+void menus_create              (GtkMenuEntry *entries,
+				gint          n_menu_entries);
+void menus_destroy             (gchar        *path);
+
 void menus_quit                (void);
-void menus_last_opened_add     (gchar                *filename);
 
+void menus_set_sensitive       (gchar *path,
+				gint   sensitive);
+void menus_set_state           (gchar *path,
+				gint   state);
 
-#endif /* MENUS_H */
+void menus_last_opened_add     (gchar *filename);
+
+#endif /* __MENUS_H__ */

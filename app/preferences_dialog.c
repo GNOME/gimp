@@ -23,7 +23,7 @@
 #include "gimprc.h"
 #include "image_render.h"
 #include "interface.h"
-#include "layers_dialog.h"
+#include "lc_dialog.h"
 #include "layer_select.h"
 #include "paint_options.h"
 #include "session.h"

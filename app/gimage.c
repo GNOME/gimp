@@ -1,8 +1,7 @@
 #include "gimpimageP.h"
 #include "gimage.h"
 #include "gimpimage.h"
-#include "channels_dialog.h"
-#include "layers_dialog.h"
+#include "lc_dialog.h"
 
 #include "drawable.h"
 #include "gdisplay.h"

@@ -15,29 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#ifndef  __LAYERS_DIALOGP_H__
-#define  __LAYERS_DIALOGP_H__
+#ifndef __LAYERS_DIALOG_P_H__
+#define __LAYERS_DIALOG_P_H__
 
-#include "buildmenu.h"
+void render_fs_preview (GtkWidget *, GdkPixmap *);
+void render_preview    (TempBuf *, GtkWidget *, int, int, int);
 
-GtkWidget *  layers_dialog_create    (void);
-GtkWidget *  channels_dialog_create  (void);
-
-GtkWidget *  create_image_menu       (GimpImage **, int *, MenuItemCallback);
-
-void         layers_dialog_update    (GimpImage*);
-void         channels_dialog_update  (GimpImage*);
-
-void         layers_dialog_clear     (void);
-void         channels_dialog_clear   (void);
-
-void         layers_dialog_free      (void);
-void         channels_dialog_free    (void);
-
-void         render_fs_preview       (GtkWidget *, GdkPixmap *);
-void         render_preview          (TempBuf *, GtkWidget *, int, int, int);
-
-/*  Main dialog widget  */
-extern GtkWidget *lc_shell;
-
-#endif  /*  __LAYERS_DIALOGP_H__  */
+#endif /* __LAYERS_DIALOG_P_H__ */

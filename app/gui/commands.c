@@ -24,7 +24,6 @@
 #include "brightness_contrast.h"
 #include "gimpbrushlist.h"
 #include "by_color_select.h"
-#include "channels_dialog.h"
 #include "colormaps.h"
 #include "colormap_dialog.i.h"
 #include "color_area.h"
@@ -52,7 +51,7 @@
 #include "info_window.h"
 #include "interface.h"
 #include "invert.h"
-#include "layers_dialog.h"
+#include "lc_dialog.h"
 #include "layer_select.h"
 #include "levels.h"
 #include "module_db.h"
@@ -76,8 +75,7 @@ typedef struct
 } ImageResize;
 
 /*  external functions  */
-extern void layers_dialog_layer_merge_query (GImage *, int);
-
+extern void   layers_dialog_layer_merge_query (GImage *, int);
 
 /*  local functions  */
 static void   image_resize_callback (GtkWidget *, gpointer);

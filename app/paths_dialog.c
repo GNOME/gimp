@@ -16,7 +16,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  * Some of this code is based on the layers_dialog box code.
  */
-
 #include "config.h"
 
 #include <stdio.h>
@@ -28,7 +27,6 @@
 #include "appenv.h"
 #include "draw_core.h"
 #include "actionarea.h"
-#include "buildmenu.h"
 #include "colormaps.h"
 #include "drawable.h"
 #include "errors.h"
@@ -41,18 +39,18 @@
 #include "general.h"
 #include "image_render.h"
 #include "interface.h"
-#include "layers_dialog.h"
-#include "layers_dialogP.h"
+#include "lc_dialogP.h"
+#include "menus.h"
 #include "ops_buttons.h"
 #include "paint_funcs.h"
 #include "bezier_select.h"
 #include "bezier_selectP.h"
 #include "pathsP.h"
 #include "paths_dialog.h"
+#include "paths_dialogP.h"
 #include "resize.h"
 #include "session.h"
 #include "undo.h"
-#include "libgimp/gimpmatrix.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -72,9 +70,10 @@
 #define rint(x) floor (x + 0.5)
 #endif
 
-#define PREVIEW_EVENT_MASK GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK | GDK_ENTER_NOTIFY_MASK
+#define PREVIEW_EVENT_MASK GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK | \
+                           GDK_ENTER_NOTIFY_MASK
 
-#define PATHS_LIST_WIDTH 200
+#define PATHS_LIST_WIDTH  200
 #define PATHS_LIST_HEIGHT 150
 
 typedef struct {
@@ -129,15 +128,8 @@ static void paths_dialog_realized      (GtkWidget *widget);
 static void paths_select_row           (GtkWidget *widget,gint row,gint column,GdkEventButton *event,gpointer data);
 static void paths_unselect_row         (GtkWidget *widget,gint row,gint column,GdkEventButton *event,gpointer data);
 static gint paths_list_events          (GtkWidget *widget,GdkEvent  *event);
-static void paths_dialog_new_path_callback (GtkWidget *, gpointer);
-static void paths_dialog_delete_path_callback (GtkWidget *, gpointer);
 static void paths_dialog_map_callback  (GtkWidget *w,gpointer client_data);
 static void paths_dialog_unmap_callback(GtkWidget *w,gpointer client_data);
-static void paths_dialog_dup_path_callback(GtkWidget *w,gpointer client_data);
-static void paths_dialog_copy_path_callback(GtkWidget *w,gpointer client_data);
-static void paths_dialog_paste_path_callback(GtkWidget *w,gpointer client_data);
-static void paths_dialog_stroke_path_callback(GtkWidget *w,gpointer client_data);
-static void paths_dialog_path_to_sel_callback(GtkWidget *w,gpointer client_data);
 static void paths_dialog_destroy_cb (GimpImage *image);
 static void paths_update_paths(gpointer data,gint row);
 static GSList *  pathpoints_copy(GSList *list);
@@ -148,55 +140,29 @@ static void paths_dialog_new_point_callback (GtkWidget *, gpointer);
 static void paths_dialog_add_point_callback (GtkWidget *, gpointer);
 static void paths_dialog_delete_point_callback (GtkWidget *, gpointer);
 static void paths_dialog_edit_point_callback (GtkWidget *, gpointer);
-static void paths_dialog_import_path_callback (GtkWidget *, gpointer);
-static void paths_dialog_export_path_callback (GtkWidget *, gpointer);
 static void path_close(PATHP);
 
-
-static MenuItem paths_ops[] =
-{
-  { N_("New Path"), 'N', GDK_CONTROL_MASK,
-    paths_dialog_new_path_callback, NULL, NULL, NULL },
-  { N_("Duplicate Path"), 'U', GDK_CONTROL_MASK,
-    paths_dialog_dup_path_callback, NULL, NULL, NULL },
-  { N_("Path to Selection"), 'S', GDK_CONTROL_MASK,
-    paths_dialog_path_to_sel_callback, NULL, NULL, NULL },
-  { N_("Stroke Path"), 'T', GDK_CONTROL_MASK,
-    paths_dialog_stroke_path_callback, NULL, NULL, NULL },
-  { N_("Delete Path"), 'D', GDK_CONTROL_MASK,
-    paths_dialog_delete_path_callback, NULL, NULL, NULL },
-  { N_("Import Path"), 'I', GDK_CONTROL_MASK,
-    paths_dialog_import_path_callback, NULL, NULL, NULL },
-  { N_("Export Path"), 'E', GDK_CONTROL_MASK,
-    paths_dialog_export_path_callback, NULL, NULL, NULL },
-  { N_("Copy Path"), 'C', GDK_CONTROL_MASK,
-    paths_dialog_copy_path_callback, NULL, NULL, NULL },
-  { N_("Paste Path"), 'P', GDK_CONTROL_MASK,
-    paths_dialog_paste_path_callback, NULL, NULL, NULL },
-  { NULL, 0, 0, NULL, NULL, NULL, NULL }
-};
-
-#define NEW_PATH_BUTTON 1
-#define DUP_PATH_BUTTON 2
-#define PATH_TO_SEL_BUTTON 3
-#define STROKE_PATH_BUTTON 4
-#define DEL_PATH_BUTTON 5
-#define COPY_PATH_BUTTON 8
-#define PASTE_PATH_BUTTON 9
+#define NEW_PATH_BUTTON    1
+#define DUP_PATH_BUTTON    2
+#define DEL_PATH_BUTTON    3
+#define PATH_TO_SEL_BUTTON 4
+#define STROKE_PATH_BUTTON 5
+#define COPY_PATH_BUTTON   8
+#define PASTE_PATH_BUTTON  9
 
 static OpsButton paths_ops_buttons[] =
 {
   { new_xpm, paths_dialog_new_path_callback, NULL, N_("New Path"), NULL, 0 },
   { duplicate_xpm, paths_dialog_dup_path_callback, NULL, N_("Duplicate Path"), NULL, 0 },
+  { delete_xpm, paths_dialog_delete_path_callback, NULL, N_("Delete Path"), NULL, 0 },
   { toselection_xpm, paths_dialog_path_to_sel_callback, NULL, N_("Path to Selection"), NULL, 0 },
   { penstroke_xpm, paths_dialog_stroke_path_callback, NULL, N_("Stroke Path"), NULL, 0 },
-  { delete_xpm, paths_dialog_delete_path_callback, NULL, N_("Delete Path"), NULL, 0 },
   { NULL, NULL, NULL, NULL, NULL, 0 }
 };
 
-#define POINT_NEW_BUTTON 1
-#define POINT_ADD_BUTTON 2
-#define POINT_DEL_BUTTON 3
+#define POINT_NEW_BUTTON  1
+#define POINT_ADD_BUTTON  2
+#define POINT_DEL_BUTTON  3
 #define POINT_EDIT_BUTTON 4
 
 static OpsButton point_ops_buttons[] =
@@ -209,35 +175,36 @@ static OpsButton point_ops_buttons[] =
 };
 
 static void
-paths_ops_button_set_sensitive(gint but,gboolean sensitive)
+paths_ops_button_set_sensitive (gint     but,
+				gboolean sensitive)
 {
   switch(but)
     {
     case NEW_PATH_BUTTON:
-      gtk_widget_set_sensitive(paths_ops[0].widget,sensitive);
+      menus_set_sensitive (_("<Paths>/New Path"), sensitive);
       gtk_widget_set_sensitive(paths_ops_buttons[0].widget,sensitive);
       break;
     case DUP_PATH_BUTTON:
-      gtk_widget_set_sensitive(paths_ops[1].widget,sensitive);
+      menus_set_sensitive (_("<Paths>/Duplicate Path"), sensitive);
       gtk_widget_set_sensitive(paths_ops_buttons[1].widget,sensitive);
       break;
-    case PATH_TO_SEL_BUTTON:
-      gtk_widget_set_sensitive(paths_ops[2].widget,sensitive);
+    case DEL_PATH_BUTTON:
+      menus_set_sensitive (_("<Paths>/Delete Path"), sensitive);
       gtk_widget_set_sensitive(paths_ops_buttons[2].widget,sensitive);
       break;
-    case STROKE_PATH_BUTTON:
-      gtk_widget_set_sensitive(paths_ops[3].widget,sensitive);
+    case PATH_TO_SEL_BUTTON:
+      menus_set_sensitive (_("<Paths>/Path to Selection"), sensitive);
       gtk_widget_set_sensitive(paths_ops_buttons[3].widget,sensitive);
       break;
-    case DEL_PATH_BUTTON:
-      gtk_widget_set_sensitive(paths_ops[4].widget,sensitive);
+    case STROKE_PATH_BUTTON:
+      menus_set_sensitive (_("<Paths>/Stroke Path"), sensitive);
       gtk_widget_set_sensitive(paths_ops_buttons[4].widget,sensitive);
       break;
     case COPY_PATH_BUTTON:
-      gtk_widget_set_sensitive(paths_ops[7].widget,sensitive);
+      menus_set_sensitive (_("<Paths>/Copy Path"), sensitive);
       break;
     case PASTE_PATH_BUTTON:
-      gtk_widget_set_sensitive(paths_ops[8].widget,sensitive);
+      menus_set_sensitive (_("<Paths>/Paste Path"), sensitive);
       break;
     default:
       g_warning(_("paths_ops_button_set_sensitive:: invalid button specified"));
@@ -289,10 +256,8 @@ GtkWidget * paths_dialog_create()
       paths_dialog->vbox = vbox = gtk_vbox_new (FALSE, 1);
 
       /* The point operations */
-      button_box = ops_button_box_new (lc_shell,
-				       tool_tips, 
-				       point_ops_buttons,
-				       OPS_BUTTON_RADIO);
+      button_box = ops_button_box_new (lc_dialog->shell, tool_tips, 
+				       point_ops_buttons, OPS_BUTTON_RADIO);
 
       gtk_container_set_border_width(GTK_CONTAINER(button_box),7);
 
@@ -345,19 +310,16 @@ GtkWidget * paths_dialog_create()
 
       gtk_widget_show (vbox);
 
-      /* The ops buttons */
-
-      button_box = ops_button_box_new (lc_shell,
-				       tool_tips, 
-				       paths_ops_buttons,
-				       OPS_BUTTON_NORMAL);
-
+      /*  The ops buttons  */
+      button_box = ops_button_box_new (lc_dialog->shell, tool_tips, 
+				       paths_ops_buttons, OPS_BUTTON_NORMAL);
       gtk_box_pack_start (GTK_BOX (vbox), button_box, FALSE, FALSE, 2);
       gtk_widget_show (button_box);
 
-      /*  Set up signals for map/unmap for the accelerators  */
-      paths_dialog->accel_group = gtk_accel_group_new ();
+      menus_get_paths_menu (&paths_dialog->ops_menu,
+			    &paths_dialog->accel_group);
 
+      /*  Set up signals for map/unmap for the accelerators  */
       gtk_signal_connect (GTK_OBJECT (vbox), "map",
 			  (GtkSignalFunc) paths_dialog_map_callback,
 			  NULL);
@@ -365,7 +327,6 @@ GtkWidget * paths_dialog_create()
 			  (GtkSignalFunc) paths_dialog_unmap_callback,
 			  NULL);
 
-      paths_dialog->ops_menu = build_menu (paths_ops,paths_dialog->accel_group);
       paths_ops_button_set_sensitive(DUP_PATH_BUTTON,FALSE);
       paths_ops_button_set_sensitive(DEL_PATH_BUTTON,FALSE);
       paths_ops_button_set_sensitive(STROKE_PATH_BUTTON,FALSE);
@@ -1312,7 +1273,7 @@ paths_dialog_new_path(PATHIMAGELISTP *plp,gpointer points,GimpImage *gimage,gint
   return(bzp);
 }
 
-static void 
+void 
 paths_dialog_new_path_callback (GtkWidget * widget, gpointer udata)
 {
   PATHP bzp = paths_dialog_new_path(&paths_dialog->current_path_list,
@@ -1333,7 +1294,7 @@ paths_dialog_new_path_callback (GtkWidget * widget, gpointer udata)
   point_ops_button_set_sensitive(POINT_EDIT_BUTTON,TRUE);
 }
 
-static void 
+void 
 paths_dialog_delete_path_callback (GtkWidget * widget, gpointer udata)
 {
   PATHP bzp;
@@ -1383,7 +1344,7 @@ paths_dialog_delete_path_callback (GtkWidget * widget, gpointer udata)
 }
 
 
-static void 
+void 
 paths_dialog_paste_path_callback (GtkWidget * widget, gpointer udata)
 {
   PATHP bzp;
@@ -1442,7 +1403,7 @@ paths_dialog_paste_path_callback (GtkWidget * widget, gpointer udata)
   paths_dialog->current_path_list->last_selected_row = tmprow;
 }
 
-static void 
+void 
 paths_dialog_copy_path_callback (GtkWidget * widget, gpointer udata)
 {
   PATHP bzp;
@@ -1472,7 +1433,7 @@ paths_dialog_copy_path_callback (GtkWidget * widget, gpointer udata)
   paths_ops_button_set_sensitive(PASTE_PATH_BUTTON,TRUE);
 }
 
-static void 
+void 
 paths_dialog_dup_path_callback (GtkWidget * widget, gpointer udata)
 {
   PATHP bzp;
@@ -1505,7 +1466,7 @@ paths_dialog_dup_path_callback (GtkWidget * widget, gpointer udata)
   paths_dialog->current_path_list->last_selected_row = tmprow;
 }
 
-static void 
+void 
 paths_dialog_path_to_sel_callback (GtkWidget * widget, gpointer udata)
 {
   PATHP bzp;
@@ -1555,7 +1516,7 @@ paths_dialog_path_to_sel_callback (GtkWidget * widget, gpointer udata)
     }
 }
 
-static void 
+void 
 paths_dialog_stroke_path_callback (GtkWidget * widget, gpointer udata)
 {
   PATHP bzp;
@@ -1583,7 +1544,7 @@ paths_dialog_map_callback (GtkWidget *w,
   if (!paths_dialog)
     return;
 
-  gtk_window_add_accel_group (GTK_WINDOW (gtk_widget_get_toplevel(paths_dialog->paths_list)),
+  gtk_window_add_accel_group (GTK_WINDOW (lc_dialog->shell),
 			      paths_dialog->accel_group);
 
   paths_dialog_preview_extents ();
@@ -1596,7 +1557,7 @@ paths_dialog_unmap_callback (GtkWidget *w,
   if (!paths_dialog)
     return;
   
-  gtk_window_remove_accel_group (GTK_WINDOW (gtk_widget_get_toplevel(paths_dialog->paths_list)),
+  gtk_window_remove_accel_group (GTK_WINDOW (lc_dialog->shell),
 				 paths_dialog->accel_group);
 }
 
@@ -2250,7 +2211,7 @@ path_store_callback()
   gtk_widget_show (file_dlg);
 }
 
-static void 
+void 
 paths_dialog_import_path_callback (GtkWidget * widget, gpointer udata)
 {
   /* Read and add at current position */
@@ -2258,7 +2219,7 @@ paths_dialog_import_path_callback (GtkWidget * widget, gpointer udata)
 
 }
 
-static void 
+void 
 paths_dialog_export_path_callback (GtkWidget * widget, gpointer udata)
 {
   /* Export the path to a file */

@@ -26,7 +26,6 @@
 #include "gimage_mask.h"
 #include "interface.h"
 #include "layer.h"
-#include "layers_dialog.h"
 #include "paint_core.h"
 #include "paint_options.h"
 #include "undo.h"
