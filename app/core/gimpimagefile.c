@@ -2,8 +2,6 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpfileimage.c
- * Thumbnail handling according to the Thumbnail Managing Standard.
- * http://triq.net/~pearl/thumbnail-spec/
  *
  * Copyright (C) 2001-2003  Sven Neumann <sven@gimp.org>
  *                          Michael Natterer <mitch@gimp.org>
@@ -583,6 +581,9 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
   GdkPixbuf   *pixbuf;
   gint         width, height;
   gboolean     success = FALSE;
+
+  if (size < 1)
+    return TRUE;
 
   uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
 

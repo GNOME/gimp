@@ -1,3 +1,8 @@
+2003-12-25  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimagefile.c (gimp_imagefile_save_thumb): return
+	TRUE if thumbnails are disabled. Fixes bug #129921.
+
 2003-12-24  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/pygimp-image.c: add undo_group_{start,end} methods.
