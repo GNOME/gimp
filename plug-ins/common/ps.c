@@ -1390,11 +1390,7 @@ ps_open (const gchar      *filename,
 
 #ifndef USE_REAL_OUTPUTFILE
   /* Start the command and use a pipe for reading the PNM-file. */
-#ifndef __EMX__
   fd_popen = popen (cmd, "r");
-#else
-  fd_popen = popen (cmd, "rb");
-#endif
 #else
   /* If someone does not like the pipe (or it does not work), just start */
   /* ghostscript with a real outputfile. When ghostscript has finished,  */
@@ -1474,7 +1470,7 @@ read_pnmraw_type (FILE *ifp,
   for (;;)
     {
       if (thrd == EOF) return (-1);
-#if defined (__EMX__) || defined (WIN32)
+#if defined (WIN32)
       if (thrd == '\r') thrd = getc (ifp);
 #endif
       if ((thrd == '\n') && (frst == 'P') && (scnd >= '1') && (scnd <= '6'))

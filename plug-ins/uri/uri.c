@@ -28,10 +28,6 @@
 #include <unistd.h>
 #include <errno.h>
 
-#ifdef __EMX__
-#include <process.h>
-#endif
-
 #include <libgimp/gimp.h>
 
 #include "libgimp/stdplugins-intl.h"
@@ -157,7 +153,6 @@ load_image (const gchar       *filename,
 
   tmpname = gimp_temp_name (ext + 1);
 
-#ifndef __EMX__
   if (pipe (p) != 0)
     {
       g_message ("pipe() failed: %s", g_strerror (errno));
@@ -406,33 +401,6 @@ read_connect:
 	    }
 	}
     }
-#else /* __EMX__ */
-  {
-    pid = spawnlp (P_NOWAIT,
-		   "wget",
-		   "wget", "-T", TIMEOUT, filename, "-O", tmpname, NULL);
-
-    if (pid == -1)
-      {
-	g_message ("spawn failed: %s", g_strerror (errno));
-	g_free (tmpname);
-	*status = GIMP_PDB_EXECUTION_ERROR;
-	return -1;
-      }
-
-    wpid = waitpid (pid, &process_status, 0);
-
-    if ((wpid < 0)
-	|| !WIFEXITED (process_status)
-	|| (WEXITSTATUS (process_status) != 0))
-      {
-	g_message ("wget exited abnormally on URL\n'%s'", filename);
-	g_free (tmpname);
-	*status = GIMP_PDB_EXECUTION_ERROR;
-	return -1;
-      }
-  }
-#endif
 
   image_ID = gimp_file_load (GIMP_RUN_INTERACTIVE, tmpname, tmpname);
 

@@ -1,3 +1,28 @@
+2004-01-11  Tor Lillqvist  <tml@iki.fi>
+
+	* app/config/gimpconfig-path.c: Convert to native encoding (if
+	requested) only after expanding completely. (Mentioned in #130118,
+	patch by Sven.)
+
+	* app/base/tile-swap.c
+	* app/pdb/image_cmds.c
+	* app/plug-in/plug-in.c
+	* libgimp/gimp.c
+	* libgimpbase/gimpdatafiles.c
+	* libgimpbase/gimpenv.c
+	* libgimpmodule/gimpmoduledb.c
+	* plug-ins/common/bz2.c
+	* plug-ins/common/gz.c
+	* plug-ins/common/mail.c
+	* plug-ins/common/ps.c
+	* plug-ins/common/url.c
+	* plug-ins/gfig/gfig-preview.c
+	* plug-ins/helpbrowser/helpbrowser.c
+	* plug-ins/print/print.c
+	* plug-ins/script-fu/script-fu-scripts.c
+	* tools/pdbgen/pdb/image.pdb: Remove __EMX__ ifdefs. EMX port is
+	unmaintained, presumed dead. (#131109)
+
 2004-01-11  Dov Grobgeld  <dov@imagic.weizmann.ac.il>
 
 	* plug-ins/common/CEL.c: fixed bug in registration

@@ -115,10 +115,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
-#ifdef __EMX__
-#include <fcntl.h>
-#include <process.h>
-#endif
 
 #include <gtk/gtk.h>
 
@@ -329,11 +325,8 @@ save_image (const gchar *filename,
   strcat (mailcmdline, mail_info.receipt);
 
   /* create a pipe to sendmail */
-#ifndef __EMX__
   mailpipe = popen (mailcmdline, "w");
-#else
-  mailpipe = popen (mailcmdline, "wb");
-#endif
+
   create_headers (mailpipe);
 
   /* This is necessary to make the comments and headers work correctly. Not real sure why */
@@ -352,7 +345,6 @@ save_image (const gchar *filename,
 
   if (mail_info.encapsulation == ENCAPSULATION_UUENCODE)
     {
-#ifndef __EMX__
       /* fork off a uuencode process */
       if ((pid = fork ()) < 0)
 	{
@@ -377,29 +369,6 @@ save_image (const gchar *filename,
 	  _exit (127);
 	}
       else
-#else /* __EMX__ */
-      int tfd;
-      /* save fileno(stdout) */
-      tfd = dup (fileno (stdout));
-      if (dup2 (fileno (mailpipe), fileno (stdout)) == -1)
-	{
-	  g_message ("dup2() failed: %s", g_strerror (errno));
-	  close (tfd);
-	  g_free (tmpname);
-	  return GIMP_PDB_EXECUTION_ERROR;
-	}
-      fcntl (tfd, F_SETFD, FD_CLOEXEC);
-      pid = spawnlp (P_NOWAIT, UUENCODE, UUENCODE, tmpname, filename, NULL);
-      /* restore fileno(stdout) */
-      dup2 (tfd, fileno (stdout));
-      close (tfd);
-      if (pid == -1)
-	{
-	  g_message ("spawn failed: %s", g_strerror (errno));
-	  g_free (tmpname);
-	  return GIMP_PDB_EXECUTION_ERROR;
-	}
-#endif
         {
 	  wpid = waitpid (pid, &process_status, 0);
 

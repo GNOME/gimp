@@ -132,16 +132,6 @@ gimp_datafiles_read_directories (const gchar            *path_str,
 
   for (list = path; list; list = g_list_next (list))
     {
-#ifdef __EMX__
-      /*
-       *  Change drive so opendir works.
-       */
-      if (((gchar *) list->data)[1] == ':')
-        {
-          _chdrive (((gchar *) list->data)[0]);
-        }
-#endif
-
       dir = g_dir_open ((gchar *) list->data, 0, NULL);
 
       if (dir)

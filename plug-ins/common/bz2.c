@@ -43,10 +43,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
-#ifdef __EMX__
-#include <fcntl.h>
-#include <process.h>
-#endif
 
 #include <libgimp/gimp.h>
 
@@ -207,46 +203,6 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 }
 
-#ifdef __EMX__
-static gint
-spawn_bz (gchar *filename,
-          gchar *tmpname,
-          gchar *parms,
-          gint  *pid)
-{
-  FILE *f;
-  gint  tfd;
-
-  if (!(f = fopen (filename,"wb")))
-    {
-      g_message ("fopen() failed: %s", g_strerror (errno));
-      return -1;
-    }
-
-  /* save fileno(stdout) */
-  tfd = dup (fileno (stdout));
-  /* make stdout for this process be the output file */
-  if (dup2 (fileno (f), fileno (stdout)) == -1)
-    {
-      g_message ("dup2() failed: %s", g_strerror (errno));
-      close (tfd);
-      return -1;
-    }
-  fcntl (tfd, F_SETFD, FD_CLOEXEC);
-  *pid = spawnlp (P_NOWAIT, "bzip2", "bzip2", parms, tmpname, NULL);
-  fclose (f);
-  /* restore fileno(stdout) */
-  dup2 (tfd, fileno (stdout));
-  close (tfd);
-  if (*pid == -1)
-    {
-      g_message ("spawn() failed: %s", g_strerror (errno));
-      return -1;
-    }
-  return 0;
-}
-#endif
-
 static GimpPDBStatusType
 save_image (const gchar *filename,
             gint32       image_ID,
@@ -280,7 +236,6 @@ save_image (const gchar *filename,
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
-#ifndef __EMX__
   /* fork off a bzip2 process */
   if ((pid = fork ()) < 0)
     {
@@ -308,13 +263,6 @@ save_image (const gchar *filename,
       _exit (127);
     }
   else
-#else /* __EMX__ */
-  if (spawn_bz (filename, tmpname, "-cf", &pid) == -1)
-    {
-      g_free (tmpname);
-      return GIMP_PDB_EXECUTION_ERROR;
-    }
-#endif
     {
       wpid = waitpid (pid, &process_status, 0);
 
@@ -356,7 +304,6 @@ load_image (const gchar       *filename,
   /* find a temp name */
   tmpname = gimp_temp_name (ext + 1);
 
-#ifndef __EMX__
   /* fork off a bzip2 and wait for it */
   if ((pid = fork ()) < 0)
     {
@@ -386,14 +333,6 @@ load_image (const gchar       *filename,
       _exit (127);
     }
   else  /* parent process */
-#else /* __EMX__ */
-  if (spawn_bz (tmpname, filename,"-cfd", &pid) == -1)
-    {
-      g_free (tmpname);
-      *status = GIMP_PDB_EXECUTION_ERROR;
-      return -1;
-    }
-#endif
     {
       wpid = waitpid (pid, &process_status, 0);
 

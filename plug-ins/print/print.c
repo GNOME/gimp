@@ -27,11 +27,6 @@
 #include <sys/types.h>
 #include <signal.h>
 #include <sys/wait.h>
-#ifdef __EMX__
-#define INCL_DOSDEVICES
-#define INCL_DOSERRORS
-#include <os2.h>
-#endif
 
 #include <unistd.h>
 #include <stdio.h>
@@ -173,25 +168,6 @@ query (void)
 			  args, NULL);
 }
 
-#ifdef __EMX__
-static char *
-get_tmp_filename()
-{
-  char *tmp_path, *s, filename[80];
-
-  tmp_path = getenv("TMP");
-  if (tmp_path == NULL)
-    tmp_path = "";
-
-  sprintf(filename, "gimp_print_tmp.%d", getpid());
-  s = tmp_path = g_strconcat(tmp_path, "\\", filename, NULL);
-  if (!s)
-    return NULL;
-  for ( ; *s; s++)
-    if (*s == '/') *s = '\\';
-  return tmp_path;
-}
-#endif
 
 /*
  * 'usr1_handler()' - Make a note when we receive SIGUSR1.
@@ -234,9 +210,6 @@ run (const gchar      *name,
   FILE		*prn = NULL;	/* Print file/command */
   gint		 ncolors;	/* Number of colors in colormap */
   GimpParam	 values[1];	/* Return values */
-#ifdef __EMX__
-  gchar		*tmpfile;	/* temp filename */
-#endif
   gint32         drawable_ID;   /* drawable ID */
   GimpExportReturn export = GIMP_EXPORT_CANCEL;    /* return value of gimp_export_image() */
   gint		ppid = getpid (); /* PID of plugin */
@@ -427,8 +400,7 @@ run (const gchar      *name,
        */
 
       if (plist_current > 0)
-#ifndef __EMX__
-      {
+        {
 	/*
 	 * The following IPC code is only necessary because the GIMP kills
 	 * plugins with SIGKILL if its "Cancel" button is pressed; this
@@ -498,10 +470,6 @@ run (const gchar      *name,
 	  }
 	}
       }
-#else
-      /* OS/2 PRINT command doesn't support print from stdin, use temp file */
-      prn = (tmpfile = get_tmp_filename ()) ? fopen (tmpfile, "w") : NULL;
-#endif
       else
 	prn = fopen (stp_get_output_to(vars), "wb");
 
@@ -538,24 +506,11 @@ run (const gchar      *name,
 	    values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
 	  if (plist_current > 0)
-#ifndef __EMX__
 	  {
 	    fclose (prn);
 	    kill (cpid, SIGUSR1);
 	    waitpid (cpid, &dummy, 0);
 	  }
-#else
-	  { /* PRINT temp file */
-	    gchar *s;
-	    fclose (prn);
-	    s = g_strconcat (stp_get_output_to (vars), tmpfile, NULL);
-	    if (system(s) != 0)
-	      values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-	    g_free (s);
-	    remove (tmpfile);
-	    g_free (tmpfile);
-	  }
-#endif
 	  else
 	    fclose (prn);
 	  print_finished = 1;
@@ -815,15 +770,7 @@ printrc_load (void)
 
   filename = gimp_personal_rc_file ("printrc");
 
-#ifdef __EMX__
-  _fnslashify(filename);
-#endif
-
-#ifndef __EMX__
   if ((fp = fopen(filename, "r")) != NULL)
-#else
-  if ((fp = fopen(filename, "rt")) != NULL)
-#endif
   {
    /*
     * File exists - read the contents and update the printer list...
@@ -1065,15 +1012,7 @@ printrc_save (void)
 
   filename = gimp_personal_rc_file ("printrc");
 
-#ifdef __EMX__
-  _fnslashify(filename);
-#endif
-
-#ifndef __EMX__
   if ((fp = fopen(filename, "w")) != NULL)
-#else
-  if ((fp = fopen(filename, "wt")) != NULL)
-#endif
   {
    /*
     * Write the contents of the printer list...
@@ -1159,9 +1098,7 @@ get_system_printers (void)
   char  line[255];		/* Line from status command */
   char	*ptr;			/* Pointer into line */
   char  name[128];		/* Printer name from status command */
-#ifdef __EMX__
-  BYTE  pnum;
-#endif
+
   static const char	*lpcs[] =	/* Possible locations of LPC... */
 		{
 		  "/etc"
@@ -1282,21 +1219,6 @@ get_system_printers (void)
       pclose(pfile);
     }
   }
-
-#ifdef __EMX__
-  if (DosDevConfig(&pnum, DEVINFO_PRINTER) == NO_ERROR)
-    {
-      for (i = 1; i <= pnum; i++)
-	{
-	  check_plist(plist_count + 1);
-	  initialize_printer(&plist[plist_count]);
-	  sprintf(plist[plist_count].name, "LPT%d:", i);
-	  sprintf(plist[plist_count].v.output_to, "PRINT /D:LPT%d /B ", i);
-          strcpy(plist[plist_count].v.driver, "ps2");
-          plist_count ++;
-	}
-    }
-#endif
 
   if (plist_count > 2)
     qsort(plist + 1, plist_count - 1, sizeof(gp_plist_t),

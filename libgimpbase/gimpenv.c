@@ -61,10 +61,6 @@
 #define getegid() 0
 #endif
 
-#ifdef __EMX__
-extern const char *__XOS2RedirRoot (const char *);
-#endif
-
 static gchar * gimp_env_get_dir (const gchar *gimp_env_name,
                                  const gchar *env_dir);
 
@@ -128,10 +124,6 @@ gimp_directory (void)
     }
   else
     {
-#ifdef __EMX__
-      gimp_dir = g_strdup (__XOS2RedirRoot (GIMPDIR));
-      return gimp_dir;
-#endif
       if (home_dir)
 	{
 	  gimp_dir = g_build_filename (home_dir, GIMPDIR, NULL);
@@ -474,10 +466,6 @@ gimp_path_parse (const gchar  *path,
 	  dir = g_string_new (patharray[i]);
 	}
 
-#ifdef __EMX__
-      _fnslashify (dir);
-#endif
-
       if (check)
         exists = g_file_test (dir->str, G_FILE_TEST_IS_DIR);
 
@@ -615,20 +603,13 @@ gimp_env_get_dir (const gchar *gimp_env_name,
       if (! g_path_is_absolute (env))
 	g_error ("%s environment variable should be an absolute path.",
                  gimp_env_name);
-#ifndef __EMX__
+
       return g_strdup (env);
-#else
-      return g_strdup (__XOS2RedirRoot (env));
-#endif
     }
   else
     {
-#ifndef __EMX__
       gchar *retval = g_strdup (env_dir);
       gimp_path_runtime_fix (&retval);
       return retval;
-#else
-      return g_strdup (__XOS2RedirRoot (env_dir));
-#endif
     }
 }

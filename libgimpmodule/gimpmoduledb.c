@@ -366,7 +366,7 @@ valid_module_name (const gchar *filename)
 
   basename = g_path_get_basename (filename);
 
-#if !defined(G_OS_WIN32) && !defined(G_WITH_CYGWIN) && !defined(__EMX__)
+#if !defined(G_OS_WIN32) && !defined(G_WITH_CYGWIN)
   if (strncmp (basename, "lib", 3))
     goto no_module;
 

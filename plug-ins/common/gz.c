@@ -74,11 +74,6 @@
 #endif
 #include <errno.h>
 
-#ifdef __EMX__
-#include <fcntl.h>
-#include <process.h>
-#endif
-
 #include <libgimp/gimp.h>
 
 #ifdef G_OS_WIN32
@@ -256,46 +251,6 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 }
 
-#ifdef __EMX__
-static gint
-spawn_gzip (gchar *filename,
-	    gchar *tmpname,
-	    gchar *parms,
-	    gint  *pid)
-{
-  FILE *f;
-  gint tfd;
-
-  if (!(f = fopen (filename,"w")))
-    {
-      g_message ("fopen() failed: %s", g_strerror (errno));
-      return -1;
-    }
-
-  /* save fileno(stdout) */
-  tfd = dup (fileno (stdout));
-  /* make stdout for this process be the output file */
-  if (dup2 (fileno (f), fileno (stdout)) == -1)
-    {
-      g_message ("dup2() failed: %s", g_strerror (errno));
-      close (tfd);
-      return -1;
-    }
-  fcntl (tfd, F_SETFD, FD_CLOEXEC);
-  *pid = spawnlp (P_NOWAIT, "gzip", "gzip", parms, tmpname, NULL);
-  fclose (f);
-  /* restore fileno(stdout) */
-  dup2 (tfd, fileno (stdout));
-  close (tfd);
-  if (*pid == -1)
-    {
-      g_message ("spawnlp() failed: %s", g_strerror (errno));
-      return -1;
-    }
-  return 0;
-}
-#endif
-
 static GimpPDBStatusType
 save_image (const gchar *filename,
 	    gint32       image_ID,
@@ -338,14 +293,6 @@ save_image (const gchar *filename,
     }
 
 #ifndef G_OS_WIN32
-#ifdef __EMX__
-   if (spawn_gzip (filename, tmpname, "-cfn", &pid) == -1)
-    {
-      g_free (tmpname);
-      return GIMP_PDB_EXECUTION_ERROR;
-    }
-  sleep (2); /* silly wait */
-#else /* UNIX */
   /* fork off a gzip process */
   if ((pid = fork ()) < 0)
     {
@@ -386,7 +333,6 @@ save_image (const gchar *filename,
 	  return 0;
 	}
     }
-#endif
 #else  /* G_OS_WIN32 */
   in = fopen (tmpname, "rb");
   out = fopen (filename, "wb");
@@ -452,14 +398,6 @@ load_image (const gchar       *filename,
   tmpname = gimp_temp_name (ext + 1);
 
 #ifndef G_OS_WIN32
-#ifdef __EMX__
-   if (spawn_gzip (tmpname, filename, "-cfd", &pid) == -1)
-     {
-       g_free (tmpname);
-       *status = GIMP_PDB_EXECUTION_ERROR;
-       return -1;
-     }
-#else /* UNIX */
 /* fork off a g(un)zip and wait for it */
   if ((pid = fork ()) < 0)
     {
@@ -505,7 +443,6 @@ load_image (const gchar       *filename,
 	  return -1;
 	}
     }
-#endif
 #else
   in = fopen (filename, "rb");
   out = fopen (tmpname, "wb");

@@ -190,8 +190,6 @@ register_image_procs (Gimp *gimp)
 #define FINITE(x) isfinite(x)
 #elif defined (G_OS_WIN32)
 #define FINITE(x) _finite(x)
-#elif defined (__EMX__)
-#define FINITE(x) isfinite(x)
 #else
 #error "no FINITE() implementation available?!"
 #endif

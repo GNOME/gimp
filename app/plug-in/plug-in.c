@@ -62,13 +62,6 @@
 
 #endif /* G_OS_WIN32 || G_WITH_CYGWIN */
 
-#ifdef __EMX__
-#include <fcntl.h>
-#include <process.h>
-#define _O_BINARY O_BINARY
-#define _P_NOWAIT P_NOWAIT
-#endif
-
 #include "libgimpbase/gimpbase.h"
 #include "libgimpbase/gimpprotocol.h"
 #include "libgimpbase/gimpwire.h"
@@ -323,7 +316,7 @@ plug_in_unref (PlugIn *plug_in)
 static void
 plug_in_prep_for_exec (gpointer data)
 {
-#if !defined(G_OS_WIN32) && !defined (G_WITH_CYGWIN) && !defined(__EMX__)
+#if !defined(G_OS_WIN32) && !defined (G_WITH_CYGWIN)
   PlugIn *plug_in = data;
 
   g_io_channel_unref (plug_in->my_read);
@@ -363,7 +356,7 @@ plug_in_open (PlugIn *plug_in)
       return FALSE;
     }
 
-#if defined(G_WITH_CYGWIN) || defined(__EMX__)
+#if defined(G_WITH_CYGWIN)
   /* Set to binary mode */
   setmode (my_read[0], _O_BINARY);
   setmode (my_write[0], _O_BINARY);
@@ -418,11 +411,6 @@ plug_in_open (PlugIn *plug_in)
     }
 
   stm = g_strdup_printf ("%d", plug_in->gimp->stack_trace_mode);
-
-#ifdef __EMX__
-  fcntl (my_read[0], F_SETFD, 1);
-  fcntl (my_write[1], F_SETFD, 1);
-#endif
 
   args[0] = plug_in->prog;
   args[1] = "-gimp";

@@ -40,10 +40,6 @@
 
 /*  defines  */
 
-#ifdef __EMX__
-#define chdir _chdir2
-#endif
-
 #define GIMP_HELP_EXT_NAME       "extension_gimp_help_browser"
 #define GIMP_HELP_TEMP_EXT_NAME  "extension_gimp_help_browser_temp"
 

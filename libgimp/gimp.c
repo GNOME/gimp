@@ -88,10 +88,6 @@
 #  define USE_WIN32_SHM 1
 #endif
 
-#ifdef __EMX__
-#  include <fcntl.h>
-#endif
-
 #include <libintl.h>
 #include <locale.h>
 
@@ -347,10 +343,6 @@ gimp_main (const GimpPlugInInfo *info,
 
   _readchannel  = g_io_channel_unix_new (atoi (argv[2]));
   _writechannel = g_io_channel_unix_new (atoi (argv[3]));
-#ifdef __EMX__
-  setmode (g_io_channel_unix_get_fd (_readchannel), O_BINARY);
-  setmode (g_io_channel_unix_get_fd (_writechannel), O_BINARY);
-#endif
 
   g_io_channel_set_encoding (_readchannel, NULL, NULL);
   g_io_channel_set_encoding (_writechannel, NULL, NULL);

@@ -673,10 +673,6 @@ script_fu_load_script (const GimpDatafileData *file_data,
       gchar *command;
       gchar *qf = g_strescape (file_data->filename, NULL);
 
-#ifdef __EMX__
-      _fnslashify (qf);
-#endif
-
       command = g_strdup_printf ("(load \"%s\")", qf);
       g_free (qf);
 

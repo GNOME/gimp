@@ -35,7 +35,9 @@
 
 #define SUBSTS_ALLOC 4
 
-static inline gchar * extract_token (const gchar **str);
+static gchar        * gimp_config_path_expand_only (const gchar  *path,
+                                                    GError      **error);
+static inline gchar * extract_token                (const gchar **str);
 
 
 /**
@@ -59,6 +61,30 @@ gimp_config_path_expand (const gchar  *path,
                          gboolean      recode,
                          GError      **error)
 {
+  g_return_val_if_fail (path != NULL, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  if (recode)
+    {
+      gchar *retval;
+      gchar *expanded = gimp_config_path_expand_only (path, error);
+
+      retval = g_filename_from_utf8 (expanded, -1, NULL, NULL, error);
+
+      g_free (expanded);
+
+      return retval;
+    }
+  else
+    {
+      return gimp_config_path_expand_only (path, error);
+    }
+}
+
+static gchar *
+gimp_config_path_expand_only (const gchar  *path,
+                              GError      **error)
+{
   const gchar *p;
   const gchar *s;
   gchar       *n;
@@ -70,20 +96,7 @@ gimp_config_path_expand (const gchar  *path,
   gint         length   = 0;
   gint         i;
 
-  g_return_val_if_fail (path != NULL, NULL);
-  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
-
-  if (recode)
-    {
-      if (!(filename = g_filename_from_utf8 (path, -1, NULL, NULL, error)))
-        return NULL;
-
-      p = filename;
-    }
-  else
-    {
-      p = path;
-    }
+  p = path;
 
   while (*p)
     {
@@ -163,11 +176,11 @@ gimp_config_path_expand (const gchar  *path,
     }
 
   if (n_substs == 0)
-    return recode ? filename : g_strdup (path);
+    return g_strdup (path);
 
   expanded = g_new (gchar, length + 1);
 
-  p = recode ? filename : path;
+  p = path;
   n = expanded;
 
   while (*p)

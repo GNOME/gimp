@@ -587,20 +587,12 @@ gfig_update_stat_labels (void)
       gint slen;
       gchar *hm  = (gchar *) g_get_home_dir ();
       gchar *dfn = g_strdup (current_obj->filename);
-#ifdef __EMX__
-      if (hm)
-	hm = _fnslashify (hm);
-#endif
 
-#ifndef __EMX__
       if (hm != NULL && !strncmp (dfn, hm, strlen (hm)-1))
-#else
-      if (hm != NULL && !strnicmp (dfn, hm, strlen (hm)-1))
-#endif
-	 {
-	   strcpy (dfn, "~");
-	   strcat (dfn, &dfn[strlen (hm)]);
-	 }
+        {
+          strcpy (dfn, "~");
+          strcat (dfn, &dfn[strlen (hm)]);
+        }
       if ((slen = strlen (dfn)) > 40)
 	{
 	  strncpy (str, dfn, 19);

@@ -186,7 +186,7 @@ tile_swap_exit1 (gpointer key,
 	  tile_swap_print_gaps (def_swap_file);
 	}
 
-#if defined (__EMX__) || defined (G_OS_WIN32)
+#ifdef G_OS_WIN32
       /* should close before unlink */
       if (swap_file->fd > 0)
 	{
