@@ -28,6 +28,7 @@
 
 #include <libgimp/gimpexport.h>
 #include <libgimp/gimpmenu.h>
+#include <libgimp/gimpmiscui.h>
 
 G_BEGIN_DECLS
 

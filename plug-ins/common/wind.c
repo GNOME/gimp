@@ -33,11 +33,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -55,7 +50,6 @@
 #define MAX_THRESHOLD  50
 #define MIN_STRENGTH    1
 #define MAX_STRENGTH   50
-#define PREVIEW_SIZE  128
 
 typedef enum
 {
@@ -135,11 +129,6 @@ static void reverse_buffer     (guchar  *buffer,
 				gint     length, 
 				gint     bytes);
 
-static void       fill_preview   (GtkWidget *preview_widget, 
-				  GimpDrawable *drawable);
-static GtkWidget *preview_widget (GimpDrawable *drawable);
-
-
 GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,	 /* init_proc  */
@@ -178,10 +167,7 @@ config_t config =
   LEADING      /* abs(derivative); */
 };
 
-static guchar    *preview_cache;
-static GtkWidget *preview;
-static gint       preview_cache_rowstride;
-static gint       preview_cache_bpp;
+static GimpFixMePreview *preview;
 
 MAIN ()
 
@@ -264,7 +250,6 @@ run (gchar      *name,
 	  status = GIMP_PDB_CALLING_ERROR;
 	  break;
 	}
-      g_free(preview_cache);
       gimp_set_data("plug_in_wind", &config, sizeof(config_t));
       gimp_displays_flush();
       break;
@@ -289,8 +274,6 @@ run (gchar      *name,
   *return_vals = values;
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
-
-  return;
 }
 
 static gint
@@ -311,78 +294,6 @@ render_effect (GimpDrawable *drawable,
 }
 
 static void
-preview_do_row(gint    row,
-	       gint    width,
-	       guchar *even,
-	       guchar *odd,
-	       guchar *src)
-{
-  gint    x;
-  
-  guchar *p0 = even;
-  guchar *p1 = odd;
-  
-  gdouble    r, g, b, a;
-  gdouble    c0, c1;
-  
-  for (x = 0; x < width; x++) 
-    {
-      if (preview_cache_bpp == 4)
-	{
-	  r = ((gdouble)src[x*4+0]) / 255.0;
-	  g = ((gdouble)src[x*4+1]) / 255.0;
-	  b = ((gdouble)src[x*4+2]) / 255.0;
-	  a = ((gdouble)src[x*4+3]) / 255.0;
-	}
-      else if (preview_cache_bpp == 3)
-	{
-	  r = ((gdouble)src[x*3+0]) / 255.0;
-	  g = ((gdouble)src[x*3+1]) / 255.0;
-	  b = ((gdouble)src[x*3+2]) / 255.0;
-	  a = 1.0;
-	}
-      else
-	{
-	  r = ((gdouble)src[x*preview_cache_bpp+0]) / 255.0;
-	  g = b = r;
-	  if (preview_cache_bpp == 2)
-		    a = ((gdouble)src[x*preview_cache_bpp+1]) / 255.0;
-	  else
-	    a = 1.0;
-	}
-      
-      if ((x / GIMP_CHECK_SIZE) & 1) 
-	{
-	  c0 = GIMP_CHECK_LIGHT;
-	  c1 = GIMP_CHECK_DARK;
-	} 
-      else 
-	{
-	  c0 = GIMP_CHECK_DARK;
-	  c1 = GIMP_CHECK_LIGHT;
-	}
-      
-      *p0++ = (c0 + (r - c0) * a) * 255.0;
-      *p0++ = (c0 + (g - c0) * a) * 255.0;
-      *p0++ = (c0 + (b - c0) * a) * 255.0;
-      
-      *p1++ = (c1 + (r - c1) * a) * 255.0;
-      *p1++ = (c1 + (g - c1) * a) * 255.0;
-      *p1++ = (c1 + (b - c1) * a) * 255.0;
-      
-    } /* for */
-  
-  if ((row / GIMP_CHECK_SIZE) & 1)
-    {
-      gtk_preview_draw_row (GTK_PREVIEW (preview), (guchar *)odd,  0, row, width); 
-    }
-  else
-    {
-      gtk_preview_draw_row (GTK_PREVIEW (preview), (guchar *)even, 0, row, width); 
-    }
-}
-
-static void
 render_blast (GimpDrawable   *drawable,
 	      gint         threshold,
 	      gint         strength,
@@ -400,22 +311,18 @@ render_blast (GimpDrawable   *drawable,
   gint row_stride;
   gint marker = 0;
   gint lpi;
-  guchar *odd = NULL;
-  guchar *even = NULL;
 
   if (preview_mode) 
     {
-      width  = GTK_PREVIEW (preview)->buffer_width;
-      height = GTK_PREVIEW (preview)->buffer_height;
-      bytes  = preview_cache_bpp;
+      width  = preview->width;
+      height = preview->height;
+      bytes  = preview->bpp;
 
       x1 = y1 = 0;
       x2 = width;
       y2 = height;
 
-      row_stride = preview_cache_rowstride;
-      even = g_malloc (width * 3);
-      odd  = g_malloc (width * 3);
+      row_stride = preview->rowstride;
     } 
   else 
     {
@@ -438,7 +345,7 @@ render_blast (GimpDrawable   *drawable,
   for (row = y1; row < y2; row++)
     {
       if (preview_mode)
-        memcpy (buffer, preview_cache + (row * row_stride), row_stride);
+        memcpy (buffer, preview->cache + (row * row_stride), row_stride);
       else
         gimp_pixel_rgn_get_row (&src_region, buffer, x1, row, width);
 
@@ -456,7 +363,7 @@ render_blast (GimpDrawable   *drawable,
 
       if (preview_mode) 
 	{
-	  preview_do_row(row,width,even,odd,buffer);
+	  gimp_fixme_preview_do_row(preview, row, width, buffer);
 	} 
       else 
 	{
@@ -476,8 +383,8 @@ render_blast (GimpDrawable   *drawable,
 		{
                   if (preview_mode) 
 		    {
-		      memcpy (buffer, preview_cache + (row * row_stride), row_stride);
-		      preview_do_row(row,width,even,odd,buffer);
+		      memcpy (buffer, preview->cache + (row * row_stride), row_stride);
+		      gimp_fixme_preview_do_row(preview, row, width, buffer);
 		    } 
 		  else 
 		    {
@@ -490,18 +397,12 @@ render_blast (GimpDrawable   *drawable,
 	}
     }
 
- if(even)
-    g_free(even);
-
-  if(odd)
-    g_free(odd);
-
   g_free(buffer);
   
   /*  update the region  */
   if (preview_mode) 
     {
-      gtk_widget_queue_draw (preview);
+      gtk_widget_queue_draw (preview->widget);
     }
   else 
     {
@@ -509,8 +410,6 @@ render_blast (GimpDrawable   *drawable,
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
       gimp_drawable_update (drawable->drawable_id, x1, y1, x2 - x1, y2 - y1);
     }
-
-  return;
 }
 
 static void
@@ -531,22 +430,18 @@ render_wind (GimpDrawable   *drawable,
   guchar *sb;
   gint lpi;
   gint x1, y1, x2, y2;
-  guchar *odd = NULL;
-  guchar *even = NULL;
 
   if (preview_mode) 
     {
-      width  = GTK_PREVIEW (preview)->buffer_width;
-      height = GTK_PREVIEW (preview)->buffer_height;
-      bytes  = preview_cache_bpp;
+      width  = preview->width;
+      height = preview->height;
+      bytes  = preview->bpp;
 
       x1 = y1 = 0;
       x2 = width;
       y2 = height;
 
-      row_stride = preview_cache_rowstride;
-      even = g_malloc (width * 3);
-      odd  = g_malloc (width * 3);
+      row_stride = preview->rowstride;
     } 
   else 
     {
@@ -571,7 +466,7 @@ render_wind (GimpDrawable   *drawable,
   for (row = y1; row < y2; row++)
     {
       if (preview_mode) 
-	memcpy (sb, preview_cache + (row * row_stride), row_stride);
+	memcpy (sb, preview->cache + (row * row_stride), row_stride);
       else 
 	gimp_pixel_rgn_get_row (&src_region, sb, x1, row, width);
 
@@ -585,7 +480,7 @@ render_wind (GimpDrawable   *drawable,
 
       if (preview_mode) 
 	{
-	  preview_do_row(row,width,even,odd,sb);
+	  gimp_fixme_preview_do_row(preview, row, width, sb);
 	} 
       else 
 	{
@@ -594,18 +489,12 @@ render_wind (GimpDrawable   *drawable,
 	}
     }
 
-  if(even)
-    g_free(even);
-
-  if(odd)
-    g_free(odd);
-
   g_free(sb);
 
   /*  update the region  */
   if (preview_mode) 
     {
-      gtk_widget_queue_draw (preview);
+      gtk_widget_queue_draw (preview->widget);
     } 
   else 
     {
@@ -613,8 +502,6 @@ render_wind (GimpDrawable   *drawable,
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
       gimp_drawable_update (drawable->drawable_id, x1, y1, x2 - x1, y2 - y1);
     }
-
-  return;
 }
 
 static gint
@@ -831,7 +718,6 @@ render_wind_row (guchar *sb,
 	    }
 	}
     }
-  return;
 }
 
 static gint
@@ -911,7 +797,6 @@ get_derivative (guchar  *pixel_R1,
     {
       /* no change needed */
     }
-  return;
 }
 
 static void
@@ -967,12 +852,11 @@ static void
 radio_callback (GtkWidget *widget, 
 		gpointer   data)
 {
-  GimpDrawable *drawable;
-
   gimp_radio_button_update (widget, data);
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
     {
+      GimpDrawable *drawable;
       drawable = g_object_get_data (G_OBJECT (widget), "drawable");
 
       if (drawable != NULL)
@@ -1036,10 +920,11 @@ dialog_box (GimpDrawable *drawable)
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER (abox), frame);
   gtk_widget_show (frame);
-  preview = preview_widget (drawable); /* we are here */
-  gtk_container_add (GTK_CONTAINER (frame), preview);
-  render_effect (drawable, TRUE); /* render preview image */
-  gtk_widget_show (preview);
+  preview = gimp_fixme_preview_new (NULL);
+  gimp_fixme_preview_fill (preview, drawable);
+  gtk_container_add (GTK_CONTAINER (frame), preview->widget);
+  render_effect (drawable, TRUE);
+  gtk_widget_show (preview->widget);
 
   frame = gtk_frame_new (_("Parameter Settings"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
@@ -1191,73 +1076,4 @@ dialog_box (GimpDrawable *drawable)
   gtk_main ();
   gimp_help_free ();
   gdk_flush ();
-}
-
-
-static GtkWidget *
-preview_widget (GimpDrawable *drawable)
-{
-  gint       size;
-
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  fill_preview (preview, drawable);
-  size = GTK_PREVIEW (preview)->rowstride * GTK_PREVIEW (preview)->buffer_height;
-
-  return preview;
-}
-
-static void
-fill_preview (GtkWidget *widget, 
-	      GimpDrawable *drawable)
-{
-  GimpPixelRgn  srcPR;
-  gint       width;
-  gint       height;
-  gint       x1, x2, y1, y2;
-  gint       bpp;
-  gint       y;
-  guchar    *src;
-  guchar    *even, *odd;
-  
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-
-  if (x2 - x1 > PREVIEW_SIZE)
-    x2 = x1 + PREVIEW_SIZE;
-  
-  if (y2 - y1 > PREVIEW_SIZE)
-    y2 = y1 + PREVIEW_SIZE;
-  
-  width  = x2 - x1;
-  height = y2 - y1;
-  bpp    = gimp_drawable_bpp (drawable->drawable_id);
-  
-  if (width < 1 || height < 1)
-    return;
-
-  gtk_preview_size (GTK_PREVIEW (widget), width, height);
-
-  gimp_pixel_rgn_init (&srcPR, drawable, x1, y1, x2, y2, FALSE, FALSE);
-
-  even = g_malloc (width * 3);
-  odd  = g_malloc (width * 3);
-  src  = g_malloc (width * bpp);
-  preview_cache = g_malloc(width * bpp * height);
-  preview_cache_rowstride = width * bpp;
-  preview_cache_bpp = bpp;
-
-  for (y = 0; y < height; y++)
-    {
-      gimp_pixel_rgn_get_row (&srcPR, src, x1, y + y1, width);
-      memcpy(preview_cache + (y*width*bpp),src,width*bpp);
-    }
-  
-  for (y = 0; y < height; y++)
-    {
-      preview_do_row(y,width,even,odd,preview_cache + (y*width*bpp));
-    }
-
-
-  g_free (even);
-  g_free (odd);
-  g_free (src);
 }

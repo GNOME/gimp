@@ -18,6 +18,22 @@
 	* libgimpwidgets/gimpdatafiles.c: s/S_ISLINK/S_ISNLK/ (was never
 	compiled before Hans fixed the #ifdef).
 
+2002-11-30  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/flarefx.c: 
+	* plug-ins/common/jigsaw.c: 
+	* plug-ins/common/nova.c
+	* plug-ins/common/wind.c
+	* plug-ins/common/illusion.c
+	* plug-ins/common/glasstile.c
+	* plug-ins/common/max_rgb.c: replace preview code by calls to libgimp
+
+	* libgimp/Makefile.am: added gimpmiscui.[ch]
+	* libgimp/gimpmiscui.[ch]: new files. For now contain effect preview
+	stuff collected from several plug-ins. Warning: this is NOT the new
+	effect preview widget I'm writing, just a first step to cleaning up a
+	lot of plug-ins.
+
 2002-11-30  Hans Breuer  <hans@breuer.org>
 
 	* */makefile.msc */*/makefile.msc : updated

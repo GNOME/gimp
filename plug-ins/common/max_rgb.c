@@ -31,11 +31,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -48,7 +43,6 @@
 #define	PLUG_IN_NAME	     "plug_in_max_rgb"
 #define SHORT_NAME	     "max_rgb"
 #define PROGRESS_UPDATE_NUM  100
-#define PREVIEW_SIZE         128 
 
 static void	query	(void);
 static void	run	(gchar      *name,
@@ -56,10 +50,6 @@ static void	run	(gchar      *name,
 			 GimpParam  *param,
 			 gint       *nreturn_vals,
 			 GimpParam **return_vals);
-
-static void        fill_preview_with_thumb (GtkWidget    *preview_widget, 
-					    gint32        drawable_id);
-static GtkWidget  *preview_widget          (GimpDrawable *drawable);
 
 static GimpPDBStatusType main_function     (GimpDrawable *drawable, 
 					    gboolean      preview_mode);
@@ -105,8 +95,7 @@ static Interface interface =
   FALSE
 };
 
-static guchar *preview_bits;
-static GtkWidget *preview;
+static GimpFixMePreview *preview;
 
 MAIN ()
 
@@ -188,7 +177,6 @@ run (gchar      *name,
     gimp_displays_flush ();
   if (run_mode == GIMP_RUN_INTERACTIVE && status == GIMP_PDB_SUCCESS)
     gimp_set_data (PLUG_IN_NAME, &pvals, sizeof (ValueType));
-    g_free(preview_bits);
 
   values[0].data.d_status = status;
 }
@@ -211,10 +199,10 @@ main_function (GimpDrawable *drawable,
   if (preview_mode) 
     {
       x1 = y1 = 0;
-      x2 = GTK_PREVIEW (preview)->buffer_width;
-      y2 = GTK_PREVIEW (preview)->buffer_height;
+      x2 = preview->width;
+      y2 = preview->height;
       gap = 0; /* no alpha on preview */
-      bpp = GTK_PREVIEW (preview)->bpp;
+      bpp = preview->bpp;
     } 
   else 
     {
@@ -234,19 +222,16 @@ main_function (GimpDrawable *drawable,
     return GIMP_PDB_EXECUTION_ERROR;
 
   if (preview_mode) 
-    { /* preview mode.  here we go again. see nova.c 
-	 I just don't want to write a prev_pixel_rgn_process
-	 and then find out someone else coded a much cooler
-	 preview widget / functions for GIMP */
-      src_data = g_malloc (GTK_PREVIEW (preview)->rowstride * y2);
-      memcpy (src_data, preview_bits, GTK_PREVIEW (preview)->rowstride * y2);
-      dest_data = g_malloc (GTK_PREVIEW (preview)->rowstride * y2);
+    {
+      src_data = g_malloc (preview->rowstride * y2);
+      memcpy (src_data, preview->cache, preview->rowstride * y2);
+      dest_data = g_malloc (preview->rowstride * y2);
       save_dest = dest_data;
       
       for (y = 0; y < y2; y++)
 	{
-	  src  = src_data  + y * GTK_PREVIEW (preview)->rowstride;
-	  dest = dest_data + y * GTK_PREVIEW (preview)->rowstride;
+	  src  = src_data  + y * preview->rowstride;
+	  dest = dest_data + y * preview->rowstride;
 	  
 	  for (x = 0; x < x2; x++)
 	    {
@@ -276,8 +261,8 @@ main_function (GimpDrawable *drawable,
 	    }
 	}
       
-      memcpy (GTK_PREVIEW (preview)->buffer, save_dest, GTK_PREVIEW (preview)->rowstride * y2);
-      gtk_widget_queue_draw (preview);
+      memcpy (preview->buffer, save_dest, preview->rowstride * y2);
+      gtk_widget_queue_draw (preview->widget);
     } 
   else 
     { /* normal mode */
@@ -380,10 +365,10 @@ dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (abox), frame);
   gtk_widget_show (frame);
 
-  preview = preview_widget (drawable);
-  gtk_container_add (GTK_CONTAINER (frame), preview);
+  preview = gimp_fixme_preview_new (drawable);
+  gtk_container_add (GTK_CONTAINER (frame), preview->widget);
   main_function (drawable, TRUE);
-  gtk_widget_show (preview);
+  gtk_widget_show (preview->widget);
   
   frame = gimp_radio_group_new2 (TRUE, _("Parameter Settings"),
 				 G_CALLBACK (radio_callback),
@@ -416,12 +401,11 @@ static void
 radio_callback (GtkWidget *widget, 
 		gpointer  data)
 {
-  GimpDrawable *drawable;
-
   gimp_radio_button_update (widget, data);
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
     {
+      GimpDrawable *drawable;
       drawable = g_object_get_data (G_OBJECT (widget), "drawable");
       main_function (drawable, TRUE);
     }
@@ -434,113 +418,4 @@ ok_callback (GtkWidget *widget,
   interface.run = TRUE;
 
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static GtkWidget *
-preview_widget (GimpDrawable *drawable)
-{
-  gint       size;
-  GtkWidget *preview;
-
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  fill_preview_with_thumb (preview, drawable->drawable_id);
-  size = GTK_PREVIEW (preview)->rowstride * GTK_PREVIEW (preview)->buffer_height;
-  preview_bits = g_malloc (size);
-  memcpy (preview_bits, GTK_PREVIEW (preview)->buffer, size);
-
-  return preview;
-}
-
-static void
-fill_preview_with_thumb (GtkWidget *widget, 
-			 gint32     drawable_ID)
-{
-  guchar  *drawable_data;
-  gint     bpp;
-  gint     x,y;
-  gint     width  = PREVIEW_SIZE;
-  gint     height = PREVIEW_SIZE;
-  guchar  *src;
-  gdouble  r, g, b, a;
-  gdouble  c0, c1;
-  guchar  *p0, *p1;
-  guchar  *even, *odd;
-
-  bpp = 0; /* Only returned */
-  
-  drawable_data = 
-    gimp_drawable_get_thumbnail_data (drawable_ID, &width, &height, &bpp);
-
-  if (width < 1 || height < 1)
-    return;
-
-  gtk_preview_size (GTK_PREVIEW (widget), width, height);
-
-  even = g_malloc (width * 3);
-  odd  = g_malloc (width * 3);
-  src = drawable_data;
-
-  for (y = 0; y < height; y++)
-    {
-      p0 = even;
-      p1 = odd;
-      
-      for (x = 0; x < width; x++) 
-	{
-	  if(bpp == 4)
-	    {
-	      r =  ((gdouble)src[x*4+0])/255.0;
-	      g = ((gdouble)src[x*4+1])/255.0;
-	      b = ((gdouble)src[x*4+2])/255.0;
-	      a = ((gdouble)src[x*4+3])/255.0;
-	    }
-	  else if(bpp == 3)
-	    {
-	      r =  ((gdouble)src[x*3+0])/255.0;
-	      g = ((gdouble)src[x*3+1])/255.0;
-	      b = ((gdouble)src[x*3+2])/255.0;
-	      a = 1.0;
-	    }
-	  else
-	    {
-	      r = ((gdouble)src[x*bpp+0])/255.0;
-	      g = b = r;
-	      if(bpp == 2)
-		a = ((gdouble)src[x*bpp+1])/255.0;
-	      else
-		a = 1.0;
-	    }
-	  
-	  if ((x / GIMP_CHECK_SIZE_SM) & 1) 
-	    {
-	      c0 = GIMP_CHECK_LIGHT;
-	      c1 = GIMP_CHECK_DARK;
-	    } 
-	  else 
-	    {
-	      c0 = GIMP_CHECK_DARK;
-	      c1 = GIMP_CHECK_LIGHT;
-	    }
-	  
-	*p0++ = (c0 + (r - c0) * a) * 255.0;
-	*p0++ = (c0 + (g - c0) * a) * 255.0;
-	*p0++ = (c0 + (b - c0) * a) * 255.0;
-	
-	*p1++ = (c1 + (r - c1) * a) * 255.0;
-	*p1++ = (c1 + (g - c1) * a) * 255.0;
-	*p1++ = (c1 + (b - c1) * a) * 255.0;
-	
-      } /* for */
-      
-      if ((y / GIMP_CHECK_SIZE_SM) & 1)
-	gtk_preview_draw_row (GTK_PREVIEW (widget), (guchar *)odd,  0, y, width);
-      else
-	gtk_preview_draw_row (GTK_PREVIEW (widget), (guchar *)even, 0, y, width);
-
-      src += width * bpp;
-    }
-
-  g_free (even);
-  g_free (odd);
-  g_free (drawable_data);
 }

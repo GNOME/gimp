@@ -231,8 +231,8 @@ init_generated_constants (void)
   setvar (cintern ("VERTICAL"), flocons (1), NIL);
   setvar (cintern ("UNKNOWN"), flocons (2), NIL);
 
-  setvar (cintern ("PIXELS"), flocons (0), NIL);
-  setvar (cintern ("POINTS"), flocons (1), NIL);
+  setvar (cintern ("SIZE-PIXELS"), flocons (0), NIL);
+  setvar (cintern ("SIZE-POINTS"), flocons (1), NIL);
 
   return;
 }

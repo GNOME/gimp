@@ -39,21 +39,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
-
-
-#define PREVIEW_SIZE    128 
-
 
 typedef enum 
 {
@@ -81,10 +72,6 @@ static gint jigsaw     (gboolean preview_mode);
 
 static void  jigsaw_radio_button_update (GtkWidget *widget, gpointer data);
 static void  dialog_box (void);
-static void  fill_preview_with_thumb (GtkWidget *preview_widget, 
-				      gint32     drawable_ID);
-static GtkWidget *preview_widget  (GimpDrawable *drawable);
-
 static void run_callback          (GtkWidget *widget, gpointer   data);
 static void check_button_callback (GtkWidget *widget, gpointer   data);
 
@@ -368,8 +355,7 @@ static globals_t globals =
 };
 
 /* preview globals */
-static guchar *preview_bits;
-static GtkWidget *preview;
+static GimpFixMePreview *preview;
 
 MAIN ()
 
@@ -429,7 +415,7 @@ run (gchar      *name,
 	  config.style = param[5].data.d_int32;
 	  config.blend_lines = param[6].data.d_int32;
 	  config.blend_amount = param[7].data.d_float;
-	  if (jigsaw(0) == -1)
+	  if (jigsaw(FALSE) == -1)
 	    {
 	      status = GIMP_PDB_EXECUTION_ERROR;
 	    }
@@ -451,7 +437,7 @@ run (gchar      *name,
 	  break;
 	}
       gimp_progress_init( _("Assembling Jigsaw"));
-      if (jigsaw(0) == -1)
+      if (jigsaw(FALSE) == -1)
 	{
 	  status = GIMP_PDB_CALLING_ERROR;
 	  break;
@@ -460,13 +446,12 @@ run (gchar      *name,
       gimp_set_data(PLUG_IN_STORAGE, &globals.tooltips,
 		    sizeof(globals.tooltips));
       gimp_displays_flush();
-      g_free(preview_bits);
       break;
       
     case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       gimp_get_data("plug_in_jigsaw", &config);
-      if (jigsaw(0) == -1)
+      if (jigsaw(FALSE) == -1)
 	{
 	  status = GIMP_PDB_EXECUTION_ERROR;
 	  gimp_message("An execution error occured.");
@@ -501,10 +486,10 @@ jigsaw (gboolean preview_mode)
 
   if (preview_mode) 
     {
-      width  = GTK_PREVIEW (preview)->buffer_width;
-      height = GTK_PREVIEW (preview)->buffer_height;
-      bytes  = GTK_PREVIEW (preview)->bpp;
-      buffer_size = GTK_PREVIEW (preview)->rowstride * height;
+      width  = preview->width;
+      height = preview->height;
+      bytes  = preview->bpp;
+      buffer_size = preview->rowstride * height;
     } 
   else 
     {
@@ -519,7 +504,7 @@ jigsaw (gboolean preview_mode)
 
   if (preview_mode) 
     {
-      memcpy (buffer, preview_bits, buffer_size);
+      memcpy (buffer, preview->cache, buffer_size);
     } 
   else 
     {
@@ -540,8 +525,8 @@ jigsaw (gboolean preview_mode)
   /* cleanup */
   if (preview_mode) 
     {
-      memcpy (GTK_PREVIEW (preview)->buffer, buffer, buffer_size);
-      gtk_widget_queue_draw (preview);
+      memcpy (preview->buffer, buffer, buffer_size);
+      gtk_widget_queue_draw (preview->widget);
     } 
   else 
     {
@@ -912,7 +897,7 @@ draw_vertical_line (guchar   *buffer,
   gint index;
   gint length;
   
-  rowstride = preview_mode ? GTK_PREVIEW (preview)->rowstride : bytes * width;
+  rowstride = preview_mode ? preview->rowstride : bytes * width;
   index = px[0] * bytes + rowstride * py[0];
   length = py[1] - py[0] + 1;
 
@@ -937,7 +922,7 @@ draw_horizontal_line (guchar   *buffer,
   gint index;
   gint length;
   
-  rowstride = preview_mode ? GTK_PREVIEW (preview)->rowstride : bytes * width;
+  rowstride = preview_mode ? preview->rowstride : bytes * width;
   index = px[0] * bytes + rowstride * py[0];
   length = px[1] - px[0] + 1;
 
@@ -962,7 +947,7 @@ draw_right_bump (guchar   *buffer,
   gint index;
   gint rowstride;
 
-  rowstride = preview_mode ? GTK_PREVIEW (preview)->rowstride : bytes * width;
+  rowstride = preview_mode ? preview->rowstride : bytes * width;
 
   for (i = 0; i < steps; i++)
     {
@@ -992,7 +977,7 @@ draw_left_bump (guchar   *buffer,
   gint index;
   gint rowstride;
 
-  rowstride = preview_mode ? GTK_PREVIEW (preview)->rowstride : bytes * width;
+  rowstride = preview_mode ? preview->rowstride : bytes * width;
 
   for (i = 0; i < steps; i++)
     {
@@ -1022,7 +1007,7 @@ draw_up_bump (guchar   *buffer,
   gint index;
   gint rowstride;
 
-  rowstride = preview_mode ? GTK_PREVIEW (preview)->rowstride : bytes * width;
+  rowstride = preview_mode ? preview->rowstride : bytes * width;
 
   for (i = 0; i < steps; i++)
     {
@@ -1052,7 +1037,7 @@ draw_down_bump (guchar   *buffer,
   gint index;
   gint rowstride;
 
-  rowstride = preview_mode ? GTK_PREVIEW (preview)->rowstride : bytes * width;
+  rowstride = preview_mode ? preview->rowstride : bytes * width;
 
   for (i = 0; i < steps; i++)
     {
@@ -1521,7 +1506,7 @@ darken_vertical_line (guchar   *buffer,
   gint length;
   gint temp;
 
-  rowstride = preview_mode ? GTK_PREVIEW (preview)->rowstride : bytes * width;
+  rowstride = preview_mode ? preview->rowstride : bytes * width;
   index = px[0] * bytes + py[0] * rowstride;
   length = py[1] - py[0] + 1;
 
@@ -1549,7 +1534,7 @@ lighten_vertical_line (guchar   *buffer,
   gint length;
   gint temp;
 
-  rowstride = preview_mode ? GTK_PREVIEW (preview)->rowstride : bytes * width;
+  rowstride = preview_mode ? preview->rowstride : bytes * width;
   index = px[0] * bytes + py[0] * rowstride;
   length = py[1] - py[0] + 1;
 
@@ -1577,7 +1562,7 @@ darken_horizontal_line (guchar   *buffer,
   gint length;
   gint temp;
 
-  rowstride = preview_mode ? GTK_PREVIEW (preview)->rowstride : bytes * width;
+  rowstride = preview_mode ? preview->rowstride : bytes * width;
   index = px[0] * bytes + py[0] * rowstride;
   length = px[1] - px[0] + 1;
 
@@ -1605,7 +1590,7 @@ lighten_horizontal_line (guchar   *buffer,
   gint length;
   gint temp;
 
-  rowstride = preview_mode ? GTK_PREVIEW (preview)->rowstride : bytes * width;
+  rowstride = preview_mode ? preview->rowstride : bytes * width;
   index = px[0] * bytes + py[0] * rowstride;
   length = px[1] - px[0] + 1;
 
@@ -1636,7 +1621,7 @@ darken_right_bump (guchar *buffer,
   gint temp;
   gint j = counter;
 
-  rowstride = preview_mode ? GTK_PREVIEW (preview)->rowstride : bytes * width;
+  rowstride = preview_mode ? preview->rowstride : bytes * width;
 
   for (i = 0; i < steps; i++)
     {
@@ -1691,7 +1676,7 @@ lighten_right_bump (guchar   *buffer,
   gint temp;
   gint j = counter;
 
-  rowstride = preview_mode ? GTK_PREVIEW (preview)->rowstride : bytes * width;
+  rowstride = preview_mode ? preview->rowstride : bytes * width;
 
   for (i = 0; i < steps; i++)
     {
@@ -1746,7 +1731,7 @@ darken_left_bump (guchar   *buffer,
   gint temp;
   gint j = counter;
 
-  rowstride = preview_mode ? GTK_PREVIEW (preview)->rowstride : bytes * width;
+  rowstride = preview_mode ? preview->rowstride : bytes * width;
 
   for (i = 0; i < steps; i++)
     {
@@ -1801,7 +1786,7 @@ lighten_left_bump (guchar *buffer,
   gint temp;
   gint j = counter;
 
-  rowstride = preview_mode ? GTK_PREVIEW (preview)->rowstride : bytes * width;
+  rowstride = preview_mode ? preview->rowstride : bytes * width;
 
   for (i = 0; i < steps; i++)
     {
@@ -1856,7 +1841,7 @@ darken_up_bump (guchar   *buffer,
   gint temp;
   gint j = counter;
 
-  rowstride = preview_mode ? GTK_PREVIEW (preview)->rowstride : bytes * width;
+  rowstride = preview_mode ? preview->rowstride : bytes * width;
 
   for (i = 0; i < steps; i++)
     {
@@ -1911,7 +1896,7 @@ lighten_up_bump (guchar   *buffer,
   gint temp;
   gint j = counter;
 
-  rowstride = preview_mode ? GTK_PREVIEW (preview)->rowstride : bytes * width;
+  rowstride = preview_mode ? preview->rowstride : bytes * width;
 
   for (i = 0; i < steps; i++)
     {
@@ -1966,7 +1951,7 @@ darken_down_bump (guchar   *buffer,
   gint temp;
   gint j = counter;
 
-  rowstride = preview_mode ? GTK_PREVIEW (preview)->rowstride : bytes * width;
+  rowstride = preview_mode ? preview->rowstride : bytes * width;
 
   for (i = 0; i < steps; i++)
     {
@@ -2021,7 +2006,7 @@ lighten_down_bump (guchar   *buffer,
   gint temp;
   gint j = counter;
 
-  rowstride = preview_mode ? GTK_PREVIEW (preview)->rowstride : bytes * width;
+  rowstride = preview_mode ? preview->rowstride : bytes * width;
 
   for (i = 0; i < steps; i++)
     {
@@ -2070,7 +2055,7 @@ draw_bezier_line (guchar   *buffer,
   gint index;
   gint rowstride;
 
-  rowstride = preview_mode ? GTK_PREVIEW (preview)->rowstride : bytes * width;
+  rowstride = preview_mode ? preview->rowstride : bytes * width;
 
   for (i = 0; i < steps; i++)
     {
@@ -2100,7 +2085,7 @@ darken_bezier_line (guchar   *buffer,
   gint rowstride;
   gint temp;
 
-  rowstride = preview_mode ? GTK_PREVIEW (preview)->rowstride : bytes * width;
+  rowstride = preview_mode ? preview->rowstride : bytes * width;
 
   for (i = 0; i < steps; i++)
     {
@@ -2134,7 +2119,7 @@ lighten_bezier_line (guchar   *buffer,
   gint rowstride;
   gint temp;
 
-  rowstride = preview_mode ? GTK_PREVIEW (preview)->rowstride : bytes * width;
+  rowstride = preview_mode ? preview->rowstride : bytes * width;
 
   for (i = 0; i < steps; i++)
     {
@@ -2521,10 +2506,10 @@ dialog_box (void)
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER (abox), frame);
   gtk_widget_show (frame);
-  preview = preview_widget (drawable); /* we are here */
-  gtk_container_add (GTK_CONTAINER (frame), preview);
-  jigsaw(1); /* render preview */
-  gtk_widget_show (preview);
+  preview = gimp_fixme_preview_new (drawable);
+  gtk_container_add (GTK_CONTAINER (frame), preview->widget);
+  jigsaw(TRUE); /* render preview */
+  gtk_widget_show (preview->widget);
   
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -2658,8 +2643,6 @@ dialog_box (void)
   gtk_main ();
   gimp_help_free ();
   gdk_flush ();
-
-  return;
 }
 
 /***************************************************
@@ -2698,116 +2681,4 @@ jigsaw_radio_button_update (GtkWidget *widget,
   gimp_radio_button_update (widget, data);
   if (GTK_TOGGLE_BUTTON (widget)->active)
     jigsaw (TRUE);
-}
-
-
-/* preview library */
-
-static GtkWidget *
-preview_widget (GimpDrawable *drawable)
-{
-  gint       size;
-  GtkWidget *preview;
-
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  fill_preview_with_thumb (preview, drawable->drawable_id);
-  size = GTK_PREVIEW (preview)->rowstride * GTK_PREVIEW (preview)->buffer_height;
-  preview_bits = g_malloc (size);
-  memcpy (preview_bits, GTK_PREVIEW (preview)->buffer, size);
-
-  return preview;
-}
-
-static void
-fill_preview_with_thumb (GtkWidget *widget, 
-			 gint32     drawable_ID)
-{
-  guchar  *drawable_data;
-  gint     bpp;
-  gint     x,y;
-  gint     width  = PREVIEW_SIZE;
-  gint     height = PREVIEW_SIZE;
-  guchar  *src;
-  gdouble  r, g, b, a;
-  gdouble  c0, c1;
-  guchar  *p0, *p1;
-  guchar  *even, *odd;
-
-  bpp = 0; /* Only returned */
-  
-  drawable_data = 
-    gimp_drawable_get_thumbnail_data (drawable_ID, &width, &height, &bpp);
-
-  if (width < 1 || height < 1)
-    return;
-
-  gtk_preview_size (GTK_PREVIEW (widget), width, height);
-
-  even = g_malloc (width * 3);
-  odd  = g_malloc (width * 3);
-  src = drawable_data;
-
-  for (y = 0; y < height; y++)
-    {
-      p0 = even;
-      p1 = odd;
-      
-      for (x = 0; x < width; x++) 
-	{
-	  if (bpp == 4)
-	    {
-	      r = ((gdouble)src[x*4+0]) / 255.0;
-	      g = ((gdouble)src[x*4+1]) / 255.0;
-	      b = ((gdouble)src[x*4+2]) / 255.0;
-	      a = ((gdouble)src[x*4+3]) / 255.0;
-	    }
-	  else if (bpp == 3)
-	    {
-	      r = ((gdouble)src[x*3+0]) / 255.0;
-	      g = ((gdouble)src[x*3+1]) / 255.0;
-	      b = ((gdouble)src[x*3+2]) / 255.0;
-	      a = 1.0;
-	    }
-	  else
-	    {
-	      r = ((gdouble)src[x*bpp+0]) / 255.0;
-	      g = b = r;
-	      if (bpp == 2)
-		a = ((gdouble)src[x*bpp+1]) / 255.0;
-	      else
-		a = 1.0;
-	    }
-	  
-	  if ((x / GIMP_CHECK_SIZE_SM) & 1) 
-	    {
-	      c0 = GIMP_CHECK_LIGHT;
-	      c1 = GIMP_CHECK_DARK;
-	    } 
-	  else 
-	    {
-	      c0 = GIMP_CHECK_DARK;
-	      c1 = GIMP_CHECK_LIGHT;
-	    }
-	  
-	*p0++ = (c0 + (r - c0) * a) * 255.0;
-	*p0++ = (c0 + (g - c0) * a) * 255.0;
-	*p0++ = (c0 + (b - c0) * a) * 255.0;
-	
-	*p1++ = (c1 + (r - c1) * a) * 255.0;
-	*p1++ = (c1 + (g - c1) * a) * 255.0;
-	*p1++ = (c1 + (b - c1) * a) * 255.0;
-	
-      } /* for */
-      
-      if ((y / GIMP_CHECK_SIZE_SM) & 1)
-	gtk_preview_draw_row (GTK_PREVIEW (widget), (guchar *)odd,  0, y, width);
-      else
-	gtk_preview_draw_row (GTK_PREVIEW (widget), (guchar *)even, 0, y, width);
-
-      src += width * bpp;
-    }
-
-  g_free (even);
-  g_free (odd);
-  g_free (drawable_data);
 }
