@@ -1,5 +1,9 @@
 2000-06-13  Sven Neumann  <sven@gimp.org>
 
+	* Makefile.in.in: (hopefully) fixed bug #13762.
+
+2000-06-13  Sven Neumann  <sven@gimp.org>
+
 	* it.po: updates to italian translation by Daniele Medri
 
 2000-06-10  Valek Filippov  <frob@df.ru>
