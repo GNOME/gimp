@@ -20,13 +20,6 @@
 #define __GIMP_TOOLBOX_COLOR_AREA_H__
 
 
-#ifdef DISPLAY_FILTERS
-extern GimpDisplay *color_area_gdisp; /* hack for color displays */
-#endif /* DISPLAY_FILTERS */
-
-/*
- *  Functions
- */
 GtkWidget * gimp_toolbox_color_area_create (GimpToolbox *toolbox,
                                             gint         width,
                                             gint         height);

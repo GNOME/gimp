@@ -1,5 +1,9 @@
 2003-10-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimptoolbox-color-area.[ch]: cleanup & cruft removal.
+
+2003-10-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainergridview.c: typo: s/vieport/viewport/g
 
 	(gimp_container_grid_view_insert_item): stop idle updating since
