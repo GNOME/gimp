@@ -1,7 +1,7 @@
 2004-03-20  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/jigsaw.c: pack and show the "Jigsaw Style" radio
-	buttons.
+	buttons. Fixes bug #137737.
 
 2004-03-20  Simon Budig  <simon@gimp.org>
 
