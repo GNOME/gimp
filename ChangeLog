@@ -1,7 +1,12 @@
 2004-03-11  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptextoptions.c (gimp_text_options_create_text):
+	set the color of the new text from the context foreground color.
+
+2004-03-11  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimptextoptions.[ch]: redid the color handling.
-	differently. Still not perfect, but it is somewhat cleaner.
+	Still not perfect, but it is somewhat cleaner.
 
 2004-03-11  Sven Neumann  <sven@gimp.org>
 

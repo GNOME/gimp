@@ -300,13 +300,19 @@ gimp_text_options_notify_font (GimpContext *context,
 GimpText *
 gimp_text_options_create_text (GimpTextOptions *options)
 {
-  GimpText *text;
+  GimpContext *context;
+  GimpText    *text;
+  GimpRGB      color;
 
   g_return_val_if_fail (GIMP_IS_TEXT_OPTIONS (options), NULL);
 
+  context = GIMP_CONTEXT (options);
+
+  gimp_context_get_foreground (context, &color);
+
   text = g_object_new (GIMP_TYPE_TEXT,
-                       "font",
-                       gimp_context_get_font_name (GIMP_CONTEXT (options)),
+                       "color", &color,
+                       "font",  gimp_context_get_font_name (context),
                        NULL);
 
   gimp_config_sync (GIMP_CONFIG (options), GIMP_CONFIG (text), 0);
