@@ -41,7 +41,13 @@
     maxheight))
 
 
-(define (script-fu-font-map text use-name labels font-filter font-size border)
+(define (script-fu-font-map text
+			    use-name
+			    labels
+			    font-filter
+			    font-size
+			    border
+			    colors)
   (let* ((font        "")
 	 (count       0)
          (font-list  (cadr (gimp-fonts-get-list font-filter)))
@@ -54,16 +60,29 @@
 	 (width      (+ maxwidth (* 2 border)))
 	 (height     (+ (+ (* maxheight num-fonts) (* 2 border))
 			(* labels (* label-size num-fonts))))
-	 (img        (car (gimp-image-new width height GRAY)))
-	 (drawable   (car (gimp-layer-new img width height GRAY-IMAGE
-					  "Background" 100 NORMAL-MODE))))
+	 (img        (car (gimp-image-new width height (if (= colors 0)
+							   GRAY RGB))))
+	 (drawable   (car (gimp-layer-new img width height (if (= colors 0)
+							       GRAY-IMAGE RGB-IMAGE)
+					  "Background" 100 NORMAL-MODE)))
+	 (old-bg (car (gimp-palette-get-background)))
+	 (old-fg (car (gimp-palette-get-foreground)))) 
+
     (gimp-image-undo-disable img)
+
+    (if (= colors 0)
+	(begin
+	  (gimp-palette-set-background '(255 255 255))
+	  (gimp-palette-set-foreground '(0 0 0))))
+
     (gimp-edit-clear drawable)
     (gimp-image-add-layer img drawable 0)
 
     (if (= labels TRUE)
 	(begin
-	  (set! drawable (car (gimp-layer-new img width height GRAYA-IMAGE
+	  (set! drawable (car (gimp-layer-new img width height
+					      (if (= colors 0)
+						  GRAYA-IMAGE RGBA-IMAGE)
 					      "Labels" 100 NORMAL-MODE)))
 	  (gimp-edit-clear drawable)
 	  (gimp-image-add-layer img drawable -1)))
@@ -101,6 +120,12 @@
 	   (set! count (+ count 1)))
 
     (gimp-image-set-active-layer img drawable)
+
+    (if (= colors 0)
+	(begin
+	  (gimp-palette-set-background old-bg)
+	  (gimp-palette-set-foreground old-fg)))
+
     (gimp-image-undo-enable img)
     (gimp-display-new img)))
 
@@ -111,9 +136,11 @@
 		    "Spencer Kimball"
 		    "1997"
 		    ""
-		    SF-STRING     _"Text" "How quickly daft jumping zebras vex."
-		    SF-TOGGLE     _"Use Font Name as Text" FALSE
-		    SF-TOGGLE     _"Labels"                TRUE
-		    SF-STRING     _"Filter (regexp)"       "Sans"
-		    SF-ADJUSTMENT _"Font Size (pixels)"    '(32 2 1000 1 10 0 1)
-		    SF-ADJUSTMENT _"Border (pixels)"       '(10 0  200 1 10 0 1))
+		    SF-STRING     _"_Text" "How quickly daft jumping zebras vex."
+		    SF-TOGGLE     _"Use Font _Name as Text" FALSE
+		    SF-TOGGLE     _"_Labels"                TRUE
+		    SF-STRING     _"_Filter (regexp)"       "Sans"
+		    SF-ADJUSTMENT _"Font _Size (pixels)"    '(32 2 1000 1 10 0 1)
+		    SF-ADJUSTMENT _"_Border (pixels)"       '(10 0  200 1 10 0 1)
+		    SF-OPTION     _"_Color Scheme"          '(_"Black on White"
+							      _"Active Colors"))

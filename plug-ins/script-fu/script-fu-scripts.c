@@ -1258,7 +1258,7 @@ script_fu_interface (SFScript *script)
 	  g_free (label_text);
 	  label_text = NULL;
 	  sf_interface->args_widgets[i] =
-	    gtk_check_button_new_with_label (gettext (script->arg_labels[i]));
+	    gtk_check_button_new_with_mnemonic (gettext (script->arg_labels[i]));
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (sf_interface->args_widgets[i]),
 				       script->arg_values[i].sfa_toggle);
 

@@ -1,6 +1,14 @@
 2003-10-12  Sven Neumann  <sven@gimp.org>
 
-	* app/paint/gimppaintcore.c: removed debugging output that shouldd
+	* plug-ins/script-fu/script-fu-scripts.c (script_fu_interface):
+	allow to use mnemonics in SF-TOGGLE.
+
+	* plug-ins/script-fu/scripts/font-map.scm: allow to choose the color
+	scheme to use for the font map; added mnemonics.
+
+2003-10-12  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimppaintcore.c: removed debugging output that should
 	have never been committed.
 
 2003-10-12  Michael Natterer  <mitch@gimp.org>
