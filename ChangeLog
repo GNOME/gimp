@@ -1,7 +1,7 @@
 2005-03-25  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdockable.c (gimp_dockable_add): initialize the
-	tab style to a supported one. Fixes bug #171562.
+	tab style to a supported one. Fixes bug #171567.
 
 2005-03-25  Sven Neumann  <sven@gimp.org>
 
