@@ -35,17 +35,29 @@ drawable_fill (GimpDrawable *drawable, int fill_type){
 	guchar r,g,b,a;
 	a=255;
 	switch(fill_type){
+	case FOREGROUND_FILL:
+	  palette_get_foreground(&r, &g, &b);
+	  break;
+	
 	case BACKGROUND_FILL:
-		palette_get_background(&r, &g, &b);
-		break;
+	  palette_get_background(&r, &g, &b);
+	  break;
+	
 	case WHITE_FILL:
-		r=g=b=255;
-		break;
+	  r=g=b=255;
+	  break;
+	
 	case TRANSPARENT_FILL:
-		a=r=g=b=0;
-		break;
+	  a=r=g=b=0;
+	  break;
+	
 	case NO_FILL:
-		return;
+	  return;
+	
+	default:
+	  g_warning ("drawable_fill called with unknown fill type");
+	  a=r=g=b=0;
+	  break;
 	}
 	gimp_drawable_fill(drawable,r,g,b,a);
 	drawable_update (drawable, 0, 0,

@@ -1,3 +1,9 @@
+Tue Jul 28 14:14:43 CDT 1998  Larry Ewing  <lewing@gimp.org>
+
+	* app/drawable.c (drawable_fill): added a case for
+	FOREGROUND_FILL.  Fixes the layer new dialog so that it actually
+	works with foreground fill selected. 
+
 1998-07-28  Tuomas Kuosmanen  <tigert@gimp.org>
 
 	* app/file_new_dialog.c
