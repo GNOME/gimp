@@ -21,13 +21,13 @@
  */
 
 #include "config.h"
-#include "gtk/gtk.h"
-#include "libgimp/gimp.h"
-#include "libgimp/stdplugins-intl.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "gtk/gtk.h"
+#include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* Replace them with the right ones */
 #define	PLUG_IN_NAME	"plug_in_max_rgb"
@@ -36,7 +36,6 @@
 /* you need not change the following names */
 #define INTERFACE	max_rgb_interface
 #define	DIALOG		max_rgb_dialog
-#define ERROR_DIALOG	max_rgb_error_dialog
 #define VALS		max_rgb_vals
 #define OK_CALLBACK	_max_rgbok_callback
 
@@ -48,7 +47,6 @@ static void	run	(char	*name,
 			 GParam **return_vals);
 static GStatusType	MAIN_FUNCTION (gint32 drawable_id);
 static gint	DIALOG ();
-static void	ERROR_DIALOG (gint gtk_was_not_initialized, gchar *message);
 
 static void
 OK_CALLBACK (GtkWidget *widget, gpointer   data);
@@ -65,8 +63,6 @@ static GtkWidget *
 gtkW_dialog_new (char *name,
 		 GtkSignalFunc ok_callback,
 		 GtkSignalFunc close_callback);
-static GtkWidget *
-gtkW_error_dialog_new (char * name);
 static GSList *
 gtkW_vbox_add_radio_button (GtkWidget *vbox,
 			    gchar	*name,
@@ -172,7 +168,7 @@ run (char	*name,
       /* Since a channel might be selected, we must check wheter RGB or not. */
       if (!gimp_drawable_is_rgb(drawable_id))
 	{
-	  ERROR_DIALOG (1, _("RGB drawable is not selected."));
+	  gimp_message (_("RGB drawable is not selected."));
 	  return;
 	}
       if (! DIALOG ())
@@ -282,7 +278,7 @@ DIALOG ()
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
   
-  dlg = gtkW_dialog_new (PLUG_IN_NAME,
+  dlg = gtkW_dialog_new (_("Max RGB"),
 			 (GtkSignalFunc) OK_CALLBACK,
 			 (GtkSignalFunc) gtkW_close_callback);
   
@@ -308,41 +304,6 @@ DIALOG ()
   return INTERFACE.run;
 }
 
-static void
-ERROR_DIALOG (gint gtk_was_not_initialized, gchar *message)
-{
-  GtkWidget *dlg;
-  GtkWidget *table;
-  GtkWidget *label;
-  gchar	**argv;
-  gint	argc;
-
-  if (gtk_was_not_initialized)
-    {
-      argc = 1;
-      argv = g_new (gchar *, 1);
-      argv[0] = g_strdup (PLUG_IN_NAME);
-      gtk_init (&argc, &argv);
-      gtk_rc_parse (gimp_gtkrc ());
-    }
-  
-  dlg = gtkW_error_dialog_new (PLUG_IN_NAME);
-  
-  table = gtk_table_new (1,1, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
-
-  label = gtk_label_new (message);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL|GTK_EXPAND,
-		    0, 0, 0);
-
-  gtk_widget_show (label);
-  gtk_widget_show (table);
-  gtk_widget_show (dlg);
-  
-  gtk_main ();
-  gdk_flush ();
-}
 
 static void
 OK_CALLBACK (GtkWidget *widget,
@@ -382,7 +343,7 @@ gtkW_dialog_new (char * name,
 		 GtkSignalFunc ok_callback,
 		 GtkSignalFunc close_callback)
 {
-  GtkWidget *dlg, *button;
+  GtkWidget *dlg, *button, *hbbox;
   
   dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (dlg), name);
@@ -390,52 +351,34 @@ gtkW_dialog_new (char * name,
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) gtkW_close_callback, NULL);
 
-  /* Action Area */
-  button = gtk_button_new_with_label ( _("OK"));
+  /*  Action area  */
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+ 
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) ok_callback, dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
-		      TRUE, TRUE, 0);
+		      (GtkSignalFunc) ok_callback,
+		      dlg);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ( _("Cancel"));
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT(dlg));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
-		      TRUE, TRUE, 0);
-  gtk_widget_show (button);
-  gtk_widget_show (dlg);
-
-  return dlg;
-}
-
-static GtkWidget *
-gtkW_error_dialog_new (char * name)
-{
-  GtkWidget *dlg, *button;
-  
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), name);
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) gtkW_close_callback, NULL);
-
-  /* Action Area */
-  button = gtk_button_new_with_label ( _("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) gtkW_close_callback, dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
-		      TRUE, TRUE, 0);
-  gtk_widget_grab_default (button);
+			     GTK_OBJECT (dlg));
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   return dlg;
 }
+
 
 GtkWidget *
 gtkW_table_new (GtkWidget *parent, gint col, gint row)

@@ -28,6 +28,7 @@
 
  */
 
+#include "config.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -45,6 +46,7 @@
 
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* Browser program name -- start in case it's not already running */
 #define BROWSER_PROGNAME	"netscape"
@@ -111,13 +113,15 @@ query ()
   static GParamDef *return_vals = NULL;
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("extension_web_browser",
-			  "open URL in Netscape",
-			  "You need to have Netscape installed",
+			  _("open URL in Netscape"),
+			  _("You need to have Netscape installed"),
 			  "Misha Dynin <misha@xcf.berkeley.edu>",
-	      "Misha Dynin, Jamie Zawinski, Spencer Kimball & Peter Mattis",
+			  "Misha Dynin, Jamie Zawinski, Spencer Kimball & Peter Mattis",
 			  "1997",
-			  "<Toolbox>/Xtns/Web Browser/Open URL...",
+			  _("<Toolbox>/Xtns/Web Browser/Open URL..."),
 			  NULL,
 			  PROC_EXTENSION,
 			  nargs, nreturn_vals,
@@ -149,6 +153,7 @@ run (char *name,
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
+	  INIT_I18N_UI ();
 	  /* Possibly retrieve data */
 	  gimp_get_data ("extension_web_browser", &url_info);
 
@@ -189,7 +194,7 @@ run (char *name,
 	values[0].data.d_status = STATUS_EXECUTION_ERROR;
     }
   else
-    g_assert (FALSE);
+    g_assert_not_reached ();
 }
 
 static gint
@@ -231,6 +236,7 @@ static gint
 open_url_dialog ()
 {
   GtkWidget *dlg;
+  GtkWidget *hbbox;
   GtkWidget *button;
   GtkWidget *entry;
   GtkWidget *table;
@@ -251,39 +257,48 @@ open_url_dialog ()
   gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Open URL");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Open URL"));
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) close_callback, NULL);
-  /* action area   */
-  /* Okay buton */
-  button = gtk_button_new_with_label ("OK");
+
+  /*  Action area  */
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
+  
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+  
+  button = gtk_button_new_with_label (_("About"));
+  gtk_signal_connect(GTK_OBJECT(button), "clicked",
+		     (GtkSignalFunc) about_callback,
+		     dlg);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+    
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+  
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) ok_callback,
 		      dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
-
-
-  /* cancel button */
-  button = gtk_button_new_with_label ("Cancel");
+	
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
 			     GTK_OBJECT (dlg));
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
-
-  /* about button */
-  button = gtk_button_new_with_label ("About...");
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) about_callback,
-		      dlg);
-  gtk_widget_show (button);
-
+  
   /* table */
   table = gtk_table_new (2, 3, FALSE);
   gtk_container_border_width (GTK_CONTAINER (table), 10);
@@ -294,7 +309,7 @@ open_url_dialog ()
   gtk_table_set_col_spacings (GTK_TABLE (table), 10);
 
   /*  URL:  Label */
-  label = gtk_label_new ("URL:");
+  label = gtk_label_new (_("URL:"));
   gtk_table_attach (GTK_TABLE (table), label,
 		    0, 1, 0, 1,
 		    GTK_EXPAND | GTK_FILL,
@@ -317,7 +332,7 @@ open_url_dialog ()
   gtk_widget_show (entry);
 
   /* Window label */
-  label = gtk_label_new ("Window:");
+  label = gtk_label_new (_("Window:"));
   gtk_table_attach( GTK_TABLE (table), label ,
 		    0, 1, 1, 2,
 		    GTK_EXPAND | GTK_FILL,
@@ -326,9 +341,9 @@ open_url_dialog ()
   gtk_widget_show(label);
 
   /* Window radiobutton */
-  button1 = gtk_radio_button_new_with_label( NULL, "new");
+  button1 = gtk_radio_button_new_with_label( NULL, _("New"));
   group = gtk_radio_button_group( GTK_RADIO_BUTTON( button1 ) );
-  button2 = gtk_radio_button_new_with_label( group, "current" );
+  button2 = gtk_radio_button_new_with_label( group, _("Current"));
   if( url_info.new_window == OPEN_URL_NEW_WINDOW ) {
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button1),TRUE);
   } else {

@@ -91,6 +91,7 @@ plug-ins/common/psp.c
 plug-ins/common/rotate.c
 plug-ins/common/sample_colorize.c
 plug-ins/common/screenshot.c
+plug-ins/common/sel_gauss.c
 plug-ins/common/spheredesigner.c
 plug-ins/common/sunras.c
 plug-ins/common/threshold_alpha.c
@@ -205,6 +206,8 @@ plug-ins/sel2path/sel2path.c
 plug-ins/sgi/sgi.c
 plug-ins/sinus/sinus.c
 plug-ins/struc/struc.c
+plug-ins/unsharp/unsharp.c
+plug-ins/webbrowser/webbrowser.c
 libgimp/gimpcolorbutton.c
 libgimp/gimpexport.c
 libgimp/gimpfileselection.c

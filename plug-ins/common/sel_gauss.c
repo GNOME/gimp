@@ -34,16 +34,14 @@
  *	- optimization
  *
  */
-#include <math.h>
+#include "config.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
-
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
+#include "libgimp/gimpmath.h"
+#include "libgimp/stdplugins-intl.h"
 
 #define ENTRY_WIDTH 100
 
@@ -120,13 +118,15 @@ static void query ()
   static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_sel_gauss",
-			  "Applies a selective gaussian blur to the specified drawable.",
-			  "This filter functions similar to the regular gaussian blur filter except that neighbouring pixels that differ more than the given maxdelta parameter will not be blended with. This way with the correct parameters, an image can be smoothed out without losing details. However, this filter can be rather slow.",
+			  _("Applies a selective gaussian blur to the specified drawable."),
+			  _("This filter functions similar to the regular gaussian blur filter except that neighbouring pixels that differ more than the given maxdelta parameter will not be blended with. This way with the correct parameters, an image can be smoothed out without losing details. However, this filter can be rather slow."),
 			  "Thom van Os",
 			  "Thom van Os",
 			  "1999",
-			  "<Image>/Filters/Blur/Selective Gaussian Blur...",
+			  N_("<Image>/Filters/Blur/Selective Gaussian Blur..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -150,6 +150,8 @@ static void run (
 
 	*nreturn_vals = 1;
 	*return_vals = values;
+
+	INIT_I18N_UI(); 
 
 	values[0].type = PARAM_STATUS;
 	values[0].data.d_status = status;
@@ -201,7 +203,7 @@ static void run (
 	if (gimp_drawable_is_rgb (drawable->id) ||
 		gimp_drawable_is_gray (drawable->id)) {
 
-		gimp_progress_init ("Selective Gaussian Blur");
+		gimp_progress_init (_("Selective Gaussian Blur"));
 
 		radius = fabs (bvals.radius) + 1.0;
 
@@ -216,7 +218,7 @@ static void run (
 		if (run_mode != RUN_NONINTERACTIVE)
 			gimp_displays_flush ();
 	} else {
-		gimp_message ("sel_gauss: cannot operate on indexed color images");
+		gimp_message (_("sel_gauss: Cannot operate on indexed color images"));
 		status = STATUS_EXECUTION_ERROR;
 	}
 
@@ -246,7 +248,7 @@ static gint sel_gauss_dialog ()
 	gtk_rc_parse (gimp_gtkrc ());
 
 	dlg = gtk_dialog_new ();
-	gtk_window_set_title (GTK_WINDOW (dlg), "Selective Gaussian Blur");
+	gtk_window_set_title (GTK_WINDOW (dlg), _("Selective Gaussian Blur"));
 	gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
 	gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		(GtkSignalFunc) sel_gauss_close_callback, NULL);
@@ -259,7 +261,7 @@ static gint sel_gauss_dialog ()
 	gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
 	gtk_widget_show (hbbox);
 	
-	button = gtk_button_new_with_label ("OK");
+	button = gtk_button_new_with_label (_("OK"));
 	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
 	gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			    (GtkSignalFunc) sel_gauss_ok_callback,
@@ -268,7 +270,7 @@ static gint sel_gauss_dialog ()
 	gtk_widget_grab_default (button);
 	gtk_widget_show (button);
 	
-	button = gtk_button_new_with_label ("Cancel");
+	button = gtk_button_new_with_label (_("Cancel"));
 	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
 	gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 				   (GtkSignalFunc) gtk_widget_destroy,
@@ -277,7 +279,7 @@ static gint sel_gauss_dialog ()
 	gtk_widget_show (button);
 
 	/* parameter settings */
-	frame = gtk_frame_new ("Parameter Settings");
+	frame = gtk_frame_new (_("Parameter Settings"));
 	gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
 	gtk_container_border_width (GTK_CONTAINER (frame), 10);
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame,
@@ -289,7 +291,7 @@ static gint sel_gauss_dialog ()
 	hbox = gtk_hbox_new (FALSE, 5);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
 
-	label = gtk_label_new ("Blur Radius: ");
+	label = gtk_label_new (_("Blur Radius: "));
 	gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, FALSE, 0);
 	gtk_widget_show (label);
 
@@ -306,7 +308,7 @@ static gint sel_gauss_dialog ()
 	hbox = gtk_hbox_new (FALSE, 5);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
 
-	label = gtk_label_new ("Max. delta: ");
+	label = gtk_label_new (_("Max. delta: "));
 	gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, FALSE, 0);
 	gtk_widget_show (label);
 
@@ -337,7 +339,7 @@ void init_matrix(gdouble radius, gdouble **mat, gint num)
 
 	/* This formula isn't really correct, but it'll do */
 	sd = radius / 3.329042969;
-	c1 = 1.0 / sqrt(2.0 * M_PI * sd);
+	c1 = 1.0 / sqrt(2.0 * G_PI * sd);
 	c2 = -2.0 * (sd * sd);
 
 	for (dy=0; dy<num; dy++) {

@@ -30,11 +30,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include "gtk/gtk.h"
-#include "config.h"
 #include "libgimp/gimp.h"
 #include "logo.h"
 #include "libgimp/stdplugins-intl.h"
@@ -625,6 +625,7 @@ alienmap_dialog(void)
         GtkWidget  *toggle;
         GtkWidget  *toggle_vbox;
         GtkWidget  *table, *table2, *table3;
+        GtkWidget  *hbbox;
         GtkWidget  *button;
         gint        argc;
         gchar     **argv;
@@ -853,40 +854,46 @@ alienmap_dialog(void)
 /*     gtk_widget_show (table); */
 
 
-        /* Buttons */
+    /*  Action area  */
+    gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
+    gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->action_area), FALSE);
+ 
+    hbbox = gtk_hbutton_box_new ();
+    gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+    gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
+    gtk_widget_show (hbbox);
 
-
-gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 6);
-
-        button = gtk_button_new_with_label(_("OK"));
-        GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-        gtk_signal_connect(GTK_OBJECT(button), "clicked",
-        		   (GtkSignalFunc) dialog_ok_callback,
-        		   dialog);
-        gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
-        gtk_widget_grab_default(button);
-        gtk_widget_show(button);
-        set_tooltip(tips,button,_("Accept settings and apply filter on image"));
-
-        button = gtk_button_new_with_label(_("Cancel"));
-        GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-        gtk_signal_connect(GTK_OBJECT(button), "clicked",
-        		   (GtkSignalFunc) dialog_cancel_callback,
-        		   dialog);
-        gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
-        gtk_widget_show(button);
-        set_tooltip(tips,button,_("Reject any changes and close plug-in"));
-
-	button = gtk_button_new_with_label(_("About..."));
-        GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-        gtk_signal_connect(GTK_OBJECT(button), "clicked",
-			   GTK_SIGNAL_FUNC (alienmap_logo_dialog),
-			   NULL);
-        gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area),
-		     button, TRUE, TRUE, 0);
-        gtk_widget_show(button);
-	set_tooltip(tips,button,_("Show information about this plug-in and the author"));
-
+    button = gtk_button_new_with_label (_("About"));
+    gtk_signal_connect(GTK_OBJECT(button), "clicked",
+		       GTK_SIGNAL_FUNC (alienmap_logo_dialog),
+		       NULL);
+    gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+    gtk_widget_show (button);
+    set_tooltip(tips,button,_("Show information about this plug-in and the author"));
+    
+    hbbox = gtk_hbutton_box_new ();
+    gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+    gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
+    gtk_widget_show (hbbox);
+    
+    button = gtk_button_new_with_label (_("OK"));
+    GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+    gtk_signal_connect (GTK_OBJECT (button), "clicked",
+			(GtkSignalFunc) dialog_ok_callback,
+			dialog);
+    gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+    gtk_widget_grab_default (button);
+    gtk_widget_show (button);
+    set_tooltip(tips,button,_("Accept settings and apply filter on image"));
+	
+    button = gtk_button_new_with_label (_("Cancel"));
+    GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+    gtk_signal_connect(GTK_OBJECT(button), "clicked",
+		       (GtkSignalFunc) dialog_cancel_callback,
+		       dialog);
+    gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+    gtk_widget_show (button);
+    set_tooltip(tips,button,_("Reject any changes and close plug-in"));
 
         /* Done */
 

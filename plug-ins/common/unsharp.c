@@ -22,14 +22,16 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
 
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
 #include <stdio.h>
 
-#include "libgimp/gimp.h"
 #include "gtk/gtk.h"
+#include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 #include "dialog_f.h"
 #include "dialog_i.h"
@@ -161,14 +163,16 @@ static void query () {
 	static GParamDef *return_vals = NULL;
 	static int nreturn_vals = 0;
 	
+	INIT_I18N();
+
 	/* Install a procedure in the procedure database. */
 	gimp_install_procedure ("plug_in_unsharp_mask",
-	                        "An unsharp mask filter",
-	                        "Long description / help",
+	                        _("An unsharp mask filter"),
+	                        "",
 	                        "Winston Chang <wchang3@students.wisc.edu>",
 	                        "Winston Chang",
 	                        "1999",
-	                        "<Image>/Filters/Enhance/Unsharp Mask",
+	                        N_("<Image>/Filters/Enhance/Unsharp Mask..."),
 	                        "GRAY*, RGB*",
 	                        PROC_PLUG_IN,
 	                        nargs, nreturn_vals,
@@ -196,6 +200,8 @@ static void run(char *name, int nparams, GParam *param, int *nreturn_vals,
 	*return_vals = values;
 	*nreturn_vals = 1;
 	
+	INIT_I18N_UI(); 
+
 	switch (run_mode) {
 		case RUN_INTERACTIVE:
 			gimp_get_data ("plug_in_unsharp_mask", &unsharp_params);
@@ -264,7 +270,7 @@ static void unsharp_mask(GDrawable *drawable, gint radius, gdouble amount) {
 	
 	/* Get the input */
 	gimp_drawable_mask_bounds(drawable->id, &x1, &y1, &x2, &y2);
-	gimp_progress_init("Blurring...");
+	gimp_progress_init(_("Blurring..."));
 	
 	/* generate convolution matrix */
 	cmatrix_length = gen_convolve_matrix(radius, &cmatrix);
@@ -371,7 +377,7 @@ static void unsharp_region (GPixelRgn srcPR, GPixelRgn destPR,
 		if (col%5 == 0) gimp_progress_update((gdouble)col/(3*x) + 0.33);
 	}
 
-	gimp_progress_init("Merging...");
+	gimp_progress_init(_("Merging..."));
 
 	/* find integer value of threshold */
 	threshold = unsharp_params.threshold;
@@ -724,7 +730,7 @@ static gint unsharp_mask_dialog()
 
 	gint    argc = 1;
 	gchar** argv = g_new(gchar*, 1);
-	argv[0]      = g_strdup("unsharp mask");
+	argv[0]      = g_strdup("unsharp_mask");
 
 	/* initialize */
 	gtk_init(&argc, &argv);
@@ -736,10 +742,10 @@ static gint unsharp_mask_dialog()
 	
 	/* create a new window */
 	window = gtk_dialog_new();
-	gtk_window_set_title(GTK_WINDOW(window), "Unsharp Mask " PLUG_IN_VERSION);
+	gtk_window_set_title(GTK_WINDOW(window), _("Unsharp Mask"));
 	/* I have no idea what the following two lines do. 
 	   I took them from sharpen.c */
-	gtk_window_set_wmclass(GTK_WINDOW(window), "unsharp mask", "Gimp");
+	gtk_window_set_wmclass(GTK_WINDOW(window), "unsharp_mask", "Gimp");
 	gtk_window_position(GTK_WINDOW(window), GTK_WIN_POS_MOUSE);
 	 
 
@@ -758,11 +764,11 @@ static gint unsharp_mask_dialog()
 	
 
 	/* create each of the inputs */
-	dialog_create_value_f("Radius:", GTK_TABLE(table), 1, &unsharp_params.radius,
+	dialog_create_value_f(_("Radius:"), GTK_TABLE(table), 1, &unsharp_params.radius,
 	                      0.1, 1, 1.0, 25.0);
-	dialog_create_value_f("Amount:", GTK_TABLE(table), 2, &unsharp_params.amount,
+	dialog_create_value_f(_("Amount:"), GTK_TABLE(table), 2, &unsharp_params.amount,
 	                      0.01, 2, 0.01, 5.0);
-	dialog_create_value_i("Threshold:", GTK_TABLE(table), 3, &unsharp_params.threshold,
+	dialog_create_value_i(_("Threshold:"), GTK_TABLE(table), 3, &unsharp_params.threshold,
 	                      1, 0, 255);
 
 	
@@ -778,7 +784,7 @@ static gint unsharp_mask_dialog()
 	gtk_box_pack_end (GTK_BOX (GTK_DIALOG (window)->action_area), hbbox, FALSE, FALSE, 0);
 	gtk_widget_show (hbbox);
 	
-	button = gtk_button_new_with_label ("OK");
+	button = gtk_button_new_with_label (_("OK"));
 	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
 	gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			    (GtkSignalFunc) unsharp_ok_callback,
@@ -787,7 +793,7 @@ static gint unsharp_mask_dialog()
 	gtk_widget_grab_default (button);
 	gtk_widget_show (button);
 	
-	button = gtk_button_new_with_label ("Cancel");
+	button = gtk_button_new_with_label (_("Cancel"));
 	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
 	gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			    (GtkSignalFunc) unsharp_cancel_callback,

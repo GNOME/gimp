@@ -25,19 +25,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <gtk/gtk.h>
-#include <math.h>
+#include "libgimp/gimpmath.h"
 #include "libgimp/gimp.h"
 #include "libgimp/stdplugins-intl.h"
 
 #define PLUG_IN_NAME    "plug_in_illusion"
 #define PLUG_IN_VERSION "v0.7 (Dec. 25 1997)"
 
-#ifndef PI
-#define PI 3.141592653589793238462643383279
-#endif
-#ifndef PI_2
-#define PI_2 (PI*2)
-#endif
 
 /******************************************************************************/
 
@@ -235,8 +229,8 @@ static void filter( GDrawable *drawable )
     cy = ((gdouble)y - center_y) / scale; 
     for( x = select_x1; x < select_x2; x++ ){
       cx = ((gdouble)x - center_x) / scale;
-      angle = floor( atan2(cy,cx) * parameters.division / PI_2 ) 
-	* PI_2 / parameters.division + ( PI / parameters.division );
+      angle = floor( atan2(cy,cx) * parameters.division / G_PI_2 ) 
+	* G_PI_2 / parameters.division + ( G_PI / parameters.division );
       radius = sqrt((gdouble)(cx*cx+cy*cy));
       xx = x - offset * cos( angle );
       yy = y - offset * sin( angle );
@@ -315,27 +309,34 @@ static int dialog( void )
   gtk_container_border_width( GTK_CONTAINER( GTK_DIALOG( window )->vbox ), 5 );
 
   {
-    /* buttons */
+    /* Action area */
     GtkWidget *button;
+    GtkWidget *hbbox;
+
+    gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (window)->action_area), 2);
+    gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (window)->action_area), FALSE);
+    hbbox = gtk_hbutton_box_new ();
+    gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+    gtk_box_pack_end (GTK_BOX (GTK_DIALOG (window)->action_area), hbbox, FALSE, FALSE, 0);
+    gtk_widget_show (hbbox);
 
     /* ok button */
     button = gtk_button_new_with_label( _("OK") );
+    GTK_WIDGET_SET_FLAGS( button, GTK_CAN_DEFAULT );
     gtk_signal_connect( GTK_OBJECT( button ), "clicked",
 			GTK_SIGNAL_FUNC( dialog_ok_handler ),
 			GTK_OBJECT( window ) );
-    GTK_WIDGET_SET_FLAGS( button, GTK_CAN_DEFAULT );
-    gtk_box_pack_start( GTK_BOX( GTK_DIALOG( window )->action_area ),
-			button, TRUE, TRUE, 0 );
+    gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
     gtk_widget_grab_default( button );
     gtk_widget_show( button );
     
     /* cancel button */
     button = gtk_button_new_with_label( _("Cancel") );
+    GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
     gtk_signal_connect( GTK_OBJECT( button ), "clicked",
 			GTK_SIGNAL_FUNC( dialog_cancel_handler ),
 			GTK_OBJECT( window )) ;
-    gtk_box_pack_start( GTK_BOX( GTK_DIALOG( window )->action_area ),
-			button, TRUE, TRUE, 0 );
+    gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
     gtk_widget_show( button );
   }
   
@@ -354,7 +355,7 @@ static int dialog( void )
     gtk_widget_show( table );
     
     /* tile width */
-    label = gtk_label_new( _("division: ") );
+    label = gtk_label_new( _("Division: ") );
     entry_division = gtk_entry_new();
     sprintf( buffer, "%d", parameters.division );
     gtk_entry_set_text( GTK_ENTRY( entry_division ), buffer );

@@ -1355,10 +1355,25 @@ script_fu_interface (SFScript *script)
   gtk_widget_show (frame);
 
   /*  Action area  */
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_box), hbox, FALSE, TRUE, 0);
+
   bbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_layout (GTK_BUTTON_BOX (bbox), GTK_BUTTONBOX_END);
   gtk_button_box_set_spacing (GTK_BUTTON_BOX (bbox), 4);
-  gtk_box_pack_start (GTK_BOX (main_box), bbox, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
+
+  button = gtk_button_new_with_label (_("About"));
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+                      (GtkSignalFunc) script_fu_about_callback,
+                      title);
+  gtk_container_add (GTK_CONTAINER (bbox), button);  
+  gtk_widget_show (button);
+
+  gtk_widget_show (bbox);
+
+  bbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (bbox), 4);
+  gtk_box_pack_end (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
 
   button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
@@ -1377,15 +1392,8 @@ script_fu_interface (SFScript *script)
   gtk_container_add (GTK_CONTAINER (bbox), button);  
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label (_("About"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) script_fu_about_callback,
-                      title);
-  gtk_container_add (GTK_CONTAINER (bbox), button);  
-  gtk_widget_show (button);
-
   gtk_widget_show (bbox);
+  gtk_widget_show (hbox);
 
   /* The statusbar (well it's a faked statusbar...) */
   sf_interface.status = gtk_entry_new ();
@@ -1762,7 +1770,7 @@ script_fu_about_callback (GtkWidget *widget,
 
       frame = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-      gtk_container_border_width (GTK_CONTAINER (frame), 6);
+      gtk_container_border_width (GTK_CONTAINER (frame), 2);
       gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), 
 		      frame, TRUE, TRUE, 0);
       gtk_widget_show (frame);
@@ -1860,6 +1868,7 @@ script_fu_about_callback (GtkWidget *widget,
       gtk_text_thaw (GTK_TEXT (text));
 
       /*  action area  */
+      gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
       button = gtk_button_new_with_label (_("Close"));
       GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
       gtk_signal_connect (GTK_OBJECT (button), "clicked",

@@ -1244,6 +1244,7 @@ p_smp_dialog (void)
   GtkWidget *dialog;
   GtkWidget *hbox;
   GtkWidget *vbox2;
+  GtkWidget *hbbox;
   GtkWidget *button;
   GtkWidget *frame;
   GtkWidget *pframe;
@@ -1292,38 +1293,44 @@ p_smp_dialog (void)
   gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
                       (GtkSignalFunc) p_smp_close_callback,
                       dialog);
+
   /*  Action area  */
-  button = gtk_button_new_with_label (_("Close"));
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-                             (GtkSignalFunc) gtk_widget_destroy,
-                             GTK_OBJECT (dialog));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area),
-                      button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+ 
   button = gtk_button_new_with_label (_("Apply"));
-  g_di.apply_button = button;
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) p_smp_apply_callback,
-                      dialog);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area),
-                      button, TRUE, TRUE, 0);
+		      (GtkSignalFunc) p_smp_apply_callback,
+		      dialog);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  g_di.apply_button = button;
   gtk_widget_set_sensitive(g_di.apply_button,FALSE);	      
   gtk_widget_show (button);
 
   button = gtk_button_new_with_label (_("Get Sample Colors"));
-  g_di.get_smp_colors_button = button;
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) p_smp_get_colors_callback,
-                      dialog);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area),
-                      button, TRUE, TRUE, 0);
+		      (GtkSignalFunc) p_smp_get_colors_callback,
+		      dialog);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
+  button = gtk_button_new_with_label (_("Close"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
+			     (GtkSignalFunc) gtk_widget_destroy,
+			     GTK_OBJECT (dialog));
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   /*  parameter settings  */
-  frame = gtk_frame_new (_("settings"));
+  frame = gtk_frame_new (_("Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
@@ -1384,7 +1391,7 @@ p_smp_dialog (void)
   gtk_widget_show (menu_item);
 
   /* Add extra menu items for Inverted Gradient */
-  menu_item = gtk_menu_item_new_with_label (_("** From INVERS GRADIENT **"));
+  menu_item = gtk_menu_item_new_with_label (_("** From INVERSE GRADIENT **"));
   gtk_container_add (GTK_CONTAINER (menu), menu_item);
   gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
 			    (GtkSignalFunc) p_gradient_callback,

@@ -11,6 +11,9 @@ unsharp_SOURCES = \
 	dialog_i.c	\
 	unsharp.c
 
+AM_CPPFLAGS = \
+	-DLOCALEDIR=\""$(localedir)"\"
+
 INCLUDES = \
 	-I$(top_srcdir)			\
 	$(GTK_CFLAGS)			\

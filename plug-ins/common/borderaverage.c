@@ -18,14 +18,14 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#include <stdlib.h>
-#include <libgimp/gimp.h>
-#include <gtk/gtk.h>
-#include <gck/gck.h>
-#include <plug-ins/megawidget/megawidget.h>
-
 #include "config.h"
+#include <stdlib.h>
+#include <gtk/gtk.h>
+#include "libgimp/gimp.h"
 #include "libgimp/stdplugins-intl.h"
+#include "gck/gck.h"
+#include "plug-ins/megawidget/megawidget.h"
+
 
 
 /* Declare local functions.
@@ -63,7 +63,7 @@ struct borderaverage_data {
 
 gchar * menu_labels[] = 
 	{
-		"1 (nonsens?)", "2", "4", "8", "16", "32", "64", "128", "256 (nonsens?)"
+		"1 (nonsense?)", "2", "4", "8", "16", "32", "64", "128", "256 (nonsense?)"
 	};
 
 MAIN ()

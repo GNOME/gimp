@@ -1,3 +1,19 @@
+Sun Jan  2 16:43:46 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/AlienMap/AlienMap.c
+	* plug-ins/AlienMap2/AlienMap2.c
+	* plug-ins/borderaverage/borderaverage.c
+	* plug-ins/common/illusion.c
+	* plug-ins/common/max_rgb.c
+	* plug-ins/common/sample_colorize.c
+	* plug-ins/common/sel_gauss.c
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/unsharp/Makefile.am
+	* plug-ins/unsharp/unsharp.c
+	* plug-ins/webbrowser/Makefile.am
+	* plug-ins/webbrowser/webbrowser.c
+	* po-plug-ins/POTFILES.in: dialog layout and i18n
+
 2000-01-02  Tor Lillqvist  <tml@iki.fi>
 
 	* README.win32: Some clarifications.
