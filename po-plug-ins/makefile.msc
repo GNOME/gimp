@@ -1,20 +1,22 @@
-## Makefile for installing the GIMP message catalogs with Microsoft nmake
+## Makefile for building the GIMP plug-in message catalogs with Microsoft nmake
 ## Use: nmake -f makefile.msc install
-## You will need the msgfmt program from GNU gettext!
+## You will need: - msgfmt from GNU gettext,
+##		  - jconv (http://www.oreilly.com/~lunde/j_tools.html)
+##		  - sjis_esc, from ..\po
 
 # Locale directory.
 LOCALEDIR = c:\gimp\locale
 
 # Only some languages actually have any translations
 # LANGUAGES= de fi fr hu it ja ko nl pl ru sv
-LANGUAGES= fr ja no sv
+LANGUAGES= fr ja ja.sjis no sv
 
 ################################################################
 
 # Nothing much configurable below
 
 all :
-	for %l in ($(LANGUAGES)) do nmake -f makefile.msc %l.gmo
+	for %l in ($(LANGUAGES)) do nmake -nolofo -f makefile.msc %l.gmo
 
 install : all
 	for %l in ($(LANGUAGES)) do md $(LOCALEDIR)\%l
@@ -25,3 +27,10 @@ install : all
 
 .po.gmo:
 	msgfmt -o $@ $<
+
+ja.sjis.po: ja.po
+	jconv -ie -os <ja.po | sjis_esc >ja.sjis.po
+
+clean:
+	del *.gmo
+	del ja.sjis.po

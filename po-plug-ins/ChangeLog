@@ -1,3 +1,9 @@
+1999-10-20  Tor Lillqvist  <tml@iki.fi>
+
+	* makefile.msc: Improve, add Shift-JIS version of Japanese.
+
+	* makefile.cygwin: New file.
+
 1999-10-17  Tomas Ogren  <stric@ing.umu.se>
 
 	* sv.po: Updated
