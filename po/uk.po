@@ -401,7 +401,7 @@ msgstr "Тип заповнення"
 
 #: app/bucket_fill.c:238
 msgid "Bucket Fill operation failed."
-msgstr ""
+msgstr "Операц╕я заповнення не вдалась."
 
 #: app/bucket_fill.c:341
 msgid "No available patterns for this operation."
@@ -1244,7 +1244,7 @@ msgstr "попередн╕й перегляд не доступний"
 
 #: app/fileops.c:1405
 msgid "(could not make preview)"
-msgstr ""
+msgstr "(не вдалось виконати перегляд)"
 
 #: app/fileops.c:1477 app/fileops.c:1558
 msgid "Open failed: "
@@ -1949,7 +1949,7 @@ msgstr ""
 #: app/gradient.c:4137
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
-msgstr ""
+msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: app/gradient.c:4652 app/gradient.c:4722
 msgid "(Varies)"
@@ -1957,20 +1957,20 @@ msgstr ""
 
 #: app/gradient.c:4874
 msgid "Split"
-msgstr ""
+msgstr "Розд╕лити"
 
 #. Instructions
 #: app/gradient.c:4888
 msgid "Please select the number of uniform parts"
-msgstr ""
+msgstr "Вибер╕ть к╕льк╕сть частин"
 
 #: app/gradient.c:4894
 msgid "in which you want to split the selected segment"
-msgstr ""
+msgstr "на яку ви хочите розд╕лити вид╕лений сегмент"
 
 #: app/gradient.c:4895
 msgid "in which you want to split the segments in the selection"
-msgstr ""
+msgstr "на яку ви хочете розд╕лити сегменти у вид╕лен╕"
 
 #: app/gradient.c:5255
 msgid "Blend endpoints' colors"
@@ -2222,7 +2222,7 @@ msgstr "Розд╕льн╕сть:"
 
 #: app/info_window.c:331 app/tool_options.c:464
 msgid "Unit:"
-msgstr ""
+msgstr "Одиниця:"
 
 #: app/info_window.c:333
 msgid "Scale Ratio:"
@@ -2230,11 +2230,11 @@ msgstr ""
 
 #: app/info_window.c:335
 msgid "Display Type:"
-msgstr ""
+msgstr "Тип зображення:"
 
 #: app/info_window.c:337
 msgid "Visual Class:"
-msgstr ""
+msgstr "Оптичний клас:"
 
 #: app/info_window.c:339
 msgid "Visual Depth:"
@@ -2242,7 +2242,7 @@ msgstr "Оптична глибина:"
 
 #: app/info_window.c:342
 msgid "Shades of Color:"
-msgstr ""
+msgstr "В╕дт╕нк╕в кольор╕в:"
 
 #: app/info_window.c:345
 msgid "Shades:"
@@ -2250,7 +2250,7 @@ msgstr ""
 
 #: app/info_window.c:348
 msgid "Shades of Gray:"
-msgstr ""
+msgstr "В╕дт╕нк╕в с╕рого:"
 
 #. create the info dialog
 #: app/info_window.c:377
@@ -3301,7 +3301,7 @@ msgstr "/Файл/Д╕алоги/Консоль помилок..."
 
 #: app/menus.c:186
 msgid "/File/Dialogs/Display Filters..."
-msgstr ""
+msgstr "/Файл/Д╕алоги/Ф╕льтри в╕дображення..."
 
 #: app/menus.c:196 app/menus.c:254
 msgid "/File/Quit"
@@ -3314,7 +3314,7 @@ msgstr "/Розширення"
 
 #: app/menus.c:203
 msgid "/Xtns/Module Browser..."
-msgstr ""
+msgstr "/Розширення/Перегляд модул╕в..."
 
 #. <Toolbox>/Help
 #: app/menus.c:211
@@ -3397,15 +3397,15 @@ msgstr "/Редагування/Буфер"
 
 #: app/menus.c:286
 msgid "/Edit/Buffer/Cut Named..."
-msgstr ""
+msgstr "/Редагування/Буфер/Вир╕зати в буфер з назвою..."
 
 #: app/menus.c:288
 msgid "/Edit/Buffer/Copy Named..."
-msgstr ""
+msgstr "/Редагування/Буфер/Скоп╕ювати в буфер з назвою..."
 
 #: app/menus.c:290
 msgid "/Edit/Buffer/Paste Named..."
-msgstr ""
+msgstr "/Редагування/Буфер/Вставити буфер з назвою..."
 
 #: app/menus.c:295
 msgid "/Edit/Clear"
@@ -3438,7 +3438,7 @@ msgstr "/Вид╕лення/Н╕чого"
 
 #: app/menus.c:315
 msgid "/Select/Float"
-msgstr ""
+msgstr "/Вид╕лення/Плаваюче"
 
 #: app/menus.c:320
 msgid "/Select/Feather..."
@@ -3454,7 +3454,7 @@ msgstr "/Вид╕лення/Зменшення..."
 
 #: app/menus.c:326
 msgid "/Select/Grow..."
-msgstr ""
+msgstr "/Вид╕лення/Зб╕льшення..."
 
 #: app/menus.c:328
 msgid "/Select/Border..."
@@ -3779,7 +3779,7 @@ msgstr "/Д╕алоги/Консоль помилок..."
 
 #: app/menus.c:584
 msgid "/Dialogs/Display Filters..."
-msgstr ""
+msgstr "/Д╕алоги/Ф╕льтри в╕дображення..."
 
 #. <Image>/Filters
 #: app/menus.c:592
@@ -3792,7 +3792,7 @@ msgstr "/Ф╕льтри/Повторити останн╕й"
 
 #: app/menus.c:596
 msgid "/Filters/Re-Show Last"
-msgstr ""
+msgstr "/Ф╕льтри/Показати останн╕й"
 
 #: app/menus.c:602
 msgid "/Filters/Blur"
@@ -4648,7 +4648,7 @@ msgstr ""
 
 #: app/preferences_dialog.c:1571
 msgid "Transparency Type:"
-msgstr ""
+msgstr "Тип прозорост╕:"
 
 #: app/preferences_dialog.c:1578 app/preferences_dialog.c:1656
 #: app/preferences_dialog.c:1669
@@ -4767,11 +4767,11 @@ msgstr "В╕кно зображення"
 
 #: app/preferences_dialog.c:1781
 msgid "Appearance"
-msgstr ""
+msgstr "Зовн╕шн╕й вигляд"
 
 #: app/preferences_dialog.c:1783
 msgid "Resize Window on Zoom"
-msgstr ""
+msgstr "Зм╕н╕вати розм╕р в╕кна при масштабуванн╕"
 
 #: app/preferences_dialog.c:1792
 msgid "Show Rulers"
@@ -4866,15 +4866,15 @@ msgstr ""
 
 #: app/preferences_dialog.c:2013 app/preferences_dialog.c:2056
 msgid "Bytes"
-msgstr ""
+msgstr "Байти"
 
 #: app/preferences_dialog.c:2014 app/preferences_dialog.c:2057
 msgid "KiloBytes"
-msgstr ""
+msgstr "К╕лобайти"
 
 #: app/preferences_dialog.c:2015 app/preferences_dialog.c:2058
 msgid "MegaBytes"
-msgstr ""
+msgstr "Мегабайти"
 
 #: app/preferences_dialog.c:2021
 msgid "Tile Cache Size:"
@@ -4926,7 +4926,7 @@ msgstr ""
 
 #: app/preferences_dialog.c:2141
 msgid "Session Management"
-msgstr ""
+msgstr "Управл╕ння сеансом"
 
 #: app/preferences_dialog.c:2143
 msgid "Session"
@@ -4938,11 +4938,11 @@ msgstr "Позиц╕я в╕кна"
 
 #: app/preferences_dialog.c:2153
 msgid "Save Window Positions on Exit"
-msgstr ""
+msgstr "Збер╕гати розташування в╕кон завершуючи роботу"
 
 #: app/preferences_dialog.c:2167
 msgid "Clear Saved Window Positions Now"
-msgstr ""
+msgstr "Стерти збережен╕ розташування в╕кон"
 
 #: app/preferences_dialog.c:2174
 msgid "Always Try to Restore Session"
@@ -4954,7 +4954,7 @@ msgstr "Пристро╖"
 
 #: app/preferences_dialog.c:2185
 msgid "Save Device Status on Exit"
-msgstr ""
+msgstr "Збер╕гати стан пристрою завершуючи роботу"
 
 #: app/preferences_dialog.c:2196
 msgid "Monitor Information"
@@ -5027,11 +5027,11 @@ msgstr ""
 
 #: app/preferences_dialog.c:2353
 msgid "Patterns Directories"
-msgstr ""
+msgstr "Каталог шаблон╕в"
 
 #: app/preferences_dialog.c:2355
 msgid "Select Patterns Dir"
-msgstr ""
+msgstr "Вибер╕ть каталог шаблон╕в"
 
 #: app/preferences_dialog.c:2357
 msgid "Palettes Directories"
@@ -5067,11 +5067,11 @@ msgstr "Модул╕"
 
 #: app/preferences_dialog.c:2369
 msgid "Modules Directories"
-msgstr ""
+msgstr "Каталог модул╕в"
 
 #: app/preferences_dialog.c:2371
 msgid "Select Modules Dir"
-msgstr ""
+msgstr "Вибер╕ть каталог модул╕в"
 
 #: app/procedural_db.c:44
 msgid "Procedural Database"
@@ -5096,11 +5096,11 @@ msgstr ""
 
 #: app/procedural_db_cmds.c:64
 msgid "Internal GIMP procedure"
-msgstr ""
+msgstr "Внутр╕шня процедура GIMP"
 
 #: app/procedural_db_cmds.c:65
 msgid "GIMP Plug-In"
-msgstr ""
+msgstr "Доповнення GIMP"
 
 #: app/procedural_db_cmds.c:66
 msgid "GIMP Extension"
@@ -5197,7 +5197,7 @@ msgstr ""
 
 #: app/rotate_tool.c:392
 msgid "Rotating..."
-msgstr ""
+msgstr "Обертання..."
 
 #: app/scale_tool.c:72
 msgid "Scaling Information"
@@ -5313,27 +5313,27 @@ msgstr "Цей ╕нструмент не ма╓ параметр╕в"
 
 #: app/tool_options.c:247
 msgid "Rectangular Select Options"
-msgstr ""
+msgstr "Параметри вид╕лення прямокутником"
 
 #: app/tool_options.c:249
 msgid "Elliptical Selection Options"
-msgstr ""
+msgstr "Параметри вид╕лення ел╕псом"
 
 #: app/tool_options.c:251
 msgid "Free-hand Selection Options"
-msgstr ""
+msgstr "Параметри дов╕льного вид╕лення"
 
 #: app/tool_options.c:253
 msgid "Fuzzy Selection Options"
-msgstr ""
+msgstr "Параметри вид╕лення чар╕вною паличкою"
 
 #: app/tool_options.c:255
 msgid "Bezier Selection Options"
-msgstr ""
+msgstr "Параметри вид╕лення Без'╓"
 
 #: app/tool_options.c:257
 msgid "Intelligent Scissors Options"
-msgstr ""
+msgstr "Параменти розумних ножиць"
 
 #: app/tool_options.c:259
 msgid "By-Color Select Options"
@@ -5349,7 +5349,7 @@ msgstr ""
 
 #: app/tool_options.c:550
 msgid "Bucket Fill Options"
-msgstr ""
+msgstr "Параметри заповнення"
 
 #: app/tool_options.c:552
 msgid "Blend Options"
@@ -5361,7 +5361,7 @@ msgstr "Параметри ол╕вця"
 
 #: app/tool_options.c:556
 msgid "Paintbrush Options"
-msgstr ""
+msgstr "Париметри пензля"
 
 #: app/tool_options.c:558
 msgid "Eraser Options"
@@ -5397,23 +5397,23 @@ msgstr "Параметри аерографу Xinput"
 
 #: app/tool_options.c:684
 msgid "Incremental"
-msgstr ""
+msgstr "Доповнюючий"
 
 #: app/tool_options.c:795
 msgid "Pressure Sensitivity"
-msgstr ""
+msgstr "Чутлив╕сть до натиску"
 
 #: app/tool_options.c:813
 msgid "Opacity"
-msgstr ""
+msgstr "Непрозор╕сть"
 
 #: app/tool_options.c:836
 msgid "Pressure"
-msgstr ""
+msgstr "Натиск"
 
 #: app/tool_options.c:856
 msgid "Rate"
-msgstr ""
+msgstr "Швидк╕сть"
 
 #: app/tools.c:85
 msgid "Rect Select"
@@ -5441,51 +5441,51 @@ msgstr "В╕дилення д╕лянки у форм╕ ел╕пса"
 
 #: app/tools.c:117
 msgid "Free Select"
-msgstr ""
+msgstr "Дов╕льне вид╕лення"
 
 #: app/tools.c:118
 msgid "/Tools/Free Select"
-msgstr ""
+msgstr "/╤нструменти/Дов╕льне вид╕лення"
 
 #: app/tools.c:121
 msgid "Select hand-drawn regions"
-msgstr ""
+msgstr "Вид╕лення дов╕льно╖ д╕лянки"
 
 #: app/tools.c:133
 msgid "Fuzzy Select"
-msgstr ""
+msgstr "Чар╕вна паличка"
 
 #: app/tools.c:134
 msgid "/Tools/Fuzzy Select"
-msgstr ""
+msgstr "/╤нструменти/Чар╕вна паличка"
 
 #: app/tools.c:137
 msgid "Select contiguous regions"
-msgstr ""
+msgstr "Вид╕лення сум╕жних д╕лянок"
 
 #: app/tools.c:149
 msgid "Bezier Select"
-msgstr ""
+msgstr "Вид╕лення Без'╓"
 
 #: app/tools.c:150
 msgid "/Tools/Bezier Select"
-msgstr ""
+msgstr "/╤нструменти/Вид╕лення Без'╓"
 
 #: app/tools.c:153
 msgid "Select regions using Bezier curves"
-msgstr ""
+msgstr "Вид╕лення д╕лянок використовуючи крив╕ Без'╓"
 
 #: app/tools.c:165
 msgid "Intelligent Scissors"
-msgstr ""
+msgstr "Розумн╕ ножиц╕"
 
 #: app/tools.c:166
 msgid "/Tools/Intelligent Scissors"
-msgstr ""
+msgstr "/╤нструменти/Розумн╕ ножиц╕"
 
 #: app/tools.c:169
 msgid "Select shapes from image"
-msgstr ""
+msgstr "Вид╕лення форм в зображенн╕"
 
 #: app/tools.c:181
 msgid "Move"
@@ -5571,27 +5571,27 @@ msgstr "Взяти кол╕р ╕з зображення"
 
 #: app/tools.c:341
 msgid "Bucket Fill"
-msgstr ""
+msgstr "Заповнення"
 
 #: app/tools.c:342
 msgid "/Tools/Bucket Fill"
-msgstr ""
+msgstr "/╤нструменти/Заповнення"
 
 #: app/tools.c:345
 msgid "Fill with a color or pattern"
-msgstr ""
+msgstr "Заповнення кольором чи шаблоном"
 
 #: app/tools.c:357
 msgid "Blend"
-msgstr "Злити"
+msgstr "Злиття"
 
 #: app/tools.c:358
 msgid "/Tools/Blend"
-msgstr "/╤нструменти/Злити"
+msgstr "/╤нструменти/Злиття"
 
 #: app/tools.c:361
 msgid "Fill with a color gradient"
-msgstr "Заповнити град╕╓нтом кольору"
+msgstr "Заповнення град╕╓нтом кольору"
 
 #: app/tools.c:373
 msgid "Pencil"
@@ -5643,11 +5643,11 @@ msgstr "Аерограф ╕з зм╕нним натиском"
 
 #: app/tools.c:437
 msgid "Clone"
-msgstr "Клонувати"
+msgstr "Клонування"
 
 #: app/tools.c:438
 msgid "/Tools/Clone"
-msgstr "/╤нструменти/Клонувати"
+msgstr "/╤нструменти/Клонування"
 
 #: app/tools.c:441
 msgid "Paint using patterns or image regions"
@@ -5675,7 +5675,7 @@ msgstr "/╤нструменти/Чорнило"
 
 #: app/tools.c:473
 msgid "Draw in ink"
-msgstr "Малювати чорнилом"
+msgstr "Малювання чорнилом"
 
 #: app/tools.c:485 app/tools.c:489
 msgid "Dodge or Burn"
@@ -5771,7 +5771,7 @@ msgstr "/Зображення/Кольори/Постеризац╕я..."
 
 #: app/tools.c:635
 msgid "Reduce image to a fixed numer of colors"
-msgstr "Звести зображення до ф╕ксовано╖ к╕лькост╕ кольор╕в"
+msgstr "Зведення зображення до ф╕ксовано╖ к╕лькост╕ кольор╕в"
 
 #: app/tools.c:648
 msgid "/Image/Colors/Threshold..."
@@ -5779,7 +5779,7 @@ msgstr "/Зображення/Кольори/Пор╕г..."
 
 #: app/tools.c:651
 msgid "Reduce image to two colors using a threshold"
-msgstr "Звести зображення до двох кольор╕в використовуючи пор╕г"
+msgstr "Зведення зображення до двох кольор╕в використовуючи пор╕г"
 
 #: app/tools.c:664
 msgid "/Image/Colors/Curves..."
@@ -5807,15 +5807,15 @@ msgstr "Показати г╕стограму зображення"
 
 #: app/transform_core.c:257
 msgid "Rotate"
-msgstr "Обернути"
+msgstr "Обертання"
 
 #: app/transform_core.c:258
 msgid "Scale"
-msgstr "Масштабувати"
+msgstr "Масштабування"
 
 #: app/transform_core.c:259
 msgid "Shear"
-msgstr "Викривити"
+msgstr "Викривлення"
 
 #: app/transform_core.c:368
 msgid ""
