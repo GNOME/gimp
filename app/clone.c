@@ -494,7 +494,7 @@ clone_motion (PaintCore            *paint_core,
     {
     case IMAGE_CLONE:
       /*  Set the paint area to transparent  */
-      memset (temp_buf_data (area), 0, area->width * area->height * area->bytes);
+      temp_buf_data_clear (area);
 
       /*  If the source gimage is different from the destination,
        *  then we should copy straight from the destination image

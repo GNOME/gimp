@@ -3819,7 +3819,7 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
 
   /*  The construction buffer  */
   comp = temp_buf_new (width, height, bytes, 0, 0, NULL);
-  memset (temp_buf_data (comp), 0, comp->width * comp->height * comp->bytes);
+  temp_buf_data_clear (comp);
 
   floating_sel = NULL;
   for (list = gimage->layers; list; list = g_slist_next (list))

@@ -395,18 +395,12 @@ mask_buf_free (MaskBuf *mask)
 guchar *
 mask_buf_data (MaskBuf *mask_buf)
 {
-  if (mask_buf->swapped)
-    temp_buf_unswap ((TempBuf *) mask_buf);
-
-  return mask_buf->data;
+  return temp_buf_data_clear; 
 }
 
 guchar *
 mask_buf_data_clear (MaskBuf *mask_buf)
 {
-  if (mask_buf->swapped)
-    temp_buf_unswap ((TempBuf *) mask_buf);
-
   return temp_buf_data_clear ((TempBuf *) mask_buf);
 }
 

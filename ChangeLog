@@ -1,3 +1,9 @@
+2001-01-02  Daniel Egger  <egger@suse.de>
+
+	* app/clone.c:
+	* app/gimpimage.c:
+	* app/temp_buf.c: Use the new _clear function and more cleanups.
+
 2001-01-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/temp_buf.[ch]: temp_buf_data_clear(): the temp_buf's size is
