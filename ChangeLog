@@ -1,3 +1,8 @@
+2000-05-12  Nick Lamb  <njl195@zepler.org.uk>
+
+	* plug-ins/common/tiff.c: Don't bother checking for CODEC
+	* plug-ins/bmp/bmpread.c: Misc. crash bugs fixed
+
 2000-05-12  Jay Cox  <jaycox@earthlink.net>
 
 	* app/gimpimage.c: Copy the name, tatto and parasites of the 

@@ -1234,8 +1234,13 @@ save_image (gchar   *filename,
   gchar         *name;
 
   compression = tsvals.compression;
+
+  /* Disabled because this isn't in older releases of libtiff, and it
+     wasn't helping much anyway */
+#if 0
   if (TIFFFindCODEC((uint16) compression) == NULL)
     compression = COMPRESSION_NONE; /* CODEC not available */
+#endif
 
   predictor = 0;
   tile_height = gimp_tile_height ();
