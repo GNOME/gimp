@@ -25,8 +25,11 @@
 
 #include "gui-types.h"
 
+#include "core/gimpchannel.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-offset.h"
+#include "core/gimplayer.h"
+#include "core/gimplayermask.h"
 #include "core/gimpimage.h"
 
 #include "display/gimpdisplay-foreach.h"
@@ -76,6 +79,7 @@ offset_dialog_create (GimpDrawable *drawable)
   GtkWidget    *spinbutton;
   GtkWidget    *frame;
   GtkWidget    *radio_button;
+  const gchar  *title = NULL;
 
   off_d = g_new0 (OffsetDialog, 1);
 
@@ -83,7 +87,16 @@ offset_dialog_create (GimpDrawable *drawable)
   off_d->fill_type   = gimp_drawable_has_alpha (drawable);
   off_d->gimage      = gimp_drawable_gimage (drawable);
 
-  off_d->dlg = gimp_dialog_new (_("Offset Layer"), "offset",
+  if (GIMP_IS_LAYER (drawable))
+    title = _("Offset Layer");
+  else if (GIMP_IS_LAYER_MASK (drawable))
+    title = _("Offset Layer Mask");
+  else if (GIMP_IS_CHANNEL (drawable))
+    title = _("Offset Channel");
+  else
+    g_warning ("%s: unexpected drawable type", G_STRLOC);
+
+  off_d->dlg = gimp_dialog_new (title, "offset",
 				gimp_standard_help_func,
 				"dialogs/offset.html",
 				GTK_WIN_POS_NONE,
@@ -162,6 +175,12 @@ offset_dialog_create (GimpDrawable *drawable)
 
   gtk_widget_show (table);
 
+  /*  The by half height and half width option */
+  push = gtk_button_new_with_label (_("Offset by (x/2),(y/2)"));
+  gtk_container_set_border_width (GTK_CONTAINER (push), 2);
+  gtk_box_pack_start (GTK_BOX (vbox), push, FALSE, FALSE, 0);
+  gtk_widget_show (push);
+
   /*  The wrap around option  */
   check = gtk_check_button_new_with_label (_("Wrap"));
   gtk_box_pack_start (GTK_BOX (vbox), check, FALSE, FALSE, 0);
@@ -181,18 +200,11 @@ offset_dialog_create (GimpDrawable *drawable)
 
 			   NULL);
 
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   if (! gimp_drawable_has_alpha (drawable))
     gtk_widget_set_sensitive (radio_button, FALSE);
 
-  /*  The by half height and half width option */
-#warning FIXME move button
-  push = gtk_button_new_with_label (_("Offset by (x/2),(y/2)"));
-  gtk_container_set_border_width (GTK_CONTAINER (push), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), push, FALSE, FALSE, 0);
-  gtk_widget_show (push);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   /*  Hook up the wrap around  */
   g_signal_connect (G_OBJECT (check), "toggled",

@@ -1,3 +1,7 @@
+2001-12-06  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/offset-dialog.c: some GUI fiddling.
+
 2001-12-06  Rebecca Walter <bex@gimp.org>
 
 	* app/gui/module-browser.c
