@@ -1,0 +1,48 @@
+<!-- ##### SECTION Title ##### -->
+gimppaletteselect
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### USER_FUNCTION GimpRunPaletteCallback ##### -->
+<para>
+
+</para>
+
+@palette_name: 
+@dialog_closing: 
+@user_data: 
+
+
+<!-- ##### FUNCTION gimp_palette_select_new ##### -->
+<para>
+
+</para>
+
+@title: 
+@palette_name: 
+@callback: 
+@data: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_palette_select_destroy ##### -->
+<para>
+
+</para>
+
+@palette_callback: 
+
+

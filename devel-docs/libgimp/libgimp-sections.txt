@@ -470,6 +470,13 @@ gimp_palettes_set_popup
 </SECTION>
 
 <SECTION>
+<FILE>gimppaletteselect</FILE>
+GimpRunPaletteCallback
+gimp_palette_select_new
+gimp_palette_select_destroy
+</SECTION>
+
+<SECTION>
 <FILE>gimppaths</FILE>
 gimp_path_list
 gimp_path_get_points
@@ -716,4 +723,11 @@ gimp_gradient_select_widget_set
 gimp_pattern_select_widget_new
 gimp_pattern_select_widget_close
 gimp_pattern_select_widget_set
+</SECTION>
+
+<SECTION>
+<FILE>gimppalettemenu</FILE>
+gimp_palette_select_widget_new
+gimp_palette_select_widget_close
+gimp_palette_select_widget_set
 </SECTION>

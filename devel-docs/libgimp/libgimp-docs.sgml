@@ -64,6 +64,7 @@
     <xi:include href="xml/gimpbrushselect.xml" />
     <xi:include href="xml/gimpfontselect.xml" />
     <xi:include href="xml/gimpgradientselect.xml" />
+    <xi:include href="xml/gimppaletteselect.xml" />
     <xi:include href="xml/gimppatternselect.xml" />
   </part>
 
@@ -78,6 +79,7 @@
     <xi:include href="xml/gimpbrushmenu.xml" />
     <xi:include href="xml/gimpfontmenu.xml" />
     <xi:include href="xml/gimpgradientmenu.xml" />
+    <xi:include href="xml/gimppalettemenu.xml" />
     <xi:include href="xml/gimppatternmenu.xml" />
   </part>
 
