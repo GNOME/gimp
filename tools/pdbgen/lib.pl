@@ -139,7 +139,7 @@ CODE
 		if ($type ne 'color') {
 		    $return_marshal .= ' ' x 4 . "$var = ";
 		    $return_marshal .= 'g_strdup (' if $type eq 'string';
-		    $return_marshal .= "return_vals[$argc].data.d_$type"
+		    $return_marshal .= "return_vals[$argc].data.d_$type";
 		    $return_marshal .= ')' if $type eq 'string';
 		    $return_marshal .= ";\n";
 		}
