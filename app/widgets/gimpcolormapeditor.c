@@ -200,26 +200,26 @@ gimp_colormap_dialog_class_init (GimpColormapDialogClass* klass)
 static void
 gimp_colormap_dialog_init (GimpColormapDialog *colormap_dialog)
 {
-  colormap_dialog->image                = NULL;
-  colormap_dialog->col_index            = 0;
-  colormap_dialog->dnd_col_index        = 0;
-  colormap_dialog->vbox                 = NULL;
-  colormap_dialog->palette              = NULL;
-  colormap_dialog->image_menu           = NULL;
-  colormap_dialog->popup_menu           = NULL;
-  colormap_dialog->option_menu          = NULL;
-  colormap_dialog->context              = NULL;
-  colormap_dialog->event_handler        = 0;
-  colormap_dialog->xn                   = 0;
-  colormap_dialog->yn                   = 0;
-  colormap_dialog->cellsize             = 0;
-  colormap_dialog->index_spinbutton     = NULL;
-  colormap_dialog->index_adjustment     = NULL;
-  colormap_dialog->color_entry          = NULL;
-  colormap_dialog->rename_handler       = 0;
-  colormap_dialog->cmap_changed_handler = 0;
-  colormap_dialog->add_item             = NULL;
-  colormap_dialog->color_notebook       = NULL;
+  colormap_dialog->image                   = NULL;
+  colormap_dialog->col_index               = 0;
+  colormap_dialog->dnd_col_index           = 0;
+  colormap_dialog->vbox                    = NULL;
+  colormap_dialog->palette                 = NULL;
+  colormap_dialog->image_menu              = NULL;
+  colormap_dialog->popup_menu              = NULL;
+  colormap_dialog->option_menu             = NULL;
+  colormap_dialog->context                 = NULL;
+  colormap_dialog->event_handler           = 0;
+  colormap_dialog->xn                      = 0;
+  colormap_dialog->yn                      = 0;
+  colormap_dialog->cellsize                = 0;
+  colormap_dialog->index_spinbutton        = NULL;
+  colormap_dialog->index_adjustment        = NULL;
+  colormap_dialog->color_entry             = NULL;
+  colormap_dialog->rename_handler_id       = 0;
+  colormap_dialog->cmap_changed_handler_id = 0;
+  colormap_dialog->add_item                = NULL;
+  colormap_dialog->color_notebook          = NULL;
 }
 
 GimpColormapDialog *
@@ -249,16 +249,19 @@ gimp_colormap_dialog_create (GimpContainer *context)
 
 				  NULL);
 
-  ipal->image                = NULL;
-  ipal->context              = context;
-  ipal->cmap_changed_handler = gimp_container_add_handler (context,
-							   "colormap_changed",
-							   image_cmap_change_cb,
-							   ipal);
-  ipal->rename_handler       = gimp_container_add_handler (context,
-							   "name_changed",
-							   image_rename_cb,
-							   ipal);
+  ipal->image   = NULL;
+  ipal->context = context;
+
+  ipal->cmap_changed_handler_id =
+    gimp_container_add_handler (context,
+				"colormap_changed",
+				image_cmap_change_cb,
+				ipal);
+  ipal->rename_handler_id =
+    gimp_container_add_handler (context,
+				"name_changed",
+				image_rename_cb,
+				ipal);
 
   accel_group = gtk_accel_group_new ();
   gtk_window_set_wmclass (GTK_WINDOW (ipal), "indexed_color_palette", "Gimp");
@@ -878,8 +881,8 @@ ipal_set_image (GimpColormapDialog *ipal,
       if (!ipal->image)
 	gtk_signal_handler_unblock (GTK_OBJECT (ipal->palette),
 				    ipal->event_handler);
-      g_return_if_fail (gimp_container_lookup (ipal->context,
-					       GIMP_OBJECT (gimage)));
+      g_return_if_fail (gimp_container_have (ipal->context,
+					     GIMP_OBJECT (gimage)));
       g_return_if_fail (gimp_image_base_type (gimage) == INDEXED);
       ipal->image = gimage;
       ipal_draw (ipal);

@@ -28,7 +28,6 @@
 
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimpbrushlist.h"
 #include "gimpbrush.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"

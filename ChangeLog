@@ -1,3 +1,42 @@
+2001-02-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimpcontainer.[ch]: renamed gimp_container_lookup() back
+	to gimp_container_have(). Virtualized the "add", "remove",
+	"have" and "foreach" methods and removed the "children" list.
+
+	* app/gimplist.[ch]: derived from GimpContainer now.
+
+	* app/Makefile.am
+	* app/gimpdatalist.[ch]: new object: an alphabetically sorted
+	GimpList with unique names.
+
+	* app/gimpbrushlist.[ch]: removed. It's job is done by the
+	GimpDataList now.
+
+	* app/brushes.[ch]: new files. Contain the "brushes_()" functions
+	for the global brush list.
+
+	* app/app_procs.c
+	* app/apptypes.h
+	* app/brush_select.[ch]
+	* app/colormap_dialog.[ch]
+	* app/context_manager.c
+	* app/devices.c
+	* app/gimpbrush.c
+	* app/gimpcontext.c
+	* app/gimpdnd.c
+	* app/info_window.c
+	* app/lc_dialog.c
+	* app/module_db.c
+	* app/nav_window.c
+	* app/pdb/brush_select_cmds.c
+	* app/pdb/brushes_cmds.c
+	* app/tools/by_color_select.c
+	* app/tools/paintbrush.c
+	* tools/pdbgen/pdb/brush_select.pdb
+	* tools/pdbgen/pdb/brushes.pdb
+	* po/POTFILES.in: changed accordingly.
+
 2001-02-04  Nick Lamb  <njl195@zepler.org.uk>
 
 	* app/gimpdrawablepreview.c: add <stdlib.h> or <string.h> where needed

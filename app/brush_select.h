@@ -73,6 +73,9 @@ struct _BrushSelect
 
   gboolean       redraw;
   gboolean       freeze; /*  so we don't waste so much time during refresh  */
+
+  GQuark         name_changed_handler_id;
+  GQuark         dirty_handler_id;
 };
 
 /*  list of active dialogs  */

@@ -125,17 +125,19 @@ sub brushes_set_popup {
     );
 
     %invoke = (
-	headers => [ qw("gimpbrushlist.h") ],
+	headers => [ qw("brushes.h" "gimpbrush.h" "gimplist.h") ],
 	vars => [ 'ProcRecord *prec', 'BrushSelect *bsp' ],
 	code => <<'CODE'
 {
   if ((prec = procedural_db_lookup (name)) &&
       (bsp = brush_get_brushselect (name)))
     {
-      GimpBrush *active = gimp_brush_list_get_brush (brush_list, brush_name);
+      GimpObject *object = gimp_list_get_child_by_name (brush_list, brush_name);
 
-      if (active)
+      if (object)
 	{
+	  GimpBrush *active = GIMP_BRUSH (object);
+
 	  /* Updating the context updates the widgets as well */
 
 	  gimp_context_set_brush (bsp->context, active);

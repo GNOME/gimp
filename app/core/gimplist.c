@@ -18,94 +18,30 @@
 
 #include "config.h"
 
-#include <stdio.h>
-
 #include <gtk/gtk.h>
 
 #include "apptypes.h"
 
-#include "gimpobject.h"
+#include "gimpcontainer.h"
 #include "gimplist.h"
 
 
-/*  code mostly ripped from nether's gimpset class  */
-
-enum
-{
-  ADD,
-  REMOVE,
-  LAST_SIGNAL
-};
-
-static guint gimp_list_signals[LAST_SIGNAL] = { 0 };
-
-static GimpObjectClass *parent_class = NULL;
-
-
-static void gimp_list_add_func    (GimpList *list,
-				   gpointer  object);
-static void gimp_list_remove_func (GimpList *list,
-				   gpointer  object);
+static void       gimp_list_class_init (GimpListClass *klass);
+static void       gimp_list_init       (GimpList      *list);
+static void       gimp_list_destroy    (GtkObject     *object);
+static void       gimp_list_add        (GimpContainer *container,
+				        GimpObject    *object);
+static void       gimp_list_remove     (GimpContainer *container,
+				        GimpObject    *object);
+static gboolean   gimp_list_have       (GimpContainer *container,
+				        GimpObject    *object);
+static void       gimp_list_foreach    (GimpContainer *container,
+				        GFunc          func,
+				        gpointer       user_data);
 
 
-static void
-gimp_list_destroy (GtkObject *object)
-{
-  GimpList *list = GIMP_LIST (object);
+static GimpContainerClass *parent_class = NULL;
 
-  while (list->list) /* ought to put a sanity check in here... */
-    {
-      gimp_list_remove (list, list->list->data);
-    }
-  g_slist_free (list->list);
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
-}
-
-static void
-gimp_list_init (GimpList *list)
-{
-  list->list = NULL;
-  list->type = GTK_TYPE_OBJECT;
-}
-
-static void
-gimp_list_class_init (GimpListClass *klass)
-{
-  GtkObjectClass *object_class;
-
-  object_class = (GtkObjectClass *) klass;
-
-  parent_class = gtk_type_class (GIMP_TYPE_OBJECT);
-
-  gimp_list_signals[ADD]=
-    gtk_signal_new ("add",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpListClass,
-				       add),
-                    gtk_marshal_NONE__POINTER,
-                    GTK_TYPE_NONE, 1,
-		    GTK_TYPE_POINTER);
-
-  gimp_list_signals[REMOVE]=
-    gtk_signal_new ("remove",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpListClass,
-				       remove),
-                    gtk_marshal_NONE__POINTER,
-                    GTK_TYPE_NONE, 1,
-		    GTK_TYPE_POINTER);
-
-  gtk_object_class_add_signals (object_class, gimp_list_signals, LAST_SIGNAL);
-
-  object_class->destroy = gimp_list_destroy;
-
-  klass->add    = gimp_list_add_func;
-  klass->remove = gimp_list_remove_func;
-}
 
 GtkType
 gimp_list_get_type (void)
@@ -126,123 +62,164 @@ gimp_list_get_type (void)
 	(GtkClassInitFunc) NULL
       };
 
-      list_type = gtk_type_unique (GIMP_TYPE_OBJECT, &list_info);
+      list_type = gtk_type_unique (GIMP_TYPE_CONTAINER, &list_info);
     }
 
   return list_type;
 }
 
-GimpList *
-gimp_list_new (GtkType  type,
-	       gboolean weak)
+static void
+gimp_list_class_init (GimpListClass *klass)
+{
+  GtkObjectClass     *object_class;
+  GimpContainerClass *container_class;
+
+  object_class    = (GtkObjectClass *) klass;
+  container_class = (GimpContainerClass *) klass;
+
+  parent_class = gtk_type_class (GIMP_TYPE_CONTAINER);
+
+  object_class->destroy = gimp_list_destroy;
+
+  container_class->add     = gimp_list_add;
+  container_class->remove  = gimp_list_remove;
+  container_class->have    = gimp_list_have;
+  container_class->foreach = gimp_list_foreach;
+}
+
+static void
+gimp_list_init (GimpList *list)
+{
+  list->list = NULL;
+}
+
+static void
+gimp_list_destroy (GtkObject *object)
 {
   GimpList *list;
 
+  list = GIMP_LIST (object);
+
+  while (list->list)
+    {
+      gimp_container_remove (GIMP_CONTAINER (list),
+			     GIMP_OBJECT (list->list->data));
+    }
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+gimp_list_add (GimpContainer *container,
+	       GimpObject    *object)
+{
+  GimpList *list;
+
+  list = GIMP_LIST (container);
+
+  list->list = g_list_prepend (list->list, object);
+}
+
+static void
+gimp_list_remove (GimpContainer *container,
+		  GimpObject    *object)
+{
+  GimpList *list;
+
+  list = GIMP_LIST (container);
+
+  list->list = g_list_remove (list->list, object);
+}
+
+static gboolean
+gimp_list_have (GimpContainer *container,
+		GimpObject    *object)
+{
+  GimpList *list;
+
+  list = GIMP_LIST (container);
+
+  return g_list_find (list->list, object) ? TRUE : FALSE;
+}
+
+static void
+gimp_list_foreach (GimpContainer *container,
+		   GFunc          func,
+		   gpointer       user_data)
+{
+  GimpList *list;
+
+  list = GIMP_LIST (container);
+
+  g_list_foreach (list->list, func, user_data);
+}
+
+GimpList *
+gimp_list_new (GtkType              children_type,
+	       GimpContainerPolicy  policy)
+{
+  GimpList *list;
+
+  g_return_val_if_fail (gtk_type_is_a (children_type, GIMP_TYPE_OBJECT), NULL);
+  g_return_val_if_fail (policy == GIMP_CONTAINER_POLICY_STRONG ||
+                        policy == GIMP_CONTAINER_POLICY_WEAK, NULL);
+
   list = gtk_type_new (GIMP_TYPE_LIST);
 
-  list->type = type;
-  list->weak = weak;
+  GIMP_CONTAINER (list)->children_type = children_type;
+  GIMP_CONTAINER (list)->policy        = policy;
 
   return list;
 }
 
-static void
-gimp_list_destroy_cb (GtkObject *object,
-		      gpointer   data)
+GimpObject *
+gimp_list_get_child_by_name (const GimpList *list,
+			     const gchar    *name)
 {
-  GimpList *list;
+  GimpObject *object;
+  GList      *glist;
 
-  list = GIMP_LIST (data);
+  g_return_val_if_fail (list != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_LIST (list), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
 
-  gimp_list_remove (list, object);
-}
-
-static void
-gimp_list_add_func (GimpList *list,
-		    gpointer  object)
-{
-  list->list = g_slist_prepend (list->list, object);
-}
-
-static void
-gimp_list_remove_func (GimpList *list,
-		       gpointer  object)
-{
-  list->list = g_slist_remove (list->list, object);
-}
-
-gboolean
-gimp_list_add (GimpList *list,
-	       gpointer  object)
-{
-  g_return_val_if_fail (list, FALSE);
-  g_return_val_if_fail (GTK_CHECK_TYPE (object, list->type), FALSE);
-	
-  if (g_slist_find (list->list, object))
-    return FALSE;
-	
-  if (list->weak)
+  for (glist = list->list; glist; glist = g_list_next (glist))
     {
-      gtk_signal_connect (GTK_OBJECT (object), "destroy",
-			  GTK_SIGNAL_FUNC (gimp_list_destroy_cb),
-			  list);
-    }
-  else
-    {
-      gtk_object_ref (GTK_OBJECT (object));
-      gtk_object_sink (GTK_OBJECT (object));
+      object = (GimpObject *) glist->data;
+
+      if (! strcmp (object->name, name))
+	return object;
     }
 
-  gtk_signal_emit (GTK_OBJECT (list), gimp_list_signals[ADD], object);
-
-  return TRUE;
+  return NULL;
 }
 
-gboolean
-gimp_list_remove (GimpList *list,
-		  gpointer  object)
+GimpObject *
+gimp_list_get_child_by_index (const GimpList *list,
+			      gint            index)
 {
-  g_return_val_if_fail (list, FALSE);
+  GList *glist;
 
-  if (!g_slist_find (list->list, object))
-    {
-      g_warning ("gimp_list_remove: can't find val");
-      return FALSE;
-    }
+  g_return_val_if_fail (list != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_LIST (list), NULL);
 
-  gtk_signal_emit (GTK_OBJECT (list), gimp_list_signals[REMOVE], object);
+  glist = g_list_nth (list->list, index);
 
-  if (list->weak)
-    {
-      gtk_signal_disconnect_by_func (GTK_OBJECT (object),
-				     GTK_SIGNAL_FUNC (gimp_list_destroy_cb),
-				     list);
-    }
-  else
-    {
-      gtk_object_unref (GTK_OBJECT (object));
-    }
+  if (glist)
+    return (GimpObject *) glist->data;
 
-  return TRUE;
+  return NULL;
 }
 
-gboolean
-gimp_list_have (GimpList *list,
-		gpointer  object)
+gint
+gimp_list_get_child_index (const GimpList   *list,
+			   const GimpObject *object)
 {
-  return g_slist_find (list->list, object) ? TRUE : FALSE;
-}
+  g_return_val_if_fail (list != NULL, 0);
+  g_return_val_if_fail (GIMP_IS_LIST (list), 0);
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (GIMP_IS_OBJECT (list), 0);
 
-void
-gimp_list_foreach (GimpList *list,
-		   GFunc     func,
-		   gpointer  user_data)
-{
-  g_slist_foreach (list->list, func, user_data);
-}
-
-GtkType
-gimp_list_type (GimpList *list)
-{
-  return list->type;
+  return g_list_index (list->list, (gpointer) object);
 }

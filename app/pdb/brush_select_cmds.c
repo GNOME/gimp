@@ -28,8 +28,10 @@
 #include "procedural_db.h"
 
 #include "brush_select.h"
-#include "gimpbrushlist.h"
+#include "brushes.h"
+#include "gimpbrush.h"
 #include "gimpcontext.h"
+#include "gimplist.h"
 
 static ProcRecord brushes_popup_proc;
 static ProcRecord brushes_close_popup_proc;
@@ -253,10 +255,12 @@ brushes_set_popup_invoker (Argument *args)
       if ((prec = procedural_db_lookup (name)) &&
 	  (bsp = brush_get_brushselect (name)))
 	{
-	  GimpBrush *active = gimp_brush_list_get_brush (brush_list, brush_name);
+	  GimpObject *object = gimp_list_get_child_by_name (brush_list, brush_name);
     
-	  if (active)
+	  if (object)
 	    {
+	      GimpBrush *active = GIMP_BRUSH (object);
+    
 	      /* Updating the context updates the widgets as well */
     
 	      gimp_context_set_brush (bsp->context, active);

@@ -48,8 +48,6 @@ struct _GimpContainer
   GimpContainerPolicy  policy;
   gint                 num_children;
 
-  GList               *children;
-
   /*  private  */
   GList               *handlers;
 };
@@ -58,16 +56,19 @@ struct _GimpContainerClass
 {
   GimpObjectClass  parent_class;
 
-  void (* add)    (GimpContainer *container,
-		   GimpObject    *object);
-  void (* remove) (GimpContainer *container,
-		   GimpObject    *object);
+  void     (* add)     (GimpContainer *container,
+			GimpObject    *object);
+  void     (* remove)  (GimpContainer *container,
+			GimpObject    *object);
+  gboolean (* have)    (GimpContainer *container,
+			GimpObject    *object);
+  void     (* foreach) (GimpContainer *container,
+			GFunc          func,
+			gpointer       user_data);
 };
 
 
 GtkType         gimp_container_get_type       (void);
-GimpContainer * gimp_container_new            (GtkType              children_type,
-					       GimpContainerPolicy  policy);
 
 GtkType         gimp_container_children_type  (const GimpContainer *container);
 GimpContainerPolicy gimp_container_policy     (const GimpContainer *container);
@@ -78,8 +79,8 @@ gboolean        gimp_container_add            (GimpContainer       *container,
 gboolean        gimp_container_remove         (GimpContainer       *container,
 					       GimpObject          *object);
 
-const GList   * gimp_container_lookup         (const GimpContainer *container,
-					       const GimpObject    *object);
+gboolean        gimp_container_have           (GimpContainer       *container,
+					       GimpObject          *object);
 void            gimp_container_foreach        (GimpContainer       *container,
 					       GFunc                func,
 					       gpointer             user_data);

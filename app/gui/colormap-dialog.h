@@ -53,8 +53,8 @@ struct _GimpColormapDialog
   GtkWidget        *index_spinbutton;
   GtkAdjustment    *index_adjustment;
   GtkEntry         *color_entry;
-  GimpSetHandlerId  rename_handler;
-  GimpSetHandlerId  cmap_changed_handler;
+  GQuark            rename_handler_id;
+  GQuark            cmap_changed_handler_id;
   GtkWidget        *add_item;
   ColorNotebook    *color_notebook;
 };

@@ -27,8 +27,8 @@
 #include "apptypes.h"
 #include "procedural_db.h"
 
+#include "brushes.h"
 #include "gimpbrush.h"
-#include "gimpbrushlist.h"
 #include "gimpcontext.h"
 #include "gimplist.h"
 #include "temp_buf.h"
@@ -160,7 +160,7 @@ brushes_set_brush_invoker (Argument *args)
 {
   gboolean success = TRUE;
   gchar *name;
-  GimpBrush *brush;
+  GimpObject *object;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL)
@@ -168,10 +168,10 @@ brushes_set_brush_invoker (Argument *args)
 
   if (success)
     {
-      brush = gimp_brush_list_get_brush (brush_list, name);
+      object = gimp_list_get_child_by_name (brush_list, name);
     
-      if (brush)
-	gimp_context_set_brush (NULL, brush);
+      if (object)
+	gimp_context_set_brush (NULL, GIMP_BRUSH (object));
       else
 	success = FALSE;
     }
@@ -441,10 +441,10 @@ brushes_list_invoker (Argument *args)
   gboolean success = TRUE;
   Argument *return_args;
   gchar **brushes;
-  GSList *list = NULL;
+  GList *list = NULL;
   int i = 0;
 
-  brushes = g_new (char *, brush_list->num_brushes);
+  brushes = g_new (char *, GIMP_CONTAINER (brush_list)->num_children);
 
   success = (list = GIMP_LIST (brush_list)->list) != NULL;
 
@@ -458,7 +458,7 @@ brushes_list_invoker (Argument *args)
 
   if (success)
     {
-      return_args[1].value.pdb_int = brush_list->num_brushes;
+      return_args[1].value.pdb_int = GIMP_CONTAINER (brush_list)->num_children;
       return_args[2].value.pdb_pointer = brushes;
     }
 
@@ -513,11 +513,11 @@ brushes_get_brush_data_invoker (Argument *args)
     {
       if (strlen (name))
 	{
-	  GSList *list;
+	  GList *list;
     
 	  success = FALSE;
     
-	  for (list = GIMP_LIST (brush_list)->list; list; list = g_slist_next (list))
+	  for (list = GIMP_LIST (brush_list)->list; list; list = g_list_next (list))
 	    {
 	      brush = (GimpBrush *) list->data;
     

@@ -345,7 +345,7 @@ info_window_change_display (GimpContext *context, /* NOT USED */
 
   gimage = gdisp->gimage;
 
-  if (gimage && gimp_container_lookup (image_context, GIMP_OBJECT (gimage)))
+  if (gimage && gimp_container_have (image_context, GIMP_OBJECT (gimage)))
     {
       iwd->gdisp = gdisp;
       info_window_update (gdisp);

@@ -27,14 +27,15 @@
 
 #include "apptypes.h"
 
+#include "brushes.h"
 #include "fileops.h"
 #include "gimpimage.h"
 #include "gimpbrush.h"
 #include "gimpcontextpreview.h"
 #include "gimpdnd.h"
-#include "gimpbrushlist.h"
 #include "gimpdrawable.h"
 #include "gimpdrawablepreview.h"
+#include "gimplist.h"
 #include "gimprc.h"
 #include "gradient.h"
 #include "gradient_header.h"
@@ -660,7 +661,7 @@ gimp_dnd_set_brush_data (GtkWidget     *widget,
   if (strcmp (name, "Standard") == 0)
     brush = brushes_get_standard_brush ();
   else
-    brush = gimp_brush_list_get_brush (brush_list, name);
+    brush = (GimpBrush *) gimp_list_get_child_by_name (brush_list, name);
 
   if (brush)
     (* (GimpDndDropBrushFunc) set_brush_func) (widget, brush, set_brush_data);

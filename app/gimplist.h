@@ -20,14 +20,7 @@
 #define __GIMP_LIST_H__
 
 
-#include "gimpobject.h"
-
-
-/* GimpList - a typed list of objects with signals for adding and
- * removing of stuff. If it is weak, destroyed objects get removed
- * automatically. If it is not, it refs them so they won't be freed
- * till they are removed. (Though they can be destroyed, of course)
- */
+#include "gimpcontainer.h"
 
 
 #define GIMP_TYPE_LIST            (gimp_list_get_type ())
@@ -41,39 +34,27 @@ typedef struct _GimpListClass GimpListClass;
 
 struct _GimpList
 {
-  GimpObject  parent_instance;
+  GimpContainer  parent_instance;
 
-  GtkType     type;
-  GSList     *list;
-  gboolean    weak;
+  GList         *list;
 };
 
 struct _GimpListClass
 {
-  GimpObjectClass  parent_class;
-
-  void (* add)    (GimpList *list,
-		   gpointer  object);
-  void (* remove) (GimpList *list,
-		   gpointer  object);
+  GimpContainerClass  parent_class;
 };
 
 
-GtkType    gimp_list_get_type (void);
+GtkType      gimp_list_get_type           (void);
+GimpList   * gimp_list_new                (GtkType              children_type,
+					   GimpContainerPolicy  policy);
 
-GimpList * gimp_list_new      (GtkType   type,
-			       gboolean  weak);
-
-GtkType    gimp_list_type     (GimpList *list);
-gboolean   gimp_list_add      (GimpList *list,
-			       gpointer  object);
-gboolean   gimp_list_remove   (GimpList *list,
-			       gpointer  object);
-gboolean   gimp_list_have     (GimpList *list,
-			       gpointer  object);
-void       gimp_list_foreach  (GimpList *list,
-			       GFunc     func,
-			       gpointer  user_data);
+GimpObject * gimp_list_get_child_by_name  (const GimpList      *list,
+					   const gchar         *name);
+GimpObject * gimp_list_get_child_by_index (const GimpList      *list,
+					   gint                 index);
+gint         gimp_list_get_child_index    (const GimpList      *list,
+					   const GimpObject    *object);
 
 
 #endif  /* __GIMP_LIST_H__ */

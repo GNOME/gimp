@@ -29,13 +29,14 @@
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "brushes.h"
 #include "devices.h"
 #include "dialog_handler.h"
 #include "gimpbrush.h"
 #include "gimpcontextpreview.h"
 #include "gimpdnd.h"
-#include "gimpbrushlist.h"
 #include "gimpcontext.h"
+#include "gimplist.h"
 #include "gimprc.h"
 #include "gradient.h"
 #include "gradient_header.h"
@@ -466,7 +467,7 @@ devices_rc_update (gchar        *name,
     {
       GimpBrush *brush;
 
-      brush = gimp_brush_list_get_brush (brush_list, brush_name);
+      brush = (GimpBrush *) gimp_list_get_child_by_name (brush_list, brush_name);
 
       if (brush)
 	{

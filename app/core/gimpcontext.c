@@ -26,11 +26,12 @@
 
 #include "apptypes.h"
 
+#include "brushes.h"
 #include "context_manager.h"
 #include "gdisplay.h"
 #include "gimpbrush.h"
-#include "gimpbrushlist.h"
 #include "gimpcontext.h"
+#include "gimplist.h"
 #include "gimpmarshal.h"
 #include "gimprc.h"
 #include "gradient_header.h"
@@ -871,9 +872,9 @@ gimp_context_image_changed (GimpContext *context)
 
 /*  handle disappearing images  */
 static void
-gimp_context_image_removed (GimpSet     *set,
-			    GimpImage   *image,
-			    GimpContext *context)
+gimp_context_image_removed (GimpContainer *container,
+			    GimpImage     *image,
+			    GimpContext   *context)
 {
   if (context->image == image)
     gimp_context_real_set_image (context, NULL);
@@ -1346,7 +1347,7 @@ gimp_context_brush_dirty (GimpBrush   *brush,
 
 /*  the active brush disappeared  */
 static void
-gimp_context_brush_removed (GimpBrushList *brush_list,
+gimp_context_brush_removed (GimpContainer *brush_list,
 			    GimpBrush     *brush,
 			    GimpContext   *context)
 {
@@ -1454,15 +1455,16 @@ gimp_context_refresh_brush (GimpContext *context,
   if (! context->brush_name)
     context->brush_name = g_strdup (default_brush);
 
-  if ((brush = gimp_brush_list_get_brush (brush_list, context->brush_name)))
+  if ((brush = (GimpBrush *) gimp_list_get_child_by_name (brush_list,
+							  context->brush_name)))
     {
       gimp_context_real_set_brush (context, brush);
       return;
     }
 
-  if (gimp_brush_list_length (brush_list))
+  if (gimp_container_num_children (GIMP_CONTAINER (brush_list)))
     gimp_context_real_set_brush 
-      (context, gimp_brush_list_get_brush_by_index (brush_list, 0));
+      (context, GIMP_BRUSH (gimp_list_get_child_by_index (brush_list, 0)));
   else
     gimp_context_real_set_brush (context, brushes_get_standard_brush ());
 }

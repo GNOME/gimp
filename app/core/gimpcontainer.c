@@ -39,6 +39,8 @@ enum
 {
   ADD,
   REMOVE,
+  HAVE,
+  FOREACH,
   LAST_SIGNAL
 };
 
@@ -88,7 +90,6 @@ gimp_container_init (GimpContainer *container)
   container->policy        = GIMP_CONTAINER_POLICY_STRONG;
   container->num_children  = 0;
 
-  container->children      = NULL;
   container->handlers      = NULL;
 }
 
@@ -121,12 +122,35 @@ gimp_container_class_init (GimpContainerClass* klass)
                     GTK_TYPE_NONE, 1,
                     GIMP_TYPE_OBJECT);
 
+  container_signals[HAVE] =
+    gtk_signal_new ("have",
+                    GTK_RUN_LAST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpContainerClass,
+                                       have),
+                    gtk_marshal_BOOL__POINTER,
+                    GTK_TYPE_BOOL, 1,
+                    GIMP_TYPE_OBJECT);
+
+  container_signals[FOREACH] =
+    gtk_signal_new ("foreach",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpContainerClass,
+                                       foreach),
+                    gtk_marshal_NONE__POINTER_POINTER,
+                    GTK_TYPE_NONE, 2,
+                    GTK_TYPE_POINTER,
+		    GTK_TYPE_POINTER);
+
   gtk_object_class_add_signals (object_class, container_signals, LAST_SIGNAL);
 
   object_class->destroy = gimp_container_destroy;
 
-  klass->add            = NULL;
-  klass->remove         = NULL;
+  klass->add     = NULL;
+  klass->remove  = NULL;
+  klass->have    = NULL;
+  klass->foreach = NULL;
 }
 
 static void
@@ -135,12 +159,6 @@ gimp_container_destroy (GtkObject *object)
   GimpContainer *container;
 
   container = GIMP_CONTAINER (object);
-
-  while (container->children)
-    {
-      gimp_container_remove (container,
-			     GIMP_OBJECT (container->children->data));
-    }
 
   while (container->handlers)
     {
@@ -162,24 +180,6 @@ gimp_container_child_destroy_callback (GtkObject *object,
   container = GIMP_CONTAINER (data);
 
   gimp_container_remove (container, GIMP_OBJECT (object));
-}
-
-GimpContainer *
-gimp_container_new (GtkType             children_type,
-		    GimpContainerPolicy policy)
-{
-  GimpContainer *container;
-
-  g_return_val_if_fail (gtk_type_is_a (children_type, GIMP_TYPE_OBJECT), NULL);
-  g_return_val_if_fail (policy == GIMP_CONTAINER_POLICY_STRONG ||
-			policy == GIMP_CONTAINER_POLICY_WEAK, NULL);
-
-  container = gtk_type_new (GIMP_TYPE_CONTAINER);
-
-  container->children_type = children_type;
-  container->policy        = policy;
-
-  return container;
 }
 
 GtkType
@@ -215,11 +215,12 @@ gimp_container_add (GimpContainer *container,
   g_return_val_if_fail (GTK_CHECK_TYPE (object, container->children_type),
 			FALSE);
 
-  if (gimp_container_lookup (container, object))
-    return FALSE;
-
-  container->children = g_list_prepend (container->children, object);
-  container->num_children++;
+  if (gimp_container_have (container, object))
+    {
+      g_warning ("%s(): container already contains object %p",
+		 __FUNCTION__, object);
+      return FALSE;
+    }
 
   for (list = container->handlers; list; list = g_list_next (list))
     {
@@ -248,6 +249,8 @@ gimp_container_add (GimpContainer *container,
       break;
     }
 
+  container->num_children++;
+
   gtk_signal_emit (GTK_OBJECT (container), container_signals[ADD], object);
 
   return TRUE;
@@ -268,8 +271,12 @@ gimp_container_remove (GimpContainer *container,
   g_return_val_if_fail (GTK_CHECK_TYPE (object, container->children_type),
 			FALSE);
 
-  if (! gimp_container_lookup (container, object))
-    return FALSE;
+  if (! gimp_container_have (container, object))
+    {
+      g_warning ("%s(): container does not contains object %p",
+		 __FUNCTION__, object);
+      return FALSE;
+    }
 
   for (list = container->handlers; list; list = g_list_next (list))
     {
@@ -285,9 +292,6 @@ gimp_container_remove (GimpContainer *container,
 	  gtk_object_set_data_by_id (GTK_OBJECT (object), handler->quark, NULL);
 	}
     }
-
-  container->children = g_list_remove (container->children, object);
-  container->num_children--;
 
   gtk_object_ref (GTK_OBJECT (object));
 
@@ -305,21 +309,32 @@ gimp_container_remove (GimpContainer *container,
       break;
     }
 
-  gtk_signal_emit (GTK_OBJECT (container), container_signals[REMOVE], object);
+  container->num_children--;
+
+  gtk_signal_emit (GTK_OBJECT (container), container_signals[REMOVE],
+		   object);
 
   gtk_object_unref (GTK_OBJECT (object));
 
   return TRUE;
 }
 
-const GList *
-gimp_container_lookup (const GimpContainer *container,
-		       const GimpObject    *object)
+gboolean
+gimp_container_have (GimpContainer *container,
+		     GimpObject    *object)
 {
-  g_return_val_if_fail (container != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+  gboolean have;
 
-  return g_list_find (container->children, (gpointer) object);
+  g_return_val_if_fail (container != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
+
+  if (container->num_children < 1)
+    return FALSE;
+
+  gtk_signal_emit (GTK_OBJECT (container), container_signals[HAVE],
+		   object, &have);
+
+  return have;
 }
 
 void
@@ -331,7 +346,24 @@ gimp_container_foreach (GimpContainer  *container,
   g_return_if_fail (GIMP_IS_CONTAINER (container));
   g_return_if_fail (func != NULL);
 
-  g_list_foreach (container->children, func, user_data);
+  if (container->num_children > 0)
+    gtk_signal_emit (GTK_OBJECT (container), container_signals[FOREACH],
+		     func, user_data);
+}
+
+static void
+gimp_container_add_handler_foreach_func (GimpObject           *object,
+					 GimpContainerHandler *handler)
+{
+  guint  handler_id;
+
+  handler_id = gtk_signal_connect (GTK_OBJECT (object),
+				   handler->signame,
+				   handler->func,
+				   handler->user_data);
+
+  gtk_object_set_data_by_id (GTK_OBJECT (object), handler->quark,
+			     GUINT_TO_POINTER (handler_id));
 }
 
 GQuark
@@ -341,10 +373,7 @@ gimp_container_add_handler (GimpContainer *container,
 			    gpointer       callback_data)
 {
   GimpContainerHandler *handler;
-  GtkObject            *object;
-  GList                *list;
   gchar                *key;
-  guint                 handler_id;
 
   g_return_val_if_fail (container != NULL, 0);
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), 0);
@@ -368,20 +397,29 @@ gimp_container_add_handler (GimpContainer *container,
 
   container->handlers = g_list_prepend (container->handlers, handler);
 
-  for (list = container->children; list; list = g_list_next (list))
-    {
-      object = GTK_OBJECT (list->data);
-
-      handler_id = gtk_signal_connect (object,
-				       handler->signame,
-				       handler->func,
-				       handler->user_data);
-
-      gtk_object_set_data_by_id (object, handler->quark,
-				 GUINT_TO_POINTER (handler_id));
-    }
+  gimp_container_foreach (container,
+			  (GFunc) gimp_container_add_handler_foreach_func,
+			  handler);
 
   return handler->quark;
+}
+
+static void
+gimp_container_remove_handler_foreach_func (GimpObject           *object,
+					    GimpContainerHandler *handler)
+{
+  guint  handler_id;
+
+  handler_id =
+    GPOINTER_TO_UINT (gtk_object_get_data_by_id (GTK_OBJECT (object),
+						 handler->quark));
+
+  if (handler_id)
+    {
+      gtk_signal_disconnect (GTK_OBJECT (object), handler_id);
+
+      gtk_object_set_data_by_id (GTK_OBJECT (object), handler->quark, NULL);
+    }
 }
 
 void
@@ -389,9 +427,7 @@ gimp_container_remove_handler (GimpContainer *container,
 			       GQuark         id)
 {
   GimpContainerHandler *handler;
-  GtkObject            *object;
   GList                *list;
-  guint                 handler_id;
 
   g_return_if_fail (container != NULL);
   g_return_if_fail (GIMP_IS_CONTAINER (container));
@@ -411,20 +447,9 @@ gimp_container_remove_handler (GimpContainer *container,
       return;
     }
 
-  for (list = container->children; list; list = g_list_next (list))
-    {
-      object = GTK_OBJECT (list->data);
-
-      handler_id = GPOINTER_TO_UINT
-	(gtk_object_get_data_by_id (object, handler->quark));
-
-      if (handler_id)
-	{
-	  gtk_signal_disconnect (object, handler_id);
-
-	  gtk_object_set_data_by_id (object, handler->quark, NULL);
-	}
-    }
+  gimp_container_foreach (container,
+			  (GFunc) gimp_container_remove_handler_foreach_func,
+			  handler);
 
   container->handlers = g_list_remove (container->handlers, handler);
 

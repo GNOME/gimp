@@ -41,7 +41,7 @@
 #include "module_db.h"
 #include "gimprc.h"
 #include "datafiles.h"
-#include "gimpcontainer.h"
+#include "gimplist.h"
 
 #include "libgimp/gimpenv.h"
 #include "libgimp/gimpmodule.h"
@@ -215,8 +215,8 @@ module_db_init (void)
 
   /* Load and initialize gimp modules */
 
-  modules = gimp_container_new (MODULE_INFO_TYPE,
-				GIMP_CONTAINER_POLICY_WEAK);
+  modules = GIMP_CONTAINER (gimp_list_new (MODULE_INFO_TYPE,
+					   GIMP_CONTAINER_POLICY_WEAK));
 
   if (g_module_supported ())
     datafiles_read_directories (module_path,

@@ -29,6 +29,7 @@
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
+#include "gimplist.h"
 #include "gimprc.h"
 
 #include "tools/paint_options.h"
@@ -133,8 +134,8 @@ context_manager_init (void)
   gint i;
 
   /* Create the context of all existing images */
-  image_context = gimp_container_new (GIMP_TYPE_IMAGE,
-				      GIMP_CONTAINER_POLICY_WEAK);
+  image_context = GIMP_CONTAINER (gimp_list_new (GIMP_TYPE_IMAGE,
+						 GIMP_CONTAINER_POLICY_WEAK));
 
   /*  Implicitly create the standard context  */
   standard_context = gimp_context_get_standard ();

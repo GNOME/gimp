@@ -355,7 +355,7 @@ lc_dialog_image_menu_preview_update_callback (GtkWidget *widget,
 					      "menu_preview_gimage");
 
   if (menu_preview && gimage && gimage_to_update == gimage &&
-      gimp_container_lookup (image_context, (GimpObject *) gimage))
+      gimp_container_have (image_context, (GimpObject *) gimage))
     {
       /* Must update the preview? */
       lc_dialog_fill_preview_with_thumb (menu_preview,
@@ -745,7 +745,7 @@ lc_dialog_change_image (GimpContext *context,
   if (! lc_dialog || ! lc_dialog->auto_follow_active)
     return;
 
-  if (gimage && gimp_container_lookup (image_context, GIMP_OBJECT (gimage)))
+  if (gimage && gimp_container_have (image_context, GIMP_OBJECT (gimage)))
     {
       lc_dialog_update (gimage);
       lc_dialog_update_image_list ();

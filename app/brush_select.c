@@ -30,9 +30,9 @@
 #include "brush_scale.h"
 #include "brush_edit.h"
 #include "brush_select.h"
+#include "brushes.h"
 #include "dialog_handler.h"
 #include "gimpbrushgenerated.h"
-#include "gimpbrushlist.h"
 #include "gimpbrushpipe.h"
 #include "gimpcontext.h"
 #include "gimpdnd.h"
@@ -99,14 +99,10 @@ static void     brush_select_select                (BrushSelect      *bsp,
 
 static void     brush_select_brush_dirty_callback  (GimpBrush        *brush,
 						    BrushSelect      *bsp);
-static void     connect_signals_to_brush           (GimpBrush        *brush, 
-						    BrushSelect      *bsp);
-static void     disconnect_signals_from_brush      (GimpBrush        *brush,
-						    BrushSelect      *bsp);
-static void     brush_added_callback               (GimpBrushList    *list,
+static void     brush_added_callback               (GimpContainer    *container,
 						    GimpBrush        *brush,
 						    BrushSelect      *bsp);
-static void     brush_removed_callback             (GimpBrushList    *list,
+static void     brush_removed_callback             (GimpContainer    *container,
 						    GimpBrush        *brush,
 						    BrushSelect      *bsp);
 
@@ -314,7 +310,7 @@ brush_select_new (gchar   *title,
 
   if (title && init_name && strlen (init_name))
     {
-      active = gimp_brush_list_get_brush (brush_list, init_name);
+      active = (GimpBrush *) gimp_list_get_child_by_name (brush_list, init_name);
     }
   else
     {
@@ -528,9 +524,18 @@ brush_select_new (gchar   *title,
   gtk_widget_show (vbox);
 
   /*  add callbacks to keep the display area current  */
-  gimp_list_foreach (GIMP_LIST (brush_list),
-		     (GFunc) connect_signals_to_brush,
-		     bsp);
+  bsp->name_changed_handler_id =
+    gimp_container_add_handler
+    (GIMP_CONTAINER (brush_list), "name_changed",
+     GTK_SIGNAL_FUNC (brush_select_brush_dirty_callback),
+     bsp);
+
+  bsp->dirty_handler_id =
+    gimp_container_add_handler
+    (GIMP_CONTAINER (brush_list), "dirty",
+     GTK_SIGNAL_FUNC (brush_select_brush_dirty_callback),
+     bsp);
+
   gtk_signal_connect (GTK_OBJECT (brush_list), "add",
 		      GTK_SIGNAL_FUNC (brush_added_callback),
 		      bsp);
@@ -594,9 +599,11 @@ brush_select_free (BrushSelect *bsp)
       gtk_object_unref (GTK_OBJECT (bsp->context));
     }
 
-  gimp_list_foreach (GIMP_LIST (brush_list),
-		     (GFunc) disconnect_signals_from_brush,
-		     bsp);
+  gimp_container_remove_handler (GIMP_CONTAINER (brush_list),
+				 bsp->name_changed_handler_id);
+  gimp_container_remove_handler (GIMP_CONTAINER (brush_list),
+				 bsp->dirty_handler_id);
+
   gtk_signal_disconnect_by_data (GTK_OBJECT (brush_list), bsp);
 
   g_free (bsp);
@@ -828,7 +835,7 @@ brush_select_select (BrushSelect *bsp,
   gint row, col;
   gint scroll_offset = 0;
 
-  index = gimp_brush_list_get_brush_index (brush_list, brush); 
+  index = gimp_list_get_child_index (brush_list, GIMP_OBJECT (brush)); 
 
   if (index < 0)
     return;
@@ -878,7 +885,7 @@ brush_select_brush_dirty_callback (GimpBrush   *brush,
   if (!bsp || bsp->freeze)
     return;
 
-  index  = gimp_brush_list_get_brush_index (brush_list, brush);
+  index  = gimp_list_get_child_index (brush_list, GIMP_OBJECT (brush));
   redraw = (brush != gimp_context_get_brush (bsp->context));
 
   clear_brush (bsp, brush,
@@ -892,32 +899,10 @@ brush_select_brush_dirty_callback (GimpBrush   *brush,
 }
 
 static void
-connect_signals_to_brush (GimpBrush   *brush,
-			  BrushSelect *bsp)
-{
-  gtk_signal_connect (GTK_OBJECT (brush), "dirty",
-		      GTK_SIGNAL_FUNC (brush_select_brush_dirty_callback),
-		      bsp);
-  gtk_signal_connect (GTK_OBJECT (brush), "name_changed",
-		      GTK_SIGNAL_FUNC (brush_select_brush_dirty_callback),
-		      bsp);
-}
-
-static void
-disconnect_signals_from_brush (GimpBrush   *brush,
-			       BrushSelect *bsp)
-{
-  if (!GTK_OBJECT_DESTROYED (brush))
-    gtk_signal_disconnect_by_data (GTK_OBJECT (brush), bsp);
-}
-
-static void
-brush_added_callback (GimpBrushList *list,
+brush_added_callback (GimpContainer *container,
 		      GimpBrush     *brush, 
 		      BrushSelect   *bsp)
 {
-  connect_signals_to_brush (brush, bsp);
-
   if (bsp->freeze)
     return;
 
@@ -925,12 +910,10 @@ brush_added_callback (GimpBrushList *list,
 }
 
 static void
-brush_removed_callback (GimpBrushList *list,
+brush_removed_callback (GimpContainer *container,
 			GimpBrush     *brush,
 			BrushSelect   *bsp)
 {
-  disconnect_signals_from_brush (brush, bsp);
-
   if (bsp->freeze)
     return;
 
@@ -1368,7 +1351,8 @@ do_display_brush (GimpBrush   *brush,
 static void
 display_brushes (BrushSelect *bsp)
 {
-  if (brush_list == NULL || gimp_brush_list_length (brush_list) == 0)
+  if (brush_list == NULL ||
+      gimp_container_num_children (GIMP_CONTAINER (brush_list)) == 0)
     {
       gtk_widget_set_sensitive (bsp->options_box, FALSE);
       return;
@@ -1382,7 +1366,9 @@ display_brushes (BrushSelect *bsp)
   display_setup (bsp);
 
   brush_counter = 0;
-  gimp_list_foreach (GIMP_LIST (brush_list), (GFunc) do_display_brush, bsp);
+  gimp_container_foreach (GIMP_CONTAINER (brush_list),
+			  (GFunc) do_display_brush,
+			  bsp);
 }
 
 static void
@@ -1506,7 +1492,7 @@ preview_calc_scrollbar (BrushSelect *bsp)
   gint max;
 
   bsp->scroll_offset = 0;
-  num_rows = ((gimp_brush_list_length (brush_list) +
+  num_rows = ((gimp_container_num_children (GIMP_CONTAINER (brush_list)) +
 	       (bsp->NUM_BRUSH_COLUMNS) - 1)
 	      / (bsp->NUM_BRUSH_COLUMNS));
   max = num_rows * bsp->cell_width;
@@ -1547,7 +1533,8 @@ brush_select_resize (GtkWidget   *widget,
    bsp->NUM_BRUSH_COLUMNS =
      (gint) (wid / cell_size);
    bsp->NUM_BRUSH_ROWS =
-     (gint) ((gimp_brush_list_length (brush_list) + bsp->NUM_BRUSH_COLUMNS - 1) /
+     (gint) ((gimp_container_num_children (GIMP_CONTAINER (brush_list)) +
+	      bsp->NUM_BRUSH_COLUMNS - 1) /
 	     bsp->NUM_BRUSH_COLUMNS);
 
    bsp->cell_width  = cell_size;
@@ -1580,7 +1567,7 @@ brush_select_events (GtkWidget   *widget,
       index = row * bsp->NUM_BRUSH_COLUMNS + col;
       
       /*  Get the brush and check if it is editable  */
-      brush = gimp_brush_list_get_brush_by_index (brush_list, index);
+      brush = GIMP_BRUSH (gimp_list_get_child_by_index (brush_list, index));
       if (GIMP_IS_BRUSH_GENERATED (brush))
 	brush_select_edit_brush_callback (NULL, bsp);
       break;
@@ -1592,7 +1579,7 @@ brush_select_events (GtkWidget   *widget,
       row = (bevent->y + bsp->scroll_offset) / bsp->cell_height;
       index = row * bsp->NUM_BRUSH_COLUMNS + col;
 
-      brush = gimp_brush_list_get_brush_by_index (brush_list, index);
+      brush = (GimpBrush *) gimp_list_get_child_by_index (brush_list, index);
 
       if (brush)
 	bsp->dnd_brush = brush;
@@ -1719,7 +1706,7 @@ brush_select_scroll_update (GtkAdjustment *adjustment,
 
       if (active)
 	{
-	  index = gimp_brush_list_get_brush_index (brush_list, active);
+	  index = gimp_list_get_child_index (brush_list, GIMP_OBJECT (active));
 	  if (index < 0)
 	    return;
 	  row = index / bsp->NUM_BRUSH_COLUMNS;
@@ -1823,7 +1810,8 @@ brush_select_new_brush_callback (GtkWidget *widget,
   brush = gimp_brush_generated_new (10, .5, 0.0, 1.0);
   if (brush)
     {
-      gimp_brush_list_add (brush_list, brush);
+      gimp_container_add (GIMP_CONTAINER (brush_list),
+			  GIMP_OBJECT (brush));
 
       gimp_context_set_brush (bsp->context, brush);
 
@@ -1878,19 +1866,19 @@ brush_select_delete_brush_callback (GtkWidget *widget,
 
   if (GIMP_IS_BRUSH_GENERATED (brush))
     {
-      gint index;
-
       gimp_brush_generated_delete (GIMP_BRUSH_GENERATED (brush));
 
       brush_select_freeze_all ();
 
-      index = gimp_brush_list_get_brush_index (brush_list, brush);
-      gimp_brush_list_remove (brush_list, GIMP_BRUSH (brush));
+      gimp_container_remove (GIMP_CONTAINER (brush_list),
+			     GIMP_OBJECT (brush));
       gimp_context_refresh_brushes ();
 
       brush_select_thaw_all ();
     }
   else
-    /* this should never happen */
-    g_message (_("Sorry, this brush can't be deleted."));
+    {
+      /* this should never happen */
+      g_message (_("Sorry, this brush can't be deleted."));
+    }
 }

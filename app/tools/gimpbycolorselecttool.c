@@ -1144,8 +1144,8 @@ by_color_select_close_callback (GtkWidget *widget,
   
   gimp_dialog_hide (bcd->shell);
 
-  if (bcd->gimage && gimp_container_lookup (image_context,
-					    GIMP_OBJECT (bcd->gimage)))
+  if (bcd->gimage && gimp_container_have (image_context,
+					  GIMP_OBJECT (bcd->gimage)))
     {
       bcd->gimage->by_color_select = FALSE;
     }

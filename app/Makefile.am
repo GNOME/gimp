@@ -34,6 +34,8 @@ gimp_SOURCES = \
 	brush_scale.h		\
 	brush_select.c		\
 	brush_select.h		\
+	brushes.c		\
+	brushes.h		\
 	channels_dialog.c	\
 	channels_dialog.h	\
 	channel_ops.c		\
@@ -104,8 +106,6 @@ gimp_SOURCES = \
 	gimpbrush.h		\
 	gimpbrushgenerated.c	\
 	gimpbrushgenerated.h	\
-	gimpbrushlist.c		\
-	gimpbrushlist.h		\
 	gimpbrushpipe.c		\
 	gimpbrushpipe.h		\
 	gimpchannel.c		\
@@ -116,6 +116,8 @@ gimp_SOURCES = \
 	gimpcontext.h		\
 	gimpcontextpreview.c	\
 	gimpcontextpreview.h	\
+	gimpdatalist.c		\
+	gimpdatalist.h		\
 	gimpdnd.c		\
 	gimpdnd.h		\
 	gimpdrawable.c		\

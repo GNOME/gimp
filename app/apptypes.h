@@ -35,14 +35,10 @@
 typedef struct _GimpObject          GimpObject;
 
 typedef struct _GimpContainer       GimpContainer;
+typedef struct _GimpList            GimpList;
+typedef struct _GimpDataList        GimpDataList;
 
 typedef struct _GimpContext         GimpContext;
-
-/* TODO: replace these with GimpContainer */
-typedef struct _GimpSet             GimpSet;
-typedef         guint               GimpSetHandlerId;
-typedef struct _GimpList            GimpList;
-typedef struct _GimpBrushList       GimpBrushList;
 
 
 /*  drawable objects  */
