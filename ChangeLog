@@ -1,3 +1,8 @@
+2002-03-09  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: make JPEG and PNG support required, unless the user
+	explicitly disables them.
+
 2002-03-08  Sven Neumann  <sven@gimp.org>
 
 	* app/tips_dialog.c (tips_dialog_create): added a comment for 
