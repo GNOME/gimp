@@ -69,6 +69,7 @@ quit_dialog_new (Gimp *gimp)
   GtkWidget      *label;
   GtkWidget      *button;
   GtkWidget      *view;
+  GtkWidget      *dnd_widget;
   gint            rows;
   gint            preview_size;
 
@@ -130,7 +131,8 @@ quit_dialog_new (Gimp *gimp)
                     G_CALLBACK (quit_dialog_image_activated),
                     gimp);
 
-  gimp_dnd_xds_source_add (gimp_container_view_get_dnd_widget (view),
+  dnd_widget = gimp_container_view_get_dnd_widget (GIMP_CONTAINER_VIEW (view));
+  gimp_dnd_xds_source_add (dnd_widget,
                            (GimpDndDragViewableFunc) gimp_dnd_get_drag_data,
                            NULL);
 
