@@ -395,7 +395,7 @@ gimp_fixme_preview_fill (GimpFixMePreview *preview,
 
   gtk_preview_size (GTK_PREVIEW (preview->widget), width, height);
 
-  gimp_pixel_rgn_init (&srcPR, drawable, x1, y1, x2, y2, FALSE, FALSE);
+  gimp_pixel_rgn_init (&srcPR, drawable, x1, y1, width, height, FALSE, FALSE);
 
   preview->even = g_malloc (width * 3);
   preview->odd  = g_malloc (width * 3);
