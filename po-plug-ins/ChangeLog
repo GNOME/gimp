@@ -1,4 +1,8 @@
-22003-04-09  Sven Neumann  <sven@gimp.org>
+2003-04-15  Stanislav Visnovsky  <visnovsky@nenya.ms.mff.cuni.cz>
+
+	* sk.po: Updated Slovak translation by Zdenko Podobny <zdpo@mailbox.sk>.
+
+2003-04-09  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.in.in: respect $(DESTDIR) in install target.
 
