@@ -1,3 +1,8 @@
+2003-09-17  Manish Singh  <yosh@gimp.org>
+
+	* app/Makefile.am: special case windows for leading underscores in
+	symbol names.
+
 2003-09-17  Ville PÃtsi  <drc@gimp.org>
 
 	* configure.in: Added AC_SUBST to required version numbers.
