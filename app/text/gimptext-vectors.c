@@ -40,6 +40,12 @@
 #include "gimptextlayout-render.h"
 
 
+/* for compatibility with older freetype versions */
+#ifndef FT_GLYPH_FORMAT_OUTLINE
+#define FT_GLYPH_FORMAT_OUTLINE ft_glyph_format_outline
+#endif
+
+
 typedef struct _RenderContext  RenderContext;
 
 struct _RenderContext

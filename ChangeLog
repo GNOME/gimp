@@ -1,5 +1,11 @@
 2003-07-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/text/gimptext-vectors.c: define FT_GLYPH_FORMAT_OUTLINE as
+	ft_glyph_format_outline if it doesn't exist so it compiles with
+	older freetype versions.
+
+2003-07-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/image-menu.c (image_menu_entries): add the
 	GIMP_STOCK_GRID icon to the "Configure Grid..." menu item and set
 	it insensitive if there is no image.
