@@ -20,6 +20,7 @@ int
 gimp_composite_sse2_test (int iterations, int n_pixels)
 {
 #if (__GNUC__ >= 3) && defined(USE_SSE)     && defined(ARCH_X86)
+  printf("\nRunning gimp_composite_sse2 tests...\n");
   if (gimp_composite_sse2_init () == 0) {
     printf("gimp_composite_sse2: Instruction set is not available.\n");
     return (0);

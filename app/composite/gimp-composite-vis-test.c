@@ -20,6 +20,7 @@ int
 gimp_composite_vis_test (int iterations, int n_pixels)
 {
 #if (__GNUC__ >= 3) && defined(USE_VIS)     && defined(ARCH_SPARC)
+  printf("\nRunning gimp_composite_vis tests...\n");
   if (gimp_composite_vis_init () == 0) {
     printf("gimp_composite_vis: Instruction set is not available.\n");
     return (0);

@@ -149,7 +149,7 @@ gimp_composite_regression_comp_rgba8 (char *str, gimp_rgba8_t *rgba8A, gimp_rgba
     if (expected[i].a != got[i].a) { failed = 1; }
     if (failed) {
       fail_count++;
-      printf("%s %8d A=", str, i); gimp_composite_regression_print_rgba8(&rgba8A[i]);
+      printf("%s %8lu A=", str, i); gimp_composite_regression_print_rgba8(&rgba8A[i]);
       if (rgba8B != (gimp_rgba8_t *) 0) {
         printf(" B="); gimp_composite_regression_print_rgba8(&rgba8B[i]);
       }

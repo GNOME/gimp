@@ -669,6 +669,7 @@ void
 info_window_update (GimpDisplay *gdisp)
 {
   GimpDisplayShell *shell;
+  GimpImage        *gimage;
   InfoWinData      *iwd;
   gint              type;
   gdouble           unit_factor;
@@ -699,42 +700,38 @@ info_window_update (GimpDisplay *gdisp)
   if (info_window_auto && iwd->gdisp != gdisp)
     return;
 
-  /*  width and height  */
-  unit_factor = _gimp_unit_get_factor (gdisp->gimage->gimp,
-				       gdisp->gimage->unit);
-  unit_digits = _gimp_unit_get_digits (gdisp->gimage->gimp,
-				       gdisp->gimage->unit);
+  gimage = gdisp->gimage;
 
-  g_snprintf (iwd->dimensions_str, MAX_BUF,
-	      _("%d x %d pixels"),
-	      (int) gdisp->gimage->width,
-	      (int) gdisp->gimage->height);
-  g_snprintf (format_buf, sizeof (format_buf),
-	      "%%.%df x %%.%df %s",
+  /*  width and height  */
+  unit_factor = _gimp_unit_get_factor (gimage->gimp, gimage->unit);
+  unit_digits = _gimp_unit_get_digits (gimage->gimp, gimage->unit);
+
+  g_snprintf (iwd->dimensions_str, MAX_BUF, _("%d x %d pixels"),
+	      (int) gimage->width, (int) gimage->height);
+  g_snprintf (format_buf, sizeof (format_buf), "%%.%df x %%.%df %s",
 	      unit_digits + 1, unit_digits + 1,
-	      _gimp_unit_get_plural (gdisp->gimage->gimp,
-				     gdisp->gimage->unit));
+	      _gimp_unit_get_plural (gimage->gimp, gimage->unit));
   g_snprintf (iwd->real_dimensions_str, MAX_BUF, format_buf,
-	      gdisp->gimage->width  * unit_factor / gdisp->gimage->xresolution,
-	      gdisp->gimage->height * unit_factor / gdisp->gimage->yresolution);
+	      gimage->width  * unit_factor / gimage->xresolution,
+	      gimage->height * unit_factor / gimage->yresolution);
 
   /*  image resolution  */
-  res_unit = gdisp->gimage->gimp->config->default_resolution_unit;
+  res_unit = gimage->gimp->config->default_resolution_unit;
 
-  res_unit_factor = _gimp_unit_get_factor (gdisp->gimage->gimp, res_unit);
+  res_unit_factor = _gimp_unit_get_factor (gimage->gimp, res_unit);
 
   g_snprintf (format_buf, sizeof (format_buf), _("pixels/%s"),
-              _gimp_unit_get_abbreviation (gdisp->gimage->gimp, res_unit));
+              _gimp_unit_get_abbreviation (gimage->gimp, res_unit));
   g_snprintf (iwd->resolution_str, MAX_BUF, _("%g x %g %s"),
-	      gdisp->gimage->xresolution / res_unit_factor,
-	      gdisp->gimage->yresolution / res_unit_factor,
+	      gimage->xresolution / res_unit_factor,
+	      gimage->yresolution / res_unit_factor,
               res_unit == GIMP_UNIT_INCH ? _("dpi") : format_buf);
 
   /*  user zoom ratio  */
   g_snprintf (iwd->scale_str, MAX_BUF, "%d:%d",
-	      SCALEDEST (shell), SCALESRC (shell));
+              SCALEDEST (shell), SCALESRC (shell));
 
-  type = gimp_image_base_type (gdisp->gimage);
+  type = gimp_image_base_type (gimage);
 
   /*  color type  */
   switch (type)
@@ -747,7 +744,7 @@ info_window_update (GimpDisplay *gdisp)
       break;
     case GIMP_INDEXED:
       g_snprintf (iwd->color_type_str, MAX_BUF, "%s (%d %s)",
-                  _("Indexed Color"), gdisp->gimage->num_cols, _("colors"));
+                  _("Indexed Color"), gimage->num_cols, _("colors"));
       break;
     }
 

@@ -277,6 +277,8 @@ def gimp_composite_regression(fpout, function_tables, options):
     print >>fpout, '#if %s' % (r)
     pass
 
+  print >>fpout, '  printf("\\nRunning %s tests...\\n");' % (functionnameify(options.file))
+
   print >>fpout, '  if (%s_init () == 0) {' % (functionnameify(options.file))
   print >>fpout, '    printf("%s: Instruction set is not available.\\n");' % (functionnameify(options.file))
   print >>fpout, '    return (0);'
