@@ -1031,8 +1031,10 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
                                gboolean      new_layer)
 {
   GimpImage   *gimage;
-  GimpLayer   *layer = NULL;
-  GimpLayer   *floating_layer;
+  GimpLayer   *layer     = NULL;
+  const gchar *undo_desc = NULL;
+  gint         offset_x;
+  gint         offset_y;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
@@ -1040,73 +1042,57 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
+  if (GIMP_IS_LAYER (drawable))
+    undo_desc = _("Transform Layer");
+  else if (GIMP_IS_CHANNEL (drawable))
+    undo_desc = _("Transform Channel");
+  else
+    return FALSE;
+
+  tile_manager_get_offsets (tiles, &offset_x, &offset_y);
+
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_PASTE, undo_desc);
+
   if (new_layer)
     {
       layer =
-        gimp_layer_new_from_tiles (tiles,
-                                   gimage,
+        gimp_layer_new_from_tiles (tiles, gimage,
                                    gimp_drawable_type_with_alpha (drawable),
                                    _("Transformation"),
                                    GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
-      if (! layer)
-        {
-          g_warning ("%s: gimp_layer_new_frome_tiles() failed",
-                     G_GNUC_FUNCTION);
-          return FALSE;
-        }
 
-      tile_manager_get_offsets (tiles,
-                                &GIMP_ITEM (layer)->offset_x,
-                                &GIMP_ITEM (layer)->offset_y);
-
-      /*  Start a group undo  */
-      gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
-                                   _("Paste Transform"));
+      GIMP_ITEM (layer)->offset_x = offset_x;
+      GIMP_ITEM (layer)->offset_y = offset_y;
 
       floating_sel_attach (layer, drawable);
-
-      /*  End the group undo  */
-      gimp_image_undo_group_end (gimage);
     }
   else
     {
-      const gchar *undo_desc;
-      gint         offset_x, offset_y;
+      GimpLayer     *floating_layer = gimp_image_floating_sel (gimage);
+      GimpImageType  drawable_type;
 
-      if (GIMP_IS_LAYER (drawable))
+      if (GIMP_IS_LAYER (drawable) && (tile_manager_bpp (tiles) == 2 ||
+                                       tile_manager_bpp (tiles) == 4))
         {
-          layer = GIMP_LAYER (drawable);
-          undo_desc = _("Transform Layer");
-        }
-      else if (GIMP_IS_CHANNEL (drawable))
-        {
-          undo_desc = _("Transform Channel");
+          drawable_type = gimp_drawable_type_with_alpha (drawable);
         }
       else
         {
-          return FALSE;
+          drawable_type = gimp_drawable_type (drawable);
         }
-
-      if (layer && (tile_manager_bpp (tiles) == 2 ||
-                    tile_manager_bpp (tiles) == 4))
-        {
-          gimp_layer_add_alpha (layer);
-        }
-
-      floating_layer = gimp_image_floating_sel (gimage);
 
       if (floating_layer)
         floating_sel_relax (floating_layer, TRUE);
 
-      tile_manager_get_offsets (tiles, &offset_x, &offset_y);
-
-      gimp_drawable_set_tiles_full (drawable, TRUE, undo_desc,
-                                    tiles, drawable->type,
+      gimp_drawable_set_tiles_full (drawable, TRUE, NULL,
+                                    tiles, drawable_type,
                                     offset_x, offset_y);
 
       if (floating_layer)
         floating_sel_rigor (floating_layer, TRUE);
     }
+
+  gimp_image_undo_group_end (gimage);
 
   return TRUE;
 }

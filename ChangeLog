@@ -1,3 +1,10 @@
+2004-03-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable-transform.c
+	(gimp_drawable_transform_paste): push the undo group around all
+	operations, not just around some of them. Pulled common code
+	out of the if() { } else { } construct. Cleanup.
+
 2004-03-17  Simon Budig  <simon@gimp.org>
 
 	* app/gui/plug-in-menus.c: Sort the plugin menu entries with
