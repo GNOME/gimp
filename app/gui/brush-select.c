@@ -86,10 +86,10 @@ brush_select_new (Gimp                 *gimp,
                   GimpContext          *context,
                   const gchar          *title,
 		  const gchar          *initial_brush,
+                  const gchar          *callback_name,
 		  gdouble               initial_opacity,
 		  GimpLayerModeEffects  initial_mode,
-		  gint                  initial_spacing,
-                  const gchar          *callback_name)
+		  gint                  initial_spacing)
 {
   BrushSelect   *bsp;
   GtkWidget     *table;

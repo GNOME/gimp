@@ -1,5 +1,17 @@
 2004-05-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/brush-select.[ch] (brush_select_new): reordered parameters 
+	so the first four are the same for all foo_select_new() functions.
+
+	* tools/pdbgen/pdb/brush_select.pdb: changed accordingly.
+
+	* app/pdb/brush_select_cmds.c: regenerated.
+
+	* app/gui/font-select.c (font_select_new): set the vbox'
+	border width to 6 to match the other foo_select dialogs.
+
+2004-05-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/debug-actions.c
 	* app/actions/debug-commands.[ch]
 	* menus/toolbox-menu.xml.in: added action & callback which XML-dump

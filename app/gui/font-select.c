@@ -126,7 +126,7 @@ font_select_new (Gimp        *gimp,
                                         5 * (GIMP_PREVIEW_SIZE_MEDIUM + 2),
                                         5 * (GIMP_PREVIEW_SIZE_MEDIUM + 2));
 
-  gtk_container_set_border_width (GTK_CONTAINER (font_select->view), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (font_select->view), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (font_select->shell)->vbox),
                      font_select->view);
   gtk_widget_show (font_select->view);

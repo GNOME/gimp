@@ -39,10 +39,10 @@ BrushSelect * brush_select_new             (Gimp                 *gimp,
                                             GimpContext          *context,
                                             const gchar          *title,
                                             const gchar          *initial_brush,
+                                            const gchar          *callback_name,
                                             gdouble               initial_opacity,
                                             GimpLayerModeEffects  initial_mode,
-                                            gint                  initial_spacing,
-                                            const gchar          *callback_name);
+                                            gint                  initial_spacing);
 void          brush_select_free            (BrushSelect          *bsp);
 
 BrushSelect * brush_select_get_by_callback (const gchar          *callback_name);

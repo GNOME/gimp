@@ -92,11 +92,10 @@ brushes_popup_invoker (Gimp        *gimp,
           (proc = procedural_db_lookup (gimp, brush_callback)))
         {
           brush_select_new (gimp, context, popup_title,
-                            initial_brush,
+                            initial_brush, brush_callback,
                             opacity / 100.0,
                             paint_mode,
-                            spacing,
-                            brush_callback);
+                            spacing);
         }
       else
         success = FALSE;
