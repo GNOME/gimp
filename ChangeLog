@@ -1,5 +1,10 @@
 2004-02-09  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/curve_bend.c: applied patch from Wolfgang Hofer
+	that fixes bug #133244.
+
+2004-02-09  Sven Neumann  <sven@gimp.org>
+
 	* app/Makefile.am: some updates to the gimp-console rules so that
 	it fails less badly.
 

@@ -480,7 +480,7 @@ p_if_selection_float_it (gint32 image_id,
       gint32   non_empty;
 
       /* check and see if we have a selection mask */
-      l_sel_channel_id  = gimp_image_get_selection(image_id);
+      l_sel_channel_id  = gimp_image_get_selection (image_id);
 
       gimp_selection_bounds (image_id, &non_empty, &l_x1, &l_y1, &l_x2, &l_y2);
 
