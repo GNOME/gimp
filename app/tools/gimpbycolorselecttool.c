@@ -505,13 +505,6 @@ tools_new_by_color_select (void)
       tools_register (BY_COLOR_SELECT, (ToolOptions *) by_color_options);
     }
 
-  /*  The "by color" dialog  */
-  if (!by_color_dialog)
-    by_color_dialog = by_color_select_dialog_new ();
-  else
-    if (!GTK_WIDGET_VISIBLE (by_color_dialog->shell))
-      gtk_widget_show (by_color_dialog->shell);
-
   tool = tools_new_tool (BY_COLOR_SELECT);
   private = g_new (ByColorSelect, 1);
 
@@ -557,6 +550,13 @@ by_color_select_initialize_by_image (GImage *gimage)
 void
 by_color_select_initialize (GDisplay *gdisp)
 {
+  /*  The "by color" dialog  */
+  if (!by_color_dialog)
+    by_color_dialog = by_color_select_dialog_new ();
+  else
+    if (!GTK_WIDGET_VISIBLE (by_color_dialog->shell))
+      gtk_widget_show (by_color_dialog->shell);
+
   by_color_select_initialize_by_image (gdisp->gimage);
 }
 
@@ -687,6 +687,10 @@ by_color_select_dialog_new (void)
   gtk_widget_show (options_box);
   gtk_widget_show (hbox);
   gtk_widget_show (bcd->shell);
+
+  gtk_signal_connect_object (GTK_OBJECT (bcd->shell), "unmap_event",
+			     GTK_SIGNAL_FUNC (gtk_widget_hide), 
+			     (gpointer) bcd->shell);
 
   return bcd;
 }
@@ -876,7 +880,7 @@ by_color_select_close_callback (GtkWidget *widget,
   ByColorDialog *bcd;
 
   bcd = (ByColorDialog *) data;
-
+  
   if (GTK_WIDGET_VISIBLE (bcd->shell))
     gtk_widget_hide (bcd->shell);
 
