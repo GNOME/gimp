@@ -1,7 +1,6 @@
 /*  
- *  ScreenShot plug-in v0.9.3
- *  Sven Neumann, neumanns@uni-duesseldorf.de  
- *  1999/09/01
+ *  ScreenShot plug-in
+ *  Copyright 1998-1999 Sven Neumann <sven@gimp.org>
  *
  *  Any suggestions, bug-reports or patches are very welcome.
  * 
@@ -27,23 +26,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- */
-
-/* Revision history
- *  (98/02/18)  v0.1   first development release 
- *  (98/02/19)  v0.2   small bugfix 
- *  (98/03/09)  v0.3   another one
- *  (98/03/13)  v0.4   cosmetic changes to the dialog
- *  (98/04/02)  v0.5   it works non-interactively now and registers
- *                     itself correctly as extension
- *  (98/04/18)  v0.6   cosmetic change to the dialog
- *  (98/05/28)  v0.7   use g_message for error output
- *  (98/06/04)  v0.8   added delay-time for root window shot
- *  (98/06/06)  v0.9   fixed a stupid bug in the dialog
- *  (99/08/12)  v0.9.1 somebody changed the dialog;
- *                     unset the image name and set the resolution
- *  (99/09/01)  v0.9.2 tried to fix a bug 
- *  (99/12/14)  v0.9.3 another try 
  */
 
 #include <stdio.h>
@@ -154,7 +136,7 @@ static void query (void)
 			    "a parameter."),
 			  "Sven Neumann <sven@gimp.org>",
 			  "1998, 1999",
-			  "v0.9.3 (99/12/14)",
+			  "v0.9.4 (99/12/28)",
 			  N_("<Toolbox>/File/Acquire/Screen Shot..."),
 			  NULL,
 			  PROC_EXTENSION,		
@@ -301,7 +283,6 @@ shoot (void)
       execvp (XWD, xwdargv);
       /* What are we doing here? exec must have failed */
       g_message ("screenshot: exec failed: xwd: %s\n", g_strerror (errno));
-      g_free (tmpname);
       return;
     }
   else
@@ -310,7 +291,6 @@ shoot (void)
   if (pid == -1)
     {
       g_message ("screenshot: spawn failed: %s\n", g_strerror (errno));
-      g_free (tmpname);
       return;
     }
 #endif
@@ -319,8 +299,7 @@ shoot (void)
 	      
       if (!WIFEXITED (status))
 	{
-	  gimp_message ("screenshot: xwd didn't work\n");
-	  g_free (tmpname);
+	  g_message ("screenshot: xwd didn't work\n");
 	  return;
 	}
     }
