@@ -216,8 +216,7 @@ gui_libs_init (gint    *argc,
 
 GimpInitStatusFunc
 gui_init (Gimp     *gimp,
-          gboolean  no_splash,
-          gboolean  no_splash_image)
+          gboolean  no_splash)
 {
   GimpInitStatusFunc  status_callback = NULL;
   GdkScreen          *screen;
@@ -239,8 +238,7 @@ gui_init (Gimp     *gimp,
 
   if (! no_splash)
     {
-      splash_create (! no_splash_image);
-
+      splash_create ();
       status_callback = splash_update;
     }
 

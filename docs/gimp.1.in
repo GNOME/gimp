@@ -6,9 +6,9 @@ gimp - an image manipulation and paint program.
 [\-h] [\-\-help] [-v] [\-\-version] [\-\-verbose] [\-\-no\-shm]
 [\-\-no\-cpu\-accel] [\-\-display \fIdisplay\fP] [\-d] [\-\-no\-data]
 [\-f] [\-\-no\-fonts] [\-i] [\-\-no\-interface] [\-s] [\-\-no\-splash]
-[\-S] [\-\-no\-splash\-image] [\-\-session \fI<name>\fP]
-[\-g] [\-\-gimprc \fI<gimprc>\fP] [\-\-system\-gimprc \fI<gimprc>\fP]
-[\-\-dump\-gimprc\fP] [\-\-console\-messages] [\-\-debug\-handlers]
+[\-\-session \fI<name>\fP] [\-g] [\-\-gimprc \fI<gimprc>\fP]
+[\-\-system\-gimprc \fI<gimprc>\fP] [\-\-dump\-gimprc\fP]
+[\-\-console\-messages] [\-\-debug\-handlers]
 [\-b] [\-\-batch \fI<commands>\fP]
 [\fIfilename\fP] ...
 
@@ -70,9 +70,6 @@ Use the designated X display.
 .TP 8
 .B \-s, \-\-no\-splash
 Do not show the splash screen.
-.TP 8
-.B \-S, \-\-no\-splash\-image
-Do not show the splash screen image as part of the splash screen.
 .TP 8
 .B \-\-session \fI<name>\fP
 Use a different sessionrc for this GIMP session. The given session

@@ -1,3 +1,18 @@
+2004-03-15  Sven Neumann  <sven@gimp.org>
+
+	* data/images/gimp_splash.png: splash image for GIMP 2.0 by Jimmac.
+
+	* app/gui/splash.[ch]: draw the text on the splash image, not
+	below it.
+
+	* app/app_procs.[ch]
+	* app/gui/gui.[ch]
+	* app/main.c
+	* docs/gimp.1.in: dropped support for the --no-splash-image
+	command-line option (not to be confused with --no-splash). It was
+	never very useful and makes even less sense in times where startup
+	notification is available.
+
 2004-03-15  Simon Budig  <simon@gimp.org>
 
 	* app/core/gimpimage.[ch]

@@ -89,7 +89,6 @@ app_run (const gchar         *full_prog_name,
          gboolean             no_data,
          gboolean             no_fonts,
          gboolean             no_splash,
-         gboolean             no_splash_image,
          gboolean             be_verbose,
          gboolean             use_shm,
          gboolean             use_cpu_accel,
@@ -200,7 +199,7 @@ app_run (const gchar         *full_prog_name,
   base_init (GIMP_BASE_CONFIG (gimp->config), use_cpu_accel);
 
   if (! no_interface)
-    update_status_func = gui_init (gimp, no_splash, no_splash_image);
+    update_status_func = gui_init (gimp, no_splash);
 
   if (! update_status_func)
     update_status_func = app_init_update_none;

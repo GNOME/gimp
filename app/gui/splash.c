@@ -31,31 +31,48 @@
 #include "gimp-intl.h"
 
 
-#define DEFAULT_WIDTH 300
+static GtkWidget   *splash   = NULL;
+static PangoLayout *upper    = NULL;
+static PangoLayout *lower    = NULL;
+static GtkWidget   *progress = NULL;
+static gint         width    = 0;
+static gint         height   = 0;
 
-static GtkWidget *splash   = NULL;
-static GtkWidget *label1   = NULL;
-static GtkWidget *label2   = NULL;
-static GtkWidget *progress = NULL;
 
-
-static void  splash_map (void);
+static void      splash_map         (void);
+static gboolean  splash_area_expose (GtkWidget      *widget,
+                                     GdkEventExpose *event,
+                                     GdkPixmap      *pixmap);
 
 
 /*  public functions  */
 
 void
-splash_create (gboolean show_image)
+splash_create (void)
 {
   GtkWidget *frame;
   GtkWidget *vbox;
-  GdkPixbuf *pixbuf = NULL;
+  GtkWidget *area;
+  GdkPixbuf *pixbuf;
+  GdkPixmap *pixmap;
+  gchar     *filename;
+
+  filename = g_build_filename (gimp_data_directory (),
+                               "images", "gimp_splash.png", NULL);
+  pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+  g_free (filename);
+
+  if (! pixbuf)
+    return;
+
+  width  = gdk_pixbuf_get_width (pixbuf);
+  height = gdk_pixbuf_get_height (pixbuf);
 
   splash = g_object_new (GTK_TYPE_WINDOW,
                          "type",            GTK_WINDOW_TOPLEVEL,
                          "type_hint",       GDK_WINDOW_TYPE_HINT_SPLASHSCREEN,
                          "title",           _("GIMP Startup"),
-                          "window_position", GTK_WIN_POS_CENTER,
+                         "window_position", GTK_WIN_POS_CENTER,
                          "resizable",       FALSE,
                          NULL);
 
@@ -76,65 +93,36 @@ splash_create (gboolean show_image)
   gtk_container_add (GTK_CONTAINER (splash), frame);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 4);
+  vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  if (show_image)
-    {
-      gchar *filename;
+  area = gtk_drawing_area_new ();
+  gtk_box_pack_start_defaults (GTK_BOX (vbox), area);
+  gtk_widget_show (area);
 
-      filename = g_build_filename (gimp_data_directory (),
-                                   "images", "gimp_splash.png", NULL);
-      pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
-      g_free (filename);
+  gtk_widget_set_size_request (area, width, height);
 
-      if (pixbuf)
-        {
-          GtkWidget *align;
-          GtkWidget *image;
+  gtk_widget_realize (area);
+  pixmap = gdk_pixmap_new (area->window, width, height, -1);
 
-          image = gtk_image_new_from_pixbuf (pixbuf);
-          g_object_unref (pixbuf);
+  gdk_draw_pixbuf (pixmap, area->style->black_gc,
+                   pixbuf, 0, 0, 0, 0, width, height,
+                   GDK_RGB_DITHER_NORMAL, 0, 0);
+  g_object_unref (pixbuf);
 
-          align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-          gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, TRUE, 0);
-          gtk_widget_show (align);
+  g_signal_connect (area, "expose_event",
+                    G_CALLBACK (splash_area_expose),
+                    pixmap);
+  g_signal_connect_swapped (area, "destroy",
+                            G_CALLBACK (g_object_unref),
+                            pixmap);
 
-          gtk_container_add (GTK_CONTAINER (align), image);
-          gtk_widget_show (image);
-        }
-    }
-
-  if (! pixbuf)
-    {
-      GtkWidget *line;
-
-      label1 = gtk_label_new (_("The GIMP"));
-      gtk_box_pack_start_defaults (GTK_BOX (vbox), label1);
-      gtk_widget_show (label1);
-
-      label2 = gtk_label_new (GIMP_VERSION);
-      gtk_box_pack_start_defaults (GTK_BOX (vbox), label2);
-      gtk_widget_show (label2);
-
-      line = gtk_hseparator_new ();
-      gtk_box_pack_start_defaults (GTK_BOX (vbox), line);
-      gtk_widget_show (line);
-
-      gtk_widget_set_size_request (splash, DEFAULT_WIDTH, -1);
-    }
-
-  label1 = gtk_label_new ("");
-  gtk_box_pack_start_defaults (GTK_BOX (vbox), label1);
-  gtk_widget_show (label1);
-
-  label2 = gtk_label_new ("");
-  gtk_box_pack_start_defaults (GTK_BOX (vbox), label2);
-  gtk_widget_show (label2);
+  upper = gtk_widget_create_pango_layout (splash, "");
+  lower = gtk_widget_create_pango_layout (splash, "");
 
   progress = gtk_progress_bar_new ();
-  gtk_box_pack_start_defaults (GTK_BOX (vbox), progress);
+  gtk_box_pack_end (GTK_BOX (vbox), progress, FALSE, FALSE, 0);
   gtk_widget_show (progress);
 
   gtk_widget_show (splash);
@@ -147,6 +135,12 @@ splash_destroy (void)
     {
       gtk_widget_destroy (splash);
       splash = NULL;
+
+      g_object_unref (upper);
+      upper = NULL;
+
+      g_object_unref (lower);
+      lower = NULL;
     }
 }
 
@@ -159,13 +153,16 @@ splash_update (const gchar *text1,
     return;
 
   if (text1)
-    gtk_label_set_text (GTK_LABEL (label1), text1);
+    pango_layout_set_text (upper, text1, -1);
 
   if (text2)
-    gtk_label_set_text (GTK_LABEL (label2), text2);
+    pango_layout_set_text (lower, text2, -2);
 
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (progress),
                                  CLAMP (percentage, 0.0, 1.0));
+
+  /*  FIXME: It would be more effective to expose the text area only.  */
+  gtk_widget_queue_draw (splash);
 
   while (gtk_events_pending ())
     gtk_main_iteration ();
@@ -173,6 +170,44 @@ splash_update (const gchar *text1,
 
 
 /*  private functions  */
+
+static gboolean
+splash_area_expose (GtkWidget      *widget,
+                    GdkEventExpose *event,
+                    GdkPixmap      *pixmap)
+{
+  GdkRectangle  rect;
+  GdkRectangle  draw;
+  gint          x, y;
+
+  rect.x      = (widget->allocation.width  - width)  / 2;
+  rect.y      = (widget->allocation.height - height) / 2;
+  rect.width  = width;
+  rect.height = height;
+
+  if (gdk_rectangle_intersect (&rect, &event->area, &draw))
+    {
+      gdk_draw_drawable (widget->window,
+                         widget->style->black_gc,
+                         pixmap,
+                         draw.x - rect.x, draw.y - rect.y,
+                         draw.x, draw.y, draw.width, draw.height);
+    }
+
+  pango_layout_get_pixel_size (upper, &x, &y);
+
+  x = (widget->allocation.width - x) / 2;
+  y = widget->allocation.height - 2 * y - 16;
+  gdk_draw_layout (widget->window, widget->style->black_gc, x, y, upper);
+
+  pango_layout_get_pixel_size (lower, &x, &y);
+
+  x = (widget->allocation.width - x) / 2;
+  y = widget->allocation.height - y - 8;
+  gdk_draw_layout (widget->window, widget->style->black_gc, x, y, lower);
+
+  return FALSE;
+}
 
 static void
 splash_map (void)
@@ -182,4 +217,3 @@ splash_map (void)
    */
    gtk_window_set_auto_startup_notification (TRUE);
 }
-

@@ -101,7 +101,6 @@ main (int    argc,
   gboolean            no_data                 = FALSE;
   gboolean            no_fonts                = FALSE;
   gboolean            no_splash               = FALSE;
-  gboolean            no_splash_image         = FALSE;
   gboolean            be_verbose              = FALSE;
   gboolean            use_shm                 = FALSE;
   gboolean            use_cpu_accel           = TRUE;
@@ -306,12 +305,6 @@ main (int    argc,
 	  no_splash = TRUE;
  	  argv[i] = NULL;
 	}
-      else if ((strcmp (argv[i], "--no-splash-image") == 0) ||
-	       (strcmp (argv[i], "-S") == 0))
-	{
-	  no_splash_image = TRUE;
- 	  argv[i] = NULL;
-	}
       else if (strcmp (argv[i], "--verbose") == 0)
 	{
 	  be_verbose = TRUE;
@@ -478,7 +471,6 @@ main (int    argc,
            no_data,
            no_fonts,
            no_splash,
-           no_splash_image,
            be_verbose,
            use_shm,
            use_cpu_accel,
@@ -516,7 +508,6 @@ gimp_show_help (const gchar *progname)
   g_print (_("  -i, --no-interface       Run without a user interface.\n"));
   g_print (_("  --display <display>      Use the designated X display.\n"));
   g_print (_("  -s, --no-splash          Do not show the startup window.\n"));
-  g_print (_("  -S, --no-splash-image    Do not add an image to the startup window.\n"));
   g_print (_("  --session <name>         Use an alternate sessionrc file.\n"));
   g_print (_("  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"));
   g_print (_("  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"));

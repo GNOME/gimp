@@ -24,8 +24,7 @@ gboolean           gui_libs_init (gint       *argc,
                                   gchar    ***argv);
 
 GimpInitStatusFunc gui_init      (Gimp       *gimp,
-                                  gboolean    no_spash,
-                                  gboolean    no_splash_image);
+                                  gboolean    no_spash);
 void               gui_post_init (Gimp       *gimp);
 
 
