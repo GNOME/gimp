@@ -1,5 +1,7 @@
 Revision history for Gimp-Perl extension.
 
+	- possible fix for another installation horror problem.
+
 1.13  Wed Sep  8 02:55:43 CEST 1999
 	- removed some glib-1.1 compatibility cruft.
         - gimpdocs troff output did not include the description.
