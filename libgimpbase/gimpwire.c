@@ -366,27 +366,31 @@ wire_read_double (GIOChannel *channel,
 		  gint        count,
                   gpointer    user_data)
 {
-  union {
-    gdouble d;
-    guint32 p[2];
-  } d;
-  gint    i;
+  gdouble *t;
+  guint8   tmp[8];
+  gint     i;
 #if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
-  guint32 swap;
+  gint     j;
+  guint8   swap;
 #endif
+
+  t = (gdouble *) tmp;
 
   for (i = 0; i < count; i++)
     {
-      if (! wire_read_int8 (channel, (guint8 *) &d.d, 8, user_data))
-	return FALSE;
+      if (! wire_read_int8 (channel, tmp, 8, user_data))
+        return FALSE;
 
 #if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
-      swap   = g_ntohl (d.p[1]);
-      d.p[1] = g_ntohl (d.p[0]);
-      d.p[0] = swap;
+      for (j = 0; j < 4; j++)
+        {
+          swap = tmp[j];
+          tmp[j] = tmp[7 - j];
+          tmp[7 - j] = swap;
+        }
 #endif
 
-      data[i] = d.d;
+      data[i] = *t;
     }
 
   return TRUE;
@@ -483,37 +487,41 @@ wire_write_double (GIOChannel *channel,
 		   gint        count,
                    gpointer    user_data)
 {
-  union {
-    gdouble d;
-    guint32 p[2];
-  } d;
+  gdouble *t;
+  guint8   tmp[8];
   gint     i;
 #if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
-  guint32  swap;
+  gint     j;
+  guint8   swap;
 #endif
+
+  t = (gdouble *) tmp;
 
   for (i = 0; i < count; i++)
     {
-      d.d = data[i];
+      *t = data[i];
 
 #if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
-      swap   = g_htonl (d.p[1]);
-      d.p[1] = g_htonl (d.p[0]);
-      d.p[0] = swap;
+      for (j = 0; j < 4; j++)
+        {
+          swap = tmp[j];
+          tmp[j] = tmp[7 - j];
+          tmp[7 - j] = swap;
+        }
 #endif
 
-      if (! wire_write_int8 (channel, (guint8 *) &d.d, 8, user_data))
+      if (! wire_write_int8 (channel, tmp, 8, user_data))
 	return FALSE;
 
 #if 0
       {
-	gint j;
+	gint k;
 
 	g_print ("Wire representation of %f:\t", data[i]);
 
-	for (j = 0; j < 8; j++)
+	for (k = 0; k < 8; k++)
 	  {
-	    g_print ("%02x ", ((guchar *) tmp)[j]);
+	    g_print ("%02x ", tmp[k]);
 	  }
 
 	g_print ("\n");

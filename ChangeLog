@@ -1,5 +1,13 @@
 2002-11-25  Manish Singh  <yosh@gimp.org>
 
+	* libgimpbase/gimpwire.c: using a union like that may not be
+	completely portable. Use a guint8 array instead. One wonders
+	if we really need to support the off-chance someone will make
+	a distributed gimp framework with this current incarnation
+	of the wire protocol.
+
+2002-11-25  Manish Singh  <yosh@gimp.org>
+
 	* libgimpbase/gimpwire.c: use a union instead of separate types to 
 	read/write doubles so we don't violate C's aliasing rules. Fixes
 	bug #85249.
