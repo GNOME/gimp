@@ -1,3 +1,7 @@
+2003-01-19  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimp/gimp.def: Add gimp_show_tool_tips.
+
 2003-01-19  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/screenshot.c
