@@ -1,3 +1,7 @@
+2003-09-01  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimpvectortool.c: added simplistic undo, needs polishing.
+
 2003-09-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/channels-menu.c
@@ -24,7 +28,7 @@
 	* app/vectors/gimpstroke.[ch]: virtualized gimp_stroke_close.
 
 	* app/vectors/gimpbezierstroke.c: made the _close function check,
-	if there is an unneeded segment (CCA-Sequence with all the same
+	if there is an unneeded segment (ACCA-Sequence with all the same
 	coordinates) at the gap to be closed. If so, remove it.
 
 2003-09-01  Tor Lillqvist  <tml@iki.fi>

@@ -34,6 +34,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-undo-push.h"
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 
@@ -289,6 +290,13 @@ gimp_vector_tool_button_press (GimpTool        *tool,
       g_print ("calling  draw_tool_stop\n");
       gimp_draw_tool_stop (draw_tool);
     }
+
+  gimp_tool_control_set_preserve (tool->control, TRUE);
+  if (vector_tool->vectors)
+    gimp_image_undo_push_vectors_mod (GIMP_ITEM (vector_tool->vectors)->gimage,
+                                      "Vectors operation",
+                                      vector_tool->vectors);
+  gimp_tool_control_set_preserve (tool->control, FALSE);
 
   gimp_tool_control_activate (tool->control);
   tool->gdisp = gdisp;
