@@ -1,3 +1,7 @@
+2002-02-08  Manish Singh  <yosh@gimp.org>
+                                                                                
+        * app/paint-funcs/paint-funcs.c: 64-bit cleaniless cleanups.
+
 2003-02-05  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/jpeg.c (run): if the quality level is close to zero
