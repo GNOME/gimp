@@ -7155,19 +7155,19 @@ msgstr "Appliquer un filtre sur une animation"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:101
 msgid "<Image>/Video/Split Video to Frames"
-msgstr "<Image>/Vidéo/Découper en Images"
+msgstr "<Image>/Vidéo/Découper en trames"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:102
 msgid "<Toolbox>/Xtns/Split Video to Frames"
-msgstr "<Toolbox>/Extensions/Découper en Images"
+msgstr "<Toolbox>/Extensions/Découper vidéo en trames"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:178
 msgid "<Image>/Video/Split Video to Frames/MPEG1"
-msgstr "<Image>/Vidéo/Découper en images/MPEG1"
+msgstr "<Image>/Vidéo/Découper en trames/MPEG1"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:190
 msgid "<Toolbox>/Xtns/Split Video to Frames/MPEG1"
-msgstr "<Toolbox>/Xtns/Découper vidéo en images/MPEG1"
+msgstr "<Toolbox>/Xtns/Découper vidéo en trames/MPEG1"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:332 plug-ins/gap/gap_decode_xanim.c:328
 #: plug-ins/gap/gap_range_ops.c:1184
@@ -8429,15 +8429,15 @@ msgstr "    simple), toutes au format JPEG (ou YUV ou PNM ou PPM)."
 
 #: plug-ins/gap/gap_mpege.c:155
 msgid "   all with fileformat PPM (or YUV)"
-msgstr "    simple), toutes au format PPM (ou YUV)."
+msgstr "    simple), toutes au format PPM (ou YUV)"
 
 #: plug-ins/gap/gap_mpege.c:160
 msgid "    (use 'Frames Convert' from the Video Menu"
-msgstr ""
+msgstr "    (utilisez au besoin « Convertir trames »"
 
 #: plug-ins/gap/gap_mpege.c:164
 msgid "    or 'Split Img to Frames' from the Video Menu)"
-msgstr ""
+msgstr "    ou « Calques -> trames »)"
 
 #: plug-ins/gap/gap_mpege.c:168
 msgid "3.) All Images must have the same size,"
@@ -8666,25 +8666,29 @@ msgstr ""
 msgid ""
 "\n"
 "WARNING: mpeg2encode does not support Fileformat "
-msgstr ""
+msgstr "\nAvertissement : mpeg2encode ne supporte pas ce format de fichier."
 
 #: plug-ins/gap/gap_mpege.c:992
 msgid ""
 "\n"
 "ERROR: invoked from a single image, animframe required"
-msgstr ""
+msgstr "\nErreur : cette fonction n'opère que sur les trames d'animation, pas sur les images simples."
 
 #: plug-ins/gap/gap_navigator_dialog.c:353
 msgid ""
 "Playback         \n"
 "<Shift> optimized"
 msgstr ""
+"Rejouer\n"
+"(<Maj> optimisé)"
 
 #: plug-ins/gap/gap_navigator_dialog.c:358
 msgid ""
 "Smart Update .xvpics\n"
 "<Shift> forced upd"
 msgstr ""
+"M. à j. vignettes .xvpics astucieuse\n"
+"<Shift> M. à j. forcée"
 
 #: plug-ins/gap/gap_navigator_dialog.c:363
 msgid "Duplicate selected Frames"
@@ -8703,84 +8707,89 @@ msgid ""
 "Goto prev Frame\n"
 "<Shift> use timezoom stepsize"
 msgstr ""
+"Aller à la trame précédente\n"
+"<Maj> utilise le pas d'échelle de temps"
 
 #: plug-ins/gap/gap_navigator_dialog.c:385
 msgid ""
 "Goto next Frame\n"
 "<Shift> use timezoom stepsize"
 msgstr ""
+"Aller à la trame suivante\n"
+"<Maj> utilise le pas d'échelle de temps"
 
 #: plug-ins/gap/gap_navigator_dialog.c:390
 msgid "Goto last Frame"
-msgstr ""
+msgstr "Aller à la dernière trame"
 
 #: plug-ins/gap/gap_navigator_dialog.c:443
 msgid "GAP video navigator dialog"
-msgstr ""
+msgstr "Magnétoscope GAP"
 
 #: plug-ins/gap/gap_navigator_dialog.c:448
 msgid "<Image>/Video/VCR Navigator..."
-msgstr ""
+msgstr "<Image>/Vidéo/Magnétoscope..."
 
 #: plug-ins/gap/gap_navigator_dialog.c:2689
 msgid "Videoframes:"
-msgstr ""
+msgstr "Trames vidéo :"
 
 #: plug-ins/gap/gap_navigator_dialog.c:2704
 msgid "Framerate:"
-msgstr ""
+msgstr "Trames (images) / s :"
 
 #: plug-ins/gap/gap_navigator_dialog.c:2727
 msgid "Timezoom:"
-msgstr ""
+msgstr "Échelle de temps :"
 
 #. The main shell
 #: plug-ins/gap/gap_navigator_dialog.c:2821
 msgid "Video Navigator"
-msgstr ""
+msgstr "Navigateur vidéo"
 
 #: plug-ins/gap/gap_range_ops.c:117
 msgid "New Width :"
-msgstr ""
+msgstr "Nouvelle largeur :"
 
 #: plug-ins/gap/gap_range_ops.c:124
 msgid "New Height :"
-msgstr ""
+msgstr "Nouvelle hauteur :"
 
+# faute de frappe dans l'original
 #: plug-ins/gap/gap_range_ops.c:131
 msgid "Offest X :"
-msgstr ""
+msgstr "Décalage X :"
 
 #: plug-ins/gap/gap_range_ops.c:138
 msgid "Offest Y :"
-msgstr ""
+msgstr "Décalage Y :"
 
 #: plug-ins/gap/gap_range_ops.c:147
 msgid "Crop AnimFrames (all)"
-msgstr ""
+msgstr "Rogner les trames (toutes)"
 
 #: plug-ins/gap/gap_range_ops.c:148
 #, c-format
 msgid "Crop (original %dx%d)"
-msgstr ""
+msgstr "Rogner (original %d×%d)"
 
 #: plug-ins/gap/gap_range_ops.c:158
 msgid "Resize AnimFrames (all)"
-msgstr ""
+msgstr "Redimensionner trames (toutes)"
 
 #: plug-ins/gap/gap_range_ops.c:159
 #, c-format
 msgid "Resize (original %dx%d)"
-msgstr ""
+msgstr "Redimensionner (original %d×%d)"
 
 #: plug-ins/gap/gap_range_ops.c:165
 msgid "Scale AnimFrames (all)"
-msgstr ""
+msgstr "Mettre trames à l'échelle (toutes)"
 
 #: plug-ins/gap/gap_range_ops.c:166
 #, c-format
 msgid "Scale (original %dx%d)"
-msgstr "Échelle (originale %dx%d)"
+msgstr "Mettre à l'échelle (original %dx%d)"
 
 #: plug-ins/gap/gap_range_ops.c:256
 msgid "Layerstack :"
@@ -8831,6 +8840,8 @@ msgid ""
 "Name of a cutom palette\n"
 "(is ignored if Palette Type is not custom)"
 msgstr ""
+"Nom d'une palette personnalisé\n"
+"(ignoré si le type de palette n'est pas « personnalisée »)"
 
 #: plug-ins/gap/gap_range_ops.c:327
 msgid "Remove Unused"
@@ -8956,35 +8967,40 @@ msgstr "Convertir les Paramètres :"
 
 #: plug-ins/gap/gap_range_ops.c:547
 msgid "Expand as necessary"
-msgstr ""
+msgstr "Étendre si nécessaire"
 
 #: plug-ins/gap/gap_range_ops.c:548
 msgid "Clipped to image"
-msgstr ""
+msgstr "Rogner aux dimensions de l'image"
 
 #: plug-ins/gap/gap_range_ops.c:549
 msgid "Clipped to bottom layer"
-msgstr ""
+msgstr "Rogner aux dimensions du calque du bas"
 
 #: plug-ins/gap/gap_range_ops.c:550
 msgid "Flattened image"
-msgstr "Image applatie"
+msgstr "Image aplatie (1 calque)"
 
 #: plug-ins/gap/gap_range_ops.c:551
 msgid ""
 "Resulting Layer Size is made of the outline-rectangle \n"
 "of all visible layers (may differ from frame to frame)"
 msgstr ""
+"La taille de calque résultante est la plus petite qui puisse\n"
+"contenir tous les calques visibles (elle peut varier\n"
+"de trame en trame)."
 
 #: plug-ins/gap/gap_range_ops.c:552
 msgid "Resulting Layer Size is the frame size"
-msgstr "La Taille Résultante du Calque est la taille de la trame"
+msgstr "La taille de calque résultante est la taille de la trame."
 
 #: plug-ins/gap/gap_range_ops.c:553
 msgid ""
 "Resulting Layer Size is the size of the bottom layer\n"
 "(may differ from frame to frame)"
-msgstr "La Taille Résultante du Calque est la taille du calque de fond"
+msgstr ""
+"La taille de calque résultante est la taille du calque de fond\n"
+"(elle peut varier de trame en trame)."
 
 #: plug-ins/gap/gap_range_ops.c:554
 msgid ""
@@ -9030,7 +9046,7 @@ msgstr "Utiliser tous les Calques non-sélectionnés"
 
 #: plug-ins/gap/gap_range_ops.c:730
 msgid "Creating Layer-Animated Image .."
-msgstr ""
+msgstr "Création d'une image animée selon les calques"
 
 #: plug-ins/gap/gap_range_ops.c:952
 msgid "Frames to Image"
