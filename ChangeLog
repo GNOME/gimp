@@ -1,5 +1,11 @@
 2004-07-08  Shlomi Fish  <shlomif@iglu.org.il>
 
+	* plug-ins/gimpressionist/Presets: converted the newlines in the
+	descriptions to whitespaces, so they'll simply wrap (in accordance
+	with making the description label wrappable).
+
+2004-07-08  Shlomi Fish  <shlomif@iglu.org.il>
+
 	* plug-ins/gimpressionist: Various Gimpressionist Cleanups. Made most 
 	remaining non-static global variables static, and created functions 
 	that manipulate them. Created new headers. Renamed some variables and 

@@ -1,5 +1,5 @@
 Preset
-desc=Simulates the Apply Canvas\012plugin, by just adding a\012paper relief to the image.
+desc=Simulates the Apply Canvas plugin, by just adding a paper relief to the image.
 orientnum=1
 orientfirst=0.000000
 orientlast=0.000000
