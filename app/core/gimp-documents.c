@@ -46,7 +46,7 @@ gimp_documents_load (Gimp *gimp)
 
   filename = gimp_personal_rc_file ("documents");
 
-  if (! gimp_config_deserialize_file (G_OBJECT (gimp->documents),
+  if (! gimp_config_deserialize_file (GIMP_CONFIG (gimp->documents),
 				      filename,
 				      GINT_TO_POINTER (gimp->config->thumbnail_size),
 				      &error))
@@ -77,7 +77,7 @@ gimp_documents_save (Gimp *gimp)
 
   filename = gimp_personal_rc_file ("documents");
 
-  if (! gimp_config_serialize_to_file (G_OBJECT (gimp->documents),
+  if (! gimp_config_serialize_to_file (GIMP_CONFIG (gimp->documents),
 				       filename,
 				       header, footer, NULL,
 				       &error))

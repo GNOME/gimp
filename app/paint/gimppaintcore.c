@@ -1224,10 +1224,19 @@ gimp_paint_core_subsample_mask (GimpPaintCore *core,
   if (mask == core->last_brush_mask && ! core->cache_invalid)
     {
       if (core->kernel_brushes[index2][index1])
-	return core->kernel_brushes[index2][index1];
+        {
+          g_printerr (".");
+          return core->kernel_brushes[index2][index1];
+        }
+      else
+        {
+          g_printerr ("o");
+        }
     }
   else
     {
+      g_printerr ("*");
+
       for (i = 0; i < KERNEL_SUBSAMPLE + 1; i++)
 	for (j = 0; j < KERNEL_SUBSAMPLE + 1; j++)
           if (core->kernel_brushes[i][j])

@@ -54,9 +54,9 @@ enum
 static void   gimp_container_view_class_init        (GimpContainerViewClass *klass);
 static void   gimp_container_view_init              (GimpContainerView      *view,
                                                      GimpContainerViewClass *klass);
-static void   gimp_container_view_docked_iface_init (GimpDockedIface        *docked_iface);
+static void   gimp_container_view_docked_iface_init (GimpDockedInterface    *docked_iface);
 
-static void   gimp_container_view_destroy     (GtkObject              *object);
+static void   gimp_container_view_destroy           (GtkObject              *object);
 
 static void   gimp_container_view_real_set_container (GimpContainerView *view,
 						      GimpContainer     *container);
@@ -242,7 +242,7 @@ gimp_container_view_destroy (GtkObject *object)
 }
 
 static void
-gimp_container_view_docked_iface_init (GimpDockedIface *docked_iface)
+gimp_container_view_docked_iface_init (GimpDockedInterface *docked_iface)
 {
   docked_iface->get_preview = gimp_container_view_get_preview;
   docked_iface->set_context = gimp_container_view_set_docked_context;

@@ -1,3 +1,61 @@
+2003-10-11  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpdocked.[ch]
+	* app/widgets/widgets-types.h: renamed GimpDockedIface to
+	GimpDockedInterface.
+
+	* app/display/gimpnavigationview.c
+	* app/widgets/gimpcoloreditor.c
+	* app/widgets/gimpcontainereditor.c
+	* app/widgets/gimpcontainerview.c
+	* app/widgets/gimpeditor.c
+	* app/widgets/gimpimageeditor.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimptooloptionseditor.c: changed accordingly.
+	
+	* app/config/config-types.h
+	* app/config/gimpconfig.[ch]
+	* app/config/gimpconfig-deserialize.[ch]
+	* app/config/gimpconfig-serialize.[ch]	
+	* app/config/gimpconfig-utils.[ch]: added a GimpConfig typedef and
+	changed the GimpConfig API to take GimpConfig instead of GObject
+	pointers.
+
+	* app/config/gimpconfig-dump.c
+	* app/config/gimprc.c
+	* app/config/test-config.c
+	* app/core/gimp-documents.c
+	* app/core/gimp-parasites.c
+	* app/core/gimp-templates.c
+	* app/core/gimp.[ch]
+	* app/core/gimpcontainer.c
+	* app/core/gimpcontext.c
+	* app/core/gimpdocumentlist.c
+	* app/core/gimpgrid.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-new.c
+	* app/core/gimpimage.c
+	* app/core/gimpparasitelist.c
+	* app/core/gimptemplate.c
+	* app/core/gimptooloptions.c
+	* app/core/gimpviewable.c
+	* app/gui/grid-dialog.c
+	* app/gui/preferences-dialog.c
+	* app/gui/stroke-dialog.c
+	* app/gui/templates-commands.c
+	* app/gui/tool-options-commands.c
+	* app/paint/gimppaintcore.c
+	* app/pdb/gimprc_cmds.c
+	* app/text/gimptext-parasite.c
+	* app/text/gimptext.c
+	* app/text/gimptextlayer.c
+	* app/tools/gimp-tools.c
+	* app/tools/gimptexttool.c
+	* app/widgets/gimpdevices.c
+	* app/widgets/gimptemplateeditor.c
+	* app/widgets/gimptemplateview.c
+	* tools/pdbgen/pdb/gimprc.pdb: changed accordingly.
+
 2003-10-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/Makefile.am

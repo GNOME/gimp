@@ -24,6 +24,7 @@
 
 #include "gui-types.h"
 
+#include "config/gimpconfig.h"
 #include "config/gimpconfig-utils.h"
 
 #include "core/gimp.h"
@@ -103,8 +104,8 @@ templates_new_template_ok_callback (GtkWidget *widget,
   template = g_object_get_data (G_OBJECT (dialog), "gimp-template");
   gimp     = g_object_get_data (G_OBJECT (dialog), "gimp");
 
-  gimp_config_copy_properties (G_OBJECT (editor->template),
-                               G_OBJECT (template));
+  gimp_config_copy_properties (GIMP_CONFIG (editor->template),
+                               GIMP_CONFIG (template));
 
   gimp_list_uniquefy_name (GIMP_LIST (gimp->templates),
                            GIMP_OBJECT (template), TRUE);
@@ -181,8 +182,8 @@ templates_edit_template_ok_callback (GtkWidget *widget,
   template = g_object_get_data (G_OBJECT (dialog), "gimp-template");
   gimp     = g_object_get_data (G_OBJECT (dialog), "gimp");
 
-  gimp_config_copy_properties (G_OBJECT (editor->template),
-                               G_OBJECT (template));
+  gimp_config_copy_properties (GIMP_CONFIG (editor->template),
+                               GIMP_CONFIG (template));
   gimp_list_uniquefy_name (GIMP_LIST (gimp->templates),
                            GIMP_OBJECT (template), TRUE);
 

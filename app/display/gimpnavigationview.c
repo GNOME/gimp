@@ -56,7 +56,7 @@
 static void   gimp_navigation_view_class_init (GimpNavigationViewClass *klass);
 static void   gimp_navigation_view_init       (GimpNavigationView      *view);
 
-static void   gimp_navigation_view_docked_iface_init  (GimpDockedIface  *docked_iface);
+static void   gimp_navigation_view_docked_iface_init  (GimpDockedInterface *docked_iface);
 static void   gimp_navigation_view_set_docked_context (GimpDocked       *docked,
                                                        GimpContext      *context,
                                                        GimpContext      *prev_context);
@@ -190,7 +190,7 @@ gimp_navigation_view_init (GimpNavigationView *view)
 }
 
 static void
-gimp_navigation_view_docked_iface_init (GimpDockedIface *docked_iface)
+gimp_navigation_view_docked_iface_init (GimpDockedInterface *docked_iface)
 {
   docked_iface->set_context = gimp_navigation_view_set_docked_context;
 }

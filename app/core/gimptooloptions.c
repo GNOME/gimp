@@ -166,7 +166,7 @@ gimp_tool_options_get_property (GObject    *object,
 static void
 gimp_tool_options_real_reset (GimpToolOptions *tool_options)
 {
-  gimp_config_reset (G_OBJECT (tool_options));
+  gimp_config_reset (GIMP_CONFIG (tool_options));
 }
 
 void
@@ -229,7 +229,7 @@ gimp_tool_options_serialize (GimpToolOptions  *tool_options,
   footer = g_strdup_printf ("end of %s options",
                             GIMP_OBJECT (tool_options->tool_info)->name);
 
-  retval = gimp_config_serialize_to_file (G_OBJECT (tool_options),
+  retval = gimp_config_serialize_to_file (GIMP_CONFIG (tool_options),
 					  filename,
 					  header, footer,
 					  NULL,
@@ -255,7 +255,7 @@ gimp_tool_options_deserialize (GimpToolOptions  *tool_options,
 
   filename = gimp_tool_options_build_filename (tool_options, extension);
 
-  retval = gimp_config_deserialize_file (G_OBJECT (tool_options),
+  retval = gimp_config_deserialize_file (GIMP_CONFIG (tool_options),
 					 filename,
 					 NULL,
 					 error);

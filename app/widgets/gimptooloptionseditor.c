@@ -46,7 +46,7 @@
 
 static void   gimp_tool_options_editor_class_init        (GimpToolOptionsEditorClass *klass);
 static void   gimp_tool_options_editor_init              (GimpToolOptionsEditor      *editor);
-static void   gimp_tool_options_editor_docked_iface_init (GimpDockedIface            *docked_iface);
+static void   gimp_tool_options_editor_docked_iface_init (GimpDockedInterface        *docked_iface);
 
 static void   gimp_tool_options_editor_destroy         (GtkObject             *object);
 
@@ -200,7 +200,7 @@ gimp_tool_options_editor_init (GimpToolOptionsEditor *editor)
 }
 
 static void
-gimp_tool_options_editor_docked_iface_init (GimpDockedIface *docked_iface)
+gimp_tool_options_editor_docked_iface_init (GimpDockedInterface *docked_iface)
 {
   docked_iface->get_preview = gimp_tool_options_editor_get_preview;
 }

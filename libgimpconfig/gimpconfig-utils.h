@@ -23,16 +23,19 @@
 #define __GIMP_CONFIG_UTILS_H__
 
 
-GList    * gimp_config_diff                  (GObject      *a,
-                                              GObject      *b,
-                                              GParamFlags   flags);
 void       gimp_config_connect               (GObject      *src,
                                               GObject      *dest);
 void       gimp_config_disconnect            (GObject      *src,
                                               GObject      *dest);
-void       gimp_config_copy_properties       (GObject      *src,
-                                              GObject      *dest);
-void       gimp_config_reset_properties      (GObject      *object);
+
+GList    * gimp_config_diff                  (GimpConfig   *a,
+                                              GimpConfig   *b,
+                                              GParamFlags   flags);
+
+void       gimp_config_copy_properties       (GimpConfig   *src,
+                                              GimpConfig   *dest);
+
+void       gimp_config_reset_properties      (GimpConfig   *config);
 
 void       gimp_config_string_append_escaped (GString      *string,
                                               const gchar  *val);

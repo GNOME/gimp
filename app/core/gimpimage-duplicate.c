@@ -243,7 +243,7 @@ gimp_image_duplicate (GimpImage *gimage)
   if (gimage->grid)
     {
       new_gimage->grid =
-        GIMP_GRID (gimp_config_duplicate (G_OBJECT (gimage->grid)));
+        GIMP_GRID (gimp_config_duplicate (GIMP_CONFIG (gimage->grid)));
     }
 
   /* Copy the qmask info */

@@ -103,18 +103,17 @@ gimp_text_get_type (void)
 	0,              /* n_preallocs    */
 	NULL            /* instance_init  */
       };
-      static const GInterfaceInfo text_iface_info = 
+      static const GInterfaceInfo text_iface_info =
       {
         NULL,           /* iface_init     */
-        NULL,           /* iface_finalize */ 
+        NULL,           /* iface_finalize */
         NULL            /* iface_data     */
       };
 
       text_type = g_type_register_static (GIMP_TYPE_OBJECT,
                                           "GimpText", &text_info, 0);
 
-      g_type_add_interface_static (text_type,
-                                   GIMP_TYPE_CONFIG_INTERFACE,
+      g_type_add_interface_static (text_type, GIMP_TYPE_CONFIG,
                                    &text_iface_info);
     }
 
@@ -441,7 +440,7 @@ gimp_text_get_memsize (GimpObject *object,
 }
 
 
-/* 
+/*
  *  basically copied from gtk_get_default_language()
  */
 static gchar *
@@ -449,7 +448,7 @@ gimp_text_get_default_language (void)
 {
   gchar *lang;
   gchar *p;
-  
+
 #ifdef G_OS_WIN32
   p = getenv ("LC_ALL");
   if (p != NULL)

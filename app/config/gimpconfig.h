@@ -23,37 +23,38 @@
 #define __GIMP_CONFIG_H__
 
 
-#define GIMP_TYPE_CONFIG_INTERFACE     (gimp_config_interface_get_type ())
-#define GIMP_GET_CONFIG_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_CONFIG_INTERFACE, GimpConfigInterface))
+#define GIMP_TYPE_CONFIG               (gimp_config_interface_get_type ())
+#define GIMP_IS_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONFIG))
+#define GIMP_CONFIG(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONFIG, GimpConfig))
+#define GIMP_CONFIG_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_CONFIG, GimpConfigInterface))
 
-typedef struct _GimpConfigInterface GimpConfigInterface;
 
 struct _GimpConfigInterface
 {
   GTypeInterface base_iface;
 
-  gboolean   (* serialize)            (GObject          *object,
-                                       GimpConfigWriter *writer,
-                                       gpointer          data);
-  gboolean   (* deserialize)          (GObject          *object,
-                                       GScanner         *scanner,
-                                       gint              nest_level,
-                                       gpointer          data);
-  gboolean   (* serialize_property)   (GObject          *object,
-                                       guint             property_id,
-                                       const GValue     *value,
-                                       GParamSpec       *pspec,
-                                       GimpConfigWriter *writer);
-  gboolean   (* deserialize_property) (GObject          *object,
-                                       guint             property_id,
-                                       GValue           *value,
-                                       GParamSpec       *pspec,
-                                       GScanner         *scanner,
-                                       GTokenType       *expected);
-  GObject  * (* duplicate)            (GObject          *object);
-  gboolean   (* equal)                (GObject          *a,
-                                       GObject          *b);
-  void       (* reset)                (GObject          *object);
+  gboolean     (* serialize)            (GimpConfig       *config,
+                                         GimpConfigWriter *writer,
+                                         gpointer          data);
+  gboolean     (* deserialize)          (GimpConfig       *config,
+                                         GScanner         *scanner,
+                                         gint              nest_level,
+                                         gpointer          data);
+  gboolean     (* serialize_property)   (GimpConfig       *config,
+                                         guint             property_id,
+                                         const GValue     *value,
+                                         GParamSpec       *pspec,
+                                         GimpConfigWriter *writer);
+  gboolean     (* deserialize_property) (GimpConfig       *config,
+                                         guint             property_id,
+                                         GValue           *value,
+                                         GParamSpec       *pspec,
+                                         GScanner         *scanner,
+                                         GTokenType       *expected);
+  GimpConfig * (* duplicate)            (GimpConfig       *config);
+  gboolean     (* equal)                (GimpConfig       *a,
+                                         GimpConfig       *b);
+  void         (* reset)                (GimpConfig       *config);
 };
 
 typedef void  (* GimpConfigForeachFunc) (const gchar *key,
@@ -63,22 +64,22 @@ typedef void  (* GimpConfigForeachFunc) (const gchar *key,
 
 GType         gimp_config_interface_get_type    (void) G_GNUC_CONST;
 
-gboolean      gimp_config_serialize_to_file     (GObject      *object,
+gboolean      gimp_config_serialize_to_file     (GimpConfig   *config,
                                                  const gchar  *filename,
                                                  const gchar  *header,
                                                  const gchar  *footer,
                                                  gpointer      data,
                                                  GError      **error);
-gboolean      gimp_config_serialize_to_fd       (GObject      *object,
+gboolean      gimp_config_serialize_to_fd       (GimpConfig   *config,
                                                  gint          fd,
                                                  gpointer      data);
-gchar       * gimp_config_serialize_to_string   (GObject      *object,
+gchar       * gimp_config_serialize_to_string   (GimpConfig   *config,
 						 gpointer      data);
-gboolean      gimp_config_deserialize_file      (GObject      *object,
+gboolean      gimp_config_deserialize_file      (GimpConfig   *config,
                                                  const gchar  *filename,
                                                  gpointer      data,
                                                  GError      **error);
-gboolean      gimp_config_deserialize_string    (GObject      *object,
+gboolean      gimp_config_deserialize_string    (GimpConfig   *config,
                                                  const gchar  *text,
                                                  gint          text_len,
                                                  gpointer      data,
@@ -87,17 +88,17 @@ gboolean      gimp_config_deserialize_return    (GScanner     *scanner,
                                                  GTokenType    expected_token,
                                                  gint          nest_level);
 
-GObject     * gimp_config_duplicate             (GObject      *object);
-gboolean      gimp_config_is_equal_to           (GObject      *a,
-                                                 GObject      *b);
-void          gimp_config_reset                 (GObject      *object);
+GimpConfig  * gimp_config_duplicate             (GimpConfig   *config);
+gboolean      gimp_config_is_equal_to           (GimpConfig   *a,
+                                                 GimpConfig   *b);
+void          gimp_config_reset                 (GimpConfig   *config);
 
-void          gimp_config_add_unknown_token     (GObject      *object,
+void          gimp_config_add_unknown_token     (GimpConfig   *config,
                                                  const gchar  *key,
                                                  const gchar  *value);
-const gchar * gimp_config_lookup_unknown_token  (GObject      *object,
+const gchar * gimp_config_lookup_unknown_token  (GimpConfig   *config,
                                                  const gchar  *key);
-void          gimp_config_foreach_unknown_token (GObject      *object,
+void          gimp_config_foreach_unknown_token (GimpConfig   *config,
                                                  GimpConfigForeachFunc  func,
                                                  gpointer      user_data);
 

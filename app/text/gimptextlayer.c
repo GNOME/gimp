@@ -215,7 +215,7 @@ gimp_text_layer_duplicate (GimpItem *item,
   new_text_layer = GIMP_TEXT_LAYER (new_item);
 
   new_text_layer->text =
-    GIMP_TEXT (gimp_config_duplicate (G_OBJECT (text_layer->text)));
+    GIMP_TEXT (gimp_config_duplicate (GIMP_CONFIG (text_layer->text)));
 
   g_signal_connect_object (new_text_layer->text, "notify",
                            G_CALLBACK (gimp_text_layer_notify_text),

@@ -23,17 +23,17 @@
 #define __GIMP_CONFIG_SERIALIZE_H__
 
 
-gboolean  gimp_config_serialize_properties         (GObject          *object,
+gboolean  gimp_config_serialize_properties         (GimpConfig       *config,
 						    GimpConfigWriter *writer);
-gboolean  gimp_config_serialize_changed_properties (GObject          *object,
+gboolean  gimp_config_serialize_changed_properties (GimpConfig       *config,
 						    GimpConfigWriter *writer);
-gboolean  gimp_config_serialize_properties_diff    (GObject          *object,
-                                                    GObject          *compare,
+gboolean  gimp_config_serialize_properties_diff    (GimpConfig       *config,
+                                                    GimpConfig       *compare,
 						    GimpConfigWriter *writer);
-gboolean  gimp_config_serialize_unknown_tokens     (GObject          *object,
+gboolean  gimp_config_serialize_unknown_tokens     (GimpConfig       *config,
 						    GimpConfigWriter *writer);
 
-gboolean  gimp_config_serialize_property           (GObject          *object,
+gboolean  gimp_config_serialize_property           (GimpConfig       *config,
 						    GParamSpec       *param_spec,
 						    GimpConfigWriter *writer);
 

@@ -74,8 +74,8 @@ struct _Gimp
 
   GimpCoreConfig         *config;
   GimpCoreConfig         *edit_config; /* don't use this one, it's just
-                                       * for the preferences dialog
-                                       */
+                                        * for the preferences dialog
+                                        */
 
   gboolean                be_verbose;
   gboolean                no_data;

@@ -101,10 +101,10 @@ static void       gimp_container_get_property    (GObject            *object,
 static gsize      gimp_container_get_memsize     (GimpObject         *object,
                                                   gsize              *gui_size);
 
-static gboolean   gimp_container_serialize       (GObject            *object,
+static gboolean   gimp_container_serialize       (GimpConfig         *config,
                                                   GimpConfigWriter   *writer,
                                                   gpointer            data);
-static gboolean   gimp_container_deserialize     (GObject            *object,
+static gboolean   gimp_container_deserialize     (GimpConfig         *config,
                                                   GScanner           *scanner,
                                                   gint                nest_level,
                                                   gpointer            data);
@@ -148,8 +148,7 @@ gimp_container_get_type (void)
 					       "GimpContainer",
                                                &container_info, 0);
 
-      g_type_add_interface_static (container_type,
-                                   GIMP_TYPE_CONFIG_INTERFACE,
+      g_type_add_interface_static (container_type, GIMP_TYPE_CONFIG,
                                    &config_iface_info);
     }
 
@@ -375,7 +374,7 @@ gimp_container_serialize_foreach (GObject       *object,
   GimpConfigInterface *config_iface;
   const gchar         *name;
 
-  config_iface = GIMP_GET_CONFIG_INTERFACE (object);
+  config_iface = GIMP_CONFIG_GET_INTERFACE (object);
 
   if (! config_iface)
     serialize_data->success = FALSE;
@@ -393,21 +392,21 @@ gimp_container_serialize_foreach (GObject       *object,
   else
     gimp_config_writer_print (serialize_data->writer, "NULL", 4);
 
-  serialize_data->success = config_iface->serialize (object,
+  serialize_data->success = config_iface->serialize (GIMP_CONFIG (object),
                                                      serialize_data->writer,
                                                      serialize_data->data);
   gimp_config_writer_close (serialize_data->writer);
 }
 
 static gboolean
-gimp_container_serialize (GObject          *object,
+gimp_container_serialize (GimpConfig       *config,
                           GimpConfigWriter *writer,
                           gpointer          data)
 {
   GimpContainer *container;
   SerializeData  serialize_data;
 
-  container = GIMP_CONTAINER (object);
+  container = GIMP_CONTAINER (config);
 
   serialize_data.writer  = writer;
   serialize_data.data    = data;
@@ -421,15 +420,15 @@ gimp_container_serialize (GObject          *object,
 }
 
 static gboolean
-gimp_container_deserialize (GObject  *object,
-                            GScanner *scanner,
-                            gint      nest_level,
-                            gpointer  data)
+gimp_container_deserialize (GimpConfig *config,
+                            GScanner   *scanner,
+                            gint        nest_level,
+                            gpointer    data)
 {
   GimpContainer *container;
   GTokenType     token;
 
-  container = GIMP_CONTAINER (object);
+  container = GIMP_CONTAINER (config);
 
   token = G_TOKEN_LEFT_PAREN;
 
@@ -468,7 +467,7 @@ gimp_container_deserialize (GObject  *object,
                 return FALSE;
               }
 
-            if (! g_type_is_a (type, GIMP_TYPE_CONFIG_INTERFACE))
+            if (! g_type_is_a (type, GIMP_TYPE_CONFIG))
               {
                 g_scanner_error (scanner,
                                  "'%s' does not implement GimpConfigInterface",
@@ -509,20 +508,14 @@ gimp_container_deserialize (GObject  *object,
 
             g_free (name);
 
-            {
-              GimpConfigInterface *config_iface;
-
-              config_iface = GIMP_GET_CONFIG_INTERFACE (child);
-
-              if (! config_iface->deserialize (G_OBJECT (child),
-                                               scanner,
-                                               nest_level + 1,
-                                               FALSE))
-                {
-                  /*  warning should be already set by child  */
-                  return FALSE;
-                }
-            }
+            if (! GIMP_CONFIG_GET_INTERFACE (config)->deserialize (GIMP_CONFIG (child),
+                                                                   scanner,
+                                                                   nest_level + 1,
+                                                                   FALSE))
+              {
+                /*  warning should be already set by child  */
+                return FALSE;
+              }
           }
           token = G_TOKEN_RIGHT_PAREN;
           break;

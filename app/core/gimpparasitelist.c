@@ -56,10 +56,10 @@ static gsize    gimp_parasite_list_get_memsize       (GimpObject  *object,
 
 static void     gimp_parasite_list_config_iface_init (gpointer     iface,
                                                       gpointer     iface_data);
-static gboolean gimp_parasite_list_serialize    (GObject          *list,
+static gboolean gimp_parasite_list_serialize    (GimpConfig       *list,
 						 GimpConfigWriter *writer,
 						 gpointer          data);
-static gboolean gimp_parasite_list_deserialize  (GObject          *list,
+static gboolean gimp_parasite_list_deserialize  (GimpConfig       *list,
 						 GScanner         *scanner,
 						 gint              nest_level,
 						 gpointer          data);
@@ -114,8 +114,7 @@ gimp_parasite_list_get_type (void)
       list_type = g_type_register_static (GIMP_TYPE_OBJECT,
 					  "GimpParasiteList",
 					  &list_info, 0);
-      g_type_add_interface_static (list_type,
-                                   GIMP_TYPE_CONFIG_INTERFACE,
+      g_type_add_interface_static (list_type, GIMP_TYPE_CONFIG,
                                    &list_iface_info);
     }
 
@@ -232,7 +231,7 @@ gimp_parasite_list_get_memsize (GimpObject *object,
 }
 
 static gboolean
-gimp_parasite_list_serialize (GObject          *list,
+gimp_parasite_list_serialize (GimpConfig       *list,
                               GimpConfigWriter *writer,
                               gpointer          data)
 {
@@ -245,10 +244,10 @@ gimp_parasite_list_serialize (GObject          *list,
 }
 
 static gboolean
-gimp_parasite_list_deserialize (GObject  *list,
-                                GScanner *scanner,
-                                gint      nest_level,
-                                gpointer  data)
+gimp_parasite_list_deserialize (GimpConfig *list,
+                                GScanner   *scanner,
+                                gint        nest_level,
+                                gpointer    data)
 {
   GTokenType token;
 

@@ -1,9 +1,9 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpConfig object property dumper. 
+ * GimpConfig object property dumper.
  * Copyright (C) 2001-2003  Sven Neumann <sven@gimp.org>
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -54,10 +54,10 @@ typedef enum
 
 
 static gint    dump_gimprc          (DumpFormat        format);
-static void    dump_gimprc_system   (GObject          *rc,
+static void    dump_gimprc_system   (GimpConfig       *rc,
 				     GimpConfigWriter *writer,
                                      gint              fd);
-static void    dump_gimprc_manpage  (GObject          *rc,
+static void    dump_gimprc_manpage  (GimpConfig       *rc,
 				     GimpConfigWriter *writer,
                                      gint              fd);
 static gchar * dump_describe_param  (GParamSpec       *param_spec);
@@ -70,7 +70,7 @@ main (int   argc,
       char *argv[])
 {
   DumpFormat  format = DUMP_DEFAULT;
-  
+
   if (argc > 1)
     {
       if (strcmp (argv[1], "--system-gimprc") == 0)
@@ -111,7 +111,7 @@ static gint
 dump_gimprc (DumpFormat format)
 {
   GimpConfigWriter *writer;
-  GObject          *rc;
+  GimpConfig       *rc;
   gint              fd = 1;
 
   if (format == DUMP_NONE)
@@ -159,7 +159,7 @@ static const gchar *system_gimprc_header =
 "Lines that start with a '#' are comments. Blank lines are ignored.\n"
 "\n"
 "By default everything in this file is commented out.  The file then "
-"documents the default values and shows what changes are possible.\n" 
+"documents the default values and shows what changes are possible.\n"
 "\n"
 "The variable ${gimp_dir} is set to the value of the environment "
 "variable GIMP2_DIRECTORY or, if that is not set, the compiled-in "
@@ -167,7 +167,7 @@ static const gchar *system_gimprc_header =
 "it is interpreted relative to your home directory.";
 
 static void
-dump_gimprc_system (GObject          *rc,
+dump_gimprc_system (GimpConfig       *rc,
 		    GimpConfigWriter *writer,
                     gint              fd)
 {
@@ -296,7 +296,7 @@ static const gchar *man_page_footer =
 
 
 static void
-dump_gimprc_manpage (GObject          *rc,
+dump_gimprc_manpage (GimpConfig       *rc,
 		     GimpConfigWriter *writer,
                      gint              fd)
 {
@@ -340,7 +340,7 @@ dump_gimprc_manpage (GObject          *rc,
 }
 
 
-static const gchar * display_format_description = 
+static const gchar * display_format_description =
 "This is a format string; certain % character sequences are recognised and "
 "expanded as follows:\n"
 "\n"
@@ -425,7 +425,7 @@ dump_describe_param (GParamSpec *param_spec)
 	case GIMP_PARAM_PATH_DIR:
 	  values = "This is a single folder.";
 	  break;
-	  
+
 	case GIMP_PARAM_PATH_DIR_LIST:
 	  switch (G_SEARCHPATH_SEPARATOR)
 	    {
@@ -484,9 +484,9 @@ dump_describe_param (GParamSpec *param_spec)
 	    GEnumValue *enum_value;
 	    GString    *str;
 	    gint        i;
-	    
+
 	    enum_class = g_type_class_peek (type);
-	    
+
 	    str = g_string_new (blurb);
 
 	    g_string_append (str, "  Possible values are ");

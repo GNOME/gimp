@@ -132,7 +132,8 @@ gimprc_set_invoker (Gimp     *gimp,
       /*  set the value in edit_config so we don't accidentially set
        *  GIMP_PARAM_RESTART values via the PDB
        */
-      gimp_config_add_unknown_token (G_OBJECT (gimp->edit_config), token, value);
+      gimp_config_add_unknown_token (GIMP_CONFIG (gimp->edit_config),
+				     token, value);
       success = TRUE;
     }
 

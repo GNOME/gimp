@@ -39,7 +39,7 @@
 
 static void   gimp_color_editor_class_init        (GimpColorEditorClass *klass);
 static void   gimp_color_editor_init              (GimpColorEditor      *editor);
-static void   gimp_color_editor_docked_iface_init (GimpDockedIface      *docked_iface);
+static void   gimp_color_editor_docked_iface_init (GimpDockedInterface  *docked_iface);
 
 static void   gimp_color_editor_destroy         (GtkObject         *object);
 
@@ -286,7 +286,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
 }
 
 static void
-gimp_color_editor_docked_iface_init (GimpDockedIface *docked_iface)
+gimp_color_editor_docked_iface_init (GimpDockedInterface *docked_iface)
 {
   docked_iface->set_context = gimp_color_editor_set_docked_context;
 }

@@ -31,8 +31,9 @@
 #include "base/temp-buf.h"
 #include "base/tile-manager.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/gimpconfig.h"
 #include "config/gimpconfig-utils.h"
+#include "config/gimpcoreconfig.h"
 
 #include "gimp.h"
 #include "gimp-parasites.h"
@@ -949,8 +950,8 @@ gimp_image_new (Gimp              *gimp,
   gimage->unit        = gimp->config->default_unit;
 
   gimage->grid        = g_object_new (GIMP_TYPE_GRID, NULL);
-  gimp_config_copy_properties (G_OBJECT (gimp->config->default_grid),
-                               G_OBJECT (gimage->grid));
+  gimp_config_copy_properties (GIMP_CONFIG (gimp->config->default_grid),
+                               GIMP_CONFIG (gimage->grid));
 
   switch (base_type)
     {

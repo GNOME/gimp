@@ -66,8 +66,8 @@ tool_options_save_to_cmd_callback (GtkWidget *widget,
 
   name = g_strdup (gimp_object_get_name (GIMP_OBJECT (options)));
 
-  gimp_config_copy_properties (G_OBJECT (options->tool_info->tool_options),
-                               G_OBJECT (options));
+  gimp_config_copy_properties (GIMP_CONFIG (options->tool_info->tool_options),
+                               GIMP_CONFIG (options));
   gimp_object_set_name (GIMP_OBJECT (options), name);
 
   g_free (name);
@@ -105,8 +105,8 @@ tool_options_restore_from_cmd_callback (GtkWidget *widget,
 {
   GimpToolOptions *options = GIMP_TOOL_OPTIONS (data);
 
-  gimp_config_copy_properties (G_OBJECT (options),
-                               G_OBJECT (options->tool_info->tool_options));
+  gimp_config_copy_properties (GIMP_CONFIG (options),
+                               GIMP_CONFIG (options->tool_info->tool_options));
 }
 
 void
@@ -170,12 +170,12 @@ tool_options_save_callback (GtkWidget   *widget,
                             gpointer     data)
 {
   GimpToolInfo *tool_info = GIMP_TOOL_INFO (data);
-  GObject      *copy;
+  GimpConfig   *copy;
 
   if (! name || ! strlen (name))
     name = _("Saved Options");
 
-  copy = gimp_config_duplicate (G_OBJECT (tool_info->tool_options));
+  copy = gimp_config_duplicate (GIMP_CONFIG (tool_info->tool_options));
 
   gimp_object_set_name (GIMP_OBJECT (copy), name);
   gimp_list_uniquefy_name (GIMP_LIST (tool_info->options_presets),

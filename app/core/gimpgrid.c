@@ -98,8 +98,7 @@ gimp_grid_get_type (void)
       grid_type = g_type_register_static (GIMP_TYPE_OBJECT,
                                           "GimpGrid", &grid_info, 0);
 
-      g_type_add_interface_static (grid_type,
-                                   GIMP_TYPE_CONFIG_INTERFACE,
+      g_type_add_interface_static (grid_type, GIMP_TYPE_CONFIG,
                                    &grid_iface_info);
     }
 
@@ -285,7 +284,7 @@ gimp_grid_to_parasite (const GimpGrid *grid)
 
   g_return_val_if_fail (GIMP_IS_GRID (grid), NULL);
 
-  str = gimp_config_serialize_to_string (G_OBJECT (grid), NULL);
+  str = gimp_config_serialize_to_string (GIMP_CONFIG (grid), NULL);
   g_return_val_if_fail (str != NULL, NULL);
 
   parasite = gimp_parasite_new (gimp_grid_parasite_name (),
@@ -312,7 +311,7 @@ gimp_grid_from_parasite (const GimpParasite *parasite)
 
   grid = g_object_new (GIMP_TYPE_GRID, NULL);
 
-  if (! gimp_config_deserialize_string (G_OBJECT (grid),
+  if (! gimp_config_deserialize_string (GIMP_CONFIG (grid),
                                         str,
                                         gimp_parasite_data_size (parasite),
                                         NULL,

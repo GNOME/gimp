@@ -836,7 +836,7 @@ gimp_load_config (Gimp        *gimp,
   gimp->config = GIMP_CORE_CONFIG (gimprc);
 
   gimp->edit_config =
-    GIMP_CORE_CONFIG (gimp_config_duplicate (G_OBJECT (gimp->config)));
+    GIMP_CORE_CONFIG (gimp_config_duplicate (GIMP_CONFIG (gimp->config)));
 
   g_signal_connect_object (gimp->config, "notify",
                            G_CALLBACK (gimp_global_config_notify),

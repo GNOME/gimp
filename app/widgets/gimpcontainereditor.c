@@ -42,7 +42,7 @@
 
 static void   gimp_container_editor_class_init        (GimpContainerEditorClass *klass);
 static void   gimp_container_editor_init              (GimpContainerEditor      *view);
-static void   gimp_container_editor_docked_iface_init (GimpDockedIface          *docked_iface);
+static void   gimp_container_editor_docked_iface_init (GimpDockedInterface      *docked_iface);
 
 static gboolean gimp_container_editor_select_item    (GtkWidget           *widget,
 						      GimpViewable        *viewable,
@@ -126,7 +126,7 @@ gimp_container_editor_init (GimpContainerEditor *view)
 }
 
 static void
-gimp_container_editor_docked_iface_init (GimpDockedIface *docked_iface)
+gimp_container_editor_docked_iface_init (GimpDockedInterface *docked_iface)
 {
   docked_iface->get_preview = gimp_container_editor_get_preview;
   docked_iface->set_context = gimp_container_editor_set_context;

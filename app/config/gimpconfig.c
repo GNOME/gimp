@@ -43,19 +43,19 @@
  * The GimpConfig serialization and deserialization interface.
  */
 
-static void      gimp_config_iface_init    (GimpConfigInterface  *gimp_config_iface);
+static void         gimp_config_iface_init    (GimpConfigInterface  *gimp_config_iface);
 
-static gboolean  gimp_config_iface_serialize   (GObject          *object,
-						GimpConfigWriter *writer,
-						gpointer          data);
-static gboolean  gimp_config_iface_deserialize (GObject          *object,
-						GScanner         *scanner,
-						gint              nest_level,
-						gpointer          data);
-static GObject  *gimp_config_iface_duplicate   (GObject          *object);
-static gboolean  gimp_config_iface_equal       (GObject          *a,
-                                                GObject          *b);
-static void      gimp_config_iface_reset       (GObject          *object);
+static gboolean     gimp_config_iface_serialize   (GimpConfig       *config,
+                                                   GimpConfigWriter *writer,
+                                                   gpointer          data);
+static gboolean     gimp_config_iface_deserialize (GimpConfig       *config,
+                                                   GScanner         *scanner,
+                                                   gint              nest_level,
+                                                   gpointer          data);
+static GimpConfig * gimp_config_iface_duplicate   (GimpConfig       *config);
+static gboolean     gimp_config_iface_equal       (GimpConfig       *a,
+                                                   GimpConfig       *b);
+static void         gimp_config_iface_reset       (GimpConfig       *config);
 
 
 GType
@@ -96,25 +96,25 @@ gimp_config_iface_init (GimpConfigInterface *gimp_config_iface)
 }
 
 static gboolean
-gimp_config_iface_serialize (GObject          *object,
+gimp_config_iface_serialize (GimpConfig       *config,
 			     GimpConfigWriter *writer,
                              gpointer          data)
 {
-  return gimp_config_serialize_properties (object, writer);
+  return gimp_config_serialize_properties (config, writer);
 }
 
 static gboolean
-gimp_config_iface_deserialize (GObject  *object,
-                               GScanner *scanner,
-                               gint      nest_level,
-                               gpointer  data)
+gimp_config_iface_deserialize (GimpConfig *config,
+                               GScanner   *scanner,
+                               gint        nest_level,
+                               gpointer    data)
 {
-  return gimp_config_deserialize_properties (object,
+  return gimp_config_deserialize_properties (config,
                                              scanner, nest_level, FALSE);
 }
 
-static GObject *
-gimp_config_iface_duplicate (GObject *object)
+static GimpConfig *
+gimp_config_iface_duplicate (GimpConfig *config)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
@@ -122,9 +122,9 @@ gimp_config_iface_duplicate (GObject *object)
   GParameter    *construct_params   = NULL;
   gint           n_construct_params = 0;
   guint          i;
-  GObject       *dup;
+  GimpConfig    *dup;
 
-  klass = G_OBJECT_GET_CLASS (object);
+  klass = G_OBJECT_GET_CLASS (config);
 
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
 
@@ -145,14 +145,14 @@ gimp_config_iface_duplicate (GObject *object)
           construct_params->name = prop_spec->name;
 
           g_value_init (&construct_params->value, prop_spec->value_type);
-          g_object_get_property (object, prop_spec->name,
+          g_object_get_property (G_OBJECT (config), prop_spec->name,
                                  &construct_param->value);
         }
     }
 
   g_free (property_specs);
 
-  dup = g_object_newv (G_TYPE_FROM_INSTANCE (object),
+  dup = g_object_newv (G_TYPE_FROM_INSTANCE (config),
                        n_construct_params, construct_params);
 
   for (i = 0; i < n_construct_params; i++)
@@ -160,14 +160,14 @@ gimp_config_iface_duplicate (GObject *object)
 
   g_free (construct_params);
 
-  gimp_config_copy_properties (object, dup);
+  gimp_config_copy_properties (config, dup);
 
   return dup;
 }
 
 static gboolean
-gimp_config_iface_equal (GObject *a,
-                         GObject *b)
+gimp_config_iface_equal (GimpConfig *a,
+                         GimpConfig *b)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
@@ -192,8 +192,8 @@ gimp_config_iface_equal (GObject *a,
 
       g_value_init (&a_value, prop_spec->value_type);
       g_value_init (&b_value, prop_spec->value_type);
-      g_object_get_property (a, prop_spec->name, &a_value);
-      g_object_get_property (b, prop_spec->name, &b_value);
+      g_object_get_property (G_OBJECT (a), prop_spec->name, &a_value);
+      g_object_get_property (G_OBJECT (b), prop_spec->name, &b_value);
 
       equal = (g_param_values_cmp (prop_spec, &a_value, &b_value) == 0);
 
@@ -207,103 +207,91 @@ gimp_config_iface_equal (GObject *a,
 }
 
 static void
-gimp_config_iface_reset (GObject *object)
+gimp_config_iface_reset (GimpConfig *config)
 {
-  gimp_config_reset_properties (object);
+  gimp_config_reset_properties (config);
 }
 
 /**
  * gimp_config_serialize_to_file:
- * @object: a #GObject that implements the #GimpConfigInterface.
+ * @config: a #GObject that implements the #GimpConfigInterface.
  * @filename: the name of the file to write the configuration to.
  * @header: optional file header (must be ASCII only)
  * @footer: optional file footer (must be ASCII only)
  * @data: user data passed to the serialize implementation.
  * @error:
  *
- * Serializes the object properties of @object to the file specified
+ * Serializes the object properties of @config to the file specified
  * by @filename. If a file with that name already exists, it is
  * overwritten. Basically this function opens @filename for you and
- * calls the serialize function of the @object's #GimpConfigInterface.
+ * calls the serialize function of the @config's #GimpConfigInterface.
  *
  * Return value: %TRUE if serialization succeeded, %FALSE otherwise.
  **/
 gboolean
-gimp_config_serialize_to_file (GObject      *object,
+gimp_config_serialize_to_file (GimpConfig   *config,
 			       const gchar  *filename,
 			       const gchar  *header,
 			       const gchar  *footer,
 			       gpointer      data,
 			       GError      **error)
 {
-  GimpConfigInterface *gimp_config_iface;
-  GimpConfigWriter    *writer;
+  GimpConfigWriter *writer;
 
-  g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONFIG (config), FALSE);
   g_return_val_if_fail (filename != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-  gimp_config_iface = GIMP_GET_CONFIG_INTERFACE (object);
-  g_return_val_if_fail (gimp_config_iface != NULL, FALSE);
 
   writer = gimp_config_writer_new_file (filename, TRUE, header, error);
   if (!writer)
     return FALSE;
 
-  gimp_config_iface->serialize (object, writer, data);
+  GIMP_CONFIG_GET_INTERFACE (config)->serialize (config, writer, data);
 
   return gimp_config_writer_finish (writer, footer, error);
 }
 
 gboolean
-gimp_config_serialize_to_fd (GObject   *object,
-                             gint       fd,
-                             gpointer   data)
+gimp_config_serialize_to_fd (GimpConfig *config,
+                             gint        fd,
+                             gpointer    data)
 {
-  GimpConfigInterface *gimp_config_iface;
-  GimpConfigWriter    *writer;
+  GimpConfigWriter *writer;
 
-  g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONFIG (config), FALSE);
   g_return_val_if_fail (fd > 0, FALSE);
-
-  gimp_config_iface = GIMP_GET_CONFIG_INTERFACE (object);
-  g_return_val_if_fail (gimp_config_iface != NULL, FALSE);
 
   writer = gimp_config_writer_new_fd (fd);
   if (!writer)
     return FALSE;
 
-  gimp_config_iface->serialize (object, writer, data);
+  GIMP_CONFIG_GET_INTERFACE (config)->serialize (config, writer, data);
 
   return gimp_config_writer_finish (writer, NULL, NULL);
 }
 
 /**
  * gimp_config_serialize_to_string:
- * @object: a #GObject that implements the #GimpConfigInterface.
+ * @config: a #GObject that implements the #GimpConfigInterface.
  * @data: user data passed to the serialize implementation.
  *
- * Serializes the object properties of @object to a string.
+ * Serializes the object properties of @config to a string.
  *
  * Return value: a newly allocated %NUL-terminated string.
  **/
 gchar *
-gimp_config_serialize_to_string (GObject  *object,
-				 gpointer  data)
+gimp_config_serialize_to_string (GimpConfig *config,
+				 gpointer    data)
 {
-  GimpConfigInterface *gimp_config_iface;
-  GimpConfigWriter    *writer;
-  GString             *str;
+  GimpConfigWriter *writer;
+  GString          *str;
 
-  g_return_val_if_fail (G_IS_OBJECT (object), NULL);
-
-  gimp_config_iface = GIMP_GET_CONFIG_INTERFACE (object);
-  g_return_val_if_fail (gimp_config_iface != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_CONFIG (config), NULL);
 
   str = g_string_new (NULL);
   writer = gimp_config_writer_new_string (str);
 
-  gimp_config_iface->serialize (object, writer, data);
+  GIMP_CONFIG_GET_INTERFACE (config)->serialize (config, writer, data);
 
   gimp_config_writer_finish (writer, NULL, NULL);
 
@@ -312,40 +300,37 @@ gimp_config_serialize_to_string (GObject  *object,
 
 /**
  * gimp_config_deserialize:
- * @object: a #GObject that implements the #GimpConfigInterface.
+ * @config: a #GObject that implements the #GimpConfigInterface.
  * @filename: the name of the file to read configuration from.
  * @data: user data passed to the deserialize implementation.
  * @error:
  *
  * Opens the file specified by @filename, reads configuration data
- * from it and configures @object accordingly. Basically this function
+ * from it and configures @config accordingly. Basically this function
  * creates a properly configured #GScanner for you and calls the
- * deserialize function of the @object's #GimpConfigInterface.
+ * deserialize function of the @config's #GimpConfigInterface.
  *
  * Return value: %TRUE if deserialization succeeded, %FALSE otherwise.
  **/
 gboolean
-gimp_config_deserialize_file (GObject      *object,
+gimp_config_deserialize_file (GimpConfig   *config,
 			      const gchar  *filename,
 			      gpointer      data,
 			      GError      **error)
 {
-  GimpConfigInterface *gimp_config_iface;
-  GScanner            *scanner;
-  gboolean             success;
+  GScanner *scanner;
+  gboolean  success;
 
-  g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONFIG (config), FALSE);
   g_return_val_if_fail (filename != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-  gimp_config_iface = GIMP_GET_CONFIG_INTERFACE (object);
-  g_return_val_if_fail (gimp_config_iface != NULL, FALSE);
 
   scanner = gimp_scanner_new_file (filename, error);
   if (! scanner)
     return FALSE;
 
-  success = gimp_config_iface->deserialize (object, scanner, 0, data);
+  success = GIMP_CONFIG_GET_INTERFACE (config)->deserialize (config,
+                                                             scanner, 0, data);
 
   gimp_scanner_destroy (scanner);
 
@@ -357,39 +342,36 @@ gimp_config_deserialize_file (GObject      *object,
 
 /**
  * gimp_config_deserialize_string:
- * @object: a #GObject that implements the #GimpConfigInterface.
+ * @config: a #GObject that implements the #GimpConfigInterface.
  * @text: string to deserialize (in UTF-8 encoding)
  * @text_len: length of @text in bytes or -1
  * @data:
  * @error:
  *
- * Configures @object from @text. Basically this function creates a
+ * Configures @config from @text. Basically this function creates a
  * properly configured #GScanner for you and calls the deserialize
- * function of the @object's #GimpConfigInterface.
+ * function of the @config's #GimpConfigInterface.
  *
  * Returns: %TRUE if deserialization succeeded, %FALSE otherwise.
  **/
 gboolean
-gimp_config_deserialize_string (GObject      *object,
+gimp_config_deserialize_string (GimpConfig      *config,
                                 const gchar  *text,
                                 gint          text_len,
 				gpointer      data,
                                 GError      **error)
 {
-  GimpConfigInterface *gimp_config_iface;
-  GScanner            *scanner;
-  gboolean             success;
+  GScanner *scanner;
+  gboolean  success;
 
-  g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONFIG (config), FALSE);
   g_return_val_if_fail (text != NULL || text_len == 0, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  gimp_config_iface = GIMP_GET_CONFIG_INTERFACE (object);
-  g_return_val_if_fail (gimp_config_iface != NULL, FALSE);
-
   scanner = gimp_scanner_new_string (text, text_len, error);
 
-  success = gimp_config_iface->deserialize (object, scanner, 0, data);
+  success = GIMP_CONFIG_GET_INTERFACE (config)->deserialize (config,
+                                                             scanner, 0, data);
 
   gimp_scanner_destroy (scanner);
 
@@ -438,7 +420,7 @@ gimp_config_deserialize_return (GScanner     *scanner,
 
 /**
  * gimp_config_duplicate:
- * @object: a #GObject that implements the #GimpConfigInterface.
+ * @config: a #GObject that implements the #GimpConfigInterface.
  *
  * Creates a copy of the passed object by copying all object
  * properties. The default implementation of the #GimpConfigInterface
@@ -447,18 +429,12 @@ gimp_config_deserialize_return (GScanner     *scanner,
  *
  * Return value: the duplicated #GObject.
  **/
-GObject *
-gimp_config_duplicate (GObject *object)
+GimpConfig *
+gimp_config_duplicate (GimpConfig *config)
 {
-  GimpConfigInterface *gimp_config_iface;
+  g_return_val_if_fail (GIMP_IS_CONFIG (config), NULL);
 
-  g_return_val_if_fail (G_IS_OBJECT (object), NULL);
-
-  gimp_config_iface = GIMP_GET_CONFIG_INTERFACE (object);
-
-  g_return_val_if_fail (gimp_config_iface != NULL, FALSE);
-
-  return gimp_config_iface->duplicate (object);
+  return GIMP_CONFIG_GET_INTERFACE (config)->duplicate (config);
 }
 
 /**
@@ -474,43 +450,31 @@ gimp_config_duplicate (GObject *object)
  * Return value: %TRUE if the two objects are equal.
  **/
 gboolean
-gimp_config_is_equal_to (GObject *a,
-                         GObject *b)
+gimp_config_is_equal_to (GimpConfig *a,
+                         GimpConfig *b)
 {
-  GimpConfigInterface *gimp_config_iface;
-
-  g_return_val_if_fail (G_IS_OBJECT (a), FALSE);
-  g_return_val_if_fail (G_IS_OBJECT (b), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONFIG (a), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONFIG (b), FALSE);
   g_return_val_if_fail (G_TYPE_FROM_INSTANCE (a) == G_TYPE_FROM_INSTANCE (b),
                         FALSE);
 
-  gimp_config_iface = GIMP_GET_CONFIG_INTERFACE (a);
-
-  g_return_val_if_fail (gimp_config_iface != NULL, FALSE);
-
-  return gimp_config_iface->equal (a, b);
+  return GIMP_CONFIG_GET_INTERFACE (a)->equal (a, b);
 }
 
 /**
  * gimp_config_reset:
- * @object: a #GObject that implements the #GimpConfigInterface.
+ * @config: a #GObject that implements the #GimpConfigInterface.
  *
  * Resets the object to its default state. The default implementation of the
  * #GimpConfigInterface only works for objects that are completely defined by
  * their properties.
  **/
 void
-gimp_config_reset (GObject *object)
+gimp_config_reset (GimpConfig *config)
 {
-  GimpConfigInterface *gimp_config_iface;
+  g_return_if_fail (GIMP_IS_CONFIG (config));
 
-  g_return_if_fail (G_IS_OBJECT (object));
-
-  gimp_config_iface = GIMP_GET_CONFIG_INTERFACE (object);
-
-  g_return_if_fail (gimp_config_iface != NULL);
-
-  gimp_config_iface->reset (object);
+  GIMP_CONFIG_GET_INTERFACE (config)->reset (config);
 }
 
 
@@ -531,7 +495,7 @@ static void  gimp_config_destroy_unknown_tokens (GSList   *unknown_tokens);
 
 /**
  * gimp_config_add_unknown_token:
- * @object: a #GObject.
+ * @config: a #GObject.
  * @key: a nul-terminated string to identify the value.
  * @value: a nul-terminated string representing the value.
  *
@@ -546,7 +510,7 @@ static void  gimp_config_destroy_unknown_tokens (GSList   *unknown_tokens);
  * function with a %NULL @value.
  **/
 void
-gimp_config_add_unknown_token (GObject     *object,
+gimp_config_add_unknown_token (GimpConfig     *config,
                                const gchar *key,
                                const gchar *value)
 {
@@ -555,10 +519,10 @@ gimp_config_add_unknown_token (GObject     *object,
   GSList          *last;
   GSList          *list;
 
-  g_return_if_fail (G_IS_OBJECT (object));
+  g_return_if_fail (GIMP_IS_CONFIG (config));
   g_return_if_fail (key != NULL);
 
-  unknown_tokens = (GSList *) g_object_get_data (object,
+  unknown_tokens = (GSList *) g_object_get_data (G_OBJECT (config),
                                                  GIMP_CONFIG_UNKNOWN_TOKENS);
 
   for (last = NULL, list = unknown_tokens;
@@ -580,7 +544,8 @@ gimp_config_add_unknown_token (GObject     *object,
               g_free (token->key);
 
               unknown_tokens = g_slist_remove (unknown_tokens, token);
-              g_object_set_data_full (object, GIMP_CONFIG_UNKNOWN_TOKENS,
+              g_object_set_data_full (G_OBJECT (config),
+                                      GIMP_CONFIG_UNKNOWN_TOKENS,
                                       unknown_tokens,
                      (GDestroyNotify) gimp_config_destroy_unknown_tokens);
             }
@@ -604,7 +569,8 @@ gimp_config_add_unknown_token (GObject     *object,
     {
       unknown_tokens = g_slist_append (NULL, token);
 
-      g_object_set_data_full (object, GIMP_CONFIG_UNKNOWN_TOKENS,
+      g_object_set_data_full (G_OBJECT (config),
+                              GIMP_CONFIG_UNKNOWN_TOKENS,
                               unknown_tokens,
              (GDestroyNotify) gimp_config_destroy_unknown_tokens);
     }
@@ -612,7 +578,7 @@ gimp_config_add_unknown_token (GObject     *object,
 
 /**
  * gimp_config_lookup_unknown_token:
- * @object: a #GObject.
+ * @config: a #GObject.
  * @key: a nul-terminated string to identify the value.
  *
  * This function retrieves data that was previously attached using
@@ -622,17 +588,17 @@ gimp_config_add_unknown_token (GObject     *object,
  * Returns: a pointer to a constant string.
  **/
 const gchar *
-gimp_config_lookup_unknown_token (GObject     *object,
+gimp_config_lookup_unknown_token (GimpConfig     *config,
                                   const gchar *key)
 {
   GimpConfigToken *token;
   GSList          *unknown_tokens;
   GSList          *list;
 
-  g_return_val_if_fail (G_IS_OBJECT (object), NULL);
+  g_return_val_if_fail (GIMP_IS_CONFIG (config), NULL);
   g_return_val_if_fail (key != NULL, NULL);
 
-  unknown_tokens = (GSList *) g_object_get_data (object,
+  unknown_tokens = (GSList *) g_object_get_data (G_OBJECT (config),
                                                  GIMP_CONFIG_UNKNOWN_TOKENS);
 
   for (list = unknown_tokens; list; list = g_slist_next (list))
@@ -648,15 +614,15 @@ gimp_config_lookup_unknown_token (GObject     *object,
 
 /**
  * gimp_config_foreach_unknown_token:
- * @object: a #GObject.
+ * @config: a #GObject.
  * @func: a function to call for each key/value pair.
  * @user_data: data to pass to @func.
  *
- * Calls @func for each key/value stored with the @object using
+ * Calls @func for each key/value stored with the @config using
  * gimp_config_add_unknown_token().
  **/
 void
-gimp_config_foreach_unknown_token (GObject               *object,
+gimp_config_foreach_unknown_token (GimpConfig               *config,
                                    GimpConfigForeachFunc  func,
                                    gpointer               user_data)
 {
@@ -664,10 +630,10 @@ gimp_config_foreach_unknown_token (GObject               *object,
   GSList          *unknown_tokens;
   GSList          *list;
 
-  g_return_if_fail (G_IS_OBJECT (object));
+  g_return_if_fail (GIMP_IS_CONFIG (config));
   g_return_if_fail (func != NULL);
 
-  unknown_tokens = (GSList *) g_object_get_data (object,
+  unknown_tokens = (GSList *) g_object_get_data (G_OBJECT (config),
                                                  GIMP_CONFIG_UNKNOWN_TOKENS);
 
   for (list = unknown_tokens; list; list = g_slist_next (list))

@@ -228,7 +228,7 @@ gimp_tools_restore (Gimp *gimp)
 
           filename = gimp_tool_options_build_filename (tool_info->tool_options,
                                                        "presets");
-          gimp_config_deserialize_file (G_OBJECT (tool_info->options_presets),
+          gimp_config_deserialize_file (GIMP_CONFIG (tool_info->options_presets),
                                         filename,
                                         gimp, NULL);
           g_free (filename);
@@ -274,7 +274,7 @@ gimp_tools_save (Gimp *gimp)
           footer = g_strdup_printf ("end of %s options presets",
                                     GIMP_OBJECT (tool_info)->name);
 
-          gimp_config_serialize_to_file (G_OBJECT (tool_info->options_presets),
+          gimp_config_serialize_to_file (GIMP_CONFIG (tool_info->options_presets),
                                          filename, header, footer,
                                          NULL, NULL);
 

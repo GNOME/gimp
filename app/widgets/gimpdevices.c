@@ -129,7 +129,7 @@ gimp_devices_restore (Gimp *gimp)
 
   filename = gimp_personal_rc_file ("devicerc");
 
-  if (! gimp_config_deserialize_file (G_OBJECT (manager->device_info_list),
+  if (! gimp_config_deserialize_file (GIMP_CONFIG (manager->device_info_list),
 				      filename,
 				      gimp,
 				      &error))
@@ -171,7 +171,7 @@ gimp_devices_save (Gimp *gimp)
 
   filename = gimp_personal_rc_file ("devicerc");
 
-  if (! gimp_config_serialize_to_file (G_OBJECT (manager->device_info_list),
+  if (! gimp_config_serialize_to_file (GIMP_CONFIG (manager->device_info_list),
 				       filename,
 				       "GIMP devicerc",
 				       "end of devicerc",

@@ -1,4 +1,4 @@
-/* gimpparasite.c: Copyright 1998 Jay Cox <jaycox@earthlink.net> 
+/* gimpparasite.c: Copyright 1998 Jay Cox <jaycox@earthlink.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ gimp_parasite_find (Gimp        *gimp,
   return gimp_parasite_list_find (gimp->parasites, name);
 }
 
-static void 
+static void
 list_func (const gchar    *key,
 	   GimpParasite   *parasite,
 	   gchar        ***current)
@@ -101,7 +101,7 @@ gimp_parasiterc_load (Gimp *gimp)
 
   filename = gimp_personal_rc_file ("parasiterc");
 
-  if (! gimp_config_deserialize_file (G_OBJECT (gimp->parasites),
+  if (! gimp_config_deserialize_file (GIMP_CONFIG (gimp->parasites),
 				      filename, NULL, &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
@@ -130,7 +130,7 @@ gimp_parasiterc_save (Gimp *gimp)
 
   filename = gimp_personal_rc_file ("parasiterc");
 
-  if (! gimp_config_serialize_to_file (G_OBJECT (gimp->parasites),
+  if (! gimp_config_serialize_to_file (GIMP_CONFIG (gimp->parasites),
 				       filename,
 				       header, footer, NULL,
 				       &error))

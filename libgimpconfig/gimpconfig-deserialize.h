@@ -23,10 +23,10 @@
 #define __GIMP_CONFIG_DESERIALIZE_H__
 
 
-gboolean gimp_config_deserialize_properties (GObject  *object,
-                                             GScanner *scanner,
-                                             gint      nest_level,
-                                             gboolean  store_unknown_tokens);
+gboolean gimp_config_deserialize_properties (GimpConfig *config,
+                                             GScanner   *scanner,
+                                             gint        nest_level,
+                                             gboolean    store_unknown_tokens);
 
 
 #endif /* __GIMP_CONFIG_DESERIALIZE_H__ */

@@ -32,7 +32,7 @@
 static void   gimp_image_editor_class_init     (GimpImageEditorClass *klass);
 static void   gimp_image_editor_init           (GimpImageEditor      *editor);
 
-static void   gimp_image_editor_docked_iface_init  (GimpDockedIface  *docked_iface);
+static void   gimp_image_editor_docked_iface_init  (GimpDockedInterface *docked_iface);
 static void   gimp_image_editor_set_docked_context (GimpDocked       *docked,
                                                     GimpContext      *context,
                                                     GimpContext      *prev_context);
@@ -106,7 +106,7 @@ gimp_image_editor_init (GimpImageEditor *editor)
 }
 
 static void
-gimp_image_editor_docked_iface_init (GimpDockedIface *docked_iface)
+gimp_image_editor_docked_iface_init (GimpDockedInterface *docked_iface)
 {
   docked_iface->set_context = gimp_image_editor_set_docked_context;
 }

@@ -58,7 +58,7 @@ gimp_text_to_parasite (const GimpText *text)
 
   g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
 
-  str = gimp_config_serialize_to_string (G_OBJECT (text), NULL);
+  str = gimp_config_serialize_to_string (GIMP_CONFIG (text), NULL);
   g_return_val_if_fail (str != NULL, NULL);
 
   parasite = gimp_parasite_new (gimp_text_parasite_name (),
@@ -82,10 +82,10 @@ gimp_text_from_parasite (const GimpParasite *parasite)
 
   str = gimp_parasite_data (parasite);
   g_return_val_if_fail (str != NULL, NULL);
- 
+
   text = g_object_new (GIMP_TYPE_TEXT, NULL);
 
-  if (! gimp_config_deserialize_string (G_OBJECT (text),
+  if (! gimp_config_deserialize_string (GIMP_CONFIG (text),
                                         str,
                                         gimp_parasite_data_size (parasite),
                                         NULL,
@@ -120,7 +120,7 @@ enum
   COLOR		  = 5,
   LAYER_ALIGNMENT = 6,
   XLFD		  = 7,
-  NUM_PARAMS 
+  NUM_PARAMS
 };
 
 GimpText *

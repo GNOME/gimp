@@ -42,10 +42,10 @@
 
 static void     gimp_document_list_config_iface_init (gpointer    iface,
                                                       gpointer    iface_data);
-static gboolean gimp_document_list_serialize   (GObject          *object,
+static gboolean gimp_document_list_serialize   (GimpConfig       *config,
 						GimpConfigWriter *writer,
 						gpointer          data);
-static gboolean gimp_document_list_deserialize (GObject          *object,
+static gboolean gimp_document_list_deserialize (GimpConfig       *config,
 						GScanner         *scanner,
 						gint              nest_level,
 						gpointer          data);
@@ -54,7 +54,7 @@ static gboolean gimp_document_list_deserialize (GObject          *object,
 static const gchar *document_symbol = "document";
 
 
-GType 
+GType
 gimp_document_list_get_type (void)
 {
   static GType document_list_type = 0;
@@ -73,19 +73,18 @@ gimp_document_list_get_type (void)
 	0,              /* n_preallocs    */
 	NULL            /* instance_init  */
       };
-      static const GInterfaceInfo document_list_iface_info = 
-      { 
+      static const GInterfaceInfo document_list_iface_info =
+      {
         gimp_document_list_config_iface_init,
-        NULL,           /* iface_finalize */ 
+        NULL,           /* iface_finalize */
         NULL            /* iface_data     */
       };
 
-      document_list_type = g_type_register_static (GIMP_TYPE_LIST, 
+      document_list_type = g_type_register_static (GIMP_TYPE_LIST,
                                                    "GimpDocumentList",
                                                    &document_list_info, 0);
 
-      g_type_add_interface_static (document_list_type,
-                                   GIMP_TYPE_CONFIG_INTERFACE,
+      g_type_add_interface_static (document_list_type, GIMP_TYPE_CONFIG,
                                    &document_list_iface_info);
     }
 
@@ -103,16 +102,16 @@ gimp_document_list_config_iface_init (gpointer  iface,
 }
 
 static gboolean
-gimp_document_list_serialize (GObject          *object,
+gimp_document_list_serialize (GimpConfig       *config,
                               GimpConfigWriter *writer,
                               gpointer          data)
 {
   GList *list;
 
-  for (list = GIMP_LIST (object)->list; list; list = list->next)
+  for (list = GIMP_LIST (config)->list; list; list = list->next)
     {
       gimp_config_writer_open (writer, document_symbol);
-      gimp_config_writer_string (writer, GIMP_OBJECT (list->data)->name); 
+      gimp_config_writer_string (writer, GIMP_OBJECT (list->data)->name);
       gimp_config_writer_close (writer);
     }
 
@@ -120,16 +119,14 @@ gimp_document_list_serialize (GObject          *object,
 }
 
 static gboolean
-gimp_document_list_deserialize (GObject  *object,
-                                GScanner *scanner,
-                                gint      nest_level,
-                                gpointer  data)
+gimp_document_list_deserialize (GimpConfig *config,
+                                GScanner   *scanner,
+                                gint        nest_level,
+                                gpointer    data)
 {
-  GimpDocumentList *document_list;
+  GimpDocumentList *document_list = GIMP_DOCUMENT_LIST (config);
   GTokenType        token;
   gint              size;
-
-  document_list = GIMP_DOCUMENT_LIST (object);
 
   size = GPOINTER_TO_INT (data);
 

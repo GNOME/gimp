@@ -3,7 +3,7 @@
  *
  * Test suite for GimpConfig.
  * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -48,8 +48,8 @@ int
 main (int   argc,
       char *argv[])
 {
-  GObject     *gimprc;
-  GObject     *gimprc2;
+  GimpConfig  *gimprc;
+  GimpConfig  *gimprc2;
   const gchar *filename = "foorc";
   gchar       *header;
   gchar       *result;
@@ -61,7 +61,7 @@ main (int   argc,
       if (strcmp (argv[i], "--g-fatal-warnings") == 0)
         {
           GLogLevelFlags fatal_mask;
-        
+
           fatal_mask = g_log_set_always_fatal (G_LOG_FATAL_MASK);
           fatal_mask |= G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL;
           g_log_set_always_fatal (fatal_mask);
@@ -75,12 +75,12 @@ main (int   argc,
   g_print (" Creating a new GimpRc object ...");
   gimprc = g_object_new (GIMP_TYPE_RC, NULL);
   g_print (" done.\n\n");
-  
-  g_print (" Adding the unknown token (foobar \"hadjaha\") ..."); 
+
+  g_print (" Adding the unknown token (foobar \"hadjaha\") ...");
   gimp_config_add_unknown_token (gimprc, "foobar", "hadjaha");
   g_print (" done.\n\n");
 
-  g_print (" Serializing %s to '%s' ...", 
+  g_print (" Serializing %s to '%s' ...",
            g_type_name (G_TYPE_FROM_INSTANCE (gimprc)), filename);
 
   if (! gimp_config_serialize_to_file (gimprc,
@@ -122,7 +122,7 @@ main (int   argc,
   g_object_set (gimprc2, "show-tips", FALSE, NULL);
 
   g_print ("\n Querying for \"default-comment\" ... ");
-  
+
   result = gimp_rc_query (GIMP_RC (gimprc2), "default-comment");
   if (result)
     {
@@ -136,7 +136,7 @@ main (int   argc,
   g_free (result);
 
   g_print (" Querying for \"foobar\" ... ");
-  
+
   result = gimp_rc_query (GIMP_RC (gimprc2), "foobar");
   if (result && strcmp (result, "hadjaha") == 0)
     {
@@ -200,7 +200,7 @@ main (int   argc,
   g_free (result);
   g_object_unref (gimprc2);
   g_object_unref (gimprc);
-  
+
   g_print ("\nFinished test of GimpConfig.\n\n");
 
   return EXIT_SUCCESS;
@@ -227,7 +227,7 @@ notify_callback (GObject    *object,
     }
   else
     {
-      g_print ("  %s changed but we failed to serialize its value!\n", 
+      g_print ("  %s changed but we failed to serialize its value!\n",
                pspec->name);
     }
 

@@ -494,8 +494,8 @@ gimp_template_editor_set_template (GimpTemplateEditor *editor,
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (editor->size_se), 1,
                                   template->yresolution, FALSE);
 
-  gimp_config_copy_properties (G_OBJECT (template),
-                               G_OBJECT (editor->template));
+  gimp_config_copy_properties (GIMP_CONFIG (template),
+                               GIMP_CONFIG (editor->template));
 
   g_signal_connect (editor->template, "notify",
                     G_CALLBACK (gimp_template_editor_template_notify),
@@ -508,7 +508,7 @@ gimp_template_editor_get_template (GimpTemplateEditor *editor)
 {
   g_return_val_if_fail (GIMP_IS_TEMPLATE_EDITOR (editor), NULL);
 
-  return GIMP_TEMPLATE (gimp_config_duplicate (G_OBJECT (editor->template)));
+  return GIMP_TEMPLATE (gimp_config_duplicate (GIMP_CONFIG (editor->template)));
 }
 
 

@@ -46,7 +46,7 @@ gimp_templates_load (Gimp *gimp)
 
   filename = gimp_personal_rc_file ("templaterc");
 
-  if (!gimp_config_deserialize_file (G_OBJECT (gimp->templates),
+  if (!gimp_config_deserialize_file (GIMP_CONFIG (gimp->templates),
 				     filename,
 				     NULL,
 				     &error))
@@ -79,7 +79,7 @@ gimp_templates_save (Gimp *gimp)
 
   filename = gimp_personal_rc_file ("templaterc");
 
-  if (! gimp_config_serialize_to_file (G_OBJECT (gimp->templates),
+  if (! gimp_config_serialize_to_file (GIMP_CONFIG (gimp->templates),
 				       filename,
 				       header, footer, NULL,
 				       &error))

@@ -90,15 +90,15 @@ static void       gimp_context_get_property   (GObject               *object,
 static gsize      gimp_context_get_memsize    (GimpObject            *object,
                                                gsize                 *gui_size);
 
-static gboolean   gimp_context_serialize            (GObject          *object,
+static gboolean   gimp_context_serialize            (GimpConfig       *config,
                                                      GimpConfigWriter *writer,
                                                      gpointer          data);
-static gboolean   gimp_context_serialize_property   (GObject          *object,
+static gboolean   gimp_context_serialize_property   (GimpConfig       *config,
                                                      guint             property_id,
                                                      const GValue     *value,
                                                      GParamSpec       *pspec,
                                                      GimpConfigWriter *writer);
-static gboolean   gimp_context_deserialize_property (GObject          *object,
+static gboolean   gimp_context_deserialize_property (GimpConfig       *config,
                                                      guint             property_id,
                                                      GValue           *value,
                                                      GParamSpec       *pspec,
@@ -352,8 +352,7 @@ gimp_context_get_type (void)
 					     "GimpContext",
 					     &context_info, 0);
 
-      g_type_add_interface_static (context_type,
-                                   GIMP_TYPE_CONFIG_INTERFACE,
+      g_type_add_interface_static (context_type, GIMP_TYPE_CONFIG,
                                    &config_iface_info);
     }
 
@@ -1102,15 +1101,15 @@ gimp_context_get_memsize (GimpObject *object,
 }
 
 static gboolean
-gimp_context_serialize (GObject          *object,
+gimp_context_serialize (GimpConfig       *config,
                         GimpConfigWriter *writer,
                         gpointer          data)
 {
-  return gimp_config_serialize_changed_properties (object, writer);
+  return gimp_config_serialize_changed_properties (config, writer);
 }
 
 static gboolean
-gimp_context_serialize_property (GObject          *object,
+gimp_context_serialize_property (GimpConfig       *config,
                                  guint             property_id,
                                  const GValue     *value,
                                  GParamSpec       *pspec,
@@ -1119,7 +1118,7 @@ gimp_context_serialize_property (GObject          *object,
   GimpContext *context;
   GimpObject  *serialize_obj;
 
-  context = GIMP_CONTEXT (object);
+  context = GIMP_CONTEXT (config);
 
 #if 0
   /*  serialize nothing if the property is not defined  */
@@ -1155,7 +1154,7 @@ gimp_context_serialize_property (GObject          *object,
 }
 
 static gboolean
-gimp_context_deserialize_property (GObject    *object,
+gimp_context_deserialize_property (GimpConfig *object,
                                    guint       property_id,
                                    GValue     *value,
                                    GParamSpec *pspec,

@@ -36,8 +36,8 @@
 
 /**
  * gimp_config_diff:
- * @a: a #GObject
- * @b: another #GObject of the same type as @a
+ * @a: a #GimpConfig
+ * @b: another #GimpConfig of the same type as @a
  * @flags: a mask of GParamFlags
  *
  * Compares all properties of @a and @b that have all @flags set. If
@@ -46,8 +46,8 @@
  * Return value: a GList of differing GParamSpecs.
  **/
 GList *
-gimp_config_diff (GObject      *a,
-                  GObject      *b,
+gimp_config_diff (GimpConfig      *a,
+                  GimpConfig      *b,
                   GParamFlags   flags)
 {
   GParamSpec **param_specs;
@@ -73,14 +73,14 @@ gimp_config_diff (GObject      *a,
           g_value_init (&a_value, param_specs[i]->value_type);
           g_value_init (&b_value, param_specs[i]->value_type);
 
-          g_object_get_property (a, param_specs[i]->name, &a_value);
-          g_object_get_property (b, param_specs[i]->name, &b_value);
+          g_object_get_property (G_OBJECT (a), param_specs[i]->name, &a_value);
+          g_object_get_property (G_OBJECT (b), param_specs[i]->name, &b_value);
 
           if (G_IS_PARAM_SPEC_OBJECT (param_specs[i]) &&
               (param_specs[i]->flags & GIMP_PARAM_AGGREGATE))
             {
-              GObject *a_object = g_value_get_object (&a_value);
-              GObject *b_object = g_value_get_object (&b_value);
+              GimpConfig *a_object = g_value_get_object (&a_value);
+              GimpConfig *b_object = g_value_get_object (&b_value);
 
               if (a_object && b_object &&
                   G_TYPE_FROM_INSTANCE (a_object) ==
@@ -180,23 +180,23 @@ gimp_config_disconnect (GObject *src,
 
 /**
  * gimp_config_copy_properties:
- * @src: a #GObject
- * @dest: another #GObject of the same type as @src
+ * @src: a #GimpConfig
+ * @dest: another #GimpConfig of the same type as @src
  *
  * Retrieves all read and writeable property settings from @src and
  * applies the values to @dest.
  **/
 void
-gimp_config_copy_properties (GObject *src,
-                             GObject *dest)
+gimp_config_copy_properties (GimpConfig *src,
+                             GimpConfig *dest)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
   guint          n_property_specs;
   guint          i;
 
-  g_return_if_fail (G_IS_OBJECT (src));
-  g_return_if_fail (G_IS_OBJECT (dest));
+  g_return_if_fail (GIMP_IS_CONFIG (src));
+  g_return_if_fail (GIMP_IS_CONFIG (dest));
   g_return_if_fail (G_TYPE_FROM_INSTANCE (src) == G_TYPE_FROM_INSTANCE (dest));
 
   klass = G_OBJECT_GET_CLASS (src);
@@ -206,7 +206,7 @@ gimp_config_copy_properties (GObject *src,
   if (!property_specs)
     return;
 
-  g_object_freeze_notify (dest);
+  g_object_freeze_notify (G_OBJECT (dest));
 
   for (i = 0; i < n_property_specs; i++)
     {
@@ -221,16 +221,18 @@ gimp_config_copy_properties (GObject *src,
           if (G_IS_PARAM_SPEC_OBJECT (prop_spec) &&
               (prop_spec->flags & GIMP_PARAM_AGGREGATE))
             {
-              GValue   src_value  = { 0, };
-              GValue   dest_value = { 0, };
-              GObject *src_object;
-              GObject *dest_object;
+              GValue      src_value  = { 0, };
+              GValue      dest_value = { 0, };
+              GimpConfig *src_object;
+              GimpConfig *dest_object;
 
               g_value_init (&src_value,  prop_spec->value_type);
               g_value_init (&dest_value, prop_spec->value_type);
 
-              g_object_get_property (src,  prop_spec->name, &src_value);
-              g_object_get_property (dest, prop_spec->name, &dest_value);
+              g_object_get_property (G_OBJECT (src),
+                                     prop_spec->name, &src_value);
+              g_object_get_property (G_OBJECT (dest),
+                                     prop_spec->name, &dest_value);
 
               src_object  = g_value_get_object (&src_value);
               dest_object = g_value_get_object (&dest_value);
@@ -251,8 +253,8 @@ gimp_config_copy_properties (GObject *src,
 
               g_value_init (&value, prop_spec->value_type);
 
-              g_object_get_property (src,  prop_spec->name, &value);
-              g_object_set_property (dest, prop_spec->name, &value);
+              g_object_get_property (G_OBJECT (src),  prop_spec->name, &value);
+              g_object_set_property (G_OBJECT (dest), prop_spec->name, &value);
 
               g_value_unset (&value);
             }
@@ -261,33 +263,36 @@ gimp_config_copy_properties (GObject *src,
 
   g_free (property_specs);
 
-  g_object_thaw_notify (dest);
+  g_object_thaw_notify (G_OBJECT (dest));
 }
 
 /**
  * gimp_config_reset_properties:
- * @object: a #GObject
+ * @config: a #GimpConfig
  *
  * Resets all writable properties of @object to the default values as
  * defined in their #GParamSpec.
  **/
 void
-gimp_config_reset_properties (GObject *object)
+gimp_config_reset_properties (GimpConfig *config)
 {
+  GObject       *object;
   GObjectClass  *klass;
   GParamSpec   **property_specs;
   GValue         value = { 0, };
   guint          n_property_specs;
   guint          i;
 
-  g_return_if_fail (G_IS_OBJECT (object));
+  g_return_if_fail (GIMP_IS_CONFIG (config));
 
-  klass = G_OBJECT_GET_CLASS (object);
+  klass = G_OBJECT_GET_CLASS (config);
 
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
 
   if (!property_specs)
     return;
+
+  object = G_OBJECT (config);
 
   g_object_freeze_notify (object);
 
@@ -305,13 +310,13 @@ gimp_config_reset_properties (GObject *object)
               if ((prop_spec->flags & GIMP_PARAM_SERIALIZE) &&
                   (prop_spec->flags & GIMP_PARAM_AGGREGATE) &&
                   g_type_interface_peek (g_type_class_peek (prop_spec->value_type),
-                                         GIMP_TYPE_CONFIG_INTERFACE))
+                                         GIMP_TYPE_CONFIG))
                 {
                   g_value_init (&value, prop_spec->value_type);
 
                   g_object_get_property (object, prop_spec->name, &value);
 
-                  gimp_config_reset (g_value_get_object (&value));
+                  gimp_config_reset (GIMP_CONFIG (g_value_get_object (&value)));
 
                   g_value_unset (&value);
                 }
@@ -319,8 +324,8 @@ gimp_config_reset_properties (GObject *object)
           else
             {
               g_value_init (&value, prop_spec->value_type);
-
               g_param_value_set_default (prop_spec, &value);
+
               g_object_set_property (object, prop_spec->name, &value);
 
               g_value_unset (&value);

@@ -41,7 +41,7 @@
 
 static void        gimp_editor_class_init        (GimpEditorClass *klass);
 static void        gimp_editor_init              (GimpEditor      *editor);
-static void        gimp_editor_docked_iface_init (GimpDockedIface *docked_iface);
+static void        gimp_editor_docked_iface_init (GimpDockedInterface *docked_iface);
 
 static void        gimp_editor_destroy           (GtkObject       *object);
 static void        gimp_editor_style_set         (GtkWidget       *widget,
@@ -142,7 +142,7 @@ gimp_editor_init (GimpEditor *editor)
 }
 
 static void
-gimp_editor_docked_iface_init (GimpDockedIface *docked_iface)
+gimp_editor_docked_iface_init (GimpDockedInterface *docked_iface)
 {
   docked_iface->get_menu = gimp_editor_get_menu;
 }

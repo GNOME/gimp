@@ -74,10 +74,10 @@ static void      gimp_template_get_property  (GObject          *object,
 static void      gimp_template_notify        (GObject          *object,
                                               GParamSpec       *pspec);
 
-static gboolean  gimp_template_serialize     (GObject          *object,
+static gboolean  gimp_template_serialize     (GimpConfig       *config,
                                               GimpConfigWriter *writer,
                                               gpointer          data);
-static gboolean  gimp_template_deserialize   (GObject          *object,
+static gboolean  gimp_template_deserialize   (GimpConfig       *config,
                                               GScanner         *scanner,
                                               gint              nest_level,
                                               gpointer          data);
@@ -105,7 +105,7 @@ gimp_template_get_type (void)
 	0,              /* n_preallocs    */
 	(GInstanceInitFunc) gimp_template_init,
       };
-      static const GInterfaceInfo config_iface_info = 
+      static const GInterfaceInfo config_iface_info =
       {
         (GInterfaceInitFunc) gimp_template_config_iface_init,
         NULL,           /* iface_finalize */
@@ -113,11 +113,10 @@ gimp_template_get_type (void)
       };
 
       template_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
-                                              "GimpTemplate", 
+                                              "GimpTemplate",
                                               &template_info, 0);
 
-      g_type_add_interface_static (template_type,
-                                   GIMP_TYPE_CONFIG_INTERFACE,
+      g_type_add_interface_static (template_type, GIMP_TYPE_CONFIG,
                                    &config_iface_info);
     }
 
@@ -344,20 +343,21 @@ gimp_template_notify (GObject    *object,
 }
 
 static gboolean
-gimp_template_serialize (GObject          *object,
+gimp_template_serialize (GimpConfig       *config,
                          GimpConfigWriter *writer,
                          gpointer          data)
 {
-  return gimp_config_serialize_properties (object, writer);
+  return gimp_config_serialize_properties (config, writer);
 }
 
 static gboolean
-gimp_template_deserialize (GObject  *object,
-                           GScanner *scanner,
-                           gint      nest_level,
-                           gpointer  data)
+gimp_template_deserialize (GimpConfig *config,
+                           GScanner   *scanner,
+                           gint        nest_level,
+                           gpointer    data)
 {
-  return gimp_config_deserialize_properties (object, scanner, nest_level, FALSE);
+  return gimp_config_deserialize_properties (config,
+                                             scanner, nest_level, FALSE);
 }
 
 

@@ -23,6 +23,9 @@
 #define __CONFIG_TYPES_H__
 
 
+typedef struct _GimpConfig          GimpConfig; /* dummy typedef */
+typedef struct _GimpConfigInterface GimpConfigInterface;
+
 typedef struct _GimpBaseConfig      GimpBaseConfig;
 typedef struct _GimpCoreConfig      GimpCoreConfig;
 typedef struct _GimpDisplayConfig   GimpDisplayConfig;

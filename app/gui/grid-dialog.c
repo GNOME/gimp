@@ -80,8 +80,8 @@ grid_dialog_new (GimpImage *gimage)
   grid = gimp_image_get_grid (GIMP_IMAGE (gimage));
 
   grid_backup = g_object_new (GIMP_TYPE_GRID, NULL);
-  gimp_config_copy_properties (G_OBJECT (grid),
-                               G_OBJECT (grid_backup));
+  gimp_config_copy_properties (GIMP_CONFIG (grid),
+                               GIMP_CONFIG (grid_backup));
 
   /* dialog */
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
@@ -148,8 +148,8 @@ reset_callback (GtkWidget  *widget,
   grid        = g_object_get_data (G_OBJECT (dialog), "grid");
   grid_backup = g_object_get_data (G_OBJECT (dialog), "grid-backup");
 
-  gimp_config_copy_properties (G_OBJECT (grid_backup),
-                               G_OBJECT (grid));
+  gimp_config_copy_properties (GIMP_CONFIG (grid_backup),
+                               GIMP_CONFIG (grid));
   gimp_image_grid_changed (GIMP_IMAGE (gimage));
 }
 
@@ -180,7 +180,8 @@ ok_callback (GtkWidget  *widget,
   grid        = g_object_get_data (G_OBJECT (dialog), "grid");
   grid_backup = g_object_get_data (G_OBJECT (dialog), "grid-backup");
 
-  if (! gimp_config_is_equal_to (G_OBJECT (grid_backup), G_OBJECT (grid)))
+  if (! gimp_config_is_equal_to (GIMP_CONFIG (grid_backup),
+                                 GIMP_CONFIG (grid)))
     gimp_image_undo_push_image_grid (gimage, _("Grid"), grid_backup);
 
   gtk_widget_destroy (dialog);

@@ -1,6 +1,6 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -48,8 +48,8 @@ gimp_image_new_get_last_template (Gimp      *gimp,
   if (gimage)
     gimp_template_set_from_image (template, gimage);
   else
-    gimp_config_copy_properties (G_OBJECT (gimp->image_new_last_template),
-                                 G_OBJECT (template));
+    gimp_config_copy_properties (GIMP_CONFIG (gimp->image_new_last_template),
+                                 GIMP_CONFIG (template));
 
   if (gimp->global_buffer && gimp->have_current_cut_buffer)
     {
@@ -69,7 +69,7 @@ gimp_image_new_set_last_template (Gimp         *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_TEMPLATE (template));
 
-  gimp_config_copy_properties (G_OBJECT (template),
-                               G_OBJECT (gimp->image_new_last_template));
+  gimp_config_copy_properties (GIMP_CONFIG (template),
+                               GIMP_CONFIG (gimp->image_new_last_template));
   gimp->have_current_cut_buffer = FALSE;
 }

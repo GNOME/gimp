@@ -235,7 +235,8 @@ stroke_dialog_reset_callback (GtkWidget  *widget,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
   gimp_container_menu_select_item (GIMP_CONTAINER_MENU (menu),
                                    GIMP_VIEWABLE (tool_info->paint_info));
-  gimp_config_reset (options);
+
+  gimp_config_reset (GIMP_CONFIG (options));
 }
 
 static void

@@ -78,7 +78,7 @@ static void    gimp_viewable_real_get_preview_size   (GimpViewable  *viewable,
                                                       gint          *height);
 static gchar * gimp_viewable_real_get_description    (GimpViewable  *viewable,
                                                       gchar        **tooltip);
-static gboolean gimp_viewable_serialize_property     (GObject       *object,
+static gboolean gimp_viewable_serialize_property     (GimpConfig    *config,
                                                       guint          property_id,
                                                       const GValue  *value,
                                                       GParamSpec    *pspec,
@@ -123,8 +123,7 @@ gimp_viewable_get_type (void)
 					      "GimpViewable",
 					      &viewable_info, 0);
 
-      g_type_add_interface_static (viewable_type,
-                                   GIMP_TYPE_CONFIG_INTERFACE,
+      g_type_add_interface_static (viewable_type, GIMP_TYPE_CONFIG,
                                    &config_iface_info);
     }
 
@@ -315,13 +314,13 @@ gimp_viewable_real_get_description (GimpViewable  *viewable,
 }
 
 static gboolean
-gimp_viewable_serialize_property (GObject          *object,
+gimp_viewable_serialize_property (GimpConfig       *config,
                                   guint             property_id,
                                   const GValue     *value,
                                   GParamSpec       *pspec,
                                   GimpConfigWriter *writer)
 {
-  GimpViewable *viewable = GIMP_VIEWABLE (object);
+  GimpViewable *viewable = GIMP_VIEWABLE (config);
 
   switch (property_id)
     {

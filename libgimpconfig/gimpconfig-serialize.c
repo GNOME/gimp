@@ -54,7 +54,7 @@ static void  serialize_unknown_token (const gchar  *key,
 
 /**
  * gimp_config_serialize_properties:
- * @object: a #GObject.
+ * @config: a #GimpConfig.
  * @writer: a #GimpConfigWriter.
  *
  * This function writes all object properties to the @writer.
@@ -62,7 +62,7 @@ static void  serialize_unknown_token (const gchar  *key,
  * Returns: %TRUE if serialization succeeded, %FALSE otherwise
  **/
 gboolean
-gimp_config_serialize_properties (GObject          *object,
+gimp_config_serialize_properties (GimpConfig          *config,
                                   GimpConfigWriter *writer)
 {
   GObjectClass  *klass;
@@ -70,9 +70,9 @@ gimp_config_serialize_properties (GObject          *object,
   guint          n_property_specs;
   guint          i;
 
-  g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
+  g_return_val_if_fail (G_IS_OBJECT (config), FALSE);
 
-  klass = G_OBJECT_GET_CLASS (object);
+  klass = G_OBJECT_GET_CLASS (config);
 
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
 
@@ -86,7 +86,7 @@ gimp_config_serialize_properties (GObject          *object,
       if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
         continue;
 
-      if (! gimp_config_serialize_property (object, prop_spec, writer))
+      if (! gimp_config_serialize_property (config, prop_spec, writer))
         return FALSE;
     }
 
@@ -97,7 +97,7 @@ gimp_config_serialize_properties (GObject          *object,
 
 /**
  * gimp_config_serialize_changed_properties:
- * @object: a #GObject.
+ * @config: a #GimpConfig.
  * @writer: a #GimpConfigWriter.
  *
  * This function writes all object properties that have been changed from
@@ -106,7 +106,7 @@ gimp_config_serialize_properties (GObject          *object,
  * Returns: %TRUE if serialization succeeded, %FALSE otherwise
  **/
 gboolean
-gimp_config_serialize_changed_properties (GObject          *object,
+gimp_config_serialize_changed_properties (GimpConfig       *config,
                                           GimpConfigWriter *writer)
 {
   GObjectClass  *klass;
@@ -115,9 +115,9 @@ gimp_config_serialize_changed_properties (GObject          *object,
   guint          i;
   GValue         value = { 0, };
 
-  g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
+  g_return_val_if_fail (G_IS_OBJECT (config), FALSE);
 
-  klass = G_OBJECT_GET_CLASS (object);
+  klass = G_OBJECT_GET_CLASS (config);
 
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
 
@@ -132,11 +132,11 @@ gimp_config_serialize_changed_properties (GObject          *object,
         continue;
 
       g_value_init (&value, prop_spec->value_type);
-      g_object_get_property (object, prop_spec->name, &value);
+      g_object_get_property (G_OBJECT (config), prop_spec->name, &value);
 
       if (! g_param_value_defaults (prop_spec, &value))
         {
-          if (! gimp_config_serialize_property (object, prop_spec, writer))
+          if (! gimp_config_serialize_property (config, prop_spec, writer))
             return FALSE;
         }
 
@@ -150,33 +150,33 @@ gimp_config_serialize_changed_properties (GObject          *object,
 
 /**
  * gimp_config_serialize_properties_diff:
- * @object: a #GObject.
- * @compare: a #GObject of the same type as @object.
+ * @config: a #GimpConfig.
+ * @compare: a #GimpConfig of the same type as @config.
  * @writer: a #GimpConfigWriter.
  *
- * This function compares @object and @compare and writes all
- * properties of @object that have different values than @compare to
+ * This function compares @config and @compare and writes all
+ * properties of @config that have different values than @compare to
  * the @writer.
  *
  * Returns: %TRUE if serialization succeeded, %FALSE otherwise
  **/
 gboolean
-gimp_config_serialize_properties_diff (GObject          *object,
-                                       GObject          *compare,
+gimp_config_serialize_properties_diff (GimpConfig       *config,
+                                       GimpConfig       *compare,
 				       GimpConfigWriter *writer)
 {
   GObjectClass *klass;
   GList        *diff;
   GList        *list;
 
-  g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
+  g_return_val_if_fail (G_IS_OBJECT (config), FALSE);
   g_return_val_if_fail (G_IS_OBJECT (compare), FALSE);
-  g_return_val_if_fail (G_TYPE_FROM_INSTANCE (object) ==
+  g_return_val_if_fail (G_TYPE_FROM_INSTANCE (config) ==
                         G_TYPE_FROM_INSTANCE (compare), FALSE);
 
-  klass = G_OBJECT_GET_CLASS (object);
+  klass = G_OBJECT_GET_CLASS (config);
 
-  diff = gimp_config_diff (object, compare, GIMP_PARAM_SERIALIZE);
+  diff = gimp_config_diff (config, compare, GIMP_PARAM_SERIALIZE);
 
   if (! diff)
     return TRUE;
@@ -188,7 +188,7 @@ gimp_config_serialize_properties_diff (GObject          *object,
       if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
         continue;
 
-      if (! gimp_config_serialize_property (object, prop_spec, writer))
+      if (! gimp_config_serialize_property (config, prop_spec, writer))
         return FALSE;
     }
 
@@ -199,7 +199,7 @@ gimp_config_serialize_properties_diff (GObject          *object,
 
 
 gboolean
-gimp_config_serialize_property (GObject          *object,
+gimp_config_serialize_property (GimpConfig       *config,
                                 GParamSpec       *param_spec,
                                 GimpConfigWriter *writer)
 {
@@ -213,12 +213,11 @@ gimp_config_serialize_property (GObject          *object,
     return FALSE;
 
   g_value_init (&value, param_spec->value_type);
-  g_object_get_property (object, param_spec->name, &value);
+  g_object_get_property (G_OBJECT (config), param_spec->name, &value);
 
   owner_class = g_type_class_peek (param_spec->owner_type);
 
-  config_iface = g_type_interface_peek (owner_class,
-					GIMP_TYPE_CONFIG_INTERFACE);
+  config_iface = g_type_interface_peek (owner_class, GIMP_TYPE_CONFIG);
 
   /*  We must call deserialize_property() *only* if the *exact* class
    *  which implements it is param_spec->owner_type's class.
@@ -237,13 +236,13 @@ gimp_config_serialize_property (GObject          *object,
       owner_parent_class = g_type_class_peek_parent (owner_class),
 
       parent_iface = g_type_interface_peek (owner_parent_class,
-                                            GIMP_TYPE_CONFIG_INTERFACE);
+                                            GIMP_TYPE_CONFIG);
     }
 
   if (config_iface                     &&
       config_iface != parent_iface     && /* see comment above */
       config_iface->serialize_property &&
-      config_iface->serialize_property (object,
+      config_iface->serialize_property (config,
                                         param_spec->param_id,
                                         (const GValue *) &value,
                                         param_spec,
@@ -261,22 +260,21 @@ gimp_config_serialize_property (GObject          *object,
       if (G_VALUE_HOLDS_OBJECT (&value) &&
           (param_spec->flags & GIMP_PARAM_AGGREGATE))
         {
-          GimpConfigInterface *gimp_config_iface = NULL;
-          GObject             *prop_object;
+          GimpConfigInterface *config_iface = NULL;
+          GimpConfig          *prop_object;
 
           prop_object = g_value_get_object (&value);
 
           if (prop_object)
-            gimp_config_iface = GIMP_GET_CONFIG_INTERFACE (prop_object);
+            config_iface = GIMP_CONFIG_GET_INTERFACE (prop_object);
           else
             success = TRUE;
 
-          if (gimp_config_iface)
+          if (config_iface)
             {
               gimp_config_writer_open (writer, param_spec->name);
 
-              success = gimp_config_iface->serialize (prop_object, writer,
-                                                      NULL);
+              success = config_iface->serialize (prop_object, writer, NULL);
 
               if (success)
                 gimp_config_writer_close (writer);
@@ -310,7 +308,7 @@ gimp_config_serialize_property (GObject          *object,
           else
             {
               g_warning ("couldn't serialize property %s::%s of type %s",
-                         g_type_name (G_TYPE_FROM_INSTANCE (object)),
+                         g_type_name (G_TYPE_FROM_INSTANCE (config)),
                          param_spec->name,
                          g_type_name (param_spec->value_type));
             }
@@ -482,22 +480,22 @@ gimp_config_serialize_value (const GValue *value,
 
 /**
  * gimp_config_serialize_unknown_tokens:
- * @object: a #GObject.
+ * @config: a #GimpConfig.
  * @writer: a #GimpConfigWriter.
  *
- * Writes all unknown tokens attached to #object to the @writer.  See
+ * Writes all unknown tokens attached to @config to the @writer.  See
  * gimp_config_add_unknown_token().
  *
  * Returns: %TRUE if serialization succeeded, %FALSE otherwise
  **/
 gboolean
-gimp_config_serialize_unknown_tokens (GObject          *object,
+gimp_config_serialize_unknown_tokens (GimpConfig       *config,
                                       GimpConfigWriter *writer)
 {
-  g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
+  g_return_val_if_fail (G_IS_OBJECT (config), FALSE);
 
   gimp_config_writer_linefeed (writer);
-  gimp_config_foreach_unknown_token (object, serialize_unknown_token, writer);
+  gimp_config_foreach_unknown_token (config, serialize_unknown_token, writer);
 
   return TRUE;
 }

@@ -30,7 +30,7 @@
 #include "gimpdocked.h"
 
 
-static void  gimp_docked_iface_init (GimpDockedIface *docked_iface);
+static void  gimp_docked_iface_init (GimpDockedInterface *docked_iface);
 
 
 GType
@@ -42,7 +42,7 @@ gimp_docked_interface_get_type (void)
     {
       static const GTypeInfo docked_iface_info =
       {
-        sizeof (GimpDockedIface),
+        sizeof (GimpDockedInterface),
 	(GBaseInitFunc)     gimp_docked_iface_init,
 	(GBaseFinalizeFunc) NULL,
       };
@@ -59,7 +59,7 @@ gimp_docked_interface_get_type (void)
 }
 
 static void
-gimp_docked_iface_init (GimpDockedIface *docked_iface)
+gimp_docked_iface_init (GimpDockedInterface *docked_iface)
 {
   docked_iface->set_aux_info = NULL;
   docked_iface->get_aux_info = NULL;
@@ -72,7 +72,7 @@ void
 gimp_docked_set_aux_info (GimpDocked *docked,
                           GList      *aux_info)
 {
-  GimpDockedIface *docked_iface;
+  GimpDockedInterface *docked_iface;
 
   g_return_if_fail (GIMP_IS_DOCKED (docked));
 
@@ -85,7 +85,7 @@ gimp_docked_set_aux_info (GimpDocked *docked,
 GList *
 gimp_docked_get_aux_info (GimpDocked *docked)
 {
-  GimpDockedIface *docked_iface;
+  GimpDockedInterface *docked_iface;
 
   g_return_val_if_fail (GIMP_IS_DOCKED (docked), NULL);
 
@@ -102,7 +102,7 @@ gimp_docked_get_preview (GimpDocked  *docked,
                          GimpContext *context,
                          GtkIconSize  size)
 {
-  GimpDockedIface *docked_iface;
+  GimpDockedInterface *docked_iface;
 
   g_return_val_if_fail (GIMP_IS_DOCKED (docked), NULL);
 
@@ -119,7 +119,7 @@ gimp_docked_set_context (GimpDocked  *docked,
                          GimpContext *context,
                          GimpContext *prev_context)
 {
-  GimpDockedIface *docked_iface;
+  GimpDockedInterface *docked_iface;
 
   g_return_if_fail (GIMP_IS_DOCKED (docked));
   g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
@@ -135,7 +135,7 @@ GimpItemFactory *
 gimp_docked_get_menu (GimpDocked *docked,
                       gpointer   *item_factory_data)
 {
-  GimpDockedIface *docked_iface;
+  GimpDockedInterface *docked_iface;
 
   g_return_val_if_fail (GIMP_IS_DOCKED (docked), NULL);
   g_return_val_if_fail (item_factory_data != NULL, NULL);
