@@ -63,6 +63,21 @@
       </contact>
     </entry>    
 
+    <entry size="medium" difficulty="medium" status="20%" target="1.4">
+      <title>Unify Color data types</title>
+      <description>
+	<p>
+	  LibGimp already has a new type GimpRGB. This should be used
+	  whereever possible. If necessary we can change this to a
+	  more generic struct later. Migrating to GimpRGB first will make
+	  this much easier.
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>    
+
   </section>  <!-- General -->
 
   <section>

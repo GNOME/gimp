@@ -124,9 +124,10 @@
 	* app/tools_cmds.c
 	* libgimp/gimpenums.h
 	* plug-ins/script-fu/script-fu-constants.c
-	* tools/pdbgen/enums.pl: applied patch from <oliver@zeroknowledge.com>
-	that adds new blending modes (Dodge/Burn/Hardlight). Please play with 
-	these new modes and check if they are useful and well-implemented.
+	* tools/pdbgen/enums.pl: applied patch from Oliver Lavery 
+	<oliver@zeroknowledge.com> that adds new blending modes 
+	(Dodge/Burn/Hardlight). Please play with these new modes 
+	and check if they are useful and well-implemented.
 
 2001-01-09  Sven Neumann  <sven@gimp.org>
 
