@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.9\n"
-"POT-Creation-Date: 1999-09-09 21:28-0700\n"
-"PO-Revision-Date: 1999-09-06 22:23+02:00\n"
+"POT-Creation-Date: 1999-09-16 19:02+0200\n"
+"PO-Revision-Date: 1999-09-16 19:30+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -408,19 +408,19 @@ msgstr "Kontrast"
 #. The preview toggle
 #: app/brightness_contrast.c:312 app/color_balance.c:441 app/curves.c:662
 #: app/fileops.c:396 app/hue_saturation.c:572 app/levels.c:548
-#: app/palette.c:2946 app/posterize.c:242 app/threshold.c:354
+#: app/palette.c:2964 app/posterize.c:242 app/threshold.c:354
 msgid "Preview"
 msgstr "Forhåndsvis"
 
 #. The close push button
-#: app/brush_edit.c:37 app/brush_select.c:163 app/by_color_select.c:664
+#: app/brush_edit.c:37 app/brush_select.c:167 app/by_color_select.c:664
 #: app/color_notebook.c:187 app/color_picker.c:235 app/color_select.c:235
 #: app/colormap_dialog.i.c:94 app/colormap_dialog.i.c:103 app/crop.c:1027
 #: app/devices.c:122 app/docindexif.c:103 app/errorconsole.c:269
 #: app/gdisplay_ops.c:351 app/gradient.c:675 app/gradient_select.c:77
 #: app/histogram_tool.c:262 app/info_window.c:267 app/lc_dialog.c:196
-#: app/measure.c:179 app/nav_window.c:1092 app/palette.c:2006
-#: app/palette.c:2012 app/palette.c:2833 app/palette_select.c:55
+#: app/measure.c:179 app/nav_window.c:1093 app/palette.c:2022
+#: app/palette.c:2028 app/palette.c:2851 app/palette_select.c:55
 #: app/pattern_select.c:87 app/tips_dialog.c:146 app/tools.c:923
 #: libgimp/gimpfileselection.c:356 libgimp/gimpunitmenu.c:518
 msgid "Close"
@@ -450,53 +450,53 @@ msgstr "Aspektrate:"
 msgid "Angle:"
 msgstr "Vinkel:"
 
-#: app/brush_select.c:162 app/gradient.c:674 app/module_db.c:303
-#: app/palette.c:2011 app/pattern_select.c:86
+#: app/brush_select.c:166 app/gradient.c:674 app/module_db.c:303
+#: app/palette.c:2027 app/pattern_select.c:86
 msgid "Refresh"
 msgstr "Oppdater"
 
-#: app/brush_select.c:185
+#: app/brush_select.c:189
 msgid "Brush Selection"
 msgstr "Børstevalg"
 
-#: app/brush_select.c:274 app/pattern_select.c:144
+#: app/brush_select.c:278 app/pattern_select.c:144
 msgid "Active"
 msgstr "Aktiv"
 
 #. Create the opacity scale widget
-#: app/brush_select.c:304 app/layers_dialog.c:386 app/tool_options.c:603
+#: app/brush_select.c:308 app/layers_dialog.c:386 app/tool_options.c:603
 msgid "Opacity:"
 msgstr "Ugjennomsiktighet:"
 
 #. Create the paint mode option menu
-#: app/brush_select.c:322 app/layers_dialog.c:360 app/tool_options.c:633
+#: app/brush_select.c:326 app/layers_dialog.c:360 app/tool_options.c:633
 msgid "Mode:"
 msgstr "Modus:"
 
-#: app/brush_select.c:346 app/palette.c:1453 app/palette.c:1474
-#: app/palette.c:2209
+#: app/brush_select.c:350 app/palette.c:1454 app/palette.c:1475
+#: app/palette.c:2226
 msgid "New"
 msgstr "Ny"
 
-#: app/brush_select.c:352 app/colormap_dialog.i.c:101 app/gradient_select.c:76
-#: app/palette.c:1445 app/palette.c:2005 app/palette_select.c:54
+#: app/brush_select.c:356 app/colormap_dialog.i.c:101 app/gradient_select.c:76
+#: app/palette.c:1446 app/palette.c:2021 app/palette_select.c:54
 msgid "Edit"
 msgstr "Rediger"
 
-#: app/brush_select.c:358 app/global_edit.c:711 app/gradient.c:1552
-#: app/palette.c:1460 app/palette.c:2218
+#: app/brush_select.c:362 app/global_edit.c:711 app/gradient.c:1552
+#: app/palette.c:1461 app/palette.c:2235
 msgid "Delete"
 msgstr "Slett"
 
-#: app/brush_select.c:382
+#: app/brush_select.c:386
 msgid "Spacing:"
 msgstr "Mellomrom:"
 
-#: app/brush_select.c:593
+#: app/brush_select.c:597
 msgid "failed to run brush callback function"
 msgstr "klarte ikke å kjøre callback funksjon for børste"
 
-#: app/brush_select.c:1242
+#: app/brush_select.c:1246
 msgid ""
 "We are all fresh out of brush editors today,\n"
 "please write your own or try back tomorrow\n"
@@ -813,12 +813,12 @@ msgstr "Fargenivåer: "
 #. Create the cyan-red scale widget
 #: app/color_balance.c:356
 msgid "Cyan"
-msgstr ""
+msgstr "Cyan"
 
 #. Create the magenta-green scale widget
 #: app/color_balance.c:383
 msgid "Magenta"
-msgstr ""
+msgstr "Magenta"
 
 #. Create the yellow-blue scale widget
 #: app/color_balance.c:410
@@ -1150,7 +1150,7 @@ msgstr "Kurvetype: "
 msgid "Desaturate operates only on RGB color drawables."
 msgstr "Desaturering opererer kun på tegnede objekter i RGB-farge."
 
-#: app/devices.c:121 app/gradient.c:673 app/levels.c:564 app/palette.c:2010
+#: app/devices.c:121 app/gradient.c:673 app/levels.c:564 app/palette.c:2026
 #: app/preferences_dialog.c:1503
 msgid "Save"
 msgstr "Lagre"
@@ -1462,7 +1462,7 @@ msgstr ""
 "Kan ikke forankre dette laget fordi\n"
 "det ikke er et flytende utvalg."
 
-#: app/floating_sel.c:175
+#: app/floating_sel.c:179
 msgid ""
 "Cannot create a new layer from the floating\n"
 "selection because it belongs to a\n"
@@ -1991,8 +1991,8 @@ msgstr "gimp_image_add_channel: forsøk på å legge til kanal i feilt bilde"
 msgid "gimp_image_add_channel: trying to add channel to image twice"
 msgstr "gimp_image_add_channel: forsøker å legge til kanal i bildet to ganger"
 
-#: app/gimpimage.c:3328 app/palette.c:542 app/palette.c:569 app/palette.c:931
-#: app/palette.c:935 app/palette.c:2383 app/palette.c:3077
+#: app/gimpimage.c:3328 app/palette.c:543 app/palette.c:570 app/palette.c:932
+#: app/palette.c:936 app/palette.c:2401 app/palette.c:3095
 msgid "Untitled"
 msgstr "Uten navn"
 
@@ -2208,11 +2208,11 @@ msgid "Gradient Editor"
 msgstr "Gradientredigering"
 
 #: app/gradient.c:730 app/gradient_select.c:478 app/paintbrush.c:212
-#: app/palette.c:2895
+#: app/palette.c:2913
 msgid "Gradient"
 msgstr "Gradient"
 
-#: app/gradient.c:731 app/gradient_select.c:479 app/palette.c:2180
+#: app/gradient.c:731 app/gradient_select.c:479 app/palette.c:2197
 #: app/palette_select.c:276
 msgid "Name"
 msgstr "Navn"
@@ -2924,6 +2924,10 @@ msgid ""
 "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
 "See the GNU General Public License for more details.\n"
 msgstr ""
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
+"See the GNU General Public License for more details.\n"
 
 #: app/install.c:135
 msgid ""
@@ -2932,6 +2936,10 @@ msgid ""
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
 "MA 02111-1307, USA.\n"
 msgstr ""
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
+"MA 02111-1307, USA.\n"
 
 #: app/install.c:141
 msgid ""
@@ -2967,6 +2975,11 @@ msgid ""
 "\t\tPaths to search for brushes, palettes, gradients\n"
 "\t\tpatterns, plug-ins and modules are also configured here.\n"
 msgstr ""
+"\t\tGimprc brukes til å lagre personlige referanser\n"
+"\t\tslik som standard oppførsel for GIMP og tastesnarveier\n"
+"\t\tfor tillegg. Stier til søk etter børster, paletter,\n"
+"\t\tgradienter, mønstre, tillegg og moduler konfigureres\n"
+"\t\togså her.\n"
 
 #: app/install.c:153
 msgid "unitrc\n"
@@ -2980,6 +2993,11 @@ msgid ""
 "\t\tpoints and picas. This file is overwritten each time\n"
 "\t\tyou quit the GIMP.\n"
 msgstr ""
+"\t\tUnitrc brukes til å lagre din brukerenhetsdatabase.\n"
+"\t\tDu kan definere ekstra enheter og bruke dem akkurat\n"
+"\t\tsom du bruker de innebygde enhetene tommer, millimeter,\n"
+"\t\tpunkter og picas. Denne filen overskrives hver gang\n"
+"\t\tdu avslutter GIMP.\n"
 
 #: app/install.c:160
 msgid "pluginrc\n"
@@ -2994,6 +3012,12 @@ msgid ""
 "\t\tis cached in this file.  This file is intended to\n"
 "\t\tbe GIMP-readable only, and should not be edited.\n"
 msgstr ""
+"\t\tTillegg og utvidelser er eksterne programmer som kjøres\n"
+"\t\tav GIMP og gir ekstra funksjonalitet. Disse programmene\n"
+"\t\tsøkes det etter ved oppstart og informasjon om deres\n"
+"\t\tfunksjonalitet og endringstider mellomlagres i denne\n"
+"\t\tfilen. Denne filen er ment å være lesbar kun for GIMP,\n"
+"\t\tog bør ikke redigeres.\n"
 
 #: app/install.c:168
 msgid "brushes\n"
@@ -3007,6 +3031,10 @@ msgid ""
 "\t\twide gimp brushes installation when searching for\n"
 "\t\tbrushes.\n"
 msgstr ""
+"\t\tDette er en underkatalog som kan brukes til å lagre\n"
+"\t\tbrukerdefinerte børster. Med standard gimprc sjekkes\n"
+"\t\tdenne underkatalogen i tillegg til systemkatalogen\n"
+"\t\tfor børster når det skal søkes etter disse.\n"
 
 #: app/install.c:175
 msgid "gradients\n"
@@ -3020,6 +3048,10 @@ msgid ""
 "\t\twide gimp gradients installation when searching for\n"
 "\t\tgradients.\n"
 msgstr ""
+"\t\tDette er en underkatalog som kan brukes til å lagre\n"
+"\t\tbrukerdefinerte gradienter. Med standard gimprc\n"
+"\t\tsjekkes denne underkatalogen i tillegg til system-\n"
+"\t\tkatalogen for gradienter når det søkes etter disse.\n"
 
 #: app/install.c:182
 msgid "gfig\n"
@@ -3033,6 +3065,11 @@ msgid ""
 "\t\taddition to the systemwide gimp gfig installation\n"
 "\t\twhen searching for gfig figures.\n"
 msgstr ""
+"\t\tDette er en underkatalog som kan brukes til å lagre\n"
+"\t\tbrukerdefinerte figurer for bruk med gfig tillegget.\n"
+"\t\tMed standard gimprc sjekkes denne underkatalogen i\n"
+"\t\ttillegg til systemkatalogen for gfig figurer når det\n"
+"\tsøkes etter disse.\n"
 
 #: app/install.c:189
 msgid "gflares\n"
@@ -3046,6 +3083,11 @@ msgid ""
 "\t\taddition to the systemwide gimp gflares installation\n"
 "\t\twhen searching for gflares.\n"
 msgstr ""
+"\t\tDette er en underkatalog som kan brukes til å lagre\n"
+"\t\tbrukerdefinerte gflares for bruk med gflare tillegget.\n"
+"\t\tMed standard gimprc sjekkes denne underkatalogen i\n"
+"\t\ttillegg til systemkatalogen for gflares når det søkes\n"
+"\t\tetter disse.\n"
 
 #: app/install.c:196
 msgid "fractalexplorer\n"
@@ -3059,6 +3101,11 @@ msgid ""
 "\t\taddition to the systemwide gimp FractalExplorer installation\n"
 "\t\twhen searching for fractals.\n"
 msgstr ""
+"\t\tDette er en underkatalog som kan brukes til å lagre\n"
+"\t\tbrukerdefinerte fraktaler som skal brukes med FractalExplorer\n"
+"\t\ttillegget. Med standard gimprc sjekkes denne underkatalogen i\n"
+"\t\ttillegg til systemkatalogen for FractalExplorer når det søkes\n"
+"\t\tetter disse.\n"
 
 #: app/install.c:203
 msgid "palettes\n"
@@ -3075,6 +3122,13 @@ msgid ""
 "\t\tpalettes during GIMP execution to persist across\n"
 "\t\tsessions.\n"
 msgstr ""
+"\t\tDette er en underkatalog som kan brukes til å lagre\n"
+"\t\tbrukerdefinerte paletter. Med standard gimprc sjekkes\n"
+"\t\tkun denne katalogen (ikke systemkatalogen) når det\n"
+"\t\tsøkes etter paletter. Under installasjonen kopieres\n"
+"\t\tpalettene hit fra systemkatalogen. Dette gjøres for at\n"
+"\t\tendringer som gjøres i palettene skal gjelde i kommende\n"
+"\t\tsesjoner.\n"
 
 #: app/install.c:213
 msgid "patterns\n"
@@ -3088,6 +3142,10 @@ msgid ""
 "\t\twide gimp patterns installation when searching for\n"
 "\t\tpatterns.\n"
 msgstr ""
+"\t\tDette er en underkatalog som kan brukes til å lagre\n"
+"\t\tbrukerdefinerte mønstre. Med standard gimprc sjekkes\n"
+"\t\tdenne underkatalogen i tillegg til systemkatalogen\n"
+"\t\tfor mønstre når det søkes etter disse.\n"
 
 #: app/install.c:220
 msgid "plug-ins\n"
@@ -3102,6 +3160,11 @@ msgid ""
 "\t\twide GIMP plug-in directories when searching for\n"
 "\t\tplug-ins.\n"
 msgstr ""
+"\t\tDette er en underkatalog som kan brukes til å lagre\n"
+"\t\tbrukeropprettede, midlertidige, eller andre ustøttede\n"
+"\t\ttillegg. Med standard gimprc sjekkes denne underkatalogen\n"
+"\t\ti tillegg til systemkatalogen for tillegg når det søkes\n"
+"\t\tetter disse.\n"
 
 #: app/install.c:228
 msgid "modules\n"
@@ -3115,6 +3178,11 @@ msgid ""
 "\t\tin addition to the system-wide GIMP module directory\n"
 "\t\twhen searching for modules to load when initialising.\n"
 msgstr ""
+"\t\tDenne underkatalogen kan brukes til å lagre brukeropprettede,\n"
+"\t\tmidlertidige, eller ustøttede DLL-moduler. Med standard\n"
+"\t\tgimprc sjekkes denne underkatalogen i tillegg til system-\n"
+"\t\tkatalogen for moduler når det søkes etter moduler under\n"
+"\t\toppstart.\n"
 
 #: app/install.c:235
 msgid "scripts\n"
@@ -3127,6 +3195,10 @@ msgid ""
 "\t\tfile checks this subdirectory in addition to the system\n"
 "\t\t-wide gimp scripts subdirectory when searching for scripts\n"
 msgstr ""
+"\t\tDenne underkatalogen brukes av GIMP for å lagre \n"
+"\t\tbrukeropprettede og installerte skript. Med standard gimprc\n"
+"\t\tsjekkes denne underkatalogen i tillegg til systemkatalogen\n"
+"\t\tfor skript når det søkes etter disse.\n"
 
 #: app/install.c:241
 msgid "tmp\n"
@@ -3140,6 +3212,11 @@ msgid ""
 "\t\tof the form: gimp<#>.<#>.  These files are useless across\n"
 "\t\tGIMP sessions and can be destroyed with impunity.\n"
 msgstr ""
+"\t\tDenne underkatalogen brukes av GIMP for å mellomlagre\n"
+"\t\tangreinformasjon for å redusere minnebruken. Hvis GIMP\n"
+"\t\tdrepes, kan filer bli liggende i denne katalogen; de har\n"
+"\t\tformen: gimp<#>.<#>. Disse filene er ubrukelige mellom\n"
+"\t\tsesjoner og kan slettes uten omtanke.\n"
 
 #: app/install.c:256
 msgid "GIMP Installation"
@@ -3283,7 +3360,7 @@ msgstr "Lag"
 msgid "Miscellaneous"
 msgstr "Forskjellig"
 
-#: app/internal_procs.c:127 app/palette.c:2166 app/palette.c:2178
+#: app/internal_procs.c:127 app/palette.c:2183 app/palette.c:2195
 #: app/palette_select.c:274
 msgid "Palette"
 msgstr "Palett"
@@ -3889,9 +3966,8 @@ msgid "/File/Dialogs"
 msgstr "/Fil/Dialoger"
 
 #: app/menus.c:49
-#, fuzzy
 msgid "/Image/Transforms"
-msgstr "Transformer"
+msgstr "/Bilde/Transformering"
 
 #: app/menus.c:50
 msgid "/Layers"
@@ -3910,9 +3986,8 @@ msgid "/View/Zoom"
 msgstr "/Vis/Zoom"
 
 #: app/menus.c:54
-#, fuzzy
 msgid "/Stack"
-msgstr "/Lag/Stabel"
+msgstr "/Stabel"
 
 #: app/menus.c:67 app/menus.c:101
 msgid "/File/tearoff1"
@@ -4418,7 +4493,7 @@ msgid "Move Tool Options"
 msgstr "Alternativer for flytteverktøy"
 
 #. create the info dialog
-#: app/nav_window.c:1143
+#: app/nav_window.c:1144
 #, c-format
 msgid "%s: Window Navigation"
 msgstr "%s: Vindusnavigasjon"
@@ -4476,12 +4551,12 @@ msgstr "Lengde:"
 msgid "Type:"
 msgstr "Type:"
 
-#: app/palette.c:503
+#: app/palette.c:504
 #, c-format
 msgid "can't save palette \"%s\"\n"
 msgstr "kan ikke lagre palett \"%s\"\n"
 
-#: app/palette.c:643
+#: app/palette.c:644
 #, c-format
 msgid ""
 "Loading palette %s:\n"
@@ -4494,7 +4569,7 @@ msgstr ""
 "mangler magisk header\n"
 "Trenger denne filen konvertering fra DOS?"
 
-#: app/palette.c:648
+#: app/palette.c:649
 #, c-format
 msgid ""
 "Loading palette %s:\n"
@@ -4503,7 +4578,7 @@ msgstr ""
 "Laster palett %s:\n"
 "Korrupt palett: mangler magisk header"
 
-#: app/palette.c:661
+#: app/palette.c:662
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -4512,7 +4587,7 @@ msgstr ""
 "Laster palett %s (linje %d):\n"
 "Lesefeil"
 
-#: app/palette.c:676
+#: app/palette.c:677
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -4521,7 +4596,7 @@ msgstr ""
 "Laster palett %s (linje %d):\n"
 "Mangler RØD komponent"
 
-#: app/palette.c:684
+#: app/palette.c:685
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -4530,7 +4605,7 @@ msgstr ""
 "Laster palett %s (linje %d):\n"
 "Mangler GRØNN komponent"
 
-#: app/palette.c:691
+#: app/palette.c:692
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -4539,7 +4614,7 @@ msgstr ""
 "Laster palett %s (linje %d):\n"
 "Mangler BLÅ komponent"
 
-#: app/palette.c:700
+#: app/palette.c:701
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -4548,85 +4623,85 @@ msgstr ""
 "Laster palett %s (linje %d):\n"
 "RGB-verdi utenfor gyldig område"
 
-#: app/palette.c:908
+#: app/palette.c:909
 msgid "Black"
 msgstr "Sort"
 
-#: app/palette.c:1077
+#: app/palette.c:1078
 msgid "New Palette"
 msgstr "Ny palett"
 
-#: app/palette.c:1078
+#: app/palette.c:1079
 msgid "Enter a name for new palette"
 msgstr "Skriv inn et navn for den nye paletten"
 
-#: app/palette.c:1948 app/palette.c:2116
+#: app/palette.c:1964 app/palette.c:2133
 msgid "Undefined"
 msgstr "Udefinert"
 
-#: app/palette.c:2032
+#: app/palette.c:2049
 msgid "Color Palette Edit"
 msgstr "Rediger fargepalett"
 
-#: app/palette.c:2038
+#: app/palette.c:2055
 msgid "Color Palette"
 msgstr "Fargepalett"
 
-#: app/palette.c:2168 app/palette.c:2963 libgimp/gimpfileselection.c:355
+#: app/palette.c:2185 app/palette.c:2981 libgimp/gimpfileselection.c:355
 #: libgimp/gimpunitmenu.c:510
 msgid "Select"
 msgstr "Velg"
 
-#: app/palette.c:2179 app/palette_select.c:275
+#: app/palette.c:2196 app/palette_select.c:275
 msgid "Ncols"
 msgstr "Ingen farger"
 
-#: app/palette.c:2200
+#: app/palette.c:2217
 msgid "Palette Ops"
 msgstr "Palettoperasjoner"
 
 #. The "Import" frame
-#: app/palette.c:2227 app/palette.c:2832 app/palette.c:2856
+#: app/palette.c:2244 app/palette.c:2850 app/palette.c:2874
 msgid "Import"
 msgstr "Importer"
 
-#: app/palette.c:2236
+#: app/palette.c:2253
 msgid "Merge"
 msgstr "Flett sammen"
 
-#: app/palette.c:2493
+#: app/palette.c:2511
 msgid "Merge Palette"
 msgstr "Flett sammen palett"
 
-#: app/palette.c:2494
+#: app/palette.c:2512
 msgid "Enter a name for merged palette"
 msgstr "Skriv inn navn for flettet palett"
 
-#: app/palette.c:2842
+#: app/palette.c:2860
 msgid "Import Palette"
 msgstr "Importer palett"
 
 #. The source's name
-#: app/palette.c:2872
+#: app/palette.c:2890
 msgid "Name:"
 msgstr "Navn:"
 
-#: app/palette.c:2881
+#: app/palette.c:2899
 msgid "new_import"
 msgstr "new_import"
 
 #. The source type
-#: app/palette.c:2885
+#: app/palette.c:2903
 msgid "Source:"
 msgstr "Kilde:"
 
 #. The sample size
-#: app/palette.c:2915
+#: app/palette.c:2933
 msgid "Sample Size:"
 msgstr "Eksempelstørrelse:"
 
 #. The interval
-#: app/palette.c:2928
+#: app/palette.c:2946
 msgid "Interval:"
 msgstr "Intervall:"
 
@@ -5792,9 +5867,8 @@ msgid "Smudge Options"
 msgstr "Alternativer for Smudge"
 
 #: app/tool_options.c:578
-#, fuzzy
 msgid "Xinput Airbrush Options"
-msgstr "Alternativer for airbrush"
+msgstr "Alternativer for Xinput airbrush"
 
 #: app/tool_options.c:579
 msgid "ERROR: Unknown Paint Type"
@@ -5805,19 +5879,16 @@ msgid "Incremental"
 msgstr "Inkrementell"
 
 #: app/tool_options.c:811
-#, fuzzy
 msgid "Pressure sensitivity"
-msgstr "Følsomhet:"
+msgstr "Trykkfølsomhet"
 
 #: app/tool_options.c:829
-#, fuzzy
 msgid "Opacity"
-msgstr "Ugjennomsiktighet:"
+msgstr "Ugjennomsiktighet"
 
 #: app/tool_options.c:851
-#, fuzzy
 msgid "Pressure"
-msgstr "Trykk:"
+msgstr "Trykk"
 
 #: app/tools.c:84
 msgid "Rect Select"
@@ -6110,34 +6181,28 @@ msgid "Measure distances and angles"
 msgstr "Måler avstander og vinkler"
 
 #: app/tools.c:504
-#, fuzzy
 msgid "Xinput Airbrush"
-msgstr "Luftpensel"
+msgstr "Xinput Airbrush"
 
 #: app/tools.c:506
-#, fuzzy
 msgid "/Tools/XinputAirbrush"
-msgstr "/Verktøy/Luftpensel"
+msgstr "/Verktøy/XinputAirbrush"
 
 #: app/tools.c:509
-#, fuzzy
 msgid "Natural Airbrush"
-msgstr "Luftpensel"
+msgstr "Naturlig Airbrush"
 
 #: app/tools.c:519
-#, fuzzy
 msgid "Path"
-msgstr "Stier"
+msgstr "Sti"
 
 #: app/tools.c:521
-#, fuzzy
 msgid "/Tools/Path"
-msgstr "/Verktøy/Malerpensel"
+msgstr "/Verktøy/Sti"
 
 #: app/tools.c:524
-#, fuzzy
 msgid "Manipulate paths"
-msgstr "Duplisert sti"
+msgstr "Manipuler stier"
 
 #: app/tools.c:536
 msgid "By Color Select"
@@ -6420,6 +6485,3 @@ msgstr "Ingen like ) eller \\)"
 #: app/regex.c:5442
 msgid "No previous regular expression"
 msgstr "Ingen tidligere vanlige uttrykk"
-
-#~ msgid "Use Pressure"
-#~ msgstr "Bruk trykk"

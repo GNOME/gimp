@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 1999-09-09 13:55-0700\n"
-"PO-Revision-Date: 1999-09-06 22:41+02:00\n"
+"POT-Creation-Date: 1999-09-16 19:50+0200\n"
+"PO-Revision-Date: 1999-09-16 20:01+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -251,7 +251,7 @@ msgstr ""
 msgid "Coupled-Map-Lattice Explorer"
 msgstr "Coupled-Map-Lattice utforsker"
 
-#: plug-ins/common/CML_explorer.c:1342 plug-ins/common/ps.c:2448
+#: plug-ins/common/CML_explorer.c:1342 plug-ins/common/ps.c:2503
 msgid "Preview"
 msgstr "Forhåndsvisning"
 
@@ -453,8 +453,8 @@ msgstr "Graf av aktive instillinger"
 #: plug-ins/common/depthmerge.c:746 plug-ins/common/destripe.c:695
 #: plug-ins/common/gif.c:1263 plug-ins/common/jpeg.c:1468
 #: plug-ins/common/mail.c:485 plug-ins/common/oilify.c:460
-#: plug-ins/common/png.c:827 plug-ins/common/ps.c:2023
-#: plug-ins/common/ps.c:2290 plug-ins/common/rotate.c:605
+#: plug-ins/common/png.c:843 plug-ins/common/ps.c:2078
+#: plug-ins/common/ps.c:2345 plug-ins/common/rotate.c:605
 #: plug-ins/common/threshold_alpha.c:467 plug-ins/common/threshold_alpha.c:500
 #: plug-ins/common/xbm.c:959 plug-ins/common/xpm.c:763
 #: plug-ins/print/print.c:1104 plug-ins/sel2path/sel2path.c:350
@@ -531,8 +531,8 @@ msgstr ""
 #: plug-ins/common/depthmerge.c:756 plug-ins/common/destripe.c:704
 #: plug-ins/common/gif.c:1172 plug-ins/common/jpeg.c:1477
 #: plug-ins/common/mail.c:496 plug-ins/common/oilify.c:469
-#: plug-ins/common/png.c:836 plug-ins/common/ps.c:2033
-#: plug-ins/common/ps.c:2300 plug-ins/common/rotate.c:615
+#: plug-ins/common/png.c:852 plug-ins/common/ps.c:2088
+#: plug-ins/common/ps.c:2355 plug-ins/common/rotate.c:615
 #: plug-ins/common/threshold_alpha.c:476 plug-ins/common/xbm.c:707
 #: plug-ins/common/xbm.c:969 plug-ins/common/xpm.c:772
 #: plug-ins/print/print.c:991 plug-ins/print/print.c:1097
@@ -901,7 +901,7 @@ msgstr "Linseeffekt"
 #: plug-ins/common/apply_lens.c:435 plug-ins/common/blur.c:607
 #: plug-ins/common/checkerboard.c:399 plug-ins/common/cubism.c:347
 #: plug-ins/common/jpeg.c:1512 plug-ins/common/oilify.c:478
-#: plug-ins/common/png.c:847 plug-ins/common/threshold_alpha.c:352
+#: plug-ins/common/png.c:863 plug-ins/common/threshold_alpha.c:352
 #: plug-ins/common/xpm.c:781
 msgid "Parameter Settings"
 msgstr "Innstillinger for parametere"
@@ -935,9 +935,8 @@ msgid "<Image>/Image/Transforms/Autocrop"
 msgstr ""
 
 #: plug-ins/common/autocrop.c:105
-#, fuzzy
 msgid "Cropping..."
-msgstr "Konponerer..."
+msgstr "Beskjærer..."
 
 #: plug-ins/common/autostretch_hsv.c:82 plug-ins/common/c_astretch.c:78
 msgid ""
@@ -1056,8 +1055,8 @@ msgid "Saves files in Windows BMP file format"
 msgstr "Lagrer filer i Windows BMP filformat"
 
 #: plug-ins/bmp/bmpread.c:27 plug-ins/common/gifload.c:287
-#: plug-ins/common/jpeg.c:670 plug-ins/common/png.c:345
-#: plug-ins/common/png.c:347 plug-ins/common/xbm.c:523
+#: plug-ins/common/jpeg.c:670 plug-ins/common/png.c:354
+#: plug-ins/common/png.c:356 plug-ins/common/xbm.c:523
 #: plug-ins/common/xpm.c:300
 #, c-format
 msgid "Loading %s:"
@@ -1099,7 +1098,7 @@ msgstr "%s: ugyldig fargekart\n"
 #: plug-ins/bmp/bmpread.c:210 plug-ins/bmp/bmpread.c:218
 #: plug-ins/bmp/bmpread.c:224 plug-ins/common/compose.c:562
 #: plug-ins/common/decompose.c:472 plug-ins/common/gifload.c:828
-#: plug-ins/common/jpeg.c:812 plug-ins/common/png.c:455
+#: plug-ins/common/jpeg.c:812 plug-ins/common/png.c:466
 #: plug-ins/common/xbm.c:612
 msgid "Background"
 msgstr "Bakgrunn"
@@ -1114,8 +1113,8 @@ msgid "can't open %s\n"
 msgstr "kan ikke åpne %s\n"
 
 #: plug-ins/bmp/bmpwrite.c:154 plug-ins/common/jpeg.c:1090
-#: plug-ins/common/png.c:595 plug-ins/common/png.c:597
-#: plug-ins/common/ps.c:673 plug-ins/common/xbm.c:777
+#: plug-ins/common/png.c:606 plug-ins/common/png.c:608
+#: plug-ins/common/ps.c:716 plug-ins/common/xbm.c:777
 #: plug-ins/common/xpm.c:611 plug-ins/common/xwd.c:507
 #, c-format
 msgid "Saving %s:"
@@ -1338,13 +1337,10 @@ msgid "Colorify Custom Color"
 msgstr ""
 
 #: plug-ins/common/color_enhance.c:84
-#, fuzzy
 msgid ""
 "Automatically stretch the saturation of the specified drawable to cover all "
 "possible ranges."
-msgstr ""
-"Strekk kontrasten automatisk for spesifisert tegnet objekt til å omfatte "
-"alle mulige områder."
+msgstr "Strekk metningen automatisk for spesifisert tegnet objekt til å omfatte alle mulige områder."
 
 #: plug-ins/common/color_enhance.c:85
 msgid ""
@@ -1898,7 +1894,7 @@ msgstr ""
 msgid "GIF Options"
 msgstr ""
 
-#: plug-ins/common/gif.c:1294 plug-ins/common/png.c:856
+#: plug-ins/common/gif.c:1294 plug-ins/common/png.c:872
 msgid "Interlace"
 msgstr ""
 
@@ -2096,21 +2092,20 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/guillotine.c:77
-#, fuzzy
 msgid "This function takes an image and blah blah.  Hooray!"
-msgstr "Denne funksjonen lager et nytt bilde fra flere bilder i gråtoner"
+msgstr "Denne funksjonen tar et bilde og utfører bla bla. Hurra!"
 
 #: plug-ins/common/guillotine.c:81
 msgid "<Image>/Image/Transforms/Guillotine"
-msgstr ""
+msgstr "<Image>/Bilde/Transformeringer/Giljotin"
 
 #: plug-ins/common/guillotine.c:114
 msgid "Guillotine..."
-msgstr ""
+msgstr "Giljotin..."
 
 #: plug-ins/common/guillotine.c:161
 msgid "Aie!  Aie!  Aie!\n"
-msgstr ""
+msgstr "Ai!  Ai!  Ai!\n"
 
 #: plug-ins/common/guillotine.c:171
 #, c-format
@@ -2119,7 +2114,7 @@ msgstr ""
 
 #: plug-ins/common/guillotine.c:176
 msgid "Poopy, no guides.\n"
-msgstr ""
+msgstr "Skitt, ingen manualer.\n"
 
 #: plug-ins/common/jpeg.c:307 plug-ins/common/jpeg.c:308
 msgid "loads files in the JPEG file format"
@@ -2284,13 +2279,10 @@ msgid "mail: some sort of error with the file extension or lack thereof \n"
 msgstr ""
 
 #: plug-ins/common/normalize.c:78
-#, fuzzy
 msgid ""
 "Normalize the contrast of the specified drawable to cover all possible "
 "ranges."
-msgstr ""
-"Strekk kontrasten automatisk for spesifisert tegnet objekt til å omfatte "
-"alle mulige områder."
+msgstr "Normaliser kontrasten automatisk for spesifisert tegnet objekt til å omfatte alle mulige områder."
 
 #: plug-ins/common/normalize.c:79
 msgid ""
@@ -2307,13 +2299,12 @@ msgid "<Image>/Image/Colors/Normalize"
 msgstr ""
 
 #: plug-ins/common/normalize.c:115
-#, fuzzy
 msgid "Normalizing..."
-msgstr "Skriver ut..."
+msgstr "Normaliserer..."
 
 #: plug-ins/common/normalize.c:155
 msgid "normalize: cmap was NULL!  Quitting...\n"
-msgstr ""
+msgstr "normaliser: cmap var NULL!  Avslutter...\n"
 
 #: plug-ins/common/oilify.c:122
 msgid "Modify the specified drawable to resemble an oil painting"
@@ -2353,11 +2344,15 @@ msgstr "Laster filer i PNG filformat"
 msgid "This plug-in loads Portable Network Graphics (PNG) files."
 msgstr ""
 
-#: plug-ins/common/png.c:818
+#: plug-ins/common/png.c:676
+msgid "Can't save image with alpha\n"
+msgstr ""
+
+#: plug-ins/common/png.c:834
 msgid "PNG Options"
 msgstr "PNG alternativer"
 
-#: plug-ins/common/png.c:863
+#: plug-ins/common/png.c:879
 msgid "Compression level"
 msgstr "Kompresjonsnivå"
 
@@ -2619,7 +2614,7 @@ msgstr "Orientering:"
 #.
 #. * Resolution option menu...
 #.
-#: plug-ins/common/ps.c:1999 plug-ins/print/print.c:813
+#: plug-ins/common/ps.c:2054 plug-ins/print/print.c:813
 msgid "Resolution:"
 msgstr "Oppløsning:"
 
@@ -2714,180 +2709,180 @@ msgstr "PPD/Fil?"
 msgid "File"
 msgstr "Fil"
 
-#: plug-ins/common/ps.c:320 plug-ins/common/ps.c:321
+#: plug-ins/common/ps.c:321 plug-ins/common/ps.c:322
 msgid "load file of PostScript/PDF file format"
 msgstr ""
 
-#: plug-ins/common/ps.c:344
+#: plug-ins/common/ps.c:345
 msgid "save file in PostScript file format"
 msgstr ""
 
-#: plug-ins/common/ps.c:345
+#: plug-ins/common/ps.c:346
 msgid ""
 "PostScript saving handles all image types except those with alpha channels."
 msgstr ""
 
-#: plug-ins/common/ps.c:550
+#: plug-ins/common/ps.c:588
 msgid "PS: can't open file for reading"
 msgstr ""
 
-#: plug-ins/common/ps.c:557
+#: plug-ins/common/ps.c:595
 #, c-format
 msgid "Interpreting and Loading %s:"
 msgstr ""
 
-#: plug-ins/common/ps.c:565
+#: plug-ins/common/ps.c:603
 msgid "PS: can't interprete file"
 msgstr ""
 
-#: plug-ins/common/ps.c:647
+#: plug-ins/common/ps.c:690
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr ""
 
-#: plug-ins/common/ps.c:658
+#: plug-ins/common/ps.c:701
 msgid "PS: cannot operate on unknown image types"
 msgstr ""
 
-#: plug-ins/common/ps.c:667
+#: plug-ins/common/ps.c:710
 msgid "PS: can't open file for writing"
 msgstr ""
 
-#: plug-ins/common/ps.c:1713 plug-ins/common/ps.c:1810
-#: plug-ins/common/ps.c:1903 plug-ins/common/ps.c:1972
+#: plug-ins/common/ps.c:1768 plug-ins/common/ps.c:1865
+#: plug-ins/common/ps.c:1958 plug-ins/common/ps.c:2027
 msgid "write error occured"
 msgstr "feil under skriving"
 
-#: plug-ins/common/ps.c:1999 plug-ins/common/ps.c:2264
+#: plug-ins/common/ps.c:2054 plug-ins/common/ps.c:2319
 msgid "Width:"
 msgstr "Bredde:"
 
-#: plug-ins/common/ps.c:1999 plug-ins/common/ps.c:2264
+#: plug-ins/common/ps.c:2054 plug-ins/common/ps.c:2319
 msgid "Height:"
 msgstr "Høyde:"
 
-#: plug-ins/common/ps.c:1999
+#: plug-ins/common/ps.c:2054
 msgid "Pages:"
 msgstr "Sider:"
 
-#: plug-ins/common/ps.c:2001
+#: plug-ins/common/ps.c:2056
 msgid "b/w"
 msgstr "s/hv"
 
-#: plug-ins/common/ps.c:2001
+#: plug-ins/common/ps.c:2056
 msgid "gray"
 msgstr "grå"
 
-#: plug-ins/common/ps.c:2001
+#: plug-ins/common/ps.c:2056
 msgid "colour"
 msgstr "farge"
 
-#: plug-ins/common/ps.c:2001
+#: plug-ins/common/ps.c:2056
 msgid "automatic"
 msgstr "automatisk"
 
-#: plug-ins/common/ps.c:2003
+#: plug-ins/common/ps.c:2058
 msgid "none"
 msgstr "ingen"
 
-#: plug-ins/common/ps.c:2003
+#: plug-ins/common/ps.c:2058
 msgid "weak"
 msgstr "svak"
 
-#: plug-ins/common/ps.c:2003
+#: plug-ins/common/ps.c:2058
 msgid "strong"
 msgstr "sterk"
 
-#: plug-ins/common/ps.c:2016
+#: plug-ins/common/ps.c:2071
 msgid "Load PostScript"
 msgstr ""
 
 #. Rendering
-#: plug-ins/common/ps.c:2049
+#: plug-ins/common/ps.c:2104
 msgid "Rendering"
 msgstr ""
 
-#: plug-ins/common/ps.c:2089
+#: plug-ins/common/ps.c:2144
 msgid "try BoundingBox"
 msgstr ""
 
 #. Colouring
-#: plug-ins/common/ps.c:2102
+#: plug-ins/common/ps.c:2157
 msgid "Colouring"
 msgstr ""
 
-#: plug-ins/common/ps.c:2138
+#: plug-ins/common/ps.c:2193
 msgid "Graphic antialiasing"
 msgstr ""
 
-#: plug-ins/common/ps.c:2139
+#: plug-ins/common/ps.c:2194
 msgid "Text antialiasing"
 msgstr ""
 
-#: plug-ins/common/ps.c:2264
+#: plug-ins/common/ps.c:2319
 msgid "X-offset:"
 msgstr "X-avstand"
 
-#: plug-ins/common/ps.c:2264
+#: plug-ins/common/ps.c:2319
 msgid "Y-offset:"
 msgstr "Y-avstand:"
 
-#: plug-ins/common/ps.c:2266
+#: plug-ins/common/ps.c:2321
 msgid "0"
 msgstr "0"
 
-#: plug-ins/common/ps.c:2266
+#: plug-ins/common/ps.c:2321
 msgid "90"
 msgstr "90"
 
-#: plug-ins/common/ps.c:2266
+#: plug-ins/common/ps.c:2321
 msgid "180"
 msgstr "180"
 
-#: plug-ins/common/ps.c:2266
+#: plug-ins/common/ps.c:2321
 msgid "270"
 msgstr "270"
 
-#: plug-ins/common/ps.c:2268
+#: plug-ins/common/ps.c:2323
 msgid "Inch"
 msgstr "Tomme"
 
-#: plug-ins/common/ps.c:2268
+#: plug-ins/common/ps.c:2323
 msgid "Millimeter"
 msgstr "Millimeter"
 
-#: plug-ins/common/ps.c:2283
+#: plug-ins/common/ps.c:2338
 msgid "Save PostScript"
 msgstr "Lagre PostScript"
 
 #. Image Size
-#: plug-ins/common/ps.c:2324
+#: plug-ins/common/ps.c:2379
 msgid "Image Size"
 msgstr "Bildestørrelse"
 
-#: plug-ins/common/ps.c:2363
+#: plug-ins/common/ps.c:2418
 msgid "keep aspect ratio"
 msgstr "behold aspektrate"
 
 #. Unit
-#: plug-ins/common/ps.c:2373
+#: plug-ins/common/ps.c:2428
 msgid "Unit"
 msgstr "Enhet"
 
 #. Rotation
-#: plug-ins/common/ps.c:2404
+#: plug-ins/common/ps.c:2459
 msgid "Rotation"
 msgstr "Rotasjon"
 
 #. Format
-#: plug-ins/common/ps.c:2431
+#: plug-ins/common/ps.c:2486
 msgid "Output"
 msgstr "Utskrift"
 
-#: plug-ins/common/ps.c:2439
+#: plug-ins/common/ps.c:2494
 msgid "Encapsulated PostScript"
 msgstr "Encapsulated PostScript"
 
-#: plug-ins/common/ps.c:2465
+#: plug-ins/common/ps.c:2520
 msgid "Preview size"
 msgstr "Størrelse på forhåndsvisning"
 
@@ -2915,30 +2910,27 @@ msgid "You can not rotate the whole image if there's a floating selection."
 msgstr ""
 
 #: plug-ins/common/rotate.c:518
-#, fuzzy
 msgid "Rotating..."
-msgstr "Rotasjon"
+msgstr "Roterer..."
 
 #: plug-ins/common/rotate.c:599
-#, fuzzy
 msgid "Rotate"
-msgstr "Rotasjon"
+msgstr "Roter"
 
 #. parameter settings
 #: plug-ins/common/rotate.c:625
 msgid "Rotate clockwise by"
-msgstr ""
+msgstr "Roter mer klokken"
 
 #. label: degrees
 #: plug-ins/common/rotate.c:698
 msgid "degrees"
-msgstr ""
+msgstr "grader"
 
 #. check button
 #: plug-ins/common/rotate.c:712
-#, fuzzy
 msgid "Rotate the whole image"
-msgstr "Lag nytt bilde"
+msgstr "Roter hele bildet"
 
 #: plug-ins/common/rotators.c:50
 msgid "<Image>/Image/Transforms/Image"
@@ -3026,9 +3018,8 @@ msgid "threshold_alpha (0.13):coloring transparency..."
 msgstr ""
 
 #: plug-ins/common/threshold_alpha.c:354
-#, fuzzy
 msgid "Threshold"
-msgstr "Terskel:"
+msgstr "Terskel"
 
 #: plug-ins/common/xbm.c:163
 msgid "Load a file in X10 or X11 bitmap (XBM) file format"
