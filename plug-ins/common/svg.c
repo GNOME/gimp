@@ -51,8 +51,8 @@ typedef struct
 static SvgLoadVals load_vals =
 {
   72.0,  /* resolution */
-  0,
-  0
+  0,     /* width      */
+  0      /* height     */
 };
 
 typedef struct
@@ -62,7 +62,7 @@ typedef struct
 
 static SvgLoadInterface load_interface =
 {
-  FALSE  /* run  */
+  FALSE  /* run        */
 };
 
 
@@ -82,10 +82,10 @@ static gboolean    load_dialog        (const gchar  *filename);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
+  NULL,
+  NULL,
+  query,
+  run,
 };
 
 MAIN ()
@@ -101,10 +101,10 @@ query (void)
     { GIMP_PDB_STRING, "raw_filename", "The name of the file to load"        },
     { GIMP_PDB_FLOAT,  "resolution",
       "Resolution to use for rendering the SVG (defaults to 72 dpi"          },
-    { GIMP_PDB_FLOAT,  "width",
+    { GIMP_PDB_INT32,  "width",
       "Width (in pixels) to load the SVG in."
       "(0 for original width, a negative width to specify a maximum width)"  },
-    { GIMP_PDB_FLOAT,  "height",
+    { GIMP_PDB_INT32,  "height",
       "Height (in pixels) to load the SVG in."
       "(0 for original height, a negative width to specify a maximum height)"}
   };
@@ -158,10 +158,23 @@ run (const gchar      *name,
     {
       gimp_get_data ("file_svg_load", &load_vals);
 
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-	{
+      switch (run_mode)
+        {
+        case GIMP_RUN_NONINTERACTIVE:
+          if (nparams > 2)  load_vals.resolution = param[3].data.d_float;
+          if (nparams > 3)  load_vals.width      = param[4].data.d_int32;
+          if (nparams > 4)  load_vals.height     = param[5].data.d_int32;
+          break;
+
+        case GIMP_RUN_INTERACTIVE:
+          gimp_get_data ("file_svg_load", &load_vals);
 	  if (!load_dialog (param[1].data.d_string))
 	    status = GIMP_PDB_CANCEL;
+          break;
+
+        case GIMP_RUN_WITH_LAST_VALS:
+          gimp_get_data ("file_svg_load", &load_vals);
+          break;
 	}
 
       if (status == GIMP_PDB_SUCCESS)
@@ -278,8 +291,13 @@ load_size_callback (gint     *width,
                     gpointer  data)
 {
   SvgLoadVals *vals = data;
+  gint         owidth;
+  gint         oheight;
 
   g_return_if_fail (*width > 0 && *height > 0);
+
+  owidth  = *width;
+  oheight = *height;
 
   if (!vals->width || !vals->height)
     return;
@@ -313,6 +331,9 @@ load_size_callback (gint     *width,
       vals->width  = *width;
       vals->height = *height;
     }
+
+  load_vals.width  = owidth;
+  load_vals.height = oheight;
 }
 
 static GdkPixbuf *
@@ -378,12 +399,32 @@ load_ok_callback (GtkWidget *widget,
 {
   GimpSizeEntry *size = g_object_get_data (G_OBJECT (data), "size-entry");
 
-  load_vals.width  = gimp_size_entry_get_refval (size, 0);
-  load_vals.height = gimp_size_entry_get_refval (size, 1);
+  load_vals.width  = ROUND (gimp_size_entry_get_refval (size, 0));
+  load_vals.height = ROUND (gimp_size_entry_get_refval (size, 1));
 
   load_interface.run = TRUE;
 
   gtk_widget_destroy (GTK_WIDGET (data));
+}
+
+static void
+load_resolution_callback (GimpSizeEntry *res,
+                          GimpSizeEntry *size)
+{
+  gdouble width, height, factor;
+
+  width  = gimp_size_entry_get_refval (size, 0);
+  height = gimp_size_entry_get_refval (size, 1);
+
+  if (load_vals.resolution > 0.0)
+    {
+      factor = gimp_size_entry_get_refval (res, 0) / load_vals.resolution;
+
+      gimp_size_entry_set_refval (size, 0, factor * width);
+      gimp_size_entry_set_refval (size, 1, factor * height);
+
+      load_vals.resolution = gimp_size_entry_get_refval (res, 0);
+    }
 }
 
 static gboolean
@@ -395,6 +436,7 @@ load_dialog (const gchar *filename)
   GtkWidget *table;
   GtkWidget *abox;
   GtkWidget *size;
+  GtkWidget *res;
   GtkWidget *label;
   GtkWidget *spinbutton;
   GtkWidget *image;
@@ -403,6 +445,8 @@ load_dialog (const gchar *filename)
   GError    *error = NULL;
 
   SvgLoadVals  preview_vals = { 72.0, -128, -128 };
+
+  preview_vals.resolution = load_vals.resolution;
 
   preview = load_rsvg_pixbuf (filename, &preview_vals, &error);
 
@@ -417,7 +461,7 @@ load_dialog (const gchar *filename)
 
   gimp_ui_init ("svg", FALSE);
 
-  dialog = gimp_dialog_new (_("Load SVG"), "svg",
+  dialog = gimp_dialog_new (_("Open SVG"), "svg",
                             NULL, NULL,
                             GTK_WIN_POS_MOUSE,
                             FALSE, TRUE, FALSE,
@@ -456,7 +500,7 @@ load_dialog (const gchar *filename)
   gtk_container_add (GTK_CONTAINER (frame), image);
   gtk_widget_show (image);
 
-  table = gtk_table_new (3, 2, FALSE);
+  table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacing (GTK_TABLE (table), 1, 4);
@@ -493,10 +537,9 @@ load_dialog (const gchar *filename)
   size = gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
                               TRUE, FALSE, FALSE, 10,
                               GIMP_SIZE_ENTRY_UPDATE_SIZE);
+  gtk_table_set_col_spacing (GTK_TABLE (size), 1, 4);
 
   g_object_set_data (G_OBJECT (dialog), "size-entry", size);
-
-  gtk_table_set_col_spacing (GTK_TABLE (size), 1, 4);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (size),
                              GTK_SPIN_BUTTON (spinbutton), NULL);
@@ -504,13 +547,49 @@ load_dialog (const gchar *filename)
   gtk_container_add (GTK_CONTAINER (abox), size);
   gtk_widget_show (size);
 
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size), 0, preview_vals.width);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size), 1, preview_vals.height);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size), 0,
+                                         GIMP_MIN_IMAGE_SIZE,
+                                         GIMP_MAX_IMAGE_SIZE);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size), 1,
+                                         GIMP_MIN_IMAGE_SIZE,
+                                         GIMP_MAX_IMAGE_SIZE);
+
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size), 0, load_vals.width);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size), 1, load_vals.height);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size), 0,
 				  load_vals.resolution, FALSE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size), 1,
 				  load_vals.resolution, FALSE);
+
+  label = gtk_label_new (_("Resolution:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  abox = gtk_alignment_new (0.0, 0.5, 0.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 2, 3,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (abox);
+
+  res = gimp_size_entry_new (1, GIMP_UNIT_INCH, _("pixels/%a"),
+                             FALSE, FALSE, FALSE, 10,
+                             GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
+  gtk_table_set_col_spacing (GTK_TABLE (res), 1, 4);
+
+  gtk_table_attach (GTK_TABLE (table), res, 1, 2, 2, 3,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (res);
+
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (res), 0,
+                                         GIMP_MIN_RESOLUTION,
+                                         GIMP_MAX_RESOLUTION);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (res), 0, load_vals.resolution);
+
+  g_signal_connect (res, "value-changed",
+                    G_CALLBACK (load_resolution_callback),
+                    size);
 
   gtk_widget_show (dialog);
 

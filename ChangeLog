@@ -1,3 +1,8 @@
+2003-09-21  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/svg.c: added a resolution entry and implemented
+	PDB parameter parsing.
+
 2003-09-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainergridview.c
