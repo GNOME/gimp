@@ -58,6 +58,8 @@ sub generate {
 	my @inargs = @{$proc->{inargs}} if exists $proc->{inargs};
 	my @outargs = @{$proc->{outargs}} if exists $proc->{outargs};
 
+	my $funcname = "gimp_$name";
+
 	# The 'color' argument is special cased to accept and return the
 	# individual color components. This is to maintain backwards
 	# compatibility, but it certainly won't fly for other color models
@@ -235,7 +237,7 @@ CODE
 		    $type = 'int32';
 		}
 
-	        if (exists $_->{num}) {
+		if (exists $_->{num}) {
 		    $numpos = $argc;
 		    $numtype = $type;
 		}
@@ -255,15 +257,15 @@ CODE
 		    my $numvar = '*' . $_->{array}->{name};
 		    $numvar = "num_$_->{name}" if exists $_->{array}->{no_lib};
 
-		    $return_marshal .= <<NEW . ($ch || $ch) ? <<CP1 : <<CP2;
+		    $return_marshal .= <<NEW . (($ch || $cf) ? <<CP1 : <<CP2);
       $numvar = return_vals[$numpos].data.d_$numtype;
       $var = g_new ($datatype, $numvar);
 NEW
-      memcpy ($var, return_vals[$argc].data.d_$type\[i],
-	      $numvar * sizeof ($datatype));
-CP1
       for (i = 0; i < $numvar; i++)
 	$dh$_->{name}$df\[i] = ${ch}return_vals[$argc].data.d_$type\[i]${cf};
+CP1
+      memcpy ($var, return_vals[$argc].data.d_$type\[i],
+	      $numvar * sizeof ($datatype));
 CP2
 		}
 		elsif ($type ne 'color') {
@@ -346,8 +348,6 @@ CODE
 	    $arglist = "void";
 	}
 
-	my $funcname = "gimp_$name";
-
 	# Our function prototype for the headers
 	(my $hrettype = $rettype) =~ s/ //g;
 
@@ -360,7 +360,7 @@ CODE
 	my $padtab = $padlen / 8; my $padspace = $padlen % 8;
 	my $padding = "\t" x $padtab . ' ' x $padspace;
 	$clist =~ s/\t/$padding/eg;
-
+	
 	$out->{code} .= <<CODE;
 
 $rettype

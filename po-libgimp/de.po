@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.15\n"
-"POT-Creation-Date: 2000-01-31 19:22-0800\n"
+"POT-Creation-Date: 2000-02-11 10:24-0800\n"
 "PO-Revision-Date: 2000-01-27 23:47+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -23,51 +23,51 @@ msgstr "/Benutze Vordergrundfarbe"
 msgid "/Use Background Color"
 msgstr "/Benutze Hintergrundfarbe"
 
-#: libgimp/gimpexport.c:124
+#: libgimp/gimpexport.c:155
 msgid "can't Handle Layers"
 msgstr "kennt keine Ebenen"
 
-#: libgimp/gimpexport.c:125 libgimp/gimpexport.c:134
+#: libgimp/gimpexport.c:156 libgimp/gimpexport.c:165
 msgid "Merge Visible Layers"
 msgstr "Sichtbare Ebenen vereinen"
 
-#: libgimp/gimpexport.c:133
+#: libgimp/gimpexport.c:164
 msgid "can only Handle Layers as Animation Frames"
 msgstr "kann Ebenen nur als Animation abspeichern"
 
-#: libgimp/gimpexport.c:134
+#: libgimp/gimpexport.c:165
 msgid "Save as Animation"
 msgstr "Speichere als Animation"
 
-#: libgimp/gimpexport.c:142
+#: libgimp/gimpexport.c:173
 msgid "can't Handle Transparency"
 msgstr "kennt keine Transparenz"
 
-#: libgimp/gimpexport.c:143
+#: libgimp/gimpexport.c:174
 msgid "Flatten Image"
 msgstr "Bild zusammenfügen"
 
-#: libgimp/gimpexport.c:151
+#: libgimp/gimpexport.c:182
 msgid "can only Handle RGB Images"
 msgstr "kennt nur RGB"
 
-#: libgimp/gimpexport.c:152 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
+#: libgimp/gimpexport.c:183 libgimp/gimpexport.c:211 libgimp/gimpexport.c:220
 msgid "Convert to RGB"
 msgstr "In RGB umwandeln"
 
-#: libgimp/gimpexport.c:160
+#: libgimp/gimpexport.c:191
 msgid "can only Handle Grayscale Images"
 msgstr "kennt nur Graustufen"
 
-#: libgimp/gimpexport.c:161 libgimp/gimpexport.c:180 libgimp/gimpexport.c:201
+#: libgimp/gimpexport.c:192 libgimp/gimpexport.c:211 libgimp/gimpexport.c:232
 msgid "Convert to Grayscale"
 msgstr "In Graustufen umwandeln"
 
-#: libgimp/gimpexport.c:169
+#: libgimp/gimpexport.c:200
 msgid "can only Handle Indexed Images"
 msgstr "kennt nur indizierte Paletten"
 
-#: libgimp/gimpexport.c:170 libgimp/gimpexport.c:189 libgimp/gimpexport.c:199
+#: libgimp/gimpexport.c:201 libgimp/gimpexport.c:220 libgimp/gimpexport.c:230
 msgid ""
 "Convert to indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -75,23 +75,23 @@ msgstr ""
 "Mit Standardeinstellungen in indiziertes Format umwandeln\n"
 "(Für bessere Resultate, diesen Schritt manuell durchführen)"
 
-#: libgimp/gimpexport.c:179
+#: libgimp/gimpexport.c:210
 msgid "can only Handle RGB or Grayscale Images"
 msgstr "kennt nur RGB und Graustufen"
 
-#: libgimp/gimpexport.c:188
+#: libgimp/gimpexport.c:219
 msgid "can only Handle RGB or Indexed Images"
 msgstr "kennt nur RGB und indizierte Paletten"
 
-#: libgimp/gimpexport.c:198
+#: libgimp/gimpexport.c:229
 msgid "can only Handle Grayscale or Indexed Images"
 msgstr "kennt nur Graustufen und indizierte Paletten"
 
-#: libgimp/gimpexport.c:209
+#: libgimp/gimpexport.c:240
 msgid "needs an Alpha Channel"
 msgstr "benötigt einen Alphakanal"
 
-#: libgimp/gimpexport.c:210
+#: libgimp/gimpexport.c:241
 msgid "Add Alpha Channel"
 msgstr "Alphakanal hinzufügen"
 
@@ -100,105 +100,112 @@ msgstr "Alphakanal hinzufügen"
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:279
+#: libgimp/gimpexport.c:310
 msgid "Export File"
 msgstr "Datei exportieren"
 
-#: libgimp/gimpexport.c:284
+#: libgimp/gimpexport.c:315
 msgid "Export"
 msgstr "Exportieren"
 
-#: libgimp/gimpexport.c:286
+#: libgimp/gimpexport.c:317
 msgid "Ignore"
 msgstr "Ignorieren"
 
-#: libgimp/gimpexport.c:288
+#: libgimp/gimpexport.c:319 libgimp/gimpquerybox.c:160
+#: libgimp/gimpquerybox.c:197 libgimp/gimpquerybox.c:235
+#: libgimp/gimpquerybox.c:275
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: libgimp/gimpexport.c:303
+#: libgimp/gimpexport.c:334
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
 msgstr "Das Bild sollte vor dem Abspeichern exportiert werden, denn:"
 
 #. the footline
-#: libgimp/gimpexport.c:366
+#: libgimp/gimpexport.c:397
 msgid "The export conversion won't modify your original image."
 msgstr "Dieser Vorgang wird das Originalbild nicht verändern."
 
-#: libgimp/gimpfileselection.c:352
+#: libgimp/gimpfileselection.c:394
 msgid "Select File"
 msgstr "Datei auswählen"
 
 # gehört zu einem GAP-Dialog (z.b. wollen sie speichern ?). 'Auswahl' ist am allgemeinsten, so kollidiert es nicht mit anderen Vorkommen von 'Select'
-#: libgimp/gimpfileselection.c:362 libgimp/gimpunitmenu.c:462
+#: libgimp/gimpfileselection.c:404 libgimp/gimpunitmenu.c:484
 msgid "Select"
 msgstr "Auswahl"
 
-#: libgimp/gimpfileselection.c:363 libgimp/gimpunitmenu.c:464
+#: libgimp/gimpfileselection.c:405 libgimp/gimpunitmenu.c:486
 msgid "Close"
 msgstr "Schliessen"
 
+#: libgimp/gimpquerybox.c:160 libgimp/gimpquerybox.c:197
+#: libgimp/gimpquerybox.c:235 libgimp/gimpquerybox.c:275
+msgid "OK"
+msgstr ""
+
 #. pseudo unit
-#: libgimp/gimpunit.c:46
+#: libgimp/gimpunit.c:47
 msgid "pixel"
 msgstr "Pixel"
 
-#: libgimp/gimpunit.c:46
+#: libgimp/gimpunit.c:47
 msgid "pixels"
 msgstr "Pixel"
 
 #. standard units
-#: libgimp/gimpunit.c:49
+#: libgimp/gimpunit.c:50
 msgid "inch"
 msgstr "Inch"
 
-#: libgimp/gimpunit.c:49
+#: libgimp/gimpunit.c:50
 msgid "inches"
 msgstr "Inch"
 
-#: libgimp/gimpunit.c:50
+#: libgimp/gimpunit.c:51
 msgid "millimeter"
 msgstr "Millimeter"
 
-#: libgimp/gimpunit.c:50
+#: libgimp/gimpunit.c:51
 msgid "millimeters"
 msgstr "Millimeter"
 
 #. professional units
-#: libgimp/gimpunit.c:53
+#: libgimp/gimpunit.c:54
 msgid "point"
 msgstr "Punkt"
 
-#: libgimp/gimpunit.c:53
+#: libgimp/gimpunit.c:54
 msgid "points"
 msgstr "Punkte"
 
-#: libgimp/gimpunit.c:54
+#: libgimp/gimpunit.c:55
 msgid "pica"
 msgstr "Pica"
 
-#: libgimp/gimpunit.c:54
+#: libgimp/gimpunit.c:55
 msgid "picas"
 msgstr "Picas"
 
-#: libgimp/gimpunit.c:61
+#: libgimp/gimpunit.c:62
 msgid "percent"
 msgstr "Prozent"
 
-#: libgimp/gimpunitmenu.c:215
+#: libgimp/gimpunitmenu.c:234
 msgid "More..."
 msgstr "Mehr..."
 
-#: libgimp/gimpunitmenu.c:457
+#: libgimp/gimpunitmenu.c:479
 msgid "Unit Selection"
 msgstr "Einheit auswählen"
 
-#: libgimp/gimpunitmenu.c:493
+#: libgimp/gimpunitmenu.c:516
 msgid "Unit"
 msgstr "Einheit"
 
-#: libgimp/gimpunitmenu.c:494
+#: libgimp/gimpunitmenu.c:517
 msgid "Factor"
 msgstr "Faktor"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.16\n"
-"POT-Creation-Date: 2000-02-11 10:50+0100\n"
+"POT-Creation-Date: 2000-02-11 10:24-0800\n"
 "PO-Revision-Date: 2000-02-11 11:34+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -316,7 +316,7 @@ msgstr "Editor stop"
 #: app/colormap_dialog.i.c:162 app/crop.c:1054 app/devices.c:755
 #: app/docindexif.c:105 app/errorconsole.c:281 app/gdisplay_ops.c:354
 #: app/gradient.c:801 app/gradient_select.c:153 app/histogram_tool.c:292
-#: app/info_window.c:267 app/lc_dialog.c:196 app/measure.c:273
+#: app/info_window.c:255 app/lc_dialog.c:196 app/measure.c:273
 #: app/nav_window.c:1369 app/palette.c:2094 app/palette.c:2110
 #: app/palette.c:3156 app/palette_select.c:66 app/pattern_select.c:172
 #: app/preferences_dialog.c:359 app/tips_dialog.c:171 app/tools.c:1047
@@ -714,8 +714,8 @@ msgstr "Intenzita:"
 #: app/color_picker.c:625 app/color_picker.c:626 app/color_picker.c:627
 #: app/color_picker.c:628 app/color_picker.c:629 app/color_picker.c:630
 #: app/color_picker.c:631 app/color_picker.c:649 app/color_picker.c:664
-#: app/color_picker.c:682 app/info_window.c:163 app/info_window.c:168
-#: app/info_window.c:173 app/info_window.c:178
+#: app/color_picker.c:682 app/info_window.c:160 app/info_window.c:165
+#: app/info_window.c:170 app/info_window.c:175
 msgid "N/A"
 msgstr "Není"
 
@@ -2173,7 +2173,7 @@ msgstr "Svìtlost"
 msgid "Saturation"
 msgstr "Sytost"
 
-#: app/image_new.c:58 app/info_window.c:65 app/info_window.c:550
+#: app/image_new.c:58 app/info_window.c:65 app/info_window.c:538
 #: app/preferences_dialog.c:1638
 msgid "Grayscale"
 msgstr "Odstíny ¹edi"
@@ -2265,71 +2265,71 @@ msgstr "Skuteèná barva"
 msgid "Direct Color"
 msgstr "Pøímá barva"
 
-#: app/info_window.c:183
+#: app/info_window.c:180
 msgid "A:"
 msgstr "Alfa:"
 
-#: app/info_window.c:188
+#: app/info_window.c:185
 msgid "B:"
 msgstr "Modrá:"
 
-#: app/info_window.c:193
+#: app/info_window.c:190
 msgid "G:"
 msgstr "Zelená:"
 
-#: app/info_window.c:198
+#: app/info_window.c:195
 msgid "R:"
 msgstr "Èervená:"
 
-#: app/info_window.c:219
+#: app/info_window.c:207
 msgid "Extended"
 msgstr "Roz¹íøené"
 
 #. add the information fields
-#: app/info_window.c:286
+#: app/info_window.c:274
 msgid "Dimensions (w x h):"
 msgstr "Rozmìry (w × h):"
 
-#: app/info_window.c:290
+#: app/info_window.c:278
 msgid "Resolution:"
 msgstr "Rozli¹ení:"
 
-#: app/info_window.c:292
+#: app/info_window.c:280
 msgid "Scale Ratio:"
 msgstr "Zvìt¹ení:"
 
-#: app/info_window.c:294
+#: app/info_window.c:282
 msgid "Display Type:"
 msgstr "Typ zobrazení:"
 
-#: app/info_window.c:296
+#: app/info_window.c:284
 msgid "Visual Class:"
 msgstr "Vizuální tøída:"
 
-#: app/info_window.c:298
+#: app/info_window.c:286
 msgid "Visual Depth:"
 msgstr "Vizuální hloubka:"
 
 #. create the info dialog
-#: app/info_window.c:326
+#: app/info_window.c:314
 #, c-format
 msgid "Info: %s-%d.%d"
 msgstr "Informace: %s-%d.%d"
 
-#: app/info_window.c:524
+#: app/info_window.c:512
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d × %d pixelù"
 
-#: app/info_window.c:548
+#: app/info_window.c:536
 msgid "RGB Color"
 msgstr "RGB barva"
 
-#: app/info_window.c:553
+#: app/info_window.c:541
 msgid "Indexed Color"
 msgstr "Indexovaná barva"
 
-#: app/info_window.c:553
+#: app/info_window.c:541
 msgid "colors"
 msgstr "barev"
 

@@ -102,7 +102,6 @@ EXTRA_DIST = \
 	ps-menurc		\
 	gimp.1			\
 	gimptool.1		\
-	gtkrc.forest2		\
 	gimp.m4			\
 	gimprc.win32		\
 	config.h.win32		\

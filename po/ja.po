@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.17\n"
-"POT-Creation-Date: 2000-02-11 12:37+0900\n"
+"POT-Creation-Date: 2000-02-11 10:24-0800\n"
 "PO-Revision-Date: 2000-02-11 12:38+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@awa.tohoku.ac.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -318,7 +318,7 @@ msgstr "ブラシエディタ"
 #: app/colormap_dialog.i.c:162 app/crop.c:1054 app/devices.c:755
 #: app/docindexif.c:105 app/errorconsole.c:281 app/gdisplay_ops.c:354
 #: app/gradient.c:801 app/gradient_select.c:153 app/histogram_tool.c:292
-#: app/info_window.c:267 app/lc_dialog.c:196 app/measure.c:273
+#: app/info_window.c:255 app/lc_dialog.c:196 app/measure.c:273
 #: app/nav_window.c:1369 app/palette.c:2094 app/palette.c:2110
 #: app/palette.c:3156 app/palette_select.c:66 app/pattern_select.c:172
 #: app/preferences_dialog.c:359 app/tips_dialog.c:171 app/tools.c:1047
@@ -716,8 +716,8 @@ msgstr "強度:"
 #: app/color_picker.c:625 app/color_picker.c:626 app/color_picker.c:627
 #: app/color_picker.c:628 app/color_picker.c:629 app/color_picker.c:630
 #: app/color_picker.c:631 app/color_picker.c:649 app/color_picker.c:664
-#: app/color_picker.c:682 app/info_window.c:163 app/info_window.c:168
-#: app/info_window.c:173 app/info_window.c:178
+#: app/color_picker.c:682 app/info_window.c:160 app/info_window.c:165
+#: app/info_window.c:170 app/info_window.c:175
 msgid "N/A"
 msgstr "N/A"
 
@@ -2174,7 +2174,7 @@ msgstr "明度"
 msgid "Saturation"
 msgstr "彩度"
 
-#: app/image_new.c:58 app/info_window.c:65 app/info_window.c:550
+#: app/image_new.c:58 app/info_window.c:65 app/info_window.c:538
 #: app/preferences_dialog.c:1638
 msgid "Grayscale"
 msgstr "グレースケール"
@@ -2265,71 +2265,71 @@ msgstr "トゥルーカラー"
 msgid "Direct Color"
 msgstr "ダイレクトカラー"
 
-#: app/info_window.c:183
+#: app/info_window.c:180
 msgid "A:"
 msgstr "A:"
 
-#: app/info_window.c:188
+#: app/info_window.c:185
 msgid "B:"
 msgstr "B:"
 
-#: app/info_window.c:193
+#: app/info_window.c:190
 msgid "G:"
 msgstr "G:"
 
-#: app/info_window.c:198
+#: app/info_window.c:195
 msgid "R:"
 msgstr "R:"
 
-#: app/info_window.c:219
+#: app/info_window.c:207
 msgid "Extended"
 msgstr "拡張"
 
 #. add the information fields
-#: app/info_window.c:286
+#: app/info_window.c:274
 msgid "Dimensions (w x h):"
 msgstr "大きさ (幅 x 高さ):"
 
-#: app/info_window.c:290
+#: app/info_window.c:278
 msgid "Resolution:"
 msgstr "解像度:"
 
-#: app/info_window.c:292
+#: app/info_window.c:280
 msgid "Scale Ratio:"
 msgstr "拡大率:"
 
-#: app/info_window.c:294
+#: app/info_window.c:282
 msgid "Display Type:"
 msgstr "表示タイプ:"
 
-#: app/info_window.c:296
+#: app/info_window.c:284
 msgid "Visual Class:"
 msgstr "ビジュアルクラス:"
 
-#: app/info_window.c:298
+#: app/info_window.c:286
 msgid "Visual Depth:"
 msgstr "ビジュアル深度:"
 
 #. create the info dialog
-#: app/info_window.c:326
+#: app/info_window.c:314
 #, c-format
 msgid "Info: %s-%d.%d"
 msgstr "情報: %s-%d.%d"
 
-#: app/info_window.c:524
+#: app/info_window.c:512
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d x %d ピクセル"
 
-#: app/info_window.c:548
+#: app/info_window.c:536
 msgid "RGB Color"
 msgstr "RGB カラー"
 
-#: app/info_window.c:553
+#: app/info_window.c:541
 msgid "Indexed Color"
 msgstr "インデックスカラー"
 
-#: app/info_window.c:553
+#: app/info_window.c:541
 msgid "colors"
 msgstr "色"
 

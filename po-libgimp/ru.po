@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-plugin-1.1.14\n"
-"POT-Creation-Date: 2000-01-31 19:22-0800\n"
+"POT-Creation-Date: 2000-02-11 10:24-0800\n"
 "PO-Revision-Date: 2000-01-22 18:43+03:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -20,51 +20,51 @@ msgstr "/Использовать цвет переднего плана"
 msgid "/Use Background Color"
 msgstr "/Использовать цвет фона"
 
-#: libgimp/gimpexport.c:124
+#: libgimp/gimpexport.c:155
 msgid "can't Handle Layers"
 msgstr "невозможно обработать слои"
 
-#: libgimp/gimpexport.c:125 libgimp/gimpexport.c:134
+#: libgimp/gimpexport.c:156 libgimp/gimpexport.c:165
 msgid "Merge Visible Layers"
 msgstr "Объединить видимые слои"
 
-#: libgimp/gimpexport.c:133
+#: libgimp/gimpexport.c:164
 msgid "can only Handle Layers as Animation Frames"
 msgstr "можно обработать слои только как анимированные кадры"
 
-#: libgimp/gimpexport.c:134
+#: libgimp/gimpexport.c:165
 msgid "Save as Animation"
 msgstr "Сохранить как анимацию"
 
-#: libgimp/gimpexport.c:142
+#: libgimp/gimpexport.c:173
 msgid "can't Handle Transparency"
 msgstr "невозможно обработать прозрачность"
 
-#: libgimp/gimpexport.c:143
+#: libgimp/gimpexport.c:174
 msgid "Flatten Image"
 msgstr "Свести изображение"
 
-#: libgimp/gimpexport.c:151
+#: libgimp/gimpexport.c:182
 msgid "can only Handle RGB Images"
 msgstr "можно обработать только RGB-изображения"
 
-#: libgimp/gimpexport.c:152 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
+#: libgimp/gimpexport.c:183 libgimp/gimpexport.c:211 libgimp/gimpexport.c:220
 msgid "Convert to RGB"
 msgstr "Преобразовать в RGB"
 
-#: libgimp/gimpexport.c:160
+#: libgimp/gimpexport.c:191
 msgid "can only Handle Grayscale Images"
 msgstr "можно обработать только изображения в оттенках серого"
 
-#: libgimp/gimpexport.c:161 libgimp/gimpexport.c:180 libgimp/gimpexport.c:201
+#: libgimp/gimpexport.c:192 libgimp/gimpexport.c:211 libgimp/gimpexport.c:232
 msgid "Convert to Grayscale"
 msgstr "Преобразовать в оттенки серого"
 
-#: libgimp/gimpexport.c:169
+#: libgimp/gimpexport.c:200
 msgid "can only Handle Indexed Images"
 msgstr "можно обработать только индексированные изображения"
 
-#: libgimp/gimpexport.c:170 libgimp/gimpexport.c:189 libgimp/gimpexport.c:199
+#: libgimp/gimpexport.c:201 libgimp/gimpexport.c:220 libgimp/gimpexport.c:230
 msgid ""
 "Convert to indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -72,24 +72,24 @@ msgstr ""
 "Преобразовать в индексированное используя настройки по умолчанию\n"
 "(Результат можно подстроить вручную)"
 
-#: libgimp/gimpexport.c:179
+#: libgimp/gimpexport.c:210
 msgid "can only Handle RGB or Grayscale Images"
 msgstr "можно обработать только изображения в оттенках серого или RGB"
 
-#: libgimp/gimpexport.c:188
+#: libgimp/gimpexport.c:219
 msgid "can only Handle RGB or Indexed Images"
 msgstr "можно обработать только RGB или индексированные изображения"
 
-#: libgimp/gimpexport.c:198
+#: libgimp/gimpexport.c:229
 msgid "can only Handle Grayscale or Indexed Images"
 msgstr ""
 "можно обработать только изображения в оттенках серого или индексированные"
 
-#: libgimp/gimpexport.c:209
+#: libgimp/gimpexport.c:240
 msgid "needs an Alpha Channel"
 msgstr "требуется альфа канал"
 
-#: libgimp/gimpexport.c:210
+#: libgimp/gimpexport.c:241
 msgid "Add Alpha Channel"
 msgstr "Добавить альфа-канал"
 
@@ -98,23 +98,25 @@ msgstr "Добавить альфа-канал"
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:279
+#: libgimp/gimpexport.c:310
 msgid "Export File"
 msgstr "Экспортировать файл"
 
-#: libgimp/gimpexport.c:284
+#: libgimp/gimpexport.c:315
 msgid "Export"
 msgstr "Экспорт"
 
-#: libgimp/gimpexport.c:286
+#: libgimp/gimpexport.c:317
 msgid "Ignore"
 msgstr "Игнорировать"
 
-#: libgimp/gimpexport.c:288
+#: libgimp/gimpexport.c:319 libgimp/gimpquerybox.c:160
+#: libgimp/gimpquerybox.c:197 libgimp/gimpquerybox.c:235
+#: libgimp/gimpquerybox.c:275
 msgid "Cancel"
 msgstr "Отмена"
 
-#: libgimp/gimpexport.c:303
+#: libgimp/gimpexport.c:334
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
@@ -123,81 +125,86 @@ msgstr ""
 "сохранено по следующим причинам:"
 
 #. the footline
-#: libgimp/gimpexport.c:366
+#: libgimp/gimpexport.c:397
 msgid "The export conversion won't modify your original image."
 msgstr "Экспортное преобразование не изменит ваше исходное изображение."
 
-#: libgimp/gimpfileselection.c:352
+#: libgimp/gimpfileselection.c:394
 msgid "Select File"
 msgstr "Выбрать файл"
 
-#: libgimp/gimpfileselection.c:362 libgimp/gimpunitmenu.c:462
+#: libgimp/gimpfileselection.c:404 libgimp/gimpunitmenu.c:484
 msgid "Select"
 msgstr "Выбор"
 
-#: libgimp/gimpfileselection.c:363 libgimp/gimpunitmenu.c:464
+#: libgimp/gimpfileselection.c:405 libgimp/gimpunitmenu.c:486
 msgid "Close"
 msgstr "Закрыть"
 
+#: libgimp/gimpquerybox.c:160 libgimp/gimpquerybox.c:197
+#: libgimp/gimpquerybox.c:235 libgimp/gimpquerybox.c:275
+msgid "OK"
+msgstr ""
+
 #. pseudo unit
-#: libgimp/gimpunit.c:46
+#: libgimp/gimpunit.c:47
 msgid "pixel"
 msgstr "пиксел"
 
-#: libgimp/gimpunit.c:46
+#: libgimp/gimpunit.c:47
 msgid "pixels"
 msgstr "пикселы"
 
 #. standard units
-#: libgimp/gimpunit.c:49
+#: libgimp/gimpunit.c:50
 msgid "inch"
 msgstr "дюйм"
 
-#: libgimp/gimpunit.c:49
+#: libgimp/gimpunit.c:50
 msgid "inches"
 msgstr "дюймы"
 
-#: libgimp/gimpunit.c:50
+#: libgimp/gimpunit.c:51
 msgid "millimeter"
 msgstr "миллиметр"
 
-#: libgimp/gimpunit.c:50
+#: libgimp/gimpunit.c:51
 msgid "millimeters"
 msgstr "миллиметры"
 
 #. professional units
-#: libgimp/gimpunit.c:53
+#: libgimp/gimpunit.c:54
 msgid "point"
 msgstr "пункт"
 
-#: libgimp/gimpunit.c:53
+#: libgimp/gimpunit.c:54
 msgid "points"
 msgstr "пункты"
 
-#: libgimp/gimpunit.c:54
+#: libgimp/gimpunit.c:55
 msgid "pica"
 msgstr "пика"
 
-#: libgimp/gimpunit.c:54
+#: libgimp/gimpunit.c:55
 msgid "picas"
 msgstr "пики"
 
-#: libgimp/gimpunit.c:61
+#: libgimp/gimpunit.c:62
 msgid "percent"
 msgstr "процент"
 
-#: libgimp/gimpunitmenu.c:215
+#: libgimp/gimpunitmenu.c:234
 msgid "More..."
 msgstr "Дополнительно..."
 
-#: libgimp/gimpunitmenu.c:457
+#: libgimp/gimpunitmenu.c:479
 msgid "Unit Selection"
 msgstr "Выбор единиц"
 
-#: libgimp/gimpunitmenu.c:493
+#: libgimp/gimpunitmenu.c:516
 msgid "Unit"
 msgstr "Единица"
 
-#: libgimp/gimpunitmenu.c:494
+#: libgimp/gimpunitmenu.c:517
 msgid "Factor"
 msgstr "Множитель"

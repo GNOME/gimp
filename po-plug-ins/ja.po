@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.17\n"
-"POT-Creation-Date: 2000-02-11 12:37+0900\n"
+"POT-Creation-Date: 2000-02-11 10:24-0800\n"
 "PO-Revision-Date: 2000-02-11 12:41+09:00\n"
 "Last-Translator: Çòºê ÂÙ¹° <yasuhiro@awa.tohoku.ac.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -91,8 +91,8 @@ msgstr "¤³¤Î¥×¥é¥°¥¤¥ó¤Ë¤Ä¤¤¤Æ"
 #: plug-ins/common/whirlpinch.c:829 plug-ins/common/wind.c:703
 #: plug-ins/common/wind.c:758 plug-ins/common/wmf.c:938
 #: plug-ins/common/xbm.c:973 plug-ins/common/xpm.c:799
-#: plug-ins/fits/fits.c:1003 plug-ins/flame/flame.c:586
-#: plug-ins/flame/flame.c:898 plug-ins/fp/fp_gtk.c:882
+#: plug-ins/fits/fits.c:1003 plug-ins/flame/flame.c:582
+#: plug-ins/flame/flame.c:894 plug-ins/fp/fp_gtk.c:882
 #: plug-ins/gap/gap_arr_dialog.c:965 plug-ins/gap/gap_arr_dialog.c:1189
 #: plug-ins/gap/gap_decode_xanim.c:176 plug-ins/gap/gap_mod_layer.c:145
 #: plug-ins/gap/gap_mov_dialog.c:461 plug-ins/gap/gap_mpege.c:191
@@ -174,8 +174,8 @@ msgstr "Î»²ò"
 #: plug-ins/common/whirlpinch.c:831 plug-ins/common/wind.c:760
 #: plug-ins/common/wmf.c:940 plug-ins/common/xbm.c:725
 #: plug-ins/common/xbm.c:975 plug-ins/common/xpm.c:801
-#: plug-ins/fits/fits.c:1005 plug-ins/flame/flame.c:594
-#: plug-ins/flame/flame.c:907 plug-ins/fp/fp_gtk.c:886
+#: plug-ins/fits/fits.c:1005 plug-ins/flame/flame.c:590
+#: plug-ins/flame/flame.c:903 plug-ins/fp/fp_gtk.c:886
 #: plug-ins/gap/gap_arr_dialog.c:1191 plug-ins/gap/gap_dbbrowser_utils.c:211
 #: plug-ins/gap/gap_filter_foreach.c:132 plug-ins/gap/gap_mod_layer.c:147
 #: plug-ins/gap/gap_mod_layer.c:261 plug-ins/gap/gap_mov_dialog.c:470
@@ -448,7 +448,7 @@ msgstr "¥¨¥¤¥ê¥¢¥ó¥Þ¥Ã¥× 2 ¤Ë¤Ä¤¤¤Æ"
 #: plug-ins/common/polar.c:963 plug-ins/common/ps.c:2597
 #: plug-ins/common/sharpen.c:567 plug-ins/common/spheredesigner.c:2258
 #: plug-ins/common/tileit.c:426 plug-ins/common/waves.c:593
-#: plug-ins/common/whirlpinch.c:847 plug-ins/flame/flame.c:1064
+#: plug-ins/common/whirlpinch.c:847 plug-ins/flame/flame.c:1060
 #: plug-ins/gflare/gflare.c:2514 plug-ins/gflare/gflare.c:3519
 #: plug-ins/gimpressionist/orientmap.c:502
 #: plug-ins/gimpressionist/preview.c:106 plug-ins/gimpressionist/sizemap.c:402
@@ -960,7 +960,7 @@ msgid "Waves"
 msgstr "ÇÈ"
 
 #: plug-ins/Lighting/lighting_ui.c:50 plug-ins/common/mblur.c:804
-#: plug-ins/flame/flame.c:671 plug-ins/sinus/sinus.c:1039
+#: plug-ins/flame/flame.c:667 plug-ins/sinus/sinus.c:1039
 msgid "Linear"
 msgstr "Àþ·Á"
 
@@ -968,11 +968,11 @@ msgstr "Àþ·Á"
 msgid "Logarithmic"
 msgstr "ÂÐ¿ô·¿"
 
-#: plug-ins/Lighting/lighting_ui.c:52 plug-ins/flame/flame.c:672
+#: plug-ins/Lighting/lighting_ui.c:52 plug-ins/flame/flame.c:668
 msgid "Sinusoidal"
 msgstr "ÇÈ¾õ"
 
-#: plug-ins/Lighting/lighting_ui.c:53 plug-ins/flame/flame.c:673
+#: plug-ins/Lighting/lighting_ui.c:53 plug-ins/flame/flame.c:669
 msgid "Spherical"
 msgstr "µåÌÌ"
 
@@ -2950,8 +2950,8 @@ msgid ""
 "This plug-in selectively performs a median or adaptive box filter on an "
 "image."
 msgstr ""
-"¤³¤Î¥×¥é¥°¥¤¥ó¤Ï²èÁü¤ËÂÐ¤·¤ÆÁªÂòÅª¤ËÊä´Ö¤·¤¿¤êÅ¬±þ¥Ü¥Ã¥¯¥¹¥Õ¥£¥ë¥¿¤È¤·¤Æ¤È¤·¤Æ"
-"»ÈÍÑ¤·¤¿¤ê¤Ç¤­¤ë."
+"¤³¤Î¥×¥é¥°¥¤¥ó¤Ï²èÁü¤ËÂÐ¤·¤ÆÁªÂòÅª¤ËÊä´Ö¤·¤¿¤êÅ¬±þ¥Ü¥Ã¥¯¥¹¥Õ¥£¥ë¥¿¤È¤·¤Æ¤È¤·¤"
+"Æ»ÈÍÑ¤·¤¿¤ê¤Ç¤­¤ë."
 
 #: plug-ins/common/despeckle.c:182
 msgid "<Image>/Filters/Enhance/Despeckle..."
@@ -3143,7 +3143,7 @@ msgstr "¤Ü¤«¤¹"
 #: plug-ins/common/displace.c:434 plug-ins/common/edge.c:715
 #: plug-ins/common/fractaltrace.c:789 plug-ins/common/newsprint.c:447
 #: plug-ins/common/ripple.c:669 plug-ins/common/warp.c:540
-#: plug-ins/fits/fits.c:1024 plug-ins/flame/flame.c:972
+#: plug-ins/fits/fits.c:1024 plug-ins/flame/flame.c:968
 msgid "Black"
 msgstr "¹õ"
 
@@ -3725,8 +3725,9 @@ msgid "Create images based on a random genetic formula"
 msgstr "Íð¿ôÈÆ´Ø¿ô¤Ë¤è¤Ã¤Æ²èÁü¤ò¤Ä¤¯¤ê½Ð¤¹"
 
 #: plug-ins/common/gqbist.c:335
+#, fuzzy
 msgid ""
-"This Plug-in is based on an article by Jöòn Loviscach (appeared in c't "
+"This Plug-in is based on an article by Jörn Loviscach (appeared in c't "
 "10/95, page 326). It generates modern art pictures from a random genetic "
 "formula."
 msgstr ""
@@ -4244,7 +4245,7 @@ msgid "Effect Channel"
 msgstr "ÂÐ¾Ý¥Á¥ã¥ó¥Í¥ë"
 
 #. this zoom - gamma should redraw flame preview
-#: plug-ins/common/lic.c:1059 plug-ins/flame/flame.c:937
+#: plug-ins/common/lic.c:1059 plug-ins/flame/flame.c:933
 msgid "Brightness"
 msgstr "ÌÀ¤ë¤µ"
 
@@ -4439,7 +4440,7 @@ msgstr "¤Ü¤«¤·¤Î¼ïÎà"
 msgid "Radial"
 msgstr "È¾·Â"
 
-#: plug-ins/common/mblur.c:806 plug-ins/flame/flame.c:1038
+#: plug-ins/common/mblur.c:806 plug-ins/flame/flame.c:1034
 #: plug-ins/imagemap/imap_popup.c:140
 msgid "Zoom"
 msgstr "³ÈÂç"
@@ -5019,7 +5020,7 @@ msgid "Load PostScript"
 msgstr "PostScript ÆÉ¤ß¹þ¤ß"
 
 #. Rendering
-#: plug-ins/common/ps.c:2300 plug-ins/flame/flame.c:915
+#: plug-ins/common/ps.c:2300 plug-ins/flame/flame.c:911
 msgid "Rendering"
 msgstr "¥ì¥ó¥À¥ê¥ó¥°"
 
@@ -6766,116 +6767,116 @@ msgstr "DATAMIN/DATAMAX ¤Ç"
 msgid "Image Composing"
 msgstr "²èÁü¤ò¹½À®¤·¤Æ¤¤¤Þ¤¹"
 
-#: plug-ins/flame/flame.c:135
+#: plug-ins/flame/flame.c:133
 msgid "<Image>/Filters/Render/Nature/Flame..."
 msgstr "<Image>/¥Õ¥£¥ë¥¿/²¼ÅÉ¤ê/¼«Á³/±ê..."
 
-#: plug-ins/flame/flame.c:214
+#: plug-ins/flame/flame.c:210
 msgid "Drawing Flame..."
 msgstr "±ê¤òÉÁ¤¤¤Æ¤¤¤Þ¤¹..."
 
-#: plug-ins/flame/flame.c:412
+#: plug-ins/flame/flame.c:408
 msgid "Load/Save Flame"
 msgstr "±ê¤ÎÊÝÂ¸/ÆÉ¹þ"
 
-#: plug-ins/flame/flame.c:570 plug-ins/flame/flame.c:1087
+#: plug-ins/flame/flame.c:566 plug-ins/flame/flame.c:1083
 msgid "Edit Flame"
 msgstr "±ê¤òÊÔ½¸"
 
-#: plug-ins/flame/flame.c:601
+#: plug-ins/flame/flame.c:597
 msgid "Directions"
 msgstr "Êý¸þ"
 
-#: plug-ins/flame/flame.c:632
+#: plug-ins/flame/flame.c:628
 msgid "Controls"
 msgstr "¥³¥ó¥È¥í¡¼¥ë"
 
-#: plug-ins/flame/flame.c:649
+#: plug-ins/flame/flame.c:645
 msgid "Speed"
 msgstr "Â®ÅÙ"
 
-#: plug-ins/flame/flame.c:656
+#: plug-ins/flame/flame.c:652
 msgid "Randomize"
 msgstr "Íð¿ô¤ò¿¶¤ë"
 
-#: plug-ins/flame/flame.c:669
+#: plug-ins/flame/flame.c:665
 msgid "Same"
 msgstr "Æ±¤¸"
 
-#: plug-ins/flame/flame.c:670 plug-ins/gimpressionist/orientation.c:151
+#: plug-ins/flame/flame.c:666 plug-ins/gimpressionist/orientation.c:151
 #: plug-ins/gimpressionist/size.c:150
 msgid "Random"
 msgstr "Íð¿ô"
 
-#: plug-ins/flame/flame.c:674
+#: plug-ins/flame/flame.c:670
 msgid "Swirl"
 msgstr "±²´¬"
 
-#: plug-ins/flame/flame.c:675
+#: plug-ins/flame/flame.c:671
 msgid "Horseshoe"
 msgstr "ÄýÅ´"
 
-#: plug-ins/flame/flame.c:676
+#: plug-ins/flame/flame.c:672
 msgid "Polar"
 msgstr "¶Ë"
 
-#: plug-ins/flame/flame.c:677
+#: plug-ins/flame/flame.c:673
 msgid "Bent"
 msgstr "¶Ê¤²¤ë"
 
-#: plug-ins/flame/flame.c:689
+#: plug-ins/flame/flame.c:685
 msgid "Variation:"
 msgstr "¼ïÎà:"
 
-#: plug-ins/flame/flame.c:730 plug-ins/flame/flame.c:1095
+#: plug-ins/flame/flame.c:726 plug-ins/flame/flame.c:1091
 msgid "Load Flame"
 msgstr "±êÆÉ¹þ"
 
-#: plug-ins/flame/flame.c:745 plug-ins/flame/flame.c:1103
+#: plug-ins/flame/flame.c:741 plug-ins/flame/flame.c:1099
 msgid "Save Flame"
 msgstr "±êÊÝÂ¸"
 
-#: plug-ins/flame/flame.c:885
+#: plug-ins/flame/flame.c:881
 msgid "Flame"
 msgstr "±ê"
 
-#: plug-ins/flame/flame.c:939
+#: plug-ins/flame/flame.c:935
 msgid "Contrast"
 msgstr "¥³¥ó¥È¥é¥¹¥È"
 
-#: plug-ins/flame/flame.c:941
+#: plug-ins/flame/flame.c:937
 msgid "Gamma"
 msgstr "¥¬¥ó¥Þ"
 
-#: plug-ins/flame/flame.c:943
+#: plug-ins/flame/flame.c:939
 msgid "Sample Density"
 msgstr "¥µ¥ó¥×¥ëÌ©ÅÙ"
 
-#: plug-ins/flame/flame.c:945
+#: plug-ins/flame/flame.c:941
 msgid "Spatial Oversample"
 msgstr "¶õ´Ö¥ª¡¼¥Ð¡¼¥µ¥ó¥×¥ë"
 
-#: plug-ins/flame/flame.c:947
+#: plug-ins/flame/flame.c:943
 msgid "Spatial Filter Radius"
 msgstr "¶õ´Ö¥Õ¥£¥ë¥¿È¾·Â"
 
-#: plug-ins/flame/flame.c:961
+#: plug-ins/flame/flame.c:957
 msgid "Colormap"
 msgstr "¥«¥é¡¼¥Þ¥Ã¥×"
 
-#: plug-ins/flame/flame.c:1002
+#: plug-ins/flame/flame.c:998
 msgid "Custom Gradient"
 msgstr "Ç¤°Õ¤Î¥°¥é¥Ç¡¼¥·¥ç¥ó"
 
-#: plug-ins/flame/flame.c:1022
+#: plug-ins/flame/flame.c:1018
 msgid "Camera"
 msgstr "¥«¥á¥é"
 
-#: plug-ins/flame/flame.c:1040
+#: plug-ins/flame/flame.c:1036
 msgid "X"
 msgstr "X"
 
-#: plug-ins/flame/flame.c:1042
+#: plug-ins/flame/flame.c:1038
 msgid "Y"
 msgstr "Y"
 

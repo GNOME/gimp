@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 1.1.10\n"
-"POT-Creation-Date: 2000-01-31 19:22-0800\n"
+"POT-Creation-Date: 2000-02-11 10:24-0800\n"
 "PO-Revision-Date: 1999-11-06 19:21+0200\n"
 "Last-Translator: Artur Polaczyñski <artie@kmfms.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -23,82 +23,82 @@ msgstr "Kolor FG"
 msgid "/Use Background Color"
 msgstr "Kolor FG"
 
-#: libgimp/gimpexport.c:124
+#: libgimp/gimpexport.c:155
 #, fuzzy
 msgid "can't Handle Layers"
 msgstr "Skaluj warstwê"
 
-#: libgimp/gimpexport.c:125 libgimp/gimpexport.c:134
+#: libgimp/gimpexport.c:156 libgimp/gimpexport.c:165
 msgid "Merge Visible Layers"
 msgstr "Po³±cz widoczne warstwy"
 
-#: libgimp/gimpexport.c:133
+#: libgimp/gimpexport.c:164
 #, fuzzy
 msgid "can only Handle Layers as Animation Frames"
 msgstr "Zlewanie: Niedostêpne w trybach indeksowanych."
 
-#: libgimp/gimpexport.c:134
+#: libgimp/gimpexport.c:165
 msgid "Save as Animation"
 msgstr "Zapisz jako animacje"
 
-#: libgimp/gimpexport.c:142
+#: libgimp/gimpexport.c:173
 #, fuzzy
 msgid "can't Handle Transparency"
 msgstr "Wycieranie do t³a lub prze¼roczysto¶ci"
 
-#: libgimp/gimpexport.c:143
+#: libgimp/gimpexport.c:174
 msgid "Flatten Image"
 msgstr "Sp³aszcz obraz"
 
-#: libgimp/gimpexport.c:151
+#: libgimp/gimpexport.c:182
 #, fuzzy
 msgid "can only Handle RGB Images"
 msgstr "Zlewanie: Niedostêpne w trybach indeksowanych."
 
-#: libgimp/gimpexport.c:152 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
+#: libgimp/gimpexport.c:183 libgimp/gimpexport.c:211 libgimp/gimpexport.c:220
 msgid "Convert to RGB"
 msgstr ""
 
-#: libgimp/gimpexport.c:160
+#: libgimp/gimpexport.c:191
 #, fuzzy
 msgid "can only Handle Grayscale Images"
 msgstr "Zlewanie: Niedostêpne w trybach indeksowanych."
 
-#: libgimp/gimpexport.c:161 libgimp/gimpexport.c:180 libgimp/gimpexport.c:201
+#: libgimp/gimpexport.c:192 libgimp/gimpexport.c:211 libgimp/gimpexport.c:232
 msgid "Convert to Grayscale"
 msgstr ""
 
-#: libgimp/gimpexport.c:169
+#: libgimp/gimpexport.c:200
 #, fuzzy
 msgid "can only Handle Indexed Images"
 msgstr "Zlewanie: Niedostêpne w trybach indeksowanych."
 
-#: libgimp/gimpexport.c:170 libgimp/gimpexport.c:189 libgimp/gimpexport.c:199
+#: libgimp/gimpexport.c:201 libgimp/gimpexport.c:220 libgimp/gimpexport.c:230
 msgid ""
 "Convert to indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
 
-#: libgimp/gimpexport.c:179
+#: libgimp/gimpexport.c:210
 #, fuzzy
 msgid "can only Handle RGB or Grayscale Images"
 msgstr "Zlewanie: Niedostêpne w trybach indeksowanych."
 
-#: libgimp/gimpexport.c:188
+#: libgimp/gimpexport.c:219
 #, fuzzy
 msgid "can only Handle RGB or Indexed Images"
 msgstr "Zlewanie: Niedostêpne w trybach indeksowanych."
 
-#: libgimp/gimpexport.c:198
+#: libgimp/gimpexport.c:229
 #, fuzzy
 msgid "can only Handle Grayscale or Indexed Images"
 msgstr "Zlewanie: Niedostêpne w trybach indeksowanych."
 
-#: libgimp/gimpexport.c:209
+#: libgimp/gimpexport.c:240
 msgid "needs an Alpha Channel"
 msgstr "potrzebuje kana³ alfa"
 
-#: libgimp/gimpexport.c:210
+#: libgimp/gimpexport.c:241
 msgid "Add Alpha Channel"
 msgstr "Dodaj kana³ alfa"
 
@@ -107,105 +107,112 @@ msgstr "Dodaj kana³ alfa"
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:279
+#: libgimp/gimpexport.c:310
 msgid "Export File"
 msgstr "Eksportuj Plik"
 
-#: libgimp/gimpexport.c:284
+#: libgimp/gimpexport.c:315
 msgid "Export"
 msgstr "Eksportuj"
 
-#: libgimp/gimpexport.c:286
+#: libgimp/gimpexport.c:317
 msgid "Ignore"
 msgstr "Ignoruj"
 
-#: libgimp/gimpexport.c:288
+#: libgimp/gimpexport.c:319 libgimp/gimpquerybox.c:160
+#: libgimp/gimpquerybox.c:197 libgimp/gimpquerybox.c:235
+#: libgimp/gimpquerybox.c:275
 msgid "Cancel"
 msgstr "Anuluj"
 
-#: libgimp/gimpexport.c:303
+#: libgimp/gimpexport.c:334
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
 msgstr ""
 
 #. the footline
-#: libgimp/gimpexport.c:366
+#: libgimp/gimpexport.c:397
 msgid "The export conversion won't modify your original image."
 msgstr ""
 
-#: libgimp/gimpfileselection.c:352
+#: libgimp/gimpfileselection.c:394
 msgid "Select File"
 msgstr "Wybór pliku"
 
-#: libgimp/gimpfileselection.c:362 libgimp/gimpunitmenu.c:462
+#: libgimp/gimpfileselection.c:404 libgimp/gimpunitmenu.c:484
 msgid "Select"
 msgstr "Zaznacz"
 
-#: libgimp/gimpfileselection.c:363 libgimp/gimpunitmenu.c:464
+#: libgimp/gimpfileselection.c:405 libgimp/gimpunitmenu.c:486
 msgid "Close"
 msgstr "Zamknij"
 
+#: libgimp/gimpquerybox.c:160 libgimp/gimpquerybox.c:197
+#: libgimp/gimpquerybox.c:235 libgimp/gimpquerybox.c:275
+msgid "OK"
+msgstr ""
+
 #. pseudo unit
-#: libgimp/gimpunit.c:46
+#: libgimp/gimpunit.c:47
 msgid "pixel"
 msgstr "piksel"
 
-#: libgimp/gimpunit.c:46
+#: libgimp/gimpunit.c:47
 msgid "pixels"
 msgstr "piksele"
 
 #. standard units
-#: libgimp/gimpunit.c:49
+#: libgimp/gimpunit.c:50
 msgid "inch"
 msgstr "cal"
 
-#: libgimp/gimpunit.c:49
+#: libgimp/gimpunit.c:50
 msgid "inches"
 msgstr "cale"
 
-#: libgimp/gimpunit.c:50
+#: libgimp/gimpunit.c:51
 msgid "millimeter"
 msgstr "milimetr"
 
-#: libgimp/gimpunit.c:50
+#: libgimp/gimpunit.c:51
 msgid "millimeters"
 msgstr "milimetry"
 
 #. professional units
-#: libgimp/gimpunit.c:53
+#: libgimp/gimpunit.c:54
 msgid "point"
 msgstr "punkt"
 
-#: libgimp/gimpunit.c:53
+#: libgimp/gimpunit.c:54
 msgid "points"
 msgstr "punkty"
 
-#: libgimp/gimpunit.c:54
+#: libgimp/gimpunit.c:55
 msgid "pica"
 msgstr ""
 
-#: libgimp/gimpunit.c:54
+#: libgimp/gimpunit.c:55
 msgid "picas"
 msgstr ""
 
-#: libgimp/gimpunit.c:61
+#: libgimp/gimpunit.c:62
 msgid "percent"
 msgstr "procent"
 
-#: libgimp/gimpunitmenu.c:215
+#: libgimp/gimpunitmenu.c:234
 msgid "More..."
 msgstr "Wiêcej..."
 
-#: libgimp/gimpunitmenu.c:457
+#: libgimp/gimpunitmenu.c:479
 msgid "Unit Selection"
 msgstr "Wybór Jednostki"
 
-#: libgimp/gimpunitmenu.c:493
+#: libgimp/gimpunitmenu.c:516
 #, fuzzy
 msgid "Unit"
 msgstr "BezNazwy"
 
-#: libgimp/gimpunitmenu.c:494
+#: libgimp/gimpunitmenu.c:517
 msgid "Factor"
 msgstr "Wspó³czynnik"

@@ -1,3 +1,13 @@
+Fri Feb 11 10:49:14 PST 2000 Manish Singh <yosh@gimp.org>
+
+	* Made 1.1.17 release
+
+	* Makefile.am: removed gtkrc.forest2 from EXTRA_DIST
+
+	* user_install: s/ecco/echo/
+
+	* tools/pdbgen/pdb/lib.pl: fix array copying
+
 Fri Feb 11 17:15:00 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* Makefile.am

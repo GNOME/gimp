@@ -62,4 +62,4 @@ echo "cp $1/palettes/* $2/palettes"
 cp $1/palettes/* $2/palettes
 echo "NOTICE: GIMP uses an additional gtkrc file so you can"
 echo "configure it to look differently than other GTK apps."
-ecco "You may wish to edit GIMP's gtkrc (in $2/gtkrc)."
+echo "You may wish to edit GIMP's gtkrc (in $2/gtkrc)."
