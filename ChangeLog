@@ -20,8 +20,9 @@
 	* app/color_notebook.h
 	* app/commands.c
 	* app/gimpset.h
+	* app/interface.c
 	* po/POTFILES.in
-	* tools/Makefile.am: changed accordingly.
+	* tools/Makefile.am: changed accordingly, cleanup.
 
 	* libgimp/gimpunitmenu.c: s/class/klass/
 

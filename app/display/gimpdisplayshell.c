@@ -65,46 +65,47 @@
 
 
 /*  local functions  */
-static void  tools_select_update   (GtkWidget      *widget,
-				    gpointer        data);
-static gint  tools_button_press    (GtkWidget      *widget,
-				    GdkEventButton *bevent,
-				    gpointer        data);
-static void  gdisplay_destroy      (GtkWidget      *widget,
-				    GDisplay       *display);
+static void        tools_select_update        (GtkWidget      *widget,
+					       gpointer        data);
+static gint        tools_button_press         (GtkWidget      *widget,
+					       GdkEventButton *bevent,
+					       gpointer        data);
+static void        gdisplay_destroy           (GtkWidget      *widget,
+					       GDisplay       *display);
 
-static gint  gdisplay_delete       (GtkWidget      *widget,
-				    GdkEvent       *event,
-				    GDisplay       *display);
+static gint        gdisplay_delete            (GtkWidget      *widget,
+					       GdkEvent       *event,
+					       GDisplay       *display);
 
-static void  toolbox_destroy       (void);
-static gint  toolbox_delete        (GtkWidget      *widget,
-				    GdkEvent       *event,
-				    gpointer        data);
-static gint  toolbox_check_device  (GtkWidget      *widget,
-				    GdkEvent       *event,
-				    gpointer        data);
+static void        toolbox_destroy            (void);
+static gint        toolbox_delete             (GtkWidget      *widget,
+					       GdkEvent       *event,
+					       gpointer        data);
+static gint        toolbox_check_device       (GtkWidget      *widget,
+					       GdkEvent       *event,
+					       gpointer        data);
 
-static GdkPixmap *create_pixmap    (GdkWindow      *parent,
-				    GdkBitmap     **mask,
-				    gchar         **data,
-				    gint            width,
-				    gint            height);
+static GdkPixmap * create_pixmap              (GdkWindow      *parent,
+					       GdkBitmap     **mask,
+					       gchar         **data,
+					       gint            width,
+					       gint            height);
 
-static void     toolbox_style_set_callback (GtkWidget        *window,
-					    GtkStyle         *previous_style,
-					    gpointer          data);
-static void     toolbox_set_drag_dest      (GtkWidget        *widget);
-static gboolean toolbox_drag_drop          (GtkWidget        *widget,
-					    GdkDragContext   *context,
-					    gint              x,
-					    gint              y,
-					    guint             time);
-static ToolType toolbox_drag_tool          (GtkWidget        *widget,
-					    gpointer          data);
-static void     toolbox_drop_tool          (GtkWidget        *widget,
-					    ToolType          tool,
-					    gpointer          data);
+static void        toolbox_style_set_callback (GtkWidget      *window,
+					       GtkStyle       *previous_style,
+					       gpointer        data);
+static void        toolbox_set_drag_dest      (GtkWidget      *widget);
+static gboolean    toolbox_drag_drop          (GtkWidget      *widget,
+					       GdkDragContext *context,
+					       gint            x,
+					       gint            y,
+					       guint           time);
+static ToolType    toolbox_drag_tool          (GtkWidget      *widget,
+					       gpointer        data);
+static void        toolbox_drop_tool          (GtkWidget      *widget,
+					       ToolType        tool,
+					       gpointer        data);
+
 
 static gint pixmap_colors[8][3] =
 {
@@ -237,9 +238,9 @@ allocate_colors (GtkWidget *parent)
 
   for (i = 0; i < 8; i++)
     {
-      colors[i].red = pixmap_colors[i][0] << 8;
+      colors[i].red   = pixmap_colors[i][0] << 8;
       colors[i].green = pixmap_colors[i][1] << 8;
-      colors[i].blue = pixmap_colors[i][2] << 8;
+      colors[i].blue  = pixmap_colors[i][2] << 8;
 
       gdk_color_alloc (colormap, &colors[i]);
     }
@@ -443,10 +444,10 @@ create_pixmap (GdkWindow  *parent,
   GdkGC       *gc;
   GdkVisual   *visual;
   GdkColormap *cmap;
-  gint     r, s, t, cnt;
-  guchar  *mem;
-  guchar   value;
-  guint32  pixel;
+  gint         r, s, t, cnt;
+  guchar      *mem;
+  guchar       value;
+  guint32      pixel;
 
   visual = gdk_window_get_visual (parent);
   cmap = gdk_window_get_colormap (parent);
@@ -521,13 +522,12 @@ create_pixmap (GdkWindow  *parent,
 void
 create_toolbox (void)
 {
-  GtkWidget *window;
-  GtkWidget *main_vbox;
-  GtkWidget *wbox;
-  GtkWidget *menubar;
-  GList     *list;
+  GtkWidget     *window;
+  GtkWidget     *main_vbox;
+  GtkWidget     *wbox;
+  GtkWidget     *menubar;
+  GList         *list;
   GtkAccelGroup *table;
-
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
