@@ -198,6 +198,7 @@ gimp_SOURCES = \
 	gimprc.h		\
 	gimphistogram.c		\
 	gimphistogram.h		\
+	gimphistogramP.h	\
 	global_edit.c		\
 	global_edit.h		\
 	gradient.c		\
@@ -366,12 +367,15 @@ EXTRA_DIST = \
 	tools/mask.xbm		\
 	tools/new.xpm		\
 	tools/raise.xpm		\
+	tools/paths.xbm		\
 	tools/penadd.xpm	\
 	tools/pendel.xpm	\
 	tools/penedit.xpm	\
 	tools/pennorm.xpm	\
 	tools/penstroke.xpm	\
 	tools/ptoselection.xpm	\
+	tools/zoom_in.xpm	\
+	tools/zoom_out.xpm	\
 	makefile.msc		\
 	gimp.def		\
 	gimp.rc			\
