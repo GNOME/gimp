@@ -15,7 +15,7 @@
 	* app/tools/gimpclonetool.c
 	* app/widgets/gimpdatafactoryview.c
 	* app/widgets/gimppreview.c: removed many connections to
-	"destroy": Connect to "dispose" or use g_object_weak_ref()
+	"destroy": Connect to "disconnect" or use g_object_weak_ref()
 	instead.
 
 2001-08-11  Michael Natterer  <mitch@gimp.org>
