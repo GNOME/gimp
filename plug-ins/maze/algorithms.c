@@ -1,9 +1,9 @@
-/* algorithms.c 
+/* $Id$
  * Contains routines for generating mazes, somewhat intertwined with 
  * Gimp plug-in-maze specific stuff.
  *
- * Kevin Turner <kevint@poboxes.com>
- * http://www.poboxes.com/kevint/gimp/maze.html
+ * Kevin Turner <acapnotic@users.sourceforge.net>
+ * http://gimp-plug-ins.sourceforge.net/maze/
  */
  
 /* mazegen code from rec.games.programmer's maze-faq:
@@ -37,7 +37,10 @@
  *
  */
 
+#ifndef SOLO_COMPILE
 #include "config.h"
+#endif
+
 #include <stdlib.h>
 #include "maze.h"
 #include "libgimp/gimp.h"
@@ -338,7 +341,7 @@ prim(guint pos, gchar *maz, guint x, guint y, gint rnd)
 	       switch (maz[up]) {
 	       case OUT:
 		    maz[up]=FRONTIER;
-		    front_cells=g_slist_append(front_cells,(gpointer)up); 
+		    front_cells=g_slist_prepend(front_cells,(gpointer)up); 
 	       break;
 	       case IN:
 		    d=1;
@@ -351,7 +354,7 @@ prim(guint pos, gchar *maz, guint x, guint y, gint rnd)
 	       switch (maz[down]) {
 	       case OUT:
 		    maz[down]=FRONTIER;
-		    front_cells=g_slist_append(front_cells,(gpointer)down); 
+		    front_cells=g_slist_prepend(front_cells,(gpointer)down); 
 		    break;
 	       case IN:
 		    d=d|2;
@@ -364,7 +367,7 @@ prim(guint pos, gchar *maz, guint x, guint y, gint rnd)
 	       switch (maz[left]) {
 	       case OUT:
 		    maz[left]=FRONTIER;
-		    front_cells=g_slist_append(front_cells,(gpointer)left); 
+		    front_cells=g_slist_prepend(front_cells,(gpointer)left); 
 		    break;
 	       case IN:
 		    d=d|4;
@@ -377,7 +380,7 @@ prim(guint pos, gchar *maz, guint x, guint y, gint rnd)
 	       switch (maz[right]) {
 	       case OUT:
 		    maz[right]=FRONTIER;
-		    front_cells=g_slist_append(front_cells,(gpointer)right); 
+		    front_cells=g_slist_prepend(front_cells,(gpointer)right); 
 		    break;
 	       case IN:
 		    d=d|8;

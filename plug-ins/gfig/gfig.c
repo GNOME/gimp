@@ -1053,7 +1053,7 @@ gfig_list_load_all (GList *plist)
       dir = opendir (path);
 
       if (!dir)
-	g_warning ("error reading GFig directory \"%s\"", path);
+	g_warning ("Error reading GFig directory \"%s\"", path);
       else
 	{
 	  while ((dir_ent = readdir (dir)))
@@ -1479,7 +1479,8 @@ gfig_save_callbk (void)
   FILE *fp;
   DAllObjs * objs;
   gint count = 0;
-  gchar * savename;
+  gchar *savename;
+  gchar *message;
   gchar conv_buf[MAX_LOAD_LINE*3 +1];
 
   savename = current_obj->filename;
@@ -1488,7 +1489,12 @@ gfig_save_callbk (void)
   
   if (!fp)
     {
-      g_message ("Error opening '%.100s' could not save", savename);
+      message = g_strconcat (_("Error opening: %s"), 
+			     "\n",
+			     _("Could not save."), 
+			     savename);
+      g_message (message);
+      g_free (message);
       return;
     }
 
@@ -2564,7 +2570,7 @@ gfig_gen_brush_preview (BrushDesc *bdesc)
 				      100.0, /* opacity */
 				      0 /* mode */)) < 0)
 	{
-	  g_message ("Error in creating layer for brush preview\n");
+	  g_message ("Error in creating layer for brush preview");
 	  return -1;
 	}
       gimp_image_add_layer (brush_image_ID, layer_ID, -1);
@@ -4676,7 +4682,7 @@ paint_layer_copy (gchar *new_name)
   gint32 old_drawable = gfig_drawable;
   if ((gfig_drawable = mygimp_layer_copy (gfig_drawable)) < 0)
     {
-      g_warning (_("Error in copy layer for onlayers\n"));
+      g_warning (_("Error in copy layer for onlayers"));
       gfig_drawable = old_drawable;
       return;
     }
@@ -4708,7 +4714,7 @@ paint_layer_new (gchar *new_name)
 				  1 + isgrey, /* RGBA or GRAYA type */
 				  100.0, /* opacity */
 				  0 /* mode */)) < 0)
-    g_warning (_("Error in creating layer.\n"));
+    g_warning (_("Error in creating layer"));
   else
     {
       gimp_image_add_layer (gfig_image, layer_id, -1);
@@ -4817,7 +4823,7 @@ gfig_paint_callback (GtkWidget *widget,
 		  /* Just use the given layer */
 		  break;
 		default:
-		  g_warning ("Error in onlayers val %d\n", selvals.onlayers);
+		  g_warning ("Error in onlayers val %d", selvals.onlayers);
 		  break;
 		}
 	    }

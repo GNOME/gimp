@@ -201,7 +201,7 @@ query (void)
 
   static GParamDef return_vals[] =
   {
-    { PARAM_LAYER, "Curl layer", "The new layer with the curl." }
+    { PARAM_LAYER, "Curl Layer", "The new layer with the curl." }
   }; 
   static gint nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
@@ -829,7 +829,7 @@ do_curl_effect (void)
   color_image = gimp_drawable_is_rgb (drawable->id);
   curl_layer =
     gimp_drawable_get (gimp_layer_new (image_id,
-				       _("Curl layer"),
+				       _("Curl Layer"),
 				       true_sel_width,
 				       true_sel_height,
 				       color_image ? RGBA_IMAGE : GRAYA_IMAGE,

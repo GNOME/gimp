@@ -1,9 +1,9 @@
-/* handy.c
+/* $Id$
  * These routines are useful for working with the GIMP and need not be
  * specific to plug-in-maze.
  *
- * Kevin Turner <kevint@poboxes.com>
- * http://www.poboxes.com/kevint/gimp/maze.html
+ * Kevin Turner <acapnotic@users.sourceforge.net>
+ * http://gimp-plug-ins.sourceforge.net/maze/
  */
 
 /*
@@ -113,21 +113,21 @@ drawbox( GPixelRgn *dest_rgn,
 	 guint x, guint y, guint w, guint h, 
 	 guint8 clr[4])
 {
-     guint xx, yy, y_max, x_min /*, x_max */;
-     static guint8 *rowbuf;
-     guint rowsize;
-     static guint high_size=0;
+     const guint bpp=dest_rgn->bpp;
+     const guint x_min= x * bpp;
+
+     /* x_max = dest_rgn->bpp * MIN(dest_rgn->w, (x + w)); */
+     /* rowsize = x_max - x_min */
+     const guint rowsize=bpp * MIN(dest_rgn->w, (x + w)) - x_min;
   
      /* The maximum [xy] value is that of the far end of the box, or
       * the edge of the region, whichever comes first. */
+     const guint y_max= dest_rgn->rowstride * MIN(dest_rgn->h, (y + h));
      
-     y_max = dest_rgn->rowstride * MIN(dest_rgn->h, (y + h));
-/*   x_max = dest_rgn->bpp * MIN(dest_rgn->w, (x + w)); */
+     static guint8 *rowbuf;
+     static guint high_size=0; 
      
-     x_min = x * dest_rgn->bpp;
-     
-     /* rowsize = x_max - x_min */
-     rowsize = dest_rgn->bpp * MIN(dest_rgn->w, (x + w)) - x_min;
+     guint xx, yy;
      
      /* Does the row buffer need to be (re)allocated? */
      if (high_size == 0) {
@@ -141,8 +141,8 @@ drawbox( GPixelRgn *dest_rgn,
      /* Fill the row buffer with the color. */
      for (xx= 0;
 	  xx < rowsize;
-	  xx+= dest_rgn->bpp) {
-	  memcpy (&rowbuf[xx], clr, dest_rgn->bpp);
+	  xx+= bpp) {
+	  memcpy (&rowbuf[xx], clr, bpp);
      } /* next xx */
      
      /* Fill in the box in the region with rows... */

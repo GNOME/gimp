@@ -1,3 +1,20 @@
+2000-04-12  Sven Neumann  <sven@gimp.org>
+	
+        * plug-ins/gfig/gfig.c
+	* plug-ins/pagecurl/pagecurl.c: saner message strings
+	
+        * plug-ins/maze/algorithms.c
+	* plug-ins/maze/handy.c
+	* plug-ins/maze/maze.c
+	* plug-ins/maze/maze.h
+	* plug-ins/maze/maze_face.c: applied gimp-kevint-000411-0 from
+	Kevin Turner <acapnotic@users.sourceforge.net>, which whitens, 
+	brightens, and kills bug #8568 (segfault with prim...).
+
+	I couldn't resist and hacked the UI once more so is adheres better
+	to our standards. Also less code due to more usage of libgimpui 
+	functions. Kevin, I hope you like my changes...
+
 2000-04-11  Nick Lamb  <njl195@zepler.org.uk>
 
 	* plug-ins/fp/fp.h

@@ -1,10 +1,10 @@
-/* maze.c
+/* $Id$
  * This is a plug-in for the GIMP.
  * It draws mazes...
  * 
  * Implemented as a GIMP 0.99 Plugin by 
- * Kevin Turner <kevint@poboxes.com>
- * http://www.poboxes.com/kevint/gimp/maze.html
+ * Kevin Turner <acapnotic@users.sourceforge.net>
+ * http://gimp-plug-ins.sourceforge.net/maze/
  * 
  * Code generously borrowed from assorted GIMP plugins
  * and used as a template to get me started on this one.  :)
@@ -37,7 +37,9 @@
  *
  */
 
+#ifndef SOLO_COMPILE
 #include "config.h"
+#endif
 
 #include <stdio.h>
 #include <stdlib.h>
