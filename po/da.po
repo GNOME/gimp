@@ -7,10 +7,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP /gnome-cvs\n"
-"POT-Creation-Date: 2000-04-19 01:10+0200\n"
-"PO-Revision-Date: 2000-04-18 19:31+02:00\n"
+"POT-Creation-Date: 2000-04-19 13:56+0200\n"
+"PO-Revision-Date: 2000-04-18 23:31+02:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
-"Language-Team: Danish <sslug-locale@sslug.dk>\n"
+"Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8-bit\n"
@@ -852,7 +852,7 @@ msgstr ""
 "Du forsøger at konvertere et billede med alpha/lag fra RGB/GRÅ til "
 "INDEKSERET.\n"
 "Du bør ikke generere en palette med mere end 255 farver hvis du ønsker at "
-"lave en gennemsiktig eller animeret GIF-fil af dette billede."
+"lave en gennemsigtig eller animeret GIF-fil af dette billede."
 
 #: app/convert.c:965
 msgid "Select Custom Palette"
@@ -1164,7 +1164,7 @@ msgstr ""
 "Du prøver at oprette et billede som har\n"
 "en oprindelig størrelse på %s.\n"
 "\n"
-"Vælg OK for at oprette dette billlede alligevel.\n"
+"Vælg OK for at oprette dette billede alligevel.\n"
 "Vælg Afbryd hvis du ikke mente at\n"
 "oprette så stort et billede.\n"
 "\n"
@@ -1428,7 +1428,7 @@ msgstr ""
 
 #: app/gimage_mask.c:568
 msgid "No selection to stroke!"
-msgstr "Ingen udvalg til stygning!"
+msgstr "Ingen udvalg til strygning!"
 
 #: app/gimpbrush.c:272
 msgid "Error in GIMP brush file...aborting."
@@ -1551,7 +1551,7 @@ msgstr "Lag er allerede nederst"
 
 #: app/gimpimage.c:2448
 msgid "BG has no alpha, layer was placed above"
-msgstr "BG har ikke alpha, laget blev pladsert ovenover"
+msgstr "BG har ikke alpha, laget blev pladseret ovenover"
 
 #: app/gimpimage.c:2519
 msgid ""
@@ -2026,7 +2026,7 @@ msgstr "Slet det markerede"
 
 #: app/gradient.c:3759
 msgid "Re-center midpoints in selection"
-msgstr "Recentrer midtpunkter i udvalget"
+msgstr "Recentrér midtpunkter i udvalget"
 
 #: app/gradient.c:3761
 msgid "Re-distribute handles in selection"
@@ -2060,7 +2060,7 @@ msgstr "Opdel"
 #. Instructions
 #: app/gradient.c:4853
 msgid "Please select the number of uniform parts"
-msgstr "Vennligst vælg antal uniforme dele"
+msgstr "Venligst vælg antal uniforme dele"
 
 #: app/gradient.c:4859
 msgid "in which you want to split the selected segment"
@@ -2076,7 +2076,7 @@ msgstr "Bland endepunkternes farver"
 
 #: app/gradient.c:5232
 msgid "Blend endpoints' opacity"
-msgstr "Bland endepunkternes uigennemsigtighet"
+msgstr "Bland endepunkternes uigennemsigtighed"
 
 #: app/gradient.c:5400
 msgid "Replicate"
@@ -2107,7 +2107,7 @@ msgstr "Histogram"
 
 #: app/histogram_tool.c:204
 msgid "Histogram does not operate on indexed drawables."
-msgstr "Histogram virker ikke på indekserede tegenobjekter."
+msgstr "Histogram virker ikke på indekserede tegnobjekter."
 
 #: app/histogram_tool.c:256
 msgid "Mean:"
@@ -2552,7 +2552,7 @@ msgid ""
 "<Shift> To Top"
 msgstr ""
 "Hæv lag    \n"
-"<Shift> til øverst"
+"<Skift> til øverst"
 
 #: app/layers_dialog.c:272
 msgid ""
@@ -2560,7 +2560,7 @@ msgid ""
 "<Shift> To Bottom"
 msgstr ""
 "Sænk lag       \n"
-"<Shift> til nederst"
+"<Skift> til nederst"
 
 #: app/layers_dialog.c:277
 msgid "Duplicate Layer"
@@ -3171,7 +3171,7 @@ msgstr "/Vis/Brug markering"
 
 #: app/menus.c:328
 msgid "/View/Toggle Rulers"
-msgstr "/Vis/Brug linialer"
+msgstr "/Vis/Brug linealer"
 
 #: app/menus.c:330
 msgid "/View/Toggle Statusbar"
@@ -3863,7 +3863,7 @@ msgstr "Ny palette"
 
 #: app/palette.c:1767
 msgid "Enter a name for new palette"
-msgstr "Skriv inn et navn for den nye paletten"
+msgstr "Skriv ind et navn for den nye paletten"
 
 #: app/palette.c:1821
 msgid "Delete Palette"
@@ -4053,7 +4053,7 @@ msgstr "Fejl i GIMP mønsterfil...afbryder."
 
 #: app/patterns.c:219
 msgid "GIMP pattern file appears to be truncated."
-msgstr "GIMP mønsterfil ser ud til at være kuttet."
+msgstr "GIMP mønsterfil ser ud til at være afkortet."
 
 #: app/patterns.c:283
 msgid "Pattern load failed"
@@ -4116,7 +4116,7 @@ msgstr "Fejl: Antal fortrydelser skal være nul eller større."
 
 #: app/preferences_dialog.c:246
 msgid "Error: Marching speed must be 50 or greater."
-msgstr "Fejl: Marshfart skal være 50 eller større."
+msgstr "Fejl: Marchfart skal være 50 eller større."
 
 #: app/preferences_dialog.c:252
 msgid "Error: Default width must be one or greater."
@@ -4384,7 +4384,7 @@ msgstr "Ændr vinduesstørrelse ved zoom"
 
 #: app/preferences_dialog.c:1922
 msgid "Show Rulers"
-msgstr "Vis linialer"
+msgstr "Vis linealer"
 
 #: app/preferences_dialog.c:1931
 msgid "Show Statusbar"
@@ -4392,7 +4392,7 @@ msgstr "Vis statuslinje"
 
 #: app/preferences_dialog.c:1955
 msgid "Marching Ants Speed:"
-msgstr "Hastighed for marsherende myrer:"
+msgstr "Hastighed for marcherende myrer:"
 
 #. Set the currently used string as "Custom"
 #: app/preferences_dialog.c:1963
@@ -4414,7 +4414,7 @@ msgstr "Vis zoom-rate"
 
 #: app/preferences_dialog.c:1984
 msgid "Show reversed zoom ratio"
-msgstr "Vis reversert zoom-rate"
+msgstr "Vis reverseret zoom-rate"
 
 #: app/preferences_dialog.c:1995
 msgid "Image Title Format:"
@@ -5078,7 +5078,7 @@ msgstr "Vælg områder ved brug af Bezier kurver"
 
 #: app/tools.c:179
 msgid "/Tools/Select Tools/Intelligent Scissors"
-msgstr "/Værktøj/Utvalgsværktøj/Intelligent saks"
+msgstr "/Værktøj/Udvalgsværktøj/Intelligent saks"
 
 #: app/tools.c:184
 msgid "Select shapes from image"
@@ -5212,7 +5212,7 @@ msgstr "/Værktøj/Maleværktøj/Spraydåse"
 
 #: app/tools.c:472
 msgid "Airbrush with variable pressure"
-msgstr "Spraydåse med variende tryk"
+msgstr "Spraydåse med varierende tryk"
 
 #: app/tools.c:484
 msgid "Clone"
@@ -5384,7 +5384,7 @@ msgstr "Rotation"
 
 #: app/transform_tool.c:217
 msgid "Shearing"
-msgstr "Forskydnning"
+msgstr "Forskydning"
 
 #: app/transform_tool.c:219
 msgid "Perspective"
@@ -5654,7 +5654,7 @@ msgid ""
 "patterns, plug-ins and modules can also configured\n"
 "here."
 msgstr ""
-"Gimprc bruges til at gemme personlige preferencer\n"
+"Gimprc bruges til at gemme personlige præferencer\n"
 "som indvirker på GIMP's standard opførsel.\n"
 "Stier til søgning efter pensler, paletter, gradienter, \n"
 "mønstre, indstik og moduler kan også konfigureres\n"
@@ -6103,7 +6103,7 @@ msgid ""
 "\"Tile Cache\". You should adjust it's size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
-"GIMP bruger en begrænset mængde lager for at gemme billeddata, den såkalte\n"
+"GIMP bruger en begrænset mængde lager for at gemme billeddata, den såkaldte\n"
 "\"Tile cachen\". Du bør justere størrelsen på denne så den passer i lagret.\n"
 "Tag den mængde lager i betragtning som bruges af andre processer."
 
@@ -6202,11 +6202,11 @@ msgstr "Gamma:"
 
 #: modules/colorsel_gtk.c:48
 msgid "GTK color selector as a pluggable color selector"
-msgstr "GTK farvevælger som en indsættelig farvevælger"
+msgstr "GTK farvevælger som en indstikkelig farvevælger"
 
 #: modules/colorsel_triangle.c:78
 msgid "Painter-style color selector as a pluggable color selector"
-msgstr "Farvevælger med tegnet stil som indsættelig farvevælger"
+msgstr "Farvevælger med tegnet stil som indstikkelig farvevælger"
 
 #: modules/colorsel_triangle.c:147 modules/colorsel_triangle.c:149
 msgid "Triangle"
@@ -6214,7 +6214,7 @@ msgstr "Triangel"
 
 #: modules/colorsel_water.c:76
 msgid "Watercolor style color selector as a pluggable module"
-msgstr "Farvevælger i vandfarvestil som indsætteligt modul"
+msgstr "Farvevælger i vandfarvestil som indstikkeligt modul"
 
 #: modules/colorsel_water.c:97 modules/colorsel_water.c:100
 msgid "Watercolor"
