@@ -3020,7 +3020,7 @@ msgstr "/Reiter hinzufügen/_Indizierte Palette"
 
 #: app/gui/dialogs-menu.c:83
 msgid "/Add Tab/Histogra_m"
-msgstr "/Reiter hinzufügen/_Journal"
+msgstr "/Reiter hinzufügen/Histogram_m"
 
 #: app/gui/dialogs-menu.c:85
 msgid "/Add Tab/_Selection Editor"
@@ -3068,7 +3068,7 @@ msgstr "/Reiter hinzufügen/Bil_der"
 
 #: app/gui/dialogs-menu.c:113
 msgid "/Add Tab/Document Histor_y"
-msgstr "/Reiter hinzufügen/_Journal"
+msgstr "/Reiter hinzufügen/D_okumentenindex"
 
 #: app/gui/dialogs-menu.c:115
 msgid "/Add Tab/_Templates"
