@@ -46,6 +46,7 @@ EXPORTS
 	gimp_rgb_set_uchar
 	gimp_rgb_set_uchar
 	gimp_rgb_subtract
+	gimp_rgb_to_cmyk
 	gimp_rgb_to_hls_int
 	gimp_rgb_to_hsl
 	gimp_rgb_to_hsv
