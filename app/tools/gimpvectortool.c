@@ -453,8 +453,6 @@ gimp_vector_tool_button_press (GimpTool        *tool,
           if (vector_tool->cur_anchor->selected == FALSE)
             vector_tool->function = VECTORS_FINISHED;
         }
-      vector_tool->last_x = coords->x;
-      vector_tool->last_y = coords->y;
     }
 
 
@@ -513,8 +511,6 @@ gimp_vector_tool_button_press (GimpTool        *tool,
       vector_tool->function == VECTORS_MOVE_VECTORS)
     {
       /* Work is being done in gimp_vector_tool_motion ()... */
-      vector_tool->last_x = coords->x;
-      vector_tool->last_y = coords->y;
     }
 
 
@@ -583,6 +579,9 @@ gimp_vector_tool_button_press (GimpTool        *tool,
       vector_tool->cur_anchor = NULL;
       vector_tool->function = VECTORS_FINISHED;
     }
+
+  vector_tool->last_x = coords->x;
+  vector_tool->last_y = coords->y;
 
   gimp_vectors_thaw (vector_tool->vectors);
 
@@ -677,20 +676,25 @@ gimp_vector_tool_motion (GimpTool        *tool,
       break;
 
     case VECTORS_MOVE_CURVE:
-      gimp_stroke_point_move_absolute (vector_tool->cur_stroke,
-                                       vector_tool->cur_anchor,
-                                       vector_tool->cur_position,
-                                       coords, vector_tool->restriction);
+      if (options->polygonal)
+        {
+          gimp_vector_tool_move_selected_anchors (vector_tool,
+                                               coords->x - vector_tool->last_x,
+                                               coords->y - vector_tool->last_y);
+        }
+      else
+        {
+          gimp_stroke_point_move_absolute (vector_tool->cur_stroke,
+                                           vector_tool->cur_anchor,
+                                           vector_tool->cur_position,
+                                           coords, vector_tool->restriction);
+        }
       break;
 
     case VECTORS_MOVE_ANCHORSET:
       gimp_vector_tool_move_selected_anchors (vector_tool,
                                               coords->x - vector_tool->last_x,
                                               coords->y - vector_tool->last_y);
-
-      vector_tool->last_x = coords->x;
-      vector_tool->last_y = coords->y;
-
       break;
 
     case VECTORS_MOVE_STROKE:
@@ -706,23 +710,20 @@ gimp_vector_tool_motion (GimpTool        *tool,
                                  coords->x - vector_tool->last_x,
                                  coords->y - vector_tool->last_y);
         }
-      vector_tool->last_x = coords->x;
-      vector_tool->last_y = coords->y;
-
       break;
 
     case VECTORS_MOVE_VECTORS:
       gimp_item_translate (GIMP_ITEM (vector_tool->vectors),
                            coords->x - vector_tool->last_x,
                            coords->y - vector_tool->last_y, FALSE);
-      vector_tool->last_x = coords->x;
-      vector_tool->last_y = coords->y;
-
       break;
 
     default:
       break;
     }
+
+  vector_tool->last_x = coords->x;
+  vector_tool->last_y = coords->y;
 
   gimp_vectors_thaw (vector_tool->vectors);
 }
@@ -1002,9 +1003,16 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
               else
                 {
                   if (state & TOGGLE_MASK)
-                    vector_tool->function = VECTORS_DELETE_ANCHOR;
+                    {
+                      vector_tool->function = VECTORS_DELETE_ANCHOR;
+                    }
                   else
-                    vector_tool->function = VECTORS_MOVE_HANDLE;
+                    {
+                      if (options->polygonal)
+                        vector_tool->function = VECTORS_MOVE_ANCHOR;
+                      else
+                        vector_tool->function = VECTORS_MOVE_HANDLE;
+                    }
                 }
             }
           else

@@ -66,8 +66,9 @@ gimp_drawable_stroke_vectors (GimpDrawable         *drawable,
   TileManager     *base;
   TileManager     *mask;
   gint             x1, x2, y1, y2, bytes, w, h;
-  guchar           ucolor[4] = { 255, 127, 0, 255 };
+  guchar           ucolor[4] = { 0, 0, 0, 255 };
   guchar           bg[1] = { 0, };
+  guchar          *src_bytes;
   PixelRegion      maskPR, basePR;
 
   /* what area do we operate on? */
@@ -137,12 +138,18 @@ gimp_drawable_stroke_vectors (GimpDrawable         *drawable,
   if (!gimp_drawable_has_alpha (drawable))
     bytes++;
 
+  src_bytes = g_malloc0 (bytes);
+
   /* Fill a TileManager with the stroke color */
   gimp_rgb_get_uchar (color, &(ucolor[0]), &(ucolor[1]), &(ucolor[2]));
+  src_bytes[bytes - 1] = OPAQUE_OPACITY;
+  gimp_image_transform_color (GIMP_ITEM (drawable)->gimage, drawable,
+                              src_bytes, GIMP_RGB, ucolor);
   base = tile_manager_new (w, h, bytes);
   tile_manager_set_offsets (base, x1+x2, y1+y2);
   pixel_region_init (&basePR, base, 0, 0, w, h, TRUE);
-  color_region (&basePR, ucolor);
+  color_region (&basePR, src_bytes);
+  g_free (src_bytes);
 
   /* combine mask and stroke color TileManager */
   pixel_region_init (&basePR, base, 0, 0, w, h, TRUE);
