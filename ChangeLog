@@ -1,3 +1,17 @@
+2005-03-13  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/drawable_transform.pdb
+	(drawable_transform_scale)
+	(drawable_transform_scale_default): applied fix from Theodor de
+	Ment which fixes a wrong precondition check which made certain
+	scale operations impossible. Fixes bug #170195.
+
+	* tools/pdbgen/pdb/transform_tools.pdb (scale): fixed the same
+	copy & paste bug here.
+
+	* app/pdb/drawable_transform_cmds.c
+	* app/pdb/transform_tools_cmds.c: regenerated.
+
 2005-03-12  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* plug-ins/common/winclipboard.c: applied a patch from 
