@@ -39,7 +39,7 @@ msgid ""
 "to your %s file."
 msgstr ""
 "Нема %s во gimprc:\n"
-"Треба да додате внес сличен\n"
+"Треба да додате запис сличен\n"
 "(%s \"%s\")\n"
 "на вашата датотека %s."
 
@@ -48,7 +48,7 @@ msgstr ""
 #: plug-ins/common/AlienMap2.c:1152 plug-ins/gfig/gfig.c:2617
 #: plug-ins/imagemap/imap_about.c:38 plug-ins/print/gimp_main_window.c:368
 msgid "About"
-msgstr "За ГИМП"
+msgstr "За"
 
 #. Preview
 #: plug-ins/FractalExplorer/Dialogs.c:574 plug-ins/Lighting/lighting_ui.c:1127
