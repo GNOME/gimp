@@ -628,6 +628,16 @@ paint_core_draw (Tool *tool)
 
       if (tx2 > 0 && ty2 > 0)
         {
+	  gint offx, offy;
+
+	  /* Adjust coords to start drawing from center of pixel if zoom > 1 */
+	  offx = (int) SCALEFACTOR_X (gdisp) >> 1;
+	  offy = (int) SCALEFACTOR_Y (gdisp) >> 1;
+	  tx1 += offx;
+	  ty1 += offy;
+	  tx2 += offx;
+	  ty2 += offy;
+
 	  /*  Draw start target  */
 	  gdk_draw_line (gdisp->canvas->window, paint_core->core->gc,
 			tx1 - (TARGET_WIDTH >> 1), ty1,

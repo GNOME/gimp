@@ -1,3 +1,9 @@
+Mon May  1 10:58:34 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* app/paint_core.c: applied gimp-quinet-000427-0, draw the straight
+	line preview in the center of the start and end pixels at high zoom
+	levels.
+
 2000-05-01  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/[h-p]*.c: use gimp_ui_init(). Minor cleanups like
