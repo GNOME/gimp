@@ -431,6 +431,7 @@ static CML_sensitive_widget_table random_sensitives[RANDOM_SENSITIVES_NUM] =
   { NULL, 0 }
 };
 
+static GRand   *gr;
 static gint     drawable_id = 0;
 static gint     copy_source = 0;
 static gint     copy_destination = 0;
@@ -557,7 +558,6 @@ CML_main_function (gint preview_p)
   gdouble   *hues, *sats, *vals;
   gdouble   *newh, *news, *newv;
   gdouble   *haux, *saux, *vaux;
-  GRand     *gr;
 
   /* open THE drawable */
   drawable = gimp_drawable_get (drawable_id);
@@ -775,7 +775,7 @@ CML_main_function (gint preview_p)
 	  (VALS.val.function == CML_KEEP_VALUES))
 	gimp_pixel_rgn_get_rect (&src_rgn, src_buffer,
 				 x1, y1 + dy, width_by_pixel, keep_height);
-      
+
       CML_compute_next_step (cell_num, &hues, &sats, &vals, &newh, &news, &newv,
 			     &haux, &saux, &vaux);
 
@@ -924,9 +924,7 @@ CML_next_value (gdouble   *vec,
   gdouble hold_rate = 1 - param->mod_rate;
   gdouble env_factor = 0;
   gint    index;
-  GRand  *gr;
 
-  gr = g_rand_new();
   self_mod_rate = (1 - param->env_sensitivity - param->ch_sensitivity);
 
   switch (param->arrange)
@@ -1012,8 +1010,6 @@ CML_next_value (gdouble   *vec,
     /* The range of val should be [0,1], not [0,1).
       Cannonization shuold be done in color mapping phase. */
     val = CLAMP (val, 0.0, 1);
-
-  g_rand_free (gr);
 
   return val;
 }
