@@ -1,3 +1,7 @@
+Fri Feb  4 18:27:16 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* app/global_edit.c: edit_fill with foreground, not background.
+
 Fri Feb  4 13:56:10 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* Makefile.am
