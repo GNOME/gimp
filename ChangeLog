@@ -1,5 +1,13 @@
 2003-02-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpedit.c (gimp_edit_fill): pass more detailed
+	undo_desc strings instead of always "Fill".
+
+	* app/core/gimpimage-mask-select.c: changed undo_desc strings
+	to match the already existing blurbs of the selection tools.
+
+2003-02-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage-merge.[ch]: added "const gchar *undo_desc" to
 	gimp_image_merge_layers() so the undo steps say "Merge Down",
 	"Flatten Image" etc. instead of always "Merge Layers".

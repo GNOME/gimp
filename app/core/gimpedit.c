@@ -337,6 +337,7 @@ gimp_edit_fill (GimpImage    *gimage,
   PixelRegion  bufPR;
   gint         x1, y1, x2, y2;
   guchar       col[MAX_CHANNELS];
+  const gchar *undo_desc;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
@@ -348,16 +349,19 @@ gimp_edit_fill (GimpImage    *gimage,
     {
     case GIMP_FOREGROUND_FILL:
       gimp_image_get_foreground (gimage, drawable, col);
+      undo_desc = _("Fill with FG Color");
       break;
 
     case GIMP_BACKGROUND_FILL:
       gimp_image_get_background (gimage, drawable, col);
+      undo_desc = _("Fill with BG Color");
       break;
 
     case GIMP_WHITE_FILL:
       col[RED_PIX]   = 255;
       col[GREEN_PIX] = 255;
       col[BLUE_PIX]  = 255;
+      undo_desc = _("Fill with White");
       break;
 
     case GIMP_TRANSPARENT_FILL:
@@ -366,6 +370,7 @@ gimp_edit_fill (GimpImage    *gimage,
       col[BLUE_PIX]  = 0;
       if (gimp_drawable_has_alpha (drawable))
 	col [gimp_drawable_bytes (drawable) - 1] = TRANSPARENT_OPACITY;
+      undo_desc = _("Fill with Transparency");
       break;
 
     case GIMP_NO_FILL:
@@ -374,6 +379,7 @@ gimp_edit_fill (GimpImage    *gimage,
     default:
       g_warning ("%s: unknown fill type", G_GNUC_PRETTY_FUNCTION);
       gimp_image_get_background (gimage, drawable, col);
+      undo_desc = _("Fill with BG Color");
       break;
     }
 
@@ -389,7 +395,7 @@ gimp_edit_fill (GimpImage    *gimage,
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
   gimp_image_apply_image (gimage, drawable, &bufPR,
-                          TRUE, _("Fill"),
+                          TRUE, undo_desc,
                           GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
                           NULL, x1, y1);
 

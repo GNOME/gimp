@@ -50,9 +50,9 @@ gimp_image_mask_select_rectangle (GimpImage      *gimage,
 
   /*  if applicable, replace the current selection  */
   if (op == GIMP_CHANNEL_OP_REPLACE)
-    gimp_image_mask_clear (gimage, _("Rectangular Selection"));
+    gimp_image_mask_clear (gimage, _("Rect Select"));
   else
-    gimp_image_mask_push_undo (gimage, _("Rectangular Selection"));
+    gimp_image_mask_push_undo (gimage, _("Rect Select"));
 
   /*  if feathering for rect, make a new mask with the
    *  rectangle and feather that with the old mask
@@ -97,9 +97,9 @@ gimp_image_mask_select_ellipse (GimpImage      *gimage,
 
   /*  if applicable, replace the current selection  */
   if (op == GIMP_CHANNEL_OP_REPLACE)
-    gimp_image_mask_clear (gimage, _("Ellipse Selection"));
+    gimp_image_mask_clear (gimage, _("Ellipse Select"));
   else
-    gimp_image_mask_push_undo (gimage, _("Ellipse Selection"));
+    gimp_image_mask_push_undo (gimage, _("Ellipse Select"));
 
   /*  if feathering for rect, make a new mask with the
    *  rectangle and feather that with the old mask
@@ -307,7 +307,7 @@ gimp_image_mask_select_fuzzy (GimpImage      *gimage,
     }
 
   gimp_image_mask_select_channel (gimage,
-                                  _("Select Fuzzy"),
+                                  _("Fuzzy Select"),
                                   mask,
                                   mask_x,
                                   mask_y,
