@@ -1,3 +1,11 @@
+2004-01-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-undo-push.c (undo_pop_layer): removed broken
+	code which tried to figure manually whether "alpha_changed" should
+	be emitted. Instead, simply compare the return values of
+	gimp_image_has_alpha() before and after adding/removing the
+	layer. Fixes bug #131721.
+
 2004-01-17  Henrik Brix Andersen  <brix@gimp.org>
 
 	* app/core/gimpimage-snap.c (gimp_image_snap_point): forgot to

@@ -1484,10 +1484,13 @@ undo_pop_layer (GimpUndo            *undo,
 {
   LayerUndo *lu;
   GimpLayer *layer;
+  gboolean   old_has_alpha;
 
   lu = (LayerUndo *) undo->data;
 
   layer = GIMP_LAYER (GIMP_ITEM_UNDO (undo)->item);
+
+  old_has_alpha = gimp_image_has_alpha (undo->gimage);
 
   if ((undo_mode       == GIMP_UNDO_MODE_UNDO &&
        undo->undo_type == GIMP_UNDO_LAYER_ADD) ||
@@ -1542,12 +1545,6 @@ undo_pop_layer (GimpUndo            *undo,
         }
 
       gimp_item_removed (GIMP_ITEM (layer));
-
-      if (gimp_container_num_children (undo->gimage->layers) == 1 &&
-          ! gimp_drawable_has_alpha (GIMP_LIST (undo->gimage->layers)->list->data))
-        {
-          accum->alpha_changed = TRUE;
-        }
     }
   else
     {
@@ -1570,12 +1567,6 @@ undo_pop_layer (GimpUndo            *undo,
       if (gimp_layer_is_floating_sel (layer))
 	undo->gimage->floating_sel = layer;
 
-      if (gimp_container_num_children (undo->gimage->layers) == 1 &&
-          ! gimp_drawable_has_alpha (GIMP_LIST (undo->gimage->layers)->list->data))
-        {
-          accum->alpha_changed = TRUE;
-        }
-
       /*  add the new layer  */
       gimp_container_insert (undo->gimage->layers,
 			     GIMP_OBJECT (layer), lu->prev_position);
@@ -1584,6 +1575,9 @@ undo_pop_layer (GimpUndo            *undo,
       if (gimp_layer_is_floating_sel (layer))
 	gimp_image_floating_selection_changed (undo->gimage);
     }
+
+  if (old_has_alpha != gimp_image_has_alpha (undo->gimage))
+    accum->alpha_changed = TRUE;
 
   return TRUE;
 }
