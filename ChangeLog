@@ -1,3 +1,13 @@
+2003-05-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/color-notebook.c (color_notebook_new_internal): don't
+	call gimp_dialog_factory_add_foreign() with a NULL dialog_factory.
+
+	* app/widgets/gimpcolorpanel.c: removed the color_notebook_active
+	boolean state and *always* call color_notebook_show() when the
+	user clicks the button. This way the notebook is automatically
+	deiconified or risen.
+
 2003-05-23  Sven Neumann  <sven@gimp.org>
 
 	* docs/keybindings.txt

@@ -352,8 +352,9 @@ color_notebook_new_internal (GimpViewable          *viewable,
 
   g_object_add_weak_pointer (G_OBJECT (cnp->shell), (gpointer *) &cnp->shell);
 
-  gimp_dialog_factory_add_foreign (dialog_factory, dialog_identifier,
-                                   cnp->shell);
+  if (dialog_factory)
+    gimp_dialog_factory_add_foreign (dialog_factory, dialog_identifier,
+                                     cnp->shell);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);

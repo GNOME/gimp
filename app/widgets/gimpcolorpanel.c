@@ -47,7 +47,6 @@ struct _GimpColorPanel
   GimpContext     *context;
 
   ColorNotebook   *color_notebook;
-  gboolean         color_notebook_active;
 };
 
 
@@ -123,9 +122,8 @@ gimp_color_panel_class_init (GimpColorPanelClass *klass)
 static void
 gimp_color_panel_init (GimpColorPanel *panel)
 {
-  panel->context               = NULL;
-  panel->color_notebook        = NULL;
-  panel->color_notebook_active = FALSE;
+  panel->context        = NULL;
+  panel->color_notebook = NULL;
 }
 
 static void
@@ -239,7 +237,7 @@ gimp_color_panel_color_changed (GimpColorButton *button)
 
   panel = GIMP_COLOR_PANEL (button);
 
-  if (panel->color_notebook_active)
+  if (panel->color_notebook)
     {
       gimp_color_button_get_color (GIMP_COLOR_BUTTON (button), &color);
       color_notebook_set_color (panel->color_notebook, &color);
@@ -266,16 +264,10 @@ gimp_color_panel_clicked (GtkButton *button)
 			    panel,
 			    FALSE,
 			    gimp_color_button_has_alpha (GIMP_COLOR_BUTTON (button)));
-      panel->color_notebook_active = TRUE;
     }
   else
     {
-      if (! panel->color_notebook_active)
-	{
-	  color_notebook_show (panel->color_notebook);
-	  panel->color_notebook_active = TRUE;
-	}
-      color_notebook_set_color (panel->color_notebook, &color);
+      color_notebook_show (panel->color_notebook);
     }
 }
 
@@ -300,7 +292,6 @@ gimp_color_panel_select_callback (ColorNotebook      *notebook,
 	  /* Fallthrough */
 	case COLOR_NOTEBOOK_CANCEL:
 	  color_notebook_hide (panel->color_notebook);
-	  panel->color_notebook_active = FALSE;
 	}
     }
 }
