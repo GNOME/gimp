@@ -15,29 +15,29 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1\n"
-"POT-Creation-Date: 2000-06-18 19:40-0700\n"
-"PO-Revision-Date: 2000-06-08 20:47+02:00\n"
+"POT-Creation-Date: 2000-07-20 18:06+0300\n"
+"PO-Revision-Date: 2000-07-20 20:47+02:00\n"
 "Last-Translator: Ville Hautamäki <villeh@cs.joensuu.fi>\n"
 "Language-Team: fi <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/about_dialog.c:256
+#: app/about_dialog.c:277
 msgid "About the GIMP"
 msgstr "Tietoja GIMPistä"
 
 #. this is a font, provide only one single font definition
-#: app/about_dialog.c:307
+#: app/about_dialog.c:336
 msgid "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 
-#: app/about_dialog.c:317
+#: app/about_dialog.c:346
 #, c-format
 msgid "Version %s brought to you by"
 msgstr "Version %s tekijät:"
 
-#: app/about_dialog.c:357
+#: app/about_dialog.c:387
 msgid "Please visit http://www.gimp.org/ for more info"
 msgstr "Käy hakemassa http://www.gimp.org/ :sta lisää tietoa"
 
@@ -134,7 +134,7 @@ msgstr "Poistu"
 #: app/layers_dialog.c:3484 app/layers_dialog.c:3666 app/layers_dialog.c:3761
 #: app/layers_dialog.c:4021 app/levels.c:341 app/palette.c:1826
 #: app/posterize.c:202 app/preferences_dialog.c:1465 app/qmask.c:278
-#: app/resize.c:194 app/resize.c:1326 app/threshold.c:275
+#: app/resize.c:194 app/resize.c:1324 app/threshold.c:275
 #: app/user_install.c:548 app/user_install.c:1191 modules/cdisplay_gamma.c:332
 #: modules/cdisplay_highcontrast.c:325
 msgid "Cancel"
@@ -293,7 +293,7 @@ msgstr "Kirkkaus- ja kontrastisäätö ei toimi indeksoiduille kuville."
 #: app/layers_dialog.c:3482 app/layers_dialog.c:3664 app/layers_dialog.c:3759
 #: app/layers_dialog.c:4019 app/levels.c:337 app/module_db.c:314
 #: app/posterize.c:198 app/preferences_dialog.c:1461 app/qmask.c:276
-#: app/resize.c:192 app/resize.c:1326 app/threshold.c:271
+#: app/resize.c:192 app/resize.c:1324 app/threshold.c:271
 #: app/user_install.c:1189 modules/cdisplay_gamma.c:330
 #: modules/cdisplay_highcontrast.c:323
 msgid "OK"
@@ -490,7 +490,7 @@ msgid "copy"
 msgstr "kopio"
 
 #. formulate the new layer_mask name
-#: app/channel.c:196 app/gradient.c:1599 app/layer.c:329 app/layer.c:1746
+#: app/channel.c:196 app/gradient.c:1599 app/layer.c:329 app/layer.c:1752
 #, c-format
 msgid "%s copy"
 msgstr "%s:n kopio"
@@ -1048,7 +1048,7 @@ msgstr "Tallenna väritasoasetukset"
 msgid "Load/Save Curves"
 msgstr "Lataa/Tallenna väritasoasetukset"
 
-#: app/curves.c:1624 app/curves.c:1642 app/levels.c:1441 app/levels.c:1459
+#: app/curves.c:1624 app/curves.c:1642 app/levels.c:1452 app/levels.c:1470
 #: app/paths_dialog.c:1905
 #, c-format
 msgid "Unable to open file %s"
@@ -1614,7 +1614,7 @@ msgstr "nimetön"
 msgid "Layer type %d not supported."
 msgstr "Taso tyyppiä %d ei tuettu."
 
-#: app/gimphelp.c:166
+#: app/gimphelp.c:169
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
@@ -2838,15 +2838,15 @@ msgstr "Ottotasot:"
 msgid "Output Levels:"
 msgstr "Antotasot:"
 
-#: app/levels.c:1052
+#: app/levels.c:1063
 msgid "Load Levels"
 msgstr "Lataa väritasoasetukset"
 
-#: app/levels.c:1067
+#: app/levels.c:1078
 msgid "Save Levels"
 msgstr "Tallenna väritasoasetukset"
 
-#: app/levels.c:1396
+#: app/levels.c:1407
 msgid "Load/Save Levels"
 msgstr "Lataa/Tallenna väritasoasetukset"
 
@@ -2866,63 +2866,63 @@ msgstr "Zoomaa sisään"
 msgid "Zoom out"
 msgstr "Zoomaa ulos"
 
-#: app/main.c:280
+#: app/main.c:296
 msgid "GIMP version"
 msgstr "GIMPin versio"
 
-#: app/main.c:284
+#: app/main.c:300
 #, c-format
 msgid "Usage: %s [option ...] [files ...]\n"
 msgstr "Käyttö: %s [vipu ...] [tiedostot ...]\n"
 
-#: app/main.c:285
+#: app/main.c:301
 msgid "Valid options are:\n"
 msgstr "Sallitut vivut ovat:\n"
 
-#: app/main.c:286
+#: app/main.c:302
 msgid "  -h --help                Output this help.\n"
 msgstr "  -h --help               Tulosta tämä avustusteksti.\n"
 
-#: app/main.c:287
+#: app/main.c:303
 msgid "  -v --version             Output version info.\n"
 msgstr "  -v --version            Tulosta versiotiedot.\n"
 
-#: app/main.c:288
+#: app/main.c:304
 msgid "  -b --batch <commands>    Run in batch mode.\n"
 msgstr "  -b --batch <komennot>   Aja eräajona.\n"
 
-#: app/main.c:289
+#: app/main.c:305
 msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
 msgstr "  -g --gimprc <gimprc>    Käytä toista gimprc-tiedostoa.\n"
 
-#: app/main.c:290
+#: app/main.c:306
 msgid "  -n --no-interface        Run without a user interface.\n"
 msgstr "  -n --no-interface       Aja ilman käyttöliittymää.\n"
 
-#: app/main.c:291
+#: app/main.c:307
 msgid "  -r --restore-session     Try to restore saved session.\n"
 msgstr "  -r --restore-session    Yritä palauttaa talletettua istuntoa.\n"
 
-#: app/main.c:292
+#: app/main.c:308
 msgid ""
 "  --no-data                Do not load patterns, gradients, palettes, "
 "brushes.\n"
 msgstr ""
 "  --no-data    Älä lataa kuvioita, väriliukumia, paletteja tai siveltimiä.\n"
 
-#: app/main.c:293
+#: app/main.c:309
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose               Näytä käynnistyslokia.\n"
 
-#: app/main.c:294
+#: app/main.c:310
 msgid "  --no-splash              Do not show the startup window.\n"
 msgstr "  --no-splash             Älä näytä alkuikkunaa.\n"
 
-#: app/main.c:295
+#: app/main.c:311
 msgid "  --no-splash-image        Do not add an image to the startup window.\n"
 msgstr "  --no-splash-image       Älä lisää kuvaa alkuikkunaan.\n"
 
-#: app/main.c:296
+#: app/main.c:312
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and its "
 "plugins.\n"
@@ -2930,11 +2930,11 @@ msgstr ""
 "  --no-shm                 Älä käytä jaettua muistia GIMPin ja sen "
 "liitännäisten kesken.\n"
 
-#: app/main.c:297
+#: app/main.c:313
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr "  --no-xshm               Älä käytä X:n Shared Memory -piirrettä.\n"
 
-#: app/main.c:298
+#: app/main.c:314
 msgid ""
 "  --console-messages       Display warnings to console instead of a dialog "
 "box.\n"
@@ -2942,21 +2942,33 @@ msgstr ""
 "  --console-messages       Tulosta varoitukset pääteikkunaan erillisten "
 "dialogi-ikkunoiden sijaan.\n"
 
-#: app/main.c:299
-msgid "  --debug-handlers         Enable debugging signal handlers.\n"
-msgstr "  --debug-handlers        \n"
+#: app/main.c:315
+msgid ""
+"  --debug-handlers         Enable debugging signal handlers for non-fatal "
+"signals.\n"
+msgstr ""
+"  --debug-handlers         Laita päälle debuggaus signaali hallitsijat
+"ei fataaleille signaaleille.\n"
 
-#: app/main.c:300
+#: app/main.c:316
+msgid "  --enable-stack-trace {never|query|always}\n"
+msgstr "  --enable-stack-trace {never|query|always}\n"
+
+#: app/main.c:317
+msgid "                           Debugging mode for fatal signals.\n"
+msgstr "			  Debuggaus tila fataaleille signaaleille.\n""
+
+#: app/main.c:318
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <näyttö>       Käytä osoitettua X-näyttöä.\n"
 
-#: app/main.c:301
+#: app/main.c:319
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr ""
 "  --system-gimprc <gimprc> Käytä vaihtoehtoista "
 "järjestelmä-gimprc-tiedostoa.\n"
 
-#: app/main.c:318
+#: app/main.c:336
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Tämä konsoli-ikkuna sulkeutuu kymmenessä sekunnissa)\n"
 
@@ -4166,38 +4178,38 @@ msgstr "Matriisi:"
 msgid "Perspective..."
 msgstr "Perspektiivi..."
 
-#: app/plug_in.c:324
+#: app/plug_in.c:329
 msgid "Resource configuration"
 msgstr "Resurssien konfigurointi"
 
-#: app/plug_in.c:331
+#: app/plug_in.c:336
 msgid "Plug-ins"
 msgstr "Liitännäiset"
 
-#: app/plug_in.c:343
+#: app/plug_in.c:348
 #, c-format
 msgid "query plug-in: \"%s\"\n"
 msgstr "tiedustellaan liitännäistä: \"%s\"\n"
 
-#: app/plug_in.c:379
+#: app/plug_in.c:384
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr "kirjoitetaan \"%s\"\n"
 
-#: app/plug_in.c:394
+#: app/plug_in.c:399
 msgid "Starting extensions: "
 msgstr "Käynnistetään lisäykset: "
 
-#: app/plug_in.c:395
+#: app/plug_in.c:400
 msgid "Extensions"
 msgstr "Lisäykset"
 
-#: app/plug_in.c:822
+#: app/plug_in.c:831
 #, c-format
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "Liitännäistä ei lötynyt: \"%s\""
 
-#: app/plug_in.c:1489
+#: app/plug_in.c:1491
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -4909,15 +4921,15 @@ msgstr "X:"
 msgid "Print Size & Display Unit"
 msgstr "Tulostuskoko ja näyttöyksikkö"
 
-#: app/resize.c:1238
+#: app/resize.c:1236
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Virhe: Sekä leveyden että korkeuden pitää olla nollaa suurempia."
 
-#: app/resize.c:1319
+#: app/resize.c:1317
 msgid "Layer Too Small"
 msgstr "Layer liian pieni"
 
-#: app/resize.c:1323
+#: app/resize.c:1321
 msgid ""
 "The chosen image size will shrink\n"
 "some layers completely away.\n"
@@ -5043,8 +5055,9 @@ msgstr "Seuraava vihje"
 #: app/tips_dialog.c:285
 msgid ""
 "Your GIMP tips file appears to be missing!\n"
-"There should be a file called gimp_tips.txt in the\n"
-"GIMP data directory.  Please check your installation."
+"There should be a file called gimp_tips.txt in\n"
+"the tips subdirectory of the GIMP data directory.\n"
+"Please check your installation."
 msgstr ""
 "GIMPin vihjetiedosto puuttuu!\n"
 "GIMPin asennuskansiossa pitäisi olla tiedosto nimeltään gimp_tips.txt.\n"
@@ -6266,15 +6279,14 @@ msgstr "Pystysuuntaan:"
 
 #: app/user_install.c:1352
 msgid ""
-"GIMP can obtain this information from your X-server.\n"
-"However, most X-servers do not return useful values."
+"GIMP can obtain this information from the windowing system.\n"
+"However, usually this does not give useful values."
 msgstr ""
 "GIMP voi hakea tätä tietoa ikkunointijärjestelmästä.\n"
 "Huom: Useimmat X-palvelinohjelmat eivät kerro todenmukaisia arvoja."
 
 #: app/user_install.c:1359
-#, c-format
-msgid "Get Resolution from X-server (Currently %d x %d dpi)"
+msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr "Ikkunointijärjestelmän tieto (%d x %d dpi)"
 
 #: app/user_install.c:1373
