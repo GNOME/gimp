@@ -978,7 +978,7 @@ plug_in_get_undo_desc (PlugIn *plug_in)
     }
 
   if (! undo_desc)
-    undo_desc = g_filename_to_utf8 (plug_in->name, -1, NULL, NULL, NULL);
+    undo_desc = g_filename_display_name (plug_in->name);
 
   return undo_desc;
 }

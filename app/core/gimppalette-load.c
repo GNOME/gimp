@@ -461,16 +461,10 @@ gimp_palette_load (const gchar  *filename,
     }
   else /* old palette format */
     {
-      gchar *basename;
-      gchar *utf8;
+      gchar *name = g_filename_display_basename (filename);
 
-      basename = g_path_get_basename (filename);
-
-      utf8 = g_filename_to_utf8 (basename, -1, NULL, NULL, NULL);
-      g_free (basename);
-
-      gimp_object_set_name (GIMP_OBJECT (palette), utf8);
-      g_free (utf8);
+      gimp_object_set_name (GIMP_OBJECT (palette), name);
+      g_free (name);
     }
 
   while (! feof (file))

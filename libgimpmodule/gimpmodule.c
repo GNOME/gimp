@@ -174,8 +174,12 @@ gimp_module_load (GTypeModule *module)
   g_return_val_if_fail (gimp_module->module == NULL, FALSE);
 
   if (gimp_module->verbose)
-    g_print (_("Loading module: '%s'\n"),
-             gimp_filename_to_utf8 (gimp_module->filename));
+    {
+      gchar *name = g_filename_display_name (gimp_module->filename);
+
+      g_print (_("Loading module: '%s'\n"), name);
+      g_free (name);
+    }
 
   if (! gimp_module_open (gimp_module))
     return FALSE;
@@ -277,10 +281,10 @@ gimp_module_new (const gchar *filename,
     {
       if (verbose)
 	{
-	  gchar *filename_utf8 = g_filename_to_utf8 (filename,
-						     -1, NULL, NULL, NULL);
-	  g_print (_("Skipping module: '%s'\n"), filename_utf8);
-	  g_free (filename_utf8);
+           gchar *name = g_filename_display_name (filename);
+
+           g_print (_("Skipping module: '%s'\n"), name);
+           g_free (name);
 	}
 
       module->state = GIMP_MODULE_STATE_NOT_LOADED;

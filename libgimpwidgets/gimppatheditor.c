@@ -743,7 +743,7 @@ gimp_path_editor_file_entry_changed (GtkWidget      *widget,
       return;
     }
 
-  utf8 = g_filename_to_utf8 (dir, -1, NULL, NULL, NULL);
+  utf8 = g_filename_display_name (dir);
 
   if (editor->sel_path == NULL)
     {

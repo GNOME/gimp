@@ -3747,18 +3747,9 @@ image_get_name_invoker (Gimp         *gimp,
       filename = gimp_image_get_filename (gimage);
 
       if (filename)
-        {
-          gchar *basename = g_path_get_basename (filename);
-          name = g_filename_to_utf8 (basename, -1, NULL, NULL, NULL);
-          g_free (basename);
-
-          if (! name)
-            name = g_strdup (_("(invalid UTF-8 string)"));
-        }
+        name = g_filename_display_basename (filename);
       else
-        {
-          name = g_strdup (_("Untitled"));
-        }
+        name = g_strdup (_("Untitled"));
     }
 
   return_args = procedural_db_return_args (&image_get_name_proc, success);

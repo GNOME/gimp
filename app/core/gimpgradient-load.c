@@ -95,16 +95,10 @@ gimp_gradient_load (const gchar  *filename,
     }
   else /* old gradient format */
     {
-      gchar *basename;
-      gchar *utf8;
+      gchar *name = g_filename_display_basename (filename);
 
-      basename = g_path_get_basename (filename);
-
-      utf8 = g_filename_to_utf8 (basename, -1, NULL, NULL, NULL);
-      g_free (basename);
-
-      gimp_object_set_name (GIMP_OBJECT (gradient), utf8);
-      g_free (utf8);
+      gimp_object_set_name (GIMP_OBJECT (gradient), name);
+      g_free (name);
     }
 
   num_segments = atoi (line);

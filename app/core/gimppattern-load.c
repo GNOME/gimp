@@ -469,13 +469,7 @@ gimp_pattern_load_pixbuf (const gchar  *filename,
     name = g_strdup (gdk_pixbuf_get_option (pixbuf, "tEXt::Comment"));
 
   if (! name)
-    {
-      gchar *basename = g_path_get_basename (filename);
-
-      name = g_filename_to_utf8 (basename, -1, NULL, NULL, NULL);
-
-      g_free (basename);
-    }
+    name = g_filename_display_basename (filename);
 
   pattern = g_object_new (GIMP_TYPE_PATTERN,
                           "name", name,

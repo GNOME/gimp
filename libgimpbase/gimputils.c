@@ -217,7 +217,7 @@ gimp_filename_to_utf8 (const gchar *filename)
 
   if (! filename_utf8)
     {
-      filename_utf8 = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
+      filename_utf8 = g_filename_display_name (filename);
       g_hash_table_insert (ht, g_strdup (filename), filename_utf8);
     }
 
