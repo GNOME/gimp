@@ -1,3 +1,8 @@
+Tue Dec 21 08:48:17 CET 1999  Marc Lehmann <pcg@goof.com>
+
+        * MAINTAINERS: Added Gregory McLean as gimp.specs maintainer/
+        responsible/whatever.
+
 Wed Dec 22 12:06:22 EST 1999 Gregory McLean <gregm@comstar.net>
 
 	* gimp.spec: Final clean up this results in a nice binary package
@@ -50,6 +55,7 @@ Mon Dec 20 18:42:51 EST 1999  Gregory McLean <gregm@comstar.net>
 
 	* gimp.spec: Slightly more upto date spec file. Work in progress.
 
+>>>>>>> 1.1949
 Mon Dec 20 17:58:59 GMT 1999  Adam D. Moss <adam@gimp.org>
 
 	* app/edit_selection.c: Remove old movement code and unused
@@ -608,6 +614,7 @@ Sun Dec  5 19:21:33 CET 1999  Marc Lehmann <marc@gimp.org>
         of almost all other languages.
 
 1999-12-05 Garry R. Osgood <gosgood@idt.net>
+
 	Inaugural checkin: Tile accounting
 	* app/tile_cache.c
 	* app/tile.c

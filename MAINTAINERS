@@ -145,7 +145,6 @@ current work: bezier tools (in gfonted) to be eventually folded into
              gimp;  natural brushes
 commit access: yes        
 
-
 Name: Shawn T. Amundson
 email: amundson@gimp.org
 url: http://www.gimp.org/
@@ -184,3 +183,11 @@ ircnick: ruth
 expertise: Script-fu extensions, tiff plugin
 current work: 
 commit access: no
+
+Name: Gregory McLean
+Email: gregm@comstar.net
+ircnick: Centove
+expertise: rpm specs file (and probably some more ;)
+current work: gimp.specs file
+commit access: yes
+
