@@ -191,6 +191,12 @@ brightness_contrast_initialize (GDisplay *gdisp)
     image_map_create (gdisp, brightness_contrast_dialog->drawable);
 
   brightness_contrast_update (brightness_contrast_dialog, ALL);
+
+  /* Merge-related undo release signal */
+
+  gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "layer_merge",
+		      GTK_SIGNAL_FUNC (brightness_contrast_cancel_callback),
+		      brightness_contrast_dialog);
 }
 
 /********************************/

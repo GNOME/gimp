@@ -499,6 +499,13 @@ curves_initialize (GDisplay *gdisp)
     gtk_widget_show (curves_dialog->shell);
 
   curves_update (curves_dialog, GRAPH | DRAW);
+
+  /* Merge-related undo release signal */
+
+  gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "layer_merge",
+		      GTK_SIGNAL_FUNC (curves_cancel_callback),
+		      curves_dialog);
+
 }
 
 void
@@ -513,6 +520,12 @@ curves_free (void)
 	  active_tool->preserve = FALSE;
 
 	  curves_dialog->image_map = NULL;
+
+	  gtk_signal_disconnect_by_func (
+					 GTK_OBJECT (gimp_drawable_gimage (curves_dialog->drawable)),
+					 curves_cancel_callback,
+					 curves_dialog 
+					);
 	}
 
       if (curves_dialog->pixmap)

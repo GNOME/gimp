@@ -291,6 +291,13 @@ levels_initialize (GDisplay *gdisp)
 				     levels_dialog->drawable);
   histogram_widget_update (levels_dialog->histogram, levels_dialog->hist);
   histogram_widget_range (levels_dialog->histogram, -1, -1);
+
+  /* Merge-related undo release signal */
+
+  gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "layer_merge",
+		      GTK_SIGNAL_FUNC (levels_cancel_callback),
+		      levels_dialog);
+
 }
 
 void
@@ -305,6 +312,12 @@ levels_free (void)
 	  active_tool->preserve = FALSE;
 
 	  levels_dialog->image_map = NULL;
+	  gtk_signal_disconnect_by_func (
+					 GTK_OBJECT (gimp_drawable_gimage (levels_dialog->drawable)),
+					 levels_cancel_callback,
+					 levels_dialog 
+					);
+
 	}
       gtk_widget_destroy (levels_dialog->shell);
     }

@@ -247,6 +247,13 @@ threshold_initialize (GDisplay *gdisp)
 
   if (threshold_dialog->preview)
     threshold_preview (threshold_dialog);
+
+  /* Merge-related undo release signal */
+
+  gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "layer_merge",
+		      GTK_SIGNAL_FUNC (threshold_cancel_callback),
+		      threshold_dialog);
+
 }
 
 /**********************/

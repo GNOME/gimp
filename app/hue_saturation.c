@@ -312,6 +312,12 @@ hue_saturation_initialize (GDisplay *gdisp)
     image_map_create (gdisp, hue_saturation_dialog->drawable);
 
   hue_saturation_update (hue_saturation_dialog, ALL);
+
+  /* Merge-related undo release signal */
+
+  gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "layer_merge",
+		      GTK_SIGNAL_FUNC (hue_saturation_cancel_callback),
+		      hue_saturation_dialog);
 }
 
 void
@@ -326,6 +332,11 @@ hue_saturation_free (void)
 	  active_tool->preserve = FALSE;
 
 	  hue_saturation_dialog->image_map = NULL;
+	  gtk_signal_disconnect_by_func (
+					 GTK_OBJECT (gimp_drawable_gimage (hue_saturation_dialog->drawable)),
+					 hue_saturation_cancel_callback,
+					 hue_saturation_dialog 
+					);
 	}
       gtk_widget_destroy (hue_saturation_dialog->shell);
     }

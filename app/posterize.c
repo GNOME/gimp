@@ -176,6 +176,12 @@ posterize_initialize (GDisplay *gdisp)
 
   if (posterize_dialog->preview)
     posterize_preview (posterize_dialog);
+
+  /* Merge-related undo release signal */
+
+  gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "layer_merge",
+		      GTK_SIGNAL_FUNC (posterize_cancel_callback),
+		      posterize_dialog);
 }
 
 /**********************/

@@ -117,6 +117,7 @@ enum {
   RESTRUCTURE,
   COLORMAP_CHANGED,
   UNDO_EVENT,
+  LAYER_MERGE,
   LAST_SIGNAL
 };
 
@@ -161,6 +162,9 @@ gimp_image_class_init (GimpImageClass *klass)
   gimp_image_signals[UNDO_EVENT] = 
 	  gimp_signal_new ("undo_event", GTK_RUN_FIRST, type, 0,
 			   gimp_sigtype_int);
+  gimp_image_signals[LAYER_MERGE] =
+	  gimp_signal_new ("layer_merge", GTK_RUN_FIRST, type, 0,
+			   gimp_sigtype_void);
   
   gtk_object_class_add_signals (object_class, gimp_image_signals, LAST_SIGNAL);
 }
@@ -2728,8 +2732,22 @@ gimp_image_merge_layers (GimpImage *gimage,
   if ((x2 - x1) == 0 || (y2 - y1) == 0)
     return NULL;
 
+  /* Layer merge listeners tend to be tools performing image map processing */
+  /* and disable the undo system; this signal requests such tools to        */
+  /* perform their cancel actions, releasing the undo system.               */
+
+  gtk_signal_emit (GTK_OBJECT(gimage), gimp_image_signals[LAYER_MERGE]);
+
   /*  Start a merge undo group  */
-  undo_push_group_start (gimage, LAYER_MERGE_UNDO);
+
+  if (!undo_push_group_start (gimage, LAYER_MERGE_UNDO))
+    {
+      /* Could not start an undo group. Likely the undo system is still */
+      /* disabled. Cleanup and return                                   */
+
+      g_slist_free (reverse_list);
+      return NULL;
+    }
 
   name = g_strdup (drawable_get_name (GIMP_DRAWABLE(layer)));
 

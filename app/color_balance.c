@@ -237,6 +237,12 @@ color_balance_initialize (GDisplay *gdisp)
     image_map_create (gdisp, color_balance_dialog->drawable);
 
   color_balance_update (color_balance_dialog, ALL);
+
+  /* Merge-related undo release signal */
+
+  gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "layer_merge",
+		      GTK_SIGNAL_FUNC (color_balance_cancel_callback),
+		      color_balance_dialog);
 }
 
 /**************************/
