@@ -53,8 +53,12 @@ static char rcsid[] = "$Id$";
 #include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+#ifdef HAVE_DIRENT_H
 #include <dirent.h>
+#endif
 
 #include <gtk/gtk.h>
 
@@ -69,7 +73,7 @@ static char rcsid[] = "$Id$";
 /* #define DEBUG */
 
 #ifdef DEBUG
-#define DEBUG_PRINT(X) printf X
+#define DEBUG_PRINT(X) g_print X
 #else
 #define DEBUG_PRINT(X)
 #endif
@@ -279,7 +283,7 @@ typedef struct
 /*
  * What's the difference between (structure) CalcParams and GFlare ?
  * well, radius and lengths are actual length for CalcParams where
- * they are typically 0 to 100 for GFlares, and angles are M_PI based
+ * they are typically 0 to 100 for GFlares, and angles are G_PI based
  * (radian) for CalcParams where they are degree for GFlares. et cetra.
  * This is because convienience for dialog processing and for calculating.
  * these conversion is taken place in calc init routines. see below.
@@ -909,15 +913,12 @@ plug_in_parse_gflare_path ()
   path_string = g_strdup (return_vals[1].data.d_string);
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  /* Set local path to contain temp_path, where (supposedly)
-   * there may be working files.
-   */
-  home = getenv ("HOME");
+  home = g_get_home_dir ();
 
   /* Search through all directories in the  path */
 
   next_token = path_string;
-  token = strtok (next_token, G_SEARCHPATH_SEPARATOR_S );
+  token = strtok (next_token, G_SEARCHPATH_SEPARATOR_S);
 
   while (token)
     {
@@ -943,8 +944,8 @@ plug_in_parse_gflare_path ()
 
       if (!err && S_ISDIR (filestat.st_mode))
 	{
-	  if (path[strlen (path) - 1] != '/')
-	    strcat (path, "/");
+	  if (path[strlen (path) - 1] != G_DIR_SEPARATOR)
+	    strcat (path, G_DIR_SEPARATOR_S);
 
 	  DEBUG_PRINT(("Added `%s' to gflare_path_list\n", path));
 	  gflare_path_list = g_list_append (gflare_path_list, path);
@@ -1467,8 +1468,7 @@ gflare_save (GFlare *gflare)
       /* get first entry of path */
       path = gflare_path_list->data;
 
-      gflare->filename = g_malloc (strlen (path) + strlen (gflare->name) + 2);
-      sprintf (gflare->filename, "%s%s", path, gflare->name);
+      gflare->filename = g_strdup_printf ("%s%s", path, gflare->name);
     }
 
   fp = fopen (gflare->filename, "w");
@@ -1668,9 +1668,7 @@ gflares_list_load_all ()
 	{
 	  while ((dir_ent = readdir (dir)))
 	    {
-	      filename = g_malloc (strlen(path) + strlen (dir_ent->d_name) + 1);
-
-	      sprintf (filename, "%s%s", path, dir_ent->d_name);
+	      filename = g_strdup_printf ("%s%s", path, dir_ent->d_name);
 
 	      /* Check the file and see that it is not a sub-directory */
 	      err = stat (filename, &filestat);
@@ -1737,16 +1735,16 @@ calc_init_params (GFlare *gflare, gint calc_type,
   calc.xcenter	   = xcenter;
   calc.ycenter	   = ycenter;
   calc.radius	   = radius;
-  calc.rotation	   = rotation * M_PI / 180.0;
+  calc.rotation	   = rotation * G_PI / 180.0;
   calc.hue	   = hue;
-  calc.vangle	   = vangle * M_PI / 180.0;
+  calc.vangle	   = vangle * G_PI / 180.0;
   calc.vlength	   = radius * vlength / 100.0;
   calc.glow_radius   = radius * gflare->glow_size / 100.0;
   calc.rays_radius   = radius * gflare->rays_size / 100.0;
   calc.sflare_radius = radius * gflare->sflare_size / 100.0;
-  calc.glow_rotation = (rotation + gflare->glow_rotation) * M_PI / 180.0;
-  calc.rays_rotation = (rotation + gflare->rays_rotation) * M_PI / 180.0;
-  calc.sflare_rotation = (rotation + gflare->sflare_rotation) * M_PI / 180.0;
+  calc.glow_rotation = (rotation + gflare->glow_rotation) * G_PI / 180.0;
+  calc.rays_rotation = (rotation + gflare->rays_rotation) * G_PI / 180.0;
+  calc.sflare_rotation = (rotation + gflare->sflare_rotation) * G_PI / 180.0;
   calc.glow_opacity  = gflare->glow_opacity * 255 / 100.0;
   calc.rays_opacity  = gflare->rays_opacity * 255 / 100.0;
   calc.sflare_opacity = gflare->sflare_opacity * 255 / 100.0;
@@ -1773,7 +1771,7 @@ calc_init_params (GFlare *gflare, gint calc_type,
   calc.sflare_shape = gflare->sflare_shape;
   if (calc.sflare_shape == GF_POLYGON)
     {
-      calc.sflare_angle = 2 * M_PI / (2 * gflare->sflare_nverts);
+      calc.sflare_angle = 2 * G_PI / (2 * gflare->sflare_nverts);
       calc.sflare_factor = 1.0 / cos (calc.sflare_angle);
     }
 
@@ -2063,7 +2061,7 @@ calc_glow_pix (guchar *dest_pix, gdouble x, gdouble y)
   x -= calc.xcenter;
   y -= calc.ycenter;
   radius = sqrt (x*x + y*y) / calc.glow_radius;
-  angle = (atan2 (-y, x) + calc.glow_rotation ) / (2*M_PI);
+  angle = (atan2 (-y, x) + calc.glow_rotation ) / (2*G_PI);
   angle = fmod_positive (angle, 1.0);
 
   calc_get_gradient (size_pix, calc.glow_angular_size, angle);
@@ -2107,7 +2105,7 @@ calc_rays_pix (guchar *dest_pix, gdouble x, gdouble y)
   x -= calc.xcenter;
   y -= calc.ycenter;
   radius = sqrt (x*x + y*y) / calc.rays_radius;
-  angle = (atan2 (-y, x) + calc.rays_rotation ) / (2*M_PI);
+  angle = (atan2 (-y, x) + calc.rays_rotation ) / (2*G_PI);
   angle = fmod_positive (angle, 1.0);	/* make sure 0 <= angle < 1.0 */
   spike_frac = fmod (angle, calc.rays_spike_mod * 2);
   spike_angle = angle - spike_frac + calc.rays_spike_mod;
@@ -5446,7 +5444,7 @@ query_string_box (char	      *title,
   GtkWidget *entry;
   GtkWidget *button;
 
-  query_box = (QueryBox *) g_malloc (sizeof (QueryBox));
+  query_box = g_new (QueryBox, 1);
 
   qbox = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (qbox), title);

@@ -1,3 +1,22 @@
+2000-02-05  Tor Lillqvist  <tml@iki.fi>
+
+	* gimprc.in: user_install creates the gflare directory as
+	"gflares" (not "gflare"), so use that form here, too.
+
+	* gimprc.win32: Update to match the Unix version.
+
+	* app/ops_buttons.c: Include gimpintl.h.
+
+	* app/preferences_dialog.c (file_pref_cmd_callback): I18n for the
+	Pixels/%s string. It used to come out as "Pixels/tuuma" in
+	Finnish, for instance.
+
+	* plug-ins/gflare/gflare.c: Portability.
+
+	* libgimp/gimpui.def: 
+	* plug-ins/makefile.{cygwin,msc}
+	* modules/makefile.{cygwin,msc}: Updates.
+
 2000-02-05  Jay Cox  <jaycox@earthlink.net>
 
 	* app/paths_cmds.c, tools/pdbgen/pdb/paths.pdb:

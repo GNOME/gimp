@@ -11,6 +11,7 @@ EXPORTS
 	gimp_color_button_new
 	gimp_color_button_update
 	gimp_context_help
+	gimp_coordinates_new
 	gimp_dialog_create_action_area
 	gimp_dialog_create_action_areav
 	gimp_dialog_new
@@ -24,9 +25,12 @@ EXPORTS
 	gimp_file_selection_new
 	gimp_file_selection_set_filename
 	gimp_float_adjustment_update
+	gimp_gradient_close_popup
+	gimp_gradient_get_gradient_data
 	gimp_gradient_select_widget
 	gimp_gradient_select_widget_close_popup
 	gimp_gradient_select_widget_set_popup
+	gimp_gradient_set_popup
 	gimp_help_connect_help_accel
 	gimp_help_disable_tooltips
 	gimp_help_enable_tooltips
@@ -40,6 +44,7 @@ EXPORTS
 	gimp_layer_menu_new
 	gimp_menu_item_update
 	gimp_option_menu_new
+	gimp_option_menu_new2
 	gimp_pattern_close_popup
 	gimp_pattern_get_pattern_data
 	gimp_pattern_select_widget

@@ -15,34 +15,29 @@ msgstr ""
 
 #: libgimp/gimpcolorbutton.c:105
 msgid "/Use Foreground Color"
-msgstr ""
+msgstr "/K‰yt‰ edustav‰ri‰"
 
 #: libgimp/gimpcolorbutton.c:106
 msgid "/Use Background Color"
-msgstr ""
+msgstr "/K‰yt‰ taustav‰ri‰"
 
 #: libgimp/gimpexport.c:124
-#, fuzzy
 msgid "can't Handle Layers"
 msgstr "ei pysty k‰sittelem‰‰n tasoja"
 
 #: libgimp/gimpexport.c:125 libgimp/gimpexport.c:134
-#, fuzzy
 msgid "Merge Visible Layers"
 msgstr "Yhdist‰ n‰kyv‰t tasot"
 
 #: libgimp/gimpexport.c:133
-#, fuzzy
 msgid "can only Handle Layers as Animation Frames"
 msgstr "voi k‰ytt‰‰ tasoja ainoastaan animaation ruutuina"
 
 #: libgimp/gimpexport.c:134
-#, fuzzy
 msgid "Save as Animation"
 msgstr "Tallenna animaationa"
 
 #: libgimp/gimpexport.c:142
-#, fuzzy
 msgid "can't Handle Transparency"
 msgstr "ei pysty k‰sittelem‰‰n l‰pin‰kyvyytt‰"
 
@@ -51,7 +46,6 @@ msgid "Flatten Image"
 msgstr "Yhdist‰ kuva"
 
 #: libgimp/gimpexport.c:151
-#, fuzzy
 msgid "can only Handle RGB Images"
 msgstr "k‰sittelee ainoastaan t‰ysv‰rikuvia"
 
@@ -60,17 +54,14 @@ msgid "Convert to RGB"
 msgstr "Muunna t‰ysv‰rikuvaksi"
 
 #: libgimp/gimpexport.c:160
-#, fuzzy
 msgid "can only Handle Grayscale Images"
 msgstr "k‰sittelee ainoastaan harmaas‰vykuvia"
 
 #: libgimp/gimpexport.c:161 libgimp/gimpexport.c:180 libgimp/gimpexport.c:201
-#, fuzzy
 msgid "Convert to Grayscale"
 msgstr "Muunna harmaas‰vyksi"
 
 #: libgimp/gimpexport.c:169
-#, fuzzy
 msgid "can only Handle Indexed Images"
 msgstr "k‰sittelee ainoastaan indeksoituja kuvia"
 
@@ -83,27 +74,22 @@ msgstr ""
 "(Tee se k‰sin jos haluat k‰ytt‰‰ muita kuin oletuksia)"
 
 #: libgimp/gimpexport.c:179
-#, fuzzy
 msgid "can only Handle RGB or Grayscale Images"
 msgstr "k‰sittelee ainoastaan t‰ysv‰ri- tai harmaas‰vykuvia"
 
 #: libgimp/gimpexport.c:188
-#, fuzzy
 msgid "can only Handle RGB or Indexed Images"
 msgstr "k‰sittelee ainoastaan t‰ysv‰ri- tai indeksoituja kuvia"
 
 #: libgimp/gimpexport.c:198
-#, fuzzy
 msgid "can only Handle Grayscale or Indexed Images"
 msgstr "k‰sittelee ainoastaan harmaas‰vy- tai indeksoituja kuvia"
 
 #: libgimp/gimpexport.c:209
-#, fuzzy
 msgid "needs an Alpha Channel"
 msgstr "vaatii ett‰ kuvassa on alfakanava"
 
 #: libgimp/gimpexport.c:210
-#, fuzzy
 msgid "Add Alpha Channel"
 msgstr "Lis‰‰ alfakanava"
 
@@ -140,9 +126,8 @@ msgid "The export conversion won't modify your original image."
 msgstr "Muokkaus ulosvienti‰ varten ei vaikuta alkuper‰iseen kuvaan."
 
 #: libgimp/gimpfileselection.c:352
-#, fuzzy
 msgid "Select File"
-msgstr "Valitse"
+msgstr "Valitse tiedosto"
 
 #: libgimp/gimpfileselection.c:362 libgimp/gimpunitmenu.c:462
 msgid "Select"
@@ -155,11 +140,11 @@ msgstr "Sulje"
 #. pseudo unit
 #: libgimp/gimpunit.c:46
 msgid "pixel"
-msgstr ""
+msgstr "pikseli"
 
 #: libgimp/gimpunit.c:46
 msgid "pixels"
-msgstr ""
+msgstr "pikseli‰"
 
 #. standard units
 #: libgimp/gimpunit.c:49
@@ -189,7 +174,7 @@ msgstr "pistett‰"
 
 #: libgimp/gimpunit.c:54
 msgid "pica"
-msgstr ""
+msgstr "pica"
 
 #: libgimp/gimpunit.c:54
 msgid "picas"
@@ -197,21 +182,20 @@ msgstr "picaa"
 
 #: libgimp/gimpunit.c:61
 msgid "percent"
-msgstr "%"
+msgstr "prosenttia"
 
 #: libgimp/gimpunitmenu.c:215
 msgid "More..."
-msgstr ""
+msgstr "Lis‰‰..."
 
 #: libgimp/gimpunitmenu.c:457
-#, fuzzy
 msgid "Unit Selection"
-msgstr "Valitse"
+msgstr "Valitse mittayksikkˆ"
 
 #: libgimp/gimpunitmenu.c:493
 msgid "Unit"
-msgstr ""
+msgstr "Mittayksikkˆ"
 
 #: libgimp/gimpunitmenu.c:494
 msgid "Factor"
-msgstr ""
+msgstr "Kerroin"

@@ -29,7 +29,7 @@ COMMON4 = mapcolor max_rgb mblur newsprint nlfilt noisify normalize nova oilify 
 COMMON5 = sample_colorize scatter_hsv semiflatten sharpen shift smooth_palette snoise sobel sparkle spheredesigner spread sunras tga threshold_alpha tiff tile tileit tiler video vinvert vpropagate waves whirlpinch winclipboard wind winprint wmf xbm xwd zealouscrop
 
 # These have own subdirectories each
-SEPARATE = AlienMap AlienMap2 FractalExplorer Lighting MapObject bmp borderaverage dbbrowser faxg3 fits flame fp gdyntext gfig gfli gimpressionist ifscompose imagemap maze mosaic pagecurl rcm sel2path sgi sinus struc twain unsharp winsnap
+SEPARATE = AlienMap AlienMap2 FractalExplorer Lighting MapObject bmp borderaverage dbbrowser faxg3 fits flame fp gdyntext gfig gflare gfli gimpressionist ifscompose imagemap maze mosaic pagecurl rcm sel2path sgi sinus struc twain unsharp winsnap
 
 # These are unofficial, ie not in the CVS. To build these, you should
 # get tml's source snapshot and copy this makefile to the
@@ -123,7 +123,7 @@ sub-one-separate :
 	nmake -nologo -f ..\makefile.msc TOP=..\.. PLUGIN=$(DIR) EXTRA_$(DIR)=1 $(TARGET)
 
 
-data-install : gimpressionist-data-install
+data-install : gimpressionist-data-install guash-data-install
 	-md $(GIMP)\scripts
 	$(INSTALL) script-fu\scripts\*.scm $(GIMP)\scripts
 	$(INSTALL) script-fu\scripts\*.jpg $(GIMP)\scripts
@@ -140,6 +140,9 @@ gimpressionist-data-install :
 	$(INSTALL) gimpressionist\Paper\*.pgm $(GIMP)\gimpressionist\Paper
 	$(INSTALL) gimpressionist\Presets\* $(GIMP)\gimpressionist\Presets
 	del $(GIMP)\gimpressionist\Presets\Makefile.am
+
+guash-data-install :
+
 
 !ENDIF
 !ENDIF
@@ -272,6 +275,13 @@ OBJECTS = \
 	gdyntext_ui.obj \
 	message_window.obj
 !ENDIF
+
+ifdef EXTRA_gflare
+OBJECTS = \
+	asupsample.obj \
+	gflare.obj \
+	gtkmultioptionmenu.obj
+endif
 
 !IFDEF EXTRA_gfli
 OBJECTS = \

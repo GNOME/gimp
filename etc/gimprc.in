@@ -310,6 +310,6 @@
 
 # GFlare path
 #  This path will be searched for gflares when you use the GFlare plug-in.
-(gflare-path "${gimp_dir}/gflare:${gimp_data_dir}/gflare")
+(gflare-path "${gimp_dir}/gflares:${gimp_data_dir}/gflares")
 
 # [end of file]

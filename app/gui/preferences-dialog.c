@@ -1354,6 +1354,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   gint i;
   gint divided_mem_size;
   gint mem_size_unit;
+  gchar *pixels_per_unit;
 
   if (prefs_dlg)
     {
@@ -1573,8 +1574,10 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
+  pixels_per_unit = g_strconcat (_("Pixels"), "/%s", NULL);
+
   sizeentry2 =
-    gimp_size_entry_new (2, default_resolution_units, "Pixels/%s",
+    gimp_size_entry_new (2, default_resolution_units, pixels_per_unit,
 			 FALSE, FALSE, TRUE, 75,
 			 GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
 
@@ -2334,8 +2337,11 @@ file_pref_cmd_callback (GtkWidget *widget,
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 
   sizeentry =
-    gimp_size_entry_new (2, UNIT_INCH, "Pixels/%s", FALSE, FALSE, TRUE, 75,
+    gimp_size_entry_new (2, UNIT_INCH, pixels_per_unit, FALSE, FALSE, TRUE, 75,
 			 GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
+  
+  g_free (pixels_per_unit);
+  pixels_per_unit = NULL;
 
   button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
   if (ABS (monitor_xres - monitor_yres) < GIMP_MIN_RESOLUTION)
