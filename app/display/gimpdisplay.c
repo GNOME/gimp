@@ -41,6 +41,7 @@
 #include "gimpdisplay-handlers.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-handlers.h"
+#include "gimpdisplayshell-transform.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -42,6 +42,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-selection.h"
+#include "display/gimpdisplayshell-transform.h"
 
 #include "gimpeditselectiontool.h"
 #include "gimpdrawtool.h"

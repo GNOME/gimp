@@ -34,6 +34,7 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-marching-ants.h"
 #include "gimpdisplayshell-selection.h"
+#include "gimpdisplayshell-transform.h"
 
 
 #undef VERBOSE

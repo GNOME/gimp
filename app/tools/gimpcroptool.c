@@ -36,6 +36,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-transform.h"
 
 #include "gui/info-dialog.h"
 

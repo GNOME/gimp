@@ -51,7 +51,6 @@
 #include "file/file-utils.h"
 
 #include "widgets/gimpcolorpanel.h"
-#include "widgets/gimpcursor.h"
 #include "widgets/gimpdnd.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -68,19 +67,20 @@
 #include "gimpdisplay-area.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-callbacks.h"
+#include "gimpdisplayshell-cursor.h"
 #include "gimpdisplayshell-dnd.h"
 #include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-selection.h"
+#include "gimpdisplayshell-title.h"
+#include "gimpdisplayshell-transform.h"
 #include "gimpstatusbar.h"
 
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
-
-#define MAX_TITLE_BUF 256
 
 enum
 {
@@ -93,33 +93,23 @@ enum
 
 /*  local function prototypes  */
 
-static void       gimp_display_shell_class_init   (GimpDisplayShellClass *klass);
-static void       gimp_display_shell_init         (GimpDisplayShell      *shell);
+static void      gimp_display_shell_class_init    (GimpDisplayShellClass *klass);
+static void      gimp_display_shell_init          (GimpDisplayShell      *shell);
 
-static void       gimp_display_shell_destroy           (GtkObject        *object);
-static gboolean   gimp_display_shell_delete_event      (GtkWidget        *widget,
-                                                        GdkEventAny      *aevent);
+static void      gimp_display_shell_destroy            (GtkObject        *object);
+static gboolean  gimp_display_shell_delete_event       (GtkWidget        *widget,
+							GdkEventAny      *aevent);
 
-static gpointer   gimp_display_shell_get_accel_context (gpointer          data);
+static gpointer  gimp_display_shell_get_accel_context  (gpointer          data);
 
-static void       gimp_display_shell_display_area      (GimpDisplayShell *shell,
-                                                        gint              x,
-                                                        gint              y,
-                                                        gint              w,
-                                                        gint              h);
-static void       gimp_display_shell_real_set_cursor   (GimpDisplayShell *shell,
-                                                        GdkCursorType     cursor_type,
-                                                        GimpToolCursorType  tool_cursor,
-                                                        GimpCursorModifier  modifier,
-                                                        gboolean          always_install);
-static void	  gimp_display_shell_draw_cursor       (GimpDisplayShell *shell);
+static void      gimp_display_shell_display_area       (GimpDisplayShell *shell,
+							gint              x,
+							gint              y,
+							gint              w,
+							gint              h);
+static void	 gimp_display_shell_draw_cursor        (GimpDisplayShell *shell);
 
-static void       gimp_display_shell_format_title      (GimpDisplayShell *gdisp,
-                                                        gchar            *title,
-                                                        gint              title_len,
-                                                        const gchar      *format);
-
-static void    gimp_display_shell_close_warning_dialog (GimpDisplayShell *shell,
+static void  gimp_display_shell_close_warning_dialog   (GimpDisplayShell *shell,
                                                         GimpImage        *gimage);
 static void  gimp_display_shell_close_warning_callback (GtkWidget        *widget,
                                                         gboolean          close,
@@ -872,190 +862,6 @@ gimp_display_shell_scrolled (GimpDisplayShell *shell)
   g_signal_emit (G_OBJECT (shell), display_shell_signals[SCROLLED], 0);
 }
 
-void
-gimp_display_shell_transform_coords (GimpDisplayShell *shell,
-                                     GimpCoords       *image_coords,
-                                     GimpCoords       *display_coords)
-{
-  gdouble scalex;
-  gdouble scaley;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (image_coords != NULL);
-  g_return_if_fail (display_coords != NULL);
-
-  *display_coords = *image_coords;
-
-  scalex = SCALEFACTOR_X (shell);
-  scaley = SCALEFACTOR_Y (shell);
-
-  display_coords->x = scalex * image_coords->x;
-  display_coords->y = scaley * image_coords->y;
-
-  display_coords->x += - shell->offset_x + shell->disp_xoffset;
-  display_coords->y += - shell->offset_y + shell->disp_yoffset;
-}
-
-void
-gimp_display_shell_untransform_coords (GimpDisplayShell *shell,
-                                       GimpCoords       *display_coords,
-                                       GimpCoords       *image_coords)
-{
-  gdouble scalex;
-  gdouble scaley;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (display_coords != NULL);
-  g_return_if_fail (image_coords != NULL);
-
-  *image_coords = *display_coords;
-
-  scalex = SCALEFACTOR_X (shell);
-  scaley = SCALEFACTOR_Y (shell);
-
-  image_coords->x = display_coords->x - shell->disp_xoffset + shell->offset_x;
-  image_coords->y = display_coords->y - shell->disp_yoffset + shell->offset_y;
-
-  image_coords->x /= scalex;
-  image_coords->y /= scaley;
-}
-
-void
-gimp_display_shell_transform_xy (GimpDisplayShell *shell,
-                                 gint              x,
-                                 gint              y,
-                                 gint             *nx,
-                                 gint             *ny,
-                                 gboolean          use_offsets)
-{
-  gdouble scalex;
-  gdouble scaley;
-  gint    offset_x = 0;
-  gint    offset_y = 0;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (nx != NULL);
-  g_return_if_fail (ny != NULL);
-
-  /*  transform from image coordinates to screen coordinates  */
-  scalex = SCALEFACTOR_X (shell);
-  scaley = SCALEFACTOR_Y (shell);
-
-  if (use_offsets)
-    gimp_drawable_offsets (gimp_image_active_drawable (shell->gdisp->gimage),
-                           &offset_x, &offset_y);
-
-  *nx = (gint) (scalex * (x + offset_x) - shell->offset_x);
-  *ny = (gint) (scaley * (y + offset_y) - shell->offset_y);
-
-  *nx += shell->disp_xoffset;
-  *ny += shell->disp_yoffset;
-}
-
-void
-gimp_display_shell_untransform_xy (GimpDisplayShell *shell,
-                                   gint              x,
-                                   gint              y,
-                                   gint             *nx,
-                                   gint             *ny,
-                                   gboolean          round,
-                                   gboolean          use_offsets)
-{
-  gdouble scalex;
-  gdouble scaley;
-  gint    offset_x = 0;
-  gint    offset_y = 0;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (nx != NULL);
-  g_return_if_fail (ny != NULL);
-
-  x -= shell->disp_xoffset;
-  y -= shell->disp_yoffset;
-
-  /*  transform from screen coordinates to image coordinates  */
-  scalex = SCALEFACTOR_X (shell);
-  scaley = SCALEFACTOR_Y (shell);
-
-  if (use_offsets)
-    gimp_drawable_offsets (gimp_image_active_drawable (shell->gdisp->gimage),
-                           &offset_x, &offset_y);
-
-  if (round)
-    {
-      *nx = ROUND ((x + shell->offset_x) / scalex - offset_x);
-      *ny = ROUND ((y + shell->offset_y) / scaley - offset_y);
-    }
-  else
-    {
-      *nx = (gint) ((x + shell->offset_x) / scalex - offset_x);
-      *ny = (gint) ((y + shell->offset_y) / scaley - offset_y);
-    }
-}
-
-void
-gimp_display_shell_transform_xy_f  (GimpDisplayShell *shell,
-                                    gdouble           x,
-                                    gdouble           y,
-                                    gdouble          *nx,
-                                    gdouble          *ny,
-                                    gboolean          use_offsets)
-{
-  gdouble scalex;
-  gdouble scaley;
-  gint    offset_x = 0;
-  gint    offset_y = 0;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (nx != NULL);
-  g_return_if_fail (ny != NULL);
-
-  /*  transform from gimp coordinates to screen coordinates  */
-  scalex = SCALEFACTOR_X (shell);
-  scaley = SCALEFACTOR_Y (shell);
-
-  if (use_offsets)
-    gimp_drawable_offsets (gimp_image_active_drawable (shell->gdisp->gimage),
-                           &offset_x, &offset_y);
-
-  *nx = scalex * (x + offset_x) - shell->offset_x;
-  *ny = scaley * (y + offset_y) - shell->offset_y;
-
-  *nx += shell->disp_xoffset;
-  *ny += shell->disp_yoffset;
-}
-
-void
-gimp_display_shell_untransform_xy_f (GimpDisplayShell *shell,
-                                     gdouble           x,
-                                     gdouble           y,
-                                     gdouble          *nx,
-                                     gdouble          *ny,
-                                     gboolean          use_offsets)
-{
-  gdouble scalex;
-  gdouble scaley;
-  gint    offset_x = 0;
-  gint    offset_y = 0;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (nx != NULL);
-  g_return_if_fail (ny != NULL);
-
-  x -= shell->disp_xoffset;
-  y -= shell->disp_yoffset;
-
-  /*  transform from screen coordinates to gimp coordinates  */
-  scalex = SCALEFACTOR_X (shell);
-  scaley = SCALEFACTOR_Y (shell);
-
-  if (use_offsets)
-    gimp_drawable_offsets (gimp_image_active_drawable (shell->gdisp->gimage),
-                           &offset_x, &offset_y);
-
-  *nx = (x + shell->offset_x) / scalex - offset_x;
-  *ny = (y + shell->offset_y) / scaley - offset_y;
-}
 
 void
 gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell,
@@ -1647,155 +1453,6 @@ gimp_display_shell_flush (GimpDisplayShell *shell)
     }
 }
 
-void
-gimp_display_shell_set_cursor (GimpDisplayShell   *shell,
-                               GdkCursorType       cursor_type,
-                               GimpToolCursorType  tool_cursor,
-                               GimpCursorModifier  modifier)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  if (! shell->using_override_cursor)
-    {
-      gimp_display_shell_real_set_cursor (shell,
-                                          cursor_type,
-                                          tool_cursor,
-                                          modifier,
-                                          FALSE);
-    }
-}
-
-void
-gimp_display_shell_set_override_cursor (GimpDisplayShell *shell,
-                                        GdkCursorType     cursor_type)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  if (! shell->using_override_cursor ||
-      (shell->using_override_cursor &&
-       shell->override_cursor != cursor_type))
-    {
-      GdkCursor *cursor;
-
-      shell->override_cursor       = cursor_type;
-      shell->using_override_cursor = TRUE;
-
-      cursor = gimp_cursor_new (cursor_type,
-				GIMP_TOOL_CURSOR_NONE,
-				GIMP_CURSOR_MODIFIER_NONE);
-      gdk_window_set_cursor (shell->canvas->window, cursor);
-      gdk_cursor_unref (cursor);
-    }
-}
-
-void
-gimp_display_shell_unset_override_cursor (GimpDisplayShell *shell)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  if (shell->using_override_cursor)
-    {
-      shell->using_override_cursor = FALSE;
-
-      gimp_display_shell_real_set_cursor (shell,
-                                          shell->current_cursor,
-                                          shell->tool_cursor,
-                                          shell->cursor_modifier,
-                                          TRUE);
-    }
-}
-
-void
-gimp_display_shell_update_cursor (GimpDisplayShell *shell,
-                                  gint              x, 
-                                  gint              y)
-{
-  GimpImage *gimage;
-  gboolean   new_cursor;
-  gboolean   flush = FALSE;
-  gint       t_x = -1;
-  gint       t_y = -1;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  gimage = shell->gdisp->gimage;
-
-  new_cursor = (shell->draw_cursor &&
-                shell->proximity   &&
-                x > 0              &&
-                y > 0);
-
-  /* Erase old cursor, if necessary */
-
-  if (shell->have_cursor && (! new_cursor         ||
-                             x != shell->cursor_x ||
-                             y != shell->cursor_y))
-    {
-      gimp_display_shell_add_expose_area (shell,
-                                          shell->cursor_x - 7,
-                                          shell->cursor_y - 7,
-                                          15, 15);
-      if (! new_cursor)
-	{
-	  shell->have_cursor = FALSE;
-	  flush = TRUE;
-	}
-    }
-
-  shell->have_cursor = new_cursor;
-  shell->cursor_x    = x;
-  shell->cursor_y    = y;
-  
-  if (new_cursor || flush)
-    {
-      gimp_display_shell_flush (shell);
-    }
-
-  if (x > 0 && y > 0)
-    {
-      gimp_display_shell_untransform_xy (shell, x, y, &t_x, &t_y, FALSE, FALSE);
-    }
-
-  gimp_statusbar_update_cursor (GIMP_STATUSBAR (shell->statusbar), t_x, t_y);
-
-  if (t_x < 0              ||
-      t_y < 0              ||
-      t_x >= gimage->width ||
-      t_y >= gimage->height)
-    {
-      info_window_update_extended (shell->gdisp, -1, -1);
-    } 
-  else 
-    {
-      info_window_update_extended (shell->gdisp, t_x, t_y);
-    }
-}
-
-void
-gimp_display_shell_update_title (GimpDisplayShell *shell)
-{
-  GimpDisplayConfig *config;
-  gchar              title[MAX_TITLE_BUF];
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  config = GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config);
-
-  /* format the title */
-  gimp_display_shell_format_title (shell, title, sizeof (title),
-                                   config->image_title_format);
-  gdk_window_set_title (GTK_WIDGET (shell)->window, title);
-
-  /* format the statusbar */
-  if (strcmp (config->image_title_format, config->image_status_format))
-    {
-      gimp_display_shell_format_title (shell, title, sizeof (title),
-                                       config->image_status_format);
-    }
-
-  gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar), "title");
-  gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar), "title", title);
-}
 
 void
 gimp_display_shell_update_icon (GimpDisplayShell *shell)
@@ -2340,57 +1997,6 @@ gimp_display_shell_display_area (GimpDisplayShell *shell,
 }
 
 static void
-gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
-                                    GdkCursorType       cursor_type,
-                                    GimpToolCursorType  tool_cursor,
-                                    GimpCursorModifier  modifier,
-                                    gboolean            always_install)
-{
-  GimpDisplayConfig *config;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  config = GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config);
-
-  if (cursor_type != GIMP_BAD_CURSOR)
-    {
-      switch (config->cursor_mode)
-	{
-	case GIMP_CURSOR_MODE_TOOL_ICON:
-	  break;
-
-	case GIMP_CURSOR_MODE_TOOL_CROSSHAIR:
-	  cursor_type = GIMP_CROSSHAIR_SMALL_CURSOR;
-	  break;
-
-	case GIMP_CURSOR_MODE_CROSSHAIR:
-	  cursor_type = GIMP_CROSSHAIR_CURSOR;
-	  tool_cursor = GIMP_TOOL_CURSOR_NONE;
-	  modifier    = GIMP_CURSOR_MODIFIER_NONE;
-	  break;
-	}
-    }
-
-  if (shell->current_cursor  != cursor_type ||
-      shell->tool_cursor     != tool_cursor ||
-      shell->cursor_modifier != modifier    ||
-      always_install)
-    {
-      GdkCursor *cursor;
-
-      shell->current_cursor  = cursor_type;
-      shell->tool_cursor     = tool_cursor;
-      shell->cursor_modifier = modifier;
-
-      cursor = gimp_cursor_new (cursor_type,
-				tool_cursor,
-				modifier);
-      gdk_window_set_cursor (shell->canvas->window, cursor);
-      gdk_cursor_unref (cursor);
-    }
-}
-
-static void
 gimp_display_shell_draw_cursor (GimpDisplayShell *shell)
 {
   gint x, y;
@@ -2418,253 +2024,6 @@ gimp_display_shell_draw_cursor (GimpDisplayShell *shell)
   gdk_draw_line (shell->canvas->window,
 		 shell->canvas->style->white_gc,
 		 x+1, y - 7, x+1, y + 7);
-}
-
-static gint print (gchar       *buf,
-                   gint         len,
-                   gint         start,
-                   const gchar *fmt,
-                   ...) G_GNUC_PRINTF (4, 5);
-
-static gint
-print (gchar       *buf,
-       gint         len,
-       gint         start,
-       const gchar *fmt,
-       ...)
-{
-  va_list args;
-  gint    printed;
-
-  va_start (args, fmt);
-
-  printed = g_vsnprintf (buf + start, len - start, fmt, args);
-  if (printed < 0)
-    printed = len - start;
-
-  va_end (args);
-
-  return printed;
-}
-
-static void
-gimp_display_shell_format_title (GimpDisplayShell *shell,
-                                 gchar            *title,
-                                 gint              title_len,
-                                 const gchar      *format)
-{
-  GimpImage *gimage;
-  gchar     *image_type_str = NULL;
-  gboolean   empty;
-  gint       i;
-  gchar      unit_format[8];
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  gimage = shell->gdisp->gimage;
-
-  empty = gimp_image_is_empty (gimage);
-
-  switch (gimp_image_base_type (gimage))
-    {
-    case GIMP_RGB:
-      image_type_str = empty ? _("RGB-empty") : _("RGB");
-      break;
-    case GIMP_GRAY:
-      image_type_str = empty ? _("grayscale-empty") : _("grayscale");
-      break;
-    case GIMP_INDEXED:
-      image_type_str = empty ? _("indexed-empty") : _("indexed");
-      break;
-    default:
-      g_assert_not_reached ();
-      break;
-    }
-
-  i = 0;
-
-  while (i < title_len && *format)
-    {
-      switch (*format)
-	{
-	case '%':
-	  format++;
-	  switch (*format)
-	    {
-	    case 0:
-	      g_warning ("image-title-format string ended within %%-sequence");
-	      break;
-
-	    case '%':
-	      title[i++] = '%';
-	      break;
-
-	    case 'f': /* pruned filename */
-	      {
-		gchar *basename;
-
-		basename = file_utils_uri_to_utf8_basename (gimp_image_get_uri (gimage));
-
-		i += print (title, title_len, i, "%s", basename);
-
-		g_free (basename);
-	      }
-	      break;
-
-	    case 'F': /* full filename */
-	      {
-		gchar *filename;
-
-		filename = file_utils_uri_to_utf8_filename (gimp_image_get_uri (gimage));
-
-                i += print (title, title_len, i, "%s", filename);
-
-                g_free (filename);
-              }
-	      break;
-
-	    case 'p': /* PDB id */
-	      i += print (title, title_len, i, "%d", gimp_image_get_ID (gimage));
-	      break;
-
-	    case 'i': /* instance */
-	      i += print (title, title_len, i, "%d", shell->gdisp->instance);
-	      break;
-
-	    case 't': /* type */
-	      i += print (title, title_len, i, "%s", image_type_str);
-	      break;
-
-	    case 's': /* user source zoom factor */
-	      i += print (title, title_len, i, "%d", SCALESRC (shell));
-	      break;
-
-	    case 'd': /* user destination zoom factor */
-	      i += print (title, title_len, i, "%d", SCALEDEST (shell));
-	      break;
-
-	    case 'z': /* user zoom factor (percentage) */
-	      i += print (title, title_len, i, "%d",
-                          100 * SCALEDEST (shell) / SCALESRC (shell));
-	      break;
-
-	    case 'D': /* dirty flag */
-	      if (format[1] == 0)
-		{
-		  g_warning ("image-title-format string ended within "
-                             "%%D-sequence");
-		  break;
-		}
-	      if (gimage->dirty)
-		title[i++] = format[1];
-	      format++;
-	      break;
-
-	    case 'C': /* clean flag */
-	      if (format[1] == 0)
-		{
-		  g_warning ("image-title-format string ended within "
-                             "%%C-sequence");
-		  break;
-		}
-	      if (! gimage->dirty)
-		title[i++] = format[1];
-	      format++;
-	      break;
-
-            case 'm': /* memory used by image */
-              {
-                gsize  memsize;
-                gchar *size_str;
-
-                memsize = gimp_object_get_memsize (GIMP_OBJECT (gimage));
-
-                size_str = gimp_image_new_get_memsize_string (memsize);
-
-                i += print (title, title_len, i, "%s", size_str);
-
-                g_free (size_str);
-              }
-              break;
-
-            case 'l': /* number of layers */
-              i += print (title, title_len, i, "%d",
-                          gimp_container_num_children (gimage->layers));
-              break;
-
-            case 'L': /* active drawable name */
-              {
-                GimpDrawable *drawable;
-
-                drawable = gimp_image_active_drawable (gimage);
-
-                if (drawable)
-                  i += print (title, title_len, i, "%s",
-                              gimp_object_get_name (GIMP_OBJECT (drawable)));
-                else
-                  i += print (title, title_len, i, "%s", "(none)");
-              }
-              break;
-
-	    case 'w': /* width in pixels */
-	      i += print (title, title_len, i, "%d", gimage->width);
-	      break;
-
-	    case 'W': /* width in real-world units */
-              g_snprintf (unit_format, sizeof (unit_format), "%%.%df",
-                          gimp_unit_get_digits (gimage->unit) + 1);
-              i += print (title, title_len, i, unit_format,
-                          (gimage->width *
-                           gimp_unit_get_factor (gimage->unit) /
-                           gimage->xresolution));
-              break;
-
-	    case 'h': /* height in pixels */
-	      i += print (title, title_len, i, "%d", gimage->height);
-	      break;
-
-	    case 'H': /* height in real-world units */
-              g_snprintf (unit_format, sizeof (unit_format), "%%.%df",
-                          gimp_unit_get_digits (gimage->unit) + 1);
-              i += print (title, title_len, i, unit_format,
-                          (gimage->height *
-                           gimp_unit_get_factor (gimage->unit) /
-                           gimage->yresolution));
-              break;
-
-	    case 'u': /* unit symbol */
-	      i += print (title, title_len, i, "%s",
-			  gimp_unit_get_symbol (gimage->unit));
-	      break;
-
-	    case 'U': /* unit abbreviation */
-	      i += print (title, title_len, i, "%s",
-			  gimp_unit_get_abbreviation (gimage->unit));
-	      break;
-
-	      /* Other cool things to be added:
-	       * %r = xresolution
-               * %R = yresolution
-               * %ø = image's fractal dimension
-               * %þ = the answer to everything
-	       */
-
-	    default:
-	      g_warning ("image-title-format contains unknown "
-                         "format sequence '%%%c'", *format);
-	      break;
-	    }
-	  break;
-
-	default:
-	  title[i++] = *format;
-	  break;
-	}
-
-      format++;
-    }
-
-  title[MIN (i, title_len - 1)] = '\0';
 }
 
 static void

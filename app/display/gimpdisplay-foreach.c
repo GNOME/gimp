@@ -29,6 +29,7 @@
 #include "gimpdisplay.h"
 #include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-cursor.h"
 
 
 gboolean

@@ -29,15 +29,15 @@
 
 /*  some useful macros  */
 
-/* unpacking the user scale level (char) */
-#define  SCALESRC(s)      (s->scale & 0x00ff)
-#define  SCALEDEST(s)     (s->scale >> 8)
-
 /* finding the effective screen resolution (double) */
 #define  SCREEN_XRES(s)   (s->dot_for_dot ? \
                            s->gdisp->gimage->xresolution : s->monitor_xres)
 #define  SCREEN_YRES(s)   (s->dot_for_dot ? \
                            s->gdisp->gimage->yresolution : s->monitor_yres)
+
+/* unpacking the user scale level (char) */
+#define  SCALESRC(s)      (s->scale & 0x00ff)
+#define  SCALEDEST(s)     (s->scale >> 8)
 
 /* calculate scale factors (double) */
 #define  SCALEFACTOR_X(s) ((SCALEDEST(s) * SCREEN_XRES(s)) / \
@@ -173,40 +173,6 @@ void        gimp_display_shell_reconnect             (GimpDisplayShell *shell);
 void        gimp_display_shell_scaled                (GimpDisplayShell *shell);
 void        gimp_display_shell_scrolled              (GimpDisplayShell *shell);
 
-void        gimp_display_shell_transform_coords      (GimpDisplayShell *shell,
-                                                      GimpCoords       *image_coords,
-                                                      GimpCoords       *display_coords);
-void        gimp_display_shell_untransform_coords    (GimpDisplayShell *shell,
-                                                      GimpCoords       *display_coords,
-                                                      GimpCoords       *image_coords);
-
-void        gimp_display_shell_transform_xy          (GimpDisplayShell *shell,
-                                                      gint              x,
-                                                      gint              y,
-                                                      gint             *nx,
-                                                      gint             *ny,
-                                                      gboolean          use_offsets);
-void        gimp_display_shell_untransform_xy        (GimpDisplayShell *shell,
-                                                      gint              x,
-                                                      gint              y,
-                                                      gint             *nx,
-                                                      gint             *ny,
-                                                      gboolean          round,
-                                                      gboolean          use_offsets);
-
-void        gimp_display_shell_transform_xy_f        (GimpDisplayShell *shell,
-                                                      gdouble           x,
-                                                      gdouble           y,
-                                                      gdouble          *nx,
-                                                      gdouble          *ny,
-                                                      gboolean          use_offsets);
-void        gimp_display_shell_untransform_xy_f      (GimpDisplayShell *shell,
-                                                      gdouble           x,
-                                                      gdouble           y,
-                                                      gdouble          *nx,
-                                                      gdouble          *ny,
-                                                      gboolean          use_offsets);
-
 void        gimp_display_shell_set_menu_sensitivity  (GimpDisplayShell *shell,
                                                       Gimp             *gimp,
                                                       gboolean          popup_only);
@@ -246,19 +212,6 @@ void        gimp_display_shell_expose_guide          (GimpDisplayShell *shell,
 void        gimp_display_shell_expose_full           (GimpDisplayShell *shell);
 
 void        gimp_display_shell_flush                 (GimpDisplayShell *shell);
-
-void        gimp_display_shell_set_cursor            (GimpDisplayShell *shell,
-                                                      GdkCursorType     cursor_type,
-                                                      GimpToolCursorType  tool_cursor,
-                                                      GimpCursorModifier  modifier);
-void        gimp_display_shell_set_override_cursor   (GimpDisplayShell *shell,
-                                                      GdkCursorType     cursor_type);
-void        gimp_display_shell_unset_override_cursor (GimpDisplayShell *shell);
-
-void	    gimp_display_shell_update_cursor	     (GimpDisplayShell *shell,
-                                                      gint              x,
-                                                      gint              y);
-void        gimp_display_shell_update_title          (GimpDisplayShell *shell);
 void        gimp_display_shell_update_icon           (GimpDisplayShell *shell);
 
 void        gimp_display_shell_set_padding           (GimpDisplayShell *shell,

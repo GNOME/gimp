@@ -28,6 +28,8 @@ libappdisplay_a_sources = \
 	gimpdisplayshell.h			\
 	gimpdisplayshell-callbacks.c		\
 	gimpdisplayshell-callbacks.h		\
+	gimpdisplayshell-cursor.c		\
+	gimpdisplayshell-cursor.h		\
 	gimpdisplayshell-dnd.c			\
 	gimpdisplayshell-dnd.h			\
 	gimpdisplayshell-handlers.c		\
@@ -47,6 +49,10 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-scroll.h		\
 	gimpdisplayshell-selection.c		\
 	gimpdisplayshell-selection.h		\
+	gimpdisplayshell-title.c		\
+	gimpdisplayshell-title.h		\
+	gimpdisplayshell-transform.c		\
+	gimpdisplayshell-transform.h		\
 	gimpnavigationview.c			\
 	gimpnavigationview.h			\
 	gimpprogress.c				\

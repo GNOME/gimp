@@ -1,3 +1,27 @@
+2003-01-03  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped the version number to 1.3.12.
+
+	* app/display/Makefile.am
+	* app/display/gimpdisplayshell-cursor.[ch]
+	* app/display/gimpdisplayshell-title.[ch]
+	* app/display/gimpdisplayshell-transform.[ch]: new files with code
+	that used to live in gimpdisplayshell.c.
+
+	* app/display/gimpdisplay-foreach.c
+	* app/display/gimpdisplay.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-handlers.c
+	* app/display/gimpdisplayshell-selection.c
+	* app/display/gimpdisplayshell.[ch]
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpdrawtool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimptool.c: changed accordingly.
+
 2003-01-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/tool_manager.c (tool_manager_image_undo_start): don't
