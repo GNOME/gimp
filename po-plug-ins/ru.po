@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-plugin-1.1.21+\n"
-"POT-Creation-Date: 2000-07-23 20:43+0000\n"
-"PO-Revision-Date: 2000-07-23 20:49+00:00\n"
+"POT-Creation-Date: 2000-07-25 14:55+0000\n"
+"PO-Revision-Date: 2000-07-25 15:58+00:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -4289,7 +4289,7 @@ msgid "Size: unknown"
 msgstr "Размер: неизвестный"
 
 #: plug-ins/common/jpeg.c:1590
-msgid "Save as Jpeg"
+msgid "Save as JPEG"
 msgstr "Сохранить как JPEG"
 
 #. sg - preview
@@ -4298,7 +4298,7 @@ msgid "Image Preview"
 msgstr "Просмотр изображения"
 
 #: plug-ins/common/jpeg.c:1622
-msgid "Preview (in Image Window)"
+msgid "Preview (in image window)"
 msgstr "Просмотр (в окне изображения)"
 
 #: plug-ins/common/jpeg.c:1653 plug-ins/xjt/xjt.c:836
@@ -4310,11 +4310,11 @@ msgid "Smoothing:"
 msgstr "Сглаживание:"
 
 #: plug-ins/common/jpeg.c:1702
-msgid "Restart Markers"
-msgstr "Перезапуск маркеров"
+msgid "Restart markers"
+msgstr "Перезапустить маркеры"
 
 #: plug-ins/common/jpeg.c:1710
-msgid "Restart Frequency (Rows):"
+msgid "Restart frequency (rows):"
 msgstr "Перезапуск частоты (строки):"
 
 #: plug-ins/common/jpeg.c:1739 plug-ins/xjt/xjt.c:816
@@ -4326,7 +4326,7 @@ msgid "Progressive"
 msgstr "Прогрессивная"
 
 #: plug-ins/common/jpeg.c:1768
-msgid "Force Baseline JPEG (Readable by all Decoders)"
+msgid "Force baseline JPEG (Readable by all decoders)"
 msgstr "Делать типичный JPEG (читается всеми декодерами)"
 
 #: plug-ins/common/jpeg.c:1790
@@ -4346,11 +4346,11 @@ msgid "Floating-point"
 msgstr "С плавающей точкой"
 
 #: plug-ins/common/jpeg.c:1809
-msgid "DCT Method (Speed/Quality Tradeoff):"
+msgid "DCT method (Speed/quality tradeoff):"
 msgstr "Метод DCT (компромис скорость/качество):"
 
 #: plug-ins/common/jpeg.c:1826
-msgid "Image Comments"
+msgid "Image comments"
 msgstr "Комментарий к изображению"
 
 #: plug-ins/common/laplace.c:91
@@ -5375,7 +5375,7 @@ msgstr "Создать рябь"
 
 #: plug-ins/common/ripple.c:621
 msgid "Retain Tilability"
-msgstr ""
+msgstr "Сохранить бесшовность"
 
 #. Edges toggle box
 #: plug-ins/common/ripple.c:647
@@ -8060,11 +8060,11 @@ msgstr "Шаблон совпадает с частью названия слоя"
 
 #: plug-ins/gap/gap_mod_layer.c:86 plug-ins/gap/gap_range_ops.c:577
 msgid "Pattern is LayerstackNumber List"
-msgstr ""
+msgstr "Шаблон в списке номеров стопки слоев"
 
 #: plug-ins/gap/gap_mod_layer.c:87 plug-ins/gap/gap_range_ops.c:578
 msgid "Pattern is REVERSE-stack List"
-msgstr ""
+msgstr "Шаблон в списке обращенной стопки"
 
 #: plug-ins/gap/gap_mod_layer.c:88 plug-ins/gap/gap_range_ops.c:579
 msgid "All Visible (ignore Pattern)"
@@ -8804,6 +8804,8 @@ msgid ""
 "Reset all Controlpoints to default Values\n"
 "but dont change the path (X/Y Values)"
 msgstr ""
+"Сбросить все управляющие точки до исходных значений\n"
+"но не изменять путь (X/Y значения)"
 
 #: plug-ins/gap/gap_mov_dialog.c:2423
 msgid "Rotate Follow"
@@ -8815,6 +8817,9 @@ msgid ""
 "to follow the shape of the path.\n"
 "(Shift: use Rotation of contolpoint 1 as offset)"
 msgstr ""
+"Установить вращение для всех управляющих точек\n"
+"чтобы следовать форме пути.\n"
+"(Shift: использовать вращение 1-ой управляющей точки как смещение)"
 
 #: plug-ins/gap/gap_mov_dialog.c:2441
 msgid "Delete All Points"
@@ -11227,7 +11232,9 @@ msgstr "Вороной"
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
-msgstr "В режиме \"Вороной\" только ближайший к заданной точке вектор оказывает воздействие"
+msgstr ""
+"В режиме \"Вороной\" только ближайший к заданной точке вектор оказывает "
+"воздействие"
 
 #: plug-ins/gimpressionist/paper.c:89 plug-ins/gimpressionist/paper.c:94
 msgid "Paper"
@@ -11415,7 +11422,10 @@ msgstr "Sm-вектор"
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
-msgstr "Поле sm-вектор. Щелчок левой кнопкой - перемещение выбранного sm-вектора, щелчок правой кнопкой - указание sm-вектора мышью, щелчок средней кнопкой - добавление нового sm-вектора."
+msgstr ""
+"Поле sm-вектор. Щелчок левой кнопкой - перемещение выбранного sm-вектора, "
+"щелчок правой кнопкой - указание sm-вектора мышью, щелчок средней кнопкой - "
+"добавление нового sm-вектора."
 
 #: plug-ins/gimpressionist/sizemap.c:422
 msgid "Select previous smvector"
@@ -11445,7 +11455,9 @@ msgstr "Изменить длину выбранного sm-вектора"
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
-msgstr "В режиме \"Вороной\" только ближайший к заданной точке sm-вектор оказывает воздействие"
+msgstr ""
+"В режиме \"Вороной\" только ближайший к заданной точке sm-вектор оказывает "
+"воздействие"
 
 #: plug-ins/helpbrowser/helpbrowser.c:95
 #, c-format
