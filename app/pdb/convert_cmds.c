@@ -27,9 +27,9 @@
 #include "procedural_db.h"
 
 #include "context_manager.h"
-#include "convert.h"
 #include "gimpcontainer.h"
 #include "gimpdatafactory.h"
+#include "gimpimage-convert.h"
 #include "gimpimage.h"
 #include "gimppalette.h"
 
@@ -57,7 +57,7 @@ convert_rgb_invoker (Argument *args)
 
   if (success)
     if ((success = (gimp_image_base_type (gimage) != RGB)))
-      convert_image ((void *) gimage, RGB, 0, 0, 0, 1, 0);
+      gimp_image_convert ((void *) gimage, RGB, 0, 0, 0, 1, 0, NULL);
 
   return procedural_db_return_args (&convert_rgb_proc, success);
 }
@@ -99,7 +99,7 @@ convert_grayscale_invoker (Argument *args)
 
   if (success)
     if ((success = (gimp_image_base_type (gimage) != GRAY)))
-      convert_image ((void *) gimage, GRAY, 0, 0, 0, 1, 0);
+      gimp_image_convert ((void *) gimage, GRAY, 0, 0, 0, 1, 0, NULL);
 
   return procedural_db_return_args (&convert_grayscale_proc, success);
 }
@@ -163,10 +163,10 @@ convert_indexed_invoker (Argument *args)
 
   if (success)
     {
+      GimpPalette *palette = NULL;
+    
       if ((success = (gimp_image_base_type (gimage) != INDEXED)))
 	{
-	  GimpPalette *palette = NULL;
-    
 	  switch (dither_type)
 	    {
 	    case NO_DITHER:
@@ -201,8 +201,6 @@ convert_indexed_invoker (Argument *args)
     
 	      if (palette == NULL)
 		success = FALSE;
-	      else
-		theCustomPalette = palette;
     
 	      break;
     
@@ -212,8 +210,8 @@ convert_indexed_invoker (Argument *args)
 	}
     
       if (success)
-	convert_image ((void *) gimage, INDEXED, num_cols, dither_type,
-		       alpha_dither, remove_unused, palette_type);
+	gimp_image_convert ((void *) gimage, INDEXED, num_cols, dither_type,
+			    alpha_dither, remove_unused, palette_type, palette);
     }
 
   return procedural_db_return_args (&convert_indexed_proc, success);

@@ -83,8 +83,6 @@ gimp_SOURCES = \
 ##
 	channel_ops.c		\
 	channel_ops.h		\
-	convert.c		\
-	convert.h		\
 	gdisplay.c		\
 	gdisplay.h		\
 	gdisplay_ops.c		\
@@ -174,6 +172,8 @@ gimp_SOURCES = \
 	gimphistogram.h		\
 	gimpimage.c		\
 	gimpimage.h		\
+	gimpimage-convert.c	\
+	gimpimage-convert.h	\
 	gimpimage-undo.c	\
 	gimpimage-undo.h	\
 	gimplayer.c		\

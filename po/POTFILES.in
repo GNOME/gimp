@@ -3,7 +3,6 @@
 
 app/app_procs.c
 app/channel_ops.c
-app/convert.c
 app/desaturate.c
 app/devices.c
 app/disp_callbacks.c
@@ -54,6 +53,7 @@ app/gui/color-notebook.c
 app/gui/color-select.c
 app/gui/colormap-dialog.c
 app/gui/commands.c
+app/gui/convert-dialog.c
 app/gui/file-new-dialog.c
 app/gui/gradient-editor.c
 app/gui/gradient-select.c

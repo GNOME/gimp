@@ -33,6 +33,7 @@
 #include "tools/gimptoolinfo.h"
 #include "tools/tool_manager.h"
 
+#include "convert-dialog.h"
 #include "errorconsole.h"
 #include "info-dialog.h"
 #include "info-window.h"
@@ -41,7 +42,6 @@
 #include "app_procs.h"
 #include "commands.h"
 #include "context_manager.h"
-#include "convert.h"
 #include "desaturate.h"
 #include "channel_ops.h"
 #include "equalize.h"
@@ -212,7 +212,7 @@ edit_paste_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  global_edit_paste (gdisp, 0);
+  global_edit_paste (gdisp, FALSE);
 }
 
 void
@@ -222,7 +222,7 @@ edit_paste_into_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  global_edit_paste (gdisp, 1);
+  global_edit_paste (gdisp, TRUE);
 }
 
 void
@@ -589,18 +589,18 @@ view_info_window_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  if (!info_window_follows_mouse) 
+  if (! info_window_follows_mouse) 
     {
       if (! gdisp->window_info_dialog)
 	gdisp->window_info_dialog = info_window_create ((void *) gdisp);
-      info_window_update(gdisp);
+
+      info_window_update (gdisp);
       info_dialog_popup (gdisp->window_info_dialog);
     }
   else
     {
-      info_window_follow_auto();
+      info_window_follow_auto ();
     }
-
 }
 
 void
@@ -649,7 +649,7 @@ view_toggle_rulers_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  if (!GTK_CHECK_MENU_ITEM (widget)->active)
+  if (! GTK_CHECK_MENU_ITEM (widget)->active)
     {
       if (GTK_WIDGET_VISIBLE (gdisp->origin))
 	{
@@ -662,7 +662,7 @@ view_toggle_rulers_cmd_callback (GtkWidget *widget,
     }
   else
     {
-      if (!GTK_WIDGET_VISIBLE (gdisp->origin))
+      if (! GTK_WIDGET_VISIBLE (gdisp->origin))
 	{
 	  gtk_widget_show (gdisp->origin);
 	  gtk_widget_show (gdisp->hrule);
@@ -680,14 +680,14 @@ view_toggle_statusbar_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  if (!GTK_CHECK_MENU_ITEM (widget)->active)
+  if (! GTK_CHECK_MENU_ITEM (widget)->active)
     {
       if (GTK_WIDGET_VISIBLE (gdisp->statusarea))
 	gtk_widget_hide (gdisp->statusarea);
     }
   else
     {
-      if (!GTK_WIDGET_VISIBLE (gdisp->statusarea))
+      if (! GTK_WIDGET_VISIBLE (gdisp->statusarea))
 	gtk_widget_show (gdisp->statusarea);
     }
 }

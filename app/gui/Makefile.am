@@ -21,6 +21,8 @@ libappgui_la_SOURCES = \
 	colormap-dialog.h	\
 	commands.c		\
 	commands.h		\
+	convert-dialog.c	\
+	convert-dialog.h	\
 	dialogs.c		\
 	dialogs.h		\
 	dialogs-commands.c	\

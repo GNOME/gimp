@@ -28,7 +28,7 @@ sub simple_invoke {
     %invoke = (
 	code => <<CODE
 if ((success = (gimp_image_base_type (gimage) != $type)))
-  convert_image ((void *) gimage, $type, 0, 0, 0, 1, 0);
+  gimp_image_convert ((void *) gimage, $type, 0, 0, 0, 1, 0, NULL);
 CODE
     );
 }
@@ -99,10 +99,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
+  GimpPalette *palette = NULL;
+
   if ((success = (gimp_image_base_type (gimage) != INDEXED)))
     {
-      GimpPalette *palette = NULL;
-
       switch (dither_type)
         {
 	case NO_DITHER:
@@ -137,8 +137,6 @@ HELP
 
 	  if (palette == NULL)
 	    success = FALSE;
-	  else
-	    theCustomPalette = palette;
 
 	  break;
 
@@ -148,15 +146,15 @@ HELP
     }
 
   if (success)
-    convert_image ((void *) gimage, INDEXED, num_cols, dither_type,
-		   alpha_dither, remove_unused, palette_type);
+    gimp_image_convert ((void *) gimage, INDEXED, num_cols, dither_type,
+		        alpha_dither, remove_unused, palette_type, palette);
 }
 CODE
     );
 }
 
 @headers = qw("context_manager.h" "gimpcontainer.h" "gimpimage.h"
-	      "gimpdatafactory.h" "gimppalette.h" "convert.h");
+	      "gimpdatafactory.h" "gimppalette.h" "gimpimage-convert.h");
 
 @procs = qw(convert_rgb convert_grayscale convert_indexed);
 %exports = (app => [@procs], lib => [@procs]);

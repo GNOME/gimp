@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __CONVERT_H__
-#define __CONVERT_H__
+#ifndef __GIMP_IMAGE_CONVERT_H__
+#define __GIMP_IMAGE_CONVERT_H__
 
 
 /* adam's extra palette stuff */
@@ -44,24 +44,17 @@ typedef enum
 #define MAXNUMCOLORS 256
 
 
-/*  convert functions  */
-void   convert_to_rgb        (GimpImage          *gimage);
-void   convert_to_grayscale  (GimpImage          *gimage);
-void   convert_to_indexed    (GimpImage          *gimage);
-
-void   convert_image         (GimpImage         *gimage,
-                              GimpImageBaseType  new_type,
-                              /* The following three params used only for
-                               * new_type == INDEXED
-                               */
-                              gint               num_cols,
-                              ConvertDitherType  dither,
-                              gint               alpha_dither,
-                              gint               remdups,
-                              ConvertPaletteType palette_type);
+void   gimp_image_convert (GimpImage          *gimage,
+			   GimpImageBaseType   new_type,
+			   /* The following params used only for
+			    * new_type == INDEXED
+			    */
+			   gint                num_cols,
+			   ConvertDitherType   dither,
+			   gint                alpha_dither,
+			   gint                remdups,
+			   ConvertPaletteType  palette_type,
+			   GimpPalette        *custom_palette);
 
 
-extern GimpPalette *theCustomPalette;
-
-
-#endif  /*  __CONVERT_H__  */
+#endif  /*  __GIMP_IMAGE_CONVERT_H__  */

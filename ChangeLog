@@ -1,5 +1,22 @@
 2001-04-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/convert.[ch]: removed.
+	* app/gimpimage-convert.[ch]: new files: the convert functionality
+	without GUI (now called gimp_image_convert()).
+
+	* app/gui/Makefile.am
+	* app/gui/convert-dialog.[ch]: new files.
+
+	* app/gui/commands.c
+	* app/pdb/convert_cmds.c
+	* po/POTFILES.in
+	* tools/pdbgen/pdb/convert.pdb
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/enums.pl: changed accordingly.
+
+2001-04-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/devices.[ch]
 	* app/gui/about-dialog.[ch]
 	* app/gui/preferences-dialog.[ch]

@@ -254,28 +254,6 @@ package Gimp::CodeGen::enums;
 	  mapping => { OFFSET_BACKGROUND => '0',
 		       OFFSET_TRANSPARENT => '1' }
 	},
-    ConvertPaletteType =>
-	{ contig => 1,
-	  header => 'convert.h',
-	  symbols => [ qw(MAKE_PALETTE REUSE_PALETTE WEB_PALETTE
-			  MONO_PALETTE CUSTOM_PALETTE) ],
-	  mapping => { MAKE_PALETTE => '0',
-		       REUSE_PALETTE => '1',
-		       WEB_PALETTE => '2',
-		       MONO_PALETTE => '3',
-		       CUSTOM_PALETTE => '4' }
-	},
-    ConvertDitherType =>
-	{ contig => 1,
-	  header => 'convert.h',
-	  symbols => [ qw(NO_DITHER FS_DITHER FSLOWBLEED_DITHER FIXED_DITHER
-			  NODESTRUCT_DITHER) ],
-	  mapping => { NO_DITHER => '0',
-		       FS_DITHER => '1',
-		       FSLOWBLEED_DITHER => '2',
-		       FIXED_DITHER => '3',
-		       NODESTRUCT_DITHER => '4' }
-	},
     StackTraceMode =>
 	{ contig => 1,
 	  header => 'errors.h',
@@ -308,6 +286,28 @@ package Gimp::CodeGen::enums;
 		       CLIP_TO_IMAGE => '1',
 		       CLIP_TO_BOTTOM_LAYER => '2',
 		       FLATTEN_IMAGE => '3' }
+	},
+    ConvertPaletteType =>
+	{ contig => 1,
+	  header => 'gimpimage-convert.h',
+	  symbols => [ qw(MAKE_PALETTE REUSE_PALETTE WEB_PALETTE
+			  MONO_PALETTE CUSTOM_PALETTE) ],
+	  mapping => { MAKE_PALETTE => '0',
+		       REUSE_PALETTE => '1',
+		       WEB_PALETTE => '2',
+		       MONO_PALETTE => '3',
+		       CUSTOM_PALETTE => '4' }
+	},
+    ConvertDitherType =>
+	{ contig => 1,
+	  header => 'gimpimage-convert.h',
+	  symbols => [ qw(NO_DITHER FS_DITHER FSLOWBLEED_DITHER FIXED_DITHER
+			  NODESTRUCT_DITHER) ],
+	  mapping => { NO_DITHER => '0',
+		       FS_DITHER => '1',
+		       FSLOWBLEED_DITHER => '2',
+		       FIXED_DITHER => '3',
+		       NODESTRUCT_DITHER => '4' }
 	},
     ChannelLutType =>
 	{ contig => 1,
