@@ -63,10 +63,8 @@ The type of the @completed_cb passed to the "module_unload" function
 (see below).
 </para>
 
-@completed_data: <para>
-Must be the @completed_data pointer provided by the "module_unload"
-function.
-</para>
+@completed_data: Must be the @completed_data pointer provided by the
+"module_unload" function.
 
 
 <!-- ##### USER_FUNCTION GimpModuleUnloadFunc ##### -->
