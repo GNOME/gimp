@@ -73,9 +73,9 @@ gimp_rgb_get_uchar (const GimpRGB *rgb,
 {
   g_return_if_fail (rgb != NULL);
 
-  if (r) *r = CLAMP (rgb->r, 0.0, 1.0) * 255.999;
-  if (g) *g = CLAMP (rgb->g, 0.0, 1.0) * 255.999;
-  if (b) *b = CLAMP (rgb->b, 0.0, 1.0) * 255.999;
+  if (r) *r = CLAMP (rgb->r, 0.0, 1.0) * 254.999 + 0.5;
+  if (g) *g = CLAMP (rgb->g, 0.0, 1.0) * 254.999 + 0.5;
+  if (b) *b = CLAMP (rgb->b, 0.0, 1.0) * 254.999 + 0.5;
 }
 
 void
@@ -191,7 +191,7 @@ gimp_rgb_intensity_uchar (const GimpRGB *rgb)
 {
   g_return_val_if_fail (rgb != NULL, 0);
 
-  return gimp_rgb_intensity (rgb) * 255.999;
+  return gimp_rgb_intensity (rgb) * 254.999 + 0.5;
 }
 
 void
@@ -280,10 +280,10 @@ gimp_rgba_get_uchar (const GimpRGB *rgba,
 {
   g_return_if_fail (rgba != NULL);
 
-  if (r) *r = CLAMP (rgba->r, 0.0, 1.0) * 255.999;
-  if (g) *g = CLAMP (rgba->g, 0.0, 1.0) * 255.999;
-  if (b) *b = CLAMP (rgba->b, 0.0, 1.0) * 255.999;
-  if (a) *a = CLAMP (rgba->a, 0.0, 1.0) * 255.999;
+  if (r) *r = CLAMP (rgba->r, 0.0, 1.0) * 254.999 + 0.5;
+  if (g) *g = CLAMP (rgba->g, 0.0, 1.0) * 254.999 + 0.5;
+  if (b) *b = CLAMP (rgba->b, 0.0, 1.0) * 254.999 + 0.5;
+  if (a) *a = CLAMP (rgba->a, 0.0, 1.0) * 254.999 + 0.5;
 }
 
 void

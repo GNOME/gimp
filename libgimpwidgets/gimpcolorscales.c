@@ -386,13 +386,13 @@ gimp_color_scales_update_scales (GimpColorScales *scales,
 
   selector = GIMP_COLOR_SELECTOR (scales);
 
-  values[GIMP_COLOR_SELECTOR_HUE]        = (gint) (selector->hsv.h * 360.999);
-  values[GIMP_COLOR_SELECTOR_SATURATION] = (gint) (selector->hsv.s * 100.999);
-  values[GIMP_COLOR_SELECTOR_VALUE]      = (gint) (selector->hsv.v * 100.999);
-  values[GIMP_COLOR_SELECTOR_RED]        = (gint) (selector->rgb.r * 255.999);
-  values[GIMP_COLOR_SELECTOR_GREEN]      = (gint) (selector->rgb.g * 255.999);
-  values[GIMP_COLOR_SELECTOR_BLUE]       = (gint) (selector->rgb.b * 255.999);
-  values[GIMP_COLOR_SELECTOR_ALPHA]      = (gint) (selector->rgb.a * 100.999);
+  values[GIMP_COLOR_SELECTOR_HUE]        = (gint) (selector->hsv.h * 359.999 + 0.5);
+  values[GIMP_COLOR_SELECTOR_SATURATION] = (gint) (selector->hsv.s *  99.999 + 0.5);
+  values[GIMP_COLOR_SELECTOR_VALUE]      = (gint) (selector->hsv.v *  99.999 + 0.5);
+  values[GIMP_COLOR_SELECTOR_RED]        = (gint) (selector->rgb.r * 254.999 + 0.5);
+  values[GIMP_COLOR_SELECTOR_GREEN]      = (gint) (selector->rgb.g * 254.999 + 0.5);
+  values[GIMP_COLOR_SELECTOR_BLUE]       = (gint) (selector->rgb.b * 254.999 + 0.5);
+  values[GIMP_COLOR_SELECTOR_ALPHA]      = (gint) (selector->rgb.a *  99.999 + 0.5);
 
   for (i = 0; i < 7; i++)
     {

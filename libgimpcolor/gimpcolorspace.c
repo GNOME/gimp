@@ -595,7 +595,7 @@ gimp_hls_value (gdouble n1,
   else
     value = n1;
 
-  return (gint) (value * 255);
+  return (gint) (value * 254.999 + 0.5);
 }
 
 void
@@ -767,7 +767,7 @@ gimp_hsv_to_rgb4 (guchar  *rgb,
 	}
     }
 
-  rgb[0] = hue        * 255;
-  rgb[1] = saturation * 255;
-  rgb[2] = value      * 255;
+  rgb[0] = hue        * 254.999 + 0.5;
+  rgb[1] = saturation * 254.999 + 0.5;
+  rgb[2] = value      * 254.999 + 0.5;
 }

@@ -933,9 +933,9 @@ ifs_render (AffElement     **elements,
       aff3_apply(&elements[k]->color_trans,r,g,b,&r,&g,&b);
       if (i<50) continue;
 
-      ri= (gint)(255.999*r);
-      gi = (gint)(255.999*g);
-      bi = (gint)(255.999*b);
+      ri = (gint) (254.999 * r + 0.5);
+      gi = (gint) (254.999 * g + 0.5);
+      bi = (gint) (254.999 * b + 0.5);
       
       if (preview)
 	{

@@ -1,3 +1,15 @@
+2003-06-11  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/info-window.c
+	* libgimpwidgets/gimpcolorscales.c
+	* libgimpwidgets/gimpcolorselect.c: applied some slightly modified
+	patches from Michael Bushey that fix rounding errors when
+	converting between color values in gdouble and guchar
+	representation (bug #109241).
+
+	* libgimpcolor/gimpcolorspace.c
+	* libgimpcolor/gimprgb.c: similar fixes here.
+
 2003-06-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/config/gimpcoreconfig.[ch]
