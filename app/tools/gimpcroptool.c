@@ -122,7 +122,8 @@ static void     crop_tool_crop_image          (GimpImage       *gimage,
                                                gboolean         layer_only,
                                                GimpCropMode     crop_mode);
 
-static void     crop_recalc                   (GimpCropTool    *crop);
+static void     crop_recalc                   (GimpCropTool    *crop,
+                                               gboolean         recalc_highlight);
 static void     crop_start                    (GimpCropTool    *crop);
 
 /*  Crop dialog functions  */
@@ -247,16 +248,19 @@ gimp_crop_tool_control (GimpTool       *tool,
                         GimpToolAction  action,
                         GimpDisplay    *gdisp)
 {
+  GimpCropTool *crop = GIMP_CROP_TOOL (tool);
+
   switch (action)
     {
     case PAUSE:
       break;
 
     case RESUME:
+      crop_recalc (crop, FALSE);
       break;
 
     case HALT:
-      crop_response (NULL, GTK_RESPONSE_CANCEL, GIMP_CROP_TOOL (tool));
+      crop_response (NULL, GTK_RESPONSE_CANCEL, crop);
       break;
 
     default:
@@ -454,7 +458,7 @@ gimp_crop_tool_motion (GimpTool        *tool,
   crop->lasty = cury;
 
   /*  recalculate the coordinates for crop_draw based on the new values  */
-  crop_recalc (crop);
+  crop_recalc (crop, TRUE);
 
   switch (crop->function)
     {
@@ -595,7 +599,7 @@ gimp_crop_tool_key_press (GimpTool    *tool,
       crop->y2 += inc_y;
     }
 
-  crop_recalc (crop);
+  crop_recalc (crop, TRUE);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
@@ -853,21 +857,26 @@ crop_tool_crop_image (GimpImage    *gimage,
 }
 
 static void
-crop_recalc (GimpCropTool *crop)
+crop_recalc (GimpCropTool *crop,
+             gboolean      recalc_highlight)
 {
   GimpTool         *tool  = GIMP_TOOL (crop);
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
-  GdkRectangle      rect;
 
   if (! tool->gdisp)
     return;
 
-  rect.x      = crop->x1;
-  rect.y      = crop->y1;
-  rect.width  = crop->x2 - crop->x1;
-  rect.height = crop->y2 - crop->y1;
+  if (recalc_highlight)
+    {
+      GdkRectangle rect;
 
-  gimp_display_shell_set_highlight (shell, &rect);
+      rect.x      = crop->x1;
+      rect.y      = crop->y1;
+      rect.width  = crop->x2 - crop->x1;
+      rect.height = crop->y2 - crop->y1;
+
+      gimp_display_shell_set_highlight (shell, &rect);
+    }
 
   gimp_display_shell_transform_xy (shell,
                                    crop->x1, crop->y1,
@@ -897,7 +906,7 @@ crop_start (GimpCropTool *crop)
   GimpTool         *tool  = GIMP_TOOL (crop);
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
 
-  crop_recalc (crop);
+  crop_recalc (crop, TRUE);
 
   if (! crop->crop_info)
     crop_info_create (crop);
@@ -1201,7 +1210,7 @@ crop_selection_callback (GtkWidget    *widget,
     crop->aspect_ratio = ((gdouble) (crop->x2 - crop->x1) /
                           (gdouble) (crop->y2 - crop->y1));
 
-  crop_recalc (crop);
+  crop_recalc (crop, TRUE);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (crop));
 }
@@ -1264,7 +1273,7 @@ crop_automatic_callback (GtkWidget    *widget,
       crop->y1 = offset_y + shrunk_y1;
       crop->y2 = offset_y + shrunk_y2;
 
-      crop_recalc (crop);
+      crop_recalc (crop, TRUE);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (crop));
     }
@@ -1290,7 +1299,7 @@ crop_origin_changed (GtkWidget    *widget,
       crop->y2 = crop->y2 + (origin_y - crop->y1);
       crop->y1 = origin_y;
 
-      crop_recalc (crop);
+      crop_recalc (crop, TRUE);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (crop));
     }
@@ -1311,7 +1320,7 @@ crop_size_changed (GtkWidget    *widget,
       crop->x2 = size_x + crop->x1;
       crop->y2 = size_y + crop->y1;
 
-      crop_recalc (crop);
+      crop_recalc (crop, TRUE);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (crop));
     }
@@ -1328,7 +1337,7 @@ crop_aspect_changed (GtkWidget    *widget,
   crop->y2 = crop->y1 + ((gdouble) (crop->x2 - crop->x1) / crop->aspect_ratio);
 
   crop->change_aspect_ratio = FALSE;
-  crop_recalc (crop);
+  crop_recalc (crop, TRUE);
   crop->change_aspect_ratio = TRUE;
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (crop));

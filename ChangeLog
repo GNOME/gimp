@@ -1,5 +1,17 @@
 2004-11-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpcroptool.c (crop_recalc): added "gboolean
+	recalc_highlight" and call gimp_display_shell_set_highlight() only
+	when it's TRUE. Pass TRUE from all places where the crop outline
+	actually changed.
+
+	(gimp_crop_tool_control): added back the call to crop_recalc() for
+	"case RESUME" so the outline gets updated on zoom/scroll, but pass
+	recalc_highlight = FALSE because it has not changed.
+	Fixes bug #157001.
+
+2004-11-02  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/drawable_transform.pdb (flip): renamed
 	parameter "center" to "auto_center" and removed
 	"transform_direction". Renamed rotate() to rotate_free() and
