@@ -1,3 +1,9 @@
+2004-11-05  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/flame/flame.c: removed #undef GTK_DISABLE_DEPRECATED
+	because it's no longer needed. Cleaned up #defines and
+	declarations. Removed tabs and trailing whitespace.
+
 2004-11-04  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpsessioninfo.c: be more tolerant and silently
