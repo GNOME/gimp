@@ -26,6 +26,8 @@ void   select_all_cmd_callback              (GtkWidget *widget,
                                              gpointer   data);
 void   select_none_cmd_callback             (GtkWidget *widget,
                                              gpointer   data);
+void   select_from_vectors_cmd_callback     (GtkWidget *widget,
+                                             gpointer   data);
 void   select_float_cmd_callback            (GtkWidget *widget,
                                              gpointer   data);
 void   select_feather_cmd_callback          (GtkWidget *widget,

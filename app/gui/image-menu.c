@@ -289,6 +289,11 @@ GimpItemFactoryEntry image_menu_entries[] =
       "<StockItem>", GIMP_STOCK_INVERT },
     NULL,
     GIMP_HELP_SELECTION_INVERT, NULL },
+  { { N_("/Select/Fr_om Path"), "<shift>V",
+      select_from_vectors_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_SELECTION_REPLACE },
+    NULL,
+    GIMP_HELP_SELECTION_NONE, NULL },
   { { N_("/Select/_Float"), "<control><shift>L",
       select_float_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_FLOATING_SELECTION },
@@ -1502,6 +1507,7 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Select/All",              lp);
   SET_SENSITIVE ("/Select/None",             lp && sel);
   SET_SENSITIVE ("/Select/Invert",           lp && sel);
+  SET_SENSITIVE ("/Select/From Path",        lp && vectors);
   SET_SENSITIVE ("/Select/Float",            lp && sel);
 
   if (display_items)
