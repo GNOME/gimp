@@ -6,7 +6,8 @@
 	(LDADD): Link with gimp.exp.
 
 	* app/gimp.sym: Remove all old entries (seemed to be obsolete).
-	Instead, add the ones linked to from libgimptool.
+	Instead, add the ones linked to from libgimptool and
+	libgimpwidgets.
 
 	* app/gui/user-install-dialog.c (user_install_run): On Win32, use
 	similar code as in GIMP 1.2, i.e. don't run a script to do the
