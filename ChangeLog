@@ -1,5 +1,12 @@
 2003-03-16  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/info-dialog.c: set a window type hint of
+	GDK_WINDOW_TYPE_HINT_UTILITY for info windows (fixes bug #92175).
+
+	* app/tools/gimpcolorpickertool.c: give the color area more space.
+
+2003-03-16  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: check for gdk-pixbuf-csource and allow to override
 	it by setting the GDK_PIXBUF_CSOURCE environment variable.
 
