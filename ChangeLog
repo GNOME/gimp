@@ -1,5 +1,9 @@
 2003-12-03  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/pygimp/gimpmodule.c (pygimp_delete): follow change below.
+
+2003-12-03  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/channel.pdb
 	* tools/pdbgen/pdb/layer.pdb: removed gimp_layer_delete() and
 	gimp_channel_delete() PDB wrappers...

@@ -617,8 +617,7 @@ pygimp_delete(PyObject *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "O:delete", &img))
 	return NULL;
     if (pygimp_image_check(img)) gimp_image_delete(img->ID);
-    else if (pygimp_layer_check(img)) gimp_layer_delete(img->ID);
-    else if (pygimp_channel_check(img)) gimp_channel_delete(img->ID);
+    else if (pygimp_drawable_check(img)) gimp_drawable_delete(img->ID);
     else if (pygimp_display_check(img)) gimp_display_delete(img->ID);
     Py_INCREF(Py_None);
     return Py_None;
