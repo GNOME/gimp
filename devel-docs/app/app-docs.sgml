@@ -150,6 +150,7 @@
       <xi:include href="xml/gimp-documents.xml" />
       <xi:include href="xml/gimp-edit.xml" />
       <xi:include href="xml/gimp-gradients.xml" />
+      <xi:include href="xml/gimp-gui.xml" />
       <xi:include href="xml/gimp-modules.xml" />
       <xi:include href="xml/gimp-parasites.xml" />
       <xi:include href="xml/gimp-templates.xml" />
@@ -219,7 +220,6 @@
       <xi:include href="xml/gimpimage-new.xml" />
       <xi:include href="xml/gimpimage-pick-color.xml" />
       <xi:include href="xml/gimpimage-preview.xml" />
-      <xi:include href="xml/gimpimage-projection.xml" />
       <xi:include href="xml/gimpimage-qmask.xml" />
       <xi:include href="xml/gimpimage-resize.xml" />
       <xi:include href="xml/gimpimage-rotate.xml" />
@@ -227,7 +227,6 @@
       <xi:include href="xml/gimpimage-snap.xml" />
       <xi:include href="xml/gimpimage-undo-push.xml" />
       <xi:include href="xml/gimpimage-undo.xml" />
-      <xi:include href="xml/gimpimage-unit.xml" />
     </chapter>
 
     <chapter id="app-core-undo">
@@ -247,12 +246,15 @@
       <xi:include href="xml/gimpdatafactory.xml" />
       <xi:include href="xml/gimpenvirontable.xml" />
       <xi:include href="xml/gimpgrid.xml" />
+      <xi:include href="xml/gimpprojection.xml" />
+      <xi:include href="xml/gimpprojection-construct.xml" />
     </chapter>
 
     <chapter id="app-core-misc-utils">
       <title>Misc. Utilities</title>
       <xi:include href="xml/gimp-utils.xml" />
       <xi:include href="xml/gimp-transform-utils.xml" />
+      <xi:include href="xml/gimparea.xml" />
       <xi:include href="xml/gimpcoords.xml" />
       <xi:include href="xml/gimpmarshal.xml" />
       <xi:include href="xml/gimppreviewcache.xml" />
@@ -338,10 +340,11 @@
     <chapter id="app-paint-paint-core">
       <title>The Paint Core &amp; Options</title>
       <xi:include href="xml/gimppaintcore.xml" />
-      <xi:include href="xml/gimppaintcore-kernels.xml" />
       <xi:include href="xml/gimppaintcore-stroke.xml" />
       <xi:include href="xml/gimppaintcore-undo.xml" />
       <xi:include href="xml/gimppaintoptions.xml" />
+      <xi:include href="xml/gimpbrushcore.xml" />
+      <xi:include href="xml/gimpbrushcore-kernels.xml" />
     </chapter>
 
     <chapter id="app-paint-implementations">
@@ -356,6 +359,9 @@
       <xi:include href="xml/gimpdodgeburnoptions.xml" />
       <xi:include href="xml/gimperaser.xml" />
       <xi:include href="xml/gimperaseroptions.xml" />
+      <xi:include href="xml/gimpink.xml" />
+      <xi:include href="xml/gimpink-blob.xml" />
+      <xi:include href="xml/gimpinkoptions.xml" />
       <xi:include href="xml/gimppaintbrush.xml" />
       <xi:include href="xml/gimppencil.xml" />
       <xi:include href="xml/gimppenciloptions.xml" />
@@ -407,7 +413,6 @@
     <chapter id="app-display-display">
       <title>The GimpDisplay Object</title>
       <xi:include href="xml/gimpdisplay.xml" />
-      <xi:include href="xml/gimpdisplay-area.xml" />
       <xi:include href="xml/gimpdisplay-foreach.xml" />
       <xi:include href="xml/gimpdisplay-handlers.xml" />
       <xi:include href="xml/gimpdisplayoptions.xml" />
@@ -419,6 +424,7 @@
       <xi:include href="xml/gimpdisplayshell.xml" />
       <xi:include href="xml/gimpdisplayshell-appearance.xml" />
       <xi:include href="xml/gimpdisplayshell-callbacks.xml" />
+      <xi:include href="xml/gimpdisplayshell-close.xml" />
       <xi:include href="xml/gimpdisplayshell-cursor.xml" />
       <xi:include href="xml/gimpdisplayshell-dnd.xml" />
       <xi:include href="xml/gimpdisplayshell-draw.xml" />
@@ -426,6 +432,7 @@
       <xi:include href="xml/gimpdisplayshell-filter.xml" />
       <xi:include href="xml/gimpdisplayshell-handlers.xml" />
       <xi:include href="xml/gimpdisplayshell-layer-select.xml" />
+      <xi:include href="xml/gimpdisplayshell-preview.xml" />
       <xi:include href="xml/gimpdisplayshell-render.xml" />
       <xi:include href="xml/gimpdisplayshell-scale.xml" />
       <xi:include href="xml/gimpdisplayshell-scroll.xml" />
@@ -469,8 +476,9 @@
 
     <chapter id="app-tools-options-gui">
       <title>GUI Constructors for Core Tool Options</title>
-      <xi:include href="xml/gimppaintoptions-gui.xml" />
       <xi:include href="xml/gimptooloptions-gui.xml" />
+      <xi:include href="xml/gimppaintoptions-gui.xml" />
+      <xi:include href="xml/gimpinkoptions-gui.xml" />
     </chapter>
 
     <chapter id="app-tools-selection">
@@ -493,16 +501,10 @@
       <xi:include href="xml/gimpconvolvetool.xml" />
       <xi:include href="xml/gimpdodgeburntool.xml" />
       <xi:include href="xml/gimperasertool.xml" />
+      <xi:include href="xml/gimpinktool.xml" />
       <xi:include href="xml/gimppaintbrushtool.xml" />
       <xi:include href="xml/gimppenciltool.xml" />
       <xi:include href="xml/gimpsmudgetool.xml" />
-    </chapter>
-
-    <chapter id="app-tool-ink">
-      <title>The Ink Tool</title>
-      <xi:include href="xml/gimpinktool.xml" />
-      <xi:include href="xml/gimpinktool-blob.xml" />
-      <xi:include href="xml/gimpinkoptions.xml" />
     </chapter>
 
     <chapter id="app-tool-color-applying">
@@ -575,6 +577,14 @@
       <xi:include href="xml/gimpdeviceinfo.xml" />
     </chapter>
 
+    <chapter id="app-widgets-controllers">
+      <title>Additional Input Controller Management</title>
+      <xi:include href="xml/gimpcontrollers.xml" />
+      <xi:include href="xml/gimpcontrollerinfo.xml" />
+      <xi:include href="xml/gimpcontrollerkeyboard.xml" />
+      <xi:include href="xml/gimpcontrollerwheel.xml" />
+    </chapter>
+
     <chapter id="app-widgets-docks">
       <title>Dock Windows &amp; Widgets</title>
       <xi:include href="xml/gimpdocked.xml" />
@@ -583,6 +593,7 @@
       <xi:include href="xml/gimptoolbox.xml" />
       <xi:include href="xml/gimptoolbox-dnd.xml" />
       <xi:include href="xml/gimptoolbox-color-area.xml" />
+      <xi:include href="xml/gimptoolbox-image-area.xml" />
       <xi:include href="xml/gimptoolbox-indicator-area.xml" />
       <xi:include href="xml/gimpdockbook.xml" />
       <xi:include href="xml/gimpdockable.xml" />
@@ -620,6 +631,7 @@
       <xi:include href="xml/gimpcontainerview.xml" />
       <xi:include href="xml/gimpcontainerview-utils.xml" />
       <xi:include href="xml/gimpcontainercombobox.xml" />
+      <xi:include href="xml/gimpcontainerentry.xml" />
       <xi:include href="xml/gimpcontainerbox.xml" />
       <xi:include href="xml/gimpcontainergridview.xml" />
       <xi:include href="xml/gimpcontainertreeview.xml" />
@@ -675,6 +687,17 @@
       <xi:include href="xml/gimpviewabledialog.xml" />
     </chapter>
 
+    <chapter id="app-widgets-pdb-dialogs">
+      <title>PDB-Controllable Selection Dialogs</title>
+      <xi:include href="xml/gimppdbdialog.xml" />
+      <xi:include href="xml/gimpdataselect.xml" />
+      <xi:include href="xml/gimpbrushselect.xml" />
+      <xi:include href="xml/gimpfontselect.xml" />
+      <xi:include href="xml/gimpgradientselect.xml" />
+      <xi:include href="xml/gimppaletteselect.xml" />
+      <xi:include href="xml/gimppatternselect.xml" />
+    </chapter>
+
     <chapter id="app-widgets-misc-widgets">
       <title>Misc. Widgets</title>
       <xi:include href="xml/gimpcolorbar.xml" />
@@ -682,6 +705,7 @@
       <xi:include href="xml/gimpcolorframe.xml" />
       <xi:include href="xml/gimpcolorpanel.xml" />
       <xi:include href="xml/gimpdasheditor.xml" />
+      <xi:include href="xml/gimpfgbgeditor.xml" />
       <xi:include href="xml/gimpgrideditor.xml" />
       <xi:include href="xml/gimphistogrambox.xml" />
       <xi:include href="xml/gimphistogramview.xml" />
@@ -730,10 +754,12 @@
 
     <chapter id="app-widgets-misc-utilities">
       <title>Misc. Utilities</title>
+      <xi:include href="xml/gimpclipboard.xml" />
       <xi:include href="xml/gimpcursor.xml" />
       <xi:include href="xml/gimpdialogfactory.xml" />
       <xi:include href="xml/gimpdnd.xml" />
       <xi:include href="xml/gimphelp.xml" />
+      <xi:include href="xml/gimpselectiondata.xml" />
       <xi:include href="xml/gimpsessioninfo.xml" />
       <xi:include href="xml/gimpwidgets-utils.xml" />
     </chapter>
@@ -758,6 +784,8 @@
       <title>Actions &amp; Callbacks Mainly Used in the Image Menu</title>
       <xi:include href="xml/file-actions.xml" />
       <xi:include href="xml/file-commands.xml" />
+      <xi:include href="xml/context-actions.xml" />
+      <xi:include href="xml/context-commands.xml" />
       <xi:include href="xml/edit-actions.xml" />
       <xi:include href="xml/edit-commands.xml" />
       <xi:include href="xml/select-actions.xml" />
@@ -882,6 +910,7 @@
       <xi:include href="xml/convert-dialog.xml" />
       <xi:include href="xml/file-new-dialog.xml" />
       <xi:include href="xml/file-open-dialog.xml" />
+      <xi:include href="xml/file-open-location-dialog.xml" />
       <xi:include href="xml/file-save-dialog.xml" />
       <xi:include href="xml/file-dialog-utils.xml" />
       <xi:include href="xml/grid-dialog.xml" />
@@ -891,6 +920,7 @@
       <xi:include href="xml/offset-dialog.xml" />
       <xi:include href="xml/palette-import-dialog.xml" />
       <xi:include href="xml/preferences-dialog.xml" />
+      <xi:include href="xml/quit-dialog.xml" />
       <xi:include href="xml/resize-dialog.xml" />
       <xi:include href="xml/resolution-calibrate-dialog.xml" />
       <xi:include href="xml/splash.xml" />
@@ -898,15 +928,6 @@
       <xi:include href="xml/tips-dialog.xml" />
       <xi:include href="xml/tips-parser.xml" />
       <xi:include href="xml/user-install-dialog.xml" />
-    </chapter>
-
-    <chapter id="app-gui-pdb-dialogs">
-      <title>PDB-Controllable Selection Dialogs</title>
-      <xi:include href="xml/brush-select.xml" />
-      <xi:include href="xml/font-select.xml" />
-      <xi:include href="xml/gradient-select.xml" />
-      <xi:include href="xml/palette-select.xml" />
-      <xi:include href="xml/pattern-select.xml" />
     </chapter>
   </part>
 

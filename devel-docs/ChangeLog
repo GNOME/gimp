@@ -1,3 +1,9 @@
+2004-07-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/app-docs.sgml
+	* app/app-sections.txt
+	* app/app.types: updated and reviewed.
+
 2004-07-13  Sven Neumann  <sven@gimp.org>
 
 	* app/Makefile.am (unused_symbols): added
