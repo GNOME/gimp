@@ -1,5 +1,9 @@
 2003-07-07  Sven Neumann  <sven@gimp.org>
 
+	* libgimpmath/gimpmatrix.[ch]: added gimp_matrix2_mult().
+
+2003-07-07  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/gimpbasetypes.h: include <libgimpmath/gimpmathtypes.h>.
 
 	* libgimpmath/gimpmathtypes.h

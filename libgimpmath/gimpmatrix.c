@@ -29,6 +29,7 @@
 
 #define EPSILON 1e-6
 
+
 /**
  * gimp_matrix2_identity:
  * @matrix: A matrix.
@@ -44,6 +45,46 @@ gimp_matrix2_identity (GimpMatrix2 *matrix)
   *matrix = identity;
 }
 
+/**
+ * gimp_matrix2_mult:
+ * @matrix1: The first input matrix.
+ * @matrix2: The second input matrix which will be overwritten by the result.
+ * 
+ * Multiplies two matrices and puts the result into the second one.
+ */
+void
+gimp_matrix2_mult (const GimpMatrix2 *matrix1, 
+		   GimpMatrix2       *matrix2)
+{
+  GimpMatrix2  tmp;
+
+  tmp.coeff[0][0] = (matrix1->coeff[0][0] * matrix2->coeff[0][0] +
+                     matrix1->coeff[0][1] * matrix2->coeff[1][0]);
+  tmp.coeff[0][1] = (matrix1->coeff[0][0] * matrix2->coeff[0][1] +
+                     matrix1->coeff[0][1] * matrix2->coeff[1][1]);
+  tmp.coeff[1][0] = (matrix1->coeff[1][0] * matrix2->coeff[0][0] +
+                     matrix1->coeff[1][1] * matrix2->coeff[1][0]);
+  tmp.coeff[1][1] = (matrix1->coeff[1][0] * matrix2->coeff[0][1] +
+                     matrix1->coeff[1][1] * matrix2->coeff[1][1]);
+
+  *matrix2 = tmp;
+}
+
+/**
+ * gimp_matrix3_identity:
+ * @matrix: A matrix.
+ * 
+ * Sets the matrix to the identity matrix.
+ */
+void
+gimp_matrix3_identity (GimpMatrix3 *matrix)
+{
+  static const GimpMatrix3 identity = { { { 1.0, 0.0, 0.0 },
+                                          { 0.0, 1.0, 0.0 },
+                                          { 0.0, 0.0, 1.0 } } };
+
+  *matrix = identity;
+}
 
 /**
  * gimp_matrix3_transform_point:
@@ -82,7 +123,7 @@ gimp_matrix3_transform_point (const GimpMatrix3 *matrix,
 /**
  * gimp_matrix3_mult:
  * @matrix1: The first input matrix.
- * @matrix2: The second input matrix which will be oeverwritten by the result.
+ * @matrix2: The second input matrix which will be overwritten by the result.
  * 
  * Multiplies two matrices and puts the result into the second one.
  */
@@ -109,22 +150,6 @@ gimp_matrix3_mult (const GimpMatrix3 *matrix1,
     }
 
   *matrix2 = tmp;
-}
-
-/**
- * gimp_matrix3_identity:
- * @matrix: A matrix.
- * 
- * Sets the matrix to the identity matrix.
- */
-void
-gimp_matrix3_identity (GimpMatrix3 *matrix)
-{
-  static const GimpMatrix3 identity = { { { 1.0, 0.0, 0.0 },
-                                          { 0.0, 1.0, 0.0 },
-                                          { 0.0, 0.0, 1.0 } } };
-
-  *matrix = identity;
 }
 
 /**

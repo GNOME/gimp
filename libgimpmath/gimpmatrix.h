@@ -44,7 +44,10 @@ struct _GimpMatrix4
 
 
 void          gimp_matrix2_identity        (GimpMatrix2       *matrix);
+void          gimp_matrix2_mult            (const GimpMatrix2 *matrix1, 
+					    GimpMatrix2       *matrix2);
 
+void          gimp_matrix3_identity        (GimpMatrix3       *matrix);
 void          gimp_matrix3_transform_point (const GimpMatrix3 *matrix, 
 					    gdouble            x, 
 					    gdouble            y,
@@ -52,7 +55,6 @@ void          gimp_matrix3_transform_point (const GimpMatrix3 *matrix,
 					    gdouble           *newy);
 void          gimp_matrix3_mult            (const GimpMatrix3 *matrix1, 
 					    GimpMatrix3       *matrix2);
-void          gimp_matrix3_identity        (GimpMatrix3       *matrix);
 void          gimp_matrix3_translate       (GimpMatrix3       *matrix, 
 					    gdouble            x, 
 					    gdouble            y);

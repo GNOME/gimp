@@ -53,6 +53,15 @@ basic matrix manipulations and tests.
 @matrix: 
 
 
+<!-- ##### FUNCTION gimp_matrix2_mult ##### -->
+<para>
+
+</para>
+
+@matrix1: 
+@matrix2: 
+
+
 <!-- ##### FUNCTION gimp_matrix3_identity ##### -->
 <para>
 
