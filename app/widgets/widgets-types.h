@@ -150,6 +150,9 @@ typedef void (* GimpActionGroupSetupFunc)   (GimpActionGroup *factory,
 typedef void (* GimpActionGroupUpdateFunc)  (GimpActionGroup *factory,
                                              gpointer         data);
 
+typedef void (* GimpUIManagerSetupFunc)     (GimpUIManager   *manager,
+                                             const gchar     *ui_path);
+
 typedef void (* GimpMenuPositionFunc)       (GtkMenu         *menu,
                                              gint            *x,
                                              gint            *y,

@@ -1136,6 +1136,13 @@ gint n_image_menu_entries = G_N_ELEMENTS (image_menu_entries);
 
 
 void
+image_menu_setup2 (GimpUIManager *manager,
+                   const gchar   *ui_path)
+{
+  menus_open_recent_add (manager, ui_path);
+}
+
+void
 image_menu_setup (GimpItemFactory *factory,
                   gpointer         setup_data)
 {

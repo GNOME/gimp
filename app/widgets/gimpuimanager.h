@@ -29,10 +29,11 @@ typedef struct _GimpUIManagerUIEntry GimpUIManagerUIEntry;
 
 struct _GimpUIManagerUIEntry
 {
-  gchar     *identifier;
-  gchar     *basename;
-  guint      merge_id;
-  GtkWidget *widget;
+  gchar                  *ui_path;
+  gchar                  *basename;
+  GimpUIManagerSetupFunc  setup_func;
+  guint                   merge_id;
+  GtkWidget              *widget;
 };
 
 
@@ -63,22 +64,23 @@ struct _GimpUIManagerClass
 GType           gimp_ui_manager_get_type    (void);
 GimpUIManager * gimp_ui_manager_new         (Gimp *gimp);
 
-void            gimp_ui_manager_update      (GimpUIManager *manager,
-                                             gpointer       update_data);
+void            gimp_ui_manager_update      (GimpUIManager          *manager,
+                                             gpointer                update_data);
 
-void            gimp_ui_manager_ui_register (GimpUIManager *manager,
-                                             const gchar   *identifier,
-                                             const gchar   *basename);
-GtkWidget     * gimp_ui_manager_ui_get      (GimpUIManager *manager,
-                                             const gchar   *identifier);
+void            gimp_ui_manager_ui_register (GimpUIManager          *manager,
+                                             const gchar            *ui_path,
+                                             const gchar            *basename,
+                                             GimpUIManagerSetupFunc  setup_func);
+GtkWidget     * gimp_ui_manager_ui_get      (GimpUIManager          *manager,
+                                             const gchar            *ui_path);
 
-void            gimp_ui_manager_ui_popup    (GimpUIManager        *manager,
-                                             const gchar          *ui_path,
-                                             gpointer              popup_data,
-                                             GtkWidget            *parent,
-                                             GimpMenuPositionFunc  position_func,
-                                             gpointer              position_data,
-                                             GtkDestroyNotify      popdown_func);
+void            gimp_ui_manager_ui_popup    (GimpUIManager          *manager,
+                                             const gchar            *ui_path,
+                                             gpointer                popup_data,
+                                             GtkWidget              *parent,
+                                             GimpMenuPositionFunc    position_func,
+                                             gpointer                position_data,
+                                             GtkDestroyNotify        popdown_func);
 
 
 #endif  /* __GIMP_UI_MANAGER_H__ */

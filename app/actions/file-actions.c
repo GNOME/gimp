@@ -59,7 +59,6 @@ static GimpActionEntry file_actions[] =
 {
   { "file-menu",              NULL, N_("_File")        },
   { "file-open-recent-menu",  NULL, N_("Open _Recent") },
-  { "file-open-recent-empty", NULL, N_("(Empty)")      },
   { "file-acquire-menu",      NULL, N_("_Acquire")     },
 
   { "file-new", GTK_STOCK_NEW,
@@ -147,9 +146,6 @@ file_actions_setup (GimpActionGroup *group,
                                       G_CALLBACK (file_last_opened_cmd_callback),
                                       data);
 
-  gimp_action_group_set_action_sensitive (group, "file-open-recent-empty",
-                                          FALSE);
-
   for (i = 0; i < n_entries; i++)
     {
       gimp_action_group_set_action_visible (group, entries[i].name, FALSE);
@@ -229,10 +225,6 @@ file_actions_last_opened_update (GimpContainer   *container,
 
   num_documents = gimp_container_num_children (container);
 
-  gimp_action_group_set_action_visible (group,
-                                        "file-open-recent-empty",
-                                        num_documents == 0);
-
   for (i = 0; i < n; i++)
     {
       GtkAction *action;
@@ -262,10 +254,6 @@ file_actions_last_opened_update (GimpContainer   *container,
                             "tooltip", filename,
                             "visible", TRUE,
                             NULL);
-
-#if 0
-              gimp_help_set_help_data (widget, filename, NULL);
-#endif
 
               g_free (filename);
               g_free (basename);

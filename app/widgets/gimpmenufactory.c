@@ -113,7 +113,7 @@ gimp_menu_factory_finalize (GObject *object)
         {
           GimpUIManagerUIEntry *ui_entry = uis->data;
 
-          g_free (ui_entry->identifier);
+          g_free (ui_entry->ui_path);
           g_free (ui_entry->basename);
           g_free (ui_entry);
         }
@@ -243,10 +243,11 @@ gimp_menu_factory_manager_register (GimpMenuFactory *factory,
 
       if (! strcmp (entry->identifier, identifier))
         {
-          const gchar *group;
-          const gchar *ui_identifier;
-          const gchar *ui_basename;
-          va_list      args;
+          const gchar            *group;
+          const gchar            *ui_path;
+          const gchar            *ui_basename;
+          GimpUIManagerSetupFunc  setup_func;
+          va_list                 args;
 
           g_return_if_fail (entry->action_groups == NULL);
 
@@ -262,25 +263,27 @@ gimp_menu_factory_manager_register (GimpMenuFactory *factory,
 
           entry->action_groups = g_list_reverse (entry->action_groups);
 
-          ui_identifier = va_arg (args, const gchar *);
+          ui_path = va_arg (args, const gchar *);
 
-          while (ui_identifier)
+          while (ui_path)
             {
               GimpUIManagerUIEntry *ui_entry;
 
               ui_basename = va_arg (args, const gchar *);
+              setup_func  = va_arg (args, GimpUIManagerSetupFunc);
 
               ui_entry = g_new0 (GimpUIManagerUIEntry, 1);
 
-              ui_entry->identifier = g_strdup (ui_identifier);
+              ui_entry->ui_path    = g_strdup (ui_path);
               ui_entry->basename   = g_strdup (ui_basename);
+              ui_entry->setup_func = setup_func;
               ui_entry->merge_id   = 0;
               ui_entry->widget     = NULL;
 
               entry->managed_uis = g_list_prepend (entry->managed_uis,
                                                    ui_entry);
 
-              ui_identifier = va_arg (args, const gchar *);
+              ui_path = va_arg (args, const gchar *);
             }
 
           entry->managed_uis = g_list_reverse (entry->managed_uis);
@@ -337,8 +340,9 @@ gimp_menu_factory_manager_new (GimpMenuFactory *factory,
               GimpUIManagerUIEntry *ui_entry = list->data;
 
               gimp_ui_manager_ui_register (manager,
-                                           ui_entry->identifier,
-                                           ui_entry->basename);
+                                           ui_entry->ui_path,
+                                           ui_entry->basename,
+                                           ui_entry->setup_func);
             }
 
           return manager;

@@ -1,5 +1,30 @@
 2004-04-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/widgets-types.h: added GimpUIManagerSetupFunc typedef.
+
+	* app/widgets/gimpuimanager.[ch]: added the setup_func to the
+	GimpUIManagerUIEntry struct and to gimp_ui_manager_ui_register().
+	Call the setup_func after creating the UI. Replaced the term
+	"identifier" by "ui_path".
+
+	* app/widgets/gimpmenufactory.c: ditto.
+
+	* app/gui/menus.c (menus_init): register the new setup_funcs below.
+
+	* app/gui/menus.[ch] (menus_open_recent_add)
+	* app/gui/image-menu.[ch] (image_menu_setup2)
+	* app/gui/toolbox-menu.[ch] (toolbox_menu_setup2): new setup_funcs
+	which add the "Open Recent" menu items.
+
+	* app/actions/file-actions.c: removed "file-open-recent-empty"
+	action because it's not needed.
+
+	* menus/image-menu.xml
+	* menus/toolbox-menu.xml: removed "file-open-recent-empty" menu
+	items and added <placeholder>s for the "Open Recent" menu items.
+
+2004-04-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimp.[ch]: removed "locale_domain" and "help_domain"
 	parameters from GimpMenusCreateFunc.
 

@@ -122,7 +122,7 @@ gimp_ui_manager_finalize (GObject *object)
     {
       GimpUIManagerUIEntry *entry = list->data;
 
-      g_free (entry->identifier);
+      g_free (entry->ui_path);
       g_free (entry->basename);
 
       if (entry->widget)
@@ -214,20 +214,22 @@ gimp_ui_manager_update (GimpUIManager *manager,
 }
 
 void
-gimp_ui_manager_ui_register (GimpUIManager *manager,
-                             const gchar   *identifier,
-                             const gchar   *basename)
+gimp_ui_manager_ui_register (GimpUIManager          *manager,
+                             const gchar            *ui_path,
+                             const gchar            *basename,
+                             GimpUIManagerSetupFunc  setup_func)
 {
   GimpUIManagerUIEntry *entry;
 
   g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
-  g_return_if_fail (identifier != NULL);
+  g_return_if_fail (ui_path != NULL);
   g_return_if_fail (basename != NULL);
 
   entry = g_new0 (GimpUIManagerUIEntry, 1);
 
-  entry->identifier = g_strdup (identifier);
+  entry->ui_path    = g_strdup (ui_path);
   entry->basename   = g_strdup (basename);
+  entry->setup_func = setup_func;
   entry->merge_id   = 0;
   entry->widget     = NULL;
 
@@ -241,7 +243,7 @@ gimp_ui_manager_ui_register (GimpUIManager *manager,
                                  entry->basename, NULL);
 
     g_print ("loading menu: %s for %s\n", filename,
-             entry->identifier);
+             entry->ui_path);
 
     entry->merge_id =
       gtk_ui_manager_add_ui_from_file (GTK_UI_MANAGER (manager),
@@ -259,18 +261,18 @@ gimp_ui_manager_ui_register (GimpUIManager *manager,
 
 GtkWidget *
 gimp_ui_manager_ui_get (GimpUIManager *manager,
-                        const gchar   *identifier)
+                        const gchar   *ui_path)
 {
   GList *list;
 
   g_return_val_if_fail (GIMP_IS_UI_MANAGER (manager), NULL);
-  g_return_val_if_fail (identifier != NULL, NULL);
+  g_return_val_if_fail (ui_path != NULL, NULL);
 
   for (list = manager->registered_uis; list; list = g_list_next (list))
     {
       GimpUIManagerUIEntry *entry = list->data;
 
-      if (! strcmp (entry->identifier, identifier))
+      if (! strcmp (entry->ui_path, ui_path))
         {
           if (! entry->merge_id)
             {
@@ -281,7 +283,7 @@ gimp_ui_manager_ui_get (GimpUIManager *manager,
                                            entry->basename, NULL);
 
               g_print ("loading menu: %s for %s\n", filename,
-                       entry->identifier);
+                       entry->ui_path);
 
               entry->merge_id =
                 gtk_ui_manager_add_ui_from_file (GTK_UI_MANAGER (manager),
@@ -302,10 +304,15 @@ gimp_ui_manager_ui_get (GimpUIManager *manager,
             {
               entry->widget =
                 gtk_ui_manager_get_widget (GTK_UI_MANAGER (manager),
-                                           entry->identifier);
+                                           entry->ui_path);
 
               if (entry->widget)
-                g_object_ref (entry->widget);
+                {
+                  g_object_ref (entry->widget);
+
+                  if (entry->setup_func)
+                    entry->setup_func (manager, entry->ui_path);
+                }
             }
 
           return entry->widget;
@@ -313,7 +320,7 @@ gimp_ui_manager_ui_get (GimpUIManager *manager,
     }
 
   g_warning ("%s: no entry registered for \"%s\"",
-             G_STRFUNC, identifier);
+             G_STRFUNC, ui_path);
 
   return NULL;
 }

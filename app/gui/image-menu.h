@@ -24,6 +24,9 @@ extern GimpItemFactoryEntry image_menu_entries[];
 extern gint                 n_image_menu_entries;
 
 
+void   image_menu_setup2 (GimpUIManager   *manager,
+                          const gchar     *ui_path);
+
 void   image_menu_setup  (GimpItemFactory *factory,
                           gpointer         callback_data);
 void   image_menu_update (GtkItemFactory  *factory,

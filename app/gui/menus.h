@@ -36,6 +36,9 @@ void   menus_restore                (Gimp            *gimp);
 void   menus_save                   (Gimp            *gimp);
 void   menus_clear                  (Gimp            *gimp);
 
+void   menus_open_recent_add        (GimpUIManager   *manager,
+                                     const gchar     *ui_path);
+
 void   menus_last_opened_add        (GimpItemFactory *item_factory);
 void   menus_filters_subdirs_to_top (GtkMenu         *menu);
 
