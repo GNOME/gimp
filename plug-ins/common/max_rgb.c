@@ -49,8 +49,8 @@ static void	run	(gchar      *name,
 			 gint       *nreturn_vals,
 			 GimpParam **return_vals);
 
-static void main_function (GimpDrawable *drawable, 
-			   gboolean      preview_mode);
+static GimpPDBStatusType main_function (GimpDrawable *drawable, 
+			                gboolean      preview_mode);
 
 static gint	   dialog         (GimpDrawable *drawable);
 static void        ok_callback    (GtkWidget    *widget,
@@ -162,13 +162,14 @@ run (gchar      *name,
       break;
     case GIMP_RUN_NONINTERACTIVE:
       /* You must copy the values of parameters to pvals or dialog variables. */
+      pvals.max_p = param[3].data.d_int32;
       break;
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_get_data (PLUG_IN_NAME, &pvals);
       break;
     }
   
-  main_function (drawable, FALSE);
+  status = main_function (drawable, FALSE);
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
@@ -213,7 +214,7 @@ max_rgb_func (guchar *src, guchar *dest, gint bpp, gpointer data)
     dest[3] = *src;
 }
 
-static void
+static GimpPDBStatusType
 main_function (GimpDrawable *drawable, 
 	       gboolean      preview_mode)
 {
@@ -236,6 +237,8 @@ main_function (GimpDrawable *drawable,
 
       gimp_drawable_detach (drawable);
     }  
+
+  return GIMP_PDB_SUCCESS;
 }
  
 
