@@ -311,12 +311,14 @@ run (const gchar      *name,
 	    (vpvals.propagating_channel & PROPAGATING_ALPHA) ? TRUE : FALSE;
 	  propagate_value =
 	    (vpvals.propagating_channel & PROPAGATING_VALUE) ? TRUE : FALSE;
+
 	  {
-	    int	i;
+	    gint i;
 	    for (i = 0; i < 4; i++)
-	      direction_mask_vec[i] = (vpvals.direction_mask & (1 << i))
-		? TRUE : FALSE;
+	      direction_mask_vec[i] =
+                (vpvals.direction_mask & (1 << i)) ? TRUE : FALSE;
 	  }
+
 	  if (! vpropagate_dialog (gimp_drawable_type (drawable_id)))
 	    return;
 	}
@@ -329,9 +331,9 @@ run (const gchar      *name,
 	  vpvals.lower_limit         = 0;
 	  vpvals.upper_limit         = 255;
 
-	  if(strcmp(name, ERODE_PLUG_IN_NAME) == 0)
+	  if (strcmp (name, ERODE_PLUG_IN_NAME) == 0)
 	    vpvals.propagate_mode = 0;
-	  else if(strcmp(name, DILATE_PLUG_IN_NAME) == 0)
+	  else if (strcmp (name, DILATE_PLUG_IN_NAME) == 0)
 	    vpvals.propagate_mode = 1;
 	}
       break;
@@ -355,26 +357,28 @@ run (const gchar      *name,
 	  vpvals.lower_limit         = 0;
 	  vpvals.upper_limit         = 255;
 
-	  if(strcmp(name, ERODE_PLUG_IN_NAME) == 0)
+	  if (strcmp (name, ERODE_PLUG_IN_NAME) == 0)
 	    vpvals.propagate_mode = 0;
-	  else if(strcmp(name, DILATE_PLUG_IN_NAME) == 0)
+	  else if (strcmp (name, DILATE_PLUG_IN_NAME) == 0)
 	    vpvals.propagate_mode = 1;
 	}
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (DEFAULT_PLUG_IN_NAME, &vpvals);
+      gimp_get_data (name, &vpvals);
       break;
     }
 
   status = value_propagate (drawable_id);
 
-  if (run_mode != GIMP_RUN_NONINTERACTIVE ||
-      strcmp(name, DEFAULT_PLUG_IN_NAME) != 0)
-    gimp_displays_flush();
-  if (run_mode == GIMP_RUN_INTERACTIVE && status == GIMP_PDB_SUCCESS
-      && strcmp(name, DEFAULT_PLUG_IN_NAME) == 0)
-    gimp_set_data (DEFAULT_PLUG_IN_NAME, &vpvals, sizeof (VPValueType));
+  if (status == GIMP_PDB_SUCCESS)
+    {
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
+        gimp_displays_flush ();
+
+      if (run_mode == GIMP_RUN_INTERACTIVE)
+        gimp_set_data (name, &vpvals, sizeof (VPValueType));
+    }
 
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
