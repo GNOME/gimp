@@ -101,9 +101,9 @@ gimp_display_shell_bucket_fill (GimpImage          *gimage,
     gimp_container_get_child_by_name (gimage->gimp->tool_info_list,
                                       "gimp-bucket-fill-tool");
 
-  if (tool_info && tool_info->context)
+  if (tool_info && tool_info->tool_options)
     {
-      context = tool_info->context;
+      context = GIMP_CONTEXT (tool_info->tool_options);
     }
   else
     {
