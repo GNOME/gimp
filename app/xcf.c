@@ -1134,8 +1134,8 @@ xcf_save_tile_rle (XcfInfo *info,
 	       *  matching values.
 	       */
 	      if ((length == 32768) ||
-		  ((length > 1) && (last != *data)) ||
-		  ((size - length) == 0))
+		  ((size - length) <= 0) ||
+		  ((length > 1) && (last != *data)))
 		{
 		  count += length;
 		  if (length >= 128)
@@ -1163,8 +1163,8 @@ xcf_save_tile_rle (XcfInfo *info,
 	       *  non-matching values.
 	       */
 	      if ((length == 32768) ||
-		  ((length > 0) && (last == *data)) ||
-		  ((size - length) == 0))
+		  ((size - length) == 0) ||
+		  ((length > 0) && (last == *data)))
 		{
 		  count += length;
 		  state = 0;
@@ -1203,9 +1203,11 @@ xcf_save_tile_rle (XcfInfo *info,
 	      break;
 	    }
 
-	  length += 1;
-	  last = *data;
-	  data += bpp;
+	  if (size > 0) {
+	    length += 1;
+	    last = *data;
+	    data += bpp;
+	  }
 	}
 
       if (count != (tile->ewidth * tile->eheight))

@@ -1,3 +1,7 @@
+Tue Jan 27 00:18:28 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* app/xcf.c: fixes an off by one error in xcf_tile_save_rle()
+
 Sun Jan 25 18:41:17 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* app/about_dialog.c: Added a couple names here
