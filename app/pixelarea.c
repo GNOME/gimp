@@ -106,31 +106,76 @@ pixelarea_getdata  (
                    0);
 }
 
+
 /* copies the data from the PixelArea to the PixelRow */
+#define PIXELAREA_C_1_cw
 void
 pixelarea_copy_row ( 
 		    PixelArea *pa,
 		    PixelRow *pr,
 		    int x,
 		    int y,
-                    int length, 
+                    int width, 
                     int subsample
 		   )
 {
+  guchar *pr_data = pixelrow_data (pr);
+  void *pag;
+  PixelArea area;
+  Tag pa_tag = pixelarea_tag (pa);  
+  
+  /* get a pixel area of height 1 for the wanted row. */ 
+  pixelarea_init (&area, pa->canvas, NULL, x, y ,width, 1, FALSE);  
+  
+  for (pag = pixelarea_register (1, area);
+       pag != NULL;
+       pag = pixelarea_process (pag))
+    {
+      guchar * area_data = pixelarea_data (&area);
+      int portion_width = pixelarea_width (&area);  
+      memcpy(pr_data, area_data, tag_bytes (pa_tag) * portion_width);
+      pr_data += portion_width;
+    }
 }
 
 
 /* copies the data from the PixelArea to the PixelRow col*/
+#define PIXELAREA_C_2_cw
 void
 pixelarea_copy_col ( 
 		    PixelArea *pa,
 		    PixelRow *col,
 		    int x,
 		    int y,
-                    int length, 
+                    int height, 
                     int subsample
 		   )
 {
+  guchar *col_data = pixelrow_data (col);
+  void *pag;
+  PixelArea area;
+  Tag pa_tag = pixelarea_tag (pa);  
+  int bytes = tag_bytes (pa_tag);
+  int b;
+  
+  /* get a pixel area of width 1 for the wanted column. */ 
+  pixelarea_init (&area, pa->canvas, NULL, x, y , 1, height, FALSE);  
+  
+  for (pag = pixelarea_register (1, area);
+       pag != NULL;
+       pag = pixelarea_process (pag))
+    {
+      guchar *area_data = pixelarea_data (&area);
+      int portion_height = pixelarea_height (&area); 
+      int rowstride = pixelarea_rowstride (&area); 
+      while (portion_height --)
+      { 
+        b = bytes;
+        while ( b --)
+	  *col_data++ = *area_data++;
+        area_data += rowstride;          	
+      } 
+    }
 }
 
 
@@ -141,23 +186,74 @@ pixelarea_write_row (
 		    PixelRow *pr,
 		    int x,
 		    int y,
-                    int length 
+                    int width 
 		   )
 {
+  guchar *pr_data = pixelrow_data (pr);
+  void *pag;
+  PixelArea area;
+  Tag pa_tag = pixelarea_tag (pa);  
+  
+  /* check to see if we are off the end of canvas */ 
+  if ( x + width > canvas_width (pa->canvas) ) 
+    width = canvas_width (pa->canvas)  - x;  
+  
+  /* get a pixel area of height 1 for the row. */ 
+  pixelarea_init (&area, pa->canvas, NULL, x, y ,width, 1, TRUE);  
+  
+  for (pag = pixelarea_register (1, area);
+       pag != NULL;
+       pag = pixelarea_process (pag))
+    {
+      guchar *area_data = pixelarea_data (&area);
+      int portion_width = pixelarea_width (&area);  
+      memcpy(area_data, pr_data, tag_bytes (pa_tag) * portion_width);
+      pr_data += portion_width;
+    }
 }
 
 
-/* copies the data from the PixelRow col to the PixelRow */
+/* copies the data from the PixelRow col to the PixelArea */
 void
 pixelarea_write_col ( 
 		    PixelArea *pa,
-		    PixelRow *row,
+		    PixelRow *col,
 		    int x,
 		    int y,
-                    int length 
+                    int height 
 		   )
 {
+  guchar *col_data = pixelrow_data (col);
+  void *pag;
+  PixelArea area;
+  Tag pa_tag = pixelarea_tag (pa);
+  int bytes = tag_bytes (pa_tag);
+  int b;
+  
+  /* check to see if we are off the end of canvas */ 
+  if ( y + height > canvas_height (pa->canvas) ) 
+    height = canvas_height (pa->canvas)  - y;  
+  
+  /* get a pixel area of width 1 for the wanted column.*/ 
+  pixelarea_init (&area, pa->canvas, NULL, x, y , 1, height, FALSE);  
+  
+  for (pag = pixelarea_register (1, area);
+       pag != NULL;
+       pag = pixelarea_process (pag))
+    {
+      guchar * area_data= pixelarea_data (&area);
+      int portion_height = pixelarea_height (&area); 
+      int rowstride = pixelarea_rowstride (&area); 
+      while (portion_height --)
+      { 
+        b = bytes;
+        while ( b --)
+	  *col_data++ = *area_data++;
+        area_data += rowstride;
+      } 
+    }
 }
+
 
 Paint *
 pixelarea_convert_paint (

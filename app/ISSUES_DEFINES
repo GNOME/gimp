@@ -1,0 +1,26 @@
+Issues
+
+IMAGE_RENDER_C_1_cw 
+The tilebuf (where the display pixels get built) is hard coded
+to handle the max byte size right now.
+IMAGE_RENDER_C_2_cw
+Temporary precision variable for the switch below. 
+IMAGE_RENDER_C_3_cw
+Temporary switch -- uncomment the line once canvas is hooked up.
+IMAGE_RENDER_C_4_cw
+Change all render_image_tile_fault s to render_image_canvas_fault s
+once canvas s are hooked up everywhere.
+IMAGE_RENDER_C_5_cw
+Change the info->src_tiles to info->src_canvas once Canvas * is
+returned from gimage_projection().
+IMAGE_RENDER_C_6_cw
+May want to rewrite render_image_canvas_faults to use
+pixelarea_copy_row (which faults automatically) instead
+of doing the faulting ourselves here.
+
+
+PIXELAREA_C_1_cw
+Not sure what to do with the subsample parameter here. scale_area
+does use this value. 
+PIXELAREA_C_2_cw
+Same as above .. subsample not used.

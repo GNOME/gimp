@@ -36,6 +36,7 @@ struct _RenderInfo
 {
   GDisplay *gdisp;
   TileManager *src_tiles;
+  Canvas *src_canvas;
   guint *alpha;
   guchar *scale;
   guchar *src;
@@ -45,8 +46,8 @@ struct _RenderInfo
   int scalesrc;
   int scaledest;
   int src_x, src_y;
+  int src_w, src_h;
   int src_bpp;
-  int src_precision;
   int dest_bpp;
   int dest_bpl;
   int dest_width;
@@ -92,7 +93,8 @@ render_setup (int check_type,
 
   /*  allocate a buffer for arranging information from a row of tiles  */
   if (!tile_buf)
-    tile_buf = g_new (guchar, GXIMAGE_WIDTH * MAX_CHANNELS);
+#define IMAGE_RENDER_C_1_cw
+    tile_buf = g_new (guchar, GXIMAGE_WIDTH * MAX_CHANNELS * 4);
 
   if (check_type < 0 || check_type > 5)
     g_error ("invalid check_type argument to render_setup: %d", check_type);
@@ -240,14 +242,14 @@ static void    render_image_init_info          (RenderInfo   *info,
 						int           y,
 						int           w,
 						int           h);
-static guint*  render_image_init_alpha         (int           mult);
 static guchar* render_image_accelerate_scaling (int           width,
 						int           start,
 						int           bpp,
 						int           scalesrc,
 						int           scaledest);
+static guint*  render_image_init_alpha         (int           mult);
 static guchar* render_image_tile_fault         (RenderInfo   *info);
-
+static guchar* render_image_canvas_fault       (RenderInfo *info);
 
 static RenderFunc render_funcs_u8[6][4] =
 {
@@ -361,6 +363,8 @@ render_image (GDisplay *gdisp,
 {
   RenderInfo info;
   int image_type;
+#define IMAGE_RENDER_C_2_cw
+  Precision prec = PRECISION_U8;
 
   render_image_init_info (&info, gdisp, x, y, w, h);
 
@@ -377,8 +381,10 @@ render_image (GDisplay *gdisp,
       g_warning ("unsupported destination bytes per pixel: %d", info.dest_bpp);
       return;
     }
-
-  switch( info.src_precision )
+ 
+#define IMAGE_RENDER_C_3_cw
+  /*switch( tag_precision (canvas_tag (info.src_canvas)))*/
+  switch( prec )
     {
       case PRECISION_U8:
         (* render_funcs_u8[image_type][info.dest_bpp-1]) (&info);
@@ -426,9 +432,8 @@ render_image_indexed_u8_1 (RenderInfo *info)
   y = info->y;
   ye = info->y + info->h;
   xe = info->x + info->w;
-
+#define IMAGE_RENDER_C_4_cw
   info->src = render_image_tile_fault (info);
-
   for (; y < ye; y++)
     {
       src = info->src;
@@ -1785,6 +1790,7 @@ render_image_rgb_u8_2 (RenderInfo *info)
   initial = TRUE;
   byte_order = info->byte_order;
   info->src = render_image_tile_fault (info);
+/*  info->src = render_image_tile_fault (info); */
 
   for (; y < ye; y++)
     {
@@ -1818,13 +1824,11 @@ render_image_rgb_u8_2 (RenderInfo *info)
 	}
 
       info->dest += info->dest_bpl;
-
       if (((y + 1) % info->scaledest) == 0)
 	{
 	  info->src_y += info->scalesrc;
 	  info->src = render_image_tile_fault (info);
 	}
-
       initial = FALSE;
     }
 }
@@ -4988,14 +4992,33 @@ render_image_init_info (RenderInfo *info,
   info->src_x = UNSCALE (gdisp, info->x);
   info->src_y = UNSCALE (gdisp, info->y);
   info->src_bpp = gimage_projection_bytes (gdisp->gimage);
-  info->src_precision = PRECISION_U8;
   info->dest = gximage_get_data ();
   info->dest_bpp = gximage_get_bpp ();
   info->dest_bpl = gximage_get_bpl ();
   info->dest_width = info->w * info->dest_bpp;
   info->byte_order = gximage_get_byte_order ();
+
+#define IMAGE_RENDER_C_5_cw
   info->src_tiles = gimage_projection (gdisp->gimage);
+  /*info->src_canvas = gimage_projection_canvas (gdisp->gimage); */
   info->scale = render_image_accelerate_scaling (w, info->x, info->src_bpp, info->scalesrc, info->scaledest);
+  {
+    int i;
+    static guchar *scale = NULL;
+    guchar step;
+    
+    if (!scale)
+      scale = g_new (guchar, GXIMAGE_WIDTH + 1);
+    step = info->scalesrc * info->src_bpp;
+    info->src_w = 0;
+    for (i = 0; i <= info->w; i++)
+    {
+      scale[i] = ((i + info->x + 1) % info->scaledest) ? 0 : step;
+      if (scale[i])
+	info->src_w += info->scalesrc;
+    }
+    info->scale = scale;
+  }
   info->alpha = NULL;
 
   switch (gimage_projection_type (gdisp->gimage))
@@ -5055,6 +5078,70 @@ render_image_accelerate_scaling (int width,
   return scale;
 }
 
+#define IMAGE_RENDER_C_6_cw
+static guchar*
+render_image_canvas_fault (RenderInfo *info)
+{
+  guchar *data;
+  guchar *dest;
+  guchar *scale;
+  int width;
+  int x_portion;
+  int y_portion;
+  int portion_width;
+  int step;
+  int x, b;
+  
+  /* the first portion x and y */
+  x_portion = info->src_x;
+  y_portion = info->src_y;
+  
+  /* fault in the first portion */ 
+  canvas_ref( info->src_canvas, x_portion, y_portion); 
+  data = canvas_data (info->src_canvas, info->src_x, info->src_y);
+  if (!data)
+    return NULL; 
+  scale = info->scale;
+  step = info->scalesrc * info->src_bpp;
+  dest = tile_buf;
+  
+  /* the first portions width */ 
+  portion_width = canvas_portion_width ( info->src_canvas, 
+					  x_portion,
+					  y_portion );
+  x = info->src_x;
+  width = info->w;
+
+  while (width--)
+    {
+      for (b = 0; b < info->src_bpp; b++)
+	*dest++ = data[b];
+
+      if (*scale++ != 0)
+	{
+	  x += info->scalesrc;
+	  data += step;
+
+	  if (x >= x_portion + portion_width)
+	    {
+	      canvas_unref (info->src_canvas, x_portion, y_portion);
+              if (x >= canvas_width (info->src_canvas))
+		return tile_buf;
+	      x_portion += portion_width;
+              canvas_ref (info->src_canvas, x_portion, y_portion ); 
+              data = canvas_data (info->src_canvas, x_portion, y_portion );
+              if(!data)
+		return NULL;
+	      portion_width = canvas_portion_width ( info->src_canvas, 
+					  x_portion,
+					  y_portion );
+	    }
+	}
+    }
+  canvas_unref (info->src_canvas, x_portion, y_portion);
+  return tile_buf;
+}
+
 static guchar*
 render_image_tile_fault (RenderInfo *info)
 {
@@ -5092,12 +5179,12 @@ render_image_tile_fault (RenderInfo *info)
       for (b = 0; b < info->src_bpp; b++)
 	*dest++ = data[b];
 
-      if (*scale++ != 0)
+      if (*scale++ != 0)     /*time to get a new pixel from src */
 	{
 	  x += info->scalesrc;
 	  data += step;
 
-	  if ((x >> tile_shift) != tilex)
+	  if ((x >> tile_shift) != tilex)  /*leaving the tile -- get a new one*/
 	    {
 	      tile_unref (tile, FALSE);
 	      tilex += 1;
