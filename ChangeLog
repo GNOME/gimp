@@ -1,5 +1,11 @@
 2004-07-17  Philip Lafleur  <plafleur@cvs.gnome.org>
 
+	* plug-ins/common/polar.c (dialog_update_preview): Fixed a
+	write to unallocated memory that was causing crashes in various
+	spots.
+
+2004-07-17  Philip Lafleur  <plafleur@cvs.gnome.org>
+
 	* plug-ins/common/polar.c (polarize_func): moved array
 	initialization out of variable declaration. Fixes bug #147799.
 

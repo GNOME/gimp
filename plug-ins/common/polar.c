@@ -101,14 +101,14 @@ static GimpOldPreview *preview;
 
 static void query (void);
 static void run   (const gchar      *name,
-		   gint              nparams,
-		   const GimpParam  *param,
-		   gint             *nreturn_vals,
-		   GimpParam       **return_vals);
+                   gint              nparams,
+                   const GimpParam  *param,
+                   gint             *nreturn_vals,
+                   GimpParam       **return_vals);
 
 static void   polarize(void);
 static gboolean calc_undistorted_coords(double wx, double wy,
-					double *x, double *y);
+                                        double *x, double *y);
 
 static gint polarize_dialog       (void);
 static void dialog_update_preview (void);
@@ -166,18 +166,18 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
-			  "Converts and image to and from polar coords",
-			  "Remaps and image from rectangular coordinates "
+                          "Converts and image to and from polar coords",
+                          "Remaps and image from rectangular coordinates "
                           "to polar coordinates "
-			  "or vice versa",
-			  "Daniel Dunbar and Federico Mena Quintero",
-			  "Daniel Dunbar and Federico Mena Quintero",
-			  PLUG_IN_VERSION,
-			  N_("P_olar Coords..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "or vice versa",
+                          "Daniel Dunbar and Federico Mena Quintero",
+                          "Daniel Dunbar and Federico Mena Quintero",
+                          PLUG_IN_VERSION,
+                          N_("P_olar Coords..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_NAME,
                              N_("<Image>/Filters/Distorts"));
@@ -253,24 +253,24 @@ run (const gchar      *name,
 
       /* Get information from the dialog */
       if (!polarize_dialog ())
-	return;
+        return;
 
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       /* Make sure all the arguments are present */
       if (nparams != 8)
-	{
-	  status = GIMP_PDB_CALLING_ERROR;
-	}
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
       else
-	{
-	  pcvals.circle  = param[3].data.d_float;
-	  pcvals.angle  = param[4].data.d_float;
-	  pcvals.backwards  = param[5].data.d_int32;
-	  pcvals.inverse  = param[6].data.d_int32;
-	  pcvals.polrec  = param[7].data.d_int32;
-	}
+        {
+          pcvals.circle  = param[3].data.d_float;
+          pcvals.angle  = param[4].data.d_float;
+          pcvals.backwards  = param[5].data.d_int32;
+          pcvals.inverse  = param[6].data.d_int32;
+          pcvals.polrec  = param[7].data.d_int32;
+        }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -289,18 +289,18 @@ run (const gchar      *name,
     {
       /* Set the tile cache size */
       gimp_tile_cache_ntiles (2 * (drawable->width + gimp_tile_width() - 1) /
-			      gimp_tile_width ());
+                              gimp_tile_width ());
 
       /* Run! */
       polarize ();
 
       /* If run mode is interactive, flush displays */
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	gimp_displays_flush ();
+        gimp_displays_flush ();
 
       /* Store data */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-	gimp_set_data (PLUG_IN_NAME, &pcvals, sizeof (polarize_vals_t));
+        gimp_set_data (PLUG_IN_NAME, &pcvals, sizeof (polarize_vals_t));
     }
   else if (status == GIMP_PDB_SUCCESS)
     status = GIMP_PDB_EXECUTION_ERROR;
@@ -312,10 +312,10 @@ run (const gchar      *name,
 
 static void
 polarize_func (gint x,
-	       gint y,
-	       guchar *dest,
-	       gint bpp,
-	       gpointer data)
+               gint y,
+               guchar *dest,
+               gint bpp,
+               gpointer data)
 {
   double     cx, cy;
 
@@ -341,9 +341,9 @@ polarize_func (gint x,
     {
       gint b;
       for (b = 0; b < bpp; b++)
-	{
-	  dest[b] = 255;
-	}
+        {
+          dest[b] = 255;
+        }
     }
 }
 
@@ -370,9 +370,9 @@ polarize (void)
 
 static gboolean
 calc_undistorted_coords (gdouble  wx,
-			 gdouble  wy,
-			 gdouble *x,
-			 gdouble *y)
+                         gdouble  wy,
+                         gdouble *x,
+                         gdouble *y)
 {
   gboolean inside;
   gdouble  phi, phi2;
@@ -406,68 +406,68 @@ calc_undistorted_coords (gdouble  wx,
   if (pcvals.polrec)
     {
       if (wx >= cen_x)
-	{
-	  if (wy > cen_y)
-	    {
-	      phi = G_PI - atan (((double)(wx - cen_x))/
-				 ((double)(wy - cen_y)));
-	    }
-	  else if (wy < cen_y)
-	    {
-	      phi = atan (((double)(wx - cen_x))/((double)(cen_y - wy)));
-	    }
-	  else
-	    {
-	      phi = G_PI / 2;
-	    }
-	}
+        {
+          if (wy > cen_y)
+            {
+              phi = G_PI - atan (((double)(wx - cen_x))/
+                                 ((double)(wy - cen_y)));
+            }
+          else if (wy < cen_y)
+            {
+              phi = atan (((double)(wx - cen_x))/((double)(cen_y - wy)));
+            }
+          else
+            {
+              phi = G_PI / 2;
+            }
+        }
       else if (wx < cen_x)
-	{
-	  if (wy < cen_y)
-	    {
-	      phi = 2 * G_PI - atan (((double)(cen_x -wx)) /
-				     ((double)(cen_y - wy)));
-	    }
-	  else if (wy > cen_y)
-	    {
-	      phi = G_PI + atan (((double)(cen_x - wx))/
-				 ((double)(wy - cen_y)));
-	    }
-	  else
-	    {
-	      phi = 1.5 * G_PI;
-	    }
-	}
+        {
+          if (wy < cen_y)
+            {
+              phi = 2 * G_PI - atan (((double)(cen_x -wx)) /
+                                     ((double)(cen_y - wy)));
+            }
+          else if (wy > cen_y)
+            {
+              phi = G_PI + atan (((double)(cen_x - wx))/
+                                 ((double)(wy - cen_y)));
+            }
+          else
+            {
+              phi = 1.5 * G_PI;
+            }
+        }
 
       r   = sqrt (SQR (wx - cen_x) + SQR (wy - cen_y));
 
       if (wx != cen_x)
-	{
-	  m = fabs (((double)(wy - cen_y)) / ((double)(wx - cen_x)));
-	}
+        {
+          m = fabs (((double)(wy - cen_y)) / ((double)(wx - cen_x)));
+        }
       else
-	{
-	  m = 0;
-	}
+        {
+          m = 0;
+        }
 
       if (m <= ((double)(y2 - y1) / (double)(x2 - x1)))
-	{
-	  if (wx == cen_x)
-	    {
-	      xmax = 0;
-	      ymax = cen_y - y1;
-	    }
-	  else
-	    {
-	      xmax = cen_x - x1;
-	      ymax = m * xmax;
-	    }
-	}
+        {
+          if (wx == cen_x)
+            {
+              xmax = 0;
+              ymax = cen_y - y1;
+            }
+          else
+            {
+              xmax = cen_x - x1;
+              ymax = m * xmax;
+            }
+        }
       else
-	{
-	  ymax = cen_y - y1;
-	  xmax = ymax / m;
-	}
+        {
+          ymax = cen_y - y1;
+          xmax = ymax / m;
+        }
 
       rmax = sqrt ( (double)(SQR (xmax) + SQR (ymax)) );
 
@@ -477,57 +477,57 @@ calc_undistorted_coords (gdouble  wx,
       phi = fmod (phi + angl, 2*G_PI);
 
       if (pcvals.backwards)
-	x_calc = x2 - 1 - (x2 - x1 - 1)/(2*G_PI) * phi;
+        x_calc = x2 - 1 - (x2 - x1 - 1)/(2*G_PI) * phi;
       else
-	x_calc = (x2 - x1 - 1)/(2*G_PI) * phi + x1;
+        x_calc = (x2 - x1 - 1)/(2*G_PI) * phi + x1;
 
       if (pcvals.inverse)
-	y_calc = (y2 - y1)/rmax   * r   + y1;
+        y_calc = (y2 - y1)/rmax   * r   + y1;
       else
-	y_calc = y2 - (y2 - y1)/rmax * r;
+        y_calc = y2 - (y2 - y1)/rmax * r;
     }
   else
     {
       if (pcvals.backwards)
-	phi = (2 * G_PI) * (x2 - wx) / xdiff;
+        phi = (2 * G_PI) * (x2 - wx) / xdiff;
       else
-	phi = (2 * G_PI) * (wx - x1) / xdiff;
+        phi = (2 * G_PI) * (wx - x1) / xdiff;
 
       phi = fmod (phi + angl, 2 * G_PI);
 
       if (phi >= 1.5 * G_PI)
-	phi2 = 2 * G_PI - phi;
+        phi2 = 2 * G_PI - phi;
       else if (phi >= G_PI)
-	phi2 = phi - G_PI;
+        phi2 = phi - G_PI;
       else if (phi >= 0.5 * G_PI)
-	phi2 = G_PI - phi;
+        phi2 = G_PI - phi;
       else
-	phi2 = phi;
+        phi2 = phi;
 
       xx = tan (phi2);
       if (xx != 0)
-	m = (double) 1.0 / xx;
+        m = (double) 1.0 / xx;
       else
-	m = 0;
+        m = 0;
 
       if (m <= ((double)(ydiff) / (double)(xdiff)))
-	{
-	  if (phi2 == 0)
-	    {
-	      xmax = 0;
-	      ymax = ym - y1;
-	    }
-	  else
-	    {
-	      xmax = xm - x1;
-	      ymax = m * xmax;
-	    }
-	}
+        {
+          if (phi2 == 0)
+            {
+              xmax = 0;
+              ymax = ym - y1;
+            }
+          else
+            {
+              xmax = xm - x1;
+              ymax = m * xmax;
+            }
+        }
       else
-	{
-	  ymax = ym - y1;
-	  xmax = ymax / m;
-	}
+        {
+          ymax = ym - y1;
+          xmax = ymax / m;
+        }
 
       rmax = sqrt ((double)(SQR (xmax) + SQR (ymax)));
 
@@ -536,33 +536,33 @@ calc_undistorted_coords (gdouble  wx,
       rmax = (rmax - t) / 100.0 * (100 - circle) + t;
 
       if (pcvals.inverse)
-	r = rmax * (double)((wy - y1) / (double)(ydiff));
+        r = rmax * (double)((wy - y1) / (double)(ydiff));
       else
-	r = rmax * (double)((y2 - wy) / (double)(ydiff));
+        r = rmax * (double)((y2 - wy) / (double)(ydiff));
 
       xx = r * sin (phi2);
       yy = r * cos (phi2);
 
       if (phi >= 1.5 * G_PI)
-	{
-	  x_calc = (double)xm - xx;
-	  y_calc = (double)ym - yy;
-	}
+        {
+          x_calc = (double)xm - xx;
+          y_calc = (double)ym - yy;
+        }
       else if (phi >= G_PI)
-	{
-	  x_calc = (double)xm - xx;
-	  y_calc = (double)ym + yy;
-	}
+        {
+          x_calc = (double)xm - xx;
+          y_calc = (double)ym + yy;
+        }
       else if (phi >= 0.5 * G_PI)
-	{
-	  x_calc = (double)xm + xx;
-	  y_calc = (double)ym + yy;
-	}
+        {
+          x_calc = (double)xm + xx;
+          y_calc = (double)ym + yy;
+        }
       else
-	{
-	  x_calc = (double)xm + xx;
-	  y_calc = (double)ym - yy;
-	}
+        {
+          x_calc = (double)xm + xx;
+          y_calc = (double)ym - yy;
+        }
     }
 
   xi = (int) (x_calc + 0.5);
@@ -592,12 +592,12 @@ polarize_dialog (void)
 
   dialog = gimp_dialog_new (_("Polarize"), "polar",
                             NULL, 0,
-			    gimp_standard_help_func, HELP_ID,
+                            gimp_standard_help_func, HELP_ID,
 
-			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			    NULL);
+                            NULL);
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -623,19 +623,19 @@ polarize_dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Circle _depth in percent:"), SCALE_WIDTH, 0,
-			      pcvals.circle, 0.0, 100.0, 1.0, 10.0, 2,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("Circle _depth in percent:"), SCALE_WIDTH, 0,
+                              pcvals.circle, 0.0, 100.0, 1.0, 10.0, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &pcvals.circle);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Offset _angle:"), SCALE_WIDTH, 0,
-			      pcvals.angle, 0.0, 359.0, 1.0, 15.0, 2,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("Offset _angle:"), SCALE_WIDTH, 0,
+                              pcvals.angle, 0.0, 359.0, 1.0, 15.0, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &pcvals.angle);
@@ -650,9 +650,9 @@ polarize_dialog (void)
   gtk_widget_show (toggle);
 
   gimp_help_set_help_data (toggle,
-			   _("If checked the mapping will begin at the right "
-			     "side, as opposed to beginning at the left."),
-			   NULL);
+                           _("If checked the mapping will begin at the right "
+                             "side, as opposed to beginning at the left."),
+                           NULL);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (polar_toggle_callback),
@@ -664,10 +664,10 @@ polarize_dialog (void)
   gtk_widget_show (toggle);
 
   gimp_help_set_help_data (toggle,
-			   _("If unchecked the mapping will put the bottom "
-			     "row in the middle and the top row on the "
-			     "outside.  If checked it will be the opposite."),
-			   NULL);
+                           _("If unchecked the mapping will put the bottom "
+                             "row in the middle and the top row on the "
+                             "outside.  If checked it will be the opposite."),
+                           NULL);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (polar_toggle_callback),
@@ -679,10 +679,10 @@ polarize_dialog (void)
   gtk_widget_show (toggle);
 
   gimp_help_set_help_data (toggle,
-			   _("If unchecked the image will be circularly "
-			     "mapped onto a rectangle.  If checked the image "
-			     "will be mapped onto a circle."),
-			   NULL);
+                           _("If unchecked the image will be circularly "
+                             "mapped onto a rectangle.  If checked the image "
+                             "will be mapped onto a circle."),
+                           NULL);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (polar_toggle_callback),
@@ -713,12 +713,13 @@ dialog_update_preview (void)
   gdouble  cx = 0.0, cy = 0.0;
   gint     ix, iy;
   gint     x, y;
-  gint	   bpp;
+  gint     bpp;
   gdouble  scale_x, scale_y;
   guchar  *p_ul, *i;
   GimpRGB  background;
   guchar   outside[4];
   guchar  *buffer;
+  guchar   k;
 
   gimp_palette_get_background (&background);
   gimp_rgb_set_alpha (&background, 0.0);
@@ -747,30 +748,28 @@ dialog_update_preview (void)
       p_ul = buffer;
 
       for (x = 0; x < preview->width; x++)
-	{
-	  calc_undistorted_coords (px, py, &cx, &cy);
+        {
+          calc_undistorted_coords (px, py, &cx, &cy);
 
-	  cx = (cx - left) * scale_x;
-	  cy = (cy - top) * scale_y;
+          cx = (cx - left) * scale_x;
+          cy = (cy - top) * scale_y;
 
-	  ix = (int) (cx + 0.5);
-	  iy = (int) (cy + 0.5);
+          ix = (int) (cx + 0.5);
+          iy = (int) (cy + 0.5);
 
-	  if ((ix >= 0) && (ix < preview->width) &&
-	      (iy >= 0) && (iy < preview->height))
-	    i = preview->cache + preview->rowstride * iy + bpp * ix;
-	  else
-	    i = outside;
+          if ((ix >= 0) && (ix < preview->width) &&
+              (iy >= 0) && (iy < preview->height))
+            i = preview->cache + preview->rowstride * iy + bpp * ix;
+          else
+            i = outside;
 
-	  p_ul[0] = i[0];
-	  p_ul[1] = i[1];
-	  p_ul[2] = i[2];
-	  p_ul[3] = i[3];
+          for (k = 0; k < bpp; k ++)
+            p_ul[k] = i[k];
 
-	  p_ul += bpp;
+          p_ul += bpp;
 
-	  px += dx;
-	}
+          px += dx;
+        }
 
       gimp_old_preview_do_row (preview, y, preview->width, buffer);
 
@@ -784,7 +783,7 @@ dialog_update_preview (void)
 
 static void
 dialog_scale_update (GtkAdjustment *adjustment,
-		     gdouble       *value)
+                     gdouble       *value)
 {
   gimp_double_adjustment_update (adjustment, value);
 
@@ -793,7 +792,7 @@ dialog_scale_update (GtkAdjustment *adjustment,
 
 static void
 polar_toggle_callback (GtkWidget *widget,
-		       gpointer   data)
+                       gpointer   data)
 {
   gimp_toggle_button_update (widget, data);
 
