@@ -1,3 +1,8 @@
+Sat Sep  4 00:32:18 CEST 1999  Marc Lehmann <pcg@goof.com>
+
+	* plug-ins/common/color_enhance.c,
+	plug-ins/common/plugin-defs.pl: added color_enhance plug-in.
+
 Sat Sep  4 00:23:07 CEST 1999  Marc Lehmann <pcg@goof.com>
 
 	* plug-ins/common/sparkle.c,
@@ -8,7 +13,7 @@ Sat Sep  4 00:23:07 CEST 1999  Marc Lehmann <pcg@goof.com>
 Sat Sep  4 00:16:04 CEST 1999  Marc Lehmann <pcg@goof.com>
 
 	* plug-ins/common/warp.c,
-	plug-ins/common/mkgen.pl: added warp plug-in.
+	plug-ins/common/plugin-defs.pl: added warp plug-in.
 
 Fri Sep  3 22:52:26 BST 1999 Andy Thomas <alt@gimp.org>
 
