@@ -48,7 +48,7 @@ enum {
   TOKEN_HUE_SCALE,
   TOKEN_VALUE_SCALE,
   TOKEN_SIMPLE_COLOR,
-  TOKEN_PROB,
+  TOKEN_PROB
 };
 
 static struct
