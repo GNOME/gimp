@@ -2640,6 +2640,8 @@ gimp_image_add_layer (GimpImage *gimage,
 		      GimpLayer *layer, 
 		      gint       position)
 {
+  gboolean alpha_changed = FALSE;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
@@ -2672,9 +2674,7 @@ gimp_image_add_layer (GimpImage *gimage,
 
   /*  If the layer has a mask, set the mask's gimage  */
   if (layer->mask)
-    {
-      gimp_item_set_image (GIMP_ITEM (layer->mask), gimage);
-    }
+    gimp_item_set_image (GIMP_ITEM (layer->mask), gimage);
 
   /*  add the layer to the list at the specified position  */
   if (position == -1)
@@ -2704,6 +2704,12 @@ gimp_image_add_layer (GimpImage *gimage,
       position = 1;
     }
 
+  if (gimp_container_num_children (gimage->layers) == 1 &&
+      ! gimp_drawable_has_alpha (GIMP_LIST (gimage->layers)->list->data))
+    {
+      alpha_changed = TRUE;
+    }
+
   gimp_container_insert (gimage->layers, GIMP_OBJECT (layer), position);
   g_object_unref (G_OBJECT (layer));
 
@@ -2715,6 +2721,9 @@ gimp_image_add_layer (GimpImage *gimage,
 			0, 0,
 			gimp_drawable_width  (GIMP_DRAWABLE (layer)),
 			gimp_drawable_height (GIMP_DRAWABLE (layer)));
+
+  if (alpha_changed)
+    gimp_image_alpha_changed (gimage);
 
   return TRUE;
 }
@@ -2777,6 +2786,12 @@ gimp_image_remove_layer (GimpImage *gimage,
   gimp_image_update (gimage, x, y, w, h);
 
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
+
+  if (gimp_container_num_children (gimage->layers) == 1 &&
+      ! gimp_drawable_has_alpha (GIMP_LIST (gimage->layers)->list->data))
+    {
+      gimp_image_alpha_changed (gimage);
+    }
 }
 
 gboolean

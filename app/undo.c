@@ -46,6 +46,7 @@
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayermask.h"
+#include "core/gimplist.h"
 #include "core/gimpparasitelist.h"
 
 #include "paint/gimppaintcore.h"
@@ -115,6 +116,7 @@ static gboolean resolution_changed = FALSE;
 static gboolean unit_changed       = FALSE;
 static gboolean mask_changed       = FALSE;
 static gboolean qmask_changed      = FALSE;
+static gboolean alpha_changed      = FALSE;
 
 
 static void
@@ -404,6 +406,14 @@ pop_stack (GimpImage  *gimage,
 	      gimp_image_qmask_changed (gimage);
 
 	      qmask_changed = FALSE;
+	    }
+
+	  /*  If the alpha_changed flag was set  */
+	  if (alpha_changed)
+	    {
+	      gimp_image_alpha_changed (gimage);
+
+	      alpha_changed = FALSE;
 	    }
 
 	  /* let others know that we just popped an action */
@@ -1694,6 +1704,12 @@ undo_pop_layer (GimpImage *gimage,
 			    0, 0,
 			    GIMP_DRAWABLE (lu->layer)->width,
 			    GIMP_DRAWABLE (lu->layer)->height);
+
+      if (gimp_container_num_children (gimage->layers) == 1 &&
+          ! gimp_drawable_has_alpha (GIMP_LIST (gimage->layers)->list->data))
+        {
+          alpha_changed = TRUE;
+        }
     }
   else
     {
@@ -1709,6 +1725,12 @@ undo_pop_layer (GimpImage *gimage,
       /*  if this is a floating selection, set the fs pointer  */
       if (gimp_layer_is_floating_sel (lu->layer))
 	gimage->floating_sel = lu->layer;
+
+      if (gimp_container_num_children (gimage->layers) == 1 &&
+          ! gimp_drawable_has_alpha (GIMP_LIST (gimage->layers)->list->data))
+        {
+          alpha_changed = TRUE;
+        }
 
       /*  add the new layer  */
       gimp_container_insert (gimage->layers, 

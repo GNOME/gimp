@@ -928,7 +928,7 @@ gimp_layer_add_alpha (GimpLayer *layer)
 
   gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
-  if (gimage->layers->num_children == 1)
+  if (gimp_container_num_children (gimage->layers) == 1)
     {
       gimp_image_alpha_changed (gimage);
     }
