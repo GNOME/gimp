@@ -1,5 +1,14 @@
 2004-11-02  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/drawable_transform.pdb: factored out the
+	"invoke" bodies to two utility functions, getting rid of *tons* of
+	duplicated code.
+
+	* app/pdb/drawable_transform_cmds.c: regenerated (only whitespace
+	and comments changed).
+
+2004-11-02  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/drawable_transform.pdb (drawable_*_defaults):
 	renamed parameter "interpolation" to "interpolate" as suggested by
 	pippin.
