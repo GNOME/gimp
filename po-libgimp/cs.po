@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-12-08 03:42+0100\n"
-"PO-Revision-Date: 2003-12-08 13:23+0100\n"
+"POT-Creation-Date: 2003-12-12 14:40+0100\n"
+"PO-Revision-Date: 2003-12-12 18:43+0100\n"
 "Last-Translator: Miloslav Trmač <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -197,11 +197,7 @@ msgstr "Výběr přechodu"
 msgid "None"
 msgstr "Nic"
 
-#: libgimp/gimpmiscui.c:50
-msgid "Preview"
-msgstr "Náhled"
-
-#: libgimp/gimpmiscui.c:536
+#: libgimp/gimpmiscui.c:66
 #, c-format
 msgid ""
 "No %s in gimprc:\n"
@@ -213,10 +209,6 @@ msgstr ""
 "Do svého souboru %4$s\n"
 "musíte přidat položku jako\n"
 "(%2$s \"%3$s\")."
-
-#: libgimp/gimpmiscui.c:556
-msgid "Parameter Settings"
-msgstr "Nastavení parametrů"
 
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
@@ -312,6 +304,11 @@ msgstr "Načtení selhalo"
 #: libgimpmodule/gimpmodule.c:412
 msgid "Not loaded"
 msgstr "Nenačteno"
+
+#: libgimpthumb/gimpthumb-utils.c:143
+#, c-format
+msgid "Failed to create thumbnail folder '%s'."
+msgstr "Nemohu vytvořit adresář miniatur '%s'."
 
 #: libgimpwidgets/gimpcolorbutton.c:93
 msgid "/_Foreground Color"
@@ -677,3 +674,9 @@ msgstr "Vodová barva"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Tlak"
+
+#~ msgid "Preview"
+#~ msgstr "Náhled"
+
+#~ msgid "Parameter Settings"
+#~ msgstr "Nastavení parametrů"
