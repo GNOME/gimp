@@ -1,3 +1,7 @@
+2000-06-16 Ville Hautamäki <villeh@cs.joensuu.fi>
+
+	* fi.po: started da finnish translation
+	
 2000-06-13  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.in.in: (hopefully) fixed bug #13762.
