@@ -29,7 +29,7 @@ app/gimage_mask.c
 app/gimpbrush.c
 app/gimpbrushpipe.c
 app/gimpchannel.c
-app/gimpdatafactoryview.h
+app/widgets/gimpdatafactoryview.h
 app/gimpdrawable.c
 app/gimphelp.c
 app/gimpimage.c

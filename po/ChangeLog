@@ -1,3 +1,7 @@
+2001-04-11  Simon Budig  <simon@gimp.org>
+
+	* POTFILES.in  fixed the entry for gimpdatafactoryview.c
+
 2001-03-23  Marius Andreiana  <mandreiana@yahoo.com>
 
 	* ro.po: added (thanks to Robert Claudiu Gheorghe <rgheorghe@writeme.com>)
