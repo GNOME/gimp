@@ -25,7 +25,7 @@ Overview of Changes in GIMP 2.1.2
 
 - Allow to use the color picker to edit palettes (as in gimp-1.2).
 
-- Improved gimpressionist plug-in.
+- Improvements and code cleanup in gimpressionist plug-in.
 
 - Allow to cut'n'paste image data between GIMP and other applications
   (for example Abiword) using the system clipboard.
@@ -36,6 +36,26 @@ Overview of Changes in GIMP 2.1.2
   application that behaves like 'gimp --no-interface' and doesn't link
   to GTK+ at all.
 
+- Deprecated GimpPixmap and ported almost all users to GtkImage.
+
+- Moved display projection code into a GimpProjection object. This means
+  there's finally only a single projection per image.
+
+- Introduced GimpPickable interface and implemented it for all core
+  objects that you can pick colors from.
+
+- Write smaller indexed MNG files.
+
+- Fixed issues with the internal statusbar API.
+
+- Allow for multiple light sources in the Lighting plug-in.
+
+- Redone file type selection in file load/save dialogs.
+
+- Removed HRZ plug-in.
+
+- Improved developer documentation.
+
 - Lots of bug fixes and other goodies. Check the ChangeLog for details.
 
 
@@ -43,7 +63,8 @@ Contributors:
 
    Michael Natterer, Sven Neumann, Philip Lafleur, William Skaggs,
    Geert Jordaens, Simon Budig, Roman Joost, Michael Schumacher,
-   Shlomi Fish, Hans Breuer, Brion Vibber, Robert Oegren
+   Shlomi Fish, Hans Breuer, Brion Vibber, Robert Oegren, Kevin
+   Cozens, Helvetix Victorinox
 
 
 Overview of Changes in GIMP 2.1.1

@@ -715,6 +715,7 @@
       <xi:include href="xml/gimpcolorpanel.xml" />
       <xi:include href="xml/gimpdasheditor.xml" />
       <xi:include href="xml/gimpfgbgeditor.xml" />
+      <xi:include href="xml/gimpfileprocview.xml" />
       <xi:include href="xml/gimpgrideditor.xml" />
       <xi:include href="xml/gimphistogrambox.xml" />
       <xi:include href="xml/gimphistogramview.xml" />
@@ -825,14 +826,6 @@
       <xi:include href="xml/qmask-commands.xml" />
     </chapter>
 
-    <chapter id="app-actions-file-dialog-actions">
-      <title>File Dialog Actions &amp; Callbacks</title>
-      <xi:include href="xml/file-dialog-actions.xml" />
-      <xi:include href="xml/file-dialog-commands.xml" />
-      <xi:include href="xml/file-open-actions.xml" />
-      <xi:include href="xml/file-save-actions.xml" />
-    </chapter>
-
     <chapter id="app-actions-data-factory-actions">
       <title>Data Factory Actions &amp; Callbacks</title>
       <xi:include href="xml/brushes-actions.xml" />
@@ -889,7 +882,6 @@
 
     <chapter id="app-menus-menus">
       <title>Menus</title>
-      <xi:include href="xml/file-dialog-menu.xml" />
       <xi:include href="xml/file-menu.xml" />
       <xi:include href="xml/image-menu.xml" />
       <xi:include href="xml/plug-in-menus.xml" />

@@ -10,7 +10,7 @@ extern gboolean gimp_composite_mmx_init (void);
  */
 extern gboolean gimp_composite_mmx_install (void);
 
-/**
+/*
  * Rummage through the compile-time environment to ensure this file
  * can actually be compiled like we expect it to.  If all is okay,
  * define the manifest constant COMPILE_IS_OKAY.

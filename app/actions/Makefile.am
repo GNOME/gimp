@@ -59,8 +59,6 @@ libappactions_a_SOURCES = \
 	file-actions.h			\
 	file-commands.c			\
 	file-commands.h			\
-	file-commands.c			\
-	file-commands.h			\
 	fonts-actions.c			\
 	fonts-actions.h			\
 	fonts-commands.c		\

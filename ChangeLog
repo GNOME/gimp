@@ -1,3 +1,12 @@
+2004-07-18  Sven Neumann  <sven@gimp.org>
+
+	* app/composite/gimp-composite-mmx.h: don't start a comment with
+	/** unless it's meant to be parsed by gtk-doc.
+
+	* app/actions/Makefile.am:
+	* app/actions/file-dialog-commands.[ch]: removed, not used any
+	longer.
+
 2004-07-18  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* app/paint/gimpink-blob.c (blob_make_convex): Check if the
