@@ -130,7 +130,7 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
         }
       else
         {
-          gtk_selection_data_set (selection, atom, 8, "F", 1);
+          gtk_selection_data_set (selection, atom, 8, "E", 1);
 
           if (error)
             {
@@ -146,7 +146,7 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
     }
   else
     {
-      gtk_selection_data_set (selection, atom, 8, "F", 1);
+      gtk_selection_data_set (selection, atom, 8, "E", 1);
 
       g_message (_("The given filename does not have any known "
                    "file extension."));

@@ -1,5 +1,10 @@
 2005-03-25  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdnd-xds.c (gimp_dnd_xds_save_image): in case of
+	an error, answer with E (error) instead of F (failure).
+
+2005-03-25  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpview.[ch]: virtualized GimpView::set_viewable.
 
 	* app/widgets/gimptoolbox-image-area.c: hook into "set_viewable"
