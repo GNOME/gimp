@@ -36,6 +36,8 @@
 
 #include <gtk/gtk.h>
 
+#define GDK_DISABLE_DEPRECATED
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -540,219 +542,6 @@ typedef struct _GdiCommentMultiFormats
 
 #define NPARMWORDS 16
 
-#ifndef G_BYTE_ORDER		/* Development glib has byte sex stuff,
-				 * but if we're on 1.0, use something else
-				 */
-
-#define G_LITTLE_ENDIAN 1234
-#define G_BIG_ENDIAN    4321
-
-#if defined(__i386__)
-#define G_BYTE_ORDER G_LITTLE_ENDIAN
-#elif defined(__hppa) || defined(__sparc)
-#define G_BYTE_ORDER G_BIG_ENDIAN
-#else
-#error set byte order by hand by adding your machine above
-#endif
-
-/* This is straight from the newest glib.h */
-
-/* Basic bit swapping functions
- */
-#define GUINT16_SWAP_LE_BE_CONSTANT(val)	((guint16) ( \
-    (((guint16) (val) & (guint16) 0x00ffU) << 8) | \
-    (((guint16) (val) & (guint16) 0xff00U) >> 8)))
-#define GUINT32_SWAP_LE_BE_CONSTANT(val)	((guint32) ( \
-    (((guint32) (val) & (guint32) 0x000000ffU) << 24) | \
-    (((guint32) (val) & (guint32) 0x0000ff00U) <<  8) | \
-    (((guint32) (val) & (guint32) 0x00ff0000U) >>  8) | \
-    (((guint32) (val) & (guint32) 0xff000000U) >> 24)))
-
-/* Intel specific stuff for speed
- */
-#if defined (__i386__) && (defined __GNUC__)
-
-#  define GUINT16_SWAP_LE_BE_X86(val) \
-     (__extension__						\
-      ({ register guint16 __v;					\
-	 if (__builtin_constant_p (val))			\
-	   __v = GUINT16_SWAP_LE_BE_CONSTANT (val);		\
-	 else							\
-	   __asm__ __volatile__ ("rorw $8, %w0"			\
-				 : "=r" (__v)			\
-				 : "0" ((guint16) (val))	\
-				 : "cc");			\
-	__v; }))
-
-#  define GUINT16_SWAP_LE_BE(val) \
-     ((guint16) GUINT16_SWAP_LE_BE_X86 ((guint16) (val)))
-
-#  if !defined(__i486__) && !defined(__i586__) \
-      && !defined(__pentium__) && !defined(__pentiumpro__) && !defined(__i686__)
-#     define GUINT32_SWAP_LE_BE_X86(val) \
-        (__extension__						\
-         ({ register guint32 __v;				\
-	    if (__builtin_constant_p (val))			\
-	      __v = GUINT32_SWAP_LE_BE_CONSTANT (val);		\
-	  else							\
-	    __asm__ __volatile__ ("rorw $8, %w0\n\t"		\
-				  "rorl $16, %0\n\t"		\
-				  "rorw $8, %w0"		\
-				  : "=r" (__v)			\
-				  : "0" ((guint32) (val))	\
-				  : "cc");			\
-	__v; }))
-
-#  else /* 486 and higher has bswap */
-#     define GUINT32_SWAP_LE_BE_X86(val) \
-        (__extension__						\
-         ({ register guint32 __v;				\
-	    if (__builtin_constant_p (val))			\
-	      __v = GUINT32_SWAP_LE_BE_CONSTANT (val);		\
-	  else							\
-	    __asm__ __volatile__ ("bswap %0"			\
-				  : "=r" (__v)			\
-				  : "0" ((guint32) (val)));	\
-	__v; }))
-#  endif /* processor specific 32-bit stuff */
-
-#  define GUINT32_SWAP_LE_BE(val) \
-     ((guint32) GUINT32_SWAP_LE_BE_X86 ((guint32) (val)))
-
-#else /* !__i386__ */
-#  define GUINT16_SWAP_LE_BE(val) (GUINT16_SWAP_LE_BE_CONSTANT (val))
-#  define GUINT32_SWAP_LE_BE(val) (GUINT32_SWAP_LE_BE_CONSTANT (val))
-#endif /* __i386__ */
-
-#ifdef HAVE_GINT64
-#define GUINT64_SWAP_LE_BE(val)         ((guint64) ( \
-    (((guint64) (val) & (guint64) 0x00000000000000ffU) << 56) | \
-    (((guint64) (val) & (guint64) 0x000000000000ff00U) << 40) | \
-    (((guint64) (val) & (guint64) 0x0000000000ff0000U) << 24) | \
-    (((guint64) (val) & (guint64) 0x00000000ff000000U) <<  8) | \
-    (((guint64) (val) & (guint64) 0x000000ff00000000U) >>  8) | \
-    (((guint64) (val) & (guint64) 0x0000ff0000000000U) >> 24) | \
-    (((guint64) (val) & (guint64) 0x00ff000000000000U) >> 40) | \
-    (((guint64) (val) & (guint64) 0xff00000000000000U) >> 56)))
-#endif
-
-#define GUINT16_SWAP_LE_PDP(val)	((guint16) (val))
-#define GUINT16_SWAP_BE_PDP(val)	(GUINT16_SWAP_LE_BE (val))
-#define GUINT32_SWAP_LE_PDP(val)	((guint32) ( \
-    (((guint32) (val) & (guint32) 0x0000ffffU) << 16) | \
-    (((guint32) (val) & (guint32) 0xffff0000U) >> 16)))
-#define GUINT32_SWAP_BE_PDP(val)	((guint32) ( \
-    (((guint32) (val) & (guint32) 0x00ff00ffU) << 8) | \
-    (((guint32) (val) & (guint32) 0xff00ff00U) >> 8)))
-
-#if G_BYTE_ORDER == G_LITTLE_ENDIAN
-#  define GINT16_TO_LE(val)		((gint16) (val))
-#  define GUINT16_TO_LE(val)		((guint16) (val))
-#  define GINT16_TO_BE(val)		((gint16) GUINT16_SWAP_LE_BE (val))
-#  define GUINT16_TO_BE(val)		(GUINT16_SWAP_LE_BE (val))
-#  define GINT16_FROM_LE(val)		((gint16) (val))
-#  define GUINT16_FROM_LE(val)		((guint16) (val))
-#  define GINT16_FROM_BE(val)		((gint16) GUINT16_SWAP_LE_BE (val))
-#  define GUINT16_FROM_BE(val)		(GUINT16_SWAP_LE_BE (val))
-#  define GINT32_TO_LE(val)		((gint32) (val))
-#  define GUINT32_TO_LE(val)		((guint32) (val))
-#  define GINT32_TO_BE(val)		((gint32) GUINT32_SWAP_LE_BE (val))
-#  define GUINT32_TO_BE(val)		(GUINT32_SWAP_LE_BE (val))
-#  define GINT32_FROM_LE(val)		((gint32) (val))
-#  define GUINT32_FROM_LE(val)		((guint32) (val))
-#  define GINT32_FROM_BE(val)		((gint32) GUINT32_SWAP_LE_BE (val))
-#  define GUINT32_FROM_BE(val)		(GUINT32_SWAP_LE_BE (val))
-#  ifdef HAVE_GINT64
-#  define GINT64_TO_LE(val)		((gint64) (val))
-#  define GUINT64_TO_LE(val)		((guint64) (val))
-#  define GINT64_TO_BE(val)		((gint64) GUINT64_SWAP_LE_BE (val))
-#  define GUINT64_TO_BE(val)		(GUINT64_SWAP_LE_BE (val))
-#  define GINT64_FROM_LE(val)		((gint64) (val))
-#  define GUINT64_FROM_LE(val)		((guint64) (val))
-#  define GINT64_FROM_BE(val)		((gint64) GUINT64_SWAP_LE_BE (val))
-#  define GUINT64_FROM_BE(val)		(GUINT64_SWAP_LE_BE (val))
-#  endif
-#elif G_BYTE_ORDER == G_BIG_ENDIAN
-#  define GINT16_TO_BE(val)		((gint16) (val))
-#  define GUINT16_TO_BE(val)		((guint16) (val))
-#  define GINT16_TO_LE(val)		((gint16) GUINT16_SWAP_LE_BE (val))
-#  define GUINT16_TO_LE(val)		(GUINT16_SWAP_LE_BE (val))
-#  define GINT16_FROM_BE(val)		((gint16) (val))
-#  define GUINT16_FROM_BE(val)		((guint16) (val))
-#  define GINT16_FROM_LE(val)		((gint16) GUINT16_SWAP_LE_BE (val))
-#  define GUINT16_FROM_LE(val)		(GUINT16_SWAP_LE_BE (val))
-#  define GINT32_TO_BE(val)		((gint32) (val))
-#  define GUINT32_TO_BE(val)		((guint32) (val))
-#  define GINT32_TO_LE(val)		((gint32) GUINT32_SWAP_LE_BE (val))
-#  define GUINT32_TO_LE(val)		(GUINT32_SWAP_LE_BE (val))
-#  define GINT32_FROM_BE(val)		((gint32) (val))
-#  define GUINT32_FROM_BE(val)		((guint32) (val))
-#  define GINT32_FROM_LE(val)		((gint32) GUINT32_SWAP_LE_BE (val))
-#  define GUINT32_FROM_LE(val)		(GUINT32_SWAP_LE_BE (val))
-#  ifdef HAVE_GINT64
-#  define GINT64_TO_BE(val)		((gint64) (val))
-#  define GUINT64_TO_BE(val)		((guint64) (val))
-#  define GINT64_TO_LE(val)		((gint64) GUINT64_SWAP_LE_BE (val))
-#  define GUINT64_TO_LE(val)		(GUINT64_SWAP_LE_BE (val))
-#  define GINT64_FROM_BE(val)		((gint64) (val))
-#  define GUINT64_FROM_BE(val)		((guint64) (val))
-#  define GINT64_FROM_LE(val)		((gint64) GUINT64_SWAP_LE_BE (val))
-#  define GUINT64_FROM_LE(val)		(GUINT64_SWAP_LE_BE (val))
-#  endif
-#else
-/* PDP stuff not implemented */
-#endif
-
-#if (SIZEOF_LONG == 8)
-#  define GLONG_TO_LE(val)		((glong) GINT64_TO_LE (val))
-#  define GULONG_TO_LE(val)		((gulong) GUINT64_TO_LE (val))
-#  define GLONG_TO_BE(val)		((glong) GINT64_TO_BE (val))
-#  define GULONG_TO_BE(val)		((gulong) GUINT64_TO_BE (val))
-#  define GLONG_FROM_LE(val)		((glong) GINT64_FROM_LE (val))
-#  define GULONG_FROM_LE(val)		((gulong) GUINT64_FROM_LE (val))
-#  define GLONG_FROM_BE(val)		((glong) GINT64_FROM_BE (val))
-#  define GULONG_FROM_BE(val)		((gulong) GUINT64_FROM_BE (val))
-#elif (SIZEOF_LONG == 4)
-#  define GLONG_TO_LE(val)		((glong) GINT32_TO_LE (val))
-#  define GULONG_TO_LE(val)		((gulong) GUINT32_TO_LE (val))
-#  define GLONG_TO_BE(val)		((glong) GINT32_TO_BE (val))
-#  define GULONG_TO_BE(val)		((gulong) GUINT32_TO_BE (val))
-#  define GLONG_FROM_LE(val)		((glong) GINT32_FROM_LE (val))
-#  define GULONG_FROM_LE(val)		((gulong) GUINT32_FROM_LE (val))
-#  define GLONG_FROM_BE(val)		((glong) GINT32_FROM_BE (val))
-#  define GULONG_FROM_BE(val)		((gulong) GUINT32_FROM_BE (val))
-#endif
-
-#if (SIZEOF_INT == 8)
-#  define GINT_TO_LE(val)		((gint) GINT64_TO_LE (val))
-#  define GUINT_TO_LE(val)		((guint) GUINT64_TO_LE (val))
-#  define GINT_TO_BE(val)		((gint) GINT64_TO_BE (val))
-#  define GUINT_TO_BE(val)		((guint) GUINT64_TO_BE (val))
-#  define GINT_FROM_LE(val)		((gint) GINT64_FROM_LE (val))
-#  define GUINT_FROM_LE(val)		((guint) GUINT64_FROM_LE (val))
-#  define GINT_FROM_BE(val)		((gint) GINT64_FROM_BE (val))
-#  define GUINT_FROM_BE(val)		((guint) GUINT64_FROM_BE (val))
-#elif (SIZEOF_INT == 4)
-#  define GINT_TO_LE(val)		((gint) GINT32_TO_LE (val))
-#  define GUINT_TO_LE(val)		((guint) GUINT32_TO_LE (val))
-#  define GINT_TO_BE(val)		((gint) GINT32_TO_BE (val))
-#  define GUINT_TO_BE(val)		((guint) GUINT32_TO_BE (val))
-#  define GINT_FROM_LE(val)		((gint) GINT32_FROM_LE (val))
-#  define GUINT_FROM_LE(val)		((guint) GUINT32_FROM_LE (val))
-#  define GINT_FROM_BE(val)		((gint) GINT32_FROM_BE (val))
-#  define GUINT_FROM_BE(val)		((guint) GUINT32_FROM_BE (val))
-#elif (SIZEOF_INT == 2)
-#  define GINT_TO_LE(val)		((gint) GINT16_TO_LE (val))
-#  define GUINT_TO_LE(val)		((guint) GUINT16_TO_LE (val))
-#  define GINT_TO_BE(val)		((gint) GINT16_TO_BE (val))
-#  define GUINT_TO_BE(val)		((guint) GUINT16_TO_BE (val))
-#  define GINT_FROM_LE(val)		((gint) GINT16_FROM_LE (val))
-#  define GUINT_FROM_LE(val)		((guint) GUINT16_FROM_LE (val))
-#  define GINT_FROM_BE(val)		((gint) GINT16_FROM_BE (val))
-#  define GUINT_FROM_BE(val)		((guint) GUINT16_FROM_BE (val))
-#endif
-
-#endif
 
 typedef struct
 {
@@ -776,7 +565,7 @@ static WMFLoadInterface load_interface =
 
 typedef struct
 {
-  GtkWidget *dialog;
+  GtkWidget     *dialog;
   GtkAdjustment *scale;
 } LoadDialogVals;
 
@@ -936,14 +725,15 @@ load_dialog (gchar *file_name)
 
 				  GTK_STOCK_CANCEL, gtk_widget_destroy,
 				  NULL, 1, NULL, FALSE, TRUE,
+
 				  GTK_STOCK_OK, load_ok_callback,
 				  vals, NULL, NULL, TRUE, FALSE,
 
 				  NULL);
 
-  gtk_signal_connect (GTK_OBJECT (vals->dialog), "destroy",
-                      GTK_SIGNAL_FUNC (gtk_main_quit),
-                      NULL);
+  g_signal_connect (G_OBJECT (vals->dialog), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /* Rendering */
   frame = gtk_frame_new (g_strdup_printf ( _("Rendering %s"), file_name));
@@ -1054,20 +844,21 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[2];
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  gint32        image_ID;
+  static GimpParam  values[2];
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  gint32            image_ID;
 
   l_run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 

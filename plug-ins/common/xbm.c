@@ -236,7 +236,7 @@ run (gchar      *name,
      GimpParam **return_vals)
 {
   static GimpParam   values[2];
-  GimpRunMode    run_mode;
+  GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint32             image_ID;
   gint32             drawable_ID;
@@ -251,6 +251,7 @@ run (gchar      *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
@@ -1153,9 +1154,9 @@ save_dialog (gint32 drawable_ID)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /* parameter settings */
   frame = gtk_frame_new (_("XBM Options"));
@@ -1171,11 +1172,12 @@ save_dialog (gint32 drawable_ID)
   /*  X10 format  */
   toggle = gtk_check_button_new_with_label (_("X10 Format Bitmap"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &xsvals.x10_format);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), xsvals.x10_format);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &xsvals.x10_format);
 
   table = gtk_table_new (2, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
@@ -1184,34 +1186,37 @@ save_dialog (gint32 drawable_ID)
   gtk_widget_show (table);
 
   /* prefix */
-  entry = gtk_entry_new_with_max_length (MAX_PREFIX);
+  entry = gtk_entry_new ();
+  gtk_entry_set_max_length (GTK_ENTRY (entry), MAX_PREFIX);
   gtk_entry_set_text (GTK_ENTRY (entry), xsvals.prefix);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Identifier Prefix:"), 1.0, 0.5,
 			     entry, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-                      GTK_SIGNAL_FUNC (prefix_entry_callback),
-                      NULL);
+  g_signal_connect (G_OBJECT (entry), "changed",
+                    G_CALLBACK (prefix_entry_callback),
+                    NULL);
 
   /* comment string. */
-  entry = gtk_entry_new_with_max_length (MAX_COMMENT);
+  entry = gtk_entry_new ();
+  gtk_entry_set_max_length (GTK_ENTRY (entry), MAX_COMMENT);
   gtk_widget_set_size_request (entry, 240, -1);
   gtk_entry_set_text (GTK_ENTRY (entry), xsvals.comment);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Comment:"), 1.0, 0.5,
 			     entry, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-                      GTK_SIGNAL_FUNC (comment_entry_callback),
-                      NULL);
+  g_signal_connect (G_OBJECT (entry), "changed",
+                    G_CALLBACK (comment_entry_callback),
+                    NULL);
 
   /* hotspot toggle */
   toggle = gtk_check_button_new_with_label (_("Write Hot Spot Values"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &xsvals.use_hot);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), xsvals.use_hot);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &xsvals.use_hot);
 
   table = gtk_table_new (2, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
@@ -1219,28 +1224,28 @@ save_dialog (gint32 drawable_ID)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  gtk_object_set_data (GTK_OBJECT (toggle), "set_sensitive", table);
+  g_object_set_data (G_OBJECT (toggle), "set_sensitive", table);
   gtk_widget_set_sensitive (table, xsvals.use_hot);
 
   spinbutton = gimp_spin_button_new (&adj, xsvals.x_hot, 0,
 				     gimp_drawable_width (drawable_ID) - 1,
 				     1, 1, 1, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &xsvals.x_hot);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Hot Spot X:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &xsvals.x_hot);
 
   spinbutton = gimp_spin_button_new (&adj, xsvals.y_hot, 0,
 				     gimp_drawable_height (drawable_ID) - 1,
 				     1, 1, 1, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &xsvals.y_hot);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Y:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &xsvals.y_hot);
 
   /* mask file */
   frame = gtk_frame_new (_("Mask File"));
@@ -1256,22 +1261,24 @@ save_dialog (gint32 drawable_ID)
 
   toggle = gtk_check_button_new_with_label (_("Write Extra Mask File"));
   gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 2, 0, 1);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &xsvals.write_mask);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), xsvals.write_mask);
   gtk_widget_show (toggle);
 
-  entry = gtk_entry_new_with_max_length (MAX_MASK_EXT);
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &xsvals.write_mask);
+
+  entry = gtk_entry_new ();
+  gtk_entry_set_max_length (GTK_ENTRY (entry), MAX_MASK_EXT);
   gtk_entry_set_text (GTK_ENTRY (entry), xsvals.mask_ext);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Mask File Extension:"), 1.0, 0.5,
 			     entry, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-                      GTK_SIGNAL_FUNC (mask_ext_entry_callback),
-                      NULL);
+  g_signal_connect (G_OBJECT (entry), "changed",
+                    G_CALLBACK (mask_ext_entry_callback),
+                    NULL);
 
-  gtk_object_set_data (GTK_OBJECT (toggle), "set_sensitive", entry);
+  g_object_set_data (G_OBJECT (toggle), "set_sensitive", entry);
   gtk_widget_set_sensitive (entry, xsvals.write_mask);
 
   gtk_widget_set_sensitive (frame, gimp_drawable_has_alpha (drawable_ID));

@@ -1,3 +1,17 @@
+2002-01-15  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/video.c
+	* plug-ins/common/vinvert.c
+	* plug-ins/common/vpropagate.c
+	* plug-ins/common/warp.c
+	* plug-ins/common/waves.c
+	* plug-ins/common/whirlpinch.c
+	* plug-ins/common/wind.c
+	* plug-ins/common/wmf.c
+	* plug-ins/common/xbm.c
+	* plug-ins/common/xpm.c
+	* plug-ins/common/xwd.c: compile with GTK_DISABLE_DEPRECATED.
+
 2002-01-14  Rebecca Walter  <bex@gimp.org>
 
 	* app/gui/palette-editor.c

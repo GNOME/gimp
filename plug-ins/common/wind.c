@@ -73,10 +73,10 @@ typedef enum
 
 
 static void query (void);
-static void run   (gchar   *name,
-		   gint     nparams,
+static void run   (gchar      *name,
+		   gint        nparams,
 		   GimpParam  *param,
-		   gint    *nreturn_vals,
+		   gint       *nreturn_vals,
 		   GimpParam **return_vals);
 
 static void dialog_box       (GimpDrawable   *drawable);
@@ -209,20 +209,21 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
-  drawable = gimp_drawable_get(param[2].data.d_drawable);
-  gimp_tile_cache_ntiles(2 * (drawable->width / gimp_tile_width() + 1));
+  drawable = gimp_drawable_get (param[2].data.d_drawable);
+  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
+
   switch (run_mode)
     {
     case GIMP_RUN_NONINTERACTIVE:
@@ -977,7 +978,8 @@ radio_callback (GtkWidget *widget,
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
     {
-      drawable = gtk_object_get_data (GTK_OBJECT (widget), "drawable");
+      drawable = g_object_get_data (G_OBJECT (widget), "drawable");
+
       if (drawable != NULL)
 	render_effect (drawable, TRUE);
     }
@@ -1015,9 +1017,9 @@ dialog_box (GimpDrawable *drawable)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /* init tooltips */
   gimp_help_init ();
@@ -1069,13 +1071,19 @@ dialog_box (GimpDrawable *drawable)
 
   frame = gimp_radio_group_new2 (TRUE, _("Style"),
                                  G_CALLBACK (radio_callback),
-				 &config.alg, (gpointer) config.alg,
-				 _("Wind"),  (gpointer) RENDER_WIND,  &style1,
-				 _("Blast"), (gpointer) RENDER_BLAST, &style2,
+				 &config.alg,
+                                 GINT_TO_POINTER (config.alg),
+
+				 _("Wind"),
+                                 GINT_TO_POINTER (RENDER_WIND), &style1,
+
+				 _("Blast"),
+                                 GINT_TO_POINTER (RENDER_BLAST), &style2,
 
 				 NULL);
-  gtk_object_set_data (GTK_OBJECT (style1), "drawable", drawable);
-  gtk_object_set_data (GTK_OBJECT (style2), "drawable", drawable);
+
+  g_object_set_data (G_OBJECT (style1), "drawable", drawable);
+  g_object_set_data (G_OBJECT (style2), "drawable", drawable);
 
   gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 0, 1,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
@@ -1087,12 +1095,19 @@ dialog_box (GimpDrawable *drawable)
 
   frame = gimp_radio_group_new2 (TRUE, _("Direction"),
                                  G_CALLBACK (radio_callback),
-				 &config.direction, (gpointer) config.direction,
-				 _("Left"),  (gpointer) LEFT,  &dir1,
-				 _("Right"), (gpointer) RIGHT, &dir2,
+				 &config.direction,
+                                 GINT_TO_POINTER (config.direction),
+
+				 _("Left"),
+                                 GINT_TO_POINTER (LEFT), &dir1,
+
+				 _("Right"),
+                                 GINT_TO_POINTER (RIGHT), &dir2,
+
 				 NULL);
-  gtk_object_set_data (GTK_OBJECT (dir1), "drawable", drawable);
-  gtk_object_set_data (GTK_OBJECT (dir2), "drawable", drawable);
+
+  g_object_set_data (G_OBJECT (dir1), "drawable", drawable);
+  g_object_set_data (G_OBJECT (dir2), "drawable", drawable);
 
   gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 0, 1,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
@@ -1104,16 +1119,23 @@ dialog_box (GimpDrawable *drawable)
 
   frame = gimp_radio_group_new2 (TRUE, _("Edge Affected"),
                                  G_CALLBACK (radio_callback),
-				 &config.edge, (gpointer) config.edge,
+				 &config.edge,
+                                 GINT_TO_POINTER (config.edge),
 
-				 _("Leading"),  (gpointer) LEADING,  &edge1,
-				 _("Trailing"), (gpointer) TRAILING, &edge2,
-				 _("Both"),     (gpointer) BOTH,     &edge3,
+				 _("Leading"),
+                                 GINT_TO_POINTER (LEADING), &edge1,
+
+				 _("Trailing"),
+                                 GINT_TO_POINTER (TRAILING), &edge2,
+
+				 _("Both"),
+                                 GINT_TO_POINTER (BOTH), &edge3,
 
 				 NULL);
-  gtk_object_set_data (GTK_OBJECT (edge1), "drawable", drawable);
-  gtk_object_set_data (GTK_OBJECT (edge2), "drawable", drawable);
-  gtk_object_set_data (GTK_OBJECT (edge3), "drawable", drawable);
+
+  g_object_set_data (G_OBJECT (edge1), "drawable", drawable);
+  g_object_set_data (G_OBJECT (edge2), "drawable", drawable);
+  g_object_set_data (G_OBJECT (edge3), "drawable", drawable);
 
   gtk_table_attach (GTK_TABLE (table), frame, 2, 3, 0, 1,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
@@ -1139,12 +1161,14 @@ dialog_box (GimpDrawable *drawable)
 			      MIN_THRESHOLD, MAX_THRESHOLD, 1.0, 10, 0,
 			      TRUE, 0, 0,
 			      _("Higher values restrict the effect to fewer areas of the image"), NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &config.threshold);
-  gtk_signal_connect_object (GTK_OBJECT (adj), "value_changed",
-			     GTK_SIGNAL_FUNC (render_effect),
-			     (gpointer)drawable);
+
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &config.threshold);
+
+  g_signal_connect_swapped (G_OBJECT (adj), "value_changed",
+                            G_CALLBACK (render_effect),
+                            drawable);
 
   /*****************************************************
     slider and entry for strength of wind
@@ -1157,12 +1181,13 @@ dialog_box (GimpDrawable *drawable)
 			      TRUE, 0, 0,
 			      _("Higher values increase the magnitude of the effect"), NULL);
 
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &config.strength);
-  gtk_signal_connect_object (GTK_OBJECT (adj), "value_changed",
-			     GTK_SIGNAL_FUNC (render_effect),
-			     (gpointer)drawable);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &config.strength);
+
+  g_signal_connect_swapped (G_OBJECT (adj), "value_changed",
+                            G_CALLBACK (render_effect),
+                            drawable);
 
   gtk_widget_show (table);
 

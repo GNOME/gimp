@@ -121,50 +121,50 @@ typedef struct
  */
 
 static void      query  (void);
-static void      run    (gchar    *name,
-			 gint      nparams,
-			 GimpParam   *param,
-			 gint     *nreturn_vals,
-			 GimpParam  **return_vals);
+static void      run    (gchar      *name,
+			 gint        nparams,
+			 GimpParam  *param,
+			 gint       *nreturn_vals,
+			 GimpParam **return_vals);
 
 static void      blur16           (GimpDrawable *drawable);
 
 static void      diff             (GimpDrawable *drawable, 
-				   gint32    *xl_id, 
-				   gint32    *yl_id);
+				   gint32       *xl_id, 
+				   gint32       *yl_id);
 
-static void      diff_prepare_row (GimpPixelRgn  *pixel_rgn,
-				   guchar     *data,
-				   int         x,
-				   int         y,
-				   int         w);
+static void      diff_prepare_row (GimpPixelRgn *pixel_rgn,
+				   guchar       *data,
+				   int           x,
+				   int           y,
+				   int           w);
 
 static void      warp_one         (GimpDrawable *draw, 
 				   GimpDrawable *new,
 				   GimpDrawable *map_x, 
 				   GimpDrawable *map_y,
 				   GimpDrawable *mag_draw,
-				   gint       first_time,
-				   gint       step);
+				   gint          first_time,
+				   gint          step);
 
 static void      warp        (GimpDrawable  *drawable,
 			      GimpDrawable **map_x_p,
 			      GimpDrawable **map_y_p);
  
 static gint      warp_dialog (GimpDrawable *drawable);
-static GimpTile *   warp_pixel  (GimpDrawable *drawable,
+static GimpTile *warp_pixel  (GimpDrawable *drawable,
 			      GimpTile     *tile,
-			      gint       width,
-			      gint       height,
-			      gint       x1,
-			      gint       y1,
-			      gint       x2,
-			      gint       y2,
-			      gint       x,
-			      gint       y,
-			      gint      *row,
-			      gint      *col,
-			      guchar    *pixel);
+			      gint          width,
+			      gint          height,
+			      gint          x1,
+			      gint          y1,
+			      gint          x2,
+			      gint          y2,
+			      gint          x,
+			      gint          y,
+			      gint         *row,
+			      gint         *col,
+			      guchar       *pixel);
 
 static guchar    bilinear        (gdouble  x,
 				  gdouble  y,
@@ -282,10 +282,10 @@ query (void)
 }
 
 static void
-run (gchar  *name,
-     gint    nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint   *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
   static GimpParam  values[1];
@@ -296,12 +296,12 @@ run (gchar  *name,
   GimpRGB           color;
 
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint pcnt;                 /* parameter counter for scanning input params. */
+  gint              pcnt;           /* parameter counter for scanning input params. */
 
   run_mode = param[0].data.d_int32;
 
-  tile_width = gimp_tile_width();    /* initialize some globals */
-  tile_height = gimp_tile_height();
+  tile_width  = gimp_tile_width ();    /* initialize some globals */
+  tile_height = gimp_tile_height ();
 
   /* get currently selected foreground pixel color */
   gimp_palette_get_foreground (&color);
@@ -315,6 +315,7 @@ run (gchar  *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
@@ -432,9 +433,9 @@ warp_dialog (GimpDrawable *drawable)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   gimp_help_init ();
 
@@ -460,18 +461,18 @@ warp_dialog (GimpDrawable *drawable)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Step Size:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &dvals.amount);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &dvals.amount);
 
   spinbutton = gimp_spin_button_new (&adj, dvals.iter,
 				     1, 100, 1, 5, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Iterations:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &dvals.iter);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &dvals.iter);
 
   /*  Displacement map menu  */
   label = gtk_label_new (_("Displacement Map:"));
@@ -501,48 +502,64 @@ warp_dialog (GimpDrawable *drawable)
 		    GTK_FILL, GTK_FILL, 0, 0);
 
   toggle = gtk_radio_button_new_with_label (group, _("Wrap"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
-  gtk_object_set_user_data (GTK_OBJECT (toggle), (gpointer) WRAP);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) gimp_radio_button_update,
-		      &dvals.wrap_type);
+  gtk_widget_show (toggle);
+
+  g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
+                     GINT_TO_POINTER (WRAP));
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_radio_button_update),
+                    &dvals.wrap_type);
+
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				dvals.wrap_type == WRAP);
-  gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (group, _("Smear"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
-  gtk_object_set_user_data (GTK_OBJECT (toggle), (gpointer) SMEAR);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) gimp_radio_button_update,
-		      &dvals.wrap_type);
+  gtk_widget_show (toggle);
+
+  g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
+                     GINT_TO_POINTER (SMEAR));
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_radio_button_update),
+                    &dvals.wrap_type);
+
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				dvals.wrap_type == SMEAR);
-  gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (group, _("Black"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
-  gtk_object_set_user_data (GTK_OBJECT (toggle), (gpointer) BLACK);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) gimp_radio_button_update,
-		      &dvals.wrap_type);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				dvals.wrap_type == BLACK);
   gtk_widget_show (toggle);
 
+  g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
+                     GINT_TO_POINTER (BLACK));
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_radio_button_update),
+                    &dvals.wrap_type);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				dvals.wrap_type == BLACK);
+
   toggle = gtk_radio_button_new_with_label (group, _("FG Color"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
-  gtk_object_set_user_data (GTK_OBJECT (toggle), (gpointer) COLOR);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) gimp_radio_button_update,
-		      &dvals.wrap_type);
+  gtk_widget_show (toggle);
+
+  g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
+                     GINT_TO_POINTER (COLOR));
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_radio_button_update),
+                    &dvals.wrap_type);
+
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				dvals.wrap_type == COLOR);
-  gtk_widget_show (toggle);
 
   gtk_widget_show (toggle_hbox);
 
@@ -567,27 +584,27 @@ warp_dialog (GimpDrawable *drawable)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Dither Size:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &dvals.dither);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &dvals.dither);
 
   spinbutton = gimp_spin_button_new (&adj, dvals.angle,
 				     0, 360, 1, 15, 0, 1, 1);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Rotation Angle:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &dvals.angle);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &dvals.angle);
 
   spinbutton = gimp_spin_button_new (&adj, dvals.substeps,
 				     1, 100, 1, 5, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Substeps:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &dvals.substeps);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &dvals.substeps);
 
   /*  Magnitude map menu  */
   label = gtk_label_new (_("Magnitude Map:"));
@@ -611,11 +628,12 @@ warp_dialog (GimpDrawable *drawable)
 
   toggle = gtk_check_button_new_with_label (_("Use Mag Map"));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) gimp_toggle_button_update,
-		      &dvals.mag_use);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dvals.mag_use);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &dvals.mag_use);
 
   gtk_widget_show (toggle_hbox);
 
@@ -641,9 +659,9 @@ warp_dialog (GimpDrawable *drawable)
   gimp_table_attach_aligned (GTK_TABLE (otable), 0, 0,
 			     _("Gradient Scale:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &dvals.grad_scale);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &dvals.grad_scale);
 
   /* ---------  Gradient map menu ----------------  */
 
@@ -666,9 +684,9 @@ warp_dialog (GimpDrawable *drawable)
   gimp_table_attach_aligned (GTK_TABLE (otable), 0, 1,
 			     _("Vector Mag:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &dvals.vector_scale);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &dvals.vector_scale);
 
   /* -------------------------------------------------------- */
 
@@ -677,9 +695,9 @@ warp_dialog (GimpDrawable *drawable)
   gimp_table_attach_aligned (GTK_TABLE (otable), 0, 2,
 			     _("Angle:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &dvals.vector_angle);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &dvals.vector_angle);
 
   /* ---------  Vector map menu ----------------  */
   option_menu_vector = gtk_option_menu_new ();

@@ -105,10 +105,10 @@ typedef struct
 /***** Prototypes *****/
 
 static void query (void);
-static void run   (gchar   *name,
-		   gint     nparams,
+static void run   (gchar      *name,
+		   gint        nparams,
 		   GimpParam  *param,
-		   gint    *nreturn_vals,
+		   gint       *nreturn_vals,
 		   GimpParam **return_vals);
 
 static void   whirl_pinch (void);
@@ -208,10 +208,10 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
   static GimpParam values[1];
@@ -224,11 +224,11 @@ run (gchar   *name,
   status   = GIMP_PDB_SUCCESS;
   run_mode = param[0].data.d_int32;
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
-
   *nreturn_vals = 1;
   *return_vals  = values;
+
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = status;
 
   /* Get the active drawable info */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
@@ -808,9 +808,9 @@ whirl_pinch_dialog (void)
 
 			    NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dialog), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -857,27 +857,27 @@ whirl_pinch_dialog (void)
 			      wpvals.whirl, -360.0, 360.0, 1.0, 15.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_scale_update),
-		      &wpvals.whirl);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_scale_update),
+                    &wpvals.whirl);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Pinch Amount:"), SCALE_WIDTH, 0,
 			      wpvals.pinch, -1.0, 1.0, 0.01, 0.1, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_scale_update),
-		      &wpvals.pinch);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_scale_update),
+                    &wpvals.pinch);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Radius:"), SCALE_WIDTH, 0,
 			      wpvals.radius, 0.0, 2.0, 0.01, 0.1, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (dialog_scale_update),
-		      &wpvals.radius);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (dialog_scale_update),
+                    &wpvals.radius);
 
   /* Done */
 
@@ -1032,8 +1032,7 @@ dialog_update_preview (void)
       p += preview_width * 3;
     }
 
-  gtk_widget_draw (wpint.preview, NULL);
-  gdk_flush ();
+  gtk_widget_queue_draw (wpint.preview);
 }
 
 static void

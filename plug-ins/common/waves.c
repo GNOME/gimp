@@ -92,10 +92,10 @@ static struct mwPreview *mwp;
 
 
 static void query (void);
-static void run   (gchar   *name,
-		   gint     nparam,
+static void run   (gchar      *name,
+		   gint        nparam,
 		   GimpParam  *param,
-		   gint    *nretvals,
+		   gint       *nretvals,
 		   GimpParam **retvals);
 
 static gint pluginCore       (struct piArgs *argp,
@@ -162,10 +162,10 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparam,
+run (gchar      *name,
+     gint        nparam,
      GimpParam  *param,
-     gint    *nretvals,
+     gint       *nretvals,
      GimpParam **retvals)
 {
   static GimpParam rvals[1];
@@ -173,14 +173,15 @@ run (gchar   *name,
   struct piArgs args;
 
   *nretvals = 1;
-  *retvals = rvals;
+  *retvals  = rvals;
+
+  rvals[0].type          = GIMP_PDB_STATUS;
+  rvals[0].data.d_status = GIMP_PDB_SUCCESS;
 
   memset (&args, (int) 0, sizeof (struct piArgs));
   args.type = -1;
   gimp_get_data ("plug_in_waves", &args);
 
-  rvals[0].type = GIMP_PDB_STATUS;
-  rvals[0].data.d_status = GIMP_PDB_SUCCESS;
   switch (param[0].data.d_int32)
     {
       GimpDrawable *drawable;
@@ -352,9 +353,9 @@ pluginCoreIA (struct piArgs *argp,
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -367,7 +368,7 @@ pluginCoreIA (struct piArgs *argp,
   gtk_widget_show (hbox);
 
   preview = mw_preview_new (hbox, mwp);
-  gtk_object_set_data (GTK_OBJECT (preview), "piArgs", argp);
+  g_object_set_data (G_OBJECT (preview), "piArgs", argp);
   waves_do_preview (preview);
 
   frame = gimp_radio_group_new2 (TRUE, _("Mode"),
@@ -390,10 +391,11 @@ pluginCoreIA (struct piArgs *argp,
   toggle = gtk_check_button_new_with_label ( _("Reflective"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), argp->reflective);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (waves_toggle_button_update),
-		      &argp->reflective);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (waves_toggle_button_update),
+                    &argp->reflective);
 
   frame = gtk_frame_new ( _("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
@@ -411,27 +413,27 @@ pluginCoreIA (struct piArgs *argp,
 			      argp->amplitude, 0.0, 101.0, 1.0, 5.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (waves_double_adjustment_update),
-		      &argp->amplitude);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (waves_double_adjustment_update),
+                    &argp->amplitude);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Phase:"), 140, 0,
 			      argp->phase, 0.0, 360.0, 2.0, 5.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (waves_double_adjustment_update),
-		      &argp->phase);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (waves_double_adjustment_update),
+                    &argp->phase);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Wavelength:"), 140, 0,
 			      argp->wavelength, 0.1, 50.0, 1.0, 5.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (waves_double_adjustment_update),
-		      &argp->wavelength);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (waves_double_adjustment_update),
+                    &argp->wavelength);
 
   gtk_widget_show (table);
 
@@ -473,7 +475,7 @@ waves_do_preview (GtkWidget *widget)
       theWidget = widget;
     }
 
-  argp = gtk_object_get_data (GTK_OBJECT (theWidget), "piArgs");
+  argp = g_object_get_data (G_OBJECT (theWidget), "piArgs");
   dst = g_new (guchar, mwp->width * mwp->height * mwp->bpp);
 
   wave (mwp->bits, dst, mwp->width, mwp->height, mwp->bpp,
@@ -487,8 +489,8 @@ waves_do_preview (GtkWidget *widget)
 			    mwp->width);
     }
 
-  gtk_widget_draw (theWidget, NULL);
-  gdk_flush ();
+  gtk_widget_queue_draw (theWidget);
+
   g_free (dst);
 }
 
@@ -594,11 +596,12 @@ mw_preview_new (GtkWidget        *parent,
 
   button = gtk_check_button_new_with_label (_("Do Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), do_preview);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-                      GTK_SIGNAL_FUNC (mw_preview_toggle_callback),
-                      &do_preview);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (mw_preview_toggle_callback),
+                    &do_preview);
 
   return preview;
 }

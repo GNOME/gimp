@@ -138,10 +138,10 @@ typedef struct
 /* Declare some local functions.
  */
 static void   query               (void);
-static void   run                 (gchar   *name,
-				   gint     nparams,
+static void   run                 (gchar      *name,
+				   gint        nparams,
 				   GimpParam  *param,
-				   gint    *nreturn_vals,
+				   gint       *nreturn_vals,
 				   GimpParam **return_vals);
 
 static gint32 load_image          (gchar  *filename);
@@ -264,23 +264,24 @@ those with alpha channels.",
 
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[2];
-  GimpRunMode  run_mode;
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  gint32        image_ID;
-  gint32        drawable_ID;
+  static GimpParam     values[2];
+  GimpRunMode          run_mode;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  gint32               image_ID;
+  gint32               drawable_ID;
   GimpExportReturnType export = GIMP_EXPORT_CANCEL;
 
   l_run_mode = run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
@@ -322,7 +323,7 @@ run (gchar   *name,
 	    {
 	      values[0].data.d_status = GIMP_PDB_CANCEL;
 	      return;
-	  }
+            }
 	  break;
 	default:
 	  break;

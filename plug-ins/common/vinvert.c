@@ -38,13 +38,13 @@
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (gchar     *name,
-			 gint       nparams,
-			 GimpParam    *param,
-			 gint      *nreturn_vals,
-			 GimpParam   **return_vals);
+static void      run    (gchar      *name,
+			 gint        nparams,
+			 GimpParam  *param,
+			 gint       *nreturn_vals,
+			 GimpParam **return_vals);
 
-static void      vinvert            (GimpDrawable    *drawable);
+static void      vinvert            (GimpDrawable *drawable);
 static void      indexed_vinvert    (gint32        image_ID);
 static void      vinvert_render_row (const guchar *src_row,
 				     guchar       *dest_row,
@@ -95,23 +95,23 @@ query ()
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     int     *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  gint32 image_ID;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  gint32             image_ID;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
 

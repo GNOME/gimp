@@ -81,7 +81,7 @@ static GtkWidget *  gtk_table_add_toggle       (GtkWidget     *table,
 						gint	       x1,
 						gint	       x2,
 						gint	       y,
-						GtkSignalFunc  update,
+						GCallback      update,
 						gint	      *value);
 
 static int	    value_difference_check  (guchar *, guchar *, int);
@@ -255,17 +255,17 @@ run (gchar      *name,
      gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam	 values[1];
-  GimpPDBStatusType	status = GIMP_PDB_SUCCESS;
-  GimpRunMode	run_mode;
+  static GimpParam  values[1];
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  GimpRunMode       run_mode;
   
   run_mode = param[0].data.d_int32;
   drawable_id = param[2].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
   
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
@@ -1011,9 +1011,9 @@ vpropagate_dialog (GimpImageBaseType image_type)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
@@ -1032,15 +1032,19 @@ vpropagate_dialog (GimpImageBaseType image_type)
     {
       button = gtk_radio_button_new_with_label (group,
 						gettext (modes[index].name));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (toggle_vbox), button, FALSE, FALSE, 0);
-      gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) index);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			  GTK_SIGNAL_FUNC (gimp_radio_button_update),
-			  &vpvals.propagate_mode);
+      gtk_widget_show (button);
+
+      g_object_set_data (G_OBJECT (button), "gimp-item-data",
+                         GINT_TO_POINTER (index));
+
+      g_signal_connect (G_OBJECT (button), "toggled",
+                        G_CALLBACK (gimp_radio_button_update),
+                        &vpvals.propagate_mode);
+
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				    index == vpvals.propagate_mode);
-      gtk_widget_show (button);
     }
 
   gtk_widget_show (toggle_vbox);
@@ -1061,43 +1065,43 @@ vpropagate_dialog (GimpImageBaseType image_type)
 			      vpvals.lower_limit, 0, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &vpvals.lower_limit);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &vpvals.lower_limit);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Upper Threshold:"), SCALE_WIDTH, 0,
 			      vpvals.upper_limit, 0, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &vpvals.upper_limit);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &vpvals.upper_limit);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Propagating Rate:"), SCALE_WIDTH, 0,
 			      vpvals.propagating_rate, 0, 1, 0.01, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &vpvals.propagating_rate);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &vpvals.propagating_rate);
 
   sep = gtk_hseparator_new ();
   gtk_table_attach (GTK_TABLE (table), sep, 0, 3, 3, 4, GTK_FILL, 0, 0, 0);
   gtk_widget_show (sep);
 
   gtk_table_add_toggle (table, _("To Left"), 0, 1, 5,
-			GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+			G_CALLBACK (gimp_toggle_button_update),
 			&direction_mask_vec[Right2Left]);
   gtk_table_add_toggle (table, _("To Right"), 2, 3, 5,
-			GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+			G_CALLBACK (gimp_toggle_button_update),
 			&direction_mask_vec[Left2Right]);
   gtk_table_add_toggle (table, _("To Top"), 1, 2, 4,
-			GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+			G_CALLBACK (gimp_toggle_button_update),
 			&direction_mask_vec[Bottom2Top]);
   gtk_table_add_toggle (table, _("To Bottom"), 1, 2, 6,
-			GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+			G_CALLBACK (gimp_toggle_button_update),
 			&direction_mask_vec[Top2Bottom]);
   if ((image_type == GIMP_RGBA_IMAGE) | (image_type == GIMP_GRAYA_IMAGE))
     {
@@ -1111,7 +1115,7 @@ vpropagate_dialog (GimpImageBaseType image_type)
 	toggle =
 	  gtk_table_add_toggle (table, _("Propagating Alpha Channel"),
 				0, 3, 8,
-				(GtkSignalFunc) gimp_toggle_button_update,
+				G_CALLBACK (gimp_toggle_button_update),
 				&propagate_alpha);
 	if (gimp_layer_get_preserve_transparency (drawable_id))
 	  {
@@ -1120,7 +1124,7 @@ vpropagate_dialog (GimpImageBaseType image_type)
 	  }
       }
       gtk_table_add_toggle (table, _("Propagating Value Channel"), 0, 3, 9,
-			    (GtkSignalFunc) gimp_toggle_button_update,
+			    G_CALLBACK (gimp_toggle_button_update),
 			    &propagate_value);
     }
   gtk_widget_show (table);
@@ -1153,24 +1157,26 @@ vpropagate_ok_callback (GtkWidget *widget,
 }
 
 static GtkWidget *
-gtk_table_add_toggle (GtkWidget     *table,
-		      gchar	    *name,
-		      gint	     x1,
-		      gint	     x2,
-		      gint	     y,
-		      GtkSignalFunc  update,
-		      gint	    *value)
+gtk_table_add_toggle (GtkWidget *table,
+		      gchar	*name,
+		      gint	 x1,
+		      gint	 x2,
+		      gint	 y,
+		      GCallback  update,
+		      gint	*value)
 {
   GtkWidget *toggle;
   
   toggle = gtk_check_button_new_with_label(name);
   gtk_table_attach (GTK_TABLE (table), toggle, x1, x2, y, y+1,
 		    GTK_FILL|GTK_EXPAND, 0, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) update,
-		      value);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), *value);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (update),
+                    value);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), *value);
 
   return toggle;
 }

@@ -1775,10 +1775,10 @@ static VideoInterface vint =
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (gchar   *name,
-			 gint     nparams,
+static void      run    (gchar      *name,
+			 gint        nparams,
 			 GimpParam  *param,
-			 gint    *nreturn_vals,
+			 gint       *nreturn_vals,
 			 GimpParam **return_vals);
 
 static void      video  (GimpDrawable  *drawable);
@@ -1840,23 +1840,23 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
@@ -2158,9 +2158,9 @@ video_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*  main parameter frame  */
   frame = gtk_frame_new (_("Parameter Settings"));
@@ -2186,19 +2186,23 @@ video_dialog (void)
 
   toggle = gtk_check_button_new_with_label (_("Additive"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) video_toggle_update,
-		      &vvals.additive);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), vvals.additive);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (video_toggle_update),
+                    &vvals.additive);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), vvals.additive);
 
   toggle = gtk_check_button_new_with_label ( _("Rotated"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) video_toggle_update,
-		      &vvals.rotated);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), vvals.rotated);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (video_toggle_update),
+                    &vvals.rotated);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), vvals.rotated);
 
   previewframe = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (previewframe), GTK_SHADOW_IN);
@@ -2223,15 +2227,19 @@ video_dialog (void)
     {
       toggle = gtk_radio_button_new_with_label (group,
                                                 gettext(pattern_name[y]));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
+      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-      gtk_object_set_user_data (GTK_OBJECT (toggle), (gpointer) y);
-      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-			  (GtkSignalFunc) video_radio_update,
-			  &vvals.pattern_number);
+      gtk_widget_show (toggle);
+
+      g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
+                         GINT_TO_POINTER (y));
+
+      g_signal_connect (G_OBJECT (toggle), "toggled",
+                        G_CALLBACK (video_radio_update),
+                        &vvals.pattern_number);
+
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				    vvals.pattern_number == y);
-      gtk_widget_show (toggle);
     }
 
   video_render_preview (FALSE);

@@ -90,9 +90,9 @@ gint       cpp;
 static void     query               (void);
 static void     run                 (gchar         *name,
 				     gint           nparams,
-				     GimpParam        *param,
+				     GimpParam     *param,
 				     gint          *nreturn_vals,
-				     GimpParam       **return_vals);
+				     GimpParam    **return_vals);
 
 static gint32   load_image          (gchar         *filename);
 static void     parse_colors        (XpmImage      *xpm_image,
@@ -190,24 +190,25 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[2];
-  GimpRunMode  run_mode;
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  gint32        image_ID;
-  gint32        drawable_ID;
+  static GimpParam     values[2];
+  GimpRunMode          run_mode;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  gint32               image_ID;
+  gint32               drawable_ID;
   GimpExportReturnType export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  values[0].type = GIMP_PDB_STATUS;
+
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
   if (strcmp (name, "file_xpm_load") == 0)
@@ -801,9 +802,9 @@ save_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));
@@ -824,9 +825,9 @@ save_dialog (void)
 				     TRUE, 0, 0,
 				     NULL, NULL);
 
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &xpmvals.threshold);
+  g_signal_connect (G_OBJECT (scale_data), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &xpmvals.threshold);
 
   gtk_widget_show (dlg);
 
