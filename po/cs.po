@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-17 15:30+0200\n"
+"POT-Creation-Date: 2004-08-05 21:58+0200\n"
 "PO-Revision-Date: 2004-05-27 14:01+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Uživatelskou instalaci provedete spuštěním GIMP bez přepínače '--no-"
 "interface'."
 
-#: app/app_procs.c:225
+#: app/app_procs.c:226
 #, c-format
 msgid ""
 "Unable to open a test swap file. To avoid data loss please check the "
@@ -39,7 +39,7 @@ msgstr ""
 "zkontrolujte prosím umístění a oprávnění odkládacího adresáře definovaného "
 "ve vašich Předvolbách (momentálně \"%s\")."
 
-#: app/app_procs.c:281
+#: app/app_procs.c:282
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Otevírání '%s' selhalo: %s"
@@ -2897,7 +2897,7 @@ msgstr "Nemohu převést do palety s více než 256 barvami."
 msgid "Select Custom Palette"
 msgstr "Zvolte vlastní paletu"
 
-#: app/gui/dialogs-constructors.c:194 app/gui/gui.c:324
+#: app/gui/dialogs-constructors.c:194 app/gui/gui.c:337
 #: app/gui/preferences-dialog.c:1386 app/gui/preferences-dialog.c:1389
 msgid "Tool Options"
 msgstr "Volby nástrojů"
@@ -3278,7 +3278,7 @@ msgid "/Save _Selection to File..."
 msgstr "/Uložit vý_běr do souboru..."
 
 #: app/gui/file-commands.c:188 app/gui/file-open-dialog.c:244
-#: app/widgets/gimpdnd.c:1294 app/widgets/gimpdocumentview.c:468
+#: app/widgets/gimpdnd.c:1328 app/widgets/gimpdocumentview.c:468
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -3730,11 +3730,11 @@ msgstr "Nastavit mřížku"
 msgid "Configure Image Grid"
 msgstr "Nastavit mřížku obrázků"
 
-#: app/gui/gui.c:383
+#: app/gui/gui.c:396
 msgid "Quit The GIMP?"
 msgstr "Ukončit GIMP?"
 
-#: app/gui/gui.c:388
+#: app/gui/gui.c:401
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -7392,7 +7392,7 @@ msgstr ""
 "Příliš žluťoučký kůň\n"
 "úpěl ďábelské kódy."
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:700
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:701
 msgid "Add Text Layer"
 msgstr "Přidat textovou vrstvu"
 
@@ -8608,15 +8608,15 @@ msgstr "Přidání textu do obrázku"
 msgid "/Tools/Te_xt"
 msgstr "/Nástroje/_Text"
 
-#: app/tools/gimptexttool.c:731
+#: app/tools/gimptexttool.c:732
 msgid "GIMP Text Editor"
 msgstr "Textový editor pro GIMP"
 
-#: app/tools/gimptexttool.c:841 app/tools/gimptexttool.c:844
+#: app/tools/gimptexttool.c:842 app/tools/gimptexttool.c:845
 msgid "Confirm Text Editing"
 msgstr "Potvrdit úpravu textu"
 
-#: app/tools/gimptexttool.c:865
+#: app/tools/gimptexttool.c:866
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -9113,7 +9113,7 @@ msgid "Edit Indexed Image Palette Color"
 msgstr "Upravit barvu palety indexovaného obrázku"
 
 #: app/widgets/gimpcontainergridview.c:204
-#: app/widgets/gimpcontainergridview.c:616
+#: app/widgets/gimpcontainergridview.c:623
 #: app/widgets/gimpcontainermenuimpl.c:145
 #: app/widgets/gimphistogrameditor.c:137 app/widgets/gimphistogrameditor.c:326
 msgid "(None)"
@@ -9174,7 +9174,7 @@ msgstr "Popředí: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "Pozadí: %d, %d, %d"
 
-#: app/widgets/gimpdnd.c:1258
+#: app/widgets/gimpdnd.c:1292
 #, c-format
 msgid ""
 "The filename '%s' couldn't be converted to a valid URI:\n"
@@ -9185,7 +9185,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/widgets/gimpdnd.c:1262
+#: app/widgets/gimpdnd.c:1296
 msgid "Invalid UTF-8"
 msgstr "Neplatné UTF-8"
 
@@ -9390,11 +9390,11 @@ msgstr "Šířka"
 msgid "Height"
 msgstr "Výška"
 
-#: app/widgets/gimphelp.c:193
+#: app/widgets/gimphelp.c:198
 msgid "Could not find GIMP Help Browser"
 msgstr "Nemohu nalézt prohlížeč nápovědy GIMPu"
 
-#: app/widgets/gimphelp.c:195
+#: app/widgets/gimphelp.c:200
 msgid ""
 "Could not find the GIMP Help Browser procedure. It probably was not compiled "
 "because you don't have GtkHtml2 installed."
@@ -9402,15 +9402,15 @@ msgstr ""
 "Nemohu nalézt proceduru prohlížeče nápovědy GIMPu. Pravděpodobně nebyla "
 "zkompilována, protože není nainstalován GtkHtml2."
 
-#: app/widgets/gimphelp.c:199 app/widgets/gimphelp.c:232
+#: app/widgets/gimphelp.c:204 app/widgets/gimphelp.c:237
 msgid "Use web browser instead"
 msgstr "Použít místo toho WWW prohlížeč"
 
-#: app/widgets/gimphelp.c:229
+#: app/widgets/gimphelp.c:234
 msgid "Could not start GIMP Help Browser"
 msgstr "Nemohu spustit prohlížeč nápovědy GIMPu"
 
-#: app/widgets/gimphelp.c:231
+#: app/widgets/gimphelp.c:236
 msgid "Could not start the GIMP Help Browser."
 msgstr "Nemohu spustit prohlížeč nápovědy GIMPu."
 

@@ -1,5 +1,9 @@
 2004-08-05  Sven Neumann  <sven@gimp.org>
 
+	* Made 2.0.4, the 'GIMP Tipsy' release.
+
+2004-08-05  Sven Neumann  <sven@gimp.org>
+
 	* app/app_procs.c
 	* app/base/base.[ch]
 	* app/composite/Makefile.am
@@ -20,7 +24,6 @@
 	* app/composite/gimp-composite-vis.[ch]
 	* app/composite/gimp-composite-x86.h
 	* app/composite/gimp-composite.[ch]
-
 	* app/composite/make-installer.py: backported changes to composite
 	code from HEAD branch. Fixes bug #149429 and works around problems
 	with the Intel compiler (bug #147013).

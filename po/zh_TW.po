@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-17 15:30+0200\n"
+"POT-Creation-Date: 2004-08-05 21:58+0200\n"
 "PO-Revision-Date: 2004-03-24 01:54+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -27,7 +27,7 @@ msgstr ""
 "因為使用‘--no-interface’選項，所以省略了用戶安裝的步驟。\n"
 "如果要進行用戶安裝程序，執行 GIMP 時請勿加上‘--no-interface’選項。"
 
-#: app/app_procs.c:225
+#: app/app_procs.c:226
 #, c-format
 msgid ""
 "Unable to open a test swap file. To avoid data loss please check the "
@@ -35,7 +35,7 @@ msgid ""
 "(currently \"%s\")."
 msgstr ""
 
-#: app/app_procs.c:281
+#: app/app_procs.c:282
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "開啟‘%s’失敗：%s"
@@ -2820,7 +2820,7 @@ msgstr ""
 msgid "Select Custom Palette"
 msgstr "選擇自製色盤"
 
-#: app/gui/dialogs-constructors.c:194 app/gui/gui.c:324
+#: app/gui/dialogs-constructors.c:194 app/gui/gui.c:337
 #: app/gui/preferences-dialog.c:1386 app/gui/preferences-dialog.c:1389
 msgid "Tool Options"
 msgstr "工具選項"
@@ -3207,7 +3207,7 @@ msgid "/Save _Selection to File..."
 msgstr "/將選定的內容儲存至檔案(_S)..."
 
 #: app/gui/file-commands.c:188 app/gui/file-open-dialog.c:244
-#: app/widgets/gimpdnd.c:1294 app/widgets/gimpdocumentview.c:468
+#: app/widgets/gimpdnd.c:1328 app/widgets/gimpdocumentview.c:468
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -3661,11 +3661,11 @@ msgstr ""
 msgid "Configure Image Grid"
 msgstr ""
 
-#: app/gui/gui.c:383
+#: app/gui/gui.c:396
 msgid "Quit The GIMP?"
 msgstr "是否結束 GIMP？"
 
-#: app/gui/gui.c:388
+#: app/gui/gui.c:401
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -7304,7 +7304,7 @@ msgid ""
 "five dozen liquor jugs."
 msgstr "This is Chinese test: '中文測試'"
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:700
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:701
 msgid "Add Text Layer"
 msgstr "新增文字圖層"
 
@@ -8512,15 +8512,15 @@ msgstr "將文字加進影像中"
 msgid "/Tools/Te_xt"
 msgstr "/工具/文字(_X)"
 
-#: app/tools/gimptexttool.c:731
+#: app/tools/gimptexttool.c:732
 msgid "GIMP Text Editor"
 msgstr "GIMP 文字編輯器"
 
-#: app/tools/gimptexttool.c:841 app/tools/gimptexttool.c:844
+#: app/tools/gimptexttool.c:842 app/tools/gimptexttool.c:845
 msgid "Confirm Text Editing"
 msgstr ""
 
-#: app/tools/gimptexttool.c:865
+#: app/tools/gimptexttool.c:866
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -9014,7 +9014,7 @@ msgid "Edit Indexed Image Palette Color"
 msgstr "修改索引色系影像的色盤顏色"
 
 #: app/widgets/gimpcontainergridview.c:204
-#: app/widgets/gimpcontainergridview.c:616
+#: app/widgets/gimpcontainergridview.c:623
 #: app/widgets/gimpcontainermenuimpl.c:145
 #: app/widgets/gimphistogrameditor.c:137 app/widgets/gimphistogrameditor.c:326
 msgid "(None)"
@@ -9075,7 +9075,7 @@ msgstr "前景顏色：%d，%d，%d"
 msgid "Background: %d, %d, %d"
 msgstr "背景顏色：%d，%d，%d"
 
-#: app/widgets/gimpdnd.c:1258
+#: app/widgets/gimpdnd.c:1292
 #, c-format
 msgid ""
 "The filename '%s' couldn't be converted to a valid URI:\n"
@@ -9086,7 +9086,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/widgets/gimpdnd.c:1262
+#: app/widgets/gimpdnd.c:1296
 msgid "Invalid UTF-8"
 msgstr "無效的 UTF-8 字串"
 
@@ -9291,11 +9291,11 @@ msgstr "寬度"
 msgid "Height"
 msgstr "高度"
 
-#: app/widgets/gimphelp.c:193
+#: app/widgets/gimphelp.c:198
 msgid "Could not find GIMP Help Browser"
 msgstr "找不到 GIMP 說明文件瀏覽器"
 
-#: app/widgets/gimphelp.c:195
+#: app/widgets/gimphelp.c:200
 msgid ""
 "Could not find the GIMP Help Browser procedure. It probably was not compiled "
 "because you don't have GtkHtml2 installed."
@@ -9303,15 +9303,15 @@ msgstr ""
 "找不到 GIMP 說明文件瀏覽器。可能是因為系統裡未有安裝 GtkHtml2 令此功能沒有被"
 "編譯到程式中。"
 
-#: app/widgets/gimphelp.c:199 app/widgets/gimphelp.c:232
+#: app/widgets/gimphelp.c:204 app/widgets/gimphelp.c:237
 msgid "Use web browser instead"
 msgstr "以網頁瀏覽器代替"
 
-#: app/widgets/gimphelp.c:229
+#: app/widgets/gimphelp.c:234
 msgid "Could not start GIMP Help Browser"
 msgstr "無法啟動 GIMP 說明文件瀏覽器。"
 
-#: app/widgets/gimphelp.c:231
+#: app/widgets/gimphelp.c:236
 msgid "Could not start the GIMP Help Browser."
 msgstr "無法啟動 GIMP 說明文件瀏覽器。"
 

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-17 15:30+0200\n"
+"POT-Creation-Date: 2004-08-05 21:58+0200\n"
 "PO-Revision-Date: 2004-01-20 19:30+0900\n"
 "Last-Translator: Dongsu Jang <iolo@hellocity.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -23,7 +23,7 @@ msgstr ""
 "'--no-interface' 플래그 때문에 사용자 설치를 건너뛰었습니다.\n"
 "사용자 설치를 하려면 '--no-interface' 플래그 없이 김프를 실행하십시오."
 
-#: app/app_procs.c:225
+#: app/app_procs.c:226
 #, c-format
 msgid ""
 "Unable to open a test swap file. To avoid data loss please check the "
@@ -33,7 +33,7 @@ msgstr ""
 "테스트 스왑 파일을 열 수 없습니다. 데이터의 손실을 피하려면 환경 설정에 정의"
 "된 스왑 디렉토리(현재 \"%s\")의 위치와 허가 권한을 확인하십시오."
 
-#: app/app_procs.c:281
+#: app/app_procs.c:282
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "'%s' 열기 실패: %s"
@@ -2845,7 +2845,7 @@ msgstr "256색 이상을 가진 색상표로 변환할 수 없습니다."
 msgid "Select Custom Palette"
 msgstr "사용자 색상표 선택"
 
-#: app/gui/dialogs-constructors.c:194 app/gui/gui.c:324
+#: app/gui/dialogs-constructors.c:194 app/gui/gui.c:337
 #: app/gui/preferences-dialog.c:1386 app/gui/preferences-dialog.c:1389
 msgid "Tool Options"
 msgstr "도구 선택사항"
@@ -3226,7 +3226,7 @@ msgid "/Save _Selection to File..."
 msgstr "/선택을 파일에 쓰기(_S)..."
 
 #: app/gui/file-commands.c:188 app/gui/file-open-dialog.c:244
-#: app/widgets/gimpdnd.c:1294 app/widgets/gimpdocumentview.c:468
+#: app/widgets/gimpdnd.c:1328 app/widgets/gimpdocumentview.c:468
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -3677,11 +3677,11 @@ msgstr "모눈 설정"
 msgid "Configure Image Grid"
 msgstr "이미지 모눈 설정"
 
-#: app/gui/gui.c:383
+#: app/gui/gui.c:396
 msgid "Quit The GIMP?"
 msgstr "김프를 마치겠습니까?"
 
-#: app/gui/gui.c:388
+#: app/gui/gui.c:401
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -7313,7 +7313,7 @@ msgstr ""
 "무궁화 꽃이 피었습니다.\n"
 "아름답고 고운 우리 말 우리 글!"
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:700
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:701
 msgid "Add Text Layer"
 msgstr "텍스트 레이어 더하기"
 
@@ -8528,15 +8528,15 @@ msgstr "이미지에 텍스트 더하기"
 msgid "/Tools/Te_xt"
 msgstr "/도구(T)/텍스트(_X)"
 
-#: app/tools/gimptexttool.c:731
+#: app/tools/gimptexttool.c:732
 msgid "GIMP Text Editor"
 msgstr "김프 텍스트 편집기"
 
-#: app/tools/gimptexttool.c:841 app/tools/gimptexttool.c:844
+#: app/tools/gimptexttool.c:842 app/tools/gimptexttool.c:845
 msgid "Confirm Text Editing"
 msgstr "텍스트 편집 확인"
 
-#: app/tools/gimptexttool.c:865
+#: app/tools/gimptexttool.c:866
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -9030,7 +9030,7 @@ msgid "Edit Indexed Image Palette Color"
 msgstr "인덱스된 이미지 색상표의 색상 편집"
 
 #: app/widgets/gimpcontainergridview.c:204
-#: app/widgets/gimpcontainergridview.c:616
+#: app/widgets/gimpcontainergridview.c:623
 #: app/widgets/gimpcontainermenuimpl.c:145
 #: app/widgets/gimphistogrameditor.c:137 app/widgets/gimphistogrameditor.c:326
 msgid "(None)"
@@ -9091,7 +9091,7 @@ msgstr "전경: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "배경: %d, %d, %d"
 
-#: app/widgets/gimpdnd.c:1258
+#: app/widgets/gimpdnd.c:1292
 #, c-format
 msgid ""
 "The filename '%s' couldn't be converted to a valid URI:\n"
@@ -9102,7 +9102,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/widgets/gimpdnd.c:1262
+#: app/widgets/gimpdnd.c:1296
 msgid "Invalid UTF-8"
 msgstr "잘못된 UTF-8"
 
@@ -9307,11 +9307,11 @@ msgstr "너비"
 msgid "Height"
 msgstr "높이"
 
-#: app/widgets/gimphelp.c:193
+#: app/widgets/gimphelp.c:198
 msgid "Could not find GIMP Help Browser"
 msgstr "김프 도움말 브라우저를 찾을 수 없습니다"
 
-#: app/widgets/gimphelp.c:195
+#: app/widgets/gimphelp.c:200
 msgid ""
 "Could not find the GIMP Help Browser procedure. It probably was not compiled "
 "because you don't have GtkHtml2 installed."
@@ -9319,15 +9319,15 @@ msgstr ""
 "김프 도움말 브라우저 프로시져가 없습니다. GtkHtml2가 설치되어 있지 않았다면 "
 "컴파일되지 않았을 수 있습니다."
 
-#: app/widgets/gimphelp.c:199 app/widgets/gimphelp.c:232
+#: app/widgets/gimphelp.c:204 app/widgets/gimphelp.c:237
 msgid "Use web browser instead"
 msgstr "웹 브라우저를 대신 사용하십시오"
 
-#: app/widgets/gimphelp.c:229
+#: app/widgets/gimphelp.c:234
 msgid "Could not start GIMP Help Browser"
 msgstr "김프 도움말 브라우저를 시작할 수 없습니다"
 
-#: app/widgets/gimphelp.c:231
+#: app/widgets/gimphelp.c:236
 msgid "Could not start the GIMP Help Browser."
 msgstr "김프 도움말 브라우저를 시작할 수 없습니다."
 

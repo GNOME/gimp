@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD.tr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-17 15:30+0200\n"
+"POT-Creation-Date: 2004-08-05 21:58+0200\n"
 "PO-Revision-Date: 2003-12-31 16:56+0000\n"
 "Last-Translator: Görkem Çetin <gorkem@kde.org>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -24,7 +24,7 @@ msgid ""
 "To perform user installation, run the GIMP without the '--no-interface' flag."
 msgstr ""
 
-#: app/app_procs.c:225
+#: app/app_procs.c:226
 #, c-format
 msgid ""
 "Unable to open a test swap file. To avoid data loss please check the "
@@ -32,7 +32,7 @@ msgid ""
 "(currently \"%s\")."
 msgstr ""
 
-#: app/app_procs.c:281
+#: app/app_procs.c:282
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "%s dosyasını açma başarısız oldu: %s"
@@ -2854,7 +2854,7 @@ msgstr ""
 msgid "Select Custom Palette"
 msgstr "Özel Palet Seç"
 
-#: app/gui/dialogs-constructors.c:194 app/gui/gui.c:324
+#: app/gui/dialogs-constructors.c:194 app/gui/gui.c:337
 #: app/gui/preferences-dialog.c:1386 app/gui/preferences-dialog.c:1389
 msgid "Tool Options"
 msgstr "Alet Seçenekleri"
@@ -3252,7 +3252,7 @@ msgid "/Save _Selection to File..."
 msgstr "/Seçimi _Dosyaya Kaydet..."
 
 #: app/gui/file-commands.c:188 app/gui/file-open-dialog.c:244
-#: app/widgets/gimpdnd.c:1294 app/widgets/gimpdocumentview.c:468
+#: app/widgets/gimpdnd.c:1328 app/widgets/gimpdocumentview.c:468
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -3767,11 +3767,11 @@ msgstr "Kılavuzları Yapılandır"
 msgid "Configure Image Grid"
 msgstr "Resim Boyutunu Doğrula"
 
-#: app/gui/gui.c:383
+#: app/gui/gui.c:396
 msgid "Quit The GIMP?"
 msgstr "GIMP'ten çıkmak istiyor musunuz?"
 
-#: app/gui/gui.c:388
+#: app/gui/gui.c:401
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -7608,7 +7608,7 @@ msgid ""
 "five dozen liquor jugs."
 msgstr ""
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:700
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:701
 msgid "Add Text Layer"
 msgstr "Metin Katmanı Ekle"
 
@@ -8945,15 +8945,15 @@ msgstr "Resme metin ekle"
 msgid "/Tools/Te_xt"
 msgstr "/Aletler/Met_in"
 
-#: app/tools/gimptexttool.c:731
+#: app/tools/gimptexttool.c:732
 msgid "GIMP Text Editor"
 msgstr "GIMP Metin Düzenleyici"
 
-#: app/tools/gimptexttool.c:841 app/tools/gimptexttool.c:844
+#: app/tools/gimptexttool.c:842 app/tools/gimptexttool.c:845
 msgid "Confirm Text Editing"
 msgstr ""
 
-#: app/tools/gimptexttool.c:865
+#: app/tools/gimptexttool.c:866
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -9503,7 +9503,7 @@ msgid "Edit Indexed Image Palette Color"
 msgstr "Doğrudan Renkli"
 
 #: app/widgets/gimpcontainergridview.c:204
-#: app/widgets/gimpcontainergridview.c:616
+#: app/widgets/gimpcontainergridview.c:623
 #: app/widgets/gimpcontainermenuimpl.c:145
 #: app/widgets/gimphistogrameditor.c:137 app/widgets/gimphistogrameditor.c:326
 #, fuzzy
@@ -9570,7 +9570,7 @@ msgstr "Önplan"
 msgid "Background: %d, %d, %d"
 msgstr "Arkaplan"
 
-#: app/widgets/gimpdnd.c:1258
+#: app/widgets/gimpdnd.c:1292
 #, c-format
 msgid ""
 "The filename '%s' couldn't be converted to a valid URI:\n"
@@ -9578,7 +9578,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: app/widgets/gimpdnd.c:1262
+#: app/widgets/gimpdnd.c:1296
 #, fuzzy
 msgid "Invalid UTF-8"
 msgstr "%s anahtarına verilen değer geçerli bir UTF-8 dizgesi değil"
@@ -9787,11 +9787,11 @@ msgstr "Genişlik"
 msgid "Height"
 msgstr "Yükseklik"
 
-#: app/widgets/gimphelp.c:193
+#: app/widgets/gimphelp.c:198
 msgid "Could not find GIMP Help Browser"
 msgstr "GIMP Yardım Gezgini bulunamadı"
 
-#: app/widgets/gimphelp.c:195
+#: app/widgets/gimphelp.c:200
 #, fuzzy
 msgid ""
 "Could not find the GIMP Help Browser procedure. It probably was not compiled "
@@ -9801,17 +9801,17 @@ msgstr ""
 "Büyük bir olasılıkla derleme sırasında bulunamayan\n"
 "GtkXmHTML kütüphanesinden kaynaklanmaktadır."
 
-#: app/widgets/gimphelp.c:199 app/widgets/gimphelp.c:232
+#: app/widgets/gimphelp.c:204 app/widgets/gimphelp.c:237
 #, fuzzy
 msgid "Use web browser instead"
 msgstr "Netscape'i kullan"
 
-#: app/widgets/gimphelp.c:229
+#: app/widgets/gimphelp.c:234
 #, fuzzy
 msgid "Could not start GIMP Help Browser"
 msgstr "GIMP Yardım Gezgini bulunamadı"
 
-#: app/widgets/gimphelp.c:231
+#: app/widgets/gimphelp.c:236
 #, fuzzy
 msgid "Could not start the GIMP Help Browser."
 msgstr "GIMP Yardım Gezgini bulunamadı"

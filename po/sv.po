@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-21 11:08+0900\n"
+"POT-Creation-Date: 2004-08-05 21:58+0200\n"
 "PO-Revision-Date: 2004-07-21 11:10+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -29,7 +29,7 @@ msgstr ""
 "användes.\n"
 "Kör GIMP med flaggan \"--no-interface\" för att utföra användarinstallation."
 
-#: app/app_procs.c:225
+#: app/app_procs.c:226
 #, c-format
 msgid ""
 "Unable to open a test swap file. To avoid data loss please check the "
@@ -40,7 +40,7 @@ msgstr ""
 "platsen för och tillåtna filoperationer på katalogen för växlingsfiler som "
 "är definierad i dina alternativ (just nu \"%s\")."
 
-#: app/app_procs.c:281
+#: app/app_procs.c:282
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Öppnande av \"%s\" misslyckades: %s"
@@ -2898,7 +2898,7 @@ msgstr "Kan inte konvertera till palett med mer än 256 färger."
 msgid "Select Custom Palette"
 msgstr "Välj egen palett"
 
-#: app/gui/dialogs-constructors.c:194 app/gui/gui.c:324
+#: app/gui/dialogs-constructors.c:194 app/gui/gui.c:337
 #: app/gui/preferences-dialog.c:1386 app/gui/preferences-dialog.c:1389
 msgid "Tool Options"
 msgstr "Verktygsalternativ"
@@ -3279,7 +3279,7 @@ msgid "/Save _Selection to File..."
 msgstr "/Spara _markering till fil..."
 
 #: app/gui/file-commands.c:188 app/gui/file-open-dialog.c:244
-#: app/widgets/gimpdnd.c:1294 app/widgets/gimpdocumentview.c:468
+#: app/widgets/gimpdnd.c:1328 app/widgets/gimpdocumentview.c:468
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -3732,11 +3732,11 @@ msgstr "Ställ in rutnät"
 msgid "Configure Image Grid"
 msgstr "Ställ in rutnät för bild"
 
-#: app/gui/gui.c:383
+#: app/gui/gui.c:396
 msgid "Quit The GIMP?"
 msgstr "Avsluta GIMP?"
 
-#: app/gui/gui.c:388
+#: app/gui/gui.c:401
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -7401,7 +7401,7 @@ msgstr ""
 "Flygande bäckasiner söka\n"
 "strax hwila på mjuka tuvor."
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:700
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:701
 msgid "Add Text Layer"
 msgstr "Lägg till textlager"
 
@@ -8618,15 +8618,15 @@ msgstr "Skriv text i bilden"
 msgid "/Tools/Te_xt"
 msgstr "/Verktyg/Te_xt"
 
-#: app/tools/gimptexttool.c:731
+#: app/tools/gimptexttool.c:732
 msgid "GIMP Text Editor"
 msgstr "GIMP-textredigerare"
 
-#: app/tools/gimptexttool.c:841 app/tools/gimptexttool.c:844
+#: app/tools/gimptexttool.c:842 app/tools/gimptexttool.c:845
 msgid "Confirm Text Editing"
 msgstr "Bekräfta texteditering"
 
-#: app/tools/gimptexttool.c:865
+#: app/tools/gimptexttool.c:866
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -9123,7 +9123,7 @@ msgid "Edit Indexed Image Palette Color"
 msgstr "Redigera palettfärg för indexerad bild"
 
 #: app/widgets/gimpcontainergridview.c:204
-#: app/widgets/gimpcontainergridview.c:616
+#: app/widgets/gimpcontainergridview.c:623
 #: app/widgets/gimpcontainermenuimpl.c:145
 #: app/widgets/gimphistogrameditor.c:137 app/widgets/gimphistogrameditor.c:326
 msgid "(None)"
@@ -9184,7 +9184,7 @@ msgstr "Förgrund: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "Bakgrund: %d, %d, %d"
 
-#: app/widgets/gimpdnd.c:1258
+#: app/widgets/gimpdnd.c:1292
 #, c-format
 msgid ""
 "The filename '%s' couldn't be converted to a valid URI:\n"
@@ -9195,7 +9195,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/widgets/gimpdnd.c:1262
+#: app/widgets/gimpdnd.c:1296
 msgid "Invalid UTF-8"
 msgstr "Ogiltig UTF-8"
 
@@ -9400,11 +9400,11 @@ msgstr "Bredd"
 msgid "Height"
 msgstr "Höjd"
 
-#: app/widgets/gimphelp.c:193
+#: app/widgets/gimphelp.c:198
 msgid "Could not find GIMP Help Browser"
 msgstr "Kunde inte hitta GIMP-hjälpläsaren"
 
-#: app/widgets/gimphelp.c:195
+#: app/widgets/gimphelp.c:200
 msgid ""
 "Could not find the GIMP Help Browser procedure. It probably was not compiled "
 "because you don't have GtkHtml2 installed."
@@ -9412,15 +9412,15 @@ msgstr ""
 "Kunde inte hitta GIMP-hjälpläsarproceduren. Den var förmodligen inte "
 "kompilerad eftersom du inte har GtkXmHTML installerat."
 
-#: app/widgets/gimphelp.c:199 app/widgets/gimphelp.c:232
+#: app/widgets/gimphelp.c:204 app/widgets/gimphelp.c:237
 msgid "Use web browser instead"
 msgstr "Använd webbläsare istället"
 
-#: app/widgets/gimphelp.c:229
+#: app/widgets/gimphelp.c:234
 msgid "Could not start GIMP Help Browser"
 msgstr "Kunde inte starta GIMP-hjälpläsaren"
 
-#: app/widgets/gimphelp.c:231
+#: app/widgets/gimphelp.c:236
 msgid "Could not start the GIMP Help Browser."
 msgstr "Kunde inte starta GIMP-hjälpläsaren"
 

@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-17 15:30+0200\n"
+"POT-Creation-Date: 2004-08-05 21:58+0200\n"
 "PO-Revision-Date: 2004-07-05 23:25+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -38,7 +38,7 @@ msgstr ""
 "Para realizar la instalación de usuario ejecute El GIMP sin el modificador\n"
 "«--no-interface»."
 
-#: app/app_procs.c:225
+#: app/app_procs.c:226
 #, c-format
 msgid ""
 "Unable to open a test swap file. To avoid data loss please check the "
@@ -49,7 +49,7 @@ msgstr ""
 "pérdida de datos compruebe la ubicación y los permisos del directorio de "
 "intercambio definido en sus preferencias (actualmente es «%s»)."
 
-#: app/app_procs.c:281
+#: app/app_procs.c:282
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "La apertura de «%s» ha fallado: %s"
@@ -3018,7 +3018,7 @@ msgstr "No se puede convertir a una paleta con más de 256 colores."
 msgid "Select Custom Palette"
 msgstr "Seleccionar paleta personal"
 
-#: app/gui/dialogs-constructors.c:194 app/gui/gui.c:324
+#: app/gui/dialogs-constructors.c:194 app/gui/gui.c:337
 #: app/gui/preferences-dialog.c:1386 app/gui/preferences-dialog.c:1389
 msgid "Tool Options"
 msgstr "Opciones de herramienta"
@@ -3399,7 +3399,7 @@ msgid "/Save _Selection to File..."
 msgstr "/Guardar la _selección en el archivo..."
 
 #: app/gui/file-commands.c:188 app/gui/file-open-dialog.c:244
-#: app/widgets/gimpdnd.c:1294 app/widgets/gimpdocumentview.c:468
+#: app/widgets/gimpdnd.c:1328 app/widgets/gimpdocumentview.c:468
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -3855,11 +3855,11 @@ msgstr "Configurar la rejilla"
 msgid "Configure Image Grid"
 msgstr "Configurar la imagen de la rejilla"
 
-#: app/gui/gui.c:383
+#: app/gui/gui.c:396
 msgid "Quit The GIMP?"
 msgstr "¿Salir de El GIMP?"
 
-#: app/gui/gui.c:388
+#: app/gui/gui.c:401
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -7571,7 +7571,7 @@ msgstr ""
 "Fidel exporta gazpacho,\n"
 "jamón, kiwi, viñas y buques."
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:700
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:701
 msgid "Add Text Layer"
 msgstr "Añadir una capa de texto"
 
@@ -8807,15 +8807,15 @@ msgstr "Añadir texto a la imagen"
 msgid "/Tools/Te_xt"
 msgstr "/Herramientas/Te_xto"
 
-#: app/tools/gimptexttool.c:731
+#: app/tools/gimptexttool.c:732
 msgid "GIMP Text Editor"
 msgstr "Editor de textos de El GIMP"
 
-#: app/tools/gimptexttool.c:841 app/tools/gimptexttool.c:844
+#: app/tools/gimptexttool.c:842 app/tools/gimptexttool.c:845
 msgid "Confirm Text Editing"
 msgstr "Confirmar la edición del texto"
 
-#: app/tools/gimptexttool.c:865
+#: app/tools/gimptexttool.c:866
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -9317,7 +9317,7 @@ msgid "Edit Indexed Image Palette Color"
 msgstr "Editar la paleta de colores de la imagen indexada"
 
 #: app/widgets/gimpcontainergridview.c:204
-#: app/widgets/gimpcontainergridview.c:616
+#: app/widgets/gimpcontainergridview.c:623
 #: app/widgets/gimpcontainermenuimpl.c:145
 #: app/widgets/gimphistogrameditor.c:137 app/widgets/gimphistogrameditor.c:326
 msgid "(None)"
@@ -9378,7 +9378,7 @@ msgstr "Frente: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "Fondo: %d, %d, %d"
 
-#: app/widgets/gimpdnd.c:1258
+#: app/widgets/gimpdnd.c:1292
 #, c-format
 msgid ""
 "The filename '%s' couldn't be converted to a valid URI:\n"
@@ -9389,7 +9389,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/widgets/gimpdnd.c:1262
+#: app/widgets/gimpdnd.c:1296
 msgid "Invalid UTF-8"
 msgstr "UTF-8 inválido"
 
@@ -9594,11 +9594,11 @@ msgstr "Anchura"
 msgid "Height"
 msgstr "Altura"
 
-#: app/widgets/gimphelp.c:193
+#: app/widgets/gimphelp.c:198
 msgid "Could not find GIMP Help Browser"
 msgstr "No se ha podido encontrar el navegador de ayuda de El GIMP"
 
-#: app/widgets/gimphelp.c:195
+#: app/widgets/gimphelp.c:200
 msgid ""
 "Could not find the GIMP Help Browser procedure. It probably was not compiled "
 "because you don't have GtkHtml2 installed."
@@ -9607,15 +9607,15 @@ msgstr ""
 "Probablemente no haya sido compilado porque no tiene instalada la librería "
 "GtkHtml2."
 
-#: app/widgets/gimphelp.c:199 app/widgets/gimphelp.c:232
+#: app/widgets/gimphelp.c:204 app/widgets/gimphelp.c:237
 msgid "Use web browser instead"
 msgstr "Utilizar un navegador en su lugar"
 
-#: app/widgets/gimphelp.c:229
+#: app/widgets/gimphelp.c:234
 msgid "Could not start GIMP Help Browser"
 msgstr "No se ha podido iniciar el navegador de ayuda de El GIMP"
 
-#: app/widgets/gimphelp.c:231
+#: app/widgets/gimphelp.c:236
 msgid "Could not start the GIMP Help Browser."
 msgstr "No se ha podido iniciar el navegador de ayuda de El GIMP."
 

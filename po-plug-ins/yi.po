@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-17 15:31+0200\n"
+"POT-Creation-Date: 2004-08-05 21:59+0200\n"
 "PO-Revision-Date: 2003-03-19\n"
 "Last-Translator: Raphael Finkel <raphael@cs.uky.edu>\n"
 "Language-Team: Yiddish <raphael@cs.uky.edu>\n"
@@ -59,7 +59,7 @@ msgstr ""
 #: plug-ins/common/destripe.c:573 plug-ins/common/emboss.c:705
 #: plug-ins/common/fractaltrace.c:760 plug-ins/common/grid.c:654
 #: plug-ins/common/iwarp.c:1225 plug-ins/common/mapcolor.c:551
-#: plug-ins/common/nlfilt.c:450 plug-ins/common/polar.c:604
+#: plug-ins/common/nlfilt.c:450 plug-ins/common/polar.c:609
 #: plug-ins/common/sharpen.c:523 plug-ins/common/sinus.c:1040
 #: plug-ins/common/spheredesigner.c:2508 plug-ins/common/tileit.c:390
 #: plug-ins/common/waves.c:438 plug-ins/common/whirlpinch.c:676
@@ -446,7 +446,7 @@ msgstr ""
 
 #. Do not rely on librsvg setting GError on failure!
 #. stat error (file does not exist)
-#: plug-ins/FractalExplorer/Dialogs.c:2128 plug-ins/bmp/bmpread.c:118
+#: plug-ins/FractalExplorer/Dialogs.c:2128 plug-ins/bmp/bmpread.c:153
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2341
 #: plug-ins/common/channel_mixer.c:1131 plug-ins/common/curve_bend.c:919
 #: plug-ins/common/dicom.c:289 plug-ins/common/gbr.c:322
@@ -1160,7 +1160,7 @@ msgstr ""
 msgid "Show/hide preview wireframe"
 msgstr ""
 
-#: plug-ins/bmp/bmpread.c:87
+#: plug-ins/bmp/bmpread.c:86
 msgid "Bad colormap"
 msgstr ""
 
@@ -1170,7 +1170,7 @@ msgstr ""
 #. column, highest column ever used
 #. -1  assume fsel is not available (and not attached to any drawable)
 #. -1  assume there is no floating selection
-#: plug-ins/bmp/bmpread.c:123 plug-ins/common/CEL.c:310
+#: plug-ins/bmp/bmpread.c:158 plug-ins/common/CEL.c:310
 #: plug-ins/common/dicom.c:294 plug-ins/common/gbr.c:327
 #: plug-ins/common/gifload.c:300 plug-ins/common/gih.c:634
 #: plug-ins/common/hrz.c:339 plug-ins/common/jpeg.c:819
@@ -1187,26 +1187,30 @@ msgstr ""
 msgid "Opening '%s'..."
 msgstr ""
 
-#: plug-ins/bmp/bmpread.c:135 plug-ins/bmp/bmpread.c:144
-#: plug-ins/bmp/bmpread.c:150 plug-ins/bmp/bmpread.c:158
-#: plug-ins/bmp/bmpread.c:172 plug-ins/bmp/bmpread.c:307
+#: plug-ins/bmp/bmpread.c:170 plug-ins/bmp/bmpread.c:179
+#: plug-ins/bmp/bmpread.c:185 plug-ins/bmp/bmpread.c:193
+#: plug-ins/bmp/bmpread.c:207 plug-ins/bmp/bmpread.c:339
 #, c-format
 msgid "'%s' is not a valid BMP file"
 msgstr ""
 
-#: plug-ins/bmp/bmpread.c:185 plug-ins/bmp/bmpread.c:204
-#: plug-ins/bmp/bmpread.c:225 plug-ins/bmp/bmpread.c:244
-#: plug-ins/bmp/bmpread.c:263 plug-ins/bmp/bmpread.c:269
-#: plug-ins/bmp/bmpread.c:275
+#: plug-ins/bmp/bmpread.c:220 plug-ins/bmp/bmpread.c:239
+#: plug-ins/bmp/bmpread.c:260 plug-ins/bmp/bmpread.c:279
+#: plug-ins/bmp/bmpread.c:298 plug-ins/bmp/bmpread.c:304
+#: plug-ins/bmp/bmpread.c:310
 #, c-format
 msgid "Error reading BMP file header from '%s'"
+msgstr ""
+
+#: plug-ins/bmp/bmpread.c:435
+msgid "Unrecognized or invalid BMP compression format."
 msgstr ""
 
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: plug-ins/bmp/bmpread.c:397 plug-ins/bmp/bmpread.c:405
-#: plug-ins/bmp/bmpread.c:413 plug-ins/common/CEL.c:357
+#: plug-ins/bmp/bmpread.c:444 plug-ins/bmp/bmpread.c:452
+#: plug-ins/bmp/bmpread.c:460 plug-ins/common/CEL.c:357
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:312
 #: plug-ins/common/compose.c:616 plug-ins/common/decompose.c:580
 #: plug-ins/common/dicom.c:441 plug-ins/common/film.c:975
@@ -1996,7 +2000,7 @@ msgstr ""
 #: plug-ins/common/mosaic.c:602 plug-ins/common/nlfilt.c:361
 #: plug-ins/common/noisify.c:331 plug-ins/common/nova.c:328
 #: plug-ins/common/oilify.c:452 plug-ins/common/pixelize.c:319
-#: plug-ins/common/plasma.c:328 plug-ins/common/polar.c:623
+#: plug-ins/common/plasma.c:328 plug-ins/common/polar.c:628
 #: plug-ins/common/randomize.c:725 plug-ins/common/ripple.c:516
 #: plug-ins/common/scatter_hsv.c:388 plug-ins/common/sel_gauss.c:238
 #: plug-ins/common/sharpen.c:582 plug-ins/common/shift.c:327
@@ -5660,47 +5664,47 @@ msgstr ""
 msgid "<Image>/Filters/Distorts/P_olar Coords..."
 msgstr ""
 
-#: plug-ins/common/polar.c:353
+#: plug-ins/common/polar.c:358
 msgid "Polarizing..."
 msgstr ""
 
-#: plug-ins/common/polar.c:588
+#: plug-ins/common/polar.c:593
 msgid "Polarize"
 msgstr ""
 
-#: plug-ins/common/polar.c:639
+#: plug-ins/common/polar.c:644
 msgid "Circle _Depth in Percent:"
 msgstr ""
 
-#: plug-ins/common/polar.c:648
+#: plug-ins/common/polar.c:653
 msgid "Offset _Angle:"
 msgstr ""
 
-#: plug-ins/common/polar.c:660
+#: plug-ins/common/polar.c:665
 msgid "_Map Backwards"
 msgstr ""
 
-#: plug-ins/common/polar.c:666
+#: plug-ins/common/polar.c:671
 msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
 msgstr ""
 
-#: plug-ins/common/polar.c:674
+#: plug-ins/common/polar.c:679
 msgid "Map from _Top"
 msgstr ""
 
-#: plug-ins/common/polar.c:680
+#: plug-ins/common/polar.c:685
 msgid ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
 msgstr ""
 
-#: plug-ins/common/polar.c:689
+#: plug-ins/common/polar.c:694
 msgid "To _Polar"
 msgstr ""
 
-#: plug-ins/common/polar.c:695
+#: plug-ins/common/polar.c:700
 msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."

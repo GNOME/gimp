@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp CVS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-17 15:30+0200\n"
+"POT-Creation-Date: 2004-08-05 21:58+0200\n"
 "PO-Revision-Date: 2000-10-15 19:35+0200\n"
 "Last-Translator: Francisco Xosé Vázquez Grandal <grandal@mundivia.es>\n"
 "Language-Team: Galician <trasno@ceu.fi.udc.es>\n"
@@ -23,7 +23,7 @@ msgid ""
 "To perform user installation, run the GIMP without the '--no-interface' flag."
 msgstr ""
 
-#: app/app_procs.c:225
+#: app/app_procs.c:226
 #, c-format
 msgid ""
 "Unable to open a test swap file. To avoid data loss please check the "
@@ -31,7 +31,7 @@ msgid ""
 "(currently \"%s\")."
 msgstr ""
 
-#: app/app_procs.c:281
+#: app/app_procs.c:282
 #, fuzzy, c-format
 msgid "Opening '%s' failed: %s"
 msgstr ""
@@ -3050,7 +3050,7 @@ msgstr ""
 msgid "Select Custom Palette"
 msgstr "Seleccionar paleta persoalizada"
 
-#: app/gui/dialogs-constructors.c:194 app/gui/gui.c:324
+#: app/gui/dialogs-constructors.c:194 app/gui/gui.c:337
 #: app/gui/preferences-dialog.c:1386 app/gui/preferences-dialog.c:1389
 msgid "Tool Options"
 msgstr "Opcións de ferramentas"
@@ -3514,7 +3514,7 @@ msgid "/Save _Selection to File..."
 msgstr "Escribir selección a un ficheiro..."
 
 #: app/gui/file-commands.c:188 app/gui/file-open-dialog.c:244
-#: app/widgets/gimpdnd.c:1294 app/widgets/gimpdocumentview.c:468
+#: app/widgets/gimpdnd.c:1328 app/widgets/gimpdocumentview.c:468
 #, fuzzy, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -4028,12 +4028,12 @@ msgstr "Configurar"
 msgid "Configure Image Grid"
 msgstr "Confirmar Tamaño da Imaxe"
 
-#: app/gui/gui.c:383
+#: app/gui/gui.c:396
 #, fuzzy
 msgid "Quit The GIMP?"
 msgstr "Sobre o GIMP"
 
-#: app/gui/gui.c:388
+#: app/gui/gui.c:401
 #, fuzzy
 msgid ""
 "Some files are unsaved.\n"
@@ -8319,7 +8319,7 @@ msgid ""
 "five dozen liquor jugs."
 msgstr ""
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:700
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:701
 #, fuzzy
 msgid "Add Text Layer"
 msgstr "Capa de Texto"
@@ -9683,16 +9683,16 @@ msgstr "Engadir texto á imaxe"
 msgid "/Tools/Te_xt"
 msgstr "/Ferramentas/Texto"
 
-#: app/tools/gimptexttool.c:731
+#: app/tools/gimptexttool.c:732
 #, fuzzy
 msgid "GIMP Text Editor"
 msgstr "Editar Paleta de cor"
 
-#: app/tools/gimptexttool.c:841 app/tools/gimptexttool.c:844
+#: app/tools/gimptexttool.c:842 app/tools/gimptexttool.c:845
 msgid "Confirm Text Editing"
 msgstr ""
 
-#: app/tools/gimptexttool.c:865
+#: app/tools/gimptexttool.c:866
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -10241,7 +10241,7 @@ msgid "Edit Indexed Image Palette Color"
 msgstr "Cor directa"
 
 #: app/widgets/gimpcontainergridview.c:204
-#: app/widgets/gimpcontainergridview.c:616
+#: app/widgets/gimpcontainergridview.c:623
 #: app/widgets/gimpcontainermenuimpl.c:145
 #: app/widgets/gimphistogrameditor.c:137 app/widgets/gimphistogrameditor.c:326
 #, fuzzy
@@ -10311,7 +10311,7 @@ msgstr "Primeiro plano"
 msgid "Background: %d, %d, %d"
 msgstr "Fondo"
 
-#: app/widgets/gimpdnd.c:1258
+#: app/widgets/gimpdnd.c:1292
 #, c-format
 msgid ""
 "The filename '%s' couldn't be converted to a valid URI:\n"
@@ -10319,7 +10319,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: app/widgets/gimpdnd.c:1262
+#: app/widgets/gimpdnd.c:1296
 #, fuzzy
 msgid "Invalid UTF-8"
 msgstr "Erro en ficheiro de patrón \"%s\" do GIMP"
@@ -10537,11 +10537,11 @@ msgstr "Ancho"
 msgid "Height"
 msgstr "Alto"
 
-#: app/widgets/gimphelp.c:193
+#: app/widgets/gimphelp.c:198
 msgid "Could not find GIMP Help Browser"
 msgstr "Non se atopou o visor de axuda do GIMP"
 
-#: app/widgets/gimphelp.c:195
+#: app/widgets/gimphelp.c:200
 #, fuzzy
 msgid ""
 "Could not find the GIMP Help Browser procedure. It probably was not compiled "
@@ -10551,17 +10551,17 @@ msgstr ""
 "Probablemente non foi compilado debido a\n"
 "non ter instalado GtkXmHTML."
 
-#: app/widgets/gimphelp.c:199 app/widgets/gimphelp.c:232
+#: app/widgets/gimphelp.c:204 app/widgets/gimphelp.c:237
 #, fuzzy
 msgid "Use web browser instead"
 msgstr "Usar Netscape no seu defecto"
 
-#: app/widgets/gimphelp.c:229
+#: app/widgets/gimphelp.c:234
 #, fuzzy
 msgid "Could not start GIMP Help Browser"
 msgstr "Non se atopou o visor de axuda do GIMP"
 
-#: app/widgets/gimphelp.c:231
+#: app/widgets/gimphelp.c:236
 #, fuzzy
 msgid "Could not start the GIMP Help Browser."
 msgstr "Non se atopou o visor de axuda do GIMP"

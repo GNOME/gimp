@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-17 15:30+0200\n"
+"POT-Creation-Date: 2004-08-05 21:58+0200\n"
 "PO-Revision-Date: 2004-07-17 10:04+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
@@ -30,7 +30,7 @@ msgstr ""
 "meg volt adva. Ha szeretne felhasználói telepítést végezni, indítsa el a\n"
 "programot a \"--no-interface\" kapcsoló nélkül."
 
-#: app/app_procs.c:225
+#: app/app_procs.c:226
 #, c-format
 msgid ""
 "Unable to open a test swap file. To avoid data loss please check the "
@@ -41,7 +41,7 @@ msgstr ""
 "elkerülése érdekében ellenőrizze a cserekönyvtár helyét és engedélyeit (a "
 "cserekönyvtár a beállításoknál adható meg; jelenleg \"%s\")."
 
-#: app/app_procs.c:281
+#: app/app_procs.c:282
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "\"%s\" megnyitása sikertelen: %s"
@@ -2962,7 +2962,7 @@ msgstr "Nem lehet 256-nál több színt tartalmazó palettára konvertálni."
 msgid "Select Custom Palette"
 msgstr "Egyéni paletta kiválasztása"
 
-#: app/gui/dialogs-constructors.c:194 app/gui/gui.c:324
+#: app/gui/dialogs-constructors.c:194 app/gui/gui.c:337
 #: app/gui/preferences-dialog.c:1386 app/gui/preferences-dialog.c:1389
 msgid "Tool Options"
 msgstr "Eszközbeállítások"
@@ -3344,7 +3344,7 @@ msgid "/Save _Selection to File..."
 msgstr "/_Kijelölés fájlba mentése..."
 
 #: app/gui/file-commands.c:188 app/gui/file-open-dialog.c:244
-#: app/widgets/gimpdnd.c:1294 app/widgets/gimpdocumentview.c:468
+#: app/widgets/gimpdnd.c:1328 app/widgets/gimpdocumentview.c:468
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -3800,11 +3800,11 @@ msgstr "Rács beállítása"
 msgid "Configure Image Grid"
 msgstr "Képrács beállítása"
 
-#: app/gui/gui.c:383
+#: app/gui/gui.c:396
 msgid "Quit The GIMP?"
 msgstr "Kilép a GIMP-ből?"
 
-#: app/gui/gui.c:388
+#: app/gui/gui.c:401
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -7489,7 +7489,7 @@ msgstr ""
 "abcdefghijklmnopqrstuvwxyz\n"
 "áÁéÉíÍóÓöÖőŐúÚüÜűŰ"
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:700
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:701
 msgid "Add Text Layer"
 msgstr "Szövegréteg hozzáadása"
 
@@ -8705,15 +8705,15 @@ msgstr "Szöveg írása a képre"
 msgid "/Tools/Te_xt"
 msgstr "/Eszközök/Szöve_g"
 
-#: app/tools/gimptexttool.c:731
+#: app/tools/gimptexttool.c:732
 msgid "GIMP Text Editor"
 msgstr "GIMP szövegszerkesztő"
 
-#: app/tools/gimptexttool.c:841 app/tools/gimptexttool.c:844
+#: app/tools/gimptexttool.c:842 app/tools/gimptexttool.c:845
 msgid "Confirm Text Editing"
 msgstr "Szövegszerkesztés megerősítése"
 
-#: app/tools/gimptexttool.c:865
+#: app/tools/gimptexttool.c:866
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -9213,7 +9213,7 @@ msgid "Edit Indexed Image Palette Color"
 msgstr "Indexelt képpaletta-szín szerkesztése"
 
 #: app/widgets/gimpcontainergridview.c:204
-#: app/widgets/gimpcontainergridview.c:616
+#: app/widgets/gimpcontainergridview.c:623
 #: app/widgets/gimpcontainermenuimpl.c:145
 #: app/widgets/gimphistogrameditor.c:137 app/widgets/gimphistogrameditor.c:326
 msgid "(None)"
@@ -9274,7 +9274,7 @@ msgstr "Előtér: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "Háttér: %d, %d, %d"
 
-#: app/widgets/gimpdnd.c:1258
+#: app/widgets/gimpdnd.c:1292
 #, c-format
 msgid ""
 "The filename '%s' couldn't be converted to a valid URI:\n"
@@ -9285,7 +9285,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/widgets/gimpdnd.c:1262
+#: app/widgets/gimpdnd.c:1296
 msgid "Invalid UTF-8"
 msgstr "Érvénytelen UTF-8"
 
@@ -9490,11 +9490,11 @@ msgstr "Szélesség"
 msgid "Height"
 msgstr "Magasság"
 
-#: app/widgets/gimphelp.c:193
+#: app/widgets/gimphelp.c:198
 msgid "Could not find GIMP Help Browser"
 msgstr "A GIMP Súgóböngésző nem található"
 
-#: app/widgets/gimphelp.c:195
+#: app/widgets/gimphelp.c:200
 msgid ""
 "Could not find the GIMP Help Browser procedure. It probably was not compiled "
 "because you don't have GtkHtml2 installed."
@@ -9502,15 +9502,15 @@ msgstr ""
 "A GIMP Súgóböngésző eljárása nem található. Valószínűleg nem lett "
 "lefordítva, mert a GtkHtml2 nincs telepítve."
 
-#: app/widgets/gimphelp.c:199 app/widgets/gimphelp.c:232
+#: app/widgets/gimphelp.c:204 app/widgets/gimphelp.c:237
 msgid "Use web browser instead"
 msgstr "Webböngésző használata"
 
-#: app/widgets/gimphelp.c:229
+#: app/widgets/gimphelp.c:234
 msgid "Could not start GIMP Help Browser"
 msgstr "Nem lehet elindítani a GIMP Súgóböngészőt"
 
-#: app/widgets/gimphelp.c:231
+#: app/widgets/gimphelp.c:236
 msgid "Could not start the GIMP Help Browser."
 msgstr "Nem lehet elindítani a GIMP Súgóböngészőt."
 

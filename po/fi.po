@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-17 15:30+0200\n"
+"POT-Creation-Date: 2004-08-05 21:58+0200\n"
 "PO-Revision-Date: 2004-03-22 18:36+0200\n"
 "Last-Translator: Mikko Paananen\n"
 "Language-Team:\n"
@@ -34,7 +34,7 @@ msgstr ""
 "Käyttäjäkohtainen asennus tehdään kun GIMP käynnistetään ilman '--no-"
 "interface' -valitsinta. "
 
-#: app/app_procs.c:225
+#: app/app_procs.c:226
 #, c-format
 msgid ""
 "Unable to open a test swap file. To avoid data loss please check the "
@@ -44,7 +44,7 @@ msgstr ""
 "Ei voinut avata sivutustiedostoa. Välttääksesi datan häviämisen, tarkista "
 "asetuksista sivutustiedoston paikka ja sen oikeudet. (asetus: '%s')."
 
-#: app/app_procs.c:281
+#: app/app_procs.c:282
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Tiedoston \"%s\" avaaminen epäonnistui: %s"
@@ -2890,7 +2890,7 @@ msgstr "Ei voi muuntaa paletiksi jossa on yli 256 väriä."
 msgid "Select Custom Palette"
 msgstr "Valitse räätälöity paletti"
 
-#: app/gui/dialogs-constructors.c:194 app/gui/gui.c:324
+#: app/gui/dialogs-constructors.c:194 app/gui/gui.c:337
 #: app/gui/preferences-dialog.c:1386 app/gui/preferences-dialog.c:1389
 msgid "Tool Options"
 msgstr "Työkalujen asetukset"
@@ -3271,7 +3271,7 @@ msgid "/Save _Selection to File..."
 msgstr "/Tallenna _valinta tiedostoon..."
 
 #: app/gui/file-commands.c:188 app/gui/file-open-dialog.c:244
-#: app/widgets/gimpdnd.c:1294 app/widgets/gimpdocumentview.c:468
+#: app/widgets/gimpdnd.c:1328 app/widgets/gimpdocumentview.c:468
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -3710,11 +3710,11 @@ msgstr "Aseta apuviivat"
 msgid "Configure Image Grid"
 msgstr "Aseta kuvan apuviivat"
 
-#: app/gui/gui.c:383
+#: app/gui/gui.c:396
 msgid "Quit The GIMP?"
 msgstr "Poistutaanko GIMPistä?"
 
-#: app/gui/gui.c:388
+#: app/gui/gui.c:401
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -7376,7 +7376,7 @@ msgstr ""
 "Isoviisaria Aira siivosi.\n"
 "ABCabc XYZxyz åäöÅÄÖàášü€"
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:700
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:701
 msgid "Add Text Layer"
 msgstr "Lisää tekstitaso"
 
@@ -8590,15 +8590,15 @@ msgstr "Lisää kuvaan tekstiä"
 msgid "/Tools/Te_xt"
 msgstr "/Työkalut/Teksti"
 
-#: app/tools/gimptexttool.c:731
+#: app/tools/gimptexttool.c:732
 msgid "GIMP Text Editor"
 msgstr "Tekstieditori"
 
-#: app/tools/gimptexttool.c:841 app/tools/gimptexttool.c:844
+#: app/tools/gimptexttool.c:842 app/tools/gimptexttool.c:845
 msgid "Confirm Text Editing"
 msgstr "Vahvista tekstin muokkaus"
 
-#: app/tools/gimptexttool.c:865
+#: app/tools/gimptexttool.c:866
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -9092,7 +9092,7 @@ msgid "Edit Indexed Image Palette Color"
 msgstr "Muokka indeksoidun paletin väriä"
 
 #: app/widgets/gimpcontainergridview.c:204
-#: app/widgets/gimpcontainergridview.c:616
+#: app/widgets/gimpcontainergridview.c:623
 #: app/widgets/gimpcontainermenuimpl.c:145
 #: app/widgets/gimphistogrameditor.c:137 app/widgets/gimphistogrameditor.c:326
 msgid "(None)"
@@ -9153,7 +9153,7 @@ msgstr "Edustaväri: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "Taustaväri: %d, %d, %d"
 
-#: app/widgets/gimpdnd.c:1258
+#: app/widgets/gimpdnd.c:1292
 #, c-format
 msgid ""
 "The filename '%s' couldn't be converted to a valid URI:\n"
@@ -9164,7 +9164,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/widgets/gimpdnd.c:1262
+#: app/widgets/gimpdnd.c:1296
 msgid "Invalid UTF-8"
 msgstr "Epäkelpo unicode-merkkijono"
 
@@ -9369,11 +9369,11 @@ msgstr "Leveys"
 msgid "Height"
 msgstr "Korkeus"
 
-#: app/widgets/gimphelp.c:193
+#: app/widgets/gimphelp.c:198
 msgid "Could not find GIMP Help Browser"
 msgstr "GIMP-avustusselain ei löytynyt"
 
-#: app/widgets/gimphelp.c:195
+#: app/widgets/gimphelp.c:200
 msgid ""
 "Could not find the GIMP Help Browser procedure. It probably was not compiled "
 "because you don't have GtkHtml2 installed."
@@ -9382,15 +9382,15 @@ msgstr ""
 "Sitä ei todennäköisesti ole käännetty mukaan\n"
 "koska sinulla ei ollut GtkHtml2-kirjastoa asennettuna."
 
-#: app/widgets/gimphelp.c:199 app/widgets/gimphelp.c:232
+#: app/widgets/gimphelp.c:204 app/widgets/gimphelp.c:237
 msgid "Use web browser instead"
 msgstr "Käytä web-selainta"
 
-#: app/widgets/gimphelp.c:229
+#: app/widgets/gimphelp.c:234
 msgid "Could not start GIMP Help Browser"
 msgstr "GIMP-avustusselain ei käynnistynyt"
 
-#: app/widgets/gimphelp.c:231
+#: app/widgets/gimphelp.c:236
 msgid "Could not start the GIMP Help Browser."
 msgstr "GIMP-avustusselain ei käynnistynyt"
 

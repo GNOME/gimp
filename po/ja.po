@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-17 15:30+0200\n"
+"POT-Creation-Date: 2004-08-05 21:58+0200\n"
 "PO-Revision-Date: 2004-07-30 22:40+0900\n"
 "Last-Translator: SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
@@ -26,7 +26,7 @@ msgstr ""
 "がスキップされました. ユーザインストールを行うためには\n"
 "'--no-interface' オプションを付けずに GIMP を起動してください."
 
-#: app/app_procs.c:225
+#: app/app_procs.c:226
 #, c-format
 msgid ""
 "Unable to open a test swap file. To avoid data loss please check the "
@@ -37,7 +37,7 @@ msgstr ""
 "\"%s\" に設定されている, スワップディレクトリの場所とパーミッションをチェック"
 "してください."
 
-#: app/app_procs.c:281
+#: app/app_procs.c:282
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "'%s' のオープンに失敗: %s"
@@ -289,7 +289,10 @@ msgid ""
 "swap file. Some parts of your images may be corrupted. Try to save your work "
 "using different filenames, restart the Gimp and check the location of the "
 "swap directory in your Preferences."
-msgstr "スワップファイルが開けません. GIMP はメモリを消費し尽してしまいましたが, スワップファイルが開けません. 作業内容を別のファイル名で保存し, GIMP を再起動した後, 環境設定の中でスワップディレクトリの設定を確かめてください."
+msgstr ""
+"スワップファイルが開けません. GIMP はメモリを消費し尽してしまいましたが, ス"
+"ワップファイルが開けません. 作業内容を別のファイル名で保存し, GIMP を再起動し"
+"た後, 環境設定の中でスワップディレクトリの設定を確かめてください."
 
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
@@ -470,7 +473,11 @@ msgid ""
 "progresses in all directions until the difference of pixel intensity from "
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
-msgstr "あいまい選択や塗りつぶしツールは対象の領域を種-充填アルゴリズムを用いて決定します. 種-充填は選択された起点となるピクセルから, 全方向にピクセルの彩度の変化が指定したしきい値になるまで展開していきます. ここで指定する値はその初期しきい値です."
+msgstr ""
+"あいまい選択や塗りつぶしツールは対象の領域を種-充填アルゴリズムを用いて決定し"
+"ます. 種-充填は選択された起点となるピクセルから, 全方向にピクセルの彩度の変化"
+"が指定したしきい値になるまで展開していきます. ここで指定する値はその初期しき"
+"い値です."
 
 #: app/config/gimprc-blurbs.h:87
 msgid ""
@@ -560,14 +567,18 @@ msgid ""
 "Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
-msgstr "モニタのドット/インチで表した水平解像度を設定します. 0に設定すると, Xサーバに水平, 垂直解像度の情報を問い合わせます."
+msgstr ""
+"モニタのドット/インチで表した水平解像度を設定します. 0に設定すると, Xサーバに"
+"水平, 垂直解像度の情報を問い合わせます."
 
 #: app/config/gimprc-blurbs.h:198
 msgid ""
 "Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
-msgstr "モニタのドット/インチで表した垂直解像度を設定します. 0に設定すると, Xサーバに水平, 垂直解像度の情報を問い合わせます."
+msgstr ""
+"モニタのドット/インチで表した垂直解像度を設定します. 0に設定すると, Xサーバに"
+"水平, 垂直解像度の情報を問い合わせます."
 
 #: app/config/gimprc-blurbs.h:203
 msgid ""
@@ -2863,7 +2874,7 @@ msgstr "256色より多いパレットを変換することはできません."
 msgid "Select Custom Palette"
 msgstr "カスタムパレットを選択"
 
-#: app/gui/dialogs-constructors.c:194 app/gui/gui.c:324
+#: app/gui/dialogs-constructors.c:194 app/gui/gui.c:337
 #: app/gui/preferences-dialog.c:1386 app/gui/preferences-dialog.c:1389
 msgid "Tool Options"
 msgstr "ツールオプション"
@@ -3244,7 +3255,7 @@ msgid "/Save _Selection to File..."
 msgstr "/選択したものをファイルに保存(_S)..."
 
 #: app/gui/file-commands.c:188 app/gui/file-open-dialog.c:244
-#: app/widgets/gimpdnd.c:1294 app/widgets/gimpdocumentview.c:468
+#: app/widgets/gimpdnd.c:1328 app/widgets/gimpdocumentview.c:468
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -3698,11 +3709,11 @@ msgstr "グリッドの調整"
 msgid "Configure Image Grid"
 msgstr "画像のグリッドを調整"
 
-#: app/gui/gui.c:383
+#: app/gui/gui.c:396
 msgid "Quit The GIMP?"
 msgstr "GIMPを終了しますか?"
 
-#: app/gui/gui.c:388
+#: app/gui/gui.c:401
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -7363,7 +7374,7 @@ msgstr ""
 "Pack my box with\n"
 "five dozen liquor jugs."
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:700
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:701
 msgid "Add Text Layer"
 msgstr "文字レイヤーを追加"
 
@@ -8578,15 +8589,15 @@ msgstr "画像に文字を追加"
 msgid "/Tools/Te_xt"
 msgstr "/道具/文字(_X)"
 
-#: app/tools/gimptexttool.c:731
+#: app/tools/gimptexttool.c:732
 msgid "GIMP Text Editor"
 msgstr "GIMP 文字エディタ"
 
-#: app/tools/gimptexttool.c:841 app/tools/gimptexttool.c:844
+#: app/tools/gimptexttool.c:842 app/tools/gimptexttool.c:845
 msgid "Confirm Text Editing"
 msgstr "文字編集確認"
 
-#: app/tools/gimptexttool.c:865
+#: app/tools/gimptexttool.c:866
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -9082,7 +9093,7 @@ msgid "Edit Indexed Image Palette Color"
 msgstr "画像のインデックスカラーの編集"
 
 #: app/widgets/gimpcontainergridview.c:204
-#: app/widgets/gimpcontainergridview.c:616
+#: app/widgets/gimpcontainergridview.c:623
 #: app/widgets/gimpcontainermenuimpl.c:145
 #: app/widgets/gimphistogrameditor.c:137 app/widgets/gimphistogrameditor.c:326
 msgid "(None)"
@@ -9143,7 +9154,7 @@ msgstr "描画色: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "背景色: %d, %d, %d"
 
-#: app/widgets/gimpdnd.c:1258
+#: app/widgets/gimpdnd.c:1292
 #, c-format
 msgid ""
 "The filename '%s' couldn't be converted to a valid URI:\n"
@@ -9154,7 +9165,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/widgets/gimpdnd.c:1262
+#: app/widgets/gimpdnd.c:1296
 msgid "Invalid UTF-8"
 msgstr "不適切な UTF-8 文字列"
 
@@ -9359,11 +9370,11 @@ msgstr "幅"
 msgid "Height"
 msgstr "高さ"
 
-#: app/widgets/gimphelp.c:193
+#: app/widgets/gimphelp.c:198
 msgid "Could not find GIMP Help Browser"
 msgstr "GIMP ヘルプブラウザが見付かりません"
 
-#: app/widgets/gimphelp.c:195
+#: app/widgets/gimphelp.c:200
 msgid ""
 "Could not find the GIMP Help Browser procedure. It probably was not compiled "
 "because you don't have GtkHtml2 installed."
@@ -9371,15 +9382,15 @@ msgstr ""
 "GIMP ヘブルプラウザプロシージャが見つかりません. GtkHtml2 がなく, コンパイル"
 "されなかったのかもしれません."
 
-#: app/widgets/gimphelp.c:199 app/widgets/gimphelp.c:232
+#: app/widgets/gimphelp.c:204 app/widgets/gimphelp.c:237
 msgid "Use web browser instead"
 msgstr "ウェブブラウザで代用する"
 
-#: app/widgets/gimphelp.c:229
+#: app/widgets/gimphelp.c:234
 msgid "Could not start GIMP Help Browser"
 msgstr "GIMP ヘルプブラウザが起動できませんでした"
 
-#: app/widgets/gimphelp.c:231
+#: app/widgets/gimphelp.c:236
 msgid "Could not start the GIMP Help Browser."
 msgstr "GIMP ヘルプブラウザが起動できませんでした."
 

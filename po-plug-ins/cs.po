@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-20 14:50+0200\n"
+"POT-Creation-Date: 2004-08-05 21:59+0200\n"
 "PO-Revision-Date: 2004-07-20 17:34+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -464,7 +464,7 @@ msgstr "Zapsat parametry fraktálu"
 
 #. Do not rely on librsvg setting GError on failure!
 #. stat error (file does not exist)
-#: plug-ins/FractalExplorer/Dialogs.c:2128 plug-ins/bmp/bmpread.c:118
+#: plug-ins/FractalExplorer/Dialogs.c:2128 plug-ins/bmp/bmpread.c:153
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2341
 #: plug-ins/common/channel_mixer.c:1131 plug-ins/common/curve_bend.c:919
 #: plug-ins/common/dicom.c:289 plug-ins/common/gbr.c:322
@@ -1180,7 +1180,7 @@ msgstr "_Ukázat náhledový drátový model"
 msgid "Show/hide preview wireframe"
 msgstr "Ukázat/skrýt náhledový drátový model"
 
-#: plug-ins/bmp/bmpread.c:87
+#: plug-ins/bmp/bmpread.c:86
 msgid "Bad colormap"
 msgstr "Špatná barevná mapa"
 
@@ -1190,7 +1190,7 @@ msgstr "Špatná barevná mapa"
 #. column, highest column ever used
 #. -1  assume fsel is not available (and not attached to any drawable)
 #. -1  assume there is no floating selection
-#: plug-ins/bmp/bmpread.c:123 plug-ins/common/CEL.c:310
+#: plug-ins/bmp/bmpread.c:158 plug-ins/common/CEL.c:310
 #: plug-ins/common/dicom.c:294 plug-ins/common/gbr.c:327
 #: plug-ins/common/gifload.c:300 plug-ins/common/gih.c:634
 #: plug-ins/common/hrz.c:339 plug-ins/common/jpeg.c:819
@@ -1207,26 +1207,30 @@ msgstr "Špatná barevná mapa"
 msgid "Opening '%s'..."
 msgstr "Otvírám '%s'..."
 
-#: plug-ins/bmp/bmpread.c:135 plug-ins/bmp/bmpread.c:144
-#: plug-ins/bmp/bmpread.c:150 plug-ins/bmp/bmpread.c:158
-#: plug-ins/bmp/bmpread.c:172 plug-ins/bmp/bmpread.c:307
+#: plug-ins/bmp/bmpread.c:170 plug-ins/bmp/bmpread.c:179
+#: plug-ins/bmp/bmpread.c:185 plug-ins/bmp/bmpread.c:193
+#: plug-ins/bmp/bmpread.c:207 plug-ins/bmp/bmpread.c:339
 #, c-format
 msgid "'%s' is not a valid BMP file"
 msgstr "'%s' není platný soubor BMP"
 
-#: plug-ins/bmp/bmpread.c:185 plug-ins/bmp/bmpread.c:204
-#: plug-ins/bmp/bmpread.c:225 plug-ins/bmp/bmpread.c:244
-#: plug-ins/bmp/bmpread.c:263 plug-ins/bmp/bmpread.c:269
-#: plug-ins/bmp/bmpread.c:275
+#: plug-ins/bmp/bmpread.c:220 plug-ins/bmp/bmpread.c:239
+#: plug-ins/bmp/bmpread.c:260 plug-ins/bmp/bmpread.c:279
+#: plug-ins/bmp/bmpread.c:298 plug-ins/bmp/bmpread.c:304
+#: plug-ins/bmp/bmpread.c:310
 #, c-format
 msgid "Error reading BMP file header from '%s'"
 msgstr "Chyba při čtení hlavičky souboru BMP z '%s'"
 
+#: plug-ins/bmp/bmpread.c:435
+msgid "Unrecognized or invalid BMP compression format."
+msgstr ""
+
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: plug-ins/bmp/bmpread.c:397 plug-ins/bmp/bmpread.c:405
-#: plug-ins/bmp/bmpread.c:413 plug-ins/common/CEL.c:357
+#: plug-ins/bmp/bmpread.c:444 plug-ins/bmp/bmpread.c:452
+#: plug-ins/bmp/bmpread.c:460 plug-ins/common/CEL.c:357
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:312
 #: plug-ins/common/compose.c:616 plug-ins/common/decompose.c:580
 #: plug-ins/common/dicom.c:441 plug-ins/common/film.c:975
