@@ -1,3 +1,10 @@
+Wed Jul 22 23:32:50 MEST 1998 Sven Neumann <sven@gimp.org>
+
+        * docs/quick_reference.ps
+        * docs/quick_reference.tar.gz: 
+        Updated the Quick Reference Sheet to the much improved version made 
+        by Sven Anders <anderss@fmi.uni-passau.de>.
+
 Tue Jul 21 18:32:19 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/tile.c app/tile_swap.c: Squashed a deadlock.  I hope.
