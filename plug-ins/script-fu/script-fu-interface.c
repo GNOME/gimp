@@ -207,6 +207,8 @@ script_fu_interface (SFScript *script)
   if (buf)
     *buf = '\0';
 
+  buf = g_strdup_printf (_("Script-Fu: %s"), sf_interface->title);
+
   sf_interface->dialog = dlg =
     gimp_dialog_new (buf, "script-fu",
                      NULL, 0,

@@ -1,5 +1,10 @@
 2004-10-04  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/script-fu-interface.c (script_fu_interface):
+	oops, didn't meant to remove that line.
+
+2004-10-04  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/imagemap/Makefile.am (imagemap_SOURCES): removed pix-data.h.
 
 2004-10-04  Sven Neumann  <sven@gimp.org>
