@@ -510,6 +510,8 @@ jigsaw (gboolean preview_mode)
       height = preview->height;
       bytes  = preview->bpp;
       buffer_size = preview->rowstride * height;
+      if (buffer_size == 0)
+        return -1;
     }
   else
     {

@@ -1,3 +1,9 @@
+2003-12-27  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* plug-ins/common/jigsaw.c (jigsaw): actually don't crash when
+	layer previews are disabled. Fixes the crash reported in bug
+	#112012, but not the bug itself.
+
 2003-12-26  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimagefile.c (gimp_imagefile_save_thumb): don't crash
