@@ -48,6 +48,7 @@ struct _GimpPreview
 
   /*< protected >*/
   GtkWidget    *area;
+  GtkWidget    *frame;
   GtkWidget    *hscr;
   GtkWidget    *vscr;
   GtkWidget    *toggle;

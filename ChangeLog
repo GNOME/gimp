@@ -1,5 +1,10 @@
 2004-09-09  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimppreview.[ch]: right-align the preview for RTL
+	layouts.
+
+2004-09-09  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimppreviewarea.[ch]: allow to set a maximum size
 	and center the preview area if its allocation extends the maximum.
 

@@ -58,6 +58,8 @@ static void      gimp_preview_set_property       (GObject          *object,
                                                   guint             property_id,
                                                   const GValue     *value,
                                                   GParamSpec       *pspec);
+static void      gimp_preview_direction_changed  (GtkWidget        *widget,
+                                                  GtkTextDirection  prev_dir);
 static gboolean  gimp_preview_popup_menu         (GtkWidget        *widget);
 
 static void      gimp_preview_area_realize       (GtkWidget        *widget,
@@ -132,13 +134,14 @@ gimp_preview_class_init (GimpPreviewClass *klass)
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  object_class->dispose      = gimp_preview_dispose;
-  object_class->get_property = gimp_preview_get_property;
-  object_class->set_property = gimp_preview_set_property;
+  object_class->dispose           = gimp_preview_dispose;
+  object_class->get_property      = gimp_preview_get_property;
+  object_class->set_property      = gimp_preview_set_property;
 
-  widget_class->popup_menu   = gimp_preview_popup_menu;
+  widget_class->direction_changed = gimp_preview_direction_changed;
+  widget_class->popup_menu        = gimp_preview_popup_menu;
 
-  klass->draw                = NULL;
+  klass->draw                     = NULL;
 
   g_object_class_install_property (object_class,
                                    PROP_UPDATE,
@@ -162,17 +165,21 @@ gimp_preview_init (GimpPreview *preview)
   GtkWidget *table;
   GtkWidget *frame;
   GtkObject *adj;
+  gdouble    xalign = 0.0;
 
   gtk_box_set_homogeneous (GTK_BOX (preview), FALSE);
   gtk_box_set_spacing (GTK_BOX (preview), 6);
 
-  frame = gtk_aspect_frame_new (NULL, 0.0, 0.0, 1.0, TRUE);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_NONE);
-  gtk_box_pack_start (GTK_BOX (preview), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  if (gtk_widget_get_direction (GTK_WIDGET (preview)) == GTK_TEXT_DIR_RTL)
+    xalign = 1.0;
+
+  preview->frame = gtk_aspect_frame_new (NULL, xalign, 0.0, 1.0, TRUE);
+  gtk_frame_set_shadow_type (GTK_FRAME (preview->frame), GTK_SHADOW_NONE);
+  gtk_box_pack_start (GTK_BOX (preview), preview->frame, TRUE, TRUE, 0);
+  gtk_widget_show (preview->frame);
 
   table = gtk_table_new (3, 2, FALSE);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_container_add (GTK_CONTAINER (preview->frame), table);
   gtk_widget_show (table);
 
   preview->xoff       = 0;
@@ -317,6 +324,20 @@ gimp_preview_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_preview_direction_changed (GtkWidget        *widget,
+                                GtkTextDirection  prev_dir)
+{
+  GimpPreview *preview = GIMP_PREVIEW (widget);
+  gdouble      xalign  = 0.0;
+
+  if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
+    xalign = 1.0;
+
+  gtk_aspect_frame_set (GTK_ASPECT_FRAME (preview->frame),
+                        xalign, 0.0, 1.0, TRUE);
 }
 
 static gboolean
