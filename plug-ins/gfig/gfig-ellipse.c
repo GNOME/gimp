@@ -99,7 +99,7 @@ d_paint_ellipse (GfigObject *obj)
   gdouble     dpnts[4];
 
   /* Drawing ellipse is hard .
-   * 1) select circle
+   * 1) select ellipse
    * 2) stroke it
    */
 
@@ -223,11 +223,15 @@ d_update_ellipse (GdkPoint *pnt)
                     bound_wy,
                     0,
                     360 * 64);
+      edge_pnt->pnt = *pnt;
+    }
+  else
+    {
+      edge_pnt = new_dobjpoint (pnt->x, pnt->y);
+      center_pnt->next = edge_pnt;
     }
 
-  draw_circle (pnt, TRUE);
-
-  edge_pnt = new_dobjpoint (pnt->x, pnt->y);
+  draw_circle (&edge_pnt->pnt, TRUE);
 
   bound_wx = abs (center_pnt->pnt.x - edge_pnt->pnt.x) * 2;
   bound_wy = abs (center_pnt->pnt.y - edge_pnt->pnt.y) * 2;
@@ -251,8 +255,6 @@ d_update_ellipse (GdkPoint *pnt)
                 bound_wy,
                 0,
                 360 * 64);
-
-  center_pnt->next = edge_pnt;
 }
 
 void

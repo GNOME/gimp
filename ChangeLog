@@ -1,3 +1,18 @@
+2004-12-26  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/gfig-arc.c
+	* plug-ins/gfig/gfig-bezier.c
+	* plug-ins/gfig/gfig-circle.c
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig-ellipse.c
+	* plug-ins/gfig/gfig-line.c
+	* plug-ins/gfig/gfig-poly.c
+	* plug-ins/gfig/gfig-spiral.c
+	* plug-ins/gfig/gfig-star.c
+	* plug-ins/gfig/gfig-style.h
+	* plug-ins/gfig/gfig.h: plugged some memory-leaks, and done some
+	cleanups.
+
 2004-12-24  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* app/core/gimpbrush.c: don't ask for preview with

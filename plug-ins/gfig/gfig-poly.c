@@ -224,10 +224,6 @@ d_paint_poly (GfigObject *obj)
   line_pnts[i++] = first_pnt.x;
   line_pnts[i++] = first_pnt.y;
 
-  /* Reverse line if approp */
-  if (selvals.reverselines)
-    reverse_pairs_list (&line_pnts[0], i/2);
-
   /* Scale before drawing */
   if (selvals.scaletoimage)
     scale_to_original_xy (&line_pnts[0], i/2);

@@ -1870,8 +1870,6 @@ gfig_paint_callback (void)
 
   gimp_drawable_fill (gfig_context->drawable_id, GIMP_TRANSPARENT_FILL);
 
-  /* gimp_drawable_fill (gfig_context->drawable_id, GIMP_PATTERN_FILL); */
-
   while (objs)
     {
       if (ccount == obj_show_single || obj_show_single == -1)
@@ -2049,31 +2047,6 @@ scale_to_xy (gdouble *list,
     {
       list[i] *= (org_scale_x_factor / scale_x_factor);
       list[i + 1] *= (org_scale_y_factor / scale_y_factor);
-    }
-}
-
-/* Given an list of PAIRS of doubles reverse the list */
-/* Size is number of pairs to swap */
-void
-reverse_pairs_list (gdouble *list,
-                    gint     size)
-{
-  gint i;
-
-  struct cs
-  {
-    gdouble i1;
-    gdouble i2;
-  } copyit, *orglist;
-
-  orglist = (struct cs *) list;
-
-  /* Uses struct copies */
-  for (i = 0; i < size / 2; i++)
-    {
-      copyit = orglist[i];
-      orglist[i] = orglist[size - 1 - i];
-      orglist[size - 1 - i] = copyit;
     }
 }
 

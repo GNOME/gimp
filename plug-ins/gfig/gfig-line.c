@@ -106,10 +106,6 @@ d_paint_line (GfigObject *obj)
       line_pnts[i++] = spnt->pnt.y;
     }
 
-  /* Reverse line if approp */
-  if (selvals.reverselines)
-    reverse_pairs_list (&line_pnts[0], i/2);
-
   /* Scale before drawing */
   if (selvals.scaletoimage)
     scale_to_original_xy (&line_pnts[0], i/2);
@@ -127,10 +123,6 @@ d_paint_line (GfigObject *obj)
   g_free (line_pnts);
 }
 
-/* Create a new line object. starting at the x, y point might add styles
- * later.
- */
-
 void
 d_line_object_class_init (void)
 {
@@ -143,18 +135,6 @@ d_line_object_class_init (void)
   class->copyfunc  = d_copy_line;
   class->update    = d_update_line;
 }
-
-/* You guessed it delete the object !*/
-/*
-static void
-d_delete_line (Dobject *obj)
-{
-  g_assert (obj != NULL);
-  * First free the list of points - then the object itself *
-  d_delete_dobjpoints (obj->points);
-  g_free (obj);
-}
-*/
 
 /* Update end point of line */
 static void
@@ -179,7 +159,6 @@ d_update_line (GdkPoint *pnt)
       draw_circle (&epnt->pnt, TRUE);
 
       gdk_draw_line (gfig_context->preview->window,
-                     /*gfig_context->preview->style->bg_gc[GTK_STATE_NORMAL],*/
                      gfig_gc,
                      spnt->pnt.x,
                      spnt->pnt.y,
@@ -195,7 +174,6 @@ d_update_line (GdkPoint *pnt)
   epnt = new_dobjpoint (pnt->x, pnt->y);
 
   gdk_draw_line (gfig_context->preview->window,
-                 /*gfig_context->preview->style->bg_gc[GTK_STATE_NORMAL],*/
                  gfig_gc,
                  spnt->pnt.x,
                  spnt->pnt.y,
@@ -275,5 +253,4 @@ d_line_end (GdkPoint *pnt,
       obj_creating = NULL;
       tmp_line = NULL;
     }
-  /*gtk_widget_queue_draw (gfig_context->preview);*/
 }

@@ -533,10 +533,6 @@ d_paint_arc (GfigObject *obj)
         }
     }
 
-  /* Reverse line if approp */
-  if (selvals.reverselines)
-    reverse_pairs_list (&line_pnts[0], i / 2);
-
   /* One go */
   if (obj->style.paint_type == PAINT_BRUSH_TYPE)
     {

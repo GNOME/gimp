@@ -259,10 +259,6 @@ d_paint_bezier (GfigObject *obj)
   DrawBezier (bz_line_pnts, seg_count, 0.5, 5);
   line_pnts = d_bz_get_array (&i);
 
-  /* Reverse line if approp */
-  if (selvals.reverselines)
-    reverse_pairs_list (&line_pnts[0], i / 2);
-
   /* Scale before drawing */
   if (selvals.scaletoimage)
     scale_to_original_xy (&line_pnts[0], i / 2);

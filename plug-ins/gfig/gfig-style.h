@@ -30,24 +30,24 @@
 
 struct _Style
 {
-  gchar        *name;
-  gchar        *brush_name;
-  gint          brush_width;
-  gint          brush_height;
-  gint          brush_spacing;
-  BrushType     brush_type;
-  gdouble       brushfade;
-  gdouble       brushgradient;
-  gdouble       airbrushpressure;
-  FillType      fill_type;
-  gdouble       fill_opacity;
-  gchar        *pattern;
-  gchar        *gradient;
-  PaintType     paint_type;
-  GimpRGB       foreground;
-  GimpRGB       background;
-  gboolean      reverselines;
-  gint          ref_count;
+  gchar     *name;
+  gchar     *brush_name;
+  gint       brush_width;
+  gint       brush_height;
+  gint       brush_spacing;
+  BrushType  brush_type;
+  gdouble    brushfade;
+  gdouble    brushgradient;
+  gdouble    airbrushpressure;
+  FillType   fill_type;
+  gdouble    fill_opacity;
+  gchar     *pattern;
+  gchar     *gradient;
+  PaintType  paint_type;
+  GimpRGB    foreground;
+  GimpRGB    background;
+  gboolean   reverselines;
+  gint       ref_count;
 };
 
 gboolean gfig_load_style                   (Style                *style,

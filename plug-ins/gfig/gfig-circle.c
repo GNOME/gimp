@@ -189,11 +189,16 @@ d_update_circle (GdkPoint *pnt)
                     (gint) RINT (radius) * 2,
                     0,
                     360 * 64);
+      edge_pnt->pnt = *pnt;
+    }
+  else
+    {
+      edge_pnt = new_dobjpoint (pnt->x, pnt->y);
+      center_pnt->next = edge_pnt;
     }
 
-  draw_circle (pnt, TRUE);
+  draw_circle (&edge_pnt->pnt, TRUE);
 
-  edge_pnt = new_dobjpoint (pnt->x, pnt->y);
   radius = calc_radius (&center_pnt->pnt, &edge_pnt->pnt);
 
   gdk_draw_arc (gfig_context->preview->window,
@@ -205,8 +210,6 @@ d_update_circle (GdkPoint *pnt)
                 (gint) RINT (radius) * 2,
                 0,
                 360 * 64);
-
-  center_pnt->next = edge_pnt;
 }
 
 void

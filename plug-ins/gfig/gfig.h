@@ -164,9 +164,6 @@ void            scale_to_xy     (gdouble *list,
 void            scale_to_original_xy (gdouble *list,
                                       gint     size);
 
-void reverse_pairs_list (gdouble *list,
-                         gint     size);
-
 void gfig_paint (BrushType brush_type,
                  gint32    drawable_ID,
                  gint      seg_count,
