@@ -1,5 +1,9 @@
 2005-01-03  Sven Neumann  <neumann@jpk.com>
 
+	* libgimp/gimp.def: added missing symbols.
+
+2005-01-03  Sven Neumann  <neumann@jpk.com>
+
 	Merged from HEAD branch:
 
 	* plug-ins/ifscompose/ifscompose.c: use g_free() to release memory
