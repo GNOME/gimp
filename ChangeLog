@@ -171,7 +171,8 @@
 	* app/xcf/xcf.c
 	* plug-ins/tools/.cvsignore
 	* plug-ins/tools/Makefile.am
-	* plug-ins/tools/common/Makefile.am: changed accordingly
+	* plug-ins/tools/common/Makefile.am
+	* tools/pdbgen/Makefile.am: changed accordingly
 
 
 	* libgimptool/gimptoolenums.c
