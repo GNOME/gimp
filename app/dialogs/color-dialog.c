@@ -170,7 +170,7 @@ color_notebook_new (GimpViewable          *viewable,
                      cnp->selection);
   gtk_widget_show (cnp->selection);
 
-  g_signal_connect (G_OBJECT (cnp->selection), "color_changed",
+  g_signal_connect (cnp->selection, "color_changed",
                     G_CALLBACK (color_notebook_color_changed),
                     cnp);
 

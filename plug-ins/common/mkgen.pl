@@ -53,12 +53,13 @@ EXTRA_DIST = \\
 	plugin-defs.pl$extra
 
 INCLUDES = \\
-	-I\$(top_srcdir)	\\
-	\@GTK_CFLAGS\@	\\
-	\@X_CFLAGS\@	\\
-	\@EXIF_CFLAGS\@	\\
-	\@SVG_CFLAGS\@	\\
-	\@WMF_CFLAGS\@	\\
+	-I\$(top_srcdir)					\\
+	-I\$(top_srcdir)/plug-ins/libgimpoldpreview	\\
+	\@GTK_CFLAGS\@					\\
+	\@X_CFLAGS\@					\\
+	\@EXIF_CFLAGS\@					\\
+	\@SVG_CFLAGS\@					\\
+	\@WMF_CFLAGS\@					\\
 	-I\$(includedir)
 
 libexec_PROGRAMS = \\
@@ -115,7 +116,7 @@ foreach (sort keys %plugins) {
     if (exists $plugins{$_}->{libsupp}) {
 	my @lib = split(/:/, $plugins{$_}->{libsupp});
 	foreach $lib (@lib) {
-	    $libgimp = "\$(top_builddir)/plug-ins/$lib/lib$lib.a\t\\\n\t$libgimp";
+	    $libgimp = "\$(top_builddir)/plug-ins/lib$lib/lib$lib.a\t\\\n\t$libgimp";
 	}
     }
 

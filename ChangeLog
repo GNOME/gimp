@@ -1,3 +1,21 @@
+2003-12-12  Manish Singh  <yosh@gimp.org>
+
+	* Makefile.am
+	* app/composite/Makefile.am
+	* themes/Default/images/Makefile.am: comestics.
+
+	* app/gui/color-notebook.c (color_notebook_new): no need to cast to
+	G_OBJECT for g_signal_connect.
+
+	* plug-ins/common/mkgen.pl
+	* plug-ins/common/plugin-defs.pl: properly handle the libgimpoldpreview
+	stuff.
+
+	* plug-ins/common/Makefile.am: regenerated.
+
+	* plug-ins/common/decompose.c: cbrt() is in C99, so check for that
+	in addition to GNU libc.
+
 2003-12-12  Hans Breuer  <hans@breuer.org>
 
 	[

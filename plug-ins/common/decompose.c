@@ -40,8 +40,8 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#ifndef __GLIBC__
-/* cbrt() is a GNU extension */
+/* cbrt() is a GNU extension, which C99 accepted */
+#if !defined (__GLIBC__) && !(defined (__STDC_VERSION__) && __STDC_VERSION__ >= 199901L)
 #define cbrt(x) (pow(x, 1.0/3.0)) 
 #endif
 

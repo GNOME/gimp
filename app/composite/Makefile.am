@@ -64,7 +64,7 @@ regenerate: gimp-composite-generic.o gimp-composite-mmx.o gimp-composite-sse.o g
 
 EXTRA_DIST = \
 	make-installer.py	\
-	makefile.msc \
+	makefile.msc 		\
 	ns.py
 
 

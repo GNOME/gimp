@@ -294,9 +294,9 @@ STOCK_IMAGES = \
 themedata_DATA = $(STOCK_IMAGES)
 
 EXTRA_DIST = \
-	$(themedata_DATA)	\
-	$(WILBER_IMAGES)	\
-	gimp-dialog-icons.xcf.gz \
+	$(themedata_DATA)		\
+	$(WILBER_IMAGES)		\
+	gimp-dialog-icons.xcf.gz	\
 	makefile.msc
 
 
