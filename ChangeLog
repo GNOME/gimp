@@ -1,5 +1,12 @@
 2004-09-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-draw.c
+	(gimp_display_shell_draw_grid): #define the constant crosshair
+	size for the INTERSECTION grid style instead of using an eeky
+	"const gint".
+
+2004-09-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/dialogs.c (toplevel_entries): added a foreign entry
 	"gimp-file-open-loaction-dialog".
 

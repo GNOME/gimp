@@ -140,7 +140,8 @@ gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
       gint        x_real, y_real;
       gint        x_offset, y_offset;
       gint        width, height;
-      const gint  length = 2;
+
+#define CROSSHAIR 2
 
       grid = GIMP_GRID (shell->gdisp->gimage->grid);
       if (! grid)
@@ -211,7 +212,7 @@ gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
                                                x, 0, &x_real, &y_real,
                                                FALSE);
 
-              if (x_real + length < x1 || x_real - length >= x2)
+              if (x_real + CROSSHAIR < x1 || x_real - CROSSHAIR >= x2)
                 continue;
 
               for (y = y_offset; y <= height; y += grid->yspacing)
@@ -223,20 +224,24 @@ gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
                                                    x, y, &x_real, &y_real,
                                                    FALSE);
 
-                  if (y_real + length < y1 || y_real - length >= y2)
+                  if (y_real + CROSSHAIR < y1 || y_real - CROSSHAIR >= y2)
                     continue;
 
                   if (x_real >= x1 && x_real < x2)
                     gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_CUSTOM,
                                            x_real,
-                                           CLAMP (y_real - length, y1, y2 - 1),
+                                           CLAMP (y_real - CROSSHAIR,
+                                                  y1, y2 - 1),
                                            x_real,
-                                           CLAMP (y_real + length, y1, y2 - 1));
+                                           CLAMP (y_real + CROSSHAIR,
+                                                  y1, y2 - 1));
                   if (y_real >= y1 && y_real < y2)
                     gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_CUSTOM,
-                                           CLAMP (x_real - length, x1, x2 - 1),
+                                           CLAMP (x_real - CROSSHAIR,
+                                                  x1, x2 - 1),
                                            y_real,
-                                           CLAMP (x_real + length, x1, x2 - 1),
+                                           CLAMP (x_real + CROSSHAIR,
+                                                  x1, x2 - 1),
                                            y_real);
                 }
             }
