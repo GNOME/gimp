@@ -894,7 +894,7 @@ save_as_csim(gpointer param, OutputFunc_t output)
    gchar *description;
    
    output(param, "<img src=\"%s\" width=%d height=%d border=0 "
-	  "usemap=\"#%s\">\n\n", _map_info.image_name,
+	  "usemap=\"#%s\" />\n\n", _map_info.image_name,
 	  _image_width, _image_height, _map_info.title);
    output(param, "<map name=\"%s\">\n", _map_info.title);
    output(param, 
@@ -912,7 +912,7 @@ save_as_csim(gpointer param, OutputFunc_t output)
    
    object_list_write_csim(_shapes, param, output);
    if (*_map_info.default_url)
-      output(param, "<area shape=\"default\" href=\"%s\">\n",
+      output(param, "<area shape=\"default\" href=\"%s\" />\n",
 	     _map_info.default_url);
    output(param, "</map>\n");
 }

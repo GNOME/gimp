@@ -946,6 +946,20 @@ object_list_send_to_back(ObjectList_t *list)
    }
 }
 
+static void 
+write_xml_attrib(const gchar *attrib, const gchar *value,
+		 const gchar *default_text, gpointer param, 
+		 OutputFunc_t output)
+{
+   if (*value) {
+      gchar *escaped_value = g_markup_escape_text(value, -1);
+      output(param, " %s=\"%s\"", attrib, escaped_value);
+      g_free(escaped_value);
+   } else if (*default_text) {
+      output(param, " %s", default_text);
+   }
+}
+
 void
 object_list_write_csim(ObjectList_t *list, gpointer param, OutputFunc_t output)
 {
@@ -955,20 +969,15 @@ object_list_write_csim(ObjectList_t *list, gpointer param, OutputFunc_t output)
 
       output(param, "<area shape=");
       obj->class->write_csim(obj, param, output);
-      if (*obj->comment)
-	 output(param, " alt=\"%s\"", obj->comment);
-      if (*obj->target)
-	 output(param, " target=\"%s\"", obj->target);
-      if (*obj->mouse_over)
-	 output(param, " onmouseover=\"%s\"", obj->mouse_over);
-      if (*obj->mouse_out)
-	 output(param, " onmouseout=\"%s\"", obj->mouse_out);
-      if (*obj->focus)
-	 output(param, " onfocus=\"%s\"", obj->focus);
-      if (*obj->blur)
-	 output(param, " onblur=\"%s\"", obj->blur);
 
-      output(param, " href=\"%s\">\n", obj->url);
+      write_xml_attrib("alt", obj->comment, "", param, output);
+      write_xml_attrib("target", obj->target, "", param, output);
+      write_xml_attrib("onmouseover", obj->mouse_over, "", param, output);
+      write_xml_attrib("onmouseout", obj->mouse_out, "", param, output);
+      write_xml_attrib("onfocus", obj->focus, "", param, output);
+      write_xml_attrib("onblur", obj->blur, "", param, output);
+      write_xml_attrib("href", obj->url, " nohref=\"nohref\"", param, output);
+      output(param," />\n");
    }
 }
 
