@@ -1,3 +1,30 @@
+2003-09-27  Simon Budig  <simon@gimp.org>
+
+	This still is very much in progress. I just want to commit this
+	to avoid lossage. It kind of works but there definitely is
+	code in the wrong place now.
+
+	* app/gui/stroke-dialog.[ch]: New files implementing a dialog
+	containing Svens GimpStrokeEditor-Widget.
+
+	* app/gui/Makefile.am: changed accordingly.
+
+	* app/gui/vectors-commands.c: Open the StrokeOptions-Dialog when
+	the "stroke" menu entry gets selected.
+
+	* app/vectors/gimpvectors.c: Remove bad #ifdef hacks and use
+	Libart/Paintcore-Stroking depending on the type of the stroke_desc
+	Parameter.
+
+	* app/core/gimpstrokeoptions.c: Proper handle the Enum-Properties.
+
+	* app/core/gimpscanconvert.[ch]: make the antialias-parameter
+	to gimp_scan_convert_new a gboolean.
+
+	* app/tools/gimpiscissorstool.c
+	* app/core/gimpdrawable-stroke.c
+	* app/core/gimpimage-mask-select.c: Changed accordingly.
+
 2003-09-26  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/Makefile.am

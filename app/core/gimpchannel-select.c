@@ -167,19 +167,15 @@ gimp_image_mask_select_polygon (GimpImage      *gimage,
   else
     gimp_channel_push_undo (selection, undo_desc);
 
-#define SUPERSAMPLE 3
-
   scan_convert = gimp_scan_convert_new (gimage->width,
                                         gimage->height,
-                                        antialias ? SUPERSAMPLE : 1);
+                                        antialias);
 
   gimp_scan_convert_add_polyline (scan_convert, n_points, points, TRUE);
 
   mask = gimp_scan_convert_to_channel (scan_convert, gimage);
 
   gimp_scan_convert_free (scan_convert);
-
-#undef SUPERSAMPLE
 
   if (mask)
     {
@@ -227,13 +223,9 @@ gimp_image_mask_select_vectors (GimpImage      *gimage,
   else
     gimp_channel_push_undo (selection, undo_desc);
 
-#define SUPERSAMPLE 3
-
   scan_convert = gimp_scan_convert_new (gimage->width,
                                         gimage->height,
-                                        antialias ? SUPERSAMPLE : 1);
-
-#undef SUPERSAMPLE
+                                        antialias);
 
   for (stroke = vectors->strokes; stroke; stroke = stroke->next)
     {

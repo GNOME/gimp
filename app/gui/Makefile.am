@@ -49,6 +49,8 @@ dialogs_sources = \
 	resize-dialog.h			\
 	resolution-calibrate-dialog.c	\
 	resolution-calibrate-dialog.h	\
+	stroke-dialog.c			\
+	stroke-dialog.h			\
 	templates-commands.c		\
 	templates-commands.h		\
 	templates-menu.c		\

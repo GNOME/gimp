@@ -25,6 +25,7 @@
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "gui-types.h"
+#include "stroke-dialog.h"
 
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
@@ -186,6 +187,7 @@ vectors_stroke_cmd_callback (GtkWidget *widget,
   GimpVectors  *active_vectors;
   GimpDrawable *active_drawable;
   GimpToolInfo *tool_info;
+  GtkWidget    *dialog;
   return_if_no_vectors (gimage, active_vectors, data);
 
   active_drawable = gimp_image_active_drawable (gimage);
@@ -196,11 +198,19 @@ vectors_stroke_cmd_callback (GtkWidget *widget,
       return;
     }
 
+  dialog = stroke_dialog_new (active_drawable,
+                              GIMP_ITEM (active_vectors),
+                              NULL);
+
+  gtk_widget_show (dialog);
+
+  /*
   tool_info = gimp_context_get_tool (gimp_get_current_context (gimage->gimp));
 
   gimp_item_stroke (GIMP_ITEM (active_vectors), active_drawable,
                     GIMP_OBJECT (tool_info->paint_info));
   gimp_image_flush (gimage);
+  */
 }
 
 void

@@ -185,10 +185,10 @@ gimp_stroke_options_set_property (GObject      *object,
       options->width = g_value_get_double (value);
       break;
     case PROP_CAP_STYLE:
-      options->cap_style = g_value_get_int (value);
+      options->cap_style = g_value_get_enum (value);
       break;
     case PROP_JOIN_STYLE:
-      options->join_style = g_value_get_int (value);
+      options->join_style = g_value_get_enum (value);
       break;
     case PROP_MITER:
       options->miter = g_value_get_double (value);
@@ -253,10 +253,10 @@ gimp_stroke_options_get_property (GObject    *object,
       g_value_set_double (value, options->width);
       break;
     case PROP_CAP_STYLE:
-      g_value_set_int (value, options->cap_style);
+      g_value_set_enum (value, options->cap_style);
       break;
     case PROP_JOIN_STYLE:
-      g_value_set_int (value, options->join_style);
+      g_value_set_enum (value, options->join_style);
       break;
     case PROP_MITER:
       g_value_set_double (value, options->miter);

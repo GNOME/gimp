@@ -63,19 +63,18 @@ static void gimp_scan_convert_close_add_points (GimpScanConvert *sc);
 
 /*  public functions  */
 GimpScanConvert *
-gimp_scan_convert_new (guint width,
-                       guint height,
-                       guint antialias)
+gimp_scan_convert_new (guint    width,
+                       guint    height,
+                       gboolean antialias)
 {
   GimpScanConvert *sc;
 
   g_return_val_if_fail (width > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
-  g_return_val_if_fail (antialias > 0, NULL);
 
   sc = g_new0 (GimpScanConvert, 1);
 
-  sc->antialias = (antialias != 0 ? TRUE : FALSE);
+  sc->antialias = antialias;
   sc->width     = width;
   sc->height    = height;
 

@@ -539,7 +539,9 @@ iscissors_convert (GimpIscissorsTool *iscissors,
   gint             i;
   gint             index;
 
-  sc = gimp_scan_convert_new (gdisp->gimage->width, gdisp->gimage->height, 1);
+  sc = gimp_scan_convert_new (gdisp->gimage->width,
+                              gdisp->gimage->height,
+                              TRUE);
 
   /* go over the curves in reverse order, adding the points we have */
   list = iscissors->curves;

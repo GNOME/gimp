@@ -82,7 +82,7 @@ gimp_drawable_stroke_vectors (GimpDrawable         *drawable,
 
   gimp_item_offsets (GIMP_ITEM (drawable), &x2, &y2);
 
-  scan_convert = gimp_scan_convert_new (w, h, antialias ? 1 : 0);
+  scan_convert = gimp_scan_convert_new (w, h, antialias);
 
   /* For each Stroke in the vector, interpolate it, and add it to the
    * ScanConvert */

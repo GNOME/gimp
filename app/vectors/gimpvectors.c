@@ -25,23 +25,18 @@
 
 #include "vectors-types.h"
 
+#include "core/gimp.h"
+#include "core/gimpcontext.h"
+#include "core/gimpdrawable-stroke.h"
 #include "core/gimp-transform-utils.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpmarshal.h"
 #include "core/gimppaintinfo.h"
+#include "core/gimpstrokeoptions.h"
 
-#define LIBART_STROKE
-#undef LIBART_STROKE_BAD_HACK
-
-#ifdef LIBART_STROKE
-#  include "libgimpcolor/gimpcolor.h"
-#  include "core/gimp.h"
-#  include "core/gimpcontext.h"
-#  include "core/gimpdrawable-stroke.h"
-#else
-#  include "paint/gimppaintcore-stroke.h"
-#endif
+#include "libgimpcolor/gimpcolor.h"
+#include "paint/gimppaintcore-stroke.h"
 
 #include "gimpanchor.h"
 #include "gimpstroke.h"
@@ -545,9 +540,13 @@ gimp_vectors_stroke (GimpItem      *item,
                      GimpDrawable  *drawable,
                      GimpObject    *stroke_desc)
 {
-  GimpVectors   *vectors;
-  GimpPaintInfo *paint_info = GIMP_PAINT_INFO (stroke_desc);
-  gboolean       retval;
+  GimpVectors       *vectors;
+  GimpPaintInfo     *paint_info;
+  GimpStrokeOptions *stroke_options;
+  gboolean           retval;
+
+  g_return_val_if_fail (GIMP_IS_PAINT_INFO (stroke_desc) ||
+                        GIMP_IS_STROKE_OPTIONS (stroke_desc), FALSE);
 
   vectors = GIMP_VECTORS (item);
 
@@ -557,48 +556,61 @@ gimp_vectors_stroke (GimpItem      *item,
       return FALSE;
     }
 
-#ifdef LIBART_STROKE
-  {
-    GimpContext *context;
-    GimpRGB  color;
-    gfloat   opacity;
+  if (GIMP_IS_STROKE_OPTIONS (stroke_desc))
+    {
+      GimpContext *context;
+      GimpRGB  color;
+      gdouble  width;
+      gboolean antialias;
+      GimpCapStyle cap_style;
+      GimpJoinStyle join_style; 
+      GValue value = { 0, };
 
-    context = gimp_get_current_context (
-                          gimp_item_get_image (GIMP_ITEM (drawable))->gimp);
-    gimp_context_get_foreground (context, &color);
-    opacity = gimp_context_get_opacity (context);
+      stroke_options = GIMP_STROKE_OPTIONS (stroke_desc);
 
-#ifdef LIBART_STROKE_BAD_HACK
-    /* Bad hack to be able to change the size of the stroke interactively:
-     * use the opacity value as the width...
-     */
-    gimp_drawable_stroke_vectors (drawable, vectors,
-                                  1.0,
-                                  &color,
-                                  gimp_context_get_paint_mode (context),
-                                  MAX (0.1, opacity * 100),
-                                  GIMP_JOIN_MITER, GIMP_CAP_BUTT, TRUE);
-#else
-    gimp_drawable_stroke_vectors (drawable, vectors,
-                                  opacity,
-                                  &color,
-                                  gimp_context_get_paint_mode (context),
-                                  5.0,
-                                  GIMP_JOIN_MITER, GIMP_CAP_BUTT, TRUE);
-#endif
-    retval = TRUE;
-  }
-#else
-  {
-    GimpPaintCore *core = g_object_new (paint_info->paint_type, NULL);
+      context = GIMP_CONTEXT (stroke_options);
+      gimp_context_get_foreground (context, &color);
 
-    retval = gimp_paint_core_stroke_vectors (core, drawable,
-                                             paint_info->paint_options,
-                                             vectors);
+      g_value_init (&value, G_TYPE_DOUBLE);
+      g_object_get_property (G_OBJECT (stroke_options), "width", &value);
+      width = g_value_get_double (&value);
+      g_value_unset (&value);
 
-    g_object_unref (core);
-  }
-#endif
+      g_value_init (&value, GIMP_TYPE_CAP_STYLE);
+      g_object_get_property (G_OBJECT (stroke_options), "cap-style", &value);
+      cap_style = g_value_get_enum (&value);
+      g_value_unset (&value);
+
+      g_value_init (&value, GIMP_TYPE_JOIN_STYLE);
+      g_object_get_property (G_OBJECT (stroke_options), "join-style", &value);
+      join_style = g_value_get_enum (&value);
+      g_value_unset (&value);
+
+      g_value_init (&value, G_TYPE_BOOLEAN);
+      g_object_get_property (G_OBJECT (stroke_options), "antialias", &value);
+      antialias = g_value_get_boolean (&value);
+      g_value_unset (&value);
+
+      gimp_drawable_stroke_vectors (drawable, vectors,
+                                    gimp_context_get_opacity (context),
+                                    &color,
+                                    gimp_context_get_paint_mode (context),
+                                    width, join_style, cap_style, antialias);
+      retval = TRUE;
+    }
+  else
+    {
+      GimpPaintCore *core;
+      
+      paint_info = GIMP_PAINT_INFO (stroke_desc);
+      core = g_object_new (paint_info->paint_type, NULL);
+
+      retval = gimp_paint_core_stroke_vectors (core, drawable,
+                                               paint_info->paint_options,
+                                               vectors);
+
+      g_object_unref (core);
+    }
 
   return retval;
 }

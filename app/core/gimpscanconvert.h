@@ -28,7 +28,7 @@ typedef struct _GimpScanConvert GimpScanConvert;
  */
 GimpScanConvert * gimp_scan_convert_new        (guint            width,
                                                 guint            height,
-                                                guint            antialias);
+                                                gboolean         antialias);
 
 void              gimp_scan_convert_free       (GimpScanConvert *scan_converter);
 
