@@ -1,5 +1,9 @@
 2004-04-18  Pedro Gimeno  <pggimeno@wanadoo.es>
 
+	* plug-ins/common/gauss_rle.c (gauss_rle): Oops, fixed my fix.
+
+2004-04-18  Pedro Gimeno  <pggimeno@wanadoo.es>
+
 	* plug-ins/common/gauss_iir.c: Change tabs to spaces all over the
 	file, in preparation for other changes. Minor cleanup.
 

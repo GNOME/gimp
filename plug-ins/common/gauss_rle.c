@@ -529,7 +529,7 @@ gauss_rle (GimpDrawable *drawable,
   gint     i, row, col, b;
   gint     start, end;
   gdouble  progress, max_progress;
-  gint    *curve;
+  gint    *curve = NULL;
   gint    *sum = NULL;
   gint     val;
   gint     length;
