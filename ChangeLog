@@ -1,3 +1,8 @@
+Wed Dec 29 21:28:13 CET 1999  Marc Lehmann <pcg@goof.com>
+
+	* libgimp/gimpcompat.h: Add gimp_drawable_find_parasite, reported
+        by Marco Lamberto <lm@ko.home.it>
+
 Wed Dec 29 19:05:11 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/CEL.c

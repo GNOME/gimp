@@ -35,6 +35,7 @@ extern "C" {
 #define gimp_image_parasite_find	gimp_image_parasite_find
 #define gimp_drawable_attach_parasite	gimp_drawable_parasite_attach
 #define gimp_drawable_detach_parasite	gimp_drawable_parasite_detach
+#define gimp_drawable_find_parasite	gimp_drawable_parasite_find
 #define gimp_drawable_channel		gimp_drawable_is_channel
 #define gimp_drawable_gray		gimp_drawable_is_gray
 #define gimp_drawable_color		gimp_drawable_is_rgb
