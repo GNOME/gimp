@@ -30,6 +30,7 @@
 <!entity libgimp-gimpmenu SYSTEM "sgml/gimpmenu.sgml">
 <!entity libgimp-gimpquerybox SYSTEM "sgml/gimpquerybox.sgml">
 <!entity libgimp-gimpunit SYSTEM "sgml/gimpunit.sgml">
+<!entity libgimp-gimputils SYSTEM "sgml/gimputils.sgml">
 <!entity libgimp-gimpvector SYSTEM "sgml/gimpvector.sgml">
 <!entity libgimp-gimpwidgets SYSTEM "sgml/gimpwidgets.sgml">
 ]>
@@ -55,6 +56,7 @@
     &libgimp-gimpmatrix;
     &libgimp-gimpprotocol;
     &libgimp-gimpunit;
+    &libgimp-gimputils;
     &libgimp-gimpvector;
     &libgimp-gimpwire;
     &libgimp-parasite;
