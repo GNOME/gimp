@@ -24,6 +24,8 @@
 #include "gimpbrushpipe.h"
 #include "gimpbrushpipeP.h"
 #include "gimpcontextpreview.h"
+#include "gradient.h"
+#include "gradient_header.h"
 #include "interface.h"  /* for tool_tips */
 #include "patterns.h"
 #include "temp_buf.h"
@@ -46,14 +48,22 @@ static unsigned char scale_indicator_bits[7][7][3] =
   { WHT, WHT, WHT, WHT, WHT, WHT, WHT }
 };
 
+/*  size of the gradient popup  */
+#define GRADIENT_POPUP_WIDTH  128
+#define GRADIENT_POPUP_HEIGHT 32
+
+/*  event mask for the context_preview  */
 #define CONTEXT_PREVIEW_EVENT_MASK  (GDK_BUTTON_PRESS_MASK |   \
 				     GDK_BUTTON_RELEASE_MASK | \
 				     GDK_ENTER_NOTIFY_MASK |   \
 				     GDK_LEAVE_NOTIFY_MASK)
 
+/*  shared widgets for the popups  */
 static GtkWidget *gcp_popup = NULL;
 static GtkWidget *gcp_popup_preview = NULL;
 
+
+/*  signals  */
 enum {
   CLICKED,
   LAST_SIGNAL
@@ -75,6 +85,8 @@ static void     gimp_context_preview_draw_brush           (GimpContextPreview *)
 static void     gimp_context_preview_draw_brush_popup     (GimpContextPreview *);
 static void     gimp_context_preview_draw_pattern         (GimpContextPreview *);
 static void     gimp_context_preview_draw_pattern_popup   (GimpContextPreview *);
+static void     gimp_context_preview_draw_gradient        (GimpContextPreview *);
+static void     gimp_context_preview_draw_gradient_popup  (GimpContextPreview *);
 
 
 static void
@@ -195,9 +207,14 @@ gimp_context_preview_update (GimpContextPreview *gcp,
     break;
   case GCP_PATTERN:
     gimp_context_preview_draw_pattern (gcp);
+    break;
+  case GCP_GRADIENT:
+    gimp_context_preview_draw_gradient (gcp);
+    break;
   default: 
     break;
   }
+  gtk_widget_queue_draw (GTK_WIDGET (gcp));
 
   if (gcp->show_tooltips)
   {
@@ -215,6 +232,12 @@ gimp_context_preview_update (GimpContextPreview *gcp,
       {
 	GPattern *pattern = (GPattern *)(gcp->data);
 	name = pattern->name;
+      }
+      break;
+    case GCP_GRADIENT:
+      {
+	gradient_t *gradient = (gradient_t *)(gcp->data);
+	name = gradient->name;
       }
       break;
     default:
@@ -276,6 +299,10 @@ gimp_context_preview_popup_open (GimpContextPreview *gcp,
 	height = pattern->mask->height;
       }
       break;
+    case GCP_GRADIENT:
+      width  = GRADIENT_POPUP_WIDTH;
+      height = GRADIENT_POPUP_HEIGHT;
+      break;
     default:
       return;
     }
@@ -328,6 +355,9 @@ gimp_context_preview_popup_open (GimpContextPreview *gcp,
     case GCP_PATTERN:
       gimp_context_preview_draw_pattern_popup (gcp);
       break;
+    case GCP_GRADIENT:
+      gimp_context_preview_draw_gradient_popup (gcp);
+      break;
     default:
       break;
     }  
@@ -355,7 +385,8 @@ gimp_context_preview_data_matches_type (GimpContextPreview *gcp,
       match = GIMP_IS_BRUSH (data);
       break;
     case GCP_PATTERN:
-      match = data != NULL;  /*  would be nice if pattern was a real gtk_object  */
+    case GCP_GRADIENT:
+      match = data != NULL;  /*  would be nicer if these were real gtk_objects  */
       break;
     default:
       break;
@@ -527,8 +558,6 @@ gimp_context_preview_draw_brush (GimpContextPreview *gcp)
     }
 
   g_free (buf);
- 
-  gtk_widget_queue_draw (GTK_WIDGET (gcp));
 }
 
 
@@ -636,3 +665,90 @@ gimp_context_preview_draw_pattern (GimpContextPreview *gcp)
 
   g_free(buf);
 }
+
+
+/*  gradient draw functions  */
+
+static void
+draw_gradient (GtkPreview *preview, 
+	       gradient_t *gradient,
+	       gint        width,
+	       gint        height)
+{
+  gradient_t *old_gradient = curr_gradient;
+  guchar *p0, *p1, *even, *odd;
+  gint x, y;
+  gdouble dx, cur_x;
+  gdouble r, g, b, a;
+  gdouble c0, c1;
+
+  curr_gradient = gradient;
+
+  dx    = 1.0 / (width - 1);
+  cur_x = 0.0;
+  p0    = even = g_new (guchar, 3 * width);
+  p1    = odd  = g_new (guchar, 3 * width);
+
+  for (x = 0; x < width; x++) 
+    {
+      grad_get_color_at (cur_x, &r, &g, &b, &a);
+    
+      if ((x / GRAD_CHECK_SIZE_SM) & 1) 
+	{
+	  c0 = GRAD_CHECK_LIGHT;
+	  c1 = GRAD_CHECK_DARK;
+	} 
+      else 
+	{
+	  c0 = GRAD_CHECK_DARK;
+	  c1 = GRAD_CHECK_LIGHT;
+	}
+
+      *p0++ = (c0 + (r - c0) * a) * 255.0;
+      *p0++ = (c0 + (g - c0) * a) * 255.0;
+      *p0++ = (c0 + (b - c0) * a) * 255.0;
+      
+      *p1++ = (c1 + (r - c1) * a) * 255.0;
+      *p1++ = (c1 + (g - c1) * a) * 255.0;
+      *p1++ = (c1 + (b - c1) * a) * 255.0;
+      
+      cur_x += dx;
+    }
+
+  for (y = 0; y < height; y++)
+    {
+      if ((y / GRAD_CHECK_SIZE_SM) & 1)
+	gtk_preview_draw_row (preview, odd, 0, y, width);
+      else
+	gtk_preview_draw_row (preview, even, 0, y, width);
+    }
+
+  g_free (odd);
+  g_free (even);
+  curr_gradient = old_gradient;
+}
+
+static void
+gimp_context_preview_draw_gradient_popup (GimpContextPreview *gcp)
+{
+  gradient_t *gradient;
+
+  g_return_if_fail (gcp != NULL && gcp->data != NULL);
+  
+  gradient = (gradient_t*)(gcp->data);
+  draw_gradient (GTK_PREVIEW (gcp_popup_preview), gradient, 
+		 GRADIENT_POPUP_WIDTH, GRADIENT_POPUP_HEIGHT);
+}
+
+static void
+gimp_context_preview_draw_gradient (GimpContextPreview *gcp)
+{
+  gradient_t *gradient;
+
+  g_return_if_fail (gcp != NULL && gcp->data != NULL);
+
+  gradient = (gradient_t*)(gcp->data);
+  draw_gradient (GTK_PREVIEW (gcp), gradient, gcp->width, gcp->height);
+}
+
+

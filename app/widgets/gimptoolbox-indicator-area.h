@@ -19,11 +19,11 @@
 #define __INDICATOR_AREA_H__
 #include "patterns.h"
 #include "gimpbrushlist.h"
-GtkWidget *
-indicator_area_create (int width, int height);
 
-void brush_area_update(void);
-void pattern_area_update(void);
+GtkWidget *indicator_area_create (void);
+void       brush_area_update     (void);
+void       pattern_area_update   (void);
+void       gradient_area_update  (void);
 
 #endif  /*  __INDICATOR_AREA_H__  */
 

@@ -53,6 +53,7 @@
 #include "gimprc.h"
 #include "gradient.h"
 #include "gradient_header.h"
+#include "indicator_area.h"
 #include "interface.h"
 #include "palette.h"
 #include "session.h"
@@ -261,6 +262,7 @@ sel_list_item_update(GtkWidget *widget,
   if(gsp == gradient_select_dialog)
     {
       grad_set_grad_to_name(gsp->grad->name);
+      gradient_area_update ();  /*  update the indicator_area  */
       import_palette_grad_update(gsp->grad);
     }
   else
@@ -279,7 +281,7 @@ grad_select_edit_callback (GtkWidget *w,
 
   grad_create_gradient_editor_init(TRUE);
 
-  /* Set the current gradient in this dailog to the "real  current"*/
+  /* Set the current gradient in this dialog to the "real  current"*/
   if(gsp && gsp->grad)
     grad_set_grad_to_name(gsp->grad->name);
 }

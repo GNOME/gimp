@@ -267,7 +267,7 @@ create_indicator_area (GtkWidget *parent)
   gtk_container_set_border_width (GTK_CONTAINER (alignment), 3);
   gtk_container_add (GTK_CONTAINER (frame), alignment);
 
-  ind_area = indicator_area_create (54, 42);
+  ind_area = indicator_area_create ();
   gtk_container_add (GTK_CONTAINER (alignment), ind_area);
   gtk_widget_show (ind_area);
   gtk_widget_show (alignment);

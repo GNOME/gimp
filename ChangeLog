@@ -1,3 +1,11 @@
+Wed Sep  1 13:29:09 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/gimpcontextpreview.[ch]: added gradient preview.
+
+	* app/gradient_select.c
+	* app/indicator_area.[ch]
+	* app/interface.c: display the active gradient in the toolbox.
+	
 Tue Aug 31 23:13:51 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/tile_swap.c: no leading underscore for S_IFOO constants

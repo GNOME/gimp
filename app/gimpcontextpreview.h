@@ -41,6 +41,7 @@ typedef enum
 {
   GCP_BRUSH = 0,
   GCP_PATTERN,
+  GCP_GRADIENT,
   GCP_LAST
 } GimpContextPreviewType;
 
