@@ -89,27 +89,42 @@ HELP
     );
 }
 
-
 sub displays_reconnect {
     $blurb = 'Reconnect displays from one image to another image.';
 
     $help = <<'HELP';
-This procedure connects all displays of the old_image to the new_image.
-If the new_image already has a display the reconnect is not performed and the
-procedure returns without success.  You should rarely need to use this
-function.
+This procedure connects all displays of the old_image to the
+new_image.  If the old_image has no display or new_image already has a
+display the reconnect is not performed and the procedure returns
+without success.  You should rarely need to use this function.
 HELP
 
     &std_pdb_misc;
 
     @inargs = ( 
 	{ name => 'old_image', type => 'image',
-	  desc => 'The old image (should have at least one display)' },
+	  desc => 'The old image (must have at least one display)' },
 	{ name => 'new_image', type => 'image',
 	  desc => 'The new image (must not have a display)' }
      );
 
-   %invoke = ( code => 'gimp_reconnect_displays (gimp, old_image, new_image);' );
+    %invoke = ( code => <<'CODE'
+{
+  success = (old_image != new_image    &&
+             old_image->disp_count > 0 &&
+             new_image->disp_count == 0);
+
+  if (success)
+    {
+      gimp_reconnect_displays (gimp, old_image, new_image);
+
+      /* take ownership of the image */
+      if (new_image->disp_count > 0)
+        g_object_unref (new_image);
+    }
+}
+CODE
+    );
 }
 
 @headers = qw("core/gimp.h");

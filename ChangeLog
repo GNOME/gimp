@@ -1,3 +1,15 @@
+2004-11-29  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/display.pdb: make it work as documented (fail
+	if the new_image already has a display). Also fail if the
+	old_image doesn't have any display (changed docs accordingly).
+	On success, take over the initial reference count of the new
+	image, just as the gimp_display_new() PDB wrapper does.
+	Fixes bug #159051.
+
+	* app/pdb/display_cmds.c
+	* libgimp/gimpdisplay_pdb.c: regenerated.
+
 2004-11-29  Sven Neumann  <sven@gimp.org>
 
 	* app/file/file-save.c (file_save_as): when the image filename

@@ -204,7 +204,20 @@ displays_reconnect_invoker (Gimp         *gimp,
     success = FALSE;
 
   if (success)
-    gimp_reconnect_displays (gimp, old_image, new_image);
+    {
+      success = (old_image != new_image    &&
+                 old_image->disp_count > 0 &&
+                 new_image->disp_count == 0);
+
+      if (success)
+        {
+          gimp_reconnect_displays (gimp, old_image, new_image);
+
+          /* take ownership of the image */
+          if (new_image->disp_count > 0)
+            g_object_unref (new_image);
+        }
+    }
 
   return procedural_db_return_args (&displays_reconnect_proc, success);
 }
@@ -214,7 +227,7 @@ static ProcArg displays_reconnect_inargs[] =
   {
     GIMP_PDB_IMAGE,
     "old_image",
-    "The old image (should have at least one display)"
+    "The old image (must have at least one display)"
   },
   {
     GIMP_PDB_IMAGE,
@@ -227,7 +240,7 @@ static ProcRecord displays_reconnect_proc =
 {
   "gimp_displays_reconnect",
   "Reconnect displays from one image to another image.",
-  "This procedure connects all displays of the old_image to the new_image. If the new_image already has a display the reconnect is not performed and the procedure returns without success. You should rarely need to use this function.",
+  "This procedure connects all displays of the old_image to the new_image. If the old_image has no display or new_image already has a display the reconnect is not performed and the procedure returns without success. You should rarely need to use this function.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
