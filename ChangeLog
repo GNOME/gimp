@@ -1,3 +1,7 @@
+Tue Aug 22 20:42:52 CEST 2000 Daniel Egger  <egger@suse.de>
+	
+	* plug-ins/common/cubism.c: Made a few minor optimisations.
+
 Tue Aug 22 18:26:06 CEST 2000 Daniel Egger  <egger@suse.de>
 	
 	* plug-ins/Makefile.am: 

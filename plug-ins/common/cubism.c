@@ -35,7 +35,7 @@
 #define SCALE_WIDTH    125
 #define BLACK            0
 #define BG               1
-#define SUPERSAMPLE      3
+#define SUPERSAMPLE      4
 #define MAX_POINTS       4
 #define MIN_ANGLE   -36000
 #define MAX_ANGLE    36000
@@ -518,8 +518,6 @@ fill_poly_color (Polygon   *poly,
   gdouble xx, yy;
   gdouble vec[2];
   gdouble dist, one_over_dist;
-  gint supersample;
-  gint supersample2;
   gint x1, y1, x2, y2;
   gint *vals, *vals_iter, *vals_end;
 
@@ -538,9 +536,6 @@ fill_poly_color (Polygon   *poly,
   else
     one_over_dist = 0.0;
 
-  supersample = SUPERSAMPLE;
-  supersample2 = SQR (supersample);
-
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
   bytes = drawable->bpp;
 
@@ -550,15 +545,15 @@ fill_poly_color (Polygon   *poly,
   max_x = (gint) dmax_x;
   max_y = (gint) dmax_y;
 
-  size_y = (max_y - min_y) * supersample;
-  size_x = (max_x - min_x) * supersample;
+  size_y = (max_y - min_y) * SUPERSAMPLE;
+  size_x = (max_x - min_x) * SUPERSAMPLE;
 
   min_scanlines = min_scanlines_iter = g_new (gint, size_y);
   max_scanlines = max_scanlines_iter = g_new (gint, size_y);
   for (i = 0; i < size_y; i++)
     {
-      min_scanlines[i] = max_x * supersample;
-      max_scanlines[i] = min_x * supersample;
+      min_scanlines[i] = max_x * SUPERSAMPLE;
+      max_scanlines[i] = min_x * SUPERSAMPLE;
     }
 
   if(poly->npts) {
@@ -570,12 +565,12 @@ fill_poly_color (Polygon   *poly,
     xe = (gint) poly->pts[0].x;
     ye = (gint) poly->pts[0].y;
 
-    xs *= supersample;
-    ys *= supersample;
-    xe *= supersample;
-    ye *= supersample;
+    xs *= SUPERSAMPLE;
+    ys *= SUPERSAMPLE;
+    xe *= SUPERSAMPLE;
+    ye *= SUPERSAMPLE;
 
-    convert_segment (xs, ys, xe, ye, min_y * supersample,
+    convert_segment (xs, ys, xe, ye, min_y * SUPERSAMPLE,
 		     min_scanlines, max_scanlines);
 
     for (i = 1, curptr = &poly->pts[0]; i < poly_npts; i++)
@@ -586,12 +581,12 @@ fill_poly_color (Polygon   *poly,
 	xe = (gint) curptr->x;
 	ye = (gint) curptr->y;
 
-	xs *= supersample;
-	ys *= supersample;
-	xe *= supersample;
-	ye *= supersample;
+	xs *= SUPERSAMPLE;
+	ys *= SUPERSAMPLE;
+	xe *= SUPERSAMPLE;
+	ye *= SUPERSAMPLE;
 
-	convert_segment (xs, ys, xe, ye, min_y * supersample,
+	convert_segment (xs, ys, xe, ye, min_y * SUPERSAMPLE,
 			 min_scanlines, max_scanlines);
       }
   }
@@ -603,42 +598,42 @@ fill_poly_color (Polygon   *poly,
 
   for (i = 0; i < size_y; i++, min_scanlines_iter++, max_scanlines_iter++)
     {
-      if (! (i % supersample))
+      if (! (i % SUPERSAMPLE))
 	{
 	  memset (vals, 0, sizeof (gint) * size_x);
 	}
 
-      yy = (gdouble)i / (gdouble)supersample + min_y;
+      yy = (gdouble)i / (gdouble)SUPERSAMPLE + min_y;
 
       for (j = *min_scanlines_iter; j < *max_scanlines_iter; j++)
 	{
-	  x = j - min_x * supersample;
+	  x = j - min_x * SUPERSAMPLE;
 	  vals[x] += 255;
 	}
 
-      if (! ((i + 1) % supersample))
+      if (! ((i + 1) % SUPERSAMPLE))
 	{
-	  y = (i / supersample) + min_y;
+	  y = (i / SUPERSAMPLE) + min_y;
 
 	  if (y >= y1 && y < y2)
 	    {
-	      for (j = 0; j < size_x; j += supersample)
+	      for (j = 0; j < size_x; j += SUPERSAMPLE)
 		{
-		  x = (j / supersample) + min_x;
+		  x = (j / SUPERSAMPLE) + min_x;
 
 		  if (x >= x1 && x < x2)
 		    {
 		      for (val = 0, vals_iter = &vals[j],
-			     vals_end = &vals_iter[supersample];
+			     vals_end = &vals_iter[SUPERSAMPLE];
 			   vals_iter < vals_end;
 			   vals_iter++)
 			val += *vals_iter;
 
-		      val /= supersample2;
+		      val /= SQR(SUPERSAMPLE);
 
 		      if (val > 0)
 			{
-			  xx = (gdouble) j / (gdouble) supersample + min_x;
+			  xx = (gdouble) j / (gdouble) SUPERSAMPLE + min_x;
 			  alpha = (gint) (val * calc_alpha_blend (vec, one_over_dist, xx - sx, yy - sy));
 
 			  gimp_pixel_rgn_get_pixel (&src_rgn, buf, x, y);
