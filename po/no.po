@@ -3,12 +3,12 @@
 # Kjartan Maraas <kmaraas@gnome.org>, 1999-2001.
 # Runar Ingebrigtsen <ringe@skolelinux.no>, 2004.
 # Sigurd Gartmann <sigurd-translate@brogar.org>, 2004.
-# 
+#
 msgid ""
 msgstr ""
-"Procjet-Id-Version: gimp 2.0\n"
+"Project-Id-Version: gimp 2.0\n"
 "POT-Creation-Date: 2004-04-14 00:29+0200\n"
-"PO-Revision-Date: 2004-04-21 22:59+0100\n"
+"PO-Revision-Date: 2004-07-08 18:16+0200\n"
 "Last-Translator: Runar Ingebrigtsen <ringe@skolelinux.no>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -293,7 +293,11 @@ msgid ""
 "swap file. Some parts of your images may be corrupted. Try to save your work "
 "using different filenames, restart the Gimp and check the location of the "
 "swap directory in your Preferences."
-msgstr "Kunne ikke åpne mellomlagerfil. GIMP har brukt opp minnet og kan ikke bruke mellomlagerfilen. Noen av bildene dine kan være ødelagte. Prøv å lagre arbeidet ditt med andre filnavn, start Gimp på nytt og undersøk mellomlagermappen som den er satt i innstillingene dine."
+msgstr ""
+"Kunne ikke åpne mellomlagerfil. GIMP har brukt opp minnet og kan ikke bruke "
+"mellomlagerfilen. Noen av bildene dine kan være ødelagte. Prøv å lagre "
+"arbeidet ditt med andre filnavn, start Gimp på nytt og undersøk "
+"mellomlagermappen som den er satt i innstillingene dine."
 
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
@@ -369,7 +373,9 @@ msgstr "Feil under lesing av «%s»: %s"
 msgid ""
 "There was an error parsing your '%s' file. Default values will be used. A "
 "backup of your configuration has been created at '%s'."
-msgstr "En feil oppsto ved tolking av din '%s'-fil. Benytter standardverdier. En sikkerhetskopi av innstillingene dine er opprettet på '%s'."
+msgstr ""
+"En feil oppsto ved tolking av din '%s'-fil. Benytter standardverdier. En "
+"sikkerhetskopi av innstillingene dine er opprettet på '%s'."
 
 #: app/config/gimpconfigwriter.c:107
 #, c-format
@@ -463,7 +469,8 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:70
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
-msgstr "Dette er avstanden i piksler hvor guide- og gittertilpasning aktiveres."
+msgstr ""
+"Dette er avstanden i piksler hvor guide- og gittertilpasning aktiveres."
 
 #: app/config/gimprc-blurbs.h:74
 msgid ""
@@ -472,7 +479,12 @@ msgid ""
 "progresses in all directions until the difference of pixel intensity from "
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
-msgstr "Verktøy som tryllestav og malingspann finner regioner basert på en frøfyllalgoritme. Frøfyll starter på den valgte punktet og utvider området i alle retningher helt til forskjellen i punktintensitet til startpunktet er større enn en spesifiserte terskel. Denne verdien bestemmer standardterskelen."
+msgstr ""
+"Verktøy som tryllestav og malingspann finner regioner basert på en "
+"frøfyllalgoritme. Frøfyll starter på den valgte punktet og utvider området i "
+"alle retningher helt til forskjellen i punktintensitet til startpunktet er "
+"større enn en spesifiserte terskel. Denne verdien bestemmer "
+"standardterskelen."
 
 #: app/config/gimprc-blurbs.h:87
 msgid ""
@@ -527,7 +539,8 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:167
 msgid ""
 "Sets the level of interpolation used for scaling and other transformations."
-msgstr "Angir interpolasjonsnivå brukt til skalering og andre transformasjoner."
+msgstr ""
+"Angir interpolasjonsnivå brukt til skalering og andre transformasjoner."
 
 #: app/config/gimprc-blurbs.h:171
 msgid "How many recently opened image filenames to keep on the File menu."
@@ -562,14 +575,20 @@ msgid ""
 "Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
-msgstr "Setter skjermens horisontale oppløsning, i punkter per tomme. Hvis denne blir satt til 0, blir X-tjeneren spurt om informasjon om horisontal og vertikal oppløsning."
+msgstr ""
+"Setter skjermens horisontale oppløsning, i punkter per tomme. Hvis denne "
+"blir satt til 0, blir X-tjeneren spurt om informasjon om horisontal og "
+"vertikal oppløsning."
 
 #: app/config/gimprc-blurbs.h:198
 msgid ""
 "Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
-msgstr "Setter skjermens vertikale oppløsning, i punkter per tomme. Hvis denne blir satt til 0, blir X-tjeneren spurt om informasjon om horisontal og vertikal oppløsning."
+msgstr ""
+"Setter skjermens vertikale oppløsning, i punkter per tomme. Hvis denne blir "
+"satt til 0, blir X-tjeneren spurt om informasjon om horisontal og vertikal "
+"oppløsning."
 
 #: app/config/gimprc-blurbs.h:203
 msgid ""
@@ -606,7 +625,10 @@ msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
 "down when working with large images."
-msgstr "Angir om GIMP skal opprette forhåndsvisning av lag og kanaler. Forhåndsvisning i lag- og kanalmenyene hendige, men de kan gjøre at ting går tregere ved arbeid på store bilder."
+msgstr ""
+"Angir om GIMP skal opprette forhåndsvisning av lag og kanaler. "
+"Forhåndsvisning i lag- og kanalmenyene hendige, men de kan gjøre at ting går "
+"tregere ved arbeid på store bilder."
 
 #: app/config/gimprc-blurbs.h:239
 msgid "Sets the default preview size for layers and channels."
@@ -624,7 +646,9 @@ msgstr ""
 msgid ""
 "When enabled, the image window will automatically resize itself, when "
 "zooming into and out of images."
-msgstr "Med denne funksjonen slått på vil størrelsen på bildevinduet automatisk endres når du zoomer inn og ut i bildet."
+msgstr ""
+"Med denne funksjonen slått på vil størrelsen på bildevinduet automatisk "
+"endres når du zoomer inn og ut i bildet."
 
 #: app/config/gimprc-blurbs.h:250
 msgid "Let GIMP try to restore your last saved session on each startup."
@@ -706,7 +730,9 @@ msgstr ""
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
-msgstr "Gjør at gitteret er synlig som standard. Dette kan også endres med «Vis->Vis gitter»-kommandoen."
+msgstr ""
+"Gjør at gitteret er synlig som standard. Dette kan også endres med «Vis->Vis "
+"gitter»-kommandoen."
 
 #: app/config/gimprc-blurbs.h:299
 msgid "Enable to display a handy GIMP tip on startup."
@@ -788,7 +814,11 @@ msgid ""
 "memory and disk. Setting this value higher will cause the GIMP to use less "
 "swap space, but will also cause the GIMP to use more memory. Conversely, a "
 "smaller cache size causes the GIMP to use more swap space and less memory."
-msgstr "Hurtigbufring av fliser blir brukt for å sikre at GIMP ikke roter bort fliser mellom minne og disk. Valg av høye verdier vil føre til at GIMP bruker mindre diskplass, men mer minne. Tilsvarende vil en mindre flisbuffer gjøre at GIMP bruker mer diskplass og mindre minne."
+msgstr ""
+"Hurtigbufring av fliser blir brukt for å sikre at GIMP ikke roter bort "
+"fliser mellom minne og disk. Valg av høye verdier vil føre til at GIMP "
+"bruker mindre diskplass, men mer minne. Tilsvarende vil en mindre flisbuffer "
+"gjøre at GIMP bruker mer diskplass og mindre minne."
 
 #: app/config/gimprc-blurbs.h:355
 msgid ""
@@ -826,7 +856,10 @@ msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
-msgstr "Angir en øvre grense for minne som brukes for hvert bilde til angrehistorikk. Uavhengig av denne størrelsen vil alltid det antallet angrelag som er stilt inn kunne rulles tilbake."
+msgstr ""
+"Angir en øvre grense for minne som brukes for hvert bilde til "
+"angrehistorikk. Uavhengig av denne størrelsen vil alltid det antallet "
+"angrelag som er stilt inn kunne rulles tilbake."
 
 #: app/config/gimprc-blurbs.h:378
 msgid "Sets the size of the previews in the Undo History."
@@ -1858,11 +1891,15 @@ msgstr "Vertikal linjeavstand for gitterlinjene."
 #: app/core/gimpgrid.c:159
 msgid ""
 "Horizontal offset of the first grid line; this may be a negative number."
-msgstr "Horisontal forskyvning av den første gitterlinja. Dette kan være et negativt tall."
+msgstr ""
+"Horisontal forskyvning av den første gitterlinja. Dette kan være et negativt "
+"tall."
 
 #: app/core/gimpgrid.c:166
 msgid "Vertical offset of the first grid line; this may be a negative number."
-msgstr "Vertikal forskyvning av den første gitterlinja. Dette kan være et negativt tall."
+msgstr ""
+"Vertikal forskyvning av den første gitterlinja. Dette kan være et negativt "
+"tall."
 
 #: app/core/gimpimage-colormap.c:63
 msgid "Set Indexed Palette"
@@ -3774,7 +3811,9 @@ msgstr "Bildet overstiger maksimal bildestørrelse"
 msgid ""
 "The chosen image size will shrink some layers completely away. Is this what "
 "you want?"
-msgstr "Den valgte bildestørrelsen vil forminske noen lag helt bort. Er det dette du vil gjøre?"
+msgstr ""
+"Den valgte bildestørrelsen vil forminske noen lag helt bort. Er det dette du "
+"vil gjøre?"
 
 #: app/gui/image-commands.c:547
 msgid "Layer Too Small"
@@ -6504,7 +6543,9 @@ msgstr ""
 msgid ""
 "GIMP uses an additional gtkrc file so you can configure it to look "
 "differently than other GTK apps."
-msgstr "GIMP bruker en ekstra gtkrc-fil slik at du kan få GIMP til å se annerledes ut enn andre GTK applikasjoner."
+msgstr ""
+"GIMP bruker en ekstra gtkrc-fil slik at du kan få GIMP til å se annerledes "
+"ut enn andre GTK applikasjoner."
 
 #: app/gui/user-install-dialog.c:147
 msgid ""
@@ -6524,14 +6565,21 @@ msgid ""
 "of your configuration so it can. be remembered for the next session.  You "
 "may edit this file if you wish, but it is much easier to define the keys "
 "from within The GIMP.  Deleting this file will restore the default shortcuts."
-msgstr "Tastatursnarveier kan omdefineres dynamisk i GIMP. menurc er et dump av dine innstillinger som gjør at de blir husket til neste økt. Du kan redigere denne filen hvis du vil, men det er mye lettere å definere tastene fra GIMP. Sletting av denne filen vil gjenopprette standard tastatursnarveier."
+msgstr ""
+"Tastatursnarveier kan omdefineres dynamisk i GIMP. menurc er et dump av dine "
+"innstillinger som gjør at de blir husket til neste økt. Du kan redigere "
+"denne filen hvis du vil, men det er mye lettere å definere tastene fra GIMP. "
+"Sletting av denne filen vil gjenopprette standard tastatursnarveier."
 
 #: app/gui/user-install-dialog.c:167
 msgid ""
 "The sessionrc is used to store what dialog windows were open the last time "
 "you quit The GIMP.  You can configure The GIMP to reopen these dialogs at "
 "the saved position."
-msgstr "sessionrc-filen brukes til å lagre informasjon om åpne menyer ved forrige avslutning av GIMP. Du kan få GIMP til å gjenåpne disse menyene i lagret posisjon."
+msgstr ""
+"sessionrc-filen brukes til å lagre informasjon om åpne menyer ved forrige "
+"avslutning av GIMP. Du kan få GIMP til å gjenåpne disse menyene i lagret "
+"posisjon."
 
 #: app/gui/user-install-dialog.c:174
 msgid ""
@@ -9662,7 +9710,9 @@ msgstr ""
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to open the color selection dialog."
-msgstr "Forgrunns- og bakgrunnsfarger.  De svarte og hvite rutene nullstiller farger.  Pilene bytter farger. Dobbeltklikk for å åpne meny for fargevalg."
+msgstr ""
+"Forgrunns- og bakgrunnsfarger.  De svarte og hvite rutene nullstiller "
+"farger.  Pilene bytter farger. Dobbeltklikk for å åpne meny for fargevalg."
 
 #: app/widgets/gimptooloptionseditor.c:146
 msgid "Save options to..."
