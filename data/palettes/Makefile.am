@@ -45,6 +45,8 @@ FILES = \
 	Reds_And_Purples	\
 	Royal			\
 	Topographic		\
+	Visibone		\
+	Visibone2		\
 	Volcano			\
 	Warm_Colors		\
 	Web

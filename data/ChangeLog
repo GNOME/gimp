@@ -1,3 +1,10 @@
+Thu Aug 12 20:57:02 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* palettes/Makefile.am
+	* palettes/Visibone
+	* palettes/Visibone2: added Visibone palettes with the kind
+	permission of Bob Stein <stein@visibone.com>.
+
 1999-01-20  Raja R Harinath  <harinath@cs.umn.edu>
 
 	* brushes/Makefile.am (EXTRA_DATA): Remove spurious variable.
