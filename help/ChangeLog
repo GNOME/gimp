@@ -1,20 +1,24 @@
+2002-08-28  Mel Boyce  <syngin@gimp.org>
+
+	* C/image/select/float.html: Repaired as per bug-report #75360.
+
 2001-11-30  Manish Singh  <yosh@gimp.org>
 
-	* help/C/channels/Makefile.am 
-	* help/C/file/Makefile.am
-	* help/C/image/Makefile.am 
-	* help/C/image/edit/Makefile.am
-	* help/C/image/image/Makefile.am 
-	* help/C/image/image/mode/Makefile.am 
-	* help/C/image/image/transforms/Makefile.am 
-	* help/C/image/select/Makefile.am
-	* help/C/image/view/Makefile.am 
-	* help/C/layers/Makefile.am
-	* help/C/open/Makefile.am 
-	* help/C/paths/Makefile.am
-	* help/C/save/Makefile.am 
-	* help/C/toolbox/Makefile.am
-	* help/C/toolbox/help/Makefile.am: use install-data-hook, not
+	* C/channels/Makefile.am 
+	* C/file/Makefile.am
+	* C/image/Makefile.am 
+	* C/image/edit/Makefile.am
+	* C/image/image/Makefile.am 
+	* C/image/image/mode/Makefile.am 
+	* C/image/image/transforms/Makefile.am 
+	* C/image/select/Makefile.am
+	* C/image/view/Makefile.am 
+	* C/layers/Makefile.am
+	* C/open/Makefile.am 
+	* C/paths/Makefile.am
+	* C/save/Makefile.am 
+	* C/toolbox/Makefile.am
+	* C/toolbox/help/Makefile.am: use install-data-hook, not
 	install-data-local to make symlinks
 
 2001-10-28  Sven Neumann  <sven@gimp.org>
