@@ -43,17 +43,17 @@ def remQuotStr(s):
     quote = ''
     prev = None
     for ch in s:
-	if in_quote and (ch != quote or prev == '\\'):
-	    if ch == '\\' and prev == '\\':
-		prev = None
-	    else:
-		prev = ch
-	    continue
-	    prev = ch
-	if ch in '\'"':
-	    if in_quote:
-		in_quote = 0
-	    else:
+        if in_quote and (ch != quote or prev == '\\'):
+            if ch == '\\' and prev == '\\':
+                prev = None
+            else:
+                prev = ch
+            continue
+            prev = ch
+        if ch in '\'"':
+            if in_quote:
+                in_quote = 0
+            else:
                 in_quote = 1
                 quote = ch
         ret = ret + ch
@@ -64,13 +64,13 @@ def bracketsBalanced(s):
     stack = []
     brackets = {'(':')', '[':']', '{':'}'}
     for ch in s:
-	if ch in '([{':
-	    stack.append(ch)
-	elif ch in '}])':
-	    if len(stack) != 0 and brackets[stack[-1]] == ch:
-		del stack[-1]
-	    else:
-		return 0
+        if ch in '([{':
+            stack.append(ch)
+        elif ch in '}])':
+            if len(stack) != 0 and brackets[stack[-1]] == ch:
+                del stack[-1]
+            else:
+                return 0
     return len(stack) == 0
 
 class gtkoutfile:
@@ -79,7 +79,7 @@ class gtkoutfile:
     def __init__(self, buffer, fileno, tag):
         self.__fileno = fileno
         self.__buffer = buffer
-	self.__tag = tag
+        self.__tag = tag
     def close(self): pass
     flush = close
     def fileno(self):    return self.__fileno
@@ -88,13 +88,13 @@ class gtkoutfile:
     def readline(self):  return ''
     def readlines(self): return []
     def write(self, string):
-	#stdout.write(str(self.__w.get_point()) + '\n')
-	iter = self.__buffer.get_end_iter()
-	self.__buffer.insert_with_tags_by_name(iter, string, self.__tag)
+        #stdout.write(str(self.__w.get_point()) + '\n')
+        iter = self.__buffer.get_end_iter()
+        self.__buffer.insert_with_tags_by_name(iter, string, self.__tag)
     def writelines(self, lines):
-	iter = self.__buffer.get_end_iter()
-	for line in lines:
-	    self.__buffer.insert_with_tags_by_name(iter, lines, self.__tag)
+        iter = self.__buffer.get_end_iter()
+        for line in lines:
+            self.__buffer.insert_with_tags_by_name(iter, lines, self.__tag)
     def seek(self, a):   raise IOError, (29, 'Illegal seek')
     def tell(self):      raise IOError, (29, 'Illegal seek')
     truncate = tell
@@ -106,27 +106,27 @@ class Console(gtk.VBox):
 
         self.quit_cb = quit_cb
 
-	swin = gtk.ScrolledWindow()
-	swin.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        swin = gtk.ScrolledWindow()
+        swin.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
         self.pack_start(swin)
         swin.show()
 
-	self.vadj = swin.get_vadjustment()
+        self.vadj = swin.get_vadjustment()
 
-	self.textview = gtk.TextView()
-	self.textview.set_editable(gtk.FALSE)
-	self.textview.set_cursor_visible(gtk.FALSE)
-	self.textview.set_wrap_mode(gtk.WRAP_WORD)
-	self.buffer = self.textview.get_buffer()
-	swin.add(self.textview)
-	self.textview.show()
+        self.textview = gtk.TextView()
+        self.textview.set_editable(gtk.FALSE)
+        self.textview.set_cursor_visible(gtk.FALSE)
+        self.textview.set_wrap_mode(gtk.WRAP_WORD)
+        self.buffer = self.textview.get_buffer()
+        swin.add(self.textview)
+        self.textview.show()
 
-	# tags to use when inserting text ...
-	tag = self.buffer.create_tag('normal')
-	tag = self.buffer.create_tag('command')
-	tag.set_property('weight', pango.WEIGHT_BOLD)
-	tag = self.buffer.create_tag('error')
-	tag.set_property('style', pango.STYLE_ITALIC)
+        # tags to use when inserting text ...
+        tag = self.buffer.create_tag('normal')
+        tag = self.buffer.create_tag('command')
+        tag.set_property('weight', pango.WEIGHT_BOLD)
+        tag = self.buffer.create_tag('error')
+        tag.set_property('style', pango.STYLE_ITALIC)
 
         self.inputbox = gtk.HBox(spacing=2)
         self.pack_end(self.inputbox, expand=gtk.FALSE)
@@ -162,9 +162,9 @@ class Console(gtk.VBox):
         self.namespace['__history__'] = self.history
 
     def init(self):
-	message = 'Python %s\n\n' % (sys.version,)
-	iter = self.buffer.get_end_iter()
-	self.buffer.insert_with_tags_by_name(iter, message, 'command') 
+        message = 'Python %s\n\n' % (sys.version,)
+        iter = self.buffer.get_end_iter()
+        self.buffer.insert_with_tags_by_name(iter, message, 'command') 
         self.line.grab_focus()
 
     def quit(self, *args):
@@ -177,7 +177,7 @@ class Console(gtk.VBox):
             self.line.emit_stop_by_name("key_press_event")
             self.eval()
         if event.keyval == gtk.keysyms.Tab:
-	    self.line.emit_stop_by_name("key_press_event")
+            self.line.emit_stop_by_name("key_press_event")
             self.line.append_text('\t')
             gtk.idle_add(self.focus_text)
         elif event.keyval in (gtk.keysyms.KP_Up, gtk.keysyms.Up):
@@ -189,7 +189,7 @@ class Console(gtk.VBox):
             self.historyDown()
             gtk.idle_add(self.focus_text)
         elif event.keyval in (gtk.keysyms.D, gtk.keysyms.d) and \
-		 event.state & gtk.gdk.CONTROL_MASK:
+                 event.state & gtk.gdk.CONTROL_MASK:
             self.line.emit_stop_by_name("key_press_event")
             self.ctrld()
 
@@ -198,7 +198,7 @@ class Console(gtk.VBox):
         return gtk.FALSE  # don't requeue this handler
     def scroll_bottom(self):
         self.vadj.set_value(self.vadj.upper - self.vadj.page_size)
-	return gtk.FALSE
+        return gtk.FALSE
 
     def ctrld(self):
         #self.quit()
@@ -221,6 +221,7 @@ class Console(gtk.VBox):
             self.history[self.histpos] = l
             self.histpos = self.histpos + 1
             self.line.set_text(self.history[self.histpos])
+            self.line.set_position(-1)
 
     def eval(self):
         l = self.line.get_text() + '\n'
@@ -231,9 +232,9 @@ class Console(gtk.VBox):
         else:
             self.history[self.histpos] = l
         self.line.set_text('')
-	iter = self.buffer.get_end_iter()
-	self.buffer.insert_with_tags_by_name(iter, self.prompt.get_text() + l,
-					     'command')
+        iter = self.buffer.get_end_iter()
+        self.buffer.insert_with_tags_by_name(iter, self.prompt.get_text() + l,
+                                             'command')
         if l == '\n':
             self.run(self.cmd)
             self.cmd = ''
@@ -272,7 +273,7 @@ class Console(gtk.VBox):
                 traceback.print_exc()
         self.prompt.set_text(sys.ps1)
         self.prompt.queue_draw()
-	gtk.idle_add(self.scroll_bottom)
+        gtk.idle_add(self.scroll_bottom)
         sys.stdout, self.stdout = self.stdout, sys.stdout
         sys.stderr, self.stderr = self.stderr, sys.stderr
 
@@ -300,4 +301,4 @@ def gtk_console(ns, title='Python', menu=None):
 if __name__ == '__main__':
     if len(sys.argv) < 2 or sys.argv[1] != '-gimp':
         gtk_console({'__builtins__': __builtins__, '__name__': '__main__',
-		     '__doc__': None})
+                     '__doc__': None})

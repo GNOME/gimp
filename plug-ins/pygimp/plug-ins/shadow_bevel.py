@@ -20,8 +20,8 @@ def shadow_bevel(img, drawable, blur, bevel, do_shadow, drop_x, drop_y):
 
     # do the bevel thing ...
     if bevel:
-	pdb.plug_in_bump_map(img, drawable, shadow, 135, 45, 3,
-			     0, 0, 0, 0, TRUE, FALSE, 0)
+        pdb.plug_in_bump_map(img, drawable, shadow, 135, 45, 3,
+                             0, 0, 0, 0, TRUE, FALSE, 0)
 
     # make the shadow layer black now ...
     pdb.gimp_invert(shadow)
@@ -30,8 +30,8 @@ def shadow_bevel(img, drawable, blur, bevel, do_shadow, drop_x, drop_y):
     shadow.translate(drop_x, drop_y)
 
     if not do_shadow:
-	# delete shadow ...
-	gimp.delete(shadow)
+        # delete shadow ...
+        gimp.delete(shadow)
 
     # enable undo again
     img.undo_group_end()
@@ -47,13 +47,12 @@ register(
     "RGBA, GRAYA",
     [
         (PF_SLIDER, "blur",   "Shadow blur", 6, (1, 30, 1)),
-	(PF_BOOL,   "bevel",  "Bevel the image", TRUE),
-	(PF_BOOL,   "shadow", "Make a drop shadow", TRUE),
-	(PF_INT,    "drop_x", "Drop shadow X displacement", 3),
-	(PF_INT,    "drop_y", "Drop shadow Y displacement", 6)
+        (PF_BOOL,   "bevel",  "Bevel the image", TRUE),
+        (PF_BOOL,   "shadow", "Make a drop shadow", TRUE),
+        (PF_INT,    "drop_x", "Drop shadow X displacement", 3),
+        (PF_INT,    "drop_y", "Drop shadow Y displacement", 6)
     ],
     [],
     shadow_bevel)
 
 main()
-

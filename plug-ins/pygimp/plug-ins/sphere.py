@@ -22,12 +22,12 @@ from gimpfu import *
 
 def python_sphere(radius, light, shadow, bg_colour, sphere_colour):
     if radius < 1:
-	radius = 1
+        radius = 1
     width = int(radius * 3.75)
     height = int(radius * 2.5)
     img = gimp.Image(width, height, RGB)
     drawable = gimp.Layer(img, "Sphere Layer", width, height,
-			  RGB_IMAGE, 100, NORMAL_MODE)
+                          RGB_IMAGE, 100, NORMAL_MODE)
     radians = light * math.pi / 180
     cx = width / 2
     cy = height / 2
@@ -45,20 +45,20 @@ def python_sphere(radius, light, shadow, bg_colour, sphere_colour):
     pdb.gimp_edit_fill(drawable, BACKGROUND_FILL)
     gimp.set_background(20, 20, 20)
     if (light >= 45 and light <= 75 or light <= 135 and
-	light >= 105) and shadow:
-	shadow_w = radius * 2.5 * math.cos(math.pi + radians)
-	shadow_h = radius * 0.5
-	shadow_x = cx
-	shadow_y = cy + radius * 0.65
-	if shadow_w < 0:
-	    shadow_x = cx + shadow_w
-	    shadow_w = -shadow_w
-	pdb.gimp_ellipse_select(img, shadow_x, shadow_y, shadow_w, shadow_h,
-				CHANNEL_OP_REPLACE, TRUE, TRUE, 7.5)
-	pdb.gimp_edit_bucket_fill(drawable, BG_BUCKET_FILL,
+        light >= 105) and shadow:
+        shadow_w = radius * 2.5 * math.cos(math.pi + radians)
+        shadow_h = radius * 0.5
+        shadow_x = cx
+        shadow_y = cy + radius * 0.65
+        if shadow_w < 0:
+            shadow_x = cx + shadow_w
+            shadow_w = -shadow_w
+        pdb.gimp_ellipse_select(img, shadow_x, shadow_y, shadow_w, shadow_h,
+                                CHANNEL_OP_REPLACE, TRUE, TRUE, 7.5)
+        pdb.gimp_edit_bucket_fill(drawable, BG_BUCKET_FILL,
                                   MULTIPLY_MODE, 100, 0, FALSE, 0, 0)
     pdb.gimp_ellipse_select(img, cx - radius, cy - radius, 2 * radius,
-			    2 * radius, CHANNEL_OP_REPLACE, TRUE, FALSE, 0)
+                            2 * radius, CHANNEL_OP_REPLACE, TRUE, FALSE, 0)
     pdb.gimp_edit_blend(drawable, FG_BG_RGB_MODE, NORMAL_MODE, GRADIENT_RADIAL,
                         100, offset, REPEAT_NONE, FALSE, FALSE, 0, 0, TRUE,
                         light_x, light_y, light_end_x, light_end_y)
@@ -79,10 +79,10 @@ register(
     "RGB*, GRAY*, INDEXED*",
     [
         (PF_INT, "radius", "Radius for sphere", 100),
-	(PF_SLIDER, "light", "light angle", 45, (0,360,1)),
-	(PF_TOGGLE, "shadow", "shadow?", 1),
-	(PF_COLOR, "bg_colour", "background", (255,255,255)),
-	(PF_COLOR, "sphere_colour", "sphere", (255,0,0))
+        (PF_SLIDER, "light", "light angle", 45, (0,360,1)),
+        (PF_TOGGLE, "shadow", "shadow?", 1),
+        (PF_COLOR, "bg_colour", "background", (255,255,255)),
+        (PF_COLOR, "sphere_colour", "sphere", (255,0,0))
     ],
     [],
     python_sphere)

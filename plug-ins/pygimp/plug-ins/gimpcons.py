@@ -28,16 +28,16 @@ def plug_in_python_fu_console():
     gtk.rc_parse(gimp.gtkrc())
 
     namespace = {'__builtins__': __builtins__,
-		 '__name__': '__main__', '__doc__': None,
-		 'gimp': gimp, 'pdb': gimp.pdb,
-		 'shelf': gimpshelf.shelf}
+                 '__name__': '__main__', '__doc__': None,
+                 'gimp': gimp, 'pdb': gimp.pdb,
+                 'shelf': gimpshelf.shelf}
 
     for s in gimpenums.__dict__.keys():
         if s[0] != '_':
             namespace[s] = getattr(gimpenums, s)
 
     def bye(*args):
-	gtk.main_quit()
+        gtk.main_quit()
 
     win = gtk.Window()
     win.connect("destroy", bye)

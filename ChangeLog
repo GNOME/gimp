@@ -1,3 +1,17 @@
+2004-09-29  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/plug-ins/gtkcons.py: minor tweak to history
+	behavior.
+
+	* plug-ins/pygimp/plug-ins/clothify.py
+	* plug-ins/pygimp/plug-ins/foggify.py
+	* plug-ins/pygimp/plug-ins/gimpcons.py
+	* plug-ins/pygimp/plug-ins/gtkcons.py
+	* plug-ins/pygimp/plug-ins/pdbbrowse.py
+	* plug-ins/pygimp/plug-ins/shadow_bevel.py
+	* plug-ins/pygimp/plug-ins/sphere.py
+	* plug-ins/pygimp/plug-ins/whirlpinch.py: Untabbify
+
 2004-09-29  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpcropoptions.c (gimp_crop_options_gui): plugged a

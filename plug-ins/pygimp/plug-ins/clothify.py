@@ -21,13 +21,13 @@ import math
 from gimpfu import *
 
 def python_clothify(timg, tdrawable, bx=9, by=9,
-		    azimuth=135, elevation=45, depth=3):
+                    azimuth=135, elevation=45, depth=3):
     bx = 9 ; by = 9 ; azimuth = 135 ; elevation = 45 ; depth = 3
     width = tdrawable.width
     height = tdrawable.height
     img = gimp.Image(width, height, RGB)
     layer_one = gimp.Layer(img, "X Dots", width, height, RGB_IMAGE,
-			   100, NORMAL_MODE)
+                           100, NORMAL_MODE)
     img.disable_undo()
     pdb.gimp_edit_fill(layer_one, BACKGROUND_FILL)
     img.add_layer(layer_one, 0)
@@ -43,26 +43,26 @@ def python_clothify(timg, tdrawable, bx=9, by=9,
     pdb.plug_in_c_astretch(img, bump_layer)
     pdb.plug_in_noisify(img, bump_layer, 0, 0.2, 0.2, 0.2, 0.2)
     pdb.plug_in_bump_map(img, tdrawable, bump_layer, azimuth,
-			 elevation, depth, 0, 0, 0, 0, TRUE, FALSE, 0)
+                         elevation, depth, 0, 0, 0, 0, TRUE, FALSE, 0)
     gimp.delete(img)
 
 register(
-	"python_fu_clothify",
-	"Make the specified layer look like it is printed on cloth",
-	"Make the specified layer look like it is printed on cloth",
-	"James Henstridge",
-	"James Henstridge",
-	"1997-1999",
-	"<Image>/Python-Fu/Alchemy/_Clothify",
-	"RGB*, GRAY*",
-	[
-		(PF_INT, "x_blur", "X blur", 9),
-		(PF_INT, "y_blur", "Y blur", 9),
-		(PF_INT, "azimuth", "Azimuth", 135),
-		(PF_INT, "elevation", "Elevation", 45),
-		(PF_INT, "depth", "Depth", 3)
-	],
-	[],
-	python_clothify)
+        "python_fu_clothify",
+        "Make the specified layer look like it is printed on cloth",
+        "Make the specified layer look like it is printed on cloth",
+        "James Henstridge",
+        "James Henstridge",
+        "1997-1999",
+        "<Image>/Python-Fu/Alchemy/_Clothify",
+        "RGB*, GRAY*",
+        [
+                (PF_INT, "x_blur", "X blur", 9),
+                (PF_INT, "y_blur", "Y blur", 9),
+                (PF_INT, "azimuth", "Azimuth", 135),
+                (PF_INT, "elevation", "Elevation", 45),
+                (PF_INT, "depth", "Depth", 3)
+        ],
+        [],
+        python_clothify)
 
 main()
