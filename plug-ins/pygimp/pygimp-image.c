@@ -666,7 +666,7 @@ img_repr(PyGimpImage *self)
     gchar *name;
 
     name = gimp_image_get_filename(self->ID);
-    s = PyString_FromFormat("<gimp.image %s>", name);
+    s = PyString_FromFormat("<gimp.image %s>", name?name:"(null)");
     g_free(name);
     return s;
 }
