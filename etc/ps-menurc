@@ -1,6 +1,9 @@
 ; This file installs keyboard shortcuts from Photoshop 6 in GIMP 1.3.
 ; Rename it to menurc and place it into your personal GIMP directory:
 ; ~/.gimp-1.3/menurc
+;
+; There is a web-page describing these keybindings at
+; http://epierce.freeshell.org/gimp/gimp_ps.php
 
 (gtk_accel_path "<Image>/Tools/Transform Tools/Rotate" "<Control>t")
 (gtk_accel_path "<Image>/Tools/Selection Tools/Free Select" "l")
@@ -22,6 +25,7 @@
 (gtk_accel_path "<Image>/Layer/Duplicate Layer" "<Control>j")
 (gtk_accel_path "<Image>/View/Zoom/1:1" "<Control><Alt>0")
 (gtk_accel_path "<Image>/Layer/Stack/Select Next Layer" "<Alt>bracketleft")
+(gtk_accel_path "<Image>/View/Show Grid" "<Control><Alt>apostrophe")
 (gtk_accel_path "<Image>/Image/Transform/Rotate 270 degrees" "7")
 (gtk_accel_path "<Image>/Tools/Paint Tools/Paintbrush" "b")
 (gtk_accel_path "<Image>/Dialogs/Layers..." "F7")
@@ -38,7 +42,7 @@
 (gtk_accel_path "<Image>/View/Info Window..." "F8")
 (gtk_accel_path "<Image>/Layer/Stack/Select Previous Layer" "<Alt>bracketright")
 (gtk_accel_path "<Image>/Layer/Colors/Curves..." "<Control>m")
-(gtk_accel_path "<Image>/Tools/Paint Tools/Bucket Fill" "k")
+(gtk_accel_path "<Image>/Tools/Paint Tools/Bucket Fill" "<Shift>g")
 (gtk_accel_path "<Image>/Edit/Buffer/Cut Named..." "")
 (gtk_accel_path "<Image>/Layer/Colors/Hue-Saturation..." "<Control>u")
 (gtk_accel_path "<Image>/Layer/Stack/Next Layer" "<Alt>bracketleft")
@@ -85,7 +89,6 @@
 (gtk_accel_path "<Image>/Tools/Transform Tools/Move" "v")
 (gtk_accel_path "<Image>/Edit/Paste Into" "<Shift><Control>v")
 (gtk_accel_path "<Image>/Layer/Colors/Auto/Stretch Contrast" "<Shift><Control><Alt>l")
-(gtk_accel_path "<Image>/File/New..." "<Control><Alt>Left")
 (gtk_accel_path "<Image>/Tools/Paint Tools/Airbrush" "j")
 (gtk_accel_path "<Image>/Edit/Fill with BG Color" "")
 (gtk_accel_path "<Image>/Edit/Fill with FG Color" "<Shift>BackSpace")
