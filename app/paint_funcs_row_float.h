@@ -20,6 +20,12 @@
 
 struct _PixelRow;
 
+void
+extract_channel_row_float ( 
+			struct _PixelRow *src_row,
+			struct _PixelRow *dest_row, 
+			gint channel
+	);
 
 void
 absdiff_row_float (

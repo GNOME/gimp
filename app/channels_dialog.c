@@ -1367,8 +1367,6 @@ channel_widget_preview_redraw (ChannelWidget *channel_widget)
 				     channel_widget->height);
       break;
     default:
-#define FIXME
-      return;
       width = channel_widget->gimage->width;
       height = channel_widget->gimage->height;
       channel_widget->width = (int) (channelsD->ratio * width);
@@ -1390,13 +1388,13 @@ channel_widget_preview_redraw (ChannelWidget *channel_widget)
     case Auxillary: channel = -1; break;
     default:        channel = -1; break;
     }
-
+  
   render_preview (preview_buf,
 		  channelsD->preview,
 		  channelsD->image_width,
 		  channelsD->image_height,
 		  channel);
-
+ 
   gtk_preview_put (GTK_PREVIEW (channelsD->preview),
 		   channel_widget->channel_pixmap,
 		   channel_widget->channel_preview->style->black_gc,

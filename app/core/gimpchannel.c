@@ -131,11 +131,12 @@ channel_new (int gimage_ID, int width, int height, Precision p, char *name,
 {
   Channel * channel;
   Tag tag;
+  Tag col_tag = pixelrow_tag (col);
 
   channel = gtk_type_new (gimp_channel_get_type ());
 
   tag = tag_new (p, FORMAT_GRAY, ALPHA_NO);
-  pixelrow_init (&channel->col, tag, channel->_col, 1);
+  pixelrow_init (&channel->col, col_tag, channel->_col, 1);
   
   gimp_drawable_configure (GIMP_DRAWABLE(channel), 
                            gimage_ID, width, height,
@@ -433,7 +434,7 @@ channel_preview (Channel *channel, int w, int h)
 
       p = tag_precision (drawable_tag (GIMP_DRAWABLE(channel)));
       
-      preview_buf = canvas_new (tag_new (p, FORMAT_RGB, ALPHA_NO),
+      preview_buf = canvas_new (tag_new (p, FORMAT_GRAY, ALPHA_NO),
                                 w, h,
                                 STORAGE_FLAT);
 
@@ -447,7 +448,7 @@ channel_preview (Channel *channel, int w, int h)
                       0, 0,
                       TRUE);
 
-      copy_area (&srcPR, &destPR);
+      scale_area_no_resample (&srcPR, &destPR);
 
       if (GIMP_DRAWABLE(channel)->preview)
 	canvas_delete (GIMP_DRAWABLE(channel)->preview);

@@ -883,19 +883,18 @@ project_channel (GImage *gimage, Channel *channel,
 		 PixelArea *src, PixelArea *src2)
 {
   int type;
-
   if (! gimage->construct_flag)
     {
       type = (channel->show_masked) ?
 	INITIAL_CHANNEL_MASK : INITIAL_CHANNEL_SELECTION;
-      initial_area (src2, src, NULL, &channel->col, channel->opacity,
+      initial_area (src2, src, NULL, (unsigned char *)&channel->col, channel->opacity,
 		      NORMAL, NULL, type);
     }
   else
     {
       type = (channel->show_masked) ?
 	COMBINE_INTEN_A_CHANNEL_MASK : COMBINE_INTEN_A_CHANNEL_SELECTION;
-      combine_areas (src, src2, src, NULL, &channel->col, channel->opacity,
+      combine_areas (src, src2, src, NULL, (unsigned char*)&channel->col, channel->opacity,
 		       NORMAL, NULL, type);
     }
 }
@@ -1075,7 +1074,6 @@ gimage_construct_channels (GImage *gimage, int x, int y, int w, int h)
 		x, y, w, h, TRUE);
 	  pixelarea_init (&src2PR, drawable_data (GIMP_DRAWABLE(channel)), 
 		x, y, w, h, FALSE);
-
 	  project_channel (gimage, channel, &src1PR, &src2PR);
 
 	  gimage->construct_flag = 1;
@@ -2509,16 +2507,18 @@ gimage_construct_composite_preview (GImage *gimage, int width, int height)
   int visible[MAX_CHANNELS] = {1, 1, 1, 1};
   int off_x, off_y;
   Precision p;
+  Tag t;
+  Format f;
   
   ratio = (double) width / (double) gimage->width;
 
   /*  The construction buffer  */
   p = tag_precision (gimage_tag (gimage));
-  
-  comp = canvas_new (tag_new (p, FORMAT_RGB, ALPHA_YES),
+  f = tag_format (gimage_tag (gimage));
+
+  comp = canvas_new (tag_new (p, f, ALPHA_YES),
                      width, height,
                      STORAGE_FLAT);
-
   /* the list of layers to preview */
   {
     GSList *list = gimage->layers;
@@ -2584,7 +2584,8 @@ gimage_construct_composite_preview (GImage *gimage, int width, int height)
        *   so just project them as if they were type "intensity"
        *  Send in all TRUE for visible since that info doesn't matter for previews
        */
-      switch (tag_alpha (drawable_tag (GIMP_DRAWABLE(layer))))
+      
+        switch (tag_alpha (drawable_tag (GIMP_DRAWABLE(layer))))
         {
         case ALPHA_NO:
 	  if (! construct_flag)

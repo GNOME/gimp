@@ -566,6 +566,55 @@ absdiff_area (
     }
 }
 
+/* extract */
+typedef void (*ExtractChannelRowFunc) (PixelRow*, PixelRow*, gint);
+static ExtractChannelRowFunc extract_channel_area_funcs (Tag);
+
+static ExtractChannelRowFunc
+extract_channel_area_funcs (
+                   Tag tag
+                   )
+{
+  switch (tag_precision (tag))
+    {
+    case PRECISION_U8:
+      return extract_channel_row_u8;
+    case PRECISION_U16:
+      return extract_channel_row_u8;
+    case PRECISION_FLOAT:
+      return extract_channel_row_float;
+    case PRECISION_NONE:
+    default:
+      g_warning ("extract_channel_area_funcs: bad precision");
+    }
+  return NULL;
+}
+
+void
+extract_channel_area (
+		       PixelArea * src_area,
+		       PixelArea * dest_area, 
+		       gint channel
+                      )
+{
+  ExtractChannelRowFunc extract_channel_row =
+	 extract_channel_area_funcs (pixelarea_tag (src_area));
+  void * pag;
+  for (pag = pixelarea_register (2, src_area, dest_area);
+       pag != NULL;
+       pag = pixelarea_process (pag))
+    {
+      PixelRow r1;
+      PixelRow r2;
+      gint h = pixelarea_height (src_area);
+      while (h--)
+        {
+          pixelarea_getdata (src_area, &r1, h);
+          pixelarea_getdata (dest_area, &r2, h);
+          (*extract_channel_row) (&r1, &r2, channel);
+        }
+    }
+}
 
 
 /* ---------------------------------------------------------*/
@@ -726,6 +775,8 @@ shade_area  (
         }
     }
 }
+
+
 
 typedef void (*CopyRowFunc) (PixelRow*, PixelRow*);
 static CopyRowFunc copy_area_funcs (Tag);
@@ -3577,7 +3628,6 @@ initial_area  (
   Precision prec = tag_precision(src_tag); 
   /*put in tags check*/
   initial_area_funcs (src_tag);
-  
   /* get a buffer for dissolve if needed */
   
   if ( (type == INITIAL_INTENSITY && mode == DISSOLVE_MODE) ||
@@ -3872,18 +3922,17 @@ combine_areas  (
   Tag buf_tag = src2_tag;
   gint src2_width = pixelarea_width (src2_area);
   gint src2_bytes = tag_bytes (src2_tag);
-
+ 
   if ((tag_precision (src1_tag) != tag_precision (src2_tag)) ||
-      (tag_format    (src1_tag) != tag_format    (src2_tag)) ||
       (tag_precision (src1_tag) != tag_precision (dest_tag)) ||
       (tag_format    (src1_tag) != tag_format    (dest_tag)) ||
       (mask_area &&
        (tag_precision (src1_tag) != tag_precision (mask_tag))))
     {
-      g_warning ("bad tags!");
+      g_warning ("combine_areas: bad tags!");
       return;
     }
-  
+
   combine_areas_funcs (src1_tag); 
   
   buf_size = src2_width * src2_bytes;
@@ -3964,11 +4013,11 @@ combine_areas  (
 	      /*  assume the data passed to this procedure is the channels color
 	       * 
 	       */
-              (*combine_inten_a_and_channel_mask_row) (&src1_row, &src2_row, &dest_row, NULL, opacity );
+              (*combine_inten_a_and_channel_mask_row) (&src1_row, &src2_row, &dest_row, (PixelRow*)data, opacity );
 	      break;
 
 	    case COMBINE_INTEN_A_CHANNEL_SELECTION:
-              (*combine_inten_a_and_channel_selection_row) (&src1_row, &src2_row, &dest_row, NULL, opacity );
+              (*combine_inten_a_and_channel_selection_row) (&src1_row, &src2_row, &dest_row, (PixelRow*)data, opacity );
 	      break;
 
 

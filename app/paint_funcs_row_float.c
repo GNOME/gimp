@@ -28,6 +28,25 @@
 #define OPAQUE_FLOAT       1.0
 #define HALF_OPAQUE_FLOAT  .5
 #define TRANSPARENT_FLOAT  0.0
+static gfloat no_mask = OPAQUE_FLOAT;
+
+void
+extract_channel_row_float ( 
+			PixelRow *src_row,
+			PixelRow *dest_row, 
+			gint channel
+	)
+{
+  gint i;
+  Tag src_tag = pixelrow_tag (src_row);
+  gint num_channels = tag_num_channels (src_tag);
+  gint width = pixelrow_width (dest_row);
+  gfloat * src = (gfloat*) pixelrow_data (src_row);
+  gfloat * dest = (gfloat*) pixelrow_data (dest_row);
+ 
+  for (i = 0; i < width; i++)
+     *dest++ = src[ i * num_channels + channel];
+}	
 
 void 
 absdiff_row_float  (
@@ -100,7 +119,6 @@ absdiff_row_float  (
 }
 
 
-static gfloat no_mask = OPAQUE_FLOAT;
 void 
 color_row_float  (
                   PixelRow * dest_row,

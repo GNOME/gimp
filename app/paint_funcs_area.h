@@ -156,6 +156,12 @@ absdiff_area (
               int antialias
               );
 
+void
+extract_channel_area (
+		       struct _PixelArea * src_area,
+		       struct _PixelArea * dest_area, 
+		       gint channel
+                      );
 void 
 color_area  (
              struct _PixelArea * src,

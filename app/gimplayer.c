@@ -1010,11 +1010,12 @@ layer_preview (layer, w, h)
     {
       PixelArea srcPR, destPR;
       Canvas * preview_buf;
-      Precision p;
-
-      p = tag_precision (drawable_tag (GIMP_DRAWABLE(layer)));
+      Tag tag = drawable_tag (GIMP_DRAWABLE(layer));
+      Precision p = tag_precision (tag);
+      Format f = tag_format (tag);
+      Alpha a = tag_alpha (tag);
       
-      preview_buf = canvas_new (tag_new (p, FORMAT_RGB, ALPHA_YES),
+      preview_buf = canvas_new (tag_new (p, f, a),
                                 w, h,
                                 STORAGE_FLAT);
 
@@ -1028,7 +1029,7 @@ layer_preview (layer, w, h)
                       0, 0,
                       TRUE);
 
-      scale_area (&srcPR, &destPR);
+      scale_area_no_resample (&srcPR, &destPR);
 
       if (GIMP_DRAWABLE(layer)->preview)
 	canvas_delete (GIMP_DRAWABLE(layer)->preview);
@@ -1064,11 +1065,11 @@ layer_mask_preview (layer, w, h)
 
       p = tag_precision (drawable_tag (GIMP_DRAWABLE(mask)));
 
-      preview_buf = canvas_new (tag_new (p, FORMAT_RGB, ALPHA_YES),
+      preview_buf = canvas_new (tag_new (p, FORMAT_GRAY, ALPHA_NO),
                                 w, h,
                                 STORAGE_FLAT);
-
-      pixelarea_init (&srcPR, GIMP_DRAWABLE(mask)->tiles,
+      
+     pixelarea_init (&srcPR, GIMP_DRAWABLE(mask)->tiles,
                       0, 0,
                       0, 0,
                       FALSE);
@@ -1078,7 +1079,7 @@ layer_mask_preview (layer, w, h)
                       0, 0,
                       TRUE);
 
-      scale_area (&srcPR, &destPR);
+      scale_area_no_resample (&srcPR, &destPR);
 
       if (GIMP_DRAWABLE(mask)->preview)
 	canvas_delete (GIMP_DRAWABLE(mask)->preview);

@@ -879,88 +879,157 @@ render_preview (Canvas    *preview_buf,
 		int        channel)
 {
   PixelArea src, back, dest;
-  Canvas * temp;
-  Canvas * temp2;
+  Canvas * display_buf;
   gint affect[3];
+  Tag preview_tag = canvas_tag (preview_buf);
+  Alpha a = tag_alpha (preview_tag);
+  Format f = tag_format (preview_tag);
+  Precision p = tag_precision (preview_tag);
+  int color_buf;
 
+  color_buf = (GTK_PREVIEW (preview_widget)->type == GTK_PREVIEW_COLOR);
+	
   g_return_if_fail (preview_buf != NULL);
-  
-  affect[0] = affect[1] = affect[2] = 0;
 
-  switch (channel)
+  if (color_buf)  /* rgb display expected */
+  {  
+    Canvas * composite;
+    Canvas * background_buf;
+    Canvas * preview_rgb_buf;
+    affect[0] = affect[1] = affect[2] = 0;
+
+    switch (channel)
+      {
+      case 0:    affect[0] = 1; break;
+      case 1:    affect[1] = 1; break;
+      case 2:    affect[2] = 1; break;
+      default:   affect[0] = 1; break;
+      }
+    
+    /* create a rgb preview buf if its not one already */
+    if (f == FORMAT_GRAY)
     {
-    case 0:    affect[0] = 1; break;
-    case 1:    affect[1] = 1; break;
-    case 2:    affect[2] = 1; break;
-    default:   affect[0] = 1; break;
+	preview_rgb_buf = canvas_new (tag_new (PRECISION_U8, FORMAT_RGB, a),
+		       width, height,
+		       STORAGE_FLAT);
+        pixelarea_init (&src, preview_buf,
+		    0, 0,
+		    0, 0,
+		    FALSE);
+        pixelarea_init (&dest, preview_rgb_buf,
+		    0, 0,
+		    0, 0,
+		    TRUE);
+        canvas_portion_refro (preview_rgb_buf, 0 , 0);
+	copy_area (&src, &dest);
+        canvas_portion_unref(preview_rgb_buf, 0 , 0);
     }
+    else 
+	preview_rgb_buf = preview_buf;	
 
 
-  /* create the preview */
-  temp = canvas_new (tag_new (PRECISION_U8,
-                              FORMAT_RGB,
-                              ALPHA_YES),
-                     width, height,
-                     STORAGE_FLAT);
-  
-  pixelarea_init (&src, preview_buf,
-                  0, 0,
-                  0, 0,
-                  FALSE);
+    /* src is preview_rgb_buf */
+    pixelarea_init (&src, preview_rgb_buf,
+		    0, 0,
+		    0, 0,
+		    FALSE);
+    
+#define FIXME /* create a checked or black buffer */
+    /* back is background_buf for black or checkered */
+    background_buf = canvas_new (tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_YES),
+		       width, height,
+		       STORAGE_FLAT);
 
-#define FIXME /* this needs to be a checkered or black buffer */
-  pixelarea_init (&back, preview_buf,
-                  0, 0,
-                  0, 0,
-                  FALSE);
-  
-  pixelarea_init (&dest, temp,
-                  0, 0,
-                  0, 0,
-                  TRUE);
-  
-  combine_areas (&src, &back, &dest, NULL,
-                 NULL, 1.0, NORMAL_MODE, affect,
-                 combine_areas_type (pixelarea_tag (&src),
-                                     pixelarea_tag (&dest)));
+    pixelarea_init (&back, background_buf,
+		    0, 0,
+		    0, 0,
+		    FALSE);
 
+    /* dest is composite = preview_buf_rgb composited with background_buf */
+    composite = canvas_new (tag_new (PRECISION_U8, FORMAT_RGB, a),
+		       width, height,
+		       STORAGE_FLAT);
+    
+    pixelarea_init (&dest, composite,
+		    0, 0,
+		    0, 0,
+		    TRUE);
+    
+    /* composite back and preview_rgb_buf */ 
+    canvas_portion_refro (background_buf, 0 , 0);
+    combine_areas (&src, &back, &dest, NULL,
+		   NULL, 1.0, NORMAL_MODE, affect,
+		   combine_areas_type (pixelarea_tag (&src),
+				       pixelarea_tag (&back)));
 
-  /* remove the alpha channel */
-  temp2 = canvas_new (tag_new (PRECISION_U8,
-                               FORMAT_RGB,
-                               ALPHA_NO),
-                      width, height,
-                      STORAGE_FLAT);
+    canvas_portion_unref(background_buf, 0 , 0);
 
-  pixelarea_init (&src, temp,
-                  0, 0,
-                  0, 0,
-                  FALSE);
-  
-  pixelarea_init (&dest, temp2,
-                  0, 0,
-                  0, 0,
-                  TRUE);
-  
-  copy_area (&src, &dest);
+    /* clean up any unneeded canvas at this point */
+    canvas_delete (background_buf);
+    if ( f == FORMAT_GRAY )
+	canvas_delete (preview_rgb_buf);
+	
+    if (a == ALPHA_YES)  /* display w/o alpha expected */
+    {
+	Canvas * stripped_alpha =  canvas_new (
+		       tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO),
+		       width, height,
+		       STORAGE_FLAT);
+	pixelarea_init (&src, composite,
+		    0, 0,
+		    0, 0,
+		    FALSE);
+	pixelarea_init (&dest, stripped_alpha,
+		    0, 0,
+		    0, 0,
+		    TRUE);
+	canvas_portion_refro (stripped_alpha, 0 , 0);
+	copy_area (&src, &dest);
+        canvas_portion_unref(stripped_alpha, 0 , 0);
+	canvas_delete (composite);
+	display_buf = stripped_alpha;
+    }
+    else
+     display_buf = composite;
 
-
-  /* dump it to screen */
-  canvas_portion_refro (temp2, 0, 0);
+  }
+  else  /* gray display expected */
   {
-    int i;
+    Canvas *gray_buf;
+    pixelarea_init (&src, preview_buf,
+		    0, 0,
+		    0, 0,
+		    FALSE);
+    
+    gray_buf = canvas_new (tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_NO),
+		       width, height,
+		       STORAGE_FLAT);
+    
+    pixelarea_init (&dest, gray_buf,
+		    0, 0,
+		    0, 0,
+		    TRUE);
+    canvas_portion_refro (gray_buf, 0, 0);
+    extract_channel_area (&src, &dest, channel);
+    canvas_portion_unref(gray_buf, 0 , 0);
+    display_buf = gray_buf; 
+  }
+  
+  /* dump it to screen */
+  canvas_portion_refro (display_buf, 0, 0);
+  {
+    int i, j, b;
+    int num_channels = tag_num_channels (canvas_tag (display_buf));
     for (i = 0; i < height; i++)
       {
-        guchar * t = canvas_portion_data (temp2, 0, i);
+        guchar * t = canvas_portion_data (display_buf, 0, i);
         gtk_preview_draw_row (GTK_PREVIEW (preview_widget), t, 0, i, width);
       }
   }
-  canvas_portion_unref (temp2, 0, 0);
-
+  canvas_portion_unref (display_buf, 0, 0);
 
   /* clean up */
-  canvas_delete (temp);
-  canvas_delete (temp2);
+  canvas_delete (display_buf);
 }
 
 void
@@ -2382,7 +2451,19 @@ layer_widget_preview_redraw (LayerWidget *layer_widget,
 	  preview_buf = layer_preview (layer_widget->layer,
 				       layer_widget->width,
 				       layer_widget->height);
-
+#if 0
+{
+  PixelArea area;
+  printf ("the preview_buf\n");
+  pixelarea_init (&area, preview_buf,
+                  0, 0,
+                  0, 0,
+                  FALSE);
+  pixelarea_ref (&area);
+  pixelarea_print (&area, 0,0);
+  pixelarea_unref (&area);
+}
+#endif
 	  break;
 	case MASK_PREVIEW:
 	  preview_buf = layer_mask_preview (layer_widget->layer,

@@ -199,6 +199,23 @@ absdiff_row_u8  (
 }
 
 
+void
+extract_channel_row_u8 ( 
+			PixelRow *src_row,
+			PixelRow *dest_row, 
+			gint channel
+	)
+{
+  gint i;
+  Tag src_tag = pixelrow_tag (src_row);
+  gint num_channels = tag_num_channels (src_tag);
+  gint width = pixelrow_width (dest_row);
+  guint8 * src = (guint8*) pixelrow_data (src_row);
+  guint8 * dest = (guint8*) pixelrow_data (dest_row);
+ 
+  for (i = 0; i < width; i++)
+     *dest++ = src[ i * num_channels + channel];
+}	
 
 void 
 color_row_u8  (

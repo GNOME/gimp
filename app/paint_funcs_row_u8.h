@@ -56,6 +56,13 @@ copy_row_u8  (
               );
 
 void
+extract_channel_row_u8 ( 
+			struct _PixelRow *src_row,
+			struct _PixelRow *dest_row, 
+			gint channel
+	);
+
+void
 color_row_u8 (
 	      struct _PixelRow *dest_row,
 	      struct _PixelRow *col
