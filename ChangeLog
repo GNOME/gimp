@@ -1,5 +1,12 @@
 2000-01-30  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/FractalExplorer/Dialogs.c: the "blue" variable should
+	not be connected to the "red" adjustment (Thanks to Peter Kämpf
+	<pkaempf@box.echo.ch>), fixed the initial size of the "number of
+	colors" preview.
+
+2000-01-30  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/FractalExplorer/*:
 
 	- Removed the "Gradient" notebook page and added a gimp gradient

@@ -699,7 +699,7 @@ explorer_dialog (void)
 			  _("Blue:"), SCALE_WIDTH, 0,
 			  wvals.bluestretch, 0, 1, 0.01, 0.1, 2,
 			  _("Change the intensity of the blue channel"), NULL);
-  gtk_signal_connect (GTK_OBJECT (elements->red), "value_changed",
+  gtk_signal_connect (GTK_OBJECT (elements->blue), "value_changed",
 		      GTK_SIGNAL_FUNC (explorer_double_adjustment_update),
 		      &wvals.bluestretch);
 
@@ -902,9 +902,9 @@ explorer_dialog (void)
   {
     gint xsize, ysize;
 
-    for (ysize = 1; ysize * ysize * ysize < wvals.ncolors; ysize++) /**/;
+    for (ysize = 1; ysize * ysize * ysize < 8192; ysize++) /**/;
     xsize = wvals.ncolors / ysize;
-    while (xsize * ysize < wvals.ncolors) xsize++;
+    while (xsize * ysize < 8192) xsize++;
 
     gtk_widget_set_usize (abox, xsize, ysize * 4);
   }
