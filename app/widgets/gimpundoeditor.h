@@ -45,6 +45,7 @@ struct _GimpUndoEditor
 
   GtkWidget       *undo_button;
   GtkWidget       *redo_button;
+  GtkWidget       *clear_button;
 };
 
 struct _GimpUndoEditorClass

@@ -1,5 +1,20 @@
 2004-05-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage.c (gimp_image_undo_freeze,thaw): emit the
+	"undo-freeze" and "undo-thaw" signals only on the first freeze and
+	last thaw, not on any of them.
+
+	* app/widgets/gimphelp-ids.h: added GIMP_HELP_EDIT_UNDO_CLEAR.
+
+	* app/widgets/gimpundoeditor.[ch]: added a "Clear Undo History"
+	button. Fixes bug #136300.
+
+	Also don't attach to the image's undo stack if the image's undo is
+	disabled and set the buttons' sensitivity accordingly. Should fix
+	all kinds of unpredictable undo history brokenness.
+
+2004-05-04  Michael Natterer  <mitch@gimp.org>
+
 	Treat FG/BG just like all other context properties:
 
 	* app/paint/gimppaintoptions.h: added GIMP_CONTEXT_FOREGROUND_MASK

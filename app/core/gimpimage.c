@@ -1568,7 +1568,8 @@ gimp_image_undo_freeze (GimpImage *gimage)
 
   gimage->undo_freeze_count++;
 
-  gimp_image_undo_event (gimage, GIMP_UNDO_EVENT_UNDO_FREEZE, NULL);
+  if (gimage->undo_freeze_count == 1)
+    gimp_image_undo_event (gimage, GIMP_UNDO_EVENT_UNDO_FREEZE, NULL);
 
   return TRUE;
 }
@@ -1581,7 +1582,8 @@ gimp_image_undo_thaw (GimpImage *gimage)
 
   gimage->undo_freeze_count--;
 
-  gimp_image_undo_event (gimage, GIMP_UNDO_EVENT_UNDO_THAW, NULL);
+  if (gimage->undo_freeze_count == 0)
+    gimp_image_undo_event (gimage, GIMP_UNDO_EVENT_UNDO_THAW, NULL);
 
   return TRUE;
 }
