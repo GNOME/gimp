@@ -35,11 +35,6 @@
 
 #include <gtk/gtk.h>
 
-#define GTK_DISABLE_DEPRECATED
-
-/* ewww... deprecation hacks again */
-#define __GIMP_COLOR_AREA_H__
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 

@@ -41,22 +41,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <gtk/gtk.h>
-
-#ifdef GTK_DISABLE_DEPRECATED
-/* eeek... really bad hack for the time being */
-typedef enum
-{
-  GTK_PREVIEW_COLOR,
-  GTK_PREVIEW_GRAYSCALE
-} GtkPreviewType;
-#endif
-
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
 #endif
 #undef GTK_DISABLE_DEPRECATED
-#include <gtk/gtkpreview.h>
+
+#include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimp/gimp.h"

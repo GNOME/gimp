@@ -1,3 +1,9 @@
+#include "config.h"
+
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+
 #include "FractalExplorer.h"
 
 /**********************************************************************

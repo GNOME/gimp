@@ -1,11 +1,6 @@
 #ifndef __FRACTALEXPLORER_H__
 #define __FRACTALEXPLORER_H__
 
-#include "config.h"
-
-#include <gtk/gtk.h>
-
-#include <libgimp/gimp.h>
 
 /**********************************************************************
  Magic numbers  

@@ -1,5 +1,17 @@
 2002-01-30  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/FractalExplorer/Events.c
+	* plug-ins/FractalExplorer/FractalExplorer.[ch]
+	* plug-ins/FractalExplorer/Globals.c
+	* plug-ins/common/film.c
+	* plug-ins/common/plugindetails.c
+	* plug-ins/fp/fp_misc.c
+	* plug-ins/rcm/rcm_callback.c
+	* plug-ins/rcm/rcm_misc.c: removed the ugly hacks and simply define
+	GTK_DISABLE_DEPRECATED before including gtk.h.
+
+2002-01-30  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpcolorarea.[ch]: derive from GtkDrawingArea
 	instead of deprecated GtkPreview.
 

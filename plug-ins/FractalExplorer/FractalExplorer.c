@@ -64,6 +64,13 @@
 #endif
 #include <ctype.h>
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
+#include <gtk/gtk.h>
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -73,10 +80,6 @@
 #include "Events.h"
 #include "Dialogs.h"
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
 #include <gtk/gtklist.h>
 
 #ifdef G_OS_WIN32
