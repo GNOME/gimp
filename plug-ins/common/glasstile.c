@@ -349,9 +349,7 @@ preview_widget (GDrawable *drawable)
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   fill_preview_with_thumb (preview, drawable->id);
-  size = (GTK_PREVIEW (preview)->buffer_width) * 
-	 (GTK_PREVIEW (preview)->buffer_height) * 
-	 (GTK_PREVIEW (preview)->bpp);
+  size = GTK_PREVIEW (preview)->rowstride * GTK_PREVIEW (preview)->buffer_height;
   preview_bits = g_malloc (size);
   memcpy (preview_bits, GTK_PREVIEW (preview)->buffer, size);
 
@@ -532,12 +530,18 @@ glasstile (GDrawable *drawable,
       if (preview_mode)
 	{
           if (ypixel2 < height)
-            memcpy (cur_row, preview_bits + (ypixel2 * width * bytes), width * bytes);
+            memcpy (cur_row, 
+		    preview_bits + (ypixel2 * GTK_PREVIEW (preview)->rowstride), 
+		    GTK_PREVIEW (preview)->rowstride);
           else 
-	    memcpy (cur_row, preview_bits + ((y2 - 1) * width * bytes), width * bytes);
+	    memcpy (cur_row, 
+		    preview_bits + ((y2 - 1) * GTK_PREVIEW (preview)->rowstride), 
+		    GTK_PREVIEW (preview)->rowstride);
 
           if (cbytes != bytes) /* Alpha check */
-	    memcpy (ad, preview_bits + (row * width * bytes), width * bytes);
+	    memcpy (ad, 
+		    preview_bits + (row * GTK_PREVIEW (preview)->rowstride), 
+		    GTK_PREVIEW (preview)->rowstride);
 	}
       else
 	{
@@ -593,7 +597,9 @@ glasstile (GDrawable *drawable,
 
       /*  Store the dest  */
       if (preview_mode)
-	memcpy (GTK_PREVIEW (preview)->buffer + (width * bytes * row), dest, width * bytes);
+	memcpy (GTK_PREVIEW (preview)->buffer + (GTK_PREVIEW (preview)->rowstride * row), 
+		dest, 
+		GTK_PREVIEW (preview)->rowstride);
       else
 	gimp_pixel_rgn_set_row (&destPR, dest, x1, row, iwidth);
       
@@ -617,3 +623,7 @@ glasstile (GDrawable *drawable,
   g_free (dest);
   g_free (ad);
 }
+
+
+
+

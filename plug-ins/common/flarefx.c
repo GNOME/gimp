@@ -215,7 +215,7 @@ query (void)
 			  "Karl-Johan Andersson", /* Copyright */
 			  "May 2000",
 			  N_("<Image>/Filters/Light Effects/FlareFX..."),
-			  "RGB",
+			  "RGB*",
 			  PROC_PLUG_IN,
 			  nargs, 0,
 			  args, NULL);
@@ -411,15 +411,20 @@ FlareFX (GDrawable *drawable,
     }
 
   matt = width;
-  /*  allocate row buffers  */
-  cur_row  = g_new (guchar, (x2 - x1) * bytes);
-  dest     = g_new (guchar, (x2 - x1) * bytes);
 
-  if (!preview_mode) 
+  if (preview_mode) 
     {
+      cur_row = g_new (guchar, GTK_PREVIEW (preview)->rowstride);
+      dest    = g_new (guchar, GTK_PREVIEW (preview)->rowstride);
+    }
+  else
+    {  
       /*  initialize the pixel regions  */
       gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
       gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
+
+      cur_row = g_new (guchar, (x2 - x1) * bytes);
+      dest    = g_new (guchar, (x2 - x1) * bytes);
     }
 
   scolor = (gfloat)matt * 0.0375;
@@ -440,7 +445,9 @@ FlareFX (GDrawable *drawable,
   for (row = y1; row < y2; row++) /* y-coord */
     {
       if (preview_mode) 
-	memcpy(cur_row,preview_bits+(width*bytes*row),width*bytes);
+	memcpy (cur_row, 
+		preview_bits + GTK_PREVIEW (preview)->rowstride * row,
+		GTK_PREVIEW (preview)->rowstride);
       else 
 	gimp_pixel_rgn_get_row (&srcPR, cur_row, x1, row, x2-x1);
 
@@ -476,8 +483,9 @@ FlareFX (GDrawable *drawable,
 	}
       if (preview_mode) 
 	{
-	  memcpy (GTK_PREVIEW (preview)->buffer + (width * bytes * row), 
-		  cur_row, width * bytes);
+	  memcpy (GTK_PREVIEW (preview)->buffer + GTK_PREVIEW (preview)->rowstride * row, 
+		  cur_row, 
+		  GTK_PREVIEW (preview)->rowstride);
 	} 
       else 
 	{
@@ -880,9 +888,7 @@ preview_widget (GDrawable *drawable)
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   fill_preview_with_thumb (preview, drawable->id);
-  size = (GTK_PREVIEW (preview)->buffer_width) * 
-	 (GTK_PREVIEW (preview)->buffer_height) * 
-	 (GTK_PREVIEW (preview)->bpp);
+  size = GTK_PREVIEW (preview)->rowstride * GTK_PREVIEW (preview)->buffer_height;
   preview_bits = g_malloc (size);
   memcpy (preview_bits, GTK_PREVIEW (preview)->buffer, size);
 

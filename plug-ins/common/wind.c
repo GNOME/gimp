@@ -328,26 +328,31 @@ render_blast (GDrawable   *drawable,
       x1 = y1 = 0;
       x2 = width;
       y2 = height;
+
+      row_stride = GTK_PREVIEW (preview)->rowstride;
     } 
   else 
     {
       gimp_progress_init( _("Rendering Blast..."));
       gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+
       width = x2 - x1;
       height = y2 - y1;
+
       gimp_pixel_rgn_init (&src_region,  drawable, x1, y1, width, height, FALSE, FALSE);
       gimp_pixel_rgn_init (&dest_region, drawable, x1, y1, width, height, TRUE, TRUE);
+
+      row_stride = width * bytes;
   }
 
-  row_stride = width * bytes;
   lpi = row_stride - bytes;
 
-  buffer = (guchar *) g_malloc(row_stride);
+  buffer = (guchar *) g_malloc (row_stride);
   
   for (row = y1; row < y2; row++)
     {
       if (preview_mode)
-        memcpy (buffer, preview_bits + (row * bytes * width), width * bytes);
+        memcpy (buffer, preview_bits + (row * row_stride), row_stride);
       else
         gimp_pixel_rgn_get_row (&src_region, buffer, x1, row, width);
 
@@ -365,7 +370,7 @@ render_blast (GDrawable   *drawable,
 
       if (preview_mode) 
 	{
-	  memcpy (GTK_PREVIEW (preview)->buffer + (width * bytes * row), buffer, width * bytes);
+	  memcpy (GTK_PREVIEW (preview)->buffer + (row_stride * row), buffer, row_stride);
 	} 
       else 
 	{
@@ -385,9 +390,8 @@ render_blast (GDrawable   *drawable,
 		{
                   if (preview_mode) 
 		    {
-		      memcpy (buffer, preview_bits + (row * bytes * width), width * bytes);
-		      memcpy (GTK_PREVIEW (preview)->buffer + (width * bytes * row),
-			      buffer, width * bytes);
+		      memcpy (buffer, preview_bits + (row * row_stride), row_stride);
+		      memcpy (GTK_PREVIEW (preview)->buffer + (row_stride * row), buffer, row_stride);
 		    } 
 		  else 
 		    {
@@ -445,19 +449,24 @@ render_wind (GDrawable   *drawable,
       x1 = y1 = 0;
       x2 = width;
       y2 = height;
+
+      row_stride = GTK_PREVIEW (preview)->rowstride;
     } 
   else 
     {
       gimp_progress_init( _("Rendering Wind..."));
       gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
+
       bytes = drawable->bpp;
       width = x2 - x1;
       height = y2 - y1;
+
       gimp_pixel_rgn_init (&src_region, drawable, x1, y1, width, height, FALSE, FALSE);
       gimp_pixel_rgn_init (&dest_region, drawable, x1, y1, width, height, TRUE, TRUE);
+
+      row_stride = width * bytes;
     }
   
-  row_stride = width * bytes;
   comp_stride = bytes * COMPARE_WIDTH;
   lpi = row_stride - comp_stride;
 
@@ -466,7 +475,7 @@ render_wind (GDrawable   *drawable,
   for (row = y1; row < y2; row++)
     {
       if (preview_mode) 
-	memcpy (sb, preview_bits + (row * bytes * width), width * bytes);
+	memcpy (sb, preview_bits + (row * row_stride), row_stride);
       else 
 	gimp_pixel_rgn_get_row (&src_region, sb, x1, row, width);
 
@@ -480,7 +489,7 @@ render_wind (GDrawable   *drawable,
 
       if (preview_mode) 
 	{
-	  memcpy (GTK_PREVIEW (preview)->buffer + (width * bytes * row), sb, width * bytes);
+	  memcpy (GTK_PREVIEW (preview)->buffer + (row_stride * row), sb, row_stride);
 	} 
       else 
 	{
@@ -1010,9 +1019,7 @@ preview_widget (GDrawable *drawable)
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   fill_preview (preview, drawable);
-  size = (GTK_PREVIEW (preview)->buffer_width) * 
-	 (GTK_PREVIEW (preview)->buffer_height) * 
-	 (GTK_PREVIEW (preview)->bpp);
+  size = GTK_PREVIEW (preview)->rowstride * GTK_PREVIEW (preview)->buffer_height;
   preview_bits = g_malloc (size);
   memcpy (preview_bits, GTK_PREVIEW (preview)->buffer, size);
 

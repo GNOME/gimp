@@ -337,9 +337,7 @@ preview_widget (GDrawable *drawable)
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   fill_preview_with_thumb (preview, drawable->id);
-  size = (GTK_PREVIEW (preview)->buffer_width) * 
-	 (GTK_PREVIEW (preview)->buffer_height) * 
-	 (GTK_PREVIEW (preview)->bpp);
+  size = GTK_PREVIEW (preview)->rowstride * GTK_PREVIEW (preview)->buffer_height;
   preview_bits = g_malloc (size);
   memcpy (preview_bits, GTK_PREVIEW (preview)->buffer, size);
 
@@ -974,9 +972,9 @@ nova (GDrawable *drawable,
 	  stuff, i have to duplicate the
 	  entire loop.  why not just use
 	  get_row??? */
-       src_row   = g_malloc (x2 * y2 * bpp);
-       memcpy (src_row, preview_bits, x2 * y2 * bpp);
-       dest_row  = g_malloc (x2 * y2 * bpp);
+       src_row   = g_malloc (y2 * GTK_PREVIEW (preview)->rowstride);
+       memcpy (src_row, preview_bits, y2 * GTK_PREVIEW (preview)->rowstride);
+       dest_row  = g_malloc (y2 * GTK_PREVIEW (preview)->rowstride);
        save_dest = dest_row;
  
        for (row = 0, y = 0; row < y2; row++, y++)
@@ -1038,11 +1036,11 @@ nova (GDrawable *drawable,
                src += bpp;
                dest += bpp;
              }
-           src_row += x2*bpp;
-           dest_row += x2*bpp;
+           src_row  += GTK_PREVIEW (preview)->rowstride;
+           dest_row += GTK_PREVIEW (preview)->rowstride;
          }
 
-       memcpy (GTK_PREVIEW(preview)->buffer, save_dest, x2 * y2 * bpp);
+       memcpy (GTK_PREVIEW(preview)->buffer, save_dest, y2 * GTK_PREVIEW (preview)->rowstride);
        gtk_widget_queue_draw (preview);
      } 
    else 

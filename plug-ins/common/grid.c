@@ -421,9 +421,11 @@ doit (gint32     image_ID,
   for (y = sy1; y < sy2; y++)
     {
       if (preview_mode) 
-	memcpy(dest, preview_bits + (sx2 * bytes * y), sx2 * bytes);
+	memcpy (dest, 
+		preview_bits + (GTK_PREVIEW (preview)->rowstride * y),
+		GTK_PREVIEW (preview)->rowstride);
       else 
-	gimp_pixel_rgn_get_row (&srcPR, dest, sx1, y, (sx2-sx1));
+	gimp_pixel_rgn_get_row (&srcPR, dest, sx1, y, (sx2 - sx1));
 
       y_offset = y - grid_cfg.voffset;
       while (y_offset < 0)
@@ -484,7 +486,9 @@ doit (gint32     image_ID,
         }
       if (preview_mode) 
 	{
-	  memcpy(GTK_PREVIEW (preview)->buffer+(sx2*bytes*y),dest,sx2*bytes);
+	  memcpy (GTK_PREVIEW (preview)->buffer + GTK_PREVIEW (preview)->rowstride,
+		  dest,
+		  GTK_PREVIEW (preview)->rowstride);
 	} 
       else 
 	{
@@ -983,9 +987,7 @@ preview_widget (GDrawable *drawable)
     {
       preview = gtk_preview_new (GTK_PREVIEW_COLOR);
       fill_preview (preview, drawable);
-      size = (GTK_PREVIEW (preview)->buffer_width) * 
-	(GTK_PREVIEW (preview)->buffer_height) * 
-	(GTK_PREVIEW (preview)->bpp);
+      size = GTK_PREVIEW (preview)->rowstride * GTK_PREVIEW (preview)->buffer_height;
       preview_bits = g_malloc (size);
       memcpy (preview_bits, GTK_PREVIEW (preview)->buffer, size);
     }

@@ -1,5 +1,20 @@
 2000-05-23  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/flarefx.c
+	* plug-ins/common/glasstile.c
+	* plug-ins/common/grid.c
+	* plug-ins/common/illusion.c
+	* plug-ins/common/jigsaw.c
+	* plug-ins/common/max_rgb.c
+	* plug-ins/common/noisify.c
+	* plug-ins/common/nova.c
+	* plug-ins/common/plasma.c: I am stupid. Dropping the
+	4-byte alignment caused the buffer's rowstride to 
+	become different from the GtkPreview's one. Fixed it
+	by using preview->rowstride in all cases. 
+
+2000-05-23  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/plasma.c: applied modified version of 
 	gimp-timecop-200005-12.plasma which adds a preview to the
 	plasma plug-in. 

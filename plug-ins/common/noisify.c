@@ -276,15 +276,15 @@ noisify (GDrawable *drawable,
 
   if (preview_mode) 
     {
-      src_data = g_malloc (x2 * y2 * bpp);
-      memcpy (src_data, preview_bits, x2 * y2 * bpp);
-      dest_data = g_malloc (x2 * y2 * bpp);
+      src_data  = g_malloc (GTK_PREVIEW (preview)->rowstride * y2);
+      memcpy (src_data, preview_bits, GTK_PREVIEW (preview)->rowstride * y2);
+      dest_data = g_malloc (GTK_PREVIEW (preview)->rowstride * y2);
       save_dest = dest_data;
 
       for (row = 0; row < y2; row++)
 	{
-	  src = src_data + row * x2 * bpp;
-	  dest = dest_data + row * x2 * bpp;
+	  src  = src_data  + row * GTK_PREVIEW (preview)->rowstride;
+	  dest = dest_data + row * GTK_PREVIEW (preview)->rowstride;
 	  
 	  for (col = 0; col < x2; col++)
 	    {
@@ -314,7 +314,9 @@ noisify (GDrawable *drawable,
 	    }
 	}
 
-      memcpy (GTK_PREVIEW(preview)->buffer, save_dest, x2 * y2 * bpp);
+      memcpy (GTK_PREVIEW (preview)->buffer, 
+	      save_dest, 
+	      GTK_PREVIEW (preview)->rowstride * y2);
       gtk_widget_queue_draw (preview);
     } 
   else 
@@ -664,9 +666,7 @@ preview_widget (GDrawable *drawable)
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   fill_preview (preview, drawable);
-  size = (GTK_PREVIEW (preview)->buffer_width) * 
-	 (GTK_PREVIEW (preview)->buffer_height) * 
-	 (GTK_PREVIEW (preview)->bpp);
+  size = GTK_PREVIEW (preview)->rowstride * GTK_PREVIEW (preview)->buffer_height;
   preview_bits = g_malloc (size);
   memcpy (preview_bits, GTK_PREVIEW (preview)->buffer, size);
 

@@ -327,10 +327,11 @@ filter_preview (void)
 
   for (y = 0; y < image_height; y++)
     {
-      pixels[y]     = g_new (guchar, image_width * image_bpp);
-      destpixels[y] = g_new (guchar, image_width * image_bpp);
-      memcpy (pixels[y], preview_bits + (image_width * image_bpp * y), 
-	      image_width * image_bpp);
+      pixels[y]     = g_new (guchar, GTK_PREVIEW (preview)->rowstride);
+      destpixels[y] = g_new (guchar, GTK_PREVIEW (preview)->rowstride);
+      memcpy (pixels[y], 
+	      preview_bits + GTK_PREVIEW (preview)->rowstride * y, 
+	      GTK_PREVIEW (preview)->rowstride);
     }
 
   scale  = sqrt (image_width * image_width + image_height * image_height) / 2;
@@ -373,8 +374,9 @@ filter_preview (void)
 	      (1-radius) * pixels[y][x * image_bpp + b] 
 	      + radius * pixels[yy][xx * image_bpp + b];
 	}
-      memcpy (GTK_PREVIEW (preview)->buffer + (image_width * image_bpp * y),
-	      destpixels[y], image_width * image_bpp);
+      memcpy (GTK_PREVIEW (preview)->buffer + GTK_PREVIEW (preview)->rowstride * y,
+	      destpixels[y], 
+	      GTK_PREVIEW (preview)->rowstride);
     }
 
   for (y = 0; y < image_height; y++) 
@@ -396,9 +398,7 @@ preview_widget (GDrawable *drawable)
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   fill_preview_with_thumb (preview, drawable->id);
-  size = (GTK_PREVIEW (preview)->buffer_width) * 
-	 (GTK_PREVIEW (preview)->buffer_height) * 
-	 (GTK_PREVIEW (preview)->bpp);
+  size = GTK_PREVIEW (preview)->rowstride * GTK_PREVIEW (preview)->buffer_height;
   preview_bits = g_malloc (size);
   memcpy (preview_bits, GTK_PREVIEW (preview)->buffer, size);
 

@@ -465,8 +465,8 @@ init_plasma (GDrawable *drawable,
       bpp = GTK_PREVIEW (preview)->bpp;
       alpha = bpp;
       has_alpha = 0;
-      work_buffer = g_malloc (ix2 * iy2 * bpp);
-      memcpy (work_buffer, GTK_PREVIEW (preview)->buffer, ix2 * iy2 * bpp);
+      work_buffer = g_malloc (GTK_PREVIEW (preview)->rowstride * iy2);
+      memcpy (work_buffer, GTK_PREVIEW (preview)->buffer, GTK_PREVIEW (preview)->rowstride * iy2);
     } 
   else 
     {
@@ -513,7 +513,7 @@ end_plasma (GDrawable *drawable,
 {
   if (preview_mode) 
     {
-      memcpy (GTK_PREVIEW (preview)->buffer, work_buffer, ix2 * iy2 * bpp);
+      memcpy (GTK_PREVIEW (preview)->buffer, work_buffer, GTK_PREVIEW (preview)->rowstride * iy2);
       g_free (work_buffer);
       gtk_widget_queue_draw (preview);
     } 
@@ -547,7 +547,7 @@ get_pixel (GDrawable *drawable,
 
   if (preview_mode) 
     {
-      memcpy (pixel, work_buffer + (y * ix2 * bpp) + (x * bpp), bpp);
+      memcpy (pixel, work_buffer + (y * GTK_PREVIEW (preview)->rowstride) + (x * bpp), bpp);
     }
   else 
     {
@@ -581,7 +581,7 @@ put_pixel (GDrawable *drawable,
   if (y > iy2 - 1)   y = iy2 - 1;
 
   if (preview_mode)
-    memcpy (work_buffer + (y * ix2 * bpp) + (x * bpp), pixel, bpp);
+    memcpy (work_buffer + (y * GTK_PREVIEW (preview)->rowstride) + (x * bpp), pixel, bpp);
   else
     {
       col = x / tile_width;
@@ -805,3 +805,4 @@ preview_widget (void)
 
   return preview;
 }
+

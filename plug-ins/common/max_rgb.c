@@ -232,15 +232,15 @@ main_function (GDrawable *drawable,
 	I just don't want to write a prev_pixel_rgn_process
 	and then find out someone else coded a much cooler
 	preview widget / functions for GIMP */
-     src_data = g_malloc (x2 * y2 * bpp);
-     memcpy (src_data, preview_bits, x2 * y2 * bpp);
-     dest_data = g_malloc (x2 * y2 * bpp);
+     src_data = g_malloc (GTK_PREVIEW (preview)->rowstride * y2);
+     memcpy (src_data, preview_bits, GTK_PREVIEW (preview)->rowstride * y2);
+     dest_data = g_malloc (GTK_PREVIEW (preview)->rowstride * y2);
      save_dest = dest_data;
      
      for (y = 0; y < y2; y++)
        {
-	 src = src_data + y * x2 * bpp;
-	 dest = dest_data + y * x2 * bpp;
+	 src  = src_data  + y * GTK_PREVIEW (preview)->rowstride;
+	 dest = dest_data + y * GTK_PREVIEW (preview)->rowstride;
 	 
 	 for (x = 0; x < x2; x++)
 	   {
@@ -266,11 +266,11 @@ main_function (GDrawable *drawable,
 	       *dest++ = (guchar)(((max_ch & (1 << ch)) > 0) ? max : 0);
 
 	     if (gap) 
-	       *dest++=*src++;
+	       *dest++ = *src++;
 	    }
 	}
 
-   memcpy (GTK_PREVIEW (preview)->buffer, save_dest, x2 * y2 * bpp);
+   memcpy (GTK_PREVIEW (preview)->buffer, save_dest, GTK_PREVIEW (preview)->rowstride * y2);
    gtk_widget_queue_draw (preview);
  } 
  else 
@@ -428,9 +428,7 @@ preview_widget (GDrawable *drawable)
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   fill_preview_with_thumb (preview, drawable->id);
-  size = (GTK_PREVIEW (preview)->buffer_width) * 
-	 (GTK_PREVIEW (preview)->buffer_height) * 
-	 (GTK_PREVIEW (preview)->bpp);
+  size = GTK_PREVIEW (preview)->rowstride * GTK_PREVIEW (preview)->buffer_height;
   preview_bits = g_malloc (size);
   memcpy (preview_bits, GTK_PREVIEW (preview)->buffer, size);
 
