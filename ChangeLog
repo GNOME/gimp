@@ -1,3 +1,8 @@
+2003-06-11  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/paint-funcs-generic.h (blend_pixels): fixed my
+	latest fix. Fixes bug #114882.
+
 2003-06-10  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpwidgets-utils.[ch]: added utility function
