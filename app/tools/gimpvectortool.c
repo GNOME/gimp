@@ -523,8 +523,8 @@ vector_tool_options_reset (GimpToolOptions *tool_options)
 
 
 void
-gimp_vectors_tool_set_vectors (GimpVectorTool *vector_tool,
-                               GimpVectors    *vectors)
+gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
+                              GimpVectors    *vectors)
 {
   g_return_if_fail (GIMP_IS_VECTOR_TOOL (vector_tool));
   g_return_if_fail (GIMP_IS_VECTORS (vectors));
@@ -535,6 +535,8 @@ gimp_vectors_tool_set_vectors (GimpVectorTool *vector_tool,
     g_object_unref (G_OBJECT (vector_tool->vectors));
 
   vector_tool->vectors = vectors;
+  vector_tool->cur_stroke = NULL;
+  vector_tool->cur_anchor = NULL;
 
   if (vector_tool->vectors)
     g_object_ref (G_OBJECT (vector_tool->vectors));

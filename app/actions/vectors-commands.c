@@ -617,7 +617,7 @@ vectors_edit_vectors_query (GimpVectors *vectors)
         active_tool = tool_manager_get_active (gimp);
       }
 
-    gimp_vectors_tool_set_vectors (GIMP_VECTOR_TOOL (active_tool), vectors);
+    gimp_vector_tool_set_vectors (GIMP_VECTOR_TOOL (active_tool), vectors);
 
     return;
   }

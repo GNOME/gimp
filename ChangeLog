@@ -1,3 +1,10 @@
+2002-02-26  Simon Budig  <simon@gimp.org>
+
+	* app/gui/vectors-commands.c
+	* app/tools/gimpvectortool.c
+	* app/tools/gimpvectortool.h: fixed a name of a function
+	and corrected gimp_vector_tool_set_vectors.
+
 2002-02-26  Michael Natterer  <mitch@gimp.org>
 
 	Added some kind of paint core registry. It's ugly and will change...
