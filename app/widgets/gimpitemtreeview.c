@@ -924,18 +924,15 @@ gimp_item_tree_view_drop (GimpContainerTreeView   *tree_view,
   GimpItemTreeView      *item_view      = GIMP_ITEM_TREE_VIEW (tree_view);
   GimpItemTreeViewClass *item_view_class;
   GimpContainer         *container;
-  GimpObject            *src_object;
-  GimpObject            *dest_object;
   gint                   src_index;
   gint                   dest_index;
 
   container = gimp_container_view_get_container (container_view);
 
-  src_object  = GIMP_OBJECT (src_viewable);
-  dest_object = GIMP_OBJECT (dest_viewable);
-
-  src_index  = gimp_container_get_child_index (container, src_object);
-  dest_index = gimp_container_get_child_index (container, dest_object);
+  src_index  = gimp_container_get_child_index (container,
+                                               GIMP_OBJECT (src_viewable));
+  dest_index = gimp_container_get_child_index (container,
+                                               GIMP_OBJECT (dest_viewable));
 
   item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view);
 
@@ -965,7 +962,7 @@ gimp_item_tree_view_drop (GimpContainerTreeView   *tree_view,
         }
 
       item_view_class->reorder_item (item_view->gimage,
-                                     GIMP_ITEM (src_object),
+                                     GIMP_ITEM (src_viewable),
                                      dest_index,
                                      TRUE,
                                      item_view_class->reorder_desc);

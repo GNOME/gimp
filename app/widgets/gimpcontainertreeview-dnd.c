@@ -281,19 +281,16 @@ gimp_container_tree_view_real_drop_possible (GimpContainerTreeView   *tree_view,
 {
   GimpContainerView *view      = GIMP_CONTAINER_VIEW (tree_view);
   GimpContainer     *container = gimp_container_view_get_container (view);
-  GimpObject        *src_object;
-  GimpObject        *dest_object;
   gint               src_index;
   gint               dest_index;
 
   if (src_viewable == dest_viewable)
     return FALSE;
 
-  src_object  = GIMP_OBJECT (src_viewable);
-  dest_object = GIMP_OBJECT (dest_viewable);
-
-  src_index  = gimp_container_get_child_index (container, src_object);
-  dest_index = gimp_container_get_child_index (container, dest_object);
+  src_index  = gimp_container_get_child_index (container,
+                                               GIMP_OBJECT (src_viewable));
+  dest_index = gimp_container_get_child_index (container,
+                                               GIMP_OBJECT (dest_viewable));
 
   if (src_index == -1 || dest_index == -1)
     return FALSE;
@@ -323,16 +320,13 @@ gimp_container_tree_view_real_drop (GimpContainerTreeView   *tree_view,
 {
   GimpContainerView *view      = GIMP_CONTAINER_VIEW (tree_view);
   GimpContainer     *container = gimp_container_view_get_container (view);
-  GimpObject        *src_object;
-  GimpObject        *dest_object;
   gint               src_index;
   gint               dest_index;
 
-  src_object  = GIMP_OBJECT (src_viewable);
-  dest_object = GIMP_OBJECT (dest_viewable);
-
-  src_index  = gimp_container_get_child_index (container, src_object);
-  dest_index = gimp_container_get_child_index (container, dest_object);
+  src_index  = gimp_container_get_child_index (container,
+                                               GIMP_OBJECT (src_viewable));
+  dest_index = gimp_container_get_child_index (container,
+                                               GIMP_OBJECT (dest_viewable));
 
   if (drop_pos == GTK_TREE_VIEW_DROP_AFTER && src_index > dest_index)
     {
@@ -343,5 +337,5 @@ gimp_container_tree_view_real_drop (GimpContainerTreeView   *tree_view,
       dest_index--;
     }
 
-  gimp_container_reorder (container, src_object, dest_index);
+  gimp_container_reorder (container, GIMP_OBJECT (src_viewable), dest_index);
 }

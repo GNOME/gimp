@@ -1,5 +1,11 @@
 2004-06-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontainertreeview-dnd.c
+	* app/widgets/gimpitemtreeview.c: some cleanup in the tree view
+	DND code.
+
+2004-06-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpsessioninfo.c (gimp_session_info_restore): added
 	a horrible hack that sets the paned's position after the first
 	"size-allocate" after "map". Makes position remembering work for
