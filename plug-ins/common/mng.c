@@ -472,19 +472,6 @@ mng_save_image (const gchar *filename,
       return 0;
     }
 
-  /* For now, we hardwire a comment */
-
-  if ((ret =
-       mng_putchunk_text (handle, strlen (MNG_TEXT_TITLE), MNG_TEXT_TITLE, 22,
-			  "Created using The GIMP")) != MNG_NOERROR)
-    {
-      g_warning ("Unable to mng_putchunk_text() in mng_save_image()");
-      mng_cleanup (&handle);
-      fclose (userdata->fp);
-      g_free (userdata);
-      return 0;
-    }
-
   if ((num_layers > 1) && (mng_data.loop))
     {
       if ((ret =
@@ -518,6 +505,19 @@ mng_save_image (const gchar *filename,
 	}
     }
 
+
+  /* For now, we hardwire a comment */
+
+  if ((ret =
+       mng_putchunk_text (handle, strlen (MNG_TEXT_TITLE), MNG_TEXT_TITLE, 22,
+			  "Created using The GIMP")) != MNG_NOERROR)
+    {
+      g_warning ("Unable to mng_putchunk_text() in mng_save_image()");
+      mng_cleanup (&handle);
+      fclose (userdata->fp);
+      g_free (userdata);
+      return 0;
+    }
 
 /*	how do we get this to work?
 	

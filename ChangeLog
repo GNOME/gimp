@@ -1,3 +1,8 @@
+2003-07-07  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/mng.c: applied a patch from S. Mukund that fixes
+	a problem with newer versions of libmng (bug #115544).
+
 2003-07-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/Makefile.am
