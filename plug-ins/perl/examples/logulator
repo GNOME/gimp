@@ -37,6 +37,7 @@ sub register($$$$$$$$$;@) {
    defined($ti) and defined($fsi) and defined($fi) or die "$function, $menupath: no identifiable font ($ti $fsi $fi)\n";
 
    $menupath =~ /([^\/]+)$/;
+   $menupath =~ s/\.*$/.../;
    $help=<<EOF.$help;
 
 This "script" is actually a script-fu logo script that has been converted
@@ -191,7 +192,7 @@ register "perl_fu_3d_outline_logo",
    "Hrvoje Horvat (hhorvat\@open.hr)",
    "Hrvoje Horvat",
    "07 April, 1998",
-   N_"<Image>/Filters/Logulator/3D Outline",
+   N_"<Image>/Filters/Logulator/3D Outline...",
    "",
    [
       [PF_PATTERN,   'pattern',          "Pattern", "Parque #1"],

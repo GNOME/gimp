@@ -14,7 +14,7 @@ register	"repdup",
 		"Claes G Lindblad <claesg\@algonet.se>",
 		"Claes G Lindblad <claesg\@algonet.se>",
 		"990328",
-		N_"<Image>/Edit/Repeat & Duplicate",
+		N_"<Image>/Edit/Repeat & Duplicate...",
 		"*",
 		[
 		[PF_SPINNER, "repeats", "Number of repeats",

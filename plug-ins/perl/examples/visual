@@ -124,7 +124,7 @@ register "extension_visual_scriptor",
          "Marc Lehmann",
          "Marc Lehmann",
          $VERSION,
-         N_"<Toolbox>/Xtns/Visual Scriptor",
+         N_"<Toolbox>/Xtns/Visual Scriptor...",
          "",
          [],
          sub {

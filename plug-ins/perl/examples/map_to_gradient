@@ -20,7 +20,7 @@ register "map_to_gradient",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
          "19990802",
-         N_"<Image>/Filters/Colors/Map To Gradient",
+         N_"<Image>/Filters/Colors/Map To Gradient...",
          "RGB*, GRAY",	
          [
           [PF_GRADIENT,	"gradient",	"The gradient to map to"],

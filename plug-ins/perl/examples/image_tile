@@ -435,7 +435,7 @@ register
 	Filters/Artistic/Mosaic plugin, but with images as the
 	tiles.",
   "Aaron Sherman", "Aaron Sherman (c)", "1999-03-15",
-  N_"<Image>/Filters/Map/Image Tile",
+  N_"<Image>/Filters/Map/Image Tile...",
   "*",
   [
    # Image and drawable are given for free...

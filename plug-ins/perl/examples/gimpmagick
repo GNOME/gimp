@@ -274,7 +274,7 @@ register "gimp_magick",
          "Marc Lehmann",
          "Marc Lehmann",
          $VERSION,
-         N_"<Image>/Filters/Misc/Magick",
+         N_"<Image>/Filters/Misc/Magick...",
          "*",
          [
          ],

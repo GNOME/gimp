@@ -93,7 +93,7 @@ register "billboard",
          "Seth Burgess",
          "Seth Burgess <sjburges\@gimp.org>",
          "1.3",
-         N_"<Toolbox>/Xtns/Animation/Billboard",
+         N_"<Toolbox>/Xtns/Animation/Billboard...",
          "*",
          [
           [PF_DRAWABLE, "source", "What drawable to spin from?"],

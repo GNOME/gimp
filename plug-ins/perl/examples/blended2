@@ -76,7 +76,7 @@ register "make_bevel_logos",
          "Michele Gherlone <mikem\@enet.it>",
          "(c) 2000 M. Gherlone",
          "20000130",
-         N_"<Image>/Filters/Logulator/Blended II",
+         N_"<Image>/Filters/Logulator/Blended II...",
          "*",
          [
            [PF_COLOUR	, 'choose_bg_colour', "Choose the background colour", [255, 255, 255]],

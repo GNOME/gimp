@@ -1,8 +1,5 @@
 #!/usr/app/bin/perl
 
-eval 'exec /usr/app/bin/perl  -S $0 ${1+"$@"}'
-    if 0; # not running under some shell
-
 use Gimp qw(:auto __ N_);
 use Gimp::Fu;
 use strict;
@@ -14,7 +11,7 @@ register	"mirror_split",
 		"Claes G Lindblad <claesg\@algonet.se>",
 		"Claes G Lindblad <claesg\@algonet.se>",
 		"990530",
-		N_"<Image>/Filters/Distorts/MirrorSplit",
+		N_"<Image>/Filters/Distorts/MirrorSplit...",
 		"*",
 		[
 		[PF_RADIO, "mirror", "Which half to mirror?", 0,

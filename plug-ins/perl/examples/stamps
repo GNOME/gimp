@@ -47,7 +47,7 @@ register	"stamps",
 		"Claes G Lindblad <claesg\@algonet.se>",
 		"Claes G Lindblad <claesg\@algonet.se>",
 		"990314",
-		N_"<Toolbox>/Xtns/Render/Stamps",
+		N_"<Toolbox>/Xtns/Render/Stamps...",
 		undef,
 	[
 	[PF_INT32, "size", "img size", 90],

@@ -266,7 +266,7 @@ register
 	"it appear to have height. Not quite the same as a beveled edge, ".
 	"this is a somewhat more subtle technique.",
   "Aaron Sherman", "Aaron Sherman (c)", "1999-06-14",
-  N_"<Image>/Filters/Render/Highlight Edges",
+  N_"<Image>/Filters/Render/Highlight Edges...",
   "*",
   [
    [PF_INT32, "edging", "Pixels", 1]
@@ -279,7 +279,7 @@ register
   "Use this pluggin to make a surface (selected area) look like ".
 	"brushed metal (kind of like steel).",
   "Aaron Sherman", "Aaron Sherman (c)", "1999-06-14",
-  N_"<Image>/Filters/Render/Brushed Metal",
+  N_"<Image>/Filters/Render/Brushed Metal...",
   "*",
   [
    [PF_SLIDER, "stroke_length", "Length", 25, [1, 100, 1]],

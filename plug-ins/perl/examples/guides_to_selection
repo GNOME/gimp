@@ -13,7 +13,7 @@ register "guide_to_selection",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
          "1999-08-01",
-         N_"<Image>/Guides/To Selection",
+         N_"<Image>/Guides/To Selection...",
          "*",
          [
           [PF_RADIO,	"operation",	"The selection operation",		REPLACE, [ADD => ADD, SUB => SUB, REPLACE => REPLACE]],

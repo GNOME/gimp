@@ -12,7 +12,7 @@ register	"triangle",
 		"Claes G Lindblad <claesg\@algonet.se>",
 		"Claes G Lindblad <claesg\@algonet.se>",
 		"990328",
-		N_"<Image>/Select/Triangle",
+		N_"<Image>/Select/Triangle...",
 		"*",
 		[
 		[PF_RADIO, "type", "Select position", 0,

@@ -16,7 +16,7 @@ register "random_art_1",			# Funktionsname
          "Marc Lehmann",			# Autor
          "Marc Lehmann <pcg\@goof.com",		# Copyright
          "0.3a",				# Version/Datum
-         N_"<Toolbox>/Xtns/Render/Random Art #1",	# Menüpfad
+         N_"<Toolbox>/Xtns/Render/Random Art #1...",	# Menüpfad
          "",					# Bildtypen
          # Eingabeparameter
          # Typ		Name		Beschreibung		Wert

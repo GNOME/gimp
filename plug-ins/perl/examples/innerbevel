@@ -19,17 +19,14 @@ N_"/Xtns/Render"; N_"/Xtns/Render/Logos"; # i18n workaround
 $defaultcolor1 = [124,10,18];
 $defaultcolor2 = [200,19,27];
 
-$path = N_"<Toolbox>/Xtns/Render/Logos/Inner Bevel";
+$path = N_"<Toolbox>/Xtns/Render/Logos/Inner Bevel...";
 $shortdesc = "Perform an inner bevel on text";
 $longdesc = "This uses tigert's inner bevel method on text, which can be found with his other excellent tutorials at http://tigert.gimp.org/";
 $date = "1999-03-23";
 $imgtypes = undef;
 $author = "Seth Burgess <sjburges\@gimp.org>";
 
-$path =~ m,/([^/]+)$,; 
-$regname = $1;
-$regname =~ s/ /_/g;
-$regname =~ tr/A-Z/a-z/;
+$regname = "inner_bevel";
 
 $author =~ m/^(.*) </;
 $authorname = $1;

@@ -176,7 +176,7 @@ register
   "Create a tabular index of fonts",
   "Create a tabular index of fonts",
   "Aaron Sherman", "Aaron Sherman (c)", "1999-03-16",
-  N_"<Toolbox>/Xtns/Render/Font Table",
+  N_"<Toolbox>/Xtns/Render/Font Table...",
   undef,
   [
    [PF_STRING, "foundery", "Foundery (perl regex or \"*\")", "*"],

@@ -35,7 +35,7 @@ register	"golden_mean",
 		"Claes G Lindblad <claesg\@algonet.se>",
 		"Claes G Lindblad <claesg\@algonet.se>",
 		"990328",
-		N_"<Toolbox>/Xtns/Render/Golden Mean",
+		N_"<Toolbox>/Xtns/Render/Golden Mean...",
 		undef,
 	[
 	[PF_INT32, "short", "Shortest side", 233],

@@ -12,7 +12,7 @@ register	"center_guide",
 		"Claes G Lindblad <claesg\@algonet.se>",
 		"Claes G Lindblad",
 		"990323",
-		N_"<Image>/Guides/Center Guide",
+		N_"<Image>/Guides/Center Guide...",
 		"*",
 		[
 		[PF_RADIO,

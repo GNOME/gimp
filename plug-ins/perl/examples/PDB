@@ -497,7 +497,7 @@ register "extension_pdb_explorer",
          "Marc Lehmann",
          "Marc Lehmann",
          "0.4alpha",
-         N_"<Toolbox>/Xtns/PDB Explorer",
+         N_"<Toolbox>/Xtns/PDB Explorer...",
          "",
          [],
          sub {

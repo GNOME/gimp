@@ -28,7 +28,7 @@ register "scratches",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
          "19990223",
-         N_"<Image>/Filters/Distorts/Scratches",
+         N_"<Image>/Filters/Distorts/Scratches...",
          "*",
          [
           [PF_SLIDER	, "angle_x"	, "The horizontal angle"	,  30, [  0, 360]],

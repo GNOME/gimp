@@ -43,7 +43,7 @@ register
 	"Seth Burgess",
 	"Seth Burgess <sjburges\@gimp.org>",
 	"1999-03-15",
-	N_"<Image>/Filters/Render/Terral Text",
+	N_"<Image>/Filters/Render/Terral Text...",
 	"RGB*,GRAY*",
 	[ 
 	  [ PF_RADIO, "solid_noise", "The Texture Type", 0, ["solid noise" => 1, "current picture" => 0]],
