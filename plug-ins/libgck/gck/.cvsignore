@@ -3,3 +3,4 @@ Makefile
 .deps
 _libs
 *.lo
+*.la
