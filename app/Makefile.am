@@ -164,6 +164,7 @@ gimp_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
+	$(PANGOFT2_LIBS)						\
 	$(GIMP_THREAD_LIBS)						\
 	$(GIMP_MP_LIBS)							\
 	$(INTLLIBS)							\

@@ -129,6 +129,21 @@ if test -z "$GLIB_LDFLAGS" ; then
 fi 
 GLIB_LIBS="$GLIB_LDFLAGS `echo $GTK_LIBS | sed 's/^.*\(-lglib[^ ]*\).*$/\1/'`"
 
+#
+# Check for PangoFT2
+#
+PANGOFT2_REQUIRED_VERSION=0.17
+
+AC_MSG_CHECKING(for Freetype 2.0 font support for Pango)
+  if $PKG_CONFIG --atleast-version $PANGOFT2_REQUIRED_VERSION pangoft2; then
+      AC_MSG_RESULT(found)
+      PANGOFT2_CFLAGS=`$PKG_CONFIG --cflags pangoft2`
+      PANGOFT2_LIBS=`$PKG_CONFIG --libs pangoft2`
+  else
+      AC_MSG_ERROR([*** PangoFT2 $PANGOFT2_REQUIRED_VERSION or newer is required.])
+  fi
+
+
 if eval "test x$GCC = xyes"; then
   case " $CFLAGS " in
   *[\ \	]-Wall[\ \	]*) ;;
@@ -767,6 +782,9 @@ AC_SUBST(X_LIBS)
 
 AC_SUBST(GLIB_CFLAGS)
 AC_SUBST(GLIB_LIBS)
+
+AC_SUBST(PANGOFT2_CFLAGS)
+AC_SUBST(PANGOFT2_LIBS)
 
 AC_SUBST(PKG_CONFIG)
 

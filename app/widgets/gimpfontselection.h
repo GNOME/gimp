@@ -27,8 +27,6 @@
 extern "C" {
 #endif /* __cplusplus */
 
-/* For information look into the C source or the html documentation */
-
 
 #define GIMP_TYPE_FONT_SELECTION            (gimp_font_selection_get_type ())
 #define GIMP_FONT_SELECTION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FONT_SELECTION, GimpFontSelection))
@@ -41,28 +39,33 @@ typedef struct _GimpFontSelectionClass  GimpFontSelectionClass;
 
 struct _GimpFontSelection
 {
-  GtkVBox               parent_instance;
-
-  GtkWidget            *font_clist;
-  GtkWidget            *font_style_clist;
+  GtkHBox               parent_instance;
 
   PangoContext         *context;
   PangoFontDescription *font_desc;
+
+  GtkWidget            *entry;
+  GtkWidget            *dialog;
 };
 
 struct _GimpFontSelectionClass
 {
-  GtkVBoxClass          parent_class;
+  GtkHBoxClass          parent_class;
 
   void (* font_changed) (GimpFontSelection *fontsel);
 };
 
 
-GType        gimp_font_selection_get_type     (void);
-GtkWidget *  gimp_font_selection_new          (PangoContext      *context);
-gboolean     gimp_font_selection_set_fontname (GimpFontSelection *fontsel,
-                                               const gchar       *fontname);
-const gchar *gimp_font_selection_get_fontname (GimpFontSelection *fontsel);
+GType         gimp_font_selection_get_type      (void);
+GtkWidget   * gimp_font_selection_new           (PangoContext      *context);
+gboolean      gimp_font_selection_set_fontname  (GimpFontSelection *fontsel,
+                                                 const gchar       *fontname);
+const gchar * gimp_font_selection_get_fontname  (GimpFontSelection *fontsel);
+void          gimp_font_selection_set_font_desc (GimpFontSelection          *fontsel,
+                                                 const PangoFontDescription *font_desc);
+PangoFontDescription * 
+              gimp_font_selection_get_font_desc (GimpFontSelection *fontsel);
+void          gimp_font_selection_font_changed  (GimpFontSelection *fontsel);
 
 
 #ifdef __cplusplus

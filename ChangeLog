@@ -1,3 +1,25 @@
+2001-08-11  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: added dependency on PangoFT2 (Pango compiled with 
+	FreeType2 support).
+	
+	* app/Makefile.am: link against PangoFT2.
+	
+	* app/tools/Makefile.am
+	* app/tools/gimptexttool.[ch]: rudimentary new text tool. Still needs
+	lots of work.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h:
+	* app/widgets/gimpfontselection-dialog.[ch]
+	* app/widgets/gimpfontselection.[ch]: added font selection widgets.
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgetstypes.h
+	* libgimpwidgets/gimpfontselection.[ch]: removed font selection code 
+	from here since the fonts need to be selected from the core's 
+	PangoContext. Will add PDB-controlled font selection later.
+
 2001-08-11  Michael Natterer  <mitch@gimp.org>
 
 	* TODO.xml: added a TODO entry about additional image/file info.
@@ -43,13 +65,8 @@
 
 	* app/widgets/gimpdnd.[ch]: make it DND-able.
 
-<<<<<<< ChangeLog
 	* app/widgets/gimppreview.c: fix preview rendering correctly this
 	time.
-=======
-	* app/widgets/gimppreview.c: fix  preview rendering correctly this
-	time.
->>>>>>> 1.3709
 
 2001-08-10  Sven Neumann  <sven@gimp.org>
 

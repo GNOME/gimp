@@ -42,8 +42,6 @@ libgimpwidgets_1_3_la_SOURCES = @STRIP_BEGIN@ \
 	gimpdialog.h		\
 	gimpfileselection.c	\
 	gimpfileselection.h	\
-	gimpfontselection.c	\
-	gimpfontselection.h	\
 	gimphelpui.c		\
 	gimphelpui.h		\
 	gimpoffsetarea.c	\

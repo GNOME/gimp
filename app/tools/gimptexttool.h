@@ -22,8 +22,7 @@
 
 #include "gimptool.h"
 
-
-#define SUPERSAMPLE  3
+#define SUPERSAMPLE 3
 
 typedef enum 
 {
@@ -43,12 +42,13 @@ typedef struct _GimpTextToolClass GimpTextToolClass;
 
 struct _GimpTextTool
 {
-  GimpTool  parent_instance;
+  GimpTool      parent_instance;
 
-  gint      click_x;
-  gint      click_y;
+  gint          click_x;
+  gint          click_y;
 
-  GDisplay *gdisp;
+  GDisplay     *gdisp;
+  PangoContext *pango_context;
 };
 
 struct _GimpTextToolClass
@@ -59,22 +59,21 @@ struct _GimpTextToolClass
 
 void        gimp_text_tool_register (Gimp *gimp);
 
-GtkType     gimp_text_tool_get_type (void);
+GType       gimp_text_tool_get_type (void);
 
 
-gboolean    text_get_extents (gchar        *fontname,
-			      gchar        *text,
-			      gint         *width,
-			      gint         *height,
-			      gint         *ascent,
-			      gint         *descent);
-
+gboolean    text_get_extents (const gchar  *fontname,
+                              const gchar  *text,
+                              gint         *width,
+                              gint         *height,
+                              gint         *ascent,
+                              gint         *descent);
 GimpLayer * text_render      (GimpImage    *gimage,
 			      GimpDrawable *drawable,
 			      gint          text_x,
 			      gint          text_y,
-			      gchar        *fontname,
-			      gchar        *text,
+			      const gchar  *fontname,
+			      const gchar  *text,
 			      gint          border,
 			      gint          antialias);
 
