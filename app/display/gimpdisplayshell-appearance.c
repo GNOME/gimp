@@ -395,12 +395,13 @@ gimp_display_shell_set_padding (GimpDisplayShell      *shell,
                                 const GimpRGB         *padding_color)
 {
   GimpDisplayOptions *options;
-  GimpRGB             color = *padding_color;
+  GimpRGB             color;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (padding_color != NULL);
 
   options = GET_OPTIONS (shell);
+  color   = *padding_color;
 
   switch (padding_mode)
     {

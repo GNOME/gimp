@@ -1,5 +1,11 @@
 2003-10-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-appearance.c
+	(gimp_display_shell_set_padding): avoid potential crash (access
+	pointer *after* precondition check).
+
+2003-10-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/preferences-dialog.c (prefs_display_options_frame_add):
 	properly align the toggle button columns by packing their
 	containers expanding, removed ascii art, cleanup.
