@@ -8,20 +8,21 @@
 # Pablo G. del Campo <pablodc@bigfoot.com>, 2003.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004.
 # Pablo G. del Campo <pablodc@bigfoot.com>, 2004.
+# Francisco Vila <francisco.vila@hispalinux.es>, 2004.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-13 00:46+0200\n"
-"PO-Revision-Date: 2004-05-13 01:15+0200\n"
-"Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
+"POT-Creation-Date: 2004-06-04 14:32+0200\n"
+"PO-Revision-Date: 2004-06-04 01:15+0200\n"
+"Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
-"X-Generator: KBabel 1.3.1\n"
+"X-Generator: GNU Emacs 21.3.1\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: app/app_procs.c:189
@@ -278,9 +279,10 @@ msgstr "Azul"
 msgid "Alpha"
 msgstr "Alfa"
 
+#el sustantivo es 'interpolación' en femenino. FVD
 #: app/base/base-enums.c:97
 msgid "None (Fastest)"
-msgstr "Ninguno (El mas rápido)"
+msgstr "Ninguna (la más rápida)"
 
 #: app/base/base-enums.c:98 app/core/core-enums.c:211
 #: app/widgets/widgets-enums.c:73
@@ -497,9 +499,10 @@ msgstr ""
 "se activa."
 
 #: app/config/gimprc-blurbs.h:74
+#, fuzzy
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
-"algorithm.  The seed fill starts at the intially selected pixel and "
+"algorithm.  The seed fill starts at the initially selected pixel and "
 "progresses in all directions until the difference of pixel intensity from "
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
@@ -609,6 +612,20 @@ msgid ""
 msgstr ""
 "Generalmente sólo es importante para pantallas de 8 bits, esto define la "
 "cantidad mínima de colores del sistema reservados para El GIMP."
+
+#: app/config/gimprc-blurbs.h:193
+msgid ""
+"Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
+"forces the X server to be queried for both horizontal and vertical "
+"resolution information."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:198
+msgid ""
+"Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
+"forces the X server to be queried for both horizontal and vertical "
+"resolution information."
+msgstr ""
 
 #: app/config/gimprc-blurbs.h:203
 msgid ""
@@ -1703,7 +1720,7 @@ msgstr ""
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version."
 msgstr ""
-"Error fatal de análisis en el archivo de brocha «%s»: Versiónń de brocha de "
+"Error fatal de análisis en el archivo de brocha «%s»: Versión de brocha de "
 "El GIMP desconocida."
 
 #: app/core/gimpbrushpipe.c:380 app/core/gimpbrushpipe.c:400
@@ -1827,7 +1844,7 @@ msgid ""
 "Warning: Failed to save data:\n"
 "%s"
 msgstr ""
-"Advertencia: Ha fallado el resguardo de datos:\n"
+"Advertencia: Ha fallado el guardado de datos:\n"
 "%s"
 
 #: app/core/gimpdatafactory.c:410 app/core/gimpdatafactory.c:413
@@ -1835,10 +1852,11 @@ msgstr ""
 msgid "copy"
 msgstr "copiar"
 
+# Esto debe aparecer en la aplicación como 'Copia de xyz'. FVD
 #: app/core/gimpdatafactory.c:422 app/core/gimpitem.c:316
 #, c-format
 msgid "%s copy"
-msgstr "%s copia"
+msgstr "Copia de %s"
 
 #: app/core/gimpdatafactory.c:560
 #, c-format
@@ -2467,7 +2485,7 @@ msgstr "Canal a selección"
 
 #: app/core/gimpselection.c:674
 msgid "Unable to cut or copy because the selected region is empty."
-msgstr "No se puede cortar o copiar porque la región seleccionada es vacía."
+msgstr "No se puede cortar o copiar porque la región seleccionada está vacía."
 
 #: app/core/gimpselection.c:820
 msgid "Cannot float selection because the selected region is empty."
@@ -2486,7 +2504,8 @@ msgstr ""
 "encuentra en modo de punto por punto."
 
 #: app/core/gimptemplate.c:150
-msgid "The horizonal image resolution."
+#, fuzzy
+msgid "The horizontal image resolution."
 msgstr "La resolución horizontal de la imagen."
 
 #: app/core/gimptemplate.c:155
@@ -2498,8 +2517,8 @@ msgstr "La resolución vertical de la imagen."
 msgid "pixel"
 msgstr "píxel"
 
-#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:872
-#: app/tools/gimppainttool.c:707
+#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:780
+#: app/tools/gimpmeasuretool.c:872 app/tools/gimppainttool.c:707
 msgid "pixels"
 msgstr "píxeles"
 
@@ -2766,9 +2785,9 @@ msgstr "Traducido por"
 #: app/gui/about-dialog.c:54
 msgid "translator-credits"
 msgstr ""
-"Pablo G. del Campo <pablodc@bigfoot.com>\n"
-"Francisco Javier F. Serrador <serrador@arrakis.es>\n"
-"Francisco Vila <francisco.vila@hispalinux.es>"
+"Pablo G. del Campo\n"
+"Francisco Javier F. Serrador\n"
+"Francisco Vila"
 
 #: app/gui/about-dialog.c:59
 msgid "Contributions by"
@@ -2831,16 +2850,16 @@ msgstr "/Pegar búfer como _nuevo"
 msgid "/_Delete Buffer"
 msgstr "/B_orrar búfer"
 
-# Puede que sea vacía si se refiere a la copia. FVD
+# Esto debe aparecer en la aplicación como 'Copia del canal azul'. FVD
 #: app/gui/channels-commands.c:143
 #, c-format
 msgid "%s Channel Copy"
-msgstr "%s copia del canal"
+msgstr "Copia del canal %s"
 
-# Puede que sea vacía si se refiere a la copia. FVD
+# Aquí empty no es un verbo sino un adjetivo. FVD
 #: app/gui/channels-commands.c:322
 msgid "Empty Channel"
-msgstr "Vaciar el canal"
+msgstr "Canal vacío"
 
 #: app/gui/channels-commands.c:338
 msgid "New Channel Color"
@@ -3676,7 +3695,8 @@ msgid "/blendingfunction/_Curved"
 msgstr "/Función de mezcla/_Curvada"
 
 #: app/gui/gradient-editor-menu.c:178
-msgid "/blendingfunction/_Sinusodial"
+#, fuzzy
+msgid "/blendingfunction/_Sinusoidal"
 msgstr "/Función de mezcla/_Senoidal"
 
 #: app/gui/gradient-editor-menu.c:183
@@ -4989,9 +5009,10 @@ msgstr "Recortar la capa"
 msgid "Layer Mask to Selection"
 msgstr "Máscara de capa a selección"
 
+# Otra vez Empty es adjetivo y no verbo. Nada de 'vaciar'
 #: app/gui/layers-commands.c:717
 msgid "Empty Layer"
-msgstr "Vaciar la capa"
+msgstr "Capa vacía"
 
 #: app/gui/layers-commands.c:741
 msgid "Create a New Layer"
@@ -5796,7 +5817,8 @@ msgid "Fit to Window"
 msgstr "Ajustar a la ventana"
 
 #: app/gui/preferences-dialog.c:1512
-msgid "Inital Zoom Ratio:"
+#, fuzzy
+msgid "Initial Zoom Ratio:"
 msgstr "Relación de ampliación inicial:"
 
 #. Pointer Movement Feedback
@@ -6350,7 +6372,7 @@ msgstr "Opciones de trazo"
 
 #: app/gui/stroke-dialog.c:128
 msgid "Choose Stroke Style"
-msgstr "Seleccione un estilo de trazo"
+msgstr "Seleccionar el estilo de trazo"
 
 #: app/gui/stroke-dialog.c:159
 msgid "Stroke"
@@ -7088,9 +7110,10 @@ msgstr ""
 msgid "Calibrate"
 msgstr "Calibrar"
 
+# Otra vez Empty es adjetivo. 
 #: app/gui/vectors-commands.c:444
 msgid "Empty Path"
-msgstr "Vaciar la ruta"
+msgstr "Ruta vacía"
 
 #: app/gui/vectors-commands.c:458 app/gui/vectors-commands.c:506
 msgid "New Path"
@@ -7567,9 +7590,10 @@ msgstr ""
 "Debido a la falta de tipografías la funcionalidad de texto no está "
 "disponible."
 
+# Aquí creo que Empty es adjetivo también
 #: app/text/gimptextlayer.c:598
 msgid "Empty Text Layer"
-msgstr "Limpiar la capa de texto"
+msgstr "Capa de texto vacía"
 
 #: app/text/gimptextlayer-transform.c:62
 msgid "Flip Text Layer"
@@ -7730,15 +7754,16 @@ msgstr "Mezclando..."
 
 #: app/tools/gimpbrightnesscontrasttool.c:86
 msgid "Adjust brightness and contrast"
-msgstr "Ajusta el brillo y el contraste"
+msgstr "Ajustar el brillo y el contraste"
 
 #: app/tools/gimpbrightnesscontrasttool.c:87
 msgid "/Tools/Color Tools/B_rightness-Contrast..."
 msgstr "/Herramientas/Herramientas de colores/B_rillo y contraste..."
 
+# no podía ser 'ajusta' en tercera persona. FVD
 #: app/tools/gimpbrightnesscontrasttool.c:138
 msgid "Adjust Brightness and Contrast"
-msgstr "Ajusta el brillo y el contraste"
+msgstr "Ajustar el brillo y el contraste"
 
 #: app/tools/gimpbrightnesscontrasttool.c:181
 msgid "Brightness-Contrast does not operate on indexed layers."
@@ -7812,7 +7837,7 @@ msgstr "Seleccionar por color"
 
 #: app/tools/gimpbycolorselecttool.c:83
 msgid "Select regions by color"
-msgstr "Selecciona regiones por colores"
+msgstr "Seleccionar regiones por colores"
 
 #: app/tools/gimpbycolorselecttool.c:84
 msgid "/Tools/Selection Tools/_By Color Select"
@@ -7878,9 +7903,10 @@ msgstr "R_einiciar el rango"
 msgid "Preserve _Luminosity"
 msgstr "Conservar la _luminosidad"
 
+# Por coherencia con las siguientes. FVD
 #: app/tools/gimpcolorizetool.c:96
 msgid "Colorize"
-msgstr "Colorizar"
+msgstr "Colorear"
 
 #: app/tools/gimpcolorizetool.c:97
 msgid "Colorize the image"
@@ -7900,7 +7926,7 @@ msgstr "Colorear sólo funciona sobre capas de color RGB."
 
 #: app/tools/gimpcolorizetool.c:235
 msgid "Select Color"
-msgstr "Seleccione un color"
+msgstr "Seleccionar el color"
 
 #: app/tools/gimpcolorizetool.c:254 app/tools/gimphuesaturationtool.c:363
 msgid "_Hue:"
@@ -8072,7 +8098,7 @@ msgstr "Tipo de curva"
 # //R ????
 #: app/tools/gimpdodgeburntool.c:71
 msgid "Dodge or Burn strokes"
-msgstr "blanquear o ennegrecer los trazos"
+msgstr "Blanquear o ennegrecer los trazos"
 
 # //R ???
 #: app/tools/gimpdodgeburntool.c:72
@@ -8175,9 +8201,10 @@ msgstr "/Herramientas/Herramientas de selección/Selección _borrosa"
 msgid "Histogram Scale"
 msgstr "Escala del histograma"
 
+# No podía ser 'ajusta' en tercera persona. FVD
 #: app/tools/gimphuesaturationtool.c:111
 msgid "Adjust hue and saturation"
-msgstr "Ajusta el tono y la saturación"
+msgstr "Ajustar el tono y la saturación"
 
 #: app/tools/gimphuesaturationtool.c:112
 msgid "/Tools/Color Tools/Hue-_Saturation..."
@@ -8301,7 +8328,7 @@ msgstr "/Herramientas/Herramientas de selección/Tijeras _inteligentes"
 
 #: app/tools/gimplevelstool.c:157
 msgid "Adjust color levels"
-msgstr "Ajusta niveles de color"
+msgstr "Ajustar niveles de color"
 
 #: app/tools/gimplevelstool.c:158
 msgid "/Tools/Color Tools/_Levels..."
@@ -8309,7 +8336,7 @@ msgstr "/Herramientas/Herramientas de colores/Nive_les..."
 
 #: app/tools/gimplevelstool.c:216
 msgid "Adjust Color Levels"
-msgstr "Ajusta los niveles de color"
+msgstr "Ajustar los niveles de color"
 
 #: app/tools/gimplevelstool.c:218
 msgid "Load Levels"
@@ -8325,16 +8352,15 @@ msgstr "Los niveles para capas indexadas no pueden ser ajustados."
 
 #: app/tools/gimplevelstool.c:351
 msgid "Pick Black Point"
-msgstr "Seleccione un punto negro"
+msgstr "Seleccionar un punto negro"
 
 #: app/tools/gimplevelstool.c:355
 msgid "Pick Gray Point"
-msgstr "Seleccione un punto gris"
+msgstr "Seleccionar un punto gris"
 
-# Por coherencia con lo anterior. FVD
 #: app/tools/gimplevelstool.c:359
 msgid "Pick White Point"
-msgstr "Seleccione un punto blanco"
+msgstr "Seleccionar un punto blanco"
 
 #. Input levels frame
 #: app/tools/gimplevelstool.c:440
@@ -8350,9 +8376,10 @@ msgstr "Gamma"
 msgid "Output Levels"
 msgstr "Niveles de salida"
 
+# error garrafal, corregido. FVD
 #: app/tools/gimplevelstool.c:656
 msgid "Read levels settings from file"
-msgstr "Leer las configuración de los niveles desde un archivo"
+msgstr "Leer la configuración de los niveles desde un archivo"
 
 #: app/tools/gimplevelstool.c:662
 msgid "Save levels settings to file"
@@ -8414,7 +8441,7 @@ msgstr "Distancia:"
 # galicismo (?) FVD
 #: app/tools/gimpmoveoptions.c:179
 msgid "Pick a Layer or Guide to Move"
-msgstr "Seleccione una capa o guía a mover"
+msgstr "Seleccionar una capa o guía a mover"
 
 #: app/tools/gimpmoveoptions.c:180
 msgid "Move the Current Layer"
@@ -8423,7 +8450,7 @@ msgstr "Mover la capa actual"
 # galicismo (?) FVD
 #: app/tools/gimpmoveoptions.c:189
 msgid "Pick a Path to Move"
-msgstr "Seleccione una ruta a mover"
+msgstr "Seleccionar una ruta a mover"
 
 #: app/tools/gimpmoveoptions.c:190
 msgid "Move the Current Path"
@@ -8605,10 +8632,10 @@ msgstr "Centro X:"
 msgid "Scale"
 msgstr "Redimensionar"
 
-# No es coherente con lo anterior. ¿Es para que sea más compacto? FVD
+# Ahora es coherente. FVD
 #: app/tools/gimpscaletool.c:100
 msgid "Scale the layer or selection"
-msgstr "Escala la capa o la selección"
+msgstr "Escalar la capa o la selección"
 
 #: app/tools/gimpscaletool.c:101
 msgid "/Tools/Transform Tools/_Scale"
@@ -8672,7 +8699,7 @@ msgstr "Inclinar"
 
 #: app/tools/gimpsheartool.c:101
 msgid "Shear the layer or selection"
-msgstr "Inclina la imagen o selección"
+msgstr "Inclinar la imagen o selección"
 
 #: app/tools/gimpsheartool.c:102
 msgid "/Tools/Transform Tools/S_hear"
@@ -9898,7 +9925,7 @@ msgstr ""
 
 #: app/widgets/gimptooloptionseditor.c:146
 msgid "Save options to..."
-msgstr "/Guardar las opciones en..."
+msgstr "Guardar las opciones en..."
 
 #: app/widgets/gimptooloptionseditor.c:154
 msgid "Restore options from..."
