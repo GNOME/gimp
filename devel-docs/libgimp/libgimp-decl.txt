@@ -3607,7 +3607,7 @@ typedef enum
 <FUNCTION>
 <NAME>gimp_export_image</NAME>
 <RETURNS>GimpExportReturnType  </RETURNS>
-gint32*,gint32*,gchar*,gint
+gint32 *image_ID,gint32 *drawable_ID,gchar  *format_name,gint    capabilities
 </FUNCTION>
 <MACRO>
 <NAME>GIMP_MAJOR_VERSION</NAME>

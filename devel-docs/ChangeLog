@@ -1,3 +1,8 @@
+Sat Feb  5 17:48:41 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* libgimp/libgimp-decl.txt
+	* libgimp/tmpl/gimpexport.sgml: documented gimpexport
+
 Sat Feb  5 16:22:21 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* README: more help

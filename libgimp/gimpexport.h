@@ -41,10 +41,10 @@ typedef enum
   EXPORT_EXPORT
 } GimpExportReturnType;
 
-GimpExportReturnType gimp_export_image (gint32*,  /* image_ID             */
-					gint32*,  /* drawable_ID          */
-					gchar*,   /* format name          */
-					gint);    /* plug_in_capabilities */
+GimpExportReturnType gimp_export_image (gint32 *image_ID,
+					gint32 *drawable_ID,
+					gchar  *format_name,
+					gint    capabilities);
 
 #ifdef __cplusplus
 }

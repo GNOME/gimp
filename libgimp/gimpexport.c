@@ -374,11 +374,38 @@ export_dialog (GSList *actions,
   return dialog_return;
 }
 
+/**
+ * gimp_export_image:
+ * @image_ID: Pointer to the image_ID.
+ * @drawable_ID: Pointer to the drawable_ID.
+ * @format_name: A string holding the name of the image_format.
+ * @capabilities: What can the image_format do?
+ *
+ * Takes an image and a drawable to be saved together with an
+ * integer describing the capabilities of the image_format. If
+ * the type of image doesn't match the capabilities of the format
+ * a dialog is opened that informs the user that the image has
+ * to be exported and offers to do the necessary conversions.
+ *
+ * If the user chooses to export the image, a copy is created.
+ * This copy is then converted, the image_ID and drawable_ID
+ * are changed to point to the new image and the procedure returns
+ * EXPORT_EXPORT. The save_plugin has to take care of deleting the
+ * created image using #gimp_image_delete when it has saved it.
+ *
+ * If the user chooses to Ignore the export problem, the image_ID
+ * and drawable_ID is not altered, EXPORT_IGNORE is returned and 
+ * the save_plugin should try to save the original image. If the 
+ * user chooses Cancel, EXPORT_CANCEL is returned and the 
+ * save_plugin should quit itself with status #STATUS_CANCEL.
+ *
+ * Returns: An enum of #GimpExportType describing the user_action.
+ */
 GimpExportReturnType
-gimp_export_image (gint32 *image_ID_ptr,
-		   gint32 *drawable_ID_ptr,
-		   gchar  *format,
-		   gint    cap)  /* cap like capabilities */
+gimp_export_image (gint32 *image_ID,
+		   gint32 *drawable_ID,
+		   gchar  *format_name,
+		   gint    capabilities)
 {
   GSList *actions = NULL;
   GSList *list;
@@ -390,21 +417,21 @@ gimp_export_image (gint32 *image_ID_ptr,
 
   ExportAction *action;
 
-  g_return_val_if_fail (*image_ID_ptr > -1 && *drawable_ID_ptr > -1, FALSE);
+  g_return_val_if_fail (*image_ID > -1 && *drawable_ID > -1, FALSE);
 
   /* do some sanity checks */
-  if (cap & NEEDS_ALPHA)
-    cap |= CAN_HANDLE_ALPHA;
-  if (cap & CAN_HANDLE_LAYERS_AS_ANIMATION)
-    cap |= CAN_HANDLE_LAYERS;
+  if (capabilities & NEEDS_ALPHA)
+    capabilities |= CAN_HANDLE_ALPHA;
+  if (capabilities & CAN_HANDLE_LAYERS_AS_ANIMATION)
+    capabilities |= CAN_HANDLE_LAYERS;
 
   /* check alpha */
-  layers = gimp_image_get_layers (*image_ID_ptr, &nlayers);
+  layers = gimp_image_get_layers (*image_ID, &nlayers);
   for (i = 0; i < nlayers; i++)
     {
       if (gimp_drawable_has_alpha (layers[i]))
 	{
-	  if ( !(cap & CAN_HANDLE_ALPHA) )
+	  if ( !(capabilities & CAN_HANDLE_ALPHA) )
 	    {
 	      actions = g_slist_prepend (actions, &export_action_flatten);
 	      added_flatten = TRUE;
@@ -413,7 +440,7 @@ gimp_export_image (gint32 *image_ID_ptr,
 	}
       else 
 	{
-	  if (cap & NEEDS_ALPHA)
+	  if (capabilities & NEEDS_ALPHA)
 	    {
 	      actions = g_slist_prepend (actions, &export_action_add_alpha);
 	      break;
@@ -425,46 +452,46 @@ gimp_export_image (gint32 *image_ID_ptr,
   /* check multiple layers */
   if (!added_flatten && nlayers > 1)
     {
-      if (cap & CAN_HANDLE_LAYERS_AS_ANIMATION)
+      if (capabilities & CAN_HANDLE_LAYERS_AS_ANIMATION)
 	actions = g_slist_prepend (actions, &export_action_animate_or_merge);
-      else if ( !(cap & CAN_HANDLE_LAYERS))
+      else if ( !(capabilities & CAN_HANDLE_LAYERS))
 	actions = g_slist_prepend (actions, &export_action_merge);
     }
 
   /* check the image type */	  
-  type = gimp_image_base_type (*image_ID_ptr);
+  type = gimp_image_base_type (*image_ID);
   switch (type)
     {
     case GIMP_RGB:
-       if ( !(cap & CAN_HANDLE_RGB) )
+       if ( !(capabilities & CAN_HANDLE_RGB) )
 	{
-	  if ((cap & CAN_HANDLE_INDEXED) && (cap & CAN_HANDLE_GRAY))
+	  if ((capabilities & CAN_HANDLE_INDEXED) && (capabilities & CAN_HANDLE_GRAY))
 	    actions = g_slist_prepend (actions, &export_action_convert_indexed_or_grayscale);
-	  else if (cap & CAN_HANDLE_INDEXED)
+	  else if (capabilities & CAN_HANDLE_INDEXED)
 	    actions = g_slist_prepend (actions, &export_action_convert_indexed);
-	  else if (cap & CAN_HANDLE_GRAY)
+	  else if (capabilities & CAN_HANDLE_GRAY)
 	    actions = g_slist_prepend (actions, &export_action_convert_grayscale);
 	}
       break;
     case GIMP_GRAY:
-      if ( !(cap & CAN_HANDLE_GRAY) )
+      if ( !(capabilities & CAN_HANDLE_GRAY) )
 	{
-	  if ((cap & CAN_HANDLE_RGB) && (cap & CAN_HANDLE_INDEXED))
+	  if ((capabilities & CAN_HANDLE_RGB) && (capabilities & CAN_HANDLE_INDEXED))
 	    actions = g_slist_prepend (actions, &export_action_convert_rgb_or_indexed);
-	  else if (cap & CAN_HANDLE_RGB)
+	  else if (capabilities & CAN_HANDLE_RGB)
 	    actions = g_slist_prepend (actions, &export_action_convert_rgb);
-	  else if (cap & CAN_HANDLE_INDEXED)
+	  else if (capabilities & CAN_HANDLE_INDEXED)
 	    actions = g_slist_prepend (actions, &export_action_convert_indexed);
 	}
       break;
     case GIMP_INDEXED:
-       if ( !(cap & CAN_HANDLE_INDEXED) )
+       if ( !(capabilities & CAN_HANDLE_INDEXED) )
 	{
-	  if ((cap & CAN_HANDLE_RGB) && (cap & CAN_HANDLE_GRAY))
+	  if ((capabilities & CAN_HANDLE_RGB) && (capabilities & CAN_HANDLE_GRAY))
 	    actions = g_slist_prepend (actions, &export_action_convert_rgb_or_grayscale);
-	  else if (cap & CAN_HANDLE_RGB)
+	  else if (capabilities & CAN_HANDLE_RGB)
 	    actions = g_slist_prepend (actions, &export_action_convert_rgb);
-	  else if (cap & CAN_HANDLE_GRAY)
+	  else if (capabilities & CAN_HANDLE_GRAY)
 	    actions = g_slist_prepend (actions, &export_action_convert_grayscale);
 	}
       break;
@@ -473,23 +500,23 @@ gimp_export_image (gint32 *image_ID_ptr,
   if (actions)
     {
       actions = g_slist_reverse (actions);
-      dialog_return = export_dialog (actions, format);
+      dialog_return = export_dialog (actions, format_name);
     }
   else
     dialog_return = EXPORT_IGNORE;
 
   if (dialog_return == EXPORT_EXPORT)
     {
-      *image_ID_ptr = gimp_image_duplicate (*image_ID_ptr);
-      *drawable_ID_ptr = gimp_image_get_active_layer (*image_ID_ptr);
-      gimp_image_undo_disable (*image_ID_ptr);
+      *image_ID = gimp_image_duplicate (*image_ID);
+      *drawable_ID = gimp_image_get_active_layer (*image_ID);
+      gimp_image_undo_disable (*image_ID);
       for (list = actions; list; list = list->next)
 	{
 	  action = (ExportAction*)(list->data);
 	  if (action->choice == 0 && action->default_action)  
-	    action->default_action (*image_ID_ptr, drawable_ID_ptr);
+	    action->default_action (*image_ID, drawable_ID);
 	  else if (action->choice == 1 && action->alt_action)
-	    action->alt_action (*image_ID_ptr, drawable_ID_ptr);
+	    action->alt_action (*image_ID, drawable_ID);
 	}
     }
   g_slist_free (actions);
