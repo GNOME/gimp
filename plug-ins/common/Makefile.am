@@ -61,6 +61,7 @@ libexec_PROGRAMS = \
 	gauss_rle \
 	gbr \
 	gee \
+	gee_zoom \
 	gicon \
 	gif \
 	gifload \
@@ -549,6 +550,15 @@ gee_SOURCES = \
 	gee.c
 
 gee_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
+	$(top_builddir)/libgimp/libgimp.la	\
+	$(GTK_LIBS)				\
+	$(INTLLIBS)
+
+gee_zoom_SOURCES = \
+	gee_zoom.c
+
+gee_zoom_LDADD = \
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\

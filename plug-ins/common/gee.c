@@ -1,26 +1,12 @@
 /*
- * Adam D. Moss : 1998-2000 : adam@gimp.org : adam@foxbox.org
+ * (c) Adam D. Moss : 1998-2000 : adam@gimp.org : adam@foxbox.org
  *
- * This is part of the GIMP package and is released under the GNU
- * Public License.
+ * Enjoy.
  */
 
 /*
- * Version 1.05 : 2000-12-11
+ * Version 1.01 : 2000-12-12
  *
- * 1.05:
- * Sub-pixel jitter is now less severe and less coarse.
- *
- * 1.04:
- * Wigglyness and button-click fun.
- *
- * 1.03:
- * Fix for pseudocolor displays w/gdkrgb.
- *
- * 1.02:
- * Massive speedup if you have a very recent version of GTK 1.1.
- * Removed possible div-by-0 errors, took the plugin out
- * of hiding (guess we need a new easter-egg for GIMP 1.2!)
  */
 #include "config.h"
 
@@ -38,11 +24,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-/* Test for GTK1.2-style gdkrgb code, else use old 'preview' code. */
-#ifdef __GDK_RGB_H__
-#define RAPH_IS_HOME yep
-#endif
-
+/* Is the plug-in hidden?  Hey, if you can read this, you may
+   as well comment-out the next line...! */
+#define HIDDEN
 
 
 /* Declare local functions. */
@@ -53,19 +37,18 @@ static void run   (gchar      *name,
 		   gint       *nreturn_vals,
 		   GimpParam **return_vals);
 
-static void do_playback            (void);
+static void do_fun            (void);
 
 static gint window_delete_callback (GtkWidget *widget,
 				    GdkEvent  *event,
 				    gpointer   data);
 static void window_close_callback  (GtkWidget *widget,
 				    gpointer   data);
-static gint step_callback          (gpointer   data);
+static gint iteration_callback          (gpointer   data);
 static void toggle_feedbacktype    (GtkWidget *widget,
 				    gpointer   data);
 
 static void render_frame           (void);
-static void show_frame             (void);
 static void init_preview_misc      (void);
 
 
@@ -78,28 +61,25 @@ GimpPlugInInfo PLUG_IN_INFO =
 };
 
 
-static const guint  width = 256;
-static const guint height = 256;
-
-
-#define LUTSIZE 512
-#define LUTSIZEMASK ((LUTSIZE)-1)
-static gint wigglelut[LUTSIZE];
-
-#define LOWAMP 2
-#define HIGHAMP 11
-static gint wiggleamp = LOWAMP;
+/* These aren't really redefinable, easily. */
+#define IWIDTH 256
+#define IHEIGHT 256
 
 
 /* Global widgets'n'stuff */
-static guchar     *seed_data;
-static guchar     *preview_data1;
-static guchar     *preview_data2;
-#ifdef RAPH_IS_HOME
+static guchar     *disp;      /* RGBX preview data      */
+static guchar     *environ;   /* src warping image data */
+static guchar     *bump1base;
+static guchar     *bump1;
+static guchar     *bump2base;
+static guchar     *bump2;
+static guchar     *srcbump;
+static guchar     *destbump;
+
+static gint       idle_tag;
+static GtkWidget *eventbox;
 static GtkWidget  *drawing_area;
-#else
-static GtkPreview *preview = NULL;
-#endif
+
 static gint32      image_id;
 static gint32      total_frames;
 static gint32     *layers;
@@ -107,12 +87,6 @@ static GimpDrawable      *drawable;
 static GimpImageBaseType  imagetype;
 static guchar     *palette;
 static gint        ncolours;
-
-static gint       idle_tag;
-static GtkWidget *eventbox;
-static gboolean   feedbacktype = FALSE;
-static gboolean   wiggly = TRUE;
-static gboolean   rgb_mode;
 
 
 MAIN ()
@@ -128,13 +102,17 @@ query (void)
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  gimp_install_procedure("plug_in_the_egg",
+  gimp_install_procedure("plug_in_the_slimy_egg",
 			 "A big hello from the GIMP team!",
-			 "FIXME: write help",
+			 "Beyond help.",
 			 "Adam D. Moss <adam@gimp.org>",
 			 "Adam D. Moss <adam@gimp.org>",
-			 "1998",
+			 "2000",
+#ifdef HIDDEN
 			 NULL,
+#else
+			 "<Image>/Filters/Toys/Gee-Slime",
+#endif
 			 "RGB*, INDEXED*, GRAY*",
 			 GIMP_PLUGIN,
 			 nargs, 0,
@@ -155,27 +133,22 @@ run (gchar      *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  SRAND_FUNC (time(0));
-
   run_mode = param[0].data.d_int32;
 
   INIT_I18N_UI();
 
-  /*  if (run_mode == GIMP_RUN_NONINTERACTIVE) {*/
-    if (n_params != 3)
-      {
-	status = GIMP_PDB_CALLING_ERROR;
-      }
-    /*  }*/
-
+  if (run_mode == GIMP_RUN_NONINTERACTIVE ||
+      n_params != 3)
+    {
+      status = GIMP_PDB_CALLING_ERROR;
+    }
+  
   if (status == GIMP_PDB_SUCCESS)
     {
       drawable = gimp_drawable_get (param[2].data.d_drawable);
       image_id = param[1].data.d_image;
 
-      do_playback();
-      /*    if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_displays_flush();*/
+      do_fun();
     }
 
   values[0].type = GIMP_PDB_STATUS;
@@ -194,18 +167,20 @@ build_dialog (GimpImageBaseType  basetype,
   GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *hbox2;
+  GtkTooltips *tooltips;
 
   gimp_ui_init ("gee", TRUE);
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), _("GEE!  The GIMP E'er Egg!"));
+  gtk_window_set_title (GTK_WINDOW (dlg),
+			_("GEE-SLIME"));
 
   gtk_window_set_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "delete_event",
 		      (GtkSignalFunc) window_delete_callback,
 		      NULL);
 
-  gimp_help_connect_help_accel (dlg, gimp_standard_help_func, "filters/gee.html");
+  gimp_help_connect_help_accel (dlg, gimp_standard_help_func, "filters/geeslime.html");
 
   /* Action area - 'close' button only. */
 
@@ -219,7 +194,13 @@ build_dialog (GimpImageBaseType  basetype,
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  /* The 'playback' half of the dialog */
+  tooltips = gtk_tooltips_new();
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), button,
+		       _("A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / 1998-2000"),
+		       NULL);
+  gtk_tooltips_enable (tooltips);
+
+  /* The 'fun' half of the dialog */
     
   frame = gtk_frame_new (NULL);
 
@@ -246,19 +227,10 @@ build_dialog (GimpImageBaseType  basetype,
   eventbox = gtk_event_box_new();
   gtk_container_add (GTK_CONTAINER (frame2), GTK_WIDGET (eventbox));
 
-#ifdef RAPH_IS_HOME
   drawing_area = gtk_drawing_area_new ();
-  gtk_widget_set_usize (drawing_area, width, height);
+  gtk_widget_set_usize (drawing_area, IWIDTH, IHEIGHT);
   gtk_container_add (GTK_CONTAINER (eventbox), drawing_area);
   gtk_widget_show (drawing_area);
-#else
-  preview = GTK_PREVIEW (gtk_preview_new (rgb_mode ?
-					  GTK_PREVIEW_COLOR :
-					  GTK_PREVIEW_GRAYSCALE));
-  gtk_preview_size (preview, width, height);
-  gtk_container_add (GTK_CONTAINER (eventbox), GTK_WIDGET (preview));
-  gtk_widget_show (GTK_WIDGET (preview));
-#endif /* RAPH_IS_HOME */
 
   gtk_widget_show (eventbox);
   gtk_widget_set_events (eventbox,
@@ -278,7 +250,7 @@ build_dialog (GimpImageBaseType  basetype,
   gtk_widget_show (dlg);
 	    
   idle_tag = gtk_idle_add_priority (GTK_PRIORITY_LOW,
-				    (GtkFunction) step_callback,
+				    (GtkFunction) iteration_callback,
 				    NULL);
   
   gtk_signal_connect (GTK_OBJECT (eventbox), "button_release_event",
@@ -287,28 +259,51 @@ build_dialog (GimpImageBaseType  basetype,
 }
 
 
-static void 
-init_lut (void)
+/* #define LIGHT 0x19
+#define LIGHT 0x1a
+#define LIGHT 0x21 */
+#define LIGHT 0x0d
+static guchar llut[256];
+static void
+gen_llut(void)
 {
-  gint i;
+  int i,k;
 
-  for (i=0; i<LUTSIZE; i++)
+  for (i=0; i<256; i++)
     {
-      wigglelut[i] = RINT((double)(wiggleamp<<11))*(sin((double)(i) /
-					    ((double)LUTSIZEMASK /
-					     10 * G_PI)));
+      /* k = i + RINT (((double)LIGHT) * pow(((double)i / 255.0), 0.5)); 
+	 k = i + ((LIGHT*i)/255); */
+      k = i + ((LIGHT*( /* (255*255)- */ i*i))/(255*255));
+#if 0
+      k = i + ((LIGHT*( /* (255*255*255)- */ i*i*i))/(255*255*255));
+#endif
+      k = k + 8;
+      k = (k>255 ? 255 : k);
+      llut[i] = k;
     }
 }
 
 
 static void 
-do_playback (void)
+do_fun (void)
 {
   layers    = gimp_image_get_layers (image_id, &total_frames);
   imagetype = gimp_image_base_type(image_id);
 
   if (imagetype == GIMP_INDEXED)
     palette = gimp_image_get_cmap(image_id, &ncolours);
+  else
+    if (imagetype == GIMP_GRAY)
+      {
+	int i;
+	palette = g_malloc(256 * 3);
+	for (i=0; i<256; i++)
+	  {
+	    palette[i*3+0] =
+	      palette[i*3+1] =
+	      palette[i*3+2] = i;
+	  }
+      }
 
   /* cache hint */
   gimp_tile_cache_ntiles (1);
@@ -317,112 +312,103 @@ do_playback (void)
   build_dialog(gimp_image_base_type(image_id),
                gimp_image_get_filename(image_id));
 
-  init_lut();
-  
+  gen_llut();
+
   render_frame();
-  show_frame();
 
   gtk_main ();
   gdk_flush ();
 }
 
 
+static void
+show(void)
+{
+  gdk_draw_rgb_32_image (drawing_area->window,
+			 drawing_area->style->white_gc,
+			 0, 0, IWIDTH, IHEIGHT,
+			 GDK_RGB_DITHER_NORMAL,
+			 (guchar*)disp, IWIDTH * 4);
+}
+
+
 /* Rendering Functions */
 
-/* Adam's silly algorithm. */
-static void 
-domap1 (unsigned char *src, unsigned char *dest,
-	int bx, int by, int cx, int cy)
+
+static void
+bumpbob(int x, int y, int size)
 {
-  unsigned int dy;
-  signed int bycxmcybx;
-  signed int bx2,by2;
-  signed int cx2,cy2;
-  unsigned int basesx;
-  unsigned int basesy;
+  int o;
 
-  static unsigned int grrr=0;
-
-  grrr++;
-
-  if ((cx+bx) == 0)
-    cx++;
-
-  if ((cy+by) == 0)
-    by++;
-
-  bycxmcybx = (by*cx-cy*bx);
-
-  if (bycxmcybx == 0)
-    bycxmcybx = 1;
-
-  /* A little sub-pixel jitter to liven things up. */
-  basesx = (((RAND_FUNC ()%(29<<19))/bycxmcybx)) + ((-128-((128*256)/(cx+bx)))<<11);
-  basesy = (((RAND_FUNC ()%(29<<19))/bycxmcybx)) + ((-128-((128*256)/(cy+by)))<<11);
-
-  bx2 = ((bx)<<19)/bycxmcybx;
-  cx2 = ((cx)<<19)/bycxmcybx;
-  by2 = ((by)<<19)/bycxmcybx;
-  cy2 = ((cy)<<19)/bycxmcybx;
-
-  for (dy=0;dy<256;dy++)
+  /*  for (o=0; o<size; o++)
     {
-      unsigned int sx;
-      unsigned int sy;
-      unsigned int dx;
-
-      sy = (basesy+=cx2);
-      sx = (basesx-=bx2);
-
-      if (wiggly)
+      bump[x+(size/2)+(y+o)*IWIDTH] = 255;
+    }
+  memset(&bump[x+(y+(size/2))*IWIDTH], 255, size);
+  */
+  
+  for (o=0; o<size; o++)
+    {
+      int p;
+      for (p=0; p<size; p++)
 	{
-	  sx += wigglelut[(((basesy)>>11)+grrr) & LUTSIZEMASK];
-	  sy += wigglelut[(((basesx)>>11)+(grrr/3)) & LUTSIZEMASK];
+	  int k;
+#define BOB_INC 45
+	  k = destbump[p+x+(y+o)*IWIDTH] + BOB_INC;
+	  if (k&256)
+	    destbump[p+x+(y+o)*IWIDTH] = 255;
+	  else
+	    destbump[p+x+(y+o)*IWIDTH] = k;
 	}
-
-      dx = 256;
-      do
-	{
-	  *dest++ = (*(src +
-		   (
-		    (
-		     ((255&(
-			    (sx>>11)
-			    )))
-		     |
-		     ((((255&(
-			      (sy>>11)
-			      ))<<8)))
-		     )
-		    )));
-	  ;
-	  sx += by2;
-	  sy -= cy2;
-	}
-      while (--dx);
+      /* memset(&destbump[x+(y+o)*IWIDTH], 131, size); */
     }
 }
 
-/* 3bypp variant */
+
+/* Adam's sillier algorithm. */
 static void 
-domap3(unsigned char *src, unsigned char *dest,
-       int bx, int by, int cx, int cy)
+iterate (void)
 {
-  unsigned int dy;
-  signed int bycxmcybx;
-  signed int bx2,by2;
-  signed int cx2,cy2;
+  static guint frame = 0;
+  gint i,j;
+  gint thisbump;
+  guchar sx,sy;
+  guint32 *dest;
+  guint32 *env;
+  guchar *basebump;
   unsigned int basesx;
   unsigned int basesy;
+  /*  signed int bycxmcybx;
+  signed int bx2,by2;
+  signed int cx2,cy2;
+  const gint bx = -(123-128);
+  const gint by = (128+123);
+  const gint cx = by;
+  const gint cy = -bx;*/
+#define bx (-(123-128))
+#define by (128+123)
+#define cx (by)
+#define cy (-bx)
+#define bycxmcybx (by*cx-cy*bx)
+#define bx2 (((bx)<<19)/bycxmcybx)
+#define by2 (((by)<<19)/bycxmcybx)
+#define cx2 (((cx)<<19)/bycxmcybx)
+#define cy2 (((cy)<<19)/bycxmcybx)
 
-  static unsigned int grrr=0;
+  frame++;
 
-  grrr++;
+  env = (guint32*) environ;
+  dest = (guint32*) disp;
+  srcbump = (frame&1) ? bump1 : bump2;
+  destbump = (frame&1) ? bump2 : bump1;
 
-  if ((cx+bx) == 0)
+  /* WARP DISTORTION MAP (plughole-effect) */
+
+  /* this setup obsolete, tranformation is constant */
+  /*if ((cx+bx) == 0)
     cx++;
-
-  if ((cy+by) == 0)
+    
+    if ((cy+by) == 0)
     by++;
 
   bycxmcybx = (by*cx-cy*bx);
@@ -430,240 +416,207 @@ domap3(unsigned char *src, unsigned char *dest,
   if (bycxmcybx == 0)
     bycxmcybx = 1;
 
-  /* A little sub-pixel jitter to liven things up. */
-  basesx = (((RAND_FUNC ()%89)<<19)/bycxmcybx) + ((-128-((128*256)/(cx+bx)))<<11);
-  basesy = (((RAND_FUNC ()%89)<<19)/bycxmcybx) + ((-128-((128*256)/(cy+by)))<<11);
-
   bx2 = ((bx)<<19)/bycxmcybx;
   cx2 = ((cx)<<19)/bycxmcybx;
   by2 = ((by)<<19)/bycxmcybx;
   cy2 = ((cy)<<19)/bycxmcybx;
+  */
 
-  for (dy=0;dy<256;dy++)
+  /* A little sub-pixel jitter to liven things up. */
+  basesx = (((RAND_FUNC()%(29<<19)))/bycxmcybx) + ((-128-((128*256)/(cx+bx)))<<11);
+  basesy = (((RAND_FUNC()%(29<<19)))/bycxmcybx) + ((-128-((128*256)/(cy+by)))<<11);
+  
+  basebump = srcbump;
+
+  
+#if 0
+  /* identity only */
+  j = IHEIGHT;
+  while (j--)
     {
-      unsigned int sx;
-      unsigned int sy;
-      unsigned int dx; 
-      
-      sy = (basesy+=cx2);
-      sx = (basesx-=bx2);
-
-      if (wiggly)
+      i = IWIDTH;
+      while (i--)
 	{
-	  sx += wigglelut[(((basesy)>>11)+grrr) & LUTSIZEMASK];
-	  sy += wigglelut[(((basesx)>>11)+(grrr/3)) & LUTSIZEMASK];
+	  *dest++ = *env++;
 	}
-      
-      dx = 256;
-      
-      do
-	{
-	  unsigned char* addr;
-	  
-	  addr = src + 3*
-	    (
-	     (
-	      ((255&(
-		     (sx>>11)
-		     )))
-	      |
-	      ((((255&(
-		       (sy>>11)
-		       ))<<8)))
-	      )
-	     );
-	  
-	  *dest++ = *(addr);
-	  *dest++ = *(addr+1);
-	  *dest++ = *(addr+2);
-	  
-	  sx += by2;
-	  sy -= cy2;
-	}
-      while (--dx);
     }
+  return;
+#endif
+
+
+  /* MELT DISTORTION MAP, APPLY IT */
+  j = IHEIGHT;
+  while (j--)
+    {
+      unsigned int tx;
+      unsigned int ty;
+      
+      ty = (basesy+=cx2);
+      tx = (basesx-=bx2);
+
+      i = IWIDTH;
+      while (i--)
+	{
+	  unsigned char *bptr =
+	    (srcbump + (
+			(
+			 ((255&(
+				(tx>>11)
+				)))
+			 |
+			 ((((255&(
+				  (ty>>11)
+				  ))<<8)))
+			 )
+			));
+
+	  thisbump = (11 * *(basebump) + (
+					  *(bptr-IWIDTH) +
+					  *(bptr-1) +
+					  *(bptr) +
+					  *(bptr+1) +
+					  *(bptr+IWIDTH)
+					  )
+		      );
+	  basebump++;
+	  
+	  tx += by2;
+	  ty -= cy2;
+
+	  /* TODO: Can accelerate search for non-zero bumps with
+	     casting an aligned long-word search. */
+	  if (thisbump == 0)
+	    {
+	      *(dest++) = *( env + (i | (j<<8) ) );
+	      /* *(dest++) = 111; */
+	      *(destbump++) = 0;
+	    }
+	  else
+	    {
+	      if (thisbump <= (131<<4) )
+		{
+		  thisbump >>= 4;
+		  *destbump = thisbump;
+		}
+	      else
+		*destbump = thisbump = 131;
+
+	      /* sy = j + ( ((thisbump) - *(destbump+IWIDTH))<<1);
+		 sx = i + ( ((thisbump) - *(++destbump))<<1);  + blah; */
+	      sy = j + ( ((thisbump) - *(destbump+IWIDTH)));
+	      sx = i + ( ((thisbump) - *(++destbump)));
+	      *dest++ = *( env + (sx | (sy<<8) ) );
+	      /* sx = ( ((thisbump) - *(destbump+IWIDTH)));
+		 sy = ( ((thisbump) - *(++destbump)));
+		 *dest++ = (sx) | (sy<<8) | (sx<<16); */
+	    }
+	}
+    }
+
+
+  srcbump = (frame&1) ? bump1 : bump2;
+  destbump = (frame&1) ? bump2 : bump1;
+  dest = (guint32 *) disp;
+  memset(destbump, 0, IWIDTH);
+
+#if 1
+  /*  CAUSTICS!  */
+  /* The idea here is that we refract IWIDTH*IHEIGHT parallel rays
+     through the surface of the slime and illuminate the points
+     where they hit the backing-image.  There are some unrealistic
+     shortcuts taken, but the result is quite pleasing.
+  */
+  j = IHEIGHT;
+  while (j--)
+    {
+      i = IWIDTH;
+      while (i--)
+	{
+	  /* Apply caustics */
+	  sx = *(destbump++);
+	  if (sx!=0)
+	    {
+	      guchar* cptr;
+
+	      sy = j + ( ((sx) - *(destbump+IWIDTH-1)));
+	      sx = i + ( ((sx) - *(destbump)));
+
+	      /* cptr = (guchar*)((guint32*)(( dest+ (0xffff^(sx | (sy<<8) )) ))); */
+	      cptr = (guchar*)( dest + (0xffff^(sx | (sy<<8) )) );
+
+	      *cptr = llut[*cptr]; cptr++;
+	      *cptr = llut[*cptr]; cptr++;
+	      *cptr = llut[*cptr];
+	      /* this second point of light's offset (1 across, 1 down)
+		 isn't really 'right' but it gives a more pleasing,
+		 diffuse look. */
+	      cptr+= 2 + IWIDTH*4;
+
+	      *cptr = llut[*cptr]; cptr++;
+	      *cptr = llut[*cptr]; cptr++;
+	      *cptr = llut[*cptr];
+	    }
+	}
+    }
+#endif
+
+
+    /* Interactive bumpmap */
+#define BOBSIZE 6
+#define BOBSPREAD 40
+#define BOBS_PER_FRAME 70
+  destbump = (frame&1) ? bump2 : bump1;
+  {
+    gint rxp, ryp, posx, posy;
+    GdkModifierType mask; 
+    gint size, i;
+
+    gdk_window_get_pointer (eventbox->window, &rxp, &ryp, &mask);
+
+    for (i = 0; i < BOBS_PER_FRAME; i++)
+      {
+	size = 1 + RAND_FUNC()%BOBSIZE;
+
+	posx = rxp + BOBSPREAD/2 -
+	  RINT(sqrt((RAND_FUNC()%BOBSPREAD)*(RAND_FUNC()%BOBSPREAD)));
+	posy = ryp + BOBSPREAD/2 -
+	  RINT(sqrt((RAND_FUNC()%BOBSPREAD)*(RAND_FUNC()%BOBSPREAD)));
+
+	if (! ((posx>IWIDTH-size) ||
+	       (posy>IHEIGHT-size) ||
+	       (posx<1) ||
+	       (posy<1) ))
+	  bumpbob(posx, posy, size);
+      }
+  }
 }
 
 
 static void
 render_frame (void)
 {
-  int i;
   static int frame = 0;
-  unsigned char* tmp;
-  static gint xp=128, yp=128;
-  gint rxp, ryp;
-  GdkModifierType mask;
-  gint pixels;
 
-  pixels = width*height*(rgb_mode?3:1);
-
-#ifdef RAPH_IS_HOME
-#else
-  gdk_flush();
-#endif
-
-  tmp = preview_data2;
-  preview_data2 = preview_data1;
-  preview_data1 = tmp;
-
+#if 0
   if (frame==0)
     {
-      for (i=0;i<pixels;i++)
+      gint i, bytes;
+      
+      bytes = IWIDTH*IHEIGHT*4;
+      
+      for (i=0;i<bytes;i++)
 	{
-	  preview_data2[i] =
-	    preview_data1[i] =
-	    seed_data[i];
+	  disp[i] =
+	    environ[i];
 	}
     }
-
-  gdk_window_get_pointer (eventbox->window, &rxp, &ryp, &mask);
-
-  if ((abs(rxp)>60)||(abs(ryp)>60))
-    {
-      xp = rxp;
-      yp = ryp;
-    }
-
-  if (rgb_mode)
-    {
-      domap3(preview_data2, preview_data1,
-	     -(yp-xp)/2, xp+yp
-	     ,
-	     xp+yp, (yp-xp)/2
-	     );
-
-#ifdef RAPH_IS_HOME
-      gdk_draw_rgb_image (drawing_area->window,
-			  drawing_area->style->white_gc,
-			  0, 0, width, height,
-			  GDK_RGB_DITHER_NORMAL,
-			  preview_data1, width * 3);
-#else
-      for (i=0;i<height;i++)
-	{
-	  gtk_preview_draw_row (preview,
-				&preview_data1[i*width*3],
-				0, i, width);
-	}
 #endif
 
-      /*      memcpy(preview_data1, seed_data, 256*256*3); */
+  iterate();
 
-      if (frame != 0)
-	{
-	  if (feedbacktype)
-	    {
-	      for (i=0;i<pixels;i++)
-		{
-		  gint t;
-		  t = preview_data1[i] + seed_data[i] - 128;
-		  preview_data1[i] = /*CLAMP(t,0,255);*/
-		    (t&256)? (~(t>>10)) : t; /* Quick specialized clamp */
-		}
-	    }
-	  else/* if (0) */
-	    {
-	      gint pixwords = pixels/sizeof(gint32);
-	      gint32* seedwords = (gint32*) seed_data;
-	      gint32* prevwords = (gint32*) preview_data1;
-
-	      for (i=0;i<pixwords;i++)
-		{
-		  /*preview_data1[i] = (preview_data1[i]*2 +
-		    seed_data[i]) /3;*/
-
-		  /* mod'd version of the below for a 'deeper' mix */
-		  prevwords[i] =
-		    ((prevwords[i] >> 1) & 0x7f7f7f7f) +
-		    ((prevwords[i] >> 2) & 0x3f3f3f3f) +
-		    ((seedwords[i] >> 2) & 0x3f3f3f3f);
-		  /* This is from Raph L... it should be a fast 50%/50%
-		     blend, though I don't know if 50%/50% is as nice as
-		     the old ratio. */
-		  /*
-		    prevwords[i] =
-		    ((prevwords[i] >> 1) & 0x7f7f7f7f) +
-		    ((seedwords[i] >> 1) & 0x7f7f7f7f) +
-		    (prevwords[i] & seedwords[i] & 0x01010101); */
-		}
-	    }	
-	}
-    }
-  else /* GRAYSCALE */
-    {
-      domap1(preview_data2, preview_data1,
-	     -(yp-xp)/2, xp+yp
-	     ,
-	     xp+yp, (yp-xp)/2
-	     );
-
-#ifdef RAPH_IS_HOME
-      gdk_draw_gray_image (drawing_area->window,
-			   drawing_area->style->white_gc,
-			   0, 0, width, height,
-			   GDK_RGB_DITHER_NORMAL,
-			   preview_data1, width);
-#else
-      for (i=0;i<height;i++)
-	{
-	  gtk_preview_draw_row (preview,
-				&preview_data1[i*width],
-				0, i, width);
-	}
-#endif
-
-      if (frame != 0)
-	{
-	  if (feedbacktype)
-	    {
-	      for (i=0;i<pixels;i++)
-		{
-		  int t;
-		  t = preview_data1[i] + seed_data[i] - 128;
-		  preview_data1[i] = /*CLAMP(t,0,255);*/
-		    (t&256)? (~(t>>10)) : t; /* Quick specialized clamp */
-		}
-	    }
-	  else
-	    {
-	      gint pixwords = pixels/sizeof(gint32);
-	      gint32* seedwords = (gint32*) seed_data;
-	      gint32* prevwords = (gint32*) preview_data1;
-
-	      for (i=0;i<pixwords;i++)
-		{
-
-		  /* mod'd version of the below for a 'deeper' mix */
-		  prevwords[i] =
-		    ((prevwords[i] >> 1) & 0x7f7f7f7f) +
-		    ((prevwords[i] >> 2) & 0x3f3f3f3f) +
-		    ((seedwords[i] >> 2) & 0x3f3f3f3f);
-		  /* This is from Raph L... it should be a fast 50%/50%
-		     blend, though I don't know if 50%/50% is as nice as
-		     the old ratio. */
-		  /*
-		    prevwords[i] =
-		    ((prevwords[i] >> 1) & 0x7f7f7f7f) +
-		    ((seedwords[i] >> 1) & 0x7f7f7f7f) +
-		    (prevwords[i] & seedwords[i] & 0x01010101); */
-		}
-	    }	
-	}
-    }
-
+  show();
+  
   frame++;
-}
-
-
-static void
-show_frame (void)
-{
-#ifdef RAPH_IS_HOME
-#else
-  /* Tell GTK to physically draw the preview */
-  gtk_widget_draw (GTK_WIDGET (preview), NULL);
-#endif /* RAPH_IS_HOME */
 }
 
 
@@ -674,16 +627,15 @@ init_preview_misc (void)
   gint i;
   gboolean has_alpha;
 
-  if ((imagetype == GIMP_RGB) || (imagetype == GIMP_INDEXED))
-    rgb_mode = TRUE;
-  else
-    rgb_mode = FALSE;
-
   has_alpha = gimp_drawable_has_alpha(drawable->id);
 
-  seed_data = g_malloc(width*height*4);
-  preview_data1 = g_malloc(width*height*(rgb_mode?3:1));
-  preview_data2 = g_malloc(width*height*(rgb_mode?3:1));
+  environ = g_malloc (4 * IWIDTH * IHEIGHT * 2);
+  disp = g_malloc ((IWIDTH + 2 + IWIDTH * IHEIGHT) * 4);
+  bump1base = g_malloc (IWIDTH * IHEIGHT + IWIDTH+IWIDTH);
+  bump2base = g_malloc (IWIDTH * IHEIGHT + IWIDTH+IWIDTH);
+
+  bump1 = &bump1base[IWIDTH];
+  bump2 = &bump2base[IWIDTH];
 
   if ((drawable->width<256) || (drawable->height<256))
     {
@@ -702,7 +654,7 @@ init_preview_misc (void)
 				   FALSE,
 				   FALSE);
 	      gimp_pixel_rgn_get_rect (&pixel_rgn,
-				       &seed_data[(256*i +
+				       &environ[(256*i +
 						 (
 						  (
 						   drawable->width<256 ?
@@ -739,7 +691,7 @@ init_preview_misc (void)
 			   FALSE,
 			   FALSE);
       gimp_pixel_rgn_get_rect (&pixel_rgn,
-			       seed_data,
+			       environ,
 			       drawable->width>256?(drawable->width/2-128):0,
 			       drawable->height>256?(drawable->height/2-128):0,
 			       MIN(256,drawable->width),
@@ -752,41 +704,30 @@ init_preview_misc (void)
   /* convert the image data of varying types into flat grey or rgb. */
   switch (imagetype)
     {
+    case GIMP_GRAY:
     case GIMP_INDEXED:
       if (has_alpha)
 	{
-	  for (i=width*height;i>0;i--)
+	  for (i=IWIDTH*IHEIGHT;i>0;i--)
 	    {
-	      seed_data[3*(i-1)+2] =
-		((palette[3*(seed_data[(i-1)*2])+2]*seed_data[(i-1)*2+1])/255)
-		+ ((255-seed_data[(i-1)*2+1])*(RAND_FUNC ()%256))/255;
-	      seed_data[3*(i-1)+1] =
-		((palette[3*(seed_data[(i-1)*2])+1]*seed_data[(i-1)*2+1])/255)
-		+ ((255-seed_data[(i-1)*2+1])*(RAND_FUNC ()%256))/255;
-	      seed_data[3*(i-1)+0] =
-		((palette[3*(seed_data[(i-1)*2])+0]*seed_data[(i-1)*2+1])/255)
-		+ ((255-seed_data[(i-1)*2+1])*(RAND_FUNC ()%256))/255;
+	      environ[4*(i-1)+2] =
+		((palette[3*(environ[(i-1)*2])+2]*environ[(i-1)*2+1])/255)
+		+ ((255-environ[(i-1)*2+1])*((i&255) ^ (i>>8)))/255;
+	      environ[4*(i-1)+1] =
+		((palette[3*(environ[(i-1)*2])+1]*environ[(i-1)*2+1])/255)
+		+ ((255-environ[(i-1)*2+1])*((i&255) ^ (i>>8)))/255;
+	      environ[4*(i-1)+0] =
+		((palette[3*(environ[(i-1)*2])+0]*environ[(i-1)*2+1])/255)
+		+ ((255-environ[(i-1)*2+1])*((i&255) ^ (i>>8)))/255;
 	    }
 	}
       else
 	{
-	  for (i=width*height;i>0;i--)
+	  for (i=IWIDTH*IHEIGHT;i>0;i--)
 	    {
-	      seed_data[3*(i-1)+2] = palette[3*(seed_data[i-1])+2];
-	      seed_data[3*(i-1)+1] = palette[3*(seed_data[i-1])+1];
-	      seed_data[3*(i-1)+0] = palette[3*(seed_data[i-1])+0];
-	    }
-	}
-      break;
-
-    case GIMP_GRAY:
-      if (has_alpha)
-	{
-	  for (i=0;i<width*height;i++)
-	    {
-	      seed_data[i] =
-		(seed_data[i*2]*seed_data[i*2+1])/255
-		+ ((255-seed_data[i*2+1])*(RAND_FUNC ()%256))/255;
+	      environ[4*(i-1)+2] = palette[3*(environ[i-1])+2];
+	      environ[4*(i-1)+1] = palette[3*(environ[i-1])+1];
+	      environ[4*(i-1)+0] = palette[3*(environ[i-1])+0];
 	    }
 	}
       break;
@@ -794,23 +735,47 @@ init_preview_misc (void)
     case GIMP_RGB:
       if (has_alpha)
 	{
-	  for (i=0;i<width*height;i++)
+	  for (i=0;i<IWIDTH*IHEIGHT;i++)
 	    {
-	      seed_data[i*3+2] =
-		(seed_data[i*4+2]*seed_data[i*4+3])/255
-		+ ((255-seed_data[i*4+3])*(RAND_FUNC ()%256))/255;
-	      seed_data[i*3+1] =
-		(seed_data[i*4+1]*seed_data[i*4+3])/255
-		+ ((255-seed_data[i*4+3])*(RAND_FUNC ()%256))/255;
-	      seed_data[i*3+0] =
-		(seed_data[i*4+0]*seed_data[i*4+3])/255
-		+ ((255-seed_data[i*4+3])*(RAND_FUNC ()%256))/255;
+	      environ[i*4+2] =
+		(environ[i*4+2]*environ[i*4+3])/255
+		+ ((255-environ[i*4+3])*((i&255) ^ (i>>8)))/255;
+	      environ[i*4+1] =
+		(environ[i*4+1]*environ[i*4+3])/255
+		+ ((255-environ[i*4+3])*((i&255) ^ (i>>8)))/255;
+	      environ[i*4+0] =
+		(environ[i*4+0]*environ[i*4+3])/255
+		+ ((255-environ[i*4+3])*((i&255) ^ (i>>8)))/255;
+	    }
+	}
+      else
+	{
+	  for (i=IWIDTH*IHEIGHT;i>0;i--)
+	    {
+	      environ[4*(i-1)+2] = environ[(i-1)*3+2];
+	      environ[4*(i-1)+1] = environ[(i-1)*3+1];
+	      environ[4*(i-1)+0] = environ[(i-1)*3+0];
 	    }
 	}
       break;
 
     default:
       break;
+    }
+
+  /* Finally, 180-degree flip the environmental image! */
+  for (i = 0; i < IWIDTH*IHEIGHT/2; i++)
+    {
+      guchar t;
+      t = environ[4*(i)+0];
+      environ[4*(i)+0] = environ[4*(IWIDTH*IHEIGHT-(i+1))+0];
+      environ[4*(IWIDTH*IHEIGHT-(i+1))+0] = t;
+      t = environ[4*(i)+1];
+      environ[4*(i)+1] = environ[4*(IWIDTH*IHEIGHT-(i+1))+1];
+      environ[4*(IWIDTH*IHEIGHT-(i+1))+1] = t;
+      t = environ[4*(i)+2];
+      environ[4*(i)+2] = environ[4*(IWIDTH*IHEIGHT-(i+1))+2];
+      environ[4*(IWIDTH*IHEIGHT-(i+1))+2] = t;
     }
 }
 
@@ -819,9 +784,10 @@ init_preview_misc (void)
 /* Util. */
 
 static int
-do_step (void)
+do_iteration (void)
 {
   render_frame ();
+  show ();
 
   return 1;
 }
@@ -857,42 +823,14 @@ static void
 toggle_feedbacktype (GtkWidget *widget,
 		     gpointer   event)
 {
-  GdkEventButton *bevent = (GdkEventButton *) event;
 
-  if (bevent->state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK))
-    {
-      wiggleamp = bevent->x/5;
-      
-      wiggly = TRUE;
-      init_lut();
-
-      return;
-    }
-
-  if (bevent->state & GDK_BUTTON1_MASK)
-    feedbacktype = !feedbacktype;
-
-  if (bevent->state & GDK_BUTTON2_MASK)
-    wiggly = !wiggly;
-
-  if (bevent->state & GDK_BUTTON3_MASK)
-    {
-      if (wiggleamp == LOWAMP)
-	wiggleamp = HIGHAMP;
-      else
-	wiggleamp = LOWAMP;
-
-      wiggly = TRUE;
-      init_lut();
-    }
 }
 
 
 static gint
-step_callback (gpointer   data)
+iteration_callback (gpointer   data)
 {
-  do_step();
-  show_frame();
+  do_iteration();
 
   return TRUE;
 }
