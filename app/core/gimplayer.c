@@ -682,7 +682,6 @@ gimp_layer_create_mask (const GimpLayer *layer,
       break;
 
     case GIMP_ADD_SELECTION_MASK:
-    case GIMP_ADD_INVERSE_SELECTION_MASK:
       {
         GimpChannel *selection;
 
@@ -702,7 +701,6 @@ gimp_layer_create_mask (const GimpLayer *layer,
       break;
 
     case GIMP_ADD_COPY_MASK:
-    case GIMP_ADD_INVERSE_COPY_MASK:
       {
         TileManager   *copy_tiles = NULL;
         GimpImageType  layer_type;
@@ -755,20 +753,6 @@ gimp_layer_create_mask (const GimpLayer *layer,
       }
 
       GIMP_CHANNEL (mask)->bounds_known = FALSE;
-    }
-
-  switch (add_mask_type)
-    {
-    case GIMP_ADD_WHITE_MASK:
-    case GIMP_ADD_BLACK_MASK:
-    case GIMP_ADD_ALPHA_MASK:
-    case GIMP_ADD_SELECTION_MASK:
-    case GIMP_ADD_COPY_MASK:
-      break;
-
-    case GIMP_ADD_INVERSE_SELECTION_MASK:
-    case GIMP_ADD_INVERSE_COPY_MASK:
-      gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);
       break;
     }
 

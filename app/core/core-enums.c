@@ -8,21 +8,23 @@
 
 /* enumerations from "./core-enums.h" */
 
-static const GEnumValue gimp_orientation_type_enum_values[] =
+static const GEnumValue gimp_add_mask_type_enum_values[] =
 {
-  { GIMP_ORIENTATION_HORIZONTAL, N_("Horizontal"), "horizontal" },
-  { GIMP_ORIENTATION_VERTICAL, N_("Vertical"), "vertical" },
-  { GIMP_ORIENTATION_UNKNOWN, N_("Unknown"), "unknown" },
+  { GIMP_ADD_WHITE_MASK, N_("_White (Full Opacity)"), "white-mask" },
+  { GIMP_ADD_BLACK_MASK, N_("_Black (Full Transparency)"), "black-mask" },
+  { GIMP_ADD_ALPHA_MASK, N_("Layer's _Alpha Channel"), "alpha-mask" },
+  { GIMP_ADD_SELECTION_MASK, N_("_Selection"), "selection-mask" },
+  { GIMP_ADD_COPY_MASK, N_("_Grayscale Copy of Layer"), "copy-mask" },
   { 0, NULL, NULL }
 };
 
 GType
-gimp_orientation_type_get_type (void)
+gimp_add_mask_type_get_type (void)
 {
   static GType enum_type = 0;
 
   if (!enum_type)
-    enum_type = g_enum_register_static ("GimpOrientationType", gimp_orientation_type_enum_values);
+    enum_type = g_enum_register_static ("GimpAddMaskType", gimp_add_mask_type_enum_values);
 
   return enum_type;
 }
@@ -249,6 +251,26 @@ gimp_image_type_get_type (void)
 
   if (!enum_type)
     enum_type = g_enum_register_static ("GimpImageType", gimp_image_type_enum_values);
+
+  return enum_type;
+}
+
+
+static const GEnumValue gimp_orientation_type_enum_values[] =
+{
+  { GIMP_ORIENTATION_HORIZONTAL, N_("Horizontal"), "horizontal" },
+  { GIMP_ORIENTATION_VERTICAL, N_("Vertical"), "vertical" },
+  { GIMP_ORIENTATION_UNKNOWN, N_("Unknown"), "unknown" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_orientation_type_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpOrientationType", gimp_orientation_type_enum_values);
 
   return enum_type;
 }

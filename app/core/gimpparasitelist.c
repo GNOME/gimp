@@ -488,6 +488,8 @@ parasite_serialize (const gchar      *key,
           break;
         }
     }
+  
+  g_string_append (str, "\"");
 
   gimp_config_writer_print (writer, str->str, str->len);
 

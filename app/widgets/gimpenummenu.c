@@ -158,7 +158,7 @@ gimp_enum_menu_new_with_range (GType      enum_type,
       if (value->value < minimum || value->value > maximum)
         continue;
 
-      menu_item = gtk_menu_item_new_with_label (gettext (value->value_name));
+      menu_item = gtk_menu_item_new_with_mnemonic (gettext (value->value_name));
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
       gtk_widget_show (menu_item);
 
@@ -222,7 +222,8 @@ gimp_enum_menu_new_with_values_valist (GType      enum_type,
 
       if (value)
         {
-          menu_item = gtk_menu_item_new_with_label (gettext (value->value_name));
+          menu_item =
+            gtk_menu_item_new_with_mnemonic (gettext (value->value_name));
           gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
           gtk_widget_show (menu_item);
 
@@ -403,8 +404,8 @@ gimp_enum_radio_box_new_with_range (GType       enum_type,
       if (value->value < minimum || value->value > maximum)
         continue;
 
-      button = gtk_radio_button_new_with_label (group, 
-                                                gettext (value->value_name));
+      button = gtk_radio_button_new_with_mnemonic (group, 
+                                                   gettext (value->value_name));
 
       if (first_button && *first_button == NULL)
         *first_button = button;

@@ -1,5 +1,35 @@
 2003-03-06  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpparasitelist.c: fixed parasite serialization that
+	I broke yesterday.
+
+	* app/widgets/gimpenummenu.c: added support for mnemonics.
+
+	* app/core/core-enums.h: removed the inverted variants from the
+	GimpAddMaskType enum. Registered the enum with the type system.
+
+	* app/core/gimplayer.c: changed accordingly.
+
+	* app/gui/layers-commands.c (layers_add_mask_query): use an enum
+	frame and added a check button that allows to invert the inital
+	layer mask.
+
+	* tools/pdbgen/pdb/layer.pdb: updated documentation for the
+	gimp-layer-create-mask PDB function.
+
+	* plug-ins/script-fu/siod-wrapper.c: removed new enum values from
+	the compatibility defines.
+
+	* app/core/core-enums.c
+	* app/pdb/layer_cmds.c
+	* libgimp/gimpenums.h
+	* libgimp/gimplayer_pdb.c
+	* plug-ins/pygimp/gimpenums.py
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl: regenerated.
+
+2003-03-06  Sven Neumann  <sven@gimp.org>
+
 	* HACKING
 	* INSTALL: updated for GTK+ 2.2.
 

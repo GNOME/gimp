@@ -326,15 +326,12 @@ package Gimp::CodeGen::enums;
 	  header => 'core/core-enums.h',
 	  symbols => [ qw(GIMP_ADD_WHITE_MASK GIMP_ADD_BLACK_MASK
 			  GIMP_ADD_ALPHA_MASK GIMP_ADD_SELECTION_MASK
-			  GIMP_ADD_INVERSE_SELECTION_MASK GIMP_ADD_COPY_MASK
-			  GIMP_ADD_INVERSE_COPY_MASK) ],
+			  GIMP_ADD_COPY_MASK) ],
 	  mapping => { GIMP_ADD_WHITE_MASK => '0',
 		       GIMP_ADD_BLACK_MASK => '1',
 		       GIMP_ADD_ALPHA_MASK => '2',
 		       GIMP_ADD_SELECTION_MASK => '3',
-		       GIMP_ADD_INVERSE_SELECTION_MASK => '4',
-		       GIMP_ADD_COPY_MASK => '5',
-		       GIMP_ADD_INVERSE_COPY_MASK => '6' }
+		       GIMP_ADD_COPY_MASK => '4' }
 	},
     GimpMaskApplyMode =>
 	{ contig => 1,

@@ -836,6 +836,7 @@ struct _AddMaskOptions
   GtkWidget       *query_box;
   GimpLayer       *layer;
   GimpAddMaskType  add_mask_type;
+  gboolean         invert;
 };
 
 static void
@@ -852,6 +853,10 @@ add_mask_query_ok_callback (GtkWidget *widget,
   if ((layer = (options->layer)) && (gimage = GIMP_ITEM (layer)->gimage))
     {
       mask = gimp_layer_create_mask (layer, options->add_mask_type);
+
+      if (options->invert)
+        gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);
+
       gimp_layer_add_mask (layer, mask, TRUE);
       g_object_unref (mask);
 
@@ -866,12 +871,15 @@ layers_add_mask_query (GimpLayer *layer)
 {
   AddMaskOptions *options;
   GtkWidget      *frame;
+  GtkWidget      *button;
+  GtkWidget      *sep;
   GimpImage      *gimage;
   
   /*  The new options structure  */
   options = g_new (AddMaskOptions, 1);
   options->layer         = layer;
   options->add_mask_type = GIMP_ADD_WHITE_MASK;
+  options->invert        = FALSE;
 
   gimage = gimp_item_get_image (GIMP_ITEM (layer));
   
@@ -893,66 +901,33 @@ layers_add_mask_query (GimpLayer *layer)
                               NULL);
 
   g_object_weak_ref (G_OBJECT (options->query_box),
-		     (GWeakNotify) g_free,
-		     options);
+		     (GWeakNotify) g_free, options);
 
-  /*  The radio frame and box  */
-  if (! gimp_image_mask_is_empty (gimage))
-    {
-      options->add_mask_type = GIMP_ADD_SELECTION_MASK;
+  frame = gimp_enum_radio_frame_new (GIMP_TYPE_ADD_MASK_TYPE,
+                                     gtk_label_new (_("Initialize Layer Mask to:")),
+                                     6,
+                                     G_CALLBACK (gimp_radio_button_update),
+                                     &options->add_mask_type,
+                                     &button);
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (button),
+                               GINT_TO_POINTER (options->add_mask_type));  
 
-      frame =
-        gimp_radio_group_new2 (TRUE, _("Initialize Layer Mask to:"),
-                               G_CALLBACK (gimp_radio_button_update),
-                               &options->add_mask_type,
-                               GINT_TO_POINTER (options->add_mask_type),
-
-                               _("Selection"),
-                               GINT_TO_POINTER (GIMP_ADD_SELECTION_MASK), NULL,
-                               _("Inverse Selection"),
-                               GINT_TO_POINTER (GIMP_ADD_INVERSE_SELECTION_MASK), NULL,
-
-                               _("Grayscale Copy of Layer"),
-                               GINT_TO_POINTER (GIMP_ADD_COPY_MASK), NULL,
-                               _("Inverse Grayscale Copy of Layer"),
-                               GINT_TO_POINTER (GIMP_ADD_INVERSE_COPY_MASK), NULL,
-
-                               _("White (Full Opacity)"),
-                               GINT_TO_POINTER (GIMP_ADD_WHITE_MASK), NULL,
-                               _("Black (Full Transparency)"),
-                               GINT_TO_POINTER (GIMP_ADD_BLACK_MASK), NULL,
-                               _("Layer's Alpha Channel"),
-                               GINT_TO_POINTER (GIMP_ADD_ALPHA_MASK), NULL,
-
-                               NULL);
-    }
-  else
-    {
-      frame =
-        gimp_radio_group_new2 (TRUE, _("Initialize Layer Mask to:"),
-                               G_CALLBACK (gimp_radio_button_update),
-                               &options->add_mask_type,
-                               GINT_TO_POINTER (options->add_mask_type),
-
-                               _("Grayscale Copy of Layer"),
-                               GINT_TO_POINTER (GIMP_ADD_COPY_MASK), NULL,
-                               _("Inverse Grayscale Copy of Layer"),
-                               GINT_TO_POINTER (GIMP_ADD_INVERSE_COPY_MASK), NULL,
-
-                               _("White (Full Opacity)"),
-                               GINT_TO_POINTER (GIMP_ADD_WHITE_MASK), NULL,
-                               _("Black (Full Transparency)"),
-                               GINT_TO_POINTER (GIMP_ADD_BLACK_MASK), NULL,
-                               _("Layer's Alpha Channel"),
-                               GINT_TO_POINTER (GIMP_ADD_ALPHA_MASK), NULL,
-
-                               NULL);
-    }
-
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
 		     frame);
   gtk_widget_show (frame);
+
+  sep = gtk_hseparator_new ();
+  gtk_box_pack_start (GTK_BOX (GTK_BIN (frame)->child), sep, FALSE, FALSE, 0);
+  gtk_widget_show (sep);
+
+  button = gtk_check_button_new_with_mnemonic (_("In_vert Mask"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), options->invert);
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &options->invert);
+
+  gtk_box_pack_end (GTK_BOX (GTK_BIN (frame)->child), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   gtk_widget_show (options->query_box);
 }

@@ -36,20 +36,23 @@
    pairs will be copied into libgimpproxy by gimp-mkproxy.
 #endif
 
+
 /* 
  * these enums that are registered with the type system
  */
 
-#define GIMP_TYPE_ORIENTATION_TYPE (gimp_orientation_type_get_type ())
+#define GIMP_TYPE_ADD_MASK_TYPE (gimp_add_mask_type_get_type ())
 
-GType gimp_orientation_type_get_type (void) G_GNUC_CONST;
+GType gimp_add_mask_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_ORIENTATION_HORIZONTAL, /*< desc="Horizontal" >*/
-  GIMP_ORIENTATION_VERTICAL,   /*< desc="Vertical"   >*/
-  GIMP_ORIENTATION_UNKNOWN     /*< desc="Unknown"    >*/
-} GimpOrientationType;
+  GIMP_ADD_WHITE_MASK,         /*< desc="_White (Full Opacity)"      >*/
+  GIMP_ADD_BLACK_MASK,         /*< desc="_Black (Full Transparency)" >*/
+  GIMP_ADD_ALPHA_MASK,         /*< desc="Layer's _Alpha Channel"     >*/
+  GIMP_ADD_SELECTION_MASK,     /*< desc="_Selection"                 >*/
+  GIMP_ADD_COPY_MASK           /*< desc="_Grayscale Copy of Layer"   >*/
+} GimpAddMaskType;
 
 
 #define GIMP_TYPE_BLEND_MODE (gimp_blend_mode_get_type ())
@@ -199,6 +202,18 @@ typedef enum
   GIMP_INDEXED_IMAGE,  /*< desc="Indexed"         >*/
   GIMP_INDEXEDA_IMAGE  /*< desc="Indexed-Alpha"   >*/
 } GimpImageType;
+
+
+#define GIMP_TYPE_ORIENTATION_TYPE (gimp_orientation_type_get_type ())
+
+GType gimp_orientation_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_ORIENTATION_HORIZONTAL, /*< desc="Horizontal" >*/
+  GIMP_ORIENTATION_VERTICAL,   /*< desc="Vertical"   >*/
+  GIMP_ORIENTATION_UNKNOWN     /*< desc="Unknown"    >*/
+} GimpOrientationType;
 
 
 #define GIMP_TYPE_PREVIEW_SIZE (gimp_preview_size_get_type ())
@@ -401,17 +416,6 @@ typedef enum  /*< pdb-skip >*/ /*< skip >*/
   GIMP_GRAD_HSV_CCW,  /* counterclockwise hue */
   GIMP_GRAD_HSV_CW    /* clockwise hue        */
 } GimpGradientSegmentColor;
-
-typedef enum  /*< skip >*/
-{
-  GIMP_ADD_WHITE_MASK,
-  GIMP_ADD_BLACK_MASK,
-  GIMP_ADD_ALPHA_MASK,
-  GIMP_ADD_SELECTION_MASK,
-  GIMP_ADD_INVERSE_SELECTION_MASK,
-  GIMP_ADD_COPY_MASK,
-  GIMP_ADD_INVERSE_COPY_MASK
-} GimpAddMaskType;
 
 typedef enum  /*< skip >*/
 {
