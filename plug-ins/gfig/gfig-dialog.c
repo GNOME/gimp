@@ -1806,7 +1806,7 @@ gfig_paint_callback (void)
 
           objs->obj->class->paintfunc (objs->obj);
 
-          gimp_selection_clear (gfig_context->image_id);
+          gimp_selection_none (gfig_context->image_id);
 
         }
 

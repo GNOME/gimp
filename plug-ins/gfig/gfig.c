@@ -167,7 +167,7 @@ run (const gchar      *name,
 
   /* TMP Hack - clear any selections */
   if (! gimp_selection_is_empty (gfig_context->image_id))
-    gimp_selection_clear (gfig_context->image_id);
+    gimp_selection_none (gfig_context->image_id);
 
   gimp_drawable_mask_bounds (drawable->drawable_id,
                              &sel_x1, &sel_y1, &sel_x2, &sel_y2);
