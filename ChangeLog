@@ -1,5 +1,10 @@
 2005-03-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/widgets/gimpviewrenderergradient.c: revert previous
+	change.  Didn't read the code carefully enough.
+	
+2005-03-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/widgets/gimpviewrenderergradient.c: 
 	(gimp_view_renderer_gradient_render): Make sure specified
 	point lies within specified gradient segment; should
