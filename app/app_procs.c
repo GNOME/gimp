@@ -288,7 +288,7 @@ splash_text_draw (GtkWidget *widget)
    *  This is a hack: we try to compute a good guess for the maximum number
    *  of charcters that will fit into the splash-screen using the given font
    */
-  max_label_length = (float)strlen (AUTHORS) *
+  max_label_length = 0.92 * (float)strlen (AUTHORS) *
         ( (float)logo_area_width / (float)gdk_string_width (font, AUTHORS) );
 }
 

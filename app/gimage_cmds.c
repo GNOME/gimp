@@ -1666,6 +1666,135 @@ ProcRecord gimage_lower_layer_proc =
   { { gimage_lower_layer_invoker } },
 };
 
+/*******************************/
+/*  GIMAGE_RAISE_LAYER_TO_TOP  */
+
+static Argument *
+gimage_raise_layer_to_top_invoker (Argument *args)
+{
+  GImage *gimage;
+  Layer *layer;
+
+  success = TRUE;
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if ((gimage = gimage_get_ID (int_value)) == NULL)
+	success = FALSE;
+    }
+  if (success)
+    {
+      int_value = args[1].value.pdb_int;
+      if ((layer = layer_get_ID (int_value)) == NULL)
+	success = FALSE;
+    }
+
+  if (success)
+    success = ((gimage_raise_layer_to_top (gimage, layer)) != NULL);
+
+  return procedural_db_return_args (&gimage_raise_layer_to_top_proc, success);
+}
+
+/*  The procedure definition  */
+ProcArg gimage_raise_layer_to_top_args[] =
+{
+  { PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  { PDB_LAYER,
+    "layer",
+    "The layer to raise to top"
+  }
+};
+
+ProcRecord gimage_raise_layer_to_top_proc =
+{
+  "gimp_image_raise_layer_to_top",
+  "Raise the specified layer in the image's layer stack to top of stack",
+  "This procedure raises the specified layer to top of the existing layer stack.  It will not move the layer if there is no layer above it, or the layer has no alpha channel.",
+  "Wolfgang Hofer, Sven Neumann",
+  "Wolfgang Hofer",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  2,
+  gimage_raise_layer_to_top_args,
+
+  /*  Output arguments  */
+  0,
+  NULL,
+
+  /*  Exec method  */
+  { { gimage_raise_layer_to_top_invoker } },
+};
+
+
+/**********************************/
+/*  GIMAGE_LOWER_LAYER_TO_BOTTOM  */
+
+static Argument *
+gimage_lower_layer_to_bottom_invoker (Argument *args)
+{
+  GImage *gimage;
+  Layer *layer;
+
+  success = TRUE;
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if ((gimage = gimage_get_ID (int_value)) == NULL)
+	success = FALSE;
+    }
+  if (success)
+    {
+      int_value = args[1].value.pdb_int;
+      if ((layer = layer_get_ID (int_value)) == NULL)
+	success = FALSE;
+    }
+
+  if (success)
+    success = ((gimage_lower_layer_to_bottom (gimage, layer)) != NULL);
+
+  return procedural_db_return_args (&gimage_lower_layer_to_bottom_proc, success);
+}
+
+/*  The procedure definition  */
+ProcArg gimage_lower_layer_to_bottom_args[] =
+{
+  { PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  { PDB_LAYER,
+    "layer",
+    "The layer to lower to bottom"
+  }
+};
+
+ProcRecord gimage_lower_layer_to_bottom_proc =
+{
+  "gimp_image_lower_layer_to_bottom",
+  "Lower the specified layer to bottom of the image's layer stack",
+  "This procedure lowers the specified layer to bottom of the existing layer stack.  It will not move the layer if there is no layer below it, or the layer has no alpha channel.",
+  "Wolfgang Hofer, Sven Neumann",
+  "Wolfgang Hofer",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  2,
+  gimage_lower_layer_to_bottom_args,
+
+  /*  Output arguments  */
+  0,
+  NULL,
+
+  /*  Exec method  */
+  { { gimage_lower_layer_to_bottom_invoker } },
+};
+
 
 /*********************************/
 /*  GIMAGE_MERGE_VISIBLE_LAYERS  */

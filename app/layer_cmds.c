@@ -2092,3 +2092,133 @@ ProcRecord layer_get_tattoo_proc =
   /*  Exec method  */
   { { layer_get_tattoo_invoker } },
 };
+
+/***********************/
+/*  LAYER_GET_LINKED  */
+
+static Argument *
+layer_get_linked_invoker (Argument *args)
+{
+  Layer *layer;
+  int linked;
+  Argument *return_args;
+
+  linked = FALSE;
+
+  success = TRUE;
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if ((layer = layer_get_ID (int_value)))
+	linked = layer_linked(GIMP_LAYER(layer));
+      else
+	success = FALSE;
+    }
+
+  return_args = procedural_db_return_args (&layer_get_linked_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = linked;
+
+  return return_args;
+}
+
+/*  The procedure definition  */
+ProcArg layer_get_linked_args[] =
+{
+  { PDB_LAYER,
+    "layer",
+    "the layer"
+  }
+};
+
+ProcArg layer_get_linked_out_args[] =
+{
+  { PDB_INT32,
+    "linked",
+    "the layers linked state (for moves)"
+  }
+};
+
+ProcRecord layer_get_linked_proc =
+{
+  "gimp_layer_get_linked",
+  "Get the linked state of the specified layer.",
+  "This procedure returns the specified layer's linked state.",
+  "Wolfgang Hofer",
+  "Wolfgang Hofer",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  1,
+  layer_get_linked_args,
+
+  /*  Output arguments  */
+  1,
+  layer_get_linked_out_args,
+
+  /*  Exec method  */
+  { { layer_get_linked_invoker } },
+};
+
+
+/***********************/
+/*  LAYER_SET_LINKED  */
+
+static Argument *
+layer_set_linked_invoker (Argument *args)
+{
+  Layer *layer;
+  int linked;
+
+  success = TRUE;
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if ((layer = layer_get_ID (int_value)) == NULL)
+	success = FALSE;
+    }
+  if (success)
+    {
+      linked = args[1].value.pdb_int;
+      GIMP_LAYER(layer)->linked = (linked) ? TRUE : FALSE;
+    }
+
+  return procedural_db_return_args (&layer_set_linked_proc, success);
+}
+
+/*  The procedure definition  */
+ProcArg layer_set_linked_args[] =
+{
+  { PDB_LAYER,
+    "layer",
+    "the layer"
+  },
+  { PDB_INT32,
+    "linked",
+    "the new layer linked state"
+  }
+};
+
+ProcRecord layer_set_linked_proc =
+{
+  "gimp_layer_set_linked",
+  "Set the linked state of the specified layer.",
+  "This procedure sets the specified layer's link state.",
+  "Wolfgang Hofer",
+  "Wolfgang Hofer",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  2,
+  layer_set_linked_args,
+
+  /*  Output arguments  */
+  0,
+  NULL,
+
+  /*  Exec method  */
+  { { layer_set_linked_invoker } },
+};

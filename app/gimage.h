@@ -85,6 +85,8 @@ gimage_foreach (GFunc func, gpointer user_data);
 #define gimage_pick_correlate_layer gimp_image_pick_correlate_layer
 #define gimage_raise_layer gimp_image_raise_layer
 #define gimage_lower_layer gimp_image_lower_layer
+#define gimage_raise_layer_to_top gimp_image_raise_layer_to_top
+#define gimage_lower_layer_to_bottom gimp_image_lower_layer_to_bottom
 #define gimage_merge_visible_layers gimp_image_merge_visible_layers
 #define gimage_flatten gimp_image_flatten
 #define gimage_merge_layers gimp_image_merge_layers

@@ -170,6 +170,8 @@ void            gimp_image_set_layer_mask_edit    (GimpImage *, Layer *, int);
 void            gimp_image_set_layer_mask_show    (GimpImage *, int);
 Layer *         gimp_image_raise_layer            (GimpImage *, Layer *);
 Layer *         gimp_image_lower_layer            (GimpImage *, Layer *);
+Layer *         gimp_image_raise_layer_to_top     (GimpImage *, Layer *);
+Layer *         gimp_image_lower_layer_to_bottom  (GimpImage *, Layer *);
 Layer *         gimp_image_merge_visible_layers   (GimpImage *, MergeType);
 Layer *         gimp_image_merge_down   (GimpImage *, Layer *, MergeType);
 Layer *         gimp_image_flatten                (GimpImage *);

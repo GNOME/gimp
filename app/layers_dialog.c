@@ -155,6 +155,8 @@ static void layers_dialog_unmap_callback (GtkWidget *, gpointer);
 static void layers_dialog_new_layer_callback (GtkWidget *, gpointer);
 static void layers_dialog_raise_layer_callback (GtkWidget *, gpointer);
 static void layers_dialog_lower_layer_callback (GtkWidget *, gpointer);
+static void layers_dialog_raise_layer_to_top_callback (GtkWidget *, gpointer);
+static void layers_dialog_lower_layer_to_bottom_callback (GtkWidget *, gpointer);
 static void layers_dialog_duplicate_layer_callback (GtkWidget *, gpointer);
 static void layers_dialog_delete_layer_callback (GtkWidget *, gpointer);
 static void layers_dialog_scale_layer_callback (GtkWidget *, gpointer);
@@ -253,7 +255,11 @@ static MenuItem layers_ops[] =
     layers_dialog_mask_select_callback, NULL, NULL, NULL },
   { "Add Alpha Channel", 0, 0,
     layers_dialog_add_alpha_channel_callback, NULL, NULL, NULL },
-  { NULL, 0, 0, NULL, NULL, NULL, NULL },
+  { "Layer to Top", 'T', GDK_CONTROL_MASK,
+    layers_dialog_raise_layer_to_top_callback, NULL, NULL, NULL },
+  { "Layer to Bottom", 'U', GDK_CONTROL_MASK,
+    layers_dialog_lower_layer_to_bottom_callback, NULL, NULL, NULL },
+ { NULL, 0, 0, NULL, NULL, NULL, NULL },
 };
 
 /*  the option menu items -- the paint modes  */
@@ -1233,6 +1239,10 @@ layers_dialog_set_menu_sensitivity ()
   gtk_widget_set_sensitive (layers_ops[14].widget, fs && ac && gimage && lm && lp);
   /* add alpha */
   gtk_widget_set_sensitive (layers_ops[15].widget, !alpha);
+  /* raise layer to top */
+  gtk_widget_set_sensitive (layers_ops[16].widget, fs && ac && gimage && lp && alpha);
+  /* lower layer to bottom */
+  gtk_widget_set_sensitive (layers_ops[17].widget, fs && ac && gimage && lp);
 
   /* set mode, preserve transparency and opacity to insensitive if there are no layers  */
   gtk_widget_set_sensitive (layersD->preserve_trans, lp);
@@ -1650,6 +1660,42 @@ layers_dialog_lower_layer_callback (GtkWidget *w,
   gdisplays_flush ();
 }
 
+static void
+layers_dialog_raise_layer_to_top_callback (GtkWidget *w,
+					   gpointer   client_data)
+{
+  GImage *gimage;
+
+  if (!layersD)
+    return;
+  if (! (gimage = layersD->gimage))
+    return;
+
+  if (NULL != gimage_raise_layer_to_top (gimage, gimage->active_layer))
+    {
+      /* update, only needed if raise was performed */
+      gdisplays_flush ();
+    }
+}
+
+
+static void
+layers_dialog_lower_layer_to_bottom_callback (GtkWidget *w,
+					      gpointer   client_data)
+{
+  GImage *gimage;
+
+  if (!layersD)
+    return;
+  if (! (gimage = layersD->gimage))
+    return;
+
+  if (NULL != gimage_lower_layer_to_bottom (gimage, gimage->active_layer))
+    {
+      /* update, only needed if lower was performed */
+      gdisplays_flush ();
+    }
+}
 
 static void
 layers_dialog_duplicate_layer_callback (GtkWidget *w,

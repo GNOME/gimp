@@ -80,7 +80,7 @@ internal_procs_init ()
 {
   gfloat pcount = 0;
   /* grep -c procedural_db_register internal_procs.c */
-  gfloat total_pcount = 249;
+  gfloat total_pcount = 253;
 
   app_init_update_status("Internal Procedures", "Tool procedures",
 			 pcount/total_pcount);
@@ -159,6 +159,8 @@ internal_procs_init ()
   procedural_db_register (&gimage_pick_correlate_layer_proc); pcount++;
   procedural_db_register (&gimage_raise_layer_proc); pcount++;
   procedural_db_register (&gimage_lower_layer_proc); pcount++;
+  procedural_db_register (&gimage_raise_layer_to_top_proc); pcount++;
+  procedural_db_register (&gimage_lower_layer_to_bottom_proc); pcount++;
   procedural_db_register (&gimage_merge_visible_layers_proc); pcount++;
   procedural_db_register (&gimage_merge_down_proc); pcount++;
   procedural_db_register (&gimage_flatten_proc); pcount++;
@@ -250,6 +252,8 @@ internal_procs_init ()
   procedural_db_register (&layer_mask_proc); pcount++;
   procedural_db_register (&layer_is_floating_sel_proc); pcount++;
   procedural_db_register (&layer_get_tattoo_proc); pcount++;
+  procedural_db_register (&layer_get_linked_proc); pcount++;
+  procedural_db_register (&layer_set_linked_proc); pcount++;
 
   app_init_update_status(NULL, "Channel procedures",
 			 pcount/total_pcount);

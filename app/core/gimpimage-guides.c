@@ -1792,6 +1792,165 @@ gimp_image_lower_layer (GimpImage *gimage, Layer *layer_arg)
 
   return NULL;
 }
+ 
+Layer *
+gimp_image_raise_layer_to_top (GimpImage *gimage, Layer *layer_arg)
+{
+  Layer *layer;
+  GSList *list;
+  int x_min, y_min, x_max, y_max;
+  int off_x, off_y;
+
+  list = gimage->layers;
+  if (list == NULL)
+    {
+      /* the layers list is empty */
+      return NULL;
+    }
+  layer = (Layer *) list->data;
+  if (layer == layer_arg)
+    {
+      /* layer_arg is already the top_layer */
+      g_message ("Layer is  already on top");
+      return NULL;
+    }
+  if (! layer_has_alpha (layer_arg))
+    {
+      g_message ("cant raise Layer without alpha");
+      return NULL;
+    }
+  
+  list = g_slist_next (list);
+
+  /* search for layer_arg */
+  while (list)
+    {
+      layer = (Layer *) list->data;
+      if (layer == layer_arg)
+	{
+	  break;
+	}
+      list = g_slist_next (list);
+    }
+  
+  if (layer != layer_arg)
+    {
+      /* The requested layer was not found in the layerstack
+       * Return without changing anything
+       */
+      return NULL;
+    }
+  
+  list = g_slist_remove (gimage->layers, layer_arg);
+  gimage->layers = g_slist_prepend (list, layer_arg);
+  
+  /* update the affected area (== area of layer_arg) */
+  drawable_offsets (GIMP_DRAWABLE(layer_arg), &off_x, &off_y);
+  x_min = off_x;
+  y_min = off_y;
+  x_max = off_x + drawable_width (GIMP_DRAWABLE(layer_arg));
+  y_max = off_y + drawable_height (GIMP_DRAWABLE(layer_arg));
+  gtk_signal_emit(GTK_OBJECT(gimage),
+		  gimp_image_signals[REPAINT],
+		  x_min, y_min, x_max, y_max);
+  
+  /*  invalidate the composite preview  */
+  gimp_image_invalidate_preview (gimage);
+  
+  return layer;
+}
+
+
+Layer *
+gimp_image_lower_layer_to_bottom (GimpImage *gimage, Layer *layer_arg)
+{
+  Layer *layer;
+  GSList *list;
+  GSList *next;
+  GSList *pos;
+  int x_min, y_min, x_max, y_max;
+  int off_x, off_y;
+  int index;
+  int ex_flag;
+  
+  list = gimage->layers;
+  next = NULL; layer = NULL;
+  ex_flag = 0;
+  index = 0;
+  
+  /* 1. loop find layer_arg */
+  while (list)
+    {
+      layer = (Layer *) list->data;
+      if (layer == layer_arg)
+	{
+	  break;
+	}
+      list = g_slist_next (list);
+      index++;
+    }
+  
+  if (layer != layer_arg)
+    {
+      /* The requested layer was not found in the layerstack
+       * Return without changing anything
+       */
+      return NULL;
+    }
+  pos = list;
+  
+  /* 2. loop: search for the bottom layer and check for alpha */
+  while (list)
+    {
+      next = g_slist_next (list);
+      if (next == NULL)
+	{
+	  if (layer == layer_arg)
+	    {
+	      /* there is no next layer below layer_arg */
+	      g_message ("Layer is  already on bottom");
+	    }
+	  /* bottom is reached, we can stop now */
+	  break;
+	}
+      
+      layer = (Layer *) next->data;
+      if (layer_has_alpha (layer))
+	{
+	  ex_flag = 1;
+	}
+      else
+	{
+	  g_message ("BG has no alpha, layer was placed above");
+	  break;
+	}
+      
+      list = next;
+      index++;
+    }
+  
+  if (ex_flag == 0)
+    {
+      return NULL;
+    }
+
+  list = g_slist_remove (gimage->layers, layer_arg);
+  gimage->layers = g_slist_insert (list, layer_arg, index);
+
+  /* update the affected area (== area of layer_arg) */
+  drawable_offsets (GIMP_DRAWABLE(layer_arg), &off_x, &off_y);
+  x_min = off_x;
+  y_min = off_y;
+  x_max = off_x + drawable_width (GIMP_DRAWABLE(layer_arg));
+  y_max = off_y + drawable_height (GIMP_DRAWABLE(layer_arg));
+  gtk_signal_emit(GTK_OBJECT(gimage),
+		  gimp_image_signals[REPAINT],
+		  x_min, y_min, x_max, y_max);
+
+  /*  invalidate the composite preview  */
+  gimp_image_invalidate_preview (gimage);
+  return layer_arg;
+}
 
 
 Layer *

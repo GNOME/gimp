@@ -1,6 +1,22 @@
+Sun Nov 15 17:54:18 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* plugins/script-fu/scripts/waves-anim.scm: cosmetic fix
+
+	* app/app_procs.c: cosmetic fix
+
+	* app/gimage.h
+	* app/gimage_cmds.[ch]
+	* app/gimpimage.[ch]
+	* layer_cmds.[ch]
+	* layers_dialog.c: first set of changes to integrate GAP
+	(Gimp Animation Plugin written by Michael Hofer)
+	new functions: gimp_layer_[get|set]_linked
+	               gimp_image_raise_layer_to_top
+		       gimp_image_lower_layer_to_bottom		 
+
 Sun Nov 15 15:05:22 MET 1998 Sven Neumann <sven@gimp.org>
 
-	* app/gdsiplay.h
+	* app/gdisplay.h
 	* app/interface.c: fixed my latest changes
 
 1998-11-15  Tuomas Kuosmanen  <tigert@gimp.org>
