@@ -1,52 +1,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "appenv.h"
-#include "about_dialog.h"
 #include "actionarea.h"
 #include "app_procs.h"
-#include "brightness_contrast.h"
-#include "brushes.h"
-#include "by_color_select.h"
-#include "channels_dialog.h"
-#include "colormaps.h"
-#include "color_balance.h"
 #include "commands.h"
-#include "convert.h"
-#include "curves.h"
-#include "desaturate.h"
-#include "devices.h"
-#include "channel_ops.h"
-#include "drawable.h"
-#include "equalize.h"
-#include "fileops.h"
-#include "floating_sel.h"
-#include "gdisplay_ops.h"
 #include "general.h"
 #include "gimage_cmds.h"
-#include "gimage_mask.h"
 #include "gimprc.h"
-#include "global_edit.h"
-#include "gradient.h"
-#include "histogram_tool.h"
-#include "hue_saturation.h"
-#include "image_render.h"
-#include "indexed_palette.h"
-#include "info_window.h"
 #include "interface.h"
-#include "invert.h"
-#include "layers_dialog.h"
-#include "layer_select.h"
-#include "levels.h"
-#include "palette.h"
-#include "patterns.h"
 #include "plug_in.h"
-#include "posterize.h"
-#include "resize.h"
-#include "scale.h"
-#include "threshold.h"
-#include "tips_dialog.h"
-#include "tools.h"
-#include "undo.h"
 
 typedef struct {
   GtkWidget *dlg;
@@ -57,6 +19,7 @@ typedef struct {
   GtkWidget *resolution_entry;
   float resolution;   /* always in dpi */
   float unit;  /* this is a float that is equal to unit/inch, 2.54 for cm for example */
+  float res_unit;  /* same as above but for the res unit */
   int width;
   int height;
   int type;
@@ -75,7 +38,8 @@ static void file_new_height_units_update_callback (GtkWidget *, gpointer);
 static void file_new_resolution_callback (GtkWidget *, gpointer);
 static void file_new_units_inch_menu_callback (GtkWidget *, gpointer);
 static void file_new_units_cm_menu_callback (GtkWidget *, gpointer);
-
+static void file_new_res_units_inch_callback (GtkWidget *, gpointer);
+static void file_new_res_units_cm_callback (GtkWidget *, gpointer);
 
 /*  static variables  */
 static   int          last_width = 256;
@@ -84,10 +48,13 @@ static   int          last_type = RGB;
 static   int          last_fill_type = BACKGROUND_FILL; 
 static   float        last_resolution = 72;     /* always in DPI */
 static   float        last_unit = 1;
+static   float        last_res_unit =1;
 
 /* these are temps that should be set in gimprc eventually */
+/*  FIXME */
 static   float        default_resolution = 72;     /* this needs to be set in gimprc */
 static   float        default_unit =1;
+static   float        default_res_unit = 1;
 
 static int new_dialog_run;
 
@@ -116,6 +83,7 @@ file_new_ok_callback (GtkWidget *widget,
   last_fill_type = vals->fill_type;
   last_resolution = vals->resolution;
   last_unit = vals->unit;
+  last_res_unit = vals->res_unit;
 
   switch (vals->fill_type)
     {
@@ -194,7 +162,6 @@ file_new_width_update_callback (GtkWidget *widget,
 				gpointer data)
 {
 
-  /* uh. like do something here  */
   gchar *newvalue;
   NewImageValues *vals;
   int new_width;
@@ -218,7 +185,6 @@ file_new_height_update_callback (GtkWidget *widget,
 				gpointer data)
 {
 
-  /* uh. like do something here  */
   gchar *newvalue;
   NewImageValues *vals;
   int new_height;
@@ -293,17 +259,20 @@ file_new_resolution_callback (GtkWidget *widget,
   NewImageValues *vals;
   float temp_units;
   float temp_pixels;
+  float temp_resolution;
   char buffer[12];
   
   vals = data;
 
   newvalue = gtk_entry_get_text (GTK_ENTRY(vals->resolution_entry));
-  vals->resolution = atof(newvalue);
+  temp_resolution = atof(newvalue);  /* vals->resolution is always DPI */
 
   /* a bit of a kludge to keep height/width from going to zero */
-  if(vals->resolution <= 1)
-    vals->resolution = 1;
+  if(temp_resolution <= 1)
+    temp_resolution = 1;
 
+  /* vals->resoluion is always in DPI */
+  vals->resolution = (temp_resolution * vals->res_unit);
 
   /* figure the new height */
   newvalue = gtk_entry_get_text (GTK_ENTRY(vals->height_units_entry));
@@ -349,13 +318,9 @@ file_new_units_inch_menu_callback (GtkWidget *widget ,
   newvalue = gtk_entry_get_text (GTK_ENTRY(vals->width_entry));
   temp_pixels_width = atoi(newvalue);
 
-  newvalue = gtk_entry_get_text (GTK_ENTRY(vals->resolution_entry));
-  temp_resolution = atof(newvalue);
-
-  /* remember resoltuion is always in dpi */
-  
-  temp_units_height = (float) temp_pixels_height / (((float) temp_resolution) * vals->unit);
-  temp_units_width = (float)temp_pixels_width / (((float) temp_resolution) * vals->unit);
+  /* remember vals->resoltuion is always in dpi */
+  temp_units_height = (float) temp_pixels_height / (((float) vals->resolution) * vals->unit);
+  temp_units_width = (float)temp_pixels_width / (((float) vals->resolution) * vals->unit);
 
   sprintf (buffer, "%.2f", temp_units_height);
   gtk_signal_handler_block_by_data (GTK_OBJECT (vals->height_units_entry),vals);
@@ -392,14 +357,11 @@ file_new_units_cm_menu_callback (GtkWidget *widget ,
   newvalue = gtk_entry_get_text (GTK_ENTRY(vals->width_entry));
   temp_pixels_width = atoi(newvalue);
 
-  newvalue = gtk_entry_get_text (GTK_ENTRY(vals->resolution_entry));
-  temp_resolution = atof(newvalue);
-
   /* remember resoltuion is always in dpi */
   /* convert from inches to centimeters here */
 
-  temp_units_height = ((float) temp_pixels_height / (((float) temp_resolution)) * vals->unit);
-  temp_units_width = ((float)temp_pixels_width / (((float) temp_resolution)) * vals->unit);
+  temp_units_height = ((float) temp_pixels_height / (((float) vals->resolution)) * vals->unit);
+  temp_units_width = ((float)temp_pixels_width / (((float) vals->resolution)) * vals->unit);
 
   sprintf (buffer, "%.2f", temp_units_height);
   gtk_signal_handler_block_by_data (GTK_OBJECT (vals->height_units_entry),vals);
@@ -411,10 +373,48 @@ file_new_units_cm_menu_callback (GtkWidget *widget ,
   gtk_entry_set_text (GTK_ENTRY (vals->width_units_entry), buffer);
   gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->width_units_entry),vals);
 
+}
 
+static void file_new_res_units_inch_callback (GtkWidget *widget, gpointer data)
+{
+
+  NewImageValues *vals;
+  float temp_resolution;
+  gchar *newvalue;
+  char buffer[12];
+
+  vals = data;
+  vals->res_unit = 1.0;
+  
+  /* vals->resoltuion is alwayd DPI */
+  temp_resolution = (vals->resolution / vals->res_unit);
+  sprintf (buffer, "%.2f", temp_resolution);
+  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->resolution_entry),vals);
+  gtk_entry_set_text (GTK_ENTRY (vals->resolution_entry), buffer);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->resolution_entry),vals);
 
 }
   
+static void file_new_res_units_cm_callback (GtkWidget *widget, gpointer data)
+{
+
+  NewImageValues *vals;
+  float temp_resolution;
+  gchar *newvalue;
+  char buffer[12];
+
+  vals = data;
+  vals->res_unit = 2.54;
+
+  /* vals->resolution is always DPI */
+  temp_resolution = (vals->resolution / vals->res_unit);
+  sprintf (buffer, "%.2f", temp_resolution);
+  gtk_signal_handler_block_by_data (GTK_OBJECT (vals->resolution_entry),vals);
+  gtk_entry_set_text (GTK_ENTRY (vals->resolution_entry), buffer);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (vals->resolution_entry),vals);
+
+}
+
 void
 file_new_cmd_callback (GtkWidget           *widget,
 		       gpointer             callback_data,
@@ -445,6 +445,7 @@ file_new_cmd_callback (GtkWidget           *widget,
       last_type = default_type;
       last_resolution = default_resolution;  /* this isnt set in gimprc yet */
       last_unit = default_unit;  /* not in gimprc either, inches for now */
+      last_res_unit = default_res_unit;
       new_dialog_run = 1;  
     }
 
@@ -467,6 +468,7 @@ file_new_cmd_callback (GtkWidget           *widget,
       /* this is wrong, but until resolution and unit is stored in the image... */
       vals->resolution = last_resolution;
       vals->unit = last_unit;
+      vals->res_unit = last_res_unit;
     }
   else
     {
@@ -475,6 +477,7 @@ file_new_cmd_callback (GtkWidget           *widget,
       vals->type = last_type;
       vals->resolution = last_resolution;
       vals->unit = last_unit;
+      vals->res_unit = last_res_unit;
     }
 
   if (vals->type == INDEXED)
@@ -607,8 +610,6 @@ file_new_cmd_callback (GtkWidget           *widget,
   gtk_table_attach (GTK_TABLE (table), optionmenu , 2, 3, 2, 3,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show(optionmenu);
-  /*  man this is lame, the unit stuff really needs to be in a struct */
-  printf(" vals unit is: %.2f\n", vals->unit);
 
   /* resolution frame */
   frame = gtk_frame_new ("Resolution");
@@ -647,8 +648,12 @@ file_new_cmd_callback (GtkWidget           *widget,
   /* probabaly should be more general here */
   menuitem = gtk_menu_item_new_with_label ("Inch");
   gtk_menu_append (GTK_MENU (menu), menuitem);
+  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+      (GtkSignalFunc) file_new_res_units_inch_callback, vals); 
   gtk_widget_show(menuitem);
   menuitem = gtk_menu_item_new_with_label ("Cm");
+  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+      (GtkSignalFunc) file_new_res_units_cm_callback, vals); 
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_widget_show(menuitem);
 

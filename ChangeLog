@@ -1,7 +1,13 @@
+Tue Jun  9 16:08:20 EDT 1998 Adrian Likins <adrain@gimp.org>
+
+	*app/file_new_dialog.c: more fiddling with file_new.
+	the resoution unit optionmenu should work now. Just
+	need to get the optionmenus remembering history.
+
 Tue Jun  9 12:36:57 EDT 1998  Adrian Likins <adrian@gimp.org>
 
 	*confiure.in: corrected small type concering jpeg test
-	(warning printed out "chekcing for jpeg.h" instead of	
+	(warning printed out "checking for jpeg.h" instead of	
 	jpeglib.h)
 
 Tue Jun  9 04:36:52 PDT 1998 Manish Singh <yosh@gimp.org>
