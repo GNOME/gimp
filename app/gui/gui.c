@@ -29,6 +29,7 @@
 #include "gui-types.h"
 
 #include "config/gimpguiconfig.h"
+#include "config/gimpconfig-path.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
@@ -154,10 +155,16 @@ gui_themes_init (Gimp *gimp)
 
   if (config->theme_path)
     {
-      gimp_datafiles_read_directories (config->theme_path,
+      gchar *path;
+
+      path = gimp_config_path_expand (config->theme_path, TRUE, NULL);
+
+      gimp_datafiles_read_directories (path,
 				       G_FILE_TEST_IS_DIR,
 				       gui_themes_dir_foreach_func,
 				       gimp);
+
+      g_free (path);
     }
 
   theme_dir = gui_themes_get_theme_dir (gimp);
@@ -507,9 +514,6 @@ static gboolean
 gui_exit_callback (Gimp     *gimp,
                    gboolean  kill_it)
 {
-  g_print ("EXIT: gui_exit_callback(%s)\n",
-           kill_it ? "TRUE" : "FALSE");
-
   if (! kill_it && gimp_displays_dirty (gimp))
     {
       GtkWidget *dialog;
@@ -549,9 +553,6 @@ static gboolean
 gui_exit_finish_callback (Gimp     *gimp,
                           gboolean  kill_it)
 {
-  g_print ("EXIT: gui_exit_finish_callback(%s)\n",
-           kill_it ? "TRUE" : "FALSE");
-
   menus_exit (gimp);
   render_exit (gimp);
 

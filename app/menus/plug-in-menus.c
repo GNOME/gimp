@@ -68,7 +68,6 @@ plug_in_menus_init (GSList      *plug_in_defs,
   GSList    *domains = NULL;
   GSList    *tmp;
 
-  g_return_if_fail (plug_in_defs != NULL);
   g_return_if_fail (std_plugins_domain != NULL);
 
   domains = g_slist_append (domains, (gpointer) std_plugins_domain);

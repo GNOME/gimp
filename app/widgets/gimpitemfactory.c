@@ -127,8 +127,6 @@ gimp_item_factory_destroy (GtkObject *object)
 
   factory_path = GTK_ITEM_FACTORY (object)->path;
 
-  g_print ("gimp_item_factory_destroy (%s)\n", factory_path);
-
   if (factory_path)
     {
       GimpItemFactoryClass *factory_class;
@@ -141,9 +139,6 @@ gimp_item_factory_destroy (GtkObject *object)
       if (list)
         {
           list = g_list_remove (list, factory);
-
-          g_print ("gimp_item_factory_destroy (%d %s factories remaining)\n",
-                   g_list_length (list), factory_path);
 
           if (list)
             g_hash_table_replace (factory_class->factories,

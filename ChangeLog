@@ -1,5 +1,21 @@
 2002-12-30  Sven Neumann  <sven@gimp.org>
 
+	* app/app_procs.c
+	* app/core/gimp.c
+	* app/gui/gui.c
+	* app/widgets/gimpitemfactory.c: removed debugging output.
+
+	* app/plug-in/plug-ins.c: need to expand the plug_in_path before
+	using it.
+
+	* app/gui/plug-in-menus.c (plug_in_menus_init): removed an
+	unneeded assertion.
+
+	* plug-ins/imagemap/Makefile.am (EXTRA_DIST): removed references
+	to files that were removed some time ago.
+
+2002-12-30  Sven Neumann  <sven@gimp.org>
+
 	* app/config/Makefile.am
 	* app/config/gimppluginconfig.[ch]: new files that define plug-in
 	specific configuration.

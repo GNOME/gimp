@@ -29,6 +29,7 @@
 #include "plug-in-types.h"
 
 #include "config/gimpcoreconfig.h"
+#include "config/gimpconfig-path.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
@@ -97,6 +98,7 @@ plug_ins_init (Gimp               *gimp,
 {
   gchar         *filename;
   gchar         *basename;
+  gchar         *path;
   GSList        *tmp;
   GSList        *tmp2;
   PlugInDef     *plug_in_def;
@@ -110,9 +112,14 @@ plug_ins_init (Gimp               *gimp,
   plug_in_init (gimp);
 
   /* search for binaries in the plug-in directory path */
-  gimp_datafiles_read_directories (gimp->config->plug_in_path, 
+
+  path = gimp_config_path_expand (gimp->config->plug_in_path, TRUE, NULL);
+
+  gimp_datafiles_read_directories (path,
                                    G_FILE_TEST_IS_EXECUTABLE,
 				   plug_ins_init_file, NULL);
+
+  g_free (path);
 
   /* read the pluginrc file for cached data */
   if (gimp->config->plug_in_rc_path)

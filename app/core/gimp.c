@@ -469,9 +469,6 @@ static gboolean
 gimp_real_exit (Gimp     *gimp,
                 gboolean  kill_it)
 {
-  g_print ("EXIT: gimp_real_exit(%s)\n",
-           kill_it ? "TRUE" : "FALSE");
-
   gimp_modules_unload (gimp);
   gimp_data_factory_data_save (gimp->brush_factory);
   gimp_data_factory_data_save (gimp->pattern_factory);

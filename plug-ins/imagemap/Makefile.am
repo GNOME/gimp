@@ -6,8 +6,6 @@ libexec_PROGRAMS = imagemap
 
 EXTRA_DIST = \
 	arrow.xpm	\
-	arrow_down.xpm	\
-	arrow_up.xpm	\
 	circle.xpm	\
 	coord.xpm	\
 	dimension.xpm	\

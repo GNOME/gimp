@@ -71,10 +71,6 @@ static gboolean   app_exit_callback        (Gimp        *gimp,
 static gboolean   app_exit_finish_callback (Gimp        *gimp,
                                             gboolean     kill_it);
 
-/* gimprc debugging code, to be removed */
-static void   gimprc_notify_callback (GObject    *object,
-				      GParamSpec *pspec);
-
 
 /*  global variables  */
 
@@ -134,10 +130,12 @@ app_init (gint    gimp_argc,
                         alternate_gimprc,
                         be_verbose);
 
+#if 0
   /* solely for debugging */
   g_signal_connect (G_OBJECT (gimprc), "notify",
                     G_CALLBACK (gimprc_notify_callback),
                     NULL);
+#endif
 
   /*  initialize lowlevel stuff  */
   base_init (GIMP_BASE_CONFIG (gimprc), use_mmx);
@@ -260,9 +258,6 @@ static gboolean
 app_exit_callback (Gimp     *gimp,
                    gboolean  kill_it)
 {
-  g_print ("EXIT: app_exit_callback(%s)\n",
-           kill_it ? "TRUE" : "FALSE");
-
   plug_ins_exit (gimp);
 
   if (! gimp->no_interface)
@@ -275,9 +270,6 @@ static gboolean
 app_exit_finish_callback (Gimp     *gimp,
                           gboolean  kill_it)
 {
-  g_print ("EXIT: app_exit_finish_callback(%s)\n",
-           kill_it ? "TRUE" : "FALSE");
-
   g_object_unref (G_OBJECT (gimp));
   the_gimp = NULL;
 
@@ -291,6 +283,8 @@ app_exit_finish_callback (Gimp     *gimp,
   return FALSE;
 }
 
+
+#if 0
 
 /****************************************
  * gimprc debugging code, to be removed *
@@ -326,3 +320,5 @@ gimprc_notify_callback (GObject    *object,
   g_string_free (str, TRUE);
   g_value_unset (&value);
 }
+
+#endif
