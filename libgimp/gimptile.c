@@ -264,8 +264,9 @@ gimp_tile_put (GimpTile *tile)
   if (! gp_tile_data_write (_writechannel, &tile_data, NULL))
     gimp_quit ();
 
-  gimp_read_expect_msg (&msg, GP_TILE_ACK);
+  wire_destroy (&msg);
 
+  gimp_read_expect_msg (&msg, GP_TILE_ACK);
   wire_destroy (&msg);
 }
 

@@ -1,5 +1,11 @@
 2005-01-15  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimptile.c (gimp_tile_put)
+	* libgimp/gimp.c (gimp_loop) (gimp_read_expect_msg): added missing
+	calls to wire_destroy(). Plugs memory leaks in the wire protocol.
+
+2005-01-15  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/gimpprotocol.c: formatting.
 
 2005-01-15  Sven Neumann  <sven@gimp.org>

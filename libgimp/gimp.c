@@ -890,18 +890,19 @@ gimp_read_expect_msg (WireMessage *msg,
       if (! wire_read_msg (_readchannel, msg, NULL))
 	gimp_quit ();
 
-      if (msg->type != type)
-	{
-	  if (msg->type == GP_TEMP_PROC_RUN || msg->type == GP_QUIT)
-	    {
-	      gimp_process_message (msg);
-	      continue;
-	    }
-	  else
-	    g_error ("unexpected message: %d", msg->type);
-	}
+      if (msg->type == type)
+	return; /* up to the caller to call wire_destroy() */
+
+      if (msg->type == GP_TEMP_PROC_RUN || msg->type == GP_QUIT)
+        {
+          gimp_process_message (msg);
+        }
       else
-	break;
+        {
+          g_error ("unexpected message: %d", msg->type);
+        }
+
+      wire_destroy (msg);
     }
 }
 
@@ -941,6 +942,7 @@ gimp_run_procedure2 (const gchar     *name,
   gimp_read_expect_msg (&msg, GP_PROC_RETURN);
 
   proc_return = msg.data;
+
   *n_return_vals = proc_return->nparams;
   return_vals = (GimpParam *) proc_return->params;
 
@@ -1601,32 +1603,42 @@ gimp_loop (void)
       switch (msg.type)
 	{
 	case GP_QUIT:
+          wire_destroy (&msg);
 	  gimp_close ();
 	  return;
+
 	case GP_CONFIG:
 	  gimp_config (msg.data);
 	  break;
+
 	case GP_TILE_REQ:
 	case GP_TILE_ACK:
 	case GP_TILE_DATA:
 	  g_warning ("unexpected tile message received (should not happen)");
 	  break;
+
 	case GP_PROC_RUN:
 	  gimp_proc_run (msg.data);
+          wire_destroy (&msg);
 	  gimp_close ();
           return;
+
 	case GP_PROC_RETURN:
 	  g_warning ("unexpected proc return message received (should not happen)");
 	  break;
+
 	case GP_TEMP_PROC_RUN:
 	  g_warning ("unexpected temp proc run message received (should not happen");
 	  break;
+
 	case GP_TEMP_PROC_RETURN:
 	  g_warning ("unexpected temp proc return message received (should not happen");
 	  break;
+
 	case GP_PROC_INSTALL:
 	  g_warning ("unexpected proc install message received (should not happen)");
 	  break;
+
 	case GP_HAS_INIT:
 	  g_warning ("unexpected has init message received (should not happen)");
 	  break;
