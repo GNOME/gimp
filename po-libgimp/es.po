@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-15 01:04+0200\n"
-"PO-Revision-Date: 2004-10-17 21:17+0200\n"
+"POT-Creation-Date: 2004-10-23 17:02+0200\n"
+"PO-Revision-Date: 2004-10-23 17:08+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -371,6 +371,11 @@ msgstr "No cargado"
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "No se ha podido crear la carpeta de miniaturas «%s»."
 
+#: libgimpthumb/gimpthumbnail.c:875
+#, c-format
+msgid "Could not create thumbnail for %s: %s"
+msgstr "No se ha podido crear la miniatura para %s: %s"
+
 #: libgimpwidgets/gimpcolorbutton.c:93
 msgid "/_Foreground Color"
 msgstr "/Color de _frente"
@@ -544,6 +549,10 @@ msgstr "_Reiniciar"
 #: libgimpwidgets/gimpstock.c:120
 msgid "Visible"
 msgstr "Visible"
+
+#: libgimpwidgets/gimpstock.c:153 libgimpwidgets/gimpstock.c:157
+msgid "_Stroke"
+msgstr "_Trazo"
 
 #: libgimpwidgets/gimpstock.c:169
 msgid "L_etter Spacing"
