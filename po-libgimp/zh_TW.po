@@ -1,16 +1,18 @@
 # Traditional chinese translation for gimp-libgimp.
 # Copyright (C) 2001 Free Software Foundation, Inc.
+# Chun-Chung Chen <cjj@u.washington.edu>, 2001.
+# 林佳宏 <object@mis.mgt.ncu.edu.tw>, 2001.
 # Abel Cheung <maddog@linux.org.hk>, 2001.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp 1.2.2\n"
-"POT-Creation-Date: 2001-07-26 14:09+0200\n"
-"PO-Revision-Date: 2001-07-21 04:52+0800\n"
+"Project-Id-Version: gimp-libgimp 1.2.3\n"
+"POT-Creation-Date: 2001-10-20 17:08+0800\n"
+"PO-Revision-Date: 2001-10-24 03:05+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Traditional Chinese <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=big5\n"
+"Content-Type: text/plain; charset=Big5\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpcolorbutton.c:121
@@ -27,15 +29,15 @@ msgstr "無法處理圖層"
 
 #: libgimp/gimpexport.c:161 libgimp/gimpexport.c:170
 msgid "Merge Visible Layers"
-msgstr "結合可見的圖層"
+msgstr "合併可見圖層"
 
 #: libgimp/gimpexport.c:169 libgimp/gimpexport.c:178
 msgid "can only handle layers as animation frames"
-msgstr "只能以動畫方式處理圖層"
+msgstr "只能以動畫影格的方式處理圖層"
 
 #: libgimp/gimpexport.c:170 libgimp/gimpexport.c:179
 msgid "Save as Animation"
-msgstr "以動畫方式儲存"
+msgstr "儲存為動畫"
 
 #: libgimp/gimpexport.c:179 libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
 msgid "Flatten Image"
@@ -51,7 +53,7 @@ msgstr "只能處理 RGB 圖像"
 
 #: libgimp/gimpexport.c:206 libgimp/gimpexport.c:234 libgimp/gimpexport.c:243
 msgid "Convert to RGB"
-msgstr "轉換為 RGB"
+msgstr "轉換成 RGB"
 
 #: libgimp/gimpexport.c:214
 msgid "can only handle grayscale images"
@@ -59,7 +61,7 @@ msgstr "只能處理灰階圖像"
 
 #: libgimp/gimpexport.c:215 libgimp/gimpexport.c:234 libgimp/gimpexport.c:255
 msgid "Convert to Grayscale"
-msgstr "轉換為灰階"
+msgstr "轉換成灰階"
 
 #: libgimp/gimpexport.c:223
 msgid "can only handle indexed images"
@@ -70,12 +72,12 @@ msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"轉換為預設的索引色\n"
-"（要改變效果請用人手轉換）"
+"使用預設值轉換成索引色圖像\n"
+"（請自行調整結果）"
 
 #: libgimp/gimpexport.c:233
 msgid "can only handle RGB or grayscale images"
-msgstr "只能轉換為 RGB 或灰階圖像"
+msgstr "只能處理 RGB 或灰階圖像"
 
 #: libgimp/gimpexport.c:242
 msgid "can only handle RGB or indexed images"
@@ -87,11 +89,11 @@ msgstr "只能處理灰階或索引色圖像"
 
 #: libgimp/gimpexport.c:263
 msgid "needs an alpha channel"
-msgstr "需要 alpha 色頻"
+msgstr "需要 alpha 色版"
 
 #: libgimp/gimpexport.c:264
 msgid "Add Alpha Channel"
-msgstr "新增 Alpha 色頻"
+msgstr "新增 Alpha 色版"
 
 #.
 #. *  Plug-ins have called gtk_init () before calling gimp_export ().
@@ -120,12 +122,12 @@ msgstr "取消"
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
-msgstr "你的圖像在儲存前必須匯出，這是因為："
+msgstr "圖像在儲存前必須匯出，原因如下："
 
 #. the footline
 #: libgimp/gimpexport.c:420
 msgid "The export conversion won't modify your original image."
-msgstr "匯出功能不會修改原有的圖像。"
+msgstr "匯出時的圖像轉換不會更改原有的圖像。"
 
 #: libgimp/gimpfileselection.c:388
 msgid "Select File"
@@ -143,7 +145,7 @@ msgstr "更多..."
 
 #: libgimp/gimpunitmenu.c:498
 msgid "Unit Selection"
-msgstr "單位選擇"
+msgstr "選擇單位"
 
 #: libgimp/gimpunitmenu.c:535
 msgid "Unit"
@@ -156,28 +158,28 @@ msgstr "比例"
 #. pseudo unit
 #: libgimp/gimpunit.c:49
 msgid "pixel"
-msgstr "畫素"
+msgstr "像素"
 
 #: libgimp/gimpunit.c:49
 msgid "pixels"
-msgstr "畫素"
+msgstr "像素"
 
 #. standard units
 #: libgimp/gimpunit.c:52
 msgid "inch"
-msgstr "寸"
+msgstr "英吋"
 
 #: libgimp/gimpunit.c:52
 msgid "inches"
-msgstr "寸"
+msgstr "英吋"
 
 #: libgimp/gimpunit.c:53
 msgid "millimeter"
-msgstr "亳米"
+msgstr "毫米"
 
 #: libgimp/gimpunit.c:53
 msgid "millimeters"
-msgstr "亳米"
+msgstr "毫米"
 
 #. professional units
 #: libgimp/gimpunit.c:56
@@ -190,11 +192,11 @@ msgstr "點"
 
 #: libgimp/gimpunit.c:57
 msgid "pica"
-msgstr "pica"
+msgstr "pica（鉛點）"
 
 #: libgimp/gimpunit.c:57
 msgid "picas"
-msgstr "pica"
+msgstr "picas（鉛點）"
 
 #: libgimp/gimpunit.c:64
 msgid "percent"
@@ -216,7 +218,7 @@ msgstr "時間"
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
-msgstr "亂數產生器會使用現在的時間為種子 - 這樣會保証亂數會是隨機產生的。"
+msgstr "以目前的時間作為隨機數產生器的種子 - 這保證一定程度的隨機化"
 
 #: libgimp/gimpwidgets.c:1042
 msgid "Bytes"
