@@ -59,9 +59,9 @@ void   gimp_image_mask_select_vectors   (GimpImage     *gimage,
                                          gdouble        feather_radius_y);
 
 void   gimp_image_mask_select_channel   (GimpImage     *gimage,
-                                         GimpDrawable  *drawable,
-                                         gboolean       sample_merged,
                                          GimpChannel   *channel,
+                                         gint           offset_x,
+                                         gint           offset_y,
                                          ChannelOps     op,
                                          gboolean       feather,
                                          gdouble        feather_radius_x,

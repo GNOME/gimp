@@ -32,6 +32,7 @@
 #include "display/gimpdisplay.h"
 
 #include "gimpdrawtool.h"
+#include "gimpeditselectiontool.h"
 #include "gimpselectiontool.h"
 #include "selection_options.h"
 
@@ -95,6 +96,7 @@ gimp_selection_tool_class_init (GimpSelectionToolClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   tool_class->modifier_key  = gimp_selection_tool_modifier_key;
+  tool_class->arrow_key     = gimp_edit_selection_tool_arrow_key;
   tool_class->oper_update   = gimp_selection_tool_oper_update;
   tool_class->cursor_update = gimp_selection_tool_cursor_update;
 }
@@ -179,9 +181,6 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
   selection_tool = GIMP_SELECTION_TOOL (tool);
 
   sel_options = (SelectionOptions *) tool->tool_info->tool_options;
-
-  if (tool->state == ACTIVE)
-    return;
 
   layer = gimp_image_pick_correlate_layer (gdisp->gimage, coords->x, coords->y);
   floating_sel = gimp_image_floating_sel (gdisp->gimage);

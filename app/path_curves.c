@@ -163,7 +163,7 @@ path_curve_draw_segment (GimpDrawTool *tool,
       } else {
 	 gdouble *coordinates = g_new (gdouble, 200);
          num_pts = path_curve_get_points (segment, coordinates, 100, 0, 1);
-	 gimp_draw_tool_draw_lines (tool, coordinates, num_pts, FALSE);
+	 gimp_draw_tool_draw_lines (tool, coordinates, num_pts, FALSE, FALSE);
 	 g_free (coordinates);
       }
 

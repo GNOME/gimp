@@ -1,3 +1,35 @@
+2002-03-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-mask-select.[ch]: changed
+	gimp_image_mask_select_channel() to not take "drawable" and
+	"sample_merged" parameters (which are silly in some contexts) but
+	simply the offsets of the passed channel.
+
+	* app/gui/channels-commands.c
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimpiscissorstool.c: changed accordingly.
+
+	* app/tools/gimpdrawtool.[ch]: chaged gimp_draw_tool_draw_lines()
+	and _draw_strokes() to take an additional "use_offsets" parameter
+	like the other drawing functions.
+
+	* app/path_curves.c
+	* app/tools/gimpvectortool.c: changed accordingly.
+
+	* app/paint/gimppaintcore.c: removed #if 0'ed code which was
+	identical to other functions.
+
+	* app/tools/gimpselectiontool.c: use the GimpEditSelectionTool's
+	"arrow_key_func" so it's now possible to keyboad-move the current
+	layer and selection with all selection tool. Needs some more
+	tweaking...
+
+	* app/tools/gimpiscissorstool.[ch]
+	* app/tools/gimpvectortool.[ch]: derive them from GimpSelectionTool
+	to make the modifier key <-> tool options interaction work. Ported
+	IScissors to the new way the draw_tool works.
+
 2002-03-02  Sven Neumann  <sven@gimp.org>
 
 	* autogen.sh: require intltool-0.17.
@@ -31,7 +63,6 @@
 	* themes/Default/images/preferences/folders-gradients.png
 	* themes/Default/images/preferences/folders-palettes.png
 	* themes/Default/images/preferences/folders-patterns.png
-
 	* themes/Default/images/preferences/folders-plug-ins.png: some new
 	icons made from Jimmac's new tool icons and Tigert's abstract
 	palette icon.

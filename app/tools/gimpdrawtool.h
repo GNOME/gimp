@@ -171,13 +171,15 @@ gboolean   gimp_draw_tool_on_handle                (GimpDrawTool   *draw_tool,
 
 void       gimp_draw_tool_draw_lines               (GimpDrawTool   *draw_tool, 
                                                     gdouble        *points,
-                                                    gint            npoints,
-                                                    gint            filled);
+                                                    gint            n_points,
+                                                    gboolean        filled,
+                                                    gboolean        use_offsets);
 
 void       gimp_draw_tool_draw_strokes             (GimpDrawTool   *draw_tool, 
                                                     GimpCoords     *points,
-                                                    gint            npoints,
-                                                    gint            filled);
+                                                    gint            n_points,
+                                                    gboolean        filled,
+                                                    gboolean        use_offsets);
 
 
 #endif  /*  __GIMP_DRAW_TOOL_H__  */

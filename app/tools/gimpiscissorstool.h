@@ -20,7 +20,7 @@
 #define __GIMP_ISCISSORS_TOOL_H__
 
 
-#include "gimpdrawtool.h"
+#include "gimpselectiontool.h"
 
 
 /*  The possible states...  */
@@ -30,7 +30,7 @@ typedef enum
   SEED_PLACEMENT,
   SEED_ADJUSTMENT,
   WAITING
-} Iscissors_state;
+} IscissorsState;
 
 /*  The possible drawing states...  */
 typedef enum
@@ -39,10 +39,18 @@ typedef enum
   DRAW_CURRENT_SEED = 0x1,
   DRAW_CURVE        = 0x2,
   DRAW_ACTIVE_CURVE = 0x4,
-  DRAW_LIVEWIRE     = 0x8,
+  DRAW_LIVEWIRE     = 0x8
+} IscissorsDraw;
 
-  DRAW_ALL          = (DRAW_CURRENT_SEED | DRAW_CURVE)
-} Iscissors_draw;
+/*  For oper_update & cursor_update  */
+typedef enum
+{
+  ISCISSORS_OP_NONE,
+  ISCISSORS_OP_SELECT,
+  ISCISSORS_OP_MOVE_POINT,
+  ISCISSORS_OP_ADD_POINT,
+  ISCISSORS_OP_IMPOSSIBLE,
+} IscissorsOps;
 
 typedef struct _ICurve ICurve;
 
@@ -60,9 +68,9 @@ typedef struct _GimpIscissorsToolClass GimpIscissorsToolClass;
 
 struct _GimpIscissorsTool
 {
-  GimpDrawTool    parent_instance;
+  GimpSelectionTool  parent_instance;
 
-  SelectOps       op;
+  IscissorsOps    op;
 
   gint            x, y;         /*  upper left hand coordinate            */
   gint            ix, iy;       /*  initial coordinates                   */
@@ -80,8 +88,8 @@ struct _GimpIscissorsTool
   gboolean        first_point;  /*  is this the first point?              */
   gboolean        connected;    /*  is the region closed?                 */
 
-  Iscissors_state state;        /*  state of iscissors                    */
-  Iscissors_draw  draw;         /*  items to draw on a draw request       */
+  IscissorsState  state;        /*  state of iscissors                    */
+  IscissorsDraw   draw;         /*  items to draw on a draw request       */
 
   /* XXX might be useful */
   GimpChannel    *mask;         /*  selection mask                        */
@@ -90,7 +98,7 @@ struct _GimpIscissorsTool
 
 struct _GimpIscissorsToolClass
 {
-  GimpDrawToolClass parent_class;
+  GimpSelectionToolClass parent_class;
 };
 
 

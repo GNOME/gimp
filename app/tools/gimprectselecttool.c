@@ -125,7 +125,7 @@ gimp_rect_select_tool_get_type (void)
 }
 
 
-/*  private funuctions  */
+/*  private functions  */
 
 static void
 gimp_rect_select_tool_class_init (GimpRectSelectToolClass *klass)

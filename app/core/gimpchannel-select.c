@@ -231,18 +231,15 @@ gimp_image_mask_select_vectors (GimpImage     *gimage,
 
 void
 gimp_image_mask_select_channel (GimpImage    *gimage,
-                                GimpDrawable *drawable,
-                                gboolean      sample_merged,
                                 GimpChannel  *channel,
+                                gint          offset_x,
+                                gint          offset_y,
                                 ChannelOps    op, 
                                 gboolean      feather,
                                 gdouble       feather_radius_x,
                                 gdouble       feather_radius_y)
 {
-  gint off_x, off_y;
-
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
-  g_return_if_fail ((! drawable && ! sample_merged) || GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
   /*  if applicable, replace the current selection  */
@@ -251,15 +248,6 @@ gimp_image_mask_select_channel (GimpImage    *gimage,
   else
     gimp_image_mask_undo (gimage);
 
-  if (sample_merged)
-    {
-      off_x = off_y = 0;
-    }
-  else
-    {
-      gimp_drawable_offsets (drawable, &off_x, &off_y);
-    }
-  
   if (feather)
     gimp_channel_feather (channel,
 			  feather_radius_x,
@@ -267,7 +255,7 @@ gimp_image_mask_select_channel (GimpImage    *gimage,
                           FALSE /* no undo */);
 
   gimp_channel_combine_mask (gimp_image_get_mask (gimage), channel,
-                             op, off_x, off_y);
+                             op, offset_x, offset_y);
 }
 
 void
@@ -285,6 +273,8 @@ gimp_image_mask_select_fuzzy (GimpImage    *gimage,
                               gdouble       feather_radius_y)
 {
   GimpChannel *mask;
+  gint         mask_x;
+  gint         mask_y;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
@@ -296,10 +286,20 @@ gimp_image_mask_select_fuzzy (GimpImage    *gimage,
                                                select_transparent,
                                                x, y);
 
+  if (sample_merged)
+    {
+      mask_x = 0;
+      mask_y = 0;
+    }
+  else
+    {
+      gimp_drawable_offsets (drawable, &mask_x, &mask_y);
+    }
+
   gimp_image_mask_select_channel (gimage,
-                                  drawable,
-                                  sample_merged,
                                   mask,
+                                  mask_x,
+                                  mask_y,
                                   op,
                                   feather,
                                   feather_radius_x,
@@ -322,6 +322,8 @@ gimp_image_mask_select_by_color (GimpImage     *gimage,
                                  gdouble        feather_radius_y)
 {
   GimpChannel *mask;
+  gint         mask_x;
+  gint         mask_y;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
@@ -334,10 +336,20 @@ gimp_image_mask_select_by_color (GimpImage     *gimage,
                                                 select_transparent,
                                                 color);
 
+  if (sample_merged)
+    {
+      mask_x = 0;
+      mask_y = 0;
+    }
+  else
+    {
+      gimp_drawable_offsets (drawable, &mask_x, &mask_y);
+    }
+
   gimp_image_mask_select_channel (gimage,
-                                  drawable,
-                                  sample_merged,
                                   mask,
+                                  mask_x,
+                                  mask_y,
                                   op,
                                   feather,
                                   feather_radius_x,

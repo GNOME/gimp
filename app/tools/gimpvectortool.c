@@ -30,12 +30,10 @@
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
-#include "gui/gui-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-guides.h"
 #include "core/gimptoolinfo.h"
 
 #include "vectors/gimpanchor.h"
@@ -46,14 +44,8 @@
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
 
-#include "gui/info-dialog.h"
-
 #include "gimpvectortool.h"
-#include "tool_manager.h"
-#include "tool_options.h"
-
-#include "gimprc.h"
-#include "undo.h"
+#include "selection_options.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -63,19 +55,13 @@
 #define  ARC_RADIUS     30
 #define  STATUSBAR_SIZE 128
 
-/*  maximum information buffer size  */
-#define  MAX_INFO_BUF   16
 
 /*  the vector tool options  */
 typedef struct _VectorOptions VectorOptions;
 
 struct _VectorOptions
 {
-  GimpToolOptions  tool_options;
-
-  gboolean     use_info_window;
-  gboolean     use_info_window_d;
-  GtkWidget   *use_info_window_w;
+  SelectionOptions  selection_options;
 };
 
 
@@ -115,7 +101,7 @@ static GimpToolOptions * vector_tool_options_new     (GimpToolInfo    *tool_info
 static void              vector_tool_options_reset   (GimpToolOptions *tool_options);
 
 
-static GimpDrawToolClass *parent_class = NULL;
+static GimpSelectionToolClass *parent_class = NULL;
 
 
 void
@@ -154,7 +140,7 @@ gimp_vector_tool_get_type (void)
 	(GInstanceInitFunc) gimp_vector_tool_init,
       };
 
-      tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
+      tool_type = g_type_register_static (GIMP_TYPE_SELECTION_TOOL,
 					  "GimpVectorTool", 
                                           &tool_info, 0);
     }
@@ -176,6 +162,7 @@ gimp_vector_tool_class_init (GimpVectorToolClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize     = gimp_vector_tool_finalize;
+
   tool_class->control        = gimp_vector_tool_control;
   tool_class->button_press   = gimp_vector_tool_button_press;
   tool_class->button_release = gimp_vector_tool_button_release;
@@ -428,10 +415,10 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
                                               TARGET, TARGET,
                                               GTK_ANCHOR_CENTER,
                                               FALSE))
-	    {
-	      in_handle = TRUE;
-              ctype = GIMP_CROSSHAIR_SMALL_CURSOR;
-	    }
+        {
+          in_handle = TRUE;
+          cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
+        }
     }
 
   tool->cursor          = ctype;
@@ -472,57 +459,11 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
                                       FALSE);
         }
       coords = gimp_stroke_interpolate (cur_stroke, 1.0, &num_coords, &closed);
-      gimp_draw_tool_draw_strokes (draw_tool, coords, num_coords, FALSE);
+      gimp_draw_tool_draw_strokes (draw_tool, coords, num_coords, FALSE, FALSE);
 
       g_free (coords);
     }
 }
-
-
-static GimpToolOptions *
-vector_tool_options_new (GimpToolInfo *tool_info)
-{
-  VectorOptions *options;
-  GtkWidget      *vbox;
-
-  options = g_new0 (VectorOptions, 1);
-
-  tool_options_init ((GimpToolOptions *) options, tool_info);
-
-  ((GimpToolOptions *) options)->reset_func = vector_tool_options_reset;
-
-  options->use_info_window = options->use_info_window_d  = FALSE;
-
-    /*  the main vbox  */
-  vbox = options->tool_options.main_vbox;
-
-  /*  the use_info_window toggle button  */
-  options->use_info_window_w =
-    gtk_check_button_new_with_label (_("Use Info Window"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->use_info_window_w),
-				options->use_info_window_d);
-  gtk_box_pack_start (GTK_BOX (vbox), options->use_info_window_w,
-		      FALSE, FALSE, 0);
-  gtk_widget_show (options->use_info_window_w);
-
-  g_signal_connect (G_OBJECT (options->use_info_window_w), "toggled",
-		    G_CALLBACK (gimp_toggle_button_update),
-		    &options->use_info_window);
-
-  return (GimpToolOptions *) options;
-}
-
-static void
-vector_tool_options_reset (GimpToolOptions *tool_options)
-{
-  VectorOptions *options;
-
-  options = (VectorOptions *) tool_options;
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->use_info_window_w),
-				options->use_info_window_d);
-}
-
 
 void
 gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
@@ -603,4 +544,35 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
 
       gimp_draw_tool_start (draw_tool, tool->gdisp);
     }
+}
+
+
+/*  tool options stuff  */
+
+static GimpToolOptions *
+vector_tool_options_new (GimpToolInfo *tool_info)
+{
+  VectorOptions *options;
+  GtkWidget      *vbox;
+
+  options = g_new0 (VectorOptions, 1);
+
+  selection_options_init ((SelectionOptions *) options, tool_info);
+
+  ((GimpToolOptions *) options)->reset_func = vector_tool_options_reset;
+
+  /*  the main vbox  */
+  vbox = ((GimpToolOptions *) options)->main_vbox;
+
+  return (GimpToolOptions *) options;
+}
+
+static void
+vector_tool_options_reset (GimpToolOptions *tool_options)
+{
+  VectorOptions *options;
+
+  options = (VectorOptions *) tool_options;
+
+  selection_options_reset (tool_options);
 }

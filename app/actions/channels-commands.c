@@ -142,8 +142,8 @@ channels_channel_to_sel (GtkWidget  *widget,
   return_if_no_channel (gimage, active_channel);
 
   gimp_image_mask_select_channel (gimage,
-                                  NULL, FALSE,
                                   active_channel,
+                                  0, 0,
                                   op,
                                   FALSE, 0, 0);
   gdisplays_flush ();

@@ -242,7 +242,6 @@ gimp_fuzzy_select_tool_button_release (GimpTool        *tool,
 {
   GimpFuzzySelectTool *fuzzy_sel;
   SelectionOptions    *sel_options;
-  GimpDrawable        *drawable;
 
   fuzzy_sel = GIMP_FUZZY_SELECT_TOOL (tool);
 
@@ -255,12 +254,26 @@ gimp_fuzzy_select_tool_button_release (GimpTool        *tool,
   /*  First take care of the case where the user "cancels" the action  */
   if (! (state & GDK_BUTTON3_MASK))
     {
-      drawable = gimp_image_active_drawable (gdisp->gimage);
+      gint off_x, off_y;
+
+      if (sel_options->sample_merged)
+        {
+          off_x = 0;
+          off_y = 0;
+        }
+      else
+        {
+          GimpDrawable *drawable;
+
+          drawable = gimp_image_active_drawable (gdisp->gimage);
+
+          gimp_drawable_offsets (drawable, &off_x, &off_y);
+        }
 
       gimp_image_mask_select_channel (gdisp->gimage,
-                                      drawable,
-                                      sel_options->sample_merged,
                                       fuzzy_sel->fuzzy_mask,
+                                      off_x,
+                                      off_y,
                                       GIMP_SELECTION_TOOL (tool)->op,
                                       sel_options->feather,
                                       sel_options->feather_radius,

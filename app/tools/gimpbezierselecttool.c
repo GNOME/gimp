@@ -2901,8 +2901,8 @@ bezier_to_sel_internal (GimpBezierSelectTool *bezier_sel,
     bezier_convert (bezier_sel, tool->gdisp, SUBDIVIDE, TRUE);
 
   gimp_image_mask_select_channel (gdisp->gimage,
-                                  NULL, FALSE,
                                   bezier_sel->mask,
+                                  0, 0,
                                   op,
                                   sel_options->feather,
                                   sel_options->feather_radius, 

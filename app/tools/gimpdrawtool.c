@@ -683,8 +683,9 @@ gimp_draw_tool_on_handle (GimpDrawTool   *draw_tool,
 void
 gimp_draw_tool_draw_lines (GimpDrawTool *draw_tool, 
 			   gdouble      *points,
-			   gint          npoints,
-			   gint          filled)
+			   gint          n_points,
+			   gboolean      filled,
+                           gboolean      use_offsets)
 {
   GimpDisplayShell *shell;
   GdkPoint         *coords;
@@ -693,14 +694,14 @@ gimp_draw_tool_draw_lines (GimpDrawTool *draw_tool,
 
   shell = GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell);
 
-  coords = g_new (GdkPoint, npoints);
+  coords = g_new (GdkPoint, n_points);
 
-  for (i = 0; i < npoints ; i++)
+  for (i = 0; i < n_points ; i++)
     {
       gdisplay_transform_coords_f (draw_tool->gdisp,
                                    points[i*2], points[i*2+1],
                                    &sx, &sy,
-                                   TRUE);
+                                   use_offsets);
       coords[i].x = ROUND (sx);
       coords[i].y = ROUND (sy);
     }
@@ -709,13 +710,13 @@ gimp_draw_tool_draw_lines (GimpDrawTool *draw_tool,
     {
       gdk_draw_polygon (draw_tool->win,
                         draw_tool->gc, TRUE,
-                        coords, npoints);
+                        coords, n_points);
     }
   else
     {
       gdk_draw_lines (draw_tool->win,
                       draw_tool->gc,
-                      coords, npoints);
+                      coords, n_points);
     }
 
   g_free (coords);
@@ -724,8 +725,9 @@ gimp_draw_tool_draw_lines (GimpDrawTool *draw_tool,
 void
 gimp_draw_tool_draw_strokes (GimpDrawTool *draw_tool, 
 			     GimpCoords   *points,
-			     gint          npoints,
-			     gint          filled)
+			     gint          n_points,
+			     gboolean      filled,
+                             gboolean      use_offsets)
 {
   GimpDisplayShell *shell;
   GdkPoint         *coords;
@@ -734,14 +736,14 @@ gimp_draw_tool_draw_strokes (GimpDrawTool *draw_tool,
 
   shell = GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell);
 
-  coords = g_new (GdkPoint, npoints);
+  coords = g_new (GdkPoint, n_points);
 
-  for (i = 0; i < npoints ; i++)
+  for (i = 0; i < n_points ; i++)
     {
       gdisplay_transform_coords_f (draw_tool->gdisp,
                                    points[i].x, points[i].y,
                                    &sx, &sy,
-                                   TRUE);
+                                   use_offsets);
       coords[i].x = ROUND (sx);
       coords[i].y = ROUND (sy);
     }
@@ -750,13 +752,13 @@ gimp_draw_tool_draw_strokes (GimpDrawTool *draw_tool,
     {
       gdk_draw_polygon (draw_tool->win,
                         draw_tool->gc, TRUE,
-                        coords, npoints);
+                        coords, n_points);
     }
   else
     {
       gdk_draw_lines (draw_tool->win,
                       draw_tool->gc,
-                      coords, npoints);
+                      coords, n_points);
     }
 
   g_free (coords);
