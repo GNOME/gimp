@@ -219,6 +219,9 @@ run (const gchar      *name,
   mbvals.center_x = (gdouble) (x1 + x2 - 1) / 2.0;
   mbvals.center_y = (gdouble) (y1 + y2 - 1) / 2.0;
 
+  /* Set the tile cache size */
+  gimp_tile_cache_ntiles (2 * drawable->ntile_cols);
+
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
@@ -266,9 +269,6 @@ run (const gchar      *name,
       (gimp_drawable_is_rgb(drawable->drawable_id) ||
        gimp_drawable_is_gray(drawable->drawable_id)))
     {
-      /* Set the tile cache size */
-      gimp_tile_cache_ntiles (2 * (drawable->width +
-                                   gimp_tile_width () - 1) / gimp_tile_width ());
 
       /* Run! */
       has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);

@@ -1,5 +1,10 @@
 2004-12-23  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
+	* plug-ins/common/mblur.c: set up tile cache before
+	creating dialog -- major speedup in preview.
+	
+2004-12-23  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
 	* gimp/app/widgets/gimpsizebox.c: use gimp_coordinates_new()
 	instead of duplicating a lot of code.  Fixes bug #161756.
 	
