@@ -2038,14 +2038,14 @@ static void
 ed_scrollbar_update (GtkAdjustment *adjustment,
 		     gpointer       data)
 {
-  gchar str[256];
+  gchar *str;
 
-  g_snprintf (str, sizeof (str),
-	      _("Zoom factor: %d:1    Displaying [%0.6f, %0.6f]"),
-	      g_editor->zoom_factor, adjustment->value,
-	      adjustment->value + adjustment->page_size);
+  str = g_strdup_printf (_("Zoom factor: %d:1    Displaying [%0.6f, %0.6f]"),
+			 g_editor->zoom_factor, adjustment->value,
+			 adjustment->value + adjustment->page_size);
 
   ed_set_hint (str);
+  g_free (str);
 
   ed_update_editor (GRAD_UPDATE_PREVIEW | GRAD_UPDATE_CONTROL);
 }
@@ -2279,7 +2279,7 @@ prev_set_hint (gint x)
   gdouble xpos;
   gdouble r, g, b, a;
   gdouble h, s, v;
-  gchar   str[512];
+  gchar   *str;
 
   xpos = control_calc_g_pos (x);
 
@@ -2291,13 +2291,14 @@ prev_set_hint (gint x)
 
   gimp_rgb_to_hsv_double (&h, &s, &v);
 
-  g_snprintf (str, sizeof (str), _("Position: %0.6f    "
-				   "RGB (%0.3f, %0.3f, %0.3f)    "
-				   "HSV (%0.3f, %0.3f, %0.3f)    "
-				   "Opacity: %0.3f"),
-	      xpos, r, g, b, h * 360.0, s, v, a);
+  str = g_strdup_printf (_("Position: %0.6f    "
+			   "RGB (%0.3f, %0.3f, %0.3f)    "
+			   "HSV (%0.3f, %0.3f, %0.3f)    "
+			   "Opacity: %0.3f"),
+			 xpos, r, g, b, h * 360.0, s, v, a);
 
   ed_set_hint (str);
+  g_free (str);
 }
 
 /*****/
@@ -2307,7 +2308,7 @@ prev_set_foreground (gint x)
 {
   gdouble xpos;
   gdouble r, g, b, a;
-  gchar   str[512];
+  gchar   *str;
 
   xpos = control_calc_g_pos (x);
   gradient_get_color_at (curr_gradient, xpos, &r, &g, &b, &a);
@@ -2315,15 +2316,15 @@ prev_set_foreground (gint x)
   gimp_context_set_foreground (gimp_context_get_user (),
 			       r * 255.0, g * 255.0, b * 255.0);
 
-  g_snprintf (str, sizeof (str),
-	      _("Foreground color set to RGB (%d, %d, %d) <-> "
-		"(%0.3f, %0.3f, %0.3f)"),
-	      (int) (r * 255.0),
-	      (int) (g * 255.0),
-	      (int) (b * 255.0),
-	      r, g, b);
+  str = g_strdup_printf (_("Foreground color set to RGB (%d, %d, %d) <-> "
+			   "(%0.3f, %0.3f, %0.3f)"),
+			 (int) (r * 255.0),
+			 (int) (g * 255.0),
+			 (int) (b * 255.0),
+			 r, g, b);
 
   ed_set_hint (str);
+  g_free (str);
 }
 
 static void
@@ -2331,7 +2332,7 @@ prev_set_background (gint x)
 {
   gdouble xpos;
   gdouble r, g, b, a;
-  gchar   str[512];
+  gchar   *str;
 
   xpos = control_calc_g_pos (x);
   gradient_get_color_at (curr_gradient, xpos, &r, &g, &b, &a);
@@ -2339,15 +2340,15 @@ prev_set_background (gint x)
   gimp_context_set_background (gimp_context_get_user (),
 			       r * 255.0, g * 255.0, b * 255.0);
 
-  g_snprintf (str, sizeof (str),
-	      _("Background color to RGB (%d, %d, %d) <-> "
-		"(%0.3f, %0.3f, %0.3f)"),
-	      (int) (r * 255.0),
-	      (int) (g * 255.0),
-	      (int) (b * 255.0),
-	      r, g, b);
+  str = g_strdup_printf (_("Background color to RGB (%d, %d, %d) <-> "
+			   "(%0.3f, %0.3f, %0.3f)"),
+			 (int) (r * 255.0),
+			 (int) (g * 255.0),
+			 (int) (b * 255.0),
+			 r, g, b);
 
   ed_set_hint (str);
+  g_free (str);
 }
 
 /*****/
@@ -2891,7 +2892,7 @@ control_motion (gint x)
   grad_segment_t *seg;
   gdouble pos;
   gdouble delta;
-  gchar   str[256];
+  gchar   *str = NULL;
 
   seg = g_editor->control_drag_segment;
 
@@ -2909,7 +2910,7 @@ control_motion (gint x)
 			       g_editor->control_sel_r,
 			       seg, pos);
 
-      g_snprintf (str, sizeof (str), _("Handle position: %0.6f"), seg->left);
+      str = g_strdup_printf (_("Handle position: %0.6f"), seg->left);
       ed_set_hint (str);
 
       break;
@@ -2918,7 +2919,7 @@ control_motion (gint x)
       pos = control_calc_g_pos (x);
       seg->middle = BOUNDS (pos, seg->left + EPSILON, seg->right - EPSILON);
 
-      g_snprintf (str, sizeof (str), _("Handle position: %0.6f"), seg->middle);
+      str = g_strdup_printf (_("Handle position: %0.6f"), seg->middle);
       ed_set_hint (str);
 
       break;
@@ -2936,8 +2937,8 @@ control_motion (gint x)
 
       g_editor->control_last_gx += delta;
 
-      g_snprintf (str, sizeof (str), _("Distance: %0.6f"),
-		  g_editor->control_last_gx - g_editor->control_orig_pos);
+      str = g_strdup_printf (_("Distance: %0.6f"),
+			     g_editor->control_last_gx - g_editor->control_orig_pos);
       ed_set_hint (str);
 
       break;
@@ -2947,6 +2948,9 @@ control_motion (gint x)
 			(int) g_editor->control_drag_mode);
       break;
     }
+
+  if (str)
+    g_free (str);
 
   curr_gradient->dirty = TRUE;
 
@@ -4119,7 +4123,7 @@ cpopup_update_saved_color (int    n,
 			   double b,
 			   double a)
 {
-  char str[256];
+  gchar *str;
 
   cpopup_render_color_box (GTK_PREVIEW (g_editor->left_load_color_boxes[n + 3]),
 			   r, g, b, a);
@@ -4130,13 +4134,14 @@ cpopup_update_saved_color (int    n,
   cpopup_render_color_box (GTK_PREVIEW (g_editor->right_save_color_boxes[n]),
 			   r, g, b, a);
 
-  g_snprintf (str, sizeof (str),
-	      _("RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"), r, g, b, a);
+  str = g_strdup_printf (_("RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"), r, g, b, a);
 
   gtk_label_set_text (GTK_LABEL (g_editor->left_load_labels[n + 3]), str);
   gtk_label_set_text (GTK_LABEL (g_editor->left_save_labels[n]), str);
   gtk_label_set_text (GTK_LABEL (g_editor->right_load_labels[n + 3]), str);
   gtk_label_set_text (GTK_LABEL (g_editor->right_save_labels[n]), str);
+
+  g_free (str);
 
   g_editor->saved_colors[n].r = r;
   g_editor->saved_colors[n].g = g;

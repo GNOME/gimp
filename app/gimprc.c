@@ -386,33 +386,33 @@ static GList *parse_add_directory_tokens (void)
 void
 parse_gimprc (void)
 {
-  char libfilename[MAXPATHLEN];
-  char filename[MAXPATHLEN];
-  gchar *personal_gimprc;
+  gchar *libfilename;
+  gchar *filename;
   
   parse_add_directory_tokens ();
 
-  strcpy (libfilename, gimp_system_rc_file ());
   if (alternate_system_gimprc != NULL) 
-    strncpy (libfilename, alternate_system_gimprc, MAXPATHLEN);
+    libfilename = g_strdup (alternate_system_gimprc);
+  else
+    libfilename = g_strdup (gimp_system_rc_file ());
+    
   app_init_update_status(_("Resource configuration"), libfilename, -1);
   parse_gimprc_file (libfilename);
 
   if (alternate_gimprc != NULL) 
-    strncpy (filename, alternate_gimprc, MAXPATHLEN);
+    filename = g_strdup (alternate_gimprc);
   else 
-    {
-      personal_gimprc = gimp_personal_rc_file ("gimprc");
-      strncpy (filename, personal_gimprc, MAXPATHLEN);
-      g_free (personal_gimprc);
-    }
+    filename = gimp_personal_rc_file ("gimprc");
 
-  if (filename[0] != '\0' && strcmp (filename, libfilename) != 0)
+  if (g_strcasecmp (filename, libfilename) != 0)
     {
       app_init_update_status(NULL, filename, -1);
       parse_gimprc_file (filename);
     }
 
+  g_free (filename);
+  g_free (libfilename);
+ 
   if (!image_title_format)
     image_title_format = g_strdup(DEFAULT_IMAGE_TITLE_FORMAT);
 }
@@ -457,22 +457,25 @@ parse_absolute_gimprc_file (char *filename)
 }
 
 gboolean
-parse_gimprc_file (char *filename)
+parse_gimprc_file (gchar *filename)
 {
-  char rfilename[MAXPATHLEN];
+  gchar *rfilename;
+  gboolean parsed;
 
   if (!g_path_is_absolute (filename))
     {
       if (g_get_home_dir () != NULL)
 	{
-	  g_snprintf (rfilename, sizeof (rfilename),
-		      "%s" G_DIR_SEPARATOR_S "%s",
-		      g_get_home_dir (), filename);
-	  filename = rfilename;
+	  rfilename = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s",
+				       g_get_home_dir (), filename);
+	  parsed = parse_absolute_gimprc_file (rfilename);
+	  g_free (rfilename);
+	  return parsed;
 	}
     }
 
-  return (parse_absolute_gimprc_file (filename));
+  parsed = parse_absolute_gimprc_file (filename);
+  return parsed;
 }
 
 static GList *
