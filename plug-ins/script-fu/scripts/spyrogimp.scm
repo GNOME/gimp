@@ -353,7 +353,7 @@
 			         _"Polygon: 10 sides")
  SF-ADJUSTMENT _"Outer Teeth"   '(90 1 120 1 10 0 0)
  SF-ADJUSTMENT _"Inner Teeth"   '(70 1 120 1 10 0 0)
- SF-ADJUSTMENT _"Margin (pixels)" '(5 0 10000 1 10 0 1)
+ SF-ADJUSTMENT _"Margin (pixels)" '(0 -10000 10000 1 10 0 1)
  SF-ADJUSTMENT _"Hole Ratio"    '(0.4 0.0 1.0 0.01 0.1 2 0)
  SF-ADJUSTMENT _"Start Angle"   '(0 0 359 1 10 0 0)
 
