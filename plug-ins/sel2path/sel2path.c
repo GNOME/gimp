@@ -120,7 +120,6 @@ query_2 (void)
     { GIMP_PDB_INT8,     "tangent_surround",            "tangent_surround"},
   };
   static GimpParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
   gimp_install_procedure ("plug_in_sel2path_advanced",
@@ -132,7 +131,7 @@ query_2 (void)
 			  NULL,
 			  "RGB*, INDEXED*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, nreturn_vals,
+			  G_N_ELEMENTS (args), nreturn_vals,
 			  args, return_vals);
 }
 
@@ -146,7 +145,6 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
   };
   static GimpParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
   INIT_I18N();
@@ -160,7 +158,7 @@ query (void)
 			  N_("<Image>/Select/To Path"),
 			  "RGB*, INDEXED*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, nreturn_vals,
+			  G_N_ELEMENTS (args), nreturn_vals,
 			  args, return_vals);
 
   query_2 ();

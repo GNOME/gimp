@@ -86,20 +86,17 @@ script_fu_query (void)
   {
     { GIMP_PDB_INT32,  "run_mode", "Interactive, [non-interactive]" }
   };
-  static gint nconsole_args = sizeof (console_args) / sizeof (console_args[0]);
 
   static GimpParamDef textconsole_args[] =
   {
     { GIMP_PDB_INT32,  "run_mode", "Interactive, [non-interactive]" }
   };
-  static gint ntextconsole_args = sizeof (textconsole_args) / sizeof (textconsole_args[0]);
 
   static GimpParamDef eval_args[] =
   {
     { GIMP_PDB_INT32,  "run_mode", "[Interactive], non-interactive" },
     { GIMP_PDB_STRING, "code",     "The code to evaluate" }
   };
-  static gint neval_args = sizeof (eval_args) / sizeof (eval_args[0]);
 
   static GimpParamDef server_args[] =
   {
@@ -107,7 +104,6 @@ script_fu_query (void)
     { GIMP_PDB_INT32,  "port",     "The port on which to listen for requests" },
     { GIMP_PDB_STRING, "logfile",  "The file to log server activity to" }
   };
-  static gint nserver_args = sizeof (server_args) / sizeof (server_args[0]);
 
   gimp_plugin_domain_register ("gimp-script-fu", NULL);
 
@@ -131,7 +127,7 @@ script_fu_query (void)
 			  N_("<Toolbox>/Xtns/Script-Fu/Console..."),
 			  NULL,
 			  GIMP_EXTENSION,
-			  nconsole_args, 0,
+			  G_N_ELEMENTS (console_args), 0,
 			  console_args, NULL);
 
   gimp_install_procedure ("extension_script_fu_text_console",
@@ -143,7 +139,7 @@ script_fu_query (void)
 			  NULL,
                           NULL,
                           GIMP_EXTENSION,
-                          ntextconsole_args, 0,
+                          G_N_ELEMENTS (textconsole_args), 0,
                           textconsole_args, NULL);
 
 #ifndef G_OS_WIN32
@@ -156,7 +152,7 @@ script_fu_query (void)
 			  N_("<Toolbox>/Xtns/Script-Fu/Server..."),
 			  NULL,
 			  GIMP_EXTENSION,
-			  nserver_args, 0,
+			  G_N_ELEMENTS (server_args), 0,
 			  server_args, NULL);
 #endif
 
@@ -169,7 +165,7 @@ script_fu_query (void)
 			  NULL,
 			  NULL,
 			  GIMP_EXTENSION,
-			  neval_args, 0,
+			  G_N_ELEMENTS (eval_args), 0,
 			  eval_args, NULL);
 }
 
@@ -275,7 +271,6 @@ script_fu_auxillary_init (void)
   {
     { GIMP_PDB_INT32, "run_mode", "[Interactive], non-interactive" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_temp_proc ("script_fu_refresh",
 			  _("Re-read all available scripts"),
@@ -286,7 +281,7 @@ script_fu_auxillary_init (void)
 			  N_("<Toolbox>/Xtns/Script-Fu/Refresh"),
 			  NULL,
 			  GIMP_TEMPORARY,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL,
 			  script_fu_refresh_proc);
 }

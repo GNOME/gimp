@@ -109,7 +109,7 @@ siod_init (gint local_register_scripts)
   register_scripts = local_register_scripts;
 
   /* init the interpreter */
-  process_cla (sizeof (siod_argv) / sizeof (char *), siod_argv, 1);
+  process_cla (G_N_ELEMENTS (siod_argv), siod_argv, 1);
   init_storage ();
   init_subrs ();
   init_trace ();

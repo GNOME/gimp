@@ -130,7 +130,6 @@ query (void)
     { GIMP_PDB_STRING, "url", "URL of a document to open" },
     { GIMP_PDB_INT32,  "new_window", "Create a new window or use existing one?" },
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("extension_web_browser",
 			  "open URL in Netscape",
@@ -141,7 +140,7 @@ query (void)
 			  N_("<Toolbox>/Xtns/Web Browser/Open URL..."),
 			  NULL,
 			  GIMP_EXTENSION,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

@@ -104,9 +104,6 @@ query (void)
   {
     { GIMP_PDB_IMAGE,      "image",        "Output image" },
   };
-  static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
-  static gint nload_return_vals = (sizeof (load_return_vals) /
-				   sizeof (load_return_vals[0]));
 
   static GimpParamDef save_args[] =
   {
@@ -117,7 +114,6 @@ query (void)
     { GIMP_PDB_STRING,	"raw_filename",	"The name of the file to save the image in" },
     { GIMP_PDB_INT32,	"compression",	"Compression level (0 = none, 1 = RLE, 2 = ARLE)" }
   };
-  static gint 	nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   INIT_I18N();
 
@@ -130,8 +126,8 @@ query (void)
 			  "<Load>/SGI",
 			  NULL,
 			  GIMP_PLUGIN,
-			  nload_args,
-			  nload_return_vals,
+			  G_N_ELEMENTS (load_args),
+			  G_N_ELEMENTS (load_return_vals),
 			  load_args,
 			  load_return_vals);
 
@@ -144,7 +140,7 @@ query (void)
 			  "<Save>/SGI",
 			  "RGB*,GRAY*",
 			  GIMP_PLUGIN,
-			  nsave_args,
+			  G_N_ELEMENTS (save_args),
 			  0,
 			  save_args,
 			  NULL);
