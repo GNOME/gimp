@@ -263,11 +263,11 @@ brightness_contrast_dialog_new (void)
 		     GTK_WIN_POS_NONE,
 		     FALSE, TRUE, FALSE,
 
-		     GIMP_STOCK_RESET, brightness_contrast_reset_callback,
-		     bcd, NULL, NULL, TRUE, FALSE,
-
 		     GTK_STOCK_CANCEL, brightness_contrast_cancel_callback,
 		     bcd, NULL, NULL, FALSE, TRUE,
+
+		     GIMP_STOCK_RESET, brightness_contrast_reset_callback,
+		     bcd, NULL, NULL, TRUE, FALSE,
 
 		     GTK_STOCK_OK, brightness_contrast_ok_callback,
 		     bcd, NULL, NULL, TRUE, FALSE,

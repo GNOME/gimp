@@ -1,3 +1,29 @@
+2002-02-07  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/file-new-dialog.c
+	* app/gui/resize-dialog.c
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimpthresholdtool.c
+	* app/tools/gimptransformtool.c: moved Cancel button to the left.
+
+	* data/images/Makefile.am
+	* data/images/tips_wilber.png: removed ...
+	* data/images/wilber-tips.png: ... and readded under a new name.
+
+	* app/gui/tips-dialog.c: changed accordingly.
+
+	* data/images/wilber-wizard.png: new wilber for the user installation
+	dialog.
+
+	* app/gui/user-install-dialog.c: use the new wilber icon. We still
+	need a good new eeek wilber.
+
+	* themes/Default/gtkrc: don't change the default font size.
+
 2002-02-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpobject.c: made the gimp_object_get_memsize()

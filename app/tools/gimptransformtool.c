@@ -959,11 +959,11 @@ gimp_transform_tool_info_dialog_connect (GimpTransformTool *tr_tool,
     {
       gimp_dialog_create_action_area (GIMP_DIALOG (tr_tool->info_dialog->shell),
 
-                                      ok_button, transform_ok_callback,
-                                      tr_tool, NULL, NULL, TRUE, FALSE,
-
                                       GIMP_STOCK_RESET, transform_reset_callback,
                                       tr_tool, NULL, NULL, FALSE, FALSE,
+
+                                      ok_button, transform_ok_callback,
+                                      tr_tool, NULL, NULL, TRUE, FALSE,
 
                                       NULL);
     }

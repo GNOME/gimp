@@ -55,10 +55,8 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps/eek.xpm"
 #include "pixmaps/folder.xpm"
 #include "pixmaps/new.xpm"
-#include "pixmaps/wilber.xpm"
 
 
 #ifndef G_OS_WIN32
@@ -76,7 +74,6 @@
 
 #define NUM_PAGES    6
 #define EEK_PAGE     (NUM_PAGES - 1)
-#define WILBER_WIDTH 62
 
 #define PAGE_STYLE(widget)  gtk_widget_modify_style (widget, page_style)
 #define TITLE_STYLE(widget) gtk_widget_modify_style (widget, title_style)
@@ -100,7 +97,7 @@ static GtkWidget  *user_install_dialog = NULL;
 
 static GtkWidget  *notebook        = NULL;
 
-static GtkWidget  *title_pixmap    = NULL;
+static GtkWidget  *title_image     = NULL;
 
 static GtkWidget  *title_label     = NULL;
 static GtkWidget  *footer_label    = NULL;
@@ -307,12 +304,21 @@ user_install_notebook_set_page (GtkNotebook *notebook,
   gtk_label_set_text (GTK_LABEL (title_label), title);
   gtk_label_set_text (GTK_LABEL (footer_label), footer);
 
-  if (index == EEK_PAGE)
+  if (index == EEK_PAGE && title_image)
     {
-      gtk_widget_set_size_request (title_pixmap, 
-                                   title_pixmap->allocation.width,
-                                   title_pixmap->allocation.height);
-      gimp_pixmap_set (GIMP_PIXMAP (title_pixmap), eek_xpm);
+      GdkPixbuf *wilber;
+      gchar     *filename;
+
+      filename = g_build_filename (gimp_data_directory(),
+                                   "images", "wilber-eek.png", NULL);
+      wilber = gdk_pixbuf_new_from_file (filename, NULL);
+      g_free (filename);
+
+      if (wilber)
+        {
+          gtk_image_set_from_pixbuf (GTK_IMAGE (title_image), wilber);
+          g_object_unref (wilber);
+        }
     }
   
   gtk_notebook_set_current_page (notebook, index);
@@ -526,8 +532,9 @@ user_install_dialog_create (Gimp *gimp)
   GtkWidget *darea;
   GtkWidget *page;
   GtkWidget *sep;
-
   GtkWidget *eek_box;
+  GdkPixbuf *wilber;
+  gchar     *filename;
 
   dialog = user_install_dialog =
     gimp_dialog_new (_("GIMP User Installation"), "user_installation",
@@ -578,16 +585,13 @@ user_install_dialog_create (Gimp *gimp)
 						GTK_RC_BG |
 						GTK_RC_TEXT);
 
-  pango_font_description_free (page_style->font_desc);
-  page_style->font_desc = pango_font_description_from_string ("sans 12");
-
   /*  B/Colored Style for the page title  */
   title_style = gtk_rc_style_copy (page_style);
 
   title_style->bg[GTK_STATE_NORMAL] = title_color;
 
   pango_font_description_free (title_style->font_desc);
-  title_style->font_desc = pango_font_description_from_string ("sans bold 24");
+  title_style->font_desc = pango_font_description_from_string ("sans 20");
 
   TITLE_STYLE (dialog);
 
@@ -603,7 +607,6 @@ user_install_dialog_create (Gimp *gimp)
   ebox = gtk_event_box_new ();
   TITLE_STYLE (ebox);
   gtk_widget_set_events (ebox, GDK_EXPOSURE_MASK);
-  gtk_widget_set_size_request (ebox, WILBER_WIDTH + 16, -1);
   gtk_box_pack_start (GTK_BOX (vbox), ebox, FALSE, FALSE, 0);
   gtk_widget_show (ebox);
 
@@ -612,9 +615,19 @@ user_install_dialog_create (Gimp *gimp)
   gtk_container_add (GTK_CONTAINER (ebox), hbox);
   gtk_widget_show (hbox);
 
-  title_pixmap = gimp_pixmap_new (wilber_xpm);
-  gtk_box_pack_start (GTK_BOX (hbox), title_pixmap, FALSE, FALSE, 8);
-  gtk_widget_show (title_pixmap);
+  filename = g_build_filename (gimp_data_directory(),
+                               "images", "wilber-wizard.png", NULL);
+  wilber = gdk_pixbuf_new_from_file (filename, NULL);
+  g_free (filename);
+
+  if (wilber)
+    {
+      title_image = gtk_image_new_from_pixbuf (wilber);
+      g_object_unref (wilber);
+
+      gtk_box_pack_start (GTK_BOX (hbox), title_image, FALSE, FALSE, 8);
+      gtk_widget_show (title_image);
+    }
 
   title_label = gtk_label_new (NULL);
   TITLE_STYLE (title_label);  

@@ -66,23 +66,10 @@ style "gimp-gtk-icons"
 class "GtkImage" style "gimp-gtk-icons"
 
 
-style "gimp-normal-font-style"
-{
-  font_name = "sans 12"
-}
-
-style "gimp-small-font-style"
-{
-  font_name = "sans 11"
-}
-
 style "gimp-tiny-font-style"
 {
   font_name = "sans 8"
 }
-
-
-class "GtkWidget" style "gimp-normal-font-style"
 
 class "*Ruler*" style "gimp-tiny-font-style"
 
@@ -105,7 +92,7 @@ style "gimp-hscale-style"
 class "GtkHScale" style "gimp-hscale-style"
 
 
-style "gimp-dock-style" = "gimp-small-font-style"
+style "gimp-dock-style"
 {
   GimpDock::separator_height           = 6
   GimpDockbook::tab_border             = 0

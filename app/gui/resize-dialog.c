@@ -206,14 +206,14 @@ resize_widget_new (GimpImage    *gimage,
 		       GTK_WIN_POS_MOUSE,
 		       FALSE, FALSE, TRUE,
 
-		       GIMP_STOCK_RESET, reset_callback,
-		       resize, NULL, NULL, FALSE, FALSE,
-
 		       GTK_STOCK_CANCEL, 
                        cancel_cb ? cancel_cb : G_CALLBACK (gtk_widget_destroy),
 		       cancel_cb ? user_data : NULL,
 		       cancel_cb ? NULL : (gpointer) 1,
 		       NULL, FALSE, TRUE,
+
+		       GIMP_STOCK_RESET, reset_callback,
+		       resize, NULL, NULL, FALSE, FALSE,
 
 		       GTK_STOCK_OK, ok_cb,
 		       user_data, NULL, NULL, TRUE, FALSE,

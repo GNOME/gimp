@@ -244,11 +244,11 @@ posterize_dialog_new (void)
 		     GTK_WIN_POS_NONE,
 		     FALSE, TRUE, FALSE,
 
-		     GIMP_STOCK_RESET, posterize_reset_callback,
-		     pd, NULL, NULL, TRUE, FALSE,
-
 		     GTK_STOCK_CANCEL, posterize_cancel_callback,
 		     pd, NULL, NULL, FALSE, TRUE,
+
+		     GIMP_STOCK_RESET, posterize_reset_callback,
+		     pd, NULL, NULL, TRUE, FALSE,
 
 		     GTK_STOCK_OK, posterize_ok_callback,
 		     pd, NULL, NULL, TRUE, FALSE,

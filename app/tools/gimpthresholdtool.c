@@ -333,11 +333,11 @@ threshold_dialog_new (void)
 		     GTK_WIN_POS_NONE,
 		     FALSE, TRUE, FALSE,
 
-		     GIMP_STOCK_RESET, threshold_reset_callback,
-		     td, NULL, NULL, TRUE, FALSE,
-
 		     GTK_STOCK_CANCEL, threshold_cancel_callback,
 		     td, NULL, NULL, FALSE, TRUE,
+
+		     GIMP_STOCK_RESET, threshold_reset_callback,
+		     td, NULL, NULL, TRUE, FALSE,
 
 		     GTK_STOCK_OK, threshold_ok_callback,
 		     td, NULL, NULL, TRUE, FALSE,

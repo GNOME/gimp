@@ -960,12 +960,14 @@ crop_info_create (GimpTool *tool)
   /*  create the action area  */
   gimp_dialog_create_action_area (GIMP_DIALOG (crop_info->shell),
 
-				  _("Crop"), crop_crop_callback,
-				  NULL, NULL, NULL, TRUE, FALSE,
-				  _("Resize"), crop_resize_callback,
-				  NULL, NULL, NULL, FALSE, FALSE,
 				  GTK_STOCK_CLOSE, crop_close_callback,
 				  NULL, NULL, NULL, FALSE, FALSE,
+
+				  _("Resize"), crop_resize_callback,
+				  NULL, NULL, NULL, FALSE, FALSE,
+
+				  _("Crop"), crop_crop_callback,
+				  NULL, NULL, NULL, TRUE, FALSE,
 
 				  NULL);
 

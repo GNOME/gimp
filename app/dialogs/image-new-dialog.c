@@ -117,11 +117,11 @@ file_new_dialog_create (Gimp      *gimp,
 				  GTK_WIN_POS_MOUSE,
 				  FALSE, FALSE, TRUE,
 
-				  GIMP_STOCK_RESET, file_new_reset_callback,
-				  info, NULL, NULL, FALSE, FALSE,
-
 				  GTK_STOCK_CANCEL, file_new_cancel_callback,
 				  info, NULL, NULL, FALSE, TRUE,
+
+				  GIMP_STOCK_RESET, file_new_reset_callback,
+				  info, NULL, NULL, FALSE, FALSE,
 
 				  GTK_STOCK_OK, file_new_ok_callback,
 				  info, NULL, NULL, TRUE, FALSE,
@@ -318,8 +318,12 @@ file_new_dialog_create (Gimp      *gimp,
   gtk_table_attach_defaults (GTK_TABLE (info->resolution_se), spinbutton,
 			     1, 2, 0, 1);
   gtk_widget_show (spinbutton);
-  gtk_table_attach (GTK_TABLE (table), info->resolution_se, 1, 2, 5, 7,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+
+  abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
+  gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 2, 5, 7);
+  gtk_widget_show (abox);
+
+  gtk_container_add (GTK_CONTAINER (abox), info->resolution_se);  
   gtk_widget_show (info->resolution_se);
 
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (info->resolution_se),

@@ -124,7 +124,7 @@ tips_dialog_create (void)
   gtk_widget_show (vbox2);
 
   filename = g_build_filename (gimp_data_directory(), 
-                               "images", "tips_wilber.png", NULL);
+                               "images", "wilber-tips.png", NULL);
   wilber = gdk_pixbuf_new_from_file (filename, NULL);
   g_free (filename);
 
