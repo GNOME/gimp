@@ -261,9 +261,10 @@ gimp_parasite_list_deserialize (GimpConfig *list,
         case G_TOKEN_SYMBOL:
           if (scanner->value.v_symbol == parasite_symbol)
             {
-              gchar        *parasite_name  = NULL;
-              gint          parasite_flags = 0;
-              gchar        *parasite_data  = NULL;
+              gchar        *parasite_name      = NULL;
+              gint          parasite_flags     = 0;
+              guint8       *parasite_data      = NULL;
+              gint          parasite_data_size = 0;
               GimpParasite *parasite;
 
               token = G_TOKEN_STRING;
@@ -282,17 +283,43 @@ gimp_parasite_list_deserialize (GimpConfig *list,
               if (! gimp_scanner_parse_int (scanner, &parasite_flags))
                 goto cleanup;
 
-              token = G_TOKEN_STRING;
+              token = G_TOKEN_INT;
 
               if (g_scanner_peek_next_token (scanner) != token)
-                goto cleanup;
+                {
+                  /*  old format -- plain string  */
 
-              if (! gimp_scanner_parse_string (scanner, &parasite_data))
-                goto cleanup;
+                  gchar *str;
+
+                  if (g_scanner_peek_next_token (scanner) != G_TOKEN_STRING)
+                    goto cleanup;
+
+                  if (! gimp_scanner_parse_string (scanner, &str))
+                    goto cleanup;
+
+                  parasite_data_size = strlen (str);
+                  parasite_data      = str;
+                }
+              else
+                {
+                  /*  new format -- properly encoded binary data  */
+
+                  if (! gimp_scanner_parse_int (scanner, &parasite_data_size))
+                    goto cleanup;
+
+                  token = G_TOKEN_STRING;
+
+                  if (g_scanner_peek_next_token (scanner) != token)
+                    goto cleanup;
+
+                  if (! gimp_scanner_parse_data (scanner, parasite_data_size,
+                                                 &parasite_data))
+                    goto cleanup;
+                }
 
               parasite = gimp_parasite_new (parasite_name,
                                             parasite_flags,
-                                            strlen (parasite_data),
+                                            parasite_data_size,
                                             parasite_data);
               gimp_parasite_list_add (GIMP_PARASITE_LIST (list),
                                       parasite);  /* adds a copy */
@@ -301,7 +328,7 @@ gimp_parasite_list_deserialize (GimpConfig *list,
               token = G_TOKEN_RIGHT_PAREN;
 
               g_free (parasite_data);
-cleanup:
+            cleanup:
               g_free (parasite_name);
             }
           break;
@@ -442,51 +469,19 @@ parasite_serialize (const gchar      *key,
                     GimpParasite     *parasite,
                     GimpConfigWriter *writer)
 {
-  GString     *str;
-  const gchar *data;
-  guint32      len;
-
   if (! gimp_parasite_is_persistent (parasite))
     return;
 
   gimp_config_writer_open (writer, parasite_symbol);
 
-  str = g_string_sized_new (64);
+  gimp_config_writer_printf (writer, "\"%s\" %lu %lu",
+                             gimp_parasite_name (parasite),
+                             gimp_parasite_flags (parasite),
+                             gimp_parasite_data_size (parasite));
 
-  g_string_printf (str, "\"%s\" %lu \"",
-                   gimp_parasite_name (parasite),
-                   gimp_parasite_flags (parasite));
-
-  /* the current methodology is: never move the parasiterc from one
-   * system to another. If you want to do this you should probably
-   * write out parasites which contain any non-alphanumeric(+some)
-   * characters as \xHH sequences altogether.
-   */
-
-  data = (const gchar *) gimp_parasite_data (parasite);
-
-  for (len = gimp_parasite_data_size (parasite); len > 0; len--, data++)
-    {
-      switch (*data)
-        {
-        case '\\': g_string_append_len (str, "\\\\", 2); break;
-        case '\0': g_string_append_len (str, "\\0" , 2); break;
-        case '"' : g_string_append_len (str, "\\\"", 2); break;
-          /* disabled, not portable!  */
-          /*              case '\n': fputs ("\\n", fp); break;*/
-          /*              case '\r': fputs ("\\r", fp); break;*/
-        case 26  : g_string_append_len (str, "\\z",  2); break;
-
-        default  : g_string_append_c (str, *data);
-          break;
-        }
-    }
-
-  g_string_append (str, "\"");
-
-  gimp_config_writer_print (writer, str->str, str->len);
-
-  g_string_free (str, TRUE);
+  gimp_config_writer_data (writer,
+                           gimp_parasite_data_size (parasite),
+                           gimp_parasite_data (parasite));
 
   gimp_config_writer_close (writer);
   gimp_config_writer_linefeed (writer);
