@@ -1,3 +1,7 @@
+2005-03-10  Sven Neumann  <sven@gimp.org>
+
+	* app/composite/gimp-composite-altivec.c: delete trailing whitespace.
+
 2005-03-09  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimptexttool.c (gimp_text_tool_create_vectors_warped):

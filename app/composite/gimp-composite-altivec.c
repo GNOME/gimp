@@ -50,10 +50,10 @@ static const vector unsigned char alphamask = (const vector unsigned char)
   INIT_VECTOR(0,0,0,0xff,0,0,0,0xff,0,0,0,0xff,0,0,0,0xff);
 
 /* Load a vector from an unaligned location in memory */
-static inline vector unsigned char 
+static inline vector unsigned char
 LoadUnaligned(const guchar *v)
 {
-  if ((long)v & 0x0f) 
+  if ((long)v & 0x0f)
     {
       vector unsigned char permuteVector = vec_lvsl(0, v);
       vector unsigned char low = vec_ld(0, v);
@@ -65,12 +65,12 @@ LoadUnaligned(const guchar *v)
 }
 
 /* Load less than a vector from an unaligned location in memory */
-static inline vector unsigned char 
+static inline vector unsigned char
 LoadUnalignedLess(const guchar *v,
                   int n)
 {
   vector unsigned char permuteVector = vec_lvsl(0, v);
-  if (((long)v&0x0f)+n > 15) 
+  if (((long)v&0x0f)+n > 15)
     {
       vector unsigned char low = vec_ld(0, v);
       vector unsigned char high = vec_ld(16, v);
@@ -78,13 +78,13 @@ LoadUnalignedLess(const guchar *v,
     }
   else
     {
-      vector unsigned char tmp = vec_ld(0, v); 
+      vector unsigned char tmp = vec_ld(0, v);
       return vec_perm(tmp, tmp, permuteVector); /* don't want overflow */
     }
 }
 
 /* Store a vector to an unaligned location in memory */
-static inline void 
+static inline void
 StoreUnaligned (vector unsigned char v,
                  const guchar *where)
 {
@@ -114,19 +114,19 @@ StoreUnaligned (vector unsigned char v,
 }
 
 /* Store less than a vector to an unaligned location in memory */
-static inline void 
+static inline void
 StoreUnalignedLess (vector unsigned char v,
                     const guchar *where,
                     int n)
 {
   int i;
   vector unsigned char permuteVector = vec_lvsr(0, where);
-  v = vec_perm(v, v, permuteVector); 
+  v = vec_perm(v, v, permuteVector);
   for (i=0; i<n; i++)
     vec_ste(v, i, CONST_BUFFER(where));
 }
 
-void 
+void
 gimp_composite_addition_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
 {
   const guchar *A = ctx->A;
@@ -143,7 +143,7 @@ gimp_composite_addition_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
       alpha_a=vec_and(a, alphamask);
       alpha_b=vec_and(b, alphamask);
       d=vec_min(alpha_a, alpha_b);
-   
+
       a=vec_andc(a, alphamask);
       a=vec_adds(a, d);
       b=vec_andc(b, alphamask);
@@ -160,11 +160,11 @@ gimp_composite_addition_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
   length = length*4;
   a=LoadUnalignedLess(A, length);
   b=LoadUnalignedLess(B, length);
-    
+
   alpha_a=vec_and(a,alphamask);
   alpha_b=vec_and(b,alphamask);
   d=vec_min(alpha_a,alpha_b);
-   
+
   a=vec_andc(a,alphamask);
   a=vec_adds(a,d);
   b=vec_andc(b,alphamask);
@@ -173,7 +173,7 @@ gimp_composite_addition_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
   StoreUnalignedLess(d, D, length);
 };
 
-void 
+void
 gimp_composite_subtract_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
 {
   const guchar *A = ctx->A;
@@ -190,7 +190,7 @@ gimp_composite_subtract_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
       alpha_a=vec_and(a, alphamask);
       alpha_b=vec_and(b, alphamask);
       d=vec_min(alpha_a, alpha_b);
-   
+
       a=vec_andc(a, alphamask);
       a=vec_adds(a, d);
       b=vec_andc(b, alphamask);
@@ -207,11 +207,11 @@ gimp_composite_subtract_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
   length = length*4;
   a=LoadUnalignedLess(A, length);
   b=LoadUnalignedLess(B, length);
-    
+
   alpha_a=vec_and(a,alphamask);
   alpha_b=vec_and(b,alphamask);
   d=vec_min(alpha_a,alpha_b);
-   
+
   a=vec_andc(a,alphamask);
   a=vec_adds(a,d);
   b=vec_andc(b,alphamask);
@@ -220,7 +220,7 @@ gimp_composite_subtract_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
   StoreUnalignedLess(d, D, length);
 };
 
-void 
+void
 gimp_composite_swap_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
 {
   const guchar *A = ctx->A;
