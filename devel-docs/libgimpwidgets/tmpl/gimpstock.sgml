@@ -481,6 +481,22 @@ RTL variant
 
 
 
+<!-- ##### MACRO GIMP_STOCK_CURSOR ##### -->
+<para>
+<inlinegraphic fileref="stock-cursor-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-cursor-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_SAMPLE_POINT ##### -->
+<para>
+<inlinegraphic fileref="stock-sample-point-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-sample-point-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_SHAPE_CIRCLE ##### -->
 <para>
 <inlinegraphic fileref="stock-shape-circle-16.png" format="png"></inlinegraphic>
