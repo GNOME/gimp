@@ -150,6 +150,10 @@ plug_ins_init (Gimp               *gimp,
     {
       plug_in_def = tmp->data;
 
+      basename = g_path_get_basename (plug_in_def->prog);
+      (* status_callback) (NULL, basename, nth / n_plugins);
+      g_free (basename);
+
       if (plug_in_def->needs_query)
 	{
 	  gimp->write_pluginrc = TRUE;
@@ -159,10 +163,6 @@ plug_ins_init (Gimp               *gimp,
 
 	  plug_in_call_query (gimp, plug_in_def);
 	}
-
-      basename = g_path_get_basename (plug_in_def->prog);
-      (* status_callback) (NULL, basename, nth / n_plugins);
-      g_free (basename);
     }
 
   (* status_callback) (NULL, NULL, 1.0);
@@ -279,6 +279,10 @@ plug_ins_init (Gimp               *gimp,
     {
       plug_in_def = tmp->data;
 
+      basename = g_path_get_basename (plug_in_def->prog);
+      (* status_callback) (NULL, basename, nth / n_plugins);
+      g_free (basename);
+
       if (plug_in_def->has_init)
 	{
 	  if (gimp->be_verbose)
@@ -286,10 +290,6 @@ plug_ins_init (Gimp               *gimp,
 
 	  plug_in_call_init (gimp, plug_in_def);
 	}
-
-      basename = g_path_get_basename (plug_in_def->prog);
-      (* status_callback) (NULL, basename, nth / n_plugins);
-      g_free (basename);
     }
 
   (* status_callback) (NULL, NULL, 1.0);

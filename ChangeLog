@@ -1,5 +1,11 @@
 2003-05-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/plug-ins.c (plug_ins_init): Update the splash before
+	calling plug_in_query() and plug_in_init() (applied a modified
+	patch from Raphael Quinet). Fixes bug #112156.
+
+2003-05-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdockbook.[ch]: added "dockable_added",
 	"dockable_removed" and "dockable_reordered" signals and emit them.
 
