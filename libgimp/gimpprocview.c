@@ -483,10 +483,12 @@ dialog_close_callback (GtkWidget *widget,
     /* we are called by another application : just kill the dialog box */
     gtk_widget_hide(dbbrowser->dlg);
     gtk_widget_destroy(dbbrowser->dlg);
-  } else 
+  } else {
     /* we are in the plug_in : kill the gtk application */
+    gtk_widget_destroy(dbbrowser->dlg);
     gtk_main_quit ();
-} 
+  }
+}
 
 static void 
 dialog_apply_callback (GtkWidget *widget, 

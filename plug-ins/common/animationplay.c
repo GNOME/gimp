@@ -297,7 +297,7 @@ build_dialog(GImageType basetype,
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) window_close_callback,
-		      NULL);
+		      dlg);
 
   
   /* Action area - 'close' button only. */
@@ -306,7 +306,7 @@ build_dialog(GImageType basetype,
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) window_close_callback,
-			     NULL);
+			     dlg);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area),
 		      button, TRUE, TRUE, 0);
   gtk_widget_grab_default (button);
@@ -883,6 +883,7 @@ static void
 window_close_callback (GtkWidget *widget,
 		       gpointer   data)
 {
+  gtk_widget_destroy(GTK_WIDGET(data));
   gtk_main_quit();
 }
 
