@@ -884,7 +884,7 @@ _darken_pixels_1a_1a:
 #ifndef __MINGW32__
 
 .globl lighten_pixels_3a_3a
-	.type	 lighten_pixels_3a_3a
+	.type	 lighten_pixels_3a_3a,@function
 lighten_pixels_3a_3a:
 
 #else
@@ -948,7 +948,7 @@ _lighten_pixels_3a_3a:
 #ifndef __MINGW32__
 
 .globl lighten_pixels_1a_1a
-	.type	 lighten_pixels_1a_1a
+	.type	 lighten_pixels_1a_1a,@function
 lighten_pixels_1a_1a:
 
 #else
@@ -1037,7 +1037,7 @@ _lighten_pixels_1a_1a:
 #ifndef __MINGW32__
 
 .globl screen_pixels_3a_3a
-	.type	 screen_pixels_3a_3a
+	.type	 screen_pixels_3a_3a,@function
 screen_pixels_3a_3a:
 
 #else
@@ -1173,7 +1173,7 @@ _screen_pixels_3a_3a:
 #ifndef __MINGW32__
 
 .globl screen_pixels_1a_1a
-	.type	 screen_pixels_1a_1a
+	.type	 screen_pixels_1a_1a,@function
 screen_pixels_1a_1a:
 
 #else
@@ -1369,7 +1369,7 @@ _screen_pixels_1a_1a:
 #ifndef __MINGW32__
 
 .globl overlay_pixels_3a_3a
-	.type	 overlay_pixels_3a_3a
+	.type	 overlay_pixels_3a_3a,@function
 overlay_pixels_3a_3a:
 
 #else
@@ -1417,7 +1417,7 @@ _overlay_pixels_3a_3a:
 #ifndef __MINGW32__
 
 .globl overlay_pixels_1a_1a
-	.type	 overlay_pixels_1a_1a
+	.type	 overlay_pixels_1a_1a,@function
 overlay_pixels_1a_1a:
 
 #else
