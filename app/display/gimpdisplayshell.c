@@ -1001,7 +1001,7 @@ gimp_display_shell_scrolled (GimpDisplayShell *shell)
   g_signal_emit (shell, display_shell_signals[SCROLLED], 0);
 }
 
-void
+gboolean
 gimp_display_shell_snap_coords (GimpDisplayShell *shell,
                                 GimpCoords       *coords,
                                 GimpCoords       *snapped_coords,
@@ -1012,10 +1012,11 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
 {
   gboolean snap_to_guides = FALSE;
   gboolean snap_to_grid   = FALSE;
+  gboolean snapped        = FALSE;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (coords != NULL);
-  g_return_if_fail (snapped_coords != NULL);
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+  g_return_val_if_fail (coords != NULL, FALSE);
+  g_return_val_if_fail (snapped_coords != NULL, FALSE);
 
   *snapped_coords = *coords;
 
@@ -1033,11 +1034,11 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
 
   if (snap_to_guides || snap_to_grid)
     {
-      gboolean snapped;
-      gint     tx, ty;
-      gint     snap_distance;
+      gdouble tx, ty;
+      gint    snap_distance;
 
-      snap_distance = GIMP_GUI_CONFIG (shell->gdisp->gimage->gimp->config)->snap_distance;
+      snap_distance =
+        GIMP_GUI_CONFIG (shell->gdisp->gimage->gimp->config)->snap_distance;
 
       if (snap_width > 0 && snap_height > 0)
         {
@@ -1074,6 +1075,8 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
           snapped_coords->y = ty - snap_offset_y;
         }
     }
+
+  return snapped;
 }
 
 gboolean

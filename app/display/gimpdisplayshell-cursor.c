@@ -107,8 +107,10 @@ gimp_display_shell_unset_override_cursor (GimpDisplayShell *shell)
 
 void
 gimp_display_shell_update_cursor (GimpDisplayShell *shell,
-                                  gint              x,
-                                  gint              y)
+                                  gint              display_x,
+                                  gint              display_y,
+                                  gint              image_x,
+                                  gint              image_y)
 {
   GimpImage *gimage;
   gboolean   new_cursor;
@@ -121,14 +123,14 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
 
   new_cursor = (shell->draw_cursor &&
                 shell->proximity   &&
-                x >= 0             &&
-                y >= 0);
+                display_x >= 0     &&
+                display_y >= 0);
 
   /* Erase old cursor, if necessary */
 
-  if (shell->have_cursor && (! new_cursor         ||
-                             x != shell->cursor_x ||
-                             y != shell->cursor_y))
+  if (shell->have_cursor && (! new_cursor                 ||
+                             display_x != shell->cursor_x ||
+                             display_y != shell->cursor_y))
     {
       gimp_display_shell_expose_area (shell,
                                       shell->cursor_x - 7,
@@ -139,15 +141,19 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
     }
 
   shell->have_cursor = new_cursor;
-  shell->cursor_x    = x;
-  shell->cursor_y    = y;
+  shell->cursor_x    = display_x;
+  shell->cursor_y    = display_y;
 
-  if (x >= 0 && y >= 0)
-    {
-      gimp_display_shell_untransform_xy (shell, x, y, &t_x, &t_y, FALSE, FALSE);
-    }
+  /*  use the passed image_coords for the statusbar because they are
+   *  possibly snapped...
+   */
+  gimp_statusbar_update_cursor (GIMP_STATUSBAR (shell->statusbar),
+                                image_x, image_y);
 
-  gimp_statusbar_update_cursor (GIMP_STATUSBAR (shell->statusbar), t_x, t_y);
+  /*  ...but use the unsnapped display_coords for the info window  */
+  if (display_x >= 0 && display_y >= 0)
+    gimp_display_shell_untransform_xy (shell, display_x, display_y,
+                                       &t_x, &t_y, FALSE, FALSE);
 
   if (t_x < 0              ||
       t_y < 0              ||

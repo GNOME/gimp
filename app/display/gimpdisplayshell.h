@@ -182,7 +182,7 @@ void        gimp_display_shell_reconnect             (GimpDisplayShell *shell);
 void        gimp_display_shell_scaled                (GimpDisplayShell *shell);
 void        gimp_display_shell_scrolled              (GimpDisplayShell *shell);
 
-void        gimp_display_shell_snap_coords           (GimpDisplayShell *shell,
+gboolean    gimp_display_shell_snap_coords           (GimpDisplayShell *shell,
                                                       GimpCoords       *coords,
                                                       GimpCoords       *snapped_coords,
                                                       gint              snap_offset_x,

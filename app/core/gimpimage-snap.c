@@ -37,7 +37,7 @@
 gboolean
 gimp_image_snap_x (GimpImage *gimage,
                    gdouble    x,
-                   gint      *tx,
+                   gdouble   *tx,
                    gdouble    epsilon_x,
                    gboolean   snap_to_guides,
                    gboolean   snap_to_grid)
@@ -58,7 +58,7 @@ gimp_image_snap_x (GimpImage *gimage,
   if (! snap_to_guides && ! snap_to_grid)
     return FALSE;
 
-  *tx = ROUND (x);
+  *tx = x;
 
   if (x < 0 || x >= gimage->width)
     return FALSE;
@@ -117,7 +117,7 @@ gimp_image_snap_x (GimpImage *gimage,
 gboolean
 gimp_image_snap_y (GimpImage *gimage,
                    gdouble    y,
-                   gint      *ty,
+                   gdouble   *ty,
                    gdouble    epsilon_y,
                    gboolean   snap_to_guides,
                    gboolean   snap_to_grid)
@@ -138,7 +138,7 @@ gimp_image_snap_y (GimpImage *gimage,
   if (! snap_to_guides && ! snap_to_grid)
     return FALSE;
 
-  *ty = ROUND (y);
+  *ty = y;
 
   if (y < 0 || y >= gimage->height)
     return FALSE;
@@ -198,8 +198,8 @@ gboolean
 gimp_image_snap_point (GimpImage *gimage,
                        gdouble    x,
                        gdouble    y,
-                       gint      *tx,
-                       gint      *ty,
+                       gdouble   *tx,
+                       gdouble   *ty,
                        gdouble    epsilon_x,
                        gdouble    epsilon_y,
                        gboolean   snap_to_guides,
@@ -222,8 +222,8 @@ gimp_image_snap_point (GimpImage *gimage,
   if (! snap_to_guides && ! snap_to_grid)
     return FALSE;
 
-  *tx = ROUND (x);
-  *ty = ROUND (y);
+  *tx = x;
+  *ty = y;
 
   if (x < 0 || x >= gimage->width ||
       y < 0 || y >= gimage->height)
@@ -324,15 +324,15 @@ gimp_image_snap_rectangle (GimpImage *gimage,
                            gdouble    y1,
                            gdouble    x2,
                            gdouble    y2,
-                           gint      *tx1,
-                           gint      *ty1,
+                           gdouble   *tx1,
+                           gdouble   *ty1,
                            gdouble    epsilon_x,
                            gdouble    epsilon_y,
                            gboolean   snap_to_guides,
                            gboolean   snap_to_grid)
 {
-  gint     nx1, ny1;
-  gint     nx2, ny2;
+  gdouble  nx1, ny1;
+  gdouble  nx2, ny2;
   gboolean snap1, snap2, snap3, snap4;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
@@ -342,8 +342,8 @@ gimp_image_snap_rectangle (GimpImage *gimage,
   if (! snap_to_guides && ! snap_to_grid)
     return FALSE;
 
-  *tx1 = ROUND (x1);
-  *ty1 = ROUND (y1);
+  *tx1 = x1;
+  *ty1 = y1;
 
   snap1 = gimp_image_snap_x (gimage, x1, &nx1,
                              epsilon_x,
@@ -373,7 +373,7 @@ gimp_image_snap_rectangle (GimpImage *gimage,
   if (snap1)
     *tx1 = nx1;
   else if (snap2)
-    *tx1 = ROUND (x1 + (nx2 - x2));
+    *tx1 = RINT (x1 + (nx2 - x2));
 
   if (snap3 && snap4)
     {
@@ -386,7 +386,7 @@ gimp_image_snap_rectangle (GimpImage *gimage,
   if (snap3)
     *ty1 = ny1;
   else if (snap4)
-    *ty1 = ROUND (y1 + (ny2 - y2));
+    *ty1 = RINT (y1 + (ny2 - y2));
 
   return (snap1 || snap2 || snap3 || snap4);
 }

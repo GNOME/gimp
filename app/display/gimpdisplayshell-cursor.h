@@ -20,16 +20,19 @@
 #define __GIMP_DISPLAY_SHELL_CURSOR_H__
 
 
-void        gimp_display_shell_set_cursor            (GimpDisplayShell *shell,
-                                                      GdkCursorType     cursor_type,
-                                                      GimpToolCursorType  tool_cursor,
-                                                      GimpCursorModifier  modifier);
-void        gimp_display_shell_set_override_cursor   (GimpDisplayShell *shell,
-                                                      GdkCursorType     cursor_type);
-void        gimp_display_shell_unset_override_cursor (GimpDisplayShell *shell);
+void   gimp_display_shell_set_cursor            (GimpDisplayShell   *shell,
+                                                 GdkCursorType       cursor_type,
+                                                 GimpToolCursorType  tool_cursor,
+                                                 GimpCursorModifier  modifier);
+void   gimp_display_shell_set_override_cursor   (GimpDisplayShell   *shell,
+                                                 GdkCursorType       cursor_type);
+void   gimp_display_shell_unset_override_cursor (GimpDisplayShell   *shell);
 
-void	    gimp_display_shell_update_cursor	     (GimpDisplayShell *shell,
-                                                      gint              x,
-                                                      gint              y);
+void   gimp_display_shell_update_cursor         (GimpDisplayShell   *shell,
+                                                 gint                display_x,
+                                                 gint                display_y,
+                                                 gint                image_x,
+                                                 gint                image_y);
+
 
 #endif /* __GIMP_DISPLAY_SHELL_CURSOR_H__ */

@@ -1,3 +1,28 @@
+2004-02-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-snap.[ch]: return the snapped coordinates as
+	gdouble, not gint because we must not round the unsnapped axis
+	if only one axis snapped.
+
+	* app/display/gimpdisplayshell.[ch] (gimp_display_shell_snap_coords):
+	changed accordingly. Added boolean return value indicating "snapped".
+
+	* app/display/gimpdisplayshell-cursor.[ch]
+	(gimp_display_shell_update_cursor): take both display_x and _x and
+	(possibly snapped) image_x and _y. Use the snapped values for the
+	statusbar and the unsnapped ones for updating the info_window.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_tool_events): applied modified patch
+	from Simon Budig which moves guide/grid snapping out of the
+	button_press/motion/button_release handlers and *always* snaps
+	the image_coords if the active_tool wants them to be snapped.
+	Makes sure that e.g. the brush preview is drawn at the right
+	place and fixes bug #134284.
+
+	Also pass both display_coords and image_coords to
+	gimp_display_shell_update_cursor().
+
 2004-02-23  Simon Budig  <simon@gimp.org>
 
 	* app/core/gimp.[ch]: removed unused member "standard_context"
