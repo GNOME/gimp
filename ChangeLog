@@ -1,3 +1,10 @@
+2004-09-04  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimppreviewarea.[ch]: pass a GdkEventButton to
+	gimp_preview_area_menu_popup().
+
+	* libgimpwidgets/gimppreview.c: implement GtkWidget::popup_menu().
+
 2004-09-04  DindinX  <david@dindinx.org>
 
 	* libgimpwidgets/gimppreview.c: Changed the way we attach the preview

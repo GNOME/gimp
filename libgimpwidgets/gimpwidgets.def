@@ -152,6 +152,7 @@ EXPORTS
 	gimp_preview_area_draw
 	gimp_preview_area_fill
 	gimp_preview_area_get_type
+	gimp_preview_area_menu_popup
 	gimp_preview_area_new
 	gimp_preview_area_set_cmap
 	gimp_preview_draw

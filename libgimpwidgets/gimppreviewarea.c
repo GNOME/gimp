@@ -768,10 +768,19 @@ gimp_preview_area_menu_new (GimpPreviewArea *area,
   return item;
 }
 
+/**
+ * gimp_preview_area_menu_popup:
+ * @area:  a #GimpPreviewArea
+ * @event: the button event that causes the menu to popup or %NULL
+ *
+ * Creates a popup menu that allows to configure the size and type of
+ * the checkerboard pattern that the @area uses to visualize transparency.
+ *
+ * Since: GIMP 2.2
+ **/
 void
 gimp_preview_area_menu_popup (GimpPreviewArea *area,
-                              guint            button,
-                              guint32          activate_time)
+                              GdkEventButton  *event)
 {
   GtkWidget *menu;
 
@@ -786,12 +795,10 @@ gimp_preview_area_menu_popup (GimpPreviewArea *area,
   gtk_menu_shell_append (GTK_MENU_SHELL (menu),
                          gimp_preview_area_menu_new (area, "check-size"));
 
-  gtk_menu_popup (GTK_MENU (menu),
-                  NULL, NULL, NULL, NULL, button, activate_time);
-
-#if 0
-  g_signal_connect (menu, "deactivate",
-                    G_CALLBACK (gtk_widget_destroy),
-                    NULL);
-#endif
+  if (event)
+    gtk_menu_popup (GTK_MENU (menu),
+                    NULL, NULL, NULL, NULL, event->button, event->time);
+  else
+    gtk_menu_popup (GTK_MENU (menu),
+                    NULL, NULL, NULL, NULL, 0, gtk_get_current_event_time ());
 }

@@ -58,6 +58,7 @@ static void      gimp_preview_set_property       (GObject          *object,
                                                   guint             property_id,
                                                   const GValue     *value,
                                                   GParamSpec       *pspec);
+static gboolean  gimp_preview_popup_menu         (GtkWidget        *widget);
 
 static void      gimp_preview_area_realize       (GtkWidget        *widget,
                                                   GimpPreview      *preview);
@@ -135,6 +136,10 @@ gimp_preview_class_init (GimpPreviewClass *klass)
   object_class->get_property = gimp_preview_get_property;
   object_class->set_property = gimp_preview_set_property;
 
+  widget_class->popup_menu   = gimp_preview_popup_menu;
+
+  klass->draw                = NULL;
+
   g_object_class_install_property (object_class,
                                    PROP_UPDATE,
                                    g_param_spec_boolean ("update",
@@ -142,8 +147,6 @@ gimp_preview_class_init (GimpPreviewClass *klass)
                                                          TRUE,
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
-
-  klass->draw = NULL;
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("size",
@@ -309,6 +312,16 @@ gimp_preview_set_property (GObject      *object,
     }
 }
 
+static gboolean
+gimp_preview_popup_menu (GtkWidget *widget)
+{
+  GimpPreview *preview = GIMP_PREVIEW (widget);
+
+  gimp_preview_area_menu_popup (GIMP_PREVIEW_AREA (preview->area), NULL);
+
+  return TRUE;
+}
+
 static void
 gimp_preview_area_realize (GtkWidget   *widget,
                            GimpPreview *preview)
@@ -436,10 +449,8 @@ gimp_preview_area_event (GtkWidget   *area,
           break;
 
         case 3:
-          gimp_preview_area_menu_popup (GIMP_PREVIEW_AREA (area),
-                                        button_event->button,
-                                        button_event->time);
-          break;
+          gimp_preview_area_menu_popup (GIMP_PREVIEW_AREA (area), button_event);
+          return TRUE;
         }
       break;
 

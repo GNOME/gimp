@@ -82,8 +82,7 @@ void        gimp_preview_area_set_cmap    (GimpPreviewArea *area,
                                            gint             num_colors);
 
 void        gimp_preview_area_menu_popup  (GimpPreviewArea *area,
-                                           guint            button,
-                                           guint32          activate_time);
+                                           GdkEventButton  *event);
 
 
 #endif /* __GIMP_PREVIEW_AREA_H__ */
