@@ -428,6 +428,8 @@ gimp_container_menu_item_selected (GimpContainerMenu *menu,
   g_return_if_fail (GIMP_IS_CONTAINER_MENU (menu));
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
+  gimp_container_menu_select_item (menu, viewable);
+
   if (menu->container && menu->context)
     {
       GimpContext *context;
@@ -451,8 +453,6 @@ gimp_container_menu_item_selected (GimpContainerMenu *menu,
 
       g_object_unref (context);
     }
-
-  gimp_container_menu_select_item (menu, viewable);
 }
 
 void
