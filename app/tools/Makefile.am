@@ -62,8 +62,8 @@ libapptools_la_SOURCES = \
 ##	levels.h		\
 ##	magnify.c		\
 ##	magnify.h		\
-##	measure.c		\
-##	measure.h		\
+	measure.c		\
+	measure.h		\
 	move.c			\
 	move.h			\
 	gimppaintbrushtool.c	\

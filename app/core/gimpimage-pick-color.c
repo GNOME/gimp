@@ -99,10 +99,10 @@ static void       gimp_color_picker_tool_cursor_update  (GimpTool       *tool,
 					       		 GDisplay       *gdisp);
 					       		
 static void       gimp_color_picker_tool_control        (GimpTool       *tool,
-					       		 ToolAction      action,
+                                                         ToolAction      action,
 					       		 GDisplay       *gdisp);
 
-static void       gimp_color_picker_tool_draw           (GimpTool       *tool);
+static void       gimp_color_picker_tool_draw           (GimpDrawTool   *draw_tool);
 
 
 
@@ -110,9 +110,9 @@ static GimpColorPickerToolOptions * gimp_color_picker_tool_options_new  (void);
 
 static void       gimp_color_picker_tool_options_reset   	(void);
 static void   gimp_color_picker_tool_info_window_close_callback (GtkWidget *widget,
-						       		 gpointer   data);
+                                                                 gpointer   data);
 static void       gimp_color_picker_tool_info_update    	(GimpTool   *tool,
-					      			 gboolean   valid);
+                                                                 gboolean   valid);
 
 					      			
 					      			
@@ -146,7 +146,7 @@ static gchar          index_buf[MAX_INFO_BUF];
 static gchar          gray_buf [MAX_INFO_BUF];
 static gchar          hex_buf  [MAX_INFO_BUF];
 
-static GimpToolClass *parent_class = NULL;
+static GimpDrawToolClass *parent_class = NULL;
 
 
 void
@@ -594,28 +594,24 @@ gimp_color_picker_tool_control (GimpTool    *tool,
 				ToolAction  action,
 		      		GDisplay   *gdisp)
 {
-  GimpDrawTool *dr_tool;
-
-  dr_tool = GIMP_DRAW_TOOL(tool);
-
   switch (action)
     {
     case PAUSE :
-      gimp_draw_tool_pause (dr_tool);
       break;
 
     case RESUME :
-      gimp_draw_tool_resume (dr_tool);
       break;
 
     case HALT :
-      gimp_draw_tool_stop (dr_tool);
       info_dialog_popdown (gimp_color_picker_tool_info);
       break;
 
     default:
       break;
     }
+
+  if (GIMP_TOOL_CLASS (parent_class)->control)
+    GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
 typedef guchar * (*GetColorFunc) (GimpObject *object,
@@ -742,19 +738,19 @@ pick_color (GimpImage    *gimage,
 }
 
 static void
-gimp_color_picker_tool_draw (GimpTool *tool)
+gimp_color_picker_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpColorPickerTool *cp_tool;
-  GimpDrawTool 	  *dr_tool;
-  gint             tx, ty;
-  gint             radiusx, radiusy;
-  gint             cx, cy;
+  GimpTool            *tool;
+  gint                 tx, ty;
+  gint                 radiusx, radiusy;
+  gint                 cx, cy;
 
   if (! gimp_color_picker_tool_options->sample_average)
     return;
 
-  cp_tool = GIMP_COLOR_PICKER_TOOL(tool);
-  dr_tool = GIMP_DRAW_TOOL(tool);
+  cp_tool = GIMP_COLOR_PICKER_TOOL (draw_tool);
+  tool    = GIMP_TOOL (draw_tool);
 
   gdisplay_transform_coords (tool->gdisp, cp_tool->centerx, cp_tool->centery,
 			     &tx, &ty, TRUE);
@@ -765,14 +761,14 @@ gimp_color_picker_tool_draw (GimpTool *tool)
   cy      = SCALEY (tool->gdisp, 1);
 
   /*  Draw the circle around the collecting area */
-  gdk_draw_rectangle (dr_tool->win, dr_tool->gc, 0,
+  gdk_draw_rectangle (draw_tool->win, draw_tool->gc, 0,
 		      tx - radiusx,
 		      ty - radiusy,
 		      2 * radiusx + cx, 2 * radiusy + cy);
 
   if (radiusx > 1 && radiusy > 1)
     {
-      gdk_draw_rectangle (dr_tool->win, dr_tool->gc, 0,
+      gdk_draw_rectangle (draw_tool->win, draw_tool->gc, 0,
 			  tx - radiusx + 2,
 			  ty - radiusy + 2,
 			  2 * radiusx + cx - 4, 2 * radiusy + cy - 4);
@@ -781,7 +777,7 @@ gimp_color_picker_tool_draw (GimpTool *tool)
 
 static void
 gimp_color_picker_tool_info_update (GimpTool  *tool,
-			  gboolean  valid)
+				    gboolean  valid)
 {
   if (!valid)
     {
@@ -881,7 +877,7 @@ gimp_color_picker_tool_info_update (GimpTool  *tool,
 
 static void
 gimp_color_picker_tool_info_window_close_callback (GtkWidget *widget,
-					      gpointer   client_data)
+						   gpointer   client_data)
 {
   info_dialog_popdown ((InfoDialog *) client_data);
 }

@@ -19,13 +19,19 @@
 #ifndef __GIMP_PAINTBRUSH_TOOL_H__
 #define __GIMP_PAINTBRUSH_TOOL_H__
 
+
 #include "gimppainttool.h"
+
 
 #define GIMP_TYPE_PAINTBRUSH_TOOL            (gimp_paintbrush_tool_get_type ())
 #define GIMP_PAINTBRUSH_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_PAINTBRUSH_TOOL, GimpPaintbrushTool))
 #define GIMP_IS_PAINTBRUSH_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_PAINTBRUSH_TOOL))
 #define GIMP_PAINTBRUSH_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PAINTBRUSH_TOOL, GimpPaintbrushToolClass))
 #define GIMP_IS_PAINTBRUSH_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PAINTBRUSH_TOOL))
+
+
+typedef struct _GimpPaintbrushTool      GimpPaintbrushTool;
+typedef struct _GimpPaintbrushToolClass GimpPaintbrushToolClass;
 
 struct _GimpPaintbrushTool
 {
@@ -37,25 +43,25 @@ struct _GimpPaintbrushToolClass
   GimpPaintToolClass parent_class;
 };
 
-typedef struct _GimpPaintbrushTool      GimpPaintbrushTool;
-typedef struct _GimpPaintbrushToolClass GimpPaintbrushToolClass;
+
+void       gimp_paintbrush_tool_register (void);
+
+GtkType    gimp_paintbrush_tool_get_type (void);
+GimpTool * gimp_paintbrush_tool_new      (void);
+
+
 
 /* FIXME: this antique code doesn't follow the coding style */
 
-gboolean   gimp_paintbrush_tool_non_gui    (GimpDrawable *,
-				       gint          ,
-				       gdouble      *,
-				       gdouble       ,
-				       gint          ,
-				       gdouble       );
+gboolean   gimp_paintbrush_tool_non_gui       (GimpDrawable *,
+					       gint          ,
+					       gdouble      *,
+					       gdouble       ,
+					       gint          ,
+					       gdouble       );
 gboolean gimp_paintbrush_tool_non_gui_default (GimpDrawable *,
-				       gint          ,
-				       gdouble      *);
+					       gint          ,
+					       gdouble      *);
 
-void gimp_paintbrush_tool_register (void);
-
-GimpTool * gimp_paintbrush_tool_new        (void);
-
-GtkType gimp_paintbrush_tool_get_type      (void);
 
 #endif  /*  __GIMP_PAINTBRUSH_TOOL_H__  */

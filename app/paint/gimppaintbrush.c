@@ -111,17 +111,19 @@ static GimpUnit  non_gui_gradient_unit;
 static GimpPaintToolClass *parent_class;
 
 /*  forward function declarations  */
-static void  gimp_paintbrush_tool_motion     (GimpPaintTool     *,
-					 GimpDrawable         *,
-					 PaintPressureOptions *,
-					 gdouble               ,
-					 gdouble               ,
-					 PaintApplicationMode  ,
-					 GradientPaintMode     );
-static void gimp_paintbrush_tool_paint_func  (GimpPaintTool     *paint_core,
-					 GimpDrawable         *drawable,
-					 PaintState            state);
-static void gimp_paintbrush_tool_class_init  (GimpPaintToolClass *klass);
+static void  gimp_paintbrush_tool_motion     (GimpPaintTool        *,
+					      GimpDrawable         *,
+					      PaintPressureOptions *,
+					      gdouble               ,
+					      gdouble               ,
+					      PaintApplicationMode  ,
+					      GradientPaintMode     );
+static void gimp_paintbrush_tool_paint       (GimpPaintTool        *paint_core,
+					      GimpDrawable         *drawable,
+					      PaintState            state);
+static void gimp_paintbrush_tool_class_init  (GimpPaintbrushToolClass *klass);
+static void gimp_paintbrush_tool_init        (GimpPaintbrushTool      *tool);
+
 
 /*  functions  */
 
@@ -138,7 +140,7 @@ gimp_paintbrush_tool_get_type (void)
         sizeof (GimpPaintbrushTool),
         sizeof (GimpPaintbrushToolClass),
         (GtkClassInitFunc) gimp_paintbrush_tool_class_init,
-        (GtkObjectInitFunc) NULL /*gimp_paintbrush_tool_initialize*/,
+        (GtkObjectInitFunc) gimp_paintbrush_tool_init,
         /* reserved_1 */ NULL,
         /* reserved_2 */ NULL,
         NULL
@@ -153,7 +155,7 @@ gimp_paintbrush_tool_get_type (void)
 
 static void
 gimp_paintbrush_tool_gradient_toggle_callback (GtkWidget *widget,
-				     gpointer   data)
+					       gpointer   data)
 {
   PaintbrushOptions *options = paintbrush_options;
 
@@ -391,9 +393,9 @@ gimp_paintbrush_tool_options_new (void)
 #define TIMED_BRUSH 0
 
 static void
-gimp_paintbrush_tool_paint_func (GimpPaintTool *paint_tool,
-		       GimpDrawable     *drawable,
-		       PaintState        state)
+gimp_paintbrush_tool_paint (GimpPaintTool *paint_tool,
+			    GimpDrawable  *drawable,
+			    PaintState     state)
 {
   GDisplay *gdisp = gdisplay_active ();
   double fade_out;
@@ -448,11 +450,11 @@ gimp_paintbrush_tool_paint_func (GimpPaintTool *paint_tool,
 	}
 
       gimp_paintbrush_tool_motion (paint_tool, drawable,
-			 paintbrush_options->paint_options.pressure_options,
-			 paintbrush_options->use_fade ? fade_out : 0,
-			 paintbrush_options->use_gradient ? gradient_length : 0,
-			 paintbrush_options->paint_options.incremental,
-			 paintbrush_options->gradient_type);
+				   paintbrush_options->paint_options.pressure_options,
+				   paintbrush_options->use_fade ? fade_out : 0,
+				   paintbrush_options->use_gradient ? gradient_length : 0,
+				   paintbrush_options->paint_options.incremental,
+				   paintbrush_options->gradient_type);
       break;
 
     case FINISH_PAINT :
@@ -479,19 +481,39 @@ gimp_paintbrush_tool_new (void)
   return gtk_type_new (GIMP_TYPE_PAINTBRUSH_TOOL);
 }
 
-void
-gimp_paintbrush_tool_initialize (GimpPaintTool *tool)
+static void
+gimp_paintbrush_tool_init (GimpPaintbrushTool *paintbrush)
 {
-  tool->pick_colors = TRUE;
-  tool->flags |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
+  GimpTool      *tool;
+  GimpPaintTool *paint_tool;
+
+  tool       = GIMP_TOOL (paintbrush);
+  paint_tool = GIMP_PAINT_TOOL (paintbrush);
+
+  if (! paintbrush_options)
+    {
+      paintbrush_options = gimp_paintbrush_tool_options_new ();
+
+      tool_manager_register_tool_options (GIMP_TYPE_PAINTBRUSH_TOOL,
+                                          (ToolOptions *) paintbrush_options);
+    }
+
+  tool->tool_cursor = GIMP_PAINTBRUSH_TOOL_CURSOR;
+
+  paint_tool->pick_colors =  TRUE;
+  paint_tool->flags       |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
 }
 
-void
-gimp_paintbrush_tool_class_init (GimpPaintToolClass *klass)
+static void
+gimp_paintbrush_tool_class_init (GimpPaintbrushToolClass *klass)
 {
+  GimpPaintToolClass *paint_tool_class;
+
+  paint_tool_class = (GimpPaintToolClass *) klass;
+
   parent_class = gtk_type_class (GIMP_TYPE_PAINT_TOOL);
 
-  klass->paint_func = gimp_paintbrush_tool_paint_func;
+  paint_tool_class->paint = gimp_paintbrush_tool_paint;
 }
 
 void
@@ -507,27 +529,26 @@ gimp_paintbrush_tool_register (void)
 }
 
 
-
 static void
-gimp_paintbrush_tool_motion (GimpPaintTool     *paint_tool,
-		   GimpDrawable         *drawable,
-		   PaintPressureOptions *pressure_options,
-		   double                fade_out,
-		   double                gradient_length,
-		   PaintApplicationMode  incremental,
-		   GradientPaintMode     gradient_type)
+gimp_paintbrush_tool_motion (GimpPaintTool        *paint_tool,
+			     GimpDrawable         *drawable,
+			     PaintPressureOptions *pressure_options,
+			     double                fade_out,
+			     double                gradient_length,
+			     PaintApplicationMode  incremental,
+			     GradientPaintMode     gradient_type)
 {
-  GImage  *gimage;
-  TempBuf *area;
-  gdouble  x, paint_left;
-  gdouble  position;
-  guchar   local_blend = OPAQUE_OPACITY;
-  guchar   temp_blend = OPAQUE_OPACITY;
-  guchar   col[MAX_CHANNELS];
-  GimpRGB  color;
-  gint     mode;
-  gint     opacity;
-  gdouble  scale;
+  GimpImage  *gimage;
+  TempBuf    *area;
+  gdouble     x, paint_left;
+  gdouble     position;
+  guchar      local_blend = OPAQUE_OPACITY;
+  guchar      temp_blend = OPAQUE_OPACITY;
+  guchar      col[MAX_CHANNELS];
+  GimpRGB     color;
+  gint        mode;
+  gint        opacity;
+  gdouble     scale;
   PaintApplicationMode paint_appl_mode = incremental ? INCREMENTAL : CONSTANT;
 
   position = 0.0;
@@ -568,7 +589,7 @@ gimp_paintbrush_tool_motion (GimpPaintTool     *paint_tool,
 					paint_tool->curpressure, &color);
 	  else
 	    gimp_paint_tool_get_color_from_gradient (paint_tool, gradient_length,
-						&color, mode);
+						     &color, mode);
 
 	  temp_blend =  (gint) ((color.a * local_blend));
 
@@ -589,8 +610,8 @@ gimp_paintbrush_tool_motion (GimpPaintTool     *paint_tool,
       else if (paint_tool->brush && paint_tool->brush->pixmap)
 	{
 	  gimp_paint_tool_color_area_with_pixmap (paint_tool, gimage, drawable,
-					     area,
-					     scale, SOFT);
+						  area,
+						  scale, SOFT);
 	  paint_appl_mode = INCREMENTAL;
 	}
       else
@@ -606,19 +627,22 @@ gimp_paintbrush_tool_motion (GimpPaintTool     *paint_tool,
 	opacity = opacity * 2.0 * paint_tool->curpressure;
 
       gimp_paint_tool_paste_canvas (paint_tool, drawable,
-			       MIN (opacity, 255),
-			       gimp_context_get_opacity (NULL) * 255,
-			       gimp_context_get_paint_mode (NULL),
-			       pressure_options->pressure ? PRESSURE : SOFT,
-			       scale, paint_appl_mode);
+				    MIN (opacity, 255),
+				    gimp_context_get_opacity (NULL) * 255,
+				    gimp_context_get_paint_mode (NULL),
+				    pressure_options->pressure ? PRESSURE : SOFT,
+				    scale, paint_appl_mode);
     }
 }
 
 
+#warning (FIX non-gui paint tools)
+#if 0
+
 static gpointer
-gimp_paintbrush_tool_non_gui_paint_func (GimpPaintTool    *paint_tool,
-			       GimpDrawable *drawable,
-			       PaintState    state)
+gimp_paintbrush_tool_non_gui_paint_func (GimpPaintTool *paint_tool,
+					 GimpDrawable  *drawable,
+					 PaintState     state)
 {
   GImage  *gimage;
   gdouble  fade_out;
@@ -661,19 +685,19 @@ gimp_paintbrush_tool_non_gui_paint_func (GimpPaintTool    *paint_tool,
     }
 
   gimp_paintbrush_tool_motion (paint_tool,drawable,
-		     &non_gui_pressure_options,
-		     fade_out,
-		     gradient_length,
-		     non_gui_incremental,
-		     non_gui_gradient_type);
+			       &non_gui_pressure_options,
+			       fade_out,
+			       gradient_length,
+			       non_gui_incremental,
+			       non_gui_gradient_type);
 
   return NULL;
 }
 
 gboolean
 gimp_paintbrush_tool_non_gui_default (GimpDrawable *drawable,
-			    int            num_strokes,
-			    double        *stroke_array)
+				      gint          num_strokes,
+				      double       *stroke_array)
 {
   PaintbrushOptions *options = paintbrush_options;
   gdouble            fade_out        = PAINTBRUSH_DEFAULT_FADE_OUT;
@@ -708,7 +732,7 @@ gimp_paintbrush_tool_non_gui_default (GimpDrawable *drawable,
    * thats why the code below is duplicated.
    */
   if (gimp_paint_tool_start (&non_gui_paint_tool, drawable,
-		       stroke_array[0], stroke_array[1]))
+			     stroke_array[0], stroke_array[1]))
     {
       non_gui_fade_out        = fade_out;
       non_gui_gradient_length = gradient_length;
@@ -718,7 +742,7 @@ gimp_paintbrush_tool_non_gui_default (GimpDrawable *drawable,
       non_gui_gradient_unit   = gradient_unit;
 
       /* Set the paint core's paint func */
-      non_gui_paint_tool_class->paint_func =(PaintFunc) gimp_paintbrush_tool_non_gui_paint_func;
+      non_gui_paint_tool_class->paint = gimp_paintbrush_tool_non_gui_paint_func;
 
       non_gui_paint_tool->startx = non_gui_paint_tool->lastx = stroke_array[0];
       non_gui_paint_tool->starty = non_gui_paint_tool->lasty = stroke_array[1];
@@ -751,17 +775,17 @@ gimp_paintbrush_tool_non_gui_default (GimpDrawable *drawable,
 
 gboolean
 gimp_paintbrush_tool_non_gui (GimpDrawable *drawable,
-                   int            num_strokes,
-                   double        *stroke_array,
-                   double         fade_out,
-                   int            method,
-                   double         gradient_length)
+			      gint          num_strokes,
+			      gdouble      *stroke_array,
+			      gdouble       fade_out,
+			      gint          method,
+			      gdouble       gradient_length)
 {
-  int i;
+  gint i;
 
   /* Code duplicated above */
   if (gimp_paint_tool_start (&non_gui_paint_tool, drawable,
-                      stroke_array[0], stroke_array[1]))
+			     stroke_array[0], stroke_array[1]))
     {
       non_gui_fade_out        = fade_out;
       non_gui_gradient_length = gradient_length;
@@ -769,7 +793,7 @@ gimp_paintbrush_tool_non_gui (GimpDrawable *drawable,
       non_gui_incremental     = method;
 
       /* Set the paint core's paint func */
-      non_gui_paint_tool_class->paint_func = gimp_paintbrush_tool_non_gui_paint_func;
+      non_gui_paint_tool_class->paint = gimp_paintbrush_tool_non_gui_paint_func;
 
       non_gui_paint_tool->startx = non_gui_paint_tool->lastx = stroke_array[0];
       non_gui_paint_tool->starty = non_gui_paint_tool->lasty = stroke_array[1];
@@ -800,3 +824,4 @@ gimp_paintbrush_tool_non_gui (GimpDrawable *drawable,
   else
     return FALSE;
 }
+#endif

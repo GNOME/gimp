@@ -16,11 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __MEASURE_H__
-#define __MEASURE_H__
+#ifndef __GIMP_MEASURE_TOOL_H__
+#define __GIMP_MEASURE_TOOL_H__
 
 
-#include "tool.h"
+#include "gimpdrawtool.h"
 
 
 /*  possible measure functions  */
@@ -41,12 +41,13 @@ typedef enum
 #define GIMP_MEASURE_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MEASURE_TOOL, GimpMeasureToolClass))
 #define GIMP_IS_MEASURE_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MEASURE_TOOL))
 
+
 typedef struct _GimpMeasureTool      GimpMeasureTool;
 typedef struct _GimpMeasureToolClass GimpMeasureToolClass;
 
 struct _GimpMeasureTool
 {
-  GimpDrawTool parent_instance;       /*  Core select object  */
+  GimpDrawTool     parent_instance;
 
   MeasureFunction  function;    /*  function we're performing  */
   gint             last_x;      /*  last x coordinate          */
@@ -62,13 +63,13 @@ struct _GimpMeasureTool
 
 struct _GimpMeasureToolClass
 {
-  GimpToolClass parent_class;
+  GimpDrawToolClass parent_class;
 };
 
 
-GtkType    gimp_measure_tool_get_type (void);
-
 void       gimp_measure_tool_register (void);
 
+GtkType    gimp_measure_tool_get_type (void);
 
-#endif  /*  __MEASURE_H__  */
+
+#endif  /*  __GIMP_MEASURE_TOOL_H__  */

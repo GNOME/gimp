@@ -27,18 +27,25 @@
 #include "tools/gimpdrawtool.h"
 
 
-enum { /* signals */
-	DRAW,
-	LAST_SIGNAL
+enum
+{
+  DRAW,
+  LAST_SIGNAL
 };
 
 static void   gimp_draw_tool_class_init (GimpDrawToolClass *klass);
 static void   gimp_draw_tool_init       (GimpDrawTool      *draw_tool);
 
-static void   gimp_draw_tool_real_draw  (GimpDrawTool      *draw_tool);
+static void   gimp_draw_tool_destroy    (GtkObject         *object);
+
+static void   gimp_draw_tool_control    (GimpTool          *tool,
+					 ToolAction         action,
+					 GDisplay          *gdisp);
 
 
 static guint gimp_draw_tool_signals[LAST_SIGNAL] = { 0 };
+
+static GimpToolClass *parent_class = NULL;
 
 
 
@@ -70,7 +77,13 @@ gimp_draw_tool_get_type (void)
 static void
 gimp_draw_tool_class_init (GimpDrawToolClass *klass)
 {
-  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
+  GtkObjectClass *object_class;
+  GimpToolClass  *tool_class;
+
+  object_class = (GtkObjectClass *) klass;
+  tool_class   = (GimpToolClass *) klass;
+
+  parent_class = gtk_type_class (GIMP_TYPE_TOOL);
 
   gimp_draw_tool_signals[DRAW] =
     gtk_signal_new ("draw",
@@ -81,11 +94,12 @@ gimp_draw_tool_class_init (GimpDrawToolClass *klass)
     		    gtk_marshal_NONE__NONE,
     		    GTK_TYPE_NONE, 0);
 
-  g_message ("draw is %i, DRAW is %i", gimp_draw_tool_signals[DRAW], DRAW);
-    		
-  gtk_object_class_add_signals (object_class, gimp_draw_tool_signals, LAST_SIGNAL);
+  gtk_object_class_add_signals (object_class, gimp_draw_tool_signals,
+				LAST_SIGNAL);
 
-  klass->draw   = gimp_draw_tool_real_draw;
+  object_class->destroy = gimp_draw_tool_destroy;
+
+  tool_class->control   = gimp_draw_tool_control;
 }
 
 static void
@@ -98,6 +112,51 @@ gimp_draw_tool_init (GimpDrawTool *tool)
   tool->line_style   = GDK_LINE_SOLID;
   tool->cap_style    = GDK_CAP_NOT_LAST;
   tool->join_style   = GDK_JOIN_MITER;
+}
+
+static void
+gimp_draw_tool_destroy (GtkObject *object)
+{
+  GimpDrawTool *draw_tool;
+
+  draw_tool = GIMP_DRAW_TOOL (object);
+
+  if (draw_tool->draw_state == VISIBLE)
+    gimp_draw_tool_stop (draw_tool);
+
+  if (draw_tool->gc)
+    gdk_gc_destroy (draw_tool->gc);
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+gimp_draw_tool_control (GimpTool   *tool,
+			ToolAction  action,
+			GDisplay   *gdisp)
+{
+  GimpDrawTool *draw_tool;
+
+  draw_tool = GIMP_DRAW_TOOL (tool);
+
+  switch (action)
+    {
+    case PAUSE:
+      gimp_draw_tool_pause (draw_tool);
+      break;
+
+    case RESUME:
+      gimp_draw_tool_resume (draw_tool);
+      break;
+
+    case HALT:
+      gimp_draw_tool_stop (draw_tool);
+      break;
+
+    default:
+      break;
+    }
 }
 
 void
@@ -146,9 +205,11 @@ void
 gimp_draw_tool_resume (GimpDrawTool *core)
 {
   core->paused_count = (core->paused_count > 0) ? core->paused_count - 1 : 0;
+
   if (core->paused_count == 0)
     {
       core->draw_state = VISIBLE;
+
       gtk_signal_emit(GTK_OBJECT(core), gimp_draw_tool_signals[DRAW]);
     }
 }
@@ -160,23 +221,9 @@ gimp_draw_tool_pause (GimpDrawTool *core)
   if (core->paused_count == 0)
     {
       core->draw_state = INVISIBLE;
+
       gtk_signal_emit (GTK_OBJECT(core), gimp_draw_tool_signals[DRAW]);
     }
+
   core->paused_count++;
-}
-
-/*FIXME: make this get called */
-void
-gimp_draw_tool_destroy (GimpDrawTool *core)
-{
-  if (core)
-    {
-      if (core->gc)
-	gdk_gc_destroy (core->gc);
-    }
-}
-
-static void
-gimp_draw_tool_real_draw (GimpDrawTool *draw_tool)
-{
 }

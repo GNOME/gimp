@@ -480,6 +480,9 @@ gimp_tool_help_func (const gchar *help_data)
 
 #define QUIET_STUB(x) void * x (void){return NULL;}
 
+STUB(gimp_paintbrush_tool_non_gui)
+STUB(gimp_paintbrush_tool_non_gui_default)
+
 STUB(curves_free)
 STUB(hue_saturation_free)
 STUB(levels_free)

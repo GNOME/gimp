@@ -1,3 +1,33 @@
+2001-02-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/Makefile.am: build the measure tool again.
+
+	* app/tools/gimpcolorpickertool.c: correct prototypes for some
+	functions so we don't get warnings about incompatible assignments
+	in "class_init", chain up in "control".
+
+	* app/tools/gimpdrawtool.c: added an implementation of "control"
+	which can be called from subclasses so we don't need to call
+	GimpDrawTool's methods directly from there.
+
+	* app/tools/gimppaintbrushtool.[ch]: create it's tool options so it
+	doesn't crash. Commented out the non_gui stuff. We need a different
+	interface for this.
+
+	* app/tools/gimppainttool.[ch]: some cleanups: call the draw tool's
+	"control" function, fixed "cursor_update", fixed indentation.
+
+	* app/tools/measure.[ch]: made it work again (properly subclass
+	GimpDrawTool).
+
+	* app/tools/tool.c: re-added the non_gui paintbrush STUB()'s
+
+	* app/tools/tools.c: don't allocate the non_gui stuff.
+	GimpPaintTool is an abstract superclass, so we cannot create
+	an instance of it. Moreover, the current non_gui stuff assumes
+	that there is something like a "paint_core" and changes it's
+	virtual function pointers, breaking the object system totally.
+
 2001-02-27  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/header.c: applied patch from Chuck Mason 

@@ -41,7 +41,7 @@
 #include "tool_manager.h"
 #include "tool_options.h"
 
-#include "tools/gimpdrawingtool.h"
+#include "tools/gimpdrawtool.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -76,23 +76,23 @@ static void   gimp_measure_tool_init            (GimpMeasureTool      *tool);
 
 static void   gimp_measure_tool_destroy         (GtkObject      *object);
 
-static void   measure_tool_control	              (GimpTool       *tool,
-						       ToolAction      action,
-						       GDisplay       *gdisp);
-static void   measure_tool_button_press               (GimpTool       *tool,
-						       GdkEventButton *bevent,
-						       GDisplay       *gdisp);
-static void   measure_tool_button_release             (GimpTool       *tool,
-						       GdkEventButton *bevent,
-						       GDisplay       *gdisp);
-static void   measure_tool_motion                     (GimpTool       *tool,
-						       GdkEventMotion *mevent,
-						       GDisplay       *gdisp);
-static void   measure_tool_cursor_update              (GimpTool       *tool,
-						       GdkEventMotion *mevent,
-						       GDisplay       *gdisp);
+static void   gimp_measure_tool_control         (GimpTool       *tool,
+                                                 ToolAction      action,
+                                                 GDisplay       *gdisp);
+static void   gimp_measure_tool_button_press    (GimpTool       *tool,
+                                                 GdkEventButton *bevent,
+                                                 GDisplay       *gdisp);
+static void   gimp_measure_tool_button_release  (GimpTool       *tool,
+                                                 GdkEventButton *bevent,
+                                                 GDisplay       *gdisp);
+static void   gimp_measure_tool_motion          (GimpTool       *tool,
+                                                 GdkEventMotion *mevent,
+                                                 GDisplay       *gdisp);
+static void   gimp_measure_tool_cursor_update   (GimpTool       *tool,
+                                                 GdkEventMotion *mevent,
+                                                 GDisplay       *gdisp);
 
-static void   measure_tool_draw                       (GimpTool       *tool);
+static void   gimp_measure_tool_draw            (GimpDrawTool   *draw_tool);
 
 
 
@@ -110,7 +110,7 @@ static InfoDialog *measure_tool_info = NULL;
 static gchar       distance_buf[MAX_INFO_BUF];
 static gchar       angle_buf[MAX_INFO_BUF];
 
-static GimpToolClass *parent_class = NULL;
+static GimpDrawToolClass *parent_class = NULL;
 
 
 void
@@ -153,21 +153,25 @@ gimp_measure_tool_get_type (void)
 static void
 gimp_measure_tool_class_init (GimpMeasureToolClass *klass)
 {
-  GtkObjectClass *object_class;
-  GimpToolClass  *tool_class;
+  GtkObjectClass    *object_class;
+  GimpToolClass     *tool_class;
+  GimpDrawToolClass *draw_tool_class;
 
-  object_class = (GtkObjectClass *) klass;
-  tool_class   = (GimpToolClass *) klass;
+  object_class    = (GtkObjectClass *) klass;
+  tool_class      = (GimpToolClass *) klass;
+  draw_tool_class = (GimpDrawToolClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_TOOL);
+  parent_class = gtk_type_class (GIMP_TYPE_DRAW_TOOL);
 
-  object_class->destroy = gimp_measure_tool_destroy;
+  object_class->destroy      = gimp_measure_tool_destroy;
 
-  tool_class->control        = measure_tool_control;
-  tool_class->button_press   = measure_tool_button_press;
-  tool_class->button_release = measure_tool_button_release;
-  tool_class->motion         = measure_tool_motion;
-  tool_class->cursor_update  = measure_tool_cursor_update;
+  tool_class->control        = gimp_measure_tool_control;
+  tool_class->button_press   = gimp_measure_tool_button_press;
+  tool_class->button_release = gimp_measure_tool_button_release;
+  tool_class->motion         = gimp_measure_tool_motion;
+  tool_class->cursor_update  = gimp_measure_tool_cursor_update;
+
+  draw_tool_class->draw      = gimp_measure_tool_draw;
 }
 
 static void
@@ -192,97 +196,50 @@ gimp_measure_tool_init (GimpMeasureTool *measure_tool)
 static void
 gimp_measure_tool_destroy (GtkObject *object)
 {
-  GimpDrawTool *draw_tool;
-  GimpTool        *tool;
-
-  draw_tool    = GIMP_DRAW_TOOL (object);
-  tool         = GIMP_TOOL (object);
-
-  if (tool->state == ACTIVE)
-    gimp_draw_tool_stop (draw_tool);
-
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void
-measure_tool_options_reset (void)
+gimp_measure_tool_control (GimpTool   *tool,
+                           ToolAction  action,
+                           GDisplay   *gdisp)
 {
-  MeasureOptions *options = measure_tool_options;
+  GimpMeasureTool *measure_tool;
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->use_info_window_w),
-				options->use_info_window_d);
-}
+  measure_tool = GIMP_MEASURE_TOOL (tool);
 
-static MeasureOptions *
-measure_tool_options_new (void)
-{
-  MeasureOptions *options;
-  GtkWidget      *vbox;
-
-  /*  the new measure tool options structure  */
-  options = g_new (MeasureOptions, 1);
-  tool_options_init ((ToolOptions *) options,
-		     measure_tool_options_reset);
-  options->use_info_window = options->use_info_window_d  = FALSE;
-
-    /*  the main vbox  */
-  vbox = options->tool_options.main_vbox;
-
-  /*  the use_info_window toggle button  */
-  options->use_info_window_w =
-    gtk_check_button_new_with_label (_("Use Info Window"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->use_info_window_w),
-				options->use_info_window_d);
-  gtk_box_pack_start (GTK_BOX (vbox), options->use_info_window_w, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (options->use_info_window_w), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &options->use_info_window);
-  gtk_widget_show (options->use_info_window_w);
-
-  return options;
-}
-
-static gdouble
-measure_get_angle (gint    dx,
-		   gint    dy,
-		   gdouble xres,
-		   gdouble yres)
-{
-  gdouble angle;
-
-  if (dx)
-    angle = gimp_rad_to_deg (atan (((gdouble) (dy) / yres) /
-				   ((gdouble) (dx) / xres)));
-  else if (dy)
-    angle = dy > 0 ? 270.0 : 90.0;
-  else
-    angle = 180.0;
-
-  if (dx > 0)
+  switch (action)
     {
-      if (dy > 0)
-	angle = 360.0 - angle;
-      else
-	angle = -angle;
-    }
-  else
-    {
-      angle = 180.0 - angle;
+    case PAUSE:
+      break;
+
+    case RESUME:
+      break;
+
+    case HALT:
+      gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar),
+			 measure_tool->context_id);
+      tool->state = INACTIVE;
+      break;
+
+    default:
+      break;
     }
 
-  return angle;
+  if (GIMP_TOOL_CLASS (parent_class)->control)
+    GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
 static void
-measure_tool_button_press (GimpTool       *tool,
-			   GdkEventButton *bevent,
-			   GDisplay       *gdisp)
+gimp_measure_tool_button_press (GimpTool       *tool,
+                                GdkEventButton *bevent,
+                                GDisplay       *gdisp)
 {
   GimpMeasureTool *measure_tool;
-  gint         x[3];
-  gint         y[3];
-  gint         i;
+  gint             x[3];
+  gint             y[3];
+  gint             i;
 
   measure_tool = GIMP_MEASURE_TOOL (tool);
 
@@ -385,7 +342,7 @@ measure_tool_button_press (GimpTool       *tool,
       if (tool->state == ACTIVE)
 	{
 	  /* reset everything */
-	  gimp_draw_tool_stop (GIMP_DRAW_TOOL(measure_tool));
+	  gimp_draw_tool_stop (GIMP_DRAW_TOOL (measure_tool));
 
 	  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar),
 			     measure_tool->context_id);
@@ -456,9 +413,9 @@ measure_tool_button_press (GimpTool       *tool,
 }
 
 static void
-measure_tool_button_release (GimpTool       *tool,
-			     GdkEventButton *bevent,
-			     GDisplay       *gdisp)
+gimp_measure_tool_button_release (GimpTool       *tool,
+                                  GdkEventButton *bevent,
+                                  GDisplay       *gdisp)
 {
   GimpMeasureTool *measure_tool;
 
@@ -471,20 +428,20 @@ measure_tool_button_release (GimpTool       *tool,
 }
 
 static void
-measure_tool_motion (GimpTool       *tool,
-		     GdkEventMotion *mevent,
-		     GDisplay       *gdisp)
+gimp_measure_tool_motion (GimpTool       *tool,
+                          GdkEventMotion *mevent,
+                          GDisplay       *gdisp)
 {
   GimpMeasureTool *measure_tool;
-  gint         x, y;
-  gint         ax, ay;
-  gint         bx, by;
-  gint         dx, dy;
-  gint         i;
-  gint         tmp;
-  gdouble      angle;
-  gdouble      distance;
-  gchar        status_str[STATUSBAR_SIZE];
+  gint             x, y;
+  gint             ax, ay;
+  gint             bx, by;
+  gint             dx, dy;
+  gint             i;
+  gint             tmp;
+  gdouble          angle;
+  gdouble          distance;
+  gchar            status_str[STATUSBAR_SIZE];
 
   measure_tool = GIMP_MEASURE_TOOL (tool);
 
@@ -681,15 +638,15 @@ measure_tool_motion (GimpTool       *tool,
 }
 
 static void
-measure_tool_cursor_update (GimpTool       *tool,
-			    GdkEventMotion *mevent,
-			    GDisplay       *gdisp)
+gimp_measure_tool_cursor_update (GimpTool       *tool,
+                                 GdkEventMotion *mevent,
+                                 GDisplay       *gdisp)
 {
   GimpMeasureTool *measure_tool;
-  gint         x[3];
-  gint         y[3];
-  gint         i;
-  gboolean     in_handle = FALSE;
+  gint             x[3];
+  gint             y[3];
+  gint             i;
+  gboolean         in_handle = FALSE;
 
   GdkCursorType      ctype     = GIMP_CROSSHAIR_SMALL_CURSOR;
   GimpCursorModifier cmodifier = GIMP_CURSOR_MODIFIER_NONE;
@@ -746,17 +703,18 @@ measure_tool_cursor_update (GimpTool       *tool,
 }
 
 static void
-measure_tool_draw (GimpTool *tool)
+gimp_measure_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpMeasureTool *measure_tool;
-  GimpDrawTool	  *draw_tool;
-  gint         x[3];
-  gint         y[3];
-  gint         i;
-  gint         angle1, angle2;
-  gint         draw_arc = 0;
+  GimpTool        *tool;
+  gint             x[3];
+  gint             y[3];
+  gint             i;
+  gint             angle1, angle2;
+  gint             draw_arc = 0;
 
-  measure_tool = GIMP_MEASURE_TOOL (tool);
+  measure_tool = GIMP_MEASURE_TOOL (draw_tool);
+  tool         = GIMP_TOOL (draw_tool);
 
   for (i = 0; i < measure_tool->num_points; i++)
     {
@@ -817,34 +775,72 @@ measure_tool_draw (GimpTool *tool)
 }
 
 static void
-measure_tool_control (GimpTool   *tool,
-		      ToolAction  action,
-		      GDisplay   *gdisp)
+measure_tool_options_reset (void)
 {
-  GimpDrawTool *draw_tool;
+  MeasureOptions *options = measure_tool_options;
 
-  draw_tool = GIMP_DRAW_TOOL (tool);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->use_info_window_w),
+				options->use_info_window_d);
+}
 
-  switch (action)
+static MeasureOptions *
+measure_tool_options_new (void)
+{
+  MeasureOptions *options;
+  GtkWidget      *vbox;
+
+  /*  the new measure tool options structure  */
+  options = g_new (MeasureOptions, 1);
+  tool_options_init ((ToolOptions *) options,
+		     measure_tool_options_reset);
+  options->use_info_window = options->use_info_window_d  = FALSE;
+
+    /*  the main vbox  */
+  vbox = options->tool_options.main_vbox;
+
+  /*  the use_info_window toggle button  */
+  options->use_info_window_w =
+    gtk_check_button_new_with_label (_("Use Info Window"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->use_info_window_w),
+				options->use_info_window_d);
+  gtk_box_pack_start (GTK_BOX (vbox), options->use_info_window_w, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (options->use_info_window_w), "toggled",
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &options->use_info_window);
+  gtk_widget_show (options->use_info_window_w);
+
+  return options;
+}
+
+static gdouble
+measure_get_angle (gint    dx,
+		   gint    dy,
+		   gdouble xres,
+		   gdouble yres)
+{
+  gdouble angle;
+
+  if (dx)
+    angle = gimp_rad_to_deg (atan (((gdouble) (dy) / yres) /
+				   ((gdouble) (dx) / xres)));
+  else if (dy)
+    angle = dy > 0 ? 270.0 : 90.0;
+  else
+    angle = 180.0;
+
+  if (dx > 0)
     {
-    case PAUSE:
-      gimp_draw_tool_pause (draw_tool);
-      break;
-
-    case RESUME:
-      gimp_draw_tool_resume (draw_tool);
-      break;
-
-    case HALT:
-      gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar),
-			 measure_tool->context_id);
-      gimp_draw_tool_stop (draw_tool);
-      tool->state = INACTIVE;
-      break;
-
-    default:
-      break;
+      if (dy > 0)
+	angle = 360.0 - angle;
+      else
+	angle = -angle;
     }
+  else
+    {
+      angle = 180.0 - angle;
+    }
+
+  return angle;
 }
 
 static void

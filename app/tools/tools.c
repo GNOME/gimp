@@ -51,9 +51,7 @@
 #include "scale_tool.h"
 #include "shear_tool.h"
 #include "smudge.h"
-
-GimpPaintTool *non_gui_paint_tool;
-GimpPaintToolClass *non_gui_paint_tool_class;
+#include "text_tool.h"
 
 
 void
@@ -61,13 +59,9 @@ register_tools (void)
 {
   gimp_color_picker_tool_register ();
   gimp_paintbrush_tool_register ();
-  /*FIXME gimp_measure_tool_register (); */
+  gimp_measure_tool_register ();
   gimp_move_tool_register ();
-  /*FIXME gimp_text_tool_register (); */
-
-  /* EEEEEEK! */
-  non_gui_paint_tool = gimp_paint_tool_new();
-  non_gui_paint_tool_class = GIMP_PAINT_TOOL_CLASS(gtk_type_class(GIMP_TYPE_PAINT_TOOL));
+  gimp_text_tool_register ();
 
 /*
   snatched from the pdb.  For inspiration only.  ;)
@@ -101,4 +95,3 @@ register_tools (void)
   procedural_db_register (&smudge_default_proc);
   procedural_db_register (&transform_2d_proc); */
 }
-
