@@ -4570,7 +4570,7 @@ msgstr ""
 #.
 #: app/gui/tips-parser.c:181
 msgid "tips-locale:C"
-msgstr ""
+msgstr "tips-locale:sk"
 
 #: app/gui/toolbox.c:335
 msgid ""

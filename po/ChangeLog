@@ -1,3 +1,7 @@
+2002-03-13  Stanislav Visnovsky  <visnovsky@nenya.ms.mff.cuni.cz>
+
+	* sk.po: Fix gimp_tips locale info. There are Slovak tips now.
+
 2002-03-13  Sven Neumann  <sven@gimp.org>
 
 	* ja.po: updated japanese translation from <iccii@hotmail.com>.
