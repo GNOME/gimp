@@ -1,5 +1,17 @@
 2004-10-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/image-actions.c
+	* menus/image-menu.xml.in: added menu branch "<Image>/Image/Guides".
+
+	* plug-ins/script-fu/scripts/Makefile.am
+	* plug-ins/script-fu/scripts/guides-from-selection.scm
+	* plug-ins/script-fu/scripts/guides-new-percent.scm
+	* plug-ins/script-fu/scripts/guides-new.scm
+	* plug-ins/script-fu/scripts/guides-remove-all.scm: added new
+	scripts from Alan Horkan. Fixes bug #119667.
+
+2004-10-13  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/flarefx.c: cleaned up and simplified the
 	FlareCenter code even more.
 

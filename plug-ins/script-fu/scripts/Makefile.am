@@ -57,6 +57,10 @@ scriptdata_DATA = \
 	gradient-bevel-logo.scm		\
 	gradient-example.scm		\
 	grid-system.scm			\
+	guides-from-selection.scm	\
+	guides-new.scm			\
+	guides-new-percent.scm		\
+	guides-remove-all.scm		\
 	hsv-graph.scm			\
 	i26-gunya2.scm			\
 	image-structure.scm		\

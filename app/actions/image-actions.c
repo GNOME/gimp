@@ -56,6 +56,7 @@ static GimpActionEntry image_actions[] =
   { "image-menu",           NULL, N_("_Image")     },
   { "image-mode-menu",      NULL, N_("_Mode")      },
   { "image-transform-menu", NULL, N_("_Transform") },
+  { "image-guides-menu",    NULL, N_("_Guides")    },
 
   { "image-new", GTK_STOCK_NEW,
     N_("_New..."), "<control>N", NULL,
