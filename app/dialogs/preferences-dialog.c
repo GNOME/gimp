@@ -1901,7 +1901,7 @@ prefs_dialog_new (Gimp       *gimp,
 #ifdef ENABLE_MP
   prefs_spin_button_add (object, "num-processors", 1.0, 4.0, 0,
                          _("Number of Processors to Use:"),
-                         GTK_TABLE (table), 3);
+                         GTK_TABLE (table), 3, size_group);
 #endif /* ENABLE_MP */
 
   /*  Resource Consumption  */
