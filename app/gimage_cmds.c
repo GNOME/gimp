@@ -22,7 +22,6 @@
 
 #include "config.h"
 
-#include <math.h>
 #include <string.h>
 
 #include "apptypes.h"
@@ -35,6 +34,7 @@
 #include "layer.h"
 #include "layer_pvt.h"
 
+#include "libgimp/gimpmath.h"
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimplimits.h"
 
@@ -3455,10 +3455,10 @@ image_set_resolution_invoker (Argument *args)
 
   if (success)
     {
-      if (isnan (xresolution) || xresolution < GIMP_MIN_RESOLUTION || 
-	  isinf (xresolution) || xresolution > GIMP_MAX_RESOLUTION ||
-	  isnan (yresolution) || yresolution < GIMP_MIN_RESOLUTION || 
-	  isinf (yresolution) || yresolution > GIMP_MAX_RESOLUTION)
+      if (ISNAN (xresolution) || xresolution < GIMP_MIN_RESOLUTION || 
+	  ISINF (xresolution) || xresolution > GIMP_MAX_RESOLUTION ||
+	  ISNAN (yresolution) || yresolution < GIMP_MIN_RESOLUTION || 
+	  ISINF (yresolution) || yresolution > GIMP_MAX_RESOLUTION)
 	{
 	  g_message (_("Image resolution is out of bounds,\n" 
 		       "using the default resolution instead."));

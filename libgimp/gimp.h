@@ -192,7 +192,9 @@ struct _GParam
  * application.
  */
 #  ifdef __GNUC__
-#    define _stdcall __attribute__((stdcall))
+#    ifndef _stdcall
+#      define _stdcall __attribute__((stdcall))
+#    endif
 #  endif
 
 #  define MAIN()			\

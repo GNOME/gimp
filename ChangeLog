@@ -1,3 +1,42 @@
+2000-04-10  Tor Lillqvist  <tml@iki.fi>
+
+	* README: Correct the info about Win32 mailing lists.
+
+	* gimprc.win32: Add perfect-mouse setting.
+
+	* libgimp/gimp.h
+	* app/main.c: Guard against redefinition of _stdcall.
+
+	* libgimp/gimpmath.h: Define macros ISNAN and ISINF. On Win32 use
+	_isnan() and _fpclass() from <float.h>, on other platforms use
+	isnan() and isinf(). We really should test for isnan and isinf in the
+	configure script.
+	
+	* tools/pdbgen/pdb/gimage.pdb
+	* app/gimage_cmds.c: Include gimpmath.h, use above macros instead
+	of using the nonportable isnan and isinf.
+
+	* app/gdisplay_ops.c: Do use the old gtk_widget_hide/show hack on
+	Win32.
+
+	* libgimp/makefile.cygwin
+	* libgimp/makefile.msc
+	* app/makefile.cygwin
+	* app/makefile.msc
+	* plug-ins/makefile.cygwin
+	* plug-ins/makefile.msc: Updates.
+
+	* plug-ins/gfig/gfig.c (plug_in_parse_gfig_path): Simplify warning
+	message on Win32.  We could use G_DIR_SEPARATOR in the sample
+	gimprc line, but then we would have to call g_strescape to quote
+	it, argh. Win32 users use prebuilt versions with a correct gimprc
+	file anyway.
+
+	(create_file_selection): Use g_get_tmp_dir().
+
+	(gfig_update_stat_labels): Guard against possibly NULL value from
+	g_get_home_dir().
+	
 2000-04-10  Sven Neumann  <sven@gimp.org>
 
 	* README: applied a modified version of gimp-cornwell-000408-0, 

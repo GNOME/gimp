@@ -29,6 +29,10 @@ extern "C" {
 
 #include <math.h>
 
+#ifdef G_OS_WIN32
+#include <float.h>
+#endif
+
 /* Some portability enhancing stuff. For use both by the gimp app
  * as well as plug-ins and modules.
  *
@@ -75,6 +79,14 @@ extern "C" {
 
 #define gimp_deg_to_rad(angle) ((angle) * (2.0 * G_PI) / 360.0)
 #define gimp_rad_to_deg(angle) ((angle) * 360.0 / (2.0 * G_PI))
+
+#ifdef G_OS_WIN32
+#define ISNAN(x) _isnan(x)
+#define ISINF(x) (_fpclass(x) & (_FPCLASS_NINF | _FPCLASS_PINF))
+#else
+#define ISNAN(x) isnan(x)
+#define ISINF(x) isinf(x)
+#endif
 
 #ifdef __cplusplus
 }

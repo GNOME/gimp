@@ -189,18 +189,27 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
           width = gdisp->statusarea->requisition.width; 
         }
       
+#ifdef GDK_WINDOWING_WIN32
+      gtk_widget_hide(gdisp->shell);
+#else
       while (gtk_events_pending())
 	gtk_main_iteration();
+#endif
 
       gtk_drawing_area_size(GTK_DRAWING_AREA(gdisp->canvas),
 	                    width, height);
+
+#ifdef GDK_WINDOWING_WIN32
+      gtk_widget_show(gdisp->shell);
+#endif
+
 #undef RESIZE_DEBUG
 #ifdef RESIZE_DEBUG
-      printf("1w:%d/%d d:%d/%d s:%d/%d b:%d/%d\n",
+      g_print("1w:%d/%d d:%d/%d s:%d/%d b:%d/%d\n",
 	     width, height,
 	     disp_width, disp_height,
 	     shell_width, shell_height,
-	     border_x, border_y);fflush(stdout);
+	     border_x, border_y);
 #endif /* RESIZE_DEBUG */
 		     
       gdk_window_get_origin (gdisp->shell->window, &shell_x, &shell_y);
@@ -222,17 +231,25 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
           width = gdisp->statusarea->requisition.width; 
         }
       
+#ifdef GDK_WINDOWING_WIN32
+      gtk_widget_hide(gdisp->shell);
+#else
       while (gtk_events_pending())
 	gtk_main_iteration();
+#endif
       
       gtk_drawing_area_size(GTK_DRAWING_AREA(gdisp->canvas),
 	                    width, height);
+#ifdef GDK_WINDOWING_WIN32
+      gtk_widget_show(gdisp->shell);
+#endif
+
 #ifdef RESIZE_DEBUG
-      printf("2w:%d/%d d:%d/%d s:%d/%d b:%d/%d\n",
+      g_print("2w:%d/%d d:%d/%d s:%d/%d b:%d/%d\n",
 	     width, height,
 	     disp_width, disp_height,
 	     shell_width, shell_height,
-	     border_x, border_y);fflush(stdout);
+	     border_x, border_y);
 #endif /* RESIZE_DEBUG */
 
       gdk_window_get_origin (gdisp->shell->window, &shell_x, &shell_y);
@@ -282,13 +299,21 @@ gdisplay_resize_image (GDisplay *gdisp)
       gdisp->disp_width = width;
       gdisp->disp_height = height;
 
+#ifdef GDK_WINDOWING_WIN32
+      if (GTK_WIDGET_VISIBLE (gdisp->canvas))
+	  gtk_widget_hide(gdisp->canvas);
+#else
       while (gtk_events_pending())
 	gtk_main_iteration();
+#endif
       
       gtk_widget_set_usize (gdisp->canvas,
 			    gdisp->disp_width,
 			    gdisp->disp_height);
 
+#ifdef GDK_WINDOWING_WIN32
+      gtk_widget_show(gdisp->canvas);
+#endif
     }
 
   return 1;

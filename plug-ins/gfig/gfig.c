@@ -841,10 +841,16 @@ plug_in_parse_gfig_path (void)
   if (return_vals[0].data.d_status != STATUS_SUCCESS ||
       return_vals[1].data.d_string == NULL)
     {
+#ifndef G_OS_WIN32
+      gchar *gimprc = gimp_personal_rc_file ("gimprc");
       g_message ("No gfig-path in gimprc:\n\n"
 		 "You need to add an entry like\n"
 		 "(gfig-path \"${gimp_dir}/gfig:${gimp_data_dir}/gfig\n"
-		 "to your ~/.gimp/gimprc file\n");
+		 "to your %s file\n", gimprc);
+      g_free (gimprc);
+#else
+      g_message ("No gfig-path in gimprc???\n");
+#endif
       gimp_destroy_params (return_vals, nreturn_vals);
       return;
     }
@@ -1611,7 +1617,12 @@ create_file_selection (GFigObj *obj,
       g_free (dir);
     }
   else
-    gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), "/tmp");
+    {
+      gchar *tmp = g_get_tmp_dir ();
+
+      gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), tmp);
+      g_free (tmp);
+    }
 
   if (!GTK_WIDGET_VISIBLE (window))
     gtk_widget_show (window);
@@ -5097,14 +5108,15 @@ gfig_update_stat_labels (void)
       gchar *hm = g_get_home_dir ();
       gchar *dfn = g_strdup (current_obj->filename);
 #ifdef __EMX__
-      hm = _fnslashify (hm);
+      if (hm)
+	hm = _fnslashify (hm);
 #endif
 
       
 #ifndef __EMX__
-      if (!strncmp (dfn, hm, strlen (hm)-1))
+      if (hm != NULL && !strncmp (dfn, hm, strlen (hm)-1))
 #else
-      if (!strnicmp (dfn, hm, strlen (hm)-1))
+      if (hm != NULL && !strnicmp (dfn, hm, strlen (hm)-1))
 #endif
 	 {
 	   strcpy (dfn, "~");

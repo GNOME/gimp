@@ -381,7 +381,9 @@ main (int    argc,
 /* In case we build this as a windowed application */
 
 #ifdef __GNUC__
-#define _stdcall  __attribute__((stdcall))
+#  ifndef _stdcall
+#    define _stdcall  __attribute__((stdcall))
+#  endif
 #endif
 
 int _stdcall

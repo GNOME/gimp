@@ -38,7 +38,7 @@ discussion.  To subscribe, send an empty message to
 
 	     <listname>-subscribe@xcf.berkeley.edu
 
-substituting <list-name> for "gimp-user", "gimp-win-user", "gimp-announce" or
+substituting <listname> for "gimp-user", "gimp-announce" or
 "gimp-developer" (without the quotes, of course) depending on the list you 
 want to subscribe to.  The mailing list archives can be found at:
 
@@ -46,12 +46,25 @@ want to subscribe to.  The mailing list archives can be found at:
         http://www.egroups.com/messages/gimp-user/
 
 Gimp-user is a mailing list dedicated to user problems, hints and
-tips, discussion of cool effects, etc.  Gimp-win-user is a list to discuss 
-user problems specific to the Win32 port.  Gimp-announce is a low-traffic list
+tips, discussion of cool effects, etc.  Gimp-announce is a low-traffic list
 with announcements about new releases of GIMP and plug-ins.  Gimp-developer is 
 oriented to GIMP core and plug-in developers.  Most people will only want to 
 be subscribed to gimp-user. If you want to help develop The GIMP, the
 gimp-developer mailing list is a good starting point.
+
+There are two mailing lists dedicated to the Win32 port,
+"gimpwin-users" and "gimpwin-dev". Especially the latter also carries
+traffic about the GTk+ port to Win32 in general. To subscribe, send an
+empty message to
+
+	gimpwin-users-subscribe@egroups.com
+or
+	gimpwin-dev-subscribe@egroups.com
+
+respectively. You can also use the web interface at
+http://www.egroups.com/group/gimpwin-users/ and
+http://www.egroups.com/group/gimpwin-dev/ .
+
 
 3. IRC
 ======

@@ -1212,10 +1212,10 @@ HELP
 
     $invoke{code} = <<'CODE';
 {
-  if (isnan (xresolution) || xresolution < GIMP_MIN_RESOLUTION || 
-      isinf (xresolution) || xresolution > GIMP_MAX_RESOLUTION ||
-      isnan (yresolution) || yresolution < GIMP_MIN_RESOLUTION || 
-      isinf (yresolution) || yresolution > GIMP_MAX_RESOLUTION)
+  if (ISNAN (xresolution) || xresolution < GIMP_MIN_RESOLUTION || 
+      ISINF (xresolution) || xresolution > GIMP_MAX_RESOLUTION ||
+      ISNAN (yresolution) || yresolution < GIMP_MIN_RESOLUTION || 
+      ISINF (yresolution) || yresolution > GIMP_MAX_RESOLUTION)
     {
       g_message (_("Image resolution is out of bounds,\n" 
                    "using the default resolution instead."));
@@ -1423,8 +1423,8 @@ CODE
 }
 
 
-@headers = qw("config.h" <string.h> <math.h> "gimage.h" 
-	      "libgimp/gimpintl.h" "libgimp/gimplimits.h");
+@headers = qw("config.h" <string.h> "gimage.h" 
+	      "libgimp/gimpmath.h" "libgimp/gimpintl.h" "libgimp/gimplimits.h");
 
 $extra{app}->{code} = <<'CODE';
 /* Yuup, this is somewhat unsmooth, to say the least */

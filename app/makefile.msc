@@ -177,7 +177,6 @@ gimp_OBJECTS = \
 	info_dialog.obj		\
 	info_window.obj		\
 	ink.obj         	\
-	install.obj		\
 	interface.obj		\
 	interface_cmds.obj	\
 	internal_procs.obj	\
@@ -255,6 +254,7 @@ gimp_OBJECTS = \
 	undo_cmds.obj		\
 	undo_history.obj	\
 	unit_cmds.obj		\
+	user_install.obj	\
 	xcf.obj
 
 # .SUFFIXES: .gc

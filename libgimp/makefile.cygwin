@@ -115,6 +115,8 @@ gimpenv.o : gimpenv.c
 	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpenv.c
 gimpgradient.o : gimpgradient.c
 	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpgradient.c
+gimphelp.o : gimphelp.c
+	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimphelp.c
 gimpimage.o : gimpimage.c
 	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpimage.c
 gimplayer.o : gimplayer.c
@@ -129,6 +131,8 @@ gimppixelrgn.o : gimppixelrgn.c
 	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimppixelrgn.c
 gimpprotocol.o : gimpprotocol.c
 	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpprotocol.c
+gimpselection.o : gimpselection.c
+	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimpselection.c
 gimptile.o : gimptile.c
 	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimptile.c
 gimpunit.o : gimpunit.c
