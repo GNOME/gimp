@@ -36,6 +36,15 @@
 #define HORIZONTAL  1
 #define VERTICAL    2
 
+/* force a busy cursor */
+#define BUSY_OFF   0
+#define BUSY_UP    1
+#define BUSY_ON    2
+#define BUSY_DOWN  3
+
+static guint gdisp_busy = BUSY_OFF;
+
+
 static void
 redraw (GDisplay *gdisp,
 	int       x,
@@ -183,8 +192,27 @@ gdisplay_canvas_events (GtkWidget *canvas,
 		      tools_initialize (active_tool->type, gdisp);
 		  } else
 		    active_tool->drawable = gimage_active_drawable(gdisp->gimage);
-		
-		(* active_tool->button_press_func) (active_tool, bevent, gdisp);
+
+                  /* hack hack hack */
+                  if (no_cursor_updating == 0)
+                    {
+                      switch (active_tool->type)
+                        {
+                        case BEZIER_SELECT:
+                          gdisplay_install_tool_cursor (gdisp, GDK_WATCH);
+                          break;
+                          
+                        case FUZZY_SELECT:                          
+                          gdisplay_install_tool_cursor (gdisp, GDK_WATCH);
+                          gdisp_busy = BUSY_UP;
+                          break;
+
+                        default:
+                          break;
+                        }
+                    }
+                      
+                  (* active_tool->button_press_func) (active_tool, bevent, gdisp);
 	      }
 	  break;
 
@@ -232,7 +260,37 @@ gdisplay_canvas_events (GtkWidget *canvas,
 		    bevent->y = ty;
 		  }
 
-		(* active_tool->button_release_func) (active_tool, bevent, gdisp);
+                /* hack hack hack */
+                if (no_cursor_updating == 0)
+                  {
+                    switch (active_tool->type)
+                      {
+                      case ROTATE:
+                      case SCALE:
+                      case SHEAR:
+                      case PERSPECTIVE:
+
+                      case RECT_SELECT:
+                      case ELLIPSE_SELECT:
+                      case FREE_SELECT:
+                      case BEZIER_SELECT:
+                      case FUZZY_SELECT:
+
+                      case FLIP_HORZ:
+                      case FLIP_VERT:
+                      case BUCKET_FILL:
+                      case BLEND:
+
+                        gdisplay_install_tool_cursor (gdisp, GDK_WATCH);
+                        gdisp_busy = BUSY_DOWN;
+                        break;
+                          
+                      default:
+                        break;
+                      }
+                  }
+                
+                (* active_tool->button_release_func) (active_tool, bevent, gdisp);
 	      }
 	  break;
 
@@ -357,7 +415,12 @@ gdisplay_canvas_events (GtkWidget *canvas,
 
   if (no_cursor_updating == 0)
     {
-      if (active_tool && !gimage_is_empty (gdisp->gimage) &&
+      if (gdisp_busy == BUSY_UP)
+        {
+          gdisplay_install_tool_cursor (gdisp, GDK_WATCH);
+          gdisp_busy = BUSY_ON;
+        }
+      else if (active_tool && !gimage_is_empty (gdisp->gimage) &&
 	  !(state & (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)))
 	{
 	  GdkEventMotion me;
@@ -365,8 +428,15 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  me.state = state;
 	  (* active_tool->cursor_update_func) (active_tool, &me, gdisp);
 	}
+      else if (gdisp_busy == BUSY_DOWN)
+        {
+          gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW);
+          gdisp_busy = BUSY_OFF;
+        }
       else if (gimage_is_empty (gdisp->gimage))
-	gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW);
+        {
+          gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW);
+        }
     }
 
   return return_val;

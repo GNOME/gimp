@@ -755,10 +755,6 @@ blend (GImage       *gimage,
                         x1, y1, (x2 - x1), (y2 - y1),
                         blend_mode, gradient_type, offset, repeat,
                         supersample, max_depth, threshold,
-                        /*
-                          (startx - x1), (starty - y1),
-                          (endx - x1), (endy - y1),
-                        */
                         startx, starty,
                         endx, endy,
                         opacity/100.0, paint_mode);
@@ -871,7 +867,7 @@ gradient_calc_square_factor (double dist,
 
       offset = offset / 100.0;
 
-      r   = MAXIMUM(abs(x), abs(y));
+      r   = MAXIMUM(fabs(x), fabs(y));
       rat = r / dist;
 
       if (rat < offset)
@@ -1496,6 +1492,10 @@ gradient_fill_region (GImage       *gimage,
                           width, FOO,
                           STORAGE_TILED);
 
+
+      /* register a single undo instead of one per strip. */
+      drawable_apply_image (drawable, x, y, x+width, y+height, NULL);
+
       {
         PixelArea PRrender;
         PixelArea PRapply;
@@ -1556,7 +1556,7 @@ gradient_fill_region (GImage       *gimage,
                                    NULL, apply,
                                    0, 0,
                                    0, 0,
-                                   TRUE, opacity, mode, x, y + yy);
+                                   FALSE, opacity, mode, x, y + yy);
           }
       }
     }
