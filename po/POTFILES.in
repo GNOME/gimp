@@ -3,7 +3,6 @@
 
 app/app_procs.c
 app/devices.c
-app/docindex.c
 app/file-open.c
 app/file-save.c
 app/floating_sel.c
@@ -140,6 +139,7 @@ app/widgets/gimpchannellistview.c
 app/widgets/gimpcomponentlistitem.c
 app/widgets/gimpcontainergridview.c
 app/widgets/gimpdatafactoryview.c
+app/widgets/gimpdocumentview.c
 app/widgets/gimpdrawablelistview.c
 app/widgets/gimpimagedock.c
 app/widgets/gimplayerlistview.c
