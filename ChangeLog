@@ -1,3 +1,11 @@
+2004-02-11  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/plug-ins.c (plug_ins_init)
+	* app/plug-in/plug-in.c (plug_in_close): changed g_warning() to
+	g_printerr() in a few places where the problem is not an error in
+	GIMP but a misbehaving plug-in. Suppress some of this output in
+	the stable branch.
+
 2004-02-10  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/preferences-dialog.c (prefs_dialog_new): removed "Default"

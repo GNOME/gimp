@@ -603,24 +603,30 @@ plug_in_close (PlugIn   *plug_in,
 
   while (plug_in->temp_main_loops)
     {
-      g_warning ("plug_in_close: plug-in aborted before sending its "
-                 "temporary procedure return values");
+#ifdef GIMP_UNSTABLE
+      g_printerr ("plug_in_close: plug-in aborted before sending its "
+                  "temporary procedure return values\n");
+#endif
       plug_in_main_loop_quit (plug_in);
     }
 
   if (plug_in->recurse_main_loop &&
       g_main_loop_is_running (plug_in->recurse_main_loop))
     {
-      g_warning ("plug_in_close: plug-in aborted before sending its "
-                 "procedure return values");
+#ifdef GIMP_UNSTABLE
+      g_printerr ("plug_in_close: plug-in aborted before sending its "
+                  "procedure return values\n");
+#endif
       g_main_loop_quit (plug_in->recurse_main_loop);
     }
 
   if (plug_in->ext_main_loop &&
       g_main_loop_is_running (plug_in->ext_main_loop))
     {
-      g_warning ("plug_in_close: extension aborted before sending its "
-                 "extension_ack message");
+#ifdef GIMP_UNSTABLE
+      g_printerr ("plug_in_close: extension aborted before sending its "
+                  "extension_ack message\n");
+#endif
       g_main_loop_quit (plug_in->ext_main_loop);
     }
 

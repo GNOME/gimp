@@ -189,8 +189,10 @@ plug_ins_init (Gimp               *gimp,
             {
               GSList *tmp3;
 
-              g_warning ("removing duplicate PDB procedure \"%s\"",
-                         overridden_proc_def->db_info.name);
+              g_printerr ("removing duplicate PDB procedure \"%s\" "
+                          "registered by '%s'\n",
+                          overridden_proc_def->db_info.name,
+                          gimp_filename_to_utf8 (overridden_proc_def->prog));
 
               /* search the plugin list to see if any plugins had references to
                * the overridden_proc_def.
@@ -847,8 +849,8 @@ plug_ins_image_types_parse (gchar *image_types)
 	    }
 	  else
 	    {
-              g_warning ("image_type contains unrecognizable parts: '%s'",
-                         type_spec);
+              g_printerr ("image_type contains unrecognizable parts: '%s'\n",
+                          type_spec);
 
 	      while (*image_types &&
                      ((*image_types != ' ') ||
