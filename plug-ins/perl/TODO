@@ -33,6 +33,7 @@ olof
 
 bugs
 
+  * put libs last, ignore gtk-config brokenness
   * update logulator
   * update frosty-logo.scm  t-o-p-logo.scm starscape-logo.scm starburst-logo.scm
 [DONE]  * rate-limiting for gimp_message BEFORE 1.2

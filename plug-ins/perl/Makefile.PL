@@ -222,12 +222,16 @@ install-po:
 ";
 
    print "Portable message object...";
-   for (<po/*.po>) {
-      my($po)=m!/(.*)\.po$!; #/# for brainy vim
-      print " $po";
-      $postamble .= "	\$(MKPATH) \$(datadir)/locale/$po/LC_MESSAGES\n";
-      $postamble .= "	-\$(MSGFMT) -o \$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo po/$po.po\n";
-      $postamble .= "	-\$(CHMOD) 644 \$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo\n";
+   if ($MSGFMT =~ /./) {
+      for (<po/*.po>) {
+         my($po)=m!/(.*)\.po$!; #/# for brainy vim
+         print " $po";
+         $postamble .= "	\$(MKPATH) \$(datadir)/locale/$po/LC_MESSAGES\n";
+         $postamble .= "	-\$(MSGFMT) -o \$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo po/$po.po\n";
+         $postamble .= "	-\$(CHMOD) 644 \$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo\n";
+      }
+   } else {
+      print " skipped";
    }
    print "\n";
    

@@ -4,7 +4,7 @@ do '../config.pl';
 
 sub MY::const_config {
    my $self = shift;
-   $self->{LDDLFLAGS}="$GIMP_LIBS_NOUI $LDFLAGS $LIBS $self->{LDDLFLAGS}";
+   $self->{LDDLFLAGS}="$self->{LDDLFLAGS} $GIMP_LIBS_NOUI $LDFLAGS $LIBS";
    package MY;
    $self->SUPER::const_config(@_);
 }

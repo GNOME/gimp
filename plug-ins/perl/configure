@@ -1463,7 +1463,7 @@ done
 
 
 INTLLIBS=
-MSGFMT=msgfmt
+MSGFMT=
 
 
 

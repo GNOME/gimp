@@ -848,7 +848,7 @@ sub save_image($$) {
       eval { $layer->file_jpeg_save($path,$path,$quality,$smooth,1) };
       $layer->file_jpeg_save($path,$path,$quality,$smooth,1,$interlace,"",0,1,0,0) if $@;
    } elsif ($type eq "GIF") {
-      unless ($layer->indexed) {
+      unless ($layer->is_indexed) {
          eval { $img->convert_indexed(1,256) };
          $img->convert_indexed(2,&Gimp::MAKE_PALETTE,256,1,1,"") if $@;
       }
