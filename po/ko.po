@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1\n"
 "POT-Creation-Date: 1999-02-03 16:44-0800\n"
-"PO-Revision-Date: 1999-01-17 01:30:15+0900\n"
+"PO-Revision-Date: 1999-02-04 14:48:39+0900\n"
 "Last-Translator: Sung-Hyun Nam <namsh@lgic.co.kr>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -55,18 +55,18 @@ msgstr ""
 
 #: app/app_procs.c:354
 msgid "GIMP Startup"
-msgstr ""
+msgstr "GIMP 시작"
 
 #: app/app_procs.c:465 app/gimprc.c:399
 #, c-format
 msgid "parsing \"%s\"\n"
-msgstr ""
+msgstr "\"%s\" 해석중\n"
 
 #. initialize the xcf file format routines
 #. initialize the parasite table
 #: app/app_procs.c:519
 msgid "Looking for data files"
-msgstr ""
+msgstr "데이타 파일을 찾는 중"
 
 #: app/app_procs.c:519
 msgid "Brushes"
@@ -113,7 +113,7 @@ msgstr "저장 않된 파일이 있습니다. GIMP를 종료할까요?"
 
 #: app/batch.c:35
 msgid "script-fu not available: batch mode disabled\n"
-msgstr "script-fu를 사용할 수 없슴: 일괄처리 모드 꺼짐\n"
+msgstr "script-fu를 사용할 수 없음: 일괄처리 모드 꺼짐\n"
 
 #: app/batch.c:46
 msgid "reading batch commands from stdin\n"
@@ -482,7 +482,7 @@ msgstr "닫기"
 
 #: app/brush_edit.c:200
 msgid "Brush Editor"
-msgstr ""
+msgstr "브러쉬 편집기"
 
 #. brush radius scale
 #: app/brush_edit.c:240
@@ -591,7 +591,7 @@ msgstr ""
 
 #: app/brush_select.c:319
 msgid "Edit Brush"
-msgstr ""
+msgstr "브러쉬 편집"
 
 #: app/brush_select.c:328
 msgid "New Brush"
@@ -599,7 +599,7 @@ msgstr "새 브러쉬"
 
 #: app/brush_select.c:499
 msgid "failed to run brush callback function"
-msgstr ""
+msgstr "브러쉬 콜백 함수 실행 실패"
 
 #: app/brush_select.c:1021
 msgid ""
@@ -761,21 +761,21 @@ msgstr ""
 #: app/channels_dialog.c:1053 app/color_balance.c:440 app/color_picker.c:158
 #: app/color_picker.c:168 app/curves.c:327 app/levels.c:413
 msgid "Red"
-msgstr ""
+msgstr "적색"
 
 #: app/channels_dialog.c:1054 app/color_balance.c:467 app/color_picker.c:159
 #: app/color_picker.c:169 app/curves.c:328 app/levels.c:414
 msgid "Green"
-msgstr ""
+msgstr "녹색"
 
 #: app/channels_dialog.c:1055 app/color_balance.c:494 app/color_picker.c:160
 #: app/color_picker.c:170 app/curves.c:329 app/levels.c:415
 msgid "Blue"
-msgstr ""
+msgstr "청색"
 
 #: app/channels_dialog.c:1056
 msgid "Gray"
-msgstr ""
+msgstr "회색"
 
 #: app/channels_dialog.c:1057
 msgid "Indexed"
@@ -827,7 +827,7 @@ msgstr "정렬"
 
 #: app/clone.c:233
 msgid "No patterns available for this operation."
-msgstr ""
+msgstr "이 작업을 할 수 있는 패턴이 없습니다."
 
 #: app/color_balance.c:252
 msgid "Color Balance Options"
@@ -887,7 +887,7 @@ msgstr "색상 선택"
 
 #: app/color_notebook.c:180 app/color_select.c:204
 msgid "Revert to Old Color"
-msgstr ""
+msgstr "이전 색상으로 복원"
 
 #. the main label
 #: app/color_picker.c:106
@@ -901,7 +901,7 @@ msgstr ""
 #: app/color_picker.c:161 app/color_picker.c:167 app/color_picker.c:176
 #: app/curves.c:330 app/levels.c:416
 msgid "Alpha"
-msgstr ""
+msgstr "알파"
 
 #: app/color_picker.c:162 app/color_picker.c:171 app/color_picker.c:177
 msgid "Hex Triplet"
@@ -909,7 +909,7 @@ msgstr ""
 
 #: app/color_picker.c:166
 msgid "Index"
-msgstr ""
+msgstr "색인"
 
 #: app/color_picker.c:175
 msgid "Intensity"
@@ -1264,7 +1264,7 @@ msgstr "%s 파일 열기 실패: %s"
 
 #: app/errorconsole.c:154
 msgid "Can't save, nothing selected!"
-msgstr "저장할 수 없슴, 선택된 것이 없슴!"
+msgstr "저장할 수 없음, 선택된 것이 없음!"
 
 #: app/errorconsole.c:158
 msgid "Save error log to file..."
@@ -2558,9 +2558,8 @@ msgid "Angle adjust:"
 msgstr ""
 
 #: app/ink.c:277
-#, fuzzy
 msgid "Type:"
-msgstr "채움 유형: "
+msgstr "유형: "
 
 #: app/ink.c:333
 msgid "Shape:"
@@ -3515,9 +3514,8 @@ msgid "unknown signal"
 msgstr ""
 
 #: app/menus.c:42
-#, fuzzy
 msgid "/File/MRU00 "
-msgstr "/파일/MRU%02d"
+msgstr "/파일/MRU00 "
 
 #: app/menus.c:52 app/menus.c:79
 msgid "/File/New"
@@ -3584,9 +3582,8 @@ msgid "/File/Dialogs/Error Console..."
 msgstr "/파일/Dialogs/Error Console..."
 
 #: app/menus.c:68
-#, fuzzy
 msgid "/File/Dialogs/Module Browser..."
-msgstr "/파일/Dialogs/Brushes..."
+msgstr "/파일/Dialogs/Module Browser..."
 
 #: app/menus.c:75 app/menus.c:88
 msgid "/File/Quit"
@@ -3990,7 +3987,7 @@ msgid ""
 "Unable to set state for menu which doesn't exist:\n"
 "%s\n"
 msgstr ""
-"없는 메뉴의 상태를 설정할 수 없슴:\n"
+"없는 메뉴의 상태를 설정할 수 없음:\n"
 "%s\n"
 
 #: app/menus.c:407
@@ -4009,7 +4006,7 @@ msgstr "툴 옵션 이동"
 
 #: app/paint_core.c:426
 msgid "No brushes available for use with this tool."
-msgstr "이 툴을 사용하기 위해 사용가능한 브러쉬 없슴."
+msgstr "이 툴을 사용하기 위해 사용가능한 브러쉬 없음."
 
 #: app/paint_core.c:1106
 msgid "paint_core_replace only works in INCREMENTAL mode"
@@ -4139,9 +4136,8 @@ msgid "close"
 msgstr "닫기"
 
 #: app/palette_select.c:303
-#, fuzzy
 msgid "Palette Selection"
-msgstr "패턴 선택"
+msgstr "팔렛 선택"
 
 #: app/pattern_select.c:112
 msgid "Pattern Selection"
@@ -4153,7 +4149,7 @@ msgstr "패턴 콜백 함수의 수행 실패"
 
 #: app/patterns.c:138
 msgid "Specified default pattern not found!"
-msgstr "명시된 기본 패턴을 찾을 수 없슴!"
+msgstr "명시된 기본 패턴을 찾을 수 없음!"
 
 #: app/patterns.c:207
 #, c-format
@@ -5545,7 +5541,7 @@ msgstr ""
 #. REG_BADBR
 #: app/regex.c:987
 msgid "Invalid range end"
-msgstr ""
+msgstr "무효한 범위 끝"
 
 #. REG_ERANGE
 #: app/regex.c:988
@@ -5555,26 +5551,23 @@ msgstr "메모리 부족"
 #. REG_ESPACE
 #: app/regex.c:989
 msgid "Invalid preceding regular expression"
-msgstr ""
+msgstr "무효한 정규 표현식"
 
 #. REG_BADRPT
 #: app/regex.c:990
 msgid "Premature end of regular expression"
-msgstr ""
+msgstr "정규 표현식의 끝이 너무 빨리 끝남"
 
 #. REG_EEND
 #: app/regex.c:991
 msgid "Regular expression too big"
-msgstr ""
+msgstr "너무 큰 정규 표현식"
 
 #. REG_ESIZE
 #: app/regex.c:992
 msgid "Unmatched ) or \\)"
-msgstr ""
+msgstr ") 혹은 \\)가 대칭않됨"
 
 #: app/regex.c:5442
 msgid "No previous regular expression"
-msgstr ""
-
-#~ msgid "/Filters/"
-#~ msgstr "/필터/"
+msgstr "이전 정규 표현식이 없음"
