@@ -351,6 +351,10 @@ N_("The tile cache is used to make sure the GIMP doesn't thrash " \
    "the GIMP to use more memory. Conversely, a smaller cache size " \
    "causes the GIMP to use more swap space and less memory.")
 
+#define TOOLBOX_COLOR_AREA_BLURB NULL
+#define TOOLBOX_FOO_AREA_BLURB NULL
+#define TOOLBOX_IMAGE_AREA_BLURB NULL
+
 #define TOOLBOX_WINDOW_HINT_BLURB \
 N_("The window type hint that is set on the toolbox. This may affect " \
    "how your window manager decorates and handles the toolbox window.")

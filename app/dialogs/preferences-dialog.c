@@ -1375,6 +1375,38 @@ prefs_dialog_new (Gimp       *gimp,
   size_group = NULL;
 
 
+  /*************************/
+  /*  Interface / Toolbox  */
+  /*************************/
+  vbox = prefs_notebook_append_page (gimp,
+                                     GTK_NOTEBOOK (notebook),
+                                     _("Toolbox"),
+                                     "toolbox.png",
+				     GTK_TREE_STORE (tree),
+				     _("Toolbox"),
+				     GIMP_HELP_PREFS_TOOLBOX,
+				     &top_iter,
+				     &child_iter,
+				     page_index++);
+
+  /*  Appearance  */
+  vbox2 = prefs_frame_new (_("Appearance"),
+                           GTK_CONTAINER (vbox), FALSE);
+
+  prefs_check_button_add_with_icon (object, "toolbox-color-area",
+                                    _("Show Foreground & Background _Color"),
+                                    GIMP_STOCK_DEFAULT_COLORS,
+                                    GTK_BOX (vbox2));
+  prefs_check_button_add_with_icon (object, "toolbox-foo-area",
+                                    _("Show Active _Brush, Pattern & Gradient"),
+                                    GIMP_STOCK_BRUSH,
+                                    GTK_BOX (vbox2));
+  prefs_check_button_add_with_icon (object, "toolbox-image-area",
+                                    _("Show Active _Image"),
+                                    GIMP_STOCK_IMAGE,
+                                    GTK_BOX (vbox2));
+
+
   /*******************************/
   /*  Interface / Input Devices  */
   /*******************************/

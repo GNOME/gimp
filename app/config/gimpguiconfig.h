@@ -57,6 +57,9 @@ struct _GimpGuiConfig
   gboolean             restore_accels;
   gint                 last_opened_size;
   guint64              max_new_image_size;
+  gboolean             toolbox_color_area;
+  gboolean             toolbox_foo_area;
+  gboolean             toolbox_image_area;
   gchar               *theme_path;
   gchar               *theme;
   gboolean             use_help;

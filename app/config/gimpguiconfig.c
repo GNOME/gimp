@@ -79,6 +79,9 @@ enum
   PROP_RESTORE_ACCELS,
   PROP_LAST_OPENED_SIZE,
   PROP_MAX_NEW_IMAGE_SIZE,
+  PROP_TOOLBOX_COLOR_AREA,
+  PROP_TOOLBOX_FOO_AREA,
+  PROP_TOOLBOX_IMAGE_AREA,
   PROP_THEME_PATH,
   PROP_THEME,
   PROP_USE_HELP,
@@ -206,6 +209,21 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     MAX_NEW_IMAGE_SIZE_BLURB,
                                     0, GIMP_MAX_MEMSIZE, 1 << 26,
                                     0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TOOLBOX_COLOR_AREA,
+                                    "toolbox-color-area",
+                                    TOOLBOX_COLOR_AREA_BLURB,
+                                    TRUE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TOOLBOX_FOO_AREA,
+                                    "toolbox-foo-area",
+                                    TOOLBOX_FOO_AREA_BLURB,
+                                    TRUE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TOOLBOX_IMAGE_AREA,
+                                    "toolbox-image-area",
+                                    TOOLBOX_IMAGE_AREA_BLURB,
+                                    TRUE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_THEME_PATH,
                                  "theme-path", THEME_PATH_BLURB,
 				 GIMP_PARAM_PATH_DIR_LIST,
@@ -321,6 +339,15 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_MAX_NEW_IMAGE_SIZE:
       gui_config->max_new_image_size = g_value_get_uint64 (value);
       break;
+    case PROP_TOOLBOX_COLOR_AREA:
+      gui_config->toolbox_color_area = g_value_get_boolean (value);
+      break;
+    case PROP_TOOLBOX_FOO_AREA:
+      gui_config->toolbox_foo_area = g_value_get_boolean (value);
+      break;
+    case PROP_TOOLBOX_IMAGE_AREA:
+      gui_config->toolbox_image_area = g_value_get_boolean (value);
+      break;
     case PROP_THEME_PATH:
       g_free (gui_config->theme_path);
       gui_config->theme_path = g_value_dup_string (value);
@@ -416,6 +443,15 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_MAX_NEW_IMAGE_SIZE:
       g_value_set_uint64 (value, gui_config->max_new_image_size);
+      break;
+    case PROP_TOOLBOX_COLOR_AREA:
+      g_value_set_boolean (value, gui_config->toolbox_color_area);
+      break;
+    case PROP_TOOLBOX_FOO_AREA:
+      g_value_set_boolean (value, gui_config->toolbox_foo_area);
+      break;
+    case PROP_TOOLBOX_IMAGE_AREA:
+      g_value_set_boolean (value, gui_config->toolbox_image_area);
       break;
     case PROP_THEME_PATH:
       g_value_set_string (value, gui_config->theme_path);

@@ -359,6 +359,7 @@
 #define GIMP_HELP_PREFS_INTERFACE                 "gimp-prefs-interface"
 #define GIMP_HELP_PREFS_HELP                      "gimp-prefs-help"
 #define GIMP_HELP_PREFS_TOOL_OPTIONS              "gimp-prefs-tool-options"
+#define GIMP_HELP_PREFS_TOOLBOX                   "gimp-prefs-toolbox"
 #define GIMP_HELP_PREFS_INPUT_DEVICES             "gimp-prefs-input-devices"
 #define GIMP_HELP_PREFS_IMAGE_WINDOW              "gimp-prefs-image-window"
 #define GIMP_HELP_PREFS_IMAGE_WINDOW_APPEARANCE   "gimp-prefs-image-window-appearance"

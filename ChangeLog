@@ -1,3 +1,30 @@
+2004-05-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimptoolbox-image-area.[ch]: new toolbox area which
+	shows the active image.
+
+	* app/config/gimpguiconfig.[ch]
+	* app/config/gimprc-blurbs.h: added config options to control the
+	visibility of the toolbox' color, indicator and image areas.
+
+	* app/widgets/gimptoolbox.[ch]: added the image area and honor the
+	new config options. Put the various areas into their own wrap box.
+
+	* app/widgets/gimptoolbox-dnd.c: changed accordingly.
+
+	* app/widgets/gimphelp-ids.h: added a help ID for the image area.
+
+	* app/widgets/gimptoolbox-indicator-area.c: made the previews
+	a bit larger, cleanup.
+
+	* app/gui/preferences-dialog.c: added a "Toolbox" page as GUI for
+	the new config options.
+
+	* themes/Default/images/preferences/Makefile.am
+	* themes/Default/images/preferences/toolbox.png: a (wrong) icon
+	for the "Toolbox" prefs page. Needs to be replaced.
+
 2004-05-31  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/Makefile.am

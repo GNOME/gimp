@@ -38,12 +38,16 @@ struct _GimpToolbox
   GimpDock   parent_instance;
 
   GtkWidget *menu_bar;
-  GtkWidget *wbox;
+  GtkWidget *tool_wbox;
+  GtkWidget *area_wbox;
   GtkWidget *color_area;
-  GtkWidget *indicator_area;
+  GtkWidget *foo_area;
+  GtkWidget *image_area;
 
   gint       tool_rows;
   gint       tool_columns;
+  gint       area_rows;
+  gint       area_columns;
 };
 
 struct _GimpToolboxClass

@@ -27,6 +27,7 @@ PREFS_IMAGES = \
 	monitor.png			\
 	new-image.png			\
 	session.png			\
+	toolbox.png			\
 	tool-options.png		\
 	window-management.png
 

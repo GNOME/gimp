@@ -41,10 +41,10 @@
 #include "gimp-intl.h"
 
 
-#define CELL_SIZE        23  /*  The size of the previews  */
-#define GRAD_CELL_WIDTH  48  /*  The width of the gradient preview  */
-#define GRAD_CELL_HEIGHT 12  /*  The height of the gradient preview  */
-#define CELL_PADDING      2  /*  How much between brush and pattern cells  */
+#define CELL_SIZE        26  /*  The size of the previews                  */
+#define GRAD_CELL_WIDTH  54  /*  The width of the gradient preview         */
+#define GRAD_CELL_HEIGHT 14  /*  The height of the gradient preview        */
+#define CELL_SPACING      2  /*  How much between brush and pattern cells  */
 
 
 static void
@@ -62,9 +62,7 @@ brush_preview_drop_brush (GtkWidget    *widget,
 			  GimpViewable *viewable,
 			  gpointer      data)
 {
-  GimpContext *context;
-
-  context = GIMP_CONTEXT (data);
+  GimpContext *context = GIMP_CONTEXT (data);
 
   gimp_context_set_brush (context, GIMP_BRUSH (viewable));
 }
@@ -84,9 +82,7 @@ pattern_preview_drop_pattern (GtkWidget    *widget,
 			      GimpViewable *viewable,
 			      gpointer      data)
 {
-  GimpContext *context;
-
-  context = GIMP_CONTEXT (data);
+  GimpContext *context = GIMP_CONTEXT (data);
 
   gimp_context_set_pattern (context, GIMP_PATTERN (viewable));
 }
@@ -106,9 +102,7 @@ gradient_preview_drop_gradient (GtkWidget    *widget,
 				GimpViewable *viewable,
 				gpointer      data)
 {
-  GimpContext *context;
-
-  context = GIMP_CONTEXT (data);
+  GimpContext *context = GIMP_CONTEXT (data);
 
   gimp_context_set_gradient (context, GIMP_GRADIENT (viewable));
 }
@@ -130,8 +124,8 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
   context = GIMP_DOCK (toolbox)->context;
 
   indicator_table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (indicator_table), CELL_PADDING);
-  gtk_table_set_col_spacings (GTK_TABLE (indicator_table), CELL_PADDING);
+  gtk_table_set_row_spacings (GTK_TABLE (indicator_table), CELL_SPACING);
+  gtk_table_set_col_spacings (GTK_TABLE (indicator_table), CELL_SPACING);
 
   /*  brush preview  */
 
@@ -142,21 +136,21 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
   gimp_preview_set_viewable (GIMP_PREVIEW (brush_preview),
                              GIMP_VIEWABLE (gimp_context_get_brush (context)));
   gtk_table_attach_defaults (GTK_TABLE (indicator_table), brush_preview,
-			     0, 1, 0, 1);
+                             0, 1, 0, 1);
   gtk_widget_show (brush_preview);
 
   gimp_help_set_help_data (brush_preview,
-			   _("The active brush.\n"
-			     "Click to open the Brush Dialog."), NULL);
+                           _("The active brush.\n"
+                             "Click to open the Brush Dialog."), NULL);
 
   g_signal_connect_object (context, "brush_changed",
-			   G_CALLBACK (gimp_preview_set_viewable),
-			   brush_preview,
-			   G_CONNECT_SWAPPED);
+                           G_CALLBACK (gimp_preview_set_viewable),
+                           brush_preview,
+                           G_CONNECT_SWAPPED);
 
   g_signal_connect (brush_preview, "clicked",
-		    G_CALLBACK (brush_preview_clicked),
-		    toolbox);
+                    G_CALLBACK (brush_preview_clicked),
+                    toolbox);
 
   gimp_dnd_viewable_dest_add (brush_preview,
                               GIMP_TYPE_BRUSH,
@@ -173,21 +167,21 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
                              GIMP_VIEWABLE (gimp_context_get_pattern (context)));
 
   gtk_table_attach_defaults (GTK_TABLE (indicator_table), pattern_preview,
-			     1, 2, 0, 1);
+                             1, 2, 0, 1);
   gtk_widget_show (pattern_preview);
 
   gimp_help_set_help_data (pattern_preview,
-			   _("The active pattern.\n"
-			     "Click to open the Pattern Dialog."), NULL);
+                           _("The active pattern.\n"
+                             "Click to open the Pattern Dialog."), NULL);
 
   g_signal_connect_object (context, "pattern_changed",
-			   G_CALLBACK (gimp_preview_set_viewable),
-			   pattern_preview,
-			   G_CONNECT_SWAPPED);
+                           G_CALLBACK (gimp_preview_set_viewable),
+                           pattern_preview,
+                           G_CONNECT_SWAPPED);
 
   g_signal_connect (pattern_preview, "clicked",
-		    G_CALLBACK (pattern_preview_clicked),
-		    toolbox);
+                    G_CALLBACK (pattern_preview_clicked),
+                    toolbox);
 
   gimp_dnd_viewable_dest_add (pattern_preview,
                               GIMP_TYPE_PATTERN,
@@ -204,21 +198,21 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
                              GIMP_VIEWABLE (gimp_context_get_gradient (context)));
 
   gtk_table_attach_defaults (GTK_TABLE (indicator_table), gradient_preview,
-			     0, 2, 1, 2);
+                             0, 2, 1, 2);
   gtk_widget_show (gradient_preview);
 
   gimp_help_set_help_data (gradient_preview,
-			   _("The active gradient.\n"
-			     "Click to open the Gradient Dialog."), NULL);
+                           _("The active gradient.\n"
+                             "Click to open the Gradient Dialog."), NULL);
 
   g_signal_connect_object (context, "gradient_changed",
-			   G_CALLBACK (gimp_preview_set_viewable),
-			   gradient_preview,
-			   G_CONNECT_SWAPPED);
+                           G_CALLBACK (gimp_preview_set_viewable),
+                           gradient_preview,
+                           G_CONNECT_SWAPPED);
 
   g_signal_connect (gradient_preview, "clicked",
-		    G_CALLBACK (gradient_preview_clicked),
-		    toolbox);
+                    G_CALLBACK (gradient_preview_clicked),
+                    toolbox);
 
   gimp_dnd_viewable_dest_add (gradient_preview,
                               GIMP_TYPE_GRADIENT,

@@ -65,21 +65,21 @@ gimp_toolbox_dnd_init (GimpToolbox *toolbox)
 
   gimp_dnd_file_dest_add (GTK_WIDGET (toolbox), gimp_dnd_open_files, NULL);
 
-  gimp_dnd_file_dest_add (toolbox->wbox, gimp_dnd_open_files, NULL);
+  gimp_dnd_file_dest_add (toolbox->tool_wbox, gimp_dnd_open_files, NULL);
 
-  gimp_dnd_viewable_dest_add (toolbox->wbox, GIMP_TYPE_LAYER,
+  gimp_dnd_viewable_dest_add (toolbox->tool_wbox, GIMP_TYPE_LAYER,
 			      gimp_toolbox_drop_drawable,
 			      dock->context);
-  gimp_dnd_viewable_dest_add (toolbox->wbox, GIMP_TYPE_LAYER_MASK,
+  gimp_dnd_viewable_dest_add (toolbox->tool_wbox, GIMP_TYPE_LAYER_MASK,
 			      gimp_toolbox_drop_drawable,
 			      dock->context);
-  gimp_dnd_viewable_dest_add (toolbox->wbox, GIMP_TYPE_CHANNEL,
+  gimp_dnd_viewable_dest_add (toolbox->tool_wbox, GIMP_TYPE_CHANNEL,
 			      gimp_toolbox_drop_drawable,
 			      dock->context);
-  gimp_dnd_viewable_dest_add (toolbox->wbox, GIMP_TYPE_TOOL_INFO,
+  gimp_dnd_viewable_dest_add (toolbox->tool_wbox, GIMP_TYPE_TOOL_INFO,
 			      gimp_toolbox_drop_tool,
 			      dock->context);
-  gimp_dnd_viewable_dest_add (toolbox->wbox, GIMP_TYPE_BUFFER,
+  gimp_dnd_viewable_dest_add (toolbox->tool_wbox, GIMP_TYPE_BUFFER,
 			      gimp_toolbox_drop_buffer,
 			      dock->context);
 }
