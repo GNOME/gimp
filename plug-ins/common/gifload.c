@@ -294,7 +294,7 @@ load_image (gchar *filename)
   fd = fopen (filename, "rb");
   if (!fd)
     {
-      g_message ("GIF: can't open \"%s\".", filename);
+      g_message (_("GIF: can't open file \"%s\"."), filename);
       return -1;
     }
 
@@ -313,7 +313,7 @@ load_image (gchar *filename)
 
   if (strncmp ((char *) buf, "GIF", 3) != 0)
     {
-      g_warning (_("GIF: this is not a GIF file."));
+      g_message (_("GIF: this is not a GIF file."));
       return -1;
     }
 
@@ -351,7 +351,7 @@ load_image (gchar *filename)
 
   if (GifScreen.AspectRatio != 0 && GifScreen.AspectRatio != 49)
     {
-      g_warning (_("GIF: Non-square pixels.  Image might look squashed.\n"));
+      g_message (_("GIF: Non-square pixels.  Image might look squashed."));
     }
 
 
@@ -745,7 +745,7 @@ LZWReadByte (FILE *fd,
 	    ;
 
 	  if (count != 0)
-	    g_print ("GIF: missing EOD in data stream (common occurence)");
+	    g_warning ("GIF: missing EOD in data stream (common occurence)");
 	  return -2;
 	}
 
@@ -857,7 +857,7 @@ ReadImage (FILE *fd,
       if (Gif89.delayTime < 0)
 	framename = g_strdup (_("Background"));
       else
-	framename = g_strdup_printf (_("Background (%dms)"), 10*Gif89.delayTime);
+	framename = g_strdup_printf (_("Background (%d%s)"), 10*Gif89.delayTime, "ms");
 
       previous_disposal = Gif89.disposal;
 
@@ -907,7 +907,7 @@ ReadImage (FILE *fd,
       if (Gif89.delayTime < 0)
 	framename = g_strdup_printf (_("Frame %d"), frame_number);
       else
-	framename = g_strdup_printf (_("Frame %d (%dms)"), frame_number, 10*Gif89.delayTime);
+	framename = g_strdup_printf (_("Frame %d (%d%s)"), frame_number, 10*Gif89.delayTime, "ms");
 
       switch (previous_disposal)
 	{
@@ -937,13 +937,13 @@ ReadImage (FILE *fd,
 	  framename_ptr = framename;
 	  framename = g_strconcat (framename, " (unknown disposal)", NULL);
 	  g_free (framename_ptr);
-	  g_warning (_("GIF: Undocumented GIF composite type %d is "
+	  g_message (_("GIF: Undocumented GIF composite type %d is "
 		       "not handled.  Animation might not play or "
 		       "re-save perfectly."),
                      previous_disposal);
 	  break;
 	default: 
-	  g_message ("GIF: Disposal word got corrupted.  Bug.");
+	  g_message ("GIF: Disposal word got corrupted.  Bug!");
 	  break;
 	}
       previous_disposal = Gif89.disposal;
@@ -980,7 +980,7 @@ ReadImage (FILE *fd,
     {
       /* I don't see how one would easily construct a GIF in which
 	 this could happen, but it's a mad mad world. */
-      g_warning ("GIF: Ouch!  Can't handle non-alpha RGB frames.\n"
+      g_message ("GIF: Ouch!  Can't handle non-alpha RGB frames.\n"
 		 "Please file a bug report in GIMP's bugzilla.");
       gimp_quit();
     }
@@ -1073,7 +1073,7 @@ ReadImage (FILE *fd,
 
 fini:
   if (LZWReadByte (fd, FALSE, c) >= 0)
-    g_print ("GIF: too much input data, ignoring extra...\n");
+    g_warning ("GIF: too much input data, ignoring extra...");
 
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, TRUE, FALSE);
   gimp_pixel_rgn_set_rect (&pixel_rgn, dest, 0, 0, drawable->width, drawable->height);

@@ -1,3 +1,12 @@
+2003-11-28  Adam D. Moss  <adam@gimp.org>
+
+	* plug-ins/common/gifload.c:
+	- Move 'ms' out of translatable	strings where it appears in
+	layer names, since it must not be translated into something else
+	otherwise we can't confidently parse the time value out again.
+	- flip some warnings back to messages again, mark another
+	mildly common failure message for translation.
+
 2003-11-27  Adam D. Moss  <adam@gimp.org>
 
 	* plug-ins/common/gifload.c: Clean up or clarify a load of
