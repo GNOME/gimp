@@ -1,3 +1,17 @@
+2003-09-21  Simon Budig  <simon@gimp.org>
+            Dave Neary  <bolsh@gimp.org>
+
+	* app/core/gimpdrawable-stroke.c: gimp_image_apply_image () must
+	not get the pixel Region twice, use NULL for src1_tiles, which
+	then defaults to the drawables tiles. Also pixel_region_init()
+	does not take the offsets set by tile_manager_set_offsets into
+	account. Use 0,0 instead of x1,y1. Fixes bad crashes.
+
+	* app/core/gimpscanconvert.c: fixed crash for the same reason.
+
+	* app/vectors/gimpvectors.c: Enabled the new stroking by default.
+	Of course there should be a dialog to tweak the settings...  :-)
+
 2003-09-20  Simon Budig  <simon@gimp.org>
             Dave Neary  <bolsh@gimp.org>
 

@@ -295,8 +295,7 @@ gimp_scan_convert_render (GimpScanConvert *sc,
 
   tile_manager_get_offsets (tile_manager, &x0, &y0);
 
-  pixel_region_init (&maskPR, tile_manager,
-                     x0, y0, 
+  pixel_region_init (&maskPR, tile_manager, 0, 0, 
                      tile_manager_width (tile_manager),
                      tile_manager_height (tile_manager),
                      TRUE);
@@ -307,8 +306,9 @@ gimp_scan_convert_render (GimpScanConvert *sc,
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
-      art_gray_svp_aa (sc->svp, maskPR.x, maskPR.y,
-                       maskPR.x + maskPR.w, maskPR.y + maskPR.h,
+      art_gray_svp_aa (sc->svp, x0 + maskPR.x, y0 + maskPR.y,
+                       x0 + maskPR.x + maskPR.w,
+                       y0 + maskPR.y + maskPR.h,
                        maskPR.data, maskPR.rowstride);
       if (sc->antialias == FALSE)
         {

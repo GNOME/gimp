@@ -65,13 +65,18 @@ gimp_drawable_stroke_vectors (GimpDrawable         *drawable,
   GimpStroke      *stroke;
   TileManager     *base;
   TileManager     *mask;
-  gint             x1, x2, y1, y2, bytes;
-  guchar           ucolor[4] = { 0, 0, 0, 255 };
+  gint             x1, x2, y1, y2, bytes, w, h;
+  guchar           ucolor[4] = { 255, 127, 0, 255 };
+  guchar           bg[1] = { 0, };
   PixelRegion      maskPR, basePR;
   
+  /* what area do we operate on? */
   gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+  
+  w = x2 - x1;
+  h = y2 - y1;
 
-  scan_convert = gimp_scan_convert_new (x2 - x1, y2 - y1, antialias ? 1 : 0);
+  scan_convert = gimp_scan_convert_new (w, h, antialias ? 1 : 0);
   
   /* For each Stroke in the vector, interpolate it, and add it to the
    * ScanConvert */
@@ -114,39 +119,45 @@ gimp_drawable_stroke_vectors (GimpDrawable         *drawable,
 
   gimp_scan_convert_stroke (scan_convert, jointype, captype, width);
 
-  mask = tile_manager_new (x2 - x1, y2 - y1, 1);
+  /* fill a 1-bpp Tilemanager with black, this will describe the shape
+   * of the stroke. */
+  mask = tile_manager_new (w, h, 1);
   tile_manager_set_offsets (mask, x1, y1);
-
-  pixel_region_init (&maskPR, mask, x1, y1, x2 - x1, y2 - y1, TRUE);
-  color_region (&maskPR, ucolor);
+  pixel_region_init (&maskPR, mask, 0, 0, w, h, TRUE);
+  color_region (&maskPR, bg);
   
+  /* render the stroke into it */
   gimp_scan_convert_render (scan_convert, mask);
   
   gimp_scan_convert_free (scan_convert);
-
 
   bytes = drawable->bytes;
   if (!gimp_drawable_has_alpha (drawable))
     bytes++;
 
-  base = tile_manager_new (x2 - x1, y2 - y1, bytes);
-  tile_manager_set_offsets (base, x1, y1);
-
+  /* Fill a TileManager with the stroke color */
   gimp_rgb_get_uchar (color, &(ucolor[0]), &(ucolor[1]), &(ucolor[2]));
-  pixel_region_init (&basePR, base, x1, y1, x2 - x1, y2 - y1, TRUE);
+  base = tile_manager_new (w, h, bytes);
+  tile_manager_set_offsets (base, x1, y1);
+  pixel_region_init (&basePR, base, 0, 0, w, h, TRUE);
   color_region (&basePR, ucolor);
 
+  /* combine mask and stroke color TileManager */
+  pixel_region_init (&basePR, base, 0, 0, w, h, TRUE);
+  pixel_region_init (&maskPR, mask, 0, 0, w, h, FALSE);
   apply_mask_to_region (&basePR, &maskPR, OPAQUE_OPACITY);
 
+  /* Apply to drawable */
+  pixel_region_init (&basePR, base, 0, 0, w, h, FALSE);
   gimp_image_apply_image (gimp_item_get_image (GIMP_ITEM (drawable)),
                           drawable, &basePR,
-                          TRUE, _("Render Vectors"), opacity, paint_mode,
-                          base, x1, y1);
+                          TRUE, _("Render Stroke"), opacity, paint_mode,
+                          NULL, x1, y1);
 
   tile_manager_unref (mask);
   tile_manager_unref (base);
 
-  gimp_drawable_update (drawable, x1, y1, x2 - x1, y2 - y1);
+  gimp_drawable_update (drawable, x1, y1, w, h);
 }
 
 

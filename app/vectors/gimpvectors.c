@@ -31,7 +31,7 @@
 #include "core/gimpmarshal.h"
 #include "core/gimppaintinfo.h"
 
-#undef LIBART_STROKE
+#define LIBART_STROKE
 
 #ifdef LIBART_STROKE
 #  include "libgimpcolor/gimpcolor.h"
