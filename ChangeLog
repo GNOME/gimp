@@ -1,3 +1,7 @@
+2004-07-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimpclone.c: converted tabs to spaces.
+
 2004-07-28  DindinX  <david.odin@cpe.fr>
 
 	* plug-ins/common/spread.c: fix a smallish memory leak.
