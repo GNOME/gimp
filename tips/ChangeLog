@@ -1,3 +1,10 @@
+2004-11-07  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am (tips_POFILES): added nb.po.
+
+	* nb.po
+	* no.po: fixed broken entities.
+
 2004-11-07  Sigurd Gartmann  <sigurd-translate@brogar.org>
 
 	* no.po, nb.po: Added norwegian bokmål nb translation, and
