@@ -210,6 +210,7 @@ gimp_font_get_new_preview (GimpViewable *viewable,
   GimpFont             *font;
   PangoFontDescription *font_desc;
   PangoLayout          *layout;
+  PangoRectangle        logical;
   const gchar          *name;
   TempBuf              *temp_buf;
   FT_Bitmap             bitmap;
@@ -228,9 +229,11 @@ gimp_font_get_new_preview (GimpViewable *viewable,
   if (!font_desc)
     return NULL;
 
-  pango_font_description_set_size (font_desc, PANGO_SCALE * height);
+  pango_font_description_set_size (font_desc,
+                                   PANGO_SCALE * height * 2.0 / 3.0);
 
   layout = pango_layout_new (font->pango_context);
+  pango_layout_set_font_description (layout, font_desc);
   pango_font_description_free (font_desc);
 
   pango_layout_set_text (layout, "Aa", -1);
@@ -242,7 +245,12 @@ gimp_font_get_new_preview (GimpViewable *viewable,
   bitmap.pitch  = temp_buf->width;
   bitmap.buffer = temp_buf_data (temp_buf);
   
-  pango_ft2_render_layout (&bitmap, layout, 0, 0);
+  pango_layout_get_pixel_extents (layout, NULL, &logical);
+
+  pango_ft2_render_layout (&bitmap,
+                           layout,
+                           (bitmap.width - logical.width)  / 2,
+                           (bitmap.rows  - logical.height) / 2);
   
   g_object_unref (layout);
 

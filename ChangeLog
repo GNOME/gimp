@@ -1,3 +1,7 @@
+2003-03-26  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimpfont.c (gimp_font_get_new_preview): sort of works now.
+
 2003-03-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/text/gimpfontlist.[ch]: added gimp_font_list_restore()
