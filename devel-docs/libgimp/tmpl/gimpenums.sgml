@@ -161,34 +161,6 @@ Enums and definitions.
 @GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING: 
 @GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING: 
 
-<!-- ##### ENUM GimpHistogramChannel ##### -->
-<para>
-
-</para>
-
-@GIMP_HISTOGRAM_VALUE: 
-@GIMP_HISTOGRAM_RED: 
-@GIMP_HISTOGRAM_GREEN: 
-@GIMP_HISTOGRAM_BLUE: 
-@GIMP_HISTOGRAM_ALPHA: 
-
-<!-- ##### ENUM GimpIconType ##### -->
-<para>
-
-</para>
-
-@GIMP_ICON_TYPE_STOCK_ID: 
-@GIMP_ICON_TYPE_INLINE_PIXBUF: 
-@GIMP_ICON_TYPE_IMAGE_FILE: 
-
-<!-- ##### ENUM GimpOffsetType ##### -->
-<para>
-
-</para>
-
-@GIMP_OFFSET_BACKGROUND: 
-@GIMP_OFFSET_TRANSPARENT: 
-
 <!-- ##### ENUM GimpGradientType ##### -->
 <para>
 
@@ -206,6 +178,17 @@ Enums and definitions.
 @GIMP_GRADIENT_SPIRAL_CLOCKWISE: 
 @GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE: 
 
+<!-- ##### ENUM GimpHistogramChannel ##### -->
+<para>
+
+</para>
+
+@GIMP_HISTOGRAM_VALUE: 
+@GIMP_HISTOGRAM_RED: 
+@GIMP_HISTOGRAM_GREEN: 
+@GIMP_HISTOGRAM_BLUE: 
+@GIMP_HISTOGRAM_ALPHA: 
+
 <!-- ##### ENUM GimpHueRange ##### -->
 <para>
 
@@ -218,6 +201,24 @@ Enums and definitions.
 @GIMP_CYAN_HUES: 
 @GIMP_BLUE_HUES: 
 @GIMP_MAGENTA_HUES: 
+
+<!-- ##### ENUM GimpIconType ##### -->
+<para>
+
+</para>
+
+@GIMP_ICON_TYPE_STOCK_ID: 
+@GIMP_ICON_TYPE_INLINE_PIXBUF: 
+@GIMP_ICON_TYPE_IMAGE_FILE: 
+
+<!-- ##### ENUM GimpInterpolationType ##### -->
+<para>
+
+</para>
+
+@GIMP_INTERPOLATION_NONE: 
+@GIMP_INTERPOLATION_LINEAR: 
+@GIMP_INTERPOLATION_CUBIC: 
 
 <!-- ##### ENUM GimpLayerModeEffects ##### -->
 <para>
@@ -265,6 +266,14 @@ Enums and definitions.
 @GIMP_CLIP_TO_IMAGE: 
 @GIMP_CLIP_TO_BOTTOM_LAYER: 
 @GIMP_FLATTEN_IMAGE: 
+
+<!-- ##### ENUM GimpOffsetType ##### -->
+<para>
+
+</para>
+
+@GIMP_OFFSET_BACKGROUND: 
+@GIMP_OFFSET_TRANSPARENT: 
 
 <!-- ##### ENUM GimpOrientationType ##### -->
 <para>
@@ -326,4 +335,21 @@ Enums and definitions.
 @GIMP_SHADOWS: 
 @GIMP_MIDTONES: 
 @GIMP_HIGHLIGHTS: 
+
+<!-- ##### ENUM GimpTransformDirection ##### -->
+<para>
+
+</para>
+
+@GIMP_TRANSFORM_FORWARD: 
+@GIMP_TRANSFORM_BACKWARD: 
+
+<!-- ##### FUNCTION gimp_enums_get_type_names ##### -->
+<para>
+
+</para>
+
+@n_type_names: 
+@Returns: 
+
 

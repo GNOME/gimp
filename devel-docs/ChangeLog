@@ -1,3 +1,12 @@
+2004-10-26  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/tmpl/gimpdrawabletransform.sgml: new file.
+
+	* libgimp/libgimp-docs.sgml
+	* libgimp/libgimp-sections.txt: updated.
+
+	* libgimp/tmpl/gimpenums.sgml: regenerated.
+
 2004-10-25  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt: skip types for registered enums.

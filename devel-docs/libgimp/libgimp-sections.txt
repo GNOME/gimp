@@ -70,14 +70,15 @@ GimpDodgeBurnType
 GimpFillType
 GimpGradientSegmentColor
 GimpGradientSegmentType
-GimpHistogramChannel
-GimpIconType
-GimpOffsetType
 GimpGradientType
+GimpHistogramChannel
 GimpHueRange
+GimpIconType
+GimpInterpolationType
 GimpLayerModeEffects
 GimpMaskApplyMode
 GimpMergeType
+GimpOffsetType
 GimpOrientationType
 GimpPaintApplicationMode
 GimpRepeatMode
@@ -85,6 +86,8 @@ GimpRotationType
 GimpRunMode
 GimpSizeType
 GimpTransferMode
+GimpTransformDirection
+gimp_enums_get_type_names
 <SUBSECTION Standard>
 GIMP_TYPE_ADD_MASK_TYPE
 GIMP_TYPE_BLEND_MODE
@@ -105,6 +108,7 @@ GIMP_TYPE_GRADIENT_TYPE
 GIMP_TYPE_HISTOGRAM_CHANNEL
 GIMP_TYPE_HUE_RANGE
 GIMP_TYPE_ICON_TYPE
+GIMP_TYPE_INTERPOLATION_TYPE
 GIMP_TYPE_LAYER_MODE_EFFECTS
 GIMP_TYPE_MASK_APPLY_MODE
 GIMP_TYPE_MERGE_TYPE
@@ -116,6 +120,7 @@ GIMP_TYPE_ROTATION_TYPE
 GIMP_TYPE_RUN_MODE
 GIMP_TYPE_SIZE_TYPE
 GIMP_TYPE_TRANSFER_MODE
+GIMP_TYPE_TRANSFORM_DIRECTION
 gimp_add_mask_type_get_type
 gimp_blend_mode_get_type
 gimp_brush_application_mode_get_type
@@ -135,6 +140,7 @@ gimp_gradient_type_get_type
 gimp_histogram_channel_get_type
 gimp_hue_range_get_type
 gimp_icon_type_get_type
+gimp_interpolation_type_get_type
 gimp_layer_mode_effects_get_type
 gimp_mask_apply_mode_get_type
 gimp_merge_type_get_type
@@ -146,6 +152,7 @@ gimp_rotation_type_get_type
 gimp_run_mode_get_type
 gimp_size_type_get_type
 gimp_transfer_mode_get_type
+gimp_transform_direction_get_type
 </SECTION>
 
 <SECTION>
@@ -316,6 +323,17 @@ gimp_drawable_parasite_list
 gimp_drawable_parasite_attach
 gimp_drawable_parasite_detach
 gimp_drawable_attach_new_parasite
+</SECTION>
+
+<SECTION>
+<FILE>gimpdrawabletransform</FILE>
+gimp_drawable_transform_flip
+gimp_drawable_transform_flip_free
+gimp_drawable_transform_perspective
+gimp_drawable_transform_rotate
+gimp_drawable_transform_scale
+gimp_drawable_transform_shear
+gimp_drawable_transform_2d
 </SECTION>
 
 <SECTION>
