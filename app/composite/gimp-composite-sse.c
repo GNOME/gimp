@@ -32,6 +32,7 @@
 
 #if defined(USE_SSE)
 #if defined(ARCH_X86)
+#if __GNUC__ >= 3
 #include <stdio.h>
 
 #include <glib-object.h>
@@ -39,11 +40,7 @@
 #include "base/base-types.h"
 
 #include "gimp-composite.h"
-
 #include "gimp-composite-sse.h"
-
-#if __GNUC__ >= 3
-
 
 #define pminub(src,dst,tmp)  "pminub " "%%" #src ", %%" #dst
 #define pmaxub(src,dst,tmp)  "pmaxub " "%%" #src ", %%" #dst
@@ -172,149 +169,160 @@ gimp_composite_addition_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
                 : "m" (*rgba8_alpha_mask)
                 : "%mm0");
 
-  for (; op.n_pixels >= 2; op.n_pixels -= 2) {
-    asm ("  movq    (%0), %%mm2; addl $8, %0\n"
-         "\tmovq    (%1), %%mm3; addl $8, %1\n"
-         "\tmovq    %%mm2, %%mm4\n"
-         "\tpaddusb %%mm3, %%mm4\n"
-         "\tmovq    %%mm0, %%mm1\n"
-         "\tpandn   %%mm4, %%mm1\n"
-         "\t" pminub(mm3, mm2, mm4) "\n"
-         "\tpand    %%mm0, %%mm2\n"
-         "\tpor     %%mm2, %%mm1\n"
-         "\tmovq    %%mm1, (%2); addl $8, %2\n"
-         : "+r" (op.A), "+r" (op.B), "+r" (op.D)
-         : /* empty */
-         : "0", "1", "2", "%mm0", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5", "%mm6", "%mm7");
-  }
+  for (; op.n_pixels >= 2; op.n_pixels -= 2)
+				{
+						asm ("  movq    (%0), %%mm2\n"
+											"\tmovq    (%1), %%mm3\n"
+											"\tmovq    %%mm2, %%mm4\n"
+											"\tpaddusb %%mm3, %%mm4\n"
+											"\tmovq    %%mm0, %%mm1\n"
+											"\tpandn   %%mm4, %%mm1\n"
+											"\t" pminub(mm3, mm2, mm4) "\n"
+											"\tpand    %%mm0, %%mm2\n"
+											"\tpor     %%mm2, %%mm1\n"
+											"\tmovq    %%mm1, (%2)\n"
+											: /* empty */
+											: "r" (op.A), "r" (op.B), "r" (op.D)
+											: "0", "1", "2", "%mm0", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5", "%mm6", "%mm7");
+						op.A += 8;
+						op.B += 8;
+						op.D += 8;
+				}
 
-  if (op.n_pixels) {
-    asm volatile ("  movd    (%0), %%mm2;\n"
-        "\tmovd    (%1), %%mm3;\n"
-        "\tmovq    %%mm2, %%mm4\n"
-        "\tpaddusb %%mm3, %%mm4\n"
-        "\tmovq    %%mm0, %%mm1\n"
-        "\tpandn   %%mm4, %%mm1\n"
-        "\t" pminub(mm3, mm2, mm4) "\n"
-        "\tpand    %%mm0, %%mm2\n"
-        "\tpor     %%mm2, %%mm1\n"
-        "\tmovd    %%mm1, (%2);\n"
-        : /* empty */
-        : "r" (op.A), "r" (op.B), "r" (op.D)
-        : "0", "1", "2", "%mm0", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5", "%mm6", "%mm7");
-  }
+  if (op.n_pixels)
+				{
+						asm volatile ("  movd     (%0), %%mm2\n"
+																				"\tmovd     (%1), %%mm3\n"
+																				"\tmovq    %%mm2, %%mm4\n"
+																				"\tpaddusb %%mm3, %%mm4\n"
+																				"\tmovq    %%mm0, %%mm1\n"
+																				"\tpandn   %%mm4, %%mm1\n"
+																				"\t" pminub(mm3, mm2, mm4) "\n"
+																				"\tpand    %%mm0, %%mm2\n"
+																				"\tpor     %%mm2, %%mm1\n"
+																				"\tmovd    %%mm1, (%2)\n"
+																				: /* empty */
+																				: "r" (op.A), "r" (op.B), "r" (op.D)
+																				: "0", "1", "2", "%mm0", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5", "%mm6", "%mm7");
+				}
 
   asm("emms");
 }
 
-void gimp_composite_burn_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
+void
+gimp_composite_burn_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
   asm volatile ("movq   %0,%%mm1"
-      : /* empty */
-      : "m" (*rgba8_alpha_mask)
-      : "%mm1");
+																: /* empty */
+																: "m" (*rgba8_alpha_mask)
+																: "%mm1");
 
-  for (; op.n_pixels >= 2; op.n_pixels -= 2) {
-    asm ("  movq      (%0),%%mm0; addl $8,%0\n"
-         "\tmovq      (%1),%%mm1; addl $8,%1\n"
+  for (; op.n_pixels >= 2; op.n_pixels -= 2)
+				{
+						asm ("  movq      (%0),%%mm0\n"
+											"\tmovq      (%1),%%mm1\n"
          
-         "\tmovq      %3,%%mm2\n"
-         "\tpsubb     %%mm0,%%mm2\n" /* mm2 = 255 - A */
-         "\tpxor      %%mm4,%%mm4\n"
-         "\tpunpcklbw %%mm2,%%mm4\n" /* mm4 = (255- A) * 256  */
+											"\tmovq      %3,%%mm2\n"
+											"\tpsubb     %%mm0,%%mm2\n" /* mm2 = 255 - A */
+											"\tpxor      %%mm4,%%mm4\n"
+											"\tpunpcklbw %%mm2,%%mm4\n" /* mm4 = (255- A) * 256  */
 
-         "\tmovq      %%mm1,%%mm3\n"
-         "\tpxor      %%mm5,%%mm5\n"
-         "\tpunpcklbw %%mm5,%%mm3\n"
-         "\tmovq      %4,%%mm5\n"
-         "\tpaddusw   %%mm3,%%mm5\n" /* mm5 = B + 1 */
+											"\tmovq      %%mm1,%%mm3\n"
+											"\tpxor      %%mm5,%%mm5\n"
+											"\tpunpcklbw %%mm5,%%mm3\n"
+											"\tmovq      %4,%%mm5\n"
+											"\tpaddusw   %%mm3,%%mm5\n" /* mm5 = B + 1 */
 
-         "\t" pdivwqX(mm4,mm5,mm7) "\n"
+											"\t" pdivwqX(mm4,mm5,mm7) "\n"
 
-         "\tmovq      %3,%%mm2\n"
-         "\tpsubb   %%mm0,%%mm2\n" /* mm2 = 255 - A */
-         "\tpxor      %%mm4,%%mm4\n"
-         "\tpunpckhbw %%mm2,%%mm4\n" /* mm4 = (255- A) * 256  */
+											"\tmovq      %3,%%mm2\n"
+											"\tpsubb   %%mm0,%%mm2\n" /* mm2 = 255 - A */
+											"\tpxor      %%mm4,%%mm4\n"
+											"\tpunpckhbw %%mm2,%%mm4\n" /* mm4 = (255- A) * 256  */
 
-         "\tmovq      %%mm1,%%mm3\n"
-         "\tpxor      %%mm5,%%mm5\n"
-         "\tpunpckhbw %%mm5,%%mm3\n"
-         "\tmovq      %4,%%mm5\n"
-         "\tpaddusw   %%mm3,%%mm5\n" /* mm5 = B + 1 */
-         "\t" pdivwqX(mm4,mm5,mm6) "\n"
+											"\tmovq      %%mm1,%%mm3\n"
+											"\tpxor      %%mm5,%%mm5\n"
+											"\tpunpckhbw %%mm5,%%mm3\n"
+											"\tmovq      %4,%%mm5\n"
+											"\tpaddusw   %%mm3,%%mm5\n" /* mm5 = B + 1 */
+											"\t" pdivwqX(mm4,mm5,mm6) "\n"
 
-         "\tmovq      %5,%%mm4\n"
-         "\tmovq      %%mm4,%%mm5\n"
-         "\tpsubusw     %%mm6,%%mm4\n"
-         "\tpsubusw     %%mm7,%%mm5\n"
+											"\tmovq      %5,%%mm4\n"
+											"\tmovq      %%mm4,%%mm5\n"
+											"\tpsubusw     %%mm6,%%mm4\n"
+											"\tpsubusw     %%mm7,%%mm5\n"
                   
-         "\tpackuswb  %%mm4,%%mm5\n"
+											"\tpackuswb  %%mm4,%%mm5\n"
 
-         "\t" pminub(mm0,mm1,mm3) "\n" /* mm1 = min(mm0,mm1) clobber mm3 */
+											"\t" pminub(mm0,mm1,mm3) "\n" /* mm1 = min(mm0,mm1) clobber mm3 */
 
-         "\tmovq      %6,%%mm7\n"
-         "\tpand      %%mm7,%%mm1\n" /* mm1 = mm7 & alpha_mask */
+											"\tmovq      %6,%%mm7\n"
+											"\tpand      %%mm7,%%mm1\n" /* mm1 = mm7 & alpha_mask */
 
-         "\tpandn     %%mm5,%%mm7\n" /* mm7 = ~mm7 & mm5 */
-         "\tpor       %%mm1,%%mm7\n" /* mm7 = mm7 | mm1 */
+											"\tpandn     %%mm5,%%mm7\n" /* mm7 = ~mm7 & mm5 */
+											"\tpor       %%mm1,%%mm7\n" /* mm7 = mm7 | mm1 */
 
-         "\tmovq      %%mm7,(%2); addl $8,%2\n"
-         : "+r" (op.A), "+r" (op.B), "+r" (op.D)
-         : "m" (*rgba8_b255), "m" (*rgba8_w1), "m" (*rgba8_w255), "m" (*rgba8_alpha_mask)
-         : "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
-  }
+											"\tmovq      %%mm7,(%2)\n"
+											: /* empty */
+											: "r" (op.A), "r" (op.B), "r" (op.D), "m" (*rgba8_b255), "m" (*rgba8_w1), "m" (*rgba8_w255), "m" (*rgba8_alpha_mask)
+											: "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
+						op.A += 8;
+						op.B += 8;
+						op.D += 8;
+				}
 
-  if (op.n_pixels) {
-    asm volatile ("  movd      (%0),%%mm0\n"
-                  "\tmovd      (%1),%%mm1\n"
+  if (op.n_pixels)
+				{
+						asm volatile ("  movd      (%0),%%mm0\n"
+																				"\tmovd      (%1),%%mm1\n"
 
-                  "\tmovq      %3,%%mm2\n"
-                  "\tpsubb     %%mm0,%%mm2\n" /* mm2 = 255 - A */
-                  "\tpxor      %%mm4,%%mm4\n"
-                  "\tpunpcklbw %%mm2,%%mm4\n" /* mm4 = (255- A) * 256  */
+																				"\tmovq      %3,%%mm2\n"
+																				"\tpsubb     %%mm0,%%mm2\n" /* mm2 = 255 - A */
+																				"\tpxor      %%mm4,%%mm4\n"
+																				"\tpunpcklbw %%mm2,%%mm4\n" /* mm4 = (255- A) * 256  */
 
-                  "\tmovq      %%mm1,%%mm3\n"
-                  "\tpxor      %%mm5,%%mm5\n"
-                  "\tpunpcklbw %%mm5,%%mm3\n"
-                  "\tmovq      %4,%%mm5\n"
-                  "\tpaddusw   %%mm3,%%mm5\n" /* mm5 = B + 1 */
+																				"\tmovq      %%mm1,%%mm3\n"
+																				"\tpxor      %%mm5,%%mm5\n"
+																				"\tpunpcklbw %%mm5,%%mm3\n"
+																				"\tmovq      %4,%%mm5\n"
+																				"\tpaddusw   %%mm3,%%mm5\n" /* mm5 = B + 1 */
 
-                  "\t" pdivwqX(mm4,mm5,mm7) "\n"
+																				"\t" pdivwqX(mm4,mm5,mm7) "\n"
 
-                  "\tmovq      %3,%%mm2\n"
-                  "\tpsubb   %%mm0,%%mm2\n" /* mm2 = 255 - A */
-                  "\tpxor      %%mm4,%%mm4\n"
-                  "\tpunpckhbw %%mm2,%%mm4\n" /* mm4 = (255- A) * 256  */
+																				"\tmovq      %3,%%mm2\n"
+																				"\tpsubb   %%mm0,%%mm2\n" /* mm2 = 255 - A */
+																				"\tpxor      %%mm4,%%mm4\n"
+																				"\tpunpckhbw %%mm2,%%mm4\n" /* mm4 = (255- A) * 256  */
 
-                  "\tmovq      %%mm1,%%mm3\n"
-                  "\tpxor      %%mm5,%%mm5\n"
-                  "\tpunpckhbw %%mm5,%%mm3\n"
-                  "\tmovq      %4,%%mm5\n"
-                  "\tpaddusw   %%mm3,%%mm5\n" /* mm5 = B + 1 */
-                  "\t" pdivwqX(mm4,mm5,mm6) "\n"
+																				"\tmovq      %%mm1,%%mm3\n"
+																				"\tpxor      %%mm5,%%mm5\n"
+																				"\tpunpckhbw %%mm5,%%mm3\n"
+																				"\tmovq      %4,%%mm5\n"
+																				"\tpaddusw   %%mm3,%%mm5\n" /* mm5 = B + 1 */
+																				"\t" pdivwqX(mm4,mm5,mm6) "\n"
 
-                  "\tmovq      %5,%%mm4\n"
-                  "\tmovq      %%mm4,%%mm5\n"
-                  "\tpsubusw     %%mm6,%%mm4\n"
-                  "\tpsubusw     %%mm7,%%mm5\n"
+																				"\tmovq      %5,%%mm4\n"
+																				"\tmovq      %%mm4,%%mm5\n"
+																				"\tpsubusw     %%mm6,%%mm4\n"
+																				"\tpsubusw     %%mm7,%%mm5\n"
                   
-                  "\tpackuswb  %%mm4,%%mm5\n"
+																				"\tpackuswb  %%mm4,%%mm5\n"
 
-                  "\t" pminub(mm0,mm1,mm3) "\n" /* mm1 = min(mm0,mm1) clobber mm3 */
+																				"\t" pminub(mm0,mm1,mm3) "\n" /* mm1 = min(mm0,mm1) clobber mm3 */
 
-                  "\tmovq      %6,%%mm7\n"
-                  "\tpand      %%mm7,%%mm1\n" /* mm1 = mm7 & alpha_mask */
+																				"\tmovq      %6,%%mm7\n"
+																				"\tpand      %%mm7,%%mm1\n" /* mm1 = mm7 & alpha_mask */
 
-                  "\tpandn     %%mm5,%%mm7\n" /* mm7 = ~mm7 & mm5 */
-                  "\tpor       %%mm1,%%mm7\n" /* mm7 = mm7 | mm1 */
+																				"\tpandn     %%mm5,%%mm7\n" /* mm7 = ~mm7 & mm5 */
+																				"\tpor       %%mm1,%%mm7\n" /* mm7 = mm7 | mm1 */
 
-                  "\tmovd      %%mm7,(%2)\n"
-                  : /* empty */
-                  : "r" (op.A), "r" (op.B), "r" (op.D), "m" (*rgba8_b255), "m" (*rgba8_w1), "m" (*rgba8_w255), "m" (*rgba8_alpha_mask)
-                  : "0", "1", "2", "%mm0", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5", "%mm6", "%mm7");
-  }
+																				"\tmovd      %%mm7,(%2)\n"
+																				: /* empty */
+																				: "r" (op.A), "r" (op.B), "r" (op.D), "m" (*rgba8_b255), "m" (*rgba8_w1), "m" (*rgba8_w255), "m" (*rgba8_alpha_mask)
+																				: "0", "1", "2", "%mm0", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5", "%mm6", "%mm7");
+				}
 
   asm("emms");
 }
@@ -325,25 +333,30 @@ gimp_composite_darken_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
-  for (; op.n_pixels >= 2; op.n_pixels -= 2) {
-    asm ("  movq    (%0), %%mm2; addl  $8, %0\n"
-         "\tmovq    (%1), %%mm3; addl  $8, %1\n"
-         "\t" pminub(mm3, mm2, mm4) "\n"
-         "\tmovq    %%mm2, (%2); addl  $8, %2\n"
-         : "+r" (op.A), "+S" (op.B), "+D" (op.D)
-         : /* empty */
-         : "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
-  }
+  for (; op.n_pixels >= 2; op.n_pixels -= 2)
+				{
+						asm ("  movq    (%0), %%mm2\n"
+											"\tmovq    (%1), %%mm3\n"
+											"\t" pminub(mm3, mm2, mm4) "\n"
+											"\tmovq    %%mm2, (%2)\n"
+											: /* empty */
+											: "r" (op.A), "S" (op.B), "D" (op.D)
+											: "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
+						op.A += 8;
+						op.B += 8;
+						op.D += 8;
+				}
 
-  if (op.n_pixels) {
-    asm volatile ("  movd    (%0), %%mm2;\n"
-                  "\tmovd    (%1), %%mm3;\n"
-                  "\t" pminub(mm3, mm2, mm4) "\n"
-                  "\tmovd    %%mm2, (%2);\n"
-                  : /* empty */
-                  : "r" (op.A), "r" (op.B), "r" (op.D)
-                  : "0", "1", "2", "%mm2", "%mm3", "%mm4");
-  }
+  if (op.n_pixels)
+				{
+						asm volatile ("  movd    (%0), %%mm2\n"
+																				"\tmovd    (%1), %%mm3\n"
+																				"\t" pminub(mm3, mm2, mm4) "\n"
+																				"\tmovd    %%mm2, (%2)\n"
+																				: /* empty */
+																				: "r" (op.A), "r" (op.B), "r" (op.D)
+																				: "0", "1", "2", "%mm2", "%mm3", "%mm4");
+				}
         
   asm("emms");
 }
@@ -353,45 +366,50 @@ gimp_composite_difference_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
-  asm("movq    %0,%%mm0"     :  : "m" (*rgba8_alpha_mask) : "%mm0");
+		asm volatile ("movq    %0,%%mm0"     :  : "m" (*rgba8_alpha_mask) : "%mm0");
 
-  for (; op.n_pixels >= 2; op.n_pixels -= 2) {
-    asm ("  movq    (%0), %%mm2; addl $8, %0\n"
-         "\tmovq    (%1), %%mm3; addl $8, %1\n"
-         "\tmovq    %%mm2, %%mm4\n"
-         "\tmovq    %%mm3, %%mm5\n"
-         "\tpsubusb %%mm3, %%mm4\n"
-         "\tpsubusb %%mm2, %%mm5\n"
-         "\tpaddb   %%mm5, %%mm4\n"
-         "\tmovq    %%mm0, %%mm1\n"
-         "\tpandn   %%mm4, %%mm1\n"
-         "\tpminub  %%mm3, %%mm2\n"
-         "\tpand    %%mm0, %%mm2\n"
-         "\tpor     %%mm2, %%mm1\n"
-         "\tmovq    %%mm1, (%2); addl $8, %2\n"
-         : "+r" (op.A), "+r" (op.B), "+r" (op.D)
-         : /* empty */
-         : "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
-  }
+  for (; op.n_pixels >= 2; op.n_pixels -= 2)
+				{
+						asm volatile ("  movq    (%0), %%mm2\n"
+																				"\tmovq    (%1), %%mm3\n"
+																				"\tmovq    %%mm2, %%mm4\n"
+																				"\tmovq    %%mm3, %%mm5\n"
+																				"\tpsubusb %%mm3, %%mm4\n"
+																				"\tpsubusb %%mm2, %%mm5\n"
+																				"\tpaddb   %%mm5, %%mm4\n"
+																				"\tmovq    %%mm0, %%mm1\n"
+																				"\tpandn   %%mm4, %%mm1\n"
+																				"\tpminub  %%mm3, %%mm2\n"
+																				"\tpand    %%mm0, %%mm2\n"
+																				"\tpor     %%mm2, %%mm1\n"
+																				"\tmovq    %%mm1, (%2)\n"
+																				: /* empty */
+																				: "r" (op.A), "r" (op.B), "r" (op.D)
+																				: "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
+						op.A += 8;
+						op.B += 8;
+						op.D += 8;
+				}
   
-  if (op.n_pixels) {
-    asm volatile ("  movd    (%0), %%mm2;\n"
-                  "\tmovd    (%1), %%mm3;\n"
-                  "\tmovq    %%mm2, %%mm4\n"
-                  "\tmovq    %%mm3, %%mm5\n"
-                  "\tpsubusb %%mm3, %%mm4\n"
-                  "\tpsubusb %%mm2, %%mm5\n"
-                  "\tpaddb   %%mm5, %%mm4\n"
-                  "\tmovq    %%mm0, %%mm1\n"
-                  "\tpandn   %%mm4, %%mm1\n"
-                  "\tpminub  %%mm3, %%mm2\n"
-                  "\tpand    %%mm0, %%mm2\n"
-                  "\tpor     %%mm2, %%mm1\n"
-                  "\tmovd    %%mm1, (%2);\n"
-                  : /* empty */
-                  : "r" (op.A), "r" (op.B), "r" (op.D)
-                  : "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
-  }
+  if (op.n_pixels)
+				{
+						asm volatile ("  movd    (%0), %%mm2\n"
+																				"\tmovd    (%1), %%mm3\n"
+																				"\tmovq    %%mm2, %%mm4\n"
+																				"\tmovq    %%mm3, %%mm5\n"
+																				"\tpsubusb %%mm3, %%mm4\n"
+																				"\tpsubusb %%mm2, %%mm5\n"
+																				"\tpaddb   %%mm5, %%mm4\n"
+																				"\tmovq    %%mm0, %%mm1\n"
+																				"\tpandn   %%mm4, %%mm1\n"
+																				"\tpminub  %%mm3, %%mm2\n"
+																				"\tpand    %%mm0, %%mm2\n"
+																				"\tpor     %%mm2, %%mm1\n"
+																				"\tmovd    %%mm1, (%2)\n"
+																				: /* empty */
+																				: "r" (op.A), "r" (op.B), "r" (op.D)
+																				: "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
+				}
 
   asm("emms");
 }
@@ -403,182 +421,189 @@ gimp_composite_divide_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
-  asm("movq    %0, %%mm0\n"
+  asm volatile ("movq    %0, %%mm0\n"
       "\tmovq    %1, %%mm7\n"
       :
       : "m" (*rgba8_alpha_mask), "m" (*rgba8_w1)
       : "%mm0", "%mm7");
   
-  for (; op.n_pixels >= 2; op.n_pixels -= 2) {
-    asm volatile ("  movq    (%0), %%mm0; addl $8, %0\n"
-                  "\tmovq    (%1), %%mm1; addl $8, %1\n"
+  for (; op.n_pixels >= 2; op.n_pixels -= 2)
+				{
+						asm volatile ("  movq    (%0), %%mm0\n"
+																				"\tmovq    (%1), %%mm1\n"
 
-                  "\tpxor      %%mm2,%%mm2\n"
-                  "\tpunpcklbw %%mm0,%%mm2\n" /* mm2 = A*256 */
+																				"\tpxor      %%mm2,%%mm2\n"
+																				"\tpunpcklbw %%mm0,%%mm2\n" /* mm2 = A*256 */
 
-                  "\tmovq      %%mm1,%%mm3\n"
-                  "\tpxor      %%mm5,%%mm5\n"
-                  "\tpunpcklbw %%mm5,%%mm3\n"
-                  "\tpaddw     %%mm7,%%mm3\n" /* mm3 = B+1 */
+																				"\tmovq      %%mm1,%%mm3\n"
+																				"\tpxor      %%mm5,%%mm5\n"
+																				"\tpunpcklbw %%mm5,%%mm3\n"
+																				"\tpaddw     %%mm7,%%mm3\n" /* mm3 = B+1 */
 
-                  "\t" pdivwuqX(mm2,mm3,mm5) "\n" /* mm5 = (A*256)/(B+1) */
+																				"\t" pdivwuqX(mm2,mm3,mm5) "\n" /* mm5 = (A*256)/(B+1) */
 
-                  "\tpxor      %%mm2,%%mm2\n"
-                  "\tpunpckhbw %%mm0,%%mm2\n" /* mm2 = A*256 */
+																				"\tpxor      %%mm2,%%mm2\n"
+																				"\tpunpckhbw %%mm0,%%mm2\n" /* mm2 = A*256 */
 
-                  "\tmovq      %%mm1,%%mm3\n"
-                  "\tpxor      %%mm6,%%mm6\n"
-                  "\tpunpckhbw %%mm6,%%mm3\n"
-                  "\tpaddw     %%mm7,%%mm3\n" /* mm3 = B+1 */
+																				"\tmovq      %%mm1,%%mm3\n"
+																				"\tpxor      %%mm6,%%mm6\n"
+																				"\tpunpckhbw %%mm6,%%mm3\n"
+																				"\tpaddw     %%mm7,%%mm3\n" /* mm3 = B+1 */
 
-                  "\t" pdivwuqX(mm2,mm3,mm4) "\n" /* mm4 = (A*256)/(B+1) */
+																				"\t" pdivwuqX(mm2,mm3,mm4) "\n" /* mm4 = (A*256)/(B+1) */
                   
-                  "\tpackuswb  %%mm4,%%mm5\n" /* expects mm4 and mm5 to be signed values */
+																				"\tpackuswb  %%mm4,%%mm5\n" /* expects mm4 and mm5 to be signed values */
 
-                  "\t" pminub(mm0,mm1,mm3) "\n"
-                  "\tmovq      %3,%%mm3\n"
-                  "\tmovq      %%mm3,%%mm2\n"
+																				"\t" pminub(mm0,mm1,mm3) "\n"
+																				"\tmovq      %3,%%mm3\n"
+																				"\tmovq      %%mm3,%%mm2\n"
 
-                  "\tpandn     %%mm5,%%mm3\n"
+																				"\tpandn     %%mm5,%%mm3\n"
 
-                  "\tpand      %%mm2,%%mm1\n"
-                  "\tpor       %%mm1,%%mm3\n"
+																				"\tpand      %%mm2,%%mm1\n"
+																				"\tpor       %%mm1,%%mm3\n"
 
-                  "\tmovq      %%mm3,(%2); addl $8, %2\n"
-                  : "+r" (op.A), "+r" (op.B), "+r" (op.D)
-                  : "m" (*rgba8_alpha_mask)
-                  : "%eax", "%ecx", "%edx", "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
-  }
+																				"\tmovq      %%mm3,(%2)\n"
+																				: /* empty */
+																				: "r" (op.A), "r" (op.B), "r" (op.D), "m" (*rgba8_alpha_mask)
+																				: "%eax", "%ecx", "%edx", "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
+						op.A += 8;
+						op.B += 8;
+						op.D += 8;
+				}
 
-  if (op.n_pixels) {
-    asm volatile ("  movd    (%0), %%mm0; addl $8, %0\n"
-                  "\tmovd    (%1), %%mm1; addl $8, %1\n"
+  if (op.n_pixels)
+				{
+						asm volatile ("  movd    (%0), %%mm0; addl $8, %0\n"
+																				"\tmovd    (%1), %%mm1; addl $8, %1\n"
 
-                  "\tpxor      %%mm2,%%mm2\n"
-                  "\tpunpcklbw %%mm0,%%mm2\n" /* mm2 = A*256 */
+																				"\tpxor      %%mm2,%%mm2\n"
+																				"\tpunpcklbw %%mm0,%%mm2\n" /* mm2 = A*256 */
 
-                  "\tmovq      %%mm1,%%mm3\n"
-                  "\tpxor      %%mm5,%%mm5\n"
-                  "\tpunpcklbw %%mm5,%%mm3\n"
-                  "\tpaddw     %%mm7,%%mm3\n" /* mm3 = B+1 */
+																				"\tmovq      %%mm1,%%mm3\n"
+																				"\tpxor      %%mm5,%%mm5\n"
+																				"\tpunpcklbw %%mm5,%%mm3\n"
+																				"\tpaddw     %%mm7,%%mm3\n" /* mm3 = B+1 */
 
-                  "\t" pdivwuqX(mm2,mm3,mm5) "\n" /* mm5 = (A*256)/(B+1) */
+																				"\t" pdivwuqX(mm2,mm3,mm5) "\n" /* mm5 = (A*256)/(B+1) */
 
-                  "\tpxor      %%mm2,%%mm2\n"
-                  "\tpunpckhbw %%mm0,%%mm2\n" /* mm2 = A*256 */
+																				"\tpxor      %%mm2,%%mm2\n"
+																				"\tpunpckhbw %%mm0,%%mm2\n" /* mm2 = A*256 */
 
-                  "\tmovq      %%mm1,%%mm3\n"
-                  "\tpxor      %%mm6,%%mm6\n"
-                  "\tpunpckhbw %%mm6,%%mm3\n"
-                  "\tpaddw     %%mm7,%%mm3\n" /* mm3 = B+1 */
+																				"\tmovq      %%mm1,%%mm3\n"
+																				"\tpxor      %%mm6,%%mm6\n"
+																				"\tpunpckhbw %%mm6,%%mm3\n"
+																				"\tpaddw     %%mm7,%%mm3\n" /* mm3 = B+1 */
 
-                  "\t" pdivwuqX(mm2,mm3,mm4) "\n" /* mm4 = (A*256)/(B+1) */
+																				"\t" pdivwuqX(mm2,mm3,mm4) "\n" /* mm4 = (A*256)/(B+1) */
                   
-                  "\tpackuswb  %%mm4,%%mm5\n" /* expects mm4 and mm5 to be signed values */
+																				"\tpackuswb  %%mm4,%%mm5\n" /* expects mm4 and mm5 to be signed values */
 
-                  "\t" pminub(mm0,mm1,mm3) "\n"
-                  "\tmovq      %3,%%mm3\n"
-                  "\tmovq      %%mm3,%%mm2\n"
+																				"\t" pminub(mm0,mm1,mm3) "\n"
+																				"\tmovq      %3,%%mm3\n"
+																				"\tmovq      %%mm3,%%mm2\n"
 
-                  "\tpandn     %%mm5,%%mm3\n"
+																				"\tpandn     %%mm5,%%mm3\n"
 
-                  "\tpand      %%mm2,%%mm1\n"
-                  "\tpor       %%mm1,%%mm3\n"
+																				"\tpand      %%mm2,%%mm1\n"
+																				"\tpor       %%mm1,%%mm3\n"
 
-                  "\tmovd      %%mm3,(%2); addl $8, %2\n"
-                  : /* empty */
-                  : "r" (op.A), "r" (op.B), "r" (op.D), "m" (*rgba8_alpha_mask)
-                  : "%eax", "%ecx", "%edx", "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
-  }
+																				"\tmovd      %%mm3,(%2); addl $8, %2\n"
+																				: /* empty */
+																				: "r" (op.A), "r" (op.B), "r" (op.D), "m" (*rgba8_alpha_mask)
+																				: "%eax", "%ecx", "%edx", "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
+				}
 
   asm("emms");
 }
 
-/*
- * (src1[b] << 8) / (256 - src2[b]);
- */
 void
 gimp_composite_dodge_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
-  for (; op.n_pixels >= 2; op.n_pixels -= 2) {
-    asm volatile ("  movq     (%0), %%mm0; addl $8, %0\n"
-                  "\tmovq     (%1), %%mm1; addl $8, %1\n"
-                  "\tmovq      %%mm1, %%mm3\n"
-                  "\tpxor      %%mm2, %%mm2\n"
-                  "\tpunpcklbw %%mm2, %%mm3\n"
-                  "\tpunpcklbw %%mm0, %%mm2\n"
+  for (; op.n_pixels >= 2; op.n_pixels -= 2)
+				{
+						asm volatile ("  movq     (%0), %%mm0\n"
+																				"\tmovq     (%1), %%mm1\n"
+																				"\tmovq      %%mm1, %%mm3\n"
+																				"\tpxor      %%mm2, %%mm2\n"
+																				"\tpunpcklbw %%mm2, %%mm3\n"
+																				"\tpunpcklbw %%mm0, %%mm2\n"
 
-                  "\tmovq      rgba8_w256, %%mm4\n"
-                  "\tpsubw     %%mm3, %%mm4\n"
+																				"\tmovq      %3, %%mm4\n"
+																				"\tpsubw     %%mm3, %%mm4\n"
 
-                  "\t" pdivwuqX(mm2,mm4,mm5) "\n"
+																				"\t" pdivwuqX(mm2,mm4,mm5) "\n"
 
-                  "\tmovq      %%mm1, %%mm3\n"
-                  "\tpxor      %%mm2, %%mm2\n"
-                  "\tpunpckhbw %%mm2, %%mm3\n"
-                  "\tpunpckhbw %%mm0, %%mm2\n"
+																				"\tmovq      %%mm1, %%mm3\n"
+																				"\tpxor      %%mm2, %%mm2\n"
+																				"\tpunpckhbw %%mm2, %%mm3\n"
+																				"\tpunpckhbw %%mm0, %%mm2\n"
 
-                  "\tmovq      rgba8_w256, %%mm4\n"
-                  "\tpsubw     %%mm3, %%mm4\n"
+																				"\tmovq      %3, %%mm4\n"
+																				"\tpsubw     %%mm3, %%mm4\n"
 
-                  "\t" pdivwuqX(mm2,mm4,mm6) "\n"
+																				"\t" pdivwuqX(mm2,mm4,mm6) "\n"
 
-                  "\tpackuswb  %%mm6, %%mm5\n"
+																				"\tpackuswb  %%mm6, %%mm5\n"
 
-                  "\tmovq      rgba8_alpha_mask, %%mm6\n"
-                  "\tmovq      %%mm1,%%mm7\n"
-                  "\t" pminub(mm0,mm7,mm2) "\n"
-                  "\tpand      %%mm6, %%mm7\n"
-                  "\tpandn     %%mm5, %%mm6\n"
+																				"\tmovq      %4, %%mm6\n"
+																				"\tmovq      %%mm1,%%mm7\n"
+																				"\t" pminub(mm0,mm7,mm2) "\n"
+																				"\tpand      %%mm6, %%mm7\n"
+																				"\tpandn     %%mm5, %%mm6\n"
 
-                  "\tpor       %%mm6, %%mm7\n"
+																				"\tpor       %%mm6, %%mm7\n"
 
-                  "\tmovq    %%mm7, (%2); addl $8, %2\n"
-                  : "+r" (op.A), "+r" (op.B), "+r" (op.D)
-                  : /* empty */
-                  : "0", "1", "2", "%mm0", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5", "%mm6", "%mm7");
-  }
+																				"\tmovq    %%mm7, (%2)\n"
+																				: /* empty */
+																				: "r" (op.A), "r" (op.B), "r" (op.D), "m" (*rgba8_w256), "m" (*rgba8_alpha_mask)
+																				: "0", "1", "2", "%mm0", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5", "%mm6", "%mm7");
+						op.A += 8;
+						op.B += 8;
+						op.D += 8;
+				}
 
-  if (op.n_pixels) {
-    asm volatile ("  movd     (%0), %%mm0;\n"
-                  "\tmovq     (%1), %%mm1;\n"
-                  "\tmovq      %%mm1, %%mm3\n"
-                  "\tpxor      %%mm2, %%mm2\n"
-                  "\tpunpcklbw %%mm2, %%mm3\n"
-                  "\tpunpcklbw %%mm0, %%mm2\n"
+  if (op.n_pixels)
+				{
+						asm volatile ("  movd     (%0), %%mm0\n"
+																				"\tmovq     (%1), %%mm1\n"
+																				"\tmovq      %%mm1, %%mm3\n"
+																				"\tpxor      %%mm2, %%mm2\n"
+																				"\tpunpcklbw %%mm2, %%mm3\n"
+																				"\tpunpcklbw %%mm0, %%mm2\n"
 
-                  "\tmovq      rgba8_w256, %%mm4\n"
-                  "\tpsubw     %%mm3, %%mm4\n"
+																				"\tmovq      %3, %%mm4\n"
+																				"\tpsubw     %%mm3, %%mm4\n"
 
-                  "\t" pdivwuqX(mm2,mm4,mm5) "\n"
+																				"\t" pdivwuqX(mm2,mm4,mm5) "\n"
 
-                  "\tmovq      %%mm1, %%mm3\n"
-                  "\tpxor      %%mm2, %%mm2\n"
-                  "\tpunpckhbw %%mm2, %%mm3\n"
-                  "\tpunpckhbw %%mm0, %%mm2\n"
+																				"\tmovq      %%mm1, %%mm3\n"
+																				"\tpxor      %%mm2, %%mm2\n"
+																				"\tpunpckhbw %%mm2, %%mm3\n"
+																				"\tpunpckhbw %%mm0, %%mm2\n"
 
-                  "\tmovq      rgba8_w256, %%mm4\n"
-                  "\tpsubw     %%mm3, %%mm4\n"
+																				"\tmovq      %3, %%mm4\n"
+																				"\tpsubw     %%mm3, %%mm4\n"
 
-                  "\t" pdivwuqX(mm2,mm4,mm6) "\n"
+																				"\t" pdivwuqX(mm2,mm4,mm6) "\n"
 
-                  "\tpackuswb  %%mm6, %%mm5\n"
+																				"\tpackuswb  %%mm6, %%mm5\n"
 
-                  "\tmovq      rgba8_alpha_mask, %%mm6\n"
-                  "\tmovq      %%mm1,%%mm7\n"
-                  "\t" pminub(mm0,mm7,mm2) "\n"
-                  "\tpand      %%mm6, %%mm7\n"
-                  "\tpandn     %%mm5, %%mm6\n"
+																				"\tmovq      %4, %%mm6\n"
+																				"\tmovq      %%mm1,%%mm7\n"
+																				"\t" pminub(mm0,mm7,mm2) "\n"
+																				"\tpand      %%mm6, %%mm7\n"
+																				"\tpandn     %%mm5, %%mm6\n"
 
-                  "\tpor       %%mm6, %%mm7\n"
+																				"\tpor       %%mm6, %%mm7\n"
 
-                  "\tmovd    %%mm7, (%2);\n"
-                  : /* empty */
-                  : "r" (op.A), "r" (op.B), "r" (op.D)
-                  : "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
-  }
+																				"\tmovd    %%mm7, (%2)\n"
+																				: /* empty */
+																				: "r" (op.A), "r" (op.B), "r" (op.D), "m" (*rgba8_w256), "m" (*rgba8_alpha_mask)
+																				: "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
+				}
 
   asm("emms");
 }
@@ -586,86 +611,78 @@ gimp_composite_dodge_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
 void
 gimp_composite_grain_extract_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
 {
-  GimpCompositeContext op = *_op;
+		GimpCompositeContext op = *_op;
 
-  asm("movq    %0,%%mm0"     :  : "m" (*rgba8_alpha_mask) : "%mm0");
-  asm("pxor    %%mm6,%%mm6"  :  :                        : "%mm6");
-  asm("movq    %0,%%mm7"     :  : "m" (*rgba8_w128)       : "%mm7");
+		asm volatile ("movq    %0,%%mm0"     :  : "m" (*rgba8_alpha_mask) : "%mm0");
+		asm volatile ("pxor    %%mm6,%%mm6"  :  :                         : "%mm6");
+  asm volatile ("movq    %0,%%mm7"     :  : "m" (*rgba8_w128)       : "%mm7");
 
-  for (; op.n_pixels >= 2; op.n_pixels -= 2) {
-    asm volatile ("  movq    (%0), %%mm2; addl $8, %0\n"
-                  "\tmovq    (%1), %%mm3; addl $8, %1\n"
+  for (; op.n_pixels >= 2; op.n_pixels -= 2)
+				{
+						asm volatile ("  movq    (%0), %%mm2\n"
+																				"\tmovq    (%1), %%mm3\n"
 
-                  "\tmovq      %%mm2, %%mm4\n"
-                  "\tpunpcklbw %%mm6, %%mm4\n"
-                  "\tmovq      %%mm3, %%mm5\n"
-                  "\tpunpcklbw %%mm6, %%mm5\n"
+																				mmx_low_bytes_to_words(mm2,mm4,mm6)
+																				mmx_low_bytes_to_words(mm3,mm5,mm6)
 
-                  "\tpsubw     %%mm5, %%mm4\n"
-                  "\tpaddw     %%mm7, %%mm4\n"
-                  "\tmovq      %%mm4, %%mm1\n"
+																				"\tpsubw     %%mm5, %%mm4\n"
+																				"\tpaddw     %%mm7, %%mm4\n"
+																				"\tmovq      %%mm4, %%mm1\n"
 
-                  "\tmovq      %%mm2, %%mm4\n"
-                  "\tpunpckhbw %%mm6, %%mm4\n"
-                  "\tmovq      %%mm3, %%mm5\n"
-                  "\tpunpckhbw %%mm6, %%mm5\n"
+																				mmx_high_bytes_to_words(mm2,mm4,mm6)
+																				mmx_high_bytes_to_words(mm3,mm5,mm6)
 
-                  "\tpsubw     %%mm5, %%mm4\n"
-                  "\tpaddw     %%mm7, %%mm4\n"
+																				"\tpsubw     %%mm5, %%mm4\n"
+																				"\tpaddw     %%mm7, %%mm4\n"
 
-                  "\tpackuswb  %%mm4, %%mm1\n"
-                  "\tmovq      %%mm1, %%mm4\n"
+																				"\tpackuswb  %%mm4, %%mm1\n"
+																				"\tmovq      %%mm1, %%mm4\n"
 
-                  "\tmovq      %%mm0, %%mm1; pandn     %%mm4, %%mm1\n"
+																				"\tmovq      %%mm0, %%mm1\n"
+																				"\tpandn     %%mm4, %%mm1\n"
+											
+																				"\t" pminub(mm3,mm2,mm4) "\n"
+																				"\tpand      %%mm0, %%mm2\n"
 
-                  "\t" pminub(mm3,mm2,mm4) "\n"
-                  "\tpand      %%mm0, %%mm2\n"
+																				"\tpor       %%mm2, %%mm1\n"
+																				"\tmovq      %%mm1, (%2)\n"
+																				: /* empty */
+																				: "r" (op.A), "r" (op.B), "r" (op.D)
+																				: "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
+						op.A += 8;
+						op.B += 8;
+						op.D += 8;
+				}
 
-                  "\tpor       %%mm2, %%mm1\n"
-                  "\tmovq      %%mm1, (%2); addl $8, %2\n"
-                  : "+r" (op.A), "+r" (op.B), "+r" (op.D)
-                  : /* empty */
-                  : "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
-  }
+  if (op.n_pixels)
+				{
+						asm volatile ("  movd    (%0), %%mm2\n"
+																				"\tmovd    (%1), %%mm3\n"
 
-  if (op.n_pixels) {
-    asm volatile ("  movd    (%0), %%mm2;\n"
-                  "\tmovd    (%1), %%mm3;\n"
+																				mmx_low_bytes_to_words(mm2,mm4,mm6)
+																				mmx_low_bytes_to_words(mm3,mm5,mm6)
 
-                  "\tmovq      %%mm2, %%mm4\n"
-                  "\tpunpcklbw %%mm6, %%mm4\n"
-                  "\tmovq      %%mm3, %%mm5\n"
-                  "\tpunpcklbw %%mm6, %%mm5\n"
+																				"\tpsubw     %%mm5, %%mm4\n"
+																				"\tpaddw     %%mm7, %%mm4\n"
+																				"\tmovq      %%mm4, %%mm1\n"
 
-                  "\tpsubw     %%mm5, %%mm4\n"
-                  "\tpaddw     %%mm7, %%mm4\n"
-                  "\tmovq      %%mm4, %%mm1\n"
+																				"\tpackuswb  %%mm6, %%mm1\n"
 
-                  "\tmovq      %%mm2, %%mm4\n"
-                  "\tpunpckhbw %%mm6, %%mm4\n"
-                  "\tmovq      %%mm3, %%mm5\n"
-                  "\tpunpckhbw %%mm6, %%mm5\n"
+																				"\tmovq      %%mm1, %%mm4\n"
 
-                  "\tpsubw     %%mm5, %%mm4\n"
-                  "\tpaddw     %%mm7, %%mm4\n"
+																				"\tmovq      %%mm0, %%mm1; pandn     %%mm4, %%mm1\n"
 
-                  "\tpackuswb  %%mm4, %%mm1\n"
-                  "\tmovq      %%mm1, %%mm4\n"
+																				"\t" pminub(mm3,mm2,mm4) "\n"
+																				"\tpand      %%mm0, %%mm2\n"
 
-                  "\tmovq      %%mm0, %%mm1; pandn     %%mm4, %%mm1\n"
-
-                  "\t" pminub(mm3,mm2,mm4) "\n"
-                  "\tpand      %%mm0, %%mm2\n"
-
-                  "\tpor       %%mm2, %%mm1\n"
-                  "\tmovd      %%mm1, (%2);\n"
-                  : /* empty */
-                  : "r" (op.A), "r" (op.B), "r" (op.D)
-                  : "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
+																				"\tpor       %%mm2, %%mm1\n"
+																				"\tmovd      %%mm1, (%2)\n"
+																				: /* empty */
+																				: "r" (op.A), "r" (op.B), "r" (op.D)
+																				: "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
   }
 
   asm("emms");
-
 }
 
 void
@@ -673,80 +690,70 @@ gimp_composite_grain_merge_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
-  asm("movq    %0, %%mm0"     :  : "m" (*rgba8_alpha_mask) : "%mm0");
-  asm("pxor    %%mm6, %%mm6"  :  :                        : "%mm6");
-  asm("movq    %0, %%mm7"     :  : "m" (*rgba8_w128)       : "%mm7");
+  asm volatile ("movq    %0, %%mm0\n"
+                "pxor    %%mm6, %%mm6\n"
+                "movq    %1, %%mm7\n"
+                : /* empty */
+                : "m" (*rgba8_alpha_mask), "m" (*rgba8_w128)
+                : "%mm0", "%mm6", "%mm7");
 
-  for (; op.n_pixels >= 2; op.n_pixels -= 2) {
-    asm volatile ("  movq    (%0), %%mm2; addl $8, %0\n"
-                  "\tmovq    (%1), %%mm3; addl $8, %1\n"
+  for (; op.n_pixels >= 2; op.n_pixels -= 2)
+				{
+						asm volatile ("  movq    (%0), %%mm2\n"
+																				"\tmovq    (%1), %%mm3\n"
 
-                  "\tmovq      %%mm2, %%mm4\n"
-                  "\tpunpcklbw %%mm6, %%mm4\n"
-                  "\tmovq      %%mm3, %%mm5\n"
-                  "\tpunpcklbw %%mm6, %%mm5\n"
+																				mmx_low_bytes_to_words(mm2,mm4,mm6)
+																				mmx_low_bytes_to_words(mm3,mm5,mm6)
+																				"\tpaddw     %%mm5, %%mm4\n"
+																				"\tpsubw     %%mm7, %%mm4\n"
 
-                  "\tpaddw     %%mm5, %%mm4\n"
-                  "\tpsubw     %%mm7, %%mm4\n"
-                  "\tmovq      %%mm4, %%mm1\n"
+																				mmx_high_bytes_to_words(mm2,mm1,mm6)
+																				mmx_high_bytes_to_words(mm3,mm5,mm6)
+																				"\tpaddw     %%mm5, %%mm1\n"
+																				"\tpsubw     %%mm7, %%mm1\n"
 
-                  "\tmovq      %%mm2, %%mm4\n"
-                  "\tpunpckhbw %%mm6, %%mm4\n"
-                  "\tmovq      %%mm3, %%mm5\n"
-                  "\tpunpckhbw %%mm6, %%mm5\n"
+																				"\tpackuswb  %%mm1, %%mm4\n"
+         
+																				"\t" pminub(mm3,mm2,mm5) "\n"
+																				"\tpand      %%mm0, %%mm2\n"
 
-                  "\tpaddw     %%mm5, %%mm4\n"
-                  "\tpsubw     %%mm7, %%mm4\n"
-
-                  "\tpackuswb  %%mm4, %%mm1\n"
-                  "\tmovq      %%mm1, %%mm4\n"
-
-                  "\tmovq      %%mm0, %%mm1; pandn     %%mm4, %%mm1\n"
-
-                  "\t" pminub(mm3,mm2,mm4) "\n"
-                  "\tpand      %%mm0, %%mm2\n"
-
-                  "\tpor       %%mm2, %%mm1\n"
-                  "\tmovq      %%mm1, (%2); addl $8, %2\n"
-                  : "+r" (op.A), "+r" (op.B), "+r" (op.D)
-                  : /* empty */
-                  : "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
+																				"\tmovq      %%mm0, %%mm1\n"
+																				"\tpandn     %%mm4, %%mm1\n"
+																				"\tpor       %%mm2, %%mm1\n"
+																				"\tmovq      %%mm1, (%2)\n"
+																				: /* empty */
+																				: "r" (op.A), "r" (op.B), "r" (op.D)
+																				: "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
+						op.A += 8;
+						op.B += 8;
+						op.D += 8;
   }
 
-  if (op.n_pixels) {
-    asm volatile ("  movd    (%0), %%mm2;\n"
-                  "\tmovd    (%1), %%mm3;\n"
+  if (op.n_pixels)
+				{
+						asm volatile ("  movd    (%0), %%mm2\n"
+																				"\tmovd    (%1), %%mm3\n"
 
-                  "\tmovq      %%mm2, %%mm4\n"
-                  "\tpunpcklbw %%mm6, %%mm4\n"
-                  "\tmovq      %%mm3, %%mm5\n"
-                  "\tpunpcklbw %%mm6, %%mm5\n"
-
-                  "\tpaddw     %%mm5, %%mm4\n"
-                  "\tpsubw     %%mm7, %%mm4\n"
-                  "\tmovq      %%mm4, %%mm1\n"
-
-                  "\tmovq      %%mm2, %%mm4\n"
-                  "\tpunpckhbw %%mm6, %%mm4\n"
-                  "\tmovq      %%mm3, %%mm5\n"
-                  "\tpunpckhbw %%mm6, %%mm5\n"
-
-                  "\tpaddw     %%mm5, %%mm4\n"
-                  "\tpsubw     %%mm7, %%mm4\n"
-
-                  "\tpackuswb  %%mm4, %%mm1\n"
-                  "\tmovq      %%mm1, %%mm4\n"
-
-                  "\tmovq      %%mm0, %%mm1; pandn     %%mm4, %%mm1\n"
-
-                  "\t" pminub(mm3,mm2,mm4) "\n"
-                  "\tpand      %%mm0, %%mm2\n"
-
-                  "\tpor       %%mm2, %%mm1\n"
-                  "\tmovd      %%mm1, (%2);\n"
-                  : /* empty */
-                  : "r" (op.A), "r" (op.B), "r" (op.D)
-                  : "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
+																				mmx_low_bytes_to_words(mm2,mm4,mm6)
+																				mmx_low_bytes_to_words(mm3,mm5,mm6)
+																				
+																				"\tpaddw     %%mm5, %%mm4\n"
+																				"\tpsubw     %%mm7, %%mm4\n"
+																				"\tmovq      %%mm4, %%mm1\n"
+																				"\tpackuswb  %%mm6, %%mm1\n"
+																				
+																				"\tmovq      %%mm1, %%mm4\n"
+																				
+																				"\tmovq      %%mm0, %%mm1; pandn     %%mm4, %%mm1\n"
+																				
+																				"\t" pminub(mm3,mm2,mm4) "\n"
+																				"\tpand      %%mm0, %%mm2\n"
+																				
+																				"\tpor       %%mm2, %%mm1\n"
+																				"\tmovd      %%mm1, (%2)\n"
+																				: /* empty */
+																				: "r" (op.A), "r" (op.B), "r" (op.D)
+																				: "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
   }
 
   asm("emms");
@@ -759,11 +766,12 @@ gimp_composite_lighten_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
-  asm("movq    %0,%%mm0"     :  : "m" (*rgba8_alpha_mask) : "%mm0");
+  asm volatile ("movq    %0,%%mm0"     :  : "m" (*rgba8_alpha_mask) : "%mm0");
 
-  for (; op.n_pixels >= 2; op.n_pixels -= 2) {
-    asm volatile ("  movq     (%0), %%mm2; addl $8, %0\n"
-                  "\tmovq     (%1), %%mm3; addl $8, %1\n"
+  for (; op.n_pixels >= 2; op.n_pixels -= 2)
+				{
+    asm volatile ("  movq     (%0), %%mm2\n"
+                  "\tmovq     (%1), %%mm3\n"
                   "\tmovq    %%mm2, %%mm4\n"
                   "\t" pmaxub(mm3,mm4,mm5) "\n"
                   "\tmovq    %%mm0, %%mm1\n"
@@ -771,13 +779,17 @@ gimp_composite_lighten_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
                   "\t" pminub(mm2,mm3,mm4) "\n"
                   "\tpand    %%mm0, %%mm3\n"
                   "\tpor     %%mm3, %%mm1\n"
-                  "\tmovq    %%mm1, (%2); addl $8, %2\n"
-                  : "+r" (op.A), "+r" (op.B), "+r" (op.D)
+                  "\tmovq    %%mm1, (%2)\n"
                   : /* empty */
+                  : "r" (op.A), "r" (op.B), "r" (op.D)
                   : "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
+						op.A += 8;
+						op.B += 8;
+						op.D += 8;
   }
 
-  if (op.n_pixels) {
+  if (op.n_pixels)
+				{
     asm volatile ("  movd    (%0), %%mm2\n"
                   "\tmovd    (%1), %%mm3\n"
                   "\tmovq    %%mm2, %%mm4\n"
@@ -804,62 +816,51 @@ gimp_composite_multiply_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
-  asm("movq    %0,%%mm0"     :  : "m" (*rgba8_alpha_mask) : "%mm0");
-  asm("movq    %0,%%mm7"     :  : "m" (*rgba8_w128) : "%mm7");
-  asm("pxor    %%mm6,%%mm6"  :  :  : "%mm6");
+  asm volatile ("movq    %0,%%mm0"     :  : "m" (*rgba8_alpha_mask) : "%mm0");
+  asm volatile ("movq    %0,%%mm7"     :  : "m" (*rgba8_w128) : "%mm7");
+  asm volatile ("pxor    %%mm6,%%mm6"  :  :  : "%mm6");
 
-  for (; op.n_pixels >= 2; op.n_pixels -= 2) {
-    asm volatile ("  movq     (%0), %%mm2; addl $8, %0\n"
-                  "\tmovq     (%1), %%mm3; addl $8, %1\n"
+  for (; op.n_pixels >= 2; op.n_pixels -= 2)
+				{
+						asm volatile ("  movq     (%0), %%mm2\n"
+																				"\tmovq     (%1), %%mm3\n"
 
-                  "\tmovq      %%mm2, %%mm1\n"
-                  "\tpunpcklbw %%mm6, %%mm1\n"
-                  "\tmovq      %%mm3, %%mm5\n"
-                  "\tpunpcklbw %%mm6, %%mm5\n"
-                  
-                  "\t" pmulwX(mm5,mm1,mm7) "\n"
-
-                  "\tmovq      %%mm2, %%mm4\n"
-                  "\tpunpckhbw %%mm6, %%mm4\n"
-                  "\tmovq      %%mm3, %%mm5\n"
-                  "\tpunpckhbw %%mm6, %%mm5\n"
-
-                  "\t" pmulwX(mm5,mm4,mm7) "\n"
-
-                  "\tpackuswb  %%mm4, %%mm1\n"
-
-                  "\tmovq      %%mm0, %%mm4\n"
-                  "\tpandn     %%mm1, %%mm4\n"
-                  "\tmovq      %%mm4, %%mm1\n"
-                  "\t" pminub(mm3,mm2,mm4) "\n"
-                  "\tpand      %%mm0, %%mm2\n"
-                  "\tpor       %%mm2, %%mm1\n"
-                  
-                  "\tmovq    %%mm1, (%2); addl $8, %2\n"
-                  : "+r" (op.A), "+r" (op.B), "+r" (op.D)
-                  : /* empty */
-                  : "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
+																				mmx_low_bytes_to_words(mm2,mm1,mm6)
+																				mmx_low_bytes_to_words(mm3,mm5,mm6)
+																				mmx_int_mult(mm5,mm1,mm7)
+         
+																				mmx_high_bytes_to_words(mm2,mm4,mm6)
+																				mmx_high_bytes_to_words(mm3,mm5,mm6)
+																				mmx_int_mult(mm5,mm4,mm7)
+         
+																				"\tpackuswb  %%mm4, %%mm1\n"
+         
+																				"\tmovq      %%mm0, %%mm4\n"
+																				"\tpandn     %%mm1, %%mm4\n"
+																				"\tmovq      %%mm4, %%mm1\n"
+																				"\t" pminub(mm3,mm2,mm4) "\n"
+																				"\tpand      %%mm0, %%mm2\n"
+																				"\tpor       %%mm2, %%mm1\n"
+																				
+																				"\tmovq    %%mm1, (%2)\n"
+																				: /* empty */
+																				: "r" (op.A), "r" (op.B), "r" (op.D)
+																				: "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
+						op.A += 8;
+						op.B += 8;
+						op.D += 8;
   }
 
-  if (op.n_pixels) {
+  if (op.n_pixels)
+				{
     asm volatile ("  movd     (%0), %%mm2\n"
                   "\tmovd     (%1), %%mm3\n"
 
-                  "\tmovq      %%mm2, %%mm1\n"
-                  "\tpunpcklbw %%mm6, %%mm1\n"
-                  "\tmovq      %%mm3, %%mm5\n"
-                  "\tpunpcklbw %%mm6, %%mm5\n"
+                  mmx_low_bytes_to_words(mm2,mm1,mm6)
+                  mmx_low_bytes_to_words(mm3,mm5,mm6)
+                  pmulwX(mm5,mm1,mm7)
 
-                  "\t" pmulwX(mm5,mm1,mm7) "\n"
-
-                  "\tmovq      %%mm2, %%mm4\n"
-                  "\tpunpckhbw %%mm6, %%mm4\n"
-                  "\tmovq      %%mm3, %%mm5\n"
-                  "\tpunpckhbw %%mm6, %%mm5\n"
-
-                  "\t" pmulwX(mm5,mm4,mm7) "\n"
-
-                  "\tpackuswb  %%mm4, %%mm1\n"
+                  "\tpackuswb  %%mm6, %%mm1\n"
 
                   "\tmovq      %%mm0, %%mm4\n"
                   "\tpandn     %%mm1, %%mm4\n"
@@ -928,38 +929,119 @@ sse_op_overlay(void)
 }
 
 void
-gimp_composite_overlay_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
+xxxgimp_composite_overlay_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
   asm volatile ("pxor    %%mm0,%%mm0\n"
                 "movq    (%0),%%mm7"
-                :  : "m" (*rgba8_w128) : "%mm0");
+                : /* empty */
+																: "m" (*rgba8_w128) : "%mm0");
 
-  for (; op.n_pixels >= 2; op.n_pixels -= 2) {
-    asm ("  movq    (%0), %%mm2; addl  $8, %0\n"
-         "\tmovq    (%1), %%mm3; addl  $8, %1\n"
+  for (; op.n_pixels >= 2; op.n_pixels -= 2)
+				{
+						asm volatile ("  movq    (%0), %%mm2; addl  $8, %0\n"
+																				"\tmovq    (%1), %%mm3; addl  $8, %1\n"
 
-         "\tcall sse_op_overlay\n"
+																				/* low bytes */
+																				mmx_low_bytes_to_words(mm3,mm5,mm0)
+																				"\tpcmpeqb   %%mm4, %%mm4\n"
+																				"\tpsubb     %%mm2, %%mm4\n" /* mm4 = 255 - A */
+																				"\tpunpcklbw %%mm0, %%mm4\n" /* mm4 = (low bytes as word) mm4 */
+																				"\tmovq      (%3), %%mm6\n"  /* mm6 = words of value 2 */
+																				"\tpmullw    %%mm5, %%mm6\n" /* mm6 = 2 * low bytes of B */
+																				mmx_int_mult(mm6,mm4,mm7)    /* mm4 = INT_MULT(mm6, mm4) */
+																				
+																				/* high bytes */
+																				mmx_high_bytes_to_words(mm3,mm5,mm0)
+																				"\tpcmpeqb   %%mm1, %%mm1\n"
+																				"\tpsubb     %%mm2, %%mm1\n" /* mm1 = 255 - A */
+																				"\tpunpckhbw %%mm0, %%mm1\n" /* mm1 = (high bytes as word) mm1 */
+																				"\tmovq      (%3), %%mm6\n"  /* mm6 = words of value 2 */
+																				"\tpmullw    %%mm5, %%mm6\n" /* mm6 = 2 * high bytes of B */
+																				mmx_int_mult(mm6,mm1,mm7)    /* mm1 = INT_MULT(mm6, mm1) */
+																				
+																				"\tpackuswb  %%mm1,%%mm4\n"  /* mm4 = intermediate value */
+																				
+																				mmx_low_bytes_to_words(mm4,mm5,mm0)
+																				mmx_low_bytes_to_words(mm2,mm6,mm0)
+																				"\tpaddw     %%mm6,%%mm5\n"
+																				mmx_int_mult(mm6,mm5,mm7)   /* mm5 = INT_MULT(mm6, mm5) low bytes */
+																				
+																				mmx_high_bytes_to_words(mm4,mm1,mm0)
+																				mmx_high_bytes_to_words(mm2,mm6,mm0)
+																				"\tpaddw     %%mm6,%%mm1\n"
+																				mmx_int_mult(mm6,mm1,mm7)   /* mm1 = INT_MULT(mm6, mm1) high bytes */
+																				
+																				"\tpackuswb  %%mm1,%%mm5\n"
+																				
+																				"\tmovq      (%4), %%mm0\n"
+																				"\tmovq      %%mm0, %%mm1\n"
+																				"\tpandn     %%mm5, %%mm1\n"
+																				
+																				"\t" pminub(mm2,mm3,mm4) "\n"
+																				"\tpand      %%mm0, %%mm3\n"
+																				
+																				"\tpor       %%mm3, %%mm1\n"
+																				
+																				"\tmovq    %%mm1, (%2); addl  $8, %2\n"
+																				: "+r" (op.A), "+r" (op.B), "+r" (op.D)
+																				: "m" (*rgba8_w2), "m" (*rgba8_alpha_mask)
+																				: "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
+				}
 
-         "\tmovq    %%mm1, (%2); addl  $8, %2\n"
-         : "+r" (op.A), "+S" (op.B), "+D" (op.D)
-         : /* empty */
-         : "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
-  }
+  if (op.n_pixels)
+				{
+						asm volatile ("  movd    (%0), %%mm2\n"
+																				"\tmovd    (%1), %%mm3\n"
 
-  if (op.n_pixels) {
-    asm volatile ("  movd    (%0), %%mm2;\n"
-                  "\tmovd    (%1), %%mm3;\n"
-
-                  "\tcall sse_op_overlay\n"
-
-                  "\tmovd    %%mm1, (%2);\n"
-                  : /* empty */
-                  : "r" (op.A), "r" (op.B), "r" (op.D)
-                  : "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
-  }
-
+																				/* low bytes */
+																				mmx_low_bytes_to_words(mm3,mm5,mm0)
+																				"\tpcmpeqb   %%mm4, %%mm4\n"
+																				"\tpsubb     %%mm2, %%mm4\n" /* mm4 = 255 - A */
+																				"\tpunpcklbw %%mm0, %%mm4\n" /* mm4 = (low bytes as word) mm4 */
+																				"\tmovq      (%3), %%mm6\n"  /* mm6 = words of value 2 */
+																				"\tpmullw    %%mm5, %%mm6\n" /* mm6 = 2 * low bytes of B */
+																				mmx_int_mult(mm6,mm4,mm7)    /* mm4 = INT_MULT(mm6, mm4) */
+																				
+																				/* high bytes */
+																				mmx_high_bytes_to_words(mm3,mm5,mm0)
+																				"\tpcmpeqb   %%mm1, %%mm1\n"
+																				"\tpsubb     %%mm2, %%mm1\n" /* mm1 = 255 - A */
+																				"\tpunpckhbw %%mm0, %%mm1\n" /* mm1 = (high bytes as word) mm1 */
+																				"\tmovq      (%3), %%mm6\n"  /* mm6 = words of value 2 */
+																				"\tpmullw    %%mm5, %%mm6\n" /* mm6 = 2 * high bytes of B */
+																				mmx_int_mult(mm6,mm1,mm7)    /* mm1 = INT_MULT(mm6, mm1) */
+																				
+																				"\tpackuswb  %%mm1,%%mm4\n"  /* mm4 = intermediate value */
+																				
+																				mmx_low_bytes_to_words(mm4,mm5,mm0)
+																				mmx_low_bytes_to_words(mm2,mm6,mm0)
+																				"\tpaddw     %%mm6,%%mm5\n"
+																				mmx_int_mult(mm6,mm5,mm7)   /* mm5 = INT_MULT(mm6, mm5) low bytes */
+																				
+																				mmx_high_bytes_to_words(mm4,mm1,mm0)
+																				mmx_high_bytes_to_words(mm2,mm6,mm0)
+																				"\tpaddw     %%mm6,%%mm1\n"
+																				mmx_int_mult(mm6,mm1,mm7)   /* mm1 = INT_MULT(mm6, mm1) high bytes */
+																				
+																				"\tpackuswb  %%mm1,%%mm5\n"
+																				
+																				"\tmovq      (%4), %%mm0\n"
+																				"\tmovq      %%mm0, %%mm1\n"
+																				"\tpandn     %%mm5, %%mm1\n"
+																				
+																				"\t" pminub(mm2,mm3,mm4) "\n"
+																				"\tpand      %%mm0, %%mm3\n"
+																				
+																				"\tpor       %%mm3, %%mm1\n"
+																				
+																				"\tmovd    %%mm1, (%2)\n"
+																				: /* empty */
+																				: "r" (op.A), "r" (op.B), "r" (op.D), "m" (*rgba8_w2), "m" (*rgba8_alpha_mask)
+																				: "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
+				}
+		
   asm("emms");
 }
 
@@ -983,8 +1065,9 @@ gimp_composite_scale_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
                 : "m" (op.scale.scale), "m" (*rgba8_w128)
                 : "%eax", "%mm0", "%mm5", "%mm6", "%mm7");
 
-  for (; op.n_pixels >= 2; op.n_pixels -= 2) {
-    asm volatile ("movq      (%0),%%mm2; addl $8,%0\n"
+  for (; op.n_pixels >= 2; op.n_pixels -= 2)
+				{
+    asm volatile ("movq      (%0),%%mm2\n"
                   "\tmovq      %%mm2,%%mm1\n"
                   "\tpunpcklbw %%mm0,%%mm1\n"
                   "\tmovq      %%mm3,%%mm5\n"
@@ -999,27 +1082,29 @@ gimp_composite_scale_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
 
                   "\tpackuswb  %%mm4,%%mm1\n"
 
-                  "\tmovq    %%mm1,(%1);  addl $8,%1\n"
-                  : "+r" (op.A), "+r" (op.D)
-                  : /* empty */
-                  : "0", "1", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5", "%mm6", "%mm7");
-
-  }
-
-  if (op.n_pixels) {
-    asm volatile ("movd      (%0), %%mm2\n"
-                  "\tmovq      %%mm2,%%mm1\n"
-                  "\tpunpcklbw %%mm0,%%mm1\n"
-                  "\tmovq      %%mm3,%%mm5\n"
-
-                  "\t" pmulwX(mm5,mm1,mm7) "\n"
-
-                  "\tpackuswb  %%mm0,%%mm1\n"
-                  "\tmovd    %%mm1,(%1)\n"
+                  "\tmovq    %%mm1,(%1)\n"
                   : /* empty */
                   : "r" (op.A), "r" (op.D)
                   : "0", "1", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5", "%mm6", "%mm7");
+						op.A += 8;
+						op.D += 8;
   }
+
+  if (op.n_pixels)
+				{
+						asm volatile ("movd      (%0), %%mm2\n"
+																				"\tmovq      %%mm2,%%mm1\n"
+																				"\tpunpcklbw %%mm0,%%mm1\n"
+																				"\tmovq      %%mm3,%%mm5\n"
+
+																				"\t" pmulwX(mm5,mm1,mm7) "\n"
+
+																				"\tpackuswb  %%mm0,%%mm1\n"
+																				"\tmovd    %%mm1,(%1)\n"
+																				: /* empty */
+																				: "r" (op.A), "r" (op.D)
+																				: "0", "1", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5", "%mm6", "%mm7");
+				}
 
   asm("emms");
 }
@@ -1029,111 +1114,116 @@ gimp_composite_screen_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
-  asm("movq    %0,%%mm0"     :  : "m" (*rgba8_alpha_mask) : "%mm0");
-  asm("movq    %0,%%mm7"     :  : "m" (*rgba8_w128)  : "%mm7");
-  asm("pxor    %mm6, %mm6");
+  asm volatile ("movq    %0,%%mm0"     :  : "m" (*rgba8_alpha_mask) : "%mm0");
+  asm volatile ("movq    %0,%%mm7"     :  : "m" (*rgba8_w128)  : "%mm7");
+  asm volatile ("pxor    %mm6, %mm6");
 
-  for (; op.n_pixels >= 2; op.n_pixels -= 2) {
-    asm volatile ("  movq     (%0), %%mm2; addl $8, %0\n"
-                  "\tmovq     (%1), %%mm3; addl $8, %1\n"
+  for (; op.n_pixels >= 2; op.n_pixels -= 2)
+				{
+						asm volatile ("  movq     (%0), %%mm2\n"
+																				"\tmovq     (%1), %%mm3\n"
+																				
+																				"\tpcmpeqb   %%mm4, %%mm4\n"
+																				"\tpsubb     %%mm2, %%mm4\n"
+																				"\tpcmpeqb   %%mm5, %%mm5\n"
+																				"\tpsubb     %%mm3, %%mm5\n"
 
-                  "\tpcmpeqb   %%mm4, %%mm4\n"
-                  "\tpsubb     %%mm2, %%mm4\n"
-                  "\tpcmpeqb   %%mm5, %%mm5\n"
-                  "\tpsubb     %%mm3, %%mm5\n"
-
-                  "\tpunpcklbw %%mm6, %%mm4\n"
-                  "\tpunpcklbw %%mm6, %%mm5\n"
-                  "\tpmullw    %%mm4, %%mm5\n"
-                  "\tpaddw     %%mm7, %%mm5\n"
-                  "\tmovq      %%mm5, %%mm1\n"
-                  "\tpsrlw     $ 8, %%mm1\n"
-                  "\tpaddw     %%mm5, %%mm1\n"
-                  "\tpsrlw     $ 8, %%mm1\n"
-
-                  "\tpcmpeqb   %%mm4, %%mm4\n"
-                  "\tpsubb     %%mm2, %%mm4\n"
-                  "\tpcmpeqb   %%mm5, %%mm5\n"
-                  "\tpsubb     %%mm3, %%mm5\n"
-
-                  "\tpunpckhbw %%mm6, %%mm4\n"
-                  "\tpunpckhbw %%mm6, %%mm5\n"
-                  "\tpmullw    %%mm4, %%mm5\n"
-                  "\tpaddw     %%mm7, %%mm5\n"
-                  "\tmovq      %%mm5, %%mm4\n"
-                  "\tpsrlw     $ 8, %%mm4\n"
-                  "\tpaddw     %%mm5, %%mm4\n"
-                  "\tpsrlw     $ 8, %%mm4\n"
-
-                  "\tpackuswb  %%mm4, %%mm1\n"
-
-                  "\tpcmpeqb   %%mm4, %%mm4\n"
-                  "\tpsubb     %%mm1, %%mm4\n"
-
-                  "\tmovq      %%mm0, %%mm1\n"
-                  "\tpandn     %%mm4, %%mm1\n"
-
-                  "\t" pminub(mm2,mm3,mm4) "\n"
-                  "\tpand      %%mm0, %%mm3\n"
-
-                  "\tpor       %%mm3, %%mm1\n"
-
-                  "\tmovq    %%mm1, (%2); addl $8, %2\n"
-                  : "+r" (op.A), "+r" (op.B), "+r" (op.D)
-                  : /* empty */
-                  : "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
+																				"\tpunpcklbw %%mm6, %%mm4\n"
+																				"\tpunpcklbw %%mm6, %%mm5\n"
+																				"\tpmullw    %%mm4, %%mm5\n"
+																				"\tpaddw     %%mm7, %%mm5\n"
+																				"\tmovq      %%mm5, %%mm1\n"
+																				"\tpsrlw     $ 8, %%mm1\n"
+																				"\tpaddw     %%mm5, %%mm1\n"
+																				"\tpsrlw     $ 8, %%mm1\n"
+																				
+																				"\tpcmpeqb   %%mm4, %%mm4\n"
+																				"\tpsubb     %%mm2, %%mm4\n"
+																				"\tpcmpeqb   %%mm5, %%mm5\n"
+																				"\tpsubb     %%mm3, %%mm5\n"
+																				
+																				"\tpunpckhbw %%mm6, %%mm4\n"
+																				"\tpunpckhbw %%mm6, %%mm5\n"
+																				"\tpmullw    %%mm4, %%mm5\n"
+																				"\tpaddw     %%mm7, %%mm5\n"
+																				"\tmovq      %%mm5, %%mm4\n"
+																				"\tpsrlw     $ 8, %%mm4\n"
+																				"\tpaddw     %%mm5, %%mm4\n"
+																				"\tpsrlw     $ 8, %%mm4\n"
+																				
+																				"\tpackuswb  %%mm4, %%mm1\n"
+																				
+																				"\tpcmpeqb   %%mm4, %%mm4\n"
+																				"\tpsubb     %%mm1, %%mm4\n"
+																				
+																				"\tmovq      %%mm0, %%mm1\n"
+																				"\tpandn     %%mm4, %%mm1\n"
+																				
+																				"\t" pminub(mm2,mm3,mm4) "\n"
+																				"\tpand      %%mm0, %%mm3\n"
+																				
+																				"\tpor       %%mm3, %%mm1\n"
+																				
+																				"\tmovq    %%mm1, (%2)\n"
+																				: /* empty */
+																				: "r" (op.A), "r" (op.B), "r" (op.D)
+																				: "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
+						op.A += 8;
+						op.B += 8;
+						op.D += 8;
   }
 
-  if (op.n_pixels) {
-    asm volatile ("  movd     (%0), %%mm2;\n"
-                  "\tmovd     (%1), %%mm3;\n"
+  if (op.n_pixels)
+				{
+						asm volatile ("  movd     (%0), %%mm2\n"
+																				"\tmovd     (%1), %%mm3\n"
 
-                  "\tpcmpeqb   %%mm4, %%mm4\n"
-                  "\tpsubb     %%mm2, %%mm4\n"
-                  "\tpcmpeqb   %%mm5, %%mm5\n"
-                  "\tpsubb     %%mm3, %%mm5\n"
+																				"\tpcmpeqb   %%mm4, %%mm4\n"
+																				"\tpsubb     %%mm2, %%mm4\n"
+																				"\tpcmpeqb   %%mm5, %%mm5\n"
+																				"\tpsubb     %%mm3, %%mm5\n"
 
-                  "\tpunpcklbw %%mm6, %%mm4\n"
-                  "\tpunpcklbw %%mm6, %%mm5\n"
-                  "\tpmullw    %%mm4, %%mm5\n"
-                  "\tpaddw     %%mm7, %%mm5\n"
-                  "\tmovq      %%mm5, %%mm1\n"
-                  "\tpsrlw     $ 8, %%mm1\n"
-                  "\tpaddw     %%mm5, %%mm1\n"
-                  "\tpsrlw     $ 8, %%mm1\n"
+																				"\tpunpcklbw %%mm6, %%mm4\n"
+																				"\tpunpcklbw %%mm6, %%mm5\n"
+																				"\tpmullw    %%mm4, %%mm5\n"
+																				"\tpaddw     %%mm7, %%mm5\n"
+																				"\tmovq      %%mm5, %%mm1\n"
+																				"\tpsrlw     $ 8, %%mm1\n"
+																				"\tpaddw     %%mm5, %%mm1\n"
+																				"\tpsrlw     $ 8, %%mm1\n"
 
-                  "\tpcmpeqb   %%mm4, %%mm4\n"
-                  "\tpsubb     %%mm2, %%mm4\n"
-                  "\tpcmpeqb   %%mm5, %%mm5\n"
-                  "\tpsubb     %%mm3, %%mm5\n"
+																				"\tpcmpeqb   %%mm4, %%mm4\n"
+																				"\tpsubb     %%mm2, %%mm4\n"
+																				"\tpcmpeqb   %%mm5, %%mm5\n"
+																				"\tpsubb     %%mm3, %%mm5\n"
 
-                  "\tpunpckhbw %%mm6, %%mm4\n"
-                  "\tpunpckhbw %%mm6, %%mm5\n"
-                  "\tpmullw    %%mm4, %%mm5\n"
-                  "\tpaddw     %%mm7, %%mm5\n"
-                  "\tmovq      %%mm5, %%mm4\n"
-                  "\tpsrlw     $ 8, %%mm4\n"
-                  "\tpaddw     %%mm5, %%mm4\n"
-                  "\tpsrlw     $ 8, %%mm4\n"
+																				"\tpunpckhbw %%mm6, %%mm4\n"
+																				"\tpunpckhbw %%mm6, %%mm5\n"
+																				"\tpmullw    %%mm4, %%mm5\n"
+																				"\tpaddw     %%mm7, %%mm5\n"
+																				"\tmovq      %%mm5, %%mm4\n"
+																				"\tpsrlw     $ 8, %%mm4\n"
+																				"\tpaddw     %%mm5, %%mm4\n"
+																				"\tpsrlw     $ 8, %%mm4\n"
 
-                  "\tpackuswb  %%mm4, %%mm1\n"
+																				"\tpackuswb  %%mm4, %%mm1\n"
 
-                  "\tpcmpeqb   %%mm4, %%mm4\n"
-                  "\tpsubb     %%mm1, %%mm4\n"
+																				"\tpcmpeqb   %%mm4, %%mm4\n"
+																				"\tpsubb     %%mm1, %%mm4\n"
 
-                  "\tmovq      %%mm0, %%mm1\n"
-                  "\tpandn     %%mm4, %%mm1\n"
+																				"\tmovq      %%mm0, %%mm1\n"
+																				"\tpandn     %%mm4, %%mm1\n"
 
-                  "\t" pminub(mm2,mm3,mm4) "\n"
-                  "\tpand      %%mm0, %%mm3\n"
+																				"\t" pminub(mm2,mm3,mm4) "\n"
+																				"\tpand      %%mm0, %%mm3\n"
 
-                  "\tpor       %%mm3, %%mm1\n"
+																				"\tpor       %%mm3, %%mm1\n"
 
-                  "\tmovd    %%mm1, (%2);\n"
-                  : /* empty */
-                  : "r" (op.A), "r" (op.B), "r" (op.D)
-                  : "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
-  }
+																				"\tmovd    %%mm1, (%2)\n"
+																				: /* empty */
+																				: "r" (op.A), "r" (op.B), "r" (op.D)
+																				: "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
+				}
 
   asm("emms");
 }
@@ -1144,46 +1234,51 @@ gimp_composite_subtract_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
-  asm("movq    %0,%%mm0"     :  : "m" (*rgba8_alpha_mask) : "%mm0");
+  asm volatile ("movq    %0,%%mm0"     :  : "m" (*rgba8_alpha_mask) : "%mm0");
 
-  for (; op.n_pixels >= 2; op.n_pixels -= 2) {
-    asm volatile ("  movq     (%0), %%mm2; addl $8, %0\n"
-                  "\tmovq     (%1), %%mm3; addl $8, %1\n"
+  for (; op.n_pixels >= 2; op.n_pixels -= 2)
+				{
+						asm volatile ("  movq     (%0), %%mm2\n"
+																				"\tmovq     (%1), %%mm3\n"
 
-                  "\tmovq    %%mm2, %%mm4\n"
-                  "\tpsubusb %%mm3, %%mm4\n"
+																				"\tmovq    %%mm2, %%mm4\n"
+																				"\tpsubusb %%mm3, %%mm4\n"
                   
-                  "\tmovq    %%mm0, %%mm1\n"
-                  "\tpandn   %%mm4, %%mm1\n"
-                  
-                  "\t" pminub(mm3,mm2,mm4) "\n"
-
-                  "\tpand    %%mm0, %%mm2\n"
-                  "\tpor     %%mm2, %%mm1\n"
-                  "\tmovq    %%mm1, (%2); addl $8, %2\n"
-                  : "+r" (op.A), "+r" (op.B), "+r" (op.D)
-                  : /* empty */
-                  : "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
+																				"\tmovq    %%mm0, %%mm1\n"
+																				"\tpandn   %%mm4, %%mm1\n"
+																				
+																				"\t" pminub(mm3,mm2,mm4) "\n"
+																				
+																				"\tpand    %%mm0, %%mm2\n"
+																				"\tpor     %%mm2, %%mm1\n"
+																				"\tmovq    %%mm1, (%2)\n"
+																				: /* empty */
+																				: "r" (op.A), "r" (op.B), "r" (op.D)
+																				: "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
+						op.A += 8;
+						op.B += 8;
+						op.D += 8;
   }
 
-  if (op.n_pixels) {
-    asm volatile ("  movd     (%0), %%mm2;\n"
-                  "\tmovd     (%1), %%mm3;\n"
+  if (op.n_pixels)
+				{
+						asm volatile ("  movd     (%0), %%mm2\n"
+																				"\tmovd     (%1), %%mm3\n"
 
-                  "\tmovq    %%mm2, %%mm4\n"
-                  "\tpsubusb %%mm3, %%mm4\n"
+																				"\tmovq    %%mm2, %%mm4\n"
+																				"\tpsubusb %%mm3, %%mm4\n"
                   
-                  "\tmovq    %%mm0, %%mm1\n"
-                  "\tpandn   %%mm4, %%mm1\n"
+																				"\tmovq    %%mm0, %%mm1\n"
+																				"\tpandn   %%mm4, %%mm1\n"
                   
-                  "\t" pminub(mm3,mm2,mm4) "\n"
+																				"\t" pminub(mm3,mm2,mm4) "\n"
 
-                  "\tpand    %%mm0, %%mm2\n"
-                  "\tpor     %%mm2, %%mm1\n"
-                  "\tmovd    %%mm1, (%2); addl $8, %2\n"
-                  : /* empty */
-                  : "r" (op.A), "r" (op.B), "r" (op.D)
-                  : "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
+																				"\tpand    %%mm0, %%mm2\n"
+																				"\tpor     %%mm2, %%mm1\n"
+																				"\tmovd    %%mm1, (%2)\n"
+																				: /* empty */
+																				: "r" (op.A), "r" (op.B), "r" (op.D)
+																				: "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
   }
 
   asm("emms");
@@ -1194,19 +1289,21 @@ gimp_composite_swap_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
-  for (; op.n_pixels >= 2; op.n_pixels -= 2) {
+  for (; op.n_pixels >= 2; op.n_pixels -= 2)
+				{
     asm volatile ("  movq    (%0), %%mm2\n"
                   "\tmovq    (%1), %%mm3\n"
                   "\tmovq    %%mm3, (%0)\n"
                   "\tmovq    %%mm2, (%1)\n"
-                  "\taddl    $8, %0\n"
-                  "\taddl    $8, %1\n"
-                  : "+r" (op.A), "+r" (op.B)
                   : /* empty */
+                  : "r" (op.A), "r" (op.B)
                   : "0", "1", "%mm1", "%mm2", "%mm3", "%mm4");
+						op.A += 8;
+						op.B += 8;
   }
 
-  if (op.n_pixels) {
+  if (op.n_pixels)
+				{
     asm volatile ("  movd    (%0), %%mm2\n"
                   "\tmovd    (%1), %%mm3\n"
                   "\tmovd    %%mm3, (%0)\n"
@@ -1220,13 +1317,14 @@ gimp_composite_swap_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
 }
 
 void
-gimp_composite_valueonly_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
+xxxgimp_composite_valueonly_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
   asm("movq    %0,%%mm0"     :  : "m" (*rgba8_alpha_mask) : "%mm0");
 
-  for (; op.n_pixels >= 2; op.n_pixels -= 2) {
+  for (; op.n_pixels >= 2; op.n_pixels -= 2)
+				{
     asm volatile ("  movq    (%0), %%mm2; addl  $8, %0\n"
                   "\tmovq    (%1), %%mm3; addl  $8, %1\n"
                   
@@ -1237,11 +1335,12 @@ gimp_composite_valueonly_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
                   : "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
   }
 
-  if (op.n_pixels) {
-    asm volatile ("  movd    (%0), %%mm2;\n"
-                  "\tmovd    (%1), %%mm3;\n"
+  if (op.n_pixels)
+				{
+    asm volatile ("  movd    (%0), %%mm2\n"
+                  "\tmovd    (%1), %%mm3\n"
                   
-                  "\tmovd    %%mm1, (%2);\n"
+                  "\tmovd    %%mm1, (%2)\n"
                   : /* empty */
                   : "r" (op.A), "r" (op.B), "r" (op.D)
                   : "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
@@ -1346,7 +1445,8 @@ gimp_composite_burn_va8_va8_va8_sse (GimpCompositeContext *_op)
       : "m" (va8_alpha_mask)
       : "%mm1");
 
-  for (; op.n_pixels >= 4; op.n_pixels -= 4) {
+  for (; op.n_pixels >= 4; op.n_pixels -= 4)
+				{
     asm volatile ("  movq      (%0),%%mm0; addl $8,%0\n"
                   "\tmovq      (%1),%%mm1; addl $8,%1\n"
 
@@ -1396,7 +1496,8 @@ gimp_composite_burn_va8_va8_va8_sse (GimpCompositeContext *_op)
                   : "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
   }
 
-  if (op.n_pixels) {
+  if (op.n_pixels)
+				{
     asm volatile ("  movd      (%0),%%mm0\n"
                   "\tmovd      (%1),%%mm1\n"
 

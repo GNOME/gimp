@@ -1,3 +1,20 @@
+2003-09-01  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite-mmx.c
+	* app/composite/gimp-composite-sse.c: Replaced all memory
+	  references in asm() constructs to references to "input" parameters
+	  to the asm().  This should take care of any name mangling issues
+	  (see bug #120893)
+
+	  Beautified more code to conform to the gimp style guidelines.
+
+	  No longer doing pointer math in assembly.  This should ease some
+	  of the issues of compiling on 64bit machines.
+
+	* app/composite/gimp-composite-sse-installer.c
+	* app/composite/gimp-composite-sse-test.c: Removed reference to
+	  gimp_composite_overlay_* because this code is suspect.
+	
 2003-09-01  Dave Neary  <bolsh@gimp.org>
 
 	NEWS: Updated NEWS.
