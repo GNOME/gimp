@@ -2086,7 +2086,7 @@ void selectcolor1(vector *col)
 
   window = gtk_color_selection_dialog_new( _("Color Selection Dialog"));
   
-  gtk_color_selection_set_opacity (GTK_COLOR_SELECTION(GTK_COLOR_SELECTION_DIALOG (window)->colorsel), TRUE);
+  gtk_color_selection_set_current_alpha (GTK_COLOR_SELECTION(GTK_COLOR_SELECTION_DIALOG (window)->colorsel), TRUE);
 
   gtk_signal_connect (GTK_OBJECT (window), "destroy",
                       GTK_SIGNAL_FUNC(gtk_widget_destroyed),
@@ -2124,7 +2124,7 @@ void selectcolor2(vector *col)
 
   window = gtk_color_selection_dialog_new( _("Color Selection Dialog"));
 
-  gtk_color_selection_set_opacity (GTK_COLOR_SELECTION(GTK_COLOR_SELECTION_DIALOG (window)->colorsel), TRUE);
+  gtk_color_selection_set_current_alpha (GTK_COLOR_SELECTION(GTK_COLOR_SELECTION_DIALOG (window)->colorsel), TRUE);
 
   gtk_signal_connect (GTK_OBJECT (window), "destroy",
                       GTK_SIGNAL_FUNC(gtk_widget_destroyed),

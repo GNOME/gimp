@@ -155,9 +155,12 @@ make_selection_toolbar(Selection_t *data, GtkWidget *window)
 {
    GtkWidget *toolbar;
 
-   toolbar = gtk_toolbar_new(GTK_ORIENTATION_VERTICAL, GTK_TOOLBAR_ICONS);
+   toolbar = gtk_toolbar_new();
+   gtk_toolbar_set_orientation(GTK_TOOLBAR(toolbar), GTK_ORIENTATION_VERTICAL);
    gtk_container_set_border_width(GTK_CONTAINER(toolbar), 5);
+/* FIXME: replacement ?
    gtk_toolbar_set_space_size(GTK_TOOLBAR(toolbar), 5);
+*/
 
    data->arrow_up = make_toolbar_icon(toolbar, window, arrow_up_xpm, "MoveUp",
 				      _("Move Up"), selection_command, 

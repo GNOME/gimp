@@ -43,6 +43,10 @@
 
 #include <plug-ins/dbbrowser/dbbrowser_utils.h>
 
+/* FIXME: To get the 'broken' GtkText */
+#define GTK_ENABLE_BROKEN
+#include <gtk/gtktext.h>
+
 #ifdef G_OS_WIN32
 #include <fcntl.h>
 #include <io.h>

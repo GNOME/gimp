@@ -275,6 +275,9 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+/* FIXME: remove usage of the 'broken' GtkText */
+#define GTK_ENABLE_BROKEN
+#include <gtk/gtktext.h>
 
 /* uncomment the line below for a little debugging info */
 /* #define GIFDEBUG yesplease */

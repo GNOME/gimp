@@ -470,7 +470,6 @@ mov_dialog ( GimpDrawable *drawable, t_mov_path_preview *path_ptr,
   gtk_preview_set_color_cube (color_cube[0], color_cube[1],
 			      color_cube[2], color_cube[3]);
 
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
   gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
   /* dialog */

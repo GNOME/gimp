@@ -214,8 +214,6 @@ details_callback (GtkWidget *widget,
   if (pdesc->details_showing == FALSE)
     {
       GTK_PANED (pdesc->paned)->child1_resize = FALSE;
-      gtk_paned_set_handle_size (GTK_PANED (pdesc->paned), 10);
-      gtk_paned_set_gutter_size (GTK_PANED (pdesc->paned), 6);
       gtk_label_set_text (lab, _("Details <<"));
       gtk_widget_show (pdesc->descr_scroll);
       pdesc->details_showing = TRUE;
@@ -225,8 +223,7 @@ details_callback (GtkWidget *widget,
       GtkWidget *p = GTK_WIDGET (pdesc->paned)->parent;
       GTK_PANED (pdesc->paned)->child1_resize = TRUE;
       GTK_PANED (pdesc->paned)->child2_resize = TRUE;
-      gtk_paned_set_handle_size (GTK_PANED (pdesc->paned), 0);
-      gtk_paned_set_gutter_size (GTK_PANED (pdesc->paned), 0);
+
       gtk_label_set_text (lab, _("Details >>"));
       gtk_widget_hide (pdesc->descr_scroll);
       gtk_paned_set_position (GTK_PANED (pdesc->paned),
@@ -269,8 +266,8 @@ procedure_general_select_callback (PDesc *pdesc,
   GimpParamDef    *selected_return_vals;
   GtkWidget *label;
   GtkWidget *help;
-  GtkWidget *text;
-  GtkWidget *vscrollbar;
+  GtkWidget *text_view;
+  GtkTextBuffer *text_buffer;
   GtkWidget *old_table;
   GtkWidget *old_align;
   gint       table_row = 0;
@@ -411,29 +408,25 @@ procedure_general_select_callback (PDesc *pdesc,
       gtk_widget_show (help);
       table_row++;
       
-      text = gtk_text_new (NULL, NULL);
-      gtk_text_set_editable (GTK_TEXT (text), FALSE);
-      gtk_text_set_word_wrap(GTK_TEXT(text), TRUE);
-      gtk_widget_set_usize (text, -1, 60);
-      gtk_table_attach (GTK_TABLE (help), text, 0, 1, 0, 1,
+      text_buffer = gtk_text_buffer_new  (NULL);
+      gtk_text_buffer_set_text (text_buffer, selected_proc_help, -1);
+
+      text_view = gtk_text_view_new_with_buffer (text_buffer);
+      g_object_unref (G_OBJECT (text_buffer));
+
+      gtk_text_view_set_editable (GTK_TEXT_VIEW (text_view), FALSE);
+      gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
+
+      gtk_widget_set_usize (text_view, -1, 60);
+      gtk_table_attach (GTK_TABLE (help), text_view, 0, 1, 0, 1,
 			GTK_EXPAND | GTK_SHRINK | GTK_FILL,
 			GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-      gtk_widget_show (text);
+      gtk_widget_show (text_view);
       
-      vscrollbar = gtk_vscrollbar_new (GTK_TEXT (text)->vadj);
-      gtk_table_attach (GTK_TABLE (help), vscrollbar, 1, 2, 0, 1,
-			GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-      gtk_widget_show (vscrollbar);
-            
       label = gtk_hseparator_new (); /* ok, not really a label ... :) */
       gtk_table_attach (GTK_TABLE (pdesc->info_table), label,
 			0, 4, table_row, table_row+1, GTK_FILL, GTK_FILL, 3, 6);
       gtk_widget_show(label);
-
-      gtk_text_freeze (GTK_TEXT (text));
-      gtk_text_insert (GTK_TEXT (text), NULL, NULL, NULL,
-		       selected_proc_help, -1);
-      gtk_text_thaw (GTK_TEXT (text));
 
       table_row++;
     }
@@ -1023,9 +1016,6 @@ gimp_plugin_desc (void)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (plugindesc->dlg)->vbox), 
 		      hbox, TRUE, TRUE, 0);
   gtk_widget_show (hbox);
-
-  gtk_paned_set_handle_size (GTK_PANED (hbox), 0);
-  gtk_paned_set_gutter_size (GTK_PANED (hbox), 0);
 
   /* left = vbox : the list and the search entry */
   

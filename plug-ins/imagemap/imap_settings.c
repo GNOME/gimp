@@ -29,6 +29,9 @@
 #include "imap_string.h"
 #include "imap_table.h"
 
+/* FIXME: remove usage of the 'broken' GtkText */
+#define GTK_ENABLE_BROKEN
+#include <gtk/gtktext.h>
 
 static MapFormat_t _map_format = CSIM;
 

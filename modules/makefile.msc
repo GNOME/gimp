@@ -1,5 +1,3 @@
-## WARNING: Outdated.
-
 ## Makefile for building gimp modules with Microsoft C
 ## Use: nmake -f makefile.msc
 
@@ -8,36 +6,20 @@
 # will pick it up.
 GIMP = \install\gimp
 
+TOP = ..\..
+
 ################################################################
 
 # Nothing much configurable below
 
-!IFNDEF DEBUG
-# Full optimization:
-OPTIMIZE = -Ox -MD
-LINKDEBUG = /subsystem:windows
-!ELSE
-# Debugging:
-OPTIMIZE = -Zi -MDd
-LINKDEBUG = /subsystem:console /debug
-!ENDIF
+!INCLUDE $(TOP)\build\win32\make.msc
 
-# cl -? describes the options
-CC = cl -G5 -GF $(OPTIMIZE) -W3 -nologo
+GIMP_VER = 1.3
 
-LDFLAGS = /link $(LINKDEBUG)
-INSTALL = copy
-
-GIMP_VER = 1.2
-GTK_VER = 1.3
-GLIB_VER = 1.3
-
-GLIB = ..\..\glib
-GMODULE = $(GLIB)\gmodule
-GTK = ..\..\gtk+
-INTL = ..\..\intl
-
-CFLAGS = -DHAVE_CONFIG_H -DMODULE_COMPILATION -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)\gdk -I$(GTK) -I$(INTL)
+INCLUDES = -I.. 
+DEFINES = -DHAVE_CONFIG_H -DMODULE_COMPILATION 
+DEPCFLAGS = $(INTL_CFLAGS) $(GLIB_CFLAGS) $(GTK_CFLAGS) 
+DEPLIBS = $(INTL_LIBS) $(GLIB_LIBS) $(GTK_LIBS)
 
 BIN = $(GIMP)\modules
 
@@ -59,25 +41,37 @@ install : all
 	copy ..\config.h.win32 ..\config.h
 
 colorsel_gtk-$(GIMP_VER).dll : colorsel_gtk.obj module.def
-	$(CC) $(CFLAGS) -LD -Fe$@ colorsel_gtk.obj $(LDFLAGS) ..\app\gimp.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(GLIB)\glib-$(GLIB_VER).lib /def:module.def
+	$(CC) $(CFLAGS) -LD -Fe$@ colorsel_gtk.obj $(LDFLAGS) \
+	..\app\gimp.lib \
+	..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
+	$(DEPLIBS) /def:module.def
 
 colorsel_triangle-$(GIMP_VER).dll : colorsel_triangle.obj module.def
-	$(CC) $(CFLAGS) -LD -Fe$@ colorsel_triangle.obj $(LDFLAGS) ..\app\gimp.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(INTL)\gnu-intl.lib $(GLIB)\gmodule-$(GLIB_VER).lib $(GLIB)\glib-$(GLIB_VER).lib /def:module.def
+	$(CC) $(CFLAGS) -LD -Fe$@ colorsel_triangle.obj $(LDFLAGS) \
+	..\app\gimp.lib \
+	..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
+	$(DEPLIBS) /def:module.def
 
 colorsel_water-$(GIMP_VER).dll : colorsel_water.obj module.def
-	$(CC) $(CFLAGS) -LD -Fe$@ colorsel_water.obj $(LDFLAGS) ..\app\gimp.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(INTL)\gnu-intl.lib $(GLIB)\gmodule-$(GLIB_VER).lib $(GLIB)\glib-$(GLIB_VER).lib /def:module.def
+	$(CC) $(CFLAGS) -LD -Fe$@ colorsel_water.obj $(LDFLAGS) \
+	..\app\gimp.lib \
+	..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
+	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
+	$(DEPLIBS) /def:module.def
 
-# cdisplay_gamma-$(GIMP_VER).dll : cdisplay_gamma.obj module.def
-# 	$(CC) $(CFLAGS) -LD -Fe$@ cdisplay_gamma.obj $(LDFLAGS) ..\app\gimp.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(INTL)\gnu-intl.lib $(GLIB)\gmodule-$(GLIB_VER).lib $(GLIB)\glib-$(GLIB_VER).lib /def:module.def
+cdisplay_gamma-$(GIMP_VER).dll : cdisplay_gamma.obj module.def
+	$(CC) $(CFLAGS) -LD -Fe$@ cdisplay_gamma.obj $(LDFLAGS) ..\app\gimp.lib \
+	$(DEPLIBS) /def:module.def
 
-# cdisplay_highcontrast-$(GIMP_VER).dll : cdisplay_highcontrast.obj module.def
-# 	$(CC) $(CFLAGS) -LD -Fe$@ cdisplay_highcontrast.obj $(LDFLAGS) ..\app\gimp.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(INTL)\gnu-intl.lib $(GLIB)\gmodule-$(GLIB_VER).lib $(GLIB)\glib-$(GLIB_VER).lib /def:module.def
+cdisplay_highcontrast-$(GIMP_VER).dll : cdisplay_highcontrast.obj module.def
+	$(CC) $(CFLAGS) -LD -Fe$@ cdisplay_highcontrast.obj $(LDFLAGS) ..\app\gimp.lib \
+	$(DEPLIBS) /def:module.def
 
 # General rule for building 
 .c.obj:
 	$(CC) $(CFLAGS) -GD -c $<
 
-clean:
+clean::
 	del *.dll
 	del *.lib
 	del *.obj

@@ -21,7 +21,7 @@ GIMPDIR = _gimp$(GIMP_VER)
 
 INCLUDES = -I.. 
 DEFINES = -DGIMPDIR=\"$(GIMPDIR)\"
-DEPCFLAGS = $(INTL_CFLAGS) $(GLIB_CFLAGS) $(GTK_CFLAGS) 
+DEPCFLAGS = $(INTL_CFLAGS) $(GLIB_CFLAGS) $(GTK2_CFLAGS) 
 DEPLIBS = $(GLIB_LIBS) $(INTL_LIBS) 
 
 # CFLAGS = $(GLIB_CFLAGS) 
@@ -128,7 +128,7 @@ gimpui-$(GIMP_VER).dll : $(gimpui_OBJECTS) gimpui.def
 	gimp-$(GIMP_VER).lib ..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
 	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
 	..\libgimpbase\gimpbase-$(GIMP_VER).lib \
-	$(GTK_LIBS) $(INTL_LIBS) $(DEPLIBS) $(LDFLAGS) /def:gimpui.def
+	$(GTK2_LIBS) $(INTL_LIBS) $(DEPLIBS) $(LDFLAGS) /def:gimpui.def
 
 # gimpwidgets only for gimp_dialog_new
 

@@ -11,7 +11,7 @@ includedir = $(PRJ_TOP)
 LT_RELEASE = $(PKG_VER)
 
 PKG_LINK = \
-	$(GLIB_LIBS) $(GTK_LIBS) \
+	$(GLIB_LIBS) $(GTK2_LIBS) \
 	..\base\appbase-$(PKG_VER).lib \
 	..\paint-funcs\apppaint-funcs-$(PKG_VER).lib \
 	..\..\libgimpbase\gimpbase-$(PKG_VER).lib \
@@ -82,7 +82,7 @@ OTHER_FILES = \
 INCLUDES = \
 	-I$(top_srcdir) \
 	-I$(top_srcdir)/app \
-	$(GTK_CFLAGS) \
+	$(GTK2_CFLAGS) \
 	-I$(includedir)
 
 all : \

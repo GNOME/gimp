@@ -16,6 +16,10 @@
 #include "ppmtool.h"
 #include <libgimp/stdplugins-intl.h>
 
+/* FIXME: remove usage of the 'broken' GtkText */
+#define GTK_ENABLE_BROKEN
+#include <gtk/gtktext.h>
+
 GtkWidget *presetnameentry = NULL;
 GtkWidget *presetsavebutton = NULL;
 GtkWidget *presetlist = NULL;

@@ -11,7 +11,7 @@ includedir = $(PRJ_TOP)
 LT_RELEASE = $(PKG_VER)
 
 PKG_LINK = \
-	$(GLIB_LIBS) $(GTK_LIBS) $(INTL_LIBS) \
+	$(GLIB_LIBS) $(GTK2_LIBS) $(INTL_LIBS) \
 	..\..\libgimpbase\gimpbase-$(PKG_VER).lib \
 	..\..\libgimpcolor\gimpcolor-$(PKG_VER).lib \
 	..\..\libgimpmath\gimpmath-$(PKG_VER).lib \
@@ -81,7 +81,7 @@ OBJECTS = \
 INCLUDES = \
 	-I$(top_srcdir) \
 	-I$(top_srcdir)/app \
-	$(GTK_CFLAGS) \
+	$(GTK2_CFLAGS) \
 	-I$(includedir)
 
 all : \

@@ -29,6 +29,10 @@
 #include "imap_main.h"
 #include "imap_source.h"
 
+/* FIXME: remove usage of the 'broken' GtkText */
+#define GTK_ENABLE_BROKEN
+#include <gtk/gtktext.h>
+
 static void 
 save_to_view(gpointer param, const char* format, ...)
 {

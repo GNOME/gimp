@@ -46,8 +46,6 @@ static void gtk_multi_option_menu_size_allocate   (GtkWidget          *widget,
 						   GtkAllocation      *allocation);
 static void gtk_multi_option_menu_paint           (GtkWidget          *widget,
 						   GdkRectangle       *area);
-static void gtk_multi_option_menu_draw            (GtkWidget          *widget,
-						   GdkRectangle       *area);
 static gint gtk_multi_option_menu_expose          (GtkWidget          *widget,
 						   GdkEventExpose     *event);
 static gint gtk_multi_option_menu_button_press    (GtkWidget          *widget,
@@ -109,8 +107,6 @@ gtk_multi_option_menu_class_init (GtkMultiOptionMenuClass *class)
 
   object_class->destroy = gtk_multi_option_menu_destroy;
 
-  widget_class->draw = gtk_multi_option_menu_draw;
-  widget_class->draw_focus = NULL;
   widget_class->size_request = gtk_multi_option_menu_size_request;
   widget_class->size_allocate = gtk_multi_option_menu_size_allocate;
   widget_class->expose_event = gtk_multi_option_menu_expose;
@@ -259,13 +255,13 @@ gtk_multi_option_menu_size_request (GtkWidget      *widget,
   multi_option_menu = GTK_MULTI_OPTION_MENU (widget);
 
   requisition->width = ((GTK_CONTAINER (widget)->border_width +
-			 GTK_WIDGET (widget)->style->klass->xthickness) * 2 +
+			 GTK_WIDGET (widget)->style->xthickness) * 2 +
 			multi_option_menu->width +
 			MULTI_OPTION_INDICATOR_WIDTH +
 			MULTI_OPTION_INDICATOR_SPACING * 5 +
 			CHILD_LEFT_SPACING + CHILD_RIGHT_SPACING);
   requisition->height = ((GTK_CONTAINER (widget)->border_width +
-			  GTK_WIDGET (widget)->style->klass->ythickness) * 2 +
+			  GTK_WIDGET (widget)->style->ythickness) * 2 +
 			 multi_option_menu->height +
 			 CHILD_TOP_SPACING + CHILD_BOTTOM_SPACING);
 
@@ -301,13 +297,13 @@ gtk_multi_option_menu_size_allocate (GtkWidget     *widget,
           multi_option_menu = GTK_MULTI_OPTION_MENU (widget);
 
           allocation->width = ((GTK_CONTAINER (widget)->border_width +
-			GTK_WIDGET (widget)->style->klass->xthickness) * 2 +
+			GTK_WIDGET (widget)->style->xthickness) * 2 +
 			multi_option_menu->width +
 			MULTI_OPTION_INDICATOR_WIDTH +
 			MULTI_OPTION_INDICATOR_SPACING * 5 +
 			CHILD_LEFT_SPACING + CHILD_RIGHT_SPACING);
           allocation->height = ((GTK_CONTAINER (widget)->border_width +
-			GTK_WIDGET (widget)->style->klass->ythickness) * 2 +
+			GTK_WIDGET (widget)->style->ythickness) * 2 +
 			multi_option_menu->height +
 			CHILD_TOP_SPACING + CHILD_BOTTOM_SPACING);
 
@@ -318,9 +314,9 @@ gtk_multi_option_menu_size_allocate (GtkWidget     *widget,
 
         }
       child_allocation.x = (GTK_CONTAINER (widget)->border_width +
-			    GTK_WIDGET (widget)->style->klass->xthickness);
+			    GTK_WIDGET (widget)->style->xthickness);
       child_allocation.y = (GTK_CONTAINER (widget)->border_width +
-			    GTK_WIDGET (widget)->style->klass->ythickness);
+			    GTK_WIDGET (widget)->style->ythickness);
       child_allocation.width = (allocation->width - child_allocation.x * 2 -
 				MULTI_OPTION_INDICATOR_WIDTH - MULTI_OPTION_INDICATOR_SPACING * 5 -
 				CHILD_LEFT_SPACING - CHILD_RIGHT_SPACING);
@@ -370,27 +366,6 @@ gtk_multi_option_menu_paint (GtkWidget    *widget,
 			   restrict_area.y + (restrict_area.height - MULTI_OPTION_INDICATOR_HEIGHT) / 2,
 			   MULTI_OPTION_INDICATOR_WIDTH, MULTI_OPTION_INDICATOR_HEIGHT);
 	}
-    }
-}
-
-static void
-gtk_multi_option_menu_draw (GtkWidget    *widget,
-			    GdkRectangle *area)
-{
-  GtkWidget *child;
-  GdkRectangle child_area;
-
-  g_return_if_fail (widget != NULL);
-  g_return_if_fail (GTK_IS_MULTI_OPTION_MENU (widget));
-  g_return_if_fail (area != NULL);
-
-  if (GTK_WIDGET_DRAWABLE (widget))
-    {
-      gtk_multi_option_menu_paint (widget, area);
-
-      child = GTK_BUTTON (widget)->child;
-      if (child && gtk_widget_intersect (child, area, &child_area))
-	gtk_widget_draw (child, &child_area);
     }
 }
 

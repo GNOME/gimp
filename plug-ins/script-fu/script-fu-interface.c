@@ -35,6 +35,10 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+/* FIXME: To get the 'broken' GtkText */
+#define GTK_ENABLE_BROKEN
+#include <gtk/gtktext.h>
+
 #include "siod.h"
 #include "script-fu-scripts.h"
 

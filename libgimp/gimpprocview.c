@@ -35,6 +35,10 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+/* FIXME: remove usage of the 'broken' GtkText */
+#define GTK_ENABLE_BROKEN
+#include <gtk/gtktext.h>
+
 /* configuration */
 
 #define DBL_LIST_WIDTH 220

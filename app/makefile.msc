@@ -35,7 +35,8 @@ PKG_LINK = \
 	$(top_builddir)/libgimpmath/gimpmath-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpbase/gimpbase-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpwidgets/gimpwidgets-$(LT_RELEASE).lib \
-	$(GTK_LIBS) \
+	$(GLIB_LIBS) \
+	$(GTK2_LIBS) \
 	$(GIMP_THREAD_LIBS) \
 	$(GIMP_MP_LIBS) \
 	$(INTLLIBS)\
@@ -46,7 +47,7 @@ gimp_LDFLAGS = \
 INCLUDES = \
 	-I$(top_srcdir) \
 	-I$(top_srcdir)/intl \
-	$(GTK_CFLAGS) \
+	$(GTK2_CFLAGS) \
 	-I$(includedir)
 
 regex_sources = \

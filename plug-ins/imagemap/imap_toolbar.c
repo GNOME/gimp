@@ -99,11 +99,13 @@ make_toolbar(GtkWidget *main_vbox, GtkWidget *window)
 
    handlebox = gtk_handle_box_new();
    gtk_box_pack_start(GTK_BOX(main_vbox), handlebox, FALSE, FALSE, 0);
-   data->toolbar = toolbar = gtk_toolbar_new(GTK_ORIENTATION_HORIZONTAL, 
-					     GTK_TOOLBAR_ICONS);
+   data->toolbar = toolbar = gtk_toolbar_new();
+   gtk_toolbar_set_orientation(GTK_TOOLBAR(toolbar), GTK_ORIENTATION_HORIZONTAL);
 
    gtk_container_set_border_width(GTK_CONTAINER(toolbar), 5);
+/* FIXME: replacement
    gtk_toolbar_set_space_size(GTK_TOOLBAR(toolbar), 8);
+ */
    gtk_container_add(GTK_CONTAINER(handlebox), toolbar);
 
    make_toolbar_icon(toolbar, window, open_xpm, "Open",

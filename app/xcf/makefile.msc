@@ -12,7 +12,7 @@ LT_RELEASE = $(PKG_VER)
 INCLUDES = \
 	-I$(top_srcdir) \
 	-I$(top_srcdir)/app \
-	$(GTK_CFLAGS) \
+	$(GTK2_CFLAGS) \
 	-I$(includedir) \
 
 OBJECTS = \

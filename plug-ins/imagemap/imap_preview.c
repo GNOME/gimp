@@ -455,7 +455,7 @@ make_preview(GimpDrawable *drawable)
    data->hruler = ruler = gtk_hruler_new();
    gtk_ruler_set_range(GTK_RULER(ruler), 0, data->width, 0, PREVIEW_SIZE);
    gtk_signal_connect_object(GTK_OBJECT(preview), "motion_notify_event",
-			     (GtkSignalFunc) GTK_WIDGET_CLASS(GTK_OBJECT(ruler)->klass)->motion_notify_event,
+			     (GtkSignalFunc) GTK_WIDGET_GET_CLASS(ruler)->motion_notify_event,
 			     GTK_OBJECT(ruler));
    gtk_table_attach(GTK_TABLE(table), ruler, 1, 2, 0, 1, GTK_FILL, GTK_FILL,
 		    0, 0);
@@ -465,7 +465,7 @@ make_preview(GimpDrawable *drawable)
    data->vruler = ruler = gtk_vruler_new();
    gtk_ruler_set_range(GTK_RULER(ruler), 0, data->height, 0, PREVIEW_SIZE);
    gtk_signal_connect_object(GTK_OBJECT(preview), "motion_notify_event",
-			     (GtkSignalFunc) GTK_WIDGET_CLASS (GTK_OBJECT (ruler)->klass)->motion_notify_event,
+			     (GtkSignalFunc) GTK_WIDGET_GET_CLASS (ruler)->motion_notify_event,
 			     GTK_OBJECT(ruler));
    gtk_table_attach(GTK_TABLE(table), ruler, 0, 1, 1, 2, GTK_FILL, GTK_FILL,
 		    0, 0);
