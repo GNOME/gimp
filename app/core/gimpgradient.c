@@ -267,7 +267,7 @@ gimp_gradient_duplicate (GimpData *data,
   GimpGradient        *gradient;
   GimpGradientSegment *head, *prev, *cur, *orig;
 
-  gradient = GIMP_GRADIENT (g_object_new (GIMP_TYPE_GRADIENT, NULL));
+  gradient = g_object_new (GIMP_TYPE_GRADIENT, NULL);
 
   gimp_data_dirty (GIMP_DATA (gradient));
 

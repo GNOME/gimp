@@ -121,6 +121,8 @@ typedef struct _GimpUndoAccumulator GimpUndoAccumulator;
 
 typedef struct _GimpCoords          GimpCoords;
 
+typedef struct _GimpGradientSegment GimpGradientSegment;
+
 typedef struct _GimpGuide           GimpGuide;
 
 typedef struct _GimpProgress        GimpProgress;

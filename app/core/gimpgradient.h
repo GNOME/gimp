@@ -28,8 +28,6 @@
 #define GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE 40
 
 
-typedef struct _GimpGradientSegment GimpGradientSegment;
-
 struct _GimpGradientSegment
 {
   gdouble                  left, middle, right;

@@ -1,3 +1,12 @@
+2003-07-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-types.h: added GimpGradientSegment typedef.
+
+	* app/core/gimpgradient.h: removed it here.
+
+	* app/core/gimpgradient.c: no need to cast the return value
+	of g_object_new().
+
 2003-07-08  Sven Neumann  <sven@gimp.org>
 
 	* themes/Default/images/stock-wilber-32.png
