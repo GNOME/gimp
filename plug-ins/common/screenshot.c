@@ -157,7 +157,7 @@ run (gchar      *name,
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;	 
 
   /* always return at least the status to the caller. */
-  static GimpParam values[1];
+  static GimpParam values[2];
 
   /* initialize the return of the status */ 	
   values[0].type          = GIMP_PDB_STATUS;
