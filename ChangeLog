@@ -2,6 +2,13 @@
 
 	Merged from HEAD branch:
 
+	* plug-ins/imagemap/imap_file.c: fixed overwrite confirmation
+	dialog (bug #164864).
+
+2005-01-22  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
 	* plug-ins/imagemap/imap_file.c (do_file_save_as_dialog): use
 	GTK_STOCK_SAVE for the save dialog (bug #164864).
 

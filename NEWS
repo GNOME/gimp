@@ -23,6 +23,9 @@ Bugs fixed in GIMP 2.2.3
 - correctly initialize the preview in the Bumpmap plug-in (bug #162285)
 - give visual feedback if a dialog is already opened (bug #164156)
 - fixed saving of JPEG images with large quality settings (bug #164087)
+- update the menus when selecting a component in the Channels dialog
+  (bug #164195)
+- fixed issues with the save dialog in the Imagemap plug-in (bug #164864)
 
 
 Bugs fixed in GIMP 2.2.2

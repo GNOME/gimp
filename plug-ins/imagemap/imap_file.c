@@ -84,6 +84,7 @@ do_file_open_dialog (void)
                         G_CALLBACK (open_cb),
                         dialog);
     }
+
   gtk_window_present (GTK_WINDOW (dialog));
 }
 
@@ -94,38 +95,36 @@ really_overwrite_cb (GtkMessageDialog *dialog,
 {
   if (response_id == GTK_RESPONSE_YES)
     {
-      gchar *filename;
-
-      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (data));
+      gchar *filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (data));
 
       save_as (filename);
       g_free (filename);
     }
 
   gtk_widget_destroy (GTK_WIDGET (dialog));
+  gtk_widget_hide (GTK_WIDGET (data));
 }
 
 static void
-do_file_exists_dialog (GtkWidget *dialog)
+do_file_exists_dialog (GtkWidget *parent)
 {
-  gchar *message =
+  GtkWidget *dialog;
+  gchar     *message;
+
+  message =
     g_strdup_printf ("<span weight=\"bold\" size=\"larger\">%s</span>\n\n"
                      "%s",
                      _("File already exists"),
                      _("Do you really want to overwrite?"));
 
-  dialog = gtk_message_dialog_new_with_markup (GTK_WINDOW (get_dialog()),
+  dialog = gtk_message_dialog_new_with_markup (GTK_WINDOW (parent),
                                                GTK_DIALOG_DESTROY_WITH_PARENT,
                                                GTK_MESSAGE_QUESTION,
                                                GTK_BUTTONS_YES_NO,
                                                message);
-
-  g_signal_connect (dialog, "delete_event",
-                    G_CALLBACK (gtk_true),
-                    NULL);
   g_signal_connect (dialog, "response",
                     G_CALLBACK (really_overwrite_cb),
-                    dialog);
+                    parent);
 
   gtk_widget_show (dialog);
 }
@@ -181,11 +180,13 @@ do_file_save_as_dialog (void)
                         G_CALLBACK (save_cb),
                         dialog);
     }
+
   gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
-do_file_error_dialog(const char *error, const char *filename)
+do_file_error_dialog (const char *error,
+                      const char *filename)
 {
   static Alert_t *alert;
 
