@@ -42,11 +42,10 @@ GENCAT = @GENCAT@
 GMSGFMT = PATH=../src:$$PATH @GMSGFMT@
 MSGFMT = @MSGFMT@
 XGETTEXT = PATH=../src:$$PATH @XGETTEXT@
-SXGETTEXT = $(srcdir)/script-fu-xgettext
 INTLTOOL_UPDATE = @INTLTOOL_UPDATE@
 INTLTOOL_EXTRACT = @INTLTOOL_EXTRACT@
 MSGMERGE = INTLTOOL_EXTRACT=$(INTLTOOL_EXTRACT) $(INTLTOOL_UPDATE) --gettext-package $(GETTEXT_PACKAGE) --dist
-GENPOT   = INTLTOOL_EXTRACT=$(INTLTOOL_EXTRACT) $(INTLTOOL_UPDATE) --gettext-package $(GETTEXT_PACKAGE) --pot && $(SXGETTEXT) $(POTSCRIPTS) >> $(GETTEXT_PACKAGE).pot
+GENPOT   = INTLTOOL_EXTRACT=$(INTLTOOL_EXTRACT) $(INTLTOOL_UPDATE) --gettext-package $(GETTEXT_PACKAGE) --pot
 
 DEFS = @DEFS@
 CFLAGS = @CFLAGS@
@@ -63,10 +62,6 @@ DISTFILES = ChangeLog Makefile.in.in POTFILES.in $(GETTEXT_PACKAGE).pot \
 $(POFILES) $(GMOFILES) $(SOURCES)
 
 POTFILES = \
-
-POTSCRIPTS = \
-        $(top_srcdir)/plug-ins/script-fu/scripts/*.scm \
-	$(top_srcdir)/plug-ins/webbrowser/web-browser.scm
 
 CATALOGS = @CATALOGS@
 CATOBJEXT = @CATOBJEXT@
@@ -99,8 +94,7 @@ all: all-@USE_NLS@
 all-yes: $(CATALOGS)
 all-no:
 
-$(srcdir)/$(GETTEXT_PACKAGE).pot: $(POTFILES) $(POTSCRIPTS)
-
+$(srcdir)/$(GETTEXT_PACKAGE).pot: $(POTFILES)
 	$(GENPOT)
 
 install: install-exec install-data

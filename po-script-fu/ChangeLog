@@ -1,3 +1,14 @@
+2002-03-26  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.in.in
+	* POTFILES.in
+	* update.sh: use intltool to extract translatable strings from the
+	scripts. Based on a patch from Marcel Telka <marcel@telka.sk>.
+
+	* script-fu-xgettext: removed, not needed any longer.
+
+	* de.po: Updated german translation.
+
 2002-03-20  Stanislav Visnovsky  <visnovsky@nenya.ms.mff.cuni.cz>
 
 	* sk.po: Updated Slovak translation by Zdenko Podobny <zdpo@mailbox.sk>.

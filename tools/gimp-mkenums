@@ -38,24 +38,23 @@ sub parse_entries {
     my $looking_for_name = 0;
     
     while (<$file>) {
-	
-	# read lines until comment end is matched
-	while (m@/\*([^*]|\*[^/*])*\**$@x) {
+	# read lines until we have no open comments
+	while (m@/\*([^*]|\*(?!/))*$@) {
 	    my $new;
-	    defined ($new = <>) || die "Unmatched comment in $ARGV";
+	    defined ($new = <$file>) || die "Unmatched comment in $ARGV";
 	    $_ .= $new;
 	}
 	# strip comments w/o options
-	s@/\*[^<]([^*]|\*[^/*])*\**\*/@@gx;
-
+	s@/\*(?!<)
+	    ([^*]+|\*(?!/))*
+	   \*/@@gx;
+	
 	# strip newlines
-	s/\n//;
+	s@\n@ @;
 	
 	# skip empty lines
 	next if m@^\s*$@;
 	
-#	print STDERR "xxx $_\n";
-
 	if ($looking_for_name) {
 	    if (/^\s*(\w+)/) {
 		$enumname = $1;
@@ -68,15 +67,6 @@ sub parse_entries {
             my $file= "../$1";
 	    open NEWFILE, $file or die "Cannot open include file $file: $!\n";
 	    
-	    # read lines until comment end is matched
-	    while (m@/\*([^*]|\*[^/*])*\**$@x) {
-		my $new;
-		defined ($new = <>) || die "Unmatched comment in $file_name";
-		$_ .= $new;
-	    }
-	    # strip comments w/o options
-	    s@/\*[^<]([^*]|\*[^/*])*\**\*/@@gx;
-	
 	    if (parse_entries (\*NEWFILE, $NEWFILE)) {
 		return 1;
 	    } else {
@@ -107,8 +97,6 @@ sub parse_entries {
               \s*$
              @x) {
             my ($name, $value, $options) = ($1,$2,$3);
-
-#	    print STDERR "xxx \"$name\" \"$value\" \"$otions\"\n";
 
 	    if (!defined $flags && defined $value && $value =~ /<</) {
 		$seenbitshift = 1;
@@ -220,17 +208,17 @@ while (<>) {
 	$firstenum = 1;		# Flag to print filename at next enum
     }
 
-    # read lines until comment end is matched
-    while (m@/\*([^*]|\*[^/*])*\**$@x) {
+    # read lines until we have no open comments
+    while (m@/\*([^*]|\*(?!/))*$@) {
 	my $new;
 	defined ($new = <>) || die "Unmatched comment in $ARGV";
 	$_ .= $new;
     }
     # strip comments w/o options
-    s@/\*[^<]([^*]|\*[^/*])*\**\*/@@gx;
-
-#    print STDERR "xxx $_\n";
-
+    s@/\*(?!<)
+       ([^*]+|\*(?!/))*
+       \*/@@gx;
+	
     if (m@^\s*typedef\s+enum\s*
            ({)?\s*
            (?:/\*<
