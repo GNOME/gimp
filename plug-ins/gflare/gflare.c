@@ -3846,7 +3846,7 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_box_pack_start (GTK_BOX (seed_hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  seed = gimp_random_seed_new (&gflare->sflare_seed);
+  seed = gimp_random_seed_new (&gflare->sflare_seed, FALSE);
 
   entry = GTK_WIDGET (GIMP_RANDOM_SEED_SPINBUTTON (seed));
 

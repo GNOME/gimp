@@ -128,15 +128,17 @@ gint rndm_type = RNDM_HURL;  /* hurl, pick, etc. */
 
 typedef struct
 {
-  gdouble rndm_pct;     /* likelihood of randomization (as %age) */
-  gdouble rndm_rcount;  /* repeat count */
-  guint   rndm_seed;    /* seed value for g_rand_set_seed() function */
+  gdouble  rndm_pct;     /* likelihood of randomization (as %age) */
+  gdouble  rndm_rcount;  /* repeat count */
+  gboolean randomize;    /* Whether to use a random seed */
+  guint    seed;         /* seed value for g_rand_set_seed() function */
 } RandomizeVals;
 
 static RandomizeVals pivals =
 {
   50.0,
   1.0,
+  FALSE,
   SEED_DEFAULT
 };
 
@@ -196,7 +198,8 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
     { GIMP_PDB_FLOAT, "rndm_pct", "Randomization percentage (1.0 - 100.0)" },
     { GIMP_PDB_FLOAT, "rndm_rcount", "Repeat count (1.0 - 100.0)" },
-    { GIMP_PDB_INT32, "rndm_seed", "Seed value (used only if seed type is 11)" }
+    { GIMP_PDB_INT32, "randomize", "Use random seed (TRUE, FALSE)" },
+    { GIMP_PDB_INT32, "seed", "Seed value (used only if randomize is FALSE)" }
   };
 
   const gchar *hurl_blurb =
@@ -333,7 +336,8 @@ run (const gchar      *name,
 	    {
 	      pivals.rndm_pct = (gdouble) param[3].data.d_float;
 	      pivals.rndm_rcount = (gdouble) param[4].data.d_float;
-	      pivals.rndm_seed = (gint) param[6].data.d_int32;
+	      pivals.randomize = (gboolean) param[5].data.d_int32;
+	      pivals.seed = (gint) param[6].data.d_int32;
 
 	      if ((rndm_type != RNDM_PICK &&
 		   rndm_type != RNDM_SLUR &&
@@ -376,7 +380,7 @@ run (const gchar      *name,
 	  /*
 	   *  Initialize the g_rand() function seed
 	   */
-	  g_rand_set_seed (gr, pivals.rndm_seed);
+	  g_rand_set_seed (gr, pivals.seed);
 
 	  randomize (drawable, gr);
 	  /*
@@ -715,7 +719,7 @@ randomize_dialog (void)
   gtk_widget_show(table);
 
   /*  Random Seed  */
-  seed_hbox = gimp_random_seed_new (&pivals.rndm_seed);
+  seed_hbox = gimp_random_seed_new (&pivals.seed, &pivals.randomize);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				     _("_Random Seed:"), 1.0, 0.5,
 				     seed_hbox, 1, TRUE);

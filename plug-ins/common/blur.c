@@ -93,16 +93,18 @@
 
 typedef struct
 {
-  gdouble blur_pct;     /* likelihood of randomization (as %age) */
-  gdouble blur_rcount;  /* repeat count */
-  guint   blur_seed;    /* seed value for g_random_set_seed() function */
+  gdouble  blur_pct;       /* likelihood of randomization (as %age) */
+  gdouble  blur_rcount;    /* repeat count */
+  gboolean blur_randomize; /* Generate a random seed value */
+  guint    blur_seed;      /* seed value for g_random_set_seed() function */
 } BlurVals;
 
 static BlurVals pivals =
 {
   100.0,
   1.0,
-  0,
+  FALSE,
+  0
 };
 
 
@@ -166,7 +168,8 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
     { GIMP_PDB_FLOAT, "blur_pct", "Randomization percentage (1 - 100)" },
     { GIMP_PDB_FLOAT, "blur_rcount", "Repeat count(1 - 100)" },
-    { GIMP_PDB_INT32, "blur_seed", "Seed value (used only if seed type is 11)" }
+    { GIMP_PDB_INT32, "randomize", "Use a random seed (TRUE, FALSE)" },
+    { GIMP_PDB_INT32, "seed", "Seed value (used only if randomize is FALSE)" }
   };
 
   const gchar *blurb = "Apply a 3x3 blurring convolution kernel to the specified drawable.";
@@ -261,20 +264,22 @@ run (const gchar      *name,
 	  if ((strcmp (name, "plug_in_blur_randomize") == 0) &&
 	      (nparams == 7))
 	    {
-	      pivals.blur_pct    = (gdouble) param[3].data.d_float;
-	      pivals.blur_pct    = (gdouble) MIN (100.0, pivals.blur_pct);
-	      pivals.blur_pct    = (gdouble) MAX (1.0, pivals.blur_pct);
-	      pivals.blur_rcount = (gdouble) param[4].data.d_float;
-	      pivals.blur_rcount = (gdouble) MIN (100.0,pivals.blur_rcount);
-	      pivals.blur_rcount = (gdouble) MAX (1.0, pivals.blur_rcount);
-	      pivals.blur_seed   = (gint) param[6].data.d_int32;
+	      pivals.blur_pct       = (gdouble) param[3].data.d_float;
+	      pivals.blur_pct       = (gdouble) MIN (100.0, pivals.blur_pct);
+	      pivals.blur_pct       = (gdouble) MAX (1.0, pivals.blur_pct);
+	      pivals.blur_rcount    = (gdouble) param[4].data.d_float;
+	      pivals.blur_rcount    = (gdouble) MIN (100.0,pivals.blur_rcount);
+	      pivals.blur_rcount    = (gdouble) MAX (1.0, pivals.blur_rcount);
+	      pivals.blur_randomize = (gboolean) param[5].data.d_int32;
+	      pivals.blur_seed      = (gint) param[6].data.d_int32;
 	    }
 	  else if ((strcmp (name, PLUG_IN_NAME) == 0) &&
 		   (nparams == 3))
 	    {
-	      pivals.blur_pct    = (gdouble) 100.0;
-	      pivals.blur_rcount = (gdouble) 1.0;
-	      pivals.blur_seed   = g_random_int ();
+	      pivals.blur_pct       = (gdouble) 100.0;
+	      pivals.blur_rcount    = (gdouble) 1.0;
+	      pivals.blur_randomize = FALSE;
+	      pivals.blur_seed      = g_random_int ();
 	    }
 	  else
 	    {
@@ -604,7 +609,7 @@ blur_dialog (void)
   gtk_widget_show (table);
 
   /*  Random Seed  */
-  seed_hbox = gimp_random_seed_new (&pivals.blur_seed);
+  seed_hbox = gimp_random_seed_new (&pivals.blur_seed, pivals.blur_randomize);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				     _("_Random Seed:"), 1.0, 0.5,
 				     seed_hbox, 1, TRUE);

@@ -238,7 +238,8 @@ void    gimp_scale_entry_set_sensitive (GtkObject          *adjustment,
         gtk_spin_button_get_adjustment \
         (GTK_SPIN_BUTTON (g_object_get_data (G_OBJECT (hbox), "spinbutton")))
 
-GtkWidget * gimp_random_seed_new   (guint32            *seed);
+GtkWidget * gimp_random_seed_new   (guint32            *seed,
+				    gboolean            random_seed);
 
 #define GIMP_COORDINATES_CHAINBUTTON(sizeentry) \
         (g_object_get_data (G_OBJECT (sizeentry), "chainbutton"))

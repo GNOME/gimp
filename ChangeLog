@@ -1,5 +1,25 @@
 2003-12-17  Dave Neary  <bolsh@gimp.org>
 
+	* libgimpwidgets/gimpwidgets.[ch]: Change signature of 
+	gimp_random_seed_new() to allow caller to specify that he wants to 
+	use a random seed rather than the specified seed. Previously it was
+	up to the caller to initialise the seed.
+
+	* plug-ins/gflare/gflare.c
+	* plug-ins/maze/maze_face.c
+	* plug-ins/common/
+	* plug-ins/common/plasma.c
+	* plug-ins/common/sinus.c
+	* plug-ins/common/snoise.c: Trivial modifications of call to 
+	gimp_random_seed_new() with FALSE.
+
+	* plug-ins/common/blur.c
+	* plug-ins/common/randomize.c: Modify PDB routines and tool options 
+	to allow a random seed to be specified. Useful for scripts. Reverts
+	PDB to 1.2 state. Fixes bug #129529.
+
+2003-12-17  Dave Neary  <bolsh@gimp.org>
+
 	* plug-ins/script-fu/script-fu-server.c: Destroy widget, not data.
 
 2003-12-17  Michael Natterer  <mitch@gimp.org>
