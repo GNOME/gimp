@@ -1,3 +1,9 @@
+2004-09-08  DindinX  <david@dindinx.org>
+
+	*  libgimpwidgets/gimppreviewarea.c: (gimp_preview_area_blend)
+	use gimp_preview_area_draw when the opacity is 0 or 255, instead of
+	duplicating code.
+
 2004-09-07  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpwidgets.def: added new entries.
