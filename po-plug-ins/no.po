@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 1999-12-08 20:13+0100\n"
+"POT-Creation-Date: 1999-12-14 15:42-0800\n"
 "PO-Revision-Date: 1999-12-08 21:04+01:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -132,16 +132,18 @@ msgstr ""
 #: plug-ins/common/compose.c:827 plug-ins/common/convmatrix.c:722
 #: plug-ins/common/cubism.c:337 plug-ins/common/decompose.c:993
 #: plug-ins/common/depthmerge.c:752 plug-ins/common/destripe.c:696
-#: plug-ins/common/film.c:1238 plug-ins/common/gif.c:1296
-#: plug-ins/common/grid.c:491 plug-ins/common/jpeg.c:1575
-#: plug-ins/common/lic.c:1251 plug-ins/common/mail.c:502
-#: plug-ins/common/mapcolor.c:340 plug-ins/common/nova.c:410
-#: plug-ins/common/oilify.c:468 plug-ins/common/papertile.c:517
-#: plug-ins/common/png.c:978 plug-ins/common/ps.c:2123
-#: plug-ins/common/ps.c:2387 plug-ins/common/psp.c:476
+#: plug-ins/common/displace.c:334 plug-ins/common/film.c:1238
+#: plug-ins/common/gif.c:1296 plug-ins/common/grid.c:491
+#: plug-ins/common/jpeg.c:1575 plug-ins/common/lic.c:1251
+#: plug-ins/common/mail.c:502 plug-ins/common/mapcolor.c:340
+#: plug-ins/common/nova.c:410 plug-ins/common/oilify.c:468
+#: plug-ins/common/papertile.c:517 plug-ins/common/png.c:978
+#: plug-ins/common/ps.c:2123 plug-ins/common/ps.c:2387
+#: plug-ins/common/psp.c:476 plug-ins/common/spheredesigner.c:2336
 #: plug-ins/common/threshold_alpha.c:474 plug-ins/common/threshold_alpha.c:506
 #: plug-ins/common/warp.c:516 plug-ins/common/xbm.c:995
-#: plug-ins/common/xpm.c:797 plug-ins/gap/gap_arr_dialog.c:980
+#: plug-ins/common/xpm.c:797 plug-ins/flame/flame.c:530
+#: plug-ins/flame/flame.c:819 plug-ins/gap/gap_arr_dialog.c:980
 #: plug-ins/gap/gap_arr_dialog.c:1204 plug-ins/gap/gap_mod_layer.c:149
 #: plug-ins/gap/gap_mov_dialog.c:473 plug-ins/gap/gap_mpege.c:191
 #: plug-ins/gap/gap_resi_dialog.c:149
@@ -162,7 +164,7 @@ msgstr "Akseptér innstillingene og påfør filteret på bildet"
 
 #. the 3 Action Buttons
 #: libgimp/gimpexport.c:307 plug-ins/AlienMap/AlienMap.c:871
-#: plug-ins/AlienMap2/AlienMap2.c:794 plug-ins/Lighting/lighting_ui.c:1062
+#: plug-ins/AlienMap2/AlienMap2.c:794 plug-ins/Lighting/lighting_ui.c:1071
 #: plug-ins/bmp/bmpwrite.c:458 plug-ins/common/CML_explorer.c:2701
 #: plug-ins/common/apply_lens.c:434 plug-ins/common/blur.c:628
 #: plug-ins/common/bumpmap.c:982 plug-ins/common/checkerboard.c:399
@@ -170,17 +172,19 @@ msgstr "Akseptér innstillingene og påfør filteret på bildet"
 #: plug-ins/common/compose.c:836 plug-ins/common/convmatrix.c:731
 #: plug-ins/common/cubism.c:346 plug-ins/common/decompose.c:1002
 #: plug-ins/common/depthmerge.c:761 plug-ins/common/destripe.c:705
-#: plug-ins/common/film.c:1247 plug-ins/common/gif.c:1202
-#: plug-ins/common/gif.c:1305 plug-ins/common/grid.c:500
-#: plug-ins/common/jpeg.c:1584 plug-ins/common/lic.c:1260
-#: plug-ins/common/mail.c:511 plug-ins/common/mapcolor.c:349
-#: plug-ins/common/nova.c:419 plug-ins/common/oilify.c:477
-#: plug-ins/common/papertile.c:524 plug-ins/common/png.c:987
-#: plug-ins/common/ps.c:2132 plug-ins/common/ps.c:2396
-#: plug-ins/common/psp.c:485 plug-ins/common/screenshot.c:422
+#: plug-ins/common/displace.c:343 plug-ins/common/film.c:1247
+#: plug-ins/common/gif.c:1202 plug-ins/common/gif.c:1305
+#: plug-ins/common/grid.c:500 plug-ins/common/jpeg.c:1584
+#: plug-ins/common/lic.c:1260 plug-ins/common/mail.c:511
+#: plug-ins/common/mapcolor.c:349 plug-ins/common/nova.c:419
+#: plug-ins/common/oilify.c:477 plug-ins/common/papertile.c:524
+#: plug-ins/common/png.c:987 plug-ins/common/ps.c:2132
+#: plug-ins/common/ps.c:2396 plug-ins/common/psp.c:485
+#: plug-ins/common/screenshot.c:429 plug-ins/common/spheredesigner.c:2343
 #: plug-ins/common/threshold_alpha.c:483 plug-ins/common/warp.c:525
 #: plug-ins/common/xbm.c:736 plug-ins/common/xbm.c:1004
-#: plug-ins/common/xpm.c:806 plug-ins/gap/gap_arr_dialog.c:1206
+#: plug-ins/common/xpm.c:806 plug-ins/flame/flame.c:539
+#: plug-ins/flame/flame.c:828 plug-ins/gap/gap_arr_dialog.c:1206
 #: plug-ins/gap/gap_dbbrowser_utils.c:211
 #: plug-ins/gap/gap_filter_foreach.c:132 plug-ins/gap/gap_mod_layer.c:151
 #: plug-ins/gap/gap_mod_layer.c:265 plug-ins/gap/gap_mov_dialog.c:482
@@ -395,7 +399,7 @@ msgstr "Fra bilde"
 msgid "Waves"
 msgstr "Bølger"
 
-#: plug-ins/Lighting/lighting_ui.c:50
+#: plug-ins/Lighting/lighting_ui.c:50 plug-ins/flame/flame.c:615
 msgid "Linear"
 msgstr "Lineær"
 
@@ -403,13 +407,22 @@ msgstr "Lineær"
 msgid "Logarithmic"
 msgstr "Logaritmisk"
 
-#: plug-ins/Lighting/lighting_ui.c:52
+#: plug-ins/Lighting/lighting_ui.c:52 plug-ins/flame/flame.c:616
 msgid "Sinusoidal"
 msgstr "Sinus"
 
-#: plug-ins/Lighting/lighting_ui.c:53
+#: plug-ins/Lighting/lighting_ui.c:53 plug-ins/flame/flame.c:617
 msgid "Spherical"
 msgstr "Sfærisk"
+
+#: plug-ins/Lighting/lighting_ui.c:210 plug-ins/Lighting/lighting_ui.c:1016
+#: plug-ins/common/spheredesigner.c:2621
+msgid "Bump"
+msgstr "\"Bump\""
+
+#: plug-ins/Lighting/lighting_ui.c:238 plug-ins/Lighting/lighting_ui.c:1025
+msgid "Env"
+msgstr "Miljø"
 
 #: plug-ins/Lighting/lighting_ui.c:569
 msgid "General options"
@@ -494,203 +507,201 @@ msgstr "Kvalitet for antialiasing. Høyere er bedre, men tregere"
 msgid "Stop when pixel differences are smaller than this value"
 msgstr "Stopp når pikselforskjellene er mindre enn denne verdien"
 
-#: plug-ins/Lighting/lighting_ui.c:669
+#: plug-ins/Lighting/lighting_ui.c:674
 msgid "Light settings"
 msgstr "Lyssetting"
 
-#: plug-ins/Lighting/lighting_ui.c:673
+#: plug-ins/Lighting/lighting_ui.c:678
 msgid "Lightsource type:"
 msgstr "Type lyskilde:"
 
-#: plug-ins/Lighting/lighting_ui.c:678
+#: plug-ins/Lighting/lighting_ui.c:683
 msgid "Lightsource color"
 msgstr "Lyskildens farge"
 
-#: plug-ins/Lighting/lighting_ui.c:685
+#: plug-ins/Lighting/lighting_ui.c:690
 msgid "Type of light source to apply"
 msgstr "Type lyskilde som skal brukes"
 
-#: plug-ins/Lighting/lighting_ui.c:686
+#: plug-ins/Lighting/lighting_ui.c:691
 msgid "Set light source color (white is default)"
 msgstr "Sett lyskildens farge (hvitt er forvalgt)"
 
-#: plug-ins/Lighting/lighting_ui.c:688
+#: plug-ins/Lighting/lighting_ui.c:693
 msgid "Position"
 msgstr "Posisjon"
 
-#: plug-ins/Lighting/lighting_ui.c:691 plug-ins/Lighting/lighting_ui.c:713
+#: plug-ins/Lighting/lighting_ui.c:696 plug-ins/Lighting/lighting_ui.c:718
 #: plug-ins/common/papertile.c:398
 msgid "X:"
 msgstr "X:"
 
-#: plug-ins/Lighting/lighting_ui.c:692 plug-ins/Lighting/lighting_ui.c:714
+#: plug-ins/Lighting/lighting_ui.c:697 plug-ins/Lighting/lighting_ui.c:719
 #: plug-ins/common/papertile.c:402
 msgid "Y:"
 msgstr "Y:"
 
-#: plug-ins/Lighting/lighting_ui.c:693 plug-ins/Lighting/lighting_ui.c:715
+#: plug-ins/Lighting/lighting_ui.c:698 plug-ins/Lighting/lighting_ui.c:720
 msgid "Z:"
 msgstr "Z:"
 
-#: plug-ins/Lighting/lighting_ui.c:699
+#: plug-ins/Lighting/lighting_ui.c:704
 msgid "Light source X position in XYZ space"
 msgstr "Lyskildens X-posisjon i XYZ-rommet"
 
-#: plug-ins/Lighting/lighting_ui.c:700
+#: plug-ins/Lighting/lighting_ui.c:705
 msgid "Light source Y position in XYZ space"
 msgstr "Lyskildens Y-posisjon i XYZ-rommet"
 
-#: plug-ins/Lighting/lighting_ui.c:701
+#: plug-ins/Lighting/lighting_ui.c:706
 msgid "Light source Z position in XYZ space"
 msgstr "Lyskildens Z-posisjon i XYZ-rommet"
 
-#: plug-ins/Lighting/lighting_ui.c:710
+#: plug-ins/Lighting/lighting_ui.c:715
 msgid "Direction vector"
 msgstr "Retningsvektor"
 
-#: plug-ins/Lighting/lighting_ui.c:717
+#: plug-ins/Lighting/lighting_ui.c:722
 msgid "Light source X direction in XYZ space"
 msgstr "Lyskildens X-retning i XYZ-rommet"
 
-#: plug-ins/Lighting/lighting_ui.c:718
+#: plug-ins/Lighting/lighting_ui.c:723
 msgid "Light source Y direction in XYZ space"
 msgstr "Lyskildens Y-retning i XYZ-rommet"
 
-#: plug-ins/Lighting/lighting_ui.c:719
+#: plug-ins/Lighting/lighting_ui.c:724
 msgid "Light source Z direction in XYZ space"
 msgstr "Lyskildens Z-retning i XYZ-rommet"
 
-#: plug-ins/Lighting/lighting_ui.c:751
+#: plug-ins/Lighting/lighting_ui.c:756
 msgid "Intensity levels"
 msgstr "Intensitetsnivå"
 
-#: plug-ins/Lighting/lighting_ui.c:756
+#: plug-ins/Lighting/lighting_ui.c:761
 msgid "Ambient:"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:757 plug-ins/Lighting/lighting_ui.c:808
+#: plug-ins/Lighting/lighting_ui.c:762 plug-ins/Lighting/lighting_ui.c:813
 msgid "Diffuse:"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:797
+#: plug-ins/Lighting/lighting_ui.c:802
 msgid "Amount of original color to show where no direct light falls"
 msgstr ""
 "Mengden opprinnelig farge som skal vises hvor det ikke faller direkte lys"
 
-#: plug-ins/Lighting/lighting_ui.c:798
+#: plug-ins/Lighting/lighting_ui.c:803
 msgid "Intensity of original color when lit by a light source"
 msgstr ""
 "Intensiteten for den opprinnelige fargen når den treffes av en lyskilde"
 
-#: plug-ins/Lighting/lighting_ui.c:803
+#: plug-ins/Lighting/lighting_ui.c:808
 msgid "Reflectivity"
 msgstr "Refleksjonsevne"
 
-#: plug-ins/Lighting/lighting_ui.c:809
+#: plug-ins/Lighting/lighting_ui.c:814
 msgid "Specular:"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:810
+#: plug-ins/Lighting/lighting_ui.c:815
 msgid "Hightlight:"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:824
+#: plug-ins/Lighting/lighting_ui.c:829
 msgid "Higher values makes the object reflect more light (appear lighter)"
 msgstr "Høyere verdier gjør at objektet reflekterer mer lys (ser lysere ut)"
 
-#: plug-ins/Lighting/lighting_ui.c:825
+#: plug-ins/Lighting/lighting_ui.c:830
 msgid "Controls how intense the highlights will be"
 msgstr "Kontrollerer hvor intenst høylysene vil være"
 
-#: plug-ins/Lighting/lighting_ui.c:826
+#: plug-ins/Lighting/lighting_ui.c:831
 msgid "Higher values makes the highlights more focused"
 msgstr "Høyere verdier gjør høylysene mer fokusert"
 
-#: plug-ins/Lighting/lighting_ui.c:888
+#: plug-ins/Lighting/lighting_ui.c:897
 msgid "Bumpmap settings"
 msgstr "Instillinger for \"bumpmap\""
 
-#: plug-ins/Lighting/lighting_ui.c:894
+#: plug-ins/Lighting/lighting_ui.c:903
 msgid "Bumpmap image:"
 msgstr "\"Bumpmap\" bilde:"
 
-#: plug-ins/Lighting/lighting_ui.c:913
+#: plug-ins/Lighting/lighting_ui.c:917
+#, fuzzy
+msgid "Curve:"
+msgstr "Driver:"
+
+#: plug-ins/Lighting/lighting_ui.c:922
 msgid "Minimum height:"
 msgstr "Minimal høyde:"
 
-#: plug-ins/Lighting/lighting_ui.c:915
+#: plug-ins/Lighting/lighting_ui.c:924
 msgid "Maximum height:"
 msgstr "Makimal høyde:"
 
-#: plug-ins/Lighting/lighting_ui.c:923
+#: plug-ins/Lighting/lighting_ui.c:932
 msgid "Autostretch to fit value range"
 msgstr "Autostrekk til å passe i verdiområdet"
 
-#: plug-ins/Lighting/lighting_ui.c:946
+#: plug-ins/Lighting/lighting_ui.c:955
 msgid "Environment settings"
 msgstr "Innstillinger for miljø"
 
-#: plug-ins/Lighting/lighting_ui.c:953
+#: plug-ins/Lighting/lighting_ui.c:962
 msgid "Environment image:"
 msgstr "Bilde for miljø:"
 
-#: plug-ins/Lighting/lighting_ui.c:987 plug-ins/common/lic.c:1002
+#: plug-ins/Lighting/lighting_ui.c:996 plug-ins/common/lic.c:1002
 msgid "Options"
 msgstr "Alternativer"
 
-#: plug-ins/Lighting/lighting_ui.c:993
+#: plug-ins/Lighting/lighting_ui.c:1002 plug-ins/common/spheredesigner.c:1572
+#: plug-ins/common/spheredesigner.c:2627
 msgid "Light"
 msgstr "Lys"
 
-#: plug-ins/Lighting/lighting_ui.c:999
+#: plug-ins/Lighting/lighting_ui.c:1008
 msgid "Material"
 msgstr "Materiale"
 
-#: plug-ins/Lighting/lighting_ui.c:1007
-msgid "Bump"
-msgstr "\"Bump\""
-
-#: plug-ins/Lighting/lighting_ui.c:1016
-msgid "Env"
-msgstr "Miljø"
-
-#: plug-ins/Lighting/lighting_ui.c:1037
+#: plug-ins/Lighting/lighting_ui.c:1046
 msgid "Lighting effects"
 msgstr "Lyseffekter"
 
 #. Add Ok, Cancel and Help buttons to the action area
 #. ==================================================
-#: plug-ins/Lighting/lighting_ui.c:1061
+#: plug-ins/Lighting/lighting_ui.c:1070 plug-ins/common/sample_colorize.c:1303
 #: plug-ins/gimpressionist/orientmap.c:633
 #: plug-ins/gimpressionist/presets.c:644 plug-ins/gimpressionist/sizemap.c:492
 msgid "Apply"
 msgstr "Bruk"
 
-#: plug-ins/Lighting/lighting_ui.c:1063
+#: plug-ins/Lighting/lighting_ui.c:1072
 msgid "Help"
 msgstr "Hjelp"
 
-#: plug-ins/Lighting/lighting_ui.c:1072
+#: plug-ins/Lighting/lighting_ui.c:1081
 msgid "Apply filter with current settings"
 msgstr "Bruk filter med nåværende innstillinger"
 
-#: plug-ins/Lighting/lighting_ui.c:1073
+#: plug-ins/Lighting/lighting_ui.c:1082
 msgid "Close filter without doing anything"
 msgstr "Lukk filter uten å gjøre noe"
 
-#: plug-ins/Lighting/lighting_ui.c:1093
+#: plug-ins/Lighting/lighting_ui.c:1102
 msgid "  Preview!  "
 msgstr "  Forhåndsvis!  "
 
-#: plug-ins/Lighting/lighting_ui.c:1094
+#: plug-ins/Lighting/lighting_ui.c:1103
 msgid "Recompute preview image"
 msgstr "Beregn forhåndsvisningsbildet på nytt"
 
-#: plug-ins/Lighting/lighting_ui.c:1097
+#: plug-ins/Lighting/lighting_ui.c:1106
 msgid "Zoom in (make image bigger)"
 msgstr "Zoom inn (gjør bildet større)"
 
-#: plug-ins/Lighting/lighting_ui.c:1099
+#: plug-ins/Lighting/lighting_ui.c:1108
 msgid "Zoom out (make image smaller)"
 msgstr "Zoom ut (gjør bildet mindre)"
 
@@ -1042,8 +1053,9 @@ msgstr ""
 "parameter fil som 4de arg. Du kan kontrollere CML_explorer via parameter fil."
 
 #: plug-ins/common/CML_explorer.c:494
-msgid "<Image>/Filters/Render/Pattern/CML explorer..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Filters/Render/Pattern/CML Explorer..."
+msgstr "<Image>/Filter/Farger/Alien Map"
 
 #: plug-ins/common/CML_explorer.c:796
 msgid "CML_explorer: evoluting..."
@@ -1054,6 +1066,7 @@ msgid "Coupled-Map-Lattice Explorer"
 msgstr "Coupled-Map-Lattice utforsker"
 
 #: plug-ins/common/CML_explorer.c:1339 plug-ins/common/ps.c:2543
+#: plug-ins/common/spheredesigner.c:2240 plug-ins/flame/flame.c:985
 #: plug-ins/gimpressionist/orientmap.c:502
 #: plug-ins/gimpressionist/preview.c:106 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/ifscompose/ifscompose.c:917
@@ -1074,11 +1087,13 @@ msgstr "Fast seed"
 msgid "Random seed"
 msgstr "Tilfeldig seed"
 
-#: plug-ins/common/CML_explorer.c:1404
+#: plug-ins/common/CML_explorer.c:1404 plug-ins/common/spheredesigner.c:2315
+#: plug-ins/flame/flame.c:1009
 msgid "Load"
 msgstr "Åpne"
 
-#: plug-ins/common/CML_explorer.c:1407 plug-ins/imagemap/imap_toolbar.c:112
+#: plug-ins/common/CML_explorer.c:1407 plug-ins/common/spheredesigner.c:2322
+#: plug-ins/imagemap/imap_toolbar.c:112
 msgid "Save"
 msgstr "Lagre"
 
@@ -1324,7 +1339,8 @@ msgstr ""
 
 #. Action area
 #: libgimp/gimpfileselection.c:356 libgimp/gimpunitmenu.c:550
-#: plug-ins/common/animationplay.c:692 plug-ins/gdyntext/charmap_window.c:140
+#: plug-ins/common/animationplay.c:692 plug-ins/common/sample_colorize.c:1296
+#: plug-ins/gdyntext/charmap_window.c:140
 #: plug-ins/helpbrowser/helpbrowser.c:787
 #: plug-ins/ifscompose/ifscompose.c:1249
 #: plug-ins/script-fu/script-fu-console.c:205
@@ -1361,7 +1377,9 @@ msgstr "avspilling: Ba om ramme nummer %d i en %d-rammers animasjon!\n"
 #: plug-ins/common/animoptimize.c:130
 msgid ""
 "This plugin applies various optimizations to a GIMP layer-based animation."
-msgstr "Dette tillegget påfører forskjellige optimeringer på en lagbasert animasjon i GIMP."
+msgstr ""
+"Dette tillegget påfører forskjellige optimeringer på en lagbasert animasjon "
+"i GIMP."
 
 #: plug-ins/common/animoptimize.c:136
 msgid "<Image>/Filters/Animation/Animation Optimize"
@@ -1806,7 +1824,7 @@ msgstr ""
 
 #: plug-ins/common/colortoalpha.c:114
 #, fuzzy
-msgid "<Image>/Filters/Colors/Color To Alpha..."
+msgid "<Image>/Filters/Colors/Color to Alpha..."
 msgstr "<Image>/Filter/Farger/Alien Map"
 
 #: plug-ins/common/colortoalpha.c:404
@@ -1814,17 +1832,17 @@ msgstr "<Image>/Filter/Farger/Alien Map"
 msgid "Color To Alpha"
 msgstr "Farge"
 
-#: plug-ins/common/colortoalpha.c:436 plug-ins/common/mapcolor.c:399
+#: plug-ins/common/colortoalpha.c:437 plug-ins/common/mapcolor.c:399
 #, fuzzy
 msgid "From:"
 msgstr "Fra bilde"
 
-#: plug-ins/common/colortoalpha.c:440
+#: plug-ins/common/colortoalpha.c:442
 #, fuzzy
-msgid "Color To Alpha Color Picker"
+msgid "Color to Alpha Color Picker"
 msgstr "Antall farger"
 
-#: plug-ins/common/colortoalpha.c:448
+#: plug-ins/common/colortoalpha.c:450
 msgid "to alpha"
 msgstr ""
 
@@ -1993,7 +2011,8 @@ msgstr ""
 msgid "Extend"
 msgstr ""
 
-#: plug-ins/common/convmatrix.c:80 plug-ins/common/warp.c:604
+#: plug-ins/common/convmatrix.c:80 plug-ins/common/displace.c:435
+#: plug-ins/common/warp.c:604
 msgid "Wrap"
 msgstr ""
 
@@ -2310,6 +2329,66 @@ msgstr ""
 msgid "Width"
 msgstr ""
 
+#: plug-ins/common/displace.c:190
+#, fuzzy
+msgid "Displace the contents of the specified drawable"
+msgstr ""
+"Normaliser kontrasten automatisk for spesifisert tegnet objekt til å omfatte "
+"alle mulige områder."
+
+#: plug-ins/common/displace.c:191
+msgid ""
+"Displaces the contents of the specified drawable by the amounts specified by "
+"'amount_x' and 'amount_y' multiplied by the intensity of corresponding "
+"pixels in the 'displace_map' drawables.  Both 'displace_map' drawables must "
+"be of type GRAY_IMAGE for this operation to succeed."
+msgstr ""
+
+#: plug-ins/common/displace.c:195
+#, fuzzy
+msgid "<Image>/Filters/Map/Displace..."
+msgstr "<Image>/Filter/Farger/Alien Map"
+
+#: plug-ins/common/displace.c:265
+#, fuzzy
+msgid "Displacing..."
+msgstr "Oljemaleri"
+
+#: plug-ins/common/displace.c:320
+msgid "Displace"
+msgstr ""
+
+#. The main table
+#: plug-ins/common/displace.c:352
+#, fuzzy
+msgid "Displace Options"
+msgstr "Alternativer for lagring"
+
+#. on_x, on_y
+#: plug-ins/common/displace.c:367
+#, fuzzy
+msgid "X Displacement: "
+msgstr "Prosent"
+
+#: plug-ins/common/displace.c:375
+#, fuzzy
+msgid "Y Displacement: "
+msgstr "Prosent"
+
+#: plug-ins/common/displace.c:431 plug-ins/common/warp.c:600
+msgid "On Edges: "
+msgstr ""
+
+#: plug-ins/common/displace.c:444 plug-ins/common/warp.c:613
+msgid "Smear"
+msgstr ""
+
+#: plug-ins/common/displace.c:453 plug-ins/common/warp.c:622
+#: plug-ins/flame/flame.c:893
+#, fuzzy
+msgid "Black"
+msgstr "Sort:"
+
 #: plug-ins/common/film.c:224 plug-ins/common/film.c:225
 msgid "Compose several images to a roll film"
 msgstr ""
@@ -2411,6 +2490,174 @@ msgstr ""
 #: plug-ins/common/film.c:1356
 msgid "Image selection"
 msgstr ""
+
+#: plug-ins/flame/flame.c:128
+msgid "cosmic recursive fractal flames"
+msgstr ""
+
+#: plug-ins/flame/flame.c:129
+msgid "use Smooth Palette to make colormaps"
+msgstr ""
+
+#: plug-ins/flame/flame.c:133
+#, fuzzy
+msgid "<Image>/Filters/Render/Nature/Flame..."
+msgstr "<Image>/Filter/Farger/Alien Map"
+
+#: plug-ins/flame/flame.c:204
+msgid "Drawing Flame..."
+msgstr ""
+
+#: plug-ins/flame/flame.c:272
+#, c-format
+msgid "only works with three or four channels, not %d.\n"
+msgstr ""
+
+#: plug-ins/flame/flame.c:389
+msgid "Load/Store Flame"
+msgstr ""
+
+#: plug-ins/flame/flame.c:522
+msgid "Edit Flame"
+msgstr ""
+
+#: plug-ins/flame/flame.c:548
+#, fuzzy
+msgid "Directions"
+msgstr "Retningsvektor"
+
+#: plug-ins/flame/flame.c:576
+#, fuzzy
+msgid "Controls"
+msgstr "Bildekommentarer"
+
+#: plug-ins/flame/flame.c:592
+#, fuzzy
+msgid "Speed"
+msgstr "Seed"
+
+#: plug-ins/flame/flame.c:600
+#, fuzzy
+msgid "Randomize"
+msgstr "Tilfeldig seed"
+
+#: plug-ins/flame/flame.c:613
+#, fuzzy
+msgid "Same"
+msgstr "Lagre"
+
+#: plug-ins/flame/flame.c:614 plug-ins/gimpressionist/orientation.c:154
+#: plug-ins/gimpressionist/size.c:153
+#, fuzzy
+msgid "Random"
+msgstr "Tilfeldig seed"
+
+#: plug-ins/flame/flame.c:618
+msgid "Swirl"
+msgstr ""
+
+#: plug-ins/flame/flame.c:619
+msgid "Horseshoe"
+msgstr ""
+
+#: plug-ins/flame/flame.c:620
+#, fuzzy
+msgid "Polar"
+msgstr "Farge"
+
+#: plug-ins/flame/flame.c:621
+#, fuzzy
+msgid "Bent"
+msgstr "Blå:"
+
+#: plug-ins/flame/flame.c:633
+#, fuzzy
+msgid "Variation:"
+msgstr "Metning:"
+
+#: plug-ins/flame/flame.c:671
+msgid "Load Flame"
+msgstr ""
+
+#: plug-ins/flame/flame.c:683
+msgid "Store Flame"
+msgstr ""
+
+#: plug-ins/flame/flame.c:806
+#, fuzzy
+msgid "Flame"
+msgstr "Filnavn:"
+
+#. Rendering
+#: plug-ins/common/ps.c:2147 plug-ins/flame/flame.c:836
+msgid "Rendering"
+msgstr ""
+
+#. this zoom - gamma should redraw flame preview
+#: plug-ins/common/lic.c:1048 plug-ins/flame/flame.c:858
+#, fuzzy
+msgid "Brightness"
+msgstr "Lysstyrke"
+
+#: plug-ins/flame/flame.c:860
+#, fuzzy
+msgid "Contrast"
+msgstr "Bildekommentarer"
+
+#: plug-ins/flame/flame.c:862
+msgid "Gamma"
+msgstr ""
+
+#: plug-ins/flame/flame.c:864
+msgid "Sample Density"
+msgstr ""
+
+#: plug-ins/flame/flame.c:866
+msgid "Spatial Oversample"
+msgstr ""
+
+#: plug-ins/flame/flame.c:868
+msgid "Spatial Filter Radius"
+msgstr ""
+
+#: plug-ins/flame/flame.c:882
+#, fuzzy
+msgid "Colormap:"
+msgstr "Farge"
+
+#: plug-ins/flame/flame.c:923
+#, fuzzy
+msgid "Custom Gradient"
+msgstr "Skriv ut"
+
+#: plug-ins/flame/flame.c:943
+msgid "Camera"
+msgstr ""
+
+#: plug-ins/flame/flame.c:959
+msgid "Zoom"
+msgstr ""
+
+#. X
+#: plug-ins/flame/flame.c:961 plug-ins/ifscompose/ifscompose.c:503
+#, fuzzy
+msgid "X"
+msgstr "X:"
+
+#. Y
+#: plug-ins/flame/flame.c:963 plug-ins/ifscompose/ifscompose.c:517
+#, fuzzy
+msgid "Y"
+msgstr "Y:"
+
+#: plug-ins/flame/flame.c:1000
+msgid "Shape Edit"
+msgstr ""
+
+#: plug-ins/flame/flame.c:1018
+#, fuzzy
+msgid "Store"
+msgstr "Steg"
 
 #: plug-ins/common/gif.c:396
 msgid "saves files in Compuserve GIF file format"
@@ -2885,11 +3132,6 @@ msgstr ""
 #, fuzzy
 msgid "Effect channel"
 msgstr "Bilde for miljø:"
-
-#: plug-ins/common/lic.c:1048
-#, fuzzy
-msgid "Brightness"
-msgstr "Lysstyrke"
 
 #: plug-ins/common/lic.c:1062
 #, fuzzy
@@ -3405,11 +3647,6 @@ msgstr "sterk"
 msgid "Load PostScript"
 msgstr ""
 
-#. Rendering
-#: plug-ins/common/ps.c:2147
-msgid "Rendering"
-msgstr ""
-
 #: plug-ins/common/ps.c:2187
 msgid "try BoundingBox"
 msgstr ""
@@ -3593,11 +3830,11 @@ msgstr ""
 msgid "Rotating..."
 msgstr "Roterer..."
 
-#: plug-ins/common/screenshot.c:146
+#: plug-ins/common/screenshot.c:147
 msgid "Creates a screenshot of a single window or the whole screen"
 msgstr ""
 
-#: plug-ins/common/screenshot.c:147
+#: plug-ins/common/screenshot.c:148
 msgid ""
 "This extension serves as a simple frontend to the X-window utility xwd and "
 "the xwd-file-plug-in. After specifying some options, xwd is called, the user "
@@ -3606,39 +3843,39 @@ msgid ""
 "it may grab the root window or use the window-id passed as a parameter."
 msgstr ""
 
-#: plug-ins/common/screenshot.c:157
+#: plug-ins/common/screenshot.c:158
 msgid "<Toolbox>/File/Acquire/Screen Shot..."
 msgstr ""
 
-#: plug-ins/common/screenshot.c:400
+#: plug-ins/common/screenshot.c:407
 #, fuzzy
 msgid "Screen Shot"
 msgstr "Seed"
 
-#: plug-ins/common/screenshot.c:413
+#: plug-ins/common/screenshot.c:420
 msgid "Grab"
 msgstr ""
 
-#: plug-ins/common/screenshot.c:452
+#: plug-ins/common/screenshot.c:459
 msgid "Grab a single window"
 msgstr ""
 
-#: plug-ins/common/screenshot.c:460
+#: plug-ins/common/screenshot.c:467
 #, fuzzy
 msgid "Include decorations"
 msgstr "Metning"
 
-#: plug-ins/common/screenshot.c:493
+#: plug-ins/common/screenshot.c:500
 #, fuzzy
 msgid "Grab the whole screen"
 msgstr "Roter hele bildet"
 
-#: plug-ins/common/screenshot.c:506
+#: plug-ins/common/screenshot.c:513
 #, fuzzy
 msgid "after"
 msgstr "Materiale"
 
-#: plug-ins/common/screenshot.c:515
+#: plug-ins/common/screenshot.c:522
 msgid "seconds delay"
 msgstr ""
 
@@ -3703,19 +3940,6 @@ msgstr "Metning"
 #: plug-ins/common/warp.c:580
 msgid "Displacement Map:"
 msgstr ""
-
-#: plug-ins/common/warp.c:600
-msgid "On Edges: "
-msgstr ""
-
-#: plug-ins/common/warp.c:613
-msgid "Smear"
-msgstr ""
-
-#: plug-ins/common/warp.c:622
-#, fuzzy
-msgid "Black"
-msgstr "Sort:"
 
 #: plug-ins/common/warp.c:631
 #, fuzzy
@@ -6005,6 +6229,7 @@ msgstr ""
 msgid "Adds random noise to the color"
 msgstr ""
 
+#: plug-ins/common/spheredesigner.c:2105 plug-ins/common/spheredesigner.c:2143
 #: plug-ins/gimpressionist/general.c:99
 msgid "Color Selection Dialog"
 msgstr ""
@@ -6045,7 +6270,7 @@ msgstr "Fra bilde"
 msgid "Copy the texture of the selected paper as a background"
 msgstr ""
 
-#: plug-ins/gimpressionist/general.c:220
+#: plug-ins/common/spheredesigner.c:244 plug-ins/gimpressionist/general.c:220
 msgid "Solid"
 msgstr ""
 
@@ -6210,12 +6435,6 @@ msgid ""
 "stroke"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:154
-#: plug-ins/gimpressionist/size.c:153
-#, fuzzy
-msgid "Random"
-msgstr "Tilfeldig seed"
-
 #: plug-ins/gimpressionist/orientation.c:160
 msgid "Selects a random direction of each stroke"
 msgstr ""
@@ -6300,6 +6519,7 @@ msgstr "Retningsvektor"
 msgid "Select next vector"
 msgstr "Retningsvektor"
 
+#: plug-ins/common/spheredesigner.c:2288
 #: plug-ins/gimpressionist/orientmap.c:531
 #: plug-ins/gimpressionist/sizemap.c:431
 msgid "Add"
@@ -6335,6 +6555,7 @@ msgstr ""
 msgid "Change the strength of the selected vector"
 msgstr ""
 
+#: plug-ins/common/spheredesigner.c:2369
 #: plug-ins/gimpressionist/orientmap.c:580
 msgid "Type:"
 msgstr ""
@@ -6424,7 +6645,7 @@ msgstr ""
 msgid "Applies the paper as it is (without embossing it)"
 msgstr ""
 
-#: plug-ins/gimpressionist/paper.c:172
+#: plug-ins/common/spheredesigner.c:2420 plug-ins/gimpressionist/paper.c:172
 #, fuzzy
 msgid "Scale:"
 msgstr "Skalering"
@@ -6580,8 +6801,9 @@ msgid ""
 "for inclusion into the next release!\n"
 msgstr ""
 
-#: plug-ins/gimpressionist/preview.c:117 plug-ins/gimpressionist/repaint.c:863
-#: plug-ins/gimpressionist/repaint.c:865 plug-ins/imagemap/imap_polygon.c:442
+#: plug-ins/common/spheredesigner.c:2254 plug-ins/gimpressionist/preview.c:117
+#: plug-ins/gimpressionist/repaint.c:863 plug-ins/gimpressionist/repaint.c:865
+#: plug-ins/imagemap/imap_polygon.c:442
 msgid "Update"
 msgstr ""
 
@@ -6589,7 +6811,7 @@ msgstr ""
 msgid "Refresh the Preview window"
 msgstr ""
 
-#: plug-ins/gimpressionist/preview.c:124
+#: plug-ins/common/spheredesigner.c:2350 plug-ins/gimpressionist/preview.c:124
 #, fuzzy
 msgid "Reset"
 msgstr "Gjenta:"
@@ -6806,18 +7028,6 @@ msgstr ""
 #: plug-ins/ifscompose/ifscompose.c:354
 msgid "<Image>/Filters/Render/Nature/IfsCompose..."
 msgstr ""
-
-#. X
-#: plug-ins/ifscompose/ifscompose.c:503
-#, fuzzy
-msgid "X"
-msgstr "X:"
-
-#. Y
-#: plug-ins/ifscompose/ifscompose.c:517
-#, fuzzy
-msgid "Y"
-msgstr "Y:"
 
 #. Asym
 #: plug-ins/ifscompose/ifscompose.c:559
@@ -7866,6 +8076,108 @@ msgstr "Skriv ut til fil?"
 msgid "PPD File?"
 msgstr "PPD/Fil?"
 
+#: plug-ins/common/sample_colorize.c:300
+#, fuzzy
+msgid ""
+"Colorize the contents of the specified drawable similar to sample drawable"
+msgstr ""
+"Normaliser kontrasten automatisk for spesifisert tegnet objekt til å omfatte "
+"alle mulige områder."
+
+#: plug-ins/common/sample_colorize.c:305
+#, fuzzy
+msgid "<Image>/Filters/Colors/Map/Sample Colorize..."
+msgstr "<Image>/Filter/Farger/Alien Map"
+
+#: plug-ins/common/sample_colorize.c:1261
+#: plug-ins/common/sample_colorize.c:1290
+msgid "Sample Colorize"
+msgstr ""
+
+#: plug-ins/common/sample_colorize.c:1313
+msgid "Get Sample Colors"
+msgstr ""
+
+#. parameter settings
+#: plug-ins/common/sample_colorize.c:1326
+#, fuzzy
+msgid "settings"
+msgstr "Instillinger for glød"
+
+#. layer optionmenu (Dst)
+#: plug-ins/common/sample_colorize.c:1342
+#, fuzzy
+msgid "Destination:"
+msgstr "Målkanal"
+
+#. layer optionmenu (Sample)
+#: plug-ins/common/sample_colorize.c:1360
+#, fuzzy
+msgid "Sample:"
+msgstr "Skalering"
+
+#. Add extra menu items for Gradient
+#: plug-ins/common/sample_colorize.c:1379
+msgid "** From GRADIENT **"
+msgstr ""
+
+#. Add extra menu items for Inverted Gradient
+#: plug-ins/common/sample_colorize.c:1387
+msgid "** From INVERS GRADIENT **"
+msgstr ""
+
+#. check button
+#: plug-ins/common/sample_colorize.c:1398
+#: plug-ins/common/sample_colorize.c:1418
+#, fuzzy
+msgid "Show Selection"
+msgstr "Seed"
+
+#. check button
+#: plug-ins/common/sample_colorize.c:1408
+#: plug-ins/common/sample_colorize.c:1428
+#, fuzzy
+msgid "Show Color"
+msgstr "Farge"
+
+#: plug-ins/common/sample_colorize.c:1531
+msgid "In Level: "
+msgstr ""
+
+#: plug-ins/common/sample_colorize.c:1576
+msgid "Out Level: "
+msgstr ""
+
+#. check button
+#: plug-ins/common/sample_colorize.c:1610
+#, fuzzy
+msgid "Hold Intensity"
+msgstr "Intensitetsnivå"
+
+#. check button
+#: plug-ins/common/sample_colorize.c:1621
+msgid "Original Intensity"
+msgstr ""
+
+#. check button
+#: plug-ins/common/sample_colorize.c:1633
+#, fuzzy
+msgid "Use Subcolors"
+msgstr "farge"
+
+#. check button
+#: plug-ins/common/sample_colorize.c:1643
+msgid "Smooth Samplecolors"
+msgstr ""
+
+#: plug-ins/common/sample_colorize.c:2698
+msgid "Sample Analyze..."
+msgstr ""
+
+#: plug-ins/common/sample_colorize.c:3063
+msgid "Remap Colorized..."
+msgstr ""
+
 #: plug-ins/script-fu/script-fu-console.c:157
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr ""
@@ -8158,6 +8470,175 @@ msgstr "Instillinger for glød"
 #, fuzzy
 msgid "Exponent "
 msgstr "Eksporter"
+
+#: plug-ins/common/spheredesigner.c:245
+#, fuzzy
+msgid "Checker"
+msgstr "Sjakkbrett"
+
+#: plug-ins/common/spheredesigner.c:246
+msgid "Marble"
+msgstr ""
+
+#: plug-ins/common/spheredesigner.c:247
+#, fuzzy
+msgid "Lizard"
+msgstr "Lineær"
+
+#: plug-ins/common/spheredesigner.c:248
+msgid "Phong"
+msgstr ""
+
+#: plug-ins/common/spheredesigner.c:249
+#, fuzzy
+msgid "Noise"
+msgstr "Ingen"
+
+#: plug-ins/common/spheredesigner.c:250
+msgid "Wood"
+msgstr ""
+
+#: plug-ins/common/spheredesigner.c:251
+#, fuzzy
+msgid "Spiral"
+msgstr "Sfærisk"
+
+#: plug-ins/common/spheredesigner.c:252
+#, fuzzy
+msgid "Spots"
+msgstr "punkter"
+
+#: plug-ins/common/spheredesigner.c:1570 plug-ins/common/spheredesigner.c:2615
+msgid "Texture"
+msgstr ""
+
+#: plug-ins/common/spheredesigner.c:1571
+#, fuzzy
+msgid "Bumpmap"
+msgstr "\"Bump\""
+
+#: plug-ins/common/spheredesigner.c:1573
+msgid "(unknown!?)"
+msgstr ""
+
+#: plug-ins/common/spheredesigner.c:1847
+#, fuzzy
+msgid "Open file"
+msgstr "Forhåndsvisning av bilde"
+
+#: plug-ins/common/spheredesigner.c:1847
+#, fuzzy
+msgid "Save file"
+msgstr "Forhåndsvisning av bilde"
+
+#: plug-ins/common/spheredesigner.c:2230
+msgid "Sphere Designer"
+msgstr ""
+
+#: plug-ins/common/spheredesigner.c:2263
+msgid "Textures"
+msgstr ""
+
+#: plug-ins/common/spheredesigner.c:2295
+msgid "Dup"
+msgstr ""
+
+#: plug-ins/common/spheredesigner.c:2302
+#, fuzzy
+msgid "Del"
+msgstr "Seed"
+
+#: plug-ins/common/spheredesigner.c:2357
+msgid "Texture Properties"
+msgstr ""
+
+#: plug-ins/common/spheredesigner.c:2376
+msgid "Texture:"
+msgstr ""
+
+#: plug-ins/common/spheredesigner.c:2383
+#, fuzzy
+msgid "Colors:"
+msgstr "Farge"
+
+#: plug-ins/common/spheredesigner.c:2437
+msgid "Turbulence:"
+msgstr ""
+
+#: plug-ins/common/spheredesigner.c:2454
+#, fuzzy
+msgid "Scale X:"
+msgstr "Skalering"
+
+#: plug-ins/common/spheredesigner.c:2471
+#, fuzzy
+msgid "Scale Y:"
+msgstr "Skalering"
+
+#: plug-ins/common/spheredesigner.c:2488
+#, fuzzy
+msgid "Scale Z:"
+msgstr "Skalering"
+
+#: plug-ins/common/spheredesigner.c:2507
+msgid "Rotate X:"
+msgstr ""
+
+#: plug-ins/common/spheredesigner.c:2524
+msgid "Rotate Y:"
+msgstr ""
+
+#: plug-ins/common/spheredesigner.c:2541
+msgid "Rotate Z:"
+msgstr ""
+
+#: plug-ins/common/spheredesigner.c:2558
+msgid "Pos X:"
+msgstr ""
+
+#: plug-ins/common/spheredesigner.c:2575
+msgid "Pos Y:"
+msgstr ""
+
+#: plug-ins/common/spheredesigner.c:2592
+msgid "Pos Z:"
+msgstr ""
+
+#: plug-ins/common/spheredesigner.c:2646
+#, fuzzy
+msgid "Amount:"
+msgstr "Auto"
+
+#: plug-ins/common/spheredesigner.c:2663
+#, fuzzy
+msgid "Exp:"
+msgstr "Eksporter"
+
+#: plug-ins/common/spheredesigner.c:2680
+msgid ""
+"by Vidar Madsen\n"
+"September 1999"
+msgstr ""
+
+#: plug-ins/common/spheredesigner.c:2800
+#, fuzzy
+msgid "Rendering..."
+msgstr "Heltall"
+
+#: plug-ins/common/spheredesigner.c:2845
+msgid "Renders textures spheres"
+msgstr ""
+
+#: plug-ins/common/spheredesigner.c:2846
+msgid ""
+"This plugin can be used to create textured and/or bumpmapped spheres, and "
+"uses a small lightweight raytracer to perform the task with good quality"
+msgstr ""
+
+#: plug-ins/common/spheredesigner.c:2850
+#, fuzzy
+msgid "<Image>/Filters/Render/Sphere Designer..."
+msgstr "<Image>/Filter/Farger/Alien Map"
 
 #: plug-ins/struc/struc.c:107
 msgid "Adds a canvas texture map to the picture"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.13\n"
-"POT-Creation-Date: 1999-12-07 21:06+0100\n"
+"POT-Creation-Date: 1999-12-16 11:07-0800\n"
 "PO-Revision-Date: 1999-12-08 20:01+01:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -133,7 +133,8 @@ msgid "FG to Transparent"
 msgstr "FG til transparent"
 
 #: app/blend.c:265
-msgid "Custom from editor"
+#, fuzzy
+msgid "Custom from Editor"
 msgstr "Egendefinert fra editor"
 
 #: app/blend.c:271 app/gradient.c:619 app/preferences_dialog.c:1483
@@ -185,11 +186,13 @@ msgid "None"
 msgstr "Ingen"
 
 #: app/blend.c:299
-msgid "Sawtooth wave"
+#, fuzzy
+msgid "Sawtooth Wave"
 msgstr "Sagtann-bølge"
 
 #: app/blend.c:301
-msgid "Triangular wave"
+#, fuzzy
+msgid "Triangular Wave"
 msgstr "Triangulær bølge"
 
 #: app/blend.c:335
@@ -209,7 +212,8 @@ msgid "Repeat:"
 msgstr "Gjenta:"
 
 #: app/blend.c:381
-msgid "Adaptive supersampling"
+#, fuzzy
+msgid "Adaptive Supersampling"
 msgstr "Tilpassende supersampling"
 
 #: app/blend.c:409
@@ -283,7 +287,7 @@ msgstr "Kontrast"
 
 #. The preview toggle
 #: app/brightness_contrast.c:299 app/color_balance.c:439 app/curves.c:671
-#: app/fileops.c:417 app/hue_saturation.c:563 app/levels.c:589
+#: app/fileops.c:418 app/hue_saturation.c:563 app/levels.c:589
 #: app/palette.c:3222 app/posterize.c:237 app/threshold.c:347
 msgid "Preview"
 msgstr "Forhåndsvis"
@@ -469,7 +473,8 @@ msgstr "Y:"
 
 #. The wrap around option
 #: app/channel_ops.c:165
-msgid "Wrap-Around"
+#, fuzzy
+msgid "Wrap Around"
 msgstr "Gå rundt"
 
 #. The fill options
@@ -875,7 +880,8 @@ msgid "Crop & Resize Options"
 msgstr "Alternativer for beskjæring og endring av størrelse"
 
 #: app/crop.c:188
-msgid "Current layer only"
+#, fuzzy
+msgid "Current Layer Only"
 msgstr "Bare aktivt lag"
 
 #. enlarge toggle
@@ -1079,13 +1085,14 @@ msgstr "Utjevning opererer ikke på indekserte tegnede objekter."
 
 #. the hard toggle
 #: app/eraser.c:107
-msgid "Hard edge"
+#, fuzzy
+msgid "Hard Edge"
 msgstr "Hard kant"
 
 #. the anti_erase toggle
-#: app/eraser.c:117
-msgid "Anti erase"
-msgstr "Anti slett"
+#: app/eraser.c:117 app/paint_funcs.c:100
+msgid "Anti Erase"
+msgstr "Anti-slett"
 
 #: app/errorconsole.c:170
 #, c-format
@@ -1173,20 +1180,20 @@ msgstr "Piksler/%a"
 msgid "Image Type"
 msgstr "Bildetype"
 
-#: app/fileops.c:238 app/fileops.c:275
+#: app/fileops.c:239 app/fileops.c:276
 msgid "Load Image"
 msgstr "Last bilde"
 
 #. format-chooser frame
-#: app/fileops.c:285
+#: app/fileops.c:286
 msgid "Open Options"
 msgstr "Alternativer for åpning"
 
-#: app/fileops.c:300 app/fileops.c:515
+#: app/fileops.c:301 app/fileops.c:516
 msgid "Determine file type:"
 msgstr "Bestem bildetype:"
 
-#: app/fileops.c:383
+#: app/fileops.c:384
 msgid ""
 "generate\n"
 "preview"
@@ -1194,81 +1201,81 @@ msgstr ""
 "generer\n"
 "forhåndsvisning"
 
-#: app/fileops.c:418
+#: app/fileops.c:419
 msgid "No selection."
 msgstr "Ingen utvalg."
 
-#: app/fileops.c:469 app/fileops.c:501
+#: app/fileops.c:470 app/fileops.c:502
 msgid "Save Image"
 msgstr "Lagre bilde"
 
-#: app/fileops.c:506
+#: app/fileops.c:507
 msgid "Save Options"
 msgstr "Alternativer for lagring"
 
-#: app/fileops.c:568
+#: app/fileops.c:569
 msgid "Can't revert. No filename associated with this image"
 msgstr "Kan ikke forkaste. Ingen filnavn assosiert med dette bildet"
 
-#: app/fileops.c:582
+#: app/fileops.c:583
 msgid "Revert failed."
 msgstr "Forkast feilet."
 
-#: app/fileops.c:1252
+#: app/fileops.c:1253
 msgid "(this thumbnail may be out of date)"
 msgstr "(denne miniatyren kan være gammel)"
 
-#: app/fileops.c:1253
+#: app/fileops.c:1254
 msgid "(no information)"
 msgstr "(ingen informasjon)"
 
-#: app/fileops.c:1263
+#: app/fileops.c:1264
 msgid "(thumbnail saving is disabled)"
 msgstr "(lagring av miniatyrer er slått av)"
 
-#: app/fileops.c:1267
+#: app/fileops.c:1268
 msgid "(could not write thumbnail file)"
 msgstr "(kunne ikke skrive miniatyrfil)"
 
-#: app/fileops.c:1271
+#: app/fileops.c:1272
 msgid "(thumbnail file not written)"
 msgstr "(miniatyr ikke skrevet)"
 
-#: app/fileops.c:1288
+#: app/fileops.c:1289
 msgid "no preview available"
 msgstr "ingen forhåndsvisning tilgjengelig"
 
-#: app/fileops.c:1402
+#: app/fileops.c:1403
 msgid "(could not make preview)"
 msgstr "(kunne ikke lage forhåndsvisning)"
 
-#: app/fileops.c:1474 app/fileops.c:1555
+#: app/fileops.c:1475 app/fileops.c:1556
 msgid "Open failed: "
 msgstr "Feil under åpning: "
 
-#: app/fileops.c:1615
+#: app/fileops.c:1616
 #, c-format
 msgid "%s is an irregular file (%s)"
 msgstr "%s er en uvanlig fil (%s)"
 
-#: app/fileops.c:1629 app/fileops.c:1731
+#: app/fileops.c:1630 app/fileops.c:1732
 msgid "Save failed: "
 msgstr "Feil under lagring: "
 
-#: app/fileops.c:1676
+#: app/fileops.c:1677
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s eksisterer, overskriv?"
 
-#: app/fileops.c:1680
+#: app/fileops.c:1681
 msgid "File Exists!"
 msgstr "Filen eksisterer!"
 
-#: app/fileops.c:1686
+#: app/fileops.c:1687
 msgid "Yes"
 msgstr "Ja"
 
-#: app/fileops.c:1688
+#: app/fileops.c:1689
 msgid "No"
 msgstr "Nei"
 
@@ -1656,7 +1663,8 @@ msgid "Paste Into"
 msgstr "Lim inn i"
 
 #: app/global_edit.c:698
-msgid "Paste As New"
+#, fuzzy
+msgid "Paste as New"
 msgstr "Lim inn som nytt"
 
 #: app/global_edit.c:712
@@ -2318,8 +2326,8 @@ msgstr "Gråtoner:"
 
 #. create the info dialog
 #: app/info_window.c:377
-#, c-format
-msgid "Window Info:%s-%d.%d"
+#, fuzzy, c-format
+msgid "Info: %s-%d.%d"
 msgstr "Vindusinformasjon:%s-%d.%d"
 
 #: app/info_window.c:575
@@ -3393,7 +3401,8 @@ msgid "/Xtns/Script-Fu/Patterns"
 msgstr "/Utvd/Script-Fu/Mønstre"
 
 #: app/menus.c:93
-msgid "/Xtns/Script-Fu/Web page themes"
+#, fuzzy
+msgid "/Xtns/Script-Fu/Web Page Themes"
 msgstr "/Utvd/Script-Fu/Webside tema"
 
 #: app/menus.c:94
@@ -3589,7 +3598,8 @@ msgid "/Help/Context Help..."
 msgstr "/Hjelp/Kontekst hjelp..."
 
 #: app/menus.c:218
-msgid "/Help/Tip of the day..."
+#, fuzzy
+msgid "/Help/Tip of the Day..."
 msgstr "/Hjelp/Dagens tips..."
 
 #: app/menus.c:220
@@ -3605,7 +3615,8 @@ msgid "/File/Save"
 msgstr "/Fil/Lagre"
 
 #: app/menus.c:246
-msgid "/File/Save as..."
+#, fuzzy
+msgid "/File/Save As..."
 msgstr "/Fil/Lagre som..."
 
 #: app/menus.c:248
@@ -3646,7 +3657,8 @@ msgid "/Edit/Paste Into"
 msgstr "/Rediger/Lim inn i"
 
 #: app/menus.c:280
-msgid "/Edit/Paste As New"
+#, fuzzy
+msgid "/Edit/Paste as New"
 msgstr "/Rediger/Lim inn som nytt"
 
 #. <Image>/Edit/Buffer
@@ -3720,7 +3732,8 @@ msgid "/Select/Border..."
 msgstr "/Velg/Kant..."
 
 #: app/menus.c:334
-msgid "/Select/Save To Channel"
+#, fuzzy
+msgid "/Select/Save to Channel"
 msgstr "/Velg/Lagre til kanal"
 
 #. <Image>/View
@@ -3778,7 +3791,8 @@ msgid "/View/Zoom/1:16"
 msgstr "/Vis/Zoom/1:16"
 
 #: app/menus.c:369
-msgid "/View/Dot for dot"
+#, fuzzy
+msgid "/View/Dot for Dot"
 msgstr "/Vis/Punkt for punkt"
 
 #: app/menus.c:374
@@ -3790,7 +3804,8 @@ msgid "/View/Nav. Window..."
 msgstr "/Vis/Navigasjonsvindu..."
 
 #: app/menus.c:378
-msgid "/View/Undo history..."
+#, fuzzy
+msgid "/View/Undo History..."
 msgstr "/Vis/Angrelogg..."
 
 #: app/menus.c:383
@@ -3810,7 +3825,8 @@ msgid "/View/Toggle Guides"
 msgstr "/Vis/Slå av på guider"
 
 #: app/menus.c:391
-msgid "/View/Snap To Guides"
+#, fuzzy
+msgid "/View/Snap to Guides"
 msgstr "/Vis/Fest til guider"
 
 #: app/menus.c:396
@@ -3943,7 +3959,8 @@ msgid "/Layers/Rotate"
 msgstr "/Lag/Rotér"
 
 #: app/menus.c:509
-msgid "/Layers/Resize to Image"
+#, fuzzy
+msgid "/Layers/Layer to Imagesize"
 msgstr "/Lag/Endre størrelse til bilde"
 
 #: app/menus.c:514
@@ -3959,7 +3976,8 @@ msgid "/Layers/Flatten Image"
 msgstr "/Lag/Flat ut bilde"
 
 #: app/menus.c:523
-msgid "/Layers/Mask To Selection"
+#, fuzzy
+msgid "/Layers/Mask to Selection"
 msgstr "/Lag/Maske til utvalg"
 
 #: app/menus.c:528
@@ -3967,7 +3985,8 @@ msgid "/Layers/Add Alpha Channel"
 msgstr "/Lag/Legg til alfakanal"
 
 #: app/menus.c:530
-msgid "/Layers/Alpha To Selection"
+#, fuzzy
+msgid "/Layers/Alpha to Selection"
 msgstr "/Lag/Legg til alfakanal"
 
 #. <Image>/Tools
@@ -3993,11 +4012,13 @@ msgid "/Filters"
 msgstr "/Filtre"
 
 #: app/menus.c:554
-msgid "/Filters/Repeat last"
+#, fuzzy
+msgid "/Filters/Repeat Last"
 msgstr "/Filtre/Gjenta siste"
 
 #: app/menus.c:556
-msgid "/Filters/Re-show last"
+#, fuzzy
+msgid "/Filters/Re-Show Last"
 msgstr "/Filtre/Vis siste på nytt"
 
 #: app/menus.c:562
@@ -4180,8 +4201,9 @@ msgid "/Layer Boundary Size..."
 msgstr "/Lag/Grensestørrelse..."
 
 #: app/menus.c:718
-msgid "/Resize to Image"
-msgstr "/Endre størrelse til bildets"
+#, fuzzy
+msgid "/Layer to Imagesize"
+msgstr "/Lag/Endre størrelse til bilde"
 
 #: app/menus.c:720
 msgid "/Scale Layer..."
@@ -4244,11 +4266,13 @@ msgid "/Add to Selection"
 msgstr "/Legg til i utvalg"
 
 #: app/menus.c:771
-msgid "/Subtract From Selection"
+#, fuzzy
+msgid "/Subtract from Selection"
 msgstr "/Trekk fra utvalg"
 
 #: app/menus.c:773
-msgid "/Intersect With Selection"
+#, fuzzy
+msgid "/Intersect with Selection"
 msgstr "/Kryss med utvalg"
 
 #: app/menus.c:778
@@ -4397,13 +4421,13 @@ msgstr "Alternativer for flytteverktøy"
 
 #. create the info dialog
 #: app/nav_window.c:1254
-#, c-format
-msgid "Window Navigation:%s-%d.%d"
+#, fuzzy, c-format
+msgid "Navigation: %s-%d.%d"
 msgstr "Vindusnavigasjon:%s-%d.%d"
 
 #: app/nav_window.c:1552
-msgid "No image: Window Navigation"
-msgstr "Ikke noe bilde: Vindusnavigasjon"
+msgid "Navigation: No Image"
+msgstr ""
 
 #: app/paint_core.c:699
 msgid "No brushes available for use with this tool."
@@ -4420,10 +4444,6 @@ msgstr "Fratrekk"
 #: app/paint_funcs.c:98
 msgid "Erase"
 msgstr "Slett"
-
-#: app/paint_funcs.c:100
-msgid "Anti Erase"
-msgstr "Anti-slett"
 
 #: app/paintbrush.c:192
 msgid "Once Forward"
@@ -4612,6 +4632,11 @@ msgstr "Intervall:"
 #: app/palette_select.c:53
 msgid "Palette Selection"
 msgstr "Palettutvalg"
+
+#: app/path_tool.c:1411
+#, fuzzy
+msgid "Path Tool Options"
+msgstr "Verktøysalternativer"
 
 #: app/paths_dialog.c:169
 msgid "New Path"
@@ -5173,7 +5198,8 @@ msgid "Save Window Positions on Exit"
 msgstr "Lagre vindusposisjoner ved avslutt"
 
 #: app/preferences_dialog.c:1989
-msgid "Clear Saved Window Positions"
+#, fuzzy
+msgid "Clear Saved Window Positions Now"
 msgstr "Nulstill lagrede vindusposisjoner"
 
 #: app/preferences_dialog.c:1996
@@ -5566,21 +5592,21 @@ msgstr "Terskel"
 msgid "Threshold Range:"
 msgstr "Terskelområde:"
 
-#: app/tile_swap.c:387
+#: app/tile_swap.c:394
 msgid "unable to open swap file...BAD THINGS WILL HAPPEN SOON"
 msgstr "kunne ikke åpne swap-filen...FORFERDELIGE TING VIL SKJE SNART"
 
-#: app/tile_swap.c:507 app/tile_swap.c:570
+#: app/tile_swap.c:514 app/tile_swap.c:577
 #, c-format
 msgid "unable to seek to tile location on disk: %d"
 msgstr "kunne ikke søke etter lokasjon av fliser på disk: %d"
 
-#: app/tile_swap.c:526
+#: app/tile_swap.c:533
 #, c-format
 msgid "unable to read tile data from disk: %d/%d ( %d ) bytes read"
 msgstr "kunne ikke lese flisdata fra disk: %d%/%d ( %d ) bytes lest"
 
-#: app/tile_swap.c:584
+#: app/tile_swap.c:591
 #, c-format
 msgid "unable to write tile data to disk: %d ( %d ) bytes written"
 msgstr "kunne ikke skrive flisdata til disk: %d ( %d ) bytes skrevet"
@@ -5590,7 +5616,8 @@ msgid "gimp_tips.txt"
 msgstr "gimp_tips.txt"
 
 #: app/tips_dialog.c:70
-msgid "GIMP Tip of the day"
+#, fuzzy
+msgid "GIMP Tip of the Day"
 msgstr "GIMP - dagens tips"
 
 #: app/tips_dialog.c:131
@@ -5652,7 +5679,8 @@ msgid "Feather"
 msgstr "Fjær"
 
 #: app/tool_options.c:386
-msgid "Fixed size / aspect ratio"
+#, fuzzy
+msgid "Fixed Size / Aspect Ratio"
 msgstr "Fast størrelse / aspektrate"
 
 #: app/tool_options.c:538
@@ -5708,7 +5736,8 @@ msgid "Incremental"
 msgstr "Inkrementell"
 
 #: app/tool_options.c:783
-msgid "Pressure sensitivity"
+#, fuzzy
+msgid "Pressure Sensitivity"
 msgstr "Trykkfølsomhet"
 
 #: app/tool_options.c:801
@@ -6165,37 +6194,43 @@ msgstr "Korrektiv"
 msgid "Transform Tool Options"
 msgstr "Alternativer for transformeringsverktøy"
 
-#. the smoothing toggle button
-#: app/transform_tool.c:251
-msgid "Smoothing"
-msgstr "Utjevning"
-
-#: app/transform_tool.c:258
-msgid "Show path"
-msgstr "Vis sti"
-
 #. the second radio frame and box, for transform direction
-#: app/transform_tool.c:272
-msgid "Tool paradigm"
+#: app/transform_tool.c:257
+#, fuzzy
+msgid "Tool Paradigm"
 msgstr "Verktøysparadigme"
 
 #. the show grid toggle button
-#: app/transform_tool.c:299
-msgid "Show grid"
+#: app/transform_tool.c:292
+#, fuzzy
+msgid "Show Grid"
 msgstr "Vis rutenett"
 
-#: app/transform_tool.c:310
-msgid "Grid density:"
-msgstr "Rutenettets sentitivitet"
+#: app/transform_tool.c:303
+#, fuzzy
+msgid "Density:"
+msgstr "Intensitet:"
+
+#. the smoothing toggle button
+#: app/transform_tool.c:333
+msgid "Smoothing"
+msgstr "Utjevning"
 
 #. the clip resulting image toggle button
-#: app/transform_tool.c:331
-msgid "Clip result"
+#: app/transform_tool.c:341
+#, fuzzy
+msgid "Clip Result"
 msgstr "Klipp ut resultat"
 
+#. the show_path toggle button
+#: app/transform_tool.c:355
+#, fuzzy
+msgid "Show Path"
+msgstr "Vis sti"
+
 #: app/undo_history.c:432 app/undo_history.c:753
-#, c-format
-msgid "%s: undo history"
+#, fuzzy, c-format
+msgid "Undo History: %s"
 msgstr "%s: angrelogg"
 
 #: app/undo_history.c:488
@@ -6462,3 +6497,15 @@ msgstr "ikke nok fliser funnet på dette nivået"
 #, c-format
 msgid "unable to read tile data from xcf file: %d ( %d ) bytes read"
 msgstr "kunne ikke lese flisdata fra xcf filen: %d ( %d ) bytes lest"
+
+#~ msgid "Anti erase"
+#~ msgstr "Anti slett"
+
+#~ msgid "/Resize to Image"
+#~ msgstr "/Endre størrelse til bildets"
+
+#~ msgid "No image: Window Navigation"
+#~ msgstr "Ikke noe bilde: Vindusnavigasjon"
+
+#~ msgid "Grid density:"
+#~ msgstr "Rutenettets sentitivitet"

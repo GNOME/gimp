@@ -114,7 +114,10 @@ Thu Dec 16 20:15:25 CET 1999  Olof S Kylande <olof@gimp.org>
 	* help/C/dialogs/preferences/preferences.html
 	* help/C/dialogs/preferences/session.html
 
-  
+Thu Dec 16 12:42:13 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* Made 1.1.14 release
+
 Wed Dec 15 00:10:54 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* app/channel_ops.c

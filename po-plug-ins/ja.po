@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.14\n"
-"POT-Creation-Date: 1999-12-10 13:14+0900\n"
+"POT-Creation-Date: 1999-12-14 15:42-0800\n"
 "PO-Revision-Date: 1999-12-08 14:53+09:00\n"
 "Last-Translator: Çòºê ÂÙ¹° <yasuhiro@awa.tohoku.ac.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -164,7 +164,7 @@ msgstr "ÀßÄê¤Ë´ð¤Å¤¤¤Æ¥Õ¥£¥ë¥¿¤ò²èÁü¤ËÅ¬ÍÑ¤¹¤ë"
 
 #. the 3 Action Buttons
 #: libgimp/gimpexport.c:307 plug-ins/AlienMap/AlienMap.c:871
-#: plug-ins/AlienMap2/AlienMap2.c:794 plug-ins/Lighting/lighting_ui.c:1062
+#: plug-ins/AlienMap2/AlienMap2.c:794 plug-ins/Lighting/lighting_ui.c:1071
 #: plug-ins/bmp/bmpwrite.c:458 plug-ins/common/CML_explorer.c:2701
 #: plug-ins/common/apply_lens.c:434 plug-ins/common/blur.c:628
 #: plug-ins/common/bumpmap.c:982 plug-ins/common/checkerboard.c:399
@@ -180,7 +180,7 @@ msgstr "ÀßÄê¤Ë´ð¤Å¤¤¤Æ¥Õ¥£¥ë¥¿¤ò²èÁü¤ËÅ¬ÍÑ¤¹¤ë"
 #: plug-ins/common/oilify.c:477 plug-ins/common/papertile.c:524
 #: plug-ins/common/png.c:987 plug-ins/common/ps.c:2132
 #: plug-ins/common/ps.c:2396 plug-ins/common/psp.c:485
-#: plug-ins/common/screenshot.c:422 plug-ins/common/spheredesigner.c:2343
+#: plug-ins/common/screenshot.c:429 plug-ins/common/spheredesigner.c:2343
 #: plug-ins/common/threshold_alpha.c:483 plug-ins/common/warp.c:525
 #: plug-ins/common/xbm.c:736 plug-ins/common/xbm.c:1004
 #: plug-ins/common/xpm.c:806 plug-ins/flame/flame.c:539
@@ -432,6 +432,15 @@ msgstr "ÇÈ¾õ"
 msgid "Spherical"
 msgstr "µåÌÌ"
 
+#: plug-ins/Lighting/lighting_ui.c:210 plug-ins/Lighting/lighting_ui.c:1016
+#: plug-ins/common/spheredesigner.c:2621
+msgid "Bump"
+msgstr "¥Ð¥ó¥×"
+
+#: plug-ins/Lighting/lighting_ui.c:238 plug-ins/Lighting/lighting_ui.c:1025
+msgid "Env"
+msgstr "´Ä¶­"
+
 #: plug-ins/Lighting/lighting_ui.c:569
 msgid "General options"
 msgstr "°ìÈÌ¥ª¥×¥·¥ç¥ó"
@@ -515,202 +524,199 @@ msgstr "¥¢¥ó¥Á¥¢¥¨¥¤¥ê¥¢¥·¥ó¥°¤ÎÉÊ°Ì. ¹â¤¤Äø, åºÎï¤À¤¬ÃÙ¤¤."
 msgid "Stop when pixel differences are smaller than this value"
 msgstr "¥Ô¥¯¥»¥ëÃÍ¤¬¤³¤ÎÃÍ¤è¤ê¤â¾®¤µ¤¯¤Ê¤Ã¤¿¤é»ß¤Þ¤ë"
 
-#: plug-ins/Lighting/lighting_ui.c:669
+#: plug-ins/Lighting/lighting_ui.c:674
 msgid "Light settings"
 msgstr "¸÷¸»ÀßÄê"
 
-#: plug-ins/Lighting/lighting_ui.c:673
+#: plug-ins/Lighting/lighting_ui.c:678
 msgid "Lightsource type:"
 msgstr "¸÷¸»¼ï:"
 
-#: plug-ins/Lighting/lighting_ui.c:678
+#: plug-ins/Lighting/lighting_ui.c:683
 msgid "Lightsource color"
 msgstr "¸÷¸»¿§:"
 
-#: plug-ins/Lighting/lighting_ui.c:685
+#: plug-ins/Lighting/lighting_ui.c:690
 msgid "Type of light source to apply"
 msgstr "Å¬ÍÑ¤¹¤ë¸÷¸»¤Î¼ïÎà"
 
-#: plug-ins/Lighting/lighting_ui.c:686
+#: plug-ins/Lighting/lighting_ui.c:691
 msgid "Set light source color (white is default)"
 msgstr "¸÷¸»¤Î¿§¤òÀßÄê¤¹¤ë (´ðËÜ¤ÏÇò)"
 
-#: plug-ins/Lighting/lighting_ui.c:688
+#: plug-ins/Lighting/lighting_ui.c:693
 msgid "Position"
 msgstr "°ÌÃÖ"
 
-#: plug-ins/Lighting/lighting_ui.c:691 plug-ins/Lighting/lighting_ui.c:713
+#: plug-ins/Lighting/lighting_ui.c:696 plug-ins/Lighting/lighting_ui.c:718
 #: plug-ins/common/papertile.c:398
 msgid "X:"
 msgstr "X:"
 
-#: plug-ins/Lighting/lighting_ui.c:692 plug-ins/Lighting/lighting_ui.c:714
+#: plug-ins/Lighting/lighting_ui.c:697 plug-ins/Lighting/lighting_ui.c:719
 #: plug-ins/common/papertile.c:402
 msgid "Y:"
 msgstr "Y:"
 
-#: plug-ins/Lighting/lighting_ui.c:693 plug-ins/Lighting/lighting_ui.c:715
+#: plug-ins/Lighting/lighting_ui.c:698 plug-ins/Lighting/lighting_ui.c:720
 msgid "Z:"
 msgstr "Z:"
 
-#: plug-ins/Lighting/lighting_ui.c:699
+#: plug-ins/Lighting/lighting_ui.c:704
 msgid "Light source X position in XYZ space"
 msgstr "XYZ ¶õ´ÖÃæ¤Î¸÷¸»¤Î X °ÌÃÖ"
 
-#: plug-ins/Lighting/lighting_ui.c:700
+#: plug-ins/Lighting/lighting_ui.c:705
 msgid "Light source Y position in XYZ space"
 msgstr "XYZ ¶õ´ÖÃæ¤Î¸÷¸»¤Î Y °ÌÃÖ"
 
-#: plug-ins/Lighting/lighting_ui.c:701
+#: plug-ins/Lighting/lighting_ui.c:706
 msgid "Light source Z position in XYZ space"
 msgstr "XYZ ¶õ´ÖÃæ¤Î¸÷¸»¤Î Z °ÌÃÖ"
 
-#: plug-ins/Lighting/lighting_ui.c:710
+#: plug-ins/Lighting/lighting_ui.c:715
 msgid "Direction vector"
 msgstr "Êý¸þ¥Ù¥¯¥È¥ë"
 
-#: plug-ins/Lighting/lighting_ui.c:717
+#: plug-ins/Lighting/lighting_ui.c:722
 msgid "Light source X direction in XYZ space"
 msgstr "XYZ ¶õ´ÖÃæ¤Ç¤Î¸÷¸»¤Î¸þ¤­¤Î X Êý¸þÍ×ÁÇ"
 
-#: plug-ins/Lighting/lighting_ui.c:718
+#: plug-ins/Lighting/lighting_ui.c:723
 msgid "Light source Y direction in XYZ space"
 msgstr "XYZ ¶õ´ÖÃæ¤Ç¤Î¸÷¸»¤Î¸þ¤­¤Î Y Êý¸þÍ×ÁÇ"
 
-#: plug-ins/Lighting/lighting_ui.c:719
+#: plug-ins/Lighting/lighting_ui.c:724
 msgid "Light source Z direction in XYZ space"
 msgstr "XYZ ¶õ´ÖÃæ¤Ç¤Î¸÷¸»¤Î¸þ¤­¤Î Z Êý¸þÍ×ÁÇ"
 
-#: plug-ins/Lighting/lighting_ui.c:751
+#: plug-ins/Lighting/lighting_ui.c:756
 msgid "Intensity levels"
 msgstr "¶¯ÅÙ¥ì¥Ù¥ë"
 
-#: plug-ins/Lighting/lighting_ui.c:756
+#: plug-ins/Lighting/lighting_ui.c:761
 msgid "Ambient:"
 msgstr "Ë°ÏÂÅÙ:"
 
-#: plug-ins/Lighting/lighting_ui.c:757 plug-ins/Lighting/lighting_ui.c:808
+#: plug-ins/Lighting/lighting_ui.c:762 plug-ins/Lighting/lighting_ui.c:813
 msgid "Diffuse:"
 msgstr "³È»¶:"
 
-#: plug-ins/Lighting/lighting_ui.c:797
+#: plug-ins/Lighting/lighting_ui.c:802
 msgid "Amount of original color to show where no direct light falls"
 msgstr "Ä¾ÀÜ¸÷¤¬Åö¤¿¤Ã¤Æ¤¤¤Ê¤¤¾ì¹ç¤Ë¸«¤¨¤ë¸µ¤Î¿§¤ÎÎÌ"
 
-#: plug-ins/Lighting/lighting_ui.c:798
+#: plug-ins/Lighting/lighting_ui.c:803
 msgid "Intensity of original color when lit by a light source"
 msgstr "¸÷¸»¤Ë¾È¤é¤µ¤ì¤¿¾ì¹ç¤Î¸µ¤Î¿§¤Î¶¯ÅÙ"
 
-#: plug-ins/Lighting/lighting_ui.c:803
+#: plug-ins/Lighting/lighting_ui.c:808
 msgid "Reflectivity"
 msgstr "È¿¼ÍÀ­"
 
-#: plug-ins/Lighting/lighting_ui.c:809
+#: plug-ins/Lighting/lighting_ui.c:814
 msgid "Specular:"
 msgstr "È¿¼Í:"
 
-#: plug-ins/Lighting/lighting_ui.c:810
+#: plug-ins/Lighting/lighting_ui.c:815
 msgid "Hightlight:"
 msgstr "¥Ï¥¤¥é¥¤¥È:"
 
-#: plug-ins/Lighting/lighting_ui.c:824
+#: plug-ins/Lighting/lighting_ui.c:829
 msgid "Higher values makes the object reflect more light (appear lighter)"
 msgstr "Âç¤­¤ÊÃÍ¤Ë¤¹¤ë¤ÈÊªÂÎ¤¬¤è¤ê¸÷¤òÈ¿¼Í¤¹¤ë (ÌÀ¤ë¤¯¸«¤¨¤ë)"
 
-#: plug-ins/Lighting/lighting_ui.c:825
+#: plug-ins/Lighting/lighting_ui.c:830
 msgid "Controls how intense the highlights will be"
 msgstr "¥Ï¥¤¥é¥¤¥È¤Î¶¯ÅÙ¤òÀ©¸æ¤¹¤ë"
 
-#: plug-ins/Lighting/lighting_ui.c:826
+#: plug-ins/Lighting/lighting_ui.c:831
 msgid "Higher values makes the highlights more focused"
 msgstr "Âç¤­¤ÊÃÍ¤Ë¤¹¤ë¤È¥Ï¥¤¥é¥¤¥È¤¬¤¯¤Ã¤­¤ê¤¹¤ë"
 
-#: plug-ins/Lighting/lighting_ui.c:888
+#: plug-ins/Lighting/lighting_ui.c:897
 msgid "Bumpmap settings"
 msgstr "¥Ð¥ó¥×¥Þ¥Ã¥×ÀßÄê"
 
-#: plug-ins/Lighting/lighting_ui.c:894
+#: plug-ins/Lighting/lighting_ui.c:903
 msgid "Bumpmap image:"
 msgstr "¥Ð¥ó¥×¥Þ¥Ã¥×²èÁü:"
 
-#: plug-ins/Lighting/lighting_ui.c:913
+#: plug-ins/Lighting/lighting_ui.c:917
+#, fuzzy
+msgid "Curve:"
+msgstr "¥É¥é¥¤¥Ð:"
+
+#: plug-ins/Lighting/lighting_ui.c:922
 msgid "Minimum height:"
 msgstr "ºÇ¾®¤Î¹â¤µ:"
 
-#: plug-ins/Lighting/lighting_ui.c:915
+#: plug-ins/Lighting/lighting_ui.c:924
 msgid "Maximum height:"
 msgstr "ºÇÂç¤Î¹â¤µ:"
 
-#: plug-ins/Lighting/lighting_ui.c:923
+#: plug-ins/Lighting/lighting_ui.c:932
 msgid "Autostretch to fit value range"
 msgstr "ÌÀÅÙ°è¤ò¼«Æ°Åª¤ËÄ´À°¤¹¤ë"
 
-#: plug-ins/Lighting/lighting_ui.c:946
+#: plug-ins/Lighting/lighting_ui.c:955
 msgid "Environment settings"
 msgstr "´Ä¶­ÀßÄê"
 
-#: plug-ins/Lighting/lighting_ui.c:953
+#: plug-ins/Lighting/lighting_ui.c:962
 msgid "Environment image:"
 msgstr "´Ä¶­²èÁü:"
 
-#: plug-ins/Lighting/lighting_ui.c:987 plug-ins/common/lic.c:1002
+#: plug-ins/Lighting/lighting_ui.c:996 plug-ins/common/lic.c:1002
 msgid "Options"
 msgstr "¥ª¥×¥·¥ç¥ó"
 
-#: plug-ins/Lighting/lighting_ui.c:993 plug-ins/common/spheredesigner.c:1572
+#: plug-ins/Lighting/lighting_ui.c:1002 plug-ins/common/spheredesigner.c:1572
 #: plug-ins/common/spheredesigner.c:2627
 msgid "Light"
 msgstr "¸÷¸»"
 
-#: plug-ins/Lighting/lighting_ui.c:999
+#: plug-ins/Lighting/lighting_ui.c:1008
 msgid "Material"
 msgstr "Êª¼Á"
 
-#: plug-ins/Lighting/lighting_ui.c:1007 plug-ins/common/spheredesigner.c:2621
-msgid "Bump"
-msgstr "¥Ð¥ó¥×"
-
-#: plug-ins/Lighting/lighting_ui.c:1016
-msgid "Env"
-msgstr "´Ä¶­"
-
-#: plug-ins/Lighting/lighting_ui.c:1037
+#: plug-ins/Lighting/lighting_ui.c:1046
 msgid "Lighting effects"
 msgstr "¥é¥¤¥È¸ú²Ì"
 
 #. Add Ok, Cancel and Help buttons to the action area
 #. ==================================================
-#: plug-ins/Lighting/lighting_ui.c:1061 plug-ins/common/sample_colorize.c:1303
+#: plug-ins/Lighting/lighting_ui.c:1070 plug-ins/common/sample_colorize.c:1303
 #: plug-ins/gimpressionist/orientmap.c:633
 #: plug-ins/gimpressionist/presets.c:644 plug-ins/gimpressionist/sizemap.c:492
 msgid "Apply"
 msgstr "Å¬ÍÑ"
 
-#: plug-ins/Lighting/lighting_ui.c:1063
+#: plug-ins/Lighting/lighting_ui.c:1072
 msgid "Help"
 msgstr "¥Ø¥ë¥×"
 
-#: plug-ins/Lighting/lighting_ui.c:1072
+#: plug-ins/Lighting/lighting_ui.c:1081
 msgid "Apply filter with current settings"
 msgstr "¸½ºß¤ÎÀßÄê¤Ç¥Õ¥£¥ë¥¿¤òÅ¬ÍÑ¤¹¤ë"
 
-#: plug-ins/Lighting/lighting_ui.c:1073
+#: plug-ins/Lighting/lighting_ui.c:1082
 msgid "Close filter without doing anything"
 msgstr "²¿¤â¤»¤º¤Ë¥Õ¥£¥ë¥¿¤òÊÄ¤¸¤ë"
 
-#: plug-ins/Lighting/lighting_ui.c:1093
+#: plug-ins/Lighting/lighting_ui.c:1102
 msgid "  Preview!  "
 msgstr "  ¥×¥ì¥Ó¥å¡¼!  "
 
-#: plug-ins/Lighting/lighting_ui.c:1094
+#: plug-ins/Lighting/lighting_ui.c:1103
 msgid "Recompute preview image"
 msgstr "¥×¥ì¥Ó¥å¡¼²èÁü¤òºÆ·×»»¤¹¤ë"
 
-#: plug-ins/Lighting/lighting_ui.c:1097
+#: plug-ins/Lighting/lighting_ui.c:1106
 msgid "Zoom in (make image bigger)"
 msgstr "³ÈÂç (²èÁü¤òÂç¤­¤¯¤¹¤ë)"
 
-#: plug-ins/Lighting/lighting_ui.c:1099
+#: plug-ins/Lighting/lighting_ui.c:1108
 msgid "Zoom out (make image smaller)"
 msgstr "½Ì¾® (²èÁü¤ò¾®¤µ¤¯¤¹¤ë)"
 
@@ -1063,7 +1069,8 @@ msgstr ""
 "CML_explorer ¤ò¥Ñ¥é¥á¡¼¥¿¥Õ¥¡¥¤¥ë¤òÄÌ¤·¤ÆÀ©¸æ¤Ç¤­¤ë."
 
 #: plug-ins/common/CML_explorer.c:494
-msgid "<Image>/Filters/Render/Pattern/CML explorer..."
+#, fuzzy
+msgid "<Image>/Filters/Render/Pattern/CML Explorer..."
 msgstr "<Image>/¥Õ¥£¥ë¥¿/²¼ÅÉ¤ê/¥Ñ¥¿¡¼¥ó/CML ¥¨¥¯¥¹¥×¥í¡¼¥é..."
 
 #: plug-ins/common/CML_explorer.c:796
@@ -1853,22 +1860,24 @@ msgid "7th Aug 1999"
 msgstr "1999Ç¯ 8·î7Æü"
 
 #: plug-ins/common/colortoalpha.c:114
-msgid "<Image>/Filters/Colors/Color To Alpha..."
+#, fuzzy
+msgid "<Image>/Filters/Colors/Color to Alpha..."
 msgstr "<Image>/¥Õ¥£¥ë¥¿/¿§/¿§¤òÆ©ÌÀÅÙ¤Ø..."
 
 #: plug-ins/common/colortoalpha.c:404
 msgid "Color To Alpha"
 msgstr "¿§¤òÆ©ÌÀÅÙ¤Ø"
 
-#: plug-ins/common/colortoalpha.c:436 plug-ins/common/mapcolor.c:399
+#: plug-ins/common/colortoalpha.c:437 plug-ins/common/mapcolor.c:399
 msgid "From:"
 msgstr "¸µ:"
 
-#: plug-ins/common/colortoalpha.c:440
-msgid "Color To Alpha Color Picker"
+#: plug-ins/common/colortoalpha.c:442
+#, fuzzy
+msgid "Color to Alpha Color Picker"
 msgstr "¡Ö¿§¤òÆ©ÌÀÅÙ¤Ø¡×¿§ÁªÂò"
 
-#: plug-ins/common/colortoalpha.c:448
+#: plug-ins/common/colortoalpha.c:450
 msgid "to alpha"
 msgstr "¤òÆ©ÌÀÅÙ¤Ë"
 
@@ -3315,8 +3324,8 @@ msgstr ""
 "¸Ä¡¹¤Î¥Á¥ã¥ó¥Í¥ë¤ËÂÐ¤·¤ÆÁàºî¤ò¹Ô¤¦¤è¤¦¤Ê¤³¤È¤Ï¤·¤Þ¤»¤ó. "
 "Â¿¤¯¤Î¿Í¤Ï¥³¥ó¥È¥é¥¹¥È¼«Æ°¿­Ä¹¤Ç¤Ï¤Ê¤¯, "
 "¤³¤Á¤é¤Îµ¡Ç½¤ÎÊý¤òË¾¤ó¤Ç¤¤¤ë¤è¤¦¤Ç¤¹. ¥³¥ó¥È¥é¥¹¥È¼«Æ°¿­Ä¹¤ÎÊý¤òÍÑ¤¤¤ë¤Î¤Ï, "
-"¸µ²èÁü¤¬ËÜÍèÇò¹õ¤Ê¤Î¤Ë²èÁü¤Ë¿§¤¬Ãå¤¤¤Æ¤·¤Þ¤Ã¤Æ¤¤¤ë¾ì¹ç¤Ë¤½¤ì¤ò¼è¤ê½ü¤¯¤¿¤á¤À¤±"
-"¤Ç¤·¤ç¤¦."
+"¸µ²èÁü¤¬ËÜÍèÇò¹õ¤Ê¤Î¤Ë²èÁü¤Ë¿§¤¬Ãå¤¤¤Æ¤·¤Þ¤Ã¤Æ¤¤¤ë¾ì¹ç¤Ë¤½¤ì¤ò¼è¤ê½ü¤¯¤¿¤á¤À¤"
+"±¤Ç¤·¤ç¤¦."
 
 #: plug-ins/common/normalize.c:83
 msgid "<Image>/Image/Colors/Auto/Normalize"
@@ -3803,11 +3812,11 @@ msgstr "»ÄÇ°¤Ç¤¹¤¬¥Á¥ã¥ó¥Í¥ë¤ä¥Þ¥¹¥¯¤ò²óÅ¾¤µ¤»¤ë¤³¤È¤Ï¤Ç¤­¤Þ¤»¤ó."
 msgid "Rotating..."
 msgstr "²óÅ¾¤·¤Æ¤¤¤Þ¤¹..."
 
-#: plug-ins/common/screenshot.c:146
+#: plug-ins/common/screenshot.c:147
 msgid "Creates a screenshot of a single window or the whole screen"
 msgstr ""
 
-#: plug-ins/common/screenshot.c:147
+#: plug-ins/common/screenshot.c:148
 msgid ""
 "This extension serves as a simple frontend to the X-window utility xwd and "
 "the xwd-file-plug-in. After specifying some options, xwd is called, the user "
@@ -3816,35 +3825,35 @@ msgid ""
 "it may grab the root window or use the window-id passed as a parameter."
 msgstr ""
 
-#: plug-ins/common/screenshot.c:157
+#: plug-ins/common/screenshot.c:158
 msgid "<Toolbox>/File/Acquire/Screen Shot..."
 msgstr "<Toolbox>/¥Õ¥¡¥¤¥ë/¼è¤ê¹þ¤ß/²èÌÌ¼è¤ê¹þ¤ß..."
 
-#: plug-ins/common/screenshot.c:400
+#: plug-ins/common/screenshot.c:407
 msgid "Screen Shot"
 msgstr "²èÌÌ¼è¤ê¹þ¤ß"
 
-#: plug-ins/common/screenshot.c:413
+#: plug-ins/common/screenshot.c:420
 msgid "Grab"
 msgstr "¼è¤ê¹þ¤à"
 
-#: plug-ins/common/screenshot.c:452
+#: plug-ins/common/screenshot.c:459
 msgid "Grab a single window"
 msgstr "Ã±°ì¥¦¥£¥ó¥É¥¦¤ò¼è¤ê¹þ¤à"
 
-#: plug-ins/common/screenshot.c:460
+#: plug-ins/common/screenshot.c:467
 msgid "Include decorations"
 msgstr "¥¦¥£¥ó¥É¥¦¾þ¤ê¤â´Þ¤á¤ë"
 
-#: plug-ins/common/screenshot.c:493
+#: plug-ins/common/screenshot.c:500
 msgid "Grab the whole screen"
 msgstr "²èÌÌÁ´ÂÎ¤ò¼è¤ê¹þ¤à"
 
-#: plug-ins/common/screenshot.c:506
+#: plug-ins/common/screenshot.c:513
 msgid "after"
 msgstr "¼è¤ê¹þ¤ß¤Ï"
 
-#: plug-ins/common/screenshot.c:515
+#: plug-ins/common/screenshot.c:522
 msgid "seconds delay"
 msgstr "ÉÃ¸å"
 
@@ -8304,7 +8313,7 @@ msgid "Save file"
 msgstr "¥Õ¥¡¥¤¥ë¤ËÊÝÂ¸"
 
 #: plug-ins/common/spheredesigner.c:2230
-msgid "SphereDesigner"
+msgid "Sphere Designer"
 msgstr ""
 
 #: plug-ins/common/spheredesigner.c:2263
@@ -8400,8 +8409,9 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/spheredesigner.c:2850
-msgid "<Image>/Filters/Render/SphereDesigner..."
-msgstr ""
+#, fuzzy
+msgid "<Image>/Filters/Render/Sphere Designer..."
+msgstr "<Image>/¥Õ¥£¥ë¥¿/²¼ÅÉ¤ê/Sin ¶ÊÀþ..."
 
 #: plug-ins/struc/struc.c:107
 msgid "Adds a canvas texture map to the picture"
