@@ -349,8 +349,7 @@ color_picker_motion (Tool           *tool,
   /*  First, transform the coordinates to gimp image space  */
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, FALSE, FALSE);
 
-  cp_tool->centerx = x;
-  cp_tool->centery = y;
+  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &cp_tool->centerx, &cp_tool->centery, FALSE, TRUE);
 
   color_picker_info_update (tool, get_color (gdisp->gimage, active_drawable, x, y,
 					     color_picker_options->sample_merged,
