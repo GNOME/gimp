@@ -1,5 +1,8 @@
 Revision history for Gimp-Perl extension.
 
+	- WRAP, SMEAR and BLACK were not being exported.
+	- fixed small bug in pixelmap.
+	- implemented gimp_query_procedure in XS.
 	- scm2perl had broken cdr and cddr stubs...
         - fixed examples/font_table.
         - applied fixes from Lupe Christoph.
