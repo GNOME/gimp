@@ -1,3 +1,15 @@
+2003-09-26  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimpscanconvert.[ch]: Add some parameters to
+	gimp_scan_convert_stroke () to expose the Miter-Setting
+	and enable dashing of vectors.
+
+	* app/core/gimpdrawable-stroke.c: Use the dashing feature.
+
+	* app/vectors/gimpvectors.c: Expose a bad hack (opacity
+	controls the libart-stroke width) in a #define. Default
+	is not enabled.
+
 2003-09-25  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimp/gimp.def

@@ -70,6 +70,9 @@ gimp_drawable_stroke_vectors (GimpDrawable         *drawable,
   guchar           bg[1] = { 0, };
   guchar          *src_bytes;
   PixelRegion      maskPR, basePR;
+  GArray          *dash_array = NULL;
+  gint             dashes_len = 4;
+  gdouble          dashes[4] = { 2.0, 2.0, 6.0, 2.0 };
 
   /* what area do we operate on? */
   gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
@@ -120,7 +123,11 @@ gimp_drawable_stroke_vectors (GimpDrawable         *drawable,
       return;
     }
 
-  gimp_scan_convert_stroke (scan_convert, join, cap, width);
+  dash_array = g_array_sized_new (FALSE, FALSE, sizeof (gdouble), dashes_len);
+  dash_array = g_array_prepend_vals (dash_array, &dashes, dashes_len);
+
+  gimp_scan_convert_stroke (scan_convert, width, join, cap, 10.0,
+                            0.0, dash_array);
 
   /* fill a 1-bpp Tilemanager with black, this will describe the shape
    * of the stroke. */

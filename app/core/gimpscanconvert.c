@@ -176,7 +176,7 @@ gimp_scan_convert_close_add_points (GimpScanConvert *sc)
  * It is not recommended to mix gimp_scan_convert_add_polyline with
  * gimp_scan_convert_add_points.
  *
- * Please note that if you should use gimp_scan_convert_stroke() if you
+ * Please note that you should use gimp_scan_convert_stroke() if you
  * specify open polygons.
  */
 
@@ -245,9 +245,12 @@ gimp_scan_convert_add_polyline (GimpScanConvert *sc,
  */
 void
 gimp_scan_convert_stroke (GimpScanConvert *sc,
+                          gdouble          width,
                           GimpJoinStyle    join,
                           GimpCapStyle     cap,
-                          gdouble          width)
+                          gdouble          miter,
+                          gdouble          dash_offset,
+                          GArray          *dash_info)
 {
   ArtSVP                *stroke;
   ArtPathStrokeJoinType  artjoin = 0;
@@ -284,8 +287,34 @@ gimp_scan_convert_stroke (GimpScanConvert *sc,
         break;
     }
 
+  if (dash_info)
+    {
+      ArtVpath     *dash_vpath;
+      ArtVpathDash  dash;
+      gdouble      *dashes;
+      gint          i;
+
+      width = MAX (width, 1.0);
+
+      dash.offset = dash_offset * width;
+
+      dashes = g_new (gdouble, dash_info->len);
+      
+      for (i=0; i < dash_info->len ; i++)
+        dashes[i] = width * g_array_index (dash_info, gdouble, i);
+
+      dash.n_dash = dash_info->len;
+      dash.dash = dashes;
+
+      dash_vpath = art_vpath_dash (sc->vpath, &dash);
+      art_free (sc->vpath);
+      sc->vpath = dash_vpath;
+
+      g_free (dashes);
+    }
+
   stroke = art_svp_vpath_stroke (sc->vpath, artjoin, artcap,
-                                 width, 10.0, 1.0);
+                                 width, miter, 1.0);
 
   sc->svp = stroke;
 }

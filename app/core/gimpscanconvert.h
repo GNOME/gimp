@@ -44,7 +44,7 @@ void              gimp_scan_convert_add_points (GimpScanConvert *scan_converter,
  * It is not recommended to mix gimp_scan_convert_add_polyline with
  * gimp_scan_convert_add_points.
  *
- * Please note that if you should use gimp_scan_convert_stroke() if you
+ * Please note that you should use gimp_scan_convert_stroke() if you
  * specify open polygons.
  */
 void              gimp_scan_convert_add_polyline (GimpScanConvert *sc,
@@ -60,9 +60,12 @@ void              gimp_scan_convert_add_polyline (GimpScanConvert *sc,
  */
 
 void              gimp_scan_convert_stroke     (GimpScanConvert *sc,
+                                                gdouble          width,
                                                 GimpJoinStyle    join,
                                                 GimpCapStyle     cap,
-                                                gdouble          width);
+                                                gdouble          miter,
+                                                gdouble          dash_offset,
+                                                GArray          *dash_info);
 
 /* Return a new Channel according to the polygonal shapes defined with
  * the commands above.

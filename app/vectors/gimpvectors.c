@@ -32,6 +32,7 @@
 #include "core/gimppaintinfo.h"
 
 #define LIBART_STROKE
+#undef LIBART_STROKE_BAD_HACK
 
 #ifdef LIBART_STROKE
 #  include "libgimpcolor/gimpcolor.h"
@@ -559,17 +560,31 @@ gimp_vectors_stroke (GimpItem      *item,
   {
     GimpContext *context;
     GimpRGB  color;
+    gfloat   opacity;
 
     context = gimp_get_current_context (
                           gimp_item_get_image (GIMP_ITEM (drawable))->gimp);
     gimp_context_get_foreground (context, &color);
+    opacity = gimp_context_get_opacity (context);
 
+#ifdef LIBART_STROKE_BAD_HACK
+    /* Bad hack to be able to change the size of the stroke interactively:
+     * use the opacity value as the width...
+     */
     gimp_drawable_stroke_vectors (drawable, vectors,
-                                  gimp_context_get_opacity (context),
+                                  1.0,
                                   &color,
                                   gimp_context_get_paint_mode (context),
-                                  14,  /* width */
-                                  GIMP_JOIN_MITER, GIMP_CAP_SQUARE, TRUE);
+                                  MAX (0.1, opacity * 100),
+                                  GIMP_JOIN_MITER, GIMP_CAP_BUTT, TRUE);
+#else
+    gimp_drawable_stroke_vectors (drawable, vectors,
+                                  opacity,
+                                  &color,
+                                  gimp_context_get_paint_mode (context),
+                                  5.0,
+                                  GIMP_JOIN_MITER, GIMP_CAP_BUTT, TRUE);
+#endif
     retval = TRUE;
   }
 #else
