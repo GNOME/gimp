@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.1.21\n"
-"POT-Creation-Date: 2000-05-27 21:19-0700\n"
+"POT-Creation-Date: 2000-04-08 23:18+0200\n"
 "PO-Revision-Date: 2000-05-09 00:07+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -37,13 +37,17 @@ msgstr "umí zpracovat vrstvy pouze jako políèka animace"
 msgid "Save as Animation"
 msgstr "Zapsat jako animaci"
 
-#: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186
-msgid "Flatten Image"
-msgstr "Slouèit obraz"
+#: libgimp/gimpexport.c:177
+msgid "Flatten"
+msgstr "Slouèit"
 
 #: libgimp/gimpexport.c:185
 msgid "can't Handle Transparency"
 msgstr "neumí zpracovat prùhlednost"
+
+#: libgimp/gimpexport.c:186
+msgid "Flatten Image"
+msgstr "Slouèit obraz"
 
 #: libgimp/gimpexport.c:194
 msgid "can only Handle RGB Images"
@@ -127,7 +131,7 @@ msgstr "Pøed zápisem je tøeba obrázek exportovat z následujících dùvodù:"
 msgid "The export conversion won't modify your original image."
 msgstr "Exportní konverze by nemìla zmìnit pùvodní obrázek."
 
-#: libgimp/gimpfileselection.c:388
+#: libgimp/gimpfileselection.c:350
 msgid "Select File"
 msgstr "Výbìr souboru"
 
@@ -136,6 +140,53 @@ msgstr "Výbìr souboru"
 #: libgimp/gimpunitmenu.c:495
 msgid "OK"
 msgstr "OK"
+
+#. pseudo unit
+#: libgimp/gimpunit.c:47
+msgid "pixel"
+msgstr "pixel"
+
+#: libgimp/gimpunit.c:47
+msgid "pixels"
+msgstr "pixelù"
+
+#. standard units
+#: libgimp/gimpunit.c:50
+msgid "inch"
+msgstr "palec"
+
+#: libgimp/gimpunit.c:50
+msgid "inches"
+msgstr "palcù"
+
+#: libgimp/gimpunit.c:51
+msgid "millimeter"
+msgstr "milimetr"
+
+#: libgimp/gimpunit.c:51
+msgid "millimeters"
+msgstr "milimetrù"
+
+#. professional units
+#: libgimp/gimpunit.c:54
+msgid "point"
+msgstr "bod"
+
+#: libgimp/gimpunit.c:54
+msgid "points"
+msgstr "bodù"
+
+#: libgimp/gimpunit.c:55
+msgid "pica"
+msgstr "pika"
+
+#: libgimp/gimpunit.c:55
+msgid "picas"
+msgstr "pik"
+
+#: libgimp/gimpunit.c:62
+msgid "percent"
+msgstr "procenta"
 
 #: libgimp/gimpunitmenu.c:234
 msgid "More..."
@@ -152,53 +203,6 @@ msgstr "Jednotka"
 #: libgimp/gimpunitmenu.c:528
 msgid "Factor"
 msgstr "Faktor"
-
-#. pseudo unit
-#: libgimp/gimpunit_pdb.c:47
-msgid "pixel"
-msgstr "pixel"
-
-#: libgimp/gimpunit_pdb.c:47
-msgid "pixels"
-msgstr "pixelù"
-
-#. standard units
-#: libgimp/gimpunit_pdb.c:50
-msgid "inch"
-msgstr "palec"
-
-#: libgimp/gimpunit_pdb.c:50
-msgid "inches"
-msgstr "palcù"
-
-#: libgimp/gimpunit_pdb.c:51
-msgid "millimeter"
-msgstr "milimetr"
-
-#: libgimp/gimpunit_pdb.c:51
-msgid "millimeters"
-msgstr "milimetrù"
-
-#. professional units
-#: libgimp/gimpunit_pdb.c:54
-msgid "point"
-msgstr "bod"
-
-#: libgimp/gimpunit_pdb.c:54
-msgid "points"
-msgstr "bodù"
-
-#: libgimp/gimpunit_pdb.c:55
-msgid "pica"
-msgstr "pika"
-
-#: libgimp/gimpunit_pdb.c:55
-msgid "picas"
-msgstr "pik"
-
-#: libgimp/gimpunit_pdb.c:62
-msgid "percent"
-msgstr "procenta"
 
 #: libgimp/gimpwidgets.c:706
 msgid ""
@@ -230,6 +234,3 @@ msgstr "kilobajtù"
 #: libgimp/gimpwidgets.c:1034
 msgid "MegaBytes"
 msgstr "megabajtù"
-
-#~ msgid "Flatten"
-#~ msgstr "Slouèit"

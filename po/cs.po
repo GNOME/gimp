@@ -1,33 +1,33 @@
-# Czech translation of GIMP 1.1.21.
+# Czech translation of GIMP 1.1.23.
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Stanislav Brabec <utx@k332.feld.cvut.cz>, 2000.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.21\n"
-"POT-Creation-Date: 2000-05-27 21:18-0700\n"
-"PO-Revision-Date: 2000-05-21 20:48+02:00\n"
+"POT-Creation-Date: 2000-05-30 09:35+0200\n"
+"PO-Revision-Date: 2000-05-30 09:43+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/about_dialog.c:192
+#: app/about_dialog.c:193
 msgid "About the GIMP"
 msgstr "O programu GIMP"
 
 #. this is a font, provide only one single font definition
-#: app/about_dialog.c:243
+#: app/about_dialog.c:244
 msgid "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 
-#: app/about_dialog.c:253
+#: app/about_dialog.c:254
 #, c-format
 msgid "Version %s brought to you by"
 msgstr "Verzi %s pro vás napsali"
 
-#: app/about_dialog.c:293
+#: app/about_dialog.c:294
 msgid "Please visit http://www.gimp.org/ for more info"
 msgstr "Více se dozvíte, nav¹tívíte-li http://www.gimp.org/"
 
@@ -142,7 +142,7 @@ msgstr "Poru¹ená køivka"
 msgid "Curve not closed!"
 msgstr "Køivka není uzavøená!"
 
-#: app/bezier_select.c:3228 app/gimage_mask.c:618
+#: app/bezier_select.c:3228 app/gimage_mask.c:620
 msgid "Paintbrush operation failed."
 msgstr "©tìtec selhal."
 
@@ -737,15 +737,15 @@ msgstr "Není"
 
 #: app/color_select.c:238
 msgid "H"
-msgstr ""
+msgstr "H"
 
 #: app/color_select.c:239
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: app/color_select.c:240
 msgid "V"
-msgstr ""
+msgstr "V"
 
 #: app/color_select.c:241 app/hue_saturation.c:352
 msgid "R"
@@ -1781,7 +1781,7 @@ msgstr "Zpráva programu GIMP"
 msgid "pixel"
 msgstr "pixel"
 
-#: app/gimpunit.c:58 app/measure.c:504 app/measure.c:508 app/paint_core.c:511
+#: app/gimpunit.c:58 app/measure.c:504 app/measure.c:508 app/paint_core.c:472
 msgid "pixels"
 msgstr "pixelù"
 
@@ -3814,7 +3814,7 @@ msgstr "Navigace: %s-%d.%d"
 msgid "Navigation: No Image"
 msgstr "Navigace: Bez obrázku"
 
-#: app/paint_core.c:745
+#: app/paint_core.c:706
 msgid "No brushes available for use with this tool."
 msgstr "Nejsou dostupné ¾ádné stopy pro pou¾ití s tímto nástrojem."
 
@@ -5211,9 +5211,8 @@ msgid "Magnify"
 msgstr "Lupa"
 
 #: app/tools.c:214
-#, fuzzy
 msgid "/Tools/Transform Tools/Magnify"
-msgstr "/Nástroje/Nástroje transformace/Pøesun"
+msgstr "/Nástroje/Nástroje transformace/Lupa"
 
 #: app/tools.c:219
 msgid "Zoom in & out"
@@ -6358,6 +6357,3 @@ msgstr "Vodové barvy"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Historie barev"
-
-#~ msgid "/Tools/Magnify"
-#~ msgstr "/Nástroje/Lupa"
