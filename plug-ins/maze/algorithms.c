@@ -37,6 +37,7 @@
  *
  */
 
+#include <stdlib.h>
 #include "maze.h"
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"

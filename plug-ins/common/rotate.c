@@ -50,6 +50,7 @@
  *    speedup (thanks to quartic for this suggestion). 
  */  
 
+#include <stdlib.h>
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
 

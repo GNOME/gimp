@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
 #include <gck/gck.h>

@@ -25,6 +25,7 @@
 /* option menus, entry fields, scales and checkbuttons.    */
 /***********************************************************/
 
+#include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <gdk/gdk.h>

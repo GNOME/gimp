@@ -23,10 +23,8 @@
  *
  */
 
-#ifdef MAZE_DEBUG
 #include <stdio.h>
 #include <stdlib.h>
-#endif /* MAZE_DEBUG */
 
 #include "maze.h"
 #include "libgimp/gimp.h"

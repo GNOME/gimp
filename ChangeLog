@@ -1,3 +1,12 @@
+Tue Jun  9 04:36:52 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* Got rid of a bunch of warnings when compiling plugins
+
+	* app/disp_callbacks.h: add declaration to get interface.c
+	to compile
+
+	* autogen.sh: make sure we know about ACLOCAL_FLAGS
+
 Tue Jun  9 11:18:03 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/disp_callbacks.c

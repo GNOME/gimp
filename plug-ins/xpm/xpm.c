@@ -32,6 +32,7 @@ Previous...Inherited code from Ray Lehtiniemi, who inherited it from S & P.
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 #include <X11/Xlib.h>
 #include <X11/xpm.h>
 #include "gtk/gtk.h"

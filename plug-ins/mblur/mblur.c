@@ -44,6 +44,8 @@
  *     Smash all bugs :-)
  */
 
+#include <stdlib.h>
+#include <math.h>
 #include <signal.h>
 #include <unistd.h>
 

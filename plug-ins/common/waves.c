@@ -29,6 +29,7 @@
 
 #include <math.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include <libgimp/gimp.h>
 #include <gtk/gtk.h>

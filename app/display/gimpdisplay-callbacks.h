@@ -28,6 +28,6 @@
 gint gdisplay_canvas_events (GtkWidget *, GdkEvent *);
 gint gdisplay_hruler_button_press (GtkWidget *, GdkEventButton *, gpointer);
 gint gdisplay_vruler_button_press (GtkWidget *, GdkEventButton *, gpointer);
-
+gint gdisplay_origin_button_press (GtkWidget *, GdkEventButton *, gpointer);
 
 #endif /*  __DISP_CALLBACKS_H__  */

@@ -54,6 +54,7 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <ctype.h>
+#include <math.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "pix_data.h"
