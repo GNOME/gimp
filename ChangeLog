@@ -1,5 +1,12 @@
 2003-10-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimperasertool.c (gimp_eraser_options_gui): changed
+	the "Anti Erase" toggle key from <control> to <alt> because
+	<shift> and <control> are used by straight_line mode and should
+	behave consistently across all paint tools.
+
+2003-10-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpitemtreeview.c
 	(gimp_item_tree_view_docked_iface_init): need to set
 	docked_iface->get_preview to NULL explicitly now that the
@@ -13,7 +20,7 @@
 
 	* app/widgets/gimpcoloreditor.c
 	* app/widgets/gimpdataeditor.c
-	* app/widgets/gimppaletteeditor.c. addef #defines for aux-info
+	* app/widgets/gimppaletteeditor.c. added #defines for aux-info
 	identifiers here, too.
 
 2003-10-18  Sven Neumann  <sven@gimp.org>

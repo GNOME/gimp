@@ -140,8 +140,7 @@ gimp_eraser_tool_modifier_key (GimpTool        *tool,
                                GdkModifierType  state,
                                GimpDisplay     *gdisp)
 {
-  if ((key == GDK_CONTROL_MASK) &&
-      ! (state & GDK_SHIFT_MASK)) /* leave stuff untouched in line draw mode */
+  if (key == GDK_MOD1_MASK)
     {
       GimpEraserOptions *options;
 
@@ -186,7 +185,7 @@ gimp_eraser_options_gui (GimpToolOptions *tool_options)
   vbox = gimp_paint_options_gui (tool_options);
 
   /* the anti_erase toggle */
-  str = g_strdup_printf (_("Anti Erase  %s"), gimp_get_mod_name_control ());
+  str = g_strdup_printf (_("Anti Erase  %s"), gimp_get_mod_name_alt ());
 
   button = gimp_prop_check_button_new (config, "anti-erase", str);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
