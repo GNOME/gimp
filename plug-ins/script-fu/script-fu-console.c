@@ -113,7 +113,7 @@ static int    history_cur = 0;
 static int    history_max = 50;
 
 static int   siod_output_pipe[2];
-extern int   siod_verbose_level;
+extern long  siod_verbose_level;
 extern char  siod_err_msg[];
 extern FILE *siod_output;
 
@@ -270,7 +270,11 @@ script_fu_console_interface (void)
   gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL,
 		   "along with this program; if not, write to the Free Software\n", -1);
   gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL,
-		   "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n", -1);
+		   "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n\n", -1);
+  gtk_text_insert (GTK_TEXT (cint.console), cint.font_strong, NULL, NULL,
+		   "Welcome to SIOD, Scheme In One Defun\n", -1); 
+  gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL,
+		   "(C) Copyright 1988-1994 Paradigm Associates Inc.\n", -1);
   gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL,
 		   "\n\n", -1);
   gtk_text_insert (GTK_TEXT (cint.console), cint.font_strong, NULL, NULL,
