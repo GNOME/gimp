@@ -508,8 +508,8 @@ plug_in_close (PlugIn   *plug_in,
 	       gboolean  kill_it)
 {
   Gimp *gimp;
-  gint  status;
 #ifndef G_OS_WIN32
+  gint  status;
   struct timeval tv;
 #endif
 
@@ -570,6 +570,12 @@ plug_in_close (PlugIn   *plug_in,
 	  TerminateProcess ((HANDLE) plug_in->pid, 0);
 	}
     }
+
+  /* FIXME: Wait for it like on Unix? */
+
+  /* Close handle which is no longer needed */
+  if (plug_in->pid)
+    CloseHandle ((HANDLE) plug_in->pid);
 #endif
 
   plug_in->pid = 0;

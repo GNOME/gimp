@@ -1,3 +1,8 @@
+2003-07-30  Tor Lillqvist  <tml@iki.fi>
+
+	* app/plug-in/plug-in.c (plug_in_close): [Win32] Plug handle leak,
+	call CloseHandle().
+
 2003-07-30  Manish Singh  <yosh@gimp.org>
 
 	* tools/pdbgen/app.pl: fixed UTF-8 reversed check.
