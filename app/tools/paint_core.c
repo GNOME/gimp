@@ -261,6 +261,7 @@ paint_core_button_press (Tool           *tool,
   /*  Paint to the image  */
   if (draw_line)
     {
+      draw_core_pause (paint_core->core, tool);
       paint_core_interpolate (paint_core, drawable);
       paint_core->lastx = paint_core->curx;
       paint_core->lasty = paint_core->cury;

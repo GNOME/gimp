@@ -1,3 +1,7 @@
+Sun Aug  1 16:27:27 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/paint_core.c: Fixed a bug in the line-preview. 
+
 1999-08-01  Tor Lillqvist  <tml@iki.fi>
 
 	* app/channel_ops.c (offset_halfheight_callback): Fix
