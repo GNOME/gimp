@@ -1,3 +1,7 @@
+2002-05-17  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL: documented more configure options.
+
 2002-05-16  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpbase/gimpprotocol.[ch]

@@ -21,10 +21,11 @@ There are some basic steps to building and installing the GIMP:
      ftp://ftp.gnome.org/pub/gnome/pre-gnome2/sources/libart_lgpl/
 
   5. You may want to install other third party libraries or programs that
-     are needed for some of the available plugins: TIFF, PNG, JPEG.
+     are needed for some of the available plugins: tiff, png, jpeg,
+     print, helpbrowser, ...
 
-  6. Configure the GIMP by running the `configure' script.
-     You may want to pass some options to it, see below.
+  6. Configure the GIMP by running the `configure' script. You may want
+     to pass some options to it, see below.
 
   7. Build the GIMP by running `make'.
 
@@ -54,48 +55,54 @@ options can be listed using the command `./configure --help'. There
 are five commands special options the GIMP `configure' script
 recognizes. These are:
 
-  --enable-shared and --disable-shared. This option affects whether
+  --enable-shared and --disable-shared.  This option affects whether
      shared libraries will be built or not. Shared libraries provide
      for much smaller executables. The default is to enable shared
      libraries. Disabling shared libraries is almost never a good idea.
 
-  --enable-debug and --disable-debug. This option causes the build
+  --enable-debug and --disable-debug.  This option causes the build
      process to compile with debugging enabled. If debugging is
      disabled, the GIMP will instead be compiled with optimizations turned
      on. The default is for debugging to be disabled. NOTE: This
      option is intended primarily as a convenience for developers.
 
-  --enable-ansi and --disable-ansi. This option causes stricter
+  --enable-ansi and --disable-ansi.  This option causes stricter
      ANSI C checking to be performed when compiling with GCC. The
      default is for strict checking to be disabled. NOTE: This option
      is intended primarily as a convenience for developers.
 
-  --enable-gimpdir=DIR. This option changes the default directory
+  --enable-gimpdir=DIR.  This option changes the default directory
      the gimp uses to search for its configuration files from ~/.gimp-1.3 
      (the directory .gimp-1.3 in the users home directory) to DIR.
 
-  --without-libtiff, without-libjpeg, --without-libpng. configure
+  --without-libtiff, without-libjpeg, --without-libpng.  configure
      will bail out if libtiff, libjpeg or libpng can not be found. You
      better fix the underlying problem and install these libraries with
      their header files. If you absolutely want to compile GIMP without
      support for TIFF, JPEG or PNG you need to explicitely disable
      them using the options given above.
  
-  --disable-print. The print plug-in requires a recent version of
-     libgimpprint. If you don't have it already installed, download
-     it from http://gimp-print.sourceforge.net/. If you want to compile
-     GIMP without support for printing, use the --disable-print option.
+  --enable-gtk-doc.  This option controls whether the libgimp API
+     reference will be created using gtk-doc. The HTML pages are 
+     included in a standard tarball, so you will only need this if you
+     are building from CVS.
 
-  --enable-perl and --disable-perl. The perl extension does not build
-     on all systems. If you experience problems use --disable-perl
-     and gimp will not even try to built it. The perl extension does
-     not usually respect the normal configure prefix but uses perl's
-     instead. You can force it to use a different prefix by giving it as
-     an argument to the --enable-perl option (--enable-perl=/my/prefix),
-     however, you will usually have to set PERL5LIB or equivalent
-     environment variables, otherwise gimp-perl will not run or you will
-     get many errors on startup. See README.perl for even finer grained
-     control about installation paths (and distribution making).
+  --with-html-dir=PATH.  This option allows to specify where the
+     libgimp API reference should be installed. You might want to modify
+     the path so it points to the place where glib and gtk+ installled
+     their API references so that the libgimp reference can link to
+     them.
+
+  --disable-print.  The print plug-in requires a recent version of
+     libgimpprint. If you don't have it already installed, download
+     it from http://gimp-print.sourceforge.net/. You need to pass
+     --without-gimp to gimp-print's configure script to build it without
+     having gimp-1.2 installed. If you want to compile GIMP without
+     support for printing, use the --disable-print option.
+
+  --enable-perl and --disable-perl.  The perl extension is currently
+     disabled since has not yet been updated for gimp-1.3. You can
+     enforce its build by using the --enable-perl option.
 
   --enable-mp. This options control whether to build GIMP with or without
      support for multiple processors. This option is off by default. If
@@ -114,9 +121,14 @@ recognizes. These are:
      in the same prefix. No link is created if the specified directory
      doesn't exist or you use --without-gnome-desktop.
 
+  --enable-default-binary. Use this option if you want to make gimp-1.3
+     the default gimp installation. A link called gimp pointing to the
+     gimp-1.3 executable will be installed then.
+
 The `make' command builds several things:
- - A bunch of public libraries in the directories starting with libgimp.
- - The plug-in programs in the `plug-ins' subdirectory.
+ - A bunch of public libraries in the directories starting with 'libgimp'.
+ - The plug-in programs in the 'plug-ins' directory.
+ - Some modules in the 'modules' subdirectory.
  - The main GIMP program 'gimp-1.3' in `app'.
 
 The `make install' commands installs the gimp header files associated 
