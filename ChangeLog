@@ -1,5 +1,9 @@
 2003-12-02  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/common/CML_explorer.c: fix save dialog handling.
+
+2003-12-02  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/common/Makefile.am
 	* plug-ins/common/plugin-defs.pl
 	* plug-ins/common/channel_mixer.c: Added channel mixer plugin.
