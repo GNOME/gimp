@@ -15,7 +15,7 @@
     'c_astretch' => { libdep => 'glib' },
     'checkerboard' => { libdep => 'gtk' },
     'color_enhance' => { libdep => 'gtk', ui => 1 },
-    'colortoalpha' => { libdep => 'gtk' },
+    'colortoalpha' => { libdep => 'gtk', ui => 1 },
     'colorify' => { libdep => 'gtk' },
     'compose' => { libdep => 'gtk', ui => 1 },
     'convmatrix' => { libdep => 'gtk' },

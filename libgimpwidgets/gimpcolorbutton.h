@@ -45,24 +45,6 @@ extern "C" {
 typedef struct _GimpColorButton       GimpColorButton;
 typedef struct _GimpColorButtonClass  GimpColorButtonClass;
 
-struct _GimpColorButton
-{
-  GtkButton   button;
-  
-  gchar      *title;
-  gint        width;
-  gint        height;
-  guchar     *color;
-  gint        bpp;
-  
-  gdouble    *dcolor;
-  GtkWidget  *preview;
-  GtkWidget  *dialog;
-
-  guchar     *even;
-  guchar     *odd;
-};
-
 struct _GimpColorButtonClass
 {
   GtkButtonClass parent_class;
@@ -77,6 +59,7 @@ GtkWidget* gimp_color_button_new        (gchar   *title,
 					 gint     height,
 					 guchar  *color,
 					 gint     bpp);
+void       gimp_color_button_update     (GimpColorButton *gcb);
 
 #ifdef __cplusplus
 }

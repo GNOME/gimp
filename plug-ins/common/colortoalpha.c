@@ -21,13 +21,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* TODO: 
- *  Add fg/bg buttons! 
- */
 #include <stdio.h>
 #include <stdlib.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
+#include "libgimp/stdplugins-intl.h"
 
 #define PRV_WIDTH 40
 #define PRV_HEIGHT 20
@@ -41,17 +40,8 @@ typedef struct {
 } C2AInterface;
 
 typedef struct {
-  GtkWidget	*preview;
+  GtkWidget	*color_button;
 } C2APreview;
-
-typedef struct
-{
-  GtkWidget *activate;   /* The button that activates the color sel. dialog */
-  GtkWidget *colselect;  /* The colour selection dialog itself */
-  GtkWidget *preview;    /* The colour preview */
-  unsigned char color[3];/* The selected colour */
-} CSEL;
-
 
 /* Declare local functions.
  */
@@ -70,15 +60,9 @@ static void      toalpha_render_row (const guchar *src_row,
 				     const gint bytes);
 /* UI stuff */
 static gint 	colortoalpha_dialog (GDrawable *drawable);
-static void 	C2A_color_button_callback (GtkWidget *widget, gpointer data);
-static void 	C2A_close_callback (GtkWidget *widget, gpointer data);
-static void 	C2A_ok_callback (GtkWidget *widget, gpointer data);
-static void 	C2A_bg_button_callback (GtkWidget *widget, gpointer data);
-static void 	C2A_fg_button_callback (GtkWidget *widget, gpointer data);
+static void 	C2A_close_callback  (GtkWidget *widget, gpointer data);
+static void 	C2A_ok_callback     (GtkWidget *widget, gpointer data);
 
-static void     color_preview_show(GtkWidget *widget, guchar *color);
-static void     color_select_ok_callback(GtkWidget *widget, gpointer data);
-static void     color_select_cancel_callback(GtkWidget *widget, gpointer data);
 static GRunModeType run_mode;
 
 GPlugInInfo PLUG_IN_INFO =
@@ -208,15 +192,14 @@ run (char    *name,
 }
 
 void
-colortoalpha(float *a1,
-	     float *a2,
-	     float *a3,
-	     float *a4,
-	     float c1,
-	     float c2,
-	     float c3)
+colortoalpha (float *a1,
+	      float *a2,
+	      float *a3,
+	      float *a4,
+	      float c1,
+	      float c2,
+	      float c3)
 {
-
   float alpha1, alpha2, alpha3;
 
   if ( *a1 > c1 )
@@ -285,9 +268,9 @@ colortoalpha(float *a1,
 
 static void
 toalpha_render_row (const guchar *src_data,
-		    guchar *dest_data,
-		    gint col,               /* row width in pixels */
-		    const gint bytes)
+		    guchar       *dest_data,
+		    gint          col,               /* row width in pixels */
+		    const gint    bytes)
 {
   while (col--)
     {
@@ -385,11 +368,11 @@ toalpha (GDrawable *drawable)
 }
 
 static gint 
-colortoalpha_dialog (GDrawable * drawable)
+colortoalpha_dialog (GDrawable *drawable)
 {
-  GtkWidget *button;
   GtkWidget *dlg;
-  GtkWidget *preview;
+  GtkWidget *hbbox;
+  GtkWidget *button;
   GtkWidget *table;
   GtkWidget *label;
 
@@ -415,209 +398,77 @@ colortoalpha_dialog (GDrawable * drawable)
   gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Color To Alpha");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Color To Alpha"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
                       (GtkSignalFunc) C2A_close_callback,
                       NULL);
   /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+ 
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) C2A_ok_callback,
-                      dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
+		      (GtkSignalFunc) C2A_ok_callback,
+		      dlg);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-                             (GtkSignalFunc) gtk_widget_destroy,
-                             GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
+			     (GtkSignalFunc) gtk_widget_destroy,
+			     GTK_OBJECT (dlg));
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  table = gtk_table_new(2,6,FALSE);
-  button =   gtk_button_new ();
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                     (GtkSignalFunc) C2A_color_button_callback,
-                     NULL);
-  gtk_widget_set_usize(button, PRV_WIDTH+9, PRV_HEIGHT+9);
-  preview = gtk_preview_new(GTK_PREVIEW_COLOR);
-  ppreview.preview = preview; /* save in a global structure */
+  table = gtk_table_new (1, 3, FALSE);
 
-  gtk_preview_size (GTK_PREVIEW (preview), PRV_WIDTH, PRV_HEIGHT);
-  gtk_container_add (GTK_CONTAINER (button), preview);
-  gtk_widget_show(preview);
-  color_preview_show(preview, pvals.color);
-  gtk_widget_show(button);
- 
-  gtk_table_attach( GTK_TABLE(table), button, 2, 4, 0, 1, 
+  label = gtk_label_new (_("From:"));
+  gtk_table_attach_defaults ( GTK_TABLE(table), label, 0, 1, 0, 1);
+  gtk_widget_show (label);
+  
+  button = gimp_color_button_new (_("Color To Alpha Color Picker"), 
+				  PRV_WIDTH, PRV_HEIGHT,
+				  pvals.color, 3);
+  gtk_table_attach( GTK_TABLE(table), button, 1, 2, 0, 1, 
                                  GTK_EXPAND, GTK_SHRINK, 4, 4) ; 
-  label = gtk_label_new("From:");
-  gtk_widget_show(label);
-  gtk_table_attach_defaults ( GTK_TABLE(table), label, 1, 2, 0, 1);
-  
-  label = gtk_label_new("to alpha");
-  gtk_widget_show(label);
-  gtk_table_attach_defaults ( GTK_TABLE(table), label, 4, 5, 0, 1);
-  gtk_widget_show(table);
-  gtk_box_pack_start( GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
+  gtk_widget_show(button);
+  ppreview.color_button = button;
 
-  button = gtk_button_new_with_label("Foreground");
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                     (GtkSignalFunc) C2A_fg_button_callback,
-                     NULL);
-  gtk_widget_show(button);
-  gtk_table_attach( GTK_TABLE(table), button, 1, 3, 1, 2, 
-                                 GTK_EXPAND, GTK_SHRINK, 4, 0) ; 
-  
-  button = gtk_button_new_with_label("Background");
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                     (GtkSignalFunc) C2A_bg_button_callback,
-                     NULL);
-  gtk_widget_show(button);
-  gtk_table_attach( GTK_TABLE(table), button, 3, 5, 1, 2, 
-                                 GTK_EXPAND, GTK_SHRINK, 4, 0) ; 
+  label = gtk_label_new (_("to alpha"));
+  gtk_table_attach_defaults ( GTK_TABLE(table), label, 2, 3, 0, 1);
+  gtk_widget_show (label);
+
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
+  gtk_widget_show (table);
    
-  gtk_widget_show(dlg);
+  gtk_widget_show (dlg);
 
-  gtk_main();
-  gdk_flush();
+  gtk_main ();
+  gdk_flush ();
 
   return pint.run;
 }
 
-static void
-color_preview_show (GtkWidget *widget,
-                    unsigned char *rgb)
-
-{guchar *buf, *bp;
- int j, width, height;
-
- width = PRV_WIDTH;
- height = PRV_HEIGHT;
-
- bp = buf = g_malloc (width*3);
- if (buf == NULL) return;
-
- for (j = 0; j < width; j++)
- {
-   *(bp++) = rgb[0];
-   *(bp++) = rgb[1];
-   *(bp++) = rgb[2];
- }
- for (j = 0; j < height; j++)
-   gtk_preview_draw_row (GTK_PREVIEW (widget), buf, 0, j, width);
-
- gtk_widget_draw (widget, NULL);
-
- g_free (buf);
-}
-
-
 
 static void
-C2A_close_callback(GtkWidget *widget,
-                   gpointer data)
+C2A_close_callback (GtkWidget *widget,
+		    gpointer   data)
 {
   gtk_main_quit ();
 }
+
 static void
 C2A_ok_callback (GtkWidget *widget, 
-                 gpointer data)
+                 gpointer   data)
 {
   pint.run = TRUE;
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void 
-C2A_color_button_callback (GtkWidget *widget, 
-                           gpointer data)
-{
-  GtkColorSelectionDialog *csd;
-  GtkWidget *dialog;
-  gdouble color[3];
-  gint i;
-  for (i=0;i<3;i++)
-    color[i] = (gdouble) pvals.color[i] / 255.0;
-  
-  dialog = gtk_color_selection_dialog_new("Color To Alpha Color Picker");
-  csd = GTK_COLOR_SELECTION_DIALOG (dialog);
-
-  gtk_widget_destroy (csd->help_button);
-  
-  gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-                      (GtkSignalFunc) color_select_cancel_callback, dialog);
-  gtk_signal_connect (GTK_OBJECT (csd->ok_button), "clicked",
-                     (GtkSignalFunc) color_select_ok_callback, dialog);
-  gtk_signal_connect (GTK_OBJECT (csd->cancel_button), "clicked",
-                     (GtkSignalFunc) color_select_cancel_callback, dialog);
-
-  gtk_color_selection_set_color (GTK_COLOR_SELECTION (csd->colorsel), color);
-
-  gtk_window_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
-  gtk_widget_show (dialog);
-}
-
-static void
-color_select_ok_callback (GtkWidget *widget,
-                          gpointer data)
-
-{gdouble color[3];
- GtkWidget *dialog;
- gint j;
-
- dialog = (GtkWidget *) data;
- gtk_color_selection_get_color (
-   GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (dialog)->colorsel),
-   color);
-
- for (j = 0; j < 3; j++)
-   pvals.color[j] = (unsigned char)(color[j]*255.0);
-
- color_preview_show (ppreview.preview, pvals.color);
-
- gtk_widget_destroy (dialog);
-}
-
-static void
-color_select_cancel_callback (GtkWidget *widget,
-                              gpointer data)
-{
- GtkWidget *dialog;
-
- dialog = (GtkWidget *)data;
- gtk_widget_destroy (dialog);
-}
-
-static void
-C2A_fg_button_callback (GtkWidget *widget,
-                          gpointer data)
-
-{
- guchar color[3];
- int i;
- gimp_palette_get_foreground(color, color+1, color+2);
-
- for (i = 0; i < 3; i++)
-   pvals.color[i] = color[i];
-
- color_preview_show (ppreview.preview, pvals.color);
-}
-
-static void
-C2A_bg_button_callback (GtkWidget *widget,
-                          gpointer data)
-
-{
- guchar color[3];
- int i;
- gimp_palette_get_background(color, color+1, color+2);
-
- for (i = 0; i < 3; i++)
-   pvals.color[i] = color[i];
-
- color_preview_show (ppreview.preview, pvals.color);
 }

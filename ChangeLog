@@ -1,3 +1,19 @@
+Mon Nov 15 19:31:13 MET 1999  Sven Neumann <sven.gimp.org>
+
+	* libgimp/gimpcolorbutton.c
+	* libgimp/gimpcolorbutton.h
+	* po/POTFILES.in: added dnd and a popup window on right-click that 
+	allows to load the current fg and bg colors.
+	
+	* po-plug-ins/POTFILES.in
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/colortoalpha.c
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/script-fu/script-fu-scripts.c: made script-fu and the new
+	colortoalpha plug-in use gimp_color_button
+
+	* plug-ins/common/rotate.c: add " degrees" to the menu entries
+
 Mon Nov 15 11:48:59 1999  ape@spacetec.no  (Asbjorn Pettersen)
 
 	* modules/colorsel_gtk.c (module_init): Removed most of the

@@ -301,6 +301,7 @@ colortoalpha_SOURCES = \
 	colortoalpha.c
 
 colortoalpha_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)

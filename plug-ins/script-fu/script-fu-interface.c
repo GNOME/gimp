@@ -76,13 +76,6 @@
 
 #define MAX_STRING_LENGTH 4096
 
-typedef struct
-{
-  GtkWidget *preview;
-  GtkWidget *dialog;
-  gdouble    color[3];
-  gdouble    old_color[3];
-} SFColor;
 
 typedef struct
 {
@@ -124,7 +117,7 @@ typedef union
   gint32        sfa_drawable;
   gint32        sfa_layer;
   gint32        sfa_channel;
-  SFColor       sfa_color;
+  guchar        sfa_color[3];
   gint32        sfa_toggle;
   gchar *       sfa_value;
   SFAdjustment  sfa_adjustment;
@@ -179,8 +172,6 @@ static void       script_fu_free_script      (SFScript  *script);
 static void       script_fu_enable_cc        (void);
 static void       script_fu_disable_cc       (gint       err_msg);
 static void       script_fu_interface        (SFScript  *script);
-static void       script_fu_color_preview    (GtkWidget *preview,
-					      gdouble   *color);
 static void       script_fu_font_preview     (GtkWidget *preview,
 					      gchar     *fontname);
 static void       script_fu_cleanup_widgets  (SFScript  *script);
@@ -198,15 +189,6 @@ static void       script_fu_menu_callback    (gint32     id,
 					      gpointer   data);
 static void       script_fu_toggle_update    (GtkWidget *widget,
 					      gpointer   data);
-static void       script_fu_color_preview_callback (GtkWidget *widget,
-						    gpointer   data);
-static void       script_fu_color_preview_changed  (GtkWidget *widget,
-						    gpointer   data);
-static void       script_fu_color_preview_cancel   (GtkWidget *widget,
-						    gpointer   data);
-static gint       script_fu_color_preview_delete   (GtkWidget *widget,
-						    GdkEvent  *event,
-						    gpointer   data);
 static void       script_fu_file_selection_callback(GtkWidget *widget,
 						    gpointer   data);
 static void       script_fu_font_preview_callback  (GtkWidget *widget,
@@ -414,7 +396,7 @@ script_fu_add_script (LISP a)
   GParamDef *args;
   char *val;
   int i;
-  gdouble color[3];
+  guchar color[3];
   LISP color_list;
   LISP adj_list;
   LISP brush_list;
@@ -554,15 +536,13 @@ script_fu_add_script (LISP a)
 		  if (!TYPEP (car (a), tc_cons))
 		    return my_err ("script-fu-register: color defaults must be a list of 3 integers", NIL);
 		  color_list = car (a);
-		  color[0] = (gdouble) get_c_long (car (color_list)) / 255.0;
+		  color[0] = (guchar)(CLAMP (get_c_long (car (color_list)), 0, 255));
 		  color_list = cdr (color_list);
-		  color[1] = (gdouble) get_c_long (car (color_list)) / 255.0;
+		  color[1] = (guchar)(CLAMP (get_c_long (car (color_list)), 0, 255));
 		  color_list = cdr (color_list);
-		  color[2] = (gdouble) get_c_long (car (color_list)) / 255.0;
-		  memcpy (script->arg_defaults[i].sfa_color.color, color, sizeof (gdouble) * 3);
-		  memcpy (script->arg_values[i].sfa_color.color, color, sizeof (gdouble) * 3);
-		  script->arg_values[i].sfa_color.preview = NULL;
-		  script->arg_values[i].sfa_color.dialog = NULL;
+		  color[2] = (guchar)(CLAMP (get_c_long (car (color_list)), 0, 255));
+		  memcpy (script->arg_defaults[i].sfa_color, color, sizeof (guchar) * 3);
+		  memcpy (script->arg_values[i].sfa_color, color, sizeof (guchar) * 3);
 
 		  args[i + 1].type = PARAM_COLOR;
 		  args[i + 1].name = "color";
@@ -1220,22 +1200,10 @@ script_fu_interface (SFScript *script)
 	  break;
 
 	case SF_COLOR:
-	  script->args_widgets[i] = gtk_button_new ();
+	  script->args_widgets[i] = gimp_color_button_new (_("Script-Fu Color Selection"),
+							   COLOR_SAMPLE_WIDTH, COLOR_SAMPLE_HEIGHT,
+							   script->arg_values[i].sfa_color, 3);
 
-	  script->arg_values[i].sfa_color.preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-	  script->arg_values[i].sfa_color.dialog = NULL;
-	  gtk_preview_size (GTK_PREVIEW (script->arg_values[i].sfa_color.preview),
-			    COLOR_SAMPLE_WIDTH, COLOR_SAMPLE_HEIGHT);
-	  gtk_container_add (GTK_CONTAINER (script->args_widgets[i]),
-			     script->arg_values[i].sfa_color.preview);
-	  gtk_widget_show (script->arg_values[i].sfa_color.preview);
-
-	  script_fu_color_preview (script->arg_values[i].sfa_color.preview,
-				   script->arg_values[i].sfa_color.color);
-
-	  gtk_signal_connect (GTK_OBJECT (script->args_widgets[i]), "clicked",
-			      (GtkSignalFunc) script_fu_color_preview_callback,
-			      &script->arg_values[i].sfa_color);	  
 	  break;
 
 	case SF_TOGGLE:
@@ -1432,26 +1400,6 @@ script_fu_interface (SFScript *script)
 }
 
 static void
-script_fu_color_preview (GtkWidget *preview,
-			 gdouble   *color)
-{
-  gint i;
-  guchar buf[3 * COLOR_SAMPLE_WIDTH];
-
-  for (i = 0; i < COLOR_SAMPLE_WIDTH; i++)
-    {
-      buf[3*i] = (guint) (255.999 * color[0]);
-      buf[3*i+1] = (guint) (255.999 * color[1]);
-      buf[3*i+2] = (guint) (255.999 * color[2]);
-    }
-  for (i = 0; i < COLOR_SAMPLE_HEIGHT; i++)
-    gtk_preview_draw_row (GTK_PREVIEW (preview), buf, 0, i, COLOR_SAMPLE_WIDTH);
-
-  gtk_widget_draw (preview, NULL);
-}
-
-
-static void
 script_fu_pattern_preview (gchar    *name,
 			   gint      width,
 			   gint      height,
@@ -1547,11 +1495,6 @@ script_fu_cleanup_widgets (SFScript *script)
     switch (script->arg_types[i])
       {
       case SF_COLOR:
-	if (script->arg_values[i].sfa_color.dialog != NULL)
-	  {
-	    gtk_widget_destroy (script->arg_values[i].sfa_color.dialog);
-	    script->arg_values[i].sfa_color.dialog = NULL;
-	  }
 	break;
       case SF_FILENAME:
 	break;
@@ -1674,9 +1617,9 @@ script_fu_ok_callback (GtkWidget *widget,
 	  break;
 	case SF_COLOR:
 	  sprintf (buffer, "'(%d %d %d)",
-		   (gint32) (script->arg_values[i].sfa_color.color[0] * 255.999),
-		   (gint32) (script->arg_values[i].sfa_color.color[1] * 255.999),
-		   (gint32) (script->arg_values[i].sfa_color.color[2] * 255.999));
+		   script->arg_values[i].sfa_color[0],
+		   script->arg_values[i].sfa_color[1],
+		   script->arg_values[i].sfa_color[2]);
 	  text = buffer;
 	  break;
 	case SF_TOGGLE:
@@ -1950,12 +1893,11 @@ script_fu_reset_callback (GtkWidget *widget,
       case SF_CHANNEL:
 	break;
       case SF_COLOR:
-	for (j = 0; j < 4; j++)
+	for (j = 0; j < 3; j++)
 	  {
-	    script->arg_values[i].sfa_color.color[j] = script->arg_defaults[i].sfa_color.color[j];
+	    script->arg_values[i].sfa_color[j] = script->arg_defaults[i].sfa_color[j];
 	  }
-	script_fu_color_preview (script->arg_values[i].sfa_color.preview, 
-				 script->arg_values[i].sfa_color.color);
+	gimp_color_button_update (GIMP_COLOR_BUTTON (script->args_widgets[i]));
 	break;
       case SF_TOGGLE:
 	script->arg_values[i].sfa_toggle = script->arg_defaults[i].sfa_toggle;
@@ -2026,94 +1968,6 @@ script_fu_toggle_update (GtkWidget *widget,
     *toggle_val = TRUE;
   else
     *toggle_val = FALSE;
-}
-
-
-static void
-script_fu_color_preview_callback (GtkWidget *widget,
-				  gpointer   data)
-{
-  GtkColorSelectionDialog *csd;
-  SFColor *color;
-
-  color = (SFColor *) data;
-  color->old_color[0] = color->color[0];
-  color->old_color[1] = color->color[1];
-  color->old_color[2] = color->color[2];
-      
-  if (!color->dialog)
-    {
-      color->dialog = 
-	gtk_color_selection_dialog_new (_("Script-Fu Color Picker"));
-      csd = GTK_COLOR_SELECTION_DIALOG (color->dialog);
-
-      gtk_widget_destroy (csd->help_button);
-
-      gtk_signal_connect_object (GTK_OBJECT (csd->ok_button), "clicked",
-				 (GtkSignalFunc) gtk_widget_hide,
-				 GTK_OBJECT (color->dialog));
-      gtk_signal_connect (GTK_OBJECT (csd), "delete_event",
-			  (GtkSignalFunc) script_fu_color_preview_delete,
-			  color);
-      gtk_signal_connect (GTK_OBJECT (csd), "destroy",
-			  gtk_widget_destroyed, &color->dialog);
-      gtk_signal_connect (GTK_OBJECT (csd->cancel_button), "clicked",
-			  (GtkSignalFunc) script_fu_color_preview_cancel,
-			  color);
-      gtk_signal_connect (GTK_OBJECT (csd->colorsel), "color_changed",
-			  (GtkSignalFunc) script_fu_color_preview_changed,
-			  color);
-
-      /* call here so the old color is set */
-      gtk_color_selection_set_color (GTK_COLOR_SELECTION (csd->colorsel),
-				     color->color);
-    }
-  else
-    csd = GTK_COLOR_SELECTION_DIALOG (color->dialog);
-
-  gtk_color_selection_set_color (GTK_COLOR_SELECTION (csd->colorsel),
-				 color->color);
-
-  gtk_window_position (GTK_WINDOW (color->dialog), GTK_WIN_POS_MOUSE);
-  gtk_widget_show (color->dialog);
-}
-
-static void
-script_fu_color_preview_changed (GtkWidget *widget,
-				 gpointer   data)
-{
-  SFColor *color;
-
-  color = (SFColor *) data;
-  gtk_color_selection_get_color (GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (color->dialog)->colorsel),
-				 color->color);
-  script_fu_color_preview (color->preview, color->color);
-}
-
-static void
-script_fu_color_preview_cancel (GtkWidget *widget,
-				gpointer   data)
-{
-  SFColor *color;
-
-  color = (SFColor *) data;
-
-  gtk_widget_hide (color->dialog);
-
-  color->color[0] = color->old_color[0];
-  color->color[1] = color->old_color[1];
-  color->color[2] = color->old_color[2];
-
-  script_fu_color_preview (color->preview, color->color);
-}
-
-static gint
-script_fu_color_preview_delete (GtkWidget *widget,
-				GdkEvent  *event,
-				gpointer   data)
-{
-  script_fu_color_preview_cancel (widget, data);
-  return TRUE;
 }
 
 static void

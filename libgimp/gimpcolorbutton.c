@@ -22,15 +22,63 @@
 
 /* TODO:
  *
- * add DND -- this will be trivial as soon as gimpdnd.[ch] is moved into libgimp
- *
  * handle bytes != 3|4 -- would we have to provide a special color select dialog
- *                        for that case? Another possibility could be to destroy
- *                        all color-related widgets in the gtk colorselector.
+ *                        for that case? Another possibility could be to hide or
+ *                        destroy all color-related widgets in the gtk colorselector.
  */
 
+#include "gimp.h"
 #include "gimpcolorbutton.h"
+#include "gimpintl.h"
 #include "gimplimits.h"
+
+
+/* DND -- remove as soon as gimpdnd is in libgimp */
+#define DRAG_PREVIEW_SIZE   32
+#define DRAG_ICON_OFFSET    -8
+
+static void gimp_color_button_drag_begin        (GtkWidget          *widget,
+						 GdkDragContext     *context,
+						 gpointer            data);
+static void gimp_color_button_drag_end          (GtkWidget          *widget,
+						 GdkDragContext     *context,
+						 gpointer            data);
+static void gimp_color_button_drop_handle       (GtkWidget          *widget, 
+						 GdkDragContext     *context,
+						 gint                x,
+						 gint                y,
+						 GtkSelectionData   *selection_data,
+						 guint               info,
+						 guint               time,
+						 gpointer            data);
+static void gimp_color_button_drag_handle       (GtkWidget        *widget, 
+						 GdkDragContext   *context,
+						 GtkSelectionData *selection_data,
+						 guint             info,
+						 guint             time,
+						 gpointer          data);
+static const GtkTargetEntry targets[] = { { "application/x-color", 0 } };
+
+/* end of DND */
+
+struct _GimpColorButton
+{
+  GtkButton   button;
+  
+  gchar          *title;
+  gint            width;
+  gint            height;
+  guchar         *color;
+  gint            bpp;
+  
+  gdouble        *dcolor;
+  GtkWidget      *preview;
+  GtkWidget      *dialog;
+  GtkItemFactory *item_factory;
+  
+  guchar         *even;
+  guchar         *odd;
+};
 
 
 static void  gimp_color_button_destroy   (GtkObject *object);
@@ -39,6 +87,20 @@ static void  gimp_color_button_paint     (GimpColorButton *gcb);
 
 static void  gimp_color_button_dialog_ok     (GtkWidget *widget, gpointer data);
 static void  gimp_color_button_dialog_cancel (GtkWidget *widget, gpointer data);
+
+static void  gimp_color_button_use_fg    (gpointer callback_data, guint callback_action, GtkWidget *widget);
+static void  gimp_color_button_use_bg    (gpointer callback_data, guint callback_action, GtkWidget *widget);
+
+static gint   gimp_color_button_menu_popup     (GtkWidget *widget, GdkEvent *event, gpointer data);
+static gchar* gimp_color_button_menu_translate (const gchar *path, gpointer func_data);
+
+
+static GtkItemFactoryEntry menu_items[] = {
+  { N_("/Use Foreground Color"), NULL, gimp_color_button_use_fg, 2, NULL },
+  { N_("/Use Background Color"), NULL, gimp_color_button_use_bg, 2, NULL }
+};
+static gint nmenu_items = sizeof (menu_items) / sizeof (menu_items[0]);
+
 
 enum {
   COLOR_CHANGED,
@@ -177,7 +239,93 @@ gimp_color_button_new (gchar   *title,
   gtk_widget_show (gcb->preview);
   gimp_color_button_paint (gcb);
  
+  /* right-click opens a popup */
+  gcb->item_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<popup>", NULL);  
+  gtk_item_factory_set_translate_func (gcb->item_factory, gimp_color_button_menu_translate,
+	  			       NULL, NULL);
+  gtk_item_factory_create_items (gcb->item_factory, nmenu_items, menu_items, gcb);
+  gtk_signal_connect (GTK_OBJECT (gcb),
+		      "button_press_event",
+		      GTK_SIGNAL_FUNC (gimp_color_button_menu_popup),
+		      gcb);
+
+  /* DND -- to be changed as soon as gimpdnd is in libgimp */
+  gtk_drag_dest_set (gcb->preview,
+		     GTK_DEST_DEFAULT_HIGHLIGHT |
+		     GTK_DEST_DEFAULT_MOTION |
+		     GTK_DEST_DEFAULT_DROP,
+		     targets, 1,
+		     GDK_ACTION_COPY);
+  gtk_drag_source_set (gcb->preview,
+		       GDK_BUTTON2_MASK,
+		       targets, 1,
+		       GDK_ACTION_COPY | GDK_ACTION_MOVE);
+
+  gtk_signal_connect (GTK_OBJECT (gcb->preview),
+		      "drag_begin",
+		      GTK_SIGNAL_FUNC (gimp_color_button_drag_begin),
+		      gcb);
+  gtk_signal_connect (GTK_OBJECT (gcb->preview),
+		      "drag_end",
+		      GTK_SIGNAL_FUNC (gimp_color_button_drag_end),
+		      gcb);
+  gtk_signal_connect (GTK_OBJECT (gcb->preview),
+		      "drag_data_get",
+		      GTK_SIGNAL_FUNC (gimp_color_button_drag_handle),
+		      gcb);
+  gtk_signal_connect (GTK_OBJECT (gcb->preview),
+		      "drag_data_received",
+		      GTK_SIGNAL_FUNC (gimp_color_button_drop_handle),
+		      gcb);
+  /* end of DND */
+
   return (GTK_WIDGET (gcb));
+}
+
+void       
+gimp_color_button_update (GimpColorButton *gcb)
+{
+  gint i;
+
+  g_return_if_fail (GIMP_IS_COLOR_BUTTON (gcb));
+
+  for (i = 0; i < gcb->bpp; i++)
+    gcb->dcolor[i] = (gdouble)gcb->color[i] / 255.0;
+
+  gimp_color_button_paint (gcb);
+
+  if (gcb->dialog)
+    gtk_color_selection_set_color (GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->colorsel),
+				   gcb->dcolor);
+}
+
+static gint
+gimp_color_button_menu_popup (GtkWidget *widget,
+			      GdkEvent  *event,
+			      gpointer   data)
+{
+  GimpColorButton *gcb;
+  GdkEventButton *bevent;
+  gint x;
+  gint y;
+
+  g_return_val_if_fail (GIMP_IS_COLOR_BUTTON (data), FALSE);
+  gcb = GIMP_COLOR_BUTTON (data);
+ 
+  if (event->type != GDK_BUTTON_PRESS)
+    return FALSE;
+
+  bevent = (GdkEventButton *) event;
+  
+  if (bevent->button != 3)
+    return FALSE;
+ 
+  gdk_window_get_origin (GTK_WIDGET (widget)->window, &x, &y);
+  gtk_item_factory_popup (gcb->item_factory, 
+			  x + bevent->x, y + bevent->y, 
+			  bevent->button, bevent->time);
+
+  return (TRUE);  
 }
 
 static void
@@ -287,11 +435,12 @@ gimp_color_button_dialog_ok (GtkWidget *widget,
   
   gtk_widget_destroy (gcb->dialog);  
 
-  gimp_color_button_paint (gcb);
-
   if (color_changed)
-    gtk_signal_emit (GTK_OBJECT (gcb),
-		     gimp_color_button_signals[COLOR_CHANGED]);
+    {
+      gimp_color_button_paint (gcb);
+      gtk_signal_emit (GTK_OBJECT (gcb),
+		       gimp_color_button_signals[COLOR_CHANGED]);
+    }
 }
 
 static void  
@@ -307,4 +456,148 @@ gimp_color_button_dialog_cancel (GtkWidget *widget,
 }
 
 
+static void  
+gimp_color_button_use_fg (gpointer   callback_data, 
+			  guint      callback_action, 
+			  GtkWidget *widget)
+{
+  GimpColorButton *gcb;
 
+  g_return_if_fail (GIMP_IS_COLOR_BUTTON (callback_data));
+  gcb = GIMP_COLOR_BUTTON (callback_data);
+
+  gimp_palette_get_foreground (gcb->color, gcb->color+1, gcb->color+2);
+
+  gimp_color_button_update (gcb);
+}
+
+
+static void  
+gimp_color_button_use_bg (gpointer   callback_data, 
+			  guint      callback_action, 
+			  GtkWidget *widget)
+{
+  GimpColorButton *gcb;
+
+  g_return_if_fail (GIMP_IS_COLOR_BUTTON (callback_data));
+  gcb = GIMP_COLOR_BUTTON (callback_data);
+
+  gimp_palette_get_background (gcb->color, gcb->color+1, gcb->color+2);
+
+  gimp_color_button_update (gcb);
+}
+
+static gchar* 
+gimp_color_button_menu_translate (const gchar *path, 
+				  gpointer     func_data)
+{
+  return (gettext (path));
+}
+
+/* DND -- remove as soon as gimpdnd is in libgimp */
+
+static void
+gimp_color_button_drag_begin (GtkWidget      *widget,
+			      GdkDragContext *context,
+			      gpointer        data)
+{
+  GimpColorButton *gcb = data;
+  GtkWidget *window;
+  GdkColor bg;
+
+  window = gtk_window_new (GTK_WINDOW_POPUP);
+  gtk_widget_set_app_paintable (GTK_WIDGET (window), TRUE);
+  gtk_widget_set_usize (window, DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);
+  gtk_widget_realize (window);
+  gtk_object_set_data_full (GTK_OBJECT (widget),
+			    "gimp-color-button-drag-window",
+			    window,
+			    (GtkDestroyNotify) gtk_widget_destroy);
+
+  bg.red   = 0xffff * gcb->dcolor[0];
+  bg.green = 0xffff * gcb->dcolor[1];
+  bg.blue  = 0xffff * gcb->dcolor[2];
+
+  gdk_color_alloc (gtk_widget_get_colormap (window), &bg);
+  gdk_window_set_background (window->window, &bg);
+
+  gtk_drag_set_icon_widget (context, window, DRAG_ICON_OFFSET, DRAG_ICON_OFFSET);
+}
+
+static void
+gimp_color_button_drag_end (GtkWidget      *widget,
+			    GdkDragContext *context,
+			    gpointer        data)
+{
+  gtk_object_set_data (GTK_OBJECT (widget), "gimp-color-button-drag-window", NULL);
+}
+
+static void
+gimp_color_button_drop_handle (GtkWidget        *widget, 
+			       GdkDragContext   *context,
+			       gint              x,
+			       gint              y,
+			       GtkSelectionData *selection_data,
+			       guint             info,
+			       guint             time,
+			       gpointer          data)
+{
+  GimpColorButton *gcb = data;
+  guint16 *vals;
+  guchar new_color[4];
+  gboolean color_changed = FALSE;
+  gint i;
+
+  if (selection_data->length < 0)
+    return;
+
+  if ((selection_data->format != 16) || 
+      (selection_data->length != 8))
+    {
+      g_warning ("Received invalid color data\n");
+      return;
+    }
+  
+  vals = (guint16 *)selection_data->data;
+
+  for (i = 0; i < gcb->bpp; i++)
+    {
+      gcb->dcolor[i] = (gdouble)vals[i] / 0xffff;
+      new_color[i] = gcb->dcolor[i] * 255.999;
+      if (new_color[i] != gcb->color[i])
+	color_changed = TRUE;
+      gcb->color[i] = new_color[i];
+    }
+  
+  if (color_changed)
+    {
+      gimp_color_button_paint (gcb);
+      gtk_signal_emit (GTK_OBJECT (gcb),
+		       gimp_color_button_signals[COLOR_CHANGED]);
+    }
+}
+
+static void
+gimp_color_button_drag_handle (GtkWidget        *widget, 
+			       GdkDragContext   *context,
+			       GtkSelectionData *selection_data,
+			       guint             info,
+			       guint             time,
+			       gpointer          data)
+{
+  GimpColorButton *gcb = data;
+  guint16 vals[4];
+  gint i;
+
+  for (i = 0; i < gcb->bpp; i++)
+    vals[i] = gcb->dcolor[i] * 0xffff;
+    
+  if (i == 3) 
+    vals[3] = 0xffff;
+
+  gtk_selection_data_set (selection_data,
+			  gdk_atom_intern ("application/x-color", FALSE),
+			  16, (guchar *)vals, 8);
+}
+
+/* end of DND */
