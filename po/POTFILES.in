@@ -66,15 +66,9 @@ app/actions/view-commands.c
 app/base/base-enums.c
 app/base/tile-swap.c
 
-app/config/gimpconfig-deserialize.c
 app/config/gimpconfig-file.c
-app/config/gimpconfig-path.c
-app/config/gimpconfig.c
-app/config/gimpconfigwriter.c
 app/config/gimprc.c
-app/config/gimprc-blurbs.h
 app/config/gimprc-deserialize.c
-app/config/gimpscanner.c
 
 app/core/core-enums.c
 app/core/gimp-edit.c

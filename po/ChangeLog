@@ -1,3 +1,8 @@
+2005-01-26  Adam Weinberger  <adamw@gnome.org>
+
+	* POTFILES.in: Remove references to some removed files
+	  in app/config/
+
 2005-01-25 Marco Ciampa <ciampix@libero.it>
 
 	* it.po: Updated italian translation.
