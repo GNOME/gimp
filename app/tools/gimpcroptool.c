@@ -333,7 +333,7 @@ gimp_crop_tool_button_release (GimpTool        *tool,
     {
       if (crop->function == CROPPING)
 	{
-	  if (options->crop_type == GIMP_CROP)
+	  if (options->crop_mode == GIMP_CROP_MODE_CROP)
 	    crop_tool_crop_image (gdisp->gimage,
 				  crop->x1, crop->y1,
                                   crop->x2, crop->y2,
@@ -628,14 +628,14 @@ gimp_crop_tool_modifier_key (GimpTool        *tool,
 
   if (key == GDK_CONTROL_MASK)
     {
-      switch (options->crop_type)
+      switch (options->crop_mode)
         {
-        case GIMP_CROP:
-          g_object_set (options, "crop-type", GIMP_RESIZE, NULL);
+        case GIMP_CROP_MODE_CROP:
+          g_object_set (options, "crop-type", GIMP_CROP_MODE_RESIZE, NULL);
           break;
 
-        case GIMP_RESIZE:
-          g_object_set (options, "crop-type", GIMP_CROP, NULL);
+        case GIMP_CROP_MODE_RESIZE:
+          g_object_set (options, "crop-type", GIMP_CROP_MODE_CROP, NULL);
           break;
 
         default:
@@ -772,7 +772,8 @@ gimp_crop_tool_cursor_update (GimpTool        *tool,
 
   gimp_tool_control_set_cursor (tool->control, ctype);
   gimp_tool_control_set_tool_cursor (tool->control,
-                                     options->crop_type == GIMP_CROP ?
+                                     options->crop_mode ==
+                                     GIMP_CROP_MODE_CROP ?
                                      GIMP_CROP_TOOL_CURSOR :
                                      GIMP_RESIZE_TOOL_CURSOR);
   gimp_tool_control_set_cursor_modifier (tool->control, cmodifier);

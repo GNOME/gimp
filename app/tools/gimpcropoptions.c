@@ -40,7 +40,7 @@ enum
   PROP_0,
   PROP_LAYER_ONLY,
   PROP_ALLOW_ENLARGE,
-  PROP_CROP_TYPE
+  PROP_CROP_MODE
 };
 
 
@@ -88,7 +88,7 @@ gimp_crop_options_get_type (void)
   return type;
 }
 
-static void 
+static void
 gimp_crop_options_class_init (GimpCropOptionsClass *klass)
 {
   GObjectClass *object_class;
@@ -108,10 +108,10 @@ gimp_crop_options_class_init (GimpCropOptionsClass *klass)
                                     "allow-enlarge", NULL,
                                     FALSE,
                                     0);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CROP_TYPE,
-                                 "crop-type", NULL,
-                                 GIMP_TYPE_CROP_TYPE,
-                                 GIMP_CROP,
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CROP_MODE,
+                                 "crop-mode", NULL,
+                                 GIMP_TYPE_CROP_MODE,
+                                 GIMP_CROP_MODE_CROP,
                                  0);
 }
 
@@ -126,9 +126,7 @@ gimp_crop_options_set_property (GObject      *object,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpCropOptions *options;
-
-  options = GIMP_CROP_OPTIONS (object);
+  GimpCropOptions *options = GIMP_CROP_OPTIONS (object);
 
   switch (property_id)
     {
@@ -138,8 +136,8 @@ gimp_crop_options_set_property (GObject      *object,
     case PROP_ALLOW_ENLARGE:
       options->allow_enlarge = g_value_get_boolean (value);
       break;
-    case PROP_CROP_TYPE:
-      options->crop_type = g_value_get_enum (value);
+    case PROP_CROP_MODE:
+      options->crop_mode = g_value_get_enum (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -153,9 +151,7 @@ gimp_crop_options_get_property (GObject    *object,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpCropOptions *options;
-
-  options = GIMP_CROP_OPTIONS (object);
+  GimpCropOptions *options = GIMP_CROP_OPTIONS (object);
 
   switch (property_id)
     {
@@ -165,8 +161,8 @@ gimp_crop_options_get_property (GObject    *object,
     case PROP_ALLOW_ENLARGE:
       g_value_set_boolean (value, options->allow_enlarge);
       break;
-    case PROP_CROP_TYPE:
-      g_value_set_enum (value, options->crop_type);
+    case PROP_CROP_MODE:
+      g_value_set_enum (value, options->crop_mode);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -190,7 +186,7 @@ gimp_crop_options_gui (GimpToolOptions *tool_options)
   /*  tool toggle  */
   str = g_strdup_printf (_("Tool Toggle  %s"), gimp_get_mod_name_control ());
 
-  frame = gimp_prop_enum_radio_frame_new (config, "crop-type",
+  frame = gimp_prop_enum_radio_frame_new (config, "crop-mode",
                                           str, 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);

@@ -62,8 +62,7 @@ enum_headers = \
 	../../app/core/core-enums.h			\
 	../../app/core/core-types.h			\
 	../../app/paint/paint-enums.h			\
-	../../app/plug-in/plug-in-types.h		\
-	../../app/tools/tools-enums.h
+	../../app/plug-in/plug-in-types.h
 
 pdb_scripts = \
 	pdbgen.pl	\

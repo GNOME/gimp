@@ -19,19 +19,6 @@
 #ifndef __TOOLS_ENUMS_H__
 #define __TOOLS_ENUMS_H__
 
-#if 0
-   This file is parsed by two scripts, enumgen.pl in tools/pdbgen,
-   and gimp-mkenums. All enums that are not marked with
-   /*< pdb-skip >*/ are exported to libgimp and the PDB. Enums that are
-   not marked with /*< skip >*/ are registered with the GType system.
-   If you want the enum to be skipped by both scripts, you have to use
-   /*< pdb-skip, skip >*/.
-
-   All enum values that are marked with /*< skip >*/ are skipped for
-   both targets.
-#endif
-
-
 /*
  * these enums that are registered with the type system
  */
@@ -40,29 +27,29 @@
 
 GType gimp_color_pick_mode_get_type (void) G_GNUC_CONST;
 
-typedef enum /*< pdb-skip >*/
+typedef enum
 {
   GIMP_COLOR_PICK_MODE_FOREGROUND, /*< desc="Pick Foreground Color" >*/
   GIMP_COLOR_PICK_MODE_BACKGROUND  /*< desc="Pick Background Color" >*/
 } GimpColorPickMode;
 
 
-#define GIMP_TYPE_CROP_TYPE (gimp_crop_type_get_type ())
+#define GIMP_TYPE_CROP_MODE (gimp_crop_mode_get_type ())
 
-GType gimp_crop_type_get_type (void) G_GNUC_CONST;
+GType gimp_crop_mode_get_type (void) G_GNUC_CONST;
 
-typedef enum /*< pdb-skip >*/
+typedef enum
 {
-  GIMP_CROP,   /*< desc="Crop"   >*/
-  GIMP_RESIZE  /*< desc="Resize" >*/
-} GimpCropType;
+  GIMP_CROP_MODE_CROP,   /*< desc="Crop"   >*/
+  GIMP_CROP_MODE_RESIZE  /*< desc="Resize" >*/
+} GimpCropMode;
 
 
 #define GIMP_TYPE_RECT_SELECT_MODE (gimp_rect_select_mode_get_type ())
 
 GType gimp_rect_select_mode_get_type (void) G_GNUC_CONST;
 
-typedef enum /*< pdb-skip >*/
+typedef enum
 {
   GIMP_RECT_SELECT_MODE_FREE,        /*< desc="Free Select"        >*/
   GIMP_RECT_SELECT_MODE_FIXED_SIZE,  /*< desc="Fixed Size"         >*/
@@ -74,7 +61,7 @@ typedef enum /*< pdb-skip >*/
 
 GType gimp_transform_type_get_type (void) G_GNUC_CONST;
 
-typedef enum /*< pdb-skip >*/
+typedef enum
 {
   GIMP_TRANSFORM_TYPE_LAYER,     /*< desc="Transform Active Layer" >*/
   GIMP_TRANSFORM_TYPE_SELECTION, /*< desc="Transform Selection"    >*/
@@ -86,7 +73,7 @@ typedef enum /*< pdb-skip >*/
 
 GType gimp_vector_mode_get_type (void) G_GNUC_CONST;
 
-typedef enum /*< pdb-skip >*/
+typedef enum
 {
   GIMP_VECTOR_MODE_DESIGN,      /*< desc="Design" >*/
   GIMP_VECTOR_MODE_EDIT,        /*< desc="Edit"   >*/
@@ -98,7 +85,7 @@ typedef enum /*< pdb-skip >*/
 
 GType gimp_transform_grid_type_get_type (void) G_GNUC_CONST;
 
-typedef enum /*< pdb-skip >*/
+typedef enum
 {
   GIMP_TRANSFORM_GRID_TYPE_NONE,     /*< desc="Don't Show Grid"      >*/
   GIMP_TRANSFORM_GRID_TYPE_N_LINES,  /*< desc="Number of Grid Lines" >*/
@@ -110,7 +97,7 @@ typedef enum /*< pdb-skip >*/
  * non-registered enums; register them if needed
  */
 
-typedef enum /*< pdb-skip, skip >*/
+typedef enum /*< skip >*/
 {
   SELECTION_ADD       = GIMP_CHANNEL_OP_ADD,
   SELECTION_SUBTRACT  = GIMP_CHANNEL_OP_SUBTRACT,
@@ -123,7 +110,7 @@ typedef enum /*< pdb-skip, skip >*/
 } SelectOps;
 
 /*  Tool control actions  */
-typedef enum /*< pdb-skip, skip >*/
+typedef enum /*< skip >*/
 {
   PAUSE,
   RESUME,
@@ -131,7 +118,7 @@ typedef enum /*< pdb-skip, skip >*/
 } GimpToolAction;
 
 /*  Motion event report modes  */
-typedef enum /*< pdb-skip, skip >*/
+typedef enum /*< skip >*/
 {
   GIMP_MOTION_MODE_EXACT,
   GIMP_MOTION_MODE_HINT,
@@ -139,7 +126,7 @@ typedef enum /*< pdb-skip, skip >*/
 } GimpMotionMode;
 
 /*  Possible transform functions  */
-typedef enum /*< pdb-skip, skip >*/
+typedef enum /*< skip >*/
 {
   TRANSFORM_CREATING,
   TRANSFORM_HANDLE_1,

@@ -28,20 +28,20 @@ gimp_color_pick_mode_get_type (void)
 }
 
 
-static const GEnumValue gimp_crop_type_enum_values[] =
+static const GEnumValue gimp_crop_mode_enum_values[] =
 {
-  { GIMP_CROP, N_("Crop"), "crop" },
-  { GIMP_RESIZE, N_("Resize"), "resize" },
+  { GIMP_CROP_MODE_CROP, N_("Crop"), "crop" },
+  { GIMP_CROP_MODE_RESIZE, N_("Resize"), "resize" },
   { 0, NULL, NULL }
 };
 
 GType
-gimp_crop_type_get_type (void)
+gimp_crop_mode_get_type (void)
 {
   static GType enum_type = 0;
 
   if (!enum_type)
-    enum_type = g_enum_register_static ("GimpCropType", gimp_crop_type_enum_values);
+    enum_type = g_enum_register_static ("GimpCropMode", gimp_crop_mode_enum_values);
 
   return enum_type;
 }

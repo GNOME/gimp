@@ -40,7 +40,7 @@ struct _GimpCropOptions
 
   gboolean         layer_only;
   gboolean         allow_enlarge;
-  GimpCropType     crop_type;
+  GimpCropMode     crop_mode;
 };
 
 

@@ -1,3 +1,17 @@
+2003-09-26  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/Makefile.am: don't scan "app/tools/tools-enums.h"
+	for PDB types since the PDB doesn't depend on app/tools/ any more.
+
+	* app/tools/tools-enums.h: removed lengthy "skip" vs. "pdb-skip"
+	comment. Removed "pdb-skip" from all enums. Renamed GimpCropType
+	to GimpCropMode, renamed the enum's values to GIMP_CROP_MODE_*.
+
+	* app/tools/tools-enums.c: regenerated.
+
+	* app/tools/gimpcropoptions.[ch]
+	* app/tools/gimpcroptool.c: changed accordingly.
+
 2003-09-26  Simon Budig  <simon@gimp.org>
 
 	* app/core/gimpstrokeoptions.[ch]: New Object, holding the
