@@ -29,6 +29,7 @@ FILES = \
 	Cold_Steel			\
 	Cold_Steel_2			\
 	Crown_molding			\
+	Danish_flag			\
 	Dark_1				\
 	Deep_Sea			\
 	Default				\

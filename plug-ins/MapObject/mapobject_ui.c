@@ -562,7 +562,7 @@ create_options_page (void)
 
   gimp_help_set_help_data (optionmenu, _("Type of object to map to"), NULL);
 
-  toggle = gtk_check_button_new_with_label (_("Transpararent Background"));
+  toggle = gtk_check_button_new_with_label (_("Transparent Background"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.transparent_background);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);

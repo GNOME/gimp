@@ -1,16 +1,17 @@
-# Translation of the GIMP plug-ins.
+# Translation of the GIMP lib-gimp.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Kenneth Christiansen <kenneth@ripen.dk>, 1999.
+# Birger Langkjer <birger.langkjer@image.dk>, 2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP plug-ins/tillæg 1.1.13\n"
-"POT-Creation-Date: 2000-02-28 17:47-0800\n"
-"PO-Revision-Date: 1999-12-19 11:00+0200\n"
-"Last-Translator: Kenneth Christiansen <kenneth@ripen.dk>\n"
-"Language-Team: Danish/Dansk <LL@li.org>\n"
+"Project-Id-Version: GIMP libgimp /gnome-cvs\n"
+"POT-Creation-Date: 2000-03-17 05:39+0100\n"
+"PO-Revision-Date: 2000-03-17 15:23+01:00\n"
+"Last-Translator: Birger Langkjer <birger.langkjer@image.dk>\n"
+"Language-Team: Danish/Dansk <sslug-locale@sslug.dk>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
 #: libgimp/gimpcolorbutton.c:116
@@ -22,25 +23,22 @@ msgid "/Use Background Color"
 msgstr "/Brug baggrundsfarve"
 
 #: libgimp/gimpexport.c:158
-#, fuzzy
 msgid "can't Handle Layers"
 msgstr "kan ikke håndtere lag"
 
 #: libgimp/gimpexport.c:159 libgimp/gimpexport.c:168
 msgid "Merge Visible Layers"
-msgstr ""
+msgstr "Sammenflet synlige lag"
 
 #: libgimp/gimpexport.c:167
 msgid "can only Handle Layers as Animation Frames"
-msgstr ""
+msgstr "kan kun håndtere lag som animationsbilleder"
 
 #: libgimp/gimpexport.c:168
-#, fuzzy
 msgid "Save as Animation"
 msgstr "Gem som animation"
 
 #: libgimp/gimpexport.c:176
-#, fuzzy
 msgid "can't Handle Transparency"
 msgstr "kan ikke håndtere gennemsigtighed"
 
@@ -50,49 +48,49 @@ msgstr "Flad billede ud"
 
 #: libgimp/gimpexport.c:185
 msgid "can only Handle RGB Images"
-msgstr ""
+msgstr "kan kun håndtere RGB-billeder"
 
 #: libgimp/gimpexport.c:186 libgimp/gimpexport.c:214 libgimp/gimpexport.c:223
 msgid "Convert to RGB"
-msgstr ""
+msgstr "Lav om til RGB"
 
 #: libgimp/gimpexport.c:194
 msgid "can only Handle Grayscale Images"
-msgstr ""
+msgstr "kan kun håndtere gråtonebilleder"
 
 #: libgimp/gimpexport.c:195 libgimp/gimpexport.c:214 libgimp/gimpexport.c:235
 msgid "Convert to Grayscale"
-msgstr ""
+msgstr "Lav om til gråtoner"
 
 #: libgimp/gimpexport.c:203
 msgid "can only Handle Indexed Images"
-msgstr ""
+msgstr "kan kun håndtere indekserede billeder"
 
 #: libgimp/gimpexport.c:204 libgimp/gimpexport.c:223 libgimp/gimpexport.c:233
 msgid ""
 "Convert to indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
+"Lav om til indekseret vha. standard indstillingerne\n"
+"(gør det manuelt for at fintune resultatet)"
 
 #: libgimp/gimpexport.c:213
 msgid "can only Handle RGB or Grayscale Images"
-msgstr ""
+msgstr "kan kun håndtere RGB- eller gråtonebilleder"
 
 #: libgimp/gimpexport.c:222
 msgid "can only Handle RGB or Indexed Images"
-msgstr ""
+msgstr "kan kun håndtere RGB- eller indekserede billeder"
 
 #: libgimp/gimpexport.c:232
 msgid "can only Handle Grayscale or Indexed Images"
-msgstr ""
+msgstr "kan kun håndtere gråtone- eller indekserede billeder"
 
 #: libgimp/gimpexport.c:243
-#, fuzzy
 msgid "needs an Alpha Channel"
 msgstr "kræver en alfakanel"
 
 #: libgimp/gimpexport.c:244
-#, fuzzy
 msgid "Add Alpha Channel"
 msgstr "Tilføj alfakanel"
 
@@ -111,7 +109,7 @@ msgstr "Eksportér"
 
 #: libgimp/gimpexport.c:320
 msgid "Ignore"
-msgstr ""
+msgstr "Ignorér"
 
 #: libgimp/gimpexport.c:322 libgimp/gimpquerybox.c:180
 #: libgimp/gimpquerybox.c:234 libgimp/gimpquerybox.c:290
@@ -123,12 +121,12 @@ msgstr "Annullér"
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
-msgstr ""
+msgstr "Af følgende årsager skal billedet eksporteres før det kan gemmes:"
 
 #. the footline
 #: libgimp/gimpexport.c:400
 msgid "The export conversion won't modify your original image."
-msgstr ""
+msgstr "Eksportkonversionen vil ikke ændre det oprindelige billede."
 
 #: libgimp/gimpfileselection.c:350
 msgid "Select File"
@@ -138,7 +136,7 @@ msgstr "Vælg fil"
 #: libgimp/gimpquerybox.c:290 libgimp/gimpquerybox.c:353
 #: libgimp/gimpunitmenu.c:495
 msgid "OK"
-msgstr ""
+msgstr "Ok"
 
 #. pseudo unit
 #: libgimp/gimpunit.c:47
@@ -147,12 +145,12 @@ msgstr "pixel"
 
 #: libgimp/gimpunit.c:47
 msgid "pixels"
-msgstr ""
+msgstr "pixler"
 
 #. standard units
 #: libgimp/gimpunit.c:50
 msgid "inch"
-msgstr "tommer"
+msgstr "tomme"
 
 #: libgimp/gimpunit.c:50
 msgid "inches"
@@ -164,16 +162,16 @@ msgstr "millimeter"
 
 #: libgimp/gimpunit.c:51
 msgid "millimeters"
-msgstr "millimeter"
+msgstr "millimetre"
 
 #. professional units
 #: libgimp/gimpunit.c:54
 msgid "point"
-msgstr ""
+msgstr "punkt"
 
 #: libgimp/gimpunit.c:54
 msgid "points"
-msgstr ""
+msgstr "punkter"
 
 #: libgimp/gimpunit.c:55
 msgid "pica"
@@ -189,7 +187,7 @@ msgstr "procent"
 
 #: libgimp/gimpunitmenu.c:234
 msgid "More..."
-msgstr "Mere..."
+msgstr "Flere..."
 
 #: libgimp/gimpunitmenu.c:490
 msgid "Unit Selection"
@@ -197,7 +195,7 @@ msgstr "Enhedsvalg"
 
 #: libgimp/gimpunitmenu.c:527
 msgid "Unit"
-msgstr ""
+msgstr "Enhed"
 
 #: libgimp/gimpunitmenu.c:528
 msgid "Factor"
@@ -211,10 +209,22 @@ msgstr ""
 
 #: libgimp/gimpwidgets.c:709
 msgid "Time"
-msgstr ""
+msgstr "Tid"
 
 #: libgimp/gimpwidgets.c:718
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
 msgstr ""
+
+#: libgimp/gimpwidgets.c:1030
+msgid "Bytes"
+msgstr "Byte"
+
+#: libgimp/gimpwidgets.c:1031
+msgid "KiloBytes"
+msgstr "Kilobyte"
+
+#: libgimp/gimpwidgets.c:1032
+msgid "MegaBytes"
+msgstr "Megabyte"

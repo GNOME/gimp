@@ -1,3 +1,9 @@
+2000-03-17  Birger Langkjer <birger.langkjer@image.dk>
+
+	* plug-ins/MapObject/mapobject_ui.c:565: fixed typo/spelling
+	Transpararent -> Transparent
+	* all da.po: updated.
+
 2000-03-16  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* app/text_tool.c: added missing argument for error message.
