@@ -467,8 +467,8 @@ register_magic_load_handler_invoker (Argument *args)
     
       if (!file_proc)
 	{
-	  g_message ("attempt to register non-existant load handler \"%s\""),
-		     name;
+	  g_message ("attempt to register non-existant load handler \"%s\"",
+		     name);
 	  goto done;
 	}
     
