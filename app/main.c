@@ -54,8 +54,8 @@
 #ifdef G_OS_WIN32
 #include <windows.h>
 #else
-void              on_signal       (gint);
-void              on_sig_child    (gint);
+static void       on_signal       (gint);
+static void       on_sig_child    (gint);
 #endif
 
 static void       init            (void);
@@ -65,15 +65,15 @@ static void	  on_error        (const gchar    *domain,
 				   gpointer        user_data);
 
 /* GLOBAL data */
-gint no_interface      = FALSE;
-gint no_data           = FALSE;
-gint no_splash         = FALSE;
-gint no_splash_image   = FALSE;
-gint be_verbose        = FALSE;
-gint use_shm           = FALSE;
-gint use_debug_handler = FALSE;
-gint console_messages  = FALSE;
-gint restore_session   = FALSE;
+gboolean no_interface      = FALSE;
+gboolean no_data           = FALSE;
+gboolean no_splash         = FALSE;
+gboolean no_splash_image   = FALSE;
+gboolean be_verbose        = FALSE;
+gboolean use_shm           = FALSE;
+gboolean use_debug_handler = FALSE;
+gboolean console_messages  = FALSE;
+gboolean restore_session   = FALSE;
 
 GimpSet *image_context = NULL;
 
@@ -114,8 +114,8 @@ int
 main (int    argc,
       char **argv)
 {
-  gint show_version = FALSE;
-  gint show_help    = FALSE;
+  gboolean show_version = FALSE;
+  gboolean show_help    = FALSE;
   gint i, j;
 #ifdef HAVE_PUTENV
   gchar *display_env;

@@ -30,21 +30,21 @@
 #include <signal.h>
 #include <glib.h>
 
-/* RETSIGTYPE is a reference to a 
- * (signal handler) function that
- * takes a signal ID and returns
- * void. signal(2) returns such 
- * references; so does 
- * gimp_signal_private.
+/* GimpRetSigType is a reference 
+ * to a (signal handler) function 
+ * that takes a signal ID and 
+ * returns void. 
+ * signal(2) returns such references; 
+ * so does gimp_signal_private.
  */
 
-typedef void (*RetSigType)(gint);
+typedef void (*GimpRetSigType)(gint);
 
 /* Internal implementation that can be */
 /* DEFINEd into various flavors of     */
 /* signal(2) lookalikes.               */
 
-RetSigType gimp_signal_private (gint signum, void (*gimp_sighandler)(int), gint sa_flags);
+GimpRetSigType gimp_signal_private (gint signum, void (*gimp_sighandler)(int), gint sa_flags);
 
 /* the gimp_signal_syscallrestart()    */
 /* lookalike looks like signal(2) but  */
