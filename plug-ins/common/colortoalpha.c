@@ -57,9 +57,7 @@ static void      run    (gchar       *name,
 static void inline colortoalpha             (GimpRGB       *src,
                                              const GimpRGB *color);
 static void        toalpha                  (GimpDrawable  *drawable);
-static void        toalpha_render_row       (guchar  	   *src,
-                                             guchar        *dest,
-                                             gint           row_width);
+
 /* UI stuff */
 static gboolean    colortoalpha_dialog      (GimpDrawable  *drawable);
 static void        colortoalpha_ok_callback (GtkWidget     *widget,
@@ -288,100 +286,20 @@ colortoalpha (GimpRGB       *src,
              Good call.
 */
 
-static void
-toalpha_render_row (guchar 	*src,
-		    guchar      *dest,
-		    gint         col)               /* row width in pixels */
+static void 
+toalpha_func (guchar *src, guchar *dest, gint bpp, gpointer data)
 {
-  while (col--)
-    {
-      GimpRGB color;
+  GimpRGB color;
 
-      gimp_rgba_set_uchar (&color, 
-			   src[0],
-			   src[1],
-			   src[2],
-			   src[3]);
- 
-      colortoalpha (&color, &pvals.color);
-
-      gimp_rgba_get_uchar (&color, 
-			   dest,
-			   dest + 1,
-			   dest + 2,
-			   dest + 3);
-      src += 4;
-      dest += 4;
-    }
-}
-
-static void
-toalpha_render_region (const GimpPixelRgn *srcPR,
-		       const GimpPixelRgn *destPR)
-{
-  gint    row;
-  guchar *src_ptr  = srcPR->data;
-  guchar *dest_ptr = destPR->data;
-  
-  for (row = 0; row < srcPR->h ; row++)
-    {
-      toalpha_render_row (src_ptr, dest_ptr, srcPR->w);
-
-      src_ptr  += srcPR->rowstride;
-      dest_ptr += destPR->rowstride;
-    }
+  gimp_rgba_set_uchar (&color, src[0], src[1], src[2], src[3]);
+  colortoalpha (&color, &pvals.color);
+  gimp_rgba_get_uchar (&color, &dest[0], &dest[1], &dest[2], &dest[3]);
 }
 
 static void
 toalpha (GimpDrawable *drawable)
 {
-  GimpPixelRgn srcPR, destPR;
-  gint         x1, y1, x2, y2;
-  gpointer     pr;
-  gint         total_area, area_so_far;
-  gint         progress_skip;
-
-  /* Get the input area. This is the bounding box of the selection in
-   *  the image (or the entire image if there is no selection). Only
-   *  operating on the input area is simply an optimization. It doesn't
-   *  need to be done for correct operation. (It simply makes it go
-   *  faster, since fewer pixels need to be operated on).
-   */
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-
-  total_area    = (x2 - x1) * (y2 - y1);
-  area_so_far   = 0;
-  progress_skip = 0;
-
-  if (total_area < 1)
-    return;
-
-  /* Initialize the pixel regions. */
-  gimp_pixel_rgn_init (&srcPR, drawable, x1, y1, (x2 - x1), (y2 - y1),
-		       FALSE, FALSE);
-  gimp_pixel_rgn_init (&destPR, drawable, x1, y1, (x2 - x1), (y2 - y1),
-		       TRUE, TRUE);
-  
-  for (pr = gimp_pixel_rgns_register (2, &srcPR, &destPR);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
-    {
-      toalpha_render_region (&srcPR, &destPR);
-
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	{
-	  area_so_far += srcPR.w * srcPR.h;
-
-	  if (++progress_skip % 10 == 0)
-	    gimp_progress_update ((gdouble) area_so_far / 
-                                  (gdouble) total_area);
-	}
-    }
-
-  /*  update the processed region  */
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_rgn_iterate2 (drawable, run_mode, toalpha_func, NULL);
 }
 
 static gboolean

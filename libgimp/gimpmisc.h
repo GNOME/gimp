@@ -69,6 +69,23 @@ void		 gimp_get_bg_guchar (GimpDrawable *drawable,
 				     gboolean transparent,
 				     guchar *bg);
 
+void gimp_timer_start(void);
+void gimp_timer_stop(void);
+
+
+typedef void (*GimpRgnFunc1)(guchar *src, gint bpp, gpointer);
+typedef void (*GimpRgnFunc2)(guchar *src, guchar *dest, gint bpp, gpointer);
+
+void gimp_rgn_iterate1 (GimpDrawable *drawable, 
+			GimpRunMode run_mode,
+			GimpRgnFunc1 func, 
+			gpointer data);
+
+void gimp_rgn_iterate2 (GimpDrawable *drawable,
+			GimpRunMode run_mode, 
+			GimpRgnFunc2 func, 
+			gpointer data);
+
 G_END_DECLS
 
 #endif /* __GIMP_MISC_H__ */

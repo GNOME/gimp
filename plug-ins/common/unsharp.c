@@ -51,14 +51,6 @@
 /* uncomment this line to get a rough feel of how long the
    plug-in takes to run */
 /* #define TIMER */
-#ifdef TIMER
-#include <sys/time.h>
-#include <unistd.h>
-
-static void timerstart (void);
-static void timerstop  (void);
-static struct timeval time_start, time_stop;
-#endif
 
 typedef struct
 {
@@ -111,29 +103,6 @@ static void unsharp_ok_callback  (GtkWidget *widget,
 				  gpointer   data);
 static gint unsharp_mask_dialog  (void);
 
-/* preview shit -- not finished yet */
-#undef PREVIEW
-#ifdef PREVIEW
-static void preview_scroll_callback (void);
-static void preview_init            (void);
-static void preview_exit            (void);
-static void preview_update          (void);
-
-static GtkWidget* preview;
-static gint       preview_width;    /* Width of preview widget */
-static gint       preview_height;   /* Height of preview widget */
-static gint       preview_x1;       /* Upper-left X of preview */
-static gint       preview_y1;       /* Upper-left Y of preview */
-static gint       preview_x2;       /* Lower-right X of preview */
-static gint       preview_y2;       /* Lower-right Y of preview */
-
-static gint       sel_width;    /* Selection width */
-static gint       sel_height;   /* Selection height */
-		
-static GtkObject *hscroll_data;    /* Horizontal scrollbar data */
-static GtkObject *vscroll_data;    /* Vertical scrollbar data */
-#endif
-
 static gint       run_filter = FALSE;
 		
 
@@ -144,8 +113,6 @@ static UnsharpMaskParams unsharp_params =
   0.5, /* default amount = .5 */
   0    /* default threshold = 0 */
 };
-
-/* static UnsharpMaskInterface umint = { FALSE }; */
 
 /* Setting PLUG_IN_INFO */
 GimpPlugInInfo PLUG_IN_INFO =
@@ -275,7 +242,6 @@ run (gchar      *name,
 #endif
 }
 
-/* -------------------------- Unsharp Mask ------------------------- */
 static void
 unsharp_mask (GimpDrawable *drawable,
 	      gdouble    radius,
@@ -309,7 +275,7 @@ unsharp_mask (GimpDrawable *drawable,
 /* perform an unsharp mask on the region, given a source region, dest.
    region, width and height of the regions, and corner coordinates of
    a subregion to act upon.  Everything outside the subregion is unaffected.
-  */
+*/
 static void
 unsharp_region (GimpPixelRgn srcPR,
 		GimpPixelRgn destPR,
@@ -452,99 +418,6 @@ blur_line (gdouble *ctable,
 	   gint     y,
 	   glong    bytes)
 {
-#ifdef READABLE_CODE
-/* ------------- semi-readable code ------------------- */
-  gdouble scale;
-  gdouble sum;
-  gint i,j;
-  gint row;
-
-  /* this is to take care cases in which the matrix can go over
-   * both edges at once.  It's not efficient, but this can only
-   * happen in small pictures anyway.
-   */
-  if (cmatrix_length > y)
-    {
-      for (row = 0; row < y ; row++)
-	{
-	  scale = 0;
-	  /* find the scale factor */
-	  for (j = 0; j < y ; j++)
-	    {
-	      /* if the index is in bounds, add it to the scale counter */
-	      if ((j + cmatrix_length/2 - row >= 0) &&
-		  (j + cmatrix_length/2 - row < cmatrix_length))
-		scale += cmatrix[j + cmatrix_length/2 - row];
-	    }
-	  for (i = 0; i<bytes; i++)
-	    {
-	      sum = 0;
-	      for (j = 0; j < y; j++)
-		{
-		  if ((j >= row - cmatrix_length/2) &&
-		      (j <= row + cmatrix_length/2))
-		    sum += cur_col[j*bytes + i] * cmatrix[j];
-		}
-	      dest_col[row*bytes + i] = (guchar) ROUND (sum / scale);
-	    }
-	}
-    }
-  else
-    {  /* when the cmatrix is smaller than row length */
-      /* for the edge condition, we only use available info, and scale to one */
-      for (row = 0; row < cmatrix_length/2; row++)
-	{
-	  /* find scale factor */
-	  scale=0;
-	  for (j = cmatrix_length/2 - row; j<cmatrix_length; j++)
-	    scale += cmatrix[j];
-
-	  for (i = 0; i<bytes; i++)
-	    {
-	      sum = 0;
-	      for (j = cmatrix_length/2 - row; j<cmatrix_length; j++)
-		{
-		  sum += cur_col[(row + j-cmatrix_length/2)*bytes + i] *
-		    cmatrix[j];
-		}
-	      dest_col[row*bytes + i] = (guchar) ROUND (sum / scale);
-	    }
-	}
-      /* go through each pixel in each col */
-      for (; row < y-cmatrix_length/2; row++)
-	{
-	  for (i = 0; i<bytes; i++)
-	    {
-	      sum = 0;
-	      for (j = 0; j<cmatrix_length; j++)
-		{
-		  sum += cur_col[(row + j-cmatrix_length/2)*bytes + i] * cmatrix[j];
-		}
-	      dest_col[row*bytes + i] = (guchar) ROUND (sum);
-	    }
-	}
-      /* for the edge condition , we only use available info, and scale to one */
-      for (; row < y; row++)
-	{
-	  /* find scale factor */
-	  scale=0;
-	  for (j = 0; j< y-row + cmatrix_length/2; j++)
-	    scale += cmatrix[j];
-
-	  for (i = 0; i<bytes; i++)
-	    {
-	      sum = 0;
-	      for (j = 0; j<y-row + cmatrix_length/2; j++)
-		{
-		  sum += cur_col[(row + j-cmatrix_length/2)*bytes + i] * cmatrix[j];
-		}
-	      dest_col[row*bytes + i] = (guchar) ROUND (sum / scale);
-	    }
-	}
-    }
-#endif
-#ifndef READABLE_CODE
-  /* --------------- optimized, unreadable code -------------------*/
   gdouble scale;
   gdouble sum;
   gint i=0, j=0;
@@ -646,7 +519,6 @@ blur_line (gdouble *ctable,
 	    }
 	}
     }
-#endif
 }
 
 /* generates a 1-D convolution matrix to be used for each pass of 
@@ -741,18 +613,6 @@ gen_lookup_table (gdouble *cmatrix,
 {
   int i, j;
   gdouble* lookup_table = g_new (gdouble, cmatrix_length * 256);
-
-#ifdef READABLE_CODE
-  for (i=0; i<cmatrix_length; i++)
-    {
-      for (j=0; j<256; j++)
-	{
-	  lookup_table[i*256 + j] = cmatrix[i] * (gdouble)j;
-	}
-    }
-#endif
-
-#ifndef READABLE_CODE
   gdouble* lookup_table_p = lookup_table;
   gdouble* cmatrix_p      = cmatrix;
 
@@ -764,12 +624,10 @@ gen_lookup_table (gdouble *cmatrix,
 	}
       cmatrix_p++;
     }
-#endif
 
   return lookup_table;
 }
 
-/* ------------------------ unsharp_mask_dialog ----------------------- */
 static gint
 unsharp_mask_dialog (void) 
 {
@@ -845,59 +703,6 @@ unsharp_mask_dialog (void)
   return run_filter;
 }
 
-
-/* This doesn't work yet. */
-#ifdef PREVIEW
-/* 'preview_init()' - Initialize the preview window... */
-
-static void
-preview_init (void)
-{
-  int	width;		/* Byte width of the image */
-
-  /*
-   * Setup for preview filter...
-   */
-
-  width = preview_width * img_bpp;
-
-  preview_src   = g_new (guchar, width * preview_height);
-  preview_neg   = g_new (guchar, width * preview_height);
-  preview_dst   = g_new (guchar, width * preview_height);
-  preview_image = g_new (guchar, preview_width * preview_height * 3);
-
-  preview_x1 = sel_x1;
-  preview_y1 = sel_y1;
-  preview_x2 = preview_x1 + preview_width;
-  preview_y2 = preview_y1 + preview_height;
-}
-
-/*
- * 'preview_scroll_callback()' - Update the preview when a scrollbar is moved.
- */
-
-static void
-preview_scroll_callback (void)
-{
-  preview_x1 = sel_x1 + GTK_ADJUSTMENT (hscroll_data)->value;
-  preview_y1 = sel_y1 + GTK_ADJUSTMENT (vscroll_data)->value;
-  preview_x2 = preview_x1 + MIN(preview_width, sel_width);
-  preview_y2 = preview_y1 + MIN(preview_height, sel_height);
-
-  preview_update ();
-}
-
-/*
- * 'preview_update()' - Update the preview window.
- */
-
-static void
-preview_update (void)
-{
-
-}
-#endif
-
 static void
 unsharp_ok_callback (GtkWidget *widget,
 		     gpointer   data)
@@ -906,29 +711,3 @@ unsharp_ok_callback (GtkWidget *widget,
 
   gtk_widget_destroy (GTK_WIDGET (data));
 }
-
-#ifdef TIMER
-static void
-timerstart (void)
-{
-  gettimeofday (&time_start, NULL);
-}
-
-static void
-timerstop (void)
-{
-  long sec, usec;
-	
-  gettimeofday(&time_stop,NULL);
-  sec = time_stop.tv_sec  - time_start.tv_sec;
-  usec = time_stop.tv_usec - time_start.tv_usec;
-	
-  if (usec < 0)
-    {
-      sec--;
-      usec += 1000000;
-    }
-	
-  fprintf (stderr, "%ld.%ld seconds\n", sec, usec);
-}
-#endif

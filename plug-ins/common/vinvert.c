@@ -49,7 +49,7 @@ static void      indexed_vinvert    (gint32        image_ID);
 static void      vinvert_render_row (guchar     *src,
 				     guchar     *dest,
 				     gint        row_width,
-				     const gint  bytes);
+				     const gint  bpp);
 
 
 static GimpRunMode run_mode;
@@ -170,100 +170,44 @@ indexed_vinvert (gint32 image_ID)
   gimp_image_set_cmap (image_ID, cmap, ncols);
 }
 
+static void 
+vinvert_func (guchar *src, guchar *dest, gint bpp, gpointer data)
+{
+  gint v1, v2, v3;
+
+  v1 = src[0];
+  v2 = src[1];
+  v3 = src[2];
+
+  gimp_rgb_to_hsv_int (&v1, &v2, &v3);
+  v3 = 255 - v3;
+  gimp_hsv_to_rgb_int (&v1, &v2, &v3);
+
+  dest[0] = v1;
+  dest[1] = v2;
+  dest[2] = v3;
+
+  if (bpp == 4)
+    dest[3] = src[3];
+}
+
 static void
 vinvert_render_row (guchar     *src,
 		    guchar     *dest,
 		    gint       col,       /* row width in pixels */
-		    const gint bytes)
+		    const gint bpp)
 {
   while (col--)
     {
-      gint v1, v2, v3;
-      gint bytenum;
-
-      v1 = *src++;
-      v2 = *src++;
-      v3 = *src++;
-
-      gimp_rgb_to_hsv_int (&v1, &v2, &v3);
-      v3 = 255 - v3;
-      gimp_hsv_to_rgb_int (&v1, &v2, &v3);
-
-      *dest++ = v1;
-      *dest++ = v2;
-      *dest++ = v3;
-
-      for (bytenum = 3; bytenum < bytes; bytenum++)
-	{
-	   *dest++ = *src++;
-	}
-    }
-}
-
-static void
-vinvert_render_region (const GimpPixelRgn *srcPR,
-		       const GimpPixelRgn *destPR)
-{
-  gint row;
-  guchar* src_ptr  = srcPR->data;
-  guchar* dest_ptr = destPR->data;
-  
-  for (row = 0; row < srcPR->h; row++)
-    {
-      vinvert_render_row (src_ptr, dest_ptr, srcPR->w, srcPR->bpp);
-
-      src_ptr  += srcPR->rowstride;
-      dest_ptr += destPR->rowstride;
+      vinvert_func (src, dest, bpp, NULL);
+      src += bpp;
+      dest += bpp;
     }
 }
 
 static void
 vinvert (GimpDrawable *drawable)
 {
-  GimpPixelRgn srcPR, destPR;
-  gint      x1, y1, x2, y2;
-  gpointer  pr;
-  gint      total_area, area_so_far;
-  gint      progress_skip;
-
-  /* Get the input area. This is the bounding box of the selection in
-   *  the image (or the entire image if there is no selection). Only
-   *  operating on the input area is simply an optimization. It doesn't
-   *  need to be done for correct operation. (It simply makes it go
-   *  faster, since fewer pixels need to be operated on).
-   */
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-
-  total_area = (x2 - x1) * (y2 - y1);
-
-  if (!total_area)
-    return;
-
-  area_so_far   = 0;
-  progress_skip = 0;
-
-  /* Initialize the pixel regions. */
-  gimp_pixel_rgn_init (&srcPR, drawable, x1, y1, (x2 - x1), (y2 - y1),
-		       FALSE, FALSE);
-  gimp_pixel_rgn_init (&destPR, drawable, x1, y1, (x2 - x1), (y2 - y1),
-		       TRUE, TRUE);
-  
-  for (pr = gimp_pixel_rgns_register (2, &srcPR, &destPR);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
-    {
-      vinvert_render_region (&srcPR, &destPR);
-
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	{
-	  area_so_far += srcPR.w * srcPR.h;
-	  if (((progress_skip++)%10) == 0)
-	    gimp_progress_update ((double) area_so_far / (double) total_area);
-	}
-    }
-
-  /*  update the processed region  */
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_rgn_iterate2 (drawable, run_mode, vinvert_func, NULL);
 }
+

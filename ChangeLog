@@ -1,3 +1,20 @@
+2002-11-25  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/newsprint.c: timer funcs are now in gimpmisc.
+
+	* plug-ins/common/unsharp.c: timer funcs are now in gimpmisc. Removed
+	unused/non-working preview stuff. Will be restored once I finished
+	a general preview widget for plug-ins.
+
+	* plug-ins/common/colortoalpha.c
+	* plug-ins/common/vinvert.c: use gimpmisc region iterator funcs.
+
+2002-11-25  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* libgimp/gimpmisc.[ch]: added 2 new functions (gimp_timer_start and
+	gimp_timer_stop) for timing purposes. Also added 2 general region
+	iterator functions, used in numerous plug-ins.
+
 2002-11-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdnd.c (gimp_dnd_file_dest_add): changed order of

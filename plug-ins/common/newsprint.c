@@ -92,31 +92,7 @@ static char rcsid[] = "$Id$";
 #define GPOINTER_TO_INT(x) ((int)(x))
 #endif
 
-
 /*#define TIMINGS*/
-
-#ifdef TIMINGS
-#include <sys/time.h>
-#include <unistd.h>
-#define TM_INIT()	struct timeval tm_start, tm_end
-#define TM_START()	gettimeofday(&tm_start, NULL)
-#define TM_END()							 \
-do {									 \
-    gettimeofday(&tm_end, NULL);					 \
-    tm_end.tv_sec  -= tm_start.tv_sec;					 \
-    tm_end.tv_usec -= tm_start.tv_usec;					 \
-    if (tm_end.tv_usec < 0)						 \
-    {									 \
-	tm_end.tv_usec += 1000000;					 \
-	tm_end.tv_sec  -= 1;						 \
-    }									 \
-    printf("operation took %ld.%06ld\n", tm_end.tv_sec, tm_end.tv_usec); \
-} while(0)
-#else
-#define TM_INIT()
-#define TM_START()
-#define TM_END()
-#endif
 
 #define TILE_CACHE_SIZE     16
 #define SCALE_WIDTH        125
@@ -1800,8 +1776,6 @@ newsprint (GimpDrawable *drawable)
   gpointer   pr;
   gint       w002;
 
-  TM_INIT ();
-
   width = pvals.cell_width;
 
   if (width < 0)
@@ -1900,7 +1874,9 @@ do {								\
   progress     = 0;
   max_progress = (x2 - x1) * (y2 - y1);
 
-  TM_START ();
+#ifdef TIMINGS
+  gimp_timer_start();
+#endif
 
   for (y = y1; y < y2; y += tile_width - (y % tile_width))
     {
@@ -2058,7 +2034,9 @@ do {								\
 	}
     }
 
-  TM_END ();
+#ifdef TIMINGS
+  gimp_timer_stop();
+#endif
 
   /* We don't free the threshold matrices, since we're about to
    * exit, and the OS should clean up after us. */

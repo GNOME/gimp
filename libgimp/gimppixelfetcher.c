@@ -23,6 +23,9 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#include <stdio.h>
+#include <sys/time.h> /* Used by gimp_timer_start/stop */
+
 #include "config.h"
 
 #include "gimp.h"
@@ -241,4 +244,158 @@ gimp_get_bg_guchar (GimpDrawable *drawable,
     default:
       break;
     }
+}
+
+static struct timeval time_start;
+
+void 
+gimp_timer_start(void)
+{
+  gettimeofday (&time_start, NULL);
+}
+
+void
+gimp_timer_stop(void)
+{
+  struct timeval time_stop;
+  long sec, usec;
+
+  gettimeofday(&time_stop, NULL);
+  sec = time_stop.tv_sec  - time_start.tv_sec;
+  usec = time_stop.tv_usec - time_start.tv_usec;
+	
+  if (usec < 0)
+    {
+      sec--;
+      usec += 1000000;
+    }
+	
+  fprintf (stderr, "%ld.%ld seconds\n", sec, usec);
+}
+
+static void
+gimp_rgn_render_row (guchar     *src,
+		     guchar     *dest,
+		     gint       col,       /* row width in pixels */
+		     gint 	bpp,
+		     GimpRgnFunc2 func,
+		     gpointer data)
+{
+  while (col--)
+    {
+      func (src, dest, bpp, data);
+      src += bpp;
+      dest += bpp;
+    }
+}
+
+static void
+gimp_rgn_render_region (const GimpPixelRgn *srcPR,
+		        const GimpPixelRgn *destPR,
+		        GimpRgnFunc2 func, gpointer data)
+{
+  gint row;
+  guchar* src  = srcPR->data;
+  guchar* dest = destPR->data;
+  
+  for (row = 0; row < srcPR->h; row++)
+    {
+      gimp_rgn_render_row (src, dest, srcPR->w, srcPR->bpp, func, data);
+
+      src  += srcPR->rowstride;
+      dest += destPR->rowstride;
+    }
+}
+
+void
+gimp_rgn_iterate1 (GimpDrawable *drawable, GimpRunMode run_mode,
+		   GimpRgnFunc1 func, gpointer data)
+{
+  GimpPixelRgn srcPR;
+  gint      x1, y1, x2, y2;
+  gpointer  pr;
+  gint      total_area, area_so_far;
+  gint      progress_skip;
+
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+
+  total_area = (x2 - x1) * (y2 - y1);
+
+  area_so_far   = 0;
+  progress_skip = 0;
+
+  gimp_pixel_rgn_init (&srcPR, drawable,
+		       x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
+
+  for (pr = gimp_pixel_rgns_register (1, &srcPR);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
+    {
+      guchar *src = srcPR.data;
+      gint y;
+
+      for (y = 0; y < srcPR.h; y++)
+	{
+	  guchar *s = src;
+	  gint x;
+
+	  for (x = 0; x < srcPR.w; x++)
+	    {
+              func (s, srcPR.bpp, data);
+	      s += srcPR.bpp;
+	    }
+
+	  src += srcPR.rowstride;
+	}
+
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
+	{
+	  area_so_far += srcPR.w * srcPR.h;
+	  if (((progress_skip++) % 10) == 0)
+	    gimp_progress_update ((double) area_so_far / (double) total_area);
+	}
+    }
+}
+
+void
+gimp_rgn_iterate2 (GimpDrawable *drawable, GimpRunMode run_mode, 
+		   GimpRgnFunc2 func, gpointer data)
+{
+  GimpPixelRgn srcPR, destPR;
+  gint      x1, y1, x2, y2;
+  gpointer  pr;
+  gint      total_area, area_so_far;
+  gint      progress_skip;
+
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+
+  total_area = (x2 - x1) * (y2 - y1);
+
+  area_so_far   = 0;
+  progress_skip = 0;
+
+  /* Initialize the pixel regions. */
+  gimp_pixel_rgn_init (&srcPR, drawable, x1, y1, (x2 - x1), (y2 - y1),
+		       FALSE, FALSE);
+  gimp_pixel_rgn_init (&destPR, drawable, x1, y1, (x2 - x1), (y2 - y1),
+		       TRUE, TRUE);
+  
+  for (pr = gimp_pixel_rgns_register (2, &srcPR, &destPR);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
+    {
+      gimp_rgn_render_region (&srcPR, &destPR, func, data);
+
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
+	{
+	  area_so_far += srcPR.w * srcPR.h;
+	  if (((progress_skip++) % 10) == 0)
+	    gimp_progress_update ((double) area_so_far / (double) total_area);
+	}
+    }
+
+  /*  update the processed region  */
+  gimp_drawable_flush (drawable);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 }
