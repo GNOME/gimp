@@ -26,6 +26,7 @@ app/core/gimpdrawable.c
 app/core/gimpdrawable-bucket-fill.c
 app/core/gimpdrawable-transform.c
 app/core/gimpedit.c
+app/core/gimpenvirontable.c
 app/core/gimpgradient.c
 app/core/gimpimage-convert.c
 app/core/gimpimage-mask.c

@@ -1,3 +1,17 @@
+2002-12-17  Manish Singh  <yosh@gimp.org>
+
+	* app/core/gimpenvirontable.[ch]: added some rudimentary support
+	to prepend values to existing environment variables. You can do
+	"separator name=value" now. API change to gimp_environ_table_add
+	for it too. Also added some error checking.
+
+	* app/gui/gui.c: change to new above API
+
+	* plug-ins/pygimp/Makefile.am: write ": PYTHONPATH=" out to env
+	file
+
+	* po/POTFILES.in: add gimpenvirontable.c
+
 2002-12-17  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/gimpressionist/Presets/*: changed all \010 in strings by

@@ -33,25 +33,42 @@
 
 #include "gimpenvirontable.h"
 
+#include "libgimp/gimpintl.h"
+
+
+typedef struct _GimpEnvironValue GimpEnvironValue;
+
+struct _GimpEnvironValue
+{
+  gchar *value;
+  gchar *separator;
+};
+
 
 /* FIXME: check how portable this is */
 extern char **environ;
 
 
-static void gimp_environ_table_class_init     (GimpEnvironTableClass *class);
-static void gimp_environ_table_init           (GimpEnvironTable      *environ_table);
+static void     gimp_environ_table_class_init     (GimpEnvironTableClass *class);
+static void     gimp_environ_table_init           (GimpEnvironTable      *environ_table);
 
-static void gimp_environ_table_finalize       (GObject               *object);
+static void     gimp_environ_table_finalize       (GObject               *object);
 
-static void gimp_environ_table_load_env_file  (GimpDatafileData      *file_data);
+static void     gimp_environ_table_load_env_file  (GimpDatafileData      *file_data);
+static gboolean gimp_environ_table_legal_name     (gchar                 *name);
 
-static void gimp_environ_table_populate       (GimpEnvironTable      *environ_table);
-static void gimp_environ_table_populate_one   (const gchar           *name,
-                                               const gchar           *value,
-                                               GPtrArray             *env_array);
-static void gimp_environ_table_clear_vars     (GimpEnvironTable      *environ_table);
-static void gimp_environ_table_clear_internal (GimpEnvironTable      *environ_table);
-static void gimp_environ_table_clear_envp     (GimpEnvironTable      *environ_table);
+static void     gimp_environ_table_populate       (GimpEnvironTable      *environ_table);
+static void     gimp_environ_table_populate_one   (const gchar           *name,
+                                                   GimpEnvironValue      *val,
+                                                   GPtrArray             *env_array);
+static gboolean gimp_environ_table_pass_through   (GimpEnvironTable      *environ_table,
+                                                   const gchar           *name);
+
+static void     gimp_environ_table_clear_vars     (GimpEnvironTable      *environ_table);
+static void     gimp_environ_table_clear_internal (GimpEnvironTable      *environ_table);
+static void     gimp_environ_table_clear_envp     (GimpEnvironTable      *environ_table);
+
+static void     gimp_environ_table_free_value     (gpointer               value);
 
 
 static GObjectClass *parent_class = NULL;
@@ -132,8 +149,9 @@ gimp_environ_table_load (GimpEnvironTable *environ_table,
 
   gimp_environ_table_clear (environ_table);
 
-  environ_table->vars = g_hash_table_new_full (g_str_hash, g_str_equal,
-                                               g_free, g_free);
+  environ_table->vars =
+    g_hash_table_new_full (g_str_hash, g_str_equal,
+                           g_free, gimp_environ_table_free_value);
 
   gimp_datafiles_read_directories (env_path,
                                    G_FILE_TEST_EXISTS,
@@ -144,19 +162,25 @@ gimp_environ_table_load (GimpEnvironTable *environ_table,
 void
 gimp_environ_table_add (GimpEnvironTable *environ_table,
                         const gchar      *name,
-                        const gchar      *value)
+                        const gchar      *value,
+                        const gchar      *separator)
 {
+  GimpEnvironValue *val;
+
   g_return_if_fail (GIMP_IS_ENVIRON_TABLE (environ_table));
 
   gimp_environ_table_clear_envp (environ_table);
 
   if (! environ_table->internal)
-    environ_table->internal = g_hash_table_new_full (g_str_hash, g_str_equal,
-                                                     g_free, g_free);
+    environ_table->internal =
+      g_hash_table_new_full (g_str_hash, g_str_equal,
+                             g_free, gimp_environ_table_free_value);
 
-  g_hash_table_insert (environ_table->internal,
-                       g_strdup (name),
-                       g_strdup (value));
+  val = g_new (GimpEnvironValue, 1);
+  val->value = g_strdup (value);
+  val->separator = g_strdup (separator);
+
+  g_hash_table_insert (environ_table->internal, g_strdup (name), val);
 }
 
 void
@@ -203,7 +227,7 @@ gimp_environ_table_get_envp (GimpEnvironTable *environ_table)
   g_return_val_if_fail (GIMP_IS_ENVIRON_TABLE (environ_table), NULL);
 
   /* Hmm.. should we return a copy here in the future? Not thread safe atm,
-   * but, the rest of it isn't either.
+   * but the rest of it isn't either.
    */ 
 
   if (! environ_table->envp)
@@ -219,10 +243,11 @@ static void
 gimp_environ_table_load_env_file (GimpDatafileData *file_data)
 {
   GimpEnvironTable *environ_table;
-  FILE        *env;
-  gchar        buffer[4096];
-  gsize        len;
-  gchar       *name, *value, *p;
+  FILE             *env;
+  gchar             buffer[4096];
+  gsize             len;
+  gchar            *name, *value, *separator, *p, *q;
+  GimpEnvironValue *val;
 
   environ_table = GIMP_ENVIRON_TABLE (file_data->user_data);
 
@@ -253,13 +278,57 @@ gimp_environ_table_load_env_file (GimpDatafileData *file_data)
       name = buffer;
       value = p + 1;
 
+      if (name[0] == '\0')
+        {
+          g_message (_("Empty variable name in environment file %s"),
+                     file_data->filename);
+          continue;
+        }
+
+      separator = NULL;
+
+      q = strchr (name, ' ');
+      if (q)
+        {
+          *q = '\0';
+
+          separator = name;
+          name = q + 1;
+        }
+
+      if (! gimp_environ_table_legal_name (name))
+        {
+          g_message (_("Illegal variable name in environment file %s: %s"),
+                     file_data->filename, name);
+          continue;
+        }
+
       if (! g_hash_table_lookup (environ_table->vars, name))
-        g_hash_table_insert (environ_table->vars,
-                             g_strdup (name),
-                             g_strdup (value));
+        {
+          val = g_new (GimpEnvironValue, 1);
+          val->value = g_strdup (value);
+          val->separator = g_strdup (separator);
+
+          g_hash_table_insert (environ_table->vars, g_strdup (name), val);
+        }
     }
 
   fclose (env);
+}
+
+static gboolean
+gimp_environ_table_legal_name (gchar *name)
+{
+  gchar *s;
+
+  if (! g_ascii_isalpha (*name) && (*name != '_'))
+    return FALSE;
+
+  for (s = name + 1; *s; s++)
+    if (! g_ascii_isalnum (*s) && (*s != '_'))
+      return FALSE;
+
+  return TRUE;
 }
 
 static void
@@ -280,7 +349,7 @@ gimp_environ_table_populate (GimpEnvironTable *environ_table)
         {
           name = g_strndup (*var, p - *var);
 
-          if (! g_hash_table_lookup (environ_table->vars, name))
+          if (gimp_environ_table_pass_through (environ_table, name))
             g_ptr_array_add (env_array, g_strdup (*var));
 
           g_free (name);
@@ -316,14 +385,39 @@ gimp_environ_table_populate (GimpEnvironTable *environ_table)
 }
 
 static void
-gimp_environ_table_populate_one (const gchar *name,
-                                 const gchar *value,
-                                 GPtrArray   *env_array)
+gimp_environ_table_populate_one (const gchar      *name,
+                                 GimpEnvironValue *val,
+                                 GPtrArray        *env_array)
 {
-  gchar *var;
+  gchar *old, *var = NULL;
 
-  var = g_strconcat (name, "=", value, NULL);
+  if (val->separator)
+    {
+      old = getenv (name);
+
+      if (old)
+        var = g_strconcat (name, "=", val->value, val->separator, old, NULL);
+    }
+
+  if (! var)
+    var = g_strconcat (name, "=", val->value, NULL);
+
   g_ptr_array_add (env_array, var);
+}
+
+static gboolean
+gimp_environ_table_pass_through (GimpEnvironTable *environ_table,
+                                 const gchar      *name)
+{
+  gboolean vars, internal;
+
+  vars = environ_table->vars &&
+         g_hash_table_lookup (environ_table->vars, name);
+
+  internal = environ_table->internal &&
+             g_hash_table_lookup (environ_table->internal, name);
+
+  return (!vars && !internal);
 }
 
 static void
@@ -354,4 +448,14 @@ gimp_environ_table_clear_envp (GimpEnvironTable *environ_table)
       g_strfreev (environ_table->envp);
       environ_table->envp = NULL;
     }
+}
+
+static void
+gimp_environ_table_free_value (gpointer value)
+{
+  GimpEnvironValue *val = value;
+
+  g_free (val->value);
+  g_free (val->separator);
+  g_free (val);
 }

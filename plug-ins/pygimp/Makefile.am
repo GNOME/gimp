@@ -36,7 +36,7 @@ pyenvdir = $(gimpplugindir)/environ
 
 install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(pyenvdir)
-	echo "PYTHONPATH=$(pygimpdir)" > $(DESTDIR)$(pyenvdir)/pygimp.env
+	echo ": PYTHONPATH=$(pygimpdir)" > $(DESTDIR)$(pyenvdir)/pygimp.env
 
 snap:
 	$(MAKE) dist distdir=$(PACKAGE)-SNAP-`date +"%Y%m%d"`

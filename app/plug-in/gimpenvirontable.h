@@ -57,9 +57,10 @@ void                gimp_environ_table_load      (GimpEnvironTable *environ_tabl
 
 void                gimp_environ_table_add       (GimpEnvironTable *environ_table,
                                                   const gchar      *name,
-						  const gchar      *value);
+                                                  const gchar      *value,
+                                                  const gchar      *separator);
 void                gimp_environ_table_remove    (GimpEnvironTable *environ_table,
-						  const gchar      *name);
+                                                  const gchar      *name);
 
 void                gimp_environ_table_clear     (GimpEnvironTable *environ_table);
 void                gimp_environ_table_clear_all (GimpEnvironTable *environ_table);
