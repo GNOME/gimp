@@ -277,7 +277,8 @@ gimp_data_factory_view_activate_item (GimpContainerEditor *editor,
   if (data && gimp_container_have (view->factory->container,
                                    GIMP_OBJECT (data)))
     {
-      gtk_button_clicked (GTK_BUTTON (view->edit_button));
+      if (view->edit_button && GTK_WIDGET_SENSITIVE (view->edit_button))
+        gtk_button_clicked (GTK_BUTTON (view->edit_button));
     }
 }
 

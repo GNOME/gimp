@@ -1,3 +1,9 @@
+2004-08-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdatafactoryview.c
+	(gimp_data_factory_view_activate_item): emit "clicked" on the
+	edit_button only if it exists and is sensitive. Fixes bug #151343.
+
 2004-08-31  Manish Singh  <yosh@gimp.org>
 
 	* app/plug-in/plug-in.c (plug_in_open): cast plug_in_recv_message
