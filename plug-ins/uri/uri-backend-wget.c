@@ -304,6 +304,8 @@ uri_backend_load_image (const gchar  *uri,
               if (size > 0)
                 gimp_progress_update ((gdouble) (kilobytes * 1024) /
                                       (gdouble) size);
+              else
+                gimp_progress_pulse ();
             }
           else if (dot == ':')  /* the time string contains a ':' */
             {

@@ -1,3 +1,8 @@
+2005-02-24  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/uri/uri-backend-wget.c (uri_backend_load_image): pulse
+	the progress while downloading an unspecified amount of data.
+
 2005-02-24  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/uri/uri-backend-wget.c: Handle HTTP 302 Redirect output
