@@ -272,6 +272,8 @@ gimp_strip_uline (const gchar *str)
  *
  * Return value: A (possibly escaped) copy of @str which should be
  * freed using g_free() when it is not needed any longer.
+ *
+ * Since: GIMP 2.2
  **/
 gchar *
 gimp_escape_uline (const gchar *str)

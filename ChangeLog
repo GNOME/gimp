@@ -1,3 +1,7 @@
+2004-11-10  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpbase/gimputils.c (gimp_escape_uline): "Since: GIMP 2.2".
+
 2004-11-10  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/preferences-dialog.c: set the padding-mode to custom
