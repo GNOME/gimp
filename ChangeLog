@@ -1,3 +1,9 @@
+Wed Feb  2 00:35:02 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/gfli.c: added gettext support
+
+	* plug-ins/[various Makefile.am]: added CPPFLAGS to make i18n work 
+
 Tue Feb  1 23:09:42 CET 2000  Sven Neumann <sven@gimp.org>
 	
 	* app/regex.c

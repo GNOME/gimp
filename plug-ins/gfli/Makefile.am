@@ -20,6 +20,9 @@ LDADD = \
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
+AM_CPPFLAGS = \
+	-DLOCALEDIR=\""$(localedir)"\"
+
 .PHONY: files
 
 files:

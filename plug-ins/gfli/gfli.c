@@ -47,6 +47,7 @@
  * 1.1 first support for FLI saving (BRUN and LC chunks)
  * 1.2 support for load/save ranges, fixed SGI & SUN problems (I hope...), fixed FLC
  */
+#include <config.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -56,6 +57,7 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+#include <libgimp/stdplugins-intl.h>
 
 #include "fli.h"
 
@@ -235,6 +237,8 @@ run (gchar   *name,
 
   if (strncmp (name, "file_fli_load", strlen("file_fli_load")) == 0)
     {
+      INIT_I18N_UI ();
+
       switch (run_mode)
 	{
 	case RUN_NONINTERACTIVE:
@@ -311,6 +315,8 @@ run (gchar   *name,
     }
   else if (strcmp (name, "file_fli_save") == 0)
     {
+      INIT_I18N_UI ();
+
       switch (run_mode)
 	{
 	case RUN_NONINTERACTIVE:
@@ -363,6 +369,9 @@ run (gchar   *name,
   else if (strcmp (name, "file_fli_info") == 0)
     {
       gint32 width, height, frames;
+
+      INIT_I18N_UI ();
+
       /*
        * check for valid parameters;
        */
@@ -425,7 +434,7 @@ get_info (gchar  *filename,
 
   if (!f)
     {
-      g_message ("FLI: can't open \"%s\"\n", filename);
+      g_message (_("FLI: can't open \"%s\"\n"), filename);
       return FALSE;
     }
   fli_read_header (f, &fli_header);
@@ -457,15 +466,14 @@ load_image (gchar  *filename,
 
   gint cnt;
 
-  name_buf = g_malloc (64 + strlen(filename));
-  sprintf (name_buf, "Loading %s:", filename);
+  name_buf = g_strdup_printf (_("Loading %s:"), filename);
   gimp_progress_init (name_buf);
   g_free (name_buf);
 
   f = fopen (filename ,"rb");
   if (!f)
     {
-      g_message ("FLI: can't open \"%s\"\n", filename);
+      g_message (_("FLI: can't open \"%s\"\n"), filename);
       return -1;
     }
   fli_read_header (f, &fli_header);
@@ -525,12 +533,12 @@ load_image (gchar  *filename,
    */
   for (cnt = from_frame; cnt <= to_frame; cnt++)
     {
-      gchar layername[64];
-      sprintf (layername, "Frame (%i)",cnt); 
-      layer_ID = gimp_layer_new (image_id, layername,
+      name_buf = g_strdup_printf (_("Frame (%i)"), cnt); 
+      layer_ID = gimp_layer_new (image_id, name_buf,
 				 fli_header.width, fli_header.height,
 				 INDEXED_IMAGE, 100, NORMAL_MODE);
       gimp_image_add_layer (image_id, layer_ID, 0);
+      g_free (name_buf);
 
       drawable = gimp_drawable_get (layer_ID);
       gimp_progress_update ((double) cnt / (double)(to_frame-from_frame));
@@ -622,7 +630,7 @@ save_image (gchar  *filename,
     {
     case INDEXEDA_IMAGE:
     case GRAYA_IMAGE:
-      g_message ("FLI: Sorry, can't save images with Alpha.\n");
+      g_message (_("FLI: Sorry, can't save images with Alpha.\n"));
       return FALSE;
     case GRAY_IMAGE:
       {
@@ -652,11 +660,11 @@ save_image (gchar  *filename,
 	break;
       }
     default:
-      g_message ("FLI: Sorry, I can save only INDEXED and GRAY images.\n");
+      g_message (_("FLI: Sorry, I can save only INDEXED and GRAY images.\n"));
       return FALSE;
     }
 
-  name_buf = g_strdup_printf ("Saving %s:", filename);
+  name_buf = g_strdup_printf (_("Saving %s:"), filename);
   gimp_progress_init (name_buf);
   g_free (name_buf);
 
@@ -688,7 +696,7 @@ save_image (gchar  *filename,
   f = fopen (filename ,"wb");
   if (!f)
     {
-      g_message ("FLI: can't open \"%s\"\n", filename);
+      g_message (_("FLI: can't open \"%s\"\n"), filename);
       return FALSE;
     }
   fseek (f, 128, SEEK_SET);
@@ -821,14 +829,14 @@ load_dialog (gchar *name)
 
   init_gtk ();
 
-  dialog = gimp_dialog_new ("GFLI 1.2 - Load framestack", "gfli",
+  dialog = gimp_dialog_new (_("GFLI 1.2 - Load framestack"), "gfli",
 			    gimp_plugin_help_func, "filters/gfli.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 
-			    "OK", cb_ok,
+			    _("OK"), cb_ok,
 			    NULL, NULL, NULL, TRUE, FALSE,
-			    "Cancel", gtk_widget_destroy,
+			    _("Cancel"), gtk_widget_destroy,
 			    NULL, 1, NULL, FALSE, TRUE,
 
 			    NULL);
@@ -852,7 +860,7 @@ load_dialog (gchar *name)
   spinbutton = gimp_spin_button_new (&adj,
 				     from_frame, 1, nframes, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     "From:", 1.0, 0.5,
+			     _("From:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
@@ -861,7 +869,7 @@ load_dialog (gchar *name)
   spinbutton = gimp_spin_button_new (&adj,
 				     to_frame, 1, nframes, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     "To:", 1.0, 0.5,
+			     _("To:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
@@ -892,14 +900,14 @@ save_dialog (gint32 image_id)
 
   init_gtk ();
 
-  dialog = gimp_dialog_new ("GFLI 1.2 - Save framestack", "gfli",
+  dialog = gimp_dialog_new (_("GFLI 1.2 - Save framestack"), "gfli",
 			    gimp_plugin_help_func, "filters/gfli.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 
-			    "OK", cb_ok,
+			    _("OK"), cb_ok,
 			    NULL, NULL, NULL, TRUE, FALSE,
-			    "Cancel", gtk_widget_destroy,
+			    _("Cancel"), gtk_widget_destroy,
 			    NULL, 1, NULL, FALSE, TRUE,
 
 			    NULL);
@@ -923,7 +931,7 @@ save_dialog (gint32 image_id)
   spinbutton = gimp_spin_button_new (&adj,
 				     from_frame, 1, nframes, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     "From:", 1.0, 0.5,
+			     _("From:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
@@ -932,7 +940,7 @@ save_dialog (gint32 image_id)
   spinbutton = gimp_spin_button_new (&adj,
 				     to_frame, 1, nframes, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     "To:", 1.0, 0.5,
+			     _("To:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
@@ -945,3 +953,4 @@ save_dialog (gint32 image_id)
 
   return result;
 }
+

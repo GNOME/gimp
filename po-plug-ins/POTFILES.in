@@ -168,6 +168,7 @@ plug-ins/gdyntext/gdyntext_ui.c
 plug-ins/gdyntext/message_window.c
 plug-ins/gfig/gfig.c
 plug-ins/gflare/gflare.c
+plug-ins/gfli/gfli.c
 plug-ins/gimpressionist/brush.c
 plug-ins/gimpressionist/color.c
 plug-ins/gimpressionist/general.c

@@ -41,7 +41,8 @@ LDADD = \
 	$(INTLLIBS)
 
 AM_CPPFLAGS = \
-	-DREGEX_MALLOC
+	-DREGEX_MALLOC			\
+	-DLOCALEDIR=\""$(localedir)"\"
 
 .PHONY: files
 

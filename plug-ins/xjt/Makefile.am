@@ -25,6 +25,9 @@ LDADD = \
 	$(LIBJPEG)				\
 	$(INTLLIBS)
 
+AM_CPPFLAGS = \
+	-DLOCALEDIR=\""$(localedir)"\"
+
 .PHONY: files
 
 files:
