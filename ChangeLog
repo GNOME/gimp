@@ -1,3 +1,7 @@
+2004-10-11  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/jigsaw.c: ported to GimpAspectPreview.
+
 2004-10-11  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/flarefx.c: use a GimpSizeEntry for specifying

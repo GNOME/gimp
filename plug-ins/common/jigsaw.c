@@ -68,13 +68,12 @@ static void run   (const gchar      *name,
                    gint             *nreturn_vals,
                    GimpParam       **return_vals);
 
-static gint jigsaw                 (gboolean preview_mode);
-static void jigsaw_values_changed  (GtkWidget *widget, gpointer data);
+static void     jigsaw             (GimpDrawable *drawable,
+                                    GimpPreview  *preview);
 
-static void  jigsaw_radio_button_update (GtkWidget *widget, gpointer data);
-static gboolean dialog_box (void);
+static gboolean jigsaw_dialog      (GimpDrawable *drawable);
 
-static void draw_jigsaw            (guchar    *buffer,
+static void     draw_jigsaw        (guchar    *buffer,
                                     gint       bufsize,
                                     gint       width,
                                     gint       height,
@@ -295,11 +294,12 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 struct config_tag
 {
-  gint    x;
-  gint    y;
-  style_t style;
-  gint    blend_lines;
-  gdouble blend_amount;
+  gint     x;
+  gint     y;
+  style_t  style;
+  gint     blend_lines;
+  gdouble  blend_amount;
+  gboolean preview;
 };
 
 
@@ -311,12 +311,12 @@ static config_t config =
   5,
   BEZIER_1,
   3,
-  0.5
+  0.5,
+  TRUE
 };
 
 struct globals_tag
 {
-  GimpDrawable *drawable;
   gint  *cachex1[4];
   gint  *cachex2[4];
   gint  *cachey1[4];
@@ -338,7 +338,6 @@ typedef struct globals_tag globals_t;
 
 static globals_t globals =
 {
-  0,
   {0, 0, 0, 0},
   {0, 0, 0, 0},
   {0, 0, 0, 0},
@@ -355,12 +354,6 @@ static globals_t globals =
   {0, 0, 0, 0},
   {0, 0, 0, 0}
 };
-
-/* preview globals */
-#define PREVIEW_SIZE 128
-static GtkWidget *preview;
-static gint       preview_width, preview_height, preview_bpp;
-static guchar    *preview_cache;
 
 MAIN ()
 
@@ -411,7 +404,6 @@ run (const gchar      *name,
 
   run_mode = param[0].data.d_int32;
   drawable = gimp_drawable_get(param[2].data.d_drawable);
-  globals.drawable = drawable;
   gimp_tile_cache_ntiles (drawable->width / gimp_tile_width () + 1);
 
   switch (run_mode)
@@ -424,10 +416,8 @@ run (const gchar      *name,
           config.style = param[5].data.d_int32;
           config.blend_lines = param[6].data.d_int32;
           config.blend_amount = param[7].data.d_float;
-          if (jigsaw(FALSE) == -1)
-            {
-              status = GIMP_PDB_EXECUTION_ERROR;
-            }
+
+          jigsaw (drawable, NULL);
         }
       else
         {
@@ -437,36 +427,25 @@ run (const gchar      *name,
 
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data("plug_in_jigsaw", &config);
-      if (! dialog_box())
+      if (! jigsaw_dialog (drawable))
         {
           status = GIMP_PDB_CANCEL;
           break;
         }
       gimp_progress_init (_("Assembling Jigsaw..."));
-      if (jigsaw(FALSE) == -1)
-        {
-          status = GIMP_PDB_CALLING_ERROR;
-          break;
-        }
-      gimp_set_data("plug_in_jigsaw", &config, sizeof(config_t));
-      gimp_displays_flush();
+
+      jigsaw (drawable, NULL);
+      gimp_set_data ("plug_in_jigsaw", &config, sizeof(config_t));
+      gimp_displays_flush ();
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_get_data("plug_in_jigsaw", &config);
-      if (jigsaw(FALSE) == -1)
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
-          gimp_message("An execution error occured.");
-        }
-      else
-        {
-          gimp_displays_flush();
-        }
-
+      jigsaw (drawable, NULL);
+      gimp_displays_flush ();
     }  /* switch */
 
-  gimp_drawable_detach(drawable);
+  gimp_drawable_detach (drawable);
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -474,21 +453,22 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 }
 
-static gint
-jigsaw (gboolean preview_mode)
+static void
+jigsaw (GimpDrawable *drawable,
+        GimpPreview  *preview)
 {
   GimpPixelRgn  src_pr, dest_pr;
-  guchar       *buffer;
-  GimpDrawable *drawable = globals.drawable;
+  guchar       *src = NULL, *buffer;
   gint          width;
   gint          height;
   gint          bytes;
   gint          buffer_size;
 
-  if (preview_mode)
+  if (preview)
     {
-      width  = preview_width;
-      height = preview_height;
+      gimp_preview_get_size (preview, &width, &height);
+      src = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                              &width, &height, &bytes);
     }
   else
     {
@@ -501,9 +481,9 @@ jigsaw (gboolean preview_mode)
   /* setup image buffer */
   buffer = g_new (guchar, buffer_size);
 
-  if (preview_mode)
+  if (preview)
     {
-      memcpy (buffer, preview_cache, buffer_size);
+      memcpy (buffer, src, buffer_size);
     }
   else
     {
@@ -518,17 +498,14 @@ jigsaw (gboolean preview_mode)
     (width / config.x * 2) : (height / config.y * 2);
 
   malloc_cache ();
-  draw_jigsaw (buffer, buffer_size, width, height, bytes, preview_mode);
+  draw_jigsaw (buffer, buffer_size, width, height, bytes, preview != NULL);
   free_cache ();
 
   /* cleanup */
-  if (preview_mode)
+  if (preview)
     {
-      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
-                              0, 0, width, height,
-                              gimp_drawable_type (drawable->drawable_id),
-                              buffer,
-                              width * bytes);
+      gimp_preview_draw_buffer (preview, buffer, width * bytes);
+      g_free (src);
     }
   else
     {
@@ -539,14 +516,6 @@ jigsaw (gboolean preview_mode)
     }
 
   g_free(buffer);
-
-  return 0;
-}
-
-static void
-jigsaw_values_changed (GtkWidget *widget, gpointer data)
-{
-  jigsaw (TRUE);
 }
 
 static void
@@ -2453,13 +2422,12 @@ check_config (gint width,
 ********************************************************/
 
 static gboolean
-dialog_box (void)
+jigsaw_dialog (GimpDrawable *drawable)
 {
-  GimpDrawable *drawable = globals.drawable;
+  GtkWidget    *dialog;
+  GtkWidget    *main_vbox;
+  GtkWidget    *preview;
   GtkSizeGroup *group;
-  GtkWidget    *dlg;
-  GtkWidget    *hbox;
-  GtkWidget    *vbox;
   GtkWidget    *frame;
   GtkWidget    *rbutton1;
   GtkWidget    *rbutton2;
@@ -2469,41 +2437,29 @@ dialog_box (void)
 
   gimp_ui_init ("jigsaw", TRUE);
 
-  dlg = gimp_dialog_new (_("Jigsaw"), "jigsaw",
-                         NULL, 0,
-                         gimp_standard_help_func, "plug-in-jigsaw",
+  dialog = gimp_dialog_new (_("Jigsaw"), "jigsaw",
+                            NULL, 0,
+                            gimp_standard_help_func, "plug-in-jigsaw",
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  hbox = gtk_hbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
-                      hbox, TRUE, TRUE, 0);
-  gtk_widget_show (hbox);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
 
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
-
-  preview = gimp_preview_area_new ();
-  preview_width = preview_height = PREVIEW_SIZE;
-  preview_cache = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-                                                    &preview_width,
-                                                    &preview_height,
-                                                    &preview_bpp);
-  gtk_widget_set_size_request (preview, preview_width, preview_height);
-  gtk_box_pack_start (GTK_BOX (vbox), preview, FALSE, FALSE, 0);
+  preview = gimp_aspect_preview_new (drawable, &config.preview);
+  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
-
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  g_signal_connect_swapped (preview, "invalidated",
+                            G_CALLBACK (jigsaw),
+                            drawable);
 
   frame = gimp_frame_new (_("Number of Tiles"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -2525,9 +2481,9 @@ dialog_box (void)
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &config.x);
-  g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (jigsaw_values_changed),
-                    NULL);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /* ytiles */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
@@ -2541,15 +2497,15 @@ dialog_box (void)
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &config.y);
-  g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (jigsaw_values_changed),
-                    NULL);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_widget_show (table);
   gtk_widget_show (frame);
 
   frame = gimp_frame_new (_("Bevel Edges"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -2569,9 +2525,9 @@ dialog_box (void)
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &config.blend_lines);
-  g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (jigsaw_values_changed),
-                    NULL);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /* blending amount */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
@@ -2587,9 +2543,9 @@ dialog_box (void)
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &config.blend_amount);
-  g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (jigsaw_values_changed),
-                    NULL);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_widget_show (table);
   gtk_widget_show (frame);
@@ -2597,7 +2553,7 @@ dialog_box (void)
   /* frame for primitive radio buttons */
 
   frame = gimp_int_radio_group_new (TRUE, _("Jigsaw Style"),
-                                    G_CALLBACK (jigsaw_radio_button_update),
+                                    G_CALLBACK (gimp_radio_button_update),
                                     &config.style, config.style,
 
                                     _("_Square"), BEZIER_1, &rbutton1,
@@ -2607,32 +2563,22 @@ dialog_box (void)
 
   gimp_help_set_help_data (rbutton1, _("Each piece has straight sides"), NULL);
   gimp_help_set_help_data (rbutton2, _("Each piece has curved sides"),   NULL);
+  g_signal_connect_swapped (rbutton1, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  g_signal_connect_swapped (rbutton2, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  jigsaw (TRUE); /* render preview */
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
-
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
-}
-
-/***************************************************
-  callbacks
- ***************************************************/
-
-static void
-jigsaw_radio_button_update (GtkWidget *widget,
-                            gpointer   data)
-{
-  gimp_radio_button_update (widget, data);
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    jigsaw (TRUE);
 }
 
