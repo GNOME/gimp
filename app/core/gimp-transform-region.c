@@ -664,8 +664,9 @@ gimp_transform_tool_doit (GimpTransformTool  *gt_tool,
 				 new_tiles, new_layer);
 
       /*  create and initialize the transform_undo structure  */
-      tu = g_new (TransformUndo, 1);
-      tu->tool = gt_tool;
+      tu = g_new0 (TransformUndo, 1);
+      tu->tool_ID   = tool->ID;
+      tu->tool_type = GTK_OBJECT (tool)->klass->type;
 
       for (i = 0; i < TRAN_INFO_SIZE; i++)
 	tu->trans_info[i] = old_trans_info[i];
@@ -727,7 +728,7 @@ gimp_transform_tool_motion (GimpTool          *tool,
 {
   GimpTransformTool *tr_tool;
 
-  tr_tool = GIMP_TRANSFORM_TOOL(tool);
+  tr_tool = GIMP_TRANSFORM_TOOL (tool);
 
   if (! tr_tool->bpressed)
     return;

@@ -1,5 +1,16 @@
 2001-03-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/undo.c: re-enabled transform undo. Fixes the transform tool
+	crashes.
+
+	* app/tools/gimptool.[ch]: put tool->ID back because the undo
+	system uses it. Also, a unique tool serial number will be not too
+	bad to have once we have module tools.
+
+	* app/tools/gimptransformtool.[ch]: changed accordingly.
+
+2001-03-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* app/pixel_surround.[ch]: lowlevel stuff taken out of the transform
 	tool.

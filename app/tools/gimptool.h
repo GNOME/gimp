@@ -51,6 +51,8 @@ struct _GimpTool
 {
   GimpObject	parent_instance;
 
+  gint          ID;           /*  unique tool ID                              */
+
   ToolState     state;        /*  state of tool activity                      */
   gint          paused_count; /*  paused control count                        */
   gboolean      scroll_lock;  /*  allow scrolling or not                      */

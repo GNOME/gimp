@@ -49,7 +49,8 @@
 #include "tools/gimptool.h"
 #include "tools/gimpdrawtool.h"
 #include "tools/gimppainttool.h"
-#include "tools/transform_core.h"
+#include "tools/gimptransformtool.h"
+#include "tools/tool_manager.h"
 
 #include "libgimp/gimpparasite.h"
 
@@ -1263,25 +1264,20 @@ undo_pop_transform (GimpImage *gimage,
 		    UndoType   type,
 		    gpointer   tu_ptr)
 {
-#ifdef __GNUC__
-#warning very bogus
-#endif
-#if 0
-  TransformCore *tc;
-  TransformUndo *tu;
-  TileManager   *temp;
-  gdouble        d;
-  gint           i;
-
+  GimpTransformTool *tt;
+  TransformUndo     *tu;
+  TileManager       *temp;
+  gdouble            d;
+  gint               i;
 
   /* Can't have ANY tool selected - maybe a plugin running */
   if (active_tool == NULL)
     return TRUE;
 
-  tc = (TransformCore *) active_tool->private;
+  tt = (GimpTransformTool *) active_tool;
   tu = (TransformUndo *) tu_ptr;
 
-  path_transform_do_undo (gimage,tu->path_undo);
+  path_transform_do_undo (gimage, tu->path_undo);
 
   /*  only pop if the active tool is the tool that pushed this undo  */
   if (tu->tool_ID != active_tool->ID)
@@ -1291,23 +1287,24 @@ undo_pop_transform (GimpImage *gimage,
   for (i = 0; i < TRAN_INFO_SIZE; i++)
     {
       d = tu->trans_info[i];
-      tu->trans_info[i] = tc->trans_info[i];
-      tc->trans_info[i] = d;
+      tu->trans_info[i] = tt->trans_info[i];
+      tt->trans_info[i] = d;
     }
 
   /*  swap the original buffer--the source buffer for repeated transforms
    */
   temp = tu->original;
-  tu->original = tc->original;
-  tc->original = temp;
+  tu->original = tt->original;
+  tt->original = temp;
 
   /*  If we're re-implementing the first transform, reactivate tool  */
-  if (state == REDO && tc->original)
+  if (state == REDO && tt->original)
     {
       active_tool->state = ACTIVE;
-      draw_core_resume (tc->core, active_tool);
+
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tt));
     }
-#endif
+
   return TRUE;
 }
 

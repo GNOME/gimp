@@ -109,8 +109,8 @@ typedef struct _TransformUndo TransformUndo;
 
 struct _TransformUndo
 {
-  /* Is this the right thing to do? */
-  GimpTransformTool *tool;
+  gint         tool_ID;
+  GtkType      tool_type;
 
   TranInfo     trans_info;
   TileManager *original;

@@ -93,12 +93,7 @@ static guint gimp_tool_signals[LAST_SIGNAL] = { 0 };
 
 static GimpObjectClass *parent_class = NULL;
 
-
-#ifdef __GNUC__
-#warning FIXME: check what global_tool_ID was used for
-#endif
-
-/* static gint global_tool_ID = 0; */
+static gint global_tool_ID = 0;
 
 
 GtkType
@@ -251,6 +246,8 @@ gimp_tool_class_init (GimpToolClass *klass)
 static void
 gimp_tool_init (GimpTool *tool)
 {
+  tool->ID            = global_tool_ID++;
+
   tool->state         = INACTIVE;
   tool->paused_count  = 0;
   tool->scroll_lock   = FALSE;    /*  Allow scrolling  */
