@@ -117,7 +117,9 @@ static void gimp_bezier_coords_subdivide2 (const GimpCoords      *beziercoords,
 static gboolean gimp_bezier_coords_is_straight (const GimpCoords *beziercoords,
                                                 const gdouble     precision);
 
-static void gimp_bezier_stroke_to_art_point (ArtVpath *vec);
+static void    gimp_bezier_stroke_to_art_point (const GimpStroke *stroke,
+                                                ArtVpath         *vec);
+
 
 /*  private variables  */
 
@@ -1612,9 +1614,10 @@ gimp_bezier_coords_subdivide2 (const GimpCoords *beziercoords,
 }
 
 static void
-gimp_bezier_stroke_to_art_point (ArtVpath *vec)
+gimp_bezier_stroke_to_art_point (const GimpStroke *stroke,
+                                 ArtVpath         *vec)
 {
-  g_printerr ("gimp_bezier_stroke_to_art_point: default implementation\n");
+  g_printerr ("gimp_bezier_stroke_to_art_point: implement me!\n");
 
   return;
 }

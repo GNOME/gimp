@@ -3,7 +3,7 @@
  *
  * gimpvectors.c
  * Copyright (C) 2002 Simon Budig  <simon@gimp.org>
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -953,25 +953,27 @@ gimp_vectors_real_make_bezier (const GimpVectors *vectors)
  * gimp_vectors_to_art_vpath: Create an ArtVpath from a GimpVectors object.
  * @vectors: The source path
  *
- * Traverses the stroke list of a GimpVector object, adding nodes to an 
+ * Traverses the stroke list of a GimpVector object, adding nodes to an
  * ArtVpath as it goes.
- * The destination path is allocated inside this function, and must be 
- * freed after use. 
- * 
+ * The destination path is allocated inside this function, and must be
+ * freed after use.
+ *
  * Return value: Newly allocated ArtVpath.
  */
 ArtVpath *
-gimp_vectors_to_art_vpath(const GimpVectors *vectors)
+gimp_vectors_to_art_vpath (GimpVectors *vectors)
 {
-  ArtVpath * vec;          /* Libart path we're creating */
-  GimpStroke *cur_stroke; 
-  guint num_points = g_list_length (vectors->strokes);
+  ArtVpath   *vec;          /* Libart path we're creating */
+  GimpStroke *cur_stroke;
+  guint       num_points;
+
+  num_points = g_list_length (vectors->strokes);
 
   vec = art_new (ArtVpath, num_points);
 
   gimp_vectors_freeze (vectors);
 
-  /* Get the list of Strokes in the vector, and create the equivalent 
+  /* Get the list of Strokes in the vector, and create the equivalent
    * ArtVpath node */
 
   for (cur_stroke = gimp_vectors_stroke_get_next (vectors, NULL);
@@ -979,9 +981,9 @@ gimp_vectors_to_art_vpath(const GimpVectors *vectors)
        cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke))
     {
       /* Add this stroke to the art_vpath */
-      GIMP_STROKE_GET_CLASS(cur_stroke)->to_art_point (vec);
+      gimp_stroke_to_art_point (cur_stroke, vec);
     }
-  
+
   gimp_vectors_thaw (vectors);
 
   /* That's it - nothing else to see here */

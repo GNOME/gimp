@@ -102,11 +102,11 @@ void            gimp_vectors_copy_strokes       (const GimpVectors *src_vectors,
 GimpAnchor    * gimp_vectors_anchor_get         (const GimpVectors *vectors,
                                                  const GimpCoords  *coord,
                                                  GimpStroke       **ret_stroke);
-                                                                    
-/* prev == NULL: "first" anchor */                                  
+
+/* prev == NULL: "first" anchor */
 GimpAnchor    * gimp_vectors_anchor_get_next    (const GimpVectors  *vectors,
                                                  const GimpAnchor   *prev);
-                                                                    
+
 /* type will be an xorable enum:
  * VECTORS_NONE, VECTORS_FIX_ANGLE, VECTORS_FIX_RATIO, VECTORS_RESTRICT_ANGLE
  *  or so.
@@ -137,8 +137,8 @@ void            gimp_vectors_stroke_remove      (GimpVectors        *vectors,
                                                  GimpStroke         *stroke);
 GimpStroke    * gimp_vectors_stroke_get         (const GimpVectors  *vectors,
                                                  const GimpCoords   *coord);
-                                                                    
-/* prev == NULL: "first" stroke */                                  
+
+/* prev == NULL: "first" stroke */
 GimpStroke    * gimp_vectors_stroke_get_next    (const GimpVectors  *vectors,
                                                  const GimpStroke   *prev);
 gdouble         gimp_vectors_stroke_get_length  (const GimpVectors  *vectors,
@@ -150,8 +150,8 @@ gdouble         gimp_vectors_get_length         (const GimpVectors  *vectors,
                                                  const GimpAnchor   *start);
 gdouble         gimp_vectors_get_distance       (const GimpVectors  *vectors,
                                                  const GimpCoords   *coord);
-                                                                    
-/* returns the number of valid coordinates */                       
+
+/* returns the number of valid coordinates */
 gint            gimp_vectors_interpolate        (const GimpVectors  *vectors,
                                                  const GimpStroke   *stroke,
                                                  gdouble             precision,
@@ -164,7 +164,9 @@ gint            gimp_vectors_interpolate        (const GimpVectors  *vectors,
 
 GimpVectors   * gimp_vectors_make_bezier        (const GimpVectors  *vectors);
 
+
 /* Convert to libart vector path */
-ArtVpath * gimp_vectors_to_art_vpath(const GimpVectors * vectors);
+ArtVpath      * gimp_vectors_to_art_vpath       (GimpVectors        *vectors);
+
 
 #endif /* __GIMP_VECTORS_H__ */

@@ -38,9 +38,9 @@
 struct _GimpStroke
 {
   GimpObject  parent_instance;
-               
+
   GList      *anchors;
-               
+
   gboolean    closed;
 };
 
@@ -78,7 +78,7 @@ struct _GimpStrokeClass
                                           GimpAnchorFeatureType  feature);
   void          (* anchor_delete)        (GimpStroke            *stroke,
                                           GimpAnchor            *anchor);
-  
+
   gboolean      (* point_is_movable)     (GimpStroke            *stroke,
                                           GimpAnchor            *predec,
                                           gdouble                position);
@@ -164,8 +164,9 @@ struct _GimpStrokeClass
   GList       * (* get_draw_anchors)     (const GimpStroke      *stroke);
   GList       * (* get_draw_controls)    (const GimpStroke      *stroke);
   GArray      * (* get_draw_lines)       (const GimpStroke      *stroke);
-  void          (* to_art_point)        (ArtVpath              *vec);
 
+  void          (* to_art_point)         (const GimpStroke      *stroke,
+                                          ArtVpath              *vec);
 };
 
 
@@ -183,9 +184,9 @@ gdouble      gimp_stroke_nearest_point_get    (const GimpStroke      *stroke,
                                                GimpCoords            *ret_point,
                                                GimpAnchor           **ret_segment_start,
                                                gdouble               *ret_pos);
-                                               
 
-/* prev == NULL: "first" anchor */                                  
+
+/* prev == NULL: "first" anchor */
 GimpAnchor * gimp_stroke_anchor_get_next      (const GimpStroke      *stroke,
                                                const GimpAnchor      *prev);
 
@@ -245,7 +246,7 @@ GimpAnchor * gimp_stroke_extend               (GimpStroke            *stroke,
                                                const GimpCoords      *coords,
                                                GimpAnchor            *neighbor,
                                                GimpVectorExtendMode   extend_mode);
-                                          
+
 gboolean     gimp_stroke_connect_stroke       (GimpStroke            *stroke,
                                                GimpAnchor            *anchor,
                                                GimpStroke            *extension,
@@ -259,7 +260,7 @@ gdouble      gimp_stroke_get_length           (const GimpStroke      *stroke);
 gdouble      gimp_stroke_get_distance         (const GimpStroke      *stroke,
                                                const GimpCoords      *coord);
 
-/* returns an array of valid coordinates */                       
+/* returns an array of valid coordinates */
 GArray     * gimp_stroke_interpolate          (const GimpStroke      *stroke,
                                                gdouble                precision,
                                                gboolean              *closed);
@@ -303,6 +304,9 @@ void         gimp_stroke_transform   (GimpStroke             *stroke,
 GList      * gimp_stroke_get_draw_anchors     (const GimpStroke      *stroke);
 GList      * gimp_stroke_get_draw_controls    (const GimpStroke      *stroke);
 GArray     * gimp_stroke_get_draw_lines       (const GimpStroke      *stroke);
+
+void         gimp_stroke_to_art_point         (const GimpStroke      *stroke,
+                                               ArtVpath              *vec);
 
 
 #endif /* __GIMP_STROKE_H__ */
