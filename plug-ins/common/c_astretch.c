@@ -153,7 +153,7 @@ indexed_c_astretch(gint32 image_ID)  /* a.d.m. */
 
   if (cmap==NULL)
     {
-      printf(_("c_astretch: cmap was NULL!  Quitting...\n"));
+      printf("c_astretch: cmap was NULL!  Quitting...\n");
       gimp_quit();
     }
 

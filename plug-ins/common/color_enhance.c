@@ -161,7 +161,7 @@ indexed_Color_Enhance(gint32 image_ID)  /* a.d.m. */
 
   if (cmap==NULL)
     {
-      printf(_("Color_Enhance: cmap was NULL!  Quitting...\n"));
+      printf("Color_Enhance: cmap was NULL!  Quitting...\n");
       gimp_quit();
     }
 

@@ -1001,7 +1001,7 @@ render_frame (gint32 whichframe)
 
   if (whichframe >= total_frames)
     {
-      printf( _("playback: Asked for frame number %d in a %d-frame animation!\n"),
+      printf( "playback: Asked for frame number %d in a %d-frame animation!\n",
 	     (int) (whichframe+1), (int) total_frames);
       exit(-1);
     }

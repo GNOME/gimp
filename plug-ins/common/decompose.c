@@ -300,7 +300,7 @@ run (char    *name,
   drawable_type = gimp_drawable_type (param[2].data.d_drawable);
   if ((drawable_type != RGB_IMAGE) && (drawable_type != RGBA_IMAGE))
     {
-      show_message (_("plug_in_decompose: Can only work on RGB*_IMAGE"));
+      show_message ("plug_in_decompose: Can only work on RGB*_IMAGE");
       status = STATUS_CALLING_ERROR;
     }
   if (status == STATUS_SUCCESS)
@@ -370,13 +370,13 @@ decompose (gint32  image_ID,
   drawable_src = gimp_drawable_get (drawable_ID);
   if (drawable_src->bpp < 3)
     {
-      show_message (_("decompose: not an RGB image"));
+      show_message ("decompose: not an RGB image");
       return (-1);
     }
   if ((extract[extract_idx].extract_fun == extract_alpha) &&
       (!gimp_drawable_has_alpha (drawable_ID)))
     {
-      show_message (_("decompose: No alpha channel available"));
+      show_message ("decompose: No alpha channel available");
       return (-1);
     }
   
@@ -406,7 +406,7 @@ decompose (gint32  image_ID,
     }
   if (dst[num_images-1] == NULL)
     {
-      show_message (_("decompose: out of memory"));
+      show_message ("decompose: out of memory");
       for (j = 0; j < num_images; j++)
 	{
 	  if (dst[j] != NULL) g_free (dst[j]);

@@ -302,7 +302,7 @@ run (char    *name,
         layer_list = gimp_image_get_layers (param[1].data.d_int32, &nlayers);
         if ((layer_list == NULL) || (nlayers <= 0))
         {
-          sprintf (msg, _("compose: Could not get layers for image %d"),
+          sprintf (msg, "compose: Could not get layers for image %d",
                    (int)param[1].data.d_int32);
           show_message (msg);
           return;
@@ -418,7 +418,7 @@ compose (char   *compose_type,
 	  if (   (width != (int)gimp_drawable_width (compose_ID[j]))
 		 || (height != (int)gimp_drawable_height (compose_ID[j])))
 	    {
-	      show_message (_("compose: drawables have different size"));
+	      show_message ("compose: drawables have different size");
 	      return -1;
 	    }
 	}
@@ -435,7 +435,7 @@ compose (char   *compose_type,
 	  if (   (width != (int)gimp_image_width (compose_ID[j]))
 		 || (height != (int)gimp_image_height (compose_ID[j])))
 	    {
-	      show_message (_("compose: images have different size"));
+	      show_message ("compose: images have different size");
 	      return -1;
 	    }
 	}
@@ -448,7 +448,7 @@ compose (char   *compose_type,
 	g32 = gimp_image_get_layers (compose_ID[j], &num_layers);
 	if ((g32 == NULL) || (num_layers <= 0))
 	  {
-	    show_message (_("compose: error in getting layer IDs"));
+	    show_message ("compose: error in getting layer IDs");
 	    return (-1);
 	  }
 	

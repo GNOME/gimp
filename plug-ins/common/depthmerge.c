@@ -1182,7 +1182,7 @@ void util_convertColorspace(guchar *dest,
 
   if (((sourceColorBPP != 1) && (sourceColorBPP != 3)) ||
       ((destColorBPP   != 1) && (destColorBPP   != 3)))
-    fprintf(stderr, _("Warning: I don't _like_ this color space.  This is a suggestion, not a threat.\n"));
+    fprintf(stderr, "Warning: I don't _like_ this color space.  This is a suggestion, not a threat.\n");
 
   if ((sourceColorBPP == destColorBPP) &&
       (sourceBPP      == destBPP     )) {

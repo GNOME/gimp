@@ -56,6 +56,7 @@ app/gimpimage.c
 app/gimpparasite.c
 app/gimpprogress.c
 app/gimprc.c
+app/gimpui.c
 app/gimpunit.c
 app/global_edit.c
 app/gradient.c

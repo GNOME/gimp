@@ -1,3 +1,16 @@
+1999-12-29  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* plug-ins/common/animationplay.c
+	* plug-ins/common/bz2.c
+	* plug-ins/common/c_astretch.c
+	* plug-ins/common/color_enhance.c
+	* plug-ins/common/compose.c
+	* plug-ins/common/decompose.c
+	* plug-ins/common/depthmerge.c: unmarked unnecessary translation tag.
+
+	* app/gimpui.c: #include "config.h"
+	* po/POTFILES.in: included missing app/gimpui.c
+
 Tue Dec 28 15:32:19 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/gz.c
