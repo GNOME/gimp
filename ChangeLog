@@ -1,3 +1,7 @@
+2001-11-20  David Neary <dneary@eircom.net>
+
+        * app/core/gimppalette.c: Included errno,h
+
 2001-11-20  Rebecca Walter <rjp@mail.tele.dk>
 
 	* app/core/gimpedit.c
