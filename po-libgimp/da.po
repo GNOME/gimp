@@ -10,8 +10,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
-"POT-Creation-Date: 2002-10-15 15:22+0200\n"
-"PO-Revision-Date: 2002-10-15 15:21+0200\n"
+"POT-Creation-Date: 2002-10-22 20:11+0200\n"
+"PO-Revision-Date: 2002-10-22 20:12+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -164,6 +164,26 @@ msgstr "Ingen"
 #: libgimp/gimpunit.c:56
 msgid "percent"
 msgstr "procent"
+
+#: libgimpmodule/gimpmodule.c:174
+#, c-format
+msgid "Loading module: '%s'\n"
+msgstr "Indlæser modul: '%s'\n"
+
+#: libgimpmodule/gimpmodule.c:185 libgimpmodule/gimpmodule.c:199
+#: libgimpmodule/gimpmodule.c:224 libgimpmodule/gimpmodule.c:243
+#, c-format
+msgid ""
+"Module '%s' load error:\n"
+"%s"
+msgstr ""
+"Indlæsningsfejl for modul '%s':\n"
+"%s"
+
+#: libgimpmodule/gimpmodule.c:306
+#, c-format
+msgid "Skipping module: '%s'\n"
+msgstr "Springer over modul: '%s'\n"
 
 #: libgimpwidgets/gimpcolorbutton.c:85
 msgid "/Foreground Color"
