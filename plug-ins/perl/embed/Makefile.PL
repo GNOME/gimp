@@ -30,7 +30,7 @@ clean ::
 	test -f Makefile || mv -f Makefile.old Makefile
 
 modinstall :: \$(INST_DYNAMIC)
-	mv \$(INST_DYNAMIC) \$(gimpplugindir)/modules/
+	cp \$(INST_DYNAMIC) \$(gimpplugindir)/modules/
 
 perlxsi.c:
 	\$(FULLPERL) -MExtUtils::Embed -e xsinit
