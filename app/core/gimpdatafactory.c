@@ -39,7 +39,7 @@
 #include "gimpdatafactory.h"
 #include "gimpdatalist.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void    gimp_data_factory_class_init    (GimpDataFactoryClass *klass);

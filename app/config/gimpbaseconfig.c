@@ -33,7 +33,7 @@
 #include "gimprc-blurbs.h"
 #include "gimpbaseconfig.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void  gimp_base_config_class_init   (GimpBaseConfigClass *klass);

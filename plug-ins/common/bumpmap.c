@@ -394,10 +394,10 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
   static GimpParam values[1];
@@ -405,7 +405,7 @@ run (gchar   *name,
   GimpRunMode run_mode;
   GimpPDBStatusType  status;
 
-  INIT_I18N_UI();
+  INIT_I18N ();
 
   status   = GIMP_PDB_SUCCESS;
   run_mode = param[0].data.d_int32;

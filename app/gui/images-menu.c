@@ -34,7 +34,7 @@
 #include "images-commands.h"
 #include "images-menu.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 GimpItemFactoryEntry images_menu_entries[] =

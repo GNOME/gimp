@@ -132,6 +132,8 @@ run (gchar      *name,
   
   *nreturn_vals = 1;
   *return_vals  = values;
+  
+  INIT_I18N ();
 
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
@@ -153,8 +155,6 @@ run (gchar      *name,
       config.alpha = (drawable_type == GIMP_RGBA_IMAGE ||
 		      drawable_type == GIMP_GRAYA_IMAGE ||
 		      drawable_type == GIMP_INDEXEDA_IMAGE);
-
-      INIT_I18N_UI();
 
       parasite = gimp_image_parasite_find (image_ID, "gimp-comment");
       if (parasite)

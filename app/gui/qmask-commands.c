@@ -38,7 +38,7 @@
 
 #include "qmask-commands.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 typedef struct _EditQmaskOptions EditQmaskOptions;

@@ -273,7 +273,7 @@ run (gchar      *name,
   gint32            image_ID;
   gint              k;
 
-  INIT_I18N_UI();
+  INIT_I18N ();
 
   run_mode = param[0].data.d_int32;
 

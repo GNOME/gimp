@@ -30,7 +30,7 @@
 #include "gimppaintbrushtool.h"
 #include "paint_options.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void   gimp_paintbrush_tool_class_init (GimpPaintbrushToolClass *klass);

@@ -34,7 +34,7 @@
 
 #include "gimpdisplayshell-layer-select.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 typedef struct _LayerSelect LayerSelect;

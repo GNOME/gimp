@@ -37,7 +37,7 @@
 #include "dialogs-menu.h"
 #include "menus.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define ADD_TAB(path,id,type,stock_id) \

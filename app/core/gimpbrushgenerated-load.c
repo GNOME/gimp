@@ -40,7 +40,7 @@
 
 #include "gimpbrushgenerated.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define OVERSAMPLING 5

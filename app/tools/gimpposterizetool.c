@@ -36,7 +36,7 @@
 #include "gimpposterizetool.h"
 #include "tool_manager.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define POSTERIZE_DEFAULT_LEVELS 3

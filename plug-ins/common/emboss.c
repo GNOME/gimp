@@ -172,6 +172,8 @@ run (gchar   *name,
   *nretvals = 1;
   *retvals = rvals;
 
+  INIT_I18N ();
+
   memset(&args, (int) 0, sizeof (piArgs));
 
   rvals[0].type = GIMP_PDB_STATUS;
@@ -180,7 +182,6 @@ run (gchar   *name,
   switch (param[0].data.d_int32)
     {
     case GIMP_RUN_INTERACTIVE:
-      INIT_I18N_UI();
       args.img = args.drw = 0;
       gimp_get_data ("plug_in_emboss", &args);
       if (args.img == 0 && args.drw == 0)
@@ -214,7 +215,6 @@ run (gchar   *name,
 	  break;
 	}
 
-      INIT_I18N();
       args.img = param[1].data.d_image;
       args.drw = param[2].data.d_drawable;
       args.azimuth = param[3].data.d_float;
@@ -230,7 +230,6 @@ run (gchar   *name,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      INIT_I18N();
       gimp_get_data("plug_in_emboss", &args);
       /* use this image and drawable, even with last args */
       args.img = param[1].data.d_image;

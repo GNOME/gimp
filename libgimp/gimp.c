@@ -77,6 +77,9 @@
 #  include <fcntl.h>
 #endif
 
+#include <libintl.h>
+#include <locale.h>
+
 #ifndef LIBGIMP_COMPILATION
 #define LIBGIMP_COMPILATION
 #endif
@@ -88,6 +91,7 @@
 #include "libgimpbase/gimpwire.h"
 
 #include "gimp.h"
+
 
 /* Maybe this should go in a public header if we add other things to it */
 typedef enum {
@@ -327,8 +331,18 @@ gimp_main (int   argc,
   wire_set_writer (gimp_write);
   wire_set_flusher (gimp_flush);
 
-  /* set handler both for the "LibGimp" and ""
-     domains */
+
+  /* initialize i18n support */
+
+  setlocale (LC_ALL, "");
+
+  bindtextdomain (GETTEXT_PACKAGE"-libgimp", gimp_locale_directory ());
+#ifdef HAVE_BIND_TEXTDOMAIN_CODESET
+  bind_textdomain_codeset (GETTEXT_PACKAGE"-libgimp", "UTF-8");
+#endif
+
+
+  /* set handler both for the "LibGimp" and "" domains */
 
   g_log_set_handler (G_LOG_DOMAIN,
 		     G_LOG_LEVEL_MESSAGE,

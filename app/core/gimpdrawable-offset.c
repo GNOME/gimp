@@ -38,7 +38,7 @@
 #include "gimpdrawable-offset.h"
 #include "gimpimage.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 void

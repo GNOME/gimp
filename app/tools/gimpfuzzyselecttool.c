@@ -49,7 +49,7 @@
 #include "gimpfuzzyselecttool.h"
 #include "gimpselectionoptions.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void   gimp_fuzzy_select_tool_class_init (GimpFuzzySelectToolClass *klass);

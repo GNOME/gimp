@@ -44,7 +44,7 @@
 #include "gimpsheartool.h"
 #include "gimptransformoptions.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 /*  index into trans_info array  */

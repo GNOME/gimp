@@ -33,7 +33,7 @@
 #include "gimpbrusheditor.h"
 #include "gimppreview.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define BRUSH_PREVIEW_WIDTH  128

@@ -672,6 +672,8 @@ run (gchar       *name,
 
   /*kill (getpid (), 19);*/
 
+  INIT_I18N ();
+
   run_mode = param[0].data.d_int32;
   gfig_image = param[1].data.d_image;
   gfig_drawable = param[2].data.d_drawable;
@@ -722,7 +724,6 @@ run (gchar       *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /*gimp_get_data ("plug_in_gfig", &selvals);*/
-      INIT_I18N_UI ();
       if (! gfig_dialog ())
 	{
 	  gimp_drawable_detach (drawable);

@@ -48,7 +48,7 @@
 #include "gimpcroptool.h"
 #include "tool_manager.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 /*  speed of key movement  */

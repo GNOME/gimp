@@ -45,7 +45,7 @@
 
 #include "gui/color-notebook.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define ENTRY_WIDTH  12

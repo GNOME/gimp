@@ -33,7 +33,7 @@
 #include "gimpdata.h"
 #include "gimpdatalist.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void   gimp_data_list_class_init         (GimpDataListClass *klass);

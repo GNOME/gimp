@@ -34,7 +34,7 @@
 #include "documents-menu.h"
 #include "menus.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 GimpItemFactoryEntry documents_menu_entries[] =

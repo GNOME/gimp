@@ -206,6 +206,8 @@ run (gchar   *name,		/* I - Name of filter program. */
   GimpPDBStatusType	status;		/* Return status */
   GimpParam	*values;	/* Return values */
 
+  INIT_I18N ();
+
   /*
    * Initialize parameter data...
    */
@@ -241,7 +243,6 @@ run (gchar   *name,		/* I - Name of filter program. */
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE :
-      INIT_I18N_UI();
       /*
        * Possibly retrieve data...
        */
@@ -261,7 +262,6 @@ run (gchar   *name,		/* I - Name of filter program. */
        * Make sure all the arguments are present...
        */
 
-      INIT_I18N();
       if (nparams < 4 || nparams > 7)
 	status = GIMP_PDB_CALLING_ERROR;
       else if (nparams == 4)

@@ -851,7 +851,7 @@ plugin_run (gchar      *name,
 {
   GimpPDBStatusType status;
 
-  INIT_I18N_UI();
+  INIT_I18N ();
 
   status = GIMP_PDB_SUCCESS;
   p.run  = FALSE;

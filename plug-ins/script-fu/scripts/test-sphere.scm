@@ -100,7 +100,7 @@
 ; as a list. The first option is the default choice. 
 ;
 ; Usage:
-; SF-OPTION "Orientation" '("Horzontal" "Vertical")
+; SF-OPTION "Orientation" '("Horizontal" "Vertical")
 ;
 ; The value returned when the script is invoked is the number of the
 ; choosen option, where the option first is counted as 0.
@@ -204,5 +204,5 @@
 		    SF-FONT "Font" "Agate"
 		    SF-ADJUSTMENT "Font Size (pixels)" '(50 1 1000 1 10 0 1)
 		    SF-FILENAME "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg")
-		    SF-OPTION "Orientation" '("Horzontal" "Vertical")
+		    SF-OPTION "Orientation" '("Horizontal" "Vertical")
 		    SF-DIRNAME "Output Directory" "/var/tmp/")

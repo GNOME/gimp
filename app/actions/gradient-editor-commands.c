@@ -34,7 +34,7 @@
 #include "color-notebook.h"
 #include "gradient-editor-commands.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 /*  local function prototypes  */

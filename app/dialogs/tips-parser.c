@@ -28,7 +28,7 @@
 
 #include "tips-parser.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 typedef enum

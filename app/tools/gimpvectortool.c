@@ -47,7 +47,7 @@
 #include "gimpvectoroptions.h"
 #include "gimpvectortool.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define  TARGET         9

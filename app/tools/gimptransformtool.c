@@ -61,7 +61,7 @@
 
 #include "path_transform.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define HANDLE_SIZE 10

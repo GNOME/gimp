@@ -661,6 +661,8 @@ run (gchar   *name,
 
   l_run_mode = run_mode = param[0].data.d_int32;
 
+  INIT_I18N ();
+
   *nreturn_vals = 1;
   *return_vals  = values;
   values[0].type          = GIMP_PDB_STATUS;
@@ -668,8 +670,6 @@ run (gchar   *name,
 
   if (strcmp (name, "file_ps_load") == 0)
     {
-      INIT_I18N_UI();
-
       switch (run_mode)
 	{
         case GIMP_RUN_INTERACTIVE:
@@ -720,8 +720,6 @@ run (gchar   *name,
     }
   else if (strcmp (name, "file_ps_save") == 0)
     {
-      INIT_I18N_UI();
-
       image_ID = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 

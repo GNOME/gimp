@@ -44,7 +44,7 @@
 #include "gimppropwidgets.h"
 #include "gimpwidgets-constructors.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 /*  utility function prototypes  */

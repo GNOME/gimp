@@ -51,7 +51,7 @@
 
 #include "app_procs.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define PAINT_OPTIONS_MASK GIMP_CONTEXT_OPACITY_MASK    | \

@@ -35,7 +35,7 @@
 #include "layers-menu.h"
 #include "menus.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 GimpItemFactoryEntry layers_menu_entries[] =

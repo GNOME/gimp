@@ -35,7 +35,7 @@
 #include "gimpdodgeburntool.h"
 #include "paint_options.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void   gimp_dodgeburn_tool_class_init (GimpDodgeBurnToolClass *klass);

@@ -468,8 +468,6 @@ query (void)
     { GIMP_PDB_INT32, "clr_transparent", "set all full-transparent pixels to 0" },
   };
 
-  INIT_I18N ();
-
   gimp_install_procedure ("file_xjt_load",
                           "loads files of the jpeg-tar file format",
 			  "loads files of the jpeg-tar file format",
@@ -520,6 +518,8 @@ run (gchar   *name,
   g_pid = getpid ();
   xjt_debug = FALSE;
   
+  INIT_I18N ();
+
   l_env = getenv("XJT_DEBUG");
   if(l_env != NULL)
     {
@@ -532,15 +532,6 @@ run (gchar   *name,
   *return_vals  = values;
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-
-  if (run_mode == GIMP_RUN_NONINTERACTIVE)
-    {
-      INIT_I18N();
-    }
-  else
-    {
-      INIT_I18N_UI();
-    }
 
   if (strcmp (name, "file_xjt_load") == 0)
     {

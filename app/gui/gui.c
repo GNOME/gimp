@@ -56,7 +56,7 @@
 #include "menus.h"
 #include "session.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 #include "pixmaps/wilber2.xpm"
 

@@ -53,7 +53,7 @@
 #include "gimpconvolvetool.h"
 #include "paint_options.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static GtkWidget * pressure_options_gui   (GimpPressureOptions *pressure,

@@ -238,7 +238,7 @@ run (gchar   *name,
   HANDLE	oldBm;
   BITMAPV4HEADER bmHeader;
 
-  INIT_I18N();
+  INIT_I18N ();
 
   run_mode = param[0].data.d_int32;
 

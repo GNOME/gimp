@@ -36,7 +36,7 @@
 
 #include "palette-select.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 typedef struct

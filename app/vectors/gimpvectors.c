@@ -32,7 +32,7 @@
 #include "gimpvectors.h"
 #include "gimpvectors-preview.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void       gimp_vectors_class_init  (GimpVectorsClass *klass);

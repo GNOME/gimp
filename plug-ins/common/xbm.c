@@ -247,7 +247,8 @@ run (gchar      *name,
   gchar             *mask_filename = NULL;
   GimpExportReturnType export = GIMP_EXPORT_CANCEL;
 
-  INIT_I18N_UI();
+  INIT_I18N ();
+
   strncpy (xsvals.comment, _("Created with The GIMP"), MAX_COMMENT);
 
   run_mode = param[0].data.d_int32;

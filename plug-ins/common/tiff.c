@@ -252,6 +252,8 @@ run (gchar      *name,
 
   run_mode = param[0].data.d_int32;
 
+  INIT_I18N ();
+
   *nreturn_vals = 1;
   *return_vals  = values;
 
@@ -260,7 +262,6 @@ run (gchar      *name,
 
   if (strcmp (name, "file_tiff_load") == 0)
     {
-      INIT_I18N_UI();
       image = load_image (param[1].data.d_string);
 
       if (image != -1)
@@ -287,7 +288,6 @@ run (gchar      *name,
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
-	  INIT_I18N_UI();
 	  gimp_ui_init ("tiff", FALSE);
 	  export = gimp_export_image (&image, &drawable, "TIFF", 
 				      (GIMP_EXPORT_CAN_HANDLE_RGB |
@@ -332,7 +332,6 @@ run (gchar      *name,
 	  break;
 
 	case GIMP_RUN_NONINTERACTIVE:
-	  INIT_I18N();
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != 6)
 	    {

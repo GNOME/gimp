@@ -32,7 +32,7 @@
 
 #include "widgets/gimptexteditor.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 typedef struct _TextEditorData TextEditorData;

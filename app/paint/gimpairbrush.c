@@ -37,7 +37,7 @@
 #include "gimpairbrush.h"
 #include "gimpairbrushoptions.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 typedef struct _AirbrushTimeout AirbrushTimeout;

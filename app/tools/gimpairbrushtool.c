@@ -36,7 +36,7 @@
 #include "gimpairbrushtool.h"
 #include "paint_options.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void   gimp_airbrush_tool_class_init  (GimpAirbrushToolClass *klass);

@@ -30,7 +30,7 @@
 #include "gimpdrawable.h"
 #include "gimpdrawable-invert.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 void

@@ -36,7 +36,7 @@
 #include "data-commands.h"
 #include "menus.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 GimpItemFactoryEntry brushes_menu_entries[] =

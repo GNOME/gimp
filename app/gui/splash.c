@@ -26,7 +26,7 @@
 
 #include "splash.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define DEFAULT_WIDTH 300

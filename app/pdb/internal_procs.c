@@ -26,7 +26,7 @@
 
 #include "core/gimp.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 /* Forward declarations for registering PDB procs */
 

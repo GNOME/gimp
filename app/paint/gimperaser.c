@@ -35,7 +35,7 @@
 #include "gimperaser.h"
 #include "gimperaseroptions.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void   gimp_eraser_class_init    (GimpEraserClass    *klass);

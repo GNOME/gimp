@@ -35,7 +35,7 @@
 #include "qmask-menu.h"
 #include "menus.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 GimpItemFactoryEntry qmask_menu_entries[] =

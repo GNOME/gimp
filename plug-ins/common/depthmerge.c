@@ -218,7 +218,7 @@ run (gchar      *name,
   GimpPDBStatusType status;
   DepthMerge        dm;
 
-  INIT_I18N_UI();
+  INIT_I18N ();
 
   runMode = (GimpRunMode) param[0].data.d_int32;
   status  = GIMP_PDB_SUCCESS;

@@ -163,6 +163,8 @@ run (gchar      *name,
   static GimpParam  values[1];
   GimpPDBStatusType status = GIMP_PDB_EXECUTION_ERROR;
   
+  INIT_I18N ();
+
   run_mode = param[0].data.d_int32;
   drawable_id = param[2].data.d_int32;
 
@@ -175,7 +177,6 @@ run (gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      INIT_I18N_UI();
       gimp_get_data (PLUG_IN_NAME, &VALS);
       if (!gimp_drawable_is_rgb (drawable_id))
 	{
@@ -185,15 +186,15 @@ run (gchar      *name,
       if (! scatter_hsv_dialog ())
 	return;
       break;
+
     case GIMP_RUN_NONINTERACTIVE:
-      INIT_I18N();
       VALS.holdness = param[3].data.d_int32;
       VALS.hue_distance = param[4].data.d_int32;
       VALS.saturation_distance = param[5].data.d_int32;
       VALS.value_distance = param[6].data.d_int32;
       break;
+
     case GIMP_RUN_WITH_LAST_VALS:
-      INIT_I18N();
       gimp_get_data (PLUG_IN_NAME, &VALS);
       break;
     }

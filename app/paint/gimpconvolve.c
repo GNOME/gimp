@@ -35,7 +35,7 @@
 #include "gimpconvolve.h"
 #include "gimpconvolveoptions.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define FIELD_COLS    4

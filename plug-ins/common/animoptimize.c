@@ -245,14 +245,12 @@ run (gchar   *name,
 
   run_mode = param[0].data.d_int32;
   
-  if (run_mode == GIMP_RUN_NONINTERACTIVE)
+  INIT_I18N ();
+
+  if (run_mode == GIMP_RUN_NONINTERACTIVE && n_params != 3)
     {
-      if (n_params != 3)
-	{
-	  status = GIMP_PDB_CALLING_ERROR;
-	}
+      status = GIMP_PDB_CALLING_ERROR;
     }
-  INIT_I18N();
   
   /* Check the procedure name we were called with, to decide
      what needs to be done. */

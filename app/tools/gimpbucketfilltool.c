@@ -39,7 +39,7 @@
 #include "gimpbucketfilloptions.h"
 #include "gimpbucketfilltool.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static GimpToolClass *parent_class = NULL;

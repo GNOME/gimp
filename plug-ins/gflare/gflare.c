@@ -862,11 +862,13 @@ plugin_run (gchar      *name,
 	    GimpParam **return_vals)
 {
   static GimpParam  values[1];
-  GimpRunMode   run_mode;
+  GimpRunMode       run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   /* Initialize */
   run_mode = param[0].data.d_int32;
+
+  INIT_I18N ();
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -907,7 +909,6 @@ plugin_run (gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      INIT_I18N_UI();
 
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_gflare", &pvals);

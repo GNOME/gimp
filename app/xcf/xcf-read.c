@@ -24,7 +24,7 @@
 
 #include "xcf-read.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 guint

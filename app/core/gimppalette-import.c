@@ -34,7 +34,7 @@
 #include "gimpimage-projection.h"
 #include "gimppalette.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define MAX_IMAGE_COLORS (10000 * 2)

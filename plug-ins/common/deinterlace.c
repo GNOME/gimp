@@ -109,20 +109,20 @@ run (gchar      *name,
 
   run_mode = param[0].data.d_int32;
 
+  INIT_I18N ();
+
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      INIT_I18N_UI();
       gimp_get_data ("plug_in_deinterlace", &DeinterlaceValue);
       if (! deinterlace_dialog ())
 	status = GIMP_PDB_EXECUTION_ERROR;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      INIT_I18N();
       if (nparams != 4)
 	status = GIMP_PDB_CALLING_ERROR;
       if (status == GIMP_PDB_SUCCESS)
@@ -130,7 +130,6 @@ run (gchar      *name,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      INIT_I18N();
       gimp_get_data ("plug_in_deinterlace", &DeinterlaceValue);
       break;
 

@@ -54,7 +54,7 @@
 
 #include "error-console-dialog.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 typedef enum

@@ -59,7 +59,7 @@
 #include "toolbox-menu.h"
 #include "vectors-menu.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 /*  local function prototypes  */

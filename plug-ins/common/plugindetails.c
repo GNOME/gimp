@@ -130,7 +130,7 @@ run (gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
 
-  INIT_I18N_UI();
+  INIT_I18N ();
 
   if (strcmp (name, "plug_in_details") == 0)
     {

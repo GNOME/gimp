@@ -45,7 +45,7 @@
 #include "gimppreviewrenderer.h"
 #include "gimpwidgets-utils.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void   gimp_data_factory_view_class_init (GimpDataFactoryViewClass *klass);

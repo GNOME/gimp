@@ -48,7 +48,7 @@
 
 #include "app_procs.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 typedef struct _HistogramToolDialog HistogramToolDialog;

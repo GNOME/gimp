@@ -30,7 +30,7 @@
 #include "gimpdisplayshell.h"
 #include "gimpstatusbar.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 /* maximal width of the string holding the cursor-coordinates for

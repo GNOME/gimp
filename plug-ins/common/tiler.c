@@ -84,7 +84,7 @@ run (gchar      *name,
 
   run_mode = param[0].data.d_int32;
 
-  INIT_I18N();
+  INIT_I18N ();
 
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);

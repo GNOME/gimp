@@ -1110,7 +1110,7 @@ run(gchar *name,		/* name of plugin */
   /* Get the runmode from the in-parameters */
   run_mode = param[0].data.d_int32;
 
-  INIT_I18N_UI();
+  INIT_I18N ();
 		
   /* Set up the rest of the return parameters */
   values[1].type = GIMP_PDB_INT32;

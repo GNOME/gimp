@@ -34,7 +34,7 @@
 #include "gimpsmudgetool.h"
 #include "paint_options.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void   gimp_smudge_tool_class_init  (GimpSmudgeToolClass *klass);

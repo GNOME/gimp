@@ -170,7 +170,6 @@ libgimp_1_3_la_SOURCES = \
 	gimptile.c		\
 	gimptile.h		\
 	gimpunit.c		\
-	gimpintl.h		\
 	stdplugins-intl.h	\
 	libgimp-intl.h
 
@@ -204,7 +203,6 @@ gimpinclude_HEADERS = \
 	gimpselection.h		\
 	gimptile.h		\
 	gimpexport.h		\
-	gimpintl.h		\
 	gimpmiscui.h		\
 	gimpui.h		\
 	gimpuitypes.h		\

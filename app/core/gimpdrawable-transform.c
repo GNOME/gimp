@@ -43,7 +43,7 @@
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define BILINEAR(jk,j1k,jk1,j1k1,dx,dy) \

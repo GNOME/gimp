@@ -35,7 +35,7 @@
 
 #include "tool-options-dialog.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 /*  local function prototypes  */

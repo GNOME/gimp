@@ -35,7 +35,7 @@
 #include "vectors-menu.h"
 #include "menus.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 GimpItemFactoryEntry vectors_menu_entries[] =

@@ -41,7 +41,7 @@
 #include "plug-in-run.h"
 #include "plug-in-shm.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 /*  local function prototypes  */

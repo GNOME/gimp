@@ -43,7 +43,7 @@
 #include "info-dialog.h"
 #include "info-window.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define MAX_BUF 256

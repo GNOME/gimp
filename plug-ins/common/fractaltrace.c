@@ -176,12 +176,15 @@ run (gchar      *name,
   run_mode = args[0].data.d_int32;
   status   = GIMP_PDB_SUCCESS;
 
+  INIT_I18N ();
+
   drawable     = gimp_drawable_get (args[2].data.d_drawable);
   image.width  = gimp_drawable_width( drawable->drawable_id);
   image.height = gimp_drawable_height (drawable->drawable_id);
   image.bpp    = gimp_drawable_bpp (drawable->drawable_id);
   image.alpha  = gimp_drawable_has_alpha (drawable->drawable_id);
-  gimp_drawable_mask_bounds (drawable->drawable_id, &selection.x1, &selection.y1,
+  gimp_drawable_mask_bounds (drawable->drawable_id,
+                             &selection.x1, &selection.y1,
 			     &selection.x2, &selection.y2);
   selection.width    = selection.x2 - selection.y1;
   selection.height   = selection.y2 - selection.y1;
@@ -199,12 +202,10 @@ run (gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_WITH_LAST_VALS:
-      INIT_I18N();
       gimp_get_data (PLUG_IN_NAME, &parameters);
       break;
 
     case GIMP_RUN_INTERACTIVE:
-      INIT_I18N_UI();
       gimp_get_data (PLUG_IN_NAME, &parameters);
       if (!dialog_show ())
 	{
@@ -228,7 +229,6 @@ run (gchar      *name,
 	  parameters.depth        = args[7].data.d_int32;
 	  parameters.outside_type = args[8].data.d_int32;
 	}
-      INIT_I18N();
       break;
     }
 

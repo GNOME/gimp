@@ -45,7 +45,7 @@
 #include "gimpconfig-utils.h"
 #include "gimprc.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 enum

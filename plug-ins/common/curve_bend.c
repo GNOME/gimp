@@ -702,10 +702,10 @@ query (void)
 }
 
 static void
-run (char    *name,           /* name of plugin */
-     int      nparams,        /* number of in-paramters */
+run (gchar      *name,           /* name of plugin */
+     gint        nparams,        /* number of in-paramters */
      GimpParam  *param,          /* in-parameters */
-     int     *nreturn_vals,   /* number of out-parameters */
+     gint       *nreturn_vals,   /* number of out-parameters */
      GimpParam **return_vals)    /* out-parameters */
 {
   const gchar  *l_env;
@@ -727,14 +727,9 @@ run (char    *name,           /* name of plugin */
   /*always return at least the status to the caller. */
   static GimpParam values[2];
 
+  INIT_I18N ();
 
-  if (run_mode == GIMP_RUN_INTERACTIVE) {
-    INIT_I18N_UI();
-  } else {
-    INIT_I18N();
-  }
-
-   cd = NULL;
+  cd = NULL;
 
   l_env = g_getenv("BEND_DEBUG");
   if(l_env != NULL)

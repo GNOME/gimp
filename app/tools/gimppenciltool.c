@@ -30,7 +30,7 @@
 #include "gimppenciltool.h"
 #include "paint_options.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void   gimp_pencil_tool_class_init (GimpPencilToolClass *klass);

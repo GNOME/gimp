@@ -196,6 +196,8 @@ run (gchar      *name,
 
   run_mode = param[0].data.d_int32;
 
+  INIT_I18N ();
+
   *nreturn_vals = 1;
   *return_vals  = values;
 
@@ -211,7 +213,6 @@ run (gchar      *name,
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
-	  INIT_I18N_UI();
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("plug_in_gauss_iir", &bvals);
 	  
@@ -232,11 +233,9 @@ run (gchar      *name,
 	    }
 	  if (status == GIMP_PDB_SUCCESS && (bvals.radius <= 0.0))
 	    status = GIMP_PDB_CALLING_ERROR;
-	  INIT_I18N();
 	  break;
 	  
 	case GIMP_RUN_WITH_LAST_VALS:
-	  INIT_I18N();
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("plug_in_gauss_iir", &bvals);
 	  break;
@@ -256,7 +255,6 @@ run (gchar      *name,
       switch (run_mode)
 	{	  
 	case GIMP_RUN_INTERACTIVE:
-	  INIT_I18N_UI();
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("plug_in_gauss_iir2", &b2vals);
 	  
@@ -265,7 +263,6 @@ run (gchar      *name,
 	    return;
 	  break;
 	case GIMP_RUN_NONINTERACTIVE:
-	  INIT_I18N();
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != 5)
 	    status = GIMP_PDB_CALLING_ERROR;
@@ -279,7 +276,6 @@ run (gchar      *name,
 	  break;
 	  
 	case GIMP_RUN_WITH_LAST_VALS:
-	  INIT_I18N();
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("plug_in_gauss_iir2", &b2vals);
 	  break;

@@ -41,7 +41,7 @@
 #include "xcf-read.h"
 #include "xcf-save.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 typedef GimpImage * GimpXcfLoaderFunc (Gimp    *gimp,

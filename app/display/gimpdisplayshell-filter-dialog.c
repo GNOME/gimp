@@ -34,7 +34,7 @@
 #include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-filter-dialog.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define LIST_WIDTH  150

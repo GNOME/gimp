@@ -158,6 +158,8 @@ run (gchar      *name,
 
   run_mode = param[0].data.d_int32;
 
+  INIT_I18N ();
+
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
@@ -170,7 +172,6 @@ run (gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_edge", &evals);
 
@@ -188,13 +189,11 @@ run (gchar      *name,
 	  evals.amount   = param[3].data.d_float;
 	  evals.wrapmode = param[4].data.d_int32;
 	}
-      INIT_I18N();
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_edge", &evals);
-      INIT_I18N();
       break;
 
     default:

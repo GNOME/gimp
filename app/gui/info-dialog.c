@@ -30,7 +30,7 @@
 
 #include "info-dialog.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define SB_WIDTH 10

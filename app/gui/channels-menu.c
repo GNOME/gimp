@@ -35,7 +35,7 @@
 #include "channels-menu.h"
 #include "menus.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 GimpItemFactoryEntry channels_menu_entries[] =

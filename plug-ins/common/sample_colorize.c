@@ -50,11 +50,6 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#ifndef __GIMPINTL_H__
-/* for older gimp releases use dummys nls-macros */
-#define N_(x)  x
-#define _(x)   x
-#endif
 
 /* Some useful macros */
 #define PLUG_IN_NAME "plug_in_sample_colorize"
@@ -326,6 +321,8 @@ run (gchar      *name,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   const gchar       *l_env;
 
+  INIT_I18N ();
+
   l_env = g_getenv ("SAMPLE_COLORIZE_DEBUG");
   if (l_env != NULL)
     {
@@ -369,7 +366,6 @@ run (gchar      *name,
       
       if (run_mode == GIMP_RUN_INTERACTIVE)
       {
-         INIT_I18N_UI();
          p_smp_dialog();
          p_free_colors();
          gimp_set_data (PLUG_IN_NAME, &g_values, sizeof (t_values));
@@ -378,7 +374,6 @@ run (gchar      *name,
       {
         if(run_mode == GIMP_RUN_NONINTERACTIVE)
         {
-          INIT_I18N();
           if(nparams == NUMBER_IN_ARGS)
           {
             g_values.sample_id     = param[3].data.d_drawable;

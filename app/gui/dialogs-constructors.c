@@ -83,7 +83,7 @@
 #include "tool-options-dialog.h"
 #include "vectors-commands.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 /*  local function prototypes  */

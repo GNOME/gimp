@@ -182,7 +182,7 @@ run (gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  INIT_I18N_UI(); 
+  INIT_I18N (); 
 
   switch (run_mode)
     {

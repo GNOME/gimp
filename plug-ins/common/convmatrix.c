@@ -205,11 +205,11 @@ run (gchar      *name,
      GimpParam **return_vals)
 {
   static GimpParam  values[1];
-  GimpRunMode   run_mode;
+  GimpRunMode       run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint              x, y;
 
-  INIT_I18N_UI();
+  INIT_I18N ();
 
   (void) name; /* Shut up warnings about unused parameters. */
 

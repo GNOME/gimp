@@ -36,7 +36,7 @@
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define DEFAULT_SEPARATOR_HEIGHT 6

@@ -44,7 +44,7 @@
 
 #include "gimphelp.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #ifndef G_OS_WIN32

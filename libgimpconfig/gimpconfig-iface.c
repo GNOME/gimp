@@ -36,7 +36,7 @@
 #include "gimpconfigwriter.h"
 #include "gimpscanner.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 /* 

@@ -44,7 +44,7 @@
 #include "gimpconfig-utils.h"
 #include "gimpconfigwriter.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static gboolean  gimp_config_writer_close_file (GimpConfigWriter  *writer,

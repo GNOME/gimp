@@ -46,7 +46,7 @@
 #include "gimpdisplayshell-title.h"
 #include "gimpstatusbar.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define MAX_TITLE_BUF 256

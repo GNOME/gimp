@@ -1144,8 +1144,6 @@ query (void)
     { GIMP_PDB_INT32, "depth", "Texture depth (1 - 50)" },
   };
 
-  INIT_I18N();
-
   gimp_install_procedure ("plug_in_apply_canvas",
 			  "Adds a canvas texture map to the picture",
 			  "This function applies a canvas texture map to the drawable.",
@@ -1173,20 +1171,13 @@ run (gchar      *name,
 
   run_mode = param[0].data.d_int32;
 
+  INIT_I18N ();
+
   *nreturn_vals = 1;
   *return_vals  = values;
   
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
-  
-  if (run_mode == GIMP_RUN_INTERACTIVE)
-    {
-      INIT_I18N_UI();
-    }
-  else
-    {
-      INIT_I18N();
-    }
 
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);

@@ -249,14 +249,7 @@ run (gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
-    {
-      INIT_I18N_UI();
-    }
-  else
-    {
-      INIT_I18N();
-    }
+  INIT_I18N();
 
   if (strcmp (name, "file_gih_load") == 0) 
     {

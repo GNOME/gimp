@@ -220,6 +220,8 @@ run (gchar      *name,
   
   run_mode = param[0].data.d_int32;
 
+  INIT_I18N ();
+
   *nreturn_vals = 1;
   *return_vals  = values;
   
@@ -232,7 +234,6 @@ run (gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_flarefx", &fvals);
 
@@ -245,7 +246,6 @@ run (gchar      *name,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 5)
 	status = GIMP_PDB_CALLING_ERROR;
@@ -257,7 +257,6 @@ run (gchar      *name,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_flarefx", &fvals);
       break;
@@ -273,8 +272,9 @@ run (gchar      *name,
 	  gimp_drawable_is_gray (drawable->drawable_id))
 	{
 	  gimp_progress_init (_("Render Flare..."));
-	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
-	  
+	  gimp_tile_cache_ntiles (2 *
+                                  (drawable->width / gimp_tile_width () + 1));
+
 	  FlareFX (drawable, 0);
 	  
 	  if (run_mode != GIMP_RUN_NONINTERACTIVE)

@@ -43,7 +43,7 @@
 #include "gimplist.h"
 #include "gimpmodules.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 void

@@ -43,7 +43,7 @@
 #include "gimpmagnifyoptions.h"
 #include "gimpmagnifytool.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void   gimp_magnify_tool_class_init      (GimpMagnifyToolClass *klass);

@@ -48,7 +48,7 @@
 #include "gimplayertreeview.h"
 #include "gimppreviewrenderer.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void   gimp_drawable_tree_view_class_init (GimpDrawableTreeViewClass *klass);

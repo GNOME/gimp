@@ -204,8 +204,6 @@ query (void)
     { GIMP_PDB_INT32, "ncolors", "Number of Colors for mapping (2<=ncolors<=8192)" }
   };
 
-  INIT_I18N();
-
   gimp_install_procedure ("plug_in_fractalexplorer",
 			  "Chaos Fractal Explorer Plug-In",
 			  "No help yet.",
@@ -247,7 +245,7 @@ run (gchar      *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  INIT_I18N_UI();
+  INIT_I18N ();
 
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);

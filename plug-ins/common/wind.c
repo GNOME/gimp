@@ -215,10 +215,11 @@ run (gchar      *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
   gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 
+  INIT_I18N ();
+
   switch (run_mode)
     {
     case GIMP_RUN_NONINTERACTIVE:
-      INIT_I18N();
       if (nparams != 8)
 	{
 	  status = GIMP_PDB_CALLING_ERROR;
@@ -237,7 +238,6 @@ run (gchar      *name,
       break;
       
     case GIMP_RUN_INTERACTIVE:
-      INIT_I18N_UI();
       gimp_get_data("plug_in_wind", &config);
       dialog_box(drawable);
       if (dialog_result == -1)
@@ -255,7 +255,6 @@ run (gchar      *name,
       break;
       
     case GIMP_RUN_WITH_LAST_VALS:
-      INIT_I18N();
       gimp_get_data("plug_in_wind", &config);
       if (render_effect (drawable, FALSE) == -1)
 	{

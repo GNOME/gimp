@@ -37,7 +37,7 @@
 #include "palettes-menu.h"
 #include "menus.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 GimpItemFactoryEntry palettes_menu_entries[] =

@@ -144,8 +144,6 @@ query (void)
   static GimpParamDef *return_vals = NULL;
   static int nreturn_vals = 0;
 
-  INIT_I18N();
-
   gimp_install_procedure ("plug_in_sel2path",
 			  "Converts a selection to a path",
 			  "Converts a selection to a path",
@@ -174,17 +172,13 @@ run (gchar      *name,
   gint32             image_ID;
   GimpRunMode        run_mode;
   GimpPDBStatusType  status    = GIMP_PDB_SUCCESS;
-  gboolean           no_dialog = FALSE;
+  gboolean           no_dialog;
 
   run_mode = param[0].data.d_int32;
 
-  if(!strcmp(name,"plug_in_sel2path")) 
-    {
-      no_dialog = TRUE;
-      INIT_I18N();
-    } 
-  else
-    INIT_I18N_UI();
+  INIT_I18N ();
+
+  no_dialog = (strcmp (name, "plug_in_sel2path") == 0);
 
   *nreturn_vals = 1;
   *return_vals = values;

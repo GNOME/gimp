@@ -35,7 +35,7 @@
 #include "gimpitemfactory.h"
 #include "gimpmenufactory.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void       gimp_data_editor_class_init (GimpDataEditorClass *klass);

@@ -47,7 +47,7 @@
 #include "file-save-dialog.h"
 #include "menus.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define REVERT_DATA_KEY "revert-confirm-dialog"

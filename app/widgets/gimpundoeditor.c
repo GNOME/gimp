@@ -33,7 +33,7 @@
 #include "gimpcontainertreeview.h"
 #include "gimpundoeditor.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void   gimp_undo_editor_class_init   (GimpUndoEditorClass *klass);

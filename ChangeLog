@@ -1,3 +1,32 @@
+2003-03-25  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am
+	* gimpintl.h: removed this header file.
+
+	* gimpmiscui.c: include libgimp-intl.h.
+
+	* gimp.c (gimp_main): call setlocale() and bind to the libgimp
+	textdomain so that plug-ins don't need to do that explicitely.
+
+	* libgimp/stdplugins-intl.h: added the functionality that used to
+	live in gimpintl.h and removed the libgimp related stuff. Got rid
+	of the INIT_I18N_UI() macro.
+
+	* plug-ins/*/*.c: removed all occurances of INIT_I18N_UI().
+	Plug-ins simply call INIT_I18N() once in their run() function.
+
+	* plug-ins/script-fu/script-fu-intl.h: added the functionality
+	that used to live in gimpintl.h and removed the libgimp related
+	stuff.
+
+	* app/Makefile.am
+	* app/gimp-intl.h: new file that defines the gettext macros for
+	the GIMP core.
+
+	* app/*/*.c: include gimp-intl.h instead of libgimp/gimpintl.h.
+	
+	* plug-ins/script-fu/scripts/test-sphere.scm: fixed typos.
+
 2003-03-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage.[ch]: added new functions

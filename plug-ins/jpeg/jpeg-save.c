@@ -368,6 +368,8 @@ run (gchar      *name,
 
   run_mode = param[0].data.d_int32;
 
+  INIT_I18N ();
+
   *nreturn_vals = 1;
   *return_vals  = values;
   values[0].type          = GIMP_PDB_STATUS;
@@ -375,8 +377,6 @@ run (gchar      *name,
 
   if (strcmp (name, "file_jpeg_load") == 0)
     {
-      INIT_I18N_UI();
-
       image_ID = load_image (param[1].data.d_string, run_mode, FALSE);
 
       if (image_ID != -1)
@@ -392,8 +392,6 @@ run (gchar      *name,
     }
   else if (strcmp (name, "file_jpeg_save") == 0)
     {
-      INIT_I18N_UI();
-
       image_ID = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 

@@ -29,7 +29,7 @@
 #include "gimpstatusbar.h"
 #include "gimpprogress.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 struct _GimpProgress

@@ -175,6 +175,8 @@ run (gchar      *name,
 
   run_mode = param[0].data.d_int32;
 
+  INIT_I18N ();
+
   *nreturn_vals = 1;
   *return_vals  = values;
 
@@ -206,7 +208,6 @@ run (gchar      *name,
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
-	  INIT_I18N_UI();
 	  gimp_ui_init ("gbr", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "GBR", 
 				      GIMP_EXPORT_CAN_HANDLE_GRAY  |
@@ -219,7 +220,6 @@ run (gchar      *name,
 	    }
 	  break;
 	default:
-	  INIT_I18N();
 	  break;
 	}
 

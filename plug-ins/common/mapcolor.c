@@ -391,7 +391,7 @@ run (gchar      *name,
 
   c = (guchar *) ident;
 
-  INIT_I18N_UI();
+  INIT_I18N ();
 
   l_run_mode = run_mode = param[0].data.d_int32;
 

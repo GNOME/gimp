@@ -234,6 +234,8 @@ run (gchar      *name,
   *nretvals = 1;
   *retvals  = rvals;
 
+  INIT_I18N ();
+
   memset (&args, (int) 0, sizeof (args));
   args.mode = -1;
 
@@ -248,7 +250,6 @@ run (gchar      *name,
   switch (param[0].data.d_int32)
     {
     case GIMP_RUN_INTERACTIVE:
-      INIT_I18N_UI();
       /* XXX: add code here for interactive running */
       if (args.mode == -1)
 	{
@@ -266,7 +267,6 @@ run (gchar      *name,
     break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      INIT_I18N();
       /* XXX: add code here for non-interactive running */
       if (nparam != 6)
 	{
@@ -285,7 +285,6 @@ run (gchar      *name,
     break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      INIT_I18N();
       /* XXX: add code here for last-values running */
       if (pluginCore (&args) == -1)
 	{

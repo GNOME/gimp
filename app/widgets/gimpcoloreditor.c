@@ -33,7 +33,7 @@
 
 #include "gimpcoloreditor.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void   gimp_color_editor_class_init   (GimpColorEditorClass *klass);

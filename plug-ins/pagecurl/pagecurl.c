@@ -208,8 +208,6 @@ query (void)
     { GIMP_PDB_LAYER, "Curl Layer", "The new layer with the curl." }
   }; 
 
-  INIT_I18N();
-
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Pagecurl effect",
 			  "This plug-in creates a pagecurl-effect.",
@@ -238,6 +236,8 @@ run (gchar      *name,
 
   run_mode = param[0].data.d_int32;
 
+  INIT_I18N ();
+
   set_default_params ();
 
   /*  Possibly retrieve data  */
@@ -261,14 +261,12 @@ run (gchar      *name,
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
-      INIT_I18N_UI();
 	  /*  First acquire information with a dialog  */
 	  if (!do_dialog ())
 	    return;
 	  break;
 
 	case GIMP_RUN_NONINTERACTIVE:
-      INIT_I18N();
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != 7)
 	    status = GIMP_PDB_CALLING_ERROR;
@@ -312,7 +310,6 @@ run (gchar      *name,
 	  break;
 
 	case GIMP_RUN_WITH_LAST_VALS:
-      INIT_I18N();
 	  break;
 
 	default:

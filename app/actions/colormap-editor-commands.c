@@ -35,7 +35,7 @@
 #include "color-notebook.h"
 #include "colormap-editor-commands.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 /*  local function prototypes  */

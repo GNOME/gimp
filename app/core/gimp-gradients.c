@@ -35,7 +35,7 @@
 #include "gimpdatafactory.h"
 #include "gimpgradient.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define FG_BG_RGB_KEY      "gimp-fg-bg-rgb-gradient"

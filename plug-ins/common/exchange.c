@@ -159,6 +159,8 @@ run (gchar   *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
+  INIT_I18N ();
+
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
@@ -188,7 +190,6 @@ run (gchar   *name,
   switch (runmode)
     {
     case GIMP_RUN_INTERACTIVE:
-      INIT_I18N_UI();
       /* retrieve stored arguments (if any) */
       gimp_get_data ("plug_in_exchange", &xargs);
       /* initialize using foreground color */
@@ -199,7 +200,6 @@ run (gchar   *name,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      INIT_I18N();
       gimp_get_data ("plug_in_exchange", &xargs);
       /* 
        * instead of recalling the last-set values,
@@ -210,7 +210,6 @@ run (gchar   *name,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      INIT_I18N();
       if (nparams != 12)
 	{
 	  status = GIMP_PDB_EXECUTION_ERROR;

@@ -38,7 +38,7 @@
 #include "gimptoolbox.h"
 #include "gimptoolbox-indicator-area.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define CELL_SIZE        23  /*  The size of the previews  */

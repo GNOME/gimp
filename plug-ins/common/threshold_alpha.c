@@ -125,14 +125,7 @@ run (gchar      *name,
   run_mode    = param[0].data.d_int32;
   drawable_id = param[2].data.d_int32;
 
-  if (run_mode != GIMP_RUN_INTERACTIVE)
-    {
-      INIT_I18N();
-    }
-  else
-    {
-      INIT_I18N_UI();
-    }
+  INIT_I18N ();
 
   *nreturn_vals = 1;
   *return_vals = values;

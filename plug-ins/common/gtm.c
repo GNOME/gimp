@@ -183,7 +183,7 @@ run (gchar      *name,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpDrawable      *drawable;
 
-  INIT_I18N_UI();
+  INIT_I18N ();
 
   drawable = gimp_drawable_get (param[2].data.d_int32);
 

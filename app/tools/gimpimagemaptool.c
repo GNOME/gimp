@@ -38,7 +38,7 @@
 #include "gimpimagemaptool.h"
 #include "tool_manager.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 /*  local function prototypes  */

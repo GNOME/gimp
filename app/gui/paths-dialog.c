@@ -64,7 +64,7 @@
 #include "pathP.h"
 #include "path_transform.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 #include "pixmaps/new.xpm"
 #include "pixmaps/duplicate.xpm"

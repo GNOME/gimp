@@ -26,7 +26,7 @@
 
 #include "resolution-calibrate-dialog.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define SET_STYLE(widget, style) \

@@ -36,7 +36,7 @@
 
 #include "module-browser.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define NUM_INFO_LINES 9

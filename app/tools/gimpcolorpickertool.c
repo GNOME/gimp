@@ -48,7 +48,7 @@
 #include "gimpcolorpickertool.h"
 #include "tool_manager.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define MAX_INFO_BUF 8

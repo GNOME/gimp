@@ -36,7 +36,7 @@
 #include "gimp.h"
 #include "gimpmiscui.h"
 
-#include "gimpintl.h"
+#include "libgimp-intl.h"
 
 
 #define PREVIEW_SIZE	128 

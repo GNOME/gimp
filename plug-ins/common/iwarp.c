@@ -276,6 +276,8 @@ run (gchar   *name,
 
   run_mode = param[0].data.d_int32;
 
+  INIT_I18N ();
+
   /*  Get the specified drawable  */
   destdrawable = drawable = gimp_drawable_get (param[2].data.d_drawable);
   imageID = param[1].data.d_int32;
@@ -287,7 +289,6 @@ run (gchar   *name,
       switch (run_mode)
 	{
         case GIMP_RUN_INTERACTIVE:
-          INIT_I18N_UI();
           gimp_get_data ("plug_in_iwarp", &iwarp_vals);
           gimp_tile_cache_ntiles (2 * (drawable->width + gimp_tile_width ()-1) /
 				  gimp_tile_width ());

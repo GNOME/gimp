@@ -36,7 +36,7 @@
 #include "gimpimage-undo-push.h"
 #include "gimplayer-floating-sel.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 /*  local function prototypes  */

@@ -37,7 +37,6 @@
  *-----------------------------------------------------------------------------------*/
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
 
 #include "config.h"
@@ -207,11 +206,11 @@ rcm (GimpDrawable *drawable)
   height = drawable->height;
   bytes = drawable->bpp;
 
-  src_row = (guchar *) malloc ((x2 - x1) * bytes);
-  dest_row = (guchar *) malloc ((x2 - x1) * bytes);
+  src_row  = g_new (guchar, (x2 - x1) * bytes);
+  dest_row = g_new (guchar, (x2 - x1) * bytes);
 
-  gimp_pixel_rgn_init(&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init(&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
+  gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
 
   for (row=y1; row < y2; row++)
   {
@@ -231,8 +230,8 @@ rcm (GimpDrawable *drawable)
   gimp_drawable_merge_shadow(drawable->drawable_id, TRUE);
   gimp_drawable_update(drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
   
-  free (src_row);
-  free (dest_row);
+  g_free (src_row);
+  g_free (dest_row);
 }
 
 /*-----------------------------------------------------------------------------------*/
@@ -240,10 +239,10 @@ rcm (GimpDrawable *drawable)
 /*-----------------------------------------------------------------------------------*/
 
 void 
-run (char    *name, 
-     int      nparams, 
+run (char       *name, 
+     int         nparams, 
      GimpParam  *param, 
-     int     *nreturn_vals, 
+     int        *nreturn_vals, 
      GimpParam **return_vals)
 {
   GimpParam values[1];
@@ -252,11 +251,13 @@ run (char    *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
+  INIT_I18N ();
+
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  Current.drawable = gimp_drawable_get(param[2].data.d_drawable);
-  Current.mask = gimp_drawable_get(gimp_image_get_selection(param[1].data.d_image));
+  Current.drawable = gimp_drawable_get (param[2].data.d_drawable);
+  Current.mask = gimp_drawable_get (gimp_image_get_selection (param[1].data.d_image));
 
   /* works not on INDEXED images */     
 
@@ -268,9 +269,6 @@ run (char    *name,
   else
   {
     /* call dialog and rotate the colormap */
-
-    INIT_I18N_UI(); 
-
     if (gimp_drawable_is_rgb(Current.drawable->drawable_id) && rcm_dialog())
     {
       gimp_progress_init(_("Rotating the colormap..."));

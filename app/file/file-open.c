@@ -53,7 +53,7 @@
 #include "file-open.h"
 #include "file-utils.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 /*  public functions  */

@@ -329,7 +329,6 @@ static PSPSaveInterface psint =
 };
 
 static guint16 major, minor;
-static guint tile_height;
 
 MAIN ()
 
@@ -1262,7 +1261,7 @@ read_layer_block (FILE     *f,
       gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
 			   width, height, TRUE, FALSE);
 
-      gimp_tile_cache_size (tile_height * width * bytespp);
+      gimp_tile_cache_size (gimp_tile_height () * width * bytespp);
 
       /* Read the layer channel sub-blocks */
       while (ftell (f) < sub_block_start + sub_total_len)
@@ -1674,7 +1673,7 @@ run (gchar      *name,
   gint32                drawable_ID;
   GimpExportReturnType  export = GIMP_EXPORT_CANCEL;
 
-  tile_height = gimp_tile_height ();
+  INIT_I18N ();
 
   run_mode = param[0].data.d_int32;
 
@@ -1709,7 +1708,6 @@ run (gchar      *name,
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
-	  INIT_I18N_UI();
 	  gimp_ui_init ("psp", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "PSP", 
 				      (GIMP_EXPORT_CAN_HANDLE_RGB |

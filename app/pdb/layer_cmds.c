@@ -41,7 +41,7 @@
 #include "core/gimplist.h"
 #include "pdb_glue.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 static ProcRecord layer_new_proc;
 static ProcRecord layer_copy_proc;

@@ -35,7 +35,7 @@
 #include "gimpimage-new.h"
 #include "gimplayer.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 GimpImageNewValues *

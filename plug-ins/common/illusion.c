@@ -119,6 +119,8 @@ run (gchar      *name,
   static GimpParam   returnv[1];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
+  INIT_I18N ();
+
   run_mode = params[0].data.d_int32;
   drawable = gimp_drawable_get (params[2].data.d_drawable);
 
@@ -131,7 +133,6 @@ run (gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      INIT_I18N_UI();
       gimp_get_data (PLUG_IN_NAME, &parameters);
       if (! dialog(drawable))
 	return;

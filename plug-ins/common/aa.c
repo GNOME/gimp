@@ -133,6 +133,8 @@ run (gchar       *name,
   gint32                drawable_ID;
   GimpExportReturnType  export = GIMP_EXPORT_CANCEL;
 
+  INIT_I18N ();
+
   /* Set us up to return a status. */
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -147,7 +149,6 @@ run (gchar       *name,
     {
     case GIMP_RUN_INTERACTIVE:
     case GIMP_RUN_WITH_LAST_VALS:
-      INIT_I18N_UI();
       gimp_ui_init ("aa", FALSE);
       export = gimp_export_image (&image_ID, &drawable_ID, "AA", 
 				  (GIMP_EXPORT_CAN_HANDLE_RGB  |
@@ -160,7 +161,6 @@ run (gchar       *name,
 	}
       break;
     default:
-      INIT_I18N();
       break;
     }
 

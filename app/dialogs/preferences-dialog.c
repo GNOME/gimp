@@ -45,7 +45,7 @@
 #include "resolution-calibrate-dialog.h"
 #include "session.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define MAX_COMMENT_LENGTH 512  /* arbitrary */

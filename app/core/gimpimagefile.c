@@ -63,7 +63,7 @@
 
 #include "file/file-open.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define TAG_DESCRIPTION        "tEXt::Description"

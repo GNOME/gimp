@@ -30,7 +30,7 @@
 #include "palette-editor-commands.h"
 #include "palette-editor-menu.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 GimpItemFactoryEntry palette_editor_menu_entries[] =

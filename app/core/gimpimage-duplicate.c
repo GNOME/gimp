@@ -45,7 +45,7 @@
 
 #include "path.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 GimpImage *

@@ -44,7 +44,7 @@
 #include "gimppreviewrenderer.h"
 #include "gimpwidgets-constructors.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void   gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass);

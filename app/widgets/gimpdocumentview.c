@@ -51,7 +51,7 @@
 #include "gimpdnd.h"
 #include "gimpwidgets-utils.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void   gimp_document_view_class_init (GimpDocumentViewClass *klass);

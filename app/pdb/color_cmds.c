@@ -47,7 +47,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 static ProcRecord brightness_contrast_proc;
 static ProcRecord levels_proc;

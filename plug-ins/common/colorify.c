@@ -147,7 +147,7 @@ run (gchar      *name,
   static GimpParam   values[1];
   GimpDrawable      *drawable;
 
-  INIT_I18N_UI();
+  INIT_I18N ();
 
   status = GIMP_PDB_SUCCESS;
   run_mode = param[0].data.d_int32;

@@ -316,8 +316,6 @@ query (void)
   static GimpParamDef *return_vals = NULL;
   static int nreturn_vals = 0;
 
-  INIT_I18N();
-
   gimp_install_procedure ("plug_in_mosaic",
 			  "Convert the input drawable into a collection of tiles",
 			  "Help not yet written for this plug-in",
@@ -338,12 +336,14 @@ run (gchar      *name,
      gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpRunMode  run_mode;
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  GimpDrawable    *active_drawable;
+  static GimpParam   values[1];
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpDrawable      *active_drawable;
 
   run_mode = param[0].data.d_int32;
+
+  INIT_I18N ();
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -353,7 +353,6 @@ run (gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_mosaic", &mvals);
 
@@ -363,7 +362,6 @@ run (gchar      *name,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 15)
 	status = GIMP_PDB_CALLING_ERROR;

@@ -37,7 +37,7 @@
 #include "gimphuesaturationtool.h"
 #include "tool_manager.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define SLIDER_WIDTH  200

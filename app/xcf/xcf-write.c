@@ -27,7 +27,7 @@
 #include "xcf-write.h"
 
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 guint
 xcf_write_int32 (FILE     *fp,

@@ -49,7 +49,7 @@
 #include "resolution-calibrate-dialog.h"
 #include "user-install-dialog.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 #ifdef G_OS_WIN32
 #  include <io.h>

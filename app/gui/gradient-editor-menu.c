@@ -36,7 +36,7 @@
 #include "gradient-editor-menu.h"
 #include "menus.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define LOAD_LEFT_FROM(num,magic) \

@@ -32,7 +32,7 @@
 #include "vectors/gimpstroke.h"
 #include "vectors/gimpvectors.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 void

@@ -279,6 +279,8 @@ run (gchar      *name,
 
   l_run_mode = run_mode = param[0].data.d_int32;
 
+  INIT_I18N ();
+
   *nreturn_vals = 1;
   *return_vals  = values;
 
@@ -287,8 +289,6 @@ run (gchar      *name,
 
   if (strcmp (name, "file_xwd_load") == 0)
     {
-      INIT_I18N();
-
       image_ID = load_image (param[1].data.d_string);
 
       if (image_ID != -1)
@@ -304,8 +304,6 @@ run (gchar      *name,
     }
   else if (strcmp (name, "file_xwd_save") == 0)
     {
-      INIT_I18N();
-
       image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 

@@ -164,7 +164,7 @@ run (gchar      *name,
   GimpPDBStatusType status;     /* Return status */
   static GimpParam  values[1];  /* Return values */
 
-  INIT_I18N_UI();
+  INIT_I18N ();
 
   /*
    * Initialize parameter data...

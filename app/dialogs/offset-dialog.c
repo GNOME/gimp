@@ -36,7 +36,7 @@
 
 #include "offset-dialog.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define ENTRY_WIDTH  60

@@ -50,7 +50,7 @@
 #include "gimppreview.h"
 #include "gimppreviewrenderer.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void   gimp_selection_editor_class_init (GimpSelectionEditorClass *klass);

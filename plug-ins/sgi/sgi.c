@@ -114,8 +114,6 @@ query (void)
     { GIMP_PDB_INT32,	"compression",	"Compression level (0 = none, 1 = RLE, 2 = ARLE)" }
   };
 
-  INIT_I18N();
-
   gimp_install_procedure ("file_sgi_load",
 			  "Loads files in SGI image file format",
 			  "This plug-in loads SGI image files.",
@@ -174,7 +172,7 @@ run (gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  INIT_I18N_UI();
+  INIT_I18N ();
 
   if (strcmp (name, "file_sgi_load") == 0)
     {

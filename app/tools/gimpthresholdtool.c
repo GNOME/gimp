@@ -44,7 +44,7 @@
 #include "gimpthresholdtool.h"
 #include "tool_manager.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define LOW        0x1

@@ -856,6 +856,8 @@ run (gchar      *name,
 
   l_run_mode = param[0].data.d_int32;
 
+  INIT_I18N ();
+
   *nreturn_vals = 1;
   *return_vals  = values;
 
@@ -867,7 +869,6 @@ run (gchar      *name,
       switch (l_run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
-	  INIT_I18N_UI();
 	  gimp_get_data ("file_wmf_load", &load_vals);
 
 	  if (!load_dialog (param[1].data.d_string))
@@ -875,12 +876,7 @@ run (gchar      *name,
 	  break;
 	  
 	case GIMP_RUN_NONINTERACTIVE:
-	  INIT_I18N();
-	  gimp_get_data ("file_wmf_load", &load_vals);
-	  break;
-
 	case GIMP_RUN_WITH_LAST_VALS:
-	  INIT_I18N();
 	  gimp_get_data ("file_wmf_load", &load_vals);
 
 	default:

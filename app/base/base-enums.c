@@ -4,7 +4,7 @@
 #include "config.h"
 #include <glib-object.h>
 #include "base-enums.h"
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 /* enumerations from "./base-enums.h" */
 

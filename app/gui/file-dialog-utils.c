@@ -36,7 +36,7 @@
 
 #include "file-dialog-utils.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 GtkWidget *

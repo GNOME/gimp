@@ -41,7 +41,7 @@
 #include "menus.h"
 #include "pattern-select.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 /*  local function prototypes  */

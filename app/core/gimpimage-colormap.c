@@ -31,7 +31,7 @@
 #include "gimpimage-mask.h"
 #include "gimpimage-undo-push.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 guchar *

@@ -75,7 +75,7 @@
 
 #include "gui/color-notebook.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define EPSILON 1e-10

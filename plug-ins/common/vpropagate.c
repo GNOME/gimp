@@ -291,6 +291,8 @@ run (gchar      *name,
   run_mode = param[0].data.d_int32;
   drawable_id = param[2].data.d_int32;
 
+  INIT_I18N ();
+
   *nreturn_vals = 1;
   *return_vals  = values;
   
@@ -302,7 +304,6 @@ run (gchar      *name,
     case GIMP_RUN_INTERACTIVE:
       if (strcmp (name, DEFAULT_PLUG_IN_NAME) == 0)
 	{
-	  INIT_I18N_UI();
 	  gimp_get_data (DEFAULT_PLUG_IN_NAME, &vpvals);
 	  /* building the values of dialog variables from vpvals. */
 	  propagate_alpha =
@@ -321,7 +322,6 @@ run (gchar      *name,
       else if (strcmp (name, ERODE_PLUG_IN_NAME) == 0 || 
 	       strcmp (name, DILATE_PLUG_IN_NAME) == 0)
 	{
-	  INIT_I18N();
 	  vpvals.propagating_channel = PROPAGATING_VALUE;
 	  vpvals.propagating_rate    = 1.0;
 	  vpvals.direction_mask      = 15;
@@ -334,9 +334,8 @@ run (gchar      *name,
 	    vpvals.propagate_mode = 1;
 	}
       break;
-    case GIMP_RUN_NONINTERACTIVE:
-      INIT_I18N();
 
+    case GIMP_RUN_NONINTERACTIVE:
       if (strcmp (name, DEFAULT_PLUG_IN_NAME) == 0)
 	{
 	  vpvals.propagate_mode      = param[3].data.d_int32;
@@ -349,7 +348,6 @@ run (gchar      *name,
       else if (strcmp (name, ERODE_PLUG_IN_NAME) == 0 || 
 	       strcmp (name, DILATE_PLUG_IN_NAME) == 0)
 	{
-	  INIT_I18N();
 	  vpvals.propagating_channel = PROPAGATING_VALUE;
 	  vpvals.propagating_rate    = 1.0;
 	  vpvals.direction_mask      = 15;
@@ -362,8 +360,8 @@ run (gchar      *name,
 	    vpvals.propagate_mode = 1;
 	}
       break;
+
     case GIMP_RUN_WITH_LAST_VALS:
-      INIT_I18N();
       gimp_get_data (DEFAULT_PLUG_IN_NAME, &vpvals);
       break;
     }

@@ -354,8 +354,6 @@ query (void)
   static GimpParamDef *return_vals = NULL;
   static int nreturn_vals = 0;
 
-  INIT_I18N ();
-
   gimp_install_procedure ("plug_in_ifs_compose",
 			  "Create an Iterated Function System Fractal",
 			  "Interactively create an Iterated Function System fractal. "
@@ -398,7 +396,7 @@ run (gchar      *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  INIT_I18N_UI (); 
+  INIT_I18N (); 
 
   image_id        = param[1].data.d_image;
   active_drawable = gimp_drawable_get (param[2].data.d_drawable);

@@ -50,7 +50,7 @@
 #include "file-dialog-utils.h"
 #include "file-save-dialog.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 /*  local function prototypes  */

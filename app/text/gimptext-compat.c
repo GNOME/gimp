@@ -42,7 +42,7 @@
 #include "gimptext-compat.h"
 #include "gimptextlayer.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 GimpLayer *

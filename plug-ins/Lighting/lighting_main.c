@@ -179,19 +179,12 @@ run (gchar      *name,
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
-  GimpRunMode    run_mode;
+  GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
-    {
-      INIT_I18N_UI ();
-    }
-  else
-    {
-      INIT_I18N ();
-    }
+  INIT_I18N ();
 
   *nreturn_vals = 1;
   *return_vals = values;

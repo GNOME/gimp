@@ -46,7 +46,7 @@
 #include "gimpmarshal.h"
 #include "gimpparasitelist.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 enum

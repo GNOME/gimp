@@ -152,7 +152,7 @@
 #include "gimpimage-convert-data.h"
 #include "gimpimage-convert.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 /* basic memory/quality tradeoff */

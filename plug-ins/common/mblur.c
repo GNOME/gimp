@@ -167,6 +167,8 @@ run (gchar      *name,
   GimpRunMode        run_mode;
   GimpPDBStatusType  status;
 
+  INIT_I18N ();
+
   status   = GIMP_PDB_SUCCESS;
   run_mode = param[0].data.d_int32;
 
@@ -198,8 +200,6 @@ run (gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      INIT_I18N_UI();
-
       /* Possibly retrieve data */
       gimp_get_data (PLUG_IN_NAME, &mbvals);
 
@@ -209,8 +209,6 @@ run (gchar      *name,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      INIT_I18N();
-
       /* Make sure all the arguments are present */
       if (nparams != 6)
 	status = GIMP_PDB_CALLING_ERROR;
@@ -227,8 +225,6 @@ run (gchar      *name,
     break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      INIT_I18N();
-
       /* Possibly retrieve data */
       gimp_get_data (PLUG_IN_NAME, &mbvals);
       break;

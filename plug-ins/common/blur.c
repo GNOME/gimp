@@ -233,7 +233,7 @@ run (gchar   *name,
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;        /* assume the best! */
   static GimpParam values[1];
 
-  INIT_I18N_UI();
+  INIT_I18N ();
 
   /*
    *  Get the specified drawable, do standard initialization.

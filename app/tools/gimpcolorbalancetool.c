@@ -39,7 +39,7 @@
 #include "gimpcolorbalancetool.h"
 #include "tool_manager.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define CYAN_RED       (1 << 0)

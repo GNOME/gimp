@@ -38,7 +38,7 @@
 #include "gimppreviewrendererimage.h"
 #include "gimpwidgets-utils.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 enum

@@ -51,7 +51,7 @@
 #include "path.h"
 #include "pathP.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 static gboolean xcf_save_image_props   (XcfInfo     *info,
 				        GimpImage   *gimage,

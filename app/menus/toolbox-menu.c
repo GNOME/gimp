@@ -39,7 +39,7 @@
 #include "test-commands.h"
 #include "toolbox-menu.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 GimpItemFactoryEntry toolbox_menu_entries[] =

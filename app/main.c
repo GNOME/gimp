@@ -36,6 +36,8 @@
 #define  WAIT_ANY -1
 #endif
 
+#include <locale.h>
+
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -48,7 +50,7 @@
 #include "app_procs.h"
 #include "errors.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #ifdef G_OS_WIN32
@@ -125,10 +127,14 @@ main (int    argc,
   setlocale (LC_ALL, "");
 
   bindtextdomain (GETTEXT_PACKAGE"-libgimp", gimp_locale_directory ());
+#ifdef HAVE_BIND_TEXTDOMAIN_CODESET
   bind_textdomain_codeset (GETTEXT_PACKAGE"-libgimp", "UTF-8");
+#endif
 
   bindtextdomain (GETTEXT_PACKAGE, gimp_locale_directory ());
+#ifdef HAVE_BIND_TEXTDOMAIN_CODESET
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+#endif
 
   textdomain (GETTEXT_PACKAGE);
 

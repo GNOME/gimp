@@ -58,7 +58,7 @@
 
 #include "gui/color-notebook.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 /*  Add these features:

@@ -32,7 +32,7 @@
 #include "colormap-editor-commands.h"
 #include "colormap-editor-menu.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 GimpItemFactoryEntry colormap_editor_menu_entries[] =

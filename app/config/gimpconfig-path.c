@@ -30,7 +30,7 @@
 
 #include "gimpconfig-path.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define SUBSTS_ALLOC 4

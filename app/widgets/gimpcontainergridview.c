@@ -37,7 +37,7 @@
 #include "gimppreviewrenderer.h"
 #include "gtkhwrapbox.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void     gimp_container_grid_view_class_init   (GimpContainerGridViewClass *klass);

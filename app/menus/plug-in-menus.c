@@ -39,7 +39,7 @@
 #include "plug-in-menus.h"
 
 #include "libgimpbase/gimpenv.h"
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 typedef struct _PlugInMenuEntry PlugInMenuEntry;

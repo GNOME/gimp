@@ -45,7 +45,7 @@
 #include "gimpdisplayshell-scroll.h"
 #include "gimpnavigationview.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define MAX_SCALE_BUF 20

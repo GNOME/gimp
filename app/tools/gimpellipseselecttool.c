@@ -37,7 +37,7 @@
 #include "gimpellipseselecttool.h"
 #include "gimpselectionoptions.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void   gimp_ellipse_select_tool_class_init (GimpEllipseSelectToolClass *klass);

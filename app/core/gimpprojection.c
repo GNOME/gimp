@@ -44,7 +44,7 @@
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-transform.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 enum

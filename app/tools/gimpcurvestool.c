@@ -52,7 +52,7 @@
 #include "gimpcurvestool.h"
 #include "tool_manager.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define XRANGE_TOP     (1 << 0)

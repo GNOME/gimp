@@ -39,7 +39,7 @@
 #include "gimpclone.h"
 #include "gimpcloneoptions.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void   gimp_clone_class_init       (GimpCloneClass      *klass);

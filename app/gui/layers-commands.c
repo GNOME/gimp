@@ -50,7 +50,7 @@
 #include "layers-commands.h"
 #include "resize-dialog.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 /*  local function prototypes  */

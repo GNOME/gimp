@@ -466,14 +466,7 @@ run (gchar      *name,
     status = GIMP_PDB_CALLING_ERROR;
   run_mode = param[0].data.d_int32;
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
-    {
-      INIT_I18N_UI ();
-    }
-  else
-    {
-      INIT_I18N ();
-    }
+  INIT_I18N ();
 
   if (param[2].type != GIMP_PDB_DRAWABLE)
     status = GIMP_PDB_CALLING_ERROR;

@@ -287,14 +287,7 @@ run (gchar   *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (run_mode == GIMP_RUN_NONINTERACTIVE)
-    {
-      INIT_I18N();
-    }
-  else
-    {
-      INIT_I18N_UI();
-    }
+  INIT_I18N ();
 
   if (strcmp (name, "file_pnm_load") == 0)
     {

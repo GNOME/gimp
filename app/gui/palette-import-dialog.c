@@ -45,7 +45,7 @@
 #include "gradient-select.h"
 #include "palette-import-dialog.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define IMPORT_PREVIEW_SIZE 80

@@ -51,7 +51,7 @@
 #include "gimppattern.h"
 #include "gimppattern-header.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void       gimp_pattern_class_init      (GimpPatternClass *klass);

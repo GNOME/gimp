@@ -51,7 +51,7 @@
 
 #include "dialogs.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 /*****  Container View Test Dialogs  *****/

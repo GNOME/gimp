@@ -38,7 +38,7 @@
 #include "gimpbrushfactoryview.h"
 #include "gimppreview.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void   gimp_brush_factory_view_class_init (GimpBrushFactoryViewClass *klass);

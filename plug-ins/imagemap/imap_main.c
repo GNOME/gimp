@@ -133,15 +133,18 @@ static void query()
 }
 
 static void
-run(char *name, int n_params, GimpParam *param, int *nreturn_vals,
-    GimpParam **return_vals)
+run (gchar      *name,
+     gint        n_params,
+     GimpParam  *param,
+     gint       *nreturn_vals,
+     GimpParam **return_vals)
 {
    static GimpParam values[1];
    GimpDrawable *drawable;
    GimpRunMode run_mode;
    GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
-   INIT_I18N_UI();
+   INIT_I18N ();
 
    *nreturn_vals = 1;
    *return_vals = values;

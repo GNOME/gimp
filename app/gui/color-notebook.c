@@ -37,7 +37,7 @@
 #include "color-history.h"
 #include "color-notebook.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define COLOR_AREA_SIZE  20

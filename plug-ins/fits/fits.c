@@ -160,8 +160,6 @@ query (void)
     { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the image in" },
   };
 
-  INIT_I18N();
-
   gimp_install_procedure ("file_fits_load",
                           "load file of the FITS file format",
                           "load file of the FITS file format (Flexible Image Transport System)",
@@ -199,20 +197,22 @@ query (void)
 
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[2];
-  GimpRunMode  run_mode;
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  gint32        image_ID;
-  gint32        drawable_ID;
-  GimpExportReturnType export = GIMP_EXPORT_CANCEL;
+  static GimpParam   values[2];
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  gint32             image_ID;
+  gint32             drawable_ID;
+  GimpExportReturnType  export = GIMP_EXPORT_CANCEL;
 
   l_run_mode = run_mode = (GimpRunMode)param[0].data.d_int32;
+
+  INIT_I18N ();
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -221,8 +221,6 @@ run (gchar   *name,
 
   if (strcmp (name, "file_fits_load") == 0)
     {
-      INIT_I18N_UI();
-
       switch (run_mode)
 	{
         case GIMP_RUN_INTERACTIVE:
@@ -273,8 +271,6 @@ run (gchar   *name,
     }
   else if (strcmp (name, "file_fits_save") == 0)
     {
-      INIT_I18N_UI();
-
       image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
@@ -338,10 +334,10 @@ static gint32
 load_image (gchar *filename)
 {
   gint32 image_ID, *image_list, *nl;
-  guint picnum;
-  int   k, n_images, max_images, hdu_picnum;
-  int   compose;
-  FILE *fp;
+  guint  picnum;
+  gint   k, n_images, max_images, hdu_picnum;
+  gint   compose;
+  FILE  *fp;
   FITS_FILE *ifp;
   FITS_HDU_LIST *hdu;
 

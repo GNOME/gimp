@@ -39,7 +39,7 @@
 #include "gimpiscissorstool.h"
 #include "gimpselectionoptions.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 enum

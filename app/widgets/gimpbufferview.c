@@ -37,7 +37,7 @@
 #include "gimpbufferview.h"
 #include "gimpdnd.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void   gimp_buffer_view_class_init (GimpBufferViewClass *klass);

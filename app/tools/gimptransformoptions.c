@@ -38,7 +38,7 @@
 #include "gimpscaletool.h"
 #include "gimptransformoptions.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 enum

@@ -190,10 +190,10 @@ query (void)
 }
 
 static void
-run (gchar    *name,
-     gint      nparams,
+run (gchar       *name,
+     gint         nparams,
      GimpParam   *param,
-     gint     *nreturn_vals,
+     gint        *nreturn_vals,
      GimpParam  **return_vals)
 {
   static GimpParam values[1];
@@ -205,20 +205,13 @@ run (gchar    *name,
 
   run_mode = param[0].data.d_int32;
 
+  INIT_I18N ();
+
   *nreturn_vals = 1;
   *return_vals = values;
 
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
-
-  if (run_mode == GIMP_RUN_INTERACTIVE)
-    {
-      INIT_I18N_UI();
-    }
-  else
-    {
-      INIT_I18N();
-    }
 
   blindsdrawable = drawable = 
     gimp_drawable_get (param[2].data.d_drawable);

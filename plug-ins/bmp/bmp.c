@@ -112,8 +112,6 @@ query (void)
     { GIMP_PDB_STRING,   "raw_filename", "The name entered" },
   };
  
-  INIT_I18N();
-
   gimp_install_procedure ("file_bmp_load",
                           "Loads files of Windows BMP file format",
                           "Loads files of Windows BMP file format",
@@ -164,6 +162,8 @@ run (gchar   *name,
   
   run_mode = param[0].data.d_int32;
 
+  INIT_I18N ();
+
   *nreturn_vals = 1;
   *return_vals  = values;
   values[0].type          = GIMP_PDB_STATUS;
@@ -171,8 +171,6 @@ run (gchar   *name,
 
   if (strcmp (name, "file_bmp_load") == 0)
     {
-       INIT_I18N_UI();
-
        switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
@@ -208,8 +206,6 @@ run (gchar   *name,
     }
   else if (strcmp (name, "file_bmp_save") == 0)
     {
-      INIT_I18N_UI();
-
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 

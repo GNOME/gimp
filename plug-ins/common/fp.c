@@ -99,19 +99,19 @@ query (void)
 /********************************STANDARD RUN*************************/
 
 void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  GimpParam values[1];
+  GimpParam         values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   
   *nreturn_vals = 1;
   *return_vals = values;
 
-  INIT_I18N_UI(); 
+  INIT_I18N (); 
 
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;

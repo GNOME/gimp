@@ -34,7 +34,7 @@
 #include "gimprc-blurbs.h"
 #include "gimpcoreconfig.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void  gimp_core_config_class_init   (GimpCoreConfigClass *klass);

@@ -208,6 +208,8 @@ run (gchar   *name,
 
   /* Initialize */
 
+  INIT_I18N ();
+
   diff_init_luts ();
 
   status   = GIMP_PDB_SUCCESS;
@@ -222,8 +224,6 @@ run (gchar   *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      INIT_I18N_UI();
-
       /* Possibly retrieve data */
       gimp_get_data ("plug_in_diffraction", &dvals);
 
@@ -234,8 +234,6 @@ run (gchar   *name,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      INIT_I18N();
-
       /* Make sure all the arguments are present */
       if (nparams != 15)
 	status = GIMP_PDB_CALLING_ERROR;
@@ -259,8 +257,6 @@ run (gchar   *name,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      INIT_I18N();
-
       /* Possibly retrieve data */
       gimp_get_data ("plug_in_diffraction", &dvals);
       break;

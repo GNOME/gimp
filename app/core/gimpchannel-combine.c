@@ -45,7 +45,7 @@
 #include "gimplayer.h"
 #include "gimpparasitelist.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void       gimp_channel_class_init  (GimpChannelClass *klass);

@@ -889,7 +889,7 @@ run (gchar      *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  INIT_I18N_UI ();
+  INIT_I18N ();
 
   if (strcmp (name, GIMP_HELP_EXT_NAME) == 0)
     {

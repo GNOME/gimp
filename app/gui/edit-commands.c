@@ -43,7 +43,7 @@
 #include "dialogs.h"
 #include "edit-commands.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define return_if_no_display(gdisp,data) \

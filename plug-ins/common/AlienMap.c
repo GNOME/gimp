@@ -932,8 +932,6 @@ query (void)
   static GimpParamDef *return_vals = NULL;
   static int nreturn_vals = 0;
 
-  INIT_I18N();
-
   gimp_install_procedure ("plug_in_alienmap",
         		  "AlienMap Color Transformation Plug-In",
         		  "No help yet. Just try it and you'll see!",
@@ -1017,16 +1015,16 @@ transform (guchar *r,
 }
 
 static void
-run (char       *name,
-     int         nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     int        *nreturn_vals,
-     GimpParam  **return_vals)
+     gint       *nreturn_vals,
+     GimpParam **return_vals)
 {
   static GimpParam values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
  
-  INIT_I18N_UI ();
+  INIT_I18N ();
 
   run_mode = param[0].data.d_int32;
 

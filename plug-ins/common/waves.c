@@ -140,6 +140,8 @@ run (gchar      *name,
 
   piArgs args;
 
+  INIT_I18N ();
+
   *nretvals = 1;
   *retvals  = rvals;
 
@@ -156,7 +158,6 @@ run (gchar      *name,
     {
 
     case GIMP_RUN_INTERACTIVE:
-      INIT_I18N_UI();
       /* XXX: add code here for interactive running */
       if (args.type == -1)
 	{
@@ -179,7 +180,6 @@ run (gchar      *name,
     break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      INIT_I18N();
       /* XXX: add code here for non-interactive running */
       if (nparam != 8)
 	{
@@ -200,7 +200,6 @@ run (gchar      *name,
     break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      INIT_I18N();
       /* XXX: add code here for last-values running */
       if (pluginCore (&args, drawable) == -1)
 	{

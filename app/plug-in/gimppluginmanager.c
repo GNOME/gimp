@@ -52,7 +52,7 @@
 #include "plug-in-rc.h"
 #include "plug-in-run.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define STD_PLUGINS_DOMAIN GETTEXT_PACKAGE "-std-plug-ins"

@@ -157,6 +157,8 @@ run (gchar   *name,
 
   run_mode = param[0].data.d_int32;
 
+  INIT_I18N ();
+
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
@@ -168,7 +170,6 @@ run (gchar   *name,
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
-	  INIT_I18N_UI ();
 	  /* Possibly retrieve data */
 	  gimp_get_data ("extension_web_browser", &url_info);
 

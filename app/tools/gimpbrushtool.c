@@ -48,7 +48,7 @@
 #include "gimppainttool.h"
 #include "tool_manager.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define TARGET_SIZE    15

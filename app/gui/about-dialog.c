@@ -39,7 +39,7 @@
 #include "about-dialog.h"
 #include "authors.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 #include "pixmaps/wilber2.xpm"
 

@@ -31,7 +31,7 @@
 
 #include "gimpvectoroptions.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void   gimp_vector_options_init       (GimpVectorOptions      *options);

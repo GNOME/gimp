@@ -35,7 +35,7 @@
 #include "gimprc-blurbs.h"
 #include "gimpdisplayconfig.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void  gimp_display_config_class_init   (GimpDisplayConfigClass *klass);

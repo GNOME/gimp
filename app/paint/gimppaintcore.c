@@ -53,7 +53,7 @@
 #include "gimppaintcore-undo.h"
 #include "gimppaintoptions.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define EPSILON  0.00001

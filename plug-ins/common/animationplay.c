@@ -261,18 +261,12 @@ run (gchar   *name,
 
   run_mode = param[0].data.d_int32;
 
-  if (run_mode == GIMP_RUN_NONINTERACTIVE) 
-    {
-      if (n_params != 3) 
-	{
-	  status = GIMP_PDB_CALLING_ERROR;
-	}
-      INIT_I18N();
-    } 
-  else 
-    {
-      INIT_I18N_UI();
-    }
+  INIT_I18N ();
+
+ if (run_mode == GIMP_RUN_NONINTERACTIVE && n_params != 3) 
+   {
+     status = GIMP_PDB_CALLING_ERROR;
+   }
 
   if (status == GIMP_PDB_SUCCESS) 
     {

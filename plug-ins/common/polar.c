@@ -229,6 +229,8 @@ run (gchar      *name,
   *nreturn_vals = 1;
   *return_vals  = values;
 
+  INIT_I18N ();
+
   /* Get the active drawable info */
 
   drawable = gimp_drawable_get (param[2].data.d_drawable);
@@ -288,8 +290,6 @@ run (gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      INIT_I18N_UI();
-
       /* Possibly retrieve data */
       gimp_get_data (PLUG_IN_NAME, &pcvals);
 
@@ -300,8 +300,6 @@ run (gchar      *name,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      INIT_I18N();
-
       /* Make sure all the arguments are present */
       if (nparams != 8)
 	{
@@ -318,8 +316,6 @@ run (gchar      *name,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      INIT_I18N();
-
       /* Possibly retrieve data */
       gimp_get_data (PLUG_IN_NAME, &pcvals);
       break;

@@ -155,9 +155,10 @@ run (gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
+  INIT_I18N ();
+
   if (strcmp (name, "file_pat_load") == 0) 
     {
-      INIT_I18N();
       image_ID = load_image (param[1].data.d_string);
 
       if (image_ID != -1) 
@@ -181,7 +182,6 @@ run (gchar      *name,
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
-	  INIT_I18N_UI();
 	  gimp_ui_init ("pat", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "PAT", 
 				      (GIMP_EXPORT_CAN_HANDLE_GRAY |
@@ -193,7 +193,6 @@ run (gchar      *name,
 	    }
 	  break;
 	default:
-	  INIT_I18N();
 	  break;
 	}
 

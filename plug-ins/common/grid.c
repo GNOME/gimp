@@ -172,7 +172,7 @@ run (gchar      *name,
   *nreturn_vals = 1;
   *return_vals  = values;
 
-  INIT_I18N_UI(); 
+  INIT_I18N (); 
 
   run_mode = param[0].data.d_int32;
   image_ID = param[1].data.d_int32;

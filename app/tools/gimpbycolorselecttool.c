@@ -36,7 +36,7 @@
 #include "gimpbycolorselecttool.h"
 #include "gimpselectionoptions.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void   gimp_by_color_select_tool_class_init (GimpByColorSelectToolClass *klass);

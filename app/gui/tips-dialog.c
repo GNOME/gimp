@@ -39,7 +39,7 @@
 #include "tips-dialog.h"
 #include "tips-parser.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void  tips_set_labels     (GimpTip     *tip);

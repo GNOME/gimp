@@ -29,7 +29,7 @@
 
 #include "gimpenummenu.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void  gimp_enum_menu_class_init  (GimpEnumMenuClass *klass);

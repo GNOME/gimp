@@ -164,6 +164,8 @@ run (gchar      *name,
   *nreturn_vals = 1;
   *return_vals  = values;
 
+  INIT_I18N ();
+
   /* how are we running today? */
   switch (run_mode)
     {
@@ -171,8 +173,6 @@ run (gchar      *name,
       /* Possibly retrieve data from a previous run */
       gimp_get_data (PLUG_IN_NAME, &shootvals);
       shootvals.window_id = NULL;
-
-      INIT_I18N_UI ();
 
      /* Get information from the dialog */
       if (!shoot_dialog ())

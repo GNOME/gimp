@@ -40,7 +40,7 @@
 #endif
 
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 #include "libgimpbase/gimpbasetypes.h"
 
 /*  Query structure  */

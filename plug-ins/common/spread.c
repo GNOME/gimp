@@ -137,6 +137,8 @@ run (gchar      *name,
 
   run_mode = param[0].data.d_int32;
 
+  INIT_I18N ();
+
   /*  Get the specified image and drawable  */
   image_ID = param[1].data.d_image;
   drawable = gimp_drawable_get (param[2].data.d_drawable);
@@ -150,7 +152,6 @@ run (gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_spread", &spvals);
 
@@ -160,7 +161,6 @@ run (gchar      *name,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 5)
 	{
@@ -179,7 +179,6 @@ run (gchar      *name,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_spread", &spvals);
       break;

@@ -69,7 +69,7 @@
 #include "gimpdisplayshell-transform.h"
 #include "gimpstatusbar.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 enum

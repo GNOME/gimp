@@ -53,7 +53,7 @@
 
 #include "path_transform.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define EDIT_SELECT_SCROLL_LOCK FALSE

@@ -55,7 +55,7 @@
 #include "gimpdnd.h"
 #include "gimppreview.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define DRAG_PREVIEW_SIZE 32

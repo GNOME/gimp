@@ -39,7 +39,7 @@
 #include "gimppaintbrush.h"
 #include "gimppaintoptions.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 static void   gimp_paintbrush_class_init (GimpPaintbrushClass *klass);

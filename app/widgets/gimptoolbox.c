@@ -46,7 +46,7 @@
 #include "gimptoolbox-indicator-area.h"
 #include "gtkhwrapbox.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define DEFAULT_TOOL_ICON_SIZE GTK_ICON_SIZE_BUTTON

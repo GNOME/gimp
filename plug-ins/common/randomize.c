@@ -290,6 +290,8 @@ run (gchar      *name,
   GRand             *gr; /* The GRand object which generates the 
                           * random numbers */
 
+  INIT_I18N ();
+
   /*
    *  Get the specified drawable, do standard initialization.
    */
@@ -323,7 +325,6 @@ run (gchar      *name,
 	   *  If we're running interactively, pop up the dialog box.
 	   */
 	case GIMP_RUN_INTERACTIVE:
-	  INIT_I18N_UI();
 	  gimp_get_data(PLUG_IN_NAME[rndm_type - 1], &pivals);
 	  if (!randomize_dialog())        /* return on Cancel */
 	    return;

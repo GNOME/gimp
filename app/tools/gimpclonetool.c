@@ -39,7 +39,7 @@
 #include "gimpclonetool.h"
 #include "paint_options.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define TARGET_WIDTH  15

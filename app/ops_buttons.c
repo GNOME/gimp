@@ -24,7 +24,7 @@
 
 #include "ops_buttons.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 typedef enum

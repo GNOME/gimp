@@ -28,7 +28,7 @@
 #include "xcf-private.h"
 #include "xcf-seek.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 gboolean
 xcf_seek_pos (XcfInfo *info,

@@ -78,7 +78,7 @@
 #include "gimpeditselectiontool.h"
 #include "gimpselectionoptions.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 /*  Other defines...  */

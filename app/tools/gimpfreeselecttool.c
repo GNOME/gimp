@@ -42,7 +42,7 @@
 #include "gimpfreeselecttool.h"
 #include "gimpselectionoptions.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define DEFAULT_MAX_INC 1024

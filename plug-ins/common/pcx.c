@@ -165,10 +165,10 @@ static void   writeline  (FILE   *fp,
 /* Plug-in implementation */
 
 static void
-run (gchar   *name, 
-     gint     nparams, 
+run (gchar      *name, 
+     gint        nparams, 
      GimpParam  *param, 
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals) 
 {
   static GimpParam values[2];
@@ -180,6 +180,8 @@ run (gchar   *name,
 
   run_mode = param[0].data.d_int32;
 
+  INIT_I18N ();
+
   *nreturn_vals = 1;
   *return_vals  = values;
   values[0].type          = GIMP_PDB_STATUS;
@@ -187,7 +189,6 @@ run (gchar   *name,
 
   if (strcmp (name, "file_pcx_load") == 0)
     {
-      INIT_I18N();
       image_ID = load_image (param[1].data.d_string);
 
       if (image_ID != -1)
@@ -211,7 +212,6 @@ run (gchar   *name,
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
-	  INIT_I18N_UI();
 	  gimp_ui_init ("pcx", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "PCX", 
 				      (GIMP_EXPORT_CAN_HANDLE_RGB |
@@ -224,7 +224,6 @@ run (gchar   *name,
 	    }
 	  break;
 	default:
-	  INIT_I18N();
 	  break;
 	}
 

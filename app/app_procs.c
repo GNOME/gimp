@@ -58,7 +58,7 @@
 #include "app_procs.h"
 #include "batch.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 /*  local prototypes  */

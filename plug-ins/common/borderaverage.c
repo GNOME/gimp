@@ -90,8 +90,6 @@ query (void)
     { GIMP_PDB_COLOR,     "borderaverage",   "The average color of the specified border" },
   };
 
-  INIT_I18N();
-
   gimp_install_procedure ("plug_in_borderaverage",
 			  "Borderaverage",
 			  "",
@@ -115,11 +113,11 @@ run (gchar      *name,
 {
   static GimpParam   values[3];
   GimpDrawable      *drawable;
-  GimpRunMode    run_mode;
+  GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpRGB            result_color;
 
-  INIT_I18N_UI();
+  INIT_I18N ();
 
   run_mode = param[0].data.d_int32;
 	

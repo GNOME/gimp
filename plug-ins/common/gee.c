@@ -24,11 +24,6 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-/* Is the plug-in hidden?  Hey, if you can read this, you may
-   as well comment-out the next line...! */
-#define HIDDEN
-
-
 /* Declare local functions. */
 static void query (void);
 static void run   (gchar      *name,
@@ -105,11 +100,7 @@ query (void)
 			 "Adam D. Moss <adam@gimp.org>",
 			 "Adam D. Moss <adam@gimp.org>",
 			 "2000",
-#ifdef HIDDEN
-			 NULL,
-#else
 			 N_("<Image>/Filters/Toys/Gee-Slime"),
-#endif
 			 "RGB*, INDEXED*, GRAY*",
 			 GIMP_PLUGIN,
 			 G_N_ELEMENTS (args), 0,
@@ -132,7 +123,7 @@ run (gchar      *name,
 
   run_mode = param[0].data.d_int32;
 
-  INIT_I18N_UI();
+  INIT_I18N ();
 
   if (run_mode == GIMP_RUN_NONINTERACTIVE ||
       n_params != 3)

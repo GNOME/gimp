@@ -493,6 +493,8 @@ run (gchar      *name,
   run_mode    = param[0].data.d_int32;
   drawable_id = param[2].data.d_drawable;
 
+  INIT_I18N ();
+
   *nreturn_vals = 1;
   *return_vals = values;
 
@@ -502,7 +504,6 @@ run (gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      INIT_I18N_UI();
       gimp_get_data (PLUG_IN_NAME, &VALS);
       if (! CML_explorer_dialog ())
 	return;

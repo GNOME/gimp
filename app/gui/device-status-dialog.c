@@ -44,7 +44,7 @@
 
 #include "device-status-dialog.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define CELL_SIZE 20 /* The size of the preview cells */

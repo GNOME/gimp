@@ -37,7 +37,7 @@
 #include "gimpcontainermenuimpl.h"
 #include "gimpdockbook.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define DEFAULT_MINIMAL_WIDTH     250

@@ -193,6 +193,8 @@ run (gchar      *name,
   status   = GIMP_PDB_SUCCESS;
   run_mode = param[0].data.d_int32;
 
+  INIT_I18N ();
+
   values = g_new (GimpParam, 1);
 
   *nreturn_vals = 1;
@@ -221,7 +223,6 @@ run (gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      INIT_I18N_UI();
       /*
        * Possibly retrieve data...
        */
@@ -235,7 +236,6 @@ run (gchar      *name,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      INIT_I18N();
       /*
        * Make sure all the arguments are present...
        */
@@ -246,7 +246,6 @@ run (gchar      *name,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      INIT_I18N();
       /*
        * Possibly retrieve data...
        */

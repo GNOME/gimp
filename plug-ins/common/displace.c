@@ -181,6 +181,8 @@ run (gchar      *name,
 
   run_mode = param[0].data.d_int32;
 
+  INIT_I18N ();
+
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
@@ -194,7 +196,6 @@ run (gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      INIT_I18N_UI();
       gimp_get_data ("plug_in_displace", &dvals);
 
       /*  First acquire information with a dialog  */
@@ -203,7 +204,6 @@ run (gchar      *name,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 10)
 	{

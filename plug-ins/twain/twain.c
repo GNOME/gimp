@@ -484,12 +484,10 @@ WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
  * acquiring.
  */
 static void 
-query(void)
+query (void)
 {
   static GimpParamDef args[] = { IN_ARGS };
   static GimpParamDef return_vals[] = { OUT_ARGS };
-
-  INIT_I18N_UI ();
 
 #ifdef _DEBUG
   if (twain_run_mode == RUN_DUMP)
@@ -567,6 +565,8 @@ run(gchar *name,		/* name of plugin */
   values[0].data.d_status = GIMP_PDB_SUCCESS;
   *nreturn_vals = 1;
   *return_vals = values;
+
+  INIT_I18N ();
 
   /* Before we get any further, verify that we have
    * TWAIN and that there is actually a datasource

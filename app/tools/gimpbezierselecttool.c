@@ -58,7 +58,7 @@
 #include "path.h"
 #include "pathP.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define STATUSBAR_SIZE 128

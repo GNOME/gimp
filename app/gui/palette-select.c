@@ -41,7 +41,7 @@
 #include "menus.h"
 #include "palette-select.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define STD_PALETTE_COLUMNS  6

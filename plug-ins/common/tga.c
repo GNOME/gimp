@@ -285,6 +285,8 @@ run (gchar      *name,
 
   run_mode = param[0].data.d_int32;
 
+  INIT_I18N ();
+
   *nreturn_vals = 1;
   *return_vals  = values;
   values[0].type          = GIMP_PDB_STATUS;
@@ -292,8 +294,6 @@ run (gchar      *name,
 
   if (strcmp (name, "file_tga_load") == 0)
     {
-      INIT_I18N();
-
 #ifdef PROFILE
       times (&tbuf1);
 #endif
@@ -313,7 +313,6 @@ run (gchar      *name,
     }
   else if (strcmp (name, "file_tga_save") == 0)
     {
-      INIT_I18N_UI();
       gimp_ui_init ("tga", FALSE);
 
       image_ID     = param[1].data.d_int32;

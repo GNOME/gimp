@@ -207,21 +207,23 @@ query (void)
 GimpParam values[5];
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpRunMode run_mode;
-  gint32       pc;
-  gint32       image_ID;
-  gint32       drawable_ID;
-  gint32       orig_image_ID;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  GimpRunMode          run_mode;
+  gint32               pc;
+  gint32               image_ID;
+  gint32               drawable_ID;
+  gint32               orig_image_ID;
   GimpExportReturnType export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
+
+  INIT_I18N ();
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -230,8 +232,6 @@ run (gchar   *name,
 
   if (strcmp (name, "file_fli_load") == 0)
     {
-      INIT_I18N_UI ();
-
       switch (run_mode)
 	{
 	case GIMP_RUN_NONINTERACTIVE:
@@ -302,8 +302,6 @@ run (gchar   *name,
     }  
   else if (strcmp (name, "file_fli_save") == 0)
     {
-      INIT_I18N_UI ();
-
       image_ID    = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
@@ -359,8 +357,6 @@ run (gchar   *name,
   else if (strcmp (name, "file_fli_info") == 0)
     {
       gint32 width, height, frames;
-
-      INIT_I18N_UI ();
 
       /*
        * check for valid parameters;

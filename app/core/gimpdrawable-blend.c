@@ -41,7 +41,7 @@
 #include "gimpimage.h"
 #include "gimpimage-mask.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 typedef gdouble (* BlendRepeatFunc) (gdouble);

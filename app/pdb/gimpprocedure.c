@@ -34,7 +34,7 @@
 
 #include "procedural_db.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 typedef struct _PDBData PDBData;

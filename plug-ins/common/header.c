@@ -99,6 +99,8 @@ run (gchar   *name,
 
   run_mode = param[0].data.d_int32;
 
+  INIT_I18N ();
+
   *nreturn_vals = 1;
   *return_vals  = values;
   values[0].type          = GIMP_PDB_STATUS;
@@ -114,7 +116,6 @@ run (gchar   *name,
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
-	  INIT_I18N_UI();
 	  gimp_ui_init ("header", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "Header", 
 				      (GIMP_EXPORT_CAN_HANDLE_RGB |

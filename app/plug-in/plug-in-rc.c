@@ -35,7 +35,7 @@
 #include "plug-in-proc.h"
 #include "plug-in-rc.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 /*  

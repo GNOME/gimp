@@ -162,11 +162,11 @@ query ()
 }
 
 static void
-run    (gchar    *name,
-	gint      nparams,
-	GimpParam   *param,
-	gint     *nreturn_vals,
-	GimpParam  **return_vals)
+run (gchar      *name,
+     gint        nparams,
+     GimpParam  *param,
+     gint       *nreturn_vals,
+     GimpParam **return_vals)
 {
   static GimpParam values[1];
   GimpDrawable *drawable;
@@ -182,7 +182,7 @@ run    (gchar    *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  INIT_I18N_UI(); 
+  INIT_I18N ();
 
   gr = g_rand_new ();
 

@@ -181,15 +181,15 @@ maybe_init_cp (void)
 }
 
 static void 
-run (gchar   *name, 
-     gint     n_params, 
+run (gchar      *name, 
+     gint        n_params, 
      GimpParam  *param, 
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable = NULL;
-  GimpRunMode run_mode;
+  static GimpParam  values[1];
+  GimpDrawable     *drawable = NULL;
+  GimpRunMode       run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   *nreturn_vals = 1;
@@ -197,13 +197,14 @@ run (gchar   *name,
 
   run_mode = param[0].data.d_int32;
   
+  INIT_I18N ();
+
   if (run_mode == GIMP_RUN_NONINTERACTIVE)
     {
       status = GIMP_PDB_CALLING_ERROR;
     }
   else
     {
-      INIT_I18N_UI();
       gimp_get_data ("plug_in_flame", &config);
       maybe_init_cp ();
 

@@ -395,6 +395,8 @@ run (gchar      *name,
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
+  INIT_I18N ();
+
   run_mode = param[0].data.d_int32;
   drawable = gimp_drawable_get(param[2].data.d_drawable);
   globals.drawable = drawable;
@@ -403,7 +405,6 @@ run (gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_NONINTERACTIVE:
-      INIT_I18N();
       if (nparams == 8)
 	{
 	  config.x = param[3].data.d_int32;
@@ -423,7 +424,6 @@ run (gchar      *name,
       break;
       
     case GIMP_RUN_INTERACTIVE:
-      INIT_I18N_UI();
       gimp_get_data("plug_in_jigsaw", &config);
       dialog_box();
       if (globals.dialog_result == -1)
@@ -442,7 +442,6 @@ run (gchar      *name,
       break;
       
     case GIMP_RUN_WITH_LAST_VALS:
-      INIT_I18N();
       gimp_get_data("plug_in_jigsaw", &config);
       if (jigsaw(FALSE) == -1)
 	{

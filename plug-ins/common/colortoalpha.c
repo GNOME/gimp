@@ -129,7 +129,7 @@ run (gchar      *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  INIT_I18N_UI();
+  INIT_I18N ();
 
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;

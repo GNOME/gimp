@@ -34,7 +34,7 @@
 #include "gimplayer-floating-sel.h"
 #include "gimplist.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 void

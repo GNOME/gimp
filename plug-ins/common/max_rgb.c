@@ -139,6 +139,8 @@ run (gchar      *name,
   run_mode = param[0].data.d_int32;
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
+  INIT_I18N ();
+
   *nreturn_vals = 1;
   *return_vals  = values;
   
@@ -148,7 +150,6 @@ run (gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      INIT_I18N_UI();
       gimp_get_data (PLUG_IN_NAME, &pvals);
       /* Since a channel might be selected, we must check wheter RGB or not. */
       if (!gimp_drawable_is_rgb (drawable->drawable_id))
@@ -160,11 +161,9 @@ run (gchar      *name,
 	return;
       break;
     case GIMP_RUN_NONINTERACTIVE:
-      INIT_I18N();
       /* You must copy the values of parameters to pvals or dialog variables. */
       break;
     case GIMP_RUN_WITH_LAST_VALS:
-      INIT_I18N();
       gimp_get_data (PLUG_IN_NAME, &pvals);
       break;
     }

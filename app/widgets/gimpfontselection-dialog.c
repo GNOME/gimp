@@ -38,7 +38,7 @@
 #include "gimpfontselection.h"
 #include "gimpfontselection-dialog.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define  FONT_SIZE              18

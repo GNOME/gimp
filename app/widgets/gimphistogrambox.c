@@ -31,7 +31,7 @@
 #include "gimphistogrambox.h"
 #include "gimphistogramview.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define GRADIENT_HEIGHT 15

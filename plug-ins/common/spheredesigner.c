@@ -3133,6 +3133,8 @@ run (gchar      *name,
 
   run_mode = param[0].data.d_int32;
 
+  INIT_I18N ();
+
   *nreturn_vals = 1;
   *return_vals = values;
 
@@ -3144,7 +3146,6 @@ run (gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      INIT_I18N_UI ();
       s.com.numtexture = 0;
       gimp_get_data (PLUG_IN_NAME, &s);
       if (!sphere_main (drawable))
@@ -3154,7 +3155,6 @@ run (gchar      *name,
 	}
       break;
     case GIMP_RUN_WITH_LAST_VALS:
-      INIT_I18N ();
       s.com.numtexture = 0;
       gimp_get_data (PLUG_IN_NAME, &s);
       if (s.com.numtexture == 0)

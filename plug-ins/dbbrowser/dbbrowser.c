@@ -110,12 +110,12 @@ run (gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_SUCCESS;
 
+  INIT_I18N (); 
+
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE: 
       {
-	INIT_I18N_UI(); 
-
 	gimp_ui_init ("dbbrowser", FALSE);
 
 	gtk_quit_add_destroy (1, (GtkObject *) gimp_db_browser (NULL));

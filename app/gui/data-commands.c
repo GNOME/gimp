@@ -26,7 +26,7 @@
 
 #include "data-commands.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 void

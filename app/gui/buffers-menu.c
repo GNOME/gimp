@@ -33,7 +33,7 @@
 #include "buffers-commands.h"
 #include "buffers-menu.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 GimpItemFactoryEntry buffers_menu_entries[] =

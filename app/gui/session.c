@@ -42,7 +42,7 @@
 #include "color-history.h"
 #include "session.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 /*  local function prototypes  */

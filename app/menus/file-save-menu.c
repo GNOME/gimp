@@ -37,7 +37,7 @@
 #include "file-save-menu.h"
 #include "menus.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 GimpItemFactoryEntry file_save_menu_entries[] =

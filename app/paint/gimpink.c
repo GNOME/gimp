@@ -49,7 +49,7 @@
 #include "gimpinktool.h"
 #include "gimpinktool-blob.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define SUBSAMPLE 8

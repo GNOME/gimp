@@ -45,7 +45,7 @@
 #include "gdisplay_color.h"
 #endif /* DISPLAY_FILTERS */
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 typedef enum

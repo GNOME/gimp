@@ -37,7 +37,7 @@
 
 #include "gimphelp.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 #define COLOR_BOX_WIDTH  16

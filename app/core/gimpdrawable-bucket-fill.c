@@ -40,7 +40,7 @@
 #include "gimpimage-mask.h"
 #include "gimppattern.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 /*  local function prototypes  */

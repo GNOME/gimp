@@ -37,7 +37,7 @@
 #include "gradients-menu.h"
 #include "menus.h"
 
-#include "libgimp/gimpintl.h"
+#include "gimp-intl.h"
 
 
 GimpItemFactoryEntry gradients_menu_entries[] =
