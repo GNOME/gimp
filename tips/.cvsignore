@@ -4,6 +4,7 @@ Makefile
 Makefile.in
 POTFILES
 *.pot
+fortunes
 gimp-tips.xml
 gimp-tips.xml.in.h
 messages

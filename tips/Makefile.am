@@ -47,6 +47,7 @@ EXTRA_DIST = \
 	$(tipsdata_DATA)		\
 	$(tips_in_files)		\
 	gimp-tips.dtd			\
+	fortunes.xsl			\
 	update.sh
 
 MAINTAINERCLEANFILES = $(GETTEXT_PACKAGE)-tips.pot $(tipsdata_DATA)
@@ -85,5 +86,13 @@ if HAVE_XMLLINT
 	@$(XMLLINT) --noout --valid gimp-tips.xml || \
 	  ( echo "* gimp-tips.xml INVALID *"; exit 1; )
 endif
+
+fortunes: gimp-tips.xml.in fortunes.xsl
+if HAVE_XSLTPROC
+	$(XSLTPROC) fortunes.xsl $< > $(@) || rm -f $(@)
+else
+	@echo "xsltproc is needed to build fortunes"; exit 1;
+endif
+
 
 dist-hook: validate
