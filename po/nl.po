@@ -2570,7 +2570,7 @@ msgstr ""
 
 #: app/install.c:665
 msgid "Click \"Continue\" to enter the GIMP user installation."
-msgstr "Klik \"Doorgaan\" om de gebruikersinstallatie te starten.""
+msgstr "Klik \"Doorgaan\" om de gebruikersinstallatie te starten."
 
 #: app/install.c:668
 msgid ""
