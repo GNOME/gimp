@@ -22,13 +22,16 @@
  *   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
+
+#include <gimp-print/gimp-print.h>
+
+#include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 
 #include "print_gimp.h"
 
-#include "print-intl.h"
+#include "libgimp/stdplugins-intl.h"
 
 
 /*
@@ -83,28 +86,71 @@ typedef struct
 
 } Gimp_Image_t;
 
+static const char *Image_get_appname(stp_image_t *image);
+static void Image_progress_conclude(stp_image_t *image);
+static void Image_note_progress(stp_image_t *image,
+				double current, double total);
+static void Image_progress_init(stp_image_t *image);
+static stp_image_status_t Image_get_row(stp_image_t *image,
+					unsigned char *data, int row);
+static int Image_height(stp_image_t *image);
+static int Image_width(stp_image_t *image);
+static int Image_bpp(stp_image_t *image);
+static void Image_rotate_180(stp_image_t *image);
+static void Image_rotate_cw(stp_image_t *image);
+static void Image_rotate_ccw(stp_image_t *image);
+static void Image_crop(stp_image_t *image,
+		       int left, int top, int right, int bottom);
+static void Image_vflip(stp_image_t *image);
+static void Image_hflip(stp_image_t *image);
+static void Image_transpose(stp_image_t *image);
+static void Image_reset(stp_image_t *image);
+static void Image_init(stp_image_t *image);
 
-Image
-Image_GDrawable_new(GimpDrawable *drawable)
+static stp_image_t theImage =
 {
-  Gimp_Image_t *i = malloc(sizeof(Gimp_Image_t));
+  Image_init,
+  Image_reset,
+  Image_transpose,
+  Image_hflip,
+  Image_vflip,
+  Image_crop,
+  Image_rotate_ccw,
+  Image_rotate_cw,
+  Image_rotate_180,
+  Image_bpp,
+  Image_width,
+  Image_height,
+  Image_get_row,
+  Image_get_appname,
+  Image_progress_init,
+  Image_note_progress,
+  Image_progress_conclude,
+  NULL
+};
+
+stp_image_t *
+Image_GimpDrawable_new(GimpDrawable *drawable)
+{
+  Gimp_Image_t *i = g_malloc(sizeof(Gimp_Image_t));
   i->drawable = drawable;
   gimp_pixel_rgn_init(&(i->rgn), drawable, 0, 0,
                       drawable->width, drawable->height, FALSE, FALSE);
-  Image_reset((Image) i);
-  return i;
+  theImage.rep = i;
+  theImage.reset(&theImage);
+  return &theImage;
 }
 
-void
-Image_init(Image image)
+static void
+Image_init(stp_image_t *image)
 {
   /* Nothing to do. */
 }
 
-void
-Image_reset(Image image)
+static void
+Image_reset(stp_image_t *image)
 {
-  Gimp_Image_t *i = (Gimp_Image_t *) image;
+  Gimp_Image_t *i = (Gimp_Image_t *) (image->rep);
   i->columns = FALSE;
   i->ox = 0;
   i->oy = 0;
@@ -114,10 +160,10 @@ Image_reset(Image image)
   i->mirror = FALSE;
 }
 
-void
-Image_transpose(Image image)
+static void
+Image_transpose(stp_image_t *image)
 {
-  Gimp_Image_t *i = (Gimp_Image_t *) image;
+  Gimp_Image_t *i = (Gimp_Image_t *) (image->rep);
   int tmp;
 
   if (i->mirror) i->ox += i->w - 1;
@@ -139,17 +185,17 @@ Image_transpose(Image image)
   if (i->mirror) i->ox -= i->w - 1;
 }
 
-void
-Image_hflip(Image image)
+static void
+Image_hflip(stp_image_t *image)
 {
-  Gimp_Image_t *i = (Gimp_Image_t *) image;
+  Gimp_Image_t *i = (Gimp_Image_t *) (image->rep);
   i->mirror = !i->mirror;
 }
 
-void
-Image_vflip(Image image)
+static void
+Image_vflip(stp_image_t *image)
 {
-  Gimp_Image_t *i = (Gimp_Image_t *) image;
+  Gimp_Image_t *i = (Gimp_Image_t *) (image->rep);
   i->oy += (i->h-1) * i->increment;
   i->increment = -i->increment;
 }
@@ -161,10 +207,10 @@ Image_vflip(Image image)
  * of the image.
  */
 
-void
-Image_crop(Image image, int left, int top, int right, int bottom)
+static void
+Image_crop(stp_image_t *image, int left, int top, int right, int bottom)
 {
-  Gimp_Image_t *i = (Gimp_Image_t *) image;
+  Gimp_Image_t *i = (Gimp_Image_t *) (image->rep);
   int xmax = (i->columns ? i->drawable->height : i->drawable->width) - 1;
   int ymax = (i->columns ? i->drawable->width : i->drawable->height) - 1;
 
@@ -197,93 +243,97 @@ Image_crop(Image image, int left, int top, int right, int bottom)
   i->h = nh;
 }
 
-void
-Image_rotate_ccw(Image image)
+static void
+Image_rotate_ccw(stp_image_t *image)
 {
   Image_transpose(image);
   Image_vflip(image);
 }
 
-void
-Image_rotate_cw(Image image)
+static void
+Image_rotate_cw(stp_image_t *image)
 {
   Image_transpose(image);
   Image_hflip(image);
 }
 
-void
-Image_rotate_180(Image image)
+static void
+Image_rotate_180(stp_image_t *image)
 {
   Image_vflip(image);
   Image_hflip(image);
 }
 
-int
-Image_bpp(Image image)
+static int
+Image_bpp(stp_image_t *image)
 {
-  Gimp_Image_t *i = (Gimp_Image_t *) image;
+  Gimp_Image_t *i = (Gimp_Image_t *) (image->rep);
   return i->drawable->bpp;
 }
 
-int
-Image_width(Image image)
+static int
+Image_width(stp_image_t *image)
 {
-  Gimp_Image_t *i = (Gimp_Image_t *) image;
+  Gimp_Image_t *i = (Gimp_Image_t *) (image->rep);
   return i->w;
 }
 
-int
-Image_height(Image image)
+static int
+Image_height(stp_image_t *image)
 {
-  Gimp_Image_t *i = (Gimp_Image_t *) image;
+  Gimp_Image_t *i = (Gimp_Image_t *) (image->rep);
   return i->h;
 }
 
-void
-Image_get_row(Image image, unsigned char *data, int row)
+static stp_image_status_t
+Image_get_row(stp_image_t *image, unsigned char *data, int row)
 {
-  Gimp_Image_t *i = (Gimp_Image_t *) image;
+  Gimp_Image_t *i = (Gimp_Image_t *) (image->rep);
   if (i->columns)
     gimp_pixel_rgn_get_col(&(i->rgn), data,
                            i->oy + row * i->increment, i->ox, i->w);
   else
     gimp_pixel_rgn_get_row(&(i->rgn), data,
                            i->ox, i->oy + row * i->increment, i->w);
-  if (i->mirror) {
-    /* Flip row -- probably inefficiently */
-    int f, l, b = i->drawable->bpp;
-    for (f = 0, l = i->w - 1; f < l; f++, l--) {
-      int c;
-      unsigned char tmp;
-      for (c = 0; c < b; c++) {
-        tmp = data[f*b+c];
-        data[f*b+c] = data[l*b+c];
-        data[l*b+c] = tmp;
-      }
+  if (i->mirror)
+    {
+      /* Flip row -- probably inefficiently */
+      int f, l, b = i->drawable->bpp;
+      for (f = 0, l = i->w - 1; f < l; f++, l--)
+	{
+	  int c;
+	  unsigned char tmp;
+	  for (c = 0; c < b; c++)
+	    {
+	      tmp = data[f*b+c];
+	      data[f*b+c] = data[l*b+c];
+	      data[l*b+c] = tmp;
+	    }
+	}
     }
-  }
+  return STP_IMAGE_OK;
 }
 
-void
-Image_progress_init(Image image)
+static void
+Image_progress_init(stp_image_t *image)
 {
   gimp_progress_init(_("Printing..."));
 }
 
-void
-Image_note_progress(Image image, double current, double total)
+static void
+Image_note_progress(stp_image_t *image, double current, double total)
 {
   gimp_progress_update(current / total);
 }
 
-void
-Image_progress_conclude(Image image)
+static void
+Image_progress_conclude(stp_image_t *image)
 {
   gimp_progress_update(1);
 }
 
-const char *
-Image_get_appname(Image image)
+static const char *
+Image_get_appname(stp_image_t *image)
 {
   static char pluginname[] = PLUG_IN_NAME " plug-in V" PLUG_IN_VERSION
     " for GIMP";

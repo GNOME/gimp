@@ -7,6 +7,7 @@ GTK_REQUIRED_VERSION=$GLIB_REQUIRED_VERSION
 PANGOFT2_REQUIRED_VERSION=1.0.0
 GTKDOC_REQUIRED_VERSION=0.9
 GTKHTML2_REQUIRED_VERSION=1.99.5
+GIMPPRINT_REQUIRED_VERSION=4.2.0
 
 #
 # Making releases:
@@ -672,7 +673,7 @@ AM_CONDITIONAL(ENABLE_GTK_DOC, test x$enable_gtk_doc = xyes)
 
 dnl This is for the mail plug-in
 sendmail_path=":"
-AC_ARG_WITH(sendmail_path, [  --with-sendmail=DIR     set sendmail command location],
+AC_ARG_WITH(sendmail, [  --with-sendmail=DIR     set sendmail command location],
 if eval "test x$with_sendmail != x"; then
     sendmail_path=$with_sendmail
 fi)
@@ -682,9 +683,33 @@ if test $ac_cv_path_SENDMAIL != ":"; then
   MAILER="-DMAILER=\\\"$ac_cv_path_SENDMAIL\\\""
 fi
 
+
 dnl This is for the print plug-in
-GIMP_PRINT_VERSION="4.0.4"
-GIMP_PRINT_RELEASE_DATE="02\ Dec\ 2000"
+AC_ARG_ENABLE(print, [  --disable-print         build without print support (requires libgimpprint)])
+  if test "x$enable_print" != "xno"; then
+  AC_PATH_PROG(PRINT_CONFIG, gimpprint-config, no)
+    if test "x$PRINT_CONFIG" != "xno"; then
+      AC_MSG_CHECKING(for gimpprint >= $GIMPPRINT_REQUIRED_VERSION)
+      print_version=`$PRINT_CONFIG --version`
+      if expr $print_version \>= $GIMPPRINT_REQUIRED_VERSION >/dev/null; then
+        AC_MSG_RESULT([yes (version $print_version)])
+        PRINT=print
+        PRINT_LIBS=`$PRINT_CONFIG --libs`
+        PRINT_CFLAGS=`$PRINT_CONFIG --cflags`
+      else
+        AC_MSG_WARN([
+*** libgimpprint version $print_version is too old.
+*** You need at least version $GIMPPRINT_REQUIRED_VERSION.])
+      fi
+    fi
+  fi
+
+if test x$enable_print != xno && test -z "$PRINT"; then
+  AC_MSG_ERROR([
+*** Check for libgimpprint failed. You can build without it by passing 
+*** --without-gimpprint to configure but you won't be able to print then.])
+fi
+
 
 dnl This is for the gimp-perl plug-in
 AC_ARG_ENABLE(perl, [  --enable-perl           build perl extension [by default disabled]
@@ -848,9 +873,10 @@ AC_SUBST(GAP_DECODE_MPEG)
 AC_SUBST(XPM)
 AC_SUBST(LIBXPM)
 AC_SUBST(LIBUCB)
-AC_SUBST(GIMP_PRINT_VERSION)
-AC_SUBST(GIMP_PRINT_RELEASE_DATE)
 AC_SUBST(MAILER)
+AC_SUBST(PRINT)
+AC_SUBST(PRINT_LIBS)
+AC_SUBST(PRINT_CFLAGS)
 AC_SUBST(GIMP_THREAD_FLAGS)
 AC_SUBST(GIMP_THREAD_LIBS)
 AC_SUBST(GIMP_MP_FLAGS)
@@ -956,7 +982,6 @@ plug-ins/maze/Makefile
 plug-ins/mosaic/Makefile
 plug-ins/pagecurl/Makefile
 plug-ins/print/Makefile
-plug-ins/print/escputil-1.3.1
 plug-ins/rcm/Makefile
 plug-ins/sel2path/Makefile
 plug-ins/sgi/Makefile

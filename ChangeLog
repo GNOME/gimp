@@ -1,3 +1,37 @@
+2002-05-07  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL
+	* configure.in: depend on libgimpprint >= 4.2.0 for the print plug-in.
+	You need to --disable-print to build w/o print support.
+
+	* plug-ins/Makefile.am: build print plug-in conditionally.
+	
+	* plug-ins/print/Makefile.am
+	* plug-ins/print/gimp_color_window.c
+	* plug-ins/print/gimp_main_window.c
+	* plug-ins/print/print.c
+	* plug-ins/print/print_gimp.h
+	* plug-ins/print/print-image-gimp.c: the print plug-in from the
+	gimpprint 4.2.1 release adapted to build inside the gimp tree and
+	ported to gtk+-2.0. Not yet free of deprecated code.
+
+	* plug-ins/print/README
+	* plug-ins/print/RELNOTES
+	* plug-ins/print/escputil-1.3.1.in
+	* plug-ins/print/escputil.c
+	* plug-ins/print/print-canon.c
+	* plug-ins/print/print-dither.c
+	* plug-ins/print/print-escp2.c
+	* plug-ins/print/print-intl.h
+	* plug-ins/print/print-pcl.c
+	* plug-ins/print/print-printers.c
+	* plug-ins/print/print-ps.c
+	* plug-ins/print/print-util.c
+	* plug-ins/print/print-weave.c
+	* plug-ins/print/print.h
+	* plug-ins/print/quickmatrix257.h
+	* plug-ins/print/ran.367.179.h: removed.
+
 2002-05-06  Nathan Summers  <rock@gimp.org>
 
 	* libgimpproxy/Makefile.am: correct a cut'n'paste mistake. The build

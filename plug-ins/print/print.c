@@ -21,16 +21,10 @@
  *   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
 
-#include "print_gimp.h"
-
-#ifdef GIMP_1_0
-#include <math.h>
-#endif
-
+#include <stdlib.h>
+#include <sys/types.h>
 #include <signal.h>
 #include <ctype.h>
 #include <sys/wait.h>
@@ -41,38 +35,36 @@
 #endif
 
 #include <unistd.h>
+#include <stdio.h>
+#include <string.h>
 
-#include "print-intl.h"
+#include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
+
+#include <gimp-print/gimp-print.h>
+
+#include "print_gimp.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 /*
  * Local functions...
  */
 
-static void	printrc_load(void);
-void	        printrc_save(void);
-static int	compare_printers(plist_t *p1, plist_t *p2);
-static void	get_system_printers(void);
+static void	printrc_load (void);
+void		printrc_save (void);
+static int	compare_printers (gp_plist_t *p1, gp_plist_t *p2);
+static void	get_system_printers (void);
 
 static void	query (void);
 static void	run (char *, int, GimpParam *, int *, GimpParam **);
 static int	do_print_dialog (char *proc_name);
 
-#ifndef GIMP_1_0
-extern void     gimp_create_main_window (void);
-#endif
-#ifndef NEW_UI_ONLY
-extern void     gtk_create_main_window (void);
-#endif
-
-#if 0
-static void	cleanupfunc(void);
-#endif
-
 /*
  * Globals...
  */
 
-GimpPlugInInfo PLUG_IN_INFO =		/* Plug-in information */
+GimpPlugInInfo	PLUG_IN_INFO =		/* Plug-in information */
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -80,46 +72,15 @@ GimpPlugInInfo PLUG_IN_INFO =		/* Plug-in information */
   run,   /* run_proc   */
 };
 
-vars_t vars =
-{
-	"",			/* Name of file or command to print to */
-	"ps2",			/* Name of printer "driver" */
-	"",			/* Name of PPD file */
-	OUTPUT_COLOR,		/* Color or grayscale output */
-	"",			/* Output resolution */
-	"",			/* Size of output media */
-	"",			/* Type of output media */
-	"",			/* Source of output media */
-	"",			/* Ink type */
-	"",			/* Dither algorithm */
-	1.0,			/* Output brightness */
-	100.0,			/* Scaling (100% means entire printable area, */
-				/*          -XXX means scale by PPI) */
-	-1,			/* Orientation (-1 = automatic) */
-	-1,			/* X offset (-1 = center) */
-	-1,			/* Y offset (-1 = center) */
-	1.0,			/* Screen gamma */
-	1.0,			/* Contrast */
-	1.0,			/* Cyan */
-	1.0,			/* Magenta */
-	1.0,			/* Yellow */
-	0,			/* Linear */
-	1.0,			/* Output saturation */
-	1.0,			/* Density */
-	IMAGE_CONTINUOUS,	/* Image type */
-	0,			/* Unit 0=Inch */
-	1.0,			/* Application gamma placeholder */
-	0,			/* Page width */
-	0			/* Page height */
-};
+stp_vars_t vars = NULL;
 
 int		plist_current = 0,	/* Current system printer */
 		plist_count = 0;	/* Number of system printers */
-plist_t		*plist;			/* System printers */
+gp_plist_t		*plist;			/* System printers */
 
 int		saveme = FALSE;		/* True if print should proceed */
 int		runme = FALSE;		/* True if print should proceed */
-const printer_t *current_printer = 0;	/* Current printer index */
+stp_printer_t current_printer = 0;	/* Current printer index */
 gint32          image_ID;	        /* image ID */
 
 const char *image_filename;
@@ -135,14 +96,14 @@ check_plist(int count)
   else if (current_plist_size == 0)
     {
       current_plist_size = count;
-      plist = malloc(current_plist_size * sizeof(plist_t));
+      plist = g_malloc (current_plist_size * sizeof(gp_plist_t));
     }
   else
     {
       current_plist_size *= 2;
       if (current_plist_size < count)
 	current_plist_size = count;
-      plist = realloc(plist, current_plist_size * sizeof(plist_t));
+      plist = g_realloc (plist, current_plist_size * sizeof(gp_plist_t));
     }
 }
 
@@ -150,25 +111,9 @@ check_plist(int count)
  * 'main()' - Main entry - just call gimp_main()...
  */
 
-#if 0
-int
-main(int  argc,		/* I - Number of command-line args */
-     char *argv[])	/* I - Command-line args */
-{
-  return (gimp_main(argc, argv));
-}
-#else
 MAIN()
-#endif
 
 static int print_finished = 0;
-
-#if 0
-void
-cleanupfunc(void)
-{
-}
-#endif
 
 /*
  * 'query()' - Respond to a plug-in query...
@@ -177,7 +122,7 @@ cleanupfunc(void)
 static void
 query (void)
 {
-  static GimpParamDef	args[] =
+  static GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,	"run_mode",	"Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,	"image",	"Input image" },
@@ -208,6 +153,7 @@ query (void)
     { GIMP_PDB_STRING,	"dither_algorithm", "Dither algorithm" },
     { GIMP_PDB_INT32,	"unit",		"Unit 0=Inches 1=Metric" },
   };
+  static gint nargs = sizeof(args) / sizeof(args[0]);
 
   static gchar *blurb = "This plug-in prints images from The GIMP.";
   static gchar *help  = "Prints images to PostScript, PCL, or ESC/P2 printers.";
@@ -221,10 +167,9 @@ query (void)
 			  N_("<Image>/File/Print..."),
 			  types,
 			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
+			  nargs, 0,
 			  args, NULL);
 }
-
 
 #ifdef __EMX__
 static char *
@@ -258,36 +203,40 @@ usr1_handler (int signal)
   usr1_interrupt = 1;
 }
 
+void
+gimp_writefunc(void *file, const char *buf, size_t bytes)
+{
+  FILE *prn = (FILE *)file;
+  fwrite(buf, 1, bytes, prn);
+}
+
 /*
  * 'run()' - Run the plug-in...
  */
 
 /* #define DEBUG_STARTUP */
 
-
 #ifdef DEBUG_STARTUP
 volatile int SDEBUG = 1;
 #endif
 
 static void
-run (char   *name,		/* I - Name of print program. */
-     int    nparams,		/* I - Number of parameters passed in */
-     GimpParam *param,		/* I - Parameter values */
-     int    *nreturn_vals,	/* O - Number of return values */
+run (gchar      *name,		/* I - Name of print program. */
+     gint        nparams,	/* I - Number of parameters passed in */
+     GimpParam  *param,		/* I - Parameter values */
+     gint       *nreturn_vals,	/* O - Number of return values */
      GimpParam **return_vals)	/* O - Return values */
 {
   GimpDrawable	*drawable;	/* Drawable for image */
-  GimpRunMode	 run_mode;	/* Current run mode */
-  FILE		*prn;		/* Print file/command */
+  GimpRunMode    run_mode;	/* Current run mode */
+  FILE		*prn = NULL;	/* Print file/command */
   int		 ncolors;	/* Number of colors in colormap */
   GimpParam	*values;	/* Return values */
 #ifdef __EMX__
   char		*tmpfile;	/* temp filename */
 #endif
   gint32         drawable_ID;   /* drawable ID */
-#ifndef GIMP_1_0
   GimpExportReturnType export = GIMP_EXPORT_CANCEL;    /* return value of gimp_export_image() */
-#endif
   int		ppid = getpid (), /* PID of plugin */
 		opid,		/* PID of output process */
 		cpid = 0,	/* PID of control/monitor process */
@@ -298,18 +247,23 @@ run (char   *name,		/* I - Name of print program. */
     ;
 #endif
 
-#ifdef INIT_I18N_UI
-  INIT_I18N_UI();
-#else
-  INIT_LOCALE ("gimp-print");
-#endif
+ /*
+  * Initialise libgimpprint
+  */
 
+  stp_init();
+
+  INIT_I18N();
+
+  vars = stp_allocate_copy(stp_default_settings());
+  stp_set_input_color_model(vars, COLOR_MODEL_RGB);
+  stp_set_output_color_model(vars, COLOR_MODEL_RGB);
   /*
    * Initialize parameter data...
    */
 
-  current_printer = get_printer_by_index (0);
-  run_mode = (GimpRunMode)param[0].data.d_int32;
+  current_printer = stp_get_printer_by_index (0);
+  run_mode = (GimpRunMode) param[0].data.d_int32;
 
   values = g_new (GimpParam, 1);
 
@@ -326,7 +280,6 @@ run (char   *name,		/* I - Name of print program. */
   if (strchr(image_filename, '/'))
     image_filename = strrchr(image_filename, '/') + 1;
 
-#ifndef GIMP_1_0
   /*  eventually export the image */
   switch (run_mode)
     {
@@ -348,7 +301,6 @@ run (char   *name,		/* I - Name of print program. */
     default:
       break;
     }
-#endif
 
   /*
    * Get drawable...
@@ -372,6 +324,7 @@ run (char   *name,		/* I - Name of print program. */
 
       if (!do_print_dialog (name))
 	goto cleanup;
+      stp_copy_vars(vars, plist[plist_current].v);
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
@@ -382,118 +335,74 @@ run (char   *name,		/* I - Name of print program. */
 	values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
       else
 	{
-	  strcpy (vars.output_to, param[3].data.d_string);
-	  strcpy (vars.driver, param[4].data.d_string);
-	  strcpy (vars.ppd_file, param[5].data.d_string);
-	  vars.output_type = param[6].data.d_int32;
-	  strcpy (vars.resolution, param[7].data.d_string);
-	  strcpy (vars.media_size, param[8].data.d_string);
-	  strcpy (vars.media_type, param[9].data.d_string);
-	  strcpy (vars.media_source, param[10].data.d_string);
+	  stp_set_output_to(vars, param[3].data.d_string);
+	  stp_set_driver(vars, param[4].data.d_string);
+	  stp_set_ppd_file(vars, param[5].data.d_string);
+	  stp_set_output_type(vars, param[6].data.d_int32);
+	  stp_set_resolution(vars, param[7].data.d_string);
+	  stp_set_media_size(vars, param[8].data.d_string);
+	  stp_set_media_type(vars, param[9].data.d_string);
+	  stp_set_media_source(vars, param[10].data.d_string);
 
           if (nparams > 11)
-	    vars.brightness = param[11].data.d_int32;
-	  else
-	    vars.brightness = 100;
+	    stp_set_brightness(vars, param[11].data.d_float);
 
           if (nparams > 12)
-            vars.scaling = param[12].data.d_float;
-          else
-            vars.scaling = 100.0;
+            stp_set_scaling(vars, param[12].data.d_float);
 
           if (nparams > 13)
-            vars.orientation = param[13].data.d_int32;
-          else
-            vars.orientation = -1;
+            stp_set_orientation(vars, param[13].data.d_int32);
 
           if (nparams > 14)
-            vars.left = param[14].data.d_int32;
-          else
-            vars.left = -1;
+            stp_set_left(vars, param[14].data.d_int32);
 
           if (nparams > 15)
-            vars.top = param[15].data.d_int32;
-          else
-            vars.top = -1;
+            stp_set_top(vars, param[15].data.d_int32);
 
           if (nparams > 16)
-            vars.gamma = param[16].data.d_float;
-          else
-            vars.gamma = 1.0;
+            stp_set_gamma(vars, param[16].data.d_float);
 
           if (nparams > 17)
-	    vars.contrast = param[17].data.d_int32;
-	  else
-	    vars.contrast = 100;
+	    stp_set_contrast(vars, param[17].data.d_float);
 
           if (nparams > 18)
-	    vars.cyan = param[18].data.d_int32;
-	  else
-	    vars.cyan = 100;
+	    stp_set_cyan(vars, param[18].data.d_float);
 
           if (nparams > 19)
-	    vars.magenta = param[19].data.d_int32;
-	  else
-	    vars.magenta = 100;
+	    stp_set_magenta(vars, param[19].data.d_float);
 
           if (nparams > 20)
-	    vars.yellow = param[20].data.d_int32;
-	  else
-	    vars.yellow = 100;
+	    stp_set_yellow(vars, param[20].data.d_float);
 
           if (nparams > 21)
-            vars.linear = param[21].data.d_int32;
-          else
-            vars.linear = 0;
+            stp_set_image_type(vars, param[22].data.d_int32);
 
           if (nparams > 22)
-            vars.image_type = param[22].data.d_int32;
-          else
-            vars.image_type = IMAGE_CONTINUOUS;
+            stp_set_saturation(vars, param[23].data.d_float);
 
           if (nparams > 23)
-            vars.saturation = param[23].data.d_float;
-          else
-            vars.saturation = 1.0;
+            stp_set_density(vars, param[24].data.d_float);
 
-          if (nparams > 24)
-            vars.density = param[24].data.d_float;
-          else
-            vars.density = 1.0;
+	  if (nparams > 24)
+	    stp_set_ink_type(vars, param[25].data.d_string);
 
 	  if (nparams > 25)
-	    strcpy (vars.ink_type, param[25].data.d_string);
-	  else
-	    memset (vars.ink_type, 0, 64);
+	    stp_set_dither_algorithm(vars, param[26].data.d_string);
 
-	  if (nparams > 26)
-	    strcpy (vars.dither_algorithm, param[26].data.d_string);
-	  else
-	    memset (vars.dither_algorithm, 0, 64);
-
-          if (nparams > 27)
-            vars.unit = param[27].data.d_int32;
-          else
-            vars.unit = 0;
+          if (nparams > 26)
+            stp_set_unit(vars, param[27].data.d_int32);
 	}
 
-      current_printer = get_printer_by_driver (vars.driver);
+      current_printer = stp_get_printer_by_driver (stp_get_driver(vars));
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      /*
-       * Possibly retrieve data...
-       */
-      gimp_get_data (PLUG_IN_NAME, &vars);
-      vars.page_width = 0;
-      vars.page_height = 0;
-
-      current_printer = get_printer_by_driver (vars.driver);
+      values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
       break;
 
     default:
       values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
-      break;;
+      break;
     }
 
   /*
@@ -542,7 +451,7 @@ run (char   *name,		/* I - Name of print program. */
 	      dup2 (pipefd[0], 0);
 	      close (pipefd[0]);
 	      close (pipefd[1]);
-	      execl("/bin/sh", "/bin/sh", "-c", vars.output_to, NULL);
+	      execl("/bin/sh", "/bin/sh", "-c", stp_get_output_to(vars), NULL);
 	      /* NOTREACHED */
 	      exit (1);
 	    } else {
@@ -592,30 +501,36 @@ run (char   *name,		/* I - Name of print program. */
       prn = (tmpfile = get_tmp_filename ()) ? fopen (tmpfile, "w") : NULL;
 #endif
       else
-	prn = fopen (vars.output_to, "wb");
+	prn = fopen (stp_get_output_to(vars), "wb");
 
       if (prn != NULL)
 	{
-	  Image image = Image_GDrawable_new(drawable);
-	  vars.app_gamma = gimp_gamma();
-	  merge_printvars(&vars, &(current_printer->printvars));
+	  stp_image_t *image = Image_GimpDrawable_new(drawable);
+	  stp_set_app_gamma(vars, gimp_gamma());
+	  stp_merge_printvars(vars, stp_printer_get_printvars(current_printer));
 
 	  /*
 	   * Is the image an Indexed type?  If so we need the colormap...
 	   */
 
 	  if (gimp_image_base_type (image_ID) == GIMP_INDEXED)
-	    vars.cmap = gimp_image_get_cmap (image_ID, &ncolors);
+	    stp_set_cmap(vars, gimp_image_get_cmap (image_ID, &ncolors));
 	  else
-	    vars.cmap    = NULL;
+	    stp_set_cmap(vars, NULL);
 
 	  /*
 	   * Finally, call the print driver to send the image to the printer
 	   * and close the output file/command...
 	   */
 
-	  if (verify_printer_params(current_printer, &vars))
-	    (*current_printer->print) (current_printer, 1, prn, image, &vars);
+	  stp_set_outfunc(vars, gimp_writefunc);
+	  stp_set_errfunc(vars, gimp_writefunc);
+	  stp_set_outdata(vars, prn);
+	  stp_set_errdata(vars, stderr);
+	  if (stp_printer_get_printfuncs(current_printer)->verify
+	      (current_printer, vars))
+	    stp_printer_get_printfuncs(current_printer)->print
+	      (current_printer, image, vars);
 	  else
 	    values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
@@ -630,12 +545,12 @@ run (char   *name,		/* I - Name of print program. */
 	  { /* PRINT temp file */
 	    char *s;
 	    fclose (prn);
-	    s = g_strconcat (vars.output_to, tmpfile, NULL);
+	    s = g_strconcat (stp_get_output_to(vars), tmpfile, NULL);
 	    if (system(s) != 0)
 	      values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	    g_free (s);
 	    remove (tmpfile);
-	    g_free( tmpfile);
+	    g_free (tmpfile);
 	  }
 #endif
 	  else
@@ -650,7 +565,7 @@ run (char   *name,		/* I - Name of print program. */
        */
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
-	gimp_set_data (PLUG_IN_NAME, &vars, sizeof (vars));
+	gimp_set_data (PLUG_IN_NAME, vars, sizeof (vars));
     }
 
   /*
@@ -658,14 +573,10 @@ run (char   *name,		/* I - Name of print program. */
    */
   gimp_drawable_detach (drawable);
 
-
  cleanup:
-#ifndef GIMP_1_0
   if (export == GIMP_EXPORT_EXPORT)
     gimp_image_delete (image_ID);
-#else
-  ; /* MRS: empty statement to suppress compiler warning */
-#endif
+  stp_free_vars(vars);
 }
 
 /*
@@ -675,19 +586,6 @@ run (char   *name,		/* I - Name of print program. */
 static gint
 do_print_dialog (gchar *proc_name)
 {
-#ifdef GIMP_1_0
-  gchar **argv;
-  gint    argc;
-
-  argc    = 1;
-  argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup ("print");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-
-  gdk_set_use_xshm (gimp_use_xshm());
-#endif
 
   /*
    * Get printrc options...
@@ -697,16 +595,7 @@ do_print_dialog (gchar *proc_name)
   /*
    * Print dialog window...
    */
-#ifdef NEW_UI_ONLY
   gimp_create_main_window();
-#elif defined(GIMP_1_0)
-  gtk_create_main_window ();
-#else
-  if (!strcmp (proc_name, "file_print_gimp"))
-    gimp_create_main_window ();
-  else
-    gtk_create_main_window ();
-#endif
 
   gtk_main ();
   gdk_flush ();
@@ -723,16 +612,15 @@ do_print_dialog (gchar *proc_name)
   return (runme);
 }
 
-static void
-initialize_printer(plist_t *printer)
+void
+initialize_printer(gp_plist_t *printer)
 {
-  const vars_t *def = print_default_settings();
   printer->name[0] = '\0';
   printer->active=0;
-  memcpy(&(printer->v), def, sizeof(vars_t));
+  printer->v = stp_allocate_vars();
 }
 
-#define GET_MANDATORY_STRING_PARAM(param)		\
+#define GET_MANDATORY_INTERNAL_STRING_PARAM(param)	\
 do {							\
   if ((commaptr = strchr(lineptr, ',')) == NULL)	\
     continue;						\
@@ -741,11 +629,19 @@ do {							\
   lineptr = commaptr + 1;				\
 } while (0)
 
+#define GET_MANDATORY_STRING_PARAM(param)		\
+do {							\
+  if ((commaptr = strchr(lineptr, ',')) == NULL)	\
+    continue;						\
+  stp_set_##param##_n(key.v, lineptr, commaptr - line);	\
+  lineptr = commaptr + 1;				\
+} while (0)
+
 #define GET_MANDATORY_INT_PARAM(param)			\
 do {							\
   if ((commaptr = strchr(lineptr, ',')) == NULL)	\
     continue;						\
-  key.param = atoi(lineptr);				\
+  stp_set_##param(key.v, atoi(lineptr));		\
   lineptr = commaptr + 1;				\
 } while (0)
 
@@ -753,14 +649,12 @@ do {							\
 do {								\
   if ((commaptr = strchr(lineptr, ',')) == NULL)		\
     {								\
-      strcpy(key.v.param, lineptr);				\
+      stp_set_##param(key.v, lineptr);				\
       keepgoing = 0;						\
-      key.v.param[strlen(key.v.param) - 1] = '\0';		\
     }								\
   else								\
     {								\
-      strncpy(key.v.param, lineptr, commaptr - lineptr);	\
-      key.v.param[commaptr - lineptr] = '\0';			\
+      stp_set_##param##_n(key.v, lineptr, commaptr - lineptr);	\
       lineptr = commaptr + 1;					\
     }								\
 } while (0)
@@ -773,7 +667,19 @@ do {									\
     }									\
   else									\
     {									\
-      key.v.param = atoi(lineptr);					\
+      stp_set_##param(key.v, atoi(lineptr));				\
+      lineptr = commaptr + 1;						\
+    }									\
+} while (0)
+
+#define IGNORE_OPTIONAL_PARAM(param)					\
+do {									\
+  if ((keepgoing == 0) || ((commaptr = strchr(lineptr, ',')) == NULL))	\
+    {									\
+      keepgoing = 0;							\
+    }									\
+  else									\
+    {									\
       lineptr = commaptr + 1;						\
     }									\
 } while (0)
@@ -786,14 +692,14 @@ do {									\
     }									\
   else									\
     {									\
-      const vars_t *maxvars = print_maximum_settings();			\
-      const vars_t *minvars = print_minimum_settings();			\
-      const vars_t *defvars = print_default_settings();			\
-      key.v.param = atof(lineptr);					\
-      if (key.v.param > 0 &&						\
-	  (key.v.param > 2 * maxvars->param ||				\
-	   key.v.param < minvars->param))				\
-	key.v.param = defvars->param;					\
+      const stp_vars_t maxvars = stp_maximum_settings();		\
+      const stp_vars_t minvars = stp_minimum_settings();		\
+      const stp_vars_t defvars = stp_default_settings();		\
+      stp_set_##param(key.v, atof(lineptr));				\
+      if (stp_get_##param(key.v) > 0 &&					\
+	  (stp_get_##param(key.v) > stp_get_##param(maxvars) ||		\
+	   stp_get_##param(key.v) < stp_get_##param(minvars)))		\
+	stp_set_##param(key.v, stp_get_##param(defvars));		\
       lineptr = commaptr + 1;						\
     }									\
 } while (0)
@@ -813,6 +719,65 @@ psearch(const void *key, const void *base, size_t nmemb, size_t size,
   return NULL;
 }
 
+int
+add_printer(const gp_plist_t *key, int add_only)
+{
+  /*
+   * The format of the list is the File printer followed by a qsort'ed list
+   * of system printers. So, if we want to update the file printer, it is
+   * always first in the list, else call psearch.
+   */
+  gp_plist_t *p;
+  if (strcmp(_("File"), key->name) == 0
+      && strcmp(plist[0].name, _("File")) == 0)
+    {
+      if (add_only)
+	return 0;
+      if (stp_get_printer_by_driver(stp_get_driver(key->v)))
+	{
+#ifdef DEBUG
+	  printf("Updated File printer directly\n");
+#endif
+	  p = &plist[0];
+	  memcpy(p, key, sizeof(gp_plist_t));
+	  p->v = stp_allocate_copy(key->v);
+	  p->active = 1;
+	}
+      return 1;
+    }
+  else if (stp_get_printer_by_driver(stp_get_driver(key->v)))
+    {
+      p = psearch(key, plist + 1, plist_count - 1,
+		  sizeof(gp_plist_t),
+		  (int (*)(const void *, const void *)) compare_printers);
+      if (p == NULL)
+	{
+#ifdef DEBUG
+	  fprintf(stderr, "Adding new printer from printrc file: %s\n",
+		  key->name);
+#endif
+	  check_plist(plist_count + 1);
+	  p = plist + plist_count;
+	  plist_count++;
+	  memcpy(p, key, sizeof(gp_plist_t));
+	  p->v = stp_allocate_copy(key->v);
+	  p->active = 0;
+	}
+      else
+	{
+	  if (add_only)
+	    return 0;
+#ifdef DEBUG
+	  printf("Updating printer %s.\n", key->name);
+#endif
+	  memcpy(p, key, sizeof(gp_plist_t));
+	  stp_copy_vars(p->v, key->v);
+	  p->active = 1;
+	}
+    }
+  return 1;
+}
+
 /*
  * 'printrc_load()' - Load the printer resource configuration file.
  */
@@ -825,11 +790,7 @@ printrc_load(void)
   char		line[1024],	/* Line in printrc file */
 		*lineptr,	/* Pointer in line */
 		*commaptr;	/* Pointer to next comma */
-  plist_t	*p = 0,		/* Current printer */
-		key;		/* Search key */
-#if (GIMP_MINOR_VERSION == 0)
-  char		*home;		/* Home dir */
-#endif
+  gp_plist_t	key;		/* Search key */
   int		format = 0;	/* rc file format version */
   int		system_printers; /* printer count before reading printrc */
   char *	current_printer = 0; /* printer to select */
@@ -848,16 +809,7 @@ printrc_load(void)
   * Generate the filename for the current user...
   */
 
-#if (GIMP_MINOR_VERSION == 0)
-  home = getenv("HOME");
-  if (home == NULL)
-    filename=g_strdup("/.gimp/printrc");
-  else
-    filename = malloc(strlen(home) + 15);
-    sprintf(filename, "%s/.gimp/printrc", home);
-#else
   filename = gimp_personal_rc_file ("printrc");
-#endif
 
 #ifdef __EMX__
   _fnslashify(filename);
@@ -873,7 +825,9 @@ printrc_load(void)
     * File exists - read the contents and update the printer list...
     */
 
-    (void) memset(&key, 0, sizeof(plist_t));
+    (void) memset(&key, 0, sizeof(gp_plist_t));
+    initialize_printer(&key);
+    strcpy(key.name, _("File"));
     (void) memset(line, 0, 1024);
     while (fgets(line, sizeof(line), fp) != NULL)
     {
@@ -904,18 +858,18 @@ printrc_load(void)
         * we can't use sscanf because %[^,] fails if the string is empty...
         */
 
-        GET_MANDATORY_STRING_PARAM(name);
-        GET_MANDATORY_STRING_PARAM(v.output_to);
-        GET_MANDATORY_STRING_PARAM(v.driver);
+        GET_MANDATORY_INTERNAL_STRING_PARAM(name);
+        GET_MANDATORY_STRING_PARAM(output_to);
+        GET_MANDATORY_STRING_PARAM(driver);
 
-        if (! get_printer_by_driver(key.v.driver))
+        if (! stp_get_printer_by_driver(stp_get_driver(key.v)))
 	  continue;
 
-        GET_MANDATORY_STRING_PARAM(v.ppd_file);
-        GET_MANDATORY_INT_PARAM(v.output_type);
-        GET_MANDATORY_STRING_PARAM(v.resolution);
-        GET_MANDATORY_STRING_PARAM(v.media_size);
-        GET_MANDATORY_STRING_PARAM(v.media_type);
+        GET_MANDATORY_STRING_PARAM(ppd_file);
+        GET_MANDATORY_INT_PARAM(output_type);
+        GET_MANDATORY_STRING_PARAM(resolution);
+        GET_MANDATORY_STRING_PARAM(media_size);
+        GET_MANDATORY_STRING_PARAM(media_type);
 
         GET_OPTIONAL_STRING_PARAM(media_source);
         GET_OPTIONAL_FLOAT_PARAM(brightness);
@@ -928,54 +882,14 @@ printrc_load(void)
         GET_OPTIONAL_FLOAT_PARAM(cyan);
         GET_OPTIONAL_FLOAT_PARAM(magenta);
         GET_OPTIONAL_FLOAT_PARAM(yellow);
-        GET_OPTIONAL_INT_PARAM(linear);
+        IGNORE_OPTIONAL_PARAM(linear);
         GET_OPTIONAL_INT_PARAM(image_type);
         GET_OPTIONAL_FLOAT_PARAM(saturation);
         GET_OPTIONAL_FLOAT_PARAM(density);
         GET_OPTIONAL_STRING_PARAM(ink_type);
         GET_OPTIONAL_STRING_PARAM(dither_algorithm);
         GET_OPTIONAL_INT_PARAM(unit);
-
-/*
- * The format of the list is the File printer followed by a qsort'ed list
- * of system printers. So, if we want to update the file printer, it is
- * always first in the list, else call psearch.
- */
-        if ((strcmp(key.name, _("File")) == 0) && (strcmp(plist[0].name,
-	     _("File")) == 0))
-	  {
-#ifdef DEBUG
-	    printf("Updated File printer directly\n");
-#endif
-	    p = &plist[0];
-	    memcpy(p, &key, sizeof(plist_t));
-	    p->active = 1;
-	  }
-        else
-	  {
-            if ((p = psearch(&key, plist + 1, plist_count - 1, sizeof(plist_t),
-                         (int (*)(const void *, const void *))compare_printers))
-	        != NULL)
-	      {
-#ifdef DEBUG
-	        printf("Updating printer %s.\n", key.name);
-#endif
-	        memcpy(p, &key, sizeof(plist_t));
-	        p->active = 1;
-	      }
-            else
-    	      {
-#ifdef DEBUG
-                fprintf(stderr, "Adding new printer from printrc file: %s\n",
-                  key.name);
-#endif
-	        check_plist(plist_count + 1);
-	        p = plist + plist_count;
-	        memcpy(p, &key, sizeof(plist_t));
-	        p->active = 0;
-	        plist_count++;
-	      }
-	  }
+	add_printer(&key, 0);
       }
       else if (format == 1)
       {
@@ -1019,99 +933,74 @@ printrc_load(void)
 #endif
 	if (strcasecmp("current-printer", keyword) == 0) {
 	  if (current_printer)
-	    free (current_printer);
-	  current_printer = strdup(value);
+	    g_free (current_printer);
+	  current_printer = g_strdup(value);
 	} else if (strcasecmp("printer", keyword) == 0) {
 	  /* Switch to printer named VALUE */
-	  if (strcmp(_("File"), key.name) == 0
-	      && strcmp(plist[0].name, _("File")) == 0)
-	  {
-	    if (get_printer_by_driver(key.v.driver))
-	      {
-		p = &plist[0];
-		memcpy(p, &key, sizeof(plist_t));
-		p->active = 1;
-	      }
-	  }
-	  else
-	  {
-	    if (get_printer_by_driver(key.v.driver))
-	      {
-		p = psearch(&key, plist + 1, plist_count - 1,
-			    sizeof(plist_t),
-			    (int (*)(const void *, const void *)) compare_printers);
-		if (p == NULL)
-		  {
-		    check_plist(plist_count + 1);
-		    p = plist + plist_count;
-		    plist_count++;
-		    memcpy(p, &key, sizeof(plist_t));
-		    p->active = 0;
-		  }
-		else
-		  {
-		    memcpy(p, &key, sizeof(plist_t));
-		    p->active = 1;
-		  }
-	      }
-	  }
+	  add_printer(&key, 0);
+#ifdef DEBUG
+	  printf("output_to is now %s\n", stp_get_output_to(p->v));
+#endif
+
 	  initialize_printer(&key);
 	  strncpy(key.name, value, 127);
 	} else if (strcasecmp("destination", keyword) == 0) {
-	  strncpy(key.v.output_to, value, 255);
+	  stp_set_output_to(key.v, value);
 	} else if (strcasecmp("driver", keyword) == 0) {
-	  strncpy(key.v.driver, value, 63);
+	  stp_set_driver(key.v, value);
 	} else if (strcasecmp("ppd-file", keyword) == 0) {
-	  strncpy(key.v.ppd_file, value, 256);
+	  stp_set_ppd_file(key.v, value);
 	} else if (strcasecmp("output-type", keyword) == 0) {
-	  key.v.output_type = atoi(value);
+	  stp_set_output_type(key.v, atoi(value));
 	} else if (strcasecmp("resolution", keyword) == 0) {
-	  strncpy(key.v.resolution, value, 63);
+	  stp_set_resolution(key.v, value);
 	} else if (strcasecmp("media-size", keyword) == 0) {
-	  strncpy(key.v.media_size, value, 63);
+	  stp_set_media_size(key.v, value);
 	} else if (strcasecmp("media-type", keyword) == 0) {
-	  strncpy(key.v.media_type, value, 63);
+	  stp_set_media_type(key.v, value);
 	} else if (strcasecmp("media-source", keyword) == 0) {
-	  strncpy(key.v.media_source, value, 63);
+	  stp_set_media_source(key.v, value);
 	} else if (strcasecmp("brightness", keyword) == 0) {
-	  key.v.brightness = atof(value);
+	  stp_set_brightness(key.v, atof(value));
 	} else if (strcasecmp("scaling", keyword) == 0) {
-	  key.v.scaling = atof(value);
+	  stp_set_scaling(key.v, atof(value));
 	} else if (strcasecmp("orientation", keyword) == 0) {
-	  key.v.orientation = atoi(value);
+	  stp_set_orientation(key.v, atoi(value));
 	} else if (strcasecmp("left", keyword) == 0) {
-	  key.v.left = atoi(value);
+	  stp_set_left(key.v, atoi(value));
 	} else if (strcasecmp("top", keyword) == 0) {
-	  key.v.top = atoi(value);
+	  stp_set_top(key.v, atoi(value));
 	} else if (strcasecmp("gamma", keyword) == 0) {
-	  key.v.gamma = atof(value);
+	  stp_set_gamma(key.v, atof(value));
 	} else if (strcasecmp("contrast", keyword) == 0) {
-	  key.v.contrast = atof(value);
+	  stp_set_contrast(key.v, atof(value));
 	} else if (strcasecmp("cyan", keyword) == 0) {
-	  key.v.cyan = atof(value);
+	  stp_set_cyan(key.v, atof(value));
 	} else if (strcasecmp("magenta", keyword) == 0) {
-	  key.v.magenta = atof(value);
+	  stp_set_magenta(key.v, atof(value));
 	} else if (strcasecmp("yellow", keyword) == 0) {
-	  key.v.yellow = atof(value);
+	  stp_set_yellow(key.v, atof(value));
 	} else if (strcasecmp("linear", keyword) == 0) {
-	  key.v.linear = atoi(value);
+	  /* Ignore linear */
 	} else if (strcasecmp("image-type", keyword) == 0) {
-	  key.v.image_type = atoi(value);
+	  stp_set_image_type(key.v, atoi(value));
 	} else if (strcasecmp("saturation", keyword) == 0) {
-	  key.v.saturation = atof(value);
+	  stp_set_saturation(key.v, atof(value));
 	} else if (strcasecmp("density", keyword) == 0) {
-	  key.v.density = atof(value);
+	  stp_set_density(key.v, atof(value));
 	} else if (strcasecmp("ink-type", keyword) == 0) {
-	  strncpy(key.v.ink_type, value, 63);
+	  stp_set_ink_type(key.v, value);
 	} else if (strcasecmp("dither-algorithm", keyword) == 0) {
-	  strncpy(key.v.dither_algorithm, value, 63);
+	  stp_set_dither_algorithm(key.v, value);
 	} else if (strcasecmp("unit", keyword) == 0) {
-	  key.v.unit = atoi(value);
+	  stp_set_unit(key.v, atoi(value));
+	} else if (strcasecmp("custom-page-width", keyword) == 0) {
+	  stp_set_page_width(key.v, atoi(value));
+	} else if (strcasecmp("custom-page-height", keyword) == 0) {
+	  stp_set_page_height(key.v, atoi(value));
 	} else {
 	  /* Unrecognised keyword; ignore it... */
-#if 1
-          printf("Unrecognised keyword `%s' in printrc; value `%s'\n", keyword, value);
-#endif
+          printf("Unrecognized keyword `%s' in printrc; value `%s'\n", keyword, value);
 	}
       }
       else
@@ -1122,40 +1011,7 @@ printrc_load(void)
       }
     }
     if (format > 0)
-      {
-	if (strcmp(_("File"), key.name) == 0
-	    && strcmp(plist[0].name, _("File")) == 0)
-	  {
-	    if (get_printer_by_driver(key.v.driver))
-	      {
-		p = &plist[0];
-		memcpy(p, &key, sizeof(plist_t));
-		p->active = 1;
-	      }
-	  }
-	else
-	  {
-	    if (get_printer_by_driver(key.v.driver))
-	      {
-		p = psearch(&key, plist + 1, plist_count - 1,
-			    sizeof(plist_t),
-			    (int (*)(const void *, const void *)) compare_printers);
-		if (p == NULL)
-		  {
-		    check_plist(plist_count + 1);
-		    p = plist + plist_count;
-		    plist_count++;
-		    memcpy(p, &key, sizeof(plist_t));
-		    p->active = 0;
-		  }
-		else
-		  {
-		    memcpy(p, &key, sizeof(plist_t));
-		    p->active = 1;
-		  }
-	      }
-	  }
-      }
+      add_printer(&key, 0);
     fclose(fp);
   }
 
@@ -1176,10 +1032,10 @@ printrc_load(void)
   }
   else
   {
-    if (vars.output_to[0] != '\0')
+    if (stp_get_output_to(vars)[0] != '\0')
     {
       for (i = 0; i < plist_count; i ++)
-        if (strcmp(vars.output_to, plist[i].v.output_to) == 0)
+        if (strcmp(stp_get_output_to(vars), stp_get_output_to(plist[i].v))== 0)
           break;
 
       if (i < plist_count)
@@ -1187,7 +1043,6 @@ printrc_load(void)
     }
   }
 }
-
 
 /*
  * 'printrc_save()' - Save the current printer resource configuration.
@@ -1198,26 +1053,13 @@ printrc_save(void)
   FILE		*fp;		/* Printrc file */
   char	       *filename;	/* Printrc filename */
   int		i;		/* Looping var */
-  plist_t	*p;		/* Current printer */
-#if (GIMP_MINOR_VERSION == 0)
-  char		*home;		/* Home dir */
-#endif
-
+  gp_plist_t	*p;		/* Current printer */
 
  /*
   * Generate the filename for the current user...
   */
 
-#if (GIMP_MINOR_VERSION == 0)
-  home = getenv("HOME");
-  if (home == NULL)
-    filename=g_strdup("/.gimp/printrc");
-  else
-    filename = malloc(strlen(home) + 15);
-    sprintf(filename, "%s/.gimp/printrc", home);
-#else
   filename = gimp_personal_rc_file ("printrc");
-#endif
 
 #ifdef __EMX__
   _fnslashify(filename);
@@ -1237,29 +1079,6 @@ printrc_save(void)
     fprintf(stderr, "Number of printers: %d\n", plist_count);
 #endif
 
-#if 0
-    fputs("#PRINTRC " PLUG_IN_VERSION "\n", fp);
-
-    for (i = 0, p = plist; i < plist_count; i ++, p ++)
-      {
-	fprintf(fp, "%s,%s,%s,%s,%d,%s,%s,%s,%s,",
-		p->name, p->v.output_to, p->v.driver, p->v.ppd_file,
-		p->v.output_type, p->v.resolution, p->v.media_size,
-		p->v.media_type, p->v.media_source);
-	fprintf(fp, "%.3f,%.3f,%d,%d,%d,%.3f,",
-		p->v.brightness, p->v.scaling, p->v.orientation, p->v.left,
-		p->v.top, p->v.gamma);
-	fprintf(fp, "%.3f,%.3f,%.3f,%.3f,%d,%d,%.3f,%.3f,%s,%s,%d,\n",
-		p->v.contrast, p->v.cyan, p->v.magenta, p->v.yellow,
-		p->v.linear, p->v.image_type, p->v.saturation, p->v.density,
-		p->v.ink_type, p->v.dither_algorithm, p->v.unit);
-
-#ifdef DEBUG
-        fprintf(stderr, "Wrote printer %d: %s\n", i, p->name);
-#endif
-
-      }
-#else
     fputs("#PRINTRCv1 written by GIMP-PRINT " PLUG_IN_VERSION "\n", fp);
 
     fprintf(fp, "Current-Printer: %s\n", plist[plist_current].name);
@@ -1267,38 +1086,38 @@ printrc_save(void)
     for (i = 0, p = plist; i < plist_count; i ++, p ++)
       {
 	fprintf(fp, "\nPrinter: %s\n", p->name);
-	fprintf(fp, "Destination: %s\n", p->v.output_to);
-	fprintf(fp, "Driver: %s\n", p->v.driver);
-	fprintf(fp, "PPD-File: %s\n", p->v.ppd_file);
-	fprintf(fp, "Output-Type: %d\n", p->v.output_type);
-	fprintf(fp, "Resolution: %s\n", p->v.resolution);
-	fprintf(fp, "Media-Size: %s\n", p->v.media_size);
-	fprintf(fp, "Media-Type: %s\n", p->v.media_type);
-	fprintf(fp, "Media-Source: %s\n", p->v.media_source);
-	fprintf(fp, "Brightness: %.3f\n", p->v.brightness);
-	fprintf(fp, "Scaling: %.3f\n", p->v.scaling);
-	fprintf(fp, "Orientation: %d\n", p->v.orientation);
-	fprintf(fp, "Left: %d\n", p->v.left);
-	fprintf(fp, "Top: %d\n", p->v.top);
-	fprintf(fp, "Gamma: %.3f\n", p->v.gamma);
-	fprintf(fp, "Contrast: %.3f\n", p->v.contrast);
-	fprintf(fp, "Cyan: %.3f\n", p->v.cyan);
-	fprintf(fp, "Magenta: %.3f\n", p->v.magenta);
-	fprintf(fp, "Yellow: %.3f\n", p->v.yellow);
-	fprintf(fp, "Linear: %d\n", p->v.linear);
-	fprintf(fp, "Image-Type: %d\n", p->v.image_type);
-	fprintf(fp, "Saturation: %.3f\n", p->v.saturation);
-	fprintf(fp, "Density: %.3f\n", p->v.density);
-	fprintf(fp, "Ink-Type: %s\n", p->v.ink_type);
-	fprintf(fp, "Dither-Algorithm: %s\n", p->v.dither_algorithm);
-	fprintf(fp, "Unit: %d\n", p->v.unit);
+	fprintf(fp, "Destination: %s\n", stp_get_output_to(p->v));
+	fprintf(fp, "Driver: %s\n", stp_get_driver(p->v));
+	fprintf(fp, "PPD-File: %s\n", stp_get_ppd_file(p->v));
+	fprintf(fp, "Output-Type: %d\n", stp_get_output_type(p->v));
+	fprintf(fp, "Resolution: %s\n", stp_get_resolution(p->v));
+	fprintf(fp, "Media-Size: %s\n", stp_get_media_size(p->v));
+	fprintf(fp, "Media-Type: %s\n", stp_get_media_type(p->v));
+	fprintf(fp, "Media-Source: %s\n", stp_get_media_source(p->v));
+	fprintf(fp, "Brightness: %.3f\n", stp_get_brightness(p->v));
+	fprintf(fp, "Scaling: %.3f\n", stp_get_scaling(p->v));
+	fprintf(fp, "Orientation: %d\n", stp_get_orientation(p->v));
+	fprintf(fp, "Left: %d\n", stp_get_left(p->v));
+	fprintf(fp, "Top: %d\n", stp_get_top(p->v));
+	fprintf(fp, "Gamma: %.3f\n", stp_get_gamma(p->v));
+	fprintf(fp, "Contrast: %.3f\n", stp_get_contrast(p->v));
+	fprintf(fp, "Cyan: %.3f\n", stp_get_cyan(p->v));
+	fprintf(fp, "Magenta: %.3f\n", stp_get_magenta(p->v));
+	fprintf(fp, "Yellow: %.3f\n", stp_get_yellow(p->v));
+	fprintf(fp, "Image-Type: %d\n", stp_get_image_type(p->v));
+	fprintf(fp, "Saturation: %.3f\n", stp_get_saturation(p->v));
+	fprintf(fp, "Density: %.3f\n", stp_get_density(p->v));
+	fprintf(fp, "Ink-Type: %s\n", stp_get_ink_type(p->v));
+	fprintf(fp, "Dither-Algorithm: %s\n", stp_get_dither_algorithm(p->v));
+	fprintf(fp, "Unit: %d\n", stp_get_unit(p->v));
+	fprintf(fp, "Custom-Page-Width: %d\n", stp_get_page_width(p->v));
+	fprintf(fp, "Custom-Page-Height: %d\n", stp_get_page_height(p->v));
 
 #ifdef DEBUG
         fprintf(stderr, "Wrote printer %d: %s\n", i, p->name);
 #endif
 
       }
-#endif
     fclose(fp);
   } else {
     fprintf(stderr,"could not open printrc file \"%s\"\n",filename);
@@ -1306,18 +1125,16 @@ printrc_save(void)
   g_free (filename);
 }
 
-
 /*
  * 'compare_printers()' - Compare system printer names for qsort().
  */
 
 static int
-compare_printers(plist_t *p1,	/* I - First printer to compare */
-                 plist_t *p2)	/* I - Second printer to compare */
+compare_printers(gp_plist_t *p1,	/* I - First printer to compare */
+                 gp_plist_t *p2)	/* I - Second printer to compare */
 {
   return (strcmp(p1->name, p2->name));
 }
-
 
 /*
  * 'get_system_printers()' - Get a complete list of printers from the spooler.
@@ -1326,6 +1143,8 @@ compare_printers(plist_t *p1,	/* I - First printer to compare */
 #define PRINTERS_NONE	0
 #define PRINTERS_LPC	1
 #define PRINTERS_LPSTAT	2
+
+extern int asprintf (char **result, const char *format, ...);
 
 static void
 get_system_printers(void)
@@ -1341,7 +1160,7 @@ get_system_printers(void)
 #ifdef __EMX__
   BYTE  pnum;
 #endif
-  static char	*lpcs[] =	/* Possible locations of LPC... */
+  static const char	*lpcs[] =	/* Possible locations of LPC... */
 		{
 		  "/etc"
 		  "/usr/bsd",
@@ -1349,7 +1168,6 @@ get_system_printers(void)
 		  "/usr/libexec",
 		  "/usr/sbin"
 		};
-
 
  /*
   * Setup defaults...
@@ -1361,9 +1179,8 @@ get_system_printers(void)
   plist_count = 1;
   initialize_printer(&plist[0]);
   strcpy(plist[0].name, _("File"));
-  plist[0].v.output_to[0] = '\0';
-  strcpy(plist[0].v.driver, "ps2");
-  plist[0].v.output_type = OUTPUT_COLOR;
+  stp_set_driver(plist[0].v, "ps2");
+  stp_set_output_type(plist[0].v, OUTPUT_COLOR);
 
  /*
   * Figure out what command to run...  We use lpstat if it is available over
@@ -1378,7 +1195,7 @@ get_system_printers(void)
   }
   else
   {
-    for (i = 0; i < G_N_ELEMENTS (lpcs); i ++)
+    for (i = 0; i < (sizeof(lpcs) / sizeof(lpcs[0])); i ++)
     {
       sprintf(command, "%s/lpc", lpcs[i]);
 
@@ -1386,7 +1203,7 @@ get_system_printers(void)
         break;
     }
 
-    if (i < G_N_ELEMENTS (lpcs))
+    if (i < (sizeof(lpcs) / sizeof(lpcs[0])))
     {
       strcat(command, " status < /dev/null");
       type = PRINTERS_LPC;
@@ -1410,6 +1227,7 @@ get_system_printers(void)
       while (fgets(line, sizeof(line), pfile) != NULL)
         switch (type)
 	{
+	  char *result;
 	  case PRINTERS_LPC :
 	      if (!strncmp(line, "Press RETURN to continue", 24) &&
 		  (ptr = strchr(line, ':')) != NULL &&
@@ -1422,10 +1240,16 @@ get_system_printers(void)
 		check_plist(plist_count + 1);
 		*ptr = '\0';
 		initialize_printer(&plist[plist_count]);
-		strncpy(plist[plist_count].name, line, sizeof(plist[0].name) - 1);
-		plist[plist_count].name[sizeof(plist[0].name) - 1] = '\0';
-		sprintf(plist[plist_count].v.output_to, "lpr -P%s -l", line);
-		strcpy(plist[plist_count].v.driver, "ps2");
+		strncpy(plist[plist_count].name, line,
+			sizeof(plist[plist_count].name) - 1);
+#ifdef DEBUG
+                fprintf(stderr, "Adding new printer from lpc: <%s>\n",
+                  line);
+#endif
+		asprintf(&result, "lpr -P%s -l", line);
+		stp_set_output_to(plist[plist_count].v, result);
+		g_free(result);
+		stp_set_driver(plist[plist_count].v, "ps2");
 		plist_count ++;
 	      }
 	      break;
@@ -1436,9 +1260,16 @@ get_system_printers(void)
 	      {
 		check_plist(plist_count + 1);
 		initialize_printer(&plist[plist_count]);
-		strcpy(plist[plist_count].name, name);
-		sprintf(plist[plist_count].v.output_to, "lp -s -d%s -oraw", name);
-        	strcpy(plist[plist_count].v.driver, "ps2");
+		strncpy(plist[plist_count].name, name,
+			sizeof(plist[plist_count].name) - 1);
+#ifdef DEBUG
+                fprintf(stderr, "Adding new printer from lpc: <%s>\n",
+                  name);
+#endif
+		asprintf(&result, "lp -s -d%s -oraw", name);
+		stp_set_output_to(plist[plist_count].v, result);
+		g_free(result);
+		stp_set_driver(plist[plist_count].v, "ps2");
         	plist_count ++;
 	      }
 	      else
@@ -1466,10 +1297,10 @@ get_system_printers(void)
 #endif
 
   if (plist_count > 2)
-    qsort(plist + 1, plist_count - 1, sizeof(plist_t),
+    qsort(plist + 1, plist_count - 1, sizeof(gp_plist_t),
           (int (*)(const void *, const void *))compare_printers);
 
-  if (defname[0] != '\0' && vars.output_to[0] == '\0')
+  if (defname[0] != '\0' && stp_get_output_to(vars)[0] == '\0')
   {
     for (i = 0; i < plist_count; i ++)
       if (strcmp(defname, plist[i].name) == 0)
