@@ -89,7 +89,7 @@ gimp_guides_ok_cb(gpointer data)
       hguides = NULL;
 
    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(param->lower_border)))
-      hguides = g_slist_append(hguides, 
+      hguides = g_slist_append(hguides,
 			       GINT_TO_POINTER(gimp_image_height(image_ID)));
 
    url = gtk_entry_get_text(GTK_ENTRY(param->url));
@@ -101,7 +101,7 @@ gimp_guides_ok_cb(gpointer data)
    while (guide_num > 0) {
       gint position = gimp_image_get_guide_position(image_ID, guide_num);
 
-      if (gimp_image_get_guide_orientation(image_ID, guide_num) 
+      if (gimp_image_get_guide_orientation(image_ID, guide_num)
 	  == GIMP_ORIENTATION_HORIZONTAL) {
 	 hguides = g_slist_insert_sorted(hguides, GINT_TO_POINTER(position),
 					 guide_sort_func);
@@ -116,11 +116,11 @@ gimp_guides_ok_cb(gpointer data)
 
    subcommand_start(_("Use Gimp Guides"));
 
-   for (hg = hguides; hg && hg->next; 
+   for (hg = hguides; hg && hg->next;
 	hg = (all) ? hg->next : hg->next->next) {
       gint y = GPOINTER_TO_INT(hg->data);
       gint height = GPOINTER_TO_INT(hg->next->data) - y;
-      for (vg = vguides; vg && vg->next; 
+      for (vg = vguides; vg && vg->next;
 	   vg = (all) ? vg->next : vg->next->next) {
 	 gint x = GPOINTER_TO_INT(vg->data);
 	 gint width = GPOINTER_TO_INT(vg->next->data) - x;
@@ -143,7 +143,7 @@ make_gimp_guides_dialog(void)
    DefaultDialog_t *dialog;
    GtkWidget *table, *frame, *hbox, *vbox;
    GtkWidget *label;
-   
+
    dialog = data->dialog = make_default_dialog(_("Use Gimp Guides"));
    default_dialog_set_ok_cb(dialog, gimp_guides_ok_cb, data);
    table = default_dialog_add_table(dialog, 3, 2);
@@ -152,11 +152,11 @@ make_gimp_guides_dialog(void)
    gtk_widget_show(frame);
    gtk_table_attach_defaults(GTK_TABLE(table), frame, 0, 1, 0, 1);
 
-   hbox = gtk_hbox_new(FALSE, 1);
+   hbox = gtk_hbox_new(FALSE, 12);
    gtk_container_add(GTK_CONTAINER(frame), hbox);
    gtk_widget_show(hbox);
 
-   data->alternate = 
+   data->alternate =
       gtk_radio_button_new_with_mnemonic_from_widget(NULL, _("Al_ternate"));
    gtk_box_pack_start(GTK_BOX(hbox), data->alternate, TRUE, TRUE, 0);
    gtk_widget_show(data->alternate);
@@ -190,18 +190,19 @@ make_gimp_guides_dialog(void)
    gtk_container_add(GTK_CONTAINER(vbox), data->lower_border);
    gtk_widget_show(data->lower_border);
 
-   hbox = gtk_hbox_new(FALSE, 1);
-   gtk_container_set_border_width(GTK_CONTAINER(hbox), 10);
+   hbox = gtk_hbox_new (FALSE, 6);
    gtk_table_attach_defaults(GTK_TABLE(table), hbox, 0, 2, 2, 3);
    gtk_widget_show(hbox);
 
    label = gtk_label_new_with_mnemonic(_("_Base URL:"));
    gtk_widget_show(label);
-   gtk_container_add(GTK_CONTAINER(hbox), label);
+   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 
    data->url = gtk_entry_new();
    gtk_container_add(GTK_CONTAINER(hbox), data->url);
    gtk_widget_show(data->url);
+
+   gtk_label_set_mnemonic_widget (GTK_LABEL (label), data->url);
 
    return data;
 }
@@ -247,7 +248,7 @@ gimp_guides_command_new(ObjectList_t *list, GimpDrawable *drawable)
    GimpGuidesCommand_t *command = g_new(GimpGuidesCommand_t, 1);
    command->list = list;
    command->drawable = drawable;
-   return command_init(&command->parent, _("Use Gimp Guides"), 
+   return command_init(&command->parent, _("Use Gimp Guides"),
 		       &gimp_guides_command_class);
 }
 

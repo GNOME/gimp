@@ -94,7 +94,9 @@ make_default_dialog (const gchar *title)
 
    data->dialog = gimp_dialog_new (title, "imagemap",
                                    NULL, 0,
-                                   gimp_standard_help_func, "plug-in-imagemap",
+                                   /* gimp_standard_help_func,
+                                      "plug-in-imagemap", */
+                                   gimp_standard_help_func, NULL,
                                    NULL);
 
    data->apply = gtk_dialog_add_button (GTK_DIALOG (data->dialog),
@@ -112,6 +114,12 @@ make_default_dialog (const gchar *title)
    g_signal_connect (data->dialog, "destroy",
 		     G_CALLBACK (gtk_widget_destroyed),
                      &data->dialog);
+
+   data->vbox = gtk_vbox_new (FALSE, 12);
+   gtk_container_set_border_width (GTK_CONTAINER (data->vbox), 12);
+   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (data->dialog)->vbox), data->vbox,
+                       TRUE, TRUE, 0);
+   gtk_widget_show (data->vbox);
 
    return data;
 }
@@ -150,8 +158,8 @@ void
 default_dialog_set_label(DefaultDialog_t *dialog, gchar *text)
 {
    GtkWidget *label = gtk_label_new(text);
-   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog->dialog)->vbox), label,
-		      TRUE, TRUE, 5);
+
+   gtk_box_pack_start (GTK_BOX (dialog->vbox), label, TRUE, TRUE, 0);
    gtk_widget_show(label);
 }
 
@@ -159,10 +167,12 @@ GtkWidget*
 default_dialog_add_table(DefaultDialog_t *dialog, gint rows, gint cols)
 {
    GtkWidget *table = gtk_table_new(rows, cols, FALSE);
-   gtk_container_set_border_width(GTK_CONTAINER(table), 12);
+
    gtk_table_set_row_spacings(GTK_TABLE(table), 6);
    gtk_table_set_col_spacings(GTK_TABLE(table), 6);
-   gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog->dialog)->vbox), table);
+
+   gtk_container_add (GTK_CONTAINER(dialog->vbox), table);
    gtk_widget_show(table);
+
    return table;
 }

@@ -189,7 +189,7 @@ create_link_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    GSList    *group;
 
    table = gtk_table_new(11, 1, FALSE);
-   gtk_container_set_border_width(GTK_CONTAINER(table), 10);
+   gtk_container_set_border_width(GTK_CONTAINER(table), 12);
    gtk_table_set_row_spacings(GTK_TABLE(table), 6);
    gtk_widget_show(table);
 
@@ -304,7 +304,7 @@ create_info_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    Object_t *obj = dialog->obj;
 
    vbox = gtk_vbox_new(FALSE, 1);
-   gtk_container_set_border_width(GTK_CONTAINER(vbox), 10);
+   gtk_container_set_border_width(GTK_CONTAINER(vbox), 12);
    gtk_widget_show(vbox);
 
    frame = gimp_frame_new(_("Dimensions"));
@@ -333,7 +333,7 @@ create_java_script_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
 
    table = gtk_table_new(11, 1, FALSE);
    gtk_box_pack_start(GTK_BOX(vbox), table, FALSE, FALSE, 0);
-   gtk_container_set_border_width(GTK_CONTAINER(table), 10);
+   gtk_container_set_border_width(GTK_CONTAINER(table), 12);
    gtk_table_set_row_spacings(GTK_TABLE(table), 6);
    gtk_widget_show(table);
 
@@ -454,7 +454,7 @@ create_edit_area_info_dialog(Object_t *obj)
    default_dialog_set_cancel_cb(data->dialog, edit_area_cancel_cb, data);
 
    data->notebook = notebook = gtk_notebook_new();
-   gtk_container_set_border_width(GTK_CONTAINER(notebook), 10);
+   gtk_container_set_border_width(GTK_CONTAINER(notebook), 12);
    g_signal_connect_after(notebook, "switch_page",
                           G_CALLBACK(switch_page), (gpointer) data);
 

@@ -52,11 +52,11 @@ static gpointer circle_create_info_widget(GtkWidget *frame);
 static void circle_fill_info_tab(Object_t *obj, gpointer data);
 static void circle_set_initial_focus(Object_t *obj, gpointer data);
 static void circle_update(Object_t* obj, gpointer data);
-static void circle_write_csim(Object_t* obj, gpointer param, 
+static void circle_write_csim(Object_t* obj, gpointer param,
 			      OutputFunc_t output);
-static void circle_write_cern(Object_t* obj, gpointer param, 
+static void circle_write_cern(Object_t* obj, gpointer param,
 			      OutputFunc_t output);
-static void circle_write_ncsa(Object_t* obj, gpointer param, 
+static void circle_write_ncsa(Object_t* obj, gpointer param,
 			      OutputFunc_t output);
 static const gchar* circle_get_stock_icon_name(void);
 
@@ -161,13 +161,13 @@ move_sash(Object_t *obj, gint dx, gint dy)
    circle->r = (rx > ry) ? rx : ry;
 }
 
-static void 
+static void
 circle_resize(Object_t *obj, gint percentage_x, gint percentage_y)
 {
    Circle_t *circle = ObjectToCircle(obj);
    circle->x = circle->x * percentage_x / 100;
    circle->y = circle->y * percentage_y / 100;
-   circle->r = circle->r * ((percentage_x < percentage_y) 
+   circle->r = circle->r * ((percentage_x < percentage_y)
 			    ? percentage_x : percentage_y) / 100;
 }
 
@@ -194,7 +194,7 @@ circle_point_is_on(Object_t *obj, gint x, gint y)
    return x * x + y * y <= circle->r * circle->r;
 }
 
-static void 
+static void
 circle_get_dimensions(Object_t *obj, gint *x, gint *y,
 		      gint *width, gint *height)
 {
@@ -256,36 +256,35 @@ circle_create_info_widget(GtkWidget *frame)
 
    table = gtk_table_new(3, 3, FALSE);
    gtk_container_add(GTK_CONTAINER(frame), table);
-   gtk_container_set_border_width(GTK_CONTAINER(table), 0);
 
    gtk_table_set_row_spacings(GTK_TABLE(table), 6);
    gtk_table_set_col_spacings(GTK_TABLE(table), 6);
    gtk_widget_show(table);
-   
+
    label = create_label_in_table(table, 0, 0, _("Center _x:"));
-   props->x = create_spin_button_in_table(table, label, 0, 1, 1, 0, 
+   props->x = create_spin_button_in_table(table, label, 0, 1, 1, 0,
 					  max_width - 1);
-   g_signal_connect(props->x, "value_changed", 
+   g_signal_connect(props->x, "value_changed",
                     G_CALLBACK (x_changed_cb), (gpointer) props);
    create_label_in_table(table, 0, 2, _("pixels"));
 
    label = create_label_in_table(table, 1, 0, _("Center _y:"));
-   props->y = create_spin_button_in_table(table, label, 1, 1, 1, 0, 
+   props->y = create_spin_button_in_table(table, label, 1, 1, 1, 0,
 					  max_height - 1);
-   g_signal_connect(props->y, "value_changed", 
+   g_signal_connect(props->y, "value_changed",
                     G_CALLBACK (y_changed_cb), (gpointer) props);
    create_label_in_table(table, 1, 2, _("pixels"));
 
    label = create_label_in_table(table, 2, 0, _("_Radius:"));
    props->r = create_spin_button_in_table(table, label, 2, 1, 1, 1, G_MAXINT);
-   g_signal_connect(props->r, "value_changed", 
+   g_signal_connect(props->r, "value_changed",
                     G_CALLBACK (r_changed_cb), (gpointer) props);
    create_label_in_table(table, 2, 2, _("pixels"));
 
    return props;
 }
 
-static void 
+static void
 circle_fill_info_tab(Object_t *obj, gpointer data)
 {
    Circle_t *circle = ObjectToCircle(obj);
@@ -297,14 +296,14 @@ circle_fill_info_tab(Object_t *obj, gpointer data)
    gtk_spin_button_set_value(GTK_SPIN_BUTTON(props->r), circle->r);
 }
 
-static void 
+static void
 circle_set_initial_focus(Object_t *obj, gpointer data)
 {
    CircleProperties_t *props = (CircleProperties_t*) data;
    gtk_widget_grab_focus(props->x);
 }
 
-static void 
+static void
 circle_update(Object_t* obj, gpointer data)
 {
    Circle_t *circle = ObjectToCircle(obj);

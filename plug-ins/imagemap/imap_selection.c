@@ -27,6 +27,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "imap_commands.h"
 #include "imap_edit_area_info.h"
 #include "imap_main.h"
@@ -43,9 +45,9 @@ set_buttons(Selection_t *data)
 
   if (gtk_tree_selection_get_selected (data->selection, &model, &iter)) {
 #ifdef _OLD_
-    gtk_widget_set_sensitive(data->arrow_up, 
+    gtk_widget_set_sensitive(data->arrow_up,
 			     (data->selected_row) ? TRUE : FALSE);
-    if (data->selected_row < GTK_CLIST(data->list)->rows - 1) 
+    if (data->selected_row < GTK_CLIST(data->list)->rows - 1)
       gtk_widget_set_sensitive(data->arrow_down, TRUE);
     else
       gtk_widget_set_sensitive(data->arrow_down, FALSE);
@@ -78,7 +80,7 @@ changed_cb(GtkTreeSelection *selection, gpointer param)
 
     gtk_tree_selection_get_selected (selection, &model, &iter);
     gtk_tree_model_get (GTK_TREE_MODEL(data->store), &iter, 0, &obj, -1);
-    
+
     printf("%d %d\n", count, obj->selected);
 
     if (count == 1) {
@@ -87,10 +89,10 @@ changed_cb(GtkTreeSelection *selection, gpointer param)
 	command = unselect_command_new (obj);
       } else {
 	Command_t *sub_command;
-	
+
 	gtk_tree_selection_get_selected (selection, &model, &iter);
 	gtk_tree_model_get (GTK_TREE_MODEL(data->store), &iter, 0, &obj, -1);
-	
+
 	command = subcommand_start (NULL);
 	sub_command = unselect_all_command_new (data->object_list, NULL);
 	command_add_subcommand (command, sub_command);
@@ -160,23 +162,23 @@ make_selection_toolbar(Selection_t *data)
   toolbar = gtk_toolbar_new();
   gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_ICONS);
   gtk_toolbar_set_orientation(GTK_TOOLBAR(toolbar), GTK_ORIENTATION_VERTICAL);
-  gtk_container_set_border_width(GTK_CONTAINER(toolbar), 5);
+  gtk_container_set_border_width(GTK_CONTAINER(toolbar), 0);
 
-  data->arrow_up = make_toolbar_stock_icon(toolbar, GTK_STOCK_GO_UP, 
-					   "MoveUp", _("Move Up"), 
+  data->arrow_up = make_toolbar_stock_icon(toolbar, GTK_STOCK_GO_UP,
+					   "MoveUp", _("Move Up"),
 					   selection_command,
 					   &data->cmd_move_up);
-  data->arrow_down = make_toolbar_stock_icon(toolbar, GTK_STOCK_GO_DOWN, 
-					     "MoveDown", _("Move Down"), 
-					     selection_command, 
+  data->arrow_down = make_toolbar_stock_icon(toolbar, GTK_STOCK_GO_DOWN,
+					     "MoveDown", _("Move Down"),
+					     selection_command,
 					     &data->cmd_move_down);
   gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
   data->edit = make_toolbar_stock_icon(toolbar, GTK_STOCK_PROPERTIES,
-				       "Edit", _("Edit"), selection_command, 
+				       "Edit", _("Edit"), selection_command,
 				       &data->cmd_edit);
   gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
   data->remove = make_toolbar_stock_icon(toolbar, GTK_STOCK_DELETE, "Delete",
-					 _("Delete"), selection_command, 
+					 _("Delete"), selection_command,
 					 &data->cmd_delete);
 
   gtk_widget_show(toolbar);
@@ -189,7 +191,7 @@ selection_set_selected(Selection_t *selection, gint row)
 {
   GtkTreeIter iter;
 
-  if (gtk_tree_model_iter_nth_child (GTK_TREE_MODEL (selection->store), &iter, 
+  if (gtk_tree_model_iter_nth_child (GTK_TREE_MODEL (selection->store), &iter,
 				     NULL, row)) {
     Object_t *obj;
 
@@ -211,7 +213,7 @@ object_added_cb(Object_t *obj, gpointer data)
   Selection_t *selection = (Selection_t*) data;
   GtkTreeIter iter;
   gint position = object_get_position_in_list (obj);
-  
+
   selection->nr_rows++;
   if (position < selection->nr_rows - 1) {
     gtk_list_store_insert (selection->store, &iter, position);
@@ -222,20 +224,20 @@ object_added_cb(Object_t *obj, gpointer data)
 }
 
 static gboolean
-selection_find_object(Selection_t *selection, Object_t *lookup, 
+selection_find_object(Selection_t *selection, Object_t *lookup,
 		      GtkTreeIter *iter)
 {
-  if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (selection->store), 
+  if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (selection->store),
 				     iter)) {
     do {
       Object_t *obj;
-      
-      gtk_tree_model_get (GTK_TREE_MODEL(selection->store), iter, 0, 
+
+      gtk_tree_model_get (GTK_TREE_MODEL(selection->store), iter, 0,
 			  &obj, -1);
       if (obj == lookup)
 	return TRUE;
-	
-    } while (gtk_tree_model_iter_next (GTK_TREE_MODEL (selection->store), 
+
+    } while (gtk_tree_model_iter_next (GTK_TREE_MODEL (selection->store),
 				       iter));
   }
   return FALSE;
@@ -301,14 +303,14 @@ selection_get_object (GtkTreeModel *tree_model, GtkTreeIter *iter)
   return obj;
 }
 
-static void 
-handle_drop(GtkWidget *widget, GdkDragContext *context, gint x, gint y, 
+static void
+handle_drop(GtkWidget *widget, GdkDragContext *context, gint x, gint y,
 	    GtkSelectionData *data, guint info, guint time)
 {
   gboolean success = FALSE;
   if (data->length >= 0 && data->format == 8) {
     GtkTreePath *path;
-    if (gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (widget), x, y, 
+    if (gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (widget), x, y,
 				       &path, NULL, NULL, NULL)) {
       GtkTreeModel *model = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
       GtkTreeIter iter;
@@ -329,7 +331,7 @@ handle_drop(GtkWidget *widget, GdkDragContext *context, gint x, gint y,
 }
 
 static void
-render_image (GtkTreeViewColumn *column, GtkCellRenderer *cell, 
+render_image (GtkTreeViewColumn *column, GtkCellRenderer *cell,
 	      GtkTreeModel *tree_model, GtkTreeIter *iter, gpointer data)
 {
   Object_t *obj = selection_get_object (tree_model, iter);
@@ -337,7 +339,7 @@ render_image (GtkTreeViewColumn *column, GtkCellRenderer *cell,
 }
 
 static void
-render_nr (GtkTreeViewColumn *column, GtkCellRenderer *cell, 
+render_nr (GtkTreeViewColumn *column, GtkCellRenderer *cell,
 	   GtkTreeModel *tree_model, GtkTreeIter *iter, gpointer data)
 {
   Object_t *obj = selection_get_object (tree_model, iter);
@@ -349,7 +351,7 @@ render_nr (GtkTreeViewColumn *column, GtkCellRenderer *cell,
 }
 
 static void
-render_url (GtkTreeViewColumn *column, GtkCellRenderer *cell, 
+render_url (GtkTreeViewColumn *column, GtkCellRenderer *cell,
 	    GtkTreeModel *tree_model, GtkTreeIter *iter, gpointer data)
 {
   Object_t *obj = selection_get_object (tree_model, iter);
@@ -357,7 +359,7 @@ render_url (GtkTreeViewColumn *column, GtkCellRenderer *cell,
 }
 
 static void
-render_target (GtkTreeViewColumn *column, GtkCellRenderer *cell, 
+render_target (GtkTreeViewColumn *column, GtkCellRenderer *cell,
 	       GtkTreeModel *tree_model, GtkTreeIter *iter, gpointer data)
 {
   Object_t *obj = selection_get_object (tree_model, iter);
@@ -365,7 +367,7 @@ render_target (GtkTreeViewColumn *column, GtkCellRenderer *cell,
 }
 
 static void
-render_comment (GtkTreeViewColumn *column, GtkCellRenderer *cell, 
+render_comment (GtkTreeViewColumn *column, GtkCellRenderer *cell,
 		GtkTreeModel *tree_model, GtkTreeIter *iter, gpointer data)
 {
   Object_t *obj = selection_get_object (tree_model, iter);
@@ -393,16 +395,15 @@ make_selection(ObjectList_t *object_list)
   gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_IN);
   gtk_widget_show(frame);
 
-  hbox = gtk_hbox_new(FALSE, 1);
-  gtk_container_add(GTK_CONTAINER(frame), hbox); 
+  hbox = gtk_hbox_new(FALSE, 6);
+  gtk_container_add(GTK_CONTAINER(frame), hbox);
   gtk_widget_show(hbox);
 
   toolbar = make_selection_toolbar(data);
   gtk_container_add(GTK_CONTAINER(hbox), toolbar);
 
   /* Create selection */
-  frame = gtk_frame_new(_("Selection"));
-  gtk_container_set_border_width(GTK_CONTAINER(frame), 10);
+  frame = gimp_frame_new(_("Selection"));
   gtk_container_add(GTK_CONTAINER(hbox), frame);
   gtk_widget_show(frame);
 
@@ -412,7 +413,7 @@ make_selection(ObjectList_t *object_list)
   g_object_unref (data->store);
 
   renderer = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (N_("#"), 
+  column = gtk_tree_view_column_new_with_attributes (N_("#"),
 						     renderer,
 						     NULL);
   gtk_tree_view_column_set_cell_data_func (column, renderer,
@@ -424,15 +425,15 @@ make_selection(ObjectList_t *object_list)
 
   column = gtk_tree_view_column_new ();
   gtk_tree_view_column_set_title (column, _("URL"));
-  
+
   renderer = gtk_cell_renderer_pixbuf_new ();
   gtk_tree_view_column_pack_start(column, renderer, FALSE);
   gtk_tree_view_column_set_cell_data_func (column, renderer,
 					   render_image, data, NULL);
-  
+
   renderer = gtk_cell_renderer_text_new ();
   gtk_tree_view_column_pack_start (column, renderer, TRUE);
-  gtk_tree_view_column_set_cell_data_func (column, renderer, render_url, data, 
+  gtk_tree_view_column_set_cell_data_func (column, renderer, render_url, data,
 					   NULL);
   gtk_tree_view_column_set_min_width (column, 80);
   gtk_tree_view_column_set_resizable (column, TRUE);
@@ -443,7 +444,7 @@ make_selection(ObjectList_t *object_list)
   renderer = gtk_cell_renderer_text_new ();
   column = gtk_tree_view_column_new_with_attributes (_("ALT Text"), renderer,
 						     NULL);
-  gtk_tree_view_column_set_cell_data_func (column, renderer, render_comment, 
+  gtk_tree_view_column_set_cell_data_func (column, renderer, render_comment,
 					   data, NULL);
   gtk_tree_view_column_set_min_width (column, 64);
   gtk_tree_view_column_set_resizable (column, TRUE);
@@ -471,15 +472,15 @@ make_selection(ObjectList_t *object_list)
   gtk_widget_show (list);
 
   /* Drop support */
-  gtk_drag_dest_set (list, GTK_DEST_DEFAULT_ALL, target_table, 2, 
+  gtk_drag_dest_set (list, GTK_DEST_DEFAULT_ALL, target_table, 2,
 		     GDK_ACTION_COPY);
   g_signal_connect (list, "drag_data_received", G_CALLBACK(handle_drop), NULL);
 
   /* For handling doubleclick */
 
-  g_signal_connect (list, "button_press_event", 
+  g_signal_connect (list, "button_press_event",
 		    G_CALLBACK(button_press_cb), data);
-  g_signal_connect (list, "button_release_event", 
+  g_signal_connect (list, "button_release_event",
 		    G_CALLBACK(button_release_cb), data);
 
   /* Callbacks we are interested in */
@@ -511,12 +512,12 @@ selection_toggle_visibility(Selection_t *selection)
   }
 }
 
-void 
+void
 selection_freeze(Selection_t *selection)
 {
 }
-  
-void 
+
+void
 selection_thaw(Selection_t *selection)
 {
 }

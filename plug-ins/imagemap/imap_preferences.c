@@ -194,16 +194,16 @@ preferences_save(PreferencesData_t *data)
       fprintf(out, "(mru-size %d)\n", data->mru_size);
 
       fprintf(out, "(normal-fg-color %d %d %d)\n",
-	      colors->normal_fg.red, colors->normal_fg.green, 
+	      colors->normal_fg.red, colors->normal_fg.green,
 	      colors->normal_fg.blue);
       fprintf(out, "(normal-bg-color %d %d %d)\n",
-	      colors->normal_bg.red, colors->normal_bg.green, 
+	      colors->normal_bg.red, colors->normal_bg.green,
 	      colors->normal_bg.blue);
       fprintf(out, "(selected-fg-color %d %d %d)\n",
-	      colors->selected_fg.red, colors->selected_fg.green, 
+	      colors->selected_fg.red, colors->selected_fg.green,
 	      colors->selected_fg.blue);
       fprintf(out, "(selected-bg-color %d %d %d)\n",
-	      colors->selected_bg.red, colors->selected_bg.green, 
+	      colors->selected_bg.red, colors->selected_bg.green,
 	      colors->selected_bg.blue);
 
       mru_write(get_mru(), out);
@@ -243,9 +243,9 @@ preferences_ok_cb(gpointer data)
    old_data->use_doublesized = gtk_toggle_button_get_active(
       GTK_TOGGLE_BUTTON(param->use_doublesized));
 
-   old_data->mru_size = 
+   old_data->mru_size =
       gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(param->mru_size));
-   old_data->undo_levels = 
+   old_data->undo_levels =
       gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(param->undo_levels));
    mru_set_size(mru, old_data->mru_size);
    menu_build_mru_items(mru);
@@ -265,16 +265,16 @@ preferences_ok_cb(gpointer data)
 static void
 set_button_colors(PreferencesDialog_t *dialog, ColorSelData_t *colors)
 {
-   gdk_window_set_background(dialog->normal_fg->window, 
+   gdk_window_set_background(dialog->normal_fg->window,
 			     &colors->normal_fg);
    gdk_window_clear(dialog->normal_fg->window);
-   gdk_window_set_background(dialog->normal_bg->window, 
+   gdk_window_set_background(dialog->normal_bg->window,
 			     &colors->normal_bg);
    gdk_window_clear(dialog->normal_bg->window);
-   gdk_window_set_background(dialog->selected_fg->window, 
+   gdk_window_set_background(dialog->selected_fg->window,
 			     &colors->selected_fg);
    gdk_window_clear(dialog->selected_fg->window);
-   gdk_window_set_background(dialog->selected_bg->window, 
+   gdk_window_set_background(dialog->selected_bg->window,
 			     &colors->selected_bg);
    gdk_window_clear(dialog->selected_bg->window);
 }
@@ -304,7 +304,7 @@ color_changed(GtkWidget *widget, gpointer data)
 }
 
 static void
-change_color(PreferencesDialog_t *param, GtkWidget *button, 
+change_color(PreferencesDialog_t *param, GtkWidget *button,
 	     GdkColor *gdk_color)
 {
    GdkColormap *colormap;
@@ -348,7 +348,7 @@ selected_bg_color_changed(GtkWidget *widget, gpointer data)
 
 static gint
 area_event(GtkWidget *widget, GdkEvent *event, PreferencesDialog_t *param,
-	   GdkColor *gdk_color, 
+	   GdkColor *gdk_color,
 	   void (*color_changed_func)(GtkWidget *widget, gpointer data))
 {
    if (event->type != GDK_BUTTON_PRESS)
@@ -361,8 +361,8 @@ area_event(GtkWidget *widget, GdkEvent *event, PreferencesDialog_t *param,
 
       param->color_sel = GTK_COLOR_SELECTION_DIALOG(
 	 param->color_sel_dlg)->colorsel;
-   
-      g_signal_connect(param->color_sel, "color_changed", 
+
+      g_signal_connect(param->color_sel, "color_changed",
 		       G_CALLBACK(color_changed), (gpointer) param);
 
       g_signal_connect(GTK_COLOR_SELECTION_DIALOG(dialog)->ok_button,
@@ -398,19 +398,19 @@ edit_normal_bg(GtkWidget *widget, GdkEvent *event, PreferencesDialog_t *param)
 }
 
 static gint
-edit_selected_fg(GtkWidget *widget, GdkEvent *event, 
+edit_selected_fg(GtkWidget *widget, GdkEvent *event,
 		 PreferencesDialog_t *param)
 {
-   return area_event(widget, event, param, 
+   return area_event(widget, event, param,
 		     &param->old_data->colors.selected_fg,
 		     selected_fg_color_changed);
 }
 
 static gint
-edit_selected_bg(GtkWidget *widget, GdkEvent *event, 
+edit_selected_bg(GtkWidget *widget, GdkEvent *event,
 		 PreferencesDialog_t *param)
 {
-   return area_event(widget, event, param, 
+   return area_event(widget, event, param,
 		     &param->old_data->colors.selected_bg,
 		     selected_bg_color_changed);
 }
@@ -431,11 +431,11 @@ create_tab(GtkWidget *notebook, gchar *label, gint rows, gint cols)
    gtk_table_set_col_spacings(GTK_TABLE(table), 6);
    gtk_widget_show(table);
 
-   gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, 
+   gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox,
 			    gtk_label_new_with_mnemonic(label));
 
    return table;
-} 
+}
 
 static void
 create_general_tab(PreferencesDialog_t *data, GtkWidget *notebook)
@@ -462,17 +462,17 @@ create_general_tab(PreferencesDialog_t *data, GtkWidget *notebook)
    gtk_box_pack_start(GTK_BOX(hbox), data->csim, TRUE, TRUE, 10);
    gtk_widget_show(data->csim);
 
-   data->prompt_for_area_info = 
+   data->prompt_for_area_info =
       create_check_button_in_table(table, 1, 0, _("_Prompt for area info"));
-   data->require_default_url = 
+   data->require_default_url =
       create_check_button_in_table(table, 2, 0, _("_Require default URL"));
-   data->show_area_handle = 
+   data->show_area_handle =
       create_check_button_in_table(table, 3, 0, _("Show area _handles"));
-   data->keep_circles_round = 
+   data->keep_circles_round =
       create_check_button_in_table(table, 4, 0, _("_Keep NCSA circles true"));
    data->show_url_tip =
       create_check_button_in_table(table, 5, 0, _("Show area URL _tip"));
-   data->use_doublesized = 
+   data->use_doublesized =
       create_check_button_in_table(table, 6, 0,
 				   _("_Use double-sized grab handles"));
    gtk_widget_show(frame);
@@ -484,25 +484,25 @@ create_menu_tab(PreferencesDialog_t *data, GtkWidget *notebook)
    GtkWidget *table = create_tab(notebook, _("Menu"), 2, 2);
    GtkWidget *label;
 
-   label = create_label_in_table(table, 0, 0, 
+   label = create_label_in_table(table, 0, 0,
 				 _("Number of _Undo levels (1 - 99):"));
-   data->undo_levels = create_spin_button_in_table(table, label, 0, 1, 1, 1, 
+   data->undo_levels = create_spin_button_in_table(table, label, 0, 1, 1, 1,
 						   99);
 
-   label = create_label_in_table(table, 1, 0, 
+   label = create_label_in_table(table, 1, 0,
 				 _("Number of M_RU entries (1 - 16):"));
    data->mru_size = create_spin_button_in_table(table, label, 1, 1, 1, 1, 16);
 }
 
 static GtkWidget*
-create_color_field(PreferencesDialog_t *data, GtkWidget *table, gint row, 
+create_color_field(PreferencesDialog_t *data, GtkWidget *table, gint row,
 		   gint col, GCallback func)
 {
    GtkWidget *area = gtk_drawing_area_new();
 
    gtk_widget_set_size_request(area, 16, 8);
    gtk_widget_set_events(area, GDK_BUTTON_PRESS_MASK);
-   gtk_table_attach_defaults(GTK_TABLE(table), area, col, col + 1, row, 
+   gtk_table_attach_defaults(GTK_TABLE(table), area, col, col + 1, row,
 			     row + 1);
    g_signal_connect(area, "event", func, (gpointer) data);
    gtk_widget_show(area);
@@ -514,9 +514,9 @@ static void
 create_colors_tab(PreferencesDialog_t *data, GtkWidget *notebook)
 {
    GtkWidget *table = create_tab(notebook, _("Colors"), 2, 3);
- 
+
    create_label_in_table(table, 0, 0, _("Normal:"));
-   data->normal_fg = create_color_field(data, table, 0, 1, 
+   data->normal_fg = create_color_field(data, table, 0, 1,
 					G_CALLBACK(edit_normal_fg));
    data->normal_bg = create_color_field(data, table, 0, 2,
 					G_CALLBACK(edit_normal_bg));
@@ -534,14 +534,14 @@ create_contiguous_regions_tab(PreferencesDialog_t *data, GtkWidget *notebook)
    GtkWidget *table = create_tab(notebook, _("Co_ntiguous Region"), 2, 2);
    GtkWidget *label;
 
-   label = create_label_in_table(table, 0, 0, 
+   label = create_label_in_table(table, 0, 0,
 				 _("_Threshold:"));
    data->auto_convert =
       create_check_button_in_table(table, 1, 0, _("_Automatically convert"));
 }
 
 static void
-switch_page(GtkWidget *widget, GtkNotebookPage *page, gint page_num, 
+switch_page(GtkWidget *widget, GtkNotebookPage *page, gint page_num,
 	    gpointer data)
 {
    if (page_num == 2) {
@@ -560,14 +560,12 @@ create_preferences_dialog()
    data->color_sel_dlg = NULL;
    data->dialog = dialog = make_default_dialog( _("General Preferences"));
    default_dialog_set_ok_cb(dialog, preferences_ok_cb, (gpointer) data);
-   
+
    data->notebook = notebook = gtk_notebook_new();
-   gtk_container_set_border_width(GTK_CONTAINER(notebook), 10);
-   g_signal_connect_after(notebook, "switch_page", 
+   g_signal_connect_after(notebook, "switch_page",
 			  G_CALLBACK(switch_page), (gpointer) data);
 
-   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog->dialog)->vbox), 
-		      notebook, TRUE, TRUE, 10);
+   gtk_box_pack_start (GTK_BOX (data->dialog->vbox), notebook, TRUE, TRUE, 0);
    create_general_tab(data, notebook);
    create_menu_tab(data, notebook);
    create_colors_tab(data, notebook);
@@ -614,10 +612,10 @@ do_preferences_dialog(void)
 				old_data->show_url_tip);
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dialog->use_doublesized),
 				old_data->use_doublesized);
-   
-   gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->undo_levels), 
+
+   gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->undo_levels),
 			     old_data->undo_levels);
-   gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->mru_size), 
+   gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->mru_size),
 			     old_data->mru_size);
 
    default_dialog_show(dialog->dialog);

@@ -34,7 +34,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-static void 
+static void
 save_to_view(GtkTextBuffer *buffer, const char* format, ...)
 {
    va_list ap;
@@ -49,7 +49,7 @@ save_to_view(GtkTextBuffer *buffer, const char* format, ...)
    gtk_text_buffer_insert(buffer, &iter, scratch, -1);
 }
 
-void 
+void
 do_source_dialog(void)
 {
    static DefaultDialog_t *dialog;
@@ -70,13 +70,12 @@ do_source_dialog(void)
       gtk_widget_show(text);
 
       swin = gtk_scrolled_window_new(NULL, NULL);
-      gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(swin), 
+      gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(swin),
 					  GTK_SHADOW_IN);
-      gtk_widget_set_size_request(swin, 640, 400);
-      gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog->dialog)->vbox), swin, 
-			 TRUE, TRUE, 0);
-      gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), 
-				     GTK_POLICY_AUTOMATIC, 
+      gtk_widget_set_size_request(swin, 400, 300);
+      gtk_box_pack_start(GTK_BOX(dialog->vbox), swin, TRUE, TRUE, 0);
+      gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin),
+				     GTK_POLICY_AUTOMATIC,
 				     GTK_POLICY_AUTOMATIC);
       gtk_widget_show(swin);
       gtk_container_add(GTK_CONTAINER(swin), text);

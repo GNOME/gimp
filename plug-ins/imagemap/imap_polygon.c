@@ -58,11 +58,11 @@ static void polygon_update_info_widget(Object_t *obj, gpointer data);
 static void polygon_fill_info_tab(Object_t *obj, gpointer data);
 static void polygon_set_initial_focus(Object_t *obj, gpointer data);
 static void polygon_update(Object_t* obj, gpointer data);
-static void polygon_write_csim(Object_t* obj, gpointer param, 
+static void polygon_write_csim(Object_t* obj, gpointer param,
 			       OutputFunc_t output);
-static void polygon_write_cern(Object_t* obj, gpointer param, 
+static void polygon_write_cern(Object_t* obj, gpointer param,
 			       OutputFunc_t output);
-static void polygon_write_ncsa(Object_t* obj, gpointer param, 
+static void polygon_write_ncsa(Object_t* obj, gpointer param,
 			       OutputFunc_t output);
 static void polygon_do_popup(Object_t *obj, GdkEventButton *event);
 static const gchar* polygon_get_stock_icon_name(void);
@@ -120,7 +120,7 @@ polygon_destruct(Object_t *obj)
    polygon_free_list(polygon);
 }
 
-static gboolean 
+static gboolean
 polygon_is_valid(Object_t *obj)
 {
    return g_list_length(ObjectToPolygon(obj)->points) > 2;
@@ -132,7 +132,7 @@ polygon_clone(Object_t *obj)
    Polygon_t *polygon = ObjectToPolygon(obj);
    Polygon_t *clone = g_new(Polygon_t, 1);
    GList     *p;
-   
+
    clone->points = NULL;
    for (p = polygon->points; p; p = p->next) {
       GdkPoint *point = (GdkPoint*) p->data;
@@ -238,7 +238,7 @@ polygon_point_is_on(Object_t *obj, gint x, gint y)
    return count % 2;
 }
 
-static void 
+static void
 polygon_get_dimensions(Object_t *obj, gint *x, gint *y,
 		       gint *width, gint *height)
 {
@@ -264,7 +264,7 @@ polygon_get_dimensions(Object_t *obj, gint *x, gint *y,
    *height = max_y - min_y;
 }
 
-static void 
+static void
 polygon_resize(Object_t *obj, gint percentage_x, gint percentage_y)
 {
    Polygon_t *polygon = ObjectToPolygon(obj);
@@ -363,7 +363,7 @@ insert_button_clicked(GtkWidget *widget, PolygonProperties_t *data)
 
      gtk_tree_model_get (model, &iter, 0, &point, -1);
      here = g_list_find(polygon->points, point);
-     polygon->points = g_list_insert_before(polygon->points, here, 
+     polygon->points = g_list_insert_before(polygon->points, here,
 					    new_point(x, y));
      polygon_fill_info_tab(data->obj, data);
    }
@@ -392,7 +392,7 @@ remove_button_clicked(GtkWidget *widget, PolygonProperties_t *data)
     gtk_tree_model_get (model, &iter, 0, &point, -1);
     polygon->points = g_list_remove(polygon->points, point);
     g_free(point);
-    
+
     polygon_fill_info_tab(data->obj, data);
   }
 }
@@ -416,7 +416,7 @@ y_changed_cb(GtkWidget *widget, gpointer data)
 }
 
 static void
-render_x(GtkTreeViewColumn *column, GtkCellRenderer *cell, 
+render_x(GtkTreeViewColumn *column, GtkCellRenderer *cell,
 	 GtkTreeModel *tree_model, GtkTreeIter *iter, gpointer data)
 {
   GdkPoint *point;
@@ -428,7 +428,7 @@ render_x(GtkTreeViewColumn *column, GtkCellRenderer *cell,
 }
 
 static void
-render_y(GtkTreeViewColumn *column, GtkCellRenderer *cell, 
+render_y(GtkTreeViewColumn *column, GtkCellRenderer *cell,
 	 GtkTreeModel *tree_model, GtkTreeIter *iter, gpointer data)
 {
   GdkPoint *point;
@@ -450,14 +450,13 @@ polygon_create_info_widget(GtkWidget *frame)
    GtkCellRenderer *renderer;
    GtkTreeViewColumn *column;
 
-   hbox = gtk_hbox_new(FALSE, 1);
+   hbox = gtk_hbox_new(FALSE, 12);
    gtk_container_add(GTK_CONTAINER(frame), hbox);
    gtk_widget_show(hbox);
 
    swin = gtk_scrolled_window_new(NULL, NULL);
-   gtk_container_set_border_width(GTK_CONTAINER(swin), 10);
 
-   gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), 
+   gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin),
 				  GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(swin),
 					GTK_SHADOW_IN);
@@ -471,7 +470,7 @@ polygon_create_info_widget(GtkWidget *frame)
    gtk_widget_show (view);
 
    renderer = gtk_cell_renderer_text_new ();
-   column = gtk_tree_view_column_new_with_attributes (_("x (pixels)"), 
+   column = gtk_tree_view_column_new_with_attributes (_("x (pixels)"),
 						      renderer,
 						      NULL);
    gtk_tree_view_column_set_cell_data_func(column, renderer,
@@ -480,8 +479,8 @@ polygon_create_info_widget(GtkWidget *frame)
    gtk_tree_view_append_column (GTK_TREE_VIEW (view), column);
 
    renderer = gtk_cell_renderer_text_new ();
-   column = gtk_tree_view_column_new_with_attributes (_("y (pixels)"), 
-						      renderer, 
+   column = gtk_tree_view_column_new_with_attributes (_("y (pixels)"),
+						      renderer,
 						      NULL);
    gtk_tree_view_column_set_cell_data_func(column, renderer,
 					   render_y, props, NULL);
@@ -491,24 +490,23 @@ polygon_create_info_widget(GtkWidget *frame)
    gtk_container_add (GTK_CONTAINER (swin), view);
 
    table = gtk_table_new(6, 3, FALSE);
-   gtk_container_set_border_width(GTK_CONTAINER(table), 10);
    gtk_table_set_row_spacings(GTK_TABLE(table), 6);
    gtk_table_set_col_spacings(GTK_TABLE(table), 6);
    gtk_box_pack_start(GTK_BOX(hbox), table, FALSE, FALSE, FALSE);
    gtk_widget_show(table);
 
    label = create_label_in_table(table, 0, 0, "_x:");
-   props->x = create_spin_button_in_table(table, label, 0, 1, 1, 0, 
+   props->x = create_spin_button_in_table(table, label, 0, 1, 1, 0,
 					  max_width - 1);
-   g_signal_connect(props->x, "changed", 
+   g_signal_connect(props->x, "changed",
 		    G_CALLBACK(x_changed_cb), (gpointer) props);
    gtk_widget_set_size_request(props->x, 64, -1);
    create_label_in_table(table, 0, 2, _("pixels"));
 
    label = create_label_in_table(table, 1, 0, "_y:");
-   props->y = create_spin_button_in_table(table, label, 1, 1, 1, 0, 
+   props->y = create_spin_button_in_table(table, label, 1, 1, 1, 0,
 					  max_height - 1);
-   g_signal_connect(props->y, "changed", 
+   g_signal_connect(props->y, "changed",
 		    G_CALLBACK(y_changed_cb), (gpointer) props);
    gtk_widget_set_size_request(props->y, 64, -1);
    create_label_in_table(table, 1, 2, _("pixels"));
@@ -560,7 +558,7 @@ polygon_update_info_widget(Object_t *obj, gpointer data)
 {
    PolygonProperties_t *props = (PolygonProperties_t*) data;
    GtkTreeIter iter;
-   
+
    gtk_spin_button_set_value(GTK_SPIN_BUTTON(props->x), _sash_point->x);
    gtk_spin_button_set_value(GTK_SPIN_BUTTON(props->y), _sash_point->y);
 
@@ -568,7 +566,7 @@ polygon_update_info_widget(Object_t *obj, gpointer data)
 				     NULL, _sash_index)) {
      gtk_tree_selection_select_iter(props->selection, &iter);
    }
-   
+
    if (props->timeout)
       g_source_remove(props->timeout);
    props->timeout = g_timeout_add(1000, update_timeout, data);
@@ -586,7 +584,7 @@ polygon_fill_info_tab(Object_t *obj, gpointer data)
 
    gtk_list_store_clear(props->store);
 
-   for (p = polygon->points; p; p = p->next) {  
+   for (p = polygon->points; p; p = p->next) {
      gtk_list_store_append(props->store, &iter);
      gtk_list_store_set(props->store, &iter, 0, p->data, -1);
    }
@@ -598,14 +596,14 @@ polygon_fill_info_tab(Object_t *obj, gpointer data)
    set_buttons_sensitivity(props);
 }
 
-static void 
+static void
 polygon_set_initial_focus(Object_t *obj, gpointer data)
 {
    PolygonProperties_t *props = (PolygonProperties_t*) data;
    gtk_widget_grab_focus(props->x);
 }
 
-static void 
+static void
 polygon_update(Object_t* obj, gpointer data)
 {
   /* Nothing to be done! */
@@ -670,7 +668,7 @@ polygon_insert_point(GtkWidget *widget, gpointer data)
 static void
 polygon_delete_point(GtkWidget *widget, gpointer data)
 {
-   Command_t *command = delete_point_command_new(get_popup_object(), 
+   Command_t *command = delete_point_command_new(get_popup_object(),
 						 _sash_point);
    command_execute(command);
 }
@@ -712,7 +710,7 @@ polygon_near_edge(Object_t *obj, gint x, gint y)
    return (point_near_edge(prev, first, x, y)) ? n + 1 : 0;
 }
 
-static void 
+static void
 polygon_do_popup(Object_t *obj, GdkEventButton *event)
 {
    gint x = get_real_coord((gint) event->x);
@@ -722,7 +720,7 @@ polygon_do_popup(Object_t *obj, GdkEventButton *event)
       static ObjectPopup_t *delete_popup;
       if (!delete_popup) {
 	 delete_popup = make_object_popup();
-	 object_popup_prepend_menu(delete_popup, _("Delete Point"), 
+	 object_popup_prepend_menu(delete_popup, _("Delete Point"),
 				   polygon_delete_point, delete_popup);
       }
       object_handle_popup(delete_popup, obj, event);
@@ -736,7 +734,7 @@ polygon_do_popup(Object_t *obj, GdkEventButton *event)
 
 	 if (!insert_popup) {
 	    insert_popup = make_object_popup();
-	    object_popup_prepend_menu(insert_popup, _("Insert Point"), 
+	    object_popup_prepend_menu(insert_popup, _("Insert Point"),
 				      polygon_insert_point, insert_popup);
 	 }
 	 object_handle_popup(insert_popup, obj, event);
@@ -746,7 +744,7 @@ polygon_do_popup(Object_t *obj, GdkEventButton *event)
    }
 }
 
-static const gchar* 
+static const gchar*
 polygon_get_stock_icon_name(void)
 {
    return IMAP_STOCK_POLYGON;
@@ -778,7 +776,7 @@ polygon_factory_cancel(GdkEventButton *event, Object_t *obj)
    } else {
       Polygon_t *polygon = ObjectToPolygon(obj);
       GList *link = _prev_link;
-	    
+
       _prev_link = _prev_link->prev;
       g_free((GdkPoint*) link->data);
       polygon->points = g_list_remove_link(polygon->points, link);

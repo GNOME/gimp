@@ -92,10 +92,9 @@ make_toolbar(GtkWidget *main_vbox, GtkWidget *window)
    gtk_box_pack_start(GTK_BOX(main_vbox), handlebox, FALSE, FALSE, 0);
    data->toolbar = toolbar = gtk_toolbar_new();
    gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_ICONS);
-   gtk_toolbar_set_orientation(GTK_TOOLBAR(toolbar), 
+   gtk_toolbar_set_orientation(GTK_TOOLBAR(toolbar),
 			       GTK_ORIENTATION_HORIZONTAL);
-
-   gtk_container_set_border_width(GTK_CONTAINER(toolbar), 5);
+   gtk_container_set_border_width(GTK_CONTAINER(toolbar), 0);
 
    gtk_container_add(GTK_CONTAINER(handlebox), toolbar);
 
@@ -105,63 +104,63 @@ make_toolbar(GtkWidget *main_vbox, GtkWidget *window)
 			   _("Save"), toolbar_command, &data->cmd_save);
    gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
    make_toolbar_stock_icon(toolbar, GTK_STOCK_PREFERENCES, "Preferences",
-			   _("Preferences"), toolbar_command, 
+			   _("Preferences"), toolbar_command,
 			   &data->cmd_preferences);
 
    gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
-   data->undo = make_toolbar_stock_icon(toolbar, GTK_STOCK_UNDO, "Undo", 
-					_("Undo"), toolbar_command, 
+   data->undo = make_toolbar_stock_icon(toolbar, GTK_STOCK_UNDO, "Undo",
+					_("Undo"), toolbar_command,
 					&data->cmd_undo);
    gtk_widget_set_sensitive(data->undo, FALSE);
-   data->redo = make_toolbar_stock_icon(toolbar, GTK_STOCK_REDO, "Redo", 
-					_("Redo"), toolbar_command, 
+   data->redo = make_toolbar_stock_icon(toolbar, GTK_STOCK_REDO, "Redo",
+					_("Redo"), toolbar_command,
 					&data->cmd_redo);
    gtk_widget_set_sensitive(data->redo, FALSE);
    command_list_add_update_cb(command_list_changed, data);
 
    gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
-   data->cut = make_toolbar_stock_icon(toolbar, GTK_STOCK_CUT, "Cut", 
+   data->cut = make_toolbar_stock_icon(toolbar, GTK_STOCK_CUT, "Cut",
 				 _("Cut"), toolbar_command, &data->cmd_cut);
    gtk_widget_set_sensitive(data->cut, FALSE);
-   data->copy = make_toolbar_stock_icon(toolbar, GTK_STOCK_COPY, "Copy", 
+   data->copy = make_toolbar_stock_icon(toolbar, GTK_STOCK_COPY, "Copy",
 				  _("Copy"), toolbar_command, &data->cmd_copy);
    gtk_widget_set_sensitive(data->copy, FALSE);
    paste = make_toolbar_stock_icon(toolbar, GTK_STOCK_PASTE, "Paste",
-				   _("Paste"), toolbar_command, 
+				   _("Paste"), toolbar_command,
 				   &data->cmd_paste);
    gtk_widget_set_sensitive(paste, FALSE);
    paste_buffer_add_add_cb(paste_buffer_added, (gpointer) paste);
    paste_buffer_add_remove_cb(paste_buffer_removed, (gpointer) paste);
 
    gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
-   data->zoom_in = make_toolbar_stock_icon(toolbar, GTK_STOCK_ZOOM_IN, 
-					   "ZoomIn", _("Zoom in"), 
-					   toolbar_command, 
+   data->zoom_in = make_toolbar_stock_icon(toolbar, GTK_STOCK_ZOOM_IN,
+					   "ZoomIn", _("Zoom in"),
+					   toolbar_command,
 					   &data->cmd_zoom_in);
-   data->zoom_out = make_toolbar_stock_icon(toolbar, GTK_STOCK_ZOOM_OUT, 
+   data->zoom_out = make_toolbar_stock_icon(toolbar, GTK_STOCK_ZOOM_OUT,
 					    "ZoomOut",
-					    _("Zoom out"), toolbar_command, 
+					    _("Zoom out"), toolbar_command,
 					    &data->cmd_zoom_out);
    gtk_widget_set_sensitive(data->zoom_out, FALSE);
    gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
    make_toolbar_stock_icon(toolbar, IMAP_STOCK_MAP_INFO, "EditMapInfo",
-			   _("Edit map info"), toolbar_command, 
+			   _("Edit map info"), toolbar_command,
 			   &data->cmd_edit_map_info);
    gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
-   data->to_front = make_toolbar_stock_icon(toolbar, IMAP_STOCK_TO_FRONT, 
-					    "ToFront", _("Move To Front"), 
+   data->to_front = make_toolbar_stock_icon(toolbar, IMAP_STOCK_TO_FRONT,
+					    "ToFront", _("Move To Front"),
 					    toolbar_command,
 					    &data->cmd_move_to_front);
    gtk_widget_set_sensitive(data->to_front, FALSE);
-   data->to_back = make_toolbar_stock_icon(toolbar, IMAP_STOCK_TO_BACK, 
+   data->to_back = make_toolbar_stock_icon(toolbar, IMAP_STOCK_TO_BACK,
 					   "ToBack",
-					   _("Send To Back"), toolbar_command, 
+					   _("Send To Back"), toolbar_command,
 					   &data->cmd_send_to_back);
    gtk_widget_set_sensitive(data->to_back, FALSE);
    gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
 
    data->grid = make_toolbar_toggle_icon(toolbar, GIMP_STOCK_GRID, "Grid",
-					 _("Grid"), toolbar_command, 
+					 _("Grid"), toolbar_command,
 					 &data->cmd_grid);
 
    gtk_widget_show(toolbar);
@@ -170,14 +169,14 @@ make_toolbar(GtkWidget *main_vbox, GtkWidget *window)
    return data;
 }
 
-void 
+void
 toolbar_set_zoom_sensitivity(ToolBar_t *toolbar, gint factor)
 {
    gtk_widget_set_sensitive(toolbar->zoom_in, factor < 8);
    gtk_widget_set_sensitive(toolbar->zoom_out, factor > 1);
 }
 
-void 
+void
 toolbar_set_grid(ToolBar_t *toolbar, gboolean active)
 {
    _command_lock = TRUE;

@@ -136,33 +136,33 @@ make_tools(GtkWidget *window)
    gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_ICONS);
    _tools.container = handlebox = gtk_handle_box_new();
    gtk_toolbar_set_orientation(GTK_TOOLBAR(toolbar), GTK_ORIENTATION_VERTICAL);
-   gtk_container_set_border_width(GTK_CONTAINER(toolbar), 5);
+   gtk_container_set_border_width(GTK_CONTAINER(toolbar), 0);
 
    gtk_container_add(GTK_CONTAINER(handlebox), toolbar);
 
    _tools.arrow = make_toolbar_radio_icon(toolbar, IMAP_STOCK_ARROW,
-					  NULL, _("Select"), 
-                                          _("Select existing area"), 
+					  NULL, _("Select"),
+                                          _("Select existing area"),
 					  arrow_clicked, NULL);
 #ifdef _NOT_READY_YET_
-   _tools.fuzzy_select = 
+   _tools.fuzzy_select =
       make_toolbar_radio_icon(toolbar, GIMP_STOCK_TOOL_FUZZY_SELECT,
 			      _tools.arrow, _("Fuzzy Select"),
 			      _("Select contiguous regions"),
 			      fuzzy_select_clicked, NULL);
 #endif
-   _tools.rectangle = make_toolbar_radio_icon(toolbar, IMAP_STOCK_RECTANGLE, 
-					      _tools.arrow, 
-					      _("Rectangle"), 
-					      _("Define Rectangle area"), 
+   _tools.rectangle = make_toolbar_radio_icon(toolbar, IMAP_STOCK_RECTANGLE,
+					      _tools.arrow,
+					      _("Rectangle"),
+					      _("Define Rectangle area"),
 					      rectangle_clicked, NULL);
-   _tools.circle = make_toolbar_radio_icon(toolbar, IMAP_STOCK_CIRCLE, 
+   _tools.circle = make_toolbar_radio_icon(toolbar, IMAP_STOCK_CIRCLE,
 					   _tools.rectangle, _("Circle"),
-					   _("Define Circle/Oval area"), 
+					   _("Define Circle/Oval area"),
 					   circle_clicked, NULL);
-   _tools.polygon = make_toolbar_radio_icon(toolbar, IMAP_STOCK_POLYGON, 
+   _tools.polygon = make_toolbar_radio_icon(toolbar, IMAP_STOCK_POLYGON,
 					    _tools.circle, _("Polygon"),
-					    _("Define Polygon area"), 
+					    _("Define Polygon area"),
 					    polygon_clicked, NULL);
    gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
    _tools.edit = make_toolbar_stock_icon(toolbar, GTK_STOCK_PROPERTIES,

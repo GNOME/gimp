@@ -110,7 +110,7 @@ recalc_bounds(GtkWidget *widget, gpointer data)
 
    bounds = g_strdup_printf (_("Resulting Guide Bounds: %d,%d to %d,%d (%d areas)"),
 			     left, top, left + bound_w, top + bound_h, rows * cols);
-   if (left + bound_w > get_image_width() || 
+   if (left + bound_w > get_image_width() ||
        top + bound_h > get_image_height())
      {
        gtk_dialog_set_response_sensitive (GTK_DIALOG (param->dialog->dialog),
@@ -127,94 +127,99 @@ recalc_bounds(GtkWidget *widget, gpointer data)
 }
 
 static GuidesDialog_t*
-make_guides_dialog()
+make_guides_dialog (void)
 {
    GuidesDialog_t *data = g_new(GuidesDialog_t, 1);
    DefaultDialog_t *dialog;
    GtkWidget *table;
    GtkWidget *label;
    GtkWidget *hbox;
-   
+
    dialog = data->dialog = make_default_dialog(_("Create Guides"));
-   default_dialog_set_ok_cb(dialog, guides_ok_cb, data);
-   
-   label = gtk_label_new(
-      _("Guides are pre-defined rectangles covering the image. You define\n"
-	"them by their width, height, and spacing from each other. This\n"
-	"allows you to rapidly create the most common image map type -\n"
+   default_dialog_set_ok_cb (dialog, guides_ok_cb, data);
+
+   label = gtk_label_new (
+      _("Guides are pre-defined rectangles covering the image. You define "
+	"them by their width, height, and spacing from each other. This "
+	"allows you to rapidly create the most common image map type - "
 	"image collection of \"thumbnails\", suitable for navigation bars."));
-   gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_LEFT);
-   gtk_container_set_border_width(
-      GTK_CONTAINER(GTK_DIALOG(dialog->dialog)->vbox), 10);
-   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog->dialog)->vbox), label, 
-		      TRUE, TRUE, 10);
-   gtk_widget_show(label);
-   
-   data->image_dimensions = gtk_label_new("");
-   gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog->dialog)->vbox), 
-		     data->image_dimensions);
-   gtk_widget_show(data->image_dimensions);
 
-   data->guide_bounds = gtk_label_new("");
-   gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog->dialog)->vbox), 
-		     data->guide_bounds);
-   gtk_widget_show(data->guide_bounds);
+   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
+   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+   gtk_box_pack_start (GTK_BOX (dialog->vbox), label, FALSE, FALSE, 0);
+   gtk_widget_show (label);
 
-   table = default_dialog_add_table(dialog, 4, 4);
+   data->image_dimensions = gtk_label_new ("");
+   gtk_misc_set_alignment (GTK_MISC (data->image_dimensions), 0.0, 0.5);
+   gtk_box_pack_start (GTK_BOX (dialog->vbox),
+                       data->image_dimensions, FALSE, FALSE, 0);
+   gtk_widget_show (data->image_dimensions);
 
-   label = create_label_in_table(table, 0, 0, _("_Width:"));
-   data->width = create_spin_button_in_table(table, label, 0, 1, 32, 1, 100);
-   g_signal_connect(data->width, "changed",
-                    G_CALLBACK(recalc_bounds), (gpointer) data);
+   data->guide_bounds = gtk_label_new ("");
+   gtk_misc_set_alignment (GTK_MISC (data->guide_bounds), 0.0, 0.5);
+   gtk_box_pack_start (GTK_BOX (dialog->vbox),
+                       data->guide_bounds, FALSE, FALSE, 0);
+   gtk_widget_show (data->guide_bounds);
+
+   table = default_dialog_add_table (dialog, 4, 4);
+
+   label = create_label_in_table (table, 0, 0, _("_Width:"));
+   data->width = create_spin_button_in_table (table, label, 0, 1, 32, 1, 100);
+   g_signal_connect (data->width, "changed",
+                     G_CALLBACK(recalc_bounds), (gpointer) data);
 
    label = create_label_in_table(table, 0, 2, _("_Left Start at:"));
-   data->left = create_spin_button_in_table(table, label, 0, 3, 0, 0, 100);
-   g_signal_connect(data->left, "changed",
-                    G_CALLBACK(recalc_bounds), (gpointer) data);
+   data->left = create_spin_button_in_table (table, label, 0, 3, 0, 0, 100);
+   g_signal_connect (data->left, "changed",
+                     G_CALLBACK(recalc_bounds), (gpointer) data);
 
    label = create_label_in_table(table, 1, 0, _("_Height:"));
-   data->height = create_spin_button_in_table(table, label, 1, 1, 32, 1, 100);
-   g_signal_connect(data->height, "changed",
-                    G_CALLBACK(recalc_bounds), (gpointer) data);
+   data->height = create_spin_button_in_table (table, label, 1, 1, 32, 1, 100);
+   g_signal_connect (data->height, "changed",
+                     G_CALLBACK(recalc_bounds), (gpointer) data);
 
-   label = create_label_in_table(table, 1, 2, _("_Top Start at:"));
-   data->top = create_spin_button_in_table(table, label, 1, 3, 0, 0, 100);
-   g_signal_connect(data->top, "changed",
-                    G_CALLBACK(recalc_bounds), (gpointer) data);
+   label = create_label_in_table (table, 1, 2, _("_Top Start at:"));
+   data->top = create_spin_button_in_table (table, label, 1, 3, 0, 0, 100);
+   g_signal_connect (data->top, "changed",
+                     G_CALLBACK(recalc_bounds), (gpointer) data);
 
-   label = create_label_in_table(table, 2, 0, _("_Horz. Spacing:"));
-   data->horz_spacing = create_spin_button_in_table(table, label, 2, 1, 0, 0, 
-						    100);
-   g_signal_connect(data->horz_spacing, "changed",
-                    G_CALLBACK(recalc_bounds), (gpointer) data);
+   label = create_label_in_table (table, 2, 0, _("_Horz. Spacing:"));
+   data->horz_spacing = create_spin_button_in_table (table, label, 2, 1, 0, 0,
+                                                     100);
+   g_signal_connect (data->horz_spacing, "changed",
+                     G_CALLBACK(recalc_bounds), (gpointer) data);
 
    label = create_label_in_table(table, 2, 2, _("_No. Across:"));
-   data->no_across = create_spin_button_in_table(table, label, 2, 3, 0, 0, 
+   data->no_across = create_spin_button_in_table(table, label, 2, 3, 0, 0,
 						 100);
-   g_signal_connect(data->no_across, "changed",
-                    G_CALLBACK(recalc_bounds), (gpointer) data);
+   g_signal_connect (data->no_across, "changed",
+                     G_CALLBACK(recalc_bounds), (gpointer) data);
 
    label = create_label_in_table(table, 3, 0, _("_Vert. Spacing:"));
-   data->vert_spacing = create_spin_button_in_table(table, label, 3, 1, 0, 0, 
+   data->vert_spacing = create_spin_button_in_table(table, label, 3, 1, 0, 0,
 						    100);
-   g_signal_connect(data->vert_spacing, "changed",
-                    G_CALLBACK(recalc_bounds), (gpointer) data);
+   g_signal_connect (data->vert_spacing, "changed",
+                     G_CALLBACK(recalc_bounds), (gpointer) data);
 
    label = create_label_in_table(table, 3, 2, _("No. _Down:"));
-   data->no_down = create_spin_button_in_table(table, label, 3, 3, 0, 0, 100);
-   g_signal_connect(data->no_down, "changed",
-                    G_CALLBACK(recalc_bounds), (gpointer) data);
+   data->no_down = create_spin_button_in_table (table, label, 3, 3, 0, 0, 100);
+   g_signal_connect (data->no_down, "changed",
+                     G_CALLBACK(recalc_bounds), (gpointer) data);
 
-   hbox = gtk_hbox_new(FALSE, 1);
-   gtk_container_set_border_width(GTK_CONTAINER(hbox), 10);
-   gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog->dialog)->vbox), hbox);
-   label = gtk_label_new_with_mnemonic(_("Base _URL:"));
-   gtk_widget_show(label);
-   gtk_container_add(GTK_CONTAINER(hbox), label);
-   data->base_url = gtk_entry_new();
-   gtk_container_add(GTK_CONTAINER(hbox), data->base_url);
-   gtk_widget_show(data->base_url);
+   hbox = gtk_hbox_new (FALSE, 6);
+   gtk_container_add (GTK_CONTAINER (dialog->vbox), hbox);
    gtk_widget_show(hbox);
+
+   label = gtk_label_new_with_mnemonic(_("Base _URL:"));
+   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+   gtk_widget_show(label);
+
+   data->base_url = gtk_entry_new ();
+   gtk_container_add (GTK_CONTAINER(hbox), data->base_url);
+   gtk_widget_show(data->base_url);
+
+   gtk_label_set_mnemonic_widget (GTK_LABEL (label), data->base_url);
 
    return data;
 }
@@ -229,7 +234,7 @@ init_guides_dialog(GuidesDialog_t *dialog, ObjectList_t *list)
 			       get_image_height());
    gtk_label_set_text(GTK_LABEL(dialog->image_dimensions), dimension);
    g_free (dimension);
-   gtk_label_set_text(GTK_LABEL(dialog->guide_bounds), 
+   gtk_label_set_text(GTK_LABEL(dialog->guide_bounds),
 		      _("Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"));
    gtk_widget_grab_focus(dialog->width);
 }
