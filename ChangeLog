@@ -1,3 +1,8 @@
+Mon Jun  8 17:47:37 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/menus.c: unref the itemfactories instead of destroying
+	them (from timj)
+
 Mon Jun  8 17:16:22 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/color_select.[ch]: added a hex triplet to the color

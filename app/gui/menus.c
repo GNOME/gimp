@@ -346,10 +346,10 @@ menus_quit ()
 
   if (!initialize)
     {
-      gtk_object_destroy (GTK_OBJECT (toolbox_factory));
-      gtk_object_destroy (GTK_OBJECT (image_factory));
-      gtk_object_destroy (GTK_OBJECT (load_factory));
-      gtk_object_destroy (GTK_OBJECT (save_factory));
+      gtk_object_unref (GTK_OBJECT (toolbox_factory));
+      gtk_object_unref (GTK_OBJECT (image_factory));
+      gtk_object_unref (GTK_OBJECT (load_factory));
+      gtk_object_unref (GTK_OBJECT (save_factory));
     }
 
 }
