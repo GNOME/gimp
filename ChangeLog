@@ -1,3 +1,8 @@
+2003-09-12  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpvectors-export.c: Implemented more useful
+	SVG export.
+
 2003-09-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpvectortool.c: removed all calls to
@@ -144,11 +149,11 @@
 
 2003-09-11  Simon Budig  <simon@gimp.org>
 
-	* vectors/gimpbezierstroke.[ch]: Implemented
+	* app/vectors/gimpbezierstroke.[ch]: Implemented
 	gimp_bezier_stroke_arcto () that creates an elliptical arc
 	in the way SVG works.
 
-	* vectors/gimpvectors-import.c: use it.
+	* app/vectors/gimpvectors-import.c: use it.
 
 2003-09-11  Sven Neumann  <sven@gimp.org>
 

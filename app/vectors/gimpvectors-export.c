@@ -31,6 +31,7 @@
 
 #include "gimpanchor.h"
 #include "gimpstroke.h"
+#include "gimpbezierstroke.h"
 #include "gimpvectors.h"
 #include "gimpvectors-export.h"
 
@@ -120,46 +121,110 @@ gimp_vectors_export_path (const GimpVectors *vectors,
   gchar *data = gimp_vectors_path_data (vectors);
 
   fprintf (file,
-           "  <path d=\"%s\"\n"
-           "        fill=\"none\" stroke=\"black\" stroke-width=\"1\" />\n",
+           "  <path fill=\"none\" stroke=\"black\" stroke-width=\"1\"\n"
+           "        d=\"%s\"/>\n",
            data);
-
   g_free (data);
 }
 
 static gchar *
 gimp_vectors_path_data (const GimpVectors *vectors)
 {
-  GString *str;
-  GList   *strokes;
+  GString  *str;
+  GList    *strokes;
+  gboolean  first_stroke = TRUE;
+  gchar     x_string[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar     y_string[G_ASCII_DTOSTR_BUF_SIZE];
 
   str = g_string_new (NULL);
 
   for (strokes = vectors->strokes; strokes; strokes = strokes->next)
     {
       GimpStroke *stroke = strokes->data;
-      GList      *anchors;
+      GArray     *control_points;
       GimpAnchor *anchor;
+      gboolean    closed;
+      gint        i;
 
-      anchors = stroke->anchors;
-      if (!anchors)
-        continue;
+      control_points = gimp_stroke_control_points_get (stroke, &closed);
 
-      anchor = anchors->data;
-      g_string_append_printf (str, "M%d,%d",
-                              (gint) anchor->position.x,
-                              (gint) anchor->position.y);
-
-      for (anchors = anchors->next; anchors; anchors = anchors->next)
+      if (! first_stroke)
         {
-          anchor = anchors->data;
-          g_string_append_printf (str, " L%d,%d",
-                                  (gint) anchor->position.x,
-                                  (gint) anchor->position.y);
+          g_string_append_printf (str, "\n           ");
+        }
+          
+      first_stroke = FALSE;
+
+      if (GIMP_IS_BEZIER_STROKE (stroke))
+        {
+          if (control_points->len >= 3)
+            {
+              anchor = &g_array_index (control_points, GimpAnchor, 1);
+              g_ascii_formatd (x_string, G_ASCII_DTOSTR_BUF_SIZE,
+                               "%.2f", anchor->position.x);
+              g_ascii_formatd (y_string, G_ASCII_DTOSTR_BUF_SIZE,
+                               "%.2f", anchor->position.y);
+              g_string_append_printf (str, "M %s,%s", x_string, y_string);
+            }
+
+          if (control_points->len > 3)
+            {
+              g_string_append_printf (str, "\n           C");
+            }
+
+          for (i=2; i < control_points->len - 1; i++)
+            {
+              anchor = &g_array_index (control_points, GimpAnchor, i);
+              g_ascii_formatd (x_string, G_ASCII_DTOSTR_BUF_SIZE,
+                               "%.2f", anchor->position.x);
+              g_ascii_formatd (y_string, G_ASCII_DTOSTR_BUF_SIZE,
+                               "%.2f", anchor->position.y);
+              g_string_append_printf (str, " %s,%s", x_string, y_string);
+
+              if (i % 3 == 1)
+                  g_string_append_printf (str, "\n          ");
+            }
+
+          if (closed && control_points->len > 3)
+              g_string_append_printf (str, " Z");
+        }
+      else
+        {
+          g_printerr ("Unknown stroke type\n");
+
+          if (control_points->len >= 1)
+            {
+              anchor = &g_array_index (control_points, GimpAnchor, 0);
+              g_ascii_formatd (x_string, G_ASCII_DTOSTR_BUF_SIZE,
+                               ".2f", anchor->position.x);
+              g_ascii_formatd (y_string, G_ASCII_DTOSTR_BUF_SIZE,
+                               ".2f", anchor->position.y);
+              g_string_append_printf (str, "M %s,%s", x_string, y_string);
+            }
+
+          if (control_points->len > 1)
+            {
+              g_string_append_printf (str, "\n           L");
+            }
+
+          for (i=1; i < control_points->len; i++)
+            {
+              anchor = &g_array_index (control_points, GimpAnchor, i);
+              g_ascii_formatd (x_string, G_ASCII_DTOSTR_BUF_SIZE,
+                               "%.2f", anchor->position.x);
+              g_ascii_formatd (y_string, G_ASCII_DTOSTR_BUF_SIZE,
+                               "%.2f", anchor->position.y);
+              g_string_append_printf (str, " %s,%s", x_string, y_string);
+
+              if (i % 3 == 1)
+                  g_string_append_printf (str, "\n          ");
+            }
+
+          if (closed && control_points->len > 1)
+              g_string_append_printf (str, " Z");
         }
 
-      if (stroke->closed)
-        g_string_append_printf (str, " Z");
+      g_array_free (control_points, TRUE);
     }
 
   return g_string_free (str, FALSE);
