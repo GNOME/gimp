@@ -958,7 +958,7 @@ static pcl_cap_t pcl_model_capabilities[] =
   /* LaserJet 4V, 4Si, 5Si */
   { 5,
     13 * 72, 19 * 72,
-    PCL_RES_150_150 | PCL_RES_300_300,
+    PCL_RES_150_150 | PCL_RES_300_300 | PCL_RES_600_600,
     12, 12, 18, 18,
     PCL_COLOR_NONE,
     PCL_PRINTER_LJ | PCL_PRINTER_NEW_ERG | PCL_PRINTER_TIFF,

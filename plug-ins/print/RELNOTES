@@ -1,19 +1,17 @@
-This is gimp-print version 4.0.0rc1, the first release candidate for
-the first stable release in the 4.0 line.
+This is gimp-print version 4.0.0, the first stable release in the 4.0
+line.
 
-This software includes the Print plug-in for the Gimp, and GhostScript
-and CUPS drivers.  The support for printers in GhostScript and CUPS is
-identical to the support for these printers in the Print plugin --
-they use the identical code base.  Please read Ghost/README and
-CUPS/README.txt for more information on this.
-
-This plugin can be compiled against either Gimp 1.1 or 1.0.
+This software includes the Print plug-in for the Gimp (1.0, 1.1, and
+1.2), and GhostScript and CUPS drivers.  The support for printers in
+GhostScript and CUPS is identical to the support for these printers in
+the Print plugin -- they use the identical code base.  Please read
+Ghost/README and CUPS/README.txt for more information on this.
 
 
 Gimp-Print 4.0.0 is a major release of the Gimp Print plugin and
 associated stp GhostScript driver and CUPS driver.  Among the new
 features over the 2.0 (distributed with the Gimp 1.0) and 3.0
-(distributed with some versions of the Gimp 1.1) line are:
+(distributed with some versions of the Gimp 1.1) releases are:
 
 1) Support for many more printers, including advanced Epson Stylus
    printers and many Canon BubbleJets.  This software now fully
@@ -24,11 +22,13 @@ features over the 2.0 (distributed with the Gimp 1.0) and 3.0
    smoothness of tone.
 
 3) A much-enhanced GUI in the Gimp plugin, particularly for users of
-   recent Gimp 1.1 releases.
+   recent Gimp 1.1 releases.  This GUI offers better placement
+   controls, a live preview (for Gimp 1.1.21+/1.2 only), and other
+   control improvements.
 
 4) Included Ghostscript and CUPS drivers derived from the same source
-   base as the Print plugin, enabling general printing from UNIX/Linux
-   of the same quality as printing from the Gimp.
+   base as the Print plugin, enabling general printing of the same
+   quality as printing from the Gimp.
 
 5) Included support from the Foomatic project (see
    http://www.linuxprinting.org/foomatic.html), greatly easing the
@@ -41,6 +41,15 @@ features over the 2.0 (distributed with the Gimp 1.0) and 3.0
    considerable computation, typical text and graphics now render much
    faster.  There are some new special-purpose extremely fast
    dithering algorithms that can be used.
+
+7) The default color and dithering settings are much more accurate
+   than in previous releases.
+
+8) Users of the Print plugin in the Gimp: PLEASE NOTE THAT THE printrc
+   FILE FORMAT IN THIS RELEASE IS NOT BACKWARD COMPATIBLE WITH THE
+   FORMAT IN 3.0 AND PREVIOUS RELEASES!  The main issue here is that
+   running the plug-in in this release will convert your printrc file
+   to the new format, which old releases cannot read.
 
 The following printers are supported by gimp-print 4.0.0.  Note that
 not all of these printers can print with highest quality.  In
@@ -123,13 +132,63 @@ HP PhotoSmart P1100
 HP LaserJet II series
 HP LaserJet III series
 HP LaserJet 4 series
-HP LaserJet 4V, 4Si
 HP LaserJet 5 series
-HP LaserJet 5Si
 HP LaserJet 6 series
 Lexmark 4076 (PCL printer)
 
+ERRATA:
 
+1) PostScript files (and PPD's) with embedded .setpagedevice commands
+   to choose a media type will not function correctly.  In place of
+   MediaType, stpMediaType will allow a choice of media type.  This
+   will not be fixed in the release; it is not always possible to know
+   what media types are valid at the time of the .setpagedevice call,
+   which GhostScript requires.
+
+2) The higher resolutions of the HP Deskjet 900/1220C and the HP
+   PhotoSmart P1000/P1100 have been disabled as they do not work.
+   Investigation into these modes (Photo-Ret III) is continuing.  It
+   is possible that these resolutions will be re-enabled in a later
+   update to 4.0.
+
+3) There are some known color generation problems.  In particular,
+   greens (particularly weakly saturated greens) tend to be quite
+   weak, giving grass a somewhat tan look.  This may be improved
+   somewhat by printing in 4-color rather than 6-color mode.  The
+   errors in color are not radical, but it may be hard to get a close
+   match for extremely critical work.
+
+   If the image is radically too light and washed out (or radically
+   too dark), please check the color settings, and try setting the
+   defaults (1.0 for all options).
+
+4) When using Epson 4x6 photo paper that is perforated to allow
+   tearing off the unprintable margins it is possible to print part
+   way into those margins.  This will not be fixed in the release.
+   You must specify the correct image positioning in the plugin.
+
+5) Red Hat 6.1 users cannot configure the plug-in.  The problem is
+   that neither the gimp nor the gimp-devel rpm's in that release
+   include gimptool, which is necessary for configuration to work.
+   This will not be fixed in the release; it is not possible for us to
+   distribute a version of gimptool that will work in all cases.  This
+   has no effect on the usability of the GhostScript or CUPS drivers.
+
+   The recommended fix is to recompile the Gimp from source (either
+   1.0.4 or the latest 1.1/1.2 release).  That will install gimptool,
+   and you will then be able to build the plug-in.  This does not
+   affect the Ghostscript driver.
+
+6) The Epson Stylus Color 480 and 580 printers are not supported.
+   These printers use a somewhat different print head from all other
+   Epson Stylus printers that requires additional work.  In addition,
+   these printers require a special command sequence to change the ink
+   cartridge (there are no front panel buttons to change the
+   cartridge), and that sequence is unavailable to us.  We do not
+   anticipate supporting these printers.
+
+
+EARLIER RELEASES
 
 For users of earlier versions in the gimp-print 4.0 line (3.1 and 4.0
 alpha and beta releases), the following release notes covering
@@ -157,45 +216,8 @@ Gimp-Print 4.0.0 contains the following fixes over Gimp-Print 4.0b3:
    reports of overrunning pages.  This is presumably due to paper size
    or printers not being perfectly in spec.
 
-Errata:
-
-1) PostScript files (and PPD's) with embedded .setpagedevice commands
-   to choose a media type will not function correctly.  In place of
-   MediaType, stpMediaType will allow a choice of media type.  This
-   will not be fixed in the release; it is not always possible to know
-   what media types are valid at the time of the .setpagedevice call,
-   which GhostScript requires.
-
-2) The higher resolutions of the HP Deskjet 900/1220C and the HP
-   PhotoSmart P1000/P1100 have been disabled as they do not work.
-   Investigation into these modes (Photo-Ret III) is continuing.
-
-3) There are some known color generation problems.  In particular,
-   greens (particularly weakly saturated greens) tend to be quite
-   weak, giving grass a somewhat tan look.  This may be improved
-   somewhat by printing in 4-color rather than 6-color mode.  We do
-   not anticipate much if any further improvement in the release
-   beyond the change in saturation noted above.  The errors in color
-   are not radical, but it may be hard to get a close match for
-   extremely critical work.
-
-   If the image is radically too light and washed out, please check
-   the color settings, and try setting the defaults (1.0 for all
-   options).
-
-4) When using Epson 4x6 photo paper that is perforated to allow
-   tearing off the unprintable margins it is possible to print part
-   way into those margins.  This will not be fixed in the release.
-
-5) Red Hat 6.1 users cannot configure the plug-in.  The problem is
-   that neither the gimp nor the gimp-devel rpm's in that release
-   include gimptool, which is necessary for configuration to work.
-   This will not be fixed in the release.
-
-   The recommended workaround is to recompile the Gimp from source
-   (either 1.0.4 or the latest 1.1/1.2 release).  That will install
-   gimptool, and you will then be able to build the plug-in.  This
-   does not affect the Ghostscript driver.
+7) Canon printers at 1440x720 DPI positioned the image too far to the
+   left edge of the paper.
 
 
 Gimp-Print 4.0b3 contains the following fixes over Gimp-Print 4.0b2:
@@ -229,46 +251,6 @@ Gimp-Print 4.0b3 contains the following fixes over Gimp-Print 4.0b2:
 
 8) With CUPS 1.1.3 and earlier, Under some circumstances the margins
    are not set correctly.  The solution is to upgrade to CUPS 1.1.4.
-
-Errata:
-
-1) PostScript files (and PPD's) with embedded .setpagedevice commands
-   to choose a media type will not function correctly.  In place of
-   MediaType, stpMediaType will allow a choice of media type.  This
-   will not be fixed in the release; it is not always possible to know
-   what media types are valid at the time of the .setpagedevice call,
-   which GhostScript requires.
-
-2) The higher resolutions of the HP Deskjet 900/1220C and the HP
-   PhotoSmart P1000/P1100 have been disabled as they do not work.
-   Investigation into these modes (Photo-Ret III) is continuing.
-
-3) There are some known color generation problems.  In particular,
-   greens (particularly weakly saturated greens) tend to be quite
-   weak, giving grass a somewhat tan look.  This may be improved
-   somewhat by printing in 4-color rather than 6-color mode.  We do
-   not anticipate much if any further improvement in the release
-   beyond the change in saturation noted above.  The errors in color
-   are not radical, but it may be hard to get a close match for
-   extremely critical work.
-
-   If the image is radically too light and washed out, please check
-   the color settings, and try setting the defaults (1.0 for all
-   options).
-
-4) When using Epson 4x6 photo paper that is perforated to allow
-   tearing off the unprintable margins it is possible to print part
-   way into those margins.  This will not be fixed in the release.
-
-5) Red Hat 6.1 users cannot configure the plug-in.  The problem is
-   that neither the gimp nor the gimp-devel rpm's in that release
-   include gimptool, which is necessary for configuration to work.
-   This will not be fixed in the release.
-
-   The recommended workaround is to recompile the Gimp from source
-   (either 1.0.4 or the latest 1.1/1.2 release).  That will install
-   gimptool, and you will then be able to build the plug-in.  This
-   does not affect the Ghostscript driver.
 
 
 Gimp-Print 4.0b2 contains the following fixes and improvements over
@@ -333,63 +315,6 @@ Gimp-Print 4.0b1:
    that the parameters are set to their correct defaults (use the Set
    Defaults button in the Gimp 1.1/1.2 GUI, or set all of the
    parameters to 1.0 in the Gimp 1.0 GUI).
-
-Errata:
-
-1) PostScript files (and PPD's) with embedded .setpagedevice commands
-   to choose a media type will not function correctly.  In place of
-   MediaType, stpMediaType will allow a choice of media type.  This
-   will not be fixed in the release; it is not always possible to know
-   what media types are valid at the time of the .setpagedevice call,
-   which GhostScript requires.
-
-2) The higher resolutions of the HP Deskjet 900/1220C and the HP
-   PhotoSmart P1000/P1100 have been disabled as they do not work.
-   Investigation into these modes (Photo-Ret III) is continuing.
-
-3) There are some known color generation problems.  In particular,
-   greens (particularly weakly saturated greens) tend to be quite
-   weak, giving grass a somewhat tan look.  This may be improved
-   somewhat by printing in 4-color rather than 6-color mode.  We do
-   not anticipate much if any further improvement in the release
-   beyond the change in saturation noted above.  The errors in color
-   are not radical, but it may be hard to get a close match for
-   extremely critical work.
-
-   If the image is radically too light and washed out, please check
-   the color settings.  Fix (15) above fixes a problem whereby newly
-   added printers will often have an incorrect gamma setting, but it
-   does not retroactively fix printers that were misconfigured because
-   of this.  That must be fixed manually.
-
-4) As noted above, when using Epson 4x6 photo paper that is perforated
-   to allow tearing off the unprintable margins it is possible to
-   print part way into those margins.  This will not be fixed in the
-   release.
-
-5) Red Hat 6.1 users cannot configure the plug-in.  The problem is
-   that neither the gimp nor the gimp-devel rpm's in that release
-   include gimptool, which is necessary for configuration to work.
-   This will not be fixed in the release.
-
-   The recommended workaround is to recompile the Gimp from source
-   (either 1.0.4 or the latest 1.1/1.2 release).  That will install
-   gimptool, and you will then be able to build the plug-in.  This
-   does not affect the Ghostscript driver.
-
-6) The CUPS drivers do not pass through the media type correctly, so
-   the driver always prints with the default media type, with CUPS
-   1.1.3 and earlier.  CUPS 1.1.4 (which may not be out at the time
-   you read this) has the necessary fix.
-
-7) When printing text with CUPS, under some circumstances the margins
-   are not set correctly.  This is fixed in CUPS 1.1.4 (which may not
-   be out at the time you read this); no fix is needed (or possible)
-   in gimp-print.
-
-8) The Epson Stylus 480 does not print correctly in all modes.  If an
-   owner steps forward who is willing to work on fixing the code, this
-   may get fixed, otherwise it will not be fixed.
 
 
 Gimp-Print 4.0b1 contains the following improvements and changes over
@@ -481,13 +406,6 @@ Gimp-Print 4.0a3:
 19) A number of miscellaneous bugs have been fixed.
 
 
-Errata:
-
-1) The higher resolutions of the HP Deskjet 900/1220C and the HP
-   PhotoSmart P1000/P1100 have been disabled as they do not work.
-   Investigation into these modes (Photo-Ret III) is continuing.
-
-
 Gimp-Print 4.0a3 contains the following improvements over Gimp-Print
 4.0a2:
 
@@ -576,34 +494,6 @@ Gimp-Print 4.0a3 contains the following improvements over Gimp-Print
 
 21) Miscellaneous bug fixes for certain Epson Stylus printers.
 
-ERRATA:
-
-1) The PDQ and CUPS descriptor files have still not been updated.
-
-2) Printers other than Epson Stylus printers are in an unknown state
-   of tuning.  Unless testers step forward, the these printers will
-   not be tuned in the final release!
-
-3) Documentation is still almost nonexistent.
-
-4) Red Hat 6.1 users cannot configure the plug-in.  The problem is
-   that neither the gimp nor the gimp-devel rpm's in that release
-   include gimptool, which is necessary for configuration to work.
-   The recommended solution is to recompile the Gimp from source
-   (either 1.0.4 or the latest 1.1/1.2 release).  That will install
-   gimptool, and you will then be able to build the plug-in.  This
-   does not affect the Ghostscript driver.  This is not planned to be
-   fixed in the 4.0 release.
-
-5) In some cases, when the scaling has been set to PPI mode, the
-   plugin will start at the minimum PPI allowed for the image (maximum
-   permitted image size).  It is not understood why this is happening.
-
-6) There are some known color generation problems.  In particular,
-   greens (particularly weakly saturated greens) tend to be quite
-   weak, giving grass a somewhat tan look.  These will not be fixed
-   for 4.0.
-
 
 Gimp-Print 4.0a2 contains the following improvements over Gimp-Print
 4.0a1:
@@ -628,17 +518,6 @@ Gimp-Print 4.0a2 contains the following improvements over Gimp-Print
    newer Epson printers.
 
 7) Work around some inlining problems with egcs 1.1.2.
-
-ERRATA:
-
-1) The PDQ and CUPS descriptor files are still not fixed.
-
-2) While calibration should still be improved, there is doubtless much
-   to go.
-
-3) There have been sporadic reports of blank splotches or regions,
-   apparently at the very darkest intensity.  This is not yet fully
-   characterized.
 
 
 Gimp-Print 4.0a1 contains the following improvements over Gimp-Print 3.1.9:
@@ -680,22 +559,6 @@ Gimp-Print 4.0a1 contains the following improvements over Gimp-Print 3.1.9:
 
 11) Adaptive hybrid dithering is now the default.
 
-ERRATA:
-
-1) The PDQ and CUPS descriptor files are not updated for the latest
-   change to the Ghostscript driver.
-
-2) The Epson Stylus 850 apparently does not print to the very top of
-   the page.
-
-3) Not all printers have been fully calibrated, so color and density
-   matching may be significantly off in some cases.  Also, for some
-   printers it may be possible to use smaller dot sizes than
-   currently, which will produce higher quality output.
-
-4) Photograph image type is known to work improperly with at least
-   EGCS 1.1.2, due to problems with inlining in that compiler.
-
 
 Gimp-Print 3.1.9 contains the following improvements over Gimp-Print 3.1.8:
 
@@ -716,9 +579,6 @@ Gimp-Print 3.1.9 contains the following improvements over Gimp-Print 3.1.8:
 
    * Artifacts in the adaptive hybrid and adaptive random dithering
      modes have been eliminated.
-
-Please see the README for more information.
-
 
 
 Gimp-Print 3.1.8 contains the following improvements over 3.1.7:
@@ -766,10 +626,10 @@ Gimp-Print 3.1.8 contains the following improvements over 3.1.7:
    for graphics.
 
 14) Bug fixes for Ghostscript driver.  Also, Ghostscript driver now
-    offers choice of ink type.
+   offers choice of ink type.
 
 15) Some improvement in Epson Stylus Photo, Photo 700, and Photo EX
-    output quality.
+   output quality.
 
 
 Gimp-Print 3.1.7 contains the following improvements over Gimp-Print 3.1.6:

@@ -1,3 +1,11 @@
+2000-10-29  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/print/Makefile.am
+	* plug-ins/print/README
+	* plug-ins/print/RELNOTES
+	* plug-ins/print/print-canon.c
+	* plug-ins/print/print-pcl.c: Gimp-Print Version 4.0.0
+
 2000-10-28  Tor Lillqvist  <tml@iki.fi>
 
 	* app/gimprc.c (parse_gimprc_file) 
