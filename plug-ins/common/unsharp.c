@@ -275,8 +275,8 @@ blur_line (const gdouble *ctable,
     {
       for (row = 0; row < len; row++)
         {
-          scale = 0;
           /* find the scale factor */
+          scale = 0;
           for (j = 0; j < len; j++)
             {
               /* if the index is in bounds, add it to the scale counter */
@@ -452,7 +452,7 @@ unsharp_region (GimpPixelRgn *srcPR,
       blur_line (ctable, cmatrix, cmatrix_length, src, dest, width, bytes);
       gimp_pixel_rgn_set_row (destPR, dest, x1, y1 + row, width);
 
-      if (show_progress && row % 5 == 0)
+      if (show_progress && row % 8 == 0)
         gimp_progress_update ((gdouble) row / (3 * height));
     }
 
@@ -463,7 +463,7 @@ unsharp_region (GimpPixelRgn *srcPR,
       blur_line (ctable, cmatrix, cmatrix_length, src, dest, height, bytes);
       gimp_pixel_rgn_set_col (destPR, dest, x1 + col, y1, height);
 
-      if (show_progress && col % 5 == 0)
+      if (show_progress && col % 8 == 0)
         gimp_progress_update ((gdouble) col / (3 * width) + 0.33);
     }
 
@@ -474,8 +474,10 @@ unsharp_region (GimpPixelRgn *srcPR,
      the blurred version) images */
   for (row = 0; row < height; row++)
     {
-      gint value = 0;
-      gint u, v;
+      const guchar *s = src;
+      guchar       *d = dest;
+      gint          value = 0;
+      gint          u, v;
 
       /* get source row */
       gimp_pixel_rgn_get_row (srcPR, src, x1, y1 + row, width);
@@ -488,19 +490,18 @@ unsharp_region (GimpPixelRgn *srcPR,
         {
           for (v = 0; v < bytes; v++)
             {
-              gint diff = (src[u * bytes + v] - dest[u * bytes + v]);
+              gint diff = *s - *d;
 
               /* do tresholding */
               if (abs (2 * diff) < threshold)
                 diff = 0;
 
-              value = src[u * bytes + v] + amount * diff;
-
-              dest[u * bytes + v] = CLAMP (value, 0, 255);
+              value = *s++ + amount * diff;
+              *d++ = CLAMP (value, 0, 255);
             }
         }
-      /* update progress bar every five rows */
-      if (show_progress && row % 5 == 0)
+
+      if (show_progress && row % 8 == 0)
         gimp_progress_update ((gdouble) row / (3 * height) + 0.67);
 
       gimp_pixel_rgn_set_row (destPR, dest, x1, y1 + row, width);
@@ -591,6 +592,7 @@ gen_convolve_matrix (gdouble   radius,
   sum = 0;
   for (i = 0; i < matrix_length; i++)
     sum += cmatrix[i];
+
   for (i = 0; i < matrix_length; i++)
     cmatrix[i] = cmatrix[i] / sum;
 
