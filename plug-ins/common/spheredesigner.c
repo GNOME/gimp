@@ -2240,12 +2240,15 @@ static gboolean
 expose_event (GtkWidget      *widget,
 	      GdkEventExpose *event)
 {
-  gdk_draw_rgb_image (widget->window,
-		      widget->style->white_gc,
-		      event->area.x, event->area.y,
-		      event->area.width, event->area.height,
-		      GDK_RGB_DITHER_MAX,
-		      img, PREVIEWSIZE * 3);
+  guchar *data = img + event->area.y * 3 * PREVIEWSIZE + event->area.x * 3;
+
+  gdk_draw_rgb_image_dithalign (widget->window,
+				widget->style->white_gc,
+				event->area.x, event->area.y,
+				event->area.width, event->area.height,
+				GDK_RGB_DITHER_MAX,
+				data, PREVIEWSIZE * 3,
+				- event->area.x, - event->area.y);
 
   return TRUE;
 }
@@ -2933,9 +2936,14 @@ render (void)
 		  break;
 		}
 	    }
+
+#if CONTINOUS_UPDATE
 	  drawit ();
+	  
 	  while (gtk_events_pending ())
 	    gtk_main_iteration ();
+#endif
+
 	  if (running != 1)
 	    {
 	      break;
@@ -2946,6 +2954,7 @@ render (void)
       if (running == -1)
 	break;
     }
+
   running = 0;
   drawit ();
 }
@@ -3063,7 +3072,6 @@ sphere_main (GimpDrawable *drawable)
   else
     rebuildlist ();
 
-  drawit ();
   gtk_main ();
 
   return do_run;
