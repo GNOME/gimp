@@ -1,3 +1,8 @@
+Sun Jul 11 15:19:34 CEST 1999  Marc Lehmann <pcg@goof.com>
+
+	* plug-ins/common/png.c: add abort() to save_image, as to catch
+        bugs early on.
+        
 Sun Jul 11 14:05:06 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/paths_dialog.c: my last change did break path deletion - this
@@ -94,8 +99,8 @@ Fri Jul  9 16:47:04 MEST 1999  Sven Neumann <sven@gimp.org>
 
 Thu Jul  8 00:08:50 EDT 1999  Adrian Likins <alikins@redhat.com>
 
-	*app/interface.c: added type for _NETSCAPE_URL to the DnD stuff
-	so you can now drag image urls from netscape
+	* app/interface.c: added type for _NETSCAPE_URL to the DnD stuff
+	so you can now drag image urls from netscape.
 
 Wed Jul  7 20:33:24 MEST 1999  Sven Neumann <sven@gimp.org>
 

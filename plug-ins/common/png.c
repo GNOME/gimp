@@ -661,6 +661,8 @@ save_image(char   *filename,	/* I - File to save to */
         info->num_palette= num_colors;
         bpp              = 1;
         break;
+    default:
+        abort ();
   };
 
   png_write_info(pp, info);
