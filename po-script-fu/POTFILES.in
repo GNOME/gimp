@@ -62,6 +62,10 @@ plug-ins/script-fu/scripts/glowing-logo.scm
 plug-ins/script-fu/scripts/gradient-bevel-logo.scm
 plug-ins/script-fu/scripts/gradient-example.scm
 plug-ins/script-fu/scripts/grid-system.scm
+plug-ins/script-fu/scripts/guides-from-selection.scm
+plug-ins/script-fu/scripts/guides-new-percent.scm
+plug-ins/script-fu/scripts/guides-new.scm
+plug-ins/script-fu/scripts/guides-remove-all.scm
 plug-ins/script-fu/scripts/hsv-graph.scm
 plug-ins/script-fu/scripts/i26-gunya2.scm
 plug-ins/script-fu/scripts/image-structure.scm
