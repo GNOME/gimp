@@ -1,3 +1,10 @@
+2003-07-30  Manish Singh  <yosh@gimp.org>
+
+	* tools/pdbgen/app.pl: fixed UTF-8 reversed check.
+
+	* libgimp/gimptexttool_pdb.c: regenerated (doc string changes, forgot
+	to commit from previous change)
+
 2003-07-30  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimprc-blurbs.h: tweaked some blurbs.
@@ -10,7 +17,7 @@
 
 2003-07-30  Dave Neary  <bolsh@gimp.org>
 
-	plug-ins/common/edge.c: Trivial clean-up.
+	* plug-ins/common/edge.c: Trivial clean-up.
 
 2003-07-29  Manish Singh  <yosh@gimp.org>
 

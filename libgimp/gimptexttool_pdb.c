@@ -36,7 +36,7 @@
  * @antialias: Antialiasing.
  * @size: The size of text in either pixels or points.
  * @size_type: The units of specified size.
- * @fontname: The fontname (conforming to the X Logical Font Description Conventions).
+ * @fontname: The name of the font.
  *
  * Add text at the specified location as a floating selection or a new
  * layer.
@@ -97,7 +97,7 @@ gimp_text_fontname (gint32        image_ID,
  * @text: The text to generate.
  * @size: The size of text in either pixels or points.
  * @size_type: The units of specified size.
- * @fontname: The fontname (conforming to the X Logical Font Description Conventions).
+ * @fontname: The name of the font.
  * @width: The width of the specified font.
  * @height: The height of the specified font.
  * @ascent: The ascent of the specified font.
@@ -164,14 +164,14 @@ gimp_text_get_extents_fontname (const gchar  *text,
  * @antialias: Antialiasing.
  * @size: The size of text in either pixels or points.
  * @size_type: The units of specified size.
- * @foundry: The font foundry, \"*\" for any.
- * @family: The font family, \"*\" for any.
- * @weight: The font weight, \"*\" for any.
- * @slant: The font slant, \"*\" for any.
- * @set_width: The font set-width, \"*\" for any.
- * @spacing: The font spacing, \"*\" for any.
- * @registry: The font registry, \"*\" for any.
- * @encoding: The font encoding, \"*\" for any.
+ * @foundry: The font foundry.
+ * @family: The font family.
+ * @weight: The font weight.
+ * @slant: The font slant.
+ * @set_width: The font set-width.
+ * @spacing: The font spacing.
+ * @registry: The font registry.
+ * @encoding: The font encoding.
  *
  * Add text at the specified location as a floating selection or a new
  * layer.
@@ -253,14 +253,14 @@ gimp_text (gint32        image_ID,
  * @text: The text to generate.
  * @size: The size of text in either pixels or points.
  * @size_type: The units of specified size.
- * @foundry: The font foundry, \"*\" for any.
- * @family: The font family, \"*\" for any.
- * @weight: The font weight, \"*\" for any.
- * @slant: The font slant, \"*\" for any.
- * @set_width: The font set-width, \"*\" for any.
- * @spacing: The font spacing, \"*\" for any.
- * @registry: The font registry, \"*\" for any.
- * @encoding: The font encoding, \"*\" for any.
+ * @foundry: The font foundry.
+ * @family: The font family.
+ * @weight: The font weight.
+ * @slant: The font slant.
+ * @set_width: The font set-width.
+ * @spacing: The font spacing.
+ * @registry: The font registry.
+ * @encoding: The font encoding.
  * @width: The width of the specified font.
  * @height: The height of the specified font.
  * @ascent: The ascent of the specified font.
