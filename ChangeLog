@@ -1,3 +1,10 @@
+2001-07-02  Michael Natterer  <mitch@gimp.org>
+
+	* Makefile.am
+	* configure.in
+	* help/*: removed all help files. They will be distributed as a
+	separate package in the future.
+
 2001-07-02  Nick Lamb  <njl195@zepler.org.uk>
 
         * plug-ins/common/png.c: Change PNG defaults (no 1.0 gamma chunk)

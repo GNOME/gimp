@@ -20,7 +20,6 @@ SUBDIRS = \
 	pixmaps		\
 	data		\
 	tips		\
-	help		\
 	docs		\
 	devel-docs	\
 	build
