@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = po intl libgimp plug-ins app data @GIMPDOCS@
+SUBDIRS = po intl @GCG_SUBDIRS@ libgimp app plug-ins data @GIMPDOCS@
 
 bin_SCRIPTS = gimptool
 

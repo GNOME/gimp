@@ -1,3 +1,40 @@
+Thu Jan  7 21:33:39 EET 1999 Lauri Alanko <nether@gimp.org>
+
+	* autogen.sh
+	* configure.in
+	* Makefile.am:
+
+	Added stuff to make gcg by default (for maintainers)
+	
+	* app/Makefile.am
+	* app/app_procs.c
+	* app/appenv.h
+	* app/colormap_dialog.gc
+	* app/colormap_dialog.i.c
+	* app/commands.c
+	* app/convert.c
+	* app/gimage.c
+	* app/gimp.gh
+	* app/gimpimage.c
+	* app/gimpimage.h
+	* app/gimpset.c
+	* app/gimpset.h
+	* app/gimpsetP.h
+	* app/main.c
+	* app/preferences_dialog.c
+	* app/undo.c:
+
+	Redid the indexed palette dialog to not crash, to be a bit more
+	usable, and to be a cleaner module. A first shot at using gcg in
+	actual practice..
+
+	If something is screwed, let me know!
+	
+	* libgimp/gimp.c
+	* libgimp/gimp.h:
+
+	Now keep a local copy of temp proc names
+
 Wed Jan  6 23:30:03 GMT 1999 Andy Thomas <alt@picnic.demon.co.uk>
 
 	* app/indexed_palette.c

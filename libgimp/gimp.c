@@ -245,7 +245,7 @@ gimp_progress_update (gdouble percentage)
 
 
 void
-gimp_message (char *message)
+gimp_message (const gchar *message)
 {
   GParam *return_vals;
   int nreturn_vals;
@@ -486,18 +486,21 @@ gimp_install_temp_proc (char     *name,
 			  nparams, nreturn_vals, params, return_vals);
 
   /*  Insert the temp proc run function into the hash table  */
-  g_hash_table_insert (temp_proc_ht, (gpointer) name, (gpointer) run_proc);
+  g_hash_table_insert (temp_proc_ht, g_strdup (name), (gpointer) run_proc);
 }
 
 void
 gimp_uninstall_temp_proc (char *name)
 {
   GPProcUninstall proc_uninstall;
-
+  gpointer hash_name;
   proc_uninstall.name = name;
 
   if (!gp_proc_uninstall_write (_writefd, &proc_uninstall))
     gimp_quit ();
+  
+  g_hash_table_lookup_extended (temp_proc_ht, name, &hash_name, NULL);
+  g_free (hash_name);
   g_hash_table_remove (temp_proc_ht, (gpointer) name);
 }
 

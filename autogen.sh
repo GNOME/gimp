@@ -88,7 +88,14 @@ automake $am_opt
 autoconf
 cd $ORIGDIR
 
-$srcdir/configure "$@"
+if test -z "$NO_GCG"; then
+  echo "Running autogen.sh under tools/gcg..."
+  cd tools/gcg
+  ./autogen.sh
+  cd $ORIGDIR
+fi
+
+$srcdir/configure --enable-maintainer-mode "$@"
 
 echo 
 echo "Now type 'make' to compile $PROJECT."

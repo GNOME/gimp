@@ -31,10 +31,52 @@ AM_MAINTAINER_MODE
 
 AC_CANONICAL_HOST
 
+dnl Checks for programs.
+AC_PROG_CC
+AC_ISC_POSIX
+AM_PROG_CC_STDC
+AC_PROG_INSTALL
+AC_PROG_LN_S
+AC_PROG_MAKE_SET
+AC_PROG_CPP
+
 AC_ARG_ENABLE(debug, [  --enable-debug          turn on debugging [default=no]],
 if eval "test x$enable_debug = xyes"; then
   DEBUGFLAG="-g"
 fi)
+
+ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
+
+dnl Why the heck isn't there already a macro for this?
+
+AC_ARG_WITH(gnu-make, [  --with-gnu-make         assume 'make' understands gnu extensions],
+,
+if $MAKE -v 2>/dev/null | grep 'GNU Make' >/dev/null; then
+  with_gnu_make=yes
+fi)
+
+AC_ARG_WITH(gcg, [  --with-gcg              build 'gcg' code generation tool],
+,
+with_gcg=$enable_maintainer_mode)
+
+if eval "test x$with_gcg = xyes"; then
+  GCG_SUBDIRS="tools/gcg"
+else
+  GCG_SUBDIRS=""
+fi
+
+AC_SUBST(GCG_SUBDIRS)
+AC_CONFIG_SUBDIRS($GCG_SUBDIRS)
+
+AC_ARG_ENABLE(gcg-deps, [  --enable-gcg-deps       turn on dynamic gcg dependency tracking (need gcc and gnu make)],
+,
+if eval "test x$GCC$with_gnu_make$with_gcg = xyesyesyes"; then
+  enable_gcg_deps=yes
+fi)
+
+AM_CONDITIONAL(WITH_GCG, test x$with_gcg = xyes)
+AM_CONDITIONAL(WITH_GNU_MAKE, test x$with_gnu_make = xyes)
+AM_CONDITIONAL(ENABLE_GCG_DEPS, test x$enable_gcg_deps = xyes)
 
 AC_ARG_ENABLE(ansi, [  --enable-ansi           turn on strict ansi [default=no]],
 		    , enable_ansi=no)
@@ -52,14 +94,6 @@ if test -n "$DEBUGFLAG"; then
   CFLAGS="$DEBUGFLAG $CFLAGS"
 fi
 
-dnl Checks for programs.
-AC_PROG_CC
-AC_ISC_POSIX
-AM_PROG_CC_STDC
-AC_PROG_INSTALL
-AC_PROG_LN_S
-AC_PROG_MAKE_SET
-AC_PROG_CPP
 
 dnl i18n stuff
 ALL_LINGUAS="fr sv ja it fi ko de hu"

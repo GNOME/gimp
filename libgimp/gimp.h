@@ -70,11 +70,7 @@ struct _GPlugInInfo
   /* called to run a procedure the plug-in installed in the
    *  procedure database.
    */
-  void (*run_proc) (char    *name,
-		    int      nparams,
-		    GParam  *param,
-		    int     *nreturn_vals,
-		    GParam **return_vals);
+  GRunProc run_proc;
 };
 
 struct _GTile
@@ -223,7 +219,7 @@ void gimp_progress_update (gdouble percentage);
 /* Pops up a dialog box with "message". Useful for status and
  * error reports. If "message" is NULL, do nothing.
  */
-void gimp_message (char *message);
+void gimp_message (const gchar *message);
 
 
 /* Query the gimp application's procedural database.
