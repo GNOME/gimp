@@ -43,11 +43,6 @@ static void   gimp_drawable_list_item_init       (GimpDrawableListItem      *lis
 static void   gimp_drawable_list_item_set_viewable    (GimpListItem      *list_item,
                                                        GimpViewable      *viewable);
 
-static gboolean   gimp_drawable_list_item_drag_motion (GtkWidget         *widget,
-                                                       GdkDragContext    *context,
-                                                       gint               x,
-                                                       gint               y,
-                                                       guint              time);
 static gboolean   gimp_drawable_list_item_drag_drop   (GtkWidget         *widget,
                                                        GdkDragContext    *context,
                                                        gint               x,
@@ -100,7 +95,6 @@ gimp_drawable_list_item_class_init (GimpDrawableListItemClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  widget_class->drag_motion     = gimp_drawable_list_item_drag_motion;
   widget_class->drag_drop       = gimp_drawable_list_item_drag_drop;
 
   list_item_class->set_viewable = gimp_drawable_list_item_set_viewable;
@@ -176,35 +170,6 @@ gimp_drawable_list_item_set_viewable (GimpListItem *list_item,
 			   G_CALLBACK (gimp_drawable_list_item_visibility_changed),
 			   G_OBJECT (list_item),
 			   0);
-}
-
-static gboolean
-gimp_drawable_list_item_drag_motion (GtkWidget      *widget,
-                                     GdkDragContext *context,
-                                     gint            x,
-                                     gint            y,
-                                     guint           time)
-{
-  GimpListItem  *list_item;
-  GimpViewable  *src_viewable;
-  gint           dest_index;
-  GdkDragAction  drag_action;
-  GimpDropType   drop_type;
-  gboolean       return_val;
-
-  list_item = GIMP_LIST_ITEM (widget);
-
-  return_val = gimp_list_item_check_drag (list_item, context, x, y,
-                                          &src_viewable,
-                                          &dest_index,
-                                          &drag_action,
-                                          &drop_type);
-
-  gdk_drag_status (context, drag_action, time);
-
-  list_item->drop_type = drop_type;
-
-  return return_val;
 }
 
 static gboolean

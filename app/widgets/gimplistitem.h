@@ -36,6 +36,7 @@ extern "C" {
 #define GIMP_LIST_ITEM_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LIST_ITEM, GimpListItemClass))
 #define GIMP_IS_LIST_ITEM(obj)           (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_LIST_ITEM))
 #define GIMP_IS_LIST_ITEM_CLASS(klass)   (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LIST_ITEM))
+#define GIMP_LIST_ITEM_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_LIST_ITEM, GimpListItemClass))
 
 
 typedef struct _GimpListItemClass  GimpListItemClass;
@@ -63,13 +64,15 @@ struct _GimpListItemClass
 {
   GtkListItemClass  parent_class;
 
+  /*  virtual functions  */
   void (* set_viewable)     (GimpListItem *list_item,
 			     GimpViewable *viewable);
   void (* set_preview_size) (GimpListItem *list_item);
 };
 
 
-GtkType     gimp_list_item_get_type         (void);
+GType       gimp_list_item_get_type         (void);
+
 GtkWidget * gimp_list_item_new              (GimpViewable        *viewable,
 					     gint                 preview_size);
 

@@ -72,9 +72,6 @@ enum
   EXTENDED_CLICKED,
   CONTEXT,
   RENDER,
-  GET_SIZE,
-  NEEDS_POPUP,
-  CREATE_POPUP,
   LAST_SIGNAL
 };
 
@@ -196,45 +193,6 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 		  NULL, NULL,
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
-
-  preview_signals[RENDER] = 
-    g_signal_new ("render",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_LAST,
-		  G_STRUCT_OFFSET (GimpPreviewClass, render),
-		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
-
-  preview_signals[GET_SIZE] = 
-    g_signal_new ("get_size",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_LAST,
-		  G_STRUCT_OFFSET (GimpPreviewClass, get_size),
-		  NULL, NULL,
-		  gimp_cclosure_marshal_VOID__INT_POINTER_POINTER,
-		  G_TYPE_NONE, 3,
-		  G_TYPE_INT,
-		  G_TYPE_POINTER,
-		  G_TYPE_POINTER);
-
-  preview_signals[NEEDS_POPUP] = 
-    g_signal_new ("needs_popup",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_LAST,
-		  G_STRUCT_OFFSET (GimpPreviewClass, needs_popup),
-		  NULL, NULL,
-		  gimp_cclosure_marshal_BOOLEAN__VOID,
-		  G_TYPE_BOOLEAN, 0);
-
-  preview_signals[CREATE_POPUP] = 
-    g_signal_new ("create_popup",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_LAST,
-		  G_STRUCT_OFFSET (GimpPreviewClass, create_popup),
-		  NULL, NULL,
-		  gimp_cclosure_marshal_POINTER__VOID,
-		  G_TYPE_POINTER, 0);
 
   object_class->destroy              = gimp_preview_destroy;
 
@@ -484,7 +442,6 @@ gimp_preview_set_size (GimpPreview *preview,
 {
   gint width, height;
 
-  g_return_if_fail (preview != NULL);
   g_return_if_fail (GIMP_IS_PREVIEW (preview));
   g_return_if_fail (preview_size > 0 && preview_size <= 256);
   g_return_if_fail (border_width >= 0 && border_width <= 16);
@@ -505,7 +462,6 @@ gimp_preview_set_size_full (GimpPreview *preview,
 			    gint         height,
 			    gint         border_width)
 {
-  g_return_if_fail (preview != NULL);
   g_return_if_fail (GIMP_IS_PREVIEW (preview));
   g_return_if_fail (width  > 0 && width  <= 256);
   g_return_if_fail (height > 0 && height <= 256);
@@ -527,7 +483,6 @@ void
 gimp_preview_set_dot_for_dot (GimpPreview *preview,
 			      gboolean     dot_for_dot)
 {
-  g_return_if_fail (preview != NULL);
   g_return_if_fail (GIMP_IS_PREVIEW (preview));
 
   if (dot_for_dot != preview->dot_for_dot)
@@ -549,7 +504,6 @@ void
 gimp_preview_set_border_color (GimpPreview   *preview,
 			       const GimpRGB *color)
 {
-  g_return_if_fail (preview != NULL);
   g_return_if_fail (GIMP_IS_PREVIEW (preview));
   g_return_if_fail (color != NULL);
 
@@ -564,7 +518,9 @@ gimp_preview_set_border_color (GimpPreview   *preview,
 void
 gimp_preview_render (GimpPreview *preview)
 {
-  g_signal_emit (G_OBJECT (preview), preview_signals[RENDER], 0);
+  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+
+  GIMP_PREVIEW_GET_CLASS (preview)->render (preview);
 }
 
 static gint
@@ -594,13 +550,18 @@ gimp_preview_button_press_event (GtkWidget      *widget,
 				       bevent->y);
 	    }
 	}
-      else if (bevent->button == 3)
-	{
-	  g_signal_emit (G_OBJECT (widget), preview_signals[CONTEXT], 0);
-	}
       else
 	{
-	  return FALSE;
+	  preview->press_state = 0;
+
+	  if (bevent->button == 3)
+	    {
+	      g_signal_emit (G_OBJECT (widget), preview_signals[CONTEXT], 0);
+	    }
+	  else
+	    {
+	      return FALSE;
+	    }
 	}
     }
   else if (bevent->type == GDK_2BUTTON_PRESS)
@@ -705,16 +666,15 @@ gimp_preview_real_render (GimpPreview *preview)
 {
   TempBuf *temp_buf;
 
-  temp_buf = gimp_viewable_get_new_preview (preview->viewable,
-					    preview->width,
-					    preview->height);
+  temp_buf = gimp_viewable_get_preview (preview->viewable,
+					preview->width,
+					preview->height);
 
   if (temp_buf)
     {
       gimp_preview_render_and_flush (preview,
 				     temp_buf,
 				     -1);
-      temp_buf_free (temp_buf);
     }
 }
 
@@ -724,13 +684,11 @@ gimp_preview_get_size (GimpPreview *preview,
 		       gint        *width,
 		       gint        *height)
 {
-  g_return_if_fail (preview != NULL);
   g_return_if_fail (GIMP_IS_PREVIEW (preview));
   g_return_if_fail (width != NULL);
   g_return_if_fail (height != NULL);
 
-  g_signal_emit (G_OBJECT (preview), preview_signals[GET_SIZE], 0,
-                 size, width, height);
+  GIMP_PREVIEW_GET_CLASS (preview)->get_size (preview, size, width, height);
 }
 
 static void
@@ -746,12 +704,9 @@ gimp_preview_real_get_size (GimpPreview *preview,
 static gboolean
 gimp_preview_needs_popup (GimpPreview *preview)
 {
-  gboolean needs_popup = FALSE;
+  g_return_val_if_fail (GIMP_IS_PREVIEW (preview), FALSE);
 
-  g_signal_emit (G_OBJECT (preview), preview_signals[NEEDS_POPUP], 0,
-                 &needs_popup);
-
-  return needs_popup;
+  return GIMP_PREVIEW_GET_CLASS (preview)->needs_popup (preview);
 }
 
 static gboolean
@@ -763,12 +718,9 @@ gimp_preview_real_needs_popup (GimpPreview *preview)
 static GtkWidget *
 gimp_preview_create_popup (GimpPreview *preview)
 {
-  GtkWidget *popup_preview = NULL;
+  g_return_val_if_fail (GIMP_IS_PREVIEW (preview), NULL);
 
-  g_signal_emit (G_OBJECT (preview), preview_signals[CREATE_POPUP], 0,
-                 &popup_preview);
-
-  return popup_preview;
+  return GIMP_PREVIEW_GET_CLASS (preview)->create_popup (preview);
 }
 
 static GtkWidget *

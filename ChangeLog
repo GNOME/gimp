@@ -1,5 +1,35 @@
 2001-08-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/disp_callbacks.c: removed a gdk_pointer_ungrab(), it was
+	only there because of buggy gtk+ 1.2.x. Cosmetic changes.
+
+	* app/undo.c: use G_N_ELEMENTS() instead of
+	sizeof(array)/sizeof(element).
+
+	* app/gui/menus.c: more stock icons, moved the item_factory
+	creation into the menus_get_foo_factory() functions, use
+	G_N_ELEMENTS(). This file badly needs to be spit up...
+
+	* app/core/gimpviewable.[ch]
+	* app/widgets/gimpcontainermenu.[ch]
+	* app/widgets/gimpcontainerview.[ch]
+	* app/widgets/gimplistitem.[ch]
+	* app/widgets/gimpmenuitem.[ch]
+	* app/widgets/gimppreview.[ch]: replaced tons of signal emissions
+	by virtual functions which are *much* faster. Moreover, all of
+	them are private implementation bits of the specific class
+	hierarchy and are useless or even dangerous to be exposed as
+	signals.
+
+	* app/widgets/gimpdrawablelistitem.c: removed the drag_motion()
+	implementation as it's already done in the parent class.
+
+	* app/widgets/gimplistitem.[ch]
+	* app/widgets/gimplayerlistitem.c: redraw the widget when the
+	drop_type has changed. Fixes drop_indicator drawing.
+
+2001-08-07  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpbutton.[ch]: cleanup.
 
 	* app/Makefile.am

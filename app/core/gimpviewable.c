@@ -35,8 +35,6 @@ enum
 {
   INVALIDATE_PREVIEW,
   SIZE_CHANGED,
-  GET_PREVIEW,
-  GET_NEW_PREVIEW,
   LAST_SIGNAL
 };
 
@@ -59,19 +57,22 @@ gimp_viewable_get_type (void)
 
   if (! viewable_type)
     {
-      GtkTypeInfo viewable_info =
+      static const GTypeInfo viewable_info =
       {
-        "GimpViewable",
-        sizeof (GimpViewable),
         sizeof (GimpViewableClass),
-        (GtkClassInitFunc) gimp_viewable_class_init,
-        (GtkObjectInitFunc) gimp_viewable_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_viewable_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpViewable),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_viewable_init,
       };
 
-      viewable_type = gtk_type_unique (GIMP_TYPE_OBJECT, &viewable_info);
+      viewable_type = g_type_register_static (GIMP_TYPE_OBJECT,
+					      "GimpViewable",
+					      &viewable_info, 0);
     }
 
   return viewable_type;
@@ -80,10 +81,6 @@ gimp_viewable_get_type (void)
 static void
 gimp_viewable_class_init (GimpViewableClass *klass)
 {
-  GtkObjectClass *object_class;
-
-  object_class = (GtkObjectClass *) klass;
-
   parent_class = g_type_class_peek_parent (klass);
 
   viewable_signals[INVALIDATE_PREVIEW] =
@@ -104,30 +101,9 @@ gimp_viewable_class_init (GimpViewableClass *klass)
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  viewable_signals[GET_PREVIEW] =
-    g_signal_new ("get_preview",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_LAST,
-		  G_STRUCT_OFFSET (GimpViewableClass, get_preview),
-		  NULL, NULL,
-		  gimp_cclosure_marshal_POINTER__INT_INT,
-		  G_TYPE_POINTER, 2,
-		  G_TYPE_INT,
-		  G_TYPE_INT);
-
-  viewable_signals[GET_NEW_PREVIEW] =
-    g_signal_new ("get_new_preview",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_LAST,
-		  G_STRUCT_OFFSET (GimpViewableClass, get_new_preview),
-		  NULL, NULL,
-		  gimp_cclosure_marshal_POINTER__INT_INT,
-		  G_TYPE_POINTER, 2,
-		  G_TYPE_INT,
-		  G_TYPE_INT);
-
   klass->invalidate_preview = gimp_viewable_real_invalidate_preview;
   klass->size_changed       = NULL;
+
   klass->get_preview        = NULL;
   klass->get_new_preview    = NULL;
 }
@@ -166,14 +142,17 @@ gimp_viewable_get_preview (GimpViewable *viewable,
 			   gint          width,
 			   gint          height)
 {
-  TempBuf *temp_buf = NULL;
+  GimpViewableClass *viewable_class;
+  TempBuf           *temp_buf = NULL;
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
 
-  g_signal_emit (G_OBJECT (viewable), viewable_signals[GET_PREVIEW], 0,
-		 width, height, &temp_buf);
+  viewable_class = GIMP_VIEWABLE_GET_CLASS (viewable);
+
+  if (viewable_class->get_preview)
+    temp_buf = viewable_class->get_preview (viewable, width, height);
 
   if (temp_buf)
     return temp_buf;
@@ -188,8 +167,8 @@ gimp_viewable_get_preview (GimpViewable *viewable,
 
   temp_buf = NULL;
 
-  g_signal_emit (G_OBJECT (viewable), viewable_signals[GET_NEW_PREVIEW], 0,
-		 width, height, &temp_buf);
+  if (viewable_class->get_new_preview)
+    temp_buf = viewable_class->get_new_preview (viewable, width, height);
 
   g_object_set_data_full (G_OBJECT (viewable), "static-viewable-preview",
 			  temp_buf,
@@ -203,20 +182,23 @@ gimp_viewable_get_new_preview (GimpViewable *viewable,
 			       gint          width,
 			       gint          height)
 {
-  TempBuf *temp_buf = NULL;
+  GimpViewableClass *viewable_class;
+  TempBuf           *temp_buf = NULL;
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
 
-  g_signal_emit (G_OBJECT (viewable), viewable_signals[GET_NEW_PREVIEW], 0,
-		 width, height, &temp_buf);
+  viewable_class = GIMP_VIEWABLE_GET_CLASS (viewable);
+
+  if (viewable_class->get_new_preview)
+    temp_buf = viewable_class->get_new_preview (viewable, width, height);
 
   if (temp_buf)
     return temp_buf;
 
-  g_signal_emit (G_OBJECT (viewable), viewable_signals[GET_PREVIEW], 0,
-		 width, height, &temp_buf);
+  if (viewable_class->get_preview)
+    temp_buf = viewable_class->get_preview (viewable, width, height);
 
   if (temp_buf)
     return temp_buf_copy (temp_buf, NULL);

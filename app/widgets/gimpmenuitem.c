@@ -33,13 +33,6 @@
 #include "gimppreview.h"
 
 
-enum
-{
-  SET_VIEWABLE,
-  LAST_SIGNAL
-};
-
-
 static void           gimp_menu_item_class_init    (GimpMenuItemClass *klass);
 static void           gimp_menu_item_init          (GimpMenuItem      *menu_item);
 
@@ -55,15 +48,13 @@ static GimpViewable * gimp_menu_item_drag_viewable (GtkWidget         *widget,
                                                     gpointer           data);
 
 
-static guint menu_item_signals[LAST_SIGNAL] = { 0 };
-
-static GtkMenuItemClass *parent_class       = NULL;
+static GtkMenuItemClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_menu_item_get_type (void)
 {
-  static GtkType menu_item_type = 0;
+  static GType menu_item_type = 0;
 
   if (!menu_item_type)
     {
@@ -88,21 +79,7 @@ gimp_menu_item_get_type (void)
 static void
 gimp_menu_item_class_init (GimpMenuItemClass *klass)
 {
-  GtkObjectClass *object_class;
-
-  object_class = (GtkObjectClass *) klass;
-
   parent_class = g_type_class_peek_parent (klass);
-
-  menu_item_signals[SET_VIEWABLE] = 
-    g_signal_new ("set_viewable",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpMenuItemClass, set_viewable),
-		  NULL, NULL,
-		  g_cclosure_marshal_VOID__OBJECT,
-		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_VIEWABLE);
 
   klass->set_viewable = gimp_menu_item_real_set_viewable;
 }
@@ -127,7 +104,6 @@ gimp_menu_item_new (GimpViewable  *viewable,
 {
   GimpMenuItem *menu_item;
 
-  g_return_val_if_fail (viewable != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (preview_size > 0 && preview_size <= 256, NULL);
 
@@ -144,8 +120,7 @@ static void
 gimp_menu_item_set_viewable (GimpMenuItem *menu_item,
                              GimpViewable *viewable)
 {
-  g_signal_emit (GTK_OBJECT (menu_item), menu_item_signals[SET_VIEWABLE], 0,
-                 viewable);
+  GIMP_MENU_ITEM_GET_CLASS (menu_item)->set_viewable (menu_item, viewable);
 }
 
 static void
@@ -183,7 +158,6 @@ void
 gimp_menu_item_set_name_func (GimpMenuItem        *menu_item,
 			      GimpItemGetNameFunc  get_name_func)
 {
-  g_return_if_fail (menu_item != NULL);
   g_return_if_fail (GIMP_IS_MENU_ITEM (menu_item));
 
   if (menu_item->get_name_func != get_name_func)

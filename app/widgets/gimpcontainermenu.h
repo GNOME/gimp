@@ -35,6 +35,8 @@
 #define GIMP_CONTAINER_MENU_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER_MENU, GimpContainerMenuClass))
 #define GIMP_IS_CONTAINER_MENU(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTAINER_MENU))
 #define GIMP_IS_CONTAINER_MENU_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTAINER_MENU))
+#define GIMP_CONTAINER_MENU_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONTAINER_MENU, GimpContainerMenuClass))
+
 
 typedef struct _GimpContainerMenuClass  GimpContainerMenuClass;
 
@@ -56,6 +58,18 @@ struct _GimpContainerMenuClass
 {
   GtkMenuClass  parent_class;
 
+  /*  signals  */
+  void     (* select_item)      (GimpContainerMenu *menu,
+				 GimpViewable      *object,
+				 gpointer           insert_data);
+  void     (* activate_item)    (GimpContainerMenu *menu,
+				 GimpViewable      *object,
+				 gpointer           insert_data);
+  void     (* context_item)     (GimpContainerMenu *menu,
+				 GimpViewable      *object,
+				 gpointer           insert_data);
+
+  /*  virtual functions  */
   void     (* set_container)    (GimpContainerMenu *menu,
 				 GimpContainer     *container);
   gpointer (* insert_item)      (GimpContainerMenu *menu,
@@ -68,21 +82,12 @@ struct _GimpContainerMenuClass
 				 GimpViewable      *object,
 				 gint               new_index,
 				 gpointer           insert_data);
-  void     (* select_item)      (GimpContainerMenu *menu,
-				 GimpViewable      *object,
-				 gpointer           insert_data);
-  void     (* activate_item)    (GimpContainerMenu *menu,
-				 GimpViewable      *object,
-				 gpointer           insert_data);
-  void     (* context_item)     (GimpContainerMenu *menu,
-				 GimpViewable      *object,
-				 gpointer           insert_data);
   void     (* clear_items)      (GimpContainerMenu *menu);
   void     (* set_preview_size) (GimpContainerMenu *menu);
 };
 
 
-GtkType   gimp_container_menu_get_type         (void);
+GType     gimp_container_menu_get_type         (void);
 
 void      gimp_container_menu_set_container    (GimpContainerMenu   *menu,
 						GimpContainer       *container);

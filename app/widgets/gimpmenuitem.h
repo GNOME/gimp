@@ -36,6 +36,7 @@ extern "C" {
 #define GIMP_MENU_ITEM_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MENU_ITEM, GimpMenuItemClass))
 #define GIMP_IS_MENU_ITEM(obj)           (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MENU_ITEM))
 #define GIMP_IS_MENU_ITEM_CLASS(klass)   (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MENU_ITEM))
+#define GIMP_MENU_ITEM_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MENU_ITEM, GimpMenuItemClass))
 
 
 typedef struct _GimpMenuItemClass  GimpMenuItemClass;
@@ -60,12 +61,14 @@ struct _GimpMenuItemClass
 {
   GtkMenuItemClass  parent_class;
 
+  /*  virtual functions  */
   void (* set_viewable) (GimpMenuItem *menu_item,
                          GimpViewable *viewable);
 };
 
 
-GtkType     gimp_menu_item_get_type      (void);
+GType       gimp_menu_item_get_type      (void);
+
 GtkWidget * gimp_menu_item_new           (GimpViewable        *viewable,
 					  gint                 preview_size);
 

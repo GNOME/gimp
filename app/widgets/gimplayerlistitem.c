@@ -287,7 +287,12 @@ gimp_layer_list_item_drag_motion (GtkWidget      *widget,
 
   gdk_drag_status (context, drag_action, time);
 
-  list_item->drop_type = drop_type;
+  if (list_item->drop_type != drop_type)
+    {
+      list_item->drop_type = drop_type;
+
+      gtk_widget_queue_draw (widget);
+    }
 
   return return_val;
 }

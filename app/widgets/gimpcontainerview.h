@@ -31,6 +31,7 @@
 #define GIMP_CONTAINER_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER_VIEW, GimpContainerViewClass))
 #define GIMP_IS_CONTAINER_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTAINER_VIEW))
 #define GIMP_IS_CONTAINER_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTAINER_VIEW))
+#define GIMP_CONTAINER_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONTAINER_VIEW, GimpContainerViewClass))
 
 
 typedef struct _GimpContainerViewClass  GimpContainerViewClass;
@@ -58,6 +59,18 @@ struct _GimpContainerViewClass
 {
   GtkVBoxClass  parent_class;
 
+  /*  signals  */
+  void     (* select_item)      (GimpContainerView *view,
+				 GimpViewable      *object,
+				 gpointer           insert_data);
+  void     (* activate_item)    (GimpContainerView *view,
+				 GimpViewable      *object,
+				 gpointer           insert_data);
+  void     (* context_item)     (GimpContainerView *view,
+				 GimpViewable      *object,
+				 gpointer           insert_data);
+
+  /*  virtual functions  */
   void     (* set_container)    (GimpContainerView *view,
 				 GimpContainer     *container);
   gpointer (* insert_item)      (GimpContainerView *view,
@@ -69,15 +82,6 @@ struct _GimpContainerViewClass
   void     (* reorder_item)     (GimpContainerView *view,
 				 GimpViewable      *object,
 				 gint               new_index,
-				 gpointer           insert_data);
-  void     (* select_item)      (GimpContainerView *view,
-				 GimpViewable      *object,
-				 gpointer           insert_data);
-  void     (* activate_item)    (GimpContainerView *view,
-				 GimpViewable      *object,
-				 gpointer           insert_data);
-  void     (* context_item)     (GimpContainerView *view,
-				 GimpViewable      *object,
 				 gpointer           insert_data);
   void     (* clear_items)      (GimpContainerView *view);
   void     (* set_preview_size) (GimpContainerView *view);

@@ -31,6 +31,7 @@
 #define GIMP_VIEWABLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VIEWABLE, GimpViewableClass))
 #define GIMP_IS_VIEWABLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_VIEWABLE))
 #define GIMP_IS_VIEWABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_VIEWABLE))
+#define GIMP_VIEWABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_VIEWABLE, GimpViewableClass))
 
 
 typedef struct _GimpViewableClass GimpViewableClass;
@@ -44,9 +45,11 @@ struct _GimpViewableClass
 {
   GimpObjectClass  parent_class;
 
+  /*  signals  */
   void      (* invalidate_preview) (GimpViewable *viewable);
   void      (* size_changed)       (GimpViewable *viewable);
 
+  /*  virtual functions  */
   TempBuf * (* get_preview)        (GimpViewable *viewable,
 				    gint          width,
 				    gint          height);

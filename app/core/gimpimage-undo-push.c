@@ -2959,15 +2959,13 @@ undo_name[] =
   { IMAGE_RESIZE_UNDO,		N_("image resize") },
   { MISC_UNDO,			N_("misc") }
 };
-#define NUM_NAMES (sizeof (undo_name) / sizeof (struct undo_name_t))
-
 
 static const gchar *
 undo_type_to_name (UndoType type)
 {
   gint i;
 
-  for (i=0; i < NUM_NAMES; i++)
+  for (i = 0; i < G_N_ELEMENTS (undo_name); i++)
     if (undo_name[i].type == type)
       return gettext (undo_name[i].name);
 

@@ -39,14 +39,6 @@
 #include "gimppreview.h"
 
 
-enum
-{
-  SET_VIEWABLE,
-  SET_PREVIEW_SIZE,
-  LAST_SIGNAL
-};
-
-
 static void           gimp_list_item_class_init    (GimpListItemClass *klass);
 static void           gimp_list_item_init          (GimpListItem      *list_item);
 
@@ -76,15 +68,13 @@ static GimpViewable * gimp_list_item_drag_viewable (GtkWidget         *widget,
                                                     gpointer           data);
 
 
-static guint list_item_signals[LAST_SIGNAL] = { 0 };
-
-static GtkListItemClass *parent_class       = NULL;
+static GtkListItemClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_list_item_get_type (void)
 {
-  static GtkType list_item_type = 0;
+  static GType list_item_type = 0;
 
   if (!list_item_type)
     {
@@ -109,33 +99,11 @@ gimp_list_item_get_type (void)
 static void
 gimp_list_item_class_init (GimpListItemClass *klass)
 {
-  GtkObjectClass *object_class;
   GtkWidgetClass *widget_class;
 
-  object_class = (GtkObjectClass *) klass;
   widget_class = (GtkWidgetClass *) klass;
 
   parent_class = g_type_class_peek_parent (klass);
-
-  list_item_signals[SET_VIEWABLE] = 
-    g_signal_new ("set_viewable",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpListItemClass, set_viewable),
-		  NULL, NULL,
-		  g_cclosure_marshal_VOID__OBJECT,
-		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_VIEWABLE);
-
-  list_item_signals[SET_PREVIEW_SIZE] = 
-    g_signal_new ("set_preview_size",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpListItemClass, set_preview_size),
-		  NULL, NULL,
-		  g_cclosure_marshal_VOID__INT,
-		  G_TYPE_NONE, 1,
-		  G_TYPE_INT);
 
   widget_class->expose_event = gimp_list_item_expose_event;
   widget_class->drag_leave   = gimp_list_item_drag_leave;
@@ -173,8 +141,7 @@ gimp_list_item_expose_event (GtkWidget      *widget,
 
   list_item = GIMP_LIST_ITEM (widget);
 
-  if (GTK_WIDGET_CLASS (parent_class)->expose_event)
-    GTK_WIDGET_CLASS (parent_class)->expose_event (widget, eevent);
+  GTK_WIDGET_CLASS (parent_class)->expose_event (widget, eevent);
 
   if (list_item->drop_type != GIMP_DROP_NONE)
     {
@@ -200,7 +167,7 @@ gimp_list_item_expose_event (GtkWidget      *widget,
 				  GDK_CAP_BUTT, GDK_JOIN_MITER);
     }
 
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -239,7 +206,12 @@ gimp_list_item_drag_motion (GtkWidget      *widget,
 
   gdk_drag_status (context, drag_action, time);
 
-  list_item->drop_type = drop_type;
+  if (list_item->drop_type != drop_type)
+    {
+      list_item->drop_type = drop_type;
+
+      gtk_widget_queue_draw (widget);
+    }
 
   return return_val;
 }
@@ -285,7 +257,6 @@ gimp_list_item_new (GimpViewable  *viewable,
 {
   GimpListItem *list_item;
 
-  g_return_val_if_fail (viewable != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (preview_size > 0 && preview_size <= 256, NULL);
 
@@ -317,11 +288,9 @@ void
 gimp_list_item_set_viewable (GimpListItem *list_item,
                              GimpViewable *viewable)
 {
-  g_return_if_fail (list_item != NULL);
   g_return_if_fail (GIMP_IS_LIST_ITEM (list_item));
 
-  g_signal_emit (G_OBJECT (list_item), list_item_signals[SET_VIEWABLE], 0,
-                 viewable);
+  GIMP_LIST_ITEM_GET_CLASS (list_item)->set_viewable (list_item, viewable);
 }
 
 static void
@@ -359,13 +328,12 @@ void
 gimp_list_item_set_preview_size (GimpListItem *list_item,
 				 gint          preview_size)
 {
-  g_return_if_fail (list_item != NULL);
   g_return_if_fail (GIMP_IS_LIST_ITEM (list_item));
   g_return_if_fail (preview_size > 0 && preview_size <= 256 /* FIXME: 64 */);
 
   list_item->preview_size = preview_size;
 
-  g_signal_emit (G_OBJECT (list_item), list_item_signals[SET_PREVIEW_SIZE], 0);
+  GIMP_LIST_ITEM_GET_CLASS (list_item)->set_preview_size (list_item);
 }
 
 static void

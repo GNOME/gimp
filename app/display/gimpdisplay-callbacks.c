@@ -415,7 +415,6 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	    }
 
 	  gtk_grab_remove (canvas);
-	  gdk_pointer_ungrab (bevent->time);  /* fixes pointer grab bug */
 
 	  if (active_tool && (GIMP_IS_MOVE_TOOL (active_tool) ||
 			      ! gimp_image_is_empty (gdisp->gimage)))
@@ -643,12 +642,12 @@ gdisplay_canvas_events (GtkWidget *canvas,
   if (gdisp->gimage->gimp->busy)
     return TRUE;
 
-  /* Cursor update support                               */
-  /* no_cursor_updating is TRUE (=1) when                */
-  /* <Toolbox>/File/Preferences.../Interface/...         */
-  /* Image Windows/Disable Cursor Updating is TOGGLED ON */
- 
-  if (gimprc.no_cursor_updating == 0)
+  /*  Cursor update support
+   *  no_cursor_updating is TRUE (=1) when
+   *  <Toolbox>/File/Preferences.../Interface/...
+   *  Image Windows/Disable Cursor Updating is TOGGLED ON
+   */
+  if (! gimprc.no_cursor_updating)
     {
       active_tool = tool_manager_get_active (gdisp->gimage->gimp);
 
@@ -798,8 +797,8 @@ gdisplay_origin_button_press (GtkWidget      *widget,
     }
 
   /* Return TRUE to stop signal emission so the button doesn't grab the
-   * pointer away from us. */
-
+   * pointer away from us.
+   */
   return TRUE;
 }
 
@@ -912,11 +911,10 @@ gdisplay_drop_drawable (GtkWidget    *widget,
 }
 
 static void
-gdisplay_bucket_fill (GtkWidget      *widget,
+gdisplay_bucket_fill (GDisplay       *gdisp,
 		      BucketFillMode  fill_mode,
 		      guchar          orig_color[],
-		      TempBuf        *orig_pat_buf,
-		      gpointer        data)
+		      TempBuf        *orig_pat_buf)
 {
   GimpImage    *gimage;
   GimpDrawable *drawable;
@@ -932,7 +930,7 @@ gdisplay_bucket_fill (GtkWidget      *widget,
   TempBuf  *pat_buf = NULL;
   gboolean  new_buf = FALSE;
 
-  gimage = ((GDisplay *) data)->gimage;
+  gimage = gdisp->gimage;
 
   if (gimage->gimp->busy)
     return;
@@ -1032,10 +1030,16 @@ gdisplay_drop_pattern (GtkWidget    *widget,
 		       GimpViewable *viewable,
 		       gpointer      data)
 {
+  GDisplay *gdisp;
+
+  gdisp = (GDisplay *) data;
+
   if (GIMP_IS_PATTERN (viewable))
     {
-      gdisplay_bucket_fill (widget, PATTERN_BUCKET_FILL, NULL,
-			    GIMP_PATTERN (viewable)->mask, data);
+      gdisplay_bucket_fill (gdisp,
+			    PATTERN_BUCKET_FILL,
+			    NULL,
+			    GIMP_PATTERN (viewable)->mask);
     }
 }
 
@@ -1044,7 +1048,10 @@ gdisplay_drop_color (GtkWidget     *widget,
 		     const GimpRGB *drop_color,
 		     gpointer       data)
 {
-  guchar color[4];
+  GDisplay *gdisp;
+  guchar    color[4];
+
+  gdisp = (GDisplay *) data;
 
   gimp_rgba_get_uchar (drop_color,
 		       &color[0],
@@ -1052,7 +1059,10 @@ gdisplay_drop_color (GtkWidget     *widget,
 		       &color[2],
 		       &color[3]);
 
-  gdisplay_bucket_fill (widget, FG_BUCKET_FILL, color, NULL, data);
+  gdisplay_bucket_fill (gdisp,
+			FG_BUCKET_FILL,
+			color,
+			NULL);
 }
 
 void

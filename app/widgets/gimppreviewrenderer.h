@@ -36,6 +36,7 @@ extern "C" {
 #define GIMP_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PREVIEW, GimpPreviewClass))
 #define GIMP_IS_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_PREVIEW))
 #define GIMP_IS_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PREVIEW))
+#define GIMP_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PREVIEW, GimpPreviewClass))
 
 
 typedef struct _GimpPreviewClass  GimpPreviewClass;
@@ -71,12 +72,14 @@ struct _GimpPreviewClass
 {
   GtkPreviewClass  parent_class;
 
+  /*  signals  */
   void        (* clicked)          (GimpPreview *preview);
   void        (* double_clicked)   (GimpPreview *preview);
   void        (* extended_clicked) (GimpPreview *preview,
 				    guint        modifier_state);
   void        (* context)          (GimpPreview *preview);
 
+  /*  virtual functions  */
   void        (* render)           (GimpPreview *preview);
   void        (* get_size)         (GimpPreview *preview,
 				    gint         size,
@@ -87,7 +90,7 @@ struct _GimpPreviewClass
 };
 
 
-GtkType      gimp_preview_get_type         (void);
+GType        gimp_preview_get_type         (void);
 
 GtkWidget *  gimp_preview_new              (GimpViewable  *viewable,
 					    gint           size,
