@@ -301,7 +301,10 @@ gimp_menu_position (GtkMenu *menu,
 
   gtk_menu_set_screen (menu, screen);
 
-  if (TRUE /* gtk_check_version (2, 4, 1) */)
+#ifdef __GNUC__
+#warning FIXME: remove this hack as soon as we depend on GTK+ 2.4.4
+#endif
+  if (gtk_check_version (2, 4, 4))
     gtk_menu_set_monitor (menu, monitor);
 
   gtk_widget_size_request (widget, &requisition);
@@ -377,7 +380,10 @@ gimp_button_menu_position (GtkWidget       *button,
 
   gtk_menu_set_screen (menu, screen);
 
-  if (TRUE /* gtk_check_version (2, 4, 1) */)
+#ifdef __GNUC__
+#warning FIXME: remove this hack as soon as we depend on GTK+ 2.4.4
+#endif
+  if (gtk_check_version (2, 4, 4))
     gtk_menu_set_monitor (menu, monitor);
 
   *x += button->allocation.x;
