@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Gimp qw( :auto );
+use Gimp qw(:auto __);
 use Gimp::Fu;
 
 sub stamps {
@@ -42,7 +42,7 @@ register	"stamps",
 		"Claes G Lindblad <claesg\@algonet.se>",
 		"Claes G Lindblad <claesg\@algonet.se>",
 		"990314",
-		"<Toolbox>/Xtns/Render/Stamps",
+		__"<Toolbox>/Xtns/Render/Stamps",
 		"*",
 	[
 	[PF_INT32, "size", "img size", 90],

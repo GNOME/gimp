@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Gimp qw( :auto );
+use Gimp qw(:auto __);
 use Gimp::Fu;
 use strict;
 #	Gimp::set_trace(TRACE_ALL);
@@ -11,7 +11,7 @@ register	"mirror_split",
 		"Claes G Lindblad <claesg\@algonet.se>",
 		"Claes G Lindblad <claesg\@algonet.se>",
 		"990530",
-		"<Image>/Filters/Distorts/MirrorSplit",
+		__"<Image>/Filters/Distorts/MirrorSplit",
 		"*",
 		[
 		[PF_RADIO, "mirror", "Which half to mirror?", 0,

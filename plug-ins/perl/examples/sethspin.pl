@@ -82,7 +82,7 @@ register "seth_spin",
          "Seth Burgess",
          "Seth Burgess <sjburges\@gimp.org>",
          "1.3",
-         "<Toolbox>/Xtns/Animation/Seth Spin",
+         __"<Toolbox>/Xtns/Animation/Seth Spin",
          "*",
          [
           [PF_DRAWABLE, "source", "What drawable to spin from?"],

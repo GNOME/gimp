@@ -6,7 +6,7 @@
 #
 # Written by Aaron Sherman, (c) 1998
 
-use Gimp qw(:auto);
+use Gimp qw(:auto __);
 use Gimp::Fu;
 
 # Main function. Takes width, height, do_eyes (toggle), eye_images (toggle),
@@ -106,7 +106,7 @@ register("yinyang", "Render a stand-alone Yin/Yang image",
 	"Renders a black-and-white Yin/Yang symbol optionally
 	with \"eyes\" that may optionally be images.",
 	"Aaron Sherman", "(c) 1998, Aaron Sherman",
-	"1999b", "<Toolbox>/Xtns/Render/Yin-Yang", "*",
+	"1999b", __"<Toolbox>/Xtns/Render/Yin-Yang", "*",
 	[
 		[PF_INT32, "width", "Width", 256],
 		[PF_INT32, "height", "Height", 256],

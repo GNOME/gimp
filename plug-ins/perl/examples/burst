@@ -1,7 +1,5 @@
 #!/usr/bin/perl
 
-eval 'exec /usr/bin/perl  -S $0 ${1+"$@"}'
-    if 0; # not running under some shell
 # <sjburges@gimp.org> (original release)
 #
 use Gimp;
@@ -29,7 +27,7 @@ the inside and the outside of the burst. \n",
   "Seth Burgess",
   "Seth Burgess <sjburges\@gimp.org>",
   "1999-07-31",
-  "<Image>/Filters/Misc/Burst",
+  __"<Image>/Filters/Misc/Burst",
   "*",
   [
    [PF_RADIO, "shape", "Shape To Burst Into", 0,  [Rectangle => 1, Ellipse=> 0]],

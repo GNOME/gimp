@@ -163,7 +163,7 @@ sub tex_string_to_float {
 register "tex_string_to_float", "Turn a TeX-string into floating layer", "Takes a TeX string as input and creates a floating layer of the rendered string in the current layer in the foreground color.",
     "Dov Grobgeld <dov\@imagic.weizmann.ac.il>", "Dov Grobgeld",
     "1999-03-16",
-    "<Image>/Filters/Render/TeX String",
+    __"<Image>/Filters/Render/TeX String",
     "*",
     [
      [PF_STRING,  "input_file",     "TeX macro file to input"],

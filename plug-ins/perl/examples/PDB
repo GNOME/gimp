@@ -188,10 +188,7 @@ sub complete_function {
    my $name = shift;
    $name=~s/[-_]/[-_]/g;
    my @matches = eval { sort grep /$name/i,@function };
-   if(@matches>1e6) {#d#
-      set_clist map(($_,$_),@matches[0..149]);
-      $synopsis->set(sprintf __"showing only the first 150 matches (of %d)", (scalar@matches));
-   } elsif(@matches>1) {
+   if(@matches>1) {
       set_clist map(($_,$_),@matches);
       $synopsis->set(scalar@matches.__" matching functions");
    } else {
@@ -471,7 +468,7 @@ sub create_main {
    $f2->pack_start(info,0,1,5);
    my $sw = new Gtk::ScrolledWindow;
    $sw->set_policy(-automatic, -automatic);
-   $cinfo = new_with_titles Gtk::CList '','TYPE','NAME','DESCRIPTION';
+   $cinfo = new_with_titles Gtk::CList '',__"TYPE",__"NAME",__"DESCRIPTION";
    $cinfo->set_column_auto_resize (0,1);
    $cinfo->set_column_auto_resize (1,1);
    $cinfo->set_column_auto_resize (2,1);

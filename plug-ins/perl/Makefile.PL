@@ -118,7 +118,7 @@ sub MY::install {
    my $install = $self->SUPER::install(@_);
    ($install =~ s/^(un)?install\b/really-$1install/gm) or return $install;
    '
-install ::
+install :: install-po
 	@for dir in \
 	   $(INSTALLPRIVLIB) \
 	   $(INSTALLARCHLIB) \
@@ -190,6 +190,20 @@ force_uninstall_from_perldirs ::
 force_uninstall_from_sitedirs ::
 	\$(PERL) -MExtUtils::Install -e 'uninstall(\$\$ARGV[0],1,0)' ".$self->catfile('$(SITEARCHEXP)','auto','$(FULLEXT)','.packlist')."
 
+install-po:
+";
+
+   print "Portable message object...";
+   for (<po/*.po>) {
+      my($po)=m!/(.*)\.po$!; #/# for brainy vim
+      print " $po";
+      $postamble .= "	\$(MKPATH) \$(datadir)/locale/$po/LC_MESSAGES\n";
+      $postamble .= "	-msgfmt -o \$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo po/$po.po\n";
+      $postamble .= "	\$(CHMOD) 644 \$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo\n";
+   }
+   print "\n";
+   
+   $postamble .= "
 # generate tags file
 tags: .
 	ctags --lang=c `find . -name '*.xs' -print`
@@ -200,10 +214,13 @@ autoconf:
         
 # merge messages into potfile
 msgmerge:
-	pxgettext `find . -name '*.pm' -o -name '*.xs' -o -path './examples/*'` | \\
+	./pxgettext `find . -name '*.pm' -o -name '*.xs' -o -path './examples/*'` Perl-Server | \\
         msgmerge -w 83 po/gimp-perl.pot - >gimp-perl.pot~ && \\
         mv gimp-perl.pot~ po/gimp-perl.pot
+	for po in po/*.po; do msgmerge -w 83 \$\$po po/gimp-perl.pot >\$\$po~ && mv \$\$po~ \$\$po; done
 ";
+
+   $postamble;
 }
 
 $GIMP_INC_NOUI = "-I../../ $GIMP_INC_NOUI" if $IN_GIMP;

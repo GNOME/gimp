@@ -118,3 +118,4 @@ examples/fire
 examples/povray
 pxgettext
 po/gimp-perl.pot
+po/de.po

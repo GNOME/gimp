@@ -510,7 +510,7 @@ sub help_window(\$$$) {
    my($helpwin,$blurb,$help)=@_;
    unless ($$helpwin) {
       $$helpwin = new Gtk::Dialog;
-      $$helpwin->set_title(_("Help for ").$Gimp::function);
+      $$helpwin->set_title(__("Help for ").$Gimp::function);
       my($font,$b);
 
       $b = new Gtk::Text;
@@ -666,14 +666,14 @@ sub interact($$$$@) {
            push(@getvals,sub{[split ' ',$b->get('color')]});
            set_tip $t $b,$desc;
            
-           my $c = new Gtk::Button "FG";
+           my $c = new Gtk::Button __"FG";
            signal_connect $c "clicked", sub {
              $b->set('color', "@{Gimp::Palette->get_foreground}");
            };
            set_tip $t $c,__"get current foreground colour from the gimp";
            $a->pack_start ($c,1,1,0);
            
-           my $d = new Gtk::Button "BG";
+           my $d = new Gtk::Button __"BG";
            signal_connect $d "clicked", sub {
              $b->set('color', "@{Gimp::Palette->get_background}");
            };

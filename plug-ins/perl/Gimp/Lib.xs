@@ -121,10 +121,10 @@ static void old_pdl (pdl **p, short ndims, int dim0)
   PDL->converttype (p, PDL_B, PDL_PERM);
 
   if ((*p)->ndims < ndims + (dim0 > 1))
-    croak (__("dimension mismatch, pdl has dimension %d but at least %d dimensions allowed"), (*p)->ndims, ndims + (dim0 > 1));
+    croak (__("dimension mismatch, pdl has dimension %d but at least %d dimensions required"), (*p)->ndims, ndims + (dim0 > 1));
 
   if ((*p)->ndims > ndims + 1)
-    croak (__("dimension mismatch, pdl has dimension %d but at most %d dimensions required"), (*p)->ndims, ndims + 1);
+    croak (__("dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"), (*p)->ndims, ndims + 1);
 
   if ((*p)->ndims > ndims && (*p)->dims[0] != dim0)
     croak (__("pixel size mismatch, pdl has %d channel pixels but %d channels are required"), (*p)->dims[0], dim0);

@@ -286,7 +286,7 @@ Gimp::on_net {
 	 } elsif($1 eq "o" or $1 eq "output") {
 	   $outputfile=shift @ARGV;
 	 } elsif($1 eq "info") {
-	   print "no additional information available, use --help\n";
+	   print __"no additional information available, use --help\n";
 	   exit 0;
 	 } else {
            my $arg=shift @ARGV;
@@ -641,8 +641,8 @@ sub register($$$$$$$$$;@) {
          die __"menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!";
       }
    }
-   s%^<Toolbox>/Xtns%__("<Toolbox>/Xtns")%e;
-   s%^<Image>/Filters%__("<Image>/Filters")%e;
+   $menupath =~ s%^<Toolbox>/Xtns/%__("<Toolbox>/Xtns/")%e;
+   $menupath =~ s%^<Image>/Filters/%__("<Image>/Filters/")%e;
    undef $menupath if $menupath eq "<None>";#d#
    
    @_==0 or die __"register called with too many or wrong arguments\n";
@@ -845,17 +845,20 @@ sub save_image($$) {
    my $layer = $img->get_active_layer;
    
    if ($type eq "JPG" or $type eq "JPEG") {
-      eval { Gimp->file_jpeg_save(&Gimp::RUN_NONINTERACTIVE,$img,$layer,$path,$path,$quality,$smooth,1) };
-      Gimp->file_jpeg_save(&Gimp::RUN_NONINTERACTIVE,$img,$layer,$path,$path,$quality,$smooth,1,1,"") if $@;
+      eval { $layer->file_jpeg_save($path,$path,$quality,$smooth,1) };
+      $layer->file_jpeg_save($path,$path,$quality,$smooth,1,$interlace,"",0,1,0,0) if $@;
    } elsif ($type eq "GIF") {
-      $img->convert_indexed (1,256) unless $layer->indexed;
-      Gimp->file_gif_save(&Gimp::RUN_NONINTERACTIVE,$img,$layer,$path,$path,$interlace,0,0,0);
+      unless ($layer->indexed) {
+         eval { $img->convert_indexed(1,256) };
+         $img->convert_indexed(2,&Gimp::MAKE_PALETTE,256,1,1,"") if $@;
+      }
+      $layer->file_gif_save($path,$path,$interlace,0,0,0);
    } elsif ($type eq "PNG") {
-      Gimp->file_png_save(&Gimp::RUN_NONINTERACTIVE,$img,$layer,$path,$path,$interlace,$compress);
+      $layer->file_png_save($path,$path,$interlace,$compress);
    } elsif ($type eq "PNM") {
-      Gimp->file_pnm_save(&Gimp::RUN_NONINTERACTIVE,$img,$layer,$path,$path,1);
+      $layer->file_pnm_save($path,$path,1);
    } else {
-      Gimp->gimp_file_save(&Gimp::RUN_NONINTERACTIVE,$img,$layer,$path,$path);
+      $layer->gimp_file_save($path,$path);
    }
 }
 

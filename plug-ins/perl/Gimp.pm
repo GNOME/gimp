@@ -7,13 +7,14 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $AUTOLOAD %EXPORT_TAGS @EXPORT_FAIL
             @gimp_gui_functions $function $basename $spawn_opts
             $in_quit $in_run $in_net $in_init $in_query $no_SIG
             $help $verbose $host $in_top);
-use subs qw(init end lock unlock canonicalize_color __);
+use subs qw(init end lock unlock canonicalize_color);
 
-require DynaLoader;
-
-@ISA=qw(DynaLoader);
-
-$VERSION = 1.14;
+BEGIN {
+   require DynaLoader;
+   @ISA=qw(DynaLoader);
+   $VERSION = 1.14;
+   bootstrap Gimp $VERSION;
+}
 
 my @_param = qw(
 	PARAM_BOUNDARY	PARAM_CHANNEL	PARAM_COLOR	PARAM_DISPLAY	PARAM_DRAWABLE
@@ -67,8 +68,6 @@ sub ADD_ALPHA_MASK	() { &ALPHA_MASK }
 sub ORIENTATION_HORIZONTAL	() { &HORIZONTAL }
 sub ORIENTATION_VERTICAL	() { &VERTICAL   }
 sub ORIENTATION_UNKNOWN		() { &UNKNOWN    }
-
-bootstrap Gimp $VERSION;
 
 #ENUM_DEFS#
 sub PRESSURE            (){ 2} sub SOFT                (){ 1} sub HARD                (){ 0} sub RGBA_IMAGE          (){ 1} sub INDEXED_IMAGE       (){ 4}
@@ -636,14 +635,14 @@ All constants from gimpenums.h (BG_IMAGE_FILL, RUN_NONINTERACTIVE, NORMAL_MODE, 
 
 Set default spawn options to I<options>, see L<Gimp::Net>.
 
-=item _:DEFAULT
+=item :DEFAULT
 
 The default set (see below).
 
 =back
 
-The default (unless '' is specified) is C<main xlfd_size :consts __>.
-(C<__> is used for i18n purposes).
+The default (unless '' is specified) is C<'main', 'xlfd_size', ':consts', '__'>.
+(C<'__'> is used for i18n purposes).
 
 =head1 GETTING STARTED
 
@@ -831,9 +830,9 @@ colormap, gamma, shared memory...).
 
 =item Gimp::init([connection-argument]), Gimp::end()
 
-These is an alternative and experimental interface that replaces the call to
-Gimp::main and the net callback. At the moment it only works for the Net
-interface (L<Gimp::Net>), and not as a native plug-in. Here's an example:
+These is an alternative interface that replaces the call to Gimp::main
+and the net callback. At the moment it only works for the Net interface
+(L<Gimp::Net>), and not as a native plug-in. Here's an example:
 
  use Gimp;
  

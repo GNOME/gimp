@@ -3,7 +3,7 @@
 
 #include <libgimp/gimp.h>
 
-/*#include <locale.h>*//*notyet*//*D*/
+#include <locale.h>
 
 /* FIXME */
 /* sys/param.h is redefining these! */
@@ -41,7 +41,11 @@ MODULE = Gimp	PACKAGE = Gimp
 PROTOTYPES: ENABLE
 
 BOOT:
-	/*setlocale (LC_MESSAGES, "");*//* done by perl *//*notyet*//*D*/
+#ifdef ENABLE_NLS
+	setlocale (LC_MESSAGES, ""); /* calling twice doesn't hurt, no? */
+        bindtextdomain ("gimp-perl", datadir "/locale");
+        textdomain ("gimp-perl");
+#endif
 
 void
 _exit()
@@ -76,6 +80,7 @@ dgettext(d,s)
 char *
 __(s)
 	char *	s
+        PROTOTYPE: $
 
 void
 xs_exit(status)

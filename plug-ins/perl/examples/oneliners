@@ -10,7 +10,7 @@ use Gimp::Util;
 # <sjburges@gimp.org>
 register "layer_to_image_size", "Layer2ImageSize", "Expands layer to image size",
          "Seth Burgess", "Seth Burgess <sjburges\@gimp.org>", "1.0",
-         "<Image>/Layers/Layer to Image Size", "RGB*, GRAY*", [ ], sub {
+         __"<Image>/Layers/Layer to Image Size", "RGB*, GRAY*", [ ], sub {
    ($img, $layer) = @_;
    $layer->resize($img->width, $img->height, $layer->offsets);
    ();
@@ -20,7 +20,7 @@ register "layer_to_image_size", "Layer2ImageSize", "Expands layer to image size"
 register "center_layer", "Center Layer",
          "Centers the current layer on the image",
          "Seth Burgess", "Seth Burgess <sjburges\@gimp.org>",
-         "1.0", "<Image>/Layers/Center Layer", "RGB*, GRAY*", [], sub {
+         "1.0", __"<Image>/Layers/Center Layer", "RGB*, GRAY*", [], sub {
         ($img, $layer) = @_;
         $layer->set_offsets(($img->width  - $layer->width )/2,
                         ($img->height - $layer->height)/2);

@@ -6,7 +6,8 @@ Revision history for Gimp-Perl extension.
           called.
         - started to revamp the extra argument handling.
         - updated PDB Explorer a bit, still broken.
-        - started i18n.
+        - almost full i18n of gimp-perl. A de translation is available.
+        - save_image was kinda broken for jpeg and gif at least.
         - put help window into a scrolledwindow, as to a suggestion by Jens
           Lauterbach. Karlsruhe rules!
 

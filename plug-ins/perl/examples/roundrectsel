@@ -15,7 +15,7 @@ register "round_rect_sel",
          "Seth Burgess", 
          "Seth Burgess <sjburges\@gimp.org>", 
          "1999-03-25",
-         "<Image>/Select/Round Rectangular Selection", 
+         __"<Image>/Select/Round Rectangular Selection", 
          "*", 
          [ 
            [PF_SPINNER, "x_rounding", "How much to round in the horizontal, in pixels", 16, [1,1000,1]], 

@@ -9,7 +9,7 @@ register	"layer_reorder",
 		"Marc Lehmann <pcg\@goof.com>",
 		"Marc Lehmann <pcg\@goof.com>",
 		"19990708",
-		"<Image>/Layers/Stack/Reorder Layers",
+		__"<Image>/Layers/Stack/Reorder Layers",
 		"*",
 		[
                  [PF_RADIO,	"function",	"which remapping function to use: CUSTOM (0), REVERSE (1), SHIFT (2)", 1,

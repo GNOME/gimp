@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Gimp qw( :auto );
+use Gimp qw(:auto __);
 use Gimp::Fu;
 
 register	"center_guide",
@@ -9,7 +9,7 @@ register	"center_guide",
 		"Claes G Lindblad <claesg\@algonet.se>",
 		"Claes G Lindblad",
 		"990323",
-		"<Image>/Guides/Center Guide",
+		__"<Image>/Guides/Center Guide",
 		"*",
 		[
 		[PF_RADIO,

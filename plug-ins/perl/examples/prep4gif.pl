@@ -95,7 +95,7 @@ register
 	"Seth Burgess",
 	"Seth Burgess <sjburges\@gimp.org>",
 	"2-15-98",
-	"<Image>/Filters/Misc/Prepare for GIF",
+	__"<Image>/Filters/Misc/Prepare for GIF",
 	"RGB*",
 	[
 	 [PF_INT32, "lower_threshold", "Lower Alpha Threshold", 64],

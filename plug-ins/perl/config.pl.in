@@ -15,6 +15,7 @@ $^W=0;
    exec_prefix		=> q[@exec_prefix@],
    libdir		=> q[@libdir@],
    bindir		=> q[@bindir@],
+   datadir		=> q[@datadir@],
 
    _PERL		=> q[@PERL@],
    GIMP			=> q[@GIMP@],
@@ -82,6 +83,7 @@ $GIMP_LIBS_NOUI	=~ s%\$topdir%$topdir%g;
 # $...1 variables should be put in front of the corresponding MakeMaker values.
 $INC1    = "-I$topdir";
 $DEFINE1 = $IN_GIMP ? "-DIN_GIMP" : "";
+$DEFINE1 = " -Ddatadir=\"\\\"".expand($datadir)."\\\"\"";
 
 eval "use PDL";
 if (!$@) {

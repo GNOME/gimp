@@ -27,7 +27,7 @@ register "plug_in_ditherize",
          "Marc Lehmann",
          "Marc Lehmann",
          "1.1",
-         "<Image>/Filters/Noise/Ditherize",
+         __"<Image>/Filters/Noise/Ditherize",
          "RGB*, GRAY*",
          [
           [PF_SLIDER,		"colours",	"The number of colours to dither to", 10, [0, 256]],

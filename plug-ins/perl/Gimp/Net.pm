@@ -222,7 +222,7 @@ sub gimp_init {
    } else {
       $server_fh = try_connect ("");
    }
-   defined $server_fh or croak __"could not connect to the gimp server (make sure Net-Server is running)";
+   defined $server_fh or croak __"could not connect to the gimp server (make sure Perl-Server is running)";
    { my $fh = select $server_fh; $|=1; select $fh }
    
    my @r = response;

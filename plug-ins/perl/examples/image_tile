@@ -18,7 +18,7 @@
 #	o Test (fix?) non-interactive use...
 #	o Allow tile aspect selection independant of base image
 
-use Gimp qw(:auto);
+use Gimp qw(:auto __);
 use Gimp::Fu;
 use Fcntl qw(O_RDWR O_CREAT O_TRUNC);
 use Gimp::Feature;
@@ -436,7 +436,7 @@ register
 	Filters/Artistic/Mosaic plugin, but with images as the
 	tiles.",
   "Aaron Sherman", "Aaron Sherman (c)", "1999-03-15",
-  "<Image>/Filters/Map/Image Tile",
+  __"<Image>/Filters/Map/Image Tile",
   "*",
   [
    # Image and drawable are given for free...

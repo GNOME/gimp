@@ -7,14 +7,14 @@
 # working btw).  You can follow step by step with the website at 
 # http://tigert.gimp.org/gimp/tutorials/beveled_text/
 
-use Gimp ':auto';
+use Gimp qw(:auto __);
 use Gimp::Fu;
 use Gimp::Util;
 
 $defaultcolor1 = [124,10,18];
 $defaultcolor2 = [200,19,27];
 
-$path = "<Toolbox>/Xtns/Render/Logos/Inner Bevel";
+$path = __"<Toolbox>/Xtns/Render/Logos/Inner Bevel";
 $shortdesc = "Perform an inner bevel on text";
 $longdesc = "This uses tigert's inner bevel method on text, which can be found with his other excellent tutorials at http://tigert.gimp.org/";
 $date = "1999-03-23";

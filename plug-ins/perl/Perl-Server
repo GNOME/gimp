@@ -273,7 +273,7 @@ sub extension_perl_server {
           if(handle_request($fh)) {
             $stats{$f}[0]++;
           } else {
-            slog sprintf __"closing connection %d (%d requests in %f seconds)", $f, $stats{$f}[0], time-$stats{$f}[1];
+            slog sprintf __"closing connection %d (%d requests in %g seconds)", $f, $stats{$f}[0], time-$stats{$f}[1];
             if ($exclusive) {
                $rm = $saved_rm;
                $exclusive = 0;

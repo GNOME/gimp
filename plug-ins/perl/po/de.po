@@ -1,37 +1,41 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# German gimp-perl translation table
+# Copyright (C) 1999 Free Software Foundation, Inc.
+# Marc Lehmann <pcg@goof.com>, 1999
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1\n"
 "POT-Creation-Date: 1999-09-12 17:58+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 1999-09-13 04:50+0200\n"
+"Last-Translator: Marc Lehmann <pcg@goof.com>\n"
+"Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: ENCODING\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 msgid "<Image>/Guides/Center Guide"
 msgstr ""
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Server"
 
 msgid "FATAL: unable to create $tmp: $!\n"
-msgstr ""
+msgstr "FATAL: Konnte '$tmp' nicht erzeugen: $!\n"
 
 msgid ""
 "Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a string"
 msgstr ""
+"An dieser Stelle wird ein INT32 erwartet, kein '%s'. Wenn hier wirklich ein "
+"String stehen soll bitte ein *1 anhängen"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Speed text"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Server"
 
+#, fuzzy
 msgid "<Image>/Filters/Noise/Feedback"
-msgstr ""
+msgstr "<Image>/Filter/"
 
 msgid ""
 "       interface-arguments are\n"
@@ -44,31 +48,31 @@ msgid "being called as '%s', but '%s' not registered in the pdb"
 msgstr ""
 
 msgid "argument type %s expected (not %s)"
-msgstr ""
+msgstr "Argument vom Typ %s erwartet, nicht %s"
 
 msgid "Browse"
-msgstr ""
+msgstr "Suchen"
 
 msgid "Reset all values to their default"
-msgstr ""
+msgstr "Auf Standardwerte zurücksetzen"
 
 msgid "WARNING: client tried to unlock without holding a lock"
 msgstr ""
 
 msgid "$_: illegal switch, try $0 --help\n"
-msgstr ""
+msgstr "$_: Unbekannter Schlater, wie wär's mit $0 --help stattdessen?\n"
 
 msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
 
 msgid "Brush Selection Dialog"
-msgstr ""
+msgstr "Pinselauswahl"
 
 msgid "gimp procedure '%s' not found"
-msgstr ""
+msgstr "Gimp-Funktion '%s' nicht gefunden"
 
 msgid "Pattern Selection Dialog"
-msgstr ""
+msgstr "Musterauswahl"
 
 msgid "function '$exe' not found in this script (must be one of "
 msgstr ""
@@ -77,16 +81,16 @@ msgid "pixel size mismatch, pdl has %d channel pixels but %d channels are requir
 msgstr ""
 
 msgid "Load"
-msgstr ""
+msgstr "Laden"
 
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Glossy"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Perl-Fu/Logos/Glossy"
 
 msgid "illegal parasite specification, reference expected"
 msgstr ""
 
 msgid "Date/Version"
-msgstr ""
+msgstr "Datum/Version"
 
 msgid "Status"
 msgstr ""
@@ -98,7 +102,7 @@ msgid "wrong authorization, aborting connection"
 msgstr ""
 
 msgid "BG"
-msgstr ""
+msgstr "HG"
 
 msgid "internal error (please report): too many main arguments"
 msgstr ""
@@ -106,14 +110,16 @@ msgstr ""
 msgid "use'ing Gimp::PDL is no longer necessary, please remove it!\n"
 msgstr ""
 
+#, fuzzy
 msgid "<Image>/Filters/Colors/Fire"
-msgstr ""
+msgstr "<Image>/Filter/"
 
+#, fuzzy
 msgid "<Image>/Filters/Misc/Prepare for GIF"
-msgstr ""
+msgstr "<Image>/Filter/"
 
 msgid "illegal type for colour specification"
-msgstr ""
+msgstr "Die Farbangabe hat einen falschen Typ"
 
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
 msgstr ""
@@ -122,40 +128,41 @@ msgid "Internal error: unable to convert reference in sv2net, please report!"
 msgstr ""
 
 msgid "Plug-In Path"
-msgstr ""
+msgstr "Plug-In-Pfad"
 
 msgid "accepted unix connection"
-msgstr ""
+msgstr "Unix-Verbindung angenommen"
 
 msgid "server going down..."
-msgstr ""
+msgstr "Server beendet sich..."
 
 msgid "trying to start gimp with options \"$opt\"\n"
-msgstr ""
+msgstr "Ich versuche, gimp mit den Schaltern \"$opt\" zu starten\n"
 
+#, fuzzy
 msgid "<Image>/Filters/Noise/Ditherize"
-msgstr ""
+msgstr "<Image>/Filter/"
 
 msgid "expected perl-server at other end of socket, got @r\n"
 msgstr ""
 
 msgid "pdl height != region height"
-msgstr ""
+msgstr "pdl Höhe != Höhe der Region"
 
 msgid "received QUIT request"
-msgstr ""
+msgstr "QUIT-Anfrage erhalten"
 
 msgid "<Toolbox>/Xtns/PDB Explorer"
-msgstr ""
+msgstr "<Toolbox>/Xtn/PDB-Buch"
 
 msgid " = [argument error]\n"
-msgstr ""
+msgstr " = [Argumentfehler]\n"
 
 msgid "%s arguments for function '%s'"
-msgstr ""
+msgstr "%s Argumente für die Funktion '%s'"
 
 msgid " matching functions"
-msgstr ""
+msgstr " passende Funktionen"
 
 msgid ""
 "Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
@@ -171,46 +178,49 @@ msgid "<Image>/Filters/Animation/Animate Cells"
 msgstr ""
 
 msgid "%s: procedural database execution failed"
-msgstr ""
+msgstr "%s: PDB-Aufruf fehlgeschlagen"
 
 msgid "authorization required for tcp connections"
-msgstr ""
+msgstr "TCP-Verbindungen erfordern eine Autorisierung"
 
 msgid "<Toolbox>/Xtns/Perl/Server"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Server"
 
 msgid "function name contains dashes instead of underscores"
-msgstr ""
+msgstr "Funktionsname enthält Minuszeichen anstatt Unterstrichen"
 
 msgid "authorization ok, but: $r[1]\n"
-msgstr ""
+msgstr "Autorisierung OK, aber: $r[1]\n"
 
 msgid "<Image>/Filters/Render/Highlight Edges"
 msgstr ""
 
 msgid "a color must have three components (array elements)"
 msgstr ""
+"Eine Farbe muß aus drei Komponenten bestehen (einem Feld mit drei Elementen)"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Pixelgenerator"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Server"
 
 msgid "$_: unknown/illegal file-save option"
 msgstr ""
 
 msgid "TYPE"
-msgstr ""
+msgstr "TYP"
 
 msgid "Gradient Selection Dialog"
-msgstr ""
+msgstr "Farbverlaufauswahl"
 
 msgid "Function Info"
-msgstr ""
+msgstr "Mehr Info"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Crystal"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid "unable to open $rgb_db_path"
-msgstr ""
+msgstr "Konnte $rgb_db_path nicht öffnen"
 
 msgid "<Image>/Script-Fu/Decor/Stampify"
 msgstr ""
@@ -218,29 +228,34 @@ msgstr ""
 msgid "<Image>/Select/Round Rectangular Selection"
 msgstr ""
 
+#, fuzzy
 msgid "<Image>/Filters/Map/Pixelmap"
-msgstr ""
+msgstr "<Image>/Filter/"
 
 msgid "no additional information available, use --help\n"
 msgstr ""
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Carved"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Server"
 
+#, fuzzy
 msgid "<Image>/Filters/Render/Brushed Metal"
-msgstr ""
+msgstr "<Image>/Filter/"
 
 msgid "gimp_tile_set_data is not yet implemented\n"
 msgstr ""
 
+#, fuzzy
 msgid "<Image>/Filters/Map/Image Tile"
-msgstr ""
+msgstr "<Image>/Filter/"
 
 msgid "Internal error: stashname too long, please report!"
 msgstr ""
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Bovination"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid "<Image>/Guides/Remove Guides"
 msgstr ""
@@ -249,7 +264,7 @@ msgid "Internal error: Gimp::Net #101, please report!"
 msgstr ""
 
 msgid "get current background colour from the gimp"
-msgstr ""
+msgstr "Übernehme die aktuelle Hintergrundfarbe von Gimp"
 
 msgid "WARNING: shared locking requested but not implemented"
 msgstr ""
@@ -258,22 +273,22 @@ msgid "parameter '$entry->[1]' is not optional\n"
 msgstr ""
 
 msgid "$s: not an integer\n"
-msgstr ""
+msgstr "$s: kein integer\n"
 
 msgid "unable to read '$fn': $!"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Perl/Control Center"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid "[undefined]"
-msgstr ""
+msgstr "[undefiniert]"
 
 msgid "function/macro \"$name\" not found in $class"
-msgstr ""
+msgstr "Funktion oder Macro \"$name\" existiert nicht in $class"
 
 msgid "accepted tcp connection from "
-msgstr ""
+msgstr "TCP-Verbindung angenommen von "
 
 msgid "<Image>/Layers/Stack/Reorder Layers"
 msgstr ""
@@ -285,13 +300,13 @@ msgid "unable to read temporary file $tmp: $!"
 msgstr ""
 
 msgid "PDB Explorer - the olof edition (yet still an alpha version)"
-msgstr ""
+msgstr "PDB-Buch - Edition 'Olof' (immer noch Alpha)"
 
 msgid "Illegal default font description for $function: $val\n"
-msgstr ""
+msgstr "Illegale Schriftart angegeben für $function: $val\n"
 
 msgid "unable to convert Gimp::Drawable into Gimp::GDrawable (id %d)"
-msgstr ""
+msgstr "Konnte Gimp::Drawable nicht in Gimp::GDrawable konvertieren (id %d)"
 
 msgid ""
 "BLURB:\n"
@@ -304,13 +319,14 @@ msgid ""
 msgstr ""
 
 msgid "Fileselector for $name"
-msgstr ""
+msgstr "Dateiauswahl for $name"
 
 msgid "accepting connections on port $port"
-msgstr ""
+msgstr "Akzeptiere Verbindungen auf port $port"
 
+#, fuzzy
 msgid "<Image>/Filters/Misc/Border Average"
-msgstr ""
+msgstr "<Image>/Filter/"
 
 msgid ""
 "$function: function name contains unusual characters, good style is to use only "
@@ -319,33 +335,38 @@ msgstr ""
 
 msgid "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
 msgstr ""
+"Menüpfad _muß_ mit <Image>, <Toolbox>, <Load>, <Save> oder <None> anfangen!"
 
+#, fuzzy
 msgid "<Image>/Filters/Render/Terral Text"
-msgstr ""
+msgstr "<Image>/Filter/"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Povray/Texture"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Server"
 
 msgid "register called with too many or wrong arguments\n"
-msgstr ""
+msgstr "'register' mit zu vielen oder falschen Argumenten aufgerufen\n"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Frosty"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid "params and return_vals must be array refs (even if empty)!"
 msgstr ""
 
 msgid "$_ is not a valid import tag for package $pkg"
-msgstr ""
+msgstr "$_ ist kein gültiger Import-Tag für $pkg"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Yin-Yang"
-msgstr ""
+msgstr "<Toolbox>/Xtn/"
 
 msgid "unable to accept unix connection: $!\n"
-msgstr ""
+msgstr "Konnte Unix-Verbindung nicht annehmen: $!\n"
 
 msgid "Save"
-msgstr ""
+msgstr "Speichern"
 
 msgid ""
 "\n"
@@ -362,30 +383,33 @@ msgid ""
 "this plug-in in interactive mode\n"
 msgstr ""
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Golden Mean"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
+#, fuzzy
 msgid "<Image>/Filters/Distorts/BlowInOut"
-msgstr ""
+msgstr "<Image>/Filter/"
 
 msgid "interface '$interface_type' unsupported."
 msgstr ""
 
 msgid "unable to accept tcp connection: $!\n"
-msgstr ""
+msgstr "Konnte TCp-Verbindung nicht annehmen: $!\n"
 
 msgid ""
 "dimension mismatch, pdl has dimension %d but at least %d dimensions required"
-msgstr ""
+msgstr "Dimension falsch: pdl hat die Dimension %d, Minimum ist aber %d"
 
 msgid "[unfinished]\n"
-msgstr ""
+msgstr "[abgebrochen]\n"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Gimp::Fu Example"
-msgstr ""
+msgstr "<Toolbox>/Xtn/PDB-Buch"
 
 msgid "could not connect to the gimp server (make sure Perl-Server is running)"
-msgstr ""
+msgstr "Konnte den Gimp-Server nicht finden. Läuft der Perl-Server nicht?"
 
 msgid "Cannot call '$AUTOLOAD' at this time"
 msgstr ""
@@ -394,94 +418,101 @@ msgid "<Image>/Guides/Guide Grid"
 msgstr ""
 
 msgid "unauthorized command received, aborting connection"
-msgstr ""
+msgstr "Anfrage ohne Autorisierung empfangen, Verbindung abgebrochen"
 
 msgid "Defaults"
-msgstr ""
+msgstr "Standardwerte"
 
 msgid "<Image>/Image/Colors/Alpha2Color"
 msgstr ""
 
 msgid "text string is empty"
-msgstr ""
+msgstr "Textstring ist leer"
 
 msgid "server requests authorization, but no authorization available\n"
-msgstr ""
+msgstr "Server benötigt eine Autorisierung\n"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Logos/Firetext"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid "Image Types"
-msgstr ""
+msgstr "Bildtypen"
 
 msgid "<Image>/Filters/"
-msgstr ""
+msgstr "<Image>/Filter/"
 
+#, fuzzy
 msgid "<Image>/Filters/Map/Xach Blocks"
-msgstr ""
+msgstr "<Image>/Filter/"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chrome"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Server"
 
 msgid "Menu Path"
-msgstr ""
+msgstr "Menupfad"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Neon"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid "Unable to grok '%s' as colour specifier"
-msgstr ""
+msgstr "Konnte die Farbe '%s' nicht finden"
 
 msgid "9x15bold"
 msgstr ""
 
 msgid "gimp-perl-pixel functions require the PDL::Core module"
-msgstr ""
+msgstr "Die Gimp-perl-Pixelfunktionen benötigen das PDL::Core-Modul"
 
 msgid "Accelerator"
-msgstr ""
+msgstr "Tastenkombination"
 
 msgid "dunno how to return param type %d"
 msgstr ""
 
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 msgid "only blessed scalars accepted here"
-msgstr ""
+msgstr "Objekt (nicht Referenz oder Skalar) benötigt"
 
 msgid "Internal error: unable to handle argtype '%c' in net2sv, please report!"
 msgstr ""
 
 msgid "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
-msgstr ""
+msgstr "Ungültige Dimension: pdl hat die Dimension %d, höchstens %d erlaubt"
 
 msgid "WARNING"
-msgstr ""
+msgstr "WARNUNG"
 
 msgid "argument is not of type %s"
-msgstr ""
+msgstr "Argument nicht vom Typ %s"
 
 msgid "Description"
-msgstr ""
+msgstr "Beschreibung"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Textured"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Server"
 
 msgid "Unable to convert a reference to type '%s'"
-msgstr ""
+msgstr "Konnte Referenz auf Typ '%s' nicht konvertieren"
 
 msgid "argument incompatible with type IMAGE"
-msgstr ""
+msgstr "Argument inkompatibel mit Typ IMAGE"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chalk"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
+#, fuzzy
 msgid "<Image>/Filters/Blur/2x2 Blur"
-msgstr ""
+msgstr "<Image>/Filter/"
 
 msgid "not enough"
-msgstr ""
+msgstr "nicht genügend"
 
 msgid "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
 msgstr ""
@@ -490,19 +521,19 @@ msgid "Synopsis"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Particle Trace"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Perl-Fu/Logos/Particle Trace"
 
 msgid "Color"
-msgstr ""
+msgstr "Farbe"
 
 msgid "FATAL: canonicalize_colour did not return a value!"
 msgstr ""
 
 msgid "DESCRIPTION"
-msgstr ""
+msgstr "BESCHREIBUNG"
 
 msgid "accepting connections in $host"
-msgstr ""
+msgstr "Akzeptiere Verbindungen in $host"
 
 msgid "unable to create socketpair for gimp communications: $!"
 msgstr ""
@@ -511,16 +542,16 @@ msgid "<Save> plug-in called without the 5 standard arguments!\n"
 msgstr ""
 
 msgid "unable to create '$fn': $!"
-msgstr ""
+msgstr "Konnte '$fn' nicht anlegen: $!"
 
 msgid "Previous"
-msgstr ""
+msgstr "Vorherige"
 
 msgid "WARNING: $function returned something that is not an image: \"$img\"\n"
 msgstr ""
 
 msgid "Command"
-msgstr ""
+msgstr "Befehl"
 
 msgid "accepting connections on port $Gimp::Net::default_tcp_port"
 msgstr ""
@@ -529,16 +560,17 @@ msgid "perl-arrayref required as datatype for a gimp-array"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Create_Images"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Create_Images"
 
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chip Away"
-msgstr ""
+msgstr "<Toolbox>/Xtns/Perl-Fu/Logos/Chip Away"
 
 msgid "Save $name"
-msgstr ""
+msgstr "Speichere $name"
 
 msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
 msgstr ""
+"run_mode muß entweder INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS sein\n"
 
 msgid "<Image>/Filters/Edge-Detect/2x2 Edge Detect"
 msgstr ""
@@ -549,50 +581,57 @@ msgstr ""
 msgid "interface=... tag is no longer supported\n"
 msgstr ""
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Stamps"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Server"
 
 msgid ""
 "Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to 'use "
 "strict'"
 msgstr ""
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Comic Book"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
+#, fuzzy
 msgid "<Image>/Filters/Misc/Magick"
-msgstr ""
+msgstr "<Image>/Filter/"
 
 msgid ""
 "malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or PARAM_TYPE"
 msgstr ""
 
+#, fuzzy
 msgid "<Image>/Filters/Distorts/Scratches"
-msgstr ""
+msgstr "<Image>/Filter/"
 
 msgid "last argument to gimp_pattern_select_widget must be scalar ref"
 msgstr ""
 
 msgid "accepting connections on $unix_path"
-msgstr ""
+msgstr "Akzeptiere Verbindungen auf $unix_path"
 
 msgid "Load $name"
-msgstr ""
+msgstr "Lade $name"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Starscape"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Server"
 
 msgid ", %d bytes data]"
-msgstr ""
+msgstr ", %d bytes Daten]"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Random Art #1"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid "unable to create listening tcp socket: $!\n"
-msgstr ""
+msgstr "Konnte TCP-Socket nicht erzeugene: $!\n"
 
+#, fuzzy
 msgid "<Image>/Filters/Map/Xach Shadows"
-msgstr ""
+msgstr "<Image>/Filter/"
 
 msgid ""
 "gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-1.1 "
@@ -600,31 +639,35 @@ msgid ""
 msgstr ""
 
 msgid "too many"
-msgstr ""
+msgstr "zu viele"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Animation/Seth Spin"
-msgstr ""
+msgstr "<Toolbox>/Xtn/"
 
+#, fuzzy
 msgid "<Image>/Filters/Render/Add Glow"
-msgstr ""
+msgstr "<Image>/Filter/"
 
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 msgid "<Toolbox>/Xtns/Parasite Editor"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/"
-msgstr ""
+msgstr "<Toolbox>/Xtn/"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Povray/Preferences"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Server"
 
 msgid "More..."
-msgstr ""
+msgstr "Mehr..."
 
+#, fuzzy
 msgid "<Image>/Filters/Noise/Xach Vision"
-msgstr ""
+msgstr "<Image>/Filter/"
 
 msgid "arguments to main not yet supported!"
 msgstr ""
@@ -639,16 +682,18 @@ msgid "NAME"
 msgstr ""
 
 msgid "Help"
-msgstr ""
+msgstr "Hilfe"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Newsprint text"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Animation/Billboard"
-msgstr ""
+msgstr "<Toolbox>/Xtn/PDB-Buch"
 
 msgid "no font specified, using default"
-msgstr ""
+msgstr "Keine Schriftart angegeben, benutze den Standardwert"
 
 msgid "<Image>/Select/Triangle"
 msgstr ""
@@ -663,20 +708,22 @@ msgid "<Image>/Filters/Colors/Map To Gradient"
 msgstr ""
 
 msgid "unable to grok colour specification"
-msgstr ""
+msgstr "Konnte Farbangabe nicht verstehen"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/3D Outline"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
+#, fuzzy
 msgid "<Image>/Filters/Render/Random Blends"
-msgstr ""
+msgstr "<Image>/Filter/"
 
 msgid ""
 "Internal error: asked to deobjectify an object not in the cache, please report!"
 msgstr ""
 
 msgid "too many arguments"
-msgstr ""
+msgstr "Zu viele Argumente"
 
 msgid "gimp didn't return an execution status, fatal error"
 msgstr ""
@@ -688,90 +735,100 @@ msgid "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
 msgstr ""
 
 msgid "Restore values to the previous ones"
-msgstr ""
+msgstr "Parameter auf vorherige Werte zurücksetzen"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Gradient Bevel"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid "<Image> plug-in called without both image and drawable arguments!\n"
 msgstr ""
 
 msgid ", authorization required"
-msgstr ""
+msgstr ", Autorisierung notwendig"
 
 msgid "unable to create listening unix socket: $!\n"
-msgstr ""
+msgstr "Konnte keine Unix-Domain-socket anlegen: $!\n"
 
 msgid "invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
 msgstr ""
 
 msgid "Last Modified"
-msgstr ""
+msgstr "Zuletzt verändert"
 
 msgid "Shortcuts"
-msgstr ""
+msgstr "Abkürzungen"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Blended"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Basic I"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid ""
 "the gtk perl module is required to open a dialog\n"
 "window, running with default values"
 msgstr ""
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Glowing Hot"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid "<Load> plug-in called without the 3 standard arguments!\n"
 msgstr ""
 
 msgid "Font Selection Dialog ($desc)"
-msgstr ""
+msgstr "Schirftartenauswahl ($desc)"
 
+#, fuzzy
 msgid "<Image>/Filters/Distorts/MirrorSplit"
-msgstr ""
+msgstr "<Image>/Filter/"
 
+#, fuzzy
 msgid "<Image>/Filters/Misc/Webify"
-msgstr ""
+msgstr "<Image>/Filter/"
 
 msgid "%s: procedural database execution failed on invalid input arguments"
-msgstr ""
+msgstr "%s: PDB-Aufruf fehlgeschlagen wegen ungültiger Argumente"
 
 msgid "<Image>/Filters/Colors/Colour To Alpha"
 msgstr ""
 
 msgid "(UNINITIALIZED)"
-msgstr ""
+msgstr "(UNINITIALISIERT)"
 
 msgid "closing connection %d (%d requests in %g seconds)"
-msgstr ""
+msgstr "Schließe Verbindung %d (%d Anfragen in %g Sekunden)"
 
+#, fuzzy
 msgid "<Image>/Filters/Render/TeX String"
-msgstr ""
+msgstr "<Image>/Filter/"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Starburst"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Server"
 
 msgid "required callback '$cb' not found\n"
 msgstr ""
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Font Table"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid "authorization failed: $r[1]\n"
-msgstr ""
+msgstr "Autorisierung fehlgeschlagen: $r[1]\n"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Alien Glow"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid "FATAL: Gimp::Compat version mismatch\n"
 msgstr ""
 
 msgid "server version $Gimp::VERSION started"
-msgstr ""
+msgstr "Server Version $Gimp::VERSION gestartet"
 
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
@@ -779,16 +836,17 @@ msgid ""
 msgstr ""
 
 msgid "authorization unnecessary"
-msgstr ""
+msgstr "Autorisierung unnötig"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Basic II"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid "Internal error: Gimp::Net #100, please report!"
 msgstr ""
 
 msgid "Close"
-msgstr ""
+msgstr "Schließen"
 
 msgid "<Image>/Edit/Repeat & Duplicate"
 msgstr ""
@@ -796,35 +854,40 @@ msgstr ""
 msgid "illegal parasite specification, arrayref expected"
 msgstr ""
 
+#, fuzzy
 msgid "<Image>/Filters/Misc/Burst"
-msgstr ""
+msgstr "<Image>/Filter/"
 
 msgid "unable to fork: $!"
-msgstr ""
+msgstr "Konnte nicht forken: $!"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Imigre-26"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Server"
 
+#, fuzzy
 msgid "<Image>/Filters/Distorts/Windify"
-msgstr ""
+msgstr "<Image>/Filter/"
 
 msgid "Unsupported argumenttype $type"
 msgstr ""
 
 msgid "get current foreground colour from the gimp"
-msgstr ""
+msgstr "Übernehme die aktuelle Vordergrundfarbe von Gimp"
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Perl Example Plug-in"
-msgstr ""
+msgstr "<Toolbox>/Xtn/PDB-Buch"
 
+#, fuzzy
 msgid "<Image>/Filters/Render/Fit Text"
-msgstr ""
+msgstr "<Image>/Filter/"
 
 msgid "<Image>/Guides/To Selection"
 msgstr ""
 
 msgid "Help for "
-msgstr ""
+msgstr "Hilfe für "
 
 msgid "unsupported status code: %d, fatal error\n"
 msgstr ""
@@ -835,29 +898,31 @@ msgstr ""
 msgid "<Image>/Guides/Perl-o-tine"
 msgstr ""
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/SOTA Chrome"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Server"
 
 msgid " (press Tab to complete)"
-msgstr ""
+msgstr " (Taste Tab zum Ergänzen)"
 
 msgid "This module was built without support for PDL."
-msgstr ""
+msgstr "Dieses Modul wurde ohne PDL-Unterstützung übersetzt."
 
 msgid "plug-in returned %d more values than expected"
 msgstr ""
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Homepage-Logo"
-msgstr ""
+msgstr "<Toolbox>/Xtn/"
 
 msgid "FG"
-msgstr ""
+msgstr "VG"
 
 msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
 msgstr ""
 
 msgid "Edit"
-msgstr ""
+msgstr "Edieren"
 
 msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
 msgstr ""
@@ -871,13 +936,14 @@ msgid "OK"
 msgstr ""
 
 msgid "illegal command received, aborting connection"
-msgstr ""
+msgstr "Ungültige Anfrage empfange, Vebrindung abgebrochen"
 
 msgid "<Image>/Layers/Layer to Image Size"
 msgstr ""
 
+#, fuzzy
 msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Cool Metal"
-msgstr ""
+msgstr "<Toolbox>/Xtn/Perl/Kontrollcenter"
 
 msgid "(none)"
-msgstr ""
+msgstr "(nichts ausgewählt)"
