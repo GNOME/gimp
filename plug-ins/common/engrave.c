@@ -18,15 +18,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/*
- * This plug-in creates a black-and-white 'engraved' version of an image.
- * Much of the code is stolen from the Pixelize plug-in.
- */
-
 #include "config.h"
-
-#include <stdio.h>
-#include <stdlib.h>
 
 #include <gtk/gtk.h>
 
@@ -234,7 +226,7 @@ engrave_dialog (void)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pvals.height);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("_Limit Line Width"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Limit line width"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pvals.limit);
   gtk_widget_show (toggle);
@@ -262,8 +254,8 @@ engrave (GimpDrawable *drawable)
   gint limit;
 
   tile_width = gimp_tile_width();
-  height = (gint) pvals.height;
-  limit = (gint) pvals.limit;
+  height = pvals.height;
+  limit = pvals.limit;
   if (height >= tile_width)
     engrave_large (drawable, height, limit);
   else
@@ -286,12 +278,9 @@ engrave_large (GimpDrawable *drawable,
   gint progress, max_progress;
   gpointer pr;
 
-  gimp_drawable_mask_bounds(drawable->drawable_id, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-  if (gimp_drawable_is_rgb(drawable->drawable_id))
-    bpp = 3;
-  else
-    bpp = 1;
+  bpp = (gimp_drawable_is_rgb(drawable->drawable_id)) ? 3 : 1;
   average = g_new(gulong, bpp);
 
   /* Initialize progress */
@@ -305,12 +294,13 @@ engrave_large (GimpDrawable *drawable,
 	  y_step = height - (y % height);
 	  y_step = MIN(y_step, x2 - x);
 
-	  gimp_pixel_rgn_init(&src_rgn, drawable, x, y, 1, y_step, FALSE, FALSE);
+	  gimp_pixel_rgn_init (&src_rgn, drawable, x, y, 1, y_step, 
+			       FALSE, FALSE);
 	  for (b = 0; b < bpp; b++)
 	    average[b] = 0;
 	  count = 0;
 
-	  for (pr = gimp_pixel_rgns_register(1, &src_rgn);
+	  for (pr = gimp_pixel_rgns_register (1, &src_rgn);
 	       pr != NULL;
 	       pr = gimp_pixel_rgns_process(pr))
 	    {
@@ -329,7 +319,7 @@ engrave_large (GimpDrawable *drawable,
 		}
 	      /* Update progress */
 	      progress += src_rgn.w * src_rgn.h;
-	      gimp_progress_update((double) progress / (double) max_progress);
+	      gimp_progress_update ((double) progress / (double) max_progress);
 	    }
 
 	  if (count > 0)
@@ -343,9 +333,9 @@ engrave_large (GimpDrawable *drawable,
                                         average[1],
                                         average[2]) / 254.0 * height;
 
-	  gimp_pixel_rgn_init(&dest_rgn,
-                              drawable, x, y, 1, y_step, TRUE, TRUE);
-	  for (pr = gimp_pixel_rgns_register(1, &dest_rgn);
+	  gimp_pixel_rgn_init (&dest_rgn,
+			       drawable, x, y, 1, y_step, TRUE, TRUE);
+	  for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
 	       pr != NULL;
 	       pr = gimp_pixel_rgns_process(pr))
 	    {
@@ -377,7 +367,7 @@ engrave_large (GimpDrawable *drawable,
   /*  update the engraved region  */
   gimp_drawable_flush(drawable);
   gimp_drawable_merge_shadow(drawable->drawable_id, TRUE);
-  gimp_drawable_update(drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_update(drawable->drawable_id, x1, y1, x2 - x1, y2 - y1);
 }
 
 typedef struct
@@ -408,21 +398,18 @@ engrave_small (GimpDrawable *drawable,
     x1%height != 0 etc.), operates on the remainder pixels.
   */
 
-  gimp_drawable_mask_bounds(drawable->drawable_id, &x1, &y1, &x2, &y2);
-  gimp_pixel_rgn_init(&src_rgn, drawable,
-		      x1, y1, x2 - x1, y2 - y1, FALSE, FALSE);
-  gimp_pixel_rgn_init(&dest_rgn, drawable,
-		      x1, y1, x2 - x1, y2 - y1, TRUE, TRUE);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  gimp_pixel_rgn_init (&src_rgn, drawable,
+		       x1, y1, x2 - x1, y2 - y1, FALSE, FALSE);
+  gimp_pixel_rgn_init (&dest_rgn, drawable,
+		       x1, y1, x2 - x1, y2 - y1, TRUE, TRUE);
 
   /* Initialize progress */
   progress = 0;
   max_progress = (x2 - x1) * (y2 - y1);
 
   bpp = drawable->bpp;
-  if (gimp_drawable_is_rgb(drawable->drawable_id))
-    color_n = 3;
-  else
-    color_n = 1;
+  color_n = (gimp_drawable_is_rgb (drawable->drawable_id)) ? 3 : 1;
 
   area.width = (tile_width / height) * height;
   area.data = g_new(guchar, (glong) bpp * area.width * area.width);
@@ -434,24 +421,26 @@ engrave_small (GimpDrawable *drawable,
       area.h = MIN(area.h, y2 - area.y);
       for (area.x = x1; area.x < x2; ++area.x)
 	{
-	  gimp_pixel_rgn_get_rect(&src_rgn, area.data, area.x, area.y, 1, area.h);
+	  gimp_pixel_rgn_get_rect (&src_rgn, area.data, area.x, area.y, 1, 
+				   area.h);
 
-	  engrave_sub(height, limit, bpp, color_n);
+	  engrave_sub (height, limit, bpp, color_n);
 
-	  gimp_pixel_rgn_set_rect(&dest_rgn, area.data, area.x, area.y, 1, area.h);
+	  gimp_pixel_rgn_set_rect (&dest_rgn, area.data, area.x, area.y, 1, 
+				   area.h);
 
 	  /* Update progress */
 	  progress += area.h;
-	  gimp_progress_update((double) progress / (double) max_progress);
+	  gimp_progress_update ((double) progress / (double) max_progress);
 	}
     }
 
   g_free(area.data);
 
   /*  update the engraved region  */
-  gimp_drawable_flush(drawable);
-  gimp_drawable_merge_shadow(drawable->drawable_id, TRUE);
-  gimp_drawable_update(drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_flush (drawable);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, x2 - x1, y2 - y1);
 }
 
 static void

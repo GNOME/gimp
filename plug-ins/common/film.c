@@ -22,15 +22,6 @@
  * This plug-in generates a film roll with several images
  */
 
-/* Event history:
- * V 1.00, PK, 01-Jul-97, Creation
- * V 1.01, PK, 24-Jul-97, Fix problem with previews on Irix
- * V 1.02, PK, 24-Sep-97, Try different font sizes when inquire failed.
- *                        Fit film height to images
- * V 1.03, nn, 20-Dec-97, Initialize layers in film()
- * V 1.04, PK, 08-Oct-99, Fix problem with image id zero
- *                        Internationalization
- */
 static char ident[] = "@(#) GIMP Film plug-in v1.04 1999-10-08";
 
 #include "config.h"
@@ -1195,7 +1186,7 @@ create_selection_tab (GtkWidget *notebook,
   hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), hbox,
-                            gtk_label_new_with_mnemonic (_("_Selection")));
+                            gtk_label_new_with_mnemonic (_("Selection")));
   gtk_widget_show (hbox);
 
   vbox2 = gtk_vbox_new (FALSE, 12);
@@ -1214,7 +1205,7 @@ create_selection_tab (GtkWidget *notebook,
   gtk_widget_show (vbox);
 
   /* Keep maximum image height */
-  toggle = gtk_check_button_new_with_mnemonic (_("_Fit Height to Images"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Fit height to images"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
@@ -1282,7 +1273,7 @@ create_selection_tab (GtkWidget *notebook,
   spinbutton = gimp_spin_button_new (&adj, filmvals.number_start, 0,
 				     GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 0);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                     _("Start _Index:"), 0.0, 0.5,
+                                     _("Start _index:"), 0.0, 0.5,
                                      spinbutton, 1, TRUE);
   gtk_size_group_add_widget (group, label);
 
@@ -1316,8 +1307,8 @@ create_selection_tab (GtkWidget *notebook,
 
   for (j = 0; j < 2; j++)
     {
-      toggle = gtk_check_button_new_with_mnemonic (j ? _("At _Bottom")
-                                                   : _("At _Top"));
+      toggle = gtk_check_button_new_with_mnemonic (j ? _("At _bottom")
+                                                   : _("At _top"));
       gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				    filmvals.number_pos[j]);
@@ -1380,7 +1371,7 @@ create_advanced_tab (GtkWidget *notebook)
 
   filmint.advanced_adj[0] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			  _("Image _Height:"), 0, 0,
+			  _("Image _height:"), 0, 0,
 			  filmvals.picture_height,
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
@@ -1391,7 +1382,7 @@ create_advanced_tab (GtkWidget *notebook)
 
   filmint.advanced_adj[1] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			  _("Image Spac_ing:"), 0, 0,
+			  _("Image spac_ing:"), 0, 0,
 			  filmvals.picture_space,
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
@@ -1402,7 +1393,7 @@ create_advanced_tab (GtkWidget *notebook)
 
   filmint.advanced_adj[2] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			  _("_Hole Offset:"), 0, 0,
+			  _("_Hole offset:"), 0, 0,
 			  filmvals.hole_offset,
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
@@ -1413,7 +1404,7 @@ create_advanced_tab (GtkWidget *notebook)
 
   filmint.advanced_adj[3] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			  _("Ho_le Width:"), 0, 0,
+			  _("Ho_le width:"), 0, 0,
 			  filmvals.hole_width,
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
@@ -1424,7 +1415,7 @@ create_advanced_tab (GtkWidget *notebook)
 
   filmint.advanced_adj[4] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			  _("Hol_e Height:"), 0, 0,
+			  _("Hol_e height:"), 0, 0,
 			  filmvals.hole_height,
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
@@ -1435,7 +1426,7 @@ create_advanced_tab (GtkWidget *notebook)
 
   filmint.advanced_adj[5] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			  _("Hole Sp_acing:"), 0, 0,
+			  _("Hole sp_acing:"), 0, 0,
 			  filmvals.hole_space,
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
@@ -1446,7 +1437,7 @@ create_advanced_tab (GtkWidget *notebook)
 
   filmint.advanced_adj[6] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			  _("_Number Height:"), 0, 0,
+			  _("_Number height:"), 0, 0,
 			  filmvals.number_height,
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,

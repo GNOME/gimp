@@ -19,22 +19,6 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
- * Contents:
- *
- *   main()                      - Main entry - just call gimp_main()...
- *   query()                     - Respond to a plug-in query...
- *   run()                       - Run the filter...
- *   destripe()                  - Destripe an image.
- *   destripe_dialog()           - Popup a dialog window...
- *   preview_init()              - Initialize the preview window...
- *   preview_scroll_callback()   - Update the preview when a scrollbar is moved.
- *   preview_update()            - Update the preview window.
- *   preview_exit()              - Free all memory used by the preview window...
- *   dialog_iscale_update()      - Update the value field using the scale.
- *   dialog_histogram_callback()
- *
- *   1997/08/16 * Initial Revision.
- *   1998/02/06 * Minor changes.
  */
 
 #include "config.h"
@@ -644,7 +628,7 @@ destripe_dialog (void)
                     G_CALLBACK (preview_update),
                     NULL);
 
-  button = gtk_check_button_new_with_mnemonic (_("Create _Histogram"));
+  button = gtk_check_button_new_with_mnemonic (_("Create _histogram"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), vals.histogram);
   gtk_widget_show (button);
@@ -672,13 +656,6 @@ destripe_dialog (void)
 static void
 preview_init (void)
 {
-  gint width;  /* Byte width of the image */
-
-  /*
-   * Setup for preview filter...
-   */
-  width = preview_width * img_bpp;
-
   preview_x1 = sel_x1;
   preview_y1 = sel_y1;
   preview_x2 = preview_x1 + MIN (preview_width, sel_x2 - sel_x1);

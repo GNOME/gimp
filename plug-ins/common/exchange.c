@@ -452,7 +452,7 @@ exchange_dialog (void)
       if (! framenumber)
 	{
 	  adj = gimp_scale_entry_new (GTK_TABLE (table), 1, row++,
-				      _("R_ed Threshold:"), SCALE_WIDTH, 0,
+				      _("R_ed threshold:"), SCALE_WIDTH, 0,
 				      xargs.threshold.r,
 				      0.0, 1.0, 0.01, 0.1, 3,
 				      TRUE, 0, 0,
@@ -506,7 +506,7 @@ exchange_dialog (void)
       if (!framenumber)
 	{
 	  adj = gimp_scale_entry_new (GTK_TABLE (table), 1, row++,
-				      _("G_reen Threshold:"), SCALE_WIDTH, 0,
+				      _("G_reen threshold:"), SCALE_WIDTH, 0,
 				      xargs.threshold.g,
 				      0.0, 1.0, 0.01, 0.1, 3,
 				      TRUE, 0, 0,
@@ -560,7 +560,7 @@ exchange_dialog (void)
       if (! framenumber)
 	{
 	  adj = gimp_scale_entry_new (GTK_TABLE (table), 1, row++,
-				      _("B_lue Threshold:"), SCALE_WIDTH, 0,
+				      _("B_lue threshold:"), SCALE_WIDTH, 0,
 				      xargs.threshold.b,
 				      0.0, 1.0, 0.01, 0.1, 3,
 				      TRUE, 0, 0,
@@ -585,7 +585,7 @@ exchange_dialog (void)
 	{
 	  GtkWidget *button;
 
-	  button = gtk_check_button_new_with_mnemonic (_("Lock _Thresholds"));
+	  button = gtk_check_button_new_with_mnemonic (_("Lock _thresholds"));
 	  gtk_table_attach (GTK_TABLE (table), button, 2, 4, row, row + 1,
 			    GTK_FILL, 0, 0, 0);
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),

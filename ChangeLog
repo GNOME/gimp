@@ -1,3 +1,22 @@
+2004-05-26    <maurits@b82017.upc-b.chello.nl>
+
+
+2004-05-26  Maurits Rijk  <m.rijk@chello.nl>
+
+	* plug-ins/common/decompose.c
+	* plug-ins/common/deinterlace.c
+	* plug-ins/common/depthmerge.c
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/destripe.c
+	* plug-ins/common/diffraction.c
+	* plug-ins/common/displace.c
+	* plug-ins/common/edge.c
+	* plug-ins/common/emboss.c
+	* plug-ins/common/engrave.c
+	* plug-ins/common/exchange.c: 
+	* plug-ins/common/film.c: 
+	* plug-ins/common/flarefx.c: 
+
 2004-05-26  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcolordisplayeditor.c
@@ -177,20 +196,18 @@
 	* plug-ins/common/autostretch_hsv.c
 	* plug-ins/common/blinds.c
 	* plug-ins/common/blur.c
-	* plug-ins/common/borderaverage.c: 
-	* plug-ins/common/bz2.c: 
-	* plug-ins/common/c_astretch.c: 
-	* plug-ins/common/ccanalyze.c: 
-	* plug-ins/common/channel_mixer.c: 
-	* plug-ins/common/color_enhance.c: 
-	* plug-ins/common/colorify.c: 
-	* plug-ins/common/colortoalpha.c: 
-	* plug-ins/common/csource.c: 
-	* plug-ins/common/cubism.c: 
-	* plug-ins/common/curve_bend.c: 
-
-	Use HIG capitalization style. Added GPL license in a few places.
-	Minor code clean-up.
+	* plug-ins/common/borderaverage.c
+	* plug-ins/common/bz2.c
+	* plug-ins/common/c_astretch.c
+	* plug-ins/common/ccanalyze.c 
+	* plug-ins/common/channel_mixer.c
+	* plug-ins/common/color_enhance.c
+	* plug-ins/common/colorify.c
+	* plug-ins/common/colortoalpha.c
+	* plug-ins/common/csource.c
+	* plug-ins/common/cubism.c
+	* plug-ins/common/curve_bend.c: Use HIG capitalization style. 
+	Added GPL license in a few places. Minor code clean-up.
 
 2004-05-25  Sven Neumann  <sven@gimp.org>
 

@@ -1,13 +1,10 @@
-/* Deinterlace 1.00 - image processing plug-in for the Gimp 1.0 API
+/* Deinterlace 1.00 - image processing plug-in for the Gimp
  *
  * Copyright (C) 1997 Andrew Kieschnick (andrewk@mail.utexas.edu)
  *
  * Original deinterlace for the Gimp 0.54 API by Federico Mena Quintero
  *
  * Copyright (C) 1996 Federico Mena Quintero
- *
- * Any bugs in this code are probably my (Andrew Kieschnick's) fault, as I
- * pretty much rewrote it from scratch.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,8 +22,6 @@
  */
 
 #include "config.h"
-
-#include <stdlib.h>
 
 #include <gtk/gtk.h>
 
@@ -186,13 +181,6 @@ deinterlace (GimpDrawable *drawable)
   gint row, col;
   gint x1, y1, x2, y2;
 
-  /* Get the input area. This is the bounding box of the selection in
-   *  the image (or the entire image if there is no selection). Only
-   *  operating on the input area is simply an optimization. It doesn't
-   *  need to be done for correct operation. (It simply makes it go
-   *  faster, since fewer pixels need to be operated on).
-   */
-
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
@@ -215,7 +203,7 @@ deinterlace (GimpDrawable *drawable)
   /*  loop through the rows, performing our magic*/
   for (row = y1; row < y2; row++)
     {
-      gimp_pixel_rgn_get_row (&srcPR, dest, x1, row, (x2-x1));
+      gimp_pixel_rgn_get_row (&srcPR, dest, x1, row, x2 - x1);
 
       /* Only do interpolation if the row:
 	 (1) Isn't one we want to keep
@@ -226,8 +214,8 @@ deinterlace (GimpDrawable *drawable)
 	    (row - 1 < 0) ||
 	    (row + 1 >= height)))
 	{
-	  gimp_pixel_rgn_get_row (&srcPR, upper, x1, row-1, (x2-x1));
-	  gimp_pixel_rgn_get_row (&srcPR, lower, x1, row+1, (x2-x1));
+	  gimp_pixel_rgn_get_row (&srcPR, upper, x1, row - 1, x2 - x1);
+	  gimp_pixel_rgn_get_row (&srcPR, lower, x1, row + 1, x2 - x1);
 
           if (has_alpha)
             {
@@ -255,11 +243,11 @@ deinterlace (GimpDrawable *drawable)
             }
           else
             {
-              for (col = 0; col < ((x2-x1)*bytes); col++)
-                   dest[col] = (upper[col] + lower[col]) >> 1;
+              for (col = 0; col < (x2 - x1) * bytes; col++)
+                   dest[col] = (upper[col] + lower[col]) / 2;
             }
 	}
-      gimp_pixel_rgn_set_row (&destPR, dest, x1, row, (x2-x1));
+      gimp_pixel_rgn_set_row (&destPR, dest, x1, row, x2 - x1);
 
       if ((row % 5) == 0)
 	gimp_progress_update ((double) row / (double) (y2 - y1));
@@ -268,7 +256,7 @@ deinterlace (GimpDrawable *drawable)
   /*  update the deinterlaced region  */
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_update (drawable->drawable_id, x1, y1, x2 - x1, y2 - y1);
 
   g_free (lower);
   g_free (upper);
@@ -297,8 +285,8 @@ deinterlace_dialog (void)
                                     G_CALLBACK (gimp_radio_button_update),
                                     &DeinterlaceValue, DeinterlaceValue,
 
-                                    _("Keep O_dd Fields"),  ODD_FIELDS,  NULL,
-                                    _("Keep _Even Fields"), EVEN_FIELDS, NULL,
+                                    _("Keep o_dd Fields"),  ODD_FIELDS,  NULL,
+                                    _("Keep _even Fields"), EVEN_FIELDS, NULL,
 
                                     NULL);
 

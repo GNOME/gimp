@@ -4,6 +4,23 @@
  * This filter performs edge detection on the input image.
  *  The code for this filter is based on "pgmedge", a program
  *  that is part of the netpbm package.
+ *
+ * The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
 /* pgmedge.c - edge-detect a portable graymap
@@ -24,15 +41,6 @@
  *
  *  Tips: you can enter arbitrary value into entry.
  *      (not bounded between 1.0 and 10.0)
- *
- *  Changes from version 1.06 to version 1.07:
- *  - Added entry
- *  - Cleaned up code a bit
- *
- *  Differences from Peter Mattis's original `edge' plug-in:
- *    - Added Wrapmode. (useful for tilable images)
- *    - Enhanced speed in this version.
- *    - It works with the alpha channel.
  */
 
 /*  29 July 2003   Dave Neary  <bolsh@gimp.org>
@@ -255,10 +263,6 @@ run (const gchar      *name,
 static void
 edge (GimpDrawable *drawable)
 {
-  /*
-   * this function is too long, so I must split this into a few
-   * functions later ...  -- taka
-   */
   GimpPixelRgn src_rgn, dest_rgn;
   gpointer pr;
   GimpPixelFetcher *pft;
@@ -425,7 +429,7 @@ edge_detect (guchar *data)
          ret = -1;
          break;
     }
-  return ret;
+  return CLAMP0255 (ret);
 }
 
 
@@ -453,8 +457,8 @@ sobel (guchar *data)
       v_grad += v_kernel[i] * data[i];
       h_grad += h_kernel[i] * data[i];
     }
-  return CLAMP(sqrt (v_grad * v_grad * evals.amount +
-        h_grad * h_grad * evals.amount), 0, 255);
+  return sqrt (v_grad * v_grad * evals.amount +
+	       h_grad * h_grad * evals.amount);
 }
 
 /*
@@ -497,9 +501,8 @@ prewitt (guchar *data)
     if (max < m[k])
       max = m[k];
 
-  return CLAMP(evals.amount * max, 0, 255);
+  return evals.amount * max;
 }
-
 
 /*
  * Gradient Edge detector
@@ -526,11 +529,9 @@ gradient (guchar *data)
       h_grad += h_kernel[i] * data[i];
     }
 
-  return  CLAMP(sqrt (v_grad * v_grad * evals.amount +
-                      h_grad * h_grad * evals.amount), 0, 255);
+  return  sqrt (v_grad * v_grad * evals.amount +
+		h_grad * h_grad * evals.amount);
 }
-
-
 
 /*
  * Roberts Edge detector
@@ -557,11 +558,9 @@ roberts (guchar *data)
       h_grad += h_kernel[i] * data[i];
     }
 
-  return  CLAMP(sqrt (v_grad * v_grad * evals.amount +
-                      h_grad * h_grad * evals.amount), 0, 255);
-
+  return sqrt (v_grad * v_grad * evals.amount +
+	       h_grad * h_grad * evals.amount);
 }
-
 
 /*
  * Differential Edge detector
@@ -589,10 +588,9 @@ differential (guchar *data)
       h_grad += h_kernel[i] * data[i];
     }
 
-  return  CLAMP(sqrt (v_grad * v_grad * evals.amount +
-                      h_grad * h_grad * evals.amount), 0, 255);
+  return sqrt (v_grad * v_grad * evals.amount +
+	       h_grad * h_grad * evals.amount);
 }
-
 
 /*
  * Laplace Edge detector
@@ -605,7 +603,7 @@ laplace (guchar *data)
                         1,  1,  1};
 
   gint i;
-  gint    grad;
+  gint grad;
 
   grad = 0;
 
@@ -614,8 +612,7 @@ laplace (guchar *data)
       grad += kernel[i] * data[i];
     }
 
-  return  CLAMP(grad * evals.amount, 0, 255);
-
+  return grad * evals.amount;
 }
 
 

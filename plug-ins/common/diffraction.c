@@ -526,7 +526,7 @@ diffraction_dialog (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.lam_b);
 
-  label = gtk_label_new_with_mnemonic (_("_Frequencies"));
+  label = gtk_label_new_with_mnemonic (_("Frequencies"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), table, label);
 
   /* Contours tab */
@@ -564,7 +564,7 @@ diffraction_dialog (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.contour_b);
 
-  label = gtk_label_new_with_mnemonic (_("Co_ntours"));
+  label = gtk_label_new_with_mnemonic (_("Contours"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), table, label);
 
   /* Sharp edges tab */
@@ -602,7 +602,7 @@ diffraction_dialog (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.edges_b);
 
-  label = gtk_label_new_with_mnemonic (_("_Sharp edges"));
+  label = gtk_label_new_with_mnemonic (_("Sharp edges"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), table, label);
 
   /* Other options tab */
@@ -640,7 +640,7 @@ diffraction_dialog (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.polarization);
 
-  label = gtk_label_new_with_mnemonic (_("O_ther options"));
+  label = gtk_label_new_with_mnemonic (_("Other options"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), table, label);
 
   /* Done */

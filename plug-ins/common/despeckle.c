@@ -19,26 +19,6 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
- * Contents:
- *
- *   main()                      - Main entry - just call gimp_main()...
- *   query()                     - Respond to a plug-in query...
- *   run()                       - Run the filter...
- *   despeckle()                 - Despeckle an image using a median filter.
- *   despeckle_dialog()          -  Popup a dialog window for the filter box size...
- *   preview_init()              - Initialize the preview window...
- *   preview_scroll_callback()   - Update the preview when a scrollbar is moved.
- *   preview_update()            - Update the preview window.
- *   preview_exit()              - Free all memory used by the preview window...
- *   dialog_iscale_update()      - Update the value field using the scale.
- *   dialog_adaptive_callback()  - Update the filter type...
- *   dialog_recursive_callback() - Update the filter type...
- *
- *
- * Revision History:
- *
- *   See ChangeLog
  */
 
 #include "config.h"
@@ -117,29 +97,29 @@ GimpPlugInInfo PLUG_IN_INFO =
   run    /* run   */
 };
 
-GtkWidget      *preview;                /* Preview widget */
-gint        	preview_width,		/* Width of preview widget */
-		preview_height,		/* Height of preview widget */
-		preview_x1,		/* Upper-left X of preview */
-		preview_y1,		/* Upper-left Y of preview */
-		preview_x2,		/* Lower-right X of preview */
-		preview_y2;		/* Lower-right Y of preview */
-guchar	       *preview_src = NULL,	/* Source pixel rows */
-	       *preview_dst,		/* Destination pixel row */
-	       *preview_sort;		/* Pixel value sort array */
-GtkObject      *hscroll_data,		/* Horizontal scrollbar data */
-	       *vscroll_data;		/* Vertical scrollbar data */
+static GtkWidget      *preview;                 /* Preview widget */
+static gint            preview_width,		/* Width of preview widget */
+  		       preview_height,		/* Height of preview widget */
+		       preview_x1,		/* Upper-left X of preview */
+		       preview_y1,		/* Upper-left Y of preview */
+		       preview_x2,		/* Lower-right X of preview */
+		       preview_y2;		/* Lower-right Y of preview */
+static guchar	      *preview_src = NULL,	/* Source pixel rows */
+	       	      *preview_dst,		/* Destination pixel row */
+	       	      *preview_sort;		/* Pixel value sort array */
+static GtkObject      *hscroll_data,		/* Horizontal scrollbar data */
+	       	      *vscroll_data;		/* Vertical scrollbar data */
 
-GimpDrawable      *drawable = NULL;	/* Current image */
-gint		sel_x1,			/* Selection bounds */
-		sel_y1,
-		sel_x2,
-		sel_y2;
-gint		sel_width,		/* Selection width */
-		sel_height;		/* Selection height */
-gint		img_bpp;		/* Bytes-per-pixel in image */
+static GimpDrawable   *drawable = NULL;		/* Current image */
+static gint	       sel_x1,			/* Selection bounds */
+		       sel_y1,
+		       sel_x2,
+		       sel_y2;
+static gint	       sel_width,		/* Selection width */
+		       sel_height;		/* Selection height */
+static gint	       img_bpp;			/* Bytes-per-pixel in image */
 
-gint despeckle_vals[4] =
+static gint despeckle_vals[4] =
 {
   3,
   FILTER_ADAPTIVE,
@@ -747,7 +727,7 @@ despeckle_dialog (void)
    */
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("_Black Level:"), SCALE_WIDTH, ENTRY_WIDTH,
+			      _("_Black level:"), SCALE_WIDTH, ENTRY_WIDTH,
 			      black_level, -1, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -760,7 +740,7 @@ despeckle_dialog (void)
    */
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("_White Level:"), SCALE_WIDTH, ENTRY_WIDTH,
+			      _("_White level:"), SCALE_WIDTH, ENTRY_WIDTH,
 			      white_level, 0, 256, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);

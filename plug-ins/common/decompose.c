@@ -1231,7 +1231,7 @@ decompose_dialog (void)
 				    decoint.extract_flag[j]);
     }
 
-  toggle = gtk_check_button_new_with_label (_("Decompose to _Layers"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Decompose to _layers"));
   gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),

@@ -698,7 +698,7 @@ DepthMerge_dialog (DepthMerge *dm)
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (combo);
 
-  label = gtk_label_new(_("Depth Map:"));
+  label = gtk_label_new(_("Depth map:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 		    GTK_FILL, GTK_FILL, 0, 0);
@@ -728,7 +728,7 @@ DepthMerge_dialog (DepthMerge *dm)
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (combo);
 
-  label = gtk_label_new (_("Depth Map:"));
+  label = gtk_label_new (_("Depth map:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
 		    GTK_FILL, GTK_FILL, 0, 0);
@@ -745,7 +745,7 @@ DepthMerge_dialog (DepthMerge *dm)
 
   /* Numeric parameters */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-			      _("Overlap:"), 0, 6,
+			      _("O_verlap:"), 0, 6,
 			      dm->params.overlap, 0, 2, 0.001, 0.01, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -755,7 +755,7 @@ DepthMerge_dialog (DepthMerge *dm)
   g_object_set_data (G_OBJECT (adj), "dm", dm);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
-			      _("Offset:"), 0, 6,
+			      _("O_ffset:"), 0, 6,
 			      dm->params.offset, -1, 1, 0.001, 0.01, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -765,7 +765,7 @@ DepthMerge_dialog (DepthMerge *dm)
   g_object_set_data (G_OBJECT (adj), "dm", dm);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
-			      _("Scale 1:"), 0, 6,
+			      _("Sc_ale 1:"), 0, 6,
 			      dm->params.scale1, -1, 1, 0.001, 0.01, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -775,7 +775,7 @@ DepthMerge_dialog (DepthMerge *dm)
   g_object_set_data (G_OBJECT (adj), "dm", dm);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 7,
-			      _("Scale 2:"), 0, 6,
+			      _("Sca_le 2:"), 0, 6,
 			      dm->params.scale2, -1, 1, 0.001, 0.01, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -924,14 +924,14 @@ dm_constraint (gint32   imageId,
 {
   DepthMerge *dm = (DepthMerge *)data;
 
-  return((drawableId == -1) ||
-         ((gimp_drawable_width (drawableId) ==
-	   gimp_drawable_width (dm->params.result)) &&
-	  (gimp_drawable_height (drawableId) ==
-	   gimp_drawable_height (dm->params.result)) &&
-	  ((gimp_drawable_is_rgb (drawableId) &&
-	    (gimp_drawable_is_rgb (dm->params.result))) ||
-	   gimp_drawable_is_gray (drawableId))));
+  return ((drawableId == -1) ||
+	  ((gimp_drawable_width (drawableId) ==
+	    gimp_drawable_width (dm->params.result)) &&
+	   (gimp_drawable_height (drawableId) ==
+	    gimp_drawable_height (dm->params.result)) &&
+	   ((gimp_drawable_is_rgb (drawableId) &&
+	     (gimp_drawable_is_rgb (dm->params.result))) ||
+	    gimp_drawable_is_gray (drawableId))));
 }
 
 static void

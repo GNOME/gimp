@@ -136,11 +136,11 @@ static void minner  (guchar *s, gfloat h);
 static void mouter  (guchar *s, gfloat h);
 static void mhalo   (guchar *s, gfloat h);
 static void initref (gint sx, gint sy, gint width, gint height, gint matt);
-static void fixpix  (guchar *data, float procent, RGBfloat colpro);
-static void mrt1    (guchar *s, gint i, gint col, gint row);
-static void mrt2    (guchar *s, gint i, gint col, gint row);
-static void mrt3    (guchar *s, gint i, gint col, gint row);
-static void mrt4    (guchar *s, gint i, gint col, gint row);
+static void fixpix  (guchar *data, float procent, RGBfloat *colpro);
+static void mrt1    (guchar *s, Reflect *ref, gint col, gint row);
+static void mrt2    (guchar *s, Reflect *ref, gint col, gint row);
+static void mrt3    (guchar *s, Reflect *ref, gint col, gint row);
+static void mrt4    (guchar *s, Reflect *ref, gint col, gint row);
 
 /* --- Variables --- */
 GimpPlugInInfo PLUG_IN_INFO =
@@ -336,6 +336,7 @@ FlareFX (GimpDrawable *drawable,
   gint x1, y1, x2, y2;
   gint matt;
   gfloat hyp;
+GTimer *timer = g_timer_new();
 
   if (preview_mode)
     {
@@ -407,26 +408,28 @@ FlareFX (GimpDrawable *drawable,
       for (col = x1; col < x2; col++) /* x-coord */
         {
           hyp = hypot (col-xs, row-ys);
+
           mcolor (s, hyp); /* make color */
           mglow (s, hyp);  /* make glow  */
           minner (s, hyp); /* make inner */
           mouter (s, hyp); /* make outer */
           mhalo (s, hyp);  /* make halo  */
+
           for (i = 0; i < numref; i++)
             {
               switch (ref1[i].type)
                 {
                 case 1:
-                  mrt1 (s, i, col, row);
+                  mrt1 (s, ref1 + i, col, row);
                   break;
                 case 2:
-                  mrt2 (s, i, col, row);
+                  mrt2 (s, ref1 + i, col, row);
                   break;
                 case 3:
-                  mrt3 (s, i, col, row);
+                  mrt3 (s, ref1 + i, col, row);
                   break;
                 case 4:
-                  mrt4 (s, i, col, row);
+                  mrt4 (s, ref1 + i, col, row);
                   break;
                 }
             }
@@ -456,6 +459,7 @@ FlareFX (GimpDrawable *drawable,
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
       gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+printf("%lf\n", g_timer_elapsed(timer, NULL));
     }
 
   g_free (cur_row);
@@ -466,14 +470,14 @@ static void
 mcolor (guchar *s,
         gfloat  h)
 {
-  static gfloat procent;
+  gfloat procent;
 
   procent = scolor - h;
   procent/=scolor;
   if (procent > 0.0)
     {
-      procent*=procent;
-      fixpix (s, procent, color);
+      procent *= procent;
+      fixpix (s, procent, &color);
     }
 }
 
@@ -481,14 +485,14 @@ static void
 mglow (guchar *s,
        gfloat  h)
 {
-  static gfloat procent;
+  gfloat procent;
 
   procent = sglow - h;
   procent/=sglow;
   if (procent > 0.0)
     {
       procent*=procent;
-      fixpix (s, procent, glow);
+      fixpix (s, procent, &glow);
     }
 }
 
@@ -496,14 +500,14 @@ static void
 minner (guchar *s,
         gfloat  h)
 {
-  static gfloat procent;
+  gfloat procent;
 
   procent = sinner - h;
   procent/=sinner;
   if (procent > 0.0)
     {
       procent*=procent;
-      fixpix (s, procent, inner);
+      fixpix (s, procent, &inner);
     }
 }
 
@@ -511,35 +515,35 @@ static void
 mouter (guchar *s,
         gfloat  h)
 {
-  static gfloat procent;
+  gfloat procent;
 
   procent = souter - h;
   procent/=souter;
   if (procent > 0.0)
-    fixpix (s, procent, outer);
+    fixpix (s, procent, &outer);
 }
 
 static void
 mhalo (guchar *s,
        gfloat  h)
 {
-  static gfloat procent;
+  gfloat procent;
 
   procent = h - shalo;
   procent/=(shalo*0.07);
   procent = fabs (procent);
   if (procent < 1.0)
-    fixpix (s, 1.0 - procent, halo);
+    fixpix (s, 1.0 - procent, &halo);
 }
 
 static void
 fixpix (guchar   *data,
         float     procent,
-        RGBfloat  colpro)
+        RGBfloat *colpro)
 {
-  data[0] = data[0] + (255 - data[0]) * procent * colpro.r;
-  data[1] = data[1] + (255 - data[1]) * procent * colpro.g;
-  data[2] = data[2] + (255 - data[2]) * procent * colpro.b;
+  data[0] += (255 - data[0]) * procent * colpro->r;
+  data[1] += (255 - data[1]) * procent * colpro->g;
+  data[2] += (255 - data[2]) * procent * colpro->b;
 }
 
 static void
@@ -614,69 +618,69 @@ initref (gint sx,
 }
 
 static void
-mrt1 (guchar *s,
-      gint    i,
-      gint    col,
-      gint    row)
+mrt1 (guchar  *s,
+      Reflect *ref,
+      gint     col,
+      gint     row)
 {
-  static gfloat procent;
+  gfloat procent;
 
-  procent = ref1[i].size - hypot (ref1[i].xp - col, ref1[i].yp - row);
-  procent/=ref1[i].size;
+  procent = ref->size - hypot (ref->xp - col, ref->yp - row);
+  procent/=ref->size;
   if (procent > 0.0)
     {
       procent*=procent;
-      fixpix (s, procent, ref1[i].ccol);
+      fixpix (s, procent, &ref->ccol);
     }
 }
 
 static void
 mrt2 (guchar *s,
-      gint    i,
+      Reflect *ref,
       gint    col,
       gint    row)
 {
-  static gfloat procent;
+  gfloat procent;
 
-  procent = ref1[i].size - hypot (ref1[i].xp - col, ref1[i].yp - row);
-  procent/=(ref1[i].size * 0.15);
+  procent = ref->size - hypot (ref->xp - col, ref->yp - row);
+  procent/=(ref->size * 0.15);
   if (procent > 0.0)
     {
       if (procent > 1.0) procent = 1.0;
-      fixpix (s, procent, ref1[i].ccol);
+      fixpix (s, procent, &ref->ccol);
     }
 }
 
 static void
 mrt3 (guchar *s,
-      gint    i,
+      Reflect *ref,
       gint    col,
       gint    row)
 {
-  static gfloat procent;
+  gfloat procent;
 
-  procent = ref1[i].size - hypot (ref1[i].xp - col, ref1[i].yp - row);
-  procent/=(ref1[i].size * 0.12);
+  procent = ref->size - hypot (ref->xp - col, ref->yp - row);
+  procent/=(ref->size * 0.12);
   if (procent > 0.0)
     {
       if (procent > 1.0) procent = 1.0 - (procent * 0.12);
-      fixpix (s, procent, ref1[i].ccol);
+      fixpix (s, procent, &ref->ccol);
     }
 }
 
 static void
 mrt4 (guchar *s,
-      gint    i,
+      Reflect *ref,
       gint    col,
       gint    row)
 {
-  static gfloat procent;
+  gfloat procent;
 
-  procent = hypot (ref1[i].xp - col, ref1[i].yp - row) - ref1[i].size;
-  procent/=(ref1[i].size*0.04);
+  procent = hypot (ref->xp - col, ref->yp - row) - ref->size;
+  procent/=(ref->size*0.04);
   procent = fabs (procent);
   if (procent < 1.0)
-    fixpix(s, 1.0 - procent, ref1[i].ccol);
+    fixpix(s, 1.0 - procent, &ref->ccol);
 }
 
 /*=================================================================
@@ -789,7 +793,7 @@ flare_center_create (GimpDrawable *drawable)
   gtk_widget_show (frame);
 
   /* show / hide cursor */
-  check = gtk_check_button_new_with_mnemonic (_("_Show Cursor"));
+  check = gtk_check_button_new_with_mnemonic (_("_Show cursor"));
   gtk_table_attach (GTK_TABLE (table), check, 0, 4, 2, 3,
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), show_cursor);
