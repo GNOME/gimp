@@ -124,35 +124,40 @@ file_open_dialog_response (GtkWidget *open_dialog,
     {
       gchar *filename = file_utils_filename_from_uri (list->data);
 
-      if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
+      if (filename)
         {
-          if (dialog->gimage)
-            {
-              if (file_open_dialog_open_layer (open_dialog,
-                                               dialog->gimage,
-                                               list->data,
-                                               list->data,
-                                               dialog->file_proc))
-                {
-                  success = TRUE;
-                }
-            }
-          else
-            {
-              if (file_open_dialog_open_image (open_dialog,
-                                               gimp,
-                                               list->data,
-                                               list->data,
-                                               dialog->file_proc))
-                {
-                  success = TRUE;
+          gboolean regular = g_file_test (filename, G_FILE_TEST_IS_REGULAR);
 
-                  gdk_window_raise (open_dialog->window);
-                }
-            }
+          g_free (filename);
+
+          if (! regular)
+            continue;
         }
 
-      g_free (filename);
+      if (dialog->gimage)
+        {
+          if (file_open_dialog_open_layer (open_dialog,
+                                           dialog->gimage,
+                                           list->data,
+                                           list->data,
+                                           dialog->file_proc))
+            {
+              success = TRUE;
+            }
+        }
+      else
+        {
+          if (file_open_dialog_open_image (open_dialog,
+                                           gimp,
+                                           list->data,
+                                           list->data,
+                                           dialog->file_proc))
+            {
+              success = TRUE;
+
+              gdk_window_raise (open_dialog->window);
+            }
+        }
 
       if (dialog->canceled)
         break;

@@ -1,5 +1,17 @@
 2005-02-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/dialogs/file-open-dialog.c (file_open_dialog_response)
+	* app/dialogs/file-save-dialog.c (file_save_dialog_response):
+	don't bail out if filename_from_uri() returns NULL. Perform
+	checks for G_FILE_TEST_IS_REGULAR and G_FILE_TEST_EXISTS
+	only on local files.
+
+	(This brings up the problem that we will overwrite existing remote
+	files without warning. Need to fix that before enabling remote
+	files in GimpFileDialog).
+
+2005-02-12  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpbase/gimpbaseenums.h (enum GimpProgressCommand):
 	added GIMP_PROGRESS_COMMAND_PULSE.
 

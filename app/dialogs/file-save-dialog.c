@@ -134,11 +134,17 @@ file_save_dialog_response (GtkWidget *save_dialog,
 
   if (uri && strlen (uri))
     {
-      gchar *filename = file_utils_filename_from_uri (uri);
+      gchar    *filename = file_utils_filename_from_uri (uri);
+      gboolean  exists   = FALSE;
 
-      g_return_if_fail (filename != NULL);
+      if (filename)
+        {
+          exists = g_file_test (filename, G_FILE_TEST_EXISTS);
 
-      if (g_file_test (filename, G_FILE_TEST_EXISTS))
+          g_free (filename);
+        }
+
+      if (exists)
         {
           file_save_overwrite (save_dialog, uri, uri);
         }
@@ -159,7 +165,6 @@ file_save_dialog_response (GtkWidget *save_dialog,
           gimp_file_dialog_set_sensitive (dialog, TRUE);
         }
 
-      g_free (filename);
       g_free (uri);
     }
 }
