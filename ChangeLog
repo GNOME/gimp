@@ -1,5 +1,12 @@
 2003-08-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimplayertreeview.c
+	(gimp_layer_tree_view_alpha_changed): update the button states if
+	the layer which changed alpha was the active one.
+	Fixes bug #120864.
+
+2003-08-27  Michael Natterer  <mitch@gimp.org>
+
 	Enabled type-preserving DND of all kinds of items between
 	different images. Fixes bug #119983.
 

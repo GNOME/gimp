@@ -1093,5 +1093,16 @@ gimp_layer_tree_view_alpha_changed (GimpLayer         *layer,
   iter = g_hash_table_lookup (view->hash_table, layer);
 
   if (iter)
-    gimp_layer_tree_view_alpha_update (layer_view, iter, layer);
+    {
+      GimpItemTreeView *item_view;
+
+      item_view = GIMP_ITEM_TREE_VIEW (view);
+
+      gimp_layer_tree_view_alpha_update (layer_view, iter, layer);
+
+      /*  update button states  */
+      if (gimp_image_get_active_layer (item_view->gimage) == layer)
+        gimp_container_view_select_item (GIMP_CONTAINER_VIEW (view),
+                                         GIMP_VIEWABLE (layer));
+    }
 }
