@@ -67,7 +67,7 @@
 
 # Set the plug-in search path...this path will be searched for
 #  plug-ins when the plug-in is run.
-(plug-in-path "${gimp_dir}/plug-ins:${gimp_dir}/plug-ins/script-fu:${gimp_plugin_dir}/plug-ins")
+(plug-in-path "${gimp_dir}/plug-ins:${gimp_dir}/plug-ins/script-fu:${gimp_plugin_dir}/plug-ins:${gimp_data_dir}/plug-ins")
 
 # Set the path for the script-fu plug-in.  This value is ignored by
 #  the GIMP if the script-fu plug-in is never run.
