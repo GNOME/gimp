@@ -1,3 +1,8 @@
+2002-03-15  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/colorify.c: applied a patch from Maurits Rijk 
+	<lpeek.mrijk@consunet.nl> that gives a nice speedup (#74563).
+
 2002-03-14  Manish Singh  <yosh@gimp.org>
 
 	* app/tools/gimpfuzzyselecttool.c: add missing support for

@@ -32,9 +32,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-
-#include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -54,16 +51,12 @@ static void      run   (gchar      *name,
 			gint       *nreturn_vals,
 			GimpParam **return_vals);
 
-static void      colorify     (GimpDrawable *drawable);
-static void      colorify_row (guchar       *row,
-			       gint          width,
-			       gint          bpp);
-
-static gboolean  colorify_dialog           (GimpRGB   *color);
-static void      colorify_ok_callback      (GtkWidget *widget,
-					    gpointer   data);
-static void      predefined_color_callback (GtkWidget *widget,
-					    gpointer   data);
+static void      colorify                  (GimpDrawable *drawable);
+static gboolean  colorify_dialog           (GimpRGB      *color);
+static void      colorify_ok_callback      (GtkWidget    *widget,
+					    gpointer      data);
+static void      predefined_color_callback (GtkWidget    *widget,
+					    gpointer      data);
 
 typedef struct
 {
@@ -104,8 +97,6 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,
 };
 
-static gint       sel_x1, sel_x2, sel_y1, sel_y2;
-static gint       sel_width, sel_height;
 static GtkWidget *custum_color_button = NULL;
 
 static gint lum_red_lookup[256];
@@ -129,13 +120,13 @@ query (void)
     { GIMP_PDB_COLOR, "color", "Color to apply"}
   };
 
-  gimp_install_procedure ("plug_in_colorify",
+  gimp_install_procedure (PLUG_IN_NAME,
 			  "Similar to the \"Color\" mode for layers.",
 			  "Makes an average of the RGB channels and uses it "
 			  "to set the color",
 			  "Francisco Bustamante",
 			  "Francisco Bustamante",
-			  "0.0.1",
+                          PLUG_IN_VERSION,
 			  N_("<Image>/Filters/Colors/Colorify..."), 
 			  "RGB*",
 			  GIMP_PLUGIN,
@@ -167,12 +158,6 @@ run (gchar      *name,
   *return_vals = values;
 
   drawable = gimp_drawable_get (param[2].data.d_drawable);
-
-  gimp_drawable_mask_bounds (drawable->drawable_id,
-			     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
-
-  sel_width = sel_x2 - sel_x1;
-  sel_height = sel_y2 - sel_y1;
 
   switch (run_mode)
     {
@@ -220,13 +205,15 @@ run (gchar      *name,
 static void
 colorify (GimpDrawable *drawable)
 {
-  GimpPixelRgn source_region;
-  GimpPixelRgn dest_region;
-  guchar *row;
-  gint    bpp;
-  gint    y = 0;
-  gint    i = 0;
-  gint    progress = 0;
+  GimpPixelRgn src_rgn;
+  GimpPixelRgn dest_rgn;
+  gpointer     pr;
+  gint  progress = 0;
+  gint  max_progress;
+  gint  sel_x1, sel_x2, sel_y1, sel_y2;
+  gint  sel_width, sel_height;
+  gint  x, y;
+  gint  i;
 
   for (i = 0; i < 256; i ++)
     {
@@ -238,27 +225,60 @@ colorify (GimpDrawable *drawable)
       final_blue_lookup[i]  = i * cvals.color.b;
     }
 
-  bpp = gimp_drawable_bpp (drawable->drawable_id);
-  row = g_new (guchar, sel_width * bpp);
+  gimp_drawable_mask_bounds (drawable->drawable_id,
+			     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+
+  sel_width  = sel_x2 - sel_x1;
+  sel_height = sel_y2 - sel_y1;
+
+  max_progress = sel_width * sel_height;
+
+  if (max_progress <= 0)
+    return;
 
   gimp_tile_cache_ntiles (2 * (sel_width / gimp_tile_width()) + 1);
 
-  gimp_pixel_rgn_init (&source_region, drawable,
+  gimp_pixel_rgn_init (&src_rgn, drawable,
 		       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_region, drawable,
+  gimp_pixel_rgn_init (&dest_rgn, drawable,
 		       sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
 
-  for (y = sel_y1; y < sel_y2; y++)
+  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
     {
-      gimp_pixel_rgn_get_row (&source_region, row, sel_x1, y, sel_width);
+      guchar *src  = src_rgn.data;
+      guchar *dest = dest_rgn.data;
 
-      colorify_row (row, sel_width, bpp);
+      for (y = 0; y < src_rgn.h; y++)
+	{
+	  guchar *s = src;
+	  guchar *d = dest;
 
-      gimp_pixel_rgn_set_row (&dest_region, row, sel_x1, y, sel_width);
-      gimp_progress_update ((gdouble) ++progress / (gdouble) sel_height);
+	  for (x = 0; x < src_rgn.w; x++)
+	    {
+	      gint lum = lum_red_lookup[s[0]] +
+	                 lum_green_lookup[s[1]] +
+	                 lum_blue_lookup[s[2]]; /* luminosity */
+
+	      d[0] = final_red_lookup[lum];
+	      d[1] = final_green_lookup[lum];
+	      d[2] = final_blue_lookup[lum];
+
+	      s += src_rgn.bpp;
+	      d += dest_rgn.bpp;
+	    }
+
+	  src += src_rgn.rowstride;
+	  dest += dest_rgn.rowstride;
+
+	}
+
+      /* Update progress */
+      progress += src_rgn.w * src_rgn.h;
+
+      gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
     }
-
-  g_free (row);
 
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE); 
@@ -266,29 +286,6 @@ colorify (GimpDrawable *drawable)
 			sel_x1, sel_y1, sel_width, sel_height);
 }
 
-static void
-colorify_row (guchar *row,
-	      gint    width,
-	      gint    bpp)
-{
-  gint    cur_x;
-  gint    lum; /* luminosity */
-  guchar *current = row;
-
-  for (cur_x = 0; cur_x < width; cur_x++)
-    {
-      lum = (lum_red_lookup[current[0]] +
-	     lum_green_lookup[current[1]] +
-	     lum_blue_lookup[current[2]]);
-
-      current[0] = final_red_lookup[lum];
-      current[1] = final_green_lookup[lum];
-      current[2] = final_blue_lookup[lum];
-		
-      current += bpp;
-    }
-}
-		
 static gboolean
 colorify_dialog (GimpRGB *color)
 {
@@ -322,7 +319,8 @@ colorify_dialog (GimpRGB *color)
   frame = gtk_frame_new (_("Color"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), 
+                      frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (2, 7, TRUE);
@@ -359,8 +357,8 @@ colorify_dialog (GimpRGB *color)
 				   COLOR_SIZE, COLOR_SIZE);
       gtk_container_add (GTK_CONTAINER (button), color_area);
       g_signal_connect (G_OBJECT (button), "clicked",
-			  (GtkSignalFunc) predefined_color_callback,
-			  color_area);
+			G_CALLBACK (predefined_color_callback),
+                        color_area);
       gtk_widget_show (color_area);
 
       gtk_table_attach (GTK_TABLE (table), button, i, i + 1, 1, 2,
@@ -392,7 +390,6 @@ predefined_color_callback (GtkWidget *widget,
   GimpRGB  color;
 
   gimp_color_area_get_color (GIMP_COLOR_AREA (data), &color);
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (custum_color_button), &color);
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON (custum_color_button), 
+                               &color);
 }
-
-
