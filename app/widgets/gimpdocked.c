@@ -30,7 +30,7 @@
 #include "gimpdocked.h"
 
 
-static void  gimp_docked_iface_init (GimpDockedInterface *docked_iface);
+static void  gimp_docked_iface_base_init (GimpDockedInterface *docked_iface);
 
 
 GType
@@ -43,7 +43,7 @@ gimp_docked_interface_get_type (void)
       static const GTypeInfo docked_iface_info =
       {
         sizeof (GimpDockedInterface),
-	(GBaseInitFunc)     gimp_docked_iface_init,
+	(GBaseInitFunc)     gimp_docked_iface_base_init,
 	(GBaseFinalizeFunc) NULL,
       };
 
@@ -59,13 +59,8 @@ gimp_docked_interface_get_type (void)
 }
 
 static void
-gimp_docked_iface_init (GimpDockedInterface *docked_iface)
+gimp_docked_iface_base_init (GimpDockedInterface *docked_iface)
 {
-  docked_iface->set_aux_info = NULL;
-  docked_iface->get_aux_info = NULL;
-  docked_iface->get_preview  = NULL;
-  docked_iface->set_context  = NULL;
-  docked_iface->get_menu     = NULL;
 }
 
 void
@@ -141,6 +136,21 @@ gimp_docked_get_menu (GimpDocked *docked,
   g_return_val_if_fail (item_factory_data != NULL, NULL);
 
   docked_iface = GIMP_DOCKED_GET_INTERFACE (docked);
+
+#if 0
+  g_print ("gimp_docked_get_menu: docked = %p\n"
+           "iface->set_aux_info = %p\n"
+           "iface->get_aux_info = %p\n"
+           "iface->get_preview  = %p\n"
+           "iface->set_context  = %p\n"
+           "iface->get_menu     = %p\n\n",
+           docked,
+           docked_iface->set_aux_info,
+           docked_iface->get_aux_info,
+           docked_iface->get_preview,
+           docked_iface->set_context,
+           docked_iface->get_menu);
+#endif
 
   if (docked_iface->get_menu)
     return docked_iface->get_menu (docked, item_factory_data);

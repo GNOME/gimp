@@ -1,5 +1,14 @@
 2003-10-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdocked.c (gimp_docked_iface_base_init)
+	* app/config/gimpconfig.c (gimp_config_iface_base_init): they are
+	base_init, not just init functions. Changed implementations to not
+	overwrite the parent class' vtable entries with the default
+	implementations. Fixes derived interface methods and brings
+	back all dockable menus.
+
+2003-10-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/info-window.c: eek. should actually commit what i
 	claimed below...
 
