@@ -1,3 +1,19 @@
+Tue Feb  8 18:19:29 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/gimpdnd.c: When dragging a layer, show it in its full size 
+	instead of taking the image_size into account. The offset that was
+	shown is lost during the drag, so it doesn't make sense to show it.
+
+	* app/devices.c
+	* app/gradient.c
+	* app/info_window.c
+	* app/interface.c
+	* app/nav_window.c
+	* app/ops_buttons.c: stop leaking pixmaps all over the place.
+	We might consider to make some pixmaps static and reuse them.
+
+	* app/undo_history.c: purely cosmetic
+
 2000-02-08  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpfileselection.[ch]
@@ -19,9 +35,9 @@ Tue Feb  8 14:59:43 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* libgimp/gimpexport.c: Be more intelligent when dealing with invisible
 	layers. Export should now always save what you see. Unless there is no 
-	visible layer at all, then we save the active layer. Export doesn't call 
-	gimp_merge_visible_layers any more if less than two layers are visible.
-	Fixes bug #5701.
+	visible layer at all, then we save the active layer. Export doesn't 
+	call gimp_merge_visible_layers any more if less than two layers are 
+	visible. Fixes bug #5701.
 
 Tue Feb  8 13:12:26 CET 2000  Sven Neumann <sven@gimp.org>
 

@@ -945,6 +945,9 @@ gradient_editor_create (void)
 					 &style->bg[GTK_STATE_NORMAL], 
 					 zoom_in_xpm);
   pixmapwid = gtk_pixmap_new (pixmap, mask);
+  gdk_pixmap_unref (pixmap);
+  gdk_bitmap_unref (mask);
+
   gtk_container_add (GTK_CONTAINER (button), pixmapwid);
   gtk_widget_show (pixmapwid);
   gtk_widget_show (button);
@@ -960,6 +963,9 @@ gradient_editor_create (void)
 					 &style->bg[GTK_STATE_NORMAL], 
 					 zoom_out_xpm);
   pixmapwid = gtk_pixmap_new (pixmap, mask);
+  gdk_pixmap_unref (pixmap);
+  gdk_bitmap_unref (mask);
+
   gtk_container_add (GTK_CONTAINER (button), pixmapwid);
   gtk_widget_show (pixmapwid);
   gtk_widget_show (button);

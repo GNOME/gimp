@@ -1047,7 +1047,6 @@ gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
 
   gboolean  drag_connected;
 
-  GImage    *gimage;
   TempBuf   *tmpbuf;
   gint       bpp;
   gint       x, y;
@@ -1058,59 +1057,27 @@ gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
   gint       width;
   gint       height;
   gdouble    ratio;
-  gint       offx, offy;
 
   if (! preview_size)
     return;
 
-  gimage = gimp_drawable_gimage (drawable);
-
-  if (gimage->width > gimage->height)
-    ratio = (gdouble) DRAG_PREVIEW_SIZE / (gdouble) gimage->width;
+  if (gimp_drawable_width (drawable) > gimp_drawable_height (drawable))
+    ratio = (gdouble) DRAG_PREVIEW_SIZE / 
+            (gdouble) (gimp_drawable_width (drawable));
   else
-    ratio = (gdouble) DRAG_PREVIEW_SIZE / (gdouble) gimage->height;
+    ratio = (gdouble) DRAG_PREVIEW_SIZE /
+            (gdouble) (gimp_drawable_height (drawable));
 
-  width =  (gint) (ratio * gimage->width);
-  height = (gint) (ratio * gimage->height);
-
-  if (width < 1) 
-    width = 1;
-  if (height < 1)
-    height = 1;
-
-  gimp_drawable_offsets (drawable, &offx, &offy);
-
-  offx = (int) (ratio * offx);
-  offy = (int) (ratio * offy);
-
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), width, height);
-
-  even = g_new (guchar, width * 3);
-
-  for (x = 0; x < width; x++)
-    {
-      even[x * 3]     = 255;
-      even[x * 3 + 1] = 255;
-      even[x * 3 + 2] = 255;
-    }
-
-  for (y = 0; y < height; y++)
-    {
-      gtk_preview_draw_row (GTK_PREVIEW (preview), even,
-			    0, y, width);
-    }
-
-  g_free (even);
-
-  /*  readjust for actual layer size  */
-  width  = (gint) (ratio * gimp_drawable_width  (drawable));
+  width =  (gint) (ratio * gimp_drawable_width (drawable));
   height = (gint) (ratio * gimp_drawable_height (drawable));
 
   if (width < 1) 
     width = 1;
   if (height < 1)
     height = 1;
+
+  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (preview), width, height);
 
   if (GIMP_IS_LAYER (drawable))
     {
@@ -1195,12 +1162,12 @@ gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
       if ((y / GIMP_CHECK_SIZE_SM) & 1)
 	{
 	  gtk_preview_draw_row (GTK_PREVIEW (preview), odd,
-				offx, y + offy, width);
+				0, y, width);
 	}
       else
 	{
 	  gtk_preview_draw_row (GTK_PREVIEW (preview), even,
-				offx, y + offy, width);
+				0, y, width);
 	}
       src += width * bpp;
     }

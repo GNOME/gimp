@@ -735,6 +735,7 @@ void
 device_status_create (void)
 {
   DeviceInfo *device_info;
+  GdkPixmap *pixmap;
   GtkWidget *label;
   GList *list;
   gint i;
@@ -813,9 +814,11 @@ device_status_create (void)
 	  /*  the tool  */
 
 	  deviceD->eventboxes[i] = gtk_event_box_new();
-	  deviceD->tools[i] =
-	    gtk_pixmap_new (create_tool_pixmap (deviceD->table, RECT_SELECT),
-			    NULL);
+
+	  pixmap = create_tool_pixmap (deviceD->table, RECT_SELECT);
+	  deviceD->tools[i] = gtk_pixmap_new (pixmap, NULL);
+	  gdk_pixmap_unref (pixmap);
+	  
 	  gtk_drag_source_set (deviceD->eventboxes[i],
 			       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
 			       tool_target_table, n_tool_targets,
@@ -981,6 +984,7 @@ device_status_update_current (void)
 void 
 device_status_update (guint32 deviceid)
 {
+  GdkPixmap *pixmap;
   GdkDeviceInfo *gdk_info;
   DeviceInfo    *device_info;
   guchar buffer[CELL_SIZE*3];
@@ -1018,11 +1022,10 @@ device_status_update (guint32 deviceid)
     {
       gtk_widget_show (deviceD->frames[i]);
 
-      gtk_pixmap_set
-	(GTK_PIXMAP (deviceD->tools[i]),
-	 create_tool_pixmap (deviceD->table, 
-			     gimp_context_get_tool (device_info->context)),
-	 NULL);
+      pixmap = create_tool_pixmap (deviceD->table, 
+				   gimp_context_get_tool (device_info->context));
+      gtk_pixmap_set (GTK_PIXMAP (deviceD->tools[i]), pixmap, NULL);
+      gdk_pixmap_unref (pixmap);
 
       gtk_widget_draw (deviceD->tools[i], NULL);
       gtk_widget_show (deviceD->tools[i]);

@@ -408,7 +408,7 @@ smudge_motion (PaintCore            *paint_core,
   if (!drawable_has_alpha (drawable))                             
     add_alpha_region (&tempPR, &destPR);                          
   else                                                            
-    copy_region(&tempPR, &destPR);
+    copy_region (&tempPR, &destPR);
 
   opacity = 255 * gimp_context_get_opacity (NULL);
   if (pressure_options->opacity)

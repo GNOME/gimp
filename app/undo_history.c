@@ -273,10 +273,10 @@ undo_history_set_pixmap_idle (gpointer data)
       height = (gint)(((gdouble)height * (gdouble)width ) /(gdouble) idle->gimage->width + 0.5);
     }
 
-  utype = undo_get_undo_top_type(idle->gimage);
+  utype = undo_get_undo_top_type (idle->gimage);
 
   if((utype != MASK_UNDO && utype != QMASK_UNDO) || 
-     (mbuf = mask_render_preview(idle->gimage,&width,&height)) == NULL)
+     (mbuf = mask_render_preview (idle->gimage,&width,&height)) == NULL)
     {
       buf = gimp_image_construct_composite_preview (idle->gimage, width, height);
       bpp = buf->bytes;
@@ -291,7 +291,7 @@ undo_history_set_pixmap_idle (gpointer data)
   pixmap = gdk_pixmap_new (GTK_WIDGET (idle->clist)->window, width+2, height+2, -1);
   
   gdk_draw_rectangle (pixmap, 
-		      GTK_WIDGET (idle->clist)->style->bg_gc[GTK_STATE_NORMAL],
+		      GTK_WIDGET (idle->clist)->style->black_gc,
 		      TRUE,
 		      0, 0,
 		      width + 2, height + 2);
@@ -780,13 +780,13 @@ undo_history_new (GImage *gimage)
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_widget_set_usize (GTK_WIDGET (scrolled_win), 
 			160 + st->preview_size,
-			4 * (MAX (st->preview_size, 16) + 4));
+			4 * (MAX (st->preview_size, 16) + 6));
 
   /* clist of undo actions */
   st->clist = gtk_clist_new (3);
   gtk_clist_set_selection_mode (GTK_CLIST (st->clist), GTK_SELECTION_BROWSE);
   gtk_clist_set_reorderable (GTK_CLIST (st->clist), FALSE);
-  gtk_clist_set_row_height (GTK_CLIST (st->clist), MAX (st->preview_size, 16) + 2);
+  gtk_clist_set_row_height (GTK_CLIST (st->clist), MAX (st->preview_size, 16) + 4);
   gtk_clist_set_column_width (GTK_CLIST (st->clist), 0, st->preview_size + 2);
   gtk_clist_set_column_width (GTK_CLIST (st->clist), 1, 18);
   gtk_clist_set_column_min_width (GTK_CLIST (st->clist), 2, 64);
@@ -867,6 +867,7 @@ undo_history_new (GImage *gimage)
   gtk_container_add (GTK_CONTAINER (abox), hbox2);
 
   pixmapwid = gtk_pixmap_new (undo_pixmap, undo_mask);
+
   gtk_box_pack_start (GTK_BOX (hbox2), pixmapwid, FALSE, FALSE, 0);
   gtk_widget_show (pixmapwid);
   
@@ -892,6 +893,7 @@ undo_history_new (GImage *gimage)
   gtk_container_add (GTK_CONTAINER (abox), hbox2);
 
   pixmapwid = gtk_pixmap_new (redo_pixmap, redo_mask);
+
   gtk_box_pack_start (GTK_BOX (hbox2), pixmapwid, FALSE, FALSE, 0);
   gtk_widget_show (pixmapwid);
 

@@ -505,12 +505,16 @@ create_pixmap_widget (GdkWindow  *parent,
 		      gint        width,
 		      gint        height)
 {
+  GtkWidget *widget;
   GdkPixmap *pixmap;
   GdkBitmap *mask;
 
   pixmap = create_pixmap (parent, &mask, data, width, height);
-
-  return gtk_pixmap_new (pixmap, mask);
+  widget = gtk_pixmap_new (pixmap, mask);
+  gdk_pixmap_unref (pixmap);
+  gdk_bitmap_unref (mask);
+  
+  return (widget);
 }
 
 void
@@ -846,6 +850,7 @@ create_display_shell (GDisplay* gdisp,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gdisp->qmaskoff), TRUE);
   gtk_widget_set_usize (GTK_WIDGET (gdisp->qmaskon), 15, 15);
   gtk_widget_set_usize (GTK_WIDGET (gdisp->qmaskoff), 15, 15);
+
   /* Draw pixmaps - note: you must realize the parent prior to doing the
      rest! */  
   {
@@ -861,6 +866,9 @@ create_display_shell (GDisplay* gdisp,
 					 qmasksel_xpm);   
 
     pixmap = gtk_pixmap_new (pxmp, mask);
+    gdk_pixmap_unref (pxmp);
+    gdk_bitmap_unref (mask);
+    
     gtk_container_add (GTK_CONTAINER (gdisp->qmaskon), pixmap);
     gtk_widget_show (pixmap);
   
@@ -868,6 +876,9 @@ create_display_shell (GDisplay* gdisp,
 					 &style->bg[GTK_STATE_NORMAL],
 					 qmasknosel_xpm);   
     pixmap = gtk_pixmap_new (pxmp, mask);
+    gdk_pixmap_unref (pxmp);
+    gdk_bitmap_unref (mask);
+
     gtk_container_add (GTK_CONTAINER (gdisp->qmaskoff), pixmap);
     gtk_widget_show (pixmap);
 
@@ -876,6 +887,9 @@ create_display_shell (GDisplay* gdisp,
 					 &style->bg[GTK_STATE_NORMAL],
 					 navbutton_xpm);   
     pixmap = gtk_pixmap_new (pxmp, mask);
+    gdk_pixmap_unref (pxmp);
+    gdk_bitmap_unref (mask);
+
     gtk_container_add (GTK_CONTAINER (navhbox), pixmap); 
     gtk_widget_show (pixmap); 
   }

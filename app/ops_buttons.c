@@ -53,6 +53,8 @@ ops_button_box_new (GtkWidget     *parent,
 					     &style->bg[GTK_STATE_NORMAL],
 					     ops_button->xpm_data);
       pixmap_widget = gtk_pixmap_new (pixmap, mask);
+      gdk_pixmap_unref (pixmap);
+      gdk_bitmap_unref (mask);
 
       switch (ops_type)
 	{
