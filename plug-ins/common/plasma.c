@@ -83,10 +83,8 @@
 
 typedef struct
 {
-  gint     seed;
+  guint32     seed;
   gdouble  turbulence;
-  /* Interface only */
-  gboolean timeseed;
 } PlasmaValues;
 
 typedef struct
@@ -111,7 +109,7 @@ static gint	plasma_dialog            (GimpDrawable *drawable,
 static void     plasma_ok_callback       (GtkWidget *widget, 
 					  gpointer   data);
 static void     plasma_seed_changed_callback (GimpDrawable *drawable,
-                                              gboolean    preview_mode);
+                                              gpointer      data);
 
 static void	plasma	     (GimpDrawable *drawable, 
 			      gboolean   preview_mode);
@@ -163,7 +161,6 @@ static PlasmaValues pvals =
 {
   0,     /* seed       */
   1.0,   /* turbulence */
-  TRUE   /* Time seed? */
 };
 
 static PlasmaInterface pint =
@@ -254,9 +251,8 @@ run (gchar      *name,
 	}
       else
 	{
-	  pvals.seed = (gint) param[3].data.d_int32;
+	  pvals.seed = (guint32) param[3].data.d_int32;
 	  pvals.turbulence = (gdouble) param[4].data.d_float;
-          pvals.timeseed = FALSE;
 
 	  if (pvals.turbulence <= 0)
 	    status = GIMP_PDB_CALLING_ERROR;
@@ -267,7 +263,6 @@ run (gchar      *name,
       INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_plasma", &pvals);
-      /* If we're using a time seed, set it at the start */
       break;
 
     default:
@@ -290,7 +285,7 @@ run (gchar      *name,
 
 	  /*  Store data  */
 	  if (run_mode == GIMP_RUN_INTERACTIVE || 
-	      (pvals.timeseed && run_mode == GIMP_RUN_WITH_LAST_VALS))
+	      (run_mode == GIMP_RUN_WITH_LAST_VALS))
             gimp_set_data ("plug_in_plasma", &pvals, sizeof (PlasmaValues));
 	}
       else
@@ -375,9 +370,7 @@ plasma_dialog (GimpDrawable *drawable, GimpImageType drawable_type)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  seed = gimp_random_seed_new (&pvals.seed,
-			       &pvals.timeseed,
-			       TRUE, FALSE);
+  seed = gimp_random_seed_new (&pvals.seed);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				     _("_Random Seed:"), 1.0, 0.5,
 				     seed, 1, TRUE);
@@ -386,10 +379,6 @@ plasma_dialog (GimpDrawable *drawable, GimpImageType drawable_type)
 
   g_signal_connect_swapped (G_OBJECT (GIMP_RANDOM_SEED_SPINBUTTON_ADJ (seed)),
                             "value_changed",
-                            G_CALLBACK (plasma_seed_changed_callback),
-                            drawable);
-  g_signal_connect_swapped (G_OBJECT (GIMP_RANDOM_SEED_TOGGLEBUTTON (seed)),
-                            "toggled",
                             G_CALLBACK (plasma_seed_changed_callback),
                             drawable);
 
@@ -404,7 +393,7 @@ plasma_dialog (GimpDrawable *drawable, GimpImageType drawable_type)
                     &pvals.turbulence);
   g_signal_connect_swapped (G_OBJECT (adj), "value_changed",
                             G_CALLBACK (plasma_seed_changed_callback),
-                            drawable);
+                            NULL);
 
   gtk_widget_show (dlg);
 
@@ -426,9 +415,9 @@ plasma_ok_callback (GtkWidget *widget,
 
 static void
 plasma_seed_changed_callback (GimpDrawable *drawable,
-                              gboolean    preview_mode)
+                              gpointer      data)
 {
-  plasma(drawable, preview_mode);
+  plasma(drawable, TRUE);
 }
 
 #define AVE(n, v1, v2) n[0] = ((gint)v1[0] + (gint)v2[0]) / 2;\
@@ -460,7 +449,7 @@ plasma (GimpDrawable *drawable,
   GRand *gr;
   
   gr = g_rand_new ();
-
+  
   init_plasma (drawable, preview_mode, gr);
 
   /*
@@ -488,8 +477,7 @@ init_plasma (GimpDrawable *drawable,
              GRand *gr)
 {
 
-  if (!pvals.timeseed)
-    g_rand_set_seed (gr, pvals.seed);
+  g_rand_set_seed (gr, pvals.seed);
 
   turbulence = pvals.turbulence;
 
@@ -668,7 +656,7 @@ add_random (GRand *gr,
 	{
 	  amnt = 1;
 	}
-      tmp = amnt/2 - g_rand_int_range(gr, 0, amnt);
+      tmp = g_rand_int_range(gr, -amnt/2, amnt/2);
 
       if ((gint)d[i] + tmp < 0)
 	{

@@ -918,44 +918,28 @@ gimp_scale_entry_set_sensitive (GtkObject *adjustment,
 }
 
 static void
-gimp_random_seed_toggle_update (GtkWidget *widget,
-				gpointer   data)
+gimp_random_seed_update (GtkWidget *widget,
+		         gpointer   data)
 {
-  gint *toggle_val;
+  GtkWidget *w = data;
 
-  toggle_val = (gint *) data;
-
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
-    *toggle_val = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                                      "time_true"));
-  else
-    *toggle_val = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                                      "time_false"));
-
-  gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON (w), 
+                             (guint) g_random_int ());
 }
 
 /**
  * gimp_random_seed_new:
  * @seed:       A pointer to the variable which stores the random seed.
- * @use_time:   A pointer to the variable which stores the @use_time
- *              toggle boolean.
- * @time_true:  The value to write to @use_time if the toggle button is checked.
- * @time_false: The value to write to @use_time if the toggle button is
- *              unchecked.
  *
  * Note that this widget automatically sets tooltips with
  * gimp_help_set_help_data(), so you'll have to initialize GIMP's help
  * system with gimp_help_init() before using it.
  *
- * Returns: A #GtkHBox containing a #GtkSpinButton for the random seed and
- *          a #GtkToggleButton for toggling the @use_time behaviour.
+ * Returns: A #GtkHBox containing a #GtkSpinButton for the seed and
+ *          a #GtkButton for setting a random seed.
  **/
 GtkWidget *
-gimp_random_seed_new (gint       *seed,
-		      gint       *use_time,
-		      gint        time_true,
-		      gint        time_false)
+gimp_random_seed_new (guint       *seed)
 {
   GtkWidget *hbox;
   GtkWidget *spinbutton;
@@ -968,42 +952,31 @@ gimp_random_seed_new (gint       *seed,
                                      0, (guint32) -1 , 1, 10, 0, 1, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   g_signal_connect (G_OBJECT (adj), "value_changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
+                    G_CALLBACK (gimp_uint_adjustment_update),
                     seed);
   gtk_widget_show (spinbutton);
 
   gimp_help_set_help_data (spinbutton,
-                           _("If the \"Time\" button is not pressed, "
-                             "use this value for random number generator "
+                           _("Use this value for random number generator "
                              "seed - this allows you to repeat a "
                              "given \"random\" operation"), NULL);
 
-  button = gtk_toggle_button_new_with_mnemonic (_("_Time"));
+  button = gtk_button_new_with_mnemonic (_("_Randomize"));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  g_signal_connect (G_OBJECT (button), "toggled",
-                    G_CALLBACK (gimp_random_seed_toggle_update),
-                    use_time);
+  /* Send spinbutton as data so that we can change the value in 
+   * gimp_random_seed_update() */
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (gimp_random_seed_update),
+                    spinbutton);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   gimp_help_set_help_data (button,
-                           _("Seed random number generator from the current "
-                             "time - this guarantees a reasonable "
-                             "randomization"), NULL);
-
-  g_object_set_data (G_OBJECT (button), "time_true",
-		     GINT_TO_POINTER (time_true));
-  g_object_set_data (G_OBJECT (button), "time_false",
-		     GINT_TO_POINTER (time_false));
-
-  g_object_set_data (G_OBJECT (button), "inverse_sensitive",
-		     spinbutton);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                *use_time == time_true);
+                           _("Seed random number generator with a generated random number"), 
+                           NULL);
 
   g_object_set_data (G_OBJECT (hbox), "spinbutton", spinbutton);
-  g_object_set_data (G_OBJECT (hbox), "togglebutton", button);
+  g_object_set_data (G_OBJECT (hbox), "button", button);
 
   return hbox;
 }

@@ -96,7 +96,6 @@ typedef struct
 {
   gdouble blur_pct;     /* likelihood of randomization (as %age) */
   gdouble blur_rcount;  /* repeat count */
-  gint    seed_type;    /* seed init. type - default or user value */
   gint    blur_seed;    /* seed value for g_random_set_seed() function */
 } BlurVals;
 
@@ -104,7 +103,6 @@ static BlurVals pivals =
 {
   100.0,
   1.0,
-  SEED_DEFAULT,
   0,
 };
 
@@ -117,7 +115,6 @@ static BlurInterface blur_int =
 {
   FALSE     /*  have we run? */
 };
-
 
 /*********************************
  *
@@ -181,7 +178,6 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
     { GIMP_PDB_FLOAT, "blur_pct", "Randomization percentage (1 - 100)" },
     { GIMP_PDB_FLOAT, "blur_rcount", "Repeat count(1 - 100)" },
-    { GIMP_PDB_INT32, "seed_type", "Seed type (10 = current time, 11 = seed value)" },
     { GIMP_PDB_INT32, "blur_seed", "Seed value (used only if seed type is 11)" }
   };
 
@@ -249,6 +245,7 @@ run (gchar   *name,
   values[0].data.d_status = status;
   *nreturn_vals = 1;
   *return_vals = values;
+
   /*
    *  Make sure the drawable type is appropriate.
    */
@@ -282,9 +279,6 @@ run (gchar   *name,
 	      pivals.blur_rcount = (gdouble) param[4].data.d_float;
 	      pivals.blur_rcount = (gdouble) MIN (100.0,pivals.blur_rcount);
 	      pivals.blur_rcount = (gdouble) MAX (1.0, pivals.blur_rcount);
-	      pivals.seed_type   = (gint) param[5].data.d_int32;
-	      pivals.seed_type   = (gint) MIN (SEED_USER, param[5].data.d_int32);
-	      pivals.seed_type   = (gint) MAX (SEED_DEFAULT, param[5].data.d_int32);
 	      pivals.blur_seed   = (gint) param[6].data.d_int32;
 	    }
 	  else if ((strcmp (name, PLUG_IN_NAME) == 0) &&
@@ -292,8 +286,7 @@ run (gchar   *name,
 	    {
 	      pivals.blur_pct    = (gdouble) 100.0;
 	      pivals.blur_rcount = (gdouble) 1.0;
-	      pivals.seed_type   = SEED_DEFAULT;
-	      pivals.blur_seed   = 0;
+	      pivals.blur_seed   = g_random_int ();
 	    }
 	  else
 	    {
@@ -325,8 +318,7 @@ run (gchar   *name,
 	  /*
 	   *  Initialize the rand() function seed
 	   */
-	  if (pivals.seed_type == SEED_USER)
-	    g_random_set_seed (pivals.blur_seed);
+          g_random_set_seed (pivals.blur_seed);
 
 	  blur (drawable);
 	  /*
@@ -359,6 +351,7 @@ run (gchar   *name,
    */
   values[0].data.d_status = status;
   gimp_drawable_detach (drawable);
+
 }
 
 /*********************************
@@ -473,7 +466,7 @@ blur (GimpDrawable *drawable)
 	  ind = 0;
 	  for (col = 0; col < (x2 - x1) * bytes; col++)
 	    {
-	      if (g_random_int_range(0, 100) <= (gint) pivals.blur_pct)
+	      if (g_random_int_range (0, 100) <= (gint) pivals.blur_pct)
 		{
 		  ind++;
 		  if (ind == bytes || !has_alpha)
@@ -628,9 +621,7 @@ blur_dialog (void)
   gtk_widget_show (table);
 
   /*  Random Seed  */
-  seed_hbox = gimp_random_seed_new (&pivals.blur_seed,
-				    &pivals.seed_type,
-				    SEED_DEFAULT, SEED_USER);
+  seed_hbox = gimp_random_seed_new (&pivals.blur_seed);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				     _("_Random Seed:"), 1.0, 0.5,
 				     seed_hbox, 1, TRUE);

@@ -1031,14 +1031,13 @@ typedef struct
   gdouble   scaley;
   gdouble   cmplx;
   gdouble   blend_power;
-  gint      seed;
+  guint32   seed;
   gint      tiling;
   glong     perturbation;
   glong     colorization;
   glong     colors;
   GimpRGB   col1;
   GimpRGB   col2;
-  gint      seed_is_default;
 } SinusVals;
 
 static SinusVals svals = 
@@ -1148,7 +1147,6 @@ query (void)
     { GIMP_PDB_FLOAT,    "alpha2", "alpha for the second color (used if the drawable has an alpha chanel)" },
     { GIMP_PDB_INT32,    "blend", "0= linear, 1= bilinear, 2= sinusoidal" },
     { GIMP_PDB_FLOAT,    "blend_power", "Power used to strech the blend" },
-    { GIMP_PDB_INT32,    "seed_is_default", "If set, random number generator is seeded with random seed" }
   };
 
   INIT_I18N ();
@@ -1227,7 +1225,6 @@ run (gchar      *name,
 	  gimp_rgb_set_alpha (&svals.col2, param[13].data.d_float);
 	  svals.colorization = param[14].data.d_int32;
 	  svals.blend_power  = param[15].data.d_float;
-          svals.seed_is_default = param[16].data.d_int32;
 	}
       break;
 
@@ -1283,8 +1280,8 @@ prepare_coef (params *p)
   GRand *gr;
 
   gr = g_rand_new ();
-  if(!svals.seed_is_default)
-    g_rand_set_seed (gr, svals.seed);
+
+  g_rand_set_seed (gr, svals.seed);
 
   switch (svals.colorization)
     {
@@ -1658,11 +1655,8 @@ sinus_double_adjustment_update (GtkAdjustment *adjustment,
 
 static void
 sinus_random_update (GObject   *unused,
-		     GtkWidget *random)
+		     gpointer   data)
 {
-  if (random)
-    gtk_spin_button_set_value(GIMP_RANDOM_SEED_SPINBUTTON(random),
-			      (double) svals.seed);
 
   if (do_preview)
     sinus_do_preview (NULL);
@@ -1812,8 +1806,7 @@ sinus_dialog (void)
   table = gtk_table_new(3, 1, FALSE);
   gtk_table_set_col_spacings(GTK_TABLE(table), 4);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  hbox = gimp_random_seed_new (&svals.seed, &svals.seed_is_default,
-			       TRUE, FALSE);
+  hbox = gimp_random_seed_new (&svals.seed);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				     _("_Random Seed:"), 1.0, 0.5,
 				     hbox, 1, TRUE);
@@ -1822,8 +1815,6 @@ sinus_dialog (void)
 
   g_signal_connect(G_OBJECT (GIMP_RANDOM_SEED_SPINBUTTON_ADJ (hbox)),
 		   "value_changed", G_CALLBACK (sinus_random_update), NULL);
-  g_signal_connect(G_OBJECT (GIMP_RANDOM_SEED_TOGGLEBUTTON (hbox)),
-		   "toggled", G_CALLBACK (sinus_random_update), hbox);
   gtk_widget_show(table);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Force Tiling?"));

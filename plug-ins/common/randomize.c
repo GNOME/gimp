@@ -130,7 +130,6 @@ typedef struct
 {
   gdouble rndm_pct;     /* likelihood of randomization (as %age) */
   gdouble rndm_rcount;  /* repeat count */
-  gint    seed_type;    /* seed init. type - current time or user value */
   gint    rndm_seed;    /* seed value for g_rand_set_seed() function */
 } RandomizeVals;
 
@@ -209,7 +208,6 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
     { GIMP_PDB_FLOAT, "rndm_pct", "Randomization percentage (1.0 - 100.0)" },
     { GIMP_PDB_FLOAT, "rndm_rcount", "Repeat count (1.0 - 100.0)" },
-    { GIMP_PDB_INT32, "seed_type", "Seed type (10 = current time, 11 = seed value)" },
     { GIMP_PDB_INT32, "rndm_seed", "Seed value (used only if seed type is 11)" }
   };
 
@@ -346,7 +344,6 @@ run (gchar      *name,
 	    {
 	      pivals.rndm_pct = (gdouble) param[3].data.d_float;
 	      pivals.rndm_rcount = (gdouble) param[4].data.d_float;
-	      pivals.seed_type = (gint) param[5].data.d_int32;
 	      pivals.rndm_seed = (gint) param[6].data.d_int32;
 
 	      if ((rndm_type != RNDM_PICK &&
@@ -389,9 +386,8 @@ run (gchar      *name,
 	  /*
 	   *  Initialize the g_rand() function seed
 	   */
-	  if (pivals.seed_type != SEED_DEFAULT)
-	    g_rand_set_seed (gr, pivals.rndm_seed);
-
+	  g_rand_set_seed (gr, pivals.rndm_seed);
+          
 	  randomize (drawable, gr);
 	  /*
 	   *  If we ran interactively (even repeating) update the display.
@@ -737,9 +733,7 @@ randomize_dialog (void)
   gtk_widget_show(table);
 
   /*  Random Seed  */
-  seed_hbox = gimp_random_seed_new (&pivals.rndm_seed,
-				    &pivals.seed_type,
-				    SEED_DEFAULT, SEED_USER);
+  seed_hbox = gimp_random_seed_new (&pivals.rndm_seed);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				     _("_Random Seed:"), 1.0, 0.5,
 				     seed_hbox, 1, TRUE);

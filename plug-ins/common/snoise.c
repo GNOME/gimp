@@ -92,8 +92,6 @@ typedef struct
   gint    detail;
   gdouble xsize;
   gdouble ysize;
-  /*  Interface only  */
-  gint    defaultseed;
 } SolidNoiseValues;
 
 typedef struct
@@ -138,11 +136,10 @@ static SolidNoiseValues snvals =
 {
   0,   /* tilable       */
   0,   /* turbulent     */
-  1,   /* seed          */
+  0,   /* seed          */
   1,   /* detail        */
   4.0, /* xsize         */
   4.0, /* ysize         */
-  0    /* use default seed */ 
 };
 
 static SolidNoiseInterface snint =
@@ -375,10 +372,6 @@ solid_noise_init (void)
   if (snvals.seed < 0)
     snvals.seed = 0;
   
-  /*  Define the pseudo-random number generator seed  */
-  if (!snvals.defaultseed)
-    g_rand_set_seed (gr, snvals.seed);
-
   /*  Set scaling factors  */
   if (snvals.tilable)
     {
@@ -538,9 +531,7 @@ solid_noise_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   /*  Random Seed  */
-  seed_hbox = gimp_random_seed_new (&snvals.seed,
-				    &snvals.defaultseed,
-				    TRUE, FALSE);
+  seed_hbox = gimp_random_seed_new (&snvals.seed);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				     _("_Random Seed:"), 1.0, 0.5,
 				     seed_hbox, 1, TRUE);

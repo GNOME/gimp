@@ -197,13 +197,7 @@ void    gimp_scale_entry_set_sensitive (GtkObject          *adjustment,
         gtk_spin_button_get_adjustment \
         (GTK_SPIN_BUTTON (g_object_get_data (G_OBJECT (hbox), "spinbutton")))
 
-#define GIMP_RANDOM_SEED_TOGGLEBUTTON(hbox) \
-        (g_object_get_data (G_OBJECT (hbox), "togglebutton"))
-
-GtkWidget * gimp_random_seed_new   (gint               *seed,
-				    gint               *use_time,
-				    gint                time_true,
-				    gint                time_false);
+GtkWidget * gimp_random_seed_new   (guint32            *seed);
 
 #define GIMP_COORDINATES_CHAINBUTTON(sizeentry) \
         (g_object_get_data (G_OBJECT (sizeentry), "chainbutton"))

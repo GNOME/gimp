@@ -169,8 +169,7 @@ typedef struct
   gdouble       sflare_hue;
   GFlareShape   sflare_shape;
   gint          sflare_nverts;
-  gint          sflare_seed;
-  gint          sflare_seed_default;
+  guint32       sflare_seed;
 } GFlare;
 
 typedef struct
@@ -564,8 +563,7 @@ GFlare default_gflare =
   0.0,		/* sflare_hue */
   GF_CIRCLE,	/* sflare_shape */
   6,		/* sflare_nverts */
-  1,		/* sflare_seed */
-  FALSE,        /* sflare_seed_default */
+  0,		/* sflare_seed */
 };
 
 /* These are keywords to be written to disk files specifying flares. */
@@ -1462,15 +1460,8 @@ gflare_load (const gchar *filename, const gchar *name)
   gflare_read_int      (&gflare->sflare_nverts, gf);
   gflare_read_int      (&gflare->sflare_seed, gf);
 
-  if (gflare->sflare_seed == -1)
-    {
-      gflare->sflare_seed = 1;
-      gflare->sflare_seed_default = TRUE;
-    }
-  else
-    {
-      gflare->sflare_seed_default = FALSE;
-    }
+  if (gflare->sflare_seed == 0)
+    gflare->sflare_seed = g_random_int();
 
   fclose (gf->fp);
 
@@ -1663,7 +1654,7 @@ gflare_save (GFlare *gflare)
   g_ascii_formatd (buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", gflare->sflare_rotation);
   g_ascii_formatd (buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", gflare->sflare_hue);
   fprintf (fp, "%s %s %s\n", buf[0], buf[1], buf[2]);
-  fprintf (fp, "%s %d %d\n", gflare_shapes[gflare->sflare_shape], gflare->sflare_nverts, gflare->sflare_seed_default ? -1 : gflare->sflare_seed);
+  fprintf (fp, "%s %d %d\n", gflare_shapes[gflare->sflare_shape], gflare->sflare_nverts, gflare->sflare_seed);
 
   fclose (fp);
   DEBUG_PRINT (("Saved %s\n", gflare->filename));
@@ -2092,8 +2083,7 @@ calc_place_sflare ()
       prob[i] = sum2 / sum;
     }
 
-  if (!gflare->sflare_seed_default)
-    g_rand_set_seed (gr, gflare->sflare_seed);
+  g_rand_set_seed (gr, gflare->sflare_seed);
 
   for (n = 0; n < SFLARE_NUM; n++)
     {
@@ -4186,21 +4176,15 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_box_pack_start (GTK_BOX (seed_hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  seed = gimp_random_seed_new (&gflare->sflare_seed,
-			       &gflare->sflare_seed_default,
-			       TRUE, FALSE);
+  seed = gimp_random_seed_new (&gflare->sflare_seed);
 
   entry = GTK_WIDGET (GIMP_RANDOM_SEED_SPINBUTTON (seed));
-  toggle = GTK_WIDGET (GIMP_RANDOM_SEED_TOGGLEBUTTON (seed));
 
   gtk_box_pack_start (GTK_BOX (seed_hbox), seed, FALSE, TRUE, 0);
   gtk_widget_show (seed);
 
   g_signal_connect (G_OBJECT (GTK_SPIN_BUTTON (entry)->adjustment),
                     "value_changed",
-                    G_CALLBACK (ed_preview_update),
-                    NULL);
-  g_signal_connect (G_OBJECT (toggle), "toggled",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
