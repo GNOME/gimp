@@ -319,7 +319,7 @@ gui_restore (Gimp     *gimp,
 #ifdef __GNUC__
 #warning FIXME: remove this as soon as we depend on GTK+ >= 2.2.2
 #endif
-  if (! GTK_CHECK_VERSION (2, 2, 2))
+  if (gtk_check_version (2, 2, 2) != NULL)
     gimp_message_box (GIMP_STOCK_WILBER_EEK, NULL,
                       "Please upgrade your GTK+ installation!\n\n"
                       "The GTK+ version you are using is too old.\n"
