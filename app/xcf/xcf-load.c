@@ -64,6 +64,7 @@
 
 #include "gimp-intl.h"
 
+/* #define GIMP_XCF_PATH_DEBUG */
 
 static gboolean        xcf_load_image_props   (XcfInfo      *info,
                                                GimpImage    *gimage);
@@ -1478,7 +1479,9 @@ xcf_load_vectors (XcfInfo   *info,
   GimpVectors *active_vectors;
   guint32      base;
 
+#ifdef GIMP_XCF_PATH_DEBUG
   g_printerr ("xcf_load_vectors\n");
+#endif
 
   base = info->cp;
 
@@ -1493,7 +1496,9 @@ xcf_load_vectors (XcfInfo   *info,
   info->cp += xcf_read_int32 (info->fp, &active_index, 1);
   info->cp += xcf_read_int32 (info->fp, &num_paths,    1);
 
+#ifdef GIMP_XCF_PATH_DEBUG
   g_printerr ("%d paths (active: %d)\n", num_paths, active_index);
+#endif
 
   while (num_paths-- > 0)
     if (! xcf_load_vector (info, gimage))
@@ -1505,7 +1510,9 @@ xcf_load_vectors (XcfInfo   *info,
   if (active_vectors)
     gimp_image_set_active_vectors (gimage, active_vectors);
 
+#ifdef GIMP_XCF_PATH_DEBUG
   g_printerr ("xcf_load_vectors: loaded %d bytes\n", info->cp - base);
+#endif
   return TRUE;
 }
 
@@ -1522,7 +1529,9 @@ xcf_load_vector (XcfInfo   *info,
   GimpVectors *vectors;
   gint         i;
 
+#ifdef GIMP_XCF_PATH_DEBUG
   g_printerr ("xcf_load_vector\n");
+#endif
 
   info->cp += xcf_read_string (info->fp, &name,          1);
   info->cp += xcf_read_int32  (info->fp, &tattoo,        1);
@@ -1531,9 +1540,11 @@ xcf_load_vector (XcfInfo   *info,
   info->cp += xcf_read_int32  (info->fp, &num_parasites, 1);
   info->cp += xcf_read_int32  (info->fp, &num_strokes,   1);
 
+#ifdef GIMP_XCF_PATH_DEBUG
   g_printerr ("name: %s, tattoo: %d, visible: %d, linked: %d, num_parasites %d, "
               "num_strokes %d\n",
               name, tattoo, visible, linked, num_parasites, num_strokes);
+#endif
 
   vectors = gimp_vectors_new (gimage, name);
 
@@ -1579,8 +1590,10 @@ xcf_load_vector (XcfInfo   *info,
       info->cp += xcf_read_int32 (info->fp, &num_axes,           1);
       info->cp += xcf_read_int32 (info->fp, &num_control_points, 1);
 
+#ifdef GIMP_XCF_PATH_DEBUG
       g_printerr ("stroke_type: %d, closed: %d, num_axes %d, len %d\n",
                   stroke_type_id, closed, num_axes, num_control_points);
+#endif
 
       switch (stroke_type_id)
         {
@@ -1616,9 +1629,11 @@ xcf_load_vector (XcfInfo   *info,
           g_value_set_boxed (&value, &anchor);
           g_value_array_append (control_points, &value);
 
+#ifdef GIMP_XCF_PATH_DEBUG
           g_printerr ("Anchor: %d, (%f, %f, %f, %f, %f, %f)\n", type,
                       coords[0], coords[1], coords[2], coords[3],
                       coords[4], coords[5]);
+#endif
         }
 
       g_value_unset (&value);
