@@ -6266,7 +6266,7 @@ msgstr "Benutzerinstallation Logbuch"
 
 #: app/user_install.c:903
 msgid "GIMP Performance Tuning"
-msgstr "Spoiler und Zierleisten"
+msgstr "Leistungsfähigkeit von GIMP"
 
 #: app/user_install.c:904
 msgid "Click \"Continue\" to accept the settings above."
@@ -6296,9 +6296,7 @@ msgstr ""
 
 #: app/user_install.c:929
 msgid "Aborting Installation..."
-msgstr ""
-"Die Existenz wie Sie sie kennen\n"
-"ist beendet!"
+msgstr "Installation wird abgebrochen..."
 
 #: app/user_install.c:956
 #, c-format
