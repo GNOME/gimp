@@ -296,16 +296,24 @@ struct
 settings = { 1, 1, 1 };
 
 
-static inline void vset      (GimpVector4 *v, gdouble a, gdouble b, gdouble c);
+static inline void vset      (GimpVector4  *v,
+                              gdouble       a,
+                              gdouble       b,
+                              gdouble       c);
 static void    restartrender (void);
-static void    drawcolor1    (GtkWidget *widget);
-static void    drawcolor2    (GtkWidget *widget);
+static void    drawcolor1    (GtkWidget    *widget);
+static void    drawcolor2    (GtkWidget    *widget);
 static void    render        (void);
 static void    realrender    (GimpDrawable *drawable);
-static void    fileselect    (gint);
-static gint    traceray      (ray * r, GimpVector4 * col, gint level,
-			      gdouble imp);
-static gdouble turbulence    (gdouble *point, gdouble lofreq, gdouble hifreq);
+static void    fileselect    (gint          action,
+                              GtkWidget    *parent);
+static gint    traceray      (ray          *r,
+                              GimpVector4  *col,
+                              gint          level,
+			      gdouble       imp);
+static gdouble turbulence    (gdouble      *point,
+                              gdouble       lofreq,
+                              gdouble       hifreq);
 
 
 #define COLORBUTTONWIDTH  30
@@ -2114,19 +2122,22 @@ savepreset_ok (GtkWidget        *widget,
 }
 
 static void
-loadpreset (void)
+loadpreset (GtkWidget *widget,
+            GtkWidget *parent)
 {
-  fileselect (0);
+  fileselect (0, parent);
 }
 
 static void
-savepreset (void)
+savepreset (GtkWidget *widget,
+            GtkWidget *parent)
 {
-  fileselect (1);
+  fileselect (1, parent);
 }
 
 static void
-fileselect (gint action)
+fileselect (gint       action,
+            GtkWidget *parent)
 {
   static GtkWidget *windows[2] = { NULL, NULL };
 
@@ -2136,8 +2147,9 @@ fileselect (gint action)
   if (!windows[action])
     {
       windows[action] = gtk_file_selection_new (gettext (titles[action]));
-      gtk_window_set_position (GTK_WINDOW (windows[action]),
-			       GTK_WIN_POS_MOUSE);
+
+      gtk_window_set_transient_for (GTK_WINDOW (windows[action]),
+                                    GTK_WINDOW (parent));
 
       g_signal_connect (windows[action], "destroy",
 			G_CALLBACK (gtk_widget_destroy), &windows[action]);
@@ -2564,15 +2576,19 @@ makewindow (void)
 
   button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  g_signal_connect_swapped (button, "clicked",
-			    G_CALLBACK (loadpreset), NULL);
   gtk_widget_show (button);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (loadpreset),
+                    window);
 
   button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  g_signal_connect_swapped (button, "clicked",
-			    G_CALLBACK (savepreset), NULL);
   gtk_widget_show (button);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (savepreset),
+                    window);
 
   frame = gtk_frame_new (_("Texture Properties"));
   gtk_table_attach (GTK_TABLE (table), frame, 2, 3, 0, 3,

@@ -733,6 +733,9 @@ dialog_load (GtkWidget *widget,
 
   file_select = gtk_file_selection_new (_("Load QBE file..."));
 
+  gtk_window_set_transient_for (GTK_WINDOW (file_select),
+                                GTK_WINDOW (gtk_widget_get_toplevel (widget)));
+
   gimp_help_connect (file_select, gimp_standard_help_func,
 		     "filters/gqbist.html", NULL);
 
@@ -759,6 +762,9 @@ dialog_save (GtkWidget *widget,
 
   file_select =
     gtk_file_selection_new (_("Save (middle transform) as QBE file..."));
+
+  gtk_window_set_transient_for (GTK_WINDOW (file_select),
+                                GTK_WINDOW (gtk_widget_get_toplevel (widget)));
 
   gimp_help_connect (file_select, gimp_standard_help_func,
 		     "filters/gqbist.html", NULL);

@@ -1148,14 +1148,17 @@ file_selection_ok (GtkWidget        *w,
 }
 
 static void
-create_file_selection (GFigObj *obj,
-		       gchar   *tpath)
+create_file_selection (GFigObj   *obj,
+		       gchar     *tpath,
+                       GtkWidget *parent)
 {
   static GtkWidget *window = NULL;
 
   if (!window)
     {
       window = gtk_file_selection_new (_("Save Gfig Drawing"));
+
+      gtk_window_set_transient_for (GTK_WINDOW (window), GTK_WINDOW (parent));
       gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
 
       g_signal_connect (window, "destroy",
@@ -1203,12 +1206,12 @@ create_file_selection (GFigObj *obj,
 }
 
 static void
-gfig_save (void)
+gfig_save (GtkWidget *parent)
 {
   /* Save the current object */
   if (!current_obj->filename)
    {
-     create_file_selection (current_obj, NULL);
+     create_file_selection (current_obj, NULL, parent);
      return;
    }
   gfig_save_callbk ();
@@ -3445,7 +3448,7 @@ gfig_response (GtkWidget *widget,
       break;
 
     case RESPONSE_SAVE:
-      gfig_save ();  /* Save current object */
+      gfig_save (widget);  /* Save current object */
       break;
 
     case GTK_RESPONSE_CLOSE:
@@ -3965,6 +3968,9 @@ load_button_callback (GtkWidget *widget,
 
   /* Load a single object */
   window = gtk_file_selection_new (_("Load Gfig object collection"));
+
+  gtk_window_set_transient_for (GTK_WINDOW (window),
+                                GTK_WINDOW (gtk_widget_get_toplevel (widget)));
   gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
 
   g_signal_connect (window, "destroy",
@@ -4560,7 +4566,7 @@ gfig_save_menu_callback (GtkWidget *widget,
 
   current_obj = gfig_obj_for_menu;
 
-  gfig_save ();  /* Save current object */
+  gfig_save (GTK_WIDGET (data));  /* Save current object */
 
   current_obj = real_current;
 }
@@ -4576,7 +4582,8 @@ static void
 gfig_rename_menu_callback (GtkWidget *widget,
 			   gpointer   data)
 {
-  create_file_selection (gfig_obj_for_menu, gfig_obj_for_menu->filename);
+  create_file_selection (gfig_obj_for_menu, gfig_obj_for_menu->filename,
+                         gtk_widget_get_toplevel (widget));
 }
 
 static void
@@ -4623,7 +4630,7 @@ gfig_op_menu_create (GtkWidget *window)
 
   g_signal_connect (menu_item, "activate",
                     G_CALLBACK (gfig_save_menu_callback),
-                    NULL);
+                    window);
 
 #if 0
   gtk_widget_install_accelerator (menu_item,

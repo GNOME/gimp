@@ -72,10 +72,13 @@ static explorer_vals_t standardvals =
  *********************************************************************/
 
 static void load_file_selection_ok     (GtkWidget          *widget,
-					GtkFileSelection   *fs,
-					gpointer            data);
-static void create_load_file_selection (void);
-static void create_file_selection      (void);
+					GtkFileSelection   *fs);
+static void file_selection_ok          (GtkWidget          *widget,
+					GtkFileSelection   *fs);
+static void create_load_file_selection (GtkWidget          *widget,
+                                        GtkWidget          *dialog);
+static void create_file_selection      (GtkWidget          *widget,
+                                        GtkWidget          *dialog);
 
 static void explorer_logo_dialog       (GtkWidget          *parent);
 
@@ -302,7 +305,7 @@ preview_draw_crosshair (gint px, gint py)
   guchar  *p_ul;
 
   p_ul = wint.wimage + 3 * (preview_width * py + 0);
-  
+
   for (x = 0; x < preview_width; x++)
     {
       p_ul[0] ^= 254;
@@ -310,9 +313,9 @@ preview_draw_crosshair (gint px, gint py)
       p_ul[2] ^= 254;
       p_ul += 3;
     }
-  
+
   p_ul = wint.wimage + 3 * (preview_width * 0 + px);
-  
+
   for (y = 0; y < preview_height; y++)
     {
       p_ul[0] ^= 254;
@@ -336,7 +339,7 @@ preview_redraw (void)
 			    0, y, preview_width);
       p += preview_width * 3;
     }
-  
+
   gtk_widget_queue_draw (wint.preview);
 }
 
@@ -1820,8 +1823,7 @@ save_callback (void)
 
 static void
 file_selection_ok (GtkWidget        *w,
-		   GtkFileSelection *fs,
-		   gpointer          data)
+		   GtkFileSelection *fs)
 {
   const gchar *filenamebuf;
 
@@ -1848,8 +1850,7 @@ file_selection_ok (GtkWidget        *w,
 
 static void
 load_file_selection_ok (GtkWidget        *w,
-			GtkFileSelection *fs,
-			gpointer          data)
+			GtkFileSelection *fs)
 {
   filename =
     g_strdup (gtk_file_selection_get_filename (GTK_FILE_SELECTION (fs)));
@@ -1867,7 +1868,8 @@ load_file_selection_ok (GtkWidget        *w,
 }
 
 static void
-create_load_file_selection (void)
+create_load_file_selection (GtkWidget *widget,
+                            GtkWidget *dialog)
 {
   static GtkWidget *window = NULL;
 
@@ -1876,12 +1878,13 @@ create_load_file_selection (void)
       window = gtk_file_selection_new (_("Load Fractal Parameters"));
       gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_NONE);
 
+      gtk_window_set_transient_for (GTK_WINDOW (window), GTK_WINDOW (dialog));
+
       g_signal_connect (window, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),
                         &window);
 
-      g_signal_connect (GTK_FILE_SELECTION (window)->ok_button,
-                        "clicked",
+      g_signal_connect (GTK_FILE_SELECTION (window)->ok_button, "clicked",
                         G_CALLBACK (load_file_selection_ok),
                         window);
 
@@ -1895,7 +1898,8 @@ create_load_file_selection (void)
 }
 
 static void
-create_file_selection (void)
+create_file_selection (GtkWidget *widget,
+                       GtkWidget *dialog)
 {
   static GtkWidget *window = NULL;
 
@@ -1904,12 +1908,13 @@ create_file_selection (void)
       window = gtk_file_selection_new (_("Save Fractal Parameters"));
       gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_NONE);
 
+      gtk_window_set_transient_for (GTK_WINDOW (window), GTK_WINDOW (dialog));
+
       g_signal_connect (window, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),
                         &window);
 
-      g_signal_connect (GTK_FILE_SELECTION (window)->ok_button,
-                        "clicked",
+      g_signal_connect (GTK_FILE_SELECTION (window)->ok_button, "clicked",
                         G_CALLBACK (file_selection_ok),
                         window);
 

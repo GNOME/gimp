@@ -372,7 +372,8 @@ static void    CML_save_to_file_callback   (GtkWidget   *widget,
                                             gpointer     data);
 static void    CML_execute_save_to_file    (GtkWidget   *widget,
                                             gpointer     data);
-static gint    force_overwrite             (const gchar *filename);
+static gint    force_overwrite             (const gchar *filename,
+                                            GtkWidget   *parent);
 
 static void    CML_preview_update_callback (GtkWidget   *widget,
 					    gpointer     data);
@@ -1875,7 +1876,7 @@ function_graph_new (GtkWidget *widget,
   CML_PARAM *param = (CML_PARAM *) *((gpointer *) data + 1);
 
   dlg = gimp_dialog_new (_("Graph of the current settings"), "cml_explorer",
-                         NULL, 0,
+                         gtk_widget_get_toplevel (widget), 0,
 			 gimp_standard_help_func, "filters/cml_explorer.html",
 
 			 GTK_STOCK_OK, GTK_RESPONSE_OK,
@@ -2049,7 +2050,9 @@ CML_save_to_file_callback (GtkWidget *widget,
   if (!filesel)
     {
       filesel = gtk_file_selection_new (_("Save Parameters to"));
-      gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
+
+      gtk_window_set_transient_for (GTK_WINDOW (filesel),
+                                    GTK_WINDOW (gtk_widget_get_toplevel (widget)));
 
       g_signal_connect (GTK_FILE_SELECTION (filesel)->ok_button,
 			"clicked",
@@ -2112,7 +2115,7 @@ CML_execute_save_to_file (GtkWidget *widget,
 	{
 	  gtk_widget_set_sensitive (GTK_WIDGET (data), FALSE);
 
-	  if (! force_overwrite (filename))
+	  if (! force_overwrite (filename, gtk_widget_get_toplevel (widget)))
 	    {
 	      gtk_widget_set_sensitive (GTK_WIDGET (data), TRUE);
 	      return;
@@ -2189,7 +2192,8 @@ CML_execute_save_to_file (GtkWidget *widget,
 }
 
 static gint
-force_overwrite (const gchar *filename)
+force_overwrite (const gchar *filename,
+                 GtkWidget   *parent)
 {
   GtkWidget *dlg;
   GtkWidget *label;
@@ -2198,7 +2202,7 @@ force_overwrite (const gchar *filename)
   gboolean   overwrite;
 
   dlg = gimp_dialog_new (_("CML File Operation Warning"), "cml_explorer",
-                         NULL, 0,
+                         parent, 0,
 			 gimp_standard_help_func, "filters/cml_explorer.html",
 
 			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -2239,7 +2243,8 @@ CML_load_from_file_callback (GtkWidget *widget,
     {
       filesel = gtk_file_selection_new ("");
 
-      gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
+      gtk_window_set_transient_for (GTK_WINDOW (filesel),
+                                    GTK_WINDOW (gtk_widget_get_toplevel (widget)));
 
       g_signal_connect (GTK_FILE_SELECTION (filesel)->ok_button,
 			"clicked",

@@ -2708,6 +2708,9 @@ ifs_compose_save (GtkWidget *parent)
     {
       file_select = gtk_file_selection_new (_("Save as IFS file"));
 
+      gtk_window_set_transient_for (GTK_WINDOW (file_select),
+                                    GTK_WINDOW (parent));
+
       gimp_help_connect (file_select, gimp_standard_help_func,
 			 "filters/ifscompose.html", NULL);
 
@@ -2731,6 +2734,9 @@ ifs_compose_load (GtkWidget *parent)
   if (!file_select)
     {
       file_select = gtk_file_selection_new (_("Load IFS file"));
+
+      gtk_window_set_transient_for (GTK_WINDOW (file_select),
+                                    GTK_WINDOW (parent));
 
       gimp_help_connect (file_select, gimp_standard_help_func,
 			 "filters/ifscompose.html", NULL);

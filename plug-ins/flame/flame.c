@@ -454,24 +454,24 @@ file_ok_callback (GtkWidget *widget,
 }
 
 static void
-make_file_dlg (void)
+make_file_dlg (GtkWidget *parent)
 {
   file_dlg = gtk_file_selection_new (NULL);
-  gtk_quit_add_destroy (1, GTK_OBJECT (file_dlg));
+
+  gtk_window_set_transient_for (GTK_WINDOW (file_dlg), GTK_WINDOW (parent));
+  gtk_window_set_destroy_with_parent (GTK_WINDOW (file_dlg), TRUE);
 
   gtk_window_set_position (GTK_WINDOW (file_dlg), GTK_WIN_POS_MOUSE);
   g_signal_connect_swapped (file_dlg, "delete_event",
                             G_CALLBACK (file_cancel_callback),
                             file_dlg);
-  g_signal_connect (GTK_FILE_SELECTION (file_dlg)->ok_button,
-                    "clicked",
+  g_signal_connect (GTK_FILE_SELECTION (file_dlg)->ok_button, "clicked",
                     G_CALLBACK (file_ok_callback),
-		      file_dlg);
-  g_signal_connect_swapped
-    (GTK_FILE_SELECTION (file_dlg)->cancel_button,
-     "clicked",
-     G_CALLBACK (file_cancel_callback),
-     file_dlg);
+                    file_dlg);
+  g_signal_connect_swapped (GTK_FILE_SELECTION (file_dlg)->cancel_button,
+                            "clicked",
+                            G_CALLBACK (file_cancel_callback),
+                            file_dlg);
 
   gimp_help_connect (file_dlg, gimp_standard_help_func,
                      "filters/flame.html", NULL);
@@ -744,7 +744,7 @@ load_callback (GtkWidget *widget,
 {
   if (! file_dlg)
     {
-      make_file_dlg ();
+      make_file_dlg (gtk_widget_get_toplevel (widget));
     }
   else
     {
@@ -766,7 +766,7 @@ save_callback (GtkWidget *widget,
 {
   if (!file_dlg)
     {
-      make_file_dlg ();
+      make_file_dlg (gtk_widget_get_toplevel (widget));
     }
   else
     {

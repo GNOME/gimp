@@ -78,7 +78,7 @@ static void brushdmenuselect(gint32 id, gpointer data)
   drawable = gimp_drawable_get(id);
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  
+
   bpp = gimp_drawable_bpp (drawable->drawable_id);
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   alpha = (has_alpha) ? bpp - 1 : bpp;
@@ -93,7 +93,7 @@ static void brushdmenuselect(gint32 id, gpointer data)
   src_row = g_new (guchar, (x2 - x1) * bpp);
 
   gimp_pixel_rgn_init (&src_rgn, drawable, 0, 0, x2-x1, y2-y1, FALSE, FALSE);
- 
+
   if(bpp == 3) { /* RGB */
     int bpr = (x2-x1) * 3;
     for(row = 0, y = y1; y < y2; row++, y++) {
@@ -112,7 +112,7 @@ static void brushdmenuselect(gint32 id, gpointer data)
 	tmprow[k+2] = src[2];
 	src += src_rgn.bpp;
       }
-    }  
+    }
   } else if(bpp == 2) { /* GrayA */
     for(row = 0, y = y1; y < y2; row++, y++) {
 	guchar *tmprow = p->col + row * rowstride;
@@ -125,7 +125,7 @@ static void brushdmenuselect(gint32 id, gpointer data)
 	tmprow[k+2] = src[0];
 	src += src_rgn.bpp;
       }
-    }  
+    }
   } else { /* Gray */
     for(row = 0, y = y1; y < y2; row++, y++) {
       guchar *tmprow = p->col + row * rowstride;
@@ -138,8 +138,8 @@ static void brushdmenuselect(gint32 id, gpointer data)
 	tmprow[k+2] = src[0];
 	src += src_rgn.bpp;
       }
-    }  
-  }  
+    }
+  }
   g_free (src_row);
 
   if(bpp >= 3) pcvals.colorbrushes = 1;
@@ -194,13 +194,16 @@ void savebrush(GtkWidget *wg, gpointer data)
   sprintf(path, "%s/Brushes/", (char *)thispath->data);
 
   window = gtk_file_selection_new( _("Save brush"));
+
+  gtk_window_set_transient_for (GTK_WINDOW (window),
+                                GTK_WINDOW (gtk_widget_get_toplevel (wg)));
   gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
 
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), path);
 
   g_signal_connect (window, "destroy",
                     G_CALLBACK (destroy_window), &window);
-  
+
   g_signal_connect (GTK_FILE_SELECTION (window)->ok_button, "clicked",
                     G_CALLBACK (savebrush_ok), window);
 
@@ -271,7 +274,7 @@ void updatebrushprev(char *fn)
     sc = GTK_ADJUSTMENT(brushgammaadjust)->value;
     if(sc != 1.0)
       for(i = 0; i < 256; i++)
-	gammatable[i] = pow(i / 255.0, sc) * 255; 
+	gammatable[i] = pow(i / 255.0, sc) * 255;
     else
       for(i = 0; i < 256; i++)
 	gammatable[i] = i;
@@ -322,7 +325,7 @@ static void selectbrush(GtkTreeSelection *selection, gpointer data)
 
       sprintf(fname, "Brushes/%s", brush);
       strcpy(pcvals.selectedbrush, fname);
-      
+
       updatebrushprev(fname);
 
       g_free (brush);
@@ -385,7 +388,7 @@ void create_brushpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);
   gtk_widget_show (tmpw);
 
-  brushgammaadjust = gtk_adjustment_new(pcvals.brushgamma, 0.5, 3.0, 0.1, 
+  brushgammaadjust = gtk_adjustment_new(pcvals.brushgamma, 0.5, 3.0, 0.1,
 					0.1, 1.0);
   tmpw = gtk_hscale_new(GTK_ADJUSTMENT(brushgammaadjust));
   gtk_widget_set_size_request (GTK_WIDGET(tmpw), 100, 30);
@@ -396,7 +399,7 @@ void create_brushpage(GtkNotebook *notebook)
   g_signal_connect_swapped (brushgammaadjust, "value_changed",
 			    G_CALLBACK(updatebrushprev), pcvals.selectedbrush);
 
-  gimp_help_set_help_data 
+  gimp_help_set_help_data
     (tmpw, _("Changes the gamma (brightness) of the selected brush"), NULL);
 
   box1 = gtk_hbox_new (FALSE, 0);
@@ -438,22 +441,22 @@ void create_brushpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(box2), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  brushaspectadjust = 
-    gimp_scale_entry_new (GTK_TABLE(table), 0, 0, 
+  brushaspectadjust =
+    gimp_scale_entry_new (GTK_TABLE(table), 0, 0,
 			  _("Aspect ratio:"),
-			  150, -1, pcvals.brushaspect, 
-			  -1.0, 1.0, 0.1, 0.1, 2, 
+			  150, -1, pcvals.brushaspect,
+			  -1.0, 1.0, 0.1, 0.1, 2,
 			  TRUE, 0, 0,
 			  _("Specifies the aspect ratio of the brush"),
 			  NULL);
   g_signal_connect (brushaspectadjust, "value_changed",
                     G_CALLBACK (brushaspectadjust_cb), &pcvals.brushaspect);
 
-  brushreliefadjust = 
-    gimp_scale_entry_new (GTK_TABLE(table), 0, 1, 
+  brushreliefadjust =
+    gimp_scale_entry_new (GTK_TABLE(table), 0, 1,
 			  _("Relief:"),
-			  150, -1, pcvals.brushrelief, 
-			  0.0, 100.0, 1.0, 10.0, 1, 
+			  150, -1, pcvals.brushrelief,
+			  0.0, 100.0, 1.0, 10.0, 1,
 			  TRUE, 0, 0,
 			  _("Specifies the amount of embossing to apply to the image (in percent)"),
 			  NULL);

@@ -60,6 +60,10 @@ browse_cb(GtkWidget *widget, gpointer data)
    if (!browse->file_selection) {
       GtkWidget *dialog;
       dialog = browse->file_selection = gtk_file_selection_new(browse->name);
+
+      gtk_window_set_transient_for (GTK_WINDOW (dialog),
+                                    GTK_WINDOW (gtk_widget_get_toplevel (widget)));
+
       g_signal_connect_swapped(GTK_FILE_SELECTION(dialog)->cancel_button,
 			       "clicked", G_CALLBACK(gtk_widget_hide), dialog);
       g_signal_connect(GTK_FILE_SELECTION(dialog)->ok_button,
