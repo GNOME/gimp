@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-12 17:47+0200\n"
-"PO-Revision-Date: 2004-10-12 17:50+0200\n"
+"POT-Creation-Date: 2004-10-12 23:47+0200\n"
+"PO-Revision-Date: 2004-10-12 23:48+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1970,8 +1970,8 @@ msgid "Pattern name"
 msgstr "Mustername"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
-msgid "<Image>/Select/Modify/Rounded R_ectangle..."
-msgstr "<Image>/Auswahl/_Abgerundetes Rechteck..."
+msgid "<Image>/Select/Rounded R_ectangle..."
+msgstr "<Image>/Auswahl/A_bgerundetes Rechteck..."
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:2
 msgid "Concave"

@@ -1,3 +1,10 @@
+2004-10-12  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/selection-round.scm: moved out of the
+	"Modify" placeholder. Using placeholders from Script-Fu breaks
+	i18n.  We will need to change menu registration for scripts but
+	this will have to wait..
+
 2004-10-12  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/*/*.c: all plug-ins except script-fu: removed the
