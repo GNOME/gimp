@@ -1,5 +1,11 @@
 2003-05-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/vectors-commands.c (vectors_sel_to_vectors_cmd_callback): 
+	call vectors_selection_to_vectors() instead of #warning about
+	being unimplemented.
+
+2003-05-16  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/paths.pdb: fixed some bugs and warnings in
 	the ported functions.
 

@@ -196,9 +196,7 @@ vectors_sel_to_vectors_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-#ifdef __GNUC__
-#warning FIXME: need gimp_vectors_from_mask(or something)
-#endif
+  vectors_selection_to_vectors (gimage, FALSE);
 }
 
 void
