@@ -61,7 +61,7 @@ redraw (GDisplay *gdisp,
   if ((x2 - x1) && (y2 - y1))
     {
       gdisplay_expose_area (gdisp, x1, y1, (x2 - x1), (y2 - y1));
-      gdisplays_flush ();
+      gdisplay_flush_displays_only (gdisp);
     }
 }
 

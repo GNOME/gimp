@@ -205,6 +205,8 @@ int        gdisplays_dirty                 (void);
 void       gdisplays_delete                (void);
 void       gdisplays_flush                 (void);
 void       gdisplays_flush_now             (void);
+void       gdisplay_flush_displays_only (GDisplay *gdisp); /* no rerender! */
+
 
 
 #endif /*  __GDISPLAY_H__  */

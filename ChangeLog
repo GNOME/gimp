@@ -1,3 +1,11 @@
+Sat Mar 20 21:55:53 GMT 1999  Adam D. Moss  <adam@gimp.org>
+
+	* disp_callbacks.c: Reduce some possibly-redundant re-renders
+	on expose.
+
+	* gdisplay.c gdisplay.h: Export a function to idly refresh from
+        the composite buffer without doing a re-render.
+
 Sat Mar 20 17:22:56 GMT 1999  Adam D. Moss  <adam@gimp.org>
 
 	* configure.in plug-ins/Makefile.am plug-ins/gif/gif.c
