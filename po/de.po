@@ -4796,7 +4796,7 @@ msgstr "Benutzerinstallation Logbuch"
 
 #: app/gui/user-install-dialog.c:837
 msgid "GIMP Performance Tuning"
-msgstr "Spoiler und Zierleisten"
+msgstr "Leistungsfähigkeit von GIMP"
 
 #: app/gui/user-install-dialog.c:838
 msgid "Click \"Continue\" to accept the settings above."
@@ -4826,9 +4826,7 @@ msgstr ""
 
 #: app/gui/user-install-dialog.c:863
 msgid "Aborting Installation..."
-msgstr ""
-"Die Existenz wie Sie sie kennen\n"
-"ist beendet!"
+msgstr "Installation wird abgebrochen..."
 
 #: app/gui/user-install-dialog.c:933
 msgid "does not exist.  Cannot install."
