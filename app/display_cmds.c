@@ -49,10 +49,7 @@ display_new_invoker (Argument *args)
 
   if (success)
     {
-      if (gimage->layers)
-	success = (gdisp = gdisplay_new (gimage, scale)) != NULL;
-      else
-	success = FALSE;
+      success = (gdisp = gdisplay_new (gimage, scale)) != NULL;
     }
 
   return_args = procedural_db_return_args (&display_new_proc, success);

@@ -43,10 +43,7 @@ HELP
 	vars => [ 'guint scale = 0x101' ],
 	code => <<'CODE'
 {
-  if (gimage->layers)
-    success = (gdisp = gdisplay_new (gimage, scale)) != NULL;
-  else
-    success = FALSE;
+  success = (gdisp = gdisplay_new (gimage, scale)) != NULL;
 }
 CODE
     );
