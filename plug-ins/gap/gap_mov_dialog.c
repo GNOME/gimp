@@ -30,6 +30,9 @@
  */
 
 /* revision history:
+ * gimp    1.1.13b; 1999/12/04  hof: some cosmetic gtk fixes
+ *                                   changed border_width spacing and Buttons in action area
+ *                                   to same style as used in dialogs of the gimp 1.1.13 main dialogs
  * gimp   1.1.8a;   1999/08/31  hof: accept anim framenames without underscore '_'
  * gimp   1.1.5a;   1999/05/08  hof: call fileselect in gtk+1.2 style 
  * version 0.99.00; 1999.03.03  hof: bugfix: update of the preview (did'nt work with gimp1.1.2)
@@ -399,6 +402,7 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
              gint first_nr, gint last_nr )
 {
   GdkColor   tips_fg, tips_bg;
+  GtkWidget *hbbox;
   GtkWidget *dlg;
   GtkWidget *frame;
   GtkWidget *table;
@@ -458,12 +462,20 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
   gtk_tooltips_set_colors(g_tooltips, &tips_bg, &tips_fg);
 
   /*  Action area  */
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
+
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+      
   button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) mov_ok_callback,
 		      &ok_data);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, TRUE, TRUE, 0);
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
@@ -472,7 +484,7 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
 			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
   button = gtk_button_new_with_label ( _("UpdPreview"));
@@ -480,21 +492,20 @@ mov_dialog ( GDrawable *drawable, t_mov_path_preview *path_ptr,
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) mov_upvw_callback,
 		      path_ptr);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, TRUE, TRUE, 0);
   gtk_tooltips_set_tip(g_tooltips, button,
                        _("Show PreviewFame with Selected       \nSrcLayer at current Controlpoint")
                        , NULL);
-  gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
   /*  parameter settings  */
   frame = gtk_frame_new ( _("Copy moving source-layer(s) into frames"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 6);
+  gtk_container_border_width (GTK_CONTAINER (frame), 4);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
   table = gtk_table_new (8, 2, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 6);
+  gtk_container_border_width (GTK_CONTAINER (table), 2);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_table_set_row_spacings (GTK_TABLE (table), 3);
   gtk_table_set_col_spacings (GTK_TABLE (table), 5);
@@ -1259,14 +1270,14 @@ mov_src_sel_create()
 		      path_ptr );
 */
   gtk_frame_set_shadow_type( GTK_FRAME( frame ) ,GTK_SHADOW_ETCHED_IN );
-  gtk_container_border_width( GTK_CONTAINER( frame ), 6 );
+  gtk_container_border_width( GTK_CONTAINER( frame ), 2 );
   
 
   table = gtk_table_new ( 2, 4, FALSE );
-  gtk_container_border_width (GTK_CONTAINER (table), 6);
+  gtk_container_border_width (GTK_CONTAINER (table), 2);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_table_set_row_spacings (GTK_TABLE (table), 3);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 10);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 5);
 
   /* Source Layer menu */
   label = gtk_label_new( _("SourceImage/Layer:"));
@@ -1411,11 +1422,11 @@ mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
 		      (GtkSignalFunc) mov_path_prevw_destroy,
 		      path_ptr );
   gtk_frame_set_shadow_type( GTK_FRAME( frame ) ,GTK_SHADOW_ETCHED_IN );
-  gtk_container_border_width( GTK_CONTAINER( frame ), 6 );
+  gtk_container_border_width( GTK_CONTAINER( frame ), 2 );
 
   /* table = gtk_table_new ( 2, 4, FALSE ); */
   table = gtk_table_new ( 4, 4, FALSE );
-  gtk_container_border_width (GTK_CONTAINER (table), 6 );
+  gtk_container_border_width (GTK_CONTAINER (table), 2 );
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_table_set_row_spacings (GTK_TABLE (table), 3);
   gtk_table_set_col_spacings (GTK_TABLE (table), 5);
@@ -1898,8 +1909,8 @@ mov_int_entryscale_new ( GtkTable *table, gint x, gint y,
 
 
   hbox = gtk_hbox_new ( FALSE, 5 );
-  gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
 
   gtk_table_attach (GTK_TABLE (table), label, x, x+1, y, y+1,
 		    GTK_FILL, GTK_FILL, 0, 0);

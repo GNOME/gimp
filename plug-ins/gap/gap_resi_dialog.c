@@ -26,6 +26,9 @@
  */
 
 /* revision history
+ * gimp    1.1.13b; 1999/12/04  hof: some cosmetic gtk fixes
+ *                                   changed Buttons in action area
+ *                                   to same style as used in dialogs of the gimp 1.1.13 main dialogs
  * 0.96.00; 1998/07/01   hof: first release
  */
  
@@ -87,6 +90,7 @@ p_resi_dialog (gint32 image_id, t_gap_asiz asiz_mode, char *title_text,
   t_res_int  l_resint;
   Resize *l_rp;  
   
+  GtkWidget *hbbox;
   GtkWidget *button;
   GtkWidget *vbox;
   ImageResize *image_resize;
@@ -126,6 +130,15 @@ p_resi_dialog (gint32 image_id, t_gap_asiz asiz_mode, char *title_text,
 		      (GtkSignalFunc) res_cancel_callback,
 		      NULL);
 
+  /* button hbox */
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (image_resize->shell)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (image_resize->shell)->action_area), FALSE);
+
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (image_resize->shell)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_border_width (GTK_CONTAINER (vbox), 1);
@@ -138,7 +151,7 @@ p_resi_dialog (gint32 image_id, t_gap_asiz asiz_mode, char *title_text,
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) res_ok_callback,
                        &l_resint);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (image_resize->shell)->action_area), button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, TRUE, TRUE, 0);
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
@@ -147,7 +160,7 @@ p_resi_dialog (gint32 image_id, t_gap_asiz asiz_mode, char *title_text,
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) res_cancel_callback,
                        NULL);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (image_resize->shell)->action_area), button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
   gtk_widget_show (image_resize->resize->resize_widget);

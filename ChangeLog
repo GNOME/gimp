@@ -1,3 +1,9 @@
+Mon Dec  6 10:38:38 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/gap/gap_*_dialog.c: applied a patch from Wolfgang Hofer
+	that changes the GAP dialogs to follow the GIMP standard more 
+	closely. 
+
 Sun Dec  5 19:21:33 CET 1999  Marc Lehmann <marc@gimp.org>
 
         * plug-ins/script-fu/script-fu-scripts.c: Install function names

@@ -38,6 +38,9 @@
  */
 
 /* revision history:
+ * gimp    1.1.13b; 1999/12/04  hof: some cosmetic gtk fixes
+ *                                   changed border_width spacing and Buttons in action area
+ *                                   to same style as used in dialogs of the gimp 1.1.13 main dialogs
  * gimp    1.1.11b; 1999/11/20  hof: some cosmetic gtk fixes:
  *                                   - allow X-expansion (useful for the scale widgets)
  *                                   - use a hbox on WGT_INT_PAIR and WGT_FLT_PAIR
@@ -904,6 +907,7 @@ gint p_array_std_dialog(char *title_txt,
                     gint       b_def_val)
 {
   GdkColor   tips_fg, tips_bg;
+  GtkWidget *hbbox;
   GtkWidget *button;
   GtkWidget *frame;
   GtkWidget *table;
@@ -962,6 +966,12 @@ gint p_array_std_dialog(char *title_txt,
 	gdk_color_alloc (gtk_widget_get_colormap (g_arrint.dlg), &tips_bg);
   gtk_tooltips_set_colors(g_tooltips, &tips_bg, &tips_fg);
 
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (g_arrint.dlg)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (g_arrint.dlg)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (g_arrint.dlg)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
 
   /*  Action area  */
   for(l_idx = 0; l_idx < b_argc; l_idx++)
@@ -973,7 +983,7 @@ gint p_array_std_dialog(char *title_txt,
      gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		         (GtkSignalFunc) but_array_callback,
 		         &b_argv[l_idx].but_val);
-     gtk_box_pack_start (GTK_BOX (GTK_DIALOG (g_arrint.dlg)->action_area), button, TRUE, TRUE, 0);
+     gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
      if( b_argv[l_idx].but_val == b_def_val ) gtk_widget_grab_default (button);
      gtk_widget_show (button);
      
@@ -987,7 +997,7 @@ gint p_array_std_dialog(char *title_txt,
      gtk_signal_connect (GTK_OBJECT (button), "clicked",
                          (GtkSignalFunc) but_array_callback,
                           &l_ok_value);
-     gtk_box_pack_start (GTK_BOX (GTK_DIALOG (g_arrint.dlg)->action_area), button, TRUE, TRUE, 0);
+     gtk_box_pack_start (GTK_BOX (hbbox), button, TRUE, TRUE, 0);
      gtk_widget_grab_default (button);
      gtk_widget_show (button);
   }
@@ -996,14 +1006,14 @@ gint p_array_std_dialog(char *title_txt,
   if (frame_txt == NULL)   frame = gtk_frame_new ( _("Enter Values"));
   else                     frame = gtk_frame_new (frame_txt);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_border_width (GTK_CONTAINER (frame), 4);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (g_arrint.dlg)->vbox), frame, TRUE, TRUE, 0);
 
   if(argc > 0)
   {
     /* table (one row per argv) */
     table = gtk_table_new (argc +1, 3, FALSE);
-    gtk_container_border_width (GTK_CONTAINER (table), 10);
+    gtk_container_border_width (GTK_CONTAINER (table), 2);
     gtk_container_add (GTK_CONTAINER (frame), table);
 
     for(l_idx = 0; l_idx < argc; l_idx++)
