@@ -3346,7 +3346,7 @@ image_get_component_active_invoker (Gimp     *gimp,
     success = FALSE;
 
   component = args[1].value.pdb_int;
-  if (component < GIMP_GREEN_CHANNEL || component > GIMP_ALPHA_CHANNEL)
+  if (component < GIMP_RED_CHANNEL || component > GIMP_ALPHA_CHANNEL)
     success = FALSE;
 
   if (success)
@@ -3420,7 +3420,7 @@ image_set_component_active_invoker (Gimp     *gimp,
     success = FALSE;
 
   component = args[1].value.pdb_int;
-  if (component < GIMP_GREEN_CHANNEL || component > GIMP_ALPHA_CHANNEL)
+  if (component < GIMP_RED_CHANNEL || component > GIMP_ALPHA_CHANNEL)
     success = FALSE;
 
   active = args[2].value.pdb_int ? TRUE : FALSE;
@@ -3490,7 +3490,7 @@ image_get_component_visible_invoker (Gimp     *gimp,
     success = FALSE;
 
   component = args[1].value.pdb_int;
-  if (component < GIMP_GREEN_CHANNEL || component > GIMP_ALPHA_CHANNEL)
+  if (component < GIMP_RED_CHANNEL || component > GIMP_ALPHA_CHANNEL)
     success = FALSE;
 
   if (success)
@@ -3564,7 +3564,7 @@ image_set_component_visible_invoker (Gimp     *gimp,
     success = FALSE;
 
   component = args[1].value.pdb_int;
-  if (component < GIMP_GREEN_CHANNEL || component > GIMP_ALPHA_CHANNEL)
+  if (component < GIMP_RED_CHANNEL || component > GIMP_ALPHA_CHANNEL)
     success = FALSE;
 
   visible = args[2].value.pdb_int ? TRUE : FALSE;

@@ -1191,7 +1191,7 @@ $#procs--;
 
 my $comp_arg = <<'CODE';
     splice @inargs, 1, 0, ({ name => 'component',
-			     type => 'enum GimpChannelType (no AUXILLARY_CHANNEL)',
+			     type => 'enum GimpChannelType',
 			     desc => 'The image component: { %%desc%% }' });
 
     $invoke{code} = <<'SUCCESS';

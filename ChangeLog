@@ -1,3 +1,10 @@
+2003-08-28  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/image.pdb: removed a historical enum constraint
+	that caused bug #120915.
+
+	* app/pdb/image_cmds.c: regenerated.
+
 2003-08-28  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimptransformtool.c: Modified the test when to paint
