@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.4\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-07 22:53+0200\n"
-"PO-Revision-Date: 2003-07-30 02:40+0000\n"
+"Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
+"POT-Creation-Date: 2003-09-09 17:33+0100\n"
+"PO-Revision-Date: 2003-09-09 17:35+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -79,7 +79,7 @@ msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Converter em Indexadas utilizando configurações de defeito\n"
+"Converter em Indexadas utilizando configurações por omissão\n"
 "(Faça-o manualmente para ajustar o resultado)"
 
 #: libgimp/gimpexport.c:265
@@ -574,7 +574,7 @@ msgstr "Preto"
 
 #: modules/colorsel_cmyk.c:193
 msgid "Black Pullout (%):"
-msgstr ""
+msgstr "Redução Preto (%):"
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
