@@ -51,6 +51,7 @@
 #include "widgets/gimpdocumentview.h"
 #include "widgets/gimplistitem.h"
 #include "widgets/gimppreview.h"
+#include "widgets/gimpvectorslistview.h"
 
 #include "about-dialog.h"
 #include "brush-editor.h"
@@ -735,6 +736,7 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
                              (GimpConvertItemFunc)  gimp_layer_new_from_drawable,
                              (GimpNewItemFunc)      layers_new_layer_query,
                              (GimpEditItemFunc)     layers_edit_layer_query,
+                             (GimpActivateItemFunc) layers_edit_layer_query,
                              gimp_item_factory_from_path ("<Layers>"));
 
   dockable = dialogs_dockable_new (view,
@@ -773,6 +775,7 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
                              (GimpConvertItemFunc)  NULL,
                              (GimpNewItemFunc)      channels_new_channel_query,
                              (GimpEditItemFunc)     channels_edit_channel_query,
+                             (GimpActivateItemFunc) channels_edit_channel_query,
                              gimp_item_factory_from_path ("<Channels>"));
 
   dockable = dialogs_dockable_new (view,
@@ -801,9 +804,10 @@ dialogs_vectors_list_view_new (GimpDialogFactory *factory,
 			       GimpContext       *context,
                                gint               preview_size)
 {
-  GimpImage *gimage;
-  GtkWidget *view;
-  GtkWidget *dockable;
+  GimpImage           *gimage;
+  GimpVectorsListView *vectors_view;
+  GtkWidget           *view;
+  GtkWidget           *dockable;
 
   gimage = gimp_context_get_image (context);
 
@@ -822,7 +826,12 @@ dialogs_vectors_list_view_new (GimpDialogFactory *factory,
                              (GimpConvertItemFunc)  NULL,
                              (GimpNewItemFunc)      vectors_new_vectors_query,
                              (GimpEditItemFunc)     vectors_edit_vectors_query,
+                             (GimpActivateItemFunc) vectors_vectors_tool,
                              gimp_item_factory_from_path ("<Vectors>"));
+
+  vectors_view = GIMP_VECTORS_LIST_VIEW (view);
+
+  vectors_view->stroke_item_func = vectors_stroke_vectors;
 
   dockable = dialogs_dockable_new (view,
 				   "Paths List", "Paths",

@@ -42,9 +42,21 @@ void   vectors_sel_to_vectors_cmd_callback             (GtkWidget   *widget,
                                                         gpointer     data);
 void   vectors_stroke_vectors_cmd_callback             (GtkWidget   *widget,
                                                         gpointer     data);
+void   vectors_copy_vectors_cmd_callback               (GtkWidget   *widget,
+                                                        gpointer     data);
+void   vectors_paste_vectors_cmd_callback              (GtkWidget   *widget,
+                                                        gpointer     data);
+void   vectors_import_vectors_cmd_callback             (GtkWidget   *widget,
+                                                        gpointer     data);
+void   vectors_export_vectors_cmd_callback             (GtkWidget   *widget,
+                                                        gpointer     data);
+void   vectors_vectors_tool_cmd_callback               (GtkWidget   *widget,
+                                                        gpointer     data);
 void   vectors_edit_vectors_attributes_cmd_callback    (GtkWidget   *widget,
                                                         gpointer     data);
 
+void   vectors_stroke_vectors                          (GimpVectors *vectors);
+void   vectors_vectors_tool                            (GimpVectors *vectors);
 void   vectors_new_vectors_query                       (GimpImage   *gimage,
                                                         GimpVectors *template);
 void   vectors_edit_vectors_query                      (GimpVectors *vectors);

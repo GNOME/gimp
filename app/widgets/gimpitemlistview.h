@@ -48,6 +48,7 @@ typedef GimpViewable  * (* GimpConvertItemFunc)  (GimpViewable       *viewable,
 typedef void            (* GimpNewItemFunc)      (GimpImage          *gimage,
                                                   GimpViewable       *template);
 typedef void            (* GimpEditItemFunc)     (GimpViewable       *viewable);
+typedef void            (* GimpActivateItemFunc) (GimpViewable       *viewable);
 
 
 #define GIMP_TYPE_ITEM_LIST_VIEW            (gimp_item_list_view_get_type ())
@@ -80,6 +81,7 @@ struct _GimpItemListView
 
   GimpNewItemFunc        new_item_func;
   GimpEditItemFunc       edit_item_func;
+  GimpActivateItemFunc   activate_item_func;
 
   GimpItemFactory       *item_factory;
 
@@ -116,6 +118,7 @@ GtkWidget * gimp_item_list_view_new      (gint                  preview_size,
                                           GimpConvertItemFunc   convert_item_func,
                                           GimpNewItemFunc       new_item_func,
                                           GimpEditItemFunc      edit_item_func,
+                                          GimpActivateItemFunc  activate_item_func,
                                           GimpItemFactory      *item_facotry);
 
 void       gimp_item_list_view_set_image (GimpItemListView     *view,

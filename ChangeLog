@@ -1,5 +1,25 @@
 2002-02-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpitemlistview.[ch]: added a "item_activate_func"
+	to the struct and the constructor so we can distinguish double
+	click from right click in the callbacks.
+
+	* app/widgets/gimpvectorslistview.[ch]: added a "item_stroke_func".
+
+	* app/widgets/gimpchannellistview.c: reorder the "To Selection" button.
+
+	* app/gui/dialogs-constructors.c: changed accordingly.
+
+	* app/gui/menus.c: added separators and some new items to the
+	vectors menu. Use the SELECTION_REPLACE, _ADD, ... icons for
+	the resp. menu items.
+
+	* app/gui/vectors-commands.[ch]: added empty callbacks for the new
+	menu items, put the stroke stuff to an own function which is used
+	as "item_stroke_func" when creating GimpVectorsListViews.
+
+2002-02-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage-mask-select.[ch]: implemented
 	gimp_image_mask_select_vectors() as simple wrapper around
 	gimp_image_mask_select_polygon().

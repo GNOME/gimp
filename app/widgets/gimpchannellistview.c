@@ -170,7 +170,7 @@ gimp_channel_list_view_init (GimpChannelListView *view)
 
   view->toselection_button =
     gimp_container_view_add_button (container_view,
-				    GIMP_STOCK_TO_SELECTION,
+				    GIMP_STOCK_SELECTION_REPLACE,
 				    _("Channel to Selection\n"
 				      "<Shift> Add\n"
 				      "<Ctrl> Subtract\n"
@@ -178,6 +178,9 @@ gimp_channel_list_view_init (GimpChannelListView *view)
 				    G_CALLBACK (gimp_channel_list_view_toselection_clicked),
 				    G_CALLBACK (gimp_channel_list_view_toselection_extended_clicked),
 				    view);
+
+  gtk_box_reorder_child (GTK_BOX (container_view->button_box),
+			 view->toselection_button, 5);
 
   gimp_container_view_enable_dnd (container_view,
 				  GTK_BUTTON (view->toselection_button),
@@ -329,16 +332,7 @@ static void
 gimp_channel_list_view_toselection_clicked (GtkWidget           *widget,
 					    GimpChannelListView *view)
 {
-  GimpItemListView *item_view;
-  GimpViewable     *viewable;
-
-  item_view = GIMP_ITEM_LIST_VIEW (view);
-
-  viewable = item_view->get_item_func (item_view->gimage);
-
-  if (viewable)
-    gimp_channel_list_view_to_selection (view, GIMP_CHANNEL (viewable),
-					 CHANNEL_OP_REPLACE);
+  gimp_channel_list_view_toselection_extended_clicked (widget, 0, view);
 }
 
 static void

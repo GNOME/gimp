@@ -285,6 +285,7 @@ gimp_item_list_view_new (gint                  preview_size,
                          GimpConvertItemFunc   convert_item_func,
                          GimpNewItemFunc       new_item_func,
                          GimpEditItemFunc      edit_item_func,
+                         GimpActivateItemFunc  activate_item_func,
                          GimpItemFactory      *item_factory)
 {
   GimpItemListView  *list_view;
@@ -303,6 +304,7 @@ gimp_item_list_view_new (gint                  preview_size,
   /*  convert_item_func may be NULL  */
   g_return_val_if_fail (new_item_func != NULL, NULL);
   g_return_val_if_fail (edit_item_func != NULL, NULL);
+  g_return_val_if_fail (activate_item_func != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_ITEM_FACTORY (item_factory), NULL);
 
   if (item_type == GIMP_TYPE_LAYER)
@@ -343,6 +345,7 @@ gimp_item_list_view_new (gint                  preview_size,
   list_view->convert_item_func  = convert_item_func;
   list_view->new_item_func      = new_item_func;
   list_view->edit_item_func     = edit_item_func;
+  list_view->activate_item_func = activate_item_func;
 
   list_view->item_factory = item_factory;
   g_object_ref (G_OBJECT (list_view->item_factory));
@@ -495,12 +498,16 @@ gimp_item_list_view_activate_item (GimpContainerView *view,
                                    GimpViewable      *item,
                                    gpointer           insert_data)
 {
+  GimpItemListView *item_view;
+
+  item_view = GIMP_ITEM_LIST_VIEW (view);
+
   if (GIMP_CONTAINER_VIEW_CLASS (parent_class)->activate_item)
     GIMP_CONTAINER_VIEW_CLASS (parent_class)->activate_item (view,
 							     item,
 							     insert_data);
 
-  gtk_button_clicked (GTK_BUTTON (GIMP_ITEM_LIST_VIEW (view)->edit_button));
+  item_view->activate_item_func (item);
 }
 
 static void

@@ -129,7 +129,7 @@ gimp_vectors_list_view_init (GimpVectorsListView *view)
 
   view->toselection_button =
     gimp_container_view_add_button (container_view,
-				    GIMP_STOCK_TO_SELECTION,
+				    GIMP_STOCK_SELECTION_REPLACE,
 				    _("Path to Selection\n"
 				      "<Shift> Add\n"
 				      "<Ctrl> Subtract\n"
@@ -138,7 +138,6 @@ gimp_vectors_list_view_init (GimpVectorsListView *view)
 				    G_CALLBACK (gimp_vectors_list_view_toselection_extended_clicked),
 				    view);
 
-
   view->stroke_button =
     gimp_container_view_add_button (container_view,
 				    GIMP_STOCK_STROKE,
@@ -146,6 +145,11 @@ gimp_vectors_list_view_init (GimpVectorsListView *view)
 				    G_CALLBACK (gimp_vectors_list_view_stroke_clicked),
 				    NULL,
 				    view);
+
+  gtk_box_reorder_child (GTK_BOX (container_view->button_box),
+			 view->toselection_button, 5);
+  gtk_box_reorder_child (GTK_BOX (container_view->button_box),
+			 view->stroke_button, 6);
 
   gimp_container_view_enable_dnd (container_view,
 				  GTK_BUTTON (view->toselection_button),
@@ -203,16 +207,7 @@ static void
 gimp_vectors_list_view_toselection_clicked (GtkWidget           *widget,
 					    GimpVectorsListView *view)
 {
-  GimpItemListView *item_view;
-  GimpViewable     *viewable;
-
-  item_view = GIMP_ITEM_LIST_VIEW (view);
-
-  viewable = item_view->get_item_func (item_view->gimage);
-
-  if (viewable)
-    gimp_vectors_list_view_to_selection (view, GIMP_VECTORS (viewable),
-					 CHANNEL_OP_REPLACE);
+  gimp_vectors_list_view_toselection_extended_clicked (widget, 0, view);
 }
 
 static void
@@ -252,7 +247,10 @@ static void
 gimp_vectors_list_view_stroke (GimpVectorsListView *view,
                                GimpVectors         *vectors)
 {
-  g_print ("stroke %s\n", GIMP_OBJECT (vectors)->name);
+  if (view->stroke_item_func)
+    {
+      view->stroke_item_func (vectors);
+    }
 }
 
 static void

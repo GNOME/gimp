@@ -26,6 +26,9 @@
 #include "gimpitemlistview.h"
 
 
+typedef void (* GimpStrokeItemFunc) (GimpVectors *vectors);
+
+
 #define GIMP_TYPE_VECTORS_LIST_VIEW            (gimp_vectors_list_view_get_type ())
 #define GIMP_VECTORS_LIST_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VECTORS_LIST_VIEW, GimpVectorsListView))
 #define GIMP_VECTORS_LIST_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VECTORS_LIST_VIEW, GimpVectorsListViewClass))
@@ -38,10 +41,12 @@ typedef struct _GimpVectorsListViewClass  GimpVectorsListViewClass;
 
 struct _GimpVectorsListView
 {
-  GimpItemListView  parent_instance;
+  GimpItemListView    parent_instance;
 
-  GtkWidget        *toselection_button;
-  GtkWidget        *stroke_button;
+  GimpStrokeItemFunc  stroke_item_func;
+
+  GtkWidget          *toselection_button;
+  GtkWidget          *stroke_button;
 };
 
 struct _GimpVectorsListViewClass
