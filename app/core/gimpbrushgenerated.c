@@ -437,10 +437,10 @@ gimp_brush_generated_dirty (GimpData *data)
                                           ceil (brush->radius + 1.0) *
                                           ceil (brush->radius + 1.0)));
 
-  if ((1.0 - brush->hardness) < 0.000001)
+  if ((1.0 - brush->hardness) < 0.0000004)
     exponent = 1000000.0;
   else
-    exponent = 1.0 / (1.0 - brush->hardness);
+    exponent = 0.4 / (1.0 - brush->hardness);
 
   lookup = g_malloc (length);
   sum = 0.0;
