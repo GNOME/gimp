@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-05 20:23+0200\n"
+"POT-Creation-Date: 2003-11-03 01:00+0100\n"
 "PO-Revision-Date: 2003-08-13 22:08+0300\n"
 "Last-Translator: Gil 'Dolfin' Osher <dolfin@rpg.org.il>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -21,6 +21,10 @@ msgstr ""
 #: libgimp/gimpbrushmenu.c:132
 msgid "Brush Selection"
 msgstr "בחירת מברשת"
+
+#: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
+msgid "_Browse..."
+msgstr ""
 
 #: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, c-format
@@ -210,32 +214,36 @@ msgstr "בחירת דוגמה"
 msgid "percent"
 msgstr "אחוז"
 
-#: libgimpbase/gimputils.c:118
+#: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
+msgid "(invalid UTF-8 string)"
+msgstr ""
+
+#: libgimpbase/gimputils.c:189
 #, c-format
 msgid "%d Bytes"
 msgstr "%d בתים"
 
-#: libgimpbase/gimputils.c:122
+#: libgimpbase/gimputils.c:193
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f ק\"ב"
 
-#: libgimpbase/gimputils.c:126
+#: libgimpbase/gimputils.c:197
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f ק\"ב"
 
-#: libgimpbase/gimputils.c:130
+#: libgimpbase/gimputils.c:201
 #, c-format
 msgid "%d KB"
 msgstr "%d ק\"ב"
 
-#: libgimpbase/gimputils.c:135
+#: libgimpbase/gimputils.c:206
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f מ\"ב"
 
-#: libgimpbase/gimputils.c:140
+#: libgimpbase/gimputils.c:211
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f מ\"ב"
@@ -432,23 +440,23 @@ msgstr "ריווח _שורות"
 msgid "_Resize"
 msgstr "שינוי _גודל"
 
-#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:278
+#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:280
 msgid "_Scale"
 msgstr "שינוי _קנה מידה"
 
-#: libgimpwidgets/gimpstock.c:256
+#: libgimpwidgets/gimpstock.c:259
 msgid "Crop"
 msgstr "גזיזה"
 
-#: libgimpwidgets/gimpstock.c:274
+#: libgimpwidgets/gimpstock.c:276
 msgid "_Transform"
 msgstr "_עיבוד"
 
-#: libgimpwidgets/gimpstock.c:277
+#: libgimpwidgets/gimpstock.c:279
 msgid "_Rotate"
 msgstr "_סיבוב"
 
-#: libgimpwidgets/gimpstock.c:279
+#: libgimpwidgets/gimpstock.c:281
 msgid "_Shear"
 msgstr "_חתיכה"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.SCRIPT-FU.ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-05 20:25+0200\n"
+"POT-Creation-Date: 2003-11-03 01:02+0100\n"
 "PO-Revision-Date: 2003-07-06 20:25+0400\n"
 "Last-Translator: Anatoly A. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
@@ -51,80 +51,80 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Режим выполнения Скрипт-Фу допускает только неинтерактивную работу"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1114
-#: plug-ins/script-fu/script-fu-scripts.c:1116
+#: plug-ins/script-fu/script-fu-scripts.c:1115
+#: plug-ins/script-fu/script-fu-scripts.c:1117
 msgid "/Script-Fu/"
 msgstr "/Скрипт-Фу/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1128
+#: plug-ins/script-fu/script-fu-scripts.c:1129
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Скрипт-Фу: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1162
+#: plug-ins/script-fu/script-fu-scripts.c:1163
 msgid "About"
 msgstr "О программе"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1172
+#: plug-ins/script-fu/script-fu-scripts.c:1173
 msgid "Script Arguments"
 msgstr "Аргументы скрипта"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1199
+#: plug-ins/script-fu/script-fu-scripts.c:1200
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1245
+#: plug-ins/script-fu/script-fu-scripts.c:1246
 msgid "Script-Fu Color Selection"
 msgstr "Скрипт-Фу: Выбор цвета"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1323
+#: plug-ins/script-fu/script-fu-scripts.c:1324
 msgid "Script-Fu File Selection"
 msgstr "Скрипт-Фу: Выбор файла"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1328
+#: plug-ins/script-fu/script-fu-scripts.c:1329
 msgid "Script-Fu Folder Selection"
 msgstr "Скрипт-Фу: Выбор каталога"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1345
+#: plug-ins/script-fu/script-fu-scripts.c:1346
 msgid "Script-Fu Font Selection"
 msgstr "Скрипт-Фу: Выбор шрифта"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1353
+#: plug-ins/script-fu/script-fu-scripts.c:1354
 msgid "Script-fu Pattern Selection"
 msgstr "Скрипт-Фу: Выбор шаблона"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1360
+#: plug-ins/script-fu/script-fu-scripts.c:1361
 msgid "Script-Fu Gradient Selection"
 msgstr "Скрипт-Фу: Выбор градиента"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1368
+#: plug-ins/script-fu/script-fu-scripts.c:1369
 msgid "Script-Fu Brush Selection"
 msgstr "Скрипт-Фу: Выбор кисти"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1862
+#: plug-ins/script-fu/script-fu-scripts.c:1863
 #: plug-ins/dbbrowser/dbbrowser_utils.c:492
 msgid "Author:"
 msgstr "Автор:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1868
+#: plug-ins/script-fu/script-fu-scripts.c:1869
 #: plug-ins/dbbrowser/dbbrowser_utils.c:508
 msgid "Copyright:"
 msgstr "Авторское право:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1874
+#: plug-ins/script-fu/script-fu-scripts.c:1875
 #: plug-ins/dbbrowser/dbbrowser_utils.c:500
 msgid "Date:"
 msgstr "Дата:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1882
+#: plug-ins/script-fu/script-fu-scripts.c:1883
 msgid "Image Types:"
 msgstr "Типы изображений:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2004
+#: plug-ins/script-fu/script-fu-scripts.c:2005
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -299,7 +299,6 @@ msgstr "Шрифт"
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:5
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:6
-#: plug-ins/script-fu/scripts/font-map.scm.h:4
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:6
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:6
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:7
@@ -370,7 +369,6 @@ msgstr "Смещение тени по Y"
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:10
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:9
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:7
-#: plug-ins/script-fu/scripts/font-map.scm.h:6
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:7
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:13
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:16
@@ -531,7 +529,7 @@ msgstr "Свести изображение"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:8
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:6
 msgid "Glow Color"
@@ -842,7 +840,7 @@ msgstr "План-Прозрачное"
 #: plug-ins/script-fu/scripts/land.scm.h:3
 #: plug-ins/script-fu/scripts/lava.scm.h:2
 #: plug-ins/script-fu/scripts/rendermap.scm.h:4
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:10
 msgid "Gradient"
 msgstr "Градиент"
 
@@ -879,34 +877,43 @@ msgid "Spots density Y"
 msgstr "Плотность пятен по Y"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
+#, fuzzy
+msgid "<Image>/Script-Fu/Animators/B_urn-In..."
+msgstr "<Image>/Скрипт-Фу/Аниматоры/Смесь..."
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
 msgid "Add Glowing"
 msgstr "Добавить свечение"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
 msgid "After Glow"
 msgstr "Послесвечение"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid "Burn-In: Need two layers in total!"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
+msgid "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Corona Width"
 msgstr "Ширина короны"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 msgid "Fadeout"
 msgstr "Затухание"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 msgid "Fadeout Width"
 msgstr "Ширина затухания"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
 msgid "Prepare for GIF"
 msgstr "Подготовить для GIF"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
 msgid "Speed (pixels/frame)"
 msgstr "Скорость (точек/кадр)"
 
@@ -1240,7 +1247,7 @@ msgstr "Радиус размывания"
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:4
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:4
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:5
 msgid "Color"
 msgstr "Цвет"
 
@@ -1375,20 +1382,44 @@ msgstr "<Toolbox>/Расш./Скрипт-Фу/Утилиты/Карта шриф
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
 #, fuzzy
-msgid "Border (pixels)"
-msgstr "Размер рамки (точек)"
+msgid "Active Colors"
+msgstr "Цвет контура"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:3
-msgid "Filter (regexp)"
+msgid "Black on White"
 msgstr ""
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:4
+#, fuzzy
+msgid "Font _Size (pixels)"
+msgstr "Размер шрифта (точек)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:5
-msgid "Labels"
+msgid "Use Font _Name as Text"
 msgstr ""
 
+#: plug-ins/script-fu/scripts/font-map.scm.h:6
+#, fuzzy
+msgid "_Border (pixels)"
+msgstr "Размер рамки (точек)"
+
 #: plug-ins/script-fu/scripts/font-map.scm.h:7
-msgid "Use Font Name as Text"
+#, fuzzy
+msgid "_Color Scheme"
+msgstr "Цвет 3"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:8
+msgid "_Filter (regexp)"
 msgstr ""
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:9
+msgid "_Labels"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:10
+#, fuzzy
+msgid "_Text"
+msgstr "Текст"
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:1
 #, fuzzy
@@ -2087,115 +2118,126 @@ msgid "Turn from Left to Right"
 msgstr "Повернуть слева на право"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
+#, fuzzy
+msgid "<Image>/Script-Fu/Render/_Spyrogimp..."
+msgstr "<Image>/Скрипт-Фу/Визуализация/Сетка..."
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
 msgstr "Аэрограф"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:3
 msgid "Brush"
 msgstr "Кисть"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:3
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:4
 msgid "Circle"
 msgstr "Круг"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:5
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
 msgid "Color Method"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
+msgid ""
+"Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
+"netword.com/*spyrogimp"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
 msgid "Epitrochoid"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
 msgid "Frame"
 msgstr "Кадр"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
 msgid "Gradient: Loop Sawtooth"
 msgstr "Градиент: Пилообразный цикл"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:10
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
 msgid "Gradient: Loop Triangle"
 msgstr "Градиент: Треугольный цикл"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
 msgid "Hexagon"
 msgstr "Шестиугольник"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
 msgid "Hole Ratio"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
 msgid "Inner Teeth"
 msgstr "Внутренние зубцы"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:16
 msgid "Lissajous"
 msgstr "Лиссажу"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:17
 msgid "Margin (pixels)"
 msgstr "Отступ (точек)"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:16
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
 msgid "Outer Teeth"
 msgstr "Внешние зубцы"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:17
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
 msgid "Pencil"
 msgstr "Карандаш"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:20
 msgid "Pentagon"
 msgstr "Пятиугольник"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:21
 msgid "Polygon: 10 sides"
 msgstr "Многоугольник: 10 сторон"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:20
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:22
 msgid "Polygon: 7 sides"
 msgstr "Многоугольник: 7 сторон"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:21
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:23
 msgid "Polygon: 8 sides"
 msgstr "Многоугольник: 8 сторон"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:22
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:24
 msgid "Polygon: 9 sides"
 msgstr "Многоугольник: 9 сторон"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:23
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:25
 msgid "Shape"
 msgstr "Форма"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:24
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:26
 msgid "Solid Color"
 msgstr "Сплошной цвет"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:25
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:27
 msgid "Spyrograph"
 msgstr "Спирограф"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:26
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:28
 msgid "Square"
 msgstr "Квадрат"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:27
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
 #: plug-ins/script-fu/scripts/text-circle.scm.h:7
 msgid "Start Angle"
 msgstr "Начальный угол"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:28
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:30
 msgid "Tool"
 msgstr "Инструмент"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:31
 msgid "Triangle"
 msgstr "Треугольник"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:30
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:32
 msgid "Type"
 msgstr "Тип"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-01 14:15+0100\n"
+"POT-Creation-Date: 2003-11-03 01:00+0100\n"
 "PO-Revision-Date: 2003-11-01 15:12+0100\n"
 "Last-Translator: Данило Шеган <danilo@prevod.org>\n"
 "Language-Team: Serbian (sr) <serbiangnome-listaL@nongnu.org>\n"
@@ -15,14 +15,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/FractalExplorer/Dialogs.c:495
-#: plug-ins/FractalExplorer/Dialogs.c:1586 plug-ins/gfig/gfig.c:2763
+#: plug-ins/FractalExplorer/Dialogs.c:501
+#: plug-ins/FractalExplorer/Dialogs.c:1592 plug-ins/gfig/gfig.c:2763
 #: plug-ins/imagemap/imap_about.c:38 plug-ins/print/gimp_main_window.c:360
 msgid "About"
 msgstr "О програму"
 
 #. Preview
-#: plug-ins/FractalExplorer/Dialogs.c:521 plug-ins/Lighting/lighting_ui.c:1148
+#: plug-ins/FractalExplorer/Dialogs.c:527 plug-ins/Lighting/lighting_ui.c:1148
 #: plug-ins/MapObject/mapobject_ui.c:1400 plug-ins/common/CML_explorer.c:1191
 #: plug-ins/common/curve_bend.c:1221 plug-ins/common/destripe.c:582
 #: plug-ins/common/emboss.c:713 plug-ins/common/fractaltrace.c:776
@@ -40,245 +40,245 @@ msgstr "О програму"
 msgid "Preview"
 msgstr "Преглед"
 
-#: plug-ins/FractalExplorer/Dialogs.c:567
+#: plug-ins/FractalExplorer/Dialogs.c:573
 msgid "Realtime Preview"
 msgstr "Истовремени преглед"
 
-#: plug-ins/FractalExplorer/Dialogs.c:574
+#: plug-ins/FractalExplorer/Dialogs.c:580
 msgid "If you enable this option the preview will be redrawn automatically"
 msgstr "Уколико укључите ову опцију преглед ће се сам освежавати"
 
-#: plug-ins/FractalExplorer/Dialogs.c:577
+#: plug-ins/FractalExplorer/Dialogs.c:583
 msgid "Redraw"
 msgstr "Поново исцртај"
 
-#: plug-ins/FractalExplorer/Dialogs.c:583
+#: plug-ins/FractalExplorer/Dialogs.c:589
 msgid "Redraw preview"
 msgstr "Преглед исцртавања"
 
 #. Zoom Options
-#: plug-ins/FractalExplorer/Dialogs.c:586
+#: plug-ins/FractalExplorer/Dialogs.c:592
 msgid "Zoom Options"
 msgstr "Опције увећања"
 
-#: plug-ins/FractalExplorer/Dialogs.c:600
+#: plug-ins/FractalExplorer/Dialogs.c:606
 msgid "Undo last zoom"
 msgstr "Опозови последње увећање"
 
-#: plug-ins/FractalExplorer/Dialogs.c:610
+#: plug-ins/FractalExplorer/Dialogs.c:616
 msgid "Redo last zoom"
 msgstr "Врати последње увећање"
 
-#: plug-ins/FractalExplorer/Dialogs.c:642
+#: plug-ins/FractalExplorer/Dialogs.c:648
 msgid "_Parameters"
 msgstr "_Параметри"
 
-#: plug-ins/FractalExplorer/Dialogs.c:645
+#: plug-ins/FractalExplorer/Dialogs.c:651
 msgid "Fractal Parameters"
 msgstr "Параметри за фрактале"
 
-#: plug-ins/FractalExplorer/Dialogs.c:659
+#: plug-ins/FractalExplorer/Dialogs.c:665
 msgid "XMIN:"
 msgstr "XMIN:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:662
+#: plug-ins/FractalExplorer/Dialogs.c:668
 msgid "Change the first (minimal) x-coordinate delimitation"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:670
+#: plug-ins/FractalExplorer/Dialogs.c:676
 msgid "XMAX:"
 msgstr "XMAX:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:673
+#: plug-ins/FractalExplorer/Dialogs.c:679
 msgid "Change the second (maximal) x-coordinate delimitation"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:681
+#: plug-ins/FractalExplorer/Dialogs.c:687
 msgid "YMIN:"
 msgstr "YMIN:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:684
+#: plug-ins/FractalExplorer/Dialogs.c:690
 msgid "Change the first (minimal) y-coordinate delimitation"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:692
+#: plug-ins/FractalExplorer/Dialogs.c:698
 msgid "YMAX:"
 msgstr "YMAX:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:695
+#: plug-ins/FractalExplorer/Dialogs.c:701
 msgid "Change the second (maximal) y-coordinate delimitation"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:703
+#: plug-ins/FractalExplorer/Dialogs.c:709
 msgid "ITER:"
 msgstr "ИТЕР:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:706
+#: plug-ins/FractalExplorer/Dialogs.c:712
 msgid ""
 "Change the iteration value. The higher it is, the more details will be "
 "calculated, which will take more time"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:715
+#: plug-ins/FractalExplorer/Dialogs.c:721
 msgid "CX:"
 msgstr "CX:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:718
+#: plug-ins/FractalExplorer/Dialogs.c:724
 msgid ""
 "Change the CX value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:727
+#: plug-ins/FractalExplorer/Dialogs.c:733
 msgid "CY:"
 msgstr "CY:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:730
+#: plug-ins/FractalExplorer/Dialogs.c:736
 msgid ""
 "Change the CY value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:747
+#: plug-ins/FractalExplorer/Dialogs.c:753
 msgid "Load a fractal from file"
 msgstr "Учитај фрактал из датотеке"
 
-#: plug-ins/FractalExplorer/Dialogs.c:755
+#: plug-ins/FractalExplorer/Dialogs.c:761
 msgid "Reset parameters to default values"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:764
+#: plug-ins/FractalExplorer/Dialogs.c:770
 msgid "Save active fractal to file"
 msgstr ""
 
 #. Fractal type toggle box
-#: plug-ins/FractalExplorer/Dialogs.c:767
+#: plug-ins/FractalExplorer/Dialogs.c:773
 msgid "Fractal Type"
 msgstr "Тип фрактала"
 
-#: plug-ins/FractalExplorer/Dialogs.c:780
+#: plug-ins/FractalExplorer/Dialogs.c:786
 msgid "Mandelbrot"
 msgstr "Манделбротов"
 
-#: plug-ins/FractalExplorer/Dialogs.c:782
+#: plug-ins/FractalExplorer/Dialogs.c:788
 msgid "Julia"
 msgstr "Јулија"
 
-#: plug-ins/FractalExplorer/Dialogs.c:784
+#: plug-ins/FractalExplorer/Dialogs.c:790
 msgid "Barnsley 1"
 msgstr "Барнсли 1"
 
-#: plug-ins/FractalExplorer/Dialogs.c:786
+#: plug-ins/FractalExplorer/Dialogs.c:792
 msgid "Barnsley 2"
 msgstr "Барнсли 2"
 
-#: plug-ins/FractalExplorer/Dialogs.c:788
+#: plug-ins/FractalExplorer/Dialogs.c:794
 msgid "Barnsley 3"
 msgstr "Барнсли 3"
 
-#: plug-ins/FractalExplorer/Dialogs.c:790
+#: plug-ins/FractalExplorer/Dialogs.c:796
 msgid "Spider"
 msgstr "Паук"
 
-#: plug-ins/FractalExplorer/Dialogs.c:792
+#: plug-ins/FractalExplorer/Dialogs.c:798
 msgid "Man'o'war"
 msgstr "Чо'ек рата"
 
-#: plug-ins/FractalExplorer/Dialogs.c:794
+#: plug-ins/FractalExplorer/Dialogs.c:800
 msgid "Lambda"
 msgstr "Ламбда"
 
-#: plug-ins/FractalExplorer/Dialogs.c:796
+#: plug-ins/FractalExplorer/Dialogs.c:802
 msgid "Sierpinski"
 msgstr "Сиерпински"
 
-#: plug-ins/FractalExplorer/Dialogs.c:846 plug-ins/common/sinus.c:905
+#: plug-ins/FractalExplorer/Dialogs.c:852 plug-ins/common/sinus.c:905
 #: plug-ins/imagemap/imap_preferences.c:515
 msgid "Co_lors"
 msgstr "Бо_је"
 
 #. Number of Colors frame
-#: plug-ins/FractalExplorer/Dialogs.c:850 plug-ins/common/borderaverage.c:414
+#: plug-ins/FractalExplorer/Dialogs.c:856 plug-ins/common/borderaverage.c:414
 msgid "Number of Colors"
 msgstr "Број боја"
 
-#: plug-ins/FractalExplorer/Dialogs.c:863
+#: plug-ins/FractalExplorer/Dialogs.c:869
 msgid "Number of colors:"
 msgstr "Број боја:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:866
+#: plug-ins/FractalExplorer/Dialogs.c:872
 msgid "Change the number of colors in the mapping"
 msgstr "Измени број боја у мапирању"
 
-#: plug-ins/FractalExplorer/Dialogs.c:873
+#: plug-ins/FractalExplorer/Dialogs.c:879
 msgid "Use loglog smoothing"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:880
+#: plug-ins/FractalExplorer/Dialogs.c:886
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
 msgstr ""
 
 #. Color Density frame
-#: plug-ins/FractalExplorer/Dialogs.c:884
+#: plug-ins/FractalExplorer/Dialogs.c:890
 msgid "Color Density"
 msgstr "Густина боја"
 
 #. These values are translated for the GUI but also used internally
 #. to figure out which button the user pushed, etc.
 #. Not my design, please don't blame me -- njl
-#: plug-ins/FractalExplorer/Dialogs.c:898 plug-ins/common/compose.c:133
+#: plug-ins/FractalExplorer/Dialogs.c:904 plug-ins/common/compose.c:133
 #: plug-ins/common/compose.c:143 plug-ins/fp/fp_gtk.c:25
 msgid "Red:"
 msgstr "Црвена:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:901
+#: plug-ins/FractalExplorer/Dialogs.c:907
 msgid "Change the intensity of the red channel"
 msgstr "Измените снагу црвеног канала"
 
-#: plug-ins/FractalExplorer/Dialogs.c:908 plug-ins/common/compose.c:134
+#: plug-ins/FractalExplorer/Dialogs.c:914 plug-ins/common/compose.c:134
 #: plug-ins/common/compose.c:144 plug-ins/fp/fp_gtk.c:26
 msgid "Green:"
 msgstr "Зелена:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:911
+#: plug-ins/FractalExplorer/Dialogs.c:917
 msgid "Change the intensity of the green channel"
 msgstr "Измените снагу зеленог канала"
 
-#: plug-ins/FractalExplorer/Dialogs.c:918 plug-ins/common/compose.c:135
+#: plug-ins/FractalExplorer/Dialogs.c:924 plug-ins/common/compose.c:135
 #: plug-ins/common/compose.c:145 plug-ins/fp/fp_gtk.c:27
 msgid "Blue:"
 msgstr "Плава:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:921
+#: plug-ins/FractalExplorer/Dialogs.c:927
 msgid "Change the intensity of the blue channel"
 msgstr "Измените снагу плавог канала"
 
 #. Color Function frame
-#: plug-ins/FractalExplorer/Dialogs.c:927
+#: plug-ins/FractalExplorer/Dialogs.c:933
 msgid "Color Function"
 msgstr ""
 
 #. Redmode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:938 plug-ins/common/AlienMap.c:1230
+#: plug-ins/FractalExplorer/Dialogs.c:944 plug-ins/common/AlienMap.c:1230
 #: plug-ins/common/decompose.c:128
 msgid "Red"
 msgstr "Црвена"
 
-#: plug-ins/FractalExplorer/Dialogs.c:942
-#: plug-ins/FractalExplorer/Dialogs.c:983
-#: plug-ins/FractalExplorer/Dialogs.c:1024
+#: plug-ins/FractalExplorer/Dialogs.c:948
+#: plug-ins/FractalExplorer/Dialogs.c:989
+#: plug-ins/FractalExplorer/Dialogs.c:1030
 msgid "Sine"
 msgstr "Синус"
 
-#: plug-ins/FractalExplorer/Dialogs.c:944
-#: plug-ins/FractalExplorer/Dialogs.c:985
-#: plug-ins/FractalExplorer/Dialogs.c:1026
+#: plug-ins/FractalExplorer/Dialogs.c:950
+#: plug-ins/FractalExplorer/Dialogs.c:991
+#: plug-ins/FractalExplorer/Dialogs.c:1032
 msgid "Cosine"
 msgstr "Косинус"
 
-#: plug-ins/FractalExplorer/Dialogs.c:946
-#: plug-ins/FractalExplorer/Dialogs.c:987
-#: plug-ins/FractalExplorer/Dialogs.c:1028 plug-ins/Lighting/lighting_ui.c:518
+#: plug-ins/FractalExplorer/Dialogs.c:952
+#: plug-ins/FractalExplorer/Dialogs.c:993
+#: plug-ins/FractalExplorer/Dialogs.c:1034 plug-ins/Lighting/lighting_ui.c:518
 #: plug-ins/common/CML_explorer.c:170 plug-ins/common/align_layers.c:433
 #: plug-ins/common/align_layers.c:466 plug-ins/common/ps.c:2752
 #: plug-ins/common/ps.c:2765 plug-ins/common/psp.c:444
@@ -286,21 +286,21 @@ msgstr "Косинус"
 msgid "None"
 msgstr "Ништа"
 
-#: plug-ins/FractalExplorer/Dialogs.c:951
-#: plug-ins/FractalExplorer/Dialogs.c:992
-#: plug-ins/FractalExplorer/Dialogs.c:1033
-msgid "Use sine-function for this color component"
-msgstr "Користи синусну функцију за овај део боје"
-
-#: plug-ins/FractalExplorer/Dialogs.c:954
-#: plug-ins/FractalExplorer/Dialogs.c:995
-#: plug-ins/FractalExplorer/Dialogs.c:1036
-msgid "Use cosine-function for this color component"
-msgstr "Користи косинусну функцију за овај део боје"
-
 #: plug-ins/FractalExplorer/Dialogs.c:957
 #: plug-ins/FractalExplorer/Dialogs.c:998
 #: plug-ins/FractalExplorer/Dialogs.c:1039
+msgid "Use sine-function for this color component"
+msgstr "Користи синусну функцију за овај део боје"
+
+#: plug-ins/FractalExplorer/Dialogs.c:960
+#: plug-ins/FractalExplorer/Dialogs.c:1001
+#: plug-ins/FractalExplorer/Dialogs.c:1042
+msgid "Use cosine-function for this color component"
+msgstr "Користи косинусну функцију за овај део боје"
+
+#: plug-ins/FractalExplorer/Dialogs.c:963
+#: plug-ins/FractalExplorer/Dialogs.c:1004
+#: plug-ins/FractalExplorer/Dialogs.c:1045
 msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
@@ -308,70 +308,70 @@ msgstr ""
 "Користи линеарно пресликавање уместо тригонометријске функције за овај канал "
 "боје"
 
-#: plug-ins/FractalExplorer/Dialogs.c:966
-#: plug-ins/FractalExplorer/Dialogs.c:1007
-#: plug-ins/FractalExplorer/Dialogs.c:1048
+#: plug-ins/FractalExplorer/Dialogs.c:972
+#: plug-ins/FractalExplorer/Dialogs.c:1013
+#: plug-ins/FractalExplorer/Dialogs.c:1054
 msgid "Inversion"
 msgstr "Инверзија"
 
-#: plug-ins/FractalExplorer/Dialogs.c:974
-#: plug-ins/FractalExplorer/Dialogs.c:1015
-#: plug-ins/FractalExplorer/Dialogs.c:1056
+#: plug-ins/FractalExplorer/Dialogs.c:980
+#: plug-ins/FractalExplorer/Dialogs.c:1021
+#: plug-ins/FractalExplorer/Dialogs.c:1062
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
 msgstr ""
 
 #. Greenmode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:979 plug-ins/common/AlienMap.c:1253
+#: plug-ins/FractalExplorer/Dialogs.c:985 plug-ins/common/AlienMap.c:1253
 #: plug-ins/common/decompose.c:129
 msgid "Green"
 msgstr "Зелена"
 
 #. Bluemode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:1020 plug-ins/common/AlienMap.c:1276
+#: plug-ins/FractalExplorer/Dialogs.c:1026 plug-ins/common/AlienMap.c:1276
 #: plug-ins/common/decompose.c:134
 msgid "Blue"
 msgstr "Плава"
 
 #. Colormode toggle box
-#: plug-ins/FractalExplorer/Dialogs.c:1061
+#: plug-ins/FractalExplorer/Dialogs.c:1067
 msgid "Color Mode"
 msgstr "Режим боја"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1072
+#: plug-ins/FractalExplorer/Dialogs.c:1078
 msgid "As specified above"
 msgstr "Како је наведено изнад"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1084
+#: plug-ins/FractalExplorer/Dialogs.c:1090
 msgid ""
 "Create a color-map with the options you specified above (color density/"
 "function). The result is visible in the preview image"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1094
+#: plug-ins/FractalExplorer/Dialogs.c:1100
 msgid "Apply active gradient to final image"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1106
+#: plug-ins/FractalExplorer/Dialogs.c:1112
 msgid "Create a color-map using a gradient from the gradient editor"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1112
+#: plug-ins/FractalExplorer/Dialogs.c:1118
 msgid "FractalExplorer Gradient"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1144
+#: plug-ins/FractalExplorer/Dialogs.c:1150
 msgid "_Fractals"
 msgstr "_Фрактали"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1776 plug-ins/bmp/bmpwrite.c:199
+#: plug-ins/FractalExplorer/Dialogs.c:1782 plug-ins/bmp/bmpwrite.c:199
 #: plug-ins/common/CEL.c:497 plug-ins/common/CML_explorer.c:2165
 #: plug-ins/common/gbr.c:490 plug-ins/common/gif.c:1014
 #: plug-ins/common/gih.c:1228 plug-ins/common/gtm.c:238
 #: plug-ins/common/jpeg.c:1309 plug-ins/common/pat.c:385
 #: plug-ins/common/pcx.c:579 plug-ins/common/pix.c:514
-#: plug-ins/common/png.c:962 plug-ins/common/ps.c:999
+#: plug-ins/common/png.c:973 plug-ins/common/ps.c:999
 #: plug-ins/common/psd_save.c:1526 plug-ins/common/sunras.c:520
 #: plug-ins/common/tiff.c:1519 plug-ins/common/xbm.c:1002
 #: plug-ins/common/xwd.c:529 plug-ins/fits/fits.c:461
@@ -382,32 +382,32 @@ msgid ""
 "%s"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1791
+#: plug-ins/FractalExplorer/Dialogs.c:1797
 #, c-format
 msgid ""
 "Failed to write '%s':\n"
 "%s"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1809
+#: plug-ins/FractalExplorer/Dialogs.c:1815
 msgid "Save: No filename given"
 msgstr ""
 
 #. Can't save to directory
-#: plug-ins/FractalExplorer/Dialogs.c:1816
+#: plug-ins/FractalExplorer/Dialogs.c:1822
 msgid "Save: Can't save to a folder."
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1852
+#: plug-ins/FractalExplorer/Dialogs.c:1858
 msgid "Load Fractal Parameters"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:1880
+#: plug-ins/FractalExplorer/Dialogs.c:1886
 msgid "Save Fractal Parameters"
 msgstr ""
 
 #. Do not rely on librsvg setting GError on failure!
-#: plug-ins/FractalExplorer/Dialogs.c:2079 plug-ins/bmp/bmpread.c:97
+#: plug-ins/FractalExplorer/Dialogs.c:2085 plug-ins/bmp/bmpread.c:97
 #: plug-ins/common/CEL.c:253 plug-ins/common/CML_explorer.c:2391
 #: plug-ins/common/gbr.c:298 plug-ins/common/gih.c:628
 #: plug-ins/common/hrz.c:337 plug-ins/common/jpeg.c:775
@@ -426,14 +426,14 @@ msgid ""
 "%s"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:2086
+#: plug-ins/FractalExplorer/Dialogs.c:2092
 #, c-format
 msgid ""
 "'%s'\n"
 "is not a FractalExplorer file"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:2091
+#: plug-ins/FractalExplorer/Dialogs.c:2097
 #, c-format
 msgid ""
 "'%s' is corrupt.\n"
@@ -1168,7 +1168,7 @@ msgstr ""
 #: plug-ins/common/smooth_palette.c:253 plug-ins/common/sunras.c:931
 #: plug-ins/common/tga.c:925 plug-ins/common/tiff.c:675
 #: plug-ins/common/tile.c:278 plug-ins/common/winclipboard.c:556
-#: plug-ins/common/wmf.c:2140 plug-ins/common/xbm.c:873
+#: plug-ins/common/wmf.c:2142 plug-ins/common/xbm.c:873
 #: plug-ins/faxg3/faxg3.c:462 plug-ins/fits/fits.c:517
 #: plug-ins/gfig/gfig.c:2211 plug-ins/gfig/gfig.c:2579 plug-ins/sgi/sgi.c:367
 #: plug-ins/twain/twain.c:744 plug-ins/winsnap/winsnap.c:1238
@@ -1185,7 +1185,7 @@ msgstr ""
 #: plug-ins/common/gtm.c:258 plug-ins/common/hrz.c:470
 #: plug-ins/common/jpeg.c:1265 plug-ins/common/pat.c:390
 #: plug-ins/common/pcx.c:540 plug-ins/common/pix.c:520
-#: plug-ins/common/png.c:969 plug-ins/common/pnm.c:787
+#: plug-ins/common/png.c:980 plug-ins/common/pnm.c:787
 #: plug-ins/common/ps.c:1004 plug-ins/common/psd_save.c:1531
 #: plug-ins/common/sunras.c:525 plug-ins/common/tga.c:1031
 #: plug-ins/common/tiff.c:1524 plug-ins/common/xbm.c:1007
@@ -4748,7 +4748,7 @@ msgstr ""
 msgid "PNG Compression Level:"
 msgstr ""
 
-#: plug-ins/common/mng.c:1346 plug-ins/common/png.c:1416
+#: plug-ins/common/mng.c:1346 plug-ins/common/png.c:1436
 msgid "Choose a high compression level for small file size"
 msgstr ""
 
@@ -5363,7 +5363,7 @@ msgid ""
 "Unknown PNG color model"
 msgstr ""
 
-#: plug-ins/common/png.c:948
+#: plug-ins/common/png.c:959
 #, c-format
 msgid ""
 "'%s':\n"
@@ -5372,50 +5372,50 @@ msgstr ""
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: plug-ins/common/png.c:1296
+#: plug-ins/common/png.c:1316
 msgid ""
 "Couldn't losslessly save transparency,\n"
 "saving opacity instead."
 msgstr ""
 
-#: plug-ins/common/png.c:1320
+#: plug-ins/common/png.c:1340
 msgid "Save as PNG"
 msgstr ""
 
 #. parameter settings
-#: plug-ins/common/png.c:1332 plug-ins/common/sample_colorize.c:1382
+#: plug-ins/common/png.c:1352 plug-ins/common/sample_colorize.c:1382
 msgid "Settings"
 msgstr ""
 
-#: plug-ins/common/png.c:1345
+#: plug-ins/common/png.c:1365
 msgid "_Interlacing (Adam7)"
 msgstr ""
 
-#: plug-ins/common/png.c:1355
+#: plug-ins/common/png.c:1375
 msgid "Save _Background Color"
 msgstr ""
 
-#: plug-ins/common/png.c:1363
+#: plug-ins/common/png.c:1383
 msgid "Save _Gamma"
 msgstr ""
 
-#: plug-ins/common/png.c:1371
+#: plug-ins/common/png.c:1391
 msgid "Save _Layer Offset"
 msgstr ""
 
-#: plug-ins/common/png.c:1379
+#: plug-ins/common/png.c:1399
 msgid "Save _Resolution"
 msgstr ""
 
-#: plug-ins/common/png.c:1387
+#: plug-ins/common/png.c:1407
 msgid "Save Creation _Time"
 msgstr ""
 
-#: plug-ins/common/png.c:1395
+#: plug-ins/common/png.c:1415
 msgid "Save Comme_nt"
 msgstr ""
 
-#: plug-ins/common/png.c:1412
+#: plug-ins/common/png.c:1432
 msgid "Co_mpression Level:"
 msgstr ""
 
@@ -5882,36 +5882,36 @@ msgid "Loading Screen Shot..."
 msgstr ""
 
 #. main dialog
-#: plug-ins/common/screenshot.c:347 plug-ins/common/screenshot.c:525
+#: plug-ins/common/screenshot.c:347 plug-ins/common/screenshot.c:531
 msgid "Screen Shot"
 msgstr ""
 
-#: plug-ins/common/screenshot.c:449
+#: plug-ins/common/screenshot.c:455
 msgid "Specified window not found"
 msgstr ""
 
-#: plug-ins/common/screenshot.c:481
+#: plug-ins/common/screenshot.c:487
 msgid "Error obtaining Screen Shot"
 msgstr ""
 
 #. single window
-#: plug-ins/common/screenshot.c:549 plug-ins/winsnap/winsnap.c:906
+#: plug-ins/common/screenshot.c:555 plug-ins/winsnap/winsnap.c:906
 msgid "Grab"
 msgstr ""
 
-#: plug-ins/common/screenshot.c:558
+#: plug-ins/common/screenshot.c:564
 msgid "a _Single Window"
 msgstr ""
 
-#: plug-ins/common/screenshot.c:573
+#: plug-ins/common/screenshot.c:579
 msgid "the _Whole Screen"
 msgstr ""
 
-#: plug-ins/common/screenshot.c:592
+#: plug-ins/common/screenshot.c:598
 msgid "_after"
 msgstr ""
 
-#: plug-ins/common/screenshot.c:605 plug-ins/winsnap/winsnap.c:1023
+#: plug-ins/common/screenshot.c:611 plug-ins/winsnap/winsnap.c:1023
 msgid "Seconds Delay"
 msgstr ""
 
@@ -7449,26 +7449,26 @@ msgstr ""
 msgid "PageSetupDlg failed: %d"
 msgstr ""
 
-#: plug-ins/common/wmf.c:722
+#: plug-ins/common/wmf.c:724
 msgid "Load Windows Metafile"
 msgstr ""
 
 #. Rendering
-#: plug-ins/common/wmf.c:740
+#: plug-ins/common/wmf.c:742
 #, c-format
 msgid "Rendering %s"
 msgstr ""
 
-#: plug-ins/common/wmf.c:757
+#: plug-ins/common/wmf.c:759
 msgid "Scale (log 2):"
 msgstr ""
 
-#: plug-ins/common/wmf.c:1125
+#: plug-ins/common/wmf.c:1127
 #, c-format
 msgid "Interpreting %s:"
 msgstr ""
 
-#: plug-ins/common/wmf.c:2136
+#: plug-ins/common/wmf.c:2138
 msgid "Transferring image"
 msgstr ""
 
@@ -9066,11 +9066,11 @@ msgstr ""
 msgid "The GIMPressionist"
 msgstr ""
 
-#: plug-ins/gimpressionist/gimpressionist.c:439
+#: plug-ins/gimpressionist/gimpressionist.c:442
 msgid "Gimpressionist"
 msgstr ""
 
-#: plug-ins/gimpressionist/gimpressionist.c:445
+#: plug-ins/gimpressionist/gimpressionist.c:448
 msgid "A_bout"
 msgstr "_О програму"
 
@@ -9527,7 +9527,11 @@ msgid ""
 "above. This means that the topic has not yet been written or your "
 "installation is not complete. Ensure that your installation is complete "
 "before reporting this error as a bug."
-msgstr "Тражени документ не постоји у вашој путањи Гимпа за помоћ која је приказана изнад. Ово значи да ова тема још увек није написана или да је ваша инсталација непотпуна. Проверите да ли је ваша инсталација потпуна пре него што пријавите ово као грешку."
+msgstr ""
+"Тражени документ не постоји у вашој путањи Гимпа за помоћ која је приказана "
+"изнад. Ово значи да ова тема још увек није написана или да је ваша "
+"инсталација непотпуна. Проверите да ли је ваша инсталација потпуна пре него "
+"што пријавите ово као грешку."
 
 #: plug-ins/ifscompose/ifscompose.c:369
 msgid "<Image>/Filters/Render/Nature/Ifs_Compose..."
@@ -10452,7 +10456,10 @@ msgstr "Образујем лавиринт за поплочавање помо
 msgid ""
 "Generates a maze using either the depth-first search method or Prim's "
 "algorithm.  Can make tileable mazes too.  See %s for more help."
-msgstr "Образује лавиринт користећи или прво-дубински начин тражења или Примов алгоритам. Може да образује и лавиринте за поплочавање. Погледајте %s за више помоћи."
+msgstr ""
+"Образује лавиринт користећи или прво-дубински начин тражења или Примов "
+"алгоритам. Може да образује и лавиринте за поплочавање. Погледајте %s за "
+"више помоћи."
 
 #: plug-ins/maze/maze.c:159
 msgid "Draws a maze."
@@ -10622,7 +10629,8 @@ msgid ""
 "Use zero saturation to produce grayscale output using color and black inks"
 msgstr ""
 "Прилагодите засићење (равнотежу боја) штампе\n"
-"Користите засићење нула да произведете излаз у сивим тоновима помоћу црног и мастила у боји"
+"Користите засићење нула да произведете излаз у сивим тоновима помоћу црног и "
+"мастила у боји"
 
 #: plug-ins/print/gimp_color_window.c:359
 msgid "Density:"
@@ -10633,14 +10641,20 @@ msgid ""
 "Adjust the density (amount of ink) of the print. Reduce the density if the "
 "ink bleeds through the paper or smears; increase the density if black "
 "regions are not solid."
-msgstr "Прилагодите густину (количину мастила) штампе. Смањите густину ако мастило пролази кроз папир или се размазује; увећајте густину ако црне пообласти нису пуне."
+msgstr ""
+"Прилагодите густину (количину мастила) штампе. Смањите густину ако мастило "
+"пролази кроз папир или се размазује; увећајте густину ако црне пообласти "
+"нису пуне."
 
 #: plug-ins/print/gimp_color_window.c:389
 msgid ""
 "Adjust the gamma of the print. Larger values will produce a generally "
 "brighter print, while smaller values will produce a generally darker print. "
 "Black and white will remain the same, unlike with the brightness adjustment."
-msgstr "Прилагодите гаму штампе. Веће вредсности углавном производе светлију штампу, а мање вредности углавном производе тамнију штампу. Црна и бела ће остати исте, за разлику од подешавања светлине."
+msgstr ""
+"Прилагодите гаму штампе. Веће вредсности углавном производе светлију штампу, "
+"а мање вредности углавном производе тамнију штампу. Црна и бела ће остати "
+"исте, за разлику од подешавања светлине."
 
 #: plug-ins/print/gimp_color_window.c:405
 msgid "Dither Algorithm:"
@@ -10700,10 +10714,15 @@ msgid ""
 msgstr ""
 "Поставите слику на страници.\n"
 "Кликните и превуците првим дугметом да распоредите слику.\n"
-"Кликните и превуците другим дугметом да преместите слику са већом прецизношћу; свака јединица кретања помера слику за једну штампарску тачку (1/72 инча)\n"
-"Кликните и превуците трећим (средњим) дугметом да преместите слику за јединице величине слике.\n"
-"Држањем тастера Shift притиснутим при клику и превлачењу ограничава слику на једино усправно или водоравно кретање.\n"
-"Уколико кликнете неко друго дугме при превлачењу миша, слика ће се вратити на почетни положај."
+"Кликните и превуците другим дугметом да преместите слику са већом "
+"прецизношћу; свака јединица кретања помера слику за једну штампарску тачку "
+"(1/72 инча)\n"
+"Кликните и превуците трећим (средњим) дугметом да преместите слику за "
+"јединице величине слике.\n"
+"Држањем тастера Shift притиснутим при клику и превлачењу ограничава слику на "
+"једино усправно или водоравно кретање.\n"
+"Уколико кликнете неко друго дугме при превлачењу миша, слика ће се вратити "
+"на почетни положај."
 
 #: plug-ins/print/gimp_main_window.c:482
 msgid "Portrait"
@@ -10833,7 +10852,9 @@ msgid ""
 "Enter the correct command to print to your printer. Note: Please do not "
 "remove the `-l' or `-oraw' from the command string, or printing will "
 "probably fail!"
-msgstr "Унесите праву наредбу за штампање на ваш штампач. Немојте уклањати „-l“ или „-oraw“ из ниске наредбе, или штампање вероватно неће успети!"
+msgstr ""
+"Унесите праву наредбу за штампање на ваш штампач. Немојте уклањати „-l“ или "
+"„-oraw“ из ниске наредбе, или штампање вероватно неће успети!"
 
 #.
 #. * Output file selection dialog.

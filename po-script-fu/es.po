@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-17 19:41+0200\n"
+"POT-Creation-Date: 2003-11-03 01:02+0100\n"
 "PO-Revision-Date: 2003-10-17 17:44-0300\n"
 "Last-Translator: Pablo del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -51,7 +51,8 @@ msgstr "No se puede abrir la tubería SIOD de salida"
 
 #: plug-ins/script-fu/script-fu-console.c:633
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr "El modo de evaluación de Script-Fu sólo permite invocación no interactiva"
+msgstr ""
+"El modo de evaluación de Script-Fu sólo permite invocación no interactiva"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-scripts.c:1115
@@ -509,7 +510,8 @@ msgstr "Valor delta en el color"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/_Flecha..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/_Flecha..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -531,7 +533,7 @@ msgstr "Aplanar imagen"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:8
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:6
 msgid "Glow Color"
@@ -565,7 +567,8 @@ msgstr "Arriba"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Hrule..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/Barra _Hor..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/Barra _Hor..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
 msgid "Bar Height"
@@ -577,7 +580,8 @@ msgstr "Longitud de la barra"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Bullet..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/_Bolita..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/_Bolita..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 #: plug-ins/script-fu/scripts/text-circle.scm.h:6
@@ -596,7 +600,8 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/B_otón..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/B_otón..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 msgid "Glow Radius"
@@ -741,11 +746,13 @@ msgstr "Color superior-izquierdo"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Arrow..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/_Flecha..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/_Flecha..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Bullet..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/_Bolita..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/_Bolita..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
@@ -753,15 +760,18 @@ msgstr "Diámetro"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/B_otón..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/B_otón..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/H_eading..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/E_ncabezado..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/E_ncabezado..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Hrule..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/Barra _Hor...."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/Barra _Hor...."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
@@ -828,7 +838,7 @@ msgstr "Frente-transparente"
 #: plug-ins/script-fu/scripts/land.scm.h:3
 #: plug-ins/script-fu/scripts/lava.scm.h:2
 #: plug-ins/script-fu/scripts/rendermap.scm.h:4
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:10
 msgid "Gradient"
 msgstr "Gradiente"
 
@@ -863,34 +873,43 @@ msgid "Spots density Y"
 msgstr "Densidad Y de manchas"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
+#, fuzzy
+msgid "<Image>/Script-Fu/Animators/B_urn-In..."
+msgstr "<Image>/Script-Fu/Animación/_Mezclar..."
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
 msgid "Add Glowing"
 msgstr "Añadir resplandor"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
 msgid "After Glow"
 msgstr "Después de resplandecer"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid "Burn-In: Need two layers in total!"
 msgstr "Quemador: ¡Se necesitan dos capas en total!"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
+msgid "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Corona Width"
 msgstr "Ancho de la corona"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 msgid "Fadeout"
 msgstr "Desvanecer"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 msgid "Fadeout Width"
 msgstr "Anchura del desvanecimiento"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
 msgid "Prepare for GIF"
 msgstr "Preparar para GIF"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
 msgid "Speed (pixels/frame)"
 msgstr "Velocidad (píxeles/cuadro)"
 
@@ -1211,7 +1230,7 @@ msgstr "Radio de desenfoque"
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:4
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:4
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:5
 msgid "Color"
 msgstr "Color"
 
@@ -1404,11 +1423,13 @@ msgstr "Peso de la sombra (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Gimp.Org/Enca_bezado grande..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Gimp.Org/Enca_bezado grande..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Gimp.Org/Encabezado pe_queño..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Gimp.Org/Encabezado pe_queño..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "AutoCrop"
@@ -1449,7 +1470,8 @@ msgid "Shadow Color"
 msgstr "Color de la sombra"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
 msgstr ""
 "<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Gimp.Org/Etiqueta de sub-botón "
 "del t_ubo del tubo..."
@@ -1463,7 +1485,8 @@ msgstr ""
 "botón del tubo..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
 msgstr ""
 "<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Gimp.Org/Etiquetas _generales "
 "del tubo..."
@@ -2044,115 +2067,126 @@ msgid "Turn from Left to Right"
 msgstr "Girar de izquierda a derecha"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
+#, fuzzy
+msgid "<Image>/Script-Fu/Render/_Spyrogimp..."
+msgstr "<Image>/Script-Fu/Render/Re_jilla..."
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
 msgstr "Aerógrafo"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:3
 msgid "Brush"
 msgstr "Brocha"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:3
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:4
 msgid "Circle"
 msgstr "Circulo"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:5
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
 msgid "Color Method"
 msgstr "Método de coloración"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
+msgid ""
+"Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
+"netword.com/*spyrogimp"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
 msgid "Epitrochoid"
 msgstr "Epitrochoid"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
 msgid "Frame"
 msgstr "Cuadro"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
 msgid "Gradient: Loop Sawtooth"
 msgstr "Gradiente: Bucle diente de sierra"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:10
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
 msgid "Gradient: Loop Triangle"
 msgstr "Gradiente: Bucle de triángulo"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
 msgid "Hexagon"
 msgstr "Hexágono"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
 msgid "Hole Ratio"
 msgstr "Radio del hoyo"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
 msgid "Inner Teeth"
 msgstr "Diente interno"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:16
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:17
 msgid "Margin (pixels)"
 msgstr "Margen (píxeles)"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:16
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
 msgid "Outer Teeth"
 msgstr "Diente exterior"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:17
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
 msgid "Pencil"
 msgstr "Lápiz"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:20
 msgid "Pentagon"
 msgstr "Pentágono"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:21
 msgid "Polygon: 10 sides"
 msgstr "Polígono: 10 lados"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:20
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:22
 msgid "Polygon: 7 sides"
 msgstr "Polígono: 7 lados"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:21
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:23
 msgid "Polygon: 8 sides"
 msgstr "Polígono: 8 lados"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:22
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:24
 msgid "Polygon: 9 sides"
 msgstr "Polígono: 9 lados"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:23
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:25
 msgid "Shape"
 msgstr "Forma"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:24
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:26
 msgid "Solid Color"
 msgstr "Color sólido"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:25
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:27
 msgid "Spyrograph"
 msgstr "Espirógrafo"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:26
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:28
 msgid "Square"
 msgstr "Cuadrado"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:27
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
 #: plug-ins/script-fu/scripts/text-circle.scm.h:7
 msgid "Start Angle"
 msgstr "Ángulo inicial"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:28
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:30
 msgid "Tool"
 msgstr "Herramienta"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:31
 msgid "Triangle"
 msgstr "Triángulo"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:30
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:32
 msgid "Type"
 msgstr "Tipo"
 
@@ -2577,4 +2611,3 @@ msgstr "Desplazamiento Y del brillo"
 #~ msgstr ""
 #~ "Error de Script-Fu\n"
 #~ "%s"
-

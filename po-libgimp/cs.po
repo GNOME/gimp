@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-21 14:32+0200\n"
+"POT-Creation-Date: 2003-11-03 01:00+0100\n"
 "PO-Revision-Date: 2003-10-21 15:49+0200\n"
 "Last-Translator: Miloslav Trmač <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -19,6 +19,10 @@ msgstr ""
 #: libgimp/gimpbrushmenu.c:132
 msgid "Brush Selection"
 msgstr "Výběr stopy"
+
+#: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
+msgid "_Browse..."
+msgstr ""
 
 #: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, c-format
@@ -434,23 +438,23 @@ msgstr "Řá_dkování"
 msgid "_Resize"
 msgstr "Změnit _velikost"
 
-#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:278
+#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:280
 msgid "_Scale"
 msgstr "Š_kálovat"
 
-#: libgimpwidgets/gimpstock.c:256
+#: libgimpwidgets/gimpstock.c:259
 msgid "Crop"
 msgstr "Ořezat"
 
-#: libgimpwidgets/gimpstock.c:274
+#: libgimpwidgets/gimpstock.c:276
 msgid "_Transform"
 msgstr "_Transformace"
 
-#: libgimpwidgets/gimpstock.c:277
+#: libgimpwidgets/gimpstock.c:279
 msgid "_Rotate"
 msgstr "_Rotovat"
 
-#: libgimpwidgets/gimpstock.c:279
+#: libgimpwidgets/gimpstock.c:281
 msgid "_Shear"
 msgstr "Na_klonění"
 

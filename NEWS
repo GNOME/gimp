@@ -10,8 +10,9 @@ GIMP version 2.0.
 
 Overview of Changes in GIMP 1.3.22
 ==================================
+- Made GIMP compile and work with gtk+-2.3 [Yosh]
 - Replaced histogram tool with a histogram dialog [Sven] 
-- Multi-head safety [Sven]
+- Multi-head safety [Sven, Yosh]
 - Changes for future compatibility of text layers [Sven]
 - Histogram scale configurable for all tools and defaults to linear [Sven]
 - Better default settings
@@ -29,9 +30,8 @@ Overview of Changes in GIMP 1.3.22
 - Lots of bug fixes
 
 Other contributors:
-  Manish Singh, Ville Pätsi, Simon Budig, Tor Lillqvist, Pedro Gimeno,
-  Seth Burgess, Jakub Steiner, David Odin, Ed Halley, Wolfgang Hofer,
-  Vesa Halttunen
+  Ville Pätsi, Simon Budig, Tor Lillqvist, Pedro Gimeno, Seth Burgess,
+  Jakub Steiner, David Odin, Ed Halley, Wolfgang Hofer, Vesa Halttunen
 
 
 Overview of Changes in GIMP 1.3.21

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-05 20:23+0200\n"
+"POT-Creation-Date: 2003-11-03 01:00+0100\n"
 "PO-Revision-Date: 2003-02-28 03:15-0300\n"
 "Last-Translator: Alexandre Folle de Menezes <afmenez@terra.com.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
@@ -20,6 +20,10 @@ msgstr ""
 #, fuzzy
 msgid "Brush Selection"
 msgstr "Seleção da Unidade"
+
+#: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
+msgid "_Browse..."
+msgstr ""
 
 #: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, c-format
@@ -211,32 +215,36 @@ msgstr "Seleção da Unidade"
 msgid "percent"
 msgstr "porcento"
 
-#: libgimpbase/gimputils.c:118
+#: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
+msgid "(invalid UTF-8 string)"
+msgstr ""
+
+#: libgimpbase/gimputils.c:189
 #, fuzzy, c-format
 msgid "%d Bytes"
 msgstr "Bytes"
 
-#: libgimpbase/gimputils.c:122
+#: libgimpbase/gimputils.c:193
 #, c-format
 msgid "%.2f KB"
 msgstr ""
 
-#: libgimpbase/gimputils.c:126
+#: libgimpbase/gimputils.c:197
 #, c-format
 msgid "%.1f KB"
 msgstr ""
 
-#: libgimpbase/gimputils.c:130
+#: libgimpbase/gimputils.c:201
 #, c-format
 msgid "%d KB"
 msgstr ""
 
-#: libgimpbase/gimputils.c:135
+#: libgimpbase/gimputils.c:206
 #, c-format
 msgid "%.2f MB"
 msgstr ""
 
-#: libgimpbase/gimputils.c:140
+#: libgimpbase/gimputils.c:211
 #, c-format
 msgid "%.1f MB"
 msgstr ""
@@ -434,23 +442,23 @@ msgstr "Espaçamento das L_inhas"
 msgid "_Resize"
 msgstr "_Redimensionar"
 
-#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:278
+#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:280
 msgid "_Scale"
 msgstr "E_scalar"
 
-#: libgimpwidgets/gimpstock.c:256
+#: libgimpwidgets/gimpstock.c:259
 msgid "Crop"
 msgstr "Aparar"
 
-#: libgimpwidgets/gimpstock.c:274
+#: libgimpwidgets/gimpstock.c:276
 msgid "_Transform"
 msgstr "_Transformar"
 
-#: libgimpwidgets/gimpstock.c:277
+#: libgimpwidgets/gimpstock.c:279
 msgid "_Rotate"
 msgstr "_Rotacionar"
 
-#: libgimpwidgets/gimpstock.c:279
+#: libgimpwidgets/gimpstock.c:281
 msgid "_Shear"
 msgstr "_Inclinar"
 

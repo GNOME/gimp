@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-02 14:36+0100\n"
+"POT-Creation-Date: 2003-11-03 00:57+0100\n"
 "PO-Revision-Date: 2003-11-02 19:33+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -141,7 +141,8 @@ msgstr ""
 #: app/main.c:468
 msgid ""
 "  --dump-gimprc            Output a gimprc file with default settings.\n"
-msgstr "  --dump-gimprc            Vypsat soubor gimprc s implicitními nastaveními.\n"
+msgstr ""
+"  --dump-gimprc            Vypsat soubor gimprc s implicitními nastaveními.\n"
 
 #: app/main.c:469
 msgid ""
@@ -639,25 +640,33 @@ msgstr ""
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
-msgstr "Je-li povoleno, je výběr implicitně viditelný. Může být také přepnuto příkazem \"Zobrazení->Zobrazovat výběr\"."
+msgstr ""
+"Je-li povoleno, je výběr implicitně viditelný. Může být také přepnuto "
+"příkazem \"Zobrazení->Zobrazovat výběr\"."
 
 #: app/config/gimprc-blurbs.h:249
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
-msgstr "Je-li povoleno, je hranice vrstvy implicitně viditelná. Může být také přepnuto příkazem \"Zobrazení->Zobrazovat hranici vrstvy\"."
+msgstr ""
+"Je-li povoleno, je hranice vrstvy implicitně viditelná. Může být také "
+"přepnuto příkazem \"Zobrazení->Zobrazovat hranici vrstvy\"."
 
 #: app/config/gimprc-blurbs.h:253
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
-msgstr "Je-li povoleno, jsou vodítka implicitně viditelná. Může být také přepnuto příkazem \"Zobrazení->Zobrazovat vodítka\"."
+msgstr ""
+"Je-li povoleno, jsou vodítka implicitně viditelná. Může být také přepnuto "
+"příkazem \"Zobrazení->Zobrazovat vodítka\"."
 
 #: app/config/gimprc-blurbs.h:257
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
-msgstr "Je-li povoleno, je mřížka implicitně viditelná. Může být také přepnuto příkazem \"Zobrazení->Zobrazovat mřížku\"."
+msgstr ""
+"Je-li povoleno, je mřížka implicitně viditelná. Může být také přepnuto "
+"příkazem \"Zobrazení->Zobrazovat mřížku\"."
 
 #: app/config/gimprc-blurbs.h:261
 msgid "Enable to display a handy GIMP tip on startup."
@@ -8988,7 +8997,7 @@ msgstr "Popředí: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "Pozadí: %d, %d, %d"
 
-#: app/widgets/gimpdock.c:292
+#: app/widgets/gimpdock.c:295
 msgid "You can drop dockable dialogs here."
 msgstr "Sem můžete upustit ukotvitelné dialogy."
 
@@ -9272,7 +9281,8 @@ msgstr "Automaticky"
 #: app/widgets/gimpimagedock.c:198
 msgid ""
 "When enabled the dialog automatically follows the image you are working on."
-msgstr "Když je povoleno, dialog automaticky sleduje obrázek, na kterém pracujete."
+msgstr ""
+"Když je povoleno, dialog automaticky sleduje obrázek, na kterém pracujete."
 
 #: app/widgets/gimpimageview.c:139
 msgid "Raise this image's displays"

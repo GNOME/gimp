@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-05 20:23+0200\n"
+"POT-Creation-Date: 2003-11-03 01:00+0100\n"
 "PO-Revision-Date: 2003-01-26 17:30+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -18,6 +18,10 @@ msgstr ""
 #, fuzzy
 msgid "Brush Selection"
 msgstr "Utvalg for enhet"
+
+#: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
+msgid "_Browse..."
+msgstr ""
 
 #: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, c-format
@@ -208,32 +212,36 @@ msgstr "Utvalg for enhet"
 msgid "percent"
 msgstr "prosent"
 
-#: libgimpbase/gimputils.c:118
+#: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
+msgid "(invalid UTF-8 string)"
+msgstr ""
+
+#: libgimpbase/gimputils.c:189
 #, c-format
 msgid "%d Bytes"
 msgstr ""
 
-#: libgimpbase/gimputils.c:122
+#: libgimpbase/gimputils.c:193
 #, c-format
 msgid "%.2f KB"
 msgstr ""
 
-#: libgimpbase/gimputils.c:126
+#: libgimpbase/gimputils.c:197
 #, c-format
 msgid "%.1f KB"
 msgstr ""
 
-#: libgimpbase/gimputils.c:130
+#: libgimpbase/gimputils.c:201
 #, c-format
 msgid "%d KB"
 msgstr ""
 
-#: libgimpbase/gimputils.c:135
+#: libgimpbase/gimputils.c:206
 #, c-format
 msgid "%.2f MB"
 msgstr ""
 
-#: libgimpbase/gimputils.c:140
+#: libgimpbase/gimputils.c:211
 #, c-format
 msgid "%.1f MB"
 msgstr ""
@@ -431,23 +439,23 @@ msgstr "Mellomrom mellom l_injer"
 msgid "_Resize"
 msgstr "End_re størrelse"
 
-#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:278
+#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:280
 msgid "_Scale"
 msgstr "_Skaler"
 
-#: libgimpwidgets/gimpstock.c:256
+#: libgimpwidgets/gimpstock.c:259
 msgid "Crop"
 msgstr "Beskjær"
 
-#: libgimpwidgets/gimpstock.c:274
+#: libgimpwidgets/gimpstock.c:276
 msgid "_Transform"
 msgstr "_Transformer"
 
-#: libgimpwidgets/gimpstock.c:277
+#: libgimpwidgets/gimpstock.c:279
 msgid "_Rotate"
 msgstr "_Roter"
 
-#: libgimpwidgets/gimpstock.c:279
+#: libgimpwidgets/gimpstock.c:281
 msgid "_Shear"
 msgstr "_Klipp"
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-05 20:25+0200\n"
+"POT-Creation-Date: 2003-11-03 01:02+0100\n"
 "PO-Revision-Date: 2001-10-28 01:08+0200\n"
 "Last-Translator: Softcatalà <tradgnome@softcatala.org>\n"
 "Language-Team: Catalan\n"
@@ -51,81 +51,81 @@ msgstr ""
 "El mode d'avaluació de l'Script-Fu només permet la invocació no interactiva"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1114
-#: plug-ins/script-fu/script-fu-scripts.c:1116
+#: plug-ins/script-fu/script-fu-scripts.c:1115
+#: plug-ins/script-fu/script-fu-scripts.c:1117
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1128
+#: plug-ins/script-fu/script-fu-scripts.c:1129
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1162
+#: plug-ins/script-fu/script-fu-scripts.c:1163
 msgid "About"
 msgstr "Quant a..."
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1172
+#: plug-ins/script-fu/script-fu-scripts.c:1173
 msgid "Script Arguments"
 msgstr "Arguments de la seqüència"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1199
+#: plug-ins/script-fu/script-fu-scripts.c:1200
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1245
+#: plug-ins/script-fu/script-fu-scripts.c:1246
 msgid "Script-Fu Color Selection"
 msgstr "Selecció del color de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1323
+#: plug-ins/script-fu/script-fu-scripts.c:1324
 msgid "Script-Fu File Selection"
 msgstr "Selecció del fitxer de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1328
+#: plug-ins/script-fu/script-fu-scripts.c:1329
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Selecció del fitxer de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1345
+#: plug-ins/script-fu/script-fu-scripts.c:1346
 msgid "Script-Fu Font Selection"
 msgstr "Selecció de tipus de lletra de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1353
+#: plug-ins/script-fu/script-fu-scripts.c:1354
 msgid "Script-fu Pattern Selection"
 msgstr "Selecció del patró de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1360
+#: plug-ins/script-fu/script-fu-scripts.c:1361
 msgid "Script-Fu Gradient Selection"
 msgstr "Selecció de la gradació de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1368
+#: plug-ins/script-fu/script-fu-scripts.c:1369
 msgid "Script-Fu Brush Selection"
 msgstr "Selecció del pinzell de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1862
+#: plug-ins/script-fu/script-fu-scripts.c:1863
 #: plug-ins/dbbrowser/dbbrowser_utils.c:492
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1868
+#: plug-ins/script-fu/script-fu-scripts.c:1869
 #: plug-ins/dbbrowser/dbbrowser_utils.c:508
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1874
+#: plug-ins/script-fu/script-fu-scripts.c:1875
 #: plug-ins/dbbrowser/dbbrowser_utils.c:500
 msgid "Date:"
 msgstr "Data:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1882
+#: plug-ins/script-fu/script-fu-scripts.c:1883
 msgid "Image Types:"
 msgstr "Tipus d'imatge:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2004
+#: plug-ins/script-fu/script-fu-scripts.c:2005
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -309,7 +309,6 @@ msgstr "Tipus de lletra"
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:5
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:6
-#: plug-ins/script-fu/scripts/font-map.scm.h:4
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:6
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:6
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:7
@@ -383,7 +382,6 @@ msgstr "Desplaçament en Y de les ombres"
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:10
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:9
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:7
-#: plug-ins/script-fu/scripts/font-map.scm.h:6
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:7
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:13
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:16
@@ -557,7 +555,7 @@ msgstr "Aplana la imatge"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:8
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:6
 msgid "Glow Color"
@@ -913,7 +911,7 @@ msgstr "Transparenta el fons"
 #: plug-ins/script-fu/scripts/land.scm.h:3
 #: plug-ins/script-fu/scripts/lava.scm.h:2
 #: plug-ins/script-fu/scripts/rendermap.scm.h:4
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:10
 msgid "Gradient"
 msgstr "Degradat"
 
@@ -952,38 +950,47 @@ msgstr "Densitat Y del punt de llum"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
 #, fuzzy
+msgid "<Image>/Script-Fu/Animators/B_urn-In..."
+msgstr "<Imatge>/Script-Fu/Alfa a logo/Barreja..."
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
+#, fuzzy
 msgid "Add Glowing"
 msgstr "Afegeix un punt"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
 msgid "After Glow"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid "Burn-In: Need two layers in total!"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
+msgid "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 #, fuzzy
 msgid "Corona Width"
 msgstr "Amplada original:"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 #, fuzzy
 msgid "Fadeout"
 msgstr "Fon"
 
 #
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 #, fuzzy
 msgid "Fadeout Width"
 msgstr "Amplada de l'aresta"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
 msgid "Prepare for GIF"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
 msgid "Speed (pixels/frame)"
 msgstr ""
 
@@ -1355,7 +1362,7 @@ msgstr "Radi de difuminat"
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:4
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:4
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:5
 msgid "Color"
 msgstr "Color"
 
@@ -1507,22 +1514,46 @@ msgstr "<Quadre d'eines>/Extensions/Script-Fu/Útils/Mapa de tipus de lletra..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
 #, fuzzy
-msgid "Border (pixels)"
-msgstr "Mida de la vora (píxels)"
+msgid "Active Colors"
+msgstr "Actualitza el color actiu"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:3
-msgid "Filter (regexp)"
+msgid "Black on White"
 msgstr ""
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:4
+#, fuzzy
+msgid "Font _Size (pixels)"
+msgstr "Mida del tipus de lletra (píxels)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:5
 #, fuzzy
-msgid "Labels"
-msgstr "Nivells"
+msgid "Use Font _Name as Text"
+msgstr "Utilitza el text dinàmic"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:6
+#, fuzzy
+msgid "_Border (pixels)"
+msgstr "Mida de la vora (píxels)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:7
 #, fuzzy
-msgid "Use Font Name as Text"
-msgstr "Utilitza el text dinàmic"
+msgid "_Color Scheme"
+msgstr "Selecció per color"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:8
+msgid "_Filter (regexp)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:9
+#, fuzzy
+msgid "_Labels"
+msgstr "Nivells"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:10
+#, fuzzy
+msgid "_Text"
+msgstr "Text"
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:1
 #, fuzzy
@@ -2316,139 +2347,150 @@ msgid "Turn from Left to Right"
 msgstr "Gira d'esquerra a dreta"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
+#, fuzzy
+msgid "<Image>/Script-Fu/Render/_Spyrogimp..."
+msgstr "<Imatge>/Script-Fu/Render/Circuit..."
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
 msgstr "Esprai"
 
 #
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:3
 #, fuzzy
 msgid "Brush"
 msgstr "Utilitza el pinzell"
 
 #
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:3
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:4
 #, fuzzy
 msgid "Circle"
 msgstr "Mosaic"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:5
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
 #, fuzzy
 msgid "Color Method"
 msgstr "Paleta de color"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
+msgid ""
+"Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
+"netword.com/*spyrogimp"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
 msgid "Epitrochoid"
 msgstr ""
 
 #
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
 #, fuzzy
 msgid "Frame"
 msgstr "Marcs"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
 #, fuzzy
 msgid "Gradient: Loop Sawtooth"
 msgstr "Encercla amb dents de serra"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:10
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
 #, fuzzy
 msgid "Gradient: Loop Triangle"
 msgstr "Encercla amb triangles"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
 #, fuzzy
 msgid "Hexagon"
 msgstr "Hexàgons"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
 #, fuzzy
 msgid "Hole Ratio"
 msgstr "Ràtio de l'escala:"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
 #, fuzzy
 msgid "Inner Teeth"
 msgstr "Encreua"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:16
 msgid "Lissajous"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:17
 #, fuzzy
 msgid "Margin (pixels)"
 msgstr "Radi (píxels)"
 
 #
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:16
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
 #, fuzzy
 msgid "Outer Teeth"
 msgstr "Contorn exterior"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:17
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
 msgid "Pencil"
 msgstr "Llapis"
 
 #
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:20
 #, fuzzy
 msgid "Pentagon"
 msgstr "Orientació"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:21
 msgid "Polygon: 10 sides"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:20
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:22
 msgid "Polygon: 7 sides"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:21
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:23
 msgid "Polygon: 8 sides"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:22
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:24
 msgid "Polygon: 9 sides"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:23
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:25
 msgid "Shape"
 msgstr "Ombra"
 
 #
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:24
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:26
 #, fuzzy
 msgid "Solid Color"
 msgstr "Omplenar de color"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:25
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:27
 msgid "Spyrograph"
 msgstr ""
 
 #
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:26
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:28
 #, fuzzy
 msgid "Square"
 msgstr "Quadrats"
 
 #
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:27
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
 #: plug-ins/script-fu/scripts/text-circle.scm.h:7
 msgid "Start Angle"
 msgstr "Angle inicial"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:28
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:30
 #, fuzzy
 msgid "Tool"
 msgstr "Caixa d'eines"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:31
 #, fuzzy
 msgid "Triangle"
 msgstr "Encercla amb triangles"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:30
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:32
 msgid "Type"
 msgstr "Tipus"
 
@@ -3273,9 +3315,6 @@ msgstr "Resalta el desplaçament en Y"
 
 #~ msgid "Sample Average"
 #~ msgstr "Mostra la mitjana"
-
-#~ msgid "Update Active Color"
-#~ msgstr "Actualitza el color actiu"
 
 #~ msgid "Red:"
 #~ msgstr "Vermell:"
@@ -6275,9 +6314,6 @@ msgstr "Resalta el desplaçament en Y"
 
 #~ msgid "Measure distances and angles"
 #~ msgstr "Mesura les distàncies i els angles"
-
-#~ msgid "By Color Select"
-#~ msgstr "Selecció per color"
 
 #~ msgid "/Select/By Color..."
 #~ msgstr "/Selecciona/Per color..."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-05 20:25+0200\n"
+"POT-Creation-Date: 2003-11-03 01:02+0100\n"
 "PO-Revision-Date: 2003-06-24 13:07+0200\n"
 "Last-Translator: Christian Neumair <christian-neumair@web.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -50,80 +50,80 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Der Skript-Fu Auswerte-Modus ermöglicht nur nicht-interaktive Aufrufe"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1114
-#: plug-ins/script-fu/script-fu-scripts.c:1116
+#: plug-ins/script-fu/script-fu-scripts.c:1115
+#: plug-ins/script-fu/script-fu-scripts.c:1117
 msgid "/Script-Fu/"
 msgstr "/Skript-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1128
+#: plug-ins/script-fu/script-fu-scripts.c:1129
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Skript-Fu: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1162
+#: plug-ins/script-fu/script-fu-scripts.c:1163
 msgid "About"
 msgstr "Info"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1172
+#: plug-ins/script-fu/script-fu-scripts.c:1173
 msgid "Script Arguments"
 msgstr "Skript-Argumente"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1199
+#: plug-ins/script-fu/script-fu-scripts.c:1200
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1245
+#: plug-ins/script-fu/script-fu-scripts.c:1246
 msgid "Script-Fu Color Selection"
 msgstr "Skript-Fu Farbauswahl"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1323
+#: plug-ins/script-fu/script-fu-scripts.c:1324
 msgid "Script-Fu File Selection"
 msgstr "Skript-Fu Dateiauswahl"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1328
+#: plug-ins/script-fu/script-fu-scripts.c:1329
 msgid "Script-Fu Folder Selection"
 msgstr "Skript-Fu Verzeichnisauswahl"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1345
+#: plug-ins/script-fu/script-fu-scripts.c:1346
 msgid "Script-Fu Font Selection"
 msgstr "Skript-Fu Schriftartauswahl"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1353
+#: plug-ins/script-fu/script-fu-scripts.c:1354
 msgid "Script-fu Pattern Selection"
 msgstr "Skript-Fu Musterauswahl"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1360
+#: plug-ins/script-fu/script-fu-scripts.c:1361
 msgid "Script-Fu Gradient Selection"
 msgstr "Skript-Fu Farbverlaufsauswahl"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1368
+#: plug-ins/script-fu/script-fu-scripts.c:1369
 msgid "Script-Fu Brush Selection"
 msgstr "Skript-Fu Pinselauswahl"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1862
+#: plug-ins/script-fu/script-fu-scripts.c:1863
 #: plug-ins/dbbrowser/dbbrowser_utils.c:492
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1868
+#: plug-ins/script-fu/script-fu-scripts.c:1869
 #: plug-ins/dbbrowser/dbbrowser_utils.c:508
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1874
+#: plug-ins/script-fu/script-fu-scripts.c:1875
 #: plug-ins/dbbrowser/dbbrowser_utils.c:500
 msgid "Date:"
 msgstr "Datum:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1882
+#: plug-ins/script-fu/script-fu-scripts.c:1883
 msgid "Image Types:"
 msgstr "Bildtypen:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2004
+#: plug-ins/script-fu/script-fu-scripts.c:2005
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -298,7 +298,6 @@ msgstr "Schrift"
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:5
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:6
-#: plug-ins/script-fu/scripts/font-map.scm.h:4
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:6
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:6
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:7
@@ -369,7 +368,6 @@ msgstr "Schatten Versatz Y"
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:10
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:9
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:7
-#: plug-ins/script-fu/scripts/font-map.scm.h:6
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:7
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:13
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:16
@@ -530,7 +528,7 @@ msgstr "Bild zusammenfügen"
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:8
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:6
 msgid "Glow Color"
@@ -841,7 +839,7 @@ msgstr "FG-Transparent"
 #: plug-ins/script-fu/scripts/land.scm.h:3
 #: plug-ins/script-fu/scripts/lava.scm.h:2
 #: plug-ins/script-fu/scripts/rendermap.scm.h:4
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:10
 msgid "Gradient"
 msgstr "Farbverlauf"
 
@@ -878,34 +876,43 @@ msgid "Spots density Y"
 msgstr "Fleckendichte Y"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
+#, fuzzy
+msgid "<Image>/Script-Fu/Animators/B_urn-In..."
+msgstr "<Image>/Skript-Fu/Animationen/Überblenden..."
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
 msgid "Add Glowing"
 msgstr "Glühen hinzufügen"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
 msgid "After Glow"
 msgstr "Nach dem Glühen"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid "Burn-In: Need two layers in total!"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
+msgid "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Corona Width"
 msgstr "Korona Breite"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 msgid "Fadeout"
 msgstr "Ausblenden"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 msgid "Fadeout Width"
 msgstr "Ausblenden Breite"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
 msgid "Prepare for GIF"
 msgstr "Für GIF vorbereiten"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
 msgid "Speed (pixels/frame)"
 msgstr "Geschwindigkeit (Pixel/Frame)"
 
@@ -1239,7 +1246,7 @@ msgstr "Radius des Weichzeichners"
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:4
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:4
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:5
 msgid "Color"
 msgstr "Farbe"
 
@@ -1374,20 +1381,44 @@ msgstr "<Toolbox>/Xtns/Skript-Fu/Hilfsmittel/Schriften-Liste..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
 #, fuzzy
-msgid "Border (pixels)"
-msgstr "Zellengröße (Pixel)"
+msgid "Active Colors"
+msgstr "Umriß Farbe"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:3
-msgid "Filter (regexp)"
+msgid "Black on White"
 msgstr ""
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:4
+#, fuzzy
+msgid "Font _Size (pixels)"
+msgstr "Schriftgröße (Pixel)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:5
-msgid "Labels"
+msgid "Use Font _Name as Text"
 msgstr ""
 
+#: plug-ins/script-fu/scripts/font-map.scm.h:6
+#, fuzzy
+msgid "_Border (pixels)"
+msgstr "Zellengröße (Pixel)"
+
 #: plug-ins/script-fu/scripts/font-map.scm.h:7
-msgid "Use Font Name as Text"
+#, fuzzy
+msgid "_Color Scheme"
+msgstr "Farbe 3"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:8
+msgid "_Filter (regexp)"
 msgstr ""
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:9
+msgid "_Labels"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:10
+#, fuzzy
+msgid "_Text"
+msgstr "Text"
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:1
 #, fuzzy
@@ -2084,115 +2115,126 @@ msgid "Turn from Left to Right"
 msgstr "Von links nach rechts drehen"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
+#, fuzzy
+msgid "<Image>/Script-Fu/Render/_Spyrogimp..."
+msgstr "<Image>/Skript-Fu/Render/Gitter..."
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
 msgstr "Sprühpistole"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:3
 msgid "Brush"
 msgstr "Pinsel"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:3
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:4
 msgid "Circle"
 msgstr "Kreis"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:5
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
 msgid "Color Method"
 msgstr "Färbung"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
+msgid ""
+"Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
+"netword.com/*spyrogimp"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
 msgid "Epitrochoid"
 msgstr "Epitrochoid"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
 msgid "Frame"
 msgstr "Rahmen"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
 msgid "Gradient: Loop Sawtooth"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:10
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
 msgid "Gradient: Loop Triangle"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
 msgid "Hexagon"
 msgstr "Hexagon"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
 msgid "Hole Ratio"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
 msgid "Inner Teeth"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:16
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:17
 msgid "Margin (pixels)"
 msgstr "Rand (Pixel)"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:16
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
 msgid "Outer Teeth"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:17
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
 msgid "Pencil"
 msgstr "Stift"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:20
 msgid "Pentagon"
 msgstr "Pentagon"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:21
 msgid "Polygon: 10 sides"
 msgstr "Polygon: 10 Seiten"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:20
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:22
 msgid "Polygon: 7 sides"
 msgstr "Polygon: 7 Seiten"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:21
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:23
 msgid "Polygon: 8 sides"
 msgstr "Polygon: 8 Seiten"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:22
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:24
 msgid "Polygon: 9 sides"
 msgstr "Polygon: 9 Seiten"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:23
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:25
 msgid "Shape"
 msgstr "Form"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:24
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:26
 msgid "Solid Color"
 msgstr "Farbe"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:25
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:27
 msgid "Spyrograph"
 msgstr "Spyrograph"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:26
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:28
 msgid "Square"
 msgstr "Quadrat"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:27
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
 #: plug-ins/script-fu/scripts/text-circle.scm.h:7
 msgid "Start Angle"
 msgstr "Startwinkel"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:28
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:30
 msgid "Tool"
 msgstr "Werkzeug"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:31
 msgid "Triangle"
 msgstr "Dreieck"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:30
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:32
 msgid "Type"
 msgstr "Sorte"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-01 00:57+0800\n"
+"POT-Creation-Date: 2003-11-03 00:57+0100\n"
 "PO-Revision-Date: 2003-10-30 09:00+0800\n"
 "Last-Translator: MIMOS Open Source Development Group <ismas@mimos.my>\n"
 "Language-Team: Projek Gabai <gabai-penyumbang@lists.sf.net>\n"
@@ -807,8 +807,8 @@ msgid ""
 "appended to the command with a space separating the two."
 msgstr ""
 
-#: app/config/gimpscanner.c:93 app/tools/gimpcurvestool.c:1289
-#: app/tools/gimplevelstool.c:1492 app/vectors/gimpvectors-export.c:78
+#: app/config/gimpscanner.c:93 app/tools/gimpcurvestool.c:1286
+#: app/tools/gimplevelstool.c:1486 app/vectors/gimpvectors-export.c:78
 #, c-format
 msgid "Failed to open file: '%s': %s"
 msgstr "Gagal membuka fail: '%s': %s"
@@ -1425,36 +1425,36 @@ msgid "Parasites"
 msgstr "Parasit"
 
 #. initialize the list of gimp brushes
-#: app/core/gimp.c:880 app/gui/dialogs-constructors.c:299
-#: app/gui/dialogs-constructors.c:504 app/gui/preferences-dialog.c:1912
+#: app/core/gimp.c:880 app/gui/dialogs-constructors.c:300
+#: app/gui/dialogs-constructors.c:505 app/gui/preferences-dialog.c:1912
 #: app/pdb/internal_procs.c:84
 msgid "Brushes"
 msgstr "Berus"
 
 #. initialize the list of gimp patterns
-#: app/core/gimp.c:884 app/gui/dialogs-constructors.c:319
-#: app/gui/dialogs-constructors.c:524 app/gui/preferences-dialog.c:1916
+#: app/core/gimp.c:884 app/gui/dialogs-constructors.c:320
+#: app/gui/dialogs-constructors.c:525 app/gui/preferences-dialog.c:1916
 #: app/pdb/internal_procs.c:168
 msgid "Patterns"
 msgstr "Corak"
 
 #. initialize the list of gimp palettes
-#: app/core/gimp.c:888 app/gui/dialogs-constructors.c:359
-#: app/gui/dialogs-constructors.c:564 app/gui/preferences-dialog.c:1920
+#: app/core/gimp.c:888 app/gui/dialogs-constructors.c:360
+#: app/gui/dialogs-constructors.c:565 app/gui/preferences-dialog.c:1920
 #: app/pdb/internal_procs.c:156
 msgid "Palettes"
 msgstr "Pelet"
 
 #. initialize the list of gimp gradients
-#: app/core/gimp.c:892 app/gui/dialogs-constructors.c:339
-#: app/gui/dialogs-constructors.c:544 app/gui/preferences-dialog.c:1924
+#: app/core/gimp.c:892 app/gui/dialogs-constructors.c:340
+#: app/gui/dialogs-constructors.c:545 app/gui/preferences-dialog.c:1924
 #: app/pdb/internal_procs.c:123
 msgid "Gradients"
 msgstr "Kecerunan"
 
 #. initialize the list of gimp fonts
-#: app/core/gimp.c:896 app/gui/dialogs-constructors.c:378
-#: app/gui/dialogs-constructors.c:583 app/gui/preferences-dialog.c:1928
+#: app/core/gimp.c:896 app/gui/dialogs-constructors.c:379
+#: app/gui/dialogs-constructors.c:584 app/gui/preferences-dialog.c:1928
 #: app/pdb/internal_procs.c:114
 msgid "Fonts"
 msgstr "fon"
@@ -1465,7 +1465,7 @@ msgid "Documents"
 msgstr "Dokument"
 
 #. initialize the template list
-#: app/core/gimp.c:904 app/gui/dialogs-constructors.c:461
+#: app/core/gimp.c:904 app/gui/dialogs-constructors.c:462
 msgid "Templates"
 msgstr "Templat"
 
@@ -1533,7 +1533,7 @@ msgstr ""
 "Berus GIMP mestilah GRAY atau RGBA."
 
 #: app/core/gimpbrushgenerated.c:129 app/core/gimpgradient.c:506
-#: app/core/gimpgradient.c:591 app/core/gimppalette.c:587
+#: app/core/gimpgradient.c:591 app/core/gimppalette.c:588
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Tidak dapat membuka '%s' untuk menulis: %s"
@@ -1902,7 +1902,7 @@ msgid "Can't undo %s"
 msgstr "Tidak dapat buat asal %s"
 
 #: app/core/gimpimage.c:1058 app/core/gimppalette-import.c:205
-#: app/core/gimppalette.c:658 app/gui/palette-import-dialog.c:591
+#: app/core/gimppalette.c:659 app/gui/palette-import-dialog.c:591
 #: app/pdb/image_cmds.c:3754 app/widgets/gimpdatafactoryview.c:299
 msgid "Untitled"
 msgstr "Tak berjudul"
@@ -2185,8 +2185,8 @@ msgstr ""
 "Memuatkan pelet '%s':\n"
 "Pelet rosak: pengepala magik hilang"
 
-#: app/core/gimppalette.c:423 app/core/gimppalette.c:446
-#: app/core/gimppalette.c:474 app/core/gimppalette.c:548
+#: app/core/gimppalette.c:423 app/core/gimppalette.c:447
+#: app/core/gimppalette.c:475 app/core/gimppalette.c:549
 #, c-format
 msgid ""
 "Loading palette '%s':\n"
@@ -2200,7 +2200,7 @@ msgstr ""
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Rentetan UTF-8 tak sah dalam fail pelet '%s'"
 
-#: app/core/gimppalette.c:463
+#: app/core/gimppalette.c:464
 #, c-format
 msgid ""
 "Loading palette '%s':\n"
@@ -2210,7 +2210,7 @@ msgstr ""
 "Bilangan lajur tak sah pada baris %d."
 
 #. maybe we should just abort?
-#: app/core/gimppalette.c:507
+#: app/core/gimppalette.c:508
 #, c-format
 msgid ""
 "Loading palette '%s':\n"
@@ -2219,7 +2219,7 @@ msgstr ""
 "Memuatkan pelet '%s':\n"
 "Komponen RED hilang pada baris %d."
 
-#: app/core/gimppalette.c:514
+#: app/core/gimppalette.c:515
 #, c-format
 msgid ""
 "Loading palette '%s':\n"
@@ -2228,7 +2228,7 @@ msgstr ""
 "Memuatkan pelet '%s':\n"
 "Komponen GREEN hilang pada baris %d."
 
-#: app/core/gimppalette.c:521
+#: app/core/gimppalette.c:522
 #, c-format
 msgid ""
 "Loading palette '%s':\n"
@@ -2237,7 +2237,7 @@ msgstr ""
 "Memuatkan pelet '%s':\n"
 "Komponen BLUE hilang pada baris %d."
 
-#: app/core/gimppalette.c:530
+#: app/core/gimppalette.c:531
 #, c-format
 msgid ""
 "Loading palette '%s':\n"
@@ -2246,7 +2246,7 @@ msgstr ""
 "Memuatkan pelet '%s':\n"
 "Nilai RGB di luar julat pada baris %d."
 
-#: app/core/gimppalette.c:704
+#: app/core/gimppalette.c:705
 msgid "Black"
 msgstr "Hitam"
 
@@ -2888,116 +2888,120 @@ msgstr ""
 msgid "Select Custom Palette"
 msgstr "Pilih Pelet Biasa"
 
-#: app/gui/dialogs-constructors.c:216 app/gui/gui.c:361
+#: app/gui/dialogs-constructors.c:217 app/gui/gui.c:363
 #: app/gui/preferences-dialog.c:1246 app/gui/preferences-dialog.c:1249
 msgid "Tool Options"
 msgstr "Opsyen Alat"
 
-#: app/gui/dialogs-constructors.c:236
+#: app/gui/dialogs-constructors.c:237
 msgid "Devices"
 msgstr "Peranti"
 
-#: app/gui/dialogs-constructors.c:236
+#: app/gui/dialogs-constructors.c:237
 msgid "Device Status"
 msgstr "Status Peranti"
 
-#: app/gui/dialogs-constructors.c:256
+#: app/gui/dialogs-constructors.c:257
 msgid "Errors"
 msgstr "Ralat"
 
-#: app/gui/dialogs-constructors.c:256
+#: app/gui/dialogs-constructors.c:257
 msgid "Error Console"
 msgstr "Ralat Konsol"
 
-#: app/gui/dialogs-constructors.c:278 app/gui/dialogs-constructors.c:483
+#: app/gui/dialogs-constructors.c:279 app/gui/dialogs-constructors.c:484
 msgid "Images"
 msgstr "Imej"
 
-#: app/gui/dialogs-constructors.c:396 app/gui/dialogs-constructors.c:601
+#: app/gui/dialogs-constructors.c:397 app/gui/dialogs-constructors.c:602
 msgid "Tools"
 msgstr "Alat"
 
-#: app/gui/dialogs-constructors.c:415 app/gui/dialogs-constructors.c:620
+#: app/gui/dialogs-constructors.c:416 app/gui/dialogs-constructors.c:621
 msgid "Buffers"
 msgstr "Penimbal"
 
-#: app/gui/dialogs-constructors.c:435 app/gui/dialogs-constructors.c:640
+#: app/gui/dialogs-constructors.c:436 app/gui/dialogs-constructors.c:641
 msgid "History"
 msgstr "Sejarah"
 
-#: app/gui/dialogs-constructors.c:435 app/gui/dialogs-constructors.c:640
+#: app/gui/dialogs-constructors.c:436 app/gui/dialogs-constructors.c:641
 #, fuzzy
 msgid "Document History"
 msgstr "Senarai Sejarah Dokumen"
 
-#: app/gui/dialogs-constructors.c:461
+#: app/gui/dialogs-constructors.c:462
 #, fuzzy
 msgid "Image Templates"
 msgstr "Templat"
 
-#: app/gui/dialogs-constructors.c:670
+#: app/gui/dialogs-constructors.c:671
 msgid "Layers"
 msgstr "Lapisan"
 
-#: app/gui/dialogs-constructors.c:701
+#: app/gui/dialogs-constructors.c:702
 msgid "Channels"
 msgstr "Saluran"
 
-#: app/gui/dialogs-constructors.c:738 app/pdb/internal_procs.c:162
+#: app/gui/dialogs-constructors.c:739 app/pdb/internal_procs.c:162
 #: app/tools/gimpvectortool.c:148
 msgid "Paths"
 msgstr "Laluan"
 
-#: app/gui/dialogs-constructors.c:759
+#: app/gui/dialogs-constructors.c:760
 msgid "Colormap"
 msgstr "Peta warna"
 
-#: app/gui/dialogs-constructors.c:759
+#: app/gui/dialogs-constructors.c:760
 msgid "Indexed Palette"
 msgstr "Pelet Berindeks"
 
-#: app/gui/dialogs-constructors.c:789
+#: app/gui/dialogs-constructors.c:787
+msgid "Histogram"
+msgstr "Histogram"
+
+#: app/gui/dialogs-constructors.c:813
 msgid "Selection"
 msgstr "Pemilihan"
 
-#: app/gui/dialogs-constructors.c:789
+#: app/gui/dialogs-constructors.c:813
 msgid "Selection Editor"
 msgstr "Editor Pemilihan"
 
-#: app/gui/dialogs-constructors.c:809 app/pdb/internal_procs.c:189
+#: app/gui/dialogs-constructors.c:833 app/pdb/internal_procs.c:189
 #: app/widgets/gimpundoeditor.c:122
 msgid "Undo"
 msgstr "Buat asal"
 
-#: app/gui/dialogs-constructors.c:809
+#: app/gui/dialogs-constructors.c:833
 msgid "Undo History"
 msgstr "Buat asal Sejarah"
 
-#: app/gui/dialogs-constructors.c:839
+#: app/gui/dialogs-constructors.c:863
 msgid "Navigation"
 msgstr "Pemanduan arah"
 
-#: app/gui/dialogs-constructors.c:839
+#: app/gui/dialogs-constructors.c:863
 msgid "Display Navigation"
 msgstr "Paparkan Pemanduan arah"
 
-#: app/gui/dialogs-constructors.c:857
+#: app/gui/dialogs-constructors.c:881
 msgid "FG/BG"
 msgstr "FG/BG"
 
-#: app/gui/dialogs-constructors.c:857
+#: app/gui/dialogs-constructors.c:881
 msgid "FG/BG Color"
 msgstr "Warna FG/BG"
 
-#: app/gui/dialogs-constructors.c:877
+#: app/gui/dialogs-constructors.c:901
 msgid "Brush Editor"
 msgstr "Editor Berus"
 
-#: app/gui/dialogs-constructors.c:906
+#: app/gui/dialogs-constructors.c:930
 msgid "Gradient Editor"
 msgstr "Editor Kecerunan"
 
-#: app/gui/dialogs-constructors.c:935
+#: app/gui/dialogs-constructors.c:959
 msgid "Palette Editor"
 msgstr "Editor Pelet"
 
@@ -3033,173 +3037,178 @@ msgstr "/Tambahkan Tab/_Laluan..."
 
 #: app/gui/dialogs-menu.c:81
 #, fuzzy
-msgid "/Add Tab/_Indexed Palette"
+msgid "/Add Tab/Inde_xed Palette"
 msgstr "/Tambahkan Tab/Pelet _Berindeks..."
 
 #: app/gui/dialogs-menu.c:83
 #, fuzzy
+msgid "/Add Tab/Histogra_m"
+msgstr "/Tambahkan Tab/_Buat asal Sejarah..."
+
+#: app/gui/dialogs-menu.c:85
+#, fuzzy
 msgid "/Add Tab/_Selection Editor"
 msgstr "/Tambahkan Tab/Editor _Pemilihan..."
 
-#: app/gui/dialogs-menu.c:85
+#: app/gui/dialogs-menu.c:87
 #, fuzzy
 msgid "/Add Tab/Na_vigation"
 msgstr "/Tambahkan Tab/Pe_manduan arah..."
 
-#: app/gui/dialogs-menu.c:87
+#: app/gui/dialogs-menu.c:89
 #, fuzzy
 msgid "/Add Tab/_Undo History"
 msgstr "/Tambahkan Tab/_Buat asal Sejarah..."
 
-#: app/gui/dialogs-menu.c:92
+#: app/gui/dialogs-menu.c:94
 #, fuzzy
 msgid "/Add Tab/Colo_rs"
 msgstr "/Tambahkan Tab/War_na..."
 
-#: app/gui/dialogs-menu.c:94
+#: app/gui/dialogs-menu.c:96
 #, fuzzy
 msgid "/Add Tab/Brus_hes"
 msgstr "/Tambahkan Tab/Ber_us..."
 
-#: app/gui/dialogs-menu.c:96
+#: app/gui/dialogs-menu.c:98
 #, fuzzy
 msgid "/Add Tab/P_atterns"
 msgstr "/Tambahkan Tab/C_orak..."
 
-#: app/gui/dialogs-menu.c:98
+#: app/gui/dialogs-menu.c:100
 #, fuzzy
 msgid "/Add Tab/_Gradients"
 msgstr "/Tambahkan Tab/_Kecerunan..."
 
-#: app/gui/dialogs-menu.c:100
+#: app/gui/dialogs-menu.c:102
 #, fuzzy
 msgid "/Add Tab/Pal_ettes"
 msgstr "/Tambahkan Tab/Pe_let..."
 
-#: app/gui/dialogs-menu.c:102
+#: app/gui/dialogs-menu.c:104
 #, fuzzy
 msgid "/Add Tab/_Fonts"
 msgstr "/Tambahkan Tab/_Fon..."
 
-#: app/gui/dialogs-menu.c:104
+#: app/gui/dialogs-menu.c:106
 #, fuzzy
 msgid "/Add Tab/_Buffers"
 msgstr "/Tambahkan Tab/_Penimbal..."
 
-#: app/gui/dialogs-menu.c:109
+#: app/gui/dialogs-menu.c:111
 #, fuzzy
-msgid "/Add Tab/I_mages"
+msgid "/Add Tab/_Images"
 msgstr "/Tambahkan Tab/I_mej..."
 
-#: app/gui/dialogs-menu.c:111
+#: app/gui/dialogs-menu.c:113
 #, fuzzy
 msgid "/Add Tab/Document Histor_y"
 msgstr "/Tambahkan Tab/Sejara_h Dokumen..."
 
-#: app/gui/dialogs-menu.c:113
+#: app/gui/dialogs-menu.c:115
 #, fuzzy
 msgid "/Add Tab/_Templates"
 msgstr "/Tambahkan Tab/_Templat..."
 
-#: app/gui/dialogs-menu.c:115
+#: app/gui/dialogs-menu.c:117
 #, fuzzy
 msgid "/Add Tab/T_ools"
 msgstr "/Tambahkan Tab/Alat..."
 
-#: app/gui/dialogs-menu.c:117
+#: app/gui/dialogs-menu.c:119
 #, fuzzy
 msgid "/Add Tab/Error Co_nsole"
 msgstr "/Tambahkan Tab/Ralat Ko_nsol..."
 
-#: app/gui/dialogs-menu.c:120
+#: app/gui/dialogs-menu.c:122
 #, fuzzy
 msgid "/_Close Tab"
 msgstr "/_Keluarkan Tab"
 
-#: app/gui/dialogs-menu.c:125
+#: app/gui/dialogs-menu.c:127
 #, fuzzy
 msgid "/_Detach Tab"
 msgstr "/_Pilih Tab"
 
-#: app/gui/dialogs-menu.c:133
+#: app/gui/dialogs-menu.c:135
 #, fuzzy
 msgid "/Preview Si_ze"
 msgstr "/Saiz Pralihat/_Amat Besar"
 
-#: app/gui/dialogs-menu.c:135
+#: app/gui/dialogs-menu.c:137
 msgid "/Preview Size/_Tiny"
 msgstr "/Saiz Pralihat/_Halus"
 
-#: app/gui/dialogs-menu.c:141
+#: app/gui/dialogs-menu.c:143
 msgid "/Preview Size/E_xtra Small"
 msgstr "/Saiz Pralihat/S_angat Kecil"
 
-#: app/gui/dialogs-menu.c:142
+#: app/gui/dialogs-menu.c:144
 msgid "/Preview Size/_Small"
 msgstr "/Saiz Pralihat/_Kecil"
 
-#: app/gui/dialogs-menu.c:143
+#: app/gui/dialogs-menu.c:145
 msgid "/Preview Size/_Medium"
 msgstr "/Saiz Pralihat/_Sederhana"
 
-#: app/gui/dialogs-menu.c:144
+#: app/gui/dialogs-menu.c:146
 msgid "/Preview Size/_Large"
 msgstr "/Saiz Pralihat/_Besar"
 
-#: app/gui/dialogs-menu.c:145
+#: app/gui/dialogs-menu.c:147
 msgid "/Preview Size/Ex_tra Large"
 msgstr "/Saiz Pralihat/Sa_ngat Besar"
 
-#: app/gui/dialogs-menu.c:146
+#: app/gui/dialogs-menu.c:148
 msgid "/Preview Size/_Huge"
 msgstr "/Saiz Pralihat/_Amat Besar"
 
-#: app/gui/dialogs-menu.c:147
+#: app/gui/dialogs-menu.c:149
 msgid "/Preview Size/_Enormous"
 msgstr "/Saiz Pralihat/_Terlalu Besar"
 
-#: app/gui/dialogs-menu.c:148
+#: app/gui/dialogs-menu.c:150
 msgid "/Preview Size/_Gigantic"
 msgstr "/Saiz Pralihat/_Luar biasa Besar"
 
-#: app/gui/dialogs-menu.c:150
+#: app/gui/dialogs-menu.c:152
 #, fuzzy
 msgid "/_Tab Style"
 msgstr "/Gaya Tab/_Teks"
 
-#: app/gui/dialogs-menu.c:152
+#: app/gui/dialogs-menu.c:154
 msgid "/Tab Style/_Icon"
 msgstr "/Gaya Tab/_Ikon"
 
-#: app/gui/dialogs-menu.c:158
+#: app/gui/dialogs-menu.c:160
 msgid "/Tab Style/Current _Status"
 msgstr "/Gaya Tab/_Status Semasa"
 
-#: app/gui/dialogs-menu.c:159
+#: app/gui/dialogs-menu.c:161
 msgid "/Tab Style/_Text"
 msgstr "/Gaya Tab/_Teks"
 
-#: app/gui/dialogs-menu.c:160
+#: app/gui/dialogs-menu.c:162
 msgid "/Tab Style/I_con & Text"
 msgstr "/Gaya Tab/I_kon & Teks"
 
-#: app/gui/dialogs-menu.c:161
+#: app/gui/dialogs-menu.c:163
 msgid "/Tab Style/St_atus & Text"
 msgstr "/Gaya Tab/St_atus & Teks"
 
-#: app/gui/dialogs-menu.c:163
+#: app/gui/dialogs-menu.c:165
 msgid "/View as _List"
 msgstr "/Lihat sebagai _Senarai"
 
-#: app/gui/dialogs-menu.c:167
+#: app/gui/dialogs-menu.c:169
 msgid "/View as _Grid"
 msgstr "/Lihat sebagai _Grid"
 
-#: app/gui/dialogs-menu.c:174
+#: app/gui/dialogs-menu.c:176
 msgid "/Show Image _Menu"
 msgstr "/Tunjukkan _Menu Imej"
 
-#: app/gui/dialogs-menu.c:178
+#: app/gui/dialogs-menu.c:180
 msgid "/Auto Follow Active _Image"
 msgstr "/_Imej Aktif Auto Follow"
 
@@ -3777,11 +3786,11 @@ msgstr "Konfigurasikan Grid"
 msgid "Configure Image Grid"
 msgstr "Konfigurasikan Grid Imej"
 
-#: app/gui/gui.c:421
+#: app/gui/gui.c:423
 msgid "Quit The GIMP?"
 msgstr "Keluar GIMP?"
 
-#: app/gui/gui.c:425
+#: app/gui/gui.c:427
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -3909,7 +3918,7 @@ msgstr "/Fail/Ke_mbalikan..."
 msgid "/File/_Close"
 msgstr "/Fail/_Tutup"
 
-#: app/gui/image-menu.c:147 app/gui/toolbox-menu.c:236
+#: app/gui/image-menu.c:147 app/gui/toolbox-menu.c:241
 msgid "/File/_Quit"
 msgstr "/Fail/_Keluar"
 
@@ -4568,200 +4577,205 @@ msgstr "/Dialog/_Laluan..."
 
 #: app/gui/image-menu.c:957
 #, fuzzy
-msgid "/Dialogs/_Indexed Palette"
+msgid "/Dialogs/Inde_xed Palette"
 msgstr "/Dialog/Pelet _Berindeks..."
 
 #: app/gui/image-menu.c:962
 #, fuzzy
+msgid "/Dialogs/Histogra_m"
+msgstr "/Dialog/_Buat asal Sejarah..."
+
+#: app/gui/image-menu.c:967
+#, fuzzy
 msgid "/Dialogs/_Selection Editor"
 msgstr "/Dialog/Editor _Pemilihan..."
 
-#: app/gui/image-menu.c:967
+#: app/gui/image-menu.c:972
 #, fuzzy
 msgid "/Dialogs/Na_vigation"
 msgstr "/Dialog/Pe_manduan arah..."
 
-#: app/gui/image-menu.c:972
+#: app/gui/image-menu.c:977
 #, fuzzy
 msgid "/Dialogs/_Undo History"
 msgstr "/Dialog/_Buat asal Sejarah..."
 
-#: app/gui/image-menu.c:980
+#: app/gui/image-menu.c:985
 #, fuzzy
 msgid "/Dialogs/Colo_rs"
 msgstr "/Dialog/War_na..."
 
-#: app/gui/image-menu.c:985
+#: app/gui/image-menu.c:990
 #, fuzzy
 msgid "/Dialogs/Brus_hes"
 msgstr "/Dialog/Ber_us..."
 
-#: app/gui/image-menu.c:990
+#: app/gui/image-menu.c:995
 #, fuzzy
 msgid "/Dialogs/P_atterns"
 msgstr "/Dialog/C_orak..."
 
-#: app/gui/image-menu.c:995
+#: app/gui/image-menu.c:1000
 #, fuzzy
 msgid "/Dialogs/_Gradients"
 msgstr "/Dialog/_Kecerunan..."
 
-#: app/gui/image-menu.c:1000
+#: app/gui/image-menu.c:1005
 #, fuzzy
 msgid "/Dialogs/Pal_ettes"
 msgstr "/Dialog/Pel_et..."
 
-#: app/gui/image-menu.c:1005
+#: app/gui/image-menu.c:1010
 #, fuzzy
 msgid "/Dialogs/_Fonts"
 msgstr "/Dialog/_Fon..."
 
-#: app/gui/image-menu.c:1010
+#: app/gui/image-menu.c:1015
 #, fuzzy
 msgid "/Dialogs/_Buffers"
 msgstr "/Dialog/_Penimbal..."
 
-#: app/gui/image-menu.c:1018
+#: app/gui/image-menu.c:1023
 #, fuzzy
-msgid "/Dialogs/I_mages"
+msgid "/Dialogs/_Images"
 msgstr "/Dialog/I_mej..."
 
-#: app/gui/image-menu.c:1023
+#: app/gui/image-menu.c:1028
 #, fuzzy
 msgid "/Dialogs/Document Histor_y"
 msgstr "/Dialog/Sejara_h Dokumen..."
 
-#: app/gui/image-menu.c:1028
+#: app/gui/image-menu.c:1033
 #, fuzzy
 msgid "/Dialogs/_Templates"
 msgstr "/Dialog/_Templat..."
 
-#: app/gui/image-menu.c:1033
+#: app/gui/image-menu.c:1038
 #, fuzzy
 msgid "/Dialogs/T_ools"
 msgstr "/Dialog/_Fon..."
 
-#: app/gui/image-menu.c:1038
+#: app/gui/image-menu.c:1043
 #, fuzzy
 msgid "/Dialogs/Error Co_nsole"
 msgstr "/Dialog/Ralat Ko_nsol..."
 
-#: app/gui/image-menu.c:1048
+#: app/gui/image-menu.c:1053
 msgid "/Filte_rs"
 msgstr "/Pena_pis"
 
-#: app/gui/image-menu.c:1050
+#: app/gui/image-menu.c:1055
 msgid "/Filters/Repeat Last"
 msgstr "/Penapis/Ulang yang Terakhir"
 
-#: app/gui/image-menu.c:1055
+#: app/gui/image-menu.c:1060
 msgid "/Filters/Re-Show Last"
 msgstr "/Penapis//Tunjukkan semula yang Terakhir"
 
-#: app/gui/image-menu.c:1063
+#: app/gui/image-menu.c:1068
 msgid "/Filters/_Blur"
 msgstr "/Penapis/_Kabur"
 
-#: app/gui/image-menu.c:1064
+#: app/gui/image-menu.c:1069
 msgid "/Filters/_Colors"
 msgstr "/Penapis/_Warna"
 
-#: app/gui/image-menu.c:1065
+#: app/gui/image-menu.c:1070
 msgid "/Filters/Colors/Ma_p"
 msgstr "/Penapis/Warna/Pe_ta"
 
-#: app/gui/image-menu.c:1066
+#: app/gui/image-menu.c:1071
 msgid "/Filters/_Noise"
 msgstr "/Penapis/_Hingar"
 
-#: app/gui/image-menu.c:1067
+#: app/gui/image-menu.c:1072
 msgid "/Filters/Edge-De_tect"
 msgstr "/Penapis/Ke_san Tepi"
 
-#: app/gui/image-menu.c:1068
+#: app/gui/image-menu.c:1073
 msgid "/Filters/En_hance"
 msgstr "/Penapis/Ti_ngkatkan"
 
-#: app/gui/image-menu.c:1069
+#: app/gui/image-menu.c:1074
 msgid "/Filters/_Generic"
 msgstr "/Penapis/_Generik"
 
-#: app/gui/image-menu.c:1073
+#: app/gui/image-menu.c:1078
 msgid "/Filters/Gla_ss Effects"
 msgstr "/Penapis/Kesan Ka_ca"
 
-#: app/gui/image-menu.c:1074
+#: app/gui/image-menu.c:1079
 msgid "/Filters/_Light Effects"
 msgstr "/Penapis/Kesan _Cahaya"
 
-#: app/gui/image-menu.c:1075
+#: app/gui/image-menu.c:1080
 msgid "/Filters/_Distorts"
 msgstr "/Penapis/_Herot"
 
-#: app/gui/image-menu.c:1076
+#: app/gui/image-menu.c:1081
 msgid "/Filters/_Artistic"
 msgstr "/Penapis/_Artistik"
 
-#: app/gui/image-menu.c:1077
+#: app/gui/image-menu.c:1082
 msgid "/Filters/_Map"
 msgstr "/Penapis/_Peta"
 
-#: app/gui/image-menu.c:1078
+#: app/gui/image-menu.c:1083
 msgid "/Filters/_Render"
 msgstr "/Penapis/_Render"
 
-#: app/gui/image-menu.c:1079
+#: app/gui/image-menu.c:1084
 msgid "/Filters/Render/_Clouds"
 msgstr "/Penapis/Render/_Awan"
 
-#: app/gui/image-menu.c:1080
+#: app/gui/image-menu.c:1085
 msgid "/Filters/Render/_Nature"
 msgstr "/Penapis/Render/_Sifat"
 
-#: app/gui/image-menu.c:1081
+#: app/gui/image-menu.c:1086
 msgid "/Filters/Render/_Pattern"
 msgstr "/Penapis/Render/_Corak"
 
-#: app/gui/image-menu.c:1082
+#: app/gui/image-menu.c:1087
 msgid "/Filters/_Web"
 msgstr "/Penapis/_Web"
 
-#: app/gui/image-menu.c:1086
+#: app/gui/image-menu.c:1091
 msgid "/Filters/An_imation"
 msgstr "/Penapis/An_imasi"
 
-#: app/gui/image-menu.c:1087
+#: app/gui/image-menu.c:1092
 msgid "/Filters/C_ombine"
 msgstr "/Penapis/G_abungkan"
 
-#: app/gui/image-menu.c:1091
+#: app/gui/image-menu.c:1096
 msgid "/Filters/To_ys"
 msgstr "/Penapis/Ma_inan"
 
-#: app/gui/image-menu.c:1413
+#: app/gui/image-menu.c:1418
 #, c-format
 msgid "_Undo %s"
 msgstr "_Buat asal %s"
 
-#: app/gui/image-menu.c:1418
+#: app/gui/image-menu.c:1423
 #, c-format
 msgid "_Redo %s"
 msgstr "_Buat semula %s"
 
-#: app/gui/image-menu.c:1422
+#: app/gui/image-menu.c:1427
 msgid "_Undo"
 msgstr "_Buat asal"
 
-#: app/gui/image-menu.c:1423
+#: app/gui/image-menu.c:1428
 msgid "_Redo"
 msgstr "_Buat semula"
 
-#: app/gui/image-menu.c:1670
+#: app/gui/image-menu.c:1675
 #, c-format
 msgid "Other (%d:%d) ..."
 msgstr "Lain (%d:%d) ..."
 
-#: app/gui/image-menu.c:1679
+#: app/gui/image-menu.c:1684
 #, c-format
 msgid "_Zoom (%d:%d)"
 msgstr "_Zum (%d:%d)"
@@ -6438,119 +6452,124 @@ msgstr "/Fail/Dialog/_Laluan..."
 
 #: app/gui/toolbox-menu.c:136
 #, fuzzy
-msgid "/File/Dialogs/_Indexed Palette"
+msgid "/File/Dialogs/Inde_xed Palette"
 msgstr "/Fail/Dialog/Pelet _Berindeks..."
 
 #: app/gui/toolbox-menu.c:141
 #, fuzzy
+msgid "/File/Dialogs/Histogra_m"
+msgstr "/Fail/Dialog/_Buat asal Sejarah..."
+
+#: app/gui/toolbox-menu.c:146
+#, fuzzy
 msgid "/File/Dialogs/_Selection Editor"
 msgstr "/Fail/Dialog/Editor _Pemilihan..."
 
-#: app/gui/toolbox-menu.c:146
+#: app/gui/toolbox-menu.c:151
 #, fuzzy
 msgid "/File/Dialogs/Na_vigation"
 msgstr "/Fail/Dialog/Pe_manduan arah..."
 
-#: app/gui/toolbox-menu.c:151
+#: app/gui/toolbox-menu.c:156
 #, fuzzy
 msgid "/File/Dialogs/_Undo History"
 msgstr "/Fail/Dialog/_Buat asal Sejarah..."
 
-#: app/gui/toolbox-menu.c:159
+#: app/gui/toolbox-menu.c:164
 #, fuzzy
 msgid "/File/Dialogs/Colo_rs"
 msgstr "/Fail/Dialog/War_na..."
 
-#: app/gui/toolbox-menu.c:164
+#: app/gui/toolbox-menu.c:169
 #, fuzzy
 msgid "/File/Dialogs/Brus_hes"
 msgstr "/Fail/Dialog/Ber_us..."
 
-#: app/gui/toolbox-menu.c:169
+#: app/gui/toolbox-menu.c:174
 #, fuzzy
 msgid "/File/Dialogs/P_atterns"
 msgstr "/Fail/Dialog/C_orak..."
 
-#: app/gui/toolbox-menu.c:174
+#: app/gui/toolbox-menu.c:179
 #, fuzzy
 msgid "/File/Dialogs/_Gradients"
 msgstr "/Fail/Dialog/_Kecerunan..."
 
-#: app/gui/toolbox-menu.c:179
+#: app/gui/toolbox-menu.c:184
 #, fuzzy
 msgid "/File/Dialogs/Pal_ettes"
 msgstr "/Fail/Dialog/Pel_et..."
 
-#: app/gui/toolbox-menu.c:184
+#: app/gui/toolbox-menu.c:189
 #, fuzzy
 msgid "/File/Dialogs/_Fonts"
 msgstr "/Fail/Dialog/_Fon..."
 
-#: app/gui/toolbox-menu.c:189
+#: app/gui/toolbox-menu.c:194
 #, fuzzy
 msgid "/File/Dialogs/_Buffers"
 msgstr "/Fail/Dialog/_Penimbal..."
 
-#: app/gui/toolbox-menu.c:197
+#: app/gui/toolbox-menu.c:202
 #, fuzzy
-msgid "/File/Dialogs/I_mages"
+msgid "/File/Dialogs/_Images"
 msgstr "/Fail/Dialog/I_mej..."
 
-#: app/gui/toolbox-menu.c:202
+#: app/gui/toolbox-menu.c:207
 #, fuzzy
 msgid "/File/Dialogs/Document Histor_y"
 msgstr "/Fail/Dialog/Sejara_h Dokumen..."
 
-#: app/gui/toolbox-menu.c:207
+#: app/gui/toolbox-menu.c:212
 #, fuzzy
 msgid "/File/Dialogs/_Templates"
 msgstr "/Fail/Dialog/_Templat..."
 
-#: app/gui/toolbox-menu.c:212
+#: app/gui/toolbox-menu.c:217
 #, fuzzy
 msgid "/File/Dialogs/T_ools"
 msgstr "/Fail/Dialog/_Fon..."
 
-#: app/gui/toolbox-menu.c:217
+#: app/gui/toolbox-menu.c:222
 #, fuzzy
 msgid "/File/Dialogs/Error Co_nsole"
 msgstr "/Fail/Dialog/Ralat Ko_nsol..."
 
-#: app/gui/toolbox-menu.c:224
+#: app/gui/toolbox-menu.c:229
 msgid "/File/D_ebug"
 msgstr "/Fail/N_yahpepijat"
 
 #. <Toolbox>/Xtns
-#: app/gui/toolbox-menu.c:244
+#: app/gui/toolbox-menu.c:249
 msgid "/_Xtns"
 msgstr "/_Xtns"
 
-#: app/gui/toolbox-menu.c:246
+#: app/gui/toolbox-menu.c:251
 #, fuzzy
 msgid "/Xtns/_Module Manager"
 msgstr "/Xtns/Pengurus _Modul..."
 
 #. <Toolbox>/Help
-#: app/gui/toolbox-menu.c:255
+#: app/gui/toolbox-menu.c:260
 msgid "/_Help"
 msgstr "/_Bantuan"
 
-#: app/gui/toolbox-menu.c:257
+#: app/gui/toolbox-menu.c:262
 #, fuzzy
 msgid "/Help/_Help"
 msgstr "/Bantuan/_Bantuan..."
 
-#: app/gui/toolbox-menu.c:262
+#: app/gui/toolbox-menu.c:267
 #, fuzzy
 msgid "/Help/_Context Help"
 msgstr "/Bantuan/Bantuan _Konteks..."
 
-#: app/gui/toolbox-menu.c:267
+#: app/gui/toolbox-menu.c:272
 #, fuzzy
 msgid "/Help/_Tip of the Day"
 msgstr "/Bantuan/_Tip Hari Ini..."
 
-#: app/gui/toolbox-menu.c:272
+#: app/gui/toolbox-menu.c:277
 #, fuzzy
 msgid "/Help/_About"
 msgstr "/Bantuan/_Tentang..."
@@ -7222,7 +7241,7 @@ msgid "Brightness-Contrast"
 msgstr "Kecerahan-Kontras"
 
 #: app/pdb/color_cmds.c:257 app/pdb/color_cmds.c:374
-#: app/tools/gimplevelstool.c:163
+#: app/tools/gimplevelstool.c:162
 msgid "Levels"
 msgstr "Aras"
 
@@ -7626,7 +7645,7 @@ msgstr "Bilangan Garis Grid"
 msgid "Grid Line Spacing"
 msgstr "Langkauan Garis Grid"
 
-#: app/tools/gimp-tools.c:218
+#: app/tools/gimp-tools.c:216
 msgid "This tool has no options."
 msgstr "Alat ini tidak ada opsyen."
 
@@ -7987,7 +8006,7 @@ msgstr "Selaraskan Lengkung Warna"
 msgid "Curves for indexed drawables cannot be adjusted."
 msgstr "Lengkung untuk boleh lukis berindeks tidak boleh diselaraskan."
 
-#: app/tools/gimpcurvestool.c:490 app/tools/gimplevelstool.c:435
+#: app/tools/gimpcurvestool.c:490 app/tools/gimplevelstool.c:431
 msgid "R_eset Channel"
 msgstr "S_et semula Saluran"
 
@@ -7996,7 +8015,7 @@ msgid "Modify Curves for Channel:"
 msgstr "Ubah suai Lengkung bagi Saluran:"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:563 app/tools/gimplevelstool.c:660
+#: app/tools/gimpcurvestool.c:563 app/tools/gimplevelstool.c:654
 msgid "All Channels"
 msgstr "Semua Saluran"
 
@@ -8013,11 +8032,11 @@ msgstr "Simpan seting lengkung dari fail"
 msgid "Curve Type"
 msgstr "Jenis Lengkung"
 
-#: app/tools/gimpcurvestool.c:1219
+#: app/tools/gimpcurvestool.c:1216
 msgid "Load Curves"
 msgstr "Muatkan Lengkung"
 
-#: app/tools/gimpcurvestool.c:1234
+#: app/tools/gimpcurvestool.c:1231
 msgid "Save Curves"
 msgstr "Simpan Lengkung"
 
@@ -8118,58 +8137,6 @@ msgstr "/Alat/Alat Pemilihan/Pilih secara Ka_bur"
 #, fuzzy
 msgid "Histogram Scale"
 msgstr "Skala Histogram:"
-
-#: app/tools/gimphistogramtool.c:120
-msgid "Histogram"
-msgstr "Histogram"
-
-#: app/tools/gimphistogramtool.c:121
-msgid "View image histogram"
-msgstr "Lihat histogram imej"
-
-#: app/tools/gimphistogramtool.c:122
-msgid "/Tools/Color Tools/_Histogram..."
-msgstr "/Alat/Alat Warna/_Histogram..."
-
-#: app/tools/gimphistogramtool.c:181
-msgid "Histogram does not operate on indexed drawables."
-msgstr "Histogram tidak beroperasi pasa boleh lukis berindeks."
-
-#: app/tools/gimphistogramtool.c:330
-msgid "Mean:"
-msgstr "Min:"
-
-#: app/tools/gimphistogramtool.c:331
-msgid "Std Dev:"
-msgstr "Sisihan Piawai:"
-
-#: app/tools/gimphistogramtool.c:332
-msgid "Median:"
-msgstr "Median:"
-
-#: app/tools/gimphistogramtool.c:333
-msgid "Pixels:"
-msgstr "Piksel:"
-
-#: app/tools/gimphistogramtool.c:334
-msgid "Count:"
-msgstr "Bilangan:"
-
-#: app/tools/gimphistogramtool.c:335
-msgid "Percentile:"
-msgstr "Persentil:"
-
-#: app/tools/gimphistogramtool.c:343
-msgid "View Image Histogram"
-msgstr "Lihat Histogram Imej"
-
-#: app/tools/gimphistogramtool.c:357
-msgid "Intensity Range:"
-msgstr "Julat Keamatan:"
-
-#: app/tools/gimphistogramtool.c:367
-msgid "Information on Channel:"
-msgstr "Maklumat pada Saluran:"
 
 #: app/tools/gimphuesaturationtool.c:110
 msgid "Adjust hue and saturation"
@@ -8291,73 +8258,73 @@ msgstr "Pilih bentuk dari imej"
 msgid "/Tools/Selection Tools/_Intelligent Scissors"
 msgstr "/Alat/Alat Pemilihan/Gunting _Cerdas"
 
-#: app/tools/gimplevelstool.c:164
+#: app/tools/gimplevelstool.c:163
 msgid "Adjust color levels"
 msgstr "Selaraskan aras warna"
 
-#: app/tools/gimplevelstool.c:165
+#: app/tools/gimplevelstool.c:164
 msgid "/Tools/Color Tools/_Levels..."
 msgstr "/Alat/Alat Warna/_Aras..."
 
-#: app/tools/gimplevelstool.c:233
+#: app/tools/gimplevelstool.c:232
 msgid "Adjust Color Levels"
 msgstr "Selaraskan Aras Warna"
 
-#: app/tools/gimplevelstool.c:285
+#: app/tools/gimplevelstool.c:282
 msgid "Levels for indexed drawables cannot be adjusted."
 msgstr "Aras bagi boleh lukis berindeks tidak boleh diselaraskan."
 
-#: app/tools/gimplevelstool.c:355
+#: app/tools/gimplevelstool.c:352
 msgid "Pick Black Point"
 msgstr "Pilih Titik Hitam"
 
-#: app/tools/gimplevelstool.c:359
+#: app/tools/gimplevelstool.c:356
 msgid "Pick Gray Point"
 msgstr "Pilih Titik Kelabu"
 
-#: app/tools/gimplevelstool.c:363
+#: app/tools/gimplevelstool.c:360
 msgid "Pick White Point"
 msgstr "Pilih Titik Putih"
 
-#: app/tools/gimplevelstool.c:421
+#: app/tools/gimplevelstool.c:417
 msgid "Modify Levels for Channel:"
 msgstr "Ubah suai Aras bagi Saluran:"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:445
+#: app/tools/gimplevelstool.c:441
 msgid "Input Levels"
 msgstr "Aras Input"
 
-#: app/tools/gimplevelstool.c:552
+#: app/tools/gimplevelstool.c:546
 msgid "Gamma"
 msgstr "Gama"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:582
+#: app/tools/gimplevelstool.c:576
 msgid "Output Levels"
 msgstr "Aras Output"
 
-#: app/tools/gimplevelstool.c:678
+#: app/tools/gimplevelstool.c:672
 msgid "Read levels settings from file"
 msgstr "Baca seting aras dari fail"
 
-#: app/tools/gimplevelstool.c:688
+#: app/tools/gimplevelstool.c:682
 msgid "Save levels settings to file"
 msgstr "Simpan seting aras ke fail"
 
-#: app/tools/gimplevelstool.c:700
+#: app/tools/gimplevelstool.c:694
 msgid "_Auto"
 msgstr "_Auto"
 
-#: app/tools/gimplevelstool.c:702
+#: app/tools/gimplevelstool.c:696
 msgid "Adjust levels automatically"
 msgstr "Selaraskan aras secara automatik"
 
-#: app/tools/gimplevelstool.c:1422
+#: app/tools/gimplevelstool.c:1416
 msgid "Load Levels"
 msgstr "Muatkan Aras"
 
-#: app/tools/gimplevelstool.c:1437
+#: app/tools/gimplevelstool.c:1431
 msgid "Save Levels"
 msgstr "Simpan Aras"
 
@@ -9167,6 +9134,7 @@ msgstr "Edit Warna Pelet Imej Berindeks"
 
 #: app/widgets/gimpcontainergridview.c:202
 #: app/widgets/gimpcontainergridview.c:635
+#: app/widgets/gimphistogrameditor.c:137 app/widgets/gimphistogrameditor.c:325
 msgid "(None)"
 msgstr "(Tiada)"
 
@@ -9211,25 +9179,25 @@ msgstr ""
 msgid "Delete Data Object"
 msgstr "Hapuskan Objek Data"
 
-#: app/widgets/gimpdevicestatus.c:288
+#: app/widgets/gimpdevicestatus.c:291
 msgid "Save device status"
 msgstr "Simpan status peranti"
 
-#: app/widgets/gimpdevicestatus.c:295
+#: app/widgets/gimpdevicestatus.c:298
 msgid "Configure input devices"
 msgstr "Buat konfigurasi peranti input"
 
-#: app/widgets/gimpdevicestatus.c:401
+#: app/widgets/gimpdevicestatus.c:404
 #, c-format
 msgid "Foreground: %d, %d, %d"
 msgstr "Latar depan: %d, %d, %d"
 
-#: app/widgets/gimpdevicestatus.c:406
+#: app/widgets/gimpdevicestatus.c:409
 #, c-format
 msgid "Background: %d, %d, %d"
 msgstr "Latar belakang: %d, %d, %d"
 
-#: app/widgets/gimpdock.c:292
+#: app/widgets/gimpdock.c:295
 msgid "You can drop dockable dialogs here."
 msgstr "Anda boleh menggugurkan dialog boleh dok di sini."
 
@@ -9476,6 +9444,39 @@ msgstr "Tidak dapat memulakan Pelayar Bantuan GIMP"
 msgid "Could not start the GIMP Help Browser."
 msgstr "Tidak dapat memulakan Pelayar Bantuan GIMP"
 
+#: app/widgets/gimphistogrameditor.c:124
+msgid "Mean:"
+msgstr "Min:"
+
+#: app/widgets/gimphistogrameditor.c:125
+msgid "Std Dev:"
+msgstr "Sisihan Piawai:"
+
+#: app/widgets/gimphistogrameditor.c:126
+msgid "Median:"
+msgstr "Median:"
+
+#: app/widgets/gimphistogrameditor.c:127
+msgid "Pixels:"
+msgstr "Piksel:"
+
+#: app/widgets/gimphistogrameditor.c:128
+msgid "Count:"
+msgstr "Bilangan:"
+
+#: app/widgets/gimphistogrameditor.c:129
+msgid "Percentile:"
+msgstr "Persentil:"
+
+#: app/widgets/gimphistogrameditor.c:135
+msgid "Intensity Range:"
+msgstr "Julat Keamatan:"
+
+#: app/widgets/gimphistogrameditor.c:148
+#, fuzzy
+msgid "Channel:"
+msgstr "Saluran"
+
 #: app/widgets/gimpimagedock.c:187
 msgid "Auto"
 msgstr "Auto"
@@ -9497,7 +9498,7 @@ msgstr "Wujudkan paparan baru bagi imej ini"
 msgid "Delete this image"
 msgstr "Hapuskan imej ini"
 
-#: app/widgets/gimpitemfactory.c:593
+#: app/widgets/gimpitemfactory.c:596
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -9720,7 +9721,7 @@ msgstr ""
 "Kecerunan aktif.\n"
 "Klik untuk membuka Dialog Kecerunan."
 
-#: app/widgets/gimptoolbox.c:731
+#: app/widgets/gimptoolbox.c:733
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to open the color selection dialog."
@@ -9751,17 +9752,17 @@ msgid ""
 "%s  Reset all Tool Options"
 msgstr ""
 
-#: app/widgets/gimptooloptionseditor.c:265
+#: app/widgets/gimptooloptionseditor.c:268
 #, fuzzy, c-format
 msgid "%s Options"
 msgstr "Opsyen:\n"
 
-#: app/widgets/gimptooloptionseditor.c:408
+#: app/widgets/gimptooloptionseditor.c:411
 #, fuzzy
 msgid "Reset Tool Options"
 msgstr "Opsyen Alat"
 
-#: app/widgets/gimptooloptionseditor.c:412
+#: app/widgets/gimptooloptionseditor.c:415
 msgid ""
 "Do you really want to reset all\n"
 "tool options to default values?"
@@ -9931,7 +9932,7 @@ msgstr "Mesej GIMP"
 #. The format string which is used to display modifier names
 #. *  <Shift>, <Ctrl> and <Alt>
 #.
-#: app/widgets/gimpwidgets-utils.c:475
+#: app/widgets/gimpwidgets-utils.c:482
 #, c-format
 msgid "<%s>"
 msgstr "<%s>"
@@ -10051,6 +10052,21 @@ msgstr "Wujudkan dan edit imej atau gambar"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "GIMP (tak stabil)"
+
+#~ msgid "View image histogram"
+#~ msgstr "Lihat histogram imej"
+
+#~ msgid "/Tools/Color Tools/_Histogram..."
+#~ msgstr "/Alat/Alat Warna/_Histogram..."
+
+#~ msgid "Histogram does not operate on indexed drawables."
+#~ msgstr "Histogram tidak beroperasi pasa boleh lukis berindeks."
+
+#~ msgid "View Image Histogram"
+#~ msgstr "Lihat Histogram Imej"
+
+#~ msgid "Information on Channel:"
+#~ msgstr "Maklumat pada Saluran:"
 
 #~ msgid ""
 #~ "Specifies how the area around the image should be drawn when in "

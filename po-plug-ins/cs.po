@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-02 14:42+0100\n"
+"POT-Creation-Date: 2003-11-03 01:00+0100\n"
 "PO-Revision-Date: 2003-11-02 19:36+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -381,7 +381,7 @@ msgstr "_Fraktály"
 #: plug-ins/common/gih.c:1228 plug-ins/common/gtm.c:238
 #: plug-ins/common/jpeg.c:1309 plug-ins/common/pat.c:385
 #: plug-ins/common/pcx.c:579 plug-ins/common/pix.c:514
-#: plug-ins/common/png.c:962 plug-ins/common/ps.c:999
+#: plug-ins/common/png.c:973 plug-ins/common/ps.c:999
 #: plug-ins/common/psd_save.c:1526 plug-ins/common/sunras.c:520
 #: plug-ins/common/tiff.c:1519 plug-ins/common/xbm.c:1002
 #: plug-ins/common/xwd.c:529 plug-ins/fits/fits.c:461
@@ -1212,7 +1212,7 @@ msgstr "Nemohu pracovat s neznámými typy obrázku nebo s alfa obrázky"
 #: plug-ins/common/gtm.c:258 plug-ins/common/hrz.c:470
 #: plug-ins/common/jpeg.c:1265 plug-ins/common/pat.c:390
 #: plug-ins/common/pcx.c:540 plug-ins/common/pix.c:520
-#: plug-ins/common/png.c:969 plug-ins/common/pnm.c:787
+#: plug-ins/common/png.c:980 plug-ins/common/pnm.c:787
 #: plug-ins/common/ps.c:1004 plug-ins/common/psd_save.c:1531
 #: plug-ins/common/sunras.c:525 plug-ins/common/tga.c:1031
 #: plug-ins/common/tiff.c:1524 plug-ins/common/xbm.c:1007
@@ -4833,7 +4833,7 @@ msgstr "Implicitní dispozice políčka:"
 msgid "PNG Compression Level:"
 msgstr "Úroveň komprese PNG:"
 
-#: plug-ins/common/mng.c:1346 plug-ins/common/png.c:1416
+#: plug-ins/common/mng.c:1346 plug-ins/common/png.c:1436
 msgid "Choose a high compression level for small file size"
 msgstr "Zvolte vysokou úroveň komprese pro malou velikost souboru"
 
@@ -5458,7 +5458,7 @@ msgstr ""
 "'%s':\n"
 "Neznámý barevný model PNG"
 
-#: plug-ins/common/png.c:948
+#: plug-ins/common/png.c:959
 #, c-format
 msgid ""
 "'%s':\n"
@@ -5469,7 +5469,7 @@ msgstr ""
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: plug-ins/common/png.c:1296
+#: plug-ins/common/png.c:1316
 msgid ""
 "Couldn't losslessly save transparency,\n"
 "saving opacity instead."
@@ -5477,44 +5477,44 @@ msgstr ""
 "Nemohu uložit průhlednost beze ztrát,\n"
 "ukládám místo toho neprůhlednost."
 
-#: plug-ins/common/png.c:1320
+#: plug-ins/common/png.c:1340
 msgid "Save as PNG"
 msgstr "Zapsat jako PNG"
 
 #. parameter settings
-#: plug-ins/common/png.c:1332 plug-ins/common/sample_colorize.c:1382
+#: plug-ins/common/png.c:1352 plug-ins/common/sample_colorize.c:1382
 msgid "Settings"
 msgstr "Nastavení"
 
-#: plug-ins/common/png.c:1345
+#: plug-ins/common/png.c:1365
 msgid "_Interlacing (Adam7)"
 msgstr "_Prokládání (Adam7)"
 
-#: plug-ins/common/png.c:1355
+#: plug-ins/common/png.c:1375
 msgid "Save _Background Color"
 msgstr "Uložit barvu _pozadí"
 
-#: plug-ins/common/png.c:1363
+#: plug-ins/common/png.c:1383
 msgid "Save _Gamma"
 msgstr "Uložit _gama"
 
-#: plug-ins/common/png.c:1371
+#: plug-ins/common/png.c:1391
 msgid "Save _Layer Offset"
 msgstr "Uložit posun _vrstvy"
 
-#: plug-ins/common/png.c:1379
+#: plug-ins/common/png.c:1399
 msgid "Save _Resolution"
 msgstr "Uložit _rozlišení"
 
-#: plug-ins/common/png.c:1387
+#: plug-ins/common/png.c:1407
 msgid "Save Creation _Time"
 msgstr "Uložit _čas vytvoření"
 
-#: plug-ins/common/png.c:1395
+#: plug-ins/common/png.c:1415
 msgid "Save Comme_nt"
 msgstr "Uložit _komentář"
 
-#: plug-ins/common/png.c:1412
+#: plug-ins/common/png.c:1432
 msgid "Co_mpression Level:"
 msgstr "Úroveň ko_mprese:"
 

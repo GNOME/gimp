@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-18 04:40+0200\n"
+"POT-Creation-Date: 2003-11-03 01:00+0100\n"
 "PO-Revision-Date: 2003-10-18 04:48+0200\n"
 "Last-Translator: Дејан Матијевић <dejan@ns.sympatico.ca>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
@@ -20,6 +20,10 @@ msgstr ""
 #: libgimp/gimpbrushmenu.c:132
 msgid "Brush Selection"
 msgstr "Одабирање четке"
+
+#: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
+msgid "_Browse..."
+msgstr ""
 
 #: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, c-format
@@ -438,23 +442,23 @@ msgstr "Размак редова"
 msgid "_Resize"
 msgstr "_Промени величину"
 
-#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:278
+#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:280
 msgid "_Scale"
 msgstr "_Скала"
 
-#: libgimpwidgets/gimpstock.c:256
+#: libgimpwidgets/gimpstock.c:259
 msgid "Crop"
 msgstr "Исеци"
 
-#: libgimpwidgets/gimpstock.c:274
+#: libgimpwidgets/gimpstock.c:276
 msgid "_Transform"
 msgstr "_Трансформиши"
 
-#: libgimpwidgets/gimpstock.c:277
+#: libgimpwidgets/gimpstock.c:279
 msgid "_Rotate"
 msgstr "_Ротирај"
 
-#: libgimpwidgets/gimpstock.c:279
+#: libgimpwidgets/gimpstock.c:281
 msgid "_Shear"
 msgstr "_Дели"
 

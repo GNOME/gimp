@@ -5,7 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD.sk\n"
-"POT-Creation-Date: 2003-10-24 03:38+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-11-03 01:00+0100\n"
 "PO-Revision-Date: 2003-10-27 09:04+0100\n"
 "Last-Translator: Zdenko Pdobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -17,15 +18,16 @@ msgstr ""
 msgid "Brush Selection"
 msgstr "Výber štetca"
 
-#: libgimp/gimpexport.c:183
-#: libgimp/gimpexport.c:219
+#: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
+msgid "_Browse..."
+msgstr ""
+
+#: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, c-format
 msgid "%s can't handle layers"
 msgstr "%s nevie pracovať s vrstvami"
 
-#: libgimp/gimpexport.c:184
-#: libgimp/gimpexport.c:193
-#: libgimp/gimpexport.c:202
+#: libgimp/gimpexport.c:184 libgimp/gimpexport.c:193 libgimp/gimpexport.c:202
 msgid "Merge Visible Layers"
 msgstr "Zlúčiť viditeľné vrstvy"
 
@@ -34,20 +36,16 @@ msgstr "Zlúčiť viditeľné vrstvy"
 msgid "%s can't handle layer offsets, size or opacity"
 msgstr "%s nevie pracovať s posunom, veľkosťou alebo krytím vrstvy"
 
-#: libgimp/gimpexport.c:201
-#: libgimp/gimpexport.c:210
+#: libgimp/gimpexport.c:201 libgimp/gimpexport.c:210
 #, c-format
 msgid "%s can only handle layers as animation frames"
 msgstr "%s môže spracovať vrstvy iba ako políčka animácie"
 
-#: libgimp/gimpexport.c:202
-#: libgimp/gimpexport.c:211
+#: libgimp/gimpexport.c:202 libgimp/gimpexport.c:211
 msgid "Save as Animation"
 msgstr "Uložiť ako animáciu"
 
-#: libgimp/gimpexport.c:211
-#: libgimp/gimpexport.c:220
-#: libgimp/gimpexport.c:229
+#: libgimp/gimpexport.c:211 libgimp/gimpexport.c:220 libgimp/gimpexport.c:229
 msgid "Flatten Image"
 msgstr "Do jednej vrstvy"
 
@@ -61,9 +59,7 @@ msgstr "%s nevie pracovať s priesvitnosťou"
 msgid "%s can only handle RGB images"
 msgstr "%s vie pracovať iba s RGB obrázkami"
 
-#: libgimp/gimpexport.c:238
-#: libgimp/gimpexport.c:266
-#: libgimp/gimpexport.c:275
+#: libgimp/gimpexport.c:238 libgimp/gimpexport.c:266 libgimp/gimpexport.c:275
 msgid "Convert to RGB"
 msgstr "Konverzia do RGB"
 
@@ -72,9 +68,7 @@ msgstr "Konverzia do RGB"
 msgid "%s can only handle grayscale images"
 msgstr "%s vie pracovať iba s obrázkami v odtieňoch šedej"
 
-#: libgimp/gimpexport.c:247
-#: libgimp/gimpexport.c:266
-#: libgimp/gimpexport.c:287
+#: libgimp/gimpexport.c:247 libgimp/gimpexport.c:266 libgimp/gimpexport.c:287
 msgid "Convert to Grayscale"
 msgstr "Konverzia do odtieňov šedej"
 
@@ -83,9 +77,7 @@ msgstr "Konverzia do odtieňov šedej"
 msgid "%s can only handle indexed images"
 msgstr "%s vie pracovať iba s indexovanými obrázkami"
 
-#: libgimp/gimpexport.c:256
-#: libgimp/gimpexport.c:275
-#: libgimp/gimpexport.c:285
+#: libgimp/gimpexport.c:256 libgimp/gimpexport.c:275 libgimp/gimpexport.c:285
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -148,8 +140,11 @@ msgid "Export"
 msgstr "Export"
 
 #: libgimp/gimpexport.c:468
-msgid "Your image should be exported before it can be saved for the following reasons:"
-msgstr "Váš obrázok by mal byť pred uložením exportovaný z nasledovných dôvodov:"
+msgid ""
+"Your image should be exported before it can be saved for the following "
+"reasons:"
+msgstr ""
+"Váš obrázok by mal byť pred uložením exportovaný z nasledovných dôvodov:"
 
 #. the footline
 #: libgimp/gimpexport.c:541
@@ -215,8 +210,7 @@ msgstr "Výber vzorky"
 msgid "percent"
 msgstr "percent"
 
-#: libgimpbase/gimputils.c:161
-#: libgimpbase/gimputils.c:166
+#: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
 msgid "(invalid UTF-8 string)"
 msgstr "(neplatný UTF-8 reťazec)"
 
@@ -255,10 +249,8 @@ msgstr "%.1f MB"
 msgid "Loading module: '%s'\n"
 msgstr "Načítavanie modulu: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:190
-#: libgimpmodule/gimpmodule.c:207
-#: libgimpmodule/gimpmodule.c:314
-#: libgimpmodule/gimpmodule.c:341
+#: libgimpmodule/gimpmodule.c:190 libgimpmodule/gimpmodule.c:207
+#: libgimpmodule/gimpmodule.c:314 libgimpmodule/gimpmodule.c:341
 #: libgimpmodule/gimpmodule.c:434
 #, c-format
 msgid ""
@@ -309,33 +301,27 @@ msgstr "/Biela"
 msgid "Scales"
 msgstr "Mierky"
 
-#: libgimpwidgets/gimpcolorscales.c:164
-#: libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:354
 msgid "_H"
 msgstr "_H"
 
-#: libgimpwidgets/gimpcolorscales.c:165
-#: libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
 msgid "_S"
 msgstr "_S"
 
-#: libgimpwidgets/gimpcolorscales.c:166
-#: libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:354
 msgid "_V"
 msgstr "_V"
 
-#: libgimpwidgets/gimpcolorscales.c:167
-#: libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:354
 msgid "_R"
 msgstr "_R"
 
-#: libgimpwidgets/gimpcolorscales.c:168
-#: libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:354
 msgid "_G"
 msgstr "_G"
 
-#: libgimpwidgets/gimpcolorscales.c:169
-#: libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:354
 msgid "_B"
 msgstr "_B"
 
@@ -343,38 +329,31 @@ msgstr "_B"
 msgid "_A"
 msgstr "_A"
 
-#: libgimpwidgets/gimpcolorscales.c:174
-#: libgimpwidgets/gimpcolorselect.c:358
+#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
 msgid "Hue"
 msgstr "Odtieň"
 
-#: libgimpwidgets/gimpcolorscales.c:175
-#: libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
 msgid "Saturation"
 msgstr "Sýtosť"
 
-#: libgimpwidgets/gimpcolorscales.c:176
-#: libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:360
 msgid "Value"
 msgstr "Hodnota"
 
-#: libgimpwidgets/gimpcolorscales.c:177
-#: libgimpwidgets/gimpcolorselect.c:361
+#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
 msgid "Red"
 msgstr "Červená"
 
-#: libgimpwidgets/gimpcolorscales.c:178
-#: libgimpwidgets/gimpcolorselect.c:362
+#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
 msgid "Green"
 msgstr "Zelená"
 
-#: libgimpwidgets/gimpcolorscales.c:179
-#: libgimpwidgets/gimpcolorselect.c:363
+#: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
 msgid "Blue"
 msgstr "Modrá"
 
-#: libgimpwidgets/gimpcolorscales.c:180
-#: libgimpwidgets/gimpcolorselect.c:364
+#: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:364
 msgid "Alpha"
 msgstr "Alfa"
 
@@ -407,8 +386,12 @@ msgid "GigaBytes"
 msgstr "Gigabyty"
 
 #: libgimpwidgets/gimppickbutton.c:141
-msgid "Click the eyedropper, then click a color anywhere on your screen to select that color."
-msgstr "Farbu vyberiete tak, že kliknete na kvapkadlo a potom kliknite na farbu kdekoľvek na obrazovke."
+msgid ""
+"Click the eyedropper, then click a color anywhere on your screen to select "
+"that color."
+msgstr ""
+"Farbu vyberiete tak, že kliknete na kvapkadlo a potom kliknite na farbu "
+"kdekoľvek na obrazovke."
 
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -454,24 +437,23 @@ msgstr "Riadkovanie"
 msgid "_Resize"
 msgstr "Zmeniť _veľkosť"
 
-#: libgimpwidgets/gimpstock.c:185
-#: libgimpwidgets/gimpstock.c:279
+#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:280
 msgid "_Scale"
 msgstr "_Mierka"
 
-#: libgimpwidgets/gimpstock.c:257
+#: libgimpwidgets/gimpstock.c:259
 msgid "Crop"
 msgstr "Orezanie"
 
-#: libgimpwidgets/gimpstock.c:275
+#: libgimpwidgets/gimpstock.c:276
 msgid "_Transform"
 msgstr "_Transformovanie"
 
-#: libgimpwidgets/gimpstock.c:278
+#: libgimpwidgets/gimpstock.c:279
 msgid "_Rotate"
 msgstr "_Otočenie"
 
-#: libgimpwidgets/gimpstock.c:280
+#: libgimpwidgets/gimpstock.c:281
 msgid "_Shear"
 msgstr "_Skosenie"
 
@@ -492,8 +474,12 @@ msgid "Factor"
 msgstr "Faktor"
 
 #: libgimpwidgets/gimpwidgets.c:943
-msgid "Use this value for random number generator seed - this allows you to repeat a given \"random\" operation"
-msgstr "Použite túto hodnotu na náhodný číselný generátor hniezda - toto vám umožní opakovať danú \"náhodnú\" operáciu"
+msgid ""
+"Use this value for random number generator seed - this allows you to repeat "
+"a given \"random\" operation"
+msgstr ""
+"Použite túto hodnotu na náhodný číselný generátor hniezda - toto vám umožní "
+"opakovať danú \"náhodnú\" operáciu"
 
 #: libgimpwidgets/gimpwidgets.c:947
 msgid "_Randomize"
@@ -618,4 +604,3 @@ msgstr "Vodné farby"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Tlak"
-

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-02 05:41+0100\n"
+"POT-Creation-Date: 2003-11-03 00:57+0100\n"
 "PO-Revision-Date: 2003-11-02 05:42+0100\n"
 "Last-Translator: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@bogus.example.com>\n"
@@ -9002,7 +9002,7 @@ msgstr "Боја четке: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "Позадина: %d, %d, %d"
 
-#: app/widgets/gimpdock.c:292
+#: app/widgets/gimpdock.c:295
 msgid "You can drop dockable dialogs here."
 msgstr "Мођете спустити пристанишне прозоре овде."
 
