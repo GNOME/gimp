@@ -20,6 +20,8 @@
 /* 
    dbbrowser_utils.c
    0.08  26th sept 97  by Thomas NOEL <thomas@minet.net> 
+
+   98/12/13  Sven Neumann <sven@gimp.org> : added help display
 */
 
 #include "dbbrowser_utils.h"
@@ -218,7 +220,11 @@ dialog_select (dbbrowser_t *dbbrowser,
 	       gchar       *proc_name)
   /* update the description box (right) */
 {
-  GtkWidget* label, *old_table;
+  GtkWidget *label;
+  GtkWidget *old_table;
+  GtkWidget *help;
+  GtkWidget *text = NULL;
+  GtkWidget *vscrollbar;
   gint i,row=0;
   
   if (dbbrowser->selected_proc_name) 
@@ -382,8 +388,6 @@ dialog_select (dbbrowser_t *dbbrowser,
 	}
     }
 
-  /* show the author & the copyright */
-
   if ((dbbrowser->selected_nparams) || 
       (dbbrowser->selected_nreturn_vals)) {
     label = gtk_hseparator_new(); /* ok, not really a label ... :) */
@@ -393,6 +397,47 @@ dialog_select (dbbrowser_t *dbbrowser,
     gtk_widget_show( label );
     row++;
   }
+
+  /* show the help */
+  if ((dbbrowser->selected_proc_help) && (strlen(dbbrowser->selected_proc_help) > 1))
+    {
+      label = gtk_label_new("Help :");
+      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
+      gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
+			0, 1, row, row+1, 
+			GTK_FILL, GTK_FILL, 3, 0);
+      gtk_widget_show(label);
+      
+      help = gtk_table_new (2, 2, FALSE);
+      gtk_table_set_row_spacing (GTK_TABLE (help), 0, 2);
+      gtk_table_set_col_spacing (GTK_TABLE (help), 0, 2);
+      gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), help,
+			1, 4, row, row+1, GTK_FILL, GTK_FILL, 3, 0);
+      gtk_widget_show (help);
+      row++;
+      
+      text = gtk_text_new (NULL, NULL);
+      gtk_text_set_editable (GTK_TEXT (text), FALSE);
+      gtk_text_set_word_wrap(GTK_TEXT(text), TRUE);
+      gtk_widget_set_usize (text, -1, 60);
+      gtk_table_attach (GTK_TABLE (help), text, 0, 1, 0, 1,
+			GTK_EXPAND | GTK_SHRINK | GTK_FILL,
+			GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (text);
+      
+      vscrollbar = gtk_vscrollbar_new (GTK_TEXT (text)->vadj);
+      gtk_table_attach (GTK_TABLE (help), vscrollbar, 1, 2, 0, 1,
+			GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (vscrollbar);
+            
+      label = gtk_hseparator_new(); /* ok, not really a label ... :) */
+      gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
+			0, 4, row, row+1, GTK_FILL, GTK_FILL, 3, 6);
+      gtk_widget_show(label);
+      row++;
+    }
+
+  /* show the author & the copyright */
 
   label = gtk_label_new("Author :");
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
@@ -439,21 +484,21 @@ dialog_select (dbbrowser_t *dbbrowser,
   gtk_widget_show(label);
   row++;
 
-  /*
-  label = gtk_label_new("Help :");
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
-  gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
-		    0, 1, row, row+1, 
-		    GTK_FILL, GTK_FILL, 3, 0);
-  gtk_widget_show(label);
-
-  TODO: Add help */
-
   if (old_table)
     gtk_widget_destroy(old_table);
 
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (dbbrowser->descr_scroll), 
 					 dbbrowser->descr_table);
+
+  /* now after the table is added to a window add the text */
+  if (text != NULL)
+    {
+      gtk_widget_realize (text);
+      gtk_text_freeze (GTK_TEXT (text));
+      gtk_text_insert (GTK_TEXT (text), NULL, NULL, NULL,
+		       dbbrowser->selected_proc_help, -1);
+      gtk_text_thaw (GTK_TEXT (text));
+    }
   gtk_widget_show(dbbrowser->descr_table);
 }
 
