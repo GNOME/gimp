@@ -1,3 +1,14 @@
+1999-07-04  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimp/gimpenv.c (gimp_directory): Don't warn about missing
+ 	home directory on Win32, it is perfectly natural.
+
+	* app/color_notebook.c
+	* libgimp/color_selector.h: Bypass the declaration of the exported
+ 	functions in the header. (Caused different linkage error with MSC,
+ 	as they are declared dllexport in the source, but naturally not in
+ 	the header.)
+
 Sat Jul  3 16:04:16 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/color_notebook.c

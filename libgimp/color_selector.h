@@ -76,6 +76,9 @@ typedef struct {
 
 typedef void *GimpColorSelectorID;
 
+#ifndef __COLOR_NOTEBOOK_C__	/* Bypass when compiling the source for
+				 * these functions. */
+
 /* Register a color selector.  Returns an identifier for the color
  * selector on success, or NULL if the name is already in use.  Both
  * the name and method table are internalised, so may be freed after
@@ -93,5 +96,6 @@ GimpColorSelectorID gimp_color_selector_register (const char *name,
 gboolean gimp_color_selector_unregister (GimpColorSelectorID id,
 					 void (*callback)(void *data),
 					 void *data);
+#endif /* !__COLOR_NOTEBOOK_C__ */
 
 #endif /* __COLOR_SELECTOR_H__ */
