@@ -1,3 +1,9 @@
+2000-11-06  Sven Neumann  <sven@gimp.org>
+
+	* app/convolve.[ch]: moved the new enum Garry introduced recently
+	from the header to the .c file so it does not get exported to the
+	PDB by enumgen.pl.
+
 2000-11-05  Jay Cox  <jaycox@gimp.org>
 
 	* app/paint_funcs.c:  Add some comments.  Delete some commented code.

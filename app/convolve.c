@@ -44,6 +44,18 @@
 #define DEFAULT_CONVOLVE_RATE  50.0
 #define DEFAULT_CONVOLVE_TYPE  BLUR_CONVOLVE
 
+
+/* Different clip relationships between a blur-blob and edges: 
+   see convolve_motion */
+
+typedef enum
+{
+  CONVOLVE_NCLIP,       /* Left or top edge     */
+  CONVOLVE_NOT_CLIPPED, /* No edges             */
+  CONVOLVE_PCLIP        /* Right or bottom edge */
+} ConvolveClipType;
+
+
 /*  the convolve structures  */
 
 typedef struct _ConvolveOptions ConvolveOptions;
