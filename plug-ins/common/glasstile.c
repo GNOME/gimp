@@ -104,7 +104,8 @@ static GlassInterface gt_int =
 /* preview */
 static guchar    *preview_bits;
 static GtkWidget *preview;
-static gdouble    preview_scale;
+static gdouble    preview_scale_x;
+static gdouble    preview_scale_y;
 
 /* --- Functions --- */
 
@@ -373,26 +374,23 @@ fill_preview_with_thumb (GtkWidget *widget,
   gint     x,y;
   gint     width  = PREVIEW_SIZE;
   gint     height = PREVIEW_SIZE;
-  gint     realwidth;
   guchar  *src;
   gdouble  r, g, b, a;
   gdouble  c0, c1;
-  guchar  *p0, *p1, *even, *odd;
+  guchar  *p0, *p1;
+  guchar  *even, *odd;
 
   bpp = 0; /* Only returned */
   
   drawable_data = 
     gimp_drawable_get_thumbnail_data (drawable_ID, &width, &height, &bpp);
 
-  realwidth = width;
-
-  if (width % 2) 
-    width = width - 1;
-  if ((width / 2) % 2) 
-    width = width - 2;
+  if (width < 1 || height < 1)
+    return;
 
   gtk_preview_size (GTK_PREVIEW (widget), width, height);
-  preview_scale = (gdouble)realwidth / (gdouble)gimp_drawable_width (drawable_ID);
+  preview_scale_x = (gdouble)width  / (gdouble)gimp_drawable_width  (drawable_ID);
+  preview_scale_y = (gdouble)height / (gdouble)gimp_drawable_height (drawable_ID);
 
   even = g_malloc (width * 3);
   odd  = g_malloc (width * 3);
@@ -454,7 +452,8 @@ fill_preview_with_thumb (GtkWidget *widget,
 	gtk_preview_draw_row (GTK_PREVIEW (widget), (guchar *)odd,  0, y, width);
       else
 	gtk_preview_draw_row (GTK_PREVIEW (widget), (guchar *)even, 0, y, width);
-      src += realwidth * bpp;
+
+      src += width * bpp;
     }
 
   g_free (even);
@@ -505,8 +504,8 @@ glasstile (GDrawable *drawable,
   /*  initialize the pixel regions  */
   if (preview_mode) 
     {
-      rutbredd = gtvals.xblock * preview_scale;
-      ruthojd  = gtvals.yblock * preview_scale;
+      rutbredd = gtvals.xblock * preview_scale_x;
+      ruthojd  = gtvals.yblock * preview_scale_y;
     }
   else
     {

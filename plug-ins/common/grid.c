@@ -1005,16 +1005,15 @@ fill_preview (GtkWidget *widget,
   guchar    *src;
   gdouble    r, g, b, a;
   gdouble    c0, c1;
-  guchar    *p0, *p1, *even, *odd;
+  guchar    *p0, *p1;
+  guchar    *even, *odd;
   
   width  = MIN (gimp_drawable_width (drawable->id), PREVIEW_SIZE);
   height = MIN (gimp_drawable_height (drawable->id), PREVIEW_SIZE);
   bpp = gimp_drawable_bpp (drawable->id);
   
-  if (width % 2) 
-    width = width - 1;
-  if ((width / 2) % 2) 
-    width = width - 2;
+  if (width < 1 || height < 1)
+    return;
 
   gtk_preview_size (GTK_PREVIEW (widget), width, height);
 

@@ -1,3 +1,11 @@
+2000-05-23  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/flarefx.c
+	* plug-ins/common/glasstile.c
+	* plug-ins/common/grid.c: ditched the 4-byte alignment of the 
+	preview_data since it was only causing trouble. Now the previews
+	work even for the ugly cases like width|height == 1.
+	
 2000-05-22  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/flarefx.c: fixed a bug in the new 
