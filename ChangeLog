@@ -1,5 +1,14 @@
 2003-06-11  Sven Neumann  <sven@gimp.org>
 
+	* etc/Makefile.am
+	* etc/sessionrc: added a sample sessiorc which will be used after
+	user installation.
+	
+	* app/gui/user-install-dialog.c (tree_items): install the sample
+	sessionrc.
+
+2003-06-11  Sven Neumann  <sven@gimp.org>
+
 	* app/paint-funcs/paint-funcs-generic.h (blend_pixels): fixed my
 	latest fix. Fixes bug #114882.
 

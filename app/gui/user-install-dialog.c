@@ -173,13 +173,13 @@ tree_items[] =
     N_("The sessionrc is used to store what dialog windows were\n"
        "open the last time you quit The GIMP.  You can configure\n"
        "The GIMP to reopen these dialogs at the saved position."),
-    TREE_ITEM_DONT, NULL
+    TREE_ITEM_FROM_SYSCONF_DIR, NULL
   },
   {
     FALSE, "templaterc",
     N_("This file holds a collection of standard media sizes that\n"
        "serve as image templates."),
-    TREE_ITEM_FROM_SYSCONF_DIR, "templaterc"
+    TREE_ITEM_FROM_SYSCONF_DIR, NULL
   },
   {
     FALSE, "unitrc",

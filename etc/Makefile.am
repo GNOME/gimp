@@ -5,7 +5,8 @@ gimpsysconf_DATA = \
 	gtkrc_user	\
 	templaterc	\
 	unitrc		\
-	ps-menurc
+	ps-menurc	\
+	sessionrc
 
 EXTRA_DIST = \
 	$(gimpsysconf_DATA)	\
