@@ -1670,9 +1670,7 @@ load_image (char *filename)
 
 	  gimp_image_set_filename (image_ID, filename);
 
-	  if ((int) ia.resolution > 1)
-	    gimp_image_set_resolution (image_ID, 
-				       (int) ia.resolution, (int) ia.resolution);
+	  gimp_image_set_resolution (image_ID, ia.resolution, ia.resolution);
 	}
       else
 	{

@@ -1574,7 +1574,7 @@ fractalexplorer_load (gchar *filename, gchar *name)
   
   if(load_options(fractalexplorer,fp))
     {
-      g_message (_("File '%s' is corrupt\nLine %d Option section incorrect"), filename, line_no);
+      g_message (_("File '%s' is corrupt.\nLine %d Option section incorrect"), filename, line_no);
       fclose(fp);
 
       return(NULL);

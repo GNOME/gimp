@@ -1354,7 +1354,7 @@ mov_src_sel_create()
   menu = p_buildmenu (option_step_items);
   gtk_option_menu_set_menu(GTK_OPTION_MENU(option_menu), menu);
   gtk_tooltips_set_tip(g_tooltips, option_menu,
-                       _("How to fetch te next SrcLayer   \nat the next handled frame")
+                       _("How to fetch the next SrcLayer   \nat the next handled frame")
                        , NULL);
   gtk_widget_show(option_menu);
 

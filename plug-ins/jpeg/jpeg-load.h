@@ -921,8 +921,7 @@ load_image (char         *filename,
 	break;
       }
 
-    if (xresolution > 1e-5 && yresolution > 1e-5)
-      gimp_image_set_resolution (image_ID, xresolution, yresolution);
+    gimp_image_set_resolution (image_ID, xresolution, yresolution);
   }
 #endif /* GIMP_HAVE_RESOLUTION_INFO */
 

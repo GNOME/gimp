@@ -21,6 +21,7 @@
 #include "floating_sel.h"
 #include "gimage.h"
 #include "gimage_mask.h"
+#include "gimprc.h"
 #include "interface.h"
 #include "plug_in.h"
 #include "procedural_db.h"
@@ -1846,7 +1847,8 @@ xcf_load_image_props (XcfInfo *info,
 	       yres < GIMP_MIN_RESOLUTION || yres > GIMP_MAX_RESOLUTION)
 	     {
 	       g_message ("Warning, resolution out of range in XCF file");
-	       xres = yres = 72.0;
+	       xres = default_xresolution;
+	       yres = default_yresolution;
 	     }
 	   gimage->xresolution = xres;
 	   gimage->yresolution = yres;

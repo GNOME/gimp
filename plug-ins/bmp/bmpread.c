@@ -26,9 +26,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <libgimp/gimp.h>
 #include <gtk/gtk.h>
 #include "bmp.h"
+#include <libgimp/gimp.h>
 #include "libgimp/stdplugins-intl.h"
 
 
@@ -193,8 +193,8 @@ ReadBMP (char *name)
     xresolution = LROUND((Bitmap_Head.biXPels * 2.54 / 100.0));
     yresolution = LROUND((Bitmap_Head.biYPels * 2.54 / 100.0));
     #undef LROUND
-    if (xresolution > 1e-5 && yresolution > 1e-5)
-      gimp_image_set_resolution (image_ID, xresolution, yresolution);
+
+    gimp_image_set_resolution (image_ID, xresolution, yresolution);
   }
 #endif /* GIMP_HAVE_RESOLUTION_INFO */
 

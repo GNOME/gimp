@@ -540,7 +540,7 @@ load_image (char *filename)
 
       /* If it is invalid, instead of forcing 72dpi, do not set the resolution 
 	 at all. Gimp will then use the default set by the user */
-      if (read_unit != RESUNIT_NONE && xres > 1e-5 && yres > 1e-5) 
+      if (read_unit != RESUNIT_NONE)
 	{
 	  gimp_image_set_resolution (image, xres, yres);
 	  if (unit != UNIT_PIXEL)

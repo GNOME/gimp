@@ -34,6 +34,7 @@
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimplimits.h"
 
 #include "tile_manager.h"
 #include "tile.h"
@@ -358,8 +359,9 @@ gimp_image_set_resolution (GimpImage *gimage,
       (ABS (gimage->yresolution - yresolution) < 1e-5))
       return;
 
-  /* don't allow to set the resolution to zero */
-  if (xresolution < 1e-5 || yresolution < 1e-5)
+  /* don't allow to set the resolution out of bounds */
+  if (xresolution < GIMP_MIN_RESOLUTION || xresolution > GIMP_MAX_RESOLUTION ||
+      yresolution < GIMP_MIN_RESOLUTION || yresolution > GIMP_MAX_RESOLUTION)
     return;
 
   undo_push_resolution (gimage);
@@ -2287,7 +2289,7 @@ gimp_image_merge_visible_layers (GimpImage *gimage,
   GSList *layer_list;
   GSList *merge_list = NULL;
   gboolean had_floating_sel = FALSE;
-  Layer *layer;
+  Layer *layer = NULL;
 
   /* if there's a floating selection, anchor it */
   if (gimp_image_floating_sel (gimage))

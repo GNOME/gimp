@@ -1,13 +1,23 @@
-Sat Jan  8 13:22:15 CET 2000  Sven Neumann <sven@gimp.org>
+Sat Jan  8 15:04:48 CET 2000  Sven Neumann <sven@gimp.org>
 
-	* app/gimpimage.c: don't allow to set the resolution to zero
+	* app/gimpimage.c: in gimp_image_set_resolution() check that 
+	resolutions are inside our limits (see libgimp/gimplimits.h)
 
+	* app/xcf.c: if the resolution is invalid, do not hardcode it to
+	72 dpi, use the configurable default values 
+
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/FractalExplorer/FractalExplorer.c
 	* plug-ins/bmp/bmpread.c
+	* plug-ins/common/jpeg.c
+	* plug-ins/common/laplace.c
 	* plug-ins/common/png.c
 	* plug-ins/common/ps.c
 	* plug-ins/common/psp.c
-	* plug-ins/common/tiff.c: Check the resolution before setting it.
-	If it is not valid, do nothing. GIMP will use the default values.
+	* plug-ins/common/tiff.c
+	* plug-ins/gap/gap_mov_dialog.c: fixed some typos, got rif of
+	compiler warnings, checked that the resolution is set correctly 
+	(the validity of the resolution is now checked in the core)
 
 Fri Jan  7 23:03:51 CET 2000  Sven Neumann <sven@gimp.org> 
 

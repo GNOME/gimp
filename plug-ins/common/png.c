@@ -493,8 +493,7 @@ load_image (char *filename)	/* I - File to load */
    */
 
 #ifdef GIMP_HAVE_RESOLUTION_INFO
-  if ((info->valid & PNG_INFO_pHYs) &&
-      (info->x_pixels_per_unit > 1e-5) && (info->y_pixels_per_unit > 1e-5))
+  if (info->valid & PNG_INFO_pHYs)
     {
       if (info->phys_unit_type == PNG_RESOLUTION_METER)
 	gimp_image_set_resolution(image,
