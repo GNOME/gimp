@@ -54,6 +54,8 @@
 #include "widgets/gimptexteditor.h"
 #include "widgets/gimpviewabledialog.h"
 
+#include "vectors/gimpvectors-warp.h"
+
 #include "display/gimpdisplay.h"
 
 #include "gimpeditselectiontool.h"
@@ -106,6 +108,8 @@ static gboolean  gimp_text_tool_idle_apply     (GimpTextTool      *text_tool);
 static void      gimp_text_tool_apply          (GimpTextTool      *text_tool);
 
 static void      gimp_text_tool_create_vectors (GimpTextTool      *text_tool);
+static void      gimp_text_tool_create_vectors_warped
+                                               (GimpTextTool      *text_tool);
 static void      gimp_text_tool_create_layer   (GimpTextTool      *text_tool,
                                                 GimpText          *text);
 
@@ -361,9 +365,11 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
     {
       GimpTextOptions *options;
       GtkWidget       *button;
+      GtkWidget       *button2;
 
       options = GIMP_TEXT_OPTIONS (tool->tool_info->tool_options);
-      button = g_object_get_data (G_OBJECT (options), "gimp-text-to-vectors");
+      button  = g_object_get_data (G_OBJECT (options), "gimp-text-to-vectors");
+      button2 = g_object_get_data (G_OBJECT (options), "gimp-text-to-vectors-warped");
 
       if (text_tool->text)
         {
@@ -379,6 +385,14 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
               gtk_widget_set_sensitive (button, FALSE);
               g_signal_handlers_disconnect_by_func (button,
                                                     gimp_text_tool_create_vectors,
+                                                    text_tool);
+            }
+
+          if (button2)
+            {
+              gtk_widget_set_sensitive (button2, FALSE);
+              g_signal_handlers_disconnect_by_func (button2,
+                                                    gimp_text_tool_create_vectors_warped,
                                                     text_tool);
             }
 
@@ -409,6 +423,14 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
                                         G_CALLBACK (gimp_text_tool_create_vectors),
                                         text_tool);
               gtk_widget_set_sensitive (button, TRUE);
+            }
+
+          if (button2)
+            {
+              g_signal_connect_swapped (button2, "clicked",
+                                        G_CALLBACK (gimp_text_tool_create_vectors_warped),
+                                        text_tool);
+              gtk_widget_set_sensitive (button2, TRUE);
             }
 
           if (text_tool->editor)
@@ -653,6 +675,32 @@ gimp_text_tool_create_vectors (GimpTextTool *text_tool)
       gimp_item_offsets (GIMP_ITEM (text_tool->layer), &x, &y);
       gimp_item_translate (GIMP_ITEM (vectors), x, y, FALSE);
     }
+
+  gimp_image_add_vectors (text_tool->image, vectors, -1);
+
+  gimp_image_flush (text_tool->image);
+}
+
+static void
+gimp_text_tool_create_vectors_warped (GimpTextTool *text_tool)
+{
+  GimpVectors   *vectors0;
+  GimpVectors   *vectors;
+  GimpText      *text      = text_tool->text;
+  gdouble        box_height;
+
+  if (! text || ! text_tool->image || ! text_tool->layer)
+    return;
+
+  box_height = gimp_item_height (GIMP_ITEM (text_tool->layer));
+
+  vectors0 = gimp_image_get_active_vectors (text_tool->image);
+  if (! vectors0)
+    return;
+
+  vectors = gimp_text_vectors_new (text_tool->image, text_tool->text);
+
+  gimp_vectors_warp_vectors (vectors0, vectors, 0.5 * box_height);
 
   gimp_image_add_vectors (text_tool->image, vectors, -1);
 

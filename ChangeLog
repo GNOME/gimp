@@ -1,3 +1,18 @@
+2005-03-09  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/vectors/gimpvectors-warp.c
+	* app/vectors/gimpvectors-warp.h: new files implmenting
+	"path along a path" functionality.
+
+	* app/vectors/Makefile.am: new stuff added
+	
+	* gimp/app/vectors/gimpvectors.[ch]: actually implement
+	gimp_vectors_real_stroke_get_length().
+
+	* app/tools/gimptexttool.c
+	* app/tools/gimptextoptions.c: first pass at "text
+	along a path", using new functions.  See bug #169616.
+
 2005-03-09  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimppalette.[ch]: renamed again, to

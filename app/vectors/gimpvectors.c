@@ -263,6 +263,7 @@ gimp_vectors_init (GimpVectors *vectors)
   item->visible         = FALSE;
   vectors->strokes      = NULL;
   vectors->freeze_count = 0;
+  vectors->precision    = 0.2;
 }
 
 static void
@@ -811,18 +812,22 @@ gimp_vectors_real_stroke_get_next (const GimpVectors *vectors,
 
 gdouble
 gimp_vectors_stroke_get_length (const GimpVectors *vectors,
-                                const GimpStroke  *prev)
+                                const GimpStroke  *stroke)
 {
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), 0.0);
+  g_return_val_if_fail (GIMP_IS_STROKE (stroke), 0.0);
 
-  return GIMP_VECTORS_GET_CLASS (vectors)->stroke_get_length (vectors, prev);
+  return GIMP_VECTORS_GET_CLASS (vectors)->stroke_get_length (vectors, stroke);
 }
 
 static gdouble
 gimp_vectors_real_stroke_get_length (const GimpVectors *vectors,
-                                     const GimpStroke  *prev)
+                                     const GimpStroke  *stroke)
 {
-  g_printerr ("gimp_vectors_stroke_get_length: default implementation\n");
+  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), 0.0);
+  g_return_val_if_fail (GIMP_IS_STROKE (stroke), 0.0);
+
+  return (gimp_stroke_get_length (stroke, vectors->precision));
 
   return 0.0;
 }

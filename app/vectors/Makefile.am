@@ -32,6 +32,8 @@ libappvectors_a_SOURCES = \
 	gimpvectors-import.c	\
 	gimpvectors-import.h	\
 	gimpvectors-preview.c	\
-	gimpvectors-preview.h
+	gimpvectors-preview.h	\
+	gimpvectors-warp.c	\
+	gimpvectors-warp.h
 
 EXTRA_DIST = makefile.msc

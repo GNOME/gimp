@@ -501,6 +501,14 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   g_object_set_data (G_OBJECT (tool_options),
                      "gimp-text-to-vectors", button);
 
+  button = gtk_button_new_with_label (_("Text along path"));
+  gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_set_sensitive (button, FALSE);
+  gtk_widget_show (button);
+
+  g_object_set_data (G_OBJECT (tool_options),
+                     "gimp-text-to-vectors-warped", button);
+
   return vbox;
 }
 

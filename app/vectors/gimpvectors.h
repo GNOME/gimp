@@ -42,6 +42,7 @@ struct _GimpVectors
   GList    *strokes;            /* The List of GimpStrokes        */
 
   gint      freeze_count;
+  gdouble   precision;
   /* Stuff missing */
 };
 
