@@ -1,5 +1,9 @@
 2005-03-03  Manish Singh  <yosh@gimp.org>
 
+	* tools/pdbgen/pdb/drawable.pdb: fix a typo in the docs.
+
+2005-03-03  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/pygimp/pygimp.h: Make a compatibility wrapper for
 	PyBool_FromLong for pre-2.3 versions of python.
 

@@ -548,7 +548,7 @@ sub drawable_set_pixel {
     $help = <<'HELP';
 This procedure sets the pixel value at the specified coordinates. The
 'num_channels' argument must always be equal to the bytes-per-pixel value for
-the spec ified drawable. Note that this function is not undoable, you should
+the specified drawable. Note that this function is not undoable, you should
 use it only on drawables you just created yourself.
 HELP
 
