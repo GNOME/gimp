@@ -439,6 +439,7 @@ gimp_palette_load (const gchar  *filename,
       g_strstrip (utf8);
 
       gimp_object_set_name (GIMP_OBJECT (palette), utf8);
+      g_free (utf8);
 
       if (! fgets (str, 1024, fp))
 	{

@@ -1,5 +1,9 @@
 2003-11-01  Manish Singh  <yosh@gimp.org>
 
+	* app/core/gimppalette.c (gimp_palette_load): plug a memleak
+
+2003-11-01  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/print/print_gimp.h: don't try to define inline, glib
 	does it for us.
 
