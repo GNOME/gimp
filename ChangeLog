@@ -11,6 +11,9 @@
 
 	Check for bind_textdomain_codeset on Win32.
 
+	Don't try to build xjt plug-in on Win32, no tar or bzip2 anyway,
+	typically.
+
 	* acconfig.h: Add HAVE_BIND_TEXTDOMAIN_CODESET.
 
 	* gimp-zip.in: Also distribute .def files.
@@ -28,7 +31,11 @@
 
 	* libgimp/gimpmath.h: On Win32, define G_MAXRAND as G_MAXINT.
 	(GIMP_WIN32_RAND_FUNC, GIMP_WIN32_SRAND_FUNC): Define on Win32 as
-	calls to g_random_int_range() and g_random_set_seed().
+	calls to g_random_int_range() and g_random_set_seed(). Part of
+	#67386 fix for Win32.
+
+	* plug-ins/Makefile.am: Remove already commented out obsolete
+	makefile.mingw cruft.
 
 2002-02-08  Manish Singh  <yosh@gimp.org>
 

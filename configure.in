@@ -370,7 +370,10 @@ AC_ARG_WITH(libjpeg, [  --without-libjpeg       build without JPEG support])
 	jpeg_ok=no)
       AC_MSG_RESULT($jpeg_ok)
       if test "$jpeg_ok" = yes; then
-	JPEG='jpeg'$EXEEXT; XJT='xjt'; LIBJPEG='-ljpeg'
+	JPEG='jpeg'$EXEEXT; LIBJPEG='-ljpeg'
+	if test x$os_win32 != xyes; then
+	  XJT='xjt';
+        fi
 	AC_CHECK_LIB(jpeg, jpeg_simple_progression,	
 	  AC_DEFINE(HAVE_PROGRESSIVE_JPEG),
 	  AC_MSG_WARN(JPEG library does not support progressive saving.))

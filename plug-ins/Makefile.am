@@ -63,6 +63,3 @@ files:
 	    echo $$subdir/$$file; \
 	  done; \
 	done
-
-## makefile.mingw: $(top_builddir)/config.status $(top_srcdir)/plug-ins/makefile.mingw.in
-## 	cd $(top_builddir) && CONFIG_FILES=plug-ins/$@ CONFIG_HEADERS= $(SHELL) ./config.status
