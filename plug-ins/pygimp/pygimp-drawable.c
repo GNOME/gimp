@@ -333,7 +333,7 @@ drw_repr(PyGimpLayer *self)
     PyObject *s;
     gchar *name;
 
-    name = gimp_drawable_name(self->ID);
+    name = gimp_drawable_get_name(self->ID);
     s = PyString_FromFormat("<gimp.Drawable '%s'>", name?name:"(null)");
     g_free(name);
     return s;
@@ -634,7 +634,7 @@ lay_set_mode(PyGimpLayer *self, PyObject *value, void *closure)
 static PyObject *
 lay_get_name(PyGimpLayer *self, void *closure)
 {
-    return PyString_FromString(gimp_layer_get_name(self->ID));
+    return PyString_FromString(gimp_drawable_get_name(self->ID));
 }
 
 static int
@@ -648,7 +648,7 @@ lay_set_name(PyGimpLayer *self, PyObject *value, void *closure)
 	PyErr_SetString(PyExc_TypeError, "type mis-match.");
 	return -1;
     }
-    gimp_layer_set_name(self->ID, PyString_AsString(value));
+    gimp_drawable_set_name(self->ID, PyString_AsString(value));
     return 0;
 }
 
@@ -719,7 +719,7 @@ lay_set_show_mask(PyGimpLayer *self, PyObject *value, void *closure)
 static PyObject *
 lay_get_tattoo(PyGimpLayer *self, void *closure)
 {
-    return PyInt_FromLong(gimp_layer_get_tattoo(self->ID));
+    return PyInt_FromLong(gimp_drawable_get_tattoo(self->ID));
 }
 
 static int
@@ -733,14 +733,14 @@ lay_set_tattoo(PyGimpLayer *self, PyObject *value, void *closure)
 	PyErr_SetString(PyExc_TypeError, "type mis-match.");
 	return -1;
     }
-    gimp_layer_set_tattoo(self->ID, PyInt_AsLong(value));
+    gimp_drawable_set_tattoo(self->ID, PyInt_AsLong(value));
     return 0;
 }
 
 static PyObject *
 lay_get_visible(PyGimpLayer *self, void *closure)
 {
-    return PyInt_FromLong(gimp_layer_get_visible(self->ID));
+    return PyInt_FromLong(gimp_drawable_get_visible(self->ID));
 }
 
 static int
@@ -754,7 +754,7 @@ lay_set_visible(PyGimpLayer *self, PyObject *value, void *closure)
 	PyErr_SetString(PyExc_TypeError, "type mis-match.");
 	return -1;
     }
-    gimp_layer_set_visible(self->ID, PyInt_AsLong(value));
+    gimp_drawable_set_visible(self->ID, PyInt_AsLong(value));
     return 0;
 }
 
@@ -781,7 +781,7 @@ lay_repr(PyGimpLayer *self)
     PyObject *s;
     gchar *name;
 
-    name = gimp_layer_get_name(self->ID);
+    name = gimp_drawable_get_name(self->ID);
     s = PyString_FromFormat("<gimp.Layer '%s'>", name);
     g_free(name);
     return s;
@@ -943,7 +943,7 @@ chn_set_color(PyGimpChannel *self, PyObject *value, void *closure)
 static PyObject *
 chn_get_name(PyGimpChannel *self, void *closure)
 {
-    return PyString_FromString(gimp_channel_get_name(self->ID));
+    return PyString_FromString(gimp_drawable_get_name(self->ID));
 }
 
 static int
@@ -957,7 +957,7 @@ chn_set_name(PyGimpChannel *self, PyObject *value, void *closure)
 	PyErr_SetString(PyExc_TypeError, "type mis-match.");
 	return -1;
     }
-    gimp_channel_set_name(self->ID, PyString_AsString(value));
+    gimp_drawable_set_name(self->ID, PyString_AsString(value));
     return 0;
 }
 
@@ -1006,7 +1006,7 @@ chn_set_show_masked(PyGimpLayer *self, PyObject *value, void *closure)
 static PyObject *
 chn_get_tattoo(PyGimpChannel *self, void *closure)
 {
-    return PyInt_FromLong(gimp_channel_get_tattoo(self->ID));
+    return PyInt_FromLong(gimp_drawable_get_tattoo(self->ID));
 }
 
 static int
@@ -1020,14 +1020,14 @@ chn_set_tattoo(PyGimpChannel *self, PyObject *value, void *closure)
 	PyErr_SetString(PyExc_TypeError, "type mis-match.");
 	return -1;
     }
-    gimp_channel_set_tattoo(self->ID, PyInt_AsLong(value));
+    gimp_drawable_set_tattoo(self->ID, PyInt_AsLong(value));
     return 0;
 }
 
 static PyObject *
 chn_get_visible(PyGimpLayer *self, void *closure)
 {
-    return PyInt_FromLong(gimp_channel_get_visible(self->ID));
+    return PyInt_FromLong(gimp_drawable_get_visible(self->ID));
 }
 
 static int
@@ -1041,7 +1041,7 @@ chn_set_visible(PyGimpLayer *self, PyObject *value, void *closure)
 	PyErr_SetString(PyExc_TypeError, "type mis-match.");
 	return -1;
     }
-    gimp_channel_set_visible(self->ID, PyInt_AsLong(value));
+    gimp_drawable_set_visible(self->ID, PyInt_AsLong(value));
     return 0;
 }
 
@@ -1062,7 +1062,7 @@ chn_repr(PyGimpChannel *self)
     PyObject *s;
     gchar *name;
 
-    name = gimp_channel_get_name(self->ID);
+    name = gimp_drawable_get_name(self->ID);
     s = PyString_FromFormat("<gimp.Channel '%s'>", name);
     g_free(name);
     return s;
