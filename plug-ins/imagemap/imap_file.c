@@ -54,10 +54,13 @@ open_cb(GtkWidget *widget, gpointer data)
 void
 do_file_open_dialog(void)
 {
-   static GtkWidget *dialog;
+   static GtkWidget *dialog = NULL;
+
    if (!dialog) {
       dialog = gtk_file_selection_new(_("Load Imagemap"));
       gimp_dialog_set_icon (GTK_WINDOW (dialog));
+      gtk_signal_connect (GTK_OBJECT (dialog), "delete_event",
+                          GTK_SIGNAL_FUNC(gtk_widget_hide), NULL);
       gtk_signal_connect_object(
 	 GTK_OBJECT(GTK_FILE_SELECTION(dialog)->cancel_button),
 	 "clicked", GTK_SIGNAL_FUNC(gtk_widget_hide), GTK_OBJECT(dialog));
@@ -77,7 +80,7 @@ really_overwrite(gpointer data)
 static void
 do_file_exists_dialog(gpointer data)
 {
-   static DefaultDialog_t *dialog;
+   static DefaultDialog_t *dialog = NULL;
 
    if (!dialog) {
       dialog = make_default_dialog(_("File exists!"));
@@ -115,10 +118,13 @@ save_cb(GtkWidget *widget, gpointer data)
 void
 do_file_save_as_dialog(void)
 {
-   static GtkWidget *dialog;
+   static GtkWidget *dialog = NULL;
+
    if (!dialog) {
       dialog = gtk_file_selection_new(_("Save Imagemap"));
       gimp_dialog_set_icon (GTK_WINDOW (dialog));
+      gtk_signal_connect (GTK_OBJECT (dialog), "delete_event",
+                          GTK_SIGNAL_FUNC(gtk_widget_hide), NULL);
       gtk_signal_connect_object(
 	 GTK_OBJECT(GTK_FILE_SELECTION(dialog)->cancel_button),
 	 "clicked", GTK_SIGNAL_FUNC(gtk_widget_hide), GTK_OBJECT(dialog));
@@ -160,8 +166,8 @@ create_file_error_dialog()
 void
 do_file_error_dialog(const char *error, const char *filename)
 {
-   static FileErrorDialog_t *dialog;
-   
+   static FileErrorDialog_t *dialog = NULL;
+
    if (!dialog)
       dialog = create_file_error_dialog();
 
