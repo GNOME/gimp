@@ -471,7 +471,6 @@ sub AUTOLOAD {
    my ($class,$name) = $AUTOLOAD =~ /^(.*)::(.*?)$/;
    for(@{"$class\::PREFIXES"}) {
       my $sub = $_.$name;
-      print "checking for $sub(",join(",",@_),")\n";
       if (exists $ignore_function{$sub}) {
         *{$AUTOLOAD} = sub { () };
         goto &$AUTOLOAD;
