@@ -16,6 +16,8 @@ Revision history for Gimp-Perl extension.
         - fix the parasite-editor as much as possible.
         - fixed bug reported by Andreas Jaekel (who chose not to accept
           mail from me) regarding return values for register'ed scripts.
+        - fixed the make install-po problem that Sven fixed but dumb Marc
+          accidently reverted...
 
 1.201 Thu Aug 24 23:44:43 CEST 2000
 	** LAST VERSION THAT WORKS WITH 1.0 **

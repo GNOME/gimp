@@ -62,6 +62,11 @@ AC_ARG_ENABLE(gimptest, [  --disable-gimptest      Do not try to compile and run
 
     GIMP_DATA_DIR=`$GIMPTOOL $gimptool_args --gimpdatadir`
     GIMP_PLUGIN_DIR=`$GIMPTOOL $gimptool_args --gimpplugindir`
+    nodatadir_test=`echo $GIMP_DATA_DIR | sed 's/^\(Usage\).*/\1/'`
+    if test "$nodatadir_test" = "Usage" ; then
+       GIMP_DATA_DIR=""
+       GIMP_PLUGIN_DIR=""
+    fi
 
     gimptool_major_version=`$GIMPTOOL $gimptool_args --version | \
            sed 's/\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\1/'`
@@ -84,6 +89,14 @@ dnl
 #include <stdlib.h>
 
 #include <libgimp/gimp.h>
+
+#ifndef GIMP_CHECK_VERSION
+#define GIMP_CHECK_VERSION(major, minor, micro) \
+    (GIMP_MAJOR_VERSION > (major) || \
+     (GIMP_MAJOR_VERSION == (major) && GIMP_MINOR_VERSION > (minor)) || \
+     (GIMP_MAJOR_VERSION == (major) && GIMP_MINOR_VERSION == (minor) && \
+      GIMP_MICRO_VERSION >= (micro)))
+#endif
 
 #if GIMP_CHECK_VERSION(1,1,20)
 GimpPlugInInfo
@@ -156,7 +169,20 @@ int main ()
 #include <stdio.h>
 #include <libgimp/gimp.h>
 
-GPlugInInfo PLUG_IN_INFO =
+#ifndef GIMP_CHECK_VERSION
+#define GIMP_CHECK_VERSION(major, minor, micro) \
+    (GIMP_MAJOR_VERSION > (major) || \
+     (GIMP_MAJOR_VERSION == (major) && GIMP_MINOR_VERSION > (minor)) || \
+     (GIMP_MAJOR_VERSION == (major) && GIMP_MINOR_VERSION == (minor) && \
+      GIMP_MICRO_VERSION >= (micro)))
+#endif
+
+#if GIMP_CHECK_VERSION(1,1,20)
+GimpPlugInInfo
+#else
+GPlugInInfo
+#endif
+PLUG_IN_INFO =
 {
   NULL,  /* init_proc */
   NULL,  /* quit_proc */
