@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-15 13:36+0100\n"
-"PO-Revision-Date: 2003-11-15 13:37+0100\n"
+"POT-Creation-Date: 2003-11-20 00:16+0100\n"
+"PO-Revision-Date: 2003-11-20 01:08+0100\n"
 "Last-Translator: Branko Ivanović <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@bogus.example.com>\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=3;    plural=n%10==1 && n%100!=11 ? 0 :    n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
-#: app/app_procs.c:187
+#: app/app_procs.c:182
 msgid ""
 "GIMP is not properly installed for the current user.\n"
 "User installation was skipped because the '--no-interface' flag was used.\n"
@@ -31,12 +31,12 @@ msgstr ""
 "Da bi obavili instalaciju za korisnika, pokrenite GIMP bez „--no-interface“ "
 "zastavice."
 
-#: app/app_procs.c:280
+#: app/app_procs.c:275
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Otvaranje „%s“ nije uspelo: %s"
 
-#: app/main.c:201
+#: app/main.c:211
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -44,14 +44,14 @@ msgstr ""
 "GIMP nije mogao da pokrene grafičku masku.\n"
 "Proverite da li su ispravna podešavanja ekranskog prikaza."
 
-#: app/main.c:208 app/gui/splash.c:111 app/widgets/gimptoolbox.c:168
+#: app/main.c:218 app/gui/splash.c:111 app/widgets/gimptoolbox.c:168
 msgid "The GIMP"
 msgstr "GIMP"
 
 #.
 #. *  anything else starting with a '-' is an error.
 #.
-#: app/main.c:372
+#: app/main.c:382
 #, c-format
 msgid ""
 "\n"
@@ -60,11 +60,11 @@ msgstr ""
 "\n"
 "Neispravna opcija„%s“\n"
 
-#: app/main.c:460
+#: app/main.c:470
 msgid "GIMP version"
 msgstr "GIMP verzija"
 
-#: app/main.c:468
+#: app/main.c:478
 #, c-format
 msgid ""
 "\n"
@@ -75,23 +75,23 @@ msgstr ""
 "Upotreba: %s [opcija ... ] [datoteka ... ]\n"
 "\n"
 
-#: app/main.c:469
+#: app/main.c:479
 msgid "Options:\n"
 msgstr "Opcije:\n"
 
-#: app/main.c:470
+#: app/main.c:480
 msgid "  -h, --help               Output this help.\n"
 msgstr "  -h, --help               Prikaži ovaj pomoćni tekst.\n"
 
-#: app/main.c:471
+#: app/main.c:481
 msgid "  -v, --version            Output version information.\n"
 msgstr "  -v, --version            Prikaži informacije o verziji.\n"
 
-#: app/main.c:472
+#: app/main.c:482
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Prikaži početnu poruku.\n"
 
-#: app/main.c:473
+#: app/main.c:483
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
@@ -99,72 +99,72 @@ msgstr ""
 "  --no-shm                 Ne koristi deljenu memoriju između GIMP-a i "
 "dodataka.\n"
 
-#: app/main.c:474
+#: app/main.c:484
 msgid "  --no-mmx                 Do not use MMX routines.\n"
 msgstr "  --no-mmx                 Ne koristi MMX rutine.\n"
 
-#: app/main.c:475
+#: app/main.c:485
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
 msgstr ""
 "  -d, --no-data            Ne učitavaj četke, prelaze, palete, mustre.\n"
 
-#: app/main.c:476
+#: app/main.c:486
 msgid "  -f, --no-fonts           Do not load any fonts.\n"
 msgstr "  -f, --no-fonts           Ne učitavaj fontove.\n"
 
-#: app/main.c:477
+#: app/main.c:487
 msgid "  -i, --no-interface       Run without a user interface.\n"
 msgstr "  -i, --no-interface       Pokreni bez korisničke maske.\n"
 
-#: app/main.c:478
+#: app/main.c:488
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <ekran>       Koristi navedeni X ekran.\n"
 
-#: app/main.c:479
+#: app/main.c:489
 msgid "  -s, --no-splash          Do not show the startup window.\n"
 msgstr "  -s, --no-splash          Ne prikazuj početni prozor.\n"
 
-#: app/main.c:480
+#: app/main.c:490
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
 msgstr "  -S, --no-splash-image    Nemoj dodavati sliku početnom prozoru.\n"
 
-#: app/main.c:481
+#: app/main.c:491
 msgid "  --session <name>         Use an alternate sessionrc file.\n"
 msgstr "  --sesion <ime>           Koristi drugu datoteku sesije.\n"
 
-#: app/main.c:482
+#: app/main.c:492
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
 msgstr "  -g, --gimprc <gimprc>    Koristi drugu gimprc datoteku.\n"
 
-#: app/main.c:483
+#: app/main.c:493
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr ""
 "  --system-gimprc <gimprc> Koristi navedenu sistemsku gimprc datoteku.\n"
 
-#: app/main.c:484
+#: app/main.c:494
 msgid ""
 "  --dump-gimprc            Output a gimprc file with default settings.\n"
 msgstr ""
 "  --dump-gimprc            Ispiši gimprc datoteku sa podrazumevanim "
 "podešavanjima.\n"
 
-#: app/main.c:485
+#: app/main.c:495
 msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
 msgstr ""
 "  -c, --console-messages   Prikaži upozorenja u konzoli umesto u prozoru.\n"
 
-#: app/main.c:486
+#: app/main.c:496
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         Uključi nefatalne rukovaoce signala za otkrivanje "
 "grešaka.\n"
 
-#: app/main.c:487
+#: app/main.c:497
 msgid ""
 "  --enable-stack-trace <never | query | always>\n"
 "                           Debugging mode for fatal signals.\n"
@@ -173,11 +173,11 @@ msgstr ""
 "                           Režim otkrivanja grešaka za kobne signale.\n"
 "\n"
 
-#: app/main.c:489
+#: app/main.c:499
 msgid "  -b, --batch <commands>   Process commands in batch mode.\n"
 msgstr "  -b, --batch <naredbe>   Obradi naredbe u paketnom režimu.\n"
 
-#: app/main.c:509
+#: app/main.c:519
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Ovaj konzolni prozor će biti zatvoren za deset sekundi)\n"
 
@@ -315,19 +315,19 @@ msgid "Cannot expand ${%s}"
 msgstr "Ne mogu da povećam ${%s}"
 
 #: app/config/gimpconfig-utils.c:472 app/config/gimpscanner.c:92
-#: app/core/gimpbrush.c:413 app/core/gimpbrushgenerated.c:377
-#: app/core/gimpbrushpipe.c:352 app/core/gimpgradient.c:355
-#: app/core/gimppalette.c:386 app/core/gimppattern.c:349
-#: app/tools/gimpcurvestool.c:1277 app/tools/gimplevelstool.c:1483
-#: app/xcf/xcf.c:272
+#: app/core/gimpbrush.c:414 app/core/gimpbrushgenerated.c:377
+#: app/core/gimpbrushpipe.c:352 app/core/gimpgradient.c:356
+#: app/core/gimppalette.c:379 app/core/gimppattern.c:344
+#: app/tools/gimpcurvestool.c:1279 app/tools/gimplevelstool.c:1485
+#: app/widgets/gimptexteditor.c:372 app/xcf/xcf.c:272
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Nisam mogao da otvorim „%s“ za čitanje: %s"
 
 #: app/config/gimpconfig-utils.c:481 app/config/gimpconfigwriter.c:118
-#: app/core/gimpbrushgenerated.c:129 app/core/gimpgradient.c:508
-#: app/core/gimpgradient.c:593 app/core/gimppalette.c:597 app/gui/themes.c:189
-#: app/tools/gimpcurvestool.c:1276 app/tools/gimplevelstool.c:1482
+#: app/core/gimpbrushgenerated.c:129 app/core/gimpgradient.c:509
+#: app/core/gimpgradient.c:594 app/core/gimppalette.c:590 app/gui/themes.c:237
+#: app/tools/gimpcurvestool.c:1278 app/tools/gimplevelstool.c:1484
 #: app/vectors/gimpvectors-export.c:77 app/xcf/xcf.c:333
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -391,7 +391,7 @@ msgstr "Ne mogu da napravim „%s“: %s"
 msgid "Parsing '%s'\n"
 msgstr "Obrađujem „%s“\n"
 
-#: app/config/gimprc.c:581
+#: app/config/gimprc.c:577
 #, c-format
 msgid "Saving '%s'\n"
 msgstr "Čuvam „%s“\n"
@@ -1003,7 +1003,7 @@ msgid "RGB"
 msgstr "RGB"
 
 #: app/core/core-enums.c:319 app/core/core-enums.c:340
-#: app/gui/info-window.c:87 app/gui/info-window.c:555
+#: app/gui/info-window.c:87 app/gui/info-window.c:554
 msgid "Grayscale"
 msgstr "Sivi tonovi"
 
@@ -1019,12 +1019,12 @@ msgstr "Sivi tonovi - Alfa"
 msgid "Indexed-Alpha"
 msgstr "Indeksirana paleta - Alfa"
 
-#: app/core/core-enums.c:361 app/gui/preferences-dialog.c:1719
+#: app/core/core-enums.c:361 app/gui/preferences-dialog.c:1714
 #: app/gui/user-install-dialog.c:1285
 msgid "Horizontal"
 msgstr "Vodoravno"
 
-#: app/core/core-enums.c:362 app/gui/preferences-dialog.c:1721
+#: app/core/core-enums.c:362 app/gui/preferences-dialog.c:1716
 #: app/gui/user-install-dialog.c:1287
 msgid "Vertical"
 msgstr "Uspravno"
@@ -1137,7 +1137,7 @@ msgid "Guide"
 msgstr "Vođice"
 
 #: app/core/core-enums.c:562 app/core/core-enums.c:592
-#: app/core/gimpchannel.c:1605 app/core/gimpselection.c:561
+#: app/core/gimpchannel.c:1599 app/core/gimpselection.c:565
 msgid "Selection Mask"
 msgstr "Izabrana Maska"
 
@@ -1177,7 +1177,7 @@ msgstr "Primeni Masku za slojeve"
 msgid "Floating Selection to Layer"
 msgstr "Plutajuću selekciju prebaci u sloj"
 
-#: app/core/core-enums.c:571 app/core/gimpselection.c:817
+#: app/core/core-enums.c:571 app/core/gimpselection.c:821
 msgid "Float Selection"
 msgstr "Plutajuća selekcija"
 
@@ -1397,104 +1397,104 @@ msgid "Plug-In Environment"
 msgstr "Okruženje za dodatke"
 
 #. initialize  the global parasite table
-#: app/core/gimp.c:883
+#: app/core/gimp.c:879
 msgid "Looking for data files"
 msgstr "Tražim datoteke sa podacima"
 
-#: app/core/gimp.c:883
+#: app/core/gimp.c:879
 msgid "Parasites"
 msgstr "Paraziti"
 
 #. initialize the list of gimp brushes
-#: app/core/gimp.c:887 app/gui/dialogs-constructors.c:300
-#: app/gui/dialogs-constructors.c:505 app/gui/preferences-dialog.c:2012
+#: app/core/gimp.c:883 app/gui/dialogs-constructors.c:303
+#: app/gui/dialogs-constructors.c:510 app/gui/preferences-dialog.c:2012
 #: app/pdb/internal_procs.c:84
 msgid "Brushes"
 msgstr "Četke"
 
 #. initialize the list of gimp patterns
-#: app/core/gimp.c:891 app/gui/dialogs-constructors.c:320
-#: app/gui/dialogs-constructors.c:525 app/gui/preferences-dialog.c:2016
+#: app/core/gimp.c:887 app/gui/dialogs-constructors.c:323
+#: app/gui/dialogs-constructors.c:530 app/gui/preferences-dialog.c:2016
 #: app/pdb/internal_procs.c:168
 msgid "Patterns"
 msgstr "Isečci"
 
 #. initialize the list of gimp palettes
-#: app/core/gimp.c:895 app/gui/dialogs-constructors.c:360
-#: app/gui/dialogs-constructors.c:565 app/gui/preferences-dialog.c:2020
+#: app/core/gimp.c:891 app/gui/dialogs-constructors.c:363
+#: app/gui/dialogs-constructors.c:570 app/gui/preferences-dialog.c:2020
 #: app/pdb/internal_procs.c:156
 msgid "Palettes"
 msgstr "Palete"
 
 #. initialize the list of gimp gradients
-#: app/core/gimp.c:899 app/gui/dialogs-constructors.c:340
-#: app/gui/dialogs-constructors.c:545 app/gui/preferences-dialog.c:2024
+#: app/core/gimp.c:895 app/gui/dialogs-constructors.c:343
+#: app/gui/dialogs-constructors.c:550 app/gui/preferences-dialog.c:2024
 #: app/pdb/internal_procs.c:123
 msgid "Gradients"
 msgstr "Prelivi"
 
 #. initialize the list of gimp fonts
-#: app/core/gimp.c:903 app/gui/dialogs-constructors.c:379
-#: app/gui/dialogs-constructors.c:584 app/gui/preferences-dialog.c:2028
+#: app/core/gimp.c:899 app/gui/dialogs-constructors.c:382
+#: app/gui/dialogs-constructors.c:589 app/gui/preferences-dialog.c:2028
 #: app/pdb/internal_procs.c:114
 msgid "Fonts"
 msgstr "Pisma"
 
 #. initialize the document history
-#: app/core/gimp.c:907
+#: app/core/gimp.c:903
 msgid "Documents"
 msgstr "Dokumenta"
 
 #. initialize the template list
-#: app/core/gimp.c:911 app/gui/dialogs-constructors.c:462
+#: app/core/gimp.c:907 app/gui/dialogs-constructors.c:465
 msgid "Templates"
 msgstr "Mustre"
 
 #. initialize the module list
-#: app/core/gimp.c:915 app/gui/preferences-dialog.c:2040
+#: app/core/gimp.c:911 app/gui/preferences-dialog.c:2040
 msgid "Modules"
 msgstr "Moduli"
 
-#: app/core/gimp.c:1040 app/widgets/gimperrorconsole.c:258
+#: app/core/gimp.c:1034 app/widgets/gimperrorconsole.c:259
 #: app/widgets/gimpwidgets-utils.c:93
 msgid "GIMP"
 msgstr "GIMP"
 
-#: app/core/gimpbrush.c:555
+#: app/core/gimpbrush.c:556
 #, c-format
 msgid "Could not read %d bytes from '%s': %s"
 msgstr "Nisam mogao da pročitam %d bajtova iz „%s“: %s"
 
-#: app/core/gimpbrush.c:589
+#: app/core/gimpbrush.c:590
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
 msgstr "Kobna greška pri obradi datoteke sa četkama „%s“: nepoznata dubina %d."
 
-#: app/core/gimpbrush.c:602
+#: app/core/gimpbrush.c:603
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
 msgstr "Kobna greška pri obradi datoteke sa četkama „%s“: nepoznato izdanje %d."
 
-#: app/core/gimpbrush.c:618 app/core/gimpbrush.c:734
+#: app/core/gimpbrush.c:619 app/core/gimpbrush.c:735
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr ""
 "Kobna greška pri obradi datoteke sa četkama „%s“: datoteka izgleda "
 "nedovršeno."
 
-#: app/core/gimpbrush.c:626 app/core/gimpbrushpipe.c:374
+#: app/core/gimpbrush.c:627 app/core/gimpbrushpipe.c:374
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Neispravna UTF-8 niska u datoteci sa četkama „%s“."
 
-#: app/core/gimpbrush.c:633 app/core/gimpbrushpipe.c:376
-#: app/core/gimpcontext.c:1274 app/core/gimpitem.c:422
-#: app/core/gimppattern.c:418 app/gui/templates-commands.c:150
+#: app/core/gimpbrush.c:634 app/core/gimpbrushpipe.c:376
+#: app/core/gimpcontext.c:1272 app/core/gimpitem.c:422
+#: app/core/gimppattern.c:413 app/gui/templates-commands.c:150
 #: app/tools/gimpvectortool.c:333
 msgid "Unnamed"
 msgstr "Neimenovano"
 
-#: app/core/gimpbrush.c:722
+#: app/core/gimpbrush.c:723
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
@@ -1569,35 +1569,35 @@ msgstr "Proširi kanal"
 msgid "Shrink Channel"
 msgstr "Suzi kanal"
 
-#: app/core/gimpchannel.c:471
+#: app/core/gimpchannel.c:467
 msgid "Scale Channel"
 msgstr "Povećaj ili Smanji kanal"
 
-#: app/core/gimpchannel.c:500
+#: app/core/gimpchannel.c:494
 msgid "Resize Channel"
 msgstr "Promeni veličinu kanala"
 
-#: app/core/gimpchannel.c:529
+#: app/core/gimpchannel.c:523
 msgid "Flip Channel"
 msgstr "Okreni kanal"
 
-#: app/core/gimpchannel.c:556
+#: app/core/gimpchannel.c:550
 msgid "Rotate Channel"
 msgstr "Rotiraj kanal"
 
-#: app/core/gimpchannel.c:586 app/core/gimpdrawable-transform.c:1108
+#: app/core/gimpchannel.c:580 app/core/gimpdrawable-transform.c:1108
 msgid "Transform Channel"
 msgstr "Transformiši kanal"
 
-#: app/core/gimpchannel.c:626
+#: app/core/gimpchannel.c:620
 msgid "Cannot stroke empty channel."
 msgstr "Ne može da iscrta prazan kanal."
 
-#: app/core/gimpchannel.c:1484
+#: app/core/gimpchannel.c:1478
 msgid "Set Channel Color"
 msgstr "Podesi boju kanala"
 
-#: app/core/gimpchannel.c:1533
+#: app/core/gimpchannel.c:1527
 msgid "Set Channel Opacity"
 msgstr "Podesi neprovidnost kanala"
 
@@ -1730,25 +1730,25 @@ msgstr "Isprazni naziv promenljive u datoteci okruženja %s"
 msgid "Illegal variable name in environment file %s: %s"
 msgstr "Neispravan naziv promenljive u datoteci okruženja %s: %s"
 
-#: app/core/gimpgradient.c:364
+#: app/core/gimpgradient.c:365
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
 msgstr ""
 "Kobna greška pri obradi datoteke sa prelivom „%s“: nije GIMP-ova datoteka sa "
 "prelivima."
 
-#: app/core/gimpgradient.c:381
+#: app/core/gimpgradient.c:382
 #, c-format
 msgid "Invalid UTF-8 string in gradient file '%s'."
 msgstr "Neispravna UTF-8 niska u datoteci sa prelivima „%s“"
 
-#: app/core/gimpgradient.c:409
+#: app/core/gimpgradient.c:410
 #, c-format
 msgid "Fatal parse error in gradient file '%s': File is corrupt."
 msgstr ""
 "Kobna greška pri obradi datoteke sa prelivom „%s“: datoteka je neispravna."
 
-#: app/core/gimpgradient.c:466
+#: app/core/gimpgradient.c:467
 #, c-format
 msgid "Corrupt segment %d in gradient file '%s'."
 msgstr "Korumpiran segment %d u datoteci sa prelivima „%s“."
@@ -1795,15 +1795,15 @@ msgstr "Promeni unos u indeksiranoj paleti"
 msgid "Add Color to Indexed Palette"
 msgstr "Dodaj boju u indeksiranu paletu"
 
-#: app/core/gimpimage-convert.c:771
+#: app/core/gimpimage-convert.c:772
 msgid "Convert Image to RGB"
 msgstr "Prebaci sliku u RGB režim"
 
-#: app/core/gimpimage-convert.c:775
+#: app/core/gimpimage-convert.c:776
 msgid "Convert Image to Grayscale"
 msgstr "Prebaci sliku u sive tonove"
 
-#: app/core/gimpimage-convert.c:779
+#: app/core/gimpimage-convert.c:780
 msgid "Convert Image to Indexed"
 msgstr "Prebaci sliku u indeksiranu"
 
@@ -1859,13 +1859,13 @@ msgstr "Uključi BrzeMaske"
 msgid "Disable QuickMask"
 msgstr "Isključi BrzeMaske"
 
-#: app/core/gimpimage-undo-push.c:3344
+#: app/core/gimpimage-undo-push.c:3346
 #, c-format
 msgid "Can't undo %s"
 msgstr "Ne mogu da poništim %s"
 
 #: app/core/gimpimage.c:1058 app/core/gimppalette-import.c:205
-#: app/core/gimppalette.c:668 app/gui/palette-import-dialog.c:587
+#: app/core/gimppalette.c:661 app/gui/palette-import-dialog.c:587
 #: app/pdb/image_cmds.c:3754 app/widgets/gimpdatafactoryview.c:299
 msgid "Untitled"
 msgstr "Bez naslova"
@@ -1878,168 +1878,168 @@ msgstr "Promeni rezoluciju slike"
 msgid "Change Image Unit"
 msgstr "Promeni jedinicu slike"
 
-#: app/core/gimpimage.c:1907
+#: app/core/gimpimage.c:1918
 msgid "Attach Paraite to Image"
 msgstr "Prikači parazita slici"
 
-#: app/core/gimpimage.c:1940
+#: app/core/gimpimage.c:1951
 msgid "Remove Parasite from Image"
 msgstr "Skloni parazita sa slike"
 
-#: app/core/gimpimage.c:2426
+#: app/core/gimpimage.c:2437
 msgid "Add Layer"
 msgstr "Dodaj sloj"
 
-#: app/core/gimpimage.c:2500
+#: app/core/gimpimage.c:2511
 msgid "Remove Layer"
 msgstr "Ukloni sloj"
 
-#: app/core/gimpimage.c:2562
+#: app/core/gimpimage.c:2573
 msgid "Layer cannot be raised higher."
 msgstr "Sloj se ne može podići više."
 
-#: app/core/gimpimage.c:2567 app/widgets/gimplayertreeview.c:218
+#: app/core/gimpimage.c:2578 app/widgets/gimplayertreeview.c:218
 msgid "Raise Layer"
 msgstr "Podigni sloj"
 
-#: app/core/gimpimage.c:2587
+#: app/core/gimpimage.c:2598
 msgid "Layer cannot be lowered more."
 msgstr "Sloj se ne može spustiti niže."
 
-#: app/core/gimpimage.c:2592 app/widgets/gimplayertreeview.c:222
+#: app/core/gimpimage.c:2603 app/widgets/gimplayertreeview.c:222
 msgid "Lower Layer"
 msgstr "Spusti sloj"
 
-#: app/core/gimpimage.c:2609
+#: app/core/gimpimage.c:2620
 msgid "Layer is already on top."
 msgstr "Sloj je već na vrhu."
 
-#: app/core/gimpimage.c:2615
+#: app/core/gimpimage.c:2626
 msgid "Cannot raise a layer without alpha."
 msgstr "Ne mogu da podignem sloj koji nema alfa kanal."
 
-#: app/core/gimpimage.c:2620 app/widgets/gimplayertreeview.c:220
+#: app/core/gimpimage.c:2631 app/widgets/gimplayertreeview.c:220
 msgid "Raise Layer to Top"
 msgstr "Podigni sloj na vrh"
 
-#: app/core/gimpimage.c:2640
+#: app/core/gimpimage.c:2651
 msgid "Layer is already on the bottom."
 msgstr "Sloj je već na dnu."
 
-#: app/core/gimpimage.c:2645 app/widgets/gimplayertreeview.c:224
+#: app/core/gimpimage.c:2656 app/widgets/gimplayertreeview.c:224
 msgid "Lower Layer to Bottom"
 msgstr "Spusti sloj na dno"
 
-#: app/core/gimpimage.c:2688
+#: app/core/gimpimage.c:2699
 #, c-format
 msgid "Layer '%s' has no alpha. Layer was placed above it."
 msgstr "Sloj „%s“ nema alfa kanal. Sloj je postavljen iznad njega."
 
-#: app/core/gimpimage.c:2738
+#: app/core/gimpimage.c:2749
 msgid "Add Channel"
 msgstr "Dodaj kanal"
 
-#: app/core/gimpimage.c:2783
+#: app/core/gimpimage.c:2794
 msgid "Remove Channel"
 msgstr "Ukloni kanal"
 
-#: app/core/gimpimage.c:2827
+#: app/core/gimpimage.c:2838
 msgid "Channel cannot be raised higher."
 msgstr "Kanal se ne može podići više."
 
-#: app/core/gimpimage.c:2832 app/widgets/gimpchanneltreeview.c:127
+#: app/core/gimpimage.c:2843 app/widgets/gimpchanneltreeview.c:127
 msgid "Raise Channel"
 msgstr "Podigni kanal"
 
-#: app/core/gimpimage.c:2848
+#: app/core/gimpimage.c:2859
 msgid "Channel cannot be lowered more."
 msgstr "Kanal se ne može spustiti niže."
 
-#: app/core/gimpimage.c:2853 app/widgets/gimpchanneltreeview.c:131
+#: app/core/gimpimage.c:2864 app/widgets/gimpchanneltreeview.c:131
 msgid "Lower Channel"
 msgstr "Spusti kanal"
 
-#: app/core/gimpimage.c:2926
+#: app/core/gimpimage.c:2937
 msgid "Add Path"
 msgstr "Dodaj putanju"
 
-#: app/core/gimpimage.c:2973
+#: app/core/gimpimage.c:2984
 msgid "Remove Path"
 msgstr "Ukloni putanju"
 
-#: app/core/gimpimage.c:3018
+#: app/core/gimpimage.c:3029
 msgid "Path cannot be raised higher."
 msgstr "Putanje se ne može podići više."
 
-#: app/core/gimpimage.c:3023 app/widgets/gimpvectorstreeview.c:137
+#: app/core/gimpimage.c:3034 app/widgets/gimpvectorstreeview.c:137
 msgid "Raise Path"
 msgstr "Podigni putanju"
 
-#: app/core/gimpimage.c:3039
+#: app/core/gimpimage.c:3050
 msgid "Path cannot be lowered more."
 msgstr "Putanja se ne može spustiti niže."
 
-#: app/core/gimpimage.c:3044 app/widgets/gimpvectorstreeview.c:141
+#: app/core/gimpimage.c:3055 app/widgets/gimpvectorstreeview.c:141
 msgid "Lower Path"
 msgstr "Spusti putanju"
 
-#: app/core/gimpimagefile.c:458 app/core/gimpimagefile.c:1048
+#: app/core/gimpimagefile.c:458 app/core/gimpimagefile.c:1047
 #, c-format
 msgid "Could not write thumbnail for '%s' as '%s': %s"
 msgstr "Nisam uspeo da upišem umanjeni prikaz za „%s“ kao „%s“: %s"
 
-#: app/core/gimpimagefile.c:464 app/core/gimpimagefile.c:1054
+#: app/core/gimpimagefile.c:464 app/core/gimpimagefile.c:1053
 #, c-format
 msgid "Could not set permissions of thumbnail '%s': %s"
 msgstr "Nisam uspeo da postavim ovlašćenja umanjenog prikaza „%s“: %s"
 
-#: app/core/gimpimagefile.c:742
+#: app/core/gimpimagefile.c:741
 msgid "Remote image"
 msgstr "Udaljena slika"
 
 # Danilo kaže: „Malo aorista ne škodi“ :-)
-#: app/core/gimpimagefile.c:747
+#: app/core/gimpimagefile.c:746
 msgid "Could not open"
 msgstr "Ne mogoh da otvorim"
 
-#: app/core/gimpimagefile.c:772
+#: app/core/gimpimagefile.c:771
 msgid "No preview available"
 msgstr "Pregled nije dostupan"
 
-#: app/core/gimpimagefile.c:776
+#: app/core/gimpimagefile.c:775
 msgid "Loading preview ..."
 msgstr "Učitavam pregled ..."
 
-#: app/core/gimpimagefile.c:780
+#: app/core/gimpimagefile.c:779
 msgid "Preview is out of date"
 msgstr "Pregled je zastareo"
 
-#: app/core/gimpimagefile.c:784
+#: app/core/gimpimagefile.c:783
 msgid "Cannot create preview"
 msgstr "Ne mogu da napravim pregled"
 
-#: app/core/gimpimagefile.c:794 app/gui/info-window.c:505
+#: app/core/gimpimagefile.c:793 app/gui/info-window.c:505
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d x %d tačaka"
 
 # bug: plural-forms
-#: app/core/gimpimagefile.c:812
+#: app/core/gimpimagefile.c:811
 msgid "1 Layer"
 msgstr "1 sloj"
 
 # bug: plural-forms
-#: app/core/gimpimagefile.c:814
+#: app/core/gimpimagefile.c:813
 #, c-format
 msgid "%d Layers"
 msgstr "Slojeva: %d"
 
-#: app/core/gimpimagefile.c:893
+#: app/core/gimpimagefile.c:892
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Nisam mogao da otvorim umanjeni prikaz „%s“: %s"
 
-#: app/core/gimpimagefile.c:1142
+#: app/core/gimpimagefile.c:1141
 #, c-format
 msgid "Could not create thumbnail folder '%s'."
 msgstr "Nisam mogao da napravim direktorijum za umanjene prikaze „%s“."
@@ -2117,7 +2117,7 @@ msgid "Layer to Image Size"
 msgstr "Izjednači veličinu sloja i slike"
 
 # bug: cannot first sentence be replaced with the one from next message?
-#: app/core/gimppalette.c:401
+#: app/core/gimppalette.c:394
 #, c-format
 msgid ""
 "Fatal parse error in palette file '%s': Missing magic header.\n"
@@ -2127,23 +2127,23 @@ msgstr ""
 "Treba li ovu datoteku prevesti sa DOS-a?"
 
 # bug: cannot this be used in the above message?
-#: app/core/gimppalette.c:407
+#: app/core/gimppalette.c:400
 #, c-format
 msgid "Fatal parse error in palette file '%s': Missing magic header."
 msgstr "Kobna greška u datoteci palete „%s“: nedostaje magično zaglavlje."
 
-#: app/core/gimppalette.c:423 app/core/gimppalette.c:448
-#: app/core/gimppalette.c:478 app/core/gimppalette.c:557
+#: app/core/gimppalette.c:416 app/core/gimppalette.c:441
+#: app/core/gimppalette.c:471 app/core/gimppalette.c:550
 #, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
 msgstr "Kobna greška u datoteci palete „%s“: greška pri čitanju %d. reda."
 
-#: app/core/gimppalette.c:438
+#: app/core/gimppalette.c:431
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Neispravna UTF-8 niska u datoteci palete „%s“"
 
-#: app/core/gimppalette.c:466
+#: app/core/gimppalette.c:459
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -2153,40 +2153,40 @@ msgstr ""
 "podrazumevanu vrednost."
 
 #. maybe we should just abort?
-#: app/core/gimppalette.c:512
+#: app/core/gimppalette.c:505
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr "Učitavam paletu „%s“: nedostaje CRVENA komponenta u %d. redu."
 
-#: app/core/gimppalette.c:520
+#: app/core/gimppalette.c:513
 #, c-format
 msgid "Reading palette '%s': Missing GREEN component in line %d."
 msgstr "Učitavam paletu „%s“: nedostaje ZELENA komponenta u %d. redu."
 
-#: app/core/gimppalette.c:528
+#: app/core/gimppalette.c:521
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "Učitavam paletu „%s“: nedostaje PLAVA komponenta u %d. redu."
 
-#: app/core/gimppalette.c:538
+#: app/core/gimppalette.c:531
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr "Učitavam paletu „%s“: RGB vrednost izvan opsega u %d. redu."
 
-#: app/core/gimppalette.c:714
+#: app/core/gimppalette.c:707
 msgid "Black"
 msgstr "Crna"
 
 # bug: plural-forms
-#: app/core/gimppattern.c:358 app/core/gimppattern.c:404
-#: app/core/gimppattern.c:429
+#: app/core/gimppattern.c:353 app/core/gimppattern.c:399
+#: app/core/gimppattern.c:424
 #, c-format
 msgid "Fatal parse error in pattern file '%s': Could not read %d bytes: %s"
 msgstr ""
 "Kobna greška pri obradi datoteke sa odsečkom „%s“: ne mogu da učitam %d "
 "bajtova: %s"
 
-#: app/core/gimppattern.c:377
+#: app/core/gimppattern.c:372
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
@@ -2194,7 +2194,7 @@ msgstr ""
 "Kobna greška pri obradi datoteke sa odsečkom „%s“: nepoznato izdanje odsečaka "
 "%d."
 
-#: app/core/gimppattern.c:387
+#: app/core/gimppattern.c:382
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
@@ -2204,73 +2204,73 @@ msgstr ""
 "%d.\n"
 "GIMP odsečci moraju biti SIVI ili RGB."
 
-#: app/core/gimppattern.c:411
+#: app/core/gimppattern.c:406
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Neispravna UTF-8 niska u datoteci sa odsečkom „%s“."
 
-#: app/core/gimpselection.c:192 app/tools/gimpeditselectiontool.c:247
+#: app/core/gimpselection.c:196 app/tools/gimpeditselectiontool.c:247
 #: app/tools/gimpeditselectiontool.c:1031 app/tools/gimpmoveoptions.c:184
 #: app/tools/gimpmoveoptions.c:185
 msgid "Move Selection"
 msgstr "Pomeri selekciju"
 
-#: app/core/gimpselection.c:193 app/gui/select-commands.c:151
+#: app/core/gimpselection.c:197 app/gui/select-commands.c:151
 msgid "Feather Selection"
 msgstr "Obuci selekciju"
 
-#: app/core/gimpselection.c:194
+#: app/core/gimpselection.c:198
 msgid "Sharpen Selection"
 msgstr "Izoštri selekciju"
 
-#: app/core/gimpselection.c:195 app/widgets/gimpselectioneditor.c:177
+#: app/core/gimpselection.c:199 app/widgets/gimpselectioneditor.c:176
 msgid "Select None"
 msgstr "Poništi selekciju"
 
-#: app/core/gimpselection.c:196 app/widgets/gimpselectioneditor.c:169
+#: app/core/gimpselection.c:200 app/widgets/gimpselectioneditor.c:168
 msgid "Select All"
 msgstr "Izaberi sve"
 
-#: app/core/gimpselection.c:197 app/widgets/gimpselectioneditor.c:185
+#: app/core/gimpselection.c:201 app/widgets/gimpselectioneditor.c:184
 msgid "Invert Selection"
 msgstr "Invertuj selekciju"
 
-#: app/core/gimpselection.c:198 app/gui/select-commands.c:244
+#: app/core/gimpselection.c:202 app/gui/select-commands.c:244
 msgid "Border Selection"
 msgstr "Ograniči selekciju"
 
-#: app/core/gimpselection.c:199 app/gui/select-commands.c:221
+#: app/core/gimpselection.c:203 app/gui/select-commands.c:221
 msgid "Grow Selection"
 msgstr "Povećaj selekciju"
 
-#: app/core/gimpselection.c:200 app/gui/select-commands.c:187
+#: app/core/gimpselection.c:204 app/gui/select-commands.c:187
 msgid "Shrink Selection"
 msgstr "Smanji selekciju"
 
-#: app/core/gimpselection.c:290
+#: app/core/gimpselection.c:294
 msgid "No selection to stroke."
 msgstr "Nema selekcije koja bi bila uzeta za konturu."
 
-#: app/core/gimpselection.c:299 app/widgets/gimpselectioneditor.c:217
+#: app/core/gimpselection.c:303 app/widgets/gimpselectioneditor.c:216
 msgid "Stroke Selection"
 msgstr "Uzmi selekciju kao konturu"
 
-#: app/core/gimpselection.c:593 app/gui/channels-commands.c:206
+#: app/core/gimpselection.c:597 app/gui/channels-commands.c:206
 #: app/pdb/selection_cmds.c:917 app/pdb/selection_cmds.c:1035
 #: app/widgets/gimpchanneltreeview.c:291
 msgid "Channel to Selection"
 msgstr "Napravi selekciju na osnovu kanala"
 
-#: app/core/gimpselection.c:665
+#: app/core/gimpselection.c:669
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr ""
 "Ne mogu da isečem ili kopiram zbog toga što su izabrane oblasti prazne."
 
-#: app/core/gimpselection.c:810
+#: app/core/gimpselection.c:814
 msgid "Cannot float selection because the selected region is empty."
 msgstr "Ne mogu da postavim plutajuću selekciju jer je izabrana oblast prazna."
 
-#: app/core/gimpselection.c:833 app/gui/layers-commands.c:889
+#: app/core/gimpselection.c:837 app/gui/layers-commands.c:889
 msgid "Floating Selection"
 msgstr "Plutajuća selekcija"
 
@@ -2395,12 +2395,12 @@ msgstr "/Kao među _postavkama"
 msgid "Toggle QuickMask"
 msgstr "Uključi-isključi BrzuMasku"
 
-#: app/display/gimpdisplayshell.c:1726
+#: app/display/gimpdisplayshell.c:1728
 #, c-format
 msgid "Close %s?"
 msgstr "Zatvoriti %s?"
 
-#: app/display/gimpdisplayshell.c:1728
+#: app/display/gimpdisplayshell.c:1730
 #, c-format
 msgid "Changes were made to '%s'. Close anyway?"
 msgstr "Došlo je do promena u „%s“. Da ipak zatvorim?"
@@ -2788,118 +2788,118 @@ msgstr ""
 msgid "Select Custom Palette"
 msgstr "Izaberi proizvoljnu paletu"
 
-#: app/gui/dialogs-constructors.c:217 app/gui/gui.c:363
-#: app/gui/preferences-dialog.c:1350 app/gui/preferences-dialog.c:1353
+#: app/gui/dialogs-constructors.c:218 app/gui/gui.c:350
+#: app/gui/preferences-dialog.c:1345 app/gui/preferences-dialog.c:1348
 msgid "Tool Options"
 msgstr "Opcije Alata"
 
-#: app/gui/dialogs-constructors.c:237
+#: app/gui/dialogs-constructors.c:238
 msgid "Devices"
 msgstr "Uređaji"
 
-#: app/gui/dialogs-constructors.c:237
+#: app/gui/dialogs-constructors.c:238
 msgid "Device Status"
 msgstr "Stanje uređaja"
 
-#: app/gui/dialogs-constructors.c:257
+#: app/gui/dialogs-constructors.c:258
 msgid "Errors"
 msgstr "Greške"
 
-#: app/gui/dialogs-constructors.c:257
+#: app/gui/dialogs-constructors.c:258
 msgid "Error Console"
 msgstr "Konzola za greške"
 
-#: app/gui/dialogs-constructors.c:279 app/gui/dialogs-constructors.c:484
+#: app/gui/dialogs-constructors.c:282 app/gui/dialogs-constructors.c:489
 msgid "Images"
 msgstr "Slike"
 
-#: app/gui/dialogs-constructors.c:397 app/gui/dialogs-constructors.c:602
+#: app/gui/dialogs-constructors.c:400 app/gui/dialogs-constructors.c:607
 msgid "Tools"
 msgstr "Alati"
 
-#: app/gui/dialogs-constructors.c:416 app/gui/dialogs-constructors.c:621
+#: app/gui/dialogs-constructors.c:419 app/gui/dialogs-constructors.c:626
 msgid "Buffers"
 msgstr "Baferi"
 
-#: app/gui/dialogs-constructors.c:436 app/gui/dialogs-constructors.c:641
+#: app/gui/dialogs-constructors.c:439 app/gui/dialogs-constructors.c:646
 msgid "History"
 msgstr "Istorijat"
 
-#: app/gui/dialogs-constructors.c:436 app/gui/dialogs-constructors.c:641
+#: app/gui/dialogs-constructors.c:439 app/gui/dialogs-constructors.c:646
 msgid "Document History"
 msgstr "Istorijat dokumenta"
 
-#: app/gui/dialogs-constructors.c:462
+#: app/gui/dialogs-constructors.c:465
 msgid "Image Templates"
 msgstr "Mustre slika"
 
-#: app/gui/dialogs-constructors.c:671
+#: app/gui/dialogs-constructors.c:676
 msgid "Layers"
 msgstr "Slojevi"
 
-#: app/gui/dialogs-constructors.c:702
+#: app/gui/dialogs-constructors.c:707
 msgid "Channels"
 msgstr "Kanali"
 
-#: app/gui/dialogs-constructors.c:739 app/pdb/internal_procs.c:162
+#: app/gui/dialogs-constructors.c:744 app/pdb/internal_procs.c:162
 #: app/tools/gimpvectortool.c:158
 msgid "Paths"
 msgstr "Putanje"
 
-#: app/gui/dialogs-constructors.c:760
+#: app/gui/dialogs-constructors.c:765
 msgid "Colormap"
 msgstr "Mapa boja"
 
-#: app/gui/dialogs-constructors.c:760
+#: app/gui/dialogs-constructors.c:765
 msgid "Indexed Palette"
 msgstr "Indeksirana paleta"
 
-#: app/gui/dialogs-constructors.c:787
+#: app/gui/dialogs-constructors.c:792
 msgid "Histogram"
 msgstr "Histogram"
 
-#: app/gui/dialogs-constructors.c:813
+#: app/gui/dialogs-constructors.c:818
 msgid "Selection"
 msgstr "Selekcija"
 
-#: app/gui/dialogs-constructors.c:813
+#: app/gui/dialogs-constructors.c:818
 msgid "Selection Editor"
 msgstr "Urednik selekcija"
 
-#: app/gui/dialogs-constructors.c:833 app/pdb/internal_procs.c:189
+#: app/gui/dialogs-constructors.c:838 app/pdb/internal_procs.c:189
 #: app/widgets/gimpundoeditor.c:122
 msgid "Undo"
 msgstr "Poništi"
 
-#: app/gui/dialogs-constructors.c:833
+#: app/gui/dialogs-constructors.c:838
 msgid "Undo History"
 msgstr "Istorijat poništavanja"
 
-#: app/gui/dialogs-constructors.c:863
+#: app/gui/dialogs-constructors.c:868
 msgid "Navigation"
 msgstr "Navigacija"
 
-#: app/gui/dialogs-constructors.c:863
+#: app/gui/dialogs-constructors.c:868
 msgid "Display Navigation"
 msgstr "Prikaži navigaciju"
 
-#: app/gui/dialogs-constructors.c:881
+#: app/gui/dialogs-constructors.c:886
 msgid "FG/BG"
 msgstr "Boja četke/pozadine"
 
-#: app/gui/dialogs-constructors.c:881
+#: app/gui/dialogs-constructors.c:886
 msgid "FG/BG Color"
 msgstr "FG/BG Boje"
 
-#: app/gui/dialogs-constructors.c:901
+#: app/gui/dialogs-constructors.c:906
 msgid "Brush Editor"
 msgstr "Urednik za četkice"
 
-#: app/gui/dialogs-constructors.c:932
+#: app/gui/dialogs-constructors.c:937
 msgid "Gradient Editor"
 msgstr "Urednik za prelive"
 
-#: app/gui/dialogs-constructors.c:963
+#: app/gui/dialogs-constructors.c:968
 msgid "Palette Editor"
 msgstr "Urednik za palete"
 
@@ -3139,7 +3139,7 @@ msgstr "Unesi naziv za ovaj bafer"
 msgid "Copy Named"
 msgstr "Kopiraj imenovano"
 
-#: app/gui/edit-commands.c:290 app/gui/stroke-dialog.c:269
+#: app/gui/edit-commands.c:290 app/gui/stroke-dialog.c:272
 #: app/gui/vectors-commands.c:289
 msgid "There is no active layer or channel to stroke to."
 msgstr "Nema aktivnog sloja ili kanala za iscrtavanje."
@@ -3160,7 +3160,7 @@ msgstr "/_Sačuvaj sve greške u datoteku..."
 msgid "/Save _Selection to File..."
 msgstr "/Sačuvaj selekciju u datoteku..."
 
-#: app/gui/file-commands.c:189 app/gui/file-open-dialog.c:705
+#: app/gui/file-commands.c:189 app/gui/file-open-dialog.c:713
 #: app/widgets/gimpdnd.c:1020 app/widgets/gimpdocumentview.c:456
 #, c-format
 msgid ""
@@ -3172,7 +3172,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/gui/file-commands.c:250 app/gui/file-save-dialog.c:378
+#: app/gui/file-commands.c:250 app/gui/file-save-dialog.c:393
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -3229,12 +3229,12 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/gui/file-dialog-utils.c:122
+#: app/gui/file-dialog-utils.c:113
 msgid "Determine File _Type:"
 msgstr "Odredi tip datoteke:"
 
-#: app/gui/file-new-dialog.c:96 app/gui/preferences-dialog.c:1089
-#: app/gui/preferences-dialog.c:1092
+#: app/gui/file-new-dialog.c:96 app/gui/preferences-dialog.c:1084
+#: app/gui/preferences-dialog.c:1087
 msgid "New Image"
 msgstr "Nova slika"
 
@@ -3242,7 +3242,7 @@ msgstr "Nova slika"
 msgid "Create a New Image"
 msgstr "Napravi novu sliku"
 
-#: app/gui/file-new-dialog.c:134 app/gui/preferences-dialog.c:1109
+#: app/gui/file-new-dialog.c:134 app/gui/preferences-dialog.c:1104
 msgid "From _Template:"
 msgstr "Prema Mustri:"
 
@@ -3269,11 +3269,11 @@ msgstr ""
 msgid "Confirm Image Size"
 msgstr "Potvrdi veličinu sliku"
 
-#: app/gui/file-open-dialog.c:158 app/gui/file-open-dialog.c:185
+#: app/gui/file-open-dialog.c:159 app/gui/file-open-dialog.c:186
 msgid "Open Image"
 msgstr "Otvori sliku"
 
-#: app/gui/file-open-dialog.c:232
+#: app/gui/file-open-dialog.c:236
 #, c-format
 msgid ""
 "Click to update preview\n"
@@ -3283,15 +3283,15 @@ msgstr ""
 "%s  Kliknite da ažurirate iako je prikaz ažuriran"
 
 #. The preview toggle
-#: app/gui/file-open-dialog.c:249 app/tools/gimpimagemaptool.c:236
+#: app/gui/file-open-dialog.c:253 app/tools/gimpimagemaptool.c:236
 msgid "_Preview"
 msgstr "_Prikaz"
 
-#: app/gui/file-open-dialog.c:299 app/gui/file-open-dialog.c:407
+#: app/gui/file-open-dialog.c:303 app/gui/file-open-dialog.c:411
 msgid "No Selection"
 msgstr "Nema selekcije"
 
-#: app/gui/file-open-dialog.c:498 app/gui/file-open-dialog.c:529
+#: app/gui/file-open-dialog.c:502 app/gui/file-open-dialog.c:533
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Umanjeni prikaz %d od %d"
@@ -3300,15 +3300,15 @@ msgstr "Umanjeni prikaz %d od %d"
 msgid "/Automatic"
 msgstr "/Automatski"
 
-#: app/gui/file-save-dialog.c:127 app/gui/file-save-dialog.c:209
+#: app/gui/file-save-dialog.c:128 app/gui/file-save-dialog.c:212
 msgid "Save Image"
 msgstr "Sačuvaj sliku"
 
-#: app/gui/file-save-dialog.c:181
+#: app/gui/file-save-dialog.c:182
 msgid "Save a Copy of the Image"
 msgstr "Sačuvaj kopiju slike"
 
-#: app/gui/file-save-dialog.c:297
+#: app/gui/file-save-dialog.c:312
 #, c-format
 msgid ""
 "File '%s' exists.\n"
@@ -3317,7 +3317,7 @@ msgstr ""
 "Datoteka „%s“ postoji.\n"
 "Da pišem preko nje?"
 
-#: app/gui/file-save-dialog.c:302
+#: app/gui/file-save-dialog.c:317
 msgid "File Exists!"
 msgstr "Datoteka postoji!"
 
@@ -3603,9 +3603,9 @@ msgid ""
 "Unable to run gradient callback. The corresponding plug-in may have crashed."
 msgstr "Nisam mogao da opozovem preliv. Možda je otkazao odgovarajući dodatak."
 
-#: app/gui/gradients-commands.c:74
+#: app/gui/gradients-commands.c:75
 #, c-format
-msgid "Save \"%s\" as POV-Ray"
+msgid "Save '%s' as POV-Ray"
 msgstr "Sačuvaj „%s“ kao POV-Ray"
 
 #: app/gui/gradients-menu.c:46
@@ -3640,11 +3640,11 @@ msgstr "Podesi mrežu"
 msgid "Configure Image Grid"
 msgstr "Podesi mrežu slike"
 
-#: app/gui/gui.c:422
+#: app/gui/gui.c:409
 msgid "Quit The GIMP?"
 msgstr "Napustiti GIMP?"
 
-#: app/gui/gui.c:427
+#: app/gui/gui.c:414
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -4617,8 +4617,8 @@ msgid "/_Delete Image"
 msgstr "/Obriši sliku"
 
 #. General
-#: app/gui/info-dialog.c:356 app/gui/preferences-dialog.c:1312
-#: app/gui/preferences-dialog.c:1424
+#: app/gui/info-dialog.c:356 app/gui/preferences-dialog.c:1307
+#: app/gui/preferences-dialog.c:1419
 msgid "General"
 msgstr "Opšte"
 
@@ -4646,7 +4646,7 @@ msgstr "Direct Color"
 msgid "Extended"
 msgstr "Dodatno"
 
-#: app/gui/info-window.c:149 app/gui/preferences-dialog.c:1701
+#: app/gui/info-window.c:149 app/gui/preferences-dialog.c:1696
 #: app/gui/user-install-dialog.c:1270 app/widgets/gimpgrideditor.c:266
 #: app/widgets/gimpgrideditor.c:299 app/widgets/gimptemplateeditor.c:303
 msgid "Pixels"
@@ -4732,20 +4732,20 @@ msgstr "tačaka/%s"
 msgid "%g x %g %s"
 msgstr "%g x %g %s"
 
-#: app/gui/info-window.c:523 app/gui/preferences-dialog.c:1723
+#: app/gui/info-window.c:523 app/gui/preferences-dialog.c:1718
 #: app/gui/user-install-dialog.c:1289
 msgid "dpi"
 msgstr "tpi"
 
-#: app/gui/info-window.c:552
+#: app/gui/info-window.c:551
 msgid "RGB Color"
 msgstr "RGB Boje"
 
-#: app/gui/info-window.c:559
+#: app/gui/info-window.c:558
 msgid "Indexed Color"
 msgstr "Indeksirane boje"
 
-#: app/gui/info-window.c:559
+#: app/gui/info-window.c:558
 msgid "colors"
 msgstr "boje"
 
@@ -5285,412 +5285,416 @@ msgstr "Ponovo prikaži poslednji"
 msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr "Moraćete ponovo da pokrenete GIMP da bi sledeće promene uzele maha:"
 
-#: app/gui/preferences-dialog.c:863
+#: app/gui/preferences-dialog.c:858
 msgid "Show _Menubar"
 msgstr "Prikaži glavni _meni"
 
-#: app/gui/preferences-dialog.c:866
+#: app/gui/preferences-dialog.c:861
 msgid "Show _Rulers"
 msgstr "Prikaži Lenjire"
 
-#: app/gui/preferences-dialog.c:869
+#: app/gui/preferences-dialog.c:864
 msgid "Show Scroll_bars"
 msgstr "Prikaži _klizače"
 
-#: app/gui/preferences-dialog.c:872
+#: app/gui/preferences-dialog.c:867
 msgid "Show S_tatusbar"
 msgstr "Prikaži statusnu liniju"
 
-#: app/gui/preferences-dialog.c:880
+#: app/gui/preferences-dialog.c:875
 msgid "Show S_election"
 msgstr "Prikaži selekciju"
 
-#: app/gui/preferences-dialog.c:883
+#: app/gui/preferences-dialog.c:878
 msgid "Show _Layer Boundary"
 msgstr "Pokaži _granice sloja"
 
-#: app/gui/preferences-dialog.c:886
+#: app/gui/preferences-dialog.c:881
 msgid "Show _Guides"
 msgstr "Pokaži _vođice"
 
-#: app/gui/preferences-dialog.c:889
+#: app/gui/preferences-dialog.c:884
 msgid "Show Gri_d"
 msgstr "Prikaži mr_ežu"
 
-#: app/gui/preferences-dialog.c:895
+#: app/gui/preferences-dialog.c:890
 msgid "Canvas Padding Mode:"
 msgstr "Režim ispunjenosti platna"
 
-#: app/gui/preferences-dialog.c:898
+#: app/gui/preferences-dialog.c:893
 msgid "Custom Padding Color:"
 msgstr "Proizvoljna boja ispunjenosti platna"
 
-#: app/gui/preferences-dialog.c:899
+#: app/gui/preferences-dialog.c:894
 msgid "Select Custom Canvas Padding Color"
 msgstr "Postavi proizvoljnu boju za popunu platna"
 
-#: app/gui/preferences-dialog.c:969
+#: app/gui/preferences-dialog.c:964
 msgid "Preferences"
 msgstr "Postavke"
 
-#: app/gui/preferences-dialog.c:1129
+#: app/gui/preferences-dialog.c:1124
 msgid "Maximum New Image Size:"
 msgstr "Najveća veličina nove slike:"
 
-#: app/gui/preferences-dialog.c:1138
+#: app/gui/preferences-dialog.c:1133
 msgid "Default Image Grid"
 msgstr "Podrazumevana mreža slike"
 
-#: app/gui/preferences-dialog.c:1141
+#: app/gui/preferences-dialog.c:1136
 msgid "Default Grid"
 msgstr "Podrazumevana mreža"
 
-#: app/gui/preferences-dialog.c:1161
+#: app/gui/preferences-dialog.c:1156
 msgid "User Interface"
 msgstr "Korisničko sučelje"
 
-#: app/gui/preferences-dialog.c:1164
+#: app/gui/preferences-dialog.c:1159
 msgid "Interface"
 msgstr "Sučelje"
 
 #. Previews
-#: app/gui/preferences-dialog.c:1171
+#: app/gui/preferences-dialog.c:1166
 msgid "Previews"
 msgstr "Pregledi"
 
-#: app/gui/preferences-dialog.c:1174
+#: app/gui/preferences-dialog.c:1169
 msgid "_Enable Layer & Channel Previews"
 msgstr "Uključi preglede za slojeve i kanale"
 
-#: app/gui/preferences-dialog.c:1180
+#: app/gui/preferences-dialog.c:1175
 msgid "_Layer & Channel Preview Size:"
 msgstr "_Veličina pregleda za slojeve i kanale:"
 
-#: app/gui/preferences-dialog.c:1183
+#: app/gui/preferences-dialog.c:1178
 msgid "_Navigation Preview Size:"
 msgstr "Velišina pregleda za navigaciju:"
 
 #. Dialog Bahavior
-#: app/gui/preferences-dialog.c:1187
+#: app/gui/preferences-dialog.c:1182
 msgid "Dialog Behavior"
 msgstr "Ponašanje prozora"
 
-#: app/gui/preferences-dialog.c:1190
+#: app/gui/preferences-dialog.c:1185
 msgid "_Info Window Per Display"
 msgstr "Prozor sa informacijama po prikazu"
 
 #. Menus
-#: app/gui/preferences-dialog.c:1194
+#: app/gui/preferences-dialog.c:1189
 msgid "Menus"
 msgstr "Meniji"
 
-#: app/gui/preferences-dialog.c:1197
+#: app/gui/preferences-dialog.c:1192
 msgid "Enable _Tearoff Menus"
 msgstr "Uključi iscepane menije"
 
-#: app/gui/preferences-dialog.c:1203
+#: app/gui/preferences-dialog.c:1198
 msgid "Open _Recent Menu Size:"
 msgstr "Veličina spiska nedavno otvaranih datoteka:"
 
 #. Keyboard Shortcuts
-#: app/gui/preferences-dialog.c:1207 app/gui/preferences-dialog.c:1892
+#: app/gui/preferences-dialog.c:1202 app/gui/preferences-dialog.c:1892
 msgid "Keyboard Shortcuts"
 msgstr "Prečice sa tastature"
 
-#: app/gui/preferences-dialog.c:1210
+#: app/gui/preferences-dialog.c:1205
 msgid "Use Dynamic _Keyboard Shortcuts"
 msgstr "Koristi dinamičke prečice sa _tastature"
 
 #. Themes
-#: app/gui/preferences-dialog.c:1214
+#: app/gui/preferences-dialog.c:1209
 msgid "Select Theme"
 msgstr "Izaberite temu"
 
-#: app/gui/preferences-dialog.c:1244
+#: app/gui/preferences-dialog.c:1239
 msgid "Theme"
 msgstr "Tema"
 
-#: app/gui/preferences-dialog.c:1249
+#: app/gui/preferences-dialog.c:1244
 msgid "Folder"
 msgstr "Direktorijumi"
 
-#: app/gui/preferences-dialog.c:1287
+#: app/gui/preferences-dialog.c:1282
 msgid "Reload C_urrent Theme"
 msgstr "Osvežite _tekuću temu"
 
-#: app/gui/preferences-dialog.c:1302 app/gui/preferences-dialog.c:1305
+#: app/gui/preferences-dialog.c:1297 app/gui/preferences-dialog.c:1300
 msgid "Help System"
 msgstr "Sistem za pomoć"
 
-#: app/gui/preferences-dialog.c:1315
+#: app/gui/preferences-dialog.c:1310
 msgid "Show Tool _Tips"
 msgstr "Pokaži savete za alatke"
 
-#: app/gui/preferences-dialog.c:1318
+#: app/gui/preferences-dialog.c:1313
 msgid "Context Sensitive _Help with \"F1\""
 msgstr "Napredna pomoć dostupna pritiskom na taster „F1“"
 
-#: app/gui/preferences-dialog.c:1321
+#: app/gui/preferences-dialog.c:1316
 msgid "Show Tips on _Startup"
 msgstr "Pokaži savete pri podizanju"
 
 #. Help Browser
-#: app/gui/preferences-dialog.c:1325
+#: app/gui/preferences-dialog.c:1320
 msgid "Help Browser"
 msgstr "Pretraživač sistema za pomoć"
 
-#: app/gui/preferences-dialog.c:1329
+#: app/gui/preferences-dialog.c:1324
 msgid "Help _Browser to Use:"
 msgstr "Koristi pretraživač za sistem pomoći:"
 
 #. Web Browser
-#: app/gui/preferences-dialog.c:1333 app/widgets/widgets-enums.c:55
+#: app/gui/preferences-dialog.c:1328 app/widgets/widgets-enums.c:55
 msgid "Web Browser"
 msgstr "Čitač veba"
 
-#: app/gui/preferences-dialog.c:1337
+#: app/gui/preferences-dialog.c:1332
 msgid "Select Web Browser"
 msgstr "Izaberite čitača veba"
 
-#: app/gui/preferences-dialog.c:1341
+#: app/gui/preferences-dialog.c:1336
 msgid "Web Browser to Use:"
 msgstr "Koji čitač veba da koristim:"
 
 #. Contiguous Regions
-#: app/gui/preferences-dialog.c:1360
+#: app/gui/preferences-dialog.c:1355
 msgid "Finding Contiguous Regions"
 msgstr "Pronalaženje nastavljajućih oblasti"
 
-#: app/gui/preferences-dialog.c:1365
+#: app/gui/preferences-dialog.c:1360
 msgid "Default _Threshold:"
 msgstr "Podrazumevana osetljivost:"
 
 #. Scaling
-#: app/gui/preferences-dialog.c:1369
+#: app/gui/preferences-dialog.c:1364
 msgid "Scaling"
 msgstr "Uvećanje"
 
-#: app/gui/preferences-dialog.c:1373
+#: app/gui/preferences-dialog.c:1368
 msgid "Default _Interpolation:"
 msgstr "Podrazumevana interpolacija:"
 
 #. Input Devices
-#: app/gui/preferences-dialog.c:1382 app/gui/preferences-dialog.c:1385
+#: app/gui/preferences-dialog.c:1377 app/gui/preferences-dialog.c:1380
 #: app/gui/preferences-dialog.c:1925
 msgid "Input Devices"
 msgstr "Ulazni uređaji"
 
 #. Input Device Settings
-#: app/gui/preferences-dialog.c:1392
+#: app/gui/preferences-dialog.c:1387
 msgid "Extended Input Devices"
 msgstr "Prošireni ulazni uređaji"
 
-#: app/gui/preferences-dialog.c:1399
+#: app/gui/preferences-dialog.c:1394
 msgid "Configure Extended Input Devices"
 msgstr "Podesi proširene ulazne uređaje"
 
-#: app/gui/preferences-dialog.c:1414 app/gui/preferences-dialog.c:1417
+#: app/gui/preferences-dialog.c:1409 app/gui/preferences-dialog.c:1412
 msgid "Image Windows"
 msgstr "Prozori za slike"
 
-#: app/gui/preferences-dialog.c:1427
+#: app/gui/preferences-dialog.c:1422
 msgid "Use \"_Dot for Dot\" by default"
 msgstr "Koristi „tačka za tačku“ podrazumevano"
 
-#: app/gui/preferences-dialog.c:1433
+#: app/gui/preferences-dialog.c:1428
 msgid "Marching _Ants Speed:"
 msgstr "Brzina marširajućih mrava:"
 
 #. Zoom & Resize Behavior
-#: app/gui/preferences-dialog.c:1437
+#: app/gui/preferences-dialog.c:1432
 msgid "Zoom & Resize Behavior"
 msgstr "Ponašanje razmere i uvećanja"
 
-#: app/gui/preferences-dialog.c:1441
+#: app/gui/preferences-dialog.c:1436
 msgid "Resize Window on _Zoom"
 msgstr "Promeni veličinu prozora u skladu sa razmerom"
 
-#: app/gui/preferences-dialog.c:1444
+#: app/gui/preferences-dialog.c:1439
 msgid "Resize Window on Image _Size Change"
 msgstr "Promeni veličinu prozora u skladu sa promenom veličine slike"
 
-#: app/gui/preferences-dialog.c:1450
+#: app/gui/preferences-dialog.c:1445
 msgid "Fit to Window"
 msgstr "Po meri prozora"
 
-#: app/gui/preferences-dialog.c:1452
+#: app/gui/preferences-dialog.c:1447
 msgid "Inital Zoom Ratio:"
 msgstr "Početna razmera:"
 
 #. Pointer Movement Feedback
-#: app/gui/preferences-dialog.c:1456
+#: app/gui/preferences-dialog.c:1451
 msgid "Pointer Movement Feedback"
 msgstr "Povratna sprega pokreta kursora"
 
-#: app/gui/preferences-dialog.c:1460
+#: app/gui/preferences-dialog.c:1455
 msgid "Show _Brush Outline"
 msgstr "Pokaži konturu četke"
 
-#: app/gui/preferences-dialog.c:1463
+#: app/gui/preferences-dialog.c:1458
 msgid "Perfect-but-Slow _Pointer Tracking"
 msgstr "Savršeno-ali-sporo praćenje kursora"
 
-#: app/gui/preferences-dialog.c:1466
+#: app/gui/preferences-dialog.c:1461
 msgid "Enable Cursor _Updating"
 msgstr "Uključi ažuriranje kursora"
 
-#: app/gui/preferences-dialog.c:1472
+#: app/gui/preferences-dialog.c:1467
 msgid "Cursor M_ode:"
 msgstr "Režim kursora:"
 
-#: app/gui/preferences-dialog.c:1481
+#: app/gui/preferences-dialog.c:1476
 msgid "Image Window Appearance"
 msgstr "Izgled prozora sa slikom"
 
-#: app/gui/preferences-dialog.c:1484 app/widgets/gimpgrideditor.c:203
+#: app/gui/preferences-dialog.c:1479 app/widgets/gimpgrideditor.c:203
 msgid "Appearance"
 msgstr "Izgled"
 
-#: app/gui/preferences-dialog.c:1492
+#: app/gui/preferences-dialog.c:1487
 msgid "Default Appearance in Normal Mode"
 msgstr "Podrazumevani izgled u normalnom režimu"
 
-#: app/gui/preferences-dialog.c:1497
+#: app/gui/preferences-dialog.c:1492
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Podrazumevani izgled u prikazu preko celog ekrana"
 
-#: app/gui/preferences-dialog.c:1506
+#: app/gui/preferences-dialog.c:1501
 msgid "Image Title & Statusbar Format"
 msgstr "Format naslova slike i statusne linije"
 
-#: app/gui/preferences-dialog.c:1509
+#: app/gui/preferences-dialog.c:1504
 msgid "Title & Status"
 msgstr "Naslov i status"
 
-#: app/gui/preferences-dialog.c:1528
+#: app/gui/preferences-dialog.c:1523
 msgid "Custom"
 msgstr "Proizvoljno"
 
-#: app/gui/preferences-dialog.c:1529
+#: app/gui/preferences-dialog.c:1524
 msgid "Standard"
 msgstr "Standardno"
 
-#: app/gui/preferences-dialog.c:1530
+#: app/gui/preferences-dialog.c:1525
 msgid "Show zoom percentage"
 msgstr "Pokaži razmeru (procentualno)"
 
-#: app/gui/preferences-dialog.c:1531
+#: app/gui/preferences-dialog.c:1526
 msgid "Show zoom ratio"
 msgstr "Pokaži razmeru"
 
-#: app/gui/preferences-dialog.c:1532
+#: app/gui/preferences-dialog.c:1527
 msgid "Show reversed zoom ratio"
 msgstr "Pokaži obrnutu razmeru"
 
-#: app/gui/preferences-dialog.c:1533
+#: app/gui/preferences-dialog.c:1528
 msgid "Show memory usage"
 msgstr "Pokaži iskorišćenost memorije"
 
-#: app/gui/preferences-dialog.c:1544
+#: app/gui/preferences-dialog.c:1539
 msgid "Image Title Format"
 msgstr "Format naslova slike"
 
-#: app/gui/preferences-dialog.c:1545
+#: app/gui/preferences-dialog.c:1540
 msgid "Image Statusbar Format"
 msgstr "Format statusne linije slike"
 
-#: app/gui/preferences-dialog.c:1630 app/gui/preferences-dialog.c:1633
+#: app/gui/preferences-dialog.c:1625 app/gui/preferences-dialog.c:1628
 msgid "Display"
 msgstr "Prikaz"
 
 #. Transparency
-#: app/gui/preferences-dialog.c:1640
+#: app/gui/preferences-dialog.c:1635
 msgid "Transparency"
 msgstr "Providnost"
 
-#: app/gui/preferences-dialog.c:1644
+#: app/gui/preferences-dialog.c:1639
 msgid "Transparency _Type:"
 msgstr "Tip providnosti:"
 
-#: app/gui/preferences-dialog.c:1647
+#: app/gui/preferences-dialog.c:1642
 msgid "Check _Size:"
 msgstr "Proveri veličinu:"
 
 #. 8-Bit Displays
-#: app/gui/preferences-dialog.c:1651
+#: app/gui/preferences-dialog.c:1646
 msgid "8-Bit Displays"
 msgstr "8-bitni prikaz"
 
-#: app/gui/preferences-dialog.c:1662
+#: app/gui/preferences-dialog.c:1657
 msgid "Minimum Number of Colors:"
 msgstr "Najmanji broj boja"
 
-#: app/gui/preferences-dialog.c:1665
+#: app/gui/preferences-dialog.c:1660
 msgid "Install Colormap"
 msgstr "Ugradi mapu boja"
 
-#: app/gui/preferences-dialog.c:1674 app/gui/user-install-dialog.c:953
+#: app/gui/preferences-dialog.c:1669 app/gui/user-install-dialog.c:953
 msgid "Monitor Resolution"
 msgstr "Rezolucija monitora"
 
-#: app/gui/preferences-dialog.c:1677
+#: app/gui/preferences-dialog.c:1672
 msgid "Monitor"
 msgstr "Monitor"
 
-#: app/gui/preferences-dialog.c:1683
+#: app/gui/preferences-dialog.c:1678
 msgid "Get Monitor Resolution"
 msgstr "Utvrdi rezoluciju monitora"
 
-#: app/gui/preferences-dialog.c:1692
+#: app/gui/preferences-dialog.c:1687
 #, c-format
 msgid "(Currently %d x %d dpi)"
 msgstr "(Trenutno %d x %d tpi)"
 
-#: app/gui/preferences-dialog.c:1732
+#: app/gui/preferences-dialog.c:1727
 msgid "C_alibrate"
 msgstr "Kalibracija"
 
-#: app/gui/preferences-dialog.c:1746
+#: app/gui/preferences-dialog.c:1741
 msgid "From _Windowing System"
 msgstr "Od sistema prozora"
 
-#: app/gui/preferences-dialog.c:1771
+#: app/gui/preferences-dialog.c:1766
 msgid "_Manually"
 msgstr "Ručno"
 
-#: app/gui/preferences-dialog.c:1791 app/gui/preferences-dialog.c:1794
+#: app/gui/preferences-dialog.c:1786 app/gui/preferences-dialog.c:1789
 #: app/gui/preferences-dialog.c:2044
 msgid "Environment"
 msgstr "Okruženje"
 
-#: app/gui/preferences-dialog.c:1800
+#: app/gui/preferences-dialog.c:1795
 msgid "Resource Consumption"
 msgstr "Potrošnja resursa"
 
-#: app/gui/preferences-dialog.c:1810
+#: app/gui/preferences-dialog.c:1805
 msgid "Minimal Number of Undo Levels:"
 msgstr "Najmanji broj nivoa za poništavanje:"
 
-#: app/gui/preferences-dialog.c:1813
+#: app/gui/preferences-dialog.c:1808
 msgid "Maximum Undo Memory:"
 msgstr "Najveći broj nivoa za poništavanje:"
 
-#: app/gui/preferences-dialog.c:1816 app/gui/user-install-dialog.c:1162
+#: app/gui/preferences-dialog.c:1811 app/gui/user-install-dialog.c:1162
 msgid "Tile Cache Size:"
 msgstr "Veličina ostave za deliće:"
 
-#: app/gui/preferences-dialog.c:1821
+#: app/gui/preferences-dialog.c:1816
 msgid "Number of Processors to Use:"
 msgstr "Broj korišćenih procesora:"
 
-#: app/gui/preferences-dialog.c:1827
+#: app/gui/preferences-dialog.c:1822
 msgid "Conservative Memory Usage"
 msgstr "Konzervativno iskorišćenje memorije"
 
 #. File Saving
-#: app/gui/preferences-dialog.c:1831
+#: app/gui/preferences-dialog.c:1826
 msgid "File Saving"
 msgstr "Čuvanje datoteka"
+
+#: app/gui/preferences-dialog.c:1829
+msgid "Confirm Closing of Unsaved Images"
+msgstr "Potvrdi zatvaranje nesačuvanih slika"
 
 #: app/gui/preferences-dialog.c:1835
 msgid "Only when Modified"
@@ -6023,23 +6027,23 @@ msgstr "Ograniči izbor sa"
 msgid "GIMP Startup"
 msgstr "GIMP se podiže"
 
-#: app/gui/stroke-dialog.c:105
+#: app/gui/stroke-dialog.c:106
 msgid "Stroke Options"
 msgstr "Opcije iscrtavanja"
 
-#: app/gui/stroke-dialog.c:107
+#: app/gui/stroke-dialog.c:108
 msgid "Choose Stroke Style"
 msgstr "Izaberite stil iscrtavanja"
 
-#: app/gui/stroke-dialog.c:138
+#: app/gui/stroke-dialog.c:139
 msgid "Stroke"
 msgstr "Iscrtaj"
 
-#: app/gui/stroke-dialog.c:168
+#: app/gui/stroke-dialog.c:169
 msgid "Stroke Using a Paint Tool"
 msgstr "Iscrtaj pomoću alata za crtanje"
 
-#: app/gui/stroke-dialog.c:194
+#: app/gui/stroke-dialog.c:195
 msgid "Paint Tool:"
 msgstr "Alatka za crtanje:"
 
@@ -6075,12 +6079,12 @@ msgstr "/Izmeni mustru..."
 msgid "/_Delete Template"
 msgstr "/O_briši mustru"
 
-#: app/gui/themes.c:183 app/plug-in/plug-ins.c:218
+#: app/gui/themes.c:231 app/plug-in/plug-ins.c:218
 #, c-format
 msgid "Writing '%s'\n"
 msgstr "Upisujem „%s“\n"
 
-#: app/gui/themes.c:225
+#: app/gui/themes.c:283
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr "Dodajem temu „%s“ (%s)\n"
@@ -6830,11 +6834,11 @@ msgstr "Svojstva putanje"
 msgid "Edit Path Attributes"
 msgstr "Izmeni svojstva putanje"
 
-#: app/gui/vectors-commands.c:673
+#: app/gui/vectors-commands.c:672
 msgid "Import Paths from SVG"
 msgstr "Uvezi putanju iz SVG-a"
 
-#: app/gui/vectors-commands.c:739
+#: app/gui/vectors-commands.c:736
 msgid "Export Path to SVG"
 msgstr "Izvezi putanju u SVG-a"
 
@@ -6985,7 +6989,7 @@ msgid "Brightness-Contrast"
 msgstr "Osvetljenje-Kontrast"
 
 #: app/pdb/color_cmds.c:257 app/pdb/color_cmds.c:374
-#: app/tools/gimplevelstool.c:162
+#: app/tools/gimplevelstool.c:164
 msgid "Levels"
 msgstr "Nivoi"
 
@@ -6994,7 +6998,7 @@ msgid "Posterize"
 msgstr "Smanji broj boja"
 
 #: app/pdb/color_cmds.c:701 app/pdb/color_cmds.c:808
-#: app/tools/gimpcurvestool.c:160
+#: app/tools/gimpcurvestool.c:162
 msgid "Curves"
 msgstr "Krivine"
 
@@ -7205,20 +7209,20 @@ msgid "Querying plug-in: '%s'\n"
 msgstr "Ispitujem dodatak: „%s“\n"
 
 #. initial the plug-ins
-#: app/plug-in/plug-ins.c:282
+#: app/plug-in/plug-ins.c:288
 msgid "Initializing Plug-ins"
 msgstr "Pokrećem dodatke"
 
-#: app/plug-in/plug-ins.c:297
+#: app/plug-in/plug-ins.c:303
 #, c-format
 msgid "Initializing plug-in: '%s'\n"
 msgstr "Pokrećem dodatak: „%s“\n"
 
-#: app/plug-in/plug-ins.c:326
+#: app/plug-in/plug-ins.c:332
 msgid "Starting Extensions"
 msgstr "Pokrećem proširenja"
 
-#: app/plug-in/plug-ins.c:335
+#: app/plug-in/plug-ins.c:341
 #, c-format
 msgid "Starting extension: '%s'\n"
 msgstr "Pokrećem proširenje: „%s“\n"
@@ -7620,13 +7624,13 @@ msgstr "Izaberi boju"
 msgid "_Hue:"
 msgstr "_Tip:"
 
-#: app/tools/gimpcolorizetool.c:267 app/tools/gimphuesaturationtool.c:376
-msgid "_Lightness:"
-msgstr "_Svetlina:"
-
-#: app/tools/gimpcolorizetool.c:281 app/tools/gimphuesaturationtool.c:390
+#: app/tools/gimpcolorizetool.c:267 app/tools/gimphuesaturationtool.c:390
 msgid "_Saturation:"
 msgstr "_Zasićenost:"
+
+#: app/tools/gimpcolorizetool.c:281 app/tools/gimphuesaturationtool.c:376
+msgid "_Lightness:"
+msgstr "_Svetlina:"
 
 #: app/tools/gimpcoloroptions.c:191
 msgid "Sample Average"
@@ -7730,53 +7734,53 @@ msgstr "Iz selekcije"
 msgid "Auto Shrink"
 msgstr "Automatski smanji"
 
-#: app/tools/gimpcurvestool.c:161
+#: app/tools/gimpcurvestool.c:163
 msgid "Adjust color curves"
 msgstr "Podesi krivine boja"
 
-#: app/tools/gimpcurvestool.c:162
+#: app/tools/gimpcurvestool.c:164
 msgid "/Tools/Color Tools/_Curves..."
 msgstr "/Alati/Alati za boje/Krivine..."
 
-#: app/tools/gimpcurvestool.c:232
+#: app/tools/gimpcurvestool.c:234
 msgid "Adjust Color Curves"
 msgstr "Podesi Krivine Boja"
 
-#: app/tools/gimpcurvestool.c:290
+#: app/tools/gimpcurvestool.c:292
 msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Krivine za indeksirane slojeve se ne mogu podesiti."
 
-#: app/tools/gimpcurvestool.c:483 app/tools/gimplevelstool.c:428
+#: app/tools/gimpcurvestool.c:485 app/tools/gimplevelstool.c:430
 msgid "R_eset Channel"
 msgstr "Ponovo postavi kanal"
 
-#: app/tools/gimpcurvestool.c:492
+#: app/tools/gimpcurvestool.c:494
 msgid "Modify Curves for Channel:"
 msgstr "Izmeni krivine za kanal:"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:556 app/tools/gimplevelstool.c:651
+#: app/tools/gimpcurvestool.c:558 app/tools/gimplevelstool.c:653
 msgid "All Channels"
 msgstr "Svi kanali"
 
-#: app/tools/gimpcurvestool.c:570
+#: app/tools/gimpcurvestool.c:572
 msgid "Read curves settings from file"
 msgstr "Pročitaj podešavanja krivina iz datoteke"
 
-#: app/tools/gimpcurvestool.c:580
+#: app/tools/gimpcurvestool.c:582
 msgid "Save curves settings to file"
 msgstr "Sačuvaj podešavanja krivina u datoteku"
 
 #. The radio box for selecting the curve type
-#: app/tools/gimpcurvestool.c:588
+#: app/tools/gimpcurvestool.c:590
 msgid "Curve Type"
 msgstr "Tip krivine"
 
-#: app/tools/gimpcurvestool.c:1205
+#: app/tools/gimpcurvestool.c:1207
 msgid "Load Curves"
 msgstr "Učitaj krivine"
 
-#: app/tools/gimpcurvestool.c:1220
+#: app/tools/gimpcurvestool.c:1222
 msgid "Save Curves"
 msgstr "Sačuvaj krivine"
 
@@ -7997,73 +8001,73 @@ msgstr "Izaberi oblike sa slike"
 msgid "/Tools/Selection Tools/_Intelligent Scissors"
 msgstr "/Alati/Alatke za selekcije/Pametne makaze"
 
-#: app/tools/gimplevelstool.c:163
+#: app/tools/gimplevelstool.c:165
 msgid "Adjust color levels"
 msgstr "Podesi nivoe boja"
 
-#: app/tools/gimplevelstool.c:164
+#: app/tools/gimplevelstool.c:166
 msgid "/Tools/Color Tools/_Levels..."
 msgstr "/Alati/Alatke za boje/Nivoi..."
 
-#: app/tools/gimplevelstool.c:232
+#: app/tools/gimplevelstool.c:234
 msgid "Adjust Color Levels"
 msgstr "Podesi Nivoe Boja"
 
-#: app/tools/gimplevelstool.c:283
+#: app/tools/gimplevelstool.c:285
 msgid "Levels for indexed layers cannot be adjusted."
 msgstr "Ne mogu se prilagoditi nivoi indeksiranih slojeva."
 
-#: app/tools/gimplevelstool.c:351
+#: app/tools/gimplevelstool.c:353
 msgid "Pick Black Point"
 msgstr "Izaberi crnu tačku"
 
-#: app/tools/gimplevelstool.c:355
+#: app/tools/gimplevelstool.c:357
 msgid "Pick Gray Point"
 msgstr "Izaberi sivu tačku"
 
-#: app/tools/gimplevelstool.c:359
+#: app/tools/gimplevelstool.c:361
 msgid "Pick White Point"
 msgstr "Izaberi belu tačku"
 
-#: app/tools/gimplevelstool.c:414
+#: app/tools/gimplevelstool.c:416
 msgid "Modify Levels for Channel:"
 msgstr "Podesi nivoe za kanal:"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:438
+#: app/tools/gimplevelstool.c:440
 msgid "Input Levels"
 msgstr "Ulazni nivoi"
 
-#: app/tools/gimplevelstool.c:543
+#: app/tools/gimplevelstool.c:545
 msgid "Gamma"
 msgstr "Gama"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:573
+#: app/tools/gimplevelstool.c:575
 msgid "Output Levels"
 msgstr "Izlazni nivoi"
 
-#: app/tools/gimplevelstool.c:669
+#: app/tools/gimplevelstool.c:671
 msgid "Read levels settings from file"
 msgstr "Pročitaj podešavanja nivoa iz datoteke"
 
-#: app/tools/gimplevelstool.c:679
+#: app/tools/gimplevelstool.c:681
 msgid "Save levels settings to file"
 msgstr "Sačuvaj podešavanja nivoa u datoteku"
 
-#: app/tools/gimplevelstool.c:691
+#: app/tools/gimplevelstool.c:693
 msgid "_Auto"
 msgstr "_Auto"
 
-#: app/tools/gimplevelstool.c:693
+#: app/tools/gimplevelstool.c:695
 msgid "Adjust levels automatically"
 msgstr "Podesi nivoe automatski"
 
-#: app/tools/gimplevelstool.c:1411
+#: app/tools/gimplevelstool.c:1413
 msgid "Load Levels"
 msgstr "Učitaj nivoe"
 
-#: app/tools/gimplevelstool.c:1426
+#: app/tools/gimplevelstool.c:1428
 msgid "Save Levels"
 msgstr "Sačuvaj nivoe"
 
@@ -8263,23 +8267,23 @@ msgstr "Izaberi četvoroutaone regione"
 msgid "/Tools/Selection Tools/_Rect Select"
 msgstr "/Alati/Alatke za selekcije/Četvorougaona selekcija"
 
-#: app/tools/gimprectselecttool.c:243
+#: app/tools/gimprectselecttool.c:241
 msgid "Selection: ADD"
 msgstr "Selekcija: DODAJ"
 
-#: app/tools/gimprectselecttool.c:246
+#: app/tools/gimprectselecttool.c:244
 msgid "Selection: SUBTRACT"
 msgstr "Selekcija: ODUZMI"
 
-#: app/tools/gimprectselecttool.c:249
+#: app/tools/gimprectselecttool.c:247
 msgid "Selection: INTERSECT"
 msgstr "Selekcija: NAPRAVI PRESEK"
 
-#: app/tools/gimprectselecttool.c:252
+#: app/tools/gimprectselecttool.c:250
 msgid "Selection: REPLACE"
 msgstr "Selekcija: ZAMENI"
 
-#: app/tools/gimprectselecttool.c:481
+#: app/tools/gimprectselecttool.c:475
 msgid "Selection: "
 msgstr "Selekcija:"
 
@@ -8777,19 +8781,19 @@ msgstr ""
 "%s  Oduzmi\n"
 "%s%s%s  Presek"
 
-#: app/widgets/gimpcoloreditor.c:245
+#: app/widgets/gimpcoloreditor.c:244
 msgid "FG"
 msgstr "FG"
 
-#: app/widgets/gimpcoloreditor.c:245
+#: app/widgets/gimpcoloreditor.c:244
 msgid "BG"
 msgstr "BG"
 
-#: app/widgets/gimpcoloreditor.c:249
+#: app/widgets/gimpcoloreditor.c:248
 msgid "Edit Foreground Color"
 msgstr "Izmeni boju četke"
 
-#: app/widgets/gimpcoloreditor.c:249
+#: app/widgets/gimpcoloreditor.c:248
 msgid "Edit Background Color"
 msgstr "Izmeni boju pozadine"
 
@@ -8874,8 +8878,8 @@ msgstr "Izmeni indeksiranu boju"
 msgid "Edit Indexed Image Palette Color"
 msgstr "Izmeni izmeni boju palete indeksirane slike"
 
-#: app/widgets/gimpcontainergridview.c:202
-#: app/widgets/gimpcontainergridview.c:638
+#: app/widgets/gimpcontainergridview.c:203
+#: app/widgets/gimpcontainergridview.c:619
 #: app/widgets/gimphistogrameditor.c:137 app/widgets/gimphistogrameditor.c:326
 msgid "(None)"
 msgstr "(Ništa)"
@@ -8969,11 +8973,11 @@ msgstr ""
 "%s  Ponovo učitaj sve preglede\n"
 "%s  Ukloni suvišne unose"
 
-#: app/widgets/gimperrorconsole.c:174
+#: app/widgets/gimperrorconsole.c:175
 msgid "Clear Errors"
 msgstr "Očisti Greške"
 
-#: app/widgets/gimperrorconsole.c:180
+#: app/widgets/gimperrorconsole.c:181
 #, c-format
 msgid ""
 "Save all Errors\n"
@@ -8982,20 +8986,20 @@ msgstr ""
 "Sačuvaj sve greške\n"
 "%s  Sačuvaj selekcije"
 
-#: app/widgets/gimperrorconsole.c:269 app/widgets/gimpwidgets-utils.c:195
+#: app/widgets/gimperrorconsole.c:270 app/widgets/gimpwidgets-utils.c:195
 #, c-format
 msgid "%s Message"
 msgstr "%s Poruka"
 
-#: app/widgets/gimperrorconsole.c:345
+#: app/widgets/gimperrorconsole.c:346
 msgid "Cannot save. Nothing is selected."
 msgstr "Ne mogu da sačuvam. Nije ništa izabrano."
 
-#: app/widgets/gimperrorconsole.c:355
+#: app/widgets/gimperrorconsole.c:356
 msgid "Save Error Log to File"
 msgstr "Sačuvaj dnevnik grešaka u datoteku..."
 
-#: app/widgets/gimperrorconsole.c:405
+#: app/widgets/gimperrorconsole.c:398
 #, c-format
 msgid ""
 "Error writing file '%s':\n"
@@ -9209,7 +9213,7 @@ msgstr "Napravi novi prikaz za ovu sliku"
 msgid "Delete this image"
 msgstr "Obriši ovu sliku"
 
-#: app/widgets/gimpitemfactory.c:593
+#: app/widgets/gimpitemfactory.c:597
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -9285,16 +9289,16 @@ msgstr "Izmeni boju palete"
 msgid "Edit Color Palette Entry"
 msgstr "Izmeni unos boje palete"
 
-#: app/widgets/gimppropwidgets.c:1235
+#: app/widgets/gimppropwidgets.c:1247
 #, c-format
 msgid "This text input field is limited to %d characters."
 msgstr "Ovo polje za unos teksta je ograničeno na %d slova."
 
-#: app/widgets/gimpselectioneditor.c:194
+#: app/widgets/gimpselectioneditor.c:193
 msgid "Save Selection to Channel"
 msgstr "Sačuvaj selekciju u kanal"
 
-#: app/widgets/gimpselectioneditor.c:200 app/widgets/gimpvectorstreeview.c:176
+#: app/widgets/gimpselectioneditor.c:199 app/widgets/gimpvectorstreeview.c:176
 #, c-format
 msgid ""
 "Selection to Path\n"
@@ -9371,24 +9375,19 @@ msgstr ""
 msgid "Delete Template"
 msgstr "Obriši mustru"
 
-#: app/widgets/gimptexteditor.c:192
+#: app/widgets/gimptexteditor.c:194
 msgid "Load Text from File"
 msgstr "Učitaj tekst iz datoteke"
 
-#: app/widgets/gimptexteditor.c:196
+#: app/widgets/gimptexteditor.c:198
 msgid "Clear all Text"
 msgstr "Očisti ceo tekst"
 
-#: app/widgets/gimptexteditor.c:318
+#: app/widgets/gimptexteditor.c:320
 msgid "Open Text File (UTF-8)"
 msgstr "Otvori tekstualnu datoteku (UTF-8)"
 
-#: app/widgets/gimptexteditor.c:367
-#, c-format
-msgid "Error opening file '%s': %s"
-msgstr "Greška pri otvaranju datoteke „%s“: %s"
-
-#: app/widgets/gimptexteditor.c:396
+#: app/widgets/gimptexteditor.c:401
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Neispravni UTF-8 podaci u datoteci „%s“"
@@ -9615,7 +9614,7 @@ msgstr "GIMP Poruka"
 #. The format string which is used to display modifier names
 #. *  <Shift>, <Ctrl> and <Alt>
 #.
-#: app/widgets/gimpwidgets-utils.c:489
+#: app/widgets/gimpwidgets-utils.c:506
 #, c-format
 msgid "<%s>"
 msgstr "<%s>"
@@ -9726,6 +9725,9 @@ msgstr "Napravi i uredi slike ili fotografije"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "GIMP (nestabilna verzija)"
+
+#~ msgid "Error opening file '%s': %s"
+#~ msgstr "Greška pri otvaranju datoteke „%s“: %s"
 
 #~ msgid "  -r, --restore-session    Try to restore saved session.\n"
 #~ msgstr "  -r, --restore-session    Probaj da vratiš snimljenu sesiju.\n"
