@@ -1,3 +1,10 @@
+2004-03-30  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/grid-system.scm: define "map" here,
+	the script used to take the definition from alien-glow-arrow.scm
+	or beveled-pattern-arrow.scm. Also added an undo group around all
+	operations. Fixes bug #138524.
+
 2004-03-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am

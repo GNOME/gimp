@@ -17,6 +17,11 @@
     (aset s 1 y0)
     (aset s 2 x1)
     (aset s 3 y1))
+  (define (map proc seq)
+    (if (null? seq)
+        '()
+        (cons (proc (car seq))
+              (map proc (cdr seq)))))
   (define (convert-g l)
     (cond ((null? l) '())
 	  ((eq? (car l) 'g) (cons 1.618 (convert-g (cdr l))))
@@ -45,10 +50,14 @@
     (set! y-divides (convert-g y-divides-orig))
     (set! total-step-x (apply + x-divides))
     (set! total-step-y (apply + y-divides))
-    ;(gimp-image-undo-group-start img)
+
+    (gimp-image-undo-group-start img)
+
     (set! grid-layer (car (gimp-layer-copy drw TRUE)))
+    (gimp-image-add-layer img grid-layer 0)
     (gimp-edit-clear grid-layer)
-    (gimp-drawable-set-name grid-layer "grid layer")
+    (gimp-drawable-set-name grid-layer "Grid Layer")
+
     (while (not (null? (cdr x-divides)))
       (set! stepped-x (+ stepped-x (car x-divides)))
       (set! temp (* drw-width (/ stepped-x total-step-x)))
@@ -57,6 +66,7 @@
 		       (+ drw-offset-x temp) drw-offset-y
 		       (+ drw-offset-x temp) (+ drw-offset-y drw-height))
       (gimp-pencil grid-layer 4 segment))
+
     (while (not (null? (cdr y-divides)))
       (set! stepped-y (+ stepped-y (car y-divides)))
       (set! temp (* drw-height (/ stepped-y total-step-y)))
@@ -65,8 +75,9 @@
 		       drw-offset-x (+ drw-offset-y temp)
 		       (+ drw-offset-x drw-width) (+ drw-offset-y temp))
       (gimp-pencil grid-layer 4 segment))
-    (gimp-image-add-layer img grid-layer 0)
-    ;(gimp-image-undo-group-end img)
+
+    (gimp-image-undo-group-end img)
+
     (set! script-fu-grid-system-x-divides (wrap-list x-divides-orig))
     (set! script-fu-grid-system-y-divides (wrap-list y-divides-orig))
     (gimp-displays-flush)))
@@ -78,10 +89,10 @@
 		    "Shuji Narazaki"
 		    "1997"
 		    "RGB*, INDEXED*, GRAY*"
-		    SF-IMAGE "Image to use" 0
-		    SF-DRAWABLE "Drawable to draw grid" 0
-		    SF-VALUE _"X Divisions" script-fu-grid-system-x-divides
-		    SF-VALUE _"Y Divisions" script-fu-grid-system-y-divides
+		    SF-IMAGE     "Image to use"          0
+		    SF-DRAWABLE  "Drawable to draw grid" 0
+		    SF-VALUE    _"X Divisions" script-fu-grid-system-x-divides
+		    SF-VALUE    _"Y Divisions" script-fu-grid-system-y-divides
 )
   
 ;;; grid-system.scm ends here
