@@ -1344,7 +1344,7 @@ container_view_new (gboolean       list,
 			    gimp_standard_help_func,
 			    NULL,
 			    GTK_WIN_POS_MOUSE,
-			    TRUE, TRUE, TRUE,
+			    FALSE, TRUE, TRUE,
 
 			    _("Close"), gtk_widget_destroy,
 			    NULL, 1, NULL, TRUE, TRUE,
@@ -1352,13 +1352,19 @@ container_view_new (gboolean       list,
 			    NULL);
 
   if (list)
-    view = gimp_container_list_view_new (container,
-					 preview_width,
-					 preview_height);
+    {
+      view = gimp_container_list_view_new (container,
+					   preview_width,
+					   preview_height,
+					   4, 4);
+    }
   else
-    view = gimp_container_grid_view_new (container,
-					 preview_width,
-					 preview_height);
+    {
+      view = gimp_container_grid_view_new (container,
+					   preview_width,
+					   preview_height,
+					   4, 4);
+    }
 
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), view);
   gtk_widget_show (view);

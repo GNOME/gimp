@@ -38,10 +38,18 @@
 #include "libgimp/gimplimits.h"
 
 
+#define PREVIEW_POPUP_DELAY 150
+
 #define PREVIEW_EVENT_MASK  (GDK_BUTTON_PRESS_MASK   | \
                              GDK_BUTTON_RELEASE_MASK | \
                              GDK_ENTER_NOTIFY_MASK   | \
                              GDK_LEAVE_NOTIFY_MASK)
+
+enum
+{
+  CLICKED,
+  LAST_SIGNAL
+};
 
 
 static void       gimp_preview_class_init           (GimpPreviewClass *klass);
@@ -53,9 +61,19 @@ static gint       gimp_preview_button_press_event   (GtkWidget        *widget,
 						     GdkEventButton   *bevent);
 static gint       gimp_preview_button_release_event (GtkWidget        *widget, 
 						     GdkEventButton   *bevent);
+static gint       gimp_preview_enter_notify_event   (GtkWidget        *widget,
+						     GdkEventCrossing *event);
+static gint       gimp_preview_leave_notify_event   (GtkWidget        *widget,
+						     GdkEventCrossing *event);
+static void       gimp_preview_popup_show           (GimpPreview      *preview, 
+						     gint              x,
+						     gint              y);
+static void       gimp_preview_popup_hide           (GimpPreview      *preview);
 static void       gimp_preview_paint                (GimpPreview      *preview);
 static gboolean   gimp_preview_idle_paint           (GimpPreview      *preview);
 
+
+static guint preview_signals[LAST_SIGNAL] = { 0 };
 
 static GtkPreviewClass *parent_class = NULL;
 
@@ -96,18 +114,40 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 
   parent_class = gtk_type_class (GTK_TYPE_PREVIEW);
 
+  preview_signals[CLICKED] = 
+    gtk_signal_new ("clicked",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpPreviewClass,
+				       clicked),
+                    gtk_signal_default_marshaller,
+		    GTK_TYPE_NONE, 0);
+
+  gtk_object_class_add_signals (object_class, preview_signals, LAST_SIGNAL);
+
   object_class->destroy = gimp_preview_destroy;
 
   widget_class->size_allocate        = gimp_preview_size_allocate;
   widget_class->button_press_event   = gimp_preview_button_press_event;
   widget_class->button_release_event = gimp_preview_button_release_event;
+  widget_class->enter_notify_event   = gimp_preview_enter_notify_event;
+  widget_class->leave_notify_event   = gimp_preview_leave_notify_event;
+
+  klass->clicked = NULL;
 }
 
 static void
 gimp_preview_init (GimpPreview *preview)
 {
-  preview->viewable = NULL;
-  preview->idle_id  = 0;
+  preview->viewable   = NULL;
+  preview->clickable  = FALSE;
+  preview->show_popup = FALSE;
+
+  preview->in_button  = FALSE;
+  preview->idle_id    = 0;
+  preview->popup_id   = 0;
+  preview->popup_x    = 0;
+  preview->popup_y    = 0;
 
   GTK_PREVIEW (preview)->type   = GTK_PREVIEW_COLOR;
   GTK_PREVIEW (preview)->bpp    = 3;
@@ -126,18 +166,22 @@ gimp_preview_destroy (GtkObject *object)
 GtkWidget *
 gimp_preview_new (GimpViewable *viewable,
 		  gint          width,
-		  gint          height)
+		  gint          height,
+		  gboolean      clickable,
+		  gboolean      show_popup)
 {
   GimpPreview *preview;
 
   g_return_val_if_fail (viewable != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
-  g_return_val_if_fail (width  > 0 && width  <= 64, NULL);
-  g_return_val_if_fail (height > 0 && height <= 64, NULL);
+  g_return_val_if_fail (width  > 0 && width  <= 256, NULL);
+  g_return_val_if_fail (height > 0 && height <= 256, NULL);
 
   preview = gtk_type_new (GIMP_TYPE_PREVIEW);
 
-  preview->viewable = viewable;
+  preview->viewable   = viewable;
+  preview->clickable  = clickable;
+  preview->show_popup = show_popup;
 
   gtk_signal_connect_object_while_alive (GTK_OBJECT (viewable),
 					 "invalidate_preview",
@@ -158,14 +202,180 @@ static gint
 gimp_preview_button_press_event (GtkWidget      *widget,
 				 GdkEventButton *bevent)
 {
-  return FALSE;
+  GimpPreview *preview;
+
+  preview = GIMP_PREVIEW (widget);
+
+  if (bevent->button == 1)
+    {
+      gtk_grab_add (widget);
+
+      if (preview->show_popup)
+        {
+          gimp_preview_popup_show (preview,
+				   bevent->x,
+				   bevent->y);
+        }
+    }
+
+  return TRUE;
 }
   
 static gint
 gimp_preview_button_release_event (GtkWidget      *widget,
 				   GdkEventButton *bevent)
 {
+  GimpPreview *preview;
+  gboolean     fast_click = TRUE;
+
+  preview = GIMP_PREVIEW (widget);
+
+  if (bevent->button == 1)
+    {
+      gtk_grab_remove (widget);
+
+      if (preview->show_popup)
+        {
+	  fast_click = (preview->popup_id != 0);
+
+          gimp_preview_popup_hide (preview);
+        }
+
+      if (preview->clickable && fast_click && preview->in_button)
+	{
+	  gtk_signal_emit (GTK_OBJECT (widget), preview_signals[CLICKED]);
+
+	  g_print ("clicked\n");
+	}
+    }
+
+  return TRUE;
+}
+
+static gint
+gimp_preview_enter_notify_event (GtkWidget        *widget,
+				 GdkEventCrossing *event)
+{
+  GimpPreview *preview;
+  GtkWidget   *event_widget;
+
+  preview = GIMP_PREVIEW (widget);
+  event_widget = gtk_get_event_widget ((GdkEvent *) event);
+
+  if ((event_widget == widget) &&
+      (event->detail != GDK_NOTIFY_INFERIOR))
+    {
+      preview->in_button = TRUE;
+    }
+
   return FALSE;
+}
+
+static gint
+gimp_preview_leave_notify_event (GtkWidget        *widget,
+				 GdkEventCrossing *event)
+{
+  GimpPreview *preview;
+  GtkWidget   *event_widget;
+
+  preview = GIMP_PREVIEW (widget);
+  event_widget = gtk_get_event_widget ((GdkEvent *) event);
+
+  if ((event_widget == widget) &&
+      (event->detail != GDK_NOTIFY_INFERIOR))
+    {
+      preview->in_button = FALSE;
+    }
+
+  return FALSE;
+}
+
+static gboolean
+gimp_preview_popup_timeout (GimpPreview *preview)
+{
+  GtkWidget *widget;
+  GtkWidget *window;
+  GtkWidget *frame;
+  GtkWidget *popup_preview;
+  gint       orig_x;
+  gint       orig_y;
+  gint       scr_width;
+  gint       scr_height;
+  gint       x;
+  gint       y;
+  gint       popup_width;
+  gint       popup_height;
+
+  widget = GTK_WIDGET (preview);
+
+  x = preview->popup_x;
+  y = preview->popup_y;
+
+  preview->popup_id = 0;
+  preview->popup_x  = 0;
+  preview->popup_y  = 0;
+
+  popup_width  = MIN (widget->allocation.width  * 2, 256);
+  popup_height = MIN (widget->allocation.height * 2, 256);
+
+  window = gtk_window_new (GTK_WINDOW_POPUP);
+  gtk_window_set_policy (GTK_WINDOW (window), FALSE, FALSE, TRUE);
+
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
+  gtk_container_add (GTK_CONTAINER (window), frame);
+  gtk_widget_show (frame);
+
+  popup_preview = gimp_preview_new (preview->viewable,
+				    popup_width, popup_height,
+				    FALSE, FALSE);
+  gtk_container_add (GTK_CONTAINER (frame), popup_preview);
+  gtk_widget_show (popup_preview);
+
+  gdk_window_get_origin (widget->window, &orig_x, &orig_y);
+  scr_width  = gdk_screen_width ();
+  scr_height = gdk_screen_height ();
+  x = orig_x + x - (popup_width  >> 1);
+  y = orig_y + y - (popup_height >> 1);
+  x = (x < 0) ? 0 : x;
+  y = (y < 0) ? 0 : y;
+  x = (x + popup_width  > scr_width)  ? scr_width  - popup_width  : x;
+  y = (y + popup_height > scr_height) ? scr_height - popup_height : y;
+
+  gtk_widget_popup (window, x, y);
+
+  gtk_object_set_data_full (GTK_OBJECT (preview), "preview_popup_window", window,
+			    (GtkDestroyNotify) gtk_widget_destroy);
+
+  return FALSE;
+}
+
+static void
+gimp_preview_popup_show (GimpPreview *preview,
+			 gint         x,
+			 gint         y)
+{
+  preview->popup_x = x;
+  preview->popup_y = y;
+
+  preview->popup_id = g_timeout_add (PREVIEW_POPUP_DELAY,
+				     (GSourceFunc) gimp_preview_popup_timeout,
+				     preview);
+}
+
+static void
+gimp_preview_popup_hide (GimpPreview *preview)
+{
+  if (preview->popup_id)
+    {
+      g_source_remove (preview->popup_id);
+
+      preview->popup_id = 0;
+      preview->popup_x  = 0;
+      preview->popup_y  = 0;
+    }
+
+  gtk_object_set_data (GTK_OBJECT (preview), "preview_popup_window", NULL);
 }
 
 static void

@@ -1,3 +1,16 @@
+2001-02-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimpcontainergridview.[ch]
+	* app/gimpcontainerlistview.[ch]: added "min_items_x" and
+	"min_items_y" parameters to the constructors.
+
+	* app/gimppreview.[ch]: added event handling for "click" and
+	"popup", show a dummy popup for testing.
+
+	* app/commands.c: changed accordingly.
+
+	* app/menus.c: added a separator and removed N_() from the test stuff.
+
 2001-02-06  Simon Budig  <simon@gimp.org>
 
         * libgimpwidgets/gimpdialog.c
@@ -28,7 +41,7 @@
 	* app/gimpbrush.c: create a nice preview with scale and pipe
 	indicators.
 
-	* app/gimpcontainergridview.[ch]: use the GimpConstrainderHWrapBox.
+	* app/gimpcontainergridview.[ch]: use the GimpConstrainedHWrapBox.
 
 	* app/commands.c
 	* app/gimpcontainerlistview.c

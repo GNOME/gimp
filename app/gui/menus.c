@@ -154,18 +154,21 @@ static GimpItemFactoryEntry toolbox_entries[] =
     "file/dialogs/display_filters/display_filters.html", NULL },
 #endif /* DISPLAY_FILTERS */
 
-  { { N_("/File/Test Dialogs/List of all Images..."), NULL, dialogs_test_image_container_list_view_cmd_callback, 0 },
+  { { "/File/Test Dialogs/List of all Images...", NULL, dialogs_test_image_container_list_view_cmd_callback, 0 },
     NULL, NULL },
-  { { N_("/File/Test Dialogs/List of all Brushes..."), NULL, dialogs_test_brush_container_list_view_cmd_callback, 0 },
+  { { "/File/Test Dialogs/List of all Brushes...", NULL, dialogs_test_brush_container_list_view_cmd_callback, 0 },
     NULL, NULL },
-  { { N_("/File/Test Dialogs/List of all Patterns..."), NULL, dialogs_test_pattern_container_list_view_cmd_callback, 0 },
+  { { "/File/Test Dialogs/List of all Patterns...", NULL, dialogs_test_pattern_container_list_view_cmd_callback, 0 },
     NULL, NULL },
 
-  { { N_("/File/Test Dialogs/Grid of all Images..."), NULL, dialogs_test_image_container_grid_view_cmd_callback, 0 },
+  { { "/File/Test Dialogs/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
-  { { N_("/File/Test Dialogs/Grid of all Brushes..."), NULL, dialogs_test_brush_container_grid_view_cmd_callback, 0 },
+
+  { { "/File/Test Dialogs/Grid of all Images...", NULL, dialogs_test_image_container_grid_view_cmd_callback, 0 },
     NULL, NULL },
-  { { N_("/File/Test Dialogs/Grid of all Patterns..."), NULL, dialogs_test_pattern_container_grid_view_cmd_callback, 0 },
+  { { "/File/Test Dialogs/Grid of all Brushes...", NULL, dialogs_test_brush_container_grid_view_cmd_callback, 0 },
+    NULL, NULL },
+  { { "/File/Test Dialogs/Grid of all Patterns...", NULL, dialogs_test_pattern_container_grid_view_cmd_callback, 0 },
     NULL, NULL },
 
   { { "/File/---", NULL, NULL, 0, "<Separator>" },

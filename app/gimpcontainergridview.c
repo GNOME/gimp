@@ -147,7 +147,9 @@ gimp_container_grid_view_destroy (GtkObject *object)
 GtkWidget *
 gimp_container_grid_view_new (GimpContainer *container,
 			      gint           preview_width,
-			      gint           preview_height)
+			      gint           preview_height,
+			      gint           min_items_x,
+			      gint           min_items_y)
 {
   GimpContainerGridView *grid_view;
   GimpContainerView     *view;
@@ -156,6 +158,8 @@ gimp_container_grid_view_new (GimpContainer *container,
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
   g_return_val_if_fail (preview_width  > 0 && preview_width  <= 64, NULL);
   g_return_val_if_fail (preview_height > 0 && preview_height <= 64, NULL);
+  g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, NULL);
+  g_return_val_if_fail (min_items_y > 0 && min_items_y <= 64, NULL);
 
   grid_view = gtk_type_new (GIMP_TYPE_CONTAINER_GRID_VIEW);
 
@@ -163,6 +167,10 @@ gimp_container_grid_view_new (GimpContainer *container,
 
   view->preview_width  = preview_width;
   view->preview_height = preview_height;
+
+  gtk_widget_set_usize (grid_view->wrap_box->parent,
+			(preview_width  + 2) * min_items_x - 2,
+			(preview_height + 2) * min_items_y - 2);
 
   gimp_container_view_set_container (view, container);
 
@@ -181,7 +189,8 @@ gimp_container_grid_view_insert_item (GimpContainerView *view,
 
   preview = gimp_preview_new (viewable,
 			      view->preview_width,
-			      view->preview_height);
+			      view->preview_height,
+			      TRUE, TRUE);
   gtk_wrap_box_pack (GTK_WRAP_BOX (grid_view->wrap_box), preview,
 		     FALSE, FALSE, FALSE, FALSE);
 
