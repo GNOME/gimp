@@ -462,18 +462,16 @@ msgid "Fuzziness Threshold"
 msgstr "Пор╕г розпорошення"
 
 #: app/by_color_select.c:792
-#, fuzzy
 msgid "Selection"
-msgstr "Вид╕лення: "
+msgstr "Вид╕лення"
 
 #: app/by_color_select.c:803
-#, fuzzy
 msgid "Invert"
-msgstr "Перетворення"
+msgstr "╤нвертувати"
 
 #: app/by_color_select.c:810
 msgid "All"
-msgstr ""
+msgstr "Все"
 
 #: app/channel.c:187 app/channel.c:189 app/layer.c:310 app/layer.c:312
 msgid "copy"
@@ -1404,6 +1402,8 @@ msgid ""
 "Image resolution is out of bounds,\n"
 "using the default resolution instead."
 msgstr ""
+"Розд╕льна здатн╕сть зображення поза допустимою,\n"
+"використову╓ться типове значення."
 
 #: app/gimage_mask.c:211
 msgid ""
@@ -2061,7 +2061,7 @@ msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: app/gradient.c:4617 app/gradient.c:4687
 msgid "(Varies)"
-msgstr ""
+msgstr "(Вар╕ац╕╖)"
 
 #: app/gradient.c:4839
 msgid "Split"
@@ -2373,9 +2373,8 @@ msgstr "кольор╕в"
 
 #. adjust sliders
 #: app/ink.c:291
-#, fuzzy
 msgid "Adjustment"
-msgstr "Вир╕внювання:"
+msgstr "Вир╕внювання"
 
 #: app/ink.c:308 app/ink.c:346
 msgid "Size:"
@@ -2383,19 +2382,16 @@ msgstr "Розм╕р:"
 
 #. sens sliders
 #: app/ink.c:329
-#, fuzzy
 msgid "Sensitivity"
-msgstr "Чутлив╕ть:"
+msgstr "Чутлив╕ть"
 
 #: app/ink.c:359
-#, fuzzy
 msgid "Tilt:"
-msgstr "Нахил"
+msgstr "Нахил:"
 
 #: app/ink.c:372
-#, fuzzy
 msgid "Speed:"
-msgstr "Швидк╕сть"
+msgstr "Швидк╕сть:"
 
 #. Brush shape widget
 #: app/ink.c:454
@@ -3708,39 +3704,32 @@ msgid "Unload"
 msgstr "Вивантажити"
 
 #: app/module_db.c:853
-#, fuzzy
 msgid "Purpose:"
 msgstr "Ц╕ль: "
 
 #: app/module_db.c:854
-#, fuzzy
 msgid "Author:"
-msgstr "Автор: "
+msgstr "Автор:"
 
 #: app/module_db.c:855
-#, fuzzy
 msgid "Version:"
-msgstr "Верс╕я: "
+msgstr "Верс╕я:"
 
 #: app/module_db.c:856
-#, fuzzy
 msgid "Copyright:"
-msgstr "Авторське право: "
+msgstr "Авторське право:"
 
 #: app/module_db.c:857
-#, fuzzy
 msgid "Date:"
-msgstr "Дата: "
+msgstr "Дата:"
 
 #: app/module_db.c:858
-#, fuzzy
 msgid "Location:"
-msgstr "Розм╕щення: "
+msgstr "Розм╕щення:"
 
 #: app/module_db.c:859
-#, fuzzy
 msgid "State:"
-msgstr "Стан: "
+msgstr "Стан:"
 
 #: app/module_db.c:878
 msgid "Autoload during startup"
@@ -4473,14 +4462,12 @@ msgid "Use Global Paint Options"
 msgstr "Використовувати глобальн╕ параметри пензля"
 
 #: app/preferences_dialog.c:2051
-#, fuzzy
 msgid "Finding Contiguous Regions"
-msgstr "Вид╕лення сум╕жних д╕лянок"
+msgstr "Пошук сум╕жних д╕лянок"
 
 #: app/preferences_dialog.c:2070
-#, fuzzy
 msgid "Default Threshold:"
-msgstr "Пор╕г:"
+msgstr "Типовий пор╕г:"
 
 #: app/preferences_dialog.c:2079 app/preferences_dialog.c:2081
 msgid "Environment"
@@ -5045,9 +5032,8 @@ msgid "Opacity"
 msgstr "Непрозор╕сть"
 
 #: app/tool_options.c:752
-#, fuzzy
 msgid "Hardness"
-msgstr "Тверд╕сть:"
+msgstr "Тверд╕сть"
 
 #: app/tool_options.c:772
 msgid "Rate"
@@ -5960,6 +5946,8 @@ msgid ""
 "Please wait while your personal\n"
 "GIMP directory is being created..."
 msgstr ""
+"Зачекайте доки буде створено\n"
+"ваш особистий каталог GIMP..."
 
 #: app/user_install.c:541
 msgid "GIMP User Installation"
@@ -6265,9 +6253,3 @@ msgstr "Акварель"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "╤стор╕я кольор╕в"
-
-#~ msgid "Angle"
-#~ msgstr "Кут"
-
-#~ msgid "Pressure"
-#~ msgstr "Натиск"
