@@ -1,3 +1,7 @@
+2003-03-27  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimptexteditor.c: enlarged it a little.
+
 2003-03-26  Michael Natterer  <mitch@gimp.org>
 
 	* themes/Default/images/tools/stock-tool-*-16.png: new small tool

@@ -114,6 +114,8 @@ gimp_text_editor_new (const gchar   *title,
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
   gtk_widget_show (text_view);
 
+  gtk_widget_set_size_request (text_view, 128, 64);
+
   return editor;
 }
 
