@@ -1,3 +1,18 @@
+2004-06-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpclonetool.c (gimp_clone_tool_button_release):
+	removed again (tools must not draw outside GimpDrawTool::draw()).
+
+	(gimp_clone_tool_draw): removed check for gimp_draw_tool_is_active()
+	because the draw function would not be called if the draw tool was
+	inactive. Simplified check for whether or not to draw the src
+	location.
+
+	* app/tools/gimppainttool.c (gimp_paint_tool_button_release):
+	pause/resume the draw tool across all button_release actions so
+	tools (clone) have a chance to draw different things depending on
+	gimp_tool_control_is_active(tool->control). Fixes bug #145022.
+
 2004-06-28  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/actions.c (action_select_object): added missing

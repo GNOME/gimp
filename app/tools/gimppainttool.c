@@ -483,6 +483,8 @@ gimp_paint_tool_button_release (GimpTool        *tool,
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
   /*  Let the specific painting function finish up  */
   gimp_paint_core_paint (core, drawable, paint_options, FINISH_PAINT, time);
 
@@ -499,6 +501,8 @@ gimp_paint_tool_button_release (GimpTool        *tool,
     gimp_paint_core_finish (core, drawable);
 
   gimp_image_flush (gdisp->gimage);
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
 static void

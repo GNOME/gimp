@@ -60,11 +60,6 @@ static void   gimp_clone_tool_motion           (GimpTool        *tool,
                                                 guint32          time,
                                                 GdkModifierType  state,
                                                 GimpDisplay     *gdisp);
-static void   gimp_clone_tool_button_release   (GimpTool        *tool,
-                                                GimpCoords      *coords,
-                                                guint32          time,
-                                                GdkModifierType  state,
-                                                GimpDisplay     *gdisp);
 
 static void   gimp_clone_tool_cursor_update    (GimpTool        *tool,
                                                 GimpCoords      *coords,
@@ -135,7 +130,6 @@ gimp_clone_tool_class_init (GimpCloneToolClass *klass)
 
   tool_class->button_press  = gimp_clone_tool_button_press;
   tool_class->motion        = gimp_clone_tool_motion;
-  tool_class->button_release = gimp_clone_tool_button_release;
   tool_class->cursor_update = gimp_clone_tool_cursor_update;
 
   draw_tool_class->draw     = gimp_clone_tool_draw;
@@ -184,40 +178,6 @@ gimp_clone_tool_motion (GimpTool        *tool,
   GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state, gdisp);
 }
 
-static void
-gimp_clone_tool_button_release (GimpTool        *tool,
-                                GimpCoords      *coords,
-                                guint32          time,
-                                GdkModifierType  state,
-                                GimpDisplay     *gdisp)
-{
-  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
-  GimpClone *clone;
-
-  clone = GIMP_CLONE (paint_tool->core);
-
-  if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK)
-    {}
-  else if (clone->src_drawable && ! clone->first_stroke )
-    {
-      gint off_x;
-      gint off_y;
-      
-      gimp_item_offsets (GIMP_ITEM (clone->src_drawable),
-                         &off_x, &off_y);
-      
-      gimp_draw_tool_draw_handle (GIMP_DRAW_TOOL (tool),
-                                  GIMP_HANDLE_CROSS,
-                                  clone->src_x + off_x,
-                                  clone->src_y + off_y,
-                                  TARGET_WIDTH, TARGET_WIDTH,
-                                  GTK_ANCHOR_CENTER,
-                                  FALSE);
-    }
-
-  GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time, state, gdisp);
-}
-
 void
 gimp_clone_tool_cursor_update (GimpTool        *tool,
                                GimpCoords      *coords,
@@ -262,31 +222,25 @@ gimp_clone_tool_draw (GimpDrawTool *draw_tool)
 
   if (gimp_tool_control_is_active (tool->control))
     {
+      GimpClone        *clone = GIMP_CLONE (GIMP_PAINT_TOOL (draw_tool)->core);
       GimpCloneOptions *options;
 
       options = (GimpCloneOptions *) tool->tool_info->tool_options;
 
-      if (gimp_draw_tool_is_active (draw_tool) &&
-          options->clone_type == GIMP_IMAGE_CLONE)
+      if (options->clone_type == GIMP_IMAGE_CLONE && clone->src_drawable)
         {
-          GimpClone *clone = GIMP_CLONE (GIMP_PAINT_TOOL (draw_tool)->core);
+          gint off_x;
+          gint off_y;
 
-          if (clone->src_drawable && ! clone->first_stroke )
-            {
-              gint off_x;
-              gint off_y;
+          gimp_item_offsets (GIMP_ITEM (clone->src_drawable), &off_x, &off_y);
 
-              gimp_item_offsets (GIMP_ITEM (clone->src_drawable),
-                                 &off_x, &off_y);
-
-              gimp_draw_tool_draw_handle (draw_tool,
-                                          GIMP_HANDLE_CROSS,
-                                          clone->src_x + off_x,
-                                          clone->src_y + off_y,
-                                          TARGET_WIDTH, TARGET_WIDTH,
-                                          GTK_ANCHOR_CENTER,
-                                          FALSE);
-            }
+          gimp_draw_tool_draw_handle (draw_tool,
+                                      GIMP_HANDLE_CROSS,
+                                      clone->src_x + off_x,
+                                      clone->src_y + off_y,
+                                      TARGET_WIDTH, TARGET_WIDTH,
+                                      GTK_ANCHOR_CENTER,
+                                      FALSE);
         }
     }
 
