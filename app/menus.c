@@ -42,7 +42,7 @@
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpenv.h"
 
-#define MRU_MENU_ENTRY_SIZE (strlen (_("/File/MRU00 ")) + 1)
+#define MRU_MENU_ENTRY_SIZE (strlen ("/File/MRU00 ") + 1)
 #define MRU_MENU_ACCEL_SIZE sizeof ("<control>0")
 
 static void   menus_create_item    (GtkItemFactory       *item_factory,

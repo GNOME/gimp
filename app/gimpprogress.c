@@ -35,9 +35,6 @@ struct gimp_progress_pvt {
   gpointer       cancel_data;
 };
 
-#define DEFAULT_PROGRESS_MESSAGE _("Please wait...")
-
-
 /* prototypes */
 static void progress_signal_setup (gimp_progress *, GtkSignalFunc, gpointer);
 
@@ -123,7 +120,7 @@ progress_start (GDisplay      *gdisp,
       gtk_widget_show (vbox);
 
       p->dialog_label = gtk_label_new (message ? message :
-				       DEFAULT_PROGRESS_MESSAGE);
+				       _("Please wait..."));
       gtk_misc_set_alignment (GTK_MISC (p->dialog_label), 0.0, 0.5);
       gtk_box_pack_start (GTK_BOX (vbox), p->dialog_label, FALSE, TRUE, 0);
       gtk_widget_show (p->dialog_label);
@@ -170,7 +167,7 @@ progress_restart (gimp_progress *p,
   else
     {
       gtk_label_set_text (GTK_LABEL (p->dialog_label),
-			  message ? message : DEFAULT_PROGRESS_MESSAGE);
+			  message ? message : _("Please wait..."));
       bar = p->progressbar;
     }
 

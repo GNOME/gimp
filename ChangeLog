@@ -1,3 +1,14 @@
+Thu Feb 10 02:55:53 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/about_dialog.c
+	* app/app_procs.c
+	* app/gimpprogress.c
+	* app/menus.c
+	* plug-ins/twain/twain.c
+	* plug-ins/winsnap/winsnap.c: I18n fixes. Marked hardcoded fonts for 
+	translation and moved translatable strings out of defines into places 
+	where xgettext can parse them.
+
 2000-02-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools.c: you can now drag the active tool out of the tool

@@ -240,7 +240,8 @@ about_dialog_create (gint timeout)
 
       style = gtk_style_new ();
       gdk_font_unref (style->font);
-      style->font = gdk_font_load ("-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*");
+      style->font = 
+	gdk_font_load (_("-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"));
       gtk_widget_push_style (style);
       gtk_style_unref (style);
 

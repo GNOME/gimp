@@ -101,9 +101,7 @@
 
 #define LOGO_WIDTH_MIN  300
 #define LOGO_HEIGHT_MIN 110
-#define NAME    _("The GIMP")
-#define BROUGHT _("brought to you by")
-#define AUTHORS "Spencer Kimball and Peter Mattis"
+#define AUTHORS "Spencer Kimball & Peter Mattis"
 
 #define SHOW_NEVER 0
 #define SHOW_LATER 1
@@ -267,16 +265,16 @@ splash_text_draw (GtkWidget *widget)
 {
   GdkFont *font = NULL;
 
-  font = gdk_font_load ("-Adobe-Helvetica-Bold-R-Normal--*-140-*-*-*-*-*-*");
+  font = gdk_font_load (_("-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"));
   gdk_draw_string (widget->window,
 		   font,
 		   widget->style->fg_gc[GTK_STATE_NORMAL],
-		   ((logo_area_width - gdk_string_width (font, NAME)) / 2),
+		   ((logo_area_width - gdk_string_width (font,  _("The GIMP"))) / 2),
 		   (0.25 * logo_area_height),
-		   NAME);
+		   _("The GIMP"));
   gdk_font_unref (font);
 
-  font = gdk_font_load ("-Adobe-Helvetica-Bold-R-Normal--*-120-*-*-*-*-*-*");
+  font = gdk_font_load (_("-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*"));
   gdk_draw_string (widget->window,
 		   font,
 		   widget->style->fg_gc[GTK_STATE_NORMAL],
@@ -286,9 +284,9 @@ splash_text_draw (GtkWidget *widget)
   gdk_draw_string (widget->window,
 		   font,
 		   widget->style->fg_gc[GTK_STATE_NORMAL],
-		   ((logo_area_width - gdk_string_width (font, BROUGHT)) / 2),
+		   ((logo_area_width - gdk_string_width (font, _("brought to you by"))) / 2),
 		   (0.65 * logo_area_height),
-		   BROUGHT);
+		   _("brought to you by"));
   gdk_draw_string (widget->window,
 		   font,
 		   widget->style->fg_gc[GTK_STATE_NORMAL],

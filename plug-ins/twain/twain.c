@@ -87,7 +87,6 @@
 #define PLUG_IN_AUTHOR      "Craig Setera (setera@infonet.isl.net)"
 #define PLUG_IN_COPYRIGHT   "Craig Setera"
 #define PLUG_IN_VERSION     "v0.5 (03/31/1999)"
-#define PLUG_IN_MENU_PATH   N_("<Toolbox>/File/Acquire/TWAIN...")
 
 #ifdef _DEBUG
 #define PLUG_IN_D_NAME        "twain-acquire-dump"
@@ -511,7 +510,7 @@ query(void)
 			   PLUG_IN_AUTHOR,
 			   PLUG_IN_COPYRIGHT,
 			   PLUG_IN_VERSION,
-			   PLUG_IN_MENU_PATH,
+			   N_("<Toolbox>/File/Acquire/TWAIN..."),
 			   NULL,
 			   PROC_EXTENSION,		
 			   NUMBER_IN_ARGS,

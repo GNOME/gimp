@@ -62,7 +62,6 @@
 #define PLUG_IN_AUTHOR      "Craig Setera (setera@infonet.isl.net)"
 #define PLUG_IN_COPYRIGHT   "Craig Setera"
 #define PLUG_IN_VERSION     "v0.70 (07/16/1999)"
-#define PLUG_IN_MENU_PATH   N_("<Toolbox>/File/Acquire/Screen Shot...")
 
 /*
  * Application definitions
@@ -1040,7 +1039,7 @@ query(void)
 			 PLUG_IN_AUTHOR,
 			 PLUG_IN_COPYRIGHT,
 			 PLUG_IN_VERSION,
-			 PLUG_IN_MENU_PATH,
+			 N_("<Toolbox>/File/Acquire/Screen Shot..."),
 			 NULL,
 			 PROC_EXTENSION,		
 			 NUMBER_IN_ARGS,
