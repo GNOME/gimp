@@ -52,7 +52,7 @@ typedef struct
 typedef struct
 {
   GSList  *list;
-  guint    history;
+  gint     history;
 } SFOption;
 
 typedef union

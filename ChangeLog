@@ -1,5 +1,24 @@
 2004-09-01  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/script-fu-types.h (struct SFOptions): changed
+	"guint history" to "gint history".
+
+	* plug-ins/script-fu/script-fu-interface.c: added callbacks for
+	string entries and combo boxes and connect *all* widgets to callbacks.
+
+	(script_fu_ok): don't touch the widgets at all but get the values
+	directly now that the callbacks correctly write them to their
+	structs.
+
+	(script_fu_reset): don't copy the default values manually but
+	simply set the default values on the widgets; their callbacks will
+	do the rest.
+
+	* plug-ins/script-fu/script-fu-scripts.c (script_fu_add_script):
+	added some line breaks and spaces to make it more readable.
+
+2004-09-01  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/Makefile.am
 	* libgimp/gimpui.h
 	* libgimp/gimpuitypes.h

@@ -78,8 +78,12 @@ static void   script_fu_ok                  (SFScript             *script);
 static void   script_fu_reset               (SFScript             *script);
 static void   script_fu_about               (SFScript             *script);
 
+static void   script_fu_string_callback     (GtkWidget            *widget,
+                                             gchar               **value);
 static void   script_fu_file_entry_callback (GtkWidget            *widget,
                                              SFFilename           *file);
+static void   script_fu_combo_callback      (GtkWidget            *widget,
+                                             SFOption             *option);
 static void   script_fu_pattern_callback    (const gchar          *name,
                                              gint                  width,
                                              gint                  height,
@@ -301,6 +305,7 @@ script_fu_interface (SFScript *script)
 	    }
 
           gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (widget), *ID_ptr);
+
           g_signal_connect (widget, "changed",
                             G_CALLBACK (gimp_int_combo_box_get_active),
                             ID_ptr);
@@ -314,6 +319,7 @@ script_fu_interface (SFScript *script)
                                           GIMP_COLOR_AREA_FLAT);
 
           gimp_color_button_set_update (GIMP_COLOR_BUTTON (widget), TRUE);
+
 	  g_signal_connect (widget, "color_changed",
 			    G_CALLBACK (gimp_color_button_get_color),
 			    &script->arg_values[i].sfa_color);
@@ -335,8 +341,13 @@ script_fu_interface (SFScript *script)
 	case SF_STRING:
 	  widget = gtk_entry_new ();
 	  gtk_widget_set_size_request (widget, TEXT_WIDTH, -1);
+
 	  gtk_entry_set_text (GTK_ENTRY (widget),
                               script->arg_values[i].sfa_value);
+
+          g_signal_connect (widget, "changed",
+                            G_CALLBACK (script_fu_string_callback),
+                            &script->arg_values[i].sfa_value);
 	  break;
 
 	case SF_ADJUSTMENT:
@@ -373,6 +384,11 @@ script_fu_interface (SFScript *script)
 	    default:
 	      break;
 	    }
+
+          g_signal_connect (script->arg_values[i].sfa_adjustment.adj,
+                            "value_changed",
+                            G_CALLBACK (gimp_double_adjustment_update),
+                            &script->arg_values[i].sfa_adjustment.value);
 	  break;
 
 	case SF_FILENAME:
@@ -445,6 +461,10 @@ script_fu_interface (SFScript *script)
 
           gtk_combo_box_set_active (GTK_COMBO_BOX (widget),
                                     script->arg_values[i].sfa_option.history);
+
+          g_signal_connect (widget, "changed",
+                            G_CALLBACK (script_fu_combo_callback),
+                            &script->arg_values[i].sfa_option);
 	  break;
 
 	default:
@@ -554,6 +574,16 @@ script_fu_interface_quit (SFScript *script)
 }
 
 static void
+script_fu_string_callback (GtkWidget  *widget,
+                           gchar     **value)
+{
+  if (*value)
+    g_free (*value);
+
+  *value = g_strdup (gtk_entry_get_text (GTK_ENTRY (widget)));
+}
+
+static void
 script_fu_file_entry_callback (GtkWidget  *widget,
                                SFFilename *file)
 {
@@ -562,6 +592,13 @@ script_fu_file_entry_callback (GtkWidget  *widget,
 
   file->filename =
     gimp_file_entry_get_filename (GIMP_FILE_ENTRY(file->file_entry));
+}
+
+static void
+script_fu_combo_callback (GtkWidget *widget,
+                          SFOption  *option)
+{
+  option->history = gtk_combo_box_get_active (GTK_COMBO_BOX (widget));
 }
 
 static void
@@ -680,8 +717,6 @@ script_fu_ok (SFScript *script)
 
   for (i = 0; i < script->num_args; i++)
     {
-      GtkWidget *widget = sf_interface->args_widgets[i];
-
       switch (script->arg_types[i])
         {
         case SF_IMAGE:
@@ -700,12 +735,11 @@ script_fu_ok (SFScript *script)
           break;
 
         case SF_VALUE:
-          length += strlen (gtk_entry_get_text (GTK_ENTRY (widget))) + 1;
+          length += strlen (script->arg_values[i].sfa_value) + 1;
           break;
 
         case SF_STRING:
-          escaped = g_strescape (gtk_entry_get_text (GTK_ENTRY (widget)),
-                                 NULL);
+          escaped = g_strescape (script->arg_values[i].sfa_value, NULL);
           length += strlen (escaped) + 3;
           g_free (escaped);
           break;
@@ -757,10 +791,9 @@ script_fu_ok (SFScript *script)
 
   sprintf (command, "(%s ", script->script_name);
   c += strlen (script->script_name) + 2;
+
   for (i = 0; i < script->num_args; i++)
     {
-      GtkWidget *widget = sf_interface->args_widgets[i];
-
       switch (script->arg_types[i])
         {
         case SF_IMAGE:
@@ -786,37 +819,17 @@ script_fu_ok (SFScript *script)
           break;
 
         case SF_VALUE:
-          text = (gchar *) gtk_entry_get_text (GTK_ENTRY (widget));
-          g_free (script->arg_values[i].sfa_value);
-          script->arg_values[i].sfa_value = g_strdup (text);
+          text = script->arg_values[i].sfa_value;
           break;
 
         case SF_STRING:
-          text = (gchar *) gtk_entry_get_text (GTK_ENTRY (widget));
-          g_free (script->arg_values[i].sfa_value);
-          script->arg_values[i].sfa_value = g_strdup (text);
-          escaped = g_strescape (text, NULL);
+          escaped = g_strescape (script->arg_values[i].sfa_value, NULL);
           g_snprintf (buffer, sizeof (buffer), "\"%s\"", escaped);
           g_free (escaped);
           text = buffer;
           break;
 
         case SF_ADJUSTMENT:
-          switch (script->arg_defaults[i].sfa_adjustment.type)
-            {
-            case SF_SLIDER:
-              script->arg_values[i].sfa_adjustment.value =
-                script->arg_values[i].sfa_adjustment.adj->value;
-              break;
-
-            case SF_SPINNER:
-              script->arg_values[i].sfa_adjustment.value =
-                gtk_spin_button_get_value (GTK_SPIN_BUTTON (widget));
-              break;
-
-            default:
-              break;
-            }
           text = g_ascii_dtostr (buffer, sizeof (buffer),
                                  script->arg_values[i].sfa_adjustment.value);
           break;
@@ -871,9 +884,6 @@ script_fu_ok (SFScript *script)
           break;
 
         case SF_OPTION:
-          script->arg_values[i].sfa_option.history =
-            gtk_combo_box_get_active (GTK_COMBO_BOX (widget));
-
           g_snprintf (buffer, sizeof (buffer), "%d",
                       script->arg_values[i].sfa_option.history);
           text = buffer;
@@ -915,41 +925,31 @@ script_fu_reset (SFScript *script)
           break;
 
         case SF_COLOR:
-          script->arg_values[i].sfa_color = script->arg_defaults[i].sfa_color;
           gimp_color_button_set_color (GIMP_COLOR_BUTTON (widget),
-                                       &script->arg_values[i].sfa_color);
+                                       &script->arg_defaults[i].sfa_color);
 	break;
 
         case SF_TOGGLE:
-          script->arg_values[i].sfa_toggle = script->arg_defaults[i].sfa_toggle;
           gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
-                                        script->arg_values[i].sfa_toggle);
+                                        script->arg_defaults[i].sfa_toggle);
 	break;
 
         case SF_VALUE:
         case SF_STRING:
-          g_free (script->arg_values[i].sfa_value);
-          script->arg_values[i].sfa_value =
-            g_strdup (script->arg_defaults[i].sfa_value);
           gtk_entry_set_text (GTK_ENTRY (widget),
-                              script->arg_values[i].sfa_value);
+                              script->arg_defaults[i].sfa_value);
           break;
 
         case SF_ADJUSTMENT:
-          script->arg_values[i].sfa_adjustment.value =
-            script->arg_defaults[i].sfa_adjustment.value;
           gtk_adjustment_set_value (script->arg_values[i].sfa_adjustment.adj,
-                                    script->arg_values[i].sfa_adjustment.value);
+                                    script->arg_defaults[i].sfa_adjustment.value);
           break;
 
         case SF_FILENAME:
         case SF_DIRNAME:
-          g_free (script->arg_values[i].sfa_file.filename);
-          script->arg_values[i].sfa_file.filename =
-            g_strdup (script->arg_defaults[i].sfa_file.filename);
           gimp_file_entry_set_filename
             (GIMP_FILE_ENTRY (script->arg_values[i].sfa_file.file_entry),
-             script->arg_values[i].sfa_file.filename);
+             script->arg_defaults[i].sfa_file.filename);
           break;
 
         case SF_FONT:
@@ -981,10 +981,8 @@ script_fu_reset (SFScript *script)
           break;
 
         case SF_OPTION:
-          script->arg_values[i].sfa_option.history =
-            script->arg_defaults[i].sfa_option.history;
           gtk_combo_box_set_active (GTK_COMBO_BOX (widget),
-                                    script->arg_values[i].sfa_option.history);
+                                    script->arg_defaults[i].sfa_option.history);
           break;
 
         default:

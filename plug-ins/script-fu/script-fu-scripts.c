@@ -247,8 +247,11 @@ script_fu_add_script (LISP a)
 		case SF_CHANNEL:
 		  if (!TYPEP (car (a), tc_flonum))
 		    return my_err ("script-fu-register: drawable defaults must be integer values", NIL);
-		  script->arg_defaults[i].sfa_image = get_c_long (car (a));
-		  script->arg_values[i].sfa_image = script->arg_defaults[i].sfa_image;
+
+		  script->arg_defaults[i].sfa_image =
+                    get_c_long (car (a));
+		  script->arg_values[i].sfa_image =
+                    script->arg_defaults[i].sfa_image;
 
 		  switch (script->arg_types[i])
 		    {
@@ -282,6 +285,7 @@ script_fu_add_script (LISP a)
 		case SF_COLOR:
 		  if (!TYPEP (car (a), tc_cons))
 		    return my_err ("script-fu-register: color defaults must be a list of 3 integers", NIL);
+
 		  color_list = car (a);
 		  r = CLAMP (get_c_long (car (color_list)), 0, 255);
 		  color_list = cdr (color_list);
@@ -295,53 +299,57 @@ script_fu_add_script (LISP a)
 		  script->arg_values[i].sfa_color =
 		    script->arg_defaults[i].sfa_color;
 
-		  args[i + 1].type = GIMP_PDB_COLOR;
-		  args[i + 1].name = "color";
+		  args[i + 1].type        = GIMP_PDB_COLOR;
+		  args[i + 1].name        = "color";
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
 
 		case SF_TOGGLE:
 		  if (!TYPEP (car (a), tc_flonum))
 		    return my_err ("script-fu-register: toggle default must be an integer value", NIL);
+
 		  script->arg_defaults[i].sfa_toggle =
 		    (get_c_long (car (a))) ? TRUE : FALSE;
 		  script->arg_values[i].sfa_toggle =
 		    script->arg_defaults[i].sfa_toggle;
 
-		  args[i + 1].type = GIMP_PDB_INT32;
-		  args[i + 1].name = "toggle";
+		  args[i + 1].type        = GIMP_PDB_INT32;
+		  args[i + 1].name        = "toggle";
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
 
 		case SF_VALUE:
 		  if (!TYPEP (car (a), tc_string))
 		    return my_err ("script-fu-register: value defaults must be string values", NIL);
+
 		  script->arg_defaults[i].sfa_value =
 		    g_strdup (get_c_string (car (a)));
 		  script->arg_values[i].sfa_value =
 		    g_strdup (script->arg_defaults[i].sfa_value);
 
-		  args[i + 1].type = GIMP_PDB_STRING;
-		  args[i + 1].name = "value";
+		  args[i + 1].type        = GIMP_PDB_STRING;
+		  args[i + 1].name        = "value";
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
 
 		case SF_STRING:
 		  if (!TYPEP (car (a), tc_string))
 		    return my_err ("script-fu-register: string defaults must be string values", NIL);
+
 		  script->arg_defaults[i].sfa_value =
 		    g_strdup (get_c_string (car (a)));
 		  script->arg_values[i].sfa_value =
 		    g_strdup (script->arg_defaults[i].sfa_value);
 
-		  args[i + 1].type = GIMP_PDB_STRING;
-		  args[i + 1].name = "string";
+		  args[i + 1].type        = GIMP_PDB_STRING;
+		  args[i + 1].name        = "string";
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
 
 		case SF_ADJUSTMENT:
 		  if (!TYPEP (car (a), tc_cons))
 		    return my_err ("script-fu-register: adjustment defaults must be a list", NIL);
+
 		  adj_list = car (a);
 		  script->arg_defaults[i].sfa_adjustment.value =
 		    get_c_double (car (adj_list));
@@ -364,11 +372,12 @@ script_fu_add_script (LISP a)
 		  script->arg_defaults[i].sfa_adjustment.type =
 		    get_c_long (car (adj_list));
 		  script->arg_values[i].sfa_adjustment.adj = NULL;
+
 		  script->arg_values[i].sfa_adjustment.value =
 		    script->arg_defaults[i].sfa_adjustment.value;
 
-		  args[i + 1].type = GIMP_PDB_FLOAT;
-		  args[i + 1].name = "value";
+		  args[i + 1].type        = GIMP_PDB_FLOAT;
+		  args[i + 1].name        = "value";
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
 
@@ -376,9 +385,11 @@ script_fu_add_script (LISP a)
 		  if (!TYPEP (car (a), tc_string))
 		    return my_err ("script-fu-register: filename defaults must be string values", NIL);
                   /* fallthrough */
+
 		case SF_DIRNAME:
 		  if (!TYPEP (car (a), tc_string))
 		    return my_err ("script-fu-register: dirname defaults must be string values", NIL);
+
 		  script->arg_defaults[i].sfa_file.filename =
 		    g_strdup (get_c_string (car (a)));
 
@@ -399,54 +410,58 @@ script_fu_add_script (LISP a)
 		    g_strdup (script->arg_defaults[i].sfa_file.filename);
 		  script->arg_values[i].sfa_file.file_entry = NULL;
 
-		  args[i + 1].type = GIMP_PDB_STRING;
-		  args[i + 1].name = (script->arg_types[i] == SF_FILENAME ?
-                                      "filename" : "dirname");
+		  args[i + 1].type        = GIMP_PDB_STRING;
+		  args[i + 1].name        = (script->arg_types[i] == SF_FILENAME ?
+                                             "filename" : "dirname");
 		  args[i + 1].description = script->arg_labels[i];
 		 break;
 
 		case SF_FONT:
 		  if (!TYPEP (car (a), tc_string))
 		    return my_err ("script-fu-register: font defaults must be string values", NIL);
+
 		  script->arg_defaults[i].sfa_font =
                     g_strdup (get_c_string (car (a)));
 		  script->arg_values[i].sfa_font =
                     g_strdup (script->arg_defaults[i].sfa_font);
 
-		  args[i + 1].type = GIMP_PDB_STRING;
-		  args[i + 1].name = "font";
+		  args[i + 1].type        = GIMP_PDB_STRING;
+		  args[i + 1].name        = "font";
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
 
 		case SF_PALETTE:
 		  if (!TYPEP (car (a), tc_string))
 		    return my_err ("script-fu-register: palette defaults must be string values", NIL);
+
 		  script->arg_defaults[i].sfa_palette =
                     g_strdup (get_c_string (car (a)));
 		  script->arg_values[i].sfa_palette =
                     g_strdup (script->arg_defaults[i].sfa_palette);
 
-		  args[i + 1].type = GIMP_PDB_STRING;
-		  args[i + 1].name = "palette";
+		  args[i + 1].type        = GIMP_PDB_STRING;
+		  args[i + 1].name        = "palette";
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
 
 		case SF_PATTERN:
 		  if (!TYPEP (car (a), tc_string))
 		    return my_err ("script-fu-register: pattern defaults must be string values", NIL);
+
 		  script->arg_defaults[i].sfa_pattern =
 		    g_strdup (get_c_string (car (a)));
 		  script->arg_values[i].sfa_pattern =
 		    g_strdup (script->arg_defaults[i].sfa_pattern);
 
-		  args[i + 1].type = GIMP_PDB_STRING;
-		  args[i + 1].name = "pattern";
+		  args[i + 1].type        = GIMP_PDB_STRING;
+		  args[i + 1].name        = "pattern";
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
 
 		case SF_BRUSH:
 		  if (!TYPEP (car (a), tc_cons))
 		    return my_err ("script-fu-register: brush defaults must be a list", NIL);
+
 		  brush_list = car (a);
 		  script->arg_defaults[i].sfa_brush.name =
 		    g_strdup (get_c_string (car (brush_list)));
@@ -471,27 +486,29 @@ script_fu_add_script (LISP a)
 		  script->arg_values[i].sfa_brush.paint_mode =
 		    script->arg_defaults[i].sfa_brush.paint_mode;
 
-		  args[i + 1].type = GIMP_PDB_STRING;
-		  args[i + 1].name = "brush";
+		  args[i + 1].type        = GIMP_PDB_STRING;
+		  args[i + 1].name        = "brush";
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
 
 		case SF_GRADIENT:
 		  if (!TYPEP (car (a), tc_string))
 		    return my_err ("script-fu-register: gradient defaults must be string values", NIL);
+
 		  script->arg_defaults[i].sfa_gradient =
 		    g_strdup (get_c_string (car (a)));
 		  script->arg_values[i].sfa_gradient =
 		    g_strdup (script->arg_defaults[i].sfa_pattern);
 
-		  args[i + 1].type = GIMP_PDB_STRING;
-		  args[i + 1].name = "gradient";
+		  args[i + 1].type        = GIMP_PDB_STRING;
+		  args[i + 1].name        = "gradient";
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
 
 		case SF_OPTION:
 		  if (!TYPEP (car (a), tc_cons))
 		    return my_err ("script-fu-register: option defaults must be a list", NIL);
+
 		  for (option_list = car (a);
 		       option_list;
 		       option_list = cdr (option_list))
@@ -503,8 +520,8 @@ script_fu_add_script (LISP a)
 		  script->arg_defaults[i].sfa_option.history = 0;
 		  script->arg_values[i].sfa_option.history = 0;
 
-		  args[i + 1].type = GIMP_PDB_INT32;
-		  args[i + 1].name = "option";
+		  args[i + 1].type        = GIMP_PDB_INT32;
+		  args[i + 1].name        = "option";
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
 
@@ -515,7 +532,10 @@ script_fu_add_script (LISP a)
 	      a = cdr (a);
 	    }
 	  else
-	    return my_err ("script-fu-register: missing default argument", NIL);
+            {
+              return my_err ("script-fu-register: missing default argument",
+                             NIL);
+            }
 	}
     }
 
@@ -542,10 +562,10 @@ script_fu_load_script (const GimpDatafileData *file_data,
   if (gimp_datafiles_check_extension (file_data->filename, ".scm"))
     {
       gchar *command;
-      gchar *qf = g_strescape (file_data->filename, NULL);
+      gchar *escaped = g_strescape (file_data->filename, NULL);
 
-      command = g_strdup_printf ("(load \"%s\")", qf);
-      g_free (qf);
+      command = g_strdup_printf ("(load \"%s\")", escaped);
+      g_free (escaped);
 
       if (repl_c_string (command, 0, 0, 1) != 0)
         script_fu_error_msg (command);
@@ -840,8 +860,8 @@ script_fu_lookup_script (gpointer      *foo,
       *name = script;
       return TRUE;
     }
-  else
-    return FALSE;
+
+  return FALSE;
 }
 
 static SFScript *
@@ -855,8 +875,8 @@ script_fu_find_script (const gchar *pdb_name)
 
   if (script == pdb_name)
     return NULL;
-  else
-    return (SFScript *) script;
+
+  return (SFScript *) script;
 }
 
 static void
