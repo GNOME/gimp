@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp1 1.2.2\n"
-"POT-Creation-Date: 2001-08-30 08:24+0200\n"
+"POT-Creation-Date: 2001-10-13 01:26+0200\n"
 "PO-Revision-Date: 2001-09-07 17:29+0200\n"
 "Last-Translator: Softcatalà <tradgnome@softcatala.org>\n"
 "Language-Team: Catalan\n"
@@ -249,19 +249,19 @@ msgstr "Llindar:"
 msgid "Blend: Invalid for indexed images."
 msgstr "Mescla: No és vàlida per a imatges indexades."
 
-#: app/blend.c:465
+#: app/blend.c:466
 msgid "Blend: 0, 0"
 msgstr "Mescla: 0, 0"
 
-#: app/blend.c:528
+#: app/blend.c:529
 msgid "Blend operation failed."
 msgstr "No s'ha pogut mesclar."
 
-#: app/blend.c:534
+#: app/blend.c:535
 msgid "Blending..."
 msgstr "S'estan mesclant..."
 
-#: app/blend.c:612 app/blend.c:622
+#: app/blend.c:614 app/blend.c:624
 msgid "Blend: "
 msgstr "Mescla: "
 
@@ -318,9 +318,9 @@ msgstr "Editor del pinzell"
 #. The close button
 #: app/brush_edit.c:233 app/brush_select.c:287 app/by_color_select.c:727
 #: app/color_notebook.c:125 app/color_picker.c:303 app/colormap_dialog.i.c:173
-#: app/crop.c:1073 app/devices.c:760 app/docindex.c:776 app/gdisplay_ops.c:310
+#: app/crop.c:1073 app/devices.c:760 app/docindex.c:721 app/gdisplay_ops.c:310
 #: app/gradient.c:918 app/gradient_select.c:161 app/histogram_tool.c:294
-#: app/info_window.c:261 app/lc_dialog.c:217 app/measure.c:326
+#: app/info_window.c:261 app/lc_dialog.c:217 app/measure.c:331
 #: app/nav_window.c:1426 app/palette.c:2058 app/palette.c:2074
 #: app/palette.c:3111 app/palette_select.c:70 app/pattern_select.c:178
 #: app/preferences_dialog.c:386 app/tips_dialog.c:163 app/tools.c:1549
@@ -341,7 +341,7 @@ msgstr "Duresa:"
 msgid "Aspect Ratio:"
 msgstr "Ràtio d'aspecte:"
 
-#: app/brush_edit.c:330 app/ink.c:326 app/measure.c:322 app/rotate_tool.c:93
+#: app/brush_edit.c:330 app/ink.c:326 app/measure.c:327 app/rotate_tool.c:93
 msgid "Angle:"
 msgstr "Angle:"
 
@@ -722,10 +722,10 @@ msgstr "Trio hexadecimal"
 msgid "Intensity:"
 msgstr "Intensitat:"
 
-#: app/color_picker.c:638 app/color_picker.c:639 app/color_picker.c:640
-#: app/color_picker.c:641 app/color_picker.c:642 app/color_picker.c:643
-#: app/color_picker.c:644 app/color_picker.c:656 app/color_picker.c:663
-#: app/color_picker.c:681 app/color_picker.c:696 app/info_window.c:191
+#: app/color_picker.c:639 app/color_picker.c:640 app/color_picker.c:641
+#: app/color_picker.c:642 app/color_picker.c:643 app/color_picker.c:644
+#: app/color_picker.c:645 app/color_picker.c:657 app/color_picker.c:664
+#: app/color_picker.c:682 app/color_picker.c:697 app/info_window.c:191
 #: app/info_window.c:197 app/info_window.c:203 app/info_window.c:209
 #: app/info_window.c:428 app/info_window.c:429 app/info_window.c:430
 #: app/info_window.c:431 app/info_window.c:453
@@ -1053,7 +1053,7 @@ msgstr "Estat del dispositiu"
 msgid "Pasted Layer"
 msgstr "Capa enganxada"
 
-#: app/docindex.c:116
+#: app/docindex.c:113
 msgid ""
 "Open the selected entry\n"
 "<Shift> Raise window if already open\n"
@@ -1063,7 +1063,7 @@ msgstr ""
 "<Maj> Presenta la finestra si ja és oberta\n"
 "<Ctrl> Carrega el diàleg Imatge"
 
-#: app/docindex.c:121
+#: app/docindex.c:118
 msgid ""
 "Move the selected entry up in the index\n"
 "<Shift> To top"
@@ -1071,7 +1071,7 @@ msgstr ""
 "Mou l'entrada seleccionada cap amunt en l'índex\n"
 "<Maj> fins al començament"
 
-#: app/docindex.c:125
+#: app/docindex.c:122
 msgid ""
 "Move the selected entry down in the index\n"
 "<Shift> To bottom"
@@ -1079,11 +1079,11 @@ msgstr ""
 "Mou l'entrada seleccionada cap avall en l'índex\n"
 "<Maj> fins al final"
 
-#: app/docindex.c:129
+#: app/docindex.c:126
 msgid "Remove the selected entry from the index"
 msgstr "Elimina de l'índex les entrades seleccionades"
 
-#: app/docindex.c:770
+#: app/docindex.c:715
 msgid "Document Index"
 msgstr "Índex del document"
 
@@ -1484,26 +1484,26 @@ msgstr ""
 msgid "No selection to stroke!"
 msgstr "No hi ha res seleccionat per traçar!"
 
-#: app/gimpbrush.c:298
+#: app/gimpbrush.c:301
 #, c-format
 msgid "Unknown brush format version #%d in \"%s\"."
 msgstr "Versió desconeguda del format del pinzell #%d en \"%s\"."
 
-#: app/gimpbrush.c:318
+#: app/gimpbrush.c:321
 #, c-format
 msgid "Error in GIMP brush file \"%s\"."
 msgstr "Error en el fitxer de pinzells del GIMP \"%s\"."
 
-#: app/gimpbrush.c:325 app/patterns.c:236
+#: app/gimpbrush.c:328 app/patterns.c:236
 msgid "Unnamed"
 msgstr "Sense nom"
 
-#: app/gimpbrush.c:338 app/gimpbrush.c:383
+#: app/gimpbrush.c:341 app/gimpbrush.c:386
 #, c-format
 msgid "GIMP brush file appears to be truncated: \"%s\"."
 msgstr "El fitxer de pinzells del GIMP sembla truncat: \"%s\"."
 
-#: app/gimpbrush.c:363
+#: app/gimpbrush.c:366
 #, c-format
 msgid "GIMP brush file appears to be corrupted: \"%s\"."
 msgstr "El fitxer de pinzells del GIMP sembla malmès: \"%s\"."
@@ -1740,7 +1740,7 @@ msgstr "Missatge del GIMP"
 msgid "pixel"
 msgstr "píxel"
 
-#: app/gimpunit.c:63 app/measure.c:512 app/measure.c:516 app/paint_core.c:545
+#: app/gimpunit.c:63 app/measure.c:518 app/measure.c:522 app/paint_core.c:545
 msgid "pixels"
 msgstr "píxels"
 
@@ -2946,7 +2946,7 @@ msgstr ""
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Aquesta consola finestra es tancarà en deu segons)\n"
 
-#: app/measure.c:126 app/measure.c:319
+#: app/measure.c:126 app/measure.c:324
 msgid "Measure Tool"
 msgstr "Eina de mesura"
 
@@ -2954,11 +2954,11 @@ msgstr "Eina de mesura"
 msgid "Use Info Window"
 msgstr "Utilitza la finestra d'informació"
 
-#: app/measure.c:321
+#: app/measure.c:326
 msgid "Distance:"
 msgstr "Distància:"
 
-#: app/measure.c:512 app/measure.c:517 app/measure.c:525 app/measure.c:553
+#: app/measure.c:518 app/measure.c:523 app/measure.c:531 app/measure.c:559
 msgid "degrees"
 msgstr "graus"
 
@@ -3802,7 +3802,7 @@ msgstr "Estat:"
 msgid "Autoload during startup"
 msgstr "Autocarrega a l'inici"
 
-#: app/move.c:500
+#: app/move.c:502
 msgid "Move Tool"
 msgstr "Eina Mou"
 
@@ -4834,23 +4834,23 @@ msgstr "Edita els atributs del Qmask"
 msgid "Mask Opacity:"
 msgstr "Opacitat de la màscara:"
 
-#: app/rect_select.c:203
+#: app/rect_select.c:204
 msgid "Selection: ADD"
 msgstr "Selecció: AFEGIR"
 
-#: app/rect_select.c:206
+#: app/rect_select.c:207
 msgid "Selection: SUBTRACT"
 msgstr "Selecció: SOSTREURE"
 
-#: app/rect_select.c:209
+#: app/rect_select.c:210
 msgid "Selection: INTERSECT"
 msgstr "Selecció: CREUAR"
 
-#: app/rect_select.c:212
+#: app/rect_select.c:213
 msgid "Selection: REPLACE"
 msgstr "Selecció: REEMPLAÇAR"
 
-#: app/rect_select.c:447 app/rect_select.c:454
+#: app/rect_select.c:450 app/rect_select.c:457
 msgid "Selection: "
 msgstr "Selecció: "
 

@@ -1,96 +1,97 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# gimp-libgimp translation to Catalan
+# Copyright (C) 2000 Free Software Foundation, Inc.
+# Softcatala <linux@softcatala.org>, 2000-2001
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2001-07-26 14:09+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Project-Id-Version: gimp-libgimp 1.2.2\n"
+"POT-Creation-Date: 2001-10-13 01:22+0200\n"
+"PO-Revision-Date: 2001-08-21 14:04+0200\n"
+"Last-Translator: Softcatalà <tradgnome@softcatala.org>\n"
+"Language-Team: Catalan\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: ENCODING\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpcolorbutton.c:121
 msgid "/Use Foreground Color"
-msgstr "/Use Foreground Color"
+msgstr "/Utilitza el color de primer pla"
 
 #: libgimp/gimpcolorbutton.c:122
 msgid "/Use Background Color"
-msgstr ""
+msgstr "/Utilitza el color de fons"
 
 #: libgimp/gimpexport.c:160 libgimp/gimpexport.c:187
 msgid "can't handle layers"
-msgstr ""
+msgstr "no es poden manejar capes"
 
 #: libgimp/gimpexport.c:161 libgimp/gimpexport.c:170
 msgid "Merge Visible Layers"
-msgstr ""
+msgstr "Combina les capes visibles"
 
 #: libgimp/gimpexport.c:169 libgimp/gimpexport.c:178
 msgid "can only handle layers as animation frames"
-msgstr ""
+msgstr "només es poden manejar les capes com a marcs d'animació"
 
 #: libgimp/gimpexport.c:170 libgimp/gimpexport.c:179
 msgid "Save as Animation"
-msgstr ""
+msgstr "Guarda com a animació"
 
 #: libgimp/gimpexport.c:179 libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
 msgid "Flatten Image"
-msgstr ""
+msgstr "Aplana la imatge"
 
 #: libgimp/gimpexport.c:196
 msgid "can't handle transparency"
-msgstr ""
+msgstr "no es poden manejar transparències"
 
 #: libgimp/gimpexport.c:205
 msgid "can only handle RGB images"
-msgstr ""
+msgstr "només es poden manejar imatges RGB"
 
 #: libgimp/gimpexport.c:206 libgimp/gimpexport.c:234 libgimp/gimpexport.c:243
 msgid "Convert to RGB"
-msgstr ""
+msgstr "Converteix a RGB"
 
 #: libgimp/gimpexport.c:214
 msgid "can only handle grayscale images"
-msgstr ""
+msgstr "només es poden manejar imatges d'escala de grisos"
 
 #: libgimp/gimpexport.c:215 libgimp/gimpexport.c:234 libgimp/gimpexport.c:255
 msgid "Convert to Grayscale"
-msgstr ""
+msgstr "Converteix a escala de grisos"
 
 #: libgimp/gimpexport.c:223
 msgid "can only handle indexed images"
-msgstr ""
+msgstr "només es poden manejar imatges indexades"
 
 #: libgimp/gimpexport.c:224 libgimp/gimpexport.c:243 libgimp/gimpexport.c:253
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
+"Converteix a indexades amb els paràmetres per defecte\n"
+"(Fes-ho de forma manual per ajustar el resultat)"
 
 #: libgimp/gimpexport.c:233
 msgid "can only handle RGB or grayscale images"
-msgstr ""
+msgstr "només es poden manejar imatges RGB o d'escala de grisos"
 
 #: libgimp/gimpexport.c:242
 msgid "can only handle RGB or indexed images"
-msgstr ""
+msgstr "només es poden manejar imatges RGB o indexades"
 
 #: libgimp/gimpexport.c:252
 msgid "can only handle grayscale or indexed images"
-msgstr ""
+msgstr "només es poden manejar imatges d'escala de grisos o indexades"
 
 #: libgimp/gimpexport.c:263
 msgid "needs an alpha channel"
-msgstr ""
+msgstr "necessita un canal alfa"
 
 #: libgimp/gimpexport.c:264
 msgid "Add Alpha Channel"
-msgstr ""
+msgstr "Afegeix un canal alfa"
 
 #.
 #. *  Plug-ins have called gtk_init () before calling gimp_export ().
@@ -99,130 +100,135 @@ msgstr ""
 #. the dialog
 #: libgimp/gimpexport.c:333
 msgid "Export File"
-msgstr ""
+msgstr "Exporta un fitxer"
 
 #: libgimp/gimpexport.c:338
 msgid "Export"
-msgstr ""
+msgstr "Exporta"
 
 #: libgimp/gimpexport.c:340
 msgid "Ignore"
-msgstr ""
+msgstr "Ignora"
 
 #: libgimp/gimpexport.c:342 libgimp/gimpquerybox.c:204
 #: libgimp/gimpquerybox.c:260 libgimp/gimpquerybox.c:318
 #: libgimp/gimpquerybox.c:383 libgimp/gimpunitmenu.c:505
 msgid "Cancel"
-msgstr ""
+msgstr "Cancel·la"
 
 #: libgimp/gimpexport.c:357
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
-msgstr ""
+msgstr "Heu d'exportar la imatge abans de poder-la desar pels motius següents:"
 
 #. the footline
 #: libgimp/gimpexport.c:420
 msgid "The export conversion won't modify your original image."
-msgstr ""
+msgstr "La conversió d'exportació no modificarà la imatge original."
 
 #: libgimp/gimpfileselection.c:388
 msgid "Select File"
-msgstr ""
+msgstr "Seleccioneu un fitxer"
 
 #: libgimp/gimpquerybox.c:204 libgimp/gimpquerybox.c:260
 #: libgimp/gimpquerybox.c:318 libgimp/gimpquerybox.c:383
 #: libgimp/gimpunitmenu.c:503
 msgid "OK"
-msgstr ""
+msgstr "D'acord"
 
 #: libgimp/gimpunitmenu.c:241
 msgid "More..."
-msgstr ""
+msgstr "Més..."
 
 #: libgimp/gimpunitmenu.c:498
 msgid "Unit Selection"
-msgstr ""
+msgstr "Selecció d'unitat"
 
 #: libgimp/gimpunitmenu.c:535
 msgid "Unit"
-msgstr ""
+msgstr "Unitat"
 
 #: libgimp/gimpunitmenu.c:536
 msgid "Factor"
-msgstr ""
+msgstr "Factor"
 
 #. pseudo unit
 #: libgimp/gimpunit.c:49
 msgid "pixel"
-msgstr ""
+msgstr "píxel"
 
 #: libgimp/gimpunit.c:49
 msgid "pixels"
-msgstr ""
+msgstr "píxels"
 
 #. standard units
 #: libgimp/gimpunit.c:52
 msgid "inch"
-msgstr ""
+msgstr "polzada"
 
 #: libgimp/gimpunit.c:52
 msgid "inches"
-msgstr ""
+msgstr "polzades"
 
 #: libgimp/gimpunit.c:53
 msgid "millimeter"
-msgstr ""
+msgstr "mil·límetre"
 
 #: libgimp/gimpunit.c:53
 msgid "millimeters"
-msgstr ""
+msgstr "mil·límetres"
 
 #. professional units
 #: libgimp/gimpunit.c:56
 msgid "point"
-msgstr ""
+msgstr "punt"
 
 #: libgimp/gimpunit.c:56
 msgid "points"
-msgstr ""
+msgstr "punts"
 
 #: libgimp/gimpunit.c:57
 msgid "pica"
-msgstr ""
+msgstr "pica"
 
 #: libgimp/gimpunit.c:57
 msgid "picas"
-msgstr ""
+msgstr "picas"
 
 #: libgimp/gimpunit.c:64
 msgid "percent"
-msgstr ""
+msgstr "percentatge"
 
 #: libgimp/gimpwidgets.c:715
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
 msgstr ""
+"Si el botó \"Hora\" no està premut, utilitza aquest valor com a punt de "
+"partida del generador de números aleatoris; això us permetrà repetir una "
+"operació \"aleatòria\" determinada"
 
 #: libgimp/gimpwidgets.c:720
 msgid "Time"
-msgstr ""
+msgstr "Hora"
 
 #: libgimp/gimpwidgets.c:729
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
 msgstr ""
+"Fixa el punt de partida del generador de números aleatoris a partir de "
+"l'hora actual; això garanteix una aleatorietat raonable"
 
 #: libgimp/gimpwidgets.c:1042
 msgid "Bytes"
-msgstr ""
+msgstr "Octets"
 
 #: libgimp/gimpwidgets.c:1043
 msgid "KiloBytes"
-msgstr ""
+msgstr "Quilooctets"
 
 #: libgimp/gimpwidgets.c:1044
 msgid "MegaBytes"
-msgstr ""
+msgstr "Megaoctets"
