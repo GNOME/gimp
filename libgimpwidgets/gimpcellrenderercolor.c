@@ -301,6 +301,15 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
     }
 }
 
+/**
+ * gimp_cell_renderer_color_new:
+ *
+ * Creates a #GtkCellRenderer that displays a color.
+ *
+ * Return value: a new #GimpCellRendererColor
+ *
+ * Since: GIMP 2.2
+ **/
 GtkCellRenderer *
 gimp_cell_renderer_color_new (void)
 {
