@@ -91,7 +91,6 @@ gimp_SOURCES = \
 	datafiles.h		\
 	floating_sel.c		\
 	floating_sel.h		\
-	fsdither.h		\
 	gimphistogram.c		\
 	gimphistogram.h		\
 	gimppreviewcache.h	\

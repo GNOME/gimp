@@ -15,8 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#ifndef __FSDITHER_H__
-#define __FSDITHER_H__
+
+#ifndef __GIMP_IMAGE_CONVERT_FSDITHER_H__
+#define __GIMP_IMAGE_CONVERT_FSDITHER_H__
 
 /* The following 5 arrays are used in performing floyd-steinberg
  *  error diffusion dithering. The range array allows the quick
@@ -556,4 +557,4 @@ const short floyd_steinberg_error4[] = {
    33,   33,   34,   32,   33,
 };
 
-#endif /* __FSDITHER_H__ */
+#endif /* __GIMP_IMAGE_CONVERT_FSDITHER_H__ */

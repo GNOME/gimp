@@ -107,17 +107,18 @@
 #include "base/pixel-region.h"
 #include "base/tile-manager.h"
 
+#include "gimpdrawable.h"
+#include "gimpimage.h"
+#include "gimpimage-convert.h"
+#include "gimpimage-convert-fsdither.h"
+#include "gimplist.h"
+#include "gimplayer.h"
+#include "gimppalette.h"
+
 #include "app_procs.h"
 #include "gdisplay.h"
 
 #include "floating_sel.h"
-#include "fsdither.h"
-#include "gimpdrawable.h"
-#include "gimpimage.h"
-#include "gimpimage-convert.h"
-#include "gimplist.h"
-#include "gimplayer.h"
-#include "gimppalette.h"
 #include "undo.h"
 
 

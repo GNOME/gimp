@@ -1,5 +1,15 @@
 2001-05-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/fsdither.h: removed...
+
+	* app/core/Makefile.am
+	* app/core/gimpimage-convert-fsdither.h: ...and added here.
+
+	* app/core/gimpimage-convert.c: changed accordingly.
+
+2001-05-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimprc.c: register all parse functions in a hash table
 	instead of a static array. This way, with some additional ugly
 	hacking, we get the addresses of the variables in

@@ -43,6 +43,7 @@ libappcore_la_SOURCES = \
 	gimpimage-colorhash.h		\
 	gimpimage-convert.c		\
 	gimpimage-convert.h		\
+	gimpimage-convert-fsdither.h	\
 	gimpimage-duplicate.c		\
 	gimpimage-duplicate.h		\
 	gimpimage-mask.c		\
