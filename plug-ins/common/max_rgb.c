@@ -171,6 +171,7 @@ run (gchar      *name,
     case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       /* You must copy the values of parameters to pvals or dialog variables. */
+      pvals.max_p = param[3].data.d_int32;
       break;
     case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
