@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-plugin-1.1.21+\n"
-"POT-Creation-Date: 2000-11-03 15:43+0300\n"
-"PO-Revision-Date: 2000-11-03 15:44+03:00\n"
+"POT-Creation-Date: 2000-11-17 17:47+0300\n"
+"PO-Revision-Date: 2000-11-17 17:47+03:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -49,12 +49,12 @@ msgstr "О программе"
 #: plug-ins/common/gauss_rle.c:444 plug-ins/common/gbr.c:456
 #: plug-ins/common/gicon.c:441 plug-ins/common/gif.c:1147
 #: plug-ins/common/gif.c:1218 plug-ins/common/glasstile.c:260
-#: plug-ins/common/gpb.c:269 plug-ins/common/gqbist.c:640
+#: plug-ins/common/gpb.c:299 plug-ins/common/gqbist.c:640
 #: plug-ins/common/grid.c:659 plug-ins/common/gtm.c:375
 #: plug-ins/common/hot.c:589 plug-ins/common/illusion.c:561
 #: plug-ins/common/iwarp.c:1142 plug-ins/common/jigsaw.c:2486
-#: plug-ins/common/jpeg.c:1595 plug-ins/common/lic.c:1021
-#: plug-ins/common/mail.c:465 plug-ins/common/mapcolor.c:558
+#: plug-ins/common/jpeg.c:1578 plug-ins/common/lic.c:1021
+#: plug-ins/common/mail.c:467 plug-ins/common/mapcolor.c:558
 #: plug-ins/common/max_rgb.c:348 plug-ins/common/mblur.c:763
 #: plug-ins/common/newsprint.c:1211 plug-ins/common/nlfilt.c:368
 #: plug-ins/common/noisify.c:489 plug-ins/common/nova.c:466
@@ -65,7 +65,7 @@ msgstr "О программе"
 #: plug-ins/common/ps.c:2615 plug-ins/common/ps.c:2797
 #: plug-ins/common/psp.c:428 plug-ins/common/randomize.c:702
 #: plug-ins/common/ripple.c:580 plug-ins/common/scatter_hsv.c:375
-#: plug-ins/common/screenshot.c:366 plug-ins/common/sel_gauss.c:242
+#: plug-ins/common/screenshot.c:371 plug-ins/common/sel_gauss.c:242
 #: plug-ins/common/sharpen.c:523 plug-ins/common/shift.c:376
 #: plug-ins/common/sinus.c:1704 plug-ins/common/smooth_palette.c:403
 #: plug-ins/common/snoise.c:512 plug-ins/common/sobel.c:251
@@ -73,7 +73,7 @@ msgstr "О программе"
 #: plug-ins/common/spread.c:382 plug-ins/common/struc.c:1281
 #: plug-ins/common/sunras.c:1589 plug-ins/common/tga.c:1062
 #: plug-ins/common/threshold_alpha.c:271 plug-ins/common/tiff.c:1582
-#: plug-ins/common/tile.c:383 plug-ins/common/tileit.c:386
+#: plug-ins/common/tile.c:405 plug-ins/common/tileit.c:386
 #: plug-ins/common/uniteditor.c:173 plug-ins/common/unsharp.c:786
 #: plug-ins/common/video.c:2155 plug-ins/common/vpropagate.c:935
 #: plug-ins/common/warp.c:437 plug-ins/common/waves.c:349
@@ -81,9 +81,9 @@ msgstr "О программе"
 #: plug-ins/common/wmf.c:931 plug-ins/common/xbm.c:1150
 #: plug-ins/common/xpm.c:800 plug-ins/fits/fits.c:987
 #: plug-ins/flame/flame.c:631 plug-ins/flame/flame.c:920
-#: plug-ins/fp/fp_gtk.c:895 plug-ins/gap/gap_arr_dialog.c:768
+#: plug-ins/fp/fp_gtk.c:904 plug-ins/gap/gap_arr_dialog.c:768
 #: plug-ins/gap/gap_arr_dialog.c:1010 plug-ins/gap/gap_decode_xanim.c:177
-#: plug-ins/gap/gap_lib.c:221 plug-ins/gap/gap_mod_layer.c:145
+#: plug-ins/gap/gap_lib.c:222 plug-ins/gap/gap_mod_layer.c:146
 #: plug-ins/gap/gap_mov_dialog.c:487 plug-ins/gap/gap_mpege.c:191
 #: plug-ins/gap/gap_resi_dialog.c:149 plug-ins/gdyntext/gdyntext_ui.c:199
 #: plug-ins/gdyntext/gdyntext_ui.c:573 plug-ins/gfig/gfig.c:4080
@@ -130,12 +130,12 @@ msgstr "Да"
 #: plug-ins/common/gauss_rle.c:363 plug-ins/common/gauss_rle.c:446
 #: plug-ins/common/gbr.c:458 plug-ins/common/gicon.c:443
 #: plug-ins/common/gif.c:1149 plug-ins/common/gif.c:1220
-#: plug-ins/common/glasstile.c:262 plug-ins/common/gpb.c:271
+#: plug-ins/common/glasstile.c:262 plug-ins/common/gpb.c:301
 #: plug-ins/common/gqbist.c:642 plug-ins/common/grid.c:661
 #: plug-ins/common/gtm.c:377 plug-ins/common/hot.c:591
 #: plug-ins/common/illusion.c:563 plug-ins/common/iwarp.c:1146
-#: plug-ins/common/jigsaw.c:2488 plug-ins/common/jpeg.c:1597
-#: plug-ins/common/lic.c:1023 plug-ins/common/mail.c:467
+#: plug-ins/common/jigsaw.c:2488 plug-ins/common/jpeg.c:1580
+#: plug-ins/common/lic.c:1023 plug-ins/common/mail.c:469
 #: plug-ins/common/mapcolor.c:560 plug-ins/common/max_rgb.c:350
 #: plug-ins/common/mblur.c:765 plug-ins/common/newsprint.c:1213
 #: plug-ins/common/nlfilt.c:370 plug-ins/common/noisify.c:491
@@ -146,7 +146,7 @@ msgstr "Да"
 #: plug-ins/common/polar.c:916 plug-ins/common/ps.c:2617
 #: plug-ins/common/ps.c:2799 plug-ins/common/psp.c:430
 #: plug-ins/common/randomize.c:704 plug-ins/common/ripple.c:582
-#: plug-ins/common/scatter_hsv.c:377 plug-ins/common/screenshot.c:368
+#: plug-ins/common/scatter_hsv.c:377 plug-ins/common/screenshot.c:373
 #: plug-ins/common/sel_gauss.c:244 plug-ins/common/sharpen.c:525
 #: plug-ins/common/shift.c:378 plug-ins/common/sinus.c:1706
 #: plug-ins/common/smooth_palette.c:405 plug-ins/common/snoise.c:514
@@ -154,7 +154,7 @@ msgstr "Да"
 #: plug-ins/common/spheredesigner.c:2236 plug-ins/common/spread.c:384
 #: plug-ins/common/struc.c:1283 plug-ins/common/sunras.c:1591
 #: plug-ins/common/tga.c:1064 plug-ins/common/threshold_alpha.c:273
-#: plug-ins/common/tiff.c:1584 plug-ins/common/tile.c:385
+#: plug-ins/common/tiff.c:1584 plug-ins/common/tile.c:407
 #: plug-ins/common/tileit.c:388 plug-ins/common/uniteditor.c:175
 #: plug-ins/common/unsharp.c:788 plug-ins/common/video.c:2157
 #: plug-ins/common/vpropagate.c:937 plug-ins/common/warp.c:439
@@ -162,14 +162,14 @@ msgstr "Да"
 #: plug-ins/common/wind.c:1014 plug-ins/common/wmf.c:933
 #: plug-ins/common/xbm.c:1152 plug-ins/common/xpm.c:802
 #: plug-ins/fits/fits.c:989 plug-ins/flame/flame.c:633
-#: plug-ins/flame/flame.c:922 plug-ins/fp/fp_gtk.c:899
+#: plug-ins/flame/flame.c:922 plug-ins/fp/fp_gtk.c:908
 #: plug-ins/gap/gap_arr_dialog.c:1012 plug-ins/gap/gap_dbbrowser_utils.c:210
 #: plug-ins/gap/gap_decode_mpeg_main.c:336 plug-ins/gap/gap_decode_xanim.c:175
-#: plug-ins/gap/gap_decode_xanim.c:340 plug-ins/gap/gap_filter_foreach.c:132
-#: plug-ins/gap/gap_lib.c:1018 plug-ins/gap/gap_mod_layer.c:147
-#: plug-ins/gap/gap_mod_layer.c:261 plug-ins/gap/gap_mov_dialog.c:518
+#: plug-ins/gap/gap_decode_xanim.c:340 plug-ins/gap/gap_filter_foreach.c:133
+#: plug-ins/gap/gap_lib.c:1019 plug-ins/gap/gap_mod_layer.c:148
+#: plug-ins/gap/gap_mod_layer.c:262 plug-ins/gap/gap_mov_dialog.c:518
 #: plug-ins/gap/gap_mov_dialog.c:3023 plug-ins/gap/gap_mpege.c:189
-#: plug-ins/gap/gap_mpege.c:240 plug-ins/gap/gap_range_ops.c:1243
+#: plug-ins/gap/gap_mpege.c:240 plug-ins/gap/gap_range_ops.c:1244
 #: plug-ins/gap/gap_resi_dialog.c:158 plug-ins/gfig/gfig.c:3933
 #: plug-ins/gfig/gfig.c:4080 plug-ins/gfig/gfig.c:4427
 #: plug-ins/gfig/gfig.c:4510 plug-ins/gfig/gfig.c:5021
@@ -355,7 +355,7 @@ msgstr "Загрузить фрактал из файла"
 #: plug-ins/common/curve_bend.c:1361 plug-ins/common/iwarp.c:1144
 #: plug-ins/common/sample_colorize.c:1372
 #: plug-ins/common/spheredesigner.c:2234 plug-ins/common/tileit.c:467
-#: plug-ins/fp/fp_gtk.c:897 plug-ins/gimpressionist/preview.c:124
+#: plug-ins/fp/fp_gtk.c:906 plug-ins/gimpressionist/preview.c:124
 #: plug-ins/ifscompose/ifscompose.c:792 plug-ins/sel2path/sel2path.c:339
 msgid "Reset"
 msgstr "Сбросить"
@@ -424,7 +424,7 @@ msgstr "Цвета"
 
 #. Number of Colors frame
 #: plug-ins/FractalExplorer/Dialogs.c:625 plug-ins/common/borderaverage.c:431
-#: plug-ins/gap/gap_range_ops.c:345
+#: plug-ins/gap/gap_range_ops.c:346
 msgid "Number of Colors"
 msgstr "Число цветов"
 
@@ -816,7 +816,7 @@ msgstr ""
 "Сделать результирующее изображение прозрачным с нулевой высотой рельефа"
 
 #: plug-ins/Lighting/lighting_ui.c:443 plug-ins/MapObject/mapobject_ui.c:590
-#: plug-ins/common/tile.c:421
+#: plug-ins/common/tile.c:443
 msgid "Create New Image"
 msgstr "Создать новое изображение"
 
@@ -1358,7 +1358,7 @@ msgstr "Показать скрыть каркас просмотра"
 #. must check file size
 #: plug-ins/bmp/bmpread.c:51 plug-ins/common/CEL.c:266
 #: plug-ins/common/gbr.c:281 plug-ins/common/gifload.c:306
-#: plug-ins/common/hrz.c:338 plug-ins/common/jpeg.c:746
+#: plug-ins/common/hrz.c:338 plug-ins/common/jpeg.c:739
 #: plug-ins/common/pat.c:261 plug-ins/common/pcx.c:301
 #: plug-ins/common/pix.c:326 plug-ins/common/png.c:426
 #: plug-ins/common/png.c:428 plug-ins/common/pnm.c:414
@@ -1401,14 +1401,14 @@ msgstr "%s: плохая цветовая карта"
 #: plug-ins/common/blinds.c:380 plug-ins/common/compose.c:543
 #: plug-ins/common/decompose.c:465 plug-ins/common/film.c:1002
 #: plug-ins/common/gbr.c:343 plug-ins/common/gifload.c:849
-#: plug-ins/common/hrz.c:379 plug-ins/common/jpeg.c:901
+#: plug-ins/common/hrz.c:379 plug-ins/common/jpeg.c:895
 #: plug-ins/common/lic.c:904 plug-ins/common/papertile.c:316
 #: plug-ins/common/pat.c:304 plug-ins/common/pcx.c:332
 #: plug-ins/common/pcx.c:338 plug-ins/common/pix.c:370
 #: plug-ins/common/png.c:547 plug-ins/common/pnm.c:502
 #: plug-ins/common/psd.c:2114 plug-ins/common/smooth_palette.c:241
 #: plug-ins/common/sunras.c:931 plug-ins/common/tga.c:836
-#: plug-ins/common/tiff.c:681 plug-ins/common/tile.c:268
+#: plug-ins/common/tiff.c:681 plug-ins/common/tile.c:280
 #: plug-ins/common/winclipboard.c:515 plug-ins/common/wmf.c:2350
 #: plug-ins/common/xbm.c:872 plug-ins/faxg3/faxg3.c:448
 #: plug-ins/fits/fits.c:521 plug-ins/gfig/gfig.c:2832
@@ -1431,9 +1431,9 @@ msgstr "Невозможно открыть %s"
 #. init the progress meter
 #: plug-ins/bmp/bmpwrite.c:179 plug-ins/common/CEL.c:510
 #: plug-ins/common/gbr.c:387 plug-ins/common/gif.c:943
-#: plug-ins/common/gpb.c:768 plug-ins/common/gpb.c:808
+#: plug-ins/common/gpb.c:798 plug-ins/common/gpb.c:838
 #: plug-ins/common/gtm.c:247 plug-ins/common/hrz.c:476
-#: plug-ins/common/jpeg.c:1196 plug-ins/common/pat.c:343
+#: plug-ins/common/jpeg.c:1191 plug-ins/common/pat.c:343
 #: plug-ins/common/pcx.c:547 plug-ins/common/pix.c:532
 #: plug-ins/common/png.c:775 plug-ins/common/png.c:777
 #: plug-ins/common/pnm.c:786 plug-ins/common/ps.c:1003
@@ -1862,7 +1862,7 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:299 plug-ins/common/CML_explorer.c:1282
 #: plug-ins/common/decompose.c:122 plug-ins/common/lic.c:1058
-#: plug-ins/fp/fp_gtk.c:281 plug-ins/fp/fp_gtk.c:413
+#: plug-ins/fp/fp_gtk.c:283 plug-ins/fp/fp_gtk.c:415
 #: plug-ins/gap/gap_mov_dialog.c:274 plug-ins/gimpressionist/orientation.c:188
 #: plug-ins/gimpressionist/size.c:186
 msgid "Hue"
@@ -1870,14 +1870,14 @@ msgstr "Тон"
 
 #: plug-ins/common/CML_explorer.c:300 plug-ins/common/CML_explorer.c:1287
 #: plug-ins/common/decompose.c:123 plug-ins/common/lic.c:1059
-#: plug-ins/fp/fp_gtk.c:285 plug-ins/fp/fp_gtk.c:417 plug-ins/fp/fp_gtk.c:481
+#: plug-ins/fp/fp_gtk.c:287 plug-ins/fp/fp_gtk.c:419 plug-ins/fp/fp_gtk.c:483
 #: plug-ins/gap/gap_mov_dialog.c:275 plug-ins/rcm/rcm_dialog.c:509
 msgid "Saturation"
 msgstr "Насыщенность"
 
 #: plug-ins/common/CML_explorer.c:301 plug-ins/common/CML_explorer.c:1292
-#: plug-ins/common/decompose.c:124 plug-ins/fp/fp_gtk.c:289
-#: plug-ins/fp/fp_gtk.c:421 plug-ins/gap/gap_mov_dialog.c:277
+#: plug-ins/common/decompose.c:124 plug-ins/fp/fp_gtk.c:291
+#: plug-ins/fp/fp_gtk.c:423 plug-ins/gap/gap_mov_dialog.c:277
 #: plug-ins/gimpressionist/orientation.c:131
 #: plug-ins/gimpressionist/size.c:130
 msgid "Value"
@@ -1923,7 +1923,7 @@ msgstr "Настройки яркости (серое изображение)"
 msgid "Advanced Settings"
 msgstr "Дополнительные настройки"
 
-#: plug-ins/common/CML_explorer.c:1296 plug-ins/fp/fp_gtk.c:293
+#: plug-ins/common/CML_explorer.c:1296 plug-ins/fp/fp_gtk.c:295
 msgid "Advanced"
 msgstr "Дополнительные"
 
@@ -2180,7 +2180,7 @@ msgstr "Выровнять видимые слои"
 #: plug-ins/common/emboss.c:559 plug-ins/common/engrave.c:236
 #: plug-ins/common/gauss_iir.c:378 plug-ins/common/gauss_rle.c:373
 #: plug-ins/common/glasstile.c:294 plug-ins/common/grid.c:720
-#: plug-ins/common/illusion.c:597 plug-ins/common/jpeg.c:1643
+#: plug-ins/common/illusion.c:597 plug-ins/common/jpeg.c:1626
 #: plug-ins/common/lic.c:1090 plug-ins/common/max_rgb.c:381
 #: plug-ins/common/nlfilt.c:409 plug-ins/common/noisify.c:524
 #: plug-ins/common/nova.c:478 plug-ins/common/oilify.c:470
@@ -2546,7 +2546,7 @@ msgstr "Смещение по Y:"
 msgid "Waterlevel:"
 msgstr "Ватерлиния:"
 
-#: plug-ins/common/bz2.c:267 plug-ins/common/bz2.c:352
+#: plug-ins/common/bz2.c:268 plug-ins/common/bz2.c:355
 msgid "bz2: can't open bzip2ed file without a sensible extension\n"
 msgstr "bz2: невозможно открыть bzip2-ый файл без подходящего расширения\n"
 
@@ -2624,8 +2624,8 @@ msgstr "Цвет -> Альфа-канал"
 
 #: plug-ins/common/colortoalpha.c:425 plug-ins/common/mapcolor.c:652
 #: plug-ins/gap/gap_decode_mpeg_main.c:652 plug-ins/gap/gap_decode_xanim.c:223
-#: plug-ins/gap/gap_lib.c:2103 plug-ins/gap/gap_lib.c:2282
-#: plug-ins/gap/gap_range_ops.c:252 plug-ins/gap/gap_range_ops.c:601
+#: plug-ins/gap/gap_lib.c:2104 plug-ins/gap/gap_lib.c:2283
+#: plug-ins/gap/gap_range_ops.c:253 plug-ins/gap/gap_range_ops.c:602
 #: plug-ins/gfli/gfli.c:847 plug-ins/gfli/gfli.c:916
 msgid "From:"
 msgstr "Из:"
@@ -2840,7 +2840,7 @@ msgstr "Сохранить как исходный текст C"
 msgid "Prefixed Name:"
 msgstr "Префиксное имя:"
 
-#: plug-ins/common/csource.c:689 plug-ins/common/mail.c:527
+#: plug-ins/common/csource.c:689 plug-ins/common/mail.c:529
 #: plug-ins/common/tiff.c:1618 plug-ins/common/xbm.c:1202
 msgid "Comment:"
 msgstr "Комментарий:"
@@ -3250,7 +3250,7 @@ msgstr "Создать гистограмму"
 #. table col, row
 #: plug-ins/common/destripe.c:670 plug-ins/common/gtm.c:551
 #: plug-ins/common/ps.c:2664 plug-ins/common/ps.c:2840
-#: plug-ins/common/smooth_palette.c:430 plug-ins/common/tile.c:406
+#: plug-ins/common/smooth_palette.c:430 plug-ins/common/tile.c:428
 #: plug-ins/gap/gap_mov_dialog.c:2139 plug-ins/imagemap/imap_rectangle.c:387
 #: plug-ins/print/gimp_main_window.c:638
 msgid "Width:"
@@ -3404,7 +3404,7 @@ msgstr "Ограничение ширины линии"
 #: plug-ins/common/engrave.c:256 plug-ins/common/film.c:1239
 #: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2673
 #: plug-ins/common/ps.c:2849 plug-ins/common/smooth_palette.c:439
-#: plug-ins/common/tile.c:410 plug-ins/gap/gap_mov_dialog.c:2156
+#: plug-ins/common/tile.c:432 plug-ins/gap/gap_mov_dialog.c:2156
 #: plug-ins/imagemap/imap_rectangle.c:393
 #: plug-ins/print/gimp_main_window.c:652
 msgid "Height:"
@@ -3693,22 +3693,18 @@ msgstr "Сохранить как кисть"
 msgid "Spacing:"
 msgstr "Интервал: "
 
-#: plug-ins/common/gbr.c:487 plug-ins/common/gpb.c:295
+#: plug-ins/common/gbr.c:487 plug-ins/common/gpb.c:325
 #: plug-ins/common/pat.c:435 plug-ins/gimpressionist/presets.c:373
 #: plug-ins/imagemap/imap_settings.c:93
 msgid "Description:"
 msgstr "Описание:"
 
-#: plug-ins/common/gee.c:134
-msgid "<Image>/Filters/Toys/The Egg..."
-msgstr "<Image>/Фильтры/Игрушки/Яйцо..."
-
-#: plug-ins/common/gee.c:200
+#: plug-ins/common/gee.c:198
 msgid "GEE!  The GIMP E'er Egg!"
 msgstr "GEE! The GIMP E'er Egg!"
 
 #. Action area - 'close' button only.
-#: plug-ins/common/gee.c:211
+#: plug-ins/common/gee.c:209
 msgid "** Thank you for choosing GIMP **"
 msgstr "** Спасибо за то что выбрали Gimp **"
 
@@ -3857,63 +3853,63 @@ msgstr "Ширина блока:"
 msgid "Tile Height:"
 msgstr "Высота блока:"
 
-#: plug-ins/common/gpb.c:282
+#: plug-ins/common/gpb.c:312
 msgid "Spacing (Percent):"
 msgstr "Интервал (проценты):"
 
-#: plug-ins/common/gpb.c:308
+#: plug-ins/common/gpb.c:338
 msgid "Save as Pixmap Brush"
 msgstr "Сохранить как Pixmap-кисть"
 
-#: plug-ins/common/gpb.c:365
+#: plug-ins/common/gpb.c:395
 msgid "Save as Pixmap Brush Pipe"
 msgstr "Сохранить как Pixmap Brush pipe"
 
-#: plug-ins/common/gpb.c:428
+#: plug-ins/common/gpb.c:458
 msgid "Pixels"
 msgstr "Точки растра"
 
-#: plug-ins/common/gpb.c:433 plug-ins/common/newsprint.c:1274
+#: plug-ins/common/gpb.c:463 plug-ins/common/newsprint.c:1274
 msgid "Cell Size:"
 msgstr "Размер ячейки:"
 
-#: plug-ins/common/gpb.c:445
+#: plug-ins/common/gpb.c:475
 msgid "Number of Cells:"
 msgstr "Число ячеек:"
 
-#: plug-ins/common/gpb.c:469
+#: plug-ins/common/gpb.c:499
 msgid " Rows of "
 msgstr " строк "
 
-#: plug-ins/common/gpb.c:481
+#: plug-ins/common/gpb.c:511
 msgid " Columns on each Layer"
 msgstr " столбцов на каждом слое"
 
-#: plug-ins/common/gpb.c:485
+#: plug-ins/common/gpb.c:515
 msgid " (Width Mismatch!) "
 msgstr " (ошибочная ширина!) "
 
-#: plug-ins/common/gpb.c:489
+#: plug-ins/common/gpb.c:519
 msgid " (Height Mismatch!) "
 msgstr " (ошибочная высота!) "
 
-#: plug-ins/common/gpb.c:494
+#: plug-ins/common/gpb.c:524
 msgid "Display as:"
 msgstr "Показать как:"
 
-#: plug-ins/common/gpb.c:503
+#: plug-ins/common/gpb.c:533
 msgid "Dimension:"
 msgstr "Размер:"
 
-#: plug-ins/common/gpb.c:538
+#: plug-ins/common/gpb.c:568
 msgid "Ranks:"
 msgstr "Ранги:"
 
-#: plug-ins/common/gpb.c:571
+#: plug-ins/common/gpb.c:601
 msgid "Selection:"
 msgstr "Выделение"
 
-#: plug-ins/common/gpb.c:1023
+#: plug-ins/common/gpb.c:1054
 #, c-format
 msgid "Layer %s doesn't have an alpha channel, skipped"
 msgstr "Слой %s не имеет альфа-канала, пропущен."
@@ -4126,11 +4122,11 @@ msgstr "<Image>/Изображение/Преобразование/Гильотина"
 msgid "Guillotine..."
 msgstr "Гильотинирование..."
 
-#: plug-ins/common/gz.c:322
+#: plug-ins/common/gz.c:323
 msgid "gz: no sensible extension, saving as gzip'd xcf\n"
 msgstr "gz: нет подходящего расширения, сохраненяется как сжатый gzip'ом xcf\n"
 
-#: plug-ins/common/gz.c:445
+#: plug-ins/common/gz.c:448
 msgid "gz: no sensible extension, attempting to load with file magic\n"
 msgstr "gz: нет значимого расширения, попытка загрузки с file magic\n"
 
@@ -4255,7 +4251,7 @@ msgstr "Макс. глубина:"
 
 #. parameter settings
 #: plug-ins/common/iwarp.c:1120 plug-ins/common/sample_colorize.c:1384
-#: plug-ins/common/sinus.c:1847 plug-ins/gap/gap_mod_layer.c:219
+#: plug-ins/common/sinus.c:1847 plug-ins/gap/gap_mod_layer.c:220
 #: plug-ins/gfig/gfig.c:3967 plug-ins/gflare/gflare.c:3041
 msgid "Settings"
 msgstr "Настройки"
@@ -4332,90 +4328,90 @@ msgstr "Запретить подсказки"
 msgid "Toggle Tooltips on/off"
 msgstr "Переключатель подсказок вкл/выкл"
 
-#: plug-ins/common/jpeg.c:417
+#: plug-ins/common/jpeg.c:413
 msgid "Export Preview"
 msgstr "Просмотр экспортируемого файла"
 
-#: plug-ins/common/jpeg.c:740
+#: plug-ins/common/jpeg.c:733
 #, c-format
 msgid "can't open \"%s\"\n"
 msgstr "невозможно открыть \"%s\"\n"
 
-#: plug-ins/common/jpeg.c:894
+#: plug-ins/common/jpeg.c:888
 msgid "JPEG preview"
 msgstr "Просмотр JPEG"
 
-#: plug-ins/common/jpeg.c:1115
+#: plug-ins/common/jpeg.c:1109
 #, c-format
 msgid "Size: %lu bytes (%02.01f kB)"
 msgstr "Размер: %lu байт (%02.01f Кб)"
 
-#: plug-ins/common/jpeg.c:1513 plug-ins/common/jpeg.c:1633
+#: plug-ins/common/jpeg.c:1513 plug-ins/common/jpeg.c:1616
 msgid "Size: unknown"
 msgstr "Размер: неизвестный"
 
-#: plug-ins/common/jpeg.c:1590
+#: plug-ins/common/jpeg.c:1573
 msgid "Save as JPEG"
 msgstr "Сохранить как JPEG"
 
 #. sg - preview
-#: plug-ins/common/jpeg.c:1613
+#: plug-ins/common/jpeg.c:1596
 msgid "Image Preview"
 msgstr "Просмотр изображения"
 
-#: plug-ins/common/jpeg.c:1622
+#: plug-ins/common/jpeg.c:1605
 msgid "Preview (in image window)"
 msgstr "Просмотр (в окне изображения)"
 
-#: plug-ins/common/jpeg.c:1653 plug-ins/xjt/xjt.c:836
+#: plug-ins/common/jpeg.c:1636 plug-ins/xjt/xjt.c:836
 msgid "Quality:"
 msgstr "Качество:"
 
-#: plug-ins/common/jpeg.c:1675 plug-ins/xjt/xjt.c:845
+#: plug-ins/common/jpeg.c:1658 plug-ins/xjt/xjt.c:845
 msgid "Smoothing:"
 msgstr "Сглаживание:"
 
-#: plug-ins/common/jpeg.c:1702
+#: plug-ins/common/jpeg.c:1685
 msgid "Restart markers"
 msgstr "Перезапустить маркеры"
 
-#: plug-ins/common/jpeg.c:1710
+#: plug-ins/common/jpeg.c:1693
 msgid "Restart frequency (rows):"
 msgstr "Перезапуск частоты (строки):"
 
-#: plug-ins/common/jpeg.c:1739 plug-ins/xjt/xjt.c:816
+#: plug-ins/common/jpeg.c:1722 plug-ins/xjt/xjt.c:816
 msgid "Optimize"
 msgstr "Оптимизировать"
 
-#: plug-ins/common/jpeg.c:1751
+#: plug-ins/common/jpeg.c:1734
 msgid "Progressive"
 msgstr "Прогрессивная"
 
-#: plug-ins/common/jpeg.c:1768
+#: plug-ins/common/jpeg.c:1751
 msgid "Force baseline JPEG (Readable by all decoders)"
 msgstr "Делать типичный JPEG (читается всеми декодерами)"
 
-#: plug-ins/common/jpeg.c:1790
+#: plug-ins/common/jpeg.c:1775
 msgid "Subsampling:"
 msgstr "Прореживание:"
 
-#: plug-ins/common/jpeg.c:1803
-msgid "Fast integer"
+#: plug-ins/common/jpeg.c:1784
+msgid "Fast Integer"
 msgstr "Быстрое целое"
 
-#: plug-ins/common/jpeg.c:1804
+#: plug-ins/common/jpeg.c:1785
 msgid "Integer"
 msgstr "Целое"
 
-#: plug-ins/common/jpeg.c:1805
-msgid "Floating-point"
+#: plug-ins/common/jpeg.c:1786
+msgid "Floating-Point"
 msgstr "С плавающей точкой"
 
-#: plug-ins/common/jpeg.c:1809
+#: plug-ins/common/jpeg.c:1790
 msgid "DCT method (Speed/quality tradeoff):"
 msgstr "Метод DCT (компромис скорость/качество):"
 
-#: plug-ins/common/jpeg.c:1826
+#: plug-ins/common/jpeg.c:1798
 msgid "Image comments"
 msgstr "Комментарий к изображению"
 
@@ -4507,41 +4503,41 @@ msgstr "<Image>/Фильтры/Имитация/Ван Гог (LIC)..."
 msgid "<Image>/File/Mail Image..."
 msgstr "<Image>/Файл/Отправить почтой..."
 
-#: plug-ins/common/mail.c:460
+#: plug-ins/common/mail.c:462
 msgid "Send to Mail"
 msgstr "Послать по почте"
 
-#: plug-ins/common/mail.c:491
+#: plug-ins/common/mail.c:493
 msgid "Recipient:"
 msgstr "Получатель:"
 
-#: plug-ins/common/mail.c:503
+#: plug-ins/common/mail.c:505
 msgid "Sender:"
 msgstr "Отправитель:"
 
-#: plug-ins/common/mail.c:515
+#: plug-ins/common/mail.c:517
 msgid "Subject:"
 msgstr "Тема:"
 
-#: plug-ins/common/mail.c:539 plug-ins/gfig/gfig.c:3749
+#: plug-ins/common/mail.c:541 plug-ins/gfig/gfig.c:3749
 #: plug-ins/imagemap/imap_settings.c:79
 msgid "Filename:"
 msgstr "Имя файла:"
 
 #. Encapsulation label
-#: plug-ins/common/mail.c:576
+#: plug-ins/common/mail.c:578
 msgid "Encapsulation:"
 msgstr "Инкапсуляция:"
 
-#: plug-ins/common/mail.c:588
+#: plug-ins/common/mail.c:590
 msgid "Uuencode"
 msgstr "Uuencode"
 
-#: plug-ins/common/mail.c:590
+#: plug-ins/common/mail.c:592
 msgid "MIME"
 msgstr "MIME"
 
-#: plug-ins/common/mail.c:690
+#: plug-ins/common/mail.c:692
 msgid "mail: some sort of error with the file extension or lack thereof \n"
 msgstr ""
 
@@ -4598,9 +4594,9 @@ msgid "Destination color range"
 msgstr "Итоговый цветовой диапазон"
 
 #: plug-ins/common/mapcolor.c:652 plug-ins/gap/gap_decode_mpeg_main.c:662
-#: plug-ins/gap/gap_decode_xanim.c:233 plug-ins/gap/gap_lib.c:2111
-#: plug-ins/gap/gap_lib.c:2290 plug-ins/gap/gap_range_ops.c:259
-#: plug-ins/gap/gap_range_ops.c:609 plug-ins/gfli/gfli.c:856
+#: plug-ins/gap/gap_decode_xanim.c:233 plug-ins/gap/gap_lib.c:2112
+#: plug-ins/gap/gap_lib.c:2291 plug-ins/gap/gap_range_ops.c:260
+#: plug-ins/gap/gap_range_ops.c:610 plug-ins/gfli/gfli.c:856
 #: plug-ins/gfli/gfli.c:925
 msgid "To:"
 msgstr "В:"
@@ -5628,33 +5624,33 @@ msgid "<Toolbox>/File/Acquire/Screen Shot..."
 msgstr "<Toolbox>/Файл/Захватить/Снимок экрана..."
 
 #. main dialog
-#: plug-ins/common/screenshot.c:361
+#: plug-ins/common/screenshot.c:366
 msgid "Screen Shot"
 msgstr "Снимок экрана"
 
 #. single window
-#: plug-ins/common/screenshot.c:384 plug-ins/winsnap/winsnap.c:903
+#: plug-ins/common/screenshot.c:389 plug-ins/winsnap/winsnap.c:903
 msgid "Grab"
 msgstr "Захват"
 
-#: plug-ins/common/screenshot.c:392
+#: plug-ins/common/screenshot.c:397
 msgid "Single Window"
 msgstr "Одно окно"
 
-#: plug-ins/common/screenshot.c:406
+#: plug-ins/common/screenshot.c:411
 msgid "With Decorations"
 msgstr "С обрамлением"
 
 #. root window
-#: plug-ins/common/screenshot.c:422
+#: plug-ins/common/screenshot.c:427
 msgid "Whole Screen"
 msgstr "Весь экран"
 
-#: plug-ins/common/screenshot.c:438 plug-ins/winsnap/winsnap.c:1011
+#: plug-ins/common/screenshot.c:443 plug-ins/winsnap/winsnap.c:1011
 msgid "after"
 msgstr "через"
 
-#: plug-ins/common/screenshot.c:450 plug-ins/winsnap/winsnap.c:1020
+#: plug-ins/common/screenshot.c:455 plug-ins/winsnap/winsnap.c:1020
 msgid "Seconds Delay"
 msgstr "Задержка в секундах"
 
@@ -6361,20 +6357,20 @@ msgstr "Сдуть"
 msgid "JPEG"
 msgstr "JPEG"
 
-#: plug-ins/common/tile.c:126
+#: plug-ins/common/tile.c:129
 msgid "<Image>/Filters/Map/Tile..."
 msgstr "<Image>/Фильтры/Отображение/Tile..."
 
-#: plug-ins/common/tile.c:203 plug-ins/common/tileit.c:333
+#: plug-ins/common/tile.c:207 plug-ins/common/tileit.c:333
 msgid "Tiling..."
 msgstr "Рассечение..."
 
-#: plug-ins/common/tile.c:378
+#: plug-ins/common/tile.c:400
 msgid "Tile"
 msgstr "Обрезать"
 
 #. parameter settings
-#: plug-ins/common/tile.c:395
+#: plug-ins/common/tile.c:417
 msgid "Tile to New Size"
 msgstr "Обрезка до нового размера"
 
@@ -7468,122 +7464,122 @@ msgid "Less Sat:"
 msgstr "Меньше насыщ.:"
 
 #. All the previews
-#: plug-ins/fp/fp_gtk.c:33 plug-ins/fp/fp_gtk.c:89
+#: plug-ins/fp/fp_gtk.c:33 plug-ins/fp/fp_gtk.c:91
 msgid "Current:"
 msgstr "Текущее:"
 
-#: plug-ins/fp/fp_gtk.c:85
+#: plug-ins/fp/fp_gtk.c:87
 msgid "Before and After"
 msgstr "До и после"
 
-#: plug-ins/fp/fp_gtk.c:93
+#: plug-ins/fp/fp_gtk.c:95
 msgid "Original:"
 msgstr "Исходная:"
 
-#: plug-ins/fp/fp_gtk.c:195
+#: plug-ins/fp/fp_gtk.c:197
 msgid "Hue Variations"
 msgstr "Варианты тона"
 
-#: plug-ins/fp/fp_gtk.c:210
+#: plug-ins/fp/fp_gtk.c:212
 msgid "Roughness"
 msgstr "Шероховатость"
 
-#: plug-ins/fp/fp_gtk.c:240
+#: plug-ins/fp/fp_gtk.c:242
 msgid "Affected Range"
 msgstr "Обрабатываемый диапазон"
 
-#: plug-ins/fp/fp_gtk.c:250
+#: plug-ins/fp/fp_gtk.c:252
 msgid "Shadows"
 msgstr "Тени"
 
-#: plug-ins/fp/fp_gtk.c:254
+#: plug-ins/fp/fp_gtk.c:256
 msgid "Midtones"
 msgstr "Полутона"
 
-#: plug-ins/fp/fp_gtk.c:258
+#: plug-ins/fp/fp_gtk.c:260
 msgid "Highlights"
 msgstr "Блики:"
 
-#: plug-ins/fp/fp_gtk.c:271
+#: plug-ins/fp/fp_gtk.c:273
 msgid "Windows"
 msgstr "Окна"
 
-#: plug-ins/fp/fp_gtk.c:341
+#: plug-ins/fp/fp_gtk.c:343
 msgid "Value Variations"
 msgstr "Изменения значений"
 
-#: plug-ins/fp/fp_gtk.c:389
+#: plug-ins/fp/fp_gtk.c:391
 msgid "Saturation Variations"
 msgstr "Изменения насыщенности"
 
-#: plug-ins/fp/fp_gtk.c:404
+#: plug-ins/fp/fp_gtk.c:406
 msgid "Select Pixels by"
 msgstr "Выбрать точки растра по"
 
-#: plug-ins/fp/fp_gtk.c:434
+#: plug-ins/fp/fp_gtk.c:436
 msgid "Show"
 msgstr "Показать"
 
-#: plug-ins/fp/fp_gtk.c:442 plug-ins/rcm/rcm_dialog.c:657
+#: plug-ins/fp/fp_gtk.c:444 plug-ins/rcm/rcm_dialog.c:657
 msgid "Entire Image"
 msgstr "Все изображение"
 
-#: plug-ins/fp/fp_gtk.c:447
+#: plug-ins/fp/fp_gtk.c:449
 msgid "Selection Only"
 msgstr "Выделенную часть"
 
-#: plug-ins/fp/fp_gtk.c:452
+#: plug-ins/fp/fp_gtk.c:454
 msgid "Selection In Context"
 msgstr "Выделение в контексте"
 
-#: plug-ins/fp/fp_gtk.c:466
+#: plug-ins/fp/fp_gtk.c:468
 msgid "Display"
 msgstr "Дисплей"
 
-#: plug-ins/fp/fp_gtk.c:475
+#: plug-ins/fp/fp_gtk.c:477
 msgid "CirclePalette"
 msgstr "Круговая палитра"
 
-#: plug-ins/fp/fp_gtk.c:478
+#: plug-ins/fp/fp_gtk.c:480
 msgid "Lighter And Darker"
 msgstr "Светлее и темнее"
 
 #. ******************************************************************
 #. ************************ All the Standard Stuff ******************
-#: plug-ins/fp/fp_gtk.c:890
+#: plug-ins/fp/fp_gtk.c:899
 msgid "Filter Pack Simulation"
 msgstr "Моделирование набора фильтров"
 
-#: plug-ins/fp/fp_gtk.c:1011
+#: plug-ins/fp/fp_gtk.c:1020
 msgid "Shadows:"
 msgstr "Тени:"
 
-#: plug-ins/fp/fp_gtk.c:1011
+#: plug-ins/fp/fp_gtk.c:1020
 msgid "Midtones:"
 msgstr "Полутона:"
 
-#: plug-ins/fp/fp_gtk.c:1011
+#: plug-ins/fp/fp_gtk.c:1020
 msgid "Highlights:"
 msgstr "Блики:"
 
-#: plug-ins/fp/fp_gtk.c:1025
+#: plug-ins/fp/fp_gtk.c:1034
 msgid "Advanced Filter Pack Options"
 msgstr "Дополнительные параметры пакета фильтров"
 
-#: plug-ins/fp/fp_gtk.c:1035
+#: plug-ins/fp/fp_gtk.c:1044
 msgid "Smoothness of Aliasing"
 msgstr "Гладкость выравнивания"
 
 #. ****************** MISC OPTIONS **************************
-#: plug-ins/fp/fp_gtk.c:1122
+#: plug-ins/fp/fp_gtk.c:1131
 msgid "Miscellaneous Options"
 msgstr "Разнообразные параметры"
 
-#: plug-ins/fp/fp_gtk.c:1133
+#: plug-ins/fp/fp_gtk.c:1142
 msgid "Preview as You Drag"
 msgstr "Просмотр при перетаскивании"
 
-#: plug-ins/fp/fp_gtk.c:1137
+#: plug-ins/fp/fp_gtk.c:1146
 msgid "Preview Size"
 msgstr "Размер просмотра"
 
@@ -7635,7 +7631,7 @@ msgid "Animated Filter apply (please wait)"
 msgstr "Применяется анимационный фильтр (пожалуйста подождите)"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:744
-#: plug-ins/gap/gap_filter_foreach.c:161 plug-ins/gap/gap_mod_layer.c:284
+#: plug-ins/gap/gap_filter_foreach.c:162 plug-ins/gap/gap_mod_layer.c:285
 msgid "Animated Filter apply"
 msgstr "Применяется анимационный фильтр"
 
@@ -7656,17 +7652,17 @@ msgid "<Toolbox>/Xtns/Split Video to Frames/MPEG1"
 msgstr "<Toolbox>/Расш./Разложить видео на кадры/MPEG1"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:332 plug-ins/gap/gap_decode_xanim.c:336
-#: plug-ins/gap/gap_range_ops.c:1239
+#: plug-ins/gap/gap_range_ops.c:1240
 msgid "Overwrite Frame"
 msgstr "Перезаписать кадр"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:334 plug-ins/gap/gap_decode_xanim.c:338
-#: plug-ins/gap/gap_range_ops.c:1241
+#: plug-ins/gap/gap_range_ops.c:1242
 msgid "Overwrite All"
 msgstr "Перезаписать все"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:342 plug-ins/gap/gap_decode_xanim.c:346
-#: plug-ins/gap/gap_lib.c:1026 plug-ins/gap/gap_range_ops.c:1246
+#: plug-ins/gap/gap_lib.c:1027 plug-ins/gap/gap_range_ops.c:1247
 msgid "GAP Question"
 msgstr "Вопрос GAP"
 
@@ -7734,7 +7730,7 @@ msgid "Split MPEG1 Video to Frames"
 msgstr "Разложить MPEG1-видео на кадры"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:689 plug-ins/gap/gap_decode_xanim.c:297
-#: plug-ins/gap/gap_range_ops.c:1461
+#: plug-ins/gap/gap_range_ops.c:1462
 msgid "Select Frame Range"
 msgstr "Выбрать диапазон кадров"
 
@@ -7968,20 +7964,20 @@ msgstr "переимннование кадров..."
 msgid "converting frames..."
 msgstr "преобразование кадров..."
 
-#: plug-ins/gap/gap_filter_foreach.c:124
+#: plug-ins/gap/gap_filter_foreach.c:125
 msgid "backup to file"
 msgstr "резервирование в файл"
 
 #. pixel
-#: plug-ins/gap/gap_filter_foreach.c:126
+#: plug-ins/gap/gap_filter_foreach.c:127
 msgid "Make backup of the image after each step"
 msgstr "Делать резервирование изображения после каждого шага"
 
-#: plug-ins/gap/gap_filter_foreach.c:130 plug-ins/gap/gap_mod_layer.c:259
+#: plug-ins/gap/gap_filter_foreach.c:131 plug-ins/gap/gap_mod_layer.c:260
 msgid "Continue"
 msgstr "Продолжить"
 
-#: plug-ins/gap/gap_filter_foreach.c:153 plug-ins/gap/gap_mod_layer.c:278
+#: plug-ins/gap/gap_filter_foreach.c:154 plug-ins/gap/gap_mod_layer.c:279
 #, c-format
 msgid ""
 "2nd call of %s\n"
@@ -7990,7 +7986,7 @@ msgstr ""
 "2-ой вызов %s\n"
 "(определение конечных настроек)"
 
-#: plug-ins/gap/gap_filter_foreach.c:157
+#: plug-ins/gap/gap_filter_foreach.c:158
 #, c-format
 msgid ""
 "Non-Interactive call of %s\n"
@@ -7999,19 +7995,19 @@ msgstr ""
 "Неинтерактивный вызов %s\n"
 "(для всех промежуточных слоев)"
 
-#: plug-ins/gap/gap_filter_foreach.c:276
+#: plug-ins/gap/gap_filter_foreach.c:277
 msgid "Applying Filter to all Layers..."
 msgstr "Применение фильтра ко всем слоям..."
 
-#: plug-ins/gap/gap_filter_foreach.c:550
+#: plug-ins/gap/gap_filter_foreach.c:551
 msgid "Select Filter for Animated apply"
 msgstr "Выбрать фильтр для применения на анимации"
 
-#: plug-ins/gap/gap_filter_foreach.c:551 plug-ins/gap/gap_mod_layer.c:661
+#: plug-ins/gap/gap_filter_foreach.c:552 plug-ins/gap/gap_mod_layer.c:662
 msgid "Apply Constant"
 msgstr "Применить одинаковый"
 
-#: plug-ins/gap/gap_filter_foreach.c:552 plug-ins/gap/gap_mod_layer.c:662
+#: plug-ins/gap/gap_filter_foreach.c:553 plug-ins/gap/gap_mod_layer.c:663
 msgid "Apply Varying"
 msgstr "Применить разные"
 
@@ -8035,11 +8031,11 @@ msgstr "<Image>/Видео/Кодировать/MPEG1..."
 msgid "<Image>/Video/Encode/MPEG2..."
 msgstr "<Image>/Видео/Кодировать/MPEG2..."
 
-#: plug-ins/gap/gap_lib.c:232
+#: plug-ins/gap/gap_lib.c:233
 msgid "GAP Message"
 msgstr "Сообщение GAP"
 
-#: plug-ins/gap/gap_lib.c:895
+#: plug-ins/gap/gap_lib.c:896
 msgid ""
 "OPERATION CANCELLED.\n"
 "Current frame changed while dialog was open."
@@ -8047,7 +8043,7 @@ msgstr ""
 "ОПЕРАЦИЯ ОТМЕНЕНА.\n"
 "Текущий кадр изменен пока диалог был открыт."
 
-#: plug-ins/gap/gap_lib.c:917
+#: plug-ins/gap/gap_lib.c:918
 msgid ""
 "OPERATION CANCELLED.\n"
 "GAP-plugins works only with filenames\n"
@@ -8059,7 +8055,7 @@ msgstr ""
 "имена которых заканчиваются на  _0001.xcf.\n"
 "==> Переименуйте ваше изображение и попробуйте снова."
 
-#: plug-ins/gap/gap_lib.c:1004
+#: plug-ins/gap/gap_lib.c:1005
 msgid ""
 "You are using a file format != xcf\n"
 "Save Operations may result\n"
@@ -8069,73 +8065,73 @@ msgstr ""
 "Сохранение может привести к потере\n"
 "информации о слоях"
 
-#: plug-ins/gap/gap_lib.c:1020
+#: plug-ins/gap/gap_lib.c:1021
 msgid "Save Flattened"
 msgstr "Сохранить сведенное"
 
-#: plug-ins/gap/gap_lib.c:1022
+#: plug-ins/gap/gap_lib.c:1023
 msgid "Save As Is"
 msgstr "Сохранить как есть"
 
-#: plug-ins/gap/gap_lib.c:1497 plug-ins/gap/gap_lib.c:1614
-#: plug-ins/gap/gap_lib.c:1693 plug-ins/gap/gap_lib.c:1700
-#: plug-ins/gap/gap_lib.c:1707 plug-ins/gap/gap_lib.c:1790
-#: plug-ins/gap/gap_lib.c:1812 plug-ins/gap/gap_lib.c:2701
+#: plug-ins/gap/gap_lib.c:1498 plug-ins/gap/gap_lib.c:1615
+#: plug-ins/gap/gap_lib.c:1694 plug-ins/gap/gap_lib.c:1701
+#: plug-ins/gap/gap_lib.c:1708 plug-ins/gap/gap_lib.c:1791
+#: plug-ins/gap/gap_lib.c:1813 plug-ins/gap/gap_lib.c:2702
 #, c-format
 msgid "Error: could not rename frame %ld to %ld"
 msgstr "Ошибка: не удалось переименовать кадр %ld в %ld"
 
-#: plug-ins/gap/gap_lib.c:1602
+#: plug-ins/gap/gap_lib.c:1603
 msgid "Duplicating frames..."
 msgstr "Дублирование кадров..."
 
-#: plug-ins/gap/gap_lib.c:1778
+#: plug-ins/gap/gap_lib.c:1779
 msgid "Renumber Framesequence..."
 msgstr "Перенумерация последовательности кадров..."
 
-#: plug-ins/gap/gap_lib.c:1964
+#: plug-ins/gap/gap_lib.c:1965
 #, c-format
 msgid "Goto Frame (%ld/%ld)"
 msgstr "Перейти к кадру (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:1967
+#: plug-ins/gap/gap_lib.c:1968
 #, c-format
 msgid "Destination Frame Number (%ld  - %ld)"
 msgstr "Номер целевого кадра (%ld - %ld)"
 
-#: plug-ins/gap/gap_lib.c:1971 plug-ins/gap/gap_lib.c:2048
-#: plug-ins/gap/gap_lib.c:2236
+#: plug-ins/gap/gap_lib.c:1972 plug-ins/gap/gap_lib.c:2049
+#: plug-ins/gap/gap_lib.c:2237
 msgid "Number:"
 msgstr "Номер:"
 
-#: plug-ins/gap/gap_lib.c:2032
+#: plug-ins/gap/gap_lib.c:2033
 #, c-format
 msgid "Delete Frames (%ld/%ld)"
 msgstr "Удалить кадры (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:2035
+#: plug-ins/gap/gap_lib.c:2036
 #, c-format
 msgid "Delete Frames from %ld to (number)"
 msgstr "Удалить кадры с %ld по (номер)"
 
-#: plug-ins/gap/gap_lib.c:2098
+#: plug-ins/gap/gap_lib.c:2099
 #, c-format
 msgid "Duplicate Frames (%ld/%ld)"
 msgstr "Дублировать кадры (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:2108
+#: plug-ins/gap/gap_lib.c:2109
 msgid "Source Range starts at this framenumber"
 msgstr "Исходный диапазон начинается на кадре с этим номером"
 
-#: plug-ins/gap/gap_lib.c:2116
+#: plug-ins/gap/gap_lib.c:2117
 msgid "Source Range ends at this framenumber"
 msgstr "Исходный диапазон заканчивается на кадре с этим номером"
 
-#: plug-ins/gap/gap_lib.c:2119
+#: plug-ins/gap/gap_lib.c:2120
 msgid "N times:"
 msgstr "Число копий:"
 
-#: plug-ins/gap/gap_lib.c:2126
+#: plug-ins/gap/gap_lib.c:2127
 msgid ""
 "Copy selected Range n-times  \n"
 "(you may type in Values > 99)"
@@ -8143,37 +8139,37 @@ msgstr ""
 "Скопировать выделенный диапазон n раз \n"
 "(вы можете ввести в поле значение > 99)"
 
-#: plug-ins/gap/gap_lib.c:2128
+#: plug-ins/gap/gap_lib.c:2129
 msgid "Duplicate Frame Range"
 msgstr "Дублирование диапазона кадров"
 
-#: plug-ins/gap/gap_lib.c:2231
+#: plug-ins/gap/gap_lib.c:2232
 #, c-format
 msgid "Exchange current Frame (%ld)"
 msgstr "Поменять текущий кадр (%ld)"
 
-#: plug-ins/gap/gap_lib.c:2235
+#: plug-ins/gap/gap_lib.c:2236
 msgid "With Frame (number)"
 msgstr "С кадром (номер)"
 
-#: plug-ins/gap/gap_lib.c:2277
+#: plug-ins/gap/gap_lib.c:2278
 #, c-format
 msgid "Framesequence Shift (%ld/%ld)"
 msgstr "Сдвиг последовательности кадров (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:2287
+#: plug-ins/gap/gap_lib.c:2288
 msgid "Affected Range starts at this framenumber"
 msgstr "Обрабатываемый диапазон начинается с кадра с этим номером"
 
-#: plug-ins/gap/gap_lib.c:2295
+#: plug-ins/gap/gap_lib.c:2296
 msgid "Affected Range ends at this framenumber"
 msgstr "Обрабатываемый заканчивается на кадре с этим номером"
 
-#: plug-ins/gap/gap_lib.c:2298
+#: plug-ins/gap/gap_lib.c:2299
 msgid "N-Shift:"
 msgstr "Число сдвигов (N):"
 
-#: plug-ins/gap/gap_lib.c:2303
+#: plug-ins/gap/gap_lib.c:2304
 msgid ""
 "Renumber the affected framesequence     \n"
 "(numbers are shifted in circle by N)"
@@ -8181,7 +8177,7 @@ msgstr ""
 "Перенумерует обрабатываемую последовательность\n"
 "кадров (номера циклически сдвигаются на N)"
 
-#: plug-ins/gap/gap_lib.c:2305
+#: plug-ins/gap/gap_lib.c:2306
 msgid "Framesequence shift"
 msgstr "Сдвиг последовательности кадров"
 
@@ -8262,51 +8258,51 @@ msgid "<Image>/Video/Frames Modify..."
 msgstr "<Image>/Видео/Изменить кадры..."
 
 #. Layer select modes
-#: plug-ins/gap/gap_mod_layer.c:82 plug-ins/gap/gap_range_ops.c:573
+#: plug-ins/gap/gap_mod_layer.c:83 plug-ins/gap/gap_range_ops.c:574
 msgid "Pattern is equal to LayerName"
 msgstr "Шаблон совпадает с названием слоя"
 
-#: plug-ins/gap/gap_mod_layer.c:83 plug-ins/gap/gap_range_ops.c:574
+#: plug-ins/gap/gap_mod_layer.c:84 plug-ins/gap/gap_range_ops.c:575
 msgid "Pattern is Start of LayerName"
 msgstr "Шаблон совпадает с началом названия слоя"
 
-#: plug-ins/gap/gap_mod_layer.c:84 plug-ins/gap/gap_range_ops.c:575
+#: plug-ins/gap/gap_mod_layer.c:85 plug-ins/gap/gap_range_ops.c:576
 msgid "Pattern is End of Layername"
 msgstr "Шаблон совпадает с концом названия слоя"
 
-#: plug-ins/gap/gap_mod_layer.c:85 plug-ins/gap/gap_range_ops.c:576
+#: plug-ins/gap/gap_mod_layer.c:86 plug-ins/gap/gap_range_ops.c:577
 msgid "Pattern is a Part of LayerName"
 msgstr "Шаблон совпадает с частью названия слоя"
 
-#: plug-ins/gap/gap_mod_layer.c:86 plug-ins/gap/gap_range_ops.c:577
+#: plug-ins/gap/gap_mod_layer.c:87 plug-ins/gap/gap_range_ops.c:578
 msgid "Pattern is LayerstackNumber List"
 msgstr "Шаблон в списке номеров стопки слоев"
 
-#: plug-ins/gap/gap_mod_layer.c:87 plug-ins/gap/gap_range_ops.c:578
+#: plug-ins/gap/gap_mod_layer.c:88 plug-ins/gap/gap_range_ops.c:579
 msgid "Pattern is REVERSE-stack List"
 msgstr "Шаблон в списке обращенной стопки"
 
-#: plug-ins/gap/gap_mod_layer.c:88 plug-ins/gap/gap_range_ops.c:579
+#: plug-ins/gap/gap_mod_layer.c:89 plug-ins/gap/gap_range_ops.c:580
 msgid "All Visible (ignore Pattern)"
 msgstr "Все видимые (игнорировать шаблон)"
 
-#: plug-ins/gap/gap_mod_layer.c:90
+#: plug-ins/gap/gap_mod_layer.c:91
 msgid "Select all Layers where Layername is equal to Pattern"
 msgstr "Выбрать все слои, в которых название слоя совпадает с шаблоном"
 
-#: plug-ins/gap/gap_mod_layer.c:91
+#: plug-ins/gap/gap_mod_layer.c:92
 msgid "Select all Layers where Layername starts with Pattern"
 msgstr "Выбрать все слои, в которых начало названия слоя совпадает с шаблоном"
 
-#: plug-ins/gap/gap_mod_layer.c:92
+#: plug-ins/gap/gap_mod_layer.c:93
 msgid "Select all Layers where Layername ends up with Pattern"
 msgstr "Выбрать все слои, в которых конец названия слоя совпадает с шаблоном"
 
-#: plug-ins/gap/gap_mod_layer.c:93
+#: plug-ins/gap/gap_mod_layer.c:94
 msgid "Select all Layers where Layername contains Pattern"
 msgstr "Выбрать все слои, в которых название слоя содержит шаблон"
 
-#: plug-ins/gap/gap_mod_layer.c:94
+#: plug-ins/gap/gap_mod_layer.c:95
 msgid ""
 "Select Layerstack positions.\n"
 "0, 4-5, 8\n"
@@ -8316,7 +8312,7 @@ msgstr ""
 "0, 4-5, 8\n"
 "где 0 == Верхний слой"
 
-#: plug-ins/gap/gap_mod_layer.c:95
+#: plug-ins/gap/gap_mod_layer.c:96
 msgid ""
 "Select Layerstack positions.\n"
 "0, 4-5, 8\n"
@@ -8326,64 +8322,64 @@ msgstr ""
 "0, 4-5, 8\n"
 "где 0 == Слой фона"
 
-#: plug-ins/gap/gap_mod_layer.c:96
+#: plug-ins/gap/gap_mod_layer.c:97
 msgid "Select all visible Layers"
 msgstr "Выбрать все видимые слои"
 
 #. action items what to do with the selected layer(s)
-#: plug-ins/gap/gap_mod_layer.c:100
+#: plug-ins/gap/gap_mod_layer.c:101
 msgid "Set Layer(s) visible"
 msgstr "Сделать слой(и) видимым(и)"
 
-#: plug-ins/gap/gap_mod_layer.c:101
+#: plug-ins/gap/gap_mod_layer.c:102
 msgid "Set Layer(s) invisible"
 msgstr "Сделать слой(и) невидимым(и)"
 
-#: plug-ins/gap/gap_mod_layer.c:102
+#: plug-ins/gap/gap_mod_layer.c:103
 msgid "Set Layer(s) linked"
 msgstr "Сделать слой(и) связанным(и)"
 
-#: plug-ins/gap/gap_mod_layer.c:103
+#: plug-ins/gap/gap_mod_layer.c:104
 msgid "Set Layer(s) unlinked"
 msgstr "Сделать слой(и) несвязанным(и)"
 
-#: plug-ins/gap/gap_mod_layer.c:104
+#: plug-ins/gap/gap_mod_layer.c:105
 msgid "Raise Layer(s)"
 msgstr "Поднять слой(и)"
 
-#: plug-ins/gap/gap_mod_layer.c:105
+#: plug-ins/gap/gap_mod_layer.c:106
 msgid "Lower Layer(s)"
 msgstr "Опустить слой(и)"
 
-#: plug-ins/gap/gap_mod_layer.c:106
+#: plug-ins/gap/gap_mod_layer.c:107
 msgid "Merge Layer(s) expand as necessary"
 msgstr "Объединить слои, расширяя при необходимости"
 
-#: plug-ins/gap/gap_mod_layer.c:107
+#: plug-ins/gap/gap_mod_layer.c:108
 msgid "Merge Layer(s) clipped to image"
 msgstr "Объединить слои, обрезая по изображению"
 
-#: plug-ins/gap/gap_mod_layer.c:108
+#: plug-ins/gap/gap_mod_layer.c:109
 msgid "Merge Layer(s) clipped to bg-layer"
 msgstr "Объединить слои, обрезая по фону"
 
-#: plug-ins/gap/gap_mod_layer.c:109
+#: plug-ins/gap/gap_mod_layer.c:110
 msgid "Apply filter on Layer(s)"
 msgstr "Применить фильтр к слою(ям)"
 
-#: plug-ins/gap/gap_mod_layer.c:110
+#: plug-ins/gap/gap_mod_layer.c:111
 msgid "Duplicate Layer(s)"
 msgstr "Дублировать слой(и)"
 
-#: plug-ins/gap/gap_mod_layer.c:111
+#: plug-ins/gap/gap_mod_layer.c:112
 msgid "Delete Layer(s)"
 msgstr "Удалить слой(и)"
 
-#: plug-ins/gap/gap_mod_layer.c:112
+#: plug-ins/gap/gap_mod_layer.c:113
 msgid "Rename Layer(s)"
 msgstr "Переименовать слой(и)"
 
-#: plug-ins/gap/gap_mod_layer.c:151
+#: plug-ins/gap/gap_mod_layer.c:152
 msgid ""
 "Perform function on one or more Layer(s)\n"
 "in all frames of the selected frame range\n"
@@ -8391,35 +8387,35 @@ msgstr ""
 "Применить функцию к одному или более слою(ям)\n"
 "во всех кадрах выбранного диапазона\n"
 
-#: plug-ins/gap/gap_mod_layer.c:155 plug-ins/gap/gap_mpege.c:258
-#: plug-ins/gap/gap_range_ops.c:442
+#: plug-ins/gap/gap_mod_layer.c:156 plug-ins/gap/gap_mpege.c:258
+#: plug-ins/gap/gap_range_ops.c:443
 msgid "From Frame:"
 msgstr "От кадра:"
 
-#: plug-ins/gap/gap_mod_layer.c:156 plug-ins/gap/gap_mpege.c:259
-#: plug-ins/gap/gap_range_ops.c:443 plug-ins/gap/gap_range_ops.c:602
+#: plug-ins/gap/gap_mod_layer.c:157 plug-ins/gap/gap_mpege.c:259
+#: plug-ins/gap/gap_range_ops.c:444 plug-ins/gap/gap_range_ops.c:603
 msgid "first handled frame"
 msgstr "первый обрабатываемый кадр"
 
-#: plug-ins/gap/gap_mod_layer.c:163 plug-ins/gap/gap_range_ops.c:450
+#: plug-ins/gap/gap_mod_layer.c:164 plug-ins/gap/gap_range_ops.c:451
 msgid "To Frame:"
 msgstr "До кадра:"
 
-#: plug-ins/gap/gap_mod_layer.c:164 plug-ins/gap/gap_mpege.c:267
-#: plug-ins/gap/gap_range_ops.c:451 plug-ins/gap/gap_range_ops.c:610
+#: plug-ins/gap/gap_mod_layer.c:165 plug-ins/gap/gap_mpege.c:267
+#: plug-ins/gap/gap_range_ops.c:452 plug-ins/gap/gap_range_ops.c:611
 msgid "last handled frame"
 msgstr "последний обрабатываемый кадр"
 
-#: plug-ins/gap/gap_mod_layer.c:172 plug-ins/gap/gap_range_ops.c:649
+#: plug-ins/gap/gap_mod_layer.c:173 plug-ins/gap/gap_range_ops.c:650
 msgid "Select Layer(s):"
 msgstr "Выбрать слой(и):"
 
-#: plug-ins/gap/gap_mod_layer.c:181 plug-ins/gap/gap_range_ops.c:658
+#: plug-ins/gap/gap_mod_layer.c:182 plug-ins/gap/gap_range_ops.c:659
 msgid "Select Pattern:"
 msgstr "Выбрать шаблон:"
 
 #. pixel
-#: plug-ins/gap/gap_mod_layer.c:183 plug-ins/gap/gap_range_ops.c:660
+#: plug-ins/gap/gap_mod_layer.c:184 plug-ins/gap/gap_range_ops.c:661
 msgid ""
 "String to identify layer names    \n"
 "or layerstack position numbers\n"
@@ -8429,37 +8425,37 @@ msgstr ""
 "или номер позиции в стопке слоев\n"
 "0,3-5"
 
-#: plug-ins/gap/gap_mod_layer.c:189 plug-ins/gap/gap_range_ops.c:666
+#: plug-ins/gap/gap_mod_layer.c:190 plug-ins/gap/gap_range_ops.c:667
 msgid "Case sensitive"
 msgstr "Регистрозависимость"
 
-#: plug-ins/gap/gap_mod_layer.c:190 plug-ins/gap/gap_range_ops.c:667
+#: plug-ins/gap/gap_mod_layer.c:191 plug-ins/gap/gap_range_ops.c:668
 msgid "Lowercase and UPPERCASE letters are considered as different"
 msgstr "Буквы в нижнем и ВЕРХНЕМ регистре считаются разными"
 
-#: plug-ins/gap/gap_mod_layer.c:195 plug-ins/gap/gap_range_ops.c:672
+#: plug-ins/gap/gap_mod_layer.c:196 plug-ins/gap/gap_range_ops.c:673
 msgid "Invert Selection"
 msgstr "Обратить выделение"
 
-#: plug-ins/gap/gap_mod_layer.c:196
+#: plug-ins/gap/gap_mod_layer.c:197
 msgid "Perform actions on all unselected Layers"
 msgstr "Выполнить действие на всех невыбранных слоях"
 
-#: plug-ins/gap/gap_mod_layer.c:201
+#: plug-ins/gap/gap_mod_layer.c:202
 msgid "Function:"
 msgstr "Функция:"
 
 #. argv[7].radio_help_argv = action_help
-#: plug-ins/gap/gap_mod_layer.c:205
+#: plug-ins/gap/gap_mod_layer.c:206
 msgid "Function to be performed on all selected layers"
 msgstr "Функция, которая будет выполнена на всех выделенных слоях"
 
-#: plug-ins/gap/gap_mod_layer.c:211
+#: plug-ins/gap/gap_mod_layer.c:212
 msgid "New Layername:"
 msgstr "Новое название слоя:"
 
 #. pixel
-#: plug-ins/gap/gap_mod_layer.c:213
+#: plug-ins/gap/gap_mod_layer.c:214
 msgid ""
 "New Layername for all handled layers \n"
 "[####] is replaced by frame number\n"
@@ -8469,11 +8465,11 @@ msgstr ""
 "[####] заменяется на номер кадра\n"
 "(используется только в функции переименования)"
 
-#: plug-ins/gap/gap_mod_layer.c:218
+#: plug-ins/gap/gap_mod_layer.c:219
 msgid "Frames Modify"
 msgstr "Изменение кадров"
 
-#: plug-ins/gap/gap_mod_layer.c:282
+#: plug-ins/gap/gap_mod_layer.c:283
 #, c-format
 msgid ""
 "Non-Interactive call of %s\n"
@@ -8484,19 +8480,19 @@ msgstr ""
 
 #. GAP-PDB-Browser Dialog
 #. ----------------------
-#: plug-ins/gap/gap_mod_layer.c:660
+#: plug-ins/gap/gap_mod_layer.c:661
 msgid "Select Filter for Animated frames-apply"
 msgstr "Выбрать фильтр для применения к анимированным кадрам"
 
-#: plug-ins/gap/gap_mod_layer.c:802
+#: plug-ins/gap/gap_mod_layer.c:803
 msgid "GAP Modify: No layer selected in last handled frame"
 msgstr "GAP Изменить: В последнем обработанном кадре нет выделенного слоя"
 
-#: plug-ins/gap/gap_mod_layer.c:888
+#: plug-ins/gap/gap_mod_layer.c:889
 msgid "Modifying Frames/Layer(s)..."
 msgstr "Изменение кадров/слоев..."
 
-#: plug-ins/gap/gap_mod_layer.c:969
+#: plug-ins/gap/gap_mod_layer.c:970
 msgid "No selected Layer in start frame"
 msgstr "В начальном кадре нет выделенного слоя"
 
@@ -8652,7 +8648,7 @@ msgstr "Кадр, демонстрируемый когда нажата кнопка \"Обнов. просмотр\""
 
 #. the Layerstack scale_entry
 #. table col, row
-#: plug-ins/gap/gap_mov_dialog.c:606 plug-ins/gap/gap_range_ops.c:266
+#: plug-ins/gap/gap_mov_dialog.c:606 plug-ins/gap/gap_range_ops.c:267
 msgid "Layerstack:"
 msgstr "Стопка слоев:"
 
@@ -9506,90 +9502,90 @@ msgstr ""
 msgid "Video Navigator"
 msgstr "Видео-навигатор"
 
-#: plug-ins/gap/gap_range_ops.c:119
+#: plug-ins/gap/gap_range_ops.c:120
 msgid "New Width:"
 msgstr "Новая ширина:"
 
-#: plug-ins/gap/gap_range_ops.c:128
+#: plug-ins/gap/gap_range_ops.c:129
 msgid "New Height:"
 msgstr "Новая высота:"
 
-#: plug-ins/gap/gap_range_ops.c:137
+#: plug-ins/gap/gap_range_ops.c:138
 msgid "Offset X:"
 msgstr "Смещение по X:"
 
-#: plug-ins/gap/gap_range_ops.c:146
+#: plug-ins/gap/gap_range_ops.c:147
 msgid "Offset Y:"
 msgstr "Смещение по Y:"
 
-#: plug-ins/gap/gap_range_ops.c:157
+#: plug-ins/gap/gap_range_ops.c:158
 msgid "Crop AnimFrames (all)"
 msgstr "Кадрировать АнимКадры (все)"
 
-#: plug-ins/gap/gap_range_ops.c:158
+#: plug-ins/gap/gap_range_ops.c:159
 #, c-format
 msgid "Crop (original %dx%d)"
 msgstr "Кадрировать (оригинал %dx%d)"
 
-#: plug-ins/gap/gap_range_ops.c:168
+#: plug-ins/gap/gap_range_ops.c:169
 msgid "Resize AnimFrames (all)"
 msgstr "Изменить размер АнимКадров (всех)"
 
-#: plug-ins/gap/gap_range_ops.c:169
+#: plug-ins/gap/gap_range_ops.c:170
 #, c-format
 msgid "Resize (original %dx%d)"
 msgstr "Изменить размер (оригинал %dx%d)"
 
-#: plug-ins/gap/gap_range_ops.c:175
+#: plug-ins/gap/gap_range_ops.c:176
 msgid "Scale AnimFrames (all)"
 msgstr "Масштабировать АнимКадры (все)"
 
-#: plug-ins/gap/gap_range_ops.c:176
+#: plug-ins/gap/gap_range_ops.c:177
 #, c-format
 msgid "Scale (original %dx%d)"
 msgstr "Масштабировать (оригинал %dx%d)"
 
-#: plug-ins/gap/gap_range_ops.c:307
+#: plug-ins/gap/gap_range_ops.c:308
 msgid "Generate Optimal Palette"
 msgstr "Создать оптимальную палитру"
 
-#: plug-ins/gap/gap_range_ops.c:308
+#: plug-ins/gap/gap_range_ops.c:309
 msgid "WEB Palette"
 msgstr "Web-палитра"
 
-#: plug-ins/gap/gap_range_ops.c:309
+#: plug-ins/gap/gap_range_ops.c:310
 msgid "Use Custom Palette"
 msgstr "Использовать палитру пользователя"
 
-#: plug-ins/gap/gap_range_ops.c:310
+#: plug-ins/gap/gap_range_ops.c:311
 msgid "Use Black/White (1-Bit) Palette"
 msgstr "Использовать чернобелую (1-бит) палитру"
 
-#: plug-ins/gap/gap_range_ops.c:312
+#: plug-ins/gap/gap_range_ops.c:313
 msgid "Floyd-Steinberg Color Dithering (Normal)"
 msgstr "Смешивание цветов по Флойду-Стейнбергу (нормальное)"
 
-#: plug-ins/gap/gap_range_ops.c:313
+#: plug-ins/gap/gap_range_ops.c:314
 msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
 msgstr "Смешивание цветов по Флойду-Стейнбергу (уменьшать растекание цветов)"
 
-#: plug-ins/gap/gap_range_ops.c:314
+#: plug-ins/gap/gap_range_ops.c:315
 msgid "Positioned Color Dithering"
 msgstr "Позиционное смешивание цветов"
 
-#: plug-ins/gap/gap_range_ops.c:315
+#: plug-ins/gap/gap_range_ops.c:316
 msgid "No Color Dithering"
 msgstr "Без смешивания цветов"
 
-#: plug-ins/gap/gap_range_ops.c:326
+#: plug-ins/gap/gap_range_ops.c:327
 msgid "Palette Type"
 msgstr "Тип палитры"
 
-#: plug-ins/gap/gap_range_ops.c:333
+#: plug-ins/gap/gap_range_ops.c:334
 msgid "Custom Palette"
 msgstr "Палитра пользователя"
 
-#: plug-ins/gap/gap_range_ops.c:334
+#: plug-ins/gap/gap_range_ops.c:335
 msgid ""
 "Name of a cutom palette\n"
 "(is ignored if Palette Type is not custom)"
@@ -9597,11 +9593,11 @@ msgstr ""
 "Название палитры пользователя (игнорируется,\n"
 "если тип палитры не пользовательский)"
 
-#: plug-ins/gap/gap_range_ops.c:339
+#: plug-ins/gap/gap_range_ops.c:340
 msgid "Remove Unused"
 msgstr "Удалять неиспользуемые"
 
-#: plug-ins/gap/gap_range_ops.c:340
+#: plug-ins/gap/gap_range_ops.c:341
 msgid ""
 "Remove unused or double colors\n"
 "(is ignored if Palette Type is not custom)"
@@ -9609,7 +9605,7 @@ msgstr ""
 "Удалять неиспользуемые или повторяющиеся цвета\n"
 "(игнорируется, если тип палитры не пользовательский("
 
-#: plug-ins/gap/gap_range_ops.c:346
+#: plug-ins/gap/gap_range_ops.c:347
 msgid ""
 "Number of resulting Colors\t\t \n"
 "(ignored if Palette Type is not Generate optimal palette)"
@@ -9617,43 +9613,43 @@ msgstr ""
 "Окончательное число цветов              \n"
 "(игнорируется если тип плитры не \"Создать оптимальную..\")"
 
-#: plug-ins/gap/gap_range_ops.c:353
+#: plug-ins/gap/gap_range_ops.c:354
 msgid "Dither Options"
 msgstr "Параметры смешивания"
 
-#: plug-ins/gap/gap_range_ops.c:360
+#: plug-ins/gap/gap_range_ops.c:361
 msgid "Enable transparency"
 msgstr "Разрешить прозрачность"
 
-#: plug-ins/gap/gap_range_ops.c:361
+#: plug-ins/gap/gap_range_ops.c:362
 msgid "Enable dithering of transparency"
 msgstr "Включить смешивание прозрачности"
 
-#: plug-ins/gap/gap_range_ops.c:364
+#: plug-ins/gap/gap_range_ops.c:365
 msgid "Convert Frames to Indexed"
 msgstr "Преобразовать кадры в индексированные"
 
-#: plug-ins/gap/gap_range_ops.c:365
+#: plug-ins/gap/gap_range_ops.c:366
 msgid "Palette and Dither Settings"
 msgstr "Настройки палитры и смешения"
 
-#: plug-ins/gap/gap_range_ops.c:430
+#: plug-ins/gap/gap_range_ops.c:431
 msgid "Keep Type"
 msgstr "Сохранить тип"
 
-#: plug-ins/gap/gap_range_ops.c:431
+#: plug-ins/gap/gap_range_ops.c:432
 msgid "Convert to RGB"
 msgstr "Преобр. в RGB"
 
-#: plug-ins/gap/gap_range_ops.c:432
+#: plug-ins/gap/gap_range_ops.c:433
 msgid "Convert to Gray"
 msgstr "Преобр. в серое"
 
-#: plug-ins/gap/gap_range_ops.c:433
+#: plug-ins/gap/gap_range_ops.c:434
 msgid "Convert to Indexed"
 msgstr "Преобр. в индексированное"
 
-#: plug-ins/gap/gap_range_ops.c:457
+#: plug-ins/gap/gap_range_ops.c:458
 msgid ""
 "\n"
 "Select destination fileformat by extension\n"
@@ -9663,11 +9659,11 @@ msgstr ""
 "Выбрать целевой формат файла по расширению\n"
 "при необходимости преобразуя тип изображения\n"
 
-#: plug-ins/gap/gap_range_ops.c:460
+#: plug-ins/gap/gap_range_ops.c:461
 msgid "Basename:"
 msgstr "Базовое название:"
 
-#: plug-ins/gap/gap_range_ops.c:461
+#: plug-ins/gap/gap_range_ops.c:462
 msgid ""
 "basename of the resulting frames       \n"
 "(0001.ext is added)"
@@ -9675,11 +9671,11 @@ msgstr ""
 "базовое название конечных кадров      \n"
 "(добавляется 0001.ext)"
 
-#: plug-ins/gap/gap_range_ops.c:466 plug-ins/gap/gap_split.c:234
+#: plug-ins/gap/gap_range_ops.c:467 plug-ins/gap/gap_split.c:235
 msgid "Extension:"
 msgstr "Расширение:"
 
-#: plug-ins/gap/gap_range_ops.c:467
+#: plug-ins/gap/gap_range_ops.c:468
 msgid ""
 "extension of resulting frames       \n"
 "(is also used to define Fileformat)"
@@ -9687,11 +9683,11 @@ msgstr ""
 "расширение конечных кадров      \n"
 "(используется также для определения формата файлов)"
 
-#: plug-ins/gap/gap_range_ops.c:473
+#: plug-ins/gap/gap_range_ops.c:474
 msgid "Imagetype:"
 msgstr "Тип изображения:"
 
-#: plug-ins/gap/gap_range_ops.c:474
+#: plug-ins/gap/gap_range_ops.c:475
 msgid ""
 "Convert to, or keep imagetype           \n"
 "(most fileformats can't handle all types)"
@@ -9699,11 +9695,11 @@ msgstr ""
 "Превратить в, или сохранить тип изображения\n"
 "(большинство форматов файлов не могут обрабатывать все типы)"
 
-#: plug-ins/gap/gap_range_ops.c:480 plug-ins/gap/gap_split.c:245
+#: plug-ins/gap/gap_range_ops.c:481 plug-ins/gap/gap_split.c:246
 msgid "Flatten:"
 msgstr "Сведение:"
 
-#: plug-ins/gap/gap_range_ops.c:481
+#: plug-ins/gap/gap_range_ops.c:482
 msgid ""
 "Flatten all resulting frames               \n"
 "(most fileformats need flattened frames)"
@@ -9711,31 +9707,31 @@ msgstr ""
 "Свести все итоговые кадры\n"
 "(большинство форматов файлов требуют сведения кадров)"
 
-#: plug-ins/gap/gap_range_ops.c:486
+#: plug-ins/gap/gap_range_ops.c:487
 msgid "Convert Frames to other Formats"
 msgstr "Преобразовать кадры в другой формат"
 
-#: plug-ins/gap/gap_range_ops.c:487
+#: plug-ins/gap/gap_range_ops.c:488
 msgid "Convert Settings"
 msgstr "Настройки преобразования"
 
-#: plug-ins/gap/gap_range_ops.c:564
+#: plug-ins/gap/gap_range_ops.c:565
 msgid "Expand as necessary"
 msgstr "Расширять при необходимости"
 
-#: plug-ins/gap/gap_range_ops.c:565
+#: plug-ins/gap/gap_range_ops.c:566
 msgid "Clipped to image"
 msgstr "Обрезать по изображению"
 
-#: plug-ins/gap/gap_range_ops.c:566
+#: plug-ins/gap/gap_range_ops.c:567
 msgid "Clipped to bottom layer"
 msgstr "Обрезать по нижнему слою"
 
-#: plug-ins/gap/gap_range_ops.c:567
+#: plug-ins/gap/gap_range_ops.c:568
 msgid "Flattened image"
 msgstr "Сведенное изображение"
 
-#: plug-ins/gap/gap_range_ops.c:568
+#: plug-ins/gap/gap_range_ops.c:569
 msgid ""
 "Resulting Layer Size is made of the outline-rectangle \n"
 "of all visible layers (may differ from frame to frame)"
@@ -9743,11 +9739,11 @@ msgstr ""
 "Итоговый размер слоя создается из прямоугольных контуров\n"
 "всех видимых слоев (может отличаться от кадра к кадру)"
 
-#: plug-ins/gap/gap_range_ops.c:569
+#: plug-ins/gap/gap_range_ops.c:570
 msgid "Resulting Layer Size is the frame size"
 msgstr "Итоговый размер слоя равен размеру кадра"
 
-#: plug-ins/gap/gap_range_ops.c:570
+#: plug-ins/gap/gap_range_ops.c:571
 msgid ""
 "Resulting Layer Size is the size of the bottom layer\n"
 "(may differ from frame to frame)"
@@ -9755,7 +9751,7 @@ msgstr ""
 "Итоговый размер слоя равен размеру нижнего слоя\n"
 "(может отличаться от кадра к кадру)"
 
-#: plug-ins/gap/gap_range_ops.c:571
+#: plug-ins/gap/gap_range_ops.c:572
 msgid ""
 "Resulting Layer Size is the frame size     \n"
 "transparent parts are filled with BG color"
@@ -9763,23 +9759,23 @@ msgstr ""
 "Итоговый размер слоя равен размеру кадра    \n"
 "прозрачные части заполняются цветом фона"
 
-#: plug-ins/gap/gap_range_ops.c:581
+#: plug-ins/gap/gap_range_ops.c:582
 msgid "select all Layers where Layername is equal to Pattern"
 msgstr "выбрать все слои, в которых название слоя совпадает с шаблоном"
 
-#: plug-ins/gap/gap_range_ops.c:582
+#: plug-ins/gap/gap_range_ops.c:583
 msgid "select all Layers where Layername starts with Pattern"
 msgstr "выбрать все слои, в которых начало названия слоя совпадает с шаблоном"
 
-#: plug-ins/gap/gap_range_ops.c:583
+#: plug-ins/gap/gap_range_ops.c:584
 msgid "select all Layers where Layername ends up with Pattern"
 msgstr "выбрать все слои, в которых конец названия слоя совпадает с шаблоном"
 
-#: plug-ins/gap/gap_range_ops.c:584
+#: plug-ins/gap/gap_range_ops.c:585
 msgid "select all Layers where Layername contains Pattern"
 msgstr "выбрать все слои, в которых часть названия слоя совпадает с шаблоном"
 
-#: plug-ins/gap/gap_range_ops.c:585
+#: plug-ins/gap/gap_range_ops.c:586
 msgid ""
 "select Layerstack positions.\n"
 "0, 4-5, 8\n"
@@ -9789,7 +9785,7 @@ msgstr ""
 "0, 4-5, 8\n"
 "где 0 == Верхний слой"
 
-#: plug-ins/gap/gap_range_ops.c:586
+#: plug-ins/gap/gap_range_ops.c:587
 msgid ""
 "select Layerstack positions.\n"
 "0, 4-5, 8\n"
@@ -9799,15 +9795,15 @@ msgstr ""
 "0, 4-5, 8\n"
 "где 0 == Слой фона"
 
-#: plug-ins/gap/gap_range_ops.c:587
+#: plug-ins/gap/gap_range_ops.c:588
 msgid "select all visible Layers"
 msgstr "выбрать все видимые слои"
 
-#: plug-ins/gap/gap_range_ops.c:616
+#: plug-ins/gap/gap_range_ops.c:617
 msgid "Layer Basename:"
 msgstr "Базовое название слоя: "
 
-#: plug-ins/gap/gap_range_ops.c:617
+#: plug-ins/gap/gap_range_ops.c:618
 msgid ""
 "Basename for all Layers    \n"
 "[####] is replaced by frame number"
@@ -9815,15 +9811,15 @@ msgstr ""
 "Базовое название для всех слоев      \n"
 "[####] заменяется номером кадра"
 
-#: plug-ins/gap/gap_range_ops.c:635
+#: plug-ins/gap/gap_range_ops.c:636
 msgid "Layer Mergemode:"
 msgstr "Режим объединения слоев:"
 
-#: plug-ins/gap/gap_range_ops.c:642
+#: plug-ins/gap/gap_range_ops.c:643
 msgid "Exclude BG-Layer"
 msgstr "Исключать слой фона"
 
-#: plug-ins/gap/gap_range_ops.c:643
+#: plug-ins/gap/gap_range_ops.c:644
 msgid ""
 "Exclude the BG-Layers    \n"
 "in all handled frames\n"
@@ -9833,31 +9829,31 @@ msgstr ""
 "обрабатываемых кадрах\n"
 "независимо от выделения"
 
-#: plug-ins/gap/gap_range_ops.c:673
+#: plug-ins/gap/gap_range_ops.c:674
 msgid "Use all unselected Layers"
 msgstr "Использовать все невыделенные слои"
 
-#: plug-ins/gap/gap_range_ops.c:747
+#: plug-ins/gap/gap_range_ops.c:748
 msgid "Creating Layer-Animated Image..."
 msgstr "Создание многослойной анимации..."
 
-#: plug-ins/gap/gap_range_ops.c:969
+#: plug-ins/gap/gap_range_ops.c:970
 msgid "Frames to Image"
 msgstr "Кадры -> изображение"
 
-#: plug-ins/gap/gap_range_ops.c:970
+#: plug-ins/gap/gap_range_ops.c:971
 msgid "Create Multilayer-Image from Frames"
 msgstr "Создать многослойное изображение из кадров"
 
-#: plug-ins/gap/gap_range_ops.c:1111
+#: plug-ins/gap/gap_range_ops.c:1112
 msgid "Flattening Frames..."
 msgstr "Сведение кадров..."
 
-#: plug-ins/gap/gap_range_ops.c:1112
+#: plug-ins/gap/gap_range_ops.c:1113
 msgid "Converting Frames..."
 msgstr "Преобразование кадров..."
 
-#: plug-ins/gap/gap_range_ops.c:1260
+#: plug-ins/gap/gap_range_ops.c:1261
 msgid ""
 "Convert Frames: SAVE operation FAILED.\n"
 "Desired save plugin can't handle type\n"
@@ -9867,40 +9863,40 @@ msgstr ""
 "ожидаемое дополнение сохранения не может обработать тип\n"
 "или ожидаемое дополнение сохранения не доступно."
 
-#: plug-ins/gap/gap_range_ops.c:1368
+#: plug-ins/gap/gap_range_ops.c:1369
 msgid "Cropping all Animation Frames..."
 msgstr "Кадрирование всех анимированных кадров..."
 
-#: plug-ins/gap/gap_range_ops.c:1371
+#: plug-ins/gap/gap_range_ops.c:1372
 msgid "Resizing all Animation Frames..."
 msgstr "Изменение размера всех анимированных кадров..."
 
-#: plug-ins/gap/gap_range_ops.c:1374
+#: plug-ins/gap/gap_range_ops.c:1375
 msgid "Scaling all Animation Frames..."
 msgstr "Масштабирование всех анимированных кадров..."
 
-#: plug-ins/gap/gap_range_ops.c:1460
+#: plug-ins/gap/gap_range_ops.c:1461
 msgid "Flatten Frames"
 msgstr "Сведенные кадры"
 
-#: plug-ins/gap/gap_range_ops.c:1516
+#: plug-ins/gap/gap_range_ops.c:1517
 #, c-format
 msgid "Removing Layer (pos:%ld) from Frames..."
 msgstr "Удаление слоя (поз:%ld) из кадров..."
 
-#: plug-ins/gap/gap_range_ops.c:1640
+#: plug-ins/gap/gap_range_ops.c:1641
 msgid "Delete Layers in Frames"
 msgstr "Удаление слоев в кадрах"
 
-#: plug-ins/gap/gap_range_ops.c:1641
+#: plug-ins/gap/gap_range_ops.c:1642
 msgid "Select Frame Range & Position"
 msgstr "Выбор диапазона кадров и позиции"
 
-#: plug-ins/gap/gap_split.c:100
+#: plug-ins/gap/gap_split.c:101
 msgid "Splitting into Frames..."
 msgstr "Разложение на кадры..."
 
-#: plug-ins/gap/gap_split.c:175
+#: plug-ins/gap/gap_split.c:176
 msgid ""
 "Split Frames: SAVE operation FAILED.\n"
 "desired save plugin can't handle type\n"
@@ -9910,7 +9906,7 @@ msgstr ""
 "ожидаемое дополнение сохранения не может обработать тип\n"
 "или ожидаемое дополнение сохранения не доступно."
 
-#: plug-ins/gap/gap_split.c:225
+#: plug-ins/gap/gap_split.c:226
 #, c-format
 msgid ""
 "%s\n"
@@ -9921,29 +9917,29 @@ msgstr ""
 "%s\n"
 "(%s_0001.%s)\n"
 
-#: plug-ins/gap/gap_split.c:226
+#: plug-ins/gap/gap_split.c:227
 msgid "Make a frame (diskfile) from each Layer"
 msgstr "Создать кадр (файл на диске) из каждого слоя"
 
-#: plug-ins/gap/gap_split.c:227
+#: plug-ins/gap/gap_split.c:228
 msgid "frames are named: base_nr.extension"
 msgstr "кадры называются: база_номер.расширение"
 
-#: plug-ins/gap/gap_split.c:235
+#: plug-ins/gap/gap_split.c:236
 msgid "extension of resulting frames (is also used to define Fileformat)"
 msgstr ""
 "расширение конечных кадров (используется также для определения формата "
 "файлов)"
 
-#: plug-ins/gap/gap_split.c:240
+#: plug-ins/gap/gap_split.c:241
 msgid "Inverse Order:"
 msgstr "Обратный порядок:"
 
-#: plug-ins/gap/gap_split.c:241
+#: plug-ins/gap/gap_split.c:242
 msgid "Start frame 0001 at Top Layer"
 msgstr "Начать кадр 0001 на верхнем слое"
 
-#: plug-ins/gap/gap_split.c:246
+#: plug-ins/gap/gap_split.c:247
 msgid ""
 "Remove Alpha Channel in resulting Frames. Transparent parts are filled with "
 "BG color."
@@ -9951,15 +9947,15 @@ msgstr ""
 "Удалить альфа-канал из результирующих кадров, прозрачные участки заполнить "
 "цветом фона"
 
-#: plug-ins/gap/gap_split.c:249
+#: plug-ins/gap/gap_split.c:250
 msgid "Split Image into Frames"
 msgstr "Разложить изображение на кадры"
 
-#: plug-ins/gap/gap_split.c:250
+#: plug-ins/gap/gap_split.c:251
 msgid "Split Settings"
 msgstr "Настройки разложения"
 
-#: plug-ins/gap/gap_split.c:297
+#: plug-ins/gap/gap_split.c:298
 msgid ""
 "OPERATION CANCELLED.\n"
 "This image is already an AnimFrame.\n"
@@ -13191,3 +13187,6 @@ msgstr "Ошибка: невозможно прочитать файл свойств XJT %s"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Ошибка: файл свойств XJT %s пуст"
+
+#~ msgid "<Image>/Filters/Toys/The Egg..."
+#~ msgstr "<Image>/Фильтры/Игрушки/Яйцо..."
