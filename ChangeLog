@@ -1,3 +1,13 @@
+2003-09-16  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpvectors.[ch]: Implemented an (unused/untested)
+	gimp_vectors_bounds () that returns the bounding box of an vectors
+	object.
+
+	* app/tools/gimpdrawtool.[ch]: made gimp_draw_tool_on_vectors()
+	ignore handles/anchors, since they are not visible when that
+	function gets used.
+
 2003-09-15  Simon Budig  <simon@gimp.org>
 
 	* app/core/gimpimage.c: fixed bogus

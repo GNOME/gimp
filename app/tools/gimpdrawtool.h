@@ -205,7 +205,7 @@ gboolean   gimp_draw_tool_on_vectors               (GimpDrawTool   *draw_tool,
                                                     gint            height,
                                                     GimpCoords     *ret_coords,
                                                     gdouble        *ret_pos,
-                                                    GimpAnchor    **ret_anchor,
+                                                    GimpAnchor    **ret_segment_start,
                                                     GimpStroke    **ret_stroke,
                                                     GimpVectors   **ret_vectors);
 

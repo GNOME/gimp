@@ -149,6 +149,12 @@ gdouble         gimp_vectors_get_length         (const GimpVectors  *vectors,
                                                  const GimpAnchor   *start);
 gdouble         gimp_vectors_get_distance       (const GimpVectors  *vectors,
                                                  const GimpCoords   *coord);
+gboolean        gimp_vectors_bounds             (const GimpVectors  *vectors,
+                                                 gdouble            *x1,
+                                                 gdouble            *y1,
+                                                 gdouble            *x2,
+                                                 gdouble            *y2);
+
 
 /* returns the number of valid coordinates */
 gint            gimp_vectors_interpolate        (const GimpVectors  *vectors,
