@@ -7,14 +7,14 @@
 
 (define (scale size percent) (* size percent))
 
-(define (script-fu-textured-logo text-pattern tile-type text size font bg-color blend-fg blend-bg)
+(define (script-fu-textured-logo text-pattern tile-type text size fontname bg-color blend-fg blend-bg)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
 	 (b-size (scale size 0.1))
 	 (b-size-2 (scale size 0.05))
 	 (f-size (scale size 0.075))
 	 (ds-size (scale size 0.05))
 	 (ts-size (- b-size-2 3))
-	 (text-layer (car (gimp-text img -1 0 0 text b-size TRUE size PIXELS "*" font "*" "*" "*" "*")))
+	 (text-layer (car (gimp-text-fontname img -1 0 0 text b-size TRUE size PIXELS fontname)))
 	 (width (car (gimp-drawable-width text-layer)))
 	 (height (car (gimp-drawable-height text-layer)))
 	 (blend-layer (car (gimp-layer-new img width height RGBA_IMAGE "Blend" 100 NORMAL)))
@@ -83,10 +83,10 @@
 		    "1996"
 		    ""
 		    SF-STRING "Text Pattern" "Fibers"
-		    SF-VALUE "Mosaic Tile Type" "0"
+		    SF-ADJUSTMENT "Mosaic Tile Type\n Squares 0, HEX 1, Oct 2" '(0 0 2 1 1 0 1)
 		    SF-STRING "Text String" "The GIMP"
-		    SF-VALUE "Font Size (in pixels)" "200"
-		    SF-STRING "Font" "CuneiFontLight"
+		    SF-ADJUSTMENT "Font Size (pixels)" '(200 1 1000 1 10 0 1)
+		    SF-FONT "Font" "-*-cuneifontlight-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-COLOR "Background Color" '(255 255 255)
 		    SF-COLOR "Starting Blend" '(32 106 0)
 		    SF-COLOR "Ending Blend" '(0 0 106))

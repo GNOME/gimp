@@ -1,3 +1,11 @@
+Fri Aug 14 19:58:13 EDT 1998 Adrian Likins <adrian@gimp.org>
+
+	* plugins/script-fu/scripts/select_to_brush.scm,
+	selection-round.scm,slide.scm,sota-chrome-logo.scm,
+	spinning_globe.scm,starburst-logo.scm,starscape-logo.scm,
+	swirltile.scm, swirly-pattern.scm, t-o-p-logo.scm,
+	textured-logo.scm: wave two of the changes
+
 Fri Aug 14 16:40:30 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/transform_tool.c

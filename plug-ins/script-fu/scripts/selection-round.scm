@@ -132,8 +132,7 @@
 		    "RGB RGBA GRAY GRAYA INDEXED INDEXEDA"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
-		    SF-VALUE "Relative Radius" "1.0") 
-
+		    SF-ADJUSTMENT "Relative Radius" '(1 0 128 .1 1 1 1))
 
 
 

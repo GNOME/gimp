@@ -92,8 +92,10 @@ TRUE FALSE FALSE inTransparent 0.25)
     SF-IMAGE "The Image" 0
     SF-DRAWABLE "The Layer" 0
     SF-VALUE "Frames:" "10"
+;    SF-ADJUSTMENT "Frames:" '(10 1 256 1 10 0 1)
     SF-TOGGLE "Turn from left to right?" FALSE
     SF-TOGGLE "Transparant Background?" TRUE
     SF-VALUE "Index of n Colors (0 = Remain RGB):" "63"
+;    SF-ADJUSTMENT "Index of n Colors (0 = Remain RGB):" '(63 2 256 1 10 0 1)
     SF-TOGGLE "Work on Copy?" TRUE
 )

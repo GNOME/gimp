@@ -62,7 +62,7 @@
 	(gimp-floating-sel-anchor floating-sel)))
 
 (define (script-fu-sota-chrome-logo chrome-saturation chrome-lightness chrome-factor
-				    text size font env-map hc cc)
+				    text size fontname env-map hc cc)
   (let* ((img (car (gimp-image-new 256 256 GRAY)))
 	 (banding-img (car (gimp-file-load 1 env-map env-map)))
 	 (banding-layer (car (gimp-image-active-drawable banding-img)))
@@ -76,7 +76,7 @@
 	 (offy2 (sota-scale size (- 0.25) chrome-factor))
 	 (feather (sota-scale size 0.5 chrome-factor))
 	 (brush-size (sota-scale size 0.5 chrome-factor))
-	 (text-layer (car (gimp-text img -1 0 0 text (* b-size 2) TRUE size PIXELS "*" font "*" "*" "*" "*")))
+	 (text-layer (car (gimp-text-fontname img -1 0 0 text (* b-size 2) TRUE size PIXELS fontname)))
 	 (width (car (gimp-drawable-width text-layer)))
 	 (height (car (gimp-drawable-height text-layer)))
 	 (layer1 (car (gimp-layer-new img banding-width banding-height banding-type "Layer1" 100 NORMAL)))
@@ -188,12 +188,17 @@
 		    "Spencer Kimball"
 		    "1997"
 		    ""
-		    SF-VALUE "Chrome Saturation" "-80"
-		    SF-VALUE "Chrome Lightness" "-47"
-		    SF-VALUE "Chrome Factor" "0.75"
+;		    SF-VALUE "Chrome Saturation" "-80"
+		    SF-ADJUSTMENT "Chrome Saturation" '(-80 -100 100 1 10 0 0)
+;		    SF-VALUE "Chrome Lightness" "-47"
+		    SF-ADJUSTMENT "Chrome Lightness" '(-47 -100 100 1 10 0 0)
+;		    SF-VALUE "Chrome Factor" "0.75"
+		    SF-ADJUSTMENT  "Chrome Factor" '(.75 0 1 .1 .01 2 0)
 		    SF-STRING "Text String" "The GIMP"
-		    SF-VALUE "Font Size (in pixels)" "150"
-		    SF-STRING "Font" "RoostHeavy"
+;		    SF-VALUE "Font Size (in pixels)" "150"
+		    SF-ADJUSTMENT "Font size (in pixels)" '(150 1 1000 1 10 0 1)
+;		    SF-STRING "Font" "RoostHeavy"
+		    SF-FONT "Font" "-*-roostheavy-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-STRING "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg")
 		    SF-COLOR "Highlight Balance" '(211 95 0)
 		    SF-COLOR "Chrome Balance" '(0 0 0))

@@ -84,6 +84,6 @@
 		    "Federico Mena Quintero"
 		    "June 1997"
 		    ""
-		    SF-VALUE "Quarter size" "20"
-		    SF-VALUE "Whirl angle" "90"
-		    SF-VALUE "Number of times to whirl" "4")
+		    SF-ADJUSTMENT "Quarter size" '(20 0 2048 1 10 0 1)
+		    SF-ADJUSTMENT "Whirl Angle" '(90 0 360 1 1 0 0)
+		    SF-ADJUSTMENT "Numer of times to whirl" '(4 0 128 1 1 0 1))

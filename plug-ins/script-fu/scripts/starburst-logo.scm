@@ -2,13 +2,13 @@
 ;    Effect courtesy Xach Beane's web page
 
 
-(define (script-fu-starburst-logo text size font burst-color bg-color)
+(define (script-fu-starburst-logo text size fontname burst-color bg-color)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
 	 (off (* size 0.03))
 	 (count -1)
 	 (feather (* size 0.04))
 	 (border (+ feather off))
-	 (text-layer (car (gimp-text img -1 0 0 text border TRUE size PIXELS "*" font "*" "*" "*" "*")))
+	 (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS fontname)))
 	 (width (car (gimp-drawable-width text-layer)))
 	 (height (car (gimp-drawable-height text-layer)))
 	 (burst-coords (cons (* width 0.5) (* height 0.5)))
@@ -73,7 +73,9 @@
 		    "1997"
 		    ""
 		    SF-STRING "Text String" "GIMP"
-		    SF-VALUE "Font Size (in pixels)" "150"
-		    SF-STRING "Font" "Blippo"
+;		    SF-VALUE "Font Size (in pixels)" "150"
+		    SF-ADJUSTMENT "Font Size (pixels)" '(150 0 512 1 10 0 1)
+;		    SF-STRING "Font" "Blippo"
+		    SF-FONT "Font" "-*-blippo-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-COLOR "Burst Color" '(60 196 33)
 		    SF-COLOR "BG Color" '(255 255 255))

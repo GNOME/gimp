@@ -49,7 +49,7 @@
 			 drawable
 			 text
 			 number
-			 font-family
+			 fontname
 			 font-color
 			 work-on-copy)
   (let* ((type (car (gimp-drawable-type-with-alpha drawable)))
@@ -122,16 +122,15 @@
 
 ; add the text
   (gimp-palette-set-foreground font-color)
-  (gimp-floating-sel-anchor (car (gimp-text image
+  (gimp-floating-sel-anchor (car (gimp-text-fontname image
 					    film-layer
 					    (+ hole-start (* -0.25 width))
 					    (* 0.01 height)
 					    text
 					    0
 					    TRUE
-					    (* 0.040 height) PIXELS
-					    "*" font-family "*" "*" "*" "*" )))
-  (gimp-floating-sel-anchor (car (gimp-text image
+					    (* 0.040 height) PIXELS fontname)))
+  (gimp-floating-sel-anchor (car (gimp-text-fontname image
 					    film-layer
 					    (+ hole-start (* 0.75 width))
 					    (* 0.01 height)
@@ -139,8 +138,8 @@
 					    0
 					    TRUE
 					    (* 0.040 height) PIXELS
-					    "*" font-family "*" "*" "*" "*" )))
-  (gimp-floating-sel-anchor (car (gimp-text image
+					    fontname )))
+  (gimp-floating-sel-anchor (car (gimp-text-fontname image
 					    film-layer		  
 					    (+ hole-start (* 0.35 width))
 					    (* 0.01 height)
@@ -148,8 +147,8 @@
 					    0
 					    TRUE
 					    (* 0.050 height) PIXELS
-					    "*" font-family "*" "*" "*" "*" )))
-  (gimp-floating-sel-anchor (car (gimp-text image
+					    fontname )))
+  (gimp-floating-sel-anchor (car (gimp-text-fontname image
 					    film-layer		  
 					    (+ hole-start (* 0.35 width))
 					    (* 0.95 height)
@@ -157,8 +156,8 @@
 					    0
 					    TRUE
 					    (* 0.050 height) PIXELS
-					    "*" font-family "*" "*" "*" "*" )))
-  (gimp-floating-sel-anchor (car (gimp-text image
+					    fontname )))
+  (gimp-floating-sel-anchor (car (gimp-text-fontname image
 					      film-layer		  
 					      (+ hole-start (* 0.85 width))
 					      (* 0.95 height)
@@ -166,7 +165,7 @@
 					      0
 					      TRUE
 					      (* 0.045 height) PIXELS
-					      "*" font-family "*" "*" "*" "*" )))
+					      fontname )))
 
 ; create a mask for the holes and cut them out
   (let* ((film-mask (car (gimp-layer-create-mask film-layer WHITE-MASK)))
@@ -225,7 +224,7 @@
 		    SF-DRAWABLE "Drawable" 0
 		    SF-STRING "Text" "The GIMP"
 		    SF-STRING "Number" "32"
-		    SF-STRING "Font" "Utopia"
+		    SF-FONT "Font" "-*-utopia-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-COLOR "Font Color" '(255 180 0)
 		    SF-TOGGLE "Work on copy" TRUE) 
 

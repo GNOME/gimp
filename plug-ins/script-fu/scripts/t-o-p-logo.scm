@@ -3,10 +3,10 @@
 ;; Time-stamp: <97/03/15 17:27:33 narazaki@InetQ.or.jp>
 ;; Version 0.2
 
-(define (script-fu-t-o-p-logo text size font hit-rate edge-size edge-only base-color bg-color)
+(define (script-fu-t-o-p-logo text size fontname hit-rate edge-size edge-only base-color bg-color)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
 	 (border (/ size 5))
-	 (text-layer (car (gimp-text img -1 0 0 text (* border 2) TRUE size PIXELS "*" font "*" "*" "*" "*")))
+	 (text-layer (car (gimp-text-fontname img -1 0 0 text (* border 2) TRUE size PIXELS fontname)))
 	 (width (car (gimp-drawable-width text-layer)))
 	 (height (car (gimp-drawable-height text-layer)))
 	 (text-layer-mask (car (gimp-layer-create-mask text-layer BLACK-MASK)))
@@ -86,10 +86,10 @@
 		    "1997"
 		    ""
 		    SF-STRING "Text String" "The GIMP"
-		    SF-VALUE "Font Size (in pixels)" "100"
-		    SF-STRING "Font" "Becker"
-		    SF-VALUE "Hit Rate [0.0,1.0]" "0.2"
-		    SF-VALUE "Edge Width" "2"
+		    SF-ADJUSTMENT "Font size (in pixels)" '(100 1 1000 1 10 0 1)
+		    SF-FONT "Font" "-*-becker-*-r-*-*-24-*-*-*-p-*-*-*"
+                    SF-ADJUSTMENT  "Hit Rate [0.0,1.0]" '(0.2 0 1 .01 .01 2 0)
+                    SF-ADJUSTMENT "Edge Width" '(2 0 128 1 1 0 0)
 		    SF-VALUE "Edge Only [0/1]" "0"
 		    SF-COLOR "Base Color" '(0 40 0)
 		    SF-COLOR "Background Color" '(255 255 255))

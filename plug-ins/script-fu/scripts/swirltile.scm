@@ -44,12 +44,12 @@
 		    "Adrian Likins"
 		    "1997"
 		    ""
-		    SF-VALUE "Depth" "10"
-		    SF-VALUE "Azimuth" "135"
-		    SF-VALUE "Elevation" "45"
-		    SF-VALUE "Blur Radius" "3"
-		    SF-VALUE "Height" "256"
-		    SF-VALUE "Width" "256"
-		    SF-VALUE "Whirl Amount" "320"
-		    SF-VALUE "Roughness" ".5"
+		    SF-ADJUSTMENT "Depth" '(10 0 64 1 1 0 0)
+		    SF-ADJUSTMENT "Azimuth" '(135 0 360 1 10 0 0)
+		    SF-ADJUSTMENT "Elevation" '(45 0 90 1 10 0 0)
+		    SF-ADJUSTMENT "Blur Radius" '(3 0 128 1 10 0 0)
+		    SF-ADJUSTMENT "height" '(256 0 1024 1 10 0 1)
+		    SF-ADJUSTMENT "Width" '(256 0 1024 1 10 0 1)
+		    SF-ADJUSTMENT "Whirl Amount" '(320 0 360 1 10 0 0)
+		    SF-ADJUSTMENT "Roughness" '(.5 0 1 .1 .01 2 1)
 		    SF-COLOR "Backgound Color" '(255 255 255))

@@ -103,7 +103,7 @@
 ;		    SF-STRING "Home directory" "/home/aklikins/"
 		    SF-STRING "Description" "Brush"
 		    SF-STRING "Filename" "SlothBrush"
-		    SF-VALUE "Spacing" "25")
-
+;		    SF-VALUE "Spacing" "25")
+		    SF-ADJUSTMENT "Spacing" '(25 0 1000 1 1 1 0))
 
 

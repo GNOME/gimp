@@ -31,7 +31,7 @@
 	       (set! clearance 1) (set! limit (- limit 1))))
     x))
 
-(define (script-fu-starscape-logo text size font glow-color)
+(define (script-fu-starscape-logo text size fontname glow-color)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
 	 (border (/ size 4))
 	 (grow (/ size 30))
@@ -39,7 +39,7 @@
 	 (offy (* size 0.02))
 	 (feather (/ size 4))
 	 (shadow-feather (/ size 25))
-	 (text-layer (car (gimp-text img -1 0 0 text border TRUE size PIXELS "*" font "*" "*" "*" "*")))
+	 (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS fontname)))
 	 (width (car (gimp-drawable-width text-layer)))
 	 (height (car (gimp-drawable-height text-layer)))
 	 (w (* (/ (- width (* border 2)) 2.0) 0.75))
@@ -113,6 +113,6 @@
 		    "1997"
 		    ""
 		    SF-STRING "Text String" "Nova"
-		    SF-VALUE "Font Size (in pixels)" "150"
-		    SF-STRING "Font" "engraver"
+		    SF-ADJUSTMENT "Font Size (pixels)" '(150 1 1000 1 10 0 1)
+                    SF-FONT "Font" "-*-engraver-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-COLOR "Glow Color" '(28 65 188))
