@@ -1,5 +1,11 @@
 2004-04-10  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptexttool.c (gimp_text_tool_apply): push an undo
+	group only when it's needed. This resurrects text undo compression
+	that broke when bug #137767 got fixed.
+
+2004-04-10  Sven Neumann  <sven@gimp.org>
+
 	* docs/gimp-remote.1.in: updated example URL.
 
 2004-04-10  Pedro Gimeno  <pggimeno@wanadoo.es>

@@ -2,7 +2,7 @@ The GNU Image Manipulation Program Version 2.0
 ----------------------------------------------
 
 This is the stable branch of GIMP 2.0. Only bug-fixes are applied
-here, new features are being added in the HEAD branch that is supposed
+here. New features are being added in the HEAD branch that is supposed
 to be released as GIMP version 2.2 in a not too distant future.
 
 

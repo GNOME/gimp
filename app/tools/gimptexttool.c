@@ -513,7 +513,8 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
   GObject          *src;
   GObject          *dest;
   GList            *list;
-  gboolean          push_undo = TRUE;
+  gboolean          push_undo  = TRUE;
+  gboolean          undo_group = FALSE;
 
   if (text_tool->idle_id)
     {
@@ -551,6 +552,7 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
        *   - the last undo changed the same text property on the same layer
        *   - the last undo happened less than TEXT_UNDO_TIMEOUT seconds ago
        */
+
       if (undo && GIMP_IS_TEXT_UNDO (undo) &&
           ! gimp_undo_stack_peek (image->redo_stack))
         {
@@ -574,12 +576,14 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
 
   if (push_undo)
     {
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT, NULL);
-
       if (layer->modified)
         {
+          undo_group = TRUE;
+          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT, NULL);
+
           gimp_image_undo_push_text_layer_modified (image, NULL, layer);
-          gimp_image_undo_push_drawable_mod (image, NULL, GIMP_DRAWABLE (layer));
+          gimp_image_undo_push_drawable_mod (image,
+                                             NULL, GIMP_DRAWABLE (layer));
         }
 
       gimp_image_undo_push_text_layer (image, NULL, layer, pspec);
@@ -623,7 +627,8 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
     {
       g_object_set (layer, "modified", FALSE, NULL);
 
-      gimp_image_undo_group_end (image);
+      if (undo_group)
+        gimp_image_undo_group_end (image);
     }
 
   gimp_image_flush (image);
