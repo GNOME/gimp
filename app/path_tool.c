@@ -37,10 +37,6 @@
 #include "path_toolP.h"
 #include "path_curves.h"
 
-#ifdef PATH_TOOL_DEBUG
-#include <stdio.h>
-#endif PATH_TOOL_DEBUG
-
 #include "libgimp/gimpintl.h"
 
 /*
@@ -138,16 +134,20 @@ void     path_tool_control         (Tool *, ToolAction,       gpointer);
 void     path_tool_draw            (Tool *);
 void     path_tool_draw_curve      (Tool *, PathCurve *);
 void     path_tool_draw_segment    (Tool *, PathSegment *);
-gboolean path_tool_on_anchors      (Tool *, gint, gint, gint,
-				    Path**, PathCurve**, PathSegment**);
+
 gdouble  path_tool_on_curve        (Tool *, gint, gint, gint,
 				    Path**, PathCurve**, PathSegment**);
-gboolean path_tool_on_handles      (Tool *, gint, gint, gint);
+gboolean path_tool_on_anchors      (Tool *, gint, gint, gint,
+				    Path**, PathCurve**, PathSegment**);
+gint     path_tool_on_handles      (Tool *, gint, gint, gint,
+		                    Path **, PathCurve **, PathSegment **);
 
 gint path_tool_button_press_canvas (Tool *, GdkEventButton *, GDisplay *);
 gint path_tool_button_press_anchor (Tool *, GdkEventButton *, GDisplay *);
+gint path_tool_button_press_handle (Tool *, GdkEventButton *, GDisplay *);
 gint path_tool_button_press_curve  (Tool *, GdkEventButton *, GDisplay *);
 void path_tool_motion_anchor       (Tool *, GdkEventMotion *, GDisplay *);
+void path_tool_motion_handle       (Tool *, GdkEventMotion *, GDisplay *);
 void path_tool_motion_curve        (Tool *, GdkEventMotion *, GDisplay *);
 
 
@@ -280,7 +280,7 @@ path_add_curve (Path * cur_path,
    
       cur_path->curves = cur_path->cur_curve = new_curve;
    
-      new_curve->segments = path_prepend_segment (cur_path, new_curve, SEGMENT_LINE, x, y);
+      new_curve->segments = path_prepend_segment (cur_path, new_curve, SEGMENT_BEZIER, x, y);
    }
 #ifdef PATH_TOOL_DEBUG
    else
@@ -327,8 +327,8 @@ path_append_segment  (Path * cur_path,
             tmp->next = new_segment;
 
          cur_curve->cur_segment = new_segment;
-
-         /* XXX: we need initialisation of the segment here. */
+	 
+	 path_curve_init_segment (new_segment);
 
       }
 #ifdef PATH_TOOL_DEBUG
@@ -379,7 +379,8 @@ path_prepend_segment  (Path * cur_path,
 
          cur_curve->segments = new_segment;
          cur_curve->cur_segment = new_segment;
-         /* XXX: we need initialisation of the segment here. */
+
+	 path_curve_init_segment (new_segment);
       }
 #ifdef PATH_TOOL_DEBUG
       else
@@ -415,7 +416,7 @@ path_split_segment   (PathSegment *segment,
       new_segment->prev = segment;
       new_segment->data = NULL;
 
-      /* XXX: we need initialisation of the segment here. */
+      path_curve_init_segment (new_segment);
 
       new_segment->next->prev = new_segment;
       segment->next = new_segment;
@@ -565,8 +566,6 @@ path_flip_curve (PathCurve *curve)
 
    PathSegment *tmp, *tmp2;
    
-/* XXX: Please add path_curve_flip_segment here */
-
    if (!curve && !curve->segments) {
 #ifdef PATH_TOOL_DEBUG
       fprintf (stderr, "path_flip_curve: No curve o no segments to flip!\n");
@@ -595,8 +594,8 @@ path_flip_curve (PathCurve *curve)
 	 tmp->type = end_type;
 	 tmp->data = end_data;
       }
+      path_curve_flip_segment (tmp);
       tmp = tmp->next;
-/* XXX: Probably some segment-updates needed */
    }
 }
 
@@ -647,12 +646,15 @@ path_free_segment (PathSegment *segment)
 {
    if (segment)
    {
-      /* Clear the active flag to keep path_tool->single_active_segment consistent */
+      /* Clear the active flag to keep path_tool->single_active_segment
+       * consistent */
+      
+
       path_set_flags (segment->parent->parent->path_tool, segment->parent->parent,
 	              segment->parent, segment, 0, SEGMENT_ACTIVE);
-      if (segment->data)
-         g_free(segment->data);
-/* XXX: Free Segment needs an own hook in the different curve-types! */
+
+      path_curve_cleanup_segment(segment);
+
       g_free (segment);
    }
 }
@@ -719,18 +721,27 @@ path_tool_cursor_position (Tool *tool,
 			   Path **pathP,
 			   PathCurve **curveP,
 			   PathSegment **segmentP,
-			   gdouble *positionP)
+			   gdouble *positionP,
+			   gint *handle_idP)
 {
    gdouble pos;
+   gint handle_id;
 
    if (path_tool_on_anchors (tool, x, y, halfwidth, pathP, curveP, segmentP))
       return ON_ANCHOR;
+
+   handle_id = path_tool_on_handles (tool, x, y, halfwidth, pathP, curveP, segmentP);
+   if (handle_id) {
+      if (handle_idP) (*handle_idP) = handle_id;
+      return ON_HANDLE;
+   }
 
    pos = path_tool_on_curve (tool, x, y, halfwidth, pathP, curveP, segmentP);
    if (pos >= 0 && pos <= 1) {
       if (positionP) (*positionP) = pos;
       return ON_CURVE;
    }
+
 
    return ON_CANVAS;
 }
@@ -778,11 +789,12 @@ path_tool_button_press (Tool           *tool,
     * switch accordingly.
     */
   
-   path_tool->click_type = path_tool_cursor_position(tool, x, y, halfwidth,
-                                                    &(path_tool->click_path),
-						    &(path_tool->click_curve),
-						    &(path_tool->click_segment),
-						    &(path_tool->click_position));
+   path_tool->click_type = path_tool_cursor_position (tool, x, y, halfwidth,
+                                                     &(path_tool->click_path),
+						     &(path_tool->click_curve),
+						     &(path_tool->click_segment),
+						     &(path_tool->click_position),
+						     &(path_tool->click_handle_id));
   
    switch (path_tool->click_type)
    {
@@ -792,6 +804,10 @@ path_tool_button_press (Tool           *tool,
 
    case ON_ANCHOR:
       grab_pointer = path_tool_button_press_anchor(tool, bevent, gdisp);
+      break;
+
+   case ON_HANDLE:
+      grab_pointer = path_tool_button_press_handle(tool, bevent, gdisp);
       break;
 
    case ON_CURVE:
@@ -937,6 +953,50 @@ path_tool_button_press_anchor (Tool *tool,
    return grab_pointer;
 }
 
+
+gint
+path_tool_button_press_handle (Tool *tool,
+                               GdkEventButton *bevent,
+                               GDisplay *gdisp)
+{
+   static guint32 last_click_time=0;
+   gboolean doubleclick=FALSE;
+   PathTool *path_tool = tool->private;
+   
+   Path * cur_path = path_tool->cur_path;
+   PathSegment *p_sas;
+   gint grab_pointer;
+   
+#ifdef PATH_TOOL_DEBUG
+   fprintf(stderr, "path_tool_button_press_handle:\n");
+#endif PATH_TOOL_DEBUG
+   
+   grab_pointer = 1;
+
+   if (!cur_path) {
+#ifdef PATH_TOOL_DEBUG
+      fprintf (stderr, "Fatal error: No current Path\n");
+#endif PATH_TOOL_DEBUG
+      return 0;
+   }
+   
+   /* 
+    * We have to determine, if this was a doubleclick for ourself, because
+    * disp_callback.c ignores the GDK_[23]BUTTON_EVENT's and adding them to
+    * the switch statement confuses some tools.
+    */
+   if (bevent->time - last_click_time < 250) {
+      doubleclick=TRUE;
+#ifdef PATH_TOOL_DEBUG
+      fprintf (stderr, "Doppelclick!\n");
+#endif PATH_TOOL_DEBUG
+   } else
+      doubleclick=FALSE;
+   last_click_time = bevent->time;
+
+   return grab_pointer;
+}
+
 gint
 path_tool_button_press_canvas (Tool *tool,
                                GdkEventButton *bevent,
@@ -972,17 +1032,20 @@ path_tool_button_press_canvas (Tool *tool,
       path_set_flags (path_tool, cur_path, NULL, NULL, 0, SEGMENT_ACTIVE);
 
       if (cur_segment->next == NULL)
-	 cur_curve->cur_segment = path_append_segment(cur_path, cur_curve, SEGMENT_LINE, path_tool->click_x, path_tool->click_y);
+	 cur_curve->cur_segment = path_append_segment(cur_path, cur_curve, SEGMENT_BEZIER, path_tool->click_x, path_tool->click_y);
       else
-	 cur_curve->cur_segment = path_prepend_segment(cur_path, cur_curve, SEGMENT_LINE, path_tool->click_x, path_tool->click_y);
+	 cur_curve->cur_segment = path_prepend_segment(cur_path, cur_curve, SEGMENT_BEZIER, path_tool->click_x, path_tool->click_y);
       if (cur_curve->cur_segment) {
 	 path_set_flags (path_tool, cur_path, cur_curve, cur_curve->cur_segment, SEGMENT_ACTIVE, 0);
       }
    } else {
-      path_set_flags (path_tool, cur_path, NULL, NULL, 0, SEGMENT_ACTIVE);
-      cur_path->cur_curve = path_add_curve(cur_path, path_tool->click_x, path_tool->click_y);
-      path_set_flags (path_tool, cur_path, cur_path->cur_curve, cur_path->cur_curve->segments, SEGMENT_ACTIVE, 0);
-
+      if (path_tool->active_count == 0) {
+	 path_set_flags (path_tool, cur_path, NULL, NULL, 0, SEGMENT_ACTIVE);
+	 cur_path->cur_curve = path_add_curve(cur_path, path_tool->click_x, path_tool->click_y);
+	 path_set_flags (path_tool, cur_path, cur_path->cur_curve, cur_path->cur_curve->segments, SEGMENT_ACTIVE, 0);
+      } else {
+	 path_set_flags (path_tool, cur_path, NULL, NULL, 0, SEGMENT_ACTIVE);
+      }
    }
    
    draw_core_resume(path_tool->core, tool);
@@ -1023,8 +1086,11 @@ path_tool_button_press_curve (Tool *tool,
       path_tool->click_type = ON_ANCHOR;
       path_tool->click_segment = cur_segment;
 
+   } else {
+      path_set_flags (path_tool, cur_path, NULL, NULL, 0, SEGMENT_ACTIVE);
+      path_set_flags (path_tool, cur_path, path_tool->click_curve, path_tool->click_segment, SEGMENT_ACTIVE, 0);
+      path_set_flags (path_tool, cur_path, path_tool->click_curve, path_tool->click_segment->next, SEGMENT_ACTIVE, 0);
    }
-   
    draw_core_resume(path_tool->core, tool);
 
    return 0;
@@ -1071,7 +1137,13 @@ path_tool_motion (Tool           *tool,
 
    switch (path_tool->click_type) {
    case ON_ANCHOR:
-      path_tool_motion_anchor(tool, mevent, gdisp);
+      path_tool_motion_anchor (tool, mevent, gdisp);
+      break;
+   case ON_HANDLE:
+      path_tool_motion_handle (tool, mevent, gdisp);
+      break;
+   case ON_CURVE:
+      path_tool_motion_curve (tool, mevent, gdisp);
       break;
    default:
       return;
@@ -1148,6 +1220,95 @@ path_tool_motion_anchor (Tool           *tool,
    path_tool->draw &= ~PATH_TOOL_REDRAW_ACTIVE;
 
 }
+
+void
+path_tool_motion_handle (Tool           *tool,
+		         GdkEventMotion *mevent,
+		         GDisplay       *gdisp)
+{
+   PathTool * path_tool;
+   gdouble dx, dy;
+   gint x,y;
+   static gint dxsum = 0;
+   static gint dysum = 0;
+   
+   path_tool = (PathTool *) tool->private;
+   
+   /*
+    * Dont do anything, if the user clicked with pressed CONTROL-Key,
+    * because he moved the handle to the anchor an anchor. 
+    * XXX: Not yet! :-)
+    */
+   if (path_tool->click_modifier & GDK_CONTROL_MASK)
+      return;
+   
+   if (!(path_tool->state & PATH_TOOL_DRAG))
+   {
+      path_tool->state |= PATH_TOOL_DRAG;
+      dxsum = 0;
+      dysum = 0;
+   }
+
+   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, 0);
+   
+   dx = x - path_tool->click_x - dxsum;
+   dy = y - path_tool->click_y - dysum;
+   
+   path_tool->draw |= PATH_TOOL_REDRAW_ACTIVE;
+   
+   draw_core_pause(path_tool->core, tool);
+
+   path_curve_drag_handle (path_tool, path_tool->click_segment, dx, dy, path_tool->click_handle_id);
+
+   dxsum += dx;
+   dysum += dy;
+
+   draw_core_resume (path_tool->core, tool);
+   
+   path_tool->draw &= ~PATH_TOOL_REDRAW_ACTIVE;
+
+}
+   
+
+void
+path_tool_motion_curve (Tool           *tool,
+		        GdkEventMotion *mevent,
+		        GDisplay       *gdisp)
+{
+   PathTool * path_tool;
+   gdouble dx, dy;
+   gint x,y;
+   static gint dxsum = 0;
+   static gint dysum = 0;
+   
+   path_tool = (PathTool *) tool->private;
+   
+   if (!(path_tool->state & PATH_TOOL_DRAG))
+   {
+      path_tool->state |= PATH_TOOL_DRAG;
+      dxsum = 0;
+      dysum = 0;
+   }
+
+   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, 0);
+   
+   dx = x - path_tool->click_x - dxsum;
+   dy = y - path_tool->click_y - dysum;
+   
+   path_tool->draw |= PATH_TOOL_REDRAW_ACTIVE;
+   
+   draw_core_pause(path_tool->core, tool);
+
+   path_curve_drag_segment (path_tool, path_tool->click_segment, path_tool->click_position, dx, dy);
+
+   dxsum += dx;
+   dysum += dy;
+
+   draw_core_resume (path_tool->core, tool);
+   
+   path_tool->draw &= ~PATH_TOOL_REDRAW_ACTIVE;
+
+}
    
 
 void
@@ -1172,7 +1333,7 @@ path_tool_cursor_update (Tool           *tool,
    gdisplay_untransform_coords (gdisp, mevent->x + PATH_TOOL_HALFWIDTH, 0, &halfwidth, &dummy, TRUE, 0);
    halfwidth -= x;
 
-   cursor_location = path_tool_cursor_position(tool, x, y, halfwidth, NULL, NULL, NULL, NULL);
+   cursor_location = path_tool_cursor_position (tool, x, y, halfwidth, NULL, NULL, NULL, NULL, NULL);
 
    switch (cursor_location) {
    case ON_CANVAS:
@@ -1181,8 +1342,11 @@ path_tool_cursor_update (Tool           *tool,
    case ON_ANCHOR:
       gdisplay_install_tool_cursor (gdisp, GDK_FLEUR);
       break;
+   case ON_HANDLE:
+      gdisplay_install_tool_cursor (gdisp, GDK_CROSSHAIR);
+      break;
    case ON_CURVE:
-      gdisplay_install_tool_cursor (gdisp, GDK_TCROSS);
+      gdisplay_install_tool_cursor (gdisp, GDK_CROSSHAIR);
       break;
    default:
       gdisplay_install_tool_cursor (gdisp, GDK_QUESTION_ARROW);
@@ -1318,7 +1482,7 @@ tools_free_path_tool (Tool *tool)
 
 
 /**************************************************************
- * Set of function to determine, if the click was on an segment
+ * Set of function to determine, if the click was on a segment
  */
 
 typedef struct {
@@ -1450,7 +1614,7 @@ path_tool_on_anchors (Tool *tool,
    gboolean ret_found;
 
    data->path = NULL;
-   data->segment = NULL;
+   data->curve = NULL;
    data->segment = NULL;
    data->testx = x;
    data->testy = y;
@@ -1469,6 +1633,80 @@ path_tool_on_anchors (Tool *tool,
 
    return ret_found;
 
+}
+
+/**************************************************************
+ * Set of function to determine, if the click was on an handle
+ */
+
+typedef struct {
+   Path *path;
+   PathCurve *curve;
+   PathSegment *segment;
+   gint testx;
+   gint testy;
+   gint halfwidth;
+   gint handle_id;
+   gboolean found;
+} Path_on_handles_type;
+
+/* This is a CurveTraverseFunc */
+void
+path_tool_on_handles_helper (Path *path,
+			     PathCurve *curve,
+			     PathSegment *segment,
+			     gpointer ptr)
+{
+   Path_on_handles_type *data = (Path_on_handles_type *) ptr;
+   gint handle;
+
+   if (segment && data && !data->found)
+   {
+      handle = path_curve_on_handle (NULL, segment, data->testx, data->testy,
+	   data->halfwidth);
+      if (handle)
+      {
+         data->path = path;
+         data->curve = curve;
+         data->segment = segment;
+	 data->handle_id = handle;
+	 data->found = TRUE;
+      }
+   }
+}
+
+gint
+path_tool_on_handles (Tool *tool,
+		      gint x,
+		      gint y,
+		      gint halfwidth,
+		      Path **ret_pathP,
+		      PathCurve **ret_curveP,
+		      PathSegment **ret_segmentP)
+{
+   Path_on_handles_type *data = g_new (Path_on_handles_type, 1);
+   gint handle_ret;
+
+   data->path = NULL;
+   data->curve = NULL;
+   data->segment = NULL;
+   data->testx = x;
+   data->testy = y;
+   data->halfwidth = halfwidth;
+   data->handle_id = 0;
+   data->found = FALSE;
+
+   path_traverse_path (((PathTool *) tool->private)->cur_path, NULL, path_tool_on_handles_helper, NULL, data);
+
+   if (ret_pathP) *ret_pathP = data->path;
+   if (ret_curveP) *ret_curveP = data->curve;
+   if (ret_segmentP) *ret_segmentP = data->segment;
+
+   handle_ret = data->handle_id;
+
+   g_free(data);
+
+   return handle_ret;
 }
 
 
@@ -1631,6 +1869,8 @@ path_tool_draw_helper (Path *path,
          gdk_draw_arc (core->win, core->gc, 1,
 	               x1 - PATH_TOOL_HALFWIDTH, y1 - PATH_TOOL_HALFWIDTH,
 		       PATH_TOOL_WIDTH, PATH_TOOL_WIDTH, 0, 23040);
+      
+      path_curve_draw_handles (tool, segment);
    
       if (segment->next)
       {
@@ -1661,7 +1901,8 @@ path_tool_draw (Tool *tool)
    path_traverse_path (cur_path, NULL, path_tool_draw_helper, NULL, tool);
    
 #ifdef PATH_TOOL_DEBUG
-   fprintf (stderr, "path_tool_draw end.\n");
+   /* fprintf (stderr, "path_tool_draw end.\n");
+    */
 #endif PATH_TOOL_DEBUG
    
 }

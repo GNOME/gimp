@@ -79,21 +79,21 @@ void
 path_bezier_drag_segment (PathTool *path_tool,
 			  PathSegment *segment,
 			  gdouble position,
-			  gint x,
-			  gint y);
+			  gdouble dx,
+			  gdouble dy);
 
 gint
 path_bezier_on_handles (PathTool *path_tool,
 			PathSegment *segment,
-			gint x,
-			gint y,
-			gint halfwidth);
+			gdouble x,
+			gdouble y,
+			gdouble halfwidth);
 
 void
 path_bezier_drag_handles (PathTool *path_tool,
 			  PathSegment *segment,
-			  gint x,
-			  gint y,
+			  gdouble dx,
+			  gdouble dy,
 			  gint handle_id);
 
 PathSegment *
@@ -106,16 +106,13 @@ path_bezier_update_segment (PathTool *path_tool,
 			    PathSegment *segment);
 
 void
-path_bezier_flip_segment (PathTool *path_tool,
-			  PathSegment *segment);
+path_bezier_flip_segment (PathSegment *segment);
 
 void
-path_bezier_init_segment (PathTool *path_tool,
-			  PathSegment *segment);
+path_bezier_init_segment (PathSegment *segment);
 
 void
-path_bezier_cleanup_segment (PathTool *path_tool,
-			     PathSegment *segment);
+path_bezier_cleanup_segment (PathSegment *segment);
 
 #endif /*  __PATH_BEZIER_H__ */
 

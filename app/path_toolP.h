@@ -22,6 +22,10 @@
 
 #include "draw_core.h"
 
+#ifdef PATH_TOOL_DEBUG
+#include <stdio.h>
+#endif
+
 #define IMAGE_COORDS    1
 #define AA_IMAGE_COORDS 2
 #define SCREEN_COORDS   3
@@ -92,6 +96,7 @@ struct _path_tool
    PathCurve   *click_curve;     /* was the click?                    */
    PathSegment *click_segment;
    gdouble      click_position;  /* The position on the segment       */
+   gint         click_handle_id; /* The handle ID of the segment      */
 
    gint         active_count;    /* How many segments are active?     */
    /*

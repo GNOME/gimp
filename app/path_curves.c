@@ -21,10 +21,6 @@
 #include "path_curves.h"
 #include "path_bezier.h"
 
-#ifdef PATH_TOOL_DEBUG
-#include <stdio.h>
-#endif
-
 /* only here temporarily */
 PathSegment * path_split_segment   (PathSegment *, gdouble);
 
@@ -39,19 +35,19 @@ static CurveDescription CurveTypes[] =
 
     /* SEGMENT_BEZIER */
    {
-      path_bezier_get_points,
+      NULL, /* path_bezier_get_points, */
       path_bezier_get_point,
       path_bezier_draw_handles,
-      path_bezier_draw_segment,
-      path_bezier_on_segment,
+      NULL, /* path_bezier_draw_segment, */
+      NULL, /* path_bezier_on_segment, */
       path_bezier_drag_segment,
       path_bezier_on_handles,
-      path_bezier_drag_handles,
-      path_bezier_insert_anchor,
-      path_bezier_update_segment,
+      path_bezier_drag_handles, 
+      NULL, /* path_bezier_insert_anchor, */
+      NULL, /* path_bezier_update_segment, */
       path_bezier_flip_segment,
       path_bezier_init_segment,
-      path_bezier_cleanup_segment
+      NULL /* path_bezier_cleanup_segment */
     }
 };
 
@@ -74,20 +70,27 @@ path_curve_get_points (PathTool *path_tool,
    gdouble pos, x, y;
    gint index=0;
 
-   if (segment && CurveTypes[segment->type].get_points)
-      return (* CurveTypes[segment->type].get_points) (path_tool, segment, points, npoints, start, end);
-   else {
-      if (npoints > 1 && segment && segment->next) {
-	 for (pos = start; pos <= end; pos += (end - start) / (npoints -1)) {
-	    path_curve_get_point (path_tool, segment, pos, &x, &y);
-	    points[index].x = (guint) (x + 0.5);
-	    points[index].y = (guint) (y + 0.5);
-	    index++;
-	 }
-	 return index;
-      } else
-         return 0;
+   if (segment && segment->next) {
+      if (CurveTypes[segment->type].get_points)
+	 return (* CurveTypes[segment->type].get_points) (path_tool, segment, points, npoints, start, end);
+      else {
+	 if (npoints > 1 && segment && segment->next) {
+   	    for (pos = start; pos <= end; pos += (end - start) / (npoints -1)) {
+   	       path_curve_get_point (path_tool, segment, pos, &x, &y);
+   	       points[index].x = (guint) (x + 0.5);
+   	       points[index].y = (guint) (y + 0.5);
+   	       index++;
+   	    }
+   	    return index;
+     	 } else
+       	    return 0;
+      }
    }
+#ifdef PATH_TOOL_DEBUG
+   else
+      fprintf (stderr, "path_curve_get_point called without valid curve");
+#endif
+   return 0;
 }
 
 
@@ -98,15 +101,16 @@ path_curve_get_point (PathTool *path_tool,
 		      gdouble *x,
 		      gdouble *y)
 {
-   if (segment && CurveTypes[segment->type].get_point)
-      (* CurveTypes[segment->type].get_point) (path_tool, segment, position, x, y);
-   else {
-      if (segment && segment->next) {
+   if (segment && segment->next) {
+      if (CurveTypes[segment->type].get_point)
+	 (* CurveTypes[segment->type].get_point) (path_tool, segment, position, x, y);
+      else {
 #if 0
-         *x = segment->x + (segment->next->x - segment->x) * position;
+	 *x = segment->x + (segment->next->x - segment->x) * position;
          *y = segment->y + (segment->next->y - segment->y) * position;
 #else
-	/* Only here for debugging purposes: A bezier curve fith fixed tangents */
+	 /* Only here for debugging purposes: A bezier curve fith fixed tangents */
+
 	 *x = (1-position)*(1-position)*(1-position) * segment->x +
 		3 * position *(1-position)*(1-position) * (segment->x - 60) +
 		3 * position * position *(1-position) * (segment->next->x + 60) +
@@ -117,11 +121,11 @@ path_curve_get_point (PathTool *path_tool,
 		position * position * position * (segment->next->y);
 #endif
       }
-#ifdef PATH_TOOL_DEBUG
-      else
-	 fprintf (stderr, "path_curve_get_point called without valid curve");
-#endif
    }
+#ifdef PATH_TOOL_DEBUG
+   else
+      fprintf (stderr, "path_curve_get_point called without valid curve");
+#endif
    return;
 }
 
@@ -246,20 +250,20 @@ void
 path_curve_drag_segment (PathTool *path_tool,
 			 PathSegment *segment,
 			 gdouble position,
-			 gint x,
-			 gint y)
+			 gdouble dx,
+			 gdouble dy)
 {
    if (segment && CurveTypes[segment->type].drag_segment)
-      (* CurveTypes[segment->type].drag_segment) (path_tool, segment, position, x, y);
+      (* CurveTypes[segment->type].drag_segment) (path_tool, segment, position, dx, dy);
    return;
 }
 
 gint
 path_curve_on_handle (PathTool *path_tool,
 		      PathSegment *segment,
-		      gint x,
-		      gint y,
-		      gint halfwidth)
+		      gdouble x,
+		      gdouble y,
+		      gdouble halfwidth)
 {
    if (segment && CurveTypes[segment->type].on_handles)
       return (* CurveTypes[segment->type].on_handles) (path_tool, segment, x, y, halfwidth);
@@ -269,12 +273,12 @@ path_curve_on_handle (PathTool *path_tool,
 void
 path_curve_drag_handle (PathTool *path_tool,
 			PathSegment *segment,
-			gint x,
-			gint y,
+			gdouble dx,
+			gdouble dy,
 			gint handle_id)
 {
    if (segment && CurveTypes[segment->type].drag_handle)
-      (* CurveTypes[segment->type].drag_handle) (path_tool, segment, x, y, handle_id);
+      (* CurveTypes[segment->type].drag_handle) (path_tool, segment, dx, dy, handle_id);
 }
 
 PathSegment *
@@ -290,11 +294,10 @@ path_curve_insert_anchor (PathTool *path_tool,
 }
 
 void
-path_curve_flip_segment (PathTool *path_tool,
-			 PathSegment *segment)
+path_curve_flip_segment (PathSegment *segment)
 {
    if (segment && CurveTypes[segment->type].flip_segment)
-      (* CurveTypes[segment->type].flip_segment) (path_tool, segment);
+      (* CurveTypes[segment->type].flip_segment) (segment);
    return;
 }
 
@@ -308,19 +311,18 @@ path_curve_update_segment (PathTool *path_tool,
 }
 
 void
-path_curve_init_segment (PathTool *path_tool,
-			 PathSegment *segment)
+path_curve_init_segment (PathSegment *segment)
 {
    if (segment && CurveTypes[segment->type].init_segment)
-      (* CurveTypes[segment->type].init_segment) (path_tool, segment);
+      (* CurveTypes[segment->type].init_segment) (segment);
    return;
 }
 
 void
-path_curve_cleanup_segment (PathTool *path_tool,
-			    PathSegment *segment)
+path_curve_cleanup_segment (PathSegment *segment)
 {
    if (segment && CurveTypes[segment->type].cleanup_segment)
-      (* CurveTypes[segment->type].cleanup_segment) (path_tool, segment);
+      (* CurveTypes[segment->type].cleanup_segment) (segment);
    return;
 }
+

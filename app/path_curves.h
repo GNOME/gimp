@@ -62,19 +62,19 @@ typedef gdouble (*PathOnSegmentFunc) (Tool *tool,
 typedef void (*PathDragSegmentFunc) (PathTool *path_tool,
 				     PathSegment *segment,
 				     gdouble position,
-				     gint x,
-				     gint y);
+				     gdouble dx,
+				     gdouble dy);
 
 typedef gint (*PathOnHandlesFunc) (PathTool *path_tool,
 				   PathSegment *segment,
-				   gint x,
-				   gint y,
-				   gint halfwidth);
+				   gdouble x,
+				   gdouble y,
+				   gdouble halfwidth);
 
 typedef void (*PathDragHandleFunc) (PathTool *path_tool,
 				    PathSegment *segment,
-				    gint x,
-				    gint y,
+				    gdouble dx,
+				    gdouble dy,
 				    gint handle_id);
 
 typedef PathSegment * (*PathInsertAnchorFunc) (PathTool *path_tool,
@@ -84,14 +84,11 @@ typedef PathSegment * (*PathInsertAnchorFunc) (PathTool *path_tool,
 typedef void (*PathUpdateSegmentFunc) (PathTool *path_tool,
 			    	       PathSegment *segment);
 
-typedef void (*PathFlipSegmentFunc) (PathTool *path_tool,
-				     PathSegment *segment);
+typedef void (*PathFlipSegmentFunc) (PathSegment *segment);
 
-typedef void (*PathInitSegmentFunc) (PathTool *path_tool,
-				     PathSegment *segment);
+typedef void (*PathInitSegmentFunc) (PathSegment *segment);
 
-typedef void (*PathCleanupSegmentFunc) (PathTool *path_tool,
-					PathSegment *segment);
+typedef void (*PathCleanupSegmentFunc) (PathSegment *segment);
 
 typedef struct {
    PathGetPointsFunc      get_points;
@@ -146,21 +143,21 @@ void
 path_curve_drag_segment (PathTool *path_tool,
 			 PathSegment *segment,
 			 gdouble position,
-			 gint x,
-			 gint y);
+			 gdouble dx,
+			 gdouble dy);
 
 gint
 path_curve_on_handle (PathTool *path_tool,
 		      PathSegment *segment,
-		      gint x,
-		      gint y,
-		      gint halfwidth);
+		      gdouble x,
+		      gdouble y,
+		      gdouble halfwidth);
 
 void
 path_curve_drag_handle (PathTool *path_tool,
 			PathSegment *segment,
-			gint x,
-			gint y,
+			gdouble dx,
+			gdouble dy,
 			gint handle_id);
 
 PathSegment *
@@ -173,16 +170,13 @@ path_curve_update_segment (PathTool *path_tool,
 			   PathSegment *segment);
 
 void
-path_curve_flip_segment (PathTool *path_tool,
-			 PathSegment *segment);
+path_curve_flip_segment (PathSegment *segment);
 
 void
-path_curve_init_segment (PathTool *path_tool,
-			 PathSegment *segment);
+path_curve_init_segment (PathSegment *segment);
 
 void
-path_curve_cleanup_segment (PathTool *path_tool,
-			    PathSegment *segment);
+path_curve_cleanup_segment (PathSegment *segment);
 
 
 

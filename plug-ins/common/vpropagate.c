@@ -40,101 +40,93 @@
 #define MENU_POSITION	"<Image>/Filters/Distorts/Value Propagate"
 
 typedef guchar CH;
-#define	RGB	(1 << 0)
-#define GRAY	(1 << 1)
-#define WITH_ALPHA	(1 << 2)
-#define WO_ALPHA	(1 << 3)
+#define	VP_RGB	        (1 << 0)
+#define VP_GRAY	        (1 << 1)
+#define VP_WITH_ALPHA	(1 << 2)
+#define VP_WO_ALPHA	(1 << 3)
 #define num_direction	4
 #define Right2Left	0
 #define Bottom2Top	1
 #define	Left2Right	2
 #define Top2Bottom	3
 
-static void	query	(void);
-static void	run	(char	*name,
-			 int	nparams,
-			 GParam	*param,
-			 int	*nreturn_vals,
-			 GParam **return_vals);
+static void	    query	               (void);
+static void	    run                        (char          *name,
+					        int            nparams,
+					        GParam        *param,   
+                                                int           *nreturn_vals,
+					        GParam      **return_vals);
 
-static GStatusType	value_propagate (gint drawable_id);
-static void	value_propagate_body (gint drawable_id);
-static int	vpropagate_dialog (GImageType image_type);
-static void	prepare_row (GPixelRgn *pixel_rgn,
-			     guchar    *data,
-			     int        x,
-			     int        y,
-			     int        w);
-static void
-gtkW_gint_update (GtkWidget *widget,
-		      gpointer   data);
-static void
-gtkW_scale_update (GtkAdjustment *adjustment,
-		   double   *data);
-static void
-gtkW_close_callback (GtkWidget *widget,
-		     gpointer   data);
-static void
-vpropagate_ok_callback (GtkWidget *widget,
-			gpointer   data);
-static void
-gtkW_toggle_update (GtkWidget *widget,
-		    gpointer   data);
-static GtkWidget *
-gtkW_dialog_new (char *name,
-		 GtkSignalFunc ok_callback,
-		 GtkSignalFunc close_callback);
-static GtkWidget *
-gtkW_table_add_toggle (GtkWidget	*table,
-		       gchar	*name,
-		       gint	x1,
-		       gint	x2,
-		       gint	y,
-		       GtkSignalFunc update,
-		       gint	*value);
-static GSList *
-gtkW_vbox_add_radio_button (GtkWidget *vbox,
-			    gchar	*name,
-			    GSList	*group,
-			    GtkSignalFunc	update,
-			    gint	*value);
-static void
-gtkW_table_add_gint (GtkWidget	*table,
-		     gchar	*name,
-		     gint	x,
-		     gint	y, 
-		     GtkSignalFunc	update,
-		     gint	*value,
-		     gchar	*buffer);
-static void
-gtkW_table_add_scale (GtkWidget	*table,
-		      gchar	*name,
-		      gint	x1,
-		      gint	y,
-		      GtkSignalFunc update,
-		      gdouble *value,
-		      gdouble min,
-		      gdouble max,
-		      gdouble step);
-GtkWidget *gtkW_frame_new (gchar *name, GtkWidget *parent);
-GtkWidget *gtkW_hbox_new (GtkWidget *parent);
-GtkWidget *gtkW_vbox_new (GtkWidget *parent);
+static GStatusType  value_propagate            (gint           drawable_id);
+static void         value_propagate_body       (gint           drawable_id);
+static int	    vpropagate_dialog          (GImageType     image_type);
+static void	    prepare_row                (GPixelRgn     *pixel_rgn,
+						guchar        *data,
+						int            x,
+						int            y,
+						int            w);
 
-static int	value_difference_check(CH *, CH *, int);
-static void	set_value (GImageType, int, CH *, CH *, CH *, void *);
-static void	initialize_white (GImageType, int, CH *, CH *, void **);
-static void	propagate_white (GImageType, int, CH *, CH *, CH *, void *);
-static void	initialize_black (GImageType, int, CH *, CH *, void **);
-static void	propagate_black (GImageType, int, CH *, CH *, CH *, void *);
-static void	initialize_middle (GImageType, int, CH *, CH *, void **);
-static void	propagate_middle (GImageType, int, CH *, CH *, CH *, void *);
-static void	set_middle_to_peak (GImageType, int, CH *, CH *, CH *, void *);
-static void	set_foreground_to_peak (GImageType, int, CH *, CH *, CH *, void *);
-static void	initialize_foreground (GImageType, int, CH *, CH *, void **);
-static void	initialize_background (GImageType, int, CH *, CH *, void **);
-static void	propagate_a_color (GImageType, int, CH *, CH *, CH *, void *);
-static void	propagate_opaque (GImageType, int, CH *, CH *, CH *, void *);
-static void	propagate_transparent (GImageType, int, CH *, CH *, CH *, void *);
+static void         gtkW_gint_update           (GtkWidget     *widget,
+						gpointer       data);
+static void         gtkW_scale_update          (GtkAdjustment *adjustment,
+						double        *data);
+static void         gtkW_close_callback        (GtkWidget     *widget,
+						gpointer       data);
+static void         vpropagate_ok_callback     (GtkWidget     *widget,
+						gpointer       data);
+static void         gtkW_toggle_update         (GtkWidget     *widget,
+						gpointer       data);
+static GtkWidget *  gtkW_dialog_new            (char          *name,
+						GtkSignalFunc  ok_callback,
+						GtkSignalFunc  close_callback);
+static GtkWidget *  gtkW_table_add_toggle      (GtkWidget     *table,
+						gchar	      *name,
+						gint	       x1,
+						gint	       x2,
+						gint	       y,
+						GtkSignalFunc  update,
+						gint	      *value);
+static GSList *     gtkW_vbox_add_radio_button (GtkWidget     *vbox,
+						gchar	      *name,
+						GSList	      *group,
+						GtkSignalFunc  update,
+						gint	      *value);
+static void         gtkW_table_add_gint        (GtkWidget     *table,
+						gchar	      *name,
+						gint	       x,
+						gint	       y, 
+						GtkSignalFunc  update,
+						gint          *value,
+						gchar	      *buffer);
+static void         gtkW_table_add_scale       (GtkWidget     *table,
+						gchar	      *name,
+						gint	       x1,
+						gint	       y,
+						GtkSignalFunc  update,
+						gdouble       *value,
+						gdouble        min,
+						gdouble        max,
+						gdouble        step);
+static GtkWidget *  gtkW_frame_new             (gchar         *name, 
+						GtkWidget     *parent);
+static GtkWidget *  gtkW_hbox_new              (GtkWidget     *parent);
+static GtkWidget *  gtkW_vbox_new              (GtkWidget     *parent);
+
+static int	    value_difference_check  (CH *, CH *, int);
+static void         set_value               (GImageType, int, CH *, CH *, CH *, void *);
+static void	    initialize_white        (GImageType, int, CH *, CH *, void **);
+static void	    propagate_white         (GImageType, int, CH *, CH *, CH *, void *);
+static void	    initialize_black        (GImageType, int, CH *, CH *, void **);
+static void         propagate_black         (GImageType, int, CH *, CH *, CH *, void *);
+static void	    initialize_middle       (GImageType, int, CH *, CH *, void **);
+static void	    propagate_middle        (GImageType, int, CH *, CH *, CH *, void *);
+static void	    set_middle_to_peak      (GImageType, int, CH *, CH *, CH *, void *);
+static void	    set_foreground_to_peak  (GImageType, int, CH *, CH *, CH *, void *);
+static void	    initialize_foreground   (GImageType, int, CH *, CH *, void **);
+static void	    initialize_background   (GImageType, int, CH *, CH *, void **);
+static void	    propagate_a_color       (GImageType, int, CH *, CH *, CH *, void *);
+static void	    propagate_opaque        (GImageType, int, CH *, CH *, CH *, void *);
+static void	    propagate_transparent   (GImageType, int, CH *, CH *, CH *, void *);
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -195,25 +187,24 @@ typedef struct
 } ModeParam;
 
 #define num_mode 8
-static ModeParam modes[num_mode] = {
-  { RGB | GRAY | WITH_ALPHA | WO_ALPHA, "more white (larger value)",
-    initialize_white,		propagate_white,	set_value,	FALSE},
-  { RGB | GRAY | WITH_ALPHA | WO_ALPHA,	"more black (smaller value)",
-    initialize_black,		propagate_black, 	set_value,	FALSE},
-  { RGB | GRAY | WITH_ALPHA | WO_ALPHA,	"middle value to peaks",
-    initialize_middle,		propagate_middle, 	set_middle_to_peak,
-    FALSE},
-  { RGB | GRAY | WITH_ALPHA | WO_ALPHA,	"foreground to peaks",
-    initialize_middle,		propagate_middle, 	set_foreground_to_peak,
-    FALSE},
-  { RGB | WITH_ALPHA | WO_ALPHA,	"only foreground",
-    initialize_foreground,	propagate_a_color, 	set_value,	FALSE},
-  { RGB | WITH_ALPHA | WO_ALPHA,	"only background",
-    initialize_background,	propagate_a_color, 	set_value,	FALSE},
-  { RGB | GRAY | WITH_ALPHA,		"more opaque",
-    NULL,	 		propagate_opaque, 	set_value,	FALSE},
-  { RGB | GRAY | WITH_ALPHA,		"more transparent",
-    NULL, 			propagate_transparent,	set_value,	FALSE}
+static ModeParam modes[num_mode] = 
+{
+  { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA, "more white (larger value)",
+    initialize_white,      propagate_white,       set_value,              FALSE},
+  { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA, "more black (smaller value)",
+    initialize_black,      propagate_black,       set_value,              FALSE},
+  { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA, "middle value to peaks",
+    initialize_middle,     propagate_middle,      set_middle_to_peak,     FALSE},
+  { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA, "foreground to peaks",
+    initialize_middle,     propagate_middle,      set_foreground_to_peak, FALSE},
+  { VP_RGB | VP_WITH_ALPHA | VP_WO_ALPHA,           "only foreground",
+    initialize_foreground, propagate_a_color,     set_value,              FALSE},
+  { VP_RGB | VP_WITH_ALPHA | VP_WO_ALPHA,           "only background",
+    initialize_background, propagate_a_color,     set_value,              FALSE},
+  { VP_RGB | VP_GRAY | VP_WITH_ALPHA,               "more opaque",
+    NULL,                  propagate_opaque,      set_value,              FALSE},
+  { VP_RGB | VP_GRAY | VP_WITH_ALPHA,               "more transparent",
+    NULL,                  propagate_transparent, set_value,              FALSE}
 };
 
 typedef struct 
@@ -259,11 +250,11 @@ query ()
 }
 
 static void
-run (char	*name,
-     int	nparams,
+run (char       *name,
+     int	 nparams,
      GParam	*param,
      int	*nreturn_vals,
-     GParam	**return_vals)
+     GParam    **return_vals)
 {
   static GParam	 values[1];
   GStatusType	status = STATUS_SUCCESS;
@@ -469,11 +460,12 @@ prepare_row (GPixelRgn *pixel_rgn,
 }
 
 static void
-set_value (dtype, bytes, best, here, dest, tmp)
-     GImageType	dtype;
-     int	bytes;
-     guchar	*best, *here, *dest;
-     void	*tmp;
+set_value (GImageType  dtype, 
+	   int         bytes, 
+	   guchar     *best, 
+	   guchar     *here, 
+	   guchar     *dest, 
+	   void       *tmp)
 {
   int	value_chs = 0;
   int	alpha = 0;
@@ -517,9 +509,9 @@ set_value (dtype, bytes, best, here, dest, tmp)
 }
 
 static int
-value_difference_check(pos1, pos2, ch)
-     CH		*pos1, *pos2;
-     int	ch;
+value_difference_check (CH  *pos1, 
+			CH  *pos2, 
+			int  ch)
 {
   int	index;
   int	diff;
@@ -536,11 +528,11 @@ value_difference_check(pos1, pos2, ch)
 
 /* mothods for each mode */
 static void
-initialize_white (dtype, bytes, best, here, tmp)
-     GImageType dtype;
-     int bytes;
-     CH *best, *here;
-     void **tmp;
+initialize_white (GImageType   dtype, 
+		  int          bytes, 
+		  CH          *best, 
+		  CH          *here, 
+		  void       **tmp)
 {
   if (*tmp == NULL)
     *tmp = (void *)malloc(sizeof(float));
@@ -550,11 +542,12 @@ initialize_white (dtype, bytes, best, here, tmp)
 }
 
 static void
-propagate_white (dtype, bytes, orig, here, best, tmp)
-     GImageType dtype;
-     int bytes;
-     CH *orig, *here, *best;
-     void *tmp;
+propagate_white (GImageType  dtype, 
+		 int         bytes, 
+		 CH         *orig, 
+		 CH         *here, 
+		 CH         *best, 
+		 void       *tmp)
 {
   float	v_here;
 
@@ -582,11 +575,11 @@ propagate_white (dtype, bytes, orig, here, best, tmp)
 }
 
 static void
-initialize_black (image_type, channels, best, here, tmp)
-     GImageType image_type;
-     int channels;
-     CH *best, *here;
-     void **tmp;
+initialize_black (GImageType   dtype, 
+		  int          channels, 
+		  CH          *best, 
+		  CH          *here, 
+		  void       **tmp)
 {
   if (*tmp == NULL)
     *tmp = (void *)malloc(sizeof(float));
@@ -596,15 +589,16 @@ initialize_black (image_type, channels, best, here, tmp)
 }
 
 static void
-propagate_black (image_type, channels, orig, here, best, tmp)
-     GImageType	image_type;
-     int	channels;
-     CH		*orig, *here, *best;
-     void	*tmp;
+propagate_black (GImageType  image_type, 
+		 int         channels, 
+		 CH         *orig, 
+		 CH         *here, 
+		 CH         *best, 
+		 void       *tmp)
 {
   float	v_here;
 
-  switch ( image_type )
+  switch (image_type)
     {
     case RGB_IMAGE:
     case RGBA_IMAGE:
@@ -639,11 +633,11 @@ typedef struct
 } MiddlePacket;
 
 static void
-initialize_middle (image_type, channels, best, here, tmp)
-     GImageType image_type;
-     int channels;
-     CH *best, *here;
-     void **tmp;
+initialize_middle (GImageType   image_type, 
+		   int          channels, 
+		   CH          *best, 
+		   CH          *here, 
+		   void       **tmp)
 {
   int index;
   MiddlePacket *data;
@@ -652,8 +646,8 @@ initialize_middle (image_type, channels, best, here, tmp)
     *tmp = (void *)malloc(sizeof(MiddlePacket));
   data = (MiddlePacket *)*tmp;
   for (index = 0; index < channels; index++)
-      data->min[index] = data->max[index] = here[index];
-  switch ( image_type )
+    data->min[index] = data->max[index] = here[index];
+  switch (image_type)
     {
     case RGB_IMAGE:
     case RGBA_IMAGE:
@@ -673,18 +667,19 @@ initialize_middle (image_type, channels, best, here, tmp)
 }
   
 static void
-propagate_middle (image_type, channels, orig, here, best, tmp)
-     GImageType	image_type;
-     int	channels;
-     CH		*orig, *here, *best;
-     void	*tmp;
+propagate_middle (GImageType  image_type, 
+		  int         channels, 
+		  CH         *orig, 
+		  CH         *here, 
+		  CH         *best, 
+		  void       *tmp)
 {
   float	v_here;
   MiddlePacket *data;
 
   data = (MiddlePacket *)tmp;
 
-  switch ( image_type )
+  switch (image_type)
     {
     case RGB_IMAGE:
     case RGBA_IMAGE:
@@ -723,11 +718,12 @@ propagate_middle (image_type, channels, orig, here, best, tmp)
 }
 
 static void
-set_middle_to_peak (image_type, channels, best, here, dest, tmp)
-     GImageType	image_type;
-     int	channels;
-     CH		*best, *here, *dest;
-     void	*tmp;
+set_middle_to_peak (GImageType  image_type, 
+		    int         channels, 
+		    CH         *here, 
+		    CH         *best, 
+		    CH         *dest, 
+		    void       *tmp)
 {
   int	value_chs = 0;
   int	alpha = 0;
@@ -781,11 +777,12 @@ set_middle_to_peak (image_type, channels, best, here, dest, tmp)
 }
 
 static void
-set_foreground_to_peak (image_type, channels, best, here, dest, tmp)
-     GImageType	image_type;
-     int	channels;
-     CH		*best, *here, *dest;
-     void	*tmp;
+set_foreground_to_peak (GImageType  image_type, 
+			int         channels, 
+			CH         *here, 
+			CH         *best, 
+			CH         *dest, 
+			void       *tmp)
 {
   int	value_chs = 0;
   int	alpha = 0;
@@ -831,11 +828,11 @@ set_foreground_to_peak (image_type, channels, best, here, dest, tmp)
 }
 
 static void
-initialize_foreground (image_type, channels, best, here, tmp)
-     GImageType image_type;
-     int channels;
-     CH *best, *here;
-     void **tmp;
+initialize_foreground (GImageType   image_type, 
+		       int          channels, 
+		       CH          *here, 
+		       CH          *best, 
+		       void       **tmp)
 {
   CH *ch;
 
@@ -848,11 +845,11 @@ initialize_foreground (image_type, channels, best, here, tmp)
 }
 
 static void
-initialize_background (image_type, channels, best, here, tmp)
-     GImageType image_type;
-     int channels;
-     CH *best, *here;
-     void **tmp;
+initialize_background (GImageType   image_type, 
+		       int          channels, 
+		       CH          *here, 
+		       CH          *best, 
+		       void       **tmp)
 {
   CH *ch;
 
@@ -865,11 +862,12 @@ initialize_background (image_type, channels, best, here, tmp)
 }
 
 static void
-propagate_a_color (image_type, channels, orig, here, best, tmp)
-     GImageType	image_type;
-     int	channels;
-     CH		*orig, *here, *best;
-     void	*tmp;
+propagate_a_color (GImageType  image_type, 
+		   int         channels, 
+		   CH         *orig, 
+		   CH         *here, 
+		   CH         *best, 
+		   void       *tmp)
 {
   CH *fg = (CH *)tmp;
 
@@ -892,11 +890,12 @@ propagate_a_color (image_type, channels, orig, here, best, tmp)
 }
 
 static void
-propagate_opaque (image_type, channels, orig, here, best, tmp)
-     GImageType	image_type;
-     int	channels;
-     CH		*orig, *here, *best;
-     void	*tmp;
+propagate_opaque (GImageType  image_type, 
+		  int         channels, 
+		  CH         *orig, 
+		  CH         *here, 
+		  CH         *best, 
+		  void       *tmp)
 {
   switch ( image_type )
     {
@@ -914,11 +913,12 @@ propagate_opaque (image_type, channels, orig, here, best, tmp)
 }
 
 static void
-propagate_transparent (image_type, channels, orig, here, best, tmp)
-     GImageType	image_type;
-     int	channels;
-     CH		*orig, *here, *best;
-     void	*tmp;
+propagate_transparent (GImageType  image_type, 
+		       int         channels, 
+		       CH         *orig, 
+		       CH         *here, 
+		       CH         *best, 
+		       void       *tmp)
 {
   switch ( image_type )
     {
@@ -1051,7 +1051,7 @@ vpropagate_dialog (GImageType image_type)
 /* VFtext interface functions  */
 static void
 gtkW_gint_update (GtkWidget *widget,
-		      gpointer   data)
+		  gpointer   data)
 {
   *(gint *)data = (gint)atof (gtk_entry_get_text (GTK_ENTRY (widget)));
 }
@@ -1110,9 +1110,9 @@ gtkW_toggle_update (GtkWidget *widget,
 
 /* gtkW is the abbreviation of gtk Wrapper */
 static GtkWidget *
-gtkW_dialog_new (char * name,
-		 GtkSignalFunc ok_callback,
-		 GtkSignalFunc close_callback)
+gtkW_dialog_new (char          *name,
+		 GtkSignalFunc  ok_callback,
+		 GtkSignalFunc  close_callback)
 {
   GtkWidget *dlg, *button;
   
@@ -1168,7 +1168,7 @@ gtkW_vbox_new (GtkWidget *parent)
 }
 
 GtkWidget *
-gtkW_frame_new (gchar *name,
+gtkW_frame_new (gchar     *name,
 		GtkWidget *parent)
 {
   GtkWidget *frame;
@@ -1182,13 +1182,13 @@ gtkW_frame_new (gchar *name,
 }
 
 static GtkWidget *
-gtkW_table_add_toggle (GtkWidget	*table,
-		       gchar	*name,
-		       gint	x1,
-		       gint	x2,
-		       gint	y,
-		       GtkSignalFunc update,
-		       gint	*value)
+gtkW_table_add_toggle (GtkWidget     *table,
+		       gchar	     *name,
+		       gint	      x1,
+		       gint	      x2,
+		       gint	      y,
+		       GtkSignalFunc  update,
+		       gint	     *value)
 {
   GtkWidget *toggle;
   
@@ -1204,11 +1204,11 @@ gtkW_table_add_toggle (GtkWidget	*table,
 }
 
 static GSList *
-gtkW_vbox_add_radio_button (GtkWidget *vbox,
-			    gchar	*name,
-			    GSList	*group,
-			    GtkSignalFunc	update,
-			    gint	*value)
+gtkW_vbox_add_radio_button (GtkWidget     *vbox,
+			    gchar         *name,
+			    GSList	  *group,
+			    GtkSignalFunc  update,
+			    gint          *value)
 {
   GtkWidget *toggle;
   
@@ -1223,13 +1223,13 @@ gtkW_vbox_add_radio_button (GtkWidget *vbox,
 }
 
 static void
-gtkW_table_add_gint (GtkWidget	*table,
-		     gchar	*name,
-		     gint	x,
-		     gint	y, 
-		     GtkSignalFunc	update,
-		     gint	*value,
-		     gchar	*buffer)
+gtkW_table_add_gint (GtkWidget	   *table,
+		     gchar         *name,
+		     gint	    x,
+		     gint	    y, 
+		     GtkSignalFunc  update,
+		     gint	   *value,
+		     gchar	   *buffer)
 {
   GtkWidget *label, *entry;
   
@@ -1251,15 +1251,15 @@ gtkW_table_add_gint (GtkWidget	*table,
 }
 
 static void
-gtkW_table_add_scale (GtkWidget	*table,
-		      gchar	*name,
-		      gint	x,
-		      gint	y,
-		      GtkSignalFunc update,
-		      gdouble *value,
-		      gdouble min,
-		      gdouble max,
-		      gdouble step)
+gtkW_table_add_scale (GtkWidget	    *table,
+		      gchar         *name,
+		      gint	     x,
+		      gint	     y,
+		      GtkSignalFunc  update,
+		      gdouble       *value,
+		      gdouble        min,
+		      gdouble        max,
+		      gdouble        step)
 {
   GtkObject *scale_data;
   GtkWidget *label, *scale;
@@ -1286,3 +1286,8 @@ gtkW_table_add_scale (GtkWidget	*table,
 }
 
 /* end of vpropagate.c */
+
+
+
+
+
