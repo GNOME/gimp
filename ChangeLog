@@ -1,3 +1,12 @@
+2004-06-07  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/glob.c: the glob(3) function is not available on
+	Win32 and also isn't necessarily UTF-8 safe. Started to add an
+	alternative implementation. Right now there's just some code taken
+	from GTK+ (an UTF-8 save fnmatch() implementation) and the plug-in
+	does nothing useful. I will add some stripped-down glob code based
+	on the code in glibc later.
+
 2004-06-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimplayer.c (gimp_layer_set_tiles): don't set
