@@ -58,6 +58,7 @@ struct _InkOptions
   double       aspect;
   double       angle;
   double       sensitivity;
+  double       tilt_sensitivity;
 };
 
 typedef struct _BrushWidget BrushWidget;
@@ -200,6 +201,22 @@ create_ink_options ()
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      (GtkSignalFunc) ink_scale_update,
 		      &options->sensitivity);
+
+  /* tilt sens slider */
+  hbox = gtk_hbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+  label = gtk_label_new (_("Tilt Sensitivity:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 2);
+  
+  adj = GTK_ADJUSTMENT (gtk_adjustment_new (1.0, 0.0, 1.0, 0.01, 0.1, 0.0));
+  slider = gtk_hscale_new (adj);
+  gtk_box_pack_start (GTK_BOX (hbox), slider, TRUE, TRUE, 0);
+  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
+  
+  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      (GtkSignalFunc) ink_scale_update,
+		      &options->tilt_sensitivity);
 
   /* Brush shape widget */
 
@@ -395,14 +412,16 @@ ink_pen_ellipse (gdouble x_center, gdouble y_center,
   double tsin, tcos;
   double aspect, radmin;
   double x,y;
+  double tscale;
   
   size = ink_options->size * (1 + ink_options->sensitivity * (2*pressure - 1));
   if (size*SUBSAMPLE < 1) size = 1/SUBSAMPLE;
 
   /* Add brush angle/aspect to title vectorially */
 
-  x = ink_options->aspect*cos(ink_options->angle) + xtilt*10.0;
-  y = ink_options->aspect*sin(ink_options->angle) + ytilt*10.0;
+  tscale = ink_options->tilt_sensitivity * 10.0;
+  x = ink_options->aspect*cos(ink_options->angle) + xtilt*tscale;
+  y = ink_options->aspect*sin(ink_options->angle) + ytilt*tscale;
   aspect = sqrt(x*x+y*y);
 
   if (aspect != 0)
