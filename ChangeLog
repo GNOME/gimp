@@ -1,3 +1,22 @@
+2000-08-03  Michael Natterer  <mitch@gimp.org>
+	    Sven Neumann  <sven@gimp.org>
+	
+	* libgimp/gimp.c
+	* libgimp/gimpbrushmenu.c
+	* libgimp/gimpprotocol.c: removed COMPAT_CRUFT
+	
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/common/film.c
+	* plug-ins/common/sample_colorize.c
+	* plug-ins/gdyntext/gdyntext.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/print/print.c
+	* plug-ins/sel2path/sel2path.c: replaced gimp_run_procedure
+	calls with functions from libgimp that wrap the PDB calls. 
+	And, you guessed it, cleanup and indentation.
+
+	* plug-ins/print/gimp_main_window.c: closed bug #11784.
+
 2000-08-02  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimp/gimp.def: Add handful of missing functions, that

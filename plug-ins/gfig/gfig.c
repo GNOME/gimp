@@ -94,18 +94,6 @@ extern void * gdk_root_parent;
 
 #include "pix_data.h"
 
-/* If you have NOT applied the patch to the GIMP (See readme) remove the
- * following #define
- */
-
-#define HAVE_PATCHED 1 
-
-#ifdef HAVE_PATCHED
-#define GFIG_LCC 1
-#else
-#define GFIG_LCC 2
-#endif /* HAVE_PATCHED */
-
 /***** Magic numbers *****/
 
 #define PREVIEW_SIZE 400
@@ -295,7 +283,7 @@ typedef enum
 
 typedef enum
 {
-  BRUSH_BRUSH_TYPE=0,
+  BRUSH_BRUSH_TYPE = 0,
   BRUSH_PENCIL_TYPE,
   BRUSH_AIRBRUSH_TYPE,
   BRUSH_PATTERN_TYPE
@@ -822,24 +810,18 @@ gfig_clear_selection (gint32 image_ID)
 static void
 plug_in_parse_gfig_path (void)
 {
-  GParam *return_vals;
-  gint nreturn_vals;
-
   GList *fail_list = NULL;
   GList *list;
+  gchar *gfig_path;
 
   if (gfig_path_list)
     gimp_path_free (gfig_path_list);
   
   gfig_path_list = NULL;
   
-  return_vals = gimp_run_procedure ("gimp_gimprc_query",
-				    &nreturn_vals,
-				    PARAM_STRING, "gfig-path",
-				    PARAM_END);
-  
-  if (return_vals[0].data.d_status != STATUS_SUCCESS ||
-      return_vals[1].data.d_string == NULL)
+  gfig_path = gimp_gimprc_query ("gfig-path");
+
+  if (!gfig_path)
     {
       gchar *gimprc = gimp_personal_rc_file ("gimprc");
       gchar *path = gimp_strescape
@@ -854,14 +836,12 @@ plug_in_parse_gfig_path (void)
 		   path, gimprc);
       g_free (gimprc);
       g_free (path);
-      gimp_destroy_params (return_vals, nreturn_vals);
       return;
     }
   
-  gfig_path_list = gimp_path_parse (return_vals[1].data.d_string,
-				    16, TRUE, &fail_list);
+  gfig_path_list = gimp_path_parse (gfig_path, 16, TRUE, &fail_list);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  g_free (gfig_path);
 
   if (fail_list)
     {
@@ -2538,14 +2518,49 @@ mygimp_brush_info (gint32 *width,
   gimp_destroy_params (return_vals, nreturn_vals);
 }          
 
+static void
+gfig_paint (BrushType brush_type,
+	    gint32    drawable_ID,
+	    gint      seg_count,
+	    gdouble   line_pnts[])
+{
+  switch (brush_type)
+    {
+    case BRUSH_BRUSH_TYPE:
+      gimp_paintbrush (drawable_ID,
+		       selvals.brushfade,
+		       seg_count, line_pnts,
+		       GIMP_HARD,
+		       0.0);
+      break;
+
+    case BRUSH_PENCIL_TYPE:
+      gimp_pencil (drawable_ID,
+		   seg_count, line_pnts);
+      break;
+
+    case BRUSH_AIRBRUSH_TYPE:
+      gimp_airbrush (drawable_ID,
+		     selvals.airbrushpressure,
+		     seg_count, line_pnts); 
+      break;
+
+    case BRUSH_PATTERN_TYPE:
+      gimp_clone (drawable_ID,
+		  drawable_ID,
+		  GIMP_PATTERN_CLONE,
+		  0.0, 0.0,
+		  seg_count, line_pnts);
+      break;
+    }
+}
+
 static gint32
 gfig_gen_brush_preview (BrushDesc *bdesc)
 {
   /* Given the name of a brush then paint it and return the ID of the image 
    * the preview can be got from
    */
-  GParam *return_vals = NULL;
-  int nreturn_vals;
   static gint32 layer_ID = -1;
   guchar fR, fG, fB;
   guchar bR, bG, bB;
@@ -2603,50 +2618,9 @@ gfig_gen_brush_preview (BrushDesc *bdesc)
   gimp_drawable_fill (layer_ID, 1); /* Clear... Fill with white ... */
 
   /* Blob of paint */
-
-  switch (selvals.brshtype)
-    {
-    case BRUSH_BRUSH_TYPE:
-      return_vals = gimp_run_procedure ("gimp_paintbrush", &nreturn_vals,
-					PARAM_DRAWABLE, layer_ID,
-					PARAM_FLOAT, 0.0,
-					PARAM_INT32, 2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
-					PARAM_FLOATARRAY, &line_pnts[0],
-					PARAM_INT32, 0,
-					PARAM_FLOAT, 0.0,
-					PARAM_END);
-      break;
-    case BRUSH_PENCIL_TYPE:
-      return_vals = gimp_run_procedure ("gimp_pencil", &nreturn_vals,
-					PARAM_DRAWABLE, layer_ID,
-					PARAM_INT32, 2,
-					PARAM_FLOATARRAY, &line_pnts[0],  
-					PARAM_END);
-      break;
-    case BRUSH_AIRBRUSH_TYPE:
-      return_vals = gimp_run_procedure ("gimp_airbrush", &nreturn_vals,
-					PARAM_DRAWABLE, layer_ID,
-					PARAM_FLOAT, (gdouble)selvals.airbrushpressure,
-					PARAM_INT32, 2,
-					PARAM_FLOATARRAY, &line_pnts[0],  
-					PARAM_END);
-      break;
-    case BRUSH_PATTERN_TYPE:
-      return_vals = gimp_run_procedure ("gimp_clone", &nreturn_vals,
-					PARAM_DRAWABLE, layer_ID,
-					PARAM_DRAWABLE, layer_ID,
-					PARAM_INT32, 1,
-					PARAM_FLOAT, (gdouble)0.0,
-					PARAM_FLOAT, (gdouble)0.0,
-					PARAM_INT32, 2,
-					PARAM_FLOATARRAY, &line_pnts[0],  
-					PARAM_END);
-      break;
-    default:
-      break;
-    }  
-
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gfig_paint (selvals.brshtype,
+	      layer_ID,
+	      2, line_pnts);
 
   gimp_palette_set_background (bR, bG, bB);  
   gimp_palette_set_foreground (fR, fG, fB);
@@ -4623,47 +4597,11 @@ load_button_callback (GtkWidget *widget,
   gtk_widget_show (window);
 }
 
-#if 0 /* NOT USED */
-static void 
-mygimp_edit_clear (gint32 image_ID, gint32 layer_ID)
-{
-  GParam *return_vals;
-  int nreturn_vals;
-  return_vals = gimp_run_procedure ("gimp_edit_clear",
-                                    &nreturn_vals,
-                                    PARAM_IMAGE, image_ID,
-                                    PARAM_DRAWABLE, layer_ID,
-                                    PARAM_END);
-  gimp_destroy_params (return_vals, nreturn_vals);    
-}
-#endif /* NOT USED */
-
-static gint32
-mygimp_layer_copy (gint32 layer_ID)
-{
-  GParam *return_vals;
-  int nreturn_vals;
-
-  return_vals = gimp_run_procedure ("gimp_layer_copy",
-                                    &nreturn_vals,
-                                    PARAM_LAYER, layer_ID,
-				    PARAM_INT32, 0,
-                                    PARAM_END);
-
-  layer_ID = -1;
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    layer_ID = return_vals[1].data.d_layer;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return layer_ID;
-}
-
 static void
 paint_layer_copy (gchar *new_name)
 {
   gint32 old_drawable = gfig_drawable;
-  if ((gfig_drawable = mygimp_layer_copy (gfig_drawable)) < 0)
+  if ((gfig_drawable = gimp_layer_copy (gfig_drawable)) < 0)
     {
       g_warning (_("Error in copy layer for onlayers"));
       gfig_drawable = old_drawable;
@@ -4734,22 +4672,14 @@ paint_layer_new (gchar *new_name)
 static void
 paint_layer_fill ()
 {
-  GParam *return_vals;
-  int nreturn_vals;
-
-  return_vals = gimp_run_procedure ("gimp_bucket_fill",
-                                    &nreturn_vals,
-				    PARAM_DRAWABLE, gfig_drawable,
-				    PARAM_INT32, selopt.fill_type, /* Fill mode */
-				    PARAM_INT32, 0, /* NORMAL */
-				    PARAM_FLOAT, (gdouble)selopt.fill_opacity, /* Fill opacity */
-				    PARAM_FLOAT, (gdouble)0.0, /* threshold - ignored */
-				    PARAM_INT32, 0, /* Sample merged - ignored */
-				    PARAM_FLOAT, (gdouble)0.0, /* x - ignored */
-				    PARAM_FLOAT, (gdouble)0.0, /* y - ignored */
-                                    PARAM_END);
-
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_bucket_fill (gfig_drawable,
+		    selopt.fill_type,    /* Fill mode */
+		    GIMP_NORMAL_MODE,
+		    selopt.fill_opacity, /* Fill opacity */
+		    0.0,                 /* threshold - ignored */
+		    FALSE,               /* Sample merged - ignored */
+		    0.0,                 /* x - ignored */
+		    0.0);                /* y - ignored */
 }
        
 static void
@@ -6834,8 +6764,6 @@ d_paint_line (Dobject *obj)
 {
   DobjPoints * spnt;
   gdouble *line_pnts;
-  GParam *return_vals = NULL;
-  gint nreturn_vals;
   gint seg_count = 0;
   gint i = 0;
 
@@ -6854,8 +6782,7 @@ d_paint_line (Dobject *obj)
   if (!spnt || !seg_count)
     return; /* no-line */
 
-  /* The second *2 to get around bug in GIMP */
-  line_pnts = g_new0 (gdouble, GFIG_LCC*(2*seg_count + 1));
+  line_pnts = g_new0 (gdouble, 2 * seg_count + 1);
   
   /* Go around all the points drawing a line from one to the next */
   while (spnt)
@@ -6878,63 +6805,19 @@ d_paint_line (Dobject *obj)
   /* One go */
   if (selvals.painttype == PAINT_BRUSH_TYPE)
     {
-      switch (selvals.brshtype)
-	{
-	case BRUSH_BRUSH_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_paintbrush", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_FLOAT, (gdouble)selvals.brushfade,
-					    PARAM_INT32, seg_count*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
-					    PARAM_FLOATARRAY, &line_pnts[0],
-					    PARAM_INT32, 0,
-					    PARAM_FLOAT, 0.0,
-					    PARAM_END);
-	  break;
-	case BRUSH_PENCIL_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_pencil", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_INT32, seg_count*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
-					    PARAM_END);
-	  break;
-	case BRUSH_AIRBRUSH_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_airbrush", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_FLOAT, (gdouble)selvals.airbrushpressure,
-					    PARAM_INT32, seg_count*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
-					    PARAM_END);
-	  break;
-	case BRUSH_PATTERN_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_clone", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_INT32, 1,
-					    PARAM_FLOAT, (gdouble)0.0,
-					    PARAM_FLOAT, (gdouble)0.0,
-					    PARAM_INT32, seg_count*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
-					    PARAM_END);
-	  break;
-	default:
-	  break;
-	}
+      gfig_paint (selvals.brshtype,
+		  gfig_drawable,
+		  seg_count * 2, line_pnts);
     }
   else 
     {
-      /* We want to do a selection */
-      return_vals = gimp_run_procedure ("gimp_free_select", &nreturn_vals,
-					PARAM_IMAGE, gfig_image,
-					PARAM_INT32, seg_count*2,
-					PARAM_FLOATARRAY, &line_pnts[0],  
-					PARAM_INT32, selopt.type,
-					PARAM_INT32, selopt.antia,
-					PARAM_INT32, selopt.feather,
-					PARAM_FLOAT, (gdouble)selopt.feather_radius,
-					PARAM_END);
+      gimp_free_select (gfig_image,
+			seg_count * 2, line_pnts,
+			selopt.type,
+			selopt.antia,
+			selopt.feather,
+			selopt.feather_radius);
     }
-
-  gimp_destroy_params (return_vals, nreturn_vals);
 
   g_free (line_pnts);
 }
@@ -7341,29 +7224,19 @@ d_paint_circle (Dobject *obj)
   else
     scale_to_xy (&dpnts[0], 2);
 
-  return_vals = gimp_run_procedure ("gimp_ellipse_select", &nreturn_vals,
-				    PARAM_IMAGE, gfig_image,
-				    PARAM_FLOAT, dpnts[0],
-				    PARAM_FLOAT, dpnts[1],
-				    PARAM_FLOAT, dpnts[2],
-				    PARAM_FLOAT, dpnts[3],
-				    PARAM_INT32, selopt.type,
-				    PARAM_INT32, selopt.antia,
-				    PARAM_INT32, selopt.feather,
-				    PARAM_FLOAT, (gdouble)selopt.feather_radius,
-				    PARAM_END);
-
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_ellipse_select (gfig_image,
+		       dpnts[0], dpnts[1],
+		       dpnts[2], dpnts[3],
+		       selopt.type,
+		       selopt.antia,
+		       selopt.feather,
+		       selopt.feather_radius);
 
   /* Is selection all we need ? */
   if (selvals.painttype == PAINT_SELECTION_TYPE)
     return;
 
-  return_vals = gimp_run_procedure ("gimp_edit_stroke", &nreturn_vals,
-				    PARAM_DRAWABLE, gfig_drawable,
-				    PARAM_END);
-
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_edit_stroke (gfig_drawable);
 
   return_vals = gimp_run_procedure ("gimp_selection_clear", &nreturn_vals,
 				    PARAM_IMAGE, gfig_image,
@@ -7660,8 +7533,6 @@ d_paint_approx_ellipse (Dobject *obj)
   /* first point center */
   /* Next point is radius */
   gdouble *line_pnts;
-  GParam *return_vals = NULL;
-  gint nreturn_vals;
   gint seg_count = 0;
   gint i = 0;
   DobjPoints * center_pnt;
@@ -7685,8 +7556,7 @@ d_paint_approx_ellipse (Dobject *obj)
   if (!center_pnt || !seg_count)
     return; /* no-line */
 
-  /* The second 2* to get around bug in GIMP */
-  line_pnts = g_new0 (gdouble, GFIG_LCC * (2 * seg_count + 1));
+  line_pnts = g_new0 (gdouble, 2 * seg_count + 1);
 
   /* Go around all the points drawing a line from one to the next */
 
@@ -7752,64 +7622,19 @@ d_paint_approx_ellipse (Dobject *obj)
   /* One go */
   if (selvals.painttype == PAINT_BRUSH_TYPE)
     {
-      switch (selvals.brshtype)
-	{
-	case BRUSH_BRUSH_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_paintbrush", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_FLOAT, (gdouble)selvals.brushfade,
-					    PARAM_INT32, (i/2)*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
-					    PARAM_FLOATARRAY, &line_pnts[0],
-					    PARAM_INT32, 0,
-					    PARAM_FLOAT, 0.0,
-					    PARAM_END);
-	  break;
-	case BRUSH_PENCIL_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_pencil", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_INT32, (i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
-					    PARAM_END);
-	  break;
-	case BRUSH_AIRBRUSH_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_airbrush", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_FLOAT, (gdouble)selvals.airbrushpressure,
-					    PARAM_INT32, (i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
-					    PARAM_END);
-	  break;
-	case BRUSH_PATTERN_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_clone", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_INT32, 1,
-					    PARAM_FLOAT, (gdouble)0.0,
-					    PARAM_FLOAT, (gdouble)0.0,
-					    PARAM_INT32, (i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
-					    PARAM_END);
-	  break;
-	default:
-	  break;
-	}
+      gfig_paint (selvals.brshtype,
+		  gfig_drawable,
+		  i, line_pnts);
     }
   else
     {
-      /* We want to do a selection */
-      return_vals = gimp_run_procedure ("gimp_free_select", &nreturn_vals,
-					PARAM_IMAGE, gfig_image,
-					PARAM_INT32, (i/2)*2,
-					PARAM_FLOATARRAY, &line_pnts[0],  
-					PARAM_INT32, selopt.type,
-					PARAM_INT32, selopt.antia,
-					PARAM_INT32, selopt.feather,
-					PARAM_FLOAT, (gdouble)selopt.feather_radius,
-					PARAM_END);
-
+      gimp_free_select (gfig_image,
+			i, line_pnts,
+			selopt.type,
+			selopt.antia,
+			selopt.feather,
+			selopt.feather_radius);
     }
-
-  gimp_destroy_params (return_vals, nreturn_vals);
 
   g_free (line_pnts);
 }
@@ -7882,29 +7707,19 @@ d_paint_ellipse (Dobject *obj)
     scale_to_xy (&dpnts[0], 2);
 
 
-  return_vals = gimp_run_procedure ("gimp_ellipse_select", &nreturn_vals,
-				    PARAM_IMAGE, gfig_image,
-				    PARAM_FLOAT, dpnts[0],
-				    PARAM_FLOAT, dpnts[1],
-				    PARAM_FLOAT, dpnts[2],
-				    PARAM_FLOAT, dpnts[3],
-				    PARAM_INT32, selopt.type,
-				    PARAM_INT32, selopt.antia,
-				    PARAM_INT32, selopt.feather,
-				    PARAM_FLOAT, (gdouble)selopt.feather_radius,
-				    PARAM_END);
-  
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_ellipse_select (gfig_image,
+		       dpnts[0], dpnts[1],
+		       dpnts[2], dpnts[3],
+		       selopt.type,
+		       selopt.antia,
+		       selopt.feather,
+		       selopt.feather_radius);
 
   /* Is selection all we need ? */
   if (selvals.painttype == PAINT_SELECTION_TYPE)
     return;
 
-  return_vals = gimp_run_procedure ("gimp_edit_stroke", &nreturn_vals,
-				    PARAM_DRAWABLE, gfig_drawable,
-				    PARAM_END);
-
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_edit_stroke (gfig_drawable);
 
   return_vals = gimp_run_procedure ("gimp_selection_clear", &nreturn_vals,
 				    PARAM_IMAGE, gfig_image,
@@ -8295,8 +8110,6 @@ d_paint_poly (Dobject *obj)
   /* first point center */
   /* Next point is radius */
   gdouble *line_pnts;
-  GParam *return_vals = NULL;
-  gint nreturn_vals;
   gint seg_count = 0;
   gint i = 0;
   DobjPoints * center_pnt;
@@ -8321,8 +8134,7 @@ d_paint_poly (Dobject *obj)
   if (!center_pnt || !seg_count || !center_pnt->next)
     return; /* no-line */
 
-  /* The second 2* to get around bug in GIMP */
-  line_pnts = g_new0 (gdouble, GFIG_LCC*(2*seg_count + 1));
+  line_pnts = g_new0 (gdouble, 2 * seg_count + 1);
   
   /* Go around all the points drawing a line from one to the next */
 
@@ -8387,63 +8199,19 @@ d_paint_poly (Dobject *obj)
   /* One go */
   if (selvals.painttype == PAINT_BRUSH_TYPE)
     {
-      switch (selvals.brshtype)
-	{
-	case BRUSH_BRUSH_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_paintbrush", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_FLOAT, (gdouble)selvals.brushfade,
-					    PARAM_INT32, (i/2)*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
-					    PARAM_FLOATARRAY, &line_pnts[0],
-					    PARAM_INT32, 0,
-					    PARAM_FLOAT, 0.0,
-					    PARAM_END);
-	  break;
-	case BRUSH_PENCIL_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_pencil", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_INT32, (i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
-					    PARAM_END);
-	  break;
-	case BRUSH_AIRBRUSH_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_airbrush", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_FLOAT, (gdouble)selvals.airbrushpressure,
-					    PARAM_INT32, (i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
-					    PARAM_END);
-	  break;
-	case BRUSH_PATTERN_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_clone", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_INT32, 1,
-					    PARAM_FLOAT, (gdouble)0.0,
-					    PARAM_FLOAT, (gdouble)0.0,
-					    PARAM_INT32, (i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
-					    PARAM_END);
-	  break;
-	default:
-	  break;
-	}
+      gfig_paint (selvals.brshtype,
+		  gfig_drawable,
+		  i, line_pnts);
     }
   else
     {
-      /* We want to do a selection */
-      return_vals = gimp_run_procedure ("gimp_free_select", &nreturn_vals,
-					PARAM_IMAGE, gfig_image,
-					PARAM_INT32, (i/2)*2,
-					PARAM_FLOATARRAY, &line_pnts[0],  
-					PARAM_INT32, selopt.type,
-					PARAM_INT32, selopt.antia,
-					PARAM_INT32, selopt.feather,
-					PARAM_FLOAT, (gdouble)selopt.feather_radius,
-					PARAM_END);
+      gimp_free_select (gfig_image,
+			i, line_pnts,
+			selopt.type,
+			selopt.antia,
+			selopt.feather,
+			selopt.feather_radius);
     }
-
-  gimp_destroy_params (return_vals, nreturn_vals);
 
   g_free (line_pnts);
 }
@@ -9301,8 +9069,6 @@ d_paint_arc (Dobject *obj)
   /* first point center */
   /* Next point is radius */
   gdouble *line_pnts;
-  GParam *return_vals = NULL;
-  gint nreturn_vals;
   gint seg_count = 0;
   gint i = 0;
   gdouble ang_grid;
@@ -9328,9 +9094,8 @@ d_paint_arc (Dobject *obj)
 
   seg_count = 360; /* Should make a smoth-ish curve */
 
-  /* The second 2* to get around bug in GIMP */
   /* +3 because we MIGHT do pie selection */
-  line_pnts = g_new0 (gdouble, GFIG_LCC*(2*seg_count + 3));
+  line_pnts = g_new0 (gdouble, 2 * seg_count + 3);
 
   /* Lines */
   ang_grid = 2*G_PI/(gdouble)360;
@@ -9384,47 +9149,9 @@ d_paint_arc (Dobject *obj)
   /* One go */
   if (selvals.painttype == PAINT_BRUSH_TYPE)
     {
-      switch (selvals.brshtype)
-	{
-	case BRUSH_BRUSH_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_paintbrush", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_FLOAT, (gdouble)selvals.brushfade,
-					    PARAM_INT32, (i/2)*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
-					    PARAM_FLOATARRAY, &line_pnts[0],
-					    PARAM_INT32, 0,
-					    PARAM_FLOAT, 0.0,
-					    PARAM_END);
-	  break;
-	case BRUSH_PENCIL_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_pencil", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_INT32, (i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
-					    PARAM_END);
-	  break;
-	case BRUSH_AIRBRUSH_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_airbrush", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_FLOAT, (gdouble)selvals.airbrushpressure,
-					    PARAM_INT32, (i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
-					    PARAM_END);
-	  break;
-	case BRUSH_PATTERN_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_clone", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_INT32, 1,
-					    PARAM_FLOAT, (gdouble)0.0,
-					    PARAM_FLOAT, (gdouble)0.0,
-					    PARAM_INT32, (i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
-					    PARAM_END);
-	  break;
-	default:
-	  break;
-	}
+      gfig_paint (selvals.brshtype,
+		  gfig_drawable,
+		  i, line_pnts);
     }
   else
     {
@@ -9435,19 +9162,13 @@ d_paint_arc (Dobject *obj)
 	  line_pnts[i++] = center_pnt.y;
 	}
 
-      /* We want to do a selection */
-      return_vals = gimp_run_procedure ("gimp_free_select", &nreturn_vals,
-					PARAM_IMAGE, gfig_image,
-					PARAM_INT32, (i/2)*2,
-					PARAM_FLOATARRAY, &line_pnts[0],  
-					PARAM_INT32, selopt.type,
-					PARAM_INT32, selopt.antia,
-					PARAM_INT32, selopt.feather,
-					PARAM_FLOAT, (gdouble)selopt.feather_radius,
-					PARAM_END);
+      gimp_free_select (gfig_image,
+			i, line_pnts,
+			selopt.type,
+			selopt.antia,
+			selopt.feather,
+			selopt.feather_radius);
     }
-  
-  gimp_destroy_params (return_vals, nreturn_vals);
 
   g_free (line_pnts);
 }
@@ -9836,8 +9557,6 @@ d_paint_star (Dobject *obj)
   /* first point center */
   /* Next point is radius */
   gdouble *line_pnts;
-  GParam *return_vals = NULL;
-  gint nreturn_vals;
   gint seg_count = 0;
   gint i = 0;
   DobjPoints * center_pnt;
@@ -9865,8 +9584,7 @@ d_paint_star (Dobject *obj)
   if (!center_pnt || !seg_count)
     return; /* no-line */
 
-  /* The second 2* to get around bug in GIMP */
-  line_pnts = g_new0 (gdouble, GFIG_LCC * (2 * seg_count + 1));
+  line_pnts = g_new0 (gdouble, 2 * seg_count + 1);
   
   /* Go around all the points drawing a line from one to the next */
   /* Next point defines the radius */
@@ -9959,67 +9677,21 @@ d_paint_star (Dobject *obj)
     scale_to_xy (&line_pnts[0], i/2);
 
   /* One go */
-    /* One go */
   if (selvals.painttype == PAINT_BRUSH_TYPE)
     {
-      switch (selvals.brshtype)
-	{
-	case BRUSH_BRUSH_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_paintbrush", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_FLOAT, (gdouble)selvals.brushfade,
-					    PARAM_INT32, (i/2)*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
-					    PARAM_FLOATARRAY, &line_pnts[0],
- 					    PARAM_INT32, 0,
-					    PARAM_FLOAT, 0.0,
- 					    PARAM_END);
-	  break;
-	case BRUSH_PENCIL_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_pencil", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_INT32, (i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
-					    PARAM_END);
-	  break;
-	case BRUSH_AIRBRUSH_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_airbrush", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_FLOAT, (gdouble)selvals.airbrushpressure,
-					    PARAM_INT32, (i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
-					    PARAM_END);
-	  break;
-	case BRUSH_PATTERN_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_clone", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_INT32, 1,
-					    PARAM_FLOAT, (gdouble)0.0,
-					    PARAM_FLOAT, (gdouble)0.0,
-					    PARAM_INT32, (i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
-					    PARAM_END);
-	  break;
-	default:
-	  break;
-	}
+      gfig_paint (selvals.brshtype,
+		  gfig_drawable,
+		  i, line_pnts);
     }
   else
     {
-      /* We want to do a selection */
-      return_vals = gimp_run_procedure ("gimp_free_select", &nreturn_vals,
-					PARAM_IMAGE, gfig_image,
-					PARAM_INT32, (i/2)*2,
-					PARAM_FLOATARRAY, &line_pnts[0],  
-					PARAM_INT32, selopt.type,
-					PARAM_INT32, selopt.antia,
-					PARAM_INT32, selopt.feather,
-					PARAM_FLOAT, (gdouble)selopt.feather_radius,
-					PARAM_END);
-
+      gimp_free_select (gfig_image,
+			i, line_pnts,
+			selopt.type,
+			selopt.antia,
+			selopt.feather,
+			selopt.feather_radius);
     }
-
-  gimp_destroy_params (return_vals, nreturn_vals);
 
   g_free (line_pnts);
 }
@@ -10379,8 +10051,6 @@ d_paint_spiral (Dobject *obj)
   /* first point center */
   /* Next point is radius */
   gdouble *line_pnts;
-  GParam *return_vals = NULL;
-  gint nreturn_vals;
   gint seg_count = 0;
   gint i = 0;
   DobjPoints * center_pnt;
@@ -10428,8 +10098,7 @@ d_paint_spiral (Dobject *obj)
   /* count - */
   seg_count = abs ((gint) (obj->type_data)*180) + clock_wise*(gint)RINT (offset_angle/ang_grid);
 
-  /* The second 2* to get around bug in GIMP */
-  line_pnts = g_new0 (gdouble, GFIG_LCC*(2*seg_count + 3));
+  line_pnts = g_new0 (gdouble, 2 * seg_count + 3);
 
   for (loop = 0 ; loop <= seg_count; loop++)
     {
@@ -10468,67 +10137,21 @@ d_paint_spiral (Dobject *obj)
     scale_to_xy (&line_pnts[0], i/2);
 
   /* One go */
-  /* One go */
   if (selvals.painttype == PAINT_BRUSH_TYPE)
     {
-      switch (selvals.brshtype)
-	{
-	case BRUSH_BRUSH_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_paintbrush", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_FLOAT, (gdouble)selvals.brushfade,
-					    PARAM_INT32, (i/2)*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
-					    PARAM_FLOATARRAY, &line_pnts[0],
-					    PARAM_INT32, 0,
-					    PARAM_FLOAT, 0.0,
-					    PARAM_END);
-	  break;
-	case BRUSH_PENCIL_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_pencil", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_INT32, (i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
-					    PARAM_END);
-	  break;
-	case BRUSH_AIRBRUSH_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_airbrush", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_FLOAT, (gdouble)selvals.airbrushpressure,
-					    PARAM_INT32, (i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
-					    PARAM_END);
-	  break;
-	case BRUSH_PATTERN_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_clone", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_INT32, 1,
-					    PARAM_FLOAT, (gdouble)0.0,
-					    PARAM_FLOAT, (gdouble)0.0,
-					    PARAM_INT32, (i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
-					    PARAM_END);
-	  break;
-	default:
-	  break;
-	}
+      gfig_paint (selvals.brshtype,
+		  gfig_drawable,
+		  i, line_pnts);
     }
   else
     {
-      /* We want to do a selection */
-      return_vals = gimp_run_procedure ("gimp_free_select", &nreturn_vals,
-					PARAM_IMAGE, gfig_image,
-					PARAM_INT32, (i/2)*2,
-					PARAM_FLOATARRAY, &line_pnts[0],  
-					PARAM_INT32, selopt.type,
-					PARAM_INT32, selopt.antia,
-					PARAM_INT32, selopt.feather,
-					PARAM_FLOAT, (gdouble)selopt.feather_radius,
-					PARAM_END);
-
+      gimp_free_select (gfig_image,
+			i, line_pnts,
+			selopt.type,
+			selopt.antia,
+			selopt.feather,
+			selopt.feather_radius);
     }
-
-  gimp_destroy_params (return_vals, nreturn_vals);
 
   g_free (line_pnts);
 }
@@ -10930,8 +10553,7 @@ d_draw_bezier (Dobject *obj)
   if (!spnt || !seg_count)
     return; /* no-line */
 
-  /* The second *2 to get around bug in GIMP */
-  line_pnts = (fp_pnt) g_new0 (gdouble, GFIG_LCC * (2 * seg_count + 1));
+  line_pnts = (fp_pnt) g_new0 (gdouble, 2 * seg_count + 1);
 
   /* Go around all the points drawing a line from one to the next */
   while (spnt)
@@ -10964,12 +10586,10 @@ d_paint_bezier (Dobject *obj)
 {
   gdouble *line_pnts;
   gdouble (*bz_line_pnts)[2];
-  DobjPoints * spnt;
+  DobjPoints *spnt;
   gint seg_count = 0;
 
-  GParam *return_vals = NULL;
-  gint nreturn_vals;
-  gint i=0;
+  gint i = 0;
 
   spnt = obj->points;
 
@@ -10987,8 +10607,7 @@ d_paint_bezier (Dobject *obj)
   if (!spnt || !seg_count)
     return; /* no-line */
 
-  /* The second *2 to get around bug in GIMP */
-  bz_line_pnts = (fp_pnt) g_new0 (gdouble, GFIG_LCC * (2 * seg_count + 1));
+  bz_line_pnts = (fp_pnt) g_new0 (gdouble, 2 * seg_count + 1);
 
   /* Go around all the points drawing a line from one to the next */
   while (spnt)
@@ -11012,65 +10631,22 @@ d_paint_bezier (Dobject *obj)
   else
     scale_to_xy (&line_pnts[0], i / 2);
 
+  /* One go */
   if (selvals.painttype == PAINT_BRUSH_TYPE)
     {
-      switch (selvals.brshtype)
-	{
-	case BRUSH_BRUSH_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_paintbrush", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_FLOAT, (gdouble)selvals.brushfade,
-					    PARAM_INT32, (i/2)*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
-					    PARAM_FLOATARRAY, &line_pnts[0],
-					    PARAM_INT32, 0,
-					    PARAM_FLOAT, 0.0,
-					    PARAM_END);
-	  break;
-	case BRUSH_PENCIL_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_pencil", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_INT32, (i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
-					    PARAM_END);
-	  break;
-	case BRUSH_AIRBRUSH_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_airbrush", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_FLOAT, (gdouble)selvals.airbrushpressure,
-					    PARAM_INT32, (i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
-					    PARAM_END);
-	  break;
-	case BRUSH_PATTERN_TYPE:
-	  return_vals = gimp_run_procedure ("gimp_clone", &nreturn_vals,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_DRAWABLE, gfig_drawable,
-					    PARAM_INT32, 1,
-					    PARAM_FLOAT, (gdouble)0.0,
-					    PARAM_FLOAT, (gdouble)0.0,
-					    PARAM_INT32, (i/2)*2,
-					    PARAM_FLOATARRAY, &line_pnts[0],  
-					    PARAM_END);
-	  break;
-	default:
-	  break;
-	}
+      gfig_paint (selvals.brshtype,
+		  gfig_drawable,
+		  i, line_pnts);
     }
   else
     {
-      /* We want to do a selection */
-      return_vals = gimp_run_procedure ("gimp_free_select", &nreturn_vals,
-					PARAM_IMAGE, gfig_image,
-					PARAM_INT32, (i/2)*2,
-					PARAM_FLOATARRAY, &line_pnts[0],  
-					PARAM_INT32, selopt.type,
-					PARAM_INT32, selopt.antia,
-					PARAM_INT32, selopt.feather,
-					PARAM_FLOAT, (gdouble)selopt.feather_radius,
-					PARAM_END);
+      gimp_free_select (gfig_image,
+			i, line_pnts,
+			selopt.type,
+			selopt.antia,
+			selopt.feather,
+			selopt.feather_radius);
     }
-
-  gimp_destroy_params (return_vals, nreturn_vals);
 
   g_free (bz_line_pnts);
   /* Don't free line_pnts - may need again */

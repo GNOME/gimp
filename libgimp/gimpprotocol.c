@@ -1007,32 +1007,32 @@ _gp_params_read (GIOChannel  *channel,
 
       switch ((*params)[i].type)
 	{
-	case PARAM_INT32:
+	case GIMP_PDB_INT32:
 	  if (!wire_read_int32 (channel, (guint32*) &(*params)[i].data.d_int32, 1))
 	    goto cleanup;
 	  break;
 
-	case PARAM_INT16:
+	case GIMP_PDB_INT16:
 	  if (!wire_read_int16 (channel, (guint16*) &(*params)[i].data.d_int16, 1))
 	    goto cleanup;
 	  break;
 
-	case PARAM_INT8:
+	case GIMP_PDB_INT8:
 	  if (!wire_read_int8 (channel, (guint8*) &(*params)[i].data.d_int8, 1))
 	    goto cleanup;
 	  break;
 
-        case PARAM_FLOAT:
+        case GIMP_PDB_FLOAT:
 	  if (!wire_read_double (channel, &(*params)[i].data.d_float, 1))
 	    goto cleanup;
           break;
 
-        case PARAM_STRING:
+        case GIMP_PDB_STRING:
 	  if (!wire_read_string (channel, &(*params)[i].data.d_string, 1))
 	    goto cleanup;
           break;
 
-        case PARAM_INT32ARRAY:
+        case GIMP_PDB_INT32ARRAY:
 	  (*params)[i].data.d_int32array =
 	    g_new (gint32, (*params)[i-1].data.d_int32);
 	  if (!wire_read_int32 (channel, (guint32*) (*params)[i].data.d_int32array,
@@ -1043,7 +1043,7 @@ _gp_params_read (GIOChannel  *channel,
 	    }
           break;
 
-        case PARAM_INT16ARRAY:
+        case GIMP_PDB_INT16ARRAY:
 	  (*params)[i].data.d_int16array =
 	    g_new (gint16, (*params)[i-1].data.d_int32);
 	  if (!wire_read_int16 (channel, (guint16*) (*params)[i].data.d_int16array,
@@ -1054,7 +1054,7 @@ _gp_params_read (GIOChannel  *channel,
 	    }
           break;
 
-        case PARAM_INT8ARRAY:
+        case GIMP_PDB_INT8ARRAY:
 	  (*params)[i].data.d_int8array =
 	    g_new (gint8, (*params)[i-1].data.d_int32);
 	  if (!wire_read_int8 (channel, (guint8*) (*params)[i].data.d_int8array,
@@ -1065,7 +1065,7 @@ _gp_params_read (GIOChannel  *channel,
 	    }
           break;
 
-        case PARAM_FLOATARRAY:
+        case GIMP_PDB_FLOATARRAY:
 	  (*params)[i].data.d_floatarray =
 	    g_new (gdouble, (*params)[i-1].data.d_int32);
 	  if (!wire_read_double (channel, (*params)[i].data.d_floatarray,
@@ -1076,7 +1076,7 @@ _gp_params_read (GIOChannel  *channel,
 	    }
           break;
 
-        case PARAM_STRINGARRAY:
+        case GIMP_PDB_STRINGARRAY:
 	  (*params)[i].data.d_stringarray =
 	    g_new0 (gchar*, (*params)[i-1].data.d_int32);
 	  if (!wire_read_string (channel, (*params)[i].data.d_stringarray,
@@ -1089,7 +1089,7 @@ _gp_params_read (GIOChannel  *channel,
 	    }
           break;
 
-        case PARAM_COLOR:
+        case GIMP_PDB_COLOR:
 	  if (!wire_read_int8 (channel, (guint8*) &(*params)[i].data.d_color.red, 1))
 	    goto cleanup;
 	  if (!wire_read_int8 (channel, (guint8*) &(*params)[i].data.d_color.green, 1))
@@ -1098,50 +1098,50 @@ _gp_params_read (GIOChannel  *channel,
 	    goto cleanup;
           break;
 
-        case PARAM_REGION:
+        case GIMP_PDB_REGION:
           break;
 
-        case PARAM_DISPLAY:
+        case GIMP_PDB_DISPLAY:
 	  if (!wire_read_int32 (channel, (guint32*) &(*params)[i].data.d_display, 1))
 	    goto cleanup;
           break;
 
-        case PARAM_IMAGE:
+        case GIMP_PDB_IMAGE:
 	  if (!wire_read_int32 (channel, (guint32*) &(*params)[i].data.d_image, 1))
 	    goto cleanup;
           break;
 
-        case PARAM_LAYER:
+        case GIMP_PDB_LAYER:
 	  if (!wire_read_int32 (channel, (guint32*) &(*params)[i].data.d_layer, 1))
 	    goto cleanup;
           break;
 
-        case PARAM_CHANNEL:
+        case GIMP_PDB_CHANNEL:
 	  if (!wire_read_int32 (channel, (guint32*) &(*params)[i].data.d_channel, 1))
 	    goto cleanup;
           break;
 
-        case PARAM_DRAWABLE:
+        case GIMP_PDB_DRAWABLE:
 	  if (!wire_read_int32 (channel, (guint32*) &(*params)[i].data.d_drawable, 1))
 	    goto cleanup;
           break;
 
-        case PARAM_SELECTION:
+        case GIMP_PDB_SELECTION:
 	  if (!wire_read_int32 (channel, (guint32*) &(*params)[i].data.d_selection, 1))
 	    goto cleanup;
           break;
 
-        case PARAM_BOUNDARY:
+        case GIMP_PDB_BOUNDARY:
 	  if (!wire_read_int32 (channel, (guint32*) &(*params)[i].data.d_boundary, 1))
 	    goto cleanup;
           break;
 
-        case PARAM_PATH:
+        case GIMP_PDB_PATH:
 	  if (!wire_read_int32 (channel, (guint32*) &(*params)[i].data.d_path, 1))
 	    goto cleanup;
           break;
 
-        case PARAM_PARASITE:
+        case GIMP_PDB_PARASITE:
 	  if (!wire_read_string (channel, &(*params)[i].data.d_parasite.name, 1))
 	    goto cleanup;
 	  if ((*params)[i].data.d_parasite.name == NULL)
@@ -1168,12 +1168,12 @@ _gp_params_read (GIOChannel  *channel,
 	    (*params)[i].data.d_parasite.data = NULL;
 	  break;
 
-        case PARAM_STATUS:
+        case GIMP_PDB_STATUS:
 	  if (!wire_read_int32 (channel, (guint32*) &(*params)[i].data.d_status, 1))
 	    goto cleanup;
           break;
 
-	case PARAM_END:
+	case GIMP_PDB_END:
 	  break;
 	}
     }
@@ -1203,62 +1203,62 @@ _gp_params_write (GIOChannel *channel,
 
       switch (params[i].type)
 	{
-	case PARAM_INT32:
+	case GIMP_PDB_INT32:
 	  if (!wire_write_int32 (channel, (guint32*) &params[i].data.d_int32, 1))
 	    return;
 	  break;
 
-	case PARAM_INT16:
+	case GIMP_PDB_INT16:
 	  if (!wire_write_int16 (channel, (guint16*) &params[i].data.d_int16, 1))
 	    return;
 	  break;
 
-	case PARAM_INT8:
+	case GIMP_PDB_INT8:
 	  if (!wire_write_int8 (channel, (guint8*) &params[i].data.d_int8, 1))
 	    return;
 	  break;
 
-        case PARAM_FLOAT:
+        case GIMP_PDB_FLOAT:
 	  if (!wire_write_double (channel, &params[i].data.d_float, 1))
 	    return;
           break;
 
-        case PARAM_STRING:
+        case GIMP_PDB_STRING:
 	  if (!wire_write_string (channel, &params[i].data.d_string, 1))
 	    return;
           break;
 
-        case PARAM_INT32ARRAY:
+        case GIMP_PDB_INT32ARRAY:
 	  if (!wire_write_int32 (channel, (guint32*) params[i].data.d_int32array,
 				 params[i-1].data.d_int32))
 	    return;
           break;
 
-        case PARAM_INT16ARRAY:
+        case GIMP_PDB_INT16ARRAY:
 	  if (!wire_write_int16 (channel, (guint16*) params[i].data.d_int16array,
 				 params[i-1].data.d_int32))
 	    return;
           break;
 
-        case PARAM_INT8ARRAY:
+        case GIMP_PDB_INT8ARRAY:
 	  if (!wire_write_int8 (channel, (guint8*) params[i].data.d_int8array,
 				params[i-1].data.d_int32))
 	    return;
           break;
 
-        case PARAM_FLOATARRAY:
+        case GIMP_PDB_FLOATARRAY:
 	  if (!wire_write_double (channel, params[i].data.d_floatarray,
 				  params[i-1].data.d_int32))
 	    return;
           break;
 
-        case PARAM_STRINGARRAY:
+        case GIMP_PDB_STRINGARRAY:
 	  if (!wire_write_string (channel, params[i].data.d_stringarray,
 				  params[i-1].data.d_int32))
 	    return;
           break;
 
-        case PARAM_COLOR:
+        case GIMP_PDB_COLOR:
 	  if (!wire_write_int8 (channel, (guint8*) &params[i].data.d_color.red, 1))
 	    return;
 	  if (!wire_write_int8 (channel, (guint8*) &params[i].data.d_color.green, 1))
@@ -1267,50 +1267,50 @@ _gp_params_write (GIOChannel *channel,
 	    return;
           break;
 
-        case PARAM_REGION:
+        case GIMP_PDB_REGION:
           break;
 
-        case PARAM_DISPLAY:
+        case GIMP_PDB_DISPLAY:
 	  if (!wire_write_int32 (channel, (guint32*) &params[i].data.d_display, 1))
 	    return;
           break;
 
-        case PARAM_IMAGE:
+        case GIMP_PDB_IMAGE:
 	  if (!wire_write_int32 (channel, (guint32*) &params[i].data.d_image, 1))
 	    return;
           break;
 
-        case PARAM_LAYER:
+        case GIMP_PDB_LAYER:
 	  if (!wire_write_int32 (channel, (guint32*) &params[i].data.d_layer, 1))
 	    return;
           break;
 
-        case PARAM_CHANNEL:
+        case GIMP_PDB_CHANNEL:
 	  if (!wire_write_int32 (channel, (guint32*) &params[i].data.d_channel, 1))
 	    return;
           break;
 
-        case PARAM_DRAWABLE:
+        case GIMP_PDB_DRAWABLE:
 	  if (!wire_write_int32 (channel, (guint32*) &params[i].data.d_drawable, 1))
 	    return;
           break;
 
-        case PARAM_SELECTION:
+        case GIMP_PDB_SELECTION:
 	  if (!wire_write_int32 (channel, (guint32*) &params[i].data.d_selection, 1))
 	    return;
           break;
 
-        case PARAM_BOUNDARY:
+        case GIMP_PDB_BOUNDARY:
 	  if (!wire_write_int32 (channel, (guint32*) &params[i].data.d_boundary, 1))
 	    return;
           break;
 
-        case PARAM_PATH:
+        case GIMP_PDB_PATH:
 	  if (!wire_write_int32 (channel, (guint32*) &params[i].data.d_path, 1))
 	    return;
           break;
 
-        case PARAM_PARASITE:
+        case GIMP_PDB_PARASITE:
 	  {
 	    GimpParasite *p = (GimpParasite *) &params[i].data.d_parasite;
 	    if (p->name == NULL)
@@ -1333,12 +1333,12 @@ _gp_params_write (GIOChannel *channel,
 	  }
 	  break;
 
-        case PARAM_STATUS:
+        case GIMP_PDB_STATUS:
 	  if (!wire_write_int32 (channel, (guint32*) &params[i].data.d_status, 1))
 	    return;
           break;
 
-	case PARAM_END:
+	case GIMP_PDB_END:
 	  break;
 	}
     }
@@ -1355,45 +1355,45 @@ _gp_params_destroy (GPParam *params,
     {
       switch (params[i].type)
 	{
-	case PARAM_INT32:
-	case PARAM_INT16:
-	case PARAM_INT8:
-	case PARAM_FLOAT:
-	case PARAM_COLOR:
-	case PARAM_REGION:
-	case PARAM_DISPLAY:
-	case PARAM_IMAGE:
-	case PARAM_LAYER:
-	case PARAM_CHANNEL:
-	case PARAM_DRAWABLE:
-	case PARAM_SELECTION:
-	case PARAM_BOUNDARY:
-	case PARAM_PATH:
-	case PARAM_STATUS:
+	case GIMP_PDB_INT32:
+	case GIMP_PDB_INT16:
+	case GIMP_PDB_INT8:
+	case GIMP_PDB_FLOAT:
+	case GIMP_PDB_COLOR:
+	case GIMP_PDB_REGION:
+	case GIMP_PDB_DISPLAY:
+	case GIMP_PDB_IMAGE:
+	case GIMP_PDB_LAYER:
+	case GIMP_PDB_CHANNEL:
+	case GIMP_PDB_DRAWABLE:
+	case GIMP_PDB_SELECTION:
+	case GIMP_PDB_BOUNDARY:
+	case GIMP_PDB_PATH:
+	case GIMP_PDB_STATUS:
 	  break;
 
-	case PARAM_STRING:
+	case GIMP_PDB_STRING:
 	  g_free (params[i].data.d_string);
 	  break;
 
-	case PARAM_INT32ARRAY:
+	case GIMP_PDB_INT32ARRAY:
 	  g_free (params[i].data.d_int32array);
 	  break;
 
-	case PARAM_INT16ARRAY:
+	case GIMP_PDB_INT16ARRAY:
 	  g_free (params[i].data.d_int16array);
 	  break;
 
-	case PARAM_INT8ARRAY:
+	case GIMP_PDB_INT8ARRAY:
 	  g_free (params[i].data.d_int8array);
 	  break;
 
-	case PARAM_FLOATARRAY:
+	case GIMP_PDB_FLOATARRAY:
 	  g_free (params[i].data.d_floatarray);
 	  break;
 
-	case PARAM_STRINGARRAY:
-	  if ((i > 0) && (params[i-1].type == PARAM_INT32))
+	case GIMP_PDB_STRINGARRAY:
+	  if ((i > 0) && (params[i-1].type == GIMP_PDB_INT32))
 	    {
 	      count = params[i-1].data.d_int32;
 	      for (j = 0; j < count; j++)
@@ -1402,14 +1402,14 @@ _gp_params_destroy (GPParam *params,
 	    }
 	  break;
 
-	case PARAM_PARASITE:
+	case GIMP_PDB_PARASITE:
 	  if (params[i].data.d_parasite.name)
 	    g_free(params[i].data.d_parasite.name);
 	  if (params[i].data.d_parasite.data)
 	    g_free(params[i].data.d_parasite.data);
 	  break;
 
-	case PARAM_END:
+	case GIMP_PDB_END:
 	  break;
 	}
     }

@@ -67,8 +67,6 @@ static void      run    (gchar    *name,
 static gint      sel2path_dialog         (SELVALS   *sels);
 static void      sel2path_ok_callback    (GtkWidget *widget, 
 					  gpointer   data);
-static void      sel2path_close_callback (GtkWidget *widget,
-					  gpointer   data);
 static void      sel2path_reset_callback (GtkWidget *widget,
 					  gpointer   data);
 static void      dialog_print_selVals    (SELVALS   *sels);

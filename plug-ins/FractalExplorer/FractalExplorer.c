@@ -1133,22 +1133,16 @@ list_button_press (GtkWidget      *widget,
 void
 plug_in_parse_fractalexplorer_path (void)
 {
-  GParam *return_vals;
-  gint nreturn_vals;
-
   GList *fail_list = NULL;
   GList *list;
+  gchar *fractalexplorer_path;
 
   gimp_path_free (fractalexplorer_path_list);
   fractalexplorer_path_list = NULL;
+
+  fractalexplorer_path = gimp_gimprc_query ("fractalexplorer-path");
   
-  return_vals = gimp_run_procedure ("gimp_gimprc_query",
-				    &nreturn_vals,
-				    PARAM_STRING, "fractalexplorer-path",
-				    PARAM_END);
-  
-  if (return_vals[0].data.d_status != STATUS_SUCCESS ||
-      return_vals[1].data.d_string == NULL)
+  if (!fractalexplorer_path)
     {
       gchar *gimprc = gimp_personal_rc_file ("gimprc");
       gchar *path = gimp_strescape
@@ -1162,14 +1156,13 @@ plug_in_parse_fractalexplorer_path (void)
 		   "to your %s file."), path, gimprc);
       g_free (gimprc);
       g_free (path);
-      gimp_destroy_params (return_vals, nreturn_vals);
       return;
     }
 
-  fractalexplorer_path_list = gimp_path_parse (return_vals[1].data.d_string,
+  fractalexplorer_path_list = gimp_path_parse (fractalexplorer_path,
 					       16, TRUE, &fail_list);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  g_free (fractalexplorer_path);
 
   if (fail_list)
     {

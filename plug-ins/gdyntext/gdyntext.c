@@ -92,7 +92,7 @@ static void gdt_query(void)
 			"Marco Lamberto <lm@geocities.com>",
 			"Marco Lamberto",
 			"Jan 1999",
-			_("<Image>/Filters/Render/Dynamic Text..."),
+			N_("<Image>/Filters/Render/Dynamic Text..."),
 			"RGB*,GRAY*,INDEXED*",
 			PROC_PLUG_IN,
 			ngdt_args, ngdt_rets, gdt_args, gdt_rets);

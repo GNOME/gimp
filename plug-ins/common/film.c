@@ -378,7 +378,7 @@ film (void)
   gint i, j, k, picture_count;
   gdouble f;
   guchar f_red, f_green, f_blue;
-  gint nreturn_vals, num_layers;
+  gint num_layers;
   gint32 *image_ID_src, image_ID_dst, layer_ID_src, layer_ID_dst;
   gint32 *layers;
   GDrawable *drawable_dst;
@@ -568,9 +568,8 @@ film (void)
     g_free (layers);
 
   /* Drawing text/numbers leaves us with a floating selection. Stop it */
-  gimp_run_procedure ("gimp_floating_sel_anchor", &nreturn_vals,
-		      PARAM_LAYER, gimp_image_floating_selection (image_ID_dst),
-		      PARAM_END);
+  gimp_floating_sel_anchor (gimp_image_floating_selection (image_ID_dst));
+
   /* Restore foreground */
   gimp_palette_set_foreground (f_red, f_green, f_blue);
 
@@ -907,10 +906,11 @@ draw_number (gint32 layer_ID,
              gint   height)
 {
   gchar buf[32];
-  GDrawable *drw;
-  GParam *params = NULL;
-  gint nreturn_vals, k, delta, max_delta;
-  gint32 image_ID, descent;
+  GimpDrawable *drw;
+  gint k, delta, max_delta;
+  gint32 image_ID;
+  gint32 text_layer_ID;
+  gint   text_width, text_height, text_ascent, descent;
   gchar *family = filmvals.number_fontf;
 
   g_snprintf (buf, sizeof (buf), "%d", num);
@@ -927,54 +927,50 @@ draw_number (gint32 layer_ID,
     { /* Try different font sizes if inquire of extent failed */
       delta = (k+1) / 2;
       if ((k & 1) == 0) delta = -delta;
-      params = gimp_run_procedure ("gimp_text_get_extents", &nreturn_vals,
-				   PARAM_STRING, buf,
-				   PARAM_FLOAT, (gfloat)(height+delta),
-				   PARAM_INT32, (gint32)0,  /* use pixelsize */
-				   PARAM_STRING, "*",       /* foundry */
-				   PARAM_STRING, family,    /* family */
-				   PARAM_STRING, "*",       /* weight */
-				   PARAM_STRING, "*",       /* slant */
-				   PARAM_STRING, "*",       /* set_width */
-				   PARAM_STRING, "*",       /* spacing */
-				   PARAM_STRING, "*",
-				   PARAM_STRING, "*",
-				   PARAM_END);
+      
+      gimp_text_get_extents (buf,
+			     height+delta,
+			     GIMP_PIXELS,
+			     "*",       /* foundry */
+			     family,    /* family */
+			     "*",       /* weight */
+			     "*",       /* slant */
+			     "*",       /* set_width */
+			     "*",       /* spacing */
+			     "*",
+			     "*",
+			     &text_width,
+			     &text_height,
+			     &text_ascent,
+			     &descent);
 
-      if (params[0].data.d_status == STATUS_SUCCESS)
+      if (text_width)   /*  FIXME:  use return_value of gimp_text_get_extens  */
 	{
 	  height += delta;
 	  break;
 	}
     }
 
-  if (params[0].data.d_status == STATUS_SUCCESS)
-    descent = params[4].data.d_int32;
-  else
-    descent = 0;
+  text_layer_ID = gimp_text (image_ID,
+			     layer_ID,
+			     x,
+			     y+descent/2,
+			     buf,
+			     1,           /* border */
+			     FALSE,       /* antialias */
+			     height,
+			     GIMP_PIXELS, 
+			     "*",         /* foundry */
+			     family,      /* family */
+			     "*",         /* weight */
+			     "*",         /* slant */
+			     "*",         /* set_width */
+			     "*",         /* spacing */
+			     "*",
+			     "*");
 
-  params = gimp_run_procedure ("gimp_text", &nreturn_vals,
-			       PARAM_IMAGE, image_ID,
-			       PARAM_DRAWABLE, layer_ID,
-			       PARAM_FLOAT, (gfloat)x,
-			       PARAM_FLOAT, (gfloat)(y+descent/2),
-			       PARAM_STRING, buf,
-			       PARAM_INT32, (gint32)1,  /* border */
-			       PARAM_INT32, (gint32)0,  /* antialias */
-			       PARAM_FLOAT, (gfloat)height,
-			       PARAM_INT32, (gint32)0,  /* use pixelsize */
-			       PARAM_STRING, "*",       /* foundry */
-			       PARAM_STRING, family,    /* family */
-			       PARAM_STRING, "*",       /* weight */
-			       PARAM_STRING, "*",       /* slant */
-			       PARAM_STRING, "*",       /* set_width */
-			       PARAM_STRING, "*",       /* spacing */
-			       PARAM_STRING, "*",
-			       PARAM_STRING, "*",
-			       PARAM_END);
-
-  if (params[0].data.d_status != STATUS_SUCCESS)
-    printf ("draw_number: Error in drawing text\n");
+  if (text_layer_ID == -1)
+    g_message ("draw_number: Error in drawing text\n");
 
   gimp_drawable_detach (drw);
 }

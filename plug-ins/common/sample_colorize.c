@@ -1761,33 +1761,6 @@ p_smp_dialog (void)
   return (0);
 }	/* end p_smp_dialog */
 
-/* ============================================================================
- * p_gimp_convert_rgb
- *   PDB Call
- * ============================================================================
- */
-gint
-p_gimp_convert_rgb (gint32 image_id)
-{
-   static gchar    *l_gimp_convert_rgb_proc = "gimp_convert_rgb";
-   GParam          *return_vals;
-   gint              nreturn_vals;
-
-   return_vals = gimp_run_procedure (l_gimp_convert_rgb_proc,
-                                 &nreturn_vals,
-                                 PARAM_IMAGE, image_id,
-                                 PARAM_END);
-                                 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
-   {
-      return(TRUE);
-   }
-   printf("Error: PDB call of %s failed staus=%d\n", 
-          l_gimp_convert_rgb_proc, (int)return_vals[0].data.d_status);
-   return(FALSE);
-}	/* end p_gimp_convert_rgb */
-
-
 /* -----------------------------
  * DEBUG print procedures START
  * -----------------------------
@@ -3222,7 +3195,7 @@ p_main_colorize(gint mc_flags)
       {
          if(mc_flags & MC_DST_REMAP)
          {
-           p_gimp_convert_rgb(gimp_layer_get_image_id(g_values.dst_id));
+           gimp_convert_rgb(gimp_layer_get_image_id(g_values.dst_id));
          }
       }
       p_colorize_drawable(dst_drawable->id);

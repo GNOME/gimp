@@ -433,7 +433,7 @@ gimp_brush_select_widget_set_popup (GtkWidget *widget,
   gint     init_spacing;
   GimpLayerModeEffects init_paint_mode;
   gdouble  init_opacity;
-  gint    *mask_data_size;
+  gint     mask_data_size;
   guint8  *mask_data;
   gchar   *brush_name;
   BSelect *bsel;

@@ -432,58 +432,58 @@ gimp_run_procedure (gchar *name,
   va_start (args, nreturn_vals);
   param_type = va_arg (args, GimpPDBArgType);
 
-  while (param_type != PARAM_END)
+  while (param_type != GIMP_PDB_END)
     {
       switch (param_type)
 	{
-	case PARAM_INT32:
-        case PARAM_DISPLAY:
-        case PARAM_IMAGE:
-        case PARAM_LAYER:
-        case PARAM_CHANNEL:
-        case PARAM_DRAWABLE:
-        case PARAM_SELECTION:
-        case PARAM_BOUNDARY:
-        case PARAM_PATH:
-        case PARAM_STATUS:
+	case GIMP_PDB_INT32:
+        case GIMP_PDB_DISPLAY:
+        case GIMP_PDB_IMAGE:
+        case GIMP_PDB_LAYER:
+        case GIMP_PDB_CHANNEL:
+        case GIMP_PDB_DRAWABLE:
+        case GIMP_PDB_SELECTION:
+        case GIMP_PDB_BOUNDARY:
+        case GIMP_PDB_PATH:
+        case GIMP_PDB_STATUS:
 	  (void) va_arg (args, gint);
 	  break;
-	case PARAM_INT16:
+	case GIMP_PDB_INT16:
 	  (void) va_arg (args, gint);
 	  break;
-	case PARAM_INT8:
+	case GIMP_PDB_INT8:
 	  (void) va_arg (args, gint);
 	  break;
-        case PARAM_FLOAT:
+        case GIMP_PDB_FLOAT:
           (void) va_arg (args, gdouble);
           break;
-        case PARAM_STRING:
+        case GIMP_PDB_STRING:
           (void) va_arg (args, gchar *);
           break;
-        case PARAM_INT32ARRAY:
+        case GIMP_PDB_INT32ARRAY:
           (void) va_arg (args, gint32 *);
           break;
-        case PARAM_INT16ARRAY:
+        case GIMP_PDB_INT16ARRAY:
           (void) va_arg (args, gint16 *);
           break;
-        case PARAM_INT8ARRAY:
+        case GIMP_PDB_INT8ARRAY:
           (void) va_arg (args, gint8 *);
           break;
-        case PARAM_FLOATARRAY:
+        case GIMP_PDB_FLOATARRAY:
           (void) va_arg (args, gdouble *);
           break;
-        case PARAM_STRINGARRAY:
+        case GIMP_PDB_STRINGARRAY:
           (void) va_arg (args, gchar **);
           break;
-        case PARAM_COLOR:
+        case GIMP_PDB_COLOR:
           (void) va_arg (args, guchar *);
           break;
-        case PARAM_PARASITE:
+        case GIMP_PDB_PARASITE:
           (void) va_arg (args, GimpParasite *);
           break;
-        case PARAM_REGION:
+        case GIMP_PDB_REGION:
           break;
-	case PARAM_END:
+	case GIMP_PDB_END:
 	  break;
 	}
 
@@ -503,69 +503,69 @@ gimp_run_procedure (gchar *name,
 
       switch (proc_run.params[i].type)
 	{
-	case PARAM_INT32:
+	case GIMP_PDB_INT32:
 	  proc_run.params[i].data.d_int32 = (gint32) va_arg (args, gint);
 	  break;
-	case PARAM_INT16:
+	case GIMP_PDB_INT16:
 	  proc_run.params[i].data.d_int16 = (gint16) va_arg (args, gint);
 	  break;
-	case PARAM_INT8:
+	case GIMP_PDB_INT8:
 	  proc_run.params[i].data.d_int8 = (gint8) va_arg (args, gint);
 	  break;
-        case PARAM_FLOAT:
+        case GIMP_PDB_FLOAT:
           proc_run.params[i].data.d_float = (gdouble) va_arg (args, gdouble);
           break;
-        case PARAM_STRING:
+        case GIMP_PDB_STRING:
           proc_run.params[i].data.d_string = va_arg (args, gchar *);
           break;
-        case PARAM_INT32ARRAY:
+        case GIMP_PDB_INT32ARRAY:
           proc_run.params[i].data.d_int32array = va_arg (args, gint32 *);
           break;
-        case PARAM_INT16ARRAY:
+        case GIMP_PDB_INT16ARRAY:
           proc_run.params[i].data.d_int16array = va_arg (args, gint16 *);
           break;
-        case PARAM_INT8ARRAY:
+        case GIMP_PDB_INT8ARRAY:
           proc_run.params[i].data.d_int8array = va_arg (args, gint8 *);
           break;
-        case PARAM_FLOATARRAY:
+        case GIMP_PDB_FLOATARRAY:
           proc_run.params[i].data.d_floatarray = va_arg (args, gdouble *);
           break;
-        case PARAM_STRINGARRAY:
+        case GIMP_PDB_STRINGARRAY:
           proc_run.params[i].data.d_stringarray = va_arg (args, gchar **);
           break;
-        case PARAM_COLOR:
+        case GIMP_PDB_COLOR:
 	  color = va_arg (args, guchar *);
           proc_run.params[i].data.d_color.red   = color[0];
           proc_run.params[i].data.d_color.green = color[1];
           proc_run.params[i].data.d_color.blue  = color[2];
           break;
-        case PARAM_REGION:
+        case GIMP_PDB_REGION:
           break;
-        case PARAM_DISPLAY:
+        case GIMP_PDB_DISPLAY:
 	  proc_run.params[i].data.d_display = va_arg (args, gint32);
           break;
-        case PARAM_IMAGE:
+        case GIMP_PDB_IMAGE:
 	  proc_run.params[i].data.d_image = va_arg (args, gint32);
           break;
-        case PARAM_LAYER:
+        case GIMP_PDB_LAYER:
 	  proc_run.params[i].data.d_layer = va_arg (args, gint32);
           break;
-        case PARAM_CHANNEL:
+        case GIMP_PDB_CHANNEL:
 	  proc_run.params[i].data.d_channel = va_arg (args, gint32);
           break;
-        case PARAM_DRAWABLE:
+        case GIMP_PDB_DRAWABLE:
 	  proc_run.params[i].data.d_drawable = va_arg (args, gint32);
           break;
-        case PARAM_SELECTION:
+        case GIMP_PDB_SELECTION:
 	  proc_run.params[i].data.d_selection = va_arg (args, gint32);
           break;
-        case PARAM_BOUNDARY:
+        case GIMP_PDB_BOUNDARY:
 	  proc_run.params[i].data.d_boundary = va_arg (args, gint32);
           break;
-        case PARAM_PATH:
+        case GIMP_PDB_PATH:
 	  proc_run.params[i].data.d_path = va_arg (args, gint32);
           break;
-        case PARAM_PARASITE:
+        case GIMP_PDB_PARASITE:
 	  {
 	    GimpParasite *parasite = va_arg (args, GimpParasite *);
 
@@ -583,10 +583,10 @@ gimp_run_procedure (gchar *name,
 	      }
 	  }
 	  break;
-        case PARAM_STATUS:
+        case GIMP_PDB_STATUS:
 	  proc_run.params[i].data.d_status = va_arg (args, gint32);
           break;
-	case PARAM_END:
+	case GIMP_PDB_END:
 	  break;
 	}
     }
@@ -604,10 +604,10 @@ gimp_run_procedure (gchar *name,
 
   switch (return_vals[0].data.d_status)
     {
-    case STATUS_EXECUTION_ERROR:
+    case GIMP_PDB_EXECUTION_ERROR:
       /*g_warning ("an execution error occured while trying to run: \"%s\"", name);*/
       break;
-    case STATUS_CALLING_ERROR:
+    case GIMP_PDB_CALLING_ERROR:
       g_warning ("a calling error occured while trying to run: \"%s\"", name);
       break;
     default:
@@ -672,10 +672,10 @@ gimp_run_procedure2 (gchar     *name,
 
   switch (return_vals[0].data.d_status)
     {
-    case STATUS_EXECUTION_ERROR:
+    case GIMP_PDB_EXECUTION_ERROR:
       /*g_warning ("an execution error occured while trying to run: \"%s\"", name);*/
       break;
-    case STATUS_CALLING_ERROR:
+    case GIMP_PDB_CALLING_ERROR:
       g_warning ("a calling error occured while trying to run: \"%s\"", name);
       break;
     default:
