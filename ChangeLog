@@ -1,3 +1,8 @@
+2004-11-15  Øyvind Kolås  <pippin@gimp.org>
+
+	* docs/gimp.txt: removed, outdated.
+	* make_todo: removed, unused.
+
 2004-11-15  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/print-size-dialog.c: started to redo this dialog
