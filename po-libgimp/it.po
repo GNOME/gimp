@@ -1,24 +1,24 @@
+# This is the Italian catalog for The GIMP.
+# Copyright (C) 1999 Free Software Foundation, Inc.
+# Daniele Medri <madrid@linux.it>, 2000
+# Marco Ciampa <ciampix@libero.it>, 2003
+
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.16\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-09-07 22:53+0200\n"
-"PO-Revision-Date: dom feb  6 16:47:39 CET 2000\n"
-"Last-Translator: Daniele Medri <madrid@linux.it>\n"
+"PO-Revision-Date: dom feb  6 16:47:39 CET 2003\n"
+"Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Date: dom feb  6 16:47:39 CET 2000\n"
-"From: Daniele Medri <madrid@linux.it>\n"
-"Xgettext-Options: --default-domain=gimp --directory=.. --add-comments --"
-"keyword=_ --keyword=N_ --files-from=./POTFILES.in\n"
-"Files: app/about_dialog.c app/main.c app/menus.c app/regex.c\n"
 
 #: libgimp/gimpbrushmenu.c:132
-#, fuzzy
 msgid "Brush Selection"
-msgstr "Selezione delle unità"
+msgstr "Selezione pennelli"
 
 #: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, fuzzy, c-format
@@ -115,11 +115,11 @@ msgstr "Aggiungi canale alpha"
 #. the dialog
 #: libgimp/gimpexport.c:370
 msgid "Confirm Save"
-msgstr ""
+msgstr "Conferma salvataggio"
 
 #: libgimp/gimpexport.c:378
 msgid "Confirm"
-msgstr ""
+msgstr "Conferma"
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -166,22 +166,20 @@ msgid ""
 msgstr ""
 
 #: libgimp/gimpfontmenu.c:89
-#, fuzzy
 msgid "Font Selection"
-msgstr "Selezione delle unità"
+msgstr "Selezione caratteri"
 
 #: libgimp/gimpgradientmenu.c:103
-#, fuzzy
 msgid "Gradient Selection"
-msgstr "Selezione delle unità"
+msgstr "Selezione gradiente"
 
 #: libgimp/gimpmenu.c:401
 msgid "None"
-msgstr ""
+msgstr "Nessuno"
 
 #: libgimp/gimpmiscui.c:50
 msgid "Preview"
-msgstr ""
+msgstr "Anteprima"
 
 #: libgimp/gimpmiscui.c:536
 #, c-format
@@ -193,48 +191,47 @@ msgid ""
 msgstr ""
 
 #: libgimp/gimppatternmenu.c:115
-#, fuzzy
 msgid "Pattern Selection"
-msgstr "Selezione delle unità"
+msgstr "Selezione pattern"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
 msgstr "percento"
 
 #: libgimpbase/gimputils.c:118
-#, fuzzy, c-format
+#, c-format
 msgid "%d Bytes"
-msgstr "Byte"
+msgstr "%d Byte"
 
 #: libgimpbase/gimputils.c:122
 #, c-format
 msgid "%.2f KB"
-msgstr ""
+msgstr "%.2f KB"
 
 #: libgimpbase/gimputils.c:126
 #, c-format
 msgid "%.1f KB"
-msgstr ""
+msgstr "%.1f KB"
 
 #: libgimpbase/gimputils.c:130
 #, c-format
 msgid "%d KB"
-msgstr ""
+msgstr "%d KB"
 
 #: libgimpbase/gimputils.c:135
 #, c-format
 msgid "%.2f MB"
-msgstr ""
+msgstr "%.2f MB"
 
 #: libgimpbase/gimputils.c:140
 #, c-format
 msgid "%.1f MB"
-msgstr ""
+msgstr "%.1f MB"
 
 #: libgimpmodule/gimpmodule.c:174
 #, c-format
 msgid "Loading module: '%s'\n"
-msgstr ""
+msgstr "Caricamento modulo: '%s'\n"
 
 #: libgimpmodule/gimpmodule.c:190 libgimpmodule/gimpmodule.c:207
 #: libgimpmodule/gimpmodule.c:314 libgimpmodule/gimpmodule.c:341
@@ -586,57 +583,17 @@ msgstr ""
 
 #: modules/colorsel_triangle.c:182
 msgid "Triangle"
-msgstr ""
+msgstr "Triangolo"
 
 #: modules/colorsel_water.c:104
 msgid "Watercolor style color selector"
-msgstr ""
+msgstr "Selettore colori stile acquerelli"
 
 #: modules/colorsel_water.c:176
 msgid "Watercolor"
-msgstr ""
+msgstr "Acquerelli"
 
 #: modules/colorsel_water.c:251
 msgid "Pressure"
-msgstr ""
+msgstr "Pressione"
 
-#, fuzzy
-#~ msgid "_Time"
-#~ msgstr "Tempo"
-
-#~ msgid "pixel"
-#~ msgstr "pixel"
-
-#~ msgid "pixels"
-#~ msgstr "pixel"
-
-#~ msgid "inches"
-#~ msgstr "pollici"
-
-#~ msgid "millimeter"
-#~ msgstr "millimetri"
-
-#~ msgid "millimeters"
-#~ msgstr "millimetri"
-
-#~ msgid "point"
-#~ msgstr "punto"
-
-#~ msgid "points"
-#~ msgstr "punti"
-
-#~ msgid "picas"
-#~ msgstr "pica"
-
-#, fuzzy
-#~ msgid "Select Directory"
-#~ msgstr "Seleziona file"
-
-#~ msgid "OK"
-#~ msgstr "OK"
-
-#~ msgid "Select"
-#~ msgstr "Seleziona"
-
-#~ msgid "Close"
-#~ msgstr "Chiudi"
