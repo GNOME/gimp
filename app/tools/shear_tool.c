@@ -147,6 +147,8 @@ tools_new_shear_tool (void)
 
   tool = transform_core_new (SHEAR, TRUE);
 
+  tool->tool_cursor = GIMP_SHEAR_TOOL_CURSOR;
+
   private = tool->private;
 
   /*  set the rotation specific transformation attributes  */

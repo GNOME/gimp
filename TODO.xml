@@ -106,7 +106,7 @@
       </contact>
     </entry>    
 
-    <entry size="medium" difficulty="medium" status="10%" target="1.4">
+    <entry size="medium" difficulty="medium" status="30%" target="1.4">
       <title>Cleanup existing internal objects</title>
       <description>
 	<p>
@@ -120,7 +120,7 @@
       </contact>
     </entry>
 
-    <entry size="medium" difficulty="advanced" status="0%" target="1.4">
+    <entry size="medium" difficulty="advanced" status="80%" target="1.4">
       <title>Generic data structures</title>
       <description>
 	<p>
@@ -133,7 +133,7 @@
       </contact>
     </entry>
 
-    <entry size="medium" difficulty="medium" status="0%" target="1.4">
+    <entry size="medium" difficulty="medium" status="70%" target="1.4">
       <title>Generic object container(s)</title>
       <description>
 	<p>
@@ -173,13 +173,14 @@
   <section>
     <title>LibGimp</title>
 
-    <entry size="medium" difficulty="medium" status="40%" target="1.4">
+    <entry size="medium" difficulty="medium" status="50%" target="1.4">
       <title>Restructure LibGimp</title>
       <description>
 	<p>
-	  Put libgimp, libgimpui (and new libs) into their own subdirectories
-	  under a toplevel libs directory. Install all header files under 
-	  $prefix/include/gimp/1.3/ and change gimptool accordingly.
+	  Put libgimp, libgimpui (and new libs) into their own
+	  subdirectories. Install all header files under
+	  $prefix/include/gimp-MAJOR.MINOR/ and change gimptool
+	  accordingly.
 	</p>
       </description>
       <contact>
@@ -232,7 +233,7 @@
   <section>
     <title>User Interface</title>
 
-    <entry size="medium" difficulty="medium" status="0%" target="1.4">
+    <entry size="medium" difficulty="medium" status="70%" target="1.4">
       <title>Abstract Container Views</title>
       <description>
 	<p>

@@ -380,17 +380,17 @@ text_cursor_update (Tool           *tool,
     /*  if there is a floating selection, and this aint it...  */
     if (gimp_layer_is_floating_sel (layer))
       {
-	gdisplay_install_tool_cursor (gdisp, GDK_FLEUR,
-				      MOVE,
-				      CURSOR_MODIFIER_NONE,
-				      FALSE);
+	gdisplay_install_tool_cursor (gdisp,
+				      GDK_FLEUR,
+				      GIMP_MOVE_TOOL_CURSOR,
+				      GIMP_CURSOR_MODIFIER_NONE);
 	return;
       }
 
-  gdisplay_install_tool_cursor (gdisp, GDK_XTERM,
-				TEXT,
-				CURSOR_MODIFIER_NONE,
-				FALSE);
+  gdisplay_install_tool_cursor (gdisp,
+				GDK_XTERM,
+				GIMP_TEXT_TOOL_CURSOR,
+				GIMP_CURSOR_MODIFIER_NONE);
 }
 
 static void

@@ -126,8 +126,10 @@ void          transform_core_control                (Tool           *tool,
 						     GDisplay       *gdisp);
 
 /*  transform tool functions  */
+/* make PDB compile: ToolType doesn't exist any more 
 Tool        * transform_core_new                    (ToolType        tool_type,
 						     gboolean        interactive);
+*/
 void          transform_core_free                   (Tool           *tool);
 void          transform_core_draw                   (Tool           *tool);
 void          transform_core_no_draw                (Tool           *tool);

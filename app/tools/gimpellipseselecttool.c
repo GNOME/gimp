@@ -147,6 +147,8 @@ tools_new_ellipse_select  (void)
 
   tool->private = (void *) private;
 
+  tool->tool_cursor = GIMP_ELLIPSE_SELECT_TOOL_CURSOR;
+
   tool->button_press_func   = rect_select_button_press;
   tool->button_release_func = rect_select_button_release;
   tool->motion_func         = rect_select_motion;

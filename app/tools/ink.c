@@ -1074,10 +1074,10 @@ ink_cursor_update (Tool           *tool,
 	    ctype = GIMP_MOUSE_CURSOR;
 	}
     }
-  gdisplay_install_tool_cursor (gdisp, ctype,
-				INK,
-				CURSOR_MODIFIER_NONE,
-				FALSE);
+  gdisplay_install_tool_cursor (gdisp,
+				ctype,
+				GIMP_INK_TOOL_CURSOR,
+				GIMP_CURSOR_MODIFIER_NONE);
 }
 
 static void

@@ -69,7 +69,14 @@ struct _GimpTool
   GDisplay     *gdisp;        /*  pointer to currently active gdisp           */
   GimpDrawable *drawable;     /*  pointer to the tool's current drawable      */
 
-  gboolean      toggled;      /*  Bad hack to let the paint_core show the
+  GimpToolCursorType tool_cursor;
+  GimpToolCursorType toggle_cursor;  /* one of these or both will go
+				      * away once all cursor_update
+				      * functions are properly
+				      * virtualized
+				      */
+
+  gboolean           toggled; /*  Bad hack to let the paint_core show the
 			       *  right toggle cursors
 			       */
   PaintCore    *paintcore;  
@@ -83,10 +90,6 @@ struct _GimpToolClass
 
   /* FIXME: most of this stuff must go away */
   gchar	      *pdb_string;
-
-  BitmapCursor *tool_cursor;
-  BitmapCursor *toggle_cursor;
-
 
   void (* initialize)     (GimpTool       *tool,
 			   GDisplay       *gdisp);

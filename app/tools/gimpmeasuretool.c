@@ -45,9 +45,6 @@
 #include "libgimp/gimpintl.h"
 
 #include "pixmaps2.h"
-#include "cursors/measure_small.xbm"
-#include "cursors/measure_small_mask.xbm"
-
 
 
 /*  definitions  */
@@ -112,14 +109,6 @@ static InfoDialog *measure_tool_info = NULL;
 static gchar       distance_buf[MAX_INFO_BUF];
 static gchar       angle_buf[MAX_INFO_BUF];
 
-BitmapCursor measure_tool_cursor =
-{
-  measure_small_bits, measure_small_mask_bits,
-  measure_small_width, measure_small_height,
-  0, 0, NULL, NULL, NULL
-};
-
-
 static GimpToolClass *parent_class = NULL;
 
 
@@ -172,8 +161,6 @@ gimp_measure_tool_class_init (GimpMeasureToolClass *klass)
   parent_class = gtk_type_class (GIMP_TYPE_TOOL);
 
   object_class->destroy = gimp_measure_tool_destroy;
-
-  tool_class->tool_cursor = &measure_tool_cursor;
 
   tool_class->control        = measure_tool_control;
   tool_class->button_press   = measure_tool_button_press;
@@ -465,10 +452,10 @@ measure_tool_button_press (GimpTool       *tool,
   /*  set the pointer to the crosshair,
    *  so one actually sees the cursor position
    */
-  gdisplay_install_tool_cursor (gdisp, GIMP_CROSSHAIR_SMALL_CURSOR,
-				MEASURE,
-				CURSOR_MODIFIER_NONE,
-				FALSE);
+  gdisplay_install_tool_cursor (gdisp,
+				GIMP_CROSSHAIR_SMALL_CURSOR,
+				GIMP_MEASURE_TOOL_CURSOR,
+				GIMP_CURSOR_MODIFIER_NONE);
 }
 
 static void
@@ -707,8 +694,8 @@ measure_tool_cursor_update (GimpTool       *tool,
   gint         i;
   gboolean     in_handle = FALSE;
 
-  GdkCursorType  ctype     = GIMP_CROSSHAIR_SMALL_CURSOR;
-  CursorModifier cmodifier = CURSOR_MODIFIER_NONE;
+  GdkCursorType      ctype     = GIMP_CROSSHAIR_SMALL_CURSOR;
+  GimpCursorModifier cmodifier = GIMP_CURSOR_MODIFIER_NONE;
 
   measure_tool = GIMP_MEASURE_TOOL (tool);
 
@@ -739,26 +726,26 @@ measure_tool_cursor_update (GimpTool       *tool,
 		}
 
 	      if (mevent->state & GDK_SHIFT_MASK)
-		cmodifier = CURSOR_MODIFIER_PLUS;
+		cmodifier = GIMP_CURSOR_MODIFIER_PLUS;
 	      else
-		cmodifier = CURSOR_MODIFIER_MOVE;
+		cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
 
 	      if (i == 0 && measure_tool->num_points == 3 &&
-		  cmodifier == CURSOR_MODIFIER_PLUS)
-		cmodifier = CURSOR_MODIFIER_MOVE;
+		  cmodifier == GIMP_CURSOR_MODIFIER_PLUS)
+		cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
 	      break;
 	    }
 	}
 
       if (!in_handle && measure_tool->num_points > 1 &&
 	  mevent->state & GDK_MOD1_MASK)
-	cmodifier = CURSOR_MODIFIER_MOVE;
+	cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
     }
 
-  gdisplay_install_tool_cursor (gdisp, ctype,
-				MEASURE,
-				cmodifier,
-				FALSE);
+  gdisplay_install_tool_cursor (gdisp,
+				ctype,
+				GIMP_MEASURE_TOOL_CURSOR,
+				cmodifier);
 }
 
 static void

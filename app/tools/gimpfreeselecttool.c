@@ -369,6 +369,8 @@ tools_new_free_select (void)
 
   tool->private = (void *) private;
 
+  tool->tool_cursor = GIMP_FREE_SELECT_TOOL_CURSOR;
+
   tool->button_press_func   = free_select_button_press;
   tool->button_release_func = free_select_button_release;
   tool->motion_func         = free_select_motion;

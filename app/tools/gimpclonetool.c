@@ -381,11 +381,12 @@ clone_cursor_update (Tool           *tool,
 	ctype = GIMP_BAD_CURSOR;
     }
 
-  gdisplay_install_tool_cursor (gdisp, ctype,
+  gdisplay_install_tool_cursor (gdisp,
+				ctype,
 				ctype == GIMP_CROSSHAIR_SMALL_CURSOR ?
-				TOOL_TYPE_NONE : CLONE,
-				CURSOR_MODIFIER_NONE,
-				FALSE);
+				GIMP_TOOL_CURSOR_NONE :
+				GIMP_CLONE_TOOL_CURSOR,
+				GIMP_CURSOR_MODIFIER_NONE);
 }
 
 Tool *

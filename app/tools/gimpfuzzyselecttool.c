@@ -664,6 +664,8 @@ tools_new_fuzzy_select (void)
 
   tool->private = (void *) private;
 
+  tool->tool_cursor = GIMP_FUZZY_SELECT_TOOL_CURSOR;
+
   tool->button_press_func   = fuzzy_select_button_press;
   tool->button_release_func = fuzzy_select_button_release;
   tool->motion_func         = fuzzy_select_motion;

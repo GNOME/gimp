@@ -105,7 +105,7 @@ typedef struct _Argument            Argument;
 typedef struct _BezierPoint         BezierPoint;
 typedef struct _BezierSelect        BezierSelect;
 
-typedef struct _BitmapCursor        BitmapCursor;
+typedef struct _GimpBitmapCursor    GimpBitmapCursor;
 
 typedef struct _BoundSeg            BoundSeg;
 

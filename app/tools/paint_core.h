@@ -140,7 +140,11 @@ void          paint_core_control         (Tool                *tool,
 
 /*  paint tool functions  */
 void          paint_core_no_draw         (Tool                *tool);
+
+/* ToolType doesn't exist an more
 Tool *        paint_core_new             (ToolType             type);
+*/
+
 void          paint_core_free            (Tool                *tool);
 int           paint_core_init            (PaintCore           *paint_core, 
 					  GimpDrawable        *drawable, 

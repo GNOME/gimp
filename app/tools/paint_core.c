@@ -470,14 +470,14 @@ paint_core_cursor_update (Tool           *tool,
 			  GdkEventMotion *mevent,
 			  GDisplay       *gdisp)
 {
-  GimpLayer     *layer;
-  PaintCore     *paint_core;
-  gint           x, y;
-  gchar          status_str[STATUSBAR_SIZE];
+  GimpLayer         *layer;
+  PaintCore         *paint_core;
+  gint               x, y;
+  gchar              status_str[STATUSBAR_SIZE];
 
-  GdkCursorType  ctype     = GDK_TOP_LEFT_ARROW;
-  CursorModifier cmodifier = CURSOR_MODIFIER_NONE;
-  gboolean       ctoggle   = FALSE;
+  GdkCursorType      ctype     = GDK_TOP_LEFT_ARROW;
+  GimpCursorModifier cmodifier = GIMP_CURSOR_MODIFIER_NONE;
+  gboolean           ctoggle   = FALSE;
 
   paint_core = tool->paint_core;
 
@@ -586,11 +586,11 @@ paint_core_cursor_update (Tool           *tool,
 	    {
 	    case ERASER:
 	      ctype     = GIMP_MOUSE_CURSOR;
-	      cmodifier = CURSOR_MODIFIER_MINUS;
+	      cmodifier = GIMP_CURSOR_MODIFIER_MINUS;
 	      break;
 	    case CONVOLVE:
 	      ctype     = GIMP_MOUSE_CURSOR;
-	      cmodifier = CURSOR_MODIFIER_MINUS;
+	      cmodifier = GIMP_CURSOR_MODIFIER_MINUS;
 	      break;
 	    case DODGEBURN:
 	      ctype   = GIMP_MOUSE_CURSOR;
@@ -624,11 +624,14 @@ paint_core_cursor_update (Tool           *tool,
 		ctype = GIMP_MOUSE_CURSOR;
 	    }
 	}
-      gdisplay_install_tool_cursor (gdisp, ctype,
+
+      gdisplay_install_tool_cursor (gdisp,
+				    ctype,
 				    ctype == GIMP_COLOR_PICKER_CURSOR ?
-				    COLOR_PICKER : tool->type,
-				    cmodifier,
-				    ctoggle);
+				    GIMP_COLOR_PICKER_CURSOR :
+				    ctoggle ?
+				    tool->toggle_cursor : tool->tool_cursor,
+				    cmodifier);
     }
 }
 

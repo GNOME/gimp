@@ -44,8 +44,6 @@
 #include "libgimp/gimpintl.h"
 
 #include "pixmaps2.h"
-#include "cursors/move_small.xbm"
-#include "cursors/move_small_mask.xbm"
 
 
 static void   gimp_move_tool_class_init (GimpMoveToolClass *klass);
@@ -77,14 +75,6 @@ static ToolOptions *move_options = NULL;
 
 /*  local variables  */
 static GdkGC *move_gc = NULL;
-
-BitmapCursor move_cursor =
-{
-  move_small_bits, move_small_mask_bits,
-  move_small_width, move_small_height,
-  0, 0, NULL, NULL, NULL
-};
-
 
 static GimpToolClass *parent_class = NULL;
 
@@ -138,8 +128,6 @@ gimp_move_tool_class_init (GimpMoveToolClass *klass)
   parent_class = gtk_type_class (GIMP_TYPE_TOOL);
 
   object_class->destroy = gimp_move_tool_destroy;
-
-  tool_class->tool_cursor = &move_cursor;
 
   tool_class->control        = move_tool_control;
   tool_class->button_press   = move_tool_button_press;
@@ -461,16 +449,14 @@ move_tool_cursor_update (GimpTool       *tool,
       ! gimage_mask_is_empty (gdisp->gimage))
     {
       gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
-				    RECT_SELECT,
-				    CURSOR_MODIFIER_MOVE,
-				    FALSE);
+				    GIMP_RECT_SELECT_TOOL_CURSOR,
+				    GIMP_CURSOR_MODIFIER_MOVE);
     }
   else if (mevent->state & GDK_SHIFT_MASK)
     {
       gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
-				    MOVE,
-				    CURSOR_MODIFIER_NONE,
-				    FALSE);
+				    GIMP_MOVE_TOOL_CURSOR,
+				    GIMP_CURSOR_MODIFIER_NONE);
     }
   else
     {
@@ -479,9 +465,8 @@ move_tool_cursor_update (GimpTool       *tool,
 	{
 	  tool->gdisp = gdisp;
 	  gdisplay_install_tool_cursor (gdisp, GDK_HAND2,
-					TOOL_TYPE_NONE,
-					CURSOR_MODIFIER_HAND,
-					FALSE);
+					GIMP_TOOL_CURSOR_NONE,
+					GIMP_CURSOR_MODIFIER_HAND);
 
 	  if (tool->state != ACTIVE)
 	    {
@@ -503,27 +488,29 @@ move_tool_cursor_update (GimpTool       *tool,
 	  /*  if there is a floating selection, and this aint it...  */
 	  if (gimp_image_floating_sel (gdisp->gimage) &&
 	      ! gimp_layer_is_floating_sel (layer))
-	    gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
-					  RECT_SELECT,
-					  CURSOR_MODIFIER_ANCHOR,
-					  FALSE);
+	    {
+	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					    GIMP_RECT_SELECT_TOOL_CURSOR,
+					    GIMP_CURSOR_MODIFIER_ANCHOR);
+	    }
 	  else if (layer == gdisp->gimage->active_layer)
-	    gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
-					  MOVE,
-					  CURSOR_MODIFIER_NONE,
-					  FALSE);
+	    {
+	      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					    GIMP_MOVE_TOOL_CURSOR,
+					    GIMP_CURSOR_MODIFIER_NONE);
+	    }
 	  else
-	    gdisplay_install_tool_cursor (gdisp, GDK_HAND2,
-					  TOOL_TYPE_NONE,
-					  CURSOR_MODIFIER_HAND,
-					  FALSE);
+	    {
+	      gdisplay_install_tool_cursor (gdisp, GDK_HAND2,
+					    GIMP_TOOL_CURSOR_NONE,
+					    GIMP_CURSOR_MODIFIER_HAND);
+	    }
 	}
       else
 	{
 	  gdisplay_install_tool_cursor (gdisp, GIMP_BAD_CURSOR,
-					MOVE,
-					CURSOR_MODIFIER_NONE,
-					FALSE);
+					GIMP_MOVE_TOOL_CURSOR,
+					GIMP_CURSOR_MODIFIER_NONE);
 	}
     }
 }

@@ -20,18 +20,6 @@
 #define __SCROLL_H__
 
 
-/*  app init and exit routines  */
-void      init_scrolling             (void);
-void      free_scrolling             (void);
-
-/*  routines for scrolling the image via the scrollbars  */
-void      scrollbar_disconnect       (GtkAdjustment  *adjuatment,
-				      gpointer        data);
-gboolean  scrollbar_vert_update      (GtkAdjustment  *adjuatment,
-				      gpointer        data);
-gboolean  scrollbar_horz_update      (GtkAdjustment  *adjuatment,
-				      gpointer        data);
-
 /*  routines for grabbing the image and scrolling via the pointer  */
 void      start_grab_and_scroll      (GDisplay       *gdisp,
 				      GdkEventButton *bevent);

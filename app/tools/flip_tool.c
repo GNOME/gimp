@@ -217,10 +217,12 @@ flip_cursor_update (Tool           *tool,
 	    }
 	}
     }
-  gdisplay_install_tool_cursor (gdisp, ctype,
-				FLIP,
-				CURSOR_MODIFIER_NONE,
-				ctype == GDK_SB_V_DOUBLE_ARROW);
+  gdisplay_install_tool_cursor (gdisp,
+				ctype,
+				ctype == GDK_SB_H_DOUBLE_ARROW ?
+				GIMP_FLIP_HORIZONTAL_TOOL_CORSOR :
+				GIMP_FLIP_VERTICAL_TOOL_CORSOR,
+				CURSOR_MODIFIER_NONE);
 }
 
 Tool *

@@ -202,6 +202,8 @@ tools_new_scale_tool (void)
 
   tool = transform_core_new (SCALE, TRUE);
 
+  tool->tool_cursor = GIMP_RESIZE_TOOL_CURSOR;
+
   private = tool->private;
 
   /*  set the scale specific transformation attributes  */

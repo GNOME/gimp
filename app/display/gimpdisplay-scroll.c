@@ -43,33 +43,6 @@
 /*  These are the values of the initial pointer grab   */
 static gint startx, starty;
 
-gboolean
-scrollbar_vert_update (GtkAdjustment *adjustment,
-		       gpointer       data)
-{
-  GDisplay *gdisp;
-
-  gdisp = (GDisplay *) data;
-
-  scroll_display (gdisp, 0, (adjustment->value - gdisp->offset_y));
-
-  return FALSE;
-}
-
-
-gboolean
-scrollbar_horz_update (GtkAdjustment *adjustment,
-		       gpointer       data)
-{
-  GDisplay *gdisp;
-
-  gdisp = (GDisplay *) data;
-
-  scroll_display (gdisp, (adjustment->value - gdisp->offset_x), 0);
-
-  return FALSE;
-}
-
 void
 start_grab_and_scroll (GDisplay       *gdisp,
 		       GdkEventButton *bevent)
@@ -77,8 +50,10 @@ start_grab_and_scroll (GDisplay       *gdisp,
   startx = bevent->x + gdisp->offset_x;
   starty = bevent->y + gdisp->offset_y;
 
-  change_win_cursor (gdisp->canvas->window, GDK_FLEUR,
-		     TOOL_TYPE_NONE, CURSOR_MODIFIER_NONE, FALSE);
+  gimp_change_win_cursor (gdisp->canvas->window,
+			  GDK_FLEUR,
+			  GIMP_TOOL_CURSOR_NONE,
+			  GIMP_CURSOR_MODIFIER_NONE);
 }
 
 
@@ -88,9 +63,8 @@ end_grab_and_scroll (GDisplay       *gdisp,
 {
   gdisplay_real_install_tool_cursor (gdisp,
 				     gdisp->current_cursor,
-				     gdisp->cursor_tool,
-				     CURSOR_MODIFIER_NONE,
-				     FALSE,
+				     gdisp->tool_cursor,
+				     GIMP_CURSOR_MODIFIER_NONE,
 				     TRUE);
 }
 

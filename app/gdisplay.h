@@ -152,17 +152,16 @@ struct _GDisplay
   GSList *update_areas;           /*  Update areas list                       */
   GSList *display_areas;          /*  Display areas list                      */
 
-  GdkCursorType  current_cursor;  /*  Currently installed cursor              */
-  ToolType       cursor_tool;     /*  Cursor for which tool?                  */
-  CursorModifier cursor_modifier; /*  Cursor modifier (plus, minus, ...)      */
-  gboolean       toggle_cursor;   /*  Cursor toggled?                         */
+  GdkCursorType       current_cursor;  /*  Currently installed main cursor    */
+  GimpToolCursorType  tool_cursor;     /*  Current Tool cursor                */
+  GimpCursorModifier  cursor_modifier; /*  Cursor modifier (plus, minus, ...) */
 
   GdkCursorType override_cursor;  /*  Overriding cursor (ie. hourglass)       */
   gboolean using_override_cursor; /* is the cursor overridden? (ie. hourglass)*/
 
   gboolean draw_cursor;	          /* should we draw software cursor ?         */
-  gint cursor_x;                  /* software cursor X value                  */
-  gint cursor_y;                  /* software cursor Y value                  */
+  gint     cursor_x;              /* software cursor X value                  */
+  gint     cursor_y;              /* software cursor Y value                  */
   gboolean proximity;             /* is a device in proximity of gdisplay ?   */
   gboolean have_cursor;		  /* is cursor currently drawn ?              */
   
@@ -193,21 +192,19 @@ void       gdisplay_transform_coords_f     (GDisplay *, gdouble, gdouble,
 void       gdisplay_untransform_coords_f   (GDisplay *, gdouble, gdouble, 
 					                gdouble *, gdouble *, gboolean);
 
-void       gdisplay_real_install_tool_cursor (GDisplay       *gdisp,
-					      GdkCursorType   cursor_type,
-					      ToolType        tool_type,
-					      CursorModifier  modifier,
-					      gboolean        toggle_cursor,
-					      gboolean        always_install);
-void       gdisplay_install_tool_cursor      (GDisplay       *gdisp,
-					      GdkCursorType   cursor_type,
-					      ToolType        tool_type,
-					      CursorModifier  modifier,
-					      gboolean        toggle_cursor);
-void       gdisplay_remove_tool_cursor       (GDisplay       *gdisp);
-void       gdisplay_install_override_cursor  (GDisplay       *gdisp,
-					      GdkCursorType   cursor_type);
-void       gdisplay_remove_override_cursor   (GDisplay       *gdisp);
+void       gdisplay_real_install_tool_cursor (GDisplay           *gdisp,
+					      GdkCursorType       cursor_type,
+					      GimpToolCursorType  tool_cursor,
+					      GimpCursorModifier  modifier,
+					      gboolean            always_install);
+void       gdisplay_install_tool_cursor      (GDisplay           *gdisp,
+					      GdkCursorType       cursor_type,
+					      GimpToolCursorType  tool_cursor,
+					      GimpCursorModifier  modifier);
+void       gdisplay_remove_tool_cursor       (GDisplay           *gdisp);
+void       gdisplay_install_override_cursor  (GDisplay           *gdisp,
+					      GdkCursorType       cursor_type);
+void       gdisplay_remove_override_cursor   (GDisplay           *gdisp);
 
 void       gdisplay_set_menu_sensitivity   (GDisplay *);
 void       gdisplay_expose_area            (GDisplay *, gint, gint, gint, gint);

@@ -391,6 +391,10 @@ tools_new_dodgeburn (void)
     }
 
   tool = paint_core_new (DODGEBURN);
+
+  tool->tool_cursor = GIMP_DODGE_TOOL_CURSOR;
+  tool->toggle_cursor = GIMP_BURN_TOOL_CURSOR;
+
   tool->modifier_key_func  = dodgeburn_modifier_key_func;
   tool->cursor_update_func = dodgeburn_cursor_update_func;
 

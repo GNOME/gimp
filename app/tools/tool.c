@@ -248,16 +248,18 @@ gimp_tool_class_init (GimpToolClass *klass)
 static void
 gimp_tool_init (GimpTool *tool)
 {
-  tool->state        = INACTIVE;
-  tool->paused_count = 0;
-  tool->scroll_lock  = FALSE;    /*  Allow scrolling  */
-  tool->auto_snap_to = TRUE;     /*  Snap to guides   */
+  tool->state         = INACTIVE;
+  tool->paused_count  = 0;
+  tool->scroll_lock   = FALSE;    /*  Allow scrolling  */
+  tool->auto_snap_to  = TRUE;     /*  Snap to guides   */
 
-  tool->preserve     = TRUE;     /*  Preserve tool across drawable changes  */
-  tool->gdisp        = NULL;
-  tool->drawable     = NULL;
+  tool->preserve      = TRUE;     /*  Preserve tool across drawable changes  */
+  tool->gdisp         = NULL;
+  tool->drawable      = NULL;
 
-  tool->toggled      = FALSE;
+  tool->tool_cursor   = GIMP_TOOL_CURSOR_NONE;
+  tool->toggle_cursor = GIMP_TOOL_CURSOR_NONE;
+  tool->toggled       = FALSE;
 }
 
 static void
@@ -450,9 +452,8 @@ gimp_tool_real_cursor_update (GimpTool       *tool,
 			      GDisplay       *gdisp)
 {
   gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW,
-				TOOL_TYPE_NONE,
-				CURSOR_MODIFIER_NONE,
-				FALSE);
+				GIMP_TOOL_CURSOR_NONE,
+				GIMP_CURSOR_MODIFIER_NONE);
 }
 
 static void

@@ -128,6 +128,8 @@ tools_new_perspective_tool (void)
 
   tool = transform_core_new (PERSPECTIVE, TRUE);
 
+  tool->tool_cursor = GIMP_PERSPECTIVE_TOOL_CURSOR;
+
   private = tool->private;
 
   /*  set the rotation specific transformation attributes  */

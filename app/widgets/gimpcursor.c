@@ -26,8 +26,8 @@
 #include "cursorutil.h"
 #include "dialog_handler.h"
 #include "gdisplay.h" /* for gdisplay_*_override_cursor() */
-#include "tools/tool.h"
 
+/* standard gimp cursors */
 #include "cursors/mouse.xbm"
 #include "cursors/mouse_mask.xbm"
 #include "cursors/crosshair.xbm"
@@ -40,6 +40,68 @@
 #include "cursors/zoom_mask.xbm"
 #include "cursors/dropper.xbm"
 #include "cursors/dropper_mask.xbm"
+
+/* stock tool cursors */
+#include "cursors/rect_select_small.xbm"
+#include "cursors/rect_select_small_mask.xbm"
+#include "cursors/ellipse_select_small.xbm"
+#include "cursors/ellipse_select_small_mask.xbm"
+#include "cursors/free_select_small.xbm"
+#include "cursors/free_select_small_mask.xbm"
+#include "cursors/fuzzy_select_small.xbm"
+#include "cursors/fuzzy_select_small_mask.xbm"
+#include "cursors/bezier_select_small.xbm"
+#include "cursors/bezier_select_small_mask.xbm"
+#include "cursors/scissors_small.xbm"
+#include "cursors/scissors_small_mask.xbm"
+#include "cursors/move_small.xbm"
+#include "cursors/move_small_mask.xbm"
+#include "cursors/zoom_small.xbm"
+#include "cursors/zoom_small_mask.xbm"
+#include "cursors/crop_small.xbm"
+#include "cursors/crop_small_mask.xbm"
+#include "cursors/resize_small.xbm"
+#include "cursors/resize_small_mask.xbm"
+#include "cursors/rotate_small.xbm"
+#include "cursors/rotate_small_mask.xbm"
+#include "cursors/shear_small.xbm"
+#include "cursors/shear_small_mask.xbm"
+#include "cursors/perspective_small.xbm"
+#include "cursors/perspective_small_mask.xbm"
+#include "cursors/flip_horizontal_small.xbm"
+#include "cursors/flip_horizontal_small_mask.xbm"
+#include "cursors/flip_vertical_small.xbm"
+#include "cursors/flip_vertical_small_mask.xbm"
+#include "cursors/text_small.xbm"
+#include "cursors/text_small_mask.xbm"
+#include "cursors/dropper_small.xbm"
+#include "cursors/dropper_small_mask.xbm"
+#include "cursors/bucket_fill_small.xbm"
+#include "cursors/bucket_fill_small_mask.xbm"
+#include "cursors/blend_small.xbm"
+#include "cursors/blend_small_mask.xbm"
+#include "cursors/pencil_small.xbm"
+#include "cursors/pencil_small_mask.xbm"
+#include "cursors/paintbrush_small.xbm"
+#include "cursors/paintbrush_small_mask.xbm"
+#include "cursors/eraser_small.xbm"
+#include "cursors/eraser_small_mask.xbm"
+#include "cursors/airbrush_small.xbm"
+#include "cursors/airbrush_small_mask.xbm"
+#include "cursors/clone_small.xbm"
+#include "cursors/clone_small_mask.xbm"
+#include "cursors/blur_small.xbm"
+#include "cursors/blur_small_mask.xbm"
+#include "cursors/ink_small.xbm"
+#include "cursors/ink_small_mask.xbm"
+#include "cursors/dodge_small.xbm"
+#include "cursors/dodge_small_mask.xbm"
+#include "cursors/burn_small.xbm"
+#include "cursors/burn_small_mask.xbm"
+#include "cursors/smudge_small.xbm"
+#include "cursors/smudge_small_mask.xbm"
+#include "cursors/measure_small.xbm"
+#include "cursors/measure_small_mask.xbm"
 
 /* modifiers */
 #include "cursors/plus.xbm"
@@ -69,7 +131,8 @@
 /* FIXME: gimp_busy HACK */
 gboolean gimp_busy = FALSE;
 
-static BitmapCursor gimp_cursors[] =
+
+static GimpBitmapCursor gimp_cursors[] =
 /* these have to match up with the enum in cursorutil.h */
 {
   {
@@ -104,24 +167,174 @@ static BitmapCursor gimp_cursors[] =
   }
 };
 
-enum
+static GimpBitmapCursor gimp_stock_tool_cursors[] =
+/* these have to match up with the enum in appenums.h */
 {
-  GIMP_PLUS_CURSOR = GIMP_LAST_CURSOR_ENTRY + 1,
-  GIMP_MINUS_CURSOR,
-  GIMP_INTERSECT_CURSOR,
-  GIMP_MOVE_CURSOR,
-  GIMP_RESIZE_CURSOR,
-  GIMP_CONTROL_CURSOR,
-  GIMP_ANCHOR_CURSOR,
-  GIMP_FOREGROUND_CURSOR,
-  GIMP_BACKGROUND_CURSOR,
-  GIMP_PATTERN_CURSOR,
-  GIMP_HAND_CURSOR
+  {
+    NULL, NULL,
+    0, 0,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    rect_select_small_bits, rect_select_small_mask_bits,
+    rect_select_small_width, rect_select_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    ellipse_select_small_bits, ellipse_select_small_mask_bits,
+    ellipse_select_small_width, ellipse_select_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    free_select_small_bits, free_select_small_mask_bits,
+    free_select_small_width, free_select_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    fuzzy_select_small_bits, fuzzy_select_small_mask_bits,
+    fuzzy_select_small_width, fuzzy_select_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    bezier_select_small_bits, bezier_select_small_mask_bits,
+    bezier_select_small_width, bezier_select_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    scissors_small_bits, scissors_small_mask_bits,
+    scissors_small_width, scissors_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    move_small_bits, move_small_mask_bits,
+    move_small_width, move_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    zoom_small_bits, zoom_small_mask_bits,
+    zoom_small_width, zoom_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    crop_small_bits, crop_small_mask_bits,
+    crop_small_width, crop_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    resize_small_bits, resize_small_mask_bits,
+    resize_small_width, resize_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    rotate_small_bits, rotate_small_mask_bits,
+    rotate_small_width, rotate_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    shear_small_bits, shear_small_mask_bits,
+    shear_small_width, shear_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    perspective_small_bits, perspective_small_mask_bits,
+    perspective_small_width, perspective_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    flip_horizontal_small_bits, flip_horizontal_small_mask_bits,
+    flip_horizontal_small_width, flip_horizontal_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    flip_vertical_small_bits, flip_vertical_small_mask_bits,
+    flip_vertical_small_width, flip_vertical_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    text_small_bits, text_small_mask_bits,
+    text_small_width, text_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    dropper_small_bits, dropper_small_mask_bits,
+    dropper_small_width, dropper_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    bucket_fill_small_bits, bucket_fill_small_mask_bits,
+    bucket_fill_small_width, bucket_fill_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    blend_small_bits, blend_small_mask_bits,
+    blend_small_width, blend_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    pencil_small_bits, pencil_small_mask_bits,
+    pencil_small_width, pencil_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    paintbrush_small_bits, paintbrush_small_mask_bits,
+    paintbrush_small_width, paintbrush_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    airbrush_small_bits, airbrush_small_mask_bits,
+    airbrush_small_width, airbrush_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    ink_small_bits, ink_small_mask_bits,
+    ink_small_width, ink_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    clone_small_bits, clone_small_mask_bits,
+    clone_small_width, clone_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    eraser_small_bits, eraser_small_mask_bits,
+    eraser_small_width, eraser_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    smudge_small_bits, smudge_small_mask_bits,
+    smudge_small_width, smudge_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    blur_small_bits, blur_small_mask_bits,
+    blur_small_width, blur_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    dodge_small_bits, dodge_small_mask_bits,
+    dodge_small_width, dodge_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    burn_small_bits, burn_small_mask_bits,
+    burn_small_width, burn_small_height,
+    0, 0, NULL, NULL, NULL
+  },
+  {
+    measure_small_bits, measure_small_mask_bits,
+    measure_small_width, measure_small_height,
+    0, 0, NULL, NULL, NULL
+  }
 };
 
-static BitmapCursor modifier_cursors[] =
-/* these have to match up with the enum above */
+static GimpBitmapCursor gimp_modifier_cursors[] =
+/* these have to match up with the enum in appenums.h */
 {
+  {
+    NULL, NULL,
+    0, 0,
+    0, 0, NULL, NULL, NULL
+  },
   {
     plus_bits, plus_mask_bits,
     plus_width, plus_height,
@@ -185,7 +398,7 @@ static gboolean  pending_removebusy = FALSE;
 
 
 static void
-create_cursor_bitmaps (BitmapCursor *bmcursor)
+create_cursor_bitmaps (GimpBitmapCursor *bmcursor)
 {
   if (bmcursor->bitmap == NULL)
     bmcursor->bitmap = gdk_bitmap_create_from_data (NULL, bmcursor->bits,
@@ -201,7 +414,7 @@ create_cursor_bitmaps (BitmapCursor *bmcursor)
 }
 
 static void
-create_cursor (BitmapCursor *bmcursor)
+create_cursor (GimpBitmapCursor *bmcursor)
 {
   if (bmcursor->bitmap == NULL ||
       bmcursor->mask == NULL)
@@ -226,14 +439,12 @@ create_cursor (BitmapCursor *bmcursor)
 }
 
 static void
-gimp_change_win_cursor (GdkWindow      *win,
-			GimpCursorType  curtype,
-			ToolType        tool_type,
-			CursorModifier  modifier,
-			gboolean        toggle_cursor)
+gimp_change_win_cursor_internal (GdkWindow          *window,
+				 GimpCursorType      cursor_type,
+				 GimpToolCursorType  tool_cursor,
+				 GimpCursorModifier  modifier)
 {
-  GdkCursor      *cursor;
-  GimpCursorType  modtype = GIMP_PLUS_CURSOR;
+  GdkCursor *cursor;
 
   GdkBitmap *bitmap;
   GdkBitmap *mask;
@@ -246,121 +457,96 @@ gimp_change_win_cursor (GdkWindow      *win,
   gint width;
   gint height;
 
-  BitmapCursor *bmcursor   = NULL;
-  BitmapCursor *bmmodifier = NULL;
-  BitmapCursor *bmtool     = NULL;
+  GimpBitmapCursor *bmcursor   = NULL;
+  GimpBitmapCursor *bmmodifier = NULL;
+  GimpBitmapCursor *bmtool     = NULL;
 
-  g_return_if_fail (curtype < GIMP_LAST_CURSOR_ENTRY);
+  g_return_if_fail (window != NULL);
+  g_return_if_fail (cursor_type < GIMP_LAST_CURSOR_ENTRY);
 
   /*  allow the small tool cursor only with the standard mouse,
    *  the small crosshair and the bad cursor
    */
-  if (curtype != GIMP_MOUSE_CURSOR &&
-      curtype != GIMP_CROSSHAIR_SMALL_CURSOR &&
-      curtype != GIMP_BAD_CURSOR)
-    tool_type = TOOL_TYPE_NONE;
+  if (cursor_type != GIMP_MOUSE_CURSOR &&
+      cursor_type != GIMP_CROSSHAIR_SMALL_CURSOR &&
+      cursor_type != GIMP_BAD_CURSOR)
+    {
+      tool_cursor = GIMP_TOOL_CURSOR_NONE;
+    }
 
-  curtype -= GIMP_MOUSE_CURSOR;
-  bmcursor = &gimp_cursors[(int)curtype];
+  cursor_type -= GIMP_MOUSE_CURSOR;
+  bmcursor = &gimp_cursors[(gint) cursor_type];
 
-  if (modifier  == CURSOR_MODIFIER_NONE &&
-      tool_type == TOOL_TYPE_NONE)
+  /*  if there are no modifiers, we can show the cursor immediately
+   */
+  if (modifier    == GIMP_CURSOR_MODIFIER_NONE &&
+      tool_cursor == GIMP_TOOL_CURSOR_NONE)
     {
       if  (bmcursor->cursor == NULL)
 	create_cursor (bmcursor);
 
-      gdk_window_set_cursor (win, bmcursor->cursor);
+      gdk_window_set_cursor (window, bmcursor->cursor);
 
       return;
     }
-
-  switch (modifier)
+  else if (bmcursor->bitmap == NULL ||
+	   bmcursor->mask == NULL)
     {
-    case CURSOR_MODIFIER_PLUS:
-      modtype = GIMP_PLUS_CURSOR;
-      break;
-    case CURSOR_MODIFIER_MINUS:
-      modtype = GIMP_MINUS_CURSOR;
-      break;
-    case CURSOR_MODIFIER_INTERSECT:
-      modtype = GIMP_INTERSECT_CURSOR;
-      break;
-    case CURSOR_MODIFIER_MOVE:
-      modtype = GIMP_MOVE_CURSOR;
-      break;
-    case CURSOR_MODIFIER_RESIZE:
-      modtype = GIMP_RESIZE_CURSOR;
-      break;
-    case CURSOR_MODIFIER_CONTROL:
-      modtype = GIMP_CONTROL_CURSOR;
-      break;
-    case CURSOR_MODIFIER_ANCHOR:
-      modtype = GIMP_ANCHOR_CURSOR;
-      break;
-    case CURSOR_MODIFIER_FOREGROUND:
-      modtype = GIMP_FOREGROUND_CURSOR;
-      break;
-    case CURSOR_MODIFIER_BACKGROUND:
-      modtype = GIMP_BACKGROUND_CURSOR;
-      break;
-    case CURSOR_MODIFIER_PATTERN:
-      modtype = GIMP_PATTERN_CURSOR;
-      break;
-    case CURSOR_MODIFIER_HAND:
-      modtype = GIMP_HAND_CURSOR;
-      break;
-    default:
-      break;
+      create_cursor_bitmaps (bmcursor);
     }
 
-  if (modifier != CURSOR_MODIFIER_NONE)
+  /*  prepare the tool cursor  */
+
+  if (tool_cursor < GIMP_TOOL_CURSOR_NONE ||
+      tool_cursor >= GIMP_LAST_STOCK_TOOL_CURSOR_ENTRY)
     {
-      modtype -= GIMP_PLUS_CURSOR;
-      bmmodifier = &modifier_cursors[(int)modtype];
+      tool_cursor = GIMP_TOOL_CURSOR_NONE; 
     }
-#warning FIXME (check if toggle tool cursor work)
-#if 0
-  if (tool_type != TOOL_TYPE_NONE)
+
+  if (tool_cursor != GIMP_TOOL_CURSOR_NONE)
     {
-      if (toggle_cursor)
+      bmtool = &gimp_stock_tool_cursors[(gint) tool_cursor];
+
+      if (bmtool->bitmap == NULL ||
+	  bmtool->mask == NULL)
 	{
-	  if (tool_info[(gint) tool_type].toggle_cursor.bits != NULL &&
-	      tool_info[(gint) tool_type].toggle_cursor.mask_bits != NULL)
-	    bmtool = &tool_info[(gint) tool_type].toggle_cursor;
-	}
-      else
-	{
-	  if (tool_info[(gint) tool_type].tool_cursor.bits != NULL &&
-	      tool_info[(gint) tool_type].tool_cursor.mask_bits != NULL)
-	    bmtool = &tool_info[(gint) tool_type].tool_cursor;
+	  create_cursor_bitmaps (bmtool);
 	}
     }
-#endif
 
-  if (bmcursor->bitmap == NULL ||
-      bmcursor->mask == NULL)
-    create_cursor_bitmaps (bmcursor);
+  /*  prepare the cursor modifier  */
 
-  if (bmmodifier &&
-      (bmmodifier->bitmap == NULL ||
-       bmmodifier->mask == NULL))
-    create_cursor_bitmaps (bmmodifier);
+  if (modifier < GIMP_CURSOR_MODIFIER_NONE ||
+      modifier >= GIMP_LAST_CURSOR_MODIFIER_ENTRY)
+    {
+      modifier = GIMP_CURSOR_MODIFIER_NONE;
+    }
 
- if (bmtool &&
-      (bmtool->bitmap == NULL ||
-       bmtool->mask == NULL))
-    create_cursor_bitmaps (bmtool);
+  if (modifier != GIMP_CURSOR_MODIFIER_NONE)
+    {
+      bmmodifier = &gimp_modifier_cursors[(gint) modifier];
+
+      if (bmmodifier->bitmap == NULL ||
+	  bmmodifier->mask == NULL)
+	{
+	  create_cursor_bitmaps (bmmodifier);
+	}
+    }
 
   if (gc == NULL)
     gc = gdk_gc_new (bmcursor->bitmap);
 
   gdk_window_get_size (bmcursor->bitmap, &width, &height);
 
+  /*  new bitmap and mask for on-the-fly cursor creation  */
+
   bitmap = gdk_pixmap_new (NULL, width, height, 1);
   mask   = gdk_pixmap_new (NULL, width, height, 1);
 
   color.pixel = 1;
   gdk_gc_set_foreground (gc, &color);
+
+  /*  first draw the bitmap completely ... */
 
   gdk_draw_pixmap (bitmap, gc, bmcursor->bitmap,
                    0, 0, 0, 0, width, height);
@@ -380,6 +566,8 @@ gimp_change_win_cursor (GdkWindow      *win,
 		       0, 0, 0, 0, width, height);
       gdk_gc_set_clip_mask (gc, NULL);
     }
+
+  /*  ... then the mask  */
 
   gdk_draw_pixmap (mask, gc, bmcursor->mask,
                    0, 0, 0, 0, width, height);
@@ -408,37 +596,38 @@ gimp_change_win_cursor (GdkWindow      *win,
 				       &fg, &bg,
 				       bmcursor->x_hot,
 				       bmcursor->y_hot);
-  gdk_window_set_cursor (win, cursor);
+
+  gdk_window_set_cursor (window, cursor);
+
   gdk_cursor_destroy (cursor);
   gdk_bitmap_unref (bitmap);
   gdk_bitmap_unref (mask);
 }
 
 void
-change_win_cursor (GdkWindow      *win,
-		   GdkCursorType   cursortype,
-		   ToolType        tool_type,
-		   CursorModifier  modifier,
-		   gboolean        toggle_cursor)
+gimp_change_win_cursor (GdkWindow          *win,
+			GdkCursorType       cursor_type,
+			GimpToolCursorType  tool_cursor,
+			GimpCursorModifier  modifier)
 {
   GdkCursor *cursor;
-  
-  if (cursortype > GDK_LAST_CURSOR)
+
+  if (cursor_type > GDK_LAST_CURSOR)
     {
-      gimp_change_win_cursor (win, (GimpCursorType) cursortype,
-			      tool_type,
-			      modifier,
-			      toggle_cursor);
+      gimp_change_win_cursor_internal (win,
+				       (GimpCursorType) cursor_type,
+				       tool_cursor,
+				       modifier);
       return;
     }
 
-  cursor = gdk_cursor_new (cursortype);
+  cursor = gdk_cursor_new (cursor_type);
   gdk_window_set_cursor (win, cursor);
   gdk_cursor_destroy (cursor);
 }
 
 void
-unset_win_cursor (GdkWindow *win)
+gimp_unset_win_cursor (GdkWindow *win)
 {
   gdk_window_set_cursor (win, NULL);
 }

@@ -321,6 +321,9 @@ tools_new_convolve (void)
     }
 
   tool = paint_core_new (CONVOLVE);
+
+  tool->tool_cursor = GIMP_BLUR_TOOL_CURSOR;
+
   tool->modifier_key_func  = convolve_modifier_key_func;
   tool->cursor_update_func = convolve_cursor_update_func;
 

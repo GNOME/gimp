@@ -696,10 +696,10 @@ transform_core_cursor_update (Tool           *tool,
 	}
     }
 
-  gdisplay_install_tool_cursor (gdisp, ctype,
-				tool->type,
-				CURSOR_MODIFIER_NONE,
-				FALSE);
+  gdisplay_install_tool_cursor (gdisp,
+				ctype,
+				tool->tool_cursor,
+				GIMP_CURSOR_MODIFIER_NONE);
 }
 
 void

@@ -172,21 +172,27 @@ dialog_idle_all (void)
 	}
       else if(GTK_WIDGET_VISIBLE (dstate->dialog))
 	{
-	  change_win_cursor (dstate->dialog->window, GDK_WATCH,
-			     TOOL_TYPE_NONE, CURSOR_MODIFIER_NONE, FALSE);
+	  gimp_change_win_cursor (dstate->dialog->window,
+				  GDK_WATCH,
+				  GIMP_TOOL_CURSOR_NONE,
+				  GIMP_CURSOR_MODIFIER_NONE);
 	}
     }
 
   if (toolbox_shell && GTK_WIDGET_VISIBLE (toolbox_shell->dialog))
     {
-      change_win_cursor (toolbox_shell->dialog->window, GDK_WATCH,
-			 TOOL_TYPE_NONE, CURSOR_MODIFIER_NONE, FALSE);
+      gimp_change_win_cursor (toolbox_shell->dialog->window,
+			      GDK_WATCH,
+			      GIMP_TOOL_CURSOR_NONE,
+			      GIMP_CURSOR_MODIFIER_NONE);
     }
 
   if (fileload_shell && GTK_WIDGET_VISIBLE (fileload_shell->dialog))
     {
-      change_win_cursor (fileload_shell->dialog->window, GDK_WATCH,
-			 TOOL_TYPE_NONE, CURSOR_MODIFIER_NONE, FALSE);
+      gimp_change_win_cursor (fileload_shell->dialog->window,
+			      GDK_WATCH,
+			      GIMP_TOOL_CURSOR_NONE,
+			      GIMP_CURSOR_MODIFIER_NONE);
     }
 }
 
@@ -215,18 +221,18 @@ dialog_unidle_all (void)
 	}
       else if (GTK_WIDGET_VISIBLE (dstate->dialog))
 	{
-	  unset_win_cursor (dstate->dialog->window);
+	  gimp_unset_win_cursor (dstate->dialog->window);
 	}
     }
 
   if (toolbox_shell && GTK_WIDGET_VISIBLE (toolbox_shell->dialog))
     {
-      unset_win_cursor (toolbox_shell->dialog->window);
+      gimp_unset_win_cursor (toolbox_shell->dialog->window);
     }
 
   if (fileload_shell && GTK_WIDGET_VISIBLE (fileload_shell->dialog))
     {
-      unset_win_cursor (fileload_shell->dialog->window);
+      gimp_unset_win_cursor (fileload_shell->dialog->window);
     }
 }
 

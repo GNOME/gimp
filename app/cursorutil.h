@@ -20,7 +20,7 @@
 #define __CURSORUTIL_H__
 
 
-struct _BitmapCursor
+struct _GimpBitmapCursor
 {
   guchar    *bits;
   guchar    *mask_bits;
@@ -30,6 +30,7 @@ struct _BitmapCursor
   GdkBitmap *mask;
   GdkCursor *cursor;
 };
+
 
 typedef enum
 {
@@ -42,22 +43,23 @@ typedef enum
   GIMP_LAST_CURSOR_ENTRY
 } GimpCursorType;
 
+
 /* FIXME: gimp_busy HACK */
 extern gboolean gimp_busy;
 
-void       change_win_cursor                (GdkWindow      *win,
-					     GdkCursorType   curtype,
-					     ToolType        tool_type,
-					     CursorModifier  modifier,
-					     gboolean        toggle_cursor);
-void       unset_win_cursor                 (GdkWindow      *win);
+
+void       gimp_change_win_cursor           (GdkWindow          *win,
+					     GdkCursorType       curtype,
+					     GimpToolCursorType  tool_cursor,
+					     GimpCursorModifier  modifier);
+void       gimp_unset_win_cursor            (GdkWindow          *win);
 
 void       gimp_add_busy_cursors_until_idle (void);
 void       gimp_add_busy_cursors            (void);
-gint       gimp_remove_busy_cursors         (gpointer        data);
+gint       gimp_remove_busy_cursors         (gpointer            data);
 
-gboolean   gtkutil_compress_motion          (GtkWidget      *widget,
-					     gdouble        *lastmotion_x,
-					     gdouble        *lastmotion_y);
+gboolean   gtkutil_compress_motion          (GtkWidget          *widget,
+					     gdouble            *lastmotion_x,
+					     gdouble            *lastmotion_y);
 
 #endif /*  __CURSORUTIL_H__  */

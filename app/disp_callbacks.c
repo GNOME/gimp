@@ -57,11 +57,6 @@
 #include "libgimp/gimpintl.h"
 
 
-/* Function declarations */
-
-static void gdisplay_check_device_cursor (GDisplay *gdisp);
-
-
 static void
 gdisplay_redraw (GDisplay *gdisp,
 		 gint      x,
@@ -129,6 +124,20 @@ key_to_state (gint key)
     }
 }
 
+static void
+gdisplay_vscrollbar_update (GtkAdjustment *adjustment,
+			    GDisplay      *gdisp)
+{
+  scroll_display (gdisp, 0, (adjustment->value - gdisp->offset_y));
+}
+
+static void
+gdisplay_hscrollbar_update (GtkAdjustment *adjustment,
+			    GDisplay      *gdisp)
+{
+  scroll_display (gdisp, (adjustment->value - gdisp->offset_x), 0);
+}
+
 gint
 gdisplay_shell_events (GtkWidget *widget,
 		       GdkEvent  *event,
@@ -187,10 +196,10 @@ gdisplay_canvas_events (GtkWidget *canvas,
 
       /*  set up the scrollbar observers  */
       gtk_signal_connect (GTK_OBJECT (gdisp->hsbdata), "value_changed",
-			  GTK_SIGNAL_FUNC(scrollbar_horz_update),
+			  GTK_SIGNAL_FUNC (gdisplay_hscrollbar_update),
 			  gdisp);
       gtk_signal_connect (GTK_OBJECT (gdisp->vsbdata), "value_changed",
-			  GTK_SIGNAL_FUNC (scrollbar_vert_update),
+			  GTK_SIGNAL_FUNC (gdisplay_vscrollbar_update),
 			  gdisp);
 
       /*  setup scale properly  */
@@ -643,10 +652,10 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	}
       else if (gimp_image_is_empty (gdisp->gimage))
 	{
-	  gdisplay_install_tool_cursor (gdisp, GIMP_BAD_CURSOR,
-					TOOL_TYPE_NONE,
-					CURSOR_MODIFIER_NONE,
-					FALSE);
+	  gdisplay_install_tool_cursor (gdisp,
+					GIMP_BAD_CURSOR,
+					GIMP_TOOL_CURSOR_NONE,
+					GIMP_CURSOR_MODIFIER_NONE);
 	}
     }
 

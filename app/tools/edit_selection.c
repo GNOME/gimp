@@ -664,10 +664,10 @@ edit_selection_cursor_update (Tool           *tool,
 			      GdkEventMotion *mevent,
 			      GDisplay       *gdisp)
 {
-  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
-				TOOL_TYPE_NONE,
-				CURSOR_MODIFIER_MOVE,
-				FALSE);
+  gdisplay_install_tool_cursor (gdisp,
+				GIMP_MOUSE_CURSOR,
+				GIMP_TOOL_CURSOR_NONE,
+				GIMP_CURSOR_MODIFIER_MOVE);
 }
 
 static gint

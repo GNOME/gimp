@@ -619,46 +619,46 @@ rect_select_cursor_update (Tool           *tool,
   switch (rect_sel->op)
     {
     case SELECTION_ADD:
-      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
-				    tool->type,
-				    CURSOR_MODIFIER_PLUS,
-				    FALSE);
+      gdisplay_install_tool_cursor (gdisp,
+				    GIMP_MOUSE_CURSOR,
+				    tool->tool_cursor,
+				    GIMP_CURSOR_MODIFIER_PLUS);
       break;
     case SELECTION_SUB:
-      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
-				    tool->type,
-				    CURSOR_MODIFIER_MINUS,
-				    FALSE);
+      gdisplay_install_tool_cursor (gdisp,
+				    GIMP_MOUSE_CURSOR,
+				    tool->tool_cursor,
+				    GIMP_CURSOR_MODIFIER_MINUS);
       break;
     case SELECTION_INTERSECT: 
-      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
-				    tool->type,
-				    CURSOR_MODIFIER_INTERSECT,
-				    FALSE);
+      gdisplay_install_tool_cursor (gdisp,
+				    GIMP_MOUSE_CURSOR,
+				    tool->tool_cursor,
+				    GIMP_CURSOR_MODIFIER_INTERSECT);
       break;
     case SELECTION_REPLACE:
-      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
-				    tool->type,
-				    CURSOR_MODIFIER_NONE,
-				    FALSE);
+      gdisplay_install_tool_cursor (gdisp,
+				    GIMP_MOUSE_CURSOR,
+				    tool->tool_cursor,
+				    GIMP_CURSOR_MODIFIER_NONE);
       break;
     case SELECTION_MOVE_MASK:
-      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
-				    tool->type,
-				    CURSOR_MODIFIER_MOVE,
-				    FALSE);
+      gdisplay_install_tool_cursor (gdisp,
+				    GIMP_MOUSE_CURSOR,
+				    tool->tool_cursor,
+				    GIMP_CURSOR_MODIFIER_MOVE);
       break;
     case SELECTION_MOVE:
-      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
-				    MOVE,
-				    CURSOR_MODIFIER_NONE,
-				    FALSE);
+      gdisplay_install_tool_cursor (gdisp,
+				    GIMP_MOUSE_CURSOR,
+				    GIMP_MOVE_TOOL_CURSOR,
+				    GIMP_CURSOR_MODIFIER_NONE);
       break;
     case SELECTION_ANCHOR:
-      gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
-				    tool->type,
-				    CURSOR_MODIFIER_ANCHOR,
-				    FALSE);
+      gdisplay_install_tool_cursor (gdisp,
+				    GIMP_MOUSE_CURSOR,
+				    tool->tool_cursor,
+				    GIMP_CURSOR_MODIFIER_ANCHOR);
       break;
     }
 }

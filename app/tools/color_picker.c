@@ -27,13 +27,13 @@
 
 #include "appenv.h"
 #include "color_picker.h"
+#include "cursorutil.h"
 #include "draw_core.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimpimage.h"
 #include "gimpui.h"
 #include "gimprc.h"
-#include "cursorutil.h"
 #include "info_dialog.h"
 #include "palette.h"
 #include "tool.h"
@@ -43,8 +43,6 @@
 #include "libgimp/gimpintl.h"
 
 #include "pixmaps2.h"
-#include "cursors/dropper_small.xbm"
-#include "cursors/dropper_small_mask.xbm"
 
 
 /*  maximum information buffer size  */
@@ -138,13 +136,6 @@ static gchar          index_buf[MAX_INFO_BUF];
 static gchar          gray_buf [MAX_INFO_BUF];
 static gchar          hex_buf  [MAX_INFO_BUF];
 
-BitmapCursor tool_cursor =
-{
-  dropper_small_bits, dropper_small_mask_bits,
-  dropper_small_width, dropper_small_height,
-  0, 0, NULL, NULL, NULL
-};
-
 
 static GimpToolClass *parent_class = NULL;
 
@@ -198,8 +189,6 @@ gimp_color_picker_class_init (GimpColorPickerClass *klass)
   parent_class = gtk_type_class (GIMP_TYPE_TOOL);
 
   object_class->destroy = gimp_color_picker_destroy;
-
-  tool_class->tool_cursor = &tool_cursor;
 
   tool_class->control        = color_picker_control;
   tool_class->button_press   = color_picker_button_press;
@@ -578,17 +567,17 @@ color_picker_cursor_update (GimpTool       *tool,
       x > 0 && x < gdisp->gimage->width &&
       y > 0 && y < gdisp->gimage->height)
     {
-      gdisplay_install_tool_cursor (gdisp, GIMP_COLOR_PICKER_CURSOR,
-				    COLOR_PICKER,
-				    CURSOR_MODIFIER_NONE,
-				    FALSE);
+      gdisplay_install_tool_cursor (gdisp,
+				    GIMP_COLOR_PICKER_CURSOR,
+				    GIMP_COLOR_PICKER_TOOL_CURSOR,
+				    GIMP_CURSOR_MODIFIER_NONE);
     }
   else
     {
-      gdisplay_install_tool_cursor (gdisp, GIMP_BAD_CURSOR,
-				    COLOR_PICKER,
-				    CURSOR_MODIFIER_NONE,
-				    FALSE);
+      gdisplay_install_tool_cursor (gdisp,
+				    GIMP_BAD_CURSOR,
+				    GIMP_COLOR_PICKER_TOOL_CURSOR,
+				    GIMP_CURSOR_MODIFIER_NONE);
     }
 }
 

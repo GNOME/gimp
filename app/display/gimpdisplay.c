@@ -158,9 +158,8 @@ gdisplay_new (GimpImage *gimage,
   gdisp->disp_xoffset       = 0;
   gdisp->disp_yoffset       = 0;
   gdisp->current_cursor     = (GdkCursorType) -1;
-  gdisp->cursor_tool        = TOOL_TYPE_NONE;
-  gdisp->cursor_modifier    = CURSOR_MODIFIER_NONE;
-  gdisp->toggle_cursor      = FALSE;
+  gdisp->tool_cursor        = GIMP_TOOL_CURSOR_NONE;
+  gdisp->cursor_modifier    = GIMP_CURSOR_MODIFIER_NONE;
   gdisp->draw_guides        = TRUE;
   gdisp->snap_to_guides     = TRUE;
 
@@ -210,10 +209,10 @@ gdisplay_new (GimpImage *gimage,
   g_hash_table_insert (display_ht, gdisp->canvas, gdisp);
 
   /*  set the current tool cursor  */
-  gdisplay_install_tool_cursor (gdisp, default_gdisplay_cursor,
-				TOOL_TYPE_NONE,
-				CURSOR_MODIFIER_NONE,
-				FALSE);
+  gdisplay_install_tool_cursor (gdisp,
+				default_gdisplay_cursor,
+				GIMP_TOOL_CURSOR_NONE,
+				GIMP_CURSOR_MODIFIER_NONE);
 
   gimage->instance_count++;   /* this is obsolete */
   gimage->disp_count++;
@@ -1313,10 +1312,10 @@ gdisplay_update_cursor (GDisplay *gdisp,
 			gint      x, 
 			gint      y)
 {
-  gint new_cursor;
+  gint  new_cursor;
   gchar buffer[CURSOR_STR_LENGTH];
-  gint t_x;
-  gint t_y;
+  gint  t_x;
+  gint  t_y;
 
   new_cursor = gdisp->draw_cursor && gdisp->proximity;
   
@@ -1395,8 +1394,8 @@ gdisplay_resize_cursor_label (GDisplay *gdisp)
 {
   /* Set a proper size for the coordinates display in the statusbar. */
   gchar buffer[CURSOR_STR_LENGTH];
-  gint cursor_label_width;
-  gint label_frame_size_difference;
+  gint  cursor_label_width;
+  gint  label_frame_size_difference;
 
   if (gdisp->dot_for_dot)
     {
@@ -1837,12 +1836,11 @@ gdisplay_untransform_coords_f (GDisplay *gdisp,
 
 /*  install and remove tool cursor from gdisplay...  */
 void
-gdisplay_real_install_tool_cursor (GDisplay      *gdisp,
-				   GdkCursorType  cursor_type,
-				   ToolType       tool_type,
-				   CursorModifier modifier,
-				   gboolean       toggle_cursor,
-				   gboolean       always_install)
+gdisplay_real_install_tool_cursor (GDisplay           *gdisp,
+				   GdkCursorType       cursor_type,
+				   GimpToolCursorType  tool_cursor,
+				   GimpCursorModifier  modifier,
+				   gboolean            always_install)
 {
   if (cursor_type != GIMP_BAD_CURSOR)
     {
@@ -1857,44 +1855,39 @@ gdisplay_real_install_tool_cursor (GDisplay      *gdisp,
 
 	case CURSOR_MODE_CROSSHAIR:
 	  cursor_type = GIMP_CROSSHAIR_CURSOR;
-	  tool_type   = TOOL_TYPE_NONE;
-	  modifier    = CURSOR_MODIFIER_NONE;
+	  tool_cursor = GIMP_TOOL_CURSOR_NONE;
+	  modifier    = GIMP_CURSOR_MODIFIER_NONE;
 	  break;
 	}
     }
 
-  if (gdisp->current_cursor  != cursor_type   ||
-      gdisp->cursor_tool     != tool_type     ||
-      gdisp->cursor_modifier != modifier      ||
-      gdisp->toggle_cursor   != toggle_cursor ||
+  if (gdisp->current_cursor  != cursor_type ||
+      gdisp->tool_cursor     != tool_cursor ||
+      gdisp->cursor_modifier != modifier    ||
       always_install)
     {
       gdisp->current_cursor  = cursor_type;
-      gdisp->cursor_tool     = tool_type;
+      gdisp->tool_cursor     = tool_cursor;
       gdisp->cursor_modifier = modifier;
-      gdisp->toggle_cursor   = toggle_cursor;
 
-      change_win_cursor (gdisp->canvas->window,
-			 cursor_type,
-			 tool_type,
-			 modifier,
-			 toggle_cursor);
+      gimp_change_win_cursor (gdisp->canvas->window,
+			      cursor_type,
+			      tool_cursor,
+			      modifier);
     }
 }
 
 void
-gdisplay_install_tool_cursor (GDisplay       *gdisp,
-			      GdkCursorType   cursor_type,
-			      ToolType        tool_type,
-			      CursorModifier  modifier,
-			      gboolean        toggle_cursor)
+gdisplay_install_tool_cursor (GDisplay           *gdisp,
+			      GdkCursorType       cursor_type,
+			      GimpToolCursorType  tool_cursor,
+			      GimpCursorModifier  modifier)
 {
   if (!gdisp->using_override_cursor)
     gdisplay_real_install_tool_cursor (gdisp,
 				       cursor_type,
-				       tool_type,
+				       tool_cursor,
 				       modifier,
-				       toggle_cursor,
 				       FALSE);
 }
 
@@ -1908,11 +1901,11 @@ gdisplay_install_override_cursor (GDisplay      *gdisp,
     {
       gdisp->override_cursor       = cursor_type;
       gdisp->using_override_cursor = TRUE;
-      change_win_cursor (gdisp->canvas->window,
-			 cursor_type,
-			 TOOL_TYPE_NONE,
-			 CURSOR_MODIFIER_NONE,
-			 FALSE);
+
+      gimp_change_win_cursor (gdisp->canvas->window,
+			      cursor_type,
+			      GIMP_TOOL_CURSOR_NONE,
+			      GIMP_CURSOR_MODIFIER_NONE);
     }
 }
 
@@ -1924,9 +1917,8 @@ gdisplay_remove_override_cursor (GDisplay *gdisp)
       gdisp->using_override_cursor = FALSE;
       gdisplay_real_install_tool_cursor (gdisp,
 					 gdisp->current_cursor,
-					 gdisp->cursor_tool,
+					 gdisp->tool_cursor,
 					 gdisp->cursor_modifier,
-					 gdisp->toggle_cursor,
 					 TRUE);
     }
 }
@@ -1934,7 +1926,7 @@ gdisplay_remove_override_cursor (GDisplay *gdisp)
 void
 gdisplay_remove_tool_cursor (GDisplay *gdisp)
 {
-  unset_win_cursor (gdisp->canvas->window);
+  gimp_unset_win_cursor (gdisp->canvas->window);
 }
 
 void

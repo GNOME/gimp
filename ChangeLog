@@ -1,5 +1,63 @@
 2001-02-24  Michael Natterer  <mitch@gimp.org>
 
+	* TODO.xml: updated.
+
+	* app/appenums.h
+	* app/apptypes.h: prefixed the cursor stuff with "Gimp", added
+	the new stock tool cursor enum. Removed the old ToolType enum.
+
+	* app/cursorutil.[ch]
+	* app/gdisplay.[ch]: removed the old ToolType enum and prefixed
+	the functions with "gimp_". Also stripped all "toggle cursor"
+	stuff from the cursor code, so the new API is easier and not
+	depending on the tool system.
+
+	All existing tool cursors can be used via the new stock tool
+	cursor enum, so no tool has to fiddle around with bitmap cursors.
+	There will be an cursorutil function for registering stock tool
+	cursor types on the fly.
+
+	* app/disp_callbacks.c
+	* app/scroll.[ch]: moved the display scrollbar callbacks from
+	scroll.[ch] to disp_callbacks.c. Removed some crap from scroll.h
+
+	* app/tools/tool.[ch]: removed the BitmapCursor pointers from the
+	tool class struct and add cursor and toggle cursor IDs to the
+	GimpTool struct. Work in progress.
+
+	* app/dialog_handler.c
+	* app/tools/bezier_select.c
+	* app/tools/blend.c
+	* app/tools/bucket_fill.c
+	* app/tools/by_color_select.c
+	* app/tools/clone.c
+	* app/tools/color_picker.c
+	* app/tools/convolve.c
+	* app/tools/crop.c
+	* app/tools/dodgeburn.c
+	* app/tools/edit_selection.c
+	* app/tools/ellipse_select.c
+	* app/tools/flip_tool.c
+	* app/tools/free_select.c
+	* app/tools/fuzzy_select.c
+	* app/tools/ink.c
+	* app/tools/iscissors.c
+	* app/tools/magnify.c
+	* app/tools/measure.c
+	* app/tools/move.c
+	* app/tools/paint_core.[ch]
+	* app/tools/perspective_tool.c
+	* app/tools/rect_select.c
+	* app/tools/rotate_tool.c
+	* app/tools/scale_tool.c
+	* app/tools/shear_tool.c
+	* app/tools/text_tool.c
+	* app/tools/transform_core.[ch]: changed accordingly. Did this
+	"blind" for most tools because they don't compile. The changes are
+	minimal, so there should be no conflicts.
+
+2001-02-24  Michael Natterer  <mitch@gimp.org>
+
 	* app/commands.[ch]: added cmd_callbacks for the toolbox and
 	the preferences dialog.
 

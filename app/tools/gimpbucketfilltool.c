@@ -284,11 +284,11 @@ bucket_fill_cursor_update (Tool           *tool,
 			   GdkEventMotion *mevent,
 			   GDisplay       *gdisp)
 {
-  GimpLayer      *layer;
-  GdkCursorType   ctype     = GDK_TOP_LEFT_ARROW;
-  CursorModifier  cmodifier = CURSOR_MODIFIER_NONE;
-  gint            x, y;
-  gint            off_x, off_y;
+  GimpLayer          *layer;
+  GdkCursorType       ctype     = GDK_TOP_LEFT_ARROW;
+  GimpCursorModifier  cmodifier = GIMP_CURSOR_MODIFIER_NONE;
+  gint                x, y;
+  gint                off_x, off_y;
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
 			       &x, &y, FALSE, FALSE);
@@ -311,23 +311,23 @@ bucket_fill_cursor_update (Tool           *tool,
 	      switch (bucket_options->fill_mode)
 		{
 		case FG_BUCKET_FILL:
-		  cmodifier = CURSOR_MODIFIER_FOREGROUND;
+		  cmodifier = GIMP_CURSOR_MODIFIER_FOREGROUND;
 		  break;
 		case BG_BUCKET_FILL:
-		  cmodifier = CURSOR_MODIFIER_BACKGROUND;
+		  cmodifier = GIMP_CURSOR_MODIFIER_BACKGROUND;
 		  break;
 		case PATTERN_BUCKET_FILL:
-		  cmodifier = CURSOR_MODIFIER_PATTERN;
+		  cmodifier = GIMP_CURSOR_MODIFIER_PATTERN;
 		  break;
 		}
 	    }
 	}
     }
 
-  gdisplay_install_tool_cursor (gdisp, ctype,
-				BUCKET_FILL,
-				cmodifier,
-				FALSE);
+  gdisplay_install_tool_cursor (gdisp,
+				ctype,
+				GIMP_BUCKET_FILL_TOOL_CURSOR,
+				cmodifier);
 }
 
 static void
