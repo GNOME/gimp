@@ -1,5 +1,10 @@
 2003-10-22  Dave Neary  <bolsh@gimp.org>
 
+	* plug-ins/gfig/gfig.c: Bumped version number to 2.0. Closes 
+	bug #125237.
+
+2003-10-22  Dave Neary  <bolsh@gimp.org>
+
 	* app/gui/preferences-dialog.c: Add outstanding display options to 
 	preferences dialog.
 

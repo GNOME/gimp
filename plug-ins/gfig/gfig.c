@@ -4206,7 +4206,7 @@ about_button_callback (GtkWidget *widget,
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Release 1.3"));
+  label = gtk_label_new (_("Release 2.0"));
   gtk_misc_set_padding (GTK_MISC (label), 2, 2);
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
