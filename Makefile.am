@@ -173,6 +173,7 @@ EXTRA_DIST = \
 	README.win32				\
 	README.perl				\
 	ChangeLog.pre-1-0			\
+	ChangeLog.pre-1-2			\
 	PLUGIN_MAINTAINERS			\
 	MAINTAINERS				\
 	TODO					\
