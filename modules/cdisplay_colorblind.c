@@ -35,12 +35,15 @@
 
 typedef enum
 {
-  COLORBLIND_DEFICIENCY_FOO,
-  COLORBLIND_DEFICIENCY_BAR
+  COLORBLIND_DEFICIENCY_NONE,
+  COLORBLIND_DEFICIENCY_PROTONOPIA,
+  COLORBLIND_DEFICIENCY_DEUTERANOPIA,
+  COLORBLIND_DEFICIENCY_TRITANOPIA,
+  COLORBLIND_DEFICIENCY_LAST = COLORBLIND_DEFICIENCY_TRITANOPIA
 } ColorblindDeficiency;
 
 
-#define DEFAULT_DEFICIENCY COLORBLIND_DEFICIENCY_FOO
+#define DEFAULT_DEFICIENCY COLORBLIND_DEFICIENCY_DEUTERANOPIA
 
 
 #define CDISPLAY_TYPE_COLORBLIND            (cdisplay_colorblind_type)
@@ -97,7 +100,7 @@ static const GimpModuleInfo cdisplay_colorblind_info =
   N_("Colorblind display filter"),
   "Michael Natterer <mitch@gimp.org>",
   "v0.1",
-  "(c) 2001, released under the GPL",
+  "(c) 2002, released under the GPL",
   "December 16, 2002"
 };
 
@@ -216,7 +219,6 @@ cdisplay_colorblind_convert (GimpColorDisplay *display,
   CdisplayColorblind *colorblind;
   gint                i, j;
   guchar             *b;
-  guchar              red, green, blue;
 
   colorblind = CDISPLAY_COLORBLIND (display);
 
@@ -232,30 +234,25 @@ cdisplay_colorblind_convert (GimpColorDisplay *display,
 
       switch (colorblind->deficiency)
         {
-        case COLORBLIND_DEFICIENCY_FOO:
+        case COLORBLIND_DEFICIENCY_PROTONOPIA:
+        case COLORBLIND_DEFICIENCY_DEUTERANOPIA:
+          /*  FIXME: need proper formulas  */
           while (i--)
             {
-              red   = b[0] >> 1;
-              green = b[1] >> 1;
+              guchar red   = b[0] >> 1;
+              guchar green = b[1] >> 1;
 
-              b[0] = red + green;
-              b[1] = red + green;
-              /* b[2] = b[2]; */
+              b[0] = b[1] = red + green;
 
               b += bpp;
             }
           break;
 
-        case COLORBLIND_DEFICIENCY_BAR:
+        case COLORBLIND_DEFICIENCY_TRITANOPIA:
+          /*  FIXME: need proper formula  */
           while (i--)
             {
-              red   = b[0];
-              green = b[1];
-              blue  = b[2];
-
-              b[0] = green;
-              b[1] = blue;
-              b[2] = red;
+              b[2] = 0;
 
               b += bpp;
             }
@@ -286,8 +283,8 @@ cdisplay_colorblind_load_state (GimpColorDisplay *display,
 
       if (sscanf (str, "%d", &deficiency) == 1)
         {
-          if (deficiency >= COLORBLIND_DEFICIENCY_FOO &&
-              deficiency <= COLORBLIND_DEFICIENCY_BAR)
+          if (deficiency > COLORBLIND_DEFICIENCY_NONE &&
+              deficiency <= COLORBLIND_DEFICIENCY_LAST)
             {
               colorblind->deficiency = deficiency;
 
@@ -336,12 +333,16 @@ cdisplay_colorblind_configure (GimpColorDisplay *display)
                            colorblind,
                            GINT_TO_POINTER (colorblind->deficiency),
 
-                           "FIXME: formula from bug #101256",
-                           GINT_TO_POINTER (COLORBLIND_DEFICIENCY_FOO),
+                           _("Protonopia (insensitivity to red)"),
+                           GINT_TO_POINTER (COLORBLIND_DEFICIENCY_PROTONOPIA),
                            NULL,
 
-                           "FIXME: random test formula",
-                           GINT_TO_POINTER (COLORBLIND_DEFICIENCY_BAR),
+                           _("Deuteranopia (insensitivity to green)"),
+                           GINT_TO_POINTER (COLORBLIND_DEFICIENCY_DEUTERANOPIA),
+                           NULL,
+
+                           _("Tritanopia (insensitivity to blue)"),
+                           GINT_TO_POINTER (COLORBLIND_DEFICIENCY_TRITANOPIA),
                            NULL,
 
                            NULL);

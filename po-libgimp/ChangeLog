@@ -1,3 +1,8 @@
+2002-12-16  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added modules/cdisplay_colorblind.c.
+	* de.po: updated german translation.
+
 2002-12-15  Ole Laursen  <olau@hardworking.dk>
 
 	* da.po: Updated Danish translation.

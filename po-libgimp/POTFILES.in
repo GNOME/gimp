@@ -15,6 +15,7 @@ libgimpwidgets/gimpstock.c
 libgimpwidgets/gimpunitmenu.c
 libgimpwidgets/gimpwidgets.c
 
+modules/cdisplay_colorblind.c
 modules/cdisplay_gamma.c
 modules/cdisplay_highcontrast.c
 modules/colorsel_triangle.c
