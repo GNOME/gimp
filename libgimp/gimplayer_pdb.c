@@ -789,13 +789,13 @@ gimp_layer_set_show_mask (gint32   layer_ID,
  * gimp_layer_get_edit_mask:
  * @layer_ID: The layer.
  *
- * Get the show mask of the specified layer.
+ * Get the edit mask of the specified layer.
  *
- * This procedure returns the specified layer's show mask. If the value
+ * This procedure returns the specified layer's edit mask. If the value
  * is non-zero, then the layer mask for this layer is currently active,
  * and not the layer.
  *
- * Returns: The layer show mask.
+ * Returns: The layer edit mask.
  */
 gboolean
 gimp_layer_get_edit_mask (gint32 layer_ID)
@@ -820,11 +820,11 @@ gimp_layer_get_edit_mask (gint32 layer_ID)
 /**
  * gimp_layer_set_edit_mask:
  * @layer_ID: The layer.
- * @edit_mask: The new layer show mask.
+ * @edit_mask: The new layer edit mask.
  *
- * Set the show mask of the specified layer.
+ * Set the edit mask of the specified layer.
  *
- * This procedure sets the specified layer's show mask. This controls
+ * This procedure sets the specified layer's edit mask. This controls
  * whether the layer or it's mask is currently active for editing. If
  * the specified layer has no layer mask, then this procedure will
  * return an error.

@@ -1522,15 +1522,15 @@ static ProcArg layer_get_edit_mask_outargs[] =
   {
     GIMP_PDB_INT32,
     "edit_mask",
-    "The layer show mask"
+    "The layer edit mask"
   }
 };
 
 static ProcRecord layer_get_edit_mask_proc =
 {
   "gimp_layer_get_edit_mask",
-  "Get the show mask of the specified layer.",
-  "This procedure returns the specified layer's show mask. If the value is non-zero, then the layer mask for this layer is currently active, and not the layer.",
+  "Get the edit mask of the specified layer.",
+  "This procedure returns the specified layer's edit mask. If the value is non-zero, then the layer mask for this layer is currently active, and not the layer.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -1575,15 +1575,15 @@ static ProcArg layer_set_edit_mask_inargs[] =
   {
     GIMP_PDB_INT32,
     "edit_mask",
-    "The new layer show mask"
+    "The new layer edit mask"
   }
 };
 
 static ProcRecord layer_set_edit_mask_proc =
 {
   "gimp_layer_set_edit_mask",
-  "Set the show mask of the specified layer.",
-  "This procedure sets the specified layer's show mask. This controls whether the layer or it's mask is currently active for editing. If the specified layer has no layer mask, then this procedure will return an error.",
+  "Set the edit mask of the specified layer.",
+  "This procedure sets the specified layer's edit mask. This controls whether the layer or it's mask is currently active for editing. If the specified layer has no layer mask, then this procedure will return an error.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

@@ -599,7 +599,7 @@ function returns an error.
 HELP
 CODE2
 
-&layer_accessors('edit_mask', 'boolean', 'show mask', 0, 0,
+&layer_accessors('edit_mask', 'boolean', 'edit mask', 0, 0,
 		 [ <<'CODE1', <<'CODE2' ]);
     $help .= <<'HELP';
  If the value is non-zero, then the layer mask for this layer is currently

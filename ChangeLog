@@ -1,3 +1,11 @@
+2005-03-04  Manish Singh  <yosh@gimp.org>
+
+	* tools/pdbgen/pdb/layer.pdb: fix documentation of edit_mask
+	accessors.
+
+	* libgimp/gimplayer_pdb.c
+	* app/pdb/layer_cmds.c: regenerated.
+
 2005-03-05  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/metadata/interface.c: specify alternative button order
