@@ -56,18 +56,38 @@
 #include "sanity.h"
 #include "units.h"
 
+#ifdef G_OS_WIN32
+#include <windows.h>
+#endif
+
 #include "gimp-intl.h"
 
 
-#ifdef G_OS_WIN32
-#include <windows.h>
+#ifdef GIMP_UNSTABLE
+static GimpStackTraceMode  stack_trace_mode   = GIMP_STACK_TRACE_QUERY;
+static GimpPDBCompatMode   pdb_compat_mode    = GIMP_PDB_COMPAT_WARN;
 #else
-static void  gimp_sigfatal_handler (gint         sig_num) G_GNUC_NORETURN;
-static void  gimp_sigchld_handler  (gint         sig_num);
+static GimpStackTraceMode  stack_trace_mode   = GIMP_STACK_TRACE_NEVER;
+static GimpPDBCompatMode   pdb_compat_mode    = GIMP_PDB_COMPAT_ON;
 #endif
 
-static void  gimp_show_version     (void);
-static void  gimp_show_help        (const gchar *progname);
+
+#ifndef G_OS_WIN32
+static void     gimp_sigfatal_handler        (gint sig_num) G_GNUC_NORETURN;
+static void     gimp_sigchld_handler         (gint sig_num);
+#endif
+
+static gboolean gimp_option_stack_trace_mode (const gchar  *option_name,
+                                              const gchar  *value,
+                                              gpointer      data,
+                                              GError      **error);
+static gboolean gimp_option_pdb_compat_mode (const gchar   *option_name,
+                                             const gchar   *value,
+                                             gpointer       data,
+                                             GError       **error);
+
+static void     gimp_show_version            (void);
+static void     gimp_show_help               (const gchar  *progname);
 
 
 /*
@@ -94,31 +114,119 @@ int
 main (int    argc,
       char **argv)
 {
-  const gchar        *abort_message           = NULL;
-  const gchar        *full_prog_name          = NULL;
-  const gchar        *alternate_system_gimprc = NULL;
-  const gchar        *alternate_gimprc        = NULL;
-  const gchar        *session_name            = NULL;
-  const gchar        *batch_interpreter       = NULL;
-  const gchar       **batch_commands          = NULL;
-  gboolean            show_help               = FALSE;
-  gboolean            no_interface            = FALSE;
-  gboolean            no_data                 = FALSE;
-  gboolean            no_fonts                = FALSE;
-  gboolean            no_splash               = FALSE;
-  gboolean            be_verbose              = FALSE;
-  gboolean            use_shm                 = FALSE;
-  gboolean            use_cpu_accel           = TRUE;
-  gboolean            console_messages        = FALSE;
-  gboolean            use_debug_handler       = FALSE;
-#ifdef GIMP_UNSTABLE
-  GimpStackTraceMode  stack_trace_mode        = GIMP_STACK_TRACE_QUERY;
-  GimpPDBCompatMode   pdb_compat_mode         = GIMP_PDB_COMPAT_WARN;
-#else
-  GimpStackTraceMode  stack_trace_mode        = GIMP_STACK_TRACE_NEVER;
-  GimpPDBCompatMode   pdb_compat_mode         = GIMP_PDB_COMPAT_ON;
-#endif
-  gint                i, j;
+  GOptionContext  *context;
+  const gchar     *abort_message      = NULL;
+  const gchar     *full_prog_name     = NULL;
+  const gchar     *system_gimprc      = NULL;
+  const gchar     *user_gimprc        = NULL;
+  const gchar     *session_name       = NULL;
+  const gchar     *batch_interpreter  = NULL;
+  const gchar    **batch_commands     = NULL;
+  gboolean         fatal_warnings     = FALSE;
+  gboolean         no_interface       = FALSE;
+  gboolean         no_data            = FALSE;
+  gboolean         no_fonts           = FALSE;
+  gboolean         no_splash          = FALSE;
+  gboolean         be_verbose         = FALSE;
+  gboolean         use_shm            = FALSE;
+  gboolean         use_cpu_accel      = TRUE;
+  gboolean         console_messages   = FALSE;
+  gboolean         use_debug_handler  = FALSE;
+  GError          *error              = NULL;
+  gint             i;
+
+  const GOptionEntry entries[] =
+    {
+      {
+        "verbose", 0, 0,
+        G_OPTION_ARG_NONE, &be_verbose,
+        "Be more verbose.", NULL
+      },
+      {
+        "no-interface", 'i', 0,
+        G_OPTION_ARG_NONE, &no_interface,
+        "Run without a user interface.", NULL
+      },
+      {
+        "no-data", 'd', 0,
+        G_OPTION_ARG_NONE, &no_data,
+        "Do not load brushes, gradients, palettes, patterns.", NULL
+      },
+      {
+        "no-fonts", 'f', 0,
+        G_OPTION_ARG_NONE, &no_fonts,
+        "Do not load any fonts.", NULL
+      },
+      {
+        "no-splash", 's', 0,
+        G_OPTION_ARG_NONE, &no_splash,
+        "Do not show a startup window.", NULL
+      },
+      {
+        "no-shm", 0, G_OPTION_FLAG_REVERSE,
+        G_OPTION_ARG_NONE, &use_shm,
+        "Do not use shared memory between GIMP and plugins.", NULL
+      },
+      {
+        "no-cpu-accel", 0, G_OPTION_FLAG_REVERSE,
+        G_OPTION_ARG_NONE, &use_cpu_accel,
+        "Do not use special CPU acceleration functions.", NULL
+      },
+      {
+        "session", 0, 0,
+        G_OPTION_ARG_FILENAME, &session_name,
+        "Use an alternate sessionrc file.", "name"
+      },
+      {
+        "gimprc", 0, 0,
+        G_OPTION_ARG_FILENAME, &user_gimprc,
+        "Use an alternate user gimprc file.", "filename"
+      },
+      {
+        "system-gimprc", 0, 0,
+        G_OPTION_ARG_FILENAME, &system_gimprc,
+        "Use an alternate system gimprc file.", "filename"
+      },
+      {
+        "batch", 'b', 0,
+        G_OPTION_ARG_STRING_ARRAY, &batch_commands,
+        "Batch command to run (can be used multiple times).", "command"
+      },
+      {
+        "batch-interpreter", 0, 0,
+        G_OPTION_ARG_STRING, &batch_interpreter,
+        "The procedure to process batch commands with.", "procedure"
+      },
+      {
+        "console-messages", 0, 0,
+        G_OPTION_ARG_NONE, &console_messages,
+        "Send messages to console instead of using a dialog box.", NULL
+      },
+      {
+        "pdb-compat-mode", 0, 0,
+        G_OPTION_ARG_CALLBACK, gimp_option_pdb_compat_mode,
+        "Procedural Database compatibility mode.", "never | query | always"
+      },
+      {
+        "stack-trace-mode", 0, 0,
+        G_OPTION_ARG_CALLBACK, gimp_option_stack_trace_mode,
+        "Debugging mode for fatal signals.", NULL
+      },
+      {
+        "debug-handlers", 0, 0,
+        G_OPTION_ARG_NONE, &use_debug_handler,
+        "Enable non-fatal debugging signal handlers.", NULL
+      },
+      /*  GTK+ also looks for --g-fatal-warnings, but we want it for
+       *  non-interactive use also.
+       */
+      { "g-fatal-warnings", 0, G_OPTION_FLAG_HIDDEN,
+        G_OPTION_ARG_NONE, &fatal_warnings,
+        NULL, NULL
+      },
+      { NULL }
+    };
+
 
 #if 0
   g_mem_set_vtable (glib_mem_profiler_table);
@@ -232,202 +340,30 @@ main (int    argc,
   mallopt (M_MMAP_THRESHOLD, 64 * 64 - 1);
 #endif
 
-  batch_commands    = g_new (const gchar *, argc);
-  batch_commands[0] = NULL;
+  context = g_option_context_new (NULL);
+  g_option_context_add_main_entries (context, entries, GETTEXT_PACKAGE);
 
-  for (i = 1; i < argc; i++)
+#ifdef __GNUC__
+#warning FIXME: add this code as soon as we depend on gtk+
+#endif
+  /* g_option_context_add_group (context, gtk_get_option_group (TRUE));
+   */
+
+  if (! g_option_context_parse (context, &argc, &argv, &error))
     {
-      if (strcmp (argv[i], "--g-fatal-warnings") == 0)
-	{
-          GLogLevelFlags fatal_mask;
+      g_printerr ("%s\n", error->message);
+      g_error_free (error);
 
-          fatal_mask = g_log_set_always_fatal (G_LOG_FATAL_MASK);
-          fatal_mask |= G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL;
-          g_log_set_always_fatal (fatal_mask);
- 	  argv[i] = NULL;
-	}
-      else if ((strcmp (argv[i], "--no-interface") == 0) ||
-               (strcmp (argv[i], "-i") == 0))
-	{
-	  no_interface = TRUE;
- 	  argv[i] = NULL;
-	}
-      else if (strcmp (argv[i], "--batch-interpreter") == 0)
-	{
-	  argv[i] = NULL;
-	  if (argc <= ++i)
-            {
-	      show_help = TRUE;
-	    }
-          else
-            {
-	      batch_interpreter = argv[i];
-	      argv[i] = NULL;
-            }
-	}
-      else if ((strcmp (argv[i], "--batch") == 0) ||
-	       (strcmp (argv[i], "-b") == 0))
-	{
-	  argv[i] = NULL;
-	  for (j = 0, i++ ; i < argc; j++, i++)
-	    {
-	      batch_commands[j] = argv[i];
-	      argv[i] = NULL;
-	    }
-	  batch_commands[j] = NULL;
-
-          /* We need at least one batch command */
-	  if (batch_commands[0] == NULL)
-	    show_help = TRUE;
-	}
-      else if (strcmp (argv[i], "--system-gimprc") == 0)
-	{
- 	  argv[i] = NULL;
-	  if (argc <= ++i)
-            {
-	      show_help = TRUE;
-	    }
-          else
-            {
-	      alternate_system_gimprc = argv[i];
-	      argv[i] = NULL;
-            }
-	}
-      else if ((strcmp (argv[i], "--gimprc") == 0) ||
-               (strcmp (argv[i], "-g") == 0))
-	{
-	  argv[i] = NULL;
-	  if (argc <= ++i)
-            {
-	      show_help = TRUE;
-	    }
-          else
-            {
-	      alternate_gimprc = argv[i];
-	      argv[i] = NULL;
-            }
-	}
-      else if ((strcmp (argv[i], "--no-data") == 0) ||
-	       (strcmp (argv[i], "-d") == 0))
-	{
-	  no_data = TRUE;
- 	  argv[i] = NULL;
-	}
-      else if ((strcmp (argv[i], "--no-fonts") == 0) ||
-	       (strcmp (argv[i], "-f") == 0))
-	{
-	  no_fonts = TRUE;
- 	  argv[i] = NULL;
-	}
-      else if ((strcmp (argv[i], "--no-splash") == 0) ||
-	       (strcmp (argv[i], "-s") == 0))
-	{
-	  no_splash = TRUE;
- 	  argv[i] = NULL;
-	}
-      else if (strcmp (argv[i], "--verbose") == 0)
-	{
-	  be_verbose = TRUE;
- 	  argv[i] = NULL;
-	}
-      else if (strcmp (argv[i], "--no-shm") == 0)
-	{
-	  use_shm = FALSE;
- 	  argv[i] = NULL;
-	}
-      else if (strcmp (argv[i], "--no-cpu-accel") == 0)
-	{
-	  use_cpu_accel = FALSE;
- 	  argv[i] = NULL;
-	}
-      else if (strcmp (argv[i], "--debug-handlers") == 0)
-	{
-	  use_debug_handler = TRUE;
- 	  argv[i] = NULL;
-	}
-      else if ((strcmp (argv[i], "--console-messages") == 0) ||
-	       (strcmp (argv[i], "-c") == 0))
-	{
-	  console_messages = TRUE;
- 	  argv[i] = NULL;
-	}
-      else if (strcmp (argv[i], "--session") == 0)
-	{
-	  argv[i] = NULL;
-	  if (argc <= ++i)
-            {
-	      show_help = TRUE;
-	    }
-          else
-            {
-	      session_name = argv[i];
-	      argv[i] = NULL;
-            }
-	}
-      else if (strcmp (argv[i], "--stack-trace-mode") == 0)
-	{
- 	  argv[i] = NULL;
-	  if (argc <= ++i)
-            {
-	      show_help = TRUE;
-	    }
-          else
-            {
-	      if (! strcmp (argv[i], "never"))
-		stack_trace_mode = GIMP_STACK_TRACE_NEVER;
-	      else if (! strcmp (argv[i], "query"))
-		stack_trace_mode = GIMP_STACK_TRACE_QUERY;
-	      else if (! strcmp (argv[i], "always"))
-		stack_trace_mode = GIMP_STACK_TRACE_ALWAYS;
-	      else
-		show_help = TRUE;
-
-	      argv[i] = NULL;
-            }
-	}
-      else if (strcmp (argv[i], "--pdb-compat-mode") == 0)
-	{
- 	  argv[i] = NULL;
-	  if (argc <= ++i)
-            {
-	      show_help = TRUE;
-	    }
-          else
-            {
-	      if (! strcmp (argv[i], "off"))
-		pdb_compat_mode = GIMP_PDB_COMPAT_OFF;
-	      else if (! strcmp (argv[i], "on"))
-		pdb_compat_mode = GIMP_PDB_COMPAT_ON;
-	      else if (! strcmp (argv[i], "warn"))
-		pdb_compat_mode = GIMP_PDB_COMPAT_WARN;
-	      else
-		show_help = TRUE;
-
-	      argv[i] = NULL;
-            }
-	}
-      else if (strcmp (argv[i], "--") == 0)
-        {
-          /*
-           *  everything after "--" is a parameter (i.e. image to load)
-           */
-          argv[i] = NULL;
-          break;
-        }
-      else if (argv[i][0] == '-')
-	{
-          /*
-           *  anything else starting with a '-' is an error.
-           */
-	  g_print (_("\nInvalid option \"%s\"\n"), argv[i]);
-	  show_help = TRUE;
-	}
+      app_exit (EXIT_FAILURE);
     }
 
-  if (show_help)
+  if (fatal_warnings)
     {
-      gimp_show_help (full_prog_name);
-      app_exit (EXIT_FAILURE);
+      GLogLevelFlags fatal_mask;
+
+      fatal_mask = g_log_set_always_fatal (G_LOG_FATAL_MASK);
+      fatal_mask |= G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL;
+      g_log_set_always_fatal (fatal_mask);
     }
 
 #ifndef G_OS_WIN32
@@ -473,8 +409,8 @@ main (int    argc,
   app_run (full_prog_name,
            argc - 1,
            argv + 1,
-           alternate_system_gimprc,
-           alternate_gimprc,
+           system_gimprc,
+           user_gimprc,
            session_name,
            batch_interpreter,
            batch_commands,
@@ -489,11 +425,44 @@ main (int    argc,
            stack_trace_mode,
            pdb_compat_mode);
 
-  g_free (batch_commands);
-
   return EXIT_SUCCESS;
 }
 
+static gboolean
+gimp_option_stack_trace_mode (const gchar  *option_name,
+                              const gchar  *value,
+                              gpointer      data,
+                              GError      **error)
+{
+  if (strcmp (value, "never") == 0)
+    stack_trace_mode = GIMP_STACK_TRACE_NEVER;
+  else if (strcmp (value, "query") == 0)
+    stack_trace_mode = GIMP_STACK_TRACE_QUERY;
+  else if (strcmp (value, "always") == 0)
+    stack_trace_mode = GIMP_STACK_TRACE_ALWAYS;
+  else
+    return FALSE;
+
+  return TRUE;
+}
+
+static gboolean
+gimp_option_pdb_compat_mode (const gchar  *option_name,
+                             const gchar  *value,
+                             gpointer      data,
+                             GError      **error)
+{
+  if (! strcmp (value, "off"))
+    pdb_compat_mode = GIMP_PDB_COMPAT_OFF;
+  else if (! strcmp (value, "on"))
+    pdb_compat_mode = GIMP_PDB_COMPAT_ON;
+  else if (! strcmp (value, "warn"))
+    pdb_compat_mode = GIMP_PDB_COMPAT_WARN;
+  else
+    return FALSE;
+
+  return TRUE;
+}
 
 static void
 gimp_show_version (void)
