@@ -115,7 +115,8 @@ void
 file_open_dialog_show (Gimp            *gimp,
                        GimpImage       *gimage,
                        const gchar     *uri,
-                       GimpMenuFactory *menu_factory)
+                       GimpMenuFactory *menu_factory,
+                       GtkWidget       *parent)
 {
   gchar *filename = NULL;
 
@@ -163,7 +164,7 @@ file_open_dialog_show (Gimp            *gimp,
 
   g_free (filename);
 
-  file_dialog_show (fileload);
+  file_dialog_show (fileload, parent);
 }
 
 

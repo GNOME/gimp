@@ -70,7 +70,8 @@ void   file_quit_cmd_callback              (GtkWidget   *widget,
 					    guint        action);
 
 void   file_file_open_dialog               (Gimp        *gimp,
-                                            const gchar *uri);
+                                            const gchar *uri,
+                                            GtkWidget   *parent);
 
 
 #endif /* __FILE_COMMANDS_H__ */

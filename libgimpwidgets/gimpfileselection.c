@@ -404,6 +404,9 @@ gimp_file_selection_browse_callback (GtkWidget *widget,
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (selection->file_selection),
 				   filename);
 
+  gtk_window_set_screen (GTK_WINDOW (selection->file_selection),
+                         gtk_widget_get_screen (widget));
+
   gtk_window_present (GTK_WINDOW (selection->file_selection));
 }
 

@@ -149,7 +149,7 @@ file_open_cmd_callback (GtkWidget *widget,
   else
     gimage = NULL;
 
-  file_open_dialog_show (gimp, gimage, NULL, global_menu_factory);
+  file_open_dialog_show (gimp, gimage, NULL, global_menu_factory, widget);
 }
 
 void
@@ -265,7 +265,7 @@ file_save_as_cmd_callback (GtkWidget *widget,
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
 
-  file_save_dialog_show (gdisp->gimage, global_menu_factory);
+  file_save_dialog_show (gdisp->gimage, global_menu_factory, widget);
 }
 
 void
@@ -276,7 +276,7 @@ file_save_a_copy_cmd_callback (GtkWidget *widget,
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
 
-  file_save_a_copy_dialog_show (gdisp->gimage, global_menu_factory);
+  file_save_a_copy_dialog_show (gdisp->gimage, global_menu_factory, widget);
 }
 
 void
@@ -385,9 +385,10 @@ file_quit_cmd_callback (GtkWidget *widget,
 
 void
 file_file_open_dialog (Gimp        *gimp,
-                       const gchar *uri)
+                       const gchar *uri,
+                       GtkWidget   *parent)
 {
-  file_open_dialog_show (gimp, NULL, uri, global_menu_factory);
+  file_open_dialog_show (gimp, NULL, uri, global_menu_factory, parent);
 }
 
 

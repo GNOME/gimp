@@ -78,6 +78,9 @@ gradients_save_as_pov_query (GimpContainerEditor *editor)
 
   g_free (title);
 
+  gtk_window_set_screen (GTK_WINDOW (filesel),
+                         gtk_widget_get_screen (GTK_WIDGET (editor)));
+
   gtk_window_set_role (GTK_WINDOW (filesel), "gimp-gradient-save-pov");
   gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
 

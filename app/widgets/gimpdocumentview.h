@@ -27,7 +27,8 @@
 
 
 typedef void (* GimpFileOpenDialogFunc) (Gimp        *gimp,
-                                         const gchar *uri);
+                                         const gchar *uri,
+                                         GtkWidget   *parent);
 
 
 #define GIMP_TYPE_DOCUMENT_VIEW            (gimp_document_view_get_type ())

@@ -79,9 +79,11 @@
     return
 
 
-static void  vectors_import_query  (GimpImage   *gimage);
+static void  vectors_import_query  (GimpImage   *gimage,
+                                    GtkWidget   *parent);
 static void  vectors_export_query  (GimpImage   *gimage,
-                                    GimpVectors *vectors);
+                                    GimpVectors *vectors,
+                                    GtkWidget   *parent);
 
 
 /*  public functions  */
@@ -232,7 +234,7 @@ vectors_import_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  vectors_import_query (gimage);
+  vectors_import_query (gimage, widget);
 }
 
 void
@@ -243,7 +245,7 @@ vectors_export_cmd_callback (GtkWidget *widget,
   GimpVectors *active_vectors;
   return_if_no_vectors (gimage, active_vectors, data);
 
-  vectors_export_query (gimage, active_vectors);
+  vectors_export_query (gimage, active_vectors, widget);
 }
 
 void
@@ -662,7 +664,8 @@ vectors_import_ok_callback (GtkWidget *widget)
 }
 
 static void
-vectors_import_query (GimpImage *gimage)
+vectors_import_query (GimpImage *gimage,
+                      GtkWidget *parent)
 {
   GtkFileSelection *filesel;
 
@@ -672,6 +675,9 @@ vectors_import_query (GimpImage *gimage)
   g_object_set_data (G_OBJECT (filesel), "gimp-image", gimage);
   g_object_weak_ref (G_OBJECT (gimage),
                      (GWeakNotify) gtk_widget_destroy, filesel);
+
+  gtk_window_set_screen (GTK_WINDOW (filesel),
+                         gtk_widget_get_screen (parent));
 
   gtk_window_set_role (GTK_WINDOW (filesel), "gimp-vectors-import");
   gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
@@ -724,7 +730,8 @@ vectors_export_ok_callback (GtkWidget *widget)
 
 static void
 vectors_export_query (GimpImage   *gimage,
-                      GimpVectors *vectors)
+                      GimpVectors *vectors,
+                      GtkWidget   *parent)
 {
   GtkFileSelection *filesel;
 
@@ -734,6 +741,9 @@ vectors_export_query (GimpImage   *gimage,
   g_object_set_data (G_OBJECT (filesel), "gimp-image", gimage);
   g_object_weak_ref (G_OBJECT (gimage),
                      (GWeakNotify) gtk_widget_destroy, filesel);
+
+  gtk_window_set_screen (GTK_WINDOW (filesel),
+                         gtk_widget_get_screen (parent));
 
   gtk_window_set_role (GTK_WINDOW (filesel), "gimp-vectors-export");
   gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);

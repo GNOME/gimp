@@ -132,7 +132,8 @@ file_dialog_new (Gimp              *gimp,
 }
 
 void
-file_dialog_show (GtkWidget *filesel)
+file_dialog_show (GtkWidget *filesel,
+                  GtkWidget *parent)
 {
   gimp_item_factories_set_sensitive ("<Toolbox>", "/File/Open...", FALSE);
 
@@ -140,6 +141,9 @@ file_dialog_show (GtkWidget *filesel)
   gimp_item_factories_set_sensitive ("<Image>", "/File/Save", FALSE);
   gimp_item_factories_set_sensitive ("<Image>", "/File/Save as...", FALSE);
   gimp_item_factories_set_sensitive ("<Image>", "/File/Save a Copy...", FALSE);
+
+  gtk_window_set_screen (GTK_WINDOW (filesel),
+                         gtk_widget_get_screen (parent));
 
   gtk_widget_grab_focus (GTK_FILE_SELECTION (filesel)->selection_entry);
   gtk_window_present (GTK_WINDOW (filesel));
@@ -149,7 +153,7 @@ gboolean
 file_dialog_hide (GtkWidget *filesel)
 {
   gtk_widget_hide (filesel);
-  
+
   gimp_item_factories_set_sensitive ("<Toolbox>", "/File/Open...", TRUE);
 
   gimp_item_factories_set_sensitive ("<Image>", "/File/Open...", TRUE);

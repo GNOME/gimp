@@ -1,3 +1,16 @@
+2003-11-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/file-commands.[ch]
+	* app/gui/file-dialog-utils.[ch]
+	* app/gui/file-open-dialog.[ch]
+	* app/gui/file-save-dialog.[ch]
+	* app/gui/gradients-commands.c
+	* app/gui/vectors-commands.c
+	* app/widgets/gimpdocumentview.[ch]
+	* app/widgets/gimperrorconsole.c
+	* libgimpwidgets/gimpfileselection.c: show file selections on
+	their parent widget's screen.
+
 2003-11-09  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpbrush.c (gimp_brush_load_brush)

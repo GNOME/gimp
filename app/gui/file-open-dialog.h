@@ -25,7 +25,8 @@ void   file_open_dialog_set_type (PlugInProcDef   *proc);
 void   file_open_dialog_show     (Gimp            *gimp,
                                   GimpImage       *gimage,
                                   const gchar     *uri,
-                                  GimpMenuFactory *menu_factory);
+                                  GimpMenuFactory *menu_factory,
+                                  GtkWidget       *parent);
 
 
 #endif /* __FILE_OPEN_DIALOG_H__ */

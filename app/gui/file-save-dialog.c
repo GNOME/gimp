@@ -97,7 +97,8 @@ file_save_dialog_set_type (PlugInProcDef *proc)
 
 void
 file_save_dialog_show (GimpImage       *gimage,
-                       GimpMenuFactory *menu_factory)
+                       GimpMenuFactory *menu_factory,
+                       GtkWidget       *parent)
 {
   GimpItemFactory *item_factory;
   gchar           *filename;
@@ -139,12 +140,13 @@ file_save_dialog_show (GimpImage       *gimage,
   gimp_item_factory_update (item_factory,
                             gimp_image_active_drawable (gimage));
 
-  file_dialog_show (filesave);
+  file_dialog_show (filesave, parent);
 }
 
 void
 file_save_a_copy_dialog_show (GimpImage       *gimage,
-                              GimpMenuFactory *menu_factory)
+                              GimpMenuFactory *menu_factory,
+                              GtkWidget       *parent)
 {
   GimpItemFactory *item_factory;
   const gchar     *uri;
@@ -190,7 +192,7 @@ file_save_a_copy_dialog_show (GimpImage       *gimage,
   gimp_item_factory_update (item_factory,
                             gimp_image_active_drawable (gimage));
 
-  file_dialog_show (filesave);
+  file_dialog_show (filesave, parent);
 }
 
 
