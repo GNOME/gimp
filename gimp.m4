@@ -86,7 +86,7 @@ dnl
       GIMP_MICRO_VERSION >= (micro)))
 #endif
 
-#if GIMP_CHECK_VERSION(1,1,20)
+#if GIMP_CHECK_VERSION(1,1,24)
 GimpPlugInInfo
 #else
 GPlugInInfo
@@ -165,7 +165,7 @@ int main ()
       GIMP_MICRO_VERSION >= (micro)))
 #endif
 
-#if GIMP_CHECK_VERSION(1,1,20)
+#if GIMP_CHECK_VERSION(1,1,24)
 GimpPlugInInfo
 #else
 GPlugInInfo

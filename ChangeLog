@@ -1,3 +1,8 @@
+2000-10-18  Sven Neumann  <sven@gimp.org>
+
+	* gimp.m4: as Garrick James correctly pointed out, GPlugInInfo was
+	changed to GimpPlugInInfo with version 1.1.24, not 1.1.20.
+
 2000-10-17  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimp.c: gimp_uninstall_temp_proc(): free the original
