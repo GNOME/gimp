@@ -56,6 +56,7 @@ gimp_2_2_SOURCES = $(app_sources)
 EXTRA_DIST = \
 	makefile.msc	\
 	gimp.rc		\
+	fileicon.ico	\
 	wilber.ico
 
 

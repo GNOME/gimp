@@ -1,3 +1,14 @@
+2004-11-06  Sven Neumann  <sven@gimp.org>
+
+	New Win32 icons contributed by Jernej Simoncic:
+	
+	* app/Makefile.am
+	* app/makefile.msc
+	* app/gimp.rc
+	* app/fileicon.ico: added new file icon for the Win32 build.
+
+	* app/wilber.ico: nicer application icon for the Win32 build.
+
 2004-11-05  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/maze/maze.c

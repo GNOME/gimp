@@ -107,6 +107,7 @@ EXTRA_DIST = \
 	makefile.msc \
 	gimp.rc \
 	gimp.sym \
+	fileicon.ico \
 	wilber.ico \
 	arch/i386/mmx/detect_mmx.S \
 	arch/i386/mmx/paint_funcs_mmx.S \
