@@ -55,29 +55,29 @@
 #include "libgimp/gimpintl.h"
 
 
-#define LOW_INPUT          0x1
-#define GAMMA              0x2
-#define HIGH_INPUT         0x4
-#define LOW_OUTPUT         0x8
-#define HIGH_OUTPUT        0x10
-#define INPUT_LEVELS       0x20
-#define OUTPUT_LEVELS      0x40
-#define INPUT_SLIDERS      0x80
-#define OUTPUT_SLIDERS     0x100
-#define DRAW               0x200
-#define ALL                0xFFF
+#define LOW_INPUT        (1 << 0)
+#define GAMMA            (1 << 1)
+#define HIGH_INPUT       (1 << 2)
+#define LOW_OUTPUT       (1 << 3)
+#define HIGH_OUTPUT      (1 << 4)
+#define INPUT_LEVELS     (1 << 5)
+#define OUTPUT_LEVELS    (1 << 6)
+#define INPUT_SLIDERS    (1 << 7)
+#define OUTPUT_SLIDERS   (1 << 8)
+#define DRAW             (1 << 9)
+#define ALL              0xFFF
 
 #define DA_WIDTH         GIMP_HISTOGRAM_VIEW_WIDTH
 #define DA_HEIGHT        25
 #define GRADIENT_HEIGHT  15
 #define CONTROL_HEIGHT   DA_HEIGHT - GRADIENT_HEIGHT
 
-#define LEVELS_DA_MASK  GDK_EXPOSURE_MASK | \
-                        GDK_ENTER_NOTIFY_MASK | \
-			GDK_BUTTON_PRESS_MASK | \
-			GDK_BUTTON_RELEASE_MASK | \
-			GDK_BUTTON1_MOTION_MASK | \
-			GDK_POINTER_MOTION_HINT_MASK
+#define LEVELS_DA_MASK  (GDK_EXPOSURE_MASK       | \
+                         GDK_ENTER_NOTIFY_MASK   | \
+			 GDK_BUTTON_PRESS_MASK   | \
+			 GDK_BUTTON_RELEASE_MASK | \
+			 GDK_BUTTON1_MOTION_MASK | \
+			 GDK_POINTER_MOTION_HINT_MASK)
 
 
 /*  local function prototypes  */
@@ -127,7 +127,6 @@ static gint   levels_output_da_events              (GtkWidget      *widget,
 
 static void      file_dialog_create                (GimpLevelsTool *l_tool);
 static void      file_dialog_ok_callback           (GimpLevelsTool *l_tool);
-static gboolean  file_dialog_cancel_callback       (GimpLevelsTool *l_tool);
 
 static gboolean  levels_read_from_file             (GimpLevelsTool *l_tool,
                                                     FILE           *f);
@@ -200,9 +199,9 @@ gimp_levels_tool_class_init (GimpLevelsToolClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize       = gimp_levels_tool_finalize;
+  object_class->finalize = gimp_levels_tool_finalize;
 
-  tool_class->initialize       = gimp_levels_tool_initialize;
+  tool_class->initialize = gimp_levels_tool_initialize;
 
   image_map_tool_class->map    = gimp_levels_tool_map;
   image_map_tool_class->dialog = gimp_levels_tool_dialog;
@@ -216,12 +215,12 @@ gimp_levels_tool_init (GimpLevelsTool *l_tool)
 
   image_map_tool = GIMP_IMAGE_MAP_TOOL (l_tool);
 
-  image_map_tool->shell_desc  = _("Adjust Color Levels");
+  image_map_tool->shell_desc = _("Adjust Color Levels");
 
-  l_tool->lut                 = gimp_lut_new ();
-  l_tool->levels              = g_new0 (Levels, 1);
-  l_tool->hist                = gimp_histogram_new ();
-  l_tool->channel             = GIMP_HISTOGRAM_VALUE;
+  l_tool->lut     = gimp_lut_new ();
+  l_tool->levels  = g_new0 (Levels, 1);
+  l_tool->hist    = gimp_histogram_new ();
+  l_tool->channel = GIMP_HISTOGRAM_VALUE;
 
   levels_init (l_tool->levels);
 }
@@ -1301,22 +1300,21 @@ file_dialog_create (GimpLevelsTool *l_tool)
   gtk_container_set_border_width (GTK_CONTAINER (file_dlg), 2);
   gtk_container_set_border_width (GTK_CONTAINER (file_dlg->button_area), 2);
 
-  g_signal_connect_swapped (G_OBJECT (file_dlg->cancel_button), "clicked", 
-                            G_CALLBACK (file_dialog_cancel_callback),
-                            l_tool);
+  g_object_add_weak_pointer (G_OBJECT (file_dlg),
+                             (gpointer) &l_tool->file_dialog);
+
+  gtk_window_set_transient_for (GTK_WINDOW (file_dlg),
+                                GTK_WINDOW (GIMP_IMAGE_MAP_TOOL (l_tool)->shell));
+  gtk_window_set_destroy_with_parent (GTK_WINDOW (file_dlg), TRUE);
+
   g_signal_connect_swapped (G_OBJECT (file_dlg->ok_button), "clicked", 
                             G_CALLBACK (file_dialog_ok_callback),
                             l_tool);
+  g_signal_connect_swapped (G_OBJECT (file_dlg->cancel_button), "clicked", 
+                            G_CALLBACK (gtk_widget_destroy),
+                            file_dlg);
 
-  g_signal_connect_swapped (G_OBJECT (file_dlg), "delete_event",
-                            G_CALLBACK (file_dialog_cancel_callback),
-                            l_tool);
-  g_signal_connect_swapped (G_OBJECT (GIMP_IMAGE_MAP_TOOL (l_tool)->shell),
-                            "unmap",
-                            G_CALLBACK (file_dialog_cancel_callback),
-                            l_tool);
-
-  temp = g_build_filename (gimp_directory (), "levels", NULL);
+  temp = g_build_filename (gimp_directory (), "levels", ".", NULL);
   gtk_file_selection_set_filename (file_dlg, temp);
   g_free (temp);
 
@@ -1365,19 +1363,7 @@ file_dialog_ok_callback (GimpLevelsTool *l_tool)
   if (file)
     fclose (file);
 
-  file_dialog_cancel_callback (l_tool);
-}
-
-static gboolean
-file_dialog_cancel_callback (GimpLevelsTool *l_tool)
-{
-  if (l_tool->file_dialog)
-    {
-      gtk_widget_destroy (l_tool->file_dialog);
-      l_tool->file_dialog = NULL;
-    }
-
-  return TRUE;
+  gtk_widget_destroy (l_tool->file_dialog);
 }
 
 static gboolean

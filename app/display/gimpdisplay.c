@@ -388,6 +388,34 @@ gimp_display_finish_draw (GimpDisplay *gdisp)
     }
 }
 
+/* utility function to check if the cursor is inside the active drawable */
+gboolean
+gimp_display_coords_in_active_drawable (GimpDisplay      *gdisp,
+                                        const GimpCoords *coords)
+{
+  GimpDrawable *drawable;
+  gint          x, y;
+
+  g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), FALSE);
+
+  if (!gdisp->gimage)
+    return FALSE;
+
+  if (!(drawable = gimp_image_active_drawable (gdisp->gimage)))
+    return FALSE;
+
+  gimp_drawable_offsets (drawable, &x, &y);
+
+  x = ROUND (coords->x) - x;
+  if (x < 0 || x > gimp_drawable_width (drawable))
+    return FALSE;
+
+  y = ROUND (coords->y) - y;
+  if (y < 0 || y > gimp_drawable_height (drawable))
+    return FALSE;
+
+  return TRUE;
+}
 
 /*  private functions  */
 

@@ -1,3 +1,15 @@
+2002-10-14  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplay.[ch]: added convenience function
+	gimp_display_coords_in_active_drawable().
+
+	* app/tools/gimpcurvestool.c: indicate the possibility to pick color
+	values from the image by showing a color picker cursor. Made the
+	file selection dialog transient for the tool shell.
+
+	* app/tools/gimplevelstool.c: made the file selection dialog
+	transient for the tool shell.
+
 2002-10-13  Sven Neumann  <sven@gimp.org>
 
 	* themes/Default/images/stock-color-picker-black-18.png

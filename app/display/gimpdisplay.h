@@ -98,5 +98,7 @@ void          gimp_display_flush_now            (GimpDisplay *gdisp);
 
 void          gimp_display_finish_draw          (GimpDisplay *gdisp);
 
+gboolean gimp_display_coords_in_active_drawable (GimpDisplay      *gdisp,
+                                                 const GimpCoords *coords);
 
 #endif /*  __GIMP_DISPLAY_H__  */
