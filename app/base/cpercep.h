@@ -44,7 +44,7 @@ void
 cpercep_space_to_rgb (double inr, double ing, double inb,
 		      double* outr, double* outg, double* outb);
 
-
+#if 0
 /* This is in the header so that it can potentially be inlined. */
 static const double
 cpercep_distance_space (const double L1, const double a1, const double b1,
@@ -55,7 +55,7 @@ cpercep_distance_space (const double L1, const double a1, const double b1,
   const double bd = b1 - b2;
   return (Ld*Ld + ad*ad + bd*bd);
 }
-
+#endif
 
 
 /* EXPERIMENTAL */

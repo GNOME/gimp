@@ -80,19 +80,13 @@ from the Author.
    -- if you change this then you'll probably want to change ASSUMED_GAMMA,
    the phosphor colours and the white point definition.
 */
-/*#define SANITY*/
+
+/* #define SANITY */
 #define APPROX
 #define SRGB
 
 
-
-#ifdef SANITY
-/* for fprintf */
-#include <stdio.h>
-#endif
-
 #include "cpercep.h"
-
 
 
 #ifdef SRGB
@@ -196,7 +190,7 @@ typedef double CVector[3];
 static CMatrix Mrgb_to_xyz, Mxyz_to_rgb;
 
 static int
-Minvert (const CMatrix src, CMatrix dest)
+Minvert (CMatrix src, CMatrix dest)
 {
   double det;
 
@@ -218,7 +212,7 @@ Minvert (const CMatrix src, CMatrix dest)
   if (det <= 0.0F)
     {
 #ifdef SANITY
-      fprintf(stderr, "\n\007 XXXX det: %f\n", det);
+      g_printerr ("\n\007 XXXX det: %f\n", det);
 #endif
       return 0;
     }
@@ -259,10 +253,13 @@ rgbxyzrgb_init(void)
     MRC[2][0] = 1.0F - (pxr + pyr); 
     MRC[2][1] = 1.0F - (pxg + pyg); 
     MRC[2][2] = 1.0F - (pxb + pyb);
+
     Minvert (MRC, MRCi);
+
     C1 = MRCi[0][0]*xnn + MRCi[0][1] + MRCi[0][2]*znn;
     C2 = MRCi[1][0]*xnn + MRCi[1][1] + MRCi[1][2]*znn;
     C3 = MRCi[2][0]*xnn + MRCi[2][1] + MRCi[2][2]*znn;
+
     Mrgb_to_xyz[0][0] = MRC[0][0] * C1;
     Mrgb_to_xyz[0][1] = MRC[0][1] * C2;
     Mrgb_to_xyz[0][2] = MRC[0][2] * C3;
@@ -272,10 +269,10 @@ rgbxyzrgb_init(void)
     Mrgb_to_xyz[2][0] = MRC[2][0] * C1;
     Mrgb_to_xyz[2][1] = MRC[2][1] * C2;
     Mrgb_to_xyz[2][2] = MRC[2][2] * C3;
+
     Minvert (Mrgb_to_xyz, Mxyz_to_rgb);
   }
 }
-
 
 
 static void
@@ -370,12 +367,12 @@ xyz_to_lab (double *inx,
 #ifdef SANITY
       if (L < 0.0F)
 	{
-	  fprintf(stderr, " <eek1>%f \007",(float)L);
+	  g_printerr (" <eek1>%f \007",(float)L);
 	}
       
       if (L > 100.0F)
 	{
-	  fprintf(stderr, " <eek2>%f \007",(float)L);
+	  g_printerr (" <eek2>%f \007",(float)L);
 	}
 #endif
     }
@@ -425,19 +422,19 @@ lab_to_xyz (double *inl,
   if (X<-0.00000F)
     {
       if (X<-0.0001F)
-	fprintf(stderr,"{badX %f {%f,%f,%f}}",X,L,a,b);
+	g_printerr ("{badX %f {%f,%f,%f}}",X,L,a,b);
       X = 0.0F;
     }
   if (Y<-0.00000F)
     {
       if (Y<-0.0001F)
-	fprintf(stderr,"{badY %f}",Y);
+	g_printerr ("{badY %f}",Y);
       Y = 0.0F;
     }
   if (Z<-0.00000F)
     {
       if (Z<-0.1F)
-	fprintf(stderr,"{badZ %f}",Z);
+	g_printerr ("{badZ %f}",Z);
       Z = 0.0F;
     }
 #endif
@@ -504,7 +501,7 @@ cpercep_rgb_to_space (double inr, double ing, double inb,
       (inb) < 0.0F
       )
     {
-      fprintf(stderr, "%%");
+      g_printerr ("%%");
       /* abort(); */
     }
 #endif /* SANITY */
@@ -514,7 +511,7 @@ cpercep_rgb_to_space (double inr, double ing, double inb,
 #ifdef SANITY
   if (inr < 0.0F || ing < 0.0F || inb < 0.0F)
     {
-      fprintf(stderr," [BAD2 XYZ: %f,%f,%f]\007 ",
+      g_printerr (" [BAD2 XYZ: %f,%f,%f]\007 ",
 	      inr,ing,inb);
     }
 #endif /* SANITY */
@@ -536,7 +533,7 @@ cpercep_space_to_rgb (double inr, double ing, double inb,
 #ifdef SANITY
   if (inr<-0.0F || ing<-0.0F || inb<-0.0F)
     {
-      fprintf(stderr," [BAD1 XYZ: %f,%f,%f]\007 ",
+      g_printerr (" [BAD1 XYZ: %f,%f,%f]\007 ",
 	      inr,ing,inb);
     }
 #endif
@@ -616,7 +613,7 @@ mix_colours (const double L1, const double a1, const double b1,
       *rtna =
 	*rtnb = 0.0;
 #ifdef SANITY
-      /* fprintf(stderr, "\007OUCH. "); */
+      /* g_printerr ("\007OUCH. "); */
 #endif
     }
   else

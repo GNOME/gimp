@@ -3722,20 +3722,20 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
 	    }
 
 #if 0
-	  hmm.
-	  //	  r = range_limiter[src[red_pix] + error_limiter[*rpr]];
-	  //	  g = range_limiter[src[green_pix] + error_limiter[*gpr]];
-	  //	  b = range_limiter[src[blue_pix] + error_limiter[*bpr]];
+	  /* hmm. */
 
-	  ////	  re = r >> R_SHIFT;
-	  ////	  ge = g >> G_SHIFT;
-	  ////	  be = b >> B_SHIFT;
+	  r = range_limiter[src[red_pix] + error_limiter[*rpr]];
+	  g = range_limiter[src[green_pix] + error_limiter[*gpr]];
+	  b = range_limiter[src[blue_pix] + error_limiter[*bpr]];
 
-	  //	  rgb_to_lin(r, g, b,
-	  //		     &re, &ge, &be);
+	  re = r >> R_SHIFT;
+	  ge = g >> G_SHIFT;
+	  be = b >> B_SHIFT;
+
+	  rgb_to_lin (r, g, b, &re, &ge, &be);
 #endif
-	  rgb_to_unshifted_lin(src[red_pix], src[green_pix], src[blue_pix],
-			       &re, &ge, &be);
+	  rgb_to_unshifted_lin (src[red_pix], src[green_pix], src[blue_pix],
+                                &re, &ge, &be);
 
 	  /*
 	    re = CLAMP(re, global_rmin, global_rmax);

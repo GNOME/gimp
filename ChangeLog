@@ -1,3 +1,10 @@
+2002-05-24  Sven Neumann  <sven@gimp.org>
+
+	* app/core/cpercep.[ch]
+	* app/core/gimpimage-convert.c
+	* app/paint-funcs/paint-funcs.c: removed C++ style comments and
+	compiler warnings.
+
 2002-05-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/config/gimpconfig.[ch]

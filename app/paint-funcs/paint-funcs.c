@@ -1394,7 +1394,7 @@ behind_inten_pixels (const guchar   *src1,
 		     guint           bytes1,
 		     guint           bytes2)
 {
-  // FIXME: Is this supposed to be different than in the other functions?
+  /* FIXME: Is this supposed to be different than in the other functions? */
   const guint alpha = bytes1 - 1;
   guint	b;
   guchar        src1_alpha;
