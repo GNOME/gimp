@@ -242,6 +242,8 @@ floating_sel_to_layer (GimpLayer *layer)
 
   gimp_image_undo_group_end (gimage);
 
+  gimp_object_name_changed (GIMP_OBJECT (layer));
+
   gimp_drawable_update (GIMP_DRAWABLE (layer),
 			0, 0,
 			GIMP_ITEM (layer)->width,

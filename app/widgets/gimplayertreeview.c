@@ -881,8 +881,6 @@ gimp_layer_tree_view_floating_selection_changed (GimpImage         *gimage,
 
       if (iter)
         gtk_list_store_set (GTK_LIST_STORE (tree_view->model), iter,
-                            tree_view->model_column_name,
-                            _("Floating Selection"),
                             tree_view->model_column_name_attributes,
                             layer_view->italic_attrs,
                             -1);
@@ -904,8 +902,6 @@ gimp_layer_tree_view_floating_selection_changed (GimpImage         *gimage,
 
               if (iter)
                 gtk_list_store_set (GTK_LIST_STORE (tree_view->model), iter,
-                                    tree_view->model_column_name,
-                                    gimp_object_get_name (GIMP_OBJECT (drawable)),
                                     tree_view->model_column_name_attributes,
                                     NULL,
                                     -1);

@@ -1,5 +1,26 @@
 2004-09-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimplayertreeview.c
+	(gimp_layer_tree_view_floating_selection_changed): removed the
+	hack that was displaying "Floating Selection" instead of the
+	floating layer's real name.
+
+	* app/core/gimplayer.c: implement GimpViewable::get_description()
+	instead and special case floating selections with a two-line
+	text that contains "Floating Selection".
+
+	* app/core/gimplayer-floating-sel.c
+	* app/core/gimpimage-undo-push.c: emit "name_changed" on the layer
+	when it changes its state from floating to normal or vice versa
+	so the views can update accordingly.
+
+	* app/core/gimpselection.c: s/"Selection"/"Floated Layer"/.
+
+	* app/tools/gimpeditselectiontool.c:
+	s/"Floating Layer"/"Floating Selection"/.
+
+2004-09-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/Makefile.am
 	* app/plug-in/plug-in-proc-frame.[ch]: new files containing
 	utility functions for initializing/freeing PlugInProcFrames.

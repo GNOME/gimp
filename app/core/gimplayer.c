@@ -71,6 +71,8 @@ static gint64     gimp_layer_get_memsize        (GimpObject         *object,
                                                  gint64             *gui_size);
 
 static void       gimp_layer_invalidate_preview (GimpViewable       *viewable);
+static gchar    * gimp_layer_get_description    (GimpViewable       *viewable,
+                                                 gchar             **tooltip);
 
 static void       gimp_layer_removed            (GimpItem           *item);
 static gboolean   gimp_layer_is_attached        (GimpItem           *item);
@@ -234,6 +236,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
 
   viewable_class->default_stock_id    = "gimp-layer";
   viewable_class->invalidate_preview  = gimp_layer_invalidate_preview;
+  viewable_class->get_description     = gimp_layer_get_description;
 
   item_class->removed                 = gimp_layer_removed;
   item_class->is_attached             = gimp_layer_is_attached;
@@ -370,6 +373,23 @@ gimp_layer_invalidate_preview (GimpViewable *viewable)
 
   if (gimp_layer_is_floating_sel (layer))
     floating_sel_invalidate (layer);
+}
+
+static gchar *
+gimp_layer_get_description (GimpViewable  *viewable,
+                            gchar        **tooltip)
+{
+  if (gimp_layer_is_floating_sel (GIMP_LAYER (viewable)))
+    {
+      if (tooltip)
+        *tooltip = NULL;
+
+      return g_strdup_printf (_("Floating Selection\n(%s)"),
+                              gimp_object_get_name (GIMP_OBJECT (viewable)));
+    }
+
+  return GIMP_VIEWABLE_CLASS (parent_class)->get_description (viewable,
+                                                              tooltip);
 }
 
 static void

@@ -254,7 +254,7 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
       break;
 
     default:
-      undo_desc = _("Move Floating Layer");
+      undo_desc = _("Move Floating Selection");
       break;
     }
 
@@ -1187,7 +1187,7 @@ gimp_edit_selection_tool_key_press (GimpTool    *tool,
   switch (edit_mode)
     {
     case GIMP_TRANSLATE_MODE_FLOATING_SEL:
-      undo_desc = _("Move Floating Layer");
+      undo_desc = _("Move Floating Selection");
       break;
 
     default:
