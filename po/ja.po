@@ -9041,7 +9041,7 @@ msgid "Configure input devices"
 msgstr "入力機器の設定"
 
 #: app/widgets/gimpdevicestatus.c:401
-#, c-format
+#, fuzzy, c-format
 msgid "Foreground: %d, %d, %d"
 msgstr "前景: %d, &d, %d"
 

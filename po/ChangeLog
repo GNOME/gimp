@@ -1,3 +1,8 @@
+2003-08-19  Abel Cheung  <maddog@linux.org.hk>
+
+	* ja.po, nl.po: Mark wrong entry as fuzzy.
+	* lt.po: Convert to UTF-8 again.
+
 2003-08-18  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* no.po: Update Norwegian translation.
