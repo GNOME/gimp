@@ -56,6 +56,7 @@ plug-ins/common/engrave.c
 plug-ins/common/exchange.c
 plug-ins/common/film.c
 plug-ins/common/flarefx.c
+plug-ins/common/fp.c
 plug-ins/common/fractaltrace.c
 plug-ins/common/gauss.c
 plug-ins/common/gbr.c
@@ -158,7 +159,6 @@ plug-ins/dbbrowser/procedure-browser.c
 plug-ins/faxg3/faxg3.c
 plug-ins/fits/fits.c
 plug-ins/flame/flame.c
-plug-ins/fp/fp.c
 plug-ins/gfig/gfig-bezier.c
 plug-ins/gfig/gfig-dialog.c
 plug-ins/gfig/gfig-dobject.c

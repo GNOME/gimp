@@ -1,3 +1,7 @@
+2004-10-12  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: fp.c has moved.
+
 2004-10-11  Marco Ciampa  <ciampix@libero.it>
 
 	* it.po: updated italian translation.
