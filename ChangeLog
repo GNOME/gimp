@@ -1,3 +1,11 @@
+Sat May  8 18:31:04 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* modules/Makefile.am
+	* modules/colorsel_water.c: Implemented the waterselect plug-in
+	as a colorselect module. There is a strange bug left with the update
+	of the previews in the color history. Any help is appreciated!
+	I'll let the plug-in in the distribution until this is fixed.
+
 1999-05-07  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/app_procs.c
