@@ -1,3 +1,7 @@
+2003-02-10  Sven Neumann  <sven@gimp.org>
+
+	* es.po: inserted missing line-breaks (fixes bug #105735).
+
 2003-02-10  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
 	* es.po: Updated Spanish translation.
