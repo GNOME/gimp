@@ -305,7 +305,7 @@ void gdt_get_values(GdtVals *data)
 	if (!gimp_drawable_has_alpha(data->drawable_id) || strncmp(gdtparams, "GDT", 3) != 0) {
 		data->messages = g_list_append(data->messages,
 			_("Current layer isn't a GDynText layer or it has no alpha channel.\n"
-			"  Forcing new layer creation.\n"));
+			  "  Forcing new layer creation.\n"));
 		data->new_layer = TRUE;
 		strcpy(data->text, "");
 		strcpy(data->font_family, "");
@@ -350,14 +350,15 @@ void gdt_get_values(GdtVals *data)
 	data->spacing = GDT_MAGIC_REV(gdtparams) < 9 ? 0 : atoi(params[SPACING]);
 
 	if (GDT_MAGIC_REV(gdtparams) < GDT_MAGIC_REV(GDYNTEXT_MAGIC))
-		data->messages = g_list_append(data->messages,
-			_("Upgrading old GDynText layer to "GDYNTEXT_MAGIC".\n"));
+	  data->messages = g_list_append (data->messages,
+					  g_strdup_printf (_("Upgrading old GDynText layer to %s\n"),
+							   GDYNTEXT_MAGIC));
 	else if (GDT_MAGIC_REV(gdtparams) > GDT_MAGIC_REV(GDYNTEXT_MAGIC))
-		data->messages = g_list_append(data->messages, _(
-			"WARNING: GDynText is too old!\n"
-			"  You may loose some data by changing this text.\n"
-			"  A newer version is reqired to handle this layer.\n"
-			"  Get it from "GDYNTEXT_WEB_PAGE"\n"));
+	  data->messages = g_list_append (data->messages, 
+					  g_strdup_printf (_("WARNING: GDynText is too old!\n"
+							     "  You may loose some data by changing this text.\n"
+							     "  A newer version is reqired to handle this layer.\n"
+							     "  Get it from %s\n"), GDYNTEXT_WEB_PAGE));
 }
 
 

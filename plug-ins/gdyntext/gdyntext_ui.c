@@ -182,10 +182,12 @@ create_about_dialog (void)
   gtk_box_pack_start(GTK_BOX(vbox1), frame, TRUE, TRUE, 0);
   gtk_widget_show(frame);
   
-  label = gtk_label_new(_("GIMP Dynamic Text "GDYNTEXT_VERSION"\n"
-			  "Copyright (C) 1998,1999 Marco Lamberto\n"
-			  "E-mail: lm@geocities.com\n"
-			  "Web page: "GDYNTEXT_WEB_PAGE"\n\n"));
+  /* note: if you insist on translation this string, remember that 
+     you can not use #defined strings with gettext */
+  label = gtk_label_new ("GIMP Dynamic Text "GDYNTEXT_VERSION"\n"
+			 "Copyright (C) 1998, 1999  Marco Lamberto\n"
+			 "E-mail: lm@geocities.com\n"
+			 "Web page: "GDYNTEXT_WEB_PAGE"\n\n");
   gtk_widget_show(label);
   gtk_container_add(GTK_CONTAINER(frame), label);
   gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_LEFT);

@@ -93,7 +93,7 @@ void query (void)
                           "Jochen Friedrich",
                           "Jochen Friedrich, Gert Doering, Spencer Kimball & Peter Mattis",
                           VERSION,
-			  N_("<Load>/Fax G3"),
+			  "<Load>/Fax G3",
 			  NULL,
                           PROC_PLUG_IN,
                           nload_args, nload_return_vals,

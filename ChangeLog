@@ -1,3 +1,9 @@
+2000-05-03  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/faxg3/faxg3.c
+	* plug-ins/gdyntext/gdyntext.c
+	* plug-ins/gdyntext/gdyntext_ui.c: i18n fixes
+
 Wed May  3 02:40:12 CEST 2000  Marc Lehmann <pcg@goof.com>
 
         * configure.in: Remove $CFLAGS from perl's compiler flags.  This
