@@ -1291,7 +1291,7 @@ tm_interpolate_float  (
         
         for (b = 0; b < s->alpha; b++)
           {
-            gint newval =
+            gfloat newval =
               a_recip *
               cubic (s->dy,
                      cubic (s->dx, P(0)[b],  P(1)[b], P(2)[b],  P(3)[b]),
