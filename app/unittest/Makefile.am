@@ -2,7 +2,7 @@
 
 scriptdata =
 INTLLIBS=-lintl
-bin_PROGRAMS = gimppath gimpparse
+bin_PROGRAMS = gimppath gimpparse plugdir
 #bin_PROGRAMS = testplugin gimppath gimpparse plugshow plugdir
 
 OFILES=../about_dialog.o          ../disp_callbacks.o        ../gimpunit.o \
@@ -26,7 +26,7 @@ OFILES=../about_dialog.o          ../disp_callbacks.o        ../gimpunit.o \
 ../buildmenu.o             ../flip_tool.o             ../install.o               ../resize.o\
 ../by_color_select.o       ../floating_sel.o          ../interface.o             ../rotate_tool.o\
 ../channel.o               ../floating_sel_cmds.o     ../interface_cmds.o        ../scale.o\
-../channel_cmds.o          ../frac.o                  ../internal_procs.o        ../scale_tool.o\
+../channel_cmds.o          ../undo_history.o                  ../internal_procs.o        ../scale_tool.o\
 ../channel_ops.o           ../free_select.o           ../invert.o                ../scroll.o\
 ../channel_ops_cmds.o      ../fuzzy_select.o          ../iscissors.o             ../selection.o\
 ../channels_dialog.o       ../gdisplay.o              ../layer.o                 ../session.o\
@@ -101,7 +101,7 @@ plugdir_LDADD = $(OFILES) \
 	$(GTK_LIBS)				\
 	$(GIMP_THREAD_LIBS)			\
 	$(INTLLIBS)
-gimppath_LDADD = $(OFILES) ../gimprc.o ../plug_in.o \
+gimppath_LDADD = $(OFILES) ../plug_in.o \
 	../libgimpim.a \
 	$(top_builddir)/libgimp/libgimpi.a	\
 	$(GTK_LIBS)				\

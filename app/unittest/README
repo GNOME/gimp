@@ -3,7 +3,7 @@
 
 ./gimppath 		- Display GIMP's paths and rc files.
 ./gimpparse <rc file>	- Parse rc files.
-
+./plugdir <directory>	- Display EXECUTABLE files(plug-ins) in a directory.
 
 
 

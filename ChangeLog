@@ -1,3 +1,11 @@
+Tue Sep 21 13:00:12 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
+
+	* app/unittest/gimppath.c: Show gimp_system_rc_file() result.
+	* app/unittest/Makefile.am : plugdir. 
+	* app/unittest/plugdir.c : Display EXECUTABLE files(plug-ins) 
+	in a directory. 
+	* app/unittest/README: add plugdir test program.	
+
 Tue Sep 21 11:12:22 MEST 1999  Sven Neuman <sven@gimp.org>
 
 	* plug-ins/gap/gap_lib.c
