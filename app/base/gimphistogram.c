@@ -40,7 +40,7 @@ struct _GimpHistogram
   gint               n_channels;
 
 #ifdef ENABLE_MP
-  GMutex            *mutex;
+  GStaticMutex       mutex;
   gint               num_slots;
   gdouble         ***tmp_values;
   gchar             *tmp_slots;
@@ -74,8 +74,6 @@ gimp_histogram_new (GimpBaseConfig *config)
   histogram->n_channels = 0;
 
 #ifdef ENABLE_MP
-  histogram->mutex      = g_mutex_new ();
-
   histogram->num_slots  = config->num_processors;
   histogram->tmp_slots  = g_new0 (gchar,      histogram->num_slots);
   histogram->tmp_values = g_new0 (gdouble **, histogram->num_slots);
@@ -90,8 +88,6 @@ gimp_histogram_free (GimpHistogram *histogram)
   g_return_if_fail (histogram != NULL);
 
 #ifdef ENABLE_MP
-  g_mutex_free (histogram->mutex);
-
   g_free (histogram->tmp_values);
   g_free (histogram->tmp_slots);
 #endif
@@ -464,7 +460,7 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
   gint slot = 0;
 
   /* find an unused temporary slot to put our results in and lock it */
-  g_mutex_lock (histogram->mutex);
+  g_static_mutex_lock (&histogram->mutex);
 
   while (histogram->tmp_slots[slot])
     slot++;
@@ -472,7 +468,7 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
   values = histogram->tmp_values[slot];
   histogram->tmp_slots[slot] = 1;
 
-  g_mutex_unlock (histogram->mutex);
+  g_static_mutex_unlock (&histogram->mutex);
 
 #else
   values = histogram->values;
@@ -632,10 +628,10 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 #ifdef ENABLE_MP
   /* unlock this slot */
   /* we shouldn't have to use mutex locks here */
-  g_mutex_lock (histogram->mutex);
+  g_static_mutex_lock (&histogram->mutex);
 
   histogram->tmp_slots[slot] = 0;
 
-  g_mutex_unlock (histogram->mutex);
+  g_static_mutex_unlock (&histogram->mutex);
 #endif
 }

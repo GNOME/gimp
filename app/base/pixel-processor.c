@@ -65,7 +65,7 @@ struct _PixelProcessor
   PixelRegionIterator *PRI;
 
 #ifdef ENABLE_MP
-  GMutex              *mutex;
+  GStaticMutex         mutex;
   gint                 threads;
 #endif
 
@@ -82,7 +82,7 @@ do_parallel_regions (PixelProcessor *processor)
   gint        n_tiles = 0;
   gint        i;
 
-  g_mutex_lock (processor->mutex);
+  g_static_mutex_lock (&processor->mutex);
 
   /*  the first thread getting here must not call pixel_regions_process()  */
   if (processor->threads && processor->PRI)
@@ -90,7 +90,7 @@ do_parallel_regions (PixelProcessor *processor)
 
   if (processor->PRI == NULL)
     {
-      g_mutex_unlock (processor->mutex);
+      g_static_mutex_unlock (&processor->mutex);
       return;
     }
 
@@ -106,7 +106,7 @@ do_parallel_regions (PixelProcessor *processor)
 	      tile_lock (tr[i].curtile);
 	  }
 
-      g_mutex_unlock (processor->mutex);
+      g_static_mutex_unlock (&processor->mutex);
       n_tiles++;
 
       switch(processor->num_regions)
@@ -143,7 +143,7 @@ do_parallel_regions (PixelProcessor *processor)
           break;
     }
 
-    g_mutex_lock (processor->mutex);
+    g_static_mutex_lock (&processor->mutex);
 
     for (i = 0; i < processor->num_regions; i++)
       if (processor->regions[i])
@@ -156,7 +156,7 @@ do_parallel_regions (PixelProcessor *processor)
   while (processor->PRI &&
 	 (processor->PRI = pixel_regions_process (processor->PRI)));
 
-  g_mutex_unlock (processor->mutex);
+  g_static_mutex_unlock (&processor->mutex);
 }
 #endif
 
@@ -314,15 +314,10 @@ pixel_regions_process_parallel_valist (PixelProcessorFunc  func,
   processor.num_regions = num_regions;
 
 #ifdef ENABLE_MP
-  processor.mutex       = g_mutex_new ();
   processor.threads     = 0;
 #endif
 
   pixel_regions_do_parallel (&processor);
-
-#ifdef ENABLE_MP
-  g_mutex_free (processor.mutex);
-#endif
 }
 
 void

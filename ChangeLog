@@ -1,5 +1,10 @@
 2005-02-14  Sven Neumann  <sven@gimp.org>
 
+	* app/base/gimphistogram.c
+	* app/base/pixel-processor.c: use static mutexes.
+
+2005-02-14  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: allow to enable the threaded tile-swapper code
 	(use at your own risk).
 
