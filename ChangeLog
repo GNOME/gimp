@@ -1,3 +1,9 @@
+Tue Feb 22 01:42:01 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/perl/Makefile.PL: Made 'make install' work again.
+	The gimp-perl po files are however not installed. Marc, you
+	will want to look into this again.
+
 Tue Feb 22 01:20:05 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* libgimp/gimpchainbutton.c: set the widget's requisition so it 
