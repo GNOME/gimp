@@ -1,11 +1,11 @@
 # Translation of gimp-plug-ins to Croatian
 # Copyright (C) Croatian team
-# Translators: Automatski Prijevod <>,Denis Lackovic <delacko@fly.srk.fer.hr>,
+# Translators: Antun Krasic <butch@gawab.com>,Automatski Prijevod <>,Denis Lackovic <delacko@fly.srk.fer.hr>,
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 0\n"
 "POT-Creation-Date: 2003-11-06 18:07+0100\n"
-"PO-Revision-Date: 2003-11-07 18:41+CET\n"
+"PO-Revision-Date: 2003-11-10 16:50+CET\n"
 "Last-Translator: auto\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
 "MIME-Version: 1.0\n"
@@ -6554,14 +6554,12 @@ msgid "T_ilable"
 msgstr "Rastavljivo"
 
 #: plug-ins/common/snoise.c:564
-#, fuzzy
 msgid "_X Size:"
-msgstr "X Veličina:"
+msgstr "_X Veličina:"
 
 #: plug-ins/common/snoise.c:574
-#, fuzzy
 msgid "_Y Size:"
-msgstr "Y Veličina:"
+msgstr "_Y Veličina:"
 
 #: plug-ins/common/sobel.c:141
 #, fuzzy
@@ -10274,7 +10272,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_about.c:47
 msgid "  Released under the GNU General Public License  "
-msgstr ""
+msgstr "Objavljeno unutar GNU Opće Javne Dozvole"
 
 #: plug-ins/imagemap/imap_circle.c:64
 msgid "C_ircle"
