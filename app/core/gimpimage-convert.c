@@ -194,6 +194,7 @@ typedef struct
   GtkWidget *  shell;
   void *       gimage_ptr;
 
+  int          gimage_ID;
   int          dither;
   int          num_cols;
   int          palette;
@@ -279,6 +280,7 @@ convert_to_indexed (void *gimage_ptr)
   gimage = (GImage *) gimage_ptr;
   dialog = (IndexedDialog *) g_malloc (sizeof (IndexedDialog));
   dialog->gimage_ptr = gimage_ptr;
+  dialog->gimage_ID = gimage->ID;
   dialog->num_cols = 256;
   dialog->dither = TRUE;
 
@@ -524,9 +526,13 @@ indexed_ok_callback (GtkWidget *widget,
         else
           palette_type = REUSE_PALETTE;
   /*  Convert the image to indexed color  */
-  convert_image ((GImage *) dialog->gimage_ptr, INDEXED, dialog->num_cols, dialog->dither, palette_type);
-  gdisplays_flush ();
-
+  if (gimage_get_ID (dialog->gimage_ID))
+    {
+      convert_image ((GImage *) dialog->gimage_ptr, INDEXED, dialog->num_cols,
+		     dialog->dither, palette_type);
+      gdisplays_flush ();
+    }
+  
   gtk_widget_destroy (dialog->shell);
   g_free (dialog);
   dialog = NULL;

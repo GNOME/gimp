@@ -1652,7 +1652,7 @@ select_border_cmd_callback (GtkWidget *widget,
 
   sprintf (initial, "%d", gimage_mask_border_radius);
   query_string_box ("Border Selection", "Border selection by:", initial,
-		    gimage_mask_border_callback, gdisp->gimage);
+		    gimage_mask_border_callback, (gpointer) gdisp->gimage->ID);
 }
 
 void
@@ -1680,7 +1680,7 @@ select_grow_cmd_callback (GtkWidget *widget,
 
   sprintf (initial, "%d", gimage_mask_grow_pixels);
   query_string_box ("Grow Selection", "Grow selection by:", initial,
-		    gimage_mask_grow_callback, gdisp->gimage);
+		    gimage_mask_grow_callback, (gpointer) gdisp->gimage->ID);
 }
 
 void
@@ -1694,7 +1694,7 @@ select_shrink_cmd_callback (GtkWidget *widget,
 
   sprintf (initial, "%d", gimage_mask_shrink_pixels);
   query_string_box ("Shrink Selection", "Shrink selection by:", initial,
-		    gimage_mask_shrink_callback, gdisp->gimage);
+		    gimage_mask_shrink_callback, (gpointer) gdisp->gimage->ID);
 }
 
 void
@@ -2500,7 +2500,9 @@ gimage_mask_border_callback (GtkWidget *w,
   GImage *gimage;
   int border_radius;
 
-  gimage = (GImage *) client_data;
+  if (!(gimage = gimage_get_ID ((int)client_data)))
+    return;
+
   border_radius = atoi (call_data);
 
   gimage_mask_border (gimage, border_radius);
@@ -2516,7 +2518,9 @@ gimage_mask_grow_callback (GtkWidget *w,
   GImage *gimage;
   int grow_pixels;
 
-  gimage = (GImage *) client_data;
+  if (!(gimage = gimage_get_ID ((int)client_data)))
+    return;
+
   grow_pixels = atoi (call_data);
 
   gimage_mask_grow (gimage, grow_pixels);
@@ -2532,9 +2536,17 @@ gimage_mask_shrink_callback (GtkWidget *w,
   GImage *gimage;
   int shrink_pixels;
 
-  gimage = (GImage *) client_data;
+  if (!(gimage = gimage_get_ID ((int)client_data)))
+    return;
+
   shrink_pixels = atoi (call_data);
 
   gimage_mask_shrink (gimage, shrink_pixels);
   gdisplays_flush ();
 }
+
+
+
+
+
+
