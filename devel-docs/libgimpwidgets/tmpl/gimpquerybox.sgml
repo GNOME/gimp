@@ -85,6 +85,7 @@ Note that you have to g_free() the returned string.
 </para>
 
 @title: 
+@parent: 
 @help_func: 
 @help_data: 
 @message: 
@@ -102,6 +103,7 @@ Note that you have to g_free() the returned string.
 </para>
 
 @title: 
+@parent: 
 @help_func: 
 @help_data: 
 @message: 
@@ -121,6 +123,7 @@ Note that you have to g_free() the returned string.
 </para>
 
 @title: 
+@parent: 
 @help_func: 
 @help_data: 
 @message: 
@@ -141,6 +144,7 @@ Note that you have to g_free() the returned string.
 </para>
 
 @title: 
+@parent: 
 @help_func: 
 @help_data: 
 @message: 
@@ -164,6 +168,7 @@ Note that you have to g_free() the returned string.
 </para>
 
 @title: 
+@parent: 
 @help_func: 
 @help_data: 
 @stock_id: 
