@@ -1,3 +1,7 @@
+2000-01-13  Yuri Syrota  <rasta@renome.rovno.ua>
+
+	* configure.in: Added "uk" to ALL_LINGUAS
+
 2000-01-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpui.[ch]
