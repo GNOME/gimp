@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-04-13 00:18+0200\n"
-"PO-Revision-Date: 2002-04-13 12:04+0200\n"
+"POT-Creation-Date: 2002-04-26 01:58+0200\n"
+"PO-Revision-Date: 2002-04-26 02:02+0200\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -660,6 +660,33 @@ msgstr "Spiralny (zgodnie ze wskazówkami zegara)"
 msgid "Spiral (anticlockwise)"
 msgstr "Spiralny (przeciwnie do wskazówek zegara)"
 
+#: app/core/core-enums.c:1 app/core/gimpimage-new.c:1
+#: app/display/gimpdisplayshell.c:1 app/gui/preferences-dialog.c:1
+msgid "RGB"
+msgstr "RGB"
+
+#: app/core/core-enums.c:1
+msgid "RGB-Alpha"
+msgstr "RGB-Alfa"
+
+#: app/core/core-enums.c:1 app/core/gimpimage-new.c:1
+#: app/gui/info-window.c:1 app/gui/info-window.c:1
+#: app/gui/preferences-dialog.c:1
+msgid "Grayscale"
+msgstr "Odcienie szarości"
+
+#: app/core/core-enums.c:1
+msgid "Grayscale-Alpha"
+msgstr "Odcienie szarości-Alfa"
+
+#: app/core/core-enums.c:1 app/widgets/gimpcomponentlistitem.c:1
+msgid "Indexed"
+msgstr "Indeksowany"
+
+#: app/core/core-enums.c:1
+msgid "Indexed-Alpha"
+msgstr "Indeksowany-Alfa"
+
 #: app/core/core-enums.c:1 app/core/core-enums.c:1
 #: app/tools/gimpbycolorselecttool.c:1
 msgid "None"
@@ -763,10 +790,6 @@ msgstr "Gradienty"
 #: app/core/gimp.c:1
 msgid "Documents"
 msgstr "Dokumenty"
-
-#: app/core/gimp.c:1 app/file/file-open.c:1
-msgid "Open"
-msgstr "Otwórz"
 
 #: app/core/gimpbrush.c:1
 #, c-format
@@ -925,16 +948,6 @@ msgstr ""
 msgid "There are not enough visible layers for a merge down."
 msgstr "Liczba warstw jest niewystarczająca dla połączenia w dół."
 
-#: app/core/gimpimage-new.c:1 app/display/gimpdisplayshell.c:1
-#: app/gui/preferences-dialog.c:1
-msgid "RGB"
-msgstr "RGB"
-
-#: app/core/gimpimage-new.c:1 app/gui/info-window.c:1
-#: app/gui/info-window.c:1 app/gui/preferences-dialog.c:1
-msgid "Grayscale"
-msgstr "Odcienie szarości"
-
 #: app/core/gimpimage-new.c:1 app/gui/layers-commands.c:1
 msgid "Foreground"
 msgstr "Aktualny kolor"
@@ -1035,6 +1048,30 @@ msgid "Path cannot be lowered more."
 msgstr "Nie można bardziej obniżyć ścieżki."
 
 #: app/core/gimpimagefile.c:1
+msgid "No preview available"
+msgstr "Podgląd jest niedostępny"
+
+#: app/core/gimpimagefile.c:1
+msgid "Thumbnail is out of date"
+msgstr "Miniaturka jest nieaktualna"
+
+#. image size
+#: app/core/gimpimagefile.c:1
+#, c-format
+msgid "%d x %d"
+msgstr "%d x %d"
+
+#: app/core/gimpimagefile.c:1
+#, c-format
+msgid "%d Layer"
+msgstr "%d Warstwa"
+
+#: app/core/gimpimagefile.c:1
+#, c-format
+msgid "%d Layers"
+msgstr "%d Warstw"
+
+#: app/core/gimpimagefile.c:1
 #, c-format
 msgid ""
 "Could not open thumbnail\n"
@@ -1044,6 +1081,22 @@ msgstr ""
 "Nie można otworzyć pliku miniaturki\n"
 "\"%s\":\n"
 "%s"
+
+#: app/core/gimpimagefile.c:1
+#, c-format
+msgid ""
+"Couldn't write thumbnail for '%s'\n"
+"as '%s'.\n"
+"%s"
+msgstr ""
+"Nie można zapisać miniaturki obrazu \"%s\"\n"
+"jako \"%s\":\n"
+"%s"
+
+#: app/core/gimpimagefile.c:1
+#, c-format
+msgid "Couldn't create thumbnail directory '%s'"
+msgstr "Nie można stworzyć katalogu miniaturek \"%s\"."
 
 #: app/core/gimpitem.c:1
 msgid "parasite attached to item"
@@ -1442,32 +1495,20 @@ msgid "Cancel"
 msgstr "Anuluj"
 
 #: app/file/file-open.c:1
-#, c-format
-msgid ""
-"%s failed.\n"
-"%s: Unknown file type."
-msgstr ""
-"%s nie powiodło się.\n"
-"%s: nieznany typ pliku."
+msgid "Unknown file type"
+msgstr "Nieznany typ pliku"
 
 #: app/file/file-open.c:1
-#, c-format
-msgid ""
-"%s failed.\n"
-"%s is not a regular file."
-msgstr ""
-"%s nie powiodło się.\n"
-"%s nie jest zwykłym plikiem ."
+msgid "Not a regular file"
+msgstr "To nie jest zwykły plik"
 
-# Niektórzy nigdy nie zrozumieją, co to i18n...
 #: app/file/file-open.c:1
-#, c-format
-msgid ""
-"%s failed.\n"
-"%s: %s."
-msgstr ""
-"Operacja \"%s\" na pliku nie powiodła się.\n"
-"%s: %s."
+msgid "Plug-In returned SUCCESS but did not return an image"
+msgstr "Wtyczka zwróciła kod powodzenia, lecz nie zwróciła obrazu."
+
+#: app/file/file-open.c:1
+msgid "Plug-In could not open image"
+msgstr "Wtyczka nie może otworzyć obrazu"
 
 #: app/file/file-save.c:1
 #, c-format
@@ -1902,14 +1943,6 @@ msgstr ""
 "Błąd przy otwieraniu pliku \"%s\":\n"
 "%s"
 
-#. This string needs to be fixed. Mitch is supposed to do it.  Needs a :
-#. added at the end followed by the error.  Also something about the GIMP_OBJECT
-#. needs to be changed. --bex
-#: app/gui/file-commands.c:1
-#, c-format
-msgid "Error opening file '%s'"
-msgstr "Błąd przy otwieraniu pliku: \"%s\""
-
 #. Error message should be added. --bex
 #: app/gui/file-commands.c:1 app/gui/file-save-dialog.c:1
 #, c-format
@@ -1943,18 +1976,18 @@ msgstr ""
 msgid "Revert Image"
 msgstr "Przywrócenie obrazu"
 
-# FIXME
-# 1. app/gui/file-commands.c: "Przywróć"
-# 2. app/widgets/gimpdataeditor.c: "Przywraca"
-#: app/gui/file-commands.c:1 app/widgets/gimpdataeditor.c:1
-msgid "Revert"
-msgstr "Przywróć"
-
-#. Needs error information. --bex
+# c-format
 #: app/gui/file-commands.c:1
-#, c-format
-msgid "Reverting '%s' failed."
-msgstr "Przywrócenie \"%s\" nie powiodło się."
+msgid ""
+"Reverting to '%s' failed:\n"
+"%s"
+msgstr ""
+"Przywrócenie do \"%s\" nie powiodło się:\n"
+"%s"
+
+#: app/gui/file-dialog-utils.c:1
+msgid "Determine File Type:"
+msgstr "Ustalenie typu pliku:"
 
 #: app/gui/file-new-dialog.c:1 app/gui/preferences-dialog.c:1
 #: app/gui/preferences-dialog.c:1
@@ -2038,61 +2071,22 @@ msgstr "Potwierdzenie rozmiaru obrazu"
 msgid "Open Image"
 msgstr "Otwarcie obrazu"
 
-#. format-chooser frame
 #: app/gui/file-open-dialog.c:1
-msgid "Determine File Type"
-msgstr "Ustalenie typu pliku"
+msgid "Click to create preview"
+msgstr "Kliknij, aby stworzyć podgląd."
 
 #: app/gui/file-open-dialog.c:1
-msgid ""
-"Generate\n"
-"Preview"
-msgstr ""
-"Stwórz\n"
-"Podgląd"
+msgid "_Preview"
+msgstr "_Podgląd"
 
-#. The preview frame
-#: app/gui/file-open-dialog.c:1 app/gui/palette-import-dialog.c:1
-#: app/tools/gimpbrightnesscontrasttool.c:1
-#: app/tools/gimpcolorbalancetool.c:1 app/tools/gimpcurvestool.c:1
-#: app/tools/gimphuesaturationtool.c:1 app/tools/gimplevelstool.c:1
-#: app/tools/gimpposterizetool.c:1 app/tools/gimpthresholdtool.c:1
-msgid "Preview"
-msgstr "Podgląd"
-
-#: app/gui/file-open-dialog.c:1
+#: app/gui/file-open-dialog.c:1 app/gui/file-open-dialog.c:1
 msgid "No Selection"
 msgstr "Brak zaznaczenia"
 
-#: app/gui/file-open-dialog.c:1
-msgid "This thumbnail may be out of date"
-msgstr "Ta miniaturka może być nieaktualna"
-
-#: app/gui/file-open-dialog.c:1
-msgid "No Information"
-msgstr "Brak informacji"
-
-#: app/gui/file-open-dialog.c:1
-msgid "Could not write thumbnail file."
-msgstr "Nie można zapisać pliku miniaturki."
-
-#: app/gui/file-open-dialog.c:1
-msgid "Thumbnail saving is disabled."
-msgstr "Opcja zapisu miniaturek jest nieaktywna."
-
-#: app/gui/file-open-dialog.c:1
-msgid "No preview available"
-msgstr "Podgląd jest niedostępny"
-
-#: app/gui/file-open-dialog.c:1
-msgid "Failed to generate preview."
-msgstr "Nie można stworzyć podglądu."
-
-#. Hackery required. Please add error message. --bex
 #: app/gui/file-open-dialog.c:1 app/gui/file-open-dialog.c:1
 #, c-format
-msgid "Opening '%s' failed."
-msgstr "Otwarcie \"%s\" nie powiodło się."
+msgid "Thumbnail %d of %d"
+msgstr "Miniaturka %d z %d"
 
 #: app/gui/file-save-dialog.c:1 app/gui/file-save-dialog.c:1
 msgid "Save Image"
@@ -2101,20 +2095,6 @@ msgstr "Zapis obrazu"
 #: app/gui/file-save-dialog.c:1
 msgid "Save a Copy of the Image"
 msgstr "Zapis kopii obrazu"
-
-#: app/gui/file-save-dialog.c:1
-msgid "Save Options"
-msgstr "Opcje zapisu"
-
-#: app/gui/file-save-dialog.c:1
-msgid "Determine File Type:"
-msgstr "Ustalenie typu pliku:"
-
-#. Please add error. (: %s) --bex
-#: app/gui/file-save-dialog.c:1
-#, c-format
-msgid "Saving %s failed."
-msgstr "Zapis \"%s\" nie powiódł się."
 
 #: app/gui/file-save-dialog.c:1
 #, c-format
@@ -3906,6 +3886,15 @@ msgstr "Rozmiar próbki:"
 msgid "Interval:"
 msgstr "Okres:"
 
+#. The preview frame
+#: app/gui/palette-import-dialog.c:1
+#: app/tools/gimpbrightnesscontrasttool.c:1
+#: app/tools/gimpcolorbalancetool.c:1 app/tools/gimpcurvestool.c:1
+#: app/tools/gimphuesaturationtool.c:1 app/tools/gimplevelstool.c:1
+#: app/tools/gimpposterizetool.c:1 app/tools/gimpthresholdtool.c:1
+msgid "Preview"
+msgstr "Podgląd"
+
 #: app/gui/palette-import-dialog.c:1
 msgid "Select"
 msgstr "Zaznaczenie"
@@ -4696,7 +4685,7 @@ msgstr "Przywraca zapisane ustawienia"
 
 #: app/gui/tool-options-dialog.c:1
 msgid "Reset"
-msgstr "Zresetuj"
+msgstr "Przywraca wartości domyślne"
 
 #: app/gui/user-install-dialog.c:1
 msgid ""
@@ -6738,10 +6727,6 @@ msgid "Gray"
 msgstr "Szary"
 
 #: app/widgets/gimpcomponentlistitem.c:1
-msgid "Indexed"
-msgstr "Indeksowany"
-
-#: app/widgets/gimpcomponentlistitem.c:1
 msgid "EEEEK"
 msgstr "EEEEK"
 
@@ -6749,6 +6734,13 @@ msgstr "EEEEK"
 #: app/widgets/gimpcontainergridview.c:1
 msgid "(None)"
 msgstr "(Brak)"
+
+# FIXME
+# 1. app/gui/file-commands.c: "Przywróć"
+# 2. app/widgets/gimpdataeditor.c: "Przywraca"
+#: app/widgets/gimpdataeditor.c:1
+msgid "Revert"
+msgstr "Przywróć"
 
 #: app/widgets/gimpdatafactoryview.c:1 app/widgets/gimpitemlistview.c:1
 msgid "New"
@@ -6790,8 +6782,12 @@ msgid "Remove selected entry"
 msgstr "Usuwa wybraną pozycję"
 
 #: app/widgets/gimpdocumentview.c:1
-msgid "Refresh (check files for existence)"
-msgstr "Odświeża (sprawdza istnienie plików)"
+msgid ""
+"Recreate preview\n"
+"<Shift> Reload all previews"
+msgstr ""
+"Odświeża podgląd\n"
+"<Shift> Odświeża wszystkie podglądy"
 
 #: app/widgets/gimpfontselection-dialog.c:1
 msgid "GIMP Font Selection"
