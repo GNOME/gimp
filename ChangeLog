@@ -1,3 +1,7 @@
+2004-07-21  Ray Strode  <rstrode@redhat.com>
+	* gimp/data/misc/gimp.desktop.in.in: Add MimeType line to desktop file
+	new mime sytem.
+
 2004-07-21  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/gif.c: declared global const variable as static.
