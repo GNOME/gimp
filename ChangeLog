@@ -1,7 +1,14 @@
+2003-10-17  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gfig/gfig.c: reverted most of Maurits changes (not the
+	bug-fix though). The tentative feature freeze we are in also
+	implies a string freeze.  It's too late for such massive string
+	changes.
+
 2003-10-17  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
-	* plug-ins/gfig/gfig.c: commented out code for Lock Grid (which wasn't 
-	implemented). Fixes #124157.
+	* plug-ins/gfig/gfig.c: commented out code for Lock Grid (which
+	wasn't implemented). Fixes #124157.
 
 2003-10-17  Sven Neumann  <sven@gimp.org>
 
