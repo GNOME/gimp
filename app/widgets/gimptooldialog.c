@@ -38,11 +38,11 @@
 /**
  * gimp_tool_dialog_new:
  * @tool_info: a #GimpToolInfo
- * @parent: the parent widget of this dialog
- * @desc: a string to use in the dialog header or %NULL to use the help
- *        field from #GimpToolInfo
- * @...: a %NULL-terminated valist of button parameters as described in
- *       gimp_dialog_create_action_areav().
+ * @parent:    the parent widget of this dialog
+ * @desc:      a string to use in the dialog header or %NULL to use the help
+ *             field from #GimpToolInfo
+ * @...:       a %NULL-terminated valist of button parameters as described in
+ *             gtk_dialog_new_with_buttons().
  *
  * This function conveniently creates a #GimpViewableDialog using the
  * information stored in @tool_info. It also registers the tool with
