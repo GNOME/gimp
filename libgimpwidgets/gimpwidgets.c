@@ -52,10 +52,10 @@ gimp_widgets_init (void)
 
   const guint8 *inline_pixbufs[] =
   {
-    stock_wilber_16_16,
-    stock_wilber_32_32,
-    stock_wilber_48_48,
-    stock_wilber_64_64
+    stock_wilber_16,
+    stock_wilber_32,
+    stock_wilber_48,
+    stock_wilber_64
   };
 
   gimp_stock_init ();
