@@ -1,3 +1,11 @@
+2004-01-08  Henrik Brix Andersen  <brix@gimp.org>
+
+	* app/config/gimpdisplayconfig.c: added %D* to
+	DEFAULT_IMAGE_TITLE_FORMAT.
+
+	Fixes part of bug #120424 - the patch for including a long dirty
+	indicator (%B) should be applied for gimp-2.2.
+
 2004-01-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/user-install-dialog.c: removed explicit newlines from
