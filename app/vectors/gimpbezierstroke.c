@@ -745,7 +745,7 @@ gimp_bezier_stroke_segment_nearest_point_get (const GimpCoords  *beziercoords,
   subdivided[0] = beziercoords[0];
   subdivided[6] = beziercoords[3];
 
-  if (!depth) g_printerr ("Hit rekursion depth limit!\n");
+  /* if (!depth) g_printerr ("Hit rekursion depth limit!\n"); */
 
   gimp_bezier_coords_average (&(beziercoords[0]), &(beziercoords[1]),
                               &(subdivided[1]));
@@ -1862,7 +1862,7 @@ gimp_bezier_coords_subdivide2 (const GimpCoords *beziercoords,
   subdivided[0] = beziercoords[0];
   subdivided[6] = beziercoords[3];
 
-  if (!depth) g_printerr ("Hit rekursion depth limit!\n");
+  /* if (!depth) g_printerr ("Hit rekursion depth limit!\n"); */
 
   gimp_bezier_coords_average (&(beziercoords[0]), &(beziercoords[1]),
                               &(subdivided[1]));

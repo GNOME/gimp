@@ -328,7 +328,6 @@ static jmp_buf sigill_return;
 static void
 sigill_handler (gint n)
 {
-  g_printerr ("OS lacks support for SSE instructions.\n");
   longjmp (sigill_return, 1);
 }
 

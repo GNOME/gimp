@@ -1,5 +1,17 @@
 2004-03-10  Simon Budig  <simon@gimp.org>
 
+	* app/base/cpu-accel.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/tools/gimpvectortool.c
+	* app/vectors/gimpbezierstroke.c
+	* app/vectors/gimpvectors-import.c: Removed, disabled or
+	conditionalized some debug output.
+
+	There still is debug output when pushing/popping the move tool
+	via space bar. Mitch wanted to look at that.
+
+2004-03-10  Simon Budig  <simon@gimp.org>
+
 	* app/widgets/gimpdnd.c: Disabled debug output and made it
 	conditional with DEBUG_DND.
 

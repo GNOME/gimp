@@ -46,6 +46,14 @@
 
 #include "gimp-intl.h"
 
+/* #define DEBUG_DND */
+
+#ifdef DEBUG_DND
+#define D(stmnt) stmnt
+#else
+#define D(stmnt)
+#endif
+
 
 void
 gimp_display_shell_drop_drawable (GtkWidget    *widget,
@@ -144,7 +152,7 @@ gimp_display_shell_drop_svg (GtkWidget     *widget,
   if (gimage->gimp->busy)
     return;
 
-  g_print ("drop SVG on canvas\n");
+  D (g_print ("drop SVG on canvas\n"));
 
   if (! gimp_vectors_import_buffer (gimage, svg_data, svg_data_len,
                                     TRUE, TRUE, &error))

@@ -312,7 +312,6 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
   if (gimp_draw_tool_is_active (draw_tool) && draw_tool->gdisp != gdisp)
     {
-      g_print ("calling  draw_tool_stop\n");
       gimp_draw_tool_stop (draw_tool);
     }
 

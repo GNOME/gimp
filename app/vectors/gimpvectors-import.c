@@ -702,7 +702,9 @@ parse_svg_viewbox (const gchar *value,
         }
       else  /* disable rendering of the element */
         {
+#ifdef DEBUG_VECTORS_IMPORT
           g_printerr ("empty viewBox");
+#endif
           *width = *height = 0.0;
         }
     }
