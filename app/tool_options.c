@@ -602,7 +602,6 @@ paint_options_init (PaintOptions         *options,
       break;
     }
 
-  options->pressure_options = paint_pressure_options_new (tool_type);
   if (options->pressure_options->frame)
     {
       gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox),
@@ -658,7 +657,7 @@ paint_options_reset (PaintOptions *options)
 static PaintPressureOptions *
 paint_pressure_options_new (ToolType tool_type)
 {
-  PaintPressureOptions *pressure;
+  PaintPressureOptions *pressure = NULL;
   GtkWidget *frame = NULL;
   GtkWidget *hbox = NULL;
 
