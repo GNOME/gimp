@@ -264,7 +264,7 @@ dialogs_cursor_view_new (GimpDialogFactory *factory,
                          GimpContext       *context,
                          gint               preview_size)
 {
-  return gimp_cursor_view_new (context);
+  return gimp_cursor_view_new ();
 }
 
 

@@ -1,5 +1,15 @@
 2005-04-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcursorview.[ch]: fixed spacings and update them
+	in GtkWidget::style_set(). Removed lots of cruft from the widget
+	this files were copied from, including the GimpContext param
+	to gimp_cursor_view_new(). Remember the state of the two color
+	frames as aux-info in sessionrc.
+
+	* app/dialogs/dialogs-constructors.c: changed accordingly.
+
+2005-04-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcolorframe.c (gimp_color_frame_init): switch
 	from a table to a vbox containing hboxes, so the widget's width is
 	not determined by the longest label *plus* the longest value.

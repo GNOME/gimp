@@ -25,12 +25,12 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
 #include "core/gimpunit.h"
@@ -43,30 +43,15 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_cursor_view_class_init        (GimpCursorViewClass *klass);
-static void   gimp_cursor_view_init              (GimpCursorView      *view);
+static void   gimp_cursor_view_class_init        (GimpCursorViewClass  *klass);
+static void   gimp_cursor_view_init              (GimpCursorView       *view);
 static void   gimp_cursor_view_docked_iface_init (GimpDockedInterface  *docked_iface);
 
-static void   gimp_cursor_view_destroy         (GtkObject         *object);
-static void   gimp_cursor_view_style_set       (GtkWidget         *widget,
-                                                GtkStyle          *prev_style);
-
-static void   gimp_cursor_view_set_aux_info    (GimpDocked        *docked,
-                                                GList             *aux_info);
-static GList *gimp_cursor_view_get_aux_info     (GimpDocked       *docked);
-static void   gimp_cursor_view_set_context     (GimpDocked        *docked,
-                                                GimpContext       *context);
-
-static void   gimp_cursor_view_destroy         (GtkObject         *object);
-
-#if 0
-static void   gimp_cursor_view_fg_changed      (GimpContext       *context,
-                                                 const GimpRGB     *rgb,
-                                                 GimpCursorView   *view);
-static void   gimp_cursor_view_bg_changed      (GimpContext       *context,
-                                                 const GimpRGB     *rgb,
-                                                 GimpCursorView   *view);
-#endif
+static void   gimp_cursor_view_set_aux_info      (GimpDocked           *docked,
+                                                  GList                *aux_info);
+static GList *gimp_cursor_view_get_aux_info      (GimpDocked           *docked);
+static void   gimp_cursor_view_style_set         (GtkWidget            *widget,
+                                                  GtkStyle             *prev_style);
 
 
 static GimpEditorClass *parent_class = NULL;
@@ -112,12 +97,9 @@ gimp_cursor_view_get_type (void)
 static void
 gimp_cursor_view_class_init (GimpCursorViewClass* klass)
 {
-  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
-
-  object_class->destroy = gimp_cursor_view_destroy;
 
   widget_class->style_set = gimp_cursor_view_style_set;
 }
@@ -125,32 +107,27 @@ gimp_cursor_view_class_init (GimpCursorViewClass* klass)
 static void
 gimp_cursor_view_init (GimpCursorView *view)
 {
-  GtkWidget   *hbox;
   GtkWidget   *frame;
   GtkWidget   *table;
   gint         content_spacing;
-  gint         button_spacing;
-  GtkIconSize  button_icon_size;
 
   gtk_widget_style_get (GTK_WIDGET (view),
-                        "content_spacing",  &content_spacing,
-			"button_spacing",   &button_spacing,
-                        "button_icon_size", &button_icon_size,
+                        "content_spacing", &content_spacing,
 			NULL);
 
 
   /* cursor information */
 
-  hbox = gtk_hbox_new (TRUE, content_spacing);
-  gtk_box_pack_start (GTK_BOX (view), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  view->coord_hbox = gtk_hbox_new (TRUE, content_spacing);
+  gtk_box_pack_start (GTK_BOX (view), view->coord_hbox, FALSE, FALSE, 0);
+  gtk_widget_show (view->coord_hbox);
 
   frame = gimp_frame_new (_("Pixels"));
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (view->coord_hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
@@ -168,7 +145,7 @@ gimp_cursor_view_init (GimpCursorView *view)
                              view->pixel_y_label, 1, FALSE);
 
   frame = gimp_frame_new (_("Units"));
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (view->coord_hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (2, 2, FALSE);
@@ -192,20 +169,22 @@ gimp_cursor_view_init (GimpCursorView *view)
 
   /* color information */
 
-  hbox = gtk_hbox_new (TRUE, 6);
-  gtk_box_pack_start (GTK_BOX (view), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  view->color_hbox = gtk_hbox_new (TRUE, content_spacing);
+  gtk_box_pack_start (GTK_BOX (view), view->color_hbox, FALSE, FALSE, 0);
+  gtk_widget_show (view->color_hbox);
 
   view->color_frame_1 = gimp_color_frame_new ();
   gimp_color_frame_set_mode (GIMP_COLOR_FRAME (view->color_frame_1),
                              GIMP_COLOR_FRAME_MODE_PIXEL);
-  gtk_box_pack_start (GTK_BOX (hbox), view->color_frame_1, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (view->color_hbox), view->color_frame_1,
+                      TRUE, TRUE, 0);
   gtk_widget_show (view->color_frame_1);
 
   view->color_frame_2 = gimp_color_frame_new ();
   gimp_color_frame_set_mode (GIMP_COLOR_FRAME (view->color_frame_2),
                              GIMP_COLOR_FRAME_MODE_RGB);
-  gtk_box_pack_start (GTK_BOX (hbox), view->color_frame_2, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (view->color_hbox), view->color_frame_2,
+                      TRUE, TRUE, 0);
   gtk_widget_show (view->color_frame_2);
 }
 
@@ -214,10 +193,10 @@ gimp_cursor_view_docked_iface_init (GimpDockedInterface *docked_iface)
 {
   docked_iface->set_aux_info = gimp_cursor_view_set_aux_info;
   docked_iface->get_aux_info = gimp_cursor_view_get_aux_info;
-  docked_iface->set_context  = gimp_cursor_view_set_context;
 }
 
-#define AUX_INFO_CURRENT_PAGE "current-page"
+#define AUX_INFO_FRAME_1_MODE "frame-1-mode"
+#define AUX_INFO_FRAME_2_MODE "frame-2-mode"
 
 static void
 gimp_cursor_view_set_aux_info (GimpDocked *docked,
@@ -228,10 +207,25 @@ gimp_cursor_view_set_aux_info (GimpDocked *docked,
 
   for (list = aux_info; list; list = g_list_next (list))
     {
-      GimpSessionInfoAux *aux = list->data;
+      GimpSessionInfoAux *aux   = list->data;
+      GtkWidget          *frame = NULL;
 
-      if (! strcmp (aux->name, AUX_INFO_CURRENT_PAGE))
+      if (! strcmp (aux->name, AUX_INFO_FRAME_1_MODE))
+        frame = view->color_frame_1;
+      else if (! strcmp (aux->name, AUX_INFO_FRAME_2_MODE))
+        frame = view->color_frame_2;
+
+      if (frame)
         {
+          GEnumClass *enum_class;
+          GEnumValue *enum_value;
+
+          enum_class = g_type_class_peek (GIMP_TYPE_COLOR_FRAME_MODE);
+          enum_value = g_enum_get_value_by_nick (enum_class, aux->value);
+
+          if (enum_value)
+            gimp_color_frame_set_mode (GIMP_COLOR_FRAME (frame),
+                                       enum_value->value);
         }
     }
 }
@@ -239,86 +233,28 @@ gimp_cursor_view_set_aux_info (GimpDocked *docked,
 static GList *
 gimp_cursor_view_get_aux_info (GimpDocked *docked)
 {
-  GimpCursorView *view   = GIMP_CURSOR_VIEW (docked);
-  GList          *aux_info = NULL;
+  GimpCursorView     *view   = GIMP_CURSOR_VIEW (docked);
+  GList              *aux_info = NULL;
+  const gchar        *nick;
+  GimpSessionInfoAux *aux;
 
-#if 0
-  if (notebook->cur_page)
+  if (gimp_enum_get_value (GIMP_TYPE_COLOR_FRAME_MODE,
+                           GIMP_COLOR_FRAME (view->color_frame_1)->frame_mode,
+                           NULL, &nick, NULL, NULL))
     {
-      GimpSessionInfoAux *aux;
-
-      aux = gimp_session_info_aux_new (AUX_INFO_CURRENT_PAGE,
-                                       G_OBJECT_TYPE_NAME (notebook->cur_page));
+      aux = gimp_session_info_aux_new (AUX_INFO_FRAME_1_MODE, nick);
       aux_info = g_list_append (aux_info, aux);
     }
-#endif
+
+  if (gimp_enum_get_value (GIMP_TYPE_COLOR_FRAME_MODE,
+                           GIMP_COLOR_FRAME (view->color_frame_2)->frame_mode,
+                           NULL, &nick, NULL, NULL))
+    {
+      aux = gimp_session_info_aux_new (AUX_INFO_FRAME_2_MODE, nick);
+      aux_info = g_list_append (aux_info, aux);
+    }
 
   return aux_info;
-}
-
-static void
-gimp_cursor_view_set_context (GimpDocked  *docked,
-                               GimpContext *context)
-{
-  GimpCursorView *view = GIMP_CURSOR_VIEW (docked);
-
-  if (context == view->context)
-    return;
-
-  if (view->context)
-    {
-#if 0
-      g_signal_handlers_disconnect_by_func (view->context,
-					    gimp_cursor_view_fg_changed,
-					    view);
-      g_signal_handlers_disconnect_by_func (view->context,
-					    gimp_cursor_view_bg_changed,
-					    view);
-#endif
-
-      g_object_unref (view->context);
-      view->context = NULL;
-    }
-
-  if (context)
-    {
-#if 0
-      GimpRGB rgb;
-#endif
-
-      view->context = g_object_ref (context);
-
-#if 0
-      g_signal_connect (view->context, "foreground_changed",
-			G_CALLBACK (gimp_cursor_view_fg_changed),
-			view);
-      g_signal_connect (view->context, "background_changed",
-			G_CALLBACK (gimp_cursor_view_bg_changed),
-			view);
-
-      if (view->edit_bg)
-        {
-          gimp_context_get_background (view->context, &rgb);
-          gimp_cursor_view_bg_changed (view->context, &rgb, view);
-        }
-      else
-        {
-          gimp_context_get_foreground (view->context, &rgb);
-          gimp_cursor_view_fg_changed (view->context, &rgb, view);
-        }
-#endif
-    }
-}
-
-static void
-gimp_cursor_view_destroy (GtkObject *object)
-{
-  GimpCursorView *view = GIMP_CURSOR_VIEW (object);
-
-  if (view->context)
-    gimp_docked_set_context (GIMP_DOCKED (view), NULL);
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void
@@ -326,27 +262,26 @@ gimp_cursor_view_style_set (GtkWidget *widget,
                             GtkStyle  *prev_style)
 {
   GimpCursorView *view = GIMP_CURSOR_VIEW (widget);
+  gint            content_spacing;
 
   if (GTK_WIDGET_CLASS (parent_class)->style_set)
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+
+  gtk_widget_style_get (GTK_WIDGET (view),
+                        "content_spacing", &content_spacing,
+			NULL);
+
+  gtk_box_set_spacing (GTK_BOX (view->coord_hbox), content_spacing);
+  gtk_box_set_spacing (GTK_BOX (view->color_hbox), content_spacing);
 }
 
 
 /*  public functions  */
 
 GtkWidget *
-gimp_cursor_view_new (GimpContext *context)
+gimp_cursor_view_new (void)
 {
-  GimpCursorView *view;
-
-  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
-
-  view = g_object_new (GIMP_TYPE_CURSOR_VIEW, NULL);
-
-  if (context)
-    gimp_docked_set_context (GIMP_DOCKED (view), context);
-
-  return GTK_WIDGET (view);
+  return g_object_new (GIMP_TYPE_CURSOR_VIEW, NULL);
 }
 
 void
@@ -442,56 +377,3 @@ gimp_cursor_view_update_cursor (GimpCursorView   *view,
       gimp_color_frame_set_invalid (GIMP_COLOR_FRAME (view->color_frame_2));
     }
 }
-
-
-/*  private functions  */
-
-#if 0
-static void
-gimp_cursor_view_fg_changed (GimpContext     *context,
-                             const GimpRGB   *rgb,
-                             GimpCursorView *view)
-{
-  if (! view->edit_bg)
-    {
-      GimpHSV hsv;
-
-      gimp_rgb_to_hsv (rgb, &hsv);
-
-      g_signal_handlers_block_by_func (view->notebook,
-                                       gimp_cursor_view_info_changed,
-                                       view);
-
-      gimp_info_selector_set_info (GIMP_INFO_SELECTOR (view->notebook),
-                                   rgb, &hsv);
-
-      g_signal_handlers_unblock_by_func (view->notebook,
-                                         gimp_cursor_view_info_changed,
-                                         view);
-    }
-}
-
-static void
-gimp_cursor_view_bg_changed (GimpContext     *context,
-                             const GimpRGB   *rgb,
-                             GimpCursorView *view)
-{
-  if (view->edit_bg)
-    {
-      GimpHSV hsv;
-
-      gimp_rgb_to_hsv (rgb, &hsv);
-
-      g_signal_handlers_block_by_func (view->notebook,
-                                       gimp_cursor_view_info_changed,
-                                       view);
-
-      gimp_info_selector_set_info (GIMP_INFO_SELECTOR (view->notebook),
-                                   rgb, &hsv);
-
-      g_signal_handlers_unblock_by_func (view->notebook,
-                                         gimp_cursor_view_info_changed,
-                                         view);
-    }
-}
-#endif

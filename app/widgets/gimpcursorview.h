@@ -40,7 +40,8 @@ struct _GimpCursorView
 {
   GimpEditor   parent_instance;
 
-  GimpContext *context;
+  GtkWidget   *coord_hbox;
+  GtkWidget   *color_hbox;
 
   GtkWidget   *pixel_x_label;
   GtkWidget   *pixel_y_label;
@@ -58,7 +59,7 @@ struct _GimpCursorViewClass
 
 GType       gimp_cursor_view_get_type      (void) G_GNUC_CONST;
 
-GtkWidget * gimp_cursor_view_new           (GimpContext    *context);
+GtkWidget * gimp_cursor_view_new           (void);
 
 void        gimp_cursor_view_update_cursor (GimpCursorView *view,
                                             GimpImage      *image,
