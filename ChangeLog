@@ -1,5 +1,9 @@
 2004-07-31  DindinX  <david@dindinx.org>
 
+	* plug-ins/common/fractaltrace.c: ported to GimpPreviewArea.
+
+2004-07-31  DindinX  <david@dindinx.org>
+
 	* plug-ins/common/exchange.c: ported to GimpPreviewArea.
 
 2004-07-31  DindinX  <david@dindinx.org>

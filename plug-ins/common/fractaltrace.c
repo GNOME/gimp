@@ -32,11 +32,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -48,10 +43,10 @@
 
 static void query  (void);
 static void run    (const gchar      *name,
-		    gint              nparams,
-		    const GimpParam  *param,
-		    gint             *nreturn_vals,
-		    GimpParam       **return_vals);
+                    gint              nparams,
+                    const GimpParam  *param,
+                    gint             *nreturn_vals,
+                    GimpParam       **return_vals);
 
 static void filter      (GimpDrawable *drawable);
 
@@ -123,16 +118,16 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
-			  "transform image with the Mandelbrot Fractal",
-			  "transform image with the Mandelbrot Fractal",
-			  "Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>",
-			  "Copyright (C) 1997 Hirotsuna Mizuno",
-			  PLUG_IN_VERSION,
-			  N_("_Fractal Trace..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "transform image with the Mandelbrot Fractal",
+                          "transform image with the Mandelbrot Fractal",
+                          "Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>",
+                          "Copyright (C) 1997 Hirotsuna Mizuno",
+                          PLUG_IN_VERSION,
+                          N_("_Fractal Trace..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_NAME,
                              N_("<Image>/Filters/Map"));
@@ -189,7 +184,7 @@ run (const gchar      *name,
   image.alpha  = gimp_drawable_has_alpha (drawable->drawable_id);
   gimp_drawable_mask_bounds (drawable->drawable_id,
                              &selection.x1, &selection.y1,
-			     &selection.x2, &selection.y2);
+                             &selection.x2, &selection.y2);
   selection.width    = selection.x2 - selection.y1;
   selection.height   = selection.y2 - selection.y1;
   selection.center_x = selection.x1 + (gdouble) selection.width / 2.0;
@@ -212,27 +207,27 @@ run (const gchar      *name,
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_NAME, &parameters);
       if (!dialog_show ())
-	{
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	  break;
-	}
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+          break;
+        }
       gimp_set_data (PLUG_IN_NAME, &parameters, sizeof (parameter_t));
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       if (argc != 9)
-	{
-	  status = GIMP_PDB_CALLING_ERROR;
-	}
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
       else
-	{
-	  parameters.x1           = args[3].data.d_float;
-	  parameters.x2           = args[4].data.d_float;
-	  parameters.y1           = args[5].data.d_float;
-	  parameters.y2           = args[6].data.d_float;
-	  parameters.depth        = args[7].data.d_int32;
-	  parameters.outside_type = args[8].data.d_int32;
-	}
+        {
+          parameters.x1           = args[3].data.d_float;
+          parameters.x2           = args[4].data.d_float;
+          parameters.y1           = args[5].data.d_float;
+          parameters.y2           = args[6].data.d_float;
+          parameters.depth        = args[7].data.d_int32;
+          parameters.outside_type = args[8].data.d_int32;
+        }
       break;
     }
 
@@ -241,7 +236,7 @@ run (const gchar      *name,
       gimp_tile_cache_ntiles(2 * (drawable->width / gimp_tile_width() + 1));
       filter (drawable);
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	gimp_displays_flush();
+        gimp_displays_flush();
     }
 
   gimp_drawable_detach (drawable);
@@ -275,9 +270,9 @@ pixels_init (GimpDrawable *drawable)
   gint y;
 
   gimp_pixel_rgn_init (&sPR, drawable,
-		       0, 0, image.width, image.height, FALSE, FALSE);
+                       0, 0, image.width, image.height, FALSE, FALSE);
   gimp_pixel_rgn_init (&dPR, drawable,
-		       0, 0, image.width, image.height, TRUE, TRUE);
+                       0, 0, image.width, image.height, TRUE, TRUE);
 
   spixels = g_new (guchar *, image.height);
   dpixels = g_new (guchar *, image.height);
@@ -306,8 +301,8 @@ pixels_free (void)
 
 static void
 pixels_get (gint     x,
-	    gint     y,
-	    pixel_t *pixel)
+            gint     y,
+            pixel_t *pixel)
 {
   if(x < 0) x = 0; else if (image.width  <= x) x = image.width  - 1;
   if(y < 0) y = 0; else if (image.height <= y) y = image.height - 1;
@@ -344,8 +339,8 @@ pixels_get (gint     x,
 #include <stdio.h>
 static void
 pixels_get_biliner (gdouble  x,
-		    gdouble  y,
-		    pixel_t *pixel)
+                    gdouble  y,
+                    pixel_t *pixel)
 {
   pixel_t A, B, C, D;
   gdouble a, b, c, d;
@@ -393,8 +388,8 @@ pixels_get_biliner (gdouble  x,
 
 static void
 pixels_set (gint     x,
-	    gint     y,
-	    pixel_t *pixel)
+            gint     y,
+            pixel_t *pixel)
 {
   switch (image.bpp)
     {
@@ -434,9 +429,9 @@ pixels_store (void)
 
 static void
 mandelbrot (gdouble  x,
-	    gdouble  y,
-	    gdouble *u,
-	    gdouble *v)
+            gdouble  y,
+            gdouble *u,
+            gdouble *v)
 {
   gint    iter = 0;
   gdouble xx   = x;
@@ -478,42 +473,42 @@ filter (GimpDrawable *drawable)
     {
       cy = parameters.y1 + (y - selection.y1) * scale_y;
       for (x = selection.x1; x < selection.x2; x++)
-	{
-	  cx = parameters.x1 + (x - selection.x1) * scale_x;
-	  mandelbrot (cx, cy, &px, &py);
-	  px = (px - parameters.x1) / scale_x + selection.x1;
-	  py = (py - parameters.y1) / scale_y + selection.y1;
-	  if (0 <= px && px < image.width && 0 <= py && py < image.height)
-	    {
-	      pixels_get_biliner (px, py, &pixel);
-	    }
-	  else
-	    {
-	      switch (parameters.outside_type)
-		{
-		case OUTSIDE_TYPE_WRAP:
-		  px = fmod (px, image.width);
-		  py = fmod (py, image.height);
-		  if( px < 0.0) px += image.width;
-		  if (py < 0.0) py += image.height;
-		  pixels_get_biliner (px, py, &pixel);
-		  break;
-		case OUTSIDE_TYPE_TRANSPARENT:
-		  pixel.r = pixel.g = pixel.b = 0;
-		  pixel.a = 0;
-		  break;
-		case OUTSIDE_TYPE_BLACK:
-		  pixel.r = pixel.g = pixel.b = 0;
-		  pixel.a = 255;
-		  break;
-		case OUTSIDE_TYPE_WHITE:
-		  pixel.r = pixel.g = pixel.b = 255;
-		  pixel.a = 255;
-		  break;
-		}
-	    }
-	  pixels_set (x, y, &pixel);
-	}
+        {
+          cx = parameters.x1 + (x - selection.x1) * scale_x;
+          mandelbrot (cx, cy, &px, &py);
+          px = (px - parameters.x1) / scale_x + selection.x1;
+          py = (py - parameters.y1) / scale_y + selection.y1;
+          if (0 <= px && px < image.width && 0 <= py && py < image.height)
+            {
+              pixels_get_biliner (px, py, &pixel);
+            }
+          else
+            {
+              switch (parameters.outside_type)
+                {
+                case OUTSIDE_TYPE_WRAP:
+                  px = fmod (px, image.width);
+                  py = fmod (py, image.height);
+                  if( px < 0.0) px += image.width;
+                  if (py < 0.0) py += image.height;
+                  pixels_get_biliner (px, py, &pixel);
+                  break;
+                case OUTSIDE_TYPE_TRANSPARENT:
+                  pixel.r = pixel.g = pixel.b = 0;
+                  pixel.a = 0;
+                  break;
+                case OUTSIDE_TYPE_BLACK:
+                  pixel.r = pixel.g = pixel.b = 0;
+                  pixel.a = 255;
+                  break;
+                case OUTSIDE_TYPE_WHITE:
+                  pixel.r = pixel.g = pixel.b = 255;
+                  pixel.a = 255;
+                  break;
+                }
+            }
+          pixels_set (x, y, &pixel);
+        }
       gimp_progress_update ((gdouble) (y-selection.y1) / selection.height);
     }
 
@@ -522,8 +517,8 @@ filter (GimpDrawable *drawable)
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
   gimp_drawable_update (drawable->drawable_id,
-			selection.x1, selection.y1,
-			selection.width, selection.height);
+                        selection.x1, selection.y1,
+                        selection.width, selection.height);
 }
 
 /******************************************************************************/
@@ -533,8 +528,7 @@ filter (GimpDrawable *drawable)
 typedef struct
 {
   GtkWidget  *preview;
-  guchar    **source;
-  guchar    **pixels;
+  guchar     *pixels;
   gdouble     scale;
   gint        width;
   gint        height;
@@ -545,45 +539,13 @@ static preview_t preview;
 
 static void
 dialog_preview_setpixel (gint     x,
-			 gint     y,
-			 pixel_t *pixel)
+                         gint     y,
+                         pixel_t *pixel)
 {
-  guchar grayshade;
-
-  if (pixel->a)
-    grayshade = pixel->r;
-  else
-    grayshade =
-      (((x % (GIMP_CHECK_SIZE * 2) < GIMP_CHECK_SIZE) ?
-        (y % (GIMP_CHECK_SIZE * 2) < GIMP_CHECK_SIZE) :
-        (y % (GIMP_CHECK_SIZE * 2) > GIMP_CHECK_SIZE)) ?
-       GIMP_CHECK_LIGHT : GIMP_CHECK_DARK) * 255;
-
-  switch (preview.bpp)
-    {
-    case 1:
-      preview.pixels[y][x * preview.bpp] = grayshade;
-      break;
-    case 3:
-      preview.pixels[y][x * preview.bpp]     = grayshade;
-      preview.pixels[y][x * preview.bpp + 1] = pixel->a ? pixel->g : grayshade;
-      preview.pixels[y][x * preview.bpp + 2] = pixel->a ? pixel->b : grayshade;
-      break;
-    }
-}
-
-static void
-dialog_preview_store (void)
-{
-  gint y;
-
-  for (y = 0; y < preview.height; y++)
-    {
-      gtk_preview_draw_row (GTK_PREVIEW (preview.preview),
-			    preview.pixels[y], 0, y, preview.width);
-    }
-
-  gtk_widget_queue_draw (preview.preview);
+  preview.pixels[(y * preview.width + x) * 4 + 0] = pixel->r;
+  preview.pixels[(y * preview.width + x) * 4 + 1] = pixel->g;
+  preview.pixels[(y * preview.width + x) * 4 + 2] = pixel->b;
+  preview.pixels[(y * preview.width + x) * 4 + 3] = pixel->a;
 }
 
 static void
@@ -600,38 +562,27 @@ dialog_preview_init (void)
   preview.width  = (gdouble)selection.width / preview.scale;
   preview.height = (gdouble)selection.height / preview.scale;
 
-  if (image.bpp < 3)
-    {
-      preview.bpp = 1;
-      preview.preview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
-    }
-  else
-    {
-      preview.bpp = 3;
-      preview.preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-    }
-  gtk_preview_size (GTK_PREVIEW (preview.preview),
-		    preview.width, preview.height);
+  preview.preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (preview.preview,
+                               preview.width, preview.height);
 
-  preview.source = g_new (guchar *, preview.height);
-  preview.pixels = g_new (guchar *, preview.height);
-  for (y = 0; y < preview.height; y++)
-    {
-      preview.source[y] = g_new (guchar, preview.width * preview.bpp);
-      preview.pixels[y] = g_new (guchar, preview.width * preview.bpp);
-    }
+  preview.pixels = g_new (guchar, preview.height * preview.width * 4);
 
   for (y = 0; y < preview.height; y++)
     {
       cy = selection.y1 + (gdouble)y * preview.scale;
       for (x = 0; x < preview.width; x++)
-	{
-	  cx = selection.x1 + (gdouble)x * preview.scale;
-	  pixels_get_biliner (cx, cy, &pixel);
-	  dialog_preview_setpixel (x, y, &pixel);
-	}
+        {
+          cx = selection.x1 + (gdouble)x * preview.scale;
+          pixels_get_biliner (cx, cy, &pixel);
+          dialog_preview_setpixel (x, y, &pixel);
+        }
     }
-  dialog_preview_store ();
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview.preview),
+                          0, 0, preview.width, preview.height,
+                          GIMP_RGBA_IMAGE,
+                          preview.pixels,
+                          preview.width *4);
 }
 
 static void
@@ -650,55 +601,55 @@ dialog_preview_draw (void)
     {
       cy = parameters.y1 + y * scale_y;
       for (x = 0; x < preview.width; x++)
-	{
-	  cx = parameters.x1 + x * scale_x;
-	  mandelbrot(cx, cy, &px, &py);
-	  px = (px - parameters.x1) / scale_x * preview.scale + selection.x1;
-	  py = (py - parameters.y1) / scale_y * preview.scale + selection.y1;
-	  if (0 <= px && px < image.width && 0 <= py && py < image.height)
-	    {
-	      pixels_get_biliner (px, py, &pixel);
-	    }
-	  else
-	    {
-	      switch (parameters.outside_type)
-		{
-		case OUTSIDE_TYPE_WRAP:
-		  px = fmod (px, image.width);
-		  py = fmod (py, image.height);
-		  if (px < 0.0) px += image.width;
-		  if (py < 0.0) py += image.height;
-		  pixels_get_biliner (px, py, &pixel);
-		  break;
-		case OUTSIDE_TYPE_TRANSPARENT:
-		  pixel.r = pixel.g = pixel.b =
-		    (((x % (GIMP_CHECK_SIZE * 2) < GIMP_CHECK_SIZE) ?
-		      (y % (GIMP_CHECK_SIZE * 2) < GIMP_CHECK_SIZE) :
-		      (y % (GIMP_CHECK_SIZE * 2) > GIMP_CHECK_SIZE)) ?
-		     GIMP_CHECK_LIGHT : GIMP_CHECK_DARK) * 255;
-		  break;
-		case OUTSIDE_TYPE_BLACK:
-		  pixel.r = pixel.g = pixel.b = 0;
+        {
+          cx = parameters.x1 + x * scale_x;
+          mandelbrot(cx, cy, &px, &py);
+          px = (px - parameters.x1) / scale_x * preview.scale + selection.x1;
+          py = (py - parameters.y1) / scale_y * preview.scale + selection.y1;
+          if (0 <= px && px < image.width && 0 <= py && py < image.height)
+            {
+              pixels_get_biliner (px, py, &pixel);
+            }
+          else
+            {
+              switch (parameters.outside_type)
+                {
+                case OUTSIDE_TYPE_WRAP:
+                  px = fmod (px, image.width);
+                  py = fmod (py, image.height);
+                  if (px < 0.0) px += image.width;
+                  if (py < 0.0) py += image.height;
+                  pixels_get_biliner (px, py, &pixel);
+                  break;
+                case OUTSIDE_TYPE_TRANSPARENT:
+                  pixel.r = pixel.g = pixel.b = 0;
+                  pixel.a = 0;
+                  break;
+                case OUTSIDE_TYPE_BLACK:
+                  pixel.r = pixel.g = pixel.b = 0;
                   pixel.a = 255;
-		  break;
-		case OUTSIDE_TYPE_WHITE:
-		  pixel.r = pixel.g = pixel.b = 255;
+                  break;
+                case OUTSIDE_TYPE_WHITE:
+                  pixel.r = pixel.g = pixel.b = 255;
                   pixel.a = 255;
-		  break;
-		}
-	    }
-	  dialog_preview_setpixel (x, y, &pixel);
-	}
+                  break;
+                }
+            }
+          dialog_preview_setpixel (x, y, &pixel);
+        }
     }
-
-  dialog_preview_store ();
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview.preview),
+                          0, 0, preview.width, preview.height,
+                          GIMP_RGBA_IMAGE,
+                          preview.pixels,
+                          preview.width *4);
 }
 
 /******************************************************************************/
 
 static void
 dialog_int_adjustment_update (GtkAdjustment *adjustment,
-			      gpointer       data)
+                              gpointer       data)
 {
   gimp_int_adjustment_update (adjustment, data);
 
@@ -707,7 +658,7 @@ dialog_int_adjustment_update (GtkAdjustment *adjustment,
 
 static void
 dialog_double_adjustment_update (GtkAdjustment *adjustment,
-				 gpointer       data)
+                                 gpointer       data)
 {
   gimp_double_adjustment_update (adjustment, data);
 
@@ -716,7 +667,7 @@ dialog_double_adjustment_update (GtkAdjustment *adjustment,
 
 static void
 dialog_outside_type_callback (GtkWidget *widget,
-			      gpointer  *data)
+                              gpointer  *data)
 {
   gimp_radio_button_update (widget, data);
 
@@ -742,12 +693,12 @@ dialog_show (void)
 
   dialog = gimp_dialog_new (_("Fractal Trace"), "fractaltrace",
                             NULL, 0,
-			    gimp_standard_help_func, HELP_ID,
+                            gimp_standard_help_func, HELP_ID,
 
-			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			    NULL);
+                            NULL);
 
   mainbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (mainbox), 12);
@@ -774,20 +725,20 @@ dialog_show (void)
 
   /*  Settings  */
   frame = gimp_int_radio_group_new (TRUE, _("Outside Type"),
-				    G_CALLBACK (dialog_outside_type_callback),
-				    &parameters.outside_type,
-				    parameters.outside_type,
+                                    G_CALLBACK (dialog_outside_type_callback),
+                                    &parameters.outside_type,
+                                    parameters.outside_type,
 
-				    _("_Warp"),
-				    OUTSIDE_TYPE_WRAP, NULL,
-				    _("_Transparent"),
-				    OUTSIDE_TYPE_TRANSPARENT, NULL,
-				    _("_Black"),
-				    OUTSIDE_TYPE_BLACK, NULL,
-				    _("_White"),
-				    OUTSIDE_TYPE_WHITE, NULL,
+                                    _("_Warp"),
+                                    OUTSIDE_TYPE_WRAP, NULL,
+                                    _("_Transparent"),
+                                    OUTSIDE_TYPE_TRANSPARENT, NULL,
+                                    _("_Black"),
+                                    OUTSIDE_TYPE_BLACK, NULL,
+                                    _("_White"),
+                                    OUTSIDE_TYPE_WHITE, NULL,
 
-				 NULL);
+                                 NULL);
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -802,46 +753,46 @@ dialog_show (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("X_1:"), 0, 6,
-			      parameters.x1, -50, 50, 0.1, 0.5, 2,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("X_1:"), 0, 6,
+                              parameters.x1, -50, 50, 0.1, 0.5, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_double_adjustment_update),
                     &parameters.x1);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("X_2:"), 0, 6,
-			      parameters.x2, -50, 50, 0.1, 0.5, 2,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("X_2:"), 0, 6,
+                              parameters.x2, -50, 50, 0.1, 0.5, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_double_adjustment_update),
                     &parameters.x2);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("Y_1:"), 0, 6,
-			      parameters.y1, -50, 50, 0.1, 0.5, 2,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("Y_1:"), 0, 6,
+                              parameters.y1, -50, 50, 0.1, 0.5, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_double_adjustment_update),
                     &parameters.y1);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-			      _("Y_2:"), 0, 6,
-			      parameters.y2, -50, 50, 0.1, 0.5, 2,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("Y_2:"), 0, 6,
+                              parameters.y2, -50, 50, 0.1, 0.5, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_double_adjustment_update),
                     &parameters.y2);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-			      _("_Depth:"), 0, 6,
-			      parameters.depth, 1, 50, 1, 5, 0,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Depth:"), 0, 6,
+                              parameters.depth, 1, 50, 1, 5, 0,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_int_adjustment_update),
                     &parameters.depth);
