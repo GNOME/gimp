@@ -84,8 +84,10 @@
 	  (let ((floating-sel (car (gimp-edit-paste effect-layer FALSE))))
 	    (gimp-floating-sel-anchor floating-sel)
 	    )
-	  (gimp-image-set-active-layer image effect-layer )))
-    (set! active-layer (car (gimp-image-get-active-layer image)))
+      (gimp-image-set-active-layer image effect-layer ))
+      (set! effect-layer drawable)
+    )
+    (set! active-layer effect-layer)
 
     ; all the fun stuff goes here
     (if (= pixelize TRUE)

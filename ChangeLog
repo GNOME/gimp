@@ -1,5 +1,13 @@
 2004-10-04  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/scripts/asc2img.scm: a cleaned up version of
+	the script contributed by Kevin Cozens (see bug #153900).
+	
+	* plug-ins/script-fu/scripts/predator.scm: applied patch by Kevin
+	Cozens that fixes use of the script on original layer (bug #152678).
+
+2004-10-04  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/3d-outline.scm
 	* plug-ins/script-fu/scripts/blended-logo.scm
 	* plug-ins/script-fu/scripts/camo.scm
