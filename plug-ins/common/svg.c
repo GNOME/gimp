@@ -28,11 +28,11 @@
 
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
-#include <librsvg/rsvg.h>
-#include "libgimp/stdplugins-intl.h"
+#include <rsvg.h>
 
-/* Declare local functions.
- */
+/* TODO: remove me, initialize gimp i18n services */
+#define _(String) (String)
+
 static void     query                     (void);
 static void     run                       (gchar            *name,
 					   gint              nparams,
@@ -43,13 +43,24 @@ static gint32   load_image                (gchar            *filename,
 					   GimpRunMode       runmode, 
 					   gboolean          preview);
 
+GimpPlugInInfo PLUG_IN_INFO = {
+  NULL,                         /* init_proc  */
+  NULL,                         /* quit_proc  */
+  query,                        /* query_proc */
+  run,                          /* run_proc   */
+};
+
 MAIN ()
 
+/*
+ * 'query()' - Respond to a plug-in query...
+ */
 static void
 query (void)
 {
   static GimpParamDef load_args[] =
   {
+    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
     { GIMP_PDB_STRING,   "filename",     "The name of the file to load" },
     { GIMP_PDB_STRING,   "raw_filename", "The name of the file to load" }
   };
@@ -59,11 +70,11 @@ query (void)
   };
 
   gimp_install_procedure ("file_svg_load",
-                          "loads files in the SVG file format",
-                          "loads files in the SVG file format",
-                          "Dom Lachowicz",
-                          "Dom Lachowicz",
-                          "2002",
+                          "Loads files in the SVG file format",
+                          "Loads files in the SVG file format",
+                          "Dom Lachowicz <cinamod@hotmail.com>",
+                          "Dom Lachowicz <cinamod@hotmail.com>",
+                          "(c) 2003 - " VERSION,
 			  "<Load>/SVG",
 			  NULL,
                           GIMP_PLUGIN,
@@ -72,15 +83,13 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_register_magic_load_handler ("file_svg_load",
-				    "svg",
-				    "",
+				    "svg", "",
 				    "0,string,<?xml,0,string,<svg");
 }
 
 /*
  * 'run()' - Run the plug-in...
  */
-
 static void
 run (gchar      *name,
      gint        nparams,
@@ -101,9 +110,12 @@ run (gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
+  /* MUST call this before any RSVG funcs */
+  g_type_init ();
+
   if (strcmp (name, "file_svg_load") == 0)
     {
-      INIT_I18N_UI ();
+      /* INIT_I18N_UI (); */
       image_ID = load_image (param[1].data.d_string, run_mode, FALSE);
 
       if (image_ID != -1)
@@ -124,7 +136,6 @@ run (gchar      *name,
 /*
  * 'load_image()' - Load a SVG image into a new image window.
  */
-
 static gint32
 load_image (gchar       *filename, 	/* I - File to load */ 
 	    GimpRunMode  runmode, 
@@ -157,12 +168,18 @@ load_image (gchar       *filename, 	/* I - File to load */
   image = gimp_image_new (gdk_pixbuf_get_width (pixbuf), 
 			  gdk_pixbuf_get_height (pixbuf),
 			  GIMP_RGB);
+  if (image == -1)
+    {
+      g_message ("Can't allocate new image\n%s", filename);
+      gimp_quit ();
+    }
+
   gimp_image_set_filename (image, filename);
 
   layer = gimp_layer_new (image, _("Background"),
 			  gdk_pixbuf_get_width (pixbuf), 
 			  gdk_pixbuf_get_height (pixbuf),
-			  GIMP_RGB_IMAGE, 100, GIMP_NORMAL_MODE);
+			  GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
   
   drawable = gimp_drawable_get (layer);
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
