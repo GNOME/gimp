@@ -50,15 +50,8 @@ struct _GimpDrawTool
   GimpDisplay  *gdisp;        /*  The display we are drawing to (may be
                                *  a different one than tool->gdisp)
                                */
-  GdkWindow    *win;          /*  Window to draw draw operation to       */
-  GdkGC        *gc;           /*  Graphics context for draw functions    */
 
   gint          paused_count; /*  count to keep track of multiple pauses */
-
-  gint          line_width;   /*  line attributes                        */
-  GdkLineStyle  line_style;   /**/
-  GdkCapStyle   cap_style;    /**/
-  GdkJoinStyle  join_style;   /**/
 
   GList        *vectors;      /*  GimpVectors to render                  */
   GimpMatrix3  *transform;    /*  Transformation matrix fof the vectors  */

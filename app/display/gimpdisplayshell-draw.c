@@ -107,6 +107,8 @@ static gboolean  gimp_display_shell_delete_event       (GtkWidget        *widget
 
 static void      gimp_display_shell_real_scaled        (GimpDisplayShell *shell);
 
+static GdkGC *   gimp_display_shell_grid_gc_new        (GtkWidget        *widget,
+                                                        GimpGrid         *grid);
 static void  gimp_display_shell_close_warning_dialog   (GimpDisplayShell *shell,
                                                         GimpImage        *gimage);
 static void  gimp_display_shell_close_warning_callback (GtkWidget        *widget,
@@ -716,7 +718,6 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   gimp_help_set_help_data (shell->origin, NULL, "#origin_button");
 
-  /* EEK */
   shell->canvas = gimp_canvas_new ();
 
   /*  the horizontal ruler  */
@@ -898,7 +899,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
       gtk_widget_show (shell->vrule);
     }
 
-  gtk_widget_show (shell->canvas);
+  gtk_widget_show (GTK_WIDGET (shell->canvas));
 
   if (shell->options->show_scrollbars)
     {
@@ -1244,10 +1245,11 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
                                GimpGuide        *guide,
                                gboolean          active)
 {
-  gint x1, x2;
-  gint y1, y2;
-  gint w, h;
-  gint x, y;
+  GimpCanvasStyle  style = 0;
+  gint             x1, x2;
+  gint             y1, y2;
+  gint             x, y;
+  gint             w, h;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (guide != NULL);
@@ -1260,6 +1262,7 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
                                    shell->gdisp->gimage->width,
                                    shell->gdisp->gimage->height,
                                    &x2, &y2, FALSE);
+
   gdk_drawable_get_size (shell->canvas->window, &w, &h);
 
   if (x1 < 0) x1 = 0;
@@ -1267,34 +1270,33 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
   if (x2 > w) x2 = w;
   if (y2 > h) y2 = h;
 
-  if (guide->orientation == GIMP_ORIENTATION_HORIZONTAL)
+  switch (guide->orientation)
     {
-      GimpCanvas *canvas = GIMP_CANVAS (shell->canvas);
-
+    case GIMP_ORIENTATION_HORIZONTAL:
       gimp_display_shell_transform_xy (shell,
                                        0, guide->position, &x, &y, FALSE);
+      y1 = y2 = y;
 
-      if (active)
-	gdk_draw_line (shell->canvas->window,
-                       canvas->guides.active_hgc, x1, y, x2, y);
-      else
-	gdk_draw_line (shell->canvas->window,
-                       canvas->guides.normal_hgc, x1, y, x2, y);
-    }
-  else if (guide->orientation == GIMP_ORIENTATION_VERTICAL)
-    {
-      GimpCanvas *canvas = GIMP_CANVAS (shell->canvas);
+      style = (active ?
+               GIMP_CANVAS_STYLE_HGUIDE_ACTIVE :
+               GIMP_CANVAS_STYLE_HGUIDE_NORMAL);
+      break;
 
+    case GIMP_ORIENTATION_VERTICAL:
       gimp_display_shell_transform_xy (shell,
                                        guide->position, 0, &x, &y, FALSE);
+      x1 = x2 = x;
 
-      if (active)
-	gdk_draw_line (shell->canvas->window,
-                       canvas->guides.active_vgc, x, y1, x, y2);
-      else
-	gdk_draw_line (shell->canvas->window,
-                       canvas->guides.normal_vgc, x, y1, x, y2);
+      style = (active ?
+               GIMP_CANVAS_STYLE_VGUIDE_ACTIVE :
+               GIMP_CANVAS_STYLE_VGUIDE_NORMAL);
+      break;
+
+    case GIMP_ORIENTATION_UNKNOWN:
+      return;
     }
+
+  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), style, x1, y1, x2, y2);
 }
 
 void
@@ -1323,6 +1325,7 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
   if (gimp_display_shell_get_show_grid (shell))
     {
       GimpGrid   *grid;
+      GimpCanvas *canvas;
       GdkGC      *gc;
       gint        x1, x2;
       gint        y1, y2;
@@ -1336,8 +1339,6 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
       if (grid == NULL)
         return;
 
-      gc = gimp_canvas_grid_gc_new (GIMP_CANVAS (shell->canvas), grid);
-
       gimp_display_shell_transform_xy (shell, 0, 0, &x1, &y1, FALSE);
       gimp_display_shell_transform_xy (shell,
                                        shell->gdisp->gimage->width,
@@ -1346,6 +1347,12 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
 
       width  = shell->gdisp->gimage->width;
       height = shell->gdisp->gimage->height;
+
+      canvas = GIMP_CANVAS (shell->canvas);
+
+      gc = gimp_display_shell_grid_gc_new (shell->canvas, grid);
+      gimp_canvas_set_custom_gc (canvas, gc);
+      g_object_unref (gc);
 
       switch (grid->style)
         {
@@ -1361,8 +1368,9 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
                   if (x_real >= x1 && x_real < x2 &&
                       y_real >= y1 && y_real < y2)
                     {
-                      gdk_draw_point (shell->canvas->window, gc,
-                                      x_real, y_real);
+                      gimp_canvas_draw_point (GIMP_CANVAS (shell->canvas),
+                                              GIMP_CANVAS_STYLE_CUSTOM,
+                                              x_real, y_real);
                     }
                 }
             }
@@ -1378,21 +1386,17 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
                                                    FALSE);
 
                   if (x_real >= x1 && x_real < x2)
-                    {
-                      gdk_draw_line (shell->canvas->window, gc,
-                                     x_real,
-                                     CLAMP (y_real - length, y1, y2 - 1),
-                                     x_real,
-                                     CLAMP (y_real + length, y1, y2 - 1));
-                    }
+                    gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_CUSTOM,
+                                           x_real,
+                                           CLAMP (y_real - length, y1, y2 - 1),
+                                           x_real,
+                                           CLAMP (y_real + length, y1, y2 - 1));
                   if (y_real >= y1 && y_real < y2)
-                    {
-                      gdk_draw_line (shell->canvas->window, gc,
-                                     CLAMP (x_real - length, x1, x2 - 1),
-                                     y_real,
-                                     CLAMP (x_real + length, x1, x2 - 1),
-                                     y_real);
-                    }
+                    gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_CUSTOM,
+                                           CLAMP (x_real - length, x1, x2 - 1),
+                                           y_real,
+                                           CLAMP (x_real + length, x1, x2 - 1),
+                                           y_real);
                 }
             }
           break;
@@ -1407,8 +1411,8 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
                                                FALSE);
 
               if (x_real > x1)
-                gdk_draw_line (shell->canvas->window, gc,
-                               x_real, y1, x_real, y2 - 1);
+                gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_CUSTOM,
+                                       x_real, y1, x_real, y2 - 1);
             }
 
           for (y = grid->yoffset; y < height; y += grid->yspacing)
@@ -1418,13 +1422,13 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
                                                FALSE);
 
               if (y_real > y1)
-                gdk_draw_line (shell->canvas->window, gc,
-                               x1, y_real, x2 - 1, y_real);
+                gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_CUSTOM,
+                                       x1, y_real, x2 - 1, y_real);
             }
           break;
         }
 
-      g_object_unref (gc);
+      gimp_canvas_set_custom_gc (canvas, NULL);
     }
 }
 
@@ -1465,9 +1469,9 @@ gimp_display_shell_draw_vector (GimpDisplayShell *shell,
               gdk_coords[i].y = ROUND (sy);
             }
 
-          gdk_draw_lines (shell->canvas->window,
-                          GIMP_CANVAS (shell->canvas)->vectors_gc,
-                          gdk_coords, coords->len);
+          gimp_canvas_draw_lines (GIMP_CANVAS (shell->canvas),
+                                  GIMP_CANVAS_STYLE_XOR,
+                                  gdk_coords, coords->len);
 
           g_free (gdk_coords);
         }
@@ -1658,6 +1662,45 @@ gimp_display_shell_selection_visibility (GimpDisplayShell     *shell,
 
 
 /*  private functions  */
+
+static GdkGC *
+gimp_display_shell_grid_gc_new (GtkWidget *widget,
+                                GimpGrid  *grid)
+{
+  GdkGC       *gc;
+  GdkGCValues  values;
+  GdkColor     fg, bg;
+
+  switch (grid->style)
+    {
+    case GIMP_GRID_ON_OFF_DASH:
+      values.line_style = GDK_LINE_ON_OFF_DASH;
+      break;
+
+    case GIMP_GRID_DOUBLE_DASH:
+      values.line_style = GDK_LINE_DOUBLE_DASH;
+      break;
+
+    case GIMP_GRID_DOTS:
+    case GIMP_GRID_INTERSECTIONS:
+    case GIMP_GRID_SOLID:
+      values.line_style = GDK_LINE_SOLID;
+      break;
+    }
+
+  values.join_style = GDK_JOIN_MITER;
+
+  gc = gdk_gc_new_with_values (widget->window,
+                               &values, GDK_GC_LINE_STYLE | GDK_GC_JOIN_STYLE);
+
+  gimp_rgb_get_gdk_color (&grid->fgcolor, &fg);
+  gimp_rgb_get_gdk_color (&grid->bgcolor, &bg);
+
+  gdk_gc_set_rgb_fg_color (gc, &fg);
+  gdk_gc_set_rgb_bg_color (gc, &bg);
+
+  return gc;
+}
 
 static void
 gimp_display_shell_close_warning_dialog (GimpDisplayShell *shell,

@@ -23,6 +23,20 @@
 #include <gtk/gtkdrawingarea.h>
 
 
+typedef enum
+{
+  GIMP_CANVAS_STYLE_RENDER,
+  GIMP_CANVAS_STYLE_XOR,
+  GIMP_CANVAS_STYLE_XOR_DASHED,
+  GIMP_CANVAS_STYLE_HGUIDE_NORMAL,
+  GIMP_CANVAS_STYLE_HGUIDE_ACTIVE,
+  GIMP_CANVAS_STYLE_VGUIDE_NORMAL,
+  GIMP_CANVAS_STYLE_VGUIDE_ACTIVE,
+  GIMP_CANVAS_STYLE_CUSTOM,
+  GIMP_CANVAS_NUM_STYLES
+} GimpCanvasStyle;
+
+
 #define GIMP_TYPE_CANVAS            (gimp_canvas_get_type ())
 #define GIMP_CANVAS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANVAS, GimpCanvas))
 #define GIMP_CANVAS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CANVAS, GimpCanvasClass))
@@ -37,23 +51,7 @@ struct _GimpCanvas
 {
   GtkDrawingArea  parent_instance;
 
-  /*  GC for rendering the image  */
-  GdkGC          *render_gc;
-
-  /*  GCs for rendering guides    */
-  struct
-  {
-    GdkGC        *normal_hgc;
-    GdkGC        *active_hgc;
-    GdkGC        *normal_vgc;
-    GdkGC        *active_vgc;
-  } guides;
-
-  /*  GC for the grid             */
-  GdkGC          *grid_gc;
-
-  /*  GC for the vectors          */
-  GdkGC          *vectors_gc;
+  GdkGC          *gc[GIMP_CANVAS_NUM_STYLES];
 };
 
 struct _GimpCanvasClass
@@ -62,14 +60,68 @@ struct _GimpCanvasClass
 };
 
 
-GType        gimp_canvas_get_type    (void) G_GNUC_CONST;
+GType        gimp_canvas_get_type       (void) G_GNUC_CONST;
 
-GtkWidget  * gimp_canvas_new         (void);
-GdkGC      * gimp_canvas_grid_gc_new (GimpCanvas *canvas,
-                                      GimpGrid   *grid);
-void         gimp_canvas_draw_cursor (GimpCanvas *canvas,
-                                      gint        x,
-                                      gint        y);
+GtkWidget  * gimp_canvas_new            (void);
+
+void         gimp_canvas_draw_cursor    (GimpCanvas      *canvas,
+                                         gint             x,
+                                         gint             y);
+void         gimp_canvas_draw_point     (GimpCanvas      *canvas,
+                                         GimpCanvasStyle  style,
+                                         gint             x,
+                                         gint             y);
+void         gimp_canvas_draw_line      (GimpCanvas      *canvas,
+                                         GimpCanvasStyle  style,
+                                         gint             x1,
+                                         gint             y1,
+                                         gint             x2,
+                                         gint             y2);
+void         gimp_canvas_draw_lines     (GimpCanvas      *canvas,
+                                         GimpCanvasStyle  style,
+                                         GdkPoint        *points,
+                                         gint             num_points);
+void         gimp_canvas_draw_rectangle (GimpCanvas      *canvas,
+                                         GimpCanvasStyle  style,
+                                         gboolean         filled,
+                                         gint             x,
+                                         gint             y,
+                                         gint             width,
+                                         gint             height);
+void         gimp_canvas_draw_arc       (GimpCanvas      *canvas,
+                                         GimpCanvasStyle  style,
+                                         gboolean         filled,
+                                         gint             x,
+                                         gint             y,
+                                         gint             width,
+                                         gint             height,
+                                         gint             angle1,
+                                         gint             angle2);
+void         gimp_canvas_draw_polygon   (GimpCanvas      *canvas,
+                                         GimpCanvasStyle  style,
+                                         gboolean         filled,
+                                         GdkPoint        *points,
+                                         gint             num_points);
+void         gimp_canvas_draw_segments  (GimpCanvas      *canvas,
+                                         GimpCanvasStyle  style,
+                                         GdkSegment      *segments,
+                                         gint             num_segments);
+void         gimp_canvas_draw_rgb       (GimpCanvas      *canvas,
+                                         GimpCanvasStyle  style,
+                                         gint             x,
+                                         gint             y,
+                                         gint             width,
+                                         gint             height,
+                                         guchar          *rgb_buf,
+                                         gint             rowstride,
+                                         gint             xdith,
+                                         gint             ydith);
+
+void         gimp_canvas_set_bg_color   (GimpCanvas      *canvas,
+                                         GimpRGB         *color);
+
+void         gimp_canvas_set_custom_gc  (GimpCanvas      *canvas,
+                                         GdkGC           *gc);
 
 
 #endif /*  __GIMP_CANVAS_H__  */

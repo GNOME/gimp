@@ -1,3 +1,17 @@
+2003-11-10  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpcanvas.[ch]	
+	* app/tools/gimpdrawtool.[ch]: moved GC from the the draw tool to
+	GimpCanvas. Added wrappers around GDK drawing functions and do all
+	canvas drawing by means of these new functions.
+
+	* app/display/gimpdisplayshell-appearance.c
+	* app/display/gimpdisplayshell-render.c
+	* app/display/gimpdisplayshell.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpfuzzyselecttool.c: draw using the new GimpCanvas
+	functions.
+
 2003-11-10  Dave Neary  <bolsh@gimp.org>
 
 	* app/tools/gimpimagemaptool.c: Moved assignment of shell to 

@@ -30,6 +30,7 @@
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "gimpcanvas.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayoptions.h"
 #include "gimpdisplayshell.h"
@@ -120,7 +121,7 @@ gimp_display_shell_set_show_rulers (GimpDisplayShell *shell,
 
   g_object_set (options, "show-rulers", show, NULL);
 
-  table = GTK_TABLE (shell->canvas->parent);
+  table = GTK_TABLE (GTK_WIDGET (shell->canvas)->parent);
 
   if (show)
     {
@@ -437,19 +438,7 @@ gimp_display_shell_set_padding (GimpDisplayShell      *shell,
                 "padding-color", &color,
                 NULL);
 
-  if (GTK_WIDGET_REALIZED (shell->canvas))
-    {
-      GdkColormap *colormap;
-      GdkColor     gdk_color;
-
-      gimp_rgb_get_gdk_color (&color, &gdk_color);
-
-      colormap = gdk_drawable_get_colormap (shell->canvas->window);
-      g_return_if_fail (colormap != NULL);
-      gdk_colormap_alloc_color (colormap, &gdk_color, FALSE, TRUE);
-
-      gdk_window_set_background (shell->canvas->window, &gdk_color);
-    }
+  gimp_canvas_set_bg_color (GIMP_CANVAS (shell->canvas), &color);
 
   if (shell->padding_button)
     {

@@ -33,6 +33,7 @@
 #include "vectors/gimpstroke.h"
 #include "vectors/gimpvectors.h"
 
+#include "display/gimpcanvas.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
@@ -123,15 +124,8 @@ static void
 gimp_draw_tool_init (GimpDrawTool *draw_tool)
 {
   draw_tool->gdisp        = NULL;
-  draw_tool->win          = NULL;
-  draw_tool->gc           = NULL;
 
   draw_tool->paused_count = 0;
-
-  draw_tool->line_width   = 0;
-  draw_tool->line_style   = GDK_LINE_SOLID;
-  draw_tool->cap_style    = GDK_CAP_NOT_LAST;
-  draw_tool->join_style   = GDK_JOIN_MITER;
 
   draw_tool->vectors      = NULL;
   draw_tool->transform    = NULL;
@@ -140,15 +134,7 @@ gimp_draw_tool_init (GimpDrawTool *draw_tool)
 static void
 gimp_draw_tool_finalize (GObject *object)
 {
-  GimpDrawTool *draw_tool;
-
-  draw_tool = GIMP_DRAW_TOOL (object);
-
-  if (draw_tool->gc)
-    {
-      g_object_unref (draw_tool->gc);
-      draw_tool->gc = NULL;
-    }
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (object);
 
   if (draw_tool->vectors)
     {
@@ -171,9 +157,7 @@ gimp_draw_tool_control (GimpTool       *tool,
 			GimpToolAction  action,
 			GimpDisplay    *gdisp)
 {
-  GimpDrawTool *draw_tool;
-
-  draw_tool = GIMP_DRAW_TOOL (tool);
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
 
   switch (action)
     {
@@ -258,7 +242,6 @@ gimp_draw_tool_start (GimpDrawTool *draw_tool,
 		      GimpDisplay  *gdisp)
 {
   GimpDisplayShell *shell;
-  GdkColor          fg, bg;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
   g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
@@ -268,19 +251,6 @@ gimp_draw_tool_start (GimpDrawTool *draw_tool,
   gimp_draw_tool_stop (draw_tool);
 
   draw_tool->gdisp = gdisp;
-  draw_tool->win   = shell->canvas->window;
-  draw_tool->gc    = gdk_gc_new (draw_tool->win);
-
-  gdk_gc_set_function (draw_tool->gc, GDK_INVERT);
-  fg.pixel = 0xFFFFFFFF;
-  bg.pixel = 0x00000000;
-  gdk_gc_set_foreground (draw_tool->gc, &fg);
-  gdk_gc_set_background (draw_tool->gc, &bg);
-  gdk_gc_set_line_attributes (draw_tool->gc,
-                              draw_tool->line_width,
-                              draw_tool->line_style,
-			      draw_tool->cap_style,
-                              draw_tool->join_style);
 
   gimp_draw_tool_draw (draw_tool);
 }
@@ -293,13 +263,6 @@ gimp_draw_tool_stop (GimpDrawTool *draw_tool)
   gimp_draw_tool_draw (draw_tool);
 
   draw_tool->gdisp = NULL;
-  draw_tool->win   = NULL;
-
-  if (draw_tool->gc)
-    {
-      g_object_unref (draw_tool->gc);
-      draw_tool->gc = NULL;
-    }
 }
 
 gboolean
@@ -454,10 +417,9 @@ gimp_draw_tool_draw_line (GimpDrawTool *draw_tool,
                                      &tx2, &ty2,
                                      use_offsets);
 
-  gdk_draw_line (draw_tool->win,
-                 draw_tool->gc,
-                 RINT (tx1), RINT (ty1),
-                 RINT (tx2), RINT (ty2));
+  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
+                         RINT (tx1), RINT (ty1),
+                         RINT (tx2), RINT (ty2));
 }
 
 void
@@ -468,15 +430,27 @@ gimp_draw_tool_draw_dashed_line (GimpDrawTool *draw_tool,
                                  gdouble       y2,
                                  gboolean      use_offsets)
 {
-  GdkGCValues  values;
+  GimpDisplayShell *shell;
+  gdouble           tx1, ty1;
+  gdouble           tx2, ty2;
 
-  values.line_style = GDK_LINE_ON_OFF_DASH;
-  gdk_gc_set_values (draw_tool->gc, &values, GDK_GC_LINE_STYLE);
+  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  gimp_draw_tool_draw_line (draw_tool, x1, y1, x2, y2, use_offsets);
+  shell = GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell);
 
-  values.line_style = GDK_LINE_SOLID;
-  gdk_gc_set_values (draw_tool->gc, &values, GDK_GC_LINE_STYLE);
+  gimp_display_shell_transform_xy_f (shell,
+                                     x1, y1,
+                                     &tx1, &ty1,
+                                     use_offsets);
+  gimp_display_shell_transform_xy_f (shell,
+                                     x2, y2,
+                                     &tx2, &ty2,
+                                     use_offsets);
+
+  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas),
+                         GIMP_CANVAS_STYLE_XOR_DASHED,
+                         RINT (tx1), RINT (ty1),
+                         RINT (tx2), RINT (ty2));
 }
 
 void
@@ -522,11 +496,11 @@ gimp_draw_tool_draw_rectangle (GimpDrawTool *draw_tool,
   h = (ty2 >= 0.0) ? RINT (ty2) : 0;
 
   if (w > 0 && h > 0)
-    gdk_draw_rectangle (draw_tool->win,
-                        draw_tool->gc,
-                        filled,
-                        RINT (tx1), RINT (ty1),
-                        w - 1, h - 1);
+    gimp_canvas_draw_rectangle (GIMP_CANVAS (shell->canvas),
+                                GIMP_CANVAS_STYLE_XOR,
+                                filled,
+                                RINT (tx1), RINT (ty1),
+                                w - 1, h - 1);
 }
 
 void
@@ -571,20 +545,24 @@ gimp_draw_tool_draw_arc (GimpDrawTool *draw_tool,
   if (w > 0 && h > 0)
     {
       if (w != 1 && h != 1)
-        gdk_draw_arc (draw_tool->win,
-                      draw_tool->gc,
-                      filled,
-                      RINT (tx1), RINT (ty1),
-                      w - 1, h - 1,
-                      angle1, angle2);
+        {
+          gimp_canvas_draw_arc (GIMP_CANVAS (shell->canvas),
+                                GIMP_CANVAS_STYLE_XOR,
+                                filled,
+                                RINT (tx1), RINT (ty1),
+                                w - 1, h - 1,
+                                angle1, angle2);
+        }
       else
-        /* work around the problem of an 1xN or Nx1 arc not being shown
-           properly */
-        gdk_draw_rectangle (draw_tool->win,
-                            draw_tool->gc,
-                            filled,
-                            RINT (tx1), RINT (ty1),
-                            w - 1, h - 1);
+        {
+          /* work around the problem of an 1xN or Nx1 arc not being shown
+             properly */
+          gimp_canvas_draw_rectangle (GIMP_CANVAS (shell->canvas),
+                                      GIMP_CANVAS_STYLE_XOR,
+                                      filled,
+                                      RINT (tx1), RINT (ty1),
+                                      w - 1, h - 1);
+        }
     }
 }
 
@@ -621,11 +599,11 @@ gimp_draw_tool_draw_rectangle_by_anchor (GimpDrawTool   *draw_tool,
       height++;
     }
 
-  gdk_draw_rectangle (draw_tool->win,
-                      draw_tool->gc,
-                      filled,
-                      RINT (tx), RINT (ty),
-                      width, height);
+  gimp_canvas_draw_rectangle (GIMP_CANVAS (shell->canvas),
+                              GIMP_CANVAS_STYLE_XOR,
+                              filled,
+                              RINT (tx), RINT (ty),
+                              width, height);
 }
 
 void
@@ -667,12 +645,11 @@ gimp_draw_tool_draw_arc_by_anchor (GimpDrawTool  *draw_tool,
       radius_y += 1;
     }
 
-  gdk_draw_arc (draw_tool->win,
-                draw_tool->gc,
-                filled,
-                RINT (tx), RINT (ty),
-                radius_x, radius_y,
-                angle1, angle2);
+  gimp_canvas_draw_arc (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
+                        filled,
+                        RINT (tx), RINT (ty),
+                        radius_x, radius_y,
+                        angle1, angle2);
 }
 
 void
@@ -701,14 +678,12 @@ gimp_draw_tool_draw_cross_by_anchor (GimpDrawTool  *draw_tool,
                                   anchor,
                                   &tx, &ty);
 
-  gdk_draw_line (draw_tool->win,
-                 draw_tool->gc,
-		 RINT (tx), RINT (ty) - (height >> 1),
-		 RINT (tx), RINT (ty) + (height >> 1));
-  gdk_draw_line (draw_tool->win,
-                 draw_tool->gc,
-		 RINT (tx) - (width >> 1), RINT (ty),
-		 RINT (tx) + (width >> 1), RINT (ty));
+  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
+                         RINT (tx), RINT (ty) - (height >> 1),
+                         RINT (tx), RINT (ty) + (height >> 1));
+  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
+                         RINT (tx) - (width >> 1), RINT (ty),
+                         RINT (tx) + (width >> 1), RINT (ty));
 }
 
 void
@@ -1097,7 +1072,6 @@ gimp_draw_tool_on_vectors (GimpDrawTool *draw_tool,
   return FALSE;
 }
 
-
 void
 gimp_draw_tool_draw_lines (GimpDrawTool *draw_tool,
 			   gdouble      *points,
@@ -1128,15 +1102,15 @@ gimp_draw_tool_draw_lines (GimpDrawTool *draw_tool,
 
   if (filled)
     {
-      gdk_draw_polygon (draw_tool->win,
-                        draw_tool->gc, TRUE,
-                        coords, n_points);
+      gimp_canvas_draw_polygon (GIMP_CANVAS (shell->canvas),
+                                GIMP_CANVAS_STYLE_XOR,
+                                TRUE, coords, n_points);
     }
   else
     {
-      gdk_draw_lines (draw_tool->win,
-                      draw_tool->gc,
-                      coords, n_points);
+      gimp_canvas_draw_lines (GIMP_CANVAS (shell->canvas),
+                              GIMP_CANVAS_STYLE_XOR,
+                              coords, n_points);
     }
 
   g_free (coords);
@@ -1172,15 +1146,15 @@ gimp_draw_tool_draw_strokes (GimpDrawTool *draw_tool,
 
   if (filled)
     {
-      gdk_draw_polygon (draw_tool->win,
-                        draw_tool->gc, TRUE,
-                        coords, n_points);
+      gimp_canvas_draw_polygon (GIMP_CANVAS (shell->canvas),
+                                GIMP_CANVAS_STYLE_XOR,
+                                TRUE, coords, n_points);
     }
   else
     {
-      gdk_draw_lines (draw_tool->win,
-                      draw_tool->gc,
-                      coords, n_points);
+      gimp_canvas_draw_lines (GIMP_CANVAS (shell->canvas),
+                              GIMP_CANVAS_STYLE_XOR,
+                              coords, n_points);
     }
 
   g_free (coords);
@@ -1258,8 +1232,9 @@ gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
       n_gdk_segs++;
     }
 
-  gdk_draw_segments (draw_tool->win, draw_tool->gc,
-                     gdk_segs, n_gdk_segs);
+  gimp_canvas_draw_segments (GIMP_CANVAS (shell->canvas),
+                             GIMP_CANVAS_STYLE_XOR,
+                             gdk_segs, n_gdk_segs);
 
   g_free (gdk_segs);
 }

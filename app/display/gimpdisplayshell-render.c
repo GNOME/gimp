@@ -349,9 +349,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   /*  apply filters to the rendered projection  */
   for (list = shell->filters; list; list = g_list_next (list))
     {
-      GimpColorDisplay *filter;
-
-      filter = (GimpColorDisplay *) list->data;
+      GimpColorDisplay *filter = (GimpColorDisplay *) list->data;
 
       gimp_color_display_convert (filter,
                                   shell->render_buf,
@@ -361,16 +359,12 @@ gimp_display_shell_render (GimpDisplayShell *shell,
     }
 
   /*  put it to the screen  */
-  gdk_draw_rgb_image_dithalign (shell->canvas->window,
-                                GIMP_CANVAS (shell->canvas)->render_gc,
-                                x + shell->disp_xoffset,
-                                y + shell->disp_yoffset,
-                                w, h,
-                                GDK_RGB_DITHER_MAX,
-                                shell->render_buf,
-                                3 * GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH,
-                                shell->offset_x,
-                                shell->offset_y);
+  gimp_canvas_draw_rgb (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_RENDER,
+                        x + shell->disp_xoffset, y + shell->disp_yoffset,
+                        w, h,
+                        shell->render_buf,
+                        3 * GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH,
+                        shell->offset_x, shell->offset_y);
 }
 
 
@@ -560,7 +554,7 @@ render_image_gray (RenderInfo *info)
 	{
 	  src = info->src;
 	  dest = info->dest;
-	  
+
 	  g_return_if_fail (src != NULL);
 
 	  for (x = info->x; x < xe; x++)
@@ -886,7 +880,7 @@ render_image_tile_fault (RenderInfo *info)
   if (!tile)
     return NULL;
 
-  data = tile_data_pointer (tile, 
+  data = tile_data_pointer (tile,
 			    info->src_x % TILE_WIDTH,
 			    info->src_y % TILE_HEIGHT);
   scale = info->scale;
@@ -920,7 +914,7 @@ render_image_tile_fault (RenderInfo *info)
 	      if (!tile)
 		return tile_buf;
 
-	      data = tile_data_pointer (tile, 
+	      data = tile_data_pointer (tile,
                                         x % TILE_WIDTH,
                                         info->src_y % TILE_HEIGHT);
 	    }

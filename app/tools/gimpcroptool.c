@@ -38,6 +38,7 @@
 #include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "display/gimpcanvas.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
@@ -770,24 +771,29 @@ gimp_crop_tool_draw (GimpDrawTool *draw)
   GimpCropTool     *crop;
   GimpTool         *tool;
   GimpDisplayShell *shell;
+  GimpCanvas       *canvas;
 
   crop = GIMP_CROP_TOOL (draw);
   tool = GIMP_TOOL (draw);
 
-  shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
+  shell  = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
+  canvas = GIMP_CANVAS (shell->canvas);
 
-  gdk_draw_line (draw->win, draw->gc,
-                 crop->dx1, crop->dy1,
-                 shell->disp_width, crop->dy1);
-  gdk_draw_line (draw->win, draw->gc,
-		 crop->dx1, crop->dy1,
-                 crop->dx1, shell->disp_height);
-  gdk_draw_line (draw->win, draw->gc,
-		 crop->dx2, crop->dy2,
-                 0, crop->dy2);
-  gdk_draw_line (draw->win, draw->gc,
-		 crop->dx2, crop->dy2,
-                 crop->dx2, 0);
+  gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                         crop->dx1, crop->dy1,
+                         shell->disp_width, crop->dy1);
+  gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                         crop->dx1, crop->dy1,
+                         shell->disp_width, crop->dy1);
+  gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                         crop->dx1, crop->dy1,
+                         crop->dx1, shell->disp_height);
+  gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                         crop->dx2, crop->dy2,
+                         0, crop->dy2);
+  gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
+                         crop->dx2, crop->dy2,
+                         crop->dx2, 0);
 
   gimp_draw_tool_draw_handle (draw,
                               GIMP_HANDLE_FILLED_SQUARE,
@@ -840,9 +846,7 @@ crop_tool_crop_image (GimpImage    *gimage,
 static void
 crop_recalc (GimpCropTool *crop)
 {
-  GimpTool *tool;
-
-  tool = GIMP_TOOL (crop);
+  GimpTool *tool = GIMP_TOOL (crop);
 
   gimp_display_shell_transform_xy (GIMP_DISPLAY_SHELL (tool->gdisp->shell),
                                    crop->x1, crop->y1,

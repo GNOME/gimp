@@ -40,6 +40,7 @@
 
 #include "widgets/gimphelp-ids.h"
 
+#include "display/gimpcanvas.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-cursor.h"
@@ -375,15 +376,18 @@ gimp_fuzzy_select_tool_motion (GimpTool        *tool,
 static void
 gimp_fuzzy_select_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpFuzzySelectTool *fuzzy_sel;
-
-  fuzzy_sel = GIMP_FUZZY_SELECT_TOOL (draw_tool);
+  GimpFuzzySelectTool *fuzzy_sel = GIMP_FUZZY_SELECT_TOOL (draw_tool);
 
   if (fuzzy_sel->segs)
-    gdk_draw_segments (draw_tool->win,
-                       draw_tool->gc,
-                       fuzzy_sel->segs,
-                       fuzzy_sel->num_segs);
+    {
+      GimpDisplayShell *shell;
+
+      shell = GIMP_DISPLAY_SHELL (GIMP_TOOL (draw_tool)->gdisp->shell);
+
+      gimp_canvas_draw_segments (GIMP_CANVAS (shell->canvas),
+                                 GIMP_CANVAS_STYLE_XOR,
+                                 fuzzy_sel->segs, fuzzy_sel->num_segs);
+    }
 }
 
 static GdkSegment *
