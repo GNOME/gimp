@@ -88,6 +88,7 @@ PF_FILE        = 1004
 PF_BRUSH       = 1005
 PF_PATTERN     = 1006
 PF_GRADIENT    = 1007
+PF_RADIO       = 1008
 
 _type_mapping = {
     PF_INT8        : PDB_INT8,
@@ -115,7 +116,8 @@ _type_mapping = {
     PF_FILE        : PDB_STRING,
     PF_BRUSH       : PDB_STRING,
     PF_PATTERN     : PDB_STRING,
-    PF_GRADIENT    : PDB_STRING
+    PF_GRADIENT    : PDB_STRING,
+    PF_RADIO       : PDB_STRING,
 }
 
 _registered_plugins_ = {}
@@ -273,6 +275,27 @@ def _interact(func_name):
 		self.label.set_text("No")
 	def get_value(self):
 	    return self.get_active()
+    class RadioEntry(gtk.Frame):
+        def __init__(self, default=0, items=(("Yes", 1), ("No", 0))):
+            import gtk
+            gtk.Frame.__init__(self)
+            box = gtk.HBox(gtk.FALSE, 5)
+            self.add(box)
+            box.show()
+            button = None
+            for (label, value) in items:
+                button = gtk.RadioButton(button, label)
+                button.connect("toggled", self.changed, value)
+                box.pack_start(button)
+                button.show()
+                if value == default:
+                    button.set_active(gtk.TRUE)
+                    self.active_value = value
+        def changed(self, radio, value):
+            if radio.active:
+                self.active_value = value
+        def get_value(self):
+            return self.active_value 
 
     _edit_mapping = {
 	PF_INT8        : IntEntry,
@@ -294,8 +317,9 @@ def _interact(func_name):
 
 	PF_TOGGLE      : ToggleEntry,
 	PF_SLIDER      : SliderEntry,
-	PF_SPINNER     : SpinnerEntry,
-	
+	PF_SPINNER     : SpinnerEntry,	
+	PF_RADIO       : RadioEntry,
+
 	PF_FONT        : gimpui.FontSelector,
 	PF_FILE        : gimpui.FileSelector,
 	PF_BRUSH       : gimpui.BrushSelector,
@@ -341,7 +365,7 @@ def _interact(func_name):
 	table.attach(label, 1,2, i,i+1, xoptions=gtk.FILL)
 	label.show()
 
-	if type in (PF_SPINNER, PF_SLIDER):
+	if type in (PF_SPINNER, PF_SLIDER, PF_RADIO):
 	    wid = _edit_mapping[type](def_val, params[i][4])
 	else:
 	    wid = _edit_mapping[type](def_val)

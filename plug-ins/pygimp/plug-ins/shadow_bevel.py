@@ -10,7 +10,7 @@ def shadow_bevel(img, drawable, blur, bevel, do_shadow, drop_x, drop_y):
     shadow = drawable.copy(TRUE)
     img.add_layer(shadow, img.layers.index(drawable)+1)
     shadow.name = drawable.name + " shadow"
-    shadow.preserve_transparency = FALSE
+    shadow.preserve_trans = FALSE
 
     # threshold the shadow layer to all white
     pdb.gimp_threshold(shadow, 0, 255)

@@ -496,7 +496,7 @@ pygimp_set_background(PyObject *self, PyObject *args)
     r = CLAMP(r, 0, 255);
     g = CLAMP(g, 0, 255);
     b = CLAMP(b, 0, 255);
-    gimp_rgba_set_uchar(&colour, r, g, b, 255);
+    gimp_rgb_set_uchar(&colour, r, g, b);
     gimp_palette_set_background(&colour);
     Py_INCREF(Py_None);
     return Py_None;
