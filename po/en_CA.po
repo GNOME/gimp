@@ -1,6 +1,6 @@
 # Canadian English translations for gimp
 # Copyright (C) 2004 Adam Weinberger and the GNOME Foundation
-# This file is distributed under the same license as the gimp package.
+# This file is distributed under the same licence as the gimp package.
 # Maintainer: Adam Weinberger <adamw@FreeBSD.org>
 # 
 # 
@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-07-17 15:30+0200\n"
-"PO-Revision-Date: 2004-05-30 14:29-0700\n"
+"PO-Revision-Date: 2004-08-03 14:29-0700\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -6765,8 +6765,8 @@ msgid ""
 "any later version."
 msgstr ""
 "This program is free software; you can redistribute it and/or modify it "
-"under the terms of the GNU General Public License as published by the Free "
-"Software Foundation; either version 2 of the License, or (at your option) "
+"under the terms of the GNU General Public Licence as published by the Free "
+"Software Foundation; either version 2 of the Licence, or (at your option) "
 "any later version."
 
 #: app/gui/user-install-dialog.c:773
@@ -6778,7 +6778,7 @@ msgid ""
 msgstr ""
 "This program is distributed in the hope that it will be useful, but WITHOUT "
 "ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for "
+"FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public Licence for "
 "more details."
 
 #: app/gui/user-install-dialog.c:779
@@ -6787,7 +6787,7 @@ msgid ""
 "this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
 "Place - Suite 330, Boston, MA 02111-1307, USA."
 msgstr ""
-"You should have received a copy of the GNU General Public License along with "
+"You should have received a copy of the GNU General Public Licence along with "
 "this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
 "Place - Suite 330, Boston, MA 02111-1307, USA."
 
