@@ -1056,18 +1056,25 @@ msgid ""
 "<Shift> Raise window if already open\n"
 "<Ctrl> Load Image dialog"
 msgstr ""
+"Megnyitja a kijelölt elemet\n"
+"<Shift> Felhozza az ablakot, ha már nyitva van\n"
+"<Ctrl> Kép betöltése párbeszédablak"
 
 #: app/docindex.c:121
 msgid ""
 "Move the selected entry up in the index\n"
 "<Shift> To top"
 msgstr ""
+"Felfelé mozgatja a kijelölt elemet az indexben\n"
+"<Shift> A legtetejére"
 
 #: app/docindex.c:125
 msgid ""
 "Move the selected entry down in the index\n"
 "<Shift> To bottom"
 msgstr ""
+"Lefelé mozgatja a kijelölt elemet az indexben\n"
+"<Shift> A legaljára"
 
 #: app/docindex.c:129
 msgid "Remove the selected entry from the index"
@@ -3756,7 +3763,7 @@ msgstr "modul betöltése: \"%s\"\n"
 #: app/module_db.c:609
 #, c-format
 msgid "skipping module: \"%s\"\n"
-msgstr "modul kihagyva: \"%s\"\n"
+msgstr "modul kihagyása: \"%s\"\n"
 
 #: app/module_db.c:635
 #, c-format
@@ -5862,6 +5869,13 @@ msgid ""
 "keys from within The GIMP.  Deleting this file will\n"
 "restore the default shortcuts."
 msgstr ""
+"A GIMP gyorsbillentyûit dinamikusan definiálhatod.\n"
+"A program ezeket a beállításokat a menurc fájlban tárolja,\n"
+"így a következõ futtatáskor is emlékszik ezekre. \n"
+"Szerkesztheted ezt a fájlt, de sokkal egyszerûbb a \n"
+"hozzárendeléseket a GIMP felületérõl átállítani. Ha letörlöd \n"
+"a menurc-t, visszaállnak az eredeti értékek."
+
 
 #: app/user_install.c:186
 msgid ""
@@ -5869,6 +5883,10 @@ msgid ""
 "open the last time you quit The GIMP.  You can configure\n"
 "The GIMP to reopen these dialogs at the saved position."
 msgstr ""
+"A program a sessionrc fájlban tárolja azt, hogy kilépéskor\n"
+"melyik ablakok voltak nyitva. Beállíthatod a GIMP-et úgy,\n"
+"hogy minden indításkor a legutóbb elmenett állapotot \n"
+"állítsa vissza."
 
 #: app/user_install.c:192
 msgid ""
@@ -5887,6 +5905,10 @@ msgid ""
 "wide GIMP brushes installation when searching for\n"
 "brushes."
 msgstr ""
+"Ebben a könyvtárban tárolhatók a felhasználó saját\n"
+"ecsetei. Az ecsetek betöltésekor az alapértelmezett\n"
+"gimprc fájl ellenõrzi ezt a könyvtárat is, a redszerre \n"
+"telepített ecsetkészlet mellett."
 
 #: app/user_install.c:208
 msgid ""
@@ -5895,6 +5917,9 @@ msgid ""
 "gimprc file checks this subdirectory when searching\n"
 "for generated brushes."
 msgstr ""
+"Ebbe a könyvtárba kerülnek az ecsetszerkesztõ által\n"
+"létrehozott ecsetek. Az ecsetek betöltésekor az \n"
+"alapértelmezett gimprc fájl ellenõrzi ezt a könyvtárat is."
 
 #: app/user_install.c:215
 msgid ""
@@ -5904,6 +5929,10 @@ msgid ""
 "wide GIMP gradients installation when searching\n"
 "for gradients."
 msgstr ""
+"Ebben a könyvtárban tárolhatók a felhasználó saját\n"
+"színátmenetei. A színátmenetek betöltésekor az alapértelmezett\n"
+"gimprc fájl ellenõrzi ezt a könyvtárat is, a redszerre \n"
+"telepített színátmenetek mellett."
 
 #: app/user_install.c:223
 msgid ""
@@ -5916,6 +5945,13 @@ msgid ""
 "palettes during GIMP execution to persist across\n"
 "sessions."
 msgstr ""
+"Ebben a könyvtárban találhatók a felhasználó saját\n"
+"palettái. Az alapértelmezett gimprc fájl csak ebben\n"
+"a könyvtárban keresi a palettákat (a telepítés \n"
+"rendszerkönyvtáraiban nem). A telepítés során a \n"
+"rendszerpalettákat a GIMP átmásolja ide. Erre azért\n"
+"van szükség, hogy a palettákon eszközölt változtatások\n"
+"elérhetõek legyenek a következõ programindításkor is."
 
 #: app/user_install.c:234
 msgid ""
@@ -5925,6 +5961,10 @@ msgid ""
 "wide GIMP patterns installation when searching for\n"
 "patterns."
 msgstr ""
+"Ebben a könyvtárban tárolhatók a felhasználó saját\n"
+"mintái. A minták betöltésekor az alapértelmezett\n"
+"gimprc fájl ellenõrzi ezt a könyvtárat is, a redszerre \n"
+"telepített minták mellett."
 
 #: app/user_install.c:242
 msgid ""
@@ -5962,16 +6002,22 @@ msgid ""
 msgstr ""
 
 #: app/user_install.c:273
+#, fuzzy
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Curves tool."
 msgstr ""
+"Ebben a könyvtárban tárolhatók a Curves Tool\n"
+"paraméterfájljai."
 
 #: app/user_install.c:278
+#, fuzzy
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Levels tool."
 msgstr ""
+"Ebben a könyvtárban tárolhatók a Levels tool\n"
+"paraméterfájljai."
 
 #: app/user_install.c:283
 msgid ""
