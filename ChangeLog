@@ -1,5 +1,12 @@
 2004-07-20  Sven Neumann  <sven@gimp.org>
 
+	* app/app_procs.c
+	* app/base/base.[ch]
+	* app/composite/gimp-composite.[ch]: pass "be_verbose" to the base
+	and composite subsystems.
+
+2004-07-20  Sven Neumann  <sven@gimp.org>
+
 	* autogen.sh: added some empty lines to improve readability of the
 	output in case of problems.
 

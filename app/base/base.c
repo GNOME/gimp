@@ -60,6 +60,7 @@ static void   base_tile_cache_size_notify (GObject        *config,
 
 gboolean
 base_init (GimpBaseConfig *config,
+           gboolean        be_verbose,
            gboolean        use_cpu_accel)
 {
   gchar    *swapfile;
@@ -98,7 +99,7 @@ base_init (GimpBaseConfig *config,
 
   swap_is_ok = tile_swap_test ();
 
-  gimp_composite_init (use_cpu_accel);
+  gimp_composite_init (be_verbose, use_cpu_accel);
 
   paint_funcs_setup ();
 

@@ -20,6 +20,7 @@
 #define __BASE_H__
 
 gboolean base_init (GimpBaseConfig *config,
+                    gboolean        be_verbose,
                     gboolean        use_cpu_accel);
 void     base_exit (void);
 

@@ -157,12 +157,14 @@ struct GimpCompositeOptions
 
 extern struct GimpCompositeOptions gimp_composite_options;
 
-extern void          gimp_composite_init               (gboolean use_cpu_accel);
-extern void          gimp_composite_dispatch           (GimpCompositeContext *ctx);
+void          gimp_composite_init               (gboolean  be_verbose,
+                                                 gboolean  use_cpu_accel);
 
-extern void          gimp_composite_context_print      (GimpCompositeContext *ctx);
-extern const gchar * gimp_composite_mode_astext        (GimpCompositeOperation op);
-extern const gchar * gimp_composite_pixelformat_astext (GimpPixelFormat format);
+void          gimp_composite_dispatch           (GimpCompositeContext   *ctx);
+
+void          gimp_composite_context_print      (GimpCompositeContext   *ctx);
+const gchar * gimp_composite_mode_astext        (GimpCompositeOperation  op);
+const gchar * gimp_composite_pixelformat_astext (GimpPixelFormat         format);
 
 extern const gchar *gimp_composite_function_name[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N];
 extern void (*gimp_composite_function[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N])(GimpCompositeContext *);

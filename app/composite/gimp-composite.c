@@ -343,6 +343,7 @@ gimp_composite_pixelformat_astext (GimpPixelFormat format)
 
 /**
  * gimp_composite_init:
+ * @be_verbose:    whether to be verbose on stdout
  * @use_cpu_accel: whether to use accelerated routines like MMX
  *
  * Initialise the Gimp Compositing subsystem.  This includes checking
@@ -351,7 +352,8 @@ gimp_composite_pixelformat_astext (GimpPixelFormat format)
  * are supported by the current cpu/hardware.
  **/
 void
-gimp_composite_init (gboolean use_cpu_accel)
+gimp_composite_init (gboolean  be_verbose,
+                     gboolean  use_cpu_accel)
 {
   const gchar *p;
 
@@ -365,7 +367,7 @@ gimp_composite_init (gboolean use_cpu_accel)
 
 #ifdef GIMP_UNSTABLE
   g_printerr ("gimp_composite: use=%s, verbose=%s\n",
-              (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_USE) ? "yes" : "no",
+              (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_USE)     ? "yes" : "no",
               (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_VERBOSE) ? "yes" : "no");
 #endif
 
