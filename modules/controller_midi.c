@@ -22,11 +22,17 @@
 
 #include "config.h"
 
+#undef HAVE_ASOUNDLIB_H
+
 #include <errno.h>
 #include <fcntl.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+
+#ifdef HAVE_ASOUNDLIB_H
+#  include <alsa/asoundlib.h>
+#endif
 
 #include <gtk/gtk.h>
 
@@ -72,6 +78,11 @@ struct _ControllerMidi
 
   GIOChannel     *io;
   guint           io_id;
+
+#ifdef HAVE_ASOUNDLIB_H
+  snd_seq_t      *sequencer;
+  guint           seq_id;
+#endif
 
   /* midi status */
   gboolean        swallow;
@@ -121,6 +132,31 @@ static gboolean      midi_read_event      (GIOChannel     *io,
                                            GIOCondition    cond,
                                            gpointer        data);
 
+#ifdef HAVE_ASOUNDLIB_H
+static gboolean      midi_alsa_prepare    (GSource        *source,
+                                           gint           *timeout);
+static gboolean      midi_alsa_check      (GSource        *source);
+static gboolean      midi_alsa_dispatch   (GSource        *source,
+                                           GSourceFunc     callback,
+                                           gpointer        user_data);
+
+static GSourceFuncs alsa_source_funcs =
+{
+  midi_alsa_prepare,
+  midi_alsa_check,
+  midi_alsa_dispatch,
+  NULL
+};
+
+typedef struct _GAlsaSource GAlsaSource;
+
+struct _GAlsaSource
+{
+  GSource         source;
+  ControllerMidi *controller;
+};
+
+#endif
 
 static const GimpModuleInfo midi_info =
 {
@@ -224,6 +260,10 @@ midi_init (ControllerMidi *midi)
   midi->midi_channel = -1;
   midi->io           = NULL;
   midi->io_id        = 0;
+#ifdef HAVE_ASOUNDLIB_H
+  midi->sequencer    = NULL;
+  midi->seq_id       = 0;
+#endif
 
   midi->swallow      = TRUE; /* get rid of data bytes at start of stream */
   midi->command      = 0x0;
@@ -365,6 +405,17 @@ midi_set_device (ControllerMidi *midi,
       midi->io = NULL;
     }
 
+#ifdef HAVE_ASOUNDLIB_H
+  if (midi->seq_id)
+    {
+      g_source_remove (midi->seq_id);
+      midi->seq_id = 0;
+
+      snd_seq_close (midi->sequencer);
+      midi->sequencer = NULL;
+    }
+#endif
+
   if (midi->device)
     g_free (midi->device);
 
@@ -373,6 +424,58 @@ midi_set_device (ControllerMidi *midi,
   if (midi->device && strlen (midi->device))
     {
       gint fd;
+
+#ifdef HAVE_ASOUNDLIB_H
+      if (! g_ascii_strcasecmp (midi->device, "alsa"))
+        {
+          GAlsaSource *event_source;
+          gchar       *alsa, *name;
+          gint         ret;
+
+          ret = snd_seq_open (&midi->sequencer, "default",
+                              SND_SEQ_OPEN_INPUT, 0);
+          if (ret >= 0)
+            {
+              snd_seq_set_client_name (midi->sequencer, "The GIMP");
+              ret = snd_seq_create_simple_port (midi->sequencer,
+                                                "The GIMP midi controller",
+                                                SND_SEQ_PORT_CAP_WRITE |
+                                                SND_SEQ_PORT_CAP_SUBS_WRITE,
+                                                SND_SEQ_PORT_TYPE_APPLICATION);
+            }
+
+          if (ret < 0)
+            {
+              name = g_strdup_printf (_("Device not available: %s"),
+                                      snd_strerror (ret));
+              g_object_set (midi, "name", name, NULL);
+              g_free (name);
+
+              if (midi->sequencer)
+                {
+                  snd_seq_close (midi->sequencer);
+                  midi->sequencer = NULL;
+                }
+
+              return FALSE;
+            }
+
+          /* hack to avoid new message to translate */
+          alsa = g_strdup_printf ("ALSA: %d:%d",
+                                  snd_seq_client_id (midi->sequencer),
+                                  ret);
+          name = g_strdup_printf (_("Reading from %s"), alsa);
+          g_object_set (midi, "name", name, NULL);
+          g_free (name);
+          g_free (alsa);
+
+          event_source = (GAlsaSource *) g_source_new (&alsa_source_funcs,
+                                                       sizeof (GAlsaSource));
+          event_source->controller = midi;
+          midi->seq_id = g_source_attach ((GSource *) event_source, NULL);
+          return TRUE;
+        }
+#endif
 
 #ifdef G_OS_WIN32
       fd = open (midi->device, O_RDONLY);
@@ -702,3 +805,68 @@ midi_read_event (GIOChannel   *io,
 
   return TRUE;
 }
+
+#ifdef HAVE_ASOUNDLIB_H
+static gboolean
+midi_alsa_prepare (GSource *source,
+                   gint    *timeout)
+{
+  ControllerMidi *midi = CONTROLLER_MIDI (((GAlsaSource *) source)->controller);
+  gboolean        ready;
+
+  ready = snd_seq_event_input_pending (midi->sequencer, 1) > 0;
+  *timeout = ready ? 1 : 10;
+
+  return ready;
+}
+
+static gboolean
+midi_alsa_check (GSource *source)
+{
+  ControllerMidi *midi = CONTROLLER_MIDI (((GAlsaSource *) source)->controller);
+
+  return snd_seq_event_input_pending (midi->sequencer, 1) > 0;
+}
+
+static gboolean
+midi_alsa_dispatch (GSource     *source,
+                    GSourceFunc  callback,
+                    gpointer     user_data)
+{
+  ControllerMidi *midi = CONTROLLER_MIDI (((GAlsaSource *) source)->controller);
+  snd_seq_event_t *event;
+
+  if (snd_seq_event_input_pending (midi->sequencer, 1) > 0)
+    {
+      snd_seq_event_input (midi->sequencer, &event);
+      if (event->type == SND_SEQ_EVENT_NOTEON &&
+          event->data.note.velocity == 0)
+        event->type = SND_SEQ_EVENT_NOTEOFF;
+
+      switch (event->type)
+        {
+        case SND_SEQ_EVENT_NOTEON:
+          midi_event (midi, midi->channel, event->data.note.note,
+                      (gdouble) event->data.note.velocity / 127.0);
+          break;
+
+        case SND_SEQ_EVENT_NOTEOFF:
+          midi_event (midi, midi->channel, event->data.note.note + 128,
+                      (gdouble) event->data.note.velocity / 127.0);
+          break;
+
+        case SND_SEQ_EVENT_CONTROLLER:
+          midi_event (midi, midi->channel, event->data.control.param + 256,
+                      (gdouble) event->data.control.value / 127.0);
+          break;
+
+        default:
+          break;
+        }
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+#endif

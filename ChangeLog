@@ -1,3 +1,9 @@
+2004-11-18  Simon Budig  <simon@gimp.org>
+
+	* modules/controller_midi.c: implemented support for ALSA-midi,
+	currently disabled. Needs a configure-check and proper linking
+	against libasound.
+
 2004-11-17  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/common/bumpmap.c: Fixed initialisation issue
