@@ -30,6 +30,7 @@
  */
 
 /* revision history:
+ * gimp    1.1.23a; 2000/06/04  hof: new button: rotation follow path
  * gimp    1.1.20a; 2000/04/25  hof: support for keyframes, anim_preview (suggested by jakub steiner)
  * gimp    1.1.17b; 2000/02/23  hof: bugfix: dont flatten the preview, just merge visible layers
  *                                   bugfix: for current frame never use diskfile for the preview
@@ -176,6 +177,18 @@ struct _MenuItem
   GtkWidget *widget;
 };
 
+
+typedef enum
+{
+  OPS_BUTTON_MODIFIER_NONE,
+  OPS_BUTTON_MODIFIER_SHIFT,
+  OPS_BUTTON_MODIFIER_CTRL,
+  OPS_BUTTON_MODIFIER_ALT,
+  OPS_BUTTON_MODIFIER_SHIFT_CTRL,
+  OPS_BUTTON_MODIFIER_LAST
+} OpsButtonModifier;
+
+
 /* Declare a local function.
  */
 GtkWidget       *  p_buildmenu (MenuItem *);
@@ -211,7 +224,9 @@ static void	   mov_path_prevw_cursor_update ( t_mov_path_preview *path_ptr );
 static gint	   mov_path_prevw_preview_expose ( GtkWidget *widget, GdkEvent *event );
 static gint	   mov_path_prevw_preview_events ( GtkWidget *widget, GdkEvent *event );
 static gint        p_chk_keyframes(t_mov_path_preview *path_ptr);
+static gdouble     p_calc_angle(gint p1x, gint p1y, gint p2x, gint p2y);
 
+static void     button_pressed_callback (GtkWidget *widget, GdkEventButton *bevent, gpointer client_data);
 static void	mov_padd_callback        (GtkWidget *widget,gpointer data);
 static void	mov_pins_callback        (GtkWidget *widget,gpointer data);
 static void	mov_pdel_callback        (GtkWidget *widget,gpointer data);
@@ -219,8 +234,10 @@ static void     mov_pnext_callback       (GtkWidget *widget,gpointer data);
 static void     mov_pprev_callback       (GtkWidget *widget,gpointer data);
 static void     mov_pfirst_callback      (GtkWidget *widget,gpointer data);
 static void     mov_plast_callback       (GtkWidget *widget,gpointer data);
-static void	mov_pres_callback        (GtkWidget *widget,gpointer data);
+static void	mov_pdel_all_callback    (GtkWidget *widget,gpointer data);
 static void	mov_pclr_callback        (GtkWidget *widget,gpointer data);
+static void	mov_pclr_all_callback    (GtkWidget *widget,gpointer data);
+static void	mov_prot_follow_callback (GtkWidget *widget,gpointer data);
 static void     mov_pload_callback       (GtkWidget *widget,gpointer data);
 static void     mov_psave_callback       (GtkWidget *widget,gpointer data);
 static void     p_points_load_from_file  (GtkWidget *widget,gpointer data);
@@ -294,6 +311,7 @@ static t_mov_interface mov_int =
   FALSE	    /* run */
 };
 
+OpsButtonModifier global_key_modifier = OPS_BUTTON_MODIFIER_NONE;
 
 /* ============================================================================
  **********************
@@ -914,6 +932,79 @@ p_copy_point(gint to_idx, gint from_idx)
     pvals->point[to_idx].keyframe = 0;
 }
 
+static gdouble
+p_calc_angle(gint p1x, gint p1y, gint p2x, gint p2y)
+{
+  /* calculate angle in degree
+   * how to rotate an object that follows the line between p1 and p2
+   */
+  gdouble l_a;
+  gdouble l_b;
+  gdouble l_angle_rad;
+  gdouble l_angle;
+  
+  l_a = p2x - p1x;
+  l_b = (p2y - p1y) * (-1.0);
+  
+  if(l_a == 0)
+  {
+    if(l_b < 0)  { l_angle = 90.0; }
+    else         { l_angle = 270.0; }
+  }
+  else
+  {
+    l_angle_rad = atan(l_b/l_a);
+    l_angle = (l_angle_rad * 180.0) / 3.14159;
+
+    if(l_a < 0)
+    {
+      l_angle = 180 - l_angle;
+    }
+    else
+    {
+      l_angle = l_angle * (-1.0);
+    }
+  }  
+
+  if(gap_debug)
+  {
+     printf("p_calc_angle: p1(%d/%d) p2(%d/%d)  a=%f, b=%f, angle=%f\n"
+         , (int)p1x, (int)p1y, (int)p2x, (int)p2y
+         , (float)l_a, (float)l_b, (float)l_angle);
+  }
+  return(l_angle);
+}
+
+
+static void
+button_pressed_callback (GtkWidget      *widget, 
+			 GdkEventButton *bevent,
+			 gpointer        client_data)
+{
+  OpsButtonModifier *key_modifier;
+
+  g_return_if_fail (client_data != NULL);
+  key_modifier = (OpsButtonModifier *)client_data;
+
+  if (bevent->state & GDK_SHIFT_MASK)
+    {
+      if (bevent->state & GDK_CONTROL_MASK)
+	 *key_modifier = OPS_BUTTON_MODIFIER_SHIFT_CTRL;
+      else 
+	 *key_modifier = OPS_BUTTON_MODIFIER_SHIFT;
+    }
+  else if (bevent->state & GDK_CONTROL_MASK)
+    *key_modifier = OPS_BUTTON_MODIFIER_CTRL;
+  else if (bevent->state & GDK_MOD1_MASK)
+    *key_modifier = OPS_BUTTON_MODIFIER_ALT;
+  else 
+    *key_modifier = OPS_BUTTON_MODIFIER_NONE;
+
+  if(gap_debug)
+  {  
+    printf("button_pressed_callback %d\n", (int)*key_modifier);
+  }
+}
 
 static void
 mov_padd_callback (GtkWidget *widget,
@@ -1066,13 +1157,167 @@ mov_pclr_callback (GtkWidget *widget,
 }
 
 static void
-mov_pres_callback (GtkWidget *widget,
+mov_pdel_all_callback (GtkWidget *widget,
 		      gpointer	 data)
 {
   t_mov_path_preview *path_ptr = data;
   
-  if(gap_debug) printf("mov_pres_callback\n");
+  if(gap_debug) printf("mov_pdel_all_callback\n");
   p_reset_points();
+  p_point_refresh(path_ptr);
+}
+
+static void
+mov_pclr_all_callback (GtkWidget *widget,
+		      gpointer	 data)
+{
+  gint l_idx;
+  t_mov_path_preview *path_ptr = data;
+  
+  if(gap_debug) printf("mov_pclr_all_callback\n");
+ 
+  for(l_idx = 0; l_idx <= pvals->point_idx_max; l_idx++)
+  {
+    pvals->point[l_idx].rotation = 0;   /* no rotation (0 degree) */
+  }
+  p_point_refresh(path_ptr);
+}
+
+static gdouble
+p_rotatate_less_than_180(gdouble angle, gdouble angle_new, gint *turns)
+{
+  /* if an object  follows a circular path and does more than one turn
+   * there comes a point where it flips from say 265 degree to -85 degree.
+   *
+   * if there are more (say 3) frames between the controlpoints,
+   * the object performs an unexpected rotation effect because the iteration
+   * from 265 to -85  is done  in a sequence like this: 265.0, 148.6, 32.3, -85.0
+   *
+   * we can avoid this by preventing angle changes of more than 180 degree.
+   * in such a case this procedure adjusts the new_angle from -85 to 275
+   * that results in oterations like this: 265.0, 268.3, 271.6, 275.0
+   */
+  gint l_diff;
+  gint l_turns;
+
+  l_diff = angle - (angle_new + (*turns * 360));
+  if((l_diff >= -180) && (l_diff < 180))
+  {
+      return(angle_new + (*turns * 360));
+  }
+
+  l_diff = (angle - angle_new);
+  if(l_diff < 0)
+  {
+     l_turns = (l_diff / 360) -1;
+  }
+  else
+  {
+     l_turns = (l_diff / 360) +1;
+  }
+
+  *turns = l_turns;
+
+  if(gap_debug)
+  {
+     printf("p_rotatate_less_than_180: turns %d angle_new:%f\n"
+             , (int)l_turns, (float)angle_new);
+  }
+
+  return( angle_new + (l_turns * 360));
+}
+
+static void
+mov_prot_follow_callback (GtkWidget *widget,
+		      gpointer	 data)
+{
+  gint l_idx;
+  gdouble l_startangle;
+  gdouble l_angle_1;
+  gdouble l_angle_2;
+  gdouble l_angle_new;
+  gdouble l_angle;
+  gint    l_turns;
+  
+  t_mov_path_preview *path_ptr = data;
+  
+  if(gap_debug) printf("mov_prot_follow_callback\n");
+
+  if( pvals->point_idx_max > 1)
+  {
+    l_startangle = 0.0;
+    l_angle = 0.0;
+    l_turns = 0;
+    if(global_key_modifier == OPS_BUTTON_MODIFIER_SHIFT)
+    {
+      p_points_to_tab(path_ptr);
+      l_startangle = pvals->point[0].rotation;
+    }
+ 
+    for(l_idx = 0; l_idx <= pvals->point_idx_max; l_idx++)
+    {
+      if(l_idx == 0)
+      {
+        l_angle = p_calc_angle(pvals->point[l_idx].p_x,
+	                       pvals->point[l_idx].p_y,
+	                       pvals->point[l_idx +1].p_x,
+	                       pvals->point[l_idx +1].p_y);
+      }
+      else
+      {
+        if(l_idx == pvals->point_idx_max)
+	{
+          l_angle_new = p_calc_angle(pvals->point[l_idx -1].p_x,
+	                	 pvals->point[l_idx -1].p_y,
+	                	 pvals->point[l_idx].p_x,
+	                	 pvals->point[l_idx].p_y);
+	}
+	else
+	{
+           l_angle_1 = p_calc_angle(pvals->point[l_idx -1].p_x,
+	                	  pvals->point[l_idx -1].p_y,
+	                	  pvals->point[l_idx].p_x,
+	                	  pvals->point[l_idx].p_y);
+				  
+           l_angle_2 = p_calc_angle(pvals->point[l_idx].p_x,
+	                          pvals->point[l_idx].p_y,
+	                          pvals->point[l_idx +1].p_x,
+	                          pvals->point[l_idx +1].p_y);
+
+           if((l_angle_1 == 0) && (l_angle_2 == 180))
+	   {
+               l_angle_new = 270;
+	   }
+	   else
+	   {
+             if((l_angle_1 == 90) && (l_angle_2 == 270))
+	     {
+               l_angle_new = 0;
+	     }
+	     else
+	     {
+               l_angle_new = (l_angle_1 + l_angle_2) / 2;
+	     }
+	   }
+	   if(((l_angle_1 < 0) && (l_angle_2 >= 180))
+	   || ((l_angle_2 < 0) && (l_angle_1 >= 180)))
+	   {
+	      l_angle_new += 180;
+	   }
+	}
+	l_angle = p_rotatate_less_than_180(l_angle, l_angle_new, &l_turns);
+      }
+
+      if(gap_debug)
+      {
+        printf("ROT Follow [%03d] angle = %f\n", (int)l_idx, (float)l_angle);
+      }
+
+      pvals->point[l_idx].rotation = l_startangle + l_angle;
+    }
+  }
+
+  global_key_modifier = OPS_BUTTON_MODIFIER_NONE;
   p_point_refresh(path_ptr);
 }
 
@@ -2160,18 +2405,52 @@ mov_path_prevw_create ( GDrawable *drawable, t_mov_path_preview *path_ptr)
                        , NULL);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ( _("Reset Points"));
+  button = gtk_button_new_with_label ( _("Clear All Points"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) mov_pres_callback,
+		      (GtkSignalFunc) mov_pclr_all_callback,
 		      path_ptr);
   gtk_table_attach( GTK_TABLE(button_table), button, 1, 2, row, row+1,
 		    GTK_FILL, 0, 0, 0 );
   gimp_help_set_help_data(button,
-                       _("Reset Controlpoints  \nto one Defaultpoint")
+                       _("Reset all Controlpoints to default Values\n"
+		         "but dont change the path (X/Y Values)")
                        , NULL);
   gtk_widget_show (button);
 
+  row++;
+
+  button = gtk_button_new_with_label ( _("Rotate Follow"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
+			      (GtkSignalFunc) button_pressed_callback,
+			      &global_key_modifier);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) mov_prot_follow_callback,
+		      path_ptr);
+  gtk_table_attach( GTK_TABLE(button_table), button, 0, 1, row, row+1,
+		    GTK_FILL, 0, 0, 0 );
+  gimp_help_set_help_data(button,
+                       _("Set Rotation for all Controlpoints\n"
+		         "to follow the shape of the path.\n"
+		         "(Shift: use Rotation of contolpoint 1 as offset)")
+                       , NULL);
+  gtk_widget_show (button);
+
+
+  button = gtk_button_new_with_label ( _("Delete All Points"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) mov_pdel_all_callback,
+		      path_ptr);
+  gtk_table_attach( GTK_TABLE(button_table), button, 1, 2, row, row+1,
+		    GTK_FILL, 0, 0, 0 );
+  gimp_help_set_help_data(button,
+                       _("Delete all Controlpoints")
+                       , NULL);
+  gtk_widget_show (button);
+
+  
   row++;
 
   button = gtk_button_new_with_label ( _("Load Points"));
@@ -2959,6 +3238,12 @@ p_mov_render(gint32 image_id, t_mov_values *val_ptr, t_mov_current *cur_ptr)
                      val_ptr->clip_to_img,
                      val_ptr->src_force_visible);
 
+
+  if(gap_debug) 
+  {
+    printf("p_mov_render: Before p_my_layer_copy image_id:%d src_layer_id:%d\n"
+            ,(int)image_id, (int)cur_ptr->src_layers[cur_ptr->src_layer_idx]);
+  }
 
 
   /* make a copy of the current source layer

@@ -119,42 +119,68 @@ struct _paint_undo
 };
 
 /*  paint tool action functions  */
-void          paint_core_button_press    (Tool *, GdkEventButton *, gpointer);
-void          paint_core_button_release  (Tool *, GdkEventButton *, gpointer);
-void          paint_core_motion          (Tool *, GdkEventMotion *, gpointer);
-void          paint_core_cursor_update   (Tool *, GdkEventMotion *, gpointer);
-void          paint_core_control         (Tool *, ToolAction,       gpointer);
+void          paint_core_button_press    (Tool *tool, GdkEventButton *bevent, gpointer gdisp_ptr);
+void          paint_core_button_release  (Tool *tool, GdkEventButton *bevent, gpointer gdisp_ptr);
+void          paint_core_motion          (Tool *tool, GdkEventMotion *mevent, gpointer gdisp_ptr);
+void          paint_core_cursor_update   (Tool *tool, GdkEventMotion *mevent, gpointer gdisp_ptr);
+
+void          paint_core_control         (Tool                *tool, 
+					  ToolAction           action, 
+					  gpointer             gdisp_ptr);
 
 /*  paint tool functions  */
-void          paint_core_no_draw      (Tool *);
-Tool *        paint_core_new          (ToolType);
-void          paint_core_free         (Tool *);
-int           paint_core_init         (PaintCore *, GimpDrawable *, double, double);
-void          paint_core_interpolate  (PaintCore *, GimpDrawable *);
-void          paint_core_get_color_from_gradient (PaintCore *, double, double*, double*, double*,double *,int);
-void          paint_core_finish       (PaintCore *, GimpDrawable *, int);
-void          paint_core_cleanup      (void);
+void          paint_core_no_draw         (Tool                *tool);
+Tool *        paint_core_new             (ToolType             type);
+void          paint_core_free            (Tool                *tool);
+int           paint_core_init            (PaintCore           *paint_core, 
+					  GimpDrawable        *drawable, 
+					  gdouble              x, 
+					  gdouble              y);
+void          paint_core_interpolate     (PaintCore           *paint_core, 
+					  GimpDrawable        *drawable);
+void          paint_core_finish          (PaintCore           *paint_core, 
+					  GimpDrawable        *drawable, 
+					  gint                 tool_ID);
+void          paint_core_cleanup         (void);
+
+void  paint_core_get_color_from_gradient (PaintCore            *paint_core, 
+					  gdouble               gradient_length, 
+					  gdouble              *r, 
+					  gdouble              *g, 
+					  gdouble              *b, 
+					  gdouble              *a, 
+					  GradientPaintMode     mode);
 
 /*  paint tool painting functions  */
-TempBuf *     paint_core_get_paint_area    (PaintCore *,
-					    GimpDrawable *,
-					    gdouble);
-TempBuf *     paint_core_get_orig_image    (PaintCore *,
-					    GimpDrawable *,
-					    int, int, int, int);
-void          paint_core_paste_canvas      (PaintCore *,
-					    GimpDrawable *, int, int,
-					    LayerModeEffects,
-					    BrushApplicationMode,
-					    gdouble,
-					    PaintApplicationMode);
-void          paint_core_replace_canvas    (PaintCore *,
-					    GimpDrawable *, int, int,
-					    BrushApplicationMode,
-					    gdouble,
-					    PaintApplicationMode);
-void          paint_core_color_area_with_pixmap (PaintCore *,
-						 GImage *, GimpDrawable *,
-						 TempBuf *, gdouble, int);
+TempBuf *     paint_core_get_paint_area  (PaintCore            *paint_core,
+					  GimpDrawable         *drawable,
+					  gdouble               scale);
+TempBuf *     paint_core_get_orig_image  (PaintCore            *paint_core,
+					  GimpDrawable         *drawable,
+					  gint                  x1, 
+					  gint                  y1, 
+					  gint                  x2,
+					  gint                  y2);
+void          paint_core_paste_canvas    (PaintCore            *paint_core,
+					  GimpDrawable         *drawable, 
+					  gint                  brush_opacity, 
+					  gint                  image_opacity,
+					  LayerModeEffects      paint_mode,
+					  BrushApplicationMode  brush_hardness,
+					  gdouble               brush_scale,
+					  PaintApplicationMode  mode);
+void          paint_core_replace_canvas  (PaintCore            *paint_core,
+					  GimpDrawable         *drawable, 
+					  gint                  brush_opacity, 
+					  gint                  image_opacity,
+					  BrushApplicationMode  brush_hardness,
+					  gdouble               brush_scale,
+					  PaintApplicationMode  mode);
+void   paint_core_color_area_with_pixmap (PaintCore            *paint_core,
+					  GimpImage            *dest, 
+					  GimpDrawable         *drawable,
+					  TempBuf              *area, 
+					  gdouble               scale, 
+					  BrushApplicationMode  mode);
 
 #endif  /*  __PAINT_CORE_H__  */

@@ -1,4 +1,4 @@
-Project gap "Gimp Animation Package"   01. May 2000  release 1.1.20a
+Project gap "Gimp Animation Package"   04. June 2000  release 1.1.23a
 
 --------------------------------------------------------------------
 Introduction
@@ -533,12 +533,34 @@ WebTip:	My GIMP-page http://pages.hotbot.com/arts/hof/index.html
           you can step from point to point,
 	  and make other points to the curremt point.
 	  
-       "Clear Point"
-          does reset Witdh, Height and Opacity of the point to 100%
-	  and Rotat to 0 degree.
+       "Clear Point"  "Clear All Points"
+          does reset Width, Height and Opacity of the point to 100%
+	  and Rotation to 0 degree, and leaves the path (X/Y Values)
+	  unchanged.
 	
-       "Reset Points"
+       "Delete All Points"
           removes all controlpoints.
+	  
+       "Rotate Follow"
+          Calculate Rotate values for all controlpoints
+	  to follow the path.
+	  An Object moving along a horizontal line 
+	  from left to right results in an angle of 0 degree.
+	  (or a multiple of 360 degress if the path
+	   builds circular loops)
+	  A vertical Move from top to bottom gives 90 degrees.
+	  
+	  SHIFT: If this Button is clicked while the
+	  Shift Key is pressed, a fix Rotation offset
+	  is added to all the calculated Rotation Values.
+	  The Rotation Offset is taken from the current
+	  Rotate Value of Controlpint 1.
+	  
+	  If an Object moves from Right to Left
+	  the calculated Angle is 180 degree and the Object
+	  appears upside down. 
+	  With a Startoffset of 180 (or -180)
+	  you can compensate this effect.
 	  
        "Save Points"
           saves your controlpoints to file

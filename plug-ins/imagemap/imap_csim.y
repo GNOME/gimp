@@ -222,6 +222,7 @@ coords_tag	: COORDS '=' STRING
 		      }
 		      /* Remove last point if duplicate */
 		      first = (GdkPoint*) points->data;
+		      polygon->points = points;
 		      if (first->x == point->x && first->y == point->y)
 			 polygon_remove_last_point(polygon);
 		      polygon->points = points;

@@ -1,3 +1,19 @@
+2000-06-05  Sven Neumann  <sven@gimp.org>
+
+	* app/paint_core.[ch]: indentation, no real changes
+
+	* plug-ins/gap/README
+	* plug-ins/gap/gap_mov_dialog.c
+	* plug-ins/gap/gap_mov_exec.c: applied a patch from Wolfgang
+	Hofer 
+	
+	* plug-ins/imagemap/imap_csim.y: applied a patch from
+	Maurits Rijk which promises to fix bug #10090. 
+	Yosh, could you regenerate the C code, please...?!
+
+	* tips/gimp_tips.txt: applied gimp-quinet-20000508-0.patch,
+	an update to the english tips file provided by Raphael Quinet.
+	
 2000-06-05  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/xbm.c: Don't save the mask inverted.

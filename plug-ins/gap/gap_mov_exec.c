@@ -26,6 +26,8 @@
  */
 
 /* revision history:
+ * gimp    1.1.23a; 2000/06/03  hof: bugfix anim_preview < 100% did not work
+ *                                   (the layer tattoos in a duplicated image may differ from the original !!)
  * gimp    1.1.20a; 2000/04/25  hof: support for keyframes, anim_preview
  * version 0.93.04              hof: Window with Info Message if no Source Image was selected in MovePath
  * version 0.90.00;             hof: 1.st (pre) release 14.Dec.1997
@@ -601,7 +603,9 @@ p_mov_anim_preview(t_mov_values *pvals_orig, t_anim_info *ainfo_ptr, gint previe
   gint        l_retvals;
   GImageType  l_type;
   guint       l_width, l_height;
-  gint32      l_tattoo;
+  gint32      l_stackpos;
+  gint        l_nlayers;
+  gint32     *l_src_layers;
   gint        l_rc;
   
   l_mov_ptr = &apv_mov_data;
@@ -614,6 +618,7 @@ p_mov_anim_preview(t_mov_values *pvals_orig, t_anim_info *ainfo_ptr, gint previe
 
   /* -1 assume no tmp_image (use unscaled original source) */
   l_tmp_image_id = -1;
+  l_stackpos = 0;
 
   /* Scale (down) needed ? */
   if((l_pvals->apv_scalex != 100.0) || (l_pvals->apv_scaley != 100.0))
@@ -638,9 +643,49 @@ p_mov_anim_preview(t_mov_values *pvals_orig, t_anim_info *ainfo_ptr, gint previe
 			         PARAM_INT32,    l_size_y,
 			         PARAM_END);
 
-    /* find the selected src_layer by tattoo in the copy of src_image */
-    l_tattoo = gimp_layer_get_tattoo(pvals_orig->src_layer_id);
-    l_pvals->src_layer_id = gimp_image_get_layer_by_tattoo(l_tmp_image_id, l_tattoo);
+     /* findout the src_layer id in the scaled copy by stackpos index */
+     l_pvals->src_layer_id = -1;
+     l_src_layers = gimp_image_get_layers (pvals_orig->src_image_id, &l_nlayers);
+     if(l_src_layers == NULL)
+     {
+       printf("ERROR: p_mov_anim_preview GOT no src_layers (original image_id %d)\n",
+               (int)pvals_orig->src_image_id);
+     }
+     else
+     {
+       for(l_stackpos = 0; 
+	   l_stackpos  < l_nlayers;
+	   l_stackpos++)
+       {
+	  if(l_src_layers[l_stackpos] == pvals_orig->src_layer_id)
+             break;
+       }
+       g_free(l_src_layers);
+
+       l_src_layers = gimp_image_get_layers (l_tmp_image_id, &l_nlayers);
+       if(l_src_layers == NULL)
+       {
+         printf("ERROR: p_mov_anim_preview GOT no src_layers (scaled copy image_id %d)\n",
+        	(int)l_tmp_image_id);
+       }
+       else
+       {
+          l_pvals->src_layer_id = l_src_layers[l_stackpos];
+          g_free(l_src_layers);
+       }
+      
+     }
+
+    if(gap_debug)
+    {
+      printf("p_mov_anim_preview: orig  src_image_id:%d src_layer:%d, stackpos:%d\n"
+             ,(int)pvals_orig->src_image_id
+	     ,(int)pvals_orig->src_layer_id
+	     ,(int)l_stackpos);
+      printf("   Scaled src_image_id:%d scaled_src_layer:%d\n"
+             ,(int)l_tmp_image_id
+	     ,(int)l_pvals->src_layer_id );
+    }
     
   }
 
