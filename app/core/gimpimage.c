@@ -54,6 +54,7 @@
 #include "gimpmarshal.h"
 #include "gimpparasitelist.h"
 #include "gimpselection.h"
+#include "gimptemplate.h"
 #include "gimpundostack.h"
 
 #include "file/file-utils.h"
@@ -945,13 +946,11 @@ gimp_image_new (Gimp              *gimp,
   gimage->height      = height;
   gimage->base_type   = base_type;
 
-  gimage->xresolution = gimp->config->default_xresolution;
-  gimage->yresolution = gimp->config->default_yresolution;
-  gimage->unit        = gimp->config->default_unit;
+  gimage->xresolution = gimp->config->default_image->xresolution;
+  gimage->yresolution = gimp->config->default_image->yresolution;
+  gimage->unit        = gimp->config->default_image->unit;
 
-  gimage->grid        = g_object_new (GIMP_TYPE_GRID, NULL);
-  gimp_config_copy_properties (GIMP_CONFIG (gimp->config->default_grid),
-                               GIMP_CONFIG (gimage->grid));
+  gimage->grid        = gimp_config_duplicate (GIMP_CONFIG (gimp->config->default_grid));
 
   switch (base_type)
     {

@@ -34,16 +34,19 @@
 #include "config/gimprc.h"
 
 #include "core/gimp.h"
+#include "core/gimptemplate.h"
 
 #include "text/gimp-fonts.h"
 
 #include "widgets/gimpcolorpanel.h"
+#include "widgets/gimpcontainermenuimpl.h"
 #include "widgets/gimpdeviceinfo.h"
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpgrideditor.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimppropwidgets.h"
+#include "widgets/gimptemplateeditor.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "menus.h"
@@ -72,9 +75,7 @@ static void        prefs_cancel_callback          (GtkWidget  *widget,
 static void        prefs_ok_callback              (GtkWidget  *widget,
                                                    GtkWidget  *dialog);
 
-static void   prefs_default_resolution_callback   (GtkWidget  *widget,
-                                                   GtkWidget  *size_sizeentry);
-static void   prefs_res_source_callback           (GtkWidget  *widget,
+static void   prefs_resolution_source_callback    (GtkWidget  *widget,
                                                    GObject    *config);
 static void   prefs_resolution_calibrate_callback (GtkWidget  *widget,
                                                    GtkWidget  *sizeentry);
@@ -103,7 +104,7 @@ preferences_dialog_create (Gimp *gimp)
   if (prefs_dialog)
     return prefs_dialog;
 
-  /*  turn of autosaving while the prefs dialog is open  */
+  /*  turn off autosaving while the prefs dialog is open  */
   gimp_rc_set_autosave (GIMP_RC (gimp->edit_config), FALSE);
 
   config       = GIMP_CONFIG (gimp->edit_config);
@@ -343,25 +344,20 @@ prefs_ok_callback (GtkWidget *widget,
   g_list_free (restart_diff);
 }
 
+
 static void
-prefs_default_resolution_callback (GtkWidget *widget,
-				   GtkWidget *size_sizeentry)
+prefs_template_select_callback (GimpContainerMenu *menu,
+                                GimpTemplate      *template,
+                                gpointer           insert_data,
+                                GimpTemplate      *edit_template)
 {
-  gdouble xres;
-  gdouble yres;
-
-  xres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
-  yres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
-
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_sizeentry), 0,
-				  xres, FALSE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_sizeentry), 1,
-				  yres, FALSE);
+  if (template)
+    gimp_config_sync (GIMP_CONFIG (template), GIMP_CONFIG (edit_template), 0);
 }
 
 static void
-prefs_res_source_callback (GtkWidget *widget,
-			   GObject   *config)
+prefs_resolution_source_callback (GtkWidget *widget,
+                                  GObject   *config)
 {
   gdouble  xres;
   gdouble  yres;
@@ -866,7 +862,6 @@ prefs_dialog_new (Gimp       *gimp,
   GtkWidget         *label;
   GtkWidget         *image;
   GtkWidget         *sizeentry;
-  GtkWidget         *sizeentry2;
   GtkWidget         *separator;
   GtkWidget         *calibrate_button;
   GtkWidget         *scrolled_window;
@@ -876,9 +871,7 @@ prefs_dialog_new (Gimp       *gimp,
   PangoAttribute    *attr;
   GSList            *group;
   GtkWidget         *editor;
-
   gint               i;
-  gchar             *pixels_per_unit;
 
   GObject           *object;
   GimpCoreConfig    *core_config;
@@ -1023,85 +1016,36 @@ prefs_dialog_new (Gimp       *gimp,
   /* select this page in the tree */
   gtk_tree_selection_select_iter (sel, &top_iter);
 
-  /*  Default Image Size and Unit  */
-  vbox2 = prefs_frame_new (_("Default Image Size and Unit"),
-                           GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox), TRUE);
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (vbox2), hbox);
-  gtk_widget_show (hbox);
+  {
+    GtkWidget *optionmenu;
+    GtkWidget *menu;
 
-  sizeentry = gimp_prop_coordinates_new (object,
-                                         "default-image-width",
-                                         "default-image-height",
-                                         "default-unit",
-                                         "%p", GIMP_SIZE_ENTRY_UPDATE_SIZE,
-                                         core_config->default_xresolution,
-                                         core_config->default_yresolution,
-                                         FALSE);
+    optionmenu = gtk_option_menu_new ();
+    gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                               _("From _Template:"),  1.0, 0.5,
+                               optionmenu, 1, FALSE);
 
-  gtk_table_set_col_spacings (GTK_TABLE (sizeentry), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (sizeentry), 2);
+    menu = gimp_container_menu_new (gimp->templates, NULL, 16, 0);
+    gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
+    gtk_widget_show (menu);
 
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
-				_("Width"), 0, 1, 0.0);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
-				_("Height"), 0, 2, 0.0);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
-				_("Pixels"), 1, 4, 0.0);
+    gimp_container_menu_select_item (GIMP_CONTAINER_MENU (menu), NULL);
 
-  gtk_box_pack_start (GTK_BOX (hbox), sizeentry, FALSE, FALSE, 0);
-  gtk_widget_show (sizeentry);
+    g_signal_connect (menu, "select_item",
+                      G_CALLBACK (prefs_template_select_callback),
+                      core_config->default_image);
+  }
 
-  /*  Default Image Resolution and Resolution Unit  */
-  vbox2 = prefs_frame_new (_("Default Image Resolution and Resolution Unit"),
-                           GTK_CONTAINER (vbox), FALSE);
+  editor = gimp_template_editor_new (core_config->default_image, gimp, FALSE);
+  gtk_box_pack_start (GTK_BOX (vbox), editor, FALSE, FALSE, 0);
+  gtk_widget_show (editor);
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (vbox2), hbox);
-  gtk_widget_show (hbox);
-
-  pixels_per_unit = g_strconcat (_("Pixels"), "/%s", NULL);
-
-  sizeentry2 = gimp_prop_coordinates_new (object,
-                                          "default-xresolution",
-                                          "default-yresolution",
-                                          "default-resolution_unit",
-                                          pixels_per_unit,
-                                          GIMP_SIZE_ENTRY_UPDATE_RESOLUTION,
-                                          0.0, 0.0,
-                                          TRUE);
-
-  gtk_table_set_col_spacings (GTK_TABLE (sizeentry2), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (sizeentry2), 2);
-
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry2),
-				_("Horizontal"), 0, 1, 0.0);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry2),
-				_("Vertical"), 0, 2, 0.0);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry2),
-				_("dpi"), 1, 4, 0.0);
-
-  g_signal_connect (sizeentry2, "value_changed",
-                    G_CALLBACK (prefs_default_resolution_callback),
-                    sizeentry);
-  g_signal_connect (sizeentry2, "refval_changed",
-                    G_CALLBACK (prefs_default_resolution_callback),
-                    sizeentry);
-
-  gtk_box_pack_start (GTK_BOX (hbox), sizeentry2, FALSE, FALSE, 0);
-  gtk_widget_show (sizeentry2);
-
-  table = prefs_table_new (2, GTK_CONTAINER (vbox), TRUE);
-
-  prefs_enum_option_menu_add (object, "default-image-type",
-                              GIMP_RGB, GIMP_GRAY,
-                              _("Default Image _Type:"),
-                              GTK_TABLE (table), 0);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox), TRUE);
   prefs_memsize_entry_add (object, "max-new-image-size",
                            _("Maximum Image Size:"),
                            GTK_TABLE (table), 1);
-
 
   /*********************************/
   /*  New Image / Default Comment  */
@@ -1158,8 +1102,8 @@ prefs_dialog_new (Gimp       *gimp,
 
   /*  Grid  */
   editor = gimp_grid_editor_new (core_config->default_grid,
-                                 core_config->default_xresolution,
-                                 core_config->default_yresolution);
+                                 core_config->default_image->xresolution,
+                                 core_config->default_image->yresolution);
 
   gtk_container_add (GTK_CONTAINER (vbox), editor);
   gtk_widget_show (editor);
@@ -1741,17 +1685,20 @@ prefs_dialog_new (Gimp       *gimp,
 
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 
-  sizeentry = gimp_prop_coordinates_new (object,
-                                         "monitor-xresolution",
-                                         "monitor-yresolution",
-                                         NULL,
-                                         pixels_per_unit,
-                                         GIMP_SIZE_ENTRY_UPDATE_RESOLUTION,
-                                         0.0, 0.0,
-                                         TRUE);
+  {
+    gchar *pixels_per_unit = g_strconcat (_("Pixels"), "/%s", NULL);
 
-  g_free (pixels_per_unit);
-  pixels_per_unit = NULL;
+    sizeentry = gimp_prop_coordinates_new (object,
+                                           "monitor-xresolution",
+                                           "monitor-yresolution",
+                                           NULL,
+                                           pixels_per_unit,
+                                           GIMP_SIZE_ENTRY_UPDATE_RESOLUTION,
+                                           0.0, 0.0,
+                                           TRUE);
+
+    g_free (pixels_per_unit);
+  }
 
   gtk_table_set_col_spacings (GTK_TABLE (sizeentry), 2);
   gtk_table_set_row_spacings (GTK_TABLE (sizeentry), 2);
@@ -1799,7 +1746,7 @@ prefs_dialog_new (Gimp       *gimp,
                      calibrate_button);
 
   g_signal_connect (button, "toggled",
-		    G_CALLBACK (prefs_res_source_callback),
+		    G_CALLBACK (prefs_resolution_source_callback),
 		    config);
 
   gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);

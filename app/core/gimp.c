@@ -634,9 +634,9 @@ gimp_real_initialize (Gimp               *gimp,
   gimp_paint_init (gimp);
 
   /* Set the last values used to default values. */
+  gimp->image_new_last_template =
+    gimp_config_duplicate (GIMP_CONFIG (gimp->config->default_image));
 
-  gimp->image_new_last_template = gimp_template_new ("last values");
-  gimp_template_set_from_config (gimp->image_new_last_template, gimp->config);
   gimp->have_current_cut_buffer = FALSE;
 
   gimp->standard_context = gimp_context_new (gimp, "Standard", NULL);
@@ -835,8 +835,7 @@ gimp_load_config (Gimp        *gimp,
 
   gimp->config = GIMP_CORE_CONFIG (gimprc);
 
-  gimp->edit_config =
-    GIMP_CORE_CONFIG (gimp_config_duplicate (GIMP_CONFIG (gimp->config)));
+  gimp->edit_config = gimp_config_duplicate (GIMP_CONFIG (gimp->config));
 
   g_signal_connect_object (gimp->config, "notify",
                            G_CALLBACK (gimp_global_config_notify),

@@ -53,16 +53,10 @@ struct _GimpCoreConfig
   gchar                 *default_pattern;
   gchar                 *default_palette;
   gchar                 *default_gradient;
-  GimpGrid              *default_grid;
   gchar                 *default_font;
+  GimpTemplate          *default_image;
   gchar                 *default_comment;
-  GimpImageBaseType      default_image_type;
-  gint                   default_image_width;
-  gint                   default_image_height;
-  GimpUnit               default_unit;
-  gdouble                default_xresolution;
-  gdouble                default_yresolution;
-  GimpUnit               default_resolution_unit;
+  GimpGrid              *default_grid;
   gint                   levels_of_undo;
   gulong                 undo_size;
   gchar                 *plug_in_rc_path;

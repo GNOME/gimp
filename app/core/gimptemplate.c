@@ -374,24 +374,6 @@ gimp_template_new (const gchar *name)
 }
 
 void
-gimp_template_set_from_config (GimpTemplate   *template,
-                               GimpCoreConfig *config)
-{
-  g_return_if_fail (GIMP_IS_TEMPLATE (template));
-  g_return_if_fail (GIMP_IS_CORE_CONFIG (config));
-
-  g_object_set (template,
-                "width",           config->default_image_width,
-                "height",          config->default_image_height,
-                "unit",            config->default_unit,
-                "xresolution",     config->default_xresolution,
-                "yresolution",     config->default_yresolution,
-                "resolution-unit", config->default_resolution_unit,
-                "image-type",      config->default_image_type,
-                NULL);
-}
-
-void
 gimp_template_set_from_image (GimpTemplate *template,
                               GimpImage    *gimage)
 {
@@ -415,7 +397,7 @@ gimp_template_set_from_image (GimpTemplate *template,
                 "unit",            gimp_image_get_unit (gimage),
                 "xresolution",     xresolution,
                 "yresolution",     yresolution,
-                "resolution-unit", gimage->gimp->config->default_resolution_unit,
+                "resolution-unit", gimage->gimp->config->default_image->resolution_unit,
                 "image-type",      image_type,
                 NULL);
 }

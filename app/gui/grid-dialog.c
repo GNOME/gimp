@@ -144,8 +144,8 @@ reset_callback (GtkWidget  *widget,
   gimage = g_object_get_data (G_OBJECT (dialog), "gimage");
   grid   = g_object_get_data (G_OBJECT (dialog), "grid");
 
-  gimp_config_copy_properties (GIMP_CONFIG (gimage->gimp->config->default_grid),
-                               GIMP_CONFIG (grid));
+  gimp_config_sync (GIMP_CONFIG (gimage->gimp->config->default_grid),
+                    GIMP_CONFIG (grid), 0);
   gimp_image_grid_changed (GIMP_IMAGE (gimage));
 }
 

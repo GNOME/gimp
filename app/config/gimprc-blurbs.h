@@ -64,14 +64,8 @@ N_("When enabled, this will ensure that each pixel of an image gets " \
 #define DEFAULT_GRID_BLURB \
 "Specify a default image grid."
 
-#define DEFAULT_IMAGE_WIDTH_BLURB \
-"Sets the default image width in the \"File/New\" dialog."
-
-#define DEFAULT_IMAGE_HEIGHT_BLURB \
-"Sets the default image height in the \"File/New\" dialog."
-
-#define DEFAULT_IMAGE_TYPE_BLURB \
-"Sets the default image type in the \"File/New\" dialog."
+#define DEFAULT_IMAGE_BLURB \
+"Sets the default image in the \"File/New\" dialog."
 
 #define DEFAULT_PATTERN_BLURB \
 "Specify a default pattern. The pattern is searched for in the " \
@@ -80,10 +74,6 @@ N_("When enabled, this will ensure that each pixel of an image gets " \
 #define DEFAULT_PALETTE_BLURB \
 "Specify a default palette.  The palette is searched for in the " \
 "specified palette path."
-
-#define DEFAULT_RESOLUTION_UNIT_BLURB \
-"Sets the units for the display of the default resolution in the " \
-"\"File/New\" dialog."
 
 #define DEFAULT_THRESHOLD_BLURB \
 N_("Tools such as fuzzy-select and bucket fill find regions based on a " \
@@ -96,14 +86,6 @@ N_("Tools such as fuzzy-select and bucket fill find regions based on a " \
 "Sets the default unit for new images and for the \"File/New\" dialog. " \
 "This units will be used for coordinate display when not in dot-for-dot " \
 "mode."
-
-#define DEFAULT_XRESOLUTION_BLURB \
-"Sets the default horizontal resolution for new images and for the " \
-"\"File/New\" dialog. This value is always in dpi (dots per inch)."
-
-#define DEFAULT_YRESOLUTION_BLURB \
-"Sets the default vertical resolution for new images and for the " \
-"\"File/New\" dialog. This value is always in dpi (dots per inch)."
 
 #define ENVIRON_PATH_BLURB \
 "Sets the environ search path."

@@ -160,7 +160,7 @@ gimp_config_iface_duplicate (GimpConfig *config)
 
   g_free (construct_params);
 
-  gimp_config_copy_properties (config, dup);
+  gimp_config_sync (config, dup, 0);
 
   return dup;
 }
@@ -427,9 +427,9 @@ gimp_config_deserialize_return (GScanner     *scanner,
  * only works for objects that are completely defined by their
  * properties.
  *
- * Return value: the duplicated #GObject.
+ * Return value: the duplicated #GimpConfig object
  **/
-GimpConfig *
+gpointer
 gimp_config_duplicate (GimpConfig *config)
 {
   g_return_val_if_fail (GIMP_IS_CONFIG (config), NULL);

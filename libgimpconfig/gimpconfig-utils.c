@@ -34,89 +34,6 @@
 #include "gimpconfig-utils.h"
 
 
-/**
- * gimp_config_diff:
- * @a: a #GimpConfig
- * @b: another #GimpConfig of the same type as @a
- * @flags: a mask of GParamFlags
- *
- * Compares all properties of @a and @b that have all @flags set. If
- * @flags is 0, all properties are compared.
- *
- * Return value: a GList of differing GParamSpecs.
- **/
-GList *
-gimp_config_diff (GimpConfig      *a,
-                  GimpConfig      *b,
-                  GParamFlags   flags)
-{
-  GParamSpec **param_specs;
-  guint        n_param_specs;
-  gint         i;
-  GList       *list = NULL;
-
-  g_return_val_if_fail (G_IS_OBJECT (a), FALSE);
-  g_return_val_if_fail (G_IS_OBJECT (b), FALSE);
-  g_return_val_if_fail (G_TYPE_FROM_INSTANCE (a) == G_TYPE_FROM_INSTANCE (b),
-                        FALSE);
-
-  param_specs = g_object_class_list_properties (G_OBJECT_GET_CLASS (a),
-                                                &n_param_specs);
-
-  for (i = 0; i < n_param_specs; i++)
-    {
-      if (! flags || ((param_specs[i]->flags & flags) == flags))
-        {
-          GValue a_value = { 0, };
-          GValue b_value = { 0, };
-
-          g_value_init (&a_value, param_specs[i]->value_type);
-          g_value_init (&b_value, param_specs[i]->value_type);
-
-          g_object_get_property (G_OBJECT (a), param_specs[i]->name, &a_value);
-          g_object_get_property (G_OBJECT (b), param_specs[i]->name, &b_value);
-
-          if (G_IS_PARAM_SPEC_OBJECT (param_specs[i]) &&
-              (param_specs[i]->flags & GIMP_PARAM_AGGREGATE))
-            {
-              GimpConfig *a_object = g_value_get_object (&a_value);
-              GimpConfig *b_object = g_value_get_object (&b_value);
-
-              if (a_object && b_object &&
-                  G_TYPE_FROM_INSTANCE (a_object) ==
-                  G_TYPE_FROM_INSTANCE (b_object))
-                {
-                  GList *diff = gimp_config_diff (a_object, b_object, flags);
-
-                  if (diff)
-                    {
-                      g_list_free (diff);
-                      list = g_list_prepend (list, param_specs[i]);
-                    }
-                }
-              else
-                {
-                  list = g_list_prepend (list, param_specs[i]);
-                }
-            }
-          else
-            {
-
-              if (g_param_values_cmp (param_specs[i], &a_value, &b_value))
-                list = g_list_prepend (list, param_specs[i]);
-            }
-
-          g_value_unset (&a_value);
-          g_value_unset (&b_value);
-        }
-    }
-
-  g_free (param_specs);
-
-  return g_list_reverse (list);
-}
-
-
 static void
 gimp_config_connect_notify (GObject    *src,
                             GParamSpec *param_spec,
@@ -136,6 +53,7 @@ gimp_config_connect_notify (GObject    *src,
       g_value_unset (&value);
     }
 }
+
 
 /**
  * gimp_config_connect:
@@ -179,91 +97,107 @@ gimp_config_disconnect (GObject *src,
 }
 
 /**
- * gimp_config_copy_properties:
- * @src: a #GimpConfig
- * @dest: another #GimpConfig of the same type as @src
+ * gimp_config_diff:
+ * @a: a #GimpConfig
+ * @b: another #GimpConfig of the same type as @a
+ * @flags: a mask of GParamFlags
  *
- * Retrieves all read and writeable property settings from @src and
- * applies the values to @dest.
+ * Compares all properties of @a and @b that have all @flags set. If
+ * @flags is 0, all properties are compared.
+ *
+ * Return value: a GList of differing GParamSpecs.
  **/
-void
-gimp_config_copy_properties (GimpConfig *src,
-                             GimpConfig *dest)
+GList *
+gimp_config_diff (GimpConfig  *a,
+                  GimpConfig  *b,
+                  GParamFlags  flags)
 {
-  GObjectClass  *klass;
-  GParamSpec   **property_specs;
-  guint          n_property_specs;
-  guint          i;
+  GParamSpec **param_specs;
+  guint        n_param_specs;
+  gint         i;
+  GList       *list = NULL;
 
-  g_return_if_fail (GIMP_IS_CONFIG (src));
-  g_return_if_fail (GIMP_IS_CONFIG (dest));
-  g_return_if_fail (G_TYPE_FROM_INSTANCE (src) == G_TYPE_FROM_INSTANCE (dest));
+  g_return_val_if_fail (GIMP_IS_CONFIG (a), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONFIG (b), FALSE);
+  g_return_val_if_fail (G_TYPE_FROM_INSTANCE (a) == G_TYPE_FROM_INSTANCE (b),
+                        FALSE);
 
-  klass = G_OBJECT_GET_CLASS (src);
+  param_specs = g_object_class_list_properties (G_OBJECT_GET_CLASS (a),
+                                                &n_param_specs);
 
-  property_specs = g_object_class_list_properties (klass, &n_property_specs);
-
-  if (!property_specs)
-    return;
-
-  g_object_freeze_notify (G_OBJECT (dest));
-
-  for (i = 0; i < n_property_specs; i++)
+  for (i = 0; i < n_param_specs; i++)
     {
-      GParamSpec *prop_spec;
+      if (! flags || ((param_specs[i]->flags & flags) == flags))
+        {
+          GValue a_value = { 0, };
+          GValue b_value = { 0, };
 
-      prop_spec = property_specs[i];
+          g_value_init (&a_value, param_specs[i]->value_type);
+          g_value_init (&b_value, param_specs[i]->value_type);
 
-      if ((prop_spec->flags & G_PARAM_READABLE) &&
-	  (prop_spec->flags & G_PARAM_WRITABLE) &&
-          ! (prop_spec->flags & G_PARAM_CONSTRUCT_ONLY))
-	{
-          if (G_IS_PARAM_SPEC_OBJECT (prop_spec) &&
-              (prop_spec->flags & GIMP_PARAM_AGGREGATE))
-            {
-              GValue      src_value  = { 0, };
-              GValue      dest_value = { 0, };
-              GimpConfig *src_object;
-              GimpConfig *dest_object;
+          g_object_get_property (G_OBJECT (a), param_specs[i]->name, &a_value);
+          g_object_get_property (G_OBJECT (b), param_specs[i]->name, &b_value);
 
-              g_value_init (&src_value,  prop_spec->value_type);
-              g_value_init (&dest_value, prop_spec->value_type);
+          if (g_param_values_cmp (param_specs[i], &a_value, &b_value))
+            list = g_list_prepend (list, param_specs[i]);
 
-              g_object_get_property (G_OBJECT (src),
-                                     prop_spec->name, &src_value);
-              g_object_get_property (G_OBJECT (dest),
-                                     prop_spec->name, &dest_value);
-
-              src_object  = g_value_get_object (&src_value);
-              dest_object = g_value_get_object (&dest_value);
-
-              if (src_object && dest_object &&
-                  G_TYPE_FROM_INSTANCE (src_object) ==
-                  G_TYPE_FROM_INSTANCE (dest_object))
-                {
-                  gimp_config_copy_properties (src_object, dest_object);
-                }
-
-              g_value_unset (&src_value);
-              g_value_unset (&dest_value);
-            }
-          else
-            {
-              GValue value = { 0, };
-
-              g_value_init (&value, prop_spec->value_type);
-
-              g_object_get_property (G_OBJECT (src),  prop_spec->name, &value);
-              g_object_set_property (G_OBJECT (dest), prop_spec->name, &value);
-
-              g_value_unset (&value);
-            }
+          g_value_unset (&a_value);
+          g_value_unset (&b_value);
         }
     }
 
-  g_free (property_specs);
+  g_free (param_specs);
 
-  g_object_thaw_notify (G_OBJECT (dest));
+  return g_list_reverse (list);
+}
+
+/**
+ * gimp_config_sync:
+ * @src: a #GimpConfig
+ * @dest: another #GimpConfig of the same type as @src
+ * @flags: a mask of GParamFlags
+ *
+ * Compares all read and writeable property settings from @src and @dest
+ * that have all @flags set. Differing values are then copied from @src
+ * to @dest. If @flags is 0, all read/write properties are synced.
+ **/
+gboolean
+gimp_config_sync (GimpConfig  *src,
+                  GimpConfig  *dest,
+                  GParamFlags  flags)
+{
+  GList *diff;
+  GList *list;
+
+  g_return_val_if_fail (GIMP_IS_CONFIG (src), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONFIG (dest), FALSE);
+  g_return_val_if_fail (G_TYPE_FROM_INSTANCE (src) == G_TYPE_FROM_INSTANCE (dest),
+                        FALSE);
+
+  diff = gimp_config_diff (src, dest, (flags | G_PARAM_READWRITE));
+  if (!diff)
+    return FALSE;
+
+  for (list = diff; list; list = list->next)
+    {
+      GParamSpec *prop_spec = list->data;
+
+      if (! (prop_spec->flags & G_PARAM_CONSTRUCT_ONLY))
+        {
+          GValue value = { 0, };
+
+          g_value_init (&value, prop_spec->value_type);
+
+          g_object_get_property (G_OBJECT (src),  prop_spec->name, &value);
+          g_object_set_property (G_OBJECT (dest), prop_spec->name, &value);
+
+          g_value_unset (&value);
+        }
+    }
+
+  g_list_free (diff);
+
+  return TRUE;
 }
 
 /**

@@ -27,12 +27,11 @@
 
 #include "config-types.h"
 
-#ifdef __GNUC__
-#warning FIXME #include "core/core-types.h"
-#endif
 #include "core/core-types.h"
 #include "core/gimpgrid.h"
+#include "core/gimptemplate.h"
 
+#include "gimpconfig.h"
 #include "gimpconfig-params.h"
 #include "gimpconfig-types.h"
 #include "gimpconfig-utils.h"
@@ -43,20 +42,24 @@
 #include "gimp-intl.h"
 
 
-static void  gimp_core_config_class_init          (GimpCoreConfigClass *klass);
-static void  gimp_core_config_init                (GObject             *object);
-static void  gimp_core_config_finalize            (GObject             *object);
-static void  gimp_core_config_set_property        (GObject             *object,
-                                                   guint                property_id,
-                                                   const GValue        *value,
-                                                   GParamSpec          *pspec);
-static void  gimp_core_config_get_property        (GObject             *object,
-                                                   guint                property_id,
-                                                   GValue              *value,
-                                                   GParamSpec          *pspec);
-static void gimp_core_config_default_grid_changed (GObject             *object,
-                                                   GParamSpec          *pspec,
-                                                   gpointer             data);
+static void  gimp_core_config_class_init    (GimpCoreConfigClass *klass);
+static void  gimp_core_config_init          (GimpCoreConfig      *config);
+static void  gimp_core_config_finalize             (GObject      *object);
+static void  gimp_core_config_set_property         (GObject      *object,
+                                                    guint         property_id,
+                                                    const GValue *value,
+                                                    GParamSpec   *pspec);
+static void  gimp_core_config_get_property         (GObject      *object,
+                                                    guint         property_id,
+                                                    GValue       *value,
+                                                    GParamSpec   *pspec);
+static void gimp_core_config_default_image_changed (GObject      *object,
+                                                    GParamSpec   *pspec,
+                                                    gpointer      data);
+static void gimp_core_config_default_grid_changed  (GObject      *object,
+                                                    GParamSpec   *pspec,
+                                                    gpointer      data);
+
 
 #define DEFAULT_BRUSH     "Circle (11)"
 #define DEFAULT_PATTERN   "Pine"
@@ -81,16 +84,10 @@ enum
   PROP_DEFAULT_PATTERN,
   PROP_DEFAULT_PALETTE,
   PROP_DEFAULT_GRADIENT,
-  PROP_DEFAULT_GRID,
   PROP_DEFAULT_FONT,
+  PROP_DEFAULT_IMAGE,
   PROP_DEFAULT_COMMENT,
-  PROP_DEFAULT_IMAGE_TYPE,
-  PROP_DEFAULT_IMAGE_WIDTH,
-  PROP_DEFAULT_IMAGE_HEIGHT,
-  PROP_DEFAULT_UNIT,
-  PROP_DEFAULT_XRESOLUTION,
-  PROP_DEFAULT_YRESOLUTION,
-  PROP_DEFAULT_RESOLUTION_UNIT,
+  PROP_DEFAULT_GRID,
   PROP_UNDO_LEVELS,
   PROP_UNDO_SIZE,
   PROP_PLUGINRC_PATH,
@@ -208,54 +205,22 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                    "default-gradient", DEFAULT_GRADIENT_BLURB,
                                    DEFAULT_GRADIENT,
                                    0);
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_DEFAULT_GRID,
-                                   "default-grid", DEFAULT_GRID_BLURB,
-                                   GIMP_TYPE_GRID,
-                                   GIMP_PARAM_AGGREGATE);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_FONT,
                                    "default-font", DEFAULT_FONT_BLURB,
                                    DEFAULT_FONT,
                                    0);
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_DEFAULT_IMAGE,
+                                   "default-image", DEFAULT_IMAGE_BLURB,
+                                   GIMP_TYPE_TEMPLATE,
+                                   GIMP_PARAM_AGGREGATE);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_COMMENT,
                                    "default-comment", DEFAULT_COMMENT_BLURB,
                                    DEFAULT_COMMENT,
                                    0);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DEFAULT_IMAGE_TYPE,
-                                 "default-image-type",
-                                 DEFAULT_IMAGE_TYPE_BLURB,
-                                 GIMP_TYPE_IMAGE_BASE_TYPE, GIMP_RGB,
-                                 0);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_DEFAULT_IMAGE_WIDTH,
-                                "default-image-width",
-                                DEFAULT_IMAGE_WIDTH_BLURB,
-                                1, 0x8000, 256,
-                                0);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_DEFAULT_IMAGE_HEIGHT,
-                                "default-image-height",
-                                DEFAULT_IMAGE_HEIGHT_BLURB,
-                                1, 0x8000, 256,
-                                0);
-  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_DEFAULT_UNIT,
-                                 "default-unit", DEFAULT_UNIT_BLURB,
-                                 FALSE, FALSE, GIMP_UNIT_INCH,
-                                 0);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_DEFAULT_XRESOLUTION,
-                                   "default-xresolution",
-                                   DEFAULT_XRESOLUTION_BLURB,
-                                   GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
-                                   72.0,
-                                   0);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_DEFAULT_YRESOLUTION,
-                                   "default-yresolution",
-                                   DEFAULT_YRESOLUTION_BLURB,
-                                   GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
-                                   72.0,
-                                   0);
-  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_DEFAULT_RESOLUTION_UNIT,
-                                 "default-resolution-unit",
-                                 DEFAULT_RESOLUTION_UNIT_BLURB,
-                                 FALSE, FALSE, GIMP_UNIT_INCH,
-                                 0);
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_DEFAULT_GRID,
+                                   "default-grid", DEFAULT_GRID_BLURB,
+                                   GIMP_TYPE_GRID,
+                                   GIMP_PARAM_AGGREGATE);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_UNDO_LEVELS,
                                 "undo-levels", UNDO_LEVELS_BLURB,
                                 0, G_MAXINT, 5,
@@ -300,16 +265,17 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
 }
 
 static void
-gimp_core_config_init (GObject *object)
+gimp_core_config_init (GimpCoreConfig *config)
 {
-  GimpCoreConfig *core_config;
+  config->default_image = g_object_new (GIMP_TYPE_TEMPLATE, NULL);
+  g_signal_connect (config->default_image, "notify",
+                    G_CALLBACK (gimp_core_config_default_image_changed),
+                    config);
 
-  core_config = GIMP_CORE_CONFIG (object);
-
-  core_config->default_grid = g_object_new (GIMP_TYPE_GRID, NULL);
-  g_signal_connect (core_config->default_grid, "notify",
+  config->default_grid = g_object_new (GIMP_TYPE_GRID, NULL);
+  g_signal_connect (config->default_grid, "notify",
                     G_CALLBACK (gimp_core_config_default_grid_changed),
-                    core_config);
+                    config);
 }
 
 static void
@@ -335,11 +301,11 @@ gimp_core_config_finalize (GObject *object)
   g_free (core_config->default_comment);
   g_free (core_config->plug_in_rc_path);
 
+  if (core_config->default_image)
+    g_object_unref (core_config->default_image);
+
   if (core_config->default_grid)
-    {
-      g_object_unref (core_config->default_grid);
-      core_config->default_grid = NULL;
-    }
+    g_object_unref (core_config->default_grid);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -407,38 +373,23 @@ gimp_core_config_set_property (GObject      *object,
       g_free (core_config->default_gradient);
       core_config->default_gradient = g_value_dup_string (value);
       break;
-    case PROP_DEFAULT_GRID:
-      g_object_unref (core_config->default_grid);
-      core_config->default_grid = GIMP_GRID (g_value_dup_object (value));
-      break;
     case PROP_DEFAULT_FONT:
       g_free (core_config->default_font);
       core_config->default_font = g_value_dup_string (value);
+      break;
+    case PROP_DEFAULT_IMAGE:
+      if (g_value_get_object (value))
+        gimp_config_sync (GIMP_CONFIG (g_value_get_object (value)),
+                          GIMP_CONFIG (core_config->default_image), 0);
       break;
     case PROP_DEFAULT_COMMENT:
       g_free (core_config->default_comment);
       core_config->default_comment = g_value_dup_string (value);
       break;
-    case PROP_DEFAULT_IMAGE_TYPE:
-      core_config->default_image_type = g_value_get_enum (value);
-      break;
-    case PROP_DEFAULT_IMAGE_WIDTH:
-      core_config->default_image_width = g_value_get_int (value);
-      break;
-    case PROP_DEFAULT_IMAGE_HEIGHT:
-      core_config->default_image_height = g_value_get_int (value);
-      break;
-    case PROP_DEFAULT_UNIT:
-      core_config->default_unit = g_value_get_int (value);
-      break;
-    case PROP_DEFAULT_XRESOLUTION:
-      core_config->default_xresolution = g_value_get_double (value);
-      break;
-    case PROP_DEFAULT_YRESOLUTION:
-      core_config->default_yresolution = g_value_get_double (value);
-      break;
-    case PROP_DEFAULT_RESOLUTION_UNIT:
-      core_config->default_resolution_unit = g_value_get_int (value);
+    case PROP_DEFAULT_GRID:
+      if (g_value_get_object (value))
+        gimp_config_sync (GIMP_CONFIG (g_value_get_object (value)),
+                          GIMP_CONFIG (core_config->default_grid), 0);
       break;
     case PROP_UNDO_LEVELS:
       core_config->levels_of_undo = g_value_get_int (value);
@@ -526,35 +477,17 @@ gimp_core_config_get_property (GObject    *object,
     case PROP_DEFAULT_GRADIENT:
       g_value_set_string (value, core_config->default_gradient);
       break;
-    case PROP_DEFAULT_GRID:
-      g_value_set_object (value, core_config->default_grid);
-      break;
     case PROP_DEFAULT_FONT:
       g_value_set_string (value, core_config->default_font);
+      break;
+    case PROP_DEFAULT_IMAGE:
+      g_value_set_object (value, core_config->default_image);
       break;
     case PROP_DEFAULT_COMMENT:
       g_value_set_string (value, core_config->default_comment);
       break;
-    case PROP_DEFAULT_IMAGE_TYPE:
-      g_value_set_enum (value, core_config->default_image_type);
-      break;
-    case PROP_DEFAULT_IMAGE_WIDTH:
-      g_value_set_int (value, core_config->default_image_width);
-      break;
-    case PROP_DEFAULT_IMAGE_HEIGHT:
-      g_value_set_int (value, core_config->default_image_height);
-      break;
-    case PROP_DEFAULT_UNIT:
-      g_value_set_int (value, core_config->default_unit);
-      break;
-    case PROP_DEFAULT_XRESOLUTION:
-      g_value_set_double (value, core_config->default_xresolution);
-      break;
-    case PROP_DEFAULT_YRESOLUTION:
-      g_value_set_double (value, core_config->default_yresolution);
-      break;
-    case PROP_DEFAULT_RESOLUTION_UNIT:
-      g_value_set_int (value, core_config->default_resolution_unit);
+    case PROP_DEFAULT_GRID:
+      g_value_set_object (value, core_config->default_grid);
       break;
     case PROP_UNDO_LEVELS:
       g_value_set_int (value, core_config->levels_of_undo);
@@ -591,15 +524,21 @@ gimp_core_config_get_property (GObject    *object,
 }
 
 static void
+gimp_core_config_default_image_changed (GObject    *object,
+                                        GParamSpec *pspec,
+                                        gpointer    data)
+{
+  GimpCoreConfig *core_config = GIMP_CORE_CONFIG (data);
+
+  g_object_notify (G_OBJECT (core_config), "default-image");
+}
+
+static void
 gimp_core_config_default_grid_changed (GObject    *object,
                                        GParamSpec *pspec,
                                        gpointer    data)
 {
-  GimpCoreConfig *core_config;
-
-  g_return_if_fail (GIMP_IS_CORE_CONFIG (data));
-
-  core_config = GIMP_CORE_CONFIG (data);
+  GimpCoreConfig *core_config = GIMP_CORE_CONFIG (data);
 
   g_object_notify (G_OBJECT (core_config), "default-grid");
 }

@@ -31,6 +31,7 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+#include "core/gimptemplate.h"
 
 #include "widgets/gimpenummenu.h"
 #include "widgets/gimphelp-ids.h"
@@ -124,17 +125,18 @@ resize_widget_new (GimpViewable *viewable,
 		   GCallback     ok_cb,
 		   gpointer      user_data)
 {
-  Resize        *resize;
-  ResizePrivate *private;
-  GtkWidget     *main_vbox;
-  GtkWidget     *vbox;
-  GtkWidget     *hbox;
-  GtkWidget     *table;
-  GtkWidget     *table2;
-  GtkWidget     *label;
-  GtkWidget     *frame = NULL;
-  GtkWidget     *spinbutton;
-  GtkObject     *adjustment;
+  Resize         *resize;
+  ResizePrivate  *private;
+  GimpCoreConfig *config;
+  GtkWidget      *main_vbox;
+  GtkWidget      *vbox;
+  GtkWidget      *hbox;
+  GtkWidget      *table;
+  GtkWidget      *table2;
+  GtkWidget      *label;
+  GtkWidget      *frame = NULL;
+  GtkWidget      *spinbutton;
+  GtkObject      *adjustment;
 
   g_return_val_if_fail (GIMP_IS_ITEM (viewable) ||
                         GIMP_IS_IMAGE (viewable), NULL);
@@ -159,6 +161,8 @@ resize_widget_new (GimpViewable *viewable,
       resize->target = ResizeLayer;
     }
 
+  config = resize->gimage->gimp->config;
+
   resize->type          = type;
   resize->width         = width;
   resize->height        = height;
@@ -169,7 +173,7 @@ resize_widget_new (GimpViewable *viewable,
   resize->ratio_y       = 1.0;
   resize->offset_x      = 0;
   resize->offset_y      = 0;
-  resize->interpolation = resize->gimage->gimp->config->interpolation_type;
+  resize->interpolation = config->interpolation_type;
 
   /*  dialog box  */
   {
@@ -634,7 +638,7 @@ resize_widget_new (GimpViewable *viewable,
       gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
 
       private->resolution_se =
-	gimp_size_entry_new (1, resize->gimage->gimp->config->default_resolution_unit,
+	gimp_size_entry_new (1, config->default_image->resolution_unit,
 			     _("pixels/%a"),
 			     FALSE, FALSE, FALSE, SB_WIDTH,
 			     GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);

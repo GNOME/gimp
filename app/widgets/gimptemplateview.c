@@ -294,8 +294,7 @@ gimp_template_view_duplicate_clicked (GtkWidget        *widget,
     {
       GimpTemplate *new_template;
 
-      new_template =
-        GIMP_TEMPLATE (gimp_config_duplicate (GIMP_CONFIG (template)));
+      new_template = gimp_config_duplicate (GIMP_CONFIG (template));
 
       gimp_list_uniquefy_name (GIMP_LIST (editor->view->container),
                                GIMP_OBJECT (new_template), TRUE);

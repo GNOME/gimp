@@ -1,5 +1,54 @@
 2003-10-14  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpconfig-utils.[ch]: removed
+	gimp_config_copy_properties() and added the more intelligent
+	gimp_config_sync() instead.
+
+	* app/config/Makefile.am
+	* app/config/config-types.h
+	* app/config/gimpcoreconfig.[ch]
+	* app/config/gimprc-blurbs.h: replaced default image properties
+	with a single GimpTemplate object property. Changed the
+	set_property function to not replace aggregate objects but call
+	gimp_config_sync() instead.
+
+	* app/tools/gimptextoptions.c (gimp_text_options_set_property):
+	same change here.
+
+	* app/config/gimpconfig.[ch]: changed return value of
+	gimp_config_duplicate() to gpointer to avoid some casts that only
+	made the code harder to read.
+
+	* app/widgets/gimptemplateeditor.[ch]: don't keep an internal copy
+	here but edit the GimpTemplate passed when the editor was
+	constructed.
+
+	* app/gui/preferences-dialog.c: use a GimpTemplateEditor to allow
+	editing of the default image paramaters.
+
+	* app/config/gimprc.c
+	* app/core/core-types.h
+	* app/core/gimp.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-grid.c
+	* app/core/gimpimage-new.c
+	* app/core/gimpimage-undo-push.c
+	* app/core/gimpimage.c
+	* app/core/gimptemplate.[ch]
+	* app/gui/file-new-dialog.c
+	* app/gui/grid-dialog.c
+	* app/gui/info-window.c
+	* app/gui/resize-dialog.c
+	* app/gui/templates-commands.[ch]
+	* app/gui/tool-options-commands.c
+	* app/text/gimptextlayer.c
+	* app/text/gimptextlayer.c
+	* app/tools/gimptexttool.c
+	* app/widgets/gimptemplateview.c
+	* app/xcf/xcf-load.c: changed accordingly.
+
+2003-10-14  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpgrideditor.[ch]: removed "grid_changed" signal.
 	The user of GimpGridEditor can connect to notifications of the
 	grid that is being edited. There is no need for a proxy signal.

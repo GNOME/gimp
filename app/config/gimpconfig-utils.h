@@ -31,8 +31,10 @@ void       gimp_config_disconnect            (GObject      *src,
 GList    * gimp_config_diff                  (GimpConfig   *a,
                                               GimpConfig   *b,
                                               GParamFlags   flags);
-void       gimp_config_copy_properties       (GimpConfig   *src,
-                                              GimpConfig   *dest);
+gboolean   gimp_config_sync                  (GimpConfig   *src,
+                                              GimpConfig   *dest,
+                                              GParamFlags   flags);
+
 void       gimp_config_reset_properties      (GimpConfig   *config);
 
 void       gimp_config_string_append_escaped (GString      *string,

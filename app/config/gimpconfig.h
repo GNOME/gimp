@@ -88,7 +88,7 @@ gboolean      gimp_config_deserialize_return    (GScanner     *scanner,
                                                  GTokenType    expected_token,
                                                  gint          nest_level);
 
-GimpConfig  * gimp_config_duplicate             (GimpConfig   *config);
+gpointer      gimp_config_duplicate             (GimpConfig   *config);
 gboolean      gimp_config_is_equal_to           (GimpConfig   *a,
                                                  GimpConfig   *b);
 void          gimp_config_reset                 (GimpConfig   *config);

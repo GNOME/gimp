@@ -72,8 +72,6 @@ typedef struct _GimpToolOptions     GimpToolOptions;
 typedef struct _GimpImagefile       GimpImagefile;
 typedef struct _GimpDocumentList    GimpDocumentList;
 
-typedef struct _GimpTemplate        GimpTemplate;
-
 /*  drawable objects  */
 
 typedef struct _GimpDrawable        GimpDrawable;

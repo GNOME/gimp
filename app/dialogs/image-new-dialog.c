@@ -25,6 +25,8 @@
 
 #include "gui-types.h"
 
+#include "config/gimpconfig.h"
+#include "config/gimpconfig-utils.h"
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
@@ -52,6 +54,7 @@ typedef struct
   GtkWidget    *ok_button;
 
   Gimp         *gimp;
+  GimpTemplate *template;
   gulong        memsize;
 } FileNewDialog;
 
@@ -89,8 +92,9 @@ file_new_dialog_new (Gimp *gimp)
 
   dialog = g_new0 (FileNewDialog, 1);
 
-  dialog->gimp    = gimp;
-  dialog->memsize = 0;
+  dialog->gimp     = gimp;
+  dialog->template = g_object_new (GIMP_TYPE_TEMPLATE, NULL);
+  dialog->memsize  = 0;
 
   dialog->dialog =
     gimp_viewable_dialog_new (NULL,
@@ -147,11 +151,11 @@ file_new_dialog_new (Gimp *gimp)
                     dialog);
 
   /*  Template editor  */
-  dialog->editor = gimp_template_editor_new (gimp, FALSE);
+  dialog->editor = gimp_template_editor_new (dialog->template, gimp, FALSE);
   gtk_box_pack_start (GTK_BOX (main_vbox), dialog->editor, FALSE, FALSE, 0);
   gtk_widget_show (dialog->editor);
 
-  g_signal_connect (GIMP_TEMPLATE_EDITOR (dialog->editor)->template, "notify",
+  g_signal_connect (dialog->template, "notify",
                     G_CALLBACK (file_new_template_notify),
                     dialog);
 
@@ -181,8 +185,10 @@ file_new_dialog_set (GtkWidget    *widget,
   else
     {
       template = gimp_image_new_get_last_template (dialog->gimp, gimage);
-      gimp_template_editor_set_template (GIMP_TEMPLATE_EDITOR (dialog->editor),
-                                         template);
+
+      gimp_config_sync (GIMP_CONFIG (dialog->template),
+                        GIMP_CONFIG (template), 0);
+
       g_object_unref (template);
     }
 }
@@ -212,13 +218,8 @@ static void
 file_new_reset_callback (GtkWidget     *widget,
 			 FileNewDialog *dialog)
 {
-  GimpTemplate *template;
-
-  template = gimp_template_new ("foo");
-  gimp_template_set_from_config (template, dialog->gimp->config);
-  gimp_template_editor_set_template (GIMP_TEMPLATE_EDITOR (dialog->editor),
-                                     template);
-  g_object_unref (template);
+  gimp_config_sync (GIMP_CONFIG (dialog->gimp->config->default_image),
+                    GIMP_CONFIG (dialog->template), 0);
 }
 
 static void
@@ -242,8 +243,8 @@ file_new_template_select (GimpContainerMenu *menu,
                           FileNewDialog     *dialog)
 {
   if (template)
-    gimp_template_editor_set_template (GIMP_TEMPLATE_EDITOR (dialog->editor),
-                                       template);
+    gimp_config_sync (GIMP_CONFIG (template),
+                      GIMP_CONFIG (dialog->template), 0);
 }
 
 
@@ -315,14 +316,13 @@ file_new_create_image (FileNewDialog *dialog)
   GimpTemplate *template;
   Gimp         *gimp;
 
-  template =
-    gimp_template_editor_get_template (GIMP_TEMPLATE_EDITOR (dialog->editor));
-
-  gimp = dialog->gimp;
+  template = g_object_ref (dialog->template);
+  gimp     = dialog->gimp;
 
   gtk_widget_destroy (dialog->dialog);
 
   gimp_template_create_image (gimp, template);
   gimp_image_new_set_last_template (gimp, template);
+
   g_object_unref (template);
 }

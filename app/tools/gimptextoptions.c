@@ -27,6 +27,7 @@
 
 #include "config/gimpconfig.h"
 #include "config/gimpconfig-params.h"
+#include "config/gimpconfig-utils.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
@@ -149,10 +150,14 @@ gimp_text_options_set_property (GObject      *object,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
+  GimpTextOptions *options = GIMP_TEXT_OPTIONS (object);
+
   switch (property_id)
     {
     case PROP_TEXT:
-      /* do nothing */
+      if (g_value_get_object (value))
+        gimp_config_sync (GIMP_CONFIG (g_value_get_object (value)),
+                          GIMP_CONFIG (options->text), 0);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -166,9 +171,7 @@ gimp_text_options_get_property (GObject    *object,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpTextOptions *options;
-
-  options = GIMP_TEXT_OPTIONS (object);
+  GimpTextOptions *options = GIMP_TEXT_OPTIONS (object);
 
   switch (property_id)
     {

@@ -33,6 +33,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-projection.h"
 #include "core/gimpimage-unit.h"
+#include "core/gimptemplate.h"
 #include "core/gimpunit.h"
 
 #include "file/file-utils.h"
@@ -712,7 +713,7 @@ info_window_update (GimpDisplay *gdisp)
 	      gimage->height * unit_factor / gimage->yresolution);
 
   /*  image resolution  */
-  res_unit = gimage->gimp->config->default_resolution_unit;
+  res_unit = gimage->gimp->config->default_image->resolution_unit;
   res_unit_factor = _gimp_unit_get_factor (gimage->gimp, res_unit);
 
   g_snprintf (format_buf, sizeof (format_buf), _("pixels/%s"),

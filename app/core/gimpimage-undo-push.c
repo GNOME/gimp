@@ -668,7 +668,7 @@ gimp_image_undo_push_image_grid (GimpImage   *gimage,
     {
       GridUndo *gu = new->data;
 
-      gu->grid = GIMP_GRID (gimp_config_duplicate (GIMP_CONFIG (grid)));
+      gu->grid = gimp_config_duplicate (GIMP_CONFIG (grid));
 
       return TRUE;
     }
@@ -684,7 +684,7 @@ undo_pop_image_grid (GimpUndo            *undo,
   GridUndo *gu = undo->data;
   GimpGrid *grid;
 
-  grid = GIMP_GRID (gimp_config_duplicate (GIMP_CONFIG (undo->gimage->grid)));
+  grid = gimp_config_duplicate (GIMP_CONFIG (undo->gimage->grid));
 
   gimp_image_set_grid (undo->gimage, gu->grid, FALSE);
 

@@ -3,7 +3,7 @@
  *
  * gimptemplate.h
  * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -47,7 +47,7 @@ struct _GimpTemplate
   gdouble            xresolution;
   gdouble            yresolution;
   GimpUnit           resolution_unit;
-  
+
   GimpImageBaseType  image_type;
   GimpFillType       fill_type;
 
@@ -67,8 +67,6 @@ GType          gimp_template_get_type        (void) G_GNUC_CONST;
 
 GimpTemplate * gimp_template_new             (const gchar    *name);
 
-void           gimp_template_set_from_config (GimpTemplate   *template,
-                                              GimpCoreConfig *config);
 void           gimp_template_set_from_image  (GimpTemplate   *template,
                                               GimpImage      *gimage);
 

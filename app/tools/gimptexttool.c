@@ -316,7 +316,7 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool)
 
   gimage = text_tool->gdisp->gimage;
 
-  text = GIMP_TEXT (gimp_config_duplicate (GIMP_CONFIG (options->text)));
+  text = gimp_config_duplicate (GIMP_CONFIG (options->text));
 
   layer = gimp_text_layer_new (gimage, text);
 
@@ -381,8 +381,8 @@ gimp_text_tool_connect (GimpTextTool *tool,
     {
       tool->text = g_object_ref (text);
 
-      gimp_config_copy_properties (GIMP_CONFIG (tool->text),
-				   GIMP_CONFIG (options->text));
+      gimp_config_sync (GIMP_CONFIG (tool->text),
+                        GIMP_CONFIG (options->text), 0);
 
       gimp_config_connect (G_OBJECT (options->text), G_OBJECT (tool->text));
 

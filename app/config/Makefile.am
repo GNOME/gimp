@@ -52,6 +52,7 @@ INCLUDES = \
 	-I$(top_srcdir)		\
 	-I$(top_srcdir)/app	\
 	$(GLIB_CFLAGS)		\
+	$(GDK_PIXBUF_CFLAGS)	\
 	-I$(includedir)
 
 

@@ -26,6 +26,7 @@
 
 #include "config/gimpconfig.h"
 #include "config/gimpconfig-utils.h"
+#include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
@@ -96,19 +97,11 @@ static void
 templates_new_template_ok_callback (GtkWidget *widget,
                                     GtkWidget *dialog)
 {
-  GimpTemplateEditor *editor;
-  GimpTemplate       *template;
-  Gimp               *gimp;
+  GimpTemplate *template;
+  Gimp         *gimp;
 
-  editor   = g_object_get_data (G_OBJECT (dialog), "gimp-template-editor");
   template = g_object_get_data (G_OBJECT (dialog), "gimp-template");
   gimp     = g_object_get_data (G_OBJECT (dialog), "gimp");
-
-  gimp_config_copy_properties (GIMP_CONFIG (editor->template),
-                               GIMP_CONFIG (template));
-
-  gimp_list_uniquefy_name (GIMP_LIST (gimp->templates),
-                           GIMP_OBJECT (template), TRUE);
 
   gimp_container_add (gimp->templates, GIMP_OBJECT (template));
   gimp_context_set_template (gimp_get_user_context (gimp), template);
@@ -117,17 +110,12 @@ templates_new_template_ok_callback (GtkWidget *widget,
 }
 
 void
-templates_new_template_dialog (Gimp         *gimp,
-                               GimpTemplate *template_template)
+templates_new_template_dialog (Gimp *gimp)
 {
   GimpTemplate *template;
   GtkWidget    *dialog;
   GtkWidget    *main_vbox;
   GtkWidget    *editor;
-
-  template = gimp_template_new (_("Unnamed"));
-
-  gimp_template_set_from_config (template, gimp->config);
 
   dialog =
     gimp_viewable_dialog_new (NULL,
@@ -154,18 +142,18 @@ templates_new_template_dialog (Gimp         *gimp,
                       TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  editor = gimp_template_editor_new (gimp, TRUE);
+  template = gimp_config_duplicate (GIMP_CONFIG (gimp->config->default_image));
+  gimp_object_set_name (GIMP_OBJECT (template), _("Unnamed"));
+
+  editor = gimp_template_editor_new (template, gimp, TRUE);
+
+  g_object_unref (template);
+
+  g_object_set_data (G_OBJECT (dialog), "gimp",          gimp);
+  g_object_set_data (G_OBJECT (dialog), "gimp-template", template);
+
   gtk_box_pack_start (GTK_BOX (main_vbox), editor, FALSE, FALSE, 0);
   gtk_widget_show (editor);
-
-  gimp_template_editor_set_template (GIMP_TEMPLATE_EDITOR (editor),
-                                     template);
-
-  g_object_set_data (G_OBJECT (dialog), "gimp-template-editor", editor);
-  g_object_set_data (G_OBJECT (dialog), "gimp",                 gimp);
-
-  g_object_set_data_full (G_OBJECT (dialog), "gimp-template", template,
-                          (GDestroyNotify) g_object_unref);
 
   gtk_widget_show (dialog);
 }
@@ -182,8 +170,8 @@ templates_edit_template_ok_callback (GtkWidget *widget,
   template = g_object_get_data (G_OBJECT (dialog), "gimp-template");
   gimp     = g_object_get_data (G_OBJECT (dialog), "gimp");
 
-  gimp_config_copy_properties (GIMP_CONFIG (editor->template),
-                               GIMP_CONFIG (template));
+  gimp_config_sync (GIMP_CONFIG (editor->template), GIMP_CONFIG (template), 0);
+
   gimp_list_uniquefy_name (GIMP_LIST (gimp->templates),
                            GIMP_OBJECT (template), TRUE);
 
@@ -221,16 +209,19 @@ templates_edit_template_dialog (Gimp         *gimp,
                       TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  editor = gimp_template_editor_new (gimp, TRUE);
+  g_object_set_data (G_OBJECT (dialog), "gimp",          gimp);
+  g_object_set_data (G_OBJECT (dialog), "gimp-template", template);
+
+  template = gimp_config_duplicate (GIMP_CONFIG (template));
+
+  editor = gimp_template_editor_new (template, gimp, TRUE);
+
+  g_object_unref (template);
+
   gtk_box_pack_start (GTK_BOX (main_vbox), editor, FALSE, FALSE, 0);
   gtk_widget_show (editor);
 
-  gimp_template_editor_set_template (GIMP_TEMPLATE_EDITOR (editor),
-                                     template);
-
   g_object_set_data (G_OBJECT (dialog), "gimp-template-editor", editor);
-  g_object_set_data (G_OBJECT (dialog), "gimp-template",        template);
-  g_object_set_data (G_OBJECT (dialog), "gimp",                 gimp);
 
   gtk_widget_show (dialog);
 }
