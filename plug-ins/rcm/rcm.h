@@ -124,8 +124,8 @@ typedef struct
   gint          Success;
   gint          Units;
   gint          Gray_to_from;
-  GDrawable     *drawable;
-  GDrawable     *mask;
+  GimpDrawable     *drawable;
+  GimpDrawable     *mask;
   ReducedImage  *reduced;
   RcmCircle     *To;
   RcmCircle     *From;

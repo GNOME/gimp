@@ -74,9 +74,9 @@
 static void query (void);
 static void run   (gchar   *name,
 		   gint     nparams,
-		   GParam  *param,
+		   GimpParam  *param,
 		   gint    *nreturn_vals,
-		   GParam **return_vals);
+		   GimpParam **return_vals);
 
 static gint open_url_dialog     (void);
 static void ok_callback         (GtkWidget *widget,
@@ -95,7 +95,7 @@ static gint open_url            (gchar     *url,
 				 gint       new_window);
 
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -124,11 +124,11 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_STRING, "url", "URL of a document to open" },
-    { PARAM_INT32,  "new_window", "Create a new window or use existing one?" },
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "url", "URL of a document to open" },
+    { GIMP_PDB_INT32,  "new_window", "Create a new window or use existing one?" },
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -140,7 +140,7 @@ query (void)
 			  "1997",
 			  N_("<Toolbox>/Xtns/Web Browser/Open URL..."),
 			  NULL,
-			  PROC_EXTENSION,
+			  GIMP_EXTENSION,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -148,17 +148,17 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   *nreturn_vals = 1;
@@ -168,7 +168,7 @@ run (gchar   *name,
     {
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
+	case GIMP_RUN_INTERACTIVE:
 	  INIT_I18N_UI ();
 	  /* Possibly retrieve data */
 	  gimp_get_data ("extension_web_browser", &url_info);
@@ -177,11 +177,11 @@ run (gchar   *name,
 	    return;
 	  break;
 
-	case RUN_NONINTERACTIVE:
+	case GIMP_RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != 3)
 	    {
-	      status = STATUS_CALLING_ERROR;
+	      status = GIMP_PDB_CALLING_ERROR;
 	    }
 	  else
 	    {
@@ -190,7 +190,7 @@ run (gchar   *name,
 	    }
 	  break;
 
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_get_data ("extension_web_browser", &url_info);
 	  break;
 
@@ -198,18 +198,18 @@ run (gchar   *name,
 	  break;
 	}
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  if (!open_url (url_info.url, url_info.new_window))
-	    values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	    values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-	  if (run_mode == RUN_INTERACTIVE)
+	  if (run_mode == GIMP_RUN_INTERACTIVE)
 	    gimp_set_data ("extension_web_browser", &url_info, sizeof (u_info));
 
-	  values[0].data.d_status = STATUS_SUCCESS;
+	  values[0].data.d_status = GIMP_PDB_SUCCESS;
 	}
       else
-	values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
     }
   else
     g_assert_not_reached ();

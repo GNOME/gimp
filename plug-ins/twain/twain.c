@@ -129,10 +129,10 @@ void postTransferCallback(int, void *);
 static void init(void);
 static void quit(void);
 static void query(void);
-static void run(char *, int, GParam *, int *, GParam **);
+static void run(char *, int, GimpParam *, int *, GimpParam **);
 
 /* This plug-in's functions */
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,    /* init_proc */
   NULL,    /* quit_proc */
@@ -140,7 +140,7 @@ GPlugInInfo PLUG_IN_INFO =
   run,     /* run_proc */
 };
 	
-extern void set_gimp_PLUG_IN_INFO_PTR(GPlugInInfo *);
+extern void set_gimp_PLUG_IN_INFO_PTR(GimpPlugInInfo *);
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
@@ -448,11 +448,11 @@ WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
  * Plug-in Parameter definitions
  */
 #define NUMBER_IN_ARGS 1
-#define IN_ARGS { PARAM_INT32, "run_mode", "Interactive, non-interactive" }
+#define IN_ARGS { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" }
 #define NUMBER_OUT_ARGS 2
 #define OUT_ARGS \
-	{ PARAM_INT32, "image_count", "Number of acquired images" }, \
-	{ PARAM_INT32ARRAY, "image_ids", "Array of acquired image identifiers" }
+	{ GIMP_PDB_INT32, "image_count", "Number of acquired images" }, \
+	{ GIMP_PDB_INT32ARRAY, "image_ids", "Array of acquired image identifiers" }
 
 	
 /*
@@ -464,8 +464,8 @@ WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 static void 
 query(void)
 {
-  static GParamDef args[] = { IN_ARGS };
-  static GParamDef return_vals[] = { OUT_ARGS };
+  static GimpParamDef args[] = { IN_ARGS };
+  static GimpParamDef return_vals[] = { OUT_ARGS };
 
   INIT_I18N ();
 
@@ -480,7 +480,7 @@ query(void)
 			   PLUG_IN_VERSION,
 			   PLUG_IN_D_MENU_PATH,
 			   NULL,
-			   PROC_EXTENSION,		
+			   GIMP_EXTENSION,		
 			   NUMBER_IN_ARGS,
 			   NUMBER_OUT_ARGS,
 			   args,
@@ -496,7 +496,7 @@ query(void)
 			   PLUG_IN_VERSION,
 			   PLUG_IN_R_MENU_PATH,
 			   NULL,
-			   PROC_EXTENSION,		
+			   GIMP_EXTENSION,		
 			   NUMBER_IN_ARGS,
 			   NUMBER_OUT_ARGS,
 			   args,
@@ -512,7 +512,7 @@ query(void)
 			   PLUG_IN_VERSION,
 			   N_("<Toolbox>/File/Acquire/TWAIN..."),
 			   NULL,
-			   PROC_EXTENSION,		
+			   GIMP_EXTENSION,		
 			   NUMBER_IN_ARGS,
 			   NUMBER_OUT_ARGS,
 			   args,
@@ -521,7 +521,7 @@ query(void)
 	
 	
 /* Return values storage */
-static GParam values[3];
+static GimpParam values[3];
 
 /*
  * run
@@ -532,17 +532,17 @@ static GParam values[3];
 static void 
 run(gchar *name,		/* name of plugin */
     gint nparams,		/* number of in-paramters */
-    GParam *param,		/* in-parameters */
+    GimpParam *param,		/* in-parameters */
     gint *nreturn_vals,	        /* number of out-parameters */
-    GParam **return_vals)	/* out-parameters */
+    GimpParam **return_vals)	/* out-parameters */
 {
-  GRunModeType run_mode;
+  GimpRunModeType run_mode;
 
   /* Initialize the return values
    * Always return at least the status to the caller. 
    */
-  values[0].type = PARAM_STATUS;
-  values[0].data.d_status = STATUS_SUCCESS;
+  values[0].type = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_SUCCESS;
   *nreturn_vals = 1;
   *return_vals = values;
 
@@ -551,7 +551,7 @@ run(gchar *name,		/* name of plugin */
    * to be used in doing the acquire.
    */
   if (!twainIsAvailable()) {
-    values[0].data.d_status = STATUS_EXECUTION_ERROR;
+    values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
     return;
   }
 
@@ -559,28 +559,28 @@ run(gchar *name,		/* name of plugin */
   run_mode = param[0].data.d_int32;
 		
   /* Set up the rest of the return parameters */
-  values[1].type = PARAM_INT32;
+  values[1].type = GIMP_PDB_INT32;
   values[1].data.d_int32 = 0;
-  values[2].type = PARAM_INT32ARRAY;
+  values[2].type = GIMP_PDB_INT32ARRAY;
   values[2].data.d_int32array = g_new (gint32, MAX_IMAGES);
 		
   /* How are we running today? */
   switch (run_mode) {
-  case RUN_INTERACTIVE:
+  case GIMP_RUN_INTERACTIVE:
     /* Retrieve values from the last run...
      * Currently ignored
      */
     gimp_get_data(PLUG_IN_NAME, &twainvals);
     break;
 			
-  case RUN_NONINTERACTIVE:
+  case GIMP_RUN_NONINTERACTIVE:
     /* Currently, we don't do non-interactive calls.
      * Bail if someone tries to call us non-interactively
      */
-    values[0].data.d_status = STATUS_CALLING_ERROR;
+    values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
     return;
 			
-  case RUN_WITH_LAST_VALS:
+  case GIMP_RUN_WITH_LAST_VALS:
     /* Retrieve values from the last run...
      * Currently ignored
      */
@@ -592,7 +592,7 @@ run(gchar *name,		/* name of plugin */
   } /* switch */
 		
   /* Have we succeeded so far? */
-  if (values[0].data.d_status == STATUS_SUCCESS)
+  if (values[0].data.d_status == GIMP_PDB_SUCCESS)
     twainWinMain();
 		
   /* Check to make sure we got at least one valid
@@ -603,7 +603,7 @@ run(gchar *name,		/* name of plugin */
      * datasource.  Do final Interactive
      * steps.
      */
-    if (run_mode == RUN_INTERACTIVE) {
+    if (run_mode == GIMP_RUN_INTERACTIVE) {
       /* Store variable states for next run */
       gimp_set_data(PLUG_IN_NAME, &twainvals, sizeof (TwainValues));
     }
@@ -611,7 +611,7 @@ run(gchar *name,		/* name of plugin */
     /* Set return values */
     *nreturn_vals = 3;
   } else {
-    values[0].data.d_status = STATUS_EXECUTION_ERROR;
+    values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
   }
 }
 	
@@ -625,8 +625,8 @@ run(gchar *name,		/* name of plugin */
 typedef struct {
   gint32 image_id;
   gint32 layer_id;
-  GPixelRgn pixel_rgn;
-  GDrawable *drawable;
+  GimpPixelRgn pixel_rgn;
+  GimpDrawable *drawable;
   pTW_PALETTE8 paletteData;
   int totalPixels;
   int completedPixels;
@@ -668,14 +668,14 @@ beginTransferCallback(pTW_IMAGEINFO imageInfo, void *clientData)
   case TWPT_BW:
   case TWPT_GRAY:
     /* Set up the image and layer types */
-    imageType = GRAY;
-    layerType = GRAY_IMAGE;
+    imageType = GIMP_GRAY;
+    layerType = GIMP_GRAY_IMAGE;
     break;
 			
   case TWPT_RGB:
     /* Set up the image and layer types */
-    imageType = RGB;
-    layerType = RGB_IMAGE;
+    imageType = GIMP_RGB;
+    layerType = GIMP_RGB_IMAGE;
     break;
 
   case TWPT_PALETTE:
@@ -690,14 +690,14 @@ beginTransferCallback(pTW_IMAGEINFO imageInfo, void *clientData)
     switch (theClientData->paletteData->PaletteType) {
     case TWPA_RGB:
       /* Set up the image and layer types */
-      imageType = RGB;
-      layerType = RGB_IMAGE;
+      imageType = GIMP_RGB;
+      layerType = GIMP_RGB_IMAGE;
       break;
 
     case TWPA_GRAY:
       /* Set up the image and layer types */
-      imageType = GRAY;
-      layerType = GRAY_IMAGE;
+      imageType = GIMP_GRAY;
+      layerType = GIMP_GRAY_IMAGE;
       break;
 
     default:
@@ -722,7 +722,7 @@ beginTransferCallback(pTW_IMAGEINFO imageInfo, void *clientData)
 					   _("Background"),
 					   imageInfo->ImageWidth, 
 					   imageInfo->ImageLength,
-					   layerType, 100, NORMAL_MODE);
+					   layerType, 100, GIMP_NORMAL_MODE);
 		
   /* Add the layer to the image */
   gimp_image_add_layer(theClientData->image_id, 
@@ -1090,7 +1090,7 @@ endTransferCallback(int completionState, int pendingCount, void *clientData)
   /* Make sure to check our return code */
   if (completionState == TWRC_XFERDONE) {
     /* We have a completed image transfer */
-    values[2].type = PARAM_INT32ARRAY;	
+    values[2].type = GIMP_PDB_INT32ARRAY;	
     values[2].data.d_int32array[values[1].data.d_int32++] =
       theClientData->image_id;
 				

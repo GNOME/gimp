@@ -105,15 +105,15 @@ gint
 p_get_gimp_selection_bounds (gint32 image_id, gint32 *x1, gint32 *y1, gint32 *x2, gint32 *y2)
 {
    static gchar    *l_get_sel_bounds_proc = "gimp_selection_bounds";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    return_vals = gimp_run_procedure (l_get_sel_bounds_proc,
                                  &nreturn_vals,
-                                 PARAM_IMAGE, image_id,
-                                 PARAM_END);
+                                 GIMP_PDB_IMAGE, image_id,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       *x1 = return_vals[2].data.d_int32;
       *y1 = return_vals[3].data.d_int32;
@@ -135,15 +135,15 @@ gint
 p_gimp_selection_load (gint32 image_id, gint32 channel_id)
 {
    static gchar    *l_sel_load = "gimp_selection_load";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    return_vals = gimp_run_procedure (l_sel_load,
                                  &nreturn_vals,
-                                 PARAM_CHANNEL, channel_id,
-                                 PARAM_END);
+                                 GIMP_PDB_CHANNEL, channel_id,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       return(TRUE);
    }
@@ -162,16 +162,16 @@ int
 p_layer_set_linked (gint32 layer_id, gint32 new_state)
 {
    static gchar    *l_set_linked_proc = "gimp_layer_set_linked";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    return_vals = gimp_run_procedure (l_set_linked_proc,
                                  &nreturn_vals,
-                                 PARAM_LAYER, layer_id,
-                                 PARAM_INT32, new_state,  /* TRUE or FALSE */
-                                 PARAM_END);
+                                 GIMP_PDB_LAYER, layer_id,
+                                 GIMP_PDB_INT32, new_state,  /* TRUE or FALSE */
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       return (0);
    }
@@ -187,7 +187,7 @@ p_layer_set_linked (gint32 layer_id, gint32 new_state)
 
 gint p_layer_get_linked(gint32 layer_id)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   int nreturn_vals;
   gint32 is_linked;
 
@@ -195,10 +195,10 @@ gint p_layer_get_linked(gint32 layer_id)
 
   return_vals = gimp_run_procedure ("gimp_layer_get_linked",
                                     &nreturn_vals,
-                                    PARAM_LAYER, layer_id,
-                                    PARAM_END);
+                                    GIMP_PDB_LAYER, layer_id,
+                                    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
   {
     is_linked = return_vals[1].data.d_int32;
   }
@@ -216,15 +216,15 @@ gint p_layer_get_linked(gint32 layer_id)
 gint32 p_gimp_image_floating_sel_attached_to(gint32 image_id)
 {
    static gchar    *l_fsel_attached_to_proc = "gimp_image_floating_sel_attached_to";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    return_vals = gimp_run_procedure (l_fsel_attached_to_proc,
                                  &nreturn_vals,
-                                 PARAM_IMAGE, image_id,
-                                 PARAM_END);
+                                 GIMP_PDB_IMAGE, image_id,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       return(return_vals[1].data.d_drawable);
    }
@@ -241,16 +241,16 @@ gint32 p_gimp_image_floating_sel_attached_to(gint32 image_id)
 gint   p_gimp_floating_sel_attach(gint32 layer_id, gint32 drawable_id)
 {
    static gchar    *l_fsel_attach_proc = "gimp_floating_sel_attach";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    return_vals = gimp_run_procedure (l_fsel_attach_proc,
                                  &nreturn_vals,
-                                 PARAM_LAYER,    layer_id,
-                                 PARAM_DRAWABLE, drawable_id,
-                                 PARAM_END);
+                                 GIMP_PDB_LAYER,    layer_id,
+                                 GIMP_PDB_DRAWABLE, drawable_id,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       return (0);
    }
@@ -267,16 +267,16 @@ gint   p_gimp_floating_sel_attach(gint32 layer_id, gint32 drawable_id)
 gint   p_gimp_floating_sel_rigor(gint32 layer_id, gint32 undo)
 {
    static gchar    *l_fsel_rigor_proc = "gimp_floating_sel_rigor";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    return_vals = gimp_run_procedure (l_fsel_rigor_proc,
                                  &nreturn_vals,
-                                 PARAM_LAYER, layer_id,
-                                 PARAM_INT32, undo,
-                                 PARAM_END);
+                                 GIMP_PDB_LAYER, layer_id,
+                                 GIMP_PDB_INT32, undo,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       return (0);
    }
@@ -293,16 +293,16 @@ gint   p_gimp_floating_sel_rigor(gint32 layer_id, gint32 undo)
 gint   p_gimp_floating_sel_relax(gint32 layer_id, gint32 undo)
 {
    static gchar    *l_fsel_relax_proc = "gimp_floating_sel_relax";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    return_vals = gimp_run_procedure (l_fsel_relax_proc,
                                  &nreturn_vals,
-                                 PARAM_LAYER, layer_id,
-                                 PARAM_INT32, undo,
-                                 PARAM_END);
+                                 GIMP_PDB_LAYER, layer_id,
+                                 GIMP_PDB_INT32, undo,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       return (0);
    }
@@ -322,10 +322,10 @@ gint   p_gimp_floating_sel_relax(gint32 layer_id, gint32 undo)
 gint32   p_gimp_image_add_guide(gint32 image_id, gint32 position, gint32 orientation)
 {
    static gchar    *l_add_guide_proc;
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
-   if(orientation == ORIENTATION_VERTICAL)
+   if(orientation == GIMP_VERTICAL)
    {
       l_add_guide_proc = "gimp_image_add_vguide";
    }
@@ -336,11 +336,11 @@ gint32   p_gimp_image_add_guide(gint32 image_id, gint32 position, gint32 orienta
 
    return_vals = gimp_run_procedure (l_add_guide_proc,
                                  &nreturn_vals,
-                                 PARAM_IMAGE, image_id,
-                                 PARAM_INT32, position,
-                                 PARAM_END);
+                                 GIMP_PDB_IMAGE, image_id,
+                                 GIMP_PDB_INT32, position,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       return(return_vals[1].data.d_int32);  /* return the guide ID */
    }
@@ -363,16 +363,16 @@ gint32   p_gimp_image_add_guide(gint32 image_id, gint32 position, gint32 orienta
 gint32   p_gimp_image_findnext_guide(gint32 image_id, gint32 guide_id)
 {
    static gchar    *l_findnext_guide_proc = "gimp_image_find_next_guide";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    return_vals = gimp_run_procedure (l_findnext_guide_proc,
                                  &nreturn_vals,
-                                 PARAM_IMAGE, image_id,
-                                 PARAM_INT32, guide_id,
-                                 PARAM_END);
+                                 GIMP_PDB_IMAGE, image_id,
+                                 GIMP_PDB_INT32, guide_id,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       return(return_vals[1].data.d_int32);  /* return the next guide ID */
    }
@@ -391,16 +391,16 @@ gint32   p_gimp_image_findnext_guide(gint32 image_id, gint32 guide_id)
 gint32   p_gimp_image_get_guide_position(gint32 image_id, gint32 guide_id)
 {
    static gchar    *l_get_guide_pos_proc = "gimp_image_get_guide_position";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    return_vals = gimp_run_procedure (l_get_guide_pos_proc,
                                  &nreturn_vals,
-                                 PARAM_IMAGE, image_id,
-                                 PARAM_INT32, guide_id,
-                                 PARAM_END);
+                                 GIMP_PDB_IMAGE, image_id,
+                                 GIMP_PDB_INT32, guide_id,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       return(return_vals[1].data.d_int32);  /* return the guide position */
    }
@@ -418,16 +418,16 @@ gint32   p_gimp_image_get_guide_position(gint32 image_id, gint32 guide_id)
 gint  p_gimp_image_get_guide_orientation(gint32 image_id, gint32 guide_id)
 {
    static gchar    *l_get_guide_pos_orient = "gimp_image_get_guide_orientation";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    return_vals = gimp_run_procedure (l_get_guide_pos_orient,
                                  &nreturn_vals,
-                                 PARAM_IMAGE, image_id,
-                                 PARAM_INT32, guide_id,
-                                 PARAM_END);
+                                 GIMP_PDB_IMAGE, image_id,
+                                 GIMP_PDB_INT32, guide_id,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       return(return_vals[1].data.d_int32); /* return the guide orientation */
    }
@@ -444,15 +444,15 @@ gint  p_gimp_image_get_guide_orientation(gint32 image_id, gint32 guide_id)
 gint32  p_gimp_image_get_resolution (gint32 image_id, float *xresolution, float *yresolution)
 {
    static gchar    *l_procname = "gimp_image_get_resolution";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    return_vals = gimp_run_procedure (l_procname,
                                  &nreturn_vals,
-                                 PARAM_IMAGE, image_id,
-                                 PARAM_END);
+                                 GIMP_PDB_IMAGE, image_id,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       *xresolution = return_vals[1].data.d_float;
       *yresolution = return_vals[2].data.d_float;
@@ -473,17 +473,17 @@ gint32  p_gimp_image_get_resolution (gint32 image_id, float *xresolution, float 
 gint  p_gimp_image_set_resolution (gint32 image_id, float xresolution, float yresolution)
 {
    static gchar    *l_procname = "gimp_image_set_resolution";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    return_vals = gimp_run_procedure (l_procname,
                                  &nreturn_vals,
-                                 PARAM_IMAGE, image_id,
-                                 PARAM_FLOAT, xresolution,
-                                 PARAM_FLOAT, yresolution,
-                                 PARAM_END);
+                                 GIMP_PDB_IMAGE, image_id,
+                                 GIMP_PDB_FLOAT, xresolution,
+                                 GIMP_PDB_FLOAT, yresolution,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       return (0); /* OK */
    }
@@ -500,15 +500,15 @@ gint  p_gimp_image_set_resolution (gint32 image_id, float xresolution, float yre
 gint32  p_gimp_layer_get_tattoo (gint32 layer_id)
 {
    static gchar    *l_procname = "gimp_layer_get_tattoo";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    return_vals = gimp_run_procedure (l_procname,
                                  &nreturn_vals,
-                                 PARAM_LAYER, layer_id,
-                                 PARAM_END);
+                                 GIMP_PDB_LAYER, layer_id,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       return(return_vals[1].data.d_int32);  /* OK, return Tattoo Id */
    }
@@ -525,15 +525,15 @@ gint32  p_gimp_layer_get_tattoo (gint32 layer_id)
 gint32  p_gimp_channel_get_tattoo (gint32 channel_id)
 {
    static gchar    *l_procname = "gimp_channel_get_tattoo";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    return_vals = gimp_run_procedure (l_procname,
                                  &nreturn_vals,
-                                 PARAM_CHANNEL, channel_id,
-                                 PARAM_END);
+                                 GIMP_PDB_CHANNEL, channel_id,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       return(return_vals[1].data.d_int32);  /* OK, return Tattoo Id */
    }
@@ -550,15 +550,15 @@ gchar **
 p_gimp_drawable_parasite_list (gint32 drawable_id, gint32 *num_parasites)
 {
    static gchar    *l_procname = "gimp_drawable_parasite_list";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    return_vals = gimp_run_procedure (l_procname,
                                     &nreturn_vals,
-                                    PARAM_DRAWABLE, drawable_id,
-                                    PARAM_END);
+                                    GIMP_PDB_DRAWABLE, drawable_id,
+                                    GIMP_PDB_END);
                                     
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       *num_parasites = return_vals[1].data.d_int32;
       return(return_vals[2].data.d_stringarray);    /* OK, return name list */
@@ -578,15 +578,15 @@ gchar **
 p_gimp_image_parasite_list (gint32 image_id, gint32 *num_parasites)
 {
    static gchar    *l_procname = "gimp_image_parasite_list";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    return_vals = gimp_run_procedure (l_procname,
                                     &nreturn_vals,
-                                    PARAM_IMAGE,  image_id,
-                                    PARAM_END);
+                                    GIMP_PDB_IMAGE,  image_id,
+                                    GIMP_PDB_END);
                                     
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       *num_parasites = return_vals[1].data.d_int32;
       return(return_vals[2].data.d_stringarray);    /* OK, return name list */
@@ -608,7 +608,7 @@ p_gimp_path_set_points(gint32 image_id, gchar *name,
                        gint32 path_type, gint32 num_points, gdouble *path_points)
 {
    static gchar    *l_called_proc = "gimp_path_set_points";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    gint32 l_idx;
@@ -626,14 +626,14 @@ p_gimp_path_set_points(gint32 image_id, gchar *name,
 
    return_vals = gimp_run_procedure (l_called_proc,
                                  &nreturn_vals,
-                                 PARAM_IMAGE,  image_id,
-                                 PARAM_STRING, name,
-                                 PARAM_INT32,  path_type,
-                                 PARAM_INT32,  num_points,
-                                 PARAM_FLOATARRAY, path_points,
-                                 PARAM_END);
+                                 GIMP_PDB_IMAGE,  image_id,
+                                 GIMP_PDB_STRING, name,
+                                 GIMP_PDB_INT32,  path_type,
+                                 GIMP_PDB_INT32,  num_points,
+                                 GIMP_PDB_FLOATARRAY, path_points,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       return(0);  /* OK */
    }
@@ -653,16 +653,16 @@ p_gimp_path_get_points(gint32 image_id, gchar *name,
                        gint32 *path_type, gint32 *path_closed, gint32 *num_points)
 {
    static gchar    *l_called_proc = "gimp_path_get_points";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    return_vals = gimp_run_procedure (l_called_proc,
                                  &nreturn_vals,
-                                 PARAM_IMAGE, image_id,
-                                 PARAM_STRING, name,
-                                 PARAM_END);
+                                 GIMP_PDB_IMAGE, image_id,
+                                 GIMP_PDB_STRING, name,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       *path_type = return_vals[1].data.d_int32;
       *path_closed = return_vals[2].data.d_int32;
@@ -698,15 +698,15 @@ gchar **
 p_gimp_path_list(gint32 image_id, gint32 *num_paths)
 {
    static gchar    *l_called_proc = "gimp_path_list";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    return_vals = gimp_run_procedure (l_called_proc,
                                  &nreturn_vals,
-                                 PARAM_IMAGE, image_id,
-                                 PARAM_END);
+                                 GIMP_PDB_IMAGE, image_id,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       *num_paths = return_vals[1].data.d_int32;
       return(return_vals[2].data.d_stringarray);  /* OK, return path names */
@@ -726,15 +726,15 @@ gchar *
 p_gimp_path_get_current(gint32 image_id)
 {
    static gchar    *l_called_proc = "gimp_path_get_current";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    return_vals = gimp_run_procedure (l_called_proc,
                                  &nreturn_vals,
-                                 PARAM_IMAGE, image_id,
-                                 PARAM_END);
+                                 GIMP_PDB_IMAGE, image_id,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       return(g_strdup(return_vals[1].data.d_string)); /* OK */
    }
@@ -752,16 +752,16 @@ gint
 p_gimp_path_set_current(gint32 image_id, gchar *name)
 {
    static gchar    *l_called_proc = "gimp_path_set_current";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    return_vals = gimp_run_procedure (l_called_proc,
                                  &nreturn_vals,
-                                 PARAM_IMAGE, image_id,
-                                 PARAM_STRING, name,
-                                 PARAM_END);
+                                 GIMP_PDB_IMAGE, image_id,
+                                 GIMP_PDB_STRING, name,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       return(0); /* OK */
    }
@@ -779,16 +779,16 @@ gint32
 p_gimp_path_get_locked(gint32 image_id, gchar *name)
 {
    static gchar    *l_called_proc = "gimp_path_get_locked";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    return_vals = gimp_run_procedure (l_called_proc,
                                  &nreturn_vals,
-                                 PARAM_IMAGE, image_id,
-                                 PARAM_STRING, name,
-                                 PARAM_END);
+                                 GIMP_PDB_IMAGE, image_id,
+                                 GIMP_PDB_STRING, name,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       return(return_vals[1].data.d_int32); /* OK */
    }
@@ -806,17 +806,17 @@ gint
 p_gimp_path_set_locked(gint32 image_id, gchar *name, gint32 lockstatus)
 {
    static gchar    *l_called_proc = "gimp_path_set_locked";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    return_vals = gimp_run_procedure (l_called_proc,
                                  &nreturn_vals,
-                                 PARAM_IMAGE, image_id,
-                                 PARAM_STRING, name,
-                                 PARAM_INT32, lockstatus,
-                                 PARAM_END);
+                                 GIMP_PDB_IMAGE, image_id,
+                                 GIMP_PDB_STRING, name,
+                                 GIMP_PDB_INT32, lockstatus,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       return(0); /* OK */
    }
@@ -834,16 +834,16 @@ gint32
 p_gimp_path_get_tattoo(gint32 image_id, gchar *name)
 {
    static gchar    *l_called_proc = "gimp_path_get_tattoo";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    return_vals = gimp_run_procedure (l_called_proc,
                                  &nreturn_vals,
-                                 PARAM_IMAGE, image_id,
-                                 PARAM_STRING, name,
-                                 PARAM_END);
+                                 GIMP_PDB_IMAGE, image_id,
+                                 GIMP_PDB_STRING, name,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       return(return_vals[1].data.d_int32); /* OK */
    }
@@ -861,7 +861,7 @@ gint
 p_gimp_path_set_tattoo(gint32 image_id, gchar *name, gint32 tattoovalue)
 {
    static gchar    *l_called_proc = "gimp_path_set_tattoo";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    if(p_procedure_available(l_called_proc) < 0)
@@ -870,12 +870,12 @@ p_gimp_path_set_tattoo(gint32 image_id, gchar *name, gint32 tattoovalue)
    }
    return_vals = gimp_run_procedure (l_called_proc,
                                  &nreturn_vals,
-                                 PARAM_IMAGE, image_id,
-                                 PARAM_STRING, name,
-                                 PARAM_INT32, tattoovalue,
-                                 PARAM_END);
+                                 GIMP_PDB_IMAGE, image_id,
+                                 GIMP_PDB_STRING, name,
+                                 GIMP_PDB_INT32, tattoovalue,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       return(0); /* OK */
    }
@@ -894,7 +894,7 @@ gint
 p_gimp_layer_set_tattoo(gint32 layer_id, gint32 tattoovalue)
 {
    static gchar    *l_called_proc = "gimp_layer_set_tattoo";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    if(p_procedure_available(l_called_proc) < 0)
@@ -903,11 +903,11 @@ p_gimp_layer_set_tattoo(gint32 layer_id, gint32 tattoovalue)
    }
    return_vals = gimp_run_procedure (l_called_proc,
                                  &nreturn_vals,
-                                 PARAM_LAYER, layer_id,
-                                 PARAM_INT32, tattoovalue,
-                                 PARAM_END);
+                                 GIMP_PDB_LAYER, layer_id,
+                                 GIMP_PDB_INT32, tattoovalue,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       return(0); /* OK */
    }
@@ -926,7 +926,7 @@ gint
 p_gimp_channel_set_tattoo(gint32 channel_id, gint32 tattoovalue)
 {
    static gchar    *l_called_proc = "gimp_channel_set_tattoo";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    if(p_procedure_available(l_called_proc) < 0)
@@ -935,11 +935,11 @@ p_gimp_channel_set_tattoo(gint32 channel_id, gint32 tattoovalue)
    }
    return_vals = gimp_run_procedure (l_called_proc,
                                  &nreturn_vals,
-                                 PARAM_CHANNEL, channel_id,
-                                 PARAM_INT32, tattoovalue,
-                                 PARAM_END);
+                                 GIMP_PDB_CHANNEL, channel_id,
+                                 GIMP_PDB_INT32, tattoovalue,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       return(0); /* OK */
    }
@@ -958,7 +958,7 @@ gint
 p_gimp_image_set_tattoo_state(gint32 image_id, gint32 tattoo_state)
 {
    static gchar    *l_called_proc = "gimp_image_set_tattoo_state";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    if(p_procedure_available(l_called_proc) < 0)
@@ -967,11 +967,11 @@ p_gimp_image_set_tattoo_state(gint32 image_id, gint32 tattoo_state)
    }
    return_vals = gimp_run_procedure (l_called_proc,
                                  &nreturn_vals,
-                                 PARAM_IMAGE, image_id,
-                                 PARAM_INT32, tattoo_state,
-                                 PARAM_END);
+                                 GIMP_PDB_IMAGE, image_id,
+                                 GIMP_PDB_INT32, tattoo_state,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       return(0); /* OK */
    }
@@ -989,7 +989,7 @@ gint32
 p_gimp_image_get_tattoo_state(gint32 image_id)
 {
    static gchar    *l_called_proc = "gimp_image_get_tattoo_state";
-   GParam          *return_vals;
+   GimpParam          *return_vals;
    int              nreturn_vals;
 
    if(p_procedure_available(l_called_proc) < 0)
@@ -998,10 +998,10 @@ p_gimp_image_get_tattoo_state(gint32 image_id)
    }
    return_vals = gimp_run_procedure (l_called_proc,
                                  &nreturn_vals,
-                                 PARAM_IMAGE, image_id,
-                                 PARAM_END);
+                                 GIMP_PDB_IMAGE, image_id,
+                                 GIMP_PDB_END);
 
-   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
    {
       return(return_vals[1].data.d_int32); /* OK */
    }

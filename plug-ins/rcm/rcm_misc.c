@@ -181,12 +181,12 @@ rcm_is_gray (float s)
 /*-----------------------------------------------------------------------------------*/
 
 ReducedImage*
-rcm_reduce_image (GDrawable *drawable, 
-		  GDrawable *mask, 
+rcm_reduce_image (GimpDrawable *drawable, 
+		  GimpDrawable *mask, 
 		  gint       LongerSize, 
 		  gint       Slctn)
 {
-  GPixelRgn srcPR, srcMask;
+  GimpPixelRgn srcPR, srcMask;
   ReducedImage *temp;
   guchar *tempRGB, *src_row, *tempmask, *src_mask_row;
   gint i, j, whichcol, whichrow, x1, x2, y1, y2;

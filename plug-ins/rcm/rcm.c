@@ -55,7 +55,7 @@
 /*-----------------------------------------------------------------------------------*/
 
 void query (void);
-void run   (char *name, int nparams, GParam *param, int *nreturn_vals, GParam **return_vals);
+void run   (char *name, int nparams, GimpParam *param, int *nreturn_vals, GimpParam **return_vals);
 
 /*-----------------------------------------------------------------------------------*/
 /* Global variables */
@@ -74,7 +74,7 @@ RcmParams Current =
 /* Local variables */
 /*-----------------------------------------------------------------------------------*/
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,    /* init_proc */
   NULL,    /* quit_proc */
@@ -95,14 +95,14 @@ MAIN()
 void 
 query (void)
 {
-  GParamDef args[] =
+  GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (used for indexed images)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (used for indexed images)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
   };
 
-  GParamDef *return_vals = NULL;
+  GimpParamDef *return_vals = NULL;
   int nargs = sizeof (args) / sizeof (args[0]);
   int nreturn_vals = 0;
 
@@ -117,7 +117,7 @@ query (void)
 			  "04th April 1999",
 			  N_("<Image>/Image/Colors/Colormap Rotation..."),
 			  "RGB*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, nreturn_vals,
 			  args, return_vals);
 }
@@ -197,9 +197,9 @@ rcm_row (const guchar *src_row,
 /*-----------------------------------------------------------------------------------*/
 
 void 
-rcm (GDrawable *drawable)
+rcm (GimpDrawable *drawable)
 {
-  GPixelRgn srcPR, destPR;
+  GimpPixelRgn srcPR, destPR;
   gint width, height;
   gint bytes;
   guchar *src_row, *dest_row;
@@ -247,17 +247,17 @@ rcm (GDrawable *drawable)
 void 
 run (char    *name, 
      int      nparams, 
-     GParam  *param, 
+     GimpParam  *param, 
      int     *nreturn_vals, 
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  GParam values[1];
-  GStatusType status = STATUS_SUCCESS;
+  GimpParam values[1];
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   Current.drawable = gimp_drawable_get(param[2].data.d_drawable);
@@ -268,7 +268,7 @@ run (char    *name,
   if (gimp_drawable_is_indexed (Current.drawable->id) ||
       gimp_drawable_is_gray (Current.drawable->id) )
   {
-    status = STATUS_EXECUTION_ERROR;
+    status = GIMP_PDB_EXECUTION_ERROR;
   }
   else
   {
@@ -285,10 +285,10 @@ run (char    *name,
       gimp_displays_flush();
     }
     else
-      status = STATUS_EXECUTION_ERROR;
+      status = GIMP_PDB_EXECUTION_ERROR;
   }
   
   values[0].data.d_status = status;
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     gimp_drawable_detach(Current.drawable);
 }

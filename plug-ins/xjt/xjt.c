@@ -307,7 +307,7 @@ typedef struct
   gint              gimp_major_version;
   gint              gimp_minor_version;
   gint              gimp_micro_version;
-  GImageType        image_type;
+  GimpImageBaseType        image_type;
   gint              image_width;
   gint              image_height;
   gfloat            xresolution;
@@ -373,9 +373,9 @@ t_prop_table g_prop_table[PROP_TABLE_ENTRIES] = {
 static void   query      (void);
 static void   run        (gchar   *name,
 			  gint     nparams,
-			  GParam  *param,
+			  GimpParam  *param,
 			  gint    *nreturn_vals,
-			  GParam **return_vals);
+			  GimpParam **return_vals);
 
 static gint32 load_xjt_image (gchar  *filename);
 static gint   save_xjt_image (gchar  *filename,
@@ -386,7 +386,7 @@ static gint   save_dialog      (void);
 static void   save_ok_callback (GtkWidget *widget,
 				gpointer   data);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -437,31 +437,31 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef load_args[] =
+  static GimpParamDef load_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name of the file to load" },
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename", "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw_filename", "The name of the file to load" },
   };
-  static GParamDef load_return_vals[] =
+  static GimpParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" },
+    { GIMP_PDB_IMAGE, "image", "Output image" },
   };
   static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static gint nload_return_vals = (sizeof (load_return_vals) /
 				   sizeof (load_return_vals[0]));
 
-  static GParamDef save_args[] =
+  static GimpParamDef save_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "is ignored" },
-    { PARAM_STRING, "filename", "The name of the file to save the image in" },
-    { PARAM_STRING, "raw_filename", "The name of the file to save the image in" },
-    { PARAM_FLOAT, "quality", "Quality of saved image (0 <= quality <= 1)" },
-    { PARAM_FLOAT, "smoothing", "Smoothing factor for saved image (0 <= smoothing <= 1)" },
-    { PARAM_INT32, "optimize", "Optimization of entropy encoding parameters" },
-    { PARAM_INT32, "clr_transparent", "set all full-transparent pixels to 0" },
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "is ignored" },
+    { GIMP_PDB_STRING, "filename", "The name of the file to save the image in" },
+    { GIMP_PDB_STRING, "raw_filename", "The name of the file to save the image in" },
+    { GIMP_PDB_FLOAT, "quality", "Quality of saved image (0 <= quality <= 1)" },
+    { GIMP_PDB_FLOAT, "smoothing", "Smoothing factor for saved image (0 <= smoothing <= 1)" },
+    { GIMP_PDB_INT32, "optimize", "Optimization of entropy encoding parameters" },
+    { GIMP_PDB_INT32, "clr_transparent", "set all full-transparent pixels to 0" },
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -475,7 +475,7 @@ query (void)
                           "2000-Mar-07",
 			  "<Load>/xjt",
 			  NULL,
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
@@ -487,7 +487,7 @@ query (void)
                           "2000-Mar-07",
                           "<Save>/xjt",
 			  "RGB*, GRAY*",
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nsave_args, 0,
                           save_args, NULL);
 
@@ -503,13 +503,13 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[2];
-  GRunModeType  run_mode;
-  GStatusType   status = STATUS_SUCCESS;
+  static GimpParam values[2];
+  GimpRunModeType  run_mode;
+  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
   gint32        image_ID;
   gchar        *l_env;
 
@@ -526,10 +526,10 @@ run (gchar   *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  values[0].type          = PARAM_STATUS;
-  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (run_mode == RUN_NONINTERACTIVE)
+  if (run_mode == GIMP_RUN_NONINTERACTIVE)
     {
       INIT_I18N();
     }
@@ -545,34 +545,34 @@ run (gchar   *name,
       if (image_ID != -1)
 	{
 	  *nreturn_vals = 2;
-	  values[1].type         = PARAM_IMAGE;
+	  values[1].type         = GIMP_PDB_IMAGE;
 	  values[1].data.d_image = image_ID;
 	}
       else
 	{
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
   else if (strcmp (name, "file_xjt_save") == 0)
     {
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
+	case GIMP_RUN_INTERACTIVE:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_xjt_save", &jsvals);
 
 	  /*  First acquire information with a dialog  */
 	  if (! save_dialog ())
 	    {
-	      status = STATUS_CANCEL;
+	      status = GIMP_PDB_CANCEL;
 	    }
 	  break;
 
-	case RUN_NONINTERACTIVE:
+	case GIMP_RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != 8)
 	    {
-	      status = STATUS_CALLING_ERROR;
+	      status = GIMP_PDB_CALLING_ERROR;
 	    }
 	  else
 	    {
@@ -583,16 +583,16 @@ run (gchar   *name,
 
 	      if (jsvals.quality < 0.0 || jsvals.quality > 1.0)
 		{
-		  status = STATUS_CALLING_ERROR;
+		  status = GIMP_PDB_CALLING_ERROR;
 		}
 	      else if (jsvals.smoothing < 0.0 || jsvals.smoothing > 1.0)
 		{
-		  status = STATUS_CALLING_ERROR;
+		  status = GIMP_PDB_CALLING_ERROR;
 		}
 	    }
 	  break;
 
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_xjt_save", &jsvals);
 	  break;
@@ -601,13 +601,13 @@ run (gchar   *name,
 	  break;
 	}
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  if (save_xjt_image (param[3].data.d_string,
 			      param[1].data.d_int32,
 			      param[2].data.d_int32) <0)
 	    {
-	      status = STATUS_EXECUTION_ERROR;
+	      status = GIMP_PDB_EXECUTION_ERROR;
 	    }
 	  else
 	    {
@@ -618,7 +618,7 @@ run (gchar   *name,
     }
   else
     {
-      status = STATUS_CALLING_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
     }
 
   values[0].data.d_status = status;
@@ -629,13 +629,13 @@ run (gchar   *name,
 gint32
 p_to_GimpOrientation(gint32 orientation)
 {
-  if(orientation == XJT_ORIENTATION_VERTICAL) return(ORIENTATION_VERTICAL);
-  return(ORIENTATION_HORIZONTAL);
+  if(orientation == XJT_ORIENTATION_VERTICAL) return(GIMP_VERTICAL);
+  return(GIMP_HORIZONTAL);
 }
 gint32
 p_to_XJTOrientation(gint32 orientation)
 {
-  if(orientation == ORIENTATION_VERTICAL) return(XJT_ORIENTATION_VERTICAL);
+  if(orientation == GIMP_VERTICAL) return(XJT_ORIENTATION_VERTICAL);
   return(XJT_ORIENTATION_HORIZONTAL);
 }
 
@@ -1174,7 +1174,7 @@ p_write_parasite(gchar *dirname, FILE *fp,
   FILE *l_fp_pte;
   t_param_prop   l_param;
   
-  if(parasite->flags & GIMP_PARASITE_PERSISTENT)  /* check if Parasite should be saved */
+  if(parasite->flags & GIMP_PARASITE_PERSISTENT)  /* check if GimpParasite should be saved */
   {
      global_parasite_id++;
      
@@ -1486,7 +1486,7 @@ p_write_channel_prp(gchar *dirname,
 static void
 p_write_image_prp(gchar *dirname, FILE *fp, gint32 image_id, gint wr_all_prp)
 {
-   GImageType l_image_type;
+   GimpImageBaseType l_image_type;
    guint   l_width, l_height;
    float  l_xresolution, l_yresolution;
    t_param_prop   l_param;
@@ -1579,7 +1579,7 @@ save_xjt_image (gchar   *filename,
    FILE   *l_fp_prp;
    mode_t  l_mode_dir;
    
-   GImageType l_image_type;
+   GimpImageBaseType l_image_type;
    gint32 *l_layers_list;
    gint32 *l_channels_list;
    gint    l_nlayers;

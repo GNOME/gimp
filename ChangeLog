@@ -1,3 +1,16 @@
+2000-08-24  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/rcm/rcm.[ch]
+	* plug-ins/rcm/rcm_misc.[ch]
+	* plug-ins/sel2path/sel2path.c
+	* plug-ins/sgi/sgi.c
+	* plug-ins/twain/twain.c
+	* plug-ins/webbrowser/webbrowser.c
+	* plug-ins/winsnap/winsnap.c
+	* plug-ins/xjt/xjpeg.[ch]
+	* plug-ins/xjt/xjt.c
+	* plug-ins/xjt/xpdb_calls.c: removed COMPAT_CRUFT
+	
 2000-08-23  Sven Neumann  <sven@gimp.org>
 
 	* app/fileops.c: make the file_save dialog sensitive again if the

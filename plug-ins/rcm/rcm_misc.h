@@ -54,7 +54,7 @@ float *closest(float *alpha, float *beta, float  angle);
 
 float angle_mod_2PI(float angle);
 
-ReducedImage *rcm_reduce_image(GDrawable *, GDrawable *, gint, gint);
+ReducedImage *rcm_reduce_image(GimpDrawable *, GimpDrawable *, gint, gint);
 
 void rcm_render_preview(GtkWidget *, gint);
 

@@ -88,7 +88,7 @@ static ICONINFO			iconInfo;
 static void init(void);
 static void quit(void);
 static void query(void);
-static void run(char *, int, GParam *, int *, GParam **);
+static void run(char *, int, GimpParam *, int *, GimpParam **);
 static void sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect);
 
 BOOL CALLBACK dialogProc(HWND, UINT, WPARAM, LPARAM);
@@ -133,7 +133,7 @@ static WinSnapInterface winsnapintf =
 };
 
 /* This plug-in's functions */
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,    /* init_proc */
   NULL,    /* quit_proc */
@@ -1043,13 +1043,13 @@ snap_dialog(void)
  * Plug-in Parameter definitions
  */
 #define NUMBER_IN_ARGS 3
-#define IN_ARGS { PARAM_INT32,    "run_mode",  "Interactive, non-interactive" },\
-                { PARAM_INT32,    "root",      "Root window { TRUE, FALSE }" },\
-                { PARAM_INT32,    "decorations", \
+#define IN_ARGS { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive" },\
+                { GIMP_PDB_INT32,    "root",      "Root window { TRUE, FALSE }" },\
+                { GIMP_PDB_INT32,    "decorations", \
 									"Include Window Decorations { TRUE, FALSE }" }
 
 #define NUMBER_OUT_ARGS 1
-#define OUT_ARGS { PARAM_IMAGE,   "image",     "Output image" }
+#define OUT_ARGS { GIMP_PDB_IMAGE,   "image",     "Output image" }
 
 	
 /*
@@ -1061,8 +1061,8 @@ snap_dialog(void)
 static void
 query(void)
 {
-  static GParamDef args[] = { IN_ARGS };
-  static GParamDef return_vals[] = { OUT_ARGS };
+  static GimpParamDef args[] = { IN_ARGS };
+  static GimpParamDef return_vals[] = { OUT_ARGS };
 
   INIT_I18N();
 
@@ -1075,7 +1075,7 @@ query(void)
 			 PLUG_IN_VERSION,
 			 N_("<Toolbox>/File/Acquire/Screen Shot..."),
 			 NULL,
-			 PROC_EXTENSION,		
+			 GIMP_EXTENSION,		
 			 NUMBER_IN_ARGS,
 			 NUMBER_OUT_ARGS,
 			 args,
@@ -1083,7 +1083,7 @@ query(void)
 }
 	
 /* Return values storage */
-static GParam values[2];
+static GimpParam values[2];
 
 /*
  * run
@@ -1094,18 +1094,18 @@ static GParam values[2];
 static void
 run(gchar *name,		/* name of plugin */
     gint nparams,		/* number of in-paramters */
-    GParam *param,		/* in-parameters */
+    GimpParam *param,		/* in-parameters */
     gint *nreturn_vals,	        /* number of out-parameters */
-    GParam **return_vals)	/* out-parameters */
+    GimpParam **return_vals)	/* out-parameters */
 {
-  GRunModeType run_mode;
+  GimpRunModeType run_mode;
   int wait = 1;
 
   /* Initialize the return values
    * Always return at least the status to the caller.
    */
-  values[0].type = PARAM_STATUS;
-  values[0].data.d_status = STATUS_SUCCESS;
+  values[0].type = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_SUCCESS;
   *nreturn_vals = 1;
   *return_vals = values;
 
@@ -1113,7 +1113,7 @@ run(gchar *name,		/* name of plugin */
   run_mode = param[0].data.d_int32;
 		
   /* Set up the rest of the return parameters */
-  values[1].type = PARAM_INT32;
+  values[1].type = GIMP_PDB_INT32;
   values[1].data.d_int32 = 0;
 		
   /* Get the data from last run */
@@ -1121,16 +1121,16 @@ run(gchar *name,		/* name of plugin */
 
   /* How are we running today? */
   switch (run_mode) {
-  case RUN_INTERACTIVE:
+  case GIMP_RUN_INTERACTIVE:
     /* Get information from the dialog */
     if (!snap_dialog())
       return;
     break;
 			
-  case RUN_NONINTERACTIVE:
-  case RUN_WITH_LAST_VALS:
+  case GIMP_RUN_NONINTERACTIVE:
+  case GIMP_RUN_WITH_LAST_VALS:
     if (!winsnapvals.root)
-      values[0].data.d_status = STATUS_CALLING_ERROR;
+      values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
     break;
 			
   default:
@@ -1150,7 +1150,7 @@ run(gchar *name,		/* name of plugin */
     /* A window was captured.
      * Do final Interactive steps.
      */
-    if (run_mode == RUN_INTERACTIVE) {
+    if (run_mode == GIMP_RUN_INTERACTIVE) {
       /* Store variable states for next run */
       gimp_set_data(PLUG_IN_NAME, &winsnapvals, sizeof(WinSnapValues));
     }
@@ -1158,7 +1158,7 @@ run(gchar *name,		/* name of plugin */
     /* Set return values */
     *nreturn_vals = 2;
   } else {
-    values[0].data.d_status = STATUS_EXECUTION_ERROR;
+    values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
   }
 }
 
@@ -1210,8 +1210,8 @@ sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect)
   int		imageType, layerType;
   gint32	image_id;
   gint32	layer_id;
-  GPixelRgn	pixel_rgn;
-  GDrawable    *drawable;
+  GimpPixelRgn	pixel_rgn;
+  GimpDrawable    *drawable;
 
   /* Our width and height */
   width = (rect.right - rect.left);
@@ -1227,14 +1227,14 @@ sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect)
   flipRedAndBlueBytes(width, height);
 
   /* Set up the image and layer types */
-  imageType = RGB;
-  layerType = RGB_IMAGE;
+  imageType = GIMP_RGB;
+  layerType = GIMP_RGB_IMAGE;
 
   /* Create the GIMP image and layers */
   image_id = gimp_image_new(width, height, imageType);
   layer_id = gimp_layer_new(image_id, _("Background"),
 			    ROUND4(width), height,
-			    layerType, 100, NORMAL_MODE);
+			    layerType, 100, GIMP_NORMAL_MODE);
   gimp_image_add_layer(image_id, layer_id, 0);
 
   /* Get our drawable */

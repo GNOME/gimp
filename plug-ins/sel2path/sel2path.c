@@ -60,9 +60,9 @@
 static void      query  (void);
 static void      run    (gchar    *name,
 			 gint      nparams,
-			 GParam   *param,
+			 GimpParam   *param,
 			 gint     *nreturn_vals,
-			 GParam  **return_vals);
+			 GimpParam  **return_vals);
 
 static gint      sel2path_dialog         (SELVALS   *sels);
 static void      sel2path_ok_callback    (GtkWidget *widget, 
@@ -74,7 +74,7 @@ gboolean         do_sel2path             (gint32     drawable_ID,
 					  gint32     image_ID);
 
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,    /* init_proc */
   NULL,    /* quit_proc */
@@ -85,7 +85,7 @@ GPlugInInfo PLUG_IN_INFO =
 static gint    sel_x1, sel_y1, sel_x2, sel_y2;
 static gint    has_sel, sel_width, sel_height;
 static SELVALS selVals;
-GPixelRgn      selection_rgn;
+GimpPixelRgn      selection_rgn;
 gboolean       retVal = TRUE;  /* Toggle if cancle button clicked */
 
 MAIN ()
@@ -93,33 +93,33 @@ MAIN ()
 static void
 query_2 (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32,    "run_mode",                    "Interactive, non-interactive" },
-    { PARAM_IMAGE,    "image",                       "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable",                    "Input drawable" }, 
-    { PARAM_FLOAT,    "align_threshold",             "align_threshold"},
-    { PARAM_FLOAT,    "corner_always_threshold",     "corner_always_threshold"},
-    { PARAM_INT8,     "corner_surround",             "corner_surround"},
-    { PARAM_FLOAT,    "corner_threshold",            "corner_threshold"},
-    { PARAM_FLOAT,    "error_threshold",             "error_threshold"},
-    { PARAM_INT8,     "filter_alternative_surround", "filter_alternative_surround"},
-    { PARAM_FLOAT,    "filter_epsilon",              "filter_epsilon"},
-    { PARAM_INT8,     "filter_iteration_count",      "filter_iteration_count"},
-    { PARAM_FLOAT,    "filter_percent",              "filter_percent"},
-    { PARAM_INT8,     "filter_secondary_surround",   "filter_secondary_surround"},
-    { PARAM_INT8,     "filter_surround",             "filter_surround"},
-    { PARAM_INT8,     "keep_knees",                  "{1-Yes, 0-No}"},
-    { PARAM_FLOAT,    "line_reversion_threshold",    "line_reversion_threshold"},
-    { PARAM_FLOAT,    "line_threshold",              "line_threshold"},
-    { PARAM_FLOAT,    "reparameterize_improvement",  "reparameterize_improvement"},
-    { PARAM_FLOAT,    "reparameterize_threshold",    "reparameterize_threshold"},
-    { PARAM_FLOAT,    "subdivide_search",            "subdivide_search"},
-    { PARAM_INT8,     "subdivide_surround",          "subdivide_surround"},
-    { PARAM_FLOAT,    "subdivide_threshold",         "subdivide_threshold"},
-    { PARAM_INT8,     "tangent_surround",            "tangent_surround"},
+    { GIMP_PDB_INT32,    "run_mode",                    "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",                       "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable",                    "Input drawable" }, 
+    { GIMP_PDB_FLOAT,    "align_threshold",             "align_threshold"},
+    { GIMP_PDB_FLOAT,    "corner_always_threshold",     "corner_always_threshold"},
+    { GIMP_PDB_INT8,     "corner_surround",             "corner_surround"},
+    { GIMP_PDB_FLOAT,    "corner_threshold",            "corner_threshold"},
+    { GIMP_PDB_FLOAT,    "error_threshold",             "error_threshold"},
+    { GIMP_PDB_INT8,     "filter_alternative_surround", "filter_alternative_surround"},
+    { GIMP_PDB_FLOAT,    "filter_epsilon",              "filter_epsilon"},
+    { GIMP_PDB_INT8,     "filter_iteration_count",      "filter_iteration_count"},
+    { GIMP_PDB_FLOAT,    "filter_percent",              "filter_percent"},
+    { GIMP_PDB_INT8,     "filter_secondary_surround",   "filter_secondary_surround"},
+    { GIMP_PDB_INT8,     "filter_surround",             "filter_surround"},
+    { GIMP_PDB_INT8,     "keep_knees",                  "{1-Yes, 0-No}"},
+    { GIMP_PDB_FLOAT,    "line_reversion_threshold",    "line_reversion_threshold"},
+    { GIMP_PDB_FLOAT,    "line_threshold",              "line_threshold"},
+    { GIMP_PDB_FLOAT,    "reparameterize_improvement",  "reparameterize_improvement"},
+    { GIMP_PDB_FLOAT,    "reparameterize_threshold",    "reparameterize_threshold"},
+    { GIMP_PDB_FLOAT,    "subdivide_search",            "subdivide_search"},
+    { GIMP_PDB_INT8,     "subdivide_surround",          "subdivide_surround"},
+    { GIMP_PDB_FLOAT,    "subdivide_threshold",         "subdivide_threshold"},
+    { GIMP_PDB_INT8,     "tangent_surround",            "tangent_surround"},
   };
-  static GParamDef *return_vals = NULL;
+  static GimpParamDef *return_vals = NULL;
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
@@ -131,7 +131,7 @@ query_2 (void)
 			  "1999",
 			  NULL,
 			  "RGB*, INDEXED*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, nreturn_vals,
 			  args, return_vals);
 }
@@ -139,13 +139,13 @@ query_2 (void)
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32,    "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE,    "image",    "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
   };
-  static GParamDef *return_vals = NULL;
+  static GimpParamDef *return_vals = NULL;
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
@@ -159,7 +159,7 @@ query (void)
 			  "1999",
 			  N_("<Image>/Select/To Path"),
 			  "RGB*, INDEXED*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, nreturn_vals,
 			  args, return_vals);
 
@@ -169,16 +169,16 @@ query (void)
 static void
 run (gchar    *name,
      gint      nparams,
-     GParam   *param,
+     GimpParam   *param,
      gint     *nreturn_vals,
-     GParam  **return_vals)
+     GimpParam  **return_vals)
 {
-  static GParam values[1];
-  GDrawable *   drawable;
+  static GimpParam values[1];
+  GimpDrawable *   drawable;
   gint32        drawable_ID;
   gint32        image_ID;
-  GRunModeType  run_mode;
-  GStatusType   status = STATUS_SUCCESS;
+  GimpRunModeType  run_mode;
+  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
   gboolean      no_dialog = FALSE;
 
   run_mode = param[0].data.d_int32;
@@ -194,7 +194,7 @@ run (gchar    *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   drawable_ID = param[2].data.d_drawable;
@@ -215,7 +215,7 @@ run (gchar    *name,
     {
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
+	case GIMP_RUN_INTERACTIVE:
 	  if (gimp_get_data_size ("plug_in_sel2path_advanced") > 0)
 	    {
 	      gimp_get_data ("plug_in_sel2path_advanced", &selVals);
@@ -230,11 +230,11 @@ run (gchar    *name,
 	  fit_set_params (&selVals);
 	  break;
 	  
-	case RUN_NONINTERACTIVE:
+	case GIMP_RUN_NONINTERACTIVE:
 	  if (nparams != 23)
-	    status = STATUS_CALLING_ERROR;
+	    status = GIMP_PDB_CALLING_ERROR;
 	  
-	  if (status == STATUS_SUCCESS) 
+	  if (status == GIMP_PDB_SUCCESS) 
 	    {
 	      selVals.align_threshold             =  param[3].data.d_float;
 	      selVals.corner_always_threshold     =  param[4].data.d_float;
@@ -261,7 +261,7 @@ run (gchar    *name,
 
 	  break;
 	  
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  if(gimp_get_data_size ("plug_in_sel2path_advanced") > 0)
 	    {
 	      gimp_get_data ("plug_in_sel2path_advanced", &selVals);
@@ -280,10 +280,10 @@ run (gchar    *name,
   do_sel2path (drawable_ID,image_ID);
   values[0].data.d_status = status;
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       dialog_print_selVals(&selVals);
-      if (run_mode == RUN_INTERACTIVE && !no_dialog)
+      if (run_mode == GIMP_RUN_INTERACTIVE && !no_dialog)
 	gimp_set_data ("plug_in_sel2path_advanced", &selVals, sizeof(SELVALS));
     }
 
@@ -558,7 +558,7 @@ do_sel2path (gint32 drawable_ID,
 	     gint32 image_ID)
 {
   gint32      selection_ID;
-  GDrawable  *sel_drawable;
+  GimpDrawable  *sel_drawable;
   pixel_outline_list_type olt;
   spline_list_array_type splines;
 

@@ -84,13 +84,13 @@ xjpg_load_layer (char   *filename,
             int     image_type,
             char          *layer_name,
             gdouble        layer_opacity,
-            GLayerMode     layer_mode
+            GimpLayerModeEffects     layer_mode
 	    )
 {
-  GPixelRgn l_pixel_rgn;
-  GDrawable *l_drawable;
+  GimpPixelRgn l_pixel_rgn;
+  GimpDrawable *l_drawable;
   gint32     l_layer_id;
-  GDrawableType  l_layer_type;
+  GimpImageType  l_layer_type;
   struct jpeg_decompress_struct cinfo;
   struct my_error_mgr jerr;
   FILE *infile;
@@ -104,7 +104,7 @@ xjpg_load_layer (char   *filename,
   cinfo.err = jpeg_std_error (&jerr.pub);
   jerr.pub.error_exit = my_error_exit;
 
-  l_layer_type = GRAY_IMAGE;
+  l_layer_type = GIMP_GRAY_IMAGE;
 
   if ((infile = fopen (filename, "rb")) == NULL)
   {
@@ -173,10 +173,10 @@ xjpg_load_layer (char   *filename,
   switch (cinfo.output_components)
     {
     case 1:
-      l_layer_type = GRAY_IMAGE;
+      l_layer_type = GIMP_GRAY_IMAGE;
       break;
     case 3:
-      l_layer_type = RGB_IMAGE;
+      l_layer_type = GIMP_RGB_IMAGE;
       break;
     default:
       fprintf(stderr, "XJT: cant load layer %s (type is not GRAY and not RGB)\n", filename);
@@ -268,9 +268,9 @@ xjpg_load_layer_alpha (char   *filename,
             gint32  layer_id
 	    )
 {
-  GPixelRgn l_pixel_rgn;
-  GDrawable *l_drawable;
-  GDrawableType  l_layer_type;
+  GimpPixelRgn l_pixel_rgn;
+  GimpDrawable *l_drawable;
+  GimpImageType  l_layer_type;
   struct jpeg_decompress_struct cinfo;
   struct my_error_mgr jerr;
   FILE *infile;
@@ -288,7 +288,7 @@ xjpg_load_layer_alpha (char   *filename,
   cinfo.err = jpeg_std_error (&jerr.pub);
   jerr.pub.error_exit = my_error_exit;
 
-  l_layer_type = GRAY_IMAGE;
+  l_layer_type = GIMP_GRAY_IMAGE;
 
   /* add alpha channel */
   gimp_layer_add_alpha (layer_id);
@@ -470,8 +470,8 @@ xjpg_load_channel (char   *filename,
             guchar red, guchar  green, guchar blue
 	    )
 {
-  GPixelRgn l_pixel_rgn;
-  GDrawable *l_drawable;
+  GimpPixelRgn l_pixel_rgn;
+  GimpDrawable *l_drawable;
   gint32     l_drawable_id;
   struct jpeg_decompress_struct cinfo;
   struct my_error_mgr jerr;
@@ -674,9 +674,9 @@ xjpg_save_drawable (char   *filename,
 	    gint save_mode,
 	    t_JpegSaveVals *jsvals)
 {
-  GPixelRgn pixel_rgn;
-  GDrawable *drawable;
-  GDrawableType drawable_type;
+  GimpPixelRgn pixel_rgn;
+  GimpDrawable *drawable;
+  GimpImageType drawable_type;
   struct jpeg_compress_struct cinfo;
   struct my_error_mgr jerr;
   FILE *outfile;
@@ -701,16 +701,16 @@ xjpg_save_drawable (char   *filename,
   drawable_type = gimp_drawable_type (drawable_ID);
   switch (drawable_type)
   {
-    case RGB_IMAGE:
-    case GRAY_IMAGE:
+    case GIMP_RGB_IMAGE:
+    case GIMP_GRAY_IMAGE:
       if(save_mode == JSVM_ALPHA)
         return FALSE;              /* there is no alpha to save */
       break;
-    case RGBA_IMAGE:
-    case GRAYA_IMAGE:
+    case GIMP_RGBA_IMAGE:
+    case GIMP_GRAYA_IMAGE:
       break;
       
-    case INDEXED_IMAGE:
+    case GIMP_INDEXED_IMAGE:
       /*g_message ("jpeg: cannot operate on indexed color images");*/
       return FALSE;
       break;
@@ -773,15 +773,15 @@ xjpg_save_drawable (char   *filename,
    */
   switch (drawable_type)
   {
-    case RGB_IMAGE:
-    case GRAY_IMAGE:
+    case GIMP_RGB_IMAGE:
+    case GIMP_GRAY_IMAGE:
       /* # of color components per pixel */
       cinfo.input_components = drawable->bpp;
       has_alpha = 0;
       alpha_offset = 0;
       break;
-    case RGBA_IMAGE:
-    case GRAYA_IMAGE:
+    case GIMP_RGBA_IMAGE:
+    case GIMP_GRAYA_IMAGE:
       if(save_mode == JSVM_ALPHA)
       {
  	cinfo.input_components = 1;
@@ -809,8 +809,8 @@ xjpg_save_drawable (char   *filename,
   cinfo.image_height = drawable->height;
   /* colorspace of input image */
   cinfo.in_color_space = ( (save_mode != JSVM_ALPHA) &&
-                          (drawable_type == RGB_IMAGE ||
-			   drawable_type == RGBA_IMAGE))
+                          (drawable_type == GIMP_RGB_IMAGE ||
+			   drawable_type == GIMP_RGBA_IMAGE))
     ? JCS_RGB : JCS_GRAYSCALE;
   /* Now use the library's routine to set default compression parameters.
    * (You must set at least cinfo.in_color_space before calling this,

@@ -60,7 +60,7 @@ xjpg_load_layer (char   *filename,
             int     image_type,
             char          *layer_name,
             gdouble        layer_opacity,
-            GLayerMode     layer_mode
+            GimpLayerModeEffects     layer_mode
 	    );
 
 gint
