@@ -49,7 +49,6 @@ typedef struct
 
 static const LinuxInputEvent key_events[] =
 {
-  { BTN_MISC,      "button-misc",      N_("Button Misc")      },
   { BTN_0,         "button-0",         N_("Button 0")         },
   { BTN_1,         "button-1",         N_("Button 1")         },
   { BTN_2,         "button-2",         N_("Button 2")         },
@@ -277,7 +276,7 @@ linux_input_get_n_events (GimpController *controller)
 
 static const gchar *
 linux_input_get_event_name (GimpController *controller,
-                                      gint            event_id)
+                            gint            event_id)
 {
   if (event_id < 0)
     {
