@@ -42,7 +42,10 @@ typedef struct _GimpBrushPreviewClass  GimpBrushPreviewClass;
 
 struct _GimpBrushPreview
 {
-  GimpPreview   parent_instance;
+  GimpPreview  parent_instance;
+
+  guint        pipe_timeout_id;
+  gint         pipe_animation_index;
 };
 
 struct _GimpBrushPreviewClass

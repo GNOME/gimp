@@ -34,9 +34,12 @@
 static void   gimp_brush_preview_class_init (GimpBrushPreviewClass *klass);
 static void   gimp_brush_preview_init       (GimpBrushPreview      *preview);
 
-static TempBuf   * gimp_brush_preview_create_preview (GimpPreview *preview);
-static GtkWidget * gimp_brush_preview_create_popup   (GimpPreview *preview);
-static gboolean    gimp_brush_preview_needs_popup    (GimpPreview *preview);
+static void        gimp_brush_preview_destroy             (GtkObject   *object);
+static void        gimp_brush_preview_render              (GimpPreview *preview);
+static GtkWidget * gimp_brush_preview_create_popup        (GimpPreview *preview);
+static gboolean    gimp_brush_preview_needs_popup         (GimpPreview *preview);
+
+static gboolean    gimp_brush_preview_render_timeout_func (GimpBrushPreview *preview);
 
 
 static GimpPreviewClass *parent_class = NULL;
@@ -78,14 +81,37 @@ gimp_brush_preview_class_init (GimpBrushPreviewClass *klass)
 
   parent_class = gtk_type_class (GIMP_TYPE_PREVIEW);
 
-  preview_class->create_preview = gimp_brush_preview_create_preview;
+  object_class->destroy = gimp_brush_preview_destroy;
+
+  preview_class->render         = gimp_brush_preview_render;
   preview_class->create_popup   = gimp_brush_preview_create_popup;
   preview_class->needs_popup    = gimp_brush_preview_needs_popup;
 }
 
 static void
-gimp_brush_preview_init (GimpBrushPreview *preview)
+gimp_brush_preview_init (GimpBrushPreview *brush_preview)
 {
+  brush_preview->pipe_timeout_id      = 0;
+  brush_preview->pipe_animation_index = 0;
+}
+
+static void
+gimp_brush_preview_destroy (GtkObject *object)
+{
+  GimpBrushPreview *brush_preview;
+
+  brush_preview = GIMP_BRUSH_PREVIEW (object);
+
+  if (brush_preview->pipe_timeout_id)
+    {
+      g_source_remove (brush_preview->pipe_timeout_id);
+
+      brush_preview->pipe_timeout_id = 0;
+      brush_preview->pipe_animation_index  = 0;
+    }
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 #define indicator_width  7
@@ -95,20 +121,30 @@ gimp_brush_preview_init (GimpBrushPreview *preview)
 #define BLK {   0,   0,   0 }
 #define RED { 255, 127, 127 }
 
-static TempBuf *
-gimp_brush_preview_create_preview (GimpPreview *preview)
+static void
+gimp_brush_preview_render (GimpPreview *preview)
 {
-  GimpBrush *brush;
-  TempBuf   *temp_buf;
-  gint       width;
-  gint       height;
-  gint       brush_width;
-  gint       brush_height;
-  guchar    *buf;
-  guchar    *b;
-  gint       x, y;
-  gint       offset_x;
-  gint       offset_y;
+  GimpBrushPreview *brush_preview;
+  GimpBrush        *brush;
+  TempBuf          *temp_buf;
+  gint              width;
+  gint              height;
+  gint              brush_width;
+  gint              brush_height;
+  guchar           *buf;
+  guchar           *b;
+  gint              x, y;
+  gint              offset_x;
+  gint              offset_y;
+
+  brush_preview = GIMP_BRUSH_PREVIEW (preview);
+
+  if (brush_preview->pipe_timeout_id)
+    {
+      g_source_remove (brush_preview->pipe_timeout_id);
+
+      brush_preview->pipe_timeout_id = 0;
+    }
 
   brush        = GIMP_BRUSH (preview->viewable);
   brush_width  = brush->mask->width;
@@ -118,10 +154,38 @@ gimp_brush_preview_create_preview (GimpPreview *preview)
   height = GTK_WIDGET (preview)->requisition.height;
 
   temp_buf = gimp_viewable_get_new_preview (preview->viewable,
-					    width, height);
+					    width,
+					    height);
 
   if (preview->is_popup)
-    return temp_buf;
+    {
+      gimp_preview_render_and_flush (preview,
+				     temp_buf,
+				     width,
+				     height,
+				     -1);
+
+      temp_buf_free (temp_buf);
+
+      if (GIMP_IS_BRUSH_PIPE (brush))
+	{
+	  if (width  != brush_width  ||
+	      height != brush_height)
+	    {
+	      g_warning ("%s(): non-fullsize pipe popups are not supported yet.",
+			 G_GNUC_FUNCTION);
+	      return;
+	    }
+
+	  brush_preview->pipe_animation_index  = 0;
+	  brush_preview->pipe_timeout_id =
+	    g_timeout_add (300,
+			   (GSourceFunc) gimp_brush_preview_render_timeout_func,
+			   brush_preview);
+	}
+
+      return;
+    }
 
   buf = temp_buf_data (temp_buf);
 
@@ -213,7 +277,13 @@ gimp_brush_preview_create_preview (GimpPreview *preview)
 #undef BLK
 #undef RED
 
-  return temp_buf;
+  gimp_preview_render_and_flush (preview,
+				 temp_buf,
+				 width,
+				 height,
+				 -1);
+
+  temp_buf_free (temp_buf);
 }
 
 static GtkWidget *
@@ -254,4 +324,55 @@ gimp_brush_preview_needs_popup (GimpPreview *preview)
     return TRUE;
 
   return FALSE;
+}
+
+static gboolean
+gimp_brush_preview_render_timeout_func (GimpBrushPreview *brush_preview)
+{
+  GimpPreview   *preview;
+  GimpBrushPipe *brush_pipe;
+  GimpBrush     *brush;
+  TempBuf       *temp_buf;
+  gint           width;
+  gint           height;
+  gint           brush_width;
+  gint           brush_height;
+
+  preview = GIMP_PREVIEW (brush_preview);
+
+  if (! preview->viewable)
+    {
+      brush_preview->pipe_timeout_id      = 0;
+      brush_preview->pipe_animation_index = 0;
+
+      return FALSE;
+    }
+
+  brush_pipe   = GIMP_BRUSH_PIPE (preview->viewable);
+  brush_width  = brush->mask->width;
+  brush_height = brush->mask->height;
+
+  width  = GTK_WIDGET (preview)->requisition.width;
+  height = GTK_WIDGET (preview)->requisition.height;
+
+  brush_preview->pipe_animation_index++;
+
+  if (brush_preview->pipe_animation_index >= brush_pipe->nbrushes)
+    brush_preview->pipe_animation_index = 0;
+
+  brush = GIMP_BRUSH (brush_pipe->brushes[brush_preview->pipe_animation_index]);
+
+  temp_buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (brush),
+					    width,
+					    height);
+
+  gimp_preview_render_and_flush (preview,
+				 temp_buf,
+				 width,
+				 height,
+				 -1);
+
+  temp_buf_free (temp_buf);
+
+  return TRUE;
 }

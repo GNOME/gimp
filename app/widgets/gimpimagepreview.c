@@ -36,14 +36,14 @@
 static void   gimp_image_preview_class_init (GimpImagePreviewClass *klass);
 static void   gimp_image_preview_init       (GimpImagePreview      *preview);
 
-static TempBuf   * gimp_image_preview_create_preview (GimpPreview *preview);
-static GtkWidget * gimp_image_preview_create_popup   (GimpPreview *preview);
-static void        gimp_image_preview_calc_size      (GimpImage   *gimage,
-						      gint         width,
-						      gint         height,
-						      gint        *return_width,
-						      gint        *return_height,
-						      gboolean    *scaling_up);
+static void        gimp_image_preview_render       (GimpPreview *preview);
+static GtkWidget * gimp_image_preview_create_popup (GimpPreview *preview);
+static void        gimp_image_preview_calc_size    (GimpImage   *gimage,
+						    gint         width,
+						    gint         height,
+						    gint        *return_width,
+						    gint        *return_height,
+						    gboolean    *scaling_up);
 
 
 static GimpPreviewClass *parent_class = NULL;
@@ -85,8 +85,8 @@ gimp_image_preview_class_init (GimpImagePreviewClass *klass)
 
   parent_class = gtk_type_class (GIMP_TYPE_PREVIEW);
 
-  preview_class->create_preview = gimp_image_preview_create_preview;
-  preview_class->create_popup   = gimp_image_preview_create_popup;
+  preview_class->render       = gimp_image_preview_render;
+  preview_class->create_popup = gimp_image_preview_create_popup;
 }
 
 static void
@@ -94,8 +94,8 @@ gimp_image_preview_init (GimpImagePreview *preview)
 {
 }
 
-static TempBuf *
-gimp_image_preview_create_preview (GimpPreview *preview)
+static void
+gimp_image_preview_render (GimpPreview *preview)
 {
   GimpImage *gimage;
   gint       width;
@@ -103,7 +103,7 @@ gimp_image_preview_create_preview (GimpPreview *preview)
   gint       preview_width;
   gint       preview_height;
   gboolean   scaling_up;
-  TempBuf   *return_buf;
+  TempBuf   *render_buf;
 
   gimage = GIMP_IMAGE (preview->viewable);
 
@@ -124,43 +124,59 @@ gimp_image_preview_create_preview (GimpPreview *preview)
       temp_buf = gimp_viewable_get_new_preview (preview->viewable,
 						gimage->width, 
 						gimage->height);
-      return_buf = temp_buf_scale (temp_buf, preview_width, preview_height);
+      render_buf = temp_buf_scale (temp_buf, preview_width, preview_height);
 
       temp_buf_free (temp_buf);
     }
   else
     {
-      return_buf = gimp_viewable_get_new_preview (preview->viewable,
+      render_buf = gimp_viewable_get_new_preview (preview->viewable,
 						  preview_width,
 						  preview_height);
     }
 
-  if (preview_width  < width)  return_buf->x = (width  - preview_width)  / 2;
-  if (preview_height < height) return_buf->y = (height - preview_height) / 2;
+  if (preview_width  < width)  render_buf->x = (width  - preview_width)  / 2;
+  if (preview_height < height) render_buf->y = (height - preview_height) / 2;
 
-  if (return_buf->x || return_buf->y)
+  if (render_buf->x || render_buf->y)
     {
       TempBuf *temp_buf;
       guchar   white[4] = { 255, 255, 255, 255 };
 
       temp_buf = temp_buf_new (width, height,
-			       return_buf->bytes,
+			       render_buf->bytes,
 			       0, 0,
 			       white);
 
-      temp_buf_copy_area (return_buf, temp_buf,
+      temp_buf_copy_area (render_buf, temp_buf,
 			  0, 0,
-			  return_buf->width,
-			  return_buf->height,
-			  return_buf->x,
-			  return_buf->y);
+			  render_buf->width,
+			  render_buf->height,
+			  render_buf->x,
+			  render_buf->y);
 
-      temp_buf_free (return_buf);
+      temp_buf_free (render_buf);
 
-      return temp_buf;
+      gimp_preview_render_and_flush (preview,
+				     temp_buf,
+				     width,
+				     height,
+				     -1);
+
+      temp_buf_free (temp_buf);
+
+      return;
     }
 
-  return return_buf;
+  gimp_preview_render_and_flush (preview,
+				 render_buf,
+				 width,
+				 height,
+				 -1);
+
+  temp_buf_free (render_buf);
+
+  return;
 }
 
 static GtkWidget *

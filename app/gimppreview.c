@@ -56,7 +56,7 @@
 enum
 {
   CLICKED,
-  CREATE_PREVIEW,
+  RENDER,
   CREATE_POPUP,
   NEEDS_POPUP,
   LAST_SIGNAL
@@ -77,8 +77,8 @@ static gint        gimp_preview_enter_notify_event   (GtkWidget        *widget,
 static gint        gimp_preview_leave_notify_event   (GtkWidget        *widget,
 						      GdkEventCrossing *event);
 
-static TempBuf   * gimp_preview_create_preview       (GimpPreview      *preview);
-static TempBuf   * gimp_preview_real_create_preview  (GimpPreview      *preview);
+static void        gimp_preview_render               (GimpPreview      *preview);
+static void        gimp_preview_real_render          (GimpPreview      *preview);
 static GtkWidget * gimp_preview_create_popup         (GimpPreview      *preview);
 static GtkWidget * gimp_preview_real_create_popup    (GimpPreview      *preview);
 static gboolean    gimp_preview_needs_popup          (GimpPreview      *preview);
@@ -142,14 +142,14 @@ gimp_preview_class_init (GimpPreviewClass *klass)
                     gtk_signal_default_marshaller,
 		    GTK_TYPE_NONE, 0);
 
-  preview_signals[CREATE_PREVIEW] = 
-    gtk_signal_new ("create_preview",
+  preview_signals[RENDER] = 
+    gtk_signal_new ("render",
                     GTK_RUN_LAST,
                     object_class->type,
                     GTK_SIGNAL_OFFSET (GimpPreviewClass,
-				       create_preview),
-                    gimp_marshal_POINTER__NONE,
-		    GTK_TYPE_POINTER, 0);
+				       render),
+                    gtk_signal_default_marshaller,
+		    GTK_TYPE_NONE, 0);
 
   preview_signals[CREATE_POPUP] = 
     gtk_signal_new ("create_popup",
@@ -179,10 +179,10 @@ gimp_preview_class_init (GimpPreviewClass *klass)
   widget_class->enter_notify_event   = gimp_preview_enter_notify_event;
   widget_class->leave_notify_event   = gimp_preview_leave_notify_event;
 
-  klass->clicked        = NULL;
-  klass->create_preview = gimp_preview_real_create_preview;
-  klass->create_popup   = gimp_preview_real_create_popup;
-  klass->needs_popup    = gimp_preview_real_needs_popup;
+  klass->clicked      = NULL;
+  klass->render       = gimp_preview_real_render;
+  klass->create_popup = gimp_preview_real_create_popup;
+  klass->needs_popup  = gimp_preview_real_needs_popup;
 }
 
 static void
@@ -386,24 +386,31 @@ gimp_preview_leave_notify_event (GtkWidget        *widget,
   return FALSE;
 }
 
-static TempBuf *
-gimp_preview_create_preview (GimpPreview *preview)
+static void
+gimp_preview_render (GimpPreview *preview)
 {
-  TempBuf *temp_buf = NULL;
-
-  gtk_signal_emit (GTK_OBJECT (preview), preview_signals[CREATE_PREVIEW],
-		   &temp_buf);
-
-  return temp_buf;
+  gtk_signal_emit (GTK_OBJECT (preview), preview_signals[RENDER]);
 }
 
-static TempBuf *
-gimp_preview_real_create_preview (GimpPreview *preview)
+static void
+gimp_preview_real_render (GimpPreview *preview)
 {
-  return
+  TempBuf *temp_buf;
+  gint     width;
+  gint     height;
+
+  width  = GTK_WIDGET (preview)->requisition.width;
+  height = GTK_WIDGET (preview)->requisition.height;
+
+  temp_buf =
     gimp_viewable_get_new_preview (preview->viewable,
-				   GTK_WIDGET (preview)->requisition.width,
-				   GTK_WIDGET (preview)->requisition.height);
+				   width, height);
+
+  gimp_preview_render_and_flush (preview,
+				 temp_buf,
+				 width,
+				 height,
+				 -1);
 }
 
 static GtkWidget *
@@ -564,229 +571,223 @@ gimp_preview_paint (GimpPreview *preview)
 static gboolean
 gimp_preview_idle_paint (GimpPreview *preview)
 {
-  TempBuf *temp_buf;
-  gint     width;
-  gint     height;
-  gint     channel;
-
   preview->idle_id = 0;
 
   if (! preview->viewable)
     return FALSE;
 
-  temp_buf = gimp_preview_create_preview (preview);
-
-  width   = temp_buf->width;
-  height  = temp_buf->height;
-  channel = -1;
-
-  /*  from layers_dialog.c  */
-  {
-    guchar   *src, *s;
-    guchar   *cb;
-    guchar   *buf;
-    gint      a;
-    gint      i, j, b;
-    gint      x1, y1, x2, y2;
-    gint      rowstride;
-    gboolean  color_buf;
-    gboolean  color;
-    gint      alpha;
-    gboolean  has_alpha;
-    gint      image_bytes;
-    gint      offset;
-
-    alpha = ALPHA_PIX;
-
-    /*  Here are the different cases this functions handles correctly:
-     *  1)  Offset temp_buf which does not necessarily cover full image area
-     *  2)  Color conversion of temp_buf if it is gray and image is color
-     *  3)  Background check buffer for transparent temp_bufs
-     *  4)  Using the optional "channel" argument, one channel can be extracted
-     *      from a multi-channel temp_buf and composited as a grayscale
-     *  Prereqs:
-     *  1)  Grayscale temp_bufs have bytes == {1, 2}
-     *  2)  Color temp_bufs have bytes == {3, 4}
-     *  3)  If image is gray, then temp_buf should have bytes == {1, 2}
-     */
-    color_buf   = (GTK_PREVIEW (preview)->type == GTK_PREVIEW_COLOR);
-    image_bytes = (color_buf) ? 3 : 1;
-    has_alpha   = (temp_buf->bytes == 2 || temp_buf->bytes == 4);
-    rowstride   = temp_buf->width * temp_buf->bytes;
-
-    /*  Determine if the preview buf supplied is color
-     *   Generally, if the bytes == {3, 4}, this is true.
-     *   However, if the channel argument supplied is not -1, then
-     *   the preview buf is assumed to be gray despite the number of
-     *   channels it contains
-     */
-    color = ((channel == -1) &&
-	     (temp_buf->bytes == 3 || temp_buf->bytes == 4));
-
-    if (has_alpha)
-      {
-	buf   = render_check_buf;
-	alpha = ((color) ? ALPHA_PIX :
-		 ((channel != -1) ? (temp_buf->bytes - 1) :
-		  ALPHA_G_PIX));
-      }
-    else
-      {
-	buf = render_empty_buf;
-      }
-
-    x1 = CLAMP (temp_buf->x, 0, width);
-    y1 = CLAMP (temp_buf->y, 0, height);
-    x2 = CLAMP (temp_buf->x + temp_buf->width, 0, width);
-    y2 = CLAMP (temp_buf->y + temp_buf->height, 0, height);
-
-    src = temp_buf_data (temp_buf) + ((y1 - temp_buf->y) * rowstride +
-				      (x1 - temp_buf->x) * temp_buf->bytes);
-
-    /*  One last thing for efficiency's sake:  */
-    if (channel == -1)
-      channel = 0;
-
-    for (i = 0; i < height; i++)
-      {
-	if (i & 0x4)
-	  {
-	    offset = 4;
-	    cb = buf + offset * 3;
-	  }
-	else
-	  {
-	    offset = 0;
-	    cb = buf;
-	  }
-
-	/*  The interesting stuff between leading & trailing 
-	 *  vertical transparency
-	 */
-	if (i >= y1 && i < y2)
-	  {
-	    /*  Handle the leading transparency  */
-	    for (j = 0; j < x1; j++)
-	      for (b = 0; b < image_bytes; b++)
-		render_temp_buf[j * image_bytes + b] = cb[j * 3 + b];
-
-	    /*  The stuff in the middle  */
-	    s = src;
-	    for (j = x1; j < x2; j++)
-	      {
-		if (color)
-		  {
-		    if (has_alpha)
-		      {
-			a = s[alpha] << 8;
-
-			if ((j + offset) & 0x4)
-			  {
-			    render_temp_buf[j * 3 + 0] = 
-			      render_blend_dark_check [(a | s[RED_PIX])];
-			    render_temp_buf[j * 3 + 1] = 
-			      render_blend_dark_check [(a | s[GREEN_PIX])];
-			    render_temp_buf[j * 3 + 2] = 
-			      render_blend_dark_check [(a | s[BLUE_PIX])];
-			  }
-			else
-			  {
-			    render_temp_buf[j * 3 + 0] = 
-			      render_blend_light_check [(a | s[RED_PIX])];
-			    render_temp_buf[j * 3 + 1] = 
-			      render_blend_light_check [(a | s[GREEN_PIX])];
-			    render_temp_buf[j * 3 + 2] = 
-			      render_blend_light_check [(a | s[BLUE_PIX])];
-			  }
-		      }
-		    else
-		      {
-			render_temp_buf[j * 3 + 0] = s[RED_PIX];
-			render_temp_buf[j * 3 + 1] = s[GREEN_PIX];
-			render_temp_buf[j * 3 + 2] = s[BLUE_PIX];
-		      }
-		  }
-		else
-		  {
-		    if (has_alpha)
-		      {
-			a = s[alpha] << 8;
-
-			if ((j + offset) & 0x4)
-			  {
-			    if (color_buf)
-			      {
-				render_temp_buf[j * 3 + 0] = 
-				  render_blend_dark_check [(a | s[GRAY_PIX])];
-				render_temp_buf[j * 3 + 1] = 
-				  render_blend_dark_check [(a | s[GRAY_PIX])];
-				render_temp_buf[j * 3 + 2] = 
-				  render_blend_dark_check [(a | s[GRAY_PIX])];
-			      }
-			    else
-			      {
-				render_temp_buf[j] = 
-				  render_blend_dark_check [(a | s[GRAY_PIX + channel])];
-			      }
-			  }
-			else
-			  {
-			    if (color_buf)
-			      {
-				render_temp_buf[j * 3 + 0] = 
-				  render_blend_light_check [(a | s[GRAY_PIX])];
-				render_temp_buf[j * 3 + 1] = 
-				  render_blend_light_check [(a | s[GRAY_PIX])];
-				render_temp_buf[j * 3 + 2] = 
-				  render_blend_light_check [(a | s[GRAY_PIX])];
-			      }
-			    else
-			      {
-				render_temp_buf[j] = 
-				  render_blend_light_check [(a | s[GRAY_PIX + channel])];
-			      }
-			  }
-		      }
-		    else
-		      {
-			if (color_buf)
-			  {
-			    render_temp_buf[j * 3 + 0] = s[GRAY_PIX];
-			    render_temp_buf[j * 3 + 1] = s[GRAY_PIX];
-			    render_temp_buf[j * 3 + 2] = s[GRAY_PIX];
-			  }
-			else
-			  {
-			    render_temp_buf[j] = s[GRAY_PIX + channel];
-			  }
-		      }
-		  }
-
-		s += temp_buf->bytes;
-	      }
-
-	    /*  Handle the trailing transparency  */
-	    for (j = x2; j < width; j++)
-	      for (b = 0; b < image_bytes; b++)
-		render_temp_buf[j * image_bytes + b] = cb[j * 3 + b];
-
-	    src += rowstride;
-	  }
-	else
-	  {
-	    for (j = 0; j < width; j++)
-	      for (b = 0; b < image_bytes; b++)
-		render_temp_buf[j * image_bytes + b] = cb[j * 3 + b];
-	  }
-
-	gtk_preview_draw_row (GTK_PREVIEW (preview),
-			      render_temp_buf, 0, i, width);
-      }
-  }
-
-  temp_buf_free (temp_buf);
-
-  gtk_widget_queue_draw (GTK_WIDGET (preview));
+  gimp_preview_render (preview);
 
   return FALSE;
+}
+
+void
+gimp_preview_render_and_flush (GimpPreview *preview,
+			       TempBuf     *temp_buf,
+			       gint         width,
+			       gint         height,
+			       gint         channel)
+{
+  guchar   *src, *s;
+  guchar   *cb;
+  guchar   *buf;
+  gint      a;
+  gint      i, j, b;
+  gint      x1, y1, x2, y2;
+  gint      rowstride;
+  gboolean  color_buf;
+  gboolean  color;
+  gint      alpha;
+  gboolean  has_alpha;
+  gint      image_bytes;
+  gint      offset;
+
+  alpha = ALPHA_PIX;
+
+  /*  Here are the different cases this functions handles correctly:
+   *  1)  Offset temp_buf which does not necessarily cover full image area
+   *  2)  Color conversion of temp_buf if it is gray and image is color
+   *  3)  Background check buffer for transparent temp_bufs
+   *  4)  Using the optional "channel" argument, one channel can be extracted
+   *      from a multi-channel temp_buf and composited as a grayscale
+   *  Prereqs:
+   *  1)  Grayscale temp_bufs have bytes == {1, 2}
+   *  2)  Color temp_bufs have bytes == {3, 4}
+   *  3)  If image is gray, then temp_buf should have bytes == {1, 2}
+   */
+  color_buf   = (GTK_PREVIEW (preview)->type == GTK_PREVIEW_COLOR);
+  image_bytes = (color_buf) ? 3 : 1;
+  has_alpha   = (temp_buf->bytes == 2 || temp_buf->bytes == 4);
+  rowstride   = temp_buf->width * temp_buf->bytes;
+
+  /*  Determine if the preview buf supplied is color
+   *   Generally, if the bytes == {3, 4}, this is true.
+   *   However, if the channel argument supplied is not -1, then
+   *   the preview buf is assumed to be gray despite the number of
+   *   channels it contains
+   */
+  color = ((channel == -1) &&
+	   (temp_buf->bytes == 3 || temp_buf->bytes == 4));
+
+  if (has_alpha)
+    {
+      buf   = render_check_buf;
+      alpha = ((color) ? ALPHA_PIX :
+	       ((channel != -1) ? (temp_buf->bytes - 1) :
+		ALPHA_G_PIX));
+    }
+  else
+    {
+      buf = render_empty_buf;
+    }
+
+  x1 = CLAMP (temp_buf->x, 0, width);
+  y1 = CLAMP (temp_buf->y, 0, height);
+  x2 = CLAMP (temp_buf->x + temp_buf->width, 0, width);
+  y2 = CLAMP (temp_buf->y + temp_buf->height, 0, height);
+
+  src = temp_buf_data (temp_buf) + ((y1 - temp_buf->y) * rowstride +
+				    (x1 - temp_buf->x) * temp_buf->bytes);
+
+  /*  One last thing for efficiency's sake:  */
+  if (channel == -1)
+    channel = 0;
+
+  for (i = 0; i < height; i++)
+    {
+      if (i & 0x4)
+	{
+	  offset = 4;
+	  cb = buf + offset * 3;
+	}
+      else
+	{
+	  offset = 0;
+	  cb = buf;
+	}
+
+      /*  The interesting stuff between leading & trailing 
+       *  vertical transparency
+       */
+      if (i >= y1 && i < y2)
+	{
+	  /*  Handle the leading transparency  */
+	  for (j = 0; j < x1; j++)
+	    for (b = 0; b < image_bytes; b++)
+	      render_temp_buf[j * image_bytes + b] = cb[j * 3 + b];
+
+	  /*  The stuff in the middle  */
+	  s = src;
+	  for (j = x1; j < x2; j++)
+	    {
+	      if (color)
+		{
+		  if (has_alpha)
+		    {
+		      a = s[alpha] << 8;
+
+		      if ((j + offset) & 0x4)
+			{
+			  render_temp_buf[j * 3 + 0] = 
+			    render_blend_dark_check [(a | s[RED_PIX])];
+			  render_temp_buf[j * 3 + 1] = 
+			    render_blend_dark_check [(a | s[GREEN_PIX])];
+			  render_temp_buf[j * 3 + 2] = 
+			    render_blend_dark_check [(a | s[BLUE_PIX])];
+			}
+		      else
+			{
+			  render_temp_buf[j * 3 + 0] = 
+			    render_blend_light_check [(a | s[RED_PIX])];
+			  render_temp_buf[j * 3 + 1] = 
+			    render_blend_light_check [(a | s[GREEN_PIX])];
+			  render_temp_buf[j * 3 + 2] = 
+			    render_blend_light_check [(a | s[BLUE_PIX])];
+			}
+		    }
+		  else
+		    {
+		      render_temp_buf[j * 3 + 0] = s[RED_PIX];
+		      render_temp_buf[j * 3 + 1] = s[GREEN_PIX];
+		      render_temp_buf[j * 3 + 2] = s[BLUE_PIX];
+		    }
+		}
+	      else
+		{
+		  if (has_alpha)
+		    {
+		      a = s[alpha] << 8;
+
+		      if ((j + offset) & 0x4)
+			{
+			  if (color_buf)
+			    {
+			      render_temp_buf[j * 3 + 0] = 
+				render_blend_dark_check [(a | s[GRAY_PIX])];
+			      render_temp_buf[j * 3 + 1] = 
+				render_blend_dark_check [(a | s[GRAY_PIX])];
+			      render_temp_buf[j * 3 + 2] = 
+				render_blend_dark_check [(a | s[GRAY_PIX])];
+			    }
+			  else
+			    {
+			      render_temp_buf[j] = 
+				render_blend_dark_check [(a | s[GRAY_PIX + channel])];
+			    }
+			}
+		      else
+			{
+			  if (color_buf)
+			    {
+			      render_temp_buf[j * 3 + 0] = 
+				render_blend_light_check [(a | s[GRAY_PIX])];
+			      render_temp_buf[j * 3 + 1] = 
+				render_blend_light_check [(a | s[GRAY_PIX])];
+			      render_temp_buf[j * 3 + 2] = 
+				render_blend_light_check [(a | s[GRAY_PIX])];
+			    }
+			  else
+			    {
+			      render_temp_buf[j] = 
+				render_blend_light_check [(a | s[GRAY_PIX + channel])];
+			    }
+			}
+		    }
+		  else
+		    {
+		      if (color_buf)
+			{
+			  render_temp_buf[j * 3 + 0] = s[GRAY_PIX];
+			  render_temp_buf[j * 3 + 1] = s[GRAY_PIX];
+			  render_temp_buf[j * 3 + 2] = s[GRAY_PIX];
+			}
+		      else
+			{
+			  render_temp_buf[j] = s[GRAY_PIX + channel];
+			}
+		    }
+		}
+
+	      s += temp_buf->bytes;
+	    }
+
+	  /*  Handle the trailing transparency  */
+	  for (j = x2; j < width; j++)
+	    for (b = 0; b < image_bytes; b++)
+	      render_temp_buf[j * image_bytes + b] = cb[j * 3 + b];
+
+	  src += rowstride;
+	}
+      else
+	{
+	  for (j = 0; j < width; j++)
+	    for (b = 0; b < image_bytes; b++)
+	      render_temp_buf[j * image_bytes + b] = cb[j * 3 + b];
+	}
+
+      gtk_preview_draw_row (GTK_PREVIEW (preview),
+			    render_temp_buf, 0, i, width);
+    }
+
+  gtk_widget_queue_draw (GTK_WIDGET (preview));
 }

@@ -1,5 +1,22 @@
 2001-02-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimppreview.[ch]: allocate less temp_bufs by removing the
+	"create_preview" virtual function and adding a "render" one.
+
+	Implementations have to call the new public function
+	gimp_preview_render_and_flush() to render their temp_bufs.
+	This way, e.g. the GimpPatternPreview can render the preview
+	directly from the pattern's mask.
+
+	* app/gimpdrawablepreview.c
+	* app/gimpimagepreview.c
+	* app/gimppatternpreview.c: changed accordingly.
+
+	* app/gimpbrushpreview.[ch]: same as above and added BrushPipe
+	popup animation.
+
+2001-02-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimppreview.[ch]
 	* app/gimpbrushpreview.c
 	* app/gimpcontainergridview.c

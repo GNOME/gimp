@@ -61,20 +61,26 @@ struct _GimpPreviewClass
 {
   GtkPreviewClass  parent_class;
 
-  void        (* clicked)        (GimpPreview *preview);
-  TempBuf   * (* create_preview) (GimpPreview *preview);
-  GtkWidget * (* create_popup)   (GimpPreview *preview);
-  gboolean    (* needs_popup)    (GimpPreview *preview);
+  void        (* clicked)      (GimpPreview *preview);
+  void        (* render)       (GimpPreview *preview);
+  GtkWidget * (* create_popup) (GimpPreview *preview);
+  gboolean    (* needs_popup)  (GimpPreview *preview);
 };
 
 
-GtkType      gimp_preview_get_type (void);
-GtkWidget *  gimp_preview_new      (GimpViewable  *viewable,
-				    gboolean       is_popup,
-				    gint           width,
-				    gint           height,
-				    gboolean       clickable,
-				    gboolean       show_popup);
+GtkType      gimp_preview_get_type         (void);
+GtkWidget *  gimp_preview_new              (GimpViewable  *viewable,
+					    gboolean       is_popup,
+					    gint           width,
+					    gint           height,
+					    gboolean       clickable,
+					    gboolean       show_popup);
+
+void         gimp_preview_render_and_flush (GimpPreview   *preview,
+					    TempBuf       *temp_buf,
+					    gint           width,
+					    gint           height,
+					    gint           channel);
 
 
 #ifdef __cplusplus
