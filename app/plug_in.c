@@ -151,6 +151,9 @@ static void plug_in_handle_proc_uninstall (GPProcUninstall   *proc_uninstall);
 static void plug_in_write_rc              (gchar             *filename);
 static void plug_in_init_file             (gchar             *filename);
 static void plug_in_query                 (PlugInDef         *plug_in_def);
+#ifdef HACK_FOR_BUG_66859
+static void plug_in_initialize            (PlugInDef         *plug_in_def);
+#endif
 static void plug_in_add_to_db             (void);
 static void plug_in_make_menu             (void);
 static gint plug_in_make_menu_entry       (gpointer           foo,
@@ -359,6 +362,24 @@ plug_in_init (void)
       app_init_update_status (NULL, plug_in_def->prog, nth / nplugins);
       nth++;
     }
+
+#ifdef HACK_FOR_BUG_66859
+  /* run the plug-in init functions */
+  tmp = plug_in_defs;
+  while (tmp)
+    {
+      plug_in_def = tmp->data;
+      tmp = tmp->next;
+
+      if (plug_in_def->init)
+	{
+	  if (be_verbose)
+	    g_print (_("init plug-in: \"%s\"\n"), plug_in_def->prog);
+
+	  plug_in_initialize (plug_in_def);
+	}
+    }
+#endif
 
   /* insert the proc defs */
   for (tmp = gimprc_proc_defs; tmp; tmp = g_slist_next (tmp))
@@ -692,6 +713,9 @@ plug_in_def_new (gchar *prog)
   plug_in_def->help_path     = NULL;
   plug_in_def->mtime         = 0;
   plug_in_def->query         = FALSE;
+#ifdef HACK_FOR_BUG_66859
+  plug_in_def->init	     = FALSE;
+#endif
   
   return plug_in_def;
 }
@@ -863,6 +887,9 @@ plug_in_new (gchar *name)
   plug_in->open               = FALSE;
   plug_in->destroy            = FALSE;
   plug_in->query              = FALSE;
+#ifdef HACK_FOR_BUG_66859
+  plug_in->init               = FALSE;
+#endif
   plug_in->synchronous        = FALSE;
   plug_in->recurse            = FALSE;
   plug_in->busy               = FALSE;
@@ -1010,6 +1037,12 @@ plug_in_open (PlugIn *plug_in)
 	{
 	  plug_in->args[4] = g_strdup ("-query");
 	}
+#ifdef HACK_FOR_BUG_66859
+      else if (plug_in->init)
+	{
+	  plug_in->args[4] = g_strdup ("-init");
+	}
+#endif
       else
 	{
 	  plug_in->args[4] = g_strdup ("-run");
@@ -1140,7 +1173,9 @@ plug_in_close (PlugIn   *plug_in,
 	    }
 	  if (STILL_ACTIVE == dwExitCode)
 	    {
-	      g_warning("Terminating %s ...", plug_in->args[0]);
+	      g_warning("Terminating %s handle %p...",
+			g_basename (plug_in->args[0]),
+			(HANDLE) plug_in->pid);
 	      TerminateProcess ((HANDLE) plug_in->pid, 0);
 	    }
 	}
@@ -1930,6 +1965,15 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
       break;
     }
 
+#ifdef HACK_FOR_BUG_66859
+  /* Is the plug-in only telling us that it has an init_proc? */
+  if (strcmp (proc_install->name, GIMP_HAVE_INIT_PROC_MARKER) == 0)
+    {
+      plug_in_def->init = TRUE;
+      return;
+    }
+#endif
+
   while (tmp)
     {
       proc_def = tmp->data;
@@ -2322,6 +2366,12 @@ plug_in_write_rc (gchar *filename)
 	      fprintf (fp, "\n\t(help-def \"%s\")", plug_in_def->help_path);
 	    }
 
+#ifdef HACK_FOR_BUG_66859
+	  if (plug_in_def->init)
+	    {
+	      fprintf (fp, "\n\t(has-init)");
+	    }
+#endif
 	  fprintf (fp, ")\n");
 
 	  if (tmp)
@@ -2402,6 +2452,44 @@ plug_in_query (PlugInDef *plug_in_def)
 	}
     }
 }
+
+#ifdef HACK_FOR_BUG_66859
+
+static void
+plug_in_initialize (PlugInDef *plug_in_def)
+{
+  PlugIn      *plug_in;
+  WireMessage  msg;
+
+  plug_in = plug_in_new (plug_in_def->prog);
+  if (plug_in)
+    {
+      plug_in->init        = TRUE;
+      plug_in->synchronous = TRUE;
+      plug_in->user_data   = plug_in_def;
+
+      if (plug_in_open (plug_in))
+	{
+	  plug_in_push (plug_in);
+
+	  while (plug_in->open)
+	    {
+	      if (!wire_read_msg (current_readchannel, &msg))
+		plug_in_close (current_plug_in, TRUE);
+	      else 
+		{
+		  plug_in_handle_message (&msg);
+		  wire_destroy (&msg);
+		}
+	    }
+
+	  plug_in_pop ();
+	  plug_in_destroy (plug_in);
+	}
+    }
+}
+
+#endif
 
 static void
 plug_in_add_to_db (void)

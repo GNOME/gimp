@@ -48,6 +48,9 @@ struct _PlugIn
   guint         open : 1;         /* Is the plug-in open* */
   guint         destroy : 1;      /* Should the plug-in by destroyed* */
   guint         query : 1;        /* Are we querying the plug-in? */
+#ifdef HACK_FOR_BUG_66859
+  guint		init : 1;	  /* Are we initing the plug-in? */
+#endif
   guint         synchronous : 1;  /* Is the plug-in running synchronously? */
   guint         recurse : 1;      /* Have we called 'gtk_main' recursively? */
   guint         busy : 1;         /* Is the plug-in busy with a temp proc? */
@@ -80,6 +83,9 @@ struct _PlugInDef
   gchar    *help_path;
   time_t    mtime;
   gboolean  query;
+#ifdef HACK_FOR_BUG_66859
+  gboolean  init;
+#endif
 };
 
 struct _PlugInProcDef

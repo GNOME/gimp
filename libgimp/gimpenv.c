@@ -36,6 +36,9 @@
 
 #ifdef G_OS_WIN32
 #define STRICT
+#undef DATADIR			/* typedefed in objidl.h... the value
+				   from Makefile not used here anyway */
+
 #include <windows.h>		/* For GetModuleFileName */
 #include <io.h>
 #ifndef S_IWUSR

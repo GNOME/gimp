@@ -62,6 +62,9 @@
 #define OK         2
 #define LOCALE_DEF 3
 #define HELP_DEF   4
+#ifdef HACK_FOR_BUG_66859
+#define INIT_DEF   5
+#endif
 
 typedef enum
 {
@@ -1437,6 +1440,16 @@ parse_plug_in_def (gpointer val1p,
 	success = parse_locale_def (plug_in_def);
       else if (success == HELP_DEF)
 	success = parse_help_def (plug_in_def);
+#ifdef HACK_FOR_BUG_66859
+      else if (success == INIT_DEF)
+	{
+	  token = peek_next_token ();
+	  if (!token || token != TOKEN_RIGHT_PAREN)
+	    goto error;
+	  token = get_next_token ();
+	  plug_in_def->init = TRUE;
+	}
+#endif
     }
 
   token = peek_next_token ();
@@ -1550,7 +1563,14 @@ parse_proc_def (PlugInProcDef **proc_def)
       token = get_next_token ();
       return HELP_DEF;  /* it's a help_def, let parse_help_def do the rest */
     }
-  else if (strcmp ("proc-def", token_sym) != 0)
+#ifdef HACK_FOR_BUG_66859
+  if ((strcmp ("has-init", token_sym) == 0))
+    {
+      token = get_next_token ();
+      return INIT_DEF;  /* let parse_plug_in_def do the rest */
+    }
+#endif
+  if (strcmp ("proc-def", token_sym) != 0)
     return ERROR;
 
   token = get_next_token ();

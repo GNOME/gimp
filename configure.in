@@ -577,6 +577,9 @@ if test x$os_win32 = xyes; then
   LIBS="$LIBS $GLIB_LIBS"
   AC_CHECK_FUNCS(bind_textdomain_codeset)
   LIBS=$gimp_save_LIBS
+
+  dnl Include hack for bug #66859 on Win32
+  CFLAGS="$CFLAGS -DHACK_FOR_BUG_66859"
 fi
 
 dnl check for mmap

@@ -116,7 +116,9 @@ static void       gimp_message_func            (const gchar    *log_domain,
 						gpointer        data);
 static void       gimp_process_message         (WireMessage    *msg);
 static void       gimp_close                   (void);
-
+#ifdef HACK_FOR_BUG_66859
+static void	  gimp_have_init_proc          (void);
+#endif
 
 GIOChannel *_readchannel  = NULL;
 GIOChannel *_writechannel = NULL;
@@ -274,9 +276,25 @@ gimp_main (int   argc,
     {
       if (PLUG_IN_INFO.query_proc)
 	(* PLUG_IN_INFO.query_proc) ();
+#ifdef HACK_FOR_BUG_66859
+      /* If we have an init_proc, tell GIMP about it by pretending to
+       * install a function with a special marker name.
+       */
+      if (PLUG_IN_INFO.init_proc)
+	gimp_have_init_proc ();
+#endif
       gimp_close ();
       return 0;
     }
+#ifdef HACK_FOR_BUG_66859
+  else if (strcmp (argv[4], "-init") == 0)
+    {
+      if (PLUG_IN_INFO.init_proc)
+	(* PLUG_IN_INFO.init_proc) ();
+      gimp_close ();
+      return 0;
+    }
+#endif
 
   temp_proc_ht = g_hash_table_new (g_str_hash, g_str_equal);
 
@@ -288,6 +306,26 @@ gimp_main (int   argc,
   gimp_loop ();
   return 0;
 }
+
+#ifdef HACK_FOR_BUG_66859
+
+static void
+gimp_have_init_proc (void)
+{
+  gimp_install_procedure (GIMP_HAVE_INIT_PROC_MARKER,
+			  "",
+			  "",
+			  "",
+			  "",
+			  "",
+			  NULL,
+			  "",
+			  GIMP_EXTENSION,
+			  0, 0,
+			  NULL, NULL);
+}
+
+#endif /* HACK_FOR_BUG_66859 */
 
 static void
 gimp_close (void)
@@ -1095,14 +1133,14 @@ gimp_config (GPConfig *config)
 	  /* Verify that we mapped our view */
 	  if (!_shm_addr)
 	    {
-	      g_warning ("MapViewOfFile error: %d... disabling shared memory transport",
-			 GetLastError());
+	      g_warning ("MapViewOfFile error: %s... disabling shared memory transport",
+			 g_win32_error_message (GetLastError()));
 	    }
 	}
       else
 	{
-	  g_warning ("OpenFileMapping error: %d... disabling shared memory transport",
-		     GetLastError());
+	  g_warning ("OpenFileMapping error: %s... disabling shared memory transport",
+		     g_win32_error_message (GetLastError()));
 	}
 #else
 #ifdef HAVE_SHM_H

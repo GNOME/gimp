@@ -162,6 +162,10 @@ struct _GPProcReturn
   GPParam *params;
 };
 
+#ifdef HACK_FOR_BUG_66859
+#define GIMP_HAVE_INIT_PROC_MARKER "<have-init-proc>"
+#endif
+
 struct _GPProcInstall
 {
   gchar      *name;
