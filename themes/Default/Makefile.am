@@ -134,10 +134,3 @@ CLEANFILES += $(noinst_DATA)
 
 gimp-stock-pixbufs.h: $(STOCK_IMAGES) $(STOCK_TOOL_IMAGES)
 	gdk-pixbuf-csource --raw --build-list $(STOCK_VARIABLES) $(STOCK_TOOL_VARIABLES) >$(srcdir)/gimp-stock-pixbufs.h
-
-.PHONY: files
-
-files:
-	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
-	  echo $$p; \
-	done

@@ -153,7 +153,7 @@ EXTRS_DIST = \
 gen_sources = xgen-gmh xgen-gmc
 CLEANFILES += $(gen_sources)
 
-$(srcdir)/stamp-gimpmarshal.h: gimpmarshal.list gimpmarshal.h
+$(srcdir)/stamp-gimpmarshal.h: $(srcdir)/gimpmarshal.list gimpmarshal.h
 	echo "#ifndef __GIMP_MARSHAL_H__" > xgen-gmh \
 	&& echo "#define __GIMP_MARSHAL_H__" >> xgen-gmh \
 	&& glib-genmarshal --nostdinc --prefix=gimp_cclosure_marshal $(srcdir)/gimpmarshal.list --header >> xgen-gmh \
@@ -168,10 +168,3 @@ $(srcdir)/gimpmarshal.c: $(srcdir)/stamp-gimpmarshal.h
 	&& glib-genmarshal --nostdinc --prefix=gimp_cclosure_marshal $(srcdir)/gimpmarshal.list --body >> xgen-gmc \
 	&& cp xgen-gmc $(srcdir)/gimpmarshal.c \
 	&& rm -f xgen-gmc xgen-gmc~
-
-.PHONY: files
-
-files:
-	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
-	  echo $$p; \
-	done

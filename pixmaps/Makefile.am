@@ -27,7 +27,6 @@ EXTRA_DIST = @STRIP_BEGIN@ \
 	folder.xpm		\
 	last.xpm		\
 	locked.xbm		\
-	navbutton.xpm		\
 	next.xpm		\
 	no.xpm			\
 	path.xbm		\
@@ -37,8 +36,6 @@ EXTRA_DIST = @STRIP_BEGIN@ \
 	pennorm.xpm		\
 	play.xpm		\
 	prev.xpm		\
-	qmasksel.xpm		\
-	qmasknosel.xpm		\
 	question.xpm		\
 	swap.xpm		\
 	update.xpm      	\
@@ -47,10 +44,3 @@ EXTRA_DIST = @STRIP_BEGIN@ \
 	wilber3.xpm		\
 	yes.xpm			\
 @STRIP_END@
-
-.PHONY: files
-
-files:
-	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
-	  echo $$p; \
-	done

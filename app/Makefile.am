@@ -152,12 +152,5 @@ gimp_LDADD = @STRIP_BEGIN@ \
 	$(REGEXREPL)							\
 @STRIP_END@
 
-.PHONY: files
-
-files:
-	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
-	  echo $$p; \
-	done
-
 makefile.mingw: $(top_builddir)/config.status $(top_srcdir)/app/makefile.mingw.in
 	cd $(top_builddir) && CONFIG_FILES=app/$@ CONFIG_HEADERS= $(SHELL) ./config.status

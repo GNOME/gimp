@@ -48,12 +48,5 @@ libgimpmath_1_3_la_LDFLAGS = @STRIP_BEGIN@ \
 
 libgimpmath_1_3_la_LIBADD = $(GLIB_LIBS) -lm
 
-.PHONY: files
-
-files:
-	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
-	  echo $$p; \
-	done
-
 makefile.mingw: $(top_builddir)/config.status $(top_srcdir)/libgimpmath/makefile.mingw.in
 	cd $(top_builddir) && CONFIG_FILES=libgimpmath/$@ CONFIG_HEADERS= $(SHELL) ./config.status

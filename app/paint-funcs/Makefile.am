@@ -31,10 +31,3 @@ INCLUDES = @STRIP_BEGIN@ \
 	$(GLIB_CFLAGS)		\
 	-I$(includedir)		\
 @STRIP_END@
-
-.PHONY: files
-
-files:
-	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
-	  echo $$p; \
-	done

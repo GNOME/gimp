@@ -1,6 +1,8 @@
+## Makefile.am for gimp/data/brushes
+
 brushdatadir = $(gimpdatadir)/brushes
 
-brushdata = \
+brushdata_DATA = \
 	10x10square.gbr		\
 	10x10squareBlur.gbr	\
 	11circle.gbr		\
@@ -48,3 +50,5 @@ brushdata = \
 	pixel.gbr		\
 	thegimp.gbr		\
 	xcf.gbr
+
+EXTRA_DIST = $(brushdata_DATA)

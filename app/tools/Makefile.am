@@ -131,10 +131,3 @@ INCLUDES = @STRIP_BEGIN@ \
 	$(PANGOFT2_CFLAGS)		\
 	-I$(includedir)			\
 @STRIP_END@
-
-.PHONY: files
-
-files:
-	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
-	  echo $$p; \
-	done

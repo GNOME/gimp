@@ -1,3 +1,47 @@
+2001-11-12  Michael Natterer  <mitch@gimp.org>
+
+	* HACKING: small fix.
+
+	* configure.in: changed --disable-perl to --enable-perl because
+	it doesn't build properly at the moment.
+
+	* pixmaps/Makefile.am: removed stuff which is no longer there
+	from EXTRA_DIST.
+
+	* plug-ins/Makefile.am: put back the $(GIMP_PERL) line in SUBDIRS.
+
+	* app/widgets/gimpmenuitem.c. include "libgimpwidgets/gimpwidgets.h".
+
+	* data/Makefile.am
+	* data/brushes/Makefile.am
+	* data/gradients/Makefile.am
+	* data/palettes/Makefile.am
+	* data/patterns/Makefile.am: removed the old "files" hack and put
+	the stuff to EXTRA_DIST.
+
+	* app/Makefile.am
+	* app/base/Makefile.am
+	* app/core/Makefile.am
+	* app/file/Makefile.am
+	* app/gui/Makefile.am
+	* app/paint-funcs/Makefile.am
+	* app/pdb/Makefile.am
+	* app/tools/Makefile.am
+	* app/widgets/Makefile.am
+	* app/widgets/gimpmenuitem.c
+	* app/xcf/Makefile.am
+	* cursors/Makefile.am
+	* libgimp/Makefile.am
+	* libgimpbase/Makefile.am
+	* libgimpcolor/Makefile.am
+	* libgimpmath/Makefile.am
+	* libgimpwidgets/Makefile.am
+	* m4macros/Makefile.am
+	* themes/Makefile.am
+	* themes/Default/Makefile.am
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/tools/Makefile.am: removed "files" target.
+
 2001-11-12  Sven Neumann  <sven@gimp.org>
 
 	* po/Makefile.in.in

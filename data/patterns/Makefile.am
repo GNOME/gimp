@@ -1,3 +1,5 @@
+## Process this file with automake to produce Makefile.in
+
 patterndatadir = $(gimpdatadir)/patterns
 
 patterndata_DATA = \
@@ -57,3 +59,5 @@ patterndata_DATA = \
 	wood3.pat		\
 	wood4.pat		\
 	wood5.pat
+
+EXTRA_DIST = $(patterndata_DATA)

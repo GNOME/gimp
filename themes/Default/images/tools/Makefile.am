@@ -46,10 +46,3 @@ STOCK_TOOL_IMAGES = @STRIP_BEGIN@ \
 themedata_DATA = $(STOCK_TOOL_IMAGES)
 
 EXTRA_DIST = $(themedata_DATA)
-
-.PHONY: files
-
-files:
-	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
-	  echo $$p; \
-	done

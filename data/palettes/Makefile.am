@@ -1,3 +1,5 @@
+## Makefile.am for gimp/data/palettes
+
 palettedatadir = $(gimpdatadir)/palettes
 
 palettedata_DATA = \
@@ -40,3 +42,5 @@ palettedata_DATA = \
 	Volcano.gpl		\
 	Warm_Colors.gpl		\
 	Web.gpl
+
+EXTRA_DIST = $(palettedata_DATA)

@@ -43,6 +43,7 @@ SUBDIRS = 			\
 	gfig			\
 	gflare			\
 	gfli			\
+	$(GIMP_PERL)		\
 	gimpressionist		\
 	$(HELPBROWSER)		\
 	ifscompose		\
@@ -59,7 +60,6 @@ SUBDIRS = 			\
 	plugin-helper		\
 	common
 
-##	$(GIMP_PERL)		\
 ##	gap			\
 ##	gdyntext		\
 

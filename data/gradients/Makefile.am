@@ -1,3 +1,5 @@
+## Makefile.am for gimp/data/gradients
+
 gradientdatadir = $(gimpdatadir)/gradients
 
 gradientdata_DATA = \
@@ -79,3 +81,5 @@ gradientdata_DATA = \
 	Wood_2.ggr				\
 	Yellow_Contrast.ggr			\
 	Yellow_Orange.ggr
+
+EXTRA_DIST = $(gradientdata_DATA)

@@ -112,7 +112,8 @@ wrappers around functions of parent classes. If you end up duplicating code,
 try to create a common parent class and implement the common methods there.
 
 Don't include headers in headers except where unavoidable (e.g. for
-deriving objects). Opaque typedefs go to app/apptypes.h
+deriving objects). Opaque typedefs go to app/base/base-types.h,
+app/core/core-types.h etc.
 
 Don't use the GTK wrappers around the GLib object and signal system.
 

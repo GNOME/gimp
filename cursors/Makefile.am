@@ -97,10 +97,3 @@ EXTRA_DIST = \
 	smudge_small_mask.xbm		\
 	measure_small.xbm		\
 	measure_small_mask.xbm
-
-.PHONY: files
-
-files:
-	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
-	  echo $$p; \
-	done
