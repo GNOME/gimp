@@ -58,11 +58,11 @@ gimp_paint_init (Gimp *gimp)
     gimp_smudge_register,
     gimp_convolve_register,
     gimp_clone_register,
+    gimp_ink_register,
     gimp_airbrush_register,
     gimp_eraser_register,
     gimp_paintbrush_register,
-    gimp_pencil_register,
-    gimp_ink_register
+    gimp_pencil_register
   };
 
   gint i;

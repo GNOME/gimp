@@ -1,5 +1,11 @@
 2004-05-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimp-paint.c (gimp_paint_init): register ink between
+	airbrush and clone so the stroke dialog's menu of paint functions
+	has the same order as the default toolbox order.
+
+2004-05-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimppaintcore.[ch]: removed enum GimpPaintCoreFlags
 	and member GimpPaintCore::flags. Added "gboolean traces_on_window"
 	to GimpPaintCoreClass (defaults to FALSE).
