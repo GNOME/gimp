@@ -927,7 +927,7 @@ layer_pick_correlate (layer, x, y)
       /*  Otherwise, determine if the alpha value at
        *  the given point is non-zero
        */
-      alpha = tag_num_channels (drawable_tag (GIMP_DRAWABLE(layer))); 
+      alpha = tag_num_channels (drawable_tag (GIMP_DRAWABLE(layer))) - 1; 
 
       canvas = drawable_data (GIMP_DRAWABLE(layer));
       canvas_portion_refro (canvas, x, y);
