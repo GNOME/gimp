@@ -2061,7 +2061,7 @@ static unsigned short codetab[HSIZE];
 #define HashTabOf(i)       htab[i]
 #define CodeTabOf(i)    codetab[i]
 
-const code_int hsize = HSIZE;	/* the original reason for this being
+static const code_int hsize = HSIZE;	/* the original reason for this being
 				   variable was "for dynamic table sizing",
 				   but since it was never actually changed
 				   I made it const   --Adam. */

@@ -1,3 +1,8 @@
+2004-08-20  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/gif.c: declared global const variable as static.
+	Fixes compiler warnings seen with gcc 3.4.1. Merged from HEAD.
+
 2004-08-16  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcolorframe.c (gimp_color_frame_update): fixed
