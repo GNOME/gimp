@@ -719,7 +719,8 @@ process_event_queue_keys (GdkEventKey *kevent,
 
   for (i = 0; i < nkeys; i++)
     {
-      if (kevent->keyval == keys[i] && kevent->state == modifiers[i])
+      if (kevent->keyval                 == keys[i] &&
+          (kevent->state & modifiers[i]) == modifiers[i])
 	value += values[i];
     }
 
@@ -739,8 +740,8 @@ process_event_queue_keys (GdkEventKey *kevent,
 	if (event->any.type == GDK_KEY_PRESS)
 	  {
 	    for (i = 0; i < nkeys; i++)
-	      if (event->key.keyval == keys[i] &&
-		  event->key.state  == modifiers[i])
+	      if (event->key.keyval                 == keys[i] &&
+                  (event->key.state & modifiers[i]) == modifiers[i])
 		{
 		  discard_event = TRUE;
 		  value += values[i];

@@ -1,3 +1,9 @@
+2003-05-27  Sven Neumann  <sven@gimp.org>
+
+	* app/edit_selection.c: backported a change from HEAD that makes
+	the cursor keys work with CapsLock and/or NumLock enabled. Fixes
+	bug #113835.
+
 2003-05-27  Raphael Quinet  <quinet@gamers.org>
 
 	* NEWS: Include an overview of the changes that took place since
