@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
-"POT-Creation-Date: 2002-10-10 23:16+0200\n"
-"PO-Revision-Date: 2002-06-19 18:51+0200\n"
+"POT-Creation-Date: 2002-10-24 02:53+0200\n"
+"PO-Revision-Date: 2002-10-24 03:02+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -161,7 +161,43 @@ msgstr "Ingen"
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
-msgstr "procent:"
+msgstr "procent"
+
+#: libgimpmodule/gimpmodule.c:175
+#, c-format
+msgid "Loading module: '%s'\n"
+msgstr "Läser in modul: \"%s\"\n"
+
+#: libgimpmodule/gimpmodule.c:192 libgimpmodule/gimpmodule.c:285
+#: libgimpmodule/gimpmodule.c:310 libgimpmodule/gimpmodule.c:378
+#, c-format
+msgid ""
+"Module '%s' load error:\n"
+"%s"
+msgstr ""
+"Fel vid inläsning av modulen \"%s\":\n"
+"%s"
+
+#: libgimpmodule/gimpmodule.c:252
+#, c-format
+msgid "Skipping module: '%s'\n"
+msgstr "Hoppar över modul: \"%s\"\n"
+
+#: libgimpmodule/gimpmodule.c:355
+msgid "Module error"
+msgstr "Modulfel"
+
+#: libgimpmodule/gimpmodule.c:356
+msgid "Loaded OK"
+msgstr "Lästes in OK"
+
+#: libgimpmodule/gimpmodule.c:357
+msgid "Load failed"
+msgstr "Inläsning misslyckades"
+
+#: libgimpmodule/gimpmodule.c:358
+msgid "Unloaded OK"
+msgstr "Glömdes OK"
 
 #: libgimpwidgets/gimpcolorbutton.c:85
 msgid "/Foreground Color"
@@ -220,41 +256,36 @@ msgid "Visible"
 msgstr "Synlig"
 
 #: libgimpwidgets/gimpstock.c:127
-#, fuzzy
 msgid "_Resize"
-msgstr "_Återställ"
+msgstr "_Ändra storlek"
 
-#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:175
-#, fuzzy
+#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:179
 msgid "_Scale"
-msgstr "Skala"
+msgstr "_Skala"
 
-#: libgimpwidgets/gimpstock.c:131
+#: libgimpwidgets/gimpstock.c:135
 msgid "L_etter Spacing"
-msgstr ""
+msgstr "_Teckenmellanrum"
 
-#: libgimpwidgets/gimpstock.c:132
+#: libgimpwidgets/gimpstock.c:136
 msgid "L_ine Spacing"
-msgstr ""
+msgstr "_Radmellanrum"
 
-#: libgimpwidgets/gimpstock.c:153
+#: libgimpwidgets/gimpstock.c:157
 msgid "Crop"
-msgstr ""
+msgstr "Beskär"
 
-#: libgimpwidgets/gimpstock.c:171
-#, fuzzy
+#: libgimpwidgets/gimpstock.c:175
 msgid "_Transform"
-msgstr "Transformera"
+msgstr "_Transformera"
 
-#: libgimpwidgets/gimpstock.c:174
-#, fuzzy
+#: libgimpwidgets/gimpstock.c:178
 msgid "_Rotate"
-msgstr "Rotera"
+msgstr "_Rotera"
 
-#: libgimpwidgets/gimpstock.c:176
-#, fuzzy
+#: libgimpwidgets/gimpstock.c:180
 msgid "_Shear"
-msgstr "Luta"
+msgstr "_Luta"
 
 #: libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
