@@ -1,3 +1,14 @@
+Sun Sep 26 05:33:56 MEST 1999  Jens Lautenbacher <jens@tellux.de>
+                               Sven Neumann <sven@gimp.org>
+
+	* app/gimpbrushpipe.h: introduced a macro to test for a 
+	gimp_brush_pipe that actually returns FALSE when it hits only a 
+	gimp_brush_pixmap that is no pipe
+	
+	* app/gimpcontextpreview.c: use the new macro
+
+	* app/paintbrush.c: make the compiler happy
+
 Sun Sep 26 04:18:48 MEST 1999  Jens Lautenbacher <jens@tellux.de>
                                Sven Neumann <sven@gimp.org>
 

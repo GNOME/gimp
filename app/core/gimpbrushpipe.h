@@ -44,4 +44,9 @@ GimpBrushPipe *gimp_brush_pixmap_load (char *filename);
 
 TempBuf *gimp_brush_pixmap_pixmap (GimpBrushPixmap *);
 
+/* appearantly GIMP_IS_BRUSH_PIPE () returning TRUE is no indication that you really
+   have a brush_pipe in front of you, so here we introduce a macro that works:        */
+#define GIMP_IS_REALLY_A_BRUSH_PIPE(obj) (GIMP_IS_BRUSH_PIPE (obj) && GIMP_BRUSH_PIPE (obj)->nbrushes > 1)
+
+
 #endif  /* __GIMPBRUSHPIPE_H__ */

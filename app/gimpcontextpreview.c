@@ -384,7 +384,7 @@ gimp_context_preview_popup_open (GimpContextPreview *gcp,
 	gcp->popup_width  = brush->mask->width;
 	gcp->popup_height = brush->mask->height;
 
-	if (GIMP_IS_BRUSH_PIPE (brush) && GIMP_BRUSH_PIPE (brush)->nbrushes > 1)
+	if (GIMP_IS_REALLY_A_BRUSH_PIPE (brush))
 	  {
 	    GimpBrushPipe *pipe = GIMP_BRUSH_PIPE (brush);
 	    gint i;
@@ -463,7 +463,7 @@ gimp_context_preview_popup_open (GimpContextPreview *gcp,
     {
     case GCP_BRUSH:      
       gimp_context_preview_draw_brush_popup (gcp);
-      if (GIMP_IS_BRUSH_PIPE (gcp->data) && (GIMP_BRUSH_PIPE (gcp->data)->nbrushes > 1))
+      if (GIMP_IS_REALLY_A_BRUSH_PIPE (gcp->data))
 	{
 	  gcp_pipe_index = 0;
 	  gcp_pipe_timer = gtk_timeout_add (300, (GtkFunction)gimp_context_preview_animate_pipe, gcp);
@@ -652,7 +652,7 @@ static void draw_brush (GtkPreview *preview,
       offset_x = width - indicator_width - 1;
       offset_y = height - indicator_height - 1;
       for (y = 0; y < indicator_height; y++)
-	(GIMP_IS_BRUSH_PIPE (brush) && GIMP_BRUSH_PIPE (brush)->nbrushes > 1) ?
+	(GIMP_IS_REALLY_A_BRUSH_PIPE (brush)) ?
 	  gtk_preview_draw_row (preview, scale_pipe_indicator_bits[y][0],
 				offset_x, offset_y + y, indicator_width) :
 	  gtk_preview_draw_row (preview, scale_indicator_bits[y][0],
@@ -661,7 +661,7 @@ static void draw_brush (GtkPreview *preview,
       if (GIMP_IS_BRUSH_PIXMAP (brush))
 	temp_buf_free (pixmap_buf);
     }
-  else if (!is_popup && GIMP_IS_BRUSH_PIPE (brush) && GIMP_BRUSH_PIPE (brush)->nbrushes > 1)
+  else if (!is_popup && GIMP_IS_REALLY_A_BRUSH_PIPE (brush))
     {
       offset_x = width - indicator_width - 1;
       offset_y = height - indicator_height - 1;
@@ -717,7 +717,7 @@ gimp_context_preview_animate_pipe (GimpContextPreview *gcp)
   GimpBrushPipe *pipe;
   GimpBrush *brush;
 
-  g_return_val_if_fail (gcp != NULL && GIMP_IS_BRUSH_PIPE (gcp->data), FALSE);
+  g_return_val_if_fail (gcp != NULL && GIMP_IS_REALLY_A_BRUSH_PIPE (gcp->data), FALSE);
   if (gcp_popup != NULL && !GTK_WIDGET_VISIBLE (gcp_popup)) 
     return (FALSE);
 

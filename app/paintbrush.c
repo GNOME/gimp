@@ -366,7 +366,7 @@ paintbrush_paint_func (PaintCore    *paint_core,
   double gradient_length;	
   double unit_factor;
   
-  g_return_if_fail (gdisp != NULL);
+  g_return_val_if_fail (gdisp != NULL, NULL);
 
 #if TIMED_BRUSH
   static GTimer *timer = NULL;
