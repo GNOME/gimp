@@ -155,7 +155,9 @@ run (const gchar      *name,
   gfig_context = g_new (GFigContext, 1);
   gfig_context->show_background = TRUE;
   gfig_context->selected_obj = NULL;
+
   run_mode = param[0].data.d_int32;
+
   gfig_context->image_id = param[1].data.d_image;
   gfig_context->drawable_id = param[2].data.d_drawable;
 
@@ -166,6 +168,8 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 
   gimp_image_undo_group_start (gfig_context->image_id);
+
+  gimp_context_push ();
 
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
@@ -213,6 +217,7 @@ run (const gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
+    case GIMP_RUN_WITH_LAST_VALS:
       /*gimp_get_data ("plug_in_gfig", &selvals);*/
       if (! gfig_dialog ())
         {
@@ -227,13 +232,11 @@ run (const gchar      *name,
       status = GIMP_PDB_CALLING_ERROR;
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
-      /*gimp_get_data ("plug_in_gfig", &selvals);*/
-      break;
-
     default:
       break;
     }
+
+  gimp_context_pop ();
 
   gimp_image_undo_group_end (gfig_context->image_id);
 
