@@ -238,25 +238,11 @@ init_edit_selection (GimpTool    *tool,
   GimpEditSelectionTool *edit_select;
   GimpDisplayShell      *shell;
   gint                   off_x, off_y;
+  const gchar           *undo_desc;
 
   edit_select = g_object_new (GIMP_TYPE_EDIT_SELECTION_TOOL, NULL);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  gimp_image_undo_group_start (gdisp->gimage, GIMP_UNDO_GROUP_LAYER_DISPLACE,
-                               _("Move Layer"));
-
-  gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
-                         &off_x, &off_y);
-
-  edit_select->x = edit_select->origx = coords->x - off_x;
-  edit_select->y = edit_select->origy = coords->y - off_y;
-
-  gimp_image_mask_boundary (gdisp->gimage,
-                            &edit_select->segs_in,
-                            &edit_select->segs_out,
-                            &edit_select->num_segs_in,
-                            &edit_select->num_segs_out);
 
   /*  Make a check to see if it should be a floating selection translation  */
   if (edit_type == EDIT_MASK_TO_LAYER_TRANSLATE &&
@@ -275,7 +261,32 @@ init_edit_selection (GimpTool    *tool,
 	edit_type = EDIT_FLOATING_SEL_TRANSLATE;
     }
 
+  if (edit_type == EDIT_MASK_TRANSLATE)
+    undo_desc = _("Move Selection Mask");
+  else if (edit_type == EDIT_LAYER_TRANSLATE)
+    undo_desc = _("Move Layer");
+  else
+    undo_desc = _("Move Floating Layer");
+
+  gimp_image_undo_group_start (gdisp->gimage,
+                               edit_type == EDIT_MASK_TRANSLATE ?
+                               GIMP_UNDO_GROUP_MASK :
+                               GIMP_UNDO_GROUP_LAYER_DISPLACE,
+                               undo_desc);
+
+  gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
+                         &off_x, &off_y);
+
   edit_select->edit_type = edit_type;
+
+  edit_select->x = edit_select->origx = coords->x - off_x;
+  edit_select->y = edit_select->origy = coords->y - off_y;
+
+  gimp_image_mask_boundary (gdisp->gimage,
+                            &edit_select->segs_in,
+                            &edit_select->segs_out,
+                            &edit_select->num_segs_in,
+                            &edit_select->num_segs_out);
 
   /*  find the bounding box of the selection mask -
    *  this is used for the case of a EDIT_MASK_TO_LAYER_TRANSLATE,
@@ -472,7 +483,9 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 	    break;
 
 	  case EDIT_LAYER_TRANSLATE:
-	    if ((floating_layer = gimp_image_floating_sel (gdisp->gimage)))
+	    floating_layer = gimp_image_floating_sel (gdisp->gimage);
+
+	    if (floating_layer)
 	      floating_sel_relax (floating_layer, TRUE);
 
 	    /*  translate the layer--and any "linked" layers as well  */
@@ -510,8 +523,9 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 		return;
 	      }
 
-	    /* this is always the first move, since we switch to 
-	       EDIT_FLOATING_SEL_TRANSLATE when finished here */
+	    /*  this is always the first move, since we switch to
+             *  EDIT_FLOATING_SEL_TRANSLATE when finished here
+             */
 	    gimp_image_undo_freeze (gdisp->gimage);
 	    edit_select->first_move = FALSE; 
 
@@ -535,7 +549,6 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 	    if (edit_select->first_move)
 	      {
 		gimp_image_undo_freeze (gdisp->gimage);
-
 		edit_select->first_move = FALSE;
 	      }
 	    break;
@@ -780,8 +793,6 @@ process_event_queue_keys (GdkEventKey *kevent,
 
   va_end (argp);
 
-  g_print ("process_key: state == %d\n", kevent->state);
-
   for (i = 0; i < n_keys; i++)
     if (kevent->keyval                 == keys[i] &&
         (kevent->state & modifiers[i]) == modifiers[i])
@@ -803,8 +814,6 @@ process_event_queue_keys (GdkEventKey *kevent,
         {
           if (event->any.type == GDK_KEY_PRESS)
             {
-              g_print ("process_key: state == %d\n", event->key.state);
-
               for (i = 0; i < n_keys; i++)
                 if (event->key.keyval                 == keys[i] &&
                     (event->key.state & modifiers[i]) == modifiers[i])
@@ -852,16 +861,17 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
 				    GdkEventKey *kevent,
 				    GimpDisplay *gdisp)
 {
-  gint       mask_inc_x      = 0;
-  gint       mask_inc_y      = 0;
-  gint       inc_x           = 0;
-  gint       inc_y           = 0;
-  GimpUndo  *undo;
-  gboolean   push_undo       = TRUE;
-  gboolean   translate_mask  = FALSE;
-  gboolean   translate_layer = FALSE;
-  GimpLayer *layer           = NULL;
-  EditType   edit_type       = EDIT_MASK_TRANSLATE;
+  gint          mask_inc_x      = 0;
+  gint          mask_inc_y      = 0;
+  gint          inc_x           = 0;
+  gint          inc_y           = 0;
+  GimpUndo     *undo;
+  gboolean      push_undo       = TRUE;
+  gboolean      translate_mask  = FALSE;
+  gboolean      translate_layer = FALSE;
+  GimpLayer    *layer           = NULL;
+  EditType      edit_type       = EDIT_MASK_TRANSLATE;
+  GimpUndoType  undo_type;
 
   /*  check for mask translation first because the translate_layer
    *  modifiers match the translate_mask ones...
@@ -951,10 +961,14 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
         }
     }
 
+  if (translate_mask)
+    undo_type = GIMP_UNDO_GROUP_MASK;
+  else
+    undo_type = GIMP_UNDO_GROUP_LAYER_DISPLACE;
+
   undo = gimp_undo_stack_peek (gdisp->gimage->undo_stack);
 
-  if (GIMP_IS_UNDO_STACK (undo) &&
-      undo->undo_type == GIMP_UNDO_GROUP_LAYER_DISPLACE)
+  if (GIMP_IS_UNDO_STACK (undo) && undo->undo_type == undo_type)
     {
       if (g_object_get_data (G_OBJECT (undo), "edit-selection-tool") ==
           (gpointer) tool                                                 &&
@@ -980,14 +994,11 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
       else
         undo_desc = _("Move Layer");
 
-      if (gimp_image_undo_group_start (gdisp->gimage,
-                                       GIMP_UNDO_GROUP_LAYER_DISPLACE,
-                                       undo_desc))
+      if (gimp_image_undo_group_start (gdisp->gimage, undo_type, undo_desc))
         {
           undo = gimp_undo_stack_peek (gdisp->gimage->undo_stack);
 
-          if (GIMP_IS_UNDO_STACK (undo) &&
-              undo->undo_type == GIMP_UNDO_GROUP_LAYER_DISPLACE)
+          if (GIMP_IS_UNDO_STACK (undo) && undo->undo_type == undo_type)
             {
               g_object_set_data (G_OBJECT (undo), "edit-selection-tool",
                                  tool);

@@ -1,5 +1,17 @@
 2003-03-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/core-enums.[ch]: added GIMP_UNDO_GROUP_MASK.
+
+	* app/tools/gimpeditselectiontool.c: use it for mask moving.
+	Made the "undo_desc" strings more specific.
+
+	* app/core/gimpundo.c: add it to the list of undo types for
+	which mask previews are created.
+
+	* app/core/gimpimage.c: s/Add Layer to Image/Add Layer/g etc.
+
+2003-03-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcomponenteditor.c: need to connect to the cell
 	renderer's "clicked" signal because "toggled" is not emitted any
 	longer.

@@ -2745,10 +2745,8 @@ gimp_image_add_layer (GimpImage *gimage,
       return FALSE;
     }
 
-  gimp_image_undo_push_layer_add (gimage,
-                                  _("Add Layer to Image"),
-                                  layer,
-                                  0,
+  gimp_image_undo_push_layer_add (gimage, _("Add Layer"),
+                                  layer, 0,
                                   gimp_image_get_active_layer (gimage));
 
   /*  If the layer is a floating selection, set the ID  */
@@ -2829,12 +2827,11 @@ gimp_image_remove_layer (GimpImage *gimage,
 
   g_return_if_fail (gimp_container_have (gimage->layers, GIMP_OBJECT (layer)));
 
-  gimp_image_undo_push_layer_remove (gimage,
-                                     _("Remove Layer from Image"),
+  gimp_image_undo_push_layer_remove (gimage, _("Remove Layer"),
                                      layer,
                                      gimp_container_get_child_index (gimage->layers, 
                                                                      GIMP_OBJECT (layer)),
-                                     layer);
+                                     gimp_image_get_active_layer (gimage));
 
   g_object_ref (layer);
 
@@ -3071,10 +3068,8 @@ gimp_image_add_channel (GimpImage   *gimage,
       return FALSE;
     }
 
-  gimp_image_undo_push_channel_add (gimage,
-                                    _("Add Channel to Image"),
-                                    channel,
-                                    0,
+  gimp_image_undo_push_channel_add (gimage, _("Add Channel"),
+                                    channel, 0,
                                     gimp_image_get_active_channel (gimage));
 
   /*  add the layer to the list at the specified position  */
@@ -3125,8 +3120,7 @@ gimp_image_remove_channel (GimpImage   *gimage,
   g_return_if_fail (gimp_container_have (gimage->channels, 
 					 GIMP_OBJECT (channel)));
 
-  gimp_image_undo_push_channel_remove (gimage,
-                                       _("Remove Layer from Image"),
+  gimp_image_undo_push_channel_remove (gimage, _("Remove Layer"),
                                        channel,
                                        gimp_container_get_child_index (gimage->channels,
                                                                        GIMP_OBJECT (channel)),
@@ -3265,10 +3259,8 @@ gimp_image_add_vectors (GimpImage   *gimage,
       return FALSE;
     }
 
-  gimp_image_undo_push_vectors_add (gimage,
-                                    _("Add Path to Image"),
-                                    vectors,
-                                    0,
+  gimp_image_undo_push_vectors_add (gimage, _("Add Path"),
+                                    vectors, 0,
                                     gimp_image_get_active_vectors (gimage));
 
   gimp_item_set_image (GIMP_ITEM (vectors), gimage);
@@ -3314,8 +3306,7 @@ gimp_image_remove_vectors (GimpImage   *gimage,
   g_return_if_fail (gimp_container_have (gimage->vectors,
 					 GIMP_OBJECT (vectors)));
 
-  gimp_image_undo_push_vectors_remove (gimage,
-                                       _("Remove Path from Image"),
+  gimp_image_undo_push_vectors_remove (gimage, _("Remove Path"),
                                        vectors,
                                        gimp_container_get_child_index (gimage->vectors,
                                                                        GIMP_OBJECT (vectors)),

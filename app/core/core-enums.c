@@ -435,6 +435,7 @@ static const GEnumValue gimp_undo_type_enum_values[] =
   { GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE, N_("Merge Layers"), "group-image-layers-merge" },
   { GIMP_UNDO_GROUP_IMAGE_QMASK, N_("QuickMask"), "group-image-qmask" },
   { GIMP_UNDO_GROUP_IMAGE_GUIDE, N_("Guide"), "group-image-guide" },
+  { GIMP_UNDO_GROUP_MASK, N_("Selection Mask"), "group-mask" },
   { GIMP_UNDO_GROUP_ITEM_PROPERTIES, N_("Item Properties"), "group-item-properties" },
   { GIMP_UNDO_GROUP_DRAWABLE_VISIBILITY, N_("Drawable Visilibity"), "group-drawable-visibility" },
   { GIMP_UNDO_GROUP_LAYER_SCALE, N_("Scale Layer"), "group-layer-scale" },
