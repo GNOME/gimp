@@ -16,8 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef  __BUCKET_FILL_H__
-#define  __BUCKET_FILL_H__
+#ifndef  __GIMP_BUCKET_FILL_TOOL_H__
+#define  __GIMP_BUCKET_FILL_TOOL_H__
+
+
+#include "tool.h"
 
 
 typedef enum
@@ -28,27 +31,54 @@ typedef enum
 } BucketFillMode;
 
 
-void   bucket_fill            (GimpImage      *gimage,
-			       GimpDrawable   *drawable,
-			       BucketFillMode  fill_mode,
-			       gint            paint_mode,
-			       gdouble         opacity,
-			       gdouble         threshold,
-			       gboolean        sample_merged,
-			       gdouble         x,
-			       gdouble         y);
-
-void   bucket_fill_region     (BucketFillMode  fill_mode,
-			       PixelRegion    *bufPR,
-			       PixelRegion    *maskPR,
-			       guchar         *col,
-			       TempBuf        *pattern,
-			       gint            off_x,
-			       gint            off_y,
-			       gboolean        has_alpha);
-
-Tool * tools_new_bucket_fill  (void);
-void   tools_free_bucket_fill (Tool           *tool);
+#define GIMP_TYPE_BUCKET_FILL_TOOL            (gimp_bucket_fill_tool_get_type ())
+#define GIMP_BUCKET_FILL_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_BUCKET_FILL_TOOL, GimpBucketFillTool))
+#define GIMP_IS_BUCKET_FILL_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_BUCKET_FILL_TOOL))
+#define GIMP_BUCKET_FILL_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BUCKET_FILL_TOOL, GimpBucketFillToolClass))
+#define GIMP_IS_BUCKET_FILL_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BUCKET_FILL_TOOL))
 
 
-#endif  /*  __BUCKET_FILL_H__  */
+typedef struct _GimpBucketFillTool      GimpBucketFillTool;
+typedef struct _GimpBucketFillToolClass GimpBucketFillToolClass;
+
+struct _GimpBucketFillTool
+{
+  GimpTool  parent_instance;
+
+  gint      target_x;  /*  starting x coord  */
+  gint      target_y;  /*  starting y coord  */
+};
+
+struct _GimpBucketFillToolClass
+{
+  GimpToolClass  parent_class;
+};
+
+
+void       gimp_bucket_fill_tool_register (void);
+
+GtkType    gimp_bucket_fill_tool_get_type (void);
+GimpTool * gimp_bucket_fill_tool_new      (void);
+
+
+void       bucket_fill                    (GimpImage      *gimage,
+                                           GimpDrawable   *drawable,
+                                           BucketFillMode  fill_mode,
+                                           gint            paint_mode,
+                                           gdouble         opacity,
+                                           gdouble         threshold,
+                                           gboolean        sample_merged,
+                                           gdouble         x,
+                                           gdouble         y);
+
+void       bucket_fill_region             (BucketFillMode  fill_mode,
+                                           PixelRegion    *bufPR,
+                                           PixelRegion    *maskPR,
+                                           guchar         *col,
+                                           TempBuf        *pattern,
+                                           gint            off_x,
+                                           gint            off_y,
+                                           gboolean        has_alpha);
+
+
+#endif  /*  __GIMP_BUCKET_FILL_TOOL_H__  */

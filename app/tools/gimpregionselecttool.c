@@ -1,3 +1,6 @@
+#warning (everything commented out)
+#if 0
+
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
@@ -15,7 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
+#endif
 #include "config.h"
 
 #include <stdlib.h>
@@ -28,7 +31,6 @@
 
 #include "boundary.h"
 #include "cursorutil.h"
-#include "draw_core.h"
 #include "drawable.h"
 #include "edit_selection.h"
 #include "gdisplay.h"
@@ -44,11 +46,12 @@
 #include "rect_select.h"
 #include "selection_options.h"
 #include "tool_options.h"
-#include "tools.h"
+#include "tool.h"
+#include "tool_manager.h"
 
 #include "libgimp/gimpintl.h"
 
-
+#if 0
 /*  the fuzzy selection structures  */
 
 typedef struct _FuzzySelect FuzzySelect;
@@ -100,7 +103,7 @@ static gint        num_segs = 0;
 
 GimpChannel * fuzzy_mask = NULL;
 
-
+#endif
 /*************************************/
 /*  Fuzzy selection apparatus  */
 
@@ -361,7 +364,7 @@ find_contiguous_region (GImage       *gimage,
 
   return mask;
 }
-
+#if 0
 void
 fuzzy_select (GImage       *gimage, 
 	      GimpDrawable *drawable, 
@@ -686,3 +689,4 @@ tools_free_fuzzy_select (Tool *tool)
   draw_core_free (fuzzy_sel->core);
   g_free (fuzzy_sel);
 }
+#endif

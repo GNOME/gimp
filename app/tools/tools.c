@@ -60,6 +60,7 @@ register_tools (void)
 {
   gimp_ink_tool_register ();
   gimp_paintbrush_tool_register ();
+  gimp_bucket_fill_tool_register ();
   gimp_measure_tool_register ();
   gimp_color_picker_tool_register ();
   gimp_text_tool_register ();

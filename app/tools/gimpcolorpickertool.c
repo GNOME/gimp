@@ -77,10 +77,10 @@ struct _GimpColorPickerToolOptions
 
 /*  local function prototypes  */
 
-static void 	  gimp_color_picker_tool_class_init 	(GimpColorPickerToolClass *klass);
-static void       gimp_color_picker_tool_init       	(GimpColorPickerTool *color_picker_tool);
+static void 	  gimp_color_picker_tool_class_init     (GimpColorPickerToolClass *klass);
+static void       gimp_color_picker_tool_init           (GimpColorPickerTool *color_picker_tool);
 
-static void       gimp_color_picker_tool_destroy    	(GtkObject      *object);
+static void       gimp_color_picker_tool_destroy        (GtkObject      *object);
 
 static void       gimp_color_picker_tool_button_press   (GimpTool       *tool,
 							 GdkEventButton *bevent,

@@ -1,6 +1,22 @@
 2001-02-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/Makefile.am
+	* app/tools/bucket_fill.[ch]: one more...
+
+	* app/tools/fuzzy_select.c: everything commented out except the
+	find_region stuff.
+
+	* app/tools/gimpcolorpickertool.c: cosmetic.
+
+	* app/tools/paint_options.c: #include "bucket_fill.h"
+
+	* app/tools/tool.[ch]: removed STUB()'s.
+
+	* app/tools/tools.c: register it.
+
+2001-02-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/Makefile.am
 	* app/tools/ink.[ch]: back as object.
 
 	* app/tools/paint_options.c: #include "ink.h"

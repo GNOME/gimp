@@ -16,8 +16,8 @@ libapptools_la_SOURCES = \
 	blob.h			\
 ##	brightness_contrast.c	\
 ##	brightness_contrast.h	\
-##	bucket_fill.c		\
-##	bucket_fill.h		\
+	bucket_fill.c		\
+	bucket_fill.h		\
 ##	by_color_select.c	\
 ##	by_color_select.h	\
 ##	clone.c			\
@@ -46,8 +46,8 @@ libapptools_la_SOURCES = \
 ##	flip_tool.h		\
 ##	free_select.c		\
 ##	free_select.h		\
-##	fuzzy_select.c		\
-##	fuzzy_select.h		\
+	fuzzy_select.c		\
+	fuzzy_select.h		\
 	gimptoolinfo.c		\
 	gimptoolinfo.h		\
 ##	histogram_tool.c	\

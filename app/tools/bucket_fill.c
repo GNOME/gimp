@@ -45,22 +45,15 @@
 #include "bucket_fill.h"
 #include "fuzzy_select.h"
 #include "paint_options.h"
-#include "tools.h"
+#include "tool.h"
+#include "tool_manager.h"
 
 #include "pdb/procedural_db.h"
 
 #include "libgimp/gimpintl.h"
 
+#include "pixmaps2.h"
 
-/*  the bucket fill structures  */
-
-typedef struct _BucketTool BucketTool;
-
-struct _BucketTool
-{
-  gint  target_x;  /*  starting x coord  */
-  gint  target_y;  /*  starting y coord  */
-};
 
 typedef struct _BucketOptions BucketOptions;
 
@@ -85,36 +78,133 @@ struct _BucketOptions
 /*  the bucket fill tool options  */
 static BucketOptions *bucket_options = NULL;
 
+static GimpToolClass *parent_class   = NULL;
+
 
 /*  local function prototypes  */
 
-static void  bucket_fill_button_press    (Tool           *tool,
-					  GdkEventButton *bevent,
-					  GDisplay       *gdisp);
-static void  bucket_fill_button_release  (Tool           *tool,
-					  GdkEventButton *bevent,
-					  GDisplay       *gdisp);
-static void  bucket_fill_cursor_update   (Tool           *tool,
-					  GdkEventMotion *mevent,
-					  GDisplay       *gdisp);
+static void   gimp_bucket_fill_tool_class_init (GimpBucketFillToolClass *klass);
+static void   gimp_bucket_fill_tool_init       (GimpBucketFillTool      *bucket_fill_tool);
 
-static void  bucket_fill_line_color      (guchar         *,
-					  guchar         *,
-					  guchar         *,
-					  gboolean        ,
-					  gint            ,
-					  gint            );
-static void  bucket_fill_line_pattern    (guchar         *,
-					  guchar         *,
-					  TempBuf        *,
-					  gboolean        ,
-					  gint            ,
-					  gint            ,
-					  gint            ,
-					  gint            );
+static void   gimp_bucket_fill_tool_destroy    (GtkObject      *object);
+
+static BucketOptions * bucket_options_new           (void);
+static void            bucket_options_reset         (void);
+
+static void   gimp_bucket_fill_tool_button_press    (GimpTool       *tool,
+						     GdkEventButton *bevent,
+						     GDisplay       *gdisp);
+static void   gimp_bucket_fill_tool_button_release  (GimpTool       *tool,
+						     GdkEventButton *bevent,
+						     GDisplay       *gdisp);
+static void   gimp_bucket_fill_tool_cursor_update   (GimpTool       *tool,
+						     GdkEventMotion *mevent,
+						     GDisplay       *gdisp);
+static void   gimp_bucket_fill_tool_modifier_key    (GimpTool       *tool,
+						     GdkEventKey    *kevent,
+						     GDisplay       *gdisp);
+
+static void   bucket_fill_line_color                (guchar         *,
+						     guchar         *,
+						     guchar         *,
+						     gboolean        ,
+						     gint            ,
+						     gint            );
+static void   bucket_fill_line_pattern              (guchar         *,
+						     guchar         *,
+						     TempBuf        *,
+						     gboolean        ,
+						     gint            ,
+						     gint            ,
+						     gint            ,
+						     gint            );
 
 
 /*  functions  */
+
+void
+gimp_bucket_fill_tool_register (void)
+{
+  tool_manager_register_tool (GIMP_TYPE_BUCKET_FILL_TOOL,
+                              TRUE,
+			      "gimp:bucket_fill_tool",
+			      _("Bucket Fill"),
+			      _("Fill with a color or pattern"),
+			      N_("/Tools/Paint Tools/Bucket Fill"), "<shift>B",
+			      NULL, "tools/bucket_fill.html",
+			      (const gchar **) fill_bits);
+}
+
+GtkType
+gimp_bucket_fill_tool_get_type (void)
+{
+  static GtkType tool_type = 0;
+
+  if (! tool_type)
+    {
+      GtkTypeInfo tool_info =
+      {
+        "GimpBucketFillTool",
+        sizeof (GimpBucketFillTool),
+        sizeof (GimpBucketFillToolClass),
+        (GtkClassInitFunc) gimp_bucket_fill_tool_class_init,
+        (GtkObjectInitFunc) gimp_bucket_fill_tool_init,
+        /* reserved_1 */ NULL,
+        /* reserved_2 */ NULL,
+        (GtkClassInitFunc) NULL,
+      };
+
+      tool_type = gtk_type_unique (GIMP_TYPE_TOOL, &tool_info);
+    }
+
+  return tool_type;
+}
+
+static void
+gimp_bucket_fill_tool_class_init (GimpBucketFillToolClass *klass)
+{
+  GtkObjectClass    *object_class;
+  GimpToolClass     *tool_class;
+
+  object_class = (GtkObjectClass *) klass;
+  tool_class   = (GimpToolClass *) klass;
+
+  parent_class = gtk_type_class (GIMP_TYPE_TOOL);
+
+  object_class->destroy      = gimp_bucket_fill_tool_destroy;
+
+  tool_class->button_press   = gimp_bucket_fill_tool_button_press;
+  tool_class->button_release = gimp_bucket_fill_tool_button_release;
+  tool_class->modifier_key   = gimp_bucket_fill_tool_modifier_key;
+  tool_class->cursor_update  = gimp_bucket_fill_tool_cursor_update;
+}
+
+static void
+gimp_bucket_fill_tool_init (GimpBucketFillTool *bucket_fill_tool)
+{
+  GimpTool *tool;
+
+  tool = GIMP_TOOL (bucket_fill_tool);
+
+  if (! bucket_options)
+    {
+      bucket_options = bucket_options_new ();
+
+      tool_manager_register_tool_options (GIMP_TYPE_BUCKET_FILL_TOOL,
+					  (ToolOptions *) bucket_options);
+
+      bucket_options_reset ();
+    }
+
+  tool->scroll_lock = TRUE;  /*  Disallow scrolling  */
+}
+
+static void
+gimp_bucket_fill_tool_destroy (GtkObject *object)
+{
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
 
 static void
 bucket_options_reset (void)
@@ -141,11 +231,12 @@ bucket_options_new (void)
   GtkWidget *scale;
   GtkWidget *frame;
 
-  /*  the new bucket fill tool options structure  */
-  options = g_new (BucketOptions, 1);
+  options = g_new0 (BucketOptions, 1);
+
   paint_options_init ((PaintOptions *) options,
-		      BUCKET_FILL,
+		      GIMP_TYPE_BUCKET_FILL_TOOL,
 		      bucket_options_reset);
+
   options->sample_merged = options->sample_merged_d = FALSE;
   options->threshold                                = default_threshold;
   options->fill_mode     = options->fill_mode_d     = FG_BUCKET_FILL;
@@ -211,14 +302,14 @@ bucket_options_new (void)
 /*  bucket fill action functions  */
 
 static void
-bucket_fill_button_press (Tool           *tool,
-			  GdkEventButton *bevent,
-			  GDisplay       *gdisp)
+gimp_bucket_fill_tool_button_press (GimpTool       *tool,
+				    GdkEventButton *bevent,
+				    GDisplay       *gdisp)
 {
-  BucketTool *bucket_tool;
-  gboolean    use_offsets;
+  GimpBucketFillTool *bucket_tool;
+  gboolean            use_offsets;
 
-  bucket_tool = (BucketTool *) tool->private;
+  bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
 
   use_offsets = (bucket_options->sample_merged) ? FALSE : TRUE;
 
@@ -239,15 +330,15 @@ bucket_fill_button_press (Tool           *tool,
 }
 
 static void
-bucket_fill_button_release (Tool           *tool,
-			    GdkEventButton *bevent,
-			    GDisplay       *gdisp)
+gimp_bucket_fill_tool_button_release (GimpTool       *tool,
+				      GdkEventButton *bevent,
+				      GDisplay       *gdisp)
 {
-  BucketTool *bucket_tool;
-  Argument   *return_vals;
-  gint        nreturn_vals;
+  GimpBucketFillTool *bucket_tool;
+  Argument           *return_vals;
+  gint                nreturn_vals;
 
-  bucket_tool = (BucketTool *) tool->private;
+  bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
 
   gdk_pointer_ungrab (bevent->time);
   gdk_flush ();
@@ -280,9 +371,9 @@ bucket_fill_button_release (Tool           *tool,
 }
 
 static void
-bucket_fill_cursor_update (Tool           *tool,
-			   GdkEventMotion *mevent,
-			   GDisplay       *gdisp)
+gimp_bucket_fill_tool_cursor_update (GimpTool       *tool,
+				     GdkEventMotion *mevent,
+				     GDisplay       *gdisp)
 {
   GimpLayer          *layer;
   GdkCursorType       ctype     = GDK_TOP_LEFT_ARROW;
@@ -292,6 +383,7 @@ bucket_fill_cursor_update (Tool           *tool,
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
 			       &x, &y, FALSE, FALSE);
+
   if ((layer = gimp_image_get_active_layer (gdisp->gimage))) 
     {
       gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
@@ -331,9 +423,9 @@ bucket_fill_cursor_update (Tool           *tool,
 }
 
 static void
-bucket_fill_modifier_key_func (Tool        *tool,
-			       GdkEventKey *kevent,
-			       GDisplay    *gdisp)
+gimp_bucket_fill_tool_modifier_key (GimpTool    *tool,
+				    GdkEventKey *kevent,
+				    GDisplay    *gdisp)
 {
   switch (kevent->keyval)
     {
@@ -617,49 +709,4 @@ bucket_fill_region (BucketFillMode  fill_mode,
 	    m += maskPR->rowstride;
 	}
     }
-}
-
-/**********************************/
-/*  Global bucket fill functions  */
-/**********************************/
-
-Tool *
-tools_new_bucket_fill (void)
-{
-  Tool       *tool;
-  BucketTool *private;
-
-  /*  The tool options  */
-  if (! bucket_options)
-    {
-      bucket_options = bucket_options_new ();
-      tools_register (BUCKET_FILL, (ToolOptions *) bucket_options);
-
-      /*  press all default buttons  */
-      bucket_options_reset ();
-    }
-
-  tool = tools_new_tool (BUCKET_FILL);
-  private = g_new0 (BucketTool, 1);
-
-  tool->scroll_lock = TRUE;  /*  Disallow scrolling  */
-
-  tool->private = (gpointer) private;
-
-  tool->button_press_func   = bucket_fill_button_press;
-  tool->button_release_func = bucket_fill_button_release;
-  tool->modifier_key_func   = bucket_fill_modifier_key_func;
-  tool->cursor_update_func  = bucket_fill_cursor_update;
-
-  return tool;
-}
-
-void
-tools_free_bucket_fill (Tool *tool)
-{
-  BucketTool *bucket_tool;
-
-  bucket_tool = (BucketTool *) tool->private;
-
-  g_free (bucket_tool);
 }

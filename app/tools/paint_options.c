@@ -33,6 +33,7 @@
 #include "tool.h"
 #include "tool_manager.h"
 
+#include "bucket_fill.h"
 #include "gimppaintbrushtool.h"
 #include "ink.h"
 
