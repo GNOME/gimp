@@ -2420,7 +2420,7 @@ msgid ""
 "configure it to look differently than other GTK apps."
 msgstr ""
 "GIMP використову╓ додатковий файл gtkrc, то ж ви можете\n"
-"конф╕гурувати його вигляд не впливаючи на ╕нш╕ GTK-програми."
+"зм╕нювати його вигляд не впливаючи на ╕нш╕ GTK-програми."
 
 #: app/install.c:164
 msgid ""
@@ -2431,12 +2431,12 @@ msgid ""
 "is cached in this file.  This file is intended to\n"
 "be GIMP-readable only, and should not be edited."
 msgstr ""
-"Доповнення та розширення - це зовн╕шн╕ програми, що запуска╓\n"
-"GIMP, як╕ надаять додатков╕ можливост╕.\n"
-"Ц╕ програми розшукують при запуску й ╕нформац╕я про ╖хню\n"
-"функц╕ональн╕сть та mod-times к кешу╓ться у цьому файл╕.\n"
-"Цей файл призначений лише для зчитування GIMP'ом,\n"
-"╕ не повинен редагуватися."
+"Доповнення та розширення - це зовн╕шн╕ програми, що\n"
+"запуска╓ GIMP, як╕ надють додатков╕ можливост╕.  Ц╕\n"
+"програми шукаються на запуску й ╕нформац╕я про ╖хн╕\n"
+"функц╕╖ та час модиф╕кац╕й кешу╓ться у цьому файл╕.\n"
+"Цей файл призначено  лише для зчитування  програмою\n"
+"GIMP, ╕ не повинен редагуватися."
 
 #: app/install.c:173
 msgid ""
@@ -2447,12 +2447,12 @@ msgid ""
 "keys from within The GIMP.  Deleting this file will\n"
 "restore the default shortcuts."
 msgstr ""
-"Комб╕нац╕╖ клав╕ш можуть динам╕чно перевизначен╕ в GIMP.\n"
-"В menurc збережено коп╕ю вашо╖ конф╕гурац╕╖, тому ╖╖\n"
-"можна зберегти для наступних сеанс╕в.  Ви можете зм╕нювати\n"
-"цей файл, якщо захочете, але значно прост╕ше перевизначати\n"
-"комб╕нац╕╖ клав╕ш з GIMP. Видалення цього файлу призведе\n"
-"до в╕дновлення початкових комб╕нац╕й клав╕ш."
+"Комб╕нац╕╖ клав╕ш можуть бути динам╕чно перевизначен╕ в\n"
+"GIMP. В menurc збережено коп╕ю вашо╖ конф╕гурац╕╖, тому\n"
+"╖╖ можна зберегти для наступних сеанс╕в. Ви можете зм╕-\n"
+"ювати цей файл, якщо захочете,  але значно прост╕ше пе-\n"
+"ревизначати  комб╕нац╕╖ клав╕ш з GIMP.  Видалення цього\n"
+"файлу призведе до в╕дновлення початкових комб╕нац╕й клав╕ш."
 
 #: app/install.c:182
 msgid ""
@@ -2461,8 +2461,8 @@ msgid ""
 "The GIMP to reopen these dialogs at the saved position."
 msgstr ""
 "sessionrc використову╓ться для збереження положення д╕алогових\n"
-"в╕кон в╕дкритих перед останн╕м виходом з GIMP. Ви можете\n"
-"настро╖ти GIMP, так щоб в╕дкривати ╖х в ц╕й позиц╕╖."
+"в╕кон в╕дкритих перед  останн╕м виходом з GIMP.  Ви можете на-\n"
+"стро╖ти GIMP, так щоб в╕дкривати ╖х в ц╕й позиц╕╖."
 
 #: app/install.c:188
 msgid ""
@@ -2643,7 +2643,7 @@ msgid ""
 msgstr ""
 "Це п╕дкаталог, котрий може бути використано для збереження\n"
 "створених користувачем ф╕гур використовуваних доповненням\n"
-"gfig. Тиопво у файл╕ gimprc вказано перев╕рку цього п╕д-\n"
+"gfig.  Типово у файл╕ gimprc вказано перев╕рку цього п╕д-\n"
 "каталогу, на додаток до системного при пошуку ф╕гур для gfig."
 
 #: app/install.c:295
@@ -2850,6 +2850,9 @@ msgid ""
 "\"Tile Cache\". You should adjust it's size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
+"GIMP використову╓ обмежену к╕льк╕сть пам'ят╕ для збер╕гання даних зображення\n"
+"так званий \"Tile Cache\". Ви мусите п╕д╕брати в╕дведений йому розм╕р пам'ят╕.\n"
+"Обм╕ркуйте к╕льк╕сть пам'ят╕, що використову╓ться ╕ншими запущеними процесами."
 
 #: app/install.c:1081 app/preferences_dialog.c:2102
 msgid "Tile Cache Size:"
@@ -2862,6 +2865,10 @@ msgid ""
 "with enough free space (several hundred MB). On a UNIX system, you\n"
 "may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 msgstr ""
+"Вс╕ зображення ╕ дан╕ для в╕дкату, котр╕ не пом╕стяться в \"Tile Cache\",\n"
+"буде записано у файл своп╕нгу. Цей файл ма╓ знаходитись в локальн╕й файлов╕й\n"
+"систем╕ з достатньою к╕льк╕стю в╕льного м╕сця (к╕лькасот МБ). В системах UNIX\n"
+"ви можете використовувати системний каталог тимчасових файл╕в (\"/tmp\" чи \"/var/tmp\")."
 
 #: app/install.c:1101 app/preferences_dialog.c:2361
 msgid "Select Swap Dir"
@@ -4823,7 +4830,7 @@ msgstr "Розм╕р ф╕шки:"
 
 #: app/preferences_dialog.c:1707
 msgid "8-Bit Displays"
-msgstr ""
+msgstr "8-б╕тов╕ диспле╖"
 
 #: app/preferences_dialog.c:1712
 msgid "Install Colormap"
@@ -5305,6 +5312,9 @@ msgid ""
 "some layers completely away.\n"
 "Is this what you want?"
 msgstr ""
+"Вибраний вами розм╕р зображення\n"
+"скоротить деяк╕ шари до зникнення.\n"
+"Це те чого ви хочете?"
 
 #: app/resize.c:1340
 msgid "Layer Too Small"
@@ -5429,9 +5439,9 @@ msgid ""
 "There should be a file called gimp_tips.txt in the\n"
 "GIMP data directory.  Please check your installation."
 msgstr ""
-"Схоже ваш фойл порад GIMP ма╓ помилку!\n"
-"Це ма╓ бути файл gimp_tips.ru.txt в\n"
-"каталогу даних GIMP. Будь ласка, перев╕рте вашу ╕нсталяц╕ю."
+"Схоже ваш файл порад GIMP ма╓ помилку!\n"
+"Це ма╓ бути файл gimp_tips.uk.txt в каталоз╕\n"
+"даних GIMP. Будь ласка, перев╕рте вашу ╕нсталяц╕ю."
 
 #: app/tool_options.c:121
 msgid "This tool has no options."
@@ -6031,7 +6041,7 @@ msgstr "модиф╕кац╕я каналу"
 
 #: app/undo.c:2881
 msgid "FS to layer"
-msgstr ""
+msgstr "плаваюче вид╕лення у шар"
 
 #. ok
 #: app/undo.c:2882
@@ -6040,11 +6050,11 @@ msgstr "g-зобаження"
 
 #: app/undo.c:2883
 msgid "FS rigor"
-msgstr ""
+msgstr "точне плаваюче вид╕лення"
 
 #: app/undo.c:2884
 msgid "FS relax"
-msgstr ""
+msgstr "м'яке плаваюче вид╕лення"
 
 #: app/undo.c:2885
 msgid "guide"
@@ -6094,7 +6104,7 @@ msgstr "об'╓днання шар╕в"
 
 #: app/undo.c:2896
 msgid "FS anchor"
-msgstr ""
+msgstr "причепити плаваюче вид╕лення"
 
 #: app/undo.c:2897
 msgid "gimage mod"
@@ -6182,11 +6192,11 @@ msgstr "Гама:"
 
 #: modules/colorsel_gtk.c:48
 msgid "GTK color selector as a pluggable color selector"
-msgstr ""
+msgstr "Перемикач кольору GTK як зовн╕шн╕й перемикач кольор╕в."
 
 #: modules/colorsel_triangle.c:78
 msgid "Painter-style color selector as a pluggable color selector"
-msgstr ""
+msgstr "Перемикач кольору у художньому стил╕ як зовн╕шн╕й перемикач кольор╕в."
 
 #: modules/colorsel_triangle.c:147 modules/colorsel_triangle.c:149
 msgid "Triangle"
@@ -6194,7 +6204,7 @@ msgstr "Трикутник"
 
 #: modules/colorsel_water.c:76
 msgid "Watercolor style color selector as a pluggable module"
-msgstr ""
+msgstr "Перемикач кольору у акварельному стил╕ як зовн╕шн╕й перемикач кольор╕в."
 
 #: modules/colorsel_water.c:97 modules/colorsel_water.c:100
 msgid "Watercolor"
