@@ -1,3 +1,11 @@
+2003-10-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpcontext.c: add the new context to gimp->context_list
+	in gimp_context_constructor(), not in set_property(). Cleanup.
+
+	* app/tools/gimptextoptions.c: added finalizer so we don't leak
+	the options' GtkTextBuffer and GimpText objects. Cleanup.
+
 2003-10-14  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimptemplateeditor.c (gimp_template_editor_new):

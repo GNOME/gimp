@@ -60,21 +60,22 @@ enum
 static void  gimp_text_options_init       (GimpTextOptions      *options);
 static void  gimp_text_options_class_init (GimpTextOptionsClass *options_class);
 
-static void  gimp_text_options_set_property (GObject      *object,
-                                             guint         property_id,
-                                             const GValue *value,
-                                             GParamSpec   *pspec);
-static void  gimp_text_options_get_property (GObject      *object,
-                                             guint         property_id,
-                                             GValue       *value,
-                                             GParamSpec   *pspec);
+static void  gimp_text_options_finalize         (GObject      *object);
+static void  gimp_text_options_set_property     (GObject      *object,
+                                                 guint         property_id,
+                                                 const GValue *value,
+                                                 GParamSpec   *pspec);
+static void  gimp_text_options_get_property     (GObject      *object,
+                                                 guint         property_id,
+                                                 GValue       *value,
+                                                 GParamSpec   *pspec);
 
-static void  gimp_text_options_notify_font  (GimpContext  *context,
-                                             GParamSpec   *pspec,
-                                             GimpText     *text);
-static void  gimp_text_notify_font          (GimpText     *text,
-                                             GParamSpec   *pspec,
-                                             GimpContext  *context);
+static void  gimp_text_options_notify_font      (GimpContext  *context,
+                                                 GParamSpec   *pspec,
+                                                 GimpText     *text);
+static void  gimp_text_options_notify_text_font (GimpText     *text,
+                                                 GParamSpec   *pspec,
+                                                 GimpContext  *context);
 
 
 static GimpToolOptionsClass *parent_class = NULL;
@@ -117,6 +118,7 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  object_class->finalize     = gimp_text_options_finalize;
   object_class->set_property = gimp_text_options_set_property;
   object_class->get_property = gimp_text_options_get_property;
 
@@ -129,19 +131,36 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
 static void
 gimp_text_options_init (GimpTextOptions *options)
 {
-  GObject *text;
-
-  text = g_object_new (GIMP_TYPE_TEXT, NULL);
-
-  options->text   = GIMP_TEXT (text);
-  options->buffer = gimp_prop_text_buffer_new (text, "text", -1);
+  options->text   = g_object_new (GIMP_TYPE_TEXT, NULL);
+  options->buffer = gimp_prop_text_buffer_new (G_OBJECT (options->text),
+                                               "text", -1);
 
   g_signal_connect_object (options, "notify::font",
                            G_CALLBACK (gimp_text_options_notify_font),
-                           text, 0);
-  g_signal_connect_object (text, "notify::font",
-                           G_CALLBACK (gimp_text_notify_font),
+                           options->text, 0);
+  g_signal_connect_object (options->text, "notify::font",
+                           G_CALLBACK (gimp_text_options_notify_text_font),
                            options, 0);
+}
+
+static void
+gimp_text_options_finalize (GObject *object)
+{
+  GimpTextOptions *options = GIMP_TEXT_OPTIONS (object);
+
+  if (options->buffer)
+    {
+      g_object_unref (options->buffer);
+      options->buffer = NULL;
+    }
+
+  if (options->text)
+    {
+      g_object_unref (options->text);
+      options->text = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -192,7 +211,7 @@ gimp_text_options_notify_font (GimpContext *context,
   GimpFont *font = gimp_context_get_font (context);
 
   g_signal_handlers_block_by_func (text,
-                                   gimp_text_notify_font,
+                                   gimp_text_options_notify_text_font,
                                    context);
 
   g_object_set (text,
@@ -200,14 +219,14 @@ gimp_text_options_notify_font (GimpContext *context,
                 NULL);
 
   g_signal_handlers_unblock_by_func (text,
-                                     gimp_text_notify_font,
+                                     gimp_text_options_notify_text_font,
                                      context);
 }
 
 static void
-gimp_text_notify_font (GimpText    *text,
-                       GParamSpec  *pspec,
-                       GimpContext *context)
+gimp_text_options_notify_text_font (GimpText    *text,
+                                    GParamSpec  *pspec,
+                                    GimpContext *context)
 {
   GimpObject *font;
   gchar      *value;
