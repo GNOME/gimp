@@ -1,5 +1,9 @@
 2004-03-23  Abel Cheung  <maddog@linux.org.hk>
 
+	* zh_TW.po: Updated traditional Chinese translation.
+
+2004-03-23  Abel Cheung  <maddog@linux.org.hk>
+
 	* ja.po: Mark wrong entry as fuzzy (msgfmt check failed).
 
 2004-03-23  Gustavo Maciel Dias Vieira  <gdvieira@zaz.com.br>
