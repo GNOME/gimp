@@ -39,6 +39,8 @@ typedef struct _GimpFileProcViewClass GimpFileProcViewClass;
 struct _GimpFileProcView
 {
   GtkTreeView        parent_instance;
+
+  GList             *meta_extensions;
 };
 
 struct _GimpFileProcViewClass

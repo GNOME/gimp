@@ -58,11 +58,14 @@ enum
 
 static void  gimp_file_proc_view_class_init   (GimpFileProcViewClass *klass);
 
+static void  gimp_file_proc_view_finalize          (GObject          *object);
+
 static void  gimp_file_proc_view_selection_changed (GtkTreeSelection *selection,
                                                     GimpFileProcView *view);
 
 
-static guint  view_signals[LAST_SIGNAL] = { 0 };
+static GtkTreeViewClass *parent_class              = NULL;
+static guint             view_signals[LAST_SIGNAL] = { 0 };
 
 
 GType
@@ -96,7 +99,11 @@ gimp_file_proc_view_get_type (void)
 static void
 gimp_file_proc_view_class_init (GimpFileProcViewClass *klass)
 {
-  klass->changed = NULL;
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  object_class->finalize = gimp_file_proc_view_finalize;
 
   view_signals[CHANGED] = g_signal_new ("changed",
                                         G_TYPE_FROM_CLASS (klass),
@@ -106,8 +113,24 @@ gimp_file_proc_view_class_init (GimpFileProcViewClass *klass)
                                         NULL, NULL,
                                         gimp_marshal_VOID__VOID,
                                         G_TYPE_NONE, 0);
+
+  klass->changed = NULL;
 }
 
+static void
+gimp_file_proc_view_finalize (GObject *object)
+{
+  GimpFileProcView *view = GIMP_FILE_PROC_VIEW (object);
+
+  if (view->meta_extensions)
+    {
+      g_list_foreach (view->meta_extensions, (GFunc) g_free, NULL);
+      g_list_free (view->meta_extensions);
+      view->meta_extensions = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
 
 GtkWidget *
 gimp_file_proc_view_new (Gimp        *gimp,
@@ -132,6 +155,13 @@ gimp_file_proc_view_new (Gimp        *gimp,
                               GDK_TYPE_PIXBUF,   /* COLUMN_PIXBUF     */
                               G_TYPE_STRING);    /* COLUMN_HELP_ID    */
 
+  view = g_object_new (GIMP_TYPE_FILE_PROC_VIEW,
+                       "model",      store,
+                       "rules_hint", TRUE,
+                       NULL);
+
+  g_object_unref (store);
+
   for (list = procedures; list; list = g_slist_next (list))
     {
       PlugInProcDef *proc = list->data;
@@ -144,6 +174,7 @@ gimp_file_proc_view_new (Gimp        *gimp,
           gchar       *help_id;
           const gchar *stock_id;
           GdkPixbuf   *pixbuf;
+          GSList      *list2;
 
           locale_domain = plug_ins_locale_domain (gimp, proc->prog, NULL);
           help_domain   = plug_ins_help_domain   (gimp, proc->prog, NULL);
@@ -171,6 +202,20 @@ gimp_file_proc_view_new (Gimp        *gimp,
 
           if (pixbuf)
             g_object_unref (pixbuf);
+
+          for (list2 = proc->extensions_list;
+               list2;
+               list2 = g_slist_next (list2))
+            {
+              GimpFileProcView *proc_view = GIMP_FILE_PROC_VIEW (view);
+              const gchar      *ext       = list2->data;
+              const gchar      *dot       = strchr (ext, '.');
+
+              if (dot && dot != ext)
+                proc_view->meta_extensions =
+                  g_list_append (proc_view->meta_extensions,
+                                 g_strdup (dot + 1));
+            }
         }
     }
 
@@ -184,13 +229,6 @@ gimp_file_proc_view_new (Gimp        *gimp,
                           COLUMN_HELP_ID, automatic_help_id,
                           -1);
     }
-
-  view = g_object_new (GIMP_TYPE_FILE_PROC_VIEW,
-                       "model",      store,
-                       "rules_hint", TRUE,
-                       NULL);
-
-  g_object_unref (store);
 
   column = gtk_tree_view_column_new ();
   gtk_tree_view_column_set_title (column, _("File Type"));

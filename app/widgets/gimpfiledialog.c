@@ -652,6 +652,35 @@ gimp_file_dialog_proc_changed (GimpFileProcView *view,
             {
               const gchar *last_dot = strrchr (uri, '.');
 
+              /*  check if the uri has a "meta extension" (e.g. foo.bar.gz)
+               *  and try to truncate both extensions away.
+               */
+              if (last_dot && last_dot != uri)
+                {
+                  GList *list;
+
+                  for (list = view->meta_extensions;
+                       list;
+                       list = g_list_next (list))
+                    {
+                      const gchar *ext = list->data;
+
+                      if (! strcmp (ext, last_dot + 1))
+                        {
+                          const gchar *p = last_dot - 1;
+
+                          while (p > uri && *p != '.')
+                            p--;
+
+                          if (p != uri && *p == '.')
+                            {
+                              last_dot = p;
+                              break;
+                            }
+                        }
+                    }
+                }
+
               if (last_dot != uri)
                 {
                   GString *s = g_string_new (uri);

@@ -1,3 +1,16 @@
+2004-11-18  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/compressor.c (compressors): added back the
+	.xcf.gz and .xcf.bz2 extensions because they are the only way
+	to figure the special nature of this plug-in's extensions.
+
+	* app/widgets/gimpfileprocview.[ch]: keep a list of "meta
+	extensions" (extensions which have a '.' themselves).
+
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_proc_changed):
+	try to replace the whole extension if the last extension is one of
+	the meta extensions kept by GimpFileProcView. Fixes bug #158377.
+
 2004-11-18  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/maze/maze.[ch]

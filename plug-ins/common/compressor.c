@@ -152,7 +152,7 @@ static const Compressor compressors[] =
   {
     N_("gzip archive"),
     "application/x-gzip",
-    "gz,xcfgz",
+    "xcf.gz,gz,xcfgz",
     "0,string,\037\213",
     ".xcfgz",
     ".gz",
@@ -173,7 +173,7 @@ static const Compressor compressors[] =
   {
     N_("bzip archive"),
     "application/x-bzip",
-    "bz2,xcfbz2",
+    "xcf.bz2,bz2,xcfbz2",
     "0,string,BZh",
     ".xcfbz2",
     ".bz2",
