@@ -46,14 +46,14 @@
 #define OVERHEAD          25  /*  in units of pixel area  */
 #define EPSILON           5
 
+#define ROUND(x) ((int) (x + 0.5))
+
+#define MAX_TITLE_BUF 256
+
 /* variable declarations */
 GSList *               display_list = NULL;
 static int             display_num  = 1;
 static GdkCursorType   default_gdisplay_cursor = GDK_TOP_LEFT_ARROW;
-
-#define ROUND(x) ((int) (x + 0.5))
-
-#define MAX_TITLE_BUF 4096
 
 static char *image_type_strs[] =
 {
@@ -178,11 +178,11 @@ gdisplay_format_title (GimpImage *gimage,
 	image_type_str = NULL;
       }
 
-  sprintf (title, "%s" "-%p" ".%d (%s)",
-	   prune_filename (gimage_filename (gimage)),
-	   gimage,
-	   gimage->instance_count,
-	   image_type_str);
+  g_snprintf (title, MAX_TITLE_BUF, "%s" "-%p" ".%d (%s)",
+	      prune_filename (gimage_filename (gimage)),
+	      gimage,
+	      gimage->instance_count,
+	      image_type_str);
 }
 
 
@@ -1249,6 +1249,7 @@ gdisplays_update_title (GimpImage *gimage)
   GDisplay *gdisp;
   GSList *list = display_list;
   char title [MAX_TITLE_BUF];
+  guint context_id;
 
   /*  traverse the linked list of displays, handling each one  */
   while (list)
@@ -1259,6 +1260,10 @@ gdisplays_update_title (GimpImage *gimage)
 	  /* format the title */
 	  gdisplay_format_title (gdisp->gimage, title);
 	  gdk_window_set_title (gdisp->shell->window, title);
+	  /* update the statusbar */
+	  context_id = gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "title");
+	  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), context_id);
+	  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), context_id, title);
 	}
 
       list = g_slist_next (list);

@@ -1,3 +1,9 @@
+Sun Aug  2 22:34:43 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/gdisplay.c: Tweaked and applied a patch from Daniel Egger 
+	(gimp-egger-980704). Update the statusbar when converting the
+	image to another basetype.
+
 Sun Aug  2 21:00:04 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu-scripts.c: Applied a patch from 
