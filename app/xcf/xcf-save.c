@@ -60,9 +60,6 @@
 
 #include "gimp-intl.h"
 
-/* define that to enable the new code for vectors saving */
-#undef NEW_SAVE_CODE
-
 
 static gboolean xcf_save_image_props   (XcfInfo           *info,
                                         GimpImage         *gimage,
@@ -434,24 +431,13 @@ xcf_save_image_props (XcfInfo   *info,
     xcf_check_error (xcf_save_prop (info, gimage, PROP_UNIT,
                                     error, gimage->unit));
 
-#ifdef NEW_SAVE_CODE
   if (gimp_container_num_children (gimage->vectors) > 0)
     {
       if (gimp_vectors_compat_is_compatible (gimage))
-        {
-          g_printerr ("entering PATHS compatibility mode\n");
-          xcf_check_error (xcf_save_prop (info, gimage, PROP_PATHS, error));
-        }
+        xcf_check_error (xcf_save_prop (info, gimage, PROP_PATHS, error));
       else
-        {
-          g_printerr ("using new VECTORS mode for saving the path\n");
-          xcf_check_error (xcf_save_prop (info, gimage, PROP_VECTORS, error));
-        }
+        xcf_check_error (xcf_save_prop (info, gimage, PROP_VECTORS, error));
     }
-#else
-  if (gimp_container_num_children (gimage->vectors) > 0)
-    xcf_check_error (xcf_save_prop (info, gimage, PROP_PATHS, error));
-#endif
 
   if (gimage->unit >= _gimp_unit_get_number_of_built_in_units (gimage->gimp))
     xcf_check_error (xcf_save_prop (info, gimage, PROP_USER_UNIT,

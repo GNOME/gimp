@@ -1,5 +1,9 @@
 2003-09-21  Simon Budig  <simon@gimp.org>
 
+	* app/xcf/xcf-save.c: Enable the new save code by default.
+
+2003-09-21  Simon Budig  <simon@gimp.org>
+
 	* app/core/gimpscanconvert.c: Adjusted to make sure that
 	no successive LINETOs to the same coordinate are in the
 	path. Libart chokes on that.
