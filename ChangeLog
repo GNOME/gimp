@@ -1,3 +1,8 @@
+2004-06-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* libgimp/gimpdrawable.c:  added some documentation for
+	a few important functions with no API docs.
+	
 2004-06-24  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.1.1 release.
