@@ -1,3 +1,8 @@
+2004-04-20  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gfig/gfig.c: removed unused return locations for menu
+	item pointers.
+
 2004-04-19  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: set gimp_plugin_version, gimp_sysconf_version and

@@ -2011,7 +2011,6 @@ paint_page (void)
   GtkWidget *page_menu_type;
   GtkWidget *scale_scale;
   GtkObject *scale_scale_data;
-  GtkWidget *item1, *item2, *item3;
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
@@ -2045,9 +2044,9 @@ paint_page (void)
     gimp_int_option_menu_new (FALSE, G_CALLBACK (paint_menu_callback),
                               GINT_TO_POINTER (PAINT_TYPE_MENU), 0,
 
-                             _("Brush"),          PAINT_BRUSH_TYPE, &item1,
-                             _("Selection"),      PAINT_SELECTION_TYPE, &item2,
-                             _("Selection+Fill"), PAINT_SELECTION_FILL_TYPE, &item3,
+                              _("Brush"),          PAINT_BRUSH_TYPE,          NULL,
+                              _("Selection"),      PAINT_SELECTION_TYPE,      NULL,
+                              _("Selection+Fill"), PAINT_SELECTION_FILL_TYPE, NULL,
 
                              NULL);
 
