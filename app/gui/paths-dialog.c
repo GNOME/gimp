@@ -1344,7 +1344,8 @@ paths_dialog_sel_to_path_callback (GtkWidget *widget,
 {
   ProcRecord *proc_rec;
   Argument   *args;
-  GimpImage *gimage;
+  GimpImage  *gimage;
+  GDisplay   *gdisp;
 
   /*  find the sel2path PDB record  */
   if ((proc_rec = procedural_db_lookup ("plug_in_sel2path")) == NULL)
@@ -1364,8 +1365,10 @@ paths_dialog_sel_to_path_callback (GtkWidget *widget,
   args[2].arg_type = PDB_DRAWABLE;
   args[2].value.pdb_int = (gint32) (gimage_active_drawable (gimage))->ID;
 
+  /* get the display by asking the current context */
+  gdisp = gimp_context_get_display (gimp_context_get_user ());
   plug_in_run (proc_rec, args, 3, FALSE, TRUE,
-	       (gimage_active_drawable (gimage))->ID);
+	       gdisp? gdisp->ID : 0);
 
   g_free (args);
 }

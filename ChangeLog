@@ -1,3 +1,14 @@
+Sun Jun  4 20:17:25 2000 CET  Austin Donnelly  <austin@gimp.org>
+
+	* app/paths_dialog.c: run the sel2path plugin with a proper
+	    display ID - previously we were using a _drawable_ ID as the
+	    display ID: a blatant type mismatch.
+
+	* plug-ins/sel2path/pxl-outline.c: progress bar on
+	    selection-to-path.  Also, small optimization to inner loop:
+	    cache the max values of the loops rather than needing a
+	    function call per loop iteration (ouch!).
+
 2000-06-04  Sven Neumann  <sven@gimp.org>
 
 	* app/interface.c: connect to the toolbox's "style_set" signal

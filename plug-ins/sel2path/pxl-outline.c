@@ -19,7 +19,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 #include <stdlib.h>
-
 #include "global.h"
 #include "sel2path.h"
 #include "bitmap.h"
@@ -70,18 +69,26 @@ find_outline_pixels ()
 {
   pixel_outline_list_type outline_list;
   unsigned row, col;
+  gint height;
+  gint width;
   bitmap_type marked = local_new_bitmap (sel_get_width(),sel_get_height());
 
 /*   printf("width = %d, height = %d\n",BITMAP_WIDTH(marked),BITMAP_HEIGHT(marked)); */
 
+  gimp_progress_init ("Selection to path...");
+
   O_LIST_LENGTH (outline_list) = 0;
   outline_list.data = NULL;
 
-  for (row = 0; row < sel_get_height(); row++)
-    for (col = 0; col < sel_get_width(); col++)
+  height = sel_get_height ();
+  width  = sel_get_width ();
+
+  for (row = 0; row < height; row++)
+  {
+    for (col = 0; col < width; col++)
       {
 	edge_type edge;
-        
+
         if (sel_pixel_is_white(row, col))
           continue;
 
@@ -103,6 +110,10 @@ find_outline_pixels ()
 
 	  }
       }
+
+    if ((row & 0xf) == 0)
+	gimp_progress_update (((gdouble)row) / height);
+  }
 
   local_free_bitmap (&marked); 
   
