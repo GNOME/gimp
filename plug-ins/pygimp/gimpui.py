@@ -94,12 +94,16 @@ class ImageSelector(gtk.OptionMenu):
         gtk.OptionMenu.__init__(self)
         self.menu = ImageMenu(None, self.clicked)
         self.set_menu(self.menu)
-        self.selected = default
-        children = self.menu.children()
-        for child in range(len(children)):
-            if children[child].get_data("Gimp-ID") == default:
-                self.set_history(child)
-                break
+        if default == None:
+            self.selected = self.menu.children()[0].get_data("Gimp-ID")
+            self.set_history (0)
+        else:
+            self.selected = default
+            children = self.menu.children()
+            for child in range(len(children)):
+                if children[child].get_data("Gimp-ID") == default:
+                    self.set_history(child)
+                    break
     def clicked(self, img, data=None):
         self.selected = img
     def get_value(self):
@@ -110,12 +114,16 @@ class LayerSelector(gtk.OptionMenu):
         gtk.OptionMenu.__init__(self)
         self.menu = LayerMenu(None, self.clicked)
         self.set_menu(self.menu)
-        self.selected = default
-        children = self.menu.children()
-        for child in range(len(children)):
-            if children[child].get_data("Gimp-ID") == default:
-                self.set_history(child)
-                break
+        if default == None:
+            self.selected = self.menu.children()[0].get_data("Gimp-ID")
+            self.set_history (0)
+        else:
+            self.selected = default
+            children = self.menu.children()
+            for child in range(len(children)):
+                if children[child].get_data("Gimp-ID") == default:
+                    self.set_history(child)
+                    break
     def clicked(self, layer, data=None):
         self.selected = layer
     def get_value(self):
@@ -126,12 +134,16 @@ class ChannelSelector(gtk.OptionMenu):
         gtk.OptionMenu.__init__(self)
         self.menu = ChannelMenu(None, self.clicked)
         self.set_menu(self.menu)
-        self.selected = default
-        children = self.menu.children()
-        for child in range(len(children)):
-            if children[child].get_data("Gimp-ID") == default:
-                self.set_history(child)
-                break
+        if default == None:
+            self.selected = self.menu.children()[0].get_data("Gimp-ID")
+            self.set_history (0)
+        else:
+            self.selected = default
+            children = self.menu.children()
+            for child in range(len(children)):
+                if children[child].get_data("Gimp-ID") == default:
+                    self.set_history(child)
+                    break
     def clicked(self, channel, data=None):
         self.selected = channel
     def get_value(self):
@@ -142,12 +154,16 @@ class DrawableSelector(gtk.OptionMenu):
         gtk.OptionMenu.__init__(self)
         self.menu = DrawableMenu(None, self.clicked)
         self.set_menu(self.menu)
-        self.selected = default
-        children = self.menu.children()
-        for child in range(len(children)):
-            if children[child].get_data("Gimp-ID") == default:
-                self.set_history(child)
-                break
+        if default == None:
+            self.selected = self.menu.children()[0].get_data("Gimp-ID")
+            self.set_history (0)
+        else:
+            self.selected = default
+            children = self.menu.children()
+            for child in range(len(children)):
+                if children[child].get_data("Gimp-ID") == default:
+                    self.set_history(child)
+                    break
     def clicked(self, drawable, data=None):
         self.selected = drawable
     def get_value(self):
