@@ -210,22 +210,19 @@ gimp_cell_renderer_color_get_size (GtkCellRenderer *cell,
   gtk_icon_size_lookup_for_settings (settings,
                                      color->size, &calc_width, &calc_height);
 
-  calc_width  += 2 + 2 * cell->xpad;
-  calc_height += 2 + 2 * cell->ypad;
-
-  if (cell_area && color->size > 0)
+  if (cell_area && calc_width > 0 && calc_height > 0)
     {
       if (x_offset)
 	{
 	  *x_offset = (((gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL) ?
                         1.0 - cell->xalign : cell->xalign) *
-                       (cell_area->width - calc_width - 2 * cell->xpad));
+                       (cell_area->width - calc_width));
 	  *x_offset = MAX (*x_offset, 0) + cell->xpad;
 	}
       if (y_offset)
 	{
 	  *y_offset = (cell->yalign *
-                       (cell_area->height - calc_height - 2 * cell->ypad));
+                       (cell_area->height - calc_height));
           *y_offset = MAX (*y_offset, 0) + cell->ypad;
 	}
     }
@@ -238,9 +235,9 @@ gimp_cell_renderer_color_get_size (GtkCellRenderer *cell,
     }
 
   if (width)
-    *width  = calc_width;
+    *width  = calc_width  + 2 * cell->xpad;
   if (height)
-    *height = calc_height;
+    *height = calc_height + 2 * cell->ypad;
 }
 
 static void
