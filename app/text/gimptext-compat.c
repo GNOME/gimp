@@ -59,6 +59,7 @@ text_render (GimpImage    *gimage,
   GimpText             *gtext;
   GimpLayer            *layer;
   GimpRGB               color;
+  gchar                *font;
   gdouble               size;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
@@ -74,6 +75,10 @@ text_render (GimpImage    *gimage,
 
   desc = pango_font_description_from_string (fontname);
   size = PANGO_PIXELS (pango_font_description_get_size (desc));
+
+  pango_font_description_unset_fields (desc, PANGO_FONT_MASK_SIZE);
+  font = pango_font_description_to_string (desc);
+
   pango_font_description_free (desc);
 
   gimp_context_get_foreground (gimp_get_current_context (gimage->gimp),
@@ -81,12 +86,14 @@ text_render (GimpImage    *gimage,
 
   gtext = g_object_new (GIMP_TYPE_TEXT,
                         "text",      text,
-                        "font",      fontname,
+                        "font",      font,
                         "font-size", size,
 			"antialias", antialias,
                         "border",    border,
                         "color",     &color,
                         NULL);
+
+  g_free (font);
 
   layer = gimp_text_layer_new (gimage, gtext);
 

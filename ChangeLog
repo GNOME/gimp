@@ -1,5 +1,10 @@
 2003-04-01  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimptext-compat.c (text_render): strip the size from
+	the font name before using it.
+
+2003-04-01  Sven Neumann  <sven@gimp.org>
+
 	* app/text/gimpfont.c: use a fixed size for the popup and clamp to
 	a maximum size (should actually use GIMP_PREVIEW_MAX_SIZE here).
 
