@@ -144,6 +144,8 @@ stroke_dialog_new (GimpItem    *item,
   g_object_set_data_full (G_OBJECT (dialog), "gimp-stroke-options", options,
                           (GDestroyNotify) g_object_unref);
 
+  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
@@ -156,7 +158,7 @@ stroke_dialog_new (GimpItem    *item,
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  button = gtk_radio_button_new_with_label (NULL, _("Stroke"));
+  button = gtk_radio_button_new_with_label (NULL, _("Stroke Line"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   gtk_frame_set_label_widget (GTK_FRAME (frame), button);
   gtk_widget_show (button);
@@ -187,7 +189,7 @@ stroke_dialog_new (GimpItem    *item,
   gtk_widget_show (frame);
 
   button = gtk_radio_button_new_with_label (group,
-                                            _("Stroke Using a Paint Tool"));
+                                            _("Stroke With a Paint Tool"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   gtk_frame_set_label_widget (GTK_FRAME (frame), button);
   gtk_widget_show (button);
