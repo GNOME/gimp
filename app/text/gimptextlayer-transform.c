@@ -92,7 +92,7 @@ gimp_text_layer_flip (GimpItem            *item,
   gimp_image_undo_group_end (gimage);
 
   /*  Make sure we're not caching any old selection info  */
-  gimp_layer_invalidate_boundary (layer);
+  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
 }
 
 void
@@ -151,7 +151,7 @@ gimp_text_layer_rotate (GimpItem         *item,
   gimp_image_undo_group_end (gimage);
 
   /*  Make sure we're not caching any old selection info  */
-  gimp_layer_invalidate_boundary (layer);  
+  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
 }
 
 void

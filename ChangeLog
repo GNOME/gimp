@@ -1,5 +1,10 @@
 2003-09-04  Manish Singh  <yosh@gimp.org>
 
+	* app/text/gimptextlayer-transform.c: use
+	gimp_drawable_invalidate_boundary now.
+
+2003-09-04  Manish Singh  <yosh@gimp.org>
+
 	* configure.in: #define ARCH_X86 on x86-64 too.
 
 	* app/composite/gimp-composite-sse2.c: dererference pointers outside
