@@ -60,7 +60,7 @@
 #if defined (GLIB_CHECK_VERSION) && GLIB_CHECK_VERSION (1,3,1)
 #define ESCAPE(string) g_strescape (string, NULL)
 #else
-#define ESCAPE(string) g_strescape (string)
+#define ESCAPE(string) my_strescape (string, NULL)
 #endif
 
 #define TEXT_WIDTH  100
@@ -230,6 +230,11 @@ static void       script_fu_brush_preview          (char *, /* Name */
 						    gint,    /* dialog closing */
 						    gpointer /* user data */);
 
+#if !(defined (GLIB_CHECK_VERSION) && GLIB_CHECK_VERSION (1,3,1))
+static gchar*     my_strescape                     (const gchar *source, 
+						    const gchar *exceptions);
+#endif
+
 
 /*
  *  Local variables
@@ -250,6 +255,90 @@ static gchar *last_command = NULL;
 static GList *script_list = NULL;
 
 extern char   siod_err_msg[];
+
+
+/*
+ *  We need the g_strescape () implementation from glib-1.3,
+ *  so provide it here until this becomes the standard. 
+ */
+#if !(defined (GLIB_CHECK_VERSION) && GLIB_CHECK_VERSION (1,3,1))
+static gchar*     
+my_strescape (const gchar *source, 
+	      const gchar *exceptions)
+{
+  const guchar *p = (guchar *) source;
+  /* Each source byte needs maximally four destination chars (\777) */
+  gchar *dest = g_malloc (strlen (source) * 4 + 1);
+  gchar *q = dest;
+  guchar excmap[256];
+
+  memset (excmap, 0, 256);
+  if (exceptions)
+    {
+      guchar *e = (guchar *) exceptions;
+
+      while (*e)
+	{
+	  excmap[*e] = 1;
+	  e++;
+	}
+    }
+
+  while (*p)
+    {
+      if (excmap[*p])
+	*q++ = *p;
+      else
+	{
+	  switch (*p)
+	    {
+	    case '\b':
+	      *q++ = '\\';
+	      *q++ = 'b';
+	      break;
+	    case '\f':
+	      *q++ = '\\';
+	      *q++ = 'f';
+	      break;
+	    case '\n':
+	      *q++ = '\\';
+	      *q++ = 'n';
+	      break;
+	    case '\r':
+	      *q++ = '\\';
+	      *q++ = 'r';
+	      break;
+	    case '\t':
+	      *q++ = '\\';
+	      *q++ = 't';
+	      break;
+	    case '\\':
+	      *q++ = '\\';
+	      *q++ = '\\';
+	      break;
+	    case '"':
+	      *q++ = '\\';
+	      *q++ = '"';
+	      break;
+	    default:
+	      if ((*p < ' ') || (*p >= 0177))
+		{
+		  *q++ = '\\';
+		  *q++ = '0' + (((*p) >> 6) & 07);
+		  *q++ = '0' + (((*p) >> 3) & 07);
+		  *q++ = '0' + ((*p) & 07);
+		}
+	      else
+		*q++ = *p;
+	      break;
+	    }
+	}
+      p++;
+    }
+  *q = 0;
+  return dest;
+}
+#endif  /* GLIB <= 1.3 */
 
 
 /*
