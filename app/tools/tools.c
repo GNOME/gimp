@@ -48,6 +48,7 @@
 #include "measure.h"
 #include "move.h"
 #include "paintbrush.h"
+#include "path_tool.h"
 #include "pencil.h"
 #include "posterize.h"
 #include "rect_select.h"
@@ -513,12 +514,27 @@ ToolInfo tool_info[] =
     NULL
   },          
 
+  {
+    NULL,
+    N_("Path"),
+    26,
+    N_("/Tools/Path"),
+    "",
+    (char **) measure_bits,
+    N_("Manipulate paths"),
+    "ContextHelp/path",
+    PATH_TOOL,
+    tools_new_path_tool,
+    tools_free_path_tool, 
+    NULL
+  },
+
 
   /*  Non-toolbox tools  */
   { 
     NULL,
     N_("By Color Select"),
-    26,
+    27,
     N_("/Select/By Color..."),
     NULL,
     NULL,
@@ -533,7 +549,7 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Color Balance"),
-    27,
+    28,
     N_("/Image/Colors/Color Balance"),
     NULL,
     NULL,
@@ -548,7 +564,7 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Brightness-Contrast"),
-    28,
+    29,
     N_("/Image/Colors/Brightness-Contrast"),
     NULL,
     NULL,
@@ -563,7 +579,7 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Hue-Saturation"),
-    29,
+    30,
     N_("/Image/Colors/Hue-Saturation"),
     NULL,
     NULL,
@@ -578,7 +594,7 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Posterize"),
-    30,
+    31,
     N_("/Image/Colors/Posterize"),
     NULL,
     NULL,
@@ -593,7 +609,7 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Threshold"), 
-    31,
+    32,
     N_("/Image/Colors/Threshold"),
     NULL,
     NULL,
@@ -608,7 +624,7 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Curves"),
-    32,
+    33,
     N_("/Image/Colors/Curves"),
     NULL,
     NULL,
@@ -623,7 +639,7 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Levels"),
-    33,
+    34,
     N_("/Image/Colors/Levels"),
     NULL,
     NULL,
@@ -638,7 +654,7 @@ ToolInfo tool_info[] =
   { 
     NULL,
     N_("Histogram"),
-    34,
+    35,
     N_("/Image/Histogram"),
     NULL,
     NULL,

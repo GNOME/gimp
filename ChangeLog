@@ -1,3 +1,36 @@
+Thu Sep  9 19:16:25 MEST 1999  Simon Budig <Simon.Budig@unix-ag.org>
+                               (checked in by Sven Neumann <sven@gimp.org>)
+
+        * app/tools.c
+        * app/toolsF.h
+        * app/path_tool.c
+        * app/path_tool.h
+        * app/path_toolP.h
+
+        New tool, should become a replacement for the bezier_select tool.
+        This is the start for a more general Path-tool. It will provide
+        (sometime :-) functions to manipulate a path, constructed from
+        curves (open or closed), which in turn are constructed from segments.
+
+        These segments could be lots of differen types, as a start 
+	bezier-curves are planned and Austin Donelly is probably
+	interested in using it for intelligent scissors. It will be
+	possible to mix bezier- and intelligent-scissors-segments in a
+	path - but currently I'm missing for a good UI-Idea.
+
+        This tool is far from complete, currently it is only possible to
+        create a single open curve. It is possible to manipulate an anchor 
+	by clicking on it and dragging it around. Multiple anchors can be 
+	selected by shift-clicking on an anchor. You can drag multiple 
+	anchors around.
+
+        The path_tool* files are under heavy construction currently. This 
+	is a preliminary checkin to get this in before the
+	feature-freeze... ;-)
+
+	NOTE: Simon sent me this patch on Tuesday, I just didn't manage to
+	check it in until now... (Sven)
+	
 Wed Sep  8 23:58:14 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	(from gimp-narazaki-990909-0)
