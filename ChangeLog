@@ -1,3 +1,8 @@
+Sun Dec 14 19:47:59 PST 1997 Manish Singh <yosh@gimp.org>
+
+	* Configured in the flame plugin by default
+	* updated the ripply-anim script (still broken though)
+
 Sun Dec 14 20:57:46 1997  Ray Lehtiniemi  <rayl@netrover.com>
 
 	* app/tools.c (tools_options_dialog_show): fix a problem where

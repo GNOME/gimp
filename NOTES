@@ -1,8 +1,7 @@
 Some notes on GIMP-0.99.16:
 
-* The Flame plug-in as well as MathMap, GimpTcl and Gfig
-are included but not yet integrated into the build cause of
-instability or other unresolved issues.
+* The MathMap, GimpTcl, GAG, and Gfig are included but not yet integrated
+into the build cause of instability or other unresolved issues.
 
 Please read the file TODO-DIST to find more information about things
 that were not included or that are (possibly) broken in this distribution.

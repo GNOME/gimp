@@ -2,10 +2,10 @@
 
 pluginlibdir = $(gimpplugindir)/plug-ins
 
-pluginlib_PROGRAMS = tiff
+pluginlib_PROGRAMS = flame
 
-tiff_SOURCES = \
-	tiff.c
+flame_SOURCES = \
+	cmap.c cmap.h flame.c flame.h libifs.c libifs.h megawidget.c megawidget.h rect.c rect.h
 
 INCLUDES = \
 	$(X_CFLAGS)			\
@@ -16,14 +16,13 @@ LDADD = \
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(X_LIBS)				\
-	@LIBTIFF_LIB@				\
 	-lc
 
 DEPS = \
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la
 
-tiff_DEPENDENCIES = $(DEPS)
+flame_DEPENDENCIES = $(DEPS)
 
 .PHONY: files
 

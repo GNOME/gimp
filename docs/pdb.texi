@@ -1511,6 +1511,20 @@ This procedure converts the specified image to indexed color.  This process requ
 @end defun
 @emph{Spencer Kimball & Peter Mattis}
 
+@defun gimp_convert_indexed_palette image, dither, palette_type, num_cols, palette
+This procedure converts the specified image to indexed color.  This process requires an image of type GRAY or RGB.  The `palette_type' specifies what kind of palette to use, A type of `0' means to use an optimal palette of `num_cols' generated from the colors in the image.  A type of `1' means to re-use the previous palette.  A type of `2' means to use the WWW-optimized palette.  Type `3' means to use only black and white colors.  A type of `4' means to use a palette from the gimp palettes directories.--@strong{Internal GIMP procedure}
+
+@strong{Inputs}
+@itemize @bullet
+@item @emph{image} (PDB_IMAGE)--The image
+@item @emph{dither} (PDB_INT32)--Floyd-Steinberg dithering
+@item @emph{palette_type} (PDB_INT32)--The type of palette to use, (0 optimal) (1 reuse) (2 WWW) (3 Mono) (4 Custom)
+@item @emph{num_cols} (PDB_INT32)--The number of colors to quantize to, ignored unless (palette_type == 0)
+@item @emph{palette} (PDB_STRING)--The name of the custom palette to use, ignored unless (palette_type == 4)
+@end itemize
+@end defun
+@emph{Spencer Kimball & Peter Mattis}
+
 @defun gimp_convert_rgb image
 This procedure converts the specified image to RGB color.  This process requires an image of type GRAY or INDEXED.  No image content is lost in this process aside from the colormap for an indexed image.--@strong{Internal GIMP procedure}
 
@@ -4636,6 +4650,18 @@ Then something else here--@strong{GIMP Plug-In}
 @end defun
 @emph{Pavel Grinfeld (pavel@@ml.com)}
 
+@defun plug_in_flame run_mode, image, drawable
+use Smooth Palette to make colormaps--@strong{GIMP Plug-In}
+
+@strong{Inputs}
+@itemize @bullet
+@item @emph{run_mode} (PDB_INT32)--Interactive, non-interactive
+@item @emph{image} (PDB_IMAGE)--Input image (unused)
+@item @emph{drawable} (PDB_DRAWABLE)--Input drawable
+@end itemize
+@end defun
+@emph{Scott Draves}
+
 @defun plug_in_fractal_trace run_mode, image, drawable, xmin, xmax, ymin, ymax, ymax, depth, outside_type
 transform image with the Mandelbrot Fractal--@strong{GIMP Plug-In}
 
@@ -5837,21 +5863,6 @@ Creates a simple logo with a shadow and a highlight--@strong{Temporary Procedure
 @end defun
 @emph{Spencer Kimball}
 
-@defun script-fu-beveled-logo run_mode, value, value, value, color, color
-Bevel--@strong{Temporary Procedure}
-
-@strong{Inputs}
-@itemize @bullet
-@item @emph{run_mode} (PDB_INT32)--Interactive, non-interactive
-@item @emph{value} (PDB_STRING)--Text String
-@item @emph{value} (PDB_STRING)--Font Size (in pixels)
-@item @emph{value} (PDB_STRING)--Font
-@item @emph{color} (PDB_COLOR)--Top Gradient Color
-@item @emph{color} (PDB_COLOR)--Bottom Gradient Color
-@end itemize
-@end defun
-@emph{Manish Singh <yosh@@gimp.org>}
-
 @defun script-fu-beveled-pattern-arrow run_mode, value, value, value
 Beveled pattern arrow--@strong{Temporary Procedure}
 
@@ -6041,6 +6052,21 @@ Carve the text from the specified image.  The image will be automatically tiled 
 @emph{Spencer Kimball}
 
 @defun script-fu-chalk-logo run_mode, value, value, value, color, color
+Chalk scribbled logos--@strong{Temporary Procedure}
+
+@strong{Inputs}
+@itemize @bullet
+@item @emph{run_mode} (PDB_INT32)--Interactive, non-interactive
+@item @emph{value} (PDB_STRING)--Text String
+@item @emph{value} (PDB_STRING)--Font Size (in pixels)
+@item @emph{value} (PDB_STRING)--Font
+@item @emph{color} (PDB_COLOR)--Background Color
+@item @emph{color} (PDB_COLOR)--Chalk Color
+@end itemize
+@end defun
+@emph{Manish Singh <msingh@@uclink4.berkeley.edu>}
+
+@defun script-fu-chalk-test-logo run_mode, value, value, value, color, color
 Chalk scribbled logos--@strong{Temporary Procedure}
 
 @strong{Inputs}
@@ -6450,7 +6476,7 @@ Create size of brush--@strong{Temporary Procedure}
 @item @emph{value} (PDB_STRING)--Description
 @item @emph{value} (PDB_STRING)--Width
 @item @emph{value} (PDB_STRING)--Height
-@item @emph{value} (PDB_STRING)--Spacking
+@item @emph{value} (PDB_STRING)--Spacing
 @end itemize
 @end defun
 @emph{Seth Burgess <sjburges@@ou.edu>}

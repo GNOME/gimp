@@ -61,6 +61,7 @@ SUBDIRS = 			\
 	figures			\
 	film			\
 	fits			\
+	flame			\
 	fp			\
 	fractaltrace		\
 	gauss_iir		\
@@ -141,7 +142,7 @@ scriptdata =
 
 pluginlibdir = $(gimpplugindir)/plug-ins
 
-EXTRA_DIST = build.in xcompose.txt
+EXTRA_DIST = build.in
 
 INCLUDES = \
 	$(X_CFLAGS)			\
