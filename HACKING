@@ -63,6 +63,11 @@ the GIMP API reference manuals, you can set AUTOGEN_CONFIGURE_ARGS to
 "--enable-gtk-doc". Please note that you will then need a recent
 version of gtk-doc as well as a working setup for handling DocBook/XML.
 
+If you do not have a recent version of gtk-doc, you can pass the
+option "--disable-gtk-doc" to autogen.sh.  This will completely
+disable the support for gtk-doc so you will not be able to generate
+the API documentation.
+
 
 CVS
 ---

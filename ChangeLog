@@ -1,5 +1,23 @@
 2005-01-22  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: bumped version to 2.2.4, interface_age 4.
+
+	Merged from HEAD branch:
+
+	* HACKING
+	* Makefile.am
+	* acinclude.m4
+	* autogen.sh: applied (modified) patch from Raphaël Quinet that
+	allows to build GIMP from CVS without having gtk-doc installed.
+	If you need to do this, pass --disable-gtk-doc to autogen.sh.
+
+	* configure.in: removed --disable-devel-docs option since it has
+	become obsolete now.
+
+	* devel-docs/Makefile.am: require gtk-doc when running 'make dist'.
+
+2005-01-22  Sven Neumann  <sven@gimp.org>
+
 	* Made 2.2.3 release.
 
 2005-01-22  Sven Neumann  <sven@gimp.org>
