@@ -20,10 +20,9 @@
 
 #include "tools.h"
 
-/*  by_color select functions  */
-Tool *        tools_new_posterize      (void);
-void          tools_free_posterize     (Tool *);
+Tool * tools_new_posterize  (void);
+void   tools_free_posterize (Tool     *tool);
 
-void          posterize_initialize     (GDisplay *);
+void   posterize_initialize (GDisplay *gdisp);
 
 #endif  /*  __POSTERIZE_H__  */

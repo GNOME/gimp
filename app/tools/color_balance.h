@@ -57,8 +57,6 @@ struct _ColorBalanceDialog
   TransferMode   application_mode;
 };
 
-/*  color balance functions  */
-
 Tool * tools_new_color_balance            (void);
 void   tools_free_color_balance           (Tool              *tool);
 

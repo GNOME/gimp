@@ -802,7 +802,17 @@ tools_initialize (ToolType  tool_type,
   if (tool_info[(gint) tool_type].init_func && !gdisp)
     tool_type = RECT_SELECT;
 
-  gimp_context_set_tool (gimp_context_get_user (), tool_type);
+  /*  Force the emission of the "tool_changed" signal
+   */
+  if (active_tool->type == tool_type)
+    {
+      gtk_signal_emit_by_name (GTK_OBJECT (gimp_context_get_user ()),
+			       "tool_changed", tool_type);
+    }
+  else
+    {
+      gimp_context_set_tool (gimp_context_get_user (), tool_type);
+    }
 
   if (tool_info[(gint) tool_type].init_func)
     {

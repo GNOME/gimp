@@ -99,21 +99,6 @@ static GimpItemFactoryEntry toolbox_entries[] =
   { { N_("/File/Preferences..."), NULL, file_pref_cmd_callback, 0 },
     "file/dialogs/preferences/preferences.html", NULL },
 
-  /*  <Toolbox>/File/Help  */
-
-  { { N_("/File/Help/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
-    NULL, NULL },
-  { { N_("/File/Help/Help..."), "F1", help_help_cmd_callback, 0 },
-    "file/dialogs/help.html", NULL },
-  { { N_("/File/Help/Context Help..."), "<shift>F1", help_context_help_cmd_callback, 0 },
-    "file/dialogs/context_help.html", NULL },
-  { { N_("/File/Help/Tip of the day..."), NULL, help_tips_cmd_callback, 0 },
-    "file/dialogs/tip_of_the_day.html", NULL },
-  { { N_("/File/Help/About..."), NULL, help_about_cmd_callback, 0 },
-    "file/dialogs/about.html", NULL },
-  { { N_("/File/Help/Dump Items (Debug)"), NULL, help_debug_cmd_callback, 0 },
-    NULL, NULL },
-
   /*  <Toolbox>/File/Dialogs  */
 
   { { N_("/File/---"), NULL, NULL, 0, "<Separator>" },

@@ -20,11 +20,10 @@
 
 #include "tools.h"
 
-/*  hue-saturation functions  */
-Tool *        tools_new_levels      (void);
-void          tools_free_levels     (Tool *);
+Tool * tools_new_levels  (void);
+void   tools_free_levels (Tool     *tool);
 
-void          levels_initialize     (GDisplay *);
-void          levels_free           (void);
+void   levels_initialize (GDisplay *gdisp);
+void   levels_free       (void);
 
 #endif  /*  __LEVELS_H__  */

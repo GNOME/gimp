@@ -17,7 +17,6 @@
  */
 #include "config.h"
 
-#include <math.h>
 #include "appenv.h"
 #include "buildmenu.h"
 #include "drawable.h"
@@ -25,9 +24,9 @@
 #include "gimpui.h"
 #include "histogram_tool.h"
 #include "image_map.h"
-#include "interface.h"
 
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpmath.h"
 
 #define TEXT_WIDTH       45
 #define GRADIENT_HEIGHT  15
@@ -35,11 +34,11 @@
 /*  the histogram structures  */
 
 typedef struct _HistogramTool HistogramTool;
+
 struct _HistogramTool
 {
   gint x, y;   /*  coords for last mouse click  */
 };
-
 
 /*  the histogram tool options  */
 static ToolOptions * histogram_tool_options = NULL;
@@ -47,11 +46,10 @@ static ToolOptions * histogram_tool_options = NULL;
 /*  the histogram tool dialog  */
 static HistogramToolDialog * histogram_tool_dialog = NULL;
 
-
 /*  histogram_tool action functions  */
 static void   histogram_tool_control (Tool *, ToolAction, gpointer);
 
-static HistogramToolDialog *  histogram_tool_new_dialog (void);
+static HistogramToolDialog *  histogram_tool_dialog_new (void);
 
 static void   histogram_tool_close_callback  (GtkWidget *, gpointer);
 static void   histogram_tool_value_callback  (GtkWidget *, gpointer);
@@ -62,20 +60,19 @@ static void   histogram_tool_gradient_draw   (GtkWidget *, gint);
 
 static void   histogram_tool_dialog_update   (HistogramToolDialog *, gint, gint);
 
-
 /*  histogram_tool machinery  */
 
 void
 histogram_tool_histogram_range (HistogramWidget *widget,
 				gint             start,
 				gint             end,
-				void            *user_data)
+				gpointer         data)
 {
   HistogramToolDialog *htd;
   gdouble pixels;
   gdouble count;
 
-  htd = (HistogramToolDialog *) user_data;
+  htd = (HistogramToolDialog *) data;
 
   if (htd == NULL || htd->hist == NULL ||
       gimp_histogram_nchannels(htd->hist) <= 0)
@@ -161,7 +158,7 @@ histogram_tool_control (Tool       *tool,
 }
 
 Tool *
-tools_new_histogram_tool ()
+tools_new_histogram_tool (void)
 {
   Tool * tool;
   HistogramTool * private;
@@ -213,7 +210,7 @@ histogram_tool_initialize (GDisplay *gdisp)
 
   /*  The histogram_tool dialog  */
   if (!histogram_tool_dialog)
-    histogram_tool_dialog = histogram_tool_new_dialog ();
+    histogram_tool_dialog = histogram_tool_dialog_new ();
   else if (!GTK_WIDGET_VISIBLE (histogram_tool_dialog->shell))
     gtk_widget_show (histogram_tool_dialog->shell);
 
@@ -238,17 +235,17 @@ histogram_tool_initialize (GDisplay *gdisp)
   histogram_widget_range (histogram_tool_dialog->histogram, 0, 255);
 }
 
-
 /***************************/
 /*  Histogram Tool dialog  */
 /***************************/
 
 static HistogramToolDialog *
-histogram_tool_new_dialog ()
+histogram_tool_dialog_new (void)
 {
   HistogramToolDialog *htd;
+  GtkWidget *main_vbox;
+  GtkWidget *hbox;
   GtkWidget *vbox;
-  GtkWidget *vbox2;
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *label;
@@ -296,17 +293,19 @@ histogram_tool_new_dialog ()
 
 				NULL);
 
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (htd->shell)->vbox), vbox);
+  main_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (htd->shell)->vbox), main_vbox);
 
-  /*  The vbox for the menu and histogram  */
-  vbox2 = gtk_vbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
+  hbox = gtk_hbox_new (TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
 
   /*  The option menu for selecting channels  */
   htd->channel_menu = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox2), htd->channel_menu, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), htd->channel_menu, FALSE, FALSE, 0);
 
   label = gtk_label_new (_("Information on Channel:"));
   gtk_box_pack_start (GTK_BOX (htd->channel_menu), label, FALSE, FALSE, 0);
@@ -323,32 +322,33 @@ histogram_tool_new_dialog ()
   /*  The histogram tool histogram  */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
   htd->histogram = histogram_widget_new (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT);
+  gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET(htd->histogram));
 
   gtk_signal_connect (GTK_OBJECT (htd->histogram), "rangechanged",
-		      (GtkSignalFunc) histogram_tool_histogram_range,
-		      (void*)htd);
+		      GTK_SIGNAL_FUNC (histogram_tool_histogram_range),
+		      htd);
 
-  gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET(htd->histogram));
-  gtk_widget_show (GTK_WIDGET(htd->histogram));
+  gtk_widget_show (GTK_WIDGET (htd->histogram));
   gtk_widget_show (frame);
 
   /*  The gradient below the histogram */
   htd->gradient = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (htd->gradient), 
 		    HISTOGRAM_WIDTH, GRADIENT_HEIGHT);
-  gtk_box_pack_start (GTK_BOX (vbox2), htd->gradient, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), htd->gradient, FALSE, FALSE, 0);
   gtk_widget_show (htd->gradient);
   histogram_tool_gradient_draw (htd->gradient, HISTOGRAM_VALUE);
 
-  gtk_widget_show (vbox2);
+  gtk_widget_show (vbox);
+  gtk_widget_show (hbox);
 
   /*  The table containing histogram information  */
   table = gtk_table_new (4, 4, TRUE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
 
   /*  the labels for histogram information  */
   for (i = 0; i < 7; i++)
@@ -371,7 +371,8 @@ histogram_tool_new_dialog ()
     }
 
   gtk_widget_show (table);
-  gtk_widget_show (vbox);
+
+  gtk_widget_show (main_vbox);
   gtk_widget_show (htd->shell);
 
   return htd;
@@ -379,23 +380,26 @@ histogram_tool_new_dialog ()
 
 static void
 histogram_tool_close_callback (GtkWidget *widget,
-			       gpointer   client_data)
+			       gpointer   data)
 {
   HistogramToolDialog *htd;
 
-  htd = (HistogramToolDialog *) client_data;
+  htd = (HistogramToolDialog *) data;
 
   if (GTK_WIDGET_VISIBLE (htd->shell))
     gtk_widget_hide (htd->shell);
+
+  active_tool->gdisp_ptr = NULL;
+  active_tool->drawable = NULL;
 }
 
 static void
 histogram_tool_value_callback (GtkWidget *widget,
-			       gpointer   client_data)
+			       gpointer   data)
 {
   HistogramToolDialog *htd;
 
-  htd = (HistogramToolDialog *) client_data;
+  htd = (HistogramToolDialog *) data;
 
   if (htd->channel != HISTOGRAM_VALUE)
     {
@@ -407,11 +411,11 @@ histogram_tool_value_callback (GtkWidget *widget,
 
 static void
 histogram_tool_red_callback (GtkWidget *widget,
-			     gpointer   client_data)
+			     gpointer   data)
 {
   HistogramToolDialog *htd;
 
-  htd = (HistogramToolDialog *) client_data;
+  htd = (HistogramToolDialog *) data;
 
   if (htd->channel != HISTOGRAM_RED)
     {
@@ -423,11 +427,11 @@ histogram_tool_red_callback (GtkWidget *widget,
 
 static void
 histogram_tool_green_callback (GtkWidget *widget,
-			       gpointer   client_data)
+			       gpointer   data)
 {
   HistogramToolDialog *htd;
 
-  htd = (HistogramToolDialog *) client_data;
+  htd = (HistogramToolDialog *) data;
 
   if (htd->channel != HISTOGRAM_GREEN)
     {
@@ -439,11 +443,11 @@ histogram_tool_green_callback (GtkWidget *widget,
 
 static void
 histogram_tool_blue_callback (GtkWidget *widget,
-			      gpointer   client_data)
+			      gpointer   data)
 {
   HistogramToolDialog *htd;
 
-  htd = (HistogramToolDialog *) client_data;
+  htd = (HistogramToolDialog *) data;
 
   if (htd->channel != HISTOGRAM_BLUE)
     {

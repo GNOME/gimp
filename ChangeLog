@@ -1,3 +1,25 @@
+1999-11-22  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/brightness_contrast.[ch]
+	* app/by_color_select.[ch]
+	* app/color_balance.[ch]
+	* app/curves.[ch]
+	* app/histogram_tool.[ch]
+	* app/hue_saturation.[ch]
+	* app/levels.[ch]
+	* app/posterize.[ch]
+	* app/threshold.[ch]: spinbuttons and cleaned up ui for all
+	dialog-tools. Added a "Reset" button to all dialogs.
+
+	* app/color_notebook.c: fixed a compiler warning.
+
+	* app/gimpui.[ch]: made gimp_radio_group_new() more general.
+
+	* app/menus.c: removed the <Toolbox>/File/Help submenu.
+
+	* app/tools.c: restored the old behaviour of "tools_initialize()"
+	(force the emission of the "tool_changed" signal)
+
 Sun Nov 21 22:13:59 CET 1999  Marc Lehmann <pcg@goof.com>
 
 	* app/plug_in.c: image_type=="*" enables all (known)

@@ -35,37 +35,37 @@ typedef enum
 } HueRange;
 
 typedef struct _HueSaturationDialog HueSaturationDialog;
+
 struct _HueSaturationDialog
 {
-  GtkWidget   *shell;
-  GtkWidget   *gimage_name;
-  GtkWidget   *hue_text;
-  GtkWidget   *lightness_text;
-  GtkWidget   *saturation_text;
-  GtkWidget   *hue_partition_da[6];
-  GtkAdjustment  *hue_data;
-  GtkAdjustment  *lightness_data;
-  GtkAdjustment  *saturation_data;
+  GtkWidget     *shell;
 
-  GimpDrawable *drawable;
-  ImageMap     image_map;
+  GtkWidget     *hue_partition_da[6];
 
-  double       hue[7];
-  double       lightness[7];
-  double       saturation[7];
+  GtkAdjustment *hue_data;
+  GtkAdjustment *lightness_data;
+  GtkAdjustment *saturation_data;
 
-  int          hue_partition;
-  gint         preview;
+  GimpDrawable  *drawable;
+  ImageMap       image_map;
+
+  gdouble        hue[7];
+  gdouble        lightness[7];
+  gdouble        saturation[7];
+
+  HueRange       hue_partition;
+  gboolean       preview;
 };
 
-/*  hue-saturation functions  */
-Tool *        tools_new_hue_saturation  (void);
-void          tools_free_hue_saturation (Tool *);
+Tool * tools_new_hue_saturation          (void);
+void   tools_free_hue_saturation         (Tool                 *tool);
 
-void          hue_saturation_initialize (GDisplay *);
-void          hue_saturation_free       (void);
-void          hue_saturation            (PixelRegion *, PixelRegion *, void *);
+void   hue_saturation_initialize         (GDisplay             *gdisp);
+void   hue_saturation_free               (void);
+void   hue_saturation                    (PixelRegion          *srcPR,
+					  PixelRegion          *destPR,
+					  void                 *data);
 
-void          hue_saturation_calculate_transfers (HueSaturationDialog *hsd);
+void   hue_saturation_calculate_transfers (HueSaturationDialog *hsd);
 
 #endif  /*  __HUE_SATURATION_H__  */

@@ -39,10 +39,11 @@ static void color_notebook_cancel_callback (GtkWidget *, gpointer);
 static void color_notebook_update_callback (void *, int, int, int);
 static void color_notebook_page_switch     (GtkWidget *, GtkNotebookPage *,
 					    guint);
-static void color_notebook_help_func       (gpointer data);
+static void color_notebook_help_func       (gchar *data);
 
 /* information we keep on each registered colour selector */
-typedef struct _ColorSelectorInfo {
+typedef struct _ColorSelectorInfo
+{
   char                          *name;    /* label used in notebook tab */
   char                          *help_page;
   GimpColorSelectorMethods       m;
@@ -53,7 +54,8 @@ typedef struct _ColorSelectorInfo {
   struct _ColorSelectorInfo     *next;
 } ColorSelectorInfo;
 
-typedef struct _ColorSelectorInstance {
+typedef struct _ColorSelectorInstance
+{
   _ColorNotebook                *color_notebook;
   ColorSelectorInfo             *info;
   GtkWidget                     *frame;   /* main widget */
@@ -103,7 +105,7 @@ color_notebook_new (int                    r,
 
   cnp->shell =
     gimp_dialog_new (_("Color Selection"), "color_selection",
-		     color_notebook_help_func, cnp,
+		     color_notebook_help_func, (gchar *) cnp,
 		     GTK_WIN_POS_NONE,
 		     FALSE, FALSE, FALSE,
 
@@ -339,7 +341,7 @@ color_notebook_page_switch (GtkWidget       *widget,
 }
 
 static void
-color_notebook_help_func (gpointer data)
+color_notebook_help_func (gchar *data)
 {
   ColorNotebookP cnp;
   gchar *help_path;

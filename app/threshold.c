@@ -15,9 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
 #include "appenv.h"
 #include "drawable.h"
 #include "general.h"
@@ -28,18 +25,22 @@
 
 #include "libgimp/gimpintl.h"
 
-#define TEXT_WIDTH        45
 #define HISTOGRAM_WIDTH  256
 #define HISTOGRAM_HEIGHT 150
+
+#define LOW        0x1
+#define HIGH       0x2
+#define HISTORGAM  0x4
+#define ALL       (LOW | HIGH | HISTOGRAM)
 
 /*  the threshold structures  */
 
 typedef struct _Threshold Threshold;
+
 struct _Threshold
 {
-  int x, y;    /*  coords for last mouse click  */
+  gint x, y;    /*  coords for last mouse click  */
 };
-
 
 /*  the threshold tool options  */
 static ToolOptions *threshold_options = NULL;
@@ -47,39 +48,43 @@ static ToolOptions *threshold_options = NULL;
 /*  the threshold tool dialog  */
 static ThresholdDialog *threshold_dialog = NULL;
 
-
 /*  threshold action functions  */
 static void   threshold_control (Tool *, ToolAction, gpointer);
 
-static ThresholdDialog * threshold_new_dialog (void);
+static ThresholdDialog * threshold_dialog_new (void);
 
+static void   threshold_update                     (ThresholdDialog *,
+						    gint);
 static void   threshold_preview                    (ThresholdDialog *);
+static void   threshold_reset_callback             (GtkWidget *, gpointer);
 static void   threshold_ok_callback                (GtkWidget *, gpointer);
 static void   threshold_cancel_callback            (GtkWidget *, gpointer);
 static void   threshold_preview_update             (GtkWidget *, gpointer);
-static void   threshold_low_threshold_text_update  (GtkWidget *, gpointer);
-static void   threshold_high_threshold_text_update (GtkWidget *, gpointer);
+static void   threshold_low_threshold_adjustment_update  (GtkAdjustment *,
+							  gpointer);
+static void   threshold_high_threshold_adjustment_update (GtkAdjustment *,
+							  gpointer);
 
 static void   threshold                 (PixelRegion *, PixelRegion *, void *);
-static void   threshold_histogram_range (HistogramWidget *, int, int, void *);
-
-
+static void   threshold_histogram_range (HistogramWidget *, gint, gint,
+					 gpointer);
 /*  threshold machinery  */
 
 void
-threshold_2 (void        *user_data,
+threshold_2 (void        *data,
 	     PixelRegion *srcPR,
 	     PixelRegion *destPR)
 {
-  /* this function just re-orders the arguments so we can use 
-     pixel_regions_process_paralell */
-  threshold(srcPR, destPR, user_data);
+  /*  this function just re-orders the arguments so we can use 
+   *  pixel_regions_process_paralell
+   */
+  threshold (srcPR, destPR, data);
 }
 
 static void
 threshold (PixelRegion *srcPR,
 	   PixelRegion *destPR,
-	   void        *user_data)
+	   void        *data)
 {
   ThresholdDialog *td;
   unsigned char *src, *s;
@@ -88,7 +93,7 @@ threshold (PixelRegion *srcPR,
   int w, h, b;
   int value;
 
-  td = (ThresholdDialog *) user_data;
+  td = (ThresholdDialog *) data;
 
   h = srcPR->h;
   src = srcPR->data;
@@ -128,28 +133,6 @@ threshold (PixelRegion *srcPR,
     }
 }
 
-static void
-threshold_histogram_range (HistogramWidget *w,
-			   int              start,
-			   int              end,
-			   void            *user_data)
-{
-  ThresholdDialog *td;
-  char text[12];
-
-  td = (ThresholdDialog *) user_data;
-
-  td->low_threshold = start;
-  td->high_threshold = end;
-  sprintf (text, "%d", start);
-  gtk_entry_set_text (GTK_ENTRY (td->low_threshold_text), text);
-  sprintf (text, "%d", end);
-  gtk_entry_set_text (GTK_ENTRY (td->high_threshold_text), text);
-
-  if (td->preview)
-    threshold_preview (td);
-}
-
 /*  threshold action functions  */
 
 static void
@@ -176,7 +159,7 @@ threshold_control (Tool       *tool,
 }
 
 Tool *
-tools_new_threshold ()
+tools_new_threshold (void)
 {
   Tool * tool;
   Threshold * private;
@@ -187,13 +170,6 @@ tools_new_threshold ()
       threshold_options = tool_options_new (_("Threshold Options"));
       tools_register (THRESHOLD, threshold_options);
     }
-
-  /*  The threshold dialog  */
-  if (! threshold_dialog)
-    threshold_dialog = threshold_new_dialog ();
-  else
-    if (!GTK_WIDGET_VISIBLE (threshold_dialog->shell))
-      gtk_widget_show (threshold_dialog->shell);
 
   tool = tools_new_tool (THRESHOLD);
   private = g_new (Threshold, 1);
@@ -215,7 +191,7 @@ tools_free_threshold (Tool *tool)
 
   thresh = (Threshold *) tool->private;
 
-  /*  Close the color select dialog  */
+  /*  Close the threshold dialog  */
   if (threshold_dialog)
     threshold_cancel_callback (NULL, (gpointer) threshold_dialog);
 
@@ -233,10 +209,13 @@ threshold_initialize (GDisplay *gdisp)
 
   /*  The threshold dialog  */
   if (!threshold_dialog)
-    threshold_dialog = threshold_new_dialog ();
+    threshold_dialog = threshold_dialog_new ();
   else
     if (!GTK_WIDGET_VISIBLE (threshold_dialog->shell))
       gtk_widget_show (threshold_dialog->shell);
+
+  threshold_dialog->low_threshold  = 127;
+  threshold_dialog->high_threshold = 255;
 
   threshold_dialog->drawable = gimage_active_drawable (gdisp->gimage);
   threshold_dialog->color = drawable_color (threshold_dialog->drawable);
@@ -245,31 +224,35 @@ threshold_initialize (GDisplay *gdisp)
 
   gimp_histogram_calculate_drawable (threshold_dialog->hist,
 				     threshold_dialog->drawable);
-  
+
+  gtk_signal_handler_block_by_data (GTK_OBJECT (threshold_dialog->histogram),
+				    threshold_dialog);
   histogram_widget_update (threshold_dialog->histogram,
 			   threshold_dialog->hist);
-  histogram_widget_range (threshold_dialog->histogram,
-			  threshold_dialog->low_threshold,
-			  threshold_dialog->high_threshold);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (threshold_dialog->histogram),
+				      threshold_dialog);
+
+  threshold_update (threshold_dialog, ALL);
 
   if (threshold_dialog->preview)
     threshold_preview (threshold_dialog);
 }
-
 
 /**********************/
 /*  Threshold dialog  */
 /**********************/
 
 static ThresholdDialog *
-threshold_new_dialog ()
+threshold_dialog_new (void)
 {
   ThresholdDialog *td;
   GtkWidget *vbox;
   GtkWidget *hbox;
+  GtkWidget *spinbutton;
   GtkWidget *label;
   GtkWidget *frame;
   GtkWidget *toggle;
+  GtkObject *data;
 
   td = g_new (ThresholdDialog, 1);
   td->preview        = TRUE;
@@ -284,6 +267,8 @@ threshold_new_dialog ()
 		     GTK_WIN_POS_NONE,
 		     FALSE, TRUE, FALSE,
 
+		     _("Reset"), threshold_reset_callback,
+		     td, NULL, TRUE, FALSE,
 		     _("OK"), threshold_ok_callback,
 		     td, NULL, TRUE, FALSE,
 		     _("Cancel"), threshold_cancel_callback,
@@ -291,42 +276,51 @@ threshold_new_dialog ()
 
 		     NULL);
 
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (td->shell)->vbox), vbox);
 
   /*  Horizontal box for threshold text widget  */
-  hbox = gtk_hbox_new (TRUE, 2);
+  hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Threshold Range: "));
+  label = gtk_label_new (_("Threshold Range:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  /*  low threshold text  */
-  td->low_threshold_text = gtk_entry_new ();
-  gtk_entry_set_text (GTK_ENTRY (td->low_threshold_text), "127");
-  gtk_widget_set_usize (td->low_threshold_text, TEXT_WIDTH, 25);
-  gtk_box_pack_start (GTK_BOX (hbox), td->low_threshold_text, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (td->low_threshold_text), "changed",
-		      (GtkSignalFunc) threshold_low_threshold_text_update,
-		      td);
-  gtk_widget_show (td->low_threshold_text);
+  /*  low threshold spinbutton  */
+  data = gtk_adjustment_new (td->low_threshold, 0.0, 255.0, 1.0, 10.0, 0.0);
+  td->low_threshold_data = GTK_ADJUSTMENT (data);
 
-  /* high threshold text  */
-  td->high_threshold_text = gtk_entry_new ();
-  gtk_entry_set_text (GTK_ENTRY (td->high_threshold_text), "255");
-  gtk_widget_set_usize (td->high_threshold_text, TEXT_WIDTH, 25);
-  gtk_box_pack_start (GTK_BOX (hbox), td->high_threshold_text, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (td->high_threshold_text), "changed",
-		      (GtkSignalFunc) threshold_high_threshold_text_update,
+  spinbutton = gtk_spin_button_new (td->low_threshold_data, 1.0, 0);
+  gtk_widget_set_usize (spinbutton, 75, -1);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+
+  gtk_signal_connect (GTK_OBJECT (td->low_threshold_data), "value_changed",
+		      GTK_SIGNAL_FUNC (threshold_low_threshold_adjustment_update),
 		      td);
-  gtk_widget_show (td->high_threshold_text);
+
+  gtk_widget_show (spinbutton);
+
+  /* high threshold spinbutton  */
+  data = gtk_adjustment_new (td->high_threshold, 0.0, 255.0, 1.0, 10.0, 0.0);
+  td->high_threshold_data = GTK_ADJUSTMENT (data);
+
+  spinbutton = gtk_spin_button_new (td->high_threshold_data, 1.0, 0);
+  gtk_widget_set_usize (spinbutton, 75, -1);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+
+  gtk_signal_connect (GTK_OBJECT (td->high_threshold_data), "value_changed",
+		      GTK_SIGNAL_FUNC (threshold_high_threshold_adjustment_update),
+		      td);
+
+  gtk_widget_show (spinbutton);
+
   gtk_widget_show (hbox);
 
   /*  The threshold histogram  */
-  hbox = gtk_hbox_new (TRUE, 2);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, FALSE, 0);
+  hbox = gtk_hbox_new (TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
@@ -334,55 +328,97 @@ threshold_new_dialog ()
 
   td->histogram = histogram_widget_new (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT);
 
+  gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (td->histogram));
+
   gtk_signal_connect (GTK_OBJECT (td->histogram), "rangechanged",
-		      (GtkSignalFunc) threshold_histogram_range,
-		      (void*)td);
-  gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET(td->histogram));
+		      GTK_SIGNAL_FUNC (threshold_histogram_range),
+		      td);
+
   gtk_widget_show (GTK_WIDGET(td->histogram));
+
   gtk_widget_show (frame);
   gtk_widget_show (hbox);
 
   /*  Horizontal box for preview  */
-  hbox = gtk_hbox_new (TRUE, 2);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   /*  The preview toggle  */
   toggle = gtk_check_button_new_with_label (_("Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), td->preview);
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) threshold_preview_update,
+		      GTK_SIGNAL_FUNC (threshold_preview_update),
 		      td);
 
-  gtk_widget_show (label);
   gtk_widget_show (toggle);
   gtk_widget_show (hbox);
 
   gtk_widget_show (vbox);
   gtk_widget_show (td->shell);
 
-  /* This code is so far removed from the histogram creation because the
-     function histogram_range requires a non-NULL drawable, and that
-     doesn't happen until after the top-level dialog is shown. */
-  histogram_widget_range (td->histogram, td->low_threshold, td->high_threshold);
   return td;
+}
+
+static void
+threshold_update (ThresholdDialog *td,
+		  gint             update)
+{
+  if (update & LOW)
+    {
+      gtk_adjustment_set_value (td->low_threshold_data, td->low_threshold);
+    }
+  if (update & HIGH)
+    {
+      gtk_adjustment_set_value (td->high_threshold_data, td->high_threshold);
+    }
+  if (update & HISTOGRAM)
+    {
+      histogram_widget_range (td->histogram,
+			      td->low_threshold,
+			      td->high_threshold);
+    }
 }
 
 static void
 threshold_preview (ThresholdDialog *td)
 {
   if (!td->image_map)
-    g_warning ("threshold_preview(): No image map");
-  image_map_apply (td->image_map, threshold, (void *) td);
+    {
+      g_warning ("threshold_preview(): No image map");
+      return;
+    }
+
+  active_tool->preserve = TRUE;
+  image_map_apply (td->image_map, threshold, td);
+  active_tool->preserve = FALSE;
+}
+
+static void
+threshold_reset_callback (GtkWidget *widget,
+			  gpointer   data)
+{
+  ThresholdDialog *td;
+
+  td = (ThresholdDialog *) data;
+
+  td->low_threshold  = 127.0;
+  td->high_threshold = 255.0;
+
+  threshold_update (td, ALL);
+
+  if (td->preview)
+    threshold_preview (td);
 }
 
 static void
 threshold_ok_callback (GtkWidget *widget,
-		       gpointer   client_data)
+		       gpointer   data)
 {
   ThresholdDialog *td;
 
-  td = (ThresholdDialog *) client_data;
+  td = (ThresholdDialog *) data;
 
   if (GTK_WIDGET_VISIBLE (td->shell))
     gtk_widget_hide (td->shell);
@@ -391,6 +427,7 @@ threshold_ok_callback (GtkWidget *widget,
 
   if (!td->preview)
     image_map_apply (td->image_map, threshold, (void *) td);
+
   if (td->image_map)
     image_map_commit (td->image_map);
 
@@ -404,11 +441,12 @@ threshold_ok_callback (GtkWidget *widget,
 
 static void
 threshold_cancel_callback (GtkWidget *widget,
-			   gpointer   client_data)
+			   gpointer   data)
 {
   ThresholdDialog *td;
 
-  td = (ThresholdDialog *) client_data;
+  td = (ThresholdDialog *) data;
+
   if (GTK_WIDGET_VISIBLE (td->shell))
     gtk_widget_hide (td->shell);
 
@@ -427,14 +465,14 @@ threshold_cancel_callback (GtkWidget *widget,
 }
 
 static void
-threshold_preview_update (GtkWidget *w,
+threshold_preview_update (GtkWidget *widget,
 			  gpointer   data)
 {
   ThresholdDialog *td;
 
   td = (ThresholdDialog *) data;
 
-  if (GTK_TOGGLE_BUTTON (w)->active)
+  if (GTK_TOGGLE_BUTTON (widget)->active)
     {
       td->preview = TRUE;
       threshold_preview (td);
@@ -444,47 +482,58 @@ threshold_preview_update (GtkWidget *w,
 }
 
 static void
-threshold_low_threshold_text_update (GtkWidget *w,
-				     gpointer   data)
+threshold_low_threshold_adjustment_update (GtkAdjustment *adjustment,
+					   gpointer       data)
 {
   ThresholdDialog *td;
-  char *str;
-  int value;
 
   td = (ThresholdDialog *) data;
-  str = gtk_entry_get_text (GTK_ENTRY (w));
-  value = BOUNDS (((int) atof (str)), 0, td->high_threshold);
 
-  if (value != td->low_threshold)
+  if (td->low_threshold != adjustment->value)
     {
-      td->low_threshold = value;
-      histogram_widget_range (td->histogram,
-			      td->low_threshold,
-			      td->high_threshold);
+      td->low_threshold = adjustment->value;
+
+      threshold_update (td, HISTOGRAM);
+
       if (td->preview)
 	threshold_preview (td);
     }
 }
 
 static void
-threshold_high_threshold_text_update (GtkWidget *w,
-				      gpointer   data)
+threshold_high_threshold_adjustment_update (GtkAdjustment *adjustment,
+					    gpointer       data)
 {
   ThresholdDialog *td;
-  char *str;
-  int value;
 
   td = (ThresholdDialog *) data;
-  str = gtk_entry_get_text (GTK_ENTRY (w));
-  value = BOUNDS (((int) atof (str)), td->low_threshold, 255);
 
-  if (value != td->high_threshold)
+  if (td->high_threshold != adjustment->value)
     {
-      td->high_threshold = value;
-      histogram_widget_range (td->histogram,
-			      td->low_threshold,
-			      td->high_threshold);
+      td->high_threshold = adjustment->value;
+
+      threshold_update (td, HISTOGRAM);
+
       if (td->preview)
 	threshold_preview (td);
     }
+}
+
+static void
+threshold_histogram_range (HistogramWidget *widget,
+			   gint             start,
+			   gint             end,
+			   gpointer         data)
+{
+  ThresholdDialog *td;
+
+  td = (ThresholdDialog *) data;
+
+  td->low_threshold  = start;
+  td->high_threshold = end;
+
+  threshold_update (td, LOW | HIGH);
+
+  if (td->preview)
+    threshold_preview (td);
 }

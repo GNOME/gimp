@@ -25,28 +25,33 @@
 #include "tools.h"
 
 typedef struct _ThresholdDialog ThresholdDialog;
+
 struct _ThresholdDialog
 {
-  GtkWidget   *shell;
-  GtkWidget   *low_threshold_text;
-  GtkWidget   *high_threshold_text;
+  GtkWidget       *shell;
+
+  GtkAdjustment   *low_threshold_data;
+  GtkAdjustment   *high_threshold_data;
+
   HistogramWidget *histogram;
   GimpHistogram   *hist;
 
-  GimpDrawable *drawable;
-  ImageMap     image_map;
-  int          color;
-  int          low_threshold;
-  int          high_threshold;
+  GimpDrawable    *drawable;
+  ImageMap         image_map;
 
-  gint         preview;
+  gint             color;
+  gint             low_threshold;
+  gint             high_threshold;
+
+  gboolean         preview;
 };
 
-/*  by_color select functions  */
-Tool *        tools_new_threshold      (void);
-void          tools_free_threshold     (Tool *);
+Tool * tools_new_threshold  (void);
+void   tools_free_threshold (Tool        *tool);
 
-void          threshold_initialize     (GDisplay *);
-void          threshold_2              (void *, PixelRegion *, PixelRegion *);
+void   threshold_initialize (GDisplay    *gdisp);
+void   threshold_2          (void        *data,
+			     PixelRegion *srcPR,
+			     PixelRegion *destPR);
 
 #endif  /*  __THRESHOLD_H__  */

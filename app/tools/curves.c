@@ -15,43 +15,36 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include "config.h"
-
-#include <stdlib.h>
-#include <string.h>
-
 #include "appenv.h"
 #include "buildmenu.h"
 #include "colormaps.h"
 #include "cursorutil.h"
 #include "drawable.h"
-#include "general.h"
 #include "gdisplay.h"
 #include "gimphistogram.h"
 #include "gimpui.h"
-#include "interface.h"
 #include "curves.h"
 #include "gimplut.h"
 
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
 
-#define GRAPH              0x1
-#define XRANGE_TOP         0x2
-#define XRANGE_BOTTOM      0x4
-#define YRANGE             0x8
-#define DRAW               0x10
-#define ALL                0xFF
+#define GRAPH          0x1
+#define XRANGE_TOP     0x2
+#define XRANGE_BOTTOM  0x4
+#define YRANGE         0x8
+#define DRAW          0x10
+#define ALL           0xFF
 
 /*  NB: take care when changing these values: make sure the curve[] array in
  *  curves.h is large enough.
  */
-#define GRAPH_WIDTH      256
-#define GRAPH_HEIGHT     256
-#define XRANGE_WIDTH     256
-#define XRANGE_HEIGHT    16
-#define YRANGE_WIDTH     16
-#define YRANGE_HEIGHT    256
+#define GRAPH_WIDTH    256
+#define GRAPH_HEIGHT   256
+#define XRANGE_WIDTH   256
+#define XRANGE_HEIGHT   16
+#define YRANGE_WIDTH    16
+#define YRANGE_HEIGHT  256
 #define RADIUS           3
 #define MIN_DISTANCE     8
 
@@ -69,13 +62,13 @@
 /*  the curves structures  */
 
 typedef struct _Curves Curves;
+
 struct _Curves
 {
-  int x, y;    /*  coords for last mouse click  */
+  gint x, y;    /*  coords for last mouse click  */
 };
 
-typedef double CRMatrix[4][4];
-
+typedef gdouble CRMatrix[4][4];
 
 /*  the curves tool options  */
 static ToolOptions  * curves_options = NULL;
@@ -99,18 +92,21 @@ static void   curves_button_release (Tool *, GdkEventButton *, gpointer);
 static void   curves_motion         (Tool *, GdkEventMotion *, gpointer);
 static void   curves_control        (Tool *, ToolAction,       gpointer);
 
-static CurvesDialog * curves_new_dialog (void);
+static CurvesDialog * curves_dialog_new (void);
 
 static void   curves_update          (CurvesDialog *, int);
 static void   curves_plot_curve      (CurvesDialog *, int, int, int, int);
 static void   curves_preview         (CurvesDialog *);
+
 static void   curves_value_callback  (GtkWidget *, gpointer);
 static void   curves_red_callback    (GtkWidget *, gpointer);
 static void   curves_green_callback  (GtkWidget *, gpointer);
 static void   curves_blue_callback   (GtkWidget *, gpointer);
 static void   curves_alpha_callback  (GtkWidget *, gpointer);
+
 static void   curves_smooth_callback (GtkWidget *, gpointer);
 static void   curves_free_callback   (GtkWidget *, gpointer);
+
 static void   curves_reset_callback  (GtkWidget *, gpointer);
 static void   curves_ok_callback     (GtkWidget *, gpointer);
 static void   curves_cancel_callback (GtkWidget *, gpointer);
@@ -120,12 +116,13 @@ static gint   curves_yrange_events   (GtkWidget *, GdkEvent *, CurvesDialog *);
 static gint   curves_graph_events    (GtkWidget *, GdkEvent *, CurvesDialog *);
 static void   curves_CR_compose      (CRMatrix, CRMatrix, CRMatrix);
 
-
 /*  curves machinery  */
 
 float
 curves_lut_func (CurvesDialog *cd,
-		 int nchannels, int channel, float value)
+		 gint          nchannels,
+		 gint          channel,
+		 gfloat        value)
 {
   float f;
   int index;
@@ -188,9 +185,9 @@ curves_colour_update (Tool           *tool,
   if (!(color = image_map_get_color_at(curves_dialog->image_map, x, y)))
     return;
 
-  sample_type = gimp_drawable_type(drawable);
+  sample_type = gimp_drawable_type (drawable);
   is_indexed = gimp_drawable_is_indexed (drawable);
-  has_alpha = TYPE_HAS_ALPHA(sample_type);
+  has_alpha = TYPE_HAS_ALPHA (sample_type);
 
   curves_dialog->col_value[HISTOGRAM_RED] = color[RED_PIX];
   curves_dialog->col_value[HISTOGRAM_GREEN] = color[GREEN_PIX];
@@ -207,11 +204,14 @@ curves_colour_update (Tool           *tool,
   maxval = MAXIMUM(color[RED_PIX],color[GREEN_PIX]);
   curves_dialog->col_value[HISTOGRAM_VALUE] = MAXIMUM(maxval,color[BLUE_PIX]);
 
-  g_free(color);
+  g_free (color);
 }
 
 static void
-curves_add_point(GimpDrawable * drawable,gint x, gint y,gint cchan)
+curves_add_point (GimpDrawable *drawable,
+		  gint          x,
+		  gint          y,
+		  gint          cchan)
 {
   /* Add point onto the curve */
   int closest_point = 0;
@@ -301,21 +301,21 @@ curves_button_release (Tool           *tool,
      return;
 
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, FALSE, FALSE);
-  curves_colour_update(tool,gdisp,drawable,x,y);
+  curves_colour_update (tool, gdisp, drawable, x, y);
 
   if(bevent->state & GDK_SHIFT_MASK)
     {
-      curves_add_point(drawable,x,y,curves_dialog->channel);
-      curves_calculate_curve(curves_dialog);
+      curves_add_point (drawable, x, y, curves_dialog->channel);
+      curves_calculate_curve (curves_dialog);
     }
   else if(bevent->state & GDK_CONTROL_MASK)
     {
-      curves_add_point(drawable,x,y,HISTOGRAM_VALUE);
-      curves_add_point(drawable,x,y,HISTOGRAM_RED);
-      curves_add_point(drawable,x,y,HISTOGRAM_GREEN);
-      curves_add_point(drawable,x,y,HISTOGRAM_BLUE);
-      curves_add_point(drawable,x,y,HISTOGRAM_ALPHA);
-      curves_calculate_curve(curves_dialog);
+      curves_add_point (drawable, x, y, HISTOGRAM_VALUE);
+      curves_add_point (drawable, x, y, HISTOGRAM_RED);
+      curves_add_point (drawable, x, y, HISTOGRAM_GREEN);
+      curves_add_point (drawable, x, y, HISTOGRAM_BLUE);
+      curves_add_point (drawable, x, y, HISTOGRAM_ALPHA);
+      curves_calculate_curve (curves_dialog);
     }
 
   curves_update (curves_dialog, GRAPH | DRAW);
@@ -338,7 +338,7 @@ curves_motion (Tool           *tool,
      return;
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, FALSE, FALSE);
-  curves_colour_update(tool,gdisp,drawable,x,y);
+  curves_colour_update (tool, gdisp, drawable, x, y);
   curves_update (curves_dialog, GRAPH | DRAW);
 }
 
@@ -366,7 +366,7 @@ curves_control (Tool       *tool,
 }
 
 Tool *
-tools_new_curves ()
+tools_new_curves (void)
 {
   Tool * tool;
   Curves * private;
@@ -397,15 +397,15 @@ tools_new_curves ()
 void
 tools_free_curves (Tool *tool)
 {
-  Curves * _curves;
+  Curves * private;
 
-  _curves = (Curves *) tool->private;
+  private = (Curves *) tool->private;
 
   /*  Close the color select dialog  */
   if (curves_dialog)
     curves_cancel_callback (NULL, (gpointer) curves_dialog);
 
-  g_free (_curves);
+  g_free (private);
 }
 
 static MenuItem channel_items[] =
@@ -421,7 +421,7 @@ static MenuItem channel_items[] =
 void
 curves_initialize (GDisplay *gdisp)
 {
-  int i, j;
+  gint i, j;
 
   if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
     {
@@ -431,7 +431,10 @@ curves_initialize (GDisplay *gdisp)
 
   /*  The curves dialog  */
   if (!curves_dialog)
-    curves_dialog = curves_new_dialog ();
+    curves_dialog = curves_dialog_new ();
+  else
+    if (!GTK_WIDGET_VISIBLE (curves_dialog->shell))
+      gtk_widget_show (curves_dialog->shell);
 
   /*  Initialize the values  */
   curves_dialog->channel = HISTOGRAM_VALUE;
@@ -454,22 +457,22 @@ curves_initialize (GDisplay *gdisp)
     }
 
   curves_dialog->drawable = gimage_active_drawable (gdisp->gimage);
-  curves_dialog->color = drawable_color ( (curves_dialog->drawable));
+  curves_dialog->color = drawable_color (curves_dialog->drawable);
   curves_dialog->image_map = image_map_create (gdisp, curves_dialog->drawable);
 
   /* check for alpha channel */
-  if (drawable_has_alpha ( (curves_dialog->drawable)))
-    gtk_widget_set_sensitive( channel_items[4].widget, TRUE);
+  if (drawable_has_alpha (curves_dialog->drawable))
+    gtk_widget_set_sensitive (channel_items[4].widget, TRUE);
   else 
-    gtk_widget_set_sensitive( channel_items[4].widget, FALSE);
+    gtk_widget_set_sensitive (channel_items[4].widget, FALSE);
   
   /*  hide or show the channel menu based on image type  */
   if (curves_dialog->color)
     for (i = 0; i < 4; i++) 
-       gtk_widget_set_sensitive( channel_items[i].widget, TRUE);
+       gtk_widget_set_sensitive (channel_items[i].widget, TRUE);
   else 
     for (i = 1; i < 4; i++) 
-       gtk_widget_set_sensitive( channel_items[i].widget, FALSE);
+      gtk_widget_set_sensitive (channel_items[i].widget, FALSE);
 
   /* set the current selection */
   gtk_option_menu_set_history (GTK_OPTION_MENU (curves_dialog->channel_menu), 0);
@@ -481,7 +484,7 @@ curves_initialize (GDisplay *gdisp)
 }
 
 void
-curves_free ()
+curves_free (void)
 {
   if (curves_dialog)
     {
@@ -506,7 +509,7 @@ curves_free ()
 /*******************/
 
 static CurvesDialog *
-curves_new_dialog ()
+curves_dialog_new (void)
 {
   CurvesDialog *cd;
   GtkWidget *vbox;
@@ -528,19 +531,20 @@ curves_new_dialog ()
   };
 
   cd = g_new (CurvesDialog, 1);
-  cd->cursor_ind_height = cd->cursor_ind_width = -1;
-  cd->preview = TRUE;
-  cd->curve_type = SMOOTH;
-  cd->pixmap = NULL;
-  cd->channel = HISTOGRAM_VALUE;
+  cd->cursor_ind_height = -1;
+  cd->cursor_ind_width  = -1;
+  cd->preview           = TRUE;
+  cd->curve_type        = SMOOTH;
+  cd->pixmap            = NULL;
+  cd->channel           = HISTOGRAM_VALUE;
   for (i = 0; i < 5; i++)
     for (j = 0; j < 256; j++)
       cd->curve[i][j] = j;
 
-  for(i = 0; i < (sizeof(cd->col_value)/sizeof(cd->col_value[0])); i++)
+  for (i = 0; i < (sizeof (cd->col_value) / sizeof (cd->col_value[0])); i++)
     cd->col_value[i] = 0;
 
-  cd->lut = gimp_lut_new();
+  cd->lut = gimp_lut_new ();
 
   for (i = 0; i < 5; i++)
     channel_items [i].user_data = (gpointer) cd;
@@ -562,15 +566,15 @@ curves_new_dialog ()
 
 			       NULL);
 
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (cd->shell)->vbox), vbox);
 
   /*  The option menu for selecting channels  */
-  channel_hbox = gtk_hbox_new (FALSE, 2);
+  channel_hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), channel_hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Modify Curves for Channel: "));
+  label = gtk_label_new (_("Modify Curves for Channel:"));
   gtk_box_pack_start (GTK_BOX (channel_hbox), label, FALSE, FALSE, 0);
 
   menu = build_menu (channel_items, NULL);
@@ -584,7 +588,8 @@ curves_new_dialog ()
 
   /*  The table for the yrange and the graph  */
   table = gtk_table_new (2, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   /*  The range drawing area  */
@@ -596,10 +601,12 @@ curves_new_dialog ()
   cd->yrange = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (cd->yrange), YRANGE_WIDTH, YRANGE_HEIGHT);
   gtk_widget_set_events (cd->yrange, RANGE_MASK);
-  gtk_signal_connect (GTK_OBJECT (cd->yrange), "event",
-		      (GtkSignalFunc) curves_yrange_events,
-		      cd);
   gtk_container_add (GTK_CONTAINER (frame), cd->yrange);
+
+  gtk_signal_connect (GTK_OBJECT (cd->yrange), "event",
+		      GTK_SIGNAL_FUNC (curves_yrange_events),
+		      cd);
+
   gtk_widget_show (cd->yrange);
   gtk_widget_show (frame);
 
@@ -607,18 +614,20 @@ curves_new_dialog ()
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 0, 1,
-		    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
-		    GTK_FILL, 0, 0);
+		    GTK_SHRINK | GTK_FILL,
+		    GTK_SHRINK | GTK_FILL, 0, 0);
 
   cd->graph = gtk_drawing_area_new ();
   gtk_drawing_area_size (GTK_DRAWING_AREA (cd->graph),
 			 GRAPH_WIDTH + RADIUS * 2,
 			 GRAPH_HEIGHT + RADIUS * 2);
   gtk_widget_set_events (cd->graph, GRAPH_MASK);
-  gtk_signal_connect (GTK_OBJECT (cd->graph), "event",
-		      (GtkSignalFunc) curves_graph_events,
-		      cd);
   gtk_container_add (GTK_CONTAINER (frame), cd->graph);
+
+  gtk_signal_connect (GTK_OBJECT (cd->graph), "event",
+		      GTK_SIGNAL_FUNC (curves_graph_events),
+		      cd);
+
   gtk_widget_show (cd->graph);
   gtk_widget_show (frame);
 
@@ -631,20 +640,22 @@ curves_new_dialog ()
   cd->xrange = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (cd->xrange), XRANGE_WIDTH, XRANGE_HEIGHT);
   gtk_widget_set_events (cd->xrange, RANGE_MASK);
-  gtk_signal_connect (GTK_OBJECT (cd->xrange), "event",
-		      (GtkSignalFunc) curves_xrange_events,
-		      cd);
   gtk_container_add (GTK_CONTAINER (frame), cd->xrange);
+
+  gtk_signal_connect (GTK_OBJECT (cd->xrange), "event",
+		      GTK_SIGNAL_FUNC (curves_xrange_events),
+		      cd);
+
   gtk_widget_show (cd->xrange);
   gtk_widget_show (frame);
   gtk_widget_show (table);
 
   /*  Horizontal box for preview  */
-  hbox = gtk_hbox_new (FALSE, 2);
+  hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   /*  The option menu for selecting the drawing method  */
-  label = gtk_label_new (_("Curve Type: "));
+  label = gtk_label_new (_("Curve Type:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 
   menu = build_menu (curve_type_items, NULL);
@@ -659,12 +670,12 @@ curves_new_dialog ()
   /*  The preview toggle  */
   toggle = gtk_check_button_new_with_label (_("Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), cd->preview);
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) curves_preview_update,
+		      GTK_SIGNAL_FUNC (curves_preview_update),
 		      cd);
 
-  gtk_widget_show (label);
   gtk_widget_show (toggle);
   gtk_widget_show (hbox);
 
@@ -674,32 +685,32 @@ curves_new_dialog ()
 }
 
 static void
-curve_print_loc(CurvesDialog *cd,
-		gint xpos,
-		gint ypos)
+curve_print_loc (CurvesDialog *cd,
+		 gint          xpos,
+		 gint          ypos)
 {
   char buf[32];
   gint width;
   gint ascent;
   gint descent;
 
-  if(cd->cursor_ind_width < 0)
+  if (cd->cursor_ind_width < 0)
     {
       /* Calc max extents */
-      gdk_string_extents(cd->graph->style->font,
-			 "x:888 y:888",
-			 NULL,
-			 NULL,
-			 &width,
-			 &ascent,
-			 &descent);
+      gdk_string_extents (cd->graph->style->font,
+			  "x:888 y:888",
+			  NULL,
+			  NULL,
+			  &width,
+			  &ascent,
+			  &descent);
 	
       cd->cursor_ind_width = width;
       cd->cursor_ind_height = ascent + descent;
       cd->cursor_ind_ascent = ascent;
     }
   
-  if(xpos >= 0 && xpos <= 255 && ypos >=0 && ypos <= 255)
+  if (xpos >= 0 && xpos <= 255 && ypos >=0 && ypos <= 255)
     {
       g_snprintf (buf, sizeof (buf), "x:%d y:%d",xpos,ypos);
 
@@ -730,53 +741,54 @@ curves_update (CurvesDialog *cd,
 	       int           update)
 {
   GdkRectangle area;
-  int i, j;
-  char buf[32];
+  gint i, j;
+  gchar buf[32];
   gint offset;
 
   if (update & XRANGE_TOP)
     {
-      unsigned char buf[XRANGE_WIDTH * 3];
+      guchar buf[XRANGE_WIDTH * 3];
 
-      switch (cd->channel) {
-      case HISTOGRAM_VALUE:
-      case HISTOGRAM_ALPHA:
+      switch (cd->channel)
+	{
+	case HISTOGRAM_VALUE:
+	case HISTOGRAM_ALPHA:
 	  for (i = 0; i < XRANGE_HEIGHT / 2; i++)
-	  {
+	    {
 	      for (j = 0; j < XRANGE_WIDTH ; j++)
-	      {
+		{
 		  buf[j*3+0] = cd->curve[cd->channel][j];
 		  buf[j*3+1] = cd->curve[cd->channel][j];
 		  buf[j*3+2] = cd->curve[cd->channel][j];
-	      }
+		}
 	      gtk_preview_draw_row (GTK_PREVIEW (cd->xrange),
 				    buf, 0, i, XRANGE_WIDTH);
-	  }
+	    }
 	  break;
 
-      case HISTOGRAM_RED:
-      case HISTOGRAM_GREEN:
-      case HISTOGRAM_BLUE:
-      {	  
-	  for (i = 0; i < XRANGE_HEIGHT / 2; i++)
+	case HISTOGRAM_RED:
+	case HISTOGRAM_GREEN:
+	case HISTOGRAM_BLUE:
 	  {
-	      for (j = 0; j < XRANGE_WIDTH; j++)
+	    for (i = 0; i < XRANGE_HEIGHT / 2; i++)
 	      {
-		  buf[j*3+0] = cd->curve[HISTOGRAM_RED][j];
-		  buf[j*3+1] = cd->curve[HISTOGRAM_GREEN][j];
-		  buf[j*3+2] = cd->curve[HISTOGRAM_BLUE][j];
+		for (j = 0; j < XRANGE_WIDTH; j++)
+		  {
+		    buf[j*3+0] = cd->curve[HISTOGRAM_RED][j];
+		    buf[j*3+1] = cd->curve[HISTOGRAM_GREEN][j];
+		    buf[j*3+2] = cd->curve[HISTOGRAM_BLUE][j];
+		  }
+		gtk_preview_draw_row (GTK_PREVIEW (cd->xrange),
+				      buf, 0, i, XRANGE_WIDTH);
 	      }
-	      gtk_preview_draw_row (GTK_PREVIEW (cd->xrange),
-				    buf, 0, i, XRANGE_WIDTH);
+	    break;
 	  }
-	  break;
-      }
 
-      default:
+	default:
 	  g_warning ("unknown channel type %d, can't happen!?!?",
 		     cd->channel);
 	  break;
-      } /* end switch */
+	}
 
       if (update & DRAW)
 	{
@@ -789,7 +801,7 @@ curves_update (CurvesDialog *cd,
     }
   if (update & XRANGE_BOTTOM)
     {
-      unsigned char buf[XRANGE_WIDTH * 3];
+      guchar buf[XRANGE_WIDTH * 3];
 
       for (i = 0; i < XRANGE_WIDTH; i++)
       {
@@ -812,35 +824,36 @@ curves_update (CurvesDialog *cd,
     }
   if (update & YRANGE)
     {
-      unsigned char buf[YRANGE_WIDTH * 3];
-      unsigned char pix[3];
+      guchar buf[YRANGE_WIDTH * 3];
+      guchar pix[3];
 
       for (i = 0; i < YRANGE_HEIGHT; i++)
 	{
-	  switch (cd->channel) {
-	  case HISTOGRAM_VALUE:
-	  case HISTOGRAM_ALPHA:
+	  switch (cd->channel)
+	    {
+	    case HISTOGRAM_VALUE:
+	    case HISTOGRAM_ALPHA:
 	      pix[0] = pix[1] = pix[2] = (255 - i);
 	      break;
 
-	  case HISTOGRAM_RED:
-	  case HISTOGRAM_GREEN:
-	  case HISTOGRAM_BLUE:
+	    case HISTOGRAM_RED:
+	    case HISTOGRAM_GREEN:
+	    case HISTOGRAM_BLUE:
 	      pix[0] = pix[1] = pix[2] = 0;
 	      pix[cd->channel - 1] = (255 - i);
 	      break;
 
-	  default:
+	    default:
 	      g_warning ("unknown channel type %d, can't happen!?!?",
 			 cd->channel);
 	      break;
-	  }
+	    }
 
 	  for (j = 0; j < YRANGE_WIDTH * 3; j++)
-	      buf[j] = pix[j%3];
+	    buf[j] = pix[j%3];
 
-	  gtk_preview_draw_row (GTK_PREVIEW (cd->yrange), buf, 0, i, YRANGE_WIDTH);
-
+	  gtk_preview_draw_row (GTK_PREVIEW (cd->yrange),
+				buf, 0, i, YRANGE_WIDTH);
 	}
 
       if (update & DRAW)
@@ -852,7 +865,8 @@ curves_update (CurvesDialog *cd,
 
       /*  Clear the pixmap  */
       gdk_draw_rectangle (cd->pixmap, cd->graph->style->bg_gc[GTK_STATE_NORMAL],
-			  TRUE, 0, 0, GRAPH_WIDTH + RADIUS * 2, GRAPH_HEIGHT + RADIUS * 2);
+			  TRUE, 0, 0,
+			  GRAPH_WIDTH + RADIUS * 2, GRAPH_HEIGHT + RADIUS * 2);
 
       /*  Draw the grid lines  */
       for (i = 0; i < 5; i++)
@@ -885,20 +899,20 @@ curves_update (CurvesDialog *cd,
 	  }
 
       /* draw the colour line */
-      gdk_draw_line(cd->pixmap, cd->graph->style->black_gc,
-		    cd->col_value[cd->channel]+RADIUS,RADIUS,
-		    cd->col_value[cd->channel]+RADIUS,GRAPH_HEIGHT + RADIUS);
+      gdk_draw_line (cd->pixmap, cd->graph->style->black_gc,
+		     cd->col_value[cd->channel]+RADIUS,RADIUS,
+		     cd->col_value[cd->channel]+RADIUS,GRAPH_HEIGHT + RADIUS);
 
       /* and xpos indicator */
       g_snprintf (buf, sizeof (buf), "x:%d",cd->col_value[cd->channel]);
       
-      if((cd->col_value[cd->channel]+RADIUS) < 127)
+      if ((cd->col_value[cd->channel]+RADIUS) < 127)
 	{
 	  offset = RADIUS + 4;
 	}
       else
 	{
-	  offset = -gdk_string_width(cd->graph->style->font,buf) - 2;
+	  offset = - gdk_string_width (cd->graph->style->font,buf) - 2;
 	}
 
       gdk_draw_string (cd->pixmap,
@@ -916,10 +930,10 @@ curves_update (CurvesDialog *cd,
 
 static void
 curves_plot_curve (CurvesDialog *cd,
-		   int           p1,
-		   int           p2,
-		   int           p3,
-		   int           p4)
+		   gint          p1,
+		   gint          p2,
+		   gint          p3,
+		   gint          p4)
 {
   CRMatrix geometry;
   CRMatrix tmp1, tmp2;
@@ -1045,8 +1059,8 @@ curves_calculate_curve (CurvesDialog *cd)
 	}
       break;
     }
-  gimp_lut_setup(cd->lut, (GimpLutFunc) curves_lut_func,
-		 (void *) cd, gimp_drawable_bytes(cd->drawable));
+  gimp_lut_setup (cd->lut, (GimpLutFunc) curves_lut_func,
+		  (void *) cd, gimp_drawable_bytes (cd->drawable));
 
 }
 
@@ -1054,23 +1068,24 @@ static void
 curves_preview (CurvesDialog *cd)
 {
   if (!cd->image_map)
-    g_message ("curves_preview(): No image map");
+    {
+      g_message ("curves_preview(): No image map");
+      return;
+    }
 
-  active_tool->preserve = TRUE;  /* Going to dirty the display... */
-
+  active_tool->preserve = TRUE;
   image_map_apply (cd->image_map,  (ImageMapApplyFunc)gimp_lut_process_2,
 		   (void *) cd->lut);
-
-  active_tool->preserve = FALSE;  /* All done */
+  active_tool->preserve = FALSE;
 }
 
 static void
-curves_value_callback (GtkWidget *w,
-		       gpointer   client_data)
+curves_value_callback (GtkWidget *widget,
+		       gpointer   data)
 {
   CurvesDialog *cd;
 
-  cd = (CurvesDialog *) client_data;
+  cd = (CurvesDialog *) data;
 
   if (cd->channel != HISTOGRAM_VALUE)
     {
@@ -1080,12 +1095,12 @@ curves_value_callback (GtkWidget *w,
 }
 
 static void
-curves_red_callback (GtkWidget *w,
-		     gpointer   client_data)
+curves_red_callback (GtkWidget *widget,
+		     gpointer   data)
 {
   CurvesDialog *cd;
 
-  cd = (CurvesDialog *) client_data;
+  cd = (CurvesDialog *) data;
 
   if (cd->channel != HISTOGRAM_RED)
     {
@@ -1095,12 +1110,12 @@ curves_red_callback (GtkWidget *w,
 }
 
 static void
-curves_green_callback (GtkWidget *w,
-		       gpointer   client_data)
+curves_green_callback (GtkWidget *widget,
+		       gpointer   data)
 {
   CurvesDialog *cd;
 
-  cd = (CurvesDialog *) client_data;
+  cd = (CurvesDialog *) data;
 
   if (cd->channel != HISTOGRAM_GREEN)
     {
@@ -1110,12 +1125,12 @@ curves_green_callback (GtkWidget *w,
 }
 
 static void
-curves_blue_callback (GtkWidget *w,
-		      gpointer   client_data)
+curves_blue_callback (GtkWidget *widget,
+		      gpointer   data)
 {
   CurvesDialog *cd;
 
-  cd = (CurvesDialog *) client_data;
+  cd = (CurvesDialog *) data;
 
   if (cd->channel != HISTOGRAM_BLUE)
     {
@@ -1125,12 +1140,12 @@ curves_blue_callback (GtkWidget *w,
 }
 
 static void
-curves_alpha_callback (GtkWidget *w,
-		      gpointer   client_data)
+curves_alpha_callback (GtkWidget *widget,
+		       gpointer   data)
 {
   CurvesDialog *cd;
 
-  cd = (CurvesDialog *) client_data;
+  cd = (CurvesDialog *) data;
 
   if (cd->channel != HISTOGRAM_ALPHA)
     {
@@ -1140,14 +1155,14 @@ curves_alpha_callback (GtkWidget *w,
 }
 
 static void
-curves_smooth_callback (GtkWidget *w,
-			gpointer   client_data)
+curves_smooth_callback (GtkWidget *widget,
+			gpointer   data)
 {
   CurvesDialog *cd;
   int i;
   gint32 index;
 
-  cd = (CurvesDialog *) client_data;
+  cd = (CurvesDialog *) data;
 
   if (cd->curve_type != SMOOTH)
     {
@@ -1170,12 +1185,12 @@ curves_smooth_callback (GtkWidget *w,
 }
 
 static void
-curves_free_callback (GtkWidget *w,
-		      gpointer   client_data)
+curves_free_callback (GtkWidget *widget,
+		      gpointer   data)
 {
   CurvesDialog *cd;
 
-  cd = (CurvesDialog *) client_data;
+  cd = (CurvesDialog *) data;
 
   if (cd->curve_type != GFREE)
     {
@@ -1190,12 +1205,12 @@ curves_free_callback (GtkWidget *w,
 
 static void
 curves_reset_callback (GtkWidget *widget,
-		       gpointer   client_data)
+		       gpointer   data)
 {
   CurvesDialog *cd;
   int i;
 
-  cd = (CurvesDialog *) client_data;
+  cd = (CurvesDialog *) data;
 
   /*  Initialize the values  */
   for (i = 0; i < 256; i++)
@@ -1214,17 +1229,18 @@ curves_reset_callback (GtkWidget *widget,
 
   curves_calculate_curve (cd);
   curves_update (cd, GRAPH | XRANGE_TOP | DRAW);
+
   if (cd->preview)
     curves_preview (cd);
 }
 
 static void
 curves_ok_callback (GtkWidget *widget,
-		    gpointer   client_data)
+		    gpointer   data)
 {
   CurvesDialog *cd;
 
-  cd = (CurvesDialog *) client_data;
+  cd = (CurvesDialog *) data;
 
   if (GTK_WIDGET_VISIBLE (cd->shell))
     gtk_widget_hide (cd->shell);
@@ -1248,11 +1264,12 @@ curves_ok_callback (GtkWidget *widget,
 
 static void
 curves_cancel_callback (GtkWidget *widget,
-			gpointer   client_data)
+			gpointer   data)
 {
   CurvesDialog *cd;
 
-  cd = (CurvesDialog *) client_data;
+  cd = (CurvesDialog *) data;
+
   if (GTK_WIDGET_VISIBLE (cd->shell))
     gtk_widget_hide (cd->shell);
 
@@ -1373,7 +1390,7 @@ curves_graph_events (GtkWidget    *widget,
       
       curves_calculate_curve (cd);
       curves_update (cd, GRAPH | XRANGE_TOP | DRAW);
-      gtk_grab_add(widget);
+      gtk_grab_add (widget);
 
       break;
 
@@ -1384,7 +1401,7 @@ curves_graph_events (GtkWidget    *widget,
       if (cd->preview)
 	curves_preview (cd);
 
-      gtk_grab_remove(widget);
+      gtk_grab_remove (widget);
 
       break;
 
@@ -1527,7 +1544,7 @@ curves_CR_compose (CRMatrix a,
 		   CRMatrix b,
 		   CRMatrix ab)
 {
-  int i, j;
+  gint i, j;
 
   for (i = 0; i < 4; i++)
     {

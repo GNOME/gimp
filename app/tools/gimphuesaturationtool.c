@@ -33,29 +33,24 @@
 
 #define HUE_PARTITION_MASK  GDK_EXPOSURE_MASK | GDK_ENTER_NOTIFY_MASK
 
-#define TEXT_WIDTH  45
-#define TEXT_HEIGHT 25
 #define SLIDER_WIDTH  200
-#define SLIDER_HEIGHT 35
 #define DA_WIDTH  40
 #define DA_HEIGHT 20
 
-#define HUE_PARTITION     0x0
-#define HUE_SLIDER        0x1
-#define LIGHTNESS_SLIDER  0x2
-#define SATURATION_SLIDER 0x4
-#define HUE_TEXT          0x8
-#define LIGHTNESS_TEXT    0x10
-#define SATURATION_TEXT   0x20
-#define DRAW              0x40
-#define ALL               0xFF
+#define HUE_PARTITION      0x0
+#define HUE_SLIDER         0x1
+#define LIGHTNESS_SLIDER   0x2
+#define SATURATION_SLIDER  0x4
+#define DRAW               0x40
+#define ALL                0xFF
 
 /*  the hue-saturation structures  */
 
 typedef struct _HueSaturation HueSaturation;
+
 struct _HueSaturation
 {
-  int x, y;    /*  coords for last mouse click  */
+  gint x, y;    /*  coords for last mouse click  */
 };
 
 /*  the hue-saturation tool options  */
@@ -65,56 +60,49 @@ static ToolOptions *hue_saturation_options = NULL;
 static HueSaturationDialog *hue_saturation_dialog = NULL;
 
 /*  Local variables  */
-static int hue_transfer[6][256];
-static int lightness_transfer[6][256];
-static int saturation_transfer[6][256];
-static int default_colors[6][3] =
+static gint hue_transfer[6][256];
+static gint lightness_transfer[6][256];
+static gint saturation_transfer[6][256];
+static gint default_colors[6][3] =
 {
-  { 255, 0, 0 },
-  { 255, 255, 0 },
-  { 0, 255, 0 },
-  { 0, 255, 255 },
-  { 0, 0, 255 },
-  { 255, 0, 255 }
+  { 255,   0,   0 },
+  { 255, 255,   0 },
+  {   0, 255,   0 },
+  {   0, 255, 255 },
+  {   0,   0, 255 },
+  { 255,   0, 255 }
 };
-
 
 /*  hue saturation action functions  */
 static void   hue_saturation_control (Tool *, ToolAction, gpointer);
 
-static HueSaturationDialog * hue_saturation_new_dialog (void);
+static HueSaturationDialog * hue_saturation_dialog_new (void);
 
 static void   hue_saturation_update                  (HueSaturationDialog *,
-						      int);
+						      gint);
 static void   hue_saturation_preview                 (HueSaturationDialog *);
+static void   hue_saturation_reset_callback          (GtkWidget *, gpointer);
 static void   hue_saturation_ok_callback             (GtkWidget *, gpointer);
 static void   hue_saturation_cancel_callback         (GtkWidget *, gpointer);
-static void   hue_saturation_master_callback         (GtkWidget *, gpointer);
-static void   hue_saturation_R_callback              (GtkWidget *, gpointer);
-static void   hue_saturation_Y_callback              (GtkWidget *, gpointer);
-static void   hue_saturation_G_callback              (GtkWidget *, gpointer);
-static void   hue_saturation_C_callback              (GtkWidget *, gpointer);
-static void   hue_saturation_B_callback              (GtkWidget *, gpointer);
-static void   hue_saturation_M_callback              (GtkWidget *, gpointer);
+static void   hue_saturation_partition_callback      (GtkWidget *, gpointer);
 static void   hue_saturation_preview_update          (GtkWidget *, gpointer);
-static void   hue_saturation_hue_scale_update        (GtkAdjustment *, gpointer);
-static void   hue_saturation_lightness_scale_update  (GtkAdjustment *, gpointer);
-static void   hue_saturation_saturation_scale_update (GtkAdjustment *, gpointer);
-static void   hue_saturation_hue_text_update         (GtkWidget *, gpointer);
-static void   hue_saturation_lightness_text_update   (GtkWidget *, gpointer);
-static void   hue_saturation_saturation_text_update  (GtkWidget *, gpointer);
+static void   hue_saturation_hue_adjustment_update        (GtkAdjustment *,
+							   gpointer);
+static void   hue_saturation_lightness_adjustment_update  (GtkAdjustment *,
+							   gpointer);
+static void   hue_saturation_saturation_adjustment_update (GtkAdjustment *,
+							   gpointer);
 static gint   hue_saturation_hue_partition_events    (GtkWidget *, GdkEvent *,
 						      HueSaturationDialog *);
-
 
 /*  hue saturation machinery  */
 
 void
 hue_saturation_calculate_transfers (HueSaturationDialog *hsd)
 {
-  int value;
-  int hue;
-  int i;
+  gint value;
+  gint hue;
+  gint i;
 
   /*  Calculate transfers  */
   for (hue = 0; hue < 6; hue++)
@@ -221,7 +209,6 @@ hue_saturation (PixelRegion *srcPR,
     }
 }
 
-
 /*  hue saturation action functions  */
 
 static void
@@ -248,7 +235,7 @@ hue_saturation_control (Tool       *tool,
 }
 
 Tool *
-tools_new_hue_saturation ()
+tools_new_hue_saturation (void)
 {
   Tool * tool;
   HueSaturation * private;
@@ -290,7 +277,7 @@ tools_free_hue_saturation (Tool *tool)
 void
 hue_saturation_initialize (GDisplay *gdisp)
 {
-  int i;
+  gint i;
 
   if (! drawable_color (gimage_active_drawable (gdisp->gimage)))
     {
@@ -300,7 +287,7 @@ hue_saturation_initialize (GDisplay *gdisp)
 
   /*  The "hue-saturation" dialog  */
   if (!hue_saturation_dialog)
-    hue_saturation_dialog = hue_saturation_new_dialog ();
+    hue_saturation_dialog = hue_saturation_dialog_new ();
   else
     if (!GTK_WIDGET_VISIBLE (hue_saturation_dialog->shell))
       gtk_widget_show (hue_saturation_dialog->shell);
@@ -313,12 +300,14 @@ hue_saturation_initialize (GDisplay *gdisp)
     }
 
   hue_saturation_dialog->drawable = gimage_active_drawable (gdisp->gimage);
-  hue_saturation_dialog->image_map = image_map_create (gdisp, hue_saturation_dialog->drawable);
+  hue_saturation_dialog->image_map =
+    image_map_create (gdisp, hue_saturation_dialog->drawable);
+
   hue_saturation_update (hue_saturation_dialog, ALL);
 }
 
 void
-hue_saturation_free ()
+hue_saturation_free (void)
 {
   if (hue_saturation_dialog)
     {
@@ -327,6 +316,7 @@ hue_saturation_free ()
 	  active_tool->preserve = TRUE;
 	  image_map_abort (hue_saturation_dialog->image_map);
 	  active_tool->preserve = FALSE;
+
 	  hue_saturation_dialog->image_map = NULL;
 	}
       gtk_widget_destroy (hue_saturation_dialog->shell);
@@ -338,7 +328,7 @@ hue_saturation_free ()
 /***************************/
 
 static HueSaturationDialog *
-hue_saturation_new_dialog ()
+hue_saturation_dialog_new (void)
 {
   HueSaturationDialog *hsd;
   GtkWidget *main_vbox;
@@ -348,6 +338,8 @@ hue_saturation_new_dialog ()
   GtkWidget *table;
   GtkWidget *label;
   GtkWidget *slider;
+  GtkWidget *abox;
+  GtkWidget *spinbutton;
   GtkWidget *toggle;
   GtkWidget *radio_button;
   GtkWidget *frame;
@@ -366,27 +358,18 @@ hue_saturation_new_dialog ()
     N_("M")
   };
 
-  GtkSignalFunc hue_partition_callbacks[] =
-  {
-    hue_saturation_master_callback,
-    hue_saturation_R_callback,
-    hue_saturation_Y_callback,
-    hue_saturation_G_callback,
-    hue_saturation_C_callback,
-    hue_saturation_B_callback,
-    hue_saturation_M_callback
-  };
-
   hsd = g_new (HueSaturationDialog, 1);
-  hsd->hue_partition = 0;
+  hsd->hue_partition = ALL_HUES;
   hsd->preview       = TRUE;
 
   /*  The shell and main vbox  */
-  hsd->shell = gimp_dialog_new (_("Hue-Saturation"), "hue_satiration",
+  hsd->shell = gimp_dialog_new (_("Hue-Saturation"), "hue_saturation",
 				tools_help_func, NULL,
 				GTK_WIN_POS_NONE,
 				FALSE, TRUE, FALSE,
 
+				_("Reset"), hue_saturation_reset_callback,
+				hsd, NULL, FALSE, FALSE,
 				_("OK"), hue_saturation_ok_callback,
 				hsd, NULL, TRUE, FALSE,
 				_("Cancel"), hue_saturation_cancel_callback,
@@ -394,16 +377,18 @@ hue_saturation_new_dialog ()
 
 				NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 2);
+  main_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (hsd->shell)->vbox), main_vbox);
 
   /*  The main hbox containing hue partitions and sliders  */
-  main_hbox = gtk_hbox_new (FALSE, 2);
+  main_hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (main_vbox), main_hbox, FALSE, FALSE, 0);
 
   /*  The table containing hue partitions  */
   table = gtk_table_new (7, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (main_hbox), table, FALSE, FALSE, 0);
 
   /*  the radio buttons for hue partitions  */
@@ -411,26 +396,30 @@ hue_saturation_new_dialog ()
     {
       radio_button = gtk_radio_button_new_with_label (group, hue_partition_names[i]);
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
+      gtk_object_set_data (GTK_OBJECT (radio_button), "hue_partition",
+			   (gpointer) i);
 
       if (!i)
 	{
 	  gtk_table_attach (GTK_TABLE (table), radio_button, 0, 2, 0, 1,
-			    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
+			    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
 	}
       else
 	{
 	  gtk_table_attach (GTK_TABLE (table), radio_button, 0, 1, i, i + 1,
-			    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
+			    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
 
 	  frame = gtk_frame_new (NULL);
 	  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
 	  gtk_table_attach (GTK_TABLE (table), frame,  1, 2, i, i + 1,
-			    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
+			    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
 	  hsd->hue_partition_da[i - 1] = gtk_preview_new (GTK_PREVIEW_COLOR);
-	  gtk_preview_size (GTK_PREVIEW (hsd->hue_partition_da[i - 1]), DA_WIDTH, DA_HEIGHT);
-	  gtk_widget_set_events (hsd->hue_partition_da[i - 1], HUE_PARTITION_MASK);
+	  gtk_preview_size (GTK_PREVIEW (hsd->hue_partition_da[i - 1]),
+			    DA_WIDTH, DA_HEIGHT);
+	  gtk_widget_set_events (hsd->hue_partition_da[i - 1],
+				 HUE_PARTITION_MASK);
 	  gtk_signal_connect (GTK_OBJECT (hsd->hue_partition_da[i - 1]), "event",
-			      (GtkSignalFunc) hue_saturation_hue_partition_events,
+			      GTK_SIGNAL_FUNC (hue_saturation_hue_partition_events),
 			      hsd);
 	  gtk_container_add (GTK_CONTAINER (frame), hsd->hue_partition_da[i - 1]);
 
@@ -439,14 +428,16 @@ hue_saturation_new_dialog ()
 	}
 
       gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-			  (GtkSignalFunc) hue_partition_callbacks[i],
+			  GTK_SIGNAL_FUNC (hue_saturation_partition_callback),
 			  hsd);
+
       gtk_widget_show (radio_button);
     }
+
   gtk_widget_show (table);
 
   /*  The vbox for the table and preview toggle  */
-  vbox = gtk_vbox_new (FALSE, 2);
+  vbox = gtk_vbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, FALSE, FALSE, 0);
 
   label = gtk_label_new (_("Hue / Lightness / Saturation Adjustments"));
@@ -456,126 +447,130 @@ hue_saturation_new_dialog ()
 
   /*  The table containing sliders  */
   table = gtk_table_new (3, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   /*  Create the hue scale widget  */
   label = gtk_label_new (_("Hue"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
 
   data = gtk_adjustment_new (0, -180, 180.0, 1.0, 1.0, 0.0);
   hsd->hue_data = GTK_ADJUSTMENT (data);
-  slider = gtk_hscale_new (GTK_ADJUSTMENT (data));
-  gtk_widget_set_usize (slider, SLIDER_WIDTH, SLIDER_HEIGHT);
+
+  slider = gtk_hscale_new (hsd->hue_data);
+  gtk_widget_set_usize (slider, SLIDER_WIDTH, -1);
   gtk_scale_set_digits (GTK_SCALE (slider), 0);
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
   gtk_table_attach (GTK_TABLE (table), slider, 1, 2, 0, 1,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
-		    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
-		    2, 2);
-  gtk_signal_connect (GTK_OBJECT (data), "value_changed",
-		      (GtkSignalFunc) hue_saturation_hue_scale_update,
-		      hsd);
+		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
 
-  hsd->hue_text = gtk_entry_new ();
-  gtk_widget_set_usize (hsd->hue_text, TEXT_WIDTH, TEXT_HEIGHT);
-  gtk_table_attach (GTK_TABLE (table), hsd->hue_text, 2, 3, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
-  gtk_signal_connect (GTK_OBJECT (hsd->hue_text), "changed",
-		      (GtkSignalFunc) hue_saturation_hue_text_update,
+  abox = gtk_vbox_new (FALSE, 0);
+  spinbutton = gtk_spin_button_new (hsd->hue_data, 1.0, 0);
+  gtk_widget_set_usize (spinbutton, 74, -1);
+  gtk_box_pack_end (GTK_BOX (abox), spinbutton, FALSE, FALSE, 0);
+  gtk_table_attach (GTK_TABLE (table), abox, 2, 3, 0, 1,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+
+  gtk_signal_connect (GTK_OBJECT (hsd->hue_data), "value_changed",
+		      GTK_SIGNAL_FUNC (hue_saturation_hue_adjustment_update),
 		      hsd);
 
   gtk_widget_show (label);
-  gtk_widget_show (hsd->hue_text);
   gtk_widget_show (slider);
-
+  gtk_widget_show (spinbutton);
+  gtk_widget_show (abox);
 
   /*  Create the lightness scale widget  */
   label = gtk_label_new (_("Lightness"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
 
   data = gtk_adjustment_new (0, -100.0, 100.0, 1.0, 1.0, 0.0);
   hsd->lightness_data = GTK_ADJUSTMENT (data);
-  slider = gtk_hscale_new (GTK_ADJUSTMENT (data));
-  gtk_widget_set_usize (slider, SLIDER_WIDTH, SLIDER_HEIGHT);
+
+  slider = gtk_hscale_new (hsd->lightness_data);
+  gtk_widget_set_usize (slider, SLIDER_WIDTH, -1);
   gtk_scale_set_digits (GTK_SCALE (slider), 0);
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
   gtk_table_attach (GTK_TABLE (table), slider, 1, 2, 1, 2,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
-		    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
-		    2, 2);
-  gtk_signal_connect (GTK_OBJECT (data), "value_changed",
-		      (GtkSignalFunc) hue_saturation_lightness_scale_update,
-		      hsd);
+		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
 
-  hsd->lightness_text = gtk_entry_new ();
-  gtk_widget_set_usize (hsd->lightness_text, TEXT_WIDTH, TEXT_HEIGHT);
-  gtk_table_attach (GTK_TABLE (table), hsd->lightness_text, 2, 3, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
-  gtk_signal_connect (GTK_OBJECT (hsd->lightness_text), "changed",
-		      (GtkSignalFunc) hue_saturation_lightness_text_update,
+  abox = gtk_vbox_new (FALSE, 0);
+  spinbutton = gtk_spin_button_new (hsd->lightness_data, 1.0, 0);
+  gtk_widget_set_usize (spinbutton, 75, -1);
+  gtk_box_pack_end (GTK_BOX (abox), spinbutton, FALSE, FALSE, 0);
+  gtk_table_attach (GTK_TABLE (table), abox, 2, 3, 1, 2,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+
+  gtk_signal_connect (GTK_OBJECT (hsd->lightness_data), "value_changed",
+		      GTK_SIGNAL_FUNC (hue_saturation_lightness_adjustment_update),
 		      hsd);
 
   gtk_widget_show (label);
-  gtk_widget_show (hsd->lightness_text);
   gtk_widget_show (slider);
-
+  gtk_widget_show (spinbutton);
+  gtk_widget_show (abox);
 
   /*  Create the saturation scale widget  */
   label = gtk_label_new (_("Saturation"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
 
   data = gtk_adjustment_new (0, -100.0, 100.0, 1.0, 1.0, 0.0);
   hsd->saturation_data = GTK_ADJUSTMENT (data);
-  slider = gtk_hscale_new (GTK_ADJUSTMENT (data));
-  gtk_widget_set_usize (slider, SLIDER_WIDTH, SLIDER_HEIGHT);
+
+  slider = gtk_hscale_new (hsd->saturation_data);
+  gtk_widget_set_usize (slider, SLIDER_WIDTH, -1);
   gtk_scale_set_digits (GTK_SCALE (slider), 0);
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
   gtk_table_attach (GTK_TABLE (table), slider, 1, 2, 2, 3,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
-		    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
-		    2, 2);
-  gtk_signal_connect (GTK_OBJECT (data), "value_changed",
-		      (GtkSignalFunc) hue_saturation_saturation_scale_update,
-		      hsd);
+		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
 
-  hsd->saturation_text = gtk_entry_new ();
-  gtk_widget_set_usize (hsd->saturation_text, TEXT_WIDTH, TEXT_HEIGHT);
-  gtk_table_attach (GTK_TABLE (table), hsd->saturation_text, 2, 3, 2, 3,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 3, 2);
-  gtk_signal_connect (GTK_OBJECT (hsd->saturation_text), "changed",
-		      (GtkSignalFunc) hue_saturation_saturation_text_update,
+  abox = gtk_vbox_new (FALSE, 0);
+  spinbutton = gtk_spin_button_new (hsd->saturation_data, 1.0, 0);
+  gtk_widget_set_usize (spinbutton, 75, -1);
+  gtk_box_pack_end (GTK_BOX (abox), spinbutton, FALSE, FALSE, 0);
+  gtk_table_attach (GTK_TABLE (table), abox, 2, 3, 2, 3,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+
+  gtk_signal_connect (GTK_OBJECT (hsd->saturation_data), "value_changed",
+		      GTK_SIGNAL_FUNC (hue_saturation_saturation_adjustment_update),
 		      hsd);
 
   gtk_widget_show (label);
-  gtk_widget_show (hsd->saturation_text);
   gtk_widget_show (slider);
+  gtk_widget_show (spinbutton);
+  gtk_widget_show (abox);
 
+  gtk_widget_show (table);
 
-  /*  Horizontal box for preview and colorize toggle buttons  */
-  hbox = gtk_hbox_new (TRUE, 2);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  /*  Horizontal box for preview toggle button  */
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   /*  The preview toggle  */
   toggle = gtk_check_button_new_with_label (_("Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), hsd->preview);
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) hue_saturation_preview_update,
+		      GTK_SIGNAL_FUNC (hue_saturation_preview_update),
 		      hsd);
 
   gtk_widget_show (toggle);
   gtk_widget_show (hbox);
 
-  gtk_widget_show (table);
   gtk_widget_show (vbox);
   gtk_widget_show (main_hbox);
   gtk_widget_show (main_vbox);
@@ -586,66 +581,51 @@ hue_saturation_new_dialog ()
 
 static void
 hue_saturation_update (HueSaturationDialog *hsd,
-		       int                  update)
+		       gint                 update)
 {
-  int i, j, b;
-  int rgb[3];
-  unsigned char buf[DA_WIDTH * 3];
-  char text[12];
+  gint i, j, b;
+  gint rgb[3];
+  guchar buf[DA_WIDTH * 3];
 
   if (update & HUE_SLIDER)
     {
-      hsd->hue_data->value = hsd->hue[hsd->hue_partition];
-      gtk_signal_emit_by_name (GTK_OBJECT (hsd->hue_data), "value_changed");
+      gtk_adjustment_set_value (GTK_ADJUSTMENT (hsd->hue_data),
+				hsd->hue[hsd->hue_partition]);
     }
   if (update & LIGHTNESS_SLIDER)
     {
-      hsd->lightness_data->value = hsd->lightness[hsd->hue_partition];
-      gtk_signal_emit_by_name (GTK_OBJECT (hsd->lightness_data), "value_changed");
+      gtk_adjustment_set_value (GTK_ADJUSTMENT (hsd->lightness_data),
+				hsd->lightness[hsd->hue_partition]);
     }
   if (update & SATURATION_SLIDER)
     {
-      hsd->saturation_data->value = hsd->saturation[hsd->hue_partition];
-      gtk_signal_emit_by_name (GTK_OBJECT (hsd->saturation_data), "value_changed");
-    }
-  if (update & HUE_TEXT)
-    {
-      sprintf (text, "%0.0f", hsd->hue[hsd->hue_partition]);
-      gtk_entry_set_text (GTK_ENTRY (hsd->hue_text), text);
-    }
-  if (update & LIGHTNESS_TEXT)
-    {
-      sprintf (text, "%0.0f", hsd->lightness[hsd->hue_partition]);
-      gtk_entry_set_text (GTK_ENTRY (hsd->lightness_text), text);
-    }
-  if (update & SATURATION_TEXT)
-    {
-      sprintf (text, "%0.0f", hsd->saturation[hsd->hue_partition]);
-      gtk_entry_set_text (GTK_ENTRY (hsd->saturation_text), text);
+      gtk_adjustment_set_value (GTK_ADJUSTMENT (hsd->saturation_data),
+				hsd->saturation[hsd->hue_partition]);
     }
 
   hue_saturation_calculate_transfers (hsd);
 
   for (i = 0; i < 6; i++)
     {
-      rgb[RED_PIX] = default_colors[i][RED_PIX];
+      rgb[RED_PIX]   = default_colors[i][RED_PIX];
       rgb[GREEN_PIX] = default_colors[i][GREEN_PIX];
-      rgb[BLUE_PIX] = default_colors[i][BLUE_PIX];
+      rgb[BLUE_PIX]  = default_colors[i][BLUE_PIX];
 
       rgb_to_hls (rgb, rgb + 1, rgb + 2);
 
-      rgb[RED_PIX] = hue_transfer[i][rgb[RED_PIX]];
+      rgb[RED_PIX]   = hue_transfer[i][rgb[RED_PIX]];
       rgb[GREEN_PIX] = lightness_transfer[i][rgb[GREEN_PIX]];
-      rgb[BLUE_PIX] = saturation_transfer[i][rgb[BLUE_PIX]];
+      rgb[BLUE_PIX]  = saturation_transfer[i][rgb[BLUE_PIX]];
 
       hls_to_rgb (rgb, rgb + 1, rgb + 2);
 
       for (j = 0; j < DA_WIDTH; j++)
 	for (b = 0; b < 3; b++)
-	  buf[j * 3 + b] = (unsigned char) rgb[b];
+	  buf[j * 3 + b] = (guchar) rgb[b];
 
       for (j = 0; j < DA_HEIGHT; j++)
-	gtk_preview_draw_row (GTK_PREVIEW (hsd->hue_partition_da[i]), buf, 0, j, DA_WIDTH);
+	gtk_preview_draw_row (GTK_PREVIEW (hsd->hue_partition_da[i]),
+			      buf, 0, j, DA_WIDTH);
 
       if (update & DRAW)
 	gtk_widget_draw (hsd->hue_partition_da[i], NULL);
@@ -656,19 +636,41 @@ static void
 hue_saturation_preview (HueSaturationDialog *hsd)
 {
   if (!hsd->image_map)
-    g_warning ("hue_saturation_preview(): No image map");
+    {
+      g_warning ("hue_saturation_preview(): No image map");
+      return;
+    }
+
   active_tool->preserve = TRUE;
   image_map_apply (hsd->image_map, hue_saturation, (void *) hsd);
   active_tool->preserve = FALSE;
 }
 
 static void
-hue_saturation_ok_callback (GtkWidget *widget,
-			    gpointer   client_data)
+hue_saturation_reset_callback (GtkWidget *widget,
+			       gpointer   data)
 {
   HueSaturationDialog *hsd;
 
-  hsd = (HueSaturationDialog *) client_data;
+  hsd = (HueSaturationDialog *) data;
+
+  hsd->hue[hsd->hue_partition] = 0.0;
+  hsd->lightness[hsd->hue_partition] = 0.0;
+  hsd->saturation[hsd->hue_partition] = 0.0;
+
+  hue_saturation_update (hsd, ALL);
+
+  if (hsd->preview)
+    hue_saturation_preview (hsd);
+}
+
+static void
+hue_saturation_ok_callback (GtkWidget *widget,
+			    gpointer   data)
+{
+  HueSaturationDialog *hsd;
+
+  hsd = (HueSaturationDialog *) data;
 
   if (GTK_WIDGET_VISIBLE (hsd->shell))
     gtk_widget_hide (hsd->shell);
@@ -691,11 +693,12 @@ hue_saturation_ok_callback (GtkWidget *widget,
 
 static void
 hue_saturation_cancel_callback (GtkWidget *widget,
-				gpointer   client_data)
+				gpointer   data)
 {
   HueSaturationDialog *hsd;
 
-  hsd = (HueSaturationDialog *) client_data;
+  hsd = (HueSaturationDialog *) data;
+
   if (GTK_WIDGET_VISIBLE (hsd->shell))
     gtk_widget_hide (hsd->shell);
 
@@ -714,91 +717,30 @@ hue_saturation_cancel_callback (GtkWidget *widget,
 }
 
 static void
-hue_saturation_master_callback (GtkWidget *widget,
-				gpointer   client_data)
+hue_saturation_partition_callback (GtkWidget *widget,
+				   gpointer   data)
 {
   HueSaturationDialog *hsd;
+  HueRange partition;
 
-  hsd = (HueSaturationDialog *) client_data;
-  hsd->hue_partition = 0;
+  hsd = (HueSaturationDialog *) data;
+
+  partition = (HueRange) gtk_object_get_data (GTK_OBJECT (widget),
+					      "hue_partition");
+  hsd->hue_partition = partition;
+
   hue_saturation_update (hsd, ALL);
 }
 
 static void
-hue_saturation_R_callback (GtkWidget *widget,
-			   gpointer   client_data)
-{
-  HueSaturationDialog *hsd;
-
-  hsd = (HueSaturationDialog *) client_data;
-  hsd->hue_partition = 1;
-  hue_saturation_update (hsd, ALL);
-}
-
-static void
-hue_saturation_Y_callback (GtkWidget *widget,
-			   gpointer   client_data)
-{
-  HueSaturationDialog *hsd;
-
-  hsd = (HueSaturationDialog *) client_data;
-  hsd->hue_partition = 2;
-  hue_saturation_update (hsd, ALL);
-}
-
-static void
-hue_saturation_G_callback (GtkWidget *widget,
-			   gpointer   client_data)
-{
-  HueSaturationDialog *hsd;
-
-  hsd = (HueSaturationDialog *) client_data;
-  hsd->hue_partition = 3;
-  hue_saturation_update (hsd, ALL);
-}
-
-static void
-hue_saturation_C_callback (GtkWidget *widget,
-			   gpointer   client_data)
-{
-  HueSaturationDialog *hsd;
-
-  hsd = (HueSaturationDialog *) client_data;
-  hsd->hue_partition = 4;
-  hue_saturation_update (hsd, ALL);
-}
-
-static void
-hue_saturation_B_callback (GtkWidget *widget,
-			   gpointer   client_data)
-{
-  HueSaturationDialog *hsd;
-
-  hsd = (HueSaturationDialog *) client_data;
-  hsd->hue_partition = 5;
-  hue_saturation_update (hsd, ALL);
-}
-
-static void
-hue_saturation_M_callback (GtkWidget *widget,
-			   gpointer   client_data)
-{
-  HueSaturationDialog *hsd;
-
-  hsd = (HueSaturationDialog *) client_data;
-  hsd->hue_partition = 6;
-  hue_saturation_update (hsd, ALL);
-}
-
-static void
-hue_saturation_preview_update (GtkWidget *w,
+hue_saturation_preview_update (GtkWidget *widget,
 			       gpointer   data)
 {
   HueSaturationDialog *hsd;
 
   hsd = (HueSaturationDialog *) data;
 
-  if (GTK_TOGGLE_BUTTON (w)->active)
+  if (GTK_TOGGLE_BUTTON (widget)->active)
     {
       hsd->preview = TRUE;
       hue_saturation_preview (hsd);
@@ -808,8 +750,8 @@ hue_saturation_preview_update (GtkWidget *w,
 }
 
 static void
-hue_saturation_hue_scale_update (GtkAdjustment *adjustment,
-				 gpointer       data)
+hue_saturation_hue_adjustment_update (GtkAdjustment *adjustment,
+				      gpointer       data)
 {
   HueSaturationDialog *hsd;
 
@@ -818,7 +760,7 @@ hue_saturation_hue_scale_update (GtkAdjustment *adjustment,
   if (hsd->hue[hsd->hue_partition] != adjustment->value)
     {
       hsd->hue[hsd->hue_partition] = adjustment->value;
-      hue_saturation_update (hsd, HUE_TEXT | DRAW);
+      hue_saturation_update (hsd, DRAW);
 
       if (hsd->preview)
 	hue_saturation_preview (hsd);
@@ -826,8 +768,8 @@ hue_saturation_hue_scale_update (GtkAdjustment *adjustment,
 }
 
 static void
-hue_saturation_lightness_scale_update (GtkAdjustment *adjustment,
-				       gpointer       data)
+hue_saturation_lightness_adjustment_update (GtkAdjustment *adjustment,
+					    gpointer       data)
 {
   HueSaturationDialog *hsd;
 
@@ -836,7 +778,7 @@ hue_saturation_lightness_scale_update (GtkAdjustment *adjustment,
   if (hsd->lightness[hsd->hue_partition] != adjustment->value)
     {
       hsd->lightness[hsd->hue_partition] = adjustment->value;
-      hue_saturation_update (hsd, LIGHTNESS_TEXT | DRAW);
+      hue_saturation_update (hsd, DRAW);
 
       if (hsd->preview)
 	hue_saturation_preview (hsd);
@@ -844,8 +786,8 @@ hue_saturation_lightness_scale_update (GtkAdjustment *adjustment,
 }
 
 static void
-hue_saturation_saturation_scale_update (GtkAdjustment *adjustment,
-					gpointer       data)
+hue_saturation_saturation_adjustment_update (GtkAdjustment *adjustment,
+					     gpointer       data)
 {
   HueSaturationDialog *hsd;
 
@@ -854,73 +796,7 @@ hue_saturation_saturation_scale_update (GtkAdjustment *adjustment,
   if (hsd->saturation[hsd->hue_partition] != adjustment->value)
     {
       hsd->saturation[hsd->hue_partition] = adjustment->value;
-      hue_saturation_update (hsd, SATURATION_TEXT | DRAW);
-
-      if (hsd->preview)
-	hue_saturation_preview (hsd);
-    }
-}
-
-static void
-hue_saturation_hue_text_update (GtkWidget *w,
-				gpointer   data)
-{
-  HueSaturationDialog *hsd;
-  char *str;
-  int value;
-
-  str = gtk_entry_get_text (GTK_ENTRY (w));
-  hsd = (HueSaturationDialog *) data;
-  value = BOUNDS (((int) atof (str)), -180, 180);
-
-  if ((int) hsd->hue[hsd->hue_partition] != value)
-    {
-      hsd->hue[hsd->hue_partition] = value;
-      hue_saturation_update (hsd, HUE_SLIDER | DRAW);
-
-      if (hsd->preview)
-	hue_saturation_preview (hsd);
-    }
-}
-
-static void
-hue_saturation_lightness_text_update (GtkWidget *w,
-				      gpointer   data)
-{
-  HueSaturationDialog *hsd;
-  char *str;
-  int value;
-
-  str = gtk_entry_get_text (GTK_ENTRY (w));
-  hsd = (HueSaturationDialog *) data;
-  value = BOUNDS (((int) atof (str)), -100, 100);
-
-  if ((int) hsd->lightness[hsd->hue_partition] != value)
-    {
-      hsd->lightness[hsd->hue_partition] = value;
-      hue_saturation_update (hsd, LIGHTNESS_SLIDER | DRAW);
-
-      if (hsd->preview)
-	hue_saturation_preview (hsd);
-    }
-}
-
-static void
-hue_saturation_saturation_text_update (GtkWidget *w,
-				       gpointer   data)
-{
-  HueSaturationDialog *hsd;
-  char *str;
-  int value;
-
-  str = gtk_entry_get_text (GTK_ENTRY (w));
-  hsd = (HueSaturationDialog *) data;
-  value = BOUNDS (((int) atof (str)), -100, 100);
-
-  if ((int) hsd->saturation[hsd->hue_partition] != value)
-    {
-      hsd->saturation[hsd->hue_partition] = value;
-      hue_saturation_update (hsd, SATURATION_SLIDER | DRAW);
+      hue_saturation_update (hsd, DRAW);
 
       if (hsd->preview)
 	hue_saturation_preview (hsd);

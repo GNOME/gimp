@@ -93,13 +93,16 @@ GtkWidget * gimp_option_menu_new (GtkSignalFunc       menu_item_callback,
 
 				  ...);
 
-GtkWidget * gimp_radio_group_new (GtkSignalFunc       radio_button_callback,
-				  gpointer            initial,  /* user_data */
+GtkWidget * gimp_radio_group_new (gboolean            in_frame,
+				  gchar              *frame_title,
 
 				  /* specify radio buttons as va_list:
 				   *  gchar          *label,
+				   *  GtkSignalFunc   callback,
 				   *  gpointer        data,
 				   *  gpointer        user_data,
+				   *  GtkWidget     **widget_ptr,
+				   *  gboolean        active,
 				   */
 
 				  ...);

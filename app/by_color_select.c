@@ -15,32 +15,27 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
 #include "appenv.h"
 #include "boundary.h"
 #include "by_color_select.h"
 #include "colormaps.h"
 #include "drawable.h"
 #include "draw_core.h"
-#include "general.h"
 #include "gimage_mask.h"
+#include "gimpdnd.h"
 #include "gimprc.h"
 #include "gimpset.h"
 #include "gimpui.h"
 #include "gdisplay.h"
 #include "selection_options.h"
 
-#include "gimpdnd.h"
+#include "tile.h"			/* ick. */
 
 #include "libgimp/gimpintl.h"
 
-#include "tile.h"			/* ick. */
-
-#define DEFAULT_FUZZINESS 15
-#define PREVIEW_WIDTH   256
-#define PREVIEW_HEIGHT  256
+#define DEFAULT_FUZZINESS    15
+#define PREVIEW_WIDTH       256
+#define PREVIEW_HEIGHT      256
 #define PREVIEW_EVENT_MASK  GDK_EXPOSURE_MASK | \
                             GDK_BUTTON_PRESS_MASK | \
                             GDK_ENTER_NOTIFY_MASK
@@ -48,40 +43,43 @@
 /*  the by color selection structures  */
 
 typedef struct _ByColorSelect ByColorSelect;
+
 struct _ByColorSelect
 {
-  int  x, y;       /*  Point from which to execute seed fill  */
-  int  operation;  /*  add, subtract, normal color selection  */
+  gint  x, y;       /*  Point from which to execute seed fill  */
+  gint  operation;  /*  add, subtract, normal color selection  */
 };
 
 typedef struct _ByColorDialog ByColorDialog;
+
 struct _ByColorDialog
 {
-  GtkWidget   *shell;
-  GtkWidget   *preview;
-  GtkWidget   *gimage_name;
+  GtkWidget *shell;
 
-  int          threshold;  /*  threshold value for color select             */
-  int          operation;  /*  Add, Subtract, Replace                       */
-  GImage      *gimage;     /*  gimage which is currently under examination  */
+  GtkWidget *preview;
+  GtkWidget *gimage_name;
+
+  gint       threshold;  /*  threshold value for color select             */
+  gint       operation;  /*  Add, Subtract, Replace                       */
+  GImage    *gimage;     /*  gimage which is currently under examination  */
 };
 
-
 /*  the by color selection tool options  */
-static SelectionOptions *by_color_options = NULL;
+static SelectionOptions * by_color_options = NULL;
 
 /*  the by color selection dialog  */
-static ByColorDialog *  by_color_dialog = NULL;
+static ByColorDialog    * by_color_dialog = NULL;
 
 /*  dnd stuff  */
-static GtkTargetEntry by_color_select_image_target_table[] =
+static GtkTargetEntry by_color_select_targets[] =
 {
   GIMP_TARGET_COLOR
 };
-static guint n_by_color_select_image_targets = 
-    (sizeof (by_color_select_image_target_table) /
-     sizeof (by_color_select_image_target_table[0]));
-static void by_color_select_color_drop (GtkWidget*, guchar, guchar, guchar, gpointer);
+static guint n_by_color_select_targets =  (sizeof (by_color_select_targets) /
+					   sizeof (by_color_select_targets[0]));
+
+static void by_color_select_color_drop (GtkWidget *, guchar, guchar, guchar,
+					gpointer);
 
 /*  by_color select action functions  */
 
@@ -90,32 +88,35 @@ static void by_color_select_button_release (Tool *, GdkEventButton *, gpointer);
 static void by_color_select_cursor_update  (Tool *, GdkEventMotion *, gpointer);
 static void by_color_select_control        (Tool *, ToolAction,       gpointer);
 
-static ByColorDialog * by_color_select_new_dialog (void);
+static ByColorDialog * by_color_select_dialog_new (void);
 
-static void   by_color_select_render          (ByColorDialog *, GImage *);
-static void   by_color_select_draw            (ByColorDialog *, GImage *);
-static gint   by_color_select_preview_events  (GtkWidget *, GdkEventButton *,
-					       ByColorDialog *);
-static void   by_color_select_type_callback   (GtkWidget *, gpointer);
-static void   by_color_select_reset_callback  (GtkWidget *, gpointer);
-static void   by_color_select_close_callback  (GtkWidget *, gpointer);
-static void   by_color_select_fuzzy_update    (GtkAdjustment *, gpointer);
+static void   by_color_select_render               (ByColorDialog *, GImage *);
+static void   by_color_select_draw                 (ByColorDialog *, GImage *);
+static gint   by_color_select_preview_events       (GtkWidget *,
+						    GdkEventButton *,
+						    ByColorDialog *);
+static void   by_color_select_type_callback        (GtkWidget *, gpointer);
+static void   by_color_select_reset_callback       (GtkWidget *, gpointer);
+static void   by_color_select_close_callback       (GtkWidget *, gpointer);
+static void   by_color_select_fuzzy_update         (GtkAdjustment *, gpointer);
 static void   by_color_select_preview_button_press (ByColorDialog *,
 						    GdkEventButton *);
 
-static int        is_pixel_sufficiently_different (unsigned char *, unsigned char *, int, int, int, int);
-static Channel *  by_color_select_color (GImage *, GimpDrawable *, unsigned char *, int, int, int);
+static gint       is_pixel_sufficiently_different (guchar *, guchar *,
+						   gint, gint, gint, gint);
+static Channel *  by_color_select_color           (GImage *, GimpDrawable *,
+						   guchar *, gint, gint, gint);
 
 
 /*  by_color selection machinery  */
 
 static int
-is_pixel_sufficiently_different (unsigned char *col1,
-				 unsigned char *col2,
-				 int            antialias,
-				 int            threshold,
-				 int            bytes,
-				 int            has_alpha)
+is_pixel_sufficiently_different (guchar *col1,
+				 guchar *col2,
+				 gint    antialias,
+				 gint    threshold,
+				 gint    bytes,
+				 gint    has_alpha)
 {
   int diff;
   int max;
@@ -145,7 +146,7 @@ is_pixel_sufficiently_different (unsigned char *col1,
       if (aa <= 0)
 	return 0;
       else if (aa < 0.5)
-	return (unsigned char) (aa * 512);
+	return (guchar) (aa * 512);
       else
 	return 255;
     }
@@ -159,12 +160,12 @@ is_pixel_sufficiently_different (unsigned char *col1,
 }
 
 static Channel *
-by_color_select_color (GImage        *gimage,
-		       GimpDrawable  *drawable,
-		       unsigned char *color,
-		       int            antialias,
-		       int            threshold,
-		       int            sample_merged)
+by_color_select_color (GImage       *gimage,
+		       GimpDrawable *drawable,
+		       guchar       *color,
+		       gint          antialias,
+		       gint          threshold,
+		       gint          sample_merged)
 {
   /*  Scan over the gimage's active layer, finding pixels within the specified
    *  threshold from the given R, G, & B values.  If antialiasing is on,
@@ -173,10 +174,10 @@ by_color_select_color (GImage        *gimage,
    */
   Channel *mask;
   PixelRegion imagePR, maskPR;
-  unsigned char *image_data;
-  unsigned char *mask_data;
-  unsigned char *idata, *mdata;
-  unsigned char rgb[MAX_CHANNELS];
+  guchar *image_data;
+  guchar *mask_data;
+  guchar *idata, *mdata;
+  guchar rgb[MAX_CHANNELS];
   int has_alpha, indexed;
   int width, height;
   int bytes, color_bytes, alpha;
@@ -195,7 +196,8 @@ by_color_select_color (GImage        *gimage,
       indexed = d_type == INDEXEDA_GIMAGE || d_type == INDEXED_GIMAGE;
       width = gimage->width;
       height = gimage->height;
-      pixel_region_init (&imagePR, gimage_composite (gimage), 0, 0, width, height, FALSE);
+      pixel_region_init (&imagePR, gimage_composite (gimage),
+			 0, 0, width, height, FALSE);
     }
   else
     {
@@ -206,16 +208,20 @@ by_color_select_color (GImage        *gimage,
       width = drawable_width (drawable);
       height = drawable_height (drawable);
 
-      pixel_region_init (&imagePR, drawable_data (drawable), 0, 0, width, height, FALSE);
+      pixel_region_init (&imagePR, drawable_data (drawable),
+			 0, 0, width, height, FALSE);
     }
 
-  if (indexed) {
-    /* indexed colors are always RGB or RGBA */
-    color_bytes = has_alpha ? 4 : 3;
-  } else {
-    /* RGB, RGBA, GRAY and GRAYA colors are shaped just like the image */
-    color_bytes = bytes;
-  }
+  if (indexed)
+    {
+      /* indexed colors are always RGB or RGBA */
+      color_bytes = has_alpha ? 4 : 3;
+    }
+  else
+    {
+      /* RGB, RGBA, GRAY and GRAYA colors are shaped just like the image */
+      color_bytes = bytes;
+    }
 
   alpha = bytes - 1;
   mask = channel_new_mask (gimage, width, height);
@@ -223,7 +229,9 @@ by_color_select_color (GImage        *gimage,
 		     0, 0, width, height, TRUE);
 
   /*  iterate over the entire image  */
-  for (pr = pixel_regions_register (2, &imagePR, &maskPR); pr != NULL; pr = pixel_regions_process (pr))
+  for (pr = pixel_regions_register (2, &imagePR, &maskPR);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
     {
       image_data = imagePR.data;
       mask_data = maskPR.data;
@@ -242,8 +250,12 @@ by_color_select_color (GImage        *gimage,
 		rgb[color_bytes - 1] = idata[alpha];
 
 	      /*  Find how closely the colors match  */
-	      *mdata++ = is_pixel_sufficiently_different (color, rgb, antialias,
-							  threshold, color_bytes, has_alpha);
+	      *mdata++ = is_pixel_sufficiently_different (color,
+							  rgb,
+							  antialias,
+							  threshold,
+							  color_bytes,
+							  has_alpha);
 
 	      idata += bytes;
 	    }
@@ -257,15 +269,15 @@ by_color_select_color (GImage        *gimage,
 }
 
 void
-by_color_select (GImage        *gimage,
-		 GimpDrawable  *drawable,
-		 unsigned char *color,
-		 int            threshold,
-		 int            op,
-		 int            antialias,
-		 int            feather,
-		 double         feather_radius,
-		 int            sample_merged)
+by_color_select (GImage       *gimage,
+		 GimpDrawable *drawable,
+		 guchar       *color,
+		 gint          threshold,
+		 gint          op,
+		 gint          antialias,
+		 gint          feather,
+		 gdouble       feather_radius,
+		 gint          sample_merged)
 {
   Channel * new_mask;
   int off_x, off_y;
@@ -273,7 +285,8 @@ by_color_select (GImage        *gimage,
   if (!drawable) 
     return;
 
-  new_mask = by_color_select_color (gimage, drawable, color, antialias, threshold, sample_merged);
+  new_mask = by_color_select_color (gimage, drawable, color,
+				    antialias, threshold, sample_merged);
 
   /*  if applicable, replace the current selection  */
   if (op == REPLACE)
@@ -299,7 +312,6 @@ by_color_select (GImage        *gimage,
 
   channel_delete (new_mask);
 }
-
 
 /*  by_color select action functions  */
 
@@ -345,8 +357,25 @@ by_color_select_button_press (Tool           *tool,
   /*  Update the by_color_dialog's active gdisp pointer  */
   if (by_color_dialog->gimage)
     by_color_dialog->gimage->by_color_select = FALSE;
+
+  if (by_color_dialog->gimage != gdisp->gimage)
+    {
+      gdk_draw_rectangle
+	(by_color_dialog->preview->window,
+	 by_color_dialog->preview->style->bg_gc[GTK_STATE_NORMAL],
+	 TRUE,
+	 0, 0,
+	 by_color_dialog->preview->allocation.width,
+	 by_color_dialog->preview->allocation.width);
+    }
+
   by_color_dialog->gimage = gdisp->gimage;
   gdisp->gimage->by_color_select = TRUE;
+
+  gdk_pointer_grab (gdisp->canvas->window, FALSE,
+                    GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK |
+                    GDK_BUTTON_RELEASE_MASK,
+                    NULL, NULL, bevent->time);
 }
 
 static void
@@ -356,14 +385,16 @@ by_color_select_button_release (Tool           *tool,
 {
   ByColorSelect * by_color_sel;
   GDisplay * gdisp;
-  int x, y;
+  gint x, y;
   GimpDrawable *drawable;
-  unsigned char *color;
-  int use_offsets;
+  guchar *color;
+  gint use_offsets;
 
   gdisp = (GDisplay *) gdisp_ptr;
   by_color_sel = (ByColorSelect *) tool->private;
   drawable = gimage_active_drawable (gdisp->gimage);
+
+  gdk_pointer_ungrab (bevent->time);
 
   tool->state = INACTIVE;
 
@@ -371,17 +402,18 @@ by_color_select_button_release (Tool           *tool,
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
       use_offsets = (by_color_options->sample_merged) ? FALSE : TRUE;
-      gdisplay_untransform_coords (gdisp, by_color_sel->x, by_color_sel->y, &x, &y, FALSE, use_offsets);
+      gdisplay_untransform_coords (gdisp, by_color_sel->x, by_color_sel->y,
+				   &x, &y, FALSE, use_offsets);
 
       /*  Get the start color  */
       if (by_color_options->sample_merged)
 	{
-	  if (!(color = gimp_image_get_color_at(gdisp->gimage, x, y)))
+	  if (!(color = gimp_image_get_color_at (gdisp->gimage, x, y)))
 	    return;
 	}
       else
 	{
-	  if (!(color = gimp_drawable_get_color_at(drawable, x, y)))
+	  if (!(color = gimp_drawable_get_color_at (drawable, x, y)))
 	    return;
 	}
 
@@ -394,7 +426,7 @@ by_color_select_button_release (Tool           *tool,
 		       by_color_options->feather_radius,
 		       by_color_options->sample_merged);
 
-      g_free(color);
+      g_free (color);
 
       /*  show selection on all views  */
       gdisplays_flush ();
@@ -412,17 +444,20 @@ by_color_select_cursor_update (Tool           *tool,
 {
   GDisplay *gdisp;
   Layer *layer;
-  int x, y;
+  gint x, y;
 
   gdisp = (GDisplay *) gdisp_ptr;
 
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, FALSE, FALSE);
+  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
+			       &x, &y, FALSE, FALSE);
+
   if ((layer = gimage_pick_correlate_layer (gdisp->gimage, x, y)))
     if (layer == gdisp->gimage->active_layer)
       {
 	gdisplay_install_tool_cursor (gdisp, GDK_TCROSS);
 	return;
       }
+
   gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW);
 }
 
@@ -450,13 +485,13 @@ by_color_select_control (Tool       *tool,
 }
 
 static void
-by_color_select_options_reset ()
+by_color_select_options_reset (void)
 {
   selection_options_reset (by_color_options);
 }
 
 Tool *
-tools_new_by_color_select ()
+tools_new_by_color_select (void)
 {
   Tool * tool;
   ByColorSelect * private;
@@ -471,7 +506,7 @@ tools_new_by_color_select ()
 
   /*  The "by color" dialog  */
   if (!by_color_dialog)
-    by_color_dialog = by_color_select_new_dialog ();
+    by_color_dialog = by_color_select_dialog_new ();
   else
     if (!GTK_WIDGET_VISIBLE (by_color_dialog->shell))
       gtk_widget_show (by_color_dialog->shell);
@@ -521,7 +556,6 @@ by_color_select_initialize_by_image (GImage *gimage)
 void
 by_color_select_initialize (GDisplay *gdisp)
 {
-  /* wrap this call so the tool_info->init_func works  */
   by_color_select_initialize_by_image (gdisp->gimage);
 }
 
@@ -530,37 +564,16 @@ by_color_select_initialize (GDisplay *gdisp)
 /****************************/
 
 static ByColorDialog *
-by_color_select_new_dialog ()
+by_color_select_dialog_new (void)
 {
   ByColorDialog *bcd;
-  GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *frame;
   GtkWidget *options_box;
   GtkWidget *label;
   GtkWidget *util_box;
   GtkWidget *slider;
-  GtkWidget *radio_box;
-  GtkWidget *radio_button;
   GtkObject *data;
-  GSList *group = NULL;
-  gint i;
-
-  gchar *button_names[] =
-  {
-    N_("Replace"),
-    N_("Add"),
-    N_("Subtract"),
-    N_("Intersect")
-  };
-
-  gint button_values[] =
-  {
-    REPLACE,
-    ADD,
-    SUB,
-    INTERSECT
-  };
 
   bcd = g_new (ByColorDialog, 1);
   bcd->gimage    = NULL;
@@ -580,101 +593,98 @@ by_color_select_new_dialog ()
 
 				NULL);
 
-  /*  The vbox  */
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (bcd->shell)->vbox), vbox);
-
-  /*  The horizontal box containing preview & options box  */
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  /*  The main hbox  */
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (bcd->shell)->vbox), hbox);
 
   /*  The preview  */
-  util_box = gtk_vbox_new (FALSE, 2);
+  util_box = gtk_vbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (hbox), util_box, FALSE, FALSE, 0);
+
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (util_box), frame, FALSE, FALSE, 0);
+
   bcd->preview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
   gtk_preview_size (GTK_PREVIEW (bcd->preview), PREVIEW_WIDTH, PREVIEW_HEIGHT);
   gtk_widget_set_events (bcd->preview, PREVIEW_EVENT_MASK);
-  gtk_signal_connect (GTK_OBJECT (bcd->preview), "button_press_event",
-		      (GtkSignalFunc) by_color_select_preview_events,
-		      bcd);
   gtk_container_add (GTK_CONTAINER (frame), bcd->preview);
 
-  /* dnd colors to the image window */
+  gtk_signal_connect (GTK_OBJECT (bcd->preview), "button_press_event",
+		      GTK_SIGNAL_FUNC (by_color_select_preview_events),
+		      bcd);
+
+  /*  dnd colors to the image window  */
   gtk_drag_dest_set (bcd->preview, 
                      GTK_DEST_DEFAULT_HIGHLIGHT |
                      GTK_DEST_DEFAULT_MOTION |
                      GTK_DEST_DEFAULT_DROP, 
-                     by_color_select_image_target_table, 
-                     n_by_color_select_image_targets,
+                     by_color_select_targets,
+                     n_by_color_select_targets,
                      GDK_ACTION_COPY);
   gimp_dnd_color_dest_set (bcd->preview, by_color_select_color_drop, bcd);
-
 
   gtk_widget_show (bcd->preview);
   gtk_widget_show (frame);
   gtk_widget_show (util_box);
 
   /*  options box  */
-  options_box = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (options_box), 5);
-  gtk_box_pack_start (GTK_BOX (hbox), options_box, TRUE, TRUE, 0);
+  options_box = gtk_vbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (hbox), options_box, FALSE, FALSE, 0);
 
   /*  Create the active image label  */
   util_box = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (options_box), util_box, FALSE, FALSE, 0);
+
   bcd->gimage_name = gtk_label_new (_("Inactive"));
-  gtk_box_pack_start (GTK_BOX (util_box), bcd->gimage_name, FALSE, FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (util_box), bcd->gimage_name, FALSE, FALSE, 0);
 
   gtk_widget_show (bcd->gimage_name);
   gtk_widget_show (util_box);
 
   /*  Create the selection mode radio box  */
-  frame = gtk_frame_new (_("Selection Mode"));
+  frame = 
+    gimp_radio_group_new (TRUE, _("Selection Mode"),
+
+			  _("Replace"), by_color_select_type_callback,
+			  (gpointer) REPLACE, NULL, NULL, TRUE,
+			  _("Add"), by_color_select_type_callback,
+			  (gpointer) ADD, NULL, NULL, FALSE,
+			  _("Subtract"), by_color_select_type_callback,
+			  (gpointer) SUB, NULL, NULL, FALSE,
+			  _("Intersect"), by_color_select_type_callback,
+			  (gpointer) INTERSECT, NULL, NULL, FALSE,
+
+			  NULL);
+
   gtk_box_pack_start (GTK_BOX (options_box), frame, FALSE, FALSE, 0);
-
-  radio_box = gtk_vbox_new (FALSE, 2);
-  gtk_container_add (GTK_CONTAINER (frame), radio_box);
-
-  /*  the radio buttons  */
-  for (i = 0; i < (sizeof(button_names) / sizeof(button_names[0])); i++)
-    {
-      radio_button = gtk_radio_button_new_with_label (group,
-        gettext(button_names[i]));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
-      gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-			  (GtkSignalFunc) by_color_select_type_callback,
-			  (gpointer) ((long) button_values[i]));
-      gtk_widget_show (radio_button);
-    }
-  gtk_widget_show (radio_box);
   gtk_widget_show (frame);
 
   /*  Create the opacity scale widget  */
   util_box = gtk_vbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (options_box), util_box, FALSE, FALSE, 0);
+
   label = gtk_label_new (_("Fuzziness Threshold"));
   gtk_box_pack_start (GTK_BOX (util_box), label, FALSE, FALSE, 2);
+
+  gtk_widget_show (label);
+  gtk_widget_show (util_box);
+
   data = gtk_adjustment_new (bcd->threshold, 0.0, 255.0, 1.0, 1.0, 0.0);
   slider = gtk_hscale_new (GTK_ADJUSTMENT (data));
   gtk_box_pack_start (GTK_BOX (util_box), slider, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+
   gtk_signal_connect (GTK_OBJECT (data), "value_changed",
-		      (GtkSignalFunc) by_color_select_fuzzy_update,
+		      GTK_SIGNAL_FUNC (by_color_select_fuzzy_update),
 		      bcd);
 
-  gtk_widget_show (label);
   gtk_widget_show (slider);
-  gtk_widget_show (util_box);
 
   gtk_widget_show (options_box);
   gtk_widget_show (hbox);
-  gtk_widget_show (vbox);
   gtk_widget_show (bcd->shell);
 
   return bcd;
@@ -686,14 +696,14 @@ by_color_select_render (ByColorDialog *bcd,
 {
   Channel * mask;
   MaskBuf * scaled_buf = NULL;
-  unsigned char *buf;
+  guchar *buf;
   PixelRegion srcPR, destPR;
-  unsigned char * src;
-  int subsample;
-  int width, height;
-  int srcwidth;
-  int i;
-  int scale;
+  guchar * src;
+  gint subsample;
+  gint width, height;
+  gint srcwidth;
+  gint i;
+  gint scale;
 
   mask = gimage_get_mask (gimage);
   if ((drawable_width (GIMP_DRAWABLE(mask)) > PREVIEW_WIDTH) ||
@@ -703,11 +713,13 @@ by_color_select_render (ByColorDialog *bcd,
 	  ((float) drawable_height (GIMP_DRAWABLE (mask)) / (float) PREVIEW_HEIGHT))
 	{
 	  width = PREVIEW_WIDTH;
-	  height = (drawable_height (GIMP_DRAWABLE (mask)) * PREVIEW_WIDTH) / drawable_width (GIMP_DRAWABLE (mask));
+	  height = ((drawable_height (GIMP_DRAWABLE (mask)) * PREVIEW_WIDTH) /
+		    drawable_width (GIMP_DRAWABLE (mask)));
 	}
       else
 	{
-	  width = (drawable_width (GIMP_DRAWABLE (mask)) * PREVIEW_HEIGHT) / drawable_height (GIMP_DRAWABLE (mask));
+	  width = ((drawable_width (GIMP_DRAWABLE (mask)) * PREVIEW_HEIGHT) /
+		   drawable_height (GIMP_DRAWABLE (mask)));
 	  height = PREVIEW_HEIGHT;
 	}
 
@@ -726,10 +738,10 @@ by_color_select_render (ByColorDialog *bcd,
     gtk_preview_size (GTK_PREVIEW (bcd->preview), width, height);
 
   /*  clear the image buf  */
-  buf = (unsigned char *) g_malloc (bcd->preview->requisition.width);
-  memset (buf, 0, bcd->preview->requisition.width);
+  buf = g_new0 (guchar, bcd->preview->requisition.width);
   for (i = 0; i < bcd->preview->requisition.height; i++)
-    gtk_preview_draw_row (GTK_PREVIEW (bcd->preview), buf, 0, i, bcd->preview->requisition.width);
+    gtk_preview_draw_row (GTK_PREVIEW (bcd->preview), buf,
+			  0, i, bcd->preview->requisition.width);
   g_free (buf);
 
   /*  if the mask is empty, no need to scale and update again  */
@@ -800,7 +812,8 @@ by_color_select_draw (ByColorDialog *bcd,
   gtk_widget_draw (bcd->preview, NULL);
 
   /*  Update the gimage label to reflect the displayed gimage name  */
-  gtk_label_set_text (GTK_LABEL (bcd->gimage_name), g_basename (gimage_filename (gimage)));
+  gtk_label_set_text (GTK_LABEL (bcd->gimage_name),
+		      g_basename (gimage_filename (gimage)));
 }
 
 static gint
@@ -823,25 +836,25 @@ by_color_select_preview_events (GtkWidget      *widget,
 
 static void
 by_color_select_type_callback (GtkWidget *widget,
-			       gpointer   client_data)
+			       gpointer   data)
 {
   if (by_color_dialog)
-    by_color_dialog->operation = (long) client_data;
+    by_color_dialog->operation = (long) data;
 }
 
 static void
 by_color_select_reset_callback (GtkWidget *widget,
-				gpointer   client_data)
+				gpointer   data)
 {
   ByColorDialog *bcd;
 
-  bcd = (ByColorDialog *) client_data;
+  bcd = (ByColorDialog *) data;
 
   if (!bcd->gimage)
     return;
 
   /*  check if the image associated to the mask still exists  */
-  if (!drawable_gimage (GIMP_DRAWABLE(gimage_get_mask (bcd->gimage))))
+  if (!drawable_gimage (GIMP_DRAWABLE (gimage_get_mask (bcd->gimage))))
     return;
 
   /*  reset the mask  */
@@ -857,16 +870,16 @@ by_color_select_reset_callback (GtkWidget *widget,
 
 static void
 by_color_select_close_callback (GtkWidget *widget,
-				gpointer   client_data)
+				gpointer   data)
 {
   ByColorDialog *bcd;
 
-  bcd = (ByColorDialog *) client_data;
+  bcd = (ByColorDialog *) data;
+
   if (GTK_WIDGET_VISIBLE (bcd->shell))
     gtk_widget_hide (bcd->shell);
 
-  if (bcd->gimage &&
-      gimp_set_have (image_context, bcd->gimage))
+  if (bcd->gimage && gimp_set_have (image_context, bcd->gimage))
     {
       bcd->gimage->by_color_select = FALSE;
       bcd->gimage = NULL;
@@ -880,18 +893,19 @@ by_color_select_fuzzy_update (GtkAdjustment *adjustment,
   ByColorDialog *bcd;
 
   bcd = (ByColorDialog *) data;
-  bcd->threshold = (int) adjustment->value;
+
+  bcd->threshold = (gint) (adjustment->value + 0.5);
 }
 
 static void
 by_color_select_preview_button_press (ByColorDialog  *bcd,
 				      GdkEventButton *bevent)
 {
-  int x, y;
-  int replace, operation;
+  gint x, y;
+  gint replace, operation;
   GimpDrawable *drawable;
   Tile *tile;
-  unsigned char *col;
+  guchar *col;
 
   if (!bcd->gimage)
     return;

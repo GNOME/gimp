@@ -26,34 +26,39 @@
 #define HISTOGRAM_HEIGHT 150
 
 typedef struct _HistogramToolDialog HistogramToolDialog;
+
 struct _HistogramToolDialog
 {
   GtkWidget       *shell;
+
   GtkWidget       *info_labels[7];
   GtkWidget       *channel_menu;
   HistogramWidget *histogram;
   GimpHistogram   *hist;
   GtkWidget       *gradient;
 
-  gdouble  mean;
-  gdouble  std_dev;
-  gdouble  median;
-  gdouble  pixels;
-  gdouble  count;
-  gdouble  percentile;
+  gdouble          mean;
+  gdouble          std_dev;
+  gdouble          median;
+  gdouble          pixels;
+  gdouble          count;
+  gdouble          percentile;
 
-  GimpDrawable *drawable;
-  ImageMap      image_map;
-  gint          channel;
-  gint          color;
+  GimpDrawable    *drawable;
+  ImageMap         image_map;
+  gint             channel;
+  gint             color;
 };
 
 /*  histogram_tool functions  */
-Tool * tools_new_histogram_tool  (void);
-void   tools_free_histogram_tool (Tool *);
+Tool * tools_new_histogram_tool       (void);
+void   tools_free_histogram_tool      (Tool            *tool);
 
-void   histogram_tool_initialize      (GDisplay *);
+void   histogram_tool_initialize      (GDisplay        *gdisp);
 void   histogram_tool_free            (void);
-void   histogram_tool_histogram_range (HistogramWidget *, gint, gint, void *);
+void   histogram_tool_histogram_range (HistogramWidget *hw,
+				       gint             start,
+				       gint             end,
+				       gpointer         data);
 
 #endif /* __HISTOGRAM_TOOL_H__ */

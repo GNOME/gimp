@@ -15,12 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include "config.h"
-
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-
 #include "appenv.h"
 #include "drawable.h"
 #include "gdisplay.h"
@@ -33,31 +27,32 @@
 
 #include "libgimp/gimpintl.h"
 
-#define TEXT_WIDTH 55
-
 /*  the posterize structures  */
 
 typedef struct _Posterize Posterize;
+
 struct _Posterize
 {
-  int x, y;    /*  coords for last mouse click  */
+  gint x, y;    /*  coords for last mouse click  */
 };
 
 typedef struct _PosterizeDialog PosterizeDialog;
+
 struct _PosterizeDialog
 {
-  GtkWidget    *shell;
-  GtkWidget    *levels_text;
+  GtkWidget     *shell;
 
-  GimpDrawable *drawable;
-  ImageMap      image_map;
-  int           levels;
+  GtkAdjustment *levels_data;
 
-  gint          preview;
+  GimpDrawable  *drawable;
+  ImageMap       image_map;
 
-  GimpLut      *lut;
+  gint           levels;
+
+  gboolean       preview;
+
+  GimpLut       *lut;
 };
-
 
 /*  the posterize tool options  */
 static ToolOptions *posterize_options = NULL;
@@ -69,14 +64,14 @@ static PosterizeDialog *posterize_dialog = NULL;
 /*  posterize action functions  */
 static void   posterize_control (Tool *, ToolAction, gpointer);
 
-static PosterizeDialog * posterize_new_dialog (void);
+static PosterizeDialog * posterize_dialog_new (void);
 
-static void   posterize_preview            (PosterizeDialog *);
-static void   posterize_ok_callback        (GtkWidget *, gpointer);
-static void   posterize_cancel_callback    (GtkWidget *, gpointer);
-static void   posterize_preview_update     (GtkWidget *, gpointer);
-static void   posterize_levels_text_update (GtkWidget *, gpointer);
-
+static void   posterize_preview                  (PosterizeDialog *);
+static void   posterize_reset_callback           (GtkWidget *, gpointer);
+static void   posterize_ok_callback              (GtkWidget *, gpointer);
+static void   posterize_cancel_callback          (GtkWidget *, gpointer);
+static void   posterize_preview_update           (GtkWidget *, gpointer);
+static void   posterize_levels_adjustment_update (GtkAdjustment *, gpointer);
 
 /*  posterize select action functions  */
 
@@ -104,7 +99,7 @@ posterize_control (Tool       *tool,
 }
 
 Tool *
-tools_new_posterize ()
+tools_new_posterize (void)
 {
   Tool * tool;
   Posterize * private;
@@ -115,13 +110,6 @@ tools_new_posterize ()
       posterize_options = tool_options_new (("Posterize Options"));
       tools_register (POSTERIZE, posterize_options);
     }
-
-  /*  The posterize dialog  */
-  if (!posterize_dialog)
-    posterize_dialog = posterize_new_dialog ();
-  else
-    if (!GTK_WIDGET_VISIBLE (posterize_dialog->shell))
-      gtk_widget_show (posterize_dialog->shell);
 
   tool = tools_new_tool (POSTERIZE);
   private = g_new (Posterize, 1);
@@ -161,32 +149,37 @@ posterize_initialize (GDisplay *gdisp)
 
   /*  The posterize dialog  */
   if (!posterize_dialog)
-    posterize_dialog = posterize_new_dialog ();
+    posterize_dialog = posterize_dialog_new ();
   else
     if (!GTK_WIDGET_VISIBLE (posterize_dialog->shell))
       gtk_widget_show (posterize_dialog->shell);
+
+  posterize_dialog->levels = 3;
 
   posterize_dialog->drawable = gimage_active_drawable (gdisp->gimage);
   posterize_dialog->image_map =
     image_map_create (gdisp, posterize_dialog->drawable);
 
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (posterize_dialog->levels_data), 3);
+
   if (posterize_dialog->preview)
     posterize_preview (posterize_dialog);
 }
-
 
 /**********************/
 /*  Posterize dialog  */
 /**********************/
 
 static PosterizeDialog *
-posterize_new_dialog ()
+posterize_dialog_new (void)
 {
   PosterizeDialog *pd;
   GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *label;
+  GtkWidget *spinbutton;
   GtkWidget *toggle;
+  GtkObject *data;
 
   pd = g_new (PosterizeDialog, 1);
   pd->preview = TRUE;
@@ -200,6 +193,8 @@ posterize_new_dialog ()
 		     GTK_WIN_POS_NONE,
 		     FALSE, TRUE, FALSE,
 
+		     _("Reset"), posterize_reset_callback,
+		     pd, NULL, TRUE, FALSE,
 		     _("OK"), posterize_ok_callback,
 		     pd, NULL, TRUE, FALSE,
 		     _("Cancel"), posterize_cancel_callback,
@@ -208,39 +203,43 @@ posterize_new_dialog ()
 		     NULL);
 
   vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (pd->shell)->vbox), vbox);
 
   /*  Horizontal box for levels text widget  */
-  hbox = gtk_hbox_new (TRUE, 2);
+  hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Posterize Levels: "));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, FALSE, 0);
+  label = gtk_label_new (_("Posterize Levels:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  /*  levels text  */
-  pd->levels_text = gtk_entry_new ();
-  gtk_entry_set_text (GTK_ENTRY (pd->levels_text), "3");
-  gtk_widget_set_usize (pd->levels_text, TEXT_WIDTH, 25);
-  gtk_box_pack_start (GTK_BOX (hbox), pd->levels_text, TRUE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (pd->levels_text), "changed",
-		      (GtkSignalFunc) posterize_levels_text_update,
+  /*  levels spinbutton  */
+  data = gtk_adjustment_new (3, 2, 256, 1.0, 10.0, 0.0);
+  pd->levels_data = GTK_ADJUSTMENT (data);
+
+  spinbutton = gtk_spin_button_new (pd->levels_data, 1.0, 0);
+  gtk_widget_set_usize (spinbutton, 75, -1);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+
+  gtk_signal_connect (GTK_OBJECT (pd->levels_data), "value_changed",
+		      GTK_SIGNAL_FUNC (posterize_levels_adjustment_update),
 		      pd);
-  gtk_widget_show (pd->levels_text);
+
+  gtk_widget_show (spinbutton);
   gtk_widget_show (hbox);
 
   /*  Horizontal box for preview  */
-  hbox = gtk_hbox_new (TRUE, 2);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   /*  The preview toggle  */
   toggle = gtk_check_button_new_with_label (_("Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pd->preview);
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) posterize_preview_update,
+		      GTK_SIGNAL_FUNC (posterize_preview_update),
 		      pd);
 
   gtk_widget_show (label);
@@ -257,21 +256,36 @@ static void
 posterize_preview (PosterizeDialog *pd)
 {
   if (!pd->image_map)
-    g_warning ("posterize_preview(): No image map");
+    {
+      g_warning ("posterize_preview(): No image map");
+      return;
+    }
+
   active_tool->preserve = TRUE;
-  posterize_lut_setup(pd->lut, pd->levels, gimp_drawable_bytes(pd->drawable));
-  image_map_apply (pd->image_map,  (ImageMapApplyFunc)gimp_lut_process_2,
+  posterize_lut_setup (pd->lut, pd->levels, gimp_drawable_bytes(pd->drawable));
+  image_map_apply (pd->image_map,  (ImageMapApplyFunc) gimp_lut_process_2,
 		   (void *) pd->lut);
   active_tool->preserve = FALSE;
 }
 
 static void
-posterize_ok_callback (GtkWidget *widget,
-		       gpointer   client_data)
+posterize_reset_callback (GtkWidget *widget,
+			  gpointer   data)
 {
   PosterizeDialog *pd;
 
-  pd = (PosterizeDialog *) client_data;
+  pd = (PosterizeDialog *) data;
+
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (pd->levels_data), 3);
+}
+
+static void
+posterize_ok_callback (GtkWidget *widget,
+		       gpointer   data)
+{
+  PosterizeDialog *pd;
+
+  pd = (PosterizeDialog *) data;
 
   if (GTK_WIDGET_VISIBLE (pd->shell))
     gtk_widget_hide (pd->shell);
@@ -279,12 +293,13 @@ posterize_ok_callback (GtkWidget *widget,
   active_tool->preserve = TRUE;
 
   if (!pd->preview)
-  {
-    posterize_lut_setup(pd->lut, pd->levels,
-			gimp_drawable_bytes(pd->drawable));
-    image_map_apply (pd->image_map, (ImageMapApplyFunc)gimp_lut_process_2,
-		     (void *) pd->lut);
-  }
+    {
+      posterize_lut_setup( pd->lut, pd->levels,
+			   gimp_drawable_bytes (pd->drawable));
+      image_map_apply (pd->image_map, (ImageMapApplyFunc) gimp_lut_process_2,
+		       (void *) pd->lut);
+    }
+
   if (pd->image_map)
     image_map_commit (pd->image_map);
 
@@ -298,11 +313,12 @@ posterize_ok_callback (GtkWidget *widget,
 
 static void
 posterize_cancel_callback (GtkWidget *widget,
-			   gpointer   client_data)
+			   gpointer   data)
 {
   PosterizeDialog *pd;
 
-  pd = (PosterizeDialog *) client_data;
+  pd = (PosterizeDialog *) data;
+
   if (GTK_WIDGET_VISIBLE (pd->shell))
     gtk_widget_hide (pd->shell);
 
@@ -321,14 +337,14 @@ posterize_cancel_callback (GtkWidget *widget,
 }
 
 static void
-posterize_preview_update (GtkWidget *w,
+posterize_preview_update (GtkWidget *widget,
 			  gpointer   data)
 {
   PosterizeDialog *pd;
 
   pd = (PosterizeDialog *) data;
 
-  if (GTK_TOGGLE_BUTTON (w)->active)
+  if (GTK_TOGGLE_BUTTON (widget)->active)
     {
       pd->preview = TRUE;
       posterize_preview (pd);
@@ -338,20 +354,17 @@ posterize_preview_update (GtkWidget *w,
 }
 
 static void
-posterize_levels_text_update (GtkWidget *w,
-			      gpointer   data)
+posterize_levels_adjustment_update (GtkAdjustment *adjustment,
+				    gpointer       data)
 {
   PosterizeDialog *pd;
-  char *str;
-  int value;
 
   pd = (PosterizeDialog *) data;
-  str = gtk_entry_get_text (GTK_ENTRY (w));
-  value = BOUNDS (((int) atof (str)), 2, 256);
 
-  if (value != pd->levels)
+  if (pd->levels != adjustment->value)
     {
-      pd->levels = value;
+      pd->levels = adjustment->value;
+
       if (pd->preview)
 	posterize_preview (pd);
     }

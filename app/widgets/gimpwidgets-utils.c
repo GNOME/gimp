@@ -18,9 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
-#include <string.h>
-
 #include "gimpui.h"
 
 #include "libgimp/gimpsizeentry.h"
@@ -324,50 +321,73 @@ gimp_option_menu_new (GtkSignalFunc  menu_item_callback,
 }
 
 GtkWidget *
-gimp_radio_group_new (GtkSignalFunc  radio_button_callback,
-		      gpointer       initial,  /* user_data */
+gimp_radio_group_new (gboolean  in_frame,
+		      gchar    *frame_title,
 
 		      /* specify radio buttons as va_list:
-		       *  gchar     *label,
-		       *  gpointer   data,
-		       *  gpointer   user_data,
+		       *  gchar          *label,
+		       *  GtkSignalFunc   callback,
+		       *  gpointer        data,
+		       *  gpointer        user_data,
+		       *  GtkWidget     **widget_ptr,
+		       *  gboolean        active,
 		       */
 
 		      ...)
 {
   GtkWidget *vbox;
+  GtkWidget *frame;
   GtkWidget *button;
   GSList    *group;
 
   /*  radio button variables  */
-  gchar     *label;
-  gpointer   data;
-  gpointer   user_data;
+  gchar          *label;
+  GtkSignalFunc   callback;
+  gpointer        data;
+  gpointer        user_data;
+  GtkWidget     **widget_ptr;
+  gboolean        active;
 
-  va_list    args;
+  va_list args;
 
   vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+
+  if (in_frame)
+    {
+      frame = gtk_frame_new (frame_title);
+      gtk_container_add (GTK_CONTAINER (frame), vbox);
+      gtk_widget_show (vbox);
+    }
+
   group = NULL;
 
   /*  create the radio buttons  */
-  va_start (args, initial);
+  va_start (args, frame_title);
   label = va_arg (args, gchar*);
   while (label)
     {
-      data = va_arg (args, gpointer);
-      user_data = va_arg (args, gpointer);
+      callback   = va_arg (args, GtkSignalFunc);
+      data       = va_arg (args, gpointer);
+      user_data  = va_arg (args, gpointer);
+      widget_ptr = va_arg (args, gpointer);
+      active     = va_arg (args, gboolean);
 
       button = gtk_radio_button_new_with_label (group, label);
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			  (GtkSignalFunc) radio_button_callback,
+			  GTK_SIGNAL_FUNC (callback),
 			  data);
-      gtk_object_set_user_data (GTK_OBJECT (button), user_data);
+
+      if (user_data)
+	gtk_object_set_user_data (GTK_OBJECT (button), user_data);
+
+      if (widget_ptr)
+	*widget_ptr = button;
 
       /*  press the initially active radio button  */
-      if (user_data == initial)
+      if (active)
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
       gtk_widget_show (button);
@@ -375,6 +395,9 @@ gimp_radio_group_new (GtkSignalFunc  radio_button_callback,
       label = va_arg (args, gchar*);
     }
   va_end (args);
+
+  if (in_frame)
+    return frame;
 
   return vbox;
 }
@@ -400,7 +423,7 @@ gimp_spin_button_new (GtkObject **adjustment,  /* return value */
   gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
 				   GTK_SHADOW_NONE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_usize (spinbutton, 75, 0);
+  gtk_widget_set_usize (spinbutton, 75, -1);
 
   return spinbutton;
 }
@@ -787,11 +810,12 @@ struct _MessageBox
 
 static void  gimp_message_box_close_callback  (GtkWidget *, gpointer);
 
-#define MESSAGE_STRING_BUFFER	80	/* some buffer size, not critical */
-#define MESSAGE_BOX_MAXIMUM	 7	/* the maximum number of concucrrent dialog boxes */
+#define MESSAGE_BOX_MAXIMUM  7  /*  the maximum number of concucrrent
+				 *  dialog boxes
+				 */
 
-static int message_pool = MESSAGE_BOX_MAXIMUM;
-static gchar message_box_last[MESSAGE_STRING_BUFFER];
+static gint   message_pool     = MESSAGE_BOX_MAXIMUM;
+static gchar *message_box_last = NULL;
 
 GtkWidget *
 gimp_message_box (gchar       *message,
@@ -803,13 +827,13 @@ gimp_message_box (gchar       *message,
   GtkWidget  *vbox;
   GtkWidget  *label;
 
-  static int repeat_count;
+  static gint repeat_count;
 
   /* arguably, if message_pool <= 0 we could print to stdout */
   if (!message || message_pool <= 0)
     return NULL;
 
-  if (!strcmp (message_box_last, message))
+  if (message_box_last && !strcmp (message_box_last, message))
     {
       repeat_count++;
       if (repeat_count == 3)
@@ -820,8 +844,9 @@ gimp_message_box (gchar       *message,
   else
     {
       repeat_count = 0;
-      if (strlen (message) < MESSAGE_STRING_BUFFER)
-        strcpy (message_box_last, message);
+      if (message_box_last)
+	g_free (message_box_last);
+      message_box_last = g_strdup (message);
     }
 
   if (message_pool == 1)

@@ -20,10 +20,9 @@
 
 #include "tools.h"
 
-/*  by_color select functions  */
-Tool *        tools_new_brightness_contrast      (void);
-void          tools_free_brightness_contrast     (Tool *);
+Tool * tools_new_brightness_contrast  (void);
+void   tools_free_brightness_contrast (Tool     *tool);
 
-void          brightness_contrast_initialize     (GDisplay *);
+void   brightness_contrast_initialize (GDisplay *gdisp);
 
 #endif  /*  __BRIGHTNESS_CONTRAST_H__  */
