@@ -30,9 +30,23 @@ Overview of Changes in GIMP 2.2-pre2
 
 - Load and save EXIF thumbnails in JPEG files.
 
+- Render in small resolution when creating a thumbnail for a
+  Postscript or PDF document or from an SVG or WMF image file.
+
 - Allow to import Photoshop (.act) palette files.
 
 - Added a Print Size dialog to bring back missing functionality from 2.0.
+
+- Several improvements to the GIMP Python bindins.
+
+- Guard the core better against misbehaving scripts and plug-ins.
+
+- Changed the way that Script-Fu scripts register their menus (in a
+  backward compatible way).
+
+- Added ALSA support for the MIDI controller module.
+
+- Resurrected the glob plug-in.
 
 - Lots of bug fixes and some optimizations.
 
