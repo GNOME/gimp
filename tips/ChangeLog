@@ -1,7 +1,12 @@
+2003-10-17  Sven Neumann  <sven@gimp.org>
+
+	* gimp-tips.xml.in: a bunch of updates based on a patch from
+	Raymond Ostertag.
+
 2003-09-30  Hasbullah Bin Pit <sebol@ikhlas.com>
-                                                                                
-        * ms.po: Added Translation by
-                MIMOS Open Source Development Group <ismas@mimos.my>
+
+	* ms.po: Added Translation by MIMOS Open Source Development Group
+	<ismas@mimos.my>
 
 2003-09-17  Wang Jian  <lark@linux.net.cn>
 
@@ -10,7 +15,8 @@
 
 2003-09-16  Stanislav Visnovsky <visnovsky@nenya.ms.mff.cuni.cz>
 
-	* sk.po: Updated Slovak translation by Zdenko Podobny <zdpo@mailbox.sk>.
+	* sk.po: Updated Slovak translation by Zdenko Podobny
+	<zdpo@mailbox.sk>.
 
 2003-09-09  Duarte Loreto <happyguy_pt@hotmail.com>
 
@@ -18,7 +24,8 @@
 
 2003-09-04  Stanislav Visnovsky <visnovsky@nenya.ms.mff.cuni.cz>
 
-	* sk.po: Updated Slovak translation by Zdenko Podobny <zdpo@mailbox.sk>.
+	* sk.po: Updated Slovak translation by Zdenko Podobny
+	<zdpo@mailbox.sk>.
 
 2003-09-02  Sven Neumann  <sven@gimp.org>
 
@@ -65,20 +72,20 @@
 
 2003-08-12  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2003-08-06  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * pt.po: Updated Portuguese translation.
+	* pt.po: Updated Portuguese translation.
 
 2003-08-04  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation by
+	* es.po: Updated Spanish translation by
                  Francisco Javier F. Serrador <serrador@arrakis.es>.
 
 2003-07-30  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * pt.po: Updated Portuguese translation.
+	* pt.po: Updated Portuguese translation.
 
 2003-07-28  Miloslav Trmac  <mitr@volny.cz>
 
@@ -86,7 +93,7 @@
 
 2003-07-25  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2003-07-08  Sven Neumann  <sven@gimp.org>
 
