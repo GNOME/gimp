@@ -105,6 +105,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
                                  GimpImage        *gimage)
 {
   GtkWidget      *dialog;
+  GtkWidget      *button;
   GimpMessageBox *box;
   GClosure       *closure;
   GSource        *source;
@@ -127,13 +128,19 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
                                       GTK_WIDGET (shell),
                                       GTK_DIALOG_DESTROY_WITH_PARENT,
                                       gimp_standard_help_func, NULL,
-
-                                      _("Do_n't save"), GTK_RESPONSE_CLOSE,
-                                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                      GTK_STOCK_SAVE,   RESPONSE_SAVE,
-
                                       NULL);
   g_free (title);
+
+  button = gtk_dialog_add_button (GTK_DIALOG (dialog),
+                                  _("Do_n't save"), GTK_RESPONSE_CLOSE);
+  gtk_button_set_image (GTK_BUTTON (button),
+                        gtk_image_new_from_stock (GTK_STOCK_NO,
+                                                  GTK_ICON_SIZE_BUTTON));
+
+  gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                          GTK_STOCK_SAVE,   RESPONSE_SAVE,
+                          NULL);
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
 
