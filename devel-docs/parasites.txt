@@ -121,6 +121,13 @@ Global data follows no strict rules.
 
 	Example: a hot spot at coordinates (5,5) is stored as "5 5"
 
+"icc-profile" (IMAGE, PERSISTENT)
+	This contains an ICC profile describing the color space the
+	image was produced in. TIFF images stored in PhotoShop do 
+	oftentimes contain embedded profiles. An experimental color
+	manager exists to use this parasite, and it will be used
+	for interchange between TIFF and PNG (identical profiles)
+
 
 ------------------------------------------------------------------
 

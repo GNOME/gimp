@@ -8,6 +8,9 @@
  * njl195@zepler.org.uk -- 20 April 2000
  * The code for this filter is based on "tifftopnm" and "pnmtotiff",
  *  2 programs that are a part of the netpbm package.
+ * khk@khk.net -- 13 May 2000
+ * Added support for ICCPROFILE tiff tag. If this tag is present in a 
+ * TIFF file, then a parasite is created and vice versa.
  */
 
 /*
@@ -430,6 +433,10 @@ load_image (gchar *filename)
   GimpParasite *parasite;
 #endif /* GIMP_HAVE_PARASITES */
   guint16 tmp;
+#ifdef TIFFTAG_ICCPROFILE
+  uint32 profile_size;
+  guchar *icc_profile;
+#endif
 
   TIFFSetWarningHandler (tiff_warning);
   TIFFSetErrorHandler (tiff_error);
@@ -521,6 +528,21 @@ load_image (gchar *filename)
     gimp_quit ();
   }
   gimp_image_set_filename (image, filename);
+
+  /* attach a parasite containing an ICC profile - if found in the TIFF file */
+
+#ifdef TIFFTAG_ICCPROFILE
+	/* If TIFFTAG_ICCPROFILE is defined we are dealing with a libtiff version 
+         * that can handle ICC profiles. Otherwise just ignore this section. */
+  if (TIFFGetField (tif, TIFFTAG_ICCPROFILE, &profile_size, &icc_profile)) {
+#ifdef GIMP_HAVE_PARASITES
+    parasite = parasite_new("icc-profile", 0,
+			    profile_size, icc_profile);
+    gimp_image_parasite_attach(image, parasite);
+    parasite_free(parasite);
+#endif
+  }    
+#endif
 
   /* attach a parasite containing the compression */
   if (!TIFFGetField (tif, TIFFTAG_COMPRESSION, &tmp))
@@ -1395,6 +1417,27 @@ save_image (gchar   *filename,
       gimp_parasite_free (parasite);
     }
 #endif /* GIMP_HAVE_PARASITES */
+
+  /* do we have an ICC profile? If so, write it to the TIFF file */
+#ifdef GIMP_HAVE_PARASITES
+#ifdef TIFFTAG_ICCPROFILE
+  {
+    Parasite *parasite;
+    uint32 profile_size;
+    guchar *icc_profile;
+
+    parasite = gimp_image_parasite_find (orig_image, "icc-profile");
+    if (parasite)
+      {
+        profile_size = parasite_data_size(parasite);
+	icc_profile = parasite_data(parasite);
+
+	TIFFSetField(tif, TIFFTAG_ICCPROFILE, profile_size, icc_profile);
+        parasite_free(parasite);
+      }
+  }
+#endif
+#endif
 
   if (drawable_type == INDEXED_IMAGE)
     TIFFSetField (tif, TIFFTAG_COLORMAP, red, grn, blu);

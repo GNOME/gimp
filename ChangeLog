@@ -1,3 +1,9 @@
+2000-05-20  Nick Lamb  <njl195@zepler.org.uk>
+
+	* devel-docs/parasites.txt
+	* plug-ins/common/tiff.c: Add support for ICC profiles
+	from <khk@khk.net> look out for equivalent PNG support soon
+
 2000-06-14  Daniel Egger <egger@suse.de>
 
 	* paint_funcs.c: Remove calls to tile-acessor functions
