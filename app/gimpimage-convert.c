@@ -1139,10 +1139,9 @@ make_remap_table (const unsigned char  old_palette[],
 		  && (palentries[j].used_count))
 		{
 		  remap_table[i] = j;
-		  goto found_this_one;
+		  break;
 		}
 	    }
-	found_this_one:
 	}
     }
   for (i = 0; i < *num_entries; i++)

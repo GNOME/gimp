@@ -1,3 +1,8 @@
+Tue Sep 14 12:52:11 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/convert.c: use break; instead of compiler barfing goto and
+	label: } construct
+
 Tue Sep 14 12:40:47 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/sel2path/global.h
