@@ -136,7 +136,7 @@ static const int subsample[5][5][9] = {
 };
 
 static void
-paint_core_sample_color(GimpDrawable *drawable, int x, int y, int state)
+paint_core_sample_color (GimpDrawable *drawable, int x, int y, int state)
 {
   unsigned char *color;
   if ((color = gimp_drawable_get_color_at(drawable, x, y)))
@@ -331,6 +331,7 @@ paint_core_cursor_update (tool, mevent, gdisp_ptr)
   Layer *layer;
   PaintCore * paint_core;
   GdkCursorType ctype = GDK_TOP_LEFT_ARROW;
+  int x, y;
 
   gdisp = (GDisplay *) gdisp_ptr;
   paint_core = (PaintCore *) tool->private;
@@ -338,10 +339,9 @@ paint_core_cursor_update (tool, mevent, gdisp_ptr)
   /*  undraw the current tool  */
   draw_core_pause (paint_core->core, tool);
 
-  /*  Get the current coordinates  */
-  gdisplay_untransform_coords_f (gdisp, (double) mevent->x, (double) mevent->y,
-				 &paint_core->curx, &paint_core->cury, TRUE);
-
+  gdisplay_untransform_coords (gdisp, (double) mevent->x, (double) mevent->y,
+			       &x, &y, TRUE, TRUE);
+ 
   if ((layer = gimage_get_active_layer (gdisp->gimage))) 
     {
       int off_x, off_y;
@@ -352,23 +352,26 @@ paint_core_cursor_update (tool, mevent, gdisp_ptr)
         {
 	  ctype = GIMP_COLOR_PICKER_CURSOR;
 	}
-      else if (paint_core->curx >= off_x && paint_core->cury >= off_y &&
-	       paint_core->curx < (off_x + drawable_width (GIMP_DRAWABLE(layer))) &&
-	       paint_core->cury < (off_y + drawable_height (GIMP_DRAWABLE(layer))))
+      else if (x >= off_x && y >= off_y &&
+	       x < (off_x + drawable_width (GIMP_DRAWABLE(layer))) &&
+	       y < (off_y + drawable_height (GIMP_DRAWABLE(layer))))
 	{
 	  /*  One more test--is there a selected region?
 	   *  if so, is cursor inside?
 	   */
 	  if (gimage_mask_is_empty (gdisp->gimage))
 	    ctype = GDK_PENCIL;
-	  else if (gimage_mask_value (gdisp->gimage, paint_core->curx, paint_core->cury))
+	  else if (gimage_mask_value (gdisp->gimage, x, y))
 	    ctype = GDK_PENCIL;
-	  
 	}
 
       /* If shift is down and this is not the first paint stroke, draw a line */
       if (gdisp_ptr == tool->gdisp_ptr && mevent->state & GDK_SHIFT_MASK)
 	{
+	  /*  Get the current coordinates  */
+	  gdisplay_untransform_coords_f (gdisp, (double) mevent->x, (double) mevent->y,
+					 &paint_core->curx, &paint_core->cury, TRUE);
+
 	  if (paint_core->core->gc == NULL)
 	    draw_core_start (paint_core->core, gdisp->canvas->window, tool);
 	  else
@@ -419,6 +422,7 @@ paint_core_draw (tool)
 {
   GDisplay *gdisp;
   PaintCore * paint_core;
+  int tx1, ty1, tx2, ty2;
 
   paint_core = (PaintCore *) tool->private;
 
@@ -427,27 +431,30 @@ paint_core_draw (tool)
     {
       gdisp = (GDisplay *) tool->gdisp_ptr;
 
+      gdisplay_transform_coords (gdisp, paint_core->lastx, paint_core->lasty,
+				 &tx1, &ty1, 1);
+      gdisplay_transform_coords (gdisp, paint_core->curx, paint_core->cury,
+				 &tx2, &ty2, 1);
+
       /*  Draw start target  */
       gdk_draw_line (gdisp->canvas->window, paint_core->core->gc,
-		     paint_core->lastx - (TARGET_WIDTH >> 1), paint_core->lasty,
-		     paint_core->lastx + (TARGET_WIDTH >> 1), paint_core->lasty);
+		     tx1 - (TARGET_WIDTH >> 1), ty1,
+		     tx1 + (TARGET_WIDTH >> 1), ty1);
       gdk_draw_line (gdisp->canvas->window, paint_core->core->gc,
-		     paint_core->lastx, paint_core->lasty - (TARGET_HEIGHT >> 1),
-		     paint_core->lastx, paint_core->lasty + (TARGET_HEIGHT >> 1));
+		     tx1, ty1 - (TARGET_HEIGHT >> 1),
+		     tx1, ty1 + (TARGET_HEIGHT >> 1));
       
       /*  Draw end target  */
       gdk_draw_line (gdisp->canvas->window, paint_core->core->gc,
-		     paint_core->curx - (TARGET_WIDTH >> 1), paint_core->cury,
-		     paint_core->curx + (TARGET_WIDTH >> 1), paint_core->cury);
+		     tx2 - (TARGET_WIDTH >> 1), ty2,
+		     tx2 + (TARGET_WIDTH >> 1), ty2);
       gdk_draw_line (gdisp->canvas->window, paint_core->core->gc,
-		     paint_core->curx, paint_core->cury - (TARGET_HEIGHT >> 1),
-		     paint_core->curx, paint_core->cury + (TARGET_HEIGHT >> 1));
+		     tx2, ty2 - (TARGET_HEIGHT >> 1),
+		     tx2, ty2 + (TARGET_HEIGHT >> 1));
       
       /*  Draw the line between the start and end coords  */
       gdk_draw_line (gdisp->canvas->window, paint_core->core->gc,
-		     paint_core->lastx, paint_core->lasty, 
-		     paint_core->curx, paint_core->cury);
-
+		     tx1, ty1, tx2, ty2);
     }
   return;
 }	      
