@@ -1,5 +1,32 @@
 2004-01-12  Michael Natterer  <mitch@gimp.org>
 
+	Enabled/fixed moving of channels and layer masks (was something
+	between disabled and broken before).
+
+	* app/tools/gimpeditselectiontool.h (enum EditType): added new
+	values EDIT_CHANNEL_TRANSLATE and EDIT_LAYER_MASK_TRANSLATE.
+
+	* app/tools/gimpmovetool.c (gimp_move_tool_button_press): look at
+	the type of the active drawable and invoke GimpEditSelectionTool
+	accordingly.
+
+	(gimp_move_tool_cursor_update): don't show the "bad" cursor when
+	the active drawable is a channel or layer mask.
+
+	* app/tools/gimpeditselectiontool.c: changed/enabled moving of
+	channels and layer masks to work similar to selection mask moving:
+
+	- Show only the item's outline while moving and do the actual move
+	  on button_release.
+	- Fixed/generalized some code to cope with the fact that we move
+	  the linked layers/vectors *while* moving but the moved channel
+	  itself *after* moving.
+	- Draw the channel's/mask's bounding box instead of its boundary
+	  if the boundary is empty (if all its values are either below or
+	  above HALF_WAY).
+
+2004-01-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpchannel.c: converted tabs to spaces, cosmetics.
 
 2004-01-12  Sven Neumann  <sven@gimp.org>

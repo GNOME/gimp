@@ -31,12 +31,12 @@
 
 #include "base/boundary.h"
 
-#include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpitem-linked.h"
 #include "core/gimplayer.h"
+#include "core/gimplayermask.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimpselection.h"
 #include "core/gimpundostack.h"
@@ -233,9 +233,7 @@ init_edit_selection (GimpTool    *tool,
 
   if (edit_type == EDIT_LAYER_TRANSLATE)
     {
-      GimpLayer *layer;
-
-      layer = gimp_image_get_active_layer (gdisp->gimage);
+      GimpLayer *layer = gimp_image_get_active_layer (gdisp->gimage);
 
       if (gimp_layer_is_floating_sel (layer))
 	edit_type = EDIT_FLOATING_SEL_TRANSLATE;
@@ -243,14 +241,32 @@ init_edit_selection (GimpTool    *tool,
 
   edit_select->edit_type = edit_type;
 
-  if (edit_select->edit_type == EDIT_MASK_TRANSLATE)
-    undo_desc = _("Move Selection");
-  else if (edit_select->edit_type == EDIT_VECTORS_TRANSLATE)
-    undo_desc = _("Move Path");
-  else if (edit_select->edit_type == EDIT_LAYER_TRANSLATE)
-    undo_desc = _("Move Layer");
-  else
-    undo_desc = _("Move Floating Layer");
+  switch (edit_select->edit_type)
+    {
+    case EDIT_VECTORS_TRANSLATE:
+      undo_desc = _("Move Path");
+      break;
+
+    case EDIT_CHANNEL_TRANSLATE:
+      undo_desc = _("Move Channel");
+      break;
+
+    case EDIT_LAYER_MASK_TRANSLATE:
+      undo_desc = _("Move Layer Mask");
+      break;
+
+    case EDIT_MASK_TRANSLATE:
+      undo_desc = _("Move Selection");
+      break;
+
+    case EDIT_LAYER_TRANSLATE:
+      undo_desc = _("Move Layer");
+      break;
+
+    default:
+      undo_desc = _("Move Floating Layer");
+      break;
+    }
 
   gimp_image_undo_group_start (gdisp->gimage,
                                edit_select->edit_type == EDIT_MASK_TRANSLATE ?
@@ -268,12 +284,27 @@ init_edit_selection (GimpTool    *tool,
   edit_select->x = edit_select->origx = coords->x - off_x;
   edit_select->y = edit_select->origy = coords->y - off_y;
 
-  gimp_channel_boundary (gimp_image_get_mask (gdisp->gimage),
-                         (const BoundSeg **) &edit_select->segs_in,
-                         (const BoundSeg **) &edit_select->segs_out,
-                         &edit_select->num_segs_in,
-                         &edit_select->num_segs_out,
-                         0, 0, 0, 0);
+  switch (edit_select->edit_type)
+    {
+    case EDIT_CHANNEL_TRANSLATE:
+    case EDIT_LAYER_MASK_TRANSLATE:
+      gimp_channel_boundary (GIMP_CHANNEL (active_item),
+                             (const BoundSeg **) &edit_select->segs_in,
+                             (const BoundSeg **) &edit_select->segs_out,
+                             &edit_select->num_segs_in,
+                             &edit_select->num_segs_out,
+                             0, 0, 0, 0);
+      break;
+
+    default:
+      gimp_channel_boundary (gimp_image_get_mask (gdisp->gimage),
+                             (const BoundSeg **) &edit_select->segs_in,
+                             (const BoundSeg **) &edit_select->segs_out,
+                             &edit_select->num_segs_in,
+                             &edit_select->num_segs_out,
+                             0, 0, 0, 0);
+      break;
+    }
 
   edit_select->segs_in  = g_memdup (edit_select->segs_in,
                                     edit_select->num_segs_in *
@@ -310,6 +341,20 @@ init_edit_selection (GimpTool    *tool,
 
     switch (edit_select->edit_type)
       {
+      case EDIT_CHANNEL_TRANSLATE:
+        gimp_channel_bounds (GIMP_CHANNEL (active_item),
+                             &x1, &y1, &x2, &y2);
+        break;
+
+      case EDIT_LAYER_MASK_TRANSLATE:
+        gimp_channel_bounds (GIMP_CHANNEL (active_item),
+                             &x1, &y1, &x2, &y2);
+        x1 += off_x;
+        y1 += off_y;
+        x2 += off_x;
+        y2 += off_y;
+        break;
+
       case EDIT_MASK_TRANSLATE:
         gimp_channel_bounds (gimp_image_get_mask (gdisp->gimage),
                              &x1, &y1, &x2, &y2);
@@ -441,6 +486,7 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
 {
   GimpEditSelectionTool *edit_select;
   GimpDisplayShell      *shell;
+  GimpItem              *active_item;
 
   edit_select = GIMP_EDIT_SELECTION_TOOL (tool);
   shell       = GIMP_DISPLAY_SHELL (gdisp->shell);
@@ -455,15 +501,20 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
 
   tool_manager_pop_tool (gdisp->gimage->gimp);
 
+  if (edit_select->edit_type == EDIT_VECTORS_TRANSLATE)
+    active_item = GIMP_ITEM (gimp_image_get_active_vectors (gdisp->gimage));
+  else
+    active_item = GIMP_ITEM (gimp_image_active_drawable (gdisp->gimage));
+
+  gimp_edit_selection_tool_calc_coords (edit_select, gdisp,
+                                        coords->x,
+                                        coords->y);
+
   /* EDIT_MASK_TRANSLATE is performed here at movement end, not 'live' like
    *  the other translation types.
    */
   if (edit_select->edit_type == EDIT_MASK_TRANSLATE)
     {
-      gimp_edit_selection_tool_calc_coords (edit_select, gdisp,
-                                            coords->x,
-                                            coords->y);
-
       /* move the selection -- whether there has been movement or not!
        * (to ensure that there's something on the undo stack)
        */
@@ -471,30 +522,40 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
                            edit_select->cumlx,
                            edit_select->cumly,
                            TRUE);
+    }
 
-      if (edit_select->first_move)
-	{
-	  gimp_image_undo_freeze (gdisp->gimage);
-	  edit_select->first_move = FALSE;
-	}
+  if (edit_select->first_move)
+    {
+      gimp_image_undo_freeze (gdisp->gimage);
+      edit_select->first_move = FALSE;
     }
 
   /* thaw the undo again */
   gimp_image_undo_thaw (gdisp->gimage);
 
+  /*  EDIT_CHANNEL_TRANSLATE and EDIT_LAYER_MASK_TRANSLATE need to be
+   *  preformed after thawing the undo.
+   */
+  if (edit_select->edit_type == EDIT_CHANNEL_TRANSLATE ||
+      edit_select->edit_type == EDIT_LAYER_MASK_TRANSLATE)
+    {
+      /* move the channel -- whether there has been movement or not!
+       * (to ensure that there's something on the undo stack)
+       */
+      gimp_item_translate (active_item,
+                           edit_select->cumlx,
+                           edit_select->cumly,
+                           TRUE);
+    }
+
   if (edit_select->edit_type == EDIT_VECTORS_TRANSLATE ||
+      edit_select->edit_type == EDIT_CHANNEL_TRANSLATE ||
       edit_select->edit_type == EDIT_LAYER_TRANSLATE)
     {
       if (! (state & GDK_BUTTON3_MASK) &&
-          (edit_select->cumlx != 0 || edit_select->cumly != 0))
+          (edit_select->cumlx != 0 ||
+           edit_select->cumly != 0))
         {
-          GimpItem *active_item;
-
-          if (edit_select->edit_type == EDIT_VECTORS_TRANSLATE)
-            active_item = GIMP_ITEM (gimp_image_get_active_vectors (gdisp->gimage));
-          else
-            active_item = GIMP_ITEM (gimp_image_active_drawable (gdisp->gimage));
-
           if (gimp_item_get_linked (active_item))
             {
               /*  translate all linked channels as well  */
@@ -596,6 +657,7 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 
 	switch (edit_select->edit_type)
 	  {
+          case EDIT_LAYER_MASK_TRANSLATE:
 	  case EDIT_MASK_TRANSLATE:
 	    /*  we don't do the actual edit selection move here.  */
 	    edit_select->origx = x;
@@ -603,6 +665,7 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 	    break;
 
           case EDIT_VECTORS_TRANSLATE:
+          case EDIT_CHANNEL_TRANSLATE:
 	    edit_select->origx = x;
 	    edit_select->origy = y;
 
@@ -617,7 +680,12 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
               if (floating_layer)
                 floating_sel_relax (floating_layer, TRUE);
 
-              gimp_item_translate (active_item, xoffset, yoffset, TRUE);
+              /*  for CHANNEL_TRANSLATE, only translate the linked layers
+               *  and vectors on-the-fly, the channel is translated
+               *  on button_release.
+               */
+              if (edit_select->edit_type != EDIT_CHANNEL_TRANSLATE)
+                gimp_item_translate (active_item, xoffset, yoffset, TRUE);
 
               if (gimp_item_get_linked (active_item))
                 {
@@ -731,23 +799,51 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 
   switch (edit_select->edit_type)
     {
+    case EDIT_CHANNEL_TRANSLATE:
+    case EDIT_LAYER_MASK_TRANSLATE:
     case EDIT_MASK_TRANSLATE:
       {
-        GimpLayer  *layer        = gimp_image_get_active_layer (gdisp->gimage);
-        gboolean    floating_sel = gimp_layer_is_floating_sel (layer);
+        gboolean floating_sel = FALSE;
+        gint     off_x        = 0;
+        gint     off_y        = 0;
+
+        if (edit_select->edit_type == EDIT_MASK_TRANSLATE)
+          {
+            GimpLayer *layer = gimp_image_get_active_layer (gdisp->gimage);
+
+            if (layer)
+              floating_sel = gimp_layer_is_floating_sel (layer);
+          }
+        else
+          {
+            gimp_item_offsets (active_item, &off_x, &off_y);
+          }
 
         if (! floating_sel)
           gimp_draw_tool_draw_boundary (draw_tool,
                                         edit_select->segs_in,
                                         edit_select->num_segs_in,
-                                        edit_select->cumlx,
-                                        edit_select->cumly);
+                                        edit_select->cumlx + off_x,
+                                        edit_select->cumly + off_y);
 
-        gimp_draw_tool_draw_boundary (draw_tool,
-                                      edit_select->segs_out,
-                                      edit_select->num_segs_out,
-                                      edit_select->cumlx,
-                                      edit_select->cumly);
+        if (edit_select->segs_out)
+          {
+            gimp_draw_tool_draw_boundary (draw_tool,
+                                          edit_select->segs_out,
+                                          edit_select->num_segs_out,
+                                          edit_select->cumlx + off_x,
+                                          edit_select->cumly + off_y);
+          }
+        else if (edit_select->edit_type != EDIT_MASK_TRANSLATE)
+          {
+            gimp_draw_tool_draw_rectangle (draw_tool,
+                                           FALSE,
+                                           edit_select->cumlx + off_x,
+                                           edit_select->cumly + off_y,
+                                           active_item->width,
+                                           active_item->height,
+                                           FALSE);
+          }
       }
       break;
 
@@ -1108,8 +1204,17 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
 
               if (item)
                 {
-                  if (GIMP_IS_LAYER (item) &&
-                      gimp_layer_is_floating_sel (GIMP_LAYER (item)))
+                  if (GIMP_IS_LAYER_MASK (item))
+                    {
+                      edit_type = EDIT_LAYER_MASK_TRANSLATE;
+                      undo_desc = _("Move Layer Mask");
+                    }
+                  else if (GIMP_IS_CHANNEL (item))
+                    {
+                      edit_type = EDIT_CHANNEL_TRANSLATE;
+                      undo_desc = _("Move Channel");
+                    }
+                  else if (gimp_layer_is_floating_sel (GIMP_LAYER (item)))
                     {
                       edit_type = EDIT_FLOATING_SEL_TRANSLATE;
                       undo_desc = _("Move Floating Layer");
@@ -1117,11 +1222,7 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
                   else
                     {
                       edit_type = EDIT_LAYER_TRANSLATE;
-
-                      if (GIMP_IS_CHANNEL (item))
-                        undo_desc = _("Move Channel");
-                      else
-                        undo_desc = _("Move Layer");
+                      undo_desc = _("Move Layer");
                     }
 
                   undo_type = GIMP_UNDO_GROUP_ITEM_DISPLACE;
@@ -1168,6 +1269,7 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
 
   switch (edit_type)
     {
+    case EDIT_LAYER_MASK_TRANSLATE:
     case EDIT_MASK_TRANSLATE:
       gimp_item_translate (item, inc_x, inc_y, push_undo);
       break;
@@ -1178,6 +1280,7 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
       break;
 
     case EDIT_VECTORS_TRANSLATE:
+    case EDIT_CHANNEL_TRANSLATE:
     case EDIT_LAYER_TRANSLATE:
       {
         GimpLayer *floating_layer;

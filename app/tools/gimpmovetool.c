@@ -26,10 +26,10 @@
 
 #include "tools-types.h"
 
-#include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimplayer.h"
+#include "core/gimplayermask.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimptoolinfo.h"
 
@@ -276,9 +276,16 @@ gimp_move_tool_button_press (GimpTool        *tool,
     }
   else if (options->move_current)
     {
-      if (gimp_image_get_active_layer (gdisp->gimage))
+      GimpDrawable *drawable = gimp_image_active_drawable (gdisp->gimage);
+
+      if (drawable)
         {
-          init_edit_selection (tool, gdisp, coords, EDIT_LAYER_TRANSLATE);
+          if (GIMP_IS_LAYER_MASK (drawable))
+            init_edit_selection (tool, gdisp, coords, EDIT_LAYER_MASK_TRANSLATE);
+          else if (GIMP_IS_CHANNEL (drawable))
+            init_edit_selection (tool, gdisp, coords, EDIT_CHANNEL_TRANSLATE);
+          else
+            init_edit_selection (tool, gdisp, coords, EDIT_LAYER_TRANSLATE);
         }
     }
   else
@@ -632,7 +639,7 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
     }
   else if (options->move_current)
     {
-      if (gimp_image_get_active_layer (gdisp->gimage))
+      if (gimp_image_active_drawable (gdisp->gimage))
         cursor = GIMP_MOUSE_CURSOR;
     }
   else
