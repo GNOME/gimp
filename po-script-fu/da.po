@@ -1,13 +1,14 @@
 # GIMP script-fu in danish.
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Birger Langkjer <birger.langkjer@image.dk>, 2000.
+# Keld Simonsen <keld@dkuug.dk>, 2000.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu/gnome-cvs\n"
 "POT-Creation-Date: 2000-03-28 01:56-0800\n"
-"PO-Revision-Date: 2000-04-25 17:41+01:00\n"
-"Last-Translator: Birger Langkjer <birger.langkjer@image.dk>\n"
+"PO-Revision-Date: 2000-04-25 18:41+01:00\n"
+"Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish <sslug-locale@sslug.dk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -76,9 +77,8 @@ msgid "Script-Fu Color Selection"
 msgstr "Skript-Fu farvevalg"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1212
-#, fuzzy
 msgid "Script Toggle"
-msgstr "Skript Schalter"
+msgstr "Skript skifter"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1274
 msgid "Script-Fu File Selection"
@@ -168,9 +168,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Server..."
 
 #: plug-ins/script-fu/script-fu.c:1007 plug-ins/script-fu/script-fu.c:1008
-#, fuzzy
 msgid "Re-read all available scripts"
-msgstr "Alle Skripte neu einlesen"
+msgstr "Genindlæs alle skrifttyper"
 
 #: plug-ins/script-fu/script-fu.c:1012
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
@@ -252,9 +251,8 @@ msgid "<Image>/Script-Fu/Decor/Fuzzy Border..."
 msgstr "<Image>/Skript-Fu/Dekoration/Rand ausblenden..."
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/Old Photo..."
-msgstr "<Image>/Skript-Fu/Dekoration/Altes Foto..."
+msgstr "<Image>/Skript-Fu/Dekoration/Gamle Foto..."
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 #, fuzzy
@@ -262,9 +260,8 @@ msgid "<Image>/Script-Fu/Decor/Round Corners..."
 msgstr "<Image>/Skript-Fu/Dekoration/Runde Ecken..."
 
 #: plug-ins/script-fu/scripts/slide.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor/Slide..."
-msgstr "<Image>/Skript-Fu/Dekoration/Dia..."
+msgstr "<Image>/Skript-Fu/Dekoration/Dias..."
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 #, fuzzy
@@ -309,17 +306,16 @@ msgstr "<Image>/Skript-Fu/Udvalg/Til Billede"
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #, fuzzy
 msgid "<Image>/Script-Fu/Shadow/Drop-Shadow..."
-msgstr "<Image>/Skript-Fu/Schatten/Schlagschatten..."
+msgstr "<Image>/Skript-Fu/Skygger/Schlagschatten..."
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-#, fuzzy
 msgid "<Image>/Script-Fu/Shadow/Perspective..."
-msgstr "<Image>/Skript-Fu/Schatten/Perspektivisch..."
+msgstr "<Image>/Skript-Fu/Skygger/Perspektivisk..."
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 #, fuzzy
 msgid "<Image>/Script-Fu/Shadow/Xach-Effect..."
-msgstr "<Image>/Skript-Fu/Schatten/Xach-Effekt..."
+msgstr "<Image>/Skript-Fu/Skygger/Xach-Effekt..."
 
 #: plug-ins/script-fu/scripts/carve-it.scm:0
 #, fuzzy
@@ -728,7 +724,7 @@ msgstr "Schlagschatten hinzufügen"
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 #, fuzzy
 msgid "Add Shadow"
-msgstr "Schatten hinzufügen"
+msgstr "Skygger hinzufügen"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
@@ -1054,7 +1050,7 @@ msgstr "Neues Bild erzeugen"
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
 #, fuzzy
 msgid "Create Shadow"
-msgstr "Schatten erzeugen"
+msgstr "Skygger erzeugen"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #, fuzzy
@@ -1118,27 +1114,27 @@ msgstr "Durchmesser"
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 #, fuzzy
 msgid "Drop Shadow Blur Radius"
-msgstr "Schatten weichzeichnen (Radius)"
+msgstr "Skygger weichzeichnen (Radius)"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 #, fuzzy
 msgid "Drop Shadow Color"
-msgstr "Schatten Farve"
+msgstr "Skygger Farve"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 #, fuzzy
 msgid "Drop Shadow Opacity"
-msgstr "Schatten Deckkraft"
+msgstr "Skygger Deckkraft"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 #, fuzzy
 msgid "Drop Shadow X Offset"
-msgstr "Schatten X Versatz"
+msgstr "Skygger X Versatz"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 #, fuzzy
 msgid "Drop Shadow Y Offset"
-msgstr "Schatten Y Versatz"
+msgstr "Skygger Y Versatz"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 #, fuzzy
@@ -1847,7 +1843,7 @@ msgstr "Relativer Abstand zum Horizont"
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 #, fuzzy
 msgid "Relative Length of Shadow"
-msgstr "Relative Länge des Schattens"
+msgstr "Relative Länge des Skyggers"
 
 #: plug-ins/script-fu/scripts/selection-round.scm:0
 #, fuzzy
@@ -1926,48 +1922,46 @@ msgstr ""
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #, fuzzy
 msgid "Shadow Blur Radius"
-msgstr "Schatten weichzeichnen (Radius)"
+msgstr "Skygger weichzeichnen (Radius)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 #, fuzzy
 msgid "Shadow Color"
-msgstr "Schattenfarve"
+msgstr "Skyggerfarve"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 #, fuzzy
 msgid "Shadow Darkness"
-msgstr "Schatten Dunkelheit"
+msgstr "Skygger Dunkelheit"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 #, fuzzy
 msgid "Shadow Depth"
-msgstr "Schatten Tiefe"
+msgstr "Skygger Tiefe"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 #, fuzzy
 msgid "Shadow Weight (%)"
-msgstr "Schatten Bredde (%)"
+msgstr "Skygger Bredde (%)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 #, fuzzy
 msgid "Shadow X Offset"
-msgstr "Schatten Versatz X"
+msgstr "Skygger Versatz X"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #: plug-ins/script-fu/scripts/round-corners.scm:0
-#, fuzzy
 msgid "Shadow Y Offset"
-msgstr "Schatten Versatz Y"
+msgstr "Skygger Afsæt Y"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #: plug-ins/script-fu/scripts/sphere.scm:0
-#, fuzzy
 msgid "Shadow"
-msgstr "Schatten"
+msgstr "Skygger"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 #, fuzzy
@@ -1982,9 +1976,8 @@ msgstr "Scherlänge (> 0)"
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 #: plug-ins/script-fu/scripts/lava.scm:0
-#, fuzzy
 msgid "Size"
-msgstr "Größe"
+msgstr "Størrelse"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 #, fuzzy
@@ -2009,14 +2002,12 @@ msgstr "Abstand zwischen Ebenen"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #: plug-ins/script-fu/scripts/select_to_brush.scm:0
-#, fuzzy
 msgid "Spacing"
-msgstr "Abstand"
+msgstr "Afstand"
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
-#, fuzzy
 msgid "Sphere Color"
-msgstr "Kugelfarve"
+msgstr "Kuglefarve"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 #, fuzzy
@@ -2024,14 +2015,12 @@ msgid "Spread"
 msgstr "Verteilen"
 
 #: plug-ins/script-fu/scripts/coffee.scm:0
-#, fuzzy
 msgid "Stains"
-msgstr "Flecken"
+msgstr "Pletter"
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
-#, fuzzy
 msgid "Start Angle"
-msgstr "Startwinkel"
+msgstr "Startvinkel"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
@@ -2040,12 +2029,10 @@ msgid "Start Blend"
 msgstr "Start Farbübergang"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
-#, fuzzy
 msgid "Start X"
 msgstr "Start X"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
-#, fuzzy
 msgid "Start Y"
 msgstr "Start Y"
 
@@ -2064,9 +2051,8 @@ msgid "TRUE = Detail in Middle, FALSE = Tile"
 msgstr "TRUE = Details in der Mitte, FALSE = Kacheln"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
-#, fuzzy
 msgid "Text Color (Active)"
-msgstr "Textfarve (aktiv)"
+msgstr "Tekstfarve (aktiv)"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 #: plug-ins/script-fu/scripts/asc2img.scm:0
@@ -2081,14 +2067,12 @@ msgstr "Textfarve (aktiv)"
 #: plug-ins/script-fu/scripts/news-text.scm:0
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 #: plug-ins/script-fu/scripts/speed-text.scm:0
-#, fuzzy
 msgid "Text Color"
-msgstr "Textfarve"
+msgstr "Tekstfarve"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
-#, fuzzy
 msgid "Text Pattern"
-msgstr "Textmuster"
+msgstr "Tekstmønster"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
@@ -2127,31 +2111,26 @@ msgstr "Textmuster"
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #: plug-ins/script-fu/scripts/title-header.scm:0
-#, fuzzy
 msgid "Text"
-msgstr "Text"
+msgstr "Tekst"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
-#, fuzzy
 msgid "Thickness"
-msgstr "Dicke"
+msgstr "Tykkelse"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
-#, fuzzy
 msgid "Thread Density"
-msgstr "Fadendichte"
+msgstr "Tråd-tykkelse"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
-#, fuzzy
 msgid "Thread Intensity"
-msgstr "Fadenintensität"
+msgstr "Tråd-intensitet"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
-#, fuzzy
 msgid "Thread Length"
-msgstr "Fadenlänge"
+msgstr "Trådlængde"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 #, fuzzy
@@ -2162,9 +2141,8 @@ msgstr "Schwellwert (Größer 1<-->255 Kleiner)"
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
-#, fuzzy
 msgid "Transparent Background"
-msgstr "Transparenter Hintergrund"
+msgstr "gennemsigtig baggrund"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 #, fuzzy
@@ -2172,19 +2150,16 @@ msgid "Turn from Left to Right"
 msgstr "Von links nach rechts drehen"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
-#, fuzzy
 msgid "Upper Color (Active)"
-msgstr "Farve oben (aktiv)"
+msgstr "Farve øverst (aktiv)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
-#, fuzzy
 msgid "Upper Color"
-msgstr "Farve oben"
+msgstr "Farve øverst"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
-#, fuzzy
 msgid "Upper-Left color"
-msgstr "Farve oben links"
+msgstr "Farve øverst til venstre"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 #, fuzzy
