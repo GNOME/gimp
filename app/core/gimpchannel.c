@@ -776,9 +776,13 @@ gimp_channel_set_tiles (GimpDrawable *drawable,
                                       undo_desc,
                                       GIMP_CHANNEL (drawable));
 
+  gimp_drawable_invalidate_boundary (drawable);
+
   GIMP_DRAWABLE_CLASS (parent_class)->set_tiles (drawable,
                                                  push_undo, undo_desc,
                                                  tiles, type);
+
+  GIMP_CHANNEL (drawable)->bounds_known = FALSE;
 }
 
 static void

@@ -90,6 +90,13 @@ static void       gimp_text_layer_set_tiles      (GimpDrawable   *drawable,
                                                   const gchar    *undo_desc,
                                                   TileManager    *tiles,
                                                   GimpImageType   type);
+static void       gimp_text_layer_swap_pixels    (GimpDrawable   *drawable,
+                                                  TileManager    *tiles,
+                                                  gboolean        sparse,
+                                                  gint            x,
+                                                  gint            y,
+                                                  gint            width,
+                                                  gint            height);
 
 static void       gimp_text_layer_text_notify    (GimpTextLayer  *layer);
 static gboolean   gimp_text_layer_render         (GimpTextLayer  *layer);
@@ -159,6 +166,7 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
   drawable_class->apply_region     = gimp_text_layer_apply_region;
   drawable_class->replace_region   = gimp_text_layer_replace_region;
   drawable_class->set_tiles        = gimp_text_layer_set_tiles;
+  drawable_class->swap_pixels      = gimp_text_layer_swap_pixels;
 }
 
 static void
@@ -296,6 +304,20 @@ gimp_text_layer_set_tiles (GimpDrawable  *drawable,
   GIMP_DRAWABLE_CLASS (parent_class)->set_tiles (drawable,
                                                  push_undo, undo_desc,
                                                  tiles, type);
+  GIMP_TEXT_LAYER (drawable)->modified = TRUE;
+}
+
+static void
+gimp_text_layer_swap_pixels (GimpDrawable *drawable,
+                             TileManager  *tiles,
+                             gboolean      sparse,
+                             gint          x,
+                             gint          y,
+                             gint          width,
+                             gint          height)
+{
+  GIMP_DRAWABLE_CLASS (parent_class)->swap_pixels (drawable, tiles, sparse,
+                                                   x, y, width, height);
   GIMP_TEXT_LAYER (drawable)->modified = TRUE;
 }
 
@@ -459,6 +481,8 @@ gimp_text_layer_render (GimpTextLayer *layer)
       if (width  != gimp_item_width (item) ||
           height != gimp_item_height (item))
         {
+          TileManager *new_tiles;
+
           gimp_drawable_update (drawable,
                                 0, 0,
                                 gimp_item_width (item),
@@ -470,10 +494,13 @@ gimp_text_layer_render (GimpTextLayer *layer)
           GIMP_ITEM (drawable)->width  = width;
           GIMP_ITEM (drawable)->height = height;
 
-          if (drawable->tiles)
-            tile_manager_unref (drawable->tiles);
+          new_tiles = tile_manager_new (width, height, drawable->bytes),
 
-          drawable->tiles = tile_manager_new (width, height, drawable->bytes);
+          gimp_drawable_set_tiles (drawable, FALSE, NULL,
+                                   new_tiles, gimp_drawable_type (drawable));
+          tile_manager_unref (new_tiles);
+
+          layer->modified = FALSE;
 
           gimp_drawable_update (drawable,
                                 0, 0,
@@ -501,16 +528,13 @@ static void
 gimp_text_layer_render_layout (GimpTextLayer  *layer,
 			       GimpTextLayout *layout)
 {
-  GimpDrawable *drawable;
-  GimpItem     *item;
+  GimpDrawable *drawable = GIMP_DRAWABLE (layer);
+  GimpItem     *item     = GIMP_ITEM (layer);
   TileManager  *mask;
   FT_Bitmap     bitmap;
   PixelRegion   textPR;
   PixelRegion   maskPR;
   gint          i;
-
-  drawable = GIMP_DRAWABLE (layer);
-  item     = GIMP_ITEM (layer);
 
   gimp_drawable_fill (drawable, &layer->text->color, NULL);
 

@@ -1,5 +1,27 @@
 2004-03-15  Michael Natterer  <mitch@gimp.org>
 
+	Closer to text layer undo:
+
+	* app/core/gimpchannel.c (gimp_channel_set_tiles): invalidate the
+	channel's boundary and bounds.
+
+	* app/text/gimptextlayer.c: implement GimpDrawable::swap_pixels()
+	and set text_layer->modified = TRUE after upchaining.
+
+	(gimp_text_layer_render): use gimp_drawable_set_tiles() and
+	set text_layer->modified = FALSE afterwards.
+
+	* app/core/gimpimage-undo-push.c: cleaned up variable declarations
+	and initializations.
+
+	(undo_pop_layer_mod)
+	(undo_pop_channel_mod): use gimp_channel_set_tiles() instead of
+	touching drawable->tiles manually. Now all pixel manipulation
+	(at least on layers) should be virtualized and can be detected by
+	the text layer.
+
+2004-03-15  Michael Natterer  <mitch@gimp.org>
+
 	Prepare the undo system for proper text layer undo:
 
 	* app/core/core-enums.[ch] (enum GimpUndoType): replaced
