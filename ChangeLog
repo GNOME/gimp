@@ -1,3 +1,11 @@
+2003-12-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdnd.c: return a boolean indicating success from
+	all drop handlers.
+
+	(gimp_dnd_data_drop_handle): finish the drop correctly by calling
+	gtk_drag_finish() with the above success value.
+
 2003-12-20  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpxmlparser.[ch]: added gimp_xml_parser_parse_buffer().

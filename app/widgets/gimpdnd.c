@@ -71,7 +71,7 @@ typedef guchar    * (* GimpDndDragDataFunc) (GtkWidget *widget,
 					     gpointer   get_data_data,
 					     gint      *format,
 					     gint      *length);
-typedef void        (* GimpDndDropDataFunc) (GtkWidget *widget,
+typedef gboolean    (* GimpDndDropDataFunc) (GtkWidget *widget,
 					     GCallback  set_data_func,
 					     gpointer   set_data_data,
 					     guchar    *vals,
@@ -109,7 +109,7 @@ static guchar    * gimp_dnd_get_file_data      (GtkWidget *widget,
 					        gpointer   get_file_data,
 					        gint      *format,
 					        gint      *length);
-static void        gimp_dnd_set_file_data      (GtkWidget *widget,
+static gboolean    gimp_dnd_set_file_data      (GtkWidget *widget,
 					        GCallback  set_file_func,
 					        gpointer   set_file_data,
 					        guchar    *vals,
@@ -121,7 +121,7 @@ static guchar    * gimp_dnd_get_color_data     (GtkWidget *widget,
 					        gpointer   get_color_data,
 					        gint      *format,
 					        gint      *length);
-static void        gimp_dnd_set_color_data     (GtkWidget *widget,
+static gboolean    gimp_dnd_set_color_data     (GtkWidget *widget,
 					        GCallback  set_color_func,
 					        gpointer   set_color_data,
 					        guchar    *vals,
@@ -133,7 +133,7 @@ static guchar    * gimp_dnd_get_svg_data       (GtkWidget *widget,
 					        gpointer   get_svg_data,
 					        gint      *format,
 					        gint      *length);
-static void        gimp_dnd_set_svg_data       (GtkWidget *widget,
+static gboolean    gimp_dnd_set_svg_data       (GtkWidget *widget,
 					        GCallback  set_svg_func,
 					        gpointer   set_svg_data,
 					        guchar    *vals,
@@ -145,7 +145,7 @@ static guchar    * gimp_dnd_get_image_data     (GtkWidget *widget,
 					        gpointer   get_image_data,
 					        gint      *format,
 					        gint      *length);
-static void        gimp_dnd_set_image_data     (GtkWidget *widget,
+static gboolean    gimp_dnd_set_image_data     (GtkWidget *widget,
 					        GCallback  set_image_func,
 					        gpointer   set_image_data,
 					        guchar    *vals,
@@ -157,7 +157,7 @@ static guchar    * gimp_dnd_get_item_data      (GtkWidget *widget,
 					        gpointer   get_item_data,
 					        gint      *format,
 					        gint      *length);
-static void        gimp_dnd_set_item_data      (GtkWidget *widget,
+static gboolean    gimp_dnd_set_item_data      (GtkWidget *widget,
 					        GCallback  set_item_func,
 					        gpointer   set_item_data,
 					        guchar    *vals,
@@ -169,55 +169,55 @@ static guchar    * gimp_dnd_get_data_data      (GtkWidget *widget,
 					        gpointer   get_data_data,
 					        gint      *format,
 					        gint      *length);
-static void        gimp_dnd_set_brush_data     (GtkWidget *widget,
+static gboolean    gimp_dnd_set_brush_data     (GtkWidget *widget,
 					        GCallback  set_brush_func,
 					        gpointer   set_brush_data,
 					        guchar    *vals,
 					        gint       format,
 					        gint       length);
-static void        gimp_dnd_set_pattern_data   (GtkWidget *widget,
+static gboolean    gimp_dnd_set_pattern_data   (GtkWidget *widget,
 					        GCallback  set_pattern_func,
 					        gpointer   set_pattern_data,
 					        guchar    *vals,
 					        gint       format,
 					        gint       length);
-static void        gimp_dnd_set_gradient_data  (GtkWidget *widget,
+static gboolean    gimp_dnd_set_gradient_data  (GtkWidget *widget,
 					        GCallback  set_gradient_func,
 					        gpointer   set_gradient_data,
 					        guchar    *vals,
 					        gint       format,
 					        gint       length);
-static void        gimp_dnd_set_palette_data   (GtkWidget *widget,
+static gboolean    gimp_dnd_set_palette_data   (GtkWidget *widget,
 					        GCallback  set_palette_func,
 					        gpointer   set_palette_data,
 					        guchar    *vals,
 					        gint       format,
 					        gint       length);
-static void        gimp_dnd_set_font_data      (GtkWidget *widget,
+static gboolean    gimp_dnd_set_font_data      (GtkWidget *widget,
 					        GCallback  set_font_func,
 					        gpointer   set_font_data,
 					        guchar    *vals,
 					        gint       format,
 					        gint       length);
-static void        gimp_dnd_set_buffer_data    (GtkWidget *widget,
+static gboolean    gimp_dnd_set_buffer_data    (GtkWidget *widget,
 					        GCallback  set_buffer_func,
 					        gpointer   set_buffer_data,
 					        guchar    *vals,
 					        gint       format,
 					        gint       length);
-static void        gimp_dnd_set_imagefile_data (GtkWidget *widget,
+static gboolean    gimp_dnd_set_imagefile_data (GtkWidget *widget,
 					        GCallback  set_imagefile_func,
 					        gpointer   set_imagefile_data,
 					        guchar    *vals,
 					        gint       format,
 					        gint       length);
-static void        gimp_dnd_set_template_data  (GtkWidget *widget,
+static gboolean    gimp_dnd_set_template_data  (GtkWidget *widget,
                                                 GCallback  set_template_func,
 					        gpointer   set_template_data,
 					        guchar    *vals,
 					        gint       format,
 					        gint       length);
-static void        gimp_dnd_set_tool_data      (GtkWidget *widget,
+static gboolean    gimp_dnd_set_tool_data      (GtkWidget *widget,
 					        GCallback  set_tool_func,
 					        gpointer   set_tool_data,
 					        guchar    *vals,
@@ -701,12 +701,13 @@ gimp_dnd_data_drop_handle (GtkWidget        *widget,
 			   guint             time,
 			   gpointer          data)
 {
-  GCallback    set_data_func = NULL;
-  gpointer     set_data_data = NULL;
-  GimpDndType  data_type;
+  GimpDndType data_type;
 
-  if (selection_data->length < 0)
-    return;
+  if (selection_data->length <= 0)
+    {
+      gtk_drag_finish (context, FALSE, FALSE, time);
+      return;
+    }
 
   for (data_type = GIMP_DND_TYPE_NONE + 1;
        data_type <= GIMP_DND_TYPE_LAST;
@@ -716,6 +717,9 @@ gimp_dnd_data_drop_handle (GtkWidget        *widget,
 
       if (dnd_data->target_entry.info == info)
 	{
+          GCallback set_data_func = NULL;
+          gpointer  set_data_data = NULL;
+
           g_print ("gimp_dnd_data_drop_handle(%s)\n",
                    dnd_data->target_entry.target);
 
@@ -727,16 +731,19 @@ gimp_dnd_data_drop_handle (GtkWidget        *widget,
             set_data_data = g_object_get_data (G_OBJECT (widget),
                                                dnd_data->set_data_data_name);
 
-	  if (! set_data_func)
-	    return;
+	  if (set_data_func &&
+              dnd_data->set_data_func (widget,
+                                       set_data_func,
+                                       set_data_data,
+                                       selection_data->data,
+                                       selection_data->format,
+                                       selection_data->length))
+            {
+              gtk_drag_finish (context, TRUE, FALSE, time);
+              return;
+            }
 
-	  dnd_data->set_data_func (widget,
-                                   set_data_func,
-                                   set_data_data,
-                                   selection_data->data,
-                                   selection_data->format,
-                                   selection_data->length);
-
+          gtk_drag_finish (context, FALSE, FALSE, time);
 	  return;
 	}
     }
@@ -983,7 +990,7 @@ gimp_dnd_get_file_data (GtkWidget *widget,
   return (guchar *) vals;
 }
 
-static void
+static gboolean
 gimp_dnd_set_file_data (GtkWidget *widget,
 			GCallback  set_file_func,
 			gpointer   set_file_data,
@@ -997,7 +1004,7 @@ gimp_dnd_set_file_data (GtkWidget *widget,
   if (format != 8)
     {
       g_warning ("Received invalid file data!");
-      return;
+      return FALSE;
     }
 
   buffer = (gchar *) vals;
@@ -1031,13 +1038,15 @@ gimp_dnd_set_file_data (GtkWidget *widget,
       }
   }
 
-  if (files)
-    {
-      (* (GimpDndDropFileFunc) set_file_func) (widget, files, set_file_data);
+  if (! files)
+    return FALSE;
 
-      g_list_foreach (files, (GFunc) g_free, NULL);
-      g_list_free (files);
-    }
+  (* (GimpDndDropFileFunc) set_file_func) (widget, files, set_file_data);
+
+  g_list_foreach (files, (GFunc) g_free, NULL);
+  g_list_free (files);
+
+  return TRUE;
 }
 
 void
@@ -1333,7 +1342,7 @@ gimp_dnd_get_color_data (GtkWidget *widget,
   return (guchar *) vals;
 }
 
-static void
+static gboolean
 gimp_dnd_set_color_data (GtkWidget *widget,
 			 GCallback  set_color_func,
 			 gpointer   set_color_data,
@@ -1347,7 +1356,7 @@ gimp_dnd_set_color_data (GtkWidget *widget,
   if ((format != 16) || (length != 8))
     {
       g_warning ("Received invalid color data!");
-      return;
+      return FALSE;
     }
 
   color_vals = (guint16 *) vals;
@@ -1360,6 +1369,8 @@ gimp_dnd_set_color_data (GtkWidget *widget,
 
   (* (GimpDndDropColorFunc) set_color_func) (widget, &color,
 					     set_color_data);
+
+  return TRUE;
 }
 
 void
@@ -1418,7 +1429,7 @@ gimp_dnd_get_svg_data (GtkWidget *widget,
   return svg_data;
 }
 
-static void
+static gboolean
 gimp_dnd_set_svg_data (GtkWidget *widget,
                        GCallback  set_svg_func,
                        gpointer   set_svg_data,
@@ -1429,10 +1440,12 @@ gimp_dnd_set_svg_data (GtkWidget *widget,
   if (format != 8)
     {
       g_warning ("Received invalid SVG data!");
-      return;
+      return FALSE;
     }
 
   (* (GimpDndDropSvgFunc) set_svg_func) (widget, vals, length, set_svg_data);
+
+  return TRUE;
 }
 
 void
@@ -1752,7 +1765,7 @@ gimp_dnd_get_image_data (GtkWidget *widget,
   return (guchar *) id;
 }
 
-static void
+static gboolean
 gimp_dnd_set_image_data (GtkWidget *widget,
 			 GCallback  set_image_func,
 			 gpointer   set_image_data,
@@ -1767,21 +1780,25 @@ gimp_dnd_set_image_data (GtkWidget *widget,
   if ((format != 8) || (length < 1))
     {
       g_warning ("Received invalid image ID data!");
-      return;
+      return FALSE;
     }
 
   id = (gchar *) vals;
   ID = atoi (id);
 
   if (! ID)
-    return;
+    return FALSE;
 
   gimage = gimp_image_get_by_ID (the_dnd_gimp, ID);
 
-  if (gimage)
-    (* (GimpDndDropViewableFunc) set_image_func) (widget,
-						  GIMP_VIEWABLE (gimage),
-						  set_image_data);
+  if (! gimage)
+    return FALSE;
+
+  (* (GimpDndDropViewableFunc) set_image_func) (widget,
+                                                GIMP_VIEWABLE (gimage),
+                                                set_image_data);
+
+  return TRUE;
 }
 
 
@@ -1813,7 +1830,7 @@ gimp_dnd_get_item_data (GtkWidget *widget,
   return (guchar *) id;
 }
 
-static void
+static gboolean
 gimp_dnd_set_item_data (GtkWidget *widget,
                         GCallback  set_item_func,
                         gpointer   set_item_data,
@@ -1828,21 +1845,25 @@ gimp_dnd_set_item_data (GtkWidget *widget,
   if ((format != 8) || (length < 1))
     {
       g_warning ("Received invalid item ID data!");
-      return;
+      return FALSE;
     }
 
   id = (gchar *) vals;
   ID = atoi (id);
 
   if (! ID)
-    return;
+    return FALSE;
 
   item = gimp_item_get_by_ID (the_dnd_gimp, ID);
 
-  if (item)
-    (* (GimpDndDropViewableFunc) set_item_func) (widget,
-                                                 GIMP_VIEWABLE (item),
-                                                 set_item_data);
+  if (! item)
+    return FALSE;
+
+  (* (GimpDndDropViewableFunc) set_item_func) (widget,
+                                               GIMP_VIEWABLE (item),
+                                               set_item_data);
+
+  return TRUE;
 }
 
 
@@ -1882,7 +1903,7 @@ gimp_dnd_get_data_data (GtkWidget *widget,
 /*  brush dnd functions  */
 /*************************/
 
-static void
+static gboolean
 gimp_dnd_set_brush_data (GtkWidget *widget,
 			 GCallback  set_brush_func,
 			 gpointer   set_brush_data,
@@ -1896,7 +1917,7 @@ gimp_dnd_set_brush_data (GtkWidget *widget,
   if ((format != 8) || (length < 1))
     {
       g_warning ("Received invalid brush data!");
-      return;
+      return FALSE;
     }
 
   name = (gchar *) vals;
@@ -1910,10 +1931,14 @@ gimp_dnd_set_brush_data (GtkWidget *widget,
       gimp_container_get_child_by_name (the_dnd_gimp->brush_factory->container,
 					name);
 
-  if (brush)
-    (* (GimpDndDropViewableFunc) set_brush_func) (widget,
-						  GIMP_VIEWABLE (brush),
-						  set_brush_data);
+  if (! brush)
+    return FALSE;
+
+  (* (GimpDndDropViewableFunc) set_brush_func) (widget,
+                                                GIMP_VIEWABLE (brush),
+                                                set_brush_data);
+
+  return TRUE;
 }
 
 
@@ -1921,7 +1946,7 @@ gimp_dnd_set_brush_data (GtkWidget *widget,
 /*  pattern dnd functions  */
 /***************************/
 
-static void
+static gboolean
 gimp_dnd_set_pattern_data (GtkWidget *widget,
 			   GCallback  set_pattern_func,
 			   gpointer   set_pattern_data,
@@ -1935,7 +1960,7 @@ gimp_dnd_set_pattern_data (GtkWidget *widget,
   if ((format != 8) || (length < 1))
     {
       g_warning ("Received invalid pattern data!");
-      return;
+      return FALSE;
     }
 
   name = (gchar *) vals;
@@ -1947,10 +1972,14 @@ gimp_dnd_set_pattern_data (GtkWidget *widget,
       gimp_container_get_child_by_name (the_dnd_gimp->pattern_factory->container,
 					name);
 
-  if (pattern)
-    (* (GimpDndDropViewableFunc) set_pattern_func) (widget,
-						    GIMP_VIEWABLE (pattern),
-						    set_pattern_data);
+  if (! pattern)
+    return FALSE;
+
+  (* (GimpDndDropViewableFunc) set_pattern_func) (widget,
+                                                  GIMP_VIEWABLE (pattern),
+                                                  set_pattern_data);
+
+  return TRUE;
 }
 
 
@@ -1958,7 +1987,7 @@ gimp_dnd_set_pattern_data (GtkWidget *widget,
 /*  gradient dnd functions  */
 /****************************/
 
-static void
+static gboolean
 gimp_dnd_set_gradient_data (GtkWidget *widget,
 			    GCallback  set_gradient_func,
 			    gpointer   set_gradient_data,
@@ -1972,7 +2001,7 @@ gimp_dnd_set_gradient_data (GtkWidget *widget,
   if ((format != 8) || (length < 1))
     {
       g_warning ("Received invalid gradient data!");
-      return;
+      return FALSE;
     }
 
   name = (gchar *) vals;
@@ -1984,10 +2013,14 @@ gimp_dnd_set_gradient_data (GtkWidget *widget,
       gimp_container_get_child_by_name (the_dnd_gimp->gradient_factory->container,
 					name);
 
-  if (gradient)
-    (* (GimpDndDropViewableFunc) set_gradient_func) (widget,
-						     GIMP_VIEWABLE (gradient),
-						     set_gradient_data);
+  if (! gradient)
+    return FALSE;
+
+  (* (GimpDndDropViewableFunc) set_gradient_func) (widget,
+                                                   GIMP_VIEWABLE (gradient),
+                                                   set_gradient_data);
+
+  return TRUE;
 }
 
 
@@ -1995,7 +2028,7 @@ gimp_dnd_set_gradient_data (GtkWidget *widget,
 /*  palette dnd functions  */
 /***************************/
 
-static void
+static gboolean
 gimp_dnd_set_palette_data (GtkWidget *widget,
 			   GCallback  set_palette_func,
 			   gpointer   set_palette_data,
@@ -2009,7 +2042,7 @@ gimp_dnd_set_palette_data (GtkWidget *widget,
   if ((format != 8) || (length < 1))
     {
       g_warning ("Received invalid palette data!");
-      return;
+      return FALSE;
     }
 
   name = (gchar *) vals;
@@ -2021,10 +2054,14 @@ gimp_dnd_set_palette_data (GtkWidget *widget,
       gimp_container_get_child_by_name (the_dnd_gimp->palette_factory->container,
 					name);
 
-  if (palette)
-    (* (GimpDndDropViewableFunc) set_palette_func) (widget,
-						    GIMP_VIEWABLE (palette),
-						    set_palette_data);
+  if (! palette)
+    return FALSE;
+
+  (* (GimpDndDropViewableFunc) set_palette_func) (widget,
+                                                  GIMP_VIEWABLE (palette),
+                                                  set_palette_data);
+
+  return TRUE;
 }
 
 
@@ -2032,7 +2069,7 @@ gimp_dnd_set_palette_data (GtkWidget *widget,
 /*  font dnd functions  */
 /************************/
 
-static void
+static gboolean
 gimp_dnd_set_font_data (GtkWidget *widget,
                         GCallback  set_font_func,
                         gpointer   set_font_data,
@@ -2046,7 +2083,7 @@ gimp_dnd_set_font_data (GtkWidget *widget,
   if ((format != 8) || (length < 1))
     {
       g_warning ("Received invalid font data!");
-      return;
+      return FALSE;
     }
 
   name = (gchar *) vals;
@@ -2057,10 +2094,14 @@ gimp_dnd_set_font_data (GtkWidget *widget,
     font = (GimpFont *)
       gimp_container_get_child_by_name (the_dnd_gimp->fonts, name);
 
-  if (font)
-    (* (GimpDndDropViewableFunc) set_font_func) (widget,
-                                                 GIMP_VIEWABLE (font),
-                                                 set_font_data);
+  if (! font)
+    return FALSE;
+
+  (* (GimpDndDropViewableFunc) set_font_func) (widget,
+                                               GIMP_VIEWABLE (font),
+                                               set_font_data);
+
+  return TRUE;
 }
 
 
@@ -2068,7 +2109,7 @@ gimp_dnd_set_font_data (GtkWidget *widget,
 /*  buffer dnd functions  */
 /**************************/
 
-static void
+static gboolean
 gimp_dnd_set_buffer_data (GtkWidget *widget,
 			  GCallback  set_buffer_func,
 			  gpointer   set_buffer_data,
@@ -2082,7 +2123,7 @@ gimp_dnd_set_buffer_data (GtkWidget *widget,
   if ((format != 8) || (length < 1))
     {
       g_warning ("Received invalid buffer data!");
-      return;
+      return FALSE;
     }
 
   name = (gchar *) vals;
@@ -2090,10 +2131,14 @@ gimp_dnd_set_buffer_data (GtkWidget *widget,
   buffer = (GimpBuffer *)
     gimp_container_get_child_by_name (the_dnd_gimp->named_buffers, name);
 
-  if (buffer)
-    (* (GimpDndDropViewableFunc) set_buffer_func) (widget,
-						   GIMP_VIEWABLE (buffer),
-						   set_buffer_data);
+  if (! buffer)
+    return FALSE;
+
+  (* (GimpDndDropViewableFunc) set_buffer_func) (widget,
+                                                 GIMP_VIEWABLE (buffer),
+                                                 set_buffer_data);
+
+  return TRUE;
 }
 
 
@@ -2101,7 +2146,7 @@ gimp_dnd_set_buffer_data (GtkWidget *widget,
 /*  imagefile dnd functions  */
 /*****************************/
 
-static void
+static gboolean
 gimp_dnd_set_imagefile_data (GtkWidget *widget,
 			     GCallback  set_imagefile_func,
 			     gpointer   set_imagefile_data,
@@ -2115,7 +2160,7 @@ gimp_dnd_set_imagefile_data (GtkWidget *widget,
   if ((format != 8) || (length < 1))
     {
       g_warning ("Received invalid imagefile data!");
-      return;
+      return FALSE;
     }
 
   name = (gchar *) vals;
@@ -2123,10 +2168,14 @@ gimp_dnd_set_imagefile_data (GtkWidget *widget,
   imagefile = (GimpImagefile *)
     gimp_container_get_child_by_name (the_dnd_gimp->documents, name);
 
-  if (imagefile)
-    (* (GimpDndDropViewableFunc) set_imagefile_func) (widget,
-						      GIMP_VIEWABLE (imagefile),
-						      set_imagefile_data);
+  if (! imagefile)
+    return FALSE;
+
+  (* (GimpDndDropViewableFunc) set_imagefile_func) (widget,
+                                                    GIMP_VIEWABLE (imagefile),
+                                                    set_imagefile_data);
+
+  return TRUE;
 }
 
 
@@ -2134,7 +2183,7 @@ gimp_dnd_set_imagefile_data (GtkWidget *widget,
 /*  template dnd functions  */
 /*****************************/
 
-static void
+static gboolean
 gimp_dnd_set_template_data (GtkWidget *widget,
                             GCallback  set_template_func,
                             gpointer   set_template_data,
@@ -2148,7 +2197,7 @@ gimp_dnd_set_template_data (GtkWidget *widget,
   if ((format != 8) || (length < 1))
     {
       g_warning ("Received invalid template data!");
-      return;
+      return FALSE;
     }
 
   name = (gchar *) vals;
@@ -2156,10 +2205,14 @@ gimp_dnd_set_template_data (GtkWidget *widget,
   template = (GimpTemplate *)
     gimp_container_get_child_by_name (the_dnd_gimp->templates, name);
 
-  if (template)
-    (* (GimpDndDropViewableFunc) set_template_func) (widget,
-                                                     GIMP_VIEWABLE (template),
-                                                     set_template_data);
+  if (! template)
+    return FALSE;
+
+  (* (GimpDndDropViewableFunc) set_template_func) (widget,
+                                                   GIMP_VIEWABLE (template),
+                                                   set_template_data);
+
+  return TRUE;
 }
 
 
@@ -2167,7 +2220,7 @@ gimp_dnd_set_template_data (GtkWidget *widget,
 /*  tool dnd functions  */
 /************************/
 
-static void
+static gboolean
 gimp_dnd_set_tool_data (GtkWidget *widget,
 			GCallback  set_tool_func,
 			gpointer   set_tool_data,
@@ -2181,7 +2234,7 @@ gimp_dnd_set_tool_data (GtkWidget *widget,
   if ((format != 8) || (length < 1))
     {
       g_warning ("Received invalid tool data!");
-      return;
+      return FALSE;
     }
 
   name = (gchar *) vals;
@@ -2192,8 +2245,12 @@ gimp_dnd_set_tool_data (GtkWidget *widget,
     tool_info = (GimpToolInfo *)
       gimp_container_get_child_by_name (the_dnd_gimp->tool_info_list, name);
 
-  if (tool_info)
-    (* (GimpDndDropViewableFunc) set_tool_func) (widget,
-						 GIMP_VIEWABLE (tool_info),
-						 set_tool_data);
+  if (! tool_info)
+    return FALSE;
+
+  (* (GimpDndDropViewableFunc) set_tool_func) (widget,
+                                               GIMP_VIEWABLE (tool_info),
+                                               set_tool_data);
+
+  return TRUE;
 }
