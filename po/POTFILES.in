@@ -81,6 +81,7 @@ app/gui/layers-commands.c
 app/gui/menus.c
 app/gui/module-browser.c
 app/gui/offset-dialog.c
+app/gui/palette-editor-commands.c
 app/gui/palette-import-dialog.c
 app/gui/palette-select.c
 app/gui/palettes-commands.c
