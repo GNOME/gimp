@@ -210,6 +210,9 @@ gimp_display_shell_events (GtkWidget        *widget,
             shell->visibility = shell->fullscreen_visibility;
           }
 
+        gimp_display_shell_set_show_selection  (shell, visibility.selection);
+        gimp_display_shell_set_show_layer      (shell, visibility.active_layer);
+        gimp_display_shell_set_show_guides     (shell, visibility.guides);
         gimp_display_shell_set_show_menubar    (shell, visibility.menubar);
         gimp_display_shell_set_show_rulers     (shell, visibility.rulers);
         gimp_display_shell_set_show_scrollbars (shell, visibility.scrollbars);

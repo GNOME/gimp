@@ -57,6 +57,7 @@
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-cursor.h"
 #include "gimpdisplayshell-dnd.h"
@@ -199,6 +200,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->disp_yoffset          = 0;
 
   shell->proximity             = FALSE;
+  shell->snap_to_guides        = TRUE;
 
   shell->select                = NULL;
 
@@ -254,15 +256,21 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->window_state          = 0;
 
-  shell->visibility.menubar    = FALSE;
-  shell->visibility.rulers     = TRUE;
-  shell->visibility.scrollbars = TRUE;
-  shell->visibility.statusbar  = TRUE;
+  shell->visibility.selection    = TRUE;
+  shell->visibility.active_layer = TRUE;
+  shell->visibility.guides       = TRUE;
+  shell->visibility.menubar      = FALSE;
+  shell->visibility.rulers       = TRUE;
+  shell->visibility.scrollbars   = TRUE;
+  shell->visibility.statusbar    = TRUE;
 
-  shell->fullscreen_visibility.menubar    = FALSE;
-  shell->fullscreen_visibility.rulers     = FALSE;
-  shell->fullscreen_visibility.scrollbars = FALSE;
-  shell->fullscreen_visibility.statusbar  = FALSE;
+  shell->fullscreen_visibility.selection    = TRUE;
+  shell->fullscreen_visibility.active_layer = TRUE;
+  shell->fullscreen_visibility.guides       = TRUE;
+  shell->fullscreen_visibility.menubar      = FALSE;
+  shell->fullscreen_visibility.rulers       = FALSE;
+  shell->fullscreen_visibility.scrollbars   = FALSE;
+  shell->fullscreen_visibility.statusbar    = FALSE;
 
   gtk_window_set_wmclass (GTK_WINDOW (shell), "image_window", "Gimp");
   gtk_window_set_resizable (GTK_WINDOW (shell), TRUE);
@@ -405,11 +413,17 @@ gimp_display_shell_delete_event (GtkWidget   *widget,
 static void
 gimp_display_shell_real_scaled (GimpDisplayShell *shell)
 {
+  GimpContext *user_context;
+
   gimp_display_shell_update_title (shell);
 
   /* update the <Image>/View/Zoom menu */
   gimp_item_factory_update (shell->menubar_factory, shell);
-  gimp_item_factory_update (shell->popup_factory,   shell);
+
+  user_context = gimp_get_user_context (shell->gdisp->gimage->gimp);
+
+  if (shell->gdisp == gimp_context_get_display (user_context))
+    gimp_item_factory_update (shell->popup_factory, shell);
 }
 
 GtkWidget *
@@ -920,7 +934,7 @@ gimp_display_shell_find_guide (GimpDisplayShell *shell,
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
 
-  if (shell->gdisp->draw_guides)
+  if (gimp_display_shell_get_show_guides (shell))
     {
       gdouble image_x, image_y;
 
@@ -953,8 +967,8 @@ gimp_display_shell_snap_point (GimpDisplayShell *shell,
   *tx = x;
   *ty = y;
 
-  if (shell->gdisp->draw_guides &&
-      shell->gdisp->snap_to_guides &&
+  if (gimp_display_shell_get_show_guides (shell) &&
+      shell->snap_to_guides                      &&
       shell->gdisp->gimage->guides)
     {
       gdouble  image_x, image_y;
@@ -1006,7 +1020,7 @@ gimp_display_shell_snap_rectangle (GimpDisplayShell *shell,
 
   snap1 = gimp_display_shell_snap_point (shell, x1, y1, &nx1, &ny1);
   snap2 = gimp_display_shell_snap_point (shell, x2, y2, &nx2, &ny2);
-  
+
   if (snap1 || snap2)
     {
       if (x1 != nx1)
@@ -1328,7 +1342,7 @@ gimp_display_shell_draw_guides (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (shell->gdisp->draw_guides)
+  if (gimp_display_shell_get_show_guides (shell))
     {
       GList     *list;
       GimpGuide *guide;

@@ -37,6 +37,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-appearance.h"
 #include "display/gimpdisplayshell-transform.h"
 
 #include "widgets/gimpwidgets-utils.h"
@@ -215,11 +216,13 @@ gimp_move_tool_button_press (GimpTool        *tool,
                              GdkModifierType  state,
                              GimpDisplay     *gdisp)
 {
-  GimpMoveTool    *move;
-  GimpMoveOptions *options;
-  GimpLayer       *layer;
-  GimpGuide       *guide;
+  GimpDisplayShell *shell;
+  GimpMoveTool     *move;
+  GimpMoveOptions  *options;
+  GimpLayer        *layer;
+  GimpGuide        *guide;
 
+  shell   = GIMP_DISPLAY_SHELL (gdisp->shell);
   move    = GIMP_MOVE_TOOL (tool);
   options = GIMP_MOVE_OPTIONS (tool->tool_info->tool_options);
 
@@ -241,7 +244,7 @@ gimp_move_tool_button_press (GimpTool        *tool,
     }
   else
     {
-      if (gdisp->draw_guides &&
+      if (gimp_display_shell_get_show_guides (shell) &&
 	  (guide = gimp_image_find_guide (gdisp->gimage, coords->x, coords->y)))
 	{
 	  gimp_image_undo_push_image_guide (gdisp->gimage,
@@ -460,11 +463,13 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
                               GdkModifierType  state,
                               GimpDisplay     *gdisp)
 {
-  GimpMoveTool    *move;
-  GimpMoveOptions *options;
-  GimpGuide       *guide;
-  GimpLayer       *layer;
+  GimpDisplayShell *shell;
+  GimpMoveTool     *move;
+  GimpMoveOptions  *options;
+  GimpLayer        *layer;
+  GimpGuide        *guide;
 
+  shell   = GIMP_DISPLAY_SHELL (gdisp->shell);
   move    = GIMP_MOVE_TOOL (tool);
   options = GIMP_MOVE_OPTIONS (tool->tool_info->tool_options);
 
@@ -484,7 +489,7 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
     }
   else
     {
-      if (gdisp->draw_guides &&
+      if (gimp_display_shell_get_show_guides (shell) &&
 	  (guide = gimp_image_find_guide (gdisp->gimage, coords->x, coords->y)))
 	{
 	  tool->gdisp = gdisp;

@@ -1,3 +1,31 @@
+2003-03-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplay.[ch]: removed gdisp->draw_guides
+	and gdisp->snap_to_guides.
+
+	* app/display/gimpdisplayshell.[ch]: added shell->snap_to_guides.
+	Added the state of guide, selection and active_layer visibility to
+	the GimpDisplayShellVisibility struct so they can be configured
+	separately for fullscreen mode. Update the popup_factory in
+	gimp_display_shell_real_scaled() only if this is the active
+	display.
+
+	* app/display/gimpdisplayshell-appearance.[ch]: added accessors
+	for selection, active_layer and guide visibility.
+
+	* app/display/gimpdisplayshell-selection.[ch]: changed
+	accordingly.  Changed the selection and active_layer toggle
+	functions to *_set_hidden().
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/gui/image-menu.c
+	* app/gui/view-commands.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpmovetool.c: changed accordingly.
+
+	* app/gui/gui.c (gui_display_new): update the menubar_factory
+	*after* making the new display the active one.
+
 2003-03-20  Sven Neumann  <sven@gimp.org>
 
 	* INSTALL: some minor updates.

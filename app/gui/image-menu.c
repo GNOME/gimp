@@ -1109,7 +1109,7 @@ image_menu_update (GtkItemFactory *item_factory,
   gint                        lind          = -1;
   gint                        lnum          = -1;
   gboolean                    fullscreen    = FALSE;
-  GimpDisplayShellVisibility *visibility = NULL;
+  GimpDisplayShellVisibility *visibility    = NULL;
   
   gimp = GIMP_ITEM_FACTORY (item_factory)->gimp;
 
@@ -1272,16 +1272,14 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/View/Display Filters...",   gdisp);
 
   SET_SENSITIVE ("/View/Show Selection",      gdisp);
-  SET_ACTIVE    ("/View/Show Selection",      (gdisp && shell->select &&
-                                               ! shell->select->hidden));
+  SET_ACTIVE    ("/View/Show Selection",      gdisp && visibility->selection);
   SET_SENSITIVE ("/View/Show Layer Boundary", gdisp);
-  SET_ACTIVE    ("/View/Show Layer Boundary", (gdisp && shell->select &&
-                                               ! shell->select->layer_hidden));
+  SET_ACTIVE    ("/View/Show Layer Boundary", gdisp && visibility->active_layer);
 
   SET_SENSITIVE ("/View/Show Guides",    gdisp);
-  SET_ACTIVE    ("/View/Show Guides",    gdisp && gdisp->draw_guides);
+  SET_ACTIVE    ("/View/Show Guides",    gdisp && visibility->guides);
   SET_SENSITIVE ("/View/Snap to Guides", gdisp);
-  SET_ACTIVE    ("/View/Snap to Guides", gdisp && gdisp->snap_to_guides);
+  SET_ACTIVE    ("/View/Snap to Guides", gdisp && shell->snap_to_guides);
 
   SET_SENSITIVE ("/View/Show Menubar", gdisp);
   SET_ACTIVE    ("/View/Show Menubar", gdisp && visibility->menubar);

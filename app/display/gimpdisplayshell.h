@@ -31,6 +31,10 @@ typedef struct _GimpDisplayShellVisibility GimpDisplayShellVisibility;
 
 struct _GimpDisplayShellVisibility
 {
+  gboolean selection;
+  gboolean active_layer;
+  gboolean guides;
+
   gboolean menubar;
   gboolean rulers;
   gboolean scrollbars;
@@ -95,28 +99,29 @@ struct _GimpDisplayShell
   gint              offset_x;          /*  offset of display image into raw image  */
   gint              offset_y;
 
-  gint              disp_width;        /*  width of drawing area   */
-  gint              disp_height;       /*  height of drawing area  */
+  gint              disp_width;        /*  width of drawing area              */
+  gint              disp_height;       /*  height of drawing area             */
   gint              disp_xoffset;
   gint              disp_yoffset;
 
-  gboolean          proximity;         /* is a device in proximity           */
+  gboolean          proximity;         /* is a device in proximity            */
+  gboolean          snap_to_guides;    /*  should the guides be snapped to?   */
 
-  Selection        *select;            /*  Selection object    */
+  Selection        *select;            /*  Selection object                   */
 
-  GtkAdjustment    *hsbdata;           /*  adjustments         */
+  GtkAdjustment    *hsbdata;           /*  adjustments                        */
   GtkAdjustment    *vsbdata;
 
-  GtkWidget        *canvas;            /*  canvas widget       */
+  GtkWidget        *canvas;            /*  canvas widget                      */
 
-  GtkWidget        *hsb;               /*  scroll bars         */
+  GtkWidget        *hsb;               /*  scroll bars                        */
   GtkWidget        *vsb;
-  GtkWidget        *qmask;             /*  qmask button        */
-  GtkWidget        *hrule;             /*  rulers              */
+  GtkWidget        *qmask;             /*  qmask button                       */
+  GtkWidget        *hrule;             /*  rulers                             */
   GtkWidget        *vrule;
-  GtkWidget        *origin;            /*  origin button       */
+  GtkWidget        *origin;            /*  origin button                      */
 
-  GtkWidget        *statusbar;         /*  statusbar           */
+  GtkWidget        *statusbar;         /*  statusbar                          */
 
   guchar           *render_buf;        /*  buffer for rendering the image     */
   GdkGC            *render_gc;         /*  GC for rendering the image         */

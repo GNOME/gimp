@@ -32,6 +32,7 @@
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-marching-ants.h"
 #include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-transform.h"
@@ -136,8 +137,8 @@ gimp_display_shell_selection_create (GdkWindow        *win,
   new->state          = INVISIBLE;
   new->paused         = 0;
   new->recalc         = TRUE;
-  new->hidden         = FALSE;
-  new->layer_hidden   = FALSE;
+  new->hidden         = ! gimp_display_shell_get_show_selection (shell);
+  new->layer_hidden   = ! gimp_display_shell_get_show_layer (shell);
 
   for (i = 0; i < 8; i++)
     new->points_in[i] = NULL;
@@ -368,27 +369,33 @@ gimp_display_shell_selection_layer_invis (Selection *select)
 
 
 void
-gimp_display_shell_selection_toggle (Selection *select)
+gimp_display_shell_selection_set_hidden (Selection *select,
+                                         gboolean   hidden)
 {
-  gimp_display_shell_selection_invis (select);
-  gimp_display_shell_selection_layer_invis (select);
+  if (hidden != select->hidden)
+    {
+      gimp_display_shell_selection_invis (select);
+      gimp_display_shell_selection_layer_invis (select);
 
-  /*  toggle the visibility  */
-  select->hidden = select->hidden ? FALSE : TRUE;
+      select->hidden = hidden;
 
-  gimp_display_shell_selection_start (select, TRUE);
+      gimp_display_shell_selection_start (select, TRUE);
+    }
 }
 
 void
-gimp_display_shell_selection_toggle_layer (Selection *select)
+gimp_display_shell_selection_layer_set_hidden (Selection *select,
+                                               gboolean   hidden)
 {
-  gimp_display_shell_selection_invis (select);
-  gimp_display_shell_selection_layer_invis (select);
+  if (hidden != select->layer_hidden)
+    {
+      gimp_display_shell_selection_invis (select);
+      gimp_display_shell_selection_layer_invis (select);
 
-  /*  toggle the visibility  */
-  select->layer_hidden = select->layer_hidden ? FALSE : TRUE;
+      select->layer_hidden = hidden;
 
-  gimp_display_shell_selection_start (select, TRUE);
+      gimp_display_shell_selection_start (select, TRUE);
+    }
 }
 
 

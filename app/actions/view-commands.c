@@ -35,7 +35,6 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
 #include "display/gimpdisplayshell-scale.h"
-#include "display/gimpdisplayshell-selection.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpitemfactory.h"
@@ -222,18 +221,8 @@ view_toggle_selection_cmd_callback (GtkWidget *widget,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  /*  hidden == TRUE corresponds to the menu toggle being FALSE  */
-  if (GTK_CHECK_MENU_ITEM (widget)->active == shell->select->hidden)
-    {
-      gimp_display_shell_selection_toggle (shell->select);
-
-      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
-                                    "/View/Show Selection",
-                                    ! shell->select->hidden);
-      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-                                    "/View/Show Selection",
-                                    ! shell->select->hidden);
-    }
+  gimp_display_shell_set_show_selection (shell,
+                                         GTK_CHECK_MENU_ITEM (widget)->active);
 }
 
 void
@@ -246,18 +235,8 @@ view_toggle_layer_boundary_cmd_callback (GtkWidget *widget,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  /*  hidden == TRUE corresponds to the menu toggle being FALSE  */
-  if (GTK_CHECK_MENU_ITEM (widget)->active == shell->select->layer_hidden)
-    {
-      gimp_display_shell_selection_toggle_layer (shell->select);
-
-      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
-                                    "/View/Show Layer Boundary",
-                                    ! shell->select->layer_hidden);
-      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-                                    "/View/Show Layer Boundary",
-                                    ! shell->select->layer_hidden);
-    }
+  gimp_display_shell_set_show_layer (shell,
+                                     GTK_CHECK_MENU_ITEM (widget)->active);
 }
 
 void
@@ -320,32 +299,14 @@ void
 view_toggle_guides_cmd_callback (GtkWidget *widget,
 				 gpointer   data)
 {
-  GimpDisplay *gdisp;
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
   return_if_no_display (gdisp, data);
 
-  if (GTK_CHECK_MENU_ITEM (widget)->active != gdisp->draw_guides)
-    {
-      GimpDisplayShell *shell;
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-      shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-      gdisp->draw_guides = GTK_CHECK_MENU_ITEM (widget)->active;
-
-      if (gdisp->gimage->guides)
-        {
-          gimp_display_shell_expose_full (shell);
-          gimp_display_flush (gdisp);
-        }
-      else
-        {
-          gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
-                                        "/View/Show Guides",
-                                        gdisp->draw_guides);
-          gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-                                        "/View/Show Guides",
-                                        gdisp->draw_guides);
-        }
-    }
+  gimp_display_shell_set_show_guides (shell,
+                                      GTK_CHECK_MENU_ITEM (widget)->active);
 }
 
 void
@@ -358,16 +319,16 @@ view_snap_to_guides_cmd_callback (GtkWidget *widget,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  if (gdisp->snap_to_guides != GTK_CHECK_MENU_ITEM (widget)->active)
+  if (shell->snap_to_guides != GTK_CHECK_MENU_ITEM (widget)->active)
     {
-      gdisp->snap_to_guides = GTK_CHECK_MENU_ITEM (widget)->active;
+      shell->snap_to_guides = GTK_CHECK_MENU_ITEM (widget)->active;
 
       gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
                                     "/View/Snap to Guides",
-                                    gdisp->snap_to_guides);
+                                    shell->snap_to_guides);
       gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
                                     "/View/Snap to Guides",
-                                    gdisp->snap_to_guides);
+                                    shell->snap_to_guides);
     }
 }
 

@@ -28,6 +28,18 @@ void       gimp_display_shell_set_fullscreen      (GimpDisplayShell *shell,
                                                    gboolean          fullscreen);
 gboolean   gimp_display_shell_get_fullscreen      (GimpDisplayShell *shell);
 
+void       gimp_display_shell_set_show_selection  (GimpDisplayShell *shell,
+                                                   gboolean          show);
+gboolean   gimp_display_shell_get_show_selection  (GimpDisplayShell *shell);
+
+void       gimp_display_shell_set_show_layer      (GimpDisplayShell *shell,
+                                                   gboolean          show);
+gboolean   gimp_display_shell_get_show_layer      (GimpDisplayShell *shell);
+
+void       gimp_display_shell_set_show_guides     (GimpDisplayShell *shell,
+                                                   gboolean          show);
+gboolean   gimp_display_shell_get_show_guides     (GimpDisplayShell *shell);
+
 void       gimp_display_shell_set_show_menubar    (GimpDisplayShell *shell,
                                                    gboolean          show);
 gboolean   gimp_display_shell_get_show_menubar    (GimpDisplayShell *shell);

@@ -60,9 +60,6 @@ struct _GimpDisplay
 
   GtkWidget  *shell;            /*  shell widget for this gdisplay          */
 
-  gboolean    draw_guides;      /*  should the guides be drawn?             */
-  gboolean    snap_to_guides;   /*  should the guides be snapped to?        */
-
   GSList     *update_areas;     /*  Update areas list                       */
 
   IdleRenderStruct idle_render; /*  state of this gdisplay's render thread  */

@@ -453,9 +453,9 @@ gui_display_new (GimpImage *gimage,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gimp_item_factory_update (shell->menubar_factory, shell);
-
   gimp_context_set_display (gimp_get_user_context (gimage->gimp), gdisp);
+
+  gimp_item_factory_update (shell->menubar_factory, shell);
 
   if (double_speed)
     g_signal_connect_after (shell->canvas, "expose_event",

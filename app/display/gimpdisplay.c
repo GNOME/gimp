@@ -142,9 +142,6 @@ gimp_display_init (GimpDisplay *gdisp)
 
   gdisp->shell                    = NULL;
 
-  gdisp->draw_guides              = TRUE;
-  gdisp->snap_to_guides           = TRUE;
-
   gdisp->update_areas             = NULL;
 
   gdisp->idle_render.idle_id      = 0;

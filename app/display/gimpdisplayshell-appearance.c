@@ -25,11 +25,15 @@
 
 #include "display-types.h"
 
+#include "core/gimpimage.h"
+
 #include "widgets/gimpitemfactory.h"
 
+#include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-callbacks.h"
+#include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-render.h"
 
 
@@ -138,6 +142,102 @@ gimp_display_shell_get_fullscreen (GimpDisplayShell *shell)
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
 
   return (shell->window_state & GDK_WINDOW_STATE_FULLSCREEN) != 0;
+}
+
+void
+gimp_display_shell_set_show_selection (GimpDisplayShell *shell,
+                                       gboolean          show)
+{
+  GimpDisplayShellVisibility *visibility;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  visibility = GET_VISIBILITY (shell);
+
+  if (show != visibility->selection)
+    {
+      visibility->selection = show ? TRUE : FALSE;
+
+      if (shell->select)
+        gimp_display_shell_selection_set_hidden (shell->select, ! show);
+
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
+                                    "/View/Show Selection", show);
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
+                                    "/View/Show Selection", show);
+    }
+}
+
+gboolean
+gimp_display_shell_get_show_selection (GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+
+  return GET_VISIBILITY (shell)->selection;
+}
+
+void
+gimp_display_shell_set_show_layer (GimpDisplayShell *shell,
+                                   gboolean          show)
+{
+  GimpDisplayShellVisibility *visibility;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  visibility = GET_VISIBILITY (shell);
+
+  if (show != visibility->active_layer)
+    {
+      visibility->active_layer = show ? TRUE : FALSE;
+
+      if (shell->select)
+        gimp_display_shell_selection_layer_set_hidden (shell->select, ! show);
+
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
+                                    "/View/Show Layer Boundary", show);
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
+                                    "/View/Show Layer Boundary", show);
+    }
+}
+
+gboolean
+gimp_display_shell_get_show_layer (GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+
+  return GET_VISIBILITY (shell)->active_layer;
+}
+
+void
+gimp_display_shell_set_show_guides (GimpDisplayShell *shell,
+                                    gboolean          show)
+{
+  GimpDisplayShellVisibility *visibility;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  visibility = GET_VISIBILITY (shell);
+
+  if (show != visibility->guides)
+    {
+      visibility->guides = show ? TRUE : FALSE;
+
+      if (shell->gdisp->gimage->guides)
+        gimp_display_shell_expose_full (shell);
+
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
+                                    "/View/Show Guides", show);
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
+                                    "/View/Show Guides", show);
+    }
+}
+
+gboolean
+gimp_display_shell_get_show_guides (GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+
+  return GET_VISIBILITY (shell)->guides;
 }
 
 void

@@ -43,6 +43,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-appearance.h"
 #include "display/gimpdisplayshell-selection.h"
 #include "display/gimpdisplayshell-transform.h"
 
@@ -196,9 +197,12 @@ gimp_edit_selection_tool_snap (GimpEditSelectionTool *edit_select,
 			       gdouble                x,
 			       gdouble                y)
 {
-  gdouble x1, y1;
-  gdouble x2, y2;
-  gdouble dx, dy;
+  GimpDisplayShell *shell;
+  gdouble           x1, y1;
+  gdouble           x2, y2;
+  gdouble           dx, dy;
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   dx = x - edit_select->origx;
   dy = y - edit_select->origy;
@@ -206,8 +210,8 @@ gimp_edit_selection_tool_snap (GimpEditSelectionTool *edit_select,
   x1 = edit_select->x1 + dx;
   y1 = edit_select->y1 + dy;
 
-  if (gdisp->draw_guides &&
-      gdisp->snap_to_guides &&
+  if (gimp_display_shell_get_show_guides (shell) &&
+      shell->snap_to_guides &&
       gdisp->gimage->guides)
     {
       gint image_x1, image_y1;
