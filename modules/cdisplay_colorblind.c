@@ -97,7 +97,7 @@ struct _CdisplayColorblind
   gfloat                inflection;
 
   guint32               cache[2 * COLOR_CACHE_SIZE];
-  gfloat                gamma_lut[256][3];
+  gfloat                gamma_lut[256];
 };
 
 struct _CdisplayColorblindClass
@@ -153,7 +153,7 @@ static void        cdisplay_colorblind_set_deficiency (CdisplayColorblind   *col
    * indistinguishabled).
    */
 
-static const gfloat gammaRGB[3] = { 2.1, 2.0, 2.1 };
+static const gfloat gammaRGB = 2.1;
 
 
   /* For most modern Cathode-Ray Tube monitors (CRTs), the following
@@ -300,11 +300,7 @@ cdisplay_colorblind_init (CdisplayColorblind *colorblind)
   gint i;
 
   for (i = 0; i < 256; i++)
-    {
-      colorblind->gamma_lut[i][0] = pow (i, 1.0 / gammaRGB[0]);
-      colorblind->gamma_lut[i][1] = pow (i, 1.0 / gammaRGB[1]);
-      colorblind->gamma_lut[i][2] = pow (i, 1.0 / gammaRGB[2]);
-    }
+    colorblind->gamma_lut[i] = pow (i, 1.0 / gammaRGB);
 }
 
 static void
@@ -346,6 +342,37 @@ cdisplay_colorblind_set_property (GObject      *object,
     }
 }
 
+
+/*
+ * This function performs a binary search in the gamma LUT.  It
+ * assumes a monotone gamma function and it simply clips out of gamut
+ * values. It would be better to desaturate instead of clipping.
+ */
+static inline guchar
+lut_lookup (gfloat        value,
+            const gfloat *lut)
+{
+  guchar offset = 128;
+
+  while (TRUE)
+    {
+      if (lut[offset] < value)
+        {
+          if (offset == 255 || lut[offset + 1] >= value)
+            return offset;
+
+          offset++;
+        }
+      else
+        {
+          if (offset == 0 || lut[offset - 1] < value)
+            return offset;
+
+          offset--;
+        }
+    }
+}
+
 static void
 cdisplay_colorblind_convert (GimpColorDisplay *display,
                              guchar           *buf,
@@ -355,18 +382,21 @@ cdisplay_colorblind_convert (GimpColorDisplay *display,
                              gint              bpl)
 {
   CdisplayColorblind *colorblind = CDISPLAY_COLORBLIND (display);
-  guchar             *b;
-  gfloat              a1, b1, c1, a2, b2, c2;
+  const gfloat        a1 = colorblind->a1;
+  const gfloat        b1 = colorblind->b1;
+  const gfloat        c1 = colorblind->c1;
+  const gfloat        a2 = colorblind->a2;
+  const gfloat        b2 = colorblind->b2;
+  const gfloat        c2 = colorblind->c2;
   gfloat              tmp;
-  gfloat              red, green, blue, redOld, greenOld;
+  gfloat              red, green, blue;
+  gfloat              redOld, greenOld;
+  guchar             *b;
   gint                x, y;
 
   /* Require 3 bytes per pixel (assume RGB) */
   if (bpp != 3)
     return;
-
-  a1 = colorblind->a1; b1 = colorblind->b1; c1 = colorblind->c1;
-  a2 = colorblind->a2; b2 = colorblind->b2; c2 = colorblind->c2;
 
   for (y = 0; y < height; y++, buf += bpl)
     for (x = 0, b = buf; x < width; x++, b += bpp)
@@ -390,9 +420,9 @@ cdisplay_colorblind_convert (GimpColorDisplay *display,
           }
 
         /* Remove gamma to linearize RGB intensities */
-        red   = colorblind->gamma_lut[b[0]][0];
-        green = colorblind->gamma_lut[b[1]][1];
-        blue  = colorblind->gamma_lut[b[2]][2];
+        red   = colorblind->gamma_lut[b[0]];
+        green = colorblind->gamma_lut[b[1]];
+        blue  = colorblind->gamma_lut[b[2]];
 
         /* Convert to LMS (dot product with transform matrix) */
         redOld   = red;
@@ -408,7 +438,7 @@ cdisplay_colorblind_convert (GimpColorDisplay *display,
             tmp = blue / red;
             /* See which side of the inflection line we fall... */
             if (tmp < colorblind->inflection)
-            green = -(a1 * red + c1 * blue) / b1;
+              green = -(a1 * red + c1 * blue) / b1;
             else
               green = -(a2 * red + c2 * blue) / b2;
             break;
@@ -444,15 +474,9 @@ cdisplay_colorblind_convert (GimpColorDisplay *display,
         blue  = redOld * lms2rgb[6] + greenOld * lms2rgb[7] + blue * lms2rgb[8];
 
         /* Apply gamma to go back to non-linear intensities */
-        red   = pow (red,   gammaRGB[0]);
-        green = pow (green, gammaRGB[1]);
-        blue  = pow (blue,  gammaRGB[2]);
-
-        /* Ensure that we stay within the RGB gamut */
-        /* *** FIXME: it would be better to desaturate than blindly clip. */
-        b[0] = (guchar) CLAMP (red,   0, 255);
-        b[1] = (guchar) CLAMP (green, 0, 255);
-        b[2] = (guchar) CLAMP (blue,  0, 255);
+        b[0] = lut_lookup (red,   colorblind->gamma_lut);
+        b[1] = lut_lookup (green, colorblind->gamma_lut);
+        b[2] = lut_lookup (blue,  colorblind->gamma_lut);
 
         /* Put the result into our cache */
         colorblind->cache[2 * index]     = pixel;

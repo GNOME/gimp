@@ -1,5 +1,11 @@
 2005-03-26  Sven Neumann  <sven@gimp.org>
 
+	* modules/cdisplay_colorblind.c: use the same LUT for all color
+	channels. Do a binary search in the LUT for the backward
+	transformation.
+
+2005-03-26  Sven Neumann  <sven@gimp.org>
+
 	* modules/cdisplay_colorblind.c: applied a modified version of
 	a patch by Gautier Portet that introduces a LUT for the gamma
 	correction (bug #101256). Also moved constants out of the
