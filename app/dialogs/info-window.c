@@ -33,7 +33,7 @@
 #include "info_dialog.h"
 #include "info_window.h"
 
-#include "tools/tools.h"
+#include "tools/tool.h"
 
 #include "pdb/procedural_db.h"
 
@@ -158,8 +158,8 @@ info_window_create_extended (InfoDialog *info_win)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  pixmap = gtk_pixmap_new (tool_get_pixmap (COLOR_PICKER),
-			   tool_get_mask (COLOR_PICKER));
+  pixmap = gtk_pixmap_new (gimp_tool_get_pixmap (COLOR_PICKER),
+			   gimp_tool_get_mask (COLOR_PICKER));
   gtk_table_attach (GTK_TABLE (table), pixmap, 0, 2, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
   gtk_widget_show (pixmap);

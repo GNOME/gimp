@@ -567,6 +567,8 @@ app_init (void)
   RESET_BAR();
   xcf_init ();             /*  initialize the xcf file format routines */
 
+  register_tools();	   /* register internal tools */
+
   /*  initialize  the global parasite table  */
   app_init_update_status (_("Looking for data files"), _("Parasites"), 0.00);
   gimp_init_parasites ();

@@ -41,8 +41,7 @@
 #include "gimppreview.h"
 #include "gimprc.h"
 #include "temp_buf.h"
-
-#include "tools/tools.h"
+#include "tools/tool.h"
 
 #include "libgimp/gimplimits.h"
 
@@ -991,6 +990,7 @@ gimp_dnd_get_gradient_icon (GtkWidget     *widget,
 				   0,
 				   TRUE, FALSE, FALSE);
 
+
   return preview;
 }
 
@@ -1195,13 +1195,16 @@ gimp_dnd_get_tool_icon (GtkWidget     *widget,
 
   tool_type = (* (GimpDndDragToolFunc) get_tool_func) (widget, get_tool_data);
 
+#warning obsolete
+#if 0
   if (((gint) tool_type < 0) || ((gint) tool_type >= num_tools))
     return NULL;
 
-  tool_icon = gtk_pixmap_new (tool_get_pixmap (tool_type),
-			      tool_get_mask (tool_type));
+  tool_icon = gtk_pixmap_new (gimp_tool_get_pixmap (tool_type),
+			      gimp_tool_get_mask (tool_type));
 
   return tool_icon;
+#endif
 }
 
 static guchar *
@@ -1216,9 +1219,11 @@ gimp_dnd_get_tool_data (GtkWidget     *widget,
 
   tool_type = (* (GimpDndDragToolFunc) get_tool_func) (widget, get_tool_data);
 
+#warning yet another
+#if 0
   if (((gint) tool_type < 0) || ((gint) tool_type >= num_tools))
     return NULL;
-
+#endif
   val = g_new (guint16, 1);
 
   val[0] = (guint16) tool_type;
@@ -1249,9 +1254,11 @@ gimp_dnd_set_tool_data (GtkWidget     *widget,
   val = *((guint16 *) vals);
 
   tool_type = (ToolType) val;
-
+#warning nothing special
+#if 0
   if (((gint) tool_type < 0) || ((gint) tool_type >= num_tools))
     return;
+#endif
 
   (* (GimpDndDropToolFunc) set_tool_func) (widget, tool_type, set_tool_data);
 }

@@ -42,9 +42,7 @@
 #include "gimplist.h"
 #include "gimprc.h"
 #include "session.h"
-
-#include "tools/tools.h"
-
+#include "tools/tool.h"
 #include "libgimp/gimpenv.h"
 
 #include "libgimp/gimpintl.h"
@@ -119,10 +117,10 @@ static void     devices_close_callback           (GtkWidget    *widget,
 static void     device_status_update             (guint32       deviceid);
 static void     device_status_update_current     (void);
 
-static ToolType device_status_drag_tool          (GtkWidget    *widget,
+static GimpTool *device_status_drag_tool         (GtkWidget    *widget,
 						  gpointer      data);
 static void     device_status_drop_tool          (GtkWidget    *widget,
-						  ToolType      tool,
+						  GimpTool     *tool,
 						  gpointer      data);
 static void     device_status_foreground_changed (GtkWidget    *widget,
 						  gpointer      data);
@@ -365,7 +363,7 @@ devices_rc_update (gchar        *name,
 		   GdkAxisUse   *axes, 
 		   gint          num_keys, 
 		   GdkDeviceKey *keys,
-		   ToolType      tool,
+		   GimpTool     *tool,
 		   GimpRGB      *foreground,
 		   GimpRGB      *background,
 		   gchar        *brush_name, 
@@ -682,8 +680,12 @@ devices_write_rc_device (DeviceInfo *device_info,
   if (gimp_context_get_tool (device_info->context) >= FIRST_TOOLBOX_TOOL &&
       gimp_context_get_tool (device_info->context) <= LAST_TOOLBOX_TOOL)
     {
+
+#warning somebody fix me, please
+#if 0
       fprintf (fp, "\n    (tool \"%s\")",
 	       tool_info[gimp_context_get_tool (device_info->context)].tool_name);
+#endif
     }
 
   {
@@ -827,8 +829,8 @@ device_status_create (void)
 
 	  deviceD->eventboxes[i] = gtk_event_box_new ();
 
-	  deviceD->tools[i] = gtk_pixmap_new (tool_get_pixmap (RECT_SELECT), 
-					      tool_get_mask (RECT_SELECT));
+	  deviceD->tools[i] = gtk_pixmap_new (gimp_tool_get_pixmap (RECT_SELECT), 
+					      gimp_tool_get_mask (RECT_SELECT));
 	  
 	  gtk_drag_source_set (deviceD->eventboxes[i],
 			       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
@@ -1076,17 +1078,19 @@ device_status_update (guint32 deviceid)
       gtk_widget_show (deviceD->frames[i]);
 
       gtk_pixmap_set (GTK_PIXMAP (deviceD->tools[i]), 
-		      tool_get_pixmap (gimp_context_get_tool (device_info->context)),
-		      tool_get_mask (gimp_context_get_tool (device_info->context)));
+		      gimp_tool_get_pixmap (gimp_context_get_tool (device_info->context)),
+		      gimp_tool_get_mask (gimp_context_get_tool (device_info->context)));
 
       gtk_widget_draw (deviceD->tools[i], NULL);
       gtk_widget_show (deviceD->tools[i]);
       gtk_widget_show (deviceD->eventboxes[i]);
 
+#warning fixme
+#if 0
       gimp_help_set_help_data (deviceD->eventboxes[i],
 			       tool_info[(gint) gimp_context_get_tool (device_info->context)].tool_desc,
 			       tool_info[(gint) gimp_context_get_tool (device_info->context)].private_tip);
-
+#endif
       /*  foreground color  */
       gimp_context_get_foreground (device_info->context, &color);
       gimp_color_area_set_color (GIMP_COLOR_AREA (deviceD->foregrounds[i]), 
@@ -1134,7 +1138,7 @@ device_status_update (guint32 deviceid)
 
 /*  dnd stuff  */
 
-static ToolType
+static GimpTool *
 device_status_drag_tool (GtkWidget *widget,
 			 gpointer   data)
 {
@@ -1154,7 +1158,7 @@ device_status_drag_tool (GtkWidget *widget,
 
 static void
 device_status_drop_tool (GtkWidget *widget,
-			 ToolType   tool,
+			 GimpTool   *tool,
 			 gpointer   data)
 {
   DeviceInfo *device_info;

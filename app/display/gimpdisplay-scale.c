@@ -31,7 +31,7 @@
 #include "nav_window.h"
 #include "scale.h"
 
-#include "tools/tools.h"
+#include "tools/tool.h"
 
 
 void
@@ -56,7 +56,7 @@ resize_display (GDisplay *gdisp,
 		gboolean  redisplay)
 {
   /* freeze the active tool */
-  active_tool_control (PAUSE, (void *) gdisp);
+  tool_manager_control_active (PAUSE, (void *) gdisp);
 
   if (resize_window)
     gdisplay_shrink_wrap (gdisp);
@@ -73,7 +73,7 @@ resize_display (GDisplay *gdisp,
     }
 
   /* re-enable the active tool */
-  active_tool_control (RESUME, (void *) gdisp);
+  tool_manager_control_active (RESUME, (void *) gdisp);
 }
 
 
@@ -81,7 +81,7 @@ void
 shrink_wrap_display (GDisplay *gdisp)
 {
   /* freeze the active tool */
-  active_tool_control (PAUSE, (void *) gdisp);
+  tool_manager_control_active (PAUSE, (void *) gdisp);
 
   gdisplay_shrink_wrap (gdisp);
 
@@ -92,7 +92,7 @@ shrink_wrap_display (GDisplay *gdisp)
   gdisplays_flush ();
 
   /* re-enable the active tool */
-  active_tool_control (RESUME, (void *) gdisp);
+  tool_manager_control_active (RESUME, (void *) gdisp);
 }
 
 

@@ -52,8 +52,7 @@
 #include "plug_in.h"
 #include "gimage.h"
 #include "session.h"
-
-#include "tools/tools.h"
+#include "tools/tool.h"
 
 #include "libgimp/gimpenv.h"
 #include "libgimp/gimputils.h"
@@ -2114,7 +2113,7 @@ parse_device (gpointer val1p,
   gint          num_keys = 0;
   GdkDeviceKey *keys     = NULL;
 
-  ToolType tool          = RECT_SELECT;
+  GimpTool *tool;
   GimpRGB  foreground    = { 1.0, 1.0, 1.0, 1.0 };
   GimpRGB  background    = { 0.0, 0.0, 0.0, 1.0 };
   gchar   *brush_name    = NULL;
@@ -2228,12 +2227,17 @@ parse_device (gpointer val1p,
 	  token = get_next_token ();
 
 	  /* FIXME: this shouldn't be hard coded like this */
+#warning deep bogosity error 
+#if 0
 	  for (tool = FIRST_TOOLBOX_TOOL; tool <= LAST_TOOLBOX_TOOL; tool++)
 	    {
 	      if (!strcmp (tool_info[tool].tool_name, token_str))
 		break;
 	    }
-	  if (tool > LAST_TOOLBOX_TOOL)
+
+#endif
+
+if (tool > LAST_TOOLBOX_TOOL)
 	    goto error;
 	}
       else if (!strcmp ("foreground", token_sym))

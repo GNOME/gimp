@@ -90,7 +90,7 @@ static void gimp_context_copy_display        (GimpContext      *src,
 
 /*  tool  */
 static void gimp_context_real_set_tool       (GimpContext      *context,
-					      ToolType          tool);
+					      GimpTool         *tool);
 static void gimp_context_copy_tool           (GimpContext      *src,
 					      GimpContext      *dest);
 
@@ -379,9 +379,9 @@ gimp_context_class_init (GimpContextClass *klass)
 		    object_class->type,
 		    GTK_SIGNAL_OFFSET (GimpContextClass,
 				       tool_changed),
-		    gtk_marshal_NONE__INT,
+		    gtk_marshal_NONE__POINTER,
 		    GTK_TYPE_NONE, 1,
-		    GTK_TYPE_INT);
+		    GTK_TYPE_POINTER);
 
   gimp_context_signals[FOREGROUND_CHANGED] =
     gtk_signal_new (gimp_context_signal_names[FOREGROUND_CHANGED],
@@ -493,7 +493,7 @@ gimp_context_init (GimpContext *context)
   context->image         = NULL;
   context->display       = NULL;
 
-  context->tool          = RECT_SELECT;
+  context->tool 	 = NULL;
 
   gimp_rgba_set (&context->foreground, 0.0, 0.0, 0.0, 1.0);
   gimp_rgba_set (&context->background, 1.0, 1.0, 1.0, 1.0);
@@ -1228,7 +1228,7 @@ gimp_context_copy_display (GimpContext *src,
 /*****************************************************************************/
 /*  tool  ********************************************************************/
 
-ToolType
+GimpTool *
 gimp_context_get_tool (GimpContext *context)
 {
   context_check_current (context);
@@ -1239,7 +1239,7 @@ gimp_context_get_tool (GimpContext *context)
 
 void
 gimp_context_set_tool (GimpContext *context,
-		       ToolType     tool)
+		       GimpTool     *tool)
 {
   context_check_current (context);
   context_return_if_fail (context);
@@ -1261,7 +1261,7 @@ gimp_context_tool_changed (GimpContext *context)
 
 static void
 gimp_context_real_set_tool (GimpContext *context,
-			    ToolType     tool)
+			    GimpTool     *tool)
 {
   if (context->tool == tool)
     return;

@@ -1,3 +1,57 @@
+2001-02-13 Nathan Summers <rock@gimp.org>
+
+	* configure.in
+	* plug-ins/plugin-helper/*: prototype for an extension that allows 
+	gmodules as plugins.  Known bug: crashes on gmodules with a static "query" function
+        
+	* app/tools/tool.c 
+	* app/tools/tool.h: created new GimpTool object.  Did away with ToolInfo.
+	Most tools still need to be ported over to the new api.
+
+        * app/tools/tools.c: now contains the initialization function to register 
+	the tools with the Gimp
+
+        * app/tools/tools.h: renamed to tool.h
+
+	* app/Makefile.am 
+	* app/app_procs.c
+        * app/apptypes.h 
+	* app/commands.c 
+	* app/context_manager.c
+        * app/cursorutil.c 
+	* app/devices.c 
+	* app/devices.h
+        * app/disp_callbacks.c 
+	* app/draw_core.c 
+	* app/draw_core.h
+        * app/gdisplay.c 
+	* app/gimage.c 
+	* app/gimage_mask.c
+        * app/gimpcontext.c 
+	* app/gimpcontext.h 
+        * app/global_edit.c 
+	* app/info_window.c 
+	* app/interface.c
+        * app/libgimp_glue.c 
+	* app/menus.c 
+	* app/paint_core.h
+        * app/paint_options.h 
+	* app/scale.c 
+	* app/scroll.c 
+	* app/toolbox.c
+	* app/undo.c 
+	* app/tools/Makefile.am
+        * app/tools/color_picker.c 
+	* app/tools/color_picker.h
+        * app/tools/paint_core.c 
+	* app/tools/tool_options.c
+        * app/tools/tool_options.h 
+	* app/tools/tool_options_dialog.c
+	* libgimp/gimp.c 
+	* plug-ins/Makefile.am: changed acordingly
+
+        * plug-ins/script-fu/script-fu-scripts.c: fixed typo in comment.  Pathetic, huh?
+
 2001-02-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am

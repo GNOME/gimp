@@ -92,7 +92,7 @@
 #endif /* DISPLAY_FILTERS */
 
 #include "tools/tool_options_dialog.h"
-#include "tools/tools.h"
+#include "tools/tool.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -1120,6 +1120,8 @@ tools_select_cmd_callback (GtkWidget *widget,
   gdisp     = gdisplay_active ();
 
 
+#warning fix tools_select_cmd_callback
+#if 0
   gimp_context_set_tool (gimp_context_get_user (), tool_type);
 
   /*  Paranoia  */
@@ -1141,6 +1143,7 @@ tools_select_cmd_callback (GtkWidget *widget,
    *  before deleting it
    */
   active_tool->gdisp = gdisp;
+#endif
 }
 
 /*****  Filters  *****/

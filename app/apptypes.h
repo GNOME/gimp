@@ -150,9 +150,8 @@ typedef struct _TempBuf             MaskBuf;
 typedef struct _Tile                Tile;
 typedef struct _TileManager         TileManager;
 
-typedef struct _Tool                Tool;
-typedef struct _ToolInfo            ToolInfo;
-
+typedef struct _Tool		    Tool;
+typedef struct _ToolInfo	    ToolInfo;
 typedef struct _ToolOptions         ToolOptions;
 
 typedef struct _ScanConvertPoint    ScanConvertPoint;

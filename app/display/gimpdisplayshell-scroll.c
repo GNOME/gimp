@@ -30,7 +30,7 @@
 #include "scroll.h"
 #include "nav_window.h"
 
-#include "tools/tools.h"
+#include "tools/tool.h"
 
 
 /*  This is the delay before dithering begins
@@ -179,7 +179,7 @@ scroll_display (GDisplay *gdisp,
       gdisp->offset_y = old_y;
 
       /*  stop the currently active tool  */
-      active_tool_control (PAUSE, (void *) gdisp);
+      tool_manager_control_active (PAUSE, (void *) gdisp);
 
       /*  set the offsets back to the new values  */
       gdisp->offset_x += x_offset;
@@ -194,7 +194,7 @@ scroll_display (GDisplay *gdisp,
 		       (gdisp->disp_height - abs (y_offset)));
 
       /*  resume the currently active tool  */
-      active_tool_control (RESUME, (void *) gdisp);
+      tool_manager_control_active (RESUME, (void *) gdisp);
 
       /*  scale the image into the exposed regions  */
       if (x_offset)

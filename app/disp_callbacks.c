@@ -52,7 +52,7 @@
 
 #include "tools/bucket_fill.h"
 #include "tools/move.h"
-#include "tools/tools.h"
+#include "tools/tool_manager.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -250,6 +250,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
       switch (bevent->button)
 	{
 	case 1:
+	  g_message("disp_callbacks button pressed");
 	  state |= GDK_BUTTON1_MASK;
 	  gtk_grab_add (canvas);
 
@@ -261,14 +262,19 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	   * guaranteed to work in future versions of GTK.
 	   * -Yosh
 	   */
+
+	   
 	  if (key_signal_id == 0)
 	    key_signal_id = gtk_signal_connect (GTK_OBJECT (canvas),
 						"key_press_event",
 						GTK_SIGNAL_FUNC (gtk_true),
 						NULL);
+/* FIXME!!! This code is ugly, and active_tool shouldn't be referenced directly */
 
-	  if (active_tool && ((active_tool->type == MOVE) ||
-			      ! gimp_image_is_empty (gdisp->gimage)))
+		 
+
+	  if (active_tool && (GIMP_IS_MOVE_TOOL(active_tool) ||
+			      !gimp_image_is_empty (gdisp->gimage)))
 	    {
 	      if (active_tool->auto_snap_to)
 		{
@@ -289,7 +295,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 		  /* and doesn't want to be preserved across drawable changes */
 		  ! active_tool->preserve)
 		{
-		  tools_initialize (active_tool->type, gdisp);
+		  gimp_tool_old_initialize (active_tool, gdisp);
 		}
 
 	      /* otherwise set it's drawable if it has none */
@@ -298,9 +304,9 @@ gdisplay_canvas_events (GtkWidget *canvas,
 		  active_tool->drawable =
 		    gimp_image_active_drawable (gdisp->gimage);
 		}
-
-	      (* active_tool->button_press_func) (active_tool, bevent, gdisp);
-	    }
+	      
+	      gimp_tool_emit_button_press (active_tool, bevent, gdisp);
+	    } 
 	  break;
 
 	case 2:
@@ -370,8 +376,8 @@ gdisplay_canvas_events (GtkWidget *canvas,
        *
        *  ugly: fuzzy_select sets busy cursors while ACTIVE.
        */
-      if (gimp_busy && ! (active_tool->type == FUZZY_SELECT &&
-			  active_tool->state == ACTIVE))
+      if (gimp_busy && ! (GIMP_IS_FUZZY_SELECT(active_tool)  &&
+	                  active_tool->state == ACTIVE))
 	return TRUE;
 
       switch (bevent->button)
@@ -388,7 +394,8 @@ gdisplay_canvas_events (GtkWidget *canvas,
 
 	  gtk_grab_remove (canvas);
 	  gdk_pointer_ungrab (bevent->time);  /* fixes pointer grab bug */
-	  if (active_tool && ((active_tool->type == MOVE) ||
+
+	  if (active_tool && (GIMP_IS_MOVE_TOOL(active_tool) ||
 			      !gimp_image_is_empty (gdisp->gimage)))
 	    {
 	      if (active_tool->state == ACTIVE)
@@ -400,8 +407,8 @@ gdisplay_canvas_events (GtkWidget *canvas,
 		      bevent->y = ty;
 		      update_cursor = TRUE;
 		    }
-
-		  (* active_tool->button_release_func) (active_tool, bevent,
+		  
+		  gimp_tool_emit_button_release (active_tool, bevent,
 							gdisp);
 		}
 	    }
@@ -443,13 +450,13 @@ gdisplay_canvas_events (GtkWidget *canvas,
        *
        *  ugly: fuzzy_select sets busy cursors while ACTIVE.
        */
-      if (gimp_busy && ! (active_tool->type == FUZZY_SELECT &&
-			  active_tool->state == ACTIVE))
+      if (gimp_busy && !(GIMP_IS_FUZZY_SELECT(active_tool) &&
+	                  active_tool->state == ACTIVE))
 	return TRUE;
-
      /* Ask for the pointer position, but ignore it except for cursor
-      * handling, so motion events sync with the button press/release events
+      * handling, so motion events sync with the button press/release events 
       */
+
       if (mevent->is_hint)
 	{
 	  gdk_input_window_get_pointer (canvas->window, current_device, &tx, &ty,
@@ -473,8 +480,8 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  gdisplay_check_device_cursor (gdisp);
 	}
 
-      if (active_tool && ((active_tool->type == MOVE) ||
-			  ! gimp_image_is_empty (gdisp->gimage)) &&
+      if (active_tool && (GIMP_IS_MOVE_TOOL(active_tool) ||
+			  !gimp_image_is_empty (gdisp->gimage)) &&
 	  (mevent->state & GDK_BUTTON1_MASK))
 	{
 	  if (active_tool->state == ACTIVE)
@@ -499,7 +506,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 		  update_cursor = TRUE;
 		}
 
-	      (* active_tool->motion_func) (active_tool, mevent, gdisp);
+	      gimp_tool_emit_motion (active_tool, mevent, gdisp);
 	    }
 	}
       else if ((mevent->state & GDK_BUTTON2_MASK) && scrolled)
@@ -517,7 +524,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
         {
           /* ...then preconditions to modify a tool */ 
           /* operator state have been met.          */
-          (* active_tool->oper_update_func) (active_tool, mevent, gdisp);
+          gimp_tool_emit_oper_update (active_tool, mevent, gdisp);
         }
 
       break;
@@ -534,10 +541,10 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	{
 	case GDK_Left: case GDK_Right:
 	case GDK_Up: case GDK_Down:
-	  if (active_tool && !gimp_image_is_empty (gdisp->gimage))
-	    (* active_tool->arrow_keys_func) (active_tool, kevent, gdisp);
+if (active_tool && !gimp_image_is_empty (gdisp->gimage))
+	    gimp_tool_emit_arrow_keys (active_tool, kevent, gdisp);
 	  return_val = TRUE;
-	  break;
+break;
 
 	case GDK_Tab:
 	  if (kevent->state & GDK_MOD1_MASK &&
@@ -570,7 +577,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 					    &tx, &ty, NULL, NULL, NULL, NULL
 #endif /* GTK_HAVE_SIX_VALUATORS */
 					    );
-	      (* active_tool->modifier_key_func) (active_tool, kevent, gdisp);
+	      gimp_tool_emit_modifier_key (active_tool, kevent, gdisp);
 	      return_val = TRUE;
 	    }
 	  break;
@@ -601,7 +608,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	                                    &tx, &ty, NULL, NULL, NULL, NULL
 #endif /* GTK_HAVE_SIX_VALUATORS */ 
 					    );
-	      (* active_tool->modifier_key_func) (active_tool, kevent, gdisp);
+	      gimp_tool_emit_modifier_key (active_tool, kevent, gdisp);
 	      return_val = TRUE;
 	    }
 	  break;
@@ -631,7 +638,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  GdkEventMotion me;
 	  me.x = tx;  me.y = ty;
 	  me.state = state;
-	  (* active_tool->cursor_update_func) (active_tool, &me, gdisp);
+	  gimp_tool_emit_cursor_update (active_tool, &me, gdisp);
 	}
       else if (gimp_image_is_empty (gdisp->gimage))
 	{
@@ -923,11 +930,13 @@ gdisplay_bucket_fill (GtkWidget      *widget,
   gimp_add_busy_cursors ();
 
   /*  Get the bucket fill context  */
-  if (! global_paint_options)
+#warning I like cheese
+#if 0
+if (! global_paint_options)
     context = tool_info[BUCKET_FILL].tool_context;
   else
     context = gimp_context_get_user ();
-
+#endif
   /*  Transform the passed data for the dest image  */
   if (fill_mode == FG_BUCKET_FILL)
     {

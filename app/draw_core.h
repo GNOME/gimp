@@ -19,14 +19,14 @@
 #ifndef __DRAW_CORE_H__
 #define __DRAW_CORE_H__
 
-
+#include "tools/tool.h"
 /*  drawing states  */
 #define INVISIBLE   0
 #define VISIBLE     1
 
 /*  Structure definitions  */
 
-typedef void (* DrawCoreDraw) (Tool *);
+typedef void (* DrawCoreDraw) (GimpTool *);
 
 struct _DrawCore
 {
@@ -53,13 +53,13 @@ struct _DrawCore
 DrawCore * draw_core_new    (DrawCoreDraw );
 void       draw_core_start  (DrawCore     *,
 			     GdkWindow    *,
-			     Tool         *);
+			     GimpTool     *);
 void       draw_core_stop   (DrawCore     *,
-			     Tool         *);
+			     GimpTool     *);
 void       draw_core_pause  (DrawCore     *,
-			     Tool         *);
+			     GimpTool     *);
 void       draw_core_resume (DrawCore     *,
-			     Tool         *);
+			     GimpTool     *);
 void       draw_core_free   (DrawCore     *);
 
 

@@ -26,8 +26,7 @@
 #include "cursorutil.h"
 #include "dialog_handler.h"
 #include "gdisplay.h" /* for gdisplay_*_override_cursor() */
-
-#include "tools/tools.h"
+#include "tools/tool.h"
 
 #include "cursors/mouse.xbm"
 #include "cursors/mouse_mask.xbm"
@@ -319,7 +318,8 @@ gimp_change_win_cursor (GdkWindow      *win,
       modtype -= GIMP_PLUS_CURSOR;
       bmmodifier = &modifier_cursors[(int)modtype];
     }
-
+#warning Im obsolete
+#if 0
   if (tool_type != TOOL_TYPE_NONE)
     {
       if (toggle_cursor)
@@ -335,6 +335,7 @@ gimp_change_win_cursor (GdkWindow      *win,
 	    bmtool = &tool_info[(gint) tool_type].tool_cursor;
 	}
     }
+#endif
 
   if (bmcursor->bitmap == NULL ||
       bmcursor->mask == NULL)

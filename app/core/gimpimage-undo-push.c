@@ -47,7 +47,7 @@
 
 #include "tools/by_color_select.h"
 #include "tools/paint_core.h"
-#include "tools/tools.h"
+#include "tools/tool.h"
 #include "tools/transform_core.h"
 
 #include "libgimp/gimpparasite.h"
@@ -1268,6 +1268,9 @@ undo_pop_transform (GimpImage *gimage,
   gdouble        d;
   gint           i;
 
+
+#warning very bogus
+#if 0
   /* Can't have ANY tool selected - maybe a plugin running */
   if (active_tool == NULL)
     return TRUE;
@@ -1301,7 +1304,7 @@ undo_pop_transform (GimpImage *gimage,
       active_tool->state = ACTIVE;
       draw_core_resume (tc->core, active_tool);
     }
-
+#endif
   return TRUE;
 }
 
@@ -1346,7 +1349,8 @@ undo_push_paint (GimpImage *gimage,
     }
 }
 
-
+#warning super bogosity error
+#if 0
 static gboolean
 undo_pop_paint (GimpImage *gimage,
 		UndoState  state,
@@ -1391,7 +1395,7 @@ undo_pop_paint (GimpImage *gimage,
 
   return TRUE;
 }
-
+#endif
 
 static void
 undo_free_paint (UndoState  state,

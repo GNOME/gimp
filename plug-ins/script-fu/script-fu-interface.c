@@ -786,7 +786,7 @@ script_fu_report_cc (gchar *command)
 
 
 /* 
- *  The following function is a GTraverseFunction, Please 
+ *  The following function is a GTraverseFunction.  Please 
  *  note that it frees the script->args structure.  --Sven 
  */
 static gboolean

@@ -59,7 +59,7 @@
 #include "gdisplay_color.h"
 #endif /* DISPLAY_FILTERS */
 
-#include "tools/tools.h"
+#include "tools/tool_manager.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -373,7 +373,7 @@ gdisplay_delete (GDisplay *gdisp)
   g_hash_table_remove (display_ht, gdisp->canvas);
 
   /*  stop any active tool  */
-  active_tool_control (HALT, (void *) gdisp);
+  tool_manager_control_active (HALT, (void *) gdisp);
 
   /*  clear out the pointer to this gdisp from the active tool  */
   if (active_tool &&
@@ -657,7 +657,7 @@ gdisplay_flush_displays_only (GDisplay *gdisp)
   if (list)
     {
       /*  stop the currently active tool  */
-      active_tool_control (PAUSE, (void *) gdisp);
+      tool_manager_control_active (PAUSE, (void *) gdisp);
 
       while (list)
 	{
@@ -682,7 +682,7 @@ gdisplay_flush_displays_only (GDisplay *gdisp)
       selection_start (gdisp->select, TRUE);
 
       /* start the currently active tool */
-      active_tool_control (RESUME, (void *) gdisp);
+      tool_manager_control_active (RESUME, (void *) gdisp);
     }  
 }
 

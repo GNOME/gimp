@@ -41,7 +41,7 @@
 #include "gimprc.h"
 
 #include "tools/paint_options.h"
-#include "tools/tools.h"
+#include "tools/tool.h"
 
 
 /*
@@ -76,7 +76,10 @@ context_manager_tool_changed (GimpContext *user_context,
 			      ToolType     tool_type,
 			      gpointer     data)
 {
-  /* FIXME: gimp_busy HACK */
+#warning fix context_manager_tool_changed
+#if 0
+
+/* FIXME: gimp_busy HACK */
   if (gimp_busy)
     {
       /*  there may be contexts waiting for the user_context's "tool_changed"
@@ -139,6 +142,8 @@ context_manager_tool_changed (GimpContext *user_context,
       gtk_signal_handler_unblock_by_data
 	(GTK_OBJECT (tool_info[tool_type].tool_widget), (gpointer) tool_type);
     }
+
+#endif
 }
 
 void
@@ -252,7 +257,9 @@ context_manager_init (void)
   /*  TODO: add foreground, background, brush, pattern, gradient  */
   gimp_context_define_args (global_tool_context, PAINT_OPTIONS_MASK, FALSE);
 
-  /*  Initialize the paint tools' private contexts  */
+#warning fixme here too
+#if 0
+/*  Initialize the paint tools' private contexts  */
   for (i = 0; i < num_tools; i++)
     {
       switch (tool_info[i].tool_id)
@@ -290,6 +297,7 @@ context_manager_init (void)
     {
       gimp_context_set_parent (global_tool_context, user_context);
     }
+#endif
 }
 
 void
@@ -300,6 +308,8 @@ context_manager_free (void)
   gtk_object_unref (GTK_OBJECT (global_tool_context));
   global_tool_context = NULL;
 
+#warning I need fixing
+#if 0
   for (i = 0; i < num_tools; i++)
     {
       if (tool_info[i].tool_context != NULL)
@@ -308,7 +318,7 @@ context_manager_free (void)
 	  tool_info[i].tool_context = NULL;
 	}
     }
-
+#endif
   gtk_object_unref (GTK_OBJECT (gimp_context_get_user ()));
   gimp_context_set_user (NULL);
   gimp_context_set_current (NULL);
@@ -331,6 +341,9 @@ context_manager_set_global_paint_options (gboolean global)
   if (global == global_paint_options) return;
 
   paint_options_set_global (global);
+
+#warning yet another fix needed
+#if 0
 
   if (global)
     {
@@ -356,4 +369,6 @@ context_manager_set_global_paint_options (gboolean global)
 	  gimp_context_set_parent (context, gimp_context_get_user ());
 	}
     }
+
+#endif
 }

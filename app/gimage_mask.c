@@ -39,7 +39,7 @@
 
 #include "tools/paint_core.h"
 #include "tools/paint_options.h"
-#include "tools/tools.h"
+#include "tools/tool.h"
 
 #include "pdb/procedural_db.h"
 
@@ -627,7 +627,7 @@ gimage_mask_stroke (GImage       *gimage,
 
       /* Stroke with the correct tool */
       return_vals =
-	procedural_db_run_proc (tool_active_PDB_string (),
+	procedural_db_run_proc (tool_manager_get_active_PDB_string (),
 				&nreturn_vals,
 				PDB_DRAWABLE, gimp_drawable_get_ID (drawable),
 				PDB_INT32, (gint32) cpnt,

@@ -41,7 +41,7 @@
 #include "preferences_dialog.h"
 #include "toolbox.h"
 
-#include "tools/tools.h"
+#include "tools/tool_manager.h"
 
 #include "libgimp/gimpenv.h"
 
@@ -1224,10 +1224,9 @@ menus_reorder_plugins (void)
 }
 
 static void
-menus_tools_create (ToolInfo *tool_info)
+menus_tools_create (GimpToolClass *tool_info)
 {
   GimpItemFactoryEntry entry;
-
   if (tool_info->menu_path == NULL)
     return;
 
@@ -1236,7 +1235,7 @@ menus_tools_create (ToolInfo *tool_info)
   entry.entry.callback        = tools_select_cmd_callback;
   entry.entry.callback_action = tool_info->tool_id;
   entry.entry.item_type       = NULL;
-  entry.help_page             = tool_info->private_tip;
+  entry.help_page             = tool_info->help_data;
   entry.description           = NULL;
 
   menus_create_item (image_factory, &entry, (gpointer) tool_info, 2);
@@ -1686,6 +1685,8 @@ menus_init (void)
   GtkWidget *menu_item;
   gchar     *filename;
   gint       i;
+  GSList     *tools;
+  GimpToolClass *klass;
 
   if (menus_initialized)
     return;
@@ -1765,13 +1766,15 @@ menus_init (void)
 		      paths_entries,
 		      NULL, 2);
 
-  for (i = 0; i < num_tools; i++)
-    {
-      menus_tools_create (&tool_info[i]);
-    }
 
+for (tools = registered_tools; tools; tools=tools->next)
+    {
+      menus_tools_create (tools->data);
+    }
   /*  reorder <Image>/Image/Colors  */
-  menu_item = gtk_item_factory_get_widget (image_factory,
+#warning fixme
+#if 0 
+   menu_item = gtk_item_factory_get_widget (image_factory,
 					   tool_info[POSTERIZE].menu_path);
   if (menu_item && menu_item->parent)
     gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, 3);
@@ -1802,7 +1805,6 @@ menus_init (void)
 	    pos++;
 	  }
       }
-
     if (menu_item && menu_item->parent)
       {
 	separator = gtk_menu_item_new ();
@@ -1811,6 +1813,7 @@ menus_init (void)
       }
   }
 
+#endif
   filename = gimp_personal_rc_file ("menurc");
   gtk_item_factory_parse_rc (filename);
   g_free (filename);

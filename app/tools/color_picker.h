@@ -19,6 +19,34 @@
 #ifndef  __COLOR_PICKER_H__
 #define  __COLOR_PICKER_H__
 
+#include "tool.h"
+
+#define GIMP_TYPE_COLOR_PICKER            (gimp_color_picker_get_type ())
+#define GIMP_COLOR_PICKER(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_COLOR_PICKER, GimpColorPicker))
+#define GIMP_IS_COLOR_PICKER(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_COLOR_PICKER))
+#define GIMP_COLOR_PICKER_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_PICKER, GimpColorPickerClass))
+#define GIMP_IS_COLOR_PICKER_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_PICKER))
+
+GtkType gimp_color_picker_get_type (void);
+
+struct _GimpColorPicker
+{
+	GimpTool parent_instance;
+
+	DrawCore *core;       /*  Core select object  */
+
+	gint      centerx;    /*  starting x coord    */
+	gint      centery;    /*  starting y coord    */
+	    
+};
+
+struct _GimpColorPickerClass
+{
+	GimpToolClass parent_class;
+};
+
+typedef struct _GimpColorPicker GimpColorPicker; /* This is one of the stupidest parts of the gnu coding standards */
+typedef struct _GimpColorPickerClass GimpColorPickerClass; /* making the typedef and the struct one line like everyone else does confuses nobody */
 
 extern gint col_value[5];
 
@@ -32,8 +60,6 @@ gboolean   pick_color              (GimpImage    *gimage,
 				    double        average_radius,
 				    gint          final);
 
-Tool     * tools_new_color_picker  (void);
-void       tools_free_color_picker (Tool *tool);
-
+GimpTool     * gimp_color_picker_new  (void);
 
 #endif  /*  __COLOR_PICKER_H__  */

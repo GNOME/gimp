@@ -826,6 +826,7 @@ plug-ins/print/escputil.1
 plug-ins/rcm/Makefile
 plug-ins/sel2path/Makefile
 plug-ins/sgi/Makefile
+plug-ins/plugin-helper/Makefile
 modules/Makefile
 modules/makefile.mingw
 cursors/Makefile

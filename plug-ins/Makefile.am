@@ -64,6 +64,7 @@ SUBDIRS = 			\
 	sel2path		\
 	$(WEBBROWSER)		\
 	$(XJT)			\
+	plugin-helper		\
 	common
 
 .PHONY: files

@@ -35,7 +35,7 @@
 #include "palette_import.h"
 #include "undo.h"
 
-#include "tools/tools.h"
+#include "tools/tool_manager.h"
 
 
 /* gimage.c: Junk (ugly dependencies) from gimpimage.c on its way
@@ -92,6 +92,7 @@ gimage_new (gint              width,
   return gimage;
 }
 
+
 static void
 gimage_dirty_handler (GimpImage *gimage)
 {
@@ -102,10 +103,11 @@ gimage_dirty_handler (GimpImage *gimage)
       if (gdisp)
 	{
 	  if (gdisp->gimage == gimage)
-	    tools_initialize (active_tool->type, gdisp);
+	    gimp_tool_old_initialize (active_tool, gdisp);
 	  else
-	    tools_initialize (active_tool->type, NULL);
-	}
+	    gimp_tool_old_initialize (active_tool, NULL);
+
+}
     }
 }
 

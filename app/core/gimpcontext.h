@@ -22,6 +22,7 @@
 #define __GIMP_CONTEXT_H__
 
 
+#include "tools/tool.h"
 #include "gimpobject.h"
 
 
@@ -89,7 +90,7 @@ struct _GimpContext
   GimpImage	   *image;
   GDisplay	   *display;
 
-  ToolType          tool;
+  GimpTool          *tool;
 
   GimpRGB           foreground;
   GimpRGB           background;
@@ -234,9 +235,9 @@ void               gimp_context_display_changed    (GimpContext     *context);
 
 
 /*  tool  */
-ToolType           gimp_context_get_tool           (GimpContext     *context);
+GimpTool           *gimp_context_get_tool           (GimpContext     *context);
 void               gimp_context_set_tool           (GimpContext     *context,
-						    ToolType         tool_type);
+						    GimpTool        *tool_type);
 void               gimp_context_tool_changed       (GimpContext     *context);
 
 

@@ -41,7 +41,7 @@
 #include "tile_manager.h"
 #include "undo.h"
 
-#include "tools/tools.h"
+#include "tools/tool.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -533,7 +533,7 @@ gboolean
 global_edit_cut (GDisplay *gdisp)
 {
   /*  stop any active tool  */
-  active_tool_control (HALT, gdisp);
+  tool_manager_control_active (HALT, gdisp);
 
   if (!edit_cut (gdisp->gimage, gimp_image_active_drawable (gdisp->gimage)))
     return FALSE;
@@ -558,7 +558,7 @@ global_edit_paste (GDisplay *gdisp,
 		   gboolean  paste_into)
 {
   /*  stop any active tool  */
-  active_tool_control (HALT, gdisp);
+  tool_manager_control_active (HALT, gdisp);
 
   if (!edit_paste (gdisp->gimage, gimp_image_active_drawable (gdisp->gimage), 
 		   global_buf, paste_into))
@@ -578,7 +578,7 @@ global_edit_paste_as_new (GDisplay *gdisp)
     return FALSE;
 
   /*  stop any active tool  */
-  active_tool_control (HALT, gdisp);
+  tool_manager_control_active (HALT, gdisp);
 
   return edit_paste_as_new (gdisp->gimage, global_buf);
 }
@@ -892,7 +892,7 @@ named_edit_cut (GDisplay *gdisp)
   GtkWidget *qbox;
 
   /*  stop any active tool  */
-  active_tool_control (HALT, gdisp);
+  tool_manager_control_active (HALT, gdisp);
 
   qbox = gimp_query_string_box (_("Cut Named"),
 				gimp_standard_help_func,

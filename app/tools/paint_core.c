@@ -47,7 +47,7 @@
 #include "temp_buf.h"
 #include "tile.h"
 #include "tile_manager.h"
-#include "tools.h"
+#include "tool.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
@@ -198,7 +198,7 @@ paint_core_sample_color (GimpDrawable *drawable,
 
 
 void
-paint_core_button_press (Tool           *tool,
+paint_core_button_press (GimpTool       *tool,
 			 GdkEventButton *bevent,
 			 GDisplay       *gdisp)
 {
@@ -208,7 +208,7 @@ paint_core_button_press (Tool           *tool,
   gdouble       x, y;
   GimpDrawable *drawable;
 
-  paint_core = (PaintCore *) tool->private;
+  paint_core = tool->paint_core;
 
   g_return_if_fail (gdisp != NULL);
   g_return_if_fail (paint_core != NULL);
@@ -380,7 +380,7 @@ paint_core_button_press (Tool           *tool,
 }
 
 void
-paint_core_button_release (Tool           *tool,
+paint_core_button_release (GimpTool        *tool,
 			   GdkEventButton *bevent,
 			   GDisplay       *gdisp)
 {
@@ -388,7 +388,7 @@ paint_core_button_release (Tool           *tool,
   PaintCore *paint_core;
 
   gimage     = gdisp->gimage;
-  paint_core = (PaintCore *) tool->private;
+  paint_core = tool->paint_core;
 
   /*  resume the current selection and ungrab the pointer  */
   gdisplays_selection_visibility (gdisp->gimage, SelectionResume);
@@ -413,13 +413,13 @@ paint_core_button_release (Tool           *tool,
 }
 
 void
-paint_core_motion (Tool           *tool,
+paint_core_motion (GimpTool       *tool,
 		   GdkEventMotion *mevent,
 		   GDisplay       *gdisp)
 {
   PaintCore *paint_core;
 
-  paint_core = (PaintCore *) tool->private;
+  paint_core = tool->paint_core;
 
   gdisplay_untransform_coords_f (gdisp, (double) mevent->x, (double) mevent->y,
 				 &paint_core->curx, &paint_core->cury, TRUE);
@@ -479,7 +479,7 @@ paint_core_cursor_update (Tool           *tool,
   CursorModifier cmodifier = CURSOR_MODIFIER_NONE;
   gboolean       ctoggle   = FALSE;
 
-  paint_core = (PaintCore *) tool->private;
+  paint_core = tool->paint_core;
 
   /*  undraw the current tool  */
   draw_core_pause (paint_core->core, tool);
@@ -633,14 +633,14 @@ paint_core_cursor_update (Tool           *tool,
 }
 
 void
-paint_core_control (Tool       *tool,
+paint_core_control (GimpTool    *tool,
 		    ToolAction  action,
 		    GDisplay   *gdisp)
 {
   PaintCore    *paint_core;
   GimpDrawable *drawable;
 
-  paint_core = (PaintCore *) tool->private;
+  paint_core = (PaintCore *) tool->paint_core;
   drawable   = gimp_image_active_drawable (gdisp->gimage);
 
   switch (action)
@@ -663,13 +663,13 @@ paint_core_control (Tool       *tool,
 }
 
 void
-paint_core_draw (Tool *tool)
+paint_core_draw (GimpTool *tool)
 {
   GDisplay  *gdisp;
   PaintCore *paint_core;
   gint       tx1, ty1, tx2, ty2;
 
-  paint_core = (PaintCore *) tool->private;
+  paint_core = tool->paint_core;
 
   /* if shift was never used, paint_core->core->gc is NULL 
      and we don't care about a redraw                       */
@@ -723,9 +723,9 @@ paint_core_draw (Tool *tool)
 }	      
 
 Tool *
-paint_core_new (ToolType type)
+paint_core_new (GimpToolClas *type)
 {
-  Tool      *tool;
+  GimpTool      *tool;
   PaintCore *private;
 
   tool = tools_new_tool (type);
@@ -748,11 +748,11 @@ paint_core_new (ToolType type)
 }
 
 void
-paint_core_free (Tool *tool)
+paint_core_free (GimpTool *tool)
 {
   PaintCore * paint_core;
 
-  paint_core = (PaintCore *) tool->private;
+  paint_core = (PaintCore *) tool->paint_core;
 
   /*  Make sure the selection core is not visible  */
   if (tool->state == ACTIVE && paint_core->core)

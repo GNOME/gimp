@@ -32,7 +32,8 @@
 
 #include "tool_options.h"
 #include "tool_options_dialog.h"
-#include "tools.h"
+#include "tool.h"
+#include "tool_manager.h"
 
 #include "libgimp/gimpintl.h"
 

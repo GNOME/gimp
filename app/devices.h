@@ -19,6 +19,7 @@
 #ifndef __DEVICES_H__
 #define __DEVICES_H__
 
+#include "tools/tool.h"
 
 typedef enum
 {
@@ -61,7 +62,7 @@ void   devices_rc_update    (gchar        *name,
 			     GdkAxisUse   *axes,
 			     gint          num_keys,
 			     GdkDeviceKey *keys,
-			     ToolType      tool,
+			     GimpTool     *tool,
 			     GimpRGB      *foreground,
 			     GimpRGB      *background,
 			     gchar        *brush_name,

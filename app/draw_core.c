@@ -50,7 +50,7 @@ draw_core_new (DrawCoreDraw draw_func)
 void
 draw_core_start (DrawCore  *core,
 		 GdkWindow *win,
-		 Tool      *tool)
+		 GimpTool      *tool)
 {
   GdkColor fg, bg;
 
@@ -81,7 +81,7 @@ draw_core_start (DrawCore  *core,
 
 void
 draw_core_stop (DrawCore *core,
-		Tool     *tool)
+		GimpTool     *tool)
 {
   if (core->draw_state == INVISIBLE)
     return;
@@ -94,7 +94,7 @@ draw_core_stop (DrawCore *core,
 
 void
 draw_core_resume (DrawCore *core,
-		  Tool     *tool)
+		  GimpTool     *tool)
 {
   core->paused_count = (core->paused_count > 0) ? core->paused_count - 1 : 0;
   if (core->paused_count == 0)
@@ -107,7 +107,7 @@ draw_core_resume (DrawCore *core,
 
 void
 draw_core_pause (DrawCore *core,
-		 Tool     *tool)
+		 GimpTool     *tool)
 {
   if (core->paused_count == 0)
     {

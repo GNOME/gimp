@@ -19,28 +19,42 @@
 #ifndef __TOOL_OPTIONS_H__
 #define __TOOL_OPTIONS_H__
 
+#include "gimpobject.h"
+
+#define GIMP_TYPE_TOOL_OPTIONS            (gimp_tool_options_get_type ())
+#define GIMP_TOOL_OPTIONS(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_TOOL_OPTIONS, GimpToolOptions))
+#define GIMP_IS_TOOL_OPTIONS(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_TOOL_OPTIONS))
+#define GIMP_TOOL_OPTIONS_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_OPTIONS, GimpToolOptionsClass))
+#define GIMP_IS_TOOL_OPTIONS_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_OPTIONS))
 
 /*  the tool options structures  */
 
 struct _ToolOptions
 {
+  GimpObject	       parent_instance;
   GtkWidget            *main_vbox;
-  const gchar          *title;
+  gchar                *title;
 
   ToolOptionsResetFunc  reset_func;
 };
 
+struct _ToolOptionsClass
+{
+  GimpObjectClass   parent_class;
+};
+
+typedef struct _ToolOptionsClass ToolOptionsClass;
 
 /*  create a dummy tool options structure
  *  (to be used by tools without options)
  */
-ToolOptions * tool_options_new  (const gchar          *title);
+ToolOptions * tool_options_new  (const gchar *title);
 
 /*  initialize an already allocated ToolOptions structure
  *  (to be used by derived tool options only)
  */
 void          tool_options_init (ToolOptions          *options,
-				 const gchar          *title,
+				 const gchar                *title,
 				 ToolOptionsResetFunc  reset_func);
 
 
