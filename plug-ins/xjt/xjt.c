@@ -1259,7 +1259,7 @@ p_write_parasite(const gchar  *dirname,
 
      /* write the parasite data to a file named p1.pte */
      l_parasite_file = g_strdup_printf("%s%cp%d.pte", dirname, G_DIR_SEPARATOR, (int)global_parasite_id);
-     l_fp_pte = fopen(l_parasite_file, "wb");
+     l_fp_pte = g_fopen(l_parasite_file, "wb");
      if(l_fp_pte == NULL)
      {
        g_message (_("Could not open '%s' for writing: %s"),
@@ -2526,7 +2526,7 @@ p_create_and_attach_parasite (gint32            gimp_obj_id,
      return(-1);
   }
 
-  l_fp_pte = fopen(l_parasite_file, "rb");
+  l_fp_pte = g_fopen(l_parasite_file, "rb");
   if(l_fp_pte == NULL)
   {
      g_message (_("Could not open '%s' for reading: %s"),
@@ -3120,7 +3120,7 @@ p_load_linefile(const gchar *filename, gint32 *len)
   l_file_buff = g_malloc0(*len +1);
 
   /* read file into buffer */
-  l_fp = fopen(filename, "r");
+  l_fp = g_fopen(filename, "r");
   if(l_fp == NULL)
   {
     return(NULL);

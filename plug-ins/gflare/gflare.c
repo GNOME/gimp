@@ -42,6 +42,7 @@
 #endif
 
 #include <glib/gstdio.h>
+
 #include <glib-object.h>
 
 #include <libgimpcolor/gimpcolor.h>
