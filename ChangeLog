@@ -1,3 +1,9 @@
+2004-12-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpfgbgeditor.[ch]: use the coordinates passed in
+	the color drop callback instead of remembering them in the
+	drag_motion handler.
+
 2004-12-31  Sven Neumann  <sven@gimp.org>
 
 	* tools/kernelgen.c: fixed rounding so that all brush kernels are

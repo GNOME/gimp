@@ -527,11 +527,9 @@ gimp_fg_bg_editor_drag_motion (GtkWidget      *widget,
                                guint           time)
 {
   GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (widget);
+  FgBgTarget      target = gimp_fg_bg_editor_target (editor, x, y);
 
-  editor->dnd_target = gimp_fg_bg_editor_target (editor, x, y);
-
-  if (editor->dnd_target == FORE_AREA ||
-      editor->dnd_target == BACK_AREA)
+  if (target == FORE_AREA || target == BACK_AREA)
     {
       gdk_drag_status (context, GDK_ACTION_COPY, time);
 
@@ -639,7 +637,7 @@ gimp_fg_bg_editor_drop_color (GtkWidget     *widget,
 
   if (editor->context)
     {
-      switch (editor->dnd_target)
+      switch (gimp_fg_bg_editor_target (editor, x, y))
         {
         case FORE_AREA:
           gimp_context_set_foreground (editor->context, color);

@@ -52,7 +52,6 @@ struct _GimpFgBgEditor
   gint             rect_width;
   gint             rect_height;
   gint             click_target;
-  gint             dnd_target;
 };
 
 struct _GimpFgBgEditorClass
