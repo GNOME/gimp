@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.18\n"
-"POT-Creation-Date: 2000-03-03 17:47-0800\n"
-"PO-Revision-Date: 2000-02-29 16:40+09:00\n"
+"POT-Creation-Date: 2000-03-09 00:06+0900\n"
+"PO-Revision-Date: 2000-03-09 01:14+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@awa.tohoku.ac.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -68,13 +68,13 @@ msgstr "このプラグインについて"
 #: plug-ins/common/iwarp.c:1080 plug-ins/common/jigsaw.c:2316
 #: plug-ins/common/jpeg.c:1607 plug-ins/common/lic.c:1020
 #: plug-ins/common/mail.c:504 plug-ins/common/mapcolor.c:338
-#: plug-ins/common/max_rgb.c:266 plug-ins/common/mblur.c:783
+#: plug-ins/common/max_rgb.c:266 plug-ins/common/mblur.c:784
 #: plug-ins/common/newsprint.c:1230 plug-ins/common/nlfilt.c:359
 #: plug-ins/common/noisify.c:333 plug-ins/common/nova.c:364
 #: plug-ins/common/oilify.c:462 plug-ins/common/papertile.c:248
 #: plug-ins/common/pat.c:428 plug-ins/common/pixelize.c:289
 #: plug-ins/common/plasma.c:295 plug-ins/common/png.c:934
-#: plug-ins/common/pnm.c:950 plug-ins/common/polar.c:942
+#: plug-ins/common/pnm.c:950 plug-ins/common/polar.c:943
 #: plug-ins/common/ps.c:2278 plug-ins/common/ps.c:2459
 #: plug-ins/common/psp.c:443 plug-ins/common/randomize.c:710
 #: plug-ins/common/ripple.c:596 plug-ins/common/scatter_hsv.c:392
@@ -89,30 +89,29 @@ msgstr "このプラグインについて"
 #: plug-ins/common/unsharp.c:794 plug-ins/common/video.c:2175
 #: plug-ins/common/vpropagate.c:942 plug-ins/common/warp.c:443
 #: plug-ins/common/waves.c:356 plug-ins/common/whirlpinch.c:829
-#: plug-ins/common/wind.c:703 plug-ins/common/wind.c:758
-#: plug-ins/common/wmf.c:938 plug-ins/common/xbm.c:1134
-#: plug-ins/common/xpm.c:799 plug-ins/fits/fits.c:1003
-#: plug-ins/flame/flame.c:582 plug-ins/flame/flame.c:894
-#: plug-ins/fp/fp_gtk.c:882 plug-ins/gap/gap_arr_dialog.c:768
-#: plug-ins/gap/gap_arr_dialog.c:1008 plug-ins/gap/gap_decode_xanim.c:177
-#: plug-ins/gap/gap_mod_layer.c:145 plug-ins/gap/gap_mov_dialog.c:452
-#: plug-ins/gap/gap_mpege.c:191 plug-ins/gap/gap_resi_dialog.c:149
-#: plug-ins/gdyntext/gdyntext_ui.c:188 plug-ins/gdyntext/gdyntext_ui.c:503
-#: plug-ins/gfig/gfig.c:4106 plug-ins/gfig/gfig.c:4451
-#: plug-ins/gfig/gfig.c:4534 plug-ins/gfig/gfig.c:4880
-#: plug-ins/gflare/gflare.c:2465 plug-ins/gflare/gflare.c:3475
-#: plug-ins/gfli/gfli.c:857 plug-ins/gfli/gfli.c:926
-#: plug-ins/gimpressionist/gimpressionist.c:360
+#: plug-ins/common/wind.c:719 plug-ins/common/wmf.c:938
+#: plug-ins/common/xbm.c:1144 plug-ins/common/xpm.c:799
+#: plug-ins/fits/fits.c:1003 plug-ins/flame/flame.c:586
+#: plug-ins/flame/flame.c:898 plug-ins/fp/fp_gtk.c:882
+#: plug-ins/gap/gap_arr_dialog.c:768 plug-ins/gap/gap_arr_dialog.c:1008
+#: plug-ins/gap/gap_decode_xanim.c:177 plug-ins/gap/gap_mod_layer.c:145
+#: plug-ins/gap/gap_mov_dialog.c:452 plug-ins/gap/gap_mpege.c:191
+#: plug-ins/gap/gap_resi_dialog.c:149 plug-ins/gdyntext/gdyntext_ui.c:188
+#: plug-ins/gdyntext/gdyntext_ui.c:503 plug-ins/gfig/gfig.c:4106
+#: plug-ins/gfig/gfig.c:4451 plug-ins/gfig/gfig.c:4534
+#: plug-ins/gfig/gfig.c:4880 plug-ins/gflare/gflare.c:2465
+#: plug-ins/gflare/gflare.c:3475 plug-ins/gfli/gfli.c:857
+#: plug-ins/gfli/gfli.c:926 plug-ins/gimpressionist/gimpressionist.c:360
 #: plug-ins/gimpressionist/gimpressionist.c:482
 #: plug-ins/gimpressionist/orientmap.c:626
 #: plug-ins/gimpressionist/presets.c:392 plug-ins/gimpressionist/sizemap.c:485
 #: plug-ins/ifscompose/ifscompose.c:797
 #: plug-ins/imagemap/imap_default_dialog.c:102 plug-ins/maze/maze_face.c:203
-#: plug-ins/mosaic/mosaic.c:548 plug-ins/pagecurl/pagecurl.c:527
+#: plug-ins/mosaic/mosaic.c:548 plug-ins/pagecurl/pagecurl.c:530
 #: plug-ins/print/print.c:1253 plug-ins/rcm/rcm_dialog.c:746
 #: plug-ins/sel2path/sel2path.c:347 plug-ins/sgi/sgi.c:655
 #: plug-ins/sinus/sinus.c:753 plug-ins/struc/struc.c:261
-#: plug-ins/webbrowser/webbrowser.c:286 plug-ins/xjt/xjt.c:796
+#: plug-ins/webbrowser/webbrowser.c:286 plug-ins/xjt/xjt.c:800
 msgid "OK"
 msgstr "了解"
 
@@ -150,13 +149,13 @@ msgstr "了解"
 #: plug-ins/common/jigsaw.c:2318 plug-ins/common/jpeg.c:1609
 #: plug-ins/common/lic.c:1022 plug-ins/common/mail.c:506
 #: plug-ins/common/mapcolor.c:340 plug-ins/common/max_rgb.c:268
-#: plug-ins/common/mblur.c:785 plug-ins/common/newsprint.c:1232
+#: plug-ins/common/mblur.c:786 plug-ins/common/newsprint.c:1232
 #: plug-ins/common/nlfilt.c:361 plug-ins/common/noisify.c:335
 #: plug-ins/common/nova.c:366 plug-ins/common/oilify.c:464
 #: plug-ins/common/papertile.c:250 plug-ins/common/pat.c:430
 #: plug-ins/common/pixelize.c:291 plug-ins/common/plasma.c:297
 #: plug-ins/common/png.c:936 plug-ins/common/pnm.c:952
-#: plug-ins/common/polar.c:944 plug-ins/common/ps.c:2280
+#: plug-ins/common/polar.c:945 plug-ins/common/ps.c:2280
 #: plug-ins/common/ps.c:2461 plug-ins/common/psp.c:445
 #: plug-ins/common/randomize.c:712 plug-ins/common/ripple.c:598
 #: plug-ins/common/scatter_hsv.c:394 plug-ins/common/screenshot.c:400
@@ -171,10 +170,10 @@ msgstr "了解"
 #: plug-ins/common/unsharp.c:796 plug-ins/common/video.c:2177
 #: plug-ins/common/vpropagate.c:944 plug-ins/common/warp.c:445
 #: plug-ins/common/waves.c:358 plug-ins/common/whirlpinch.c:831
-#: plug-ins/common/wind.c:760 plug-ins/common/wmf.c:940
-#: plug-ins/common/xbm.c:884 plug-ins/common/xbm.c:1136
+#: plug-ins/common/wind.c:721 plug-ins/common/wmf.c:940
+#: plug-ins/common/xbm.c:894 plug-ins/common/xbm.c:1146
 #: plug-ins/common/xpm.c:801 plug-ins/fits/fits.c:1005
-#: plug-ins/flame/flame.c:590 plug-ins/flame/flame.c:903
+#: plug-ins/flame/flame.c:594 plug-ins/flame/flame.c:907
 #: plug-ins/fp/fp_gtk.c:886 plug-ins/gap/gap_arr_dialog.c:1010
 #: plug-ins/gap/gap_dbbrowser_utils.c:211
 #: plug-ins/gap/gap_filter_foreach.c:132 plug-ins/gap/gap_mod_layer.c:147
@@ -190,12 +189,12 @@ msgstr "了解"
 #: plug-ins/gimpressionist/presets.c:400 plug-ins/gimpressionist/sizemap.c:499
 #: plug-ins/ifscompose/ifscompose.c:805
 #: plug-ins/imagemap/imap_default_dialog.c:117 plug-ins/maze/maze_face.c:207
-#: plug-ins/mosaic/mosaic.c:550 plug-ins/pagecurl/pagecurl.c:529
+#: plug-ins/mosaic/mosaic.c:550 plug-ins/pagecurl/pagecurl.c:532
 #: plug-ins/print/print.c:774 plug-ins/print/print.c:1255
 #: plug-ins/rcm/rcm_dialog.c:748 plug-ins/sel2path/sel2path.c:356
 #: plug-ins/sgi/sgi.c:657 plug-ins/sinus/sinus.c:755
 #: plug-ins/struc/struc.c:263 plug-ins/webbrowser/webbrowser.c:295
-#: plug-ins/winsnap/winsnap.c:906 plug-ins/xjt/xjt.c:798
+#: plug-ins/winsnap/winsnap.c:906 plug-ins/xjt/xjt.c:802
 msgid "Cancel"
 msgstr "取消"
 
@@ -437,10 +436,10 @@ msgstr "エイリアンマップ 2 について"
 #: plug-ins/common/curve_bend.c:1523 plug-ins/common/destripe.c:597
 #: plug-ins/common/emboss.c:762 plug-ins/common/exchange.c:313
 #: plug-ins/common/fractaltrace.c:759 plug-ins/common/nlfilt.c:586
-#: plug-ins/common/polar.c:963 plug-ins/common/ps.c:2597
+#: plug-ins/common/polar.c:964 plug-ins/common/ps.c:2597
 #: plug-ins/common/sharpen.c:567 plug-ins/common/spheredesigner.c:2258
 #: plug-ins/common/tileit.c:426 plug-ins/common/waves.c:593
-#: plug-ins/common/whirlpinch.c:847 plug-ins/flame/flame.c:1060
+#: plug-ins/common/whirlpinch.c:847 plug-ins/flame/flame.c:1064
 #: plug-ins/gfig/gfig.c:3982 plug-ins/gflare/gflare.c:2492
 #: plug-ins/gflare/gflare.c:3500 plug-ins/gimpressionist/orientmap.c:502
 #: plug-ins/gimpressionist/preview.c:106 plug-ins/gimpressionist/sizemap.c:402
@@ -1085,7 +1084,7 @@ msgstr "XYZ 空間中の光源の X 位置"
 #: plug-ins/MapObject/mapobject_ui.c:1093
 #: plug-ins/MapObject/mapobject_ui.c:1189 plug-ins/common/flarefx.c:763
 #: plug-ins/common/nova.c:512 plug-ins/common/papertile.c:292
-#: plug-ins/common/xbm.c:1227 plug-ins/gap/gap_mov_dialog.c:1572
+#: plug-ins/common/xbm.c:1237 plug-ins/gap/gap_mov_dialog.c:1572
 #: plug-ins/gflare/gflare.c:2878 plug-ins/ifscompose/ifscompose.c:526
 msgid "Y:"
 msgstr "Y:"
@@ -1177,8 +1176,8 @@ msgstr "バンプマップ設定"
 msgid "Bumpmap Image:"
 msgstr "バンプマップ画像:"
 
-#: plug-ins/Lighting/lighting_ui.c:919 plug-ins/common/mblur.c:804
-#: plug-ins/flame/flame.c:667 plug-ins/sinus/sinus.c:1039
+#: plug-ins/Lighting/lighting_ui.c:919 plug-ins/common/mblur.c:805
+#: plug-ins/flame/flame.c:671 plug-ins/sinus/sinus.c:1039
 msgid "Linear"
 msgstr "線形"
 
@@ -1186,11 +1185,11 @@ msgstr "線形"
 msgid "Logarithmic"
 msgstr "対数型"
 
-#: plug-ins/Lighting/lighting_ui.c:921 plug-ins/flame/flame.c:668
+#: plug-ins/Lighting/lighting_ui.c:921 plug-ins/flame/flame.c:672
 msgid "Sinusoidal"
 msgstr "波状"
 
-#: plug-ins/Lighting/lighting_ui.c:922 plug-ins/flame/flame.c:669
+#: plug-ins/Lighting/lighting_ui.c:922 plug-ins/flame/flame.c:673
 msgid "Spherical"
 msgstr "球面"
 
@@ -1283,7 +1282,7 @@ msgstr "球"
 
 #: plug-ins/MapObject/mapobject_ui.c:563
 msgid "Type of object to map to"
-msgstr ""
+msgstr "マップする対象の形状"
 
 #: plug-ins/MapObject/mapobject_ui.c:565
 msgid "Transpararent Background"
@@ -1399,7 +1398,7 @@ msgstr "半径:"
 msgid "Cylinder radius"
 msgstr ""
 
-#: plug-ins/MapObject/mapobject_ui.c:1284 plug-ins/common/mblur.c:824
+#: plug-ins/MapObject/mapobject_ui.c:1284 plug-ins/common/mblur.c:825
 msgid "Length:"
 msgstr "長さ:"
 
@@ -1435,10 +1434,10 @@ msgstr ""
 #: plug-ins/common/png.c:416 plug-ins/common/pnm.c:416
 #: plug-ins/common/psd.c:1707 plug-ins/common/sunras.c:443
 #: plug-ins/common/tga.c:430 plug-ins/common/tiff.c:440
-#: plug-ins/common/xbm.c:665 plug-ins/common/xpm.c:326
+#: plug-ins/common/xbm.c:675 plug-ins/common/xpm.c:326
 #: plug-ins/common/xwd.c:457 plug-ins/faxg3/faxg3.c:191
 #: plug-ins/gfli/gfli.c:471 plug-ins/sgi/sgi.c:331 plug-ins/sgi/sgi.c:333
-#: plug-ins/xjt/xjt.c:3238
+#: plug-ins/xjt/xjt.c:3253
 #, c-format
 msgid "Loading %s:"
 msgstr "%s 読み込み中:"
@@ -1483,8 +1482,8 @@ msgstr "%s: 不正なカラーマップです\n"
 #: plug-ins/common/psd.c:2088 plug-ins/common/smooth_palette.c:237
 #: plug-ins/common/sunras.c:921 plug-ins/common/tga.c:1015
 #: plug-ins/common/tiff.c:650 plug-ins/common/tile.c:264
-#: plug-ins/common/winclipboard.c:513 plug-ins/common/wmf.c:2362
-#: plug-ins/common/xbm.c:801 plug-ins/faxg3/faxg3.c:443
+#: plug-ins/common/winclipboard.c:513 plug-ins/common/wmf.c:2358
+#: plug-ins/common/xbm.c:811 plug-ins/faxg3/faxg3.c:443
 #: plug-ins/fits/fits.c:522 plug-ins/gfig/gfig.c:2848
 #: plug-ins/gfig/gfig.c:3176 plug-ins/sgi/sgi.c:379 plug-ins/twain/twain.c:723
 #: plug-ins/winsnap/winsnap.c:1201
@@ -1510,10 +1509,10 @@ msgstr "%s が開けません\n"
 #: plug-ins/common/png.c:721 plug-ins/common/png.c:723
 #: plug-ins/common/pnm.c:788 plug-ins/common/ps.c:842
 #: plug-ins/common/sunras.c:526 plug-ins/common/tga.c:1197
-#: plug-ins/common/tiff.c:1224 plug-ins/common/xbm.c:949
+#: plug-ins/common/tiff.c:1224 plug-ins/common/xbm.c:959
 #: plug-ins/common/xpm.c:643 plug-ins/common/xwd.c:561
 #: plug-ins/fits/fits.c:473 plug-ins/gfli/gfli.c:691 plug-ins/sgi/sgi.c:549
-#: plug-ins/sgi/sgi.c:551 plug-ins/xjt/xjt.c:1624
+#: plug-ins/sgi/sgi.c:551 plug-ins/xjt/xjt.c:1635
 #, c-format
 msgid "Saving %s:"
 msgstr "%s 保存中:"
@@ -2082,10 +2081,6 @@ msgstr "テキスト形式で保存"
 msgid "Data Formatting"
 msgstr "データフォーマット"
 
-#: plug-ins/common/align_layers.c:149 plug-ins/common/align_layers.c:150
-msgid "Align visible layers"
-msgstr "可視レイヤーの整列"
-
 #: plug-ins/common/align_layers.c:154
 msgid "<Image>/Layers/Align Visible Layers..."
 msgstr "<Image>/レイヤー/可視レイヤーの整列..."
@@ -2116,7 +2111,7 @@ msgstr "可視レイヤーの整列"
 #: plug-ins/common/noisify.c:345 plug-ins/common/nova.c:376
 #: plug-ins/common/oilify.c:474 plug-ins/common/pixelize.c:301
 #: plug-ins/common/plasma.c:309 plug-ins/common/png.c:945
-#: plug-ins/common/polar.c:983 plug-ins/common/randomize.c:728
+#: plug-ins/common/polar.c:984 plug-ins/common/randomize.c:728
 #: plug-ins/common/ripple.c:692 plug-ins/common/scatter_hsv.c:445
 #: plug-ins/common/sel_gauss.c:258 plug-ins/common/sharpen.c:627
 #: plug-ins/common/shift.c:395 plug-ins/common/smooth_palette.c:415
@@ -2124,9 +2119,9 @@ msgstr "可視レイヤーの整列"
 #: plug-ins/common/sparkle.c:370 plug-ins/common/threshold_alpha.c:285
 #: plug-ins/common/unsharp.c:805 plug-ins/common/video.c:2187
 #: plug-ins/common/vpropagate.c:984 plug-ins/common/waves.c:406
-#: plug-ins/common/whirlpinch.c:868 plug-ins/common/wind.c:772
+#: plug-ins/common/whirlpinch.c:868 plug-ins/common/wind.c:733
 #: plug-ins/common/xpm.c:811 plug-ins/mosaic/mosaic.c:660
-#: plug-ins/struc/struc.c:273 plug-ins/xjt/xjt.c:808
+#: plug-ins/struc/struc.c:273 plug-ins/xjt/xjt.c:812
 msgid "Parameter Settings"
 msgstr "パラメータ設定"
 
@@ -2202,11 +2197,11 @@ msgstr "格子サイズ:"
 
 #: plug-ins/common/animationplay.c:276
 msgid "<Image>/Filters/Animation/Animation Playback..."
-msgstr "<Image>/フィルタ/アニメーション/アニメーション再生..."
+msgstr "<Image>/フィルタ/動画/動画再生..."
 
 #: plug-ins/common/animationplay.c:702
 msgid "Animation Playback: "
-msgstr "アニメーション再生: "
+msgstr "動画再生: "
 
 #. The close button
 #: plug-ins/common/animationplay.c:709 plug-ins/common/plugindetails.c:1002
@@ -2244,19 +2239,19 @@ msgstr "フレーム %v (%u 中)"
 
 #: plug-ins/common/animoptimize.c:158
 msgid "<Image>/Filters/Animation/Animation Optimize"
-msgstr "<Image>/フィルタ/アニメーション/アニメーション最適化"
+msgstr "<Image>/フィルタ/動画/動画最適化"
 
 #: plug-ins/common/animoptimize.c:174
 msgid "<Image>/Filters/Animation/Animation UnOptimize"
-msgstr "<Image>/フィルタ/アニメーション/アニメーション非最適化"
+msgstr "<Image>/フィルタ/動画/動画非最適化"
 
 #: plug-ins/common/animoptimize.c:270
 msgid "Optimizing Animation..."
-msgstr "アニメーションを最適化しています..."
+msgstr "動画を最適化しています..."
 
 #: plug-ins/common/animoptimize.c:272
 msgid "UnOptimizing Animation..."
-msgstr "アニメーションを非最適化しています..."
+msgstr "動画を非最適化しています..."
 
 #: plug-ins/common/animoptimize.c:301
 msgid "Not enough memory to allocate buffers for optimization.\n"
@@ -2326,13 +2321,13 @@ msgstr "ブラインド"
 #. attach labels
 #: plug-ins/common/blinds.c:392 plug-ins/common/grid.c:631
 #: plug-ins/common/ripple.c:654 plug-ins/common/tileit.c:470
-#: plug-ins/pagecurl/pagecurl.c:656
+#: plug-ins/pagecurl/pagecurl.c:659
 msgid "Horizontal"
 msgstr "水平"
 
 #: plug-ins/common/blinds.c:393 plug-ins/common/grid.c:632
 #: plug-ins/common/ripple.c:655 plug-ins/common/tileit.c:478
-#: plug-ins/pagecurl/pagecurl.c:657
+#: plug-ins/pagecurl/pagecurl.c:660
 msgid "Vertical"
 msgstr "鉛直"
 
@@ -2730,7 +2725,7 @@ msgid "Prefixed Name:"
 msgstr "前置名:"
 
 #: plug-ins/common/csource.c:706 plug-ins/common/mail.c:566
-#: plug-ins/common/tiff.c:1502 plug-ins/common/xbm.c:1186
+#: plug-ins/common/tiff.c:1502 plug-ins/common/xbm.c:1196
 msgid "Comment:"
 msgstr "コメント:"
 
@@ -3226,7 +3221,7 @@ msgstr "ぼかす"
 #: plug-ins/common/displace.c:434 plug-ins/common/edge.c:714
 #: plug-ins/common/fractaltrace.c:787 plug-ins/common/newsprint.c:447
 #: plug-ins/common/ripple.c:669 plug-ins/common/warp.c:540
-#: plug-ins/fits/fits.c:1024 plug-ins/flame/flame.c:968
+#: plug-ins/fits/fits.c:1024 plug-ins/flame/flame.c:972
 #: plug-ins/gfig/gfig.c:3309
 msgid "Black"
 msgstr "黒"
@@ -3659,7 +3654,7 @@ msgstr "GIF コメント:"
 #. additional animated gif parameter settings
 #: plug-ins/common/gif.c:1321
 msgid "Animated GIF Options"
-msgstr "アニメ GIF オプション"
+msgstr "動画 GIF オプション"
 
 #: plug-ins/common/gif.c:1329
 msgid "Loop forever"
@@ -4038,10 +4033,6 @@ msgstr "彩度を減らす"
 msgid "Blacken"
 msgstr "黒くする"
 
-#: plug-ins/common/illusion.c:110 plug-ins/common/illusion.c:111
-msgid "produce illusion"
-msgstr "幻を生成する"
-
 #: plug-ins/common/illusion.c:115
 msgid "<Image>/Filters/Map/Illusion..."
 msgstr "<Image>/フィルタ/マップ/幻..."
@@ -4245,11 +4236,11 @@ msgstr "画像プレビュー"
 msgid "Preview (in Image Window)"
 msgstr "画像ウインドウ中でプレビュー"
 
-#: plug-ins/common/jpeg.c:1665 plug-ins/xjt/xjt.c:839
+#: plug-ins/common/jpeg.c:1665 plug-ins/xjt/xjt.c:843
 msgid "Quality:"
 msgstr "品質:"
 
-#: plug-ins/common/jpeg.c:1687 plug-ins/xjt/xjt.c:848
+#: plug-ins/common/jpeg.c:1687 plug-ins/xjt/xjt.c:852
 msgid "Smoothing:"
 msgstr "スムージング:"
 
@@ -4261,7 +4252,7 @@ msgstr "リスタートマーカー"
 msgid "Restart Frequency (Rows):"
 msgstr "リスタート頻度(列)"
 
-#: plug-ins/common/jpeg.c:1751 plug-ins/xjt/xjt.c:819
+#: plug-ins/common/jpeg.c:1751 plug-ins/xjt/xjt.c:823
 msgid "Optimize"
 msgstr "最適化"
 
@@ -4324,7 +4315,7 @@ msgid "Effect Channel"
 msgstr "対象チャンネル"
 
 #. this zoom - gamma should redraw flame preview
-#: plug-ins/common/lic.c:1059 plug-ins/flame/flame.c:933
+#: plug-ins/common/lic.c:1059 plug-ins/flame/flame.c:937
 msgid "Brightness"
 msgstr "明るさ"
 
@@ -4487,50 +4478,38 @@ msgstr "最大値チャンネルを残す"
 msgid "Hold the Minimal Channels"
 msgstr "最小値チャンネルを残す"
 
-#: plug-ins/common/mblur.c:165
-msgid "Motion blur of image"
-msgstr "画像のモーションぼかし"
-
-#: plug-ins/common/mblur.c:166
-msgid ""
-"This plug-in simulates the effect seen when photographing a moving object at "
-"a slow shutter speed. Done by adding multiple displaced copies."
-msgstr ""
-"遅いシャッタースピードで動く物体を撮った写真のような効果を出します. "
-"実際には幾つかずらした画像を重ねているだけです."
-
-#: plug-ins/common/mblur.c:170
+#: plug-ins/common/mblur.c:171
 msgid "<Image>/Filters/Blur/Motion Blur..."
 msgstr "<Image>/フィルタ/ぼかし/モーションぼかし..."
 
-#: plug-ins/common/mblur.c:632 plug-ins/common/unsharp.c:288
+#: plug-ins/common/mblur.c:633 plug-ins/common/unsharp.c:288
 msgid "Blurring..."
 msgstr "ぼかしています..."
 
-#: plug-ins/common/mblur.c:778
+#: plug-ins/common/mblur.c:779
 msgid "Motion Blur"
 msgstr "モーションぼかし"
 
-#: plug-ins/common/mblur.c:800
+#: plug-ins/common/mblur.c:801
 msgid "Blur Type"
 msgstr "ぼかしの種類"
 
-#: plug-ins/common/mblur.c:805 plug-ins/gimpressionist/orientation.c:161
+#: plug-ins/common/mblur.c:806 plug-ins/gimpressionist/orientation.c:161
 #: plug-ins/gimpressionist/size.c:160
 msgid "Radial"
 msgstr "半径"
 
-#: plug-ins/common/mblur.c:806 plug-ins/flame/flame.c:1034
+#: plug-ins/common/mblur.c:807 plug-ins/flame/flame.c:1038
 #: plug-ins/imagemap/imap_popup.c:141
 msgid "Zoom"
 msgstr "拡大"
 
-#: plug-ins/common/mblur.c:812
+#: plug-ins/common/mblur.c:813
 msgid "Blur Parameters"
 msgstr "ぼかしパラメータ"
 
 #. Angle
-#: plug-ins/common/mblur.c:833 plug-ins/common/newsprint.c:1025
+#: plug-ins/common/mblur.c:834 plug-ins/common/newsprint.c:1025
 #: plug-ins/common/warp.c:693 plug-ins/gimpressionist/orientmap.c:551
 #: plug-ins/ifscompose/ifscompose.c:554
 msgid "Angle:"
@@ -4787,14 +4766,6 @@ msgstr "前景色"
 msgid "Background Color"
 msgstr "背景色"
 
-#: plug-ins/common/papertile.c:866
-msgid "Cuts an image into paper tiles, and slides each paper tile."
-msgstr "紙タイル上に画像を分割して、個々のタイルをずらす."
-
-#: plug-ins/common/papertile.c:867
-msgid "This plug-in cuts an image into paper tiles and slides each paper tile."
-msgstr "このプラグインは紙タイル上に画像を分割して、個々のタイルをずらす."
-
 #: plug-ins/common/papertile.c:870
 msgid "September 31, 1999"
 msgstr "1999年 9月 31日"
@@ -4870,8 +4841,8 @@ msgstr "詳細 >>"
 #. Number of plugins
 #: plug-ins/common/plugindetails.c:312
 #, c-format
-msgid " Number of Plugin Interfaces: %d"
-msgstr " プラグインインターフェースの数 :%d"
+msgid "Number of Plugin Interfaces: %d"
+msgstr " プラグインインターフェースの数: %d"
 
 #. menu path
 #: plug-ins/common/plugindetails.c:330
@@ -4881,17 +4852,20 @@ msgstr "メニューパス:"
 #. show the name
 #: plug-ins/common/plugindetails.c:351
 #: plug-ins/dbbrowser/dbbrowser_utils.c:342
+#: plug-ins/gap/gap_dbbrowser_utils.c:325
 msgid "Name:"
 msgstr "名称:"
 
 #. show the description
 #: plug-ins/common/plugindetails.c:373
 #: plug-ins/dbbrowser/dbbrowser_utils.c:358
+#: plug-ins/gap/gap_dbbrowser_utils.c:342
 msgid "Blurb:"
 msgstr "説明:"
 
 #: plug-ins/common/plugindetails.c:395
 #: plug-ins/dbbrowser/dbbrowser_utils.c:477
+#: plug-ins/gap/gap_dbbrowser_utils.c:459
 msgid "Help:"
 msgstr "ヘルプ:"
 
@@ -4908,6 +4882,7 @@ msgstr "プラグインの説明"
 #: plug-ins/common/plugindetails.c:1000
 #: plug-ins/dbbrowser/dbbrowser_utils.c:151
 #: plug-ins/dbbrowser/dbbrowser_utils.c:170
+#: plug-ins/gap/gap_dbbrowser_utils.c:175
 msgid "Search by Name"
 msgstr "名前で検索"
 
@@ -4943,6 +4918,7 @@ msgstr "ツリー表示"
 
 #: plug-ins/common/plugindetails.c:1098
 #: plug-ins/dbbrowser/dbbrowser_utils.c:224
+#: plug-ins/gap/gap_dbbrowser_utils.c:137
 msgid "Search:"
 msgstr "検索:"
 
@@ -5027,52 +5003,42 @@ msgstr "生"
 msgid "Ascii"
 msgstr "ASCII"
 
-#: plug-ins/common/polar.c:210
-msgid "Converts and image to and from polar coords"
-msgstr "画像を極座標形式にしたり戻したりする"
-
-#: plug-ins/common/polar.c:211
-msgid ""
-"Remaps and image from rectangular coordinates to polar coordinats or vice "
-"versa"
-msgstr "画像を直行座標形式と極座標形式の間で相互に変換する"
-
-#: plug-ins/common/polar.c:215
+#: plug-ins/common/polar.c:216
 msgid "<Image>/Filters/Distorts/Polar Coords..."
 msgstr "<Image>/フィルタ/歪み/極座標..."
 
-#: plug-ins/common/polar.c:409
+#: plug-ins/common/polar.c:410
 msgid "Polarizing..."
 msgstr "極座標に変換しています..."
 
-#: plug-ins/common/polar.c:937
+#: plug-ins/common/polar.c:938
 msgid "Polarize"
 msgstr "極座標"
 
-#: plug-ins/common/polar.c:999
+#: plug-ins/common/polar.c:1000
 msgid "Circle Depth in Percent:"
 msgstr "％で表した円の丸さ:"
 
-#: plug-ins/common/polar.c:1008
+#: plug-ins/common/polar.c:1009
 msgid "Offset Angle:"
 msgstr "角度オフセット:"
 
-#: plug-ins/common/polar.c:1020
+#: plug-ins/common/polar.c:1021
 msgid "Map Backwards"
 msgstr "逆方向マップ"
 
-#: plug-ins/common/polar.c:1028
+#: plug-ins/common/polar.c:1029
 msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
 msgstr ""
 "チェックしてある場合には右側から, そうでなければ左側からマッピングします."
 
-#: plug-ins/common/polar.c:1032
+#: plug-ins/common/polar.c:1033
 msgid "Map from Top"
 msgstr "上側からマップ"
 
-#: plug-ins/common/polar.c:1040
+#: plug-ins/common/polar.c:1041
 msgid ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
@@ -5080,11 +5046,11 @@ msgstr ""
 "チェックしてない場合には画像の下側を中心に, "
 "上側を外に向けてマッピングします. チェックした場合には逆になります."
 
-#: plug-ins/common/polar.c:1045
+#: plug-ins/common/polar.c:1046
 msgid "To Polar"
 msgstr "極座標へ"
 
-#: plug-ins/common/polar.c:1053
+#: plug-ins/common/polar.c:1054
 msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
@@ -5127,7 +5093,7 @@ msgid "Load PostScript"
 msgstr "PostScript 読み込み"
 
 #. Rendering
-#: plug-ins/common/ps.c:2300 plug-ins/flame/flame.c:911
+#: plug-ins/common/ps.c:2300 plug-ins/flame/flame.c:915
 msgid "Rendering"
 msgstr "レンダリング"
 
@@ -5351,11 +5317,6 @@ msgstr "残念ですがチャンネルやマスクを回転させることはできません."
 msgid "Rotating..."
 msgstr "回転しています..."
 
-#: plug-ins/common/sample_colorize.c:302
-msgid ""
-"Colorize the contents of the specified drawable similar to sample drawable"
-msgstr "指定した描画対象をサンプル描画対象のように色づけする."
-
 #: plug-ins/common/sample_colorize.c:307
 msgid "<Image>/Filters/Colors/Map/Sample Colorize..."
 msgstr "<Image>/フィルタ/色/マップ/サンプル色付け..."
@@ -5445,10 +5406,6 @@ msgstr "サンプルを解析しています..."
 msgid "Remap Colorized..."
 msgstr "再マップ色付けしています..."
 
-#: plug-ins/common/scatter_hsv.c:139 plug-ins/common/scatter_hsv.c:140
-msgid "Scattering pixel values in HSV space"
-msgstr "HSV 色空間でピクセルの各値を散乱させます"
-
 #: plug-ins/common/scatter_hsv.c:144
 msgid "<Image>/Filters/Noise/Scatter HSV..."
 msgstr "<Image>/フィルタ/ノイズ/HSV 散乱..."
@@ -5468,25 +5425,6 @@ msgstr "プレビュー (1:4) - 右クリックでジャンプします"
 #: plug-ins/common/scatter_hsv.c:458
 msgid "Holdness:"
 msgstr "保存度:"
-
-#: plug-ins/common/screenshot.c:135
-msgid "Creates a screenshot of a single window or the whole screen"
-msgstr "単一ウインドウや画面全体のスクリーンショットを作成します"
-
-#: plug-ins/common/screenshot.c:136
-msgid ""
-"This extension serves as a simple frontend to the X-window utility xwd and "
-"the xwd-file-plug-in. After specifying some options, xwd is called, the user "
-"selects a window, and the resulting image is loaded into the gimp. "
-"Alternatively the whole screen can be grabbed. When called non-interactively "
-"it may grab the root window or use the window-id passed as a parameter."
-msgstr ""
-"X Window System の xwd ユーティリティーと xwd "
-"ファイルプラグインのフロントエンドとして機能します. "
-"指定されたオプションに基づいて xwd を実行し, "
-"ユーザが指定したウインドウか全画面を取り込んだ後, 結果の画像ファイルを gimp "
-"に読み込みます. 非インタラクティブモードで呼び出された場合には, root window "
-"もしくは指定された window ID を元に取り込みを行います."
 
 #: plug-ins/common/screenshot.c:146 plug-ins/winsnap/winsnap.c:1042
 msgid "<Toolbox>/File/Acquire/Screen Shot..."
@@ -5545,14 +5483,6 @@ msgstr "<Image>/フィルタ/色/半統合"
 #: plug-ins/common/semiflatten.c:128
 msgid "Semi-Flatten..."
 msgstr "半統合しています..."
-
-#: plug-ins/common/sharpen.c:163
-msgid "Sharpen filter, typically used to 'sharpen' a photographic image."
-msgstr "一般に明瞭化フィルタは写真画像をシャープにするために用いられる."
-
-#: plug-ins/common/sharpen.c:164
-msgid "This plug-in selectively performs a convolution filter on an image."
-msgstr "画像に対する選択的コンボリューションフィルタとして働きます."
 
 #: plug-ins/common/sharpen.c:168
 msgid "<Image>/Filters/Enhance/Sharpen..."
@@ -6053,7 +5983,7 @@ msgid "Threshold Alpha"
 msgstr "アルファチャンネル閾値"
 
 #: plug-ins/common/threshold_alpha.c:297 plug-ins/common/unsharp.c:837
-#: plug-ins/common/wind.c:857 plug-ins/gflare/gflare.c:3022
+#: plug-ins/common/wind.c:818 plug-ins/gflare/gflare.c:3022
 msgid "Threshold:"
 msgstr "閾値:"
 
@@ -6147,64 +6077,56 @@ msgid "Tiler..."
 msgstr "タイルを生成しています..."
 
 #: plug-ins/common/uniteditor.c:71
-#, fuzzy
 msgid "<Toolbox>/Xtns/Unit Editor..."
-msgstr "<Toolbox>/拡張/DB ブラウザ..."
+msgstr "<Toolbox>/拡張/単位エディタ..."
 
 #: plug-ins/common/uniteditor.c:165 plug-ins/common/uniteditor.c:629
-#, fuzzy
 msgid "New Unit"
-msgstr "単位"
+msgstr "新しい単位"
 
 #: plug-ins/common/uniteditor.c:193
-#, fuzzy
 msgid "ID:"
-msgstr "入力:"
+msgstr "ID:"
 
 #: plug-ins/common/uniteditor.c:205
-#, fuzzy
 msgid "Factor:"
-msgstr "乗数(P):"
+msgstr "乗数:"
 
 #: plug-ins/common/uniteditor.c:216
-#, fuzzy
 msgid "Digits:"
-msgstr "割る数:"
+msgstr "数字:"
 
 #: plug-ins/common/uniteditor.c:229
 msgid "Symbol:"
-msgstr ""
+msgstr "シンボル:"
 
 #: plug-ins/common/uniteditor.c:242
-#, fuzzy
 msgid "Abbreviation:"
-msgstr "持ち上げ:"
+msgstr "省略形:"
 
 #: plug-ins/common/uniteditor.c:255
-#, fuzzy
 msgid "Singular:"
-msgstr "反射:"
+msgstr "単数形:"
 
 #: plug-ins/common/uniteditor.c:268
-#, fuzzy
 msgid "Plural:"
-msgstr "説明:"
+msgstr "複数形:"
 
 #: plug-ins/common/uniteditor.c:305
 msgid "Unit factor must not be 0."
-msgstr ""
+msgstr "単位乗数は霊であってはなりません."
 
 #: plug-ins/common/uniteditor.c:315
 msgid "All text fields must contain a value."
-msgstr ""
+msgstr "全ての文字フィールドが埋められていなければなりません."
 
 #: plug-ins/common/uniteditor.c:524
 msgid "Unit Editor"
-msgstr ""
+msgstr "単位エディタ"
 
 #: plug-ins/common/uniteditor.c:529 plug-ins/gimpressionist/presets.c:656
 msgid "Refresh"
-msgstr ""
+msgstr "再読み込み"
 
 #: plug-ins/common/uniteditor.c:542
 msgid ""
@@ -6247,71 +6169,64 @@ msgid "The unit's plural form."
 msgstr ""
 
 #: plug-ins/common/uniteditor.c:575
-#, fuzzy
 msgid "Saved"
-msgstr "保存"
+msgstr "保存済"
 
 #: plug-ins/common/uniteditor.c:576
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: plug-ins/common/uniteditor.c:577
 msgid "Factor"
-msgstr ""
+msgstr "乗数"
 
 #: plug-ins/common/uniteditor.c:578
-#, fuzzy
 msgid "Digits"
-msgstr "ハイライト"
+msgstr "数字"
 
 #: plug-ins/common/uniteditor.c:579
 msgid "Symbol"
-msgstr ""
+msgstr "シンボル"
 
 #: plug-ins/common/uniteditor.c:580
 msgid "Abbr."
-msgstr ""
+msgstr "省略形"
 
 #: plug-ins/common/uniteditor.c:581
-#, fuzzy
 msgid "Singular"
-msgstr "Sin 曲線"
+msgstr "単数形"
 
 #: plug-ins/common/uniteditor.c:582
 msgid "Plural"
-msgstr ""
+msgstr "複数形"
 
 #: plug-ins/common/uniteditor.c:636
 msgid "Create a new unit from scratch."
-msgstr ""
+msgstr "まっさらなところから新しい単位を作る."
 
 #: plug-ins/common/uniteditor.c:638
-#, fuzzy
 msgid "Duplicate Unit"
-msgstr "複製するフレーム範囲"
+msgstr "単位を複製"
 
 #: plug-ins/common/uniteditor.c:645
 msgid "Create a new unit with the currently seleted unit as template."
-msgstr ""
+msgstr "現在選択中の単位を元にして新しい単位を作る."
 
 #: plug-ins/common/uniteditor.c:648
 msgid "Don't Save Unit"
-msgstr ""
+msgstr "単位を保存しない"
 
 #: plug-ins/common/uniteditor.c:655
-#, fuzzy
 msgid "Don't save the currently selected unit before GIMP exits."
-msgstr "現在選択中のフラクタルを削除する"
+msgstr "GIMP が終了するまで現在選択中の単位を保存しない."
 
 #: plug-ins/common/uniteditor.c:660
-#, fuzzy
 msgid "Save Unit"
-msgstr "端点保存"
+msgstr "単位を保存"
 
 #: plug-ins/common/uniteditor.c:667
-#, fuzzy
 msgid "Save the currently selected unit before GIMP exits."
-msgstr "現在選択中のフラクタルを削除する"
+msgstr "GIMP 終了前に現在選択中の単位を保存する."
 
 #: plug-ins/common/unsharp.c:184
 msgid "<Image>/Filters/Enhance/Unsharp Mask..."
@@ -6422,16 +6337,12 @@ msgstr "より不透明に"
 msgid "More Transparent"
 msgstr "より透明に"
 
-#: plug-ins/common/vpropagate.c:213 plug-ins/common/vpropagate.c:214
-msgid "Propagate values of the layer"
-msgstr "レイヤーの明度を上げる"
-
 #: plug-ins/common/vpropagate.c:218
 msgid "<Image>/Filters/Distorts/Value Propagate..."
 msgstr "<Image>/フィルタ/歪み/明度伝搬..."
 
 #: plug-ins/common/vpropagate.c:365
-msgid "value propagating..."
+msgid "Value propagating..."
 msgstr "明度を伝搬させています..."
 
 #: plug-ins/common/vpropagate.c:938
@@ -6647,86 +6558,81 @@ msgstr "ペースト結果"
 msgid "Pasting ..."
 msgstr "ペーストしています..."
 
-#: plug-ins/common/wind.c:163
+#: plug-ins/common/wind.c:160
 msgid "<Image>/Filters/Distorts/Wind..."
 msgstr "<Image>/フィルタ/歪み/風..."
 
-#: plug-ins/common/wind.c:253
+#: plug-ins/common/wind.c:250
 msgid "Rendering Wind..."
 msgstr "風を描いています..."
 
-#: plug-ins/common/wind.c:259
+#: plug-ins/common/wind.c:256
 msgid "Rendering Blast..."
 msgstr "暴風にさらしています..."
 
-#: plug-ins/common/wind.c:698 plug-ins/common/wind.c:753
-#: plug-ins/common/wind.c:798
+#: plug-ins/common/wind.c:687
+msgid "Wind Strength must be greater than 0."
+msgstr "風の強さは 0 より大きくなければいけません."
+
+#: plug-ins/common/wind.c:714 plug-ins/common/wind.c:759
 msgid "Wind"
 msgstr "風"
-
-#: plug-ins/common/wind.c:726
-msgid ""
-"\n"
-"   Wind Strength must be greater than 0.   \n"
-msgstr ""
-"\n"
-"   風の強さは 0 より大きくなければいけません.   \n"
 
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
-#: plug-ins/common/wind.c:794
+#: plug-ins/common/wind.c:755
 msgid "Style"
 msgstr "スタイル"
 
-#: plug-ins/common/wind.c:799
+#: plug-ins/common/wind.c:760
 msgid "Blast"
 msgstr "暴風"
 
 #. *****************************************************
 #. radio buttons for choosing LEFT or RIGHT
 #. *************************************************
-#: plug-ins/common/wind.c:811 plug-ins/struc/struc.c:284
+#: plug-ins/common/wind.c:772 plug-ins/struc/struc.c:284
 msgid "Direction"
 msgstr "方向"
 
-#: plug-ins/common/wind.c:815
+#: plug-ins/common/wind.c:776
 msgid "Left"
 msgstr "左"
 
-#: plug-ins/common/wind.c:816
+#: plug-ins/common/wind.c:777
 msgid "Right"
 msgstr "右"
 
 #. ****************************************************
 #. radio buttons for choosing BOTH, LEADING, TRAILING
 #. **************************************************
-#: plug-ins/common/wind.c:828
+#: plug-ins/common/wind.c:789
 msgid "Edge Affected"
 msgstr "端の効果"
 
-#: plug-ins/common/wind.c:832
+#: plug-ins/common/wind.c:793
 msgid "Leading"
 msgstr "きっかけ"
 
-#: plug-ins/common/wind.c:833
+#: plug-ins/common/wind.c:794
 msgid "Trailing"
 msgstr "たなびき"
 
-#: plug-ins/common/wind.c:834
+#: plug-ins/common/wind.c:795
 msgid "Both"
 msgstr "両方"
 
-#: plug-ins/common/wind.c:861
+#: plug-ins/common/wind.c:822
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr "値を大きくすると影響を受ける領域が小さくなる"
 
-#: plug-ins/common/wind.c:871 plug-ins/gimpressionist/orientmap.c:565
+#: plug-ins/common/wind.c:832 plug-ins/gimpressionist/orientmap.c:565
 #: plug-ins/gimpressionist/sizemap.c:465
 msgid "Strength:"
 msgstr "強さ:"
 
-#: plug-ins/common/wind.c:875
+#: plug-ins/common/wind.c:836
 msgid "Higher values increase the magnitude of the effect"
 msgstr "値を大きくすると効果が大きくなる"
 
@@ -6800,7 +6706,7 @@ msgstr "スケール (log 2):"
 msgid "Interpreting %s:"
 msgstr "%s を解釈しています:"
 
-#: plug-ins/common/wmf.c:2355
+#: plug-ins/common/wmf.c:2354
 msgid "Transferring image"
 msgstr "画像を転送しています"
 
@@ -6808,33 +6714,33 @@ msgstr "画像を転送しています"
 msgid "Created with The GIMP"
 msgstr "Created with The GIMP"
 
-#: plug-ins/common/xbm.c:661
+#: plug-ins/common/xbm.c:671
 #, c-format
 msgid "XBM: cannot open \"%s\"\n"
 msgstr "XBM: \"%s\" が開けない\n"
 
-#: plug-ins/common/xbm.c:744
+#: plug-ins/common/xbm.c:754
 #, c-format
 msgid "XBM: cannot read header (ftell == %ld)\n"
 msgstr "XBM: ヘッダが読み込めない (ftell == %ld)\n"
 
-#: plug-ins/common/xbm.c:750
+#: plug-ins/common/xbm.c:760
 msgid "XBM: no image width specified\n"
 msgstr "XBM: 画像幅が指定されていない\n"
 
-#: plug-ins/common/xbm.c:756
+#: plug-ins/common/xbm.c:766
 msgid "XBM: no image height specified\n"
 msgstr "XBM: 画像の高さが指定されていない\n"
 
-#: plug-ins/common/xbm.c:762
+#: plug-ins/common/xbm.c:772
 msgid "XBM: no image data type specified\n"
 msgstr "XBM: 画像の種類が指定されていない\n"
 
-#: plug-ins/common/xbm.c:879
+#: plug-ins/common/xbm.c:889
 msgid "XBM Warning"
 msgstr "XBM 警告"
 
-#: plug-ins/common/xbm.c:900
+#: plug-ins/common/xbm.c:910
 msgid ""
 "The image which you are trying to save as\n"
 "an XBM contains more than two colors.\n"
@@ -6848,38 +6754,37 @@ msgstr ""
 "保存する前に白黒 (1-bit) インデックス\n"
 "画像に変換してください."
 
-#: plug-ins/common/xbm.c:971
+#: plug-ins/common/xbm.c:981
 #, c-format
 msgid "XBM: cannot create \"%s\"\n"
 msgstr "XBM: \"%s\" が作れない\n"
 
-#: plug-ins/common/xbm.c:1129
+#: plug-ins/common/xbm.c:1139
 msgid "Save as XBM"
 msgstr "XBM 形式で保存"
 
 #. parameter settings
-#: plug-ins/common/xbm.c:1146
+#: plug-ins/common/xbm.c:1156
 msgid "XBM Options"
 msgstr "XBM オプション"
 
 #. X10 format
-#: plug-ins/common/xbm.c:1157
+#: plug-ins/common/xbm.c:1167
 msgid "X10 Format Bitmap"
 msgstr "X10 形式ビットマップ"
 
-#: plug-ins/common/xbm.c:1175
+#: plug-ins/common/xbm.c:1185
 msgid "Identifier Prefix:"
 msgstr "識別子プレフィックス: "
 
 #. hotspot toggle
-#: plug-ins/common/xbm.c:1193
+#: plug-ins/common/xbm.c:1203
 msgid "Write Hot Spot Values"
 msgstr ""
 
-#: plug-ins/common/xbm.c:1217
-#, fuzzy
+#: plug-ins/common/xbm.c:1227
 msgid "Hot Spot X:"
-msgstr "回転 X:"
+msgstr ""
 
 #: plug-ins/common/xpm.c:794
 msgid "Save as XPM"
@@ -6963,28 +6868,33 @@ msgstr "DB ブラウザ (初期化しています...)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:153
 #: plug-ins/dbbrowser/dbbrowser_utils.c:172
+#: plug-ins/gap/gap_dbbrowser_utils.c:183
 msgid "Search by Blurb"
 msgstr "説明で検索"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:380
+#: plug-ins/gap/gap_dbbrowser_utils.c:364
 msgid "In:"
 msgstr "入力:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:427
+#: plug-ins/gap/gap_dbbrowser_utils.c:410
 msgid "Out:"
 msgstr "出力:"
 
 #. show the author & the copyright
 #: plug-ins/dbbrowser/dbbrowser_utils.c:515
-#: plug-ins/imagemap/imap_settings.c:89
+#: plug-ins/gap/gap_dbbrowser_utils.c:497 plug-ins/imagemap/imap_settings.c:89
 msgid "Author:"
 msgstr "作者:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:530
+#: plug-ins/gap/gap_dbbrowser_utils.c:512
 msgid "Date:"
 msgstr "日付:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:545
+#: plug-ins/gap/gap_dbbrowser_utils.c:527
 msgid "Copyright:"
 msgstr "著作権表示:"
 
@@ -7040,116 +6950,116 @@ msgstr "DATAMIN/DATAMAX で"
 msgid "Image Composing"
 msgstr "画像を構成しています"
 
-#: plug-ins/flame/flame.c:133
+#: plug-ins/flame/flame.c:135
 msgid "<Image>/Filters/Render/Nature/Flame..."
 msgstr "<Image>/フィルタ/下塗り/自然/炎..."
 
-#: plug-ins/flame/flame.c:210
+#: plug-ins/flame/flame.c:214
 msgid "Drawing Flame..."
 msgstr "炎を描いています..."
 
-#: plug-ins/flame/flame.c:408
+#: plug-ins/flame/flame.c:412
 msgid "Load/Save Flame"
 msgstr "炎の保存/読込"
 
-#: plug-ins/flame/flame.c:566 plug-ins/flame/flame.c:1083
+#: plug-ins/flame/flame.c:570 plug-ins/flame/flame.c:1087
 msgid "Edit Flame"
 msgstr "炎を編集"
 
-#: plug-ins/flame/flame.c:597
+#: plug-ins/flame/flame.c:601
 msgid "Directions"
 msgstr "方向"
 
-#: plug-ins/flame/flame.c:628
+#: plug-ins/flame/flame.c:632
 msgid "Controls"
 msgstr "コントロール"
 
-#: plug-ins/flame/flame.c:645
+#: plug-ins/flame/flame.c:649
 msgid "Speed"
 msgstr "速度"
 
-#: plug-ins/flame/flame.c:652
+#: plug-ins/flame/flame.c:656
 msgid "Randomize"
 msgstr "乱数を振る"
 
-#: plug-ins/flame/flame.c:665
+#: plug-ins/flame/flame.c:669
 msgid "Same"
 msgstr "同じ"
 
-#: plug-ins/flame/flame.c:666 plug-ins/gimpressionist/orientation.c:151
+#: plug-ins/flame/flame.c:670 plug-ins/gimpressionist/orientation.c:151
 #: plug-ins/gimpressionist/size.c:150
 msgid "Random"
 msgstr "乱数"
 
-#: plug-ins/flame/flame.c:670
+#: plug-ins/flame/flame.c:674
 msgid "Swirl"
 msgstr "渦巻"
 
-#: plug-ins/flame/flame.c:671
+#: plug-ins/flame/flame.c:675
 msgid "Horseshoe"
 msgstr "蹄鉄"
 
-#: plug-ins/flame/flame.c:672 plug-ins/gfig/gfig.c:3296
+#: plug-ins/flame/flame.c:676 plug-ins/gfig/gfig.c:3296
 msgid "Polar"
 msgstr "極"
 
-#: plug-ins/flame/flame.c:673
+#: plug-ins/flame/flame.c:677
 msgid "Bent"
 msgstr "曲げる"
 
-#: plug-ins/flame/flame.c:685
+#: plug-ins/flame/flame.c:689
 msgid "Variation:"
 msgstr "種類:"
 
-#: plug-ins/flame/flame.c:726 plug-ins/flame/flame.c:1091
+#: plug-ins/flame/flame.c:730 plug-ins/flame/flame.c:1095
 msgid "Load Flame"
 msgstr "炎読込"
 
-#: plug-ins/flame/flame.c:741 plug-ins/flame/flame.c:1099
+#: plug-ins/flame/flame.c:745 plug-ins/flame/flame.c:1103
 msgid "Save Flame"
 msgstr "炎保存"
 
-#: plug-ins/flame/flame.c:881
+#: plug-ins/flame/flame.c:885
 msgid "Flame"
 msgstr "炎"
 
-#: plug-ins/flame/flame.c:935
+#: plug-ins/flame/flame.c:939
 msgid "Contrast"
 msgstr "コントラスト"
 
-#: plug-ins/flame/flame.c:937
+#: plug-ins/flame/flame.c:941
 msgid "Gamma"
 msgstr "ガンマ"
 
-#: plug-ins/flame/flame.c:939
+#: plug-ins/flame/flame.c:943
 msgid "Sample Density"
 msgstr "サンプル密度"
 
-#: plug-ins/flame/flame.c:941
+#: plug-ins/flame/flame.c:945
 msgid "Spatial Oversample"
 msgstr "空間オーバーサンプル"
 
-#: plug-ins/flame/flame.c:943
+#: plug-ins/flame/flame.c:947
 msgid "Spatial Filter Radius"
 msgstr "空間フィルタ半径"
 
-#: plug-ins/flame/flame.c:957
+#: plug-ins/flame/flame.c:961
 msgid "Colormap"
 msgstr "カラーマップ"
 
-#: plug-ins/flame/flame.c:998
+#: plug-ins/flame/flame.c:1002
 msgid "Custom Gradient"
 msgstr "任意のグラデーション"
 
-#: plug-ins/flame/flame.c:1018
+#: plug-ins/flame/flame.c:1022
 msgid "Camera"
 msgstr "カメラ"
 
-#: plug-ins/flame/flame.c:1036
+#: plug-ins/flame/flame.c:1040
 msgid "X"
 msgstr "X"
 
-#: plug-ins/flame/flame.c:1038
+#: plug-ins/flame/flame.c:1042
 msgid "Y"
 msgstr "Y"
 
@@ -7332,79 +7242,32 @@ msgstr "選択"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:65
 msgid "GAP Animated Filter apply"
-msgstr "GAP アニメーションフィルタ適用"
+msgstr "GAP 動画フィルタ適用"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:86
 msgid "Animated Filter apply (init)"
-msgstr "アニメーションフィルタ適用 (初期)"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:137
-msgid "Search :"
-msgstr "検索 :"
+msgstr "動画フィルタ適用 (初期)"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:166
 msgid "Gen Code by name"
 msgstr "名前で元コードを検索"
 
-#: plug-ins/gap/gap_dbbrowser_utils.c:175
-msgid "Search by name"
-msgstr "名前で検索"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:183
-msgid "Search by blurb"
-msgstr "説明で検索"
-
-#. show the name
-#: plug-ins/gap/gap_dbbrowser_utils.c:325
-msgid "Name :"
-msgstr "名称 :"
-
-#. show the description
-#: plug-ins/gap/gap_dbbrowser_utils.c:342
-msgid "Blurb :"
-msgstr "説明 :"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:364
-msgid "In :"
-msgstr "入力 :"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:410
-msgid "Out :"
-msgstr "出力 :"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:459
-msgid "Help :"
-msgstr "ヘルプ :"
-
-#. show the author & the copyright
-#: plug-ins/gap/gap_dbbrowser_utils.c:497
-msgid "Author :"
-msgstr "作者 :"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:512
-msgid "Date :"
-msgstr "日付 :"
-
-#: plug-ins/gap/gap_dbbrowser_utils.c:527
-msgid "Copyright :"
-msgstr "著作権表示 :"
-
 #: plug-ins/gap/gap_dbbrowser_utils.c:666
 msgid "Animated Filter apply (by name - please wait)"
-msgstr "アニメーションフィルタ適用 (名前で - お待ち下さい)"
+msgstr "動画フィルタ適用 (名前で - お待ち下さい)"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:690
 msgid "Animated Filter apply (by blurb - please wait)"
-msgstr "アニメーションフィルタ適用 (説明で - お待ち下さい)"
+msgstr "動画フィルタ適用 (説明で - お待ち下さい)"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:698
 msgid "Animated Filter apply (please wait)"
-msgstr "アニメーションフィルタ適用 (お待ち下さい)"
+msgstr "動画フィルタ適用 (お待ち下さい)"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:745
 #: plug-ins/gap/gap_filter_foreach.c:161 plug-ins/gap/gap_mod_layer.c:284
 msgid "Animated Filter apply"
-msgstr "アニメーションフィルタ適用"
+msgstr "動画フィルタ適用"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:101
 msgid "<Image>/Video/Split Video to Frames"
@@ -9009,10 +8872,6 @@ msgstr ""
 msgid "Goto last Frame"
 msgstr "最後のフレームへ"
 
-#: plug-ins/gap/gap_navigator_dialog.c:443
-msgid "GAP video navigator dialog"
-msgstr ""
-
 #: plug-ins/gap/gap_navigator_dialog.c:448
 msgid "<Image>/Video/VCR Navigator..."
 msgstr "<Image>/動画/VCR ナビゲータ..."
@@ -10596,10 +10455,6 @@ msgstr "偏向閾値:"
 msgid "A bailout-value for adaptive selections"
 msgstr "適応的選択をやめる閾値"
 
-#: plug-ins/gimpressionist/gimp.c:100 plug-ins/gimpressionist/gimp.c:101
-msgid "Performs various artistic operations on an image"
-msgstr "画像に様々な芸術的効果を与える"
-
 #: plug-ins/gimpressionist/gimp.c:105
 msgid "<Image>/Filters/Artistic/GIMPressionist..."
 msgstr "<Image>/フィルタ/芸術的効果/GIMPressionist..."
@@ -12015,43 +11870,43 @@ msgstr "色の種類:"
 msgid "Unable to add additional point.\n"
 msgstr "これ以上点を追加できません.\n"
 
-#: plug-ins/pagecurl/pagecurl.c:216
+#: plug-ins/pagecurl/pagecurl.c:217
 msgid "<Image>/Filters/Distorts/Pagecurl..."
 msgstr "<Image>/フィルタ/歪み/ページめくり..."
 
-#: plug-ins/pagecurl/pagecurl.c:522
+#: plug-ins/pagecurl/pagecurl.c:525
 msgid "Pagecurl Effect"
 msgstr "ページめくり効果"
 
-#: plug-ins/pagecurl/pagecurl.c:543
+#: plug-ins/pagecurl/pagecurl.c:546
 msgid "Curl Location"
 msgstr "めくる位置"
 
-#: plug-ins/pagecurl/pagecurl.c:610
+#: plug-ins/pagecurl/pagecurl.c:613
 msgid "Upper Left"
 msgstr "左上"
 
-#: plug-ins/pagecurl/pagecurl.c:611
+#: plug-ins/pagecurl/pagecurl.c:614
 msgid "Upper Right"
 msgstr "右上"
 
-#: plug-ins/pagecurl/pagecurl.c:612
+#: plug-ins/pagecurl/pagecurl.c:615
 msgid "Lower Left"
 msgstr "左下"
 
-#: plug-ins/pagecurl/pagecurl.c:613
+#: plug-ins/pagecurl/pagecurl.c:616
 msgid "Lower Right"
 msgstr "右下"
 
-#: plug-ins/pagecurl/pagecurl.c:644
+#: plug-ins/pagecurl/pagecurl.c:647
 msgid "Curl Orientation"
 msgstr "めくる向き"
 
-#: plug-ins/pagecurl/pagecurl.c:683
+#: plug-ins/pagecurl/pagecurl.c:686
 msgid "Shade under Curl"
 msgstr "めくった下に影をつける"
 
-#: plug-ins/pagecurl/pagecurl.c:693
+#: plug-ins/pagecurl/pagecurl.c:696
 msgid ""
 "Use Current Gradient\n"
 "instead of FG/BG-Color"
@@ -12059,15 +11914,15 @@ msgstr ""
 "前景/背景色の代わりに\n"
 "現在のグラデーションを使う"
 
-#: plug-ins/pagecurl/pagecurl.c:705
+#: plug-ins/pagecurl/pagecurl.c:708
 msgid "Curl Opacity"
 msgstr "曲がった部分の不透明度"
 
-#: plug-ins/pagecurl/pagecurl.c:832
+#: plug-ins/pagecurl/pagecurl.c:835
 msgid "Curl layer"
 msgstr "めくり部分レイヤー"
 
-#: plug-ins/pagecurl/pagecurl.c:1086
+#: plug-ins/pagecurl/pagecurl.c:1089
 msgid "Page Curl..."
 msgstr "ページをめくっています..."
 
@@ -12651,79 +12506,79 @@ msgstr "画面全体を取り込む"
 msgid "No data captured"
 msgstr "何も取り込まれませんでした"
 
-#: plug-ins/xjt/xjt.c:660
+#: plug-ins/xjt/xjt.c:664
 #, c-format
 msgid "XJT file contains unknown layermode %d"
 msgstr "XJT ファイル中に不明なレイヤーモード %d があります"
 
-#: plug-ins/xjt/xjt.c:690
+#: plug-ins/xjt/xjt.c:694
 #, c-format
 msgid "Warning: unsupported layermode %d saved to XJT"
 msgstr "警告: サポートされないレイヤーモード %d が XJT に保存されました"
 
-#: plug-ins/xjt/xjt.c:706
+#: plug-ins/xjt/xjt.c:710
 #, c-format
 msgid "XJT file contains unknown pathtype %d"
 msgstr "XJT ファイル中に不明なパス種 %d があります"
 
-#: plug-ins/xjt/xjt.c:722
+#: plug-ins/xjt/xjt.c:726
 #, c-format
 msgid "Warning: unsupported pathtype %d saved to XJT"
 msgstr "警告: サポートされないパス種 %d が XJT に保存されました"
 
-#: plug-ins/xjt/xjt.c:742
+#: plug-ins/xjt/xjt.c:746
 #, c-format
 msgid "XJT file contains unknown unittype %d"
 msgstr "XJT ファイル中に不明な単位系 %d があります"
 
-#: plug-ins/xjt/xjt.c:763
+#: plug-ins/xjt/xjt.c:767
 #, c-format
 msgid "Warning: unsupported unittype %d saved to XJT"
 msgstr "警告: サポートされない単位系 %d が XJT に保存されました"
 
-#: plug-ins/xjt/xjt.c:791
+#: plug-ins/xjt/xjt.c:795
 msgid "Save as XJT"
 msgstr "XJT 形式で保存"
 
-#: plug-ins/xjt/xjt.c:828
+#: plug-ins/xjt/xjt.c:832
 msgid "Clear Transparent"
 msgstr "透明クリア"
 
-#: plug-ins/xjt/xjt.c:1223
+#: plug-ins/xjt/xjt.c:1227
 #, c-format
 msgid "Can't open (write): %s"
 msgstr "書き込みのための %s が開けません"
 
-#: plug-ins/xjt/xjt.c:1615
+#: plug-ins/xjt/xjt.c:1626
 msgid "xjt: cannot operate on indexed color images"
 msgstr "xjt: インデックス画像には適用できません"
 
-#: plug-ins/xjt/xjt.c:1619
+#: plug-ins/xjt/xjt.c:1630
 msgid "xjt: cannot operate on unknown image types"
 msgstr "xjt: 不明な画像種は取り扱えません"
 
-#: plug-ins/xjt/xjt.c:1634 plug-ins/xjt/xjt.c:3248
+#: plug-ins/xjt/xjt.c:1645 plug-ins/xjt/xjt.c:3263
 #, c-format
 msgid "Can't create working dir: %s"
 msgstr "作業ディレクトリ %s が作れません"
 
-#: plug-ins/xjt/xjt.c:1643
+#: plug-ins/xjt/xjt.c:1654
 #, c-format
 msgid "Can't open : %s"
 msgstr "%s が開けません"
 
 #. stat error (file does not exist)
-#: plug-ins/xjt/xjt.c:2463 plug-ins/xjt/xjt.c:2470
+#: plug-ins/xjt/xjt.c:2475 plug-ins/xjt/xjt.c:2482
 #, c-format
 msgid "Can't open (read): %s"
 msgstr "%s が開けません"
 
-#: plug-ins/xjt/xjt.c:3111
+#: plug-ins/xjt/xjt.c:3126
 #, c-format
 msgid "Error: Cant read XJT propertyfile %s"
 msgstr "エラー: XJT プロパティファイル %s が読めません"
 
-#: plug-ins/xjt/xjt.c:3116
+#: plug-ins/xjt/xjt.c:3131
 #, c-format
 msgid "Error,XJT propertyfile %s is empty"
 msgstr "エラー: XJT プロパティファイル %s が空です<"
