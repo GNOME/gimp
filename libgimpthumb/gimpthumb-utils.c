@@ -36,7 +36,7 @@
 #include <glib-object.h>
 
 #ifdef G_OS_WIN32
-#include <libgimpbase/gimpwin32-io.h>
+#include "libgimpbase/gimpwin32-io.h"
 #endif
 
 #include "libgimpmath/gimpmath.h"

@@ -31,16 +31,11 @@
 
 #include <glib-object.h>
 
-#ifdef G_OS_WIN32
-#include <io.h>
-#define F_OK 0
-#define W_OK 2
-#define R_OK 4
-#define X_OK 0 /* not really */
-#define access(f,p) _access(f,p)
-#endif
-
 #include "libgimpbase/gimpbase.h"
+
+#ifdef G_OS_WIN32
+#include "libgimpbase/gimpwin32-io.h"
+#endif
 
 #include "core-types.h"
 
@@ -106,11 +101,8 @@ gimp_data_get_type (void)
 static void
 gimp_data_class_init (GimpDataClass *klass)
 {
-  GObjectClass    *object_class;
-  GimpObjectClass *gimp_object_class;
-
-  object_class      = G_OBJECT_CLASS (klass);
-  gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 

@@ -1,5 +1,19 @@
 2004-07-19  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpbase/gimpwin32-io.h: added copyright header, added
+	#defines for access(), F_OK, R_OK and X_OK.
+
+	* app/core/gimpdata.c: include the above instead of defining
+	the workarounds here.
+
+	* app/base/tile-swap.c
+	* app/config/gimpconfig-dump.c
+	* libgimpthumb/gimpthumb-utils.c
+	* libgimpthumb/gimpthumbnail.c: for consistency, #include
+	gimpwin32-io.h with "" instead of <>.
+
+2004-07-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpchannel-combine.c (gimp_channel_combine_ellipse):
 	comments not intended for gtk-doc must not start with '/**'.
 

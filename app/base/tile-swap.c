@@ -329,7 +329,7 @@ tile_swap_compress (gint swap_num)
 
 /* check if we can open a swap file */
 gboolean
-tile_swap_test ()
+tile_swap_test (void)
 {
   SwapFile *swap_file;
   int       swap_num = 1;
