@@ -620,9 +620,8 @@ gimp_vectors_copy_strokes (const GimpVectors *src_vectors,
 
   if (dest_vectors->strokes)
     {
-#ifdef __GNUC__
-#warning FIXME: free old dest_vectors->strokes
-#endif
+      g_list_foreach (dest_vectors->strokes, (Gfunc) g_object_unref, NULL);
+      g_list_free (dest_vectors->strokes);
     }
 
   dest_vectors->strokes = g_list_copy (src_vectors->strokes);

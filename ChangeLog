@@ -1,5 +1,13 @@
 2003-09-02  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpeditselectiontool.c (init_edit_selection): removed
+	a superfluous call to g_object_ref().
+
+	* app/vectors/gimpvectors.c (gimp_vectors_copy_strokes): free the
+	old list of strokes.
+
+2003-09-02  Sven Neumann  <sven@gimp.org>
+
 	* app/text/gimptextlayout-render.c (gimp_text_layout_render)
 	* app/widgets/gimpfontselection.c (gimp_font_selection_set_fontname)
 	* app/widgets/gimptexteditor.c (gimp_text_editor_new)
