@@ -1,7 +1,7 @@
 2001-04-11  Stanislav Brabec  <utx@penguin.cz>
 
 	On request of Martin Weber <martweb@gmx.net>:
-	* plug-ins/bmp/bmp.c:
+	* plug-ins/bmp/bmpread.c:
 	GIMP couldn't read bmp files with a ba chunk. This kind of files 
 	can be found in OS/2 1.x.
 
