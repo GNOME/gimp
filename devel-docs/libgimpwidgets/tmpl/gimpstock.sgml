@@ -473,6 +473,27 @@ RTL variant
 
 
 
+<!-- ##### MACRO GIMP_STOCK_SHAPE_CIRCLE ##### -->
+<para>
+<inlinegraphic fileref="stock-shape-circle-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_SHAPE_SQUARE ##### -->
+<para>
+<inlinegraphic fileref="stock-shape-square-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_SHAPE_DIAMOND ##### -->
+<para>
+<inlinegraphic fileref="stock-shape-diamond-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_CAP_BUTT ##### -->
 <para>
 <inlinegraphic fileref="stock-cap-butt-16.png" format="png"></inlinegraphic>
