@@ -1,3 +1,8 @@
+2003-09-04  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpbezierstroke.c: Bah. Fixed stupid error from
+	my last commit.
+
 2003-09-04  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/font-map.scm: ported from gimp-text
