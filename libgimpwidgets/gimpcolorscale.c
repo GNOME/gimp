@@ -106,7 +106,7 @@ gimp_color_scale_init (GimpColorScale *scale)
   range->orientation       = GTK_ORIENTATION_HORIZONTAL;
   range->flippable         = TRUE;
 
-  scale->channel = GIMP_COLOR_SELECTOR_HUE;
+  scale->channel = GIMP_COLOR_SELECTOR_VALUE;
 
   gimp_rgba_set (&scale->rgb, 0.0, 0.0, 0.0, 1.0);
   gimp_rgb_to_hsv (&scale->rgb, &scale->hsv);
@@ -364,30 +364,19 @@ gimp_color_scale_expose (GtkWidget      *widget,
 
 GtkWidget *
 gimp_color_scale_new (GtkOrientation            orientation,
-                      GimpColorSelectorChannel  channel,
-                      const GimpRGB            *rgb,
-                      const GimpHSV            *hsv)
+                      GimpColorSelectorChannel  channel)
 {
   GimpColorScale *scale;
   GtkRange       *range;
 
-  g_return_val_if_fail ((rgb == NULL && hsv == NULL) ||
-                        (rgb != NULL && hsv != NULL), NULL);
-
   scale = g_object_new (GIMP_TYPE_COLOR_SCALE, NULL);
+
+  scale->channel = channel;
 
   range = GTK_RANGE (scale);
   range->orientation = orientation;
   range->flippable   = (orientation == GTK_ORIENTATION_HORIZONTAL);
-
-  scale->channel = channel;
-
-  if (rgb && hsv)
-    {
-      scale->rgb = *rgb;
-      scale->hsv = *hsv;
-    }
-
+  
   return GTK_WIDGET (scale);
 }
 

@@ -27,8 +27,28 @@ GimpColorScale
 
 @orientation: 
 @channel: 
+@Returns: 
+<!-- # Unused Parameters # -->
 @rgb: 
 @hsv: 
-@Returns: 
+
+
+<!-- ##### FUNCTION gimp_color_scale_set_channel ##### -->
+<para>
+
+</para>
+
+@scale: 
+@channel: 
+
+
+<!-- ##### FUNCTION gimp_color_scale_set_color ##### -->
+<para>
+
+</para>
+
+@scale: 
+@rgb: 
+@hsv: 
 
 

@@ -361,6 +361,7 @@ GIMP_SCALE_ENTRY_SPINBUTTON
 GIMP_SCALE_ENTRY_SPINBUTTON_ADJ
 gimp_scale_entry_new
 gimp_scale_entry_set_sensitive
+gimp_color_scale_entry_new
 GIMP_RANDOM_SEED_SPINBUTTON
 GIMP_RANDOM_SEED_SPINBUTTON_ADJ
 GIMP_RANDOM_SEED_TOGGLEBUTTON
@@ -448,6 +449,8 @@ GIMP_COLOR_NOTEBOOK_GET_CLASS
 <TITLE>GimpColorScale</TITLE>
 GimpColorScale
 gimp_color_scale_new
+gimp_color_scale_set_channel
+gimp_color_scale_set_color
 <SUBSECTION Standard>
 GIMP_COLOR_SCALE
 GIMP_IS_COLOR_SCALE

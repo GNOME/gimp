@@ -336,6 +336,28 @@ Returns the #GtkAdjustment of the scale_entry's #GtkSpinButton.
 @sensitive: 
 
 
+<!-- ##### FUNCTION gimp_color_scale_entry_new ##### -->
+<para>
+
+</para>
+
+@table: 
+@column: 
+@row: 
+@text: 
+@scale_width: 
+@spinbutton_width: 
+@value: 
+@lower: 
+@upper: 
+@step_increment: 
+@page_increment: 
+@digits: 
+@tooltip: 
+@help_data: 
+@Returns: 
+
+
 <!-- ##### MACRO GIMP_RANDOM_SEED_SPINBUTTON ##### -->
 <para>
 Returns the random_seed's #GtkSpinButton.

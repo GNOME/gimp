@@ -1,5 +1,12 @@
 2002-10-31  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpcolorscale.[ch]: removed rgb and hsv parameters
+	from gimp_color_scale_new().
+
+	* libgimpwidgets/gimpwidgets.c: changed accordingly.
+
+2002-10-31  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpcolorscale.c: made inverted and flippable work
 	correctly.
 

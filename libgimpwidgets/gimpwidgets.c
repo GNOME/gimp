@@ -734,17 +734,11 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
 
   if (color_scale)
     {
-      GimpRGB rgb;
-      GimpHSV hsv;
-
-      gimp_rgba_set (&rgb, 0.0, 0.0, 0.0, 1.0);
-      gimp_rgb_to_hsv (&rgb, &hsv);
-
       scale = gimp_color_scale_new (GTK_ORIENTATION_HORIZONTAL,
-                                    GIMP_COLOR_SELECTOR_HUE,
-                                    &rgb, &hsv);
+                                    GIMP_COLOR_SELECTOR_VALUE);
 
-      gtk_range_set_adjustment (GTK_RANGE (scale), GTK_ADJUSTMENT (adjustment));
+      gtk_range_set_adjustment (GTK_RANGE (scale),
+                                GTK_ADJUSTMENT (adjustment));
     }
   else
     {
