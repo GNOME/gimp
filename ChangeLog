@@ -1,5 +1,10 @@
 2003-07-24  Michael Natterer  <mitch@gimp.org>
 
+	* app/text/gimptext-vectors.c: added control points.
+	Looks correct now.
+
+2003-07-24  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/scripts/test-sphere.scm: added image, layer,
 	channel and drawable menus for testing.
 
