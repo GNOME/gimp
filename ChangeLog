@@ -1,5 +1,12 @@
 2004-09-07  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/xwd.c (query): applied patch from Alan Horkan
+	which improves the blurb and help texts. Fixes bug #151912.
+
+	Unrelated: did coding style / indentation cleanup in the whole file.
+
+2004-09-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpfiledialog.c (gimp_file_dialog_set_uri):
 	simplified the code that selects an image file by its URI.
 

@@ -95,7 +95,7 @@ typedef struct
   L_CARD32 l_green_mask;     /* Green mask */
   L_CARD32 l_blue_mask;      /* Blue mask */
   L_CARD32 l_bits_per_rgb;   /* Number of bits per RGB-part */
-  L_CARD32 l_colormap_entries; /* Number of colours in colour table (?) */
+  L_CARD32 l_colormap_entries; /* Number of colors in color table (?) */
   L_CARD32 l_ncolors;        /* Number of xwdcolor structures */
   L_CARD32 l_window_width;   /* Window width */
   L_CARD32 l_window_height;  /* Window height */
@@ -106,7 +106,7 @@ typedef struct
 
 typedef struct
 {
-  L_CARD32 l_pixel;          /* Colour index */
+  L_CARD32 l_pixel;          /* Color index */
   L_CARD16 l_red, l_green, l_blue;  /* RGB-values */
   L_CARD8  l_flags, l_pad;
 } L_XWDCOLOR;
@@ -140,55 +140,89 @@ typedef struct
  */
 static void   query               (void);
 static void   run                 (const gchar      *name,
-				   gint              nparams,
-				   const GimpParam  *param,
-				   gint             *nreturn_vals,
-				   GimpParam       **return_vals);
+                                   gint              nparams,
+                                   const GimpParam  *param,
+                                   gint             *nreturn_vals,
+                                   GimpParam       **return_vals);
 
 static gint32 load_image          (const gchar      *filename);
 static gint   save_image          (const gchar      *filename,
-				   gint32            image_ID,
-				   gint32            drawable_ID);
+                                   gint32            image_ID,
+                                   gint32            drawable_ID);
 static gint32 create_new_image    (const gchar      *filename,
                                    guint             width,
                                    guint             height,
-				   GimpImageBaseType type,
+                                   GimpImageBaseType type,
                                    gint32           *layer_ID,
-				   GimpDrawable    **drawable,
+                                   GimpDrawable    **drawable,
                                    GimpPixelRgn     *pixel_rgn);
 
-static int    set_pixelmap        (int, L_XWDCOLOR *,PIXEL_MAP *);
-static int    get_pixelmap        (L_CARD32, PIXEL_MAP *,unsigned char *,
-				   unsigned char *, unsigned char *);
+static int      set_pixelmap      (gint,
+                                   L_XWDCOLOR *,
+                                   PIXEL_MAP *);
+static gboolean get_pixelmap      (L_CARD32,
+                                   PIXEL_MAP *,
+                                   guchar *,
+                                   guchar *,
+                                   guchar *);
 static void   set_bw_color_table  (gint32);
-static void   set_color_table     (gint32, L_XWDFILEHEADER *, L_XWDCOLOR *);
-
-static gint32 load_xwd_f2_d1_b1   (const gchar *, FILE *, L_XWDFILEHEADER *,
-				   L_XWDCOLOR *);
-static gint32 load_xwd_f2_d8_b8   (const gchar *, FILE *, L_XWDFILEHEADER *,
-				   L_XWDCOLOR *);
-static gint32 load_xwd_f2_d16_b16 (const gchar *, FILE *, L_XWDFILEHEADER *,
-                                   L_XWDCOLOR *);
-static gint32 load_xwd_f2_d24_b32 (const gchar *, FILE *, L_XWDFILEHEADER *,
-                                   L_XWDCOLOR *);
-static gint32 load_xwd_f1_d24_b1  (const gchar *, FILE *, L_XWDFILEHEADER *,
+static void   set_color_table     (gint32,
+                                   L_XWDFILEHEADER *,
                                    L_XWDCOLOR *);
 
-static L_CARD32 read_card32  (FILE *, int *);
-static L_CARD16 read_card16  (FILE *, int *);
-static L_CARD8  read_card8   (FILE *, int *);
+static gint32 load_xwd_f2_d1_b1   (const gchar *,
+                                   FILE *,
+                                   L_XWDFILEHEADER *,
+                                   L_XWDCOLOR *);
+static gint32 load_xwd_f2_d8_b8   (const gchar *,
+                                   FILE *,
+                                   L_XWDFILEHEADER *,
+                                   L_XWDCOLOR *);
+static gint32 load_xwd_f2_d16_b16 (const gchar *,
+                                   FILE *,
+                                   L_XWDFILEHEADER *,
+                                   L_XWDCOLOR *);
+static gint32 load_xwd_f2_d24_b32 (const gchar *,
+                                   FILE *,
+                                   L_XWDFILEHEADER *,
+                                   L_XWDCOLOR *);
+static gint32 load_xwd_f1_d24_b1  (const gchar *,
+                                   FILE *,
+                                   L_XWDFILEHEADER *,
+                                   L_XWDCOLOR *);
 
-static void write_card32     (FILE *, L_CARD32);
-static void write_card16     (FILE *, L_CARD32);
-static void write_card8      (FILE *, L_CARD32);
+static L_CARD32 read_card32  (FILE *,
+                              gint *);
+static L_CARD16 read_card16  (FILE *,
+                              gint *);
+static L_CARD8  read_card8   (FILE *,
+                              gint *);
 
-static void read_xwd_header  (FILE *, L_XWDFILEHEADER *);
-static void write_xwd_header (FILE *, L_XWDFILEHEADER *);
-static void read_xwd_cols    (FILE *, L_XWDFILEHEADER *, L_XWDCOLOR *);
-static void write_xwd_cols   (FILE *, L_XWDFILEHEADER *, L_XWDCOLOR *);
+static void write_card32     (FILE *,
+                              L_CARD32);
+static void write_card16     (FILE *,
+                              L_CARD32);
+static void write_card8      (FILE *,
+                              L_CARD32);
 
-static gint save_index       (FILE *, gint32, gint32, int);
-static gint save_rgb         (FILE *, gint32, gint32);
+static void read_xwd_header  (FILE *,
+                              L_XWDFILEHEADER *);
+static void write_xwd_header (FILE *,
+                              L_XWDFILEHEADER *);
+static void read_xwd_cols    (FILE *,
+                              L_XWDFILEHEADER *,
+                              L_XWDCOLOR *);
+static void write_xwd_cols   (FILE *,
+                              L_XWDFILEHEADER *,
+                              L_XWDCOLOR *);
+
+static gint save_index       (FILE *,
+                              gint32,
+                              gint32,
+                              gint);
+static gint save_rgb         (FILE *,
+                              gint32,
+                              gint32);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -233,8 +267,10 @@ query (void)
   };
 
   gimp_install_procedure ("file_xwd_load",
-                          "load file of the XWD file format",
-                          "load file of the XWD file format",
+                          "Loads files in the XWD (X Window Dump) format",
+                          "Loads files in the XWD (X Window Dump) format. "
+                          "XWD image files are produced by the program xwd. "
+                          "Xwd is an X Window System window dumping utility.",
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
                           "1996",
@@ -248,14 +284,14 @@ query (void)
   gimp_plugin_menu_register ("file_xwd_load", "<Load>");
   gimp_register_file_handler_mime ("file_xwd_load", "image/x-xwindowdump");
   gimp_register_magic_load_handler ("file_xwd_load",
-				    "xwd",
-				    "",
+                                    "xwd",
+                                    "",
                                     "4,long,0x00000007");
 
   gimp_install_procedure ("file_xwd_save",
-                          "saves files in the XWD file format",
-                          "XWD saving handles all image types except \
-those with alpha channels.",
+                          "Saves files in the XWD (X Window Dump) format",
+                          "XWD saving handles all image types except "
+                          "those with alpha channels.",
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
                           "1996",
@@ -268,8 +304,8 @@ those with alpha channels.",
   gimp_plugin_menu_register ("file_xwd_save", "<Save>");
   gimp_register_file_handler_mime ("file_xwd_save", "image/x-xwindowdump");
   gimp_register_save_handler ("file_xwd_save",
-			      "xwd",
-			      "");
+                              "xwd",
+                              "");
 }
 
 
@@ -302,40 +338,41 @@ run (const gchar      *name,
       image_ID = load_image (param[1].data.d_string);
 
       if (image_ID != -1)
-	{
-	  *nreturn_vals = 2;
-	  values[1].type         = GIMP_PDB_IMAGE;
-	  values[1].data.d_image = image_ID;
-	}
+        {
+          *nreturn_vals = 2;
+          values[1].type         = GIMP_PDB_IMAGE;
+          values[1].data.d_image = image_ID;
+        }
       else
-	{
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
   else if (strcmp (name, "file_xwd_save") == 0)
     {
-      image_ID = param[1].data.d_int32;
+      image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
       /*  eventually export the image */
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_ui_init ("xwd", FALSE);
-	  export = gimp_export_image (&image_ID, &drawable_ID, "XWD",
-				      (GIMP_EXPORT_CAN_HANDLE_RGB |
-				       GIMP_EXPORT_CAN_HANDLE_GRAY |
-				       GIMP_EXPORT_CAN_HANDLE_INDEXED));
-	  if (export == GIMP_EXPORT_CANCEL)
-	    {
-	      values[0].data.d_status = GIMP_PDB_CANCEL;
-	      return;
+        {
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
+          gimp_ui_init ("xwd", FALSE);
+          export = gimp_export_image (&image_ID, &drawable_ID, "XWD",
+                                      (GIMP_EXPORT_CAN_HANDLE_RGB |
+                                       GIMP_EXPORT_CAN_HANDLE_GRAY |
+                                       GIMP_EXPORT_CAN_HANDLE_INDEXED));
+          if (export == GIMP_EXPORT_CANCEL)
+            {
+              values[0].data.d_status = GIMP_PDB_CANCEL;
+              return;
             }
-	  break;
-	default:
-	  break;
-	}
+          break;
+
+        default:
+          break;
+        }
 
       switch (run_mode)
         {
@@ -355,14 +392,15 @@ run (const gchar      *name,
         }
 
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  if (! save_image (param[3].data.d_string, image_ID, drawable_ID))
-	    {
-	      status = GIMP_PDB_EXECUTION_ERROR;
-	    }
-	}
+        {
+          if (! save_image (param[3].data.d_string, image_ID, drawable_ID))
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+        }
+
       if (export == GIMP_EXPORT_EXPORT)
-	gimp_image_delete (image_ID);
+        gimp_image_delete (image_ID);
     }
   else
     {
@@ -375,12 +413,12 @@ run (const gchar      *name,
 static gint32
 load_image (const gchar *filename)
 {
-  FILE *ifp;
-  int depth, bpp;
-  gchar *temp;
-  gint32 image_ID;
-  L_XWDFILEHEADER xwdhdr;
-  L_XWDCOLOR *xwdcolmap = NULL;
+  FILE            *ifp;
+  gint             depth, bpp;
+  gchar           *temp;
+  gint32           image_ID;
+  L_XWDFILEHEADER  xwdhdr;
+  L_XWDCOLOR      *xwdcolmap = NULL;
 
   ifp = fopen (filename, "rb");
   if (!ifp)
@@ -400,11 +438,12 @@ load_image (const gchar *filename)
     }
 
 #ifdef XWD_COL_WAIT_DEBUG
-   {int k = 1;
+  {
+    int k = 1;
 
     while (k)
       k = k;
-   }
+  }
 #endif
 
   /* Position to start of XWDColor structures */
@@ -415,11 +454,12 @@ load_image (const gchar *filename)
       xwdcolmap = g_new (L_XWDCOLOR, xwdhdr.l_colormap_entries);
 
       read_xwd_cols (ifp, &xwdhdr, xwdcolmap);
+
 #ifdef XWD_COL_DEBUG
       {
         int j;
         printf ("File %s\n",filename);
-        for (j=0; j < xwdhdr.l_colormap_entries; j++)
+        for (j = 0; j < xwdhdr.l_colormap_entries; j++)
           printf ("Entry 0x%08lx: 0x%04lx,  0x%04lx, 0x%04lx, %d\n",
                   (long)xwdcolmap[j].l_pixel,(long)xwdcolmap[j].l_red,
                   (long)xwdcolmap[j].l_green,(long)xwdcolmap[j].l_blue,
@@ -429,7 +469,7 @@ load_image (const gchar *filename)
 
       if (xwdhdr.l_file_version != 7)
         {
-          g_message (_("can't read color entries"));
+          g_message (_("Can't read color entries"));
           g_free (xwdcolmap);
           fclose (ifp);
           return (-1);
@@ -442,61 +482,64 @@ load_image (const gchar *filename)
   g_free (temp);
 
   depth = xwdhdr.l_pixmap_depth;
-  bpp = xwdhdr.l_bits_per_pixel;
+  bpp   = xwdhdr.l_bits_per_pixel;
 
   image_ID = -1;
   switch (xwdhdr.l_pixmap_format)
-  {
+    {
     case 0:    /* Single plane bitmap */
       if ((depth == 1) && (bpp == 1))
-      { /* Can be performed by format 2 loader */
-        image_ID = load_xwd_f2_d1_b1 (filename, ifp, &xwdhdr, xwdcolmap);
-      }
+        { /* Can be performed by format 2 loader */
+          image_ID = load_xwd_f2_d1_b1 (filename, ifp, &xwdhdr, xwdcolmap);
+        }
       break;
 
     case 1:    /* Single plane pixmap */
       if ((depth <= 24) && (bpp == 1))
-      {
-        image_ID = load_xwd_f1_d24_b1 (filename, ifp, &xwdhdr, xwdcolmap);
-      }
+        {
+          image_ID = load_xwd_f1_d24_b1 (filename, ifp, &xwdhdr, xwdcolmap);
+        }
       break;
 
-   case 2:    /* Multiplane pixmaps */
-     if ((depth == 1) && (bpp == 1))
-     {
-       image_ID = load_xwd_f2_d1_b1 (filename, ifp, &xwdhdr, xwdcolmap);
-     }
-     else if ((depth <= 8) && (bpp == 8))
-     {
-       image_ID = load_xwd_f2_d8_b8 (filename, ifp, &xwdhdr, xwdcolmap);
-     }
-     else if ((depth <= 16) && (bpp == 16))
-     {
-       image_ID = load_xwd_f2_d16_b16 (filename, ifp, &xwdhdr, xwdcolmap);
-     }
-     else if ((depth <= 24) && ((bpp == 24) || (bpp == 32)))
-     {
-       image_ID = load_xwd_f2_d24_b32 (filename, ifp, &xwdhdr, xwdcolmap);
-     }
-     break;
-  }
+    case 2:    /* Multiplane pixmaps */
+      if ((depth == 1) && (bpp == 1))
+        {
+          image_ID = load_xwd_f2_d1_b1 (filename, ifp, &xwdhdr, xwdcolmap);
+        }
+      else if ((depth <= 8) && (bpp == 8))
+        {
+          image_ID = load_xwd_f2_d8_b8 (filename, ifp, &xwdhdr, xwdcolmap);
+        }
+      else if ((depth <= 16) && (bpp == 16))
+        {
+          image_ID = load_xwd_f2_d16_b16 (filename, ifp, &xwdhdr, xwdcolmap);
+        }
+      else if ((depth <= 24) && ((bpp == 24) || (bpp == 32)))
+        {
+          image_ID = load_xwd_f2_d24_b32 (filename, ifp, &xwdhdr, xwdcolmap);
+        }
+      break;
+    }
 
   fclose (ifp);
 
-  if (xwdcolmap != NULL) g_free ((char *)xwdcolmap);
+  if (xwdcolmap)
+    g_free (xwdcolmap);
 
   if (image_ID == -1)
-  {
-    temp = g_strdup_printf (_("load_image (xwd): XWD-file %s has format %d, depth %d\n\
-and bits per pixel %d.\nCurrently this is not supported.\n"),
-			    gimp_filename_to_utf8 (filename),
-                            (int) xwdhdr.l_pixmap_format, depth, bpp);
-    g_message (temp);
-    g_free (temp);
-    return (-1);
-  }
+    {
+      temp = g_strdup_printf (_("XWD-file %s has format %d, depth %d\n"
+                                "and bits per pixel %d.\n"
+                                "Currently this is not supported."),
+                              gimp_filename_to_utf8 (filename),
+                              (gint) xwdhdr.l_pixmap_format, depth, bpp);
+      g_message (temp);
+      g_free (temp);
 
-  return (image_ID);
+      return -1;
+    }
+
+  return image_ID;
 }
 
 static gint
@@ -505,10 +548,10 @@ save_image (const gchar *filename,
             gint32       drawable_ID)
 
 {
-  FILE* ofp;
-  GimpImageType drawable_type;
-  gint retval;
-  char *temp;
+  FILE          *ofp;
+  GimpImageType  drawable_type;
+  gint           retval;
+  gchar         *temp;
 
   drawable_type = gimp_drawable_type (drawable_ID);
 
@@ -527,7 +570,7 @@ save_image (const gchar *filename,
       break;
     default:
       g_message (_("Cannot operate on unknown image types."));
-      return (FALSE);
+      return FALSE;
       break;
     }
 
@@ -562,73 +605,76 @@ save_image (const gchar *filename,
 
 static L_CARD32
 read_card32 (FILE *ifp,
-	     int  *err)
+             int  *err)
 
 {
   L_CARD32 c;
 
-  c = (((L_CARD32)(getc (ifp))) << 24);
-  c |= (((L_CARD32)(getc (ifp))) << 16);
-  c |= (((L_CARD32)(getc (ifp))) << 8);
-  c |= ((L_CARD32)(*err = getc (ifp)));
+  c =  (((L_CARD32) (getc (ifp))) << 24);
+  c |= (((L_CARD32) (getc (ifp))) << 16);
+  c |= (((L_CARD32) (getc (ifp))) << 8);
+  c |= ((L_CARD32) (*err = getc (ifp)));
 
   *err = (*err < 0);
-  return (c);
+
+  return c;
 }
 
 
 static L_CARD16
 read_card16 (FILE *ifp,
-	     int  *err)
+             int  *err)
 
 {
   L_CARD16 c;
 
-  c = (((L_CARD16)(getc (ifp))) << 8);
-  c |= ((L_CARD16)(*err = getc (ifp)));
+  c =  (((L_CARD16) (getc (ifp))) << 8);
+  c |= ((L_CARD16) (*err = getc (ifp)));
 
   *err = (*err < 0);
-  return (c);
+
+  return c;
 }
 
 
 static L_CARD8
 read_card8 (FILE *ifp,
-	    int  *err)
+            int  *err)
 {
   L_CARD8 c;
 
-  c = ((L_CARD8)(*err = getc (ifp)));
+  c = ((L_CARD8) (*err = getc (ifp)));
 
   *err = (*err < 0);
-  return (c);
+
+  return c;
 }
 
 static void
 write_card32 (FILE     *ofp,
-	      L_CARD32  c)
+              L_CARD32  c)
 {
-  putc ((int)((c >> 24) & 0xff), ofp);
-  putc ((int)((c >> 16) & 0xff), ofp);
-  putc ((int)((c >> 8) & 0xff), ofp);
-  putc ((int)((c) & 0xff), ofp);
+  putc ((int) ((c >> 24) & 0xff), ofp);
+  putc ((int) ((c >> 16) & 0xff), ofp);
+  putc ((int) ((c >> 8) & 0xff), ofp);
+  putc ((int) ((c) & 0xff), ofp);
 }
 
 
 static void
 write_card16 (FILE     *ofp,
-	      L_CARD32  c)
+              L_CARD32  c)
 {
-  putc ((int)((c >> 8) & 0xff), ofp);
-  putc ((int)((c) & 0xff), ofp);
+  putc ((int) ((c >> 8) & 0xff), ofp);
+  putc ((int) ((c) & 0xff), ofp);
 }
 
 
 static void
 write_card8 (FILE     *ofp,
-	     L_CARD32  c)
+             L_CARD32  c)
 {
-  putc ((int)((c) & 0xff), ofp);
+  putc ((int) ((c) & 0xff), ofp);
 }
 
 
@@ -636,19 +682,22 @@ static void
 read_xwd_header (FILE            *ifp,
                  L_XWDFILEHEADER *xwdhdr)
 {
-  int j, err;
+  gint      j, err;
   L_CARD32 *cp;
 
-  cp = (L_CARD32 *)xwdhdr;
+  cp = (L_CARD32 *) xwdhdr;
 
   /* Read in all 32-bit values of the header and check for byte order */
-  for (j = 0; j < sizeof (L_XWDFILEHEADER)/sizeof(xwdhdr->l_file_version); j++)
+  for (j = 0; j < sizeof (L_XWDFILEHEADER) / sizeof(xwdhdr->l_file_version); j++)
     {
       *(cp++) = read_card32 (ifp, &err);
-      if (err) break;
+
+      if (err)
+        break;
     }
 
-  if (err) xwdhdr->l_file_version = 0;  /* Not a valid XWD-file */
+  if (err)
+    xwdhdr->l_file_version = 0;  /* Not a valid XWD-file */
 }
 
 
@@ -658,24 +707,24 @@ write_xwd_header (FILE            *ofp,
                   L_XWDFILEHEADER *xwdhdr)
 
 {
-  int j, hdrpad, hdr_entries;
+  gint      j, hdrpad, hdr_entries;
   L_CARD32 *cp;
 
   hdrpad = XWDHDR_PAD;
-  hdr_entries = sizeof (L_XWDFILEHEADER)/sizeof(xwdhdr->l_file_version);
+  hdr_entries = sizeof (L_XWDFILEHEADER) / sizeof(xwdhdr->l_file_version);
   xwdhdr->l_header_size = hdr_entries * 4 + hdrpad;
 
-  cp = (L_CARD32 *)xwdhdr;
+  cp = (L_CARD32 *) xwdhdr;
 
   /* Write out all 32-bit values of the header and check for byte order */
-  for (j = 0; j < sizeof (L_XWDFILEHEADER)/sizeof(xwdhdr->l_file_version); j++)
+  for (j = 0; j < sizeof (L_XWDFILEHEADER) / sizeof(xwdhdr->l_file_version); j++)
     {
       write_card32 (ofp, *(cp++));
     }
 
   /* Add padding bytes after XWD header */
   for (j = 0; j < hdrpad; j++)
-    write_card8 (ofp, (L_CARD32)0);
+    write_card8 (ofp, (L_CARD32) 0);
 }
 
 
@@ -684,10 +733,10 @@ read_xwd_cols (FILE            *ifp,
                L_XWDFILEHEADER *xwdhdr,
                L_XWDCOLOR      *colormap)
 {
-  int j, err = 0;
-  int flag_is_bad, index_is_bad;
-  int indexed = (xwdhdr->l_pixmap_depth <= 8);
-  long colmappos = ftell (ifp);
+  gint  j, err = 0;
+  gint  flag_is_bad, index_is_bad;
+  gint  indexed = (xwdhdr->l_pixmap_depth <= 8);
+  glong colmappos = ftell (ifp);
 
   /* Read in XWD-Color structures (the usual case) */
   flag_is_bad = index_is_bad = 0;
@@ -703,9 +752,10 @@ read_xwd_cols (FILE            *ifp,
       colormap[j].l_pad   = read_card8 (ifp, &err);
 
       if (indexed && (colormap[j].l_pixel > 255))
-	index_is_bad++;
+        index_is_bad++;
 
-      if (err) break;
+      if (err)
+        break;
     }
 
   if (err)        /* Not a valid XWD-file ? */
@@ -730,9 +780,10 @@ read_xwd_cols (FILE            *ifp,
       colormap[j].l_pad   = read_card8 (ifp, &err);
 
       if (indexed && (colormap[j].l_pixel > 255))
-	index_is_bad++;
+        index_is_bad++;
 
-      if (err) break;
+      if (err)
+        break;
     }
 
   if (err)        /* Not a valid XWD-file ? */
@@ -757,12 +808,13 @@ read_xwd_cols (FILE            *ifp,
       colormap[j].l_pad   = read_card8 (ifp, &err);
 
       /* if ((colormap[j].l_flags == 0) || (colormap[j].l_flags > 7))
-	 flag_is_bad++; */
+         flag_is_bad++; */
 
       if (indexed && (colormap[j].l_pixel > 255))
-	index_is_bad++;
+        index_is_bad++;
 
-      if (err) break;
+      if (err)
+        break;
     }
 
   if (err)        /* Not a valid XWD-file ? */
@@ -791,10 +843,11 @@ read_xwd_cols (FILE            *ifp,
       read_card16 (ifp, &err);
       read_card32 (ifp, &err);
 
-       if (indexed && (colormap[j].l_pixel > 255))
-	index_is_bad++;
+      if (indexed && (colormap[j].l_pixel > 255))
+        index_is_bad++;
 
-       if (err) break;
+       if (err)
+         break;
     }
 
   if (flag_is_bad || index_is_bad)
@@ -806,7 +859,9 @@ read_xwd_cols (FILE            *ifp,
 
       printf (")\n");
     }
-  if (err) xwdhdr->l_file_version = 0;  /* Not a valid XWD-file */
+
+  if (err)
+    xwdhdr->l_file_version = 0;  /* Not a valid XWD-file */
 }
 
 
@@ -829,8 +884,8 @@ write_xwd_cols (FILE            *ofp,
       write_card32 (ofp, (L_CARD32)colormap[j].l_green);
       write_card32 (ofp, (L_CARD32)0);
       write_card32 (ofp, (L_CARD32)colormap[j].l_blue);
-      write_card8 (ofp, (L_CARD32)colormap[j].l_flags);
-      write_card8 (ofp, (L_CARD32)colormap[j].l_pad);
+      write_card8  (ofp, (L_CARD32)colormap[j].l_flags);
+      write_card8  (ofp, (L_CARD32)colormap[j].l_pad);
       write_card16 (ofp, (L_CARD32)0);
       write_card32 (ofp, (L_CARD32)0);
 #else
@@ -840,15 +895,15 @@ write_xwd_cols (FILE            *ofp,
       write_card16 (ofp, (L_CARD32)colormap[j].l_red);
       write_card16 (ofp, (L_CARD32)colormap[j].l_green);
       write_card16 (ofp, (L_CARD32)colormap[j].l_blue);
-      write_card8 (ofp, (L_CARD32)colormap[j].l_flags);
-      write_card8 (ofp, (L_CARD32)colormap[j].l_pad);
+      write_card8  (ofp, (L_CARD32)colormap[j].l_flags);
+      write_card8  (ofp, (L_CARD32)colormap[j].l_pad);
 #else
       write_card32 (ofp, colormap[j].l_pixel);
       write_card16 (ofp, (L_CARD32)colormap[j].l_red);
       write_card16 (ofp, (L_CARD32)colormap[j].l_green);
       write_card16 (ofp, (L_CARD32)colormap[j].l_blue);
-      write_card8 (ofp, (L_CARD32)colormap[j].l_flags);
-      write_card8 (ofp, (L_CARD32)colormap[j].l_pad);
+      write_card8  (ofp, (L_CARD32)colormap[j].l_flags);
+      write_card8  (ofp, (L_CARD32)colormap[j].l_pad);
 #endif
 #endif
     }
@@ -858,15 +913,16 @@ write_xwd_cols (FILE            *ofp,
 /* Create a map for mapping up to 32 bit pixelvalues to RGB. */
 /* Returns number of colors kept in the map (up to 256) */
 
-static int set_pixelmap (int         ncols,
-                         L_XWDCOLOR *xwdcol,
-                         PIXEL_MAP  *pixelmap)
+static gint
+set_pixelmap (int         ncols,
+              L_XWDCOLOR *xwdcol,
+              PIXEL_MAP  *pixelmap)
 
 {
-  int i, j, k, maxcols;
+  gint     i, j, k, maxcols;
   L_CARD32 pixel_val;
 
-  memset ((char *)pixelmap,0,sizeof (PIXEL_MAP));
+  memset ((gchar *) pixelmap, 0, sizeof (PIXEL_MAP));
 
   maxcols = 0;
 
@@ -874,21 +930,22 @@ static int set_pixelmap (int         ncols,
     {
       pixel_val = xwdcol[j].l_pixel;
       for (k = 0; k < maxcols; k++)  /* Where to insert in list ? */
-	{
-	  if (pixel_val <= pixelmap->pmap[k].pixel_val)
-	    break;
-	}
+        {
+          if (pixel_val <= pixelmap->pmap[k].pixel_val)
+            break;
+        }
       if ((k < maxcols) && (pixel_val == pixelmap->pmap[k].pixel_val))
-	break;   /* It was already in list */
+        break;   /* It was already in list */
 
-      if (k >= 256) break;
+      if (k >= 256)
+        break;
 
       if (k < maxcols)   /* Must move entries to the back ? */
-	{
-	  for (i = maxcols-1; i >= k; i--)
-	    memcpy ((char *)&(pixelmap->pmap[i+1]),(char *)&(pixelmap->pmap[i]),
-		    sizeof (PMAP));
-	}
+        {
+          for (i = maxcols-1; i >= k; i--)
+            memcpy ((char *)&(pixelmap->pmap[i+1]),(char *)&(pixelmap->pmap[i]),
+                    sizeof (PMAP));
+        }
       pixelmap->pmap[k].pixel_val = pixel_val;
       pixelmap->pmap[k].red = xwdcol[j].l_red >> 8;
       pixelmap->pmap[k].green = xwdcol[j].l_green >> 8;
@@ -898,34 +955,38 @@ static int set_pixelmap (int         ncols,
     }
   pixelmap->npixel = maxcols;
 #ifdef XWD_COL_DEBUG
-  printf ("Colours in pixelmap: %d\n",pixelmap->npixel);
+  printf ("Colors in pixelmap: %d\n",pixelmap->npixel);
   for (j=0; j<pixelmap->npixel; j++)
     printf ("Pixelvalue 0x%08lx, 0x%02x 0x%02x 0x%02x\n",
-	    pixelmap->pmap[j].pixel_val,
-	    pixelmap->pmap[j].red,pixelmap->pmap[j].green,
-	    pixelmap->pmap[j].blue);
+            pixelmap->pmap[j].pixel_val,
+            pixelmap->pmap[j].red,pixelmap->pmap[j].green,
+            pixelmap->pmap[j].blue);
   for (j=0; j<=MAPPERMASK; j++)
     printf ("0x%08lx: %d\n",(long)j,pixelmap->pixel_in_map[j]);
 #endif
-  return (pixelmap->npixel);
+
+  return pixelmap->npixel;
 }
 
 
-/* Search a pixel value in the pixel map. Returns 0 if the */
-/* pixelval was not found in map. Returns 1 if found. */
+/* Search a pixel value in the pixel map. Returns FALSE if the */
+/* pixelval was not found in map. Returns TRUE if found. */
 
-static int
-get_pixelmap (L_CARD32       pixelval,
-	      PIXEL_MAP     *pixelmap,
-	      unsigned char *red,
-	      unsigned char *green,
-	      unsigned char *blue)
+static gboolean
+get_pixelmap (L_CARD32   pixelval,
+              PIXEL_MAP *pixelmap,
+              guchar    *red,
+              guchar    *green,
+              guchar    *blue)
 
 {
   register PMAP *low, *high, *middle;
 
-  if (pixelmap->npixel == 0) return (0);
-  if (!(pixelmap->pixel_in_map[pixelval & MAPPERMASK])) return (0);
+  if (pixelmap->npixel == 0)
+    return FALSE;
+
+  if (!(pixelmap->pixel_in_map[pixelval & MAPPERMASK]))
+    return FALSE;
 
   low =  &(pixelmap->pmap[0]);
   high = &(pixelmap->pmap[pixelmap->npixel-1]);
@@ -935,24 +996,25 @@ get_pixelmap (L_CARD32       pixelval,
     {
       middle = low + ((high - low)/2);
       if (pixelval <= middle->pixel_val)
-	high = middle;
+        high = middle;
       else
-	low = middle+1;
+        low = middle+1;
     }
 
   if (pixelval == low->pixel_val)
     {
       *red = low->red; *green = low->green; *blue = low->blue;
-      return (1);
+      return TRUE;
     }
-  return (0);
+
+  return FALSE;
 }
 
 
 static void
 set_bw_color_table (gint32 image_ID)
 {
-  static unsigned char BWColorMap[2*3] = { 255, 255, 255, 0, 0, 0 };
+  static guchar BWColorMap[2*3] = { 255, 255, 255, 0, 0, 0 };
 
 #ifdef XWD_COL_DEBUG
   printf ("Set GIMP b/w-colortable:\n");
@@ -964,12 +1026,13 @@ set_bw_color_table (gint32 image_ID)
 
 /* Initialize an 8-bit colortable from the mask-values of the XWD-header */
 static void
-init_color_table256 (L_XWDFILEHEADER *xwdhdr, unsigned char *ColorMap)
+init_color_table256 (L_XWDFILEHEADER *xwdhdr,
+                     guchar          *ColorMap)
 
 {
-  int i, j, k, cuind;
-  int redshift, greenshift, blueshift;
-  int maxred, maxgreen, maxblue;
+  gint i, j, k, cuind;
+  gint redshift, greenshift, blueshift;
+  gint maxred, maxgreen, maxblue;
 
   /* Assume: the bit masks for red/green/blue are grouped together
    * Example: redmask = 0xe0, greenmask = 0x1c, bluemask = 0x03
@@ -977,54 +1040,62 @@ init_color_table256 (L_XWDFILEHEADER *xwdhdr, unsigned char *ColorMap)
    * and the maximum value for each component.
    */
   redshift = greenshift = blueshift = 0;
-  if ((maxred = xwdhdr->l_red_mask) == 0) return;
+  if ((maxred = xwdhdr->l_red_mask) == 0)
+    return;
 
   /* Shift the redmask to the rightmost bit position to get
    * maximum value for red.
    */
   while ((maxred & 1) == 0)
-  {
-    redshift++;
-    maxred >>= 1;
-  }
-  if ((maxgreen = xwdhdr->l_green_mask) == 0) return;
-  while ((maxgreen & 1) == 0)
-  {
-    greenshift++;
-    maxgreen >>= 1;
-  }
-  if ((maxblue = xwdhdr->l_blue_mask) == 0) return;
-  while ((maxblue & 1) == 0)
-  {
-    blueshift++;
-    maxblue >>= 1;
-  }
+    {
+      redshift++;
+      maxred >>= 1;
+    }
 
-  memset ((char *)ColorMap,0,256*3);
+  if ((maxgreen = xwdhdr->l_green_mask) == 0)
+    return;
+
+  while ((maxgreen & 1) == 0)
+    {
+      greenshift++;
+      maxgreen >>= 1;
+    }
+
+  if ((maxblue = xwdhdr->l_blue_mask) == 0)
+    return;
+
+  while ((maxblue & 1) == 0)
+    {
+      blueshift++;
+      maxblue >>= 1;
+    }
+
+  memset ((gchar *) ColorMap, 0, 256 * 3);
 
   for (i = 0; i <= maxred; i++)
     for (j = 0; j <= maxgreen; j++)
       for (k = 0; k <= maxblue; k++)
-      {
-        cuind = (i << redshift) | (j << greenshift) | (k << blueshift);
-        if (cuind < 256)
         {
-          ColorMap[cuind*3]   = (i * 255)/maxred;
-          ColorMap[cuind*3+1] = (j * 255)/maxgreen;
-          ColorMap[cuind*3+2] = (k * 255)/maxblue;
+          cuind = (i << redshift) | (j << greenshift) | (k << blueshift);
+
+          if (cuind < 256)
+            {
+              ColorMap[cuind*3]   = (i * 255)/maxred;
+              ColorMap[cuind*3+1] = (j * 255)/maxgreen;
+              ColorMap[cuind*3+2] = (k * 255)/maxblue;
+            }
         }
-      }
 }
 
 
 static void
 set_color_table (gint32           image_ID,
-		 L_XWDFILEHEADER *xwdhdr,
-		 L_XWDCOLOR      *xwdcolmap)
+                 L_XWDFILEHEADER *xwdhdr,
+                 L_XWDCOLOR      *xwdcolmap)
 
 {
-  int ncols, i, j;
-  unsigned char ColorMap[256*3];
+  gint   ncols, i, j;
+  guchar ColorMap[256 * 3];
 
   ncols = xwdhdr->l_colormap_entries;
   if (xwdhdr->l_ncolors < ncols)
@@ -1041,19 +1112,20 @@ set_color_table (gint32           image_ID,
     {
       i = xwdcolmap[j].l_pixel;
       if ((i >= 0) && (i < 256))
-	{
-	  ColorMap[i*3] = (xwdcolmap[j].l_red) >> 8;
-	  ColorMap[i*3+1] = (xwdcolmap[j].l_green) >> 8;
-	  ColorMap[i*3+2] = (xwdcolmap[j].l_blue) >> 8;
-	}
+        {
+          ColorMap[i*3] = (xwdcolmap[j].l_red) >> 8;
+          ColorMap[i*3+1] = (xwdcolmap[j].l_green) >> 8;
+          ColorMap[i*3+2] = (xwdcolmap[j].l_blue) >> 8;
+        }
     }
 
 #ifdef XWD_COL_DEBUG
   printf ("Set GIMP colortable:\n");
   for (j = 0; j < 256; j++)
     printf ("%3d: 0x%02x 0x%02x 0x%02x\n", j,
-	    ColorMap[j*3], ColorMap[j*3+1], ColorMap[j*3+2]);
+            ColorMap[j*3], ColorMap[j*3+1], ColorMap[j*3+2]);
 #endif
+
   gimp_image_set_cmap (image_ID, ColorMap, 256);
 }
 
@@ -1093,13 +1165,14 @@ create_new_image (const gchar         *filename,
   gimp_image_set_filename (image_ID, filename);
 
   *layer_ID = gimp_layer_new (image_ID, "Background", width, height,
-			      gdtype, 100, GIMP_NORMAL_MODE);
+                              gdtype, 100, GIMP_NORMAL_MODE);
   gimp_image_add_layer (image_ID, *layer_ID, 0);
 
   *drawable = gimp_drawable_get (*layer_ID);
   gimp_pixel_rgn_init (pixel_rgn, *drawable, 0, 0, (*drawable)->width,
-		       (*drawable)->height, TRUE, FALSE);
-  return (image_ID);
+                       (*drawable)->height, TRUE, FALSE);
+
+  return image_ID;
 }
 
 
@@ -1111,61 +1184,62 @@ load_xwd_f2_d1_b1 (const gchar     *filename,
                    L_XWDFILEHEADER *xwdhdr,
                    L_XWDCOLOR      *xwdcolmap)
 {
-  register int pix8;
-  register unsigned char *dest, *src;
-  unsigned char c1, c2, c3, c4;
-  int width, height, linepad, scan_lines, tile_height;
-  int i, j, ncols;
-  char *temp = ident;  /* Just to satisfy lint/gcc */
-  unsigned char bit2byte[256*8];
-  unsigned char *data, *scanline;
-  int err = 0;
-  gint32 layer_ID, image_ID;
-  GimpPixelRgn pixel_rgn;
-  GimpDrawable *drawable;
+  register int     pix8;
+  register guchar *dest, *src;
+  guchar           c1, c2, c3, c4;
+  gint             width, height, linepad, scan_lines, tile_height;
+  gint             i, j, ncols;
+  gchar           *temp = ident;  /* Just to satisfy lint/gcc */
+  guchar           bit2byte[256 * 8];
+  guchar          *data, *scanline;
+  gint             err = 0;
+  gint32           layer_ID, image_ID;
+  GimpPixelRgn     pixel_rgn;
+  GimpDrawable    *drawable;
 
 #ifdef XWD_DEBUG
   printf ("load_xwd_f2_d1_b1 (%s)\n", filename);
 #endif
 
-  width = xwdhdr->l_pixmap_width;
+  width  = xwdhdr->l_pixmap_width;
   height = xwdhdr->l_pixmap_height;
 
   image_ID = create_new_image (filename, width, height, GIMP_INDEXED,
-			       &layer_ID, &drawable, &pixel_rgn);
+                               &layer_ID, &drawable, &pixel_rgn);
 
   tile_height = gimp_tile_height ();
   data = g_malloc (tile_height * width);
 
-  scanline = (unsigned char *)g_malloc (xwdhdr->l_bytes_per_line+8);
-  if (scanline == NULL) return (-1);
+  scanline = g_new (guchar, xwdhdr->l_bytes_per_line + 8);
 
   ncols = xwdhdr->l_colormap_entries;
-  if (xwdhdr->l_ncolors < ncols) ncols = xwdhdr->l_ncolors;
+  if (xwdhdr->l_ncolors < ncols)
+    ncols = xwdhdr->l_ncolors;
 
   if (ncols < 2)
     set_bw_color_table (image_ID);
   else
     set_color_table (image_ID, xwdhdr, xwdcolmap);
 
-  temp = (char *)bit2byte;
+  temp = (gchar *) bit2byte;
 
   /* Get an array for mapping 8 bits in a byte to 8 bytes */
   if (!xwdhdr->l_bitmap_bit_order)
     {
       for (j = 0; j < 256; j++)
-	for (i = 0; i < 8; i++)
-	  *(temp++) = ((j & (1 << i)) != 0);
+        for (i = 0; i < 8; i++)
+          *(temp++) = ((j & (1 << i)) != 0);
     }
   else
     {
       for (j = 0; j < 256; j++)
-	for (i = 7; i >= 0; i--)
-	  *(temp++) = ((j & (1 << i)) != 0);
+        for (i = 7; i >= 0; i--)
+          *(temp++) = ((j & (1 << i)) != 0);
     }
 
   linepad = xwdhdr->l_bytes_per_line - (xwdhdr->l_pixmap_width+7)/8;
-  if (linepad < 0) linepad = 0;
+  if (linepad < 0)
+    linepad = 0;
 
   dest = data;
   scan_lines = 0;
@@ -1173,77 +1247,78 @@ load_xwd_f2_d1_b1 (const gchar     *filename,
   for (i = 0; i < height; i++)
     {
       if (fread (scanline, xwdhdr->l_bytes_per_line, 1, ifp) != 1)
-	{
-	  err = 1;
-	  break;
-	}
+        {
+          err = 1;
+          break;
+        }
 
       /* Need to check byte order ? */
       if (xwdhdr->l_bitmap_bit_order != xwdhdr->l_byte_order)
-	{
-	  src = scanline;
-	  switch (xwdhdr->l_bitmap_unit)
-	    {
-	    case 16:
-	      j = xwdhdr->l_bytes_per_line;
-	      while (j > 0)
-		{
-		  c1 = src[0]; c2 = src[1];
-		  *(src++) = c2; *(src++) = c1;
-		  j -= 2;
-		}
-	      break;
+        {
+          src = scanline;
+          switch (xwdhdr->l_bitmap_unit)
+            {
+            case 16:
+              j = xwdhdr->l_bytes_per_line;
+              while (j > 0)
+                {
+                  c1 = src[0]; c2 = src[1];
+                  *(src++) = c2; *(src++) = c1;
+                  j -= 2;
+                }
+              break;
 
-	    case 32:
-	      j = xwdhdr->l_bytes_per_line;
-	      while (j > 0)
-		{
-		  c1 = src[0]; c2 = src[1]; c3 = src[2]; c4 = src[3];
-		  *(src++) = c4; *(src++) = c3; *(src++) = c2; *(src++) = c1;
-		  j -= 4;
-		}
-	      break;
-	    }
-	}
+            case 32:
+              j = xwdhdr->l_bytes_per_line;
+              while (j > 0)
+                {
+                  c1 = src[0]; c2 = src[1]; c3 = src[2]; c4 = src[3];
+                  *(src++) = c4; *(src++) = c3; *(src++) = c2; *(src++) = c1;
+                  j -= 4;
+                }
+              break;
+            }
+        }
       src = scanline;
       j = width;
       while (j >= 8)
-	{
-	  pix8 = *(src++);
-	  memcpy (dest, bit2byte + pix8*8, 8);
-	  dest += 8;
-	  j -= 8;
-	}
+        {
+          pix8 = *(src++);
+          memcpy (dest, bit2byte + pix8*8, 8);
+          dest += 8;
+          j -= 8;
+        }
       if (j > 0)
-	{
-	  pix8 = *(src++);
-	  memcpy (dest, bit2byte + pix8*8, j);
-	  dest += j;
-	}
+        {
+          pix8 = *(src++);
+          memcpy (dest, bit2byte + pix8*8, j);
+          dest += j;
+        }
 
       scan_lines++;
 
       if ((i % 20) == 0)
-	gimp_progress_update ((double)(i+1) / (double)height);
+        gimp_progress_update ((double)(i+1) / (double)height);
 
       if ((scan_lines == tile_height) || ((i+1) == height))
-	{
-	  gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
-				   width, scan_lines);
-	  scan_lines = 0;
-	  dest = data;
-	}
+        {
+          gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
+                                   width, scan_lines);
+          scan_lines = 0;
+          dest = data;
+        }
       if (err) break;
     }
+
   g_free (data);
   g_free (scanline);
 
   if (err)
-    g_message (_("EOF encountered on "));
+    g_message (_("EOF encountered on reading"));
 
   gimp_drawable_flush (drawable);
 
-  return (err ? -1 : image_ID);
+  return err ? -1 : image_ID;
 }
 
 
@@ -1255,56 +1330,58 @@ load_xwd_f2_d8_b8 (const gchar     *filename,
                    L_XWDFILEHEADER *xwdhdr,
                    L_XWDCOLOR      *xwdcolmap)
 {
-  int width, height, linepad, tile_height, scan_lines;
-  int i, j, ncols;
-  int greyscale;
-  unsigned char *dest, *data;
-  int err = 0;
-  gint32 layer_ID, image_ID;
-  GimpPixelRgn pixel_rgn;
+  gint          width, height, linepad, tile_height, scan_lines;
+  gint          i, j, ncols;
+  gint          grayscale;
+  guchar       *dest, *data;
+  gint          err = 0;
+  gint32        layer_ID, image_ID;
+  GimpPixelRgn  pixel_rgn;
   GimpDrawable *drawable;
 
 #ifdef XWD_DEBUG
   printf ("load_xwd_f2_d8_b8 (%s)\n", filename);
 #endif
 
-  width = xwdhdr->l_pixmap_width;
+  width  = xwdhdr->l_pixmap_width;
   height = xwdhdr->l_pixmap_height;
 
-  /* This could also be a greyscale image. Check it */
-  greyscale = 0;
+  /* This could also be a grayscale image. Check it */
+  grayscale = 0;
   if ((xwdhdr->l_ncolors == 256) && (xwdhdr->l_colormap_entries == 256))
     {
       for (j = 0; j < 256; j++)
-	{
-	  if (   (xwdcolmap[j].l_pixel != j)
-		 || ((xwdcolmap[j].l_red >> 8) != j)
-		 || ((xwdcolmap[j].l_green >> 8) != j)
-		 || ((xwdcolmap[j].l_blue >> 8) != j))
-	    break;
-	}
-      greyscale = (j == 256);
+        {
+          if ((xwdcolmap[j].l_pixel != j)
+              || ((xwdcolmap[j].l_red >> 8) != j)
+              || ((xwdcolmap[j].l_green >> 8) != j)
+              || ((xwdcolmap[j].l_blue >> 8) != j))
+            break;
+        }
+
+      grayscale = (j == 256);
     }
 
   image_ID = create_new_image (filename, width, height,
-			       greyscale ? GIMP_GRAY : GIMP_INDEXED,
-			       &layer_ID, &drawable, &pixel_rgn);
+                               grayscale ? GIMP_GRAY : GIMP_INDEXED,
+                               &layer_ID, &drawable, &pixel_rgn);
 
   tile_height = gimp_tile_height ();
   data = g_malloc (tile_height * width);
 
-  if (!greyscale)
+  if (!grayscale)
     {
       ncols = xwdhdr->l_colormap_entries;
       if (xwdhdr->l_ncolors < ncols) ncols = xwdhdr->l_ncolors;
       if (ncols < 2)
-	set_bw_color_table (image_ID);
+        set_bw_color_table (image_ID);
       else
-	set_color_table (image_ID, xwdhdr, xwdcolmap);
+        set_color_table (image_ID, xwdhdr, xwdcolmap);
     }
 
   linepad = xwdhdr->l_bytes_per_line - xwdhdr->l_pixmap_width;
-  if (linepad < 0) linepad = 0;
+  if (linepad < 0)
+    linepad = 0;
 
   dest = data;
   scan_lines = 0;
@@ -1312,28 +1389,29 @@ load_xwd_f2_d8_b8 (const gchar     *filename,
   for (i = 0; i < height; i++)
     {
       if (fread (dest, 1, width, ifp) != width)
-	{
-	  err = 1;
-	  break;
-	}
+        {
+          err = 1;
+          break;
+        }
       dest += width;
 
       for (j = 0; j < linepad; j++)
-	getc (ifp);
+        getc (ifp);
 
       scan_lines++;
 
       if ((i % 20) == 0)
-	gimp_progress_update ((double)(i+1) / (double)height);
+        gimp_progress_update ((gdouble) (i + 1) / (gdouble) height);
 
       if ((scan_lines == tile_height) || ((i+1) == height))
-	{
-	  gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
-				   width, scan_lines);
-	  scan_lines = 0;
-	  dest = data;
-	}
+        {
+          gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
+                                   width, scan_lines);
+          scan_lines = 0;
+          dest = data;
+        }
     }
+
   g_free (data);
 
   if (err)
@@ -1341,7 +1419,7 @@ load_xwd_f2_d8_b8 (const gchar     *filename,
 
   gimp_drawable_flush (drawable);
 
-  return (err ? -1 : image_ID);
+  return err ? -1 : image_ID;
 }
 
 
@@ -1353,42 +1431,36 @@ load_xwd_f2_d16_b16 (const gchar     *filename,
                      L_XWDFILEHEADER *xwdhdr,
                      L_XWDCOLOR      *xwdcolmap)
 {
-  register unsigned char *dest, lsbyte_first;
-  int width, height, linepad, i, j, c0, c1, ncols;
-  int red, green, blue, redval, greenval, blueval;
-  int maxred, maxgreen, maxblue;
-  int tile_height, scan_lines;
-  unsigned long redmask, greenmask, bluemask;
-  unsigned int redshift, greenshift, blueshift;
-  unsigned long maxval;
-  unsigned char *ColorMap, *cm, *data;
-  int err = 0;
-  gint32 layer_ID, image_ID;
-  GimpPixelRgn pixel_rgn;
-  GimpDrawable *drawable;
+  register guchar *dest, lsbyte_first;
+  gint             width, height, linepad, i, j, c0, c1, ncols;
+  gint             red, green, blue, redval, greenval, blueval;
+  gint             maxred, maxgreen, maxblue;
+  gint             tile_height, scan_lines;
+  gulong           redmask, greenmask, bluemask;
+  guint            redshift, greenshift, blueshift;
+  gulong           maxval;
+  guchar          *ColorMap, *cm, *data;
+  gint             err = 0;
+  gint32           layer_ID, image_ID;
+  GimpPixelRgn     pixel_rgn;
+  GimpDrawable    *drawable;
 
 #ifdef XWD_DEBUG
   printf ("load_xwd_f2_d16_b16 (%s)\n", filename);
 #endif
 
-  width = xwdhdr->l_pixmap_width;
+  width  = xwdhdr->l_pixmap_width;
   height = xwdhdr->l_pixmap_height;
 
   image_ID = create_new_image (filename, width, height, GIMP_RGB,
-			       &layer_ID, &drawable, &pixel_rgn);
+                               &layer_ID, &drawable, &pixel_rgn);
 
   tile_height = gimp_tile_height ();
   data = g_malloc (tile_height * width * 3);
 
   /* Get memory for mapping 16 bit XWD-pixel to GIMP-RGB */
   maxval = 0x10000 * 3;
-  ColorMap = (unsigned char *)g_malloc (maxval);
-  if (ColorMap == NULL)
-    {
-      g_message (_("No memory for mapping colors"));
-      return (-1);
-    }
-  memset (ColorMap,0,maxval);
+  ColorMap = g_new0 (guchar, maxval);
 
   redmask   = xwdhdr->l_red_mask;
   greenmask = xwdhdr->l_green_mask;
@@ -1398,9 +1470,9 @@ load_xwd_f2_d16_b16 (const gchar     *filename,
   /* (We rely on the the mask bits are grouped and not mixed) */
   redshift = greenshift = blueshift = 0;
 
-  while (((1 << redshift) & redmask) == 0) redshift++;
+  while (((1 << redshift)   & redmask)   == 0) redshift++;
   while (((1 << greenshift) & greenmask) == 0) greenshift++;
-  while (((1 << blueshift) & bluemask) == 0) blueshift++;
+  while (((1 << blueshift)  & bluemask)  == 0) blueshift++;
 
   /* The bits_per_rgb may not be correct. Use redmask instead */
   maxred = 0; while (redmask >> (redshift + maxred)) maxred++;
@@ -1417,24 +1489,25 @@ load_xwd_f2_d16_b16 (const gchar     *filename,
     {
       redval = (red * 255) / maxred;
       for (green = 0; green <= maxgreen; green++)
-	{
-	  greenval = (green * 255) / maxgreen;
-	  for (blue = 0; blue <= maxblue; blue++)
-	    {
-	      blueval = (blue * 255) / maxblue;
-	      cm = ColorMap + ((red << redshift) + (green << greenshift)
-			       + (blue << blueshift)) * 3;
-	      *(cm++) = redval;
-	      *(cm++) = greenval;
-	      *cm = blueval;
-	    }
-	}
+        {
+          greenval = (green * 255) / maxgreen;
+          for (blue = 0; blue <= maxblue; blue++)
+            {
+              blueval = (blue * 255) / maxblue;
+              cm = ColorMap + ((red << redshift) + (green << greenshift)
+                               + (blue << blueshift)) * 3;
+              *(cm++) = redval;
+              *(cm++) = greenval;
+              *cm = blueval;
+            }
+        }
     }
 
   /* Now look what was written to the XWD-Colormap */
 
   ncols = xwdhdr->l_colormap_entries;
-  if (xwdhdr->l_ncolors < ncols) ncols = xwdhdr->l_ncolors;
+  if (xwdhdr->l_ncolors < ncols)
+    ncols = xwdhdr->l_ncolors;
 
   for (j = 0; j < ncols; j++)
     {
@@ -1457,43 +1530,44 @@ load_xwd_f2_d16_b16 (const gchar     *filename,
   for (i = 0; i < height; i++)
     {
       for (j = 0; j < width; j++)
-	{
-	  c0 = getc (ifp);
-	  c1 = getc (ifp);
-	  if (c1 < 0)
-	    {
-	      err = 1;
-	      break;
-	    }
+        {
+          c0 = getc (ifp);
+          c1 = getc (ifp);
+          if (c1 < 0)
+            {
+              err = 1;
+              break;
+            }
 
-	  if (lsbyte_first)
-	    c0 = c0 | (c1 << 8);
-	  else
-	    c0 = (c0 << 8) | c1;
+          if (lsbyte_first)
+            c0 = c0 | (c1 << 8);
+          else
+            c0 = (c0 << 8) | c1;
 
-	  cm = ColorMap + c0 * 3;
-	  *(dest++) = *(cm++);
-	  *(dest++) = *(cm++);
-	  *(dest++) = *cm;
-	}
+          cm = ColorMap + c0 * 3;
+          *(dest++) = *(cm++);
+          *(dest++) = *(cm++);
+          *(dest++) = *cm;
+        }
 
-      if (err) break;
+      if (err)
+        break;
 
       for (j = 0; j < linepad; j++)
-	getc (ifp);
+        getc (ifp);
 
       scan_lines++;
 
       if ((i % 20) == 0)
-	gimp_progress_update ((double)(i+1) / (double)height);
+        gimp_progress_update ((double)(i+1) / (double)height);
 
       if ((scan_lines == tile_height) || ((i+1) == height))
-	{
-	  gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
-				   width, scan_lines);
-	  scan_lines = 0;
-	  dest = data;
-	}
+        {
+          gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
+                                   width, scan_lines);
+          scan_lines = 0;
+          dest = data;
+        }
     }
   g_free (data);
   g_free (ColorMap);
@@ -1503,7 +1577,7 @@ load_xwd_f2_d16_b16 (const gchar     *filename,
 
   gimp_drawable_flush (drawable);
 
-  return (err ? -1 : image_ID);
+  return err ? -1 : image_ID;
 }
 
 
@@ -1515,31 +1589,31 @@ load_xwd_f2_d24_b32 (const gchar     *filename,
                      L_XWDFILEHEADER *xwdhdr,
                      L_XWDCOLOR      *xwdcolmap)
 {
-  register unsigned char *dest, lsbyte_first;
-  int width, height, linepad, i, j, c0, c1, c2, c3;
-  int tile_height, scan_lines;
-  L_CARD32 pixelval;
-  int red, green, blue, ncols;
-  int maxred, maxgreen, maxblue;
-  unsigned long redmask, greenmask, bluemask;
-  unsigned int redshift, greenshift, blueshift;
-  unsigned char redmap[256],greenmap[256],bluemap[256];
-  unsigned char *data;
-  PIXEL_MAP pixel_map;
-  int err = 0;
-  gint32 layer_ID, image_ID;
-  GimpPixelRgn pixel_rgn;
-  GimpDrawable *drawable;
+  register guchar *dest, lsbyte_first;
+  gint             width, height, linepad, i, j, c0, c1, c2, c3;
+  gint             tile_height, scan_lines;
+  L_CARD32         pixelval;
+  gint             red, green, blue, ncols;
+  gint             maxred, maxgreen, maxblue;
+  gulong           redmask, greenmask, bluemask;
+  guint            redshift, greenshift, blueshift;
+  guchar           redmap[256], greenmap[256], bluemap[256];
+  guchar          *data;
+  PIXEL_MAP        pixel_map;
+  gint             err = 0;
+  gint32           layer_ID, image_ID;
+  GimpPixelRgn     pixel_rgn;
+  GimpDrawable    *drawable;
 
 #ifdef XWD_DEBUG
   printf ("load_xwd_f2_d24_b32 (%s)\n", filename);
 #endif
 
-  width = xwdhdr->l_pixmap_width;
+  width  = xwdhdr->l_pixmap_width;
   height = xwdhdr->l_pixmap_height;
 
   image_ID = create_new_image (filename, width, height, GIMP_RGB,
-			       &layer_ID, &drawable, &pixel_rgn);
+                               &layer_ID, &drawable, &pixel_rgn);
 
   tile_height = gimp_tile_height ();
   data = g_malloc (tile_height * width * 3);
@@ -1548,17 +1622,17 @@ load_xwd_f2_d24_b32 (const gchar     *filename,
   greenmask = xwdhdr->l_green_mask;
   bluemask  = xwdhdr->l_blue_mask;
 
-  if (redmask == 0) redmask = 0xff0000;
+  if (redmask   == 0) redmask   = 0xff0000;
   if (greenmask == 0) greenmask = 0x00ff00;
-  if (bluemask == 0) bluemask = 0x0000ff;
+  if (bluemask  == 0) bluemask  = 0x0000ff;
 
   /* How to shift RGB to be right aligned ? */
   /* (We rely on the the mask bits are grouped and not mixed) */
   redshift = greenshift = blueshift = 0;
 
-  while (((1 << redshift) & redmask) == 0) redshift++;
+  while (((1 << redshift)   & redmask)   == 0) redshift++;
   while (((1 << greenshift) & greenmask) == 0) greenshift++;
-  while (((1 << blueshift) & bluemask) == 0) blueshift++;
+  while (((1 << blueshift)  & bluemask)  == 0) blueshift++;
 
   /* The bits_per_rgb may not be correct. Use redmask instead */
 
@@ -1597,102 +1671,105 @@ load_xwd_f2_d24_b32 (const gchar     *filename,
   if (xwdhdr->l_bits_per_pixel == 32)
     {
       for (i = 0; i < height; i++)
-	{
-	  for (j = 0; j < width; j++)
-	    {
-	      c0 = getc (ifp);
-	      c1 = getc (ifp);
-	      c2 = getc (ifp);
-	      c3 = getc (ifp);
-	      if (c3 < 0)
-		{
-		  err = 1;
-		  break;
-		}
-	      if (lsbyte_first)
-		pixelval = c0 | (c1 << 8) | (c2 << 16) | (c3 << 24);
-	      else
-		pixelval = (c0 << 24) | (c1 << 16) | (c2 << 8) | c3;
+        {
+          for (j = 0; j < width; j++)
+            {
+              c0 = getc (ifp);
+              c1 = getc (ifp);
+              c2 = getc (ifp);
+              c3 = getc (ifp);
+              if (c3 < 0)
+                {
+                  err = 1;
+                  break;
+                }
+              if (lsbyte_first)
+                pixelval = c0 | (c1 << 8) | (c2 << 16) | (c3 << 24);
+              else
+                pixelval = (c0 << 24) | (c1 << 16) | (c2 << 8) | c3;
 
-	      if (get_pixelmap (pixelval, &pixel_map, dest, dest+1, dest+2))
-		{
-		  dest += 3;
-		}
-	      else
-		{
-		  *(dest++) = redmap[(pixelval & redmask) >> redshift];
-		  *(dest++) = greenmap[(pixelval & greenmask) >> greenshift];
-		  *(dest++) = bluemap[(pixelval & bluemask) >> blueshift];
-		}
-	    }
-	  scan_lines++;
+              if (get_pixelmap (pixelval, &pixel_map, dest, dest+1, dest+2))
+                {
+                  dest += 3;
+                }
+              else
+                {
+                  *(dest++) = redmap[(pixelval & redmask) >> redshift];
+                  *(dest++) = greenmap[(pixelval & greenmask) >> greenshift];
+                  *(dest++) = bluemap[(pixelval & bluemask) >> blueshift];
+                }
+            }
+          scan_lines++;
 
-	  if (err) break;
+          if (err)
+            break;
 
-	  for (j = 0; j < linepad; j++)
-	    getc (ifp);
+          for (j = 0; j < linepad; j++)
+            getc (ifp);
 
-	  if ((i % 20) == 0)
-	    gimp_progress_update ((double)(i+1) / (double)height);
+          if ((i % 20) == 0)
+            gimp_progress_update ((gdouble) (i + 1) / (gdouble) height);
 
-	  if ((scan_lines == tile_height) || ((i+1) == height))
-	    {
-	      gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
-				       width, scan_lines);
-	      scan_lines = 0;
-	      dest = data;
-	    }
-	}
+          if ((scan_lines == tile_height) || ((i+1) == height))
+            {
+              gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
+                                       width, scan_lines);
+              scan_lines = 0;
+              dest = data;
+            }
+        }
     }
   else    /* 24 bits per pixel */
     {
       for (i = 0; i < height; i++)
-	{
-	  for (j = 0; j < width; j++)
-	    {
-	      c0 = getc (ifp);
-	      c1 = getc (ifp);
-	      c2 = getc (ifp);
-	      if (c2 < 0)
-		{
-		  err = 1;
-		  break;
-		}
-	      if (lsbyte_first)
-		pixelval = c0 | (c1 << 8) | (c2 << 16);
-	      else
-		pixelval = (c0 << 16) | (c1 << 8) | c2;
+        {
+          for (j = 0; j < width; j++)
+            {
+              c0 = getc (ifp);
+              c1 = getc (ifp);
+              c2 = getc (ifp);
+              if (c2 < 0)
+                {
+                  err = 1;
+                  break;
+                }
+              if (lsbyte_first)
+                pixelval = c0 | (c1 << 8) | (c2 << 16);
+              else
+                pixelval = (c0 << 16) | (c1 << 8) | c2;
 
-	      if (get_pixelmap (pixelval, &pixel_map, dest, dest+1, dest+2))
-		{
-		  dest += 3;
-		}
-	      else
-		{
-		  *(dest++) = redmap[(pixelval & redmask) >> redshift];
-		  *(dest++) = greenmap[(pixelval & greenmask) >> greenshift];
-		  *(dest++) = bluemap[(pixelval & bluemask) >> blueshift];
-		}
-	    }
-	  scan_lines++;
+              if (get_pixelmap (pixelval, &pixel_map, dest, dest+1, dest+2))
+                {
+                  dest += 3;
+                }
+              else
+                {
+                  *(dest++) = redmap[(pixelval & redmask) >> redshift];
+                  *(dest++) = greenmap[(pixelval & greenmask) >> greenshift];
+                  *(dest++) = bluemap[(pixelval & bluemask) >> blueshift];
+                }
+            }
+          scan_lines++;
 
-	  if (err) break;
+          if (err)
+            break;
 
-	  for (j = 0; j < linepad; j++)
-	    getc (ifp);
+          for (j = 0; j < linepad; j++)
+            getc (ifp);
 
-	  if ((i % 20) == 0)
-	    gimp_progress_update ((double)(i+1) / (double)height);
+          if ((i % 20) == 0)
+            gimp_progress_update ((gdouble) (i + 1) / (gdouble) height);
 
-	  if ((scan_lines == tile_height) || ((i+1) == height))
-	    {
-	      gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
-				       width, scan_lines);
-	      scan_lines = 0;
-	      dest = data;
-	    }
-	}
+          if ((scan_lines == tile_height) || ((i+1) == height))
+            {
+              gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
+                                       width, scan_lines);
+              scan_lines = 0;
+              dest = data;
+            }
+        }
     }
+
   g_free (data);
 
   if (err)
@@ -1700,7 +1777,7 @@ load_xwd_f2_d24_b32 (const gchar     *filename,
 
   gimp_drawable_flush (drawable);
 
-  return (err ? -1 : image_ID);
+  return err ? -1 : image_ID;
 }
 
 
@@ -1712,56 +1789,59 @@ load_xwd_f1_d24_b1 (const gchar     *filename,
                     L_XWDFILEHEADER *xwdhdr,
                     L_XWDCOLOR      *xwdcolmap)
 {
-  register unsigned char *dest, outmask, inmask, do_reverse;
-  int width, height, linepad, i, j, plane, fromright;
-  int tile_height, tile_start, tile_end;
-  int indexed, bytes_per_pixel;
-  int maxred, maxgreen, maxblue;
-  int red, green, blue, ncols, standard_rgb;
-  long data_offset, plane_offset, tile_offset;
-  unsigned long redmask, greenmask, bluemask;
-  unsigned int redshift, greenshift, blueshift;
-  unsigned long g;
-  unsigned char redmap[256], greenmap[256], bluemap[256];
-  unsigned char bit_reverse[256];
-  unsigned char *xwddata, *xwdin, *data;
-  L_CARD32 pixelval;
-  PIXEL_MAP pixel_map;
-  int err = 0;
-  gint32 layer_ID, image_ID;
-  GimpPixelRgn pixel_rgn;
-  GimpDrawable *drawable;
+  register guchar *dest, outmask, inmask, do_reverse;
+  gint             width, height, linepad, i, j, plane, fromright;
+  gint             tile_height, tile_start, tile_end;
+  gint             indexed, bytes_per_pixel;
+  gint             maxred, maxgreen, maxblue;
+  gint             red, green, blue, ncols, standard_rgb;
+  glong            data_offset, plane_offset, tile_offset;
+  gulong           redmask, greenmask, bluemask;
+  guint            redshift, greenshift, blueshift;
+  gulong           g;
+  guchar           redmap[256], greenmap[256], bluemap[256];
+  guchar           bit_reverse[256];
+  guchar          *xwddata, *xwdin, *data;
+  L_CARD32         pixelval;
+  PIXEL_MAP        pixel_map;
+  gint             err = 0;
+  gint32           layer_ID, image_ID;
+  GimpPixelRgn     pixel_rgn;
+  GimpDrawable    *drawable;
 
 #ifdef XWD_DEBUG
   printf ("load_xwd_f1_d24_b1 (%s)\n", filename);
 #endif
 
   xwddata = g_malloc (xwdhdr->l_bytes_per_line);
-  if (xwddata == NULL) return (-1);
+  if (xwddata == NULL)
+    return -1;
 
-  width = xwdhdr->l_pixmap_width;
-  height = xwdhdr->l_pixmap_height;
-  indexed = (xwdhdr->l_pixmap_depth <= 8);
+  width           = xwdhdr->l_pixmap_width;
+  height          = xwdhdr->l_pixmap_height;
+  indexed         = (xwdhdr->l_pixmap_depth <= 8);
   bytes_per_pixel = (indexed ? 1 : 3);
 
-  image_ID = create_new_image (filename, width, height, indexed ? GIMP_INDEXED : GIMP_RGB,
-			       &layer_ID, &drawable, &pixel_rgn);
+  image_ID = create_new_image (filename, width, height,
+                               indexed ? GIMP_INDEXED : GIMP_RGB,
+                               &layer_ID, &drawable, &pixel_rgn);
 
   tile_height = gimp_tile_height ();
   data = g_malloc (tile_height * width * bytes_per_pixel);
 
   linepad =   xwdhdr->l_bytes_per_line
     - (xwdhdr->l_pixmap_width+7)/8;
-  if (linepad < 0) linepad = 0;
+  if (linepad < 0)
+    linepad = 0;
 
   for (j = 0; j < 256; j++)   /* Create an array for reversing bits */
     {
       inmask = 0;
       for (i = 0; i < 8; i++)
-	{
-	  inmask <<= 1;
-	  if (j & (1 << i)) inmask |= 1;
-	}
+        {
+          inmask <<= 1;
+          if (j & (1 << i)) inmask |= 1;
+        }
       bit_reverse[j] = inmask;
     }
 
@@ -1769,188 +1849,192 @@ load_xwd_f1_d24_b1 (const gchar     *filename,
   greenmask = xwdhdr->l_green_mask;
   bluemask  = xwdhdr->l_blue_mask;
 
-  if (redmask == 0) redmask = 0xff0000;
+  if (redmask   == 0) redmask   = 0xff0000;
   if (greenmask == 0) greenmask = 0x00ff00;
-  if (bluemask == 0) bluemask = 0x0000ff;
+  if (bluemask  == 0) bluemask  = 0x0000ff;
 
   standard_rgb =    (redmask == 0xff0000) && (greenmask == 0x00ff00)
     && (bluemask == 0x0000ff);
   redshift = greenshift = blueshift = 0;
 
- if (!standard_rgb)   /* Do we need to re-map the pixel-values ? */
-   {
-     /* How to shift RGB to be right aligned ? */
-     /* (We rely on the the mask bits are grouped and not mixed) */
+  if (!standard_rgb)   /* Do we need to re-map the pixel-values ? */
+    {
+      /* How to shift RGB to be right aligned ? */
+      /* (We rely on the the mask bits are grouped and not mixed) */
 
-     while (((1 << redshift) & redmask) == 0) redshift++;
-     while (((1 << greenshift) & greenmask) == 0) greenshift++;
-     while (((1 << blueshift) & bluemask) == 0) blueshift++;
+      while (((1 << redshift)   & redmask)   == 0) redshift++;
+      while (((1 << greenshift) & greenmask) == 0) greenshift++;
+      while (((1 << blueshift)  & bluemask)  == 0) blueshift++;
 
-     /* The bits_per_rgb may not be correct. Use redmask instead */
+      /* The bits_per_rgb may not be correct. Use redmask instead */
 
-     maxred = 0; while (redmask >> (redshift + maxred)) maxred++;
-     maxred = (1 << maxred) - 1;
+      maxred = 0; while (redmask >> (redshift + maxred)) maxred++;
+      maxred = (1 << maxred) - 1;
 
-     maxgreen = 0; while (greenmask >> (greenshift + maxgreen)) maxgreen++;
-     maxgreen = (1 << maxgreen) - 1;
+      maxgreen = 0; while (greenmask >> (greenshift + maxgreen)) maxgreen++;
+      maxgreen = (1 << maxgreen) - 1;
 
-     maxblue = 0; while (bluemask >> (blueshift + maxblue)) maxblue++;
-     maxblue = (1 << maxblue) - 1;
+      maxblue = 0; while (bluemask >> (blueshift + maxblue)) maxblue++;
+      maxblue = (1 << maxblue) - 1;
 
-     /* Set map-arrays for red, green, blue */
-     for (red = 0; red <= maxred; red++)
-       redmap[red] = (red * 255) / maxred;
-     for (green = 0; green <= maxgreen; green++)
-       greenmap[green] = (green * 255) / maxgreen;
-     for (blue = 0; blue <= maxblue; blue++)
-       bluemap[blue] = (blue * 255) / maxblue;
-   }
+      /* Set map-arrays for red, green, blue */
+      for (red = 0; red <= maxred; red++)
+        redmap[red] = (red * 255) / maxred;
+      for (green = 0; green <= maxgreen; green++)
+        greenmap[green] = (green * 255) / maxgreen;
+      for (blue = 0; blue <= maxblue; blue++)
+        bluemap[blue] = (blue * 255) / maxblue;
+    }
 
- ncols = xwdhdr->l_colormap_entries;
- if (xwdhdr->l_ncolors < ncols) ncols = xwdhdr->l_ncolors;
- if (indexed)
-   {
-     if (ncols < 2)
-       set_bw_color_table (image_ID);
-     else
-       set_color_table (image_ID, xwdhdr, xwdcolmap);
-   }
- else
-   {
-     ncols = set_pixelmap (ncols, xwdcolmap, &pixel_map);
-   }
+  ncols = xwdhdr->l_colormap_entries;
+  if (xwdhdr->l_ncolors < ncols)
+    ncols = xwdhdr->l_ncolors;
 
- do_reverse = !xwdhdr->l_bitmap_bit_order;
+  if (indexed)
+    {
+      if (ncols < 2)
+        set_bw_color_table (image_ID);
+      else
+        set_color_table (image_ID, xwdhdr, xwdcolmap);
+    }
+  else
+    {
+      ncols = set_pixelmap (ncols, xwdcolmap, &pixel_map);
+    }
 
- /* This is where the image data starts within the file */
- data_offset = ftell (ifp);
+  do_reverse = !xwdhdr->l_bitmap_bit_order;
 
- for (tile_start = 0; tile_start < height; tile_start += tile_height)
-   {
-     memset (data, 0, width*tile_height*bytes_per_pixel);
+  /* This is where the image data starts within the file */
+  data_offset = ftell (ifp);
 
-     tile_end = tile_start + tile_height - 1;
-     if (tile_end >= height) tile_end = height - 1;
+  for (tile_start = 0; tile_start < height; tile_start += tile_height)
+    {
+      memset (data, 0, width*tile_height*bytes_per_pixel);
 
-     for (plane = 0; plane < xwdhdr->l_pixmap_depth; plane++)
-       {
-	 dest = data;    /* Position to start of tile within the plane */
-	 plane_offset = data_offset + plane*height*xwdhdr->l_bytes_per_line;
-	 tile_offset = plane_offset + tile_start*xwdhdr->l_bytes_per_line;
-	 fseek (ifp, tile_offset, SEEK_SET);
+      tile_end = tile_start + tile_height - 1;
+      if (tile_end >= height)
+        tile_end = height - 1;
 
-	 /* Place the last plane at the least significant bit */
+      for (plane = 0; plane < xwdhdr->l_pixmap_depth; plane++)
+        {
+          dest = data;    /* Position to start of tile within the plane */
+          plane_offset = data_offset + plane*height*xwdhdr->l_bytes_per_line;
+          tile_offset = plane_offset + tile_start*xwdhdr->l_bytes_per_line;
+          fseek (ifp, tile_offset, SEEK_SET);
 
-	 if (indexed)   /* Only 1 byte per pixel */
-	   {
-	     fromright = xwdhdr->l_pixmap_depth-1-plane;
-	     outmask = (1 << fromright);
-	   }
-	 else           /* 3 bytes per pixel */
-	   {
-	     fromright = xwdhdr->l_pixmap_depth-1-plane;
-	     dest += 2 - fromright/8;
-	     outmask = (1 << (fromright % 8));
-	   }
+          /* Place the last plane at the least significant bit */
 
-	 for (i = tile_start; i <= tile_end; i++)
-	   {
-	     if (fread (xwddata,xwdhdr->l_bytes_per_line,1,ifp) != 1)
-	       {
-		 err = 1;
-		 break;
-	       }
-	     xwdin = xwddata;
+          if (indexed)   /* Only 1 byte per pixel */
+            {
+              fromright = xwdhdr->l_pixmap_depth-1-plane;
+              outmask = (1 << fromright);
+            }
+          else           /* 3 bytes per pixel */
+            {
+              fromright = xwdhdr->l_pixmap_depth-1-plane;
+              dest += 2 - fromright/8;
+              outmask = (1 << (fromright % 8));
+            }
 
-	     /* Handle bitmap unit */
-	     if (xwdhdr->l_bitmap_unit == 16)
-	       {
-		 if (xwdhdr->l_bitmap_bit_order != xwdhdr->l_byte_order)
-		   {
-		     j = xwdhdr->l_bytes_per_line/2;
-		     while (j--)
-		       {
-			 inmask = xwdin[0]; xwdin[0] = xwdin[1]; xwdin[1] = inmask;
-			 xwdin += 2;
-		       }
-		     xwdin = xwddata;
-		   }
-	       }
-	     else if (xwdhdr->l_bitmap_unit == 32)
-	       {
-		 if (xwdhdr->l_bitmap_bit_order != xwdhdr->l_byte_order)
-		   {
-		     j = xwdhdr->l_bytes_per_line/4;
-		     while (j--)
-		       {
-			 inmask = xwdin[0]; xwdin[0] = xwdin[3]; xwdin[3] = inmask;
-			 inmask = xwdin[1]; xwdin[1] = xwdin[2]; xwdin[2] = inmask;
-			 xwdin += 4;
-		       }
-		     xwdin = xwddata;
-		   }
-	       }
+          for (i = tile_start; i <= tile_end; i++)
+            {
+              if (fread (xwddata,xwdhdr->l_bytes_per_line,1,ifp) != 1)
+                {
+                  err = 1;
+                  break;
+                }
+              xwdin = xwddata;
 
-	     g = inmask = 0;
-	     for (j = 0; j < width; j++)
-	       {
-		 if (!inmask)
-		   {
-		     g = *(xwdin++);
-		     if (do_reverse)
-		       g = bit_reverse[g];
-		     inmask = 0x80;
-		   }
+              /* Handle bitmap unit */
+              if (xwdhdr->l_bitmap_unit == 16)
+                {
+                  if (xwdhdr->l_bitmap_bit_order != xwdhdr->l_byte_order)
+                    {
+                      j = xwdhdr->l_bytes_per_line/2;
+                      while (j--)
+                        {
+                          inmask = xwdin[0]; xwdin[0] = xwdin[1]; xwdin[1] = inmask;
+                          xwdin += 2;
+                        }
+                      xwdin = xwddata;
+                    }
+                }
+              else if (xwdhdr->l_bitmap_unit == 32)
+                {
+                  if (xwdhdr->l_bitmap_bit_order != xwdhdr->l_byte_order)
+                    {
+                      j = xwdhdr->l_bytes_per_line/4;
+                      while (j--)
+                        {
+                          inmask = xwdin[0]; xwdin[0] = xwdin[3]; xwdin[3] = inmask;
+                          inmask = xwdin[1]; xwdin[1] = xwdin[2]; xwdin[2] = inmask;
+                          xwdin += 4;
+                        }
+                      xwdin = xwddata;
+                    }
+                }
 
-		 if (g & inmask)
-		   *dest |= outmask;
-		 dest += bytes_per_pixel;
+              g = inmask = 0;
+              for (j = 0; j < width; j++)
+                {
+                  if (!inmask)
+                    {
+                      g = *(xwdin++);
+                      if (do_reverse)
+                        g = bit_reverse[g];
+                      inmask = 0x80;
+                    }
 
-		 inmask >>= 1;
-	       }
-	   }
+                  if (g & inmask)
+                    *dest |= outmask;
+                  dest += bytes_per_pixel;
 
-       }
+                  inmask >>= 1;
+                }
+            }
+        }
 
-     /* For indexed images, the mapping to colors is done by the color table. */
-     /* Otherwise we must do the mapping by ourself. */
-     if (!indexed)
-       {
-	 dest = data;
-	 for (i = tile_start; i <= tile_end; i++)
-	   {
-	     for (j = 0; j < width; j++)
-	       {
-		 pixelval = (*dest << 16) | (*(dest+1) << 8) | *(dest+2);
-		 if (   get_pixelmap (pixelval, &pixel_map, dest, dest+1, dest+2)
-			|| standard_rgb)
-		   {
-		     dest += 3;
-		   }
-		 else   /* We have to map RGB to 0,...,255 */
-		   {
-		     *(dest++) = redmap[(pixelval & redmask) >> redshift];
-		     *(dest++) = greenmap[(pixelval & greenmask) >> greenshift];
-		     *(dest++) = bluemap[(pixelval & bluemask) >> blueshift];
-		   }
-	       }
-	   }
-       }
+      /* For indexed images, the mapping to colors is done by the color table. */
+      /* Otherwise we must do the mapping by ourself. */
+      if (!indexed)
+        {
+          dest = data;
+          for (i = tile_start; i <= tile_end; i++)
+            {
+              for (j = 0; j < width; j++)
+                {
+                  pixelval = (*dest << 16) | (*(dest+1) << 8) | *(dest+2);
 
-     gimp_progress_update ((double)(tile_end) / (double)(height));
+                  if (get_pixelmap (pixelval, &pixel_map, dest, dest+1, dest+2)
+                      || standard_rgb)
+                    {
+                      dest += 3;
+                    }
+                  else   /* We have to map RGB to 0,...,255 */
+                    {
+                      *(dest++) = redmap[(pixelval & redmask) >> redshift];
+                      *(dest++) = greenmap[(pixelval & greenmask) >> greenshift];
+                      *(dest++) = bluemap[(pixelval & bluemask) >> blueshift];
+                    }
+                }
+            }
+        }
 
-     gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, tile_start,
-			      width, tile_end-tile_start+1);
-   }
- g_free (data);
- g_free (xwddata);
+      gimp_progress_update ((gdouble) tile_end / (gdouble) height);
 
- if (err)
-   g_message (_("EOF encountered on reading"));
+      gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, tile_start,
+                               width, tile_end-tile_start+1);
+    }
 
- gimp_drawable_flush (drawable);
+  g_free (data);
+  g_free (xwddata);
 
- return (err ? -1 : image_ID);
+  if (err)
+    g_message (_("EOF encountered on reading"));
+
+  gimp_drawable_flush (drawable);
+
+  return err ? -1 : image_ID;
 }
 
 
@@ -1958,37 +2042,38 @@ static gint
 save_index (FILE    *ofp,
 	    gint32   image_ID,
 	    gint32   drawable_ID,
-	    int      grey)
+	    gint     gray)
 {
-  int height, width, linepad, tile_height, i, j;
-  int ncolors, vclass;
-  long tmp = 0;
-  unsigned char *data, *src, *cmap;
-  L_XWDFILEHEADER xwdhdr;
-  L_XWDCOLOR xwdcolmap[256];
-  GimpPixelRgn pixel_rgn;
-  GimpDrawable *drawable;
-  GimpImageType drawable_type;
+  gint             height, width, linepad, tile_height, i, j;
+  gint             ncolors, vclass;
+  glong            tmp = 0;
+  guchar          *data, *src, *cmap;
+  L_XWDFILEHEADER  xwdhdr;
+  L_XWDCOLOR       xwdcolmap[256];
+  GimpPixelRgn     pixel_rgn;
+  GimpDrawable    *drawable;
+  GimpImageType    drawable_type;
 
 #ifdef XWD_DEBUG
   printf ("save_index ()\n");
 #endif
 
-  drawable = gimp_drawable_get (drawable_ID);
+  drawable      = gimp_drawable_get (drawable_ID);
   drawable_type = gimp_drawable_type (drawable_ID);
-  width = drawable->width;
-  height = drawable->height;
-  tile_height = gimp_tile_height ();
+  width         = drawable->width;
+  height        = drawable->height;
+  tile_height   = gimp_tile_height ();
+
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height, FALSE, FALSE);
 
   /* allocate a buffer for retrieving information from the pixel region  */
-  src = data = (unsigned char *)g_malloc (tile_height * width * drawable->bpp);
+  src = data = g_new (guchar, tile_height * width * drawable->bpp);
 
   linepad = width % 4;
   if (linepad) linepad = 4 - linepad;
 
   /* Fill XWD-color map */
-  if (grey)
+  if (gray)
     {
       vclass = 0;
       ncolors = 256;
@@ -2020,31 +2105,31 @@ save_index (FILE    *ofp,
     }
 
   /* Fill in the XWD header (header_size is evaluated by write_xwd_hdr ()) */
-  xwdhdr.l_header_size = 0;
-  xwdhdr.l_file_version = 7;
-  xwdhdr.l_pixmap_format = 2;
-  xwdhdr.l_pixmap_depth = 8;
-  xwdhdr.l_pixmap_width = width;
-  xwdhdr.l_pixmap_height = height;
-  xwdhdr.l_xoffset = 0;
-  xwdhdr.l_byte_order = 1;
-  xwdhdr.l_bitmap_unit = 32;
+  xwdhdr.l_header_size      = 0;
+  xwdhdr.l_file_version     = 7;
+  xwdhdr.l_pixmap_format    = 2;
+  xwdhdr.l_pixmap_depth     = 8;
+  xwdhdr.l_pixmap_width     = width;
+  xwdhdr.l_pixmap_height    = height;
+  xwdhdr.l_xoffset          = 0;
+  xwdhdr.l_byte_order       = 1;
+  xwdhdr.l_bitmap_unit      = 32;
   xwdhdr.l_bitmap_bit_order = 1;
-  xwdhdr.l_bitmap_pad = 32;
-  xwdhdr.l_bits_per_pixel = 8;
-  xwdhdr.l_bytes_per_line = width + linepad;
-  xwdhdr.l_visual_class = vclass;
-  xwdhdr.l_red_mask = 0x000000;
-  xwdhdr.l_green_mask = 0x000000;
-  xwdhdr.l_blue_mask = 0x000000;
-  xwdhdr.l_bits_per_rgb = 8;
+  xwdhdr.l_bitmap_pad       = 32;
+  xwdhdr.l_bits_per_pixel   = 8;
+  xwdhdr.l_bytes_per_line   = width + linepad;
+  xwdhdr.l_visual_class     = vclass;
+  xwdhdr.l_red_mask         = 0x000000;
+  xwdhdr.l_green_mask       = 0x000000;
+  xwdhdr.l_blue_mask        = 0x000000;
+  xwdhdr.l_bits_per_rgb     = 8;
   xwdhdr.l_colormap_entries = ncolors;
-  xwdhdr.l_ncolors = ncolors;
-  xwdhdr.l_window_width = width;
-  xwdhdr.l_window_height = height;
-  xwdhdr.l_window_x = 64;
-  xwdhdr.l_window_y = 64;
-  xwdhdr.l_window_bdrwidth = 0;
+  xwdhdr.l_ncolors          = ncolors;
+  xwdhdr.l_window_width     = width;
+  xwdhdr.l_window_height    = height;
+  xwdhdr.l_window_x         = 64;
+  xwdhdr.l_window_y         = 64;
+  xwdhdr.l_window_bdrwidth  = 0;
 
   write_xwd_header (ofp, &xwdhdr);
   write_xwd_cols (ofp, &xwdhdr, xwdcolmap);
@@ -2052,28 +2137,35 @@ save_index (FILE    *ofp,
   for (i = 0; i < height; i++)
     {
       if ((i % tile_height) == 0)   /* Get more data */
-	{int scan_lines = (i+tile_height-1 < height) ? tile_height : (height-i);
+	{
+          gint scan_lines = (i + tile_height - 1 < height) ? tile_height : (height - i);
 
-	gimp_pixel_rgn_get_rect (&pixel_rgn, data, 0, i, width, scan_lines);
-	src = data;
+          gimp_pixel_rgn_get_rect (&pixel_rgn, data, 0, i, width, scan_lines);
+          src = data;
 	}
+
       fwrite (src, width, 1, ofp);
-      if (linepad) fwrite ((char *)&tmp, linepad, 1, ofp);
+
+      if (linepad)
+        fwrite ((char *)&tmp, linepad, 1, ofp);
+
       src += width;
 
       if ((i % 20) == 0)
-	gimp_progress_update ((double) i / (double) height);
+	gimp_progress_update ((gdouble) i / (gdouble) height);
     }
+
   g_free (data);
 
   gimp_drawable_detach (drawable);
 
   if (ferror (ofp))
     {
-      g_message (_("Error during writing indexed/grey image"));
-      return (FALSE);
+      g_message (_("Error during writing indexed/gray image"));
+      return FALSE;
     }
-  return (TRUE);
+
+  return TRUE;
 }
 
 
@@ -2082,77 +2174,85 @@ save_rgb (FILE   *ofp,
           gint32  image_ID,
           gint32  drawable_ID)
 {
-  int height, width, linepad, tile_height, i;
-  long tmp = 0;
-  unsigned char *data, *src;
-  L_XWDFILEHEADER xwdhdr;
-  GimpPixelRgn pixel_rgn;
-  GimpDrawable *drawable;
-  GimpImageType drawable_type;
+  gint             height, width, linepad, tile_height, i;
+  glong            tmp = 0;
+  guchar          *data, *src;
+  L_XWDFILEHEADER  xwdhdr;
+  GimpPixelRgn     pixel_rgn;
+  GimpDrawable    *drawable;
+  GimpImageType    drawable_type;
 
 #ifdef XWD_DEBUG
   printf ("save_rgb ()\n");
 #endif
 
-  drawable = gimp_drawable_get (drawable_ID);
+  drawable      = gimp_drawable_get (drawable_ID);
   drawable_type = gimp_drawable_type (drawable_ID);
-  width = drawable->width;
-  height = drawable->height;
-  tile_height = gimp_tile_height ();
+  width         = drawable->width;
+  height        = drawable->height;
+  tile_height   = gimp_tile_height ();
+
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height, FALSE, FALSE);
 
   /* allocate a buffer for retrieving information from the pixel region  */
-  src = data = (unsigned char *)g_malloc (tile_height * width * drawable->bpp);
+  src = data = g_new (guchar, tile_height * width * drawable->bpp);
 
   linepad = (width * 3) % 4;
-  if (linepad) linepad = 4 - linepad;
+  if (linepad)
+    linepad = 4 - linepad;
 
   /* Fill in the XWD header (header_size is evaluated by write_xwd_hdr ()) */
-  xwdhdr.l_header_size = 0;
-  xwdhdr.l_file_version = 7;
-  xwdhdr.l_pixmap_format = 2;
-  xwdhdr.l_pixmap_depth = 24;
-  xwdhdr.l_pixmap_width = width;
-  xwdhdr.l_pixmap_height = height;
-  xwdhdr.l_xoffset = 0;
-  xwdhdr.l_byte_order = 1;
+  xwdhdr.l_header_size      = 0;
+  xwdhdr.l_file_version     = 7;
+  xwdhdr.l_pixmap_format    = 2;
+  xwdhdr.l_pixmap_depth     = 24;
+  xwdhdr.l_pixmap_width     = width;
+  xwdhdr.l_pixmap_height    = height;
+  xwdhdr.l_xoffset          = 0;
+  xwdhdr.l_byte_order       = 1;
 
-  xwdhdr.l_bitmap_unit = 32;
+  xwdhdr.l_bitmap_unit      = 32;
   xwdhdr.l_bitmap_bit_order = 1;
-  xwdhdr.l_bitmap_pad = 32;
-  xwdhdr.l_bits_per_pixel = 24;
+  xwdhdr.l_bitmap_pad       = 32;
+  xwdhdr.l_bits_per_pixel   = 24;
 
-  xwdhdr.l_bytes_per_line = width * 3 + linepad;
-  xwdhdr.l_visual_class = 5;
-  xwdhdr.l_red_mask = 0xff0000;
-  xwdhdr.l_green_mask = 0x00ff00;
-  xwdhdr.l_blue_mask = 0x0000ff;
-  xwdhdr.l_bits_per_rgb = 8;
+  xwdhdr.l_bytes_per_line   = width * 3 + linepad;
+  xwdhdr.l_visual_class     = 5;
+  xwdhdr.l_red_mask         = 0xff0000;
+  xwdhdr.l_green_mask       = 0x00ff00;
+  xwdhdr.l_blue_mask        = 0x0000ff;
+  xwdhdr.l_bits_per_rgb     = 8;
   xwdhdr.l_colormap_entries = 0;
-  xwdhdr.l_ncolors = 0;
-  xwdhdr.l_window_width = width;
-  xwdhdr.l_window_height = height;
-  xwdhdr.l_window_x = 64;
-  xwdhdr.l_window_y = 64;
-  xwdhdr.l_window_bdrwidth = 0;
+  xwdhdr.l_ncolors          = 0;
+  xwdhdr.l_window_width     = width;
+  xwdhdr.l_window_height    = height;
+  xwdhdr.l_window_x         = 64;
+  xwdhdr.l_window_y         = 64;
+  xwdhdr.l_window_bdrwidth  = 0;
 
   write_xwd_header (ofp, &xwdhdr);
 
   for (i = 0; i < height; i++)
     {
       if ((i % tile_height) == 0)   /* Get more data */
-	{int scan_lines = (i+tile_height-1 < height) ? tile_height : (height-i);
+	{
+          gint scan_lines = (i + tile_height - 1 < height) ? tile_height : (height - i);
 
-	gimp_pixel_rgn_get_rect (&pixel_rgn, data, 0, i, width, scan_lines);
-	src = data;
+          gimp_pixel_rgn_get_rect (&pixel_rgn, data, 0, i, width, scan_lines);
+          src = data;
 	}
-      fwrite (src, width*3, 1, ofp);
-      if (linepad) fwrite ((char *)&tmp, linepad, 1, ofp);
-      src += width*3;
+
+      fwrite (src, width * 3, 1, ofp);
+
+      if (linepad)
+        fwrite ((char *)&tmp, linepad, 1, ofp);
+
+      src += width * 3;
 
       if ((i % 20) == 0)
-	gimp_progress_update ((double) i / (double) height);
+	gimp_progress_update ((gdouble) i / (gdouble) height);
     }
+
   g_free (data);
 
   gimp_drawable_detach (drawable);
@@ -2160,7 +2260,8 @@ save_rgb (FILE   *ofp,
   if (ferror (ofp))
     {
       g_message (_("Error during writing rgb image"));
-      return (FALSE);
+      return FALSE;
     }
-  return (TRUE);
+
+  return TRUE;
 }
