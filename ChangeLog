@@ -1,3 +1,10 @@
+2000-05-17  Asbjorn Pettersen  <asbjornP@dualog.no>
+
+	* app/module_db.c: 
+	* modules/modregister.h: cd wo
+	* modules/modregister.c (mod_dialog_register): add OS/2 functions
+	for dialog_register() and dialog_unregister().
+
 2000-05-17  Sven Neumann  <sven@gimp.org>
 
         * app/menus.c: rewrote the "Help/Dump Items" function. Now it

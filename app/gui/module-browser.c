@@ -67,6 +67,8 @@ extern void gimp_color_selector_register();
 extern void gimp_color_selector_unregister();
 extern void gimp_color_display_register();
 extern void gimp_color_display_unregister();
+extern void dialog_register();
+extern void dialog_unregister();
 
 static struct main_funcs_struc {
   gchar *name;
@@ -78,6 +80,8 @@ gimp_main_funcs[] = {
   { "gimp_color_selector_unregister", gimp_color_selector_unregister },
   { "gimp_color_display_register", gimp_color_display_register },
   { "gimp_color_display_unregister", gimp_color_display_unregister },
+  { "dialog_register", dialog_register },
+  { "dialog_unregister", dialog_unregister },
   { NULL, NULL }
 };
 #endif

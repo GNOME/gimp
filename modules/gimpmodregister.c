@@ -107,4 +107,24 @@ mod_color_display_unregister (const char *name)
     return (status);
 }
 
+void mod_dialog_register (GtkWidget *dialog)
+{
+    dialog_reg_func reg_func;
+    
+    reg_func = (dialog_reg_func) get_main_func("dialog_register");
+    if (!reg_func)
+	return;
+    (*reg_func) (dialog);
+}
+
+void mod_dialog_unregister (GtkWidget *dialog)
+{
+    dialog_reg_func reg_func;
+    
+    reg_func = (dialog_reg_func) get_main_func("dialog_unregister");
+    if (!reg_func)
+	return;
+    (*reg_func) (dialog);
+}
+
 #endif

@@ -40,6 +40,12 @@ typedef gboolean (*color_unreg_func) (GimpColorSelectorID,
 				      void *);
 typedef G_MODULE_EXPORT gboolean (*display_unreg_func) (const char *name);
 
+typedef void (*dialog_reg_func) (GtkWidget *dialog);
+
+void mod_dialog_register (GtkWidget *dialog);
+void mod_dialog_unregister (GtkWidget *dialog);
+#define dialog_register mod_dialog_register 
+#define dialog_unregister mod_dialog_unregister 
 
 GimpColorSelectorID
 mod_color_selector_register (const char *name,
