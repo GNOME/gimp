@@ -103,7 +103,7 @@ static void unsharp_region       (GimpPixelRgn   srcPTR,
 				  gint        y2);
 
 static void unsharp_mask         (GimpDrawable *drawable,
-				  gint       radius,
+				  gdouble    radius,
 				  gdouble    amount);
 
 static void unsharp_ok_callback  (GtkWidget *widget,
@@ -277,7 +277,7 @@ run (gchar      *name,
 /* -------------------------- Unsharp Mask ------------------------- */
 static void
 unsharp_mask (GimpDrawable *drawable,
-	      gint       radius,
+	      gdouble    radius,
 	      gdouble    amount)
 {
   GimpPixelRgn srcPR, destPR;
@@ -810,7 +810,7 @@ unsharp_mask_dialog (void)
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("_Radius:"), SCALE_WIDTH, 0,
-			      unsharp_params.radius, 1.0, 25.0, 0.1, 1.0, 1,
+			      unsharp_params.radius, 0.1, 25.0, 0.1, 1.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
   g_signal_connect (G_OBJECT (adj), "value_changed",

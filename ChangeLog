@@ -1,5 +1,10 @@
 2002-06-13  Sven Neumann  <sven@gimp.org>
 
+        * plug-ins/common/unsharp.c: merged fix for bug #83420 from stable
+	branch.
+
+2002-06-13  Sven Neumann  <sven@gimp.org>
+
 	* configure.in
 	* app/plug-in/plug-in.c (plug_in_init_shm): allocate shared memory
 	segments with permissions 0600 instead of making them accessible
