@@ -923,7 +923,8 @@ user_install_run (void)
   gint         err;
   gboolean     executable = TRUE;
 
-  filename = g_build_filename (gimp_data_directory (), USER_INSTALL, NULL);
+  filename = g_build_filename (gimp_data_directory (), "misc",
+                               USER_INSTALL, NULL);
 
   if ((err = stat (filename, &stat_buf)) != 0)
     {
@@ -973,7 +974,8 @@ user_install_run (void)
 
       g_free (filename);
 
-      filename = g_build_filename (quoted_data_dir, USER_INSTALL, NULL);
+      filename = g_build_filename (quoted_data_dir, "misc",
+                                   USER_INSTALL, NULL);
 
       command = g_strdup_printf ("%s %s %s %s",
                                  filename,

@@ -1,3 +1,35 @@
+2001-11-14  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: new directories etc/, data/images/ and data/misc/.
+
+	* Makefile.am
+	* data/Makefile.am: added new SUBDIRs.
+
+	* data/images/Makefile.am
+	* data/misc/Makefile.am
+	* etc/Makefile.am: new Makefiles
+
+	* gimp1_0_splash.ppm
+	* gimp1_2_splash.ppm
+	* gimp_logo.ppm
+	* gimp_splash.ppm: removed, now in data/images/
+
+	* rmshm
+	* user_install
+	* user_install.bat: removed, now in data/misc/
+
+	* gimprc.in
+	* gimprc.win32
+	* gimprc_user.in
+	* gtkrc_user
+	* ps-menurc
+	* unitrc: removed, now in etc/
+
+	* app/gui/about-dialog.c
+	* app/gui/splash.c
+	* app/gui/user-install-dialog.c: changed image and script file
+	paths accordingly.
+
 2001-11-14  Sven Neumann  <sven@gimp.org>
 
 	* app/pdb/gimprc_cmds.c

@@ -21,6 +21,7 @@ SUBDIRS = \
 	$(GIMP_MODULES)		\
 	$(GIMP_PLUGINS)		\
 	data			\
+	etc			\
 	tips			\
 	docs			\
 	devel-docs		\
@@ -39,15 +40,7 @@ EXTRA_DIST = \
 	PLUGIN_MAINTAINERS		\
 	MAINTAINERS			\
 	TODO				\
-	gtkrc_user			\
-	unitrc				\
-	gimp_logo.ppm			\
-	gimp_splash.ppm			\
-	rmshm				\
-	user_install			\
-	user_install.bat		\
-	ps-menurc			\
-	gimprc.win32			\
+	TODO.xml			\
 	config.h.win32			\
 	po/po2tbl.sed.in		\
 	po/update.sh			\
@@ -56,21 +49,6 @@ EXTRA_DIST = \
 	po-plug-ins/update.sh		\
 	po-script-fu/script-fu-xgettext	\
 	po-script-fu/update.sh
-
-gimpdata_DATA = \
-	gimp_logo.ppm		\
-	gimp_splash.ppm
-
-gimpsysconf_DATA = \
-	gimprc			\
-	gimprc_user		\
-	gtkrc_user		\
-	unitrc			\
-	ps-menurc
-
-gimpdata_SCRIPTS = user_install
-
-scriptdata =
 
 gimpinstall:
 	$(LN_S) $(srcdir)/install-sh $(srcdir)/gimpinstall

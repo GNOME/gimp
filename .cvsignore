@@ -7,11 +7,9 @@ config.cache
 stamp-h
 stamp-h1
 gimp.spec
-gimprc
 config.status
 libtool
 aclocal.m4
-gimprc_user
 gimptool-1.4
 intl
 config.h.in

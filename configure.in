@@ -825,8 +825,6 @@ AC_SUBST(GIMP_MODULES)
 dnl Output the Makefiles
 
 AC_OUTPUT([
-gimprc
-gimprc_user
 gimptool-1.4
 gimp.spec
 Makefile
@@ -925,10 +923,15 @@ themes/Default/Makefile
 themes/Default/images/Makefile
 themes/Default/images/tools/Makefile
 data/Makefile
+data/misc/Makefile
+data/images/Makefile
 data/brushes/Makefile
 data/gradients/Makefile
 data/palettes/Makefile
 data/patterns/Makefile
+etc/Makefile
+etc/gimprc
+etc/gimprc_user
 m4macros/Makefile
 po/Makefile.in
 po-libgimp/Makefile.in

@@ -316,7 +316,8 @@ about_dialog_load_logo (GtkWidget *window)
   if (logo_pixmap)
     return TRUE;
 
-  filename = g_build_filename (gimp_data_directory (), "gimp_logo.ppm", NULL);
+  filename = g_build_filename (gimp_data_directory (), "images",
+                               "gimp_logo.ppm", NULL);
   fp = fopen (filename, "rb");
   g_free (filename);
 

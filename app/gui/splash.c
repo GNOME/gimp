@@ -218,7 +218,8 @@ splash_logo_load_size (GtkWidget *window)
   if (logo_pixmap)
     return TRUE;
 
-  filename = g_build_filename (gimp_data_directory (), "gimp_splash.ppm", NULL);
+  filename = g_build_filename (gimp_data_directory (), "images",
+                               "gimp_splash.ppm", NULL);
 
   fp = fopen (filename, "rb");
 
@@ -258,7 +259,8 @@ splash_logo_load (void)
   if (! win_initstatus || logo_pixmap || ! splash_show_logo)
     return;
 
-  filename = g_build_filename (gimp_data_directory (), "gimp_splash.ppm", NULL);
+  filename = g_build_filename (gimp_data_directory (), "images",
+                               "gimp_splash.ppm", NULL);
 
   fp = fopen (filename, "rb");
 
