@@ -101,10 +101,7 @@ procedural_db_lookup (gchar *name)
   if (list != NULL)
     procedure = (ProcRecord *) list->data;
   else
-    {
-      g_message (_("PDB calling error %s not found"), name);
-      procedure = NULL;
-    }
+    procedure = NULL;
 
   return procedure;
 }
@@ -126,6 +123,8 @@ procedural_db_execute (gchar    *name,
     {
       if ((procedure = (ProcRecord *) list->data) == NULL)
 	{
+	  g_message (_("PDB calling error %s not found"), name);
+
 	  return_args = (Argument *) g_malloc (sizeof (Argument));
 	  return_args->arg_type = PDB_STATUS;
 	  return_args->value.pdb_int = PDB_CALLING_ERROR;

@@ -1,3 +1,9 @@
+Fri Oct 22 18:29:14 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/procedural_db.c: db_lookup seems to be used pretty often as a
+	sanity check, giving lots of spurious messages. Move the check to
+	db_execute
+
 Sat Oct 23 00:02:53 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* app/procedural_db.c
