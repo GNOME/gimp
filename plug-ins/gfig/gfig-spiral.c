@@ -84,7 +84,7 @@ d_draw_spiral (GfigObject *obj)
   /* First point is the center */
   /* Just draw a control point around it */
 
-  draw_sqr (&center_pnt->pnt);
+  draw_sqr (&center_pnt->pnt, obj == gfig_context->selected_obj);
 
   /* Next point defines the radius */
   radius_pnt = center_pnt->next; /* this defines the vetices */
@@ -98,7 +98,7 @@ d_draw_spiral (GfigObject *obj)
     }
 
   /* Other control point */
-  draw_sqr (&radius_pnt->pnt);
+  draw_sqr (&radius_pnt->pnt, obj == gfig_context->selected_obj);
 
   /* Have center and radius - draw spiral */
 
@@ -304,7 +304,7 @@ d_update_spiral (GdkPoint *pnt)
   if ((edge_pnt = center_pnt->next))
     {
       /* Undraw */
-      draw_circle (&edge_pnt->pnt);
+      draw_circle (&edge_pnt->pnt, TRUE);
       selvals.opts.showcontrol = 0;
       d_draw_spiral (obj_creating);
 
@@ -324,7 +324,7 @@ d_update_spiral (GdkPoint *pnt)
   selvals.opts.showcontrol = saved_cnt_pnt;
 
   /* Realy draw the control points */
-  draw_circle (&edge_pnt->pnt);
+  draw_circle (&edge_pnt->pnt, TRUE);
 }
 
 void
@@ -339,7 +339,7 @@ void
 d_spiral_end (GdkPoint *pnt,
               gint     shift_down)
 {
-  draw_circle (pnt);
+  draw_circle (pnt, TRUE);
   add_to_all_obj (gfig_context->current_obj, obj_creating);
   obj_creating = NULL;
 }

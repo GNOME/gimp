@@ -344,9 +344,9 @@ arc_drawing_details (GfigObject *obj,
 
   if (draw_cnts)
     {
-      draw_sqr (&pnt1->pnt);
-      draw_sqr (&pnt2->pnt);
-      draw_sqr (&pnt3->pnt);
+      draw_sqr (&pnt1->pnt, obj == gfig_context->selected_obj);
+      draw_sqr (&pnt2->pnt, obj == gfig_context->selected_obj);
+      draw_sqr (&pnt3->pnt, obj == gfig_context->selected_obj);
     }
 
   if (do_scale)
@@ -564,7 +564,7 @@ d_arc_start (GdkPoint *pnt,
 {
   /* Draw lines to start with -- then convert to an arc */
   if (!tmp_line)
-    draw_sqr (pnt);
+    draw_sqr (pnt, TRUE);
   d_line_start (pnt, TRUE); /* TRUE means multiple pointed line */
 }
 

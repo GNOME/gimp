@@ -791,35 +791,35 @@ object_start (GdkPoint *pnt,
     case LINE:
       /* Shift means we are still drawing */
       if (!shift_down || !obj_creating)
-        draw_sqr (pnt);
+        draw_sqr (pnt, TRUE);
       d_line_start (pnt, shift_down);
       break;
     case CIRCLE:
-      draw_sqr (pnt);
+      draw_sqr (pnt, TRUE);
       d_circle_start (pnt, shift_down);
       break;
     case ELLIPSE:
-      draw_sqr (pnt);
+      draw_sqr (pnt, TRUE);
       d_ellipse_start (pnt, shift_down);
       break;
     case POLY:
-      draw_sqr (pnt);
+      draw_sqr (pnt, TRUE);
       d_poly_start (pnt, shift_down);
       break;
     case ARC:
       d_arc_start (pnt, shift_down);
       break;
     case STAR:
-      draw_sqr (pnt);
+      draw_sqr (pnt, TRUE);
       d_star_start (pnt, shift_down);
       break;
     case SPIRAL:
-      draw_sqr (pnt);
+      draw_sqr (pnt, TRUE);
       d_spiral_start (pnt, shift_down);
       break;
     case BEZIER:
       if (!tmp_bezier)
-        draw_sqr (pnt);
+        draw_sqr (pnt, TRUE);
       d_bezier_start (pnt, shift_down);
       break;
     default:
@@ -849,30 +849,30 @@ object_end (GdkPoint *pnt,
     {
     case LINE:
       d_line_end (pnt, shift_down);
-      draw_sqr (pnt);
+      draw_sqr (pnt, TRUE);
       break;
     case CIRCLE:
-      draw_sqr (pnt);
+      draw_sqr (pnt, TRUE);
       d_circle_end (pnt, shift_down);
       break;
     case ELLIPSE:
-      draw_sqr (pnt);
+      draw_sqr (pnt, TRUE);
       d_ellipse_end (pnt, shift_down);
       break;
     case POLY:
-      draw_sqr (pnt);
+      draw_sqr (pnt, TRUE);
       d_poly_end (pnt, shift_down);
       break;
     case STAR:
-      draw_sqr (pnt);
+      draw_sqr (pnt, TRUE);
       d_star_end (pnt, shift_down);
       break;
     case ARC:
-      draw_sqr (pnt);
+      draw_sqr (pnt, TRUE);
       d_arc_end (pnt, shift_down);
       break;
     case SPIRAL:
-      draw_sqr (pnt);
+      draw_sqr (pnt, TRUE);
       d_spiral_end (pnt, shift_down);
       break;
     case BEZIER:

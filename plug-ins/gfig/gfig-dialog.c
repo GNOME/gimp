@@ -689,20 +689,38 @@ gfig_save_menu_callback (GtkWidget *widget,
 
 /* Given a point x, y draw a circle */
 void
-draw_circle (GdkPoint *p)
+draw_circle (GdkPoint *p,
+             gboolean  selected)
 {
   if (!selvals.opts.showcontrol)
     return;
 
   gdk_draw_arc (gfig_context->preview->window,
                 gfig_gc,
-                0,
+                selected,
                 p->x - SQ_SIZE/2,
                 p->y - SQ_SIZE/2,
                 SQ_SIZE,
                 SQ_SIZE,
                 0,
                 360*64);
+}
+
+/* Given a point x, y draw a square around it */
+void
+draw_sqr (GdkPoint *p,
+          gboolean  selected)
+{
+  if (!selvals.opts.showcontrol)
+    return;
+
+  gdk_draw_rectangle (gfig_context->preview->window,
+                      gfig_gc,
+                      selected,
+                      gfig_scale_x (p->x) - SQ_SIZE / 2,
+                      gfig_scale_y (p->y) - SQ_SIZE / 2,
+                      SQ_SIZE,
+                      SQ_SIZE);
 }
 
 static void
@@ -1800,22 +1818,6 @@ gfig_paint_callback (void)
     }
 
   gfig_preview_expose (gfig_context->preview, NULL);
-}
-
-/* Given a point x, y draw a square around it */
-void
-draw_sqr (GdkPoint *p)
-{
-  if (!selvals.opts.showcontrol)
-    return;
-
-  gdk_draw_rectangle (gfig_context->preview->window,
-                      gfig_gc,
-                      0,
-                      gfig_scale_x (p->x) - SQ_SIZE / 2,
-                      gfig_scale_y (p->y) - SQ_SIZE / 2,
-                      SQ_SIZE,
-                      SQ_SIZE);
 }
 
 /* Draw the grid on the screen

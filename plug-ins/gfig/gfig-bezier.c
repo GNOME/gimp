@@ -196,7 +196,7 @@ d_draw_bezier (GfigObject *obj)
   /* Go around all the points drawing a line from one to the next */
   for (spnt = obj->points; spnt; spnt = spnt->next)
     {
-      draw_sqr (&spnt->pnt);
+      draw_sqr (&spnt->pnt, obj == gfig_context->selected_obj);
       line_pnts[i][0] = spnt->pnt.x;
       line_pnts[i][1] = spnt->pnt.y;
       i++;
@@ -322,7 +322,7 @@ d_update_bezier (GdkPoint *pnt)
           l_pnt = l_pnt->next;
         }
 
-      draw_circle (&l_pnt->pnt);
+      draw_circle (&l_pnt->pnt, TRUE);
       selvals.opts.showcontrol = 0;
       d_draw_bezier (tmp_bezier);
       l_pnt->pnt = *pnt;
@@ -341,7 +341,7 @@ d_update_bezier (GdkPoint *pnt)
   selvals.opts.showcontrol = saved_cnt_pnt;
 
   /* Realy draw the control points */
-  draw_circle (&l_pnt->pnt);
+  draw_circle (&l_pnt->pnt, TRUE);
 }
 
 void
@@ -379,8 +379,8 @@ d_bezier_end (GdkPoint *pnt, gint shift_down)
 
       if (l_pnt)
         {
-          draw_circle (&l_pnt->pnt);
-          draw_sqr (&l_pnt->pnt);
+          draw_circle (&l_pnt->pnt, TRUE);
+          draw_sqr (&l_pnt->pnt, TRUE);
 
           if (bezier_closed)
             {
@@ -414,8 +414,8 @@ d_bezier_end (GdkPoint *pnt, gint shift_down)
     {
       if (!tmp_bezier->points->next)
         {
-          draw_circle (&tmp_bezier->points->pnt);
-          draw_sqr (&tmp_bezier->points->pnt);
+          draw_circle (&tmp_bezier->points->pnt, TRUE);
+          draw_sqr (&tmp_bezier->points->pnt, TRUE);
         }
 
       d_draw_bezier (tmp_bezier);

@@ -67,13 +67,13 @@ d_draw_line (GfigObject *obj)
 
   while (spnt && epnt)
     {
-      draw_sqr (&spnt->pnt);
+      draw_sqr (&spnt->pnt, obj == gfig_context->selected_obj);
       /* Go around all the points drawing a line from one to the next */
       gfig_draw_line (spnt->pnt.x, spnt->pnt.y, epnt->pnt.x, epnt->pnt.y);
       spnt = epnt;
       epnt = epnt->next;
     }
-  draw_sqr (&spnt->pnt);
+  draw_sqr (&spnt->pnt, obj = gfig_context->selected_obj);
 }
 
 void
@@ -211,7 +211,7 @@ d_update_line (GdkPoint *pnt)
     {
       /* undraw  current */
       /* Draw square on point */
-      draw_circle (&epnt->pnt);
+      draw_circle (&epnt->pnt, TRUE);
 
       gdk_draw_line (gfig_context->preview->window,
                      /*gfig_context->preview->style->bg_gc[GTK_STATE_NORMAL],*/
@@ -225,7 +225,7 @@ d_update_line (GdkPoint *pnt)
 
   /* draw new */
   /* Draw circle on point */
-  draw_circle (pnt);
+  draw_circle (pnt, TRUE);
 
   epnt = new_dobjpoint (pnt->x, pnt->y);
 
@@ -261,7 +261,7 @@ d_line_end (GdkPoint *pnt,
             gboolean  shift_down)
 {
   /* Undraw the last circle */
-  draw_circle (pnt);
+  draw_circle (pnt, TRUE);
 
   if (shift_down)
     {

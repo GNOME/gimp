@@ -82,7 +82,7 @@ d_draw_star (GfigObject *obj)
   /* First point is the center */
   /* Just draw a control point around it */
 
-  draw_sqr (&center_pnt->pnt);
+  draw_sqr (&center_pnt->pnt, obj == gfig_context->selected_obj);
 
   /* Next point defines the radius */
   outer_radius_pnt = center_pnt->next; /* this defines the vertices */
@@ -106,8 +106,8 @@ d_draw_star (GfigObject *obj)
     }
 
   /* Other control points */
-  draw_sqr (&outer_radius_pnt->pnt);
-  draw_sqr (&inner_radius_pnt->pnt);
+  draw_sqr (&outer_radius_pnt->pnt, obj == gfig_context->selected_obj);
+  draw_sqr (&inner_radius_pnt->pnt, obj == gfig_context->selected_obj);
 
   /* Have center and radius - draw star */
 
@@ -358,8 +358,8 @@ d_update_star (GdkPoint *pnt)
     {
       /* Undraw */
       inner_pnt = outer_pnt->next;
-      draw_circle (&inner_pnt->pnt);
-      draw_circle (&outer_pnt->pnt);
+      draw_circle (&inner_pnt->pnt, TRUE);
+      draw_circle (&outer_pnt->pnt, TRUE);
       selvals.opts.showcontrol = 0;
       d_draw_star (obj_creating);
       outer_pnt->pnt = *pnt;
@@ -386,8 +386,8 @@ d_update_star (GdkPoint *pnt)
   selvals.opts.showcontrol = saved_cnt_pnt;
 
   /* Realy draw the control points */
-  draw_circle (&outer_pnt->pnt);
-  draw_circle (&inner_pnt->pnt);
+  draw_circle (&outer_pnt->pnt, TRUE);
+  draw_circle (&inner_pnt->pnt, TRUE);
 }
 
 void
@@ -402,7 +402,7 @@ void
 d_star_end (GdkPoint *pnt,
             gint      shift_down)
 {
-  draw_circle (pnt);
+  draw_circle (pnt, TRUE);
   add_to_all_obj (gfig_context->current_obj, obj_creating);
   obj_creating = NULL;
 }

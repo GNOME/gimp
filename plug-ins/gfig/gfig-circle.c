@@ -69,8 +69,8 @@ d_draw_circle (GfigObject *obj)
     }
 
   radius = calc_radius (&center_pnt->pnt, &edge_pnt->pnt);
-  draw_sqr (&center_pnt->pnt);
-  draw_sqr (&edge_pnt->pnt);
+  draw_sqr (&center_pnt->pnt, obj == gfig_context->selected_obj);
+  draw_sqr (&edge_pnt->pnt, obj == gfig_context->selected_obj);
 
   gfig_draw_arc (center_pnt->pnt.x, center_pnt->pnt.y, radius, radius, 0, 360);
 }
@@ -167,7 +167,7 @@ d_update_circle (GdkPoint *pnt)
   if ((edge_pnt = center_pnt->next))
     {
       /* Undraw current */
-      draw_circle (&edge_pnt->pnt);
+      draw_circle (&edge_pnt->pnt, TRUE);
       radius = calc_radius (&center_pnt->pnt, &edge_pnt->pnt);
 
       gdk_draw_arc (gfig_context->preview->window,
@@ -181,7 +181,7 @@ d_update_circle (GdkPoint *pnt)
                     360 * 64);
     }
 
-  draw_circle (pnt);
+  draw_circle (pnt, TRUE);
 
   edge_pnt = new_dobjpoint (pnt->x, pnt->y);
   radius = calc_radius (&center_pnt->pnt, &edge_pnt->pnt);
@@ -218,7 +218,7 @@ d_circle_end (GdkPoint *pnt,
     }
   else
     {
-      draw_circle (pnt);
+      draw_circle (pnt, TRUE);
       add_to_all_obj (gfig_context->current_obj, obj_creating);
     }
 

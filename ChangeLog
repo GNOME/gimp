@@ -1,5 +1,21 @@
 2004-11-21  DindinX  <dindinx@gimp.org>
 
+	* plug-ins/gfig/gfig-arc.c
+	* plug-ins/gfig/gfig-bezier.c
+	* plug-ins/gfig/gfig-circle.c
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig-dobject.c
+	* plug-ins/gfig/gfig-ellipse.c
+	* plug-ins/gfig/gfig-line.c
+	* plug-ins/gfig/gfig-poly.c
+	* plug-ins/gfig/gfig-spiral.c
+	* plug-ins/gfig/gfig-star.c
+	* plug-ins/gfig/gfig.h: makes which object is selected more obvious by
+	using filled handles for the selected object.  Not perfect, but
+	certainly a good hint.
+
+2004-11-21  DindinX  <dindinx@gimp.org>
+
 	* plug-ins/gfig/gfig-preview.c: call gfig_grid_colours() in the
 	realize callback of the preview, so the gray gc of the grid works
 	again. Reported by Zigomar.

@@ -63,8 +63,8 @@ d_draw_ellipse (GfigObject * obj)
       g_warning ("Internal error - ellipse no edge pnt");
     }
 
-  draw_sqr (&center_pnt->pnt);
-  draw_sqr (&edge_pnt->pnt);
+  draw_sqr (&center_pnt->pnt, obj == gfig_context->selected_obj);
+  draw_sqr (&edge_pnt->pnt, obj == gfig_context->selected_obj);
 
   bound_wx = abs (center_pnt->pnt.x - edge_pnt->pnt.x);
   bound_wy = abs (center_pnt->pnt.y - edge_pnt->pnt.y);
@@ -206,7 +206,7 @@ d_update_ellipse (GdkPoint *pnt)
       else
         top_y = edge_pnt->pnt.y;
 
-      draw_circle (&edge_pnt->pnt);
+      draw_circle (&edge_pnt->pnt, TRUE);
 
       gdk_draw_arc (gfig_context->preview->window,
                     gfig_gc,
@@ -219,7 +219,7 @@ d_update_ellipse (GdkPoint *pnt)
                     360 * 64);
     }
 
-  draw_circle (pnt);
+  draw_circle (pnt, TRUE);
 
   edge_pnt = new_dobjpoint (pnt->x, pnt->y);
 
@@ -266,7 +266,7 @@ d_ellipse_end (GdkPoint *pnt, gint shift_down)
     }
   else
     {
-      draw_circle (pnt);
+      draw_circle (pnt, TRUE);
       add_to_all_obj (gfig_context->current_obj, obj_creating);
     }
 

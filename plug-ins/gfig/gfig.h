@@ -176,8 +176,10 @@ void gfig_paint (BrushType brush_type,
                  gint      seg_count,
                  gdouble   line_pnts[]);
 
-void draw_circle (GdkPoint *p);
-void draw_sqr (GdkPoint *p);
+void draw_circle (GdkPoint *p,
+                  gboolean  selected);
+void draw_sqr    (GdkPoint *p,
+                  gboolean  selected);
 
 void       list_button_update   (GFigObj *obj);
 
