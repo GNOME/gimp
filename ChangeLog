@@ -1,5 +1,10 @@
 2002-12-13  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/tiff.c: applied a patch from Peter Kirchgessner
+	that suppresses the progress bar in non-interactive mode (#97352).
+
+2002-12-13  Sven Neumann  <sven@gimp.org>
+
 	* app/gdisplay_ops.c (gdisplay_shrink_wrap): avoid to move the
 	image window offscreen (#79486).
 
