@@ -141,21 +141,13 @@ palette_duplicate_invoker (Gimp         *gimp,
   GimpPalette *palette_copy = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name && !g_utf8_validate (name, -1, NULL))
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
     {
-      if (name && strlen (name))
-      {
-        palette = (GimpPalette *)
-          gimp_container_get_child_by_name (gimp->palette_factory->container,
-                                            name);
-      }
-    else
-      {
-        palette = gimp_context_get_palette (context);
-      }
+      palette = (GimpPalette *)
+        gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
       if (palette)
         {
@@ -182,7 +174,7 @@ static ProcArg palette_duplicate_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The palette name (\"\" means currently active palette)"
+    "The palette name."
   }
 };
 
@@ -224,7 +216,7 @@ palette_rename_invoker (Gimp         *gimp,
   GimpPalette *palette = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name && !g_utf8_validate (name, -1, NULL))
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   new_name = (gchar *) args[1].value.pdb_pointer;
@@ -233,16 +225,8 @@ palette_rename_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (name && strlen (name))
-      {
-        palette = (GimpPalette *)
-          gimp_container_get_child_by_name (gimp->palette_factory->container,
-                                            name);
-      }
-    else
-      {
-        palette = gimp_context_get_palette (context);
-      }
+      palette = (GimpPalette *)
+        gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
       if (palette && GIMP_DATA (palette)->writable)
         gimp_object_set_name (GIMP_OBJECT (palette), new_name);
@@ -263,7 +247,7 @@ static ProcArg palette_rename_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The palette name (\"\" means currently active palette)"
+    "The palette name."
   },
   {
     GIMP_PDB_STRING,
@@ -308,21 +292,13 @@ palette_delete_invoker (Gimp         *gimp,
   GimpPalette *palette = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name && !g_utf8_validate (name, -1, NULL))
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
     {
-      if (name && strlen (name))
-      {
-        palette = (GimpPalette *)
-          gimp_container_get_child_by_name (gimp->palette_factory->container,
-                                            name);
-      }
-    else
-      {
-        palette = gimp_context_get_palette (context);
-      }
+      palette = (GimpPalette *)
+        gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
       if (palette && GIMP_DATA (palette)->deletable)
         {
@@ -350,7 +326,7 @@ static ProcArg palette_delete_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The palette name (\"\" means currently active palette)"
+    "The palette name."
   }
 };
 
@@ -382,21 +358,13 @@ palette_get_info_invoker (Gimp         *gimp,
   GimpPalette *palette = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name && !g_utf8_validate (name, -1, NULL))
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
     {
-      if (name && strlen (name))
-      {
-        palette = (GimpPalette *)
-          gimp_container_get_child_by_name (gimp->palette_factory->container,
-                                            name);
-      }
-    else
-      {
-        palette = gimp_context_get_palette (context);
-      }
+      palette = (GimpPalette *)
+        gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
       success = (palette != NULL);
     }
@@ -414,7 +382,7 @@ static ProcArg palette_get_info_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The palette name (\"\" means currently active palette)"
+    "The palette name."
   }
 };
 
@@ -458,7 +426,7 @@ palette_add_entry_invoker (Gimp         *gimp,
   GimpPaletteEntry *entry = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name && !g_utf8_validate (name, -1, NULL))
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   entry_name = (gchar *) args[1].value.pdb_pointer;
@@ -469,16 +437,8 @@ palette_add_entry_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (name && strlen (name))
-      {
-        palette = (GimpPalette *)
-          gimp_container_get_child_by_name (gimp->palette_factory->container,
-                                            name);
-      }
-    else
-      {
-        palette = gimp_context_get_palette (context);
-      }
+      palette = (GimpPalette *)
+        gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
       if (palette && GIMP_DATA (palette)->writable)
         entry = gimp_palette_add_entry (palette, entry_name, &color);
@@ -499,7 +459,7 @@ static ProcArg palette_add_entry_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The palette name (\"\" means currently active palette)"
+    "The palette name."
   },
   {
     GIMP_PDB_STRING,
@@ -551,23 +511,15 @@ palette_delete_entry_invoker (Gimp         *gimp,
   GimpPaletteEntry *entry = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name && !g_utf8_validate (name, -1, NULL))
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   entry_num = args[1].value.pdb_int;
 
   if (success)
     {
-      if (name && strlen (name))
-      {
-        palette = (GimpPalette *)
-          gimp_container_get_child_by_name (gimp->palette_factory->container,
-                                            name);
-      }
-    else
-      {
-        palette = gimp_context_get_palette (context);
-      }
+      palette = (GimpPalette *)
+        gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
       if (palette && GIMP_DATA (palette)->writable)
         {
@@ -592,7 +544,7 @@ static ProcArg palette_delete_entry_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The palette name (\"\" means currently active palette)"
+    "The palette name."
   },
   {
     GIMP_PDB_INT32,
@@ -632,23 +584,15 @@ palette_entry_get_color_invoker (Gimp         *gimp,
   GimpPaletteEntry *entry = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name && !g_utf8_validate (name, -1, NULL))
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   entry_num = args[1].value.pdb_int;
 
   if (success)
     {
-      if (name && strlen (name))
-      {
-        palette = (GimpPalette *)
-          gimp_container_get_child_by_name (gimp->palette_factory->container,
-                                            name);
-      }
-    else
-      {
-        palette = gimp_context_get_palette (context);
-      }
+      palette = (GimpPalette *)
+        gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
       if (palette)
         {
@@ -678,7 +622,7 @@ static ProcArg palette_entry_get_color_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The palette name (\"\" means currently active palette)"
+    "The palette name."
   },
   {
     GIMP_PDB_INT32,
@@ -726,7 +670,7 @@ palette_entry_set_color_invoker (Gimp         *gimp,
   GimpPaletteEntry *entry = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name && !g_utf8_validate (name, -1, NULL))
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   entry_num = args[1].value.pdb_int;
@@ -735,16 +679,8 @@ palette_entry_set_color_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (name && strlen (name))
-      {
-        palette = (GimpPalette *)
-          gimp_container_get_child_by_name (gimp->palette_factory->container,
-                                            name);
-      }
-    else
-      {
-        palette = gimp_context_get_palette (context);
-      }
+      palette = (GimpPalette *)
+        gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
       if (palette && GIMP_DATA (palette)->writable)
         {
@@ -771,7 +707,7 @@ static ProcArg palette_entry_set_color_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The palette name (\"\" means currently active palette)"
+    "The palette name."
   },
   {
     GIMP_PDB_INT32,
@@ -815,23 +751,15 @@ palette_entry_get_name_invoker (Gimp         *gimp,
   GimpPaletteEntry *entry = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name && !g_utf8_validate (name, -1, NULL))
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   entry_num = args[1].value.pdb_int;
 
   if (success)
     {
-      if (name && strlen (name))
-      {
-        palette = (GimpPalette *)
-          gimp_container_get_child_by_name (gimp->palette_factory->container,
-                                            name);
-      }
-    else
-      {
-        palette = gimp_context_get_palette (context);
-      }
+      palette = (GimpPalette *)
+        gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
       if (palette)
         {
@@ -857,7 +785,7 @@ static ProcArg palette_entry_get_name_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The palette name (\"\" means currently active palette)"
+    "The palette name."
   },
   {
     GIMP_PDB_INT32,
@@ -905,7 +833,7 @@ palette_entry_set_name_invoker (Gimp         *gimp,
   GimpPaletteEntry *entry = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name && !g_utf8_validate (name, -1, NULL))
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   entry_num = args[1].value.pdb_int;
@@ -916,16 +844,8 @@ palette_entry_set_name_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (name && strlen (name))
-      {
-        palette = (GimpPalette *)
-          gimp_container_get_child_by_name (gimp->palette_factory->container,
-                                            name);
-      }
-    else
-      {
-        palette = gimp_context_get_palette (context);
-      }
+      palette = (GimpPalette *)
+        gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
       if (palette && GIMP_DATA (palette)->writable)
         {
@@ -953,7 +873,7 @@ static ProcArg palette_entry_set_name_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The palette name (\"\" means currently active palette)"
+    "The palette name."
   },
   {
     GIMP_PDB_INT32,

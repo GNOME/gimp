@@ -2428,12 +2428,21 @@ p_fill_missing_colors (void)
 static void
 p_get_gradient (gint mode)
 {
-  gdouble        *f_samples, *f_samp;        /* float samples */
-  gint                l_lum;
+  gchar   *name;
+  gint     n_f_samples;
+  gdouble *f_samples;
+  gdouble *f_samp;        /* float samples */
+  gint     l_lum;
 
-  p_free_colors();
-  f_samples = gimp_gradients_sample_uniform (256 /* n_samples */,
-                                             mode == SMP_INV_GRADIENT);
+  p_free_colors ();
+
+  name = gimp_context_get_gradient ();
+
+  gimp_gradient_get_uniform_samples (name, 256 /* n_samples */,
+                                     mode == SMP_INV_GRADIENT,
+                                     &n_f_samples, &f_samples);
+
+  g_free (name);
 
   for (l_lum = 0; l_lum < 256; l_lum++)
     {

@@ -143,12 +143,9 @@ gimp_patterns_get_pattern (gint *width,
  * @length: Length of pattern mask data.
  * @mask_data: The pattern mask data.
  *
- * Retrieve information about the currently active pattern (including
- * data).
+ * This procedure is deprecated! Use 'gimp_pattern_get_data' instead.
  *
- * This procedure retrieves information about the currently active
- * pattern. This includes the pattern name, and the pattern extents
- * (width and height). It also returns the pattern data.
+ * This procedure is deprecated! Use 'gimp_pattern_get_data' instead.
  *
  * Returns: The pattern name.
  */

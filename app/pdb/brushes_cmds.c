@@ -408,11 +408,11 @@ static ProcArg brushes_get_brush_data_outargs[] =
 static ProcRecord brushes_get_brush_data_proc =
 {
   "gimp_brushes_get_brush_data",
-  "Retrieve information about the currently active brush (including data).",
-  "This procedure retrieves information about the currently active brush. This includes the brush name, and the brush extents (width and height). It also returns the brush data.",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1998",
+  "This procedure is deprecated! Use 'gimp_brush_get_pixels' instead.",
+  "This procedure is deprecated! Use 'gimp_brush_get_pixels' instead.",
+  "",
+  "",
+  "",
   GIMP_INTERNAL,
   1,
   brushes_get_brush_data_inargs,

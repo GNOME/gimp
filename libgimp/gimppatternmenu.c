@@ -22,6 +22,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include "gimp.h"
 #include "gimpui.h"
 
@@ -149,13 +151,17 @@ gimp_pattern_select_widget_new (const gchar            *title,
                     pattern_sel);
 
   /* Do initial pattern setup */
-  pattern_sel->pattern_name =
-    gimp_patterns_get_pattern_data (pattern_name,
-                                    &pattern_sel->width,
-                                    &pattern_sel->height,
-                                    &pattern_sel->bytes,
-                                    &mask_data_size,
-                                    &pattern_sel->mask_data);
+  if (! pattern_name || ! strlen (pattern_name))
+    pattern_sel->pattern_name = gimp_context_get_pattern ();
+  else
+    pattern_sel->pattern_name = g_strdup (pattern_name);
+
+  gimp_pattern_get_pixels (pattern_sel->pattern_name,
+                           &pattern_sel->width,
+                           &pattern_sel->height,
+                           &pattern_sel->bytes,
+                           &mask_data_size,
+                           &pattern_sel->mask_data);
 
   g_object_set_data (G_OBJECT (hbox), PATTERN_SELECT_DATA_KEY, pattern_sel);
 
@@ -172,6 +178,8 @@ void
 gimp_pattern_select_widget_close (GtkWidget *widget)
 {
   PatternSelect *pattern_sel;
+
+  g_return_if_fail (GTK_IS_WIDGET (widget));
 
   pattern_sel = g_object_get_data (G_OBJECT (widget), PATTERN_SELECT_DATA_KEY);
 
@@ -199,6 +207,8 @@ gimp_pattern_select_widget_set (GtkWidget   *widget,
 {
   PatternSelect *pattern_sel;
 
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
   pattern_sel = g_object_get_data (G_OBJECT (widget), PATTERN_SELECT_DATA_KEY);
 
   g_return_if_fail (pattern_sel != NULL);
@@ -217,21 +227,25 @@ gimp_pattern_select_widget_set (GtkWidget   *widget,
       guint8 *mask_data;
       gchar  *name;
 
-      name = gimp_patterns_get_pattern_data (pattern_name,
-                                             &width,
-                                             &height,
-                                             &bytes,
-                                             &mask_data_size,
-                                             &mask_data);
+      if (! pattern_name || ! strlen (pattern_name))
+        name = gimp_context_get_pattern ();
+      else
+        name = g_strdup (pattern_name);
 
-      if (name)
+      if (gimp_pattern_get_pixels (name,
+                                   &width,
+                                   &height,
+                                   &bytes,
+                                   &mask_data_size,
+                                   &mask_data))
         {
           gimp_pattern_select_widget_callback (name, width, height, bytes,
                                                mask_data, FALSE, pattern_sel);
 
-          g_free (name);
           g_free (mask_data);
         }
+
+      g_free (name);
     }
 }
 

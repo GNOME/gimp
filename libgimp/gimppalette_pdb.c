@@ -59,7 +59,7 @@ gimp_palette_new (const gchar *name)
 
 /**
  * gimp_palette_duplicate:
- * @name: The palette name (\"\" means currently active palette).
+ * @name: The palette name.
  *
  * Duplicates a palette
  *
@@ -91,7 +91,7 @@ gimp_palette_duplicate (const gchar *name)
 
 /**
  * gimp_palette_rename:
- * @name: The palette name (\"\" means currently active palette).
+ * @name: The palette name.
  * @new_name: The new name of the palette.
  *
  * Rename a palette
@@ -126,7 +126,7 @@ gimp_palette_rename (const gchar *name,
 
 /**
  * gimp_palette_delete:
- * @name: The palette name (\"\" means currently active palette).
+ * @name: The palette name.
  *
  * Deletes a palette
  *
@@ -157,7 +157,7 @@ gimp_palette_delete (const gchar *name)
 
 /**
  * gimp_palette_get_info:
- * @name: The palette name (\"\" means currently active palette).
+ * @name: The palette name.
  * @num_colors: The number of colors in the palette.
  *
  * Retrieve information about the specified palette.
@@ -196,7 +196,7 @@ gimp_palette_get_info (const gchar *name,
 
 /**
  * gimp_palette_add_entry:
- * @name: The palette name (\"\" means currently active palette).
+ * @name: The palette name.
  * @entry_name: The name of the entry.
  * @color: The new entry's color color.
  * @entry_num: The index of the added entry.
@@ -241,7 +241,7 @@ gimp_palette_add_entry (const gchar   *name,
 
 /**
  * gimp_palette_delete_entry:
- * @name: The palette name (\"\" means currently active palette).
+ * @name: The palette name.
  * @entry_num: The index of the added entry.
  *
  * Deletes a palette entry from the specified palette.
@@ -276,7 +276,7 @@ gimp_palette_delete_entry (const gchar *name,
 
 /**
  * gimp_palette_entry_get_color:
- * @name: The palette name (\"\" means currently active palette).
+ * @name: The palette name.
  * @entry_num: The entry to retrieve.
  * @color: The color requested.
  *
@@ -317,7 +317,7 @@ gimp_palette_entry_get_color (const gchar *name,
 
 /**
  * gimp_palette_entry_set_color:
- * @name: The palette name (\"\" means currently active palette).
+ * @name: The palette name.
  * @entry_num: The entry to retrieve.
  * @color: The new color.
  *
@@ -356,7 +356,7 @@ gimp_palette_entry_set_color (const gchar   *name,
 
 /**
  * gimp_palette_entry_get_name:
- * @name: The palette name (\"\" means currently active palette).
+ * @name: The palette name.
  * @entry_num: The entry to retrieve.
  * @entry_name: The name requested.
  *
@@ -399,7 +399,7 @@ gimp_palette_entry_get_name (const gchar  *name,
 
 /**
  * gimp_palette_entry_set_name:
- * @name: The palette name (\"\" means currently active palette).
+ * @name: The palette name.
  * @entry_num: The entry to retrieve.
  * @entry_name: The new name.
  *

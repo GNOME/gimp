@@ -203,12 +203,9 @@ gimp_brushes_set_spacing (gint spacing)
  * @length: Length of brush mask data.
  * @mask_data: The brush mask data.
  *
- * Retrieve information about the currently active brush (including
- * data).
+ * This procedure is deprecated! Use 'gimp_brush_get_pixels' instead.
  *
- * This procedure retrieves information about the currently active
- * brush. This includes the brush name, and the brush extents (width
- * and height). It also returns the brush data.
+ * This procedure is deprecated! Use 'gimp_brush_get_pixels' instead.
  *
  * Returns: The brush name.
  */

@@ -27,22 +27,8 @@ sub mitch_misc {
 sub pattern_arg () {{
     name => 'name',
     type => 'string',
-    desc => 'The pattern name ("" means currently active pattern)',
-    null_ok => '1'
+    desc => 'The pattern name.'
 }}
-
-my $get_pattern_from_name = <<'CODE';
-if (name && strlen (name))
-  {
-    pattern = (GimpPattern *)
-      gimp_container_get_child_by_name (gimp->pattern_factory->container,
-                                        name);
-  }
-else
-  {
-    pattern = gimp_context_get_pattern (context);
-  }
-CODE
 
 
 # The defs
@@ -74,11 +60,66 @@ HELP
 
     %invoke = (
 	vars => [ 'GimpPattern *pattern = NULL' ],
-	code => <<"CODE"
+	code => <<'CODE'
 {
-  $get_pattern_from_name
+  pattern = (GimpPattern *)
+    gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
 
   success = (pattern != NULL);
+}
+CODE
+    );
+}
+
+sub pattern_get_pixels {
+    $blurb = <<'BLURB';
+Retrieve information about the specified pattern (including pixels).
+BLURB
+
+    $help = <<'HELP';
+This procedure retrieves information about the specified. This
+includes the pattern extents (width and height), its bpp and its pixel
+data.
+HELP
+
+    &mitch_misc;
+
+    @inargs = (
+        &pattern_arg
+    );
+
+    @outargs = (
+	{ name => 'width', type => 'int32', no_declare => '1',
+          alias => 'pattern->mask->width', void_ret => '1',
+          desc => "The pattern width" },
+	{ name => 'height', type => 'int32', no_declare => '1',
+          alias => 'pattern->mask->height',
+          desc => "The pattern height" },
+	{ name => 'bpp', type => 'int32', no_declare => '1',
+          alias => 'pattern->mask->bytes',
+          desc => "The pattern bpp" },
+        { name => 'mask_bytes', type => 'int8array', init => 1,
+	  desc => 'The pattern mask data',
+          array => { init => 1,
+		     desc => 'Length of pattern mask data' } }
+    );
+    
+    %invoke = (
+	vars => [ 'GimpPattern *pattern = NULL' ],
+	code => <<'CODE'
+{
+  pattern = (GimpPattern *)
+    gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
+
+  if (pattern)
+    {
+      num_mask_bytes = pattern->mask->height * pattern->mask->width *
+	               pattern->mask->bytes;
+      mask_bytes     = g_memdup (temp_buf_data (pattern->mask),
+                                 num_mask_bytes);
+    }
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -89,7 +130,7 @@ CODE
               "core/gimpcontext.h" "core/gimplist.h"
               "core/gimpdatafactory.h" "core/gimppattern.h" );
 
-@procs = qw(pattern_get_info);
+@procs = qw(pattern_get_info pattern_get_pixels);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Pattern';

@@ -27,8 +27,7 @@ sub mitch_misc {
 sub palette_arg () {{
     name => 'name',
     type => 'string',
-    desc => 'The palette name ("" means currently active palette)',
-    null_ok => '1'
+    desc => 'The palette name.'
 }}
 
 my $get_palette_from_name = <<'CODE';
@@ -97,9 +96,10 @@ sub palette_duplicate {
     %invoke = (
 	vars => [ 'GimpPalette *palette = NULL',
                   'GimpPalette *palette_copy = NULL' ],
-        code => <<"CODE"
+        code => <<'CODE'
 {
-  $get_palette_from_name
+  palette = (GimpPalette *)
+    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   if (palette)
     {
@@ -136,9 +136,10 @@ sub palette_rename {
 
     %invoke = (
 	vars => [ 'GimpPalette *palette = NULL' ],
-	code => <<"CODE"
+	code => <<'CODE'
 {
-  $get_palette_from_name
+  palette = (GimpPalette *)
+    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   if (palette && GIMP_DATA (palette)->writable)
     gimp_object_set_name (GIMP_OBJECT (palette), new_name);
@@ -161,9 +162,10 @@ sub palette_delete {
 
     %invoke = (
 	vars => [ 'GimpPalette *palette = NULL' ],
-	code => <<"CODE"
+	code => <<'CODE'
 {
-  $get_palette_from_name
+  palette = (GimpPalette *)
+    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   if (palette && GIMP_DATA (palette)->deletable)
     {
@@ -208,9 +210,10 @@ HELP
 
     %invoke = (
 	vars => [ 'GimpPalette *palette = NULL' ],
-	code => <<"CODE"
+	code => <<'CODE'
 {
-  $get_palette_from_name
+  palette = (GimpPalette *)
+    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   success = (palette != NULL);
 }
@@ -245,9 +248,10 @@ HELP
     %invoke = (
 	vars => [ 'GimpPalette *palette = NULL',
                   'GimpPaletteEntry *entry = NULL' ],
-	code => <<"CODE"
+	code => <<'CODE'
 {
-  $get_palette_from_name
+  palette = (GimpPalette *)
+    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   if (palette && GIMP_DATA (palette)->writable)
     entry = gimp_palette_add_entry (palette, entry_name, &color);
@@ -277,9 +281,10 @@ HELP
     %invoke = (
 	vars => [ 'GimpPalette *palette = NULL',
                   'GimpPaletteEntry *entry = NULL' ],
-	code => <<"CODE"
+	code => <<'CODE'
 {
-  $get_palette_from_name
+  palette = (GimpPalette *)
+    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   if (palette && GIMP_DATA (palette)->writable)
     {
@@ -323,9 +328,10 @@ HELP
     %invoke = (
 	vars => [ 'GimpPalette *palette = NULL',
                   'GimpPaletteEntry *entry = NULL' ],
-	code => <<"CODE"
+	code => <<'CODE'
 {
-  $get_palette_from_name
+  palette = (GimpPalette *)
+    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   if (palette)
     {
@@ -366,9 +372,10 @@ HELP
     %invoke = (
 	vars => [ 'GimpPalette *palette = NULL',
                   'GimpPaletteEntry *entry = NULL' ],
-	code => <<"CODE"
+	code => <<'CODE'
 {
-  $get_palette_from_name
+  palette = (GimpPalette *)
+    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   if (palette && GIMP_DATA (palette)->writable)
     {
@@ -415,9 +422,10 @@ HELP
     %invoke = (
 	vars => [ 'GimpPalette *palette = NULL',
                   'GimpPaletteEntry *entry = NULL' ],
-	code => <<"CODE"
+	code => <<'CODE'
 {
-  $get_palette_from_name
+  palette = (GimpPalette *)
+    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   if (palette)
     {
@@ -454,9 +462,10 @@ HELP
     %invoke = (
 	vars => [ 'GimpPalette *palette = NULL',
                   'GimpPaletteEntry *entry = NULL' ],
-	code => <<"CODE"
+	code => <<'CODE'
 {
-  $get_palette_from_name
+  palette = (GimpPalette *)
+    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   if (palette && GIMP_DATA (palette)->writable)
     {

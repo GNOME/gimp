@@ -22,6 +22,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include "gimp.h"
 #include "gimpui.h"
 
@@ -115,9 +117,6 @@ gimp_brush_select_widget_new (const gchar          *title,
   BrushSelect          *brush_sel;
   GtkWidget            *frame;
   GtkWidget            *hbox;
-  gint                  init_spacing;
-  GimpLayerModeEffects  init_paint_mode;
-  gdouble               init_opacity;
   gint                  mask_data_size;
 
   g_return_val_if_fail (callback != NULL, NULL);
@@ -164,20 +163,31 @@ gimp_brush_select_widget_new (const gchar          *title,
                     brush_sel);
 
   /* Do initial brush setup */
-  brush_sel->brush_name = gimp_brushes_get_brush_data (brush_name,
-                                                       &init_opacity,
-                                                       &init_spacing,
-                                                       &init_paint_mode,
-                                                       &brush_sel->width,
-                                                       &brush_sel->height,
-                                                       &mask_data_size,
-                                                       &brush_sel->mask_data);
+  if (! brush_name || ! strlen (brush_name))
+    brush_sel->brush_name = gimp_context_get_brush ();
+  else
+    brush_sel->brush_name = g_strdup (brush_name);
 
-  if (brush_sel->brush_name)
+  if (gimp_brush_get_pixels (brush_sel->brush_name,
+                             &brush_sel->width,
+                             &brush_sel->height,
+                             &mask_data_size,
+                             &brush_sel->mask_data))
     {
-      brush_sel->opacity    = (opacity == -1.0)  ? init_opacity    : opacity;
-      brush_sel->spacing    = (spacing == -1)    ? init_spacing    : spacing;
-      brush_sel->paint_mode = (paint_mode == -1) ? init_paint_mode : paint_mode;
+      if (opacity == -1)
+        brush_sel->opacity = gimp_context_get_opacity ();
+      else
+        brush_sel->opacity = opacity;
+
+      if (paint_mode == -1)
+        brush_sel->paint_mode = gimp_context_get_paint_mode ();
+      else
+        brush_sel->paint_mode = paint_mode;
+
+      if (spacing == -1)
+        gimp_brush_get_spacing (brush_sel->brush_name, &brush_sel->spacing);
+      else
+        brush_sel->spacing = spacing;
     }
 
   g_object_set_data (G_OBJECT (hbox), BRUSH_SELECT_DATA_KEY, brush_sel);
@@ -239,37 +249,40 @@ gimp_brush_select_widget_set (GtkWidget            *widget,
     }
   else
     {
-      gint                  width;
-      gint                  height;
-      gint                  init_spacing;
-      GimpLayerModeEffects  init_paint_mode;
-      gdouble               init_opacity;
-      gint                  mask_data_size;
-      guint8               *mask_data;
-      gchar                *name;
+      gint    width;
+      gint    height;
+      gint    mask_data_size;
+      guint8 *mask_data;
+      gchar  *name;
 
-      name = gimp_brushes_get_brush_data (brush_name,
-					  &init_opacity,
-					  &init_spacing,
-					  &init_paint_mode,
-					  &width,
-					  &height,
-					  &mask_data_size,
-					  &mask_data);
+      if (! brush_name || ! strlen (brush_name))
+        name = gimp_context_get_brush ();
+      else
+        name = g_strdup (brush_name);
 
-      if (name)
+      if (gimp_brush_get_pixels (name,
+                                 &width,
+                                 &height,
+                                 &mask_data_size,
+                                 &mask_data))
         {
-          if (opacity    == -1.0) opacity    = init_opacity;
-          if (spacing    == -1)   spacing    = init_spacing;
-          if (paint_mode == -1)   paint_mode = init_paint_mode;
+          if (opacity == -1.0)
+            opacity = gimp_context_get_opacity ();
 
-          gimp_brush_select_widget_callback (brush_name, opacity, spacing,
+          if (paint_mode == -1)
+            paint_mode = gimp_context_get_paint_mode ();
+
+          if (spacing == -1)
+            gimp_brush_get_spacing (name, &spacing);
+
+          gimp_brush_select_widget_callback (name, opacity, spacing,
                                              paint_mode, width, height,
                                              mask_data, FALSE, brush_sel);
 
-          g_free (name);
           g_free (mask_data);
         }
+
+      g_free (name);
     }
 }
 

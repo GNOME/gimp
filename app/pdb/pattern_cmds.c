@@ -35,11 +35,13 @@
 #include "core/gimppattern.h"
 
 static ProcRecord pattern_get_info_proc;
+static ProcRecord pattern_get_pixels_proc;
 
 void
 register_pattern_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &pattern_get_info_proc);
+  procedural_db_register (gimp, &pattern_get_pixels_proc);
 }
 
 static Argument *
@@ -54,21 +56,13 @@ pattern_get_info_invoker (Gimp         *gimp,
   GimpPattern *pattern = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name && !g_utf8_validate (name, -1, NULL))
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
     {
-      if (name && strlen (name))
-      {
-        pattern = (GimpPattern *)
-          gimp_container_get_child_by_name (gimp->pattern_factory->container,
-                                            name);
-      }
-    else
-      {
-        pattern = gimp_context_get_pattern (context);
-      }
+      pattern = (GimpPattern *)
+        gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
 
       success = (pattern != NULL);
     }
@@ -90,7 +84,7 @@ static ProcArg pattern_get_info_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The pattern name (\"\" means currently active pattern)"
+    "The pattern name."
   }
 };
 
@@ -127,4 +121,105 @@ static ProcRecord pattern_get_info_proc =
   3,
   pattern_get_info_outargs,
   { { pattern_get_info_invoker } }
+};
+
+static Argument *
+pattern_get_pixels_invoker (Gimp         *gimp,
+                            GimpContext  *context,
+                            GimpProgress *progress,
+                            Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *name;
+  gint32 num_mask_bytes = 0;
+  guint8 *mask_bytes = NULL;
+  GimpPattern *pattern = NULL;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      pattern = (GimpPattern *)
+        gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
+
+      if (pattern)
+        {
+          num_mask_bytes = pattern->mask->height * pattern->mask->width *
+                           pattern->mask->bytes;
+          mask_bytes     = g_memdup (temp_buf_data (pattern->mask),
+                                     num_mask_bytes);
+        }
+      else
+        success = FALSE;
+    }
+
+  return_args = procedural_db_return_args (&pattern_get_pixels_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_int = pattern->mask->width;
+      return_args[2].value.pdb_int = pattern->mask->height;
+      return_args[3].value.pdb_int = pattern->mask->bytes;
+      return_args[4].value.pdb_int = num_mask_bytes;
+      return_args[5].value.pdb_pointer = mask_bytes;
+    }
+
+  return return_args;
+}
+
+static ProcArg pattern_get_pixels_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The pattern name."
+  }
+};
+
+static ProcArg pattern_get_pixels_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "width",
+    "The pattern width"
+  },
+  {
+    GIMP_PDB_INT32,
+    "height",
+    "The pattern height"
+  },
+  {
+    GIMP_PDB_INT32,
+    "bpp",
+    "The pattern bpp"
+  },
+  {
+    GIMP_PDB_INT32,
+    "num_mask_bytes",
+    "Length of pattern mask data"
+  },
+  {
+    GIMP_PDB_INT8ARRAY,
+    "mask_bytes",
+    "The pattern mask data"
+  }
+};
+
+static ProcRecord pattern_get_pixels_proc =
+{
+  "gimp_pattern_get_pixels",
+  "Retrieve information about the specified pattern (including pixels).",
+  "This procedure retrieves information about the specified. This includes the pattern extents (width and height), its bpp and its pixel data.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
+  "2004",
+  GIMP_INTERNAL,
+  1,
+  pattern_get_pixels_inargs,
+  5,
+  pattern_get_pixels_outargs,
+  { { pattern_get_pixels_invoker } }
 };

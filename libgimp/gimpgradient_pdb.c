@@ -23,6 +23,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include "gimp.h"
 
 /**
@@ -59,7 +61,7 @@ gimp_gradient_new (const gchar *name)
 
 /**
  * gimp_gradient_duplicate:
- * @name: The gradient name (\"\" means currently active gradient).
+ * @name: The gradient name.
  *
  * Duplicates a gradient
  *
@@ -91,7 +93,7 @@ gimp_gradient_duplicate (const gchar *name)
 
 /**
  * gimp_gradient_rename:
- * @name: The gradient name (\"\" means currently active gradient).
+ * @name: The gradient name.
  * @new_name: The new name of the gradient.
  *
  * Rename a gradient
@@ -126,7 +128,7 @@ gimp_gradient_rename (const gchar *name,
 
 /**
  * gimp_gradient_delete:
- * @name: The gradient name (\"\" means currently active gradient).
+ * @name: The gradient name.
  *
  * Deletes a gradient
  *
@@ -156,8 +158,126 @@ gimp_gradient_delete (const gchar *name)
 }
 
 /**
+ * gimp_gradient_get_uniform_samples:
+ * @name: The gradient name.
+ * @num_samples: The number of samples to take.
+ * @reverse: Use the reverse gradient.
+ * @num_color_samples: Length of the color_samples array (4 * num_samples).
+ * @color_samples: Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }.
+ *
+ * Sample the specified in uniform parts.
+ *
+ * This procedure samples the active gradient in the specified number
+ * of uniform parts. It returns a list of floating-point values which
+ * correspond to the RGBA values for each sample. The minimum number of
+ * samples to take is 2, in which case the returned colors will
+ * correspond to the { 0.0, 1.0 } positions in the gradient. For
+ * example, if the number of samples is 3, the procedure will return
+ * the colors at positions { 0.0, 0.5, 1.0 }.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+gimp_gradient_get_uniform_samples (const gchar  *name,
+				   gint          num_samples,
+				   gboolean      reverse,
+				   gint         *num_color_samples,
+				   gdouble     **color_samples)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_gradient_get_uniform_samples",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_INT32, num_samples,
+				    GIMP_PDB_INT32, reverse,
+				    GIMP_PDB_END);
+
+  *num_color_samples = 0;
+  *color_samples = NULL;
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
+    {
+      *num_color_samples = return_vals[1].data.d_int32;
+      *color_samples = g_new (gdouble, *num_color_samples);
+      memcpy (*color_samples, return_vals[2].data.d_floatarray,
+	      *num_color_samples * sizeof (gdouble));
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_gradient_get_custom_samples:
+ * @name: The gradient name.
+ * @num_samples: The number of samples to take.
+ * @positions: The list of positions to sample along the gradient.
+ * @reverse: Use the reverse gradient.
+ * @num_color_samples: Length of the color_samples array (4 * num_samples).
+ * @color_samples: Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }.
+ *
+ * Sample the spacified gradient in custom positions.
+ *
+ * This procedure samples the active gradient in the specified number
+ * of points. The procedure will sample the gradient in the specified
+ * positions from the list. The left endpoint of the gradient
+ * corresponds to position 0.0, and the right endpoint corresponds to
+ * 1.0. The procedure returns a list of floating-point values which
+ * correspond to the RGBA values for each sample.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+gimp_gradient_get_custom_samples (const gchar    *name,
+				  gint            num_samples,
+				  const gdouble  *positions,
+				  gboolean        reverse,
+				  gint           *num_color_samples,
+				  gdouble       **color_samples)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_gradient_get_custom_samples",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_INT32, num_samples,
+				    GIMP_PDB_FLOATARRAY, positions,
+				    GIMP_PDB_INT32, reverse,
+				    GIMP_PDB_END);
+
+  *num_color_samples = 0;
+  *color_samples = NULL;
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
+    {
+      *num_color_samples = return_vals[1].data.d_int32;
+      *color_samples = g_new (gdouble, *num_color_samples);
+      memcpy (*color_samples, return_vals[2].data.d_floatarray,
+	      *num_color_samples * sizeof (gdouble));
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_gradient_segment_get_left_color:
- * @name: The gradient name (\"\" means currently active gradient).
+ * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
  * @color: The return color.
  * @opacity: The opacity of the endpoint.
@@ -205,7 +325,7 @@ gimp_gradient_segment_get_left_color (const gchar *name,
 
 /**
  * gimp_gradient_segment_set_left_color:
- * @name: The gradient name (\"\" means currently active gradient).
+ * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
  * @color: The color to set.
  * @opacity: The opacity to set for the endpoint.
@@ -247,7 +367,7 @@ gimp_gradient_segment_set_left_color (const gchar   *name,
 
 /**
  * gimp_gradient_segment_get_right_color:
- * @name: The gradient name (\"\" means currently active gradient).
+ * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
  * @color: The return color.
  * @opacity: The opacity of the endpoint.
@@ -295,7 +415,7 @@ gimp_gradient_segment_get_right_color (const gchar *name,
 
 /**
  * gimp_gradient_segment_set_right_color:
- * @name: The gradient name (\"\" means currently active gradient).
+ * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
  * @color: The color to set.
  * @opacity: The opacity to set for the endpoint.
@@ -337,7 +457,7 @@ gimp_gradient_segment_set_right_color (const gchar   *name,
 
 /**
  * gimp_gradient_segment_get_left_pos:
- * @name: The gradient name (\"\" means currently active gradient).
+ * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
  * @pos: The return position.
  *
@@ -380,7 +500,7 @@ gimp_gradient_segment_get_left_pos (const gchar *name,
 
 /**
  * gimp_gradient_segment_set_left_pos:
- * @name: The gradient name (\"\" means currently active gradient).
+ * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
  * @pos: The position to set the guidepoint in.
  * @final_pos: The return position.
@@ -429,7 +549,7 @@ gimp_gradient_segment_set_left_pos (const gchar *name,
 
 /**
  * gimp_gradient_segment_get_middle_pos:
- * @name: The gradient name (\"\" means currently active gradient).
+ * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
  * @pos: The return position.
  *
@@ -472,7 +592,7 @@ gimp_gradient_segment_get_middle_pos (const gchar *name,
 
 /**
  * gimp_gradient_segment_set_middle_pos:
- * @name: The gradient name (\"\" means currently active gradient).
+ * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
  * @pos: The position to set the guidepoint in.
  * @final_pos: The return position.
@@ -519,7 +639,7 @@ gimp_gradient_segment_set_middle_pos (const gchar *name,
 
 /**
  * gimp_gradient_segment_get_right_pos:
- * @name: The gradient name (\"\" means currently active gradient).
+ * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
  * @pos: The return position.
  *
@@ -562,7 +682,7 @@ gimp_gradient_segment_get_right_pos (const gchar *name,
 
 /**
  * gimp_gradient_segment_set_right_pos:
- * @name: The gradient name (\"\" means currently active gradient).
+ * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
  * @pos: The position to set the guidepoint in.
  * @final_pos: The return position.
@@ -611,7 +731,7 @@ gimp_gradient_segment_set_right_pos (const gchar *name,
 
 /**
  * gimp_gradient_segment_get_blending_function:
- * @name: The gradient name (\"\" means currently active gradient).
+ * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
  * @blend_func: The blending function of the segment.
  *
@@ -653,7 +773,7 @@ gimp_gradient_segment_get_blending_function (const gchar             *name,
 
 /**
  * gimp_gradient_segment_get_coloring_type:
- * @name: The gradient name (\"\" means currently active gradient).
+ * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
  * @coloring_type: The coloring type of the segment.
  *
@@ -695,7 +815,7 @@ gimp_gradient_segment_get_coloring_type (const gchar              *name,
 
 /**
  * gimp_gradient_segment_range_set_blending_function:
- * @name: The gradient name (\"\" means currently active gradient).
+ * @name: The gradient name.
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
  * @blending_function: The Blending Function.
@@ -736,7 +856,7 @@ gimp_gradient_segment_range_set_blending_function (const gchar             *name
 
 /**
  * gimp_gradient_segment_range_set_coloring_type:
- * @name: The gradient name (\"\" means currently active gradient).
+ * @name: The gradient name.
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
  * @coloring_type: The Coloring Type.
@@ -777,7 +897,7 @@ gimp_gradient_segment_range_set_coloring_type (const gchar              *name,
 
 /**
  * gimp_gradient_segment_range_flip:
- * @name: The gradient name (\"\" means currently active gradient).
+ * @name: The gradient name.
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
  *
@@ -814,7 +934,7 @@ gimp_gradient_segment_range_flip (const gchar *name,
 
 /**
  * gimp_gradient_segment_range_replicate:
- * @name: The gradient name (\"\" means currently active gradient).
+ * @name: The gradient name.
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
  * @replicate_times: The number of times to replicate.
@@ -856,7 +976,7 @@ gimp_gradient_segment_range_replicate (const gchar *name,
 
 /**
  * gimp_gradient_segment_range_split_midpoint:
- * @name: The gradient name (\"\" means currently active gradient).
+ * @name: The gradient name.
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
  *
@@ -894,7 +1014,7 @@ gimp_gradient_segment_range_split_midpoint (const gchar *name,
 
 /**
  * gimp_gradient_segment_range_split_uniform:
- * @name: The gradient name (\"\" means currently active gradient).
+ * @name: The gradient name.
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
  * @split_parts: The number of uniform divisions to split each segment to.
@@ -935,7 +1055,7 @@ gimp_gradient_segment_range_split_uniform (const gchar *name,
 
 /**
  * gimp_gradient_segment_range_delete:
- * @name: The gradient name (\"\" means currently active gradient).
+ * @name: The gradient name.
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
  *
@@ -972,7 +1092,7 @@ gimp_gradient_segment_range_delete (const gchar *name,
 
 /**
  * gimp_gradient_segment_range_redistribute_handles:
- * @name: The gradient name (\"\" means currently active gradient).
+ * @name: The gradient name.
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
  *
@@ -1010,7 +1130,7 @@ gimp_gradient_segment_range_redistribute_handles (const gchar *name,
 
 /**
  * gimp_gradient_segment_range_blend_colors:
- * @name: The gradient name (\"\" means currently active gradient).
+ * @name: The gradient name.
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
  *
@@ -1049,7 +1169,7 @@ gimp_gradient_segment_range_blend_colors (const gchar *name,
 
 /**
  * gimp_gradient_segment_range_blend_opacity:
- * @name: The gradient name (\"\" means currently active gradient).
+ * @name: The gradient name.
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
  *
@@ -1088,7 +1208,7 @@ gimp_gradient_segment_range_blend_opacity (const gchar *name,
 
 /**
  * gimp_gradient_segment_range_move:
- * @name: The gradient name (\"\" means currently active gradient).
+ * @name: The gradient name.
  * @start_segment: The index of the first segment to operate on.
  * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
  * @delta: The delta to move the segment range.

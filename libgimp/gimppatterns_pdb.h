@@ -36,12 +36,14 @@ gchar**  gimp_patterns_get_list         (const gchar  *filter,
 gchar*   gimp_patterns_get_pattern      (gint         *width,
 					 gint         *height);
 #endif /* GIMP_DISABLE_DEPRECATED */
+#ifndef GIMP_DISABLE_DEPRECATED
 gchar*   gimp_patterns_get_pattern_data (const gchar  *name,
 					 gint         *width,
 					 gint         *height,
 					 gint         *mask_bpp,
 					 gint         *length,
 					 guint8      **mask_data);
+#endif /* GIMP_DISABLE_DEPRECATED */
 
 
 G_END_DECLS

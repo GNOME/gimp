@@ -61,7 +61,7 @@
     (if (= color-method 1)
         ; option 1
         ; Just return the gradient
-        (cdr (gimp-gradients-get-gradient-data grad (min steps 50) FALSE))
+        (gimp-gradient-get-uniform-samples grad (min steps 50) FALSE)
 
         ; option 2
         ; The returned list is such that the gradient appears two times, once
@@ -69,7 +69,7 @@
         ; jumps if we go beyond the edge
         (let* (
                 ; Sample the gradient into array "gr".
-                (gr (cdr (gimp-gradients-get-gradient-data grad (/ (min steps 50) 2) FALSE)))
+                (gr (gimp-gradient-get-uniform-samples grad (/ (min steps 50) 2) FALSE))
                                                     
                 (grn (car gr))  ; length of sample array.
                 (gra (cadr gr)) ; array of color samples (R1,G1,B1,A1, R2,....)

@@ -39,6 +39,7 @@ static ProcRecord brush_duplicate_proc;
 static ProcRecord brush_rename_proc;
 static ProcRecord brush_delete_proc;
 static ProcRecord brush_get_info_proc;
+static ProcRecord brush_get_pixels_proc;
 static ProcRecord brush_get_spacing_proc;
 static ProcRecord brush_set_spacing_proc;
 
@@ -50,6 +51,7 @@ register_brush_procs (Gimp *gimp)
   procedural_db_register (gimp, &brush_rename_proc);
   procedural_db_register (gimp, &brush_delete_proc);
   procedural_db_register (gimp, &brush_get_info_proc);
+  procedural_db_register (gimp, &brush_get_pixels_proc);
   procedural_db_register (gimp, &brush_get_spacing_proc);
   procedural_db_register (gimp, &brush_set_spacing_proc);
 }
@@ -132,21 +134,13 @@ brush_duplicate_invoker (Gimp         *gimp,
   GimpBrush *brush_copy = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name && !g_utf8_validate (name, -1, NULL))
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
     {
-      if (name && strlen (name))
-      {
-        brush = (GimpBrush *)
-          gimp_container_get_child_by_name (gimp->brush_factory->container,
-                                            name);
-      }
-    else
-      {
-        brush = gimp_context_get_brush (context);
-      }
+      brush = (GimpBrush *)
+        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
       if (brush)
         {
@@ -173,7 +167,7 @@ static ProcArg brush_duplicate_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The brush name (\"\" means currently active brush)"
+    "The brush name"
   }
 };
 
@@ -215,7 +209,7 @@ brush_rename_invoker (Gimp         *gimp,
   GimpBrush *brush = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name && !g_utf8_validate (name, -1, NULL))
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   new_name = (gchar *) args[1].value.pdb_pointer;
@@ -224,16 +218,8 @@ brush_rename_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (name && strlen (name))
-      {
-        brush = (GimpBrush *)
-          gimp_container_get_child_by_name (gimp->brush_factory->container,
-                                            name);
-      }
-    else
-      {
-        brush = gimp_context_get_brush (context);
-      }
+      brush = (GimpBrush *)
+        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
       if (brush && GIMP_DATA (brush)->writable)
         gimp_object_set_name (GIMP_OBJECT (brush), new_name);
@@ -254,7 +240,7 @@ static ProcArg brush_rename_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The brush name (\"\" means currently active brush)"
+    "The brush name"
   },
   {
     GIMP_PDB_STRING,
@@ -299,21 +285,13 @@ brush_delete_invoker (Gimp         *gimp,
   GimpBrush *brush = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name && !g_utf8_validate (name, -1, NULL))
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
     {
-      if (name && strlen (name))
-      {
-        brush = (GimpBrush *)
-          gimp_container_get_child_by_name (gimp->brush_factory->container,
-                                            name);
-      }
-    else
-      {
-        brush = gimp_context_get_brush (context);
-      }
+      brush = (GimpBrush *)
+        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
       if (brush && GIMP_DATA (brush)->deletable)
         {
@@ -341,7 +319,7 @@ static ProcArg brush_delete_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The brush name (\"\" means currently active brush)"
+    "The brush name"
   }
 };
 
@@ -373,21 +351,13 @@ brush_get_info_invoker (Gimp         *gimp,
   GimpBrush *brush = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name && !g_utf8_validate (name, -1, NULL))
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
     {
-      if (name && strlen (name))
-      {
-        brush = (GimpBrush *)
-          gimp_container_get_child_by_name (gimp->brush_factory->container,
-                                            name);
-      }
-    else
-      {
-        brush = gimp_context_get_brush (context);
-      }
+      brush = (GimpBrush *)
+        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
       success = (brush != NULL);
     }
@@ -408,7 +378,7 @@ static ProcArg brush_get_info_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The brush name (\"\" means currently active brush)"
+    "The brush name"
   }
 };
 
@@ -443,6 +413,99 @@ static ProcRecord brush_get_info_proc =
 };
 
 static Argument *
+brush_get_pixels_invoker (Gimp         *gimp,
+                          GimpContext  *context,
+                          GimpProgress *progress,
+                          Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *name;
+  gint32 num_mask_bytes = 0;
+  guint8 *mask_bytes = NULL;
+  GimpBrush *brush = NULL;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      brush = (GimpBrush *)
+        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+      if (brush)
+        {
+          num_mask_bytes = brush->mask->height * brush->mask->width;
+          mask_bytes     = g_memdup (temp_buf_data (brush->mask), num_mask_bytes);
+        }
+      else
+        success = FALSE;
+    }
+
+  return_args = procedural_db_return_args (&brush_get_pixels_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_int = brush->mask->width;
+      return_args[2].value.pdb_int = brush->mask->height;
+      return_args[3].value.pdb_int = num_mask_bytes;
+      return_args[4].value.pdb_pointer = mask_bytes;
+    }
+
+  return return_args;
+}
+
+static ProcArg brush_get_pixels_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The brush name"
+  }
+};
+
+static ProcArg brush_get_pixels_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "width",
+    "The brush width"
+  },
+  {
+    GIMP_PDB_INT32,
+    "height",
+    "The brush height"
+  },
+  {
+    GIMP_PDB_INT32,
+    "num_mask_bytes",
+    "Length of brush mask data"
+  },
+  {
+    GIMP_PDB_INT8ARRAY,
+    "mask_bytes",
+    "The brush mask data"
+  }
+};
+
+static ProcRecord brush_get_pixels_proc =
+{
+  "gimp_brush_get_pixels",
+  "Retrieve information about the specified brush.",
+  "This procedure retrieves information about the specified brush. This includes the brush extents (width and height) and its pixels data.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
+  "2004",
+  GIMP_INTERNAL,
+  1,
+  brush_get_pixels_inargs,
+  4,
+  brush_get_pixels_outargs,
+  { { brush_get_pixels_invoker } }
+};
+
+static Argument *
 brush_get_spacing_invoker (Gimp         *gimp,
                            GimpContext  *context,
                            GimpProgress *progress,
@@ -454,21 +517,13 @@ brush_get_spacing_invoker (Gimp         *gimp,
   GimpBrush *brush = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name && !g_utf8_validate (name, -1, NULL))
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
     {
-      if (name && strlen (name))
-      {
-        brush = (GimpBrush *)
-          gimp_container_get_child_by_name (gimp->brush_factory->container,
-                                            name);
-      }
-    else
-      {
-        brush = gimp_context_get_brush (context);
-      }
+      brush = (GimpBrush *)
+        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
       success = (brush != NULL);
     }
@@ -476,7 +531,7 @@ brush_get_spacing_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&brush_get_spacing_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_brush_get_spacing (gimp_context_get_brush (context));
+    return_args[1].value.pdb_int = gimp_brush_get_spacing (brush);
 
   return return_args;
 }
@@ -486,7 +541,7 @@ static ProcArg brush_get_spacing_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The brush name (\"\" means currently active brush)"
+    "The brush name"
   }
 };
 
@@ -527,7 +582,7 @@ brush_set_spacing_invoker (Gimp         *gimp,
   GimpBrush *brush = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name && !g_utf8_validate (name, -1, NULL))
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   spacing = args[1].value.pdb_int;
@@ -536,16 +591,8 @@ brush_set_spacing_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if (name && strlen (name))
-      {
-        brush = (GimpBrush *)
-          gimp_container_get_child_by_name (gimp->brush_factory->container,
-                                            name);
-      }
-    else
-      {
-        brush = gimp_context_get_brush (context);
-      }
+      brush = (GimpBrush *)
+        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
       if (brush && GIMP_DATA (brush)->writable)
         gimp_brush_set_spacing (brush, spacing);
@@ -561,7 +608,7 @@ static ProcArg brush_set_spacing_inargs[] =
   {
     GIMP_PDB_STRING,
     "name",
-    "The brush name (\"\" means currently active brush)"
+    "The brush name"
   },
   {
     GIMP_PDB_INT32,

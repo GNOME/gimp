@@ -27,8 +27,7 @@ sub mitch_misc {
 sub brush_arg () {{
     name => 'name',
     type => 'string',
-    desc => 'The brush name ("" means currently active brush)',
-    null_ok => '1'
+    desc => 'The brush name'
 }}
 
 sub spacing_arg () {{
@@ -36,19 +35,6 @@ sub spacing_arg () {{
     type => '0 <= int32 <= 1000',
     desc => 'The brush spacing: %%desc%%'
 }}
-
-my $get_brush_from_name = <<'CODE';
-if (name && strlen (name))
-  {
-    brush = (GimpBrush *)
-      gimp_container_get_child_by_name (gimp->brush_factory->container,
-                                        name);
-  }
-else
-  {
-    brush = gimp_context_get_brush (context);
-  }
-CODE
 
 
 # The defs
@@ -103,9 +89,10 @@ sub brush_duplicate {
     %invoke = (
 	vars => [ 'GimpBrush *brush = NULL',
                   'GimpBrush *brush_copy = NULL' ],
-        code => <<"CODE"
+        code => <<'CODE'
 {
-  $get_brush_from_name
+  brush = (GimpBrush *)
+    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
   if (brush)
     {
@@ -142,9 +129,10 @@ sub brush_rename {
 
     %invoke = (
 	vars => [ 'GimpBrush *brush = NULL' ],
-	code => <<"CODE"
+	code => <<'CODE'
 {
-  $get_brush_from_name
+  brush = (GimpBrush *)
+    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
   if (brush && GIMP_DATA (brush)->writable)
     gimp_object_set_name (GIMP_OBJECT (brush), new_name);
@@ -167,9 +155,10 @@ sub brush_delete {
 
     %invoke = (
 	vars => [ 'GimpBrush *brush = NULL' ],
-	code => <<"CODE"
+	code => <<'CODE'
 {
-  $get_brush_from_name
+  brush = (GimpBrush *)
+    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
   if (brush && GIMP_DATA (brush)->deletable)
     {
@@ -216,9 +205,10 @@ HELP
 
     %invoke = (
 	vars => [ 'GimpBrush *brush = NULL' ],
-	code => <<"CODE"
+	code => <<'CODE'
 {
-  $get_brush_from_name
+  brush = (GimpBrush *)
+    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
   success = (brush != NULL);
 }
@@ -244,15 +234,16 @@ HELP
     @outargs = (
         &spacing_arg
     );
-    $outargs[0]->{alias} = 'gimp_brush_get_spacing (gimp_context_get_brush (context))';
+    $outargs[0]->{alias} = 'gimp_brush_get_spacing (brush)';
     $outargs[0]->{no_declare} = 1;
     $outargs[0]->{void_ret} = 1;
 
     %invoke = (
 	vars => [ 'GimpBrush *brush = NULL' ],
-	code => <<"CODE"
+	code => <<'CODE'
 {
-  $get_brush_from_name
+  brush = (GimpBrush *)
+    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
   success = (brush != NULL);
 }
@@ -277,12 +268,61 @@ HELP
 
     %invoke = (
 	vars => [ 'GimpBrush *brush = NULL' ],
-	code => <<"CODE"
+	code => <<'CODE'
 {
-  $get_brush_from_name
+  brush = (GimpBrush *)
+    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
   if (brush && GIMP_DATA (brush)->writable)
     gimp_brush_set_spacing (brush, spacing);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub brush_get_pixels {
+    $blurb = <<'BLURB';
+Retrieve information about the specified brush.
+BLURB
+
+    $help = <<'HELP';
+This procedure retrieves information about the specified brush. This
+includes the brush extents (width and height) and its pixels data.
+HELP
+
+    &mitch_misc;
+
+    @inargs = (
+        &brush_arg
+    );
+
+    @outargs = (
+	{ name => 'width', type => 'int32', no_declare => '1',
+          alias => 'brush->mask->width', void_ret => '1',
+          desc => "The brush width" },
+	{ name => 'height', type => 'int32', no_declare => '1',
+          alias => 'brush->mask->height',
+          desc => "The brush height" },
+        { name => 'mask_bytes', type => 'int8array', init => 1,
+	  desc => 'The brush mask data',
+          array => { init => 1,
+                     desc => 'Length of brush mask data' } }
+    );
+
+    %invoke = (
+	vars => [ 'GimpBrush *brush = NULL' ],
+	code => <<'CODE'
+{
+  brush = (GimpBrush *)
+    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+  if (brush)
+    {
+      num_mask_bytes = brush->mask->height * brush->mask->width;
+      mask_bytes     = g_memdup (temp_buf_data (brush->mask), num_mask_bytes);
+    }
   else
     success = FALSE;
 }
@@ -296,7 +336,8 @@ CODE
               "core/gimpcontext.h" "core/gimpdatafactory.h");
 
 @procs = qw(brush_new brush_duplicate brush_rename brush_delete
-            brush_get_info brush_get_spacing brush_set_spacing);
+            brush_get_info brush_get_pixels
+            brush_get_spacing brush_set_spacing);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Brush';

@@ -29,18 +29,23 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gchar*   gimp_brush_new         (const gchar *name);
-gchar*   gimp_brush_duplicate   (const gchar *name);
-gchar*   gimp_brush_rename      (const gchar *name,
-				 const gchar *new_name);
-gboolean gimp_brush_delete      (const gchar *name);
-gboolean gimp_brush_get_info    (const gchar *name,
-				 gint        *width,
-				 gint        *height);
-gboolean gimp_brush_get_spacing (const gchar *name,
-				 gint        *spacing);
-gboolean gimp_brush_set_spacing (const gchar *name,
-				 gint         spacing);
+gchar*   gimp_brush_new         (const gchar  *name);
+gchar*   gimp_brush_duplicate   (const gchar  *name);
+gchar*   gimp_brush_rename      (const gchar  *name,
+				 const gchar  *new_name);
+gboolean gimp_brush_delete      (const gchar  *name);
+gboolean gimp_brush_get_info    (const gchar  *name,
+				 gint         *width,
+				 gint         *height);
+gboolean gimp_brush_get_pixels  (const gchar  *name,
+				 gint         *width,
+				 gint         *height,
+				 gint         *num_mask_bytes,
+				 guint8      **mask_bytes);
+gboolean gimp_brush_get_spacing (const gchar  *name,
+				 gint         *spacing);
+gboolean gimp_brush_set_spacing (const gchar  *name,
+				 gint          spacing);
 
 
 G_END_DECLS

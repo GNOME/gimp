@@ -1,3 +1,46 @@
+2004-10-06  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/brushes.pdb (brushes_get_brush_data)
+	* tools/pdbgen/pdb/gradients.pdb (gradients_sample_uniform)
+	(gradients_sample_custom) (gradients_get_gradient_data)
+	* tools/pdbgen/pdb/patterns.pdb (patterns_get_pattern_data):
+	deprecated.
+
+	* tools/pdbgen/pdb/brush.pdb
+	* tools/pdbgen/pdb/gradient.pdb
+	* tools/pdbgen/pdb/palette.pdb
+	* tools/pdbgen/pdb/pattern.pdb: added replacements for the
+	deprecated functions. Removed the silly feature that passing NULL
+	as name operates on the current brush, pattern etc.
+
+	* app/pdb/brush_cmds.c
+	* app/pdb/brushes_cmds.c
+	* app/pdb/gradient_cmds.c
+	* app/pdb/gradients_cmds.c
+	* app/pdb/internal_procs.c
+	* app/pdb/palette_cmds.c
+	* app/pdb/pattern_cmds.c
+	* app/pdb/patterns_cmds.c
+	* libgimp/gimpbrush_pdb.[ch]
+	* libgimp/gimpbrushes_pdb.[ch]
+	* libgimp/gimpgradient_pdb.[ch]
+	* libgimp/gimpgradients_pdb.[ch]
+	* libgimp/gimppalette_pdb.c
+	* libgimp/gimppattern_pdb.[ch]
+	* libgimp/gimppatterns_pdb.[ch]: regenerated.
+
+	* libgimp/gimpbrushmenu.c
+	* libgimp/gimpgradientmenu.c
+	* libgimp/gimppatternmenu.c
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/common/gradmap.c
+	* plug-ins/common/sample_colorize.c
+	* plug-ins/flame/flame.c
+	* plug-ins/gfig/gfig-style.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/pagecurl/pagecurl.c
+	* plug-ins/script-fu/scripts/spyrogimp.scm: changed accordingly.
+
 2004-10-06  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/spheredesigner.c: improved the dialog a bit,

@@ -1045,13 +1045,20 @@ page_curl (gint32 drawable_id)
 static guchar *
 get_gradient_samples (gint32    drawable_id,
                       gboolean  reverse)
- {
-  gdouble       *f_samples, *f_samp;    /* float samples */
-  guchar        *b_samples, *b_samp;    /* byte samples */
-  gint          bpp, color, has_alpha, alpha;
-  gint          i, j;
+{
+  gchar   *gradient_name;
+  gint     n_f_samples;
+  gdouble *f_samples, *f_samp;    /* float samples */
+  guchar  *b_samples, *b_samp;    /* byte samples */
+  gint     bpp, color, has_alpha, alpha;
+  gint     i, j;
 
-  f_samples = gimp_gradients_sample_uniform (NGRADSAMPLES, reverse);
+  gradient_name = gimp_context_get_gradient ();
+
+  gimp_gradient_get_uniform_samples (gradient_name, NGRADSAMPLES, reverse,
+                                     &n_f_samples, &f_samples);
+
+  g_free (gradient_name);
 
   bpp       = gimp_drawable_bpp (drawable_id);
   color     = gimp_drawable_is_rgb (drawable_id);

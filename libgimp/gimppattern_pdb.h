@@ -29,10 +29,16 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_pattern_get_info (const gchar *name,
-				gint        *width,
-				gint        *height,
-				gint        *bpp);
+gboolean gimp_pattern_get_info   (const gchar  *name,
+				  gint         *width,
+				  gint         *height,
+				  gint         *bpp);
+gboolean gimp_pattern_get_pixels (const gchar  *name,
+				  gint         *width,
+				  gint         *height,
+				  gint         *bpp,
+				  gint         *num_mask_bytes,
+				  guint8      **mask_bytes);
 
 
 G_END_DECLS

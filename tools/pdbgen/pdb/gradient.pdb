@@ -21,25 +21,17 @@ sub shlomi_misc {
     $since  = '2.2';
 }
 
+sub federico_misc {
+    $author = $copyright = 'Federico Mena Quintero';
+    $date   = '1997';
+    $since  = '2.2';
+}
+
 sub gradient_arg () {{
     name => 'name',
     type => 'string',
-    desc => 'The gradient name ("" means currently active gradient)',
-    null_ok => '1'
+    desc => 'The gradient name'
 }}
-
-my $get_gradient_from_name = <<'CODE';
-  if (name && strlen (name))
-    {
-      gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container,
-                                          name);
-    }
-  else
-    {
-      gradient = gimp_context_get_gradient (context);
-    }
-CODE
 
 sub _gen_gradient_search_for_segment_code
 {
@@ -54,23 +46,24 @@ sub _gen_gradient_search_for_segment_code
 
     return <<"CODE";
 {
-$get_gradient_from_name
+  gradient = (GimpGradient *)
+    gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
-  success = (gradient != NULL);
-
-  if (success)
+  if (gradient)
     {
       GimpGradientSegment *seg;
 
       seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
 
-      success = (seg != NULL);
-
-      if (success)
+      if (seg)
         {
 $action_on_success
         }
+      else
+        success = FALSE;
     }
+  else
+    success = FALSE;
 }
 
 CODE
@@ -306,7 +299,8 @@ sub gradient_duplicate {
                   'GimpGradient *gradient_copy = NULL' ],
         code => <<"CODE"
 {
-  $get_gradient_from_name
+  gradient = (GimpGradient *)
+    gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
   if (gradient)
     {
@@ -345,7 +339,8 @@ sub gradient_rename {
 	vars => [ 'GimpGradient *gradient = NULL' ],
 	code => <<"CODE"
 {
-  $get_gradient_from_name
+  gradient = (GimpGradient *)
+    gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
   if (gradient && GIMP_DATA (gradient)->writable)
     gimp_object_set_name (GIMP_OBJECT (gradient), new_name);
@@ -370,7 +365,8 @@ sub gradient_delete {
 	vars => [ 'GimpGradient *gradient = NULL' ],
 	code => <<"CODE"
 {
-  $get_gradient_from_name
+  gradient = (GimpGradient *)
+    gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
   if (gradient && GIMP_DATA (gradient)->deletable)
     {
@@ -384,6 +380,149 @@ sub gradient_delete {
         {
           g_message (error->message);
           g_clear_error (&error);
+        }
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub sample_num_arg {
+    { name => 'num_samples', type => $_[0] . 'int32',
+      desc => 'The number of samples to take' }
+}
+
+sub reverse_arg {
+    { name => 'reverse', type => 'boolean',
+      desc => 'Use the reverse gradient (%%desc%%)' }
+}
+
+sub sample_outargs {
+    @outargs = (
+        { name => 'color_samples', type => 'floatarray', init => 1,
+          void_ret => 1,
+	  desc => 'Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }',
+	  array => { init => 1,
+                     desc => 'Length of the color_samples array (4 *
+			      num_samples)' } }
+    );
+}
+
+sub gradient_get_uniform_samples {
+    $blurb = 'Sample the specified in uniform parts.';
+
+    $help = <<'HELP';
+This procedure samples the active gradient in the
+specified number of uniform parts. It returns a list of floating-point values
+which correspond to the RGBA values for each sample. The minimum number of
+samples to take is 2, in which case the returned colors will correspond to the
+{ 0.0, 1.0 } positions in the gradient. For example, if the number of samples
+is 3, the procedure will return the colors at positions { 0.0, 0.5, 1.0 }.
+HELP
+
+    &federico_misc;
+
+    @inargs = (
+         &gradient_arg,
+	 &sample_num_arg('2 <= '),
+	 &reverse_arg
+    );
+
+    &sample_outargs;
+
+    %invoke = (
+	vars => [ 'GimpGradient *gradient' ],
+	code => <<'CODE'
+{
+  gradient = (GimpGradient *)
+    gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+
+  if (gradient)
+    {
+      gdouble  pos   = 0.0;
+      gdouble  delta = 1.0 / (num_samples - 1);
+      gdouble *sample;
+
+      num_color_samples = num_samples * 4;
+
+      sample = color_samples = g_new (gdouble, num_color_samples);
+
+      while (num_samples--)
+        {
+          GimpRGB color;
+
+          gimp_gradient_get_color_at (gradient, pos, reverse, &color);
+
+          *sample++ = color.r;
+          *sample++ = color.g;
+          *sample++ = color.b;
+          *sample++ = color.a;
+
+          pos += delta;
+        }
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_get_custom_samples {
+    $blurb = 'Sample the spacified gradient in custom positions.';
+
+    $help = <<'HELP';
+This procedure samples the active gradient in the specified number of
+points. The procedure will sample the gradient in the specified
+positions from the list. The left endpoint of the gradient corresponds
+to position 0.0, and the right endpoint corresponds to 1.0. The
+procedure returns a list of floating-point values which correspond to
+the RGBA values for each sample.
+HELP
+
+    &federico_misc;
+
+    @inargs = (
+         &gradient_arg,
+	{ name  => 'positions',
+	  type  => 'floatarray',
+	  desc  => 'The list of positions to sample along the gradient',
+	  alias => 'pos',
+	  array => &sample_num_arg("") },
+	&reverse_arg
+    );
+
+    &sample_outargs;
+
+    %invoke = (
+	vars => [ 'GimpGradient *gradient' ],
+	code => <<'CODE'
+{
+  gradient = (GimpGradient *)
+    gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+
+  if (gradient)
+    {
+      gdouble *sample;
+
+      num_color_samples = num_samples * 4;
+
+      sample = color_samples = g_new (gdouble, num_color_samples);
+
+      while (num_samples--)
+        {
+          GimpRGB color;
+
+          gimp_gradient_get_color_at (gradient, *pos, reverse, &color);
+
+          *sample++ = color.r;
+          *sample++ = color.g;
+          *sample++ = color.b;
+          *sample++ = color.a;
+
+          pos++;
         }
     }
   else
@@ -532,7 +671,8 @@ sub _gen_gradient_operate_on_segments_range
         vars => [ 'GimpGradient *gradient = NULL' ],
         code => <<"CODE",
 {
-$get_gradient_from_name
+  gradient = (GimpGradient *)
+    gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
   if (gradient)
     {
@@ -814,6 +954,7 @@ CODE
               "core/gimpdatafactory.h" "core/gimplist.h");
 
 @procs = qw(gradient_new gradient_duplicate gradient_rename gradient_delete
+            gradient_get_uniform_samples gradient_get_custom_samples
             gradient_segment_get_left_color gradient_segment_set_left_color
             gradient_segment_get_right_color gradient_segment_set_right_color
             gradient_segment_get_left_pos gradient_segment_set_left_pos

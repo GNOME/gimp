@@ -43,6 +43,7 @@ gint     gimp_brushes_get_spacing    (void);
 #ifndef GIMP_DISABLE_DEPRECATED
 gboolean gimp_brushes_set_spacing    (gint                   spacing);
 #endif /* GIMP_DISABLE_DEPRECATED */
+#ifndef GIMP_DISABLE_DEPRECATED
 gchar*   gimp_brushes_get_brush_data (const gchar           *name,
 				      gdouble               *opacity,
 				      gint                  *spacing,
@@ -51,6 +52,7 @@ gchar*   gimp_brushes_get_brush_data (const gchar           *name,
 				      gint                  *height,
 				      gint                  *length,
 				      guint8               **mask_data);
+#endif /* GIMP_DISABLE_DEPRECATED */
 
 
 G_END_DECLS

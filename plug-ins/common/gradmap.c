@@ -194,15 +194,20 @@ gradmap (GimpDrawable *drawable)
 static guchar *
 get_samples (GimpDrawable *drawable)
 {
+  gchar   *gradient_name;
+  gint     n_f_samples;
   gdouble *f_samples, *f_samp;  /* float samples */
   guchar  *b_samples, *b_samp;  /* byte samples */
   gint     bpp, color, has_alpha, alpha;
   gint     i, j;
 
+  gradient_name = gimp_context_get_gradient ();
+
 #ifdef __GNUC__
 #warning FIXME: "reverse" hardcoded to FALSE.
 #endif
-  f_samples = gimp_gradients_sample_uniform (NSAMPLES, FALSE);
+  gimp_gradient_get_uniform_samples (gradient_name, NSAMPLES, FALSE,
+                                     &n_f_samples, &f_samples);
 
   bpp       = gimp_drawable_bpp (drawable->drawable_id);
   color     = gimp_drawable_is_rgb (drawable->drawable_id);

@@ -20,6 +20,7 @@
 #define ZOOM_UNDO_SIZE 100
 
 
+static gint              n_gradient_samples = 0;
 static gdouble          *gradient_samples = NULL;
 static gchar            *gradient_name    = NULL;
 static gboolean          ready_now = FALSE;
@@ -256,8 +257,6 @@ static void
 explorer_number_of_colors_callback (GtkAdjustment *adjustment,
                                     gpointer       data)
 {
-  gint dummy;
-
   gimp_int_adjustment_update (adjustment, data);
 
   g_free (gradient_samples);
@@ -265,11 +264,11 @@ explorer_number_of_colors_callback (GtkAdjustment *adjustment,
   if (! gradient_name)
     gradient_name = gimp_context_get_gradient ();
 
-  gimp_gradients_get_gradient_data (gradient_name,
-                                    wvals.ncolors,
-                                    wvals.gradinvert,
-                                    &dummy,
-                                    &gradient_samples);
+  gimp_gradient_get_uniform_samples (gradient_name,
+                                     wvals.ncolors,
+                                     wvals.gradinvert,
+                                     &n_gradient_samples,
+                                     &gradient_samples);
 
   set_cmap_preview ();
   dialog_update_preview ();
@@ -282,18 +281,16 @@ explorer_gradient_select_callback (const gchar   *name,
                                    gboolean       dialog_closing,
                                    gpointer       data)
 {
-  gint dummy;
-
   g_free (gradient_name);
   g_free (gradient_samples);
 
   gradient_name = g_strdup (name);
 
-  gimp_gradients_get_gradient_data (gradient_name,
-                                    wvals.ncolors,
-                                    wvals.gradinvert,
-                                    &dummy,
-                                    &gradient_samples);
+  gimp_gradient_get_uniform_samples (gradient_name,
+                                     wvals.ncolors,
+                                     wvals.gradinvert,
+                                     &n_gradient_samples,
+                                     &gradient_samples);
 
   if (wvals.colormode == 1)
     {
@@ -303,7 +300,8 @@ explorer_gradient_select_callback (const gchar   *name,
 }
 
 static void
-preview_draw_crosshair (gint px, gint py)
+preview_draw_crosshair (gint px,
+                        gint py)
 {
   gint     x, y;
   guchar  *p_ul;
@@ -1135,8 +1133,13 @@ explorer_dialog (void)
                              "the gradient editor"), NULL);
 
   gradient_name = gimp_context_get_gradient ();
-  gradient_samples = gimp_gradients_sample_uniform (wvals.ncolors,
-                                                    wvals.gradinvert);
+
+  gimp_gradient_get_uniform_samples (gradient_name,
+                                     wvals.ncolors,
+                                     wvals.gradinvert,
+                                     &n_gradient_samples,
+                                     &gradient_samples);
+
   gradient = gimp_gradient_select_widget_new (_("FractalExplorer Gradient"),
                                               gradient_name,
                                               explorer_gradient_select_callback,
@@ -1500,8 +1503,17 @@ make_color_map (void)
    *  mode for noninteractive use (bug #103470).
    */
   if (gradient_samples == NULL)
-    gradient_samples = gimp_gradients_sample_uniform (wvals.ncolors,
-                                                      wvals.gradinvert);
+    {
+      gchar *gradient_name = gimp_context_get_gradient ();
+
+      gimp_gradient_get_uniform_samples (gradient_name,
+                                         wvals.ncolors,
+                                         wvals.gradinvert,
+                                         &n_gradient_samples,
+                                         &gradient_samples);
+
+      g_free (gradient_name);
+    }
 
   redstretch   = wvals.redstretch * 127.5;
   greenstretch = wvals.greenstretch * 127.5;

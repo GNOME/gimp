@@ -22,6 +22,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include "gimp.h"
 #include "gimpui.h"
 
@@ -110,9 +112,12 @@ gimp_gradient_select_widget_new (const gchar             *title,
   gradient_sel->sample_size = CELL_WIDTH;
   gradient_sel->reverse     = FALSE;
 
-  gradient_sel->button = gtk_button_new ();
+  if (! gradient_name || ! strlen (gradient_name))
+    gradient_sel->gradient_name = gimp_context_get_gradient ();
+  else
+    gradient_sel->gradient_name = g_strdup (gradient_name);
 
-  gradient_sel->gradient_name = g_strdup (gradient_name);
+  gradient_sel->button = gtk_button_new ();
 
   g_signal_connect (gradient_sel->button, "clicked",
                     G_CALLBACK (gimp_gradient_select_widget_clicked),
@@ -193,24 +198,28 @@ gimp_gradient_select_widget_set (GtkWidget   *widget,
   else
     {
       gchar   *name;
-      gdouble *gradient_data;
-      gint     width;
+      gint     n_samples;
+      gdouble *samples;
 
-      name = gimp_gradients_get_gradient_data (gradient_name,
-					       gradient_sel->sample_size,
-                                               gradient_sel->reverse,
-                                               &width,
-					       &gradient_data);
+      if (! gradient_name || ! strlen (gradient_name))
+        name = gimp_context_get_gradient ();
+      else
+        name = g_strdup (gradient_name);
 
-      if (name)
-	{
+      if (gimp_gradient_get_uniform_samples (name,
+                                             gradient_sel->sample_size,
+                                             gradient_sel->reverse,
+                                             &n_samples,
+                                             &samples))
+        {
 	  gimp_gradient_select_widget_callback (name,
-                                                width, gradient_data,
+                                                n_samples, samples,
                                                 FALSE, gradient_sel);
 
-	  g_free (name);
-          g_free (gradient_data);
+          g_free (samples);
 	}
+
+      g_free (name);
     }
 }
 
@@ -285,26 +294,20 @@ gimp_gradient_select_preview_size_allocate (GtkWidget      *widget,
                                             GtkAllocation  *allocation,
                                             GradientSelect *gradient_sel)
 {
-  gchar   *name;
-  gdouble *data;
-  gint     width;
+  gint     n_samples;
+  gdouble *samples;
 
-  name = gimp_gradients_get_gradient_data (gradient_sel->gradient_name,
-                                           allocation->width,
-                                           gradient_sel->reverse,
-                                           &width,
-                                           &data);
-
-  if (name)
+  if (gimp_gradient_get_uniform_samples (gradient_sel->gradient_name,
+                                         allocation->width,
+                                         gradient_sel->reverse,
+                                         &n_samples,
+                                         &samples))
     {
       gradient_sel->sample_size   = allocation->width;
-      gradient_sel->width         = width;
-
-      g_free (gradient_sel->gradient_name);
-      gradient_sel->gradient_name = name;
+      gradient_sel->width         = n_samples;
 
       g_free (gradient_sel->gradient_data);
-      gradient_sel->gradient_data = data;
+      gradient_sel->gradient_data = samples;
     }
 }
 

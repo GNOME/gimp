@@ -23,6 +23,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include "gimp.h"
 
 /**
@@ -59,7 +61,7 @@ gimp_brush_new (const gchar *name)
 
 /**
  * gimp_brush_duplicate:
- * @name: The brush name (\"\" means currently active brush).
+ * @name: The brush name.
  *
  * Duplicates a brush
  *
@@ -91,7 +93,7 @@ gimp_brush_duplicate (const gchar *name)
 
 /**
  * gimp_brush_rename:
- * @name: The brush name (\"\" means currently active brush).
+ * @name: The brush name.
  * @new_name: The new name of the brush.
  *
  * Rename a brush
@@ -126,7 +128,7 @@ gimp_brush_rename (const gchar *name,
 
 /**
  * gimp_brush_delete:
- * @name: The brush name (\"\" means currently active brush).
+ * @name: The brush name.
  *
  * Deletes a brush
  *
@@ -157,7 +159,7 @@ gimp_brush_delete (const gchar *name)
 
 /**
  * gimp_brush_get_info:
- * @name: The brush name (\"\" means currently active brush).
+ * @name: The brush name.
  * @width: The brush width.
  * @height: The brush height.
  *
@@ -201,8 +203,63 @@ gimp_brush_get_info (const gchar *name,
 }
 
 /**
+ * gimp_brush_get_pixels:
+ * @name: The brush name.
+ * @width: The brush width.
+ * @height: The brush height.
+ * @num_mask_bytes: Length of brush mask data.
+ * @mask_bytes: The brush mask data.
+ *
+ * Retrieve information about the specified brush.
+ *
+ * This procedure retrieves information about the specified brush. This
+ * includes the brush extents (width and height) and its pixels data.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+gimp_brush_get_pixels (const gchar  *name,
+		       gint         *width,
+		       gint         *height,
+		       gint         *num_mask_bytes,
+		       guint8      **mask_bytes)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_brush_get_pixels",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_END);
+
+  *width = 0;
+  *height = 0;
+  *num_mask_bytes = 0;
+  *mask_bytes = NULL;
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
+    {
+      *width = return_vals[1].data.d_int32;
+      *height = return_vals[2].data.d_int32;
+      *num_mask_bytes = return_vals[3].data.d_int32;
+      *mask_bytes = g_new (guint8, *num_mask_bytes);
+      memcpy (*mask_bytes, return_vals[4].data.d_int8array,
+	      *num_mask_bytes * sizeof (guint8));
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_brush_get_spacing:
- * @name: The brush name (\"\" means currently active brush).
+ * @name: The brush name.
  * @spacing: The brush spacing.
  *
  * Get the brush spacing.
@@ -242,7 +299,7 @@ gimp_brush_get_spacing (const gchar *name,
 
 /**
  * gimp_brush_set_spacing:
- * @name: The brush name (\"\" means currently active brush).
+ * @name: The brush name.
  * @spacing: The brush spacing.
  *
  * Set the brush spacing.

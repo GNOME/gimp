@@ -22,19 +22,6 @@ sub federico_misc {
     $date = '1997';
 }
 
-my $get_gradient_from_name = <<'CODE';
-if (name && strlen (name))
-  {
-    gradient = (GimpGradient *)
-      gimp_container_get_child_by_name (gimp->gradient_factory->container,
-                                        name);
-  }
-else
-  {
-    gradient = gimp_context_get_gradient (context);
-  }
-CODE
-
 
 # The defs
 
@@ -110,18 +97,11 @@ sub sample_outargs {
 }
 
 sub gradients_sample_uniform {
-    $blurb = 'Sample the active gradient in uniform parts.';
+    $blurb = $help = "This procedure is deprecated! Use 'gimp_gradient_get_uniform_samples' instead.";
 
-    $help = <<'HELP';
-This procedure samples the active gradient in the
-specified number of uniform parts. It returns a list of floating-point values
-which correspond to the RGBA values for each sample. The minimum number of
-samples to take is 2, in which case the returned colors will correspond to the
-{ 0.0, 1.0 } positions in the gradient. For example, if the number of samples
-is 3, the procedure will return the colors at positions { 0.0, 0.5, 1.0 }.
-HELP
+    $author = $copyright = $date = '';
 
-    &federico_misc;
+    $deprecated = 1;
 
     @inargs = (
 	 &sample_num_arg('2 <= '),
@@ -160,18 +140,11 @@ CODE
 }
 
 sub gradients_sample_custom {
-    $blurb = 'Sample the active gradient in custom positions.';
+    $blurb = $help = "This procedure is deprecated! Use 'gimp_gradient_get_custom_samples' instead.";
 
-    $help = <<'HELP';
-This procedure samples the active gradient in the specified number of
-points. The procedure will sample the gradient in the specified
-positions from the list. The left endpoint of the gradient corresponds
-to position 0.0, and the right endpoint corresponds to 1.0. The
-procedure returns a list of floating-point values which correspond to
-the RGBA values for each sample.
-HELP
+    $author = $copyright = $date = '';
 
-    &federico_misc;
+    $deprecated = 1;
 
     @inargs = (
 	{ name  => 'positions',
@@ -220,16 +193,11 @@ sub sample_size_arg {
 }
 
 sub gradients_get_gradient_data {
-    $blurb = <<'BLURB';
-Retrieve information about the specified gradient (including data).
-BLURB
+    $blurb = $help = "This procedure is deprecated! Use 'gimp_gradient_get_uniform_samples' instead.";
 
-    $help = <<'HELP';
-This procedure retrieves information about the gradient. This includes the
-gradient name, and the sample data for the gradient.
-HELP
+    $author = $copyright = $date = '';
 
-    &federico_misc;
+    $deprecated = 1;
 
     @inargs = (
 	{ name => 'name', type => 'string',
@@ -254,7 +222,16 @@ HELP
 	vars => [ 'GimpGradient *gradient = NULL' ],
 	code => <<"CODE"
 {
-  $get_gradient_from_name
+  if (name && strlen (name))
+    {
+      gradient = (GimpGradient *)
+        gimp_container_get_child_by_name (gimp->gradient_factory->container,
+                                          name);
+    }
+  else
+    {
+      gradient = gimp_context_get_gradient (context);
+    }
 
   if (gradient)
     {

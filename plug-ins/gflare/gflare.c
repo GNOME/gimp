@@ -4668,7 +4668,7 @@ gradient_get_blend (guchar *fg,
   gint     j;
   guchar  *v = values;
 
-  for (i=0; i<nvalues; i++)
+  for (i = 0; i < nvalues; i++)
     {
       x = (double) i / nvalues;
       for (j = 0; j < 4; j++)
@@ -4794,24 +4794,19 @@ gradient_get_values_real_external (const gchar *gradient_name,
 				   gint         nvalues,
                                    gboolean     reverse)
 {
-  gchar   *old_name;
+  gint     n_tmp_values;
   gdouble *tmp_values;
   gint     i;
   gint     j;
 
-  old_name = gimp_context_get_gradient ();
+  gimp_gradient_get_uniform_samples (gradient_name, nvalues, reverse,
+                                     &n_tmp_values, &tmp_values);
 
-  gimp_context_set_gradient (gradient_name);
-
-  tmp_values = gimp_gradients_sample_uniform (nvalues, reverse);
   for (i = 0; i < nvalues; i++)
     for (j = 0; j < 4; j++)
-      values[4*i+j] = (guchar) (tmp_values[4*i+j] * 255);
-
-  gimp_context_set_gradient (old_name);
+      values[4 * i + j] = (guchar) (tmp_values[4 * i + j] * 255);
 
   g_free (tmp_values);
-  g_free (old_name);
 }
 
 void

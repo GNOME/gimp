@@ -305,11 +305,11 @@ static ProcArg patterns_get_pattern_data_outargs[] =
 static ProcRecord patterns_get_pattern_data_proc =
 {
   "gimp_patterns_get_pattern_data",
-  "Retrieve information about the currently active pattern (including data).",
-  "This procedure retrieves information about the currently active pattern. This includes the pattern name, and the pattern extents (width and height). It also returns the pattern data.",
-  "Andy Thomas",
-  "Andy Thomas",
-  "1998",
+  "This procedure is deprecated! Use 'gimp_pattern_get_data' instead.",
+  "This procedure is deprecated! Use 'gimp_pattern_get_data' instead.",
+  "",
+  "",
+  "",
   GIMP_INTERNAL,
   1,
   patterns_get_pattern_data_inargs,

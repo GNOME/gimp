@@ -120,20 +120,15 @@ sub patterns_get_pattern {
 }
 
 sub patterns_get_pattern_data {
-    $blurb = <<'BLURB';
-Retrieve information about the currently active pattern (including data).
-BLURB
+    $blurb = $help = "This procedure is deprecated! Use 'gimp_pattern_get_data' instead.";
 
-    $help = <<'HELP';
-This procedure retrieves information about the currently active pattern. This
-includes the pattern name, and the pattern extents (width and height). It also
-returns the pattern data.
-HELP
+    $author = $copyright = $data = '';
 
-    $author = $copyright = 'Andy Thomas';
-    $date = '1998';
+    $deprecated = 1;
 
-    @inargs = ( &pattern_arg );
+    @inargs = (
+        &pattern_arg
+    );
     $inargs[0]->{desc} = 'The pattern name ("" means currently active pattern)';
 
     @outargs = (
