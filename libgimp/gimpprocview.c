@@ -63,31 +63,31 @@ typedef struct
   GtkWidget *scrolled_win;
 
   /* the currently selected procedure */
-  gchar *selected_proc_name;
-  gchar *selected_scheme_proc_name;
-  gchar *selected_proc_blurb;
-  gchar *selected_proc_help;
-  gchar *selected_proc_author;
-  gchar *selected_proc_copyright;
-  gchar *selected_proc_date;
-  gint   selected_proc_type;
-  gint   selected_nparams;
-  gint   selected_nreturn_vals;
-  GParamDef *selected_params;
-  GParamDef *selected_return_vals; 
+  gchar           *selected_proc_name;
+  gchar           *selected_scheme_proc_name;
+  gchar           *selected_proc_blurb;
+  gchar           *selected_proc_help;
+  gchar           *selected_proc_author;
+  gchar           *selected_proc_copyright;
+  gchar           *selected_proc_date;
+  GimpPDBProcType  selected_proc_type;
+  gint             selected_nparams;
+  gint             selected_nreturn_vals;
+  GimpParamDef    *selected_params;
+  GimpParamDef    *selected_return_vals; 
 
-  void (* apply_callback) (gchar     *selected_proc_name,
-			   gchar     *selected_scheme_proc_name,
-			   gchar     *selected_proc_blurb,
-			   gchar     *selected_proc_help,
-			   gchar     *selected_proc_author,
-			   gchar     *selected_proc_copyright,
-			   gchar     *selected_proc_date,
-			   gint       selected_proc_type,
-			   gint       selected_nparams,
-			   gint       selected_nreturn_vals,
-			   GParamDef *selected_params,
-			   GParamDef *selected_return_vals);
+  void (* apply_callback) (gchar           *proc_name,
+			   gchar           *scheme_proc_name,
+			   gchar           *proc_blurb,
+			   gchar           *proc_help,
+			   gchar           *proc_author,
+			   gchar           *proc_copyright,
+			   gchar           *proc_date,
+			   GimpPDBProcType  proc_type,
+			   gint             nparams,
+			   gint             nreturn_vals,
+			   GimpParamDef    *params,
+			   GimpParamDef    *return_vals);
 
 } dbbrowser_t;
 
@@ -115,18 +115,18 @@ GList * proc_table = NULL;
  * console_entry != NULL => called from the script-fu-console
  */
 GtkWidget *
-gimp_db_browser (void (* apply_callback) (gchar     *selected_proc_name,
-					  gchar     *selected_scheme_proc_name,
-					  gchar     *selected_proc_blurb,
-					  gchar     *selected_proc_help,
-					  gchar     *selected_proc_author,
-					  gchar     *selected_proc_copyright,
-					  gchar     *selected_proc_date,
-					  gint       selected_proc_type,
-					  gint       selected_nparams,
-					  gint       selected_nreturn_vals,
-					  GParamDef *selected_params,
-					  GParamDef *selected_return_vals))
+gimp_db_browser (void (* apply_callback) (gchar           *proc_name,
+					  gchar           *scheme_proc_name,
+					  gchar           *proc_blurb,
+					  gchar           *proc_help,
+					  gchar           *proc_author,
+					  gchar           *proc_copyright,
+					  gchar           *proc_date,
+					  GimpPDBProcType  proc_type,
+					  gint             nparams,
+					  gint             nreturn_vals,
+					  GimpParamDef    *params,
+					  GimpParamDef    *return_vals))
 {
   dbbrowser_t* dbbrowser;
   

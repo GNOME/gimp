@@ -296,21 +296,21 @@ init_gimp (void)
 static void
 init_procedures (void)
 {
-  gchar **proc_list;
-  gchar  *proc_name;
-  gchar  *arg_name;
-  gchar  *proc_blurb;
-  gchar  *proc_help;
-  gchar  *proc_author;
-  gchar  *proc_copyright;
-  gchar  *proc_date;
-  gint    proc_type;
-  gint    nparams;
-  gint    nreturn_vals;
-  GParamDef *params;
-  GParamDef *return_vals;
-  gint  num_procs;
-  gint  i;
+  gchar          **proc_list;
+  gchar           *proc_name;
+  gchar           *arg_name;
+  gchar           *proc_blurb;
+  gchar           *proc_help;
+  gchar           *proc_author;
+  gchar           *proc_copyright;
+  gchar           *proc_date;
+  GimpPDBProcType  proc_type;
+  gint             nparams;
+  gint             nreturn_vals;
+  GimpParamDef    *params;
+  GimpParamDef    *return_vals;
+  gint             num_procs;
+  gint             i;
 
   /*  register the database execution procedure  */
   init_lsubr ("gimp-proc-db-call", marshall_proc_db_call);
@@ -486,29 +486,29 @@ lprin1s (LISP   exp,
 static LISP
 marshall_proc_db_call (LISP a)
 {
-  GParam *args;
-  GParam *values = NULL;
-  int nvalues;
-  char *proc_name;
-  char *proc_blurb;
-  char *proc_help;
-  char *proc_author;
-  char *proc_copyright;
-  char *proc_date;
-  int proc_type;
-  int nparams;
-  int nreturn_vals;
-  GParamDef *params;
-  GParamDef *return_vals;
-  char error_str[256];
-  int i;
-  int success = TRUE;
-  LISP color_list;
-  LISP intermediate_val;
-  LISP return_val = NIL;
-  char *string;
-  int string_len;
-  LISP a_saved;
+  GimpParam       *args;
+  GimpParam       *values = NULL;
+  gint             nvalues;
+  gchar           *proc_name;
+  gchar           *proc_blurb;
+  gchar           *proc_help;
+  gchar           *proc_author;
+  gchar           *proc_copyright;
+  gchar           *proc_date;
+  GimpPDBProcType  proc_type;
+  gint             nparams;
+  gint             nreturn_vals;
+  GimpParamDef    *params;
+  GimpParamDef    *return_vals;
+  gchar  error_str[256];
+  gint   i;
+  gint   success = TRUE;
+  LISP   color_list;
+  LISP   intermediate_val;
+  LISP   return_val = NIL;
+  gchar *string;
+  gint   string_len;
+  LISP   a_saved;
 
   /* Save a in case it is needed for an error message. */
   a_saved = a;

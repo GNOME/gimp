@@ -73,23 +73,21 @@ static gint32 g_current_image_id;
 
 gint p_call_plugin(char *plugin_name, gint32 image_id, gint32 layer_id, GRunModeType run_mode)
 {
-  GDrawable  *l_drawable;
-  GParam     *l_ret_params;
-  GParam     *l_argv;
-  gint        l_retvals;
-  int         l_idx;
-
-  int             l_nparams;
-  int             l_nreturn_vals;
-  int             l_proc_type;
-  char            *l_proc_blurb;
-  char            *l_proc_help;
-  char            *l_proc_author;
-  char            *l_proc_copyright;
-  char            *l_proc_date;
-  GParamDef       *l_params;
-  GParamDef       *l_return_vals;
-  
+  GimpDrawable    *l_drawable;
+  GimpParam       *l_ret_params;
+  GimpParam       *l_argv;
+  gint             l_retvals;
+  gint             l_idx;
+  gint             l_nparams;
+  gint             l_nreturn_vals;
+  GimpPDBProcType  l_proc_type;
+  gchar           *l_proc_blurb;
+  gchar           *l_proc_help;
+  gchar           *l_proc_author;
+  gchar           *l_proc_copyright;
+  gchar           *l_proc_date;
+  GimpParamDef    *l_params;
+  GimpParamDef    *l_return_vals;
 
   l_drawable =  gimp_drawable_get(layer_id);  /* use the background layer */
 
@@ -262,16 +260,16 @@ void p_set_data(char *key, gint plugin_data_len)
 
 gint p_procedure_available(char  *proc_name, t_proc_type ptype)
 {
-  int             l_nparams;
-  int             l_nreturn_vals;
-  int             l_proc_type;
-  char            *l_proc_blurb;
-  char            *l_proc_help;
-  char            *l_proc_author;
-  char            *l_proc_copyright;
-  char            *l_proc_date;
-  GParamDef       *l_params;
-  GParamDef       *l_return_vals;
+  gint             l_nparams;
+  gint             l_nreturn_vals;
+  GimpPDBProcType  l_proc_type;
+  gchar           *l_proc_blurb;
+  gchar           *l_proc_help;
+  gchar           *l_proc_author;
+  gchar           *l_proc_copyright;
+  gchar           *l_proc_date;
+  GimpParamDef    *l_params;
+  GimpParamDef    *l_return_vals;
   gint             l_rc;
 
   l_rc = 0;
@@ -279,17 +277,17 @@ gint p_procedure_available(char  *proc_name, t_proc_type ptype)
   /* Query the gimp application's procedural database
    *  regarding a particular procedure.
    */
-  if(gimp_query_procedure  (proc_name,
-			        &l_proc_blurb,
-			        &l_proc_help,
-			        &l_proc_author,
-			        &l_proc_copyright,
-			        &l_proc_date,
-			        &l_proc_type,
-			        &l_nparams,
-			        &l_nreturn_vals,
-			        &l_params,
-			        &l_return_vals))
+  if (gimp_query_procedure (proc_name,
+			    &l_proc_blurb,
+			    &l_proc_help,
+			    &l_proc_author,
+			    &l_proc_copyright,
+			    &l_proc_date,
+			    &l_proc_type,
+			    &l_nparams,
+			    &l_nreturn_vals,
+			    &l_params,
+			    &l_return_vals))
   {
      /* procedure found in PDB */
      if(gap_debug) fprintf(stderr, "DEBUG: found in PDB %s\n", proc_name);

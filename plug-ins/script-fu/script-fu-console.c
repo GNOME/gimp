@@ -342,18 +342,18 @@ script_fu_close_callback (GtkWidget *widget,
 }
 
 void 
-apply_callback (gchar     *proc_name,
-		gchar     *scheme_proc_name,
-		gchar     *proc_blurb,
-		gchar     *proc_help,
-		gchar     *proc_author,
-		gchar     *proc_copyright,
-		gchar     *proc_date,
-		int        proc_type,
-		int        nparams,
-		int        nreturn_vals,
-		GParamDef *params,
-		GParamDef *return_vals )
+apply_callback (gchar           *proc_name,
+		gchar           *scheme_proc_name,
+		gchar           *proc_blurb,
+		gchar           *proc_help,
+		gchar           *proc_author,
+		gchar           *proc_copyright,
+		gchar           *proc_date,
+		GimpPDBProcType  proc_type,
+		gint             nparams,
+		gint             nreturn_vals,
+		GimpParamDef    *params,
+		GimpParamDef    *return_vals)
 {
   gint i;
   GString *text;

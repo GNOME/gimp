@@ -149,6 +149,8 @@ libgimp_la_SOURCES = \
 	${PDB_WRAPPERS_H}	\
 	gimpcolorspace.c	\
 	gimpcolorspace.h	\
+	gimpchannel.c		\
+	gimpchannel.h		\
 	gimpdrawable.c		\
 	gimpdrawable.h		\
 	gimpenv.c		\
@@ -169,6 +171,8 @@ libgimp_la_SOURCES = \
 	gimpparasiteio.h	\
 	gimppixelrgn.c		\
 	gimppixelrgn.h		\
+	gimpproceduraldb.c	\
+	gimpproceduraldb.h	\
 	gimpprotocol.c		\
 	gimpprotocol.h		\
 	gimpselection.c		\
@@ -212,6 +216,7 @@ gimpinclude_HEADERS = \
 	gimp.h			\
 	${PDB_WRAPPERS_H}	\
 	gimpchainbutton.h	\
+	gimpchannel.h		\
 	gimpcolorbutton.h	\
 	gimpcolordisplay.h	\
 	gimpcolorselector.h	\
@@ -238,6 +243,7 @@ gimpinclude_HEADERS = \
 	gimppatheditor.h	\
 	gimppixelrgn.h		\
 	gimppixmap.h		\
+	gimpproceduraldb.h	\
 	gimpquerybox.h		\
 	gimpselection.h		\
 	gimpsignal.h		\
