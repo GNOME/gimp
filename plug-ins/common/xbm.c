@@ -44,6 +44,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 #include "libgimp/stdplugins-intl.h"
 
 /* Wear your GIMP with pride! */
@@ -89,27 +90,28 @@ static XBMSaveInterface xsint =
 
 /* Declare some local functions.
  */
-static void   query      (void);
-static void   run        (char    *name,
-                          int      nparams,
-                          GParam  *param,
-                          int     *nreturn_vals,
-                          GParam **return_vals);
-static gint32 load_image (char   *filename);
-static gint   save_image (char   *filename,
-			  gint32  image_ID,
-			  gint32  drawable_ID);
-static gint   save_dialog (gint32  drawable_ID);
-static void   close_callback  (GtkWidget *widget,
-			       gpointer   data);
-static void   save_ok_callback     (GtkWidget *widget,
-				    gpointer   data);
-static void   save_toggle_update   (GtkWidget *widget,
-				    gpointer   data);
+static void   query        (void);
+static void   run          (char    *name,
+			    int      nparams,
+			    GParam  *param,
+			    int     *nreturn_vals,
+			    GParam **return_vals);
+static void   init_gtk     (void);
+static gint32 load_image   (char   *filename);
+static gint   save_image   (char   *filename,
+			    gint32  image_ID, 
+			    gint32  drawable_ID);
+static gint   save_dialog  (gint32  drawable_ID);
+static void   close_callback         (GtkWidget *widget,
+				      gpointer   data);
+static void   save_ok_callback       (GtkWidget *widget,
+				      gpointer   data);
+static void   save_toggle_update     (GtkWidget *widget,
+				      gpointer   data);
 static void   comment_entry_callback (GtkWidget *widget,
-				    gpointer   data);
-static void   prefix_entry_callback(GtkWidget *widget,
-				    gpointer   data);
+				      gpointer   data);
+static void   prefix_entry_callback  (GtkWidget *widget,
+				      gpointer   data);
 
 
 GPlugInInfo PLUG_IN_INFO =
@@ -132,13 +134,13 @@ query ()
 {
   static GParamDef load_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_STRING, "filename", "The name of the file to load" },
+    { PARAM_INT32,  "run_mode",     "Interactive, non-interactive" },
+    { PARAM_STRING, "filename",     "The name of the file to load" },
     { PARAM_STRING, "raw_filename", "The name entered" },
   };
   static GParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" },
+    { PARAM_IMAGE,  "image",        "Output image" },
   };
   static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
@@ -146,16 +148,16 @@ query ()
 
   static GParamDef save_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Drawable to save" },
-    { PARAM_STRING, "filename", "The name of the file to save" },
-    { PARAM_STRING, "raw_filename", "The name entered" },
-    { PARAM_STRING, "comment", "Image description (maximum 72 bytes)" },
-    { PARAM_INT32, "x10", "Save in X10 format" },
-    { PARAM_INT32, "x_hot", "X coordinate of hotspot" },
-    { PARAM_INT32, "y_hot", "Y coordinate of hotspot" },
-    { PARAM_STRING, "prefix", "Identifier prefix [determined from filename]"},
+    { PARAM_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { PARAM_IMAGE,    "image",        "Input image" },
+    { PARAM_DRAWABLE, "drawable",     "Drawable to save" },
+    { PARAM_STRING,   "filename",     "The name of the file to save" },
+    { PARAM_STRING,   "raw_filename", "The name entered" },
+    { PARAM_STRING,   "comment",      "Image description (maximum 72 bytes)" },
+    { PARAM_INT32,    "x10",          "Save in X10 format" },
+    { PARAM_INT32,    "x_hot",        "X coordinate of hotspot" },
+    { PARAM_INT32,    "y_hot",        "Y coordinate of hotspot" },
+    { PARAM_STRING,   "prefix",       "Identifier prefix [determined from filename]"},
   } ;
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -225,6 +227,8 @@ run (char    *name,
   GStatusType status = STATUS_SUCCESS;
   GRunModeType run_mode;
   gint32 image_ID;
+  gint32 drawable_ID;
+  GimpExportReturnType export = EXPORT_CANCEL;
 
   INIT_I18N_UI();
   strncpy(xsvals.comment, _("Made with Gimp"), MAX_COMMENT);
@@ -259,12 +263,26 @@ run (char    *name,
     }
   else if (strcmp (name, "file_xbm_save") == 0)
     {
-      int argc;
-      char **argv;
-
-      argc = 1;
-      argv = g_new (gchar *, 1);
-      argv[0] = g_strdup ("xbm");
+      image_ID = param[1].data.d_int32;
+      drawable_ID = param[2].data.d_int32;
+    
+      /*  eventually export the image */ 
+      switch (run_mode)
+	{
+	case RUN_INTERACTIVE:
+	case RUN_WITH_LAST_VALS:
+	  init_gtk ();
+	  export = gimp_export_image (&image_ID, &drawable_ID, "XBM", CAN_HANDLE_INDEXED);
+	  if (export == EXPORT_CANCEL)
+	    {
+	      *nreturn_vals = 1;
+	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      return;
+	  }
+	  break;
+	default:
+	  break;
+	}
 
       switch (run_mode)
 	{
@@ -276,7 +294,7 @@ run (char    *name,
 	  init_prefix (param[3].data.d_string);
 
 	  /*  First acquire information with a dialog  */
-	  if (! save_dialog (param[2].data.d_int32))
+	  if (! save_dialog (drawable_ID))
 	    return;
 
 	  break;
@@ -335,8 +353,7 @@ run (char    *name,
 	}
 
       *nreturn_vals = 1;
-      if (save_image (param[3].data.d_string, param[1].data.d_int32,
-		      param[2].data.d_int32))
+      if (save_image (param[3].data.d_string, image_ID, drawable_ID))
 	{
 	  /*  Store xsvals data  */
 	  gimp_set_data ("file_xbm_save", &xsvals, sizeof (xsvals));
@@ -344,6 +361,9 @@ run (char    *name,
 	}
       else
 	values[0].data.d_status = STATUS_EXECUTION_ERROR;
+
+      if (export == EXPORT_EXPORT)
+	gimp_image_delete (image_ID);
     }
 }
 
@@ -351,7 +371,8 @@ run (char    *name,
 
 /* Return the value of a digit. */
 static gint
-getval (int c, int base)
+getval (int c, 
+	int base)
 {
   static guchar *digits = "0123456789abcdefABCDEF";
   int val;
@@ -417,7 +438,8 @@ cpp_fgetc (FILE *fp)
 
 /* Match a string with a file. */
 static gint
-match (FILE *fp, char *s)
+match (FILE *fp, 
+       char *s)
 {
   int c;
 
@@ -926,24 +948,26 @@ save_image (char   *filename,
 }
 
 
+static void 
+init_gtk ()
+{
+  gchar **argv;
+  gint argc;
+
+  argc = 1;
+  argv = g_new (gchar *, 1);
+  argv[0] = g_strdup ("xbm");
+  
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
+}
+
 static gint
 save_dialog (gint32  drawable_ID)
 {
   GtkWidget *dlg, *button, *toggle, *label, *entry, *frame, *hbox, *vbox;
-  gchar **argv;
-  gint argc;
 
   xsint.run = FALSE;
-
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("save");
-
-  gtk_init (&argc, &argv);
-  gtk_initialized = TRUE;
-
-  gtk_rc_parse (gimp_gtkrc ());
-  gdk_set_use_xshm(gimp_use_xshm());
 
   dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (dlg), _("Save as XBM"));
@@ -1048,8 +1072,8 @@ save_dialog (gint32  drawable_ID)
 
 /* Update the comment string. */
 static void
-comment_entry_callback  (GtkWidget *widget,
-			 gpointer   data)
+comment_entry_callback (GtkWidget *widget,
+			gpointer   data)
 {
   memset (xsvals.comment, 0, sizeof (xsvals.comment));
   strncpy (xsvals.comment,
@@ -1058,8 +1082,8 @@ comment_entry_callback  (GtkWidget *widget,
 
 
 static void
-prefix_entry_callback(GtkWidget *widget,
-		      gpointer   data)
+prefix_entry_callback (GtkWidget *widget,
+		       gpointer   data)
 {
   memset (xsvals.prefix, 0, sizeof (xsvals.prefix));
   strncpy (xsvals.prefix, gtk_entry_get_text (GTK_ENTRY (widget)), MAX_PREFIX);
@@ -1094,3 +1118,15 @@ Local Variables:
 compile-command:"gcc -Wall -Wmissing-prototypes -g -O -o xbm xbm.c -lgimp -lgtk -lgdk -lglib -lm"
 End:
 */
+
+
+
+
+
+
+
+
+
+
+
+

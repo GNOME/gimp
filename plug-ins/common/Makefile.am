@@ -820,6 +820,7 @@ pnm_SOURCES = \
 	pnm.c
 
 pnm_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -1000,6 +1001,7 @@ sunras_SOURCES = \
 	sunras.c
 
 sunras_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -1133,6 +1135,7 @@ xbm_SOURCES = \
 	xbm.c
 
 xbm_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -1151,8 +1154,9 @@ xwd_SOURCES = \
 	xwd.c
 
 xwd_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
-	$(GLIB_LIBS)				\
+	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
 zealouscrop_SOURCES = \

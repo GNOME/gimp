@@ -78,7 +78,7 @@
     'plasma' => { libdep => 'gtk' },
     'plugindetails' => { libdep => 'gtk' },
     'png' => { libdep => 'gtk', ui => 1, optional => 1 },
-    'pnm' => { libdep => 'gtk' },
+    'pnm' => { libdep => 'gtk', ui => 1 },
     'polar' => { libdep => 'gtk' },
     'ps' => { libdep => 'gtk', ui => 1 },
     'psd' => { libdep => 'glib' },
@@ -100,7 +100,7 @@
     'sparkle' => { libdep => 'gtk' },
     'spheredesigner' => { libdep => 'gtk' },
     'spread' => { libdep => 'gtk' },
-    'sunras' => { libdep => 'gtk' },
+    'sunras' => { libdep => 'gtk', ui => 1 },
     'tga' => { libdep => 'gtk', ui => 1 },
     'threshold_alpha' => { libdep => 'gtk' },
     'tiff' => { libdep => 'gtk', ui => 1, optional => 1 },
@@ -116,9 +116,9 @@
     'whirlpinch' => { libdep => 'gtk' },
     'wind' => { libdep => 'gtk' },
     'wmf' => { libdep => 'gtk' },
-    'xbm' => { libdep => 'gtk' },
+    'xbm' => { libdep => 'gtk', ui => 1 },
     'xpm' => { libdep => 'gtk', ui => 1, optional => 1 },
-    'xwd' => { libdep => 'glib' },
+    'xwd' => { libdep => 'gtk', ui => 1 },
     'zealouscrop' => { libdep => 'glib' }
 );
 

@@ -42,6 +42,7 @@
 
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #ifdef G_OS_WIN32
 #include <io.h>
@@ -118,7 +119,8 @@ static gint   save_image (char   *filename,
 			  gint32  image_ID,
 			  gint32  drawable_ID);
 
-static gint   save_dialog ();
+static void   init_gtk                 (void);
+static gint   save_dialog              (void);
 
 static void   pnm_load_ascii           (PNMScanner * scan,
 					PNMInfo *    info,
@@ -221,12 +223,12 @@ query ()
 
   static GParamDef save_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Drawable to save" },
-    { PARAM_STRING, "filename", "The name of the file to save the image in" },
-    { PARAM_STRING, "raw_filename", "The name of the file to save the image in" },
-    { PARAM_INT32, "raw", "Specify non-zero for raw output, zero for ascii output" }
+    { PARAM_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { PARAM_IMAGE,    "image",        "Input image" },
+    { PARAM_DRAWABLE, "drawable",     "Drawable to save" },
+    { PARAM_STRING,   "filename",     "The name of the file to save the image in" },
+    { PARAM_STRING,   "raw_filename", "The name of the file to save the image in" },
+    { PARAM_INT32,    "raw",          "Specify non-zero for raw output, zero for ascii output" }
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -249,7 +251,7 @@ query ()
                           "Erik Nygren",
                           "1996",
                           "<Save>/PNM",
-			  "RGB*, GRAY*, INDEXED*",
+			  "RGB, GRAY, INDEXED",
                           PROC_PLUG_IN,
                           nsave_args, 0,
                           save_args, NULL);
@@ -270,6 +272,8 @@ run (char    *name,
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
   gint32 image_ID;
+  gint32 drawable_ID;
+  GimpExportReturnType export = EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
@@ -296,6 +300,29 @@ run (char    *name,
     }
   else if (strcmp (name, "file_pnm_save") == 0)
     {
+      *nreturn_vals = 1;
+      image_ID      = param[1].data.d_int32;
+      drawable_ID   = param[2].data.d_int32;
+    
+      /*  eventually export the image */ 
+      switch (run_mode)
+	{
+	case RUN_INTERACTIVE:
+	case RUN_WITH_LAST_VALS:
+	  init_gtk ();
+	  export = gimp_export_image (&image_ID, &drawable_ID, "PNM", 
+				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED));
+	  if (export == EXPORT_CANCEL)
+	    {
+	      *nreturn_vals = 1;
+	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      return;
+	    }
+	break;
+	default:
+	  break;
+	}
+      
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
@@ -325,7 +352,7 @@ run (char    *name,
 	  break;
 	}
 
-      if (save_image (param[3].data.d_string, param[1].data.d_int32, param[2].data.d_int32))
+      if (save_image (param[3].data.d_string, image_ID, drawable_ID))
 	{
 	  /*  Store psvals data  */
 	  gimp_set_data ("file_pnm_save", &psvals, sizeof (PNMSaveVals));
@@ -334,7 +361,9 @@ run (char    *name,
 	}
       else
 	values[0].data.d_status = STATUS_EXECUTION_ERROR;
-      *nreturn_vals = 1;
+
+      if (export == EXPORT_EXPORT)
+	gimp_image_delete (image_ID);
     }
 }
 
@@ -570,8 +599,8 @@ pnm_load_raw (PNMScanner *scan,
   g_free (data);
 }
 
-void
-static pnm_load_rawpbm (PNMScanner *scan,
+static void
+pnm_load_rawpbm (PNMScanner *scan,
 		 PNMInfo    *info,
 		 GPixelRgn  *pixel_rgn)
 {
@@ -714,7 +743,7 @@ save_image (char   *filename,
   /*  Make sure we're not saving an image with an alpha channel  */
   if (gimp_drawable_has_alpha (drawable_ID))
     {
-      /* gimp_message ("PNM save cannot handle images with alpha channels.");  */
+      gimp_message ("PNM save cannot handle images with alpha channels.");
       return FALSE;
     }
 
@@ -849,6 +878,21 @@ save_image (char   *filename,
   return TRUE;
 }
 
+
+static void 
+init_gtk ()
+{
+  gchar **argv;
+  gint argc;
+
+  argc = 1;
+  argv = g_new (gchar *, 1);
+  argv[0] = g_strdup ("pnm");
+  
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
+}
+
 static gint
 save_dialog ()
 {
@@ -858,17 +902,8 @@ save_dialog ()
   GtkWidget *frame;
   GtkWidget *toggle_vbox;
   GSList *group;
-  gchar **argv;
-  gint argc;
   gint use_raw = (psvals.raw == TRUE);
   gint use_ascii = (psvals.raw == FALSE);
-
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("save");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (dlg), "Save as PNM");

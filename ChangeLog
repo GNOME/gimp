@@ -1,3 +1,13 @@
+Thu Oct 14 04:08:31 *EST 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/pnm.c
+	* plug-ins/common/sunras.c
+	* plug-ins/common/xbm.c
+	* plug-ins/common/xwd.c: a step further down on the road to make
+	all save plug-ins export-aware
+
 Thu Oct 14 01:00:03 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/gdisplay.c
