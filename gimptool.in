@@ -243,11 +243,11 @@ while test $# -gt 0; do
           ;;
         --*install-admin-bin)
           install_cmd="@INSTALL_PROGRAM@"
-          install_dir="$plug_in_dir/plug-ins"
+          install_dir="$gimpplugindir/plug-ins"
           ;;
         --install-admin-bin-strip)
           install_cmd="@INSTALL_PROGRAM@ -s"
-          install_dir="$plug_in_dir/plug-ins"
+          install_dir="$gimpplugindir/plug-ins"
           ;;
         --*install-script)
           install_cmd="@INSTALL_DATA@"
@@ -255,7 +255,7 @@ while test $# -gt 0; do
           ;;
         --*install-admin-script)
           install_cmd="@INSTALL_DATA@"
-          install_dir="$data_dir/scripts"
+          install_dir="$gimpdatadir/scripts"
           ;;
       esac
       case $1 in
@@ -309,7 +309,7 @@ while test $# -gt 0; do
         --install | --install-noui | --install-nogimpui)
           install_dir="$HOME/@gimpdir@/plug-ins" ;;
         --install-admin | --install-admin-noui | --install-admin-nogimpui)
-          install_dir="$plug_in_dir/plug-ins" ;;
+          install_dir="$gimpplugindir/plug-ins" ;;
       esac
       noui=`echo $opt | sed 's/^.*\(noui\)$/\1/'`
       nogimpui=`echo $opt | sed 's/^.*\(nogimpui\)$/\1/'`
