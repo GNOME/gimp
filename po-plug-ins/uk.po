@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 2000-09-22 11:39-0700\n"
+"POT-Creation-Date: 2000-09-26 12:17+0300\n"
 "PO-Revision-Date: 2000-02-08 16:11+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -187,7 +187,7 @@ msgstr "Гаразд"
 #: plug-ins/sgi/sgi.c:642 plug-ins/webbrowser/webbrowser.c:283
 #: plug-ins/winsnap/winsnap.c:913 plug-ins/xjt/xjt.c:795
 msgid "Cancel"
-msgstr "В╕дмова"
+msgstr "В╕дм╕нити"
 
 #. Preview
 #: plug-ins/FractalExplorer/Dialogs.c:308 plug-ins/Lighting/lighting_ui.c:1161
@@ -6023,7 +6023,7 @@ msgstr ""
 #: plug-ins/gimpressionist/repaint.c:874 plug-ins/gimpressionist/repaint.c:876
 #: plug-ins/imagemap/imap_polygon.c:446
 msgid "Update"
-msgstr ""
+msgstr "Оновити"
 
 #: plug-ins/common/spheredesigner.c:2277
 msgid "Textures"
@@ -6037,11 +6037,11 @@ msgstr "Додати"
 
 #: plug-ins/common/spheredesigner.c:2309
 msgid "Dup"
-msgstr ""
+msgstr "Дублювати"
 
 #: plug-ins/common/spheredesigner.c:2316
 msgid "Del"
-msgstr ""
+msgstr "Стерти"
 
 #: plug-ins/common/spheredesigner.c:2343
 msgid "Texture Properties"
@@ -6904,7 +6904,7 @@ msgstr ""
 #: plug-ins/common/wind.c:1154 plug-ins/gimpressionist/orientmap.c:565
 #: plug-ins/gimpressionist/sizemap.c:465
 msgid "Strength:"
-msgstr ""
+msgstr "Сила:"
 
 #: plug-ins/common/wind.c:1158
 msgid "Higher values increase the magnitude of the effect"
@@ -8196,11 +8196,11 @@ msgstr ""
 
 #: plug-ins/gap/gap_mod_layer.c:104
 msgid "Raise Layer(s)"
-msgstr ""
+msgstr "П╕дняти шари"
 
 #: plug-ins/gap/gap_mod_layer.c:105
 msgid "Lower Layer(s)"
-msgstr ""
+msgstr "Опустити шари"
 
 #: plug-ins/gap/gap_mod_layer.c:106
 msgid "Merge Layer(s) expand as necessary"
@@ -8216,19 +8216,19 @@ msgstr ""
 
 #: plug-ins/gap/gap_mod_layer.c:109
 msgid "Apply filter on Layer(s)"
-msgstr ""
+msgstr "Застосувати ф╕льтр до шар╕в"
 
 #: plug-ins/gap/gap_mod_layer.c:110
 msgid "Duplicate Layer(s)"
-msgstr ""
+msgstr "Дублювати шари"
 
 #: plug-ins/gap/gap_mod_layer.c:111
 msgid "Delete Layer(s)"
-msgstr ""
+msgstr "Старти шари"
 
 #: plug-ins/gap/gap_mod_layer.c:112
 msgid "Rename Layer(s)"
-msgstr ""
+msgstr "Перейменувати шари"
 
 #: plug-ins/gap/gap_mod_layer.c:151
 msgid ""
@@ -8244,7 +8244,7 @@ msgstr "В╕д кадру:"
 #: plug-ins/gap/gap_mod_layer.c:156 plug-ins/gap/gap_mpege.c:259
 #: plug-ins/gap/gap_range_ops.c:443 plug-ins/gap/gap_range_ops.c:602
 msgid "first handled frame"
-msgstr ""
+msgstr "перший оброблений шар"
 
 #: plug-ins/gap/gap_mod_layer.c:163 plug-ins/gap/gap_range_ops.c:450
 msgid "To Frame:"
@@ -8253,15 +8253,15 @@ msgstr "До кадру:"
 #: plug-ins/gap/gap_mod_layer.c:164 plug-ins/gap/gap_mpege.c:267
 #: plug-ins/gap/gap_range_ops.c:451 plug-ins/gap/gap_range_ops.c:610
 msgid "last handled frame"
-msgstr ""
+msgstr "останн╕й оброблений шар"
 
 #: plug-ins/gap/gap_mod_layer.c:172 plug-ins/gap/gap_range_ops.c:649
 msgid "Select Layer(s):"
-msgstr ""
+msgstr "Вибрати шари:"
 
 #: plug-ins/gap/gap_mod_layer.c:181 plug-ins/gap/gap_range_ops.c:658
 msgid "Select Pattern:"
-msgstr ""
+msgstr "Вибрати шаблон:"
 
 #. pixel
 #: plug-ins/gap/gap_mod_layer.c:183 plug-ins/gap/gap_range_ops.c:660
@@ -8294,7 +8294,7 @@ msgstr "Функц╕я:"
 #. argv[7].radio_help_argv = action_help
 #: plug-ins/gap/gap_mod_layer.c:205
 msgid "Function to be performed on all selected layers"
-msgstr ""
+msgstr "Функц╕я, яку биде виконано для вс╕х вибраних шар╕в"
 
 #: plug-ins/gap/gap_mod_layer.c:211
 msgid "New Layername:"
@@ -8310,7 +8310,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mod_layer.c:218
 msgid "Frames Modify"
-msgstr ""
+msgstr "Модиф╕кування кадр╕в"
 
 #: plug-ins/gap/gap_mod_layer.c:282
 #, c-format
@@ -8323,28 +8323,28 @@ msgstr ""
 #. ----------------------
 #: plug-ins/gap/gap_mod_layer.c:660
 msgid "Select Filter for Animated frames-apply"
-msgstr ""
+msgstr "Вибрати ф╕льтр для застосування до ан╕мованих кадр╕в."
 
 #: plug-ins/gap/gap_mod_layer.c:802
 msgid "GAP Modify: No layer selected in last handled frame"
-msgstr ""
+msgstr "Зм╕на GAP: В останньому обробленому калр╕ нема╓ вибраного шару"
 
 #: plug-ins/gap/gap_mod_layer.c:888
 msgid "Modifying Frames/Layer(s)..."
-msgstr ""
+msgstr "Модиф╕кування кадр╕в/шар╕в..."
 
 #: plug-ins/gap/gap_mod_layer.c:969
 msgid "No selected Layer in start frame"
-msgstr ""
+msgstr "В початковому кадр╕ нема╓ вибраного шару"
 
 #: plug-ins/gap/gap_mov_dialog.c:264 plug-ins/gfig/gfig.c:3319
 #: plug-ins/gflare/gflare.c:594 plug-ins/gimpressionist/orientmap.c:590
 msgid "Normal"
-msgstr ""
+msgstr "Звичайний"
 
 #: plug-ins/gap/gap_mov_dialog.c:265
 msgid "Dissolve"
-msgstr ""
+msgstr "Розчинення"
 
 #: plug-ins/gap/gap_mov_dialog.c:266
 msgid "Multiply"
@@ -10200,7 +10200,7 @@ msgstr ""
 #: plug-ins/gfig/gfig.c:2998
 #, fuzzy
 msgid "Gradient:"
-msgstr "Град╕╓нт"
+msgstr "Град╕╓нт:"
 
 #: plug-ins/gfig/gfig.c:3018
 msgid "Pressure:"
@@ -10750,7 +10750,7 @@ msgstr "FLI: Неможливо в╕дкрити \"%s\""
 #: plug-ins/gfli/gfli.c:526
 #, c-format
 msgid "Frame (%i)"
-msgstr ""
+msgstr "Кадр (%i)"
 
 #: plug-ins/gfli/gfli.c:675
 msgid "FLI: Sorry, I can save only INDEXED and GRAY images."
@@ -11055,7 +11055,7 @@ msgid ""
 "it towards mouse, Middle-click to add a new vector."
 msgstr ""
 "Векторне поле. Клацання л╕вою кнопкою пересува╓ вибраний вектор, клацання "
-"правою - вказу╓ вектор, клацання середньою - дода╓ новый вектор."
+"правою - вказу╓ вектор, клацання середньою - дода╓ новий вектор."
 
 #: plug-ins/gimpressionist/orientmap.c:500
 #: plug-ins/gimpressionist/sizemap.c:400
@@ -11085,11 +11085,11 @@ msgstr "Стерти вибраний вектор"
 
 #: plug-ins/gimpressionist/orientmap.c:563
 msgid "Change the angle of the selected vector"
-msgstr ""
+msgstr "Зм╕нити кут вибраного вектора"
 
 #: plug-ins/gimpressionist/orientmap.c:577
 msgid "Change the strength of the selected vector"
-msgstr ""
+msgstr "Зм╕нити довжину вибраного вектора"
 
 #: plug-ins/gimpressionist/orientmap.c:596
 msgid "Vortex"
@@ -11121,31 +11121,33 @@ msgstr "В╕дм╕нити ус╕ зм╕ни та вийти"
 #: plug-ins/gimpressionist/orientmap.c:653
 #: plug-ins/gimpressionist/sizemap.c:512
 msgid "Strength exp.:"
-msgstr ""
+msgstr "Експонента сили:"
 
 #: plug-ins/gimpressionist/orientmap.c:665
 #: plug-ins/gimpressionist/sizemap.c:524
 msgid "Change the exponent of the strength"
-msgstr ""
+msgstr "Зм╕нити експоненту сили"
 
 #: plug-ins/gimpressionist/orientmap.c:667
 msgid "Angle offset:"
-msgstr ""
+msgstr "Кут зм╕щення:"
 
 #: plug-ins/gimpressionist/orientmap.c:679
 msgid "Offset all vectors with a given angle"
-msgstr ""
+msgstr "Зм╕стити вс╕ вектори на вказаний кут"
 
 #: plug-ins/gimpressionist/orientmap.c:681
 #: plug-ins/gimpressionist/sizemap.c:527
 msgid "Voronoi"
-msgstr ""
+msgstr "Вороной"
 
 #: plug-ins/gimpressionist/orientmap.c:689
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
 msgstr ""
+"В режим╕ \"Вороной\" лише найближчий до задано╖ точки вектор ма╓ "
+"вплив"
 
 #: plug-ins/gimpressionist/paper.c:89 plug-ins/gimpressionist/paper.c:94
 msgid "Paper"
@@ -11153,16 +11155,16 @@ msgstr "Пап╕р"
 
 #: plug-ins/gimpressionist/paper.c:130
 msgid "Paper Preview:"
-msgstr ""
+msgstr "Перегляд паперу:"
 
 #. updatepaperprev(NULL);
 #: plug-ins/gimpressionist/paper.c:141
 msgid "Invert"
-msgstr ""
+msgstr "╤нвертувати"
 
 #: plug-ins/gimpressionist/paper.c:148
 msgid "Inverts the Papers texture"
-msgstr ""
+msgstr "╤нвертувати текстуру паперу"
 
 #: plug-ins/gimpressionist/paper.c:156
 msgid "Applies the paper as it is (without embossing it)"
@@ -12040,15 +12042,15 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_preferences.c:464
 msgid "Use double-sized grab handles"
-msgstr ""
+msgstr "Використовувати обробники подво╓ного розм╕ру"
 
 #: plug-ins/imagemap/imap_preferences.c:488
 msgid "Number of Undo levels (1 - 99):"
-msgstr ""
+msgstr "К╕льк╕сть р╕вн╕в в╕дм╕ни (1 - 99):"
 
 #: plug-ins/imagemap/imap_preferences.c:491
 msgid "Number of MRU entries (1 - 16):"
-msgstr ""
+msgstr "К╕льк╕сть рядк╕в MRU (1 - 16):"
 
 #: plug-ins/imagemap/imap_preferences.c:494
 msgid "Menu"
@@ -12160,11 +12162,11 @@ msgstr "Старту вид╕лену д╕лянку"
 
 #: plug-ins/maze/algorithms.c:285
 msgid "Constructing maze using Prim's Algorithm..."
-msgstr ""
+msgstr "Створення лаб╕ринту використовуючи ал╜оритм Пр╕ма..."
 
 #: plug-ins/maze/algorithms.c:458
 msgid "Constructing tileable maze using Prim's Algorithm..."
-msgstr ""
+msgstr "Конструювання розс╕ченого лаб╕ринту з використанням ал╜оритма Пр╕ма..."
 
 #: plug-ins/maze/maze.c:161
 msgid "<Image>/Filters/Render/Pattern/Maze..."
@@ -12197,11 +12199,11 @@ msgstr "Зм╕щення (1):"
 
 #: plug-ins/maze/maze_face.c:304
 msgid "Depth First"
-msgstr ""
+msgstr "Первинно в глибину"
 
 #: plug-ins/maze/maze_face.c:311
 msgid "Prim's Algorithm"
-msgstr ""
+msgstr "Ал╜оритм Пр╕ма"
 
 #: plug-ins/maze/maze_face.c:330
 #, c-format
