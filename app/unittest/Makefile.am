@@ -2,13 +2,13 @@
 
 scriptdata =
 INTLLIBS=-lintl
-bin_PROGRAMS = gimppath gimpparse plugdir parse_gimprc
+bin_PROGRAMS = gimppath gimpparse plugdir parse_gimprc gimpmodule
 #bin_PROGRAMS = testplugin gimppath gimpparse plugshow plugdir
 
 OFILES=../about_dialog.o          ../disp_callbacks.o        ../gimpunit.o \
-             ../pattern_select.o \
-../actionarea.o            ../docindex.o              ../global_edit.o \
-          ../pattern_select_cmds.o \
+../pattern_select.o \
+../docindex.o              ../global_edit.o \
+../pattern_select_cmds.o \
 ../airbrush.o              ../docindexif.o            ../gradient.o              ../patterns.o\
 ../draw_core.o             ../gradient_cmds.o         ../patterns_cmds.o \
 ../asupsample.o            ../drawable.o              ../gradient_select.o       ../pencil.o\
@@ -39,7 +39,7 @@ OFILES=../about_dialog.o          ../disp_callbacks.o        ../gimpunit.o \
 ../color_picker.o          ../gimage_mask_cmds.o      ../app_procs.o                  ../tile_cache.o\
 ../color_select.o          ../gimpbrush.o             ../menus.o                 ../tile_manager.o\
 ../color_transfer.o        ../gimpbrushgenerated.o    ../misc_cmds.o             ../tile_swap.o\
-../colormap_dialog.o       ../gimpbrushlist.o         ../module_db.o             ../tips_dialog.o\
+../colormap_dialog.o       ../gimpbrushlist.o                      ../tips_dialog.o\
 ../colormaps.o             ../gimpdrawable.o          ../move.o                  ../tool_options.o\
 ../commands.o              ../gimphistogram.o         ../ops_buttons.o           ../tools.o\
 ../convert.o               ../gimpimage.o             ../paint_core.o            ../tools_cmds.o\
@@ -67,6 +67,8 @@ OFILES=../about_dialog.o          ../disp_callbacks.o        ../gimpunit.o \
 #	plugshow.c
 plugdir_SOURCES = \
 	plugdir.c
+gimpmodule_SOURCES = \
+	gimpmodule.c
 gimppath_SOURCES = \
 	gimppath.c	
 
@@ -96,26 +98,32 @@ LDADD = $(OFILES) \
 #	$(GTK_LIBS)				\
 #	$(GIMP_THREAD_LIBS)			\
 #	$(INTLLIBS)
-plugdir_LDADD = $(OFILES) \
+plugdir_LDADD = $(OFILES) ../module_db.o\
 	../libgimpim.a \
 	$(top_builddir)/libgimp/libgimpi.a	\
 	$(GTK_LIBS)				\
 	$(GIMP_THREAD_LIBS)			\
 	$(INTLLIBS)
-gimppath_LDADD = $(OFILES) ../plug_in.o \
+gimppath_LDADD = $(OFILES) ../plug_in.o ../module_db.o \
 	../libgimpim.a \
 	$(top_builddir)/libgimp/libgimpi.a	\
 	$(GTK_LIBS)				\
 	$(GIMP_THREAD_LIBS)			\
 	$(INTLLIBS)
 
-gimpparse_LDADD = $(OFILES) ../plug_in.o\
+gimpparse_LDADD = $(OFILES) ../plug_in.o ../module_db.o\
 	../libgimpim.a \
 	$(top_builddir)/libgimp/libgimpi.a	\
 	$(GTK_LIBS)				\
 	$(GIMP_THREAD_LIBS)			\
 	$(INTLLIBS)
-parse_gimprc_LDADD = $(OFILES) ../plug_in.o\
+parse_gimprc_LDADD = $(OFILES) ../plug_in.o ../module_db.o\
+	../libgimpim.a \
+	$(top_builddir)/libgimp/libgimpi.a	\
+	$(GTK_LIBS)				\
+	$(GIMP_THREAD_LIBS)			\
+	$(INTLLIBS)
+gimpmodule_LDADD =  ../plug_in.o $(OFILES) ../gimprc.o \
 	../libgimpim.a \
 	$(top_builddir)/libgimp/libgimpi.a	\
 	$(GTK_LIBS)				\
