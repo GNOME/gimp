@@ -1,3 +1,8 @@
+2002-11-21  Sven Neumann  <neo@wintermute>
+
+	* libgimpmath/libgimpmath-sections.txt
+	* libgimpmath/tmpl/gimpmath.sgml: bye, bye G_MAXRAND.
+
 2002-11-19  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt

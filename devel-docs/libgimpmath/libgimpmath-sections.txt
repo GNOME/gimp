@@ -1,7 +1,6 @@
 <SECTION>
 <FILE>gimpmath</FILE>
 <TITLE>GimpMath</TITLE>
-G_MAXRAND
 RINT
 ROUND
 SQR
