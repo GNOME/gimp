@@ -477,7 +477,7 @@ gimp_color_button_clicked (GtkButton *button)
       gtk_signal_connect (GTK_OBJECT (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->cancel_button), 
 			  "clicked",
 			  (GtkSignalFunc) gimp_color_button_dialog_cancel, gcb);
-      gtk_window_position (GTK_WINDOW (gcb->dialog), GTK_WIN_POS_MOUSE);  
+      gtk_window_set_position (GTK_WINDOW (gcb->dialog), GTK_WIN_POS_MOUSE);  
     }
   gtk_color_selection_set_color (GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->colorsel), 
 				 gcb->dcolor);

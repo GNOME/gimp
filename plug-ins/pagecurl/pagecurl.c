@@ -637,7 +637,7 @@ do_dialog (void)
    gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
    hbox = gtk_hbox_new (FALSE, 4);
-   gtk_container_border_width (GTK_CONTAINER (hbox), 2);
+   gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
    gtk_container_add (GTK_CONTAINER (frame), hbox);
 
    {

@@ -125,7 +125,7 @@ p_resi_dialog (gint32 image_id, t_gap_asiz asiz_mode, char *title_text,
   image_resize->shell = gtk_dialog_new ();
   l_resint.dlg = image_resize->shell;
   gtk_window_set_title (GTK_WINDOW (image_resize->shell), title_text);
-  gtk_window_position (GTK_WINDOW (image_resize->shell), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position (GTK_WINDOW (image_resize->shell), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (image_resize->shell), "destroy",
 		      (GtkSignalFunc) res_cancel_callback,
 		      NULL);
@@ -141,7 +141,7 @@ p_resi_dialog (gint32 image_id, t_gap_asiz asiz_mode, char *title_text,
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 1);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (image_resize->shell)->vbox), vbox, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), image_resize->resize->resize_widget, FALSE, FALSE, 0);
 

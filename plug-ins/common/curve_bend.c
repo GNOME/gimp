@@ -2164,7 +2164,7 @@ bender_load_callback (GtkWidget *w,
   filesel = gtk_file_selection_new ( _("Load Curve Points from file"));
   cd->filesel = filesel;
   
-  gtk_window_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
 		      "clicked", (GtkSignalFunc) p_points_load_from_file,
 		      cd);
@@ -2194,7 +2194,7 @@ bender_save_callback (GtkWidget *w,
   filesel = gtk_file_selection_new ( _("Save Curve Points to file"));
   cd->filesel = filesel;
   
-  gtk_window_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
 		      "clicked", (GtkSignalFunc) p_points_save_to_file,
 		      cd);

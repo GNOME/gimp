@@ -61,8 +61,8 @@ reset_adv_dialog (void)
 	}
       else if (GTK_IS_TOGGLE_BUTTON (widget))
 	{
-	  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (widget),
-				       (gboolean)(*value));
+	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget),
+					(gboolean)(*value));
 	}
       else
 	g_warning ("Internal widget list error");
@@ -249,7 +249,7 @@ dialog_create_selection_area (SELVALS *sels)
   gtk_object_set_data (GTK_OBJECT (adj), "default_value", def_val (2.0));
 
   check = gtk_check_button_new_with_label ("Keep Knees");
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (check), sels->keep_knees);  
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), sels->keep_knees);  
   gtk_table_attach (GTK_TABLE (table), check, 1, 3, row, row + 1,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gimp_help_set_help_data (GTK_WIDGET (check), 

@@ -123,11 +123,16 @@ static guchar		 col[3];
 static GtkWidget *
 create_message_window (GtkWidget **mw)
 {
-  *mw = message_window_new(_("GDynText: Messages Window"));
-  gtk_widget_set_usize(*mw, 430, 170);
-  gtk_window_position(GTK_WINDOW(*mw), GTK_WIN_POS_CENTER);
-  gtk_signal_connect(GTK_OBJECT(*mw), "destroy", GTK_SIGNAL_FUNC(on_window_destroy), mw);
-  gtk_signal_connect(GTK_OBJECT(MESSAGE_WINDOW(*mw)->dismiss_button), "clicked", GTK_SIGNAL_FUNC(on_window_close), *mw);
+  *mw = message_window_new (_("GDynText: Messages Window"));
+  gtk_widget_set_usize (*mw, 430, 170);
+  gtk_window_set_position (GTK_WINDOW (*mw), GTK_WIN_POS_CENTER);
+  gtk_signal_connect (GTK_OBJECT (*mw), "destroy",
+		      GTK_SIGNAL_FUNC (on_window_destroy),
+		      mw);
+  gtk_signal_connect (GTK_OBJECT (MESSAGE_WINDOW (*mw)->dismiss_button),
+		      "clicked",
+		      GTK_SIGNAL_FUNC (on_window_close),
+		      *mw);
   
   return *mw;
 }
@@ -148,10 +153,10 @@ create_about_dialog (void)
   GtkWidget *vbox1;
 
   window = gtk_window_new(GTK_WINDOW_DIALOG);
-  gtk_container_border_width(GTK_CONTAINER(window), 0);
+  gtk_container_set_border_width(GTK_CONTAINER(window), 0);
   gtk_window_set_title(GTK_WINDOW(window), _("GDynText: About ..."));
   gtk_window_set_policy(GTK_WINDOW(window), FALSE, FALSE, FALSE);
-  gtk_window_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
+  gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
   gimp_dialog_set_icon (GTK_WINDOW (window));
   gtk_signal_connect(GTK_OBJECT(window), "destroy",
 		     GTK_SIGNAL_FUNC(on_about_dialog_destroy), NULL);
@@ -265,7 +270,7 @@ create_main_window (GdtMainWindow **main_window,
   g_free (title);
   gtk_window_set_policy(GTK_WINDOW(mw->window), TRUE, TRUE, FALSE);
   gtk_widget_set_usize(mw->window, 550, 400);
-  gtk_container_border_width(GTK_CONTAINER(mw->window), 0);
+  gtk_container_set_border_width(GTK_CONTAINER(mw->window), 0);
   gtk_signal_connect(GTK_OBJECT(mw->window), "destroy",
 		     GTK_SIGNAL_FUNC(on_main_window_cancel_clicked), &mw->ok_pressed);
   gtk_widget_realize(mw->window);
@@ -299,7 +304,7 @@ create_main_window (GdtMainWindow **main_window,
 							    NULL, _("Toggle creation of a new layer"), NULL, 
 							    gtk_icon, 
 							    NULL, NULL);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(telem), data->new_layer);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (telem), data->new_layer);
   gtk_signal_connect(GTK_OBJECT(telem), "toggled", GTK_SIGNAL_FUNC(on_button_toggled), &data->new_layer);
   gtk_widget_set_sensitive(telem, !data->new_layer);
   
@@ -339,7 +344,7 @@ create_main_window (GdtMainWindow **main_window,
 				     NULL, _("Toggle anti-aliased text"), NULL, 
 				     gtk_icon, 
 				     NULL, NULL);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(telem), data->antialias);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (telem), data->antialias);
   gtk_signal_connect(GTK_OBJECT(telem), "clicked", GTK_SIGNAL_FUNC(on_button_toggled), &data->antialias);
   
   gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
@@ -352,7 +357,8 @@ create_main_window (GdtMainWindow **main_window,
 				     NULL, _("Left aligned text"), NULL, 
 				     gtk_icon, 
 				     GTK_SIGNAL_FUNC(on_main_window_align_l_clicked), &data->alignment);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(telem), data->alignment == LEFT);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (telem),
+				data->alignment == LEFT);
   
   /* CENTER Align */
   icon = gdk_pixmap_create_from_xpm_d(mw->window->window, &mask, &toolbar->style->bg[GTK_STATE_NORMAL], align_center_xpm);
@@ -363,7 +369,8 @@ create_main_window (GdtMainWindow **main_window,
 				     NULL, _("Centered text"), NULL, 
 				     gtk_icon, 
 				     GTK_SIGNAL_FUNC(on_main_window_align_c_clicked), &data->alignment);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(telem), data->alignment == CENTER);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (telem),
+				data->alignment == CENTER);
   
   /* RIGHT Align */
   icon = gdk_pixmap_create_from_xpm_d(mw->window->window, &mask, &toolbar->style->bg[GTK_STATE_NORMAL], align_right_xpm);
@@ -374,7 +381,8 @@ create_main_window (GdtMainWindow **main_window,
 				     NULL, _("Right aligned text"), NULL, 
 				     gtk_icon, 
 				     GTK_SIGNAL_FUNC(on_main_window_align_r_clicked), &data->alignment);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(telem), data->alignment == RIGHT);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (telem),
+				data->alignment == RIGHT);
 
   gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
   
@@ -385,7 +393,7 @@ create_main_window (GdtMainWindow **main_window,
 						   NULL, _("Toggle text font preview"), NULL, 
 						   gtk_icon, 
 						   NULL, NULL);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(font_preview_toggle), FALSE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (font_preview_toggle), FALSE);
   gtk_signal_connect(GTK_OBJECT(font_preview_toggle), "toggled", GTK_SIGNAL_FUNC(on_font_preview_toggled), NULL);
   
   gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
@@ -598,7 +606,8 @@ create_main_window (GdtMainWindow **main_window,
   /* setup font preview */
   if (data->preview) 
     {
-      gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(font_preview_toggle), TRUE);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (font_preview_toggle),
+				    TRUE);
       gtk_toggle_button_toggled(GTK_TOGGLE_BUTTON(font_preview_toggle));
     }
   
@@ -666,7 +675,7 @@ on_main_window_apply_clicked (GtkWidget *widget,
   gimp_set_data("plug_in_gdyntext", data, sizeof(GdtVals));
   if (data->new_layer) 
     {
-      gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(main_window->new_layer_toggle), FALSE); 
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (main_window->new_layer_toggle), FALSE); 
       if (!GTK_WIDGET_SENSITIVE(main_window->new_layer_toggle))
 	gtk_widget_set_sensitive(main_window->new_layer_toggle, TRUE);
     }
@@ -785,7 +794,7 @@ gtk_text_set_font (GtkText *text,
       gtk_text_insert(text, style->font, NULL, NULL, " ", -1);
       gtk_editable_delete_text(GTK_EDITABLE(text), 0, -1);
     }
-  gtk_widget_set_style(GTK_WIDGET(text), style);
+  gtk_widget_set_style (GTK_WIDGET(text), style);
   gtk_text_set_point(GTK_TEXT(main_window->textarea), pos);
   gtk_text_thaw(text);
 }
@@ -853,7 +862,8 @@ on_charmap_button_toggled (GtkWidget *widget,
 	{
 	  charmap_window = charmap_window_new(_("GDynText: CharMap"));
 	  gtk_widget_set_usize(charmap_window, 430, 270);
-	  gtk_window_position(GTK_WINDOW(charmap_window), GTK_WIN_POS_CENTER);
+	  gtk_window_set_position (GTK_WINDOW (charmap_window),
+				   GTK_WIN_POS_CENTER);
 	  gtk_signal_connect(GTK_OBJECT(charmap_window), "destroy", GTK_SIGNAL_FUNC(on_window_destroy), &charmap_window);
 	  gtk_signal_connect(GTK_OBJECT(CHARMAP_WINDOW(charmap_window)->close_button), "clicked", GTK_SIGNAL_FUNC(on_window_close), charmap_window);
 	  gtk_signal_connect(GTK_OBJECT(CHARMAP_WINDOW(charmap_window)->insert_button), "clicked", GTK_SIGNAL_FUNC(on_charmap_window_insert), charmap_window);
@@ -874,8 +884,8 @@ static void
 toggle_button_update (GtkWidget *widget, 
 		      GtkWidget *window)
 {
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(widget), 
-			      window ? GTK_WIDGET_VISIBLE(window) : FALSE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), 
+				window ? GTK_WIDGET_VISIBLE (window) : FALSE);
 }
 
 

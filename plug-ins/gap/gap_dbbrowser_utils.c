@@ -84,7 +84,7 @@ gap_db_browser_dialog(char *title_txt,
   dbbrowser->dlg = gtk_dialog_new ();
   
   gtk_window_set_title (GTK_WINDOW (dbbrowser->dlg), _("Animated Filter apply (init)"));
-  gtk_window_position (GTK_WINDOW (dbbrowser->dlg), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position (GTK_WINDOW (dbbrowser->dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dbbrowser->dlg), "destroy",
                       (GtkSignalFunc) dialog_close_callback,
                       dbbrowser);
@@ -104,7 +104,7 @@ gap_db_browser_dialog(char *title_txt,
   /* left = vbox : the list and the search entry */
   
   vbox = gtk_vbox_new( FALSE, 0 );
-  gtk_container_border_width (GTK_CONTAINER (vbox), 3); 
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 3); 
   gtk_box_pack_start (GTK_BOX (hbox), 
 		      vbox, FALSE, TRUE, 0);
   gtk_widget_show(vbox);
@@ -159,8 +159,7 @@ gap_db_browser_dialog(char *title_txt,
 
   /* buttons in dlg->action_aera */
 
-  gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG(dbbrowser->dlg)->action_area), 0);
-
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG(dbbrowser->dlg)->action_area), 0);
 
   if (gap_debug) {
     button = gtk_button_new_with_label ( _("Gen Code by name"));

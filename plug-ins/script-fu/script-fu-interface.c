@@ -1865,7 +1865,7 @@ script_fu_about_callback (GtkWidget *widget,
      
       dialog = gtk_dialog_new ();
       gtk_window_set_title (GTK_WINDOW (dialog), title);
-      gtk_window_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
+      gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
       gtk_signal_connect (GTK_OBJECT (dialog), "delete_event",
 			  GTK_SIGNAL_FUNC (script_fu_about_dialog_delete),
 			  dialog);
@@ -2123,7 +2123,7 @@ script_fu_font_preview_callback (GtkWidget *widget,
     fsd = GTK_FONT_SELECTION_DIALOG (font->dialog);
 
   gtk_font_selection_dialog_set_font_name (fsd, font->fontname);
-  gtk_window_position (GTK_WINDOW (font->dialog), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position (GTK_WINDOW (font->dialog), GTK_WIN_POS_MOUSE);
   gtk_widget_show (font->dialog);
 }
 

@@ -556,7 +556,7 @@ server_interface (void)
   table = gtk_table_new (2, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_border_width (GTK_CONTAINER (table), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
 
   /*  The server port  */

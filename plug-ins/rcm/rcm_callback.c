@@ -146,8 +146,9 @@ rcm_cw_ccw (GtkWidget *button,
   rcm_set_pixmap(&circle->cw_ccw_pixmap, circle->cw_ccw_button->parent,
 		 circle->cw_ccw_box, (circle->angle->cw_ccw>0) ? rcm_cw : rcm_ccw);
 
-  gtk_label_set(GTK_LABEL(circle->cw_ccw_label),
-		(circle->angle->cw_ccw>0) ? _("Switch to clockwise") : _("Switch to c/clockwise"));
+  gtk_label_set_text (GTK_LABEL (circle->cw_ccw_label),
+		      (circle->angle->cw_ccw>0) ?
+		      _("Switch to clockwise") : _("Switch to c/clockwise"));
 
   rcm_a_to_b(button, circle);
 }
@@ -186,7 +187,7 @@ rcm_spinbutton_to_degrees (GtkWidget *button,
   adj->page_increment = 1.0;
   gtk_spin_button_set_digits(GTK_SPIN_BUTTON(button), 2);
 
-  gtk_label_set(GTK_LABEL(label), rcm_units_string(Current.Units));
+  gtk_label_set_text (GTK_LABEL(label), rcm_units_string(Current.Units));
 }
 
 void 
@@ -239,7 +240,7 @@ rcm_spinbutton_to_radians (GtkWidget *button,
   adj->page_increment = 0.001;
   gtk_spin_button_set_digits(GTK_SPIN_BUTTON(button), 4);
 
-  gtk_label_set(GTK_LABEL(label), rcm_units_string(Current.Units));
+  gtk_label_set_text (GTK_LABEL(label), rcm_units_string(Current.Units));
 }
 
 void 
@@ -292,7 +293,7 @@ rcm_spinbutton_to_radians_over_PI (GtkWidget *button,
   adj->page_increment = 0.001;
   gtk_spin_button_set_digits(GTK_SPIN_BUTTON(button), 4);
 
-  gtk_label_set(GTK_LABEL(label), rcm_units_string(Current.Units));
+  gtk_label_set_text (GTK_LABEL(label), rcm_units_string(Current.Units));
 }
 
 void 

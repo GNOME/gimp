@@ -989,7 +989,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
   gint       i;
 
   vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);

@@ -1512,7 +1512,7 @@ alienmap2_dialog (void)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      GTK_SIGNAL_FUNC (alienmap2_toggle_update),
 		      &wvals.redmode);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), wvals.redmode);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), wvals.redmode);
   gtk_widget_show (toggle);
   gimp_help_set_help_data (toggle, _("Use function for red/hue component"),
 			   NULL);
@@ -1522,7 +1522,7 @@ alienmap2_dialog (void)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      GTK_SIGNAL_FUNC (alienmap2_toggle_update),
 		      &wvals.greenmode);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), wvals.greenmode);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), wvals.greenmode);
   gtk_widget_show (toggle);
   gimp_help_set_help_data (toggle,
 			   _("Use function for green/saturation component"),
@@ -1533,7 +1533,7 @@ alienmap2_dialog (void)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      GTK_SIGNAL_FUNC (alienmap2_toggle_update),
 		      &wvals.bluemode);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), wvals.bluemode);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), wvals.bluemode);
   gtk_widget_show (toggle);
   gimp_help_set_help_data (toggle,
 			   _("Use function for blue/luminance component"),
@@ -1690,7 +1690,7 @@ alienmap2_logo_dialog (void)
       gtk_box_pack_start (GTK_BOX (GTK_DIALOG (logodlg)->vbox), xframe,
 			  TRUE, TRUE, 0);
       xvbox = gtk_vbox_new (FALSE, 4);
-      gtk_container_border_width (GTK_CONTAINER (xvbox), 4);
+      gtk_container_set_border_width (GTK_CONTAINER (xvbox), 4);
       gtk_container_add (GTK_CONTAINER(xframe), xvbox);
       
       /*  The logo frame & drawing area  */

@@ -235,7 +235,7 @@ tips_show_previous (GtkWidget *widget,
   if (last_tip < 0)
     last_tip = tips_count - 1;
 
-  gtk_label_set (GTK_LABEL (tips_label), tips_text[last_tip]);
+  gtk_label_set_text (GTK_LABEL (tips_label), tips_text[last_tip]);
 }
 
 static void
@@ -247,7 +247,7 @@ tips_show_next (GtkWidget *widget,
   if (last_tip >= tips_count)
     last_tip = 0;
 
-  gtk_label_set (GTK_LABEL (tips_label), tips_text[last_tip]);
+  gtk_label_set_text (GTK_LABEL (tips_label), tips_text[last_tip]);
 }
 
 static void

@@ -887,7 +887,8 @@ void navi_reload_ainfo_force(gint32 image_id)
      sprintf(frame_nr_to_char, "%04d - %04d"
             , (int)naviD->ainfo_ptr->first_frame_nr
 	    , (int)naviD->ainfo_ptr->last_frame_nr );
-     gtk_label_set (GTK_LABEL (naviD->framerange_number_label), frame_nr_to_char);
+     gtk_label_set_text (GTK_LABEL (naviD->framerange_number_label),
+			 frame_nr_to_char);
   }
 
   if(old_ainfo_ptr) p_free_ainfo(&old_ainfo_ptr);
@@ -2714,7 +2715,7 @@ frame_widget_time_label_update(FrameWidget *fw)
   
   navi_calc_frametiming(fw->frame_nr, frame_nr_to_time);
 
-  gtk_label_set (GTK_LABEL (fw->time_label), frame_nr_to_time);
+  gtk_label_set_text (GTK_LABEL (fw->time_label), frame_nr_to_time);
 }
 
 static FrameWidget *

@@ -1466,8 +1466,8 @@ p_smp_dialog (void)
   gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
                       (GtkSignalFunc) p_smp_toggle_callback,
                       &g_di.dst_show_selection);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (check_button),
-                               g_di.dst_show_selection);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
+				g_di.dst_show_selection);
   gtk_widget_show (check_button);
 
   /* check button */
@@ -1476,8 +1476,8 @@ p_smp_dialog (void)
   gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
                       (GtkSignalFunc) p_smp_toggle_callback,
                       &g_di.dst_show_color);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (check_button),
-                               g_di.dst_show_color);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
+				g_di.dst_show_color);
   gtk_widget_show (check_button);
 
   hbox = gtk_hbox_new (FALSE, 4);
@@ -1491,8 +1491,8 @@ p_smp_dialog (void)
   gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
                       (GtkSignalFunc)p_smp_toggle_callback ,
                       &g_di.sample_show_selection);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (check_button),
-                               g_di.sample_show_selection);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
+				g_di.sample_show_selection);
   gtk_widget_show (check_button);
 
   /* check button */
@@ -1501,8 +1501,8 @@ p_smp_dialog (void)
   gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
                       (GtkSignalFunc)p_smp_toggle_callback ,
                       &g_di.sample_show_color);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (check_button),
-                               g_di.sample_show_color);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
+				g_di.sample_show_color);
   gtk_widget_show (check_button);
   
   l_ty++;
@@ -1701,8 +1701,8 @@ p_smp_dialog (void)
   gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
                       (GtkSignalFunc) p_smp_toggle_callback,
                       &g_values.hold_inten);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (check_button),
-                               g_values.hold_inten);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
+				g_values.hold_inten);
   gtk_widget_show (check_button);
 
   /* check button */
@@ -1712,8 +1712,8 @@ p_smp_dialog (void)
   gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
                       (GtkSignalFunc) p_smp_toggle_callback,
                       &g_values.orig_inten);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (check_button),
-                               g_values.orig_inten);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
+				g_values.orig_inten);
   gtk_widget_set_sensitive (g_di.orig_inten_button, g_values.hold_inten);
   gtk_widget_show (check_button);
   
@@ -1728,8 +1728,8 @@ p_smp_dialog (void)
   gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
                       (GtkSignalFunc) p_smp_toggle_callback,
                       &g_values.rnd_subcolors);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (check_button),
-                               g_values.rnd_subcolors);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
+				g_values.rnd_subcolors);
   gtk_widget_show (check_button);
   
   /* check button */
@@ -1738,8 +1738,8 @@ p_smp_dialog (void)
   gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
                       (GtkSignalFunc) p_smp_toggle_callback,
                       &g_values.guess_missing);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (check_button),
-                               g_values.guess_missing);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
+				g_values.guess_missing);
   gtk_widget_show (check_button);
 
   l_ty++;

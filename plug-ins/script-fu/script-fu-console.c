@@ -192,8 +192,8 @@ script_fu_console_interface (void)
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      GTK_SIGNAL_FUNC (gtk_widget_destroyed),
 		      &dlg);
-  gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), 2);
-  gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 0);
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 0);
 
   /*  Action area  */
   button = gtk_button_new_with_label (_("Close"));
@@ -227,7 +227,7 @@ script_fu_console_interface (void)
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
 
-  gtk_container_border_width (GTK_CONTAINER (table), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
 
   cint.font_strong = gdk_font_load ("-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*");
   cint.font_emphasis = gdk_font_load ("-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*");

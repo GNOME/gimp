@@ -1072,7 +1072,7 @@ gdisplay_update_cursor (GDisplay *gdisp,
       t_x >= gdisp->gimage->width ||
       t_y >= gdisp->gimage->height)
     {
-      gtk_label_set (GTK_LABEL (gdisp->cursor_label), "");
+      gtk_label_set_text (GTK_LABEL (gdisp->cursor_label), "");
       info_window_update_RGB (gdisp, -1, -1);
     } 
   else 
@@ -1093,7 +1093,7 @@ gdisplay_update_cursor (GDisplay *gdisp,
 	     ", ",
 	     (gdouble) t_y * unit_factor / gdisp->gimage->yresolution);
 	}
-      gtk_label_set (GTK_LABEL (gdisp->cursor_label), buffer);
+      gtk_label_set_text (GTK_LABEL (gdisp->cursor_label), buffer);
       info_window_update_RGB (gdisp, t_x, t_y);
     }
 

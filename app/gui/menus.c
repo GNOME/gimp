@@ -1319,8 +1319,8 @@ menus_last_opened_update_labels (void)
 	{
 	  gtk_widget_show (widget);
 
-	  gtk_label_set (GTK_LABEL (GTK_BIN (widget)->child),
-			 entry_filename->str);
+	  gtk_label_set_text (GTK_LABEL (GTK_BIN (widget)->child),
+			      entry_filename->str);
 	  gimp_help_set_help_data (widget, 
 				   ((GString *) filename_slist->data)->str, NULL);
 	}

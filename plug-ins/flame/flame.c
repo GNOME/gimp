@@ -473,7 +473,7 @@ make_file_dlg (void)
   file_dlg = gtk_file_selection_new (NULL);
   gtk_quit_add_destroy (1, GTK_OBJECT (file_dlg));
 
-  gtk_window_position (GTK_WINDOW (file_dlg), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position (GTK_WINDOW (file_dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect_object (GTK_OBJECT (file_dlg), "delete_event",
 			     GTK_SIGNAL_FUNC (file_cancel_callback),
 			     GTK_OBJECT (file_dlg));

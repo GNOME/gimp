@@ -697,23 +697,23 @@ build_dialog (GimpImageBaseType  basetype,
     frame = gtk_frame_new (windowname);
     g_free (windowname);
     gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-    gtk_container_border_width (GTK_CONTAINER (frame), 3);
+    gtk_container_set_border_width (GTK_CONTAINER (frame), 3);
     gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
 			frame, TRUE, TRUE, 0);
     
     {
       hbox = gtk_hbox_new (FALSE, 5);
-      gtk_container_border_width (GTK_CONTAINER (hbox), 3);
+      gtk_container_set_border_width (GTK_CONTAINER (hbox), 3);
       gtk_container_add (GTK_CONTAINER (frame), hbox);
       
       {
 	vbox = gtk_vbox_new (FALSE, 5);
-	gtk_container_border_width (GTK_CONTAINER (vbox), 3);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox), 3);
 	gtk_container_add (GTK_CONTAINER (hbox), vbox);
 	
 	{
 	  hbox2 = gtk_hbox_new (FALSE, 0);
-	  gtk_container_border_width (GTK_CONTAINER (hbox2), 0);
+	  gtk_container_set_border_width (GTK_CONTAINER (hbox2), 0);
 	  gtk_box_pack_start (GTK_BOX (vbox), hbox2, TRUE, TRUE, 0);
 	  
 	  {
@@ -744,7 +744,7 @@ build_dialog (GimpImageBaseType  basetype,
 	    gtk_widget_show(hbox2);
 
 	  hbox2 = gtk_hbox_new (TRUE, 0);
-	  gtk_container_border_width (GTK_CONTAINER (hbox2), 0);
+	  gtk_container_set_border_width (GTK_CONTAINER (hbox2), 0);
 	  gtk_box_pack_start (GTK_BOX (vbox), hbox2, FALSE, FALSE, 0);
 	  {
 	    frame2 = gtk_frame_new (NULL);

@@ -1553,7 +1553,7 @@ create_file_selection (GFigObj *obj,
   if (!window)
     {
       window = gtk_file_selection_new ("Save gfig drawing");
-      gtk_window_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
+      gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
 
       gtk_signal_connect (GTK_OBJECT (window), "destroy",
 			  GTK_SIGNAL_FUNC (gtk_widget_destroyed),
@@ -2314,7 +2314,7 @@ gfig_brush_preview (GtkWidget **pv)
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 0);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 0);
   gtk_widget_show (frame);
 
   *pv = gtk_preview_new (GTK_PREVIEW_COLOR);
@@ -4561,7 +4561,7 @@ load_button_callback (GtkWidget *widget,
 
   /* Load a single object */
   window = gtk_file_selection_new (_("Load Gfig obj"));
-  gtk_window_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
 
   gtk_signal_connect (GTK_OBJECT (window), "destroy",
 		      GTK_SIGNAL_FUNC (gtk_widget_destroyed),

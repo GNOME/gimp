@@ -467,7 +467,7 @@ mov_dialog ( GimpDrawable *drawable, t_mov_path_preview *path_ptr,
   ok_data.dlg = dlg;
   ok_data.path_ptr = path_ptr;
   gtk_window_set_title (GTK_WINDOW (dlg), _("Move Path"));
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) mov_close_callback,
 		      NULL);
@@ -526,7 +526,7 @@ mov_dialog ( GimpDrawable *drawable, t_mov_path_preview *path_ptr,
   /*  parameter settings  */
   frame = gtk_frame_new ( _("Copy moving source-layer(s) into frames"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
   /* the vbox */
@@ -627,7 +627,8 @@ mov_dialog ( GimpDrawable *drawable, t_mov_path_preview *path_ptr,
   gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
                       (GtkSignalFunc) mov_gint_toggle_callback,
                        &pvals->src_force_visible);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (check_button), pvals->src_force_visible);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
+				pvals->src_force_visible);
   gimp_help_set_help_data(check_button,
                        _("Force visibility for all copied Src-Layers")
                        , NULL);
@@ -639,7 +640,8 @@ mov_dialog ( GimpDrawable *drawable, t_mov_path_preview *path_ptr,
   gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
                       (GtkSignalFunc) mov_gint_toggle_callback,
                        &pvals->clip_to_img);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (check_button), pvals->clip_to_img);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
+				pvals->clip_to_img);
   gimp_help_set_help_data(check_button,
                        _("Clip all copied Src-Layers at Frame Boundaries")
                        , NULL);
@@ -1343,7 +1345,7 @@ mov_pload_callback (GtkWidget *widget,
   filesel = gtk_file_selection_new ( _("Load Path Points from file"));
   path_ptr->filesel = filesel;
 
-  gtk_window_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
 
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
 		      "clicked", (GtkSignalFunc) p_points_load_from_file,
@@ -1379,7 +1381,7 @@ mov_psave_callback (GtkWidget *widget,
   filesel = gtk_file_selection_new ( _("Save Path Points to file"));
   path_ptr->filesel = filesel;
 
-  gtk_window_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
 
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
 		      "clicked", (GtkSignalFunc) p_points_save_to_file,
@@ -1721,13 +1723,15 @@ p_points_to_tab(t_mov_path_preview *path_ptr)
 void
 p_update_point_labels(t_mov_path_preview *path_ptr)
 { 
-  g_snprintf (&path_ptr->PointIndex_Label[0], LABEL_LENGTH, _("Current Point: [ %3d ] of [ %3d ]"), 
+  g_snprintf (&path_ptr->PointIndex_Label[0], LABEL_LENGTH,
+	      _("Current Point: [ %3d ] of [ %3d ]"), 
 	      pvals->point_idx + 1, pvals->point_idx_max +1);
 
-  if(NULL != path_ptr->PointIndex_LabelPtr)
-  {  gtk_label_set(GTK_LABEL(path_ptr->PointIndex_LabelPtr),
-                   &path_ptr->PointIndex_Label[0]);
-  }
+  if (NULL != path_ptr->PointIndex_LabelPtr)
+    {
+      gtk_label_set_text (GTK_LABEL (path_ptr->PointIndex_LabelPtr),
+			  &path_ptr->PointIndex_Label[0]);
+    }
 }
 
 
@@ -1918,12 +1922,11 @@ mov_src_sel_create()
 		      (GtkSignalFunc) mov_src_sel_destroy,
 		      path_ptr );
 */
-  gtk_frame_set_shadow_type( GTK_FRAME( frame ) ,GTK_SHADOW_ETCHED_IN );
-  gtk_container_border_width( GTK_CONTAINER( frame ), 2 );
+  gtk_frame_set_shadow_type (GTK_FRAME (frame) ,GTK_SHADOW_ETCHED_IN);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 2);
   
-
-  table = gtk_table_new ( 2, 4, FALSE );
-  gtk_container_border_width (GTK_CONTAINER (table), 2);
+  table = gtk_table_new (2, 4, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
@@ -2079,7 +2082,7 @@ mov_path_prevw_create ( GimpDrawable *drawable, t_mov_path_preview *path_ptr)
 		      (GtkSignalFunc) mov_path_prevw_destroy,
 		      path_ptr );
   gtk_frame_set_shadow_type( GTK_FRAME( frame ) ,GTK_SHADOW_ETCHED_IN );
-  gtk_container_border_width( GTK_CONTAINER( frame ), 2 );
+  gtk_container_set_border_width( GTK_CONTAINER( frame ), 2 );
 
   /* the vbox */
   vbox = gtk_vbox_new (FALSE, 3);
@@ -2089,7 +2092,7 @@ mov_path_prevw_create ( GimpDrawable *drawable, t_mov_path_preview *path_ptr)
 
   /* the table (4 rows) */
   table = gtk_table_new ( 4, 6, FALSE );
-  gtk_container_border_width (GTK_CONTAINER (table), 2 );
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2 );
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
@@ -2228,7 +2231,7 @@ mov_path_prevw_create ( GimpDrawable *drawable, t_mov_path_preview *path_ptr)
 
   /* the preview table (1 rows) */
   pv_table = gtk_table_new ( 1, 1, FALSE );
-  gtk_container_border_width (GTK_CONTAINER (pv_table), 2 );
+  gtk_container_set_border_width (GTK_CONTAINER (pv_table), 2 );
   gtk_table_set_row_spacings (GTK_TABLE (pv_table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (pv_table), 4);
   gtk_box_pack_start (GTK_BOX (hbox), pv_table, TRUE, TRUE, 0);
@@ -2303,7 +2306,8 @@ mov_path_prevw_create ( GimpDrawable *drawable, t_mov_path_preview *path_ptr)
   gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
                       (GtkSignalFunc) mov_show_path_callback,
                        path_ptr);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (check_button), path_ptr->show_path);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
+				path_ptr->show_path);
   gimp_help_set_help_data(check_button,
                        _("Show Path Lines and enable "
                          "pick/drag with left button "

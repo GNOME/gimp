@@ -484,8 +484,8 @@ sparkle_dialog (void)
 
   toggle = gtk_check_button_new_with_label (_("Preserve Luminosity"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
-			       svals.preserve_luminosity);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				svals.preserve_luminosity);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &svals.preserve_luminosity);
@@ -495,7 +495,7 @@ sparkle_dialog (void)
 
   toggle = gtk_check_button_new_with_label (_("Inverse"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), svals.invers);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), svals.invers);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &svals.invers);
@@ -504,7 +504,7 @@ sparkle_dialog (void)
 
   toggle = gtk_check_button_new_with_label (_("Add Border"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), svals.border);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), svals.border);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &svals.border);

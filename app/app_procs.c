@@ -439,7 +439,7 @@ app_init_update_status (gchar *label1val,
   if (!no_interface && !no_splash && win_initstatus)
     {
       if (label1val && strcmp (label1val, GTK_LABEL (label1)->label))
-	gtk_label_set (GTK_LABEL (label1), label1val);
+	gtk_label_set_text (GTK_LABEL (label1), label1val);
 
       if (label2val && strcmp (label2val, GTK_LABEL (label2)->label))
 	{

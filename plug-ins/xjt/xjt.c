@@ -814,7 +814,7 @@ save_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   toggle = gtk_check_button_new_with_label (_("Optimize"));
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), jsvals.optimize);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.optimize);
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 0, 1,
 		    GTK_FILL, 0, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -823,7 +823,7 @@ save_dialog (void)
   gtk_widget_show (toggle);
 
   toggle = gtk_check_button_new_with_label (_("Clear Transparent"));
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 			       jsvals.clr_transparent);
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 1, 2,
 		    GTK_FILL, 0, 0, 0);

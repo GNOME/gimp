@@ -1,3 +1,63 @@
+2000-08-28  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: added -DGTK_DISABLE_COMPAT_H to CPPFLAGS.
+
+	* app/app_procs.c
+	* app/gdisplay.c
+	* app/layers_dialog.c
+	* app/menus.c
+	* app/tips_dialog.c
+	* libgimp/gimpcolorbutton.c
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/bmp/bmpwrite.c
+	* plug-ins/common/AlienMap.c
+	* plug-ins/common/AlienMap2.c
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/animationplay.c
+	* plug-ins/common/cubism.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/deinterlace.c
+	* plug-ins/common/gee.c
+	* plug-ins/common/glasstile.c
+	* plug-ins/common/iwarp.c
+	* plug-ins/common/mail.c
+	* plug-ins/common/pat.c
+	* plug-ins/common/pixelize.c
+	* plug-ins/common/plugindetails.c
+	* plug-ins/common/png.c
+	* plug-ins/common/sample_colorize.c
+	* plug-ins/common/sel_gauss.c
+	* plug-ins/common/sinus.c
+	* plug-ins/common/sparkle.c
+	* plug-ins/common/spheredesigner.c
+	* plug-ins/common/tga.c
+	* plug-ins/common/tileit.c
+	* plug-ins/common/vpropagate.c
+	* plug-ins/common/warp.c
+	* plug-ins/common/waves.c
+	* plug-ins/common/wmf.c
+	* plug-ins/flame/flame.c
+	* plug-ins/fp/fp_gtk.c
+	* plug-ins/gap/gap_arr_dialog.c
+	* plug-ins/gap/gap_dbbrowser_utils.c
+	* plug-ins/gap/gap_mov_dialog.c
+	* plug-ins/gap/gap_navigator_dialog.c
+	* plug-ins/gap/gap_resi_dialog.c
+	* plug-ins/gdyntext/gdyntext_ui.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gimpressionist/brush.c
+	* plug-ins/gimpressionist/gimpressionist.c
+	* plug-ins/pagecurl/pagecurl.c
+	* plug-ins/print/gimp_main_window.c
+	* plug-ins/rcm/rcm_callback.c
+	* plug-ins/rcm/rcm_dialog.c
+	* plug-ins/script-fu/script-fu-console.c
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/script-fu-server.c
+	* plug-ins/sel2path/sel2path_adv_dialog.c
+	* plug-ins/xjt/xjt.c: removed COMPAT_CRUFT.
+
 2000-08-28  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu.c: add missing cases to switch 

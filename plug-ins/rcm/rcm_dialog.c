@@ -84,7 +84,7 @@ rcm_create_one_preview (GtkWidget **preview,
 {
   *frame = gtk_frame_new(NULL);
   gtk_frame_set_shadow_type(GTK_FRAME(*frame), GTK_SHADOW_IN);
-  gtk_container_border_width(GTK_CONTAINER(*frame), 0);
+  gtk_container_set_border_width(GTK_CONTAINER(*frame), 0);
   gtk_widget_show(*frame);
   
   *preview = gtk_preview_new(GTK_PREVIEW_COLOR);
@@ -217,7 +217,7 @@ rcm_create_one_circle (gint   height,
 
   /** Main: Circle: create (main) frame **/
   st->frame = gtk_frame_new(label_content);
-  gtk_container_border_width(GTK_CONTAINER(st->frame), 0);
+  gtk_container_set_border_width(GTK_CONTAINER(st->frame), 0);
   gtk_widget_show(st->frame);
 
   /** Main: Circle: create frame & preview **/
@@ -225,7 +225,7 @@ rcm_create_one_circle (gint   height,
   /* create frame */
   frame = gtk_frame_new(NULL);
   gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_IN);
-  gtk_container_border_width(GTK_CONTAINER(frame), 0);
+  gtk_container_set_border_width(GTK_CONTAINER(frame), 0);
   gtk_widget_show(frame);
  
   /* create preview */
@@ -634,7 +634,7 @@ rcm_create_misc (void)
   
   button = gtk_check_button_new_with_label (_("Continuous update"));
   gtk_box_pack_start(GTK_BOX(preview_vbox), button, FALSE, FALSE, 0);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), Current.RealTime);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), Current.RealTime);
    
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) (GtkSignalFunc) rcm_preview_as_you_drag,

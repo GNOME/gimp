@@ -147,7 +147,7 @@ fp_create_circle_palette (void)
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
   gtk_widget_show (frame);
 
   table = gtk_table_new (11, 11, FALSE);
@@ -318,7 +318,7 @@ fp_create_lnd (void)
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_widget_show (frame);
 
   table = gtk_table_new (1, 11, FALSE);
@@ -367,7 +367,7 @@ fp_create_msnls (void)
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
   gtk_widget_show (frame);
 
   table = gtk_table_new (1, 11, FALSE);
@@ -464,7 +464,7 @@ fp_create_frame_select (void)
   GtkWidget *frame, *box;
 
   frame = gtk_frame_new (_("Display"));
-  gtk_container_border_width (GTK_CONTAINER (frame), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
   gtk_widget_show (frame);
 
   box = gtk_hbox_new (FALSE, 8);
@@ -571,7 +571,7 @@ Create_A_Table_Entry (GtkWidget **box,
   GtkWidget *label, *button, *table;
 
   *box = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (*box), PR_BX_BRDR);
+  gtk_container_set_border_width (GTK_CONTAINER (*box), PR_BX_BRDR);
   gtk_widget_show (*box);
 
   /* Delayed translation applied here */
@@ -1044,7 +1044,7 @@ fp_advanced_dialog (void)
  
   graphFrame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (graphFrame), GTK_SHADOW_IN);
-  gtk_container_border_width (GTK_CONTAINER (graphFrame),0);
+  gtk_container_set_border_width (GTK_CONTAINER (graphFrame),0);
   gtk_widget_show (graphFrame);
   gtk_table_attach (GTK_TABLE (table), graphFrame, 0, 1, 0, 1,
 		    GTK_EXPAND, 0, 0, 0);

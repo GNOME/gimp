@@ -516,8 +516,8 @@ warp_dialog (GimpDrawable *drawable)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) gimp_radio_button_update,
 		      &dvals.wrap_type);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
-			       dvals.wrap_type == WRAP);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				dvals.wrap_type == WRAP);
   gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (group, _("Smear"));
@@ -527,8 +527,8 @@ warp_dialog (GimpDrawable *drawable)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) gimp_radio_button_update,
 		      &dvals.wrap_type);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
-			       dvals.wrap_type == SMEAR);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				dvals.wrap_type == SMEAR);
   gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (group, _("Black"));
@@ -538,8 +538,8 @@ warp_dialog (GimpDrawable *drawable)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) gimp_radio_button_update,
 		      &dvals.wrap_type);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
-			       dvals.wrap_type == BLACK);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				dvals.wrap_type == BLACK);
   gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (group, _("FG Color"));
@@ -549,8 +549,8 @@ warp_dialog (GimpDrawable *drawable)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) gimp_radio_button_update,
 		      &dvals.wrap_type);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
-			       dvals.wrap_type == COLOR);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				dvals.wrap_type == COLOR);
   gtk_widget_show (toggle);
 
   gtk_widget_show (toggle_hbox);
@@ -614,7 +614,7 @@ warp_dialog (GimpDrawable *drawable)
 
   /*  Magnitude Usage  */
   toggle_hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_border_width (GTK_CONTAINER (toggle_hbox), 1);
+  gtk_container_set_border_width (GTK_CONTAINER (toggle_hbox), 1);
   gtk_table_attach (GTK_TABLE (table), toggle_hbox, 2, 3, 2, 3,
 		    GTK_FILL, GTK_FILL, 0, 0);
 
@@ -623,7 +623,7 @@ warp_dialog (GimpDrawable *drawable)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) gimp_toggle_button_update,
 		      &dvals.mag_use);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), dvals.mag_use);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dvals.mag_use);
   gtk_widget_show (toggle);
 
   gtk_widget_show (toggle_hbox);

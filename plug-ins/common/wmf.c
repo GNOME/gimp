@@ -947,7 +947,7 @@ load_dialog (gchar *file_name)
 		      TRUE, TRUE, 0);
 
   vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   /* Scale label */

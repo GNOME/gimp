@@ -827,7 +827,7 @@ fractalexplorer_dialog_edit_list (GtkWidget          *lwidget,
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (options->query_box), _("Edit fractal name"));
-  gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);

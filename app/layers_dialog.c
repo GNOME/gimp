@@ -3330,7 +3330,7 @@ layer_widget_layer_flush (GtkWidget *widget,
   /*  we need to set the name label if necessary  */
   gtk_label_get (GTK_LABEL (layer_widget->label), &label_name);
   if (strcmp (name, label_name))
-    gtk_label_set (GTK_LABEL (layer_widget->label), name);
+    gtk_label_set_text (GTK_LABEL (layer_widget->label), name);
 
   /*  show the layer mask preview if necessary  */
   if (layer_get_mask (layer_widget->layer) == NULL &&

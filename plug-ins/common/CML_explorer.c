@@ -2115,7 +2115,7 @@ CML_save_to_file_callback (GtkWidget *widget,
   GtkWidget *filesel;
 
   filesel = gtk_file_selection_new (_("Save Parameters to"));
-  gtk_window_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
 
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
 		      "clicked",
@@ -2306,7 +2306,7 @@ CML_load_from_file_callback (GtkWidget *widget,
     filesel = gtk_file_selection_new (_("Load Parameters from"));
   else
     filesel = gtk_file_selection_new (_("Selective Load from"));
-  gtk_window_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
 
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
 		      "clicked",

@@ -751,7 +751,7 @@ gimp_create_main_window (void)
    */
 
   table = gtk_table_new (5, 2, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 8);
   gtk_table_set_row_spacing (GTK_TABLE (table), 0, 100);

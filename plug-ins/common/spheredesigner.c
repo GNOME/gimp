@@ -1852,7 +1852,7 @@ void fileselect(int action)
 
   if(!windows[action]) {
     windows[action] = gtk_file_selection_new( gettext(titles[action]));
-    gtk_window_position (GTK_WINDOW (windows[action]), GTK_WIN_POS_MOUSE);
+    gtk_window_set_position (GTK_WINDOW (windows[action]), GTK_WIN_POS_MOUSE);
     
     gtk_signal_connect (GTK_OBJECT (windows[action]), "destroy",
 			GTK_SIGNAL_FUNC(gtk_widget_destroy),
@@ -2350,7 +2350,7 @@ GtkWidget* makewindow (void)
   gtk_object_set_data (GTK_OBJECT (window), "table2", table2);
   gtk_widget_show (table2);
   gtk_container_add (GTK_CONTAINER (frame4), table2);
-  gtk_container_border_width (GTK_CONTAINER (table2), 5);
+  gtk_container_set_border_width (GTK_CONTAINER (table2), 5);
   gtk_table_set_col_spacings (GTK_TABLE (table2), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table2), 2);
 

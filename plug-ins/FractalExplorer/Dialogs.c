@@ -354,7 +354,7 @@ explorer_dialog (void)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      GTK_SIGNAL_FUNC (explorer_toggle_update),
 		      &wvals.alwayspreview);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), wvals.alwayspreview);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), wvals.alwayspreview);
   gtk_widget_show (toggle);
   gimp_help_set_help_data (toggle, _("If you enable this option the preview "
 				     "will be redrawn automatically"), NULL);
@@ -650,7 +650,7 @@ explorer_dialog (void)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) explorer_toggle_update,
 		      &wvals.useloglog);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), wvals.useloglog);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), wvals.useloglog);
   gtk_widget_show (toggle);
   gimp_help_set_help_data (toggle, _("Use log log smoothing to eliminate "
 				     "\"banding\" in the result"), NULL);
@@ -821,7 +821,7 @@ explorer_dialog (void)
 
   elements->blueinvert = toggle =
     gtk_check_button_new_with_label (_("Inversion"));
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON( toggle), wvals.blueinvert);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON( toggle), wvals.blueinvert);
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      GTK_SIGNAL_FUNC (explorer_toggle_update),
@@ -851,8 +851,8 @@ explorer_dialog (void)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      GTK_SIGNAL_FUNC (explorer_radio_update),
 		      &wvals.colormode);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
-			       wvals.colormode == 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				wvals.colormode == 0);
   gtk_widget_show (toggle);
   gimp_help_set_help_data (toggle,
 			   _("Create a color-map with the options you "
@@ -1663,7 +1663,7 @@ create_load_file_selection (void)
   if (!window)
     {
       window = gtk_file_selection_new (_("Load Fractal Parameters"));
-      gtk_window_position (GTK_WINDOW (window), GTK_WIN_POS_NONE);
+      gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_NONE);
 
       gtk_signal_connect (GTK_OBJECT (window), "destroy",
 			  GTK_SIGNAL_FUNC (gtk_widget_destroyed),
@@ -1698,7 +1698,7 @@ create_file_selection (void)
   if (!window)
     {
       window = gtk_file_selection_new (_("Save Fractal Parameters"));
-      gtk_window_position (GTK_WINDOW (window), GTK_WIN_POS_NONE);
+      gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_NONE);
 
       gtk_signal_connect (GTK_OBJECT (window), "destroy",
 			  GTK_SIGNAL_FUNC (gtk_widget_destroyed),

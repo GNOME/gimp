@@ -1030,7 +1030,7 @@ gimp_plugin_desc (void)
   /* left = vbox : the list and the search entry */
   
   plugindesc->left_paned = vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 3); 
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 3); 
   gtk_paned_pack1 (GTK_PANED (hbox), vbox, FALSE, FALSE);
   gtk_widget_show (vbox);
 

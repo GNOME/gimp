@@ -187,7 +187,7 @@ void savebrush(GtkWidget *wg, gpointer data)
   sprintf(path, "%s/Brushes/", (char *)thispath->data);
 
   window = gtk_file_selection_new( _("Save brush"));
-  gtk_window_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
 
   gtk_file_selection_set_filename(GTK_FILE_SELECTION(window), path);
 
@@ -358,7 +358,7 @@ void create_brushpage(GtkNotebook *notebook)
   gtk_widget_show_all(menubox);
 
   thispage = gtk_vbox_new(FALSE, 0);
-  gtk_container_border_width (GTK_CONTAINER (thispage), 5);
+  gtk_container_set_border_width (GTK_CONTAINER (thispage), 5);
   gtk_widget_show(thispage);
 
   box1 = gtk_hbox_new (FALSE, 0);
@@ -387,7 +387,7 @@ void create_brushpage(GtkNotebook *notebook)
   box2 = gtk_vbox_new (FALSE, 0);
   gtk_box_pack_start(GTK_BOX(box1), box2,FALSE,FALSE,0);
   gtk_widget_show (box2);
-  gtk_container_border_width (GTK_CONTAINER (box2), 5);
+  gtk_container_set_border_width (GTK_CONTAINER (box2), 5);
 
   tmpw = gtk_label_new( _("Brush Preview:"));
   gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);

@@ -258,7 +258,7 @@ filesel_open_cb(GtkWidget *widget, t_arr_arg *arr_ptr)
   filesel = gtk_file_selection_new (arr_ptr->label_txt);
   arr_ptr->text_filesel = filesel;
 
-  gtk_window_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
 
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
 		      "clicked", (GtkSignalFunc) filesel_ok_cb,
@@ -418,8 +418,8 @@ toggle_create_value(char *title, GtkTable *table, int row, t_arr_arg *arr_ptr)
   gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
                       (GtkSignalFunc) toggle_update_cb,
                        arr_ptr);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (check_button),
-                               arr_ptr->int_ret);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
+				arr_ptr->int_ret);
   if(arr_ptr->help_txt != NULL)
   { 
      gimp_help_set_help_data(check_button, arr_ptr->help_txt,NULL);
@@ -504,7 +504,7 @@ radio_create_value(char *title, GtkTable *table, int row, t_arr_arg *arr_ptr)
 		         (GtkSignalFunc) radio_update_cb,
 		          radio_ptr);
 
-     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (radio_button), 
+     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_button), 
 				   l_radio_pressed);
      if(l_radio_help_txt != NULL)
      { 
@@ -749,7 +749,7 @@ gint p_array_std_dialog(char *title_txt,
   /* dialog */
   g_arrint.dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (g_arrint.dlg), title_txt);
-  gtk_window_position (GTK_WINDOW (g_arrint.dlg), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position (GTK_WINDOW (g_arrint.dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (g_arrint.dlg), "destroy",
 		      (GtkSignalFunc) arr_close_callback,
 		      NULL);
@@ -794,7 +794,7 @@ gint p_array_std_dialog(char *title_txt,
   if (frame_txt == NULL)   frame = gtk_frame_new ( _("Enter Values"));
   else                     frame = gtk_frame_new (frame_txt);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (g_arrint.dlg)->vbox), frame, TRUE, TRUE, 0);
 
   if(argc > 0)

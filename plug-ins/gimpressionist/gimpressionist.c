@@ -182,15 +182,15 @@ void restorevals(void)
 
   gtk_adjustment_set_value(GTK_ADJUSTMENT(paperreliefadjust), pcvals.paperrelief);
   gtk_adjustment_set_value(GTK_ADJUSTMENT(paperscaleadjust), pcvals.paperscale);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(paperinvert), pcvals.paperinvert);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(generalpaintedges), pcvals.generalpaintedges);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(generaltileable), pcvals.generaltileable);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(generaldropshadow), pcvals.generaldropshadow);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(paperinvert), pcvals.paperinvert);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(generalpaintedges), pcvals.generalpaintedges);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(generaltileable), pcvals.generaltileable);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(generaldropshadow), pcvals.generaldropshadow);
   gtk_adjustment_set_value(GTK_ADJUSTMENT(generalshadowdepth), pcvals.generalshadowdepth);
   gtk_adjustment_set_value(GTK_ADJUSTMENT(generalshadowblur), pcvals.generalshadowblur);
 
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(placecenter), pcvals.placecenter);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(paperoverlay), pcvals.paperoverlay);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(placecenter), pcvals.placecenter);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(paperoverlay), pcvals.paperoverlay);
 
   drawcolor(NULL);
 
@@ -344,7 +344,7 @@ void showabout(void)
   }
   window = gtk_dialog_new();
   gtk_window_set_title(GTK_WINDOW(window), _("The GIMPressionist!"));
-  gtk_window_position(GTK_WINDOW(window), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_MOUSE);
   gtk_signal_connect(GTK_OBJECT(window), "destroy",
 		     GTK_SIGNAL_FUNC (gtk_widget_destroyed),
 		     &window);
@@ -364,7 +364,7 @@ void showabout(void)
   gtk_widget_show(tmpw);
 
   tmpvbox = gtk_vbox_new(FALSE, 5);
-  gtk_container_border_width(GTK_CONTAINER(tmpvbox), 5);
+  gtk_container_set_border_width(GTK_CONTAINER(tmpvbox), 5);
   gtk_container_add(GTK_CONTAINER(GTK_DIALOG(window)->vbox), tmpvbox);
       
   tmphbox = gtk_hbox_new(TRUE, 5);
@@ -440,7 +440,7 @@ int create_dialog(void)
 		      NULL);
 
   gtk_window_set_title (GTK_WINDOW (window), _("The GIMPressionist!"));
-  gtk_container_border_width (GTK_CONTAINER (window), 5);
+  gtk_container_set_border_width (GTK_CONTAINER (window), 5);
 
   box1 = gtk_hbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (window), box1);
@@ -453,7 +453,7 @@ int create_dialog(void)
   notebook = gtk_notebook_new ();
   gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_TOP);
   gtk_box_pack_start (GTK_BOX (box1), notebook, TRUE, TRUE, 5);
-  gtk_container_border_width (GTK_CONTAINER (notebook), 0);
+  gtk_container_set_border_width (GTK_CONTAINER (notebook), 0);
   gtk_widget_realize (notebook);
   gtk_widget_show(notebook);
 

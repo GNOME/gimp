@@ -475,7 +475,7 @@ save_dialog (void)
 
   /* table */
   table = gtk_table_new (7, 2, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 

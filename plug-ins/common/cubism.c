@@ -321,7 +321,7 @@ cubism_dialog (void)
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacing (GTK_TABLE (table), 0, 4);
-  gtk_container_border_width (GTK_CONTAINER (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   toggle = gtk_check_button_new_with_label (_("Use Background Color"));
