@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.x\n"
-"POT-Creation-Date: 2003-02-21 11:59+0100\n"
+"POT-Creation-Date: 2003-02-24 12:03+0100\n"
 "PO-Revision-Date: 2003-02-21 12:40-0300\n"
 "Last-Translator: Pablo Gonzalo del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -24,17 +24,17 @@ msgid ""
 "To perform user installation, run the GIMP without the '--no-interface' flag."
 msgstr ""
 "El GIMP no se encuentra instalado correctamente para el usuario actual.\n"
-"La instalación del usuario fue salteada debido a que se utilizó la bandera "
-"«-- no interface».\n"
-"Para realizar la instalación de usuario ejecute El GIMP sin la bandera «--no-"
-"interface»."
+"La instalación del usuario fue salteada debido a que se utilizó el \n"
+"modificador «-- no interface».\n"
+"Para realizar la instalación de usuario ejecute El GIMP sin el modificador\n"
+"«--no-interface»."
 
 #: app/main.c:170
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
 msgstr ""
-"El GIMP no ha podido inicializar la interfaz gráfica de usuario.\n"
+"El GIMP no ha podido inicializar la interfase gráfica de usuario.\n"
 "Asegúrese de que exista una instalación apropiada para su pantalla."
 
 #.
@@ -61,7 +61,7 @@ msgid ""
 "\n"
 msgstr ""
 "\n"
-"Uso: %s [opción ...] [archivo ....]\n"
+"Uso: %s [opción ... ] [archivo ... ]\n"
 "\n"
 
 #: app/main.c:458
@@ -70,27 +70,23 @@ msgstr "Opciones:\n"
 
 #: app/main.c:459
 msgid "  -b, --batch <commands>   Run in batch mode.\n"
-msgstr "  -b, --batch <órdenes>    Ejecutar en modo no interactivo.\n"
+msgstr "  -b, --batch <comandos>   Ejecutar en modo no interactivo.\n"
 
 #: app/main.c:460
 msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
-msgstr ""
-"  -c, --console-messages   Mostrar las advertencias en la consola en vez de "
-"en una ventana.\n"
+msgstr "  -c, --console-messages   Mostrar las advertencias en la consola en vez de en una ventana.\n"
 
 #: app/main.c:461
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
-msgstr ""
-"  -d, --no-data            No cargar brochas, gradientes, paletas ni "
-"patrones.\n"
+msgstr "  -d, --no-data            No cargar las brochas, los gradientes, paletas ni patrones.\n"
 
 #: app/main.c:462
 msgid "  -i, --no-interface       Run without a user interface.\n"
-msgstr "  -i, --no-interface       Ejecutar sin interfaz de usuario.\n"
+msgstr "  -i, --no-interface       Ejecutar sin una interfase de usuario.\n"
 
 #: app/main.c:463
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
@@ -124,9 +120,7 @@ msgstr "  --verbose                Mostrar mensajes de inicio.\n"
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
-msgstr ""
-"  --no-shm                 No compartir la memoria entre El GIMP y las "
-"extensiones (plug-ins).\n"
+msgstr "  --no-shm                 No compartir la memoria entre El GIMP y las extensiones (plug-ins).\n"
 
 #: app/main.c:471
 msgid "  --no-mmx                 Do not use MMX routines.\n"
@@ -135,9 +129,7 @@ msgstr "  --no-xshm                No utilizar las rutinas MMX.\n"
 # //R Posiblemente estará mal
 #: app/main.c:472
 msgid "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
-msgstr ""
-"  --debug-handlers         Activar depuración de manejadores de señales no "
-"fatales.\n"
+msgstr "  --debug-handlers         Activar depuración de manejadores de señales no fatales.\n"
 
 #: app/main.c:473
 msgid "  --display <display>      Use the designated X display.\n"
@@ -312,13 +304,13 @@ msgstr ""
 msgid "Failed to create file '%s': %s"
 msgstr "Ha fallado la creación del archivo «%s»: %s"
 
-#: app/config/gimprc.c:346 app/config/gimprc.c:358 app/gui/gui.c:190
+#: app/config/gimprc.c:347 app/config/gimprc.c:359 app/gui/gui.c:190
 #: app/gui/gui.c:201
 #, c-format
 msgid "Parsing '%s'\n"
 msgstr "Analizando «%s»\n"
 
-#: app/config/gimprc.c:576
+#: app/config/gimprc.c:582
 #, c-format
 msgid "Saving '%s'\n"
 msgstr "Guardando «%s»\n"
@@ -1133,30 +1125,30 @@ msgid "Parasites"
 msgstr "Parásitos"
 
 #. initialize the list of gimp brushes
-#: app/core/gimp.c:737 app/gui/dialogs-constructors.c:333
-#: app/gui/dialogs-constructors.c:481 app/gui/preferences-dialog.c:1768
-#: app/pdb/internal_procs.c:82
+#: app/core/gimp.c:737 app/gui/dialogs-constructors.c:334
+#: app/gui/dialogs-constructors.c:482 app/gui/dialogs-constructors.c:630
+#: app/gui/preferences-dialog.c:1768 app/pdb/internal_procs.c:82
 msgid "Brushes"
 msgstr "Brochas"
 
 #. initialize the list of gimp patterns
-#: app/core/gimp.c:741 app/gui/dialogs-constructors.c:354
-#: app/gui/dialogs-constructors.c:502 app/gui/preferences-dialog.c:1772
-#: app/pdb/internal_procs.c:160
+#: app/core/gimp.c:741 app/gui/dialogs-constructors.c:355
+#: app/gui/dialogs-constructors.c:503 app/gui/dialogs-constructors.c:651
+#: app/gui/preferences-dialog.c:1772 app/pdb/internal_procs.c:160
 msgid "Patterns"
 msgstr "Patrones"
 
 #. initialize the list of gimp palettes
-#: app/core/gimp.c:745 app/gui/dialogs-constructors.c:396
-#: app/gui/dialogs-constructors.c:544 app/gui/preferences-dialog.c:1776
-#: app/pdb/internal_procs.c:148
+#: app/core/gimp.c:745 app/gui/dialogs-constructors.c:397
+#: app/gui/dialogs-constructors.c:545 app/gui/dialogs-constructors.c:693
+#: app/gui/preferences-dialog.c:1776 app/pdb/internal_procs.c:148
 msgid "Palettes"
 msgstr "Paletas"
 
 #. initialize the list of gimp gradients
-#: app/core/gimp.c:749 app/gui/dialogs-constructors.c:375
-#: app/gui/dialogs-constructors.c:523 app/gui/preferences-dialog.c:1780
-#: app/pdb/internal_procs.c:115
+#: app/core/gimp.c:749 app/gui/dialogs-constructors.c:376
+#: app/gui/dialogs-constructors.c:524 app/gui/dialogs-constructors.c:672
+#: app/gui/preferences-dialog.c:1780 app/pdb/internal_procs.c:115
 msgid "Gradients"
 msgstr "Gradientes"
 
@@ -1166,8 +1158,8 @@ msgid "Documents"
 msgstr "Documentos"
 
 #: app/core/gimpbrush.c:375 app/core/gimpbrushgenerated.c:390
-#: app/core/gimpbrushpipe.c:319 app/core/gimpgradient.c:338
-#: app/core/gimppalette.c:299 app/core/gimppattern.c:302
+#: app/core/gimpbrushpipe.c:319 app/core/gimpgradient.c:357
+#: app/core/gimppalette.c:318 app/core/gimppattern.c:302
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "No se ha podido abrir «%s» para lectura: %s"
@@ -1201,8 +1193,8 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Cadena UTF-8 inválida en el archivo de brocha «%s»"
 
 #: app/core/gimpbrush.c:573 app/core/gimpbrushpipe.c:343
-#: app/core/gimpcontext.c:1158 app/core/gimpgradient.c:369
-#: app/core/gimpitem.c:357 app/core/gimppalette.c:355
+#: app/core/gimpcontext.c:1158 app/core/gimpgradient.c:388
+#: app/core/gimpitem.c:357 app/core/gimppalette.c:374
 #: app/core/gimppattern.c:368 app/tools/gimpvectortool.c:291
 msgid "Unnamed"
 msgstr "Sin nombre"
@@ -1218,8 +1210,8 @@ msgstr ""
 "en el archivo «%s».\n"
 "Las brochas de El GIMP deben ser GRISES o RGBA."
 
-#: app/core/gimpbrushgenerated.c:131 app/core/gimpgradient.c:487
-#: app/core/gimpgradient.c:572 app/core/gimppalette.c:498
+#: app/core/gimpbrushgenerated.c:131 app/core/gimpgradient.c:506
+#: app/core/gimpgradient.c:591 app/core/gimppalette.c:517
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "No se ha podido abrir «%s» para lectura: %s"
@@ -1427,17 +1419,17 @@ msgstr "Nombre de variable vacío en el archivo de entorno %s"
 msgid "Illegal variable name in environment file %s: %s"
 msgstr "Nombre de variable ilegal en el archivo de ambiente %s: %s"
 
-#: app/core/gimpgradient.c:347
+#: app/core/gimpgradient.c:366
 #, c-format
 msgid "Fatal Parse Error: '%s' is not a GIMP Gradient file"
 msgstr "Error de análisis fatal: «%s» no es archivo de gradientes de El GIMP"
 
-#: app/core/gimpgradient.c:367
+#: app/core/gimpgradient.c:386
 #, c-format
 msgid "Invalid UTF-8 string in gradient file '%s'."
 msgstr "Cadena UTF-8 inválida en el archivo de gradiente «%s»"
 
-#: app/core/gimpgradient.c:389
+#: app/core/gimpgradient.c:408
 #, c-format
 msgid ""
 "Fatal parsing error:\n"
@@ -1446,7 +1438,7 @@ msgstr ""
 "Error de análisis fatal:\n"
 "El archivo de gradientes «%s» esta corrupto."
 
-#: app/core/gimpgradient.c:445
+#: app/core/gimpgradient.c:464
 #, c-format
 msgid "Corrupt segment %d in gradient file '%s'."
 msgstr "Segmento corrupto %d en el archivo de gradiente «%s»."
@@ -1648,73 +1640,73 @@ msgstr "Desactivar la máscara rápida"
 msgid "Can't undo %s"
 msgstr "No se puede deshacer %s"
 
-#: app/core/gimpimage.c:1059 app/core/gimppalette-import.c:204
-#: app/core/gimppalette.c:543 app/gui/palette-import-dialog.c:591
+#: app/core/gimpimage.c:1091 app/core/gimppalette-import.c:204
+#: app/core/gimppalette.c:562 app/gui/palette-import-dialog.c:591
 #: app/pdb/image_cmds.c:3704 app/widgets/gimpdatafactoryview.c:266
 msgid "Untitled"
 msgstr "Sin_nombre"
 
-#: app/core/gimpimage.c:1133
+#: app/core/gimpimage.c:1165
 msgid "Change Image Reolution"
 msgstr "Cambiar la resolución de la imagen"
 
-#: app/core/gimpimage.c:1172
+#: app/core/gimpimage.c:1204
 msgid "Change Image Unit"
 msgstr "Cambiar la unidad de medida"
 
-#: app/core/gimpimage.c:2149
+#: app/core/gimpimage.c:2181
 msgid "Attach Paraite to Image"
 msgstr "Adjuntar parásito a la imagen"
 
-#: app/core/gimpimage.c:2182
+#: app/core/gimpimage.c:2214
 msgid "Remove Parasite from Image"
 msgstr "Quitar el parásito de la imagen"
 
-#: app/core/gimpimage.c:2695
+#: app/core/gimpimage.c:2727
 msgid "Add Layer to Image"
 msgstr "Añadir una capa a a la imagen"
 
-#: app/core/gimpimage.c:2779 app/core/gimpimage.c:3075
+#: app/core/gimpimage.c:2811 app/core/gimpimage.c:3107
 msgid "Remove Layer from Image"
 msgstr "Quitar una capa de la imagen"
 
-#: app/core/gimpimage.c:2847
+#: app/core/gimpimage.c:2879
 msgid "Layer cannot be raised higher."
 msgstr "La capa no puede ser elevada mas alto."
 
-#: app/core/gimpimage.c:2852 app/widgets/gimplayerlistview.c:140
+#: app/core/gimpimage.c:2884 app/widgets/gimplayerlistview.c:140
 msgid "Raise Layer"
 msgstr "Elevar la capa"
 
-#: app/core/gimpimage.c:2872
+#: app/core/gimpimage.c:2904
 msgid "Layer cannot be lowered more."
 msgstr "La capa no puede bajarse mas."
 
-#: app/core/gimpimage.c:2877 app/widgets/gimplayerlistview.c:142
+#: app/core/gimpimage.c:2909 app/widgets/gimplayerlistview.c:142
 msgid "Lower Layer"
 msgstr "Bajar la capa"
 
-#: app/core/gimpimage.c:2894
+#: app/core/gimpimage.c:2926
 msgid "Layer is already on top."
 msgstr "La capa ya se encuentra al principio."
 
-#: app/core/gimpimage.c:2900
+#: app/core/gimpimage.c:2932
 msgid "Cannot raise a layer without alpha."
 msgstr "No se puede elevar una capa sin alfa."
 
-#: app/core/gimpimage.c:2905 app/widgets/gimplayerlistview.c:141
+#: app/core/gimpimage.c:2937 app/widgets/gimplayerlistview.c:141
 msgid "Raise Layer to Top"
 msgstr "Elevar la capa hasta el principio"
 
-#: app/core/gimpimage.c:2925
+#: app/core/gimpimage.c:2957
 msgid "Layer is already on the bottom."
 msgstr "La capa ya se encuentra al final."
 
-#: app/core/gimpimage.c:2930 app/widgets/gimplayerlistview.c:143
+#: app/core/gimpimage.c:2962 app/widgets/gimplayerlistview.c:143
 msgid "Lower Layer to Bottom"
 msgstr "Bajar la capa hasta el final"
 
-#: app/core/gimpimage.c:2974
+#: app/core/gimpimage.c:3006
 #, c-format
 msgid ""
 "Layer \"%s\" has no alpha.\n"
@@ -1723,47 +1715,47 @@ msgstr ""
 "La capa «%s» no tiene alfa.\n"
 "La capa fue colocada encima de esta."
 
-#: app/core/gimpimage.c:3021
+#: app/core/gimpimage.c:3053
 msgid "Add Channel to Image"
 msgstr "Añadir un canal a la imagen"
 
-#: app/core/gimpimage.c:3123
+#: app/core/gimpimage.c:3155
 msgid "Channel cannot be raised higher."
 msgstr "El canal no puede ser elevado mas alto."
 
-#: app/core/gimpimage.c:3128 app/widgets/gimpchannellistview.c:139
+#: app/core/gimpimage.c:3160 app/widgets/gimpchannellistview.c:139
 msgid "Raise Channel"
 msgstr "Elevar el canal"
 
-#: app/core/gimpimage.c:3144
+#: app/core/gimpimage.c:3176
 msgid "Channel cannot be lowered more."
 msgstr "El canal no puede descender mas."
 
-#: app/core/gimpimage.c:3149 app/widgets/gimpchannellistview.c:141
+#: app/core/gimpimage.c:3181 app/widgets/gimpchannellistview.c:141
 msgid "Lower Channel"
 msgstr "Bajar el canal"
 
-#: app/core/gimpimage.c:3215
+#: app/core/gimpimage.c:3247
 msgid "Add Path to Image"
 msgstr "Añadir una ruta a la imagen"
 
-#: app/core/gimpimage.c:3264
+#: app/core/gimpimage.c:3296
 msgid "Remove Path from Image"
 msgstr "Quitar una ruta de la imagen"
 
-#: app/core/gimpimage.c:3312
+#: app/core/gimpimage.c:3344
 msgid "Path cannot be raised higher."
 msgstr "La ruta no puede ser elevada mas alto."
 
-#: app/core/gimpimage.c:3317 app/widgets/gimpvectorslistview.c:121
+#: app/core/gimpimage.c:3349 app/widgets/gimpvectorslistview.c:121
 msgid "Raise Path"
 msgstr "Elevar la ruta"
 
-#: app/core/gimpimage.c:3333
+#: app/core/gimpimage.c:3365
 msgid "Path cannot be lowered more."
 msgstr "La ruta no puede descender mas."
 
-#: app/core/gimpimage.c:3338 app/widgets/gimpvectorslistview.c:123
+#: app/core/gimpimage.c:3370 app/widgets/gimpvectorslistview.c:123
 msgid "Lower Path"
 msgstr "Bajar la ruta"
 
@@ -1908,7 +1900,7 @@ msgstr "Añadir un canal alfa"
 msgid "Layer to Image Size"
 msgstr "Capa a tamaño de imagen"
 
-#: app/core/gimppalette.c:314
+#: app/core/gimppalette.c:333
 #, c-format
 msgid ""
 "Loading palette '%s':\n"
@@ -1919,7 +1911,7 @@ msgstr ""
 "Paleta rota: falta la cabecera mágica\n"
 "¿Necesita este archivo ser convertido de DOS?"
 
-#: app/core/gimppalette.c:320
+#: app/core/gimppalette.c:339
 #, c-format
 msgid ""
 "Loading palette '%s':\n"
@@ -1928,8 +1920,8 @@ msgstr ""
 "Cargando paleta «%s»:\n"
 "Paleta errónea: falta la cabecera mágica"
 
-#: app/core/gimppalette.c:336 app/core/gimppalette.c:361
-#: app/core/gimppalette.c:389 app/core/gimppalette.c:459
+#: app/core/gimppalette.c:355 app/core/gimppalette.c:380
+#: app/core/gimppalette.c:408 app/core/gimppalette.c:478
 #, c-format
 msgid ""
 "Loading palette '%s':\n"
@@ -1938,12 +1930,12 @@ msgstr ""
 "Cargando paleta «%s»:\n"
 "Error de lectura en la línea %d."
 
-#: app/core/gimppalette.c:354
+#: app/core/gimppalette.c:373
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Cadena UTF-8 inválida en el archivo de paleta «%s»"
 
-#: app/core/gimppalette.c:378
+#: app/core/gimppalette.c:397
 #, c-format
 msgid ""
 "Loading palette '%s':\n"
@@ -1953,7 +1945,7 @@ msgstr ""
 "Número inválido de columnas en la línea %d."
 
 #. maybe we should just abort?
-#: app/core/gimppalette.c:418
+#: app/core/gimppalette.c:437
 #, c-format
 msgid ""
 "Loading palette '%s':\n"
@@ -1962,7 +1954,7 @@ msgstr ""
 "Cargando paleta «%s»:\n"
 "Falta la componente ROJO en la línea %d."
 
-#: app/core/gimppalette.c:425
+#: app/core/gimppalette.c:444
 #, c-format
 msgid ""
 "Loading palette '%s':\n"
@@ -1971,7 +1963,7 @@ msgstr ""
 "Cargando paleta %s:\n"
 "Falta la componente VERDE en la línea %d."
 
-#: app/core/gimppalette.c:432
+#: app/core/gimppalette.c:451
 #, c-format
 msgid ""
 "Loading palette '%s':\n"
@@ -1980,7 +1972,7 @@ msgstr ""
 "Cargando paleta %s:\n"
 "Falta la componente AZUL en la línea %d."
 
-#: app/core/gimppalette.c:441
+#: app/core/gimppalette.c:460
 #, c-format
 msgid ""
 "Loading palette '%s':\n"
@@ -1989,7 +1981,7 @@ msgstr ""
 "Cargando paleta %s:\n"
 "Valor RGB fuera de rango en la línea %d."
 
-#: app/core/gimppalette.c:589
+#: app/core/gimppalette.c:608
 msgid "Black"
 msgstr "Negro"
 
@@ -2101,44 +2093,44 @@ msgid "Custom Color"
 msgstr "Color personalizado"
 
 #. create the contents of the right_vbox  ********************************
-#: app/display/gimpdisplayshell.c:669
+#: app/display/gimpdisplayshell.c:657
 msgid "Set Canvas Padding Color"
 msgstr "Establecer el color de desplazamiento del lienzo"
 
-#: app/display/gimpdisplayshell.c:678
+#: app/display/gimpdisplayshell.c:666
 msgid "Set canvas padding color"
 msgstr "Establecer el color de desplazamiento del lienzo"
 
-#: app/display/gimpdisplayshell.c:690
+#: app/display/gimpdisplayshell.c:678
 msgid "/From Theme"
 msgstr "/Del tema"
 
-#: app/display/gimpdisplayshell.c:693
+#: app/display/gimpdisplayshell.c:681
 msgid "/Light Check Color"
 msgstr "/Cuadro de color claro"
 
-#: app/display/gimpdisplayshell.c:696
+#: app/display/gimpdisplayshell.c:684
 msgid "/Dark Check Color"
 msgstr "/Cuadro de color oscuro"
 
-#: app/display/gimpdisplayshell.c:702
+#: app/display/gimpdisplayshell.c:690
 msgid "/Select Custom Color..."
 msgstr "/Seleccionar color personalizado..."
 
-#: app/display/gimpdisplayshell.c:706
+#: app/display/gimpdisplayshell.c:694
 msgid "/As in Preferences"
 msgstr "/De acuerdo a la preferencias"
 
-#: app/display/gimpdisplayshell.c:731
+#: app/display/gimpdisplayshell.c:719
 msgid "Toggle QuickMask"
 msgstr "Activar máscara rápida"
 
-#: app/display/gimpdisplayshell.c:1683
+#: app/display/gimpdisplayshell.c:1623
 #, c-format
 msgid "Close %s?"
 msgstr "¿Cerrar %s?"
 
-#: app/display/gimpdisplayshell.c:1685
+#: app/display/gimpdisplayshell.c:1625
 #, c-format
 msgid ""
 "Changes were made to %s.\n"
@@ -2151,48 +2143,48 @@ msgstr ""
 msgid "Drop New Layer"
 msgstr "Soltar la capa nueva"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:125
+#: app/display/gimpdisplayshell-filter-dialog.c:124
 msgid "Color Display Filters"
 msgstr "Filtros de pantalla a color"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:165
+#: app/display/gimpdisplayshell-filter-dialog.c:164
 msgid "Available Filters"
 msgstr "Filtros disponibles"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:191
+#: app/display/gimpdisplayshell-filter-dialog.c:190
 msgid "Add the selected filter to the list of active filters."
 msgstr "Añadir el filtro seleccionado a la lista de filtros activos"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:208
+#: app/display/gimpdisplayshell-filter-dialog.c:207
 msgid "Remove the selected filter from the list of active filters."
 msgstr "Quita el filtro seleccionado de la lista de filtros activos."
 
-#: app/display/gimpdisplayshell-filter-dialog.c:222
+#: app/display/gimpdisplayshell-filter-dialog.c:221
 msgid "Move the selected filter up"
 msgstr "Mover el filtro seleccionado hacia arriba"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:231
+#: app/display/gimpdisplayshell-filter-dialog.c:230
 msgid "Move the selected filter down"
 msgstr "Mover el filtro seleccionado hacia abajo"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:257
+#: app/display/gimpdisplayshell-filter-dialog.c:256
 msgid "Active Filters"
 msgstr "Filtros activos"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:289
+#: app/display/gimpdisplayshell-filter-dialog.c:288
 msgid "Reset the selected filter to default values"
 msgstr "Reiniciar el filtro seleccionado con los valores predeterminados"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:661
+#: app/display/gimpdisplayshell-filter-dialog.c:660
 #, c-format
 msgid "Configure Selected Filter: %s"
 msgstr "Configurar el filtro seleccionado: %s"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:668
+#: app/display/gimpdisplayshell-filter-dialog.c:667
 msgid "No Filter Selected"
 msgstr "No ha seleccionado ningún filtro"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:672
+#: app/display/gimpdisplayshell-filter-dialog.c:671
 msgid "Configure Selected Filter"
 msgstr "Configurar el filtro seleccionado"
 
@@ -2557,265 +2549,296 @@ msgstr "Frente: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "Fondo: %d, %d, %d"
 
-#: app/gui/dialogs-constructors.c:267 app/gui/preferences-dialog.c:1188
+#: app/gui/dialogs-constructors.c:268 app/gui/preferences-dialog.c:1188
 #: app/gui/preferences-dialog.c:1191
 msgid "Tool Options"
 msgstr "Opciones de herramienta"
 
-#: app/gui/dialogs-constructors.c:287
+#: app/gui/dialogs-constructors.c:288
 msgid "Error Console"
 msgstr "Consola de errores"
 
-#: app/gui/dialogs-constructors.c:287
+#: app/gui/dialogs-constructors.c:288
 msgid "Errors"
 msgstr "Errores"
 
-#: app/gui/dialogs-constructors.c:311
+#: app/gui/dialogs-constructors.c:312
 msgid "Image List"
 msgstr "Lista de imágenes"
 
-#: app/gui/dialogs-constructors.c:311 app/gui/dialogs-constructors.c:459
+#: app/gui/dialogs-constructors.c:312 app/gui/dialogs-constructors.c:460
+#: app/gui/dialogs-constructors.c:608
 msgid "Images"
 msgstr "Imágenes"
 
-#: app/gui/dialogs-constructors.c:333
+#: app/gui/dialogs-constructors.c:334
 msgid "Brush List"
 msgstr "Lista de brochas"
 
-#: app/gui/dialogs-constructors.c:354
+#: app/gui/dialogs-constructors.c:355
 msgid "Pattern List"
 msgstr "Lista de patrones"
 
-#: app/gui/dialogs-constructors.c:375
+#: app/gui/dialogs-constructors.c:376
 msgid "Gradient List"
 msgstr "Lista de gradientes"
 
-#: app/gui/dialogs-constructors.c:396
+#: app/gui/dialogs-constructors.c:397
 msgid "Palette List"
 msgstr "Lista de paletas"
 
-#: app/gui/dialogs-constructors.c:415
+#: app/gui/dialogs-constructors.c:416
 msgid "Tool List"
 msgstr "Lista de herramientas"
 
-#: app/gui/dialogs-constructors.c:415 app/gui/dialogs-constructors.c:563
+#: app/gui/dialogs-constructors.c:416 app/gui/dialogs-constructors.c:564
+#: app/gui/dialogs-constructors.c:712
 msgid "Tools"
 msgstr "Herramientas"
 
-#: app/gui/dialogs-constructors.c:435
+#: app/gui/dialogs-constructors.c:436
 msgid "Buffer List"
 msgstr "Lista de búferes"
 
-#: app/gui/dialogs-constructors.c:435 app/gui/dialogs-constructors.c:583
+#: app/gui/dialogs-constructors.c:436 app/gui/dialogs-constructors.c:584
+#: app/gui/dialogs-constructors.c:732
 msgid "Buffers"
 msgstr "Búferes"
 
-#: app/gui/dialogs-constructors.c:459
+#: app/gui/dialogs-constructors.c:460
 msgid "Image Grid"
 msgstr "Rejilla de la imagen"
 
-#: app/gui/dialogs-constructors.c:481
+#: app/gui/dialogs-constructors.c:482
 msgid "Brush Grid"
 msgstr "Rejilla de la brocha"
 
-#: app/gui/dialogs-constructors.c:502
+#: app/gui/dialogs-constructors.c:503
 msgid "Pattern Grid"
 msgstr "Rejilla del patrón"
 
-#: app/gui/dialogs-constructors.c:523
+#: app/gui/dialogs-constructors.c:524
 msgid "Gradient Grid"
 msgstr "Rejilla del gradiente"
 
-#: app/gui/dialogs-constructors.c:544
+#: app/gui/dialogs-constructors.c:545
 msgid "Palette Grid"
 msgstr "Rejilla de la paleta"
 
-#: app/gui/dialogs-constructors.c:563
+#: app/gui/dialogs-constructors.c:564
 msgid "Tool Grid"
 msgstr "Rejilla de herramientas"
 
-#: app/gui/dialogs-constructors.c:583
+#: app/gui/dialogs-constructors.c:584
 msgid "Buffer Grid"
 msgstr "Rejilla de búferes"
 
-#: app/gui/dialogs-constructors.c:614
+#: app/gui/dialogs-constructors.c:608
+msgid "Image Tree"
+msgstr "Árbol de la imagen"
+
+#: app/gui/dialogs-constructors.c:630
+msgid "Brush Tree"
+msgstr "Árbol de la brocha"
+
+#: app/gui/dialogs-constructors.c:651
+msgid "Pattern Tree"
+msgstr "Árbol del patrón"
+
+#: app/gui/dialogs-constructors.c:672
+msgid "Gradient Tree"
+msgstr "Árbol del gradiente"
+
+#: app/gui/dialogs-constructors.c:693
+msgid "Palette Tree"
+msgstr "Árbol de la paleta"
+
+#: app/gui/dialogs-constructors.c:712
+msgid "Tool Tree"
+msgstr "Árbol de la herramienta"
+
+#: app/gui/dialogs-constructors.c:732
+msgid "Buffer Tree"
+msgstr "Árbol de bufer"
+
+#: app/gui/dialogs-constructors.c:763
 msgid "Layer List"
 msgstr "Lista de capas"
 
-#: app/gui/dialogs-constructors.c:614
+#: app/gui/dialogs-constructors.c:763
 msgid "Layers"
 msgstr "Capas"
 
-#: app/gui/dialogs-constructors.c:645
+#: app/gui/dialogs-constructors.c:794
 msgid "Channel List"
 msgstr "Lista de canales"
 
-#: app/gui/dialogs-constructors.c:645
+#: app/gui/dialogs-constructors.c:794
 msgid "Channels"
 msgstr "Canales"
 
-#: app/gui/dialogs-constructors.c:681
+#: app/gui/dialogs-constructors.c:830
 msgid "Paths List"
 msgstr "Lista de rutas"
 
-#: app/gui/dialogs-constructors.c:681 app/pdb/internal_procs.c:154
+#: app/gui/dialogs-constructors.c:830 app/pdb/internal_procs.c:154
 msgid "Paths"
 msgstr "Rutas"
 
-#: app/gui/dialogs-constructors.c:707
+#: app/gui/dialogs-constructors.c:856
 msgid "Old Path List"
 msgstr "Lista anterior de rutas"
 
-#: app/gui/dialogs-constructors.c:707
+#: app/gui/dialogs-constructors.c:856
 msgid "Old Paths"
 msgstr "Rutas anteriores"
 
-#: app/gui/dialogs-constructors.c:730
+#: app/gui/dialogs-constructors.c:879
 msgid "Indexed Palette"
 msgstr "Paleta indexada"
 
-#: app/gui/dialogs-constructors.c:730
+#: app/gui/dialogs-constructors.c:879
 msgid "Colormap"
 msgstr "Mapa de colores"
 
-#: app/gui/dialogs-constructors.c:757
+#: app/gui/dialogs-constructors.c:906
 msgid "Selection Editor"
 msgstr "Editor de selección"
 
-#: app/gui/dialogs-constructors.c:757 app/gui/layers-commands.c:910
+#: app/gui/dialogs-constructors.c:906 app/gui/layers-commands.c:910
 msgid "Selection"
 msgstr "Selección"
 
-#: app/gui/dialogs-constructors.c:781
+#: app/gui/dialogs-constructors.c:930
 msgid "Undo History"
 msgstr "Historial de deshacer"
 
-#: app/gui/dialogs-constructors.c:781 app/gui/image-menu.c:1180
+#: app/gui/dialogs-constructors.c:930 app/gui/image-menu.c:1180
 #: app/pdb/internal_procs.c:181 app/widgets/gimpundoeditor.c:123
 msgid "Undo"
 msgstr "Deshacer"
 
-#: app/gui/dialogs-constructors.c:804
+#: app/gui/dialogs-constructors.c:953
 msgid "Color Editor"
 msgstr "Editor de color"
 
-#: app/gui/dialogs-constructors.c:804 app/pdb/internal_procs.c:88
+#: app/gui/dialogs-constructors.c:953 app/pdb/internal_procs.c:88
 #: app/widgets/gimpwidgets-constructors.c:70
 #: app/widgets/gimpwidgets-constructors.c:103
 msgid "Color"
 msgstr "Color"
 
-#: app/gui/dialogs-constructors.c:826
+#: app/gui/dialogs-constructors.c:975
 msgid "Document History"
 msgstr "Historial del documento"
 
-#: app/gui/dialogs-constructors.c:826
+#: app/gui/dialogs-constructors.c:975
 msgid "History"
 msgstr "Historial"
 
-#: app/gui/dialogs-constructors.c:847
+#: app/gui/dialogs-constructors.c:996
 msgid "Brush Editor"
 msgstr "Editor de brochas"
 
-#: app/gui/dialogs-constructors.c:875
+#: app/gui/dialogs-constructors.c:1024
 msgid "Gradient Editor"
 msgstr "Editor de gradientes"
 
-#: app/gui/dialogs-constructors.c:903
+#: app/gui/dialogs-constructors.c:1052
 msgid "Palette Editor"
 msgstr "Editor de paleta"
 
-#: app/gui/dialogs-constructors.c:937
+#: app/gui/dialogs-constructors.c:1086
 msgid "Display Navigation"
 msgstr "Navegación de la pantalla"
 
-#: app/gui/dialogs-constructors.c:937
+#: app/gui/dialogs-constructors.c:1086
 msgid "Navigation"
 msgstr "Navegación"
 
 #: app/gui/dialogs-menu.c:53
 msgid "/Select Tab"
-msgstr "/Seleccionar pestaña"
+msgstr "/Seleccionar la solapa"
 
 #: app/gui/dialogs-menu.c:56
 msgid "/Add Tab/Tool Options..."
-msgstr "/Añadir pestaña/Opciones de herramienta..."
+msgstr "/Añadir solapa/Opciones de herramienta..."
 
 #: app/gui/dialogs-menu.c:61
 msgid "/Add Tab/Layers..."
-msgstr "/Añadir pestaña/Capas..."
+msgstr "/Añadir solapa/Capas..."
 
 #: app/gui/dialogs-menu.c:62
 msgid "/Add Tab/Channels..."
-msgstr "/Añadir pestaña/Canales..."
+msgstr "/Añadir solapa/Canales..."
 
 #: app/gui/dialogs-menu.c:63
 msgid "/Add Tab/Paths..."
-msgstr "/Añadir pestaña/Rutas..."
+msgstr "/Añadir solapa/Rutas..."
 
 #: app/gui/dialogs-menu.c:64
 msgid "/Add Tab/Indexed Palette..."
-msgstr "/Añadir pestaña/Paleta indexada..."
+msgstr "/Añadir solapa/Paleta indexada..."
 
 #: app/gui/dialogs-menu.c:66
 msgid "/Add Tab/Selection Editor..."
-msgstr "/Añadir pestaña/Editor de selección..."
+msgstr "/Añadir solapa/Editor de selección..."
 
 #: app/gui/dialogs-menu.c:68
 msgid "/Add Tab/Navigation..."
-msgstr "/Añadir pestaña/Navegación..."
+msgstr "/Añadir solapa/Navegación..."
 
 #: app/gui/dialogs-menu.c:70
 msgid "/Add Tab/Undo History..."
-msgstr "/Añadir pestaña/Histórico de deshacer..."
+msgstr "/Añadir solapa/Histórico de deshacer..."
 
 #: app/gui/dialogs-menu.c:75
 msgid "/Add Tab/Colors..."
-msgstr "/Añadir pestaña/Colores..."
+msgstr "/Añadir solapa/Colores..."
 
 #: app/gui/dialogs-menu.c:77
 msgid "/Add Tab/Brushes..."
-msgstr "/Añadir pestaña/Brochas..."
+msgstr "/Añadir solapa/Brochas..."
 
 #: app/gui/dialogs-menu.c:79
 msgid "/Add Tab/Patterns..."
-msgstr "/Añadir pestaña/Patrones..."
+msgstr "/Añadir solapa/Patrones..."
 
 #: app/gui/dialogs-menu.c:81
 msgid "/Add Tab/Gradients..."
-msgstr "/Añadir pestaña/Gradientes..."
+msgstr "/Añadir solapa/Gradientes..."
 
 #: app/gui/dialogs-menu.c:83
 msgid "/Add Tab/Palettes..."
-msgstr "/Añadir pestaña/Paletas..."
+msgstr "/Añadir solapa/Paletas..."
 
 #: app/gui/dialogs-menu.c:85
 msgid "/Add Tab/Buffers..."
-msgstr "/Añadir pestaña/Búferes..."
+msgstr "/Añadir solapa/Búferes..."
 
 #: app/gui/dialogs-menu.c:90
 msgid "/Add Tab/Images..."
-msgstr "/Añadir pestaña/Imágenes..."
+msgstr "/Añadir solapa/Imágenes..."
 
 #: app/gui/dialogs-menu.c:91
 msgid "/Add Tab/Document History..."
-msgstr "/Añadir pestaña/Historial del documento..."
+msgstr "/Añadir solapa/Historial del documento..."
 
 #: app/gui/dialogs-menu.c:93
 msgid "/Add Tab/Error Console..."
-msgstr "/Añadir pestaña/Consola de errores..."
+msgstr "/Añadir solapa/Consola de errores..."
 
 #: app/gui/dialogs-menu.c:98
 msgid "/Add Tab/Tools..."
-msgstr "/Añadir pestaña/Herramientas..."
+msgstr "/Añadir solapa/Herramientas..."
 
 #: app/gui/dialogs-menu.c:99
 msgid "/Add Tab/Old Paths..."
-msgstr "/Añadir pestaña/Rutas anteriores..."
+msgstr "/Añadir solapa/Rutas anteriores..."
 
 #: app/gui/dialogs-menu.c:101
 msgid "/Remove Tab"
-msgstr "/Quitar pestaña"
+msgstr "/Quitar solapa"
 
 #: app/gui/dialogs-menu.c:110
 msgid "/Preview Size/Tiny"
@@ -2861,11 +2884,15 @@ msgstr "/Ver como lista"
 msgid "/View as Grid"
 msgstr "/Ver como rejilla"
 
-#: app/gui/dialogs-menu.c:133
+#: app/gui/dialogs-menu.c:130
+msgid "/View as Tree"
+msgstr "/Ver como árbol"
+
+#: app/gui/dialogs-menu.c:136
 msgid "/Show Image Menu"
 msgstr "/Mostrar menú de imagen"
 
-#: app/gui/dialogs-menu.c:136
+#: app/gui/dialogs-menu.c:139
 msgid "/Auto Follow Active Image"
 msgstr "/Seguir automáticamente la imagen activa"
 
@@ -6577,7 +6604,7 @@ msgstr "Cuantos píxeles deben ser recortados de la primera línea"
 msgid "Additional line spacing (in pixels)"
 msgstr "Espaciado de línea adicional (en píxeles)"
 
-#: app/text/gimptext-compat.c:99 app/tools/gimptexttool.c:284
+#: app/text/gimptext-compat.c:99 app/tools/gimptexttool.c:285
 msgid "Add Text Layer"
 msgstr "Añadir una capa de texto"
 
@@ -7679,7 +7706,7 @@ msgstr "Añadir texto a la imagen"
 msgid "/Tools/Text"
 msgstr "/Herramientas/Texto"
 
-#: app/tools/gimptexttool.c:345
+#: app/tools/gimptexttool.c:346
 msgid "GIMP Text Editor"
 msgstr "Editor de textos de El GIMP"
 
@@ -8203,11 +8230,11 @@ msgstr "Ocurrió un error al abrir el archivo «%s»: %s"
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Datos UTF-8 inválidos en el archivo «%s»"
 
-#: app/widgets/gimptoolbox-color-area.c:391
+#: app/widgets/gimptoolbox-color-area.c:405
 msgid "Change Foreground Color"
 msgstr "Cambiar el color de frente"
 
-#: app/widgets/gimptoolbox-color-area.c:392
+#: app/widgets/gimptoolbox-color-area.c:406
 msgid "Change Background Color"
 msgstr "Cambiar el color de fondo"
 
