@@ -156,6 +156,8 @@ gimp_color_balance_tool_init (GimpColorBalanceTool *cb_tool)
 
   image_map_tool->shell_title = _("Color Balance");
   image_map_tool->shell_name  = "color_balance";
+  image_map_tool->shell_desc  = _("Adjust Color Balance");
+  image_map_tool->stock_id    = GIMP_STOCK_TOOL_COLOR_BALANCE;
 
   cb_tool->color_balance      = g_new0 (ColorBalance, 1);
   cb_tool->transfer_mode      = GIMP_MIDTONES;
@@ -188,8 +190,13 @@ gimp_color_balance_tool_initialize (GimpTool    *tool,
 
   cb_tool = GIMP_COLOR_BALANCE_TOOL (tool);
 
-  if (gdisp &&
-      ! gimp_drawable_is_rgb (gimp_image_active_drawable (gdisp->gimage)))
+  if (! gdisp)
+    {
+      GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
+      return;
+    }
+
+  if (! gimp_drawable_is_rgb (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Color balance operates only on RGB color drawables."));
       return;
@@ -333,7 +340,7 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_end (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  toggle = gtk_check_button_new_with_label (_("Preserve Luminosity"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Preserve _Luminosity"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				cb_tool->color_balance->preserve_luminosity);
   gtk_box_pack_end (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);

@@ -160,6 +160,8 @@ gimp_threshold_tool_init (GimpThresholdTool *t_tool)
 
   image_map_tool->shell_title = _("Threshold");
   image_map_tool->shell_name  = "threshold";
+  image_map_tool->shell_desc  = _("Apply Threshold");
+  image_map_tool->stock_id    = GIMP_STOCK_TOOL_THRESHOLD;
 
   t_tool->threshold = g_new0 (Threshold, 1);
   t_tool->hist      = gimp_histogram_new ();
@@ -199,8 +201,13 @@ gimp_threshold_tool_initialize (GimpTool    *tool,
 
   t_tool = GIMP_THRESHOLD_TOOL (tool);
 
-  if (gdisp &&
-      gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
+  if (! gdisp)
+    {
+      GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
+      return;
+    }
+
+  if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Threshold does not operate on indexed drawables."));
       return;
@@ -251,6 +258,7 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
 {
   GimpThresholdTool *t_tool;
   GtkWidget         *hbox;
+  GtkWidget         *vbox;
   GtkWidget         *spinbutton;
   GtkWidget         *label;
   GtkWidget         *frame;
@@ -258,10 +266,17 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
 
   t_tool = GIMP_THRESHOLD_TOOL (image_map_tool);
 
-  /*  Horizontal box for threshold text widget  */
+  hbox = gtk_hbox_new (TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (image_map_tool->main_vbox), hbox);
+  gtk_widget_show (hbox);
+
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, FALSE, 0);
+  gtk_widget_show (vbox);
+
   hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), hbox,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   label = gtk_label_new (_("Threshold Range:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
@@ -295,17 +310,10 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
                     G_CALLBACK (threshold_high_threshold_adjustment_update),
                     t_tool);
 
-  gtk_widget_show (hbox);
-
   /*  The threshold histogram  */
-  hbox = gtk_hbox_new (TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), hbox,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   t_tool->histogram = gimp_histogram_view_new (HISTOGRAM_WIDTH,

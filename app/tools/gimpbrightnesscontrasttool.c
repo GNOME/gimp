@@ -147,6 +147,8 @@ gimp_brightness_contrast_tool_init (GimpBrightnessContrastTool *bc_tool)
 
   image_map_tool->shell_title = _("Brightness-Contrast");
   image_map_tool->shell_name  = "brightness_contrast";
+  image_map_tool->shell_desc  = _("Adjust Brightness and Contrast");
+  image_map_tool->stock_id    = GIMP_STOCK_TOOL_BRIGHTNESS_CONTRAST;
 
   bc_tool->brightness = 0.0;
   bc_tool->contrast   = 0.0;
@@ -177,8 +179,13 @@ gimp_brightness_contrast_tool_initialize (GimpTool    *tool,
 
   bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (tool);
 
-  if (gdisp &&
-      gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
+  if (! gdisp)
+    {
+      GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
+      return;
+    }
+
+  if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Brightness-Contrast does not operate on indexed drawables."));
       return;
@@ -220,6 +227,7 @@ gimp_brightness_contrast_tool_dialog (GimpImageMapTool *image_map_tool)
 {
   GimpBrightnessContrastTool *bc_tool;
   GtkWidget                  *table;
+  GtkWidget                  *slider;
   GtkObject                  *data;
 
   bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (image_map_tool);
@@ -234,14 +242,15 @@ gimp_brightness_contrast_tool_dialog (GimpImageMapTool *image_map_tool)
 
   /*  Create the brightness scale widget  */
   data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                               _("Brightness:"),
+                               _("_Brightness:"),
                                SLIDER_WIDTH, 75,
                                bc_tool->brightness,
                                -127.0, 127.0, 1.0, 10.0, 0,
                                TRUE, 0.0, 0.0,
                                NULL, NULL);
-
   bc_tool->brightness_data = GTK_ADJUSTMENT (data);
+  slider = GIMP_SCALE_ENTRY_SCALE (data);
+  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
 
   g_signal_connect (G_OBJECT (data), "value_changed",
                     G_CALLBACK (brightness_contrast_brightness_adjustment_update),
@@ -249,14 +258,15 @@ gimp_brightness_contrast_tool_dialog (GimpImageMapTool *image_map_tool)
 
   /*  Create the contrast scale widget  */
   data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                               _("Contrast:"),
+                               _("Con_trast:"),
                                SLIDER_WIDTH, 75,
                                bc_tool->contrast,
                                -127.0, 127.0, 1.0, 10.0, 0,
                                TRUE, 0.0, 0.0,
                                NULL, NULL);
-
   bc_tool->contrast_data = GTK_ADJUSTMENT (data);
+  slider = GIMP_SCALE_ENTRY_SCALE (data);
+  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
 
   g_signal_connect (G_OBJECT (data), "value_changed",
                     G_CALLBACK (brightness_contrast_contrast_adjustment_update),

@@ -46,6 +46,9 @@ struct _GimpImageMapTool
   /* the dialog */
   const gchar  *shell_title;
   const gchar  *shell_name;
+  const gchar  *shell_desc;
+  const gchar  *stock_id;
+
   GtkWidget    *shell;
   GtkWidget    *title_preview;
   GtkWidget    *title_label;

@@ -222,6 +222,8 @@ gimp_levels_tool_init (GimpLevelsTool *l_tool)
 
   image_map_tool->shell_title = _("Levels");
   image_map_tool->shell_name  = "levels";
+  image_map_tool->shell_desc  = _("Adjust Color Levels");
+  image_map_tool->stock_id    = GIMP_STOCK_TOOL_LEVELS;
 
   l_tool->lut     = gimp_lut_new ();
   l_tool->hist    = gimp_histogram_new ();
@@ -260,8 +262,13 @@ gimp_levels_tool_initialize (GimpTool    *tool,
 
   l_tool = GIMP_LEVELS_TOOL (tool);
 
-  if (gdisp &&
-      gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
+  if (! gdisp)
+    {
+      GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
+      return;
+    }
+
+  if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Levels for indexed drawables cannot be adjusted."));
       return;
@@ -377,19 +384,18 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
+  hbox = gtk_hbox_new (TRUE, 2);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
+
   vbox2 = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
-  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, FALSE, 0);
   gtk_widget_show (vbox2);
-
-  /*  The levels histogram  */
-  hbox = gtk_hbox_new (TRUE, 2);
-  gtk_box_pack_start (GTK_BOX (vbox2), hbox, TRUE, FALSE, 0);
-  gtk_widget_show (hbox);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   l_tool->histogram = gimp_histogram_view_new (HISTOGRAM_WIDTH,
@@ -494,19 +500,18 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
+  hbox = gtk_hbox_new (TRUE, 2);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
+
   vbox2 = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
-  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, FALSE, 0);
   gtk_widget_show (vbox2);
-
-  /*  The output levels drawing area  */
-  hbox = gtk_hbox_new (TRUE, 2);
-  gtk_box_pack_start (GTK_BOX (vbox2), hbox, TRUE, FALSE, 0);
-  gtk_widget_show (hbox);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   vbox3 = gtk_vbox_new (FALSE, 2);
@@ -572,34 +577,41 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 
 
   /*  Horizontal button box for auto / load / save  */
+  frame = gtk_frame_new (_("All Channels"));
+  gtk_box_pack_end (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
   hbbox = gtk_hbutton_box_new ();
+  gtk_container_set_border_width (GTK_CONTAINER (hbbox), 2);
   gtk_box_set_spacing (GTK_BOX (hbbox), 4);
   gtk_button_box_set_layout (GTK_BUTTON_BOX (hbbox), GTK_BUTTONBOX_SPREAD);
-  gtk_box_pack_end (GTK_BOX (image_map_tool->main_vbox), hbbox,
-                    FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), hbbox);
   gtk_widget_show (hbbox);
 
-  button = gtk_button_new_with_label (_("Auto"));
+  button = gtk_button_new_with_mnemonic (_("_Auto"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gimp_help_set_help_data (button, _("Adjust levels automatically"), NULL);
   gtk_widget_show (button);
 
   g_signal_connect (G_OBJECT (button), "clicked",
 		      G_CALLBACK (levels_auto_callback),
 		      l_tool);
 
-  button = gtk_button_new_with_label (_("Load"));
+  button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gimp_help_set_help_data (button, _("Read levels settings from file"), NULL);
   gtk_widget_show (button);
 
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (levels_load_callback),
                     l_tool);
 
-  button = gtk_button_new_with_label (_("Save"));
+  button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gimp_help_set_help_data (button, _("Save levels settings to file"), NULL);
   gtk_widget_show (button);
 
   g_signal_connect (G_OBJECT (button), "clicked",

@@ -1,5 +1,35 @@
 2002-08-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpimagemaptool.[ch]: added a tool icon and
+	descriptive string to the dialog's title box. Create the
+	drawable preview with is_popup == TRUE so it doesn't show
+	layers in the image context. Still not perfect...
+
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimpthresholdtool.c: Chain up early in initialize()
+	and return if gdisp == NULL. Set stock_id and desc_text so
+	GimpImageMapTool can display them. Added lots of mnemonics
+	(#80804). Use gimp_size_entry_new() instead of manually creating
+	the slider+spinbutton stuff.
+
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimplevelstool.c: changed widgets packing to make them
+	resizable without strange effects. Put the "Load", "Save" and
+	"Auto" buttons into a frame.
+
+	* app/tools/gimphuesaturationtool.c: use GimpColorAreas instead of
+	deprecated GtkPreviews. Arranged the color previews and their
+	radio buttons as a color wheel. Not the best solution maybe but
+	IMHO better than the old GUI.
+
+2002-08-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdrawablepreview.c (gimp_drawable_preview_render):
 	look at drawable->offset_[xy] != 0 when deciding whether to offset
 	the preview. Fixes bug where layers of the size of the image were

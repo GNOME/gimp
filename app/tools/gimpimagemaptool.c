@@ -192,11 +192,11 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
 
   if (! gdisp)
     {
-      gimp_image_map_tool_cancel_clicked (NULL, image_map_tool);
+      if (image_map_tool->shell)
+        gimp_image_map_tool_cancel_clicked (NULL, image_map_tool);
+
       return;
     }
-
-  drawable = gimp_image_active_drawable (gdisp->gimage);
 
   if (! image_map_tool->shell)
     {
@@ -204,6 +204,7 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
       GtkWidget *frame;
       GtkWidget *vbox;
       GtkWidget *hbox;
+      GtkWidget *image;
       GtkWidget *preview;
       GtkWidget *label;
       GtkWidget *toggle;
@@ -233,31 +234,45 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
       gtk_widget_show (frame);
 
       hbox = gtk_hbox_new (FALSE, 4);
-      gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+      gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
       gtk_container_add (GTK_CONTAINER (frame), hbox);
       gtk_widget_show (hbox);
 
+      image = gtk_image_new_from_stock (image_map_tool->stock_id,
+                                        GTK_ICON_SIZE_BUTTON);
+      gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
+      gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+      gtk_widget_show (image);
+
       image_map_tool->title_preview = preview =
-        gimp_preview_new_by_type (GIMP_TYPE_DRAWABLE, 32, 1, FALSE);
-      gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+        gimp_preview_new_by_type (GIMP_TYPE_DRAWABLE, 32, 1, TRUE);
+      gtk_box_pack_end (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
       gtk_widget_show (preview);
 
+      vbox = gtk_vbox_new (FALSE, 2);
+      gtk_container_add (GTK_CONTAINER (hbox), vbox);
+      gtk_widget_show (vbox);
+
+      label = gtk_label_new (image_map_tool->shell_desc);
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+
       image_map_tool->title_label = label = gtk_label_new (NULL);
-      //gtk_widget_set_size_request (label, 0, -1);
-      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_box_pack_end (GTK_BOX (vbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
 
       image_map_tool->main_vbox = vbox = gtk_vbox_new (FALSE, 4);
       gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
       gtk_container_add (GTK_CONTAINER (GTK_DIALOG (shell)->vbox), vbox);
 
-      /*  Horizontal box for preview  */
-      hbox = gtk_hbox_new (FALSE, 4);
+      hbox = gtk_hbox_new (FALSE, 0);
       gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
       /*  The preview toggle  */
-      toggle = gtk_check_button_new_with_label (_("Preview"));
+      toggle = gtk_check_button_new_with_mnemonic (_("_Preview"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                     image_map_tool->preview);
       gtk_box_pack_end (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
@@ -273,11 +288,12 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
       gtk_widget_show (vbox);
     }
 
+  drawable = gimp_image_active_drawable (gdisp->gimage);
+
   basename =
     file_utils_uri_to_utf8_basename (gimp_image_get_uri (gdisp->gimage));
 
-  str = g_strdup_printf ("%s\n%s (%s)",
-                         image_map_tool->shell_title,
+  str = g_strdup_printf ("%s (%s)",
                          basename,
                          gimp_object_get_name (GIMP_OBJECT (drawable)));
 

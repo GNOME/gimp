@@ -242,6 +242,8 @@ gimp_curves_tool_init (GimpCurvesTool *c_tool)
 
   image_map_tool->shell_title = _("Curves");
   image_map_tool->shell_name  = "curves";
+  image_map_tool->shell_desc  = _("Adjust Color Curves");
+  image_map_tool->stock_id    = GIMP_STOCK_TOOL_CURVES;
 
   c_tool->curves  = g_new0 (Curves, 1);
   c_tool->lut     = gimp_lut_new ();
@@ -305,8 +307,13 @@ gimp_curves_tool_initialize (GimpTool    *tool,
 
   c_tool = GIMP_CURVES_TOOL (tool);
 
-  if (gdisp &&
-      gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
+  if (! gdisp)
+    {
+      GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
+      return;
+    }
+
+  if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Curves for indexed drawables cannot be adjusted."));
       return;
@@ -330,8 +337,8 @@ gimp_curves_tool_initialize (GimpTool    *tool,
                                   c_tool);
 
   /* set the current selection */
-  gtk_option_menu_set_history (GTK_OPTION_MENU (c_tool->channel_menu),
-			       c_tool->channel);
+  gimp_option_menu_set_history (GTK_OPTION_MENU (c_tool->channel_menu),
+                                GINT_TO_POINTER (c_tool->channel));
 
   curves_update (c_tool, ALL);
 }
@@ -399,25 +406,18 @@ gimp_curves_tool_button_release (GimpTool        *tool,
 
   if (state & GDK_SHIFT_MASK)
     {
-      curves_add_point (c_tool,
-                        coords->x, coords->y, c_tool->channel);
-
+      curves_add_point (c_tool, coords->x, coords->y, c_tool->channel);
       curves_calculate_curve (c_tool->curves, c_tool->channel);
     }
   else if (state & GDK_CONTROL_MASK)
     {
-      curves_add_point (c_tool,
-                        coords->x, coords->y, GIMP_HISTOGRAM_VALUE);
-      curves_add_point (c_tool,
-                        coords->x, coords->y, GIMP_HISTOGRAM_RED);
-      curves_add_point (c_tool,
-                        coords->x, coords->y, GIMP_HISTOGRAM_GREEN);
-      curves_add_point (c_tool,
-                        coords->x, coords->y, GIMP_HISTOGRAM_BLUE);
-      curves_add_point (c_tool,
-                        coords->x, coords->y, GIMP_HISTOGRAM_ALPHA);
+      gint i;
 
-      curves_calculate_curve (c_tool->curves, c_tool->channel);
+      for (i = 0; i < 5; i++)
+        {
+          curves_add_point (c_tool, coords->x, coords->y, i);
+          curves_calculate_curve (c_tool->curves, c_tool->channel);
+        }
     }
 
   gimp_tool_control_halt (tool->control);
@@ -482,9 +482,7 @@ curves_color_update (GimpTool       *tool,
   c_tool->col_value[GIMP_HISTOGRAM_BLUE]  = color[BLUE_PIX];
 
   if (has_alpha)
-    {
-      c_tool->col_value[GIMP_HISTOGRAM_ALPHA] = color[3];
-    }
+    c_tool->col_value[GIMP_HISTOGRAM_ALPHA] = color[3];
 
   if (is_indexed)
     c_tool->col_value[GIMP_HISTOGRAM_ALPHA] = color[4];
@@ -562,6 +560,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
 {
   GimpCurvesTool *c_tool;
   GtkWidget      *hbox;
+  GtkWidget      *vbox;
   GtkWidget      *hbbox;
   GtkWidget      *frame;
   GtkWidget      *table;
@@ -569,11 +568,19 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
 
   c_tool = GIMP_CURVES_TOOL (image_map_tool);
 
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), hbox,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, FALSE, 0);
+  gtk_widget_show (vbox);
+
   table = gtk_table_new (2, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), table,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   /*  The option menu for selecting channels  */
@@ -603,10 +610,10 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
     gimp_option_menu_new (FALSE,
 
                           _("Smooth"), curves_smooth_callback,
-                          c_tool, NULL, NULL, TRUE,
+                          c_tool, GINT_TO_POINTER (CURVES_SMOOTH), NULL, TRUE,
 
                           _("Free"), curves_free_callback,
-                          c_tool, NULL, NULL, FALSE,
+                          c_tool, GINT_TO_POINTER (CURVES_FREE), NULL, FALSE,
 
                           NULL);
 
@@ -618,8 +625,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   table = gtk_table_new (2, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), table,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   /*  The range drawing area  */
   frame = gtk_frame_new (NULL);
@@ -668,24 +674,31 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (table);
 
   /*  Horizontal button box for load / save  */
+  frame = gtk_frame_new (_("All Channels"));
+  gtk_box_pack_end (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
   hbbox = gtk_hbutton_box_new ();
+  gtk_container_set_border_width (GTK_CONTAINER (hbbox), 2);
   gtk_box_set_spacing (GTK_BOX (hbbox), 4);
   gtk_button_box_set_layout (GTK_BUTTON_BOX (hbbox), GTK_BUTTONBOX_SPREAD);
-  gtk_box_pack_end (GTK_BOX (image_map_tool->main_vbox), hbbox, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), hbbox);
   gtk_widget_show (hbbox);
 
-  button = gtk_button_new_with_label (_("Load"));
+  button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gimp_help_set_help_data (button, _("Read curves settings from file"), NULL);
   gtk_widget_show (button);
 
   g_signal_connect (G_OBJECT (button), "clicked",
 		    G_CALLBACK (curves_load_callback),
 		    c_tool);
 
-  button = gtk_button_new_with_label (_("Save"));
+  button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gimp_help_set_help_data (button, _("Save curves settings to file"), NULL);
   gtk_widget_show (button);
 
   g_signal_connect (G_OBJECT (button), "clicked",
@@ -762,16 +775,16 @@ static void
 curves_update (GimpCurvesTool *c_tool,
 	       gint            update)
 {
-  gint  i, j;
-  gchar buf[32];
-  gint  offset;
-  gint  height;
-  gint  sel_channel;
+  GimpHistogramChannel sel_channel;
+  gint                 i, j;
+  gchar                buf[32];
+  gint                 offset;
+  gint                 height;
   
   if (c_tool->color)
     {
       sel_channel = c_tool->channel;
-    } 
+    }
   else 
     {
       if (c_tool->channel == 2)
@@ -1005,8 +1018,8 @@ curves_channel_callback (GtkWidget *widget,
         c_tool->channel = 1;
     }
 
-  gtk_option_menu_set_history (GTK_OPTION_MENU (c_tool->curve_type_menu),
-			       c_tool->curves->curve_type[c_tool->channel]);
+  gimp_option_menu_set_history (GTK_OPTION_MENU (c_tool->curve_type_menu),
+                                GINT_TO_POINTER (c_tool->curves->curve_type[c_tool->channel]));
 
   curves_update (c_tool, XRANGE_TOP | YRANGE | GRAPH | DRAW);
 }
@@ -1067,7 +1080,9 @@ curves_smooth_callback (GtkWidget *widget,
     {
       c_tool->curves->curve_type[c_tool->channel] = CURVES_SMOOTH;
 
-      /*  pick representative points from the curve and make them control points  */
+      /*  pick representative points from the curve
+       *  and make them control points
+       */
       for (i = 0; i <= 8; i++)
 	{
 	  index = CLAMP0255 (i * 32);
@@ -1482,8 +1497,9 @@ curves_read_from_file (GimpCurvesTool *c_tool,
     curves_calculate_curve (c_tool->curves, i);
 
   curves_update (c_tool, ALL);
-  gtk_option_menu_set_history (GTK_OPTION_MENU (c_tool->curve_type_menu),
-			       CURVES_SMOOTH);
+
+  gimp_option_menu_set_history (GTK_OPTION_MENU (c_tool->curve_type_menu),
+                                GINT_TO_POINTER (CURVES_SMOOTH));
 
   gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (c_tool));
 

@@ -140,6 +140,8 @@ gimp_posterize_tool_init (GimpPosterizeTool *posterize_tool)
 
   image_map_tool->shell_title = _("Posterize");
   image_map_tool->shell_name  = "posterize";
+  image_map_tool->shell_desc  = _("Posterize (Reduce Number of Colors)");
+  image_map_tool->stock_id    = GIMP_STOCK_TOOL_POSTERIZE;
 
   posterize_tool->levels = POSTERIZE_DEFAULT_LEVELS;
   posterize_tool->lut    = gimp_lut_new ();
@@ -169,8 +171,13 @@ gimp_posterize_tool_initialize (GimpTool    *tool,
 
   posterize_tool = GIMP_POSTERIZE_TOOL (tool);
 
-  if (gdisp &&
-      gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
+  if (! gdisp)
+    {
+      GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
+      return;
+    }
+
+  if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Posterize does not operate on indexed drawables."));
       return;
@@ -213,6 +220,7 @@ gimp_posterize_tool_dialog (GimpImageMapTool *image_map_tool)
 {
   GimpPosterizeTool *posterize_tool;
   GtkWidget         *table;
+  GtkWidget         *slider;
   GtkObject         *data;
 
   posterize_tool = GIMP_POSTERIZE_TOOL (image_map_tool);
@@ -225,14 +233,15 @@ gimp_posterize_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (table);
 
   data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                               _("Posterize Levels:"),
+                               _("Posterize _Levels:"),
                                SLIDER_WIDTH, 75,
                                posterize_tool->levels,
                                2.0, 256.0, 1.0, 10.0, 0,
                                TRUE, 0.0, 0.0,
                                NULL, NULL);
-
   posterize_tool->levels_data = GTK_ADJUSTMENT (data);
+  slider = GIMP_SCALE_ENTRY_SCALE (data);
+  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
 
   g_signal_connect (G_OBJECT (posterize_tool->levels_data), "value_changed",
                     G_CALLBACK (posterize_levels_adjustment_update),
