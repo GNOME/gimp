@@ -1,3 +1,14 @@
+2001-11-05  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/imagemap/*.c: ported fixes from stable branch (mostly 
+	missing includes of config.h),
+
+	* plug-ins/gimpressionist/orientmap.c: removed commented out code
+	that continued to show up when grepping for deprecated GTK+ code.
+
+	* tools/pdbgen/pdb/procedural_db.pdb: removed unneeded inclusion
+	of config.h (it gets added automatically).
+
 2001-11-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-scroll.c: stop synthesizing expose

@@ -22,16 +22,18 @@
  */
 
 #include "config.h"
+
 #include "imap_circle.h"
 #include "imap_edit_area_info.h"
 #include "imap_main.h"
-#include "libgimp/stdplugins-intl.h"
 #include "imap_menu.h"
 #include "imap_misc.h"
 #include "imap_polygon.h"
 #include "imap_popup.h"
 #include "imap_rectangle.h"
 #include "imap_tools.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 #include "arrow.xpm"
 #include "rectangle.xpm"
@@ -128,26 +130,32 @@ make_tools(GtkWidget *window)
    gtk_container_add(GTK_CONTAINER(handlebox), toolbar);
 
    _tools.arrow = make_toolbar_radio_icon(toolbar, window, NULL, arrow_xpm, 
-					  "Select", _("Select existing area"), 
+					  _("Select"), 
+                                          _("Select existing area"), 
 					  arrow_clicked, NULL);
    _tools.rectangle = make_toolbar_radio_icon(toolbar, window, _tools.arrow, 
-					      rectangle_xpm, "Rectangle", 
+					      rectangle_xpm, 
+                                              _("Rectangle"), 
 					      _("Define Rectangle area"), 
 					      rectangle_clicked, NULL);
    _tools.circle = make_toolbar_radio_icon(toolbar, window, _tools.rectangle, 
-					   circle_xpm, "Circle",
+					   circle_xpm, 
+                                           _("Circle"),
 					   _("Define Circle/Oval area"), 
 					   circle_clicked, NULL);
    _tools.polygon = make_toolbar_radio_icon(toolbar, window, _tools.circle, 
-					    polygon_xpm, "Polygon",
+					    polygon_xpm, 
+                                            _("Polygon"),
 					    _("Define Polygon area"), 
 					    polygon_clicked, NULL);
    gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
-   _tools.edit = make_toolbar_icon(toolbar, window, edit_xpm, "Edit",
+   _tools.edit = make_toolbar_icon(toolbar, window, edit_xpm, 
+                                   _("Edit"),
 				   _("Edit selected area info"), tools_command,
 				   &_tools.cmd_edit);
    gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
-   _tools.delete = make_toolbar_icon(toolbar, window, delete_xpm, "Delete",
+   _tools.delete = make_toolbar_icon(toolbar, window, delete_xpm, 
+                                     _("Delete"),
 				     _("Delete selected area"), tools_command,
 				     &_tools.cmd_delete);
 

@@ -21,11 +21,14 @@
  *
  */
 
+#include "config.h"
+
 #include "imap_cmd_copy_object.h"
 #include "imap_cmd_cut_object.h"
 #include "imap_cmd_delete.h"
-#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 static CmdExecuteValue_t cut_object_command_execute(Command_t *parent);
 static void cut_object_command_undo(Command_t *parent);

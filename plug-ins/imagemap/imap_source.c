@@ -21,13 +21,16 @@
  *
  */
 
+#include "config.h"
+
 #include <stdarg.h>
 #include <stdio.h>
 
 #include "imap_default_dialog.h"
-#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 #include "imap_source.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 /* FIXME: remove usage of the 'broken' GtkText */
 #define GTK_ENABLE_BROKEN

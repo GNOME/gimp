@@ -21,13 +21,11 @@
  *
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include "config.h"
-#include "libgimp/gimp.h"
-#include "libgimp/stdplugins-intl.h"
 
 #include "imap_command.h"
 #include "imap_file.h"
@@ -37,6 +35,9 @@
 #include "imap_mru.h"
 #include "imap_preferences.h"
 #include "imap_table.h"
+
+#include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 static gint
 parse_map_type(void)

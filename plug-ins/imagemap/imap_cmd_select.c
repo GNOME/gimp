@@ -21,9 +21,12 @@
  *
  */
 
+#include "config.h"
+
 #include "imap_cmd_select.h"
-#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 static void select_command_destruct(Command_t *parent);
 static CmdExecuteValue_t select_command_execute(Command_t *parent);

@@ -21,10 +21,13 @@
  *
  */
 
+#include "config.h"
+
 #include "imap_cmd_copy.h"
 #include "imap_cmd_object_down.h"
-#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 static CmdExecuteValue_t move_down_command_execute(Command_t *parent);
 static void move_down_command_undo(Command_t *parent);

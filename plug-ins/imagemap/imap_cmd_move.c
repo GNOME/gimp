@@ -21,10 +21,13 @@
  *
  */
 
+#include "config.h"
+
 #include "imap_cmd_move.h"
 #include "imap_cmd_object_move.h"
-#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 static void move_command_destruct(Command_t *parent);
 static CmdExecuteValue_t move_command_execute(Command_t *parent);

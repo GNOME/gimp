@@ -21,10 +21,13 @@
  *
  */
 
+#include "config.h"
+
 #include "imap_cmd_copy.h"
 #include "imap_cmd_edit_object.h"
-#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 COMMAND_PROTO(move_sash_command);
 

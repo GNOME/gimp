@@ -22,8 +22,8 @@
  */
 
 #include "config.h"
+
 #include "imap_browse.h"
-#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 #include "imap_settings.h"
 #include "imap_string.h"
@@ -32,6 +32,8 @@
 /* FIXME: remove usage of the 'broken' GtkText */
 #define GTK_ENABLE_BROKEN
 #include <gtk/gtktext.h>
+
+#include "libgimp/stdplugins-intl.h"
 
 static MapFormat_t _map_format = CSIM;
 

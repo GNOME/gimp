@@ -21,18 +21,20 @@
  *
  */
 
+#include "config.h"
+
 #include <stdio.h>
 
-#include "config.h"
 #include "imap_cmd_edit_object.h"
 #include "imap_cmd_select.h"
 #include "imap_cmd_unselect.h"
 #include "imap_cmd_unselect_all.h"
 #include "imap_edit_area_info.h"
-#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 #include "imap_misc.h"
 #include "imap_selection.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 #include "arrow_up.xpm"
 #include "arrow_down.xpm"
