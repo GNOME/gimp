@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
 "POT-Creation-Date: 2000-04-27 01:42+0200\n"
-"PO-Revision-Date: 2000-05-16 16:34+01:00\n"
+"PO-Revision-Date: 2000-05-17 11:34+01:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish/Dansk <sslug-locale@sslug.dk>\n"
 "MIME-Version: 1.0\n"
@@ -737,8 +737,8 @@ msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
 msgstr ""
-"Benyt lineær afbildning i stedet for enhver trigonometrisk funktion for denne "
-"farvekanal"
+"Benyt lineær afbildning i stedet for enhver trigonometrisk funktion for "
+"denne farvekanal"
 
 #: plug-ins/FractalExplorer/Dialogs.c:740
 #: plug-ins/FractalExplorer/Dialogs.c:781
@@ -5130,8 +5130,8 @@ msgid ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
 msgstr ""
-"Hvis ikke valgt vil afbildingen sætte bundrækken i midten af "
-"toprækken udenfor. Hvis valgt vil det være omvendt."
+"Hvis ikke valgt vil afbildingen sætte bundrækken i midten af toprækken "
+"udenfor. Hvis valgt vil det være omvendt."
 
 #: plug-ins/common/polar.c:1017
 msgid "To Polar"
@@ -5142,8 +5142,8 @@ msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
 msgstr ""
-"Hvis ikke valgt vil billedet blive cirkulært afbildet på et "
-"rektangel. Hvis valgt vil billedt blive afbildet på en cirkel."
+"Hvis ikke valgt vil billedet blive cirkulært afbildet på et rektangel. Hvis "
+"valgt vil billedt blive afbildet på en cirkel."
 
 #: plug-ins/common/ps.c:870
 msgid "PS: can't open file for reading"
@@ -8232,7 +8232,7 @@ msgstr "Vælg filter for 'Anvend animerede-rammer'"
 
 #: plug-ins/gap/gap_mod_layer.c:802
 msgid "GAP Modify: No layer selected in last handled frame"
-msgstr "GAP ændring: Intet lag galg i sidste bearbejdede ramme"
+msgstr "GAP ændring: Intet lag valgt i sidste bearbejdede ramme"
 
 #: plug-ins/gap/gap_mod_layer.c:888
 msgid "Modifying Frames/Layer(s)..."
@@ -8457,8 +8457,7 @@ msgstr "Skalér forhåndsvisning"
 
 #: plug-ins/gap/gap_mov_dialog.c:811
 msgid "Scale down size of the generated animated preview (in %)"
-msgstr "Nedskalér størrelse på det genererede animerede "
-"forhåndsvisning i %)"
+msgstr "Nedskalér størrelse på det genererede animerede forhåndsvisning i %)"
 
 #: plug-ins/gap/gap_mov_dialog.c:819
 msgid "Framerate"
@@ -8466,8 +8465,8 @@ msgstr "Rammefrekvens"
 
 #: plug-ins/gap/gap_mov_dialog.c:820
 msgid "Framerate to use in the animated preview in frames/sec"
-msgstr "Rammefrekvens der skal bruges i den animerede "
-"forhåndsvisning i rammer/sek"
+msgstr ""
+"Rammefrekvens der skal bruges i den animerede forhåndsvisning i rammer/sek"
 
 #: plug-ins/gap/gap_mov_dialog.c:834
 msgid "Copy to Video Buffer"
@@ -8478,16 +8477,15 @@ msgid ""
 "Save all single frames of animated preview to video buffer\n"
 "(configured in gimprc by video-paste-dir and video-paste-basename)"
 msgstr ""
-"Gem alle enkelte rammer fra en animeret forhåndsvisning i en "
-"videobuffer (konfigureret i gimprc med video-paste-dir og "
-"video-paste-basename)"
+"Gem alle enkelte rammer fra en animeret forhåndsvisning i en videobuffer "
+"(konfigureret i gimprc med video-paste-dir og video-paste-basename)"
 
 #: plug-ins/gap/gap_mov_dialog.c:840
 msgid "Move Path Animated Preview"
 msgstr "Animeret forhåndsvisning af bevægelses-sti"
 
 #: plug-ins/gap/gap_mov_dialog.c:886
-msgid "Generate Animate Preview failed\n"
+msgid "Generate Animated Preview failed\n"
 msgstr "Generering af animeret forhåndsvisning fejlede\n"
 
 #. filesel is already open
@@ -8781,8 +8779,8 @@ msgid ""
 "Error: Keyframe %d at point [%d] higher or equal than last handled frame"
 msgstr ""
 "\n"
-"Fejl: Nøgleramme %d ved punkt [%d] højere eller lig med sidst "
-"behandlede ramme"
+"Fejl: Nøgleramme %d ved punkt [%d] højere eller lig med sidst behandlede "
+"ramme"
 
 #: plug-ins/gap/gap_mov_dialog.c:2676
 #, c-format
@@ -8792,8 +8790,8 @@ msgid ""
 "for the previous controlpoints"
 msgstr ""
 "\n"
-"Fejl: Nøgleramme %d ved punkt [%d] efterlader ikke nok plads "
-"(rammer for de foregående kontrolpunkter)"
+"Fejl: Nøgleramme %d ved punkt [%d] efterlader ikke nok plads (rammer for de "
+"foregående kontrolpunkter)"
 
 #: plug-ins/gap/gap_mov_dialog.c:2686
 #, c-format
@@ -9819,11 +9817,11 @@ msgstr "Konvertér gamle GDynText-lag til %s\n"
 msgid ""
 "WARNING: GDynText is too old!\n"
 "  You may loose some data by changing this text.\n"
-"  A newer version is reqired to handle this layer.\n"
+"  A newer version is required to handle this layer.\n"
 "  Get it from %s\n"
 msgstr ""
 "ADVARSEL: GDynText er for gammel!\n"
-"  du kan tabe data væd ændring af denne tekst.\n"
+"  du kan tabe data ved at ændre af denne tekst.\n"
 "  En nyere version er krævet for at behandle dette lag.\n"
 "  Få det fra %s\n"
 
@@ -9917,8 +9915,8 @@ msgid ""
 "Holding the Shift key while pressing this button will force GDynText in "
 "changing the layer name as done in GIMP 1.0."
 msgstr ""
-"Hold skifte-tasten nede og tryk denne tast for at tvinge "
-"GDynText til at ændre lag-navnet som i GIMP 1.0."
+"Hold skifte-tasten nede og tryk denne tast for at tvinge GDynText til at "
+"ændre lag-navnet som i GIMP 1.0."
 
 #: plug-ins/gdyntext/gdyntext_ui.c:1015
 msgid "GDynText: CharMap"

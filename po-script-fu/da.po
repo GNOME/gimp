@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu/gnome-cvs\n"
 "POT-Creation-Date: 2000-05-09 20:27-0700\n"
-"PO-Revision-Date: 2000-05-16 11:41+01:00\n"
+"PO-Revision-Date: 2000-05-17 11:41+01:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish <sslug-locale@sslug.dk>\n"
 "MIME-Version: 1.0\n"
@@ -1248,8 +1248,8 @@ msgid "Gradient"
 msgstr "Farveforløb"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
-msgid "Granularity (0 - 15)"
-msgstr "Kornethed (0 - 15)"
+msgid "Granularity (0-15)"
+msgstr "Kornethed (0-15)"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
