@@ -1,3 +1,20 @@
+2000-04-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/interface.c: completely overworked the widget packing of the
+	display shell. This was necessary because the table insisted on
+	giving the vertical scrollbar more allocation than it needed when
+	first displaying an image which is smaller than the minimal
+	statusbar width. Replaced the tables with packing boxes.
+
+	See the comments I've added to create_display_shell() if you
+	really want to see the ugly details.
+
+	Also, to get rid of the 2-pixel spacing which appears at the
+	bottom of the display whenever the statusarea is hidden,
+	gdisp->statusarea is now the eventbox, not the hbox it contains.
+
+	* pixmaps/navbutton.xpm: made it 2x2 pixels larger.
+
 Sun Apr  2 04:39:10 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* configure.in: minor portability nit with gtkxmhtml tests
