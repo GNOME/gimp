@@ -1,3 +1,10 @@
+2001-11-13  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL
+	* NEWS
+	* README
+	* TODO.xml: updated
+
 2001-11-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/user-installed-dialog.c: fixed some action_area uglyness

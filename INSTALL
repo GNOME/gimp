@@ -6,25 +6,27 @@ There are some basic steps to building and installing the GIMP:
 
   1. You need to have installed a recent version of pkg-config available
      from http://www.freedesktop.org/software/pkgconfig/.  
-  2. You need to have installed GTK version 1.3.7 or better. Do not try
+  2. You need to have installed GTK version 1.3.10 or better. Do not try
      to use the stable GTK+ versions 1.2.x, it will not work. GTK+-1.3.x
      are development releases of the upcoming GTK+-2.0 release. GTK+-2.0
-     itself needs recent versions of GLib-2.0, Pango and ATK. 
-     GTK+-2.0 and friends can be installed side by side with GTK+-1.2.
-  3. You may want to install other third party libraries or programs that
-     are needed for some of the available plugins: TIFF, PNG, JPEG, MPEG,
-     perl, etc.
-  4. You may want to install the freefont package so you have the fonts
-     most scripts use by default. 
-     Grab it from ftp://ftp.gimp.org/pub/gimp/fonts/
+     itself needs recent versions of GLib-2.0, Pango and ATK. Grab them
+     from ftp://ftp.gtk.org/. GTK+-2.0 and friends can be installed side 
+     by side with GTK+-1.2.
+  3. We require PangoFT2, a Pango backend that uses FreeType2. Make you
+     sure you have FreeType2 installed before you compile Pango.
+  4. You may want to install other third party libraries or programs that
+     are needed for some of the available plugins: TIFF, PNG, JPEG.
   5. Configure the GIMP by running the `configure' script.
      You may want to pass some options to it, see below.
   6. Build the GIMP by running `make'.
-  7. Install the GIMP by running `make install' or `make install-strip'.
-  8. Optionally install the separate gimp-data-extras package.
+  7. If you have installed GIMP-1.2 in the same prefix, make a copy of
+     the gimp executable (calling it for example gimp12). Everything but
+     the main gimp executable will be installed in way that it does not
+     clash with files from a GIMP-1.2 installation.
+  7. Install the GIMP by running `make install'.
 
 Please make sure you don't have any old GTK+-2.0, jpeg, etc. libraries 
-lying around on your system, otherwise configure will fail to find the 
+lying around on your system, otherwise configure may fail to find the 
 new ones.
 
 Generic instructions for configuring and compiling auto-configured
@@ -93,27 +95,17 @@ recognizes. These are:
   8. --with-sendmail=[]. This option is used to tell GIMP where to find
      this command. Normally this options don't have to be used because
      configure tries to find it in the usual places.
-  
-  9. --enable-python and --disable-python. This options control whether to
-     build the python scripting language plygin or not. This options
-     defaults to off.   
 
 The `make' command builds several things:
- - The libraries `libgimp/libgimp.la', `libgimp/libgimpi.la' and
-   `libgimp/libgimpui.la'. The `.la' suffix is used by libtool, the
-    program used to ease the compilation of shared libraries on
-    different platforms.
+ - A bunch of public libraries in the directories starting with libgimp.
  - The plug-in programs in the `plug-ins' subdirectory.
  - The main GIMP program in `app/gimp'.
 
 The `make install' commands installs the gimp header files associated 
-with libgimp and the libgimp library, the plug-ins, some data files and 
-the GIMP executable. After running `make install' and assuming the 
-build process was successful you should be able to run `gimp'.
+with the libgimp libraries, the plug-ins, some data files and the GIMP 
+executable. After running `make install' and assuming the build process 
+was successful you should be able to run `gimp'.
 
-Using `make install-strip' will remove unneeded debugging cruft and 
-unused functions from the binaries which will reduce the size of the
-GIMP and its plug-ins. 
 
 When ./configure fails
 ======================
@@ -134,7 +126,7 @@ several reasons why this might fail:
   gtk+-2.0.pc to the environment variable PKG_CONFIG_PATH before running 
   configure.
 
-* The GTK libraries were not found at run time. The details
+* The GTK+ libraries were not found at run time. The details
   of how to fix this problem will depend on the system:
 
   Fix: On Linux and other systems using ELF libraries, add the

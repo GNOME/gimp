@@ -16,7 +16,7 @@
   <section>
     <title>General</title>
 
-    <entry size="big" difficulty="advanced" status="60%" target="1.4">
+    <entry size="big" difficulty="advanced" status="80%" target="1.4">
       <title>Port to glib-2.0 and gtk+-2.0</title>
       <description>
 	<p>
@@ -44,7 +44,7 @@
       </contact>
     </entry>    
 
-    <entry size="big" difficulty="medium" status="70%" target="1.4">
+    <entry size="big" difficulty="medium" status="80%" target="1.4">
       <title>Code reorganization</title>
       <description>
 	<p>
@@ -113,7 +113,7 @@
   <section>
     <title>Objectification</title>
     
-    <entry size="small" difficulty="easy" status="80%" target="1.4">
+    <entry size="small" difficulty="easy" status="100%" target="1.4">
       <title>Generic GimpObject</title>
       <description>
 	<p>
@@ -126,7 +126,7 @@
       </contact>
     </entry>    
 
-    <entry size="medium" difficulty="medium" status="40%" target="1.4">
+    <entry size="medium" difficulty="medium" status="60%" target="1.4">
       <title>Cleanup existing internal objects</title>
       <description>
 	<p>
@@ -153,7 +153,7 @@
       </contact>
     </entry>
 
-    <entry size="medium" difficulty="medium" status="70%" target="1.4">
+    <entry size="medium" difficulty="medium" status="80%" target="1.4">
       <title>Generic object container(s)</title>
       <description>
 	<p>
@@ -310,7 +310,7 @@
   <section>
     <title>User Interface</title>
 
-    <entry size="medium" difficulty="medium" status="70%" target="1.4">
+    <entry size="medium" difficulty="medium" status="80%" target="1.4">
       <title>Abstract Container Views</title>
       <description>
 	<p>
