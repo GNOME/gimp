@@ -20,7 +20,7 @@
  */
 
 /*
- * XWD-input/output was written by Peter Kirchgessner (pkirchg@aol.com).
+ * XWD-input/output was written by Peter Kirchgessner (peter@kirchgessner.net)
  * Examples from mainly used UNIX-systems have been used for testing.
  * If a file does not work, please return a small (!!) compressed example.
  * Currently the following formats are supported:
@@ -46,8 +46,9 @@
  * V 1.93, PK, 11-Apr-98: Fix problem with overwriting memory
  * V 1.94, ME, 27-Feb-00: Remove superfluous little-endian support (format is
                           specified as big-endian). Trim magic header
+ * V 1.95, PK, 02-Jul-01: Fix problem with 8 bit image
  */
-static char ident[] = "@(#) GIMP XWD file-plugin v1.94  27-Feb-2000";
+static char ident[] = "@(#) GIMP XWD file-plugin v1.95  02-Jul-2001";
 
 #include "config.h"
 
@@ -389,6 +390,14 @@ load_image (gchar *filename)
       fclose (ifp);
       return (-1);
     }
+
+#ifdef XWD_COL_WAIT_DEBUG
+   {int k = 1;
+ 
+    while (k)
+      k = k;
+   }
+#endif
 
   /* Position to start of XWDColor structures */
   fseek (ifp, (long)xwdhdr.l_header_size, SEEK_SET);
@@ -953,6 +962,61 @@ set_bw_color_table (gint32 image_ID)
 }
 
 
+/* Initialize an 8-bit colortable from the mask-values of the XWD-header */
+static void 
+init_color_table256 (L_XWDFILEHEADER *xwdhdr, unsigned char *ColorMap)
+     
+{
+  int i, j, k, cuind;
+  int redshift, greenshift, blueshift;
+  int maxred, maxgreen, maxblue;
+
+  /* Assume: the bit masks for red/green/blue are grouped together
+   * Example: redmask = 0xe0, greenmask = 0x1c, bluemask = 0x03
+   * We need to know where to place the RGB-values (shifting)
+   * and the maximum value for each component.
+   */
+  redshift = greenshift = blueshift = 0;
+  if ((maxred = xwdhdr->l_red_mask) == 0) return;
+
+  /* Shift the redmask to the rightmost bit position to get
+   * maximum value for red.
+   */
+  while ((maxred & 1) == 0)
+  {
+    redshift++;
+    maxred >>= 1;
+  }
+  if ((maxgreen = xwdhdr->l_green_mask) == 0) return;
+  while ((maxgreen & 1) == 0)
+  {
+    greenshift++;
+    maxgreen >>= 1;
+  }
+  if ((maxblue = xwdhdr->l_blue_mask) == 0) return;
+  while ((maxblue & 1) == 0)
+  {
+    blueshift++;
+    maxblue >>= 1;
+  }
+
+  memset ((char *)ColorMap,0,256*3);
+
+  for (i = 0; i <= maxred; i++)
+    for (j = 0; j <= maxgreen; j++)
+      for (k = 0; k <= maxblue; k++)
+      {
+        cuind = (i << redshift) | (j << greenshift) | (k << blueshift);
+        if (cuind < 256)
+        {
+          ColorMap[cuind*3]   = (i * 255)/maxred;
+          ColorMap[cuind*3+1] = (j * 255)/maxgreen;
+          ColorMap[cuind*3+2] = (k * 255)/maxblue;
+        }
+      }
+}
+
+
 static void 
 set_color_table (gint32           image_ID,
 		 L_XWDFILEHEADER *xwdhdr,
@@ -969,9 +1033,10 @@ set_color_table (gint32           image_ID,
     return;
   if (ncols > 256) 
     ncols = 256;
-  
-  memset ((char *)ColorMap,0,sizeof (ColorMap));
-  
+
+  /* Initialize color table for all 256 entries from mask-values */
+  init_color_table256 (xwdhdr, ColorMap);
+
   for (j = 0; j < ncols; j++)
     {
       i = xwdcolmap[j].l_pixel;
@@ -985,12 +1050,14 @@ set_color_table (gint32           image_ID,
   
 #ifdef XWD_COL_DEBUG
   printf ("Set GIMP colortable:\n");
-  for (j = 0; j < ncols; j++)
+  for (j = 0; j < 256; j++)
     printf ("%3d: 0x%02x 0x%02x 0x%02x\n", j,
 	    ColorMap[j*3], ColorMap[j*3+1], ColorMap[j*3+2]);
 #endif
-  gimp_image_set_cmap (image_ID, ColorMap, ncols);
+  gimp_image_set_cmap (image_ID, ColorMap, 256);
 }
+
+
 
 
 /* Create an image. Sets layer_ID, drawable and rgn. Returns image_ID */
