@@ -67,7 +67,7 @@ static void      gauss_iir         (GimpDrawable *drawable,
  * Gaussian blur interface
  */
 static gint      gauss_iir_dialog  (void);
-static gint      gauss_iir2_dialog (gint32        image_ID, 
+static gint      gauss_iir2_dialog (gint32        image_ID,
 				    GimpDrawable *drawable);
 
 /*
@@ -215,12 +215,12 @@ run (const gchar      *name,
 	case GIMP_RUN_INTERACTIVE:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("plug_in_gauss_iir", &bvals);
-	  
+
 	  /*  First acquire information with a dialog  */
 	  if (! gauss_iir_dialog ())
 	    return;
 	  break;
-	  
+
 	case GIMP_RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != 6)
@@ -234,12 +234,12 @@ run (const gchar      *name,
 	  if (status == GIMP_PDB_SUCCESS && (bvals.radius <= 0.0))
 	    status = GIMP_PDB_CALLING_ERROR;
 	  break;
-	  
+
 	case GIMP_RUN_WITH_LAST_VALS:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("plug_in_gauss_iir", &bvals);
 	  break;
-	  
+
 	default:
 	  break;
 	}
@@ -253,11 +253,11 @@ run (const gchar      *name,
   else if (strcmp (name, "plug_in_gauss_iir2") == 0)
     {
       switch (run_mode)
-	{	  
+	{
 	case GIMP_RUN_INTERACTIVE:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("plug_in_gauss_iir2", &b2vals);
-	  
+
 	  /*  First acquire information with a dialog  */
 	  if (! gauss_iir2_dialog (image_ID, drawable))
 	    return;
@@ -271,15 +271,16 @@ run (const gchar      *name,
 	      b2vals.horizontal = param[3].data.d_float;
 	      b2vals.vertical   = param[4].data.d_float;
 	    }
-	  if (status == GIMP_PDB_SUCCESS && (b2vals.horizontal <= 0.0 && b2vals.vertical <= 0.0))
+	  if (status == GIMP_PDB_SUCCESS &&
+              (b2vals.horizontal <= 0.0 && b2vals.vertical <= 0.0))
 	    status = GIMP_PDB_CALLING_ERROR;
 	  break;
-	  
+
 	case GIMP_RUN_WITH_LAST_VALS:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("plug_in_gauss_iir2", &b2vals);
 	  break;
-	  
+
 	default:
 	  break;
 	}
@@ -294,28 +295,31 @@ run (const gchar      *name,
 	  gimp_drawable_is_gray (drawable->drawable_id))
 	{
 	  gimp_progress_init ( _("IIR Gaussian Blur"));
-	  
+
           /*  set the tile cache size so that the gaussian blur works well  */
-          gimp_tile_cache_ntiles (2 * (MAX (drawable->width, drawable->height) /
+          gimp_tile_cache_ntiles (2 *
+                                  (MAX (drawable->width, drawable->height) /
 				  gimp_tile_width () + 1));
 
           /*  run the gaussian blur  */
 	  if (strcmp (name, "plug_in_gauss_iir") == 0)
 	    {
-	      gauss_iir (drawable, (bvals.horizontal ? bvals.radius : 0.0), 
+	      gauss_iir (drawable, (bvals.horizontal ? bvals.radius : 0.0),
                                    (bvals.vertical ? bvals.radius : 0.0));
-	      
+
 	      /*  Store data  */
 	      if (run_mode == GIMP_RUN_INTERACTIVE)
-		gimp_set_data ("plug_in_gauss_iir", &bvals, sizeof (BlurValues));
-	    } 
+		gimp_set_data ("plug_in_gauss_iir",
+                               &bvals, sizeof (BlurValues));
+	    }
 	  else
 	    {
 	      gauss_iir (drawable, b2vals.horizontal, b2vals.vertical);
-	  
+
 	      /*  Store data  */
 	      if (run_mode == GIMP_RUN_INTERACTIVE)
-		gimp_set_data ("plug_in_gauss_iir2", &b2vals, sizeof (Blur2Values));
+		gimp_set_data ("plug_in_gauss_iir2",
+                               &b2vals, sizeof (Blur2Values));
 	    }
 
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
@@ -466,6 +470,8 @@ gauss_iir2_dialog (gint32        image_ID,
   gtk_container_set_border_width (GTK_CONTAINER (size), 4);
   gtk_container_add (GTK_CONTAINER (frame), size);
 
+  gimp_size_entry_set_pixel_digits (GIMP_SIZE_ENTRY (size), 1);
+
   gtk_widget_show (size);
   gtk_widget_show (frame);
   gtk_widget_show (dlg);
@@ -592,10 +598,10 @@ gauss_iir (GimpDrawable *drawable,
   max_progress  = (horz <= 0.0 ) ? 0 : width * height * horz;
   max_progress += (vert <= 0.0 ) ? 0 : width * height * vert;
 
-  
+
   /*  First the vertical pass  */
   if (vert > 0.0)
-    {    
+    {
       vert = fabs (vert) + 1.0;
       std_dev = sqrt (-(vert * vert) / (2 * log (1.0 / 255.0)));
 
@@ -676,7 +682,7 @@ if (horz > 0.0)
       if (horz != vert)
 	{
 	  std_dev = sqrt (-(horz * horz) / (2 * log (1.0 / 255.0)));
-	        
+
 	  /*  derive the constants for calculating the gaussian from the std dev  */
 	  find_constants (n_p, n_m, d_p, d_m, bd_p, bd_m, std_dev);
 	}
@@ -770,7 +776,7 @@ transfer_pixels (gdouble *src1,
       sum = *src1++ + *src2++;
       if (sum > 255) sum = 255;
       else if(sum < 0) sum = 0;
-	  
+
       *dest++ = (guchar) sum;
     }
 }

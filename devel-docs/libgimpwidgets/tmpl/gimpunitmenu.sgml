@@ -110,6 +110,24 @@ gimp_coordinates_new()
 @gum: 
 
 
+<!-- ##### FUNCTION gimp_unit_menu_get_pixel_digits ##### -->
+<para>
+
+</para>
+
+@menu: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_unit_menu_set_pixel_digits ##### -->
+<para>
+
+</para>
+
+@menu: 
+@digits: 
+
+
 <!-- ##### SIGNAL GimpUnitMenu::unit-changed ##### -->
 <para>
 This signal is emitted whenever the user selects a #GimpUnit from the

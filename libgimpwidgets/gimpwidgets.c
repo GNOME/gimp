@@ -1452,6 +1452,8 @@ gimp_unit_menu_update (GtkWidget *widget,
 	    ((*val == GIMP_UNIT_PERCENT) ? 2 :
 	     (MIN (6, MAX (3, _gimp_eek.unit_get_digits (*val))))));
 
+  digits += gimp_unit_menu_get_pixel_digits (GIMP_UNIT_MENU (widget));
+
   spinbutton = g_object_get_data (G_OBJECT (widget), "set_digits");
   while (spinbutton)
     {

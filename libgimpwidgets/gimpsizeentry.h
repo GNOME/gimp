@@ -1,9 +1,9 @@
-/* LIBGIMP - The GIMP Library       
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball 
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpsizeentry.h
  * Copyright (C) 1999-2000 Sven Neumann <sven@gimp.org>
- *                         Michael Natterer <mitch@gimp.org> 
+ *                         Michael Natterer <mitch@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -126,8 +126,11 @@ void        gimp_size_entry_set_refval            (GimpSizeEntry *gse,
 					           gdouble        refval);
 
 GimpUnit    gimp_size_entry_get_unit              (GimpSizeEntry *gse);
-void        gimp_size_entry_set_unit              (GimpSizeEntry *gse, 
+void        gimp_size_entry_set_unit              (GimpSizeEntry *gse,
 					           GimpUnit       unit);
+
+void        gimp_size_entry_set_pixel_digits      (GimpSizeEntry *gse,
+                                                   gint           digits);
 
 void        gimp_size_entry_grab_focus            (GimpSizeEntry *gse);
 

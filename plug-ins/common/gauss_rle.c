@@ -67,7 +67,7 @@ static void      gauss_rle (GimpDrawable  *drawable,
  * Gaussian blur interface
  */
 static gint      gauss_rle_dialog  (void);
-static gint      gauss_rle2_dialog (gint32        image_ID, 
+static gint      gauss_rle2_dialog (gint32        image_ID,
 				    GimpDrawable *drawable);
 
 /*
@@ -205,7 +205,7 @@ run (const gchar      *name,
   if (strcmp (name, "plug_in_gauss_rle") == 0)   /* the old-fashioned way of calling it */
     {
       switch (run_mode)
-	{	  
+	{
 	case GIMP_RUN_INTERACTIVE:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("plug_in_gauss_rle", &bvals);
@@ -227,31 +227,31 @@ run (const gchar      *name,
 	  if (status == GIMP_PDB_SUCCESS && (bvals.radius <= 0.0))
 	    status = GIMP_PDB_CALLING_ERROR;
 	  break;
-	  
+
 	case GIMP_RUN_WITH_LAST_VALS:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("plug_in_gauss_rle", &bvals);
 	  break;
-	  
+
 	default:
 	  break;
 	}
-      
+
       if (!(bvals.horizontal || bvals.vertical))
 	{
 	  g_message ( _("You must specify either horizontal or vertical (or both)"));
 	  status = GIMP_PDB_CALLING_ERROR;
 	}
 
-    } 
+    }
   else if (strcmp (name, "plug_in_gauss_rle2") == 0)
     {
       switch (run_mode)
-	{	  
+	{
 	case GIMP_RUN_INTERACTIVE:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("plug_in_gauss_rle2", &b2vals);
-	  
+
 	  /*  First acquire information with a dialog  */
 	  if (! gauss_rle2_dialog (image_ID, drawable))
 	    return;
@@ -265,10 +265,11 @@ run (const gchar      *name,
 	      b2vals.horizontal = param[3].data.d_float;
 	      b2vals.vertical   = param[4].data.d_float;
 	    }
-	  if (status == GIMP_PDB_SUCCESS && (b2vals.horizontal <= 0.0 && b2vals.vertical <= 0.0))
+	  if (status == GIMP_PDB_SUCCESS &&
+              (b2vals.horizontal <= 0.0 && b2vals.vertical <= 0.0))
 	    status = GIMP_PDB_CALLING_ERROR;
 	  break;
-	  
+
 	case GIMP_RUN_WITH_LAST_VALS:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("plug_in_gauss_rle2", &b2vals);
@@ -277,7 +278,7 @@ run (const gchar      *name,
 	default:
 	  break;
 	}
-    }    
+    }
   else
     status = GIMP_PDB_CALLING_ERROR;
 
@@ -290,26 +291,29 @@ run (const gchar      *name,
           gimp_progress_init ( _("RLE Gaussian Blur"));
 
           /*  set the tile cache size so that the gaussian blur works well  */
-          gimp_tile_cache_ntiles (2 * (MAX (drawable->width, drawable->height) /
+          gimp_tile_cache_ntiles (2 *
+                                  (MAX (drawable->width, drawable->height) /
 				  gimp_tile_width () + 1));
 
           /*  run the gaussian blur  */
 	  if (strcmp (name, "plug_in_gauss_rle") == 0)
 	    {
-	      gauss_rle (drawable, (bvals.horizontal ? bvals.radius : 0.0), 
+	      gauss_rle (drawable, (bvals.horizontal ? bvals.radius : 0.0),
                                    (bvals.vertical ? bvals.radius : 0.0));
-	      
+
 	      /*  Store data  */
 	      if (run_mode == GIMP_RUN_INTERACTIVE)
-		gimp_set_data ("plug_in_gauss_rle", &bvals, sizeof (BlurValues));
-	    } 
+		gimp_set_data ("plug_in_gauss_rle",
+                               &bvals, sizeof (BlurValues));
+	    }
 	  else
 	    {
 	      gauss_rle (drawable, b2vals.horizontal, b2vals.vertical);
-	  
+
 	      /*  Store data  */
 	      if (run_mode == GIMP_RUN_INTERACTIVE)
-		gimp_set_data ("plug_in_gauss_rle2", &b2vals, sizeof (Blur2Values));
+		gimp_set_data ("plug_in_gauss_rle2",
+                               &b2vals, sizeof (Blur2Values));
 	    }
 
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
@@ -460,6 +464,8 @@ gauss_rle2_dialog (gint32        image_ID,
   gtk_container_set_border_width (GTK_CONTAINER (size), 4);
   gtk_container_add (GTK_CONTAINER (frame), size);
 
+  gimp_size_entry_set_pixel_digits (GIMP_SIZE_ENTRY (size), 1);
+
   gtk_widget_show (size);
   gtk_widget_show (frame);
   gtk_widget_show (dlg);
@@ -585,14 +591,14 @@ gauss_rle (GimpDrawable *drawable,
   progress = 0.0;
   max_progress  = (horz <= 0.0 ) ? 0 : width * height * horz;
   max_progress += (vert <= 0.0 ) ? 0 : width * height * vert;
-	  
+
 
   /*  First the vertical pass  */
   if (vert > 0.0)
     {
       vert = fabs (vert) + 1.0;
       std_dev = sqrt (-(vert * vert) / (2 * log (1.0 / 255.0)));
-      
+
       curve = make_curve (std_dev, &length);
       sum = g_new (gint, 2 * length + 1);
 
@@ -601,7 +607,7 @@ gauss_rle (GimpDrawable *drawable,
       for (i = 1; i <= length*2; i++)
 	sum[i] = curve[i-length-1] + sum[i-1];
       sum += length;
-      
+
       total = sum[length] - sum[-length];
 
        for (col = 0; col < width; col++)
@@ -624,7 +630,8 @@ gauss_rle (GimpDrawable *drawable,
 	      for (row = 0; row < height; row++)
 		{
 		  start = (row < length) ? -row : -length;
-		  end = (height <= (row + length)) ? (height - row - 1) : length;
+		  end = (height <= (row + length) ?
+                         (height - row - 1) : length);
 
 		  val = 0;
 		  i = start;
@@ -673,7 +680,7 @@ gauss_rle (GimpDrawable *drawable,
       if (horz != vert)
 	{
 	  std_dev = sqrt (-(horz * horz) / (2 * log (1.0 / 255.0)));
-      
+
 	  curve = make_curve (std_dev, &length);
 	  sum = g_new (gint, 2 * length + 1);
 
@@ -682,7 +689,7 @@ gauss_rle (GimpDrawable *drawable,
 	  for (i = 1; i <= length*2; i++)
 	    sum[i] = curve[i-length-1] + sum[i-1];
 	  sum += length;
-	  
+
 	  total = sum[length] - sum[-length];
 	}
 
@@ -741,7 +748,7 @@ gauss_rle (GimpDrawable *drawable,
 	    gimp_progress_update (progress / max_progress);
 	}
     }
-	  
+
 
   /*  merge the shadow, update the drawable  */
   gimp_drawable_flush (drawable);

@@ -1,5 +1,5 @@
 /* LIBGIMP - The GIMP Library
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball 
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpunitmenu.h
  * Copyright (C) 1999 Michael Natterer <mitch@gimp.org>
@@ -45,6 +45,7 @@ struct _GimpUnitMenu
   /* public (read only) */
   gchar         *format;
   GimpUnit       unit;
+  gint           pixel_digits;
 
   gboolean       show_pixels;
   gboolean       show_percent;
@@ -62,18 +63,22 @@ struct _GimpUnitMenuClass
 };
 
 
-GType       gimp_unit_menu_get_type (void) G_GNUC_CONST;
+GType       gimp_unit_menu_get_type         (void) G_GNUC_CONST;
 
-GtkWidget * gimp_unit_menu_new      (const gchar *format,
-				     GimpUnit     unit,
-				     gboolean     show_pixels,
-				     gboolean     show_percent,
-				     gboolean     show_custom);
+GtkWidget * gimp_unit_menu_new              (const gchar  *format,
+                                             GimpUnit      unit,
+                                             gboolean      show_pixels,
+                                             gboolean      show_percent,
+                                             gboolean      show_custom);
 
-void        gimp_unit_menu_set_unit (GimpUnitMenu *menu, 
-				     GimpUnit      unit);
+void        gimp_unit_menu_set_unit         (GimpUnitMenu *menu,
+                                             GimpUnit      unit);
 
-GimpUnit    gimp_unit_menu_get_unit (GimpUnitMenu *menu);
+GimpUnit    gimp_unit_menu_get_unit         (GimpUnitMenu *menu);
+
+void        gimp_unit_menu_set_pixel_digits (GimpUnitMenu *menu,
+                                             gint          digits);
+gint        gimp_unit_menu_get_pixel_digits (GimpUnitMenu *menu);
 
 
 G_END_DECLS

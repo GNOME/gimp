@@ -1,18 +1,18 @@
-/* LIBGIMP - The GIMP Library 
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpsizeentry.c
  * Copyright (C) 1999-2000 Sven Neumann <sven@gimp.org>
- *                         Michael Natterer <mitch@gimp.org> 
+ *                         Michael Natterer <mitch@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU  
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -121,7 +121,7 @@ gimp_size_entry_get_type (void)
                                          "GimpSizeEntry",
                                          &gse_info, 0);
     }
-  
+
   return gse_type;
 }
 
@@ -308,7 +308,7 @@ gimp_size_entry_new (gint                       number_of_fields,
       gsef->refval            = 0;
       gsef->min_refval        = 0;
       gsef->max_refval        = SIZE_MAX_VALUE;
-      gsef->refval_digits     = 
+      gsef->refval_digits     =
 	(update_policy == GIMP_SIZE_ENTRY_UPDATE_SIZE) ? 0 : 3;
       gsef->stop_recursion    = 0;
 
@@ -361,7 +361,7 @@ gimp_size_entry_new (gint                       number_of_fields,
                             gsef);
 
 	  gtk_widget_show (gsef->refval_spinbutton);
-	}			
+	}
 
       if (gse->menu_show_pixels && (unit == GIMP_UNIT_PIXEL) &&
           ! gse->show_refval)
@@ -380,7 +380,7 @@ gimp_size_entry_new (gint                       number_of_fields,
                     G_CALLBACK (gimp_size_entry_unit_callback),
                     gse);
   gtk_widget_show (gse->unitmenu);
-  
+
   return GTK_WIDGET (gse);
 }
 
@@ -404,6 +404,7 @@ gimp_size_entry_add_field  (GimpSizeEntry *gse,
 			    GtkSpinButton *refval_spinbutton)
 {
   GimpSizeEntryField *gsef;
+  gint                digits;
 
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
   g_return_if_fail (GTK_IS_SPIN_BUTTON (value_spinbutton));
@@ -449,10 +450,11 @@ gimp_size_entry_add_field  (GimpSizeEntry *gse,
                         gsef);
     }
 
-  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (value_spinbutton),
-			      (gse->unit == GIMP_UNIT_PIXEL) ? gsef->refval_digits :
-			      (gse->unit == GIMP_UNIT_PERCENT) ? 2 :
-			      GIMP_SIZE_ENTRY_DIGITS (gse->unit));
+  digits = ((gse->unit == GIMP_UNIT_PIXEL) ? gsef->refval_digits :
+            (gse->unit == GIMP_UNIT_PERCENT) ? 2 :
+            GIMP_SIZE_ENTRY_DIGITS (gse->unit));
+
+  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (value_spinbutton), digits);
 
   if (gse->menu_show_pixels &&
       !gse->show_refval &&
@@ -504,7 +506,7 @@ gimp_size_entry_attach_label (GimpSizeEntry *gse,
             }
         }
     }
-      
+
   gtk_misc_set_alignment (GTK_MISC (label), alignment, 0.5);
 
   gtk_table_attach (GTK_TABLE (gse), label, column, column+1, row, row+1,
@@ -755,7 +757,7 @@ gimp_size_entry_update_value (GimpSizeEntryField *gsef,
 	gtk_adjustment_set_value (GTK_ADJUSTMENT (gsef->refval_adjustment),
 				  gsef->refval);
       break;
-      
+
     default:
       break;
     }
@@ -1078,7 +1080,7 @@ gimp_size_entry_refval_callback (GtkWidget *widget,
  * @gse: The sizeentry you want to know the unit of.
  *
  * Returns the #GimpUnit the user has selected in the #GimpSizeEntry's
- * #GimpUnitMenu. 
+ * #GimpUnitMenu.
  *
  * Returns: The sizeentry's unit.
  **/
@@ -1100,6 +1102,8 @@ gimp_size_entry_update_unit (GimpSizeEntry *gse,
 
   gse->unit = unit;
 
+  digits = gimp_unit_menu_get_pixel_digits (GIMP_UNIT_MENU (gse->unitmenu));
+
   for (i = 0; i < gse->number_of_fields; i++)
     {
       gsef = (GimpSizeEntryField *) g_slist_nth_data (gse->fields, i);
@@ -1108,18 +1112,18 @@ gimp_size_entry_update_unit (GimpSizeEntry *gse,
 	{
 	  if (unit == GIMP_UNIT_PIXEL)
 	    gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
-					gsef->refval_digits);
+					gsef->refval_digits + digits);
 	  else if (unit == GIMP_UNIT_PERCENT)
 	    gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
-					2);
+					2 + digits);
 	  else
 	    gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
-					GIMP_SIZE_ENTRY_DIGITS (unit));
+					GIMP_SIZE_ENTRY_DIGITS (unit) + digits);
 	}
       else if (gse->update_policy == GIMP_SIZE_ENTRY_UPDATE_RESOLUTION)
 	{
-	  digits =
-	    -(_gimp_eek.unit_get_digits (unit) - _gimp_eek.unit_get_digits (GIMP_UNIT_INCH));
+	  digits = (_gimp_eek.unit_get_digits (GIMP_UNIT_INCH) -
+                    _gimp_eek.unit_get_digits (unit));
 	  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gsef->value_spinbutton),
 				      MAX (3 + digits, 3));
 	}
@@ -1131,7 +1135,7 @@ gimp_size_entry_update_unit (GimpSizeEntry *gse,
                                        gsef);
 
       gimp_size_entry_set_refval_boundaries (gse, i,
-					     gsef->min_refval, 
+					     gsef->min_refval,
                                              gsef->max_refval);
 
       g_signal_handlers_unblock_by_func (gsef->value_adjustment,
@@ -1139,8 +1143,9 @@ gimp_size_entry_update_unit (GimpSizeEntry *gse,
                                          gsef);
     }
 
-  g_signal_emit (gse, gimp_size_entry_signals[VALUE_CHANGED], 0);
+  g_signal_emit (gse, gimp_size_entry_signals[UNIT_CHANGED], 0);
 }
+
 
 /**
  * gimp_size_entry_set_unit:
@@ -1153,7 +1158,7 @@ gimp_size_entry_update_unit (GimpSizeEntry *gse,
  * gimp_size_entry_new().
  **/
 void
-gimp_size_entry_set_unit (GimpSizeEntry *gse, 
+gimp_size_entry_set_unit (GimpSizeEntry *gse,
 			  GimpUnit       unit)
 {
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
@@ -1170,9 +1175,31 @@ gimp_size_entry_unit_callback (GtkWidget *widget,
 {
   gimp_size_entry_update_unit (GIMP_SIZE_ENTRY (data),
 			       gimp_unit_menu_get_unit (GIMP_UNIT_MENU(widget)));
-
-  g_signal_emit (data, gimp_size_entry_signals[UNIT_CHANGED], 0);
 }
+
+
+/**
+ * gimp_size_entry_set_pixel_digits:
+ * @gse: a #GimpSizeEntry
+ * @digits: the number of digits to display for a pixel size
+ *
+ * Similar to gimp_unit_menu_set_pixel_digits(), this function allows
+ * you set up a #GimpSizeEntry so that sub-pixel sizes can be entered.
+ **/
+void
+gimp_size_entry_set_pixel_digits (GimpSizeEntry *gse,
+                                  gint           digits)
+{
+  GimpUnitMenu *menu;
+
+  g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
+
+  menu = GIMP_UNIT_MENU (gse->unitmenu);
+
+  gimp_unit_menu_set_pixel_digits (menu, digits);
+  gimp_size_entry_update_unit (gse, gimp_unit_menu_get_unit (menu));
+}
+
 
 /**
  * gimp_size_entry_grab_focus:

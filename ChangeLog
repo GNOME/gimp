@@ -1,3 +1,19 @@
+2003-10-01  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpunitmenu.[ch]:
+	* libgimpwidgets/gimpwidgets.c: added an API to allow for
+	sub-pixel sizes in spinbuttons connected to a GimpUnitMenu.
+	Make GimpUnitMenu emit "unit-changed" when the unit is changed
+	programmatically.
+
+	* libgimpwidgets/gimpsizeentry.[ch}: added a similar API here.
+	Make GimpSizeEntry emit "unit-changed" when the unit is changed
+	programmatically. The other signals will need similar changes.
+
+	* plug-ins/common/gauss_rle.c
+	* plug-ins/common/gauss_iir.c
+	* app/widgets/gimpstrokeeditor.c: use the new API.
+
 2003-09-30  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdockable.c (gimp_dockable_new): accept NULL

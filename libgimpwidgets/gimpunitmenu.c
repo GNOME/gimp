@@ -8,10 +8,10 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -31,6 +31,7 @@
 #include "gimpdialog.h"
 #include "gimphelpui.h"
 #include "gimpunitmenu.h"
+#include "gimpwidgets.h"
 #include "gimpwidgets-private.h"
 
 #include "libgimp/libgimp-intl.h"
@@ -91,7 +92,7 @@ gimp_unit_menu_get_type (void)
                                          "GimpUnitMenu",
                                          &menu_info, 0);
     }
-  
+
   return menu_type;
 }
 
@@ -104,7 +105,7 @@ gimp_unit_menu_class_init (GimpUnitMenuClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  gimp_unit_menu_signals[UNIT_CHANGED] = 
+  gimp_unit_menu_signals[UNIT_CHANGED] =
     g_signal_new ("unit_changed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
@@ -242,12 +243,12 @@ gimp_unit_menu_new (const gchar *format,
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
       gtk_widget_set_sensitive (menuitem, FALSE);
       gtk_widget_show (menuitem);
-      
+
       menuitem =
 	gtk_menu_item_new_with_label (gimp_unit_menu_build_string (format,
                                                                    unit));
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-      g_object_set_data (G_OBJECT (menuitem), "gimp_unit_menu", 
+      g_object_set_data (G_OBJECT (menuitem), "gimp_unit_menu",
                          GINT_TO_POINTER (unit));
       gtk_widget_show (menuitem);
 
@@ -285,7 +286,7 @@ gimp_unit_menu_new (const gchar *format,
 				(((show_pixels || show_percent) ? 2 : 0) +
 				 ((show_pixels && show_percent) ? 1 : 0) +
 				 ((unit < GIMP_UNIT_END) ?
-				  (unit - 1) : GIMP_UNIT_END)))); 
+				  (unit - 1) : GIMP_UNIT_END))));
 
   return GTK_WIDGET (unit_menu);
 }
@@ -336,7 +337,7 @@ gimp_unit_menu_set_unit (GimpUnitMenu *menu,
       gtk_menu_reorder_child (GTK_MENU (GTK_OPTION_MENU (menu)->menu),
 			      menuitem, user_unit - 1);
       gtk_widget_show (menuitem);
-      
+
       menuitem =
 	gtk_menu_item_new_with_label (gimp_unit_menu_build_string (menu->format,
 								   unit));
@@ -364,6 +365,8 @@ gimp_unit_menu_set_unit (GimpUnitMenu *menu,
 				   menu->show_percent) ? 1 : 0) +
 				 ((unit < GIMP_UNIT_END) ?
 				  (unit - 1) : GIMP_UNIT_END))));
+
+  g_signal_emit (menu, gimp_unit_menu_signals[UNIT_CHANGED], 0);
 }
 
 /**
@@ -381,6 +384,53 @@ gimp_unit_menu_get_unit (GimpUnitMenu *menu)
 
   return menu->unit;
 }
+
+
+/**
+ * gimp_unit_menu_set_pixel_digits:
+ * @menu: a #GimpUnitMenu
+ * @digits: the number of digits to display for a pixel size
+ *
+ * A GimpUnitMenu can be setup to control the number of digits shown
+ * by attached spinbuttons. Please refer to the documentation of
+ * gimp_unit_menu_update() to see how this is done.
+ *
+ * This function allows to specify the number of digits shown for a
+ * size in pixels. Usually this is 0 (only full pixels). If you want
+ * to allow the user to specify sub-pixel sizes using the attached
+ * spinbuttons, specify the number of digits after the decimal point
+ * here. You should do this after attaching your spinbuttons.
+ **/
+void
+gimp_unit_menu_set_pixel_digits (GimpUnitMenu *menu,
+                                 gint          digits)
+{
+  GimpUnit unit;
+
+  g_return_if_fail (GIMP_IS_UNIT_MENU (menu));
+
+  menu->pixel_digits = digits;
+
+  gimp_unit_menu_update (GTK_WIDGET (menu), &unit);
+}
+
+/**
+ * gimp_unit_menu_get_pixel_digits:
+ * @menu: a #GimpUnitMenu
+ *
+ * Retrieve the number of digits for a pixel size as set by
+ * gimp_unit_set_pixel_digits().
+ *
+ * Return value: the configured number of digits for a pixel size
+ **/
+gint
+gimp_unit_menu_get_pixel_digits (GimpUnitMenu *menu)
+{
+  g_return_val_if_fail (GIMP_IS_UNIT_MENU (menu), 0);
+
+  return menu->pixel_digits;
+}
+
 
 /*  most of the next two functions is stolen from app/gdisplay.c  */
 static gint
@@ -422,7 +472,7 @@ gimp_unit_menu_build_string (const gchar *format,
 	    case 0:
 	      g_warning ("unit-menu-format string ended within %%-sequence");
 	      break;
-	      
+
 	    case '%':
 	      buffer[i++] = '%';
 	      break;
@@ -464,7 +514,7 @@ gimp_unit_menu_build_string (const gchar *format,
 	  buffer[i++] = *format;
 	  break;
 	}
-      
+
       format++;
     }
 
@@ -495,7 +545,6 @@ gimp_unit_menu_selection_ok_callback (GtkWidget *widget,
       g_value_unset (&val);
 
       gimp_unit_menu_set_unit (menu, unit);
-      g_signal_emit (menu, gimp_unit_menu_signals[UNIT_CHANGED], 0);
 
       gtk_widget_destroy (menu->selection);
     }
@@ -634,7 +683,7 @@ gimp_unit_menu_callback (GtkWidget *widget,
   menu = data;
   new_unit = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (widget),
                                                   "gimp_unit_menu"));
-  
+
   if (menu->unit == new_unit)
     return;
 
@@ -661,5 +710,4 @@ gimp_unit_menu_callback (GtkWidget *widget,
     }
 
   gimp_unit_menu_set_unit (menu, new_unit);
-  g_signal_emit (menu, gimp_unit_menu_signals[UNIT_CHANGED], 0);
 }

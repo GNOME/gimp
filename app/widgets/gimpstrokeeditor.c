@@ -182,6 +182,7 @@ gimp_stroke_editor_constructor (GType                   type,
 
   menu = gimp_prop_unit_menu_new (G_OBJECT (editor->options), "unit", "%a");
   g_object_set_data (G_OBJECT (menu), "set_digits", spinbutton);
+  gimp_unit_menu_set_pixel_digits (GIMP_UNIT_MENU (menu), 1);
   gtk_table_attach (GTK_TABLE (table), menu, 2, 3, row, row + 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (menu);

@@ -150,6 +150,7 @@ gimp_size_entry_get_refval
 gimp_size_entry_set_refval
 gimp_size_entry_get_unit
 gimp_size_entry_set_unit
+gimp_size_entry_set_pixel_digits
 gimp_size_entry_grab_focus
 <SUBSECTION Standard>
 GIMP_SIZE_ENTRY
@@ -169,6 +170,8 @@ GimpUnitMenu
 gimp_unit_menu_new
 gimp_unit_menu_set_unit
 gimp_unit_menu_get_unit
+gimp_unit_menu_get_pixel_digits
+gimp_unit_menu_set_pixel_digits
 <SUBSECTION Standard>
 GIMP_UNIT_MENU
 GIMP_IS_UNIT_MENU

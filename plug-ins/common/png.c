@@ -637,14 +637,40 @@ load_image (const gchar *filename)
     }
   if (png_get_valid (pp, info, PNG_INFO_pHYs))
     {
-      gimp_image_set_resolution (image,
-                                 ((double)
-                                  png_get_x_pixels_per_meter (pp,
-                                                              info)) * 0.0254,
-                                 ((double)
-                                  png_get_y_pixels_per_meter (pp,
-                                                              info)) *
-                                 0.0254);
+      png_uint_32  xres;
+      png_uint_32  yres;
+      gint         unit_type;
+
+      if (png_get_pHYs (pp, info, &xres, &yres, &unit_type))
+        {
+          switch (unit_type)
+            {
+            case PNG_RESOLUTION_UNKNOWN:
+              {
+                gdouble image_xres, image_yres;
+
+                gimp_image_get_resolution (image, &image_xres, &image_yres);
+
+                if (xres > yres)
+                  image_xres = image_yres * (gdouble) xres / (gdouble) yres;
+                else
+                  image_yres = image_xres * (gdouble) yres / (gdouble) xres;
+
+                gimp_image_set_resolution (image, image_xres, image_yres);
+              }
+              break;
+
+            case PNG_RESOLUTION_METER:
+              gimp_image_set_resolution (image,
+                                         (gdouble) xres * 0.254,
+                                         (gdouble) yres * 0.254);
+              break;
+
+            default:
+              break;
+            }
+        }
+
     }
 #endif /* PNG_LIBPNG_VER > 99 */
 
