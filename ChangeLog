@@ -1,3 +1,12 @@
+Mon Mar 23 18:08:59 PST 1998 Manish Singh <yosh@gimp.org>
+
+        * app/gimage_mask.c
+        * app/paint_core.c: applied patch from Ben Jackson to fix
+        fractional pixel errors and reverted the old fix.
+
+        * app/paint_funcs.h: changed the #defines for ERASE_MODE and
+        REPLACE_MODE to correctly match layer_modes[]
+
 Mon Mar 23 20:51:53 1998  Owen Taylor  <owt1@cornell.edu>
 
 	* INSTALL configure.in: Added some documentation

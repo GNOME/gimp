@@ -68,10 +68,7 @@ static TempBuf *  canvas_buf = NULL;
 
 /*  brush buffers  */
 static MaskBuf *  solid_brush;
-static MaskBuf *  kernel_brushes[4][4] = { {NULL, NULL, NULL, NULL},
-					   {NULL, NULL, NULL, NULL},
-					   {NULL, NULL, NULL, NULL},
-					   {NULL, NULL, NULL, NULL}};
+static MaskBuf *  kernel_brushes[5][5];
 
 
 /*  paint buffers utility functions  */
@@ -85,32 +82,42 @@ static void        free_paint_buffers     (void);
 #define KERNEL_HEIGHT  3
 
 /*  Brush pixel subsampling kernels  */
-static int subsample[4][4][9] =
-{
-  {
-    { 16, 48, 0, 48, 144, 0, 0, 0, 0 },
-    { 0, 64, 0, 0, 192, 0, 0, 0, 0 },
-    { 0, 48, 16, 0, 144, 48, 0, 0, 0 },
-    { 0, 32, 32, 0, 96, 96, 0, 0, 0 },
-  },
-  {
-    { 0, 0, 0, 64, 192, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 256, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 192, 64, 0, 0, 0 },
-    { 0, 0, 0, 0, 128, 128, 0, 0, 0 },
-  },
-  {
-    { 0, 0, 0, 48, 144, 0, 16, 48, 0 },
-    { 0, 0, 0, 0, 192, 0, 0, 64, 0 },
-    { 0, 0, 0, 0, 144, 48, 0, 48, 16 },
-    { 0, 0, 0, 0, 96, 96, 0, 32, 32 },
-  },
-  {
-    { 0, 0, 0, 32, 96, 0, 32, 96, 0 },
-    { 0, 0, 0, 0, 128, 0, 0, 128, 0 },
-    { 0, 0, 0, 0, 96, 32, 0, 96, 32 },
-    { 0, 0, 0, 0, 64, 64, 0, 64, 64 },
-  },
+static int subsample[5][5][9] = {
+	{
+		{ 64, 64, 0, 64, 64, 0, 0, 0, 0, },
+		{ 32, 96, 0, 32, 96, 0, 0, 0, 0, },
+		{ 0, 128, 0, 0, 128, 0, 0, 0, 0, },
+		{ 0, 96, 32, 0, 96, 32, 0, 0, 0, },
+		{ 0, 64, 64, 0, 64, 64, 0, 0, 0, },
+	},
+	{
+		{ 32, 32, 0, 96, 96, 0, 0, 0, 0, },
+		{ 16, 48, 0, 48, 144, 0, 0, 0, 0, },
+		{ 0, 64, 0, 0, 192, 0, 0, 0, 0, },
+		{ 0, 48, 16, 0, 144, 48, 0, 0, 0, },
+		{ 0, 32, 32, 0, 96, 96, 0, 0, 0, },
+	},
+	{
+		{ 0, 0, 0, 128, 128, 0, 0, 0, 0, },
+		{ 0, 0, 0, 64, 192, 0, 0, 0, 0, },
+		{ 0, 0, 0, 0, 256, 0, 0, 0, 0, },
+		{ 0, 0, 0, 0, 192, 64, 0, 0, 0, },
+		{ 0, 0, 0, 0, 128, 128, 0, 0, 0, },
+	},
+	{
+		{ 0, 0, 0, 96, 96, 0, 32, 32, 0, },
+		{ 0, 0, 0, 48, 144, 0, 16, 48, 0, },
+		{ 0, 0, 0, 0, 192, 0, 0, 64, 0, },
+		{ 0, 0, 0, 0, 144, 48, 0, 48, 16, },
+		{ 0, 0, 0, 0, 96, 96, 0, 32, 32, },
+	},
+	{
+		{ 0, 0, 0, 64, 64, 0, 64, 64, 0, },
+		{ 0, 0, 0, 32, 96, 0, 32, 96, 0, },
+		{ 0, 0, 0, 0, 128, 0, 0, 128, 0, },
+		{ 0, 0, 0, 0, 96, 32, 0, 96, 32, },
+		{ 0, 0, 0, 0, 64, 64, 0, 64, 64, },
+	},
 };
 
 void
@@ -687,22 +694,20 @@ paint_core_subsample_mask (mask, x, y)
   int r, s;
 
   x += (x < 0) ? mask->width : 0;
-  left = x - ((int) x);
+  left = x - floor(x) + 0.125;
   index1 = (int) (left * 4);
-  index1 = (index1 < 0) ? 0 : index1;
 
   y += (y < 0) ? mask->height : 0;
-  left = y - ((int) y);
+  left = y - floor(y) + 0.125;
   index2 = (int) (left * 4);
-  index2 = (index2 < 0) ? 0 : index2;
 
   kernel = subsample[index2][index1];
 
   if ((mask == last_brush) && kernel_brushes[index2][index1])
     return kernel_brushes[index2][index1];
   else if (mask != last_brush)
-    for (i = 0; i < 4; i++)
-      for (j = 0; j < 4; j++)
+    for (i = 0; i < 5; i++)
+      for (j = 0; j < 5; j++)
 	{
 	  if (kernel_brushes[i][j])
 	    mask_buf_free (kernel_brushes[i][j]);
