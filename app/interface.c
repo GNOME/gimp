@@ -228,9 +228,9 @@ create_color_area (GtkWidget *parent)
 
   col_area = color_area_create (54, 42, default_pixmap, swap_pixmap);
   gtk_container_add (GTK_CONTAINER (alignment), col_area);
-  gtk_tooltips_set_tip (tool_tips, col_area, _("Foreground & background colors.  The small black "
-			"and white squares reset colors.  The small arrows swap colors.  Double "
-			"click to change colors."),
+  gtk_tooltips_set_tip (tool_tips, col_area, _("Foreground & background colors.  The black "
+			                       "and white squares reset colors.  The arrows swap colors. Double "
+			                       "click to select a color from a colorrequester."),
 			NULL);
   gtk_widget_show (col_area);
   gtk_widget_show (alignment);
@@ -816,7 +816,7 @@ query_string_box (char        *title,
   query_box = (QueryBox *) g_malloc (sizeof (QueryBox));
 
   qbox = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (qbox), title);
+  gtk_window_set_title (GTK_WINDOW (qbox), gettext(title));
   gtk_window_set_wmclass (GTK_WINDOW (qbox), "query_box", "Gimp");
   gtk_window_position (GTK_WINDOW (qbox), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (qbox), "delete_event",
@@ -847,14 +847,14 @@ query_string_box (char        *title,
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (qbox)->vbox), vbox);
   gtk_widget_show (vbox);
 
-  label = gtk_label_new (message);
+  label = gtk_label_new (gettext(message));
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
   gtk_widget_show (label);
 
   entry = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (vbox), entry, TRUE, TRUE, 0);
   if (initial)
-    gtk_entry_set_text (GTK_ENTRY (entry), initial);
+    gtk_entry_set_text (GTK_ENTRY (entry), gettext(initial));
   gtk_widget_show (entry);
 
   query_box->qbox = qbox;

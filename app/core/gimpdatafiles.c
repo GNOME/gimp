@@ -76,7 +76,7 @@ datafiles_read_directories (char *path_str,
     {
       if (*token == '~')
 	{
-	  path = g_malloc(strlen(home) + strlen(token) + 2);
+	  path = g_malloc(strlen(home) + strlen(token) + 1);
 	  sprintf(path, "%s%s", home, token + 1);
 	}
       else
@@ -102,9 +102,7 @@ datafiles_read_directories (char *path_str,
 	    {
 	      while ((dir_ent = readdir(dir)))
 		{
-		  filename = g_malloc(strlen(path) + strlen(dir_ent->d_name) + 1);
-
-		  sprintf(filename, "%s%s", path, dir_ent->d_name);
+		  filename = g_strdup_printf("%s%s", path, dir_ent->d_name);
 
 		  /* Check the file and see that it is not a sub-directory */
 		  err = stat(filename, &filestat);

@@ -109,7 +109,7 @@ static ActionAreaItem action_items[2] =
   { N_("Reset"), transform_reset_callback, NULL, NULL },
 };
 
-static char *action_labels[4] =
+static const char *action_labels[4] =
 {
   N_("Rotate"),
   N_("Scale"),

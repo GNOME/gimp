@@ -297,19 +297,19 @@ ProcArg airbrush_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the drawable")
+    "the drawable"
   },
   { PDB_FLOAT,
     "pressure",
-    N_("The pressure of the airbrush strokes: 0 <= pressure <= 100")
+    "The pressure of the airbrush strokes: 0 <= pressure <= 100"
   },
   { PDB_INT32,
     "num_strokes",
-    N_("number of stroke control points (count each coordinate as 2 points)")
+    "number of stroke control points (count each coordinate as 2 points)"
   },
   { PDB_FLOATARRAY,
     "strokes",
-    N_("array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}")
+    "array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}"
   }
 };
 
@@ -317,8 +317,8 @@ ProcArg airbrush_args[] =
 ProcRecord airbrush_proc =
 {
   "gimp_airbrush",
-  N_("Paint in the current brush with varying pressure.  Paint application is time-dependent"),
-  N_("This tool simulates the use of an airbrush.  Paint pressure represents the relative intensity of the paint application.  High pressure results in a thicker layer of paint while low pressure results in a thinner layer."),
+  "Paint in the current brush with varying pressure.  Paint application is time-dependent",
+  "This tool simulates the use of an airbrush.  Paint pressure represents the relative intensity of the paint application.  High pressure results in a thicker layer of paint while low pressure results in a thinner layer.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

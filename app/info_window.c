@@ -136,11 +136,8 @@ info_window_create (void *gdisp_ptr)
   title = prune_filename (gimage_filename (gdisp->gimage));
   type = gimage_base_type (gdisp->gimage);
 
-  /*  allocate the title buffer  */
-  title_buf = (char *) g_malloc (sizeof (char) * (strlen (title) + 15));
-  sprintf (title_buf, _("%s: Window Info"), title);
-
   /*  create the info dialog  */
+  title_buf = g_strdup_printf (_("%s: Window Info"), title);
   info_win = info_dialog_new (title_buf);
   g_free (title_buf);
 
@@ -197,37 +194,37 @@ info_window_update (InfoDialog *info_win,
   iwd = (InfoWinData *) info_win->user_data;
 
   /*  width and height  */
-  sprintf (iwd->dimensions_str, "%d x %d",
+  g_snprintf (iwd->dimensions_str, MAX_BUF, "%d x %d",
 	   (int) gdisp->gimage->width, (int) gdisp->gimage->height);
 
   /*  image resolution  */
-  sprintf (iwd->resolution_str, "%g x %g dpi",
+  g_snprintf (iwd->resolution_str, MAX_BUF, "%g x %g dpi",
 	   gdisp->gimage->xresolution,
 	   gdisp->gimage->yresolution);
 
   /*  user zoom ratio  */
-  sprintf (iwd->scale_str, "%d:%d",
+  g_snprintf (iwd->scale_str, MAX_BUF, "%d:%d",
 	   SCALEDEST (gdisp), SCALESRC (gdisp));
 
   type = gimage_base_type (gdisp->gimage);
 
   /*  color type  */
   if (type == RGB)
-    sprintf (iwd->color_type_str, "%s", _("RGB Color"));
+    g_snprintf (iwd->color_type_str, MAX_BUF, "%s", _("RGB Color"));
   else if (type == GRAY)
-    sprintf (iwd->color_type_str, "%s", _("Grayscale"));
+    g_snprintf (iwd->color_type_str, MAX_BUF, "%s", _("Grayscale"));
   else if (type == INDEXED)
-    sprintf (iwd->color_type_str, "%s", _("Indexed Color"));
+    g_snprintf (iwd->color_type_str, MAX_BUF, "%s", _("Indexed Color"));
 
   /*  visual class  */
   if (type == RGB ||
       type == INDEXED)
-    sprintf (iwd->visual_class_str, "%s", visual_classes[g_visual->type]);
+    g_snprintf (iwd->visual_class_str, MAX_BUF, "%s", visual_classes[g_visual->type]);
   else if (type == GRAY)
-    sprintf (iwd->visual_class_str, "%s", visual_classes[g_visual->type]);
+    g_snprintf (iwd->visual_class_str, MAX_BUF, "%s", visual_classes[g_visual->type]);
 
   /*  visual depth  */
-  sprintf (iwd->visual_depth_str, "%d", gdisp->depth);
+  g_snprintf (iwd->visual_depth_str, MAX_BUF, "%d", gdisp->depth);
 
   /*  pure color shades  */
   get_shades (gdisp, iwd->shades_str);

@@ -204,23 +204,23 @@ ProcArg eraser_extended_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the drawable")
+    "the drawable"
   },
   { PDB_INT32,
     "num_strokes",
-    N_("number of stroke control points (count each coordinate as 2 points)")
+    "number of stroke control points (count each coordinate as 2 points)"
   },
   { PDB_FLOATARRAY,
     "strokes",
-    N_("array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}")
+    "array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}"
   },
   { PDB_INT32,
     "hardness",
-    N_("SOFT(0) or HARD(1)")
+    "SOFT(0) or HARD(1)"
   },
   { PDB_INT32,
     "method",
-    N_("CONTINUOUS(0) or INCREMENTAL(1)")
+    "CONTINUOUS(0) or INCREMENTAL(1)"
   }
 };
 
@@ -228,15 +228,15 @@ ProcArg eraser_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the drawable")
+    "the drawable"
   },
   { PDB_INT32,
     "num_strokes",
-    N_("number of stroke control points (count each coordinate as 2 points)")
+    "number of stroke control points (count each coordinate as 2 points)"
   },
   { PDB_FLOATARRAY,
     "strokes",
-    N_("array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}")
+    "array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}"
   }
 };
 
@@ -244,8 +244,8 @@ ProcArg eraser_args[] =
 ProcRecord eraser_proc =
 {
   "gimp_eraser",
-  N_("Erase using the current brush"),
-  N_("This tool erases using the current brush mask.  If the specified drawable contains an alpha channel, then the erased pixels will become transparent.  Otherwise, the eraser tool replaces the contents of the drawable with the background color.  Like paintbrush, this tool linearly interpolates between the specified stroke coordinates."),
+  "Erase using the current brush",
+  "This tool erases using the current brush mask.  If the specified drawable contains an alpha channel, then the erased pixels will become transparent.  Otherwise, the eraser tool replaces the contents of the drawable with the background color.  Like paintbrush, this tool linearly interpolates between the specified stroke coordinates.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -266,8 +266,8 @@ ProcRecord eraser_proc =
 ProcRecord eraser_extended_proc =
 {
   "gimp_eraser_extended",
-  N_("Erase using the current brush"),
-  N_("This tool erases using the current brush mask.  If the specified drawable contains an alpha channel, then the erased pixels will become transparent.  Otherwise, the eraser tool replaces the contents of the drawable with the background color.  Like paintbrush, this tool linearly interpolates between the specified stroke coordinates."),
+  "Erase using the current brush",
+  "This tool erases using the current brush mask.  If the specified drawable contains an alpha channel, then the erased pixels will become transparent.  Otherwise, the eraser tool replaces the contents of the drawable with the background color.  Like paintbrush, this tool linearly interpolates between the specified stroke coordinates.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

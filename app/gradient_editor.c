@@ -397,7 +397,7 @@ GSList     *gradients_list        = NULL; /* The list of gradients */
 gradient_t *grad_default_gradient = NULL;
 gradient_editor_t *g_editor       = NULL; /* The gradient editor */
 
-static char *blending_types[] = {
+static const char *blending_types[] = {
 	N_("Linear"),
 	N_("Curved"),
 	N_("Sinusoidal"),
@@ -405,7 +405,7 @@ static char *blending_types[] = {
 	N_("Spherical (decreasing)")
 }; /* blending_types */
 
-static char *coloring_types[] = {
+static const char *coloring_types[] = {
 	N_("Plain RGB"),
 	N_("HSV (counter-clockwise hue)"),
 	N_("HSV (clockwise hue)")
@@ -985,7 +985,7 @@ ed_create_button(gchar *label, double xalign, double yalign, GtkSignalFunc signa
 static void
 ed_set_hint(char *str)
 {
-	gtk_label_set(GTK_LABEL(g_editor->hint_label), str);
+	gtk_label_set(GTK_LABEL(g_editor->hint_label), gettext(str));
 	gdk_flush();
 } /* ed_set_hint */
 
@@ -1254,9 +1254,9 @@ ed_close_callback(GtkWidget *widget, gpointer client_data)
 static void
 ed_new_gradient_callback(GtkWidget *widget, gpointer client_data)
 {
-	query_string_box(_("New gradient"),
-			 _("Enter a name for the new gradient"),
-			 _("untitled"),
+	query_string_box(N_("New gradient"),
+			 N_("Enter a name for the new gradient"),
+			 N_("untitled"),
 			 ed_do_new_gradient_callback, NULL);
 } /* ed_new_gradient_callback */
 
@@ -1361,12 +1361,10 @@ ed_copy_gradient_callback(GtkWidget *widget, gpointer client_data)
 	if (curr_gradient == NULL) 
                return;
 
-	name = g_malloc((strlen(curr_gradient->name) + 6) * sizeof(char));
+	name = g_strdup_printf(_("%s copy"), curr_gradient->name);
 
-	sprintf(name, _("%s copy"), curr_gradient->name);
-
-	query_string_box(_("Copy gradient"),
-			 _("Enter a name for the copied gradient"),
+	query_string_box(N_("Copy gradient"),
+			 N_("Enter a name for the copied gradient"),
 			 name,
 			 ed_do_copy_gradient_callback, NULL);
 
@@ -1469,8 +1467,7 @@ ed_delete_gradient_callback(GtkWidget *widget, gpointer client_data)
 	gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
 	gtk_widget_show(label);
 
-	str = g_malloc((strlen(curr_gradient->name) + 32 * sizeof(char)));
-	sprintf(str, _("\"%s\" from the list and from disk?"), curr_gradient->name);
+	str = g_strdup_printf(_("\"%s\" from the list and from disk?"), curr_gradient->name);
 
 	label = gtk_label_new(str);
 	gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
@@ -1595,8 +1592,8 @@ ed_rename_grads_callback(GtkWidget *widget, gpointer client_data)
         if(curr_gradient == NULL)
 	  return;
 
-	query_string_box(_("Rename gradient"),
-			 _("Enter a new name for the gradient"),
+	query_string_box(N_("Rename gradient"),
+			 N_("Enter a new name for the gradient"),
 			 curr_gradient->name,
 			 ed_do_rename_gradient_callback, curr_gradient);
 }
@@ -1730,8 +1727,8 @@ ed_scrollbar_update(GtkAdjustment *adjustment, gpointer data)
 {
 	char           str[256];
 
-	sprintf(str, _("Zoom factor: %d:1    Displaying [%0.6f, %0.6f]"),
-		g_editor->zoom_factor, adjustment->value, adjustment->value + adjustment->page_size);
+	g_snprintf(str, sizeof(str), _("Zoom factor: %d:1    Displaying [%0.6f, %0.6f]"),
+		   g_editor->zoom_factor, adjustment->value, adjustment->value + adjustment->page_size);
 
 	ed_set_hint(str);
 
@@ -1934,11 +1931,11 @@ prev_set_hint(gint x)
 
 	calc_rgb_to_hsv(&h, &s, &v);
 
-	sprintf(str, _("Position: %0.6f    "
-		"RGB (%0.3f, %0.3f, %0.3f)    "
-		"HSV (%0.3f, %0.3f, %0.3f)    "
-		"Opacity: %0.3f"),
-		xpos, r, g, b, h * 360.0, s, v, a);
+	g_snprintf(str, sizeof(str), _("Position: %0.6f    "
+		   "RGB (%0.3f, %0.3f, %0.3f)    "
+		   "HSV (%0.3f, %0.3f, %0.3f)    "
+		   "Opacity: %0.3f"),
+		   xpos, r, g, b, h * 360.0, s, v, a);
 
 	ed_set_hint(str);
 } /* prev_set_hint */
@@ -1958,11 +1955,11 @@ prev_set_foreground(gint x)
 
 	palette_set_foreground(r * 255.0, g * 255.0, b * 255.0);
 
-	sprintf(str, _("Foreground color set to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"),
-		(int) (r * 255.0),
-		(int) (g * 255.0),
-		(int) (b * 255.0),
-		r, g, b);
+	g_snprintf(str, sizeof(str), _("Foreground color set to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"),
+		   (int) (r * 255.0),
+		   (int) (g * 255.0),
+		   (int) (b * 255.0),
+		   r, g, b);
 
 	ed_set_hint(str);
 } /* prev_set_foreground */
@@ -2247,16 +2244,16 @@ control_do_hint(gint x, gint y)
 			case GRAD_DRAG_LEFT:
 				if (seg != NULL) {
 					if (seg->prev != NULL)
-						ed_set_hint(_("Drag: move    Shift+drag: move & compress"));
+						ed_set_hint(N_("Drag: move    Shift+drag: move & compress"));
 					else
-						ed_set_hint(_("Click: select    Shift+click: extend selection"));
+						ed_set_hint(N_("Click: select    Shift+click: extend selection"));
 				} else
-					ed_set_hint(_("Click: select    Shift+click: extend selection"));
+					ed_set_hint(N_("Click: select    Shift+click: extend selection"));
 
 				break;
 
 			case GRAD_DRAG_MIDDLE:
-				ed_set_hint(_("Click: select    Shift+click: extend selection    "
+				ed_set_hint(N_("Click: select    Shift+click: extend selection    "
 					    "Drag: move"));
 
 				break;
@@ -2267,7 +2264,7 @@ control_do_hint(gint x, gint y)
 				break;
 		} /* switch */
 	} else
-		ed_set_hint(_("Click: select    Shift+click: extend selection    "
+		ed_set_hint(N_("Click: select    Shift+click: extend selection    "
 			    "Drag: move    Shift+drag: move & compress"));
 } /* control_do_hint */
 
@@ -2471,7 +2468,7 @@ control_motion(gint x)
 						      g_editor->control_sel_r,
 						      seg, pos);
 
-			sprintf(str, _("Handle position: %0.6f"), seg->left);
+			g_snprintf(str, sizeof(str), _("Handle position: %0.6f"), seg->left);
 			ed_set_hint(str);
 
 			break;
@@ -2480,7 +2477,7 @@ control_motion(gint x)
 			pos = control_calc_g_pos(x);
 			seg->middle = BOUNDS(pos, seg->left + EPSILON, seg->right - EPSILON);
 
-			sprintf(str, _("Handle position: %0.6f"), seg->middle);
+			g_snprintf(str, sizeof(str), _("Handle position: %0.6f"), seg->middle);
 			ed_set_hint(str);
 
 			break;
@@ -2497,7 +2494,7 @@ control_motion(gint x)
 
 			g_editor->control_last_gx += delta;
 
-			sprintf(str, _("Distance: %0.6f"),
+			g_snprintf(str, sizeof(str), _("Distance: %0.6f"),
 				g_editor->control_last_gx - g_editor->control_orig_pos);
 			ed_set_hint(str);
 
@@ -3682,7 +3679,7 @@ cpopup_update_saved_color(int n, double r, double g, double b, double a)
 	cpopup_render_color_box(GTK_PREVIEW(g_editor->right_save_color_boxes[n]),
 				r, g, b, a);
 
-	sprintf(str, _("RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"), r, g, b, a);
+	g_snprintf(str, sizeof(str), _("RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"), r, g, b, a);
 
 	gtk_label_set(GTK_LABEL(g_editor->left_load_labels[n + 3]), str);
 	gtk_label_set(GTK_LABEL(g_editor->left_save_labels[n]), str);
@@ -4284,7 +4281,7 @@ cpopup_set_left_color_callback(GtkWidget *widget, gpointer data)
 	g_editor->left_saved_dirty    = curr_gradient->dirty;
 	g_editor->left_saved_segments = cpopup_save_selection();
 
-	cpopup_create_color_dialog(_("Left endpoint color"),
+	cpopup_create_color_dialog(_("Left endpoint's color"),
 				   g_editor->control_sel_l->r0,
 				   g_editor->control_sel_l->g0,
 				   g_editor->control_sel_l->b0,
@@ -4385,7 +4382,7 @@ cpopup_set_right_color_callback(GtkWidget *widget, gpointer data)
 	g_editor->right_saved_dirty    = curr_gradient->dirty;
 	g_editor->right_saved_segments = cpopup_save_selection();
 
-	cpopup_create_color_dialog(_("Right endpoint color"),
+	cpopup_create_color_dialog(_("Right endpoint's color"),
 				   g_editor->control_sel_r->r1,
 				   g_editor->control_sel_r->g1,
 				   g_editor->control_sel_r->b1,
@@ -5978,15 +5975,12 @@ build_user_filename(char *name, char *path_str)
 
 	if (token) {
 		if (*token == '~') {
-			path = g_malloc(strlen(home) + strlen(token) + 1);
-			sprintf(path, "%s%s", home, token + 1);
+			path = g_strdup_printf("%s%s", home, token + 1);
 		} else {
-			path = g_malloc(strlen(token) + 1);
-			strcpy(path, token);
+			path = g_strdup(token);
 		} /* else */
 
-		filename = g_malloc(strlen(path) + strlen(name) + 2);
-		sprintf(filename, "%s/%s", path, name);
+		filename = g_strdup_printf(filename, "%s/%s", path, name);
 
 		g_free(path);
 	} /* if */

@@ -153,47 +153,47 @@ ProcArg ellipse_select_args[] =
 {
   { PDB_IMAGE,
     "image",
-    N_("the image")
+    "the image"
   },
   { PDB_FLOAT,
     "x",
-    N_("x coordinate of upper-left corner of ellipse bounding box")
+    "x coordinate of upper-left corner of ellipse bounding box"
   },
   { PDB_FLOAT,
     "y",
-    N_("y coordinate of upper-left corner of ellipse bounding box")
+    "y coordinate of upper-left corner of ellipse bounding box"
   },
   { PDB_FLOAT,
     "width",
-    N_("the width of the ellipse: width > 0")
+    "the width of the ellipse: width > 0"
   },
   { PDB_FLOAT,
     "height",
-    N_("the height of the ellipse: height > 0")
+    "the height of the ellipse: height > 0"
   },
   { PDB_INT32,
     "operation",
-    N_("the selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }")
+    "the selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }"
   },
   { PDB_INT32,
     "antialias",
-    N_("antialiasing On/Off")
+    "antialiasing On/Off"
   },
   { PDB_INT32,
     "feather",
-    N_("feather option for selections")
+    "feather option for selections"
   },
   { PDB_FLOAT,
     "feather_radius",
-    N_("radius for feather operation")
+    "radius for feather operation"
   }
 };
 
 ProcRecord ellipse_select_proc =
 {
   "gimp_ellipse_select",
-  N_("Create an elliptical selection over the specified image"),
-  N_("This tool creates an elliptical selection over the specified image.  The elliptical region can be either added to, subtracted from, or replace the contents of the previous selection mask.  If antialiasing is turned on, the edges of the elliptical region will contain intermediate values which give the appearance of a sharper, less pixelized edge.  This should be set as TRUE most of the time.  If the feather option is enabled, the resulting selection is blurred before combining.  The blur is a gaussian blur with the specified feather radius."),
+  "Create an elliptical selection over the specified image",
+  "This tool creates an elliptical selection over the specified image.  The elliptical region can be either added to, subtracted from, or replace the contents of the previous selection mask.  If antialiasing is turned on, the edges of the elliptical region will contain intermediate values which give the appearance of a sharper, less pixelized edge.  This should be set as TRUE most of the time.  If the feather option is enabled, the resulting selection is blurred before combining.  The blur is a gaussian blur with the specified feather radius.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

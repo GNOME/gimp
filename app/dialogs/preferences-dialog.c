@@ -722,7 +722,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   GtkWidget *table;
   GtkAdjustment *adj;
   GSList *group;
-  char *transparencies[] =
+  static const char *transparencies[] =
   {
     N_("Light Checks"),
     N_("Mid-Tone Checks"),
@@ -731,13 +731,13 @@ file_pref_cmd_callback (GtkWidget *widget,
     N_("Gray Only"),
     N_("Black Only"),
   };
-  char *checks[] =
+  static const char *checks[] =
   {
     N_("Small Checks"),
     N_("Medium Checks"),
     N_("Large Checks"),
   };
-  int transparency_vals[] =
+  static const int transparency_vals[] =
   {
     LIGHT_CHECKS,
     GRAY_CHECKS,
@@ -746,13 +746,13 @@ file_pref_cmd_callback (GtkWidget *widget,
     GRAY_ONLY,
     BLACK_ONLY,
   };
-  int check_vals[] =
+  static const int check_vals[] =
   {
     SMALL_CHECKS,
     MEDIUM_CHECKS,
     LARGE_CHECKS,
   };
-  struct {
+  static const struct {
     char *label;
     int unit;
   } mem_size_units[] =
@@ -761,7 +761,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       {N_("KiloBytes"), 1024},
       {N_("MegaBytes"), (1024*1024)}
     };
-  struct {
+  static const struct {
     char *label;
     char **mpath;
   } dirs[] =
@@ -774,7 +774,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       {N_("Palette dir:"), &edit_palette_path},
       {N_("Plug-in dir:"), &edit_plug_in_path}
     };
-  struct {
+  static const struct {
     char *label;
     int size;
   } preview_sizes[] =
@@ -1004,7 +1004,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       menu = gtk_menu_new ();
       for (i = 0; i < npreview_sizes; i++)
         {
-          menuitem = gtk_menu_item_new_with_label (preview_sizes[i].label);
+          menuitem = gtk_menu_item_new_with_label (gettext(preview_sizes[i].label));
 	  gtk_menu_append (GTK_MENU (menu), menuitem);
 	  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			      (GtkSignalFunc) file_prefs_preview_size_callback,
@@ -1434,8 +1434,8 @@ file_pref_cmd_callback (GtkWidget *widget,
 
 	  gdisplay_xserver_resolution (&xres, &yres);
 
-	  sprintf (buf, _("(currently %d x %d dpi)"),
-		   (int)(xres + 0.5), (int)(yres + 0.5));
+	  g_snprintf (buf, sizeof(buf), _("(currently %d x %d dpi)"),
+		      (int)(xres + 0.5), (int)(yres + 0.5));
 	  label = gtk_label_new (buf);
 	  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 	  gtk_widget_show (label);

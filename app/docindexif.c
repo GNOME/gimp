@@ -99,8 +99,7 @@ GtkWidget *create_idea_toolbar()
 
 gchar *append2( gchar *string1, gboolean del1, gchar *string2, gboolean del2)
 {
-  gchar *newstring = g_malloc( strlen( string1 ) + strlen( string2 ) + 1 );
-  sprintf( newstring, "%s%s", string1, string2 );
+  gchar *newstring = g_strconcat( string1, string2, NULL );
   if ( del1 )
     g_free( string1 );
   if ( del2 )

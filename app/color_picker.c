@@ -383,51 +383,57 @@ color_picker_info_update (Tool *tool,
 {
   if (!valid)
     {
-      sprintf (red_buf, _("N/A"));
-      sprintf (green_buf, _("N/A"));
-      sprintf (blue_buf, _("N/A"));
-      sprintf (alpha_buf, _("N/A"));
-      sprintf (index_buf, _("N/A"));
-      sprintf (gray_buf, _("N/A"));
-      sprintf (hex_buf, _("N/A"));
+      g_snprintf (red_buf, MAX_INFO_BUF, _("N/A"));
+      g_snprintf (green_buf, MAX_INFO_BUF, _("N/A"));
+      g_snprintf (blue_buf, MAX_INFO_BUF, _("N/A"));
+      g_snprintf (alpha_buf, MAX_INFO_BUF, _("N/A"));
+      g_snprintf (index_buf, MAX_INFO_BUF, _("N/A"));
+      g_snprintf (gray_buf, MAX_INFO_BUF, _("N/A"));
+      g_snprintf (hex_buf, MAX_INFO_BUF, _("N/A"));
     }
   else
     {
       switch (sample_type)
 	{
 	case RGB_GIMAGE: case RGBA_GIMAGE:
-	  sprintf (red_buf, "%d", col_value [RED_PIX]);
-	  sprintf (green_buf, "%d", col_value [GREEN_PIX]);
-	  sprintf (blue_buf, "%d", col_value [BLUE_PIX]);
+	  g_snprintf (red_buf, MAX_INFO_BUF, "%d", col_value [RED_PIX]);
+	  g_snprintf (green_buf, MAX_INFO_BUF, "%d", col_value [GREEN_PIX]);
+	  g_snprintf (blue_buf, MAX_INFO_BUF, "%d", col_value [BLUE_PIX]);
 	  if (sample_type == RGBA_GIMAGE)
-	    sprintf (alpha_buf, "%d", col_value [ALPHA_PIX]);
+	    g_snprintf (alpha_buf, MAX_INFO_BUF, "%d", col_value [ALPHA_PIX]);
 	  else
-	    sprintf (alpha_buf, _("N/A"));
-	  sprintf (hex_buf, "#%.2x%.2x%.2x", col_value [RED_PIX],
-		   col_value [GREEN_PIX], col_value [BLUE_PIX]);
+	    g_snprintf (alpha_buf, MAX_INFO_BUF, _("N/A"));
+	  g_snprintf (hex_buf, MAX_INFO_BUF, "#%.2x%.2x%.2x",
+		      col_value [RED_PIX],
+		      col_value [GREEN_PIX],
+		      col_value [BLUE_PIX]);
 	  break;
 
 	case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
-	  sprintf (index_buf, "%d", col_value [4]);
+	  g_snprintf (index_buf, MAX_INFO_BUF, "%d", col_value [4]);
 	  if (sample_type == INDEXEDA_GIMAGE)
-	    sprintf (alpha_buf, "%d", col_value [ALPHA_PIX]);
+	    g_snprintf (alpha_buf, MAX_INFO_BUF, "%d", col_value [ALPHA_PIX]);
 	  else
-	    sprintf (alpha_buf, _("N/A"));
-	  sprintf (red_buf, "%d", col_value [RED_PIX]);
-	  sprintf (green_buf, "%d", col_value [GREEN_PIX]);
-	  sprintf (blue_buf, "%d", col_value [BLUE_PIX]);
-	  sprintf (hex_buf, "#%.2x%.2x%.2x", col_value [RED_PIX],
-		   col_value [GREEN_PIX], col_value [BLUE_PIX]);
+	    g_snprintf (alpha_buf, MAX_INFO_BUF, _("N/A"));
+	  g_snprintf (red_buf, MAX_INFO_BUF, "%d", col_value [RED_PIX]);
+	  g_snprintf (green_buf, MAX_INFO_BUF, "%d", col_value [GREEN_PIX]);
+	  g_snprintf (blue_buf, MAX_INFO_BUF, "%d", col_value [BLUE_PIX]);
+	  g_snprintf (hex_buf, MAX_INFO_BUF, "#%.2x%.2x%.2x",
+		      col_value [RED_PIX],
+		      col_value [GREEN_PIX],
+		      col_value [BLUE_PIX]);
 	  break;
 
 	case GRAY_GIMAGE: case GRAYA_GIMAGE:
-	  sprintf (gray_buf, "%d", col_value [GRAY_PIX]);
+	  g_snprintf (gray_buf, MAX_INFO_BUF, "%d", col_value [GRAY_PIX]);
 	  if (sample_type == GRAYA_GIMAGE)
-	    sprintf (alpha_buf, "%d", col_value [ALPHA_PIX]);
+	    g_snprintf (alpha_buf, MAX_INFO_BUF, "%d", col_value [ALPHA_PIX]);
 	  else
-	    sprintf (alpha_buf, _("N/A"));
-	  sprintf (hex_buf, "#%.2x%.2x%.2x", col_value [GRAY_PIX],
-		   col_value [GRAY_PIX], col_value [GRAY_PIX]);
+	    g_snprintf (alpha_buf, MAX_INFO_BUF, _("N/A"));
+	  g_snprintf (hex_buf, MAX_INFO_BUF, "#%.2x%.2x%.2x",
+		      col_value [GRAY_PIX],
+		      col_value [GRAY_PIX],
+		      col_value [GRAY_PIX]);
 	  break;
 	}
     }
@@ -477,23 +483,23 @@ ProcArg color_picker_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the drawable")
+    "the drawable"
   },
   { PDB_FLOAT,
     "x",
-    N_("x coordinate of upper-left corner of rectangle")
+    "x coordinate of upper-left corner of rectangle"
   },
   { PDB_FLOAT,
     "y",
-    N_("y coordinate of upper-left corner of rectangle")
+    "y coordinate of upper-left corner of rectangle"
   },
   { PDB_INT32,
     "sample_merged",
-    N_("use the composite image, not the drawable")
+    "use the composite image, not the drawable"
   },
   { PDB_INT32,
     "save_color",
-    N_("save the color to the active palette")
+    "save the color to the active palette"
   }
 };
 
@@ -501,15 +507,15 @@ ProcArg color_picker_out_args[] =
 {
   { PDB_COLOR,
     "color",
-    N_("the return color")
+    "the return color"
   }
 };
 
 ProcRecord color_picker_proc =
 {
   "gimp_color_picker",
-  N_("Determine the color at the given drawable coordinates"),
-  N_("This tool determines the color at the specified coordinates.  The returned color is an RGB triplet even for grayscale and indexed drawables.  If the coordinates lie outside of the extents of the specified drawable, then an error is returned.  If the drawable has an alpha channel, the algorithm examines the alpha value of the drawable at the coordinates.  If the alpha value is completely transparent (0), then an error is returned.  If the sample_merged parameter is non-zero, the data of the composite image will be used instead of that for the specified drawable.  This is equivalent to sampling for colors after merging all visible layers.  In the case of a merged sampling, the supplied drawable is ignored."),
+  "Determine the color at the given drawable coordinates",
+  "This tool determines the color at the specified coordinates.  The returned color is an RGB triplet even for grayscale and indexed drawables.  If the coordinates lie outside of the extents of the specified drawable, then an error is returned.  If the drawable has an alpha channel, the algorithm examines the alpha value of the drawable at the coordinates.  If the alpha value is completely transparent (0), then an error is returned.  If the sample_merged parameter is non-zero, the data of the composite image will be used instead of that for the specified drawable.  This is equivalent to sampling for colors after merging all visible layers.  In the case of a merged sampling, the supplied drawable is ignored.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

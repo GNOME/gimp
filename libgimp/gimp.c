@@ -887,7 +887,7 @@ gimp_gtkrc ()
   if (!home_dir)
     return NULL;
 
-  sprintf (filename, "%s/%s/gtkrc", home_dir, GIMPDIR);
+  g_snprintf (filename, MAXPATHLEN, "%s/%s/gtkrc", home_dir, GIMPDIR);
 
   return filename;
 }

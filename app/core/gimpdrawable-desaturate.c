@@ -118,15 +118,15 @@ ProcArg desaturate_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the drawable")
+    "the drawable"
   }
 };
 
 ProcRecord desaturate_proc =
 {
   "gimp_desaturate",
-  N_("Desaturate the contents of the specified drawable"),
-  N_("This procedure desaturates the contents of the specified drawable.  This procedure only works on drawables of type RGB color."),
+  "Desaturate the contents of the specified drawable",
+  "This procedure desaturates the contents of the specified drawable.  This procedure only works on drawables of type RGB color.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

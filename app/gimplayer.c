@@ -300,19 +300,22 @@ layer_copy (layer, add_alpha)
   char *ext;
   int number;
   char *name;
+  int len;
   PixelRegion srcPR, destPR;
 
   /*  formulate the new layer name  */
   name = layer_get_name(layer);
   ext = strrchr(name, '#');
-  layer_name = (char *) g_malloc (strlen (name) + 6);
-  if ((strlen(name) >= 4 &&  strcmp(&name[strlen(name) -4], _("copy")) == 0) ||
-      (ext && (number = atoi(ext+1)) > 0 && 
-       ((int)(log10(number) + 1)) == strlen(ext+1)))
-    /* don't have rudundant "copy"s */
-    sprintf (layer_name, "%s", name);
+  len = strlen (_("copy"));
+  if ((strlen(name) >= len &&
+       strcmp(&name[strlen(name) - len], _("copy")) == 0) ||
+      (ext && (number = atoi(ext + 1)) > 0 && 
+       ((int)(log10(number) + 1)) == strlen(ext + 1)))
+    /* don't have redundant "copy"s */
+    layer_name = g_strdup (name);
   else
-    sprintf (layer_name, _("%s copy"), name);
+    layer_name = g_strdup_printf (_("%s copy"), name);
+
   /*  when copying a layer, the copy ALWAYS has an alpha channel  */
   if (add_alpha)
     {
@@ -473,8 +476,7 @@ layer_create_mask (layer, add_mask_type)
   unsigned char white_mask = OPAQUE_OPACITY;
   unsigned char black_mask = TRANSPARENT_OPACITY;
 
-  mask_name = (char *) g_malloc (strlen (GIMP_DRAWABLE(layer)->name) + strlen (_("mask")) + 2);
-  sprintf (mask_name, _("%s mask"), GIMP_DRAWABLE(layer)->name);
+  mask_name = g_strdup_printf (_("%s mask"), GIMP_DRAWABLE(layer)->name);
 
   /*  Create the layer mask  */
   mask = layer_mask_new (GIMP_DRAWABLE(layer)->gimage, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height,
@@ -1426,8 +1428,7 @@ layer_mask_copy (LayerMask *layer_mask)
   PixelRegion srcPR, destPR;
 
   /*  formulate the new layer_mask name  */
-  layer_mask_name = (char *) g_malloc (strlen (GIMP_DRAWABLE(layer_mask)->name) + 6);
-  sprintf (layer_mask_name, _("%s copy"), GIMP_DRAWABLE(layer_mask)->name);
+  layer_mask_name = g_strdup_printf (_("%s copy"), GIMP_DRAWABLE(layer_mask)->name);
 
   /*  allocate a new layer_mask object  */
   new_layer_mask = layer_mask_new (GIMP_DRAWABLE(layer_mask)->gimage, 

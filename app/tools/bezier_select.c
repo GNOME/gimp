@@ -2116,7 +2116,7 @@ void create_choice(GtkWidget *box)
   gtk_box_pack_start(GTK_BOX(box), hbox, TRUE, FALSE, 10);
   gtk_widget_show(hbox);
   
-  w = gtk_label_new(_("Mode :"));
+  w = gtk_label_new(_("Mode:"));
   gtk_misc_set_alignment(GTK_MISC(w), 0.0, 0.5);
   gtk_box_pack_start(GTK_BOX(hbox), w, FALSE, FALSE, 0);
   gtk_widget_show(w);

@@ -1020,31 +1020,31 @@ ProcArg crop_args[] =
 {
   { PDB_IMAGE,
     "image",
-    N_("the image")
+    "the image"
   },
   { PDB_INT32,
     "new_width",
-    N_("new image width: (0 < new_width <= width)")
+    "new image width: (0 < new_width <= width)"
   },
   { PDB_INT32,
     "new_height",
-    N_("new image height: (0 < new_height <= height)")
+    "new image height: (0 < new_height <= height)"
   },
   { PDB_INT32,
     "offx",
-    N_("x offset: (0 <= offx <= (width - new_width))")
+    "x offset: (0 <= offx <= (width - new_width))"
   },
   { PDB_INT32,
     "offy",
-    N_("y offset: (0 <= offy <= (height - new_height))")
+    "y offset: (0 <= offy <= (height - new_height))"
   }
 };
 
 ProcRecord crop_proc =
 {
   "gimp_crop",
-  N_("Crop the image to the specified extents."),
-  N_("This procedure crops the image so that it's new width and height are equal to the supplied parameters.  Offsets are also provided which describe the position of the previous image's content.  All channels and layers within the image are cropped to the new image extents; this includes the image selection mask.  If any parameters are out of range, an error is returned."),
+  "Crop the image to the specified extents.",
+  "This procedure crops the image so that it's new width and height are equal to the supplied parameters.  Offsets are also provided which describe the position of the previous image's content.  All channels and layers within the image are cropped to the new image extents; this includes the image selection mask.  If any parameters are out of range, an error is returned.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

@@ -89,7 +89,7 @@ static void        free_paint_buffers     (void);
 #define KERNEL_HEIGHT  3
 
 /*  Brush pixel subsampling kernels  */
-static int subsample[5][5][9] = {
+static const int subsample[5][5][9] = {
 	{
 		{ 64, 64, 0, 64, 64, 0, 0, 0, 0, },
 		{ 32, 96, 0, 32, 96, 0, 0, 0, 0, },
@@ -780,9 +780,9 @@ paint_core_subsample_mask (mask, x, y)
   MaskBuf * dest;
   double left;
   unsigned char * m, * d;
-  int * k;
+  const int * k;
   int index1, index2;
-  int * kernel;
+  const int * kernel;
   int new_val;
   int i, j;
   int r, s;

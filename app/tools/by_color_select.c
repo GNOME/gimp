@@ -973,43 +973,43 @@ ProcArg by_color_select_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the drawable")
+    "the drawable"
   },
   { PDB_COLOR,
     "color",
-    N_("the color to select")
+    "the color to select"
   },
   { PDB_INT32,
     "threshold",
-    N_("threshold in intensity levels: 0 <= threshold <= 255")
+    "threshold in intensity levels: 0 <= threshold <= 255"
   },
   { PDB_INT32,
     "operation",
-    N_("the selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }")
+    "the selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }"
   },
   { PDB_INT32,
     "antialias",
-    N_("antialiasing On/Off")
+    "antialiasing On/Off"
   },
   { PDB_INT32,
     "feather",
-    N_("feather option for selections")
+    "feather option for selections"
   },
   { PDB_FLOAT,
     "feather_radius",
-    N_("radius for feather operation")
+    "radius for feather operation"
   },
   { PDB_INT32,
     "sample_merged",
-    N_("use the composite image, not the drawable")
+    "use the composite image, not the drawable"
   }
 };
 
 ProcRecord by_color_select_proc =
 {
   "gimp_by_color_select",
-  N_("Create a selection by selecting all pixels (in the specified drawable) with the same (or similar) color to that specified."),
-  N_("This tool creates a selection over the specified image.  A by-color selection is determined by the supplied color under the constraints of the specified threshold.  Essentially, all pixels (in the drawable) that have color sufficiently close to the specified color (as determined by the threshold value) are included in the selection.  The antialiasing parameter allows the final selection mask to contain intermediate values based on close misses to the threshold bar.  Feathering can be enabled optionally and is controlled with the \"feather_radius\" paramter.  If the sample_merged parameter is non-zero, the data of the composite image will be used instead of that for the specified drawable.  This is equivalent to sampling for colors after merging all visible layers.  In the case of a merged sampling, the supplied drawable is ignored."),
+  "Create a selection by selecting all pixels (in the specified drawable) with the same (or similar) color to that specified.",
+  "This tool creates a selection over the specified image.  A by-color selection is determined by the supplied color under the constraints of the specified threshold.  Essentially, all pixels (in the drawable) that have color sufficiently close to the specified color (as determined by the threshold value) are included in the selection.  The antialiasing parameter allows the final selection mask to contain intermediate values based on close misses to the threshold bar.  Feathering can be enabled optionally and is controlled with the \"feather_radius\" paramter.  If the sample_merged parameter is non-zero, the data of the composite image will be used instead of that for the specified drawable.  This is equivalent to sampling for colors after merging all visible layers.  In the case of a merged sampling, the supplied drawable is ignored.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

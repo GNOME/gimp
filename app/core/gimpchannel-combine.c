@@ -179,18 +179,20 @@ channel_copy (Channel *channel)
   char *ext;
   int number;
   char *name;
+  int len;
 
   /*  formulate the new channel name  */
   name = channel_get_name(channel);
   ext = strrchr(name, '#');
-  channel_name = (char *) g_malloc (strlen (name) + 6);
-  if ((strlen(name) >= 4 &&  strcmp(&name[strlen(name) -4], _("copy")) == 0) ||
-      (ext && (number = atoi(ext+1)) > 0 && 
-       ((int)(log10(number) + 1)) == strlen(ext+1)))
-    /* don't have rudundant "copy"s */
-    sprintf (channel_name, "%s", name);
+  len = strlen (_("copy"));
+  if ((strlen(name) >= len &&
+       strcmp(&name[strlen(name) - len], _("copy")) == 0) ||
+      (ext && (number = atoi(ext + 1)) > 0 && 
+       ((int)(log10(number) + 1)) == strlen(ext + 1)))
+    /* don't have redundant "copy"s */
+    channel_name = g_strdup (name);
   else
-    sprintf (channel_name, _("%s copy"), name);
+    channel_name = g_strdup_printf (_("%s copy"), name);
 
   /*  allocate a new channel object  */
   new_channel = channel_new (GIMP_DRAWABLE(channel)->gimage, 

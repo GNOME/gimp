@@ -404,11 +404,8 @@ mask_buf_data (mask_buf)
  *    temp bufs are not cached in memory at all, they go right to disk.
  */
 
-#define MAX_FILENAME    2048
-
 /*  a static counter for generating unique filenames  */
 static int swap_index = 0;
-static char filename_buf[MAX_FILENAME];
 
 /*  a static pointer which keeps track of the last request for a swapped buffer  */
 static TempBuf * cached_in_memory = NULL;
@@ -418,12 +415,8 @@ static char *
 generate_unique_filename (void)
 {
   pid_t pid;
-
   pid = getpid ();
-
-  sprintf (filename_buf, "%s/gimp%d.%d", temp_path, (int) pid, swap_index++);
-
-  return g_strdup (filename_buf);
+  return g_strdup_printf ("%s/gimp%d.%d", temp_path, (int) pid, swap_index++);
 }
 
 

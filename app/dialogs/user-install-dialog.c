@@ -419,9 +419,9 @@ install_run (InstallCallback callback)
 
   /*  Generate output  */
   if ((gimp_data_dir = getenv ("GIMP_DATADIR")) != NULL)
-    sprintf (buffer, "%s/user_install", gimp_data_dir);
+    g_snprintf (buffer, sizeof(buffer), "%s/user_install", gimp_data_dir);
   else
-    sprintf (buffer, "%s/user_install", DATADIR);
+    g_snprintf (buffer, sizeof(buffer), "%s/user_install", DATADIR);
 
   if ((err = stat (buffer, &stat_buf)) != 0)
     {
@@ -441,11 +441,11 @@ install_run (InstallCallback callback)
   if (executable == TRUE)
     {
       if (gimp_data_dir)
-	sprintf (buffer, "%s/user_install %s %s", gimp_data_dir, gimp_data_dir,
-		 gimp_directory ());
+	g_snprintf (buffer, sizeof(buffer), "%s/user_install %s %s",
+		    gimp_data_dir, gimp_data_dir, gimp_directory ());
       else
-	sprintf (buffer, "%s/user_install %s %s", DATADIR, DATADIR,
-		 gimp_directory ());
+	g_snprintf (buffer, sizeof(buffer), "%s/user_install %s %s",
+		    DATADIR, DATADIR, gimp_directory ());
 
       if ((pfp = popen (buffer, "r")) != NULL)
 	{

@@ -2917,15 +2917,15 @@ ProcArg convert_rgb_args[] =
 {
   { PDB_IMAGE,
     "image",
-    N_("the image")
+    "the image"
   }
 };
 
 ProcRecord convert_rgb_proc =
 {
   "gimp_convert_rgb",
-  N_("Convert specified image to RGB color"),
-  N_("This procedure converts the specified image to RGB color.  This process requires an image of type GRAY or INDEXED.  No image content is lost in this process aside from the colormap for an indexed image."),
+  "Convert specified image to RGB color",
+  "This procedure converts the specified image to RGB color.  This process requires an image of type GRAY or INDEXED.  No image content is lost in this process aside from the colormap for an indexed image.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -2975,15 +2975,15 @@ ProcArg convert_grayscale_args[] =
 {
   { PDB_IMAGE,
     "image",
-    N_("the image")
+    "the image"
   }
 };
 
 ProcRecord convert_grayscale_proc =
 {
   "gimp_convert_grayscale",
-  N_("Convert specified image to grayscale (256 intensity levels)"),
-  N_("This procedure converts the specified image to grayscale with 8 bits per pixel (256 intensity levels).  This process requires an image of type RGB or INDEXED."),
+  "Convert specified image to grayscale (256 intensity levels)",
+  "This procedure converts the specified image to grayscale with 8 bits per pixel (256 intensity levels).  This process requires an image of type RGB or INDEXED.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -3033,23 +3033,23 @@ ProcArg convert_indexed_args[] =
 {
   { PDB_IMAGE,
     "image",
-    N_("the image")
+    "the image"
   },
   { PDB_INT32,
     "dither",
-    N_("Floyd-Steinberg dithering")
+    "Floyd-Steinberg dithering"
   },
   { PDB_INT32,
     "num_cols",
-    N_("the number of colors to quantize to")
+    "the number of colors to quantize to"
   }
 };
 
 ProcRecord convert_indexed_proc =
 {
   "gimp_convert_indexed",
-  N_("Convert specified image to indexed color"),
-  N_("This procedure converts the specified image to indexed color.  This process requires an image of type GRAY or RGB.  The 'num_cols' arguments specifies how many colors the resulting image should be quantized to (1-256)."),
+  "Convert specified image to indexed color",
+  "This procedure converts the specified image to indexed color.  This process requires an image of type GRAY or RGB.  The 'num_cols' arguments specifies how many colors the resulting image should be quantized to (1-256).",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -3109,31 +3109,31 @@ ProcArg convert_indexed_palette_args[] =
 {
   { PDB_IMAGE,
     "image",
-    N_("the image")
+    "the image"
   },
   { PDB_INT32,
     "dither",
-    N_("Floyd-Steinberg dithering")
+    "Floyd-Steinberg dithering"
   },
   { PDB_INT32,
     "palette_type",
-    N_("The type of palette to use, (0 optimal) (1 reuse) (2 WWW) (3 Mono) (4 Custom)")
+    "The type of palette to use, (0 optimal) (1 reuse) (2 WWW) (3 Mono) (4 Custom)"
   },
   { PDB_INT32,
     "num_cols",
-    N_("the number of colors to quantize to, ignored unless (palette_type == 0)")
+    "the number of colors to quantize to, ignored unless (palette_type == 0)"
   },
   { PDB_STRING,
     "palette",
-    N_("The name of the custom palette to use, ignored unless (palette_type == 4)")
+    "The name of the custom palette to use, ignored unless (palette_type == 4)"
   }
 };
 
 ProcRecord convert_indexed_palette_proc =
 {
   "gimp_convert_indexed_palette",
-  N_("Convert specified image to indexed color"),
-  N_("This procedure converts the specified image to indexed color.  This process requires an image of type GRAY or RGB.  The `palette_type' specifies what kind of palette to use, A type of `0' means to use an optimal palette of `num_cols' generated from the colors in the image.  A type of `1' means to re-use the previous palette.  A type of `2' means to use the WWW-optimized palette.  Type `3' means to use only black and white colors.  A type of `4' means to use a palette from the gimp palettes directories."),
+  "Convert specified image to indexed color",
+  "This procedure converts the specified image to indexed color.  This process requires an image of type GRAY or RGB.  The `palette_type' specifies what kind of palette to use, A type of `0' means to use an optimal palette of `num_cols' generated from the colors in the image.  A type of `1' means to re-use the previous palette.  A type of `2' means to use the WWW-optimized palette.  Type `3' means to use only black and white colors.  A type of `4' means to use a palette from the gimp palettes directories.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -3195,7 +3195,7 @@ convert_indexed_palette_invoker (Argument *args)
 		  break;
 		  case CUSTOM_PALETTE:
           palette_name = args[4].value.pdb_pointer;
- /*         fprintf(stderr, _("looking for palette `%s'\n"), palette_name); */
+ /*         fprintf(stderr, "looking for palette `%s'\n", palette_name); */
           if (!palette_entries_list) palette_init_palettes(FALSE);
 		    for(list = palette_entries_list;
               list;

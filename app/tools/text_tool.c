@@ -813,7 +813,6 @@ text_size_multiply(char **fontname, int mul)
   char *end;
   int pixel = -1;
   int point = -1;
-  int length;
   char new_pixel[12];
   char new_point[12];
 
@@ -846,16 +845,7 @@ do {						\
   TO_TXT(point);
 #undef TO_TXT
 
-  /* careful you don't overrun the allocation */
-  length =
-      strlen(*fontname) + 1 +
-      strlen(new_pixel) + 1 + strlen(new_point) + strlen(end) + 1/*null-term*/;
-
-  newfont = g_malloc(length);
-
-  /* DON'T change this string without changing the length calculation
-   * above */
-  sprintf(newfont, "%s-%s-%s%s", *fontname, new_pixel, new_point, end);
+  newfont = g_strdup_printf("%s-%s-%s%s", *fontname, new_pixel, new_point, end);
 
   g_free(*fontname);
 

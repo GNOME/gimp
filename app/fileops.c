@@ -114,21 +114,21 @@ static GtkWidget *save_options = NULL;
  */
 static ProcArg file_load_args[] =
 {
-  { PDB_INT32, "run_mode", N_("Interactive, non-interactive.") },
-  { PDB_STRING, "filename", N_("The name of the file to load.") },
-  { PDB_STRING, "raw_filename", N_("The name entered.") },
+  { PDB_INT32, "run_mode", "Interactive, non-interactive." },
+  { PDB_STRING, "filename", "The name of the file to load." },
+  { PDB_STRING, "raw_filename", "The name entered." },
 };
 
 static ProcArg file_load_return_vals[] =
 {
-  { PDB_IMAGE, "image", N_("Output image.") },
+  { PDB_IMAGE, "image", "Output image." },
 };
 
 static ProcRecord file_load_proc =
 {
   "gimp_file_load",
-  N_("Loads a file by extension"),
-  N_("This procedure invokes the correct file load handler according to the file's extension and/or prefix.  The name of the file to load is typically a full pathname, and the name entered is what the user actually typed before prepending a directory path.  The reason for this is that if the user types http://www.xcf/~gimp he wants to fetch a URL, and the full pathname will not look like a URL."),
+  "Loads a file by extension",
+  "This procedure invokes the correct file load handler according to the file's extension and/or prefix.  The name of the file to load is typically a full pathname, and the name entered is what the user actually typed before prepending a directory path.  The reason for this is that if the user types http://www.xcf/~gimp he wants to fetch a URL, and the full pathname will not look like a URL.",
   "Josh MacDonald",
   "Josh MacDonald",
   "1997",
@@ -144,18 +144,18 @@ static ProcRecord file_load_proc =
  */
 static ProcArg file_save_args[] =
 {
-  { PDB_INT32, "run_mode", N_("Interactive, non-interactive") },
-  { PDB_IMAGE, "image", N_("Input image") },
-  { PDB_DRAWABLE, "drawable", N_("Drawable to save") },
-  { PDB_STRING, "filename", N_("The name of the file to save the image in") },
-  { PDB_STRING, "raw_filename", N_("The name of the file to save the image in") }
+  { PDB_INT32, "run_mode", "Interactive, non-interactive" },
+  { PDB_IMAGE, "image", "Input image" },
+  { PDB_DRAWABLE, "drawable", "Drawable to save" },
+  { PDB_STRING, "filename", "The name of the file to save the image in" },
+  { PDB_STRING, "raw_filename", "The name of the file to save the image in" }
 };
 
 static ProcRecord file_save_proc =
 {
   "gimp_file_save",
-  N_("Saves a file by extension"),
-  N_("This procedure invokes the correct file save handler according to the file's extension and/or prefix.  The name of the file to save is typically a full pathname, and the name entered is what the user actually typed before prepending a directory path.  The reason for this is that if the user types http://www.xcf/~gimp he wants to fetch a URL, and the full pathname will not look like a URL."),
+  "Saves a file by extension",
+  "This procedure invokes the correct file save handler according to the file's extension and/or prefix.  The name of the file to save is typically a full pathname, and the name entered is what the user actually typed before prepending a directory path.  The reason for this is that if the user types http://www.xcf/~gimp he wants to fetch a URL, and the full pathname will not look like a URL.",
   "Josh MacDonald",
   "Josh MacDonald",
   "1997",
@@ -172,19 +172,19 @@ static ProcRecord file_save_proc =
 
 static ProcArg file_temp_name_args[] =
 {
-  { PDB_STRING, "extension", N_("The extension the file will have.") }
+  { PDB_STRING, "extension", "The extension the file will have." }
 };
 
 static ProcArg file_temp_name_values[] =
 {
-  { PDB_STRING, "name", N_("The temp name.") }
+  { PDB_STRING, "name", "The temp name." }
 };
 
 static ProcRecord file_temp_name_proc =
 {
   "gimp_temp_name",
-  N_("Generates a unique filename."),
-  N_("Generates a unique filename using the temp path supplied in the user's gimprc."),
+  "Generates a unique filename.",
+  "Generates a unique filename using the temp path supplied in the user's gimprc.",
   "Josh MacDonald",
   "Josh MacDonald",
   "1997",
@@ -203,24 +203,24 @@ static ProcArg register_magic_load_handler_args[] =
 {
   { PDB_STRING,
     "procedure_name",
-    N_("the name of the procedure to be used for loading") },
+    "the name of the procedure to be used for loading" },
   { PDB_STRING,
     "extensions",
-    N_("comma separated list of extensions this handler can load (ie. \"jpeg,jpg\")") },
+    "comma separated list of extensions this handler can load (ie. \"jpeg,jpg\")" },
   { PDB_STRING,
     "prefixes",
-    N_("comma separated list of prefixes this handler can load (ie. \"http:,ftp:\")") },
+    "comma separated list of prefixes this handler can load (ie. \"http:,ftp:\")" },
   { PDB_STRING,
     "magics",
-    N_("comma separated list of magic file information this handler can load (ie. \"0,string,GIF\")") },
+    "comma separated list of magic file information this handler can load (ie. \"0,string,GIF\")" },
 };
 
 static ProcRecord register_magic_load_handler_proc =
 {
   "gimp_register_magic_load_handler",
-  N_("Registers a file load handler procedure"),
-  N_("Registers a procedural database procedure to be called to load files of a \
-      particular file format using magic file information."),
+  "Registers a file load handler procedure",
+  "Registers a procedural database procedure to be called to load files of a \
+      particular file format using magic file information.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -239,20 +239,20 @@ static ProcArg register_load_handler_args[] =
 {
   { PDB_STRING,
     "procedure_name",
-    N_("the name of the procedure to be used for loading") },
+    "the name of the procedure to be used for loading" },
   { PDB_STRING,
     "extensions",
-    N_("comma separated list of extensions this handler can load (ie. \"jpeg,jpg\")") },
+    "comma separated list of extensions this handler can load (ie. \"jpeg,jpg\")" },
   { PDB_STRING,
     "prefixes",
-    N_("comma separated list of prefixes this handler can load (ie. \"http:,ftp:\")") },
+    "comma separated list of prefixes this handler can load (ie. \"http:,ftp:\")" },
 };
 
 static ProcRecord register_load_handler_proc =
 {
   "gimp_register_load_handler",
-  N_("Registers a file load handler procedure"),
-  N_("Registers a procedural database procedure to be called to load files of a particular file format."),
+  "Registers a file load handler procedure",
+  "Registers a procedural database procedure to be called to load files of a particular file format.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -271,20 +271,20 @@ static ProcArg register_save_handler_args[] =
 {
   { PDB_STRING,
     "procedure_name",
-    N_("the name of the procedure to be used for saving") },
+    "the name of the procedure to be used for saving" },
   { PDB_STRING,
     "extensions",
-    N_("comma separated list of extensions this handler can save (ie. \"jpeg,jpg\")") },
+    "comma separated list of extensions this handler can save (ie. \"jpeg,jpg\")" },
   { PDB_STRING,
     "prefixes",
-    N_("comma separated list of prefixes this handler can save (ie. \"http:,ftp:\")") },
+    "comma separated list of prefixes this handler can save (ie. \"http:,ftp:\")" },
 };
 
 static ProcRecord register_save_handler_proc =
 {
   "gimp_register_save_handler",
-  N_("Registers a file save handler procedure"),
-  N_("Registers a procedural database procedure to be called to save files in a particular file format."),
+  "Registers a file save handler procedure",
+  "Registers a procedural database procedure to be called to save files in a particular file format.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -1098,8 +1098,7 @@ file_overwrite (char *filename, char* raw_filename)
   char *overwrite_text;
 
   overwrite_box = (OverwriteBox *) g_malloc (sizeof (OverwriteBox));
-  overwrite_text = (char *) g_malloc (strlen (_(" exists, overwrite?")) + strlen (filename) + 1);
-  sprintf (overwrite_text, _("%s exists, overwrite?"), filename);
+  overwrite_text = g_strdup_printf (_("%s exists, overwrite?"), filename);
 
   overwrite_box->full_filename = filename;
   overwrite_box->raw_filename = raw_filename;
@@ -1520,7 +1519,7 @@ file_update_menus (GSList *procs,
       procs = procs->next;
 
       if (file_proc->db_info.proc_type != PDB_EXTENSION)
-	menus_set_sensitive (file_proc->menu_path, (file_proc->image_types_val & image_type));
+	menus_set_sensitive (gettext(file_proc->menu_path), (file_proc->image_types_val & image_type));
     }
 }
 

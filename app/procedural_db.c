@@ -890,8 +890,7 @@ procedural_db_print_entry (gpointer key,
 
       if (list || num != 1)
 	{
-	  buf = g_new (char, strlen (procedure->name) + 10);
-	  sprintf (buf, "%s <%d>", procedure->name, num);
+	  buf = g_strdup_printf ("%s <%d>", procedure->name, num);
 	  output_string (buf);
 	  g_free (buf);
 	}

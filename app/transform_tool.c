@@ -112,14 +112,14 @@ create_transform_options (void)
   GtkWidget *grid_density;
   GSList *group;
   int i;
-  char *transform_button_names[4] =
+  static const char *transform_button_names[] =
   {
     N_("Rotation"),
     N_("Scaling"),
     N_("Shearing"),
     N_("Perspective")
   };
-  char *direction_button_names[2] =
+  static const char *direction_button_names[] =
   {
     N_("Traditional"),
     N_("Corrective")

@@ -41,6 +41,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/param.h>
 
 #include <gtk/gtk.h>
 
@@ -116,13 +117,13 @@ void
 save_sessionrc (void)
 {
   char *gimp_dir;
-  char filename[512];
+  char filename[MAXPATHLEN];
   FILE *fp;
 
   gimp_dir = gimp_directory ();
   if ('\000' != gimp_dir[0])
     {
-      sprintf (filename, "%s/sessionrc", gimp_dir);
+      g_snprintf (filename, MAXPATHLEN, "%s/sessionrc", gimp_dir);
 
       fp = fopen (filename, "wb");
       if (!fp)
@@ -150,13 +151,13 @@ void
 session_init (void)
 {
   char *gimp_dir;
-  char filename[512];
+  char filename[MAXPATHLEN];
 
   gimp_dir = gimp_directory ();
 
   if (gimp_dir)
     {
-      sprintf (filename, "%s/sessionrc", gimp_dir);
+      g_snprintf (filename, MAXPATHLEN, "%s/sessionrc", gimp_dir);
       app_init_update_status(NULL, filename, -1);
       parse_gimprc_file (filename);
     }

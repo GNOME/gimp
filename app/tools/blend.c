@@ -208,7 +208,7 @@ static PixelRegion distR =
 };
 
 /*  the blend option menu items -- the blend modes  */
-static MenuItem blend_option_items[] =
+static const MenuItem blend_option_items[] =
 {
   { N_("FG to BG RGB"), 0, 0, blend_mode_callback, (gpointer) FG_BG_RGB_MODE, NULL, NULL },
   { N_("FG to BG HSV"), 0, 0, blend_mode_callback, (gpointer) FG_BG_HSV_MODE, NULL, NULL },
@@ -218,7 +218,7 @@ static MenuItem blend_option_items[] =
 };
 
 /*  the gradient option menu items -- the gradient modes  */
-static MenuItem gradient_option_items[] =
+static const MenuItem gradient_option_items[] =
 {
   { N_("Linear"), 0, 0, gradient_type_callback, (gpointer) Linear, NULL, NULL },
   { N_("Bi-Linear"), 0, 0, gradient_type_callback, (gpointer) BiLinear, NULL, NULL },
@@ -237,7 +237,7 @@ static BlendOptions *blend_options = NULL;
 
 /* repeat menu items */
 
-static MenuItem repeat_option_items[] =
+static const MenuItem repeat_option_items[] =
 {
   { N_("None"), 0, 0, repeat_type_callback, (gpointer) REPEAT_NONE, NULL, NULL },
   { N_("Sawtooth wave"), 0, 0, repeat_type_callback, (gpointer) REPEAT_SAWTOOTH, NULL, NULL },

@@ -1300,27 +1300,27 @@ ProcArg curves_spline_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the drawable")
+    "the drawable"
   },
   { PDB_INT32,
     "channel",
-    N_("the channel to modify: { VALUE (0), RED (1), GREEN (2), BLUE (3), ALPHA (4), GRAY (0) }")
+    "the channel to modify: { VALUE (0), RED (1), GREEN (2), BLUE (3), ALPHA (4), GRAY (0) }"
   },
   { PDB_INT32,
     "num_points",
-    N_("the number of values in the control point array ( 3 < num_points <= 32 )")
+    "the number of values in the control point array ( 3 < num_points <= 32 )"
   },
   { PDB_INT8ARRAY,
     "control_pts",
-    N_("the spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }")
+    "the spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }"
   }
 };
 
 ProcRecord curves_spline_proc =
 {
   "gimp_curves_spline",
-  N_("Modifies the intensity curve(s) for specified drawable"),
-  N_("Modifies the intensity mapping for one channel in the specified drawable.  The drawable must be either grayscale or RGB, and the channel can be either an intensity component, or the value.  The 'control_pts' parameter is an array of integers which define a set of control points which describe a Catmull Rom spline which yields the final intensity curve.  Use the 'gimp_curves_explicit' function to explicitly modify intensity levels."),
+  "Modifies the intensity curve(s) for specified drawable",
+  "Modifies the intensity mapping for one channel in the specified drawable.  The drawable must be either grayscale or RGB, and the channel can be either an intensity component, or the value.  The 'control_pts' parameter is an array of integers which define a set of control points which describe a Catmull Rom spline which yields the final intensity curve.  Use the 'gimp_curves_explicit' function to explicitly modify intensity levels.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -1449,27 +1449,27 @@ ProcArg curves_explicit_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the drawable")
+    "the drawable"
   },
   { PDB_INT32,
     "channel",
-    N_("the channel to modify: { VALUE (0), RED (1), GREEN (2), BLUE (3), GRAY (0) }")
+    "the channel to modify: { VALUE (0), RED (1), GREEN (2), BLUE (3), GRAY (0) }"
   },
   { PDB_INT32,
     "num_bytes",
-    N_("the number of bytes in the new curve (always 256)")
+    "the number of bytes in the new curve (always 256)"
   },
   { PDB_INT8ARRAY,
     "curve",
-    N_("the explicit curve")
+    "the explicit curve"
   }
 };
 
 ProcRecord curves_explicit_proc =
 {
   "gimp_curves_explicit",
-  N_("Modifies the intensity curve(s) for specified drawable"),
-  N_("Modifies the intensity mapping for one channel in the specified drawable.  The drawable must be either grayscale or RGB, and the channel can be either an intensity component, or the value.  The 'curve' parameter is an array of bytes which explicitly defines how each pixel value in the drawable will be modified.  Use the 'gimp_curves_spline' function to modify intensity levels with Catmull Rom splines."),
+  "Modifies the intensity curve(s) for specified drawable",
+  "Modifies the intensity mapping for one channel in the specified drawable.  The drawable must be either grayscale or RGB, and the channel can be either an intensity component, or the value.  The 'curve' parameter is an array of bytes which explicitly defines how each pixel value in the drawable will be modified.  Use the 'gimp_curves_spline' function to modify intensity levels with Catmull Rom splines.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

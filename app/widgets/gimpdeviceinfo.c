@@ -219,7 +219,7 @@ devices_restore()
 
   if (gimp_dir)
     {
-      sprintf (filename, "%s/devicerc", gimp_dir);
+      g_snprintf (filename, MAXPATHLEN, "%s/devicerc", gimp_dir);
       parse_gimprc_file (filename);
     }
 
@@ -621,7 +621,7 @@ static void
 devices_write_rc (void)
 {
   char *gimp_dir;
-  char filename[512];
+  char filename[MAXPATHLEN];
   FILE *fp;
 
   devices_save_current_info();
@@ -629,7 +629,7 @@ devices_write_rc (void)
   gimp_dir = gimp_directory ();
   if ('\000' != gimp_dir[0])
     {
-      sprintf (filename, "%s/devicerc", gimp_dir);
+      g_snprintf (filename, MAXPATHLEN, "%s/devicerc", gimp_dir);
 
       fp = fopen (filename, "wb");
       if (!fp)

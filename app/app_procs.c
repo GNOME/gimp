@@ -161,7 +161,7 @@ splash_logo_load_size (GtkWidget *window)
   if (logo_pixmap)
     return TRUE;
 
-  sprintf (buf, "%s/gimp1_1_splash.ppm", DATADIR);
+  g_snprintf (buf, sizeof(buf), "%s/gimp1_1_splash.ppm", DATADIR);
 
   fp = fopen (buf, "rb");
   if (!fp)
@@ -196,7 +196,7 @@ splash_logo_load (GtkWidget *window)
   if (logo_pixmap)
     return TRUE;
 
-  sprintf (buf, "%s/gimp1_1_splash.ppm", DATADIR);
+  g_snprintf (buf, sizeof(buf), "%s/gimp1_1_splash.ppm", DATADIR);
 
   fp = fopen (buf, "rb");
   if (!fp)
@@ -454,7 +454,7 @@ app_init (void)
   gimp_dir = gimp_directory ();
   if (gimp_dir[0] != '\000')
     {
-      sprintf (filename, "%s/gtkrc", gimp_dir);
+      g_snprintf (filename, MAXPATHLEN, "%s/gtkrc", gimp_dir);
 
       if ((be_verbose == TRUE) || (no_splash == TRUE))
 	g_print (_("parsing \"%s\"\n"), filename);
@@ -528,8 +528,7 @@ app_init (void)
   /* Add the swap file  */
   if (swap_path == NULL)
     swap_path = "/tmp";
-  path = g_new (gchar, strlen (swap_path) + 32);
-  sprintf (path, "%s/gimpswap.%ld", swap_path, (long)getpid ());
+  path = g_strdup_printf ("%s/gimpswap.%ld", swap_path, (long)getpid ());
   tile_swap_add (path, NULL, NULL);
   g_free (path);
 

@@ -389,8 +389,7 @@ gdisplay_close_warning_dialog (char     *image_name,
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (mbox)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  warning_buf = (char *) g_malloc (strlen (image_name) + 50);
-  sprintf (warning_buf, _("Changes were made to %s.  Close anyway?"), image_name);
+  warning_buf = g_strdup_printf(_("Changes were made to %s. Close anyway?"), image_name);
   label = gtk_label_new (warning_buf);
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
   gtk_widget_show (label);

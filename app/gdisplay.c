@@ -598,7 +598,7 @@ gdisplay_draw_guide (GDisplay *gdisp,
   if (initialize)
     {
       GdkGCValues values;
-      char stipple[8] =
+      const char stipple[] =
       {
 	0xF0,    /*  ####----  */
 	0xE1,    /*  ###----#  */

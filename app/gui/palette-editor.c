@@ -1165,17 +1165,14 @@ palette_create_entries(gpointer   client_data,
 	    {
 	      if (*token == '~')
 		{
-		  path = g_malloc(strlen(home) + strlen(token) + 1);
-		  sprintf(path, "%s%s", home, token + 1);
+		  path = g_strdup_printf("%s%s", home, token + 1);
 		}
 	      else
 		{
-		  path = g_malloc(strlen(token) + 1);
-		  strcpy(path, token);
+		  path = g_strdup(token);
 		}
 
-	      entries->filename = g_malloc (strlen (path) + strlen (palette_name) + 2);
-	      sprintf (entries->filename, "%s/%s", path, palette_name);
+	      entries->filename = g_strdup_printf ("%s/%s", path, palette_name);
 
 	      g_free (path);
 	    }

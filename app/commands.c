@@ -362,7 +362,9 @@ select_border_cmd_callback (GtkWidget *widget,
   gdisp = gdisplay_active ();
 
   sprintf (initial, "%d", gimage_mask_border_radius);
-  query_string_box (_("Border Selection"), _("Border selection by:"), initial,
+  query_string_box (N_("Border Selection"),
+                    N_("Border selection by:"),
+                    initial,
 		    gimage_mask_border_callback, gdisp->gimage);
 }
 
@@ -376,7 +378,9 @@ select_feather_cmd_callback (GtkWidget *widget,
   gdisp = gdisplay_active ();
 
   sprintf (initial, "%f", gimage_mask_feather_radius);
-  query_string_box (_("Feather Selection"), _("Feather selection by:"), initial,
+  query_string_box (N_("Feather Selection"),
+                    N_("Feather selection by:"),
+                    initial,
 		    gimage_mask_feather_callback, gdisp->gimage);
 }
 

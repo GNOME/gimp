@@ -21,6 +21,7 @@
 #include "gimprc.h"
 #include "ops_buttons.h"
 
+#include "libgimp/gimpintl.h"
 
 GtkWidget *ops_button_box_new (GtkWidget   *parent,
 			       GtkTooltips *tool_tips,
@@ -61,7 +62,7 @@ GtkWidget *ops_button_box_new (GtkWidget   *parent,
 				 GTK_OBJECT (parent));
 
       if (tool_tips != NULL)
-	gtk_tooltips_set_tip (tool_tips, button, ops_buttons->tooltip, NULL);
+	gtk_tooltips_set_tip (tool_tips, button, gettext(ops_buttons->tooltip), NULL);
 
       gtk_box_pack_start (GTK_BOX(button_box), button, TRUE, TRUE, 0);
       gtk_widget_show (button);

@@ -39,12 +39,12 @@
 #define MRU_MENU_ACCEL_SIZE sizeof ("<control>0")
 
 static void menus_init (void);
-static GtkItemFactoryEntry * translate_entries (GtkItemFactoryEntry *, gint);
+static GtkItemFactoryEntry * translate_entries (const GtkItemFactoryEntry *, gint);
 static void free_translated_entries(GtkItemFactoryEntry *, gint);
 
 static GSList *last_opened_raw_filenames = NULL;
 
-static GtkItemFactoryEntry toolbox_entries[] =
+static const GtkItemFactoryEntry toolbox_entries[] =
 {
   { N_("/File/New"), "<control>N", file_new_cmd_callback, 0 },
   { N_("/File/Open"), "<control>O", file_open_cmd_callback, 0 },
@@ -67,10 +67,10 @@ static GtkItemFactoryEntry toolbox_entries[] =
 static guint n_toolbox_entries = sizeof (toolbox_entries) / sizeof (toolbox_entries[0]);
 static GtkItemFactory *toolbox_factory = NULL;
 
-static GtkItemFactoryEntry file_menu_separator = { N_("/File/---"), NULL, NULL, 0, "<Separator>" };
-static GtkItemFactoryEntry toolbox_end = { N_("/File/Quit"), "<control>Q", file_quit_cmd_callback, 0 };
+static const GtkItemFactoryEntry file_menu_separator = { N_("/File/---"), NULL, NULL, 0, "<Separator>" };
+static const GtkItemFactoryEntry toolbox_end = { N_("/File/Quit"), "<control>Q", file_quit_cmd_callback, 0 };
 
-static GtkItemFactoryEntry image_entries[] =
+static const GtkItemFactoryEntry image_entries[] =
 {
   { N_("/File/New"), "<control>N", file_new_cmd_callback, 1 },
   { N_("/File/Open"), "<control>O", file_open_cmd_callback, 0 },
@@ -109,9 +109,6 @@ static GtkItemFactoryEntry image_entries[] =
   { N_("/Select/Grow"), NULL, select_grow_cmd_callback, 0 },
   { N_("/Select/Shrink"), NULL, select_shrink_cmd_callback, 0 },
   { N_("/Select/Save To Channel"), NULL, select_save_cmd_callback, 0 },
-  /*
-  { "/Select/By Color...", NULL, tools_select_cmd_callback, BY_COLOR_SELECT }, 
-  */
 
   { N_("/View/Zoom In"), "equal", view_zoomin_cmd_callback, 0 },
   { N_("/View/Zoom Out"), "minus", view_zoomout_cmd_callback, 0 },
@@ -136,16 +133,6 @@ static GtkItemFactoryEntry image_entries[] =
   
   { N_("/Image/Colors/Equalize"), NULL, image_equalize_cmd_callback, 0 },
   { N_("/Image/Colors/Invert"), NULL, image_invert_cmd_callback, 0 },
-  /*
-  { N_("/Image/Colors/Posterize"), NULL, tools_select_cmd_callback, POSTERIZE },
-  { N_("/Image/Colors/Threshold"), NULL, tools_select_cmd_callback, THRESHOLD },
-  { N_("/Image/Colors/---"), NULL, NULL, 0, "<Separator>" },
-  { N_("/Image/Colors/Color Balance"), NULL, tools_select_cmd_callback, COLOR_BALANCE },
-  { N_("/Image/Colors/Brightness-Contrast"), NULL, tools_select_cmd_callback, BRIGHTNESS_CONTRAST },
-  { N_("/Image/Colors/Hue-Saturation"), NULL, tools_select_cmd_callback, 0 },
-  { N_("/Image/Colors/Curves"), NULL, tools_select_cmd_callback, CURVES },
-  { N_("/Image/Colors/Levels"), NULL, tools_select_cmd_callback, LEVELS },
-  */
   { N_("/Image/Colors/---"), NULL, NULL, 0, "<Separator>" },
   { N_("/Image/Colors/Desaturate"), NULL, image_desaturate_cmd_callback, 0 },
   { N_("/Image/Channel Ops/Duplicate"), "<control>D", channel_ops_duplicate_cmd_callback, 0 },
@@ -160,7 +147,6 @@ static GtkItemFactoryEntry image_entries[] =
   { N_("/Image/Resize"), NULL, image_resize_cmd_callback, 0 },
   { N_("/Image/Scale"), NULL, image_scale_cmd_callback, 0 },
   { N_("/Image/---"), NULL, NULL, 0, "<Separator>" },
-  /*  { N_("/Image/Histogram"), NULL, tools_select_cmd_callback, HISTOGRAM}, */
   { N_("/Image/---"), NULL, NULL, 0, "<Separator>" },
   
   { N_("/Layers/Layers & Channels..."), "<control>L", dialogs_lc_cmd_callback, 0 },
@@ -173,7 +159,6 @@ static GtkItemFactoryEntry image_entries[] =
   { N_("/Layers/Mask To Selection"), NULL, layers_mask_select_cmd_callback, 0 },
   { N_("/Layers/Add Alpha Channel"), NULL, layers_add_alpha_channel_cmd_callback, 0 },
   
-  /*  { N_("/Tools/Rect Select"), "R", tools_select_cmd_callback, RECT_SELECT },
   { N_("/Tools/Ellipse Select"), "E", tools_select_cmd_callback, ELLIPSE_SELECT },
   { N_("/Tools/Free Select"), "F", tools_select_cmd_callback, FREE_SELECT },
   { N_("/Tools/Fuzzy Select"), "Z", tools_select_cmd_callback, FUZZY_SELECT },
@@ -196,7 +181,6 @@ static GtkItemFactoryEntry image_entries[] =
   { N_("/Tools/Convolve"), "V", tools_select_cmd_callback, CONVOLVE },
   { N_("/Tools/Ink"), "K", tools_select_cmd_callback, INK },
   { N_("/Tools/Default Colors"), "D", tools_default_colors_cmd_callback, 0 },
-  { N_("/Tools/Swap Colors"), "X", tools_swap_colors_cmd_callback, 0 }, */ 
   { N_("/Tools/Toolbox"), NULL, toolbox_raise_callback, 0 },
   { N_("/Tools/---"), NULL, NULL, 0, "<Separator>" },  
   { N_("/Tools/Default Colors"), "D", tools_default_colors_cmd_callback, 0 },
@@ -221,7 +205,7 @@ static GtkItemFactoryEntry image_entries[] =
 static guint n_image_entries = sizeof (image_entries) / sizeof (image_entries[0]);
 static GtkItemFactory *image_factory = NULL;
   
-static GtkItemFactoryEntry load_entries[] =
+static const GtkItemFactoryEntry load_entries[] =
 {
   { N_("/Automatic"), NULL, file_load_by_extension_callback, 0 },
   { "/---", NULL, NULL, 0, "<Separator>" },
@@ -229,7 +213,7 @@ static GtkItemFactoryEntry load_entries[] =
 static guint n_load_entries = sizeof (load_entries) / sizeof (load_entries[0]);
 static GtkItemFactory *load_factory = NULL;
   
-static GtkItemFactoryEntry save_entries[] =
+static const GtkItemFactoryEntry save_entries[] =
 {
   { N_("/By extension"), NULL, file_save_by_extension_callback, 0 },
   { "/---", NULL, NULL, 0, "<Separator>" },
@@ -308,16 +292,12 @@ menus_tools_create (ToolInfo *tool_info)
 {
   GtkItemFactoryEntry entry;
   
-  /* entry.path = g_strconcat ("<Image>", tool_info->menu_path, NULL);*/
-  /* entry.callback_data = tool_info; */
   entry.path = gettext(tool_info->menu_path);
   entry.accelerator = tool_info->menu_accel;
   entry.callback = tools_select_cmd_callback;
   entry.callback_action = tool_info->tool_id;
   entry.item_type = NULL;
  
-  fflush(stderr);
-  /*menus_create (&entry, 1);*/
   gtk_item_factory_create_item (image_factory,
 				&entry,
 				(gpointer)tool_info,
@@ -467,7 +447,7 @@ menus_last_opened_add (gchar *filename)
 
   if (num_entries == 0)
     {
-      widget = gtk_item_factory_get_widget (toolbox_factory, file_menu_separator.path);
+      widget = gtk_item_factory_get_widget (toolbox_factory, gettext(file_menu_separator.path));
       gtk_widget_show (widget);
     }
 
@@ -503,8 +483,8 @@ menus_init_mru ()
       last_opened_entries[i].callback_action = i;
       last_opened_entries[i].item_type = NULL;
 
-      sprintf (path, _("/File/MRU%02d"), i + 1);
-      sprintf (accelerator, "<control>%d", i + 1);
+      g_snprintf (path, MRU_MENU_ENTRY_SIZE, _("/File/MRU%02d"), i + 1);
+      g_snprintf (accelerator, MRU_MENU_ACCEL_SIZE, "<control>%d", i + 1);
     }
 
   gtk_item_factory_create_items_ac (toolbox_factory, last_opened_size,
@@ -517,7 +497,7 @@ menus_init_mru ()
       gtk_widget_hide (widget);
     }
 
-  widget = gtk_item_factory_get_widget (toolbox_factory, file_menu_separator.path);
+  widget = gtk_item_factory_get_widget (toolbox_factory, gettext(file_menu_separator.path));
   gtk_widget_hide (widget);
   
   g_free (paths);
@@ -525,8 +505,6 @@ menus_init_mru ()
   g_free (last_opened_entries);
 }
 
-/*  This is separate from menus_init() in case the last_opened_size changes,
-    or for any other reason we might want to regen just the toolbox menu     */
 void
 menus_init_toolbox ()
 {
@@ -549,7 +527,7 @@ menus_init_toolbox ()
 }
 
 static GtkItemFactoryEntry *
-translate_entries (GtkItemFactoryEntry *entries, gint n)
+translate_entries (const GtkItemFactoryEntry *entries, gint n)
 {
   gint i;
   GtkItemFactoryEntry *ret;

@@ -371,10 +371,10 @@ plug_in_init ()
       if (*pluginrc_path == '/')
         strcpy(filename, pluginrc_path);
       else
-        sprintf(filename, "%s/%s", gimp_directory(), pluginrc_path);
+        g_snprintf(filename, MAXPATHLEN, "%s/%s", gimp_directory(), pluginrc_path);
     }
   else
-    sprintf (filename, "%s/pluginrc", gimp_directory ());
+    g_snprintf (filename, MAXPATHLEN, "%s/pluginrc", gimp_directory ());
 
   app_init_update_status(_("Resource configuration"), filename, -1);
   parse_gimprc_file (filename);
@@ -522,8 +522,7 @@ plug_in_add (char *prog,
 
   if (strncmp ("plug_in_", prog, 8) != 0)
     {
-      char *t = g_new (char, strlen (prog) + 9);
-      sprintf (t, "plug_in_%s", prog);
+      char *t = g_strdup_printf ("plug_in_%s", prog);
       g_free (prog);
       prog = t;
     }
@@ -1265,7 +1264,7 @@ plug_in_set_menu_sensitivity (int base_type)
 	      break;
 	    }
 
-	  menus_set_sensitive (proc_def->menu_path, sensitive);
+	  menus_set_sensitive (gettext(proc_def->menu_path), sensitive);
           if (last_plug_in && (last_plug_in == &(proc_def->db_info)))
 	    {
 	      menus_set_sensitive (_("<Image>/Filters/Repeat last"), sensitive);
@@ -2377,7 +2376,7 @@ plug_in_proc_def_remove (PlugInProcDef *proc_def)
 {
   /*  Destroy the menu item  */
   if (proc_def->menu_path)
-    menus_destroy (proc_def->menu_path);
+    menus_destroy (gettext(proc_def->menu_path));
 
   /*  Unregister the procedural database entry  */
   procedural_db_unregister (proc_def->db_info.name);

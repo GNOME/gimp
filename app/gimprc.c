@@ -21,6 +21,7 @@
 #include <string.h>
 #include <errno.h>
 #include <sys/stat.h>
+#include <sys/param.h>
 #include <glib.h>
 
 #include "app_procs.h"
@@ -161,18 +162,18 @@ static int parse_unknown (char *token_sym);
 
 static char* value_to_str (char *name);
 
-static char* string_to_str (gpointer val1p, gpointer val2p);
-static char* path_to_str (gpointer val1p, gpointer val2p);
-static char* double_to_str (gpointer val1p, gpointer val2p);
-static char* float_to_str (gpointer val1p, gpointer val2p);
-static char* int_to_str (gpointer val1p, gpointer val2p);
-static char* boolean_to_str (gpointer val1p, gpointer val2p);
-static char* position_to_str (gpointer val1p, gpointer val2p);
-static char* mem_size_to_str (gpointer val1p, gpointer val2p);
-static char* image_type_to_str (gpointer val1p, gpointer val2p);
-static char* color_cube_to_str (gpointer val1p, gpointer val2p);
-static char* preview_size_to_str (gpointer val1p, gpointer val2p);
-static char* ruler_units_to_str (gpointer val1p, gpointer val2p);
+static inline char* string_to_str (gpointer val1p, gpointer val2p);
+static inline char* path_to_str (gpointer val1p, gpointer val2p);
+static inline char* double_to_str (gpointer val1p, gpointer val2p);
+static inline char* float_to_str (gpointer val1p, gpointer val2p);
+static inline char* int_to_str (gpointer val1p, gpointer val2p);
+static inline char* boolean_to_str (gpointer val1p, gpointer val2p);
+static inline char* position_to_str (gpointer val1p, gpointer val2p);
+static inline char* mem_size_to_str (gpointer val1p, gpointer val2p);
+static inline char* image_type_to_str (gpointer val1p, gpointer val2p);
+static inline char* color_cube_to_str (gpointer val1p, gpointer val2p);
+static inline char* preview_size_to_str (gpointer val1p, gpointer val2p);
+static inline char* ruler_units_to_str (gpointer val1p, gpointer val2p);
 
 static char* transform_path (char *path, int destroy);
 static char* gimprc_find_token (char *token);
@@ -333,8 +334,8 @@ gimp_directory ()
 void
 parse_gimprc ()
 {
-  char libfilename[512];
-  char filename[512];
+  char libfilename[MAXPATHLEN];
+  char filename[MAXPATHLEN];
   char *gimp_data_dir;
   char *gimp_dir;
 
@@ -347,9 +348,9 @@ parse_gimprc ()
   add_gimp_directory_token (gimp_dir);
 
   if ((gimp_data_dir = getenv ("GIMP_DATADIR")) != NULL)
-    sprintf (libfilename, "%s/gimprc", gimp_data_dir);
+    g_snprintf (libfilename, MAXPATHLEN, "%s/gimprc", gimp_data_dir);
   else
-    sprintf (libfilename, "%s/gimprc", DATADIR);
+    g_snprintf (libfilename, MAXPATHLEN, "%s/gimprc", DATADIR);
 
   app_init_update_status(_("Resource configuration"), libfilename, -1);
   if (alternate_system_gimprc != NULL) 
@@ -358,7 +359,7 @@ parse_gimprc ()
     }
   parse_gimprc_file (libfilename);
 
-  sprintf (filename, "%s/gimprc", gimp_dir);
+  g_snprintf (filename, MAXPATHLEN, "%s/gimprc", gimp_dir);
   if (strcmp (filename, libfilename) != 0)
     {
       app_init_update_status(NULL, filename, -1);
@@ -376,13 +377,13 @@ parse_gimprc_file (char *filename)
 {
   static char *home_dir = NULL;
   int status;
-  char rfilename[512];
+  char rfilename[MAXPATHLEN];
 
   if (filename[0] != '/')
     {
       if (!home_dir)
 	home_dir = g_strdup (getenv ("HOME"));
-      sprintf (rfilename, "%s/%s", home_dir, filename);
+      g_snprintf (rfilename, MAXPATHLEN, "%s/%s", home_dir, filename);
       filename = rfilename;
     }
 
@@ -436,7 +437,7 @@ save_gimprc (GList **updated_options,
 {
   char timestamp[40];
   char *gimp_dir;
-  char name[512];
+  char name[MAXPATHLEN];
   FILE *fp_new;
   FILE *fp_old;
   GList *option;
@@ -449,7 +450,7 @@ save_gimprc (GList **updated_options,
   g_assert(conflicting_options != NULL);
 
   gimp_dir = gimp_directory ();
-  sprintf (name, "%s/gimprc", gimp_dir);
+  g_snprintf (name, MAXPATHLEN, "%s/gimprc", gimp_dir);
 
   error_msg = open_backup_file (name, &fp_new, &fp_old);
   if (error_msg != NULL)
@@ -2003,58 +2004,42 @@ value_to_str (char *name)
   return NULL;
 }
 
-static char *
+static inline char *
 string_to_str (gpointer val1p,
 	       gpointer val2p)
 {
-  char *str;
-
-  str = g_malloc (strlen (*((char **)val1p)) + 3);
-  sprintf (str, "%c%s%c", '"', *((char **)val1p), '"');
-  return str;
+  return g_strdup_printf ("%c%s%c", '"', *((char **)val1p), '"');
 }
 
-static char *
+static inline char *
 path_to_str (gpointer val1p,
 	     gpointer val2p)
 {
   return string_to_str (val1p, val2p);
 }
 
-static char *
+static inline char *
 double_to_str (gpointer val1p,
 	       gpointer val2p)
 {
-  char *str;
-
-  str = g_malloc (20);
-  sprintf (str, "%f", *((double *)val1p));
-  return str;
+  return g_strdup_printf ("%f", *((double *)val1p));
 }
 
-static char *
+static inline char *
 float_to_str (gpointer val1p,
 	      gpointer val2p)
 {
-  char *str;
-
-  str = g_malloc (20);
-  sprintf (str, "%f", (double)(*((float *)val1p)));
-  return str;
+  return g_strdup_printf ("%f", (double)(*((float *)val1p)));
 }
 
-static char *
+static inline char *
 int_to_str (gpointer val1p,
 	    gpointer val2p)
 {
-  char *str;
-
-  str = g_malloc (20);
-  sprintf (str, "%d", *((int *)val1p));
-  return str;
+  return g_strdup_printf ("%d", *((int *)val1p));
 }
 
-static char *
+static inline char *
 boolean_to_str (gpointer val1p,
 		gpointer val2p)
 {
@@ -2070,36 +2055,29 @@ boolean_to_str (gpointer val1p,
     return g_strdup ("no");
 }
 
-static char *
+static inline char *
 position_to_str (gpointer val1p,
 		 gpointer val2p)
 {
-  char *str;
-
-  str = g_malloc (40);
-  sprintf (str, "%d %d", *((int *)val1p), *((int *)val2p));
-  return str;
+  return g_strdup_printf ("%d %d", *((int *)val1p), *((int *)val2p));
 }
 
-static char *
+static inline char *
 mem_size_to_str (gpointer val1p,
 		 gpointer val2p)
 {
   int size;
-  char *str;
 
   size = *((int *)val1p);
-  str = g_malloc (20);
   if (size % 1048576 == 0)
-    sprintf (str, "%dM", size / 1048576);
+    return g_strdup_printf ("%dM", size / 1048576);
   else if (size % 1024 == 0)
-    sprintf (str, "%dK", size / 1024);
+    return g_strdup_printf ("%dK", size / 1024);
   else
-    sprintf (str, "%dB", size);
-  return str;
+    return g_strdup_printf ("%dB", size);
 }
 
-static char *
+static inline char *
 image_type_to_str (gpointer val1p,
 		   gpointer val2p)
 {
@@ -2112,20 +2090,16 @@ image_type_to_str (gpointer val1p,
     return g_strdup ("rgb");
 }
 
-static char *
+static inline char *
 color_cube_to_str (gpointer val1p,
 		   gpointer val2p)
 {
-  char *str;
-
-  str = g_malloc (40);
-  sprintf (str, "%d %d %d  %d",
-	   color_cube_shades[0], color_cube_shades[1],
-	   color_cube_shades[2], color_cube_shades[3]);
-  return str;
+  return g_strdup_printf ("%d %d %d  %d",
+			   color_cube_shades[0], color_cube_shades[1],
+			   color_cube_shades[2], color_cube_shades[3]);
 }
 
-static char *
+static inline char *
 preview_size_to_str (gpointer val1p,
 		     gpointer val2p)
 {
@@ -2139,7 +2113,7 @@ preview_size_to_str (gpointer val1p,
     return g_strdup ("none");
 }
 
-static char *
+static inline char *
 ruler_units_to_str (gpointer val1p,
 		    gpointer val2p)
 {
@@ -2207,8 +2181,7 @@ open_backup_file (char *filename,
       return _("Can't open gimprc, reason unknown");
     }
 
-  oldfilename = g_malloc (strlen (filename) + 5);
-  sprintf (oldfilename, "%s.old", filename);
+  oldfilename = g_strdup_printf ("%s.old", filename);
   if (rename (filename, oldfilename) < 0)
     {
       g_free (oldfilename);

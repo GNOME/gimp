@@ -337,7 +337,7 @@ brightness_contrast_new_dialog ()
   /*  The shell and main vbox  */
   bcd->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (bcd->shell), "brightness_contrast", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (bcd->shell), N_("Brightness-Contrast"));
+  gtk_window_set_title (GTK_WINDOW (bcd->shell), _("Brightness-Contrast"));
   
   /* handle wm close signal */
   gtk_signal_connect (GTK_OBJECT (bcd->shell), "delete_event",
@@ -645,23 +645,23 @@ ProcArg brightness_contrast_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the drawable")
+    "the drawable"
   },
   { PDB_INT32,
     "brightness",
-    N_("brightness adjustment: (-127 <= brightness <= 127)")
+    "brightness adjustment: (-127 <= brightness <= 127)"
   },
   { PDB_INT32,
     "contrast",
-    N_("constrast adjustment: (-127 <= contrast <= 127)")
+    "constrast adjustment: (-127 <= contrast <= 127)"
   }
 };
 
 ProcRecord brightness_contrast_proc =
 {
   "gimp_brightness_contrast",
-  N_("Modify brightness/contrast in the specified drawable"),
-  N_("This procedures allows the brightness and contrast of the specified drawable to be modified.  Both 'brightness' and 'contrast' parameters are defined between -127 and 127."),
+  "Modify brightness/contrast in the specified drawable",
+  "This procedures allows the brightness and contrast of the specified drawable to be modified.  Both 'brightness' and 'contrast' parameters are defined between -127 and 127.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",

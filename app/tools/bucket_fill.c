@@ -698,43 +698,43 @@ ProcArg bucket_fill_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the affected drawable")
+    "the affected drawable"
   },
   { PDB_INT32,
     "fill_mode",
-    N_("the type of fill: { FG-BUCKET-FILL (0), BG-BUCKET-FILL (1), PATTERN-BUCKET-FILL (2) }")
+    "the type of fill: { FG-BUCKET-FILL (0), BG-BUCKET-FILL (1), PATTERN-BUCKET-FILL (2) }"
   },
   { PDB_INT32,
     "paint_mode",
-    N_("the paint application mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5) DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }")
+    "the paint application mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5) DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }"
   },
   { PDB_FLOAT,
     "opacity",
-    N_("the opacity of the final bucket fill (0 <= opacity <= 100)")
+    "the opacity of the final bucket fill (0 <= opacity <= 100)"
   },
   { PDB_FLOAT,
     "threshold",
-    N_("the threshold determines how extensive the seed fill will be.  It's value is specified in terms of intensity levels (0 <= threshold <= 255).  This parameter is only valid when there is no selection in the specified image.")
+    "the threshold determines how extensive the seed fill will be.  It's value is specified in terms of intensity levels (0 <= threshold <= 255).  This parameter is only valid when there is no selection in the specified image."
   },
   { PDB_INT32,
     "sample_merged",
-    N_("use the composite image, not the drawable")
+    "use the composite image, not the drawable"
   },
   { PDB_FLOAT,
     "x",
-    N_("the x coordinate of this bucket fill's application.  This parameter is only valid when there is no selection in the specified image.")
+    "the x coordinate of this bucket fill's application.  This parameter is only valid when there is no selection in the specified image."
   },
   { PDB_FLOAT,
     "y",
-    N_("the y coordinate of this bucket fill's application.  This parameter is only valid when there is no selection in the specified image.")
+    "the y coordinate of this bucket fill's application.  This parameter is only valid when there is no selection in the specified image."
   },
 };
 
 ProcRecord bucket_fill_proc =
 {
   "gimp_bucket_fill",
-  N_("Fill the area specified either by the current selection if there is one, or by a seed fill starting at the specified coordinates."),
-  N_("This tool requires information on the paint application mode, and the fill mode, which can either be in the foreground color, or in the currently active pattern.  If there is no selection, a seed fill is executed at the specified coordinates and extends outward in keeping with the threshold parameter.  If there is a selection in the target image, the threshold, sample merged, x, and y arguments are unused.  If the sample_merged parameter is non-zero, the data of the composite image will be used instead of that for the specified drawable.  This is equivalent to sampling for colors after merging all visible layers.  In the case of merged sampling, the x,y coordinates are relative to the image's origin; otherwise, they are relative to the drawable's origin."),
+  "Fill the area specified either by the current selection if there is one, or by a seed fill starting at the specified coordinates.",
+  "This tool requires information on the paint application mode, and the fill mode, which can either be in the foreground color, or in the currently active pattern.  If there is no selection, a seed fill is executed at the specified coordinates and extends outward in keeping with the threshold parameter.  If there is a selection in the target image, the threshold, sample merged, x, and y arguments are unused.  If the sample_merged parameter is non-zero, the data of the composite image will be used instead of that for the specified drawable.  This is equivalent to sampling for colors after merging all visible layers.  In the case of merged sampling, the x,y coordinates are relative to the image's origin; otherwise, they are relative to the drawable's origin.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

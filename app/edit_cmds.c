@@ -73,15 +73,15 @@ ProcArg edit_cut_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the drawable to cut from")
+    "the drawable to cut from"
   }
 };
 
 ProcRecord edit_cut_proc =
 {
   "gimp_edit_cut",
-  N_("Cut from the specified drawable"),
-  N_("If there is a selection in the image, then the area specified by the selection is cut from the specified drawable and placed in an internal GIMP edit buffer.  It can subsequently be retrieved using the 'gimp-edit-paste' command.  If there is no selection, then the specified drawable will be removed and its contents stored in the internal GIMP edit buffer.  The drawable MUST belong to the specified image, or an error is returned."),
+  "Cut from the specified drawable",
+  "If there is a selection in the image, then the area specified by the selection is cut from the specified drawable and placed in an internal GIMP edit buffer.  It can subsequently be retrieved using the 'gimp-edit-paste' command.  If there is no selection, then the specified drawable will be removed and its contents stored in the internal GIMP edit buffer.  The drawable MUST belong to the specified image, or an error is returned.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -140,15 +140,15 @@ ProcArg edit_copy_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the drawable to copy from")
+    "the drawable to copy from"
   }
 };
 
 ProcRecord edit_copy_proc =
 {
   "gimp_edit_copy",
-  N_("Copy from the specified drawable"),
-  N_("If there is a selection in the image, then the area specified by the selection is copied from the specified drawable and placed in an internal GIMP edit buffer.  It can subsequently be retrieved using the 'gimp-edit-paste' command.  If there is no selection, then the specified drawable's contents will be stored in the internal GIMP edit buffer.  The drawable MUST belong to the specified image, or an error is returned."),
+  "Copy from the specified drawable",
+  "If there is a selection in the image, then the area specified by the selection is copied from the specified drawable and placed in an internal GIMP edit buffer.  It can subsequently be retrieved using the 'gimp-edit-paste' command.  If there is no selection, then the specified drawable's contents will be stored in the internal GIMP edit buffer.  The drawable MUST belong to the specified image, or an error is returned.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -219,11 +219,11 @@ ProcArg edit_paste_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the drawable to paste from")
+    "the drawable to paste from"
   },
   { PDB_INT32,
     "paste_into",
-    N_("clear selection, or paste behind it?")
+    "clear selection, or paste behind it?"
   }
 };
 
@@ -231,15 +231,15 @@ ProcArg edit_paste_out_args[] =
 {
   { PDB_LAYER,
     "floating_sel",
-    N_("the new floating selection")
+    "the new floating selection"
   }
 };
 
 ProcRecord edit_paste_proc =
 {
   "gimp_edit_paste",
-  N_("Paste buffer to the specified drawable"),
-  N_("This procedure pastes a copy of the internal GIMP edit buffer to the specified drawable.  The GIMP edit buffer will be empty unless a call was previously made to either 'gimp-edit-cut' or 'gimp-edit-copy'.  The \"paste_into\" option specifies whether to clear the current image selection, or to paste the buffer \"behind\" the selection.  This allows the selection to act as a mask for the pasted buffer.  Anywhere that the selection mask is non-zero, the pasted buffer will show through.  The pasted buffer will be a new layer in the image which is designated as the image floating selection.  If the image has a floating selection at the time of pasting, the old floating selection will be anchored to it's drawable before the new floating selection is added.  This procedure returns the new floating layer.  The resulting floating selection will already be attached to the specified drawable, and a subsequent call to floating_sel_attach is not needed."),
+  "Paste buffer to the specified drawable",
+  "This procedure pastes a copy of the internal GIMP edit buffer to the specified drawable.  The GIMP edit buffer will be empty unless a call was previously made to either 'gimp-edit-cut' or 'gimp-edit-copy'.  The \"paste_into\" option specifies whether to clear the current image selection, or to paste the buffer \"behind\" the selection.  This allows the selection to act as a mask for the pasted buffer.  Anywhere that the selection mask is non-zero, the pasted buffer will show through.  The pasted buffer will be a new layer in the image which is designated as the image floating selection.  If the image has a floating selection at the time of pasting, the old floating selection will be anchored to it's drawable before the new floating selection is added.  This procedure returns the new floating layer.  The resulting floating selection will already be attached to the specified drawable, and a subsequent call to floating_sel_attach is not needed.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -298,15 +298,15 @@ ProcArg edit_clear_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("The drawable to clear from")
+    "The drawable to clear from"
   }
 };
 
 ProcRecord edit_clear_proc =
 {
   "gimp_edit_clear",
-  N_("Clear selected area of drawable"),
-  N_("This procedure clears the specified drawable.  If the drawable has an alpha channel, the cleared pixels will become transparent.  If the drawable does not have an alpha channel, cleared pixels will be set to the background color.  This procedure only affects regions within a selection if there is a selection active."),
+  "Clear selected area of drawable",
+  "This procedure clears the specified drawable.  If the drawable has an alpha channel, the cleared pixels will become transparent.  If the drawable does not have an alpha channel, cleared pixels will be set to the background color.  This procedure only affects regions within a selection if there is a selection active.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -364,15 +364,15 @@ ProcArg edit_fill_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the drawable to fill from")
+    "the drawable to fill from"
   }
 };
 
 ProcRecord edit_fill_proc =
 {
   "gimp_edit_fill",
-  N_("Fill selected area of drawable"),
-  N_("This procedure fills the specified drawable with the background color.  This procedure only affects regions within a selection if there is a selection active."),
+  "Fill selected area of drawable",
+  "This procedure fills the specified drawable with the background color.  This procedure only affects regions within a selection if there is a selection active.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -431,15 +431,15 @@ ProcArg edit_stroke_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the drawable to stroke to")
+    "the drawable to stroke to"
   }
 };
 
 ProcRecord edit_stroke_proc =
 {
   "gimp_edit_stroke",
-  N_("Stroke the current selection"),
-  N_("This procedure strokes the current selection, painting along the selection boundary with the active brush and foreground color.  The paint is applied to the specified drawable regardless of the active selection."),
+  "Stroke the current selection",
+  "This procedure strokes the current selection, painting along the selection boundary with the active brush and foreground color.  The paint is applied to the specified drawable regardless of the active selection.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

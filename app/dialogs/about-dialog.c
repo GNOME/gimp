@@ -294,7 +294,7 @@ about_dialog_load_logo (GtkWidget *window)
   if (logo_pixmap)
     return TRUE;
 
-  sprintf (buf, "%s/gimp_logo.ppm", DATADIR);
+  g_snprintf (buf, sizeof(buf), "%s/gimp_logo.ppm", DATADIR);
 
   fp = fopen (buf, "rb");
   if (!fp)
