@@ -1,10 +1,15 @@
+Thu Oct 14 13:31:59 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/sunras.c	
+	* plug-ins/common/xwd.c: changed a few changes I made yesterday...
+
 Thu Oct 14 04:59:11 BST 1999 Nick Lamb <njl195@zepler.org>
 
 	* app/preferences_dialog.c: Recalculate size of ctree in the
 	preferences dialog after adding all the categories.
 	This is the real fix for #2508.
 
-Thu Oct 14 04:08:31 *EST 1999  Sven Neumann <sven@gimp.org>
+Thu Oct 14 04:08:31 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/Makefile.am
 	* plug-ins/common/plugin-defs.pl
@@ -37,7 +42,7 @@ Thu Oct 14 01:00:03 MEST 1999  Sven Neumann <sven@gimp.org>
 Wed Oct 13 21:37:51 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* app/crop.c
-	* app/sca_convert.c
+	* app/scan_convert.c
 
 	Fixes to memory problems (use of freed memory references) found
 	by running with dmalloc. 

@@ -142,6 +142,7 @@ static void   save_ok_callback         (GtkWidget *widget,
                                         gpointer   data);
 static void   save_toggle_update       (GtkWidget *widget,
                                         gpointer   data);
+static void   show_message             (char *);
 
 /* Portability kludge */
 static int my_fwrite (void *ptr, int size, int nmemb, FILE *stream);
@@ -370,7 +371,7 @@ load_image (char *filename)
   ifp = fopen (filename, "rb");
   if (!ifp)
   {
-    gimp_message ("can't open file for reading");
+    show_message ("can't open file for reading");
     return (-1);
   }
 
@@ -379,14 +380,14 @@ load_image (char *filename)
   read_sun_header (ifp, &sunhdr);
   if (sunhdr.l_ras_magic != RAS_MAGIC)
   {
-    gimp_message("can't open file as SUN-raster-file");
+    show_message("can't open file as SUN-raster-file");
     fclose (ifp);
     return (-1);
   }
 
   if ((sunhdr.l_ras_type < 0) || (sunhdr.l_ras_type > 5))
   {
-    gimp_message ("the type of this SUN-rasterfile\nis not supported");
+    show_message ("the type of this SUN-rasterfile\nis not supported");
     fclose (ifp);
     return (-1);
   }
@@ -397,7 +398,7 @@ load_image (char *filename)
     suncolmap = (unsigned char *)malloc (sunhdr.l_ras_maplength);
     if (suncolmap == NULL)
     {
-      gimp_message ("cant get memory for colour map");
+      show_message ("cant get memory for colour map");
       fclose (ifp);
       return (-1);
     }
@@ -414,14 +415,14 @@ load_image (char *filename)
 #endif
     if (sunhdr.l_ras_magic != RAS_MAGIC)
     {
-      gimp_message ("cant read colour entries");
+      show_message ("cant read colour entries");
       fclose (ifp);
       return (-1);
     }
   }
   else if (sunhdr.l_ras_maplength > 0)
   {
-    gimp_message ("type of colourmap not supported");
+    show_message ("type of colourmap not supported");
     fseek (ifp, (sizeof (L_SUNFILEHEADER)/sizeof (L_CARD32))
                *4 + sunhdr.l_ras_maplength, SEEK_SET);
   }
@@ -463,7 +464,7 @@ load_image (char *filename)
 
   if (image_ID == -1)
   {
-    gimp_message ("this image depth is not supported");
+    show_message ("this image depth is not supported");
     return (-1);
   }
 
@@ -487,7 +488,7 @@ save_image (char *filename,
   /*  Make sure we're not saving an image with an alpha channel  */
   if (gimp_drawable_has_alpha (drawable_ID))
   {
-    gimp_message ("SUNRAS save cannot handle images with alpha channels");
+    show_message ("SUNRAS save cannot handle images with alpha channels");
     return FALSE;
   }
 
@@ -498,7 +499,7 @@ save_image (char *filename,
     case RGB_IMAGE:
       break;
     default:
-      gimp_message ("cannot operate on unknown image types");
+      show_message ("cannot operate on unknown image types");
       return (FALSE);
       break;
   }
@@ -507,7 +508,7 @@ save_image (char *filename,
   ofp = fopen (filename, "wb");
   if (!ofp)
   {
-    gimp_message ("cant open file for writing");
+    show_message ("cant open file for writing");
     return (FALSE);
   }
 
@@ -1028,7 +1029,7 @@ load_sun_d1 (char            *filename,
   g_free (data);
   
   if (err)
-    gimp_message ("EOF encountered on reading");
+    show_message ("EOF encountered on reading");
   
   gimp_drawable_flush (drawable);
   
@@ -1120,7 +1121,7 @@ load_sun_d8 (char            *filename,
   g_free (data);
   
   if (err)
-    gimp_message ("EOF encountered on reading");
+    show_message ("EOF encountered on reading");
   
   gimp_drawable_flush (drawable);
   
@@ -1202,7 +1203,7 @@ load_sun_d24 (char             *filename,
   g_free (data);
   
   if (err)
-    gimp_message ("EOF encountered on reading");
+    show_message ("EOF encountered on reading");
   
   gimp_drawable_flush (drawable);
   
@@ -1298,7 +1299,7 @@ load_sun_d32 (char            *filename,
   g_free (data);
   
   if (err)
-    gimp_message ("EOF encountered on reading");
+    show_message ("EOF encountered on reading");
   
   gimp_drawable_flush (drawable);
   
@@ -1454,7 +1455,7 @@ save_index (FILE    *ofp,
 
   if (ferror (ofp))
     {
-      gimp_message ("write error occured");
+      show_message ("write error occured");
       return (FALSE);
     }
   return (TRUE);
@@ -1563,7 +1564,7 @@ save_rgb (FILE   *ofp,
   
   if (ferror (ofp))
     {
-      gimp_message ("write error occured");
+      show_message ("write error occured");
       return (FALSE);
     }
   return (TRUE);
@@ -1707,6 +1708,16 @@ save_toggle_update (GtkWidget *widget,
     *toggle_val = FALSE;
 }
 
+/* Show a message. Where to show it, depends on the runmode */
+static void 
+show_message (char *message)
+{
+  if (l_run_mode == RUN_INTERACTIVE)
+    gimp_message (message);
+  else
+    fprintf (stderr, "sunras: %s\n", message);
+}
+
 static int 
 my_fwrite (void *ptr, 
 	   int   size, 
@@ -1715,3 +1726,7 @@ my_fwrite (void *ptr,
 {
   return fwrite(ptr, size, nmemb, stream);
 }
+
+
+
+

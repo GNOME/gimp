@@ -124,28 +124,28 @@ typedef struct {
 
 /* Declare some local functions.
  */
-static void   query      (void);
-static void   run        (char    *name,
-                          int      nparams,
-                          GParam  *param,
-                          int     *nreturn_vals,
-                          GParam **return_vals);
+static void   query               (void);
+static void   run                 (char    *name,
+				   int      nparams,
+				   GParam  *param,
+				   int     *nreturn_vals,
+				   GParam **return_vals);
 
-static void   init_gtk   (void);
+static void   init_gtk            (void);
 
-static gint32 load_image (char *filename);
-static gint   save_image (char *filename,
-			  gint32 image_ID,
-			  gint32 drawable_ID);
-static gint32 create_new_image (char *filename, guint width, guint height,
-				GImageType type, gint32 *layer_ID, 
-				GDrawable **drawable, GPixelRgn *pixel_rgn);
+static gint32 load_image          (char *filename);
+static gint   save_image          (char *filename,
+				   gint32 image_ID,
+				   gint32 drawable_ID);
+static gint32 create_new_image    (char *filename, guint width, guint height,
+				   GImageType type, gint32 *layer_ID, 
+				   GDrawable **drawable, GPixelRgn *pixel_rgn);
 
-static int set_pixelmap           (int, L_XWDCOLOR *,PIXEL_MAP *);
-static int get_pixelmap           (L_CARD32, PIXEL_MAP *,unsigned char *,
+static int    set_pixelmap        (int, L_XWDCOLOR *,PIXEL_MAP *);
+static int    get_pixelmap        (L_CARD32, PIXEL_MAP *,unsigned char *,
 				   unsigned char *, unsigned char *);
-static void set_bw_color_table    (gint32);
-static void set_color_table       (gint32, L_XWDFILEHEADER *, L_XWDCOLOR *);
+static void   set_bw_color_table  (gint32);
+static void   set_color_table     (gint32, L_XWDFILEHEADER *, L_XWDCOLOR *);
 
 static gint32 load_xwd_f2_d1_b1   (char *, FILE *, L_XWDFILEHEADER *,
 				   L_XWDCOLOR *);
@@ -174,6 +174,8 @@ static void write_xwd_cols   (FILE *, L_XWDFILEHEADER *, L_XWDCOLOR *);
 static gint save_index       (FILE *, gint32, gint32, int);
 static gint save_rgb         (FILE *, gint32, gint32);
 
+static void show_message     (char *);
+
 
 static int read_msb_first = 1;
 
@@ -200,13 +202,13 @@ query (void)
 {
   static GParamDef load_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_STRING, "filename", "The name of the file to load" },
+    { PARAM_INT32,  "run_mode",     "Interactive, non-interactive" },
+    { PARAM_STRING, "filename",     "The name of the file to load" },
     { PARAM_STRING, "raw_filename", "The name of the file to load" },
   };
   static GParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" },
+    { PARAM_IMAGE,  "image",        "Output image" },
   };
   static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static int nload_return_vals = sizeof (load_return_vals)
@@ -214,12 +216,11 @@ query (void)
 
   static GParamDef save_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Drawable to save" },
-    { PARAM_STRING, "filename", "The name of the file to save the image in" },
-    { PARAM_STRING, "raw_filename",
-            "The name of the file to save the image in" }
+    { PARAM_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { PARAM_IMAGE,    "image",        "Input image" },
+    { PARAM_DRAWABLE, "drawable",     "Drawable to save" },
+    { PARAM_STRING,   "filename",     "The name of the file to save the image in" },
+    { PARAM_STRING,   "raw_filename", "The name of the file to save the image in" }
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -245,7 +246,7 @@ those with alpha channels."),
                           "Peter Kirchgessner",
                           "1996",
                           "<Save>/XWD",
-                          "RGB*, GRAY*, INDEXED*",
+                          "RGB, GRAY, INDEXED",
                           PROC_PLUG_IN,
                           nsave_args, 0,
                           save_args, NULL);
@@ -305,7 +306,7 @@ run (char    *name,
 	case RUN_WITH_LAST_VALS:
 	  init_gtk ();
 	  export = gimp_export_image (&image_ID, &drawable_ID, "XWD", 
-				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED | CAN_HANDLE_ALPHA));
+				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED));
 	  if (export == EXPORT_CANCEL)
 	    {
 	      *nreturn_vals = 1;
@@ -374,7 +375,7 @@ load_image (char *filename)
   ifp = fopen (filename, "rb");
   if (!ifp)
   {
-    gimp_message (_("can't open file for reading"));
+    show_message (_("can't open file for reading"));
     return (-1);
   }
 
@@ -390,7 +391,7 @@ load_image (char *filename)
     read_xwd_header (ifp, &xwdhdr);
     if (xwdhdr.l_file_version != 7)
     {
-      gimp_message(_("can't open file as XWD file"));
+      show_message(_("can't open file as XWD file"));
       fclose (ifp);
       return (-1);
     }
@@ -405,7 +406,7 @@ load_image (char *filename)
                                         * xwdhdr.l_colormap_entries);
     if (xwdcolmap == NULL)
     {
-      gimp_message (_("can't get memory for colormap"));
+      show_message (_("can't get memory for colormap"));
       fclose (ifp);
       return (-1);
     }
@@ -423,7 +424,7 @@ load_image (char *filename)
 #endif
     if (xwdhdr.l_file_version != 7)
     {
-      gimp_message (_("can't read color entries"));
+      show_message (_("can't read color entries"));
       g_free (xwdcolmap);
       fclose (ifp);
       return (-1);
@@ -487,14 +488,14 @@ load_image (char *filename)
     temp = g_malloc (strlen (filename)+256);
     if (temp == NULL)
     {
-      gimp_message (_("this image depth/format is not supported"));
+      show_message (_("this image depth/format is not supported"));
     }
     else
     {
       sprintf (temp, _("load_image (xwd): XWD-file %s has format %d, depth %d\n\
 and bits per pixel %d.\nCurrently this is not supported.\n"),
                filename, (int)xwdhdr.l_pixmap_format, depth, bpp);
-      gimp_message (temp);
+      show_message (temp);
       g_free (temp);
     }
     return (-1);
@@ -519,7 +520,7 @@ save_image (char   *filename,
   /*  Make sure we're not saving an image with an alpha channel  */
   if (gimp_drawable_has_alpha (drawable_ID))
     {
-      gimp_message (_("XWD save cannot handle images with alpha channels"));
+      show_message (_("XWD save cannot handle images with alpha channels"));
       return FALSE;
     }
 
@@ -530,7 +531,7 @@ save_image (char   *filename,
     case RGB_IMAGE:
       break;
     default:
-      gimp_message (_("cannot operate on unknown image types"));
+      show_message (_("cannot operate on unknown image types"));
       return (FALSE);
       break;
     }
@@ -539,7 +540,7 @@ save_image (char   *filename,
   ofp = fopen (filename, "wb");
   if (!ofp)
     {
-      gimp_message (_("can't open file for writing"));
+      show_message (_("can't open file for writing"));
       return (FALSE);
     }
 
@@ -1197,7 +1198,7 @@ load_xwd_f2_d1_b1 (char            *filename,
   g_free (scanline);
   
   if (err)
-    gimp_message (_("EOF encountered on "));
+    show_message (_("EOF encountered on "));
   
   gimp_drawable_flush (drawable);
   
@@ -1295,7 +1296,7 @@ load_xwd_f2_d8_b8 (char            *filename,
   g_free (data);
   
   if (err)
-    gimp_message (_("EOF encountered on reading"));
+    show_message (_("EOF encountered on reading"));
   
   gimp_drawable_flush (drawable);
   
@@ -1343,7 +1344,7 @@ load_xwd_f2_d16_b16 (char            *filename,
   ColorMap = (unsigned char *)g_malloc (maxval);
   if (ColorMap == NULL)
     {
-      gimp_message (_("No memory for mapping colors"));
+      show_message (_("No memory for mapping colors"));
       return (-1);
     }
   memset (ColorMap,0,maxval);
@@ -1457,7 +1458,7 @@ load_xwd_f2_d16_b16 (char            *filename,
   g_free (ColorMap);
   
   if (err)
-    gimp_message (_("EOF encountered on reading"));
+    show_message (_("EOF encountered on reading"));
   
   gimp_drawable_flush (drawable);
   
@@ -1654,7 +1655,7 @@ load_xwd_f2_d24_b32 (char            *filename,
   g_free (data);
   
   if (err)
-    gimp_message (_("EOF encountered on reading"));
+    show_message (_("EOF encountered on reading"));
   
   gimp_drawable_flush (drawable);
   
@@ -1905,7 +1906,7 @@ load_xwd_f1_d24_b1 (char            *filename,
  g_free (xwddata);
  
  if (err)
-   gimp_message (_("EOF encountered on reading"));
+   show_message (_("EOF encountered on reading"));
  
  gimp_drawable_flush (drawable);
  
@@ -2029,7 +2030,7 @@ save_index (FILE    *ofp,
   
   if (ferror (ofp))
     {
-      gimp_message (_("Error during writing indexed/grey image"));
+      show_message (_("Error during writing indexed/grey image"));
       return (FALSE);
     }
   return (TRUE);
@@ -2118,12 +2119,21 @@ save_rgb (FILE   *ofp,
 
   if (ferror (ofp))
     {
-      gimp_message (_("Error during writing rgb image"));
+      show_message (_("Error during writing rgb image"));
       return (FALSE);
     }
   return (TRUE);
 }
 
+/* Show a message. Where to show it, depends on the runmode */
+static void 
+show_message (char *message)
+{
+  if (l_run_mode == RUN_INTERACTIVE)
+    gimp_message (message);
+  else
+    fprintf (stderr, "sunras: %s\n", message);
+}
 
 
 
