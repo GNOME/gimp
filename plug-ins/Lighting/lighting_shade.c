@@ -568,6 +568,7 @@ get_ray_color_no_bilinear (GimpVector3 *position)
   gdouble     xf, yf;
   GimpVector3 normal, *p;
 
+
   pos_to_float (position->x, position->y, &xf, &yf);
 
   x = RINT (xf);

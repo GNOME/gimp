@@ -218,15 +218,15 @@ pos_to_float (gdouble  x,
     {
       y -= 0.5 * (1.0 - (gdouble) height / (gdouble) width);
 
-      *xf = x * (gdouble) width;
-      *yf = y * (gdouble) width;
+      *xf = x * (gdouble) (width-1);
+      *yf = y * (gdouble) (width-1);
     }
   else
     {
       x -= 0.5 * (1.0 - (gdouble) width / (gdouble) height);
 
-      *xf = x * (gdouble) height;
-      *yf = y * (gdouble) height;
+      *xf = x * (gdouble) (height-1);
+      *yf = y * (gdouble) (height-1);
     }
 }
 
