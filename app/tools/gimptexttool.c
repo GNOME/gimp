@@ -118,6 +118,8 @@ static void   text_tool_render               (GimpTextTool    *text_tool);
 static GimpToolOptions * text_tool_options_new   (GimpToolInfo    *tool_info);
 static void              text_tool_options_reset (GimpToolOptions *tool_options);
 
+static void              text_tool_editor_show   (GimpTextTool    *text_tool);
+static void              text_tool_editor_ok     (GimpTextTool    *text_tool);
 
 /*  local variables  */
 
@@ -195,12 +197,13 @@ gimp_text_tool_class_init (GimpTextToolClass *klass)
 static void
 gimp_text_tool_init (GimpTextTool *text_tool)
 {
-  GimpTool *tool;
-
-  tool = GIMP_TOOL (text_tool);
+  GimpTool *tool = GIMP_TOOL (text_tool);
  
   text_tool->pango_context = pango_ft2_get_context (gimprc.monitor_xres,
                                                     gimprc.monitor_yres);
+
+  text_tool->buffer = gtk_text_buffer_new (NULL);
+  gtk_text_buffer_set_text (text_tool->buffer, "Eeek, it's The GIMP", -1);
 
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TEXT_TOOL_CURSOR);
@@ -209,14 +212,21 @@ gimp_text_tool_init (GimpTextTool *text_tool)
 static void
 gimp_text_tool_finalize (GObject *object)
 {
-  GimpTextTool *text_tool;
-
-  text_tool = GIMP_TEXT_TOOL (object);
+  GimpTextTool *text_tool = GIMP_TEXT_TOOL (object);
 
   if (text_tool->pango_context)
     {
       g_object_unref (text_tool->pango_context);
       text_tool->pango_context = NULL;
+    }
+  if (text_tool->buffer)
+    {
+      g_object_unref (text_tool->buffer);
+      text_tool->buffer = NULL;
+    }
+  if (text_tool->editor)
+    {
+      gtk_widget_destroy (text_tool->editor);
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -275,7 +285,7 @@ text_tool_button_press (GimpTool        *tool,
 	return;
       }
 
-  text_tool_render (GIMP_TEXT_TOOL (tool));
+  text_tool_editor_show (text_tool);
 }
 
 static void
@@ -285,7 +295,8 @@ text_tool_button_release (GimpTool        *tool,
 			  GdkModifierType  state,
 			  GimpDisplay     *gdisp)
 {
-  gimp_tool_control_halt (tool->control);    /* sets paused_count to 0 -- is this ok? */
+  /* sets paused_count to 0 -- is this ok? */
+  gimp_tool_control_halt (tool->control);
 }
 
 static void
@@ -296,20 +307,14 @@ text_tool_cursor_update (GimpTool        *tool,
 {
   GimpLayer *layer;
 
-  layer = gimp_image_pick_correlate_layer (gdisp->gimage, coords->x, coords->y);
+  layer = gimp_image_pick_correlate_layer (gdisp->gimage,
+                                           coords->x, coords->y);
 
-  if (layer && gimp_layer_is_floating_sel (layer))
-    {
-      /* if there is a floating selection, and this aint it ... */
-
-      gimp_tool_control_set_cursor_modifier (tool->control,
-                                             GIMP_CURSOR_MODIFIER_MOVE);
-    }
-  else
-    {
-      gimp_tool_control_set_cursor_modifier (tool->control,
-                                             GIMP_CURSOR_MODIFIER_NONE);
-    }
+  gimp_tool_control_set_cursor_modifier (tool->control,
+                                         (layer &&
+                                          gimp_layer_is_floating_sel (layer)) ?
+                                         GIMP_CURSOR_MODIFIER_MOVE            :
+                                         GIMP_CURSOR_MODIFIER_NONE);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
@@ -317,11 +322,14 @@ text_tool_cursor_update (GimpTool        *tool,
 static void
 text_tool_render (GimpTextTool *text_tool)
 {
-  TextOptions  *options;
-  GimpImage    *gimage;
-  GimpText     *text;
-  GimpLayer    *layer;
-  const gchar  *font;
+  TextOptions *options;
+  GimpImage   *gimage;
+  GimpText    *text;
+  GimpLayer   *layer;
+  const gchar *font;
+  gchar       *str;
+  GtkTextIter  start_iter;
+  GtkTextIter  end_iter;
 
   options = (TextOptions *) GIMP_TOOL (text_tool)->tool_info->tool_options;
   gimage  = text_tool->gdisp->gimage;
@@ -334,9 +342,15 @@ text_tool_render (GimpTextTool *text_tool)
       return;
     }
 
+  gtk_text_buffer_get_bounds (text_tool->buffer, &start_iter, &end_iter);
+  str = gtk_text_buffer_get_text (text_tool->buffer,
+                                  &start_iter, &end_iter, FALSE);
+
+  if (!str)
+    return;
+
   text = GIMP_TEXT (g_object_new (GIMP_TYPE_TEXT,
-                                  "text", ("No, you can't change this text.\n"
-                                           "Please DON'T report this bug."),
+                                  "text",           str,
                                   "font",           font,
                                   "size",           options->size,
                                   "border",         options->border,
@@ -344,7 +358,8 @@ text_tool_render (GimpTextTool *text_tool)
                                   "letter-spacing", options->letter_spacing,
                                   "line-spacing",   options->line_spacing,
                                   NULL));
-  
+  g_free (str);
+
   layer = gimp_image_text_render (gimage, text);
 
   g_object_unref (text);
@@ -520,4 +535,62 @@ text_tool_options_reset (GimpToolOptions *tool_options)
                             options->letter_spacing_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->line_spacing_w),
                             options->line_spacing_d);
+}
+
+static void
+text_tool_editor_show (GimpTextTool *text_tool)
+{
+  GtkWidget *scrolled_window;
+  GtkWidget *text_view;
+
+  if (text_tool->editor)
+    {
+      if (text_tool->editor->window)
+        gdk_window_raise (text_tool->editor->window);
+
+      return;
+    }
+
+  text_tool->editor = gimp_dialog_new (_("GIMP Text Editor"), "text_editor",
+                                       gimp_standard_help_func,
+                                       "dialogs/text_editor.html",
+                                       GTK_WIN_POS_NONE,
+                                       FALSE, TRUE, FALSE,
+
+                                       GTK_STOCK_CANCEL, gtk_widget_destroy,
+                                       NULL, 1, NULL, TRUE, TRUE,
+                                       
+                                       GTK_STOCK_OK, text_tool_editor_ok,
+                                       NULL, text_tool, NULL, TRUE, TRUE,
+
+                                       NULL);
+
+  g_object_add_weak_pointer (G_OBJECT (text_tool->editor),
+                             (gpointer) &text_tool->editor);
+
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+				  GTK_POLICY_AUTOMATIC,
+				  GTK_POLICY_AUTOMATIC);
+  gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 4);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (text_tool->editor)->vbox),
+                     scrolled_window);
+  gtk_widget_show (scrolled_window);
+
+  text_view = gtk_text_view_new_with_buffer (text_tool->buffer);
+  gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
+  gtk_widget_show (text_view);
+
+  gtk_widget_show (text_tool->editor);
+}
+
+static void
+text_tool_editor_ok (GimpTextTool *text_tool)
+{
+  if (!text_tool->editor)
+    return;
+
+  gtk_widget_destroy (text_tool->editor);
+
+  text_tool_render (text_tool);
 }

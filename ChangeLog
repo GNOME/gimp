@@ -1,5 +1,9 @@
 2002-10-10  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptexttool.[ch]: added a very simple text editor.
+
+2002-10-10  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig-params.[ch]: optionally allow GIMP_UNIT_PIXEL
 	as value for GimpUnit params.
 

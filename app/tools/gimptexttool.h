@@ -33,13 +33,16 @@ typedef struct _GimpTextToolClass GimpTextToolClass;
 
 struct _GimpTextTool
 {
-  GimpTool      parent_instance;
+  GimpTool       parent_instance;
 
-  gint          click_x;
-  gint          click_y;
+  gint           click_x;
+  gint           click_y;
 
-  GimpDisplay  *gdisp;
-  PangoContext *pango_context;
+  GimpDisplay   *gdisp;
+  PangoContext  *pango_context;
+
+  GtkTextBuffer *buffer;
+  GtkWidget     *editor;
 };
 
 struct _GimpTextToolClass
