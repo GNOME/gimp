@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = \
+SUBDIRS = m4  \
 	tools		\
 	intl		\
 	libgimp		\
@@ -23,7 +23,7 @@ bin_SCRIPTS = gimptool-1.2 @GIMPINSTALL@
 
 EXTRA_SCRIPTS = gimptool-1.2 gimpinstall-1.2
 
-EXTRA_DIST = \
+EXTRA_DIST = config.rpath mkinstalldirs  \
 	cursors/mouse.xbm			\
 	cursors/mouse_mask.xbm			\
 	cursors/crosshair.xbm			\
@@ -174,9 +174,9 @@ EXTRA_DIST = \
 	README.perl				\
 	ChangeLog.pre-1-0			\
 	ChangeLog.pre-1-2			\
-	PLUGIN_MAINTAINERS			\
+	LICENSE					\
 	MAINTAINERS				\
-	TODO					\
+	PLUGIN_MAINTAINERS			\
 	gtkrc					\
 	gtkrc_user				\
 	unitrc					\
@@ -284,3 +284,5 @@ checkin: populate
 
 release:
 	$(MAKE) dist distdir=$(PACKAGE)`date +"%y%m%d"`
+
+ACLOCAL_AMFLAGS = -I m4

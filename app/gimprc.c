@@ -383,15 +383,18 @@ gimp_system_rc_file (void)
   return value;
 }
 
+
+#define LEXBUF_HUNKSIZE 2048
+
 gboolean
 parse_buffers_init (void)
 {
   if (!parse_info.buffer)
     {
-      parse_info.buffer = g_new (gchar, 4096);
-      parse_info.tokenbuf      = parse_info.buffer + 2048;
-      parse_info.buffer_size   = 2048;
-      parse_info.tokenbuf_size = 2048;
+      parse_info.buffer        = g_new (gchar, 4 * LEXBUF_HUNKSIZE);
+      parse_info.tokenbuf      = parse_info.buffer + LEXBUF_HUNKSIZE;
+      parse_info.buffer_size   = LEXBUF_HUNKSIZE;
+      parse_info.tokenbuf_size = 4 * LEXBUF_HUNKSIZE;
 
       return TRUE;
     }

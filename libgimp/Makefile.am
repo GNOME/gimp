@@ -72,6 +72,7 @@ INCLUDES = \
 	-I$(includedir)
 
 EXTRA_DIST = \
+	COPYING			\
 	gimpfeatures.h.in	\
 	makefile.mingw		\
 	makefile.mingw.in	\
