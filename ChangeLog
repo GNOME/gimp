@@ -1,3 +1,13 @@
+2003-03-21  Manish Singh  <yosh@gimp.org>
+                                                                                
+	* plug-ins/common/ps.c: always quote the filename, since system/popen
+	uses the shell. Also, never quote the filename if we are reading from
+	a parameter file (only in the win32 case). Fixes #108648.
+
+	* plug-ins/dbbrowser/dbbrowser_utils.c: double click on a list item
+	files Apply, if applicable. Remove the existing model in the treeview
+	(which will deallocate it) instead of clearing it.
+                                                                                
 2003-03-22  Sven Neumann  <sven@gimp.org>
 
 	* themes/Default/images/stock-channel-16.png

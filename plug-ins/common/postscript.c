@@ -90,6 +90,14 @@ static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.15  04-Oct-2002";
 
 #define STR_LENGTH 64
 
+#ifndef G_OS_WIN32
+#define DEFAULT_GS_PROG "gs"
+#else
+/* We want the console ghostscript application. It should be in the PATH */
+#define DEFAULT_GS_PROG "gswin32c"
+#endif
+
+
 /* Load info */
 typedef struct
 {
@@ -1269,13 +1277,12 @@ ps_open (gchar            *filename,
          gint             *ury,
          gint             *is_epsf)
 {
-  char *cmd, *gs, *gs_opts, *driver, *fnbuf = NULL;
+  char *cmd, *gs, *gs_opts, *driver, *quoted_fn, *fnbuf = NULL;
   FILE *fd_popen;
   int width, height, resolution;
   int x0, y0, x1, y1;
   int offx = 0, offy = 0;
   int is_pdf, maybe_epsf = 0;
-  int blank, anf, apo;
   char TextAlphaBits[64], GraphicsAlphaBits[64], geometry[32];
   char offset[32];
 
@@ -1360,43 +1367,10 @@ ps_open (gchar            *filename,
 #endif
 
   gs = getenv ("GS_PROG");
-#ifndef G_OS_WIN32
-  if (gs == NULL) gs = "gs";
-
-  /* Escape special characters. Escaping " does not work with call of shell. */
-  /* fnbuf points to memory that should be freed. */
-  filename = fnbuf = g_strescape (filename, "\"");
-  blank = (strchr (filename, ' ') != NULL);
-  apo = (strchr (filename, '\'') != NULL);
-  anf = (strchr (filename, '"') != NULL);
-
-  /* Must the filename be enclosed ? */
-  /* If we have " and ' it will not work */
-  if (blank || anf || apo)
-  {
-    if (!anf) /* No " ? Enclose with " */
-    {
-      filename = g_strdup_printf ("\"%s\"", filename);
-      g_free (fnbuf);
-      fnbuf = filename;
-    }
-    else if (!apo) /* No ' ? Enclose with ' */
-    {
-      filename = g_strdup_printf ("'%s'", filename);
-      g_free (fnbuf);
-      fnbuf = filename;
-    }
-  }
-
-#else
-  /* We want the console ghostscript application. It should be in the PATH */
   if (gs == NULL)
-    gs = "gswin32c";
-  /* Quote the filename in case it contains spaces. Ignore memory leak,
-   * this is a short-lived plug-in.
-   */
-  filename = g_strdup_printf ("\"%s\"", filename);
-#endif
+    gs = DEFAULT_GS_PROG;
+
+  quoted_fn = g_shell_quote (filename);
 
   gs_opts = getenv ("GS_OPTIONS");
   if (gs_opts == NULL)
@@ -1422,11 +1396,11 @@ ps_open (gchar            *filename,
   if (!is_pdf)    /* For PDF, we cant set geometry */
     sprintf (geometry,"-g%dx%d ", width, height);
 
-  cmd = g_strdup_printf ("%s -sDEVICE=%s -r%d %s%s%s-q -dNOPAUSE %s \
--sOutputFile=%s %s-f %s %s-c quit",
+  cmd = g_strdup_printf ("%s -sDEVICE=%s -r%d %s%s%s-q -dNOPAUSE %s "
+                         "-sOutputFile=%s %s-f %s %s-c quit",
 			 gs, driver, resolution, geometry,
 			 TextAlphaBits, GraphicsAlphaBits,
-			 gs_opts, pnmfile, offset, filename,
+			 gs_opts, pnmfile, offset, quoted_fn,
                          *is_epsf ? "-c showpage " : "");
 #ifdef PS_DEBUG
   g_print ("Going to start ghostscript with:\n%s\n", cmd);
@@ -1454,7 +1428,12 @@ ps_open (gchar            *filename,
       indirfile = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "i%lx",
 				   g_get_tmp_dir (), getpid ());
       indf = fopen (indirfile, "w");
-      fprintf (indf, "%s\n", cmd + strlen (gs) + 1);
+      fprintf (indf, "%s -sDEVICE=%s -r%d %s%s%s-q -dNOPAUSE %s "
+	             "-sOutputFile=%s %s-f %s %s-c quit\n",
+	       gs, driver, resolution, geometry,
+	       TextAlphaBits, GraphicsAlphaBits,
+	       gs_opts, pnmfile, offset, filename,
+	       *is_epsf ? "-c showpage " : "");
       sprintf (cmd, "%s @%s", gs, indirfile);
       fclose (indf);
     }
@@ -1464,6 +1443,7 @@ ps_open (gchar            *filename,
 #endif
   g_free (cmd);
   g_free (fnbuf);
+  g_free (quoted_fn);
 
   return (fd_popen);
 }

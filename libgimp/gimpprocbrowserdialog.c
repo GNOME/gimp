@@ -87,18 +87,22 @@ typedef struct
 
 /* local functions */
 
-static void         dialog_apply_callback     (GtkWidget        *widget,
-					       dbbrowser_t      *dbbrowser);
-static gint         procedure_select_callback (GtkTreeSelection *sel,
-					       dbbrowser_t      *dbbrowser);
-static void         dialog_search_callback    (GtkWidget        *widget, 
-					       dbbrowser_t      *dbbrowser);
-static void         dialog_select             (dbbrowser_t      *dbbrowser, 
-					       gchar            *proc_name);
-static void         dialog_close_callback     (GtkWidget        *widget, 
-					       dbbrowser_t      *dbbrowser);
-static void         convert_string            (gchar            *str);
-static const gchar *GParamType2char           (GimpPDBArgType    t);
+static void         dialog_apply_callback        (GtkWidget         *widget,
+						  dbbrowser_t       *dbbrowser);
+static gint         procedure_select_callback    (GtkTreeSelection  *sel,
+						  dbbrowser_t       *dbbrowser);
+static void         procedure_activated_callback (GtkTreeView       *treeview,
+						  GtkTreePath       *path,
+						  GtkTreeViewColumn *column,
+						  dbbrowser_t       *dbbrowser);
+static void         dialog_search_callback       (GtkWidget         *widget, 
+						  dbbrowser_t       *dbbrowser);
+static void         dialog_select                (dbbrowser_t       *dbbrowser, 
+						  gchar             *proc_name);
+static void         dialog_close_callback        (GtkWidget         *widget, 
+						  dbbrowser_t       *dbbrowser);
+static void         convert_string               (gchar             *str);
+static const gchar *GParamType2char              (GimpPDBArgType     t);
 
 /* create the dialog box
  * console_entry != NULL => called from the script-fu-console
@@ -191,6 +195,10 @@ gimp_db_browser (GimpDBBrowserApplyCallback apply_callback)
 					       "text", 0, NULL);
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (dbbrowser->tv), FALSE);
 
+  if (apply_callback)
+    g_signal_connect (dbbrowser->tv, "row_activated",
+                      G_CALLBACK (procedure_activated_callback), dbbrowser);
+
   gtk_widget_set_size_request (dbbrowser->tv, DBL_LIST_WIDTH, DBL_HEIGHT);
   gtk_container_add (GTK_CONTAINER (scrolled_window), dbbrowser->tv);
   gtk_widget_show (dbbrowser->tv);
@@ -257,6 +265,15 @@ gimp_db_browser (GimpDBBrowserApplyCallback apply_callback)
   dialog_search_callback (NULL, dbbrowser);
 
   return dbbrowser->dialog;
+}
+
+static void
+procedure_activated_callback (GtkTreeView       *treeview,
+			      GtkTreePath       *path,
+			      GtkTreeViewColumn *column,
+			      dbbrowser_t       *dbbrowser)
+{
+  dialog_apply_callback (NULL, dbbrowser);
 }
 
 static gint
@@ -580,18 +597,7 @@ dialog_search_callback (GtkWidget   *widget,
   GString      *query;
   GtkTreeIter   iter;
 
-  if (dbbrowser->store)
-    {
-      gtk_list_store_clear (dbbrowser->store);
-
-      /* Perhaps I'm too stupid but I can't find a proper way of
-         keeping the list store from sorting itself while new items
-         are added. Since this _slow_, we unset the store here to
-         force creation of a new one that doesn't sort and activate
-         sorting later.
-      */
-      dbbrowser->store = NULL;
-    }
+  gtk_tree_view_set_model (GTK_TREE_VIEW (dbbrowser->tv), NULL);
 
   /* search */
 
@@ -635,13 +641,10 @@ dialog_search_callback (GtkWidget   *widget,
 			        &num_procs, &proc_list);
     }
 
-  if (!dbbrowser->store)
-    {
-      dbbrowser->store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
-      gtk_tree_view_set_model (GTK_TREE_VIEW (dbbrowser->tv),
-                               GTK_TREE_MODEL (dbbrowser->store));
-      g_object_unref (dbbrowser->store);
-    }
+  dbbrowser->store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
+  gtk_tree_view_set_model (GTK_TREE_VIEW (dbbrowser->tv),
+                           GTK_TREE_MODEL (dbbrowser->store));
+  g_object_unref (dbbrowser->store);
 
   for (i = 0; i < num_procs; i++)
     {
