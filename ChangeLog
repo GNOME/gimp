@@ -1,3 +1,12 @@
+2003-08-05  Raphael Quinet  <quinet@gamers.org>
+
+	* plug-ins/common/jpeg.c (DEFAULT_QUALITY): increase the default
+	quality setting from 0.75 to 0.85, as requested in bug #61088 and
+	in bug #63610.  This seems to be a more reasonable default for
+	most users.  The correct way to solve this problem would be to
+	implement the persistent preferences as described in bug #63610,
+	but this quick fix should take care of the most annoying problem.
+
 2003-08-05  Henrik Brix Andersen  <brix@gimp.org>
 
 	* plug-ins/common/align_layers.c

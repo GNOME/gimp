@@ -174,7 +174,8 @@
 /* #undef HAVE_PROGRESSIVE_JPEG   if your library doesn't support it     */
 /* #define HAVE_PROGRESSIVE_JPEG  if your library knows how to handle it */
 
-#define DEFAULT_QUALITY     0.75
+/* See bugs #63610 and #61088 for a discussion about the quality settings */
+#define DEFAULT_QUALITY     0.85
 #define DEFAULT_SMOOTHING   0.0
 #define DEFAULT_OPTIMIZE    1
 #define DEFAULT_PROGRESSIVE 0
