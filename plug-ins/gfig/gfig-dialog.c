@@ -246,6 +246,7 @@ gfig_dialog (void)
 
   /* initial gimp and default styles */
   gfig_read_gimp_style (&gfig_context->gimp_style, "Gimp");
+  gfig_context->default_style.paint_type = selvals.painttype;
   gfig_context->current_style = &gfig_context->default_style;
   gfig_style_append (&gfig_context->gimp_style);
   gfig_read_gimp_style (&gfig_context->default_style, "Base");

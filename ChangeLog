@@ -1,3 +1,12 @@
+2004-11-28  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/gfig-dialog.c: correctly initializes the paint_type
+	field of the default style.
+
+	* plug-ins/gfig/gfig-style.c: don't print an useless error message
+	where no-one can see it when loading an other with no style but use
+	the default style instead.
+
 2004-11-28  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gfig/gfig-dialog.[ch]
