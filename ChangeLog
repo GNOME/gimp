@@ -1,3 +1,33 @@
+2003-02-09  Michael Natterer  <mitch@convergence.de>
+
+	* app/core/core-enums.[ch]: changed GimpOrientationType from
+	GIMP_HORIZONTAL to GIMP_ORIENTATION_HORIZONTAL etc.
+
+	* tools/pdbgen/pdb/guides.pdb: changed accordingly. Don't subtract
+	1 from guide->orientation because InternalOrientationType no
+	longer exists.
+
+	* tools/pdbgen/stddefs.pl: chop the whole GIMP_ORIENTATION_UNKNOWN
+	value from the enum, not just UNKNOWN.
+
+	* app/pdb/guides_cmds.c
+	* app/pdb/transform_tools_cmds.c
+	* libgimp/gimpenums.h
+	* libgimp/gimpguides_pdb.c
+	* plug-ins/script-fu/script-fu-constants.c
+	* plug-ins/pygimp/gimpenums.py
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* libgimp/gimpcompat.h
+	* plug-ins/script-fu/siod-wrapper.c: added compat enums.
+
+	* plug-ins/imagemap/imap_cmd_gimp_guides.c
+	* plug-ins/xjt/xjt.c
+	* plug-ins/xjt/xpdb_calls.c
+	* plug-ins/common/gih.c
+	* plug-ins/common/guillotine.c
+	* plug-ins/common/rotate.c: changed accordingly.
+
 2003-02-09  Manish Singh  <yosh@gimp.org>
 
 	* libgimp/gimp.c: implemented plug-in debugging hooks. Also, use

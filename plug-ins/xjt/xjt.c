@@ -633,13 +633,13 @@ run (gchar   *name,
 gint32
 p_to_GimpOrientation(gint32 orientation)
 {
-  if(orientation == XJT_ORIENTATION_VERTICAL) return(GIMP_VERTICAL);
-  return(GIMP_HORIZONTAL);
+  if(orientation == XJT_ORIENTATION_VERTICAL) return(GIMP_ORIENTATION_VERTICAL);
+  return(GIMP_ORIENTATION_HORIZONTAL);
 }
 gint32
 p_to_XJTOrientation(gint32 orientation)
 {
-  if(orientation == GIMP_VERTICAL) return(XJT_ORIENTATION_VERTICAL);
+  if(orientation == GIMP_ORIENTATION_VERTICAL) return(XJT_ORIENTATION_VERTICAL);
   return(XJT_ORIENTATION_HORIZONTAL);
 }
 

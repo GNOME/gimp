@@ -101,10 +101,10 @@ gimp_guides_ok_cb(gpointer data)
       gint position = gimp_image_get_guide_position(image_ID, guide_num);
 
       if (gimp_image_get_guide_orientation(image_ID, guide_num) 
-	  == GIMP_HORIZONTAL) {
+	  == GIMP_ORIENTATION_HORIZONTAL) {
 	 hguides = g_slist_insert_sorted(hguides, GINT_TO_POINTER(position),
 					 guide_sort_func);
-      } else {			/* GIMP_VERTICAL */
+      } else {			/* GIMP_ORIENTATION_VERTICAL */
 	 vguides = g_slist_insert_sorted(vguides, GINT_TO_POINTER(position),
 					 guide_sort_func);
       }

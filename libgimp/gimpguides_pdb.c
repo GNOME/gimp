@@ -183,7 +183,7 @@ gimp_image_get_guide_orientation (gint32 image_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  GimpOrientationType orientation = GIMP_UNKNOWN;
+  GimpOrientationType orientation = GIMP_ORIENTATION_UNKNOWN;
 
   return_vals = gimp_run_procedure ("gimp_image_get_guide_orientation",
 				    &nreturn_vals,

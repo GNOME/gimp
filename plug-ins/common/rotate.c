@@ -594,7 +594,7 @@ rotate (void)
 	      for (list = guides; list; list = list->next)  
 		{
 		  guide = (GuideInfo *)list->data;
-		  if (guide->orientation == GIMP_HORIZONTAL)
+		  if (guide->orientation == GIMP_ORIENTATION_HORIZONTAL)
 		    gimp_image_add_vguide (image_ID, height - guide->position);
 		  else
 		    gimp_image_add_hguide (image_ID, guide->position);
@@ -605,7 +605,7 @@ rotate (void)
 	      for (list = guides; list; list = list->next)  
 		{
 		  guide = (GuideInfo *)list->data;
-		  if (guide->orientation == GIMP_HORIZONTAL)
+		  if (guide->orientation == GIMP_ORIENTATION_HORIZONTAL)
 		    gimp_image_add_hguide (image_ID, height - guide->position);
 		  else
 		    gimp_image_add_vguide (image_ID, width - guide->position);
@@ -616,7 +616,7 @@ rotate (void)
 	      for (list = guides; list; list = list->next)  
 		{
 		  guide = (GuideInfo *)list->data;
-		  if (guide->orientation == GIMP_HORIZONTAL)
+		  if (guide->orientation == GIMP_ORIENTATION_HORIZONTAL)
 		    gimp_image_add_vguide (image_ID, guide->position);
 		  else
 		    gimp_image_add_hguide (image_ID, width - guide->position);

@@ -218,7 +218,7 @@ HELP
     @outargs = (
 	{ name => 'orientation', type => &std_orientation_enum, init => 1,
 	  desc => "The guide's orientation: { %%desc%% }",
-	  libdef => 'GIMP_UNKNOWN' }
+	  libdef => 'GIMP_ORIENTATION_UNKNOWN' }
     );
 
     %invoke = (
@@ -234,7 +234,7 @@ HELP
       if ((((GimpGuide *) guides->data)->guide_ID == guide) &&
 	  (((GimpGuide *) guides->data)->position >= 0))
 	{
-	  orientation = ((GimpGuide *) guides->data)->orientation - 1;
+	  orientation = ((GimpGuide *) guides->data)->orientation;
 	  success = TRUE;
 	  break;
 	}

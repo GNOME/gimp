@@ -312,6 +312,10 @@ init_constants (void)
   setvar (cintern ("CONTINUOUS"),  flocons (GIMP_PAINT_CONSTANT),    NIL);
   setvar (cintern ("INCREMENTAL"), flocons (GIMP_PAINT_INCREMENTAL), NIL);
 
+  setvar (cintern ("HORIZONTAL"), flocons (GIMP_ORIENTATION_HORIZONTAL), NIL);
+  setvar (cintern ("VERTICAL"),   flocons (GIMP_ORIENTATION_VERTICAL),   NIL);
+  setvar (cintern ("UNKNOWN"),    flocons (GIMP_ORIENTATION_UNKNOWN),    NIL);
+
   /* Useful misc stuff */
   setvar (cintern ("TRUE"),           flocons (TRUE),  NIL);
   setvar (cintern ("FALSE"),          flocons (FALSE), NIL);

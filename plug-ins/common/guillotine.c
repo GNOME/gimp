@@ -148,17 +148,17 @@ guillotine (gint32 image_ID)
 
       switch (gimp_image_get_guide_orientation (image_ID, guide_num))
         {
-        case GIMP_HORIZONTAL:
+        case GIMP_ORIENTATION_HORIZONTAL:
 	  hguides = g_list_insert_sorted (hguides, GINT_TO_POINTER (position),
 					  guide_sort_func);
           break;
 
-        case GIMP_VERTICAL:
+        case GIMP_ORIENTATION_VERTICAL:
 	  vguides = g_list_insert_sorted (vguides, GINT_TO_POINTER (position),
 					  guide_sort_func);
           break;
 
-        case GIMP_UNKNOWN:
+        case GIMP_ORIENTATION_UNKNOWN:
           g_assert_not_reached ();
           break;
 	}

@@ -69,7 +69,7 @@ flip_invoker (Gimp     *gimp,
     success = FALSE;
 
   flip_type = args[1].value.pdb_int;
-  if (flip_type < GIMP_HORIZONTAL || flip_type > GIMP_VERTICAL)
+  if (flip_type < GIMP_ORIENTATION_HORIZONTAL || flip_type > GIMP_ORIENTATION_VERTICAL)
     success = FALSE;
 
   if (success)
@@ -95,7 +95,7 @@ static ProcArg flip_inargs[] =
   {
     GIMP_PDB_INT32,
     "flip_type",
-    "Type of flip: GIMP_HORIZONTAL (0), GIMP_VERTICAL (1), GIMP_"
+    "Type of flip: GIMP_ORIENTATION_HORIZONTAL (0) or GIMP_ORIENTATION_VERTICAL (1)"
   }
 };
 
@@ -519,7 +519,7 @@ shear_invoker (Gimp     *gimp,
   interpolation = args[1].value.pdb_int ? TRUE : FALSE;
 
   shear_type = args[2].value.pdb_int;
-  if (shear_type < GIMP_HORIZONTAL || shear_type > GIMP_VERTICAL)
+  if (shear_type < GIMP_ORIENTATION_HORIZONTAL || shear_type > GIMP_ORIENTATION_VERTICAL)
     success = FALSE;
 
   magnitude = args[3].value.pdb_float;
@@ -570,7 +570,7 @@ static ProcArg shear_inargs[] =
   {
     GIMP_PDB_INT32,
     "shear_type",
-    "Type of shear: GIMP_HORIZONTAL (0), GIMP_VERTICAL (1), GIMP_"
+    "Type of shear: GIMP_ORIENTATION_HORIZONTAL (0) or GIMP_ORIENTATION_VERTICAL (1)"
   },
   {
     GIMP_PDB_FLOAT,

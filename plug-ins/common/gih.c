@@ -753,7 +753,7 @@ size_adjustment_callback (GtkWidget *widget,
 
   *(adj->value) = GTK_ADJUSTMENT (widget)->value;
 
-  if (adj->orientation == GIMP_VERTICAL)
+  if (adj->orientation == GIMP_ORIENTATION_VERTICAL)
     {
       size = gimp_image_width (adj->image);
       newn = size / *(adj->value);
@@ -908,7 +908,7 @@ gih_save_dialog (gint32 image_ID)
   gtk_widget_show (spinbutton);
 
   layer_ID = gimp_image_get_layers (image_ID, &nlayers);
-  cellw_adjust.orientation = GIMP_VERTICAL;
+  cellw_adjust.orientation = GIMP_ORIENTATION_VERTICAL;
   cellw_adjust.image       = image_ID;
   cellw_adjust.toplayer    = layer_ID[nlayers-1];
   cellw_adjust.nguides     = 0;
@@ -930,7 +930,7 @@ gih_save_dialog (gint32 image_ID)
   gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  cellh_adjust.orientation = GIMP_HORIZONTAL;
+  cellh_adjust.orientation = GIMP_ORIENTATION_HORIZONTAL;
   cellh_adjust.image       = image_ID;
   cellh_adjust.toplayer    = layer_ID[nlayers-1];
   cellh_adjust.nguides     = 0;

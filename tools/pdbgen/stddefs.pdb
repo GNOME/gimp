@@ -36,7 +36,7 @@ sub std_antialias_arg () {{
 }}
 
 sub std_orientation_enum () {
-    'enum GimpOrientationType (no UNKNOWN)'
+    'enum GimpOrientationType (no GIMP_ORIENTATION_UNKNOWN)'
 }
 
 1;

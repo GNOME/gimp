@@ -234,9 +234,9 @@ typedef enum
 
 typedef enum
 {
-  GIMP_HORIZONTAL,
-  GIMP_VERTICAL,
-  GIMP_UNKNOWN
+  GIMP_ORIENTATION_HORIZONTAL,
+  GIMP_ORIENTATION_VERTICAL,
+  GIMP_ORIENTATION_UNKNOWN
 } GimpOrientationType;
 
 typedef enum

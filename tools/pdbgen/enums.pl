@@ -190,10 +190,11 @@ package Gimp::CodeGen::enums;
     GimpOrientationType =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',
-	  symbols => [ qw(GIMP_HORIZONTAL GIMP_VERTICAL GIMP_UNKNOWN) ],
-	  mapping => { GIMP_HORIZONTAL => '0',
-		       GIMP_VERTICAL => '1',
-		       GIMP_UNKNOWN => '2' }
+	  symbols => [ qw(GIMP_ORIENTATION_HORIZONTAL
+			  GIMP_ORIENTATION_VERTICAL GIMP_ORIENTATION_UNKNOWN) ],
+	  mapping => { GIMP_ORIENTATION_HORIZONTAL => '0',
+		       GIMP_ORIENTATION_VERTICAL => '1',
+		       GIMP_ORIENTATION_UNKNOWN => '2' }
 	},
     GimpBlendMode =>
 	{ contig => 1,

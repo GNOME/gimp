@@ -46,14 +46,10 @@ GType gimp_orientation_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_HORIZONTAL, /*< desc="Horizontal" >*/
-  GIMP_VERTICAL,   /*< desc="Vertical"   >*/
-  GIMP_UNKNOWN     /*< desc="Unknown"    >*/
+  GIMP_ORIENTATION_HORIZONTAL, /*< desc="Horizontal" >*/
+  GIMP_ORIENTATION_VERTICAL,   /*< desc="Vertical"   >*/
+  GIMP_ORIENTATION_UNKNOWN     /*< desc="Unknown"    >*/
 } GimpOrientationType;
-
-#define GIMP_ORIENTATION_HORIZONTAL GIMP_HORIZONTAL
-#define GIMP_ORIENTATION_VERTICAL   GIMP_VERTICAL
-#define GIMP_ORIENTATION_UNKNOWN    GIMP_UNKNOWN
 
 
 #define GIMP_TYPE_BLEND_MODE (gimp_blend_mode_get_type ())

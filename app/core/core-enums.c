@@ -10,9 +10,9 @@
 
 static const GEnumValue gimp_orientation_type_enum_values[] =
 {
-  { GIMP_HORIZONTAL, N_("Horizontal"), "horizontal" },
-  { GIMP_VERTICAL, N_("Vertical"), "vertical" },
-  { GIMP_UNKNOWN, N_("Unknown"), "unknown" },
+  { GIMP_ORIENTATION_HORIZONTAL, N_("Horizontal"), "horizontal" },
+  { GIMP_ORIENTATION_VERTICAL, N_("Vertical"), "vertical" },
+  { GIMP_ORIENTATION_UNKNOWN, N_("Unknown"), "unknown" },
   { 0, NULL, NULL }
 };
 

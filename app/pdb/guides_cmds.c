@@ -422,7 +422,7 @@ image_get_guide_orientation_invoker (Gimp     *gimp,
 	  if ((((GimpGuide *) guides->data)->guide_ID == guide) &&
 	      (((GimpGuide *) guides->data)->position >= 0))
 	    {
-	      orientation = ((GimpGuide *) guides->data)->orientation - 1;
+	      orientation = ((GimpGuide *) guides->data)->orientation;
 	      success = TRUE;
 	      break;
 	    }
@@ -458,7 +458,7 @@ static ProcArg image_get_guide_orientation_outargs[] =
   {
     GIMP_PDB_INT32,
     "orientation",
-    "The guide's orientation: { GIMP_HORIZONTAL (0), GIMP_VERTICAL (1), GIMP_ }"
+    "The guide's orientation: { GIMP_ORIENTATION_HORIZONTAL (0), GIMP_ORIENTATION_VERTICAL (1) }"
   }
 };
 

@@ -166,9 +166,9 @@ init_generated_constants (void)
   setvar (cintern ("OFFSET-BACKGROUND"), flocons (0), NIL);
   setvar (cintern ("OFFSET-TRANSPARENT"), flocons (1), NIL);
 
-  setvar (cintern ("HORIZONTAL"), flocons (0), NIL);
-  setvar (cintern ("VERTICAL"), flocons (1), NIL);
-  setvar (cintern ("UNKNOWN"), flocons (2), NIL);
+  setvar (cintern ("ORIENTATION-HORIZONTAL"), flocons (0), NIL);
+  setvar (cintern ("ORIENTATION-VERTICAL"), flocons (1), NIL);
+  setvar (cintern ("ORIENTATION-UNKNOWN"), flocons (2), NIL);
 
   setvar (cintern ("PDB-INT32"), flocons (0), NIL);
   setvar (cintern ("PDB-INT16"), flocons (1), NIL);
