@@ -321,7 +321,6 @@ menus_create (GtkMenuEntry *entries,
         menu_item = gtk_item_factory_get_widget (ifactory, "<Image>/File/Quit");
         if (menu_item && menu_item->parent)
             gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, -1);
-
     }
 }
 
@@ -469,8 +468,19 @@ void
 menus_last_opened_add (gchar *filename)
 {
   GString	*raw_filename;
+  GSList        *item;
   GtkWidget	*widget;
   guint         num_entries;
+
+  /* ignore the add if we've already got the filename on the list */
+  item = last_opened_raw_filenames;
+  while (item)
+  {
+      raw_filename = item->data;
+      if (!strcmp (raw_filename->str, filename))
+	  return;
+      item = g_slist_next (item);
+  }
 
   num_entries = g_slist_length (last_opened_raw_filenames);
 
