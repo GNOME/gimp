@@ -15,6 +15,9 @@
 #include <ctype.h>
 #include <string.h>
 
+#include <gtk/gtk.h>
+
+#include "dialog_handler.h"
 #include "docindex.h"
 #include "docindexif.h"
 #include "fileops.h"
@@ -56,12 +59,6 @@ open_or_raise (gchar *file_name)
     }
 }
 
-gboolean
-exit_from_go ()
-{
-  return FALSE;
-}
-
 void open_file_in_position (gchar *filename,
 			    gint   position)
 {
@@ -73,7 +70,8 @@ GtkMenuFactory *create_idea_menu ()
   return NULL;
 }
 
-GtkWidget *create_idea_toolbar ()
+GtkWidget *
+create_idea_toolbar (void)
 {
   GtkWidget *toolbar;
 
@@ -168,7 +166,7 @@ clear_white (FILE *fp)
 /* reset_usize
  *  A callback so that the window can be resized smaller. */
 gint
-reset_usize (gpointer data  )
+reset_usize (gpointer data)
 {
   gtk_widget_set_usize (GTK_WIDGET (data), 0, 0);
   return FALSE;
@@ -178,13 +176,12 @@ void
 make_idea_window (gint x,
 		  gint y)
 {
-  GtkWidget *main_vbox, *menu;
+  GtkWidget *main_vbox;
   GtkWidget *scrolled_win;
   GtkWidget *toolbar;
-  GtkAccelGroup *accel;
 
   /* malloc idea_manager */
-  ideas = g_malloc0 (sizeof (idea_manager));
+  ideas = g_new0 (idea_manager, 1);
 
   /* Setup tree */
   ideas->tree = gtk_tree_new ();
@@ -195,23 +192,11 @@ make_idea_window (gint x,
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
 				  GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS );
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
-					 ideas->tree );
+					 ideas->tree);
   gtk_widget_show (ideas->tree);
 
   /* allocate the window and attach the menu */
   ideas->window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-  ideas->menubar = create_idea_menu (ideas);
-  if (ideas->menubar)
-    {
-      menu = ideas->menubar->widget;
-      /* Setup accelerator (hotkey) table */
-      accel = ideas->menubar->accel_group;
-      
-      /* Add accelerators to window widget */
-      gtk_window_add_accel_group (GTK_WINDOW (ideas->window), accel);
-    }
-  else
-    menu = NULL;
   
   /* Setup the status bar */
   ideas->status = gtk_statusbar_new ();
@@ -224,25 +209,17 @@ make_idea_window (gint x,
   
   /* Setup a vbox to contain the menu */
   main_vbox = gtk_vbox_new (FALSE, 0);
-  if (menu)
-    gtk_box_pack_start (GTK_BOX (main_vbox), menu, FALSE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (main_vbox), toolbar, FALSE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (main_vbox), scrolled_win, TRUE, TRUE, 0); 
   gtk_box_pack_start (GTK_BOX (main_vbox), ideas->status, FALSE, FALSE, 0);
-  if (menu)
-    gtk_widget_show (menu);
   gtk_widget_show (scrolled_win);
   gtk_widget_show (ideas->status);
 
-  /* Set the GOWindow title */
-  ideas->title = g_strdup (_("Document Index"));
-
   /* Set the GtkWindow title */
-  gtk_window_set_title (GTK_WINDOW (ideas->window), ideas->title);
+  gtk_window_set_title (GTK_WINDOW (ideas->window), _("Document Index"));
 
   /* Set the initial status message */
-  gtk_statusbar_push (GTK_STATUSBAR (ideas->status), ideas->contextid,
-		      _("GTK successfully started"));
+  gtk_statusbar_push (GTK_STATUSBAR (ideas->status), ideas->contextid, "");
 
   /* Connect the signals */
   gtk_signal_connect (GTK_OBJECT (ideas->window), "delete_event",
@@ -267,4 +244,6 @@ make_idea_window (gint x,
   gimp_help_connect_help_accel (ideas->window,
 				gimp_standard_help_func,
 				"dialogs/document_index.html");
+
+  dialog_register (ideas->window);
 }

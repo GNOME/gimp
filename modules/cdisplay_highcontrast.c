@@ -19,15 +19,20 @@
 
 #include <string.h>
 
+#include <gtk/gtk.h>
+
 #include <libgimp/color_display.h>
-#include <libgimp/gimpintl.h>
 #include <libgimp/gimpmodule.h>
 #include <libgimp/parasite.h>
 #include <libgimp/gimpui.h>
 #include <libgimp/gimpmath.h>
 
-#include <gtk/gtk.h>
+#include "app/dialog_handler.h"
+
 #include "modregister.h"
+
+#include "libgimp/gimpintl.h"
+
 
 #define COLOR_DISPLAY_NAME _("High Contrast")
 
@@ -98,7 +103,7 @@ static GimpModuleInfo info =
 G_MODULE_EXPORT GimpModuleStatus
 module_init (GimpModuleInfo **inforet)
 {
-#ifndef __EMX__ 
+#ifndef __EMX__
   if (gimp_color_display_register (COLOR_DISPLAY_NAME, &methods))
 #else
   if (mod_color_display_register (COLOR_DISPLAY_NAME, &methods))
@@ -116,7 +121,7 @@ module_unload (void *shutdown_data,
 	       void (*completed_cb)(void *),
 	       void *completed_data)
 {
-#ifndef __EMX__ 
+#ifndef __EMX__
   gimp_color_display_unregister (COLOR_DISPLAY_NAME);
 #else
   mod_color_display_unregister (COLOR_DISPLAY_NAME);
@@ -125,7 +130,7 @@ module_unload (void *shutdown_data,
 
 
 static gpointer
-contrast_new (int type)
+contrast_new (gint type)
 {
   ContrastContext *context;
 
@@ -155,7 +160,7 @@ contrast_clone (gpointer cd_ID)
 static void
 contrast_create_lookup_table (ContrastContext *context)
 {
-  int i;
+  gint i;
 
   if (context->contrast == 0.0)
     context->contrast = 1.0;
@@ -173,7 +178,10 @@ contrast_destroy (gpointer cd_ID)
   ContrastContext *context = cd_ID;
 
   if (context->shell)
-    gtk_widget_destroy (context->shell);
+    {
+      dialog_unregister (context->shell);
+      gtk_widget_destroy (context->shell);
+    }
 
   g_free (context->lookup);
   g_free (context);
@@ -182,13 +190,13 @@ contrast_destroy (gpointer cd_ID)
 static void
 contrast_convert (gpointer  cd_ID,
 		  guchar   *buf,
-		  int       width,
-		  int       height,
-		  int       bpp,
-		  int       bpl)
+		  gint      width,
+		  gint      height,
+		  gint      bpp,
+		  gint      bpl)
 {
   guchar *lookup = ((ContrastContext *) cd_ID)->lookup;
-  int i, j = height;
+  gint    i, j = height;
 
   /* You will not be using the entire buffer most of the time. 
    * Hence, the simplistic code for this is as follows:
@@ -265,6 +273,7 @@ contrast_configure_ok_callback (GtkWidget *widget,
   context->contrast = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (context->spinner));
   contrast_create_lookup_table (context);
 
+  dialog_unregister (context->shell);
   gtk_widget_destroy (GTK_WIDGET (context->shell));
   context->shell = NULL;
 
@@ -278,6 +287,7 @@ contrast_configure_cancel_callback (GtkWidget *widget,
 {
   ContrastContext *context = data;
 
+  dialog_unregister (context->shell);
   gtk_widget_destroy (GTK_WIDGET (context->shell));
   context->shell = NULL;
 
@@ -304,17 +314,20 @@ contrast_configure (gpointer cd_ID,
       context->cancel_func = cancel_func;
       context->cancel_data = cancel_data;
 
-      context->shell = gimp_dialog_new (_("High Contrast"), "high contrast",
-					gimp_standard_help_func, "modules/highcontrast.html",
-					GTK_WIN_POS_MOUSE,
-					FALSE, TRUE, FALSE,
+      context->shell =
+	gimp_dialog_new (_("High Contrast"), "high contrast",
+			 gimp_standard_help_func, "modules/highcontrast.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
 
-					_("OK"), contrast_configure_ok_callback,
-					cd_ID, NULL, NULL, TRUE, FALSE,
-					_("Cancel"), contrast_configure_cancel_callback,
-					cd_ID, NULL, NULL, FALSE, TRUE,
-					
-					NULL);
+			 _("OK"), contrast_configure_ok_callback,
+			 cd_ID, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), contrast_configure_cancel_callback,
+			 cd_ID, NULL, NULL, FALSE, TRUE,
+
+			 NULL);
+
+      dialog_register (context->shell);
 
       hbox = gtk_hbox_new (FALSE, 2);
       gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
@@ -341,9 +354,11 @@ contrast_configure_cancel (gpointer cd_ID)
   ContrastContext *context = cd_ID;
  
   if (context->shell)
-    gtk_widget_destroy (context->shell);
-
-  context->shell = NULL;
+    {
+      dialog_unregister (context->shell);
+      gtk_widget_destroy (context->shell);
+      context->shell = NULL;
+    }
 
   if (context->cancel_func)
     context->cancel_func (context, context->cancel_data);

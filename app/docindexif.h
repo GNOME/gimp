@@ -17,14 +17,18 @@
 
 #include <stdio.h>
 
+struct bool_char_pair
+{
+  gboolean  boole;
+  gchar    *string;
+};
+
 void             open_or_raise         (gchar    *file_name);
 void             raise_if_match        (gpointer  data,
 					gpointer  user_data);
-gboolean         exit_from_go          ();
 void             open_file_in_position (gchar    *filename,
 					gint      position);
-GtkMenuFactory * create_idea_menu      ();
-GtkWidget      * create_idea_toolbar   ();
+GtkWidget      * create_idea_toolbar   (void);
 void             clear_white           (FILE     *fp);
 int              getinteger            (FILE     *fp);
 gchar          * append2               (gchar    *string1,
@@ -32,11 +36,5 @@ gchar          * append2               (gchar    *string1,
 					gchar    *string2,
 					gboolean  del2);
 gint             reset_usize           (gpointer  data);
-
-struct bool_char_pair
-{
-  gboolean boole;
-  gchar *string;
-};
 
 #endif /* __DOCINDEXIF_H__ */

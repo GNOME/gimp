@@ -22,12 +22,10 @@
 typedef struct idea_manager
 {
   /* The scrollbar */
-  GtkWidget *vscrollbar,
-    /* The GTK window */
-    *window;
+  GtkWidget *vscrollbar;
+  /* The GTK window */
+  GtkWidget *window;
   GtkWidget *tree;
-  /* The menufactory */
-  GtkMenuFactory *menubar;
   /* The window menu widget */
   GtkWidget *window_menu;
   /* The status bar widget */
@@ -36,7 +34,6 @@ typedef struct idea_manager
   guint contextid;
   gboolean changed;
   gboolean named;
-  gchar *title;
   gint auto_save;
   gint long_term_auto_save;
   gint count;

@@ -1,3 +1,13 @@
+2000-05-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/docindex.[ch]
+	* app/docindexif.[ch]: call dialog_[un]register(). Fixes #10284.
+	Also removed some useless stuff.
+
+	* app/gdisplay_color_ui.c
+	* modules/cdisplay_gamma.c
+	* modules/cdisplay_highcontrast.c: call dialog_[un]register().
+
 2000-05-05  Jay Cox  <jaycox@earthlink.net>
 
 	* app/pixel_processor.c: try to minimize the overhead of

@@ -17,6 +17,7 @@
 
 #include <gtk/gtk.h>
 
+#include "dialog_handler.h"
 #include "docindexif.h"
 #include "docindex.h"
 #include "gimpdnd.h"
@@ -167,13 +168,10 @@ idea_window_delete_event_callback (GtkWidget *widget,
 				   GdkEvent  *event,
 				   gpointer   data)
 {
-  if (! exit_from_go ())
-    {
-      save_idea_manager (ideas);
-      create_idea_list ();
-      g_free (ideas);
-      ideas = 0;
-    }
+  save_idea_manager (ideas);
+  create_idea_list ();
+  g_free (ideas);
+  ideas = 0;
 
   return FALSE;
 }
@@ -186,9 +184,10 @@ idea_hide_callback (GtkWidget *widget,
     save_idea_manager (ideas);
 
   /* False if exitting */
-  if ((! exit_from_go ()) && ideas)
+  if (ideas)
     {
       create_idea_list ();
+      dialog_unregister (ideas->window);
       gtk_widget_destroy (ideas->window);
       g_free (ideas);
       ideas = 0;
@@ -614,7 +613,7 @@ idea_remove_callback (GtkWidget *widget,
 }
 
 void
-close_idea_window( void )
+close_idea_window (void)
 {
   idea_hide_callback (NULL, NULL);
 }

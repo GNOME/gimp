@@ -16,15 +16,21 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include "config.h"
+
+#include <gtk/gtk.h>
+
 #include "color_area.h"
+#include "dialog_handler.h"
 #include "gdisplay.h"
 #include "gdisplay_color.h"
 #include "gdisplay_color_ui.h"
 #include "gimpimageP.h"
 #include "gimpui.h"
+
 #include "libgimp/parasite.h"
+
 #include "libgimp/gimpintl.h"
-#include <gtk/gtk.h>
+
 
 typedef struct _ColorDisplayDialog ColorDisplayDialog;
 
@@ -106,8 +112,8 @@ make_dialog (ColorDisplayDialog *cdd)
   GtkWidget *hbox;
   GtkWidget *scrolled_win;
   GtkWidget *vbbox;
-  char *titles[2];
-  int i;
+  gchar *titles[2];
+  gint   i;
 
   static ButtonInfo buttons[] = 
   {
@@ -130,6 +136,8 @@ make_dialog (ColorDisplayDialog *cdd)
 				cdd, NULL, NULL, FALSE, TRUE,
 
 				NULL);
+
+  dialog_register (cdd->shell);
 
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (cdd->shell)->vbox), hbox,

@@ -17,17 +17,22 @@
  */
 #include "config.h"
 
-#include <math.h>
 #include <string.h>
 
+#include <gtk/gtk.h>
+
 #include <libgimp/color_display.h>
-#include <libgimp/gimpintl.h>
 #include <libgimp/gimpmodule.h>
 #include <libgimp/parasite.h>
+#include <libgimp/gimpmath.h>
 #include <libgimp/gimpui.h>
 
-#include <gtk/gtk.h>
+#include "app/dialog_handler.h"
+
 #include "modregister.h"
+
+#include "libgimp/gimpintl.h"
+
 
 #define COLOR_DISPLAY_NAME _("Gamma")
 
@@ -116,7 +121,7 @@ module_unload (void *shutdown_data,
 	       void (*completed_cb)(void *),
 	       void *completed_data)
 {
-#ifndef __EMX__ 
+#ifndef __EMX__
   gimp_color_display_unregister (COLOR_DISPLAY_NAME);
 #else
   mod_color_display_unregister (COLOR_DISPLAY_NAME);
@@ -157,9 +162,9 @@ gamma_clone (gpointer cd_ID)
 static void
 gamma_create_lookup_table (GammaContext *context)
 {
-  double one_over_gamma;
-  double ind;
-  int i;
+  gdouble one_over_gamma;
+  gdouble ind;
+  gint    i;
 
   if (context->gamma == 0.0)
     context->gamma = 1.0;
@@ -179,7 +184,10 @@ gamma_destroy (gpointer cd_ID)
   GammaContext *context = cd_ID;
 
   if (context->shell)
-    gtk_widget_destroy (context->shell);
+    {
+      dialog_unregister (context->shell);
+      gtk_widget_destroy (context->shell);
+    }
 
   g_free (context->lookup);
   g_free (context);
@@ -188,13 +196,13 @@ gamma_destroy (gpointer cd_ID)
 static void
 gamma_convert (gpointer  cd_ID,
     	       guchar   *buf,
-	       int       width,
-	       int       height,
-	       int       bpp,
-	       int       bpl)
+	       gint      width,
+	       gint      height,
+	       gint      bpp,
+	       gint      bpl)
 {
   guchar *lookup = ((GammaContext *) cd_ID)->lookup;
-  int i, j = height;
+  gint    i, j = height;
 
   /* You will not be using the entire buffer most of the time. 
    * Hence, the simplistic code for this is as follows:
@@ -271,6 +279,7 @@ gamma_configure_ok_callback (GtkWidget *widget,
   context->gamma = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (context->spinner));
   gamma_create_lookup_table (context);
 
+  dialog_unregister (context->shell);
   gtk_widget_destroy (GTK_WIDGET (context->shell));
   context->shell = NULL;
 
@@ -284,6 +293,7 @@ gamma_configure_cancel_callback (GtkWidget *widget,
 {
   GammaContext *context = data;
 
+  dialog_unregister (context->shell);
   gtk_widget_destroy (GTK_WIDGET (context->shell));
   context->shell = NULL;
 
@@ -310,17 +320,20 @@ gamma_configure (gpointer cd_ID,
       context->cancel_func = cancel_func;
       context->cancel_data = cancel_data;
 
-      context->shell = gimp_dialog_new (_("Gamma"), "gamma",
-					gimp_standard_help_func, "modules/gamma.html",
-					GTK_WIN_POS_MOUSE,
-					FALSE, TRUE, FALSE,
+      context->shell =
+	gimp_dialog_new (_("Gamma"), "gamma",
+			 gimp_standard_help_func, "modules/gamma.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
 
-					_("OK"), gamma_configure_ok_callback,
-					cd_ID, NULL, NULL, TRUE, FALSE,
-					_("Cancel"), gamma_configure_cancel_callback,
-					cd_ID, NULL, NULL, FALSE, TRUE,
-					
-					NULL);
+			 _("OK"), gamma_configure_ok_callback,
+			 cd_ID, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gamma_configure_cancel_callback,
+			 cd_ID, NULL, NULL, FALSE, TRUE,
+
+			 NULL);
+
+      dialog_register (context->shell);
 
       hbox = gtk_hbox_new (FALSE, 2);
       gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
@@ -347,9 +360,11 @@ gamma_configure_cancel (gpointer cd_ID)
   GammaContext *context = cd_ID;
  
   if (context->shell)
-    gtk_widget_destroy (context->shell);
-
-  context->shell = NULL;
+    {
+      dialog_unregister (context->shell);
+      gtk_widget_destroy (context->shell);
+      context->shell = NULL;
+    }
 
   if (context->cancel_func)
     context->cancel_func (context, context->cancel_data);
