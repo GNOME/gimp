@@ -198,7 +198,7 @@ procedure_select_callback (GtkWidget *widget,
   dbbrowser_t *dbbrowser = data;
 
   g_return_val_if_fail (widget != NULL, FALSE);
-  //  g_return_val_if_fail (bevent != NULL, FALSE);
+  /*  g_return_val_if_fail (bevent != NULL, FALSE); */
   g_return_val_if_fail (dbbrowser != NULL, FALSE);
 
   if (gtk_clist_get_text (GTK_CLIST (widget), row, column, &temp)) {
