@@ -1,3 +1,11 @@
+Sun Jan  4 14:24:05 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* plug-ins/despeckle/despeckle.c: realloc buffers when the radius
+ 	of effect changes; save all values (not just radius) in plugin
+ 	data store; adjusted parameter handling to match PDB registration.
+	The algorithm still generates artifacts in the top rows of the
+	image.
+
 Sat Jan  3 16:48:02 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* app/colormaps.c: check for NULL pointer access when not enough
