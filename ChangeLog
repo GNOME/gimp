@@ -1,3 +1,8 @@
+2003-01-13  Manish Singh  <yosh@gimp.org>
+                                                                                
+        * configure.in: Partially address #102058 with a --with-shm configure
+        option. Defaults to sysv except on OS X, where it is none.
+
 2003-01-10  Sven Neumann  <sven@gimp.org>
 
 	* app/interface.c (create_display_shell): break out of the loop
