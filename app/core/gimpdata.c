@@ -88,8 +88,8 @@ gimp_data_get_type (void)
         (GBaseInitFunc) NULL,
         (GBaseFinalizeFunc) NULL,
         (GClassInitFunc) gimp_data_class_init,
-        NULL,		/* class_finalize */
-        NULL,		/* class_data     */
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
         sizeof (GimpData),
         0,              /* n_preallocs    */
         (GInstanceInitFunc) gimp_data_init,
@@ -116,12 +116,12 @@ gimp_data_class_init (GimpDataClass *klass)
 
   data_signals[DIRTY] =
     g_signal_new ("dirty",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpDataClass, dirty),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpDataClass, dirty),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   object_class->finalize          = gimp_data_finalize;
 
@@ -197,6 +197,19 @@ gimp_data_real_dirty (GimpData *data)
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (data));
 }
 
+/**
+ * gimp_data_save:
+ * @data:  object whose contents are to be saved.
+ * @error: place to return error messages.
+ *
+ * Save the object.  If the object is marked as "internal", nothing happens.
+ * Otherwise, it is saved to disk, using the file name set by 
+ * gimp_data_set_filename().  If the save is successful, the
+ * object is marked as not dirty.  If not, an error message is returned
+ * using the @error argument.
+ *
+ * Returns: %TRUE if the object is internal or the save is successful. 
+ **/
 gboolean
 gimp_data_save (GimpData  *data,
                 GError   **error)
@@ -224,6 +237,15 @@ gimp_data_save (GimpData  *data,
   return success;
 }
 
+/**
+ * gimp_data_dirty:
+ * @object: a #GimpData object.
+ *
+ * Marks @object as dirty.  Unless the object is frozen, this causes its 
+ * preview to be invalidated, and emits a "dirty" signals that can be handled 
+ * at lower levels of the object hierarchy.  If the object is frozen, the
+ * function has no effect.
+ **/
 void
 gimp_data_dirty (GimpData *data)
 {
@@ -233,6 +255,14 @@ gimp_data_dirty (GimpData *data)
     g_signal_emit (data, data_signals[DIRTY], 0);
 }
 
+/**
+ * gimp_data_freeze:
+ * @object: a #GimpData object.
+ *
+ * Increments the freeze count for the object.  A positive freeze count
+ * prevents the object from being treated as dirty.  Any call to this
+ * function must be followed eventually by a call to gimp_data_thaw().
+ **/
 void
 gimp_data_freeze (GimpData *data)
 {
@@ -241,6 +271,15 @@ gimp_data_freeze (GimpData *data)
   data->freeze_count++;
 }
 
+/**
+ * gimp_data_thaw:
+ * @object: a #GimpData object.
+ *
+ * Decrements the freeze count for the object.  If the freeze count
+ * drops to zero, the object is marked as dirty, and the "dirty"
+ * signal is emitted.  It is an error to call this function without
+ * having previously called gimp_data_freeze().
+ **/
 void
 gimp_data_thaw (GimpData *data)
 {
@@ -253,6 +292,19 @@ gimp_data_thaw (GimpData *data)
     gimp_data_dirty (data);
 }
 
+/**
+ * gimp_data_delete_from_disk:
+ * @data:  a #GimpData object.
+ * @error: place to return error messages.
+ *
+ * Deletes the object from disk.  If the object is marked as "internal",
+ * nothing happens.  Otherwise, if the file exists whose name has been
+ * set by gimp_data_set_filename(), it is deleted.  Obviously this is
+ * a potentially dangerous function, which should be used with care.
+ *
+ * Returns: %TRUE if the object is internal to Gimp, or the deletion is
+ *          successful.
+ **/
 gboolean
 gimp_data_delete_from_disk (GimpData  *data,
                             GError   **error)
@@ -287,9 +339,24 @@ gimp_data_get_extension (GimpData *data)
   return NULL;
 }
 
+/**
+ * gimp_data_set_filename:
+ * @data:     A #GimpData object
+ * @filename: File name to assign to @data.
+ * @writable: %TRUE if we want to be able to write to this file.
+ *
+ * This function assigns a file name to @data, and sets some flags 
+ * according to the properties of the file.  If @writable is %TRUE,
+ * and the user has permission to write or overwrite the requested file
+ * name, and a "save" method exists for @data's object type, then
+ * @data is marked as writable. 
+ *
+ * The @filename argument is copied, so it can be freed when you
+ * are done with it. 
+ **/
 void
 gimp_data_set_filename (GimpData    *data,
-			const gchar *filename,
+                        const gchar *filename,
                         gboolean     writable)
 {
   g_return_if_fail (GIMP_IS_DATA (data));
@@ -328,9 +395,20 @@ gimp_data_set_filename (GimpData    *data,
     }
 }
 
+/**
+ * gimp_data_create_filename:
+ * @data:     a #Gimpdata object.
+ * @dest_dir: directory in which to create a file name.
+ *
+ * This function creates a unique file name to be used for saving
+ * a representation of @data in the directory @dest_dir.  If the
+ * user does not have write permission in @dest_dir, then @data
+ * is marked as "not writable", so you should check on this before
+ * assuming that @data can be saved.
+ **/
 void
 gimp_data_create_filename (GimpData    *data,
-			   const gchar *dest_dir)
+                           const gchar *dest_dir)
 {
   gchar *safename;
   gchar *filename;
@@ -363,9 +441,9 @@ gimp_data_create_filename (GimpData    *data,
       g_free (fullpath);
 
       filename = g_strdup_printf ("%s-%d%s",
-				  safename,
+                                  safename,
                                   unum++,
-				  gimp_data_get_extension (data));
+                                  gimp_data_get_extension (data));
 
       fullpath = g_build_filename (dest_dir, filename, NULL);
 
@@ -379,6 +457,18 @@ gimp_data_create_filename (GimpData    *data,
   g_free (fullpath);
 }
 
+/**
+ * gimp_data_duplicate:
+ * @data:              a #GimpData object
+ * @stingy_memory_use: if %TRUE, use the disk rather than RAM 
+ *                     where possible.
+ *
+ * Creates a copy of @data, if possible.  Only the object data is
+ * copied:  the newly created object is not automatically given an 
+ * object name, file name, preview, etc.
+ *
+ * Returns: the newly created copy, or %NULL if @data cannot be copied.
+ **/
 GimpData *
 gimp_data_duplicate (GimpData *data,
                      gboolean  stingy_memory_use)
@@ -391,6 +481,15 @@ gimp_data_duplicate (GimpData *data,
   return NULL;
 }
 
+/**
+ * gimp_data_make_internal:
+ * @data: a #GimpData object.
+ *
+ * Mark @data as "internal" to Gimp, which means that it will not be saved
+ * to disk.  Note that if you do this, later calls to gimp_data_save()
+ * and gimp_data_delete_from_disk() will automatically return successfully 
+ * without giving any warning.
+ **/
 void
 gimp_data_make_internal (GimpData *data)
 {
@@ -407,6 +506,19 @@ gimp_data_make_internal (GimpData *data)
   data->deletable = FALSE;
 }
 
+/**
+ * gimp_data_name_compare:
+ * @data1: a #GimpData object.
+ * @data2: another #GimpData object.
+ *
+ * Compares the names of the two objects for use in sorting; see
+ * gimp_object_name_collate() for the method.  Objects marked as
+ * "internal" are considered to come before any objects that are not.
+ *
+ * Return value: -1 if @data1 compares before @data2,
+ *                0 if they compare equal,
+ *                1 if @data1 compares after @data2.
+ **/
 gint
 gimp_data_name_compare (GimpData *data1,
                         GimpData *data2)
@@ -419,6 +531,11 @@ gimp_data_name_compare (GimpData *data1,
                                    (GimpObject *) data2);
 }
 
+/**
+ * gimp_data_error_quark:
+ *
+ * This function is currently not used anywhere.
+ **/
 GQuark
 gimp_data_error_quark (void)
 {
