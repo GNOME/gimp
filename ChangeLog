@@ -1,3 +1,7 @@
+Sat Apr 11 15:23:26 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* Made 0.99.26 release
+
 Sat Apr 11 15:03:43 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/gdisplay.c: reverted cosmetic fix below, broke zoomed
