@@ -40,14 +40,13 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("gdisplay.h") ],
 	vars => [ 'guint scale = 0x101' ],
 	code => <<'CODE'
 {
-  if (gimage->layers == NULL)
-    success = FALSE;
-  else
+  if (gimage->layers)
     success = (gdisp = gdisplay_new (gimage, scale)) != NULL;
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -68,10 +67,7 @@ HELP
 	  desc => 'The display to delete', alias => 'gdisp' }
     );
 
-    %invoke = (
-	headers => [ qw("gdisplay.h") ],
-	code => 'gtk_widget_destroy (gdisp->shell);'
-    );
+    %invoke = ( code => 'gtk_widget_destroy (gdisp->shell);' );
 }
 
 sub displays_flush {
@@ -85,11 +81,10 @@ HELP
 
     &std_pdb_misc;
 
-    %invoke = (
-	headers => [ qw("gdisplay.h") ],
-	code => 'gdisplays_flush ();'
-    );
+    %invoke = ( code => 'gdisplays_flush ();' );
 }
+
+@headers = qw("gdisplay.h");
 
 @procs = qw(display_new display_delete displays_flush);
 %exports = (app => [@procs], lib => [@procs]);

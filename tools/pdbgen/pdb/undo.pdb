@@ -38,10 +38,7 @@ HELP
 
     &inargs;
 
-    %invoke = (
-	headers => [ qw("undo.h") ],
-	code => 'undo_push_group_start (gimage, MISC_UNDO);'
-    );
+    %invoke = ( code => 'undo_push_group_start (gimage, MISC_UNDO);' );
 }
 
 sub undo_push_group_end {
@@ -57,11 +54,10 @@ HELP
 
     &inargs;
 
-    %invoke = (
-	headers => [ qw("undo.h") ],
-	code => 'undo_push_group_end (gimage);'
-    );
+    %invoke = ( code => 'undo_push_group_end (gimage);' );
 }
+
+@headers = qw("undo.h");
 
 @procs = qw(undo_push_group_start undo_push_group_end);
 %exports = (app => [@procs]);

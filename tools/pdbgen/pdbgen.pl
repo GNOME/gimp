@@ -56,7 +56,7 @@ $evalcode = <<'CODE';
     &$safeeval("do '$main::srcdir/stddefs.pdb'");
 
     # Group properties
-    undef $desc; undef $code;
+    undef $desc; undef $code; undef @headers;
 
     # Load the file in and get the group info
     &$safeeval("require '$main::srcdir/pdb/$file.pdb'");
@@ -89,10 +89,12 @@ $evalcode = <<'CODE';
 	    }
 	}
 	$pdb{$proc} = $entry;
+
+	push @{$entry->{invoke}->{headers}}, @headers if scalar @headers;
     }
 
     # Find out what to do with these entries 
-    while (($dest, $procs) = each %exports) { push @{$gen{$dest}}, @$procs; }
+    while (($dest, $procs) = each %exports) { push @{$gen{$dest}}, @$procs }
 }
 CODE
 
@@ -112,7 +114,7 @@ require 'enums.pl';
 require 'util.pl';
 
 # Squash whitespace into just single spaces between words
-sub trimspace { for (${$_[0]}) { s/[\n\s]+/ /g; s/^ //; s/ $//; } }
+sub trimspace { for (${$_[0]}) { s/\s+/ /gs; s/^ //; s/ $//; } }
 
 # Trim spaces and escape quotes C-style
 sub nicetext {

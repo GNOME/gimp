@@ -130,7 +130,6 @@ HELP
     &render_outargs;
 
     %invoke = (
-	headers => [ qw("text_tool.h") ],
 	vars => ['gchar *fontname[2048]'],
 	code => <<'CODE'
 {
@@ -176,7 +175,6 @@ HELP
     &extents_outargs;
 
     %invoke = (
-	headers => [ qw("text_tool.h") ],
 	code => <<'CODE'
 {
   success = text_get_xlfd (size, size_type, foundry, family, weight,
@@ -223,7 +221,6 @@ HELP
     &render_outargs;
 
     %invoke = (
-	headers => [ qw("text_tool.h") ],
 	pass_through => 'text',
 	pass_args => [ 0..8 ],
 	make_args => [ &fontname_makeargs ]
@@ -251,12 +248,13 @@ HELP
     &extents_outargs;
 
     %invoke = (
-	headers => [ qw("text_tool.h") ],
 	pass_through => 'text_get_extents',
 	pass_args => [ 0..2 ],
 	make_args => [ &fontname_makeargs ]
     );
 }
+
+@headers = qw("text_tool.h");
 
 @procs = qw(text text_get_extents text_fontname text_get_extents_fontname);
 %exports = (app => [@procs]);

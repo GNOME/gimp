@@ -93,8 +93,8 @@ sub arg_parse {
 	my ($name, $remove) = ($1, $2);
 	my @retvals = ('enum', $name);
 
-	if ($remove && $remove =~ / \(no /) {
-	    $remove =~ s/ \(no (.*?)\)$/$1/;
+	if ($remove && $remove =~ m@ \(no @) {
+	    chop $remove; ($remove = substr($remove, 5)) =~ s/ $//;
 	    push @retvals, split(/,\s*/, $remove);
 	}
 

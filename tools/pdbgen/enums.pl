@@ -41,6 +41,53 @@ package Gimp::CodeGen::enums;
 	  symbols => [ qw(PIXELS POINTS) ],
 	  mapping => { PIXELS => '0',
 		       POINTS => '1' }
+	},
+    GimpFillType =>
+	{ contig => 1,
+	  symbols => [ qw(FOREGROUND_FILL BACKGROUND_FILL WHITE_FILL
+			  TRANSPARENT_FILL NO_FILL) ],
+	  mapping => { FOREGROUND_FILL => '0',
+		       BACKGROUND_FILL => '1',
+		       WHITE_FILL => '2',
+		       TRANSPARENT_FILL => '3',
+		       NO_FILL => '4' }
+	},
+    GimpImageType =>
+	{ contig => 1,
+	  symbols => [ qw(RGB_GIMAGE RGBA_GIMAGE GRAY_GIMAGE GRAYA_GIMAGE
+			  INDEXED_GIMAGE INDEXEDA_GIMAGE) ],
+	  mapping => { RGB_GIMAGE => '0',
+		       RGBA_GIMAGE => '1',
+		       GRAY_GIMAGE => '2',
+		       GRAYA_GIMAGE => '3',
+		       INDEXED_GIMAGE => '4',
+		       INDEXEDA_GIMAGE => '5' }
+	},
+    GimpImageBaseType =>
+	{ contig => 1,
+	  symbols => [ qw(RGB GRAY INDEXED) ],
+	  mapping => { RGB => '0',
+		       GRAY => '1',
+		       INDEXED => '2' }
+	},
+    ChannelType =>
+	{ contig => 1,
+	  symbols => [ qw(Red Green Blue Gray Indexed Auxillary) ],
+	  mapping => { Red => '0',
+		       Green => '1',
+		       Blue => '2',
+		       Gray => '3',
+		       Indexed => '4',
+		       Auxillary => '5' }
+	},
+    MergeType =>
+	{ contig => 1,
+	  symbols => [ qw(ExpandAsNecessary ClipToImage ClipToBottomLayer
+			  FlattenImage) ],
+	  mapping => { ExpandAsNecessary => '0',
+		       ClipToImage => '1',
+		       ClipToBottomLayer => '2',
+		       FlattenImage => '3' }
 	}
 );
 

@@ -17,8 +17,38 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub drawable_arg {
-    { name => 'drawable', type => 'drawable', desc => 'The drawable' }
+sub drawable_arg {{
+    name => 'drawable',
+    type => 'drawable',
+    desc => 'The drawable',
+    no_success => 1
+}}
+
+sub drawable_prop_proc {
+    my ($return, $name, $type, $func, $desc) = @_;
+
+    $blurb = "Returns $return.";
+
+    &std_pdb_misc;
+
+    @inargs = ( &drawable_arg );
+
+    @outargs = (
+	{ name => $name, type => $type, desc => $desc, 
+	  alias => "drawable_$func (drawable)", no_declare => 1 }
+    );
+}
+
+sub drawable_type_proc {
+    my ($desc, $type, $func) = @_;
+
+    $help = <<HELP;
+This procedure returns non-zero if the specified drawable is of type
+{ $type }.
+HELP
+
+    &drawable_prop_proc("whether the drawable is $desc type", $func, 'boolean',
+			$func, "non-zero if the drawable is $desc type")
 }
 
 sub drawable_merge_shadow {
@@ -38,11 +68,9 @@ HELP
         { name => 'undo', type => 'boolean',
 	  desc => 'Push merge to undo stack?' }
     );
+    delete $inargs[0]->{no_success};
 
-    %invoke = (
-	headers => [ qw("drawable.h") ],
-	code => 'drawable_merge_shadow (drawable, undo);'
-    );
+    %invoke = ( code => 'drawable_merge_shadow (drawable, undo);' );
 }
 
 sub drawable_fill {
@@ -67,8 +95,193 @@ HELP
 	  desc => 'The type of fill: %%desc%%' }
     );
 
+    %invoke = ( code => 'drawable_fill (drawable, fill_type);' );
+}
+
+sub drawable_update {
+    $blurb = 'Update the specified region of the drawable.';
+
+    $help = <<'HELP';
+This procedure updates the specified region of the drawable. The (x, y)
+coordinate pair is relative to the drawable's origin, not to the image origin.
+Therefore, the entire drawable can be updated with: {x->0, y->0, w->width,
+h->height }.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&drawable_arg,
+	{ name => 'x', type => 'int32',
+	  desc => 'x coordinate of upper left corner of update region' },
+	{ name => 'y', type => 'int32',
+	  desc => 'y coordinate of upper left corner of update region' },
+	{ name => 'width', type => 'int32',
+	  desc => 'Width of update region' },
+	{ name => 'height', type => 'int32',
+	  desc => 'Height of update region' }
+    );
+
+    %invoke = ( code => 'drawable_update (drawable, x, y, width, height);' );
+}
+
+sub drawable_mask_bounds {
+    $blurb = <<'BLURB';
+Find the bounding box of the current selection in relation to the specified
+drawable.
+BLURB
+
+    $help = <<'HELP';
+This procedure returns the whether there is a selection. If there is one, the
+upper left and lower righthand corners of its bounding box are returned. These
+coordinates are specified relative to the drawable's origin, and bounded by
+the drawable's extents.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( &drawable_arg );
+
+    @outargs = (
+	{ name => 'non_empty', type => 'boolean',
+	  desc => 'TRUE if there is a selection' },
+    );
+
+    my $pos = 1;
+    foreach $where ('upper left', 'lower right') {
+	foreach (qw(x y)) {
+	    push @outargs, { name => "$_$pos", type => 'int32',
+	    		     desc => '$_ coordinate of the $where corner of
+			     	      selection bounds' }
+	}
+	$pos++;
+    }
+
     %invoke = (
-	headers => [ qw("drawable.h") ],
-	code => 'drawable_fill (drawable, fill_type);'
+	code => <<'CODE'
+non_empty = drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+CODE
     );
 }
+
+sub drawable_gimage {
+    $blurb = "Returns the drawable's image.";
+
+    $help = "This procedure returns the drawable's image.";
+
+    &std_pdb_misc;
+
+    @inargs = ( &drawable_arg );
+
+    @outargs = ( &std_image_arg );
+    $outargs[0]->{desc} = "The drawable's image";
+
+    %invoke = (
+	code => 'success = (gimage = drawable_gimage (drawable)) != NULL;'
+    );
+}
+
+sub drawable_type {
+    $help = "This procedure returns the drawable's type.";
+
+    &drawable_prop_proc("the drawable's type", 'type', 'enum GimpImageType',
+			'type',"The drawable's type: %%desc%%");
+
+    delete $inargs[0]->{no_success};
+}
+
+sub drawable_has_alpha {
+    $help = <<'HELP';
+This procedure returns whether the specified drawable has an alpha channel.
+This can only be true for layers, and the associated type will be one of:
+{ RGBA , GRAYA, INDEXEDA }.
+HELP
+
+    &drawable_prop_proc('non-zero if the drawable has an alpha channel',
+			'has_alpha', 'boolean', 'has_alpha',
+			'Does the drawable have an alpha channel?');
+}
+
+sub drawable_type_with_alpha {
+    $help = <<'HELP';
+This procedure returns the drawable's type if an alpha channel were added. If
+the type is currently Gray, for instance, the returned type would be GrayA. If
+the drawable already has an alpha channel, the drawable's type is simply
+returned.
+HELP
+
+    &drawable_prop_proc("the drawable's type with alpha", 'type_with_alpha',
+			'enum GimpImageType (no RGB_GIMAGE, GRAY_GIMAGE,
+			 INDEXED_GIMAGE)', 'type_with_alpha',
+			"The drawable's type with alpha: %%desc%%");
+}
+
+sub drawable_color {
+    &drawable_type_proc('an RGB', 'RGB, RGBA', 'color');
+}
+
+sub drawable_gray {
+    &drawable_type_proc('a grayscale', 'Gray, GrayA', 'gray');
+}
+
+sub drawable_indexed {
+    &drawable_type_proc('an indexed', 'Indexed, IndexedA', 'indexed');
+}
+
+sub drawable_bytes {
+    $help = <<'HELP';
+This procedure returns the number of bytes per pixel (or the number of
+channels) for the specified drawable.
+HELP
+
+    &drawable_prop_proc('the bytes per pixel', 'bytes', 'int32', 'bytes',
+			'Bytes per pixel');
+}
+
+sub drawable_width {
+    $help = "This procedure returns the specified drawable's width in pixels.";
+
+    &drawable_prop_proc('the width of the drawable', 'width', 'int32',
+			'width', 'Width of drawable');
+}
+
+sub drawable_height {
+    $help = "This procedure returns the specified drawable's height in pixels.";
+
+    &drawable_prop_proc('the height of the drawable', 'height', 'int32',
+			'height', 'Height of drawable');
+}
+
+sub drawable_offsets {
+    $blurb = 'Returns the offsets for the drawable.';
+
+    $help = <<'HELP';
+This procedure returns the specified drawable's offsets. This only makes sense
+if the drawable is a layer since channels are anchored. The offsets of a
+channel will be returned as 0.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( &drawable_arg );
+
+    foreach (qw(x y)) {
+	push @outargs, { name => "offset_$_", type => 'int32',
+			 desc => "$_ offset of drawable" }
+    }
+
+    %invoke = ( code => 'drawable_offsets (drawable, &offset_x, &offset_y);' );
+}
+
+@headers = qw("drawable.h");
+
+@procs = qw(drawable_merge_shadow drawable_fill drawable_update
+	    drawable_mask_bounds drawable_gimage drawable_type
+	    drawable_has_alpha drawable_type_with_alpha drawable_color
+	    drawable_gray drawable_indexed drawable_bytes drawable_width
+	    drawable_height drawable_offsets);
+%exports = (app => [@procs]);
+
+$desc = 'Drawable procedures';
+
+1;

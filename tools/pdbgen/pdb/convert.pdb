@@ -26,9 +26,8 @@ sub simple_inargs {
 sub simple_invoke {
     my $type = shift;
     %invoke = (
-	headers => [ qw("gimage.h" "convert.h") ],
 	code => <<CODE
-if (success = (gimage_base_type (gimage) != $type))
+if ((success = (gimage_base_type (gimage) != $type)))
   convert_image ((void *) gimage, $type, 0, 0, 0);
 CODE
     );
@@ -81,7 +80,6 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("gimage.h" "convert.h") ],
 	code => <<'CODE'
 {
   success = (gimage_base_type (gimage) != INDEXED);
@@ -122,14 +120,15 @@ HELP
 		   (palette_type == MAKE_PALETTE)' },
 	{ name => 'palette', type => 'string',
 	  desc => 'The name of the custom palette to use, ignored unless
-		   (palette_type == CUSTOM_PALETTE)' }
+		   (palette_type == CUSTOM_PALETTE)',
+	  alias => 'palette_name' }
     );
 
     %invoke = (
-	headers => [ qw("gimage.h" "convert.h" "palette.h") ],
+	headers => [ qw("palette.h") ],
 	code => <<'CODE'
 {
-  if (success = (gimage_base_type (gimage) != INDEXED))
+  if ((success = (gimage_base_type (gimage) != INDEXED)))
     {
       PaletteEntriesP entries, the_palette = NULL;
       GSList *list;
@@ -178,6 +177,8 @@ HELP
 CODE
     );
 }
+
+@headers = qw("gimage.h" "convert.h");
 
 @procs = qw(convert_rgb convert_grayscale convert_indexed
 	    convert_indexed_palette);

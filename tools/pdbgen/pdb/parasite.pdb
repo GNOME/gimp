@@ -24,6 +24,19 @@ sub pdb_misc {
     $date = 1998;
 }
 
+sub name_arg {{
+    name => 'name',
+    type => 'string',
+    desc => "The name of the parasite to $_[0]",
+    no_success => 1
+}}
+
+sub parasite_outarg {{
+    name => 'parasite',
+    type => 'parasite',
+    desc => "The $_[0] parasite"
+}}
+
 sub parasite_new {
     $blurb = 'Creates a new parasite.';
 
@@ -32,8 +45,7 @@ sub parasite_new {
     &pdb_misc;
 
     @inargs = (
-	{ name => 'name', type => 'string',
- 	  desc => 'The name of the parasite to create', no_success => 1 },
+	&name_arg('create'),
 	{ name => 'flags', type => 'int32',
 	  desc => 'The flags (persistance == 1)' },
 	{ name => 'size', type => '0 <= int32',
@@ -42,13 +54,9 @@ sub parasite_new {
 	  desc => 'The data', no_success => 1 }
     );
 
-    @outargs = (
-	{ name => 'parasite', type => 'parasite',
-	  desc => 'The new parasite' }
-    );
+    @outargs = ( &parasite_outarg('new') );
 
     %invoke = (
-	headers => [ qw("libgimp/parasite.h") ],
 	code => <<'CODE'
 {
   if (size > 0 && data == NULL)
@@ -60,7 +68,45 @@ CODE
     );
 }
 
-@procs = qw(parasite_new);
+sub parasite_find {
+    $blurb = 'Finds the named parasite.';
+
+    $help = <<'HELP';
+Finds and returns the named parasite that was previously attached to the gimp.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &name_arg('find') );
+
+    @outargs = ( &parasite_outarg('found') );
+
+    %invoke = (
+	headers => [ qw("gimpparasite.h") ],
+	code => <<'CODE'
+success = (parasite = parasite_copy (gimp_find_parasite (name))) != NULL;
+CODE
+    );
+}
+
+sub parasite_attach {
+    $blurb = 'Add a parasite to the gimp.';
+
+    $help = <<'HELP';
+This procedure attaches a parasite to the gimp. It has no return values.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'parasite', type => 'parasite',
+	  desc => 'The parasite to attach to the gimp' }
+    );
+}
+
+@headers = qw("libgimp/parasite.h");
+
+@procs = qw(parasite_new parasite_find parasite_attach);
 %exports = (app => [@procs]);
 
 $desc = 'Parasite procedures';

@@ -49,7 +49,7 @@ CODE
 
 sub invoke_set {
     %invoke = (
-	headers => [ qw("gimpimage.h" "palette.h") ],
+	headers => [ qw("gimpimage.h") ],
 	code => <<CODE
 palette_set_@{[shift]}ground (col[RED_PIX], col[GREEN_PIX], col[BLUE_PIX]);
 CODE
@@ -124,10 +124,7 @@ HELP
 
     &std_pdb_misc;
 
-    %invoke = (
-	headers => [ qw("palette.h") ],
-	code => 'palette_set_default_colors ();'
-    );
+    %invoke = ( code => 'palette_set_default_colors ();' );
 }
 
 sub palette_swap_colors {
@@ -140,10 +137,7 @@ HELP
 
     &std_pdb_misc;
 
-    %invoke = (
-	headers => [ qw("palette.h") ],
-	code => 'palette_swap_colors ();'
-    );
+    %invoke = ( code => 'palette_swap_colors ();' );
 }
 
 sub palette_refresh {
@@ -158,7 +152,6 @@ HELP
     $date = '1998';
 
     %invoke = (
-	headers => [ qw("palette.h") ],
 	code => <<'CODE'
 {
   /* FIXME: I've hardcoded success to be TRUE, because brushes_init() is a 
@@ -176,6 +169,8 @@ HELP
 CODE
     );
 }
+
+@headers = qw("palette.h");
 
 @procs = qw(palette_get_foreground palette_get_background
 	    palette_set_foreground palette_set_background

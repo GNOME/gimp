@@ -79,7 +79,7 @@ sub declare_args {
 	    unless (exists $_->{no_declare}) {
 		$result .= ' ' x 2 . $arg->{type} . &arg_vname($_);
 		if (!exists $_->{no_init} && exists $_->{init}) {
-		    $result .= $arg->{type} =~ /\*$/ ? ' = NULL' : '0'
+		    $result .= $arg->{type} =~ /\*$/ ? ' = NULL' : ' = 0'
 		}
 		$result .= ";\n";
 
@@ -359,7 +359,6 @@ CODE
 		$out->{headers}->{$header}++;
 	    }
 	}
-	$out->{headers}->{q/"procedural_db.h"/}++;
 
 	$out->{code} .= "\nstatic Argument *\n";
 	$out->{code} .= "${name}_invoker (Argument *args)\n{\n";
@@ -460,14 +459,17 @@ CODE
 	    }
 
 	    $invoker .= &marshal_inargs($proc, 0);
-
 	    $invoker .= "\n" if $invoker && $invoker !~ /\n\n/s;
 
-	    my $frag = &format_code_frag($proc->{invoke}->{code}, $success);
+	    my $frag = "";
 
-	    $frag = ' ' x 2 . "if (success)\n" . $frag if $success;
-	    $success = ($frag =~ /success =/) unless $success;
+	    if (exists $proc->{invoke}->{code}) {
+		$frag = &format_code_frag($proc->{invoke}->{code}, $success);
+		$frag = ' ' x 2 . "if (success)\n" . $frag if $success;
+		$success = ($frag =~ /success =/) unless $success;
+	    }
 
+	    chomp $invoker if !$frag;
 	    $code .= $invoker . $frag;
 	    $code .= "\n" if $frag =~ /\n\n/s || $invoker;
 	    $code .= &marshal_outargs($proc) . "}\n";
@@ -505,6 +507,8 @@ static ProcRecord ${name}_proc =
   { { ${name}_invoker } }
 };
 CODE
+
+	delete $out->{headers}->{q/"procedural_db.h"/};
     }
 
     my $gpl = <<'GPL';
@@ -553,6 +557,7 @@ HEADER
 	my $cfile = "$destdir/${group}_cmds.c$FILE_EXT";
 	open CFILE, "> $cfile" or die "Can't open $cmdfile: $!\n";
 	print CFILE $gpl;
+	print CFILE qq/#include "procedural_db.h"\n\n/;
 	foreach $header (sort keys %{$out->{headers}}) {
 	    print CFILE "#include $header\n";
 	}

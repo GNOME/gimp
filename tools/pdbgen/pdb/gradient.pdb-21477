@@ -194,7 +194,6 @@ HELP
     &sample_outargs;
 
     %invoke = (
-	headers => [ qw("gradient.h") ],
 	vars => ['gdouble r, g, b, a', 'gdouble *pv'],
 	code => <<'CODE'
 {
@@ -217,6 +216,8 @@ HELP
 CODE
     );
 }
+
+@headers = qw("gradient.h");
 
 @procs = qw(gradients_get_list gradients_get_active gradients_set_active
 	    gradients_sample_uniform gradients_sample_custom);
