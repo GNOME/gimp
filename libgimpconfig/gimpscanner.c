@@ -85,7 +85,8 @@ gimp_scanner_new (const gchar  *filename,
   scanner->input_name  = g_strdup (filename);
 
   scanner->config->cset_identifier_first = ( G_CSET_a_2_z G_CSET_A_2_Z );
-  scanner->config->cset_identifier_nth   = ( G_CSET_a_2_z G_CSET_A_2_Z "-_" );
+  scanner->config->cset_identifier_nth   = ( G_CSET_a_2_z G_CSET_A_2_Z
+                                             G_CSET_DIGITS "-_" );
 
   scanner->config->scan_identifier_1char = TRUE;
 
