@@ -468,7 +468,7 @@ readXVThumb (const gchar  *fnam,
 
   if (strncmp(P7_buf, P7_332, 6)!=0)
     {
-      g_warning ("Thumbnail doesn't have the 'P7 332' header.");
+      g_warning ("Thumbnail does not have the 'P7 332' header.");
       fclose (fp);
       return NULL;
     }
@@ -507,14 +507,14 @@ readXVThumb (const gchar  *fnam,
 
   if (twofivefive!=255)
     {
-      g_warning ("Thumbnail is of funky depth.");
+      g_warning ("Thumbnail depth is incorrect.");
       fclose (fp);
       return NULL;
     }
 
   if ((*w)<1 || (*h)<1 || (*w)>80 || (*h)>60)
     {
-      g_warning ("Thumbnail size bad.  Corrupted?");
+      g_warning ("Thumbnail size is bad.  Corrupted?");
       fclose (fp);
       return NULL;
     }
@@ -658,7 +658,7 @@ file_save_thumbnail (GimpImage   *gimage,
 	  break;
 
 	default:
-	  g_warning("UNKNOWN GIMAGE TYPE IN THUMBNAIL SAVE");
+	  g_warning ("%s: Unknown image type.", G_STRLOC);
 	  break;
 	}
 
