@@ -6270,7 +6270,6 @@ msgid "Installation failed.  Contact system administrator."
 msgstr "Asennus epäonnistui. Ota yhteys ylläpitoon."
 
 #: app/user_install.c:1094
-#, fuzzy
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"

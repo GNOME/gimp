@@ -2,6 +2,10 @@
 
 	* es.po: Updated translation.
 
+2000-10-31  Tor Lillqvist  <tml@iki.fi>
+
+	* fi.po: Remove one bogus fuzziness indicator.
+
 Mon Oct 30 20:56:00 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* cs.po: Updated translation.
