@@ -82,7 +82,7 @@ static void gimp_dnd_data_received (GtkWidget *,
 				    GtkSelectionData *,
 				    guint,
 				    guint);
-static gint gimp_dnd_open_files    (gchar *);
+static void gimp_dnd_open_files    (gchar *);
 
 static int pixmap_colors[8][3] =
 {
@@ -1483,35 +1483,22 @@ gimp_dnd_data_received (GtkWidget          *widget,
   return;
 }
 
-static gint
-gimp_dnd_open_files (gchar *buffer)
+static void
+gimp_dnd_open_files (gchar *name)
 {
-  gchar	 name_buffer[1024];
   const gchar *data_type = "file:";
   const gint sig_len = strlen (data_type);
 
-  while (*buffer)
-    {
-      gchar *name = name_buffer;
-      gint len = 0;
+  if (name == NULL || *name == 0)
+    return;
 
-      while ((*buffer != 0) && (*buffer != '\n'))
-	{
-	  *name++ = *buffer++;
-	  len++;
-	}
-      if (len == 0)
-	break;
-      if (*(name - 1) == 0xd)
-	*(name - 1) = 0;
-      name = name_buffer;
-      if ((sig_len < len) && (! strncmp (name, data_type, sig_len)))
-	name += sig_len;
+  if (strlen (name) > sig_len && (strncmp (name, data_type, sig_len) == 0))
+    name += sig_len;
 
-      file_open (name, name);
-
-      if (*buffer)
-	buffer++;
-    }
-  return TRUE;
+  file_open (name, name);
 }
+
+
+
+
+

@@ -1,3 +1,10 @@
+Mon Aug  2 21:15:08 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/interface.c: Eeek, how has the dnd stuff ever worked before?
+	Shame on me, I should have looked into the patch before applying it
+	instead of only testing if it works. Hopefully we do the right thing
+	now.
+
 Sun Aug  1 19:27:49 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* Made 1.1.8 release
