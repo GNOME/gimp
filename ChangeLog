@@ -1,3 +1,49 @@
+Sat Mar 27 01:13:42 EST 1999  Matt Wilson  <msw@gimp.org>
+
+	* app/app_procs.c: removed the idle function from the
+	splash screen, added code that services the event
+	queue.  This reduces flicker in the splash screen.
+	(backport from 1.1)
+
+	* app/brushes.c: s/gpointer/gconstpointer for hash table
+	functions (backport from 1.1)
+
+	* app/fileops.c: added #include <stdlib.h> to get
+	prototype for strtol()
+
+	* app/gdisplay.c: added a check to see if we have a gdisplay
+	hash table set up before we go looking for the gdisplay
+	for this toplevel widget. (backport from 1.1)
+
+	* app/interface.c: added a bound check for progress_update
+	(backport from 1.1)
+
+	* app/main.c: added a cast to make g_set-message_handler happy
+	(backport from 1.1)
+
+	* app/patterns.c: s/gpointer/gconstpointer for hash table
+	functions (backport from 1.1)
+
+	* app/plug_in.c: added bounds check for progress bar update
+
+	* app/procedural_db.c: s/gpointer/gconstpointer for hash table
+	functions, changed to using g_str_equal for comparison
+	(backport from 1.1)
+
+	* plug-ins/MapObject/mapobject_ui.c: now uses the right widget
+	for adjustment callbacks (backport from 1.1 branch)
+
+	* plug-ins/dbbrowser/dbbrowser_utils.c: fixed the clist of
+	db functions so that the scrollbar shows, added viewports
+	for non-scrollable description table
+
+	* plug-ins/gfig/gfig.c: reverted to the gfig version from
+	the 1.0 branch, ported to GTK+ 1.2
+
+	* plug-ins/script-fu/script-fu-server.c: set up the clientname
+	hash table to use g_direct_hash (backport from 1.1),
+	added stdlib.h for malloc() prototype.
+
 Mon Mar 15 13:13:36 1999  Owen Taylor  <otaylor@redhat.com>
 
 	* plug-ins/xd/xd.c plug-ins/film/film.c:

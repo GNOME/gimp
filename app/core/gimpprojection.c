@@ -202,7 +202,7 @@ gdisplay_delete (GDisplay *gdisp)
 
   /*  free the selection structure  */
   selection_free (gdisp->select);
-  
+
   if (gdisp->scroll_gc)
     gdk_gc_destroy (gdisp->scroll_gc);
 
@@ -1114,7 +1114,7 @@ gdisplay_active ()
   GtkWidget *event_widget;
   GtkWidget *toplevel_widget;
   GdkEvent *event;
-  GDisplay *gdisp;
+  GDisplay *gdisp = NULL;
 
   /*  If the popup shell is valid, then get the gdisplay associated with that shell  */
   event = gtk_get_current_event ();
@@ -1125,7 +1125,9 @@ gdisplay_active ()
     return NULL;
 
   toplevel_widget = gtk_widget_get_toplevel (event_widget);
-  gdisp = g_hash_table_lookup (display_ht, toplevel_widget);
+
+  if (display_ht)
+    gdisp = g_hash_table_lookup (display_ht, toplevel_widget);
 
   if (gdisp)
     return gdisp;

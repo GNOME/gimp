@@ -22,6 +22,8 @@
    0.08  26th sept 97  by Thomas NOEL <thomas@minet.net>
 */
 
+#include <stdlib.h>
+
 #include "dbbrowser_utils.h"
 
 GList *proc_table;
@@ -92,8 +94,7 @@ gimp_db_browser(void (* apply_callback) ( gchar     *selected_proc_name,
   gtk_signal_connect (GTK_OBJECT (dbbrowser->clist), "select_row",
 		      (GtkSignalFunc) procedure_select_callback,
 		      dbbrowser);
-  gtk_box_pack_start (GTK_BOX (vbox),
-		      dbbrowser->clist, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), dbbrowser->scrolled_win, TRUE, TRUE, 0);
   gtk_container_add (GTK_CONTAINER (dbbrowser->scrolled_win), dbbrowser->clist);
   gtk_widget_show(dbbrowser->clist);
   gtk_widget_show(dbbrowser->scrolled_win);
@@ -452,8 +453,9 @@ dialog_select (dbbrowser_t *dbbrowser,
 
   if (old_table) gtk_widget_destroy(old_table);
 
-  gtk_container_add (GTK_CONTAINER (dbbrowser->descr_scroll),
-		     dbbrowser->descr_table );
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (dbbrowser->descr_scroll),
+					 dbbrowser->descr_table);
+
   gtk_widget_show(dbbrowser->descr_table);
 }
 

@@ -58,7 +58,7 @@ static void         create_default_brush   (void);
 static void         load_brush             (char *filename);
 static void         free_brush             (GBrushP);
 static void         brushes_free_one       (gpointer, gpointer);
-static gint         brush_compare_func     (gpointer, gpointer);
+static gint         brush_compare_func     (gconstpointer, gconstpointer);
 
 /*  function declarations  */
 void
@@ -91,18 +91,18 @@ brushes_init (int no_data)
     list = g_slist_next(list);
     if(list) {
       GBrushP gb2 = (GBrushP)list->data;
-      
+
       if(gb_start == NULL) {
         gb_start = gb;
       }
-      
+
       if(gb_start->name
 	 && gb2->name
 	 && (strcmp(gb_start->name,gb2->name) == 0)) {
-	
+
         gint b_digits = 2;
         gint gb_tmp_cnt = gb_count++;
-	
+
         /* Alter gb2... */
         g_free(gb2->name);
         while((gb_tmp_cnt /= 10) > 0)
@@ -116,8 +116,8 @@ brushes_init (int no_data)
         gb_start = gb2;
         gb_count = 0;
       }
-    }  
-  }                  
+    }
+  }
 }
 
 
@@ -129,7 +129,7 @@ brushes_free_one (gpointer data, gpointer dummy)
 
 
 static gint
-brush_compare_func (gpointer first, gpointer second)
+brush_compare_func (gconstpointer first, gconstpointer second)
 {
   return strcmp (((GBrushP)first)->name, ((GBrushP)second)->name);
 }
@@ -370,7 +370,7 @@ create_brush_dialog ()
       else
 	gdk_window_raise(brush_select_dialog->shell->window);
     }
-  
+
 }
 
 
@@ -460,10 +460,10 @@ static Argument *
 brushes_refresh_brush_invoker (Argument *args)
 {
 
-  /* FIXME: I've hardcoded success to be 1, because brushes_init() is a 
-   *        void function right now.  It'd be nice if it returned a value at 
+  /* FIXME: I've hardcoded success to be 1, because brushes_init() is a
+   *        void function right now.  It'd be nice if it returned a value at
    *        some future date, so we could tell if things blew up when reparsing
-   *        the list (for whatever reason). 
+   *        the list (for whatever reason).
    *                       - Seth "Yes, this is a kludge" Burgess
    *                         <sjburges@ou.edu>
    */
@@ -526,7 +526,7 @@ ProcRecord brushes_refresh_brush_proc =
   "gimp_brushes_refresh",
   "Refresh current brushes",
   "This procedure retrieves all brushes currently in the user's brush path "
-  "and updates the brush dialog accordingly.", 
+  "and updates the brush dialog accordingly.",
   "Seth Burgess<sjburges@ou.edu>",
   "Seth Burgess",
   "1997",

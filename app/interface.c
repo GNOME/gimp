@@ -1012,6 +1012,9 @@ progress_start ()
 void
 progress_update (float percentage)
 {
+  if (!(percentage >= 0.0 && percentage <= 1.0))
+    return;
+
   gtk_progress_bar_update (GTK_PROGRESS_BAR (progress_area), percentage);
 
   if (GTK_WIDGET_VISIBLE (progress_area))

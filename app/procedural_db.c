@@ -66,9 +66,7 @@ static Argument * procedural_db_set_data (Argument *);
 static Argument * procedural_db_query (Argument *);
 static void       procedural_db_query_entry (gpointer, gpointer, gpointer);
 static int        match_strings (regex_t *, char *);
-static guint      procedural_db_hash_func (gpointer key);
-static gint       procedural_db_compare_func (gpointer a, gpointer b);
-
+static guint      procedural_db_hash_func (gconstpointer key);
 
 /*  Local data  */
 static GHashTable *procedural_ht = NULL;
@@ -485,7 +483,7 @@ procedural_db_init ()
   app_init_update_status("Procedural Database", NULL, -1);
   if (!procedural_ht)
     procedural_ht = g_hash_table_new (procedural_db_hash_func,
-				      procedural_db_compare_func);
+				      g_str_equal);
 }
 
 void
@@ -1128,7 +1126,7 @@ match_strings (regex_t * preg,
 }
 
 static guint
-procedural_db_hash_func (gpointer key)
+procedural_db_hash_func (gconstpointer key)
 {
   gchar *string;
   guint result;
@@ -1172,9 +1170,4 @@ procedural_db_hash_func (gpointer key)
   return result;
 }
 
-static gint
-procedural_db_compare_func (gpointer a,
-			    gpointer b)
-{
-  return (strcmp ((char *) a, (char *) b) == 0);
-}
+

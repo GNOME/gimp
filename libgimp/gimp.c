@@ -120,7 +120,7 @@ gimp_main (int   argc,
       return 0;
     }
 
-  g_set_message_handler (&gimp_message_func);
+  g_set_message_handler ((GPrintFunc) gimp_message_func);
 
   temp_proc_ht = g_hash_table_new (&g_str_hash, &g_str_equal);
 
