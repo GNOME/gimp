@@ -23,12 +23,9 @@
 #include "tile_manager_pvt.h"
 #include "tile_pvt.h"			/* ick. */
 
-static void tile_manager_destroy_level (TileManager *tm,
-					TileLevel *level);
 static int tile_manager_get_tile_num (TileManager *tm,
 				       int xpixel,
-				       int ypixel,
-				       int level);
+				       int ypixel);
 
 
 TileManager*
@@ -37,120 +34,48 @@ tile_manager_new (int toplevel_width,
 		  int bpp)
 {
   TileManager *tm;
-  int tmp1, tmp2;
   int width, height;
-  int i;
 
   tm = g_new (TileManager, 1);
 
-  tmp1 = tile_manager_calc_levels (toplevel_width, TILE_WIDTH);
-  tmp2 = tile_manager_calc_levels (toplevel_height, TILE_HEIGHT);
-
-  tm->nlevels = MAX (tmp1, tmp2);
-  tm->levels = g_new (TileLevel, tm->nlevels);
   tm->user_data = NULL;
   tm->validate_proc = NULL;
 
   width = toplevel_width;
   height = toplevel_height;
 
-  for (i = 0; i < tm->nlevels; i++)
-    {
-      tm->levels[i].width = width;
-      tm->levels[i].height = height;
-      tm->levels[i].bpp = bpp;
-      tm->levels[i].ntile_rows = (height + TILE_HEIGHT - 1) / TILE_HEIGHT;
-      tm->levels[i].ntile_cols = (width + TILE_WIDTH - 1) / TILE_WIDTH;
-      tm->levels[i].tiles = NULL;
-
-      width /= 2;
-      height /= 2;
-    }
-
+  tm->width = width;
+  tm->height = height;
+  tm->bpp = bpp;
+  tm->ntile_rows = (height + TILE_HEIGHT - 1) / TILE_HEIGHT;
+  tm->ntile_cols = (width + TILE_WIDTH - 1) / TILE_WIDTH;
+  tm->tiles = NULL;
+  
   return tm;
 }
 
 void
 tile_manager_destroy (TileManager *tm)
 {
+  int ntiles;
   int i;
 
-  for (i = 0; i < tm->nlevels; i++)
-    tile_manager_destroy_level (tm, &tm->levels[i]);
+  if (tm->tiles)
+    {
+      ntiles = tm->ntile_rows * tm->ntile_cols;
 
-  g_free (tm->levels);
+      for (i = 0; i < ntiles; i++)
+	{
+	  TILE_MUTEX_LOCK (tm->tiles[i]);
+	  tile_detach (tm->tiles[i], tm, i);
+	}
+
+      g_free (tm->tiles);
+    }
+
   g_free (tm);
 }
 
-int
-tile_manager_calc_levels (int size,
-			  int tile_size)
-{
-  int levels;
-
-  levels = 1;
-  while (size > tile_size)
-    {
-      size /= 2;
-      levels += 1;
-    }
-
-  return levels;
-}
-
-void
-tile_manager_set_nlevels (TileManager *tm,
-			  int          nlevels)
-{
-  TileLevel *levels;
-  int width, height;
-  int i;
-
-  if ((nlevels < 1) || (nlevels == tm->nlevels))
-    return;
-
-  levels = g_new (TileLevel, nlevels);
-
-  if (nlevels > tm->nlevels)
-    {
-      for (i = 0; i < tm->nlevels; i++)
-	levels[i] = tm->levels[i];
-
-      width = tm->levels[tm->nlevels - 1].width;
-      height = tm->levels[tm->nlevels - 1].height;
-
-      for (; i < nlevels; i++)
-	{
-	  levels[i].width = width;
-	  levels[i].height = height;
-	  levels[i].bpp = tm->levels[0].bpp;
-	  levels[i].ntile_rows = (height + TILE_HEIGHT - 1) / TILE_HEIGHT;
-	  levels[i].ntile_cols = (width + TILE_WIDTH - 1) / TILE_WIDTH;
-	  levels[i].tiles = NULL;
-
-	  width /= 2;
-	  height /= 2;
-
-	  if (width < 1)
-	    width = 1;
-	  if (height < 1)
-	    height = 1;
-	}
-    }
-  else
-    {
-      for (i = 0; i < nlevels; i++)
-	levels[i] = tm->levels[i];
-
-      for (; i < tm->nlevels; i++)
-	tile_manager_destroy_level (tm, &tm->levels[i]);
-    }
-
-  g_free (tm->levels);
-
-  tm->nlevels = nlevels;
-  tm->levels = levels;
-}
 
 void
 tile_manager_set_validate_proc (TileManager      *tm,
@@ -159,31 +84,29 @@ tile_manager_set_validate_proc (TileManager      *tm,
   tm->validate_proc = proc;
 }
 
+
 Tile*
 tile_manager_get_tile (TileManager *tm,
 		       int          xpixel,
 		       int          ypixel,
-		       int          level,
 		       int          wantread,
 		       int          wantwrite)
 {
   int tile_num;
 
-  tile_num = tile_manager_get_tile_num (tm, xpixel, ypixel, level);
+  tile_num = tile_manager_get_tile_num (tm, xpixel, ypixel);
   if (tile_num < 0)
     return NULL;
 
-  return tile_manager_get (tm, tile_num, level, wantread, wantwrite);
+  return tile_manager_get (tm, tile_num, wantread, wantwrite);
 }
 
 Tile*
 tile_manager_get (TileManager *tm,
 		  int          tile_num,
-		  int          level,
 		  int          wantread,
 		  int          wantwrite)
 {
-  TileLevel *tile_level;
   Tile **tiles;
   Tile **tile_ptr;
   int ntiles;
@@ -192,32 +115,28 @@ tile_manager_get (TileManager *tm,
   int bottom_tile;
   int i, j, k;
 
-  if ((level < 0) || (level >= tm->nlevels))
-    return NULL;
-
-  tile_level = &tm->levels[level];
-  ntiles = tile_level->ntile_rows * tile_level->ntile_cols;
+  ntiles = tm->ntile_rows * tm->ntile_cols;
 
   if ((tile_num < 0) || (tile_num >= ntiles))
     return NULL;
 
-  if (!tile_level->tiles)
+  if (!tm->tiles)
     {
-      tile_level->tiles = g_new (Tile*, ntiles);
-      tiles = tile_level->tiles;
+      tm->tiles = g_new (Tile*, ntiles);
+      tiles = tm->tiles;
 
-      nrows = tile_level->ntile_rows;
-      ncols = tile_level->ntile_cols;
+      nrows = tm->ntile_rows;
+      ncols = tm->ntile_cols;
 
-      right_tile = tile_level->width - ((ncols - 1) * TILE_WIDTH);
-      bottom_tile = tile_level->height - ((nrows - 1) * TILE_HEIGHT);
+      right_tile = tm->width - ((ncols - 1) * TILE_WIDTH);
+      bottom_tile = tm->height - ((nrows - 1) * TILE_HEIGHT);
 
       for (i = 0, k = 0; i < nrows; i++)
 	{
 	  for (j = 0; j < ncols; j++, k++)
 	    {
 	      tiles[k] = g_new (Tile, 1);
-	      tile_init (tiles[k], tile_level->bpp);
+	      tile_init (tiles[k], tm->bpp);
 	      tile_attach (tiles[k], tm, k);
 
 	      if (j == (ncols - 1))
@@ -229,7 +148,7 @@ tile_manager_get (TileManager *tm,
 	}
     }
 
-  tile_ptr = &tile_level->tiles[tile_num];
+  tile_ptr = &tm->tiles[tile_num];
 
   if (wantread) 
     {
@@ -268,19 +187,16 @@ tile_manager_get (TileManager *tm,
 void
 tile_manager_get_async (TileManager *tm,
                         int          xpixel,
-                        int          ypixel,
-                        int          level)
+                        int          ypixel)
 {
   Tile *tile_ptr;
-  TileLevel *tile_level;
   int tile_num;
 
-  tile_num = tile_manager_get_tile_num (tm, xpixel, ypixel, level);
+  tile_num = tile_manager_get_tile_num (tm, xpixel, ypixel);
   if (tile_num < 0)
     return;
 
-  tile_level = &tm->levels[level];
-  tile_ptr = tile_level->tiles[tile_num];
+  tile_ptr = tm->tiles[tile_num];
 
   tile_swap_in_async (tile_ptr);
 }
@@ -292,164 +208,40 @@ tile_manager_validate (TileManager *tm,
   tile->valid = TRUE;
 
   if (tm->validate_proc)
-    (* tm->validate_proc) (tm, tile, -1);
+    (* tm->validate_proc) (tm, tile);
 }
 
 void
 tile_manager_invalidate_tiles (TileManager *tm,
 			       Tile        *toplevel_tile)
 {
-  TileLevel *level;
   double x, y;
   int row, col;
   int num;
-  int i;
 
-  col = toplevel_tile->tlink->tile_num % tm->levels[0].ntile_cols;
-  row = toplevel_tile->tlink->tile_num / tm->levels[0].ntile_cols;
+  col = toplevel_tile->tlink->tile_num % tm->ntile_cols;
+  row = toplevel_tile->tlink->tile_num / tm->ntile_cols;
 
-  x = (col * TILE_WIDTH + toplevel_tile->ewidth / 2.0) / (double) tm->levels[0].width;
-  y = (row * TILE_HEIGHT + toplevel_tile->eheight / 2.0) / (double) tm->levels[0].height;
+  x = (col * TILE_WIDTH + toplevel_tile->ewidth / 2.0) / (double) tm->width;
+  y = (row * TILE_HEIGHT + toplevel_tile->eheight / 2.0) / (double) tm->height;
 
-  for (i = 1; i < tm->nlevels; i++)
+  if (tm->tiles)
     {
-      level = &tm->levels[i];
-      if (level->tiles)
-	{
-	  col = x * level->width / TILE_WIDTH;
-	  row = y * level->height / TILE_HEIGHT;
-	  num = row * level->ntile_cols + col;
-	  tile_invalidate (&level->tiles[num], tm, num);
-	}
-    }
-}
-
-void
-tile_manager_invalidate_sublevels (TileManager *tm)
-{
-  int ntiles;
-  int i, j;
-
-  for (i = 1; i < tm->nlevels; i++)
-    {
-      if (tm->levels[i].tiles)
-	{
-	  ntiles = tm->levels[i].ntile_rows * tm->levels[i].ntile_cols;
-	  for (j = 0; j < ntiles; j++)
-	    tile_invalidate (&tm->levels[i].tiles[j], tm, j);
-	}
-    }
-}
-
-void
-tile_manager_update_tile (TileManager *tm,
-			  Tile        *toplevel_tile,
-			  int          level)
-{
-  TileLevel *tile_level;
-  Tile *tile;
-  guchar *src, *dest;
-  double x, y;
-  int srcx, srcy;
-  int tilex, tiley;
-  int tilew, tileh;
-  int bpp;
-  int row, col;
-  int num;
-  int i, j, k;
-
-  if ((level < 1) || (level >= tm->nlevels))
-    return;
-
-  col = toplevel_tile->tlink->tile_num % tm->levels[0].ntile_cols;
-  row = toplevel_tile->tlink->tile_num / tm->levels[0].ntile_cols;
-
-  x = (col * TILE_WIDTH + toplevel_tile->ewidth / 2.0) / (double) tm->levels[0].width;
-  y = (row * TILE_HEIGHT + toplevel_tile->eheight / 2.0) / (double) tm->levels[0].height;
-
-  tilex = ((col * TILE_WIDTH) >> level) % 64;
-  tiley = ((row * TILE_HEIGHT) >> level) % 64;
-
-  if (level > 6)
-    {
-      if (((col % (level - 6)) != 0) ||
-	  ((row % (level - 6)) != 0))
-	return;
-
-      tilew = 1;
-      tileh = 1;
-    }
-  else
-    {
-      tilew = (toplevel_tile->ewidth) >> level;
-      tileh = (toplevel_tile->eheight) >> level;
-    }
-
-  tile_level = &tm->levels[level];
-  col = (x * tile_level->width) / TILE_WIDTH;
-  row = (y * tile_level->height) / TILE_HEIGHT;
-  num = row * tile_level->ntile_cols + col;
-
-  tile = tile_manager_get (tm, num, level, TRUE, TRUE);
-
-  tile_lock (toplevel_tile);
-
-  tilew += tilex;
-  tileh += tiley;
-
-  bpp = tile->bpp;
-
-  for (i = tiley; i < tileh; i++)
-    {
-      srcx = tilex << level;
-      srcy = tiley << level;
-
-      src = toplevel_tile->data + (srcy * toplevel_tile->ewidth + srcx) * bpp;
-      dest = tile->data + (tiley * tile->ewidth + tilex) * bpp;
-
-      for (j = tilex; j < tilew; j++)
-	{
-	  for (k = 0; k < bpp; k++)
-	    dest[k] = src[k];
-
-	  dest += bpp;
-	  src += (bpp << level);
-	}
-    }
-
-  tile_release (tile, TRUE);
-  tile_release (toplevel_tile, FALSE);
-}
-
-
-static void
-tile_manager_destroy_level (TileManager *tm, TileLevel *level)
-{
-  int ntiles;
-  int i;
-
-  if (level->tiles)
-    {
-      ntiles = level->ntile_rows * level->ntile_cols;
-
-      for (i = 0; i < ntiles; i++)
-	{
-	  TILE_MUTEX_LOCK (level->tiles[i]);
-	  tile_detach (level->tiles[i], tm, i);
-	}
-
-      g_free (level->tiles);
+      col = x * tm->width / TILE_WIDTH;
+      row = y * tm->height / TILE_HEIGHT;
+      num = row * tm->ntile_cols + col;
+      tile_invalidate (&tm->tiles[num], tm, num);
     }
 }
 
 
 void
 tile_invalidate_tile (Tile **tile_ptr, TileManager *tm, 
-		      int xpixel, int ypixel, int level)
+		      int xpixel, int ypixel)
 {
   int tile_num;
 
-  tile_num = tile_manager_get_tile_num (tm, xpixel, ypixel, level);
+  tile_num = tile_manager_get_tile_num (tm, xpixel, ypixel);
   if (tile_num < 0) return;
   
   tile_invalidate (tile_ptr, tm, tile_num);
@@ -505,26 +297,14 @@ void
 tile_manager_map_tile (TileManager *tm,
 		       int          xpixel,
 		       int          ypixel,
-		       int          level,
 		       Tile        *srctile)
 {
-  TileLevel *tile_level;
   int tile_row;
   int tile_col;
   int tile_num;
 
-  /*  printf("#");fflush(stdout); */
-
-  if ((level < 0) || (level >= tm->nlevels))
-    {
-      g_warning ("tile_manager_map_tile: level out of range.");
-      return;
-    }
-
-  tile_level = &tm->levels[level];
-
-  if ((xpixel < 0) || (xpixel >= tile_level->width) ||
-      (ypixel < 0) || (ypixel >= tile_level->height))
+  if ((xpixel < 0) || (xpixel >= tm->width) ||
+      (ypixel < 0) || (ypixel >= tm->height))
     {
       g_warning ("tile_manager_map_tile: tile co-ord out of range.");
       return;
@@ -532,18 +312,16 @@ tile_manager_map_tile (TileManager *tm,
 
   tile_row = ypixel / TILE_HEIGHT;
   tile_col = xpixel / TILE_WIDTH;
-  tile_num = tile_row * tile_level->ntile_cols + tile_col;
+  tile_num = tile_row * tm->ntile_cols + tile_col;
 
-  tile_manager_map (tm, tile_num, level, srctile);
+  tile_manager_map (tm, tile_num, srctile);
 }
 
 void
 tile_manager_map (TileManager *tm,
 		  int          tile_num,
-		  int          level,
 		  Tile        *srctile)
 {
-  TileLevel *tile_level;
   Tile **tiles;
   Tile **tile_ptr;
   int ntiles;
@@ -552,16 +330,7 @@ tile_manager_map (TileManager *tm,
   int bottom_tile;
   int i, j, k;
 
-  /*  printf("@");fflush(stdout);*/
-
-  if ((level < 0) || (level >= tm->nlevels))
-    {
-      g_warning ("tile_manager_map: level out of range.");
-      return;
-    }
-
-  tile_level = &tm->levels[level];
-  ntiles = tile_level->ntile_rows * tile_level->ntile_cols;
+  ntiles = tm->ntile_rows * tm->ntile_cols;
 
   if ((tile_num < 0) || (tile_num >= ntiles))
     {
@@ -569,18 +338,18 @@ tile_manager_map (TileManager *tm,
       return;
     }
 
-  if (!tile_level->tiles)
+  if (!tm->tiles)
     {
       /*      g_warning ("tile_manager_map: empty tile level - init'ing.");*/
 
-      tile_level->tiles = g_new (Tile*, ntiles);
-      tiles = tile_level->tiles;
+      tm->tiles = g_new (Tile*, ntiles);
+      tiles = tm->tiles;
 
-      nrows = tile_level->ntile_rows;
-      ncols = tile_level->ntile_cols;
+      nrows = tm->ntile_rows;
+      ncols = tm->ntile_cols;
 
-      right_tile = tile_level->width - ((ncols - 1) * TILE_WIDTH);
-      bottom_tile = tile_level->height - ((nrows - 1) * TILE_HEIGHT);
+      right_tile = tm->width - ((ncols - 1) * TILE_WIDTH);
+      bottom_tile = tm->height - ((nrows - 1) * TILE_HEIGHT);
 
       for (i = 0, k = 0; i < nrows; i++)
 	{
@@ -589,7 +358,7 @@ tile_manager_map (TileManager *tm,
 	      /*	      printf(",");fflush(stdout);*/
 
 	      tiles[k] = g_new (Tile, 1);
-	      tile_init (tiles[k], tile_level->bpp);
+	      tile_init (tiles[k], tm->bpp);
 	      tile_attach (tiles[k], tm, k);
 
 	      if (j == (ncols - 1))
@@ -603,7 +372,7 @@ tile_manager_map (TileManager *tm,
       /*      g_warning ("tile_manager_map: empty tile level - done.");*/
     }
 
-  tile_ptr = &tile_level->tiles[tile_num];
+  tile_ptr = &tm->tiles[tile_num];
 
   /*  printf(")");fflush(stdout);*/
 
@@ -632,25 +401,19 @@ tile_manager_map (TileManager *tm,
 static int
 tile_manager_get_tile_num (TileManager *tm,
 		           int xpixel,
-		           int ypixel,
-		           int level)
+		           int ypixel)
 {
-  TileLevel *tile_level;
   int tile_row;
   int tile_col;
   int tile_num;
 
-  if ((level < 0) || (level >= tm->nlevels))
-    return -1;
-
-  tile_level = &tm->levels[level];
-  if ((xpixel < 0) || (xpixel >= tile_level->width) ||
-      (ypixel < 0) || (ypixel >= tile_level->height))
+  if ((xpixel < 0) || (xpixel >= tm->width) ||
+      (ypixel < 0) || (ypixel >= tm->height))
     return -1;
 
   tile_row = ypixel / TILE_HEIGHT;
   tile_col = xpixel / TILE_WIDTH;
-  tile_num = tile_row * tile_level->ntile_cols + tile_col;
+  tile_num = tile_row * tm->ntile_cols + tile_col;
 
   return tile_num;
 }
@@ -669,21 +432,21 @@ tile_manager_get_user_data (TileManager *tm)
 }
 
 int 
-tile_manager_level_width  (TileManager *tm, int level) 
+tile_manager_level_width  (TileManager *tm) 
 {
-  return tm->levels[level].width;
+  return tm->width;
 }
 
 int 
-tile_manager_level_height (TileManager *tm, int level)
+tile_manager_level_height (TileManager *tm)
 {
-  return tm->levels[level].height;
+  return tm->height;
 }
 
 int 
-tile_manager_level_bpp    (TileManager *tm, int level)
+tile_manager_level_bpp    (TileManager *tm)
 {
-  return tm->levels[level].bpp;
+  return tm->bpp;
 }
 
 void
@@ -702,8 +465,28 @@ tile_manager_get_tile_coordinates (TileManager *tm, Tile *tile, int *x, int *y)
       return;
     }
 
-  *x = TILE_WIDTH * (tl->tile_num % tm->levels[0].ntile_cols);
-  *y = TILE_HEIGHT * (tl->tile_num / tm->levels[0].ntile_cols);
+  *x = TILE_WIDTH * (tl->tile_num % tm->ntile_cols);
+  *y = TILE_HEIGHT * (tl->tile_num / tm->ntile_cols);
+}
+
+  
+void
+tile_manager_map_over_tile (TileManager *tm, Tile *tile, Tile *srctile)
+{
+  TileLink *tl;
+
+  for (tl = tile->tlink; tl; tl = tl->next) 
+    {
+      if (tl->tm == tm) break;
+    }
+
+  if (tl == NULL) 
+    {
+      g_warning ("tile_manager_map_over_tile: tile not attached to manager");
+      return;
+    }
+
+  tile_manager_map (tm, tl->tile_num, srctile);
 }
 
   

@@ -81,12 +81,12 @@ crop_buffer (TileManager *tiles,
   void * pr;
   unsigned char black[MAX_CHANNELS] = { 0, 0, 0, 0 };
 
-  bytes = tiles->levels[0].bpp;
+  bytes = tiles->bpp;
   alpha = bytes - 1;
 
   /*  go through and calculate the bounds  */
-  x1 = tiles->levels[0].width;
-  y1 = tiles->levels[0].height;
+  x1 = tiles->width;
+  y1 = tiles->height;
   x2 = 0;
   y2 = 0;
 
@@ -119,17 +119,17 @@ crop_buffer (TileManager *tiles,
 	}
     }
 
-  x2 = BOUNDS (x2 + 1, 0, tiles->levels[0].width);
-  y2 = BOUNDS (y2 + 1, 0, tiles->levels[0].height);
+  x2 = BOUNDS (x2 + 1, 0, tiles->width);
+  y2 = BOUNDS (y2 + 1, 0, tiles->height);
 
-  empty = (x1 == tiles->levels[0].width && y1 == tiles->levels[0].height);
+  empty = (x1 == tiles->width && y1 == tiles->height);
 
   /*  If there are no visible pixels, return NULL */
   if (empty)
     new_tiles = NULL;
   /*  If no cropping, return original buffer  */
-  else if (x1 == 0 && y1 == 0 && x2 == tiles->levels[0].width &&
-	   y2 == tiles->levels[0].height && border == 0)
+  else if (x1 == 0 && y1 == 0 && x2 == tiles->width &&
+	   y2 == tiles->height && border == 0)
     new_tiles = tiles;
   /*  Otherwise, crop the original area  */
   else
@@ -657,9 +657,9 @@ new_named_buffer (TileManager *tiles,
 
   nb = (NamedBuffer *) g_malloc (sizeof (NamedBuffer));
 
-  nb->buf = tile_manager_new (tiles->levels[0].width, tiles->levels[0].height, tiles->levels[0].bpp);
-  pixel_region_init (&srcPR, tiles, 0, 0, tiles->levels[0].width, tiles->levels[0].height, FALSE);
-  pixel_region_init (&destPR, nb->buf, 0, 0, tiles->levels[0].width, tiles->levels[0].height, TRUE);
+  nb->buf = tile_manager_new (tiles->width, tiles->height, tiles->bpp);
+  pixel_region_init (&srcPR, tiles, 0, 0, tiles->width, tiles->height, FALSE);
+  pixel_region_init (&destPR, nb->buf, 0, 0, tiles->width, tiles->height, TRUE);
   copy_region (&srcPR, &destPR);
 
   nb->name = g_strdup ((char *) name);

@@ -20,8 +20,10 @@
 
 #include "tile.h"
 
-struct _TileLevel
+struct _TileManager
 {
+  int x, y;                        /* tile manager offsets  */
+
   int width;                       /* the width of the tiled area */
   int height;                      /* the height of the tiled area */
   int bpp;                         /* the bpp of each tile */
@@ -30,13 +32,6 @@ struct _TileLevel
   int ntile_cols;                  /* the number of tiles in each columns */
 
   Tile **tiles;                    /* the tiles for this level */
-};
-
-struct _TileManager
-{
-  int x, y;                        /* tile manager offsets  */
-  int nlevels;                     /* the number of tile levels in the hierarchy */
-  TileLevel *levels;               /* the hierarchy */
   TileValidateProc validate_proc;  /* this proc is called when an attempt to get an
 				    *  invalid tile is made.
 				    */

@@ -128,8 +128,8 @@ ref_tiles (TileManager *src, TileManager *mask, Tile **s_tile, Tile **m_tile,
   if (*m_tile != NULL)
     tile_release (*m_tile, TRUE);
 
-  *s_tile = tile_manager_get_tile (src, x, y, 0, TRUE, FALSE);
-  *m_tile = tile_manager_get_tile (mask, x, y, 0, TRUE, TRUE);
+  *s_tile = tile_manager_get_tile (src, x, y, TRUE, FALSE);
+  *m_tile = tile_manager_get_tile (mask, x, y, TRUE, TRUE);
 
   *s = tile_data_pointer (*s_tile, x % TILE_WIDTH, y % TILE_HEIGHT);
   *m = tile_data_pointer (*m_tile, x % TILE_WIDTH, y % TILE_HEIGHT);
@@ -214,7 +214,7 @@ find_contiguous_region_helper (PixelRegion *mask, PixelRegion *src,
   if (x < 0 || x >= src->w) return;
   if (y < 0 || y >= src->h) return;
 
-  tile = tile_manager_get_tile (mask->tiles, x, y, 0, TRUE, FALSE);
+  tile = tile_manager_get_tile (mask->tiles, x, y, TRUE, FALSE);
   val = *(unsigned char *)(tile_data_pointer (tile, 
 					      x%TILE_WIDTH, y%TILE_HEIGHT));
   tile_release (tile, FALSE);
@@ -281,7 +281,7 @@ find_contiguous_region (GImage *gimage, GimpDrawable *drawable, int antialias,
   mask = channel_new_mask (gimage, srcPR.w, srcPR.h);
   pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), 0, 0, drawable_width (GIMP_DRAWABLE(mask)), drawable_height (GIMP_DRAWABLE(mask)), TRUE);
 
-  tile = tile_manager_get_tile (srcPR.tiles, x, y, 0, TRUE, FALSE);
+  tile = tile_manager_get_tile (srcPR.tiles, x, y, TRUE, FALSE);
   if (tile)
     {
       start = tile_data_pointer (tile, x%TILE_WIDTH, y%TILE_HEIGHT);

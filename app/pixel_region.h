@@ -26,6 +26,8 @@ struct _PixelRegion
 {
   unsigned char *    data;           /*  pointer to region data  */
   TileManager *      tiles;          /*  pointer to tiles  */
+  Tile *             curtile;	     /*  current tile  */
+  int		     offx, offy;     /*  tile offsets */
   int                rowstride;      /*  bytes per pixel row  */
   int                x, y;           /*  origin  */
   int                w, h;           /*  width and  height of region  */

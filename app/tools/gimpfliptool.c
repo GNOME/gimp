@@ -248,9 +248,9 @@ flip_tool_flip_horz (GImage      *gimage,
 
   if (flip > 0)
     {
-      new = tile_manager_new (orig->levels[0].width, orig->levels[0].height, orig->levels[0].bpp);
-      pixel_region_init (&srcPR, orig, 0, 0, orig->levels[0].width, orig->levels[0].height, FALSE);
-      pixel_region_init (&destPR, new, 0, 0, orig->levels[0].width, orig->levels[0].height, TRUE);
+      new = tile_manager_new (orig->width, orig->height, orig->bpp);
+      pixel_region_init (&srcPR, orig, 0, 0, orig->width, orig->height, FALSE);
+      pixel_region_init (&destPR, new, 0, 0, orig->width, orig->height, TRUE);
 
       copy_region (&srcPR, &destPR);
       new->x = orig->x;
@@ -258,14 +258,14 @@ flip_tool_flip_horz (GImage      *gimage,
     }
   else
     {
-      new = tile_manager_new (orig->levels[0].width, orig->levels[0].height, orig->levels[0].bpp);
+      new = tile_manager_new (orig->width, orig->height, orig->bpp);
       new->x = orig->x;
       new->y = orig->y;
 
-      for (i = 0; i < orig->levels[0].width; i++)
+      for (i = 0; i < orig->width; i++)
 	{
-	  pixel_region_init (&srcPR, orig, i, 0, 1, orig->levels[0].height, FALSE);
-	  pixel_region_init (&destPR, new, (orig->levels[0].width - i - 1), 0, 1, orig->levels[0].height, TRUE);
+	  pixel_region_init (&srcPR, orig, i, 0, 1, orig->height, FALSE);
+	  pixel_region_init (&destPR, new, (orig->width - i - 1), 0, 1, orig->height, TRUE);
 
 	  copy_region (&srcPR, &destPR);
 	}
@@ -289,9 +289,9 @@ flip_tool_flip_vert (GImage      *gimage,
 
   if (flip > 0)
     {
-      new = tile_manager_new (orig->levels[0].width, orig->levels[0].height, orig->levels[0].bpp);
-      pixel_region_init (&srcPR, orig, 0, 0, orig->levels[0].width, orig->levels[0].height, FALSE);
-      pixel_region_init (&destPR, new, 0, 0, orig->levels[0].width, orig->levels[0].height, TRUE);
+      new = tile_manager_new (orig->width, orig->height, orig->bpp);
+      pixel_region_init (&srcPR, orig, 0, 0, orig->width, orig->height, FALSE);
+      pixel_region_init (&destPR, new, 0, 0, orig->width, orig->height, TRUE);
 
       copy_region (&srcPR, &destPR);
       new->x = orig->x;
@@ -299,14 +299,14 @@ flip_tool_flip_vert (GImage      *gimage,
     }
   else
     {
-      new = tile_manager_new (orig->levels[0].width, orig->levels[0].height, orig->levels[0].bpp);
+      new = tile_manager_new (orig->width, orig->height, orig->bpp);
       new->x = orig->x;
       new->y = orig->y;
 
-      for (i = 0; i < orig->levels[0].height; i++)
+      for (i = 0; i < orig->height; i++)
 	{
-	  pixel_region_init (&srcPR, orig, 0, i, orig->levels[0].width, 1, FALSE);
-	  pixel_region_init (&destPR, new, 0, (orig->levels[0].height - i - 1), orig->levels[0].width, 1, TRUE);
+	  pixel_region_init (&srcPR, orig, 0, i, orig->width, 1, FALSE);
+	  pixel_region_init (&destPR, new, 0, (orig->height - i - 1), orig->width, 1, TRUE);
 
 	  copy_region (&srcPR, &destPR);
 	}

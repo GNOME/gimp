@@ -440,11 +440,11 @@ scale_tool_scale (gimage, drawable, trans_info, float_tiles, interpolation, matr
   y2 = trans_info[Y2];
 
   pixel_region_init (&srcPR, float_tiles, 0, 0,
-                     float_tiles->levels[0].width,
-                     float_tiles->levels[0].height, FALSE);
+                     float_tiles->width,
+                     float_tiles->height, FALSE);
 
   /*  Create the new tile manager  */
-  new_tiles = tile_manager_new ((x2 - x1), (y2 - y1), float_tiles->levels[0].bpp);
+  new_tiles = tile_manager_new ((x2 - x1), (y2 - y1), float_tiles->bpp);
   pixel_region_init (&destPR, new_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
 
 
@@ -592,10 +592,10 @@ scale_invoker (args)
       float_tiles = transform_core_cut (gimage, drawable, &new_layer);
 
       scalex = scaley = 1.0;
-      if (float_tiles->levels[0].width)
-	scalex = (trans_info[X2] - trans_info[X1]) / (double) float_tiles->levels[0].width;
-      if (float_tiles->levels[0].height)
-	scaley = (trans_info[Y2] - trans_info[Y1]) / (double) float_tiles->levels[0].height;
+      if (float_tiles->width)
+	scalex = (trans_info[X2] - trans_info[X1]) / (double) float_tiles->width;
+      if (float_tiles->height)
+	scaley = (trans_info[Y2] - trans_info[Y1]) / (double) float_tiles->height;
 
       /*  assemble the transformation matrix  */
       identity_matrix  (matrix);

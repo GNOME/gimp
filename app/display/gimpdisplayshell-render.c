@@ -2434,7 +2434,7 @@ render_image_tile_fault (RenderInfo *info)
   tilex = info->src_x / TILE_WIDTH;
   tiley = info->src_y / TILE_HEIGHT;
 
-  tile = tile_manager_get_tile (info->src_tiles, info->src_x, info->src_y, 0, TRUE, FALSE);
+  tile = tile_manager_get_tile (info->src_tiles, info->src_x, info->src_y, TRUE, FALSE);
   if (!tile)
     return NULL;
 
@@ -2463,7 +2463,7 @@ render_image_tile_fault (RenderInfo *info)
 	      tile_release (tile, FALSE);
 	      tilex += 1;
 
-	      tile = tile_manager_get_tile (info->src_tiles, x, info->src_y, 0, TRUE, FALSE);
+	      tile = tile_manager_get_tile (info->src_tiles, x, info->src_y, TRUE, FALSE);
 	      if (!tile)
 		return tile_buf;
 

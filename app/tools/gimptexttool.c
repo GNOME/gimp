@@ -1877,8 +1877,8 @@ text_render (GImage *gimage,
     tile_manager_destroy (mask);
 
   if (newmask && 
-      (layer = layer_new (gimage, newmask->levels[0].width,
-			 newmask->levels[0].height, layer_type,
+      (layer = layer_new (gimage, newmask->width,
+			 newmask->height, layer_type,
 			 "Text Layer", OPAQUE_OPACITY, NORMAL_MODE)))
     {
       /*  color the layer buffer  */

@@ -485,16 +485,16 @@ shear_invoker (args)
       /*  Cut/Copy from the specified drawable  */
       float_tiles = transform_core_cut (gimage, drawable, &new_layer);
 
-      cx = float_tiles->x + float_tiles->levels[0].width / 2.0;
-      cy = float_tiles->y + float_tiles->levels[0].height / 2.0;
+      cx = float_tiles->x + float_tiles->width / 2.0;
+      cy = float_tiles->y + float_tiles->height / 2.0;
 
       identity_matrix  (matrix);
       translate_matrix (matrix, -cx, -cy);
       /*  shear matrix  */
       if (shear_type == HORZ)
-	xshear_matrix (matrix, shear_magnitude / float_tiles->levels[0].height);
+	xshear_matrix (matrix, shear_magnitude / float_tiles->height);
       else if (shear_type == VERT)
-	yshear_matrix (matrix, shear_magnitude / float_tiles->levels[0].width);
+	yshear_matrix (matrix, shear_magnitude / float_tiles->width);
       translate_matrix (matrix, +cx, +cy);
 
       /*  shear the buffer  */

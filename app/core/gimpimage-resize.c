@@ -411,9 +411,9 @@ TileManager *
 gimp_image_shadow (GimpImage *gimage, int width, int height, int bpp)
 {
   if (gimage->shadow &&
-      ((width != tile_manager_level_width (gimage->shadow, 0)) ||
-       (height != tile_manager_level_height (gimage->shadow, 0)) ||
-       (bpp != tile_manager_level_bpp (gimage->shadow, 0))))
+      ((width != tile_manager_level_width (gimage->shadow)) ||
+       (height != tile_manager_level_height (gimage->shadow)) ||
+       (bpp != tile_manager_level_bpp (gimage->shadow))))
     gimp_image_free_shadow (gimage);
   else if (gimage->shadow)
     return gimage->shadow;
@@ -1226,7 +1226,7 @@ gimp_image_invalidate (GimpImage *gimage, int x, int y, int w, int h, int x1, in
   for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
     for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
       {
-	tile = tile_manager_get_tile (tm, j, i, 0, FALSE, FALSE);
+	tile = tile_manager_get_tile (tm, j, i, FALSE, FALSE);
 
 	/*  invalidate all lower level tiles  */
 	/*tile_manager_invalidate_tiles (gimp_image_projection (gimage), tile);*/
@@ -1236,7 +1236,7 @@ gimp_image_invalidate (GimpImage *gimage, int x, int y, int w, int h, int x1, in
 	    /*  check if the tile is outside the bounds  */
 	    if ((MIN ((j + tile_ewidth(tile)), x2) - MAX (j, x1)) <= 0)
 	      {
-		tile_invalidate_tile (&tile, tm, j, i, 0);
+		tile_invalidate_tile (&tile, tm, j, i);
 		if (j < x1)
 		  startx = MAX (startx, (j + tile_ewidth(tile)));
 		else
@@ -1244,7 +1244,7 @@ gimp_image_invalidate (GimpImage *gimage, int x, int y, int w, int h, int x1, in
 	      }
 	    else if (MIN ((i + tile_eheight(tile)), y2) - MAX (i, y1) <= 0)
 	      {
-		tile_invalidate_tile (&tile, tm, j, i, 0);
+		tile_invalidate_tile (&tile, tm, j, i);
 		if (i < y1)
 		  starty = MAX (starty, (i + tile_eheight(tile)));
 		else
@@ -1276,7 +1276,7 @@ gimp_image_invalidate (GimpImage *gimage, int x, int y, int w, int h, int x1, in
 }
 
 void
-gimp_image_validate (TileManager *tm, Tile *tile, int level)
+gimp_image_validate (TileManager *tm, Tile *tile)
 {
   GimpImage *gimage;
   int x, y;
@@ -2575,8 +2575,8 @@ gimp_image_projection (GimpImage *gimage)
     }
   else
     {
-      if ((tile_manager_level_width (gimage->projection, 0) != gimage->width) ||
-	  (tile_manager_level_height (gimage->projection, 0) != gimage->height))
+      if ((tile_manager_level_width (gimage->projection) != gimage->width) ||
+	  (tile_manager_level_height (gimage->projection) != gimage->height))
 	gimp_image_allocate_projection (gimage);
 
       return gimage->projection;

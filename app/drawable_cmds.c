@@ -1265,7 +1265,7 @@ drawable_set_pixel_invoker (Argument *args)
 
   if (success)
     {
-      tile = tile_manager_get_tile (drawable_data (drawable), x, y, 0, TRUE, TRUE);
+      tile = tile_manager_get_tile (drawable_data (drawable), x, y, TRUE, TRUE);
 
       x %= TILE_WIDTH;
       y %= TILE_HEIGHT;
@@ -1369,7 +1369,7 @@ drawable_get_pixel_invoker (Argument *args)
   if (success)
     {
       pixel = (unsigned char *) g_new (unsigned char, num_channels);
-      tile = tile_manager_get_tile (drawable_data (drawable), x, y, 0, TRUE, FALSE);
+      tile = tile_manager_get_tile (drawable_data (drawable), x, y, TRUE, FALSE);
 
       x %= TILE_WIDTH;
       y %= TILE_HEIGHT;

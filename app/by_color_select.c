@@ -360,7 +360,7 @@ by_color_select_button_release (Tool           *tool,
 	{
 	  if (x < 0 || y < 0 || x >= gdisp->gimage->width || y >= gdisp->gimage->height)
 	    return;
-	  tile = tile_manager_get_tile (gimage_composite (gdisp->gimage), x, y, 0, TRUE, FALSE);
+	  tile = tile_manager_get_tile (gimage_composite (gdisp->gimage), x, y, TRUE, FALSE);
 	  data = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
           gimage_get_color (gdisp->gimage, gimage_composite_type(gdisp->gimage), col, data);
           tile_release (tile, FALSE);
@@ -369,7 +369,7 @@ by_color_select_button_release (Tool           *tool,
 	{
 	  if (x < 0 || y < 0 || x >= drawable_width (drawable) || y >= drawable_height (drawable))
 	    return;
-	  tile = tile_manager_get_tile (drawable_data (drawable), x, y, 0, TRUE, FALSE);
+	  tile = tile_manager_get_tile (drawable_data (drawable), x, y, TRUE, FALSE);
 	  data = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
           gimage_get_color (gdisp->gimage, drawable_type(drawable), col, data);
           tile_release (tile, FALSE);
@@ -931,7 +931,7 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
       y = bcd->gimage->height * bevent->y / bcd->preview->requisition.height;
       if (x < 0 || y < 0 || x >= bcd->gimage->width || y >= bcd->gimage->height)
 	return;
-      tile = tile_manager_get_tile (gimage_composite (bcd->gimage), x, y, 0, TRUE, FALSE);
+      tile = tile_manager_get_tile (gimage_composite (bcd->gimage), x, y, TRUE, FALSE);
       col = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
     }
   else
@@ -943,7 +943,7 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
       y = drawable_height (drawable) * bevent->y / bcd->preview->requisition.height - offy;
       if (x < 0 || y < 0 || x >= drawable_width (drawable) || y >= drawable_height (drawable))
 	return;
-      tile = tile_manager_get_tile (drawable_data (drawable), x, y, 0, TRUE, FALSE);
+      tile = tile_manager_get_tile (drawable_data (drawable), x, y, TRUE, FALSE);
       col = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
     }
 

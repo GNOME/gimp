@@ -91,7 +91,7 @@ static void xcf_save_channel       (XcfInfo     *info,
 static void xcf_save_hierarchy     (XcfInfo     *info,
 				    TileManager *tiles);
 static void xcf_save_level         (XcfInfo     *info,
-				    TileLevel   *level);
+				    TileManager *tiles);
 static void xcf_save_tile          (XcfInfo     *info,
 				    Tile        *tile);
 static void xcf_save_tile_rle      (XcfInfo     *info,
@@ -118,9 +118,7 @@ static LayerMask* xcf_load_layer_mask  (XcfInfo     *info,
 static gint     xcf_load_hierarchy     (XcfInfo     *info,
 					TileManager *tiles);
 static gint     xcf_load_level         (XcfInfo     *info,
-					TileManager *tiles,
-					TileLevel   *level,
-					int          level_num);
+					TileManager *tiles);
 static gint     xcf_load_tile          (XcfInfo     *info,
 					Tile        *tile);
 static gint     xcf_load_tile_rle      (XcfInfo     *info,
@@ -965,6 +963,23 @@ xcf_save_channel (XcfInfo *info,
   saved_pos = info->cp;
 }
 
+static int
+xcf_calc_levels (int size,
+		 int tile_size)
+{
+  int levels;
+
+  levels = 1;
+  while (size > tile_size)
+    {
+      size /= 2;
+      levels += 1;
+    }
+
+  return levels;
+}
+
+
 static void
 xcf_save_hierarchy (XcfInfo     *info,
 		    TileManager *tiles)
@@ -972,36 +987,54 @@ xcf_save_hierarchy (XcfInfo     *info,
   guint32 saved_pos;
   guint32 offset;
   int i;
+  int nlevels, tmp1, tmp2;
+  int h, w;
 
-  info->cp += xcf_write_int32 (info->fp, (guint32*) &tiles->levels[0].width, 1);
-  info->cp += xcf_write_int32 (info->fp, (guint32*) &tiles->levels[0].height, 1);
-  info->cp += xcf_write_int32 (info->fp, (guint32*) &tiles->levels[0].bpp, 1);
+  info->cp += xcf_write_int32 (info->fp, (guint32*) &tiles->width, 1);
+  info->cp += xcf_write_int32 (info->fp, (guint32*) &tiles->height, 1);
+  info->cp += xcf_write_int32 (info->fp, (guint32*) &tiles->bpp, 1);
 
   saved_pos = info->cp;
+  
+  tmp1 = xcf_calc_levels (tiles->width, TILE_WIDTH);
+  tmp2 = xcf_calc_levels (tiles->height, TILE_HEIGHT);
+  nlevels = MAX(tmp1, tmp2);
 
-  xcf_seek_pos (info, info->cp + (tiles->nlevels + 1) * 4);
+  xcf_seek_pos (info, info->cp + (1 + nlevels) * 4);
 
-  for (i = 0; i < tiles->nlevels; i++)
+  for (i = 0; i < nlevels; i++) 
     {
-      /* save the start offset of where we are writing
-       *  out the next level.
-       */
       offset = info->cp;
 
-      /* write out the level. */
-      xcf_save_level (info, &tiles->levels[i]);
+      if (i == 0) 
+	{
+	  /* write out the level. */
+	  xcf_save_level (info, tiles);
+	  w = tiles->width;
+	  h = tiles->height;
+	} 
+      else 
+	{
+	  /* fake an empty level */
+	  tmp1 = 0;
+	  w /= 2;
+	  h /= 2;
+	  info->cp += xcf_write_int32 (info->fp, (guint32*) &w, 1);
+	  info->cp += xcf_write_int32 (info->fp, (guint32*) &h, 1);
+	  info->cp += xcf_write_int32 (info->fp, (guint32*) &tmp1, 1);
+	}
 
       /* seek back to where we are to write out the next
        *  level offset and write it out.
        */
       xcf_seek_pos (info, saved_pos);
       info->cp += xcf_write_int32 (info->fp, &offset, 1);
-
+      
       /* increment the location we are to write out the
        *  next offset.
        */
       saved_pos = info->cp;
-
+  
       /* seek to the end of the file which is where
        *  we will write out the next level.
        */
@@ -1017,8 +1050,8 @@ xcf_save_hierarchy (XcfInfo     *info,
 }
 
 static void
-xcf_save_level (XcfInfo   *info,
-		TileLevel *level)
+xcf_save_level (XcfInfo     *info,
+		TileManager *level)
 {
   guint32 saved_pos;
   guint32 offset;
@@ -1792,10 +1825,10 @@ xcf_load_hierarchy (XcfInfo     *info,
 {
   guint32 saved_pos;
   guint32 offset;
+  guint32 junk;
   int width;
   int height;
   int bpp;
-  int i;
 
   info->cp += xcf_read_int32 (info->fp, (guint32*) &width, 1);
   info->cp += xcf_read_int32 (info->fp, (guint32*) &height, 1);
@@ -1804,50 +1837,42 @@ xcf_load_hierarchy (XcfInfo     *info,
   /* make sure the values in the file correspond to the values
    *  calculated when the TileManager was created.
    */
-  if ((width != tiles->levels[0].width) ||
-      (height != tiles->levels[0].height) ||
-      (bpp != tiles->levels[0].bpp))
+  if ((width != tiles->width) ||
+      (height != tiles->height) ||
+      (bpp != tiles->bpp))
     return FALSE;
 
   /* load in the levels...we make sure that the number of levels
    *  calculated when the TileManager was created is the same
    *  as the number of levels found in the file.
    */
-  for (i = 0; i < tiles->nlevels; i++)
+
+  info->cp += xcf_read_int32 (info->fp, &offset, 1); /* top level */
+
+  /* discard offsets for layers below first, if any.
+   */
+  do 
     {
-      /* read in the offset of the next level */
-      info->cp += xcf_read_int32 (info->fp, &offset, 1);
-
-      if (offset == 0)
-	{
-	  g_message ("not enough levels found in hierarchy");
-	  return FALSE;
-	}
-
-      /* save the current position as it is where the
-       *  next level offset is stored.
-       */
-      saved_pos = info->cp;
-
-      /* seek to the level offset */
-      xcf_seek_pos (info, offset);
-
-      /* read in the level */
-      if (!xcf_load_level (info, tiles, &tiles->levels[i], i))
-	return FALSE;
-
-      /* restore the saved position so we'll be ready to
-       *  read the next offset.
-       */
-      xcf_seek_pos (info, saved_pos);
+      info->cp += xcf_read_int32 (info->fp, &junk, 1);
     }
+  while (junk != 0);
 
-  info->cp += xcf_read_int32 (info->fp, &offset, 1);
-  if (offset != 0)
-    {
-      g_message ("encountered garbage after reading hierarchy: %d", offset);
-      return FALSE;
-    }
+  /* save the current position as it is where the
+   *  next level offset is stored.
+   */
+  saved_pos = info->cp;
+  
+  /* seek to the level offset */
+  xcf_seek_pos (info, offset);
+  
+  /* read in the level */
+  if (!xcf_load_level (info, tiles))
+    return FALSE;
+      
+  /* restore the saved position so we'll be ready to
+   *  read the next offset.
+   */
+  xcf_seek_pos (info, saved_pos);
 
   return TRUE;
 }
@@ -1855,9 +1880,7 @@ xcf_load_hierarchy (XcfInfo     *info,
 
 static gint
 xcf_load_level (XcfInfo     *info,
-		TileManager *tiles,
-		TileLevel   *level,
-		int          level_num)
+		TileManager *tiles)
 {
   guint32 saved_pos;
   guint32 offset;
@@ -1872,8 +1895,8 @@ xcf_load_level (XcfInfo     *info,
   info->cp += xcf_read_int32 (info->fp, (guint32*) &width, 1);
   info->cp += xcf_read_int32 (info->fp, (guint32*) &height, 1);
 
-  if ((width != level->width) ||
-      (height != level->height))
+  if ((width != tiles->width) ||
+      (height != tiles->height))
     return FALSE;
 
   /* read in the first tile offset.
@@ -1888,7 +1911,7 @@ xcf_load_level (XcfInfo     *info,
    */
   previous = NULL;
 
-  ntiles = level->ntile_rows * level->ntile_cols;
+  ntiles = tiles->ntile_rows * tiles->ntile_cols;
   for (i = 0; i < ntiles; i++)
     {
       fail = FALSE;
@@ -1908,7 +1931,7 @@ xcf_load_level (XcfInfo     *info,
       xcf_seek_pos (info, offset);
 
       /* get the tile from the tile manager */
-      tile = tile_manager_get (tiles, i, level_num, TRUE, TRUE);
+      tile = tile_manager_get (tiles, i, TRUE, TRUE);
 
       /* read in the tile */
       switch (info->compression)
@@ -1951,25 +1974,11 @@ xcf_load_level (XcfInfo     *info,
 	      memcmp (tile_data_pointer(tile, 0, 0), 
 		      tile_data_pointer(previous, 0, 0),
 		      tile_size (tile)) == 0)
-	    {
-	      tile_release (tile, TRUE);
-	      tile_manager_map (tiles, i, level_num, previous);
-
-	      /*	      putchar('M');*/
-	    }
-	  else
-	    {
-	      tile_release (tile, TRUE);
-	      previous = tile;
-
-	      /*	      putchar('.');*/
-	    }
+	    tile_manager_map (tiles, i, previous);
 	  tile_release (previous, FALSE);
 	}
-      else
-	{
-	  previous = tile;
-	}
+      tile_release (tile, TRUE);
+      previous = tile_manager_get (tiles, i, FALSE, FALSE);
 
       /* restore the saved position so we'll be ready to
        *  read the next offset.

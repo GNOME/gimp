@@ -979,11 +979,11 @@ ink_set_undo_tiles (drawable, x, y, w, h)
     {
       for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
 	{
-	  dest_tile = tile_manager_get_tile (undo_tiles, j, i, 0, FALSE, FALSE);
+	  dest_tile = tile_manager_get_tile (undo_tiles, j, i, FALSE, FALSE);
 	  if (tile_is_valid (dest_tile) == FALSE)
 	    {
-	      src_tile = tile_manager_get_tile (drawable_data (drawable), j, i, 0, TRUE, FALSE);
-	      tile_manager_map_tile (undo_tiles, j, i, 0, src_tile);
+	      src_tile = tile_manager_get_tile (drawable_data (drawable), j, i, TRUE, FALSE);
+	      tile_manager_map_tile (undo_tiles, j, i, src_tile);
 	      tile_release (src_tile, FALSE);
 	    }
 	}
@@ -1003,10 +1003,10 @@ ink_set_canvas_tiles (x, y, w, h)
     {
       for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
 	{
-	  tile = tile_manager_get_tile (canvas_tiles, j, i, 0, FALSE, FALSE);
+	  tile = tile_manager_get_tile (canvas_tiles, j, i, FALSE, FALSE);
 	  if (tile_is_valid (tile) == FALSE)
 	    {
-	      tile = tile_manager_get_tile (canvas_tiles, j, i, 0, TRUE, TRUE);
+	      tile = tile_manager_get_tile (canvas_tiles, j, i, TRUE, TRUE);
 	      memset (tile_data_pointer (tile, 0, 0), 
 		      0, 
 		      tile_size (tile));

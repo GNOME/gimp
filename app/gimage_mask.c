@@ -274,7 +274,7 @@ gimage_mask_extract (gimage, drawable, cut_gimage, keep_indexed)
 
 	  /*  Update the region  */
 	  gdisplays_update_area (gimage, tiles->x, tiles->y,
-				 tiles->levels[0].width, tiles->levels[0].height);
+				 tiles->width, tiles->height);
 
 	  /*  Invalidate the preview  */
 	  drawable_invalidate_preview (drawable);

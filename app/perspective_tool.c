@@ -474,10 +474,10 @@ perspective_invoker (args)
       cy     = float_tiles->y;
       scalex = 1.0;
       scaley = 1.0;
-      if (float_tiles->levels[0].width)
-	scalex = 1.0 / float_tiles->levels[0].width;
-      if (float_tiles->levels[0].height)
-	scaley = 1.0 / float_tiles->levels[0].height;
+      if (float_tiles->width)
+	scalex = 1.0 / float_tiles->width;
+      if (float_tiles->height)
+	scaley = 1.0 / float_tiles->height;
 
       /*  assemble the transformation matrix  */
       identity_matrix  (matrix);

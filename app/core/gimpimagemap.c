@@ -146,21 +146,21 @@ image_map_apply (ImageMap           image_map,
   if (!_image_map->undo_tiles ||
       _image_map->undo_tiles->x != x1 ||
       _image_map->undo_tiles->y != y1 ||
-      _image_map->undo_tiles->levels[0].width != (x2 - x1) ||
-      _image_map->undo_tiles->levels[0].height != (y2 - y1))
+      _image_map->undo_tiles->width != (x2 - x1) ||
+      _image_map->undo_tiles->height != (y2 - y1))
     {
       /*  If undo tiles exist, copy them to the drawable*/
       if (_image_map->undo_tiles)
 	{
 	  /*  Copy from the drawable to the tiles  */
 	  pixel_region_init (&_image_map->srcPR, _image_map->undo_tiles, 0, 0,
-			     _image_map->undo_tiles->levels[0].width,
-			     _image_map->undo_tiles->levels[0].height,
+			     _image_map->undo_tiles->width,
+			     _image_map->undo_tiles->height,
 			     FALSE);
 	  pixel_region_init (&_image_map->destPR, drawable_data ( (_image_map->drawable)),
 			     _image_map->undo_tiles->x, _image_map->undo_tiles->y,
-			     _image_map->undo_tiles->levels[0].width,
-			     _image_map->undo_tiles->levels[0].height,
+			     _image_map->undo_tiles->width,
+			     _image_map->undo_tiles->height,
 			     TRUE);
 
 	  copy_region (&_image_map->srcPR, &_image_map->destPR);
@@ -168,8 +168,8 @@ image_map_apply (ImageMap           image_map,
 
       /*  If either the extents changed or the tiles don't exist, allocate new  */
       if (!_image_map->undo_tiles ||
-	  _image_map->undo_tiles->levels[0].width != (x2 - x1) ||
-	  _image_map->undo_tiles->levels[0].height != (y2 - y1))
+	  _image_map->undo_tiles->width != (x2 - x1) ||
+	  _image_map->undo_tiles->height != (y2 - y1))
 	{
 	  /*  Destroy old tiles--If they exist  */
 	  if (_image_map->undo_tiles != NULL)
@@ -234,8 +234,8 @@ image_map_commit (ImageMap image_map)
     {
       x1 = _image_map->undo_tiles->x;
       y1 = _image_map->undo_tiles->y;
-      x2 = _image_map->undo_tiles->x + _image_map->undo_tiles->levels[0].width;
-      y2 = _image_map->undo_tiles->y + _image_map->undo_tiles->levels[0].height;
+      x2 = _image_map->undo_tiles->x + _image_map->undo_tiles->width;
+      y2 = _image_map->undo_tiles->y + _image_map->undo_tiles->height;
       drawable_apply_image ( (_image_map->drawable), x1, y1, x2, y2, _image_map->undo_tiles, FALSE);
     }
 
@@ -266,13 +266,13 @@ image_map_abort (ImageMap image_map)
     {
       /*  Copy from the drawable to the tiles  */
       pixel_region_init (&srcPR, _image_map->undo_tiles, 0, 0,
-			 _image_map->undo_tiles->levels[0].width,
-			 _image_map->undo_tiles->levels[0].height,
+			 _image_map->undo_tiles->width,
+			 _image_map->undo_tiles->height,
 			 FALSE);
       pixel_region_init (&destPR, drawable_data ( (_image_map->drawable)),
 			 _image_map->undo_tiles->x, _image_map->undo_tiles->y,
-			 _image_map->undo_tiles->levels[0].width,
-			 _image_map->undo_tiles->levels[0].height,
+			 _image_map->undo_tiles->width,
+			 _image_map->undo_tiles->height,
 			 TRUE);
 
       /* if the user has changed the image depth get out quickly */
@@ -289,8 +289,8 @@ image_map_abort (ImageMap image_map)
       /*  Update the area  */
       drawable_update ( (_image_map->drawable),
 		       _image_map->undo_tiles->x, _image_map->undo_tiles->y,
-		       _image_map->undo_tiles->levels[0].width,
-		       _image_map->undo_tiles->levels[0].height);
+		       _image_map->undo_tiles->width,
+		       _image_map->undo_tiles->height);
 
       /*  Free the undo_tiles tile manager  */
       tile_manager_destroy (_image_map->undo_tiles);

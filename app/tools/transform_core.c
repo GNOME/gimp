@@ -64,7 +64,7 @@ static void	   invert		     (Matrix, Matrix);
 		    dy  * ((1-dx)*jk1 + dx*j1k1))
 
 #define REF_TILE(i,x,y) \
-     tile[i] = tile_manager_get_tile (float_tiles, x, y, 0, TRUE, FALSE); \
+     tile[i] = tile_manager_get_tile (float_tiles, x, y, TRUE, FALSE); \
      src[i] = tile_data_pointer (tile[i], (x) % TILE_WIDTH, (y) % TILE_HEIGHT);
 
 
@@ -1008,8 +1008,8 @@ transform_core_bounds (tool, gdisp_ptr)
     {
       transform_core->x1 = tiles->x;
       transform_core->y1 = tiles->y;
-      transform_core->x2 = tiles->x + tiles->levels[0].width;
-      transform_core->y2 = tiles->y + tiles->levels[0].height;
+      transform_core->x2 = tiles->x + tiles->width;
+      transform_core->y2 = tiles->y + tiles->height;
     }
   else
     {
@@ -1192,8 +1192,13 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
 
   x1 = float_tiles->x;
   y1 = float_tiles->y;
-  x2 = x1 + float_tiles->levels[0].width;
-  y2 = y1 + float_tiles->levels[0].height;
+  x2 = x1 + float_tiles->width;
+  y2 = y1 + float_tiles->height;
+
+  transform_point (matrix, x1, y1, &dx1, &dy1);
+  transform_point (matrix, x2, y1, &dx2, &dy2);
+  transform_point (matrix, x1, y2, &dx3, &dy3);
+  transform_point (matrix, x2, y2, &dx4, &dy4);
 
   /*  Find the bounding coordinates  */
   if (active_tool && transform_tool_clip ())
@@ -1227,14 +1232,14 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
     }
 
   /*  Get the new temporary buffer for the transformed result  */
-  tiles = tile_manager_new ((tx2 - tx1), (ty2 - ty1), float_tiles->levels[0].bpp);
+  tiles = tile_manager_new ((tx2 - tx1), (ty2 - ty1), float_tiles->bpp);
   pixel_region_init (&destPR, tiles, 0, 0, (tx2 - tx1), (ty2 - ty1), TRUE);
   tiles->x = tx1;
   tiles->y = ty1;
 
-  width = tiles->levels[0].width;
-  height = tiles->levels[0].height;
-  bytes = tiles->levels[0].bpp;
+  width = tiles->width;
+  height = tiles->height;
+  bytes = tiles->bpp;
 
   dest = (unsigned char *) g_malloc (width * bytes);
 
@@ -1555,9 +1560,9 @@ transform_core_paste (gimage, drawable, tiles, new_layer)
       GIMP_DRAWABLE(layer)->tiles = tiles;
 
       /*  Fill in the new layer's attributes  */
-      GIMP_DRAWABLE(layer)->width = tiles->levels[0].width;
-      GIMP_DRAWABLE(layer)->height = tiles->levels[0].height;
-      GIMP_DRAWABLE(layer)->bytes = tiles->levels[0].bpp;
+      GIMP_DRAWABLE(layer)->width = tiles->width;
+      GIMP_DRAWABLE(layer)->height = tiles->height;
+      GIMP_DRAWABLE(layer)->bytes = tiles->bpp;
       GIMP_DRAWABLE(layer)->offset_x = tiles->x;
       GIMP_DRAWABLE(layer)->offset_y = tiles->y;
 

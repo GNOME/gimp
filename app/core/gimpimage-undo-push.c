@@ -534,8 +534,8 @@ undo_push_image_mod (GImage *gimage,
   y2 = BOUNDS (y2, 0, dheight);
 
   tiles = (TileManager *) tiles_ptr;
-  size = tiles->levels[0].width * tiles->levels[0].height *
-    tiles->levels[0].bpp + sizeof (void *) * 2;
+  size = tiles->width * tiles->height *
+    tiles->bpp + sizeof (void *) * 2;
 
   if ((new = undo_push (gimage, size, IMAGE_MOD_UNDO)))
     {
@@ -595,8 +595,8 @@ undo_pop_image (GImage *gimage,
 
   if (image_undo->sparse == FALSE)
     {
-      w = tiles->levels[0].width;
-      h = tiles->levels[0].height;
+      w = tiles->width;
+      h = tiles->height;
 
       pixel_region_init (&PR1, tiles, 0, 0, w, h, TRUE);
       pixel_region_init (&PR2, drawable_data (image_undo->drawable), x, y, w, h, TRUE);
@@ -617,16 +617,16 @@ undo_pop_image (GImage *gimage,
 	{
 	  for (j = x; j < image_undo->x2; j += (TILE_WIDTH - (j % TILE_WIDTH)))
 	    {
-	      src_tile = tile_manager_get_tile (tiles, j, i, 0, FALSE, FALSE);
+	      src_tile = tile_manager_get_tile (tiles, j, i, FALSE, FALSE);
 	      if (tile_is_valid (src_tile) == TRUE)
 		{
 		  /* swap tiles, not pixels! */
 
-		  src_tile = tile_manager_get_tile (tiles, j, i, 0, TRUE, FALSE /* TRUE */);
-		  dest_tile = tile_manager_get_tile (drawable_data (image_undo->drawable), j, i, 0, TRUE, FALSE /* TRUE */);
+		  src_tile = tile_manager_get_tile (tiles, j, i, TRUE, FALSE /* TRUE */);
+		  dest_tile = tile_manager_get_tile (drawable_data (image_undo->drawable), j, i, TRUE, FALSE /* TRUE */);
 
-		  tile_manager_map_tile (tiles, j, i, 0, dest_tile);
-		  tile_manager_map_tile (drawable_data (image_undo->drawable), j, i, 0, src_tile);
+		  tile_manager_map_tile (tiles, j, i, dest_tile);
+		  tile_manager_map_tile (drawable_data (image_undo->drawable), j, i, src_tile);
 #if 0
 		  swap_pixels (tile_data_pointer (src_tile, 0, 0),
 			       tile_data_pointer (dest_tile, 0, 0),
@@ -672,7 +672,7 @@ undo_push_mask (GImage *gimage,
 
   mask_undo = (MaskUndo *) mask_ptr;
   if (mask_undo->tiles)
-    size = mask_undo->tiles->levels[0].width * mask_undo->tiles->levels[0].height;
+    size = mask_undo->tiles->width * mask_undo->tiles->height;
   else
     size = 0;
 
@@ -733,8 +733,8 @@ undo_pop_mask (GImage *gimage,
 
   if (mask_undo->tiles)
     {
-      width = mask_undo->tiles->levels[0].width;
-      height = mask_undo->tiles->levels[0].height;
+      width = mask_undo->tiles->width;
+      height = mask_undo->tiles->height;
       pixel_region_init (&srcPR, mask_undo->tiles, 0, 0, width, height, FALSE);
       pixel_region_init (&destPR, GIMP_DRAWABLE(sel_mask)->tiles, mask_undo->x, mask_undo->y, width, height, TRUE);
       copy_region (&srcPR, &destPR);
@@ -1271,9 +1271,9 @@ undo_pop_layer_mod (GImage *gimage,
   GIMP_DRAWABLE(layer)->tiles = tiles;
   GIMP_DRAWABLE(layer)->offset_x = tiles->x;
   GIMP_DRAWABLE(layer)->offset_y = tiles->y;
-  GIMP_DRAWABLE(layer)->width = tiles->levels[0].width;
-  GIMP_DRAWABLE(layer)->height = tiles->levels[0].height;
-  GIMP_DRAWABLE(layer)->bytes = tiles->levels[0].bpp;
+  GIMP_DRAWABLE(layer)->width = tiles->width;
+  GIMP_DRAWABLE(layer)->height = tiles->height;
+  GIMP_DRAWABLE(layer)->bytes = tiles->bpp;
   GIMP_DRAWABLE(layer)->type = layer_type;
   GIMP_DRAWABLE(layer)->has_alpha = TYPE_HAS_ALPHA (layer_type);
 
@@ -1618,8 +1618,8 @@ undo_pop_channel_mod (GImage *gimage,
 
   temp = GIMP_DRAWABLE(channel)->tiles;
   GIMP_DRAWABLE(channel)->tiles = tiles;
-  GIMP_DRAWABLE(channel)->width = tiles->levels[0].width;
-  GIMP_DRAWABLE(channel)->height = tiles->levels[0].height;
+  GIMP_DRAWABLE(channel)->width = tiles->width;
+  GIMP_DRAWABLE(channel)->height = tiles->height;
 
   /*  Set the new buffer  */
   data[1] = temp;

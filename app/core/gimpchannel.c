@@ -108,7 +108,7 @@ int channel_get_count = 0;
 /*  Function definitions  */
 
 static void
-channel_validate (TileManager *tm, Tile *tile, int level)
+channel_validate (TileManager *tm, Tile *tile)
 {
   /*  Set the contents of the tile to empty  */
   memset (tile_data_pointer (tile, 0, 0), 
@@ -549,7 +549,7 @@ channel_value (Channel *mask, int x, int y)
 	return 0;
     }
 
-  tile = tile_manager_get_tile (GIMP_DRAWABLE(mask)->tiles, x, y, 0, TRUE, FALSE);
+  tile = tile_manager_get_tile (GIMP_DRAWABLE(mask)->tiles, x, y, TRUE, FALSE);
   val = *(unsigned char *)(tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT));
   tile_release (tile, FALSE);
 

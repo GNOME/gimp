@@ -1,3 +1,22 @@
+Sat Aug 15 14:09:12 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* blend.c boundary.c by_color_select.c channel.c color_picker.c
+ 	  convert.c drawable_cmds.c file_new_dialog.c flip_tool.c
+ 	  floating_sel.c fuzzy_select.c gimage_mask.c gimpimage.c
+ 	  gimpimage.h global_edit.c image_map.c image_render.c ink.c
+ 	  layer.c paint_core.c paint_funcs.c perspective_tool.c
+ 	  pixel_region.c pixel_region.h plug_in.c rotate_tool.c
+ 	  scale_tool.c shear_tool.c text_tool.c tile_manager.c
+ 	  tile_manager.h tile_manager_pvt.h transform_core.c undo.c xcf.c:
+
+	  Another tile tweak.  This one eliminates tile levels (which add
+ 	  bookkeeping without being used).  Made copy_region more
+ 	  intelligent on when to use tile sharing; some changes made to
+ 	  pixel_regions to facilitate this.  Fixed a refcount problem with
+ 	  xcf load and probably a few other bugs that I've forgotten
+ 	  about.  Added a sanity check in set_undo_tiles to help with a
+ 	  problem larry is reporting with airbrush and xinput.
+
 Sat Aug 15 16:11:07 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* TODO: updated the TODO file

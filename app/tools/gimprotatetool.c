@@ -479,8 +479,8 @@ rotate_invoker (args)
       /*  Cut/Copy from the specified drawable  */
       float_tiles = transform_core_cut (gimage, drawable, &new_layer);
 
-      cx = float_tiles->x + float_tiles->levels[0].width / 2.0;
-      cy = float_tiles->y + float_tiles->levels[0].height / 2.0;
+      cx = float_tiles->x + float_tiles->width / 2.0;
+      cy = float_tiles->y + float_tiles->height / 2.0;
 
       /*  assemble the transformation matrix  */
       identity_matrix  (matrix);

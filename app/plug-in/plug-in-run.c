@@ -1358,7 +1358,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 	  return;
 	}
 
-      tile = tile_manager_get (tm, tile_info->tile_num, 0, TRUE, TRUE);
+      tile = tile_manager_get (tm, tile_info->tile_num, TRUE, TRUE);
       if (!tile)
 	{
 	  g_message ("plug-in requested invalid tile (killing)\n");
@@ -1395,7 +1395,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 	  return;
 	}
 
-      tile = tile_manager_get (tm, tile_req->tile_num, 0, TRUE, FALSE);
+      tile = tile_manager_get (tm, tile_req->tile_num, TRUE, FALSE);
       if (!tile)
 	{
 	  g_message ("plug-in requested invalid tile (killing)\n");

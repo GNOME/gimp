@@ -675,12 +675,12 @@ paint_core_get_orig_image (paint_core, drawable, x1, y1, x2, y2)
     {
       /*  If the undo tile corresponding to this location is valid, use it  */
       undo_tile = tile_manager_get_tile (undo_tiles, srcPR.x, srcPR.y,
-					 0, FALSE, FALSE);
+					 FALSE, FALSE);
       if (tile_is_valid (undo_tile) == TRUE)
 	{
 	  refd = 1;
 	  undo_tile = tile_manager_get_tile (undo_tiles, srcPR.x, srcPR.y,
-					     0, TRUE, FALSE);
+					     TRUE, FALSE);
 	  s = tile_data_pointer (undo_tile, 0, 0) +
 	    srcPR.rowstride * (srcPR.y % TILE_HEIGHT) +
 	    srcPR.bytes * (srcPR.x % TILE_WIDTH); /* dubious... */
@@ -1240,15 +1240,21 @@ set_undo_tiles (drawable, x, y, w, h)
   Tile *src_tile;
   Tile *dest_tile;
 
+  if (undo_tiles == NULL) 
+    {
+      g_warning ("set_undo_tiles: undo_tiles is null");
+      return;
+    }
+
   for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
     {
       for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
 	{
-	  dest_tile = tile_manager_get_tile (undo_tiles, j, i, 0, FALSE, FALSE);
+	  dest_tile = tile_manager_get_tile (undo_tiles, j, i, FALSE, FALSE);
 	  if (tile_is_valid (dest_tile) == FALSE)
 	    {
-	      src_tile = tile_manager_get_tile (drawable_data (drawable), j, i, 0, TRUE, FALSE);
-	      tile_manager_map_tile (undo_tiles, j, i, 0, src_tile);
+	      src_tile = tile_manager_get_tile (drawable_data (drawable), j, i, TRUE, FALSE);
+	      tile_manager_map_tile (undo_tiles, j, i, src_tile);
 	      tile_release (src_tile, FALSE);
 	    }
 	}
@@ -1267,10 +1273,10 @@ set_canvas_tiles (x, y, w, h)
     {
       for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
 	{
-	  tile = tile_manager_get_tile (canvas_tiles, j, i, 0, FALSE, FALSE);
+	  tile = tile_manager_get_tile (canvas_tiles, j, i, FALSE, FALSE);
 	  if (tile_is_valid (tile) == FALSE)
 	    {
-	      tile = tile_manager_get_tile (canvas_tiles, j, i, 0, TRUE, TRUE);
+	      tile = tile_manager_get_tile (canvas_tiles, j, i, TRUE, TRUE);
 	      memset (tile_data_pointer (tile, 0, 0), 0, 
 		      tile_size (tile));
 	      tile_release (tile, TRUE);

@@ -463,8 +463,8 @@ file_new_cmd_callback (GtkWidget           *widget,
 
   if(global_buf && !last_new_image)
     {
-      vals->width = global_buf->levels[0].width;
-      vals->height = global_buf->levels[0].height;
+      vals->width = global_buf->width;
+      vals->height = global_buf->height;
     }
 
   vals->dlg = gtk_dialog_new ();

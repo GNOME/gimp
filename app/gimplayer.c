@@ -392,7 +392,7 @@ layer_from_tiles (gimage_ptr, drawable, tiles, name, opacity, mode)
   layer_type = drawable_type_with_alpha ( (drawable));
 
   /*  Create the new layer  */
-  new_layer = layer_new (0, tiles->levels[0].width, tiles->levels[0].height,
+  new_layer = layer_new (0, tiles->width, tiles->height,
 			 layer_type, name, opacity, mode);
 
   if (!new_layer) {
@@ -404,14 +404,14 @@ layer_from_tiles (gimage_ptr, drawable, tiles, name, opacity, mode)
   pixel_region_init (&layerPR, GIMP_DRAWABLE(new_layer)->tiles, 0, 0, GIMP_DRAWABLE(new_layer)->width, GIMP_DRAWABLE(new_layer)->height, TRUE);
   pixel_region_init (&bufPR, tiles, 0, 0, GIMP_DRAWABLE(new_layer)->width, GIMP_DRAWABLE(new_layer)->height, FALSE);
 
-  if ((tiles->levels[0].bpp == 4 && GIMP_DRAWABLE(new_layer)->type == RGBA_GIMAGE) ||
-      (tiles->levels[0].bpp == 2 && GIMP_DRAWABLE(new_layer)->type == GRAYA_GIMAGE))
+  if ((tiles->bpp == 4 && GIMP_DRAWABLE(new_layer)->type == RGBA_GIMAGE) ||
+      (tiles->bpp == 2 && GIMP_DRAWABLE(new_layer)->type == GRAYA_GIMAGE))
     /*  If we want a layer the same type as the buffer  */
     copy_region (&bufPR, &layerPR);
   else
     /*  Transform the contents of the buf to the new_layer  */
     transform_color (gimage, &layerPR, &bufPR, GIMP_DRAWABLE(new_layer),
-		     (tiles->levels[0].bpp == 4) ? RGB : GRAY);
+		     (tiles->bpp == 4) ? RGB : GRAY);
 
   return new_layer;
 }
@@ -940,7 +940,7 @@ layer_pick_correlate (layer, x, y)
       /*  Otherwise, determine if the alpha value at
        *  the given point is non-zero
        */
-      tile = tile_manager_get_tile (GIMP_DRAWABLE(layer)->tiles, x, y, 0, TRUE, FALSE);
+      tile = tile_manager_get_tile (GIMP_DRAWABLE(layer)->tiles, x, y, TRUE, FALSE);
 
       val = * (unsigned char*) (tile_data_pointer (tile,
 						   x % TILE_WIDTH,
@@ -949,7 +949,7 @@ layer_pick_correlate (layer, x, y)
       if (layer->mask)
 	{
 	  unsigned char *ptr;
-	  mask_tile = tile_manager_get_tile (GIMP_DRAWABLE(layer->mask)->tiles, x, y, 0, TRUE, FALSE);
+	  mask_tile = tile_manager_get_tile (GIMP_DRAWABLE(layer->mask)->tiles, x, y, TRUE, FALSE);
 	  ptr = tile_data_pointer (mask_tile, x % TILE_WIDTH, y % TILE_HEIGHT);
 	  val = val * (*ptr) / 255;
 	  tile_release (mask_tile, FALSE);

@@ -74,8 +74,9 @@ pixel_region_init (PR, tiles, x, y, w, h, dirty)
      int dirty;
 {
   PR->tiles = tiles;
+  PR->curtile = NULL;
   PR->data = NULL;
-  PR->bytes = tiles->levels[0].bpp;
+  PR->bytes = tiles->bpp;
   PR->rowstride = PR->bytes * TILE_WIDTH;
   PR->x = x;
   PR->y = y;
@@ -118,7 +119,7 @@ pixel_region_get_async (PR, ulx, uly, lrx, lry)
 
   for (y = uly; y < lry; y += TILE_HEIGHT)
     for (x = ulx; x < lrx; x += TILE_WIDTH)
-      tile_manager_get_async (PR->tiles, x, y, 0);
+      tile_manager_get_async (PR->tiles, x, y);
 }
 
 void
@@ -143,7 +144,7 @@ pixel_region_get_row (PR, x, y, w, data, subsample)
 
   while (x < end)
     {
-      tile = tile_manager_get_tile (PR->tiles, x, y, 0, TRUE, FALSE);
+      tile = tile_manager_get_tile (PR->tiles, x, y, TRUE, FALSE);
       tile_data = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
       npixels = tile_ewidth (tile) - (x % TILE_WIDTH);
 
@@ -190,7 +191,7 @@ pixel_region_set_row (PR, x, y, w, data)
 
   while (x < end)
     {
-      tile = tile_manager_get_tile (PR->tiles, x, y, 0, TRUE, TRUE);
+      tile = tile_manager_get_tile (PR->tiles, x, y, TRUE, TRUE);
       tile_data = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
 
       npixels = tile_ewidth(tile) - (x % TILE_WIDTH);
@@ -229,7 +230,7 @@ pixel_region_get_col (PR, x, y, h, data, subsample)
 
   while (y < end)
     {
-      tile = tile_manager_get_tile (PR->tiles, x, y, 0, TRUE, FALSE);
+      tile = tile_manager_get_tile (PR->tiles, x, y, TRUE, FALSE);
       tile_data = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
       boundary = y + (tile_eheight(tile) - (y % TILE_HEIGHT));
       if (boundary > end) /* make sure we don't write past the end */
@@ -269,7 +270,7 @@ pixel_region_set_col (PR, x, y, h, data)
 
   while (y < end)
     {
-      tile = tile_manager_get_tile (PR->tiles, x, y, 0, TRUE, TRUE);
+      tile = tile_manager_get_tile (PR->tiles, x, y, TRUE, TRUE);
       tile_data = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
       boundary = y + (tile_eheight(tile) - (y % TILE_HEIGHT));
       inc = tile_bpp(tile) * tile_ewidth(tile);
@@ -370,8 +371,8 @@ pixel_regions_process (PRI_ptr)
 	  /*  Unref the last referenced tile if the underlying region is a tile manager  */
 	  if (PRH->PR->tiles)
 	    {
-	      Tile *tile = tile_manager_get_tile (PRH->PR->tiles, PRH->PR->x, PRH->PR->y, 0, FALSE, FALSE);
-	      tile_release (tile, PRH->PR->dirty);
+	      tile_release (PRH->PR->curtile, PRH->PR->dirty);
+	      PRH->PR->curtile = NULL;
 	    }
 
 	  PRH->PR->x += PRI->portion_width;
@@ -417,8 +418,8 @@ pixel_regions_process_stop (PRI_ptr)
 	  /*  Unref the last referenced tile if the underlying region is a tile manager  */
 	  if (PRH->PR->tiles)
 	    {
-	      Tile *tile = tile_manager_get_tile (PRH->PR->tiles, PRH->PR->x, PRH->PR->y, 0, FALSE, FALSE);
-	      tile_release (tile, PRH->PR->dirty);
+	      tile_release (PRH->PR->curtile, PRH->PR->dirty);
+	      PRH->PR->curtile = NULL;
 	    }
 	}
 
@@ -588,16 +589,14 @@ pixel_region_configure (PRH, PRI)
    */
   if (PRH->PR->tiles)
     {
-      Tile *tile;
-      int offx, offy;
+      PRH->PR->curtile = tile_manager_get_tile (PRH->PR->tiles, PRH->PR->x, PRH->PR->y, TRUE, PRH->PR->dirty);
 
-      tile = tile_manager_get_tile (PRH->PR->tiles, PRH->PR->x, PRH->PR->y, 0, TRUE, PRH->PR->dirty);
+      PRH->PR->offx = PRH->PR->x % TILE_WIDTH;
+      PRH->PR->offy = PRH->PR->y % TILE_HEIGHT;
 
-      offx = PRH->PR->x % TILE_WIDTH;
-      offy = PRH->PR->y % TILE_HEIGHT;
-
-      PRH->PR->rowstride = tile_ewidth(tile) * PRH->PR->bytes;
-      PRH->PR->data = tile_data_pointer(tile, offx, offy);
+      PRH->PR->rowstride = tile_ewidth(PRH->PR->curtile) * PRH->PR->bytes;
+      PRH->PR->data = tile_data_pointer(PRH->PR->curtile, 
+					PRH->PR->offx, PRH->PR->offy);
     }
   else
     {

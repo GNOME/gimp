@@ -226,9 +226,9 @@ floating_sel_store (Layer *layer,
   int x1, y1, x2, y2;
 
   /*  Check the backing store & make sure it has the correct dimensions  */
-  if (layer->fs.backing_store->levels[0].width != drawable_width (GIMP_DRAWABLE(layer)) ||
-      layer->fs.backing_store->levels[0].height != drawable_height (GIMP_DRAWABLE(layer)) ||
-      layer->fs.backing_store->levels[0].bpp != drawable_bytes (layer->fs.drawable))
+  if (layer->fs.backing_store->width != drawable_width (GIMP_DRAWABLE(layer)) ||
+      layer->fs.backing_store->height != drawable_height (GIMP_DRAWABLE(layer)) ||
+      layer->fs.backing_store->bpp != drawable_bytes (layer->fs.drawable))
     {
       /*  free the backing store and allocate anew  */
       tile_manager_destroy (layer->fs.backing_store);

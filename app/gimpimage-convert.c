@@ -2471,7 +2471,7 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
   src_bytes = GIMP_DRAWABLE(layer)->bytes;
-  dest_bytes = new_tiles->levels[0].bpp;
+  dest_bytes = new_tiles->bpp;
   width = GIMP_DRAWABLE(layer)->width;
   height = GIMP_DRAWABLE(layer)->height;
 
@@ -2627,7 +2627,7 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
   src_bytes = GIMP_DRAWABLE(layer)->bytes;
-  dest_bytes = new_tiles->levels[0].bpp;
+  dest_bytes = new_tiles->bpp;
   width = GIMP_DRAWABLE(layer)->width;
   height = GIMP_DRAWABLE(layer)->height;
 

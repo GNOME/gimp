@@ -22,12 +22,10 @@
 #include "tile.h"
 
 
-typedef struct _TileLevel    TileLevel;
 typedef struct _TileManager  TileManager;
 
 typedef void (*TileValidateProc) (TileManager *tm,
-				  Tile        *tile,
-				  int          level);
+				  Tile        *tile);
 
 
 /* Creates a new tile manager with the specified
@@ -47,23 +45,6 @@ TileManager* tile_manager_new (int toplevel_width,
  */
 void tile_manager_destroy (TileManager *tm);
 
-/* Calculate the number of levels necessary to have a complete
- *  hierarchy. This procedure is normally called twice with
- *  the width and then height and the maximum value returned
- *  is then used as the number of levels an image needs.
- */
-int tile_manager_calc_levels (int size,
-			      int tile_size);
-
-/* Set the number of levels this tile manager is managing.
- *  This procedure may destroy unnecessary levels in the
- *  tile manager if the new number of levels is less than
- *  the old number of levels.
- * Any newly added levels will consist of invalid tiles.
- */
-void tile_manager_set_nlevels (TileManager *tm,
-			       int          nlevels);
-
 /* Set the validate procedure for the tile manager.
  *  The validate procedure is called when an invalid tile
  *  is referenced. If the procedure is NULL, then the tile
@@ -73,15 +54,11 @@ void tile_manager_set_nlevels (TileManager *tm,
 void tile_manager_set_validate_proc (TileManager      *tm,
 				     TileValidateProc  proc);
 
-/* Get a specified tile from a tile manager. The tile
- *  is from the given level and contains the specified
- *  pixel. Be aware that the pixel coordinates are
- *  dependent on the level.
+/* Get a specified tile from a tile manager. 
  */
 Tile* tile_manager_get_tile (TileManager *tm,
 			     int          xpixel,
 			     int          ypixel,
-			     int          level,
 			     int          wantread,
 			     int          wantwrite);
 
@@ -89,29 +66,25 @@ Tile* tile_manager_get_tile (TileManager *tm,
  */
 Tile* tile_manager_get (TileManager *tm,
 			int          tile_num,
-			int          level,
 			int          wantread,
 			int          wantwrite);
 
-/* Request that (if possible) the tile at x,y,layer be swapped
+/* Request that (if possible) the tile at x,y be swapped
  * in.  This is only a hint to improve performance; no guarantees.
  * The tile may be swapped in or otherwise made more accessible
  * if it is convenient...
  */
 void tile_manager_get_async (TileManager *tm,
 			     int          xpixel,
-			     int          ypixel,
-                             int          level);
+			     int          ypixel);
 
 void tile_manager_map_tile (TileManager *tm,
 			    int          xpixel,
 			    int          ypixel,
-			    int          level,
 			    Tile        *srctile);
 
 void tile_manager_map (TileManager *tm,
 		       int          time_num,
-		       int          level,
 		       Tile        *srctile);
 
 /* Validate a tiles memory.
@@ -121,37 +94,27 @@ void tile_manager_validate (TileManager *tm,
 
 void tile_invalidate (Tile **tile_ptr, TileManager *tm, int tile_num);
 void tile_invalidate_tile (Tile **tile_ptr, TileManager *tm, 
-			   int xpixel, int ypixel, int level);
+			   int xpixel, int ypixel);
 
 /* Given a toplevel tile, this procedure will invalidate
- *  (set the dirty bit) for all tiles in lower levels which
- *  contain this toplevel tile.
- * Note: if a level hasn't been created then the tile for that
- *       level won't be invalidated.
+ *  (set the dirty bit) for this toplevel tile.
  */
 void tile_manager_invalidate_tiles (TileManager *tm,
 				    Tile        *toplevel_tile);
-
-/* Invalidates all the tiles in the sublevels.
- */
-void tile_manager_invalidate_sublevels (TileManager *tm);
-
-/* Update a portion lower level tile given a toplevel tile.
- */
-void tile_manager_update_tile (TileManager *tm,
-			       Tile        *toplevel_tile,
-			       int          level);
 
 void tile_manager_set_user_data (TileManager *tm,
 				 void        *user_data);
 
 void *tile_manager_get_user_data (TileManager *tm);
 
-int tile_manager_level_width  (TileManager *tm, int level);
-int tile_manager_level_height (TileManager *tm, int level);
-int tile_manager_level_bpp    (TileManager *tm, int level);
+int tile_manager_level_width  (TileManager *tm);
+int tile_manager_level_height (TileManager *tm);
+int tile_manager_level_bpp    (TileManager *tm);
 
 void tile_manager_get_tile_coordinates (TileManager *tm, Tile *tile,
 					int *x, int *y);
+
+void tile_manager_map_over_tile (TileManager *tm, Tile *tile, Tile *srctile);
+
 
 #endif /* __TILE_MANAGER_H__ */
