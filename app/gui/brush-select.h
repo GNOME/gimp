@@ -52,6 +52,9 @@ struct _BrushSelect {
   gdouble opacity_value;
   gint spacing_value;
   gint paint_mode;
+  /* To calc column pos. */
+  gint NUM_BRUSH_COLUMNS;
+  gint NUM_BRUSH_ROWS;
 };
 
 BrushSelectP  brush_select_new     (gchar *,

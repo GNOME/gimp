@@ -41,8 +41,8 @@
 #define STD_BRUSH_COLUMNS 5
 #define STD_BRUSH_ROWS    5
 
-#define MAX_WIN_WIDTH     (STD_CELL_WIDTH * NUM_BRUSH_COLUMNS)
-#define MAX_WIN_HEIGHT    (STD_CELL_HEIGHT * NUM_BRUSH_ROWS)
+#define MAX_WIN_WIDTH(p)     (STD_CELL_WIDTH * ((p)->NUM_BRUSH_COLUMNS))
+#define MAX_WIN_HEIGHT(p)    (STD_CELL_HEIGHT * ((p)->NUM_BRUSH_ROWS))
 #define MARGIN_WIDTH      3
 #define MARGIN_HEIGHT     3
 
@@ -122,8 +122,6 @@ static BrushEditGeneratedWindow *brush_edit_generated_dialog;
 /* PDB interface data */
 static int          success;
 
-int NUM_BRUSH_COLUMNS=5;
-int NUM_BRUSH_ROWS=5;
 static GSList *active_dialogs = NULL; /* List of active dialogs */
 
 
@@ -179,6 +177,8 @@ brush_select_new (gchar * title,
   bsp->old_row = bsp->old_col = 0;
   bsp->brush = NULL; /* NULL -> main dialog window */
   bsp->brush_popup = NULL;
+  bsp->NUM_BRUSH_COLUMNS = STD_BRUSH_COLUMNS;
+  bsp->NUM_BRUSH_ROWS = STD_BRUSH_ROWS;
 
   /*  The shell and main vbox  */
   bsp->shell = gtk_dialog_new ();
@@ -214,7 +214,7 @@ brush_select_new (gchar * title,
   bsp->frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (bsp->frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (hbox), bsp->frame, TRUE, TRUE, 0);
-  bsp->sbar_data = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, MAX_WIN_HEIGHT, 1, 1, MAX_WIN_HEIGHT));
+  bsp->sbar_data = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, MAX_WIN_HEIGHT(bsp), 1, 1, MAX_WIN_HEIGHT(bsp)));
   sbar = gtk_vscrollbar_new (bsp->sbar_data);
   gtk_signal_connect (GTK_OBJECT (bsp->sbar_data), "value_changed",
 		      (GtkSignalFunc) preview_scroll_update, bsp);
@@ -227,8 +227,8 @@ brush_select_new (gchar * title,
   bsp->cell_width = STD_CELL_WIDTH;
   bsp->cell_height = STD_CELL_HEIGHT;
 
-  bsp->width = MAX_WIN_WIDTH;
-  bsp->height = MAX_WIN_HEIGHT;
+  bsp->width = MAX_WIN_WIDTH(bsp);
+  bsp->height = MAX_WIN_HEIGHT(bsp);
 
   bsp->preview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
   gtk_preview_size (GTK_PREVIEW (bsp->preview), bsp->width, bsp->height);
@@ -427,8 +427,8 @@ brush_select_select (BrushSelectP bsp,
   if (index < 0)
     return;
   update_active_brush_field (bsp);
-  row = index / NUM_BRUSH_COLUMNS;
-  col = index - row * NUM_BRUSH_COLUMNS;
+  row = index / bsp->NUM_BRUSH_COLUMNS;
+  col = index - row * (bsp->NUM_BRUSH_COLUMNS);
 
   brush_select_show_selected (bsp, row, col);
 }
@@ -708,8 +708,8 @@ display_setup (BrushSelectP bsp)
 static int brush_counter = 0;
 static void do_display_brush (GimpBrush *brush, BrushSelectP bsp)
 {
-  display_brush (bsp, brush, brush_counter % NUM_BRUSH_COLUMNS,
-		 brush_counter / NUM_BRUSH_COLUMNS);
+  display_brush (bsp, brush, brush_counter % (bsp->NUM_BRUSH_COLUMNS),
+		 brush_counter / (bsp->NUM_BRUSH_COLUMNS));
   brush_counter++;
 }
 
@@ -826,8 +826,8 @@ preview_calc_scrollbar (BrushSelectP bsp)
   int offs;
 
   offs = bsp->scroll_offset;
-  num_rows = (gimp_brush_list_length(brush_list) + NUM_BRUSH_COLUMNS - 1)
-    / NUM_BRUSH_COLUMNS;
+  num_rows = (gimp_brush_list_length(brush_list) + (bsp->NUM_BRUSH_COLUMNS) - 1)
+    / (bsp->NUM_BRUSH_COLUMNS);
   max = num_rows * bsp->cell_width;
   if (!num_rows) num_rows = 1;
   page_size = bsp->preview->allocation.height;
@@ -848,8 +848,8 @@ brush_select_resize (GtkWidget *widget,
 		     GdkEvent *event, 
 		     BrushSelectP bsp)
 {
-   NUM_BRUSH_COLUMNS = (gint)((widget->allocation.width - 4) / STD_CELL_WIDTH);
-   NUM_BRUSH_ROWS = (gimp_brush_list_length(brush_list) + NUM_BRUSH_COLUMNS - 1) / NUM_BRUSH_COLUMNS;
+   bsp->NUM_BRUSH_COLUMNS = (gint)((widget->allocation.width - 4) / STD_CELL_WIDTH);
+   bsp->NUM_BRUSH_ROWS = (gimp_brush_list_length(brush_list) + bsp->NUM_BRUSH_COLUMNS - 1) / bsp->NUM_BRUSH_COLUMNS;
    
    bsp->width = widget->allocation.width - 4;
    bsp->height = widget->allocation.height - 4;
@@ -859,7 +859,7 @@ brush_select_resize (GtkWidget *widget,
    /*  recalculate scrollbar extents  */
    preview_calc_scrollbar (bsp);
  
-   /*  render the patterns into the newly created image structure  */
+   /*  render the brush into the newly created image structure  */
    display_brushes (bsp);
  
    /*  update the display  */   
@@ -921,7 +921,7 @@ brush_select_events (GtkWidget    *widget,
 	{
 	  col = bevent->x / bsp->cell_width;
 	  row = (bevent->y + bsp->scroll_offset) / bsp->cell_height;
-	  index = row * NUM_BRUSH_COLUMNS + col;
+	  index = row * bsp->NUM_BRUSH_COLUMNS + col;
 
 	  /*  Get the brush and display the popup brush preview  */
 	  if ((brush = gimp_brush_list_get_brush_by_index (brush_list, index)))
@@ -1118,8 +1118,8 @@ preview_scroll_update (GtkAdjustment *adjustment,
 	  index = gimp_brush_list_get_brush_index(brush_list, active);
 	  if (index < 0)
 	    return;
-	  row = index / NUM_BRUSH_COLUMNS;
-	  col = index - row * NUM_BRUSH_COLUMNS;
+	  row = index / bsp->NUM_BRUSH_COLUMNS;
+	  col = index - row * bsp->NUM_BRUSH_COLUMNS;
 	  brush_select_show_selected (bsp, row, col);
 	}
 
