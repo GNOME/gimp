@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.2.3\n"
-"POT-Creation-Date: 2001-11-13 03:08+0800\n"
-"PO-Revision-Date: 2001-11-13 14:41+0800\n"
+"POT-Creation-Date: 2001-11-17 06:13-0500\n"
+"PO-Revision-Date: 2001-11-18 17:07+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Traditional Chinese <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -8324,7 +8324,7 @@ msgstr ""
 #: plug-ins/gap/gap_mov_dialog.c:262 plug-ins/gfig/gfig.c:3319
 #: plug-ins/gflare/gflare.c:594 plug-ins/gimpressionist/orientmap.c:590
 msgid "Normal"
-msgstr ""
+msgstr "正常"
 
 #: plug-ins/gap/gap_mov_dialog.c:263
 msgid "Dissolve"
@@ -8429,11 +8429,11 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:518
 msgid "Anim Preview"
-msgstr ""
+msgstr "動畫預覽"
 
 #: plug-ins/gap/gap_mov_dialog.c:525
 msgid "Generate Animated Preview as multilayer image"
-msgstr ""
+msgstr "以多圖層的圖像方式產生動畫預覽"
 
 #. parameter settings
 #: plug-ins/gap/gap_mov_dialog.c:538
@@ -8444,7 +8444,7 @@ msgstr ""
 #. table col, row
 #: plug-ins/gap/gap_mov_dialog.c:571
 msgid "Start Frame:"
-msgstr ""
+msgstr "開始畫格︰"
 
 #. label text
 #. scalesize spinsize
@@ -8456,13 +8456,13 @@ msgstr ""
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:579
 msgid "First handled frame"
-msgstr ""
+msgstr "第一個處理的畫格"
 
 #. the end frame scale_entry
 #. table col, row
 #: plug-ins/gap/gap_mov_dialog.c:586
 msgid "End Frame:"
-msgstr ""
+msgstr "終止畫格︰"
 
 #. label text
 #. scalesize spinsize
@@ -8474,13 +8474,13 @@ msgstr ""
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:594
 msgid "Last handled frame"
-msgstr ""
+msgstr "最後一個處理的畫格"
 
 #. the Preview Frame scale_entry
 #. table col, row
 #: plug-ins/gap/gap_mov_dialog.c:601
 msgid "Preview Frame:"
-msgstr ""
+msgstr "預覽畫格︰"
 
 #. label text
 #. scalesize spinsize
@@ -8492,13 +8492,13 @@ msgstr ""
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:609
 msgid "Frame to show when UpdPreview button is pressed"
-msgstr ""
+msgstr "當按下「更新預覽」時顯示的畫格"
 
 #. the Layerstack scale_entry
 #. table col, row
 #: plug-ins/gap/gap_mov_dialog.c:617 plug-ins/gap/gap_range_ops.c:267
 msgid "Layerstack:"
-msgstr ""
+msgstr "圖層堆疊︰"
 
 #. label text
 #. scalesize spinsize
@@ -8526,11 +8526,11 @@ msgstr ""
 #. toggle clip_to_image
 #: plug-ins/gap/gap_mov_dialog.c:650
 msgid "Clip To Frame"
-msgstr ""
+msgstr "依畫格範圍裁剪"
 
 #: plug-ins/gap/gap_mov_dialog.c:657
 msgid "Clip all copied Src-Layers at Frame Boundaries"
-msgstr ""
+msgstr "裁剪所有已複製的來源圖層至畫格範圍之內"
 
 #: plug-ins/gap/gap_mov_dialog.c:705
 msgid ""
@@ -8552,11 +8552,11 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:833
 msgid "Anim Preview Mode"
-msgstr ""
+msgstr "動畫預覽模式"
 
 #: plug-ins/gap/gap_mov_dialog.c:841
 msgid "Scale Preview"
-msgstr ""
+msgstr "縮放預覽"
 
 #: plug-ins/gap/gap_mov_dialog.c:842
 msgid "Scale down size of the generated animated preview (in %)"
@@ -8572,7 +8572,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:865
 msgid "Copy to Video Buffer"
-msgstr ""
+msgstr "複製至視像緩衝區"
 
 #: plug-ins/gap/gap_mov_dialog.c:866
 msgid ""
@@ -8586,17 +8586,17 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:917
 msgid "Generate Animated Preview failed\n"
-msgstr ""
+msgstr "產生動畫預覽失敗\n"
 
 #. filesel is already open
 #: plug-ins/gap/gap_mov_dialog.c:1202
 msgid "Load Path Points from file"
-msgstr ""
+msgstr "由檔案載入路徑控制點"
 
 #. filesel is already open
 #: plug-ins/gap/gap_mov_dialog.c:1238
 msgid "Save Path Points to file"
-msgstr ""
+msgstr "將路徑控制點儲存至檔案"
 
 #: plug-ins/gap/gap_mov_dialog.c:1567
 #, c-format
@@ -8632,7 +8632,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:1736
 msgid "How to fetch the next SrcLayer at the next handled frame"
-msgstr ""
+msgstr "在下一個處理的畫格中如何取得下一個來源圖層"
 
 #. Source Image Handle menu
 #: plug-ins/gap/gap_mov_dialog.c:1742
@@ -8641,13 +8641,13 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:1760
 msgid "How to place the SrcLayer at Controlpoint Coordinates"
-msgstr ""
+msgstr "如何將來源圖層放至控制點座標"
 
 #. to avoid side effects while initialization
 #. the frame
 #: plug-ins/gap/gap_mov_dialog.c:1814
 msgid "Move Path Preview"
-msgstr ""
+msgstr "移動路徑預覽"
 
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:1846
@@ -8810,7 +8810,7 @@ msgstr "顯示最後一個控制點"
 
 #: plug-ins/gap/gap_mov_dialog.c:2133
 msgid "Clear Point"
-msgstr ""
+msgstr "清除控制點"
 
 #: plug-ins/gap/gap_mov_dialog.c:2141
 msgid "Reset the current Controlpoint to default Values"
@@ -8818,7 +8818,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2145
 msgid "Clear All Points"
-msgstr ""
+msgstr "清除所有控制點"
 
 #: plug-ins/gap/gap_mov_dialog.c:2153
 msgid ""
@@ -8838,7 +8838,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2178
 msgid "Delete All Points"
-msgstr ""
+msgstr "刪除所有控制點"
 
 #: plug-ins/gap/gap_mov_dialog.c:2186
 msgid "Delete all Controlpoints"
@@ -8846,7 +8846,7 @@ msgstr "刪除所有控制點"
 
 #: plug-ins/gap/gap_mov_dialog.c:2193
 msgid "Load Points"
-msgstr ""
+msgstr "載入控制點"
 
 #: plug-ins/gap/gap_mov_dialog.c:2201
 msgid "Load Controlpoints from file"
@@ -8854,7 +8854,7 @@ msgstr "由檔案載入控制點"
 
 #: plug-ins/gap/gap_mov_dialog.c:2205
 msgid "Save Points"
-msgstr ""
+msgstr "儲存控制點"
 
 #: plug-ins/gap/gap_mov_dialog.c:2213
 msgid "Save Controlpoints to file"
@@ -8886,11 +8886,11 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_exec.c:455
 msgid "Copying Layers into Frames..."
-msgstr ""
+msgstr "正在複製圖層到畫格..."
 
 #: plug-ins/gap/gap_mov_exec.c:459
 msgid "Generating Animated Preview..."
-msgstr ""
+msgstr "正在產生動畫預覽..."
 
 #: plug-ins/gap/gap_mov_exec.c:1376
 #, c-format
@@ -8920,6 +8920,8 @@ msgid ""
 "\n"
 "Error: controlpoint [%d] is out of handled framerange"
 msgstr ""
+"\n"
+"錯誤︰控制點 [%d] 在處理的畫格範圍之外"
 
 #: plug-ins/gap/gap_mov_exec.c:1426
 #, c-format
@@ -8939,59 +8941,59 @@ msgstr "執行 mpeg2_encode 1.2 所需條件："
 
 #: plug-ins/gap/gap_mpege.c:124
 msgid "1.) mpeg_encode 1.5 must be installed"
-msgstr "1）必須先安裝 mpeg_encode 1.5"
+msgstr "１）必須先安裝 mpeg_encode 1.5"
 
 #: plug-ins/gap/gap_mpege.c:127
 msgid "1.) mpeg2encode 1.2 must be installed"
-msgstr "1）必須先安裝 mpeg2_encode 1.2"
+msgstr "１）必須先安裝 mpeg2_encode 1.2"
 
 #: plug-ins/gap/gap_mpege.c:132
 msgid "    you can get mpeg_encode at"
-msgstr "   你可在下列網址取得 mpeg_encode："
+msgstr "　　你可在下列網址取得 mpeg_encode："
 
 #: plug-ins/gap/gap_mpege.c:135
 msgid "    you can get mpeg2encode at http://www.mpeg.org/MSSG"
-msgstr "   你可以在 http://www.mpeg.org/MSSG 取得 mpeg2encode"
+msgstr "　　你可以在 http://www.mpeg.org/MSSG 取得 mpeg2encode"
 
 #: plug-ins/gap/gap_mpege.c:140
 msgid "    ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
-msgstr "    ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
+msgstr "　　ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
 
 #: plug-ins/gap/gap_mpege.c:143
 msgid "   or at ftp://ftp.mpeg.org/pub/mpeg/mssg "
-msgstr "   或是 ftp://ftp.mpeg.org/pub/mpeg/mssg "
+msgstr "　　或是 ftp://ftp.mpeg.org/pub/mpeg/mssg "
 
 #: plug-ins/gap/gap_mpege.c:148
 msgid "2.) You need a series of single Images on disk (AnimFrames)"
-msgstr "2.）磁碟上需要有一系列的單一圖像（動畫畫格）"
+msgstr "２）磁碟上需要有一系列的單一圖像（動畫畫格）"
 
 #: plug-ins/gap/gap_mpege.c:152
 msgid "    all with fileformat JPEG (or YUV or PNM or PPM)"
-msgstr "    而全部的檔案格式都是 JPEG（或 YUV、PNM、PPM）"
+msgstr "　　而全部的檔案格式都是 JPEG（或 YUV、PNM、PPM）"
 
 #: plug-ins/gap/gap_mpege.c:155
 msgid "   all with fileformat PPM (or YUV)"
-msgstr "    而全部的檔案格式都是 PPM（或 YUV）"
+msgstr "　　而全部的檔案格式都是 PPM（或 YUV）"
 
 #: plug-ins/gap/gap_mpege.c:160
 msgid "    (use 'Frames Convert' from the Video Menu"
-msgstr ""
+msgstr "　　（使用視像選單中的「畫格轉換」或是"
 
 #: plug-ins/gap/gap_mpege.c:164
 msgid "    or 'Split Image to Frames' from the Video Menu)"
-msgstr ""
+msgstr "　　視像選單中的「分解圖像為畫格」）"
 
 #: plug-ins/gap/gap_mpege.c:168
 msgid "3.) All Images must have the same size,"
-msgstr "3.）所有圖像的尺寸必須一樣，"
+msgstr "３）所有圖像的尺寸必須一樣，"
 
 #: plug-ins/gap/gap_mpege.c:175
 msgid "    width and height must be a multiple of 16"
-msgstr "    寬度和高度都必須是 16 的倍數"
+msgstr "　　寬度和高度都必須是 16 的倍數"
 
 #: plug-ins/gap/gap_mpege.c:179
 msgid "    (use Scale or Crop from the Video Menu)"
-msgstr "    （可在視像選單中選取縮放或裁剪）"
+msgstr "　　（可在視像選單中選取縮放或裁剪）"
 
 #: plug-ins/gap/gap_mpege.c:194
 msgid "MPEG_ENCODE Information"
@@ -9444,7 +9446,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:431
 msgid "Keep Type"
-msgstr ""
+msgstr "保持類型"
 
 #: plug-ins/gap/gap_range_ops.c:432
 msgid "Convert to RGB"
@@ -9470,13 +9472,15 @@ msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:461
 msgid "Basename:"
-msgstr ""
+msgstr "基本檔名︰"
 
 #: plug-ins/gap/gap_range_ops.c:462
 msgid ""
 "basename of the resulting frames       \n"
 "(0001.ext is added)"
 msgstr ""
+"產生出來的畫格的基本檔名\n"
+"（會加上 0001.ext）"
 
 #: plug-ins/gap/gap_range_ops.c:467 plug-ins/gap/gap_split.c:235
 msgid "Extension:"
@@ -9487,6 +9491,8 @@ msgid ""
 "extension of resulting frames       \n"
 "(is also used to define Fileformat)"
 msgstr ""
+"產生出來的畫格的延伸檔名\n"
+"（也用來定義檔案格式）"
 
 #: plug-ins/gap/gap_range_ops.c:474
 msgid "Imagetype:"
@@ -9497,6 +9503,8 @@ msgid ""
 "Convert to, or keep imagetype           \n"
 "(most fileformats can't handle all types)"
 msgstr ""
+"轉換，或保持圖像類型\n"
+"（大部分的檔案格式無法處理所有類型）"
 
 #: plug-ins/gap/gap_range_ops.c:481 plug-ins/gap/gap_split.c:246
 msgid "Flatten:"
@@ -9507,6 +9515,8 @@ msgid ""
 "Flatten all resulting frames               \n"
 "(most fileformats need flattened frames)"
 msgstr ""
+"將所有產生出來的畫格平面化\n"
+"（大部分的檔案格式都需要平面化的畫格）"
 
 #: plug-ins/gap/gap_range_ops.c:487
 msgid "Convert Frames to other Formats"
@@ -9537,6 +9547,8 @@ msgid ""
 "Resulting Layer Size is made of the outline-rectangle \n"
 "of all visible layers (may differ from frame to frame)"
 msgstr ""
+"最後的圖層尺寸是由所有可見圖層\n"
+"的外框所組成的（各畫格之間可能不同）"
 
 #: plug-ins/gap/gap_range_ops.c:570
 msgid "Resulting Layer Size is the frame size"
@@ -9547,12 +9559,16 @@ msgid ""
 "Resulting Layer Size is the size of the bottom layer\n"
 "(may differ from frame to frame)"
 msgstr ""
+"最後的圖層尺寸是最底圖層的尺寸\n"
+"（各畫格之間可能不同）"
 
 #: plug-ins/gap/gap_range_ops.c:572
 msgid ""
 "Resulting Layer Size is the frame size     \n"
 "transparent parts are filled with BG color"
 msgstr ""
+"最後的圖層尺寸是畫格的尺寸\n"
+"透明部份會以背景顏色填上"
 
 #: plug-ins/gap/gap_range_ops.c:582
 msgid "select all Layers where Layername is equal to Pattern"
@@ -9603,6 +9619,8 @@ msgid ""
 "Basename for all Layers    \n"
 "[####] is replaced by frame number"
 msgstr ""
+"所有圖層的基本名稱\n"
+"[####] 會以畫格編號取代"
 
 #: plug-ins/gap/gap_range_ops.c:636
 msgid "Layer Mergemode:"
@@ -9649,6 +9667,9 @@ msgid ""
 "Desired save plugin can't handle type\n"
 "or desired save plugin not available."
 msgstr ""
+"轉換畫格︰儲存操作失敗。\n"
+"需要的儲存增效模組無法處理該類型\n"
+"或是找不到所需的儲存增效模組。"
 
 #: plug-ins/gap/gap_range_ops.c:1369
 msgid "Cropping all Animation Frames..."
@@ -9669,7 +9690,7 @@ msgstr "平面化畫格"
 #: plug-ins/gap/gap_range_ops.c:1517
 #, c-format
 msgid "Removing Layer (pos:%ld) from Frames..."
-msgstr ""
+msgstr "由畫格移除圖層（位置︰%ld）"
 
 #: plug-ins/gap/gap_range_ops.c:1634
 msgid "Delete Layers in Frames"
@@ -9689,6 +9710,9 @@ msgid ""
 "desired save plugin can't handle type\n"
 "or desired save plugin not available."
 msgstr ""
+"分解畫格︰儲存操作失敗。\n"
+"需要的儲存增效模組無法處理該類型\n"
+"或是找不到所需的儲存增效模組。"
 
 #: plug-ins/gap/gap_split.c:226
 #, c-format
@@ -9707,11 +9731,11 @@ msgstr ""
 
 #: plug-ins/gap/gap_split.c:228
 msgid "frames are named: base_nr.extension"
-msgstr ""
+msgstr "畫格名稱為︰「基本名稱_編號.延伸檔名」"
 
 #: plug-ins/gap/gap_split.c:236
 msgid "extension of resulting frames (is also used to define Fileformat)"
-msgstr ""
+msgstr "產生出來的畫格的延伸檔案（也用來定義檔案格式）"
 
 #: plug-ins/gap/gap_split.c:241
 msgid "Inverse Order:"
@@ -9719,13 +9743,13 @@ msgstr ""
 
 #: plug-ins/gap/gap_split.c:242
 msgid "Start frame 0001 at Top Layer"
-msgstr ""
+msgstr "從最頂圖層開始編號 0001 的畫格"
 
 #: plug-ins/gap/gap_split.c:247
 msgid ""
 "Remove Alpha Channel in resulting Frames. Transparent parts are filled with "
 "BG color."
-msgstr ""
+msgstr "移除所產生的畫格的透明色版。透明部份會以背景顏色填上。"
 
 #: plug-ins/gap/gap_split.c:250
 msgid "Split Image into Frames"
@@ -9778,7 +9802,7 @@ msgstr "字元：%c，%d，0x%02x"
 
 #: plug-ins/gdyntext/charmap_window.c:119
 msgid "Selected char:"
-msgstr ""
+msgstr "選擇的字元︰"
 
 #: plug-ins/gdyntext/charmap_window.c:133 plug-ins/imagemap/imap_polygon.c:454
 msgid "Insert"
@@ -9954,6 +9978,8 @@ msgid ""
 "Holding the Shift key while pressing this button will force GDynText in "
 "changing the layer name as done in GIMP 1.0."
 msgstr ""
+"按下此按鈕時同時按著 Shift 鍵會強制令 GDynText 改變圖層名稱，如同 GIMP 1.0 時"
+"一樣"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:863
 msgid "GDynText: CharMap"
@@ -9980,11 +10006,12 @@ msgid ""
 " WARNING: GDynText is too old! A newer version is required to handle this "
 "layer. Get it from %s"
 msgstr ""
+"警告︰GDynText 版本太舊了！需要較新版本才可處理此圖層。可在以下位置取得︰%s"
 
 #: plug-ins/gdyntext/gdyntextcompat.c:172
 #, c-format
 msgid " Upgrading old GDynText layer to %s."
-msgstr ""
+msgstr "正在將舊的 GDynText 圖層更新至 %s"
 
 #: plug-ins/gdyntext/message_window.c:115
 msgid "Dismiss"
@@ -10002,14 +10029,18 @@ msgid ""
 "(gfig-path \"%s\")\n"
 "to your %s file."
 msgstr ""
+"gimprc 中未定義 gfig-path︰\n"
+"你需要在 %2$s 檔案中加上類似\n"
+"(gfig-path \"%1$s\")\n"
+"的項目。"
 
 #: plug-ins/gfig/gfig.c:835
 msgid "gfig-path misconfigured - the following directories were not found"
-msgstr ""
+msgstr "gfig-path 設定錯誤 - 找不到以下的目錄"
 
 #: plug-ins/gfig/gfig.c:1058
 msgid "First Gfig"
-msgstr ""
+msgstr "第一個 Gfig"
 
 #: plug-ins/gfig/gfig.c:1559
 msgid "Save Gfig drawing"
@@ -10028,7 +10059,7 @@ msgstr "編輯"
 
 #: plug-ins/gfig/gfig.c:1919
 msgid "Edit Gfig object collection"
-msgstr ""
+msgstr "編輯 Gfig 物件集"
 
 #: plug-ins/gfig/gfig.c:1922
 msgid "Merge"
@@ -10065,7 +10096,7 @@ msgstr "封閉"
 
 #: plug-ins/gfig/gfig.c:2032
 msgid "Close curve on completion"
-msgstr ""
+msgstr "完成時封閉曲線"
 
 #: plug-ins/gfig/gfig.c:2037
 msgid "Show Line Frame"
@@ -10077,15 +10108,15 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:2058
 msgid "Regular Polygon Number of Sides"
-msgstr ""
+msgstr "正多邊形邊數"
 
 #: plug-ins/gfig/gfig.c:2070
 msgid "Star Number of Points"
-msgstr ""
+msgstr "星形點數"
 
 #: plug-ins/gfig/gfig.c:2082
 msgid "Spiral Number of Points"
-msgstr ""
+msgstr "螺旋形點數"
 
 #: plug-ins/gfig/gfig.c:2106
 msgid "Ops"
@@ -10117,7 +10148,7 @@ msgstr "繪畫星形"
 
 #: plug-ins/gfig/gfig.c:2160
 msgid "Create spiral"
-msgstr "繪畫旋渦"
+msgstr "繪畫螺旋"
 
 #: plug-ins/gfig/gfig.c:2170
 msgid "Create bezier curve. Shift + Button ends object creation."
@@ -10230,15 +10261,15 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:2862
 msgid "Scale to Image"
-msgstr ""
+msgstr "縮放至圖像"
 
 #: plug-ins/gfig/gfig.c:2870
 msgid "Scale drawings to images size"
-msgstr ""
+msgstr "將繪圖縮放至圖像尺寸"
 
 #: plug-ins/gfig/gfig.c:2892
 msgid "Approx. Circles/Ellipses"
-msgstr ""
+msgstr "近似圓形/橢圓"
 
 #: plug-ins/gfig/gfig.c:2899
 msgid ""
@@ -10248,7 +10279,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:2934
 msgid "Gfig brush selection"
-msgstr ""
+msgstr "Gfig 選擇筆刷"
 
 #: plug-ins/gfig/gfig.c:2975
 msgid "Fade out:"
@@ -10274,7 +10305,7 @@ msgstr "設定筆刷..."
 #: plug-ins/gfig/gfig.c:3137 plug-ins/gimpressionist/orientmap.c:531
 #: plug-ins/gimpressionist/sizemap.c:431
 msgid "Add"
-msgstr "相加"
+msgstr "新增"
 
 #: plug-ins/gfig/gfig.c:3139
 msgid "Replace"
@@ -10398,19 +10429,19 @@ msgstr "物件"
 
 #: plug-ins/gfig/gfig.c:3542
 msgid "Select directory and rescan Gfig object collection"
-msgstr ""
+msgstr "選擇目錄並重新掃瞄 Gfig 物件集"
 
 #: plug-ins/gfig/gfig.c:3553
 msgid "Load a single Gfig object collection"
-msgstr ""
+msgstr "載入單一的 Gfig 物件集"
 
 #: plug-ins/gfig/gfig.c:3562
 msgid "Create a new Gfig object collection for editing"
-msgstr ""
+msgstr "建立用來編輯的新 Gfig 物件集"
 
 #: plug-ins/gfig/gfig.c:3572
 msgid "Delete currently selected Gfig Object collection"
-msgstr ""
+msgstr "刪除目前選擇的 Gfig 物件集"
 
 #. Position labels
 #: plug-ins/gfig/gfig.c:3686
@@ -10423,7 +10454,7 @@ msgstr "物件的細節"
 
 #: plug-ins/gfig/gfig.c:3736
 msgid "Collection Details"
-msgstr ""
+msgstr "物件集細節"
 
 #: plug-ins/gfig/gfig.c:3743
 msgid "Draw Name:"
@@ -10577,10 +10608,14 @@ msgid ""
 "(gflare-path \"%s\")\n"
 "to your %s file."
 msgstr ""
+"gimprc 中未定義 gflare-path︰\n"
+"你需要在 %2$s 檔案中加上類似\n"
+"(gflare-path \"%1$s\")\n"
+"的項目。"
 
 #: plug-ins/gflare/gflare.c:1010
 msgid "gflare-path misconfigured - the following directories were not found"
-msgstr "gflare-path 設定有誤 - 找不到下列的目錄"
+msgstr "gflare-path 設定錯誤 - 找不到下列的目錄"
 
 #: plug-ins/gflare/gflare.c:1367
 #, c-format
@@ -10618,11 +10653,11 @@ msgstr "GFlare"
 
 #: plug-ins/gflare/gflare.c:2573
 msgid "`Default' is created."
-msgstr ""
+msgstr "已建立「預設」。"
 
 #: plug-ins/gflare/gflare.c:2574
 msgid "Default"
-msgstr ""
+msgstr "預設"
 
 #: plug-ins/gflare/gflare.c:2924 plug-ins/gflare/gflare.c:3763
 #: plug-ins/gflare/gflare.c:3873 plug-ins/gflare/gflare.c:4015
@@ -10779,7 +10814,7 @@ msgstr ""
 
 #: plug-ins/gflare/gflare.c:3982
 msgid "Probability Gradient:"
-msgstr ""
+msgstr "機率漸層︰"
 
 #.
 #. *	Shape Radio Button Frame
@@ -10825,7 +10860,7 @@ msgstr ""
 
 #: plug-ins/gfli/gfli.c:675
 msgid "FLI: Sorry, I can save only INDEXED and GRAY images."
-msgstr ""
+msgstr "FLI︰抱欺，只能儲存索引色或灰階圖像。"
 
 #: plug-ins/gfli/gfli.c:816
 msgid "GFLI 1.3 - Load framestack"
@@ -10853,7 +10888,7 @@ msgstr "改變所選筆刷的 gamma（亮度）值"
 
 #: plug-ins/gimpressionist/brush.c:428
 msgid "Select:"
-msgstr ""
+msgstr "選擇："
 
 #: plug-ins/gimpressionist/brush.c:433
 msgid "Aspect ratio:"
@@ -10861,7 +10896,7 @@ msgstr "長寬比："
 
 #: plug-ins/gimpressionist/brush.c:437 plug-ins/gimpressionist/paper.c:173
 msgid "Relief:"
-msgstr ""
+msgstr "起伏："
 
 #: plug-ins/gimpressionist/brush.c:452
 msgid "(None)"
@@ -10877,83 +10912,83 @@ msgstr "指定筆刷的長寬比"
 
 #: plug-ins/gimpressionist/brush.c:490
 msgid "Specifies the amount of embossing to apply to each brush stroke"
-msgstr ""
+msgstr "指定每個筆劃的浮凸程度"
 
 #: plug-ins/gimpressionist/color.c:86
 msgid "Average under brush"
-msgstr ""
+msgstr "取筆刷平均值"
 
 #: plug-ins/gimpressionist/color.c:92
 msgid "Color is computed from the average of all pixels under the brush"
-msgstr ""
+msgstr "顏色由筆刷中所有的像素的平均值計算出來"
 
 #: plug-ins/gimpressionist/color.c:96
 msgid "Center of brush"
-msgstr "筆刷中心點"
+msgstr "取筆刷中心點"
 
 #: plug-ins/gimpressionist/color.c:102
 msgid "Samples the color from the pixel in the center of the brush"
-msgstr ""
+msgstr "在筆刷中心點的像素抽取顏色樣本"
 
 #: plug-ins/gimpressionist/color.c:111
 msgid "Color noise:"
-msgstr ""
+msgstr "色彩雜訊："
 
 #: plug-ins/gimpressionist/color.c:122
 msgid "Adds random noise to the color"
-msgstr ""
+msgstr "加入隨機雜訊到顏色裡"
 
 #: plug-ins/gimpressionist/general.c:99
 msgid "Color Selection Dialog"
-msgstr ""
+msgstr "色彩選擇對話窗"
 
 #: plug-ins/gimpressionist/general.c:156
 msgid "Edge darken:"
-msgstr ""
+msgstr "邊緣變暗："
 
 #: plug-ins/gimpressionist/general.c:173
 msgid "How much to \"darken\" the edges of each brush stroke"
-msgstr ""
+msgstr "每個筆劃的邊緣「變暗」的程度"
 
 #: plug-ins/gimpressionist/general.c:180
 msgid "Background:"
-msgstr ""
+msgstr "背景："
 
 #: plug-ins/gimpressionist/general.c:188
 msgid "Keep original"
-msgstr ""
+msgstr "保留原來圖像"
 
 #: plug-ins/gimpressionist/general.c:194
 msgid "Preserve the original image as a background"
-msgstr ""
+msgstr "保留原來的圖像作為背景"
 
 #: plug-ins/gimpressionist/general.c:198
 msgid "From paper"
-msgstr ""
+msgstr "取自紙張"
 
 #: plug-ins/gimpressionist/general.c:204
 msgid "Copy the texture of the selected paper as a background"
-msgstr ""
+msgstr "複製選定的紙張紋理作為背景"
 
 #: plug-ins/gimpressionist/general.c:217
 msgid "Solid"
-msgstr ""
+msgstr "純色"
 
 #: plug-ins/gimpressionist/general.c:223
 msgid "Solid colored background"
-msgstr ""
+msgstr "純色的背景"
 
 #: plug-ins/gimpressionist/general.c:246
 msgid "Use a transparent background; Only the strokes painted will be visible"
-msgstr ""
+msgstr "使用透明背景；只可以看到繪上的筆劃"
 
 #: plug-ins/gimpressionist/general.c:261
 msgid "Paint edges"
-msgstr ""
+msgstr "繪畫邊界"
 
 #: plug-ins/gimpressionist/general.c:265
 msgid "Selects if to place strokes all the way out to the edges of the image"
-msgstr ""
+msgstr "選擇筆劃是否會劃出圖像邊界之外"
 
 #. Tileable checkbox
 #: plug-ins/gimpressionist/general.c:269 plug-ins/maze/maze_face.c:282
@@ -10962,19 +10997,19 @@ msgstr "可鋪排"
 
 #: plug-ins/gimpressionist/general.c:273
 msgid "Selects if the resulting image should be seamlessly tileable"
-msgstr ""
+msgstr "選擇最後的圖像是否可以亳無縫隙地鋪排起來"
 
 #: plug-ins/gimpressionist/general.c:281
 msgid "Drop Shadow"
-msgstr ""
+msgstr "陰影"
 
 #: plug-ins/gimpressionist/general.c:285
 msgid "Adds a shadow effect to each brush stroke"
-msgstr ""
+msgstr "在每個筆劃都加上陰影效果"
 
 #: plug-ins/gimpressionist/general.c:296
 msgid "How much to \"darken\" the drop shadow"
-msgstr ""
+msgstr "陰影變暗的程度"
 
 #: plug-ins/gimpressionist/general.c:302
 msgid "Shadow depth:"
@@ -10983,15 +11018,15 @@ msgstr "陰影深度："
 #: plug-ins/gimpressionist/general.c:313
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
-msgstr ""
+msgstr "陰影的深度，即是與原來物件的距離"
 
 #: plug-ins/gimpressionist/general.c:319
 msgid "Shadow blur:"
-msgstr ""
+msgstr "陰影模糊化："
 
 #: plug-ins/gimpressionist/general.c:330
 msgid "How much to blur the drop shadow"
-msgstr ""
+msgstr "陰影模糊的程度"
 
 #: plug-ins/gimpressionist/general.c:336
 msgid "Deviation threshold:"
@@ -11017,6 +11052,10 @@ msgid ""
 "  (gimpressionist-path \"%s\")\n"
 "(or similar) to your gimprc file.\n"
 msgstr ""
+"*** 警告 ***\n"
+"強烈建議加上\n"
+"  (gimpressionist-path \"%s\")\n"
+"（或類似設定）到你的 gimprc 檔。\n"
 
 #: plug-ins/gimpressionist/gimpressionist.c:346
 #: plug-ins/gimpressionist/gimpressionist.c:442
@@ -11025,7 +11064,7 @@ msgstr "The GIMPressionist！"
 
 #: plug-ins/gimpressionist/gimpressionist.c:484
 msgid "Run with the selected settings"
-msgstr ""
+msgstr "以選定的設定執行"
 
 #: plug-ins/gimpressionist/gimpressionist.c:491
 msgid "Quit the program"
@@ -11051,13 +11090,13 @@ msgstr "起始角度："
 msgid "Angle span:"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:96 plug-ins/gimpressionist/size.c:95
+#: plug-ins/gimpressionist/orientation.c:96
 msgid "The number of directions (i.e. brushes) to use"
-msgstr ""
+msgstr "使用的方向（即筆刷）的數目"
 
 #: plug-ins/gimpressionist/orientation.c:105
 msgid "The angle of the first brush to create"
-msgstr ""
+msgstr "第一個產生的筆刷的角度"
 
 #: plug-ins/gimpressionist/orientation.c:114
 msgid "How large an angle-span to use (360 = full circle)"
@@ -11067,7 +11106,7 @@ msgstr ""
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
-msgstr ""
+msgstr "根據區域的亮度決定筆劃的方向"
 
 #: plug-ins/gimpressionist/orientation.c:141
 #: plug-ins/gimpressionist/size.c:140
@@ -11078,42 +11117,42 @@ msgstr "半徑"
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
-msgstr ""
+msgstr "根據到圖像中心點的距離決定筆劃的方向"
 
 #: plug-ins/gimpressionist/orientation.c:157
 msgid "Selects a random direction of each stroke"
-msgstr ""
+msgstr "每個筆劃的方向都是隨機的"
 
 #: plug-ins/gimpressionist/orientation.c:167
 msgid "Let the direction from the center determine the direction of the stroke"
-msgstr ""
+msgstr "根據到中心點的方向決定筆劃的方向"
 
 #: plug-ins/gimpressionist/orientation.c:176
 #: plug-ins/gimpressionist/size.c:175
 msgid "Flowing"
-msgstr ""
+msgstr "流動"
 
 #: plug-ins/gimpressionist/orientation.c:182
 #: plug-ins/gimpressionist/size.c:181
 msgid "The strokes follow a \"flowing\" pattern"
-msgstr ""
+msgstr "筆劃會順著一個「流動」的方向繪上"
 
 #: plug-ins/gimpressionist/orientation.c:194
 msgid "The hue of the region determines the direction of the stroke"
-msgstr ""
+msgstr "根據區域的色相決定筆劃的方向"
 
 #: plug-ins/gimpressionist/orientation.c:204
 msgid "The direction that matches the original image the closest is selected"
-msgstr ""
+msgstr "選擇最符合原來圖像的方向"
 
 #: plug-ins/gimpressionist/orientation.c:213
 #: plug-ins/gimpressionist/size.c:210
 msgid "Manual"
-msgstr ""
+msgstr "自行決定"
 
 #: plug-ins/gimpressionist/orientation.c:219
 msgid "Manually specify the stroke orientation"
-msgstr ""
+msgstr "自行決定筆劃的方向"
 
 #: plug-ins/gimpressionist/orientation.c:223
 #: plug-ins/gimpressionist/size.c:220
@@ -11122,21 +11161,25 @@ msgstr "編輯..."
 
 #: plug-ins/gimpressionist/orientation.c:228
 msgid "Opens up the Orientation Map Editor"
-msgstr ""
+msgstr "開啟方向圖編輯器"
 
 #: plug-ins/gimpressionist/orientmap.c:461
 msgid "Orientation Map Editor"
-msgstr ""
+msgstr "方向圖編輯器"
 
 #: plug-ins/gimpressionist/orientmap.c:469
 msgid "Vectors"
-msgstr ""
+msgstr "向量"
 
 #: plug-ins/gimpressionist/orientmap.c:479
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
 msgstr ""
+"這是向量場。\n"
+"按滑鼠左鍵移動選定的向量，\n"
+"按右鍵將向量指向滑鼠方向，\n"
+"按中鍵則新增向量。"
 
 #: plug-ins/gimpressionist/orientmap.c:500
 #: plug-ins/gimpressionist/sizemap.c:400
@@ -11145,44 +11188,44 @@ msgstr "調整預覽圖的亮度"
 
 #: plug-ins/gimpressionist/orientmap.c:522
 msgid "Select previous vector"
-msgstr ""
+msgstr "選擇上一個向量"
 
 #: plug-ins/gimpressionist/orientmap.c:529
 msgid "Select next vector"
-msgstr ""
+msgstr "選擇下一個向量"
 
 #: plug-ins/gimpressionist/orientmap.c:536
 msgid "Add new vector"
-msgstr ""
+msgstr "新增向量"
 
 #: plug-ins/gimpressionist/orientmap.c:538
 #: plug-ins/gimpressionist/sizemap.c:438
 msgid "Kill"
-msgstr ""
+msgstr "刪除"
 
 #: plug-ins/gimpressionist/orientmap.c:543
 msgid "Delete selected vector"
-msgstr ""
+msgstr "刪除選定的向量"
 
 #: plug-ins/gimpressionist/orientmap.c:563
 msgid "Change the angle of the selected vector"
-msgstr ""
+msgstr "改變選定的向量的角度"
 
 #: plug-ins/gimpressionist/orientmap.c:577
 msgid "Change the strength of the selected vector"
-msgstr ""
+msgstr "改變選定的向量的強度"
 
 #: plug-ins/gimpressionist/orientmap.c:596
 msgid "Vortex"
-msgstr ""
+msgstr "渦流"
 
 #: plug-ins/gimpressionist/orientmap.c:608
 msgid "Vortex2"
-msgstr ""
+msgstr "渦流 2"
 
 #: plug-ins/gimpressionist/orientmap.c:614
 msgid "Vortex3"
-msgstr ""
+msgstr "渦流 3"
 
 #: plug-ins/gimpressionist/orientmap.c:631
 #: plug-ins/gimpressionist/sizemap.c:490
@@ -11192,7 +11235,7 @@ msgstr "套用並離開編輯器"
 #: plug-ins/gimpressionist/orientmap.c:638
 #: plug-ins/gimpressionist/sizemap.c:497
 msgid "Apply, but stay inside the editor"
-msgstr ""
+msgstr "套用，但停留在編輯器中"
 
 #: plug-ins/gimpressionist/orientmap.c:645
 #: plug-ins/gimpressionist/sizemap.c:504
@@ -11202,20 +11245,20 @@ msgstr "取消所有改變並離開"
 #: plug-ins/gimpressionist/orientmap.c:653
 #: plug-ins/gimpressionist/sizemap.c:512
 msgid "Strength exp.:"
-msgstr ""
+msgstr "強度指數："
 
 #: plug-ins/gimpressionist/orientmap.c:665
 #: plug-ins/gimpressionist/sizemap.c:524
 msgid "Change the exponent of the strength"
-msgstr ""
+msgstr "改變強度的指數"
 
 #: plug-ins/gimpressionist/orientmap.c:667
 msgid "Angle offset:"
-msgstr ""
+msgstr "角度偏移量："
 
 #: plug-ins/gimpressionist/orientmap.c:679
 msgid "Offset all vectors with a given angle"
-msgstr ""
+msgstr "所有向量都會偏移指定的角度"
 
 #: plug-ins/gimpressionist/orientmap.c:681
 #: plug-ins/gimpressionist/sizemap.c:527
@@ -11226,50 +11269,50 @@ msgstr "Voronoi"
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
-msgstr ""
+msgstr "Voronoi-模式使得只有最接近指定點的向量才會有影響"
 
 #: plug-ins/gimpressionist/paper.c:89 plug-ins/gimpressionist/paper.c:94
 msgid "Paper"
-msgstr ""
+msgstr "紙張"
 
 #: plug-ins/gimpressionist/paper.c:130
 msgid "Paper Preview:"
-msgstr ""
+msgstr "紙張預覽："
 
 #. updatepaperprev(NULL);
 #: plug-ins/gimpressionist/paper.c:141
 msgid "Invert"
-msgstr ""
+msgstr "相反"
 
 #: plug-ins/gimpressionist/paper.c:148
 msgid "Inverts the Papers texture"
-msgstr ""
+msgstr "使用相反的紙張紋理"
 
 #: plug-ins/gimpressionist/paper.c:156
 msgid "Applies the paper as it is (without embossing it)"
-msgstr ""
+msgstr "套用原來紙張（不加上浮雕效果）"
 
 #. Scale
 #: plug-ins/gimpressionist/paper.c:169 plug-ins/ifscompose/ifscompose.c:563
 msgid "Scale:"
-msgstr ""
+msgstr "縮放："
 
 #: plug-ins/gimpressionist/paper.c:188
 msgid "Specifies the scale of the texture (in percent of original file)"
-msgstr ""
+msgstr "指定紋理的縮放程度（原始檔的百分比）"
 
 #: plug-ins/gimpressionist/paper.c:197
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
-msgstr ""
+msgstr "指定圖像浮凸的程度（以百分比計）"
 
 #: plug-ins/gimpressionist/placement.c:52
 #: plug-ins/gimpressionist/placement.c:57
 msgid "Placement"
-msgstr ""
+msgstr "配置"
 
 #: plug-ins/gimpressionist/placement.c:77
 msgid "Placement:"
-msgstr ""
+msgstr "配置："
 
 #: plug-ins/gimpressionist/placement.c:87
 msgid "Randomly"
@@ -11301,35 +11344,35 @@ msgstr ""
 
 #: plug-ins/gimpressionist/placement.c:129
 msgid "Focus the brush strokes around the center of the image"
-msgstr ""
+msgstr "筆劃會圍繞圖像四周"
 
 #: plug-ins/gimpressionist/presets.c:572 plug-ins/gimpressionist/presets.c:577
 msgid "Presets"
-msgstr ""
+msgstr "預設"
 
 #: plug-ins/gimpressionist/presets.c:596
 msgid "Save current"
-msgstr ""
+msgstr "儲存目前設定"
 
 #: plug-ins/gimpressionist/presets.c:602
 msgid "Save the current settings to the specified file"
-msgstr ""
+msgstr "儲存目前的設定到指定的檔案"
 
 #: plug-ins/gimpressionist/presets.c:646
 msgid "Reads the selected Preset into memory"
-msgstr ""
+msgstr "將選定的預設效果讀入記憶體"
 
 #: plug-ins/gimpressionist/presets.c:654
 msgid "Deletes the selected Preset"
-msgstr ""
+msgstr "刪除選定的預設效果"
 
 #: plug-ins/gimpressionist/presets.c:662
 msgid "Reread the directory of Presets"
-msgstr ""
+msgstr "重新讀取預設效果的目錄"
 
 #: plug-ins/gimpressionist/presets.c:664
 msgid "(Desc)"
-msgstr ""
+msgstr "(描述)"
 
 #: plug-ins/gimpressionist/presets.c:669
 msgid ""
@@ -11339,6 +11382,11 @@ msgid ""
 "feel free to send them to me <vidar@prosalg.no>\n"
 "for inclusion into the next release!\n"
 msgstr ""
+"\n"
+"如果你有一些好的預設效果，\n"
+"（或者筆刷及紙張）\n"
+"歡迎將它們寄給我 <vidar@prosalg.no>\n"
+"以加進下一個版本！\n"
 
 #: plug-ins/gimpressionist/preview.c:117 plug-ins/gimpressionist/repaint.c:877
 #: plug-ins/gimpressionist/repaint.c:879 plug-ins/imagemap/imap_polygon.c:448
@@ -11355,7 +11403,7 @@ msgstr "還原至本來的圖像"
 
 #: plug-ins/gimpressionist/size.c:72
 msgid "Sizes:"
-msgstr "尺寸："
+msgstr "大小數目："
 
 #: plug-ins/gimpressionist/size.c:76
 msgid "Min size:"
@@ -11365,91 +11413,99 @@ msgstr "最小尺寸："
 msgid "Max size:"
 msgstr "最大尺寸："
 
+#: plug-ins/gimpressionist/size.c:95
+msgid "The number of sizes of brushes to use"
+msgstr "使用的筆刷大小的數目"
+
 #: plug-ins/gimpressionist/size.c:104
 msgid "The smallest brush to create"
-msgstr ""
+msgstr "可產生的最小筆刷"
 
 #: plug-ins/gimpressionist/size.c:113
 msgid "The largest brush to create"
-msgstr ""
+msgstr "可產生的最大筆刷"
 
 #: plug-ins/gimpressionist/size.c:136
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
-msgstr ""
+msgstr "由該區域的亮度決定筆劃的大小"
 
 #: plug-ins/gimpressionist/size.c:146
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
-msgstr ""
+msgstr "由距離圖像中心點的遠近決定筆劃的大小"
 
 #: plug-ins/gimpressionist/size.c:156
 msgid "Selects a random size for each stroke"
-msgstr ""
+msgstr "每個筆劃的大小是隨機的"
 
 #: plug-ins/gimpressionist/size.c:166
 msgid "Let the direction from the center determine the size of the stroke"
-msgstr ""
+msgstr "由到中心點的方向決定筆劃的大小"
 
 #: plug-ins/gimpressionist/size.c:192
 msgid "The hue of the region determines the size of the stroke"
-msgstr ""
+msgstr "由該區域的色相決定筆劃的大小"
 
 #: plug-ins/gimpressionist/size.c:202
 msgid "The brush-size that matches the original image the closest is selected"
-msgstr ""
+msgstr "選擇最符合原來圖像的筆刷大小"
 
 #: plug-ins/gimpressionist/size.c:216
 msgid "Manually specify the stroke size"
-msgstr ""
+msgstr "自行指定筆劃大小"
 
 #: plug-ins/gimpressionist/size.c:225
 msgid "Opens up the Size Map Editor"
-msgstr ""
+msgstr "開啟尺寸圖編輯器"
 
 #: plug-ins/gimpressionist/sizemap.c:361
 msgid "Size Map Editor"
-msgstr ""
+msgstr "尺寸圖編輯器"
 
 #: plug-ins/gimpressionist/sizemap.c:369
 msgid "Smvectors"
-msgstr ""
+msgstr "尺寸向量"
 
 #: plug-ins/gimpressionist/sizemap.c:379
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
 msgstr ""
+"這是尺寸向量場。\n"
+"按滑鼠左鍵移動選定的尺寸向量，\n"
+"按右鍵將尺寸向量指向滑鼠方向，\n"
+"按中鍵則新增尺寸向量。"
 
 #: plug-ins/gimpressionist/sizemap.c:422
 msgid "Select previous smvector"
-msgstr ""
+msgstr "選擇上一個尺寸向量"
 
 #: plug-ins/gimpressionist/sizemap.c:429
 msgid "Select next smvector"
-msgstr ""
+msgstr "選擇下一個尺寸向量"
 
 #: plug-ins/gimpressionist/sizemap.c:436
 msgid "Add new smvector"
-msgstr ""
+msgstr "新增尺寸向量"
 
 #: plug-ins/gimpressionist/sizemap.c:443
 msgid "Delete selected smvector"
-msgstr ""
+msgstr "刪除選定的尺寸向量"
 
 #: plug-ins/gimpressionist/sizemap.c:463
 msgid "Change the angle of the selected smvector"
-msgstr ""
+msgstr "改變選定的尺寸向量角度"
 
 #: plug-ins/gimpressionist/sizemap.c:477
 msgid "Change the strength of the selected smvector"
-msgstr ""
+msgstr "改變選定的尺寸向量強度"
 
 #: plug-ins/gimpressionist/sizemap.c:535
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
-msgstr ""
+msgstr "Voronoi-模式使得只有最接近指定點的尺寸向量才會有影響"
 
 #: plug-ins/helpbrowser/helpbrowser.c:95
 #, c-format
@@ -11460,6 +11516,10 @@ msgid ""
 "written yet or that something is wrong with your installation. Please check "
 "carefully before you report this as a bug.</small></body></html>"
 msgstr ""
+"<html><head><title>找不到文件</title></head><body bgcolor=\"#ffffff"
+"\"><center><p>%s<h3>找不到文件</h3><tt>%s</tt></center><p><small>這表示該題目"
+"的輔助說明仍未寫好，或是安裝時出了問題。請在當成錯誤來回報之前先檢查清楚。</"
+"small></body></html>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:111
 #, c-format
@@ -11471,6 +11531,10 @@ msgid ""
 "with your installation. Please check carefully before you report this as a "
 "bug.</small></body></html>"
 msgstr ""
+"<html><head><title>找不到目錄</title></head><body bgcolor=\"#ffffff"
+"\"><center><p>%1$s<h3>當嘗試存取</h3><tt>%3$s</tt><h3>無法進入目錄</h3><tt>%2"
+"$s</tt></center><p><small>這表示該題目的輔助說明仍未寫好，或是安裝時出了問"
+"題。請在當成錯誤來回報之前先檢查清楚。</small></body></html>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:137
 msgid "Contents"
