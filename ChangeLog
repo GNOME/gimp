@@ -1,3 +1,8 @@
+Wed Jan 26 04:12:08 CET 2000  Marc Lehmann <pcg@goof.com>
+
+	* PLUGIN_CVS: mirroring control script (read it for more info).
+        * ChangeLog.plug-ins: The ChangeLog file for the plug-in cvs.
+
 2000-01-26  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpsizeentry.[ch]: block the sizeentry's signals while
@@ -33,6 +38,7 @@ Wed Jan 26 00:10:34 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/*: don't include the two files.
 
+>>>>>>> 1.2135
 Tue Jan 25 21:58:49 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/layer.c: applied a change suggested by Steinar H. Gunderson.
