@@ -41,6 +41,11 @@
 
 static GimpActionEntry drawable_actions[] =
 {
+  { "drawable-levels-auto", NULL,
+    N_("_White Balance"), NULL, NULL,
+    G_CALLBACK (drawable_levels_auto_cmd_callback),
+    GIMP_HELP_LAYER_WHITE_BALANCE},
+
   { "drawable-desaturate", GIMP_STOCK_CONVERT_GRAYSCALE,
     N_("_Desaturate"), NULL, NULL,
     G_CALLBACK (drawable_desaturate_cmd_callback),
@@ -173,10 +178,11 @@ drawable_actions_update (GimpActionGroup *group,
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("drawable-desaturate", drawable &&   is_rgb);
-  SET_SENSITIVE ("drawable-equalize",   drawable && ! is_indexed);
-  SET_SENSITIVE ("drawable-invert",     drawable && ! is_indexed);
-  SET_SENSITIVE ("drawable-offset",     drawable);
+  SET_SENSITIVE ("drawable-levels-auto", drawable &&   is_rgb);
+  SET_SENSITIVE ("drawable-desaturate",  drawable &&   is_rgb);
+  SET_SENSITIVE ("drawable-equalize",    drawable && ! is_indexed);
+  SET_SENSITIVE ("drawable-invert",      drawable && ! is_indexed);
+  SET_SENSITIVE ("drawable-offset",      drawable);
 
   SET_SENSITIVE ("drawable-visible", drawable);
   SET_SENSITIVE ("drawable-linked",  drawable);

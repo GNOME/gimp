@@ -1,3 +1,19 @@
+2004-10-29  Øyvind Kolås  <pippin@gimp.org>
+
+	* tools/pdbgen/pdb/color.pdb: moved body of code from here.
+
+	* app/core/gimpdrawable-levels.[ch]: to here.
+	* app/core/Makefile.am: added gimpdrawable-levels.[ch].
+	* app/pdb/color_cmds.c: regenerated.
+
+	* app/actions/drawable-actions.c
+	* app/actions/drawable-commands.[ch]: added drawable-layers-auto
+	action.
+
+	* app/widgets/gimphelp-ids.h: added GIMP_HELP_LAYER_WHITE_BALANCE.
+	* app/menus/image-menu.xml.in: added new auto/White Balance action.
+	* app/menus/image-menu.xml: regenerated.
+
 2004-10-29  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpuimanager.c (gimp_ui_manager_entry_load)

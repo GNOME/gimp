@@ -43,6 +43,7 @@
 #include "core/gimpdrawable-equalize.h"
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimpdrawable-invert.h"
+#include "core/gimpdrawable-levels.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "gimp-intl.h"
@@ -231,51 +232,13 @@ levels_invoker (Gimp         *gimp,
         success = FALSE;
 
       if (success)
-        {
-          gint x, y, width, height;
-
-          /* The application should occur only within selection bounds */
-          if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
-            {
-              PixelRegion  srcPR, destPR;
-              Levels       l;
-              GimpLut     *lut;
-
-              /* FIXME: hack */
-              if (gimp_drawable_is_gray (drawable) &&
-                  channel == GIMP_HISTOGRAM_ALPHA)
-                channel = 1;
-
-              lut = gimp_lut_new ();
-
-              levels_init (&l);
-
-              l.low_input[channel]   = low_input;
-              l.high_input[channel]  = high_input;
-              l.gamma[channel]       = gamma;
-              l.low_output[channel]  = low_output;
-              l.high_output[channel] = high_output;
-
-              /* setup the lut */
-              gimp_lut_setup (lut,
-                              (GimpLutFunc) levels_lut_func,
-                              &l,
-                              gimp_drawable_bytes (drawable));
-
-              pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-                                 x, y, width, height, FALSE);
-              pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
-                                 x, y, width, height, TRUE);
-
-              pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
-                                              &srcPR, &destPR);
-
-              gimp_lut_free (lut);
-
-              gimp_drawable_merge_shadow (drawable, TRUE, _("Levels"));
-              gimp_drawable_update (drawable, x, y, width, height);
-            }
-        }
+        gimp_drawable_levels (drawable, context,
+                              channel,
+                              low_input,
+                              high_input,
+                              gamma,
+                              low_output,
+                              high_output);
     }
 
   return procedural_db_return_args (&levels_proc, success);
@@ -356,48 +319,7 @@ levels_auto_invoker (Gimp         *gimp,
         success = FALSE;
 
       if (success)
-        {
-          gint x, y, width, height;
-
-          /* The application should occur only within selection bounds */
-          if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
-            {
-              PixelRegion    srcPR, destPR;
-              Levels         levels;
-              GimpLut       *lut;
-              GimpHistogram *hist;
-
-              /* Build the histogram */
-              hist = gimp_histogram_new (GIMP_BASE_CONFIG (gimp->config));
-
-              gimp_drawable_calculate_histogram (drawable, hist);
-
-              /* Calculate the levels */
-              levels_init (&levels);
-              levels_auto (&levels, hist, ! gimp_drawable_is_gray (drawable));
-
-              /* Set up the lut */
-              lut  = gimp_lut_new ();
-              gimp_lut_setup (lut,
-                              (GimpLutFunc) levels_lut_func,
-                              &levels,
-                              gimp_drawable_bytes (drawable));
-
-              pixel_region_init (&srcPR, gimp_drawable_data (drawable),
-                                 x, y, width, height, FALSE);
-              pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
-                                 x, y, width, height, TRUE);
-
-              pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
-                                              &srcPR, &destPR);
-
-              gimp_lut_free (lut);
-              gimp_histogram_free (hist);
-
-              gimp_drawable_merge_shadow (drawable, TRUE, _("Levels"));
-              gimp_drawable_update (drawable, x, y, width, height);
-            }
-        }
+        gimp_drawable_levels_auto (drawable, context);
     }
 
   return procedural_db_return_args (&levels_auto_proc, success);

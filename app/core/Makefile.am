@@ -89,6 +89,8 @@ libappcore_a_sources = \
 	gimpdrawable-histogram.h	\
 	gimpdrawable-invert.c		\
 	gimpdrawable-invert.h		\
+	gimpdrawable-levels.c		\
+	gimpdrawable-levels.h		\
 	gimpdrawable-offset.c		\
 	gimpdrawable-offset.h		\
 	gimpdrawable-preview.c		\

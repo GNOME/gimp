@@ -28,6 +28,7 @@
 #include "core/gimpdrawable-desaturate.h"
 #include "core/gimpdrawable-equalize.h"
 #include "core/gimpdrawable-invert.h"
+#include "core/gimpdrawable-levels.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpitem-linked.h"
@@ -43,6 +44,26 @@
 
 
 /*  public functions  */
+
+void
+drawable_levels_auto_cmd_callback (GtkAction *action,
+                                   gpointer   data)
+{
+  GimpImage    *gimage;
+  GimpDrawable *drawable;
+  GimpContext  *context;
+  return_if_no_drawable (gimage, drawable, data);
+  return_if_no_context (context, data);
+
+  if (! gimp_drawable_is_rgb (drawable))
+    {
+      g_message (_("White Balance operates only on RGB color layers."));
+      return;
+    }
+
+  gimp_drawable_levels_auto (drawable, context);
+  gimp_image_flush (gimage);
+}
 
 void
 drawable_desaturate_cmd_callback (GtkAction *action,
