@@ -1,26 +1,16 @@
 # This is the Spanish locale definition for libgimp.
 #
 # Éste es el fichero con los mensajes en español de Gimp.
-# Preguntas, consejos y correcciones _constructivas_ son
-# bienvenidos.
-#
-#  * Este fichero está sin terminar *
+# (sección libgimp) Preguntas, consejos y correcciones 
+# _constructivas_ son bienvenidos.
 #
 # Copyright (C) 1998-2000 Free Software Foundation, Inc.
 # Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>
-#
-# NOTAS PERSONALES:
-#  - Usar mayúsculas para nombres de elementos ("Gradiente")
-#  - "Cubo de relleno" no es muy afortunada
-#  - Hay que aclarar el significado de dodge/burn
-#  - De momento pongo "dibujable" por "drawable"
-#  - Hay que revisar los largos mensajes de instalación
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.20\n"
-"POT-Creation-Date: 2000-06-06 12:41-0700\n"
-"PO-Revision-Date: 2000-04-23 12:56+02:00\n"
+"Project-Id-Version: GIMP 1.1.21\n"
+"POT-Creation-Date: 2000-08-03 14:42+0200\n"
+"PO-Revision-Date: 2000-08-05 19:50+02:00\n"
 "Last-Translator: Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -36,75 +26,75 @@ msgstr "/Usar color de Frente"
 msgid "/Use Background Color"
 msgstr "/Usar color de Fondo"
 
-#: libgimp/gimpexport.c:158
-msgid "can't Handle Layers"
-msgstr "no puedo manejar Capas"
+#: libgimp/gimpexport.c:158 libgimp/gimpexport.c:185
+msgid "can't handle layers"
+msgstr "no puede manejar Capas"
 
 #: libgimp/gimpexport.c:159 libgimp/gimpexport.c:168
 msgid "Merge Visible Layers"
 msgstr "Mezclar Capas visibles"
 
 #: libgimp/gimpexport.c:167 libgimp/gimpexport.c:176
-msgid "can only Handle Layers as Animation Frames"
-msgstr "sólo puedo manejar Capas como Fotogramas de Animación"
+msgid "can only handle layers as animation frames"
+msgstr "sólo puede manejar Capas como fotogramas de animación"
 
 #: libgimp/gimpexport.c:168 libgimp/gimpexport.c:177
 msgid "Save as Animation"
 msgstr "Guardar como Animación"
 
-#: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186
+#: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186 libgimp/gimpexport.c:195
 msgid "Flatten Image"
 msgstr "Aplanar Imagen"
 
-#: libgimp/gimpexport.c:185
-msgid "can't Handle Transparency"
-msgstr "no puedo manejar transparencia"
-
 #: libgimp/gimpexport.c:194
-msgid "can only Handle RGB Images"
-msgstr "sólo puedo manejar imágenes RGB"
+msgid "can't handle transparency"
+msgstr "no puede manejar transparencia"
 
-#: libgimp/gimpexport.c:195 libgimp/gimpexport.c:223 libgimp/gimpexport.c:232
+#: libgimp/gimpexport.c:203
+msgid "can only handle RGB images"
+msgstr "sólo puede manejar imágenes RGB"
+
+#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:232 libgimp/gimpexport.c:241
 msgid "Convert to RGB"
 msgstr "Convertir a RGB"
 
-#: libgimp/gimpexport.c:203
-msgid "can only Handle Grayscale Images"
-msgstr "sólo puedo manejar imágenes en escala de grises"
+#: libgimp/gimpexport.c:212
+msgid "can only handle grayscale images"
+msgstr "sólo puede manejar imágenes en escala de grises"
 
-#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:223 libgimp/gimpexport.c:244
+#: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:253
 msgid "Convert to Grayscale"
 msgstr "Convertir a Escala de grises"
 
-#: libgimp/gimpexport.c:212
-msgid "can only Handle Indexed Images"
-msgstr "sólo puedo manejar imágenes indexadas"
+#: libgimp/gimpexport.c:221
+msgid "can only handle indexed images"
+msgstr "sólo puede manejar imágenes indexadas"
 
-#: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:242
+#: libgimp/gimpexport.c:222 libgimp/gimpexport.c:241 libgimp/gimpexport.c:251
 msgid ""
-"Convert to indexed using default settings\n"
+"Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Convertir a indexada usando ajustes por defecto\n"
+"Convertir a indexada usando ajustes predefinidos\n"
 "(Hágalo manualmente para afinar el resultado)"
 
-#: libgimp/gimpexport.c:222
-msgid "can only Handle RGB or Grayscale Images"
-msgstr "sólo puedo manejar imágenes RGB o Escala de grises"
-
 #: libgimp/gimpexport.c:231
-msgid "can only Handle RGB or Indexed Images"
-msgstr "sólo puedo manejar imágenes RGB o indexadas"
+msgid "can only handle RGB or grayscale images"
+msgstr "sólo puede manejar imágenes RGB o Escala de grises"
 
-#: libgimp/gimpexport.c:241
-msgid "can only Handle Grayscale or Indexed Images"
-msgstr "sólo puedo manejar imágenes indexadas o Escala de grises"
+#: libgimp/gimpexport.c:240
+msgid "can only handle RGB or indexed images"
+msgstr "sólo puede manejar imágenes RGB o indexadas"
 
-#: libgimp/gimpexport.c:252
-msgid "needs an Alpha Channel"
+#: libgimp/gimpexport.c:250
+msgid "can only handle grayscale or indexed images"
+msgstr "sólo puede manejar imágenes indexadas o Escala de grises"
+
+#: libgimp/gimpexport.c:261
+msgid "needs an alpha channel"
 msgstr "necesita un Canal alfa"
 
-#: libgimp/gimpexport.c:253
+#: libgimp/gimpexport.c:262
 msgid "Add Alpha Channel"
 msgstr "Añadir Canal alfa"
 
@@ -113,25 +103,25 @@ msgstr "Añadir Canal alfa"
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:322
+#: libgimp/gimpexport.c:331
 msgid "Export File"
 msgstr "Exportar fichero"
 
-#: libgimp/gimpexport.c:327
+#: libgimp/gimpexport.c:336
 msgid "Export"
 msgstr "Exportar"
 
-#: libgimp/gimpexport.c:329
+#: libgimp/gimpexport.c:338
 msgid "Ignore"
-msgstr "Ignorar"
+msgstr "No hacer caso"
 
-#: libgimp/gimpexport.c:331 libgimp/gimpquerybox.c:183
+#: libgimp/gimpexport.c:340 libgimp/gimpquerybox.c:183
 #: libgimp/gimpquerybox.c:237 libgimp/gimpquerybox.c:293
 #: libgimp/gimpquerybox.c:356 libgimp/gimpunitmenu.c:501
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: libgimp/gimpexport.c:346
+#: libgimp/gimpexport.c:355
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
@@ -140,7 +130,7 @@ msgstr ""
 "siguientes razones:"
 
 #. the footline
-#: libgimp/gimpexport.c:409
+#: libgimp/gimpexport.c:418
 msgid "The export conversion won't modify your original image."
 msgstr "La conversión de exportación no modificará su imagen original"
 
@@ -235,7 +225,7 @@ msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
 msgstr ""
-"Tomar semilla para generador de números aleatorios del tiempo actual - "
+"Tomar semilla para generador de números aleatorios de la hora actual - "
 "garantiza una aleatoriedad razonable"
 
 #: libgimp/gimpwidgets.c:1035
