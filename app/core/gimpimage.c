@@ -1790,11 +1790,10 @@ gimp_image_transform_temp_buf (const GimpImage    *dest_image,
   has_alpha = (in_bytes == 2 || in_bytes == 4);
   is_rgb    = (in_bytes == 3 || in_bytes == 4);
 
-  ret_buf_type =
-    GIMP_IMAGE_TYPE_FROM_BASE_TYPE (gimp_image_base_type (dest_image));
-
   if (has_alpha)
-    ret_buf_type = GIMP_IMAGE_TYPE_WITH_ALPHA (ret_buf_type);
+    ret_buf_type = gimp_drawable_type_with_alpha (dest_drawable);
+  else
+    ret_buf_type = gimp_drawable_type_without_alpha (dest_drawable);
 
   out_bytes = GIMP_IMAGE_TYPE_BYTES (ret_buf_type);
 

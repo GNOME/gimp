@@ -1,3 +1,9 @@
+2004-01-14  Dave Neary  <bolsh@gimp.org>
+
+	* app/core/gimpimage.c: get the type of the drawable, not the 
+	image, when transforming a TempBuf, making dragging & dropping 
+	patterns on layer masks work correctly. Fixes bug #131146.
+
 2004-01-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage.h: added GIMP_IMAGE_TYPE_WITHOUT_ALPHA()
