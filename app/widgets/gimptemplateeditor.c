@@ -372,7 +372,7 @@ gimp_template_editor_finalize (GObject *object)
 
 GtkWidget *
 gimp_template_editor_new (Gimp     *gimp,
-                          gboolean  edit_stock_id)
+                          gboolean  edit_template)
 {
   GimpTemplateEditor *editor;
 
@@ -380,9 +380,10 @@ gimp_template_editor_new (Gimp     *gimp,
 
   editor = g_object_new (GIMP_TYPE_TEMPLATE_EDITOR, NULL);
 
-  if (edit_stock_id)
+  if (edit_template)
     {
       GtkWidget *table;
+      GtkWidget *entry;
       GtkWidget *button;
       GSList    *stock_list;
       GSList    *list;
@@ -411,18 +412,25 @@ gimp_template_editor_new (Gimp     *gimp,
       g_slist_foreach (stock_list, (GFunc) g_free, NULL);
       g_slist_free (stock_list);
 
-      table = gtk_table_new (1, 2, FALSE);
+      table = gtk_table_new (2, 2, FALSE);
       gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+      gtk_table_set_row_spacings (GTK_TABLE (table), 2);
       gtk_box_pack_start (GTK_BOX (editor), table, FALSE, FALSE, 0);
       gtk_box_reorder_child (GTK_BOX (editor), table, 0);
       gtk_widget_show (table);
+
+      entry = gimp_prop_entry_new (G_OBJECT (editor->template), "name", 128);
+
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                                 _("_Name:"), 1.0, 0.5,
+                                 entry, 1, FALSE);
 
       button = gimp_viewable_button_new (editor->stock_id_container,
                                          editor->stock_id_context,
                                          GIMP_PREVIEW_SIZE_SMALL, 0,
                                          NULL, NULL, NULL, NULL);
 
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                                  _("_Icon:"), 1.0, 0.5,
                                  button, 1, TRUE);
     }
@@ -585,4 +593,3 @@ gimp_template_editor_icon_changed (GimpContext        *context,
                 "stock-id", GIMP_OBJECT (template)->name,
                 NULL);
 }
-

@@ -20,14 +20,22 @@
 #define __TEMPLATES_COMMANDS_H__
 
 
-void   templates_new_template_cmd_callback       (GtkWidget *widget,
-                                                  gpointer   data);
-void   templates_duplicate_template_cmd_callback (GtkWidget *widget,
-                                                  gpointer   data);
-void   templates_create_image_cmd_callback       (GtkWidget *widget,
-                                                  gpointer   data);
-void   templates_delete_template_cmd_callback    (GtkWidget *widget,
-                                                  gpointer   data);
+void   templates_new_template_cmd_callback       (GtkWidget    *widget,
+                                                  gpointer      data);
+void   templates_duplicate_template_cmd_callback (GtkWidget    *widget,
+                                                  gpointer      data);
+void   templates_edit_template_cmd_callback      (GtkWidget    *widget,
+                                                  gpointer      data);
+void   templates_create_image_cmd_callback       (GtkWidget    *widget,
+                                                  gpointer      data);
+void   templates_delete_template_cmd_callback    (GtkWidget    *widget,
+                                                  gpointer      data);
 
+void   templates_new_template_dialog             (Gimp         *gimp,
+                                                  GimpTemplate *template);
+void   templates_edit_template_dialog            (Gimp         *gimp,
+                                                  GimpTemplate *template);
+void   templates_file_new_dialog                 (Gimp         *gimp,
+                                                  GimpTemplate *template);
 
 #endif /* __TEMPLATES_COMMANDS_H__ */

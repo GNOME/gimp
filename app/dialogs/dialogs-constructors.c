@@ -84,6 +84,7 @@
 #include "module-browser.h"
 #include "paths-dialog.h"
 #include "preferences-dialog.h"
+#include "templates-commands.h"
 #include "tips-dialog.h"
 #include "tool-options-dialog.h"
 #include "vectors-commands.h"
@@ -896,13 +897,20 @@ dialogs_template_list_new (GimpDialogFactory *factory,
                            GimpContext       *context,
                            gint               preview_size)
 {
-  GtkWidget *view;
+  GtkWidget        *view;
+  GimpTemplateView *template_view;
 
   view = gimp_template_view_new (GIMP_VIEW_TYPE_LIST,
                                  context->gimp->templates,
                                  context,
                                  preview_size, 0,
                                  factory->menu_factory);
+
+  template_view = GIMP_TEMPLATE_VIEW (view);
+
+  template_view->new_template_func  = templates_new_template_dialog;
+  template_view->edit_template_func = templates_edit_template_dialog;
+  template_view->create_image_func  = templates_file_new_dialog;
 
   return dialogs_dockable_new (view,
 			       _("List of Templates"), _("Templates"),

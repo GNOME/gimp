@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -336,6 +338,9 @@ gimp_template_notify (GObject    *object,
       template->initial_size           = (gulong) size;
       template->initial_size_too_large = FALSE;
     }
+
+  if (! strcmp (pspec->name, "stock-id"))
+    gimp_viewable_invalidate_preview (GIMP_VIEWABLE (object));
 }
 
 static gboolean

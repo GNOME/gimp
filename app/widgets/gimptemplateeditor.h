@@ -63,7 +63,7 @@ struct _GimpTemplateEditorClass
 GType          gimp_template_editor_get_type       (void) G_GNUC_CONST;
 
 GtkWidget    * gimp_template_editor_new            (Gimp               *gimp,
-                                                    gboolean            edit_stock_id);
+                                                    gboolean            edit_template);
 
 void           gimp_template_editor_set_template   (GimpTemplateEditor *editor,
                                                     GimpTemplate       *template);

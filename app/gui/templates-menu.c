@@ -39,15 +39,19 @@
 
 GimpItemFactoryEntry templates_menu_entries[] =
 {
-  { { N_("/New Template"), "",
+  { { N_("/New Template..."), "",
       templates_new_template_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
     NULL, NULL, NULL },
-  { { N_("/Duplicate Template"), "",
+  { { N_("/Duplicate Template..."), "",
       templates_duplicate_template_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_DUPLICATE },
     NULL, NULL, NULL },
-  { { N_("/Create Image from Template"), "",
+  { { N_("/Edit Template..."), "",
+      templates_edit_template_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_EDIT },
+    NULL, NULL, NULL },
+  { { N_("/Create Image from Template..."), "",
       templates_create_image_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_IMAGE },
     NULL, NULL, NULL },
@@ -74,10 +78,11 @@ templates_menu_update (GtkItemFactory *factory,
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("/New Template",               TRUE);
-  SET_SENSITIVE ("/Duplicate Template",         template);
-  SET_SENSITIVE ("/Create Image from Template", template);
-  SET_SENSITIVE ("/Delete Template...",         template);
+  SET_SENSITIVE ("/New Template...",               TRUE);
+  SET_SENSITIVE ("/Duplicate Template...",         template);
+  SET_SENSITIVE ("/Edit Template...",              template);
+  SET_SENSITIVE ("/Create Image from Template...", template);
+  SET_SENSITIVE ("/Delete Template...",            template);
 
 #undef SET_SENSITIVE
 }

@@ -1,3 +1,30 @@
+2003-04-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimptemplate.c (gimp_template_notify): invalidate
+	the preview when the stock_id changes.
+
+	* app/widgets/gimptemplateeditor.[ch]: added an optional entry
+	to edit the template's name.
+
+	* app/widgets/gimptemplateview.[ch]: added a "duplicate" button and
+	function pointers for creating templates, editing templates and
+	creating images from templates.
+
+	* app/gui/file-new-dialog.[ch] (file_new_dialog_create): added an
+	optional template parameter.
+
+	* app/gui/file-commands.c: pass template == NULL.
+
+	* app/gui/templates-menu.c: added a "Duplicate Template" menu entry.
+
+	* app/gui/templates-commands.[ch]: added the callback for the
+	duplicate menu item. Added "New Template" and "Edit Template"
+	dialogs. Added a function which opens a file_new_dialog with
+	a template preselected.
+
+	* app/gui/dialogs-constructors.c: let GimpTemplateView know
+	about the functions.
+
 2003-04-13  Sven Neumann  <sven@gimp.org>
 
 	* app/paint/gimppaintoptions.c: changed the "fade-length" and

@@ -105,7 +105,7 @@ file_new_cmd_callback (GtkWidget *widget,
   else 
     gimage = NULL;
 
-  file_new_dialog_create (gimp, gimage);
+  file_new_dialog_create (gimp, gimage, NULL);
 }
 
 void
