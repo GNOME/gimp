@@ -1,3 +1,11 @@
+2004-11-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpactiongroup.c
+	(gimp_action_group_set_action_color)
+	(gimp_action_group_set_action_color): allow to set color and
+	viewable to NULL, GimpAction handles this nicely. Fixes warnings
+	some foo_actions_update() functions were triggering.
+
 2004-11-30  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/gfig/*[ch]: code cleanup

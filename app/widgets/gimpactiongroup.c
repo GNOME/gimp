@@ -776,7 +776,6 @@ gimp_action_group_set_action_color (GimpActionGroup *group,
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
-  g_return_if_fail (color != NULL);
 
   action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
 
@@ -798,8 +797,13 @@ gimp_action_group_set_action_color (GimpActionGroup *group,
 
   if (set_label)
     {
-      gchar *label = g_strdup_printf (_("RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"),
-                                      color->r, color->g, color->b, color->a);
+      gchar *label;
+
+      if (color)
+        label = g_strdup_printf (_("RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"),
+                                 color->r, color->g, color->b, color->a);
+      else
+        label = g_strdup (_("(none)"));
 
       g_object_set (action,
                     "color", color,
@@ -822,7 +826,7 @@ gimp_action_group_set_action_viewable (GimpActionGroup *group,
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
-  g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
+  g_return_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable));
 
   action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
 
