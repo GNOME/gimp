@@ -371,7 +371,7 @@ prefs_check_settings (Gimp *gimp)
 
 static void
 prefs_restart_notification_save_callback (GtkWidget *widget,
-					       gpointer   data)
+                                          gpointer   data)
 {
   prefs_save_callback (widget, prefs_dialog);
   gtk_widget_destroy (GTK_WIDGET (data));
@@ -1355,6 +1355,7 @@ prefs_notebook_append_page (GtkNotebook   *notebook,
   GtkWidget   *label;
 
   event_box = gtk_event_box_new ();
+  gtk_notebook_append_page (notebook, event_box, NULL);
   gtk_widget_show (event_box);
 
   gimp_help_set_help_data (event_box, NULL, help_data);
@@ -1381,8 +1382,6 @@ prefs_notebook_append_page (GtkNotebook   *notebook,
 
   gtk_tree_store_append (tree, iter, parent);
   gtk_tree_store_set (tree, iter, 0, tree_label, 1, page_index, -1);
-
-  gtk_notebook_append_page (notebook, event_box, NULL);
 
   return vbox;
 }
@@ -1465,8 +1464,6 @@ preferences_dialog_create (Gimp *gimp)
   GtkWidget        *fileselection;
   GtkWidget        *patheditor;
   GtkWidget        *spinbutton;
-  GtkWidget        *combo;
-  GtkWidget        *comboitem;
   GtkWidget        *optionmenu;
   GtkWidget        *table;
   GtkWidget        *label;
@@ -1779,7 +1776,7 @@ preferences_dialog_create (Gimp *gimp)
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
-      
+
   table = gtk_table_new (2, 2, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
@@ -1982,19 +1979,19 @@ preferences_dialog_create (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  /* Don't show the Auto-save button until we really 
-     have auto-saving in the gimp.
+#if 0
+  /*  Don't show the Auto-save button until we really 
+   *  have auto-saving in the gimp.
+   */
+  button = gtk_check_button_new_with_label(_("Auto Save"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), auto_save);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
-     button = gtk_check_button_new_with_label(_("Auto save"));
-     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                   auto_save);
-     gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-     gtk_widget_show (button);
-
-     g_signal_connect (G_OBJECT (button), "toggled",
-	               G_CALLBACK (prefs_toggle_callback),
-			auto_save);
-  */
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (prefs_toggle_callback),
+                    &auto_save);
+#endif
 
   optionmenu =
     gimp_option_menu_new2 (FALSE,
@@ -2241,45 +2238,53 @@ preferences_dialog_create (Gimp *gimp)
 		    &gimprc.marching_speed);
 
   /* The title format string */
-  combo = gtk_combo_new ();
-  gtk_combo_set_use_arrows (GTK_COMBO (combo), FALSE);
-  gtk_combo_set_value_in_list (GTK_COMBO (combo), FALSE, FALSE);
-  /* Set the currently used string as "Custom" */
-  comboitem = gtk_list_item_new_with_label (_("Custom"));
-  gtk_combo_set_item_string (GTK_COMBO (combo), GTK_ITEM (comboitem),
-			     gimprc.image_title_format);
-  gtk_container_add (GTK_CONTAINER (GTK_COMBO (combo)->list), comboitem);
-  gtk_widget_show (comboitem);
-  /* set some commonly used format strings */
-  comboitem = gtk_list_item_new_with_label (_("Standard"));
-  gtk_combo_set_item_string (GTK_COMBO (combo), GTK_ITEM (comboitem),
-			     "%f-%p.%i (%t)");
-  gtk_container_add(GTK_CONTAINER (GTK_COMBO (combo)->list), comboitem);
-  gtk_widget_show (comboitem);
-  comboitem = gtk_list_item_new_with_label (_("Show zoom percentage"));
-  gtk_combo_set_item_string (GTK_COMBO (combo), GTK_ITEM (comboitem),
-			     "%f-%p.%i (%t) %z%%");
-  gtk_container_add (GTK_CONTAINER (GTK_COMBO (combo)->list), comboitem);
-  gtk_widget_show (comboitem);
-  comboitem = gtk_list_item_new_with_label (_("Show zoom ratio"));
-  gtk_combo_set_item_string (GTK_COMBO (combo), GTK_ITEM (comboitem),
-			     "%f-%p.%i (%t) %d:%s");
-  gtk_container_add (GTK_CONTAINER (GTK_COMBO (combo)->list), comboitem);
-  gtk_widget_show (comboitem);
-  comboitem = gtk_list_item_new_with_label (_("Show reversed zoom ratio"));
-  gtk_combo_set_item_string (GTK_COMBO (combo), GTK_ITEM (comboitem),
-			     "%f-%p.%i (%t) %s:%d");
-  gtk_container_add (GTK_CONTAINER (GTK_COMBO (combo)->list), comboitem);
-  gtk_widget_show (comboitem);
+  {
+    GtkWidget *combo;
+    GtkWidget *comboitem;
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Image Title Format:"), 1.0, 0.5,
-			     combo, 1, FALSE);
+    const gchar *format_strings[] =
+    {
+      NULL,
+      "%f-%p.%i (%t)",
+      "%f-%p.%i (%t) %z%%",
+      "%f-%p.%i (%t) %d:%s",
+      "%f-%p.%i (%t) %s:%d"
+    };
 
-  g_signal_connect (G_OBJECT (GTK_COMBO (combo)->entry), "changed",
-		    G_CALLBACK (prefs_string_callback), 
-		    &gimprc.image_title_format);
-  /* End of the title format string */
+    const gchar *combo_strings[] =
+    {
+      N_("Custom"),
+      N_("Standard"),
+      N_("Show zoom percentage"),
+      N_("Show zoom ratio"),
+      N_("Show reversed zoom ratio")
+    };
+
+    g_assert (G_N_ELEMENTS (format_strings) == G_N_ELEMENTS (combo_strings));
+
+    format_strings[0] = gimprc.image_title_format;
+
+    combo = gtk_combo_new ();
+    gtk_combo_set_use_arrows (GTK_COMBO (combo), FALSE);
+    gtk_combo_set_value_in_list (GTK_COMBO (combo), FALSE, FALSE);
+
+    for (i = 0; i < G_N_ELEMENTS (combo_strings); i++)
+      {
+        comboitem = gtk_list_item_new_with_label (gettext (combo_strings[i]));
+        gtk_combo_set_item_string (GTK_COMBO (combo), GTK_ITEM (comboitem),
+                                   format_strings[i]);
+        gtk_container_add (GTK_CONTAINER (GTK_COMBO (combo)->list), comboitem);
+        gtk_widget_show (comboitem);
+      }
+
+    gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                               _("Image Title Format:"), 1.0, 0.5,
+                               combo, 1, FALSE);
+
+    g_signal_connect (G_OBJECT (GTK_COMBO (combo)->entry), "changed",
+                      G_CALLBACK (prefs_string_callback), 
+                      &gimprc.image_title_format);
+  }
 
   vbox2 = prefs_frame_new (_("Pointer Movement Feedback"), GTK_BOX (vbox));
 
@@ -2674,7 +2679,7 @@ preferences_dialog_create (Gimp *gimp)
 
   group = NULL;
   button = gtk_radio_button_new_with_label (group, _("From windowing system"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   g_signal_connect (G_OBJECT (button), "toggled",
 		    G_CALLBACK (prefs_res_source_callback),
 		    NULL);
@@ -2696,16 +2701,16 @@ preferences_dialog_create (Gimp *gimp)
   gtk_widget_show (separator);
   
   button = gtk_radio_button_new_with_label (group, _("Manually:"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
   
   gtk_box_pack_start (GTK_BOX (vbox2), abox, FALSE, FALSE, 0);
   gtk_widget_show (abox);
-  
+
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
-  
+
   if (! gimprc.using_xserver_resolution)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
@@ -2720,7 +2725,7 @@ preferences_dialog_create (Gimp *gimp)
 				     page_index);
   gtk_widget_show (vbox);
   page_index++;
-  
+
   {
     static const struct
     {
@@ -2733,21 +2738,20 @@ preferences_dialog_create (Gimp *gimp)
       { N_("Temp Dir:"), N_("Select Temp Dir"), &edit_temp_path },
       { N_("Swap Dir:"), N_("Select Swap Dir"), &edit_swap_path },
     };
-    static gint ndirs = sizeof (dirs) / sizeof (dirs[0]);
-    
-    table = gtk_table_new (ndirs + 1, 2, FALSE);
+
+    table = gtk_table_new (G_N_ELEMENTS (dirs) + 1, 2, FALSE);
     gtk_table_set_row_spacings (GTK_TABLE (table), 2);
     gtk_table_set_col_spacings (GTK_TABLE (table), 4);
     gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, TRUE, 0);
     gtk_widget_show (table);
-    
-    for (i = 0; i < ndirs; i++)
+
+    for (i = 0; i < G_N_ELEMENTS (dirs); i++)
       {
-	fileselection = gimp_file_selection_new (gettext(dirs[i].fs_label),
+	fileselection = gimp_file_selection_new (gettext (dirs[i].fs_label),
 						 *(dirs[i].mdir),
 						 TRUE, TRUE);
 	gimp_table_attach_aligned (GTK_TABLE (table), 0, i,
-				   gettext(dirs[i].label), 1.0, 0.5,
+				   gettext (dirs[i].label), 1.0, 0.5,
 				   fileselection, 1, FALSE);
 
 	g_signal_connect (G_OBJECT (fileselection), "filename_changed",
@@ -2797,9 +2801,8 @@ preferences_dialog_create (Gimp *gimp)
 	N_("Select Themes Dir"),
 	&edit_theme_path }
     };
-    static gint npaths = sizeof (paths) / sizeof (paths[0]);
-	
-    for (i = 0; i < npaths; i++)
+
+    for (i = 0; i < G_N_ELEMENTS (paths); i++)
       {
 	vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 					   gettext (paths[i].label),
@@ -2812,7 +2815,7 @@ preferences_dialog_create (Gimp *gimp)
 	gtk_widget_show (vbox);
 	page_index++;
 
-	patheditor = gimp_path_editor_new (gettext(paths[i].fs_label),
+	patheditor = gimp_path_editor_new (gettext (paths[i].fs_label),
 					   *(paths[i].mpath));
 	gtk_container_add (GTK_CONTAINER (vbox), patheditor);
 	gtk_widget_show (patheditor);

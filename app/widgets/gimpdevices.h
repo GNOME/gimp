@@ -16,65 +16,41 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef __DEVICES_H__
-#define __DEVICES_H__
+#ifndef __GIMP_DEVICES_H__
+#define __GIMP_DEVICES_H__
 
 
-typedef enum
-{
-  DEVICE_MODE       = 1 << 0,
-  DEVICE_AXES       = 1 << 1,
-  DEVICE_KEYS       = 1 << 2,
-  DEVICE_TOOL       = 1 << 3,
-  DEVICE_FOREGROUND = 1 << 4,
-  DEVICE_BACKGROUND = 1 << 5,
-  DEVICE_BRUSH      = 1 << 6,
-  DEVICE_PATTERN    = 1 << 7,
-  DEVICE_GRADIENT   = 1 << 8
-} DeviceValues;
+typedef void (* GimpDeviceChangeNotify) (Gimp *gimp);
 
 
-/*  Initialize the input devices  */
-void        devices_init          (Gimp         *gimp);
+void        gimp_devices_init          (Gimp                   *gimp,
+                                        GimpDeviceChangeNotify  change_notify);
+void        gimp_devices_exit          (Gimp                   *gimp);
 
-/*  Restores device settings from rc file  */
-void        devices_restore       (Gimp         *gimp);
+void        gimp_devices_restore       (Gimp                   *gimp);
+void        gimp_devices_save          (Gimp                   *gimp);
 
-GdkDevice * devices_get_current   (Gimp         *gimp);
+GdkDevice * gimp_devices_get_current   (Gimp                   *gimp);
 
-/*  Returns TRUE, and makes necessary global changes
- *  if event is not for current_device
- */
-gboolean    devices_check_change  (Gimp         *gimp,
-                                   GdkEvent     *event);
+gboolean    gimp_devices_check_change  (Gimp                   *gimp,
+                                        GdkEvent               *event);
+void        gimp_devices_select_device (Gimp                   *gimp,
+                                        GdkDevice              *device);
 
-/*  Loads stored device settings (tool, cursor, ...)  */
-void        devices_select_device (Gimp         *gimp,
-                                   GdkDevice    *device);
-
-/*  The device info dialog  */
-GtkWidget * input_dialog_create   (Gimp         *gimp);
-void        input_dialog_free     (Gimp         *gimp);
-
-/*  The device status dialog  */
-GtkWidget * device_status_create  (Gimp         *gimp);
-void        device_status_free    (Gimp         *gimp);
-
-/* Add information about one tool from rc file */
-void        devices_rc_update     (Gimp         *gimp,
-                                   gchar        *name,
-                                   DeviceValues  values,
-                                   GdkInputMode  mode,
-                                   gint          num_axes,
-                                   GdkAxisUse   *axes,
-                                   gint          num_keys,
-                                   GdkDeviceKey *keys,
-                                   const gchar  *tool_name,
-                                   GimpRGB      *foreground,
-                                   GimpRGB      *background,
-                                   const gchar  *brush_name,
-                                   const gchar  *pattern_name,
-                                   const gchar  *gradient_name);
+void        gimp_devices_rc_update     (Gimp                   *gimp,
+                                        const gchar            *name,
+                                        GimpDeviceValues        values,
+                                        GdkInputMode            mode,
+                                        gint                    num_axes,
+                                        const GdkAxisUse       *axes,
+                                        gint                    num_keys,
+                                        const GdkDeviceKey     *keys,
+                                        const gchar            *tool_name,
+                                        const GimpRGB          *foreground,
+                                        const GimpRGB          *background,
+                                        const gchar            *brush_name,
+                                        const gchar            *pattern_name,
+                                        const gchar            *gradient_name);
 
 
-#endif /* __DEVICES_H__ */
+#endif /* __GIMP_DEVICES_H__ */

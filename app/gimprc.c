@@ -49,6 +49,7 @@
 
 #include "plug-in/plug-in.h"
 
+#include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
 
 #include "tools/gimptool.h"
@@ -57,7 +58,6 @@
 #include "gui/menus.h"
 
 #include "app_procs.h"
-#include "devices.h"
 #include "general.h"
 #include "gimphelp.h"
 #include "gimprc.h"
@@ -2126,9 +2126,9 @@ static gint
 parse_device (gpointer val1p, 
 	      gpointer val2p)
 {
-  DeviceValues values = 0;
-  gint         i;
-  gint         token;
+  GimpDeviceValues values = 0;
+  gint             i;
+  gint             token;
   
   /* The initialized values here are meaningless */
   gchar        *name     = NULL;
@@ -2165,7 +2165,7 @@ parse_device (gpointer val1p,
 
       if (!strcmp ("mode", token_sym))
 	{
-	  values |= DEVICE_MODE;
+	  values |= GIMP_DEVICE_VALUE_MODE;
 
 	  token = peek_next_token ();
 	  if (!token || (token != TOKEN_SYMBOL))
@@ -2183,7 +2183,7 @@ parse_device (gpointer val1p,
 	}
       else if (!strcmp ("axes", token_sym))
 	{
-	  values |= DEVICE_AXES;
+	  values |= GIMP_DEVICE_VALUE_AXES;
 
 	  token = peek_next_token ();
 	  if (!token || (token != TOKEN_NUMBER))
@@ -2218,7 +2218,7 @@ parse_device (gpointer val1p,
 	}
       else if (!strcmp ("keys", token_sym))
 	{
-	  values |= DEVICE_KEYS;
+	  values |= GIMP_DEVICE_VALUE_KEYS;
 
 	  token = peek_next_token ();
 	  if (!token || (token != TOKEN_NUMBER))
@@ -2240,7 +2240,7 @@ parse_device (gpointer val1p,
 	}
       else if (!strcmp ("tool", token_sym))
 	{
-	  values |= DEVICE_TOOL;
+	  values |= GIMP_DEVICE_VALUE_TOOL;
 
 	  token = peek_next_token ();
 	  if (!token || (token != TOKEN_STRING))
@@ -2251,7 +2251,7 @@ parse_device (gpointer val1p,
 	}
       else if (!strcmp ("foreground", token_sym))
 	{
-	  values |= DEVICE_FOREGROUND;
+	  values |= GIMP_DEVICE_VALUE_FOREGROUND;
 
 	  if (parse_color (&foreground) == ERROR)
 	    goto error;
@@ -2260,7 +2260,7 @@ parse_device (gpointer val1p,
 	}
       else if (!strcmp ("background", token_sym))
 	{
-	  values |= DEVICE_BACKGROUND;
+	  values |= GIMP_DEVICE_VALUE_BACKGROUND;
 
 	  if (parse_color (&background) == ERROR)
 	    goto error;
@@ -2269,7 +2269,7 @@ parse_device (gpointer val1p,
 	}
       else if (!strcmp ("brush", token_sym))
 	{
-	  values |= DEVICE_BRUSH;
+	  values |= GIMP_DEVICE_VALUE_BRUSH;
 
 	  token = peek_next_token ();
 	  if (!token || (token != TOKEN_STRING))
@@ -2280,7 +2280,7 @@ parse_device (gpointer val1p,
 	}
       else if (!strcmp ("pattern", token_sym))
 	{
-	  values |= DEVICE_PATTERN;
+	  values |= GIMP_DEVICE_VALUE_PATTERN;
 
 	  token = peek_next_token ();
 	  if (!token || (token != TOKEN_STRING))
@@ -2291,7 +2291,7 @@ parse_device (gpointer val1p,
 	}
       else if (!strcmp ("gradient", token_sym))
 	{
-	  values |= DEVICE_GRADIENT;
+	  values |= GIMP_DEVICE_VALUE_GRADIENT;
 
 	  token = peek_next_token ();
 	  if (!token || (token != TOKEN_STRING))
@@ -2313,14 +2313,17 @@ parse_device (gpointer val1p,
     goto error;
   token = get_next_token ();
 
-  devices_rc_update (the_gimp,
-                     name, values, mode, num_axes, axes, num_keys, keys,
-		     tool_name,
-		     &foreground,
-		     &background,
-		     brush_name,
-		     pattern_name,
-		     gradient_name);
+  gimp_devices_rc_update (the_gimp,
+                          name,
+                          values,
+                          mode,
+                          num_axes, axes,
+                          num_keys, keys,
+                          tool_name,
+                          &foreground, &background,
+                          brush_name,
+                          pattern_name,
+                          gradient_name);
 
   g_free (tool_name);
   g_free (brush_name);

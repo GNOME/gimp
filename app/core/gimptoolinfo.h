@@ -35,7 +35,6 @@
 
 typedef struct _GimpToolInfoClass GimpToolInfoClass;
 
-
 struct _GimpToolInfo
 {
   GimpData          parent_instance;

@@ -61,6 +61,7 @@ typedef void (* GimpContextCopyPropFunc) (GimpContext *src,
 static void gimp_context_class_init          (GimpContextClass *klass);
 static void gimp_context_init                (GimpContext      *context);
 
+static void gimp_context_dispose             (GObject          *object);
 static void gimp_context_finalize            (GObject          *object);
 
 static void gimp_context_set_property        (GObject          *object,
@@ -208,6 +209,7 @@ static void gimp_context_copy_imagefile      (GimpContext      *src,
 enum
 {
   PROP_0,
+  PROP_GIMP,
   PROP_IMAGE,
   PROP_DISPLAY,
   PROP_TOOL,
@@ -501,6 +503,7 @@ gimp_context_class_init (GimpContextClass *klass)
 
   object_class->set_property = gimp_context_set_property;
   object_class->get_property = gimp_context_get_property;
+  object_class->dispose      = gimp_context_dispose;
   object_class->finalize     = gimp_context_finalize;
 
   klass->image_changed       = NULL;
@@ -515,7 +518,7 @@ gimp_context_class_init (GimpContextClass *klass)
   klass->gradient_changed    = NULL;
   klass->palette_changed     = NULL;
   klass->buffer_changed      = NULL;
-  klass->imagefile_changed    = NULL;
+  klass->imagefile_changed   = NULL;
 
   gimp_context_prop_types[GIMP_CONTEXT_PROP_IMAGE]     = GIMP_TYPE_IMAGE;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_TOOL]      = GIMP_TYPE_TOOL_INFO;
@@ -525,6 +528,14 @@ gimp_context_class_init (GimpContextClass *klass)
   gimp_context_prop_types[GIMP_CONTEXT_PROP_PALETTE]   = GIMP_TYPE_PALETTE;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_BUFFER]    = GIMP_TYPE_BUFFER;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_IMAGEFILE] = GIMP_TYPE_IMAGEFILE;
+
+  g_object_class_install_property (object_class,
+                                   PROP_GIMP,
+                                   g_param_spec_object ("gimp",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_GIMP,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class,
 				   PROP_IMAGE,
@@ -657,6 +668,23 @@ gimp_context_init (GimpContext *context)
 }
 
 static void
+gimp_context_dispose (GObject *object)
+{
+  GimpContext *context;
+
+  context = GIMP_CONTEXT (object);
+
+  if (context->gimp)
+    {
+      context->gimp->context_list = g_list_remove (context->gimp->context_list,
+                                                   context);
+      context->gimp = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
 gimp_context_finalize (GObject *object)
 {
   GimpContext *context;
@@ -751,6 +779,11 @@ gimp_context_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_GIMP:
+      context->gimp = g_value_get_object (value);
+      context->gimp->context_list = g_list_prepend (context->gimp->context_list,
+                                                    context);
+      break;
     case PROP_IMAGE:
       gimp_context_set_image (context, g_value_get_object (value));
       break;
@@ -808,6 +841,9 @@ gimp_context_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_GIMP:
+      g_value_set_object (value, context->gimp);
+      break;
     case PROP_IMAGE:
       g_value_set_object (value, gimp_context_get_image (context));
       break;
@@ -867,11 +903,10 @@ gimp_context_new (Gimp        *gimp,
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (! template || GIMP_IS_CONTEXT (template), NULL);
 
-  context = g_object_new (GIMP_TYPE_CONTEXT, NULL);
-
-  context->gimp = gimp;
-
-  gimp_object_set_name (GIMP_OBJECT (context), name);
+  context = g_object_new (GIMP_TYPE_CONTEXT,
+                          "name", name,
+                          "gimp", gimp,
+                          NULL);
 
   g_signal_connect_object (G_OBJECT (gimp->images), "remove",
 			   G_CALLBACK (gimp_context_image_removed),
@@ -1340,22 +1375,16 @@ gimp_context_real_set_display (GimpContext *context,
 					      context);
     }
 
-  if (display)
+  context->display = display;
+
+  if (context->display)
     {
-      eek_wrapper = (EEKWrapper *) display;
+      eek_wrapper = (EEKWrapper *) context->display;
 
       g_signal_connect_object (G_OBJECT (eek_wrapper->shell), "destroy",
 			       G_CALLBACK (gimp_context_display_destroy),
 			       G_OBJECT (context),
 			       0);
-    }
-
-  context->display = display;
-
-  /*  set the image _before_ emitting the display_changed signal  */
-  if (display)
-    {
-      eek_wrapper = (EEKWrapper *) display;
 
       gimp_context_real_set_image (context, eek_wrapper->gimage);
     }

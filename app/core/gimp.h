@@ -170,10 +170,6 @@ void          gimp_open_file            (Gimp               *gimp,
 					 gboolean            with_display);
 */
 
-GimpContext * gimp_create_context       (Gimp               *gimp,
-					 const gchar        *name,
-					 GimpContext        *template);
-
 GimpContext * gimp_get_standard_context (Gimp               *gimp);
 
 void          gimp_set_default_context  (Gimp               *gimp,

@@ -38,6 +38,10 @@ libappwidgets_a_SOURCES = @STRIP_BEGIN@ \
 	gimpcursor.h			\
 	gimpdatafactoryview.c		\
 	gimpdatafactoryview.h		\
+	gimpdeviceinfo.c		\
+	gimpdeviceinfo.h		\
+	gimpdevices.c			\
+	gimpdevices.h			\
 	gimpdialogfactory.c		\
 	gimpdialogfactory.h		\
 	gimpdnd.c			\

@@ -30,6 +30,8 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	convert-dialog.h		\
 	data-commands.c			\
 	data-commands.h			\
+	device-status-dialog.c		\
+	device-status-dialog.h		\
 	dialogs.c			\
 	dialogs.h			\
 	dialogs-commands.c		\
@@ -71,6 +73,8 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	info-dialog.h			\
 	info-window.c			\
 	info-window.h			\
+	input-dialog.c			\
+	input-dialog.h			\
 	layers-commands.c		\
 	layers-commands.h		\
 	menus.c				\

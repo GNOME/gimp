@@ -157,7 +157,7 @@ brush_select_new (Gimp        *gimp,
 
   if (title)
     {
-      bsp->context = gimp_create_context (gimp, title, NULL);
+      bsp->context = gimp_context_new (gimp, title, NULL);
     }
   else
     {

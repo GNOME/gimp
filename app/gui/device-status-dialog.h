@@ -13,25 +13,16 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef __TOOLS_COMMANDS_H__
-#define __TOOLS_COMMANDS_H__
+#ifndef __DEVICE_STATUS_DIALOG_H__
+#define __DEVICE_STATUS_DIALOG_H__
 
 
-void   tools_default_colors_cmd_callback (GtkWidget *widget,
-					  gpointer   data,
-					  guint      action);
-void   tools_swap_colors_cmd_callback    (GtkWidget *widget,
-					  gpointer   data,
-					  guint      action);
-void   tools_swap_contexts_cmd_callback  (GtkWidget *widget,
-					  gpointer   data,
-					  guint      action);
-void   tools_select_cmd_callback         (GtkWidget *widget,
-					  gpointer   data,
-					  guint      action);
+GtkWidget * device_status_dialog_create         (Gimp *gimp);
+
+void        device_status_dialog_update_current (Gimp *gimp);
 
 
-#endif /* __TOOLS_COMMANDS_H__ */
+#endif /* __DEVICE_STATUS_DIALOG_H__ */

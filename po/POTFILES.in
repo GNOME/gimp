@@ -2,7 +2,6 @@
 # marked to allow runtime translation of messages
 
 app/app_procs.c
-app/devices.c
 app/floating_sel.c
 app/gimphelp.c
 app/gimpprogress.c
@@ -48,6 +47,7 @@ app/gui/color-notebook.c
 app/gui/color-select.c
 app/gui/colormap-dialog.c
 app/gui/convert-dialog.c
+app/gui/device-status-dialog.c
 app/gui/dialogs-constructors.c
 app/gui/edit-commands.c
 app/gui/file-commands.c

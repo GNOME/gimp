@@ -42,6 +42,7 @@
 #include "tools/tool_manager.h"
 
 #include "widgets/gimpcursor.h"
+#include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpitemfactory.h"
 
@@ -56,7 +57,6 @@
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-selection.h"
 
-#include "devices.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
@@ -269,21 +269,11 @@ gimp_display_shell_canvas_focus_out (GtkWidget        *widget,
 static void
 gimp_display_shell_check_device_cursor (GimpDisplayShell *shell)
 {
-  GList *list;
+  GdkDevice *current_device;
 
-  /*  gdk_devices_list() returns an internal list, so we shouldn't
-   *  free it afterwards
-   */
-  for (list = gdk_devices_list (); list; list = g_list_next (list))
-    {
-      GdkDevice *device = (GdkDevice *) list->data;
+  current_device = gimp_devices_get_current (shell->gdisp->gimage->gimp);
 
-      if (device == devices_get_current (shell->gdisp->gimage->gimp))
-	{
-	  shell->draw_cursor = ! device->has_cursor;
-	  break;
-	}
-    }
+  shell->draw_cursor = ! current_device->has_cursor;
 }
 
 gboolean
@@ -317,16 +307,16 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   gimage = gdisp->gimage;
 
   /*  Find out what device the event occurred upon  */
-  if (! gimage->gimp->busy && devices_check_change (gimage->gimp, event))
+  if (! gimage->gimp->busy && gimp_devices_check_change (gimage->gimp, event))
     {
       gimp_display_shell_check_device_cursor (shell);
     }
 
   gimp_display_shell_get_coords (shell, event,
-                                 devices_get_current (gimage->gimp),
+                                 gimp_devices_get_current (gimage->gimp),
                                  &display_coords);
   gimp_display_shell_get_state (shell, event,
-                                devices_get_current (gimage->gimp),
+                                gimp_devices_get_current (gimage->gimp),
                                 &state);
   time = gdk_event_get_time (event);
 

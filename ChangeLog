@@ -1,3 +1,52 @@
+2001-12-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/devices.[ch]: removed, chopped...
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/gui/Makefile.am
+
+	* app/widgets/gimpdeviceinfo.[ch]
+	* app/widgets/gimpdevices.[ch]
+	* app/gui/device-status-dialog.[ch]
+	* app/gui/input-dialog.[ch]: ...and added here.
+
+	Made GimpToolInfo a GimpContext subclass. Create a GimpDeviceManager
+	struct in gimpdevices.c and attach it to the Gimp instance.
+
+	* app/core/gimp.[ch]: removed gimp_create_context(). It was a bad
+	idea in the first place beause it prevented GimpContext subclasses
+	from being be properly registered with their Gimp instance.
+
+	* app/core/gimpcontext.c: moved the stuff which used to be in
+	gimp_create_context() back here. Added a "gimp" property which
+	must be set on construction. Added a "dispose" implementation
+	which removes the context from it's Gimp's context_list.
+
+	* app/gimprc.c
+	* app/core/gimptoolinfo.[ch]
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/gui/brush-select.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/gradient-editor.c
+	* app/gui/gradient-select.c
+	* app/gui/gui.c
+	* app/gui/menus.c
+	* app/gui/palette-editor.c
+	* app/gui/palette-select.c
+	* app/gui/pattern-select.c
+	* app/gui/toolbox.c
+	* app/tools/gimppainttool.c
+	* app/tools/tool_manager.c
+	* app/widgets/gimpimagedock.c: changed accordingly.
+
+	* app/gui/tools-commands.[ch]: made all callback signatures
+	the same.
+
+	* app/gui/preferences-dialog.c: cleaned up the
+	display_format_string GtkCombo code.
+
 2001-12-07  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpmarshal.[ch]: removed from CVS, they are generated.

@@ -500,7 +500,7 @@ static GimpItemFactoryEntry image_entries[] =
       "<StockItem>", GTK_STOCK_ZOOM_OUT },
     NULL,
     "view/zoom.html", NULL },
-  { { N_("/View/Zoom to Fit Window"), NULL,
+  { { N_("/View/Zoom to Fit Window"), "<control><shift>E",
       view_zoom_fit_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_ZOOM_FIT },
     NULL,

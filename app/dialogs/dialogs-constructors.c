@@ -57,6 +57,7 @@
 #include "channels-commands.h"
 #include "color-area.h"
 #include "colormap-dialog.h"
+#include "device-status-dialog.h"
 #include "dialogs.h"
 #include "dialogs-constructors.h"
 #include "documents-commands.h"
@@ -64,6 +65,7 @@
 #include "gradient-editor.h"
 #include "gradient-select.h"
 #include "gradients-commands.h"
+#include "input-dialog.h"
 #include "layers-commands.h"
 #include "menus.h"
 #include "module-browser.h"
@@ -78,7 +80,6 @@
 #include "tool-options-dialog.h"
 #include "toolbox.h"
 
-#include "devices.h"
 #include "gimprc.h"
 #include "undo_history.h"
 
@@ -177,7 +178,7 @@ dialogs_device_status_get (GimpDialogFactory *factory,
 			   GimpContext       *context,
                            gint               preview_size)
 {
-  return device_status_create (context->gimp);
+  return device_status_dialog_create (context->gimp);
 }
 
 GtkWidget *

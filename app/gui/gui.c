@@ -39,13 +39,14 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-render.h"
 
+#include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "brush-select.h"
 #include "color-select.h"
-#include "devices.h"
+#include "device-status-dialog.h"
 #include "dialogs.h"
 #include "error-console-dialog.h"
 #include "file-open-dialog.h"
@@ -257,7 +258,7 @@ gui_init (Gimp *gimp)
 
   dialogs_init (gimp);
 
-  devices_init (gimp);
+  gimp_devices_init (gimp, device_status_dialog_update_current);
   session_init (gimp);
 }
 
@@ -279,7 +280,7 @@ gui_restore (Gimp     *gimp,
 
   color_select_init ();
 
-  devices_restore (gimp);
+  gimp_devices_restore (gimp);
 
   if (gimprc.always_restore_session || restore_session)
     session_restore (gimp);
@@ -305,7 +306,9 @@ gui_shutdown (Gimp *gimp)
   gimp->message_handler = GIMP_CONSOLE;
 
   session_save (gimp);
-  device_status_free (gimp);
+
+  if (gimprc.save_device_status)
+    gimp_devices_save (gimp);
 
   brush_dialog_free ();
   pattern_dialog_free ();
@@ -324,6 +327,7 @@ gui_exit (Gimp *gimp)
   render_free ();
 
   dialogs_exit (gimp);
+  gimp_devices_exit (gimp);
 
   /*  handle this in the dialog factory:  */
   tool_options_dialog_free (gimp);

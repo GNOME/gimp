@@ -112,9 +112,23 @@ typedef enum
   GIMP_LAST_CURSOR_MODIFIER_ENTRY
 } GimpCursorModifier;
 
+typedef enum
+{
+  GIMP_DEVICE_VALUE_MODE       = 1 << 0,
+  GIMP_DEVICE_VALUE_AXES       = 1 << 1,
+  GIMP_DEVICE_VALUE_KEYS       = 1 << 2,
+  GIMP_DEVICE_VALUE_TOOL       = 1 << 3,
+  GIMP_DEVICE_VALUE_FOREGROUND = 1 << 4,
+  GIMP_DEVICE_VALUE_BACKGROUND = 1 << 5,
+  GIMP_DEVICE_VALUE_BRUSH      = 1 << 6,
+  GIMP_DEVICE_VALUE_PATTERN    = 1 << 7,
+  GIMP_DEVICE_VALUE_GRADIENT   = 1 << 8
+} GimpDeviceValues;
+
 
 /*  non-widget objects  */
 
+typedef struct _GimpDeviceInfo          GimpDeviceInfo;
 typedef struct _GimpDialogFactory       GimpDialogFactory;
 
 

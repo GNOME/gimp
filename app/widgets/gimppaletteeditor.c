@@ -244,7 +244,7 @@ palette_editor_new (Gimp *gimp)
 
   palette_editor = g_new0 (PaletteEditor, 1);
 
-  palette_editor->context = gimp_create_context (gimp, NULL, NULL);
+  palette_editor->context = gimp_context_new (gimp, "Palette Editor", NULL);
 
   palette_editor->zoom_factor   = 1.0;
   palette_editor->columns       = COLUMNS;

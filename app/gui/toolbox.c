@@ -41,6 +41,7 @@
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdnd.h"
 #include "widgets/gimpitemfactory.h"
@@ -48,7 +49,6 @@
 #include "widgets/gtkhwrapbox.h"
 
 #include "color-area.h"
-#include "devices.h"
 #include "dialogs.h"
 #include "indicator-area.h"
 
@@ -150,7 +150,7 @@ toolbox_check_device (GtkWidget *widget,
 		      GdkEvent  *event,
 		      gpointer   data)
 {
-  devices_check_change (GIMP (data), event);
+  gimp_devices_check_change (GIMP (data), event);
 
   return FALSE;
 }

@@ -123,7 +123,7 @@ gradient_select_new (Gimp        *gimp,
 
   if (title)
     {
-      gsp->context = gimp_create_context (gimp, title, NULL);
+      gsp->context = gimp_context_new (gimp, title, NULL);
     }
   else
     {

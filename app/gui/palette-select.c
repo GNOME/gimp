@@ -124,7 +124,7 @@ palette_select_new (Gimp        *gimp,
 
   if (title)
     {
-      psp->context = gimp_create_context (gimp, title, NULL);
+      psp->context = gimp_context_new (gimp, title, NULL);
     }
   else
     {

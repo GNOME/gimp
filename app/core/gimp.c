@@ -58,14 +58,11 @@
 #include "libgimp/gimpintl.h"
 
 
-static void   gimp_class_init                  (GimpClass   *klass);
-static void   gimp_init                        (Gimp        *gimp);
+static void   gimp_class_init (GimpClass *klass);
+static void   gimp_init       (Gimp      *gimp);
 
-static void   gimp_dispose                     (GObject     *object);
-static void   gimp_finalize                    (GObject     *object);
-
-static void   gimp_context_disconnect_callback (GimpContext *context,
-						Gimp        *gimp);
+static void   gimp_dispose    (GObject   *object);
+static void   gimp_finalize   (GObject   *object);
 
 
 static GimpObjectClass *parent_class = NULL;
@@ -408,19 +405,19 @@ gimp_initialize (Gimp               *gimp,
 
   gimp_image_new_init (gimp);
 
-  gimp->standard_context = gimp_create_context (gimp, "Standard", NULL);
+  gimp->standard_context = gimp_context_new (gimp, "Standard", NULL);
 
   /*  the default context contains the user's saved preferences
    *
    *  TODO: load from disk
    */
-  context = gimp_create_context (gimp, "Default", NULL);
+  context = gimp_context_new (gimp, "Default", NULL);
   gimp_set_default_context (gimp, context);
   g_object_unref (G_OBJECT (context));
 
   /*  the initial user_context is a straight copy of the default context
    */
-  context = gimp_create_context (gimp, "User", context);
+  context = gimp_context_new (gimp, "User", context);
   gimp_set_user_context (gimp, context);
   g_object_unref (G_OBJECT (context));
 
@@ -699,39 +696,6 @@ gimp_open_file (Gimp        *gimp,
     }
 }
 #endif
-
-GimpContext *
-gimp_create_context (Gimp        *gimp,
-		     const gchar *name,
-		     GimpContext *template)
-{
-  GimpContext *context;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (! template || GIMP_IS_CONTEXT (template), NULL);
-
-  /*  FIXME: need unique names here  */
-  if (! name)
-    name = "Unnamed";
-
-  context = gimp_context_new (gimp, name, template);
-
-  gimp->context_list = g_list_prepend (gimp->context_list, context);
-
-  g_signal_connect_object (G_OBJECT (context), "disconnect",
-			   G_CALLBACK (gimp_context_disconnect_callback),
-			   G_OBJECT (gimp),
-			   0);
-
-  return context;
-}
-
-static void
-gimp_context_disconnect_callback (GimpContext *context,
-				  Gimp        *gimp)
-{
-  gimp->context_list = g_list_remove (gimp->context_list, context);
-}
 
 GimpContext *
 gimp_get_standard_context (Gimp *gimp)

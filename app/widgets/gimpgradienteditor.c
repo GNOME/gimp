@@ -256,7 +256,7 @@ gradient_editor_new (Gimp *gimp)
 
   editor = g_new (GradientEditor, 1);
 
-  editor->context = gimp_create_context (gimp, NULL, NULL);
+  editor->context = gimp_context_new (gimp, "Gradient Editor", NULL);
 
   g_signal_connect (G_OBJECT (editor->context), "gradient_changed",
 		    G_CALLBACK (gradient_editor_gradient_changed),

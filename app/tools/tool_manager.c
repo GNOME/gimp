@@ -120,9 +120,9 @@ tool_manager_init (Gimp *gimp)
   /*  Create a context to store the paint options of the
    *  global paint options mode
    */
-  tool_manager->global_tool_context = gimp_create_context (gimp,
-							   "Global Tool Context",
-							   user_context);
+  tool_manager->global_tool_context = gimp_context_new (gimp,
+                                                        "Global Tool Context",
+                                                        user_context);
 
   /*  TODO: add foreground, background, brush, pattern, gradient  */
   gimp_context_define_properties (tool_manager->global_tool_context,
@@ -594,7 +594,6 @@ tool_manager_register_tool (Gimp                   *gimp,
 #ifdef __GNUC__
 #warning FIXME: remove gtk_widget_get_default_style()
 #endif
-
   style = gtk_widget_get_default_style ();
 
   pixbuf = gtk_icon_set_render_icon (icon_set,

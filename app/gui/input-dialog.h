@@ -13,25 +13,15 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef __TOOLS_COMMANDS_H__
-#define __TOOLS_COMMANDS_H__
+#ifndef __INPUT_DIALOG_H__
+#define __INPUT_DIALOG_H__
 
 
-void   tools_default_colors_cmd_callback (GtkWidget *widget,
-					  gpointer   data,
-					  guint      action);
-void   tools_swap_colors_cmd_callback    (GtkWidget *widget,
-					  gpointer   data,
-					  guint      action);
-void   tools_swap_contexts_cmd_callback  (GtkWidget *widget,
-					  gpointer   data,
-					  guint      action);
-void   tools_select_cmd_callback         (GtkWidget *widget,
-					  gpointer   data,
-					  guint      action);
+GtkWidget * input_dialog_create (Gimp *gimp);
+void        input_dialog_free   (Gimp *gimp);
 
 
-#endif /* __TOOLS_COMMANDS_H__ */
+#endif /* __INPUT_DIALOG_H__ */

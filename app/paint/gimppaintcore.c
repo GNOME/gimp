@@ -47,6 +47,8 @@
 #include "core/gimpmarshal.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpdevices.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
@@ -58,7 +60,6 @@
 #include "gimppainttool.h"
 
 #include "app_procs.h"
-#include "devices.h"
 #include "gimprc.h"
 #include "undo.h"
 
@@ -1128,7 +1129,7 @@ gimp_paint_tool_get_paint_area (GimpPaintTool *paint_tool,
     gimp_drawable_bytes (drawable) : gimp_drawable_bytes (drawable) + 1;
 
   gimp_paint_tool_calculate_brush_size (paint_tool->brush->mask, scale,
-				   &bwidth, &bheight);
+                                        &bwidth, &bheight);
 
   /*  adjust the x and y coordinates to the upper left corner of the brush  */
   x = (gint) floor (paint_tool->cur_coords.x) - (bwidth  >> 1);
@@ -1298,7 +1299,7 @@ gimp_paint_tool_calculate_brush_size (MaskBuf *mask,
 {
   scale = CLAMP (scale, 0.0, 1.0);
 
-  if (devices_get_current (the_gimp) == gdk_device_get_core_pointer ())
+  if (gimp_devices_get_current (the_gimp) == gdk_device_get_core_pointer ())
     {
       *width  = mask->width;
       *height = mask->height;
@@ -1554,7 +1555,7 @@ gimp_paint_tool_scale_mask (MaskBuf *brush_mask,
     return brush_mask;
 
   gimp_paint_tool_calculate_brush_size (brush_mask, scale,
-				   &dest_width, &dest_height);
+                                        &dest_width, &dest_height);
 
   if (brush_mask == last_brush && !cache_invalid &&
       dest_width == last_width && dest_height == last_height)
@@ -1592,7 +1593,7 @@ gimp_paint_tool_scale_pixmap (MaskBuf *brush_mask,
     return brush_mask;
 
   gimp_paint_tool_calculate_brush_size (brush_mask, scale,
-				   &dest_width, &dest_height);
+                                        &dest_width, &dest_height);
 
   if (brush_mask == last_brush && !cache_invalid &&
       dest_width == last_width && dest_height == last_height)
@@ -1621,10 +1622,15 @@ gimp_paint_tool_get_brush_mask (GimpPaintTool	     *paint_tool,
 
   tool = GIMP_TOOL (paint_tool);
 
-  if (devices_get_current (tool->tool_info->gimp) == gdk_device_get_core_pointer ())
-    mask = paint_tool->brush->mask;
+  if (gimp_devices_get_current (tool->tool_info->gimp) ==
+      gdk_device_get_core_pointer ())
+    {
+      mask = paint_tool->brush->mask;
+    }
   else
-    mask = gimp_paint_tool_scale_mask (paint_tool->brush->mask, scale);
+    {
+      mask = gimp_paint_tool_scale_mask (paint_tool->brush->mask, scale);
+    }
 
   switch (brush_hardness)
     {

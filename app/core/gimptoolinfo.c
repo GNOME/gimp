@@ -113,7 +113,7 @@ gimp_tool_info_finalize (GObject *object)
 {
   GimpToolInfo *tool_info;
 
-  tool_info = (GimpToolInfo *) object;
+  tool_info = GIMP_TOOL_INFO (object);
 
   if (tool_info->blurb)
     {
@@ -250,7 +250,7 @@ gimp_tool_info_new (Gimp         *gimp,
   GimpToolInfo *tool_info;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (! context || GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (identifier != NULL, NULL);
   g_return_val_if_fail (blurb != NULL, NULL);
   g_return_val_if_fail (help != NULL, NULL);
@@ -264,9 +264,9 @@ gimp_tool_info_new (Gimp         *gimp,
 
   if (tool_context)
     {
-      tool_info->context = gimp_create_context (context->gimp,
-						identifier,
-						context);
+      tool_info->context = gimp_context_new (gimp,
+                                             identifier,
+                                             context);
     }
 
   tool_info->gimp          = gimp;
