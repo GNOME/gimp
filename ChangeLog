@@ -1,3 +1,9 @@
+2002-09-09  Jakub Steiner <jimmac@ximian.com>
+
+	* themes/Default/images/stock-grow-16.png:
+	* themes/Default/images/stock-shrink-16.png: make the icons less
+	  crowded
+
 2002-09-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimplayerlistview.c
