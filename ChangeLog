@@ -1,5 +1,10 @@
 2004-10-10  DindinX  <dindinx@gimp.org>
 
+	* plug-ins/common/AlienMap2.c: ported to GimpAspectPreview, and some
+	minor cleanups.
+
+2004-10-10  DindinX  <dindinx@gimp.org>
+
 	* plug-ins/common/vpropagate.c: added a preview.
 
 2004-10-10  DindinX  <dindinx@gimp.org>

@@ -61,12 +61,8 @@ typedef struct
   gboolean   redmode;
   gboolean   greenmode;
   gboolean   bluemode;
+  gboolean   preview;
 } alienmap2_vals_t;
-
-typedef struct
-{
-  gint run;
-} alienmap2_interface_t;
 
 /* Declare local functions. */
 
@@ -82,12 +78,10 @@ static void      transform                (guchar        *r,
                                            guchar        *g,
                                            guchar        *b);
 static gint      alienmap2_dialog         (void);
-static void      dialog_update_preview    (void);
+static void      dialog_update_preview    (GimpDrawable  *drawable,
+                                           GimpPreview   *preview);
 static void      dialog_scale_update      (GtkAdjustment *adjustment,
                                            gdouble       *value);
-static void      dialog_response          (GtkWidget     *widget,
-                                           gint           response_id,
-                                           gpointer       data);
 static void      alienmap2_toggle_update  (GtkWidget     *widget,
                                            gpointer       data);
 static void      alienmap2_radio_update   (GtkWidget     *widget,
@@ -100,10 +94,7 @@ static void      alienmap2_get_label_size (void);
 
 /***** Variables *****/
 
-#define PREVIEW_SIZE 128
 static GtkWidget *preview;
-static gint       preview_width, preview_height, preview_bpp;
-static guchar    *preview_cache;
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -111,11 +102,6 @@ GimpPlugInInfo PLUG_IN_INFO =
   NULL,  /* quit_proc  */
   query, /* query_proc */
   run    /* run_proc   */
-};
-
-static alienmap2_interface_t wint =
-{
-  FALSE  /* run     */
 };
 
 static alienmap2_vals_t wvals =
@@ -127,6 +113,7 @@ static alienmap2_vals_t wvals =
   1.0,
   0.0,
   RGB_MODEL,
+  TRUE,
   TRUE,
   TRUE,
   TRUE
@@ -340,7 +327,7 @@ run (const gchar      *name,
 
           /* Set the tile cache size */
           gimp_tile_cache_ntiles (2 * (drawable->width /
-				       gimp_tile_width () + 1));
+                                       gimp_tile_width () + 1));
 
           /* Run! */
 
@@ -351,7 +338,7 @@ run (const gchar      *name,
           /* Store data */
           if (run_mode == GIMP_RUN_INTERACTIVE)
             gimp_set_data ("plug_in_alienmap2",
-			   &wvals, sizeof(alienmap2_vals_t));
+                           &wvals, sizeof(alienmap2_vals_t));
         }
       else
         {
@@ -397,13 +384,16 @@ static gint
 alienmap2_dialog (void)
 {
   GtkWidget *dialog;
+  GtkWidget *main_vbox;
   GtkWidget *top_table;
   GtkWidget *align;
   GtkWidget *frame;
   GtkWidget *toggle;
+  GtkWidget *hbox;
   GtkWidget *vbox;
   GtkWidget *table;
   GtkObject *adj;
+  gboolean   run;
 
   gimp_ui_init ("alienmap2", TRUE);
 
@@ -416,36 +406,23 @@ alienmap2_dialog (void)
 
                             NULL);
 
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (dialog_response),
-                    NULL);
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
+
+  preview = gimp_aspect_preview_new (drawable, &wvals.preview);
+  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
+  gtk_widget_show (preview);
+  g_signal_connect_swapped (preview, "invalidated",
+                            G_CALLBACK (dialog_update_preview),
+                            drawable);
 
   top_table = gtk_table_new (2, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (top_table), 12);
   gtk_table_set_row_spacings (GTK_TABLE (top_table), 12);
-  gtk_container_set_border_width (GTK_CONTAINER (top_table), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), top_table,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), top_table, FALSE, FALSE, 0);
   gtk_widget_show (top_table);
-
-  /* Preview */
-  align = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
-  gtk_table_attach (GTK_TABLE (top_table), align, 0, 1, 0, 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (align);
-
-  preview = gimp_preview_area_new ();
-  preview_width = preview_height = PREVIEW_SIZE;
-  preview_cache = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-                                                    &preview_width,
-                                                    &preview_height,
-                                                    &preview_bpp);
-  gtk_widget_set_size_request (preview, preview_width, preview_height);
-  gtk_container_add (GTK_CONTAINER (align), preview);
-  gtk_widget_show (preview);
 
   /* Controls */
   table = gtk_table_new (6, 3, FALSE);
@@ -457,11 +434,11 @@ alienmap2_dialog (void)
 
   entry_freq_rh = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			  NULL, SCALE_WIDTH, ENTRY_WIDTH,
-			  wvals.redfrequency, 0, 20.0, 0.1, 1, 2,
-			  TRUE, 0, 0,
-			  _("Number of cycles covering full value range"),
-			  NULL);
+                          NULL, SCALE_WIDTH, ENTRY_WIDTH,
+                          wvals.redfrequency, 0, 20.0, 0.1, 1, 2,
+                          TRUE, 0, 0,
+                          _("Number of cycles covering full value range"),
+                          NULL);
   label_freq_rh = GIMP_SCALE_ENTRY_LABEL (adj);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
@@ -469,11 +446,11 @@ alienmap2_dialog (void)
 
   entry_phase_rh = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			  NULL, SCALE_WIDTH, ENTRY_WIDTH,
-			  wvals.redangle, 0, 360.0, 1, 15, 2,
-			  TRUE, 0, 0,
-			  _("Phase angle, range 0-360"),
-			  NULL);
+                          NULL, SCALE_WIDTH, ENTRY_WIDTH,
+                          wvals.redangle, 0, 360.0, 1, 15, 2,
+                          TRUE, 0, 0,
+                          _("Phase angle, range 0-360"),
+                          NULL);
   label_phase_rh = GIMP_SCALE_ENTRY_LABEL (adj);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
@@ -481,11 +458,11 @@ alienmap2_dialog (void)
 
   entry_freq_gs = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			  NULL, SCALE_WIDTH, ENTRY_WIDTH,
-			  wvals.greenfrequency, 0, 20.0, 0.1, 1, 2,
-			  TRUE, 0, 0,
-			  _("Number of cycles covering full value range"),
-			  NULL);
+                          NULL, SCALE_WIDTH, ENTRY_WIDTH,
+                          wvals.greenfrequency, 0, 20.0, 0.1, 1, 2,
+                          TRUE, 0, 0,
+                          _("Number of cycles covering full value range"),
+                          NULL);
   label_freq_gs = GIMP_SCALE_ENTRY_LABEL (adj);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
@@ -493,11 +470,11 @@ alienmap2_dialog (void)
 
   entry_phase_gs = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-			  NULL, SCALE_WIDTH, ENTRY_WIDTH,
-			  wvals.redangle, 0, 360.0, 1, 15, 2,
-			  TRUE, 0, 0,
-			  _("Phase angle, range 0-360"),
-			  NULL);
+                          NULL, SCALE_WIDTH, ENTRY_WIDTH,
+                          wvals.redangle, 0, 360.0, 1, 15, 2,
+                          TRUE, 0, 0,
+                          _("Phase angle, range 0-360"),
+                          NULL);
   label_phase_gs = GIMP_SCALE_ENTRY_LABEL (adj);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
@@ -505,11 +482,11 @@ alienmap2_dialog (void)
 
   entry_freq_bl = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-			  NULL, SCALE_WIDTH, ENTRY_WIDTH,
-			  wvals.bluefrequency, 0, 20.0, 0.1, 1, 2,
-			  TRUE, 0, 0,
-			  _("Number of cycles covering full value range"),
-			  NULL);
+                          NULL, SCALE_WIDTH, ENTRY_WIDTH,
+                          wvals.bluefrequency, 0, 20.0, 0.1, 1, 2,
+                          TRUE, 0, 0,
+                          _("Number of cycles covering full value range"),
+                          NULL);
   label_freq_bl = GIMP_SCALE_ENTRY_LABEL (adj);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
@@ -517,21 +494,21 @@ alienmap2_dialog (void)
 
   entry_phase_bl = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
-			  NULL, SCALE_WIDTH, ENTRY_WIDTH,
-			  wvals.blueangle, 0, 360.0, 1, 15, 2,
-			  TRUE, 0, 0,
-			  _("Phase angle, range 0-360"),
-			  NULL);
+                          NULL, SCALE_WIDTH, ENTRY_WIDTH,
+                          wvals.blueangle, 0, 360.0, 1, 15, 2,
+                          TRUE, 0, 0,
+                          _("Phase angle, range 0-360"),
+                          NULL);
   label_phase_bl = GIMP_SCALE_ENTRY_LABEL (adj);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.blueangle);
 
   /*  Mode toggle box  */
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_table_attach (GTK_TABLE (top_table), vbox, 1, 2, 0, 1,
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_table_attach (GTK_TABLE (top_table), hbox, 1, 2, 0, 1,
                     GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
-  gtk_widget_show (vbox);
+  gtk_widget_show (hbox);
 
   frame =
     gimp_int_radio_group_new (TRUE, _("Mode"),
@@ -543,7 +520,11 @@ alienmap2_dialog (void)
 
                               NULL);
 
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
 
   toggle_modify_rh = toggle = gtk_check_button_new_with_mnemonic (NULL);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
@@ -579,30 +560,32 @@ alienmap2_dialog (void)
   alienmap2_set_labels ();
   alienmap2_set_sensitive ();
 
-  dialog_update_preview ();
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_main ();
+  gtk_widget_destroy (dialog);
 
-  return wint.run;
+  return run;
 }
 
 static void
-dialog_update_preview (void)
+dialog_update_preview (GimpDrawable *drawable,
+                       GimpPreview  *preview)
 {
-  guchar *dest;
+  guchar *dest, *src;
+  gint    width, height, bpp;
   gint    i;
 
-  dest = g_new (guchar, preview_width * preview_height * preview_bpp);
+  gimp_preview_get_size (preview, &width, &height);
+  src = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                          &width, &height, &bpp);
+  dest = g_new (guchar, width * height * bpp);
 
-  for (i = 0 ; i < preview_width * preview_height ; i++)
-    alienmap2_func (preview_cache + i * preview_bpp,
-                    dest + i * preview_bpp,
-                    preview_bpp, NULL);
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
-                          0, 0, preview_width, preview_height,
-                          gimp_drawable_type (drawable->drawable_id),
-                          dest,
-                          preview_width * preview_bpp);
+  for (i = 0 ; i < width * height ; i++)
+    alienmap2_func (src + i * bpp, dest + i * bpp, bpp, NULL);
+
+  gimp_preview_draw_buffer (preview, dest, width * bpp);
+
+  g_free (src);
   g_free (dest);
 }
 
@@ -612,23 +595,7 @@ dialog_scale_update (GtkAdjustment *adjustment,
 {
   gimp_double_adjustment_update (adjustment, value);
 
-  dialog_update_preview();
-}
-
-static void
-dialog_response (GtkWidget *widget,
-                 gint       response_id,
-                 gpointer   data)
-{
-  switch (response_id)
-    {
-    case GTK_RESPONSE_OK:
-      wint.run = TRUE;
-
-    default:
-      gtk_widget_destroy (widget);
-      break;
-    }
+  gimp_preview_invalidate (GIMP_PREVIEW (preview));
 }
 
 static void
@@ -639,7 +606,7 @@ alienmap2_toggle_update (GtkWidget *widget,
 
   alienmap2_set_sensitive ();
 
-  dialog_update_preview ();
+  gimp_preview_invalidate (GIMP_PREVIEW (preview));
 }
 
 static void
@@ -650,7 +617,7 @@ alienmap2_radio_update (GtkWidget *widget,
 
   alienmap2_set_labels ();
 
-  dialog_update_preview ();
+  gimp_preview_invalidate (GIMP_PREVIEW (preview));
 }
 
 
