@@ -16,6 +16,8 @@ FractalExplorer_SOURCES = \
 	FractalExplorer.c	\
 	FractalExplorer.h	\
 	Globals.c		\
+	Languages.c		\
+	Languages.h		\
 	logo.h			\
 	pix_data.h
 
