@@ -1,5 +1,13 @@
 2004-06-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontrollers.c: ref the actions when putting
+	them in the mapping table.
+
+	* app/actions/context-actions.c: added actions to change the
+	opacity in 10% steps.
+
+2004-06-16  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpcontroller.[ch]: added a "name" property.
 	Dispatch events only if the controller is enabled.
 

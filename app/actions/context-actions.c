@@ -80,6 +80,14 @@ static GimpEnumActionEntry context_opacity_actions[] =
   { "context-opacity-increase", GTK_STOCK_ADD,
     "More Opaque", NULL, NULL,
     GIMP_CONTEXT_SELECT_NEXT,
+    NULL },
+  { "context-opacity-decrease-skip", GTK_STOCK_REMOVE,
+    "Much More Transparent", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SKIP_PREVIOUS,
+    NULL },
+  { "context-opacity-increase-skip", GTK_STOCK_ADD,
+    "Much More Opaque", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SKIP_NEXT,
     NULL }
 };
 

@@ -338,7 +338,8 @@ gimp_controller_deserialize (GimpControllerManager *manager,
 
                     *key = event_id;
 
-                    g_hash_table_insert (info->mapping, key, action);
+                    g_hash_table_insert (info->mapping, key,
+                                         g_object_ref (action));
                   }
                 else
                   {
