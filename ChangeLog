@@ -1,3 +1,11 @@
+2002-06-12  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimppreview.c (gimp_preview_size_allocate): center
+	the preview's allocation.
+
+	* app/tools/gimpblendtool.c (blend_options_new): use a button for
+	the gradient so it's more obvious that it can be pressed.
+
 2002-06-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdata.[ch]: added a boolean "internal" which

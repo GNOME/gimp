@@ -448,6 +448,7 @@ blend_options_new (GimpToolInfo *tool_info)
   GtkWidget    *vbox;
   GtkWidget    *table;
   GtkWidget    *frame;
+  GtkWidget    *button;
   GtkWidget    *preview;
 
   /*  the new blend tool options structure  */
@@ -509,18 +510,22 @@ blend_options_new (GimpToolInfo *tool_info)
   user_context = gimp_get_user_context (tool_info->gimp);
   gradient     = gimp_context_get_gradient (user_context);
 
+  button = gtk_button_new ();
   preview = gimp_preview_new_full (GIMP_VIEWABLE (gradient),
-                                   48, 16, 0,
-                                   FALSE, TRUE, TRUE);
+                                   128, 16, 0,
+                                   FALSE, FALSE, TRUE);
+  gtk_container_add (GTK_CONTAINER (button), preview);
+  gtk_widget_show (preview);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Gradient:"), 1.0, 0.5,
-			     preview, 2, TRUE);
+			     button, 2, TRUE);
 
   g_signal_connect_object (G_OBJECT (user_context), "gradient_changed",
                            G_CALLBACK (gimp_preview_set_viewable),
                            G_OBJECT (preview),
                            G_CONNECT_SWAPPED);
-  g_signal_connect (G_OBJECT (preview), "clicked",
+  g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (blend_options_gradient_clicked),
                     NULL);
 

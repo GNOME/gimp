@@ -275,11 +275,22 @@ gimp_preview_size_allocate (GtkWidget     *widget,
 			    GtkAllocation *allocation)
 {
   GimpPreview *preview;
+  gint         width;
+  gint         height;
 
   preview = GIMP_PREVIEW (widget);
 
-  allocation->width  = preview->width  + 2 * preview->border_width;
-  allocation->height = preview->height + 2 * preview->border_width;
+  width  = preview->width  + 2 * preview->border_width;
+  height = preview->height + 2 * preview->border_width;
+
+  if (allocation->width > width)
+    allocation->x += (allocation->width - width) / 2;
+
+  if (allocation->height > height)
+    allocation->y += (allocation->height - height) / 2;
+
+  allocation->width  = width;
+  allocation->height = height;
 
   if (GTK_WIDGET_CLASS (parent_class)->size_allocate)
     GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
@@ -307,7 +318,7 @@ gimp_preview_expose_event (GtkWidget      *widget,
   if (widget->allocation.width > buf_rect.width)
     buf_rect.x = (widget->allocation.width - buf_rect.width) / 2;
 
-  if (widget->allocation.height >buf_rect.height)
+  if (widget->allocation.height > buf_rect.height)
     buf_rect.y = (widget->allocation.height - buf_rect.height) / 2;
 
   if (gdk_rectangle_intersect (&event->area, &buf_rect, &render_rect))
