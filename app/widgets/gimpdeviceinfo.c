@@ -235,8 +235,7 @@ devices_restore()
       tmp_list = tmp_list->next;
     }
 
-  if (device_info == NULL)
-    return;
+  g_return_if_fail (device_info != NULL);
 
   suppress_update = TRUE;
 

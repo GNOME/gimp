@@ -1,3 +1,9 @@
+Fri Nov 27 11:45:03 1998  Raph Levien  <raph@gimp.org>
+
+	* app/devices.c (devices_restore): changed silent return on
+	device_info == NULL to a g_warning_if_fail (now that Gtk+ is fixed,
+	this case should never happen).
+
 Wed Nov 25 18:37:44 1998  Owen Taylor  <otaylor@redhat.com>
 
 	* plug-ins/gz/gz.c: We don't need GTK+, and we
