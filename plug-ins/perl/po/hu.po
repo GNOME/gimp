@@ -155,55 +155,55 @@ msgstr "<Image>/Szerkesztés/Ismétlés és másolás..."
 
 #: examples/animate_cells:0
 msgid "<Image>/Filters/Animation/Animate Cells..."
-msgstr "<Image>/Szûrõk/Animation/Animate Cells..."
+msgstr "<Image>/Szûrõk/Animáció/Animate Cells..."
 
 #: examples/blowinout:0
 msgid "<Image>/Filters/Animation/BlowInOut..."
-msgstr "<Image>/Szûrõk/Animation/BlowInOut..."
+msgstr "<Image>/Szûrõk/Animáció/BlowInOut..."
 
 #: examples/frame_filter:0
 msgid "<Image>/Filters/Apply Perl Expression..."
-msgstr "<Image>/Szûrõk/Apply Perl Expression..."
+msgstr "<Image>/Szûrõk/Perl kifejezés alkalmazása..."
 
 #: examples/gouge:0
 msgid "<Image>/Filters/Blur/2x2 Blur"
-msgstr "<Image>/Szûrõk/Blur/2x2 Blur"
+msgstr "<Image>/Szûrõk/Elmosás/2x2-es elmosás"
 
 #: examples/colourtoalpha:0
 msgid "<Image>/Filters/Colors/Colour To Alpha..."
-msgstr "<Image>/Szûrõk/Colors/Colour To Alpha..."
+msgstr "<Image>/Szûrõk/Színek/Színbõl alfa..."
 
 #: examples/fire:0
 msgid "<Image>/Filters/Colors/Fire..."
-msgstr "<Image>/Szûrõk/Colors/Fire..."
+msgstr "<Image>/Szûrõk/Színek/Tûz..."
 
 #: examples/map_to_gradient:0
 msgid "<Image>/Filters/Colors/Map To Gradient..."
-msgstr "<Image>/Szûrõk/Colors/Map To Gradient..."
+msgstr "<Image>/Szûrõk/Színek/Map To Gradient..."
 
 #: examples/mirrorsplit:0
 msgid "<Image>/Filters/Distorts/MirrorSplit..."
-msgstr "<Image>/Szûrõk/Distorts/MirrorSplit..."
+msgstr "<Image>/Szûrõk/Torzítás/MirrorSplit..."
 
 #: examples/scratches:0
 msgid "<Image>/Filters/Distorts/Scratches..."
-msgstr "<Image>/Szûrõk/Distorts/Scratches..."
+msgstr "<Image>/Szûrõk/Torzítás/Karcolások..."
 
 #: examples/windify:0
 msgid "<Image>/Filters/Distorts/Windify..."
-msgstr "<Image>/Szûrõk/Distorts/Windify..."
+msgstr "<Image>/Szûrõk/Torzítás/Szelesítés..."
 
 #: examples/gouge:0
 msgid "<Image>/Filters/Edge-Detect/2x2 Edge Detect"
-msgstr "<Image>/Szûrõk/Edge-Detect/2x2 Edge Detect"
+msgstr "<Image>/Szûrõk/Élkeresés/2x2-es élkeresés"
 
 #: examples/gouge:0
 msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
-msgstr "<Image>/Szûrõk/Enhance/2x2 Contrast Enhance"
+msgstr "<Image>/Szûrõk/Kiemelés/2x2-es kontraszt kiemelés"
 
 #: examples/warp-sharp:0
 msgid "<Image>/Filters/Enhance/Warp Sharp..."
-msgstr "<Image>/Szûrõk/Enhance/Warp Sharp..."
+msgstr "<Image>/Szûrõk/Kiemelés/Warp Sharp..."
 
 #: examples/blended2:0
 msgid "<Image>/Filters/Logulator/Blended II..."
@@ -215,7 +215,7 @@ msgstr "<Image>/Szûrõk/Logulátor/Carved"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Crystal"
-msgstr "<Image>/Szûrõk/Logulátor/Crystal"
+msgstr "<Image>/Szûrõk/Logulátor/Kristály"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Imigre-26"
@@ -235,11 +235,11 @@ msgstr "<Image>/Szûrõk/Logulátor/Speed text"
 
 #: examples/translogo:0
 msgid "<Image>/Filters/Logulator/Transparent Logo..."
-msgstr "<Image>/Szûrõk/Logulátor/Transparent Logo..."
+msgstr "<Image>/Szûrõk/Logulátor/Átlátszó Logó..."
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Web title header"
-msgstr "<Image>/Szûrõk/Logulátor/Web title header"
+msgstr "<Image>/Szûrõk/Logulátor/Webes fejléc"
 
 #: examples/image_tile:0
 msgid "<Image>/Filters/Map/Image Tile..."
@@ -251,11 +251,11 @@ msgstr "<Image>/Szûrõk/Leképezés/Pixelmap..."
 
 #: examples/xachlego:0
 msgid "<Image>/Filters/Map/Xach Blocks..."
-msgstr "<Image>/Szûrõk/Leképezés/Xach Blocks..."
+msgstr "<Image>/Szûrõk/Leképezés/Xach blokkok..."
 
 #: examples/xachshadow:0
 msgid "<Image>/Filters/Map/Xach Shadows..."
-msgstr "<Image>/Szûrõk/Leképezés/Xach Shadows..."
+msgstr "<Image>/Szûrõk/Leképezés/Xach árnyékok..."
 
 #: examples/border:0
 msgid "<Image>/Filters/Misc/Border Average..."
@@ -275,7 +275,7 @@ msgstr "<Image>/Szûrõk/Zaj/Visszacsatolás..."
 
 #: examples/xachvision:0
 msgid "<Image>/Filters/Noise/Xach Vision..."
-msgstr "<Image>/Szûrõk/Zaj/Xach Vision..."
+msgstr "<Image>/Szûrõk/Zaj/Xach látomás..."
 
 #: examples/dust:0
 msgid "<Image>/Filters/Render/Add Dust..."
@@ -291,15 +291,15 @@ msgstr "<Image>/Szûrõk/Megjelenítés/Brushed Metal..."
 
 #: examples/burst:0
 msgid "<Image>/Filters/Render/Burst..."
-msgstr "<Image>/Szûrõk/Megjelenítés/Burst..."
+msgstr "<Image>/Szûrõk/Megjelenítés/Kitörés..."
 
 #: examples/fit-text:0
 msgid "<Image>/Filters/Render/Fit Text..."
-msgstr "<Image>/Szûrõk/Megjelenítés/Fit Text..."
+msgstr "<Image>/Szûrõk/Megjelenítés/Szöveg igazítása..."
 
 #: examples/glowing_steel:0
 msgid "<Image>/Filters/Render/Highlight Edges..."
-msgstr "<Image>/Szûrõk/Megjelenítés/Highlight Edges..."
+msgstr "<Image>/Szûrõk/Megjelenítés/Szélek kiemelése..."
 
 #: examples/randomblends:0
 msgid "<Image>/Filters/Render/Random Blends..."
@@ -343,7 +343,7 @@ msgstr "<Image>/Segédvonalak/Segédvonalak eltávolítása"
 
 #: examples/guides_to_selection:0
 msgid "<Image>/Guides/To Selection..."
-msgstr "<Image>/Segédvonalak/To Selection..."
+msgstr "<Image>/Segédvonalak/Kijelöléshez..."
 
 #: examples/alpha2color:0
 msgid "<Image>/Image/Alpha/Alpha2Color..."
@@ -355,15 +355,15 @@ msgstr "<Image>/Kép/Alfa/Alfa törlése..."
 
 #: examples/layerfuncs:0
 msgid "<Image>/Layers/Center Layer"
-msgstr "<Image>/Rétegek/Center Layer"
+msgstr "<Image>/Rétegek/Réteget középre"
 
 #: examples/frame_reshuffle:0
 msgid "<Image>/Layers/Stack/Reorder Layers..."
-msgstr "<Image>/Rétegek/Verem/Reorder Layers..."
+msgstr "<Image>/Rétegek/Verem/Átrendezés..."
 
 #: examples/roundrectsel:0
 msgid "<Image>/Select/Round Rectangular Selection..."
-msgstr "<Image>/Kijelölés/Round Rectangular Selection..."
+msgstr "<Image>/Kijelölés/Lekerekített téglalap..."
 
 #: examples/roundsel:0
 msgid "<Image>/Select/Round..."
@@ -375,7 +375,7 @@ msgstr "<Image>/Kijelölés/Háromszög..."
 
 #: examples/gap-vcr:0
 msgid "<Image>/Video/VCR Console..."
-msgstr "<Image>/Video/Videólejátszó konzolja..."
+msgstr "<Image>/Mozgókép/Videólejátszó konzolja..."
 
 #: examples/view3d:0
 msgid "<Image>/View/3D Surface..."
