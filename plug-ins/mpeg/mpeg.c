@@ -66,6 +66,18 @@
  */
 
 
+/* endianness guessing from wmf.c */
+#define G_LITTLE_ENDIAN 1234
+#define G_BIG_ENDIAN    4321
+#if defined(__i386__)
+#define G_BYTE_ORDER G_LITTLE_ENDIAN
+#elif defined(__hppa) || defined(__sparc)
+#define G_BYTE_ORDER G_BIG_ENDIAN
+#else
+#error set byte order by hand by adding your machine above
+#endif
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
@@ -299,7 +311,16 @@ load_image (char *filename)
 	 only have to fill in the alpha channel. */
       for (i=(wwidth*wheight)-1; i>=0; i--)
 	{
-	  data[i*4+3] = 255;
+#if G_BYTE_ORDER == G_BIG_ENDIAN
+          unsigned char r,g,b;
+          r = data[i*4+3 ];
+          g = data[i*4+2 ];
+          b = data[i*4+1 ];
+          data[i*4+2]= b;
+          data[i*4+1]= g;
+          data[i*4 ] = r;
+#endif
+          data[i*4+3] = 255;
 	}
 
 
