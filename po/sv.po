@@ -9,16 +9,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-08-02 22:32+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-08-10 15:15+0200\n"
 "PO-Revision-Date: 2003-08-02 22:35+0200\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
-#: app/app_procs.c:174
+#: app/app_procs.c:193
 msgid ""
 "GIMP is not properly installed for the current user.\n"
 "User installation was skipped because the '--no-interface' flag was used.\n"
@@ -29,7 +29,7 @@ msgstr ""
 "användes.\n"
 "Kör GIMP med flaggan \"--no-interface\" för att utföra användarinstallation."
 
-#: app/app_procs.c:317
+#: app/app_procs.c:336
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -38,7 +38,7 @@ msgstr ""
 "Öppnande av \"%s\" misslyckades:\n"
 "%s"
 
-#: app/main.c:174
+#: app/main.c:154
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -49,7 +49,7 @@ msgstr ""
 #.
 #. *  anything else starting with a '-' is an error.
 #.
-#: app/main.c:331
+#: app/main.c:311
 #, c-format
 msgid ""
 "\n"
@@ -58,11 +58,11 @@ msgstr ""
 "\n"
 "Ogiltig flagga \"%s\"\n"
 
-#: app/main.c:399
+#: app/main.c:379
 msgid "GIMP version"
 msgstr "GIMP version"
 
-#: app/main.c:407
+#: app/main.c:387
 #, c-format
 msgid ""
 "\n"
@@ -73,15 +73,15 @@ msgstr ""
 "Användning: %s [flagga ...] [fil ...]\n"
 "\n"
 
-#: app/main.c:408
+#: app/main.c:388
 msgid "Options:\n"
 msgstr "Alternativ:\n"
 
-#: app/main.c:409
+#: app/main.c:389
 msgid "  -b, --batch <commands>   Run in batch mode.\n"
 msgstr "  -b, --batch <kommandon>  Kör i flerjobbsläge.\n"
 
-#: app/main.c:410
+#: app/main.c:390
 msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
@@ -89,7 +89,7 @@ msgstr ""
 "  -c, --console-messages   Visa varningsmeddelanden till konsollen, inte ett "
 "separat dialogfönster.\n"
 
-#: app/main.c:411
+#: app/main.c:391
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
@@ -97,65 +97,65 @@ msgstr ""
 "  -d, --no-data            Läs in inte in penslar, färgskalor, färgpaletter, "
 "mönster.\n"
 
-#: app/main.c:412
+#: app/main.c:392
 msgid "  -i, --no-interface       Run without a user interface.\n"
 msgstr "  -i, --no-interface       Kör utan användargränssnitt.\n"
 
-#: app/main.c:413
+#: app/main.c:393
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
 msgstr "  -g, --gimprc <gimprc>    Använd en alternativ gimprc-fil.\n"
 
-#: app/main.c:414
+#: app/main.c:394
 msgid "  -h, --help               Output this help.\n"
 msgstr "  -h, --help               Skriv ut denna hjälptext.\n"
 
-#: app/main.c:415
+#: app/main.c:395
 msgid "  -r, --restore-session    Try to restore saved session.\n"
 msgstr "  -r, --restore-session    Försök att återställa sparad session.\n"
 
-#: app/main.c:416
+#: app/main.c:396
 msgid "  -s, --no-splash          Do not show the startup window.\n"
 msgstr "  -s, --no-splash          Visa inte startfönstret.\n"
 
-#: app/main.c:417
+#: app/main.c:397
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
 msgstr "  -S, --no-splash-image    Visa ingen bild i startfönstret.\n"
 
-#: app/main.c:418
+#: app/main.c:398
 msgid "  -v, --version            Output version information.\n"
 msgstr "  -v, --version            Skriv ut versionsinformation.\n"
 
-#: app/main.c:419
+#: app/main.c:399
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Visa startmeddelanden.\n"
 
-#: app/main.c:420
+#: app/main.c:400
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
 msgstr ""
 "  --no-shm                 Använd inte delat minne mellan GIMP och tillägg.\n"
 
-#: app/main.c:421
+#: app/main.c:401
 msgid "  --no-mmx                 Do not use MMX routines.\n"
 msgstr "  --no-mmx                Använd inte MMX-rutiner.\n"
 
-#: app/main.c:422
+#: app/main.c:402
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         Aktivera icke ödesdiger signalhanterare för\n"
 "                           felsökning.\n"
 
-#: app/main.c:423
+#: app/main.c:403
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <display>      Använd en speciell X-display.\n"
 
-#: app/main.c:424
+#: app/main.c:404
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr "  --system-gimprc <gimprc> Använd en alternativ system-gimprc-fil.\n"
 
-#: app/main.c:425
+#: app/main.c:405
 msgid ""
 "  --enable-stack-trace <never | query | always>\n"
 "                           Debugging mode for fatal signals.\n"
@@ -165,7 +165,7 @@ msgstr ""
 "                           Felsökningsläge för ödesdigra signaler.\n"
 "\n"
 
-#: app/main.c:444
+#: app/main.c:424
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Detta konsollfönster kommer att stängas om tio sekunder)\n"
 
@@ -262,8 +262,8 @@ msgstr "Mittentoner"
 msgid "Highlights"
 msgstr "Ljuspunkter"
 
-#: app/config/gimpconfig-deserialize.c:209 app/config/gimpconfig.c:374
-#: app/config/gimpconfig.c:387 app/config/gimpscanner.c:391
+#: app/config/gimpconfig-deserialize.c:209 app/config/gimpconfig.c:375
+#: app/config/gimpconfig.c:388 app/config/gimpscanner.c:391
 #: app/config/gimpscanner.c:462 app/core/gimpunits.c:157 app/gui/session.c:176
 #: app/plug-in/plug-in-rc.c:134
 msgid "fatal parse error"
@@ -1146,7 +1146,7 @@ msgstr "Transformera"
 msgid "Paint"
 msgstr "Måla"
 
-#: app/core/core-enums.c:500 app/core/core-enums.c:540 app/core/gimpitem.c:786
+#: app/core/core-enums.c:500 app/core/core-enums.c:540 app/core/gimpitem.c:788
 msgid "Attach Parasite"
 msgstr "Koppla parasit"
 
@@ -1393,7 +1393,7 @@ msgstr "Ogiltig UTF-8-sträng i penselfilen \"%s\"."
 #: app/core/gimpcontext.c:1302 app/core/gimpgradient.c:385
 #: app/core/gimpitem.c:382 app/core/gimppalette.c:438
 #: app/core/gimppattern.c:410 app/gui/templates-commands.c:126
-#: app/tools/gimpvectortool.c:276
+#: app/tools/gimpvectortool.c:278
 msgid "Unnamed"
 msgstr "Namnlös"
 
@@ -2046,11 +2046,11 @@ msgstr "Misslyckades med att öppna miniatyrbildsfilen \"%s\": %s"
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Misslyckades med att skapa miniatyrbildsmappen \"%s\"."
 
-#: app/core/gimpitem.c:796
+#: app/core/gimpitem.c:798
 msgid "Attach Parasite to Item"
 msgstr "Koppla parasit till objekt"
 
-#: app/core/gimpitem.c:835 app/core/gimpitem.c:842
+#: app/core/gimpitem.c:837 app/core/gimpitem.c:844
 msgid "Remove Parasite from Item"
 msgstr "Ta bort parasit från objekt"
 
@@ -2246,7 +2246,7 @@ msgid "pixel"
 msgstr "bildpunkt"
 
 #: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:579
-#: app/tools/gimpmeasuretool.c:582 app/tools/gimppainttool.c:585
+#: app/tools/gimpmeasuretool.c:582 app/tools/gimppainttool.c:623
 msgid "pixels"
 msgstr "bildpunkter"
 
@@ -4534,85 +4534,105 @@ msgid "/Filters/_Colors"
 msgstr "/Filter/_Färger"
 
 #: app/gui/image-menu.c:1014
+#, fuzzy
+msgid "/Filters/Colors/Ma_p"
+msgstr "/Filter/_Färger"
+
+#: app/gui/image-menu.c:1015
 msgid "/Filters/_Noise"
 msgstr "/Filter/_Brus"
 
-#: app/gui/image-menu.c:1015
+#: app/gui/image-menu.c:1016
 msgid "/Filters/Edge-De_tect"
 msgstr "/Filter/_Leta kanter"
 
-#: app/gui/image-menu.c:1016
+#: app/gui/image-menu.c:1017
 msgid "/Filters/En_hance"
 msgstr "/Filter/Fö_rbättra"
 
-#: app/gui/image-menu.c:1017
+#: app/gui/image-menu.c:1018
 msgid "/Filters/_Generic"
 msgstr "/Filter/_Allmänna"
 
-#: app/gui/image-menu.c:1021
+#: app/gui/image-menu.c:1022
 msgid "/Filters/Gla_ss Effects"
 msgstr "/Filter/_Glaseffekter"
 
-#: app/gui/image-menu.c:1022
+#: app/gui/image-menu.c:1023
 msgid "/Filters/_Light Effects"
 msgstr "/Filter/Ljus_effekter"
 
-#: app/gui/image-menu.c:1023
+#: app/gui/image-menu.c:1024
 msgid "/Filters/_Distorts"
 msgstr "/Filter/_Störningar"
 
-#: app/gui/image-menu.c:1024
+#: app/gui/image-menu.c:1025
 msgid "/Filters/_Artistic"
 msgstr "/Filter/Ar_tistiskt"
 
-#: app/gui/image-menu.c:1025
+#: app/gui/image-menu.c:1026
 msgid "/Filters/_Map"
 msgstr "/Filter/_Mappa"
 
-#: app/gui/image-menu.c:1026
+#: app/gui/image-menu.c:1027
 msgid "/Filters/_Render"
 msgstr "/Filter/_Rendera"
 
-#: app/gui/image-menu.c:1027
+#: app/gui/image-menu.c:1028
+#, fuzzy
+msgid "/Filters/Render/_Clouds"
+msgstr "/Filter/_Rendera"
+
+#: app/gui/image-menu.c:1029
+#, fuzzy
+msgid "/Filters/Render/_Nature"
+msgstr "/Filter/_Rendera"
+
+#: app/gui/image-menu.c:1030
+#, fuzzy
+msgid "/Filters/Render/_Pattern"
+msgstr "/Filter/_Rendera"
+
+#: app/gui/image-menu.c:1031
 msgid "/Filters/_Web"
 msgstr "/Filter/_Webb"
 
-#: app/gui/image-menu.c:1031
+#: app/gui/image-menu.c:1035
 msgid "/Filters/An_imation"
 msgstr "/Filter/An_imation"
 
-#: app/gui/image-menu.c:1032
+#: app/gui/image-menu.c:1036
 msgid "/Filters/C_ombine"
 msgstr "/Filter/K_ombinera"
 
-#: app/gui/image-menu.c:1036
+#: app/gui/image-menu.c:1040
 msgid "/Filters/To_ys"
 msgstr "/Filter/Le_ksaker"
 
-#: app/gui/image-menu.c:1361
+#: app/gui/image-menu.c:1365
 #, c-format
 msgid "_Undo %s"
 msgstr "i_Ångra %s"
 
-#: app/gui/image-menu.c:1366
+#: app/gui/image-menu.c:1370
 #, c-format
 msgid "_Redo %s"
 msgstr "_Gör om %s"
 
-#: app/gui/image-menu.c:1370
+#: app/gui/image-menu.c:1374
 msgid "_Undo"
 msgstr "_Ångra"
 
-#: app/gui/image-menu.c:1371
+#: app/gui/image-menu.c:1375
 msgid "_Redo"
 msgstr "_Gör om"
 
-#: app/gui/image-menu.c:1617
+#: app/gui/image-menu.c:1621
 #, c-format
 msgid "Other (%d:%d) ..."
 msgstr "Annat (%d:%d)..."
 
-#: app/gui/image-menu.c:1626
+#: app/gui/image-menu.c:1630
 #, c-format
 msgid "_Zoom (%d:%d)"
 msgstr "_Zooma(%d:%d)"
@@ -5192,21 +5212,21 @@ msgstr "/Ta bort mönster..."
 msgid "/Refresh Patterns"
 msgstr "/Uppdatera mönster"
 
-#: app/gui/plug-in-menus.c:363
+#: app/gui/plug-in-menus.c:367
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "U_pprepa \"%s\""
 
-#: app/gui/plug-in-menus.c:364
+#: app/gui/plug-in-menus.c:368
 #, c-format
 msgid "R_e-show \"%s\""
 msgstr "Å_tervisa \"%s\""
 
-#: app/gui/plug-in-menus.c:390
+#: app/gui/plug-in-menus.c:394
 msgid "Repeat Last"
 msgstr "Upprepa senaste"
 
-#: app/gui/plug-in-menus.c:393
+#: app/gui/plug-in-menus.c:397
 msgid "Re-Show Last"
 msgstr "Återvisa senaste"
 
@@ -6971,7 +6991,7 @@ msgstr "Temporär procedur"
 msgid "Free Select"
 msgstr "Fri markering"
 
-#: app/plug-in/plug-in.c:704
+#: app/plug-in/plug-in.c:706
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -8409,23 +8429,23 @@ msgstr "Byt namn på slinga"
 msgid "Move Path"
 msgstr "Flytta slinga"
 
-#: app/vectors/gimpvectors.c:333
+#: app/vectors/gimpvectors.c:326
 msgid "Scale Path"
 msgstr "Skala slinga"
 
-#: app/vectors/gimpvectors.c:372
+#: app/vectors/gimpvectors.c:361
 msgid "Resize Path"
 msgstr "Ändra storlek på slinga"
 
-#: app/vectors/gimpvectors.c:409
+#: app/vectors/gimpvectors.c:391
 msgid "Flip Path"
 msgstr "Vänd sling"
 
-#: app/vectors/gimpvectors.c:473
+#: app/vectors/gimpvectors.c:437
 msgid "Rotate Path"
 msgstr "Rotera slinga"
 
-#: app/vectors/gimpvectors.c:514
+#: app/vectors/gimpvectors.c:468
 msgid "Transform Path"
 msgstr "Transformera slinga"
 

@@ -13,16 +13,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.4\n"
-"POT-Creation-Date: 2003-08-06 00:06+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-08-10 15:15+0200\n"
 "PO-Revision-Date: 2003-08-06 01:25+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
-#: app/app_procs.c:174
+#: app/app_procs.c:193
 msgid ""
 "GIMP is not properly installed for the current user.\n"
 "User installation was skipped because the '--no-interface' flag was used.\n"
@@ -34,7 +34,7 @@ msgstr ""
 "Para efectuar instalação de utilizador, execute o GIMP sem a opção '--no-"
 "interface'."
 
-#: app/app_procs.c:317
+#: app/app_procs.c:336
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -43,7 +43,7 @@ msgstr ""
 "Falha ao abrir '%s':\n"
 "%s"
 
-#: app/main.c:174
+#: app/main.c:154
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -54,7 +54,7 @@ msgstr ""
 #.
 #. *  anything else starting with a '-' is an error.
 #.
-#: app/main.c:331
+#: app/main.c:311
 #, c-format
 msgid ""
 "\n"
@@ -63,11 +63,11 @@ msgstr ""
 "\n"
 "Opção \"%s\" inválida\n"
 
-#: app/main.c:399
+#: app/main.c:379
 msgid "GIMP version"
 msgstr "Versão do GIMP"
 
-#: app/main.c:407
+#: app/main.c:387
 #, c-format
 msgid ""
 "\n"
@@ -77,15 +77,15 @@ msgstr ""
 "\n"
 "Utilização: %s [opção ...] [ficheiro ...]\n"
 
-#: app/main.c:408
+#: app/main.c:388
 msgid "Options:\n"
 msgstr "Opções:\n"
 
-#: app/main.c:409
+#: app/main.c:389
 msgid "  -b, --batch <commands>   Run in batch mode.\n"
 msgstr "  -b, --batch <comandos>    Execução em modo batch.\n"
 
-#: app/main.c:410
+#: app/main.c:390
 msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
@@ -93,7 +93,7 @@ msgstr ""
 "  -c, --console-messages       Mostra avisos na consola em vez de em caixas "
 "de diálogo.\n"
 
-#: app/main.c:411
+#: app/main.c:391
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
@@ -101,40 +101,40 @@ msgstr ""
 "  -d, --no-data               Não carregar texturas, gradientes, paletas, "
 "pincéis.\n"
 
-#: app/main.c:412
+#: app/main.c:392
 msgid "  -i, --no-interface       Run without a user interface.\n"
 msgstr "  -i --no-interface        Executar sem interface de utilizador.\n"
 
-#: app/main.c:413
+#: app/main.c:393
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
 msgstr "  -g, --gimprc <gimprc>     Utilizar um ficheiro gimprc alternativo.\n"
 
-#: app/main.c:414
+#: app/main.c:394
 msgid "  -h, --help               Output this help.\n"
 msgstr " -h, --help                Apresenta esta ajuda.\n"
 
-#: app/main.c:415
+#: app/main.c:395
 msgid "  -r, --restore-session    Try to restore saved session.\n"
 msgstr "  -r, --restore-session     Tenta restaurar sessão gravada.\n"
 
-#: app/main.c:416
+#: app/main.c:396
 msgid "  -s, --no-splash          Do not show the startup window.\n"
 msgstr "  -s, --no-splash          Não apresentar a janela de inicialização.\n"
 
-#: app/main.c:417
+#: app/main.c:397
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
 msgstr ""
 "  -S, --no-splash-image    Não adicionar uma imagem à janela inicial.\n"
 
-#: app/main.c:418
+#: app/main.c:398
 msgid "  -v, --version            Output version information.\n"
 msgstr "  -v, --version            Apresentar informações de versão.\n"
 
-#: app/main.c:419
+#: app/main.c:399
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Mostrar as mensagens de inicialização.\n"
 
-#: app/main.c:420
+#: app/main.c:400
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
@@ -142,28 +142,28 @@ msgstr ""
 "  --no-shm                 Não utilizar memória partilhada entre o GIMP e "
 "seus plugins.\n"
 
-#: app/main.c:421
+#: app/main.c:401
 msgid "  --no-mmx                 Do not use MMX routines.\n"
 msgstr "  --no-mmx                 Não utilizar rotinas MMX.\n"
 
-#: app/main.c:422
+#: app/main.c:402
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         Activa manipuladores de sinais de depuração não-"
 "fatais.\n"
 
-#: app/main.c:423
+#: app/main.c:403
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <display>      Utiliza o monitor de X indicado.\n"
 
-#: app/main.c:424
+#: app/main.c:404
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr ""
 "  --system-gimprc <gimprc> Utiliza um ficheiro gimprc de sistema "
 "alternativo.\n"
 
-#: app/main.c:425
+#: app/main.c:405
 msgid ""
 "  --enable-stack-trace <never | query | always>\n"
 "                           Debugging mode for fatal signals.\n"
@@ -173,7 +173,7 @@ msgstr ""
 "                           Modo de depuração para sinais fatais.\n"
 "\n"
 
-#: app/main.c:444
+#: app/main.c:424
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Esta janela de consola será fechada em dez segundos)\n"
 
@@ -270,8 +270,8 @@ msgstr "Tons Médios"
 msgid "Highlights"
 msgstr "Tons Claros"
 
-#: app/config/gimpconfig-deserialize.c:209 app/config/gimpconfig.c:374
-#: app/config/gimpconfig.c:387 app/config/gimpscanner.c:391
+#: app/config/gimpconfig-deserialize.c:209 app/config/gimpconfig.c:375
+#: app/config/gimpconfig.c:388 app/config/gimpscanner.c:391
 #: app/config/gimpscanner.c:462 app/core/gimpunits.c:157 app/gui/session.c:176
 #: app/plug-in/plug-in-rc.c:134
 msgid "fatal parse error"
@@ -378,8 +378,8 @@ msgid ""
 "Specifies how the area around the image should be drawn when in fullscreen "
 "mode."
 msgstr ""
-"Especifica como deverá ser desenhada a área à volta da imagem em modo de ecrã "
-"completo."
+"Especifica como deverá ser desenhada a área à volta da imagem em modo de "
+"ecrã completo."
 
 #: app/config/gimprc-blurbs.h:27
 msgid ""
@@ -615,8 +615,9 @@ msgid ""
 "When enabled, the menubar is visible by default in fullscreen mode. This can "
 "also be toggled with the \"View->Show Menubar\" command."
 msgstr ""
-"Quando activo, torna a barra de menu visível por omissão em modo de ecrã completo. "
-"Pode também ser alternado com o comando \"Ver->Mostrar Barra Menu\"."
+"Quando activo, torna a barra de menu visível por omissão em modo de ecrã "
+"completo. Pode também ser alternado com o comando \"Ver->Mostrar Barra Menu"
+"\"."
 
 #: app/config/gimprc-blurbs.h:270
 msgid ""
@@ -631,16 +632,18 @@ msgid ""
 "When enabled, the scrollbars are visible by default in fullscreen mode. This "
 "can also be toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
-"Quando activo, torna as barras de rolamento visíveis por omissão em modo de ecrã "
-"completo. Pode também ser alternado com o comando \"Ver->Mostrar Barras Rolamento\"."
+"Quando activo, torna as barras de rolamento visíveis por omissão em modo de "
+"ecrã completo. Pode também ser alternado com o comando \"Ver->Mostrar Barras "
+"Rolamento\"."
 
 #: app/config/gimprc-blurbs.h:278
 msgid ""
 "When enabled, the statusbar is visible by default in fullscreen mode. This "
 "can also be toggled with the \"View->Show Statusbar\" command."
 msgstr ""
-"Quando activo, torna a barra de estados visível por omissão em modo de ecrã completo. "
-"Pode também ser alternado com o comando \"Ver->Mostrar Barra Estados\"."
+"Quando activo, torna a barra de estados visível por omissão em modo de ecrã "
+"completo. Pode também ser alternado com o comando \"Ver->Mostrar Barra "
+"Estados\"."
 
 #: app/config/gimprc-blurbs.h:282
 msgid "Enable to display a handy GIMP tip on startup."
@@ -1166,7 +1169,7 @@ msgstr "Transformar"
 msgid "Paint"
 msgstr "Pintar"
 
-#: app/core/core-enums.c:500 app/core/core-enums.c:540 app/core/gimpitem.c:786
+#: app/core/core-enums.c:500 app/core/core-enums.c:540 app/core/gimpitem.c:788
 msgid "Attach Parasite"
 msgstr "Anexar Informações Anexas"
 
@@ -2064,11 +2067,11 @@ msgstr "Falha ao abrir ficheiro de imagem de referência '%s': %s"
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Falha ao criar pasta de imagens de referência '%s'."
 
-#: app/core/gimpitem.c:796
+#: app/core/gimpitem.c:798
 msgid "Attach Parasite to Item"
 msgstr "Anexar Informações Anexas ao Item"
 
-#: app/core/gimpitem.c:835 app/core/gimpitem.c:842
+#: app/core/gimpitem.c:837 app/core/gimpitem.c:844
 msgid "Remove Parasite from Item"
 msgstr "Remover Informações Anexas do Item"
 
@@ -2267,7 +2270,7 @@ msgid "pixel"
 msgstr "pixel"
 
 #: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:579
-#: app/tools/gimpmeasuretool.c:582 app/tools/gimppainttool.c:585
+#: app/tools/gimpmeasuretool.c:582 app/tools/gimppainttool.c:623
 msgid "pixels"
 msgstr "pixels"
 
@@ -8452,23 +8455,23 @@ msgstr "Renomear Caminho"
 msgid "Move Path"
 msgstr "Mover Caminho"
 
-#: app/vectors/gimpvectors.c:333
+#: app/vectors/gimpvectors.c:326
 msgid "Scale Path"
 msgstr "Escalar Caminho"
 
-#: app/vectors/gimpvectors.c:372
+#: app/vectors/gimpvectors.c:361
 msgid "Resize Path"
 msgstr "Redimensionar Caminho"
 
-#: app/vectors/gimpvectors.c:409
+#: app/vectors/gimpvectors.c:391
 msgid "Flip Path"
 msgstr "Virar Caminho"
 
-#: app/vectors/gimpvectors.c:473
+#: app/vectors/gimpvectors.c:437
 msgid "Rotate Path"
 msgstr "Rodar Caminho"
 
-#: app/vectors/gimpvectors.c:514
+#: app/vectors/gimpvectors.c:468
 msgid "Transform Path"
 msgstr "Transformar Caminho"
 

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-08-07 11:49+0200\n"
+"POT-Creation-Date: 2003-08-10 15:17+0200\n"
 "PO-Revision-Date: 2003-08-07 10:17-0300\n"
 "Last-Translator: Pablo G. del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -30,16 +30,16 @@ msgstr "Acerca de"
 #. Preview
 #: plug-ins/FractalExplorer/Dialogs.c:318 plug-ins/Lighting/lighting_ui.c:1150
 #: plug-ins/MapObject/mapobject_ui.c:1402 plug-ins/common/CML_explorer.c:1191
-#: plug-ins/common/blinds.c:339 plug-ins/common/curve_bend.c:1378
-#: plug-ins/common/destripe.c:578 plug-ins/common/emboss.c:722
-#: plug-ins/common/fractaltrace.c:776 plug-ins/common/grid.c:671
-#: plug-ins/common/iwarp.c:1211 plug-ins/common/mapcolor.c:576
-#: plug-ins/common/nlfilt.c:466 plug-ins/common/polar.c:704
-#: plug-ins/common/sharpen.c:557 plug-ins/common/sinus.c:2047
-#: plug-ins/common/spheredesigner.c:2486 plug-ins/common/tileit.c:403
-#: plug-ins/common/waves.c:454 plug-ins/common/whirlpinch.c:673
-#: plug-ins/flame/flame.c:940 plug-ins/gflare/gflare.c:2312
-#: plug-ins/gflare/gflare.c:3239 plug-ins/gimpressionist/orientmap.c:501
+#: plug-ins/common/curve_bend.c:1378 plug-ins/common/destripe.c:578
+#: plug-ins/common/emboss.c:722 plug-ins/common/fractaltrace.c:776
+#: plug-ins/common/grid.c:671 plug-ins/common/iwarp.c:1223
+#: plug-ins/common/mapcolor.c:576 plug-ins/common/nlfilt.c:466
+#: plug-ins/common/polar.c:704 plug-ins/common/sharpen.c:557
+#: plug-ins/common/sinus.c:2047 plug-ins/common/spheredesigner.c:2486
+#: plug-ins/common/tileit.c:403 plug-ins/common/waves.c:454
+#: plug-ins/common/whirlpinch.c:673 plug-ins/flame/flame.c:940
+#: plug-ins/gflare/gflare.c:2312 plug-ins/gflare/gflare.c:3239
+#: plug-ins/gimpressionist/orientmap.c:501
 #: plug-ins/gimpressionist/preview.c:111 plug-ins/gimpressionist/sizemap.c:436
 #: plug-ins/ifscompose/ifscompose.c:931 plug-ins/print/gimp_main_window.c:411
 #: plug-ins/rcm/rcm_dialog.c:124 plug-ins/rcm/rcm_dialog.c:671
@@ -644,7 +644,8 @@ msgstr "U_mbral:"
 
 #: plug-ins/Lighting/lighting_ui.c:460 plug-ins/MapObject/mapobject_ui.c:655
 msgid "Stop when pixel differences are smaller than this value"
-msgstr "Parar cuando las diferencias entre píxeles sean más pequeñas que este valor"
+msgstr ""
+"Parar cuando las diferencias entre píxeles sean más pequeñas que este valor"
 
 #: plug-ins/Lighting/lighting_ui.c:502 plug-ins/MapObject/mapobject_ui.c:681
 msgid "Light Settings"
@@ -1213,7 +1214,7 @@ msgstr ""
 #. Create an indexed-alpha layer to hold the image...
 #: plug-ins/bmp/bmpread.c:328 plug-ins/bmp/bmpread.c:336
 #: plug-ins/bmp/bmpread.c:344 plug-ins/common/CEL.c:295
-#: plug-ins/common/blinds.c:376 plug-ins/common/compose.c:617
+#: plug-ins/common/blinds.c:321 plug-ins/common/compose.c:617
 #: plug-ins/common/decompose.c:501 plug-ins/common/film.c:979
 #: plug-ins/common/gifload.c:856 plug-ins/common/hrz.c:373
 #: plug-ins/common/jpeg.c:930 plug-ins/common/pat.c:338
@@ -1337,7 +1338,8 @@ msgstr "Usar función coseno para componente roja."
 
 #: plug-ins/common/AlienMap.c:1245
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
-msgstr "Canal rojo: usar un mapeo lineal en lugar de cualquier función trigonométrica"
+msgstr ""
+"Canal rojo: usar un mapeo lineal en lugar de cualquier función trigonométrica"
 
 #: plug-ins/common/AlienMap.c:1264
 msgid "Use sine-function for green component."
@@ -1348,7 +1350,8 @@ msgid "Use cosine-function for green component."
 msgstr "Usar función coseno para componente verde."
 
 #: plug-ins/common/AlienMap.c:1268
-msgid "Green channel: use linear mapping instead of any trigonometrical function"
+msgid ""
+"Green channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 "Canal verde: usar un mapeo lineal en lugar de cualquier función "
 "trigonométrica"
@@ -1362,8 +1365,10 @@ msgid "Use cosine-function for blue component."
 msgstr "Usar función coseno para componente azul."
 
 #: plug-ins/common/AlienMap.c:1291
-msgid "Blue channel: use linear mapping instead of any trigonometrical function"
-msgstr "Canal azul: usar un mapeo lineal en lugar de cualquier función trigonométrica"
+msgid ""
+"Blue channel: use linear mapping instead of any trigonometrical function"
+msgstr ""
+"Canal azul: usar un mapeo lineal en lugar de cualquier función trigonométrica"
 
 #: plug-ins/common/AlienMap.c:1357
 msgid "About AlienMap"
@@ -1984,7 +1989,7 @@ msgstr "Alinear capas visibles"
 #. *  First set up the basic containers, label them, etc.
 #.
 #: plug-ins/common/align_layers.c:428 plug-ins/common/apply_lens.c:403
-#: plug-ins/common/blinds.c:401 plug-ins/common/blur.c:613
+#: plug-ins/common/blinds.c:346 plug-ins/common/blur.c:613
 #: plug-ins/common/bumpmap.c:1018 plug-ins/common/checkerboard.c:395
 #: plug-ins/common/cubism.c:281 plug-ins/common/despeckle.c:737
 #: plug-ins/common/destripe.c:639 plug-ins/common/edge.c:697
@@ -2199,44 +2204,44 @@ msgstr "<Image>/Capa/Colores/Auto/Estirar _HSV"
 msgid "Auto-Stretching HSV..."
 msgstr "Auto-estirando HSV..."
 
-#: plug-ins/common/blinds.c:185
+#: plug-ins/common/blinds.c:170
 msgid "<Image>/Filters/Distorts/_Blinds..."
 msgstr "<Image>/Filtros/Distorsión/_Persiana..."
 
-#: plug-ins/common/blinds.c:274
+#: plug-ins/common/blinds.c:236
 msgid "Adding Blinds..."
 msgstr "Aplicando persiana ..."
 
 #. Get the preview image and store it also set has_alpha
-#: plug-ins/common/blinds.c:314
+#: plug-ins/common/blinds.c:275
 msgid "Blinds"
 msgstr "Persiana"
 
 #. Orientation toggle box
-#: plug-ins/common/blinds.c:365 plug-ins/common/ripple.c:544
+#: plug-ins/common/blinds.c:310 plug-ins/common/ripple.c:544
 msgid "Orientation"
 msgstr "Orientación"
 
-#: plug-ins/common/blinds.c:369 plug-ins/common/ripple.c:549
+#: plug-ins/common/blinds.c:314 plug-ins/common/ripple.c:549
 #: plug-ins/common/tileit.c:446
 msgid "_Horizontal"
 msgstr "_Horizontal"
 
-#: plug-ins/common/blinds.c:370 plug-ins/common/ripple.c:552
+#: plug-ins/common/blinds.c:315 plug-ins/common/ripple.c:552
 #: plug-ins/common/tileit.c:456
 msgid "_Vertical"
 msgstr "_Vertical"
 
-#: plug-ins/common/blinds.c:385 plug-ins/common/fractaltrace.c:802
+#: plug-ins/common/blinds.c:330 plug-ins/common/fractaltrace.c:802
 #: plug-ins/common/papertile.c:383
 msgid "_Transparent"
 msgstr "_Transparente"
 
-#: plug-ins/common/blinds.c:414
+#: plug-ins/common/blinds.c:359
 msgid "_Displacement:"
 msgstr "_Desplazamiento:"
 
-#: plug-ins/common/blinds.c:423
+#: plug-ins/common/blinds.c:368
 msgid "_Num Segments:"
 msgstr "_Nro. de segmentos:"
 
@@ -2378,7 +2383,8 @@ msgstr "A_mbiental:"
 
 #: plug-ins/common/bz2.c:265 plug-ins/common/bz2.c:352
 msgid "Can't open bzip2ed file without a sensible extension"
-msgstr "No se puede abrir un archivo comprimido con bzip2 sin una extensión clara"
+msgstr ""
+"No se puede abrir un archivo comprimido con bzip2 sin una extensión clara"
 
 #: plug-ins/common/c_astretch.c:88
 msgid "<Image>/Layer/Colors/Auto/_Stretch Contrast"
@@ -3782,7 +3788,8 @@ msgstr ""
 "codificación ASCII de 7 bits. No se guardará ningún comentario."
 
 #: plug-ins/common/gif.c:990
-msgid "Sorry, can't save RGB images as GIFs. Convert to Indexed or Grayscale first."
+msgid ""
+"Sorry, can't save RGB images as GIFs. Convert to Indexed or Grayscale first."
 msgstr ""
 "Lo siento, no se pueden guardar imágenes RGB como GIFs - convierta a "
 "INDEXADA o TONOS DE GRIS primero."
@@ -3799,7 +3806,8 @@ msgstr ""
 
 #: plug-ins/common/gif.c:1171
 msgid "Delay inserted to prevent evil CPU-sucking anim."
-msgstr "Retardo insertado para evitar la maldita animación de chupadora de CPU."
+msgstr ""
+"Retardo insertado para evitar la maldita animación de chupadora de CPU."
 
 #: plug-ins/common/gif.c:1215
 msgid "GIF Warning"
@@ -3956,8 +3964,8 @@ msgstr "Selección:"
 msgid "Background (%dms)"
 msgstr "Fondo (%dms)"
 
-#: plug-ins/common/gifload.c:906 plug-ins/common/iwarp.c:766
-#: plug-ins/common/iwarp.c:794
+#: plug-ins/common/gifload.c:906 plug-ins/common/iwarp.c:777
+#: plug-ins/common/iwarp.c:806
 #, c-format
 msgid "Frame %d"
 msgstr "Cuadro %d"
@@ -4174,7 +4182,8 @@ msgstr "El número de píxeles en el borde de la tabla."
 
 #: plug-ins/common/gtm.c:610
 msgid "The width for each table cell.  Can be a number or a percent."
-msgstr "La anchura de cada celda de tabla. Puede ser un número o un porcentaje."
+msgstr ""
+"La anchura de cada celda de tabla. Puede ser un número o un porcentaje."
 
 #: plug-ins/common/gtm.c:626
 msgid "The height for each table cell.  Can be a number or a percent."
@@ -4285,97 +4294,97 @@ msgstr "Modo _2"
 msgid "<Image>/Filters/Distorts/_IWarp..."
 msgstr "<Image>/Filtros/Distorsión/Deformación _interactiva..."
 
-#: plug-ins/common/iwarp.c:679
+#: plug-ins/common/iwarp.c:682
 msgid "Warping..."
 msgstr "Deformando..."
 
-#: plug-ins/common/iwarp.c:773 plug-ins/common/iwarp.c:785
+#: plug-ins/common/iwarp.c:784 plug-ins/common/iwarp.c:796
 #, c-format
 msgid "Warping Frame No. %d..."
 msgstr "Deformando el cuadro nº %d..."
 
-#: plug-ins/common/iwarp.c:786
+#: plug-ins/common/iwarp.c:797
 msgid "Ping Pong"
 msgstr "Ping Pong"
 
-#: plug-ins/common/iwarp.c:961
+#: plug-ins/common/iwarp.c:973
 msgid "A_nimate"
 msgstr "A_nimar"
 
-#: plug-ins/common/iwarp.c:981
+#: plug-ins/common/iwarp.c:993
 msgid "Number of _Frames:"
 msgstr "Cantidad de c_uadros:"
 
-#: plug-ins/common/iwarp.c:990
+#: plug-ins/common/iwarp.c:1002
 msgid "R_everse"
 msgstr "Inv_erso"
 
-#: plug-ins/common/iwarp.c:999
+#: plug-ins/common/iwarp.c:1011
 msgid "_Ping Pong"
 msgstr "_Ping Pong"
 
-#: plug-ins/common/iwarp.c:1012
+#: plug-ins/common/iwarp.c:1024
 msgid "_Animate"
 msgstr "_Animar"
 
-#: plug-ins/common/iwarp.c:1040
+#: plug-ins/common/iwarp.c:1052
 msgid "_Deform Radius:"
 msgstr "Radio de _deformación:"
 
-#: plug-ins/common/iwarp.c:1050
+#: plug-ins/common/iwarp.c:1062
 msgid "D_eform Amount:"
 msgstr "Cantidad de d_eformación:"
 
-#: plug-ins/common/iwarp.c:1059
+#: plug-ins/common/iwarp.c:1071
 msgid "Deform Mode"
 msgstr "Modo de deformación"
 
-#: plug-ins/common/iwarp.c:1073
+#: plug-ins/common/iwarp.c:1085
 msgid "_Move"
 msgstr "_Mover"
 
-#: plug-ins/common/iwarp.c:1076
+#: plug-ins/common/iwarp.c:1088
 msgid "_Grow"
 msgstr "C_recer"
 
-#: plug-ins/common/iwarp.c:1079
+#: plug-ins/common/iwarp.c:1091
 msgid "S_wirl CCW"
 msgstr "T_orbellino (Antihorario)"
 
-#: plug-ins/common/iwarp.c:1082
+#: plug-ins/common/iwarp.c:1094
 msgid "Remo_ve"
 msgstr "Q_uitar"
 
-#: plug-ins/common/iwarp.c:1085
+#: plug-ins/common/iwarp.c:1097
 msgid "S_hrink"
 msgstr "E_ncoger"
 
-#: plug-ins/common/iwarp.c:1088
+#: plug-ins/common/iwarp.c:1100
 msgid "Sw_irl CW"
 msgstr "Torbell_ino (Horario)"
 
-#: plug-ins/common/iwarp.c:1111
+#: plug-ins/common/iwarp.c:1123
 msgid "_Bilinear"
 msgstr "_Bilineal"
 
-#: plug-ins/common/iwarp.c:1125
+#: plug-ins/common/iwarp.c:1137
 msgid "Adaptive S_upersample"
 msgstr "Sobrem_uestreo adaptativo"
 
-#: plug-ins/common/iwarp.c:1146
+#: plug-ins/common/iwarp.c:1158
 msgid "Ma_x Depth:"
 msgstr "Profundidad má_xima:"
 
-#: plug-ins/common/iwarp.c:1156
+#: plug-ins/common/iwarp.c:1168
 msgid "Thresho_ld:"
 msgstr "U_mbral:"
 
-#: plug-ins/common/iwarp.c:1169 plug-ins/common/sinus.c:1774
+#: plug-ins/common/iwarp.c:1181 plug-ins/common/sinus.c:1774
 #: plug-ins/gflare/gflare.c:2787
 msgid "_Settings"
 msgstr "C_onfiguración"
 
-#: plug-ins/common/iwarp.c:1186
+#: plug-ins/common/iwarp.c:1198
 msgid "IWarp"
 msgstr "Deformación Interactiva"
 
@@ -4817,7 +4826,8 @@ msgstr "Nivel de compresión de PNG:"
 
 #: plug-ins/common/mng.c:1258 plug-ins/common/png.c:1388
 msgid "Choose a high compression level for small file size"
-msgstr "Seleccione un nivel de compresión alto para achicar el tamaño del archivo"
+msgstr ""
+"Seleccione un nivel de compresión alto para achicar el tamaño del archivo"
 
 #: plug-ins/common/mng.c:1271
 msgid "JPEG Compression Quality:"
@@ -6273,7 +6283,8 @@ msgstr "Saturació_n aleatoria:"
 
 #: plug-ins/common/sparkle.c:467
 msgid "Adjust the Value how much the Saturation should be changed randomly"
-msgstr "Ajusta el valor de cuánto debe cambiarse la saturación de forma aleatoria"
+msgstr ""
+"Ajusta el valor de cuánto debe cambiarse la saturación de forma aleatoria"
 
 #: plug-ins/common/sparkle.c:485
 msgid "_Preserve Luminosity"
@@ -6775,7 +6786,8 @@ msgid "ID"
 msgstr "Identificador"
 
 #: plug-ins/common/uniteditor.c:83
-msgid "This string will be used to identify a unit in GIMP's configuration files."
+msgid ""
+"This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 "Esta cadena será usada para identificar una unidad en los archivos de "
 "configuración de El GIMP."
@@ -8093,7 +8105,8 @@ msgstr "Crear una espiral"
 
 #: plug-ins/gfig/gfig.c:2005
 msgid "Create bezier curve. Shift + Button ends object creation."
-msgstr "Crear una curva de Bezier. Mays + botón termina la creación del objeto."
+msgstr ""
+"Crear una curva de Bezier. Mays + botón termina la creación del objeto."
 
 #: plug-ins/gfig/gfig.c:2011
 msgid "Move an object"
@@ -8843,7 +8856,8 @@ msgstr "Cuadro (%i)"
 
 #: plug-ins/gfli/gfli.c:676
 msgid "Sorry, I can save only INDEXED and GRAY images."
-msgstr "Lo siento, sólo se pueden guardar imágenes INDEXADAS y en TONOS DE GRIS."
+msgstr ""
+"Lo siento, sólo se pueden guardar imágenes INDEXADAS y en TONOS DE GRIS."
 
 #: plug-ins/gfli/gfli.c:818
 msgid "GFLI 1.3 - Load framestack"
@@ -8900,7 +8914,8 @@ msgstr "Relieve:"
 
 #: plug-ins/gimpressionist/brush.c:460 plug-ins/gimpressionist/paper.c:165
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
-msgstr "Especifica la cantidad de relieve a aplicar a la imagen (en porcentaje)"
+msgstr ""
+"Especifica la cantidad de relieve a aplicar a la imagen (en porcentaje)"
 
 #: plug-ins/gimpressionist/color.c:34
 msgid "Co_lor"
@@ -8916,7 +8931,8 @@ msgstr "C_entro de la brocha"
 
 #: plug-ins/gimpressionist/color.c:57
 msgid "Color is computed from the average of all pixels under the brush"
-msgstr "Se calcula el color con el promedio de todos los píxeles bajo la brocha"
+msgstr ""
+"Se calcula el color con el promedio de todos los píxeles bajo la brocha"
 
 #: plug-ins/gimpressionist/color.c:59
 msgid "Samples the color from the pixel in the center of the brush"
@@ -8956,7 +8972,8 @@ msgstr "Fondo con color sólido"
 
 #: plug-ins/gimpressionist/general.c:124
 msgid "Use a transparent background; Only the strokes painted will be visible"
-msgstr "Usar un fondo transparente; sólo las pinceladas pintadas serán visibles"
+msgstr ""
+"Usar un fondo transparente; sólo las pinceladas pintadas serán visibles"
 
 #: plug-ins/gimpressionist/general.c:139
 msgid "Paint edges"
@@ -8964,7 +8981,8 @@ msgstr "Pintar bordes"
 
 #: plug-ins/gimpressionist/general.c:143
 msgid "Selects if to place strokes all the way out to the edges of the image"
-msgstr "Seleccione si se colocarán pinceladas a lo largo de los bordes de la imagen"
+msgstr ""
+"Seleccione si se colocarán pinceladas a lo largo de los bordes de la imagen"
 
 #. Tileable checkbox
 #: plug-ins/gimpressionist/general.c:147 plug-ins/maze/maze_face.c:283
@@ -8973,7 +8991,8 @@ msgstr "Convertible en mosaico"
 
 #: plug-ins/gimpressionist/general.c:150
 msgid "Selects if the resulting image should be seamlessly tileable"
-msgstr "Selecciona si la imagen resultante debería ser enlosable «sin costuras»"
+msgstr ""
+"Selecciona si la imagen resultante debería ser enlosable «sin costuras»"
 
 #: plug-ins/gimpressionist/general.c:154
 msgid "Drop Shadow"
@@ -9004,7 +9023,8 @@ msgid "Shadow depth:"
 msgstr "Profundidad de sombras:"
 
 #: plug-ins/gimpressionist/general.c:191
-msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgid ""
+"The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
 "La profundidad de las sombras arrojadas, es decir, cómo de apartada del "
 "objeto debería estar"
@@ -9099,7 +9119,8 @@ msgstr "Radio"
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
-msgstr "La distancia al centro de la imagen determina la dirección de la pincelada"
+msgstr ""
+"La distancia al centro de la imagen determina la dirección de la pincelada"
 
 #: plug-ins/gimpressionist/orientation.c:136
 msgid "Selects a random direction of each stroke"
@@ -9112,7 +9133,8 @@ msgstr "Radial"
 
 #: plug-ins/gimpressionist/orientation.c:147
 msgid "Let the direction from the center determine the direction of the stroke"
-msgstr "Hace que la dirección desde el centro determine la dirección de la pincelada"
+msgstr ""
+"Hace que la dirección desde el centro determine la dirección de la pincelada"
 
 #: plug-ins/gimpressionist/orientation.c:156
 #: plug-ins/gimpressionist/size.c:138
@@ -9282,7 +9304,8 @@ msgstr "Aplica el papel como está (sin darle relieve)"
 
 #: plug-ins/gimpressionist/paper.c:153
 msgid "Specifies the scale of the texture (in percent of original file)"
-msgstr "Especifica la escala de la textura (en porcentaje con el archivo original)"
+msgstr ""
+"Especifica la escala de la textura (en porcentaje con el archivo original)"
 
 #: plug-ins/gimpressionist/placement.c:36
 msgid "Pl_acement"
@@ -9420,12 +9443,16 @@ msgid "The largest brush to create"
 msgstr "La mayor brocha a crear"
 
 #: plug-ins/gimpressionist/size.c:111
-msgid "Let the value (brightness) of the region determine the size of the stroke"
-msgstr "Hace que el valor (brillo) de la región determine el tamaño de la pincelada"
+msgid ""
+"Let the value (brightness) of the region determine the size of the stroke"
+msgstr ""
+"Hace que el valor (brillo) de la región determine el tamaño de la pincelada"
 
 #: plug-ins/gimpressionist/size.c:118
-msgid "The distance from the center of the image determines the size of the stroke"
-msgstr "La distancia al centro de la imagen determina el tamaño de la pincelada"
+msgid ""
+"The distance from the center of the image determines the size of the stroke"
+msgstr ""
+"La distancia al centro de la imagen determina el tamaño de la pincelada"
 
 #: plug-ins/gimpressionist/size.c:125
 msgid "Selects a random size for each stroke"
@@ -9441,7 +9468,8 @@ msgstr "El tono de la región determina el tamaño de la pincelada"
 
 #: plug-ins/gimpressionist/size.c:157
 msgid "The brush-size that matches the original image the closest is selected"
-msgstr "Selecciona el tamaño de la pincelada que más se parece a la imagen original"
+msgstr ""
+"Selecciona el tamaño de la pincelada que más se parece a la imagen original"
 
 #: plug-ins/gimpressionist/size.c:168
 msgid "Manually specify the stroke size"
@@ -11267,7 +11295,8 @@ msgid "Adjust Output..."
 msgstr "Ajustar la salida..."
 
 #: plug-ins/print/gimp_main_window.c:1462
-msgid "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
+msgid ""
+"Adjust color balance, brightness, contrast, saturation, and dither algorithm"
 msgstr ""
 "Ajustar el balance de color, brillo, contraste, saturación y el algoritmo de "
 "entramado"
@@ -11749,4 +11778,3 @@ msgstr "Error: El archivo de propiedades XJT %s está vacío"
 #~ msgstr ""
 #~ "por Vidar Madsen\n"
 #~ "Septiembre 1999"
-

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.3.18\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-31 22:10+0200\n"
+"POT-Creation-Date: 2003-08-10 15:15+0200\n"
 "PO-Revision-Date: 2003-07-30 22:50+0200\n"
 "Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/app_procs.c:174
+#: app/app_procs.c:193
 msgid ""
 "GIMP is not properly installed for the current user.\n"
 "User installation was skipped because the '--no-interface' flag was used.\n"
@@ -33,7 +33,7 @@ msgstr ""
 "Pour réaliser l'installation utilisateur, lancez GIMP sans l'option '--no-"
 "interface'."
 
-#: app/app_procs.c:317
+#: app/app_procs.c:336
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -42,7 +42,7 @@ msgstr ""
 "L'ouverture de « %s » a échoué :\n"
 "%s"
 
-#: app/main.c:174
+#: app/main.c:154
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -54,7 +54,7 @@ msgstr ""
 #.
 #. *  anything else starting with a '-' is an error.
 #.
-#: app/main.c:331
+#: app/main.c:311
 #, c-format
 msgid ""
 "\n"
@@ -63,11 +63,11 @@ msgstr ""
 "\n"
 "Option « %s » non valide\n"
 
-#: app/main.c:399
+#: app/main.c:379
 msgid "GIMP version"
 msgstr "Version GIMP"
 
-#: app/main.c:407
+#: app/main.c:387
 #, c-format
 msgid ""
 "\n"
@@ -78,15 +78,15 @@ msgstr ""
 "Usage : %s [option ...] [fichier ...]\n"
 "\n"
 
-#: app/main.c:408
+#: app/main.c:388
 msgid "Options:\n"
 msgstr "Options :\n"
 
-#: app/main.c:409
+#: app/main.c:389
 msgid "  -b, --batch <commands>   Run in batch mode.\n"
 msgstr "  -b, --batch <commandes>  Lancement en mode batch.\n"
 
-#: app/main.c:410
+#: app/main.c:390
 msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
@@ -94,7 +94,7 @@ msgstr ""
 "  -c, --console-messages   Affiche les avertissements dans la console à la "
 "place d'une boîte de dialogue.\n"
 
-#: app/main.c:411
+#: app/main.c:391
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
@@ -102,42 +102,42 @@ msgstr ""
 "  -d, --no-data            Ne charge pas les motifs, dégradés, palettes, "
 "brosses.\n"
 
-#: app/main.c:412
+#: app/main.c:392
 msgid "  -i, --no-interface       Run without a user interface.\n"
 msgstr "  -i, --no-interface       Lancer sans interface utilisateur.\n"
 
-#: app/main.c:413
+#: app/main.c:393
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
 msgstr "  -g, --gimprc <gimprc>    Utiliser un autre fichier gimprc.\n"
 
-#: app/main.c:414
+#: app/main.c:394
 msgid "  -h, --help               Output this help.\n"
 msgstr "  -h, --help               Affiche cette aide.\n"
 
-#: app/main.c:415
+#: app/main.c:395
 msgid "  -r, --restore-session    Try to restore saved session.\n"
 msgstr ""
 "  -r, --restore-session    Tente de restaurer une session enregistrée.\n"
 
-#: app/main.c:416
+#: app/main.c:396
 msgid "  -s, --no-splash          Do not show the startup window.\n"
 msgstr "  -s, --no-splash          N'affiche pas l'écran de démarrage.\n"
 
-#: app/main.c:417
+#: app/main.c:397
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
 msgstr ""
 "  -S, --no-splash-image    Ne pas utiliser d'image dans l'écran de "
 "démarrage.\n"
 
-#: app/main.c:418
+#: app/main.c:398
 msgid "  -v, --version            Output version information.\n"
 msgstr "  -v, --version            Affiche la version.\n"
 
-#: app/main.c:419
+#: app/main.c:399
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Affiche les messages de démarrage.\n"
 
-#: app/main.c:420
+#: app/main.c:400
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
@@ -145,26 +145,26 @@ msgstr ""
 "  --no-shm           Ne pas utiliser la mémoire partagée entre GIMP et ses "
 "greffons.\n"
 
-#: app/main.c:421
+#: app/main.c:401
 msgid "  --no-mmx                 Do not use MMX routines.\n"
 msgstr "  --no-mmx                Ne pas utiliser l'extension MMX.\n"
 
-#: app/main.c:422
+#: app/main.c:402
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         Active le déboguage des gestionnaires de signaux "
 "pour les signaux non fatals.\n"
 
-#: app/main.c:423
+#: app/main.c:403
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <affichage>    Utilise l'affichage X spécifié.\n"
 
-#: app/main.c:424
+#: app/main.c:404
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr "  --system-gimprc <gimprc> Utilise un autre fichier système gimprc.\n"
 
-#: app/main.c:425
+#: app/main.c:405
 msgid ""
 "  --enable-stack-trace <never | query | always>\n"
 "                           Debugging mode for fatal signals.\n"
@@ -174,7 +174,7 @@ msgstr ""
 "                           Mode de déboguage pour les signaux fatals.\n"
 "\n"
 
-#: app/main.c:444
+#: app/main.c:424
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Cette fenêtre de console se fermera dans dix secondes.)\n"
 
@@ -271,8 +271,8 @@ msgstr "Demi-teintes"
 msgid "Highlights"
 msgstr "Tons vifs"
 
-#: app/config/gimpconfig-deserialize.c:209 app/config/gimpconfig.c:374
-#: app/config/gimpconfig.c:387 app/config/gimpscanner.c:391
+#: app/config/gimpconfig-deserialize.c:209 app/config/gimpconfig.c:375
+#: app/config/gimpconfig.c:388 app/config/gimpscanner.c:391
 #: app/config/gimpscanner.c:462 app/core/gimpunits.c:157 app/gui/session.c:176
 #: app/plug-in/plug-in-rc.c:134
 msgid "fatal parse error"
@@ -1200,7 +1200,7 @@ msgstr "Transformer"
 msgid "Paint"
 msgstr "Peindre"
 
-#: app/core/core-enums.c:500 app/core/core-enums.c:540 app/core/gimpitem.c:786
+#: app/core/core-enums.c:500 app/core/core-enums.c:540 app/core/gimpitem.c:788
 msgid "Attach Parasite"
 msgstr "Attacher un parasite"
 
@@ -1447,7 +1447,7 @@ msgstr "Chaîne de caractères UTF-8 non valide dans le fichier de brosse « %s
 #: app/core/gimpcontext.c:1302 app/core/gimpgradient.c:385
 #: app/core/gimpitem.c:382 app/core/gimppalette.c:438
 #: app/core/gimppattern.c:410 app/gui/templates-commands.c:126
-#: app/tools/gimpvectortool.c:276
+#: app/tools/gimpvectortool.c:278
 msgid "Unnamed"
 msgstr "SansNom"
 
@@ -2099,11 +2099,11 @@ msgstr "L'ouverture du fichier vignette « %s » a échoué : %s"
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "La création du dossier de vignettes « %s » a échoué."
 
-#: app/core/gimpitem.c:796
+#: app/core/gimpitem.c:798
 msgid "Attach Parasite to Item"
 msgstr "Attacher un parasite à l'élément"
 
-#: app/core/gimpitem.c:835 app/core/gimpitem.c:842
+#: app/core/gimpitem.c:837 app/core/gimpitem.c:844
 msgid "Remove Parasite from Item"
 msgstr "Enlever un parasite de l'élément"
 
@@ -2308,7 +2308,7 @@ msgid "pixel"
 msgstr "pixel"
 
 #: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:579
-#: app/tools/gimpmeasuretool.c:582 app/tools/gimppainttool.c:585
+#: app/tools/gimpmeasuretool.c:582 app/tools/gimppainttool.c:623
 msgid "pixels"
 msgstr "pixels"
 
@@ -3911,7 +3911,7 @@ msgstr "/Fichier/Re_venir au fichier..."
 msgid "/File/_Close"
 msgstr "/Fichier/_Fermer"
 
-#: app/gui/image-menu.c:145 app/gui/toolbox-menu.c:228
+#: app/gui/image-menu.c:145 app/gui/toolbox-menu.c:230
 msgid "/File/_Quit"
 msgstr "/Fichier/_Quitter"
 
@@ -4602,85 +4602,105 @@ msgid "/Filters/_Colors"
 msgstr "/Filtres/_Couleurs"
 
 #: app/gui/image-menu.c:1014
+#, fuzzy
+msgid "/Filters/Colors/Ma_p"
+msgstr "/Filtres/_Couleurs"
+
+#: app/gui/image-menu.c:1015
 msgid "/Filters/_Noise"
 msgstr "/Filtres/_Bruit"
 
-#: app/gui/image-menu.c:1015
+#: app/gui/image-menu.c:1016
 msgid "/Filters/Edge-De_tect"
 msgstr "/Filtres/Dé_tection de bord"
 
-#: app/gui/image-menu.c:1016
+#: app/gui/image-menu.c:1017
 msgid "/Filters/En_hance"
 msgstr "/Filtres/_Amélioration"
 
-#: app/gui/image-menu.c:1017
+#: app/gui/image-menu.c:1018
 msgid "/Filters/_Generic"
 msgstr "/Filtres/_Générique"
 
-#: app/gui/image-menu.c:1021
+#: app/gui/image-menu.c:1022
 msgid "/Filters/Gla_ss Effects"
 msgstr "/Filtres/Effets de _verre"
 
-#: app/gui/image-menu.c:1022
+#: app/gui/image-menu.c:1023
 msgid "/Filters/_Light Effects"
 msgstr "/Filtres/Effets de _lumière"
 
-#: app/gui/image-menu.c:1023
+#: app/gui/image-menu.c:1024
 msgid "/Filters/_Distorts"
 msgstr "/Filtres/_Distorsions"
 
-#: app/gui/image-menu.c:1024
+#: app/gui/image-menu.c:1025
 msgid "/Filters/_Artistic"
 msgstr "/Filtres/_Artistique"
 
-#: app/gui/image-menu.c:1025
+#: app/gui/image-menu.c:1026
 msgid "/Filters/_Map"
 msgstr "/Filtres/_Carte"
 
-#: app/gui/image-menu.c:1026
+#: app/gui/image-menu.c:1027
 msgid "/Filters/_Render"
 msgstr "/Fichier/_Rendu"
 
-#: app/gui/image-menu.c:1027
+#: app/gui/image-menu.c:1028
+#, fuzzy
+msgid "/Filters/Render/_Clouds"
+msgstr "/Fichier/_Rendu"
+
+#: app/gui/image-menu.c:1029
+#, fuzzy
+msgid "/Filters/Render/_Nature"
+msgstr "/Fichier/_Rendu"
+
+#: app/gui/image-menu.c:1030
+#, fuzzy
+msgid "/Filters/Render/_Pattern"
+msgstr "/Fichier/_Rendu"
+
+#: app/gui/image-menu.c:1031
 msgid "/Filters/_Web"
 msgstr "/Filtres/_Web"
 
-#: app/gui/image-menu.c:1031
+#: app/gui/image-menu.c:1035
 msgid "/Filters/An_imation"
 msgstr "/Filtres/An_imation"
 
-#: app/gui/image-menu.c:1032
+#: app/gui/image-menu.c:1036
 msgid "/Filters/C_ombine"
 msgstr "/Fichier/C_ombiner"
 
-#: app/gui/image-menu.c:1036
+#: app/gui/image-menu.c:1040
 msgid "/Filters/To_ys"
 msgstr "/Filtres/_Jouets"
 
-#: app/gui/image-menu.c:1361
+#: app/gui/image-menu.c:1365
 #, c-format
 msgid "_Undo %s"
 msgstr "_Annuler %s"
 
-#: app/gui/image-menu.c:1366
+#: app/gui/image-menu.c:1370
 #, c-format
 msgid "_Redo %s"
 msgstr "Fai_re à nouveau %s"
 
-#: app/gui/image-menu.c:1370
+#: app/gui/image-menu.c:1374
 msgid "_Undo"
 msgstr "A_nnuler"
 
-#: app/gui/image-menu.c:1371
+#: app/gui/image-menu.c:1375
 msgid "_Redo"
 msgstr "_Refaire"
 
-#: app/gui/image-menu.c:1617
+#: app/gui/image-menu.c:1621
 #, c-format
 msgid "Other (%d:%d) ..."
 msgstr "Autre (%d:%d) ..."
 
-#: app/gui/image-menu.c:1626
+#: app/gui/image-menu.c:1630
 #, c-format
 msgid "_Zoom (%d:%d)"
 msgstr "_Zoom (%d:%d)"
@@ -5260,21 +5280,21 @@ msgstr "/Supprimer le motif..."
 msgid "/Refresh Patterns"
 msgstr "/Rafraîchir les motifs"
 
-#: app/gui/plug-in-menus.c:363
+#: app/gui/plug-in-menus.c:367
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Ré_péter « %s »"
 
-#: app/gui/plug-in-menus.c:364
+#: app/gui/plug-in-menus.c:368
 #, c-format
 msgid "R_e-show \"%s\""
 msgstr "_Réafficher « %s »"
 
-#: app/gui/plug-in-menus.c:390
+#: app/gui/plug-in-menus.c:394
 msgid "Repeat Last"
 msgstr "Répéter le dernier"
 
-#: app/gui/plug-in-menus.c:393
+#: app/gui/plug-in-menus.c:397
 msgid "Re-Show Last"
 msgstr "Réafficher le dernier"
 
@@ -6164,33 +6184,38 @@ msgstr "/Fichier/Dialogues/_Modèles..."
 msgid "/File/Dialogs/Error Co_nsole..."
 msgstr "/Fichier/Dialogues/Co_nsole d'erreurs..."
 
+#: app/gui/toolbox-menu.c:218
+#, fuzzy
+msgid "/File/D_ebug"
+msgstr "/Filtres/_Web"
+
 #. <Toolbox>/Xtns
-#: app/gui/toolbox-menu.c:236
+#: app/gui/toolbox-menu.c:238
 msgid "/_Xtns"
 msgstr "/E_xts"
 
-#: app/gui/toolbox-menu.c:238
+#: app/gui/toolbox-menu.c:240
 msgid "/Xtns/_Module Manager..."
 msgstr "/Exts/Gestionnaire de _Modules..."
 
 #. <Toolbox>/Help
-#: app/gui/toolbox-menu.c:247
+#: app/gui/toolbox-menu.c:249
 msgid "/_Help"
 msgstr "/_Aide"
 
-#: app/gui/toolbox-menu.c:249
+#: app/gui/toolbox-menu.c:251
 msgid "/Help/_Help..."
 msgstr "/Help/_Aide..."
 
-#: app/gui/toolbox-menu.c:254
+#: app/gui/toolbox-menu.c:256
 msgid "/Help/_Context Help..."
 msgstr "/Aide/Aide _contextuelle..."
 
-#: app/gui/toolbox-menu.c:259
+#: app/gui/toolbox-menu.c:261
 msgid "/Help/_Tip of the Day..."
 msgstr "/Aide/Conseil du _jour..."
 
-#: app/gui/toolbox-menu.c:264
+#: app/gui/toolbox-menu.c:266
 msgid "/Help/_About..."
 msgstr "/Aide/À _propos..."
 
@@ -7071,7 +7096,7 @@ msgstr "Procédure temporaire"
 msgid "Free Select"
 msgstr "Sélection à main levée"
 
-#: app/plug-in/plug-in.c:704
+#: app/plug-in/plug-in.c:706
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -8516,23 +8541,23 @@ msgstr "Renommer le chemin"
 msgid "Move Path"
 msgstr "Déplacer le chemin"
 
-#: app/vectors/gimpvectors.c:333
+#: app/vectors/gimpvectors.c:326
 msgid "Scale Path"
 msgstr "Étirer le chemin"
 
-#: app/vectors/gimpvectors.c:372
+#: app/vectors/gimpvectors.c:361
 msgid "Resize Path"
 msgstr "Redimensionner le chemin"
 
-#: app/vectors/gimpvectors.c:409
+#: app/vectors/gimpvectors.c:391
 msgid "Flip Path"
 msgstr "Retourner le chemin"
 
-#: app/vectors/gimpvectors.c:473
+#: app/vectors/gimpvectors.c:437
 msgid "Rotate Path"
 msgstr "Pivoter le chemin"
 
-#: app/vectors/gimpvectors.c:514
+#: app/vectors/gimpvectors.c:468
 msgid "Transform Path"
 msgstr "Transformer le chemin"
 

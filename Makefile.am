@@ -47,8 +47,9 @@ EXTRA_DIST = \
 	README.i18n		\
 	README.win32		\
 	TODO.xml		\
-	gimptool-win32.c.in	\
 	config.h.win32		\
+	gimp.spec.in		\
+	gimptool-win32.c.in	\
 	intltool-extract.in	\
 	intltool-merge.in	\
 	intltool-update.in	\

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-08-05 11:55+0200\n"
+"POT-Creation-Date: 2003-08-10 15:15+0200\n"
 "PO-Revision-Date: 2003-08-05 10:35-0300\n"
 "Last-Translator: Pablo G. del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "\n"
 "X-Generator: KBabel 1.0\n"
 
-#: app/app_procs.c:174
+#: app/app_procs.c:193
 msgid ""
 "GIMP is not properly installed for the current user.\n"
 "User installation was skipped because the '--no-interface' flag was used.\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Para realizar la instalación de usuario ejecute El GIMP sin el modificador\n"
 "«--no-interface»."
 
-#: app/app_procs.c:317
+#: app/app_procs.c:336
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -41,7 +41,7 @@ msgstr ""
 "La apertura de «%s» ha fallado:\n"
 "%s"
 
-#: app/main.c:174
+#: app/main.c:154
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -52,7 +52,7 @@ msgstr ""
 #.
 #. *  anything else starting with a '-' is an error.
 #.
-#: app/main.c:331
+#: app/main.c:311
 #, c-format
 msgid ""
 "\n"
@@ -61,11 +61,11 @@ msgstr ""
 "\n"
 "Opción inválida «%s»\n"
 
-#: app/main.c:399
+#: app/main.c:379
 msgid "GIMP version"
 msgstr "Versión de El GIMP"
 
-#: app/main.c:407
+#: app/main.c:387
 #, c-format
 msgid ""
 "\n"
@@ -76,15 +76,15 @@ msgstr ""
 "Uso: %s [opción ... ] [archivo ... ]\n"
 "\n"
 
-#: app/main.c:408
+#: app/main.c:388
 msgid "Options:\n"
 msgstr "Opciones:\n"
 
-#: app/main.c:409
+#: app/main.c:389
 msgid "  -b, --batch <commands>   Run in batch mode.\n"
 msgstr "  -b, --batch <comandos>   Ejecutar en modo no interactivo.\n"
 
-#: app/main.c:410
+#: app/main.c:390
 msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
@@ -92,7 +92,7 @@ msgstr ""
 "  -c, --console-messages   Mostrar las advertencias en la consola en vez de "
 "en una ventana.\n"
 
-#: app/main.c:411
+#: app/main.c:391
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
@@ -100,39 +100,40 @@ msgstr ""
 "  -d, --no-data            No cargar las brochas, los gradientes, paletas ni "
 "patrones.\n"
 
-#: app/main.c:412
+#: app/main.c:392
 msgid "  -i, --no-interface       Run without a user interface.\n"
 msgstr "  -i, --no-interface       Ejecutar sin una interfaz de usuario.\n"
 
-#: app/main.c:413
+#: app/main.c:393
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
 msgstr "  -g, --gimprc <gimprc>    Usar un archivo «gimprc» alternativo.\n"
 
-#: app/main.c:414
+#: app/main.c:394
 msgid "  -h, --help               Output this help.\n"
 msgstr "  -h, --help               Muestra esta ayuda.\n"
 
-#: app/main.c:415
+#: app/main.c:395
 msgid "  -r, --restore-session    Try to restore saved session.\n"
 msgstr "  -r, --restore-session    Intenta restaurar una sesión guardada.\n"
 
-#: app/main.c:416
+#: app/main.c:396
 msgid "  -s, --no-splash          Do not show the startup window.\n"
 msgstr "  -s, --no-splash          No mostrar la ventana de inicio.\n"
 
-#: app/main.c:417
+#: app/main.c:397
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
-msgstr "  -S, --no-splash-image    No poner una imagen en la ventana de inicio.\n"
+msgstr ""
+"  -S, --no-splash-image    No poner una imagen en la ventana de inicio.\n"
 
-#: app/main.c:418
+#: app/main.c:398
 msgid "  -v, --version            Output version information.\n"
 msgstr "  -v, --version            Muestra información sobre la versión.\n"
 
-#: app/main.c:419
+#: app/main.c:399
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Mostrar mensajes de inicio.\n"
 
-#: app/main.c:420
+#: app/main.c:400
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
@@ -140,27 +141,29 @@ msgstr ""
 "  --no-shm                 No compartir la memoria entre El GIMP y las "
 "extensiones.\n"
 
-#: app/main.c:421
+#: app/main.c:401
 msgid "  --no-mmx                 Do not use MMX routines.\n"
 msgstr "  --no-xshm                No utilizar las rutinas MMX.\n"
 
 # //R Posiblemente estará mal
 # Creo que ahora está un poco mejor. FVD
-#: app/main.c:422
-msgid "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
+#: app/main.c:402
+msgid ""
+"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         Activar los manejadores de señales no fatales de "
 "depuración.\n"
 
-#: app/main.c:423
+#: app/main.c:403
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <pantalla>      Usar la pantalla X designada.\n"
 
-#: app/main.c:424
+#: app/main.c:404
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
-msgstr "  --system-gimprc <gimprc> Usar un archivo de sistema «gimprc» alternativo.\n"
+msgstr ""
+"  --system-gimprc <gimprc> Usar un archivo de sistema «gimprc» alternativo.\n"
 
-#: app/main.c:425
+#: app/main.c:405
 msgid ""
 "  --enable-stack-trace <never | query | always>\n"
 "                           Debugging mode for fatal signals.\n"
@@ -170,7 +173,7 @@ msgstr ""
 "                           Modo de depuración para señales fatales.\n"
 "\n"
 
-#: app/main.c:444
+#: app/main.c:424
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Esta ventana de consola se cerrará en diez segundos)\n"
 
@@ -267,8 +270,8 @@ msgstr "Tonos medios"
 msgid "Highlights"
 msgstr "Puntos de luz"
 
-#: app/config/gimpconfig-deserialize.c:209 app/config/gimpconfig.c:374
-#: app/config/gimpconfig.c:387 app/config/gimpscanner.c:391
+#: app/config/gimpconfig-deserialize.c:209 app/config/gimpconfig.c:375
+#: app/config/gimpconfig.c:388 app/config/gimpscanner.c:391
 #: app/config/gimpscanner.c:462 app/core/gimpunits.c:157 app/gui/session.c:176
 #: app/plug-in/plug-in-rc.c:134
 msgid "fatal parse error"
@@ -375,16 +378,16 @@ msgid ""
 "Specifies how the area around the image should be drawn when in fullscreen "
 "mode."
 msgstr ""
-"Especifica como debería ser dibujada el área alrededor de la imagen en el modo de pantalla "
-"completa."
+"Especifica como debería ser dibujada el área alrededor de la imagen en el "
+"modo de pantalla completa."
 
 #: app/config/gimprc-blurbs.h:27
 msgid ""
 "Sets the canvas padding color used when in fullscreen mode and the padding "
 "mode is set to custom color."
 msgstr ""
-"Establece el color de desplazamiento del lienzo usado cuando en el modo de de pantalla "
-"completa y desplazamiento está definido como color personalizado."
+"Establece el color de desplazamiento del lienzo usado cuando en el modo de "
+"de pantalla completa y desplazamiento está definido como color personalizado."
 
 #: app/config/gimprc-blurbs.h:31
 msgid ""
@@ -450,7 +453,8 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:142
 msgid "Sets the text to appear in image window titles."
-msgstr "Establece el texto que aparecerá en los títulos de las ventanas de imágenes."
+msgstr ""
+"Establece el texto que aparecerá en los títulos de las ventanas de imágenes."
 
 #: app/config/gimprc-blurbs.h:145
 msgid "When enabled, the GIMP will use a different info window per image view."
@@ -473,7 +477,8 @@ msgstr ""
 "pseudo-color."
 
 #: app/config/gimprc-blurbs.h:155
-msgid "Sets the level of interpolation used for scaling and other transformations."
+msgid ""
+"Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 "Establece el nivel de interpolación utilizado para el redimensionado y otras "
 "transformaciones."
@@ -580,7 +585,8 @@ msgstr ""
 "inicio."
 
 #: app/config/gimprc-blurbs.h:240
-msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
+msgid ""
+"Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 "Recordar la herramienta, el patrón, el color y las brochas actuales entre "
 "distintas sesiones de El GIMP."
@@ -631,8 +637,8 @@ msgid ""
 "When enabled, the menubar is visible by default in fullscreen mode. This can "
 "also be toggled with the \"View->Show Menubar\" command."
 msgstr ""
-"Cuando está activado la barra de menu es visible de forma predeterminada en el modo "
-"de pantalla completa. Esto también puede ser activado con el comando "
+"Cuando está activado la barra de menu es visible de forma predeterminada en "
+"el modo de pantalla completa. Esto también puede ser activado con el comando "
 "«Ver->Mostrar la barra de menu»."
 
 #: app/config/gimprc-blurbs.h:270
@@ -640,26 +646,27 @@ msgid ""
 "When enabled, the rulers are visible by default in fullscreen mode. This can "
 "also be toggled with the \"View->Show Rulers\" command."
 msgstr ""
-"Cuando está activado las reglas están visibles de forma predeterminada en el modo de pantalla "
-"completa. Esto también puede ser activado con el comando «Ver->Mostrar las reglas»."
+"Cuando está activado las reglas están visibles de forma predeterminada en el "
+"modo de pantalla completa. Esto también puede ser activado con el comando "
+"«Ver->Mostrar las reglas»."
 
 #: app/config/gimprc-blurbs.h:274
 msgid ""
 "When enabled, the scrollbars are visible by default in fullscreen mode. This "
 "can also be toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
-"Cuando está activado las barras de desplazamiento están visibles de forma predeterminada "
-"en el modo de pantalla completa. Esto también puede ser activado con el comando "
-"«Ver->Mostrar las barras de desplazamiento»."
+"Cuando está activado las barras de desplazamiento están visibles de forma "
+"predeterminada en el modo de pantalla completa. Esto también puede ser "
+"activado con el comando «Ver->Mostrar las barras de desplazamiento»."
 
 #: app/config/gimprc-blurbs.h:278
 msgid ""
 "When enabled, the statusbar is visible by default in fullscreen mode. This "
 "can also be toggled with the \"View->Show Statusbar\" command."
 msgstr ""
-"Cuando está activado la barra de estado es visible de forma predeterminada en el modo de "
-"pantalla completa. Esto también puede ser activado con el comando «Ver->Mostrar la barra de "
-"estado»."
+"Cuando está activado la barra de estado es visible de forma predeterminada "
+"en el modo de pantalla completa. Esto también puede ser activado con el "
+"comando «Ver->Mostrar la barra de estado»."
 
 #: app/config/gimprc-blurbs.h:282
 msgid "Enable to display a handy GIMP tip on startup."
@@ -702,7 +709,8 @@ msgid "When enabled, menus can be torn off."
 msgstr "Cuando se encuentre activado los menús podrán ser separados. "
 
 #: app/config/gimprc-blurbs.h:305
-msgid "When enabled, you can change keyboard shortcuts for menu items on the fly."
+msgid ""
+"When enabled, you can change keyboard shortcuts for menu items on the fly."
 msgstr ""
 "Cuando está activado puede cambiar las combinaciones de teclas de los "
 "elementos del menú  al vuelo."
@@ -713,7 +721,8 @@ msgstr "Guardar las combinaciones de teclas modificadas al salir de El GIMP."
 
 #: app/config/gimprc-blurbs.h:311
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
-msgstr "Restaurar las combinaciones de teclas guardadas en cada inicio de El GIMP."
+msgstr ""
+"Restaurar las combinaciones de teclas guardadas en cada inicio de El GIMP."
 
 # "si es", no "si sea". FVD
 #: app/config/gimprc-blurbs.h:314
@@ -758,7 +767,8 @@ msgstr "Establece la forma en que se muestra la transparencia en las imágenes."
 
 #: app/config/gimprc-blurbs.h:340
 msgid "Sets the size of the checkerboard used to display transparency."
-msgstr "Establece el tamaño del cuadriculado utilizado para mostrar la transparencia."
+msgstr ""
+"Establece el tamaño del cuadriculado utilizado para mostrar la transparencia."
 
 #: app/config/gimprc-blurbs.h:343
 msgid ""
@@ -1196,7 +1206,7 @@ msgstr "Transformar"
 msgid "Paint"
 msgstr "Pintar"
 
-#: app/core/core-enums.c:500 app/core/core-enums.c:540 app/core/gimpitem.c:786
+#: app/core/core-enums.c:500 app/core/core-enums.c:540 app/core/gimpitem.c:788
 msgid "Attach Parasite"
 msgstr "Adjuntar parásito"
 
@@ -1477,7 +1487,8 @@ msgstr "Error fatal de análisis: «%s» no es un archivo de brocha de El GIMP"
 #: app/core/gimpbrushgenerated.c:398
 #, c-format
 msgid "Fatal Parse Error: '%s': unknown GIMP Brush version"
-msgstr "Error fatal de análisis: «%s»: versión de brocha de El GIMP desconocida"
+msgstr ""
+"Error fatal de análisis: «%s»: versión de brocha de El GIMP desconocida"
 
 #: app/core/gimpbrushpipe.c:382 app/core/gimpbrushpipe.c:402
 #: app/core/gimpbrushpipe.c:492
@@ -1705,7 +1716,8 @@ msgstr "Nombre de variable ilegal en el archivo de ambiente %s: %s"
 #: app/core/gimpgradient.c:363
 #, c-format
 msgid "Fatal Parse Error: '%s' is not a GIMP Gradient file"
-msgstr "Error fatal de análisis: «%s» no es un archivo de gradientes de El GIMP"
+msgstr ""
+"Error fatal de análisis: «%s» no es un archivo de gradientes de El GIMP"
 
 #: app/core/gimpgradient.c:383
 #, c-format
@@ -2099,11 +2111,11 @@ msgstr "Ha fallado la apertura del archivo de miniatura «%s»: %s"
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Ha fallado la creación de la carpeta de miniaturas «%s»"
 
-#: app/core/gimpitem.c:796
+#: app/core/gimpitem.c:798
 msgid "Attach Parasite to Item"
 msgstr "Adjuntar una parásito al elemento"
 
-#: app/core/gimpitem.c:835 app/core/gimpitem.c:842
+#: app/core/gimpitem.c:837 app/core/gimpitem.c:844
 msgid "Remove Parasite from Item"
 msgstr "Quitar el parásito del elemento"
 
@@ -2148,7 +2160,8 @@ msgstr "Rotar la capa"
 
 #: app/core/gimplayer.c:833
 msgid "Cannot add layer mask to layer which is not part of an image."
-msgstr "No se puede añadir una máscara a la capa dado que no es parte de una imagen."
+msgstr ""
+"No se puede añadir una máscara a la capa dado que no es parte de una imagen."
 
 #: app/core/gimplayer.c:840
 msgid "Unable to add a layer mask since the layer already has one."
@@ -2291,7 +2304,8 @@ msgstr "Cadena UTF-8 inválida en el archivo de patrón «%s»"
 #: app/core/gimppattern.c:421
 #, c-format
 msgid "Fatal parsing error: Pattern file '%s' appears truncated."
-msgstr "Error fatal de análisis: El archivo de patrón  «%s» parece estar truncado."
+msgstr ""
+"Error fatal de análisis: El archivo de patrón  «%s» parece estar truncado."
 
 #. pseudo unit
 #: app/core/gimpunit.c:55
@@ -2299,7 +2313,7 @@ msgid "pixel"
 msgstr "píxel"
 
 #: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:579
-#: app/tools/gimpmeasuretool.c:582 app/tools/gimppainttool.c:585
+#: app/tools/gimpmeasuretool.c:582 app/tools/gimppainttool.c:623
 msgid "pixels"
 msgstr "píxeles"
 
@@ -6585,7 +6599,8 @@ msgid "Click \"Continue\" to accept the settings above."
 msgstr "Presione «Continuar» para aceptar los ajustes de arriba."
 
 #: app/gui/user-install-dialog.c:941
-msgid "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
+msgid ""
+"<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
 "<b>Para obtener un rendimiento óptimo de El GIMP podrían tener que ajustarse "
 "algunas opciones.</b>"
@@ -6690,7 +6705,8 @@ msgstr ""
 #: app/gui/user-install-dialog.c:1316
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
-msgstr "Obtener la resolución desde el sistema de ventanas (actualmente %d x %d ppp)"
+msgstr ""
+"Obtener la resolución desde el sistema de ventanas (actualmente %d x %d ppp)"
 
 #: app/gui/user-install-dialog.c:1336
 msgid ""
@@ -7177,7 +7193,8 @@ msgid "(invalid UTF-8 string)"
 msgstr "(cadena UTF-8 inválida)"
 
 #: app/text/gimptext.c:162
-msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
+msgid ""
+"Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "El «hinting» altera el contorno de la tipografía para producir un mapa de "
 "bits preciso en tamaños pequeños"
@@ -8295,7 +8312,8 @@ msgstr "Bordes suavizados"
 
 #: app/tools/gimpselectionoptions.c:153
 msgid "Allow completely transparent regions to be selected"
-msgstr "Permitir que las regiones completamente transparentes sean seleccionadas"
+msgstr ""
+"Permitir que las regiones completamente transparentes sean seleccionadas"
 
 #: app/tools/gimpselectionoptions.c:159
 msgid "Base selection on all visible layers"
@@ -8303,7 +8321,8 @@ msgstr "Selección base en todas las capas visibles"
 
 #: app/tools/gimpselectionoptions.c:174
 msgid "Use all visible layers when shrinking the selection"
-msgstr "Utilizar todas las capas visibles cuando se está achicando la selección"
+msgstr ""
+"Utilizar todas las capas visibles cuando se está achicando la selección"
 
 #: app/tools/gimpselectionoptions.c:403 app/tools/gimptextoptions.c:306
 msgid "Antialiasing"
@@ -8526,23 +8545,23 @@ msgstr "Renombrar la ruta"
 msgid "Move Path"
 msgstr "Mover la ruta"
 
-#: app/vectors/gimpvectors.c:333
+#: app/vectors/gimpvectors.c:326
 msgid "Scale Path"
 msgstr "Escalar la ruta"
 
-#: app/vectors/gimpvectors.c:372
+#: app/vectors/gimpvectors.c:361
 msgid "Resize Path"
 msgstr "Redimensionar la ruta"
 
-#: app/vectors/gimpvectors.c:409
+#: app/vectors/gimpvectors.c:391
 msgid "Flip Path"
 msgstr "Voltear la ruta"
 
-#: app/vectors/gimpvectors.c:473
+#: app/vectors/gimpvectors.c:437
 msgid "Rotate Path"
 msgstr "Rotar la ruta"
 
-#: app/vectors/gimpvectors.c:514
+#: app/vectors/gimpvectors.c:468
 msgid "Transform Path"
 msgstr "Transformar la ruta"
 
@@ -9348,7 +9367,8 @@ msgstr "No se ha podido buscar dentro del archivo XCF: %s"
 #: app/xcf/xcf.c:261
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr "Error XCF: Se encontró una versión %d de archivo de tipo XCF no soportada"
+msgstr ""
+"Error XCF: Se encontró una versión %d de archivo de tipo XCF no soportada"
 
 #: app/xcf/xcf.c:325
 #, c-format
@@ -9786,4 +9806,3 @@ msgstr "El GIMP (inestable)"
 
 #~ msgid "Reset"
 #~ msgstr "Restaurar"
-

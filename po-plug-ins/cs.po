@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-08-06 20:05+0200\n"
+"POT-Creation-Date: 2003-08-10 15:17+0200\n"
 "PO-Revision-Date: 2003-08-07 02:52+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -26,16 +26,16 @@ msgstr "O programu"
 #. Preview
 #: plug-ins/FractalExplorer/Dialogs.c:318 plug-ins/Lighting/lighting_ui.c:1150
 #: plug-ins/MapObject/mapobject_ui.c:1402 plug-ins/common/CML_explorer.c:1191
-#: plug-ins/common/blinds.c:339 plug-ins/common/curve_bend.c:1378
-#: plug-ins/common/destripe.c:578 plug-ins/common/emboss.c:722
-#: plug-ins/common/fractaltrace.c:776 plug-ins/common/grid.c:671
-#: plug-ins/common/iwarp.c:1211 plug-ins/common/mapcolor.c:576
-#: plug-ins/common/nlfilt.c:466 plug-ins/common/polar.c:704
-#: plug-ins/common/sharpen.c:557 plug-ins/common/sinus.c:2047
-#: plug-ins/common/spheredesigner.c:2486 plug-ins/common/tileit.c:403
-#: plug-ins/common/waves.c:454 plug-ins/common/whirlpinch.c:673
-#: plug-ins/flame/flame.c:940 plug-ins/gflare/gflare.c:2312
-#: plug-ins/gflare/gflare.c:3239 plug-ins/gimpressionist/orientmap.c:501
+#: plug-ins/common/curve_bend.c:1378 plug-ins/common/destripe.c:578
+#: plug-ins/common/emboss.c:722 plug-ins/common/fractaltrace.c:776
+#: plug-ins/common/grid.c:671 plug-ins/common/iwarp.c:1223
+#: plug-ins/common/mapcolor.c:576 plug-ins/common/nlfilt.c:466
+#: plug-ins/common/polar.c:704 plug-ins/common/sharpen.c:557
+#: plug-ins/common/sinus.c:2047 plug-ins/common/spheredesigner.c:2486
+#: plug-ins/common/tileit.c:403 plug-ins/common/waves.c:454
+#: plug-ins/common/whirlpinch.c:673 plug-ins/flame/flame.c:940
+#: plug-ins/gflare/gflare.c:2312 plug-ins/gflare/gflare.c:3239
+#: plug-ins/gimpressionist/orientmap.c:501
 #: plug-ins/gimpressionist/preview.c:111 plug-ins/gimpressionist/sizemap.c:436
 #: plug-ins/ifscompose/ifscompose.c:931 plug-ins/print/gimp_main_window.c:411
 #: plug-ins/rcm/rcm_dialog.c:124 plug-ins/rcm/rcm_dialog.c:671
@@ -1201,7 +1201,7 @@ msgstr ""
 #. Create an indexed-alpha layer to hold the image...
 #: plug-ins/bmp/bmpread.c:328 plug-ins/bmp/bmpread.c:336
 #: plug-ins/bmp/bmpread.c:344 plug-ins/common/CEL.c:295
-#: plug-ins/common/blinds.c:376 plug-ins/common/compose.c:617
+#: plug-ins/common/blinds.c:321 plug-ins/common/compose.c:617
 #: plug-ins/common/decompose.c:501 plug-ins/common/film.c:979
 #: plug-ins/common/gifload.c:856 plug-ins/common/hrz.c:373
 #: plug-ins/common/jpeg.c:930 plug-ins/common/pat.c:338
@@ -1969,7 +1969,7 @@ msgstr "Zarovnání viditelných vrstev"
 #. *  First set up the basic containers, label them, etc.
 #.
 #: plug-ins/common/align_layers.c:428 plug-ins/common/apply_lens.c:403
-#: plug-ins/common/blinds.c:401 plug-ins/common/blur.c:613
+#: plug-ins/common/blinds.c:346 plug-ins/common/blur.c:613
 #: plug-ins/common/bumpmap.c:1018 plug-ins/common/checkerboard.c:395
 #: plug-ins/common/cubism.c:281 plug-ins/common/despeckle.c:737
 #: plug-ins/common/destripe.c:639 plug-ins/common/edge.c:697
@@ -2184,44 +2184,44 @@ msgstr "<Image>/Vrstva/Barvy/Auto/Roztažení _HSV"
 msgid "Auto-Stretching HSV..."
 msgstr "Automaticky roztahuje HSV..."
 
-#: plug-ins/common/blinds.c:185
+#: plug-ins/common/blinds.c:170
 msgid "<Image>/Filters/Distorts/_Blinds..."
 msgstr "<Image>/Filtry/Zkreslení/_Pruhy..."
 
-#: plug-ins/common/blinds.c:274
+#: plug-ins/common/blinds.c:236
 msgid "Adding Blinds..."
 msgstr "Přidávají se pruhy..."
 
 #. Get the preview image and store it also set has_alpha
-#: plug-ins/common/blinds.c:314
+#: plug-ins/common/blinds.c:275
 msgid "Blinds"
 msgstr "Pruhy"
 
 #. Orientation toggle box
-#: plug-ins/common/blinds.c:365 plug-ins/common/ripple.c:544
+#: plug-ins/common/blinds.c:310 plug-ins/common/ripple.c:544
 msgid "Orientation"
 msgstr "Orientace"
 
-#: plug-ins/common/blinds.c:369 plug-ins/common/ripple.c:549
+#: plug-ins/common/blinds.c:314 plug-ins/common/ripple.c:549
 #: plug-ins/common/tileit.c:446
 msgid "_Horizontal"
 msgstr "V_odorovně"
 
-#: plug-ins/common/blinds.c:370 plug-ins/common/ripple.c:552
+#: plug-ins/common/blinds.c:315 plug-ins/common/ripple.c:552
 #: plug-ins/common/tileit.c:456
 msgid "_Vertical"
 msgstr "S_visle"
 
-#: plug-ins/common/blinds.c:385 plug-ins/common/fractaltrace.c:802
+#: plug-ins/common/blinds.c:330 plug-ins/common/fractaltrace.c:802
 #: plug-ins/common/papertile.c:383
 msgid "_Transparent"
 msgstr "_Průhledné"
 
-#: plug-ins/common/blinds.c:414
+#: plug-ins/common/blinds.c:359
 msgid "_Displacement:"
 msgstr "Vy_tlačení:"
 
-#: plug-ins/common/blinds.c:423
+#: plug-ins/common/blinds.c:368
 msgid "_Num Segments:"
 msgstr "Počet segme_ntů:"
 
@@ -3930,8 +3930,8 @@ msgstr "Výběr:"
 msgid "Background (%dms)"
 msgstr "Pozadí (%dms)"
 
-#: plug-ins/common/gifload.c:906 plug-ins/common/iwarp.c:766
-#: plug-ins/common/iwarp.c:794
+#: plug-ins/common/gifload.c:906 plug-ins/common/iwarp.c:777
+#: plug-ins/common/iwarp.c:806
 #, c-format
 msgid "Frame %d"
 msgstr "Políčko %d"
@@ -4259,97 +4259,97 @@ msgstr "Režim _2"
 msgid "<Image>/Filters/Distorts/_IWarp..."
 msgstr "<Image>/Filtry/Zkreslení/_Interaktivní ohýbání..."
 
-#: plug-ins/common/iwarp.c:679
+#: plug-ins/common/iwarp.c:682
 msgid "Warping..."
 msgstr "Ohýbá se..."
 
-#: plug-ins/common/iwarp.c:773 plug-ins/common/iwarp.c:785
+#: plug-ins/common/iwarp.c:784 plug-ins/common/iwarp.c:796
 #, c-format
 msgid "Warping Frame No. %d..."
 msgstr "Ohýbám se políčko č. %d..."
 
-#: plug-ins/common/iwarp.c:786
+#: plug-ins/common/iwarp.c:797
 msgid "Ping Pong"
 msgstr "Tam a zpět"
 
-#: plug-ins/common/iwarp.c:961
+#: plug-ins/common/iwarp.c:973
 msgid "A_nimate"
 msgstr "A_nimovat"
 
-#: plug-ins/common/iwarp.c:981
+#: plug-ins/common/iwarp.c:993
 msgid "Number of _Frames:"
 msgstr "Počet rámeč_ků:"
 
-#: plug-ins/common/iwarp.c:990
+#: plug-ins/common/iwarp.c:1002
 msgid "R_everse"
 msgstr "Z_pětně"
 
-#: plug-ins/common/iwarp.c:999
+#: plug-ins/common/iwarp.c:1011
 msgid "_Ping Pong"
 msgstr "_Tam a zpět"
 
-#: plug-ins/common/iwarp.c:1012
+#: plug-ins/common/iwarp.c:1024
 msgid "_Animate"
 msgstr "_Animovat"
 
-#: plug-ins/common/iwarp.c:1040
+#: plug-ins/common/iwarp.c:1052
 msgid "_Deform Radius:"
 msgstr "Poloměr _deformace:"
 
-#: plug-ins/common/iwarp.c:1050
+#: plug-ins/common/iwarp.c:1062
 msgid "D_eform Amount:"
 msgstr "Míra d_eformace:"
 
-#: plug-ins/common/iwarp.c:1059
+#: plug-ins/common/iwarp.c:1071
 msgid "Deform Mode"
 msgstr "Režim deformace"
 
-#: plug-ins/common/iwarp.c:1073
+#: plug-ins/common/iwarp.c:1085
 msgid "_Move"
 msgstr "P_osun"
 
-#: plug-ins/common/iwarp.c:1076
+#: plug-ins/common/iwarp.c:1088
 msgid "_Grow"
 msgstr "Ná_růst"
 
-#: plug-ins/common/iwarp.c:1079
+#: plug-ins/common/iwarp.c:1091
 msgid "S_wirl CCW"
 msgstr "Vír proti s_m. hod. ruč."
 
-#: plug-ins/common/iwarp.c:1082
+#: plug-ins/common/iwarp.c:1094
 msgid "Remo_ve"
 msgstr "Odstran_it"
 
-#: plug-ins/common/iwarp.c:1085
+#: plug-ins/common/iwarp.c:1097
 msgid "S_hrink"
 msgstr "_Zmenšení"
 
-#: plug-ins/common/iwarp.c:1088
+#: plug-ins/common/iwarp.c:1100
 msgid "Sw_irl CW"
 msgstr "Vír ve sm. hod. r_uč."
 
-#: plug-ins/common/iwarp.c:1111
+#: plug-ins/common/iwarp.c:1123
 msgid "_Bilinear"
 msgstr "_Bilineární"
 
-#: plug-ins/common/iwarp.c:1125
+#: plug-ins/common/iwarp.c:1137
 msgid "Adaptive S_upersample"
 msgstr "Adaptivní převzorko_vání"
 
-#: plug-ins/common/iwarp.c:1146
+#: plug-ins/common/iwarp.c:1158
 msgid "Ma_x Depth:"
 msgstr "Ma_ximální hloubka:"
 
-#: plug-ins/common/iwarp.c:1156
+#: plug-ins/common/iwarp.c:1168
 msgid "Thresho_ld:"
 msgstr "Prá_h:"
 
-#: plug-ins/common/iwarp.c:1169 plug-ins/common/sinus.c:1774
+#: plug-ins/common/iwarp.c:1181 plug-ins/common/sinus.c:1774
 #: plug-ins/gflare/gflare.c:2787
 msgid "_Settings"
 msgstr "Na_stavení"
 
-#: plug-ins/common/iwarp.c:1186
+#: plug-ins/common/iwarp.c:1198
 msgid "IWarp"
 msgstr "Interaktivní ohýbání"
 

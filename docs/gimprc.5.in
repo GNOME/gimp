@@ -506,39 +506,43 @@ channel values as floats between 0.0 and 1.0.
 .TP
 (fullscreen-show-menubar no)
 
-When enabled, the menubar is visible by default. This can also be toggled with
-the "View->Show Menubar" command.  Possible values are yes and no.
+When enabled, the menubar is visible by default in fullscreen mode. This can
+also be toggled with the "View->Show Menubar" command.  Possible values are
+yes and no.
 
 .TP
 (fullscreen-show-rulers no)
 
-When enabled, the rulers are visible by default. This can also be toggled with
-the "View->Show Rulers" command.  Possible values are yes and no.
+When enabled, the rulers are visible by default in fullscreen mode. This can
+also be toggled with the "View->Show Rulers" command.  Possible values are yes
+and no.
 
 .TP
 (fullscreen-show-scrollbars no)
 
-When enabled, the scrollbars are visible by default. This can also be toggled
-with the "View->Show Scrollbars" command.  Possible values are yes and no.
+When enabled, the scrollbars are visible by default in fullscreen mode. This
+can also be toggled with the "View->Show Scrollbars" command.  Possible values
+are yes and no.
 
 .TP
 (fullscreen-show-statusbar no)
 
-When enabled, the statusbar is visible by default. This can also be toggled
-with the "View->Show Statusbar" command.  Possible values are yes and no.
+When enabled, the statusbar is visible by default in fullscreen mode. This can
+also be toggled with the "View->Show Statusbar" command.  Possible values are
+yes and no.
 
 .TP
 (fullscreen-canvas-padding-mode custom)
 
-Specifies how the area around the image should be drawn.  Possible values are
-default, light-check, dark-check and custom.
+Specifies how the area around the image should be drawn when in fullscreen
+mode.  Possible values are default, light-check, dark-check and custom.
 
 .TP
 (fullscreen-canvas-padding-color (color-rgba 0.000000 0.000000 0.000000 1.000000))
 
-Sets the canvas padding color used if the padding mode is set to custom color.
- The color is specified in the form (color-rgba red green blue alpha) with
-channel values as floats between 0.0 and 1.0.
+Sets the canvas padding color used when in fullscreen mode and the padding
+mode is set to custom color.  The color is specified in the form (color-rgba
+red green blue alpha) with channel values as floats between 0.0 and 1.0.
 
 .TP
 (transparency-size medium-checks)
