@@ -2,9 +2,9 @@ EXPORTS
 	_gp_params_destroy
 	gimp_any_to_utf8
 	gimp_base_init
-	gimp_checks_get_shades
 	gimp_check_size_get_type
 	gimp_check_type_get_type
+	gimp_checks_get_shades
 	gimp_data_directory
 	gimp_datafiles_check_extension
 	gimp_datafiles_read_directories
