@@ -149,27 +149,26 @@ void updateompreviewprev(void)
 {
   int x, y;
   static struct ppm nbuffer = {0,0,NULL};
-  struct rgbcolor black = {0,0,0};
-  struct rgbcolor gray = {120,120,120};
-  struct rgbcolor white = {255,255,255};
+  guchar black[3] = {0,0,0};
+  guchar gray[3] = {120,120,120};
+  guchar white[3] = {255,255,255};
 
   if(!nbuffer.col) {
     newppm(&nbuffer,OMWIDTH,OMHEIGHT);
   }
-  fill(&nbuffer, &black);
+  fill(&nbuffer, black);
 
   for(y = 6; y < OMHEIGHT-4; y += 10)
     for(x = 6; x < OMWIDTH-4; x += 10) {
       double dir = degtorad(getdir(x/(double)OMWIDTH,y/(double)OMHEIGHT,0));
       double xo = sin(dir)*4.0;
       double yo = cos(dir)*4.0;
-      drawline(&nbuffer, x-xo, y-yo, x+xo, y+yo, &gray);
-      putrgb(&nbuffer, x-xo, y-yo, &white);
+      drawline(&nbuffer, x-xo, y-yo, x+xo, y+yo, gray);
+      putrgb(&nbuffer, x-xo, y-yo, white);
     }
 
   for(y = 0; y < OMHEIGHT; y++)
-    gtk_preview_draw_row(GTK_PREVIEW(ompreviewprev), (guchar *)nbuffer.col[y],
-			 0, y, OMWIDTH);
+    gtk_preview_draw_row(GTK_PREVIEW(ompreviewprev), (guchar *)nbuffer.col + y * OMWIDTH * 3, 0, y, OMWIDTH);
   gtk_widget_draw(ompreviewprev,NULL);
 }
 
@@ -184,9 +183,9 @@ void updatevectorprev(void)
   double dir, xo, yo;
   double val;
   static double lastval = 0.0;
-  struct rgbcolor gray = {120,120,120};
-  struct rgbcolor red = {255,0,0};
-  struct rgbcolor white = {255,255,255};
+  guchar gray[3] = {120,120,120};
+  guchar red[3] = {255,0,0};
+  guchar white[3] = {255,255,255};
 
   if(vectprevbrightadjust) val = 1.0 - GTK_ADJUSTMENT(vectprevbrightadjust)->value / 100.0;
   else val = 0.5;
@@ -211,14 +210,14 @@ void updatevectorprev(void)
     xo = sin(dir)*(6.0+100*s);
     yo = cos(dir)*(6.0+100*s);
     if(i == selectedvector)
-      drawline(&buffer, x-xo, y-yo, x+xo, y+yo, &red);
+      drawline(&buffer, x-xo, y-yo, x+xo, y+yo, red);
     else
-      drawline(&buffer, x-xo, y-yo, x+xo, y+yo, &gray);
-    putrgb(&buffer, x-xo, y-yo, &white);
+      drawline(&buffer, x-xo, y-yo, x+xo, y+yo, gray);
+    putrgb(&buffer, x-xo, y-yo, white);
   }
 
   for(y = 0; y < OMHEIGHT; y++)
-    gtk_preview_draw_row(GTK_PREVIEW(vectorprev), (guchar *)buffer.col[y], 0, y, OMWIDTH);
+    gtk_preview_draw_row(GTK_PREVIEW(vectorprev), (guchar *)buffer.col + y * OMWIDTH * 3, 0, y, OMWIDTH);
   gtk_widget_draw(vectorprev,NULL);
 
 }
@@ -367,46 +366,6 @@ void vectypeclick(GtkWidget *w, gpointer data)
   updatevectorprev();
   updateompreviewprev();
 }
-
-#ifdef DEBUG
-
-void loadclick(void)
-{
-  readdata(MAPFILE);
-  selectedvector = 0;
-  updatevectorprev();
-  updateompreviewprev();
-}
-
-void saveclick(void)
-{
-  FILE *f = fopen(MAPFILE, "wt");
-  int i;
-  for(i = 0; i < numvect; i++) {
-    fprintf(f, "%.3f\t%.3f\t%5.1f\t%5.1f\n",
-	    vector[i].x, vector[i].y, vector[i].dir, vector[i].str);
-  }
-  fclose(f);
-}
-
-void showpixclick(void)
-{
-  int x, y;
-  for(y = 0; y < OMHEIGHT; y++) {
-    char buf[OMWIDTH*3];
-    for(x = 0; x < OMWIDTH; x++) {
-      int c = pixval(getdir(x/(double)OMWIDTH, y/(double)OMHEIGHT,0));
-      buf[x*3] = c;
-      buf[x*3+1] = c;
-      buf[x*3+2] = c;
-    }
-    gtk_preview_draw_row(GTK_PREVIEW(ompreviewprev), buf, 0, y, OMWIDTH);
-  }
-  gtk_widget_draw(ompreviewprev,NULL);
-}
-
-#endif
-
 
 void hidewin(GtkWidget *w, GtkWidget **win)
 {
@@ -726,39 +685,6 @@ void create_orientmap_dialog(void)
 		     (GtkSignalFunc)angoffadjmove, NULL);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Voronoi-mode makes only the vector closest to the given point have any influence", NULL);
   
-
-#ifdef DEBUG
-  tmpw = hbox = gtk_hbox_new(TRUE,0);
-  gtk_table_attach_defaults(GTK_TABLE(table1), tmpw, 1,2,3,4);
-  gtk_container_border_width (GTK_CONTAINER (tmpw), 2);
-  gtk_widget_show(tmpw);
-
-  tmpw = gtk_button_new_with_label("Save");
-  gtk_box_pack_start(GTK_BOX(hbox), tmpw, FALSE, TRUE, 0);
-  gtk_widget_show(tmpw);
-  gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
-		      GTK_SIGNAL_FUNC(saveclick), NULL);
-
-  tmpw = gtk_button_new_with_label("Load");
-  gtk_box_pack_start(GTK_BOX(hbox), tmpw, FALSE, TRUE, 0);
-  gtk_widget_show(tmpw);
-  gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
-		      GTK_SIGNAL_FUNC(loadclick), NULL);
-
-  tmpw = gtk_button_new_with_label("Show pix");
-  gtk_box_pack_start(GTK_BOX(hbox), tmpw, FALSE, TRUE, 0);
-  gtk_widget_show(tmpw);
-  gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
-		      GTK_SIGNAL_FUNC(showpixclick), NULL);
-
-  tmpw = gtk_button_new_with_label("dumpvect");
-  gtk_box_pack_start(GTK_BOX(hbox), tmpw, FALSE, TRUE, 0);
-  gtk_widget_show(tmpw);
-  gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
-		      GTK_SIGNAL_FUNC(dumpvect), NULL);
-#endif  
-  
-
   gtk_widget_show(omwindow);
 
   updatevectorprev();

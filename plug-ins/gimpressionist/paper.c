@@ -41,10 +41,11 @@ void updatepaperprev(char *fn)
     sc = 100.0 / sc;
     resize(&p, p.width*sc,p.height*sc);
     for(i = 0; i < 100; i++) {
+      int k = i * p.width * 3;
       memset(buf,0,100);
       if(i < p.height) {
 	for(j = 0; j < p.width; j++)
-	  buf[j] = p.col[i][j].r;
+	  buf[j] = p.col[k + j * 3];
 	if(GTK_TOGGLE_BUTTON(paperinvert)->active)
 	  for(j = 0; j < p.width; j++)
 	    buf[j] = 255 - buf[j];

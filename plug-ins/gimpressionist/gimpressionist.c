@@ -60,10 +60,6 @@ GList *parsepath(void)
   gimpdatasubdir = strchr (defaultpath, ':') + 1;
 #endif
 
-#ifdef DEBUG
-  fprintf(stderr, "gimp_gimprc_query: ");
-#endif
-
   if(standalone)
     tmps = g_strdup(defaultpath);
   else {
@@ -89,9 +85,6 @@ GList *parsepath(void)
       tmps = g_strdup(defaultpath);
     } else {
       tmps = g_strdup(return_vals[1].data.d_string);
-#ifdef DEBUG
-      fprintf(stderr, "Got \"%s\"\n", tmps);
-#endif
     }
     gimp_destroy_params (return_vals, nreturn_vals);
   }
@@ -125,10 +118,6 @@ char *findfile(char *fn)
   static char file[200];
   struct stat st;
 
-#ifdef DEBUG
-  fprintf(stderr, "findfile(%s)\n", fn);
-#endif
-
   if(!rcpath) rcpath = parsepath();
 
   thispath = rcpath;
@@ -137,9 +126,6 @@ char *findfile(char *fn)
     if(!stat(file, &st)) return file;
     thispath = thispath->next;
   }
-#ifdef DEBUG
-  fprintf(stderr, "findfile(%s) returned NULL\n", fn);
-#endif
   return NULL;
 }
 

@@ -53,6 +53,7 @@ void brushdmenuselect(gint32 id, gpointer data)
   gint x1, y1, x2, y2;
   gint row, col;
   GDrawable *drawable;
+  int rowstride;
 
   if(brushfile == 2) return; /* Not finished GUI-building yet */
 
@@ -77,6 +78,8 @@ void brushdmenuselect(gint32 id, gpointer data)
   newppm(&brushppm, x2-x1, y2-y1);
   p = &brushppm;
 
+  rowstride = p->width * 3;
+
   src_row = (guchar *)safemalloc((x2 - x1) * bpp);
 
   gimp_pixel_rgn_init (&src_rgn, drawable, 0, 0, x2-x1, y2-y1, FALSE, FALSE);
@@ -85,42 +88,44 @@ void brushdmenuselect(gint32 id, gpointer data)
     int bpr = (x2-x1) * 3;
     for(row = 0, y = y1; y < y2; row++, y++) {
       gimp_pixel_rgn_get_row (&src_rgn, src_row, x1, y, (x2 - x1));
-      memcpy(p->col[row], src_row, bpr);
+      memcpy(p->col + row*rowstride, src_row, bpr);
     }
   } else if(bpp > 3) { /* RGBA */
     for(row = 0, y = y1; y < y2; row++, y++) {
-      struct rgbcolor *tmprow = p->col[row];
+      guchar *tmprow = p->col + row * rowstride;
       gimp_pixel_rgn_get_row (&src_rgn, src_row, x1, y, (x2 - x1));
       src = src_row;
       for (col = 0, x = x1; x < x2; col++, x++) {
-	tmprow[col].r = src[0];
-	tmprow[col].g = src[1];
-	tmprow[col].b = src[2];
+	int k = col * 3;
+	tmprow[k+0] = src[0];
+	tmprow[k+1] = src[1];
+	tmprow[k+2] = src[2];
 	src += src_rgn.bpp;
-	
       }
     }  
   } else if(bpp == 2) { /* GrayA */
     for(row = 0, y = y1; y < y2; row++, y++) {
-      struct rgbcolor *tmprow = p->col[row];
+	guchar *tmprow = p->col + row * rowstride;
       gimp_pixel_rgn_get_row (&src_rgn, src_row, x1, y, (x2 - x1));
       src = src_row;
       for (col = 0, x = x1; x < x2; col++, x++) {
-	tmprow[col].r = src[0];
-	tmprow[col].g = src[0];
-	tmprow[col].b = src[0];
+	int k = col * 3;
+	tmprow[k+0] = src[0];
+	tmprow[k+1] = src[0];
+	tmprow[k+2] = src[0];
 	src += src_rgn.bpp;
       }
     }  
   } else { /* Gray */
     for(row = 0, y = y1; y < y2; row++, y++) {
-      struct rgbcolor *tmprow = p->col[row];
+      guchar *tmprow = p->col + row * rowstride;
       gimp_pixel_rgn_get_row (&src_rgn, src_row, x1, y, (x2 - x1));
       src = src_row;
       for (col = 0, x = x1; x < x2; col++, x++) {
-	tmprow[col].r = src[0];
-	tmprow[col].g = src[0];
-	tmprow[col].b = src[0];
+	int k = col * 3;
+	tmprow[k+0] = src[0];
+	tmprow[k+1] = src[0];
+	tmprow[k+2] = src[0];
 	src += src_rgn.bpp;
       }
     }  
@@ -220,12 +225,12 @@ void reloadbrush(char *fn, struct ppm *p)
 
 void padbrush(struct ppm *p, int width, int height)
 {
-  struct rgbcolor black = {0,0,0};
+  guchar black[3] = {0,0,0};
   int left = (width - p->width) / 2;
   int right = (width - p->width) - left;
   int top = (height - p->height) / 2;
   int bottom = (height - p->height) - top;
-  pad(p, left, right, top, bottom, &black);
+  pad(p, left, right, top, bottom, black);
 }
 
 void updatebrushprev(char *fn)
@@ -244,7 +249,7 @@ void updatebrushprev(char *fn)
   } else {
     double sc;
     struct ppm p = {0,0,NULL};
-    unsigned char gammatable[256];
+    guchar gammatable[256];
     int newheight;
 
     if(brushfile)
@@ -268,10 +273,11 @@ void updatebrushprev(char *fn)
     resize_fast(&p, p.width*sc,newheight*sc);
     padbrush(&p,100,100);
     for(i = 0; i < 100; i++) {
+      int k = i * p.width * 3;
       memset(buf,0,100);
       if(i < p.height)
 	for(j = 0; j < p.width; j++)
-	  buf[j] = gammatable[p.col[i][j].r];
+	  buf[j] = gammatable[p.col[k + j * 3]];
       gtk_preview_draw_row (GTK_PREVIEW (brushprev), buf, 0, i, 100);
     }
     killppm(&p);

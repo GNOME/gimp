@@ -323,7 +323,7 @@ void savepreset(GtkWidget *wg, GtkWidget *p);
 
 void presetdesccallback(GtkWidget *widget, gpointer data)
 {
-  unsigned char *s;
+  guchar *s;
   char *d, *str;
   str = gtk_editable_get_chars(GTK_EDITABLE (widget),0,-1);
   s = str;

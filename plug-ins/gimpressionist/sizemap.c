@@ -92,26 +92,25 @@ void updatesmpreviewprev(void)
 {
   int x, y;
   static struct ppm nsbuffer = {0,0,NULL};
-  struct rgbcolor black = {0,0,0};
-  struct rgbcolor gray = {120,120,120};
+  guchar black[3] = {0,0,0};
+  guchar gray[3] = {120,120,120};
 
   if(!nsbuffer.col) {
     newppm(&nsbuffer,OMWIDTH,OMHEIGHT);
   }
-  fill(&nsbuffer, &black);
+  fill(&nsbuffer, black);
 
   for(y = 6; y < OMHEIGHT-4; y += 10)
     for(x = 6; x < OMWIDTH-4; x += 10) {
       double siz = 5 * getsiz(x/(double)OMWIDTH,y/(double)OMHEIGHT,0);
-      drawline(&nsbuffer, x-siz, y-siz, x+siz, y-siz, &gray);
-      drawline(&nsbuffer, x+siz, y-siz, x+siz, y+siz, &gray);
-      drawline(&nsbuffer, x+siz, y+siz, x-siz, y+siz, &gray);
-      drawline(&nsbuffer, x-siz, y+siz, x-siz, y-siz, &gray);
+      drawline(&nsbuffer, x-siz, y-siz, x+siz, y-siz, gray);
+      drawline(&nsbuffer, x+siz, y-siz, x+siz, y+siz, gray);
+      drawline(&nsbuffer, x+siz, y+siz, x-siz, y+siz, gray);
+      drawline(&nsbuffer, x-siz, y+siz, x-siz, y-siz, gray);
     }
 
   for(y = 0; y < OMHEIGHT; y++)
-    gtk_preview_draw_row(GTK_PREVIEW(smpreviewprev), (guchar *)nsbuffer.col[y],
-			 0, y, OMWIDTH);
+    gtk_preview_draw_row(GTK_PREVIEW(smpreviewprev), &nsbuffer.col[y*nsbuffer.width*3], 0, y, OMWIDTH);
   gtk_widget_draw(smpreviewprev,NULL);
 }
 
@@ -125,9 +124,9 @@ void updatesmvectorprev(void)
   int i, x, y;
   double val;
   static double lastval = 0.0;
-  struct rgbcolor gray = {120,120,120};
-  struct rgbcolor red = {255,0,0};
-  struct rgbcolor white = {255,255,255};
+  guchar gray[3] = {120,120,120};
+  guchar red[3] = {255,0,0};
+  guchar white[3] = {255,255,255};
 
   if(smvectprevbrightadjust) val = 1.0 - GTK_ADJUSTMENT(smvectprevbrightadjust)->value / 100.0;
   else val = 0.5;
@@ -147,17 +146,17 @@ void updatesmvectorprev(void)
     x = smvector[i].x * OMWIDTH;
     y = smvector[i].y * OMHEIGHT;
     if(i == selectedsmvector) {
-      drawline(&sbuffer, x-5, y, x+5, y, &red);
-      drawline(&sbuffer, x, y-5, x, y+5, &red);
+      drawline(&sbuffer, x-5, y, x+5, y, red);
+      drawline(&sbuffer, x, y-5, x, y+5, red);
     } else {
-      drawline(&sbuffer, x-5, y, x+5, y, &gray);
-      drawline(&sbuffer, x, y-5, x, y+5, &gray);
+      drawline(&sbuffer, x-5, y, x+5, y, gray);
+      drawline(&sbuffer, x, y-5, x, y+5, gray);
     }
-    putrgb(&sbuffer, x, y, &white);
+    putrgb(&sbuffer, x, y, white);
   }
 
   for(y = 0; y < OMHEIGHT; y++)
-    gtk_preview_draw_row(GTK_PREVIEW(smvectorprev), (guchar *)sbuffer.col[y], 0, y, OMWIDTH);
+    gtk_preview_draw_row(GTK_PREVIEW(smvectorprev), &sbuffer.col[y*sbuffer.width*3], 0, y, OMWIDTH);
   gtk_widget_draw(smvectorprev,NULL);
 
 }
@@ -533,39 +532,6 @@ void create_sizemap_dialog(void)
 		     (GtkSignalFunc)smstrexpsmadjmove, NULL);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, "Voronoi-mode makes only the smvector closest to the given point have any influence", NULL);
   
-
-#ifdef DEBUG
-  tmpw = hbox = gtk_hbox_new(TRUE,0);
-  gtk_table_attach_defaults(GTK_TABLE(table1), tmpw, 1,2,3,4);
-  gtk_container_border_width (GTK_CONTAINER (tmpw), 2);
-  gtk_widget_show(tmpw);
-
-  tmpw = gtk_button_new_with_label("Save");
-  gtk_box_pack_start(GTK_BOX(hbox), tmpw, FALSE, TRUE, 0);
-  gtk_widget_show(tmpw);
-  gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
-		      GTK_SIGNAL_FUNC(saveclick), NULL);
-
-  tmpw = gtk_button_new_with_label("Load");
-  gtk_box_pack_start(GTK_BOX(hbox), tmpw, FALSE, TRUE, 0);
-  gtk_widget_show(tmpw);
-  gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
-		      GTK_SIGNAL_FUNC(loadclick), NULL);
-
-  tmpw = gtk_button_new_with_label("Show pix");
-  gtk_box_pack_start(GTK_BOX(hbox), tmpw, FALSE, TRUE, 0);
-  gtk_widget_show(tmpw);
-  gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
-		      GTK_SIGNAL_FUNC(showpixclick), NULL);
-
-  tmpw = gtk_button_new_with_label("dumpvect");
-  gtk_box_pack_start(GTK_BOX(hbox), tmpw, FALSE, TRUE, 0);
-  gtk_widget_show(tmpw);
-  gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
-		      GTK_SIGNAL_FUNC(dumpvect), NULL);
-#endif  
-  
-
   gtk_widget_show(smwindow);
 
   updatesmvectorprev();

@@ -22,51 +22,50 @@ gimpressionist_vals_t runningvals;
 void prepbrush(struct ppm *p)
 {
   int x, y;
+  int rowstride = p->width * 3;
 
   for(y = 0; y< p->height; y++) {
     for(x = 0; x < p->width; x++) {
-      p->col[y][x].g = 0;
+      p->col[y*rowstride+x*3+1] = 0;
     }
   }
 
   for(y = 1; y< p->height; y++) {
     for(x = 1; x < p->width; x++) {
-      int v = p->col[y][x].r - p->col[y-1][x-1].r;
+      int v = p->col[y*rowstride+x*3] - p->col[(y-1)*rowstride+(x-1)*3];
       if(v < 0) v = 0;
-      p->col[y][x].g = v;
+      p->col[y*rowstride+x*3+1] = v;
     }
   }
 }
 
 double sumbrush(struct ppm *p)
 {
-  int x, y;
   double sum = 0;
-  for(y = 0; y< p->height; y++) {
-    for(x = 0; x < p->width; x++) {
-      sum += p->col[y][x].r;
-    }
-  }
+  int i;
+
+  for(i = 0; i < p->width*3*p->height; i += 3)
+    sum += p->col[i];
   return sum;
 }
 
-int gethue(struct rgbcolor *rgb)
+int gethue(guchar *rgb)
 {
   double h, v, temp, diff;
-  if((rgb->r == rgb->g) && (rgb->r == rgb->b)) /* Gray */
+  if((rgb[0] == rgb[1]) && (rgb[0] == rgb[2])) /* Gray */
     return 0;
-  v = (rgb->r > rgb->g ? rgb->r : rgb->g);     /* v = st<F8>rste verdi */
-  if(rgb->b > v) v = rgb->b;
-  temp = (rgb->r > rgb->g ? rgb->g : rgb->r ); /* temp = minste */
-  if(rgb->b < temp) temp = rgb->b;
+  v = (rgb[0] > rgb[1] ? rgb[0] : rgb[1]);     /* v = st<F8>rste verdi */
+  if(rgb[2] > v) v = rgb[2];
+  temp = (rgb[0] > rgb[1] ? rgb[1] : rgb[0] ); /* temp = minste */
+  if(rgb[2] < temp) temp = rgb[2];
   diff = v - temp;
 
-  if(v == rgb->r)
-    h = ((double)rgb->g - rgb->b) / diff;
-  else if(v == rgb->g)
-    h = ((double)rgb->b - rgb->r) / diff + 2;
-  else /* v == rgb->b */
-    h = ((double)rgb->r - rgb->g) / diff + 4;
+  if(v == rgb[0])
+    h = ((double)rgb[1] - rgb[2]) / diff;
+  else if(v == rgb[1])
+    h = ((double)rgb[2] - rgb[0]) / diff + 2;
+  else /* v == rgb[2] */
+    h = ((double)rgb[0] - rgb[1]) / diff + 4;
   if(h < 0) h += 6;
   return h * 255.0 / 6.0;
 }
@@ -90,15 +89,16 @@ int bestbrush(struct ppm *p, struct ppm *a, int tx, int ty,
 
     r = g = b = 0.0;
     for(y = 0; y < brush->height; y++) {
-      struct rgbcolor *row = p->col[ty+y];
+      guchar *row = p->col + (ty+y)*p->width*3;
       for(x = 0; x < brush->width; x++) {
+	int k = (tx+x)*3;
 	double v;
-	if((h = brush->col[y][x].r)) {
+	if((h = brush->col[(y*brush->width*3)+x*3])) {
 	  /* thissum += h; */
 	  v = h / 255.0;
-	  r += row[tx+x].r * v;
-	  g += row[tx+x].g * v;
-	  b += row[tx+x].b * v;
+	  r += row[k+0] * v;
+	  g += row[k+1] * v;
+	  b += row[k+2] * v;
 	}
       }
     }
@@ -108,16 +108,17 @@ int bestbrush(struct ppm *p, struct ppm *a, int tx, int ty,
 
     dev = 0.0;
     for(y = 0; y < brush->height; y++) {
-      struct rgbcolor *row = p->col[ty+y];
+      guchar *row = p->col + (ty+y)*p->width*3;
       for(x = 0; x < brush->width; x++) {
+	int k = (tx+x)*3;
 	double v;
-	if((h = brush->col[y][x].r)) {
+	if((h = brush->col[(y*brush->width*3)+x*3])) {
 	  v = h / 255.0;
-	  dev += abs(row[tx+x].r - r) * v;
-	  dev += abs(row[tx+x].g - g) * v;
-	  dev += abs(row[tx+x].b - b) * v;
+	  dev += abs(row[k+0] - r) * v;
+	  dev += abs(row[k+1] - g) * v;
+	  dev += abs(row[k+2] - b) * v;
 	  if(img_has_alpha)
-	    dev += a->col[ty+y][tx+x].r * v;
+	    dev += a->col[(ty+y)*a->width*3+(tx+x)*3] * v;
 	}
       }
     }
@@ -177,63 +178,66 @@ void applybrush(struct ppm *brush,
     int sx = tx + shadowdepth - shadowblur*2;
     int sy = ty + shadowdepth - shadowblur*2;
     for(y = 0; y < shadow->height; y++) {
-      struct rgbcolor *row, *arow = NULL;
+      guchar *row, *arow = NULL;
       if((sy + y) < 0) continue;
       if((sy + y) >= tmp.height) break;
-      row = tmp.col[sy+y];
-      if(img_has_alpha) arow = atmp.col[sy+y];
+      row = tmp.col + (sy+y) * tmp.width * 3;
+      if(img_has_alpha) arow = atmp.col + (sy+y) * atmp.width * 3;
       for(x = 0; x < shadow->width; x++) {
+	int k = (sx + x) * 3;
 	if((sx + x) < 0) continue;
 	if((sx + x) >= tmp.width) break;
-	h = shadow->col[y][x].b;
+	h = shadow->col[y*shadow->width*3+x*3+2];
 	if(!h) continue;
 	v = 1.0 - (h / 255.0 * runningvals.generalshadowdarkness / 100.0);
-	row[sx+x].r *= v;
-	row[sx+x].g *= v;
-	row[sx+x].b *= v;
-	if(img_has_alpha) arow[sx+x].r *= v;
+	row[k+0] *= v;
+	row[k+1] *= v;
+	row[k+2] *= v;
+	if(img_has_alpha) arow[k] *= v;
       }
     }
   }
 
   for(y = 0; y < brush->height; y++) {
-    struct rgbcolor *row = tmp.col[ty+y];
-    struct rgbcolor *arow = NULL;
-    if(img_has_alpha) arow = atmp.col[ty+y];
+    guchar *row = tmp.col + (ty+y)*tmp.width*3;
+    guchar *arow = NULL;
+    if(img_has_alpha) arow = atmp.col + (ty+y)*atmp.width*3;
     for(x = 0; x < brush->width; x++) {
-      h = brush->col[y][x].r;
+      int k = (tx + x) * 3;
+      h = brush->col[y*brush->width*3+x*3];
       if(!h) continue;
 
       if(runningvals.colorbrushes) {
-	v = 1.0 - brush->col[y][x].b / 255.0;
-	row[tx+x].r *= v;
-	row[tx+x].g *= v;
-	row[tx+x].b *= v;
-	if(img_has_alpha) arow[tx+x].r *= v;
+	v = 1.0 - brush->col[y*brush->width*3+x*3+2] / 255.0;
+	row[k+0] *= v;
+	row[k+1] *= v;
+	row[k+2] *= v;
+	if(img_has_alpha) arow[(tx+x)*3] *= v;
       }
       v = (1.0 - h / 255.0) * edgedarken;
-      row[tx+x].r *= v;
-      row[tx+x].g *= v;
-      row[tx+x].b *= v;
-      if(img_has_alpha) arow[tx+x].r *= v;
+      row[k+0] *= v;
+      row[k+1] *= v;
+      row[k+2] *= v;
+      if(img_has_alpha) arow[k] *= v;
 
       v = h / 255.0;
-      row[tx+x].r += r * v;
-      row[tx+x].g += g * v;
-      row[tx+x].b += b * v;
+      row[k+0] += r * v;
+      row[k+1] += g * v;
+      row[k+2] += b * v;
     }
   }
 
   if(relief > 0.001) {
     for(y = 1; y < brush->height; y++) {
-      struct rgbcolor *row = tmp.col[ty+y];
+      guchar *row = tmp.col + (ty+y)*tmp.width*3;
       for(x = 1; x < brush->width; x++) {
-	h = brush->col[y][x].g * relief;
+	int k = (tx + x) * 3;
+	h = brush->col[y*brush->width*3+x*3+1] * relief;
 	if(h < 0.001) continue;
 	if(h > 255) h = 255;
-	row[tx+x].r = (row[tx+x].r * (255-h) + 255 * h) / 255;
-	row[tx+x].g = (row[tx+x].g * (255-h) + 255 * h) / 255;
-	row[tx+x].b = (row[tx+x].b * (255-h) + 255 * h) / 255;
+	row[k+0] = (row[k+0] * (255-h) + 255 * h) / 255;
+	row[k+1] = (row[k+1] * (255-h) + 255 * h) / 255;
+	row[k+2] = (row[k+2] * (255-h) + 255 * h) / 255;
       }
     }
   }
@@ -247,7 +251,7 @@ void repaint(struct ppm *p, struct ppm *a)
   struct ppm atmp = {0,0,NULL};
   int r, g, b, n, h, i, j, on, sn;
   int numbrush, maxbrushwidth, maxbrushheight;
-  struct rgbcolor back = {0,0,0};
+  guchar back[3] = {0,0,0};
   struct ppm *brushes, *shadows;
   struct ppm *brush, *shadow = NULL;
   double *brushsum;
@@ -315,7 +319,7 @@ void repaint(struct ppm *p, struct ppm *a)
   i = 1 + sqrt(brushes[0].width * brushes[0].width +
 	       brushes[0].height * brushes[0].height);
   pad(&brushes[0], i-brushes[0].width, i-brushes[0].width,
-      i-brushes[0].height, i-brushes[0].height, &back);
+      i-brushes[0].height, i-brushes[0].height, back);
   
   for(i = 1; i < numbrush; i++) {
     brushes[i].col = NULL;
@@ -362,12 +366,12 @@ void repaint(struct ppm *p, struct ppm *a)
   
   for(i = 0; i < numbrush; i++) {
     int xp, yp;
-    struct rgbcolor blk = {0,0,0};
+    guchar blk[3] = {0,0,0};
 
     xp = maxbrushwidth - brushes[i].width;
     yp = maxbrushheight - brushes[i].height;
     if(xp || yp)
-      pad(&brushes[i], xp/2, xp-xp/2, yp/2, yp-yp/2, &blk);
+      pad(&brushes[i], xp/2, xp-xp/2, yp/2, yp-yp/2, blk);
   }
 
   if(dropshadow) {
@@ -376,7 +380,7 @@ void repaint(struct ppm *p, struct ppm *a)
       copyppm(&brushes[i], &shadows[i]);
       ppmgamma(&shadows[i], 0, 1,1,0);
       pad(&shadows[i], shadowblur*2, shadowblur*2, 
-	  shadowblur*2, shadowblur*2, &back);
+	  shadowblur*2, shadowblur*2, back);
       for(j = 0; j < shadowblur; j++)
 	blur(&shadows[i], 2, 2);
       /* autocrop(&shadows[i],1); */
@@ -403,19 +407,19 @@ void repaint(struct ppm *p, struct ppm *a)
   if(img_has_alpha) {
     /* Initially fully transparent */
     if(runningvals.generalbgtype == 3) {
-      struct rgbcolor tmpcol = {255,255,255};
+      guchar tmpcol[3] = {255,255,255};
       newppm(&atmp, a->width, a->height);
-      fill(&atmp, &tmpcol);
+      fill(&atmp, tmpcol);
     } else {
       copyppm(a, &atmp);
     }
   }
 
   if(runningvals.generalbgtype == 0) {
-    struct rgbcolor tmpcol;
+    guchar tmpcol[3];
     newppm(&tmp, p->width, p->height);
     memcpy(&tmpcol, runningvals.color, 3);
-    fill(&tmp, &tmpcol);
+    fill(&tmp, tmpcol);
   } else if(runningvals.generalbgtype == 1) {
     copyppm(p, &tmp);
   } else {
@@ -429,7 +433,7 @@ void repaint(struct ppm *p, struct ppm *a)
       int rx = x % paperppm.width;
       for(y = 0; y < tmp.height; y++) {
 	int ry = y % paperppm.height;
-	memcpy(&tmp.col[y][x], &paperppm.col[ry][rx], 3);
+	memcpy(&tmp.col[y*tmp.width*3+x*3], &paperppm.col[ry*paperppm.width*3+rx*3], 3);
       }
     }
   }
@@ -441,27 +445,27 @@ void repaint(struct ppm *p, struct ppm *a)
   if(runningvals.orienttype == 0) { /* Value */
     newppm(&dirmap, p->width, p->height);
     for(y = 0; y < dirmap.height; y++) {
-      struct rgbcolor *dstrow = dirmap.col[y];
-      struct rgbcolor *srcrow = p->col[y];
+      guchar *dstrow = &dirmap.col[y*dirmap.width*3];
+      guchar *srcrow = &p->col[y*p->width*3];
       for(x = 0; x < dirmap.width; x++) {
-	dstrow[x].r = (srcrow[x].r + srcrow[x].g + srcrow[x].b) / 3;
+	dstrow[x*3] = (srcrow[x*3] + srcrow[x*3+1] + srcrow[x*3+2]) / 3;
       }
     }
   } else if(runningvals.orienttype == 1) { /* Radius */
     newppm(&dirmap, p->width, p->height);
     for(y = 0; y < dirmap.height; y++) {
-      struct rgbcolor *dstrow = dirmap.col[y];
+      guchar *dstrow = &dirmap.col[y*dirmap.width*3];
       double ysqr = (cy-y)*(cy-y);
       for(x = 0; x < dirmap.width; x++) {
-	dstrow[x].r = sqrt((cx-x)*(cx-x)+ysqr) * 255 / maxdist;
+	dstrow[x*3] = sqrt((cx-x)*(cx-x)+ysqr) * 255 / maxdist;
       }
     }
   } else if(runningvals.orienttype == 3) { /* Radial */
     newppm(&dirmap, p->width, p->height);
     for(y = 0; y < dirmap.height; y++) {
-      struct rgbcolor *dstrow = dirmap.col[y];
+      guchar *dstrow = &dirmap.col[y*dirmap.width*3];
       for(x = 0; x < dirmap.width; x++) {
-	dstrow[x].r = (M_PI + atan2(cy-y, cx-x)) * 255.0 / (M_PI*2);
+	dstrow[x*3] = (M_PI + atan2(cy-y, cx-x)) * 255.0 / (M_PI*2);
       }
     }
   } else if(runningvals.orienttype == 4) { /* Flowing */
@@ -476,24 +480,24 @@ void repaint(struct ppm *p, struct ppm *a)
   } else if(runningvals.orienttype == 5) { /* Hue */
     newppm(&dirmap, p->width, p->height);
     for(y = 0; y < dirmap.height; y++) {
-      struct rgbcolor *dstrow = dirmap.col[y];
-      struct rgbcolor *srcrow = p->col[y];
+      guchar *dstrow = &dirmap.col[y*dirmap.width*3];
+      guchar *srcrow = &p->col[y*p->width*3];
       for(x = 0; x < dirmap.width; x++) {
-	dstrow[x].r = gethue(&srcrow[x]);
+	dstrow[x*3] = gethue(&srcrow[x*3]);
       }
     }
   } else if(runningvals.orienttype == 6) {
-    struct rgbcolor tmpcol = {0,0,0};
+    guchar tmpcol[3] = {0,0,0};
     newppm(&dirmap, p->width, p->height);
-    fill(&dirmap, &tmpcol);
+    fill(&dirmap, tmpcol);
 
   } else if(runningvals.orienttype == 7) { /* Manual */
     newppm(&dirmap, p->width-maxbrushwidth*2, p->height-maxbrushheight*2);
     for(y = 0; y < dirmap.height; y++) {
-      struct rgbcolor *dstrow = dirmap.col[y];
+      guchar *dstrow = &dirmap.col[y*dirmap.width*3];
       double tmpy = y / (double)dirmap.height;
       for(x = 0; x < dirmap.width; x++) {
-	dstrow[x].r = pixval(90-getdir(x / (double)dirmap.width, tmpy, 1));
+	dstrow[x*3] = pixval(90-getdir(x / (double)dirmap.width, tmpy, 1));
       }
     }
     edgepad(&dirmap, maxbrushwidth, maxbrushwidth, maxbrushheight, maxbrushheight);
@@ -502,27 +506,27 @@ void repaint(struct ppm *p, struct ppm *a)
   if(runningvals.sizetype == 0) { /* Value */
     newppm(&sizmap, p->width, p->height);
     for(y = 0; y < sizmap.height; y++) {
-      struct rgbcolor *dstrow = sizmap.col[y];
-      struct rgbcolor *srcrow = p->col[y];
+      guchar *dstrow = &sizmap.col[y*sizmap.width*3];
+      guchar *srcrow = &p->col[y*p->width*3];
       for(x = 0; x < sizmap.width; x++) {
-	dstrow[x].r = (srcrow[x].r + srcrow[x].g + srcrow[x].b) / 3;
+	dstrow[x*3] = (srcrow[x*3] + srcrow[x*3+1] + srcrow[x*3+2]) / 3;
       }
     }
   } else if(runningvals.sizetype == 1) { /* Radius */
     newppm(&sizmap, p->width, p->height);
     for(y = 0; y < sizmap.height; y++) {
-      struct rgbcolor *dstrow = sizmap.col[y];
+      guchar *dstrow = &sizmap.col[y*sizmap.width*3];
       double ysqr = (cy-y)*(cy-y);
       for(x = 0; x < sizmap.width; x++) {
-	dstrow[x].r = sqrt((cx-x)*(cx-x)+ysqr) * 255 / maxdist;
+	dstrow[x*3] = sqrt((cx-x)*(cx-x)+ysqr) * 255 / maxdist;
       }
     }
   } else if(runningvals.sizetype == 3) { /* Radial */
     newppm(&sizmap, p->width, p->height);
     for(y = 0; y < sizmap.height; y++) {
-      struct rgbcolor *dstrow = sizmap.col[y];
+      guchar *dstrow = &sizmap.col[y*sizmap.width*3];
       for(x = 0; x < sizmap.width; x++) {
-	dstrow[x].r = (M_PI + atan2(cy-y, cx-x)) * 255.0 / (M_PI*2);
+	dstrow[x*3] = (M_PI + atan2(cy-y, cx-x)) * 255.0 / (M_PI*2);
       }
     }
   } else if(runningvals.sizetype == 4) { /* Flowing */
@@ -537,24 +541,24 @@ void repaint(struct ppm *p, struct ppm *a)
   } else if(runningvals.sizetype == 5) { /* Hue */
     newppm(&sizmap, p->width, p->height);
     for(y = 0; y < sizmap.height; y++) {
-      struct rgbcolor *dstrow = sizmap.col[y];
-      struct rgbcolor *srcrow = p->col[y];
+      guchar *dstrow = &sizmap.col[y*sizmap.width*3];
+      guchar *srcrow = &p->col[y*p->width*3];
       for(x = 0; x < sizmap.width; x++) {
-	dstrow[x].r = gethue(&srcrow[x]);
+	dstrow[x*3] = gethue(&srcrow[x*3]);
       }
     }
   } else if(runningvals.sizetype == 6) {
-    struct rgbcolor tmpcol = {0,0,0};
+    guchar tmpcol[3] = {0,0,0};
     newppm(&sizmap, p->width, p->height);
-    fill(&sizmap, &tmpcol);
+    fill(&sizmap, tmpcol);
 
   } else if(runningvals.sizetype == 7) { /* Manual */
     newppm(&sizmap, p->width-maxbrushwidth*2, p->height-maxbrushheight*2);
     for(y = 0; y < sizmap.height; y++) {
-      struct rgbcolor *dstrow = sizmap.col[y];
+      guchar *dstrow = &sizmap.col[y*sizmap.width*3];
       double tmpy = y / (double)sizmap.height;
       for(x = 0; x < sizmap.width; x++) {
-	dstrow[x].r = 255 * (1.0 - getsiz(x / (double)sizmap.width, tmpy, 1));
+	dstrow[x*3] = 255 * (1.0 - getsiz(x / (double)sizmap.width, tmpy, 1));
       }
     }
     edgepad(&sizmap, maxbrushwidth, maxbrushwidth, maxbrushheight, maxbrushheight);
@@ -639,7 +643,7 @@ void repaint(struct ppm *p, struct ppm *a)
     }
 
     if(img_has_alpha) {
-      if(a->col[ty][tx].r > 128)
+      if(a->col[ty*a->width*3+tx*3] > 128)
 	continue;
     }
 
@@ -655,7 +659,7 @@ void repaint(struct ppm *p, struct ppm *a)
     case 4: /* Flowing */
     case 5: /* Hue */
     case 7: /* Manual */
-      on = runningvals.orientnum * dirmap.col[ty][tx].r / 255;
+      on = runningvals.orientnum * dirmap.col[ty*dirmap.width*3+tx*3] / 255;
       break;
     case 6: /* Adaptive */
       break; /* Handled below */
@@ -675,7 +679,7 @@ void repaint(struct ppm *p, struct ppm *a)
     case 4: /* Flowing */
     case 5: /* Hue */
     case 7: /* Manual */
-      sn = runningvals.sizenum * sizmap.col[ty][tx].r / 255;
+      sn = runningvals.sizenum * sizmap.col[ty*sizmap.width*3+tx*3] / 255;
       break;
     case 6: /* Adaptive */
       break; /* Handled below */
@@ -715,14 +719,15 @@ void repaint(struct ppm *p, struct ppm *a)
     /* Calculate color - avg. of in-brush pixels */
     r = g = b = 0;
     for(y = 0; y < brush->height; y++) {
-      struct rgbcolor *row = p->col[ty+y];
+      guchar *row = &p->col[(ty+y)*p->width*3];
       for(x = 0; x < brush->width; x++) {
+	int k = (tx+x) * 3;
 	double v;
-	if((h = brush->col[y][x].r)) {
+	if((h = brush->col[y*brush->width*3+x*3])) {
 	  v = h / 255.0;
-	  r += row[tx+x].r * v;
-	  g += row[tx+x].g * v;
-	  b += row[tx+x].b * v;
+	  r += row[k+0] * v;
+	  g += row[k+1] * v;
+	  b += row[k+2] * v;
 	}
       }
     }
@@ -808,23 +813,24 @@ void repaint(struct ppm *p, struct ppm *a)
       double h, v;
       int px = x % tmp.width, py;
       for(y = 0; y < p->height; y++) {
+	int k = y * tmp.width * 3 + x * 3;
 	py = y % tmp.height;
 	if(runningvals.paperoverlay)
-	  h = (tmp.col[py][px].r-128) * relief;
+	  h = (tmp.col[py*tmp.width*3+px*3]-128) * relief;
 	else
-	  h = (tmp.col[py][px].r - (int)tmp.col[(py+1)%tmp.height][(px+1)%tmp.width].r) / -2.0 * relief;
+	  h = (tmp.col[py*tmp.width*3+px*3] - (int)tmp.col[((py+1)%tmp.height)*tmp.width*3+((px+1)%tmp.width)*3]) / -2.0 * relief;
 	if(h <= 0.0) {
 	  v = 1.0 + h/128.0;
 	  if(v < 0.0) v = 0.0; else if(v > 1.0) v = 1.0;
-	  p->col[y][x].r *= v;
-	  p->col[y][x].g *= v;
-	  p->col[y][x].b *= v;
+	  p->col[k+0] *= v;
+	  p->col[k+1] *= v;
+	  p->col[k+2] *= v;
 	} else {
 	  v = h/128.0;
 	  if(v < 0.0) v = 0.0; else if(v > 1.0) v = 1.0;
-	  p->col[y][x].r = p->col[y][x].r * (1.0-v) + 255 * v;
-	  p->col[y][x].g = p->col[y][x].g * (1.0-v) + 255 * v;
-	  p->col[y][x].b = p->col[y][x].b * (1.0-v) + 255 * v;
+	  p->col[k+0] = p->col[k+0] * (1.0-v) + 255 * v;
+	  p->col[k+1] = p->col[k+1] * (1.0-v) + 255 * v;
+	  p->col[k+2] = p->col[k+2] * (1.0-v) + 255 * v;
 	}
       }
     }

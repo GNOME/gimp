@@ -21,19 +21,21 @@ void drawalpha(struct ppm *p, struct ppm *a)
   int x, y, g;
   double v;
   int gridsize = 16;
+  int rowstride = p->width * 3;
 
   for(y = 0; y < p->height; y++) {
     for(x = 0; x < p->width; x++) {
-      if(!a->col[y][x].r) continue;
-      v = 1.0 - a->col[y][x].r / 255.0;
+      int k = y*rowstride + x*3;
+      if(!a->col[k]) continue;
+      v = 1.0 - a->col[k] / 255.0;
       g = ((x/gridsize+y/gridsize)%2)*60+100;
-      p->col[y][x].r *= v;
-      p->col[y][x].g *= v;
-      p->col[y][x].b *= v;
+      p->col[k+0] *= v;
+      p->col[k+1] *= v;
+      p->col[k+2] *= v;
       v = 1.0-v;
-      p->col[y][x].r += g*v;
-      p->col[y][x].g += g*v;
-      p->col[y][x].b += g*v;
+      p->col[k+0] += g*v;
+      p->col[k+1] += g*v;
+      p->col[k+2] += g*v;
     }
   }
   
@@ -42,7 +44,7 @@ void drawalpha(struct ppm *p, struct ppm *a)
 
 void updatepreviewprev(GtkWidget *wg, void *d)
 {
-  int i, j;
+  int i;
   char buf[PREVIEWSIZE*3];
   static struct ppm p = {0,0,NULL};
   static struct ppm a = {0,0,NULL};
@@ -83,9 +85,8 @@ void updatepreviewprev(GtkWidget *wg, void *d)
 
     for(i = 0; i < PREVIEWSIZE; i++) {
       memset(buf,0,PREVIEWSIZE*3);
-      for(j = 0; j < p.width; j++)
-	gtk_preview_draw_row(GTK_PREVIEW(previewprev), (guchar *)p.col[i],
-			     0, i, PREVIEWSIZE);
+      //for(j = 0; j < p.width; j++)
+      gtk_preview_draw_row(GTK_PREVIEW(previewprev), (guchar *)&p.col[i*PREVIEWSIZE*3], 0, i, PREVIEWSIZE);
     }
     killppm(&p);
     if(img_has_alpha)

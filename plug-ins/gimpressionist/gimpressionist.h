@@ -1,7 +1,7 @@
 #include <gtk/gtk.h>
 
 #define PLUG_IN_NAME "plug_in_gimpressionist"
-#define PLUG_IN_VERSION "v0.99.5, August 1999"
+#define PLUG_IN_VERSION "v0.99.6, August 1999"
 
 #ifndef DEFAULTPATH
 #define DEFAULTPATH "~/.gimp/gimpressionist:/usr/local/share/gimp/gimpressionist"
@@ -80,6 +80,8 @@ typedef struct {
 
   int generalshadowdepth;
   int generalshadowblur;
+
+  int coloracc;
 } gimpressionist_vals_t;
 
 /* Globals */
@@ -135,6 +137,7 @@ extern GtkObject *generalshadowadjust;
 extern GtkObject *generalshadowdepth;
 extern GtkObject *generalshadowblur;
 extern GtkObject *devthreshadjust;
+extern GtkObject *coloraccadjust;
 
 extern GtkWidget *placecenter;
 

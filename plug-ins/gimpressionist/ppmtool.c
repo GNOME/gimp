@@ -45,10 +45,6 @@ void *safemalloc(int len)
 
 void killppm(struct ppm *p)
 {
-  int y;
-  for(y = 0; y < p->height; y++) {
-    free(p->col[y]);
-  }
   free(p->col);
   p->col = NULL;
   p->height = p->width = 0;
@@ -57,14 +53,8 @@ void killppm(struct ppm *p)
 
 void newppm(struct ppm *p, int xs, int ys)
 {
-  int x,y;
-  struct rgbcolor bgcol = {0,0,0};
-
-#ifdef DEBUG
-  if((xs < 1) || (ys < 1)) {
-    fprintf(stderr, "Illegal size (%dx%d) specified!%c\n",xs, ys, 7);
-  }
-#endif
+  int x;
+  guchar bgcol[3] = {0,0,0};
 
   if(xs < 1)
     xs = 1;
@@ -73,24 +63,22 @@ void newppm(struct ppm *p, int xs, int ys)
 
   p->width = xs;
   p->height = ys;
-  p->col = (struct rgbcolor **)safemalloc(p->height * sizeof(struct rgbcolor *));
-  for(y = 0; y < p->height; y++) {
-    struct rgbcolor *row = p->col[y] = (struct rgbcolor *)safemalloc(p->width * sizeof(struct rgbcolor));
-    for(x = 0; x < p->width; x++) {
-      row[x].r = bgcol.r;
-      row[x].g = bgcol.g;
-      row[x].b = bgcol.b;
-    }
+  p->col = safemalloc(xs * 3 * ys);
+  for(x = 0; x < xs * 3 * ys; x += 3) {
+    p->col[x+0] = bgcol[0];
+    p->col[x+1] = bgcol[1];
+    p->col[x+2] = bgcol[2];
   }
 }
 
-void getrgb(struct ppm *s, float xo, float yo, struct rgbcolor *d)
+void getrgb(struct ppm *s, float xo, float yo, guchar *d)
 {
   float ix, iy;
   int x1, x2, y1, y2;
   float x1y1, x2y1, x1y2, x2y2;
   float r, g, b;
   int bail = 0;
+  int rowstride = s->width * 3;
 
   if(xo < 0.0) bail=1;
   else if(xo >= s->width-1) { xo = s->width-1; } /* bail=1; */
@@ -98,7 +86,7 @@ void getrgb(struct ppm *s, float xo, float yo, struct rgbcolor *d)
   else if(yo >= s->height-1) { yo= s->height-1; } /* bail=1; */
 
   if(bail) {
-    d->r = d->g = d->b = 0;
+    d[0] = d[1] = d[2] = 0;
     return;
   }
 
@@ -121,34 +109,25 @@ void getrgb(struct ppm *s, float xo, float yo, struct rgbcolor *d)
   x1y2 = (1.0-xo+ix)*(yo-iy);
   x2y2 = (xo-ix)*(yo-iy);
 
-  r = s->col[y1][x1].r * x1y1;
-  if(x2y1 > 0.0)
-    r += s->col[y1][x2].r * x2y1;
-  if(x1y2 > 0.0)
-    r += s->col[y2][x1].r * x1y2;
-  if(x2y2 > 0.0)
-    r += s->col[y2][x2].r * x2y2;
+  r = s->col[y1*rowstride + x1*3 + 0] * x1y1;
+  g = s->col[y1*rowstride + x1*3 + 1] * x1y1;
+  b = s->col[y1*rowstride + x1*3 + 2] * x1y1;
 
-  g = s->col[y1][x1].g * x1y1;
-  if(x2y1 > 0.0)
-    g += s->col[y1][x2].g * x2y1;
-  if(x1y2 > 0.0)
-    g += s->col[y2][x1].g * x1y2;
-  if(x2y2 > 0.0)
-    g += s->col[y2][x2].g * x2y2;
+  if(x2y1 > 0.0) r += s->col[y1*rowstride + x2*3 + 0] * x2y1;
+  if(x2y1 > 0.0) g += s->col[y1*rowstride + x2*3 + 1] * x2y1;
+  if(x2y1 > 0.0) b += s->col[y1*rowstride + x2*3 + 2] * x2y1;
 
-  b = s->col[y1][x1].b * x1y1;
-  if(x2y1 > 0.0)
-    b += s->col[y1][x2].b * x2y1;
-  if(x1y2 > 0.0)
-    b += s->col[y2][x1].b * x1y2;
-  if(x2y2 > 0.0)
-    b += s->col[y2][x2].b * x2y2;
+  if(x1y2 > 0.0) r += s->col[y2*rowstride + x1*3 + 0] * x1y2;
+  if(x1y2 > 0.0) g += s->col[y2*rowstride + x1*3 + 1] * x1y2;
+  if(x1y2 > 0.0) b += s->col[y2*rowstride + x1*3 + 2] * x1y2;
 
-  d->r = r;
-  d->g = g;
-  d->b = b;
+  if(x2y2 > 0.0) r += s->col[y2*rowstride + x2*3 + 0] * x2y2;
+  if(x2y2 > 0.0) g += s->col[y2*rowstride + x2*3 + 1] * x2y2;
+  if(x2y2 > 0.0) b += s->col[y2*rowstride + x2*3 + 2] * x2y2;
 
+  d[0] = r;
+  d[1] = g;
+  d[2] = b;
 }
 
 
@@ -161,8 +140,9 @@ void resize(struct ppm *p, int nx, int ny)
 
   newppm(&tmp, nx, ny);
   for(y = 0; y < ny; y++) {
+    guchar *row = tmp.col + y * tmp.width * 3;
     for(x = 0; x < nx; x++) {
-      getrgb(p, x*xs, y*ys, &tmp.col[y][x]);
+      getrgb(p, x*xs, y*ys, &row[x*3]);
     }
   }
   killppm(p);
@@ -187,7 +167,7 @@ void resize_fast(struct ppm *p, int nx, int ny)
   for(y = 0; y < ny; y++) {
     for(x = 0; x < nx; x++) {
       int rx = x*xs, ry = y*ys;
-      memcpy(&tmp.col[y][x], &p->col[ry][rx], 3);
+      memcpy(&tmp.col[y*tmp.width*3+x*3], &p->col[ry*p->width*3+rx*3], 3);
     }
   }
   killppm(p);
@@ -210,7 +190,7 @@ struct _BrushHeader
 
 void msb2lsb(unsigned int *i)
 {
-  unsigned char *p = (unsigned char *)i, c;
+  guchar *p = (guchar *)i, c;
   c = p[1]; p[1] = p[2]; p[2] = c;
   c = p[0]; p[0] = p[3]; p[3] = c;
 }
@@ -219,7 +199,7 @@ void loadgbr(char *fn, struct ppm *p)
 {
   FILE *f;
   struct _BrushHeader hdr;
-  unsigned char *ptr;
+  guchar *ptr;
   int x, y;
 
   f = fopen(fn, "rb");
@@ -248,7 +228,8 @@ void loadgbr(char *fn, struct ppm *p)
   for(y = 0; y < p->height; y++) {
     fread(ptr, p->width, 1, f);
     for(x = 0; x < p->width; x++) {
-      p->col[y][x].r = p->col[y][x].g = p->col[y][x].b = ptr[x];
+      int k = y*p->width*3 + x*3;
+      p->col[k+0] = p->col[k+1] = p->col[k+2] = ptr[x];
     }
   }
   fclose(f);
@@ -258,7 +239,7 @@ void loadgbr(char *fn, struct ppm *p)
 void loadppm(char *fn, struct ppm *p)
 {
   char line[200];
-  int x,y, pgm = 0, c;
+  int y, pgm = 0;
   FILE *f;
 
   if(!strcmp(&fn[strlen(fn)-4], ".gbr")) {
@@ -299,41 +280,37 @@ void loadppm(char *fn, struct ppm *p)
     return;
     /* fatal("Aborting!"); */
   }
-  p->col = (struct rgbcolor **)safemalloc(p->height * sizeof(struct rgbcolor *));
+  p->col = safemalloc(p->height * p->width * 3);
 
-  if(!pgm)
-    for(y = 0; y < p->height; y++) {
-      p->col[y] = (struct rgbcolor *)safemalloc(p->width * sizeof(struct rgbcolor));
-      fread(p->col[y], p->width * sizeof(struct rgbcolor), 1, f);
-  } else /* if pgm */ {
-    for(y = 0; y < p->height; y++) {
-      p->col[y] = (struct rgbcolor *)safemalloc(p->width * sizeof(struct rgbcolor));
-      fread(p->col[y], p->width, 1, f);
-      for(x = p->width-1; x>=0; x--) {
-	c = *((unsigned char *)(p->col[y])+x);
-	p->col[y][x].r = p->col[y][x].g = p->col[y][x].b = c;
-      }
+  if(!pgm) {
+    fread(p->col, p->height * 3 * p->width, 1, f);
+  } else {
+    guchar *tmpcol = safemalloc(p->width * p->height);
+    fread(tmpcol, p->height * p->width, 1, f);
+    for(y = 0; y < p->width * p->height * 3; y++) {
+      p->col[y] = tmpcol[y/3];
     }
   }
   fclose(f);
 }
 
-void fill(struct ppm *p, struct rgbcolor *c)
+void fill(struct ppm *p, guchar *c)
 {
   int x, y;
  
-  if((c->r == c->g) && (c->r == c->b)) {
-    unsigned char col = c->r;
+  if((c[0] == c[1]) && (c[0] == c[2])) {
+    guchar col = c[0];
     for(y = 0; y < p->height; y++) {
-      memset(p->col[y], col, p->width*3);
+      memset(p->col + y*p->width*3, col, p->width*3);
     }
   } else {
     for(y = 0; y < p->height; y++) {
-      struct rgbcolor *row = p->col[y];
+      guchar *row = p->col + y * p->width * 3;
       for(x = 0; x < p->width; x++) {
-	row[x].r = c->r;
-	row[x].g = c->g;
-	row[x].b = c->b;
+	int k = x * 3;
+	row[k+0] = c[0];
+	row[k+1] = c[1];
+	row[k+2] = c[2];
       }
     }
   }
@@ -341,16 +318,12 @@ void fill(struct ppm *p, struct rgbcolor *c)
 
 void copyppm(struct ppm *s, struct ppm *p)
 {
-  int y;
   if(p->col)
     killppm(p);
   p->width = s->width;
   p->height = s->height;
-  p->col = (struct rgbcolor **)safemalloc(p->height * sizeof(struct rgbcolor *));
-  for(y = 0; y < p->height; y++) {
-    p->col[y] = (struct rgbcolor *)safemalloc(p->width * sizeof(struct rgbcolor));
-    memcpy(p->col[y], s->col[y], p->width * sizeof(struct rgbcolor));
-  }
+  p->col = safemalloc(p->width * 3 * p->height);
+  memcpy(p->col, s->col, p->width * 3 * p->height);
 }
 
 void freerotate(struct ppm *p, double amount)
@@ -360,6 +333,7 @@ void freerotate(struct ppm *p, double amount)
   double R, a;
   struct ppm tmp = {0,0,NULL};
   double f = amount*M_PI*2/360.0;
+  int rowstride = p->width * 3;
 
   a = p->width/(float)p->height;
   R = p->width<p->height?p->width/2:p->height/2;
@@ -376,7 +350,7 @@ void freerotate(struct ppm *p, double amount)
 
       nx = (p->width/2.0 + cos(d-f) * r);
       ny = (p->height/2.0 + sin(d-f) * r);
-      getrgb(p, nx, ny, &tmp.col[y][x]);
+      getrgb(p, nx, ny, tmp.col + y*rowstride+x*3);
     }
   }
   killppm(p);
@@ -389,11 +363,15 @@ void crop(struct ppm *p, int lx, int ly, int hx, int hy)
 {
   struct ppm tmp = {0,0,NULL};
   int x, y;
+  int srowstride = p->width * 3;
+  int drowstride;
 
   newppm(&tmp, hx-lx, hy-ly);
+  drowstride = tmp.width * 3;
   for(y = ly; y < hy; y++)
     for(x = lx; x < hx; x++)
-      memcpy(&tmp.col[y-ly][x-lx], &p->col[y][x], sizeof(struct rgbcolor));
+      memcpy(&tmp.col[(y-ly)*drowstride+(x-lx)*3],
+	     &p->col[y*srowstride+x*3], 3);
   killppm(p);
   p->col = tmp.col;
   p->width = tmp.width;
@@ -404,15 +382,17 @@ void autocrop(struct ppm *p, int room)
 {
   int lx = 0, hx = p->width, ly = 0, hy = p->height;
   int x, y, n = 0;
-  struct rgbcolor tc;
+  guchar tc[3];
   struct ppm tmp = {0,0,NULL};
+  int rowstride = p->width * 3;
+  int drowstride;
 
   /* upper */
-  memcpy(&tc, &p->col[0][0], sizeof(struct rgbcolor));
+  memcpy(&tc, p->col, 3);
   for(y = 0; y < p->height; y++) {
     n = 0;
     for(x = 0; x < p->width; x++) {
-      if(memcmp(&tc, &p->col[y][x], sizeof(struct rgbcolor))) { n++; break; }
+      if(memcmp(&tc, &p->col[y*rowstride+x*3], 3)) { n++; break; }
     }
     if(n) break;
   }
@@ -420,11 +400,11 @@ void autocrop(struct ppm *p, int room)
   /* printf("ly = %d\n", ly); */
 
   /* lower */
-  memcpy(&tc, &p->col[p->height-1][0], sizeof(struct rgbcolor));
+  memcpy(&tc, &p->col[(p->height-1)*rowstride], 3);
   for(y = p->height-1; y >= 0; y--) {
     n = 0;
     for(x = 0; x < p->width; x++) {
-      if(memcmp(&tc, &p->col[y][x], sizeof(struct rgbcolor))) { n++; break; }
+      if(memcmp(&tc, &p->col[y*rowstride+x*3], 3)) { n++; break; }
     }
     if(n) break;
   }
@@ -433,11 +413,11 @@ void autocrop(struct ppm *p, int room)
   /* printf("hy = %d\n", hy); */
 
   /* left */
-  memcpy(&tc, &p->col[ly][0], sizeof(struct rgbcolor));
+  memcpy(&tc, &p->col[ly*rowstride], 3);
   for(x = 0; x < p->width; x++) {
     n = 0;
     for(y = ly; y <= hy && y < p->height; y++) {
-      if(memcmp(&tc, &p->col[y][x], sizeof(struct rgbcolor))) { n++; break; }
+      if(memcmp(&tc, &p->col[y*rowstride+x*3], 3)) { n++; break; }
     }
     if(n) break;
   }
@@ -445,11 +425,11 @@ void autocrop(struct ppm *p, int room)
   /* printf("lx = %d\n", lx); */
 
   /* right */
-  memcpy(&tc, &p->col[ly][p->width-1], sizeof(struct rgbcolor));
+  memcpy(&tc, &p->col[ly*rowstride + (p->width-1)*3], 3);
   for(x = p->width-1; x >= 0; x--) {
     n = 0;
     for(y = ly; y <= hy; y++) {
-      if(memcmp(&tc, &p->col[y][x], sizeof(struct rgbcolor))) { n++; break; }
+      if(memcmp(&tc, &p->col[y*rowstride+x*3], 3)) { n++; break; }
     }
     if(n) break;
   }
@@ -462,47 +442,53 @@ void autocrop(struct ppm *p, int room)
   hy += room; if(hy>=p->height) hy = p->height-1;
 
   newppm(&tmp, hx-lx, hy-ly);
+  drowstride = tmp.width * 3;
   for(y = ly; y < hy; y++)
     for(x = lx; x < hx; x++)
-      memcpy(&tmp.col[y-ly][x-lx], &p->col[y][x], sizeof(struct rgbcolor));
+      memcpy(&tmp.col[(y-ly)*drowstride+(x-lx)*3],
+	     &p->col[y*rowstride+x*3], 3);
   killppm(p);
   p->col = tmp.col;
   p->width = tmp.width;
   p->height = tmp.height;
 }
 
-void pad(struct ppm *p, int left,int right, int top, int bottom, struct rgbcolor *bg)
+void pad(struct ppm *p, int left,int right, int top, int bottom, guchar *bg)
 {
   int x, y;
   struct ppm tmp = {0,0,NULL};
 
   newppm(&tmp, p->width+left+right, p->height+top+bottom);
   for(y = 0; y < tmp.height; y++) {
-    struct rgbcolor *row, *srcrow;
-    row = tmp.col[y];
+    guchar *row, *srcrow;
+    row = tmp.col + y * tmp.width * 3;
     if((y < top) || (y >= tmp.height-bottom)) {
       for(x = 0; x < tmp.width; x++) {
-        row[x].r = bg->r;
-        row[x].g = bg->g;
-        row[x].b = bg->b;
+	int k = x * 3;
+        row[k+0] = bg[0];
+        row[k+1] = bg[1];
+        row[k+2] = bg[2];
       }
       continue;
     }
-    srcrow = p->col[y-top];
+    srcrow = p->col + (y-top) * p->width * 3;
     for(x = 0; x < left; x++) {
-      row[x].r = bg->r;
-      row[x].g = bg->g;
-      row[x].b = bg->b;
+      int k = x * 3;
+      row[k+0] = bg[0];
+      row[k+1] = bg[1];
+      row[k+2] = bg[2];
     }
     for(; x < tmp.width-right; x++) {
-      tmp.col[y][x].r = srcrow[x-left].r;
-      tmp.col[y][x].g = srcrow[x-left].g;
-      tmp.col[y][x].b = srcrow[x-left].b;
+      int k = y * tmp.width * 3 + x * 3;
+      tmp.col[k+0] = srcrow[(x-left)*3+0];
+      tmp.col[k+1] = srcrow[(x-left)*3+1];
+      tmp.col[k+2] = srcrow[(x-left)*3+2];
     }
     for(; x < tmp.width; x++) {
-      row[x].r = bg->r;
-      row[x].g = bg->g;
-      row[x].b = bg->b;
+      int k = x * 3;
+      row[k+0] = bg[0];
+      row[k+1] = bg[1];
+      row[k+2] = bg[2];
     }
   }
   killppm(p);
@@ -513,11 +499,9 @@ void pad(struct ppm *p, int left,int right, int top, int bottom, struct rgbcolor
 
 void saveppm(struct ppm *p, char *fn)
 {
-  int y;
   FILE *f = fopen(fn, "wb");
   fprintf(f, "P6\n%d %d\n255\n", p->width, p->height);
-  for(y = 0; y < p->height; y++)
-    fwrite(p->col[y], p->width, 3, f);
+  fwrite(p->col, p->width * 3 * p->height, 1, f);
   fclose(f);
 }
 
@@ -525,33 +509,36 @@ void edgepad(struct ppm *p, int left,int right, int top, int bottom)
 {
   int x,y;
   struct ppm tmp = {0,0,NULL};
-  struct rgbcolor testcol = {0,255,0};
+  guchar testcol[3] = {0,255,0};
+  int srowstride, drowstride;
 
   newppm(&tmp, p->width+left+right, p->height+top+bottom);
-  fill(&tmp, &testcol);
+  fill(&tmp, testcol);
+
+  srowstride = p->width * 3;
+  drowstride = tmp.width * 3;
+  
   for(y = 0; y < top; y++) {
-    memcpy(&tmp.col[y][left], &p->col[0][0], p->width * sizeof(struct rgbcolor));
+    memcpy(&tmp.col[y*drowstride+left*3], p->col, srowstride);
   }
   for(; y-top < p->height; y++) {
-    memcpy(&tmp.col[y][left], &p->col[y-top][0], p->width * sizeof(struct rgbcolor));
+    memcpy(&tmp.col[y*drowstride+left*3], p->col + (y-top)*srowstride, srowstride);
   }
   for(; y < tmp.height; y++) {
-    memcpy(&tmp.col[y][left], &p->col[p->height-1][0], p->width * sizeof(struct rgbcolor));
+    memcpy(&tmp.col[y*drowstride+left*3], p->col + (p->height-1)*srowstride, srowstride);
   }
   for(y = 0; y < tmp.height; y++) {
-    struct rgbcolor *col;
-    struct rgbcolor *tmprow;
+    guchar *col, *tmprow;
 
-    tmprow = tmp.col[y];
+    tmprow = tmp.col + y*drowstride;
+    col = tmp.col + y*drowstride + left*3;
 
-    col = &tmp.col[y][left];
     for(x = 0; x < left; x++) {
-      memcpy(&tmprow[x], col, sizeof(struct rgbcolor));
+      memcpy(&tmprow[x*3], col, 3);
     }
-      
-    col = &tmp.col[y][tmp.width-right-1];
+    col = tmp.col + y*drowstride + (tmp.width-right-1)*3;
     for(x = 0; x < right; x++) {
-      memcpy(&tmprow[x+tmp.width-right-1], col, sizeof(struct rgbcolor));
+      memcpy(&tmprow[(x+tmp.width-right-1)*3], col, 3);
     }
   }
   killppm(p);
@@ -562,69 +549,42 @@ void edgepad(struct ppm *p, int left,int right, int top, int bottom)
 
 void ppmgamma(struct ppm *p, float e, int r, int g, int b)
 {
-  int x, y;
-  unsigned char xlat[256];
+  int x, l = p->width * 3 * p->height;
+  guchar xlat[256], *pix;
   if(e > 0.0) for(x = 0; x < 256; x++) {
     xlat[x] = pow((x/255.0),(1.0/e))*255.0;
   } else if(e < 0.0) for(x = 0; x < 256; x++) {
     xlat[255-x] = pow((x/255.0),(-1.0/e))*255.0;
   } else for(x = 0; x < 256; x++) { xlat[x] = 0; }
 
-  if(r) for(y = 0; y < p->height; y++) {
-    struct rgbcolor *row = p->col[y];
-    for(x = 0; x < p->width; x++) {
-      row[x].r = xlat[row[x].r];
-    }
-  }
-  if(g) for(y = 0; y < p->height; y++) {
-    struct rgbcolor *row = p->col[y];
-    for(x = 0; x < p->width; x++) {
-      row[x].g = xlat[row[x].g];
-    }
-  }
-  if(b) for(y = 0; y < p->height; y++) {
-    struct rgbcolor *row = p->col[y];
-    for(x = 0; x < p->width; x++) {
-      row[x].b = xlat[row[x].b];
-    }
-  }
+  pix = p->col;
+  if(r) for(x = 0; x < l; x += 3) pix[x] = xlat[pix[x]];
+  if(g) for(x = 1; x < l; x += 3) pix[x] = xlat[pix[x]];
+  if(b) for(x = 2; x < l; x += 3) pix[x] = xlat[pix[x]];
 }
 
 void ppmbrightness(struct ppm *p, float e, int r, int g, int b)
 {
-  int x, y;
-  unsigned char xlat[256];
+  int x, l = p->width * 3 * p->height;
+  guchar xlat[256], *pix;
   for(x = 0; x < 256; x++) {
     xlat[x] = x*e;
   } 
 
-  if(r) for(y = 0; y < p->height; y++) {
-    struct rgbcolor *row = p->col[y];
-    for(x = 0; x < p->width; x++) {
-      row[x].r = xlat[row[x].r];
-    }
-  }
-  if(g) for(y = 0; y < p->height; y++) {
-    struct rgbcolor *row = p->col[y];
-    for(x = 0; x < p->width; x++) {
-      row[x].g = xlat[row[x].g];
-    }
-  }
-  if(b) for(y = 0; y < p->height; y++) {
-    struct rgbcolor *row = p->col[y];
-    for(x = 0; x < p->width; x++) {
-      row[x].b = xlat[row[x].b];
-    }
-  }
+  pix = p->col;
+  if(r) for(x = 0; x < l; x += 3) pix[x] = xlat[pix[x]];
+  if(g) for(x = 1; x < l; x += 3) pix[x] = xlat[pix[x]];
+  if(b) for(x = 2; x < l; x += 3) pix[x] = xlat[pix[x]];
 }
 
 
 void blur(struct ppm *p, int xrad, int yrad)
 {
-  int x, y;
+  int x, y, k;
   int tx, ty;
   struct ppm tmp = {0,0,NULL};
   int r, g, b, n;
+  int rowstride = p->width * 3;
 
   newppm(&tmp, p->width, p->height);
   for(y = 0; y < p->height; y++) {
@@ -636,15 +596,17 @@ void blur(struct ppm *p, int xrad, int yrad)
           if(ty>=p->height) continue;
           if(tx<0) continue;
           if(tx>=p->width) continue;
-          r += p->col[ty][tx].r;
-          g += p->col[ty][tx].g;
-          b += p->col[ty][tx].b;
+	  k = ty*rowstride + tx*3;
+          r += p->col[k+0];
+          g += p->col[k+1];
+          b += p->col[k+2];
           n++;
         }
       }
-      tmp.col[y][x].r = r / n;
-      tmp.col[y][x].g = g / n;
-      tmp.col[y][x].b = b / n;
+      k = y*rowstride + x*3;
+      tmp.col[k+0] = r / n;
+      tmp.col[k+1] = g / n;
+      tmp.col[k+2] = b / n;
     }
   }
   killppm(p);
@@ -653,18 +615,20 @@ void blur(struct ppm *p, int xrad, int yrad)
   p->col = tmp.col;
 }
 
-void putrgb_fast(struct ppm *s, float xo, float yo, struct rgbcolor *d)
+void putrgb_fast(struct ppm *s, float xo, float yo, guchar *d)
 {
-  struct rgbcolor *tp = &s->col[(int)(yo+0.5)][(int)(xo+0.5)];
-  tp->r = d->r;
-  tp->g = d->g;
-  tp->b = d->b;
+  guchar *tp;
+  tp = s->col + s->width * 3 * (int)(yo+0.5) + 3 * (int)(xo+0.5);
+  tp[0] = d[0];
+  tp[1] = d[1];
+  tp[2] = d[2];
 }
 
-void putrgb(struct ppm *s, float xo, float yo, struct rgbcolor *d)
+void putrgb(struct ppm *s, float xo, float yo, guchar *d)
 {
   int x, y;
   float aa, ab, ba, bb;
+  int k, rowstride = s->width * 3;
 
   x = xo;
   y = yo;
@@ -680,34 +644,38 @@ void putrgb(struct ppm *s, float xo, float yo, struct rgbcolor *d)
   ba = (1.0-xo)*yo;
   bb = xo*yo;
 
-  s->col[y][x].r *= (1.0-aa);
-  s->col[y][x].g *= (1.0-aa);
-  s->col[y][x].b *= (1.0-aa);
-  s->col[y][x+1].r *= (1.0-ab);
-  s->col[y][x+1].g *= (1.0-ab);
-  s->col[y][x+1].b *= (1.0-ab);
-  s->col[y+1][x].r *= (1.0-ba);
-  s->col[y+1][x].g *= (1.0-ba);
-  s->col[y+1][x].b *= (1.0-ba);
-  s->col[y+1][x+1].r *= (1.0-bb);
-  s->col[y+1][x+1].g *= (1.0-bb);
-  s->col[y+1][x+1].b *= (1.0-bb);
+  k = y*rowstride + x*3;
+  s->col[k+0] *= (1.0-aa);
+  s->col[k+1] *= (1.0-aa);
+  s->col[k+2] *= (1.0-aa);
+  
+  s->col[k+3] *= (1.0-ab);
+  s->col[k+4] *= (1.0-ab);
+  s->col[k+5] *= (1.0-ab);
 
-  s->col[y][x].r += aa * d->r;
-  s->col[y][x].g += aa * d->g;
-  s->col[y][x].b += aa * d->b;
-  s->col[y][x+1].r += ab * d->r;
-  s->col[y][x+1].g += ab * d->g;
-  s->col[y][x+1].b += ab * d->b;
-  s->col[y+1][x].r += ba * d->r;
-  s->col[y+1][x].g += ba * d->g;
-  s->col[y+1][x].b += ba * d->b;
-  s->col[y+1][x+1].r += bb * d->r;
-  s->col[y+1][x+1].g += bb * d->g;
-  s->col[y+1][x+1].b += bb * d->b;
+  s->col[k+rowstride+0] *= (1.0-ba);
+  s->col[k+rowstride+1] *= (1.0-ba);
+  s->col[k+rowstride+2] *= (1.0-ba);
+
+  s->col[k+rowstride+3] *= (1.0-bb);
+  s->col[k+rowstride+4] *= (1.0-bb);
+  s->col[k+rowstride+5] *= (1.0-bb);
+
+  s->col[k+0] += aa * d[0];
+  s->col[k+1] += aa * d[1];
+  s->col[k+2] += aa * d[2];
+  s->col[k+3] += ab * d[0];
+  s->col[k+4] += ab * d[1];
+  s->col[k+5] += ab * d[2];
+  s->col[k+rowstride+0] += ba * d[0];
+  s->col[k+rowstride+1] += ba * d[1];
+  s->col[k+rowstride+2] += ba * d[2];
+  s->col[k+rowstride+3] += bb * d[0];
+  s->col[k+rowstride+4] += bb * d[1];
+  s->col[k+rowstride+5] += bb * d[2];
 }
 
-void drawline(struct ppm *p, float fx, float fy, float tx, float ty, struct rgbcolor *col)
+void drawline(struct ppm *p, float fx, float fy, float tx, float ty, guchar *col)
 {
   float i;
   float d, x, y;
