@@ -67,21 +67,6 @@ static GimpActionEntry image_actions[] =
     G_CALLBACK (image_new_from_image_cmd_callback),
     GIMP_HELP_FILE_NEW },
 
-  { "image-convert-rgb", GIMP_STOCK_CONVERT_RGB,
-    N_("_RGB"), NULL, NULL,
-    G_CALLBACK (image_convert_rgb_cmd_callback),
-    GIMP_HELP_IMAGE_CONVERT_RGB },
-
-  { "image-convert-grayscale", GIMP_STOCK_CONVERT_GRAYSCALE,
-    N_("_Grayscale"), NULL, NULL,
-    G_CALLBACK (image_convert_grayscale_cmd_callback),
-    GIMP_HELP_IMAGE_CONVERT_GRAYSCALE },
-
-  { "image-convert-indexed", GIMP_STOCK_CONVERT_INDEXED,
-    N_("_Indexed..."), NULL, NULL,
-    G_CALLBACK (image_convert_indexed_cmd_callback),
-    GIMP_HELP_IMAGE_CONVERT_INDEXED },
-
   { "image-resize", GIMP_STOCK_RESIZE,
     N_("Can_vas Size..."), NULL, NULL,
     G_CALLBACK (image_resize_cmd_callback),
@@ -116,6 +101,24 @@ static GimpActionEntry image_actions[] =
     N_("Configure G_rid..."), NULL, NULL,
     G_CALLBACK (image_configure_grid_cmd_callback),
     GIMP_HELP_IMAGE_GRID }
+};
+
+static GimpEnumActionEntry image_convert_actions[] =
+{
+  { "image-convert-rgb", GIMP_STOCK_CONVERT_RGB,
+    N_("_RGB"), NULL, NULL,
+    GIMP_RGB,
+    GIMP_HELP_IMAGE_CONVERT_RGB },
+
+  { "image-convert-grayscale", GIMP_STOCK_CONVERT_GRAYSCALE,
+    N_("_Grayscale"), NULL, NULL,
+    GIMP_GRAY,
+    GIMP_HELP_IMAGE_CONVERT_GRAYSCALE },
+
+  { "image-convert-indexed", GIMP_STOCK_CONVERT_INDEXED,
+    N_("_Indexed..."), NULL, NULL,
+    GIMP_INDEXED,
+    GIMP_HELP_IMAGE_CONVERT_INDEXED }
 };
 
 static GimpEnumActionEntry image_flip_actions[] =
@@ -157,6 +160,11 @@ image_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_actions (group,
                                  image_actions,
                                  G_N_ELEMENTS (image_actions));
+
+  gimp_action_group_add_enum_actions (group,
+                                      image_convert_actions,
+                                      G_N_ELEMENTS (image_convert_actions),
+                                      G_CALLBACK (image_convert_cmd_callback));
 
   gimp_action_group_add_enum_actions (group,
                                       image_flip_actions,

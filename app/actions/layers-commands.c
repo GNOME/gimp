@@ -424,30 +424,19 @@ layers_mask_add_cmd_callback (GtkAction *action,
 
 void
 layers_mask_apply_cmd_callback (GtkAction *action,
+                                gint       value,
                                 gpointer   data)
 {
-  GimpImage *gimage;
-  GimpLayer *layer;
+  GimpImage         *gimage;
+  GimpLayer         *layer;
+  GimpMaskApplyMode  mode;
   return_if_no_layer (gimage, layer, data);
+
+  mode = (GimpMaskApplyMode) value;
 
   if (gimp_layer_get_mask (layer))
     {
-      gimp_layer_apply_mask (layer, GIMP_MASK_APPLY, TRUE);
-      gimp_image_flush (gimage);
-    }
-}
-
-void
-layers_mask_delete_cmd_callback (GtkAction *action,
-                                 gpointer   data)
-{
-  GimpImage *gimage;
-  GimpLayer *layer;
-  return_if_no_layer (gimage, layer, data);
-
-  if (gimp_layer_get_mask (layer))
-    {
-      gimp_layer_apply_mask (layer, GIMP_MASK_DISCARD, TRUE);
+      gimp_layer_apply_mask (layer, mode, TRUE);
       gimp_image_flush (gimage);
     }
 }

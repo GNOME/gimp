@@ -170,20 +170,23 @@ static GimpActionEntry layers_actions[] =
     G_CALLBACK (layers_mask_add_cmd_callback),
     GIMP_HELP_LAYER_MASK_ADD },
 
-  { "layers-mask-apply", NULL,
-    N_("Apply Layer _Mask"), NULL, NULL,
-    G_CALLBACK (layers_mask_apply_cmd_callback),
-    GIMP_HELP_LAYER_MASK_APPLY },
-
-  { "layers-mask-delete", GTK_STOCK_DELETE,
-    N_("Delete Layer Mas_k"), "", NULL,
-    G_CALLBACK (layers_mask_delete_cmd_callback),
-    GIMP_HELP_LAYER_MASK_DELETE },
-
   { "layers-alpha-add", GIMP_STOCK_TRANSPARENCY,
     N_("Add Alpha C_hannel"), NULL, NULL,
     G_CALLBACK (layers_alpha_add_cmd_callback),
     GIMP_HELP_LAYER_ALPHA_ADD }
+};
+
+static GimpEnumActionEntry layers_mask_apply_actions[] =
+{
+  { "layers-mask-apply", NULL,
+    N_("Apply Layer _Mask"), NULL, NULL,
+    GIMP_MASK_APPLY,
+    GIMP_HELP_LAYER_MASK_APPLY },
+
+  { "layers-mask-delete", GTK_STOCK_DELETE,
+    N_("Delete Layer Mas_k"), "", NULL,
+    GIMP_MASK_DISCARD,
+    GIMP_HELP_LAYER_MASK_DELETE }
 };
 
 static GimpEnumActionEntry layers_mask_to_selection_actions[] =
@@ -238,6 +241,11 @@ layers_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_actions (group,
                                  layers_actions,
                                  G_N_ELEMENTS (layers_actions));
+
+  gimp_action_group_add_enum_actions (group,
+                                      layers_mask_apply_actions,
+                                      G_N_ELEMENTS (layers_mask_apply_actions),
+                                      G_CALLBACK (layers_mask_apply_cmd_callback));
 
   gimp_action_group_add_enum_actions (group,
                                       layers_mask_to_selection_actions,

@@ -144,39 +144,28 @@ image_new_from_image_cmd_callback (GtkAction *action,
 }
 
 void
-image_convert_rgb_cmd_callback (GtkAction *action,
-				gpointer   data)
-{
-  GimpImage *gimage;
-  return_if_no_image (gimage, data);
-
-  gimp_image_convert (gimage, GIMP_RGB, 0, 0, FALSE, FALSE, 0, NULL);
-  gimp_image_flush (gimage);
-}
-
-void
-image_convert_grayscale_cmd_callback (GtkAction *action,
-				      gpointer   data)
-{
-  GimpImage *gimage;
-  return_if_no_image (gimage, data);
-
-  gimp_image_convert (gimage, GIMP_GRAY, 0, 0, FALSE, FALSE, 0, NULL);
-  gimp_image_flush (gimage);
-}
-
-void
-image_convert_indexed_cmd_callback (GtkAction *action,
-				    gpointer   data)
+image_convert_cmd_callback (GtkAction *action,
+                            gint       value,
+                            gpointer   data)
 {
   GimpImage *gimage;
   GtkWidget *widget;
-  GtkWidget *dialog;
   return_if_no_image (gimage, data);
   return_if_no_widget (widget, data);
 
-  dialog = convert_dialog_new (gimage, widget);
-  gtk_widget_show (dialog);
+  switch ((GimpImageBaseType) value)
+    {
+    case GIMP_RGB:
+    case GIMP_GRAY:
+      gimp_image_convert (gimage, (GimpImageBaseType) value,
+                          0, 0, FALSE, FALSE, 0, NULL);
+      gimp_image_flush (gimage);
+      break;
+
+    case GIMP_INDEXED:
+      gtk_widget_show (convert_dialog_new (gimage, widget));
+      break;
+    }
 }
 
 void

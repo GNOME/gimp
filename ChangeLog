@@ -1,7 +1,17 @@
+2004-06-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/image-actions.c
+	* app/actions/image-commands.[ch]
+	* app/actions/layers-actions.c
+	* app/actions/layers-commands.[ch]: made the
+	"image-convert-rgb/grayscale/indexed" and the
+	"layers-mask-apply/delete" actions GimpEnumActions and merged
+	their callbacks.
+
 2004-06-10  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* app/gui/preferences-dialog.c: restored the 'Show Paint Tool
-    Cursor' option that was removed during clean-up.
+	Cursor' option that was removed during clean-up.
 
 2004-06-10  Philip Lafleur  <plafleur@cvs.gnome.org>
 
