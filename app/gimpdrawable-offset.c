@@ -486,17 +486,20 @@ offset (GimpImage         *gimage,
     }
 
   /*  push an undo  */
-  drawable_apply_image (drawable, 0, 0,
+  drawable_apply_image (drawable,
+			0, 0,
 			gimp_drawable_width (drawable),
 			gimp_drawable_height (drawable),
-			gimp_drawable_data (drawable), FALSE);
+			gimp_drawable_data (drawable),
+			FALSE);
 
   /*  swap the tiles  */
   drawable->tiles = new_tiles;
 
 
   /*  update the drawable  */
-  drawable_update (drawable, 0, 0,
+  drawable_update (drawable,
+		   0, 0,
 		   gimp_drawable_width (drawable),
 		   gimp_drawable_height (drawable));
 }
@@ -512,8 +515,8 @@ offset_ok_callback (GtkWidget *widget,
   OffsetDialog *off_d;
   GImage       *gimage;
   GimpDrawable *drawable;
-  gint offset_x;
-  gint offset_y;
+  gint          offset_x;
+  gint          offset_y;
 
   off_d = (OffsetDialog *) data;
 

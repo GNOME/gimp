@@ -39,10 +39,10 @@
 
 #include "channel.h"
 #include "cursorutil.h"
-#include "drawable.h"
 #include "floating_sel.h"
 #include "gimage.h"
 #include "gimage_mask.h"
+#include "gimpdrawable.h"
 #include "gimplayermask.h"
 #include "gimprc.h"
 #include "layer.h"

@@ -583,7 +583,8 @@ gimp_layer_translate (GimpLayer *layer,
   undo_push_layer_displace (GIMP_DRAWABLE (layer)->gimage, layer);
 
   /*  update the affected region  */
-  drawable_update (GIMP_DRAWABLE (layer), 0, 0, 
+  drawable_update (GIMP_DRAWABLE (layer),
+		   0, 0, 
 		   GIMP_DRAWABLE (layer)->width, 
 		   GIMP_DRAWABLE (layer)->height);
 
@@ -606,8 +607,7 @@ gimp_layer_translate (GimpLayer *layer,
       GIMP_DRAWABLE (layer->mask)->offset_y += off_y;
 
       /*  invalidate the mask preview  */
-      gimp_drawable_invalidate_preview (GIMP_DRAWABLE (layer->mask),
-					FALSE);
+      gimp_drawable_invalidate_preview (GIMP_DRAWABLE (layer->mask), FALSE);
     }
 }
 
@@ -947,7 +947,8 @@ gimp_layer_resize (GimpLayer *layer,
   /*  Update the old layer position  */
   drawable_update (GIMP_DRAWABLE( layer),
 		   0, 0,
-		   GIMP_DRAWABLE (layer)->width, GIMP_DRAWABLE (layer)->height);
+		   GIMP_DRAWABLE (layer)->width,
+		   GIMP_DRAWABLE (layer)->height);
 
   /*  Configure the pixel regions  */
   pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles, 
@@ -1014,7 +1015,8 @@ gimp_layer_resize (GimpLayer *layer,
   /*  update the new layer area  */
   drawable_update (GIMP_DRAWABLE (layer),
 		   0, 0,
-		   GIMP_DRAWABLE (layer)->width, GIMP_DRAWABLE (layer)->height);
+		   GIMP_DRAWABLE (layer)->width,
+		   GIMP_DRAWABLE (layer)->height);
 }
 
 void
@@ -1105,7 +1107,6 @@ gimp_layer_invalidate_boundary (GimpLayer *layer)
   GimpImage   *gimage;
   GimpChannel *mask;
 
-  /*  first get the selection mask channel  */
   if (! (gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer))))
     return;
 
@@ -1115,6 +1116,7 @@ gimp_layer_invalidate_boundary (GimpLayer *layer)
   /*  clear the affected region surrounding the layer  */
   gdisplays_selection_visibility (gimage, SelectionLayerOff); 
 
+  /*  get the selection mask channel  */
   mask = gimp_image_get_mask (gimage);
 
   /*  Only bother with the bounds if there is a selection  */

@@ -28,30 +28,22 @@
 #include "apptypes.h"
 
 #include "boundary.h"
-#include "drawable.h"
-#include "floating_sel.h"
-#include "gdisplay.h"
-#include "gimage_mask.h"
-#include "gimpimage.h"
 #include "gimplayermask.h"
-#include "gimppreviewcache.h"
-#include "layer.h"
-#include "parasitelist.h"
 #include "paint_funcs.h"
 #include "pixel_region.h"
-#include "undo.h"
 #include "temp_buf.h"
 #include "tile_manager.h"
 #include "tile.h"
+#include "undo.h"
 
 #include "libgimp/gimpparasite.h"
 
 #include "libgimp/gimpintl.h"
 
 
-static void      gimp_layer_mask_class_init      (GimpLayerMaskClass *klass);
-static void      gimp_layer_mask_init            (GimpLayerMask      *layermask);
-static void      gimp_layer_mask_destroy         (GtkObject          *object);
+static void   gimp_layer_mask_class_init (GimpLayerMaskClass *klass);
+static void   gimp_layer_mask_init       (GimpLayerMask      *layermask);
+static void   gimp_layer_mask_destroy    (GtkObject          *object);
 
 
 static GimpChannelClass  *parent_class = NULL;

@@ -23,9 +23,8 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
-#include "drawable.h"
 #include "gdisplay.h"
+#include "gimpdrawable.h"
 #include "gimpdrawablepreview.h"
 #include "gimpimage.h"
 #include "gimprc.h"

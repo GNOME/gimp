@@ -1,5 +1,43 @@
 2001-01-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/channel.[ch]: removed channel_update() because channel.c
+	should not call gdisplays_update(). Use drawable_update() and
+	a subsequent gdisplays_update() instead.
+
+	* app/qmask.c: do as described above.
+
+	* app/channel_ops.c
+	* app/channels_dialog.c
+	* app/commands.c
+	* app/convert.c
+	* app/disp_callbacks.c
+	* app/equalize.c
+	* app/fileops.c
+	* app/floating_sel.c
+	* app/gdisplay.c
+	* app/gimage.c
+	* app/gimage_mask.c
+	* app/gimpdnd.c
+	* app/gimpdrawablepreview.c
+	* app/gimphistogram.c
+	* app/gimplayermask.c
+	* app/global_edit.c
+	* app/histogramwidget.c
+	* app/histogramwidget.h
+	* app/image_map.c
+	* app/image_new.c
+	* app/invert.c
+	* app/layer.c
+	* app/layer_select.c
+	* app/paths_dialog.c
+	* app/plug_in.c
+	* app/scan_convert.c
+	* app/undo_history.c
+	* app/xcf.c: include gimpdrawable.h instead of drawable.h where
+	possible, removed useless includes, minor other cleanups.
+
+2001-01-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* app/gimpdrawablepreview.[ch]: new file with one set of functions...
 

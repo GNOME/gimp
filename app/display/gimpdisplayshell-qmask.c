@@ -364,7 +364,13 @@ edit_qmask_query_ok_callback (GtkWidget *widget,
       if (gimp_rgba_distance (&color, &channel->color) > 0.0001)
 	{
 	  channel->color = color;
-	  gimp_channel_update (channel);
+
+	  drawable_update (GIMP_DRAWABLE (channel),
+			   0, 0,
+			   GIMP_DRAWABLE (channel)->width,
+			   GIMP_DRAWABLE (channel)->height);
+
+	  gdisplays_flush ();
 	}
     }
 

@@ -22,10 +22,10 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "image_map.h"
 #include "paint_funcs.h"

@@ -33,7 +33,6 @@
 #include "apptypes.h"
 
 #include "draw_core.h"
-#include "drawable.h"
 #include "floating_sel.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"

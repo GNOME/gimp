@@ -73,7 +73,6 @@ equalize (GimpImage    *gimage,
   hist = gimp_histogram_new ();
   gimp_histogram_calculate_drawable (hist, drawable);
 
-
   /* Build equalization LUT */
   lut = eq_histogram_lut_new (hist, bytes);
 
@@ -92,5 +91,8 @@ equalize (GimpImage    *gimage,
   gimp_histogram_free (hist);
 
   gimp_drawable_merge_shadow (drawable, TRUE);
-  drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+
+  drawable_update (drawable,
+		   x1, y1,
+		   (x2 - x1), (y2 - y1));
 }

@@ -22,15 +22,14 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "boundary.h"
 #include "channel.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
+#include "gimage_mask.h"
 #include "gimpimage.h"
 #include "gimplayermask.h"
-#include "gimage_mask.h"
 #include "gimprc.h"
 #include "layer.h"
 #include "paint_funcs.h"
@@ -151,17 +150,19 @@ gimage_mask_invalidate (GImage *gimage)
    *  mask in the composition of the floating selection
    */
   layer = gimp_image_get_active_layer (gimage);
+
   if (layer && gimp_layer_is_floating_sel (layer))
-    drawable_update (GIMP_DRAWABLE(layer), 0, 0,
-		     GIMP_DRAWABLE(layer)->width,
-		     GIMP_DRAWABLE(layer)->height);
+    drawable_update (GIMP_DRAWABLE (layer),
+		     0, 0,
+		     GIMP_DRAWABLE (layer)->width,
+		     GIMP_DRAWABLE (layer)->height);
 }
 
 
 gint
 gimage_mask_value (GImage *gimage,
-		   int     x,
-		   int     y)
+		   gint    x,
+		   gint    y)
 {
   return gimp_channel_value (gimp_image_get_mask (gimage), x, y);
 }

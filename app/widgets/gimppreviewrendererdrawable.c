@@ -24,10 +24,10 @@
 
 #include "apptypes.h"
 
-#include "boundary.h"
 #include "channel.h"
-#include "drawable.h"
 #include "gimpimage.h"
+#include "gimpdrawable.h"
+#include "gimpdrawablepreview.h"
 #include "gimppreviewcache.h"
 #include "layer.h"
 #include "paint_funcs.h"
@@ -70,7 +70,7 @@ gimp_drawable_preview (GimpDrawable *drawable,
       TempBuf *tb = gimp_drawable_preview_private (drawable,
 						   PREVIEW_CACHE_PRIME_WIDTH,
 						   PREVIEW_CACHE_PRIME_HEIGHT);
-      
+
       /* Save the 2nd call */
       if (width  == PREVIEW_CACHE_PRIME_WIDTH &&
 	  height == PREVIEW_CACHE_PRIME_HEIGHT)
@@ -128,6 +128,7 @@ gimp_drawable_preview_private (GimpDrawable *drawable,
 
       /*  calculate 'acceptable' subsample  */
       subsample = 1;
+
       /* handle some truncation errors */
       if (width < 1) width = 1;
       if (height < 1) height = 1;
@@ -296,15 +297,18 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
 	    {
 	      map_to_color (2, cmap, s, rgb);
 
-	      r[RED_PIX] += rgb[RED_PIX] * tot_frac;
+	      r[RED_PIX]   += rgb[RED_PIX] * tot_frac;
 	      r[GREEN_PIX] += rgb[GREEN_PIX] * tot_frac;
-	      r[BLUE_PIX] += rgb[BLUE_PIX] * tot_frac;
+	      r[BLUE_PIX]  += rgb[BLUE_PIX] * tot_frac;
+
 	      if (bytes == 4)
 		r[ALPHA_PIX] += s[ALPHA_I_PIX] * tot_frac;
 	    }
 	  else
-	    for (b = 0; b < bytes; b++)
-	      r[b] += s[b] * tot_frac;
+	    {
+	      for (b = 0; b < bytes; b++)
+		r[b] += s[b] * tot_frac;
+	    }
 
 	  /*  increment the destination  */
 	  if (x_cum + x_rat <= (src_col + 1 + EPSILON))
@@ -313,7 +317,6 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
 	      x_cum += x_rat;
 	      j--;
 	    }
-
 	  /* increment the source */
 	  else
 	    {
@@ -335,7 +338,7 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
 	    {
 	      b = bytes;
 	      while (b--)
-		*d++ = (guchar) ((*r++ * tot_frac)+0.5);
+		*d++ = (guchar) ((*r++ * tot_frac) + 0.5);
 	    }
 
 	  dest += destwidth;

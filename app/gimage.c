@@ -25,13 +25,13 @@
 #include "appenv.h"
 #include "channel.h"
 #include "dialog_handler.h"
-#include "drawable.h"
+#include "gdisplay.h"
 #include "gimage.h"
+#include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimpset.h"
 #include "layer.h"
 #include "lc_dialog.h"
-#include "gdisplay.h"
 #include "paint_funcs.h"
 #include "palette_import.h"
 #include "undo.h"
@@ -44,16 +44,19 @@
  * layers_dialog, gdisplay, tools, etc..
  */
 
-static void gimage_dirty_handler        (GimpImage* gimage);
-static void gimage_destroy_handler      (GimpImage* gimage);
-static void gimage_cmap_change_handler  (GimpImage* gimage,
+static void gimage_dirty_handler        (GimpImage *gimage);
+static void gimage_destroy_handler      (GimpImage *gimage);
+static void gimage_cmap_change_handler  (GimpImage *gimage,
 					 gint       ncol,
 					 gpointer   user_data);
-static void gimage_rename_handler       (GimpImage* gimage);
-static void gimage_resize_handler       (GimpImage* gimage);
-static void gimage_restructure_handler  (GimpImage* gimage);
-static void gimage_repaint_handler      (GimpImage* gimage,
-					 gint, gint, gint, gint);
+static void gimage_rename_handler       (GimpImage *gimage);
+static void gimage_resize_handler       (GimpImage *gimage);
+static void gimage_restructure_handler  (GimpImage *gimage);
+static void gimage_repaint_handler      (GimpImage *gimage,
+					 gint       x,
+					 gint       y,
+					 gint       w,
+					 gint       h);
 
 
 GimpImage *

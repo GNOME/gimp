@@ -32,7 +32,6 @@
 #include "boundary.h"
 #include "channel.h"
 #include "drawable.h"
-#include "gdisplay.h"
 #include "gimpimage.h"
 #include "gimage_mask.h"
 #include "gimppreviewcache.h"
@@ -415,20 +414,6 @@ gimp_channel_resize (GimpChannel *channel,
 		   GIMP_DRAWABLE (channel)->height);
 }
 
-void            
-gimp_channel_update (GimpChannel *channel)
-{
-  drawable_update (GIMP_DRAWABLE (channel),
-		   0, 0,
-		   GIMP_DRAWABLE (channel)->width,
-		   GIMP_DRAWABLE (channel)->height);
-  gdisplays_flush ();
-}
-
-/**********************/
-/*  access functions  */
-/**********************/
-
 gboolean
 gimp_channel_toggle_visibility (GimpChannel *channel)
 {
@@ -436,6 +421,7 @@ gimp_channel_toggle_visibility (GimpChannel *channel)
 
   return GIMP_DRAWABLE (channel)->visible;
 }
+
 
 /******************************/
 /*  selection mask functions  */

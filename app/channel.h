@@ -108,7 +108,6 @@ void            gimp_channel_resize            (GimpChannel       *channel,
 						gint               new_height,
 						gint               offx,
 						gint               offy);
-void            gimp_channel_update            (GimpChannel       *channel);
 
 gboolean        gimp_channel_toggle_visibility (GimpChannel       *channel);
 

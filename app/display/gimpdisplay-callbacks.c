@@ -32,10 +32,10 @@
 #include "devices.h"
 #include "dialog_handler.h"
 #include "disp_callbacks.h"
+#include "drawable.h"
 #include "gdisplay.h"
 #include "gimpimage.h"
 #include "gimpcontext.h"
-#include "drawable.h"
 #include "gimprc.h"
 #include "info_window.h"
 #include "layer.h"
@@ -62,25 +62,29 @@
 static void gdisplay_check_device_cursor (GDisplay *gdisp);
 
 static void
-redraw (GDisplay *gdisp,
-	gint      x,
-	gint      y,
-	gint      w,
-	gint      h)
+gdisplay_redraw (GDisplay *gdisp,
+		 gint      x,
+		 gint      y,
+		 gint      w,
+		 gint      h)
 {
   glong x1, y1, x2, y2;    /*  coordinate of rectangle corners  */
 
   x1 = x;
   y1 = y;
-  x2 = (x+w);
-  y2 = (y+h);
+  x2 = (x + w);
+  y2 = (y + h);
+
   x1 = CLAMP (x1, 0, gdisp->disp_width);
   y1 = CLAMP (y1, 0, gdisp->disp_height);
   x2 = CLAMP (x2, 0, gdisp->disp_width);
   y2 = CLAMP (y2, 0, gdisp->disp_height);
+
   if ((x2 - x1) && (y2 - y1))
     {
-      gdisplay_expose_area (gdisp, x1, y1, (x2 - x1), (y2 - y1));
+      gdisplay_expose_area (gdisp,
+			    x1, y1,
+			    (x2 - x1), (y2 - y1));
       gdisplay_flush_displays_only (gdisp);
     }
 }
@@ -202,8 +206,9 @@ gdisplay_canvas_events (GtkWidget *canvas,
       eevent = (GdkEventExpose *) event;
       /*printf(" EXP:%d,%d(%dx%d) ",eevent->area.x, eevent->area.y,
 	eevent->area.width, eevent->area.height);fflush(stdout);*/
-      redraw (gdisp, eevent->area.x, eevent->area.y,
-	      eevent->area.width, eevent->area.height);
+      gdisplay_redraw (gdisp,
+		       eevent->area.x, eevent->area.y,
+		       eevent->area.width, eevent->area.height);
       break;
 
     case GDK_CONFIGURE:
@@ -982,7 +987,9 @@ gdisplay_bucket_fill (GtkWidget      *widget,
   tile_manager_destroy (buf_tiles);
 
   /*  Update the displays  */
-  drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+  drawable_update (drawable,
+		   x1, y1,
+		   (x2 - x1), (y2 - y1));
   gdisplays_flush ();
 
   if (new_buf)

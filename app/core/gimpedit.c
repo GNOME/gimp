@@ -26,9 +26,7 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "drawable.h"
-#include "image_new.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gimage.h"
@@ -36,6 +34,7 @@
 #include "gimpcontext.h"
 #include "gimplayermask.h"
 #include "global_edit.h"
+#include "image_new.h"
 #include "layer.h"
 #include "paint_funcs.h"
 #include "pixel_region.h"
@@ -446,7 +445,9 @@ edit_clear (GimpImage    *gimage,
 			  ERASE_MODE, NULL, x1, y1);
 
   /*  update the image  */
-  drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+  drawable_update (drawable,
+		   x1, y1,
+		   (x2 - x1), (y2 - y1));
 
   /*  free the temporary tiles  */
   tile_manager_destroy (buf_tiles);
@@ -518,7 +519,9 @@ edit_fill (GimpImage    *gimage,
 			  NORMAL_MODE, NULL, x1, y1);
 
   /*  update the image  */
-  drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+  drawable_update (drawable,
+		   x1, y1,
+		   (x2 - x1), (y2 - y1));
 
   /*  free the temporary tiles  */
   tile_manager_destroy (buf_tiles);

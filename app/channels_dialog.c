@@ -1772,9 +1772,11 @@ channel_widget_drop_color (GtkWidget     *widget,
     {
       channel->color = *color;
 
-      drawable_update (GIMP_DRAWABLE (channel), 0, 0,
+      drawable_update (GIMP_DRAWABLE (channel),
+		       0, 0,
 		       GIMP_DRAWABLE (channel)->width,
 		       GIMP_DRAWABLE (channel)->height);
+
       gdisplays_flush ();
     }
 }
@@ -2680,9 +2682,12 @@ edit_channel_query_ok_callback (GtkWidget *widget,
       if (gimp_rgba_distance (&color, &channel->color) > 0.0001)
 	{
 	  channel->color = color;
-	  drawable_update (GIMP_DRAWABLE (channel), 0, 0,
+
+	  drawable_update (GIMP_DRAWABLE (channel),
+			   0, 0,
 			   GIMP_DRAWABLE (channel)->width,
 			   GIMP_DRAWABLE (channel)->height);
+
 	  gdisplays_flush ();
 	}
     }

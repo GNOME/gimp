@@ -22,11 +22,10 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "drawable.h"
-#include "invert.h"
 #include "gimpimage.h"
 #include "gimplut.h"
+#include "invert.h"
 #include "lut_funcs.h"
 #include "pixel_processor.h"
 #include "pixel_region.h"
@@ -40,8 +39,8 @@ void
 image_invert (GimpImage *gimage)
 {
   GimpDrawable *drawable;
-  Argument *return_vals;
-  gint nreturn_vals;
+  Argument     *return_vals;
+  gint          nreturn_vals;
 
   drawable = gimp_image_active_drawable (gimage);
 
@@ -69,9 +68,9 @@ image_invert (GimpImage *gimage)
 void
 invert (GimpDrawable *drawable)
 {
-  PixelRegion srcPR, destPR;
-  gint x1, y1, x2, y2;
-  GimpLut *lut;
+  PixelRegion  srcPR, destPR;
+  gint         x1, y1, x2, y2;
+  GimpLut     *lut;
 
   lut = invert_lut_new (gimp_drawable_bytes (drawable));
 
@@ -87,5 +86,8 @@ invert (GimpDrawable *drawable)
   gimp_lut_free (lut);
 
   gimp_drawable_merge_shadow (drawable, TRUE);
-  drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+
+  drawable_update (drawable,
+		   x1, y1,
+		   (x2 - x1), (y2 - y1));
 }

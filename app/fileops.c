@@ -70,7 +70,7 @@
 #include "cursorutil.h"
 #include "dialog_handler.h"
 #include "docindex.h"
-#include "drawable.h"
+#include "gimpdrawable.h"
 #include "gdisplay.h"
 #include "gimage.h"
 #include "gimpcontext.h"

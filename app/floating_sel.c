@@ -24,15 +24,14 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "boundary.h"
 #include "drawable.h"
-#include "layer.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpimage.h"
 #include "gimplayermask.h"
+#include "layer.h"
 #include "paint_funcs.h"
 #include "pixel_region.h"
 #include "tile_manager.h"

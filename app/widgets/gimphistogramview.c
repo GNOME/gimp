@@ -24,11 +24,9 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
-#include "drawable.h"
-#include "gdisplay.h"
 #include "gimage.h"
 #include "gimage_mask.h"
+#include "gimphistogram.h"
 #include "histogramwidget.h"
 #include "tile_manager.h"
 

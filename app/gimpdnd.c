@@ -27,20 +27,17 @@
 
 #include "apptypes.h"
 
-#include "channel.h"
-#include "drawable.h"
 #include "fileops.h"
 #include "gimpimage.h"
 #include "gimpbrush.h"
 #include "gimpcontextpreview.h"
 #include "gimpdnd.h"
 #include "gimpbrushlist.h"
+#include "gimpdrawable.h"
 #include "gimpdrawablepreview.h"
-#include "gimplayermask.h"
 #include "gimprc.h"
 #include "gradient.h"
 #include "gradient_header.h"
-#include "layer.h"
 #include "patterns.h"
 #include "temp_buf.h"
 

@@ -19,21 +19,21 @@
 #ifndef __HISTOGRAM_WIDGET_H__
 #define __HISTOGRAM_WIDGET_H__
 
-#include <gtk/gtkdrawingarea.h>
 
-#include "gimphistogram.h"
+#include <gtk/gtkdrawingarea.h>
 
 
 #define HISTOGRAM_WIDGET_TYPE         (histogram_widget_get_type ())
 #define HISTOGRAM_WIDGET(obj)         GTK_CHECK_CAST (obj, histogram_widget_get_type (), HistogramWidget)
-#define HISTOGRAM_WIDGET_CLASS(klass) GTK_CHECK_CLASS_CAST (klass, histogram_widget_get_type (), HistogramWidget)
 #define IS_HISTOGRAM_WIDGET(obj)      GTK_CHECK_TYPE (obj, histogram_widget_get_type ())
+#define HISTOGRAM_WIDGET_CLASS(klass) GTK_CHECK_CLASS_CAST (klass, histogram_widget_get_type (), HistogramWidget)
+
 
 typedef struct _HistogramWidgetClass HistogramWidgetClass;
 
 struct _HistogramWidget
 {
-  GtkDrawingArea drawingarea;
+  GtkDrawingArea        parent_instance;
 
   GimpHistogram        *histogram;
   GimpHistogramChannel  channel;
@@ -43,7 +43,7 @@ struct _HistogramWidget
 
 struct _HistogramWidgetClass
 {
-  GtkDrawingAreaClass parent_class;
+  GtkDrawingAreaClass  parent_class;
 
   void (* range_changed) (HistogramWidget *hw,
 			  gint             start,
