@@ -1,5 +1,9 @@
 2004-11-04  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/ifscompose/ifscompose.c: #undef GTK_DISABLE_DEPRECATED.
+
+2004-11-04  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpcolorbutton.[ch]: use a GtkUIManager instead
 	of a GtkItemFactory. Added virtual function ::get_action_type()
 	and create the manager's actions manually using that action type
