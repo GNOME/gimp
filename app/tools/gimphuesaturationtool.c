@@ -183,9 +183,7 @@ gimp_hue_saturation_tool_init (GimpHueSaturationTool *hs_tool)
 static void
 gimp_hue_saturation_tool_finalize (GObject *object)
 {
-  GimpHueSaturationTool *hs_tool;
-
-  hs_tool = GIMP_HUE_SATURATION_TOOL (object);
+  GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (object);
 
   if (hs_tool->hue_saturation)
     {
@@ -200,11 +198,15 @@ static void
 gimp_hue_saturation_tool_initialize (GimpTool    *tool,
 				     GimpDisplay *gdisp)
 {
-  GimpHueSaturationTool *hs_tool;
+  GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (tool);
+  GimpDrawable          *drawable;
 
-  hs_tool = GIMP_HUE_SATURATION_TOOL (tool);
+  drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  if (! gimp_drawable_is_rgb (gimp_image_active_drawable (gdisp->gimage)))
+  if (! drawable)
+    return;
+
+  if (! gimp_drawable_is_rgb (drawable))
     {
       g_message (_("Hue-Saturation operates only on RGB color drawables."));
       return;
@@ -220,9 +222,7 @@ gimp_hue_saturation_tool_initialize (GimpTool    *tool,
 static void
 gimp_hue_saturation_tool_map (GimpImageMapTool *image_map_tool)
 {
-  GimpHueSaturationTool *hs_tool;
-
-  hs_tool = GIMP_HUE_SATURATION_TOOL (image_map_tool);
+  GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (image_map_tool);
 
   gimp_image_map_apply (image_map_tool->image_map,
                         (GimpImageMapApplyFunc) hue_saturation,
@@ -237,7 +237,7 @@ gimp_hue_saturation_tool_map (GimpImageMapTool *image_map_tool)
 static void
 gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
 {
-  GimpHueSaturationTool *hs_tool;
+  GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (image_map_tool);
   GtkWidget             *abox;
   GtkWidget             *table;
   GtkWidget             *slider;
@@ -267,8 +267,6 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
     { N_("_B"),      3, 4, 4, 4 },
     { N_("_M"),      3, 2, 4, 2 }
   };
-
-  hs_tool = GIMP_HUE_SATURATION_TOOL (image_map_tool);
 
   frame = gtk_frame_new (_("Select Primary Color to Modify"));
   gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), frame,
@@ -417,9 +415,7 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
 static void
 gimp_hue_saturation_tool_reset (GimpImageMapTool *image_map_tool)
 {
-  GimpHueSaturationTool *hs_tool;
-
-  hs_tool = GIMP_HUE_SATURATION_TOOL (image_map_tool);
+  GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (image_map_tool);
 
   hue_saturation_init (hs_tool->hue_saturation);
   hue_saturation_update (hs_tool, ALL);

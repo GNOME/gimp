@@ -187,16 +187,17 @@ static void
 gimp_threshold_tool_initialize (GimpTool    *tool,
 				GimpDisplay *gdisp)
 {
-  GimpThresholdTool *t_tool;
+  GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (tool);
   GimpDrawable      *drawable;
-
-  t_tool = GIMP_THRESHOLD_TOOL (tool);
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
+  if (! drawable)
+    return;
+
   if (gimp_drawable_is_indexed (drawable))
     {
-      g_message (_("Threshold does not operate on indexed drawables."));
+      g_message (_("Threshold does not operate on indexed layers."));
       return;
     }
 
@@ -248,11 +249,9 @@ gimp_threshold_tool_map (GimpImageMapTool *image_map_tool)
 static void
 gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
 {
-  GimpThresholdTool *t_tool;
+  GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (image_map_tool);
   GimpToolOptions   *tool_options;
   GtkWidget         *box;
-
-  t_tool = GIMP_THRESHOLD_TOOL (image_map_tool);
 
   box = gimp_histogram_box_new (_("Threshold Range:"));
   gtk_container_add (GTK_CONTAINER (image_map_tool->main_vbox), box);

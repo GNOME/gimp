@@ -168,9 +168,7 @@ gimp_colorize_tool_init (GimpColorizeTool *col_tool)
 static void
 gimp_colorize_tool_finalize (GObject *object)
 {
-  GimpColorizeTool *col_tool;
-
-  col_tool = GIMP_COLORIZE_TOOL (object);
+  GimpColorizeTool *col_tool = GIMP_COLORIZE_TOOL (object);
 
   if (col_tool->colorize)
     {
@@ -185,13 +183,17 @@ static void
 gimp_colorize_tool_initialize (GimpTool    *tool,
                                GimpDisplay *gdisp)
 {
-  GimpColorizeTool *col_tool;
+  GimpColorizeTool *col_tool = GIMP_COLORIZE_TOOL (tool);
+  GimpDrawable     *drawable;
 
-  col_tool = GIMP_COLORIZE_TOOL (tool);
+  drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  if (! gimp_drawable_is_rgb (gimp_image_active_drawable (gdisp->gimage)))
+  if (! drawable)
+    return;
+
+  if (! gimp_drawable_is_rgb (drawable))
     {
-      g_message (_("Colorize operates only on RGB color drawables."));
+      g_message (_("Colorize operates only on RGB color layers."));
       return;
     }
 
@@ -207,9 +209,7 @@ gimp_colorize_tool_initialize (GimpTool    *tool,
 static void
 gimp_colorize_tool_map (GimpImageMapTool *image_map_tool)
 {
-  GimpColorizeTool *col_tool;
-
-  col_tool = GIMP_COLORIZE_TOOL (image_map_tool);
+  GimpColorizeTool *col_tool = GIMP_COLORIZE_TOOL (image_map_tool);
 
   gimp_image_map_apply (image_map_tool->image_map,
                         (GimpImageMapApplyFunc) colorize,
@@ -224,14 +224,12 @@ gimp_colorize_tool_map (GimpImageMapTool *image_map_tool)
 static void
 gimp_colorize_tool_dialog (GimpImageMapTool *image_map_tool)
 {
-  GimpColorizeTool *col_tool;
+  GimpColorizeTool *col_tool = GIMP_COLORIZE_TOOL (image_map_tool);
   GtkWidget        *table;
   GtkWidget        *slider;
   GtkWidget        *frame;
   GtkWidget        *vbox;
   GtkObject        *data;
-
-  col_tool = GIMP_COLORIZE_TOOL (image_map_tool);
 
   frame = gtk_frame_new (_("Select Color"));
   gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), frame,
@@ -296,9 +294,7 @@ gimp_colorize_tool_dialog (GimpImageMapTool *image_map_tool)
 static void
 gimp_colorize_tool_reset (GimpImageMapTool *image_map_tool)
 {
-  GimpColorizeTool *col_tool;
-
-  col_tool = GIMP_COLORIZE_TOOL (image_map_tool);
+  GimpColorizeTool *col_tool = GIMP_COLORIZE_TOOL (image_map_tool);
 
   colorize_init (col_tool->colorize);
 

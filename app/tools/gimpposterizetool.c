@@ -146,9 +146,7 @@ gimp_posterize_tool_init (GimpPosterizeTool *posterize_tool)
 static void
 gimp_posterize_tool_finalize (GObject *object)
 {
-  GimpPosterizeTool *posterize_tool;
-
-  posterize_tool = GIMP_POSTERIZE_TOOL (object);
+  GimpPosterizeTool *posterize_tool = GIMP_POSTERIZE_TOOL (object);
 
   if (posterize_tool->lut)
     {
@@ -163,13 +161,17 @@ static void
 gimp_posterize_tool_initialize (GimpTool    *tool,
 				GimpDisplay *gdisp)
 {
-  GimpPosterizeTool *posterize_tool;
+  GimpPosterizeTool *posterize_tool = GIMP_POSTERIZE_TOOL (tool);
+  GimpDrawable      *drawable;
 
-  posterize_tool = GIMP_POSTERIZE_TOOL (tool);
+  drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
+  if (! drawable)
+    return;
+
+  if (gimp_drawable_is_indexed (drawable))
     {
-      g_message (_("Posterize does not operate on indexed drawables."));
+      g_message (_("Posterize does not operate on indexed layers."));
       return;
     }
 
@@ -186,11 +188,7 @@ gimp_posterize_tool_initialize (GimpTool    *tool,
 static void
 gimp_posterize_tool_map (GimpImageMapTool *image_map_tool)
 {
-  GimpPosterizeTool *posterize_tool;
-  GimpTool          *tool;
-
-  posterize_tool = GIMP_POSTERIZE_TOOL (image_map_tool);
-  tool           = GIMP_TOOL (image_map_tool);
+  GimpPosterizeTool *posterize_tool = GIMP_POSTERIZE_TOOL (image_map_tool);
 
   posterize_lut_setup (posterize_tool->lut,
                        posterize_tool->levels,
@@ -208,12 +206,10 @@ gimp_posterize_tool_map (GimpImageMapTool *image_map_tool)
 static void
 gimp_posterize_tool_dialog (GimpImageMapTool *image_map_tool)
 {
-  GimpPosterizeTool *posterize_tool;
+  GimpPosterizeTool *posterize_tool = GIMP_POSTERIZE_TOOL (image_map_tool);
   GtkWidget         *table;
   GtkWidget         *slider;
   GtkObject         *data;
-
-  posterize_tool = GIMP_POSTERIZE_TOOL (image_map_tool);
 
   /*  The table containing sliders  */
   table = gtk_table_new (1, 3, FALSE);
@@ -240,9 +236,7 @@ gimp_posterize_tool_dialog (GimpImageMapTool *image_map_tool)
 static void
 gimp_posterize_tool_reset (GimpImageMapTool *image_map_tool)
 {
-  GimpPosterizeTool *posterize_tool;
-
-  posterize_tool = GIMP_POSTERIZE_TOOL (image_map_tool);
+  GimpPosterizeTool *posterize_tool = GIMP_POSTERIZE_TOOL (image_map_tool);
 
   posterize_tool->levels = POSTERIZE_DEFAULT_LEVELS;
 

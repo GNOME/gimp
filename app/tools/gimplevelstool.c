@@ -270,16 +270,17 @@ static void
 gimp_levels_tool_initialize (GimpTool    *tool,
 			     GimpDisplay *gdisp)
 {
-  GimpLevelsTool *l_tool;
+  GimpLevelsTool *l_tool = GIMP_LEVELS_TOOL (tool);
   GimpDrawable   *drawable;
-
-  l_tool = GIMP_LEVELS_TOOL (tool);
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
+  if (! drawable)
+    return;
+
   if (gimp_drawable_is_indexed (drawable))
     {
-      g_message (_("Levels for indexed drawables cannot be adjusted."));
+      g_message (_("Levels for indexed layers cannot be adjusted."));
       return;
     }
 
@@ -322,9 +323,7 @@ gimp_levels_tool_initialize (GimpTool    *tool,
 static void
 gimp_levels_tool_map (GimpImageMapTool *image_map_tool)
 {
-  GimpLevelsTool *l_tool;
-
-  l_tool = GIMP_LEVELS_TOOL (image_map_tool);
+  GimpLevelsTool *l_tool = GIMP_LEVELS_TOOL (image_map_tool);
 
   gimp_image_map_apply (image_map_tool->image_map,
                         (GimpImageMapApplyFunc) gimp_lut_process_2,
@@ -382,7 +381,7 @@ gimp_levels_tool_color_picker_new (GimpLevelsTool *tool,
 static void
 gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 {
-  GimpLevelsTool  *l_tool;
+  GimpLevelsTool  *l_tool = GIMP_LEVELS_TOOL (image_map_tool);
   GimpToolOptions *tool_options;
   GtkWidget       *vbox;
   GtkWidget       *vbox2;
@@ -397,8 +396,6 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkWidget       *button;
   GtkWidget       *spinbutton;
   GtkObject       *data;
-
-  l_tool = GIMP_LEVELS_TOOL (image_map_tool);
 
   hbox = gtk_hbox_new (TRUE, 0);
   gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), hbox,

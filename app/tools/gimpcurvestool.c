@@ -247,9 +247,7 @@ gimp_curves_tool_init (GimpCurvesTool *c_tool)
 static void
 gimp_curves_tool_finalize (GObject *object)
 {
-  GimpCurvesTool *c_tool;
-
-  c_tool = GIMP_CURVES_TOOL (object);
+  GimpCurvesTool *c_tool = GIMP_CURVES_TOOL (object);
 
   if (c_tool->curves)
     {
@@ -279,18 +277,19 @@ static void
 gimp_curves_tool_initialize (GimpTool    *tool,
 			     GimpDisplay *gdisp)
 {
-  GimpCurvesTool *c_tool;
+  GimpCurvesTool *c_tool = GIMP_CURVES_TOOL (tool);
   GimpDrawable   *drawable;
 
-  c_tool = GIMP_CURVES_TOOL (tool);
+  drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
+  if (! drawable)
+    return;
+
+  if (gimp_drawable_is_indexed (drawable))
     {
-      g_message (_("Curves for indexed drawables cannot be adjusted."));
+      g_message (_("Curves for indexed layers cannot be adjusted."));
       return;
     }
-
-  drawable = gimp_image_active_drawable (gdisp->gimage);
 
   curves_init (c_tool->curves);
 
@@ -325,10 +324,8 @@ gimp_curves_tool_button_release (GimpTool        *tool,
 				 GdkModifierType  state,
 				 GimpDisplay     *gdisp)
 {
-  GimpCurvesTool *c_tool;
+  GimpCurvesTool *c_tool = GIMP_CURVES_TOOL (tool);
   GimpDrawable   *drawable;
-
-  c_tool = GIMP_CURVES_TOOL (tool);
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
@@ -427,9 +424,7 @@ curves_add_point (GimpCurvesTool *c_tool,
 static void
 gimp_curves_tool_map (GimpImageMapTool *image_map_tool)
 {
-  GimpCurvesTool *c_tool;
-
-  c_tool = GIMP_CURVES_TOOL (image_map_tool);
+  GimpCurvesTool *c_tool = GIMP_CURVES_TOOL (image_map_tool);
 
   gimp_lut_setup (c_tool->lut,
 		  (GimpLutFunc) curves_lut_func,
@@ -449,7 +444,7 @@ gimp_curves_tool_map (GimpImageMapTool *image_map_tool)
 static void
 gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
 {
-  GimpCurvesTool *c_tool;
+  GimpCurvesTool *c_tool = GIMP_CURVES_TOOL (image_map_tool);
   GtkWidget      *hbox;
   GtkWidget      *vbox;
   GtkWidget      *hbbox;
@@ -457,8 +452,6 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkWidget      *menu;
   GtkWidget      *table;
   GtkWidget      *button;
-
-  c_tool = GIMP_CURVES_TOOL (image_map_tool);
 
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), hbox,
@@ -612,10 +605,8 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
 static void
 gimp_curves_tool_reset (GimpImageMapTool *image_map_tool)
 {
-  GimpCurvesTool       *c_tool;
+  GimpCurvesTool       *c_tool = GIMP_CURVES_TOOL (image_map_tool);
   GimpHistogramChannel  channel;
-
-  c_tool = GIMP_CURVES_TOOL (image_map_tool);
 
   c_tool->grab_point = -1;
 

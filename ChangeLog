@@ -1,3 +1,27 @@
+2003-11-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-undo-push.c (undo_pop_layer): when trying to
+	activate the previously selected layer after a layer removal, also
+	look at gimage->layer_stack, just as gimp_image_remove_layer()
+	does. Should fix regression from 1.2 when there was no avtive
+	layer after certain undo operations. Fixes bug #126781.
+	Reordered instructions to match gimp_image_remove_layer().
+
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorizetool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimpthresholdtool.c: although the crash triggering bug
+	is fixed, the image_map tools should not crash when invoked
+	without active drawable: changed all _initialize() functions to
+	silently return if there is no active drawable.
+
+	Changed "drawable" to "layer" in all user visible warnings about
+	indexed or non-RGB drawables. Cleanup.
+
 2003-11-13 Simon Budig  <simon@gimp.org>
 
 	* app/core/gimpdrawable-stroke.c: removed erraneous offset by

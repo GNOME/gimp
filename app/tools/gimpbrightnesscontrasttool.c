@@ -154,9 +154,7 @@ gimp_brightness_contrast_tool_init (GimpBrightnessContrastTool *bc_tool)
 static void
 gimp_brightness_contrast_tool_finalize (GObject *object)
 {
-  GimpBrightnessContrastTool *bc_tool;
-
-  bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (object);
+  GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (object);
 
   if (bc_tool->lut)
     {
@@ -171,13 +169,17 @@ static void
 gimp_brightness_contrast_tool_initialize (GimpTool    *tool,
 					  GimpDisplay *gdisp)
 {
-  GimpBrightnessContrastTool *bc_tool;
+  GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (tool);
+  GimpDrawable               *drawable;
 
-  bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (tool);
+  drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
+  if (! drawable)
+    return;
+
+  if (gimp_drawable_is_indexed (drawable))
     {
-      g_message (_("Brightness-Contrast does not operate on indexed drawables."));
+      g_message (_("Brightness-Contrast does not operate on indexed layers."));
       return;
     }
 
@@ -193,10 +195,8 @@ static void
 gimp_brightness_contrast_tool_map (GimpImageMapTool *image_map_tool)
 {
   GimpBrightnessContrastTool *bc_tool;
-  GimpTool                   *tool;
 
   bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (image_map_tool);
-  tool    = GIMP_TOOL (image_map_tool);
 
   brightness_contrast_lut_setup (bc_tool->lut,
                                  bc_tool->brightness / 255.0,

@@ -1508,25 +1508,10 @@ undo_pop_layer (GimpUndo            *undo,
       /*  record the current position  */
       lu->prev_position = gimp_image_get_layer_index (undo->gimage, layer);
 
-      if (layer == gimp_image_get_active_layer (undo->gimage))
-        {
-          if (lu->prev_layer)
-            {
-              gimp_image_set_active_layer (undo->gimage, lu->prev_layer);
-            }
-          else
-            {
-              undo->gimage->active_layer = NULL;
-              gimp_image_active_layer_changed (undo->gimage);
-            }
-        }
-
       /*  remove the layer  */
       gimp_container_remove (undo->gimage->layers, GIMP_OBJECT (layer));
       undo->gimage->layer_stack = g_slist_remove (undo->gimage->layer_stack,
                                                   layer);
-
-      gimp_item_removed (GIMP_ITEM (layer));
 
       /*  reset the gimage values  */
       if (gimp_layer_is_floating_sel (layer))
@@ -1537,6 +1522,26 @@ undo_pop_layer (GimpUndo            *undo,
 
 	  gimp_image_floating_selection_changed (undo->gimage);
 	}
+
+      if (layer == gimp_image_get_active_layer (undo->gimage))
+        {
+          if (lu->prev_layer)
+            {
+              gimp_image_set_active_layer (undo->gimage, lu->prev_layer);
+            }
+          else if (undo->gimage->layer_stack)
+            {
+              gimp_image_set_active_layer (undo->gimage,
+                                           undo->gimage->layer_stack->data);
+            }
+          else
+            {
+              undo->gimage->active_layer = NULL;
+              gimp_image_active_layer_changed (undo->gimage);
+            }
+        }
+
+      gimp_item_removed (GIMP_ITEM (layer));
 
       if (gimp_container_num_children (undo->gimage->layers) == 1 &&
           ! gimp_drawable_has_alpha (GIMP_LIST (undo->gimage->layers)->list->data))

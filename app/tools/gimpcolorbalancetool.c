@@ -66,17 +66,17 @@ static void   gimp_color_balance_tool_reset      (GimpImageMapTool *image_map_to
 static void   color_balance_update               (GimpColorBalanceTool *cb_tool,
 						  gint                  update);
 static void   color_balance_range_callback       (GtkWidget            *widget,
-						  gpointer              data);
+						  GimpColorBalanceTool *cb_tool);
 static void   color_balance_range_reset_callback (GtkWidget            *widget,
-						  gpointer              data);
+						  GimpColorBalanceTool *cb_tool);
 static void   color_balance_preserve_update      (GtkWidget            *widget,
-						  gpointer              data);
+						  GimpColorBalanceTool *cb_tool);
 static void   color_balance_cr_adjustment_update (GtkAdjustment        *adj,
-						  gpointer              data);
+						  GimpColorBalanceTool *cb_tool);
 static void   color_balance_mg_adjustment_update (GtkAdjustment        *adj,
-						  gpointer              data);
+						  GimpColorBalanceTool *cb_tool);
 static void   color_balance_yb_adjustment_update (GtkAdjustment        *adj,
-						  gpointer              data);
+						  GimpColorBalanceTool *cb_tool);
 
 
 static GimpImageMapToolClass *parent_class = NULL;
@@ -166,9 +166,7 @@ gimp_color_balance_tool_init (GimpColorBalanceTool *cb_tool)
 static void
 gimp_color_balance_tool_finalize (GObject *object)
 {
-  GimpColorBalanceTool *cb_tool;
-
-  cb_tool = GIMP_COLOR_BALANCE_TOOL (object);
+  GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (object);
 
   if (cb_tool->color_balance)
     {
@@ -183,13 +181,17 @@ static void
 gimp_color_balance_tool_initialize (GimpTool    *tool,
 				    GimpDisplay *gdisp)
 {
-  GimpColorBalanceTool *cb_tool;
+  GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (tool);
+  GimpDrawable         *drawable;
 
-  cb_tool = GIMP_COLOR_BALANCE_TOOL (tool);
+  drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  if (! gimp_drawable_is_rgb (gimp_image_active_drawable (gdisp->gimage)))
+  if (! drawable)
+    return;
+
+  if (! gimp_drawable_is_rgb (drawable))
     {
-      g_message (_("Color balance operates only on RGB color drawables."));
+      g_message (_("Color balance operates only on RGB color layers."));
       return;
     }
 
@@ -205,9 +207,7 @@ gimp_color_balance_tool_initialize (GimpTool    *tool,
 static void
 gimp_color_balance_tool_map (GimpImageMapTool *image_map_tool)
 {
-  GimpColorBalanceTool *cb_tool;
-
-  cb_tool = GIMP_COLOR_BALANCE_TOOL (image_map_tool);
+  GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (image_map_tool);
 
   color_balance_create_lookup_tables (cb_tool->color_balance);
   gimp_image_map_apply (image_map_tool->image_map,
@@ -263,15 +263,13 @@ create_levels_scale (const gchar   *left,
 static void
 gimp_color_balance_tool_dialog (GimpImageMapTool *image_map_tool)
 {
-  GimpColorBalanceTool *cb_tool;
+  GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (image_map_tool);
   GtkWidget            *vbox;
   GtkWidget            *hbox;
   GtkWidget            *table;
   GtkWidget            *toggle;
   GtkWidget            *button;
   GtkWidget            *frame;
-
-  cb_tool = GIMP_COLOR_BALANCE_TOOL (image_map_tool);
 
   frame = gimp_enum_radio_frame_new (GIMP_TYPE_TRANSFER_MODE,
                                      gtk_label_new (_("Select Range to Modify")),
@@ -353,9 +351,7 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *image_map_tool)
 static void
 gimp_color_balance_tool_reset (GimpImageMapTool *image_map_tool)
 {
-  GimpColorBalanceTool *cb_tool;
-
-  cb_tool = GIMP_COLOR_BALANCE_TOOL (image_map_tool);
+  GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (image_map_tool);
 
   color_balance_init (cb_tool->color_balance);
   color_balance_update (cb_tool, ALL);
@@ -387,25 +383,17 @@ color_balance_update (GimpColorBalanceTool *cb_tool,
 }
 
 static void
-color_balance_range_callback (GtkWidget *widget,
-			      gpointer   data)
+color_balance_range_callback (GtkWidget            *widget,
+                              GimpColorBalanceTool *cb_tool)
 {
-  GimpColorBalanceTool *cb_tool;
-
-  cb_tool = GIMP_COLOR_BALANCE_TOOL (data);
-
   gimp_radio_button_update (widget, &cb_tool->transfer_mode);
   color_balance_update (cb_tool, ALL);
 }
 
 static void
-color_balance_range_reset_callback (GtkWidget *widget,
-                                    gpointer   data)
+color_balance_range_reset_callback (GtkWidget            *widget,
+                                    GimpColorBalanceTool *cb_tool)
 {
-  GimpColorBalanceTool *cb_tool;
-
-  cb_tool = GIMP_COLOR_BALANCE_TOOL (data);
-
   color_balance_range_reset (cb_tool->color_balance,
                              cb_tool->transfer_mode);
   color_balance_update (cb_tool, ALL);
@@ -414,13 +402,10 @@ color_balance_range_reset_callback (GtkWidget *widget,
 }
 
 static void
-color_balance_preserve_update (GtkWidget *widget,
-			       gpointer   data)
+color_balance_preserve_update (GtkWidget            *widget,
+                               GimpColorBalanceTool *cb_tool)
 {
-  GimpColorBalanceTool *cb_tool;
-  gboolean              active;
-
-  cb_tool = GIMP_COLOR_BALANCE_TOOL (data);
+  gboolean active;
 
   active = GTK_TOGGLE_BUTTON (widget)->active;
 
@@ -433,13 +418,10 @@ color_balance_preserve_update (GtkWidget *widget,
 }
 
 static void
-color_balance_cr_adjustment_update (GtkAdjustment *adjustment,
-				    gpointer       data)
+color_balance_cr_adjustment_update (GtkAdjustment        *adjustment,
+                                    GimpColorBalanceTool *cb_tool)
 {
-  GimpColorBalanceTool *cb_tool;
-  GimpTransferMode      tm;
-
-  cb_tool = GIMP_COLOR_BALANCE_TOOL (data);
+  GimpTransferMode tm;
 
   tm = cb_tool->transfer_mode;
 
@@ -452,13 +434,10 @@ color_balance_cr_adjustment_update (GtkAdjustment *adjustment,
 }
 
 static void
-color_balance_mg_adjustment_update (GtkAdjustment *adjustment,
-				    gpointer       data)
+color_balance_mg_adjustment_update (GtkAdjustment        *adjustment,
+                                    GimpColorBalanceTool *cb_tool)
 {
-  GimpColorBalanceTool *cb_tool;
-  GimpTransferMode      tm;
-
-  cb_tool = GIMP_COLOR_BALANCE_TOOL (data);
+  GimpTransferMode tm;
 
   tm = cb_tool->transfer_mode;
 
@@ -471,13 +450,10 @@ color_balance_mg_adjustment_update (GtkAdjustment *adjustment,
 }
 
 static void
-color_balance_yb_adjustment_update (GtkAdjustment *adjustment,
-				    gpointer       data)
+color_balance_yb_adjustment_update (GtkAdjustment        *adjustment,
+                                    GimpColorBalanceTool *cb_tool)
 {
-  GimpColorBalanceTool *cb_tool;
-  GimpTransferMode      tm;
-
-  cb_tool = GIMP_COLOR_BALANCE_TOOL (data);
+  GimpTransferMode tm;
 
   tm = cb_tool->transfer_mode;
 
