@@ -946,8 +946,8 @@ gimp_vectors_bounds (const GimpVectors  *vectors,
               point = g_array_index (stroke_coords, GimpCoords, i);
               *x1 = MIN (*x1, point.x);
               *y1 = MIN (*y1, point.y);
-              *x2 = MIN (*x2, point.x);
-              *y2 = MIN (*y2, point.y);
+              *x2 = MAX (*x2, point.x);
+              *y2 = MAX (*y2, point.y);
             }
           g_array_free (stroke_coords, TRUE);
         }
