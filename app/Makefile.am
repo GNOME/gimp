@@ -309,7 +309,7 @@ INCLUDES = \
 LDADD = \
 	$(top_builddir)/libgimp/libgimpi.a	\
 	$(GTK_LIBS)				\
-	$(THREAD_LIBS)
+	$(THREAD_LIBS)				\
 	-lc
 
 DEPS = \

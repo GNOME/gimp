@@ -182,6 +182,8 @@ static GtkItemFactoryEntry image_entries[] =
   { "/Tools/Swap Colors", "X", tools_swap_colors_cmd_callback, 0 }, */ 
   { "/Tools/Toolbox", NULL, toolbox_raise_callback, 0 },
   { "/Tools/---", NULL, NULL, 0, "<Separator>" },  
+  { "/Tools/Default Colors", "D", tools_default_colors_cmd_callback, 0 },
+  { "/Tools/Swap Colors", "X", tools_swap_colors_cmd_callback, 0 },
   { "/Filters/", NULL, NULL, 0 },
   { "/Filters/Repeat last", "<alt>F", filters_repeat_cmd_callback, 0x0 },
   { "/Filters/Re-show last", "<alt><shift>F", filters_repeat_cmd_callback, 0x1 },

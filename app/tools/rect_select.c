@@ -69,6 +69,7 @@ create_selection_options (ToolType tool_type)
   GtkWidget *feather_toggle;
   GtkWidget *feather_scale;
   GtkWidget *sample_merged_toggle;
+  GtkWidget *bezier_toggle;
   GtkObject *feather_scale_data;
 
   label = NULL;
@@ -79,6 +80,7 @@ create_selection_options (ToolType tool_type)
   options->feather = FALSE;
   options->feather_radius = 10.0;
   options->sample_merged = FALSE;
+  options->sample_merged = TRUE;
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
@@ -135,6 +137,18 @@ create_selection_options (ToolType tool_type)
       break;
     default:
       break;
+    }
+
+  if (tool_type == BEZIER_SELECT)
+    {
+      bezier_toggle = gtk_check_button_new_with_label ("Bezier Extends");
+      gtk_box_pack_start (GTK_BOX (vbox), bezier_toggle, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (bezier_toggle), "toggled",
+			  (GtkSignalFunc) selection_toggle_update,
+			  &options->extend);
+      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (bezier_toggle), options->extend);
+      gtk_widget_show (bezier_toggle);
+
     }
 
   /*  the antialias toggle button  */

@@ -1,4 +1,18 @@
-Thu Jun 25 17:25:01 PDT 1998 Adrian Likine <adrian@gimp.org>
+Fri Jun 26 00:59:16 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/Makefile.am: corrected typo
+
+	* app/bezier_select.c
+	* app/rect_select.[ch]: merged in bezier extend patch
+	by Raphael FRANCOIS (fraph@ibm.net)
+
+	* app/menus.c: restored "lost" menu items and shortcuts
+	These really aren't tools.. maybe they should go somewhere
+	else?
+
+	* plug-ins/Lighting/lighting_main.c: added gimp_displays_flush
+
+Thu Jun 25 17:25:01 PDT 1998 Adrian Likins <adrian@gimp.org>
 
 	* Makefile.am:
 	* app/app_procs.c:
