@@ -7,9 +7,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp 1.2.0\n"
-"POT-Creation-Date: 2001-02-03 18:31+0100\n"
-"PO-Revision-Date: 2001-02-03 18:32+0100\n"
+"Project-Id-Version: gimp-libgimp 1.2.1\n"
+"POT-Creation-Date: 2001-04-26 13:18+0200\n"
+"PO-Revision-Date: 2001-04-26 13:21+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"

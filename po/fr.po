@@ -7,9 +7,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.2.0\n"
-"POT-Creation-Date: 2001-02-03 18:30+0100\n"
-"PO-Revision-Date: 2001-02-03 18:36+0100\n"
+"Project-Id-Version: gimp 1.2.1\n"
+"POT-Creation-Date: 2001-04-26 13:18+0200\n"
+"PO-Revision-Date: 2001-04-26 13:21+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -1408,7 +1408,7 @@ msgstr "Le fichier existe !"
 msgid "Revert"
 msgstr "Revenir"
 
-#: app/fileops.c:1967
+#: app/fileops.c:1970
 #, c-format
 msgid ""
 "Revert failed.\n"
@@ -1516,26 +1516,26 @@ msgstr ""
 msgid "No selection to stroke!"
 msgstr "Aucune sélection à entourer d'un coup de pinceau !"
 
-#: app/gimpbrush.c:294
+#: app/gimpbrush.c:298
 #, c-format
 msgid "Unknown brush format version #%d in \"%s\"."
 msgstr "Format de pinceau inconnu #%d dans \"%s\"."
 
-#: app/gimpbrush.c:314
+#: app/gimpbrush.c:318
 #, c-format
 msgid "Error in GIMP brush file \"%s\"."
 msgstr "Erreur dans le fichier de pinceaux de GIMP \"%s\"."
 
-#: app/gimpbrush.c:321 app/patterns.c:235
+#: app/gimpbrush.c:325 app/patterns.c:236
 msgid "Unnamed"
 msgstr "SansNom"
 
-#: app/gimpbrush.c:334 app/gimpbrush.c:379
+#: app/gimpbrush.c:338 app/gimpbrush.c:383
 #, c-format
 msgid "GIMP brush file appears to be truncated: \"%s\"."
 msgstr "Le fichier de pinceaux GIMP semble avoir été tronqué : \"%s\"."
 
-#: app/gimpbrush.c:359
+#: app/gimpbrush.c:363
 #, c-format
 msgid "GIMP brush file appears to be corrupted: \"%s\"."
 msgstr "Le fichier de pinceaux GIMP semble avoir été corrompu : \"%s\"."
@@ -1558,7 +1558,7 @@ msgstr ""
 "Avertissement : échec du chargement du pinceau animé\n"
 "\"%s\""
 
-#: app/gimpbrushpipe.c:292
+#: app/gimpbrushpipe.c:296
 #, c-format
 msgid ""
 "Brush pipes should have at least one brush:\n"
@@ -1567,7 +1567,7 @@ msgstr ""
 "Les pinceaux animés doivent contenir au moins un pinceau :\n"
 "\"%s\""
 
-#: app/gimpbrushpipe.c:383
+#: app/gimpbrushpipe.c:387
 #, c-format
 msgid ""
 "Failed to load one of the brushes in the brush pipe\n"
@@ -4160,17 +4160,17 @@ msgstr "Sélection de motif"
 msgid "No Patterns available"
 msgstr "Pas de motif disponible"
 
-#: app/patterns.c:209
+#: app/patterns.c:210
 #, c-format
 msgid "Unknown pattern format version #%d in \"%s\"."
 msgstr "Format de motif inconnu #%d dans \"%s\"."
 
-#: app/patterns.c:228
+#: app/patterns.c:229
 #, c-format
 msgid "Error in GIMP pattern file \"%s\"."
 msgstr "Erreur dans le fichier de motif GIMP \"%s\"."
 
-#: app/patterns.c:244
+#: app/patterns.c:245
 #, c-format
 msgid "GIMP pattern file appears to be truncated: \"%s\"."
 msgstr "Le fichier de motif GIMP semble être tronqué : \"%s\"."
@@ -4235,13 +4235,13 @@ msgstr ""
 "Vous devriez enregistrer vos images et redémarrer GIMP\n"
 "pour être sur de sa stabilité."
 
+#: app/posterize.c:116 app/posterize.c:203 app/tools.c:1110
+msgid "Posterize"
+msgstr "Postériser"
+
 #: app/posterize.c:158
 msgid "Posterize does not operate on indexed drawables."
 msgstr "La postérisation n'opère pas sur les images indexées."
-
-#: app/posterize.c:203 app/tools.c:1110
-msgid "Posterize"
-msgstr "Postériser"
 
 #: app/posterize.c:225
 msgid "Posterize Levels:"
@@ -4578,11 +4578,11 @@ msgstr "Désactive la mise à jour du curseur"
 
 #: app/preferences_dialog.c:2101
 msgid "Tool Icon"
-msgstr "Icone de l'outil"
+msgstr "Icône de l'outil"
 
 #: app/preferences_dialog.c:2103
 msgid "Tool Icon with Crosshair"
-msgstr "Icone de l'outil avec une croix"
+msgstr "Icône de l'outil avec une croix"
 
 #: app/preferences_dialog.c:2105
 msgid "Crosshair only"
@@ -6858,7 +6858,7 @@ msgstr "Historique des couleurs"
 #~ msgstr "Configuration de l'interface"
 
 #~ msgid "Help System Settings"
-#~ msgstr "Paramétres du système d'aide"
+#~ msgstr "Paramètres du système d'aide"
 
 #~ msgid "Image Windows Settings"
 #~ msgstr "Configuration des fenêtres d'image"
