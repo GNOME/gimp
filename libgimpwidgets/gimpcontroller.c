@@ -221,26 +221,36 @@ const gchar *
 gimp_controller_get_event_name (GimpController *controller,
                                 gint            event_id)
 {
+  const gchar *name = NULL;
+
   g_return_val_if_fail (GIMP_IS_CONTROLLER (controller), NULL);
 
   if (GIMP_CONTROLLER_GET_CLASS (controller)->get_event_name)
-    return GIMP_CONTROLLER_GET_CLASS (controller)->get_event_name (controller,
+    name = GIMP_CONTROLLER_GET_CLASS (controller)->get_event_name (controller,
                                                                    event_id);
 
-  return NULL;
+  if (! name)
+    name = "<invalid event id>";
+
+  return name;
 }
 
 const gchar *
 gimp_controller_get_event_blurb (GimpController *controller,
                                  gint            event_id)
 {
+  const gchar *blurb = NULL;
+
   g_return_val_if_fail (GIMP_IS_CONTROLLER (controller), NULL);
 
   if (GIMP_CONTROLLER_GET_CLASS (controller)->get_event_blurb)
-    return GIMP_CONTROLLER_GET_CLASS (controller)->get_event_blurb (controller,
-                                                                    event_id);
+    blurb =  GIMP_CONTROLLER_GET_CLASS (controller)->get_event_blurb (controller,
+                                                                      event_id);
 
-  return NULL;
+  if (! blurb)
+    blurb = "<invalid event id>";
+
+  return blurb;
 }
 
 void

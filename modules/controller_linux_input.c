@@ -394,11 +394,16 @@ linux_input_read_event (GIOChannel   *io,
           for (i = 0; i < G_N_ELEMENTS (key_events); i++)
             if (ev.code == key_events[i].code)
               {
+                GimpController      *controller = GIMP_CONTROLLER (data);
                 GimpControllerEvent  cevent;
 
                 cevent.any.type     = GIMP_CONTROLLER_EVENT_TRIGGER;
                 cevent.any.source   = GIMP_CONTROLLER (data);
                 cevent.any.event_id = i;
+
+                gimp_controller_event (controller, &cevent);
+
+                break;
               }
           break;
 

@@ -427,9 +427,9 @@ gimp_controller_info_event (GimpController            *controller,
                      controller, event, action_name, &retval);
 
       if (retval)
-        g_print ("   action was found\n\n");
+        g_print ("    action was found\n\n");
       else
-        g_print ("   action NOT found\n\n");
+        g_print ("    action NOT found\n\n");
 
       return retval;
     }

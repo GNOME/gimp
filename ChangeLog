@@ -1,3 +1,14 @@
+2004-06-16  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpcontroller.c (gimp_controller_get_event_name)
+	(gimp_controller_get_event_blurb): always return a non-NULL
+	string (return "<invalid event id>" as fallback).
+
+	* modules/controller_linux_input.c: reenabled button event
+	dispatching.
+
+	* app/widgets/gimpcontrollerinfo.c: fixed debugging output.
+
 2004-06-16  Simon Budig  <simon@gimp.org>
 
 	* modules/controller_linux_input.c: break out of the
