@@ -454,12 +454,10 @@ create_edit_area_info_dialog(Object_t *obj)
    default_dialog_set_cancel_cb(data->dialog, edit_area_cancel_cb, data);
 
    data->notebook = notebook = gtk_notebook_new();
-   gtk_container_set_border_width(GTK_CONTAINER(notebook), 12);
    g_signal_connect_after(notebook, "switch_page",
                           G_CALLBACK(switch_page), (gpointer) data);
 
-   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(data->dialog->dialog)->vbox),
-		      notebook, TRUE, TRUE, 10);
+   gtk_box_pack_start(GTK_BOX(data->dialog->vbox), notebook, TRUE, TRUE, 0);
    create_link_tab(data, notebook);
    create_info_tab(data, notebook);
    create_java_script_tab(data, notebook);

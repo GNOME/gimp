@@ -1,3 +1,15 @@
+2004-10-25  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/imagemap/imap_cmd_gimp_guides.c
+	* plug-ins/imagemap/imap_edit_area_info.c
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/imagemap/imap_menu.[ch]
+	* plug-ins/imagemap/imap_menu_funcs.[ch]
+	* plug-ins/imagemap/imap_misc.c
+	* plug-ins/imagemap/imap_settings.c
+	* plug-ins/imagemap/imap_source.c: added a menu entry for Help.
+	Did more minor layout adjustments for HIG compliance.
+
 2004-10-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpobject.c: #include "libgimpbase/gimpbase.h", not

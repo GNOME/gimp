@@ -56,7 +56,8 @@ do_source_dialog(void)
    static GtkWidget *text;
    static GtkTextBuffer *buffer;
 
-   if (!dialog) {
+   if (!dialog)
+     {
       GtkWidget *swin;
 
       dialog = make_default_dialog(_("View Source"));

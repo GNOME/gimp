@@ -38,7 +38,7 @@ init_accel_group(GtkWidget *window)
 }
 
 void
-add_accelerator(GtkWidget *widget, guchar accelerator_key,
+add_accelerator(GtkWidget *widget, guint accelerator_key,
 		guint8 accelerator_mods)
 {
    gtk_widget_add_accelerator(widget, "activate", accelerator_group,

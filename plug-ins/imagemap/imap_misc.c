@@ -82,9 +82,7 @@ create_base_alert(const gchar *stock_id)
    default_dialog_hide_apply_button(dialog);
 
    hbox = gtk_hbox_new (FALSE, 12);
-   gtk_container_set_border_width (GTK_CONTAINER(hbox), 12);
-   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog->dialog)->vbox), hbox,
-		      TRUE, TRUE, 0);
+   gtk_box_pack_start(GTK_BOX(dialog->vbox), hbox, FALSE, FALSE, 0);
    gtk_widget_show(hbox);
 
    image = gtk_image_new_from_stock(stock_id, GTK_ICON_SIZE_DIALOG);

@@ -49,7 +49,7 @@ typedef struct {
   GtkWidget *zoom[8];
   GtkWidget *zoom_in;
   GtkWidget *zoom_out;
-  
+
   gint	      nr_off_mru_items;
 
   CommandFactory_t cmd_open;
@@ -58,7 +58,7 @@ typedef struct {
   CommandFactory_t cmd_preferences;
   CommandFactory_t cmd_close;
   CommandFactory_t cmd_quit;
-  
+
   CommandFactory_t cmd_undo;
   CommandFactory_t cmd_redo;
   CommandFactory_t cmd_cut;
@@ -68,20 +68,21 @@ typedef struct {
   CommandFactory_t cmd_deselect_all;
   CommandFactory_t cmd_clear;
   CommandFactory_t cmd_edit_area_info;
-  
+
   CommandFactory_t cmd_area_list;
   CommandFactory_t cmd_source;
   CommandFactory_t cmd_color;
   CommandFactory_t cmd_gray;
   CommandFactory_t cmd_zoom_in;
   CommandFactory_t cmd_zoom_out;
-  
+
   CommandFactory_t cmd_edit_map_info;
-  
+
   CommandFactory_t cmd_grid_settings;
   CommandFactory_t cmd_create_guides;
   CommandFactory_t cmd_use_gimp_guides;
-  
+
+  CommandFactory_t cmd_help;
   CommandFactory_t cmd_about;
 } Menu_t;
 
@@ -135,6 +136,8 @@ typedef struct {
 	((menu)->cmd_create_guides = (command))
 #define menu_set_use_gimp_guides_command(menu, command) \
 	((menu)->cmd_use_gimp_guides = (command))
+#define menu_set_help_command(menu, command) \
+	((menu)->cmd_help = (command))
 #define menu_set_about_command(menu, command) \
 	((menu)->cmd_about = (command))
 

@@ -1213,6 +1213,12 @@ factory_file_open_dialog(void)
    return command_new(do_file_open_dialog);
 }
 
+static void
+imap_help (void)
+{
+  gimp_standard_help_func ("plug-in-imagemap", NULL);
+}
+
 static Command_t*
 factory_save(void)
 {
@@ -1389,6 +1395,12 @@ factory_use_gimp_guides_dialog(void)
 }
 
 static Command_t*
+factory_help(void)
+{
+   return command_new(imap_help);
+}
+
+static Command_t*
 factory_about_dialog(void)
 {
    return command_new(do_about_dialog);
@@ -1405,6 +1417,8 @@ factory_move_down(void)
 {
    return move_down_command_new(_shapes);
 }
+
+
 
 static gint
 dialog(GimpDrawable *drawable)
@@ -1471,6 +1485,7 @@ dialog(GimpDrawable *drawable)
    menu_set_grid_settings_command(menu, factory_grid_settings_dialog);
    menu_set_create_guides_command(menu, factory_create_guides_dialog);
    menu_set_use_gimp_guides_command(menu, factory_use_gimp_guides_dialog);
+   menu_set_help_command(menu, factory_help);
    menu_set_about_command(menu, factory_about_dialog);
 
    /* Create popup */

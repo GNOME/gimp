@@ -24,6 +24,7 @@
 #include "config.h"
 
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "imap_circle.h"
 #include "imap_file.h"
@@ -184,7 +185,7 @@ make_file_menu(GtkWidget *menu_bar)
    make_item_with_image(file_menu, GTK_STOCK_OPEN, menu_command,
 			&_menu.cmd_open);
    _menu.open_recent = make_sub_menu(file_menu, _("Open recent"));
-   make_item_with_image(file_menu, GTK_STOCK_SAVE, menu_command, 
+   make_item_with_image(file_menu, GTK_STOCK_SAVE, menu_command,
 			&_menu.cmd_save);
    item = make_item_with_image(file_menu, GTK_STOCK_SAVE_AS, menu_command,
 			       &_menu.cmd_save_as);
@@ -205,7 +206,7 @@ command_list_changed(Command_t *command, gpointer data)
    /* Set undo entry */
    if (_menu.undo)
       gtk_widget_destroy(_menu.undo);
-   scratch = g_strdup_printf (_("_Undo %s"), 
+   scratch = g_strdup_printf (_("_Undo %s"),
                               command && command->name ? command->name : "");
    _menu.undo = insert_item_with_label(_menu.edit_menu, 1, scratch,
 				       menu_command, &_menu.cmd_undo);
@@ -221,7 +222,7 @@ command_list_changed(Command_t *command, gpointer data)
    command = command_list_get_redo_command();
    if (_menu.redo)
       gtk_widget_destroy(_menu.redo);
-   scratch = g_strdup_printf (_("_Redo %s"), 
+   scratch = g_strdup_printf (_("_Redo %s"),
                               command && command->name ? command->name : "");
    _menu.redo = insert_item_with_label(_menu.edit_menu, 2, scratch,
 				       menu_command, &_menu.cmd_redo);
@@ -270,8 +271,8 @@ make_edit_menu(GtkWidget *menu_bar)
    item = make_item_with_label(edit_menu, _("Select _all"), menu_command,
 			       &_menu.cmd_select_all);
    add_accelerator(item, 'A', GDK_CONTROL_MASK);
-   _menu.deselect_all = make_item_with_label(edit_menu, _("Deselect _all"), 
-					     menu_command, 
+   _menu.deselect_all = make_item_with_label(edit_menu, _("Deselect _all"),
+					     menu_command,
 					     &_menu.cmd_deselect_all);
    add_accelerator(_menu.deselect_all, 'A', GDK_SHIFT_MASK|GDK_CONTROL_MASK);
    make_separator(edit_menu);
@@ -318,9 +319,9 @@ make_view_menu(GtkWidget *menu_bar)
 
    make_separator(view_menu);
 
-   _menu.zoom_in = make_item_with_image(view_menu, GTK_STOCK_ZOOM_IN, 
+   _menu.zoom_in = make_item_with_image(view_menu, GTK_STOCK_ZOOM_IN,
 					menu_command, &_menu.cmd_zoom_in);
-   _menu.zoom_out = make_item_with_image(view_menu, GTK_STOCK_ZOOM_OUT, 
+   _menu.zoom_out = make_item_with_image(view_menu, GTK_STOCK_ZOOM_OUT,
 					 menu_command, &_menu.cmd_zoom_out);
    gtk_widget_set_sensitive(_menu.zoom_out, FALSE);
 
@@ -360,7 +361,7 @@ make_mapping_menu(GtkWidget *menu_bar)
    _menu.arrow = make_radio_item(menu, NULL, _("Arrow"), menu_arrow, NULL);
    group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.arrow));
 #ifdef _NOT_READY_YET_
-   _menu.fuzzy_select = make_radio_item(menu, group, 
+   _menu.fuzzy_select = make_radio_item(menu, group,
 					_("Select contiguous region"),
 					menu_fuzzy_select, NULL);
    group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.fuzzy_select));
@@ -394,9 +395,15 @@ make_tools_menu(GtkWidget *menu_bar)
 static void
 make_help_menu(GtkWidget *menu_bar)
 {
-   GtkWidget *help_menu = make_menu_bar_item(menu_bar, _("_Help"));
-   make_item_with_label(help_menu, _("About ImageMap..."), menu_command,
-			&_menu.cmd_about);
+  GtkWidget *item;
+  GtkWidget *help_menu = make_menu_bar_item(menu_bar, _("_Help"));
+
+  item = make_item_with_label(help_menu, _("_Contents"), menu_command,
+                              &_menu.cmd_help);
+  add_accelerator(item, GDK_F1, 0);
+
+  make_item_with_label(help_menu, _("_About ImageMap"), menu_command,
+                       &_menu.cmd_about);
 }
 
 Menu_t*
