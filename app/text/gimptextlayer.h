@@ -45,7 +45,6 @@ struct _GimpTextLayer
                                  *  and that should be removed when the text
                                  *  is changed.
                                  */
-  guint         idle_render_id;
   gboolean      auto_rename;
   gboolean      modified;
 };
@@ -64,7 +63,6 @@ GimpText  * gimp_text_layer_get_text    (GimpTextLayer *layer);
 void        gimp_text_layer_set_text    (GimpTextLayer *layer,
                                          GimpText      *text);
 void        gimp_text_layer_discard     (GimpTextLayer *layer);
-void        gimp_text_layer_flush       (GimpTextLayer *layer);
 
 gboolean    gimp_drawable_is_text_layer (GimpDrawable  *drawable);
 

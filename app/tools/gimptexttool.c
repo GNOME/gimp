@@ -80,8 +80,12 @@ static void      gimp_text_tool_cursor_update  (GimpTool          *tool,
                                                 GdkModifierType    state,
                                                 GimpDisplay       *gdisp);
 
-static void      gimp_text_tool_connect        (GimpTextTool      *tool,
+static void      gimp_text_tool_connect        (GimpTextTool      *text_tool,
                                                 GimpText          *text);
+static void      gimp_text_tool_notify         (GimpTextTool      *text_tool,
+                                                GParamSpec        *pspec);
+static void      gimp_text_tool_apply          (GimpTextTool      *text_tool);
+static gboolean  gimp_text_tool_idle_apply     (GimpTextTool      *text_tool);
 
 static void      gimp_text_tool_create_vectors (GimpTextTool      *text_tool);
 static void      gimp_text_tool_create_layer   (GimpTextTool      *text_tool);
@@ -169,6 +173,7 @@ gimp_text_tool_init (GimpTextTool *text_tool)
   GimpTool *tool = GIMP_TOOL (text_tool);
 
   text_tool->proxy   = NULL;
+  text_tool->pending = NULL;
   text_tool->idle_id = 0;
 
   text_tool->text    = NULL;
@@ -197,6 +202,10 @@ gimp_text_tool_constructor (GType                  type,
 
   gimp_text_options_connect_text (options, text_tool->proxy);
 
+  g_signal_connect_object (text_tool->proxy, "notify",
+                           G_CALLBACK (gimp_text_tool_notify),
+                           text_tool, G_CONNECT_SWAPPED);
+
   return object;
 }
 
@@ -205,11 +214,8 @@ gimp_text_tool_dispose (GObject *object)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (object);
 
-  if (text_tool->idle_id)
-    {
-      g_source_remove (text_tool->idle_id);
-      text_tool->idle_id = 0;
-    }
+  if (text_tool->pending)
+    gimp_text_tool_apply (text_tool);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -308,6 +314,134 @@ gimp_text_tool_cursor_update (GimpTool        *tool,
 }
 
 static void
+gimp_text_tool_connect (GimpTextTool *text_tool,
+                        GimpText     *text)
+{
+  GimpTool        *tool = GIMP_TOOL (text_tool);
+  GimpTextOptions *options;
+  GtkWidget       *button;
+
+  if (text_tool->text == text)
+    return;
+
+  options = GIMP_TEXT_OPTIONS (tool->tool_info->tool_options);
+
+  button = g_object_get_data (G_OBJECT (options), "gimp-text-to-vectors");
+
+  if (text_tool->text)
+    {
+      if (text_tool->pending)
+        gimp_text_tool_apply (text_tool);
+
+      if (button)
+        {
+          gtk_widget_set_sensitive (button, FALSE);
+          g_signal_handlers_disconnect_by_func (button,
+                                                gimp_text_tool_create_vectors,
+                                                text_tool);
+        }
+
+      if (text_tool->editor)
+        gtk_widget_destroy (text_tool->editor);
+
+      g_object_set (G_OBJECT (text_tool->proxy), "text", NULL, NULL);
+
+      g_object_unref (text_tool->text);
+      text_tool->text = NULL;
+
+      text_tool->layer = NULL;
+    }
+
+  gimp_context_define_property (GIMP_CONTEXT (options),
+                                GIMP_CONTEXT_PROP_FOREGROUND, text != NULL);
+
+  if (text)
+    {
+      gimp_config_sync (GIMP_CONFIG (text), GIMP_CONFIG (text_tool->proxy), 0);
+
+      text_tool->text = g_object_ref (text);
+
+      if (button)
+        {
+          g_signal_connect_swapped (button, "clicked",
+                                    G_CALLBACK (gimp_text_tool_create_vectors),
+                                    text_tool);
+          gtk_widget_set_sensitive (button, TRUE);
+        }
+    }
+}
+
+static void
+gimp_text_tool_notify (GimpTextTool *text_tool,
+                       GParamSpec   *pspec)
+{
+  if (! text_tool->text)
+    return;
+
+  if ((pspec->flags & G_PARAM_READWRITE) == G_PARAM_READWRITE)
+    {
+      text_tool->pending = g_list_append (text_tool->pending, pspec);
+
+      if (text_tool->idle_id)
+        g_source_remove (text_tool->idle_id);
+
+      text_tool->idle_id =
+        g_idle_add_full (G_PRIORITY_LOW,
+                         (GSourceFunc) gimp_text_tool_idle_apply, text_tool,
+                         NULL);
+    }
+}
+
+static void
+gimp_text_tool_apply (GimpTextTool *text_tool)
+{
+  GList *list;
+
+  if (text_tool->idle_id)
+    {
+      g_source_remove (text_tool->idle_id);
+      text_tool->idle_id = 0;
+    }
+
+  g_return_if_fail (text_tool->text != NULL);
+
+  g_printerr ("applying %d text change(s)\n",
+              g_list_length (text_tool->pending));
+
+  g_object_freeze_notify (G_OBJECT (text_tool->text));
+
+  for (list = text_tool->pending; list; list = list->next)
+    {
+      GParamSpec *pspec = list->data;
+      GValue      value = { 0, };
+
+      g_value_init (&value, pspec->value_type);
+
+      g_object_get_property (G_OBJECT (text_tool->proxy),
+                             pspec->name, &value);
+      g_object_set_property (G_OBJECT (text_tool->text),
+                             pspec->name, &value);
+
+      g_value_unset (&value);
+    }
+
+  g_object_thaw_notify (G_OBJECT (text_tool->text));
+
+  g_list_free (text_tool->pending);
+  text_tool->pending = NULL;
+}
+
+static gboolean
+gimp_text_tool_idle_apply (GimpTextTool *text_tool)
+{
+  text_tool->idle_id = 0;
+
+  gimp_text_tool_apply (text_tool);
+
+  return FALSE;
+}
+
+static void
 gimp_text_tool_create_vectors (GimpTextTool *text_tool)
 {
   GimpTool    *tool  = GIMP_TOOL (text_tool);
@@ -352,7 +486,7 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool)
                 NULL);
 
   image = tool->gdisp->gimage;
-  text = gimp_config_duplicate (GIMP_CONFIG (text_tool->proxy));
+   text = gimp_config_duplicate (GIMP_CONFIG (text_tool->proxy));
   layer = gimp_text_layer_new (image, text);
 
   g_object_unref (text);
@@ -382,65 +516,6 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool)
   gimp_image_flush (image);
 
   gimp_text_tool_set_layer (text_tool, layer);
-}
-
-static void
-gimp_text_tool_connect (GimpTextTool *text_tool,
-                        GimpText     *text)
-{
-  GimpTool        *tool = GIMP_TOOL (text_tool);
-  GimpTextOptions *options;
-  GtkWidget       *button;
-
-  if (text_tool->text == text)
-    return;
-
-  options = GIMP_TEXT_OPTIONS (tool->tool_info->tool_options);
-
-  button = g_object_get_data (G_OBJECT (options), "gimp-text-to-vectors");
-
-  if (text_tool->text)
-    {
-      if (button)
-        {
-          gtk_widget_set_sensitive (button, FALSE);
-          g_signal_handlers_disconnect_by_func (button,
-                                                gimp_text_tool_create_vectors,
-                                                text_tool);
-        }
-
-      gimp_config_disconnect (G_OBJECT (text_tool->text),
-                              G_OBJECT (text_tool->proxy));
-
-      if (text_tool->editor)
-        gtk_widget_destroy (text_tool->editor);
-
-      g_object_set (G_OBJECT (text_tool->proxy), "text", NULL, NULL);
-
-      g_object_unref (text_tool->text);
-      text_tool->text = NULL;
-
-      text_tool->layer = NULL;
-    }
-
-  gimp_context_define_property (GIMP_CONTEXT (options),
-                                GIMP_CONTEXT_PROP_FOREGROUND, text != NULL);
-
-  if (text)
-    {
-      text_tool->text = g_object_ref (text);
-
-      gimp_config_sync (GIMP_CONFIG (text), GIMP_CONFIG (text_tool->proxy), 0);
-      gimp_config_connect (G_OBJECT (text), G_OBJECT (text_tool->proxy), NULL);
-
-      if (button)
-        {
-          g_signal_connect_swapped (button, "clicked",
-                                    G_CALLBACK (gimp_text_tool_create_vectors),
-                                    text_tool);
-          gtk_widget_set_sensitive (button, TRUE);
-        }
-    }
 }
 
 static void

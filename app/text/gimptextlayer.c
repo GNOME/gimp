@@ -56,7 +56,6 @@
 
 static void       gimp_text_layer_class_init     (GimpTextLayerClass *klass);
 static void       gimp_text_layer_init           (GimpTextLayer  *layer);
-static void       gimp_text_layer_dispose        (GObject        *object);
 static void       gimp_text_layer_finalize       (GObject        *object);
 
 static gint64     gimp_text_layer_get_memsize    (GimpObject     *object,
@@ -93,8 +92,7 @@ static void       gimp_text_layer_set_tiles      (GimpDrawable   *drawable,
                                                   GimpImageType   type);
 
 static void       gimp_text_layer_text_notify    (GimpTextLayer  *layer);
-static gboolean   gimp_text_layer_idle_render    (GimpTextLayer  *layer);
-static gboolean   gimp_text_layer_render_now     (GimpTextLayer  *layer);
+static gboolean   gimp_text_layer_render         (GimpTextLayer  *layer);
 static void       gimp_text_layer_render_layout  (GimpTextLayer  *layer,
                                                   GimpTextLayout *layout);
 
@@ -141,7 +139,6 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->dispose            = gimp_text_layer_dispose;
   object_class->finalize           = gimp_text_layer_finalize;
 
   gimp_object_class->get_memsize   = gimp_text_layer_get_memsize;
@@ -167,25 +164,10 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
 static void
 gimp_text_layer_init (GimpTextLayer *layer)
 {
-  layer->text           = NULL;
-  layer->text_parasite  = NULL;
-  layer->idle_render_id = 0;
-  layer->auto_rename    = TRUE;
-  layer->modified       = FALSE;
-}
-
-static void
-gimp_text_layer_dispose (GObject *object)
-{
-  GimpTextLayer *layer = GIMP_TEXT_LAYER (object);
-
-  if (layer->idle_render_id)
-    {
-      g_source_remove (layer->idle_render_id);
-      layer->idle_render_id = 0;
-    }
-
-  G_OBJECT_CLASS (parent_class)->dispose (object);
+  layer->text          = NULL;
+  layer->text_parasite = NULL;
+  layer->auto_rename   = TRUE;
+  layer->modified      = FALSE;
 }
 
 static void
@@ -349,7 +331,7 @@ gimp_text_layer_new (GimpImage *image,
 
   gimp_text_layer_set_text (layer, text);
 
-  if (! gimp_text_layer_render_now (layer))
+  if (! gimp_text_layer_render (layer))
     {
       g_object_unref (layer);
       return NULL;
@@ -370,8 +352,6 @@ gimp_text_layer_set_text (GimpTextLayer *layer,
 
   if (layer->text)
     {
-      gimp_text_layer_flush (layer);
-
       g_signal_handlers_disconnect_by_func (layer->text,
                                             G_CALLBACK (gimp_text_layer_text_notify),
                                             layer);
@@ -432,22 +412,6 @@ gimp_text_layer_discard (GimpTextLayer *layer)
   gimp_text_layer_set_text (layer, NULL);
 }
 
-/**
- * gimp_text_layer_flush:
- * @layer: a #GimpTextLayer
- *
- * Flushes pending changes to the text layer that would otherwise be
- * performed in an idle handler.
- */
- void
-gimp_text_layer_flush (GimpTextLayer *layer)
-{
-  g_return_if_fail (GIMP_IS_TEXT_LAYER (layer));
-
-  if (layer->idle_render_id)
-    gimp_text_layer_render_now (layer);
-}
-
 static void
 gimp_text_layer_text_notify (GimpTextLayer *layer)
 {
@@ -461,27 +425,11 @@ gimp_text_layer_text_notify (GimpTextLayer *layer)
       layer->text_parasite = NULL;
     }
 
-  if (layer->idle_render_id)
-    g_source_remove (layer->idle_render_id);
-
-  layer->idle_render_id =
-    g_idle_add_full (G_PRIORITY_LOW,
-                     (GSourceFunc) gimp_text_layer_idle_render, layer,
-                     NULL);
+  gimp_text_layer_render (layer);
 }
 
 static gboolean
-gimp_text_layer_idle_render (GimpTextLayer *layer)
-{
-  layer->idle_render_id = 0;
-
-  gimp_text_layer_render_now (layer);
-
-  return FALSE;
-}
-
-static gboolean
-gimp_text_layer_render_now (GimpTextLayer *layer)
+gimp_text_layer_render (GimpTextLayer *layer)
 {
   GimpDrawable   *drawable;
   GimpItem       *item;
@@ -489,12 +437,6 @@ gimp_text_layer_render_now (GimpTextLayer *layer)
   GimpTextLayout *layout;
   gint            width;
   gint            height;
-
-  if (layer->idle_render_id)
-    {
-      g_source_remove (layer->idle_render_id);
-      layer->idle_render_id = 0;
-    }
 
   if (! layer->text)
     return FALSE;

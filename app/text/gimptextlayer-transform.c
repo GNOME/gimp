@@ -81,7 +81,6 @@ gimp_text_layer_flip (GimpItem            *item,
 
     gimp_matrix2_mult (&trafo, &text->transformation);
     g_object_notify (G_OBJECT (text), "transformation");
-    gimp_text_layer_flush (GIMP_TEXT_LAYER (item));
   }
 
   /*  If there is a layer mask, make sure it gets flipped as well  */
@@ -140,7 +139,6 @@ gimp_text_layer_rotate (GimpItem         *item,
 
     gimp_matrix2_mult (&trafo, &text->transformation);
     g_object_notify (G_OBJECT (text), "transformation");
-    gimp_text_layer_flush (GIMP_TEXT_LAYER (item));
   }
 
   /*  If there is a layer mask, make sure it gets rotates as well  */

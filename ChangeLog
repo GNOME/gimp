@@ -1,5 +1,18 @@
 2004-03-14  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimptextlayer.[ch]: removed all idle handling here.
+	Changes to the text-layer's text object all applied synchronously.
+	
+	* app/display/gimpdisplayshell-dnd.c
+	* app/text/gimptextlayer-transform.c: removed now obsolete calls
+	to gimp_text_layer_flush().
+
+	* app/tools/gimptexttool.[ch]: queue up changes to the proxy text
+	object and apply them in one go from a low-priority idle handler.
+	This is basically what GimpTextLayer used to do.
+
+2004-03-14  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimptextoptions.[ch]
 	* app/tools/gimptexttool.[ch]: introduced a proxy GimpText object
 	that is tied to the GimpTextOptions for the lifetime of the text

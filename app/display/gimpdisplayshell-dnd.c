@@ -191,10 +191,9 @@ gimp_display_shell_bucket_fill (GimpDisplayShell   *shell,
    */
   if (color && gimp_drawable_is_text_layer (drawable))
     {
-      GimpText *text = gimp_text_layer_get_text (GIMP_TEXT_LAYER (drawable));
-
-      g_object_set (text, "color", color, NULL);
-      gimp_text_layer_flush (GIMP_TEXT_LAYER (drawable));
+      g_object_set (gimp_text_layer_get_text (GIMP_TEXT_LAYER (drawable)),
+                    "color", color,
+                    NULL);
     }
   else
     {

@@ -37,6 +37,7 @@ struct _GimpTextTool
   GimpTool       parent_instance;
 
   GimpText      *proxy;
+  GList         *pending;
   guint          idle_id;
 
   gint           x1, y1;
