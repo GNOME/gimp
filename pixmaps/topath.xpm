@@ -2,9 +2,9 @@
 static char * topath_xpm[] = {
 "24 24 4 1",
 " 	c None",
-".	c #000000",
-"+	c #FFFFFF",
-"@	c #B2B2B2",
+".	c #020204",
+"+	c #E8E8E9",
+"@	c #B5B5B6",
 "                        ",
 "                        ",
 "                        ",
