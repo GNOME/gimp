@@ -149,7 +149,6 @@ dialog_ientry_update(GtkWidget *widget,   /* I - Entry widget */
 	newtextvalue[MAX_ENTRY_LENGTH] ='\0';
 	oldtextlength = strlen(newtextvalue);
 
-	fprintf(stderr, "%d\n", *value);
 	/* this stuff cleans up non-numeric chars */
 	shift=0;
 	for (i=0; i+shift < oldtextlength; i++) {
