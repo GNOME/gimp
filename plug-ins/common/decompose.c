@@ -63,6 +63,8 @@ static gint32  create_new_image (const gchar        *filename,
                                  guint               width,
                                  guint               height,
                                  GimpImageBaseType   type,
+                                 gdouble             xres,
+                                 gdouble             yres,
                                  gint32             *layer_ID,
                                  GimpDrawable      **drawable,
                                  GimpPixelRgn       *pixel_rgn);
@@ -420,8 +422,9 @@ decompose (gint32  image_ID,
   for (j = 0; j < num_images; j++)
     {
       /* Build a filename like <imagename>-<channel>.<extension> */
-      gchar *fname;
-      gchar *extension;
+      gchar   *fname;
+      gchar   *extension;
+      gdouble  xres, yres;
 
       fname = gimp_image_get_filename (image_ID);
 
@@ -462,6 +465,8 @@ decompose (gint32  image_ID,
           filename = g_strdup (gettext (extract[extract_idx].channel_name[j]));
         }
 
+      gimp_image_get_resolution (image_ID, &xres, &yres);
+
       if (decovals.as_layers)
         {
           layername = gettext (extract[extract_idx].channel_name[j]);
@@ -469,6 +474,7 @@ decompose (gint32  image_ID,
           if (j == 0)
             image_ID_dst[j] = create_new_image (filename, layername,
                                                 width, height, GIMP_GRAY,
+                                                xres, yres,
                                                 layer_ID_dst + j,
                                                 drawable_dst + j,
                                                 pixel_rgn_dst + j);
@@ -482,8 +488,10 @@ decompose (gint32  image_ID,
         {
           image_ID_dst[j] = create_new_image (filename, NULL,
                                               width, height, GIMP_GRAY,
+                                              xres, yres,
                                               layer_ID_dst + j,
-                                              drawable_dst + j, pixel_rgn_dst + j);
+                                              drawable_dst + j,
+                                              pixel_rgn_dst + j);
         }
 
       g_free (filename);
@@ -535,6 +543,8 @@ create_new_image (const gchar        *filename,
                   guint               width,
                   guint               height,
                   GimpImageBaseType   type,
+                  gdouble             xres,
+                  gdouble             yres,
                   gint32             *layer_ID,
                   GimpDrawable      **drawable,
                   GimpPixelRgn       *pixel_rgn)
@@ -542,8 +552,10 @@ create_new_image (const gchar        *filename,
   gint32 image_ID;
 
   image_ID = gimp_image_new (width, height, type);
+
   gimp_image_undo_disable (image_ID);
   gimp_image_set_filename (image_ID, filename);
+  gimp_image_set_resolution (image_ID, xres, yres);
 
   *layer_ID = create_new_layer (image_ID,
                                 layername, width, height, type,

@@ -1,5 +1,11 @@
 2004-11-21  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/compose.c
+	* plug-ins/common/decompose.c: transfer the image resolution to
+	newly created images.
+
+2004-11-21  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/gimpressionist/Brushes/snow1.pgm: reverted a change
 	that Hans Breuer committed here, probably accidentally.
 

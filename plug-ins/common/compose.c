@@ -442,16 +442,16 @@ compose (const gchar *compose_type,
          gint32      *compose_ID,
          gboolean     compose_by_drawable)
 {
-  gint width, height, tile_height, scan_lines;
-  gint num_images, compose_idx, incr_src[MAX_COMPOSE_IMAGES];
-  gint i, j;
-  gint num_layers;
-  gint32 layer_ID_dst, image_ID_dst;
-  guchar *src[MAX_COMPOSE_IMAGES];
-  guchar *dst;
-  GimpImageType gdtype_dst;
-  GimpDrawable *drawable_src[MAX_COMPOSE_IMAGES], *drawable_dst;
-  GimpPixelRgn pixel_rgn_src[MAX_COMPOSE_IMAGES], pixel_rgn_dst;
+  gint           width, height, tile_height, scan_lines;
+  gint           num_images, compose_idx, incr_src[MAX_COMPOSE_IMAGES];
+  gint           i, j;
+  gint           num_layers;
+  gint32         layer_ID_dst, image_ID_dst;
+  guchar        *src[MAX_COMPOSE_IMAGES];
+  guchar        *dst;
+  GimpImageType  gdtype_dst;
+  GimpDrawable  *drawable_src[MAX_COMPOSE_IMAGES], *drawable_dst;
+  GimpPixelRgn   pixel_rgn_src[MAX_COMPOSE_IMAGES], pixel_rgn_dst;
 
   /* Search type of composing */
   compose_idx = -1;
@@ -461,7 +461,7 @@ compose (const gchar *compose_type,
 	compose_idx = j;
     }
   if (compose_idx < 0)
-    return (-1);
+    return -1;
 
   num_images = compose_dsc[compose_idx].num_images;
   tile_height = gimp_tile_height ();
@@ -541,10 +541,20 @@ compose (const gchar *compose_type,
   /* Create new image */
   gdtype_dst = (compose_dsc[compose_idx].compose_fun == compose_rgba)
     ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
+
   image_ID_dst = create_new_image (compose_dsc[compose_idx].filename,
 				   width, height, gdtype_dst,
 				   &layer_ID_dst, &drawable_dst,
 				   &pixel_rgn_dst);
+
+  if (! compose_by_drawable)
+    {
+      gdouble  xres, yres;
+
+      gimp_image_get_resolution (compose_ID[0], &xres, &yres);
+      gimp_image_set_resolution (image_ID_dst, xres, yres);
+    }
+
   dst = g_new (guchar, tile_height * width * drawable_dst->bpp);
 
   /* Do the composition */
@@ -608,8 +618,9 @@ create_new_image (const gchar    *filename,
     gitype = GIMP_RGB;
 
   image_ID = gimp_image_new (width, height, gitype);
-  gimp_image_set_filename (image_ID, (gchar *) filename);
+
   gimp_image_undo_disable (image_ID);
+  gimp_image_set_filename (image_ID, filename);
 
   *layer_ID = gimp_layer_new (image_ID, _("Background"), width, height,
 			      gdtype, 100, GIMP_NORMAL_MODE);
