@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.2.3\n"
-"POT-Creation-Date: 2002-10-10 05:37+0200\n"
-"PO-Revision-Date: 2002-10-10 22:00GMT\n"
+"POT-Creation-Date: 2002-10-25 05:43+0200\n"
+"PO-Revision-Date: 2002-10-25 10:43GMT\n"
 "Last-Translator: Michal Bukovjan <bukm@centrum.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -162,6 +162,42 @@ msgstr "Nic"
 msgid "percent"
 msgstr "procenta"
 
+#: libgimpmodule/gimpmodule.c:175
+#, c-format
+msgid "Loading module: '%s'\n"
+msgstr "Načítá se modul: '%s'\n"
+
+#: libgimpmodule/gimpmodule.c:192 libgimpmodule/gimpmodule.c:285
+#: libgimpmodule/gimpmodule.c:310 libgimpmodule/gimpmodule.c:378
+#, c-format
+msgid ""
+"Module '%s' load error:\n"
+"%s"
+msgstr ""
+"Chyba při načítání modulu '%s':\n"
+"%s"
+
+#: libgimpmodule/gimpmodule.c:252
+#, c-format
+msgid "Skipping module: '%s'\n"
+msgstr "Vynechává se modul: '%s'\n"
+
+#: libgimpmodule/gimpmodule.c:355
+msgid "Module error"
+msgstr "Chyba modulu"
+
+#: libgimpmodule/gimpmodule.c:356
+msgid "Loaded OK"
+msgstr "Načteno úspěšně"
+
+#: libgimpmodule/gimpmodule.c:357
+msgid "Load failed"
+msgstr "Načtení selhalo"
+
+#: libgimpmodule/gimpmodule.c:358
+msgid "Unloaded OK"
+msgstr "Uvolněno úspěšně"
+
 #: libgimpwidgets/gimpcolorbutton.c:85
 msgid "/Foreground Color"
 msgstr "/Barva popředí"
@@ -222,31 +258,31 @@ msgstr "Viditelný"
 msgid "_Resize"
 msgstr "Změnit _velikost"
 
-#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:175
+#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:179
 msgid "_Scale"
 msgstr "Š_kálovat"
 
-#: libgimpwidgets/gimpstock.c:131
+#: libgimpwidgets/gimpstock.c:135
 msgid "L_etter Spacing"
 msgstr "Roz_estup písmen"
 
-#: libgimpwidgets/gimpstock.c:132
+#: libgimpwidgets/gimpstock.c:136
 msgid "L_ine Spacing"
 msgstr "Řá_dkování"
 
-#: libgimpwidgets/gimpstock.c:153
+#: libgimpwidgets/gimpstock.c:157
 msgid "Crop"
 msgstr "Ořezat"
 
-#: libgimpwidgets/gimpstock.c:171
+#: libgimpwidgets/gimpstock.c:175
 msgid "_Transform"
 msgstr "_Transformace"
 
-#: libgimpwidgets/gimpstock.c:174
+#: libgimpwidgets/gimpstock.c:178
 msgid "_Rotate"
 msgstr "_Rotovat"
 
-#: libgimpwidgets/gimpstock.c:176
+#: libgimpwidgets/gimpstock.c:180
 msgid "_Shear"
 msgstr "Na_klonění"
 
