@@ -2203,7 +2203,7 @@ gimp_image_set_active_layer (GimpImage *gimage,
           gimage->layer_stack = g_slist_prepend (gimage->layer_stack, layer);
 
           /*  Don't cache selection info for the previous active layer  */
-          gimp_layer_invalidate_boundary (layer);
+          gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
         }
 
       gimage->active_layer = layer;
@@ -2248,7 +2248,7 @@ gimp_image_set_active_channel (GimpImage   *gimage,
       if (gimage->active_layer)
 	{
           /*  Don't cache selection info for the previous active layer  */
-          gimp_layer_invalidate_boundary (gimage->active_layer);
+          gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (gimage->active_layer));
 
 	  gimage->active_layer = NULL;
 
@@ -2581,7 +2581,7 @@ gimp_image_remove_layer (GimpImage *gimage,
   g_object_ref (layer);
 
   /*  Make sure we're not caching any old selection info  */
-  gimp_layer_invalidate_boundary (layer);
+  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
 
   gimp_container_remove (gimage->layers, GIMP_OBJECT (layer));
   gimage->layer_stack = g_slist_remove (gimage->layer_stack, layer);

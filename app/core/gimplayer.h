@@ -99,7 +99,6 @@ void            gimp_layer_add_alpha           (GimpLayer            *layer);
 void            gimp_layer_resize_to_image     (GimpLayer            *layer);
 BoundSeg      * gimp_layer_boundary            (GimpLayer            *layer,
                                                 gint                 *num_segs);
-void            gimp_layer_invalidate_boundary (GimpLayer            *layer);
 gboolean        gimp_layer_pick_correlate      (GimpLayer            *layer,
                                                 gint                  x,
                                                 gint                  y);

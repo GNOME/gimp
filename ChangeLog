@@ -1,3 +1,36 @@
+2003-09-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable.[ch]: added new pure virtual function
+	GimpDrawable::invalidate_boundary().
+
+	* app/core/gimplayer.[ch]: implement it and removed public
+	function gimp_layer_invalidate_boundary().
+
+	* app/core/gimpchannel.[ch]: implement it.
+
+	* app/core/gimpselection.[ch]: implement it and removed public
+	function gimp_selection_invalidate().
+
+	* app/core/gimpimage-mask.c (gimp_image_mask_invalidate)
+	* app/core/gimpimage-undo-push.c
+	* app/core/gimpimage.c
+	* app/core/gimplayer-floating-sel.c
+	* app/text/gimptextlayer.c: changed accordingly.
+
+	* app/core/gimpchannel.[ch]: made gimp_channel_push_undo() a
+	public function and made it call
+	gimp_drawable_invalidate_boundary(). Added undo_desc strings for
+	all undo pushing functions to GimpChannelClass.
+
+	* app/core/gimpselection.[ch]: removed gimp_selection_push_undo()
+	since after the change above it was identical to
+	gimp_channel_push_undo().  Don't push any undo here since
+	upchaining does the right thing now.  Override GimpChannelClass'
+	undo_desc strings to say "Selection".
+
+	* app/core/gimpimage-mask.c (gimp_image_mask_push_undo): changed
+	accordingly.
+
 2003-09-04  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/paths.pdb (path_get_points): lookup the vectors

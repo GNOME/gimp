@@ -52,8 +52,7 @@ gimp_image_mask_push_undo (GimpImage   *gimage,
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gimp_selection_push_undo (gimp_image_get_mask (gimage),
-                            undo_desc);
+  gimp_channel_push_undo (gimp_image_get_mask (gimage), undo_desc);
 }
 
 void
@@ -61,7 +60,7 @@ gimp_image_mask_invalidate (GimpImage *gimage)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gimp_selection_invalidate (gimp_image_get_mask (gimage));
+  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (gimp_image_get_mask (gimage)));
 }
 
 

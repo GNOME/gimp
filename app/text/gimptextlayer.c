@@ -433,7 +433,7 @@ gimp_text_layer_render_now (GimpTextLayer *layer)
                                 gimp_item_height (item));
 
           /*  Make sure we're not caching any old selection info  */
-          gimp_layer_invalidate_boundary (GIMP_LAYER (layer));
+          gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
 
           GIMP_ITEM (drawable)->width  = width;
           GIMP_ITEM (drawable)->height = height;

@@ -104,6 +104,16 @@ struct _GimpChannelClass
                          gint             radius_y,
                          gboolean         edge_lock,
                          gboolean         push_undo);
+
+  const gchar *translate_desc;
+  const gchar *feather_desc;
+  const gchar *sharpen_desc;
+  const gchar *clear_desc;
+  const gchar *all_desc;
+  const gchar *invert_desc;
+  const gchar *border_desc;
+  const gchar *grow_desc;
+  const gchar *shrink_desc;
 };
 
 
@@ -140,6 +150,9 @@ void          gimp_channel_set_color          (GimpChannel       *channel,
 gboolean      gimp_channel_get_show_masked    (GimpChannel       *channel);
 void          gimp_channel_set_show_masked    (GimpChannel       *channel,
                                                gboolean           show_masked);
+
+void          gimp_channel_push_undo          (GimpChannel       *mask,
+                                               const gchar       *undo_desc);
 
 
 /*  selection mask functions  */

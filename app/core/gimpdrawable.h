@@ -53,8 +53,12 @@ struct _GimpDrawableClass
 {
   GimpItemClass  parent_class;
 
-  void (* visibility_changed) (GimpDrawable *drawable);
-  void (* alpha_changed)      (GimpDrawable *drawable);
+  /*  signals  */
+  void (* visibility_changed)  (GimpDrawable *drawable);
+  void (* alpha_changed)       (GimpDrawable *drawable);
+
+  /*  virtual functions  */
+  void (* invalidate_boundary) (GimpDrawable *drawable);
 };
 
 
@@ -119,6 +123,8 @@ void            gimp_drawable_set_visible        (GimpDrawable       *drawable,
                                                   gboolean            push_undo);
 
 void            gimp_drawable_alpha_changed      (GimpDrawable       *drawable);
+
+void           gimp_drawable_invalidate_boundary (GimpDrawable       *drawable);
 
 guchar        * gimp_drawable_cmap               (const GimpDrawable *drawable);
 

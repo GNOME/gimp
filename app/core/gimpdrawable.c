@@ -192,6 +192,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
 
   klass->visibility_changed          = NULL;
   klass->alpha_changed               = NULL;
+  klass->invalidate_boundary         = NULL;
 }
 
 static void
@@ -961,6 +962,19 @@ gimp_drawable_alpha_changed (GimpDrawable *drawable)
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
   g_signal_emit (drawable, gimp_drawable_signals[ALPHA_CHANGED], 0);
+}
+
+void
+gimp_drawable_invalidate_boundary (GimpDrawable *drawable)
+{
+  GimpDrawableClass *drawable_class;
+
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
+  drawable_class = GIMP_DRAWABLE_GET_CLASS (drawable);
+
+  if (drawable_class->invalidate_boundary)
+    drawable_class->invalidate_boundary (drawable);
 }
 
 guchar *

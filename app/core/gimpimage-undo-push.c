@@ -1528,7 +1528,7 @@ undo_pop_layer (GimpUndo            *undo,
       undo->size += gimp_object_get_memsize (GIMP_OBJECT (layer), NULL);
 
       /*  Make sure we're not caching any old selection info  */
-      gimp_layer_invalidate_boundary (layer);
+      gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
 
       /*  record the current position  */
       lu->prev_position = gimp_image_get_layer_index (undo->gimage, layer);
@@ -1588,7 +1588,7 @@ undo_pop_layer (GimpUndo            *undo,
 
       /*  hide the current selection--for all views  */
       if (lu->prev_layer)
-	gimp_layer_invalidate_boundary (lu->prev_layer);
+	gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (lu->prev_layer));
 
       /*  if this is a floating selection, set the fs pointer  */
       if (gimp_layer_is_floating_sel (layer))
@@ -1716,7 +1716,7 @@ undo_pop_layer_mod (GimpUndo            *undo,
   lmu->offset_y = GIMP_ITEM (layer)->offset_y;
 
   /*  Make sure we're not caching any old selection info  */
-  gimp_layer_invalidate_boundary (layer);
+  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
 
   GIMP_DRAWABLE (layer)->tiles     = tiles;
   GIMP_DRAWABLE (layer)->bytes     = tile_manager_bpp (tiles);
@@ -2973,7 +2973,7 @@ undo_pop_fs_to_layer (GimpUndo            *undo,
       fsu->floating_layer->fs.initial = TRUE;
 
       /*  clear the selection  */
-      gimp_layer_invalidate_boundary (fsu->floating_layer);
+      gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (fsu->floating_layer));
 
       /*  Update the preview for the gimage and underlying drawable  */
       gimp_viewable_invalidate_preview (GIMP_VIEWABLE (fsu->floating_layer));
@@ -2991,7 +2991,7 @@ undo_pop_fs_to_layer (GimpUndo            *undo,
       gimp_viewable_invalidate_preview (GIMP_VIEWABLE (fsu->floating_layer));
 
       /*  clear the selection  */
-      gimp_layer_invalidate_boundary (fsu->floating_layer);
+      gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (fsu->floating_layer));
 
       /*  update the pointers  */
       fsu->floating_layer->fs.drawable = NULL;

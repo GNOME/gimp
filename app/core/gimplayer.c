@@ -112,6 +112,8 @@ static void       gimp_layer_transform          (GimpItem           *item,
                                                  GimpProgressFunc    progress_callback,
                                                  gpointer            progress_data);
 
+static void      gimp_layer_invalidate_boundary (GimpDrawable       *drawable);
+
 static void       gimp_layer_transform_color    (GimpImage          *gimage,
                                                  PixelRegion        *layerPR,
                                                  PixelRegion        *bufPR,
@@ -159,11 +161,13 @@ gimp_layer_class_init (GimpLayerClass *klass)
   GimpObjectClass   *gimp_object_class;
   GimpViewableClass *viewable_class;
   GimpItemClass     *item_class;
+  GimpDrawableClass *drawable_class;
 
   object_class      = G_OBJECT_CLASS (klass);
   gimp_object_class = GIMP_OBJECT_CLASS (klass);
   viewable_class    = GIMP_VIEWABLE_CLASS (klass);
   item_class        = GIMP_ITEM_CLASS (klass);
+  drawable_class    = GIMP_DRAWABLE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -203,29 +207,31 @@ gimp_layer_class_init (GimpLayerClass *klass)
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  object_class->finalize             = gimp_layer_finalize;
+  object_class->finalize              = gimp_layer_finalize;
 
-  gimp_object_class->get_memsize     = gimp_layer_get_memsize;
+  gimp_object_class->get_memsize      = gimp_layer_get_memsize;
 
-  viewable_class->default_stock_id   = "gimp-layer";
-  viewable_class->invalidate_preview = gimp_layer_invalidate_preview;
+  viewable_class->default_stock_id    = "gimp-layer";
+  viewable_class->invalidate_preview  = gimp_layer_invalidate_preview;
 
-  item_class->duplicate              = gimp_layer_duplicate;
-  item_class->convert                = gimp_layer_convert;
-  item_class->rename                 = gimp_layer_rename;
-  item_class->translate              = gimp_layer_translate;
-  item_class->scale                  = gimp_layer_scale;
-  item_class->resize                 = gimp_layer_resize;
-  item_class->flip                   = gimp_layer_flip;
-  item_class->rotate                 = gimp_layer_rotate;
-  item_class->transform              = gimp_layer_transform;
-  item_class->default_name           = _("Layer");
-  item_class->rename_desc            = _("Rename Layer");
+  item_class->duplicate               = gimp_layer_duplicate;
+  item_class->convert                 = gimp_layer_convert;
+  item_class->rename                  = gimp_layer_rename;
+  item_class->translate               = gimp_layer_translate;
+  item_class->scale                   = gimp_layer_scale;
+  item_class->resize                  = gimp_layer_resize;
+  item_class->flip                    = gimp_layer_flip;
+  item_class->rotate                  = gimp_layer_rotate;
+  item_class->transform               = gimp_layer_transform;
+  item_class->default_name            = _("Layer");
+  item_class->rename_desc             = _("Rename Layer");
 
-  klass->opacity_changed             = NULL;
-  klass->mode_changed                = NULL;
-  klass->preserve_trans_changed      = NULL;
-  klass->mask_changed                = NULL;
+  drawable_class->invalidate_boundary = gimp_layer_invalidate_boundary;
+
+  klass->opacity_changed              = NULL;
+  klass->mode_changed                 = NULL;
+  klass->preserve_trans_changed       = NULL;
+  klass->mask_changed                 = NULL;
 }
 
 static void
@@ -487,7 +493,7 @@ gimp_layer_translate (GimpItem *item,
   gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, item->width, item->height);
 
   /*  invalidate the selection boundary because of a layer modification  */
-  gimp_layer_invalidate_boundary (layer);
+  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
 
   GIMP_ITEM_CLASS (parent_class)->translate (item, offset_x, offset_y,
                                              push_undo);
@@ -541,7 +547,7 @@ gimp_layer_scale (GimpItem              *item,
     }
 
   /*  Make sure we're not caching any old selection info  */
-  gimp_layer_invalidate_boundary (layer);
+  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
 }
 
 static void
@@ -575,7 +581,7 @@ gimp_layer_resize (GimpItem *item,
     }
 
   /*  Make sure we're not caching any old selection info  */
-  gimp_layer_invalidate_boundary (layer);
+  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
 }
 
 static void
@@ -603,7 +609,7 @@ gimp_layer_flip (GimpItem            *item,
   gimp_image_undo_group_end (gimage);
 
   /*  Make sure we're not caching any old selection info  */
-  gimp_layer_invalidate_boundary (layer);
+  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
 }
 
 static void
@@ -634,7 +640,7 @@ gimp_layer_rotate (GimpItem         *item,
   gimp_image_undo_group_end (gimage);
 
   /*  Make sure we're not caching any old selection info  */
-  gimp_layer_invalidate_boundary (layer);
+  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
 }
 
 static void
@@ -669,7 +675,39 @@ gimp_layer_transform (GimpItem               *item,
   gimp_image_undo_group_end (gimage);
 
   /*  Make sure we're not caching any old selection info  */
-  gimp_layer_invalidate_boundary (layer);
+  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
+}
+
+static void
+gimp_layer_invalidate_boundary (GimpDrawable *drawable)
+{
+  GimpLayer   *layer;
+  GimpImage   *gimage;
+  GimpChannel *mask;
+
+  layer = GIMP_LAYER (drawable);
+
+  if (! (gimage = gimp_item_get_image (GIMP_ITEM (layer))))
+    return;
+
+  /*  Turn the current selection off  */
+  gimp_image_selection_control (gimage, GIMP_SELECTION_OFF);
+
+  /*  clear the affected region surrounding the layer  */
+  gimp_image_selection_control (gimage, GIMP_SELECTION_LAYER_OFF);
+
+  /*  get the selection mask channel  */
+  mask = gimp_image_get_mask (gimage);
+
+  /*  Only bother with the bounds if there is a selection  */
+  if (! gimp_channel_is_empty (mask))
+    {
+      mask->bounds_known   = FALSE;
+      mask->boundary_known = FALSE;
+    }
+
+  if (gimp_layer_is_floating_sel (layer))
+    floating_sel_invalidate (layer);
 }
 
 static void
@@ -1287,37 +1325,6 @@ gimp_layer_boundary (GimpLayer *layer,
   new_segs[3].open = 0;
 
   return new_segs;
-}
-
-void
-gimp_layer_invalidate_boundary (GimpLayer *layer)
-{
-  GimpImage   *gimage;
-  GimpChannel *mask;
-
-  g_return_if_fail (GIMP_IS_LAYER (layer));
-
-  if (! (gimage = gimp_item_get_image (GIMP_ITEM (layer))))
-    return;
-
-  /*  Turn the current selection off  */
-  gimp_image_selection_control (gimage, GIMP_SELECTION_OFF);
-
-  /*  clear the affected region surrounding the layer  */
-  gimp_image_selection_control (gimage, GIMP_SELECTION_LAYER_OFF);
-
-  /*  get the selection mask channel  */
-  mask = gimp_image_get_mask (gimage);
-
-  /*  Only bother with the bounds if there is a selection  */
-  if (! gimp_channel_is_empty (mask))
-    {
-      mask->bounds_known   = FALSE;
-      mask->boundary_known = FALSE;
-    }
-
-  if (gimp_layer_is_floating_sel (layer))
-    floating_sel_invalidate (layer);
 }
 
 gboolean

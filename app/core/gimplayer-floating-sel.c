@@ -225,7 +225,7 @@ floating_sel_to_layer (GimpLayer *layer)
                                     layer, layer->fs.drawable);
 
   /*  clear the selection  */
-  gimp_layer_invalidate_boundary (layer);
+  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
 
   /*  Set pointers  */
   layer->fs.drawable   = NULL;
