@@ -1,3 +1,9 @@
+2003-02-26  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/tmpl/gimpcolorscales.sgml
+	* libgimpwidgets/tmpl/gimpcolorselect.sgml
+	* libgimpwidgets/tmpl/gimpcolorselector.sgml: improved.
+
 2003-02-22  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-docs.sgml: added some introductory words.

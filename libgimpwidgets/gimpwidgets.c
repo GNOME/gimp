@@ -638,13 +638,13 @@ gimp_radio_group_set_active (GtkRadioButton *radio_button,
  **/
 GtkWidget *
 gimp_spin_button_new (GtkObject **adjustment,  /* return value */
-		      gfloat      value,
-		      gfloat      lower,
-		      gfloat      upper,
-		      gfloat      step_increment,
-		      gfloat      page_increment,
-		      gfloat      page_size,
-		      gfloat      climb_rate,
+		      gdouble     value,
+		      gdouble     lower,
+		      gdouble     upper,
+		      gdouble     step_increment,
+		      gdouble     page_increment,
+		      gdouble     page_size,
+		      gdouble     climb_rate,
 		      guint       digits)
 {
   GtkWidget *spinbutton;
@@ -682,15 +682,15 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
                                const gchar *text,
                                gint         scale_width,
                                gint         spinbutton_width,
-                               gfloat       value,
-                               gfloat       lower,
-                               gfloat       upper,
-                               gfloat       step_increment,
-                               gfloat       page_increment,
+                               gdouble      value,
+                               gdouble      lower,
+                               gdouble      upper,
+                               gdouble      step_increment,
+                               gdouble      page_increment,
                                guint        digits,
                                gboolean     constrain,
-                               gfloat       unconstrained_lower,
-                               gfloat       unconstrained_upper,
+                               gdouble      unconstrained_lower,
+                               gdouble      unconstrained_upper,
                                const gchar *tooltip,
                                const gchar *help_data)
 {
@@ -835,15 +835,15 @@ gimp_scale_entry_new (GtkTable    *table,
 		      const gchar *text,
 		      gint         scale_width,
 		      gint         spinbutton_width,
-		      gfloat       value,
-		      gfloat       lower,
-		      gfloat       upper,
-		      gfloat       step_increment,
-		      gfloat       page_increment,
+		      gdouble      value,
+		      gdouble      lower,
+		      gdouble      upper,
+		      gdouble      step_increment,
+		      gdouble      page_increment,
 		      guint        digits,
 		      gboolean     constrain,
-		      gfloat       unconstrained_lower,
-		      gfloat       unconstrained_upper,
+		      gdouble      unconstrained_lower,
+		      gdouble      unconstrained_upper,
 		      const gchar *tooltip,
 		      const gchar *help_data)
 {
@@ -877,8 +877,8 @@ gimp_scale_entry_new (GtkTable    *table,
  * @tooltip:             A tooltip message for the scale and the spinbutton.
  * @help_data:           The widgets' help_data (see gimp_help_set_help_data()).
  *
- * This function creates a #GtkLabel, a #GtkHScale and a #GtkSpinButton and
- * attaches them to a 3-column #GtkTable.
+ * This function creates a #GtkLabel, a #GimpColorScale and a
+ * #GtkSpinButton and attaches them to a 3-column #GtkTable.
  *
  * Note that if you pass a @tooltip or @help_data to this function you'll
  * have to initialize GIMP's help system with gimp_help_init() before using it.
@@ -892,11 +892,11 @@ gimp_color_scale_entry_new (GtkTable    *table,
                             const gchar *text,
                             gint         scale_width,
                             gint         spinbutton_width,
-                            gfloat       value,
-                            gfloat       lower,
-                            gfloat       upper,
-                            gfloat       step_increment,
-                            gfloat       page_increment,
+                            gdouble      value,
+                            gdouble      lower,
+                            gdouble      upper,
+                            gdouble      step_increment,
+                            gdouble      page_increment,
                             guint        digits,
                             const gchar *tooltip,
                             const gchar *help_data)
@@ -1396,8 +1396,8 @@ gimp_menu_item_update (GtkWidget *widget,
  * @data:       A pointer to a #gint variable which will store the
  *              @adjustment's value.
  *
- * Note that the #GtkAdjustment's value (which is a #gfloat) will be rounded
- * with RINT().
+ * Note that the #GtkAdjustment's value (which is a #gdouble) will be
+ * rounded with RINT().
  **/
 void
 gimp_int_adjustment_update (GtkAdjustment *adjustment,
@@ -1415,7 +1415,7 @@ gimp_int_adjustment_update (GtkAdjustment *adjustment,
  * @data:       A pointer to a #guint variable which will store the
  *              @adjustment's value.
  *
- * Note that the #GtkAdjustment's value (which is a #gfloat) will be rounded
+ * Note that the #GtkAdjustment's value (which is a #gdouble) will be rounded
  * with (#guint) (value + 0.5).
  **/
 void
@@ -1431,7 +1431,7 @@ gimp_uint_adjustment_update (GtkAdjustment *adjustment,
 /**
  * gimp_float_adjustment_update:
  * @adjustment: A #GtkAdjustment.
- * @data:       A pointer to a #gfloat varaiable which willl store the
+ * @data:       A pointer to a #gfloat varaiable which will store the
  *              @adjustment's value.
  **/
 void

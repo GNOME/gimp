@@ -166,13 +166,14 @@ if ! $ACLOCAL $ACLOCAL_FLAGS; then
    exit 1
 fi
 
+libtoolize --copy --force
+
 # optionally feature autoheader
 (autoheader --version)  < /dev/null > /dev/null 2>&1 && autoheader
 
 $AUTOMAKE --add-missing
 autoconf
 
-libtoolize --copy --force
 glib-gettextize --copy --force
 intltoolize --copy --force --automake
 

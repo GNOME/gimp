@@ -2,13 +2,13 @@
 GimpColorSelector
 
 <!-- ##### SECTION Short_Description ##### -->
-Functions and definitiions for creating a pluggable GIMP
-color selector module.
+Functions and definitiions for creating a pluggable GIMP color
+selector module.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-Functions and definitiions for creating a pluggable GIMP
-color selector module.
+Functions and definitiions for creating a pluggable GIMP color
+selector module.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
@@ -30,14 +30,14 @@ color selector module.
 
 <!-- ##### MACRO GIMP_COLOR_SELECTOR_SIZE ##### -->
 <para>
-
+The suggested size for a color area in a #GimpColorSelector implementation.
 </para>
 
 
 
 <!-- ##### MACRO GIMP_COLOR_SELECTOR_BAR_SIZE ##### -->
 <para>
-
+The suggested width for a color bar in a #GimpColorSelector implementation.
 </para>
 
 
@@ -47,13 +47,13 @@ color selector module.
 
 </para>
 
-@GIMP_COLOR_SELECTOR_HUE: 
-@GIMP_COLOR_SELECTOR_SATURATION: 
-@GIMP_COLOR_SELECTOR_VALUE: 
-@GIMP_COLOR_SELECTOR_RED: 
-@GIMP_COLOR_SELECTOR_GREEN: 
-@GIMP_COLOR_SELECTOR_BLUE: 
-@GIMP_COLOR_SELECTOR_ALPHA: 
+@GIMP_COLOR_SELECTOR_HUE: the hue channel
+@GIMP_COLOR_SELECTOR_SATURATION: the saturation channel
+@GIMP_COLOR_SELECTOR_VALUE: the value channel
+@GIMP_COLOR_SELECTOR_RED: the red channel
+@GIMP_COLOR_SELECTOR_GREEN: the green channel
+@GIMP_COLOR_SELECTOR_BLUE: the blue channel
+@GIMP_COLOR_SELECTOR_ALPHA: the alpha channel
 
 <!-- ##### FUNCTION gimp_color_selector_new ##### -->
 <para>
@@ -65,8 +65,6 @@ color selector module.
 @hsv: 
 @channel: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@show_alpha: 
 
 
 <!-- ##### FUNCTION gimp_color_selector_set_toggles_visible ##### -->
@@ -121,9 +119,6 @@ color selector module.
 </para>
 
 @selector: 
-<!-- # Unused Parameters # -->
-@rgb: 
-@hsv: 
 
 
 <!-- ##### FUNCTION gimp_color_selector_channel_changed ##### -->

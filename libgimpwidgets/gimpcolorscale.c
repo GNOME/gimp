@@ -371,6 +371,15 @@ gimp_color_scale_expose (GtkWidget      *widget,
   return FALSE;
 }
 
+/**
+ * gimp_color_scale_new:
+ * @orientation: the scale's orientation (horizontal or vertical)
+ * @channel: the scale's color channel
+ * 
+ * Creates a new #GimpColorScale widget.
+ * 
+ * Return value: a new #GimpColorScale widget
+ **/
 GtkWidget *
 gimp_color_scale_new (GtkOrientation            orientation,
                       GimpColorSelectorChannel  channel)
@@ -389,6 +398,13 @@ gimp_color_scale_new (GtkOrientation            orientation,
   return GTK_WIDGET (scale);
 }
 
+/**
+ * gimp_color_scale_set_channel:
+ * @scale: a #GimpColorScale widget
+ * @channel: the new color channel
+ * 
+ * Changes the color channel displayed by the @scale.
+ **/
 void
 gimp_color_scale_set_channel (GimpColorScale           *scale,
                               GimpColorSelectorChannel  channel)
@@ -404,6 +420,14 @@ gimp_color_scale_set_channel (GimpColorScale           *scale,
     }
 }
 
+/**
+ * gimp_color_scale_set_color:
+ * @scale: a #GimpColorScale widget
+ * @rgb: the new color as #GimpRGB
+ * @hsv: the new color as #GimpHSV
+ * 
+ * Changes the color value of the @scale.
+ **/
 void
 gimp_color_scale_set_color (GimpColorScale *scale,
                             const GimpRGB  *rgb,

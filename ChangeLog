@@ -1,3 +1,13 @@
+2003-02-26  Sven Neumann  <sven@gimp.org>
+
+	* autogen.sh: moved the call to libtoolize before automake.
+
+	* libgimpwidgets/gimpcolorscale.c: added some inline docs.
+
+	* libgimpwidgets/gimpwidgets.[ch]: changed gimp_spin_button_new(),
+	gimp_scale_entry_new() and gimp_color_scale_entry_new() to take
+	doubles instead of floats for the adjustment values.
+
 2003-02-25  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.[ch]
