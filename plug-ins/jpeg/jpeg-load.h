@@ -725,10 +725,9 @@ load_image (char         *filename,
 
   if (runmode != RUN_NONINTERACTIVE)
     {
-      name = malloc (strlen (filename) + 12);
-      sprintf (name, _("Loading %s:"), filename);
+      name = g_strdup_printf (_("Loading %s:"), filename);
       gimp_progress_init (name);
-      free (name);
+      g_free (name);
     }
 
   image_ID = -1;
@@ -898,26 +897,27 @@ load_image (char         *filename,
     xresolution = cinfo.X_density;
     yresolution = cinfo.Y_density;
 
-    switch (cinfo.density_unit) {
-    case 0: /* unknown */
-      asymmetry = xresolution / yresolution;
-      xresolution = 72 * asymmetry;
-      yresolution = 72;
-      break;
+    switch (cinfo.density_unit)
+      {
+      case 0: /* unknown */
+	asymmetry = xresolution / yresolution;
+	xresolution = 72 * asymmetry;
+	yresolution = 72;
+	break;
       
-    case 1: /* dots per inch */
-      break;
+      case 1: /* dots per inch */
+	break;
 
-    case 2: /* dots per cm */
-      xresolution *= 2.54;
-      yresolution *= 2.54;
-      break;
-      
-    default:
-      g_message (_("unknown density unit %d\nassuming dots per inch"),
-		 cinfo.density_unit);
-      break;
-    }
+      case 2: /* dots per cm */
+	xresolution *= 2.54;
+	yresolution *= 2.54;
+	break;
+
+      default:
+	g_message (_("unknown density unit %d\nassuming dots per inch"),
+		   cinfo.density_unit);
+	break;
+      }
 
     if (xresolution > 1e-5 && yresolution > 1e-5)
       gimp_image_set_resolution (image_ID, xresolution, yresolution);
@@ -1059,77 +1059,85 @@ background_jpeg_save (gpointer *ptr)
   int i, j;
   int yend;
 
-  if (pp->abort_me || (pp->cinfo.next_scanline >= pp->cinfo.image_height)) {
-    struct stat buf;
-    char temp[256];
+  if (pp->abort_me || (pp->cinfo.next_scanline >= pp->cinfo.image_height))
+    {
+      struct stat buf;
+      gchar temp[256];
 
-    /* clean up... */
-    if (pp->abort_me) {
-      jpeg_abort_compress (&(pp->cinfo));
-    } else {
-      jpeg_finish_compress (&(pp->cinfo));
-    }
+      /* clean up... */
+      if (pp->abort_me)
+	{
+	  jpeg_abort_compress (&(pp->cinfo));
+	}
+      else
+	{
+	  jpeg_finish_compress (&(pp->cinfo));
+	}
 
-    fclose (pp->outfile);
-    jpeg_destroy_compress (&(pp->cinfo));
+      fclose (pp->outfile);
+      jpeg_destroy_compress (&(pp->cinfo));
 
-    free (pp->temp);
-    free (pp->data);
+      g_free (pp->temp);
+      g_free (pp->data);
 
-    if (pp->drawable) gimp_drawable_detach (pp->drawable);
+      if (pp->drawable) gimp_drawable_detach (pp->drawable);
 
-    /* display the preview stuff */
-    if (!pp->abort_me) 
-      {
-	stat (pp->file_name, &buf);
-	sprintf (temp, _("Size: %lu bytes (%02.01f kB)"), buf.st_size,
-		 (float)(buf.st_size) / 1024.0f);
-	gtk_label_set_text (GTK_LABEL (preview_size), temp);
+      /* display the preview stuff */
+      if (!pp->abort_me) 
+	{
+	  stat (pp->file_name, &buf);
+	  g_snprintf (temp, sizeof (temp),
+		      _("Size: %lu bytes (%02.01f kB)"),
+		      buf.st_size, (float) (buf.st_size) / 1024.0);
+	  gtk_label_set_text (GTK_LABEL (preview_size), temp);
 	
-	/* and load the preview */
-	load_image (pp->file_name, RUN_NONINTERACTIVE, TRUE);
-      }
+	  /* and load the preview */
+	  load_image (pp->file_name, RUN_NONINTERACTIVE, TRUE);
+	}
 
-    /* we cleanup here (load_image doesn't run in the background) */
-    unlink (pp->file_name);
-    free (pp->file_name);
+      /* we cleanup here (load_image doesn't run in the background) */
+      unlink (pp->file_name);
+      g_free (pp->file_name);
 
-    if (abort_me == &(pp->abort_me)) abort_me = NULL;
+      if (abort_me == &(pp->abort_me)) abort_me = NULL;
 
-    free (pp);
+      g_free (pp);
 
-    gimp_displays_flush ();
-    gdk_flush ();
+      gimp_displays_flush ();
+      gdk_flush ();
 
-    return FALSE;
-  } else {
-    if ((pp->cinfo.next_scanline % pp->tile_height) == 0)
-      {
-        yend = pp->cinfo.next_scanline + pp->tile_height;
-        yend = MIN (yend, pp->cinfo.image_height);
-        gimp_pixel_rgn_get_rect (&pp->pixel_rgn, pp->data, 0, 
-				 pp->cinfo.next_scanline, pp->cinfo.image_width,
-                                 (yend - pp->cinfo.next_scanline));
-        pp->src = pp->data;
-      }
+      return FALSE;
+    }
+  else
+    {
+      if ((pp->cinfo.next_scanline % pp->tile_height) == 0)
+	{
+	  yend = pp->cinfo.next_scanline + pp->tile_height;
+	  yend = MIN (yend, pp->cinfo.image_height);
+	  gimp_pixel_rgn_get_rect (&pp->pixel_rgn, pp->data, 0, 
+				   pp->cinfo.next_scanline,
+				   pp->cinfo.image_width,
+				   (yend - pp->cinfo.next_scanline));
+	  pp->src = pp->data;
+	}
 
-    t = pp->temp;
-    s = pp->src;
-    i = pp->cinfo.image_width;
+      t = pp->temp;
+      s = pp->src;
+      i = pp->cinfo.image_width;
 
-    while (i--)
-      {
-        for (j = 0; j < pp->cinfo.input_components; j++)
-          *t++ = *s++;
-        if (pp->has_alpha)  /* ignore alpha channel */
-          s++;
-      }
+      while (i--)
+	{
+	  for (j = 0; j < pp->cinfo.input_components; j++)
+	    *t++ = *s++;
+	  if (pp->has_alpha)  /* ignore alpha channel */
+	    s++;
+	}
 
-    pp->src += pp->rowstride;
-    jpeg_write_scanlines (&(pp->cinfo), (JSAMPARRAY) &(pp->temp), 1);
+      pp->src += pp->rowstride;
+      jpeg_write_scanlines (&(pp->cinfo), (JSAMPARRAY) &(pp->temp), 1);
 
-    return TRUE;
-  }
+      return TRUE;
+    }
 }
 
 static gint
@@ -1159,11 +1167,9 @@ save_image (char   *filename,
 
   if (!preview) 
     {
-      name = malloc (strlen (filename) + 11);
-      
-      sprintf (name, _("Saving %s:"), filename);
+      name = g_strdup_printf (_("Saving %s:"), filename);
       gimp_progress_init (name);
-      free (name);
+      g_free (name);
     }
 
   /* Step 1: allocate and initialize JPEG compression object */
@@ -1336,7 +1342,7 @@ save_image (char   *filename,
   jpeg_start_compress (&cinfo, TRUE);
 
   /* Step 4.1: Write the comment out - pw */
-  if(image_comment) 
+  if (image_comment) 
     {
       jpeg_write_marker (&cinfo,
 			 JPEG_COM,
@@ -1354,8 +1360,8 @@ save_image (char   *filename,
    */
   /* JSAMPLEs per row in image_buffer */
   rowstride = drawable->bpp * drawable->width;
-  temp = (guchar *) malloc (cinfo.image_width * cinfo.input_components);
-  data = (guchar *) malloc (rowstride * gimp_tile_height ());
+  temp = (guchar *) g_malloc (cinfo.image_width * cinfo.input_components);
+  data = (guchar *) g_malloc (rowstride * gimp_tile_height ());
 
   /* fault if cinfo.next_scanline isn't initially a multiple of
    * gimp_tile_height */
@@ -1368,7 +1374,7 @@ save_image (char   *filename,
 
   if (preview) 
     {
-      preview_persistent *pp = malloc (sizeof (preview_persistent));
+      preview_persistent *pp = g_malloc (sizeof (preview_persistent));
       if (pp == NULL) return FALSE;
       
       /* pass all the information we need */
@@ -1436,8 +1442,8 @@ save_image (char   *filename,
   /* This is an important step since it will release a good deal of memory. */
   jpeg_destroy_compress (&cinfo);
   /* free the temporary buffer */
-  free (temp);
-  free (data);
+  g_free (temp);
+  g_free (data);
 
   /* And we're done! */
   /*gimp_do_progress (1, 1);*/
@@ -1607,7 +1613,7 @@ save_dialog ()
   gtk_widget_show (prv_table);
   gtk_widget_show (prv_frame);
 
-  make_preview();
+  make_preview ();
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));
@@ -1697,7 +1703,7 @@ save_dialog ()
   gtk_widget_show (progressive);
 
 #ifndef HAVE_PROGRESSIVE_JPEG
-  gtk_widget_set_sensitive (progressive,FALSE);
+  gtk_widget_set_sensitive (progressive, FALSE);
 #endif
   
   baseline = gtk_check_button_new_with_label (_("Force baseline JPEG (readable by all decoders)"));
@@ -1729,9 +1735,9 @@ save_dialog ()
   /* DCT method */
   menu = gtk_menu_new ();
 
-  add_menu_item(menu, _("Fast integer"),   1, dct_callback);
-  add_menu_item(menu, _("Integer"),        0, dct_callback);
-  add_menu_item(menu, _("Floating-point"), 2, dct_callback);
+  add_menu_item (menu, _("Fast integer"),   1, dct_callback);
+  add_menu_item (menu, _("Integer"),        0, dct_callback);
+  add_menu_item (menu, _("Floating-point"), 2, dct_callback);
 
   dct_menu = gtk_option_menu_new ();
  
@@ -1860,32 +1866,32 @@ save_restart_update (GtkAdjustment *adjustment,
 }
 
 static void
-save_optimize_update(GtkWidget *widget,
-		     gpointer  data)
+save_optimize_update (GtkWidget *widget,
+		      gpointer  data)
 {
   jsvals.optimize = GTK_TOGGLE_BUTTON (widget)->active;
   make_preview ();
 }
 
 static void
-save_progressive_toggle(GtkWidget *widget,
-			gpointer  data)
+save_progressive_toggle (GtkWidget *widget,
+			 gpointer  data)
 {
   jsvals.progressive = GTK_TOGGLE_BUTTON (widget)->active;
   make_preview ();
 }
 
 static void
-save_baseline_toggle(GtkWidget *widget,
-		     gpointer  data)
+save_baseline_toggle (GtkWidget *widget,
+		      gpointer  data)
 {
   jsvals.baseline = GTK_TOGGLE_BUTTON (widget)->active;
   make_preview ();
 }
 
 static void
-save_preview_toggle(GtkWidget *widget,
-                    gpointer  data)
+save_preview_toggle (GtkWidget *widget,
+		     gpointer  data)
 {
   jsvals.preview = GTK_TOGGLE_BUTTON (widget)->active;
   make_preview ();
@@ -1906,4 +1912,3 @@ dct_callback (GtkWidget *widget,
   jsvals.dct = *((guchar *)data);
   make_preview ();
 }
-

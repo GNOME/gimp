@@ -1,3 +1,11 @@
+1999-12-08  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/jpeg.c: The plugin allocated memory chunks of
+	constant size to store strings which are longer when translated,
+	causing buffer overflows. Fixes bug #3897.
+	Replaced some malloc() and free() with g_*() functions and use
+	g_snprintf instead of sprintf.
+
 1999-12-08  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/common/winprint.c: Fix the handling of stored
