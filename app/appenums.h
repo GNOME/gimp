@@ -20,16 +20,6 @@
 #define __APPENUMS_H__
 
 
-/* Fill types */
-typedef enum
-{
-  FOREGROUND_FILL,	/*< nick=FG_IMAGE_FILL >*/
-  BACKGROUND_FILL,	/*< nick=BG_IMAGE_FILL >*/
-  WHITE_FILL,		/*< nick=WHITE_IMAGE_FILL >*/
-  TRANSPARENT_FILL,	/*< nick=TRANS_IMAGE_FILL >*/
-  NO_FILL		/*< nick=NO_IMAGE_FILL >*/
-} GimpFillType;
-
 /* Brush application types  */
 typedef enum
 {

@@ -29,9 +29,9 @@
 
 #include "gimpdialogfactory.h"
 #include "gimpdnd.h"
-#include "gimpdock.h"
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
+#include "gimpimagedock.h"
 
 
 #define TAB_WIDGET_SIZE     24
@@ -419,6 +419,7 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
     {
       GtkItemFactory *ifactory;
       GtkWidget      *add_widget;
+      GtkWidget      *toggle_widget;
       GtkWidget      *notebook_menu;
       gint            origin_x;
       gint            origin_y;
@@ -426,6 +427,7 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
 
       ifactory      = GTK_ITEM_FACTORY (dockbook->dock->factory->item_factory);
       add_widget    = gtk_item_factory_get_widget (ifactory, "/Select Tab");
+      toggle_widget = gtk_item_factory_get_widget (ifactory, "/Show Image Menu");
       notebook_menu = GTK_NOTEBOOK (dockbook)->menu;
 
       gtk_object_ref (GTK_OBJECT (notebook_menu));
@@ -452,6 +454,10 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
        *  if for gimp_dockbook_menu_end()
        */
       gtk_object_ref (GTK_OBJECT (dockbook));
+
+      gtk_check_menu_item_set_active
+	(GTK_CHECK_MENU_ITEM (toggle_widget),
+	 GTK_WIDGET_VISIBLE (GIMP_IMAGE_DOCK (dockbook->dock)->option_menu->parent));
 
       gtk_item_factory_popup_with_data (ifactory,
 					dockbook,

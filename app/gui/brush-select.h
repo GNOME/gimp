@@ -29,8 +29,6 @@ struct _BrushSelect
   GtkWidget     *view;
   GtkWidget     *paint_options_box;
 
-  GtkAdjustment *spacing_data;
-
   GtkAdjustment *opacity_data;
   GtkWidget     *option_menu;
 

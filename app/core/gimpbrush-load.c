@@ -58,6 +58,13 @@
 #include "libgimp/gimpintl.h"
 
 
+enum
+{
+  SPACING_CHANGED,
+  LAST_SIGNAL
+};
+
+
 static void        gimp_brush_class_init       (GimpBrushClass *klass);
 static void        gimp_brush_init             (GimpBrush      *brush);
 static void        gimp_brush_destroy          (GtkObject      *object);
@@ -70,7 +77,9 @@ static GimpBrush * gimp_brush_select_brush     (GimpPaintTool  *paint_tool);
 static gboolean    gimp_brush_want_null_motion (GimpPaintTool  *paint_tool);
 
 
-static GimpViewableClass *parent_class = NULL;
+static guint brush_signals[LAST_SIGNAL] = { 0 };
+
+static GimpDataClass *parent_class = NULL;
 
 
 GtkType
@@ -110,14 +119,25 @@ gimp_brush_class_init (GimpBrushClass *klass)
 
   parent_class = gtk_type_class (GIMP_TYPE_DATA);
 
-  object_class->destroy = gimp_brush_destroy;
+  brush_signals[SPACING_CHANGED] = 
+    gtk_signal_new ("spacing_changed",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpBrushClass,
+                                       spacing_changed),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
+
+  gtk_object_class_add_signals (object_class, brush_signals, LAST_SIGNAL);
+
+  object_class->destroy           = gimp_brush_destroy;
 
   viewable_class->get_new_preview = gimp_brush_get_new_preview;
 
-  data_class->get_extension = gimp_brush_get_extension;
+  data_class->get_extension       = gimp_brush_get_extension;
 
-  klass->select_brush     = gimp_brush_select_brush;
-  klass->want_null_motion = gimp_brush_want_null_motion;
+  klass->select_brush             = gimp_brush_select_brush;
+  klass->want_null_motion         = gimp_brush_want_null_motion;
 }
 
 static void
@@ -379,7 +399,21 @@ gimp_brush_set_spacing (GimpBrush *brush,
   g_return_if_fail (brush != NULL);
   g_return_if_fail (GIMP_IS_BRUSH (brush));
 
-  brush->spacing = spacing;
+  if (brush->spacing != spacing)
+    {
+      brush->spacing = spacing;
+
+      gimp_brush_spacing_changed (brush);
+    }
+}
+
+void
+gimp_brush_spacing_changed (GimpBrush *brush)
+{
+  g_return_if_fail (brush != NULL);
+  g_return_if_fail (GIMP_IS_BRUSH (brush));
+
+  gtk_signal_emit (GTK_OBJECT (brush), brush_signals[SPACING_CHANGED]);
 }
 
 GimpBrush *

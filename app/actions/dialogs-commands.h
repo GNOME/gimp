@@ -20,20 +20,23 @@
 #define __DIALOGS_COMMANDS_H__
 
 
-void   dialogs_create_toplevel_cmd_callback (GtkWidget *widget,
-					     gpointer   data,
-					     guint      action);
+void   dialogs_create_toplevel_cmd_callback   (GtkWidget *widget,
+					       gpointer   data,
+					       guint      action);
 
-void   dialogs_add_tab_cmd_callback         (GtkWidget *widget,
-					     gpointer   data,
-					     guint      action);
-void   dialogs_remove_tab_cmd_callback      (GtkWidget *widget,
-					     gpointer   data,
-					     guint      action);
+void   dialogs_add_tab_cmd_callback           (GtkWidget *widget,
+					       gpointer   data,
+					       guint      action);
+void   dialogs_remove_tab_cmd_callback        (GtkWidget *widget,
+					       gpointer   data,
+					       guint      action);
+void   dialogs_toggle_image_menu_cmd_callback (GtkWidget *widget,
+					       gpointer   data,
+					       guint      action);
 
-void   dialogs_create_lc_cmd_callback       (GtkWidget *widget,
-					     gpointer   data,
-					     guint      action);
+void   dialogs_create_lc_cmd_callback         (GtkWidget *widget,
+					       gpointer   data,
+					       guint      action);
 
 
 #endif /* __DIALOGS_COMMANDS_H__ */

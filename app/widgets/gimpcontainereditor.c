@@ -33,11 +33,29 @@
 #include "gimpcontainereditor.h"
 #include "gimpcontainergridview.h"
 #include "gimpcontainerlistview.h"
+#include "gimpdnd.h"
 
 
 static void   gimp_container_editor_class_init (GimpContainerEditorClass *klass);
 static void   gimp_container_editor_init       (GimpContainerEditor      *view);
 static void   gimp_container_editor_destroy    (GtkObject                *object);
+
+static void   gimp_container_editor_viewable_dropped (GtkWidget           *widget,
+						      GimpViewable        *viewable,
+						      gpointer             data);
+
+static void   gimp_container_editor_select_item      (GtkWidget           *widget,
+						      GimpViewable        *viewable,
+						      gpointer             insert_data,
+						      GimpContainerEditor *editor);
+static void   gimp_container_editor_activate_item    (GtkWidget           *widget,
+						      GimpViewable        *viewable,
+						      gpointer             insert_data,
+						      GimpContainerEditor *editor);
+static void   gimp_container_editor_context_item     (GtkWidget           *widget,
+						      GimpViewable        *viewable,
+						      gpointer             insert_data,
+						      GimpContainerEditor *editor);
 
 
 static GtkVBoxClass *parent_class = NULL;
@@ -78,6 +96,10 @@ gimp_container_editor_class_init (GimpContainerEditorClass *klass)
   parent_class = gtk_type_class (GTK_TYPE_VBOX);
 
   object_class->destroy = gimp_container_editor_destroy;
+
+  klass->select_item    = NULL;
+  klass->activate_item  = NULL;
+  klass->context_item   = NULL;
 }
 
 static void
@@ -152,6 +174,32 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
 		     GTK_WIDGET (editor->view));
   gtk_widget_show (GTK_WIDGET (editor->view));
 
+  gtk_signal_connect_while_alive
+    (GTK_OBJECT (editor->view), "select_item",
+     GTK_SIGNAL_FUNC (gimp_container_editor_select_item),
+     editor,
+     GTK_OBJECT (editor));
+
+  gtk_signal_connect_while_alive
+    (GTK_OBJECT (editor->view), "activate_item",
+     GTK_SIGNAL_FUNC (gimp_container_editor_activate_item),
+     editor,
+     GTK_OBJECT (editor));
+
+  gtk_signal_connect_while_alive
+    (GTK_OBJECT (editor->view), "context_item",
+     GTK_SIGNAL_FUNC (gimp_container_editor_context_item),
+     editor,
+     GTK_OBJECT (editor));
+
+  /*  select the active item  */
+  gimp_container_editor_select_item
+    (GTK_WIDGET (editor->view),
+     (GimpViewable *)
+     gimp_context_get_by_type (context, container->children_type),
+     NULL,
+     editor);
+
   return TRUE;
 }
 
@@ -186,4 +234,91 @@ gimp_container_editor_add_button (GimpContainerEditor  *editor,
   gtk_widget_show (pixmap);
 
   return button;
+}
+
+void
+gimp_container_editor_enable_dnd (GimpContainerEditor  *editor,
+				  GtkButton            *button)
+{
+  g_return_if_fail (editor != NULL);
+  g_return_if_fail (GIMP_IS_CONTAINER_EDITOR (editor));
+  g_return_if_fail (button != NULL);
+  g_return_if_fail (GTK_IS_BUTTON (button));
+
+  g_return_if_fail (editor->view != NULL);
+  g_return_if_fail (editor->view->container != NULL);
+
+  gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (button),
+				  GTK_DEST_DEFAULT_ALL,
+				  editor->view->container->children_type,
+				  GDK_ACTION_COPY);
+  gimp_dnd_viewable_dest_set (GTK_WIDGET (button),
+			      editor->view->container->children_type,
+			      gimp_container_editor_viewable_dropped,
+			      editor);
+}
+
+
+/*  private functions  */
+
+static void
+gimp_container_editor_viewable_dropped (GtkWidget    *widget,
+					GimpViewable *viewable,
+					gpointer      data)
+{
+  GimpContainerEditor *editor;
+
+  editor = (GimpContainerEditor *) data;
+
+  if (viewable && gimp_container_have (editor->view->container,
+				       GIMP_OBJECT (viewable)))
+    {
+      gimp_context_set_by_type (editor->view->context,
+				editor->view->container->children_type,
+				GIMP_OBJECT (viewable));
+
+      gtk_button_clicked (GTK_BUTTON (widget));
+    }
+}
+
+static void
+gimp_container_editor_select_item (GtkWidget           *widget,
+				   GimpViewable        *viewable,
+				   gpointer             insert_data,
+				   GimpContainerEditor *editor)
+{
+  GimpContainerEditorClass *klass;
+
+  klass = GIMP_CONTAINER_EDITOR_CLASS (GTK_OBJECT (editor)->klass);
+
+  if (klass->select_item)
+    klass->select_item (editor, viewable);
+}
+
+static void
+gimp_container_editor_activate_item (GtkWidget           *widget,
+				     GimpViewable        *viewable,
+				     gpointer             insert_data,
+				     GimpContainerEditor *editor)
+{
+  GimpContainerEditorClass *klass;
+
+  klass = GIMP_CONTAINER_EDITOR_CLASS (GTK_OBJECT (editor)->klass);
+
+  if (klass->activate_item)
+    klass->activate_item (editor, viewable);
+}
+
+static void
+gimp_container_editor_context_item (GtkWidget           *widget,
+				    GimpViewable        *viewable,
+				    gpointer             insert_data,
+				    GimpContainerEditor *editor)
+{
+  GimpContainerEditorClass *klass;
+
+  klass = GIMP_CONTAINER_EDITOR_CLASS (GTK_OBJECT (editor)->klass);
+
+  if (klass->context_item)
+    klass->context_item (editor, viewable);
 }

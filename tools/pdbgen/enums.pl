@@ -128,22 +128,6 @@ package Gimp::CodeGen::enums;
 		       GIMP_PDB_SUCCESS => 'PDB_SUCCESS',
 		       GIMP_PDB_CANCEL => 'PDB_CANCEL' }
 	},
-    GimpFillType =>
-	{ contig => 1,
-	  header => 'appenums.h',
-	  symbols => [ qw(FOREGROUND_FILL BACKGROUND_FILL WHITE_FILL
-			  TRANSPARENT_FILL NO_FILL) ],
-	  mapping => { FOREGROUND_FILL => '0',
-		       BACKGROUND_FILL => '1',
-		       WHITE_FILL => '2',
-		       TRANSPARENT_FILL => '3',
-		       NO_FILL => '4' },
-	  nicks   => { FOREGROUND_FILL => 'FG_IMAGE_FILL',
-		       BACKGROUND_FILL => 'BG_IMAGE_FILL',
-		       WHITE_FILL => 'WHITE_IMAGE_FILL',
-		       TRANSPARENT_FILL => 'TRANS_IMAGE_FILL',
-		       NO_FILL => 'NO_IMAGE_FILL' }
-	},
     BrushApplicationMode =>
 	{ contig => 1,
 	  header => 'appenums.h',
@@ -335,6 +319,22 @@ package Gimp::CodeGen::enums;
 	  symbols => [ qw(APPLY DISCARD) ],
 	  mapping => { APPLY => '0',
 		       DISCARD => '1' }
+	},
+    GimpFillType =>
+	{ contig => 1,
+	  header => 'core/core-types.h',
+	  symbols => [ qw(FOREGROUND_FILL BACKGROUND_FILL WHITE_FILL
+			  TRANSPARENT_FILL NO_FILL) ],
+	  mapping => { FOREGROUND_FILL => '0',
+		       BACKGROUND_FILL => '1',
+		       WHITE_FILL => '2',
+		       TRANSPARENT_FILL => '3',
+		       NO_FILL => '4' },
+	  nicks   => { FOREGROUND_FILL => 'FG_IMAGE_FILL',
+		       BACKGROUND_FILL => 'BG_IMAGE_FILL',
+		       WHITE_FILL => 'WHITE_IMAGE_FILL',
+		       TRANSPARENT_FILL => 'TRANS_IMAGE_FILL',
+		       NO_FILL => 'NO_IMAGE_FILL' }
 	},
     GimpOffsetType =>
 	{ contig => 1,

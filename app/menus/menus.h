@@ -26,9 +26,14 @@ struct _GimpItemFactoryEntry
 {
   GtkItemFactoryEntry  entry;
 
+  const gchar *quark_string;
+
   const gchar *help_page;
   const gchar *description;
 };
+
+
+extern GSList *last_opened_raw_filenames;
 
 
 GtkItemFactory * menus_get_toolbox_factory  (void);

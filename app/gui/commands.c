@@ -20,143 +20,37 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "core/core-types.h"
-#include "tools/tools-types.h"
-
-#include "core/gimpcontext.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
-#include "core/gimptoolinfo.h"
-
-#include "tools/gimptool.h"
-#include "tools/tool_manager.h"
 
 #include "commands.h"
-#include "layer-select.h"
 
-#include "app_procs.h"
-#include "context_manager.h"
-#include "gdisplay.h"
-#include "gimprc.h"
-#include "image_render.h"
 #include "plug_in.h"
-#include "undo.h"
 
-#include "libgimp/gimpintl.h"
-
-
-#define return_if_no_display(gdisp) \
-        gdisp = gdisplay_active (); \
-        if (!gdisp) return
-
-
-/*****  Tools  *****/
-
-void
-tools_default_colors_cmd_callback (GtkWidget *widget,
-				   gpointer   client_data)
-{
-  gimp_context_set_default_colors (gimp_context_get_user ());
-}
-
-void
-tools_swap_colors_cmd_callback (GtkWidget *widget,
-				gpointer   client_data)
-{
-  gimp_context_swap_colors (gimp_context_get_user ());
-}
-
-void
-tools_swap_contexts_cmd_callback (GtkWidget *widget,
-				  gpointer   client_data)
-{
-  static GimpContext *swap_context = NULL;
-  static GimpContext *temp_context = NULL;
-
-  if (! swap_context)
-    {
-      swap_context = gimp_context_new ("Swap Context",
-				       gimp_context_get_user ());
-      temp_context = gimp_context_new ("Temp Context", NULL);
-    }
-
-  gimp_context_copy_args (gimp_context_get_user (),
-			  temp_context,
-			  GIMP_CONTEXT_ALL_ARGS_MASK);
-  gimp_context_copy_args (swap_context,
-			  gimp_context_get_user (),
-			  GIMP_CONTEXT_ALL_ARGS_MASK);
-  gimp_context_copy_args (temp_context,
-			  swap_context,
-			  GIMP_CONTEXT_ALL_ARGS_MASK);
-}
-
-void
-tools_select_cmd_callback (GtkWidget *widget,
-			   gpointer   callback_data,
-			   guint      callback_action)
-{
-  GtkType       tool_type;
-  GimpToolInfo *tool_info;
-  GDisplay     *gdisp;
-
-  tool_type = callback_action;
-
-  tool_info = tool_manager_get_info_by_type (tool_type);
-  gdisp     = gdisplay_active ();
-
-  gimp_context_set_tool (gimp_context_get_user (), tool_info);
-
-#ifdef __GNUC__
-#warning FIXME (let the tool manager to this stuff)
-#endif
-
-  /*  Paranoia  */
-  active_tool->drawable = NULL;
-
-  /*  Complete the initialisation by doing the same stuff
-   *  tools_initialize() does after it did what tools_select() does
-   */
-  if (GIMP_TOOL_CLASS (GTK_OBJECT (active_tool)->klass)->initialize)
-    {
-      gimp_tool_initialize (active_tool, gdisp);
-
-      active_tool->drawable = gimp_image_active_drawable (gdisp->gimage);
-    }
-
-  /*  setting the tool->gdisp here is a HACK to allow the tools'
-   *  dialog windows being hidden if the tool was selected from
-   *  a tear-off-menu and there was no mouse click in the display
-   *  before deleting it
-   */
-  active_tool->gdisp = gdisp;
-}
 
 /*****  Filters  *****/
 
 void
 filters_repeat_cmd_callback (GtkWidget *widget,
-			     gpointer   callback_data,
-			     guint      callback_action)
+			     gpointer   data,
+			     guint      action)
 {
-  plug_in_repeat (callback_action);
+  plug_in_repeat ((gboolean) action);
 }
 
 /*****  Help  *****/
 
 void
 help_help_cmd_callback (GtkWidget *widget,
-			gpointer   client_data)
+			gpointer   data)
 {
   gimp_standard_help_func (NULL);
 }
 
 void
 help_context_help_cmd_callback (GtkWidget *widget,
-				gpointer   client_data)
+				gpointer   data)
 {
   gimp_context_help ();
 }

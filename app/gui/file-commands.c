@@ -31,6 +31,7 @@
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
 #include "image_new.h"
+#include "menus.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -67,6 +68,32 @@ file_open_cmd_callback (GtkWidget *widget,
 			gpointer   data)
 {
   file_open_callback (widget, data);
+}
+
+void
+file_last_opened_cmd_callback (GtkWidget *widget,
+			       gpointer   data,
+			       guint      action)
+{
+  gchar *filename;
+  guint  num_entries;
+  gint   status;
+
+  num_entries = g_slist_length (last_opened_raw_filenames); 
+
+  if (action >= num_entries)
+    return;
+
+  filename =
+    ((GString *) g_slist_nth_data (last_opened_raw_filenames, action))->str;
+
+  status = file_open_with_display (filename, filename);
+
+  if (status != GIMP_PDB_SUCCESS &&
+      status != GIMP_PDB_CANCEL)
+    {
+      g_message (_("Error opening file: %s\n"), filename);
+    }
 }
 
 void

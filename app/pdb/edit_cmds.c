@@ -28,7 +28,7 @@
 #include "core/core-types.h"
 #include "procedural_db.h"
 
-#include "appenums.h"
+#include "core/core-types.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimplayer.h"
 #include "drawable.h"
@@ -68,7 +68,7 @@ edit_cut_invoker (Argument *args)
   if (success)
     {
       gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
-      success = edit_cut (gimage, drawable) != NULL;
+      success = gimp_edit_cut (gimage, drawable) != NULL;
     }
 
   return procedural_db_return_args (&edit_cut_proc, success);
@@ -113,7 +113,7 @@ edit_copy_invoker (Argument *args)
   if (success)
     {
       gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
-      success = edit_copy (gimage, drawable) != NULL;
+      success = gimp_edit_copy (gimage, drawable) != NULL;
     }
 
   return procedural_db_return_args (&edit_copy_proc, success);
@@ -163,7 +163,7 @@ edit_paste_invoker (Argument *args)
   if (success)
     {
       gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
-      layer = edit_paste (gimage, drawable, global_buffer, paste_into);
+      layer = gimp_edit_paste (gimage, drawable, global_buffer, paste_into);
       success = layer != NULL;
     }
 
@@ -228,7 +228,7 @@ edit_clear_invoker (Argument *args)
   if (success)
     {
       gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
-      success = edit_clear (gimage, drawable);
+      success = gimp_edit_clear (gimage, drawable);
     }
 
   return procedural_db_return_args (&edit_clear_proc, success);
@@ -278,7 +278,7 @@ edit_fill_invoker (Argument *args)
   if (success)
     {
       gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
-      success = edit_fill (gimage, drawable, (GimpFillType) fill_type);
+      success = gimp_edit_fill (gimage, drawable, (GimpFillType) fill_type);
     }
 
   return procedural_db_return_args (&edit_fill_proc, success);

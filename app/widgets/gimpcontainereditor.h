@@ -57,6 +57,13 @@ struct _GimpContainerEditor
 struct _GimpContainerEditorClass
 {
   GtkVBoxClass  parent_class;
+
+  void (* select_item)   (GimpContainerEditor *editor,
+			  GimpViewable        *object);
+  void (* activate_item) (GimpContainerEditor *editor,
+			  GimpViewable        *object);
+  void (* context_item)  (GimpContainerEditor *editor,
+			  GimpViewable        *object);
 };
 
 
@@ -72,11 +79,14 @@ gboolean    gimp_container_editor_construct  (GimpContainerEditor  *editor,
 					      gint                  preview_size,
 					      gint                  min_items_x,
 					      gint                  min_items_y);
+
 GtkWidget * gimp_container_editor_add_button (GimpContainerEditor  *editor,
 					      gchar               **xpm_data,
 					      const gchar          *tooltip,
 					      const gchar          *help_data,
 					      GtkSignalFunc         callback);
+void        gimp_container_editor_enable_dnd (GimpContainerEditor  *editor,
+					      GtkButton            *button);
 
 
 #endif  /*  __GIMP_CONTAINER_EDITOR_H__  */

@@ -59,15 +59,26 @@ struct _GimpDataFactoryViewClass
 };
 
 
-GtkType     gimp_data_factory_view_get_type (void);
+GtkType     gimp_data_factory_view_get_type  (void);
 
-GtkWidget * gimp_data_factory_view_new      (GimpViewType      view_type,
-					     GimpDataFactory  *factory,
-					     GimpDataEditFunc  edit_func,
-					     GimpContext      *context,
-					     gint              preview_size,
-					     gint              min_items_x,
-					     gint              min_items_y);
+GtkWidget * gimp_data_factory_view_new       (GimpViewType         view_type,
+					      GimpDataFactory     *factory,
+					      GimpDataEditFunc     edit_func,
+					      GimpContext         *context,
+					      gint                 preview_size,
+					      gint                 min_items_x,
+					      gint                 min_items_y);
 
+
+/*  protected  */
+
+gboolean    gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
+					      GimpViewType         view_type,
+					      GimpDataFactory     *factory,
+					      GimpDataEditFunc     edit_func,
+					      GimpContext         *context,
+					      gint                 preview_size,
+					      gint                 min_items_x,
+					      gint                 min_items_y);
 
 #endif  /*  __GIMP_DATA_FACTORY_VIEW_H__  */

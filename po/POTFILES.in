@@ -51,7 +51,6 @@ app/gui/color-area.c
 app/gui/color-notebook.c
 app/gui/color-select.c
 app/gui/colormap-dialog.c
-app/gui/commands.c
 app/gui/convert-dialog.c
 app/gui/dialogs-constructors.c
 app/gui/edit-commands.c

@@ -20,24 +20,14 @@
 #define __COMMANDS_H__
 
 
-void   tools_default_colors_cmd_callback    (GtkWidget *widget,
-					     gpointer   data);
-void   tools_swap_colors_cmd_callback       (GtkWidget *widget,
-					     gpointer   data);
-void   tools_swap_contexts_cmd_callback     (GtkWidget *widget,
-					     gpointer   data);
-void   tools_select_cmd_callback            (GtkWidget *widget,
-					     gpointer   data,
-					     guint      action);
+void   filters_repeat_cmd_callback    (GtkWidget *widget,
+				       gpointer   data,
+				       guint      action);
 
-void   filters_repeat_cmd_callback          (GtkWidget *widget,
-					     gpointer   data,
-					     guint      action);
-
-void   help_help_cmd_callback               (GtkWidget *widget,
-					     gpointer   data);
-void   help_context_help_cmd_callback       (GtkWidget *widget,
-					     gpointer   data);
+void   help_help_cmd_callback         (GtkWidget *widget,
+				       gpointer   data);
+void   help_context_help_cmd_callback (GtkWidget *widget,
+				       gpointer   data);
 
 
 #endif /* __COMMANDS_H__ */

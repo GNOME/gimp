@@ -28,14 +28,14 @@
 
 #include "base/temp-buf.h"
 
-#include "core/gimpbrushgenerated.h"
+#include "core/gimpbrush.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
 
 #include "pdb/procedural_db.h"
 
-#include "widgets/gimpdatafactoryview.h"
+#include "widgets/gimpbrushfactoryview.h"
 #include "widgets/gimpwidgets-constructors.h"
 
 #include "brush-select.h"
@@ -194,13 +194,14 @@ brush_select_new (gchar   *title,
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (bsp->shell)->vbox), main_vbox);
 
   /*  The Brush Grid  */
-  bsp->view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
-					  global_brush_factory,
-					  dialogs_edit_brush_func,
-					  bsp->context,
-					  MIN_CELL_SIZE,
-					  STD_BRUSH_COLUMNS,
-					  STD_BRUSH_ROWS);
+  bsp->view = gimp_brush_factory_view_new (GIMP_VIEW_TYPE_GRID,
+					   global_brush_factory,
+					   dialogs_edit_brush_func,
+					   bsp->context,
+					   title ? FALSE : TRUE,
+					   MIN_CELL_SIZE,
+					   STD_BRUSH_COLUMNS,
+					   STD_BRUSH_ROWS);
   gtk_box_pack_start (GTK_BOX (main_vbox), bsp->view, TRUE, TRUE, 0);
   gtk_widget_show (bsp->view);
 
@@ -246,35 +247,21 @@ brush_select_new (gchar   *title,
   gtk_box_pack_start (GTK_BOX (bsp->paint_options_box), sep, FALSE, FALSE, 0);
   gtk_widget_show (sep);
 
-  /*  Create the spacing scale widget  */
-  table = gtk_table_new (1, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
-  gtk_box_pack_end (GTK_BOX (bsp->view), table, FALSE, FALSE, 0);
-
-  bsp->spacing_data =
-    GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 1.0, 1000.0, 1.0, 1.0, 0.0));
-  slider = gtk_hscale_new (bsp->spacing_data);
-  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Spacing:"), 1.0, 1.0,
-			     slider, 1, FALSE);
-
   if (title && init_spacing >= 0)
     {
+      GtkAdjustment *adj;
+
+      adj = GIMP_BRUSH_FACTORY_VIEW (bsp->view)->spacing_adjustment;
+
       /*  Use passed spacing instead of brushes default  */
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (bsp->spacing_data),
-				init_spacing);
-    }
-  else if (active)
-    {
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (bsp->spacing_data),
-				gimp_brush_get_spacing (active));
+      gtk_adjustment_set_value (adj, init_spacing);
     }
 
-  gtk_signal_connect (GTK_OBJECT (bsp->spacing_data), "value_changed",
-		      GTK_SIGNAL_FUNC (spacing_scale_update),
-		      bsp);
+  gtk_signal_connect
+    (GTK_OBJECT (GIMP_BRUSH_FACTORY_VIEW (bsp->view)->spacing_adjustment),
+     "value_changed",
+     GTK_SIGNAL_FUNC (spacing_scale_update),
+     bsp);
 
   gtk_widget_show (table);
 
@@ -382,7 +369,7 @@ brush_select_change_callbacks (BrushSelect *bsp,
 				GIMP_PDB_INT32,     brush->mask->width,
 				GIMP_PDB_INT32,     brush->mask->height,
 				GIMP_PDB_INT32,     (brush->mask->width *
-						brush->mask->height),
+						     brush->mask->height),
 				GIMP_PDB_INT8ARRAY, temp_buf_data (brush->mask),
 				GIMP_PDB_INT32,     (gint) closing,
 				GIMP_PDB_END);
@@ -436,16 +423,9 @@ brush_select_brush_changed (GimpContext *context,
 			    GimpBrush   *brush,
 			    BrushSelect *bsp)
 {
-  if (brush)
+  if (brush && bsp->callback_name)
     {
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (bsp->spacing_data),
-				gimp_brush_get_spacing (brush));
-
-      gtk_widget_set_sensitive (GIMP_DATA_FACTORY_VIEW (bsp->view)->edit_button,
-				GIMP_IS_BRUSH_GENERATED (brush));
-
-      if (bsp->callback_name)
-	brush_select_change_callbacks (bsp, FALSE);
+      brush_select_change_callbacks (bsp, FALSE);
     }
 }
 
@@ -469,7 +449,7 @@ brush_select_paint_mode_changed (GimpContext      *context,
 				 BrushSelect      *bsp)
 {
   gimp_option_menu_set_history (GTK_OPTION_MENU (bsp->option_menu),
-				(gpointer) paint_mode);
+				GINT_TO_POINTER (paint_mode));
 
   if (bsp->callback_name)
     brush_select_change_callbacks (bsp, FALSE);
@@ -497,7 +477,8 @@ paint_mode_menu_callback (GtkWidget *widget,
 
   bsp = (BrushSelect *) data;
 
-  paint_mode = (LayerModeEffects) gtk_object_get_user_data (GTK_OBJECT (widget));
+  paint_mode = (LayerModeEffects)
+    GPOINTER_TO_INT (gtk_object_get_user_data (GTK_OBJECT (widget)));
 
   gimp_context_set_paint_mode (bsp->context, paint_mode);
 }
@@ -510,18 +491,10 @@ spacing_scale_update (GtkAdjustment *adjustment,
 
   bsp = (BrushSelect *) data;
 
-  if (bsp == brush_select_dialog)
+  if (bsp->callback_name && bsp->spacing_value != adjustment->value)
     {
-      gimp_brush_set_spacing (gimp_context_get_brush (bsp->context),
-			      (gint) adjustment->value);
-    }
-  else
-    {
-      if (bsp->spacing_value != adjustment->value)
-	{
-	  bsp->spacing_value = adjustment->value;
-	  brush_select_change_callbacks (bsp, FALSE);
-	}
+      bsp->spacing_value = adjustment->value;
+      brush_select_change_callbacks (bsp, FALSE);
     }
 }
 

@@ -53,10 +53,13 @@ struct _GimpImageDockClass
 };
 
 
-GtkType     gimp_image_dock_get_type (void);
+GtkType     gimp_image_dock_get_type            (void);
 
-GtkWidget * gimp_image_dock_new      (GimpDialogFactory *factory,
-				      GimpContainer     *image_container);
+GtkWidget * gimp_image_dock_new                 (GimpDialogFactory *factory,
+						 GimpContainer     *image_container);
+
+void        gimp_image_dock_set_show_image_menu (GimpImageDock     *image_dock,
+						 gboolean           show);
 
 
 #endif /* __GIMP_IMAGE_DOCK_H__ */

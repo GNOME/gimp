@@ -1,3 +1,92 @@
+2001-06-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/appenums.h: removed GimpFillType.
+
+	* app/gimprc.c: parse the session-info's new "aux-info" field.
+
+	* app/global_edit.[ch]: removed the old "Paste Named" dialog and
+	prefixed all functions with "gimp_".
+
+	* app/core/core-types.h: added GimpFillType.
+
+	* app/core/gimpbrush.[ch]: new signal "spacing_changed".
+
+	* app/gui/Makefile.am
+	* app/gui/tools-commands.[ch]: one more file cut out of commands.[ch].
+
+	* app/gui/commands.[ch]: removed the tools stuff here.
+
+	* app/gui/brush-select.[ch]
+	* app/gui/dialogs-constructors.c: use the new GimpBrushFactoryView
+	(see below).
+
+	* app/gui/dialogs-commands.[ch]
+	* app/gui/menus.[ch]:
+
+	- Made it 64bit safe again by passing the dialog factory's
+	  identifiers as GQuarks, not as guints created by GPOINTER_TO_UINT().
+	- Added a "gchar *quark_string" field to GimpItemFactoryEntry
+	  which gets transformed into a GQuark by menus_create_item().
+	- Added SEPARATOR() and BRANCH() macros which make the *_entries[]
+	  arrays more readable.
+	- Added a menu item to show/hide GimpImageDock's image menu.
+	- Removed file_last_opened_cmd_callback().
+
+	* app/gui/edit-commands.c: the global_edit functions are "gimp_"
+	prefixed now.
+
+	* app/gui/file-commands.[ch]: added file_last_opened_cmd_callback()
+	here.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpbrushfactoryview.[ch]: new widget: a
+	GimpDataFactory subclass with a "spacing" scale.
+
+	* app/widgets/gimpcontainereditor.[ch]:
+
+	- Connect to the GimpContainerView's "select_item",
+	  "activate_item" and "context_item" signals here once instead of
+	  in each subclass and dispatch them via new virtual functions.
+	- Added a convenience function which makes DND to the buttons much
+	  less painful for subclasses.
+
+	* app/widgets/gimpbufferview.c
+	* app/widgets/gimpdatafactoryview.[ch]: changed accordingly.
+
+	* app/widgets/gimpdialogfactory.[ch]:
+
+	- Added gimp_dialog_factory_dialog_raise() which can raise
+	  toplevel dialogs _and_ dockables (and creates them if they are
+	  not open yet).
+	- Keep track of all created dialogs (not only toplevels).
+	- Added an "aux_info" field to GimpSessionInfo which is a GList of
+	  gchar* and is saved in sessionrc.
+	- Remember if GimpImageDock's image menu is visible by using an
+	  aux_info string.
+	- The code did not become nicer with all those new constraints. I
+	  have to add comments before I forget how it works.
+
+	* app/widgets/gimpdockbook.c: set the state of the "Show Image Menu"
+	menu item before popping up the item factory.
+
+	* app/widgets/gimpimagedock.[ch]: added
+	gimp_image_dock_set_show_image_meu().
+
+	* plug-ins/gdyntext/gdyntext.c
+	* plug-ins/perl/examples/fit-text
+	* plug-ins/perl/examples/terral_text
+	* plug-ins/perl/examples/tex-to-float: register all text rendering
+	plug-ins under <Image>/Filters/Text
+
+	* app/pdb/brush_select_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/edit_cmds.c
+	* tools/pdbgen/pdb/brush_select.pdb
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/enums.pl
+	* po/POTFILES.in: changed according to all the stuff above.
+
 2001-06-27  Sven Neumann  <sven@gimp.org>
 
 	* README.i18n: merged changes from stable branch.

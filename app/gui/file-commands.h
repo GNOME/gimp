@@ -25,6 +25,9 @@ void   file_new_cmd_callback            (GtkWidget *widget,
 					 guint      action);
 void   file_open_cmd_callback           (GtkWidget *widget,
 					 gpointer   data);
+void   file_last_opened_cmd_callback    (GtkWidget *widget,
+					 gpointer   data,
+					 guint      action);
 void   file_save_cmd_callback           (GtkWidget *widget,
 					 gpointer   data);
 void   file_save_as_cmd_callback        (GtkWidget *widget,

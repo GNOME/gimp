@@ -35,6 +35,7 @@
 #include "core/gimplayer.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpbrushfactoryview.h"
 #include "widgets/gimpbufferview.h"
 #include "widgets/gimpcontainerlistview.h"
 #include "widgets/gimpcontainergridview.h"
@@ -316,12 +317,13 @@ dialogs_brush_list_view_new (GimpDialogFactory *factory,
 {
   GtkWidget *view;
 
-  view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
-				     global_brush_factory,
-				     dialogs_edit_brush_func,
-				     context,
-				     32,
-				     5, 3);
+  view = gimp_brush_factory_view_new (GIMP_VIEW_TYPE_LIST,
+				      global_brush_factory,
+				      dialogs_edit_brush_func,
+				      context,
+				      TRUE,
+				      32,
+				      5, 3);
 
   return dialogs_dockable_new (view,
 			       "Brush List", "Brushes",
@@ -447,12 +449,13 @@ dialogs_brush_grid_view_new (GimpDialogFactory *factory,
 {
   GtkWidget *view;
 
-  view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
-				     global_brush_factory,
-				     dialogs_edit_brush_func,
-				     context,
-				     32,
-				     5, 3);
+  view = gimp_brush_factory_view_new (GIMP_VIEW_TYPE_GRID,
+				      global_brush_factory,
+				      dialogs_edit_brush_func,
+				      context,
+				      TRUE,
+				      32,
+				      5, 3);
 
   return dialogs_dockable_new (view,
 			       "Brush Grid", "Brushes",
@@ -871,9 +874,7 @@ dialogs_set_editor_context_func (GimpDockable *dockable,
 							"gimp-dialogs-view");
 
   if (editor)
-    {
-      /* TODO: gimp_container_editor_set_context (editor, context); */
-    }
+    gimp_container_view_set_context (editor->view, context);
 }
 
 static void

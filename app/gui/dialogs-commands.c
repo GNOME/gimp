@@ -24,9 +24,9 @@
 #include "widgets/widgets-types.h"
 
 #include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpdock.h"
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
+#include "widgets/gimpimagedock.h"
 
 #include "dialogs.h"
 #include "dialogs-commands.h"
@@ -39,8 +39,12 @@ dialogs_create_toplevel_cmd_callback (GtkWidget *widget,
 {
   if (action)
     {
-      gimp_dialog_factory_dialog_new (global_dialog_factory,
-				      GUINT_TO_POINTER (action));
+      gchar *identifier;
+
+      identifier = g_quark_to_string ((GQuark) action);
+
+      if (identifier)
+	gimp_dialog_factory_dialog_new (global_dialog_factory, identifier);
     }
 }
 
@@ -56,13 +60,19 @@ dialogs_add_tab_cmd_callback (GtkWidget *widget,
   if (dockbook && action)
     {
       GtkWidget *dockable;
+      gchar     *identifier;
 
-      dockable = gimp_dialog_factory_dockable_new (dockbook->dock->factory,
-						   dockbook->dock,
-						   GUINT_TO_POINTER (action));
+      identifier = g_quark_to_string ((GQuark) action);
 
-      if (dockable)
-	gimp_dockbook_add (dockbook, GIMP_DOCKABLE (dockable), -1);
+      if (identifier)
+	{
+	  dockable = gimp_dialog_factory_dockable_new (dockbook->dock->factory,
+						       dockbook->dock,
+						       identifier);
+
+	  if (dockable)
+	    gimp_dockbook_add (dockbook, GIMP_DOCKABLE (dockable), -1);
+	}
     }
 }
 
@@ -87,6 +97,22 @@ dialogs_remove_tab_cmd_callback (GtkWidget *widget,
 
       if (dockable)
 	gimp_dockbook_remove (dockbook, dockable);
+    }
+}
+
+void
+dialogs_toggle_image_menu_cmd_callback (GtkWidget *widget,
+					gpointer   data,
+					guint      action)
+{
+  GimpDockbook *dockbook;
+
+  dockbook = (GimpDockbook *) gtk_item_factory_popup_data_from_widget (widget);
+
+  if (dockbook)
+    {
+      gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dockbook->dock),
+					   GTK_CHECK_MENU_ITEM (widget)->active);
     }
 }
 

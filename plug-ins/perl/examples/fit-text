@@ -40,7 +40,7 @@ register "fit_text",
          "Seth Burgess",
          "Seth Burgess <sjburges\@gimp.org>",
          "2000-01-29",
-         N_"<Image>/Filters/Render/Fit Text...",
+         N_"<Image>/Filters/Text/Fit Text...",
          "*",
          [
            [PF_FONT, "font", "What font type to use - size will be ignored", $defaultfont],

@@ -2491,6 +2491,26 @@ parse_session_info (gpointer val1p,
 	{
 	  info->open = TRUE;
 	}
+      else if (!strcmp ("aux-info", token_sym))
+	{
+	  token = peek_next_token ();
+	  if (!token || (token != TOKEN_LEFT_PAREN))
+	    goto error;
+	  token = get_next_token ();
+
+	  while (peek_next_token () == TOKEN_STRING)
+	    {
+	      token = get_next_token ();
+
+	      info->aux_info = g_list_append (info->aux_info,
+					      g_strdup (token_str));
+	    }
+
+	  token = peek_next_token ();
+	  if (!token || (token != TOKEN_RIGHT_PAREN))
+	    goto error;
+	  token = get_next_token ();
+	}
       else if (!strcmp ("dock", token_sym))
 	{
 	  if (info->toplevel_entry)

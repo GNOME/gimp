@@ -4,6 +4,8 @@ noinst_LIBRARIES = libappwidgets.a
 
 libappwidgets_a_SOURCES = @STRIP_BEGIN@ \
 	widgets-types.h			\
+	gimpbrushfactoryview.c		\
+	gimpbrushfactoryview.h		\
 	gimpbrushpreview.c		\
 	gimpbrushpreview.h		\
 	gimpbufferpreview.c		\

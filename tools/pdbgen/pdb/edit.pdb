@@ -55,7 +55,7 @@ HELP
 
     &std_pdb_misc;
     &inargs('cut from');
-    &invoke('edit_cut (gimage, drawable) != NULL');
+    &invoke('gimp_edit_cut (gimage, drawable) != NULL');
 }
 
 sub edit_copy {
@@ -72,7 +72,7 @@ HELP
 
     &std_pdb_misc;
     &inargs('copy from');
-    &invoke('edit_copy (gimage, drawable) != NULL');
+    &invoke('gimp_edit_copy (gimage, drawable) != NULL');
 }
 
 sub edit_paste {
@@ -106,7 +106,7 @@ HELP
     );
 
     &invoke('layer != NULL');
-    $cmd = "layer = edit_paste (gimage, drawable, global_buffer, paste_into);\n";
+    $cmd = "layer = gimp_edit_paste (gimage, drawable, global_buffer, paste_into);\n";
     $invoke{code} =~ s/(success.*$)/"$cmd  $1"/me;
 }
 
@@ -123,7 +123,7 @@ HELP
 
     &std_pdb_misc;
     &inargs('clear from');
-    &invoke('edit_clear (gimage, drawable)');
+    &invoke('gimp_edit_clear (gimage, drawable)');
 }
 
 sub edit_fill {
@@ -146,7 +146,7 @@ HELP
 	{ name => 'fill_type', type => 'enum GimpFillType',
 	  desc => 'The type of fill: %%desc%%' }
     );
-    &invoke('edit_fill (gimage, drawable, (GimpFillType) fill_type)');
+    &invoke('gimp_edit_fill (gimage, drawable, (GimpFillType) fill_type)');
 }
 
 sub edit_stroke {

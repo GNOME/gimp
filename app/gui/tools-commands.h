@@ -16,41 +16,19 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#include "config.h"
-
-#include <gtk/gtk.h>
-
-#include "libgimpwidgets/gimpwidgets.h"
-
-#include "core/core-types.h"
-
-#include "commands.h"
-
-#include "plug_in.h"
+#ifndef __TOOLS_COMMANDS_H__
+#define __TOOLS_COMMANDS_H__
 
 
-/*****  Filters  *****/
+void   tools_default_colors_cmd_callback (GtkWidget *widget,
+					  gpointer   data);
+void   tools_swap_colors_cmd_callback    (GtkWidget *widget,
+					  gpointer   data);
+void   tools_swap_contexts_cmd_callback  (GtkWidget *widget,
+					  gpointer   data);
+void   tools_select_cmd_callback         (GtkWidget *widget,
+					  gpointer   data,
+					  guint      action);
 
-void
-filters_repeat_cmd_callback (GtkWidget *widget,
-			     gpointer   data,
-			     guint      action)
-{
-  plug_in_repeat ((gboolean) action);
-}
 
-/*****  Help  *****/
-
-void
-help_help_cmd_callback (GtkWidget *widget,
-			gpointer   data)
-{
-  gimp_standard_help_func (NULL);
-}
-
-void
-help_context_help_cmd_callback (GtkWidget *widget,
-				gpointer   data)
-{
-  gimp_context_help ();
-}
+#endif /* __TOOLS_COMMANDS_H__ */

@@ -33,6 +33,7 @@ typedef GtkWidget * (* GimpDialogNewFunc) (GimpDialogFactory *factory,
 
 
 typedef struct _GimpDialogFactoryEntry GimpDialogFactoryEntry;
+typedef struct _GimpSessionInfo        GimpSessionInfo;
 
 struct _GimpDialogFactoryEntry
 {
@@ -42,9 +43,6 @@ struct _GimpDialogFactoryEntry
   gboolean           session_managed;
   gboolean           remember_size;
 };
-
-
-typedef struct _GimpSessionInfo GimpSessionInfo;
 
 struct _GimpSessionInfo
 {
@@ -58,8 +56,12 @@ struct _GimpSessionInfo
   /*  only valid while restoring and saving the session  */
   gboolean   open;
 
+  /*  GList of gchar* of optional additional dialog specific info  */
+  GList     *aux_info;
+
   /*  only one of these is valid  */
   GimpDialogFactoryEntry *toplevel_entry;
+  GimpDialogFactoryEntry *dockable_entry;
   GList                  *sub_dialogs;  /*  GList of GLists of entries  */
 };
 
@@ -119,15 +121,17 @@ void        gimp_dialog_factory_register         (GimpDialogFactory *factory,
 
 GtkWidget * gimp_dialog_factory_dialog_new       (GimpDialogFactory *factory,
 						  const gchar       *identifier);
+GtkWidget * gimp_dialog_factory_dialog_raise     (GimpDialogFactory *factory,
+						  const gchar       *identifier);
 GtkWidget * gimp_dialog_factory_dockable_new     (GimpDialogFactory *factory,
 						  GimpDock          *dock,
 						  const gchar       *identifier);
 GtkWidget * gimp_dialog_factory_dock_new         (GimpDialogFactory *factory);
 
-void        gimp_dialog_factory_add_toplevel     (GimpDialogFactory *factory,
-						  GtkWidget         *toplevel);
-void        gimp_dialog_factory_remove_toplevel  (GimpDialogFactory *factory,
-						  GtkWidget         *toplevel);
+void        gimp_dialog_factory_add_dialog       (GimpDialogFactory *factory,
+						  GtkWidget         *dialog);
+void        gimp_dialog_factory_remove_dialog    (GimpDialogFactory *factory,
+						  GtkWidget         *dialog);
 
 void        gimp_dialog_factories_session_save    (FILE             *file);
 void        gimp_dialog_factories_session_restore (void);

@@ -33,6 +33,7 @@
 #include "gimpdock.h"
 #include "gimpdockbook.h"
 #include "gimpdockable.h"
+#include "gimpimagedock.h"
 
 
 static void   gimp_dialog_factory_class_init (GimpDialogFactoryClass *klass);
@@ -251,8 +252,10 @@ gimp_dialog_factory_find_session_info (GimpDialogFactory *factory,
 
       info = (GimpSessionInfo *) list->data;
 
-      if (info->toplevel_entry &&
-	  ! strcmp (identifier, info->toplevel_entry->identifier))
+      if ((info->toplevel_entry &&
+	   ! strcmp (identifier, info->toplevel_entry->identifier)) ||
+	  (info->dockable_entry &&
+	   ! strcmp (identifier, info->dockable_entry->identifier)))
 	{
 	  return info;
 	}
@@ -264,7 +267,8 @@ gimp_dialog_factory_find_session_info (GimpDialogFactory *factory,
 static GtkWidget *
 gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
 					 GimpContext       *context,
-					 const gchar       *identifier)
+					 const gchar       *identifier,
+					 gboolean           raise_if_found)
 {
   GimpDialogFactoryEntry *entry;
   GtkWidget              *dialog = NULL;
@@ -289,7 +293,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
       return NULL;
     }
 
-  if (entry->singleton)
+  if (raise_if_found || entry->singleton)
     {
       GimpSessionInfo *info;
 
@@ -301,7 +305,24 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
 
   if (! dialog)
     {
-      dialog = entry->new_func (factory, context);
+      GtkWidget *dock = NULL;
+
+      if (factory->new_dock_func && ! context)
+	{
+	  dock = gimp_dialog_factory_dock_new (factory);
+
+	  gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dock), FALSE);
+
+	  gimp_dock_add_book (GIMP_DOCK (dock),
+			      GIMP_DOCKBOOK (gimp_dockbook_new ()), 0);
+	}
+
+      if (context)
+	dialog = entry->new_func (factory, context);
+      else if (dock)
+	dialog = entry->new_func (factory, GIMP_DOCK (dock)->context);
+      else
+	dialog = entry->new_func (factory, factory->context);
 
       if (dialog)
 	{
@@ -312,19 +333,59 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
 			       "gimp-dialog-factory-entry",
 			       entry);
 
-	  if (GTK_WIDGET_TOPLEVEL (dialog))
+	  gimp_dialog_factory_add_dialog (factory, dialog);
+
+	  if (dock)
 	    {
-	      gimp_dialog_factory_add_toplevel (factory, dialog);
+	      gimp_dock_add (GIMP_DOCK (dock), GIMP_DOCKABLE (dialog), 0, 0);
+
+	      gtk_widget_show (dock);
 	    }
+	}
+      else if (dock)
+	{
+	  gtk_widget_destroy (dock);
 	}
     }
 
-  if (dialog && GTK_WIDGET_TOPLEVEL (dialog))
+  if (dialog)
     {
-      if (! GTK_WIDGET_VISIBLE (dialog))
-	gtk_widget_show (dialog);
-      else if (dialog->window)
-	gdk_window_raise (dialog->window);
+      if (GTK_WIDGET_TOPLEVEL (dialog))
+	{
+	  if (! GTK_WIDGET_VISIBLE (dialog))
+	    gtk_widget_show (dialog);
+	  else if (dialog->window)
+	    gdk_window_raise (dialog->window);
+	}
+      else if (GIMP_IS_DOCKABLE (dialog))
+	{
+	  GimpDockable *dockable;
+	  gint          page_num;
+
+	  dockable = GIMP_DOCKABLE (dialog);
+
+	  if (dockable->dockbook && dockable->dockbook->dock)
+	    {
+	      page_num =
+		gtk_notebook_page_num (GTK_NOTEBOOK (dockable->dockbook),
+				       dialog);
+
+	      if (page_num != -1)
+		{
+		  GtkWidget *toplevel;
+
+		  gtk_notebook_set_page (GTK_NOTEBOOK (dockable->dockbook),
+					 page_num);
+
+		  toplevel = gtk_widget_get_toplevel (dialog);
+
+		  if (! GTK_WIDGET_VISIBLE (toplevel))
+		    gtk_widget_show (toplevel);
+		  else if (toplevel->window)
+		    gdk_window_raise (toplevel->window);
+		}
+	    }
+	}
     }
 
   return dialog;
@@ -340,7 +401,22 @@ gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
 
   return gimp_dialog_factory_dialog_new_internal (factory,
 						  factory->context,
-						  identifier);
+						  identifier,
+						  FALSE);
+}
+
+GtkWidget *
+gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
+				  const gchar       *identifier)
+{
+  g_return_val_if_fail (factory != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
+  g_return_val_if_fail (identifier != NULL, NULL);
+
+  return gimp_dialog_factory_dialog_new_internal (factory,
+						  NULL,
+						  identifier,
+						  TRUE);
 }
 
 GtkWidget *
@@ -356,7 +432,8 @@ gimp_dialog_factory_dockable_new (GimpDialogFactory *factory,
 
   return gimp_dialog_factory_dialog_new_internal (factory,
 						  dock->context,
-						  identifier);
+						  identifier,
+						  FALSE);
 }
 
 GtkWidget *
@@ -371,54 +448,61 @@ gimp_dialog_factory_dock_new (GimpDialogFactory *factory)
   dock = factory->new_dock_func (factory, factory->context);
 
   if (dock)
-    gimp_dialog_factory_add_toplevel (factory, dock);
+    gimp_dialog_factory_add_dialog (factory, dock);
 
   return dock;
 }
 
 void
-gimp_dialog_factory_add_toplevel (GimpDialogFactory *factory,
-				  GtkWidget         *toplevel)
+gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
+				GtkWidget         *dialog)
 {
-  GimpDialogFactory      *toplevel_factory;
+  GimpDialogFactory      *dialog_factory;
   GimpDialogFactoryEntry *entry;
   GimpSessionInfo        *info;
   GList                  *list;
 
   g_return_if_fail (factory != NULL);
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
-  g_return_if_fail (toplevel != NULL);
-  g_return_if_fail (GTK_IS_WIDGET (toplevel));
+  g_return_if_fail (dialog != NULL);
+  g_return_if_fail (GTK_IS_WIDGET (dialog));
 
-  if (g_list_find (factory->open_dialogs, toplevel))
+  if (g_list_find (factory->open_dialogs, dialog))
     {
       g_warning ("%s(): dialog already registered", G_GNUC_FUNCTION);
       return;
     }
 
-  toplevel_factory = gtk_object_get_data (GTK_OBJECT (toplevel),
-					  "gimp-dialog-factory");
+  dialog_factory = gtk_object_get_data (GTK_OBJECT (dialog),
+					"gimp-dialog-factory");
 
-  if (toplevel_factory && toplevel_factory != factory)
+  if (dialog_factory && dialog_factory != factory)
     {
       g_warning ("%s(): dialog was created by a different GimpDialogFactory",
 		 G_GNUC_FUNCTION);
       return;
     }
 
-  entry = gtk_object_get_data (GTK_OBJECT (toplevel),
+  entry = gtk_object_get_data (GTK_OBJECT (dialog),
 			       "gimp-dialog-factory-entry");
 
-  if (entry) /*  toplevel was created by this factory  */
+  if (entry) /*  dialog was created by this factory  */
     {
-      g_print ("%s: registering toplevel \"%s\"\n",
-	       G_GNUC_FUNCTION, entry->identifier);
+      gboolean toplevel;
+
+      toplevel = GTK_WIDGET_TOPLEVEL (dialog);
+
+      g_print ("%s: registering %s \"%s\"\n",
+	       G_GNUC_FUNCTION,
+	       toplevel ? "toplevel" : "dockable",
+	       entry->identifier);
 
       for (list = factory->session_infos; list; list = g_list_next (list))
 	{
 	  info = (GimpSessionInfo *) list->data;
 
-	  if (info->toplevel_entry == entry)
+	  if (((info->toplevel_entry == entry) && toplevel) ||
+	      (info->dockable_entry == entry))
 	    {
 	      if (entry->singleton)
 		{
@@ -434,7 +518,7 @@ gimp_dialog_factory_add_toplevel (GimpDialogFactory *factory,
 		  continue;
 		}
 
-	      info->widget = toplevel;
+	      info->widget = dialog;
 
 	      if (entry->session_managed)
 		{
@@ -449,8 +533,12 @@ gimp_dialog_factory_add_toplevel (GimpDialogFactory *factory,
 	{
 	  info = g_new0 (GimpSessionInfo, 1);
 
-	  info->widget         = toplevel;
-	  info->toplevel_entry = entry;
+	  info->widget = dialog;
+
+	  if (toplevel)
+	    info->toplevel_entry = entry;
+	  else
+	    info->dockable_entry = entry;
 
 	  factory->session_infos = g_list_append (factory->session_infos, info);
 	}
@@ -465,7 +553,7 @@ gimp_dialog_factory_add_toplevel (GimpDialogFactory *factory,
 
 	  if (! info->widget) /*  take the first empty slot  */
 	    {
-	      info->widget = toplevel;
+	      info->widget = dialog;
 
 	      gimp_dialog_factory_set_window_geometry (info->widget, info);
 
@@ -477,44 +565,45 @@ gimp_dialog_factory_add_toplevel (GimpDialogFactory *factory,
 	{
 	  info = g_new0 (GimpSessionInfo, 1);
 
-	  info->widget = toplevel;
+	  info->widget = dialog;
 
 	  factory->session_infos = g_list_append (factory->session_infos, info);
 	}
     }
 
-  factory->open_dialogs = g_list_prepend (factory->open_dialogs, toplevel);
+  factory->open_dialogs = g_list_prepend (factory->open_dialogs, dialog);
 
-  gtk_signal_connect_object_while_alive (GTK_OBJECT (toplevel), "destroy",
-					 GTK_SIGNAL_FUNC (gimp_dialog_factory_remove_toplevel),
-					 GTK_OBJECT (factory));
+  gtk_signal_connect_object_while_alive
+    (GTK_OBJECT (dialog), "destroy",
+     GTK_SIGNAL_FUNC (gimp_dialog_factory_remove_dialog),
+     GTK_OBJECT (factory));
 }
 
 void
-gimp_dialog_factory_remove_toplevel (GimpDialogFactory *factory,
-				     GtkWidget         *toplevel)
+gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
+				   GtkWidget         *dialog)
 {
-  GimpDialogFactory *toplevel_factory;
+  GimpDialogFactory *dialog_factory;
   GimpSessionInfo   *session_info;
   GList             *list;
 
   g_return_if_fail (factory != NULL);
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
-  g_return_if_fail (toplevel != NULL);
-  g_return_if_fail (GTK_IS_WIDGET (toplevel));
+  g_return_if_fail (dialog != NULL);
+  g_return_if_fail (GTK_IS_WIDGET (dialog));
 
-  if (! g_list_find (factory->open_dialogs, toplevel))
+  if (! g_list_find (factory->open_dialogs, dialog))
     {
       g_warning ("%s(): dialog not registered", G_GNUC_FUNCTION);
       return;
     }
 
-  factory->open_dialogs = g_list_remove (factory->open_dialogs, toplevel);
+  factory->open_dialogs = g_list_remove (factory->open_dialogs, dialog);
 
-  toplevel_factory = gtk_object_get_data (GTK_OBJECT (toplevel),
-					  "gimp-dialog-factory");
+  dialog_factory = gtk_object_get_data (GTK_OBJECT (dialog),
+					"gimp-dialog-factory");
 
-  if (toplevel_factory && toplevel_factory != factory)
+  if (dialog_factory && dialog_factory != factory)
     {
       g_warning ("%s(): dialog was created by a different GimpDialogFactory",
 		 G_GNUC_FUNCTION);
@@ -525,9 +614,18 @@ gimp_dialog_factory_remove_toplevel (GimpDialogFactory *factory,
     {
       session_info = (GimpSessionInfo *) list->data;
 
-      if (session_info->widget == toplevel)
+      if (session_info->widget == dialog)
 	{
 	  session_info->widget = NULL;
+
+	  /*  don't save session info for empty docks  */
+	  if (GIMP_IS_DOCK (dialog))
+	    {
+	      factory->session_infos = g_list_remove (factory->session_infos,
+						      session_info);
+
+	      g_free (session_info);
+	    }
 
 	  break;
 	}
@@ -547,10 +645,11 @@ gimp_dialog_factories_session_save_foreach (gchar             *name,
 
       info = (GimpSessionInfo *) list->data;
 
-      /*  we keep session info entries for all dialogs created by the
-       *  factory but don't save them if they don't want to be managed
-       */
-      if (info->toplevel_entry && ! info->toplevel_entry->session_managed)
+      /* we keep session info entries for all toplevel dialogs created
+       * by the factory but don't save them if they don't want to be
+       * managed */
+      if (info->dockable_entry ||
+	  (info->toplevel_entry && ! info->toplevel_entry->session_managed))
 	continue;
 
       if (info->widget)
@@ -573,6 +672,17 @@ gimp_dialog_factories_session_save_foreach (gchar             *name,
 	  GList    *books;
 
 	  dock = GIMP_DOCK (info->widget);
+
+	  /* FIXME: make the aux-info stuff generic */
+	  {
+	    gboolean  menu_shown;
+
+	    menu_shown =
+	      GTK_WIDGET_VISIBLE (GIMP_IMAGE_DOCK (dock)->option_menu->parent);
+
+	    fprintf (fp, "\n    (aux-info (\"%s\"))",
+		     menu_shown ? "menu-shown" : "menu-hidden");
+	  }
 
 	  fprintf (fp, "\n    (dock ");
 
@@ -633,6 +743,7 @@ gimp_dialog_factories_session_restore_foreach (gchar             *name,
 					       gpointer           data)
 {
   GList *list;
+  GList *aux;
 
   for (list = factory->session_infos; list; list = g_list_next (list))
     {
@@ -656,6 +767,26 @@ gimp_dialog_factories_session_restore_foreach (gchar             *name,
 	  GList    *books;
 
 	  dock = GIMP_DOCK (gimp_dialog_factory_dock_new (factory));
+
+	  /* FIXME: make the aux-info stuff generic */
+	  {
+	    gboolean  menu_shown = TRUE;
+
+	    for (aux = info->aux_info; aux; aux = g_list_next (aux))
+	      {
+		gchar *str;
+
+		str = (gchar *) aux->data;
+
+		if (! strcmp (str, "menu-shown"))
+		  menu_shown = TRUE;
+		else if (! strcmp (str, "menu-hidden"))
+		  menu_shown = FALSE;
+	      }
+
+	    gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dock),
+						 menu_shown);
+	  }
 
 	  for (books = info->sub_dialogs; books; books = g_list_next (books))
 	    {
@@ -691,6 +822,10 @@ gimp_dialog_factories_session_restore_foreach (gchar             *name,
 
 	  gtk_widget_show (GTK_WIDGET (dock));
 	}
+
+      g_list_foreach (info->aux_info, (GFunc) g_free, NULL);
+      g_list_free (info->aux_info);
+      info->aux_info = NULL;
     }
 }
 

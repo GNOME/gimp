@@ -29,7 +29,6 @@
 #include "core/core-types.h"
 #include "procedural_db.h"
 
-#include "appenums.h"
 #include "base/temp-buf.h"
 #include "base/tile-manager.h"
 #include "base/tile.h"

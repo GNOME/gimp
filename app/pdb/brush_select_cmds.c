@@ -36,6 +36,7 @@
 #include "core/gimpdatafactory.h"
 #include "core/gimplist.h"
 #include "gui/brush-select.h"
+#include "widgets/gimpbrushfactoryview.h"
 
 static ProcRecord brushes_popup_proc;
 static ProcRecord brushes_close_popup_proc;
@@ -265,7 +266,10 @@ brushes_set_popup_invoker (Argument *args)
     
 	  if (object)
 	    {
-	      GimpBrush *active = GIMP_BRUSH (object);
+	      GimpBrush     *active = GIMP_BRUSH (object);
+	      GtkAdjustment *spacing_adj;
+    
+	      spacing_adj = GIMP_BRUSH_FACTORY_VIEW (bsp->view)->spacing_adjustment;
     
 	      /* Updating the context updates the widgets as well */
     
@@ -273,7 +277,7 @@ brushes_set_popup_invoker (Argument *args)
 	      gimp_context_set_opacity (bsp->context, opacity);
 	      gimp_context_set_paint_mode (bsp->context, paint_mode);
     
-	      gtk_adjustment_set_value (GTK_ADJUSTMENT (bsp->spacing_data), spacing);
+	      gtk_adjustment_set_value (spacing_adj, spacing);
 	    }
 	  else
 	    success = FALSE;

@@ -125,7 +125,8 @@ sub brushes_set_popup {
     );
 
     %invoke = (
-	headers => [ qw("core/gimpbrush.h" "core/gimplist.h") ],
+	headers => [ qw("core/gimpbrush.h" "core/gimplist.h"
+	                "widgets/gimpbrushfactoryview.h") ],
 	vars => [ 'ProcRecord *prec', 'BrushSelect *bsp' ],
 	code => <<'CODE'
 {
@@ -138,7 +139,10 @@ sub brushes_set_popup {
 
       if (object)
 	{
-	  GimpBrush *active = GIMP_BRUSH (object);
+	  GimpBrush     *active = GIMP_BRUSH (object);
+	  GtkAdjustment *spacing_adj;
+
+          spacing_adj = GIMP_BRUSH_FACTORY_VIEW (bsp->view)->spacing_adjustment;
 
 	  /* Updating the context updates the widgets as well */
 
@@ -146,7 +150,7 @@ sub brushes_set_popup {
 	  gimp_context_set_opacity (bsp->context, opacity);
 	  gimp_context_set_paint_mode (bsp->context, paint_mode);
 
-	  gtk_adjustment_set_value (GTK_ADJUSTMENT (bsp->spacing_data), spacing);
+	  gtk_adjustment_set_value (spacing_adj, spacing);
 	}
       else
 	success = FALSE;

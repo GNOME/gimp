@@ -94,6 +94,8 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	tool-options-dialog.h		\
 	toolbox.c			\
 	toolbox.h			\
+	tools-commands.c		\
+	tools-commands.h		\
 	view-commands.c			\
 	view-commands.h			\
 @STRIP_END@

@@ -20,23 +20,21 @@
 #define __GLOBAL_EDIT_H__
 
 
-TileManager * edit_cut                 (GimpImage    *gimage,
-					GimpDrawable *drawable);
-TileManager * edit_copy                (GimpImage    *gimage,
-					GimpDrawable *drawable);
-GimpLayer   * edit_paste               (GimpImage    *gimage,
-					GimpDrawable *drawable,
-					TileManager  *paste,
-					gboolean      paste_into);
-GimpImage   * edit_paste_as_new        (GimpImage    *gimage,
-					TileManager  *tiles);
-gboolean      edit_clear               (GimpImage    *gimage,
-					GimpDrawable *drawable);
-gboolean      edit_fill                (GimpImage    *gimage,
-					GimpDrawable *drawable,
-					GimpFillType  fill_type);
-
-gboolean      named_edit_paste         (GimpImage   *gimage);
+TileManager * gimp_edit_cut          (GimpImage    *gimage,
+				      GimpDrawable *drawable);
+TileManager * gimp_edit_copy         (GimpImage    *gimage,
+				      GimpDrawable *drawable);
+GimpLayer   * gimp_edit_paste        (GimpImage    *gimage,
+				      GimpDrawable *drawable,
+				      TileManager  *paste,
+				      gboolean      paste_into);
+GimpImage   * gimp_edit_paste_as_new (GimpImage    *gimage,
+				      TileManager  *tiles);
+gboolean      gimp_edit_clear        (GimpImage    *gimage,
+				      GimpDrawable *drawable);
+gboolean      gimp_edit_fill         (GimpImage    *gimage,
+				      GimpDrawable *drawable,
+				      GimpFillType  fill_type);
 
 
 #endif  /*  __GLOBAL_EDIT_H__  */

@@ -60,29 +60,17 @@ static void   gimp_data_factory_view_new_clicked       (GtkWidget           *wid
 							GimpDataFactoryView *view);
 static void   gimp_data_factory_view_duplicate_clicked (GtkWidget           *widget,
 							GimpDataFactoryView *view);
-static void   gimp_data_factory_view_duplicate_dropped (GtkWidget           *widget,
-							GimpViewable        *viewable,
-							gpointer             data);
 static void   gimp_data_factory_view_edit_clicked      (GtkWidget           *widget,
 							GimpDataFactoryView *view);
-static void   gimp_data_factory_view_edit_dropped      (GtkWidget           *widget,
-							GimpViewable        *viewable,
-							gpointer             data);
 static void   gimp_data_factory_view_delete_clicked    (GtkWidget           *widget,
 							GimpDataFactoryView *view);
-static void   gimp_data_factory_view_delete_dropped    (GtkWidget           *widget,
-							GimpViewable        *viewable,
-							gpointer             data);
 static void   gimp_data_factory_view_refresh_clicked   (GtkWidget           *widget,
 							GimpDataFactoryView *view);
 
-static void   gimp_data_factory_view_data_changed      (GimpContext         *context,
-							GimpData            *data,
-							GimpDataFactoryView *view);
-static void   gimp_data_factory_view_data_activate     (GtkWidget           *context,
-							GimpData            *data,
-							gpointer             insert_data,
-							GimpDataFactoryView *view);
+static void   gimp_data_factory_view_select_item       (GimpContainerEditor *editor,
+							GimpViewable        *viewable);
+static void   gimp_data_factory_view_activate_item     (GimpContainerEditor *editor,
+							GimpViewable        *viewable);
 
 
 static GimpContainerEditorClass *parent_class = NULL;
@@ -116,107 +104,56 @@ gimp_data_factory_view_get_type (void)
 static void
 gimp_data_factory_view_class_init (GimpDataFactoryViewClass *klass)
 {
-  GtkObjectClass *object_class;
+  GtkObjectClass           *object_class;
+  GimpContainerEditorClass *editor_class;
 
   object_class = (GtkObjectClass *) klass;
+  editor_class = (GimpContainerEditorClass *) klass;
 
   parent_class = gtk_type_class (GIMP_TYPE_CONTAINER_EDITOR);
 
-  object_class->destroy = gimp_data_factory_view_destroy;
+  object_class->destroy       = gimp_data_factory_view_destroy;
+
+  editor_class->select_item   = gimp_data_factory_view_select_item;
+  editor_class->activate_item = gimp_data_factory_view_activate_item;
 }
 
 static void
 gimp_data_factory_view_init (GimpDataFactoryView *view)
 {
   GimpContainerEditor *editor;
-  GtkWidget           *pixmap;
 
   editor = GIMP_CONTAINER_EDITOR (view);
 
-  /* new */
+  view->new_button =
+    gimp_container_editor_add_button (editor,
+				      new_xpm,
+				      _("New"), NULL,
+				      gimp_data_factory_view_new_clicked);
 
-  view->new_button = gtk_button_new ();
-  gtk_box_pack_start (GTK_BOX (editor->button_box), view->new_button,
-		      TRUE, TRUE, 0);
-  gtk_widget_show (view->new_button);
+  view->duplicate_button =
+    gimp_container_editor_add_button (editor,
+				      duplicate_xpm,
+				      _("Duplicate"), NULL,
+				      gimp_data_factory_view_duplicate_clicked);
 
-  gimp_help_set_help_data (view->new_button, _("New"), NULL);
+  view->edit_button =
+    gimp_container_editor_add_button (editor,
+				      edit_xpm,
+				      _("Edit"), NULL,
+				      gimp_data_factory_view_edit_clicked);
 
-  gtk_signal_connect (GTK_OBJECT (view->new_button), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_data_factory_view_new_clicked),
-		      view);
+  view->delete_button =
+    gimp_container_editor_add_button (editor,
+				      delete_xpm,
+				      _("Delete"), NULL,
+				      gimp_data_factory_view_delete_clicked);
 
-  pixmap = gimp_pixmap_new (new_xpm);
-  gtk_container_add (GTK_CONTAINER (view->new_button), pixmap);
-  gtk_widget_show (pixmap);
-
-  /* duplicate */
-
-  view->duplicate_button = gtk_button_new ();
-  gtk_box_pack_start (GTK_BOX (editor->button_box), view->duplicate_button,
-		      TRUE, TRUE, 0);
-  gtk_widget_show (view->duplicate_button);
-
-  gimp_help_set_help_data (view->duplicate_button, _("Duplicate"), NULL);
-
-  gtk_signal_connect (GTK_OBJECT (view->duplicate_button), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_data_factory_view_duplicate_clicked),
-		      view);  
-
-  pixmap = gimp_pixmap_new (duplicate_xpm);
-  gtk_container_add (GTK_CONTAINER (view->duplicate_button), pixmap);
-  gtk_widget_show (pixmap);
-
-  /* edit */
-
-  view->edit_button = gtk_button_new ();
-  gtk_box_pack_start (GTK_BOX (editor->button_box), view->edit_button,
-		      TRUE, TRUE, 0);
-  gtk_widget_show (view->edit_button);
-
-  gimp_help_set_help_data (view->edit_button, _("Edit"), NULL);
-
-  gtk_signal_connect (GTK_OBJECT (view->edit_button), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_data_factory_view_edit_clicked),
-		      view);  
-
-  pixmap = gimp_pixmap_new (edit_xpm);
-  gtk_container_add (GTK_CONTAINER (view->edit_button), pixmap);
-  gtk_widget_show (pixmap);
-
-  /* delete */
-
-  view->delete_button = gtk_button_new ();
-  gtk_box_pack_start (GTK_BOX (editor->button_box), view->delete_button,
-		      TRUE, TRUE, 0);
-  gtk_widget_show (view->delete_button);
-
-  gimp_help_set_help_data (view->delete_button, _("Delete"), NULL);
-
-  gtk_signal_connect (GTK_OBJECT (view->delete_button), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_data_factory_view_delete_clicked),
-		      view);  
-
-  pixmap = gimp_pixmap_new (delete_xpm);
-  gtk_container_add (GTK_CONTAINER (view->delete_button), pixmap);
-  gtk_widget_show (pixmap);
-
-  /* refresh */
-
-  view->refresh_button = gtk_button_new ();
-  gtk_box_pack_start (GTK_BOX (editor->button_box), view->refresh_button,
-		      TRUE, TRUE, 0);
-  gtk_widget_show (view->refresh_button);
-
-  gimp_help_set_help_data (view->refresh_button, _("Refresh"), NULL);
-
-  gtk_signal_connect (GTK_OBJECT (view->refresh_button), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_data_factory_view_refresh_clicked),
-		      view);  
-
-  pixmap = gimp_pixmap_new (refresh_xpm);
-  gtk_container_add (GTK_CONTAINER (view->refresh_button), pixmap);
-  gtk_widget_show (pixmap);
+  view->refresh_button =
+    gimp_container_editor_add_button (editor,
+				      refresh_xpm,
+				      _("Refresh"), NULL,
+				      gimp_data_factory_view_refresh_clicked);
 
   gtk_widget_set_sensitive (view->duplicate_button, FALSE);
   gtk_widget_set_sensitive (view->edit_button, FALSE);
@@ -245,13 +182,43 @@ gimp_data_factory_view_new (GimpViewType      view_type,
 {
   GimpDataFactoryView *factory_view;
 
-  g_return_val_if_fail (factory != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
-  g_return_val_if_fail (preview_size > 0 && preview_size <= 64, NULL);
-  g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, NULL);
-  g_return_val_if_fail (min_items_y > 0 && min_items_y <= 64, NULL);
-
   factory_view = gtk_type_new (GIMP_TYPE_DATA_FACTORY_VIEW);
+
+  if (! gimp_data_factory_view_construct (factory_view,
+					  view_type,
+					  factory,
+					  edit_func,
+					  context,
+					  preview_size,
+					  min_items_x,
+					  min_items_y))
+    {
+      gtk_object_unref (GTK_OBJECT (factory_view));
+      return NULL;
+    }
+
+  return GTK_WIDGET (factory_view);
+}
+
+gboolean
+gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
+				  GimpViewType         view_type,
+				  GimpDataFactory     *factory,
+				  GimpDataEditFunc     edit_func,
+				  GimpContext         *context,
+				  gint                 preview_size,
+				  gint                 min_items_x,
+				  gint                 min_items_y)
+{
+  GimpContainerEditor *editor;
+
+  g_return_val_if_fail (factory_view != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_DATA_FACTORY_VIEW (factory_view), FALSE);
+  g_return_val_if_fail (factory != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), FALSE);
+  g_return_val_if_fail (preview_size > 0 && preview_size <= 64, FALSE);
+  g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, FALSE);
+  g_return_val_if_fail (min_items_y > 0 && min_items_y <= 64, FALSE);
 
   factory_view->factory        = factory;
   factory_view->data_edit_func = edit_func;
@@ -264,61 +231,19 @@ gimp_data_factory_view_new (GimpViewType      view_type,
 					 min_items_x,
 					 min_items_y))
     {
-      gtk_object_unref (GTK_OBJECT (factory_view));
-      return NULL;
+      return FALSE;
     }
 
-  gtk_signal_connect_while_alive
-    (GTK_OBJECT (context),
-     gimp_context_type_to_signal_name (factory->container->children_type),
-     GTK_SIGNAL_FUNC (gimp_data_factory_view_data_changed),
-     factory_view,
-     GTK_OBJECT (factory_view));
+  editor = GIMP_CONTAINER_EDITOR (factory_view);
 
-  gtk_signal_connect_while_alive
-    (GTK_OBJECT (GIMP_CONTAINER_EDITOR (factory_view)->view), "activate_item",
-     GTK_SIGNAL_FUNC (gimp_data_factory_view_data_activate),
-     factory_view,
-     GTK_OBJECT (factory_view));
+  gimp_container_editor_enable_dnd (editor,
+				    GTK_BUTTON (factory_view->duplicate_button));
+  gimp_container_editor_enable_dnd (editor,
+				    GTK_BUTTON (factory_view->edit_button));
+  gimp_container_editor_enable_dnd (editor,
+				    GTK_BUTTON (factory_view->delete_button));
 
-  /*  drop to "duplicate"  */
-  gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (factory_view->duplicate_button),
-				  GTK_DEST_DEFAULT_ALL,
-				  factory_view->factory->container->children_type,
-				  GDK_ACTION_COPY);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (factory_view->duplicate_button),
-			      factory_view->factory->container->children_type,
-			      gimp_data_factory_view_duplicate_dropped,
-			      factory_view);
-
-  /*  drop to "edit"  */
-  gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (factory_view->edit_button),
-				  GTK_DEST_DEFAULT_ALL,
-				  factory_view->factory->container->children_type,
-				  GDK_ACTION_COPY);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (factory_view->edit_button),
-			      factory_view->factory->container->children_type,
-			      gimp_data_factory_view_edit_dropped,
-			      factory_view);
-
-  /*  drop to "delete"  */
-  gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (factory_view->delete_button),
-				  GTK_DEST_DEFAULT_ALL,
-				  factory_view->factory->container->children_type,
-				  GDK_ACTION_COPY);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (factory_view->delete_button),
-			      factory_view->factory->container->children_type,
-			      gimp_data_factory_view_delete_dropped,
-			      factory_view);
-  
-  /* set button sensitivity */
-  gimp_data_factory_view_data_changed
-    (context,
-     (GimpData *)
-     gimp_context_get_by_type (context, factory->container->children_type),
-     factory_view);
-
-  return GTK_WIDGET (factory_view);
+  return TRUE;
 }
 
 static void
@@ -401,26 +326,6 @@ gimp_data_factory_view_duplicate_clicked (GtkWidget           *widget,
 }
 
 static void
-gimp_data_factory_view_duplicate_dropped (GtkWidget           *widget,
-					  GimpViewable        *viewable,
-					  gpointer             data)
-{
-  GimpDataFactoryView *view;
-
-  view = (GimpDataFactoryView *) data;
-
-  if (viewable && gimp_container_have (view->factory->container,
-				       GIMP_OBJECT (viewable)))
-    {
-      gimp_context_set_by_type (GIMP_CONTAINER_EDITOR (view)->view->context,
-				view->factory->container->children_type,
-				GIMP_OBJECT (viewable));
-
-      gimp_data_factory_view_duplicate_clicked (NULL, data);
-    }
-}
-
-static void
 gimp_data_factory_view_edit_clicked (GtkWidget           *widget,
 				     GimpDataFactoryView *view)
 {
@@ -438,27 +343,6 @@ gimp_data_factory_view_edit_clicked (GtkWidget           *widget,
       view->data_edit_func (data);
     }
 }
-
-static void
-gimp_data_factory_view_edit_dropped (GtkWidget    *widget,
-				     GimpViewable *viewable,
-				     gpointer      data)
-{
-  GimpDataFactoryView *view;
-
-  view = (GimpDataFactoryView *) data;
-
-  if (viewable && gimp_container_have (view->factory->container,
-				       GIMP_OBJECT (viewable)))
-    {
-      gimp_context_set_by_type (GIMP_CONTAINER_EDITOR (view)->view->context,
-				view->factory->container->children_type,
-				GIMP_OBJECT (viewable));
-
-      gimp_data_factory_view_edit_clicked (NULL, data);
-    }
-}
-
 
 typedef struct _GimpDataDeleteData GimpDataDeleteData;
 
@@ -539,26 +423,6 @@ gimp_data_factory_view_delete_clicked (GtkWidget           *widget,
 }
 
 static void
-gimp_data_factory_view_delete_dropped (GtkWidget    *widget,
-				       GimpViewable *viewable,
-				       gpointer      data)
-{
-  GimpDataFactoryView *view;
-
-  view = (GimpDataFactoryView *) data;
-
-  if (viewable && gimp_container_have (view->factory->container,
-				       GIMP_OBJECT (viewable)))
-    {
-      gimp_context_set_by_type (GIMP_CONTAINER_EDITOR (view)->view->context,
-				view->factory->container->children_type,
-				GIMP_OBJECT (viewable));
-
-      gimp_data_factory_view_delete_clicked (NULL, data);
-    }
-}
-
-static void
 gimp_data_factory_view_refresh_clicked (GtkWidget           *widget,
 					GimpDataFactoryView *view)
 {
@@ -566,13 +430,21 @@ gimp_data_factory_view_refresh_clicked (GtkWidget           *widget,
 }
 
 static void
-gimp_data_factory_view_data_changed (GimpContext         *context,
-				     GimpData            *data,
-				     GimpDataFactoryView *view)
+gimp_data_factory_view_select_item (GimpContainerEditor *editor,
+				    GimpViewable        *viewable)
 {
+  GimpDataFactoryView *view;
+  GimpData            *data;
+
   gboolean  duplicate_sensitive = FALSE;
   gboolean  edit_sensitive      = FALSE;
   gboolean  delete_sensitive    = FALSE;
+
+  if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
+    GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
+
+  view = GIMP_DATA_FACTORY_VIEW (editor);
+  data = GIMP_DATA (viewable);
 
   if (data && gimp_container_have (view->factory->container,
 				   GIMP_OBJECT (data)))
@@ -590,11 +462,18 @@ gimp_data_factory_view_data_changed (GimpContext         *context,
 }
 
 static void
-gimp_data_factory_view_data_activate (GtkWidget           *widget,
-				      GimpData            *data,
-				      gpointer             insert_data,
-				      GimpDataFactoryView *view)
+gimp_data_factory_view_activate_item (GimpContainerEditor *editor,
+				      GimpViewable        *viewable)
 {
+  GimpDataFactoryView *view;
+  GimpData            *data;
+
+  if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->activate_item)
+    GIMP_CONTAINER_EDITOR_CLASS (parent_class)->activate_item (editor, viewable);
+
+  view = GIMP_DATA_FACTORY_VIEW (editor);
+  data = GIMP_DATA (viewable);
+
   if (data && gimp_container_have (view->factory->container,
 				   GIMP_OBJECT (data)))
     {

@@ -198,6 +198,23 @@ gimp_image_dock_new (GimpDialogFactory *factory,
   return GTK_WIDGET (image_dock);
 }
 
+void
+gimp_image_dock_set_show_image_menu (GimpImageDock *image_dock,
+				     gboolean       show)
+{
+  g_return_if_fail (image_dock != NULL);
+  g_return_if_fail (GIMP_IS_IMAGE_DOCK (image_dock));
+
+  if (show)
+    {
+      gtk_widget_show (image_dock->option_menu->parent);
+    }
+  else
+    {
+      gtk_widget_hide (image_dock->option_menu->parent);
+    }
+}
+
 static void
 gimp_image_dock_factory_image_changed (GimpContext *context,
 				       GimpImage   *gimage,

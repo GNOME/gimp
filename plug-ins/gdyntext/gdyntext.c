@@ -91,7 +91,7 @@ gdt_query (void)
 			  "Marco Lamberto <lm@geocities.com>",
 			  "Marco Lamberto",
 			  "Jan 1999",
-			  N_("<Image>/Filters/Render/Dynamic Text..."),
+			  N_("<Image>/Filters/Text/Dynamic Text..."),
 			  "RGB*,GRAY*,INDEXED*",
 			  GIMP_PLUGIN,
 			  ngdt_args, ngdt_rets,

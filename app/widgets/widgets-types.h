@@ -131,8 +131,9 @@ typedef struct _GimpLayerListView     GimpLayerListView;
 typedef struct _GimpChannelListView   GimpChannelListView;
 
 typedef struct _GimpContainerEditor   GimpContainerEditor;
-typedef struct _GimpDataFactoryView   GimpDataFactoryView;
 typedef struct _GimpBufferView        GimpBufferView;
+typedef struct _GimpDataFactoryView   GimpDataFactoryView;
+typedef struct _GimpBrushFactoryView  GimpBrushFactoryView;
 
 typedef struct _GimpListItem          GimpListItem;
 typedef struct _GimpChannelListItem   GimpChannelListItem;
