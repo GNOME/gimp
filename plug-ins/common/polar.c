@@ -322,8 +322,13 @@ polarize_func (gint x,
   if (calc_undistorted_coords (x, y, &cx, &cy))
     {
       guchar     pixel1[4], pixel2[4], pixel3[4], pixel4[4];
-      guchar     *values[4] = {pixel1, pixel2, pixel3, pixel4};
+      guchar     *values[4];
       GimpPixelFetcher *pft = (GimpPixelFetcher*) data;
+
+      values[0] = pixel1;
+      values[1] = pixel2;
+      values[2] = pixel3;
+      values[3] = pixel4;
 
       gimp_pixel_fetcher_get_pixel (pft, cx, cy, pixel1);
       gimp_pixel_fetcher_get_pixel (pft, cx + 1, cy, pixel2);
