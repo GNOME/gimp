@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-09-06 01:25+0200\n"
-"PO-Revision-Date: 2004-09-06 01:27+0200\n"
+"PO-Revision-Date: 2004-09-06 01:53+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -2260,7 +2260,7 @@ msgstr "I_nverti mappa a sbalzo"
 #. Tile bumpmap
 #: plug-ins/common/bumpmap.c:989
 msgid "_Tile bumpmap"
-msgstr "So_vrapponi mappa a sbalzo"
+msgstr "Pias_trella mappa a sbalzo"
 
 #: plug-ins/common/bumpmap.c:1013
 msgid "_Bump map:"
@@ -2845,7 +2845,7 @@ msgstr "Dimensione ma_ttonella:"
 
 #: plug-ins/common/cubism.c:289
 msgid "T_ile saturation:"
-msgstr "Saturaz_ione mattonella:"
+msgstr "Saturaz_ione piastrella:"
 
 #: plug-ins/common/cubism.c:297
 msgid "_Use background color"
@@ -4117,15 +4117,15 @@ msgstr "Ranghi:"
 
 #: plug-ins/common/glasstile.c:116
 msgid "_Glass Tile..."
-msgstr "Mattonelle di _vetro..."
+msgstr "Piastrelle di _vetro..."
 
 #: plug-ins/common/glasstile.c:194
 msgid "Glass Tile..."
-msgstr "Mattonelle di vetro..."
+msgstr "Piastrelle di vetro..."
 
 #: plug-ins/common/glasstile.c:232
 msgid "Glass Tile"
-msgstr "Mattonelle di vetro"
+msgstr "Piastrelle di vetro"
 
 #: plug-ins/common/glasstile.c:270
 msgid "Tile _width:"
@@ -5042,7 +5042,7 @@ msgstr "Rilevamento bordi..."
 #. Progress bar for rendering tiles
 #: plug-ins/common/mosaic.c:484
 msgid "Rendering Tiles..."
-msgstr "Rendering mattonelle..."
+msgstr "Rendering piastrelle..."
 
 #: plug-ins/common/mosaic.c:510
 msgid "Mosaic"
@@ -5054,7 +5054,7 @@ msgstr "Media co_lorazione"
 
 #: plug-ins/common/mosaic.c:555
 msgid "Allo_w tile splitting"
-msgstr "Permetti _spezzettatura mattonelle"
+msgstr "Permetti _spezzettatura piastrelle"
 
 #: plug-ins/common/mosaic.c:565
 msgid "_Pitted surfaces"
