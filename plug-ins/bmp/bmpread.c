@@ -43,8 +43,6 @@
 #define BI_BITFIELDS  	3
 #endif
 
-static gboolean using565 = FALSE;
-
 static gint32 ReadImage (FILE     *fd,
                          gint      width,
                          gint      height,
@@ -53,7 +51,8 @@ static gint32 ReadImage (FILE     *fd,
                          gint      bpp,
                          gint      compression,
                          gint      rowbytes,
-                         gboolean  grey);
+                         gboolean  grey,
+                         const Bitmap_Channel *masks);
 
 
 static gint32
@@ -98,6 +97,41 @@ ReadColorMap (FILE     *fd,
   return TRUE;
 }
 
+static gboolean
+ReadChannelMasks (FILE *fd, Bitmap_Channel *masks, guint channels)
+{
+  guint32 tmp[3];
+  guint32 mask;
+  gint   i, nbits, offset, bit;
+  
+  if (!ReadOK (fd, tmp, 3 * sizeof (guint32)))
+    return FALSE;
+
+  for (i = 0; i < channels; i++)
+    {
+      mask = ToL ((guchar*) &tmp[i]);
+      masks[i].mask = mask;
+      nbits = 0;
+      offset = -1;
+      for (bit = 0; bit < 32; bit++)
+        {
+          if (mask & 1)
+            {
+              nbits++;
+              if (offset == -1)
+                offset = bit;
+            }
+          mask = mask >> 1;
+        }
+      masks[i].shiftin = offset;
+      masks[i].shiftout = 8 - nbits;
+#ifdef DEBUG
+      g_print ("Channel %d mask %08x in %d out %d\n", i, masks[i].mask, masks[i].shiftin, masks[i].shiftout);
+#endif
+    }
+  return TRUE;
+}
+
 gint32
 ReadBMP (const gchar *name)
 {
@@ -109,6 +143,7 @@ ReadBMP (const gchar *name)
   guchar    ColorMap[256][3];
   gint32    image_ID;
   guchar    magick[2];
+  Bitmap_Channel *masks;
 
   filename = name;
   fd = fopen (filename, "rb");
@@ -296,36 +331,36 @@ ReadBMP (const gchar *name)
 #endif
 
   if (Bitmap_Head.biCompr == BI_BITFIELDS &&
-      (Bitmap_Head.biBitCnt == 16 || Bitmap_Head.biBitCnt == 16))
+      Bitmap_Head.biBitCnt == 16)
     {
-      gint32 tmp[3];
-      gint32 green_mask;
-      gint   i, green;
-
-      if (!ReadOK (fd, tmp, 3 * sizeof (gint32)))
-	{
+      masks = g_new (Bitmap_Channel, 3);
+      if (! ReadChannelMasks (fd, masks, 3))
+        {
           g_message (_("'%s' is not a valid BMP file"),
                       gimp_filename_to_utf8 (filename));
           return -1;
         }
-
-      green_mask = ToL ((guchar*) &tmp[1]);
-
-      green = 0;
-      for (i = 0; i < 32; i++)
-	{
-	  if (green_mask & 1)
-	    green++;
-	  green_mask = green_mask >> 1;
-	}
-
-      using565 = (green == 6);
+    }
+  else if (Bitmap_Head.biBitCnt == 16)
+    {
+      /* Default is 5.5.5 if no masks are given */
+      masks = g_new (Bitmap_Channel, 3);
+      masks[0].mask     = 0x7c00;
+      masks[0].shiftin  = 10;
+      masks[0].shiftout = 3;
+      masks[1].mask     = 0x03e0;
+      masks[1].shiftin  = 5;
+      masks[1].shiftout = 3;
+      masks[2].mask     = 0x001f;
+      masks[2].shiftin  = 0;
+      masks[2].shiftout = 3;
     }
   else
     {
       /* Get the Colormap */
       if (!ReadColorMap (fd, ColorMap, ColormapSize, Maps, &Grey))
-	return -1;
+        return -1;
+      masks = NULL;
     }
 
 #ifdef DEBUG
@@ -343,7 +378,8 @@ ReadBMP (const gchar *name)
 			Bitmap_Head.biBitCnt,
 			Bitmap_Head.biCompr,
 			rowbytes,
-			Grey);
+			Grey,
+			masks);
 
   if (Bitmap_Head.biXPels > 0 && Bitmap_Head.biYPels > 0)
     {
@@ -374,7 +410,8 @@ ReadImage (FILE     *fd,
 	   gint      bpp,
 	   gint      compression,
 	   gint      rowbytes,
-	   gboolean  grey)
+	   gboolean  grey,
+	   const Bitmap_Channel *masks)
 {
   guchar        v, n;
   GimpPixelRgn  pixel_rgn;
@@ -388,6 +425,16 @@ ReadImage (FILE     *fd,
   gushort       rgb;
   glong         rowstride, channels;
   gint          i, j, cur_progress, max_progress;
+
+  if (! (compression == BI_RGB ||
+      (bpp == 8 && compression == BI_RLE8) ||
+      (bpp == 4 && compression == BI_RLE4) ||
+      (bpp == 16 && compression == BI_BITFIELDS) ||
+      (bpp == 32 && compression == BI_BITFIELDS)))
+    {
+      g_message (_("Unrecognized or invalid BMP compression format."));
+      return -1;
+    }
 
   /* Make a new image in the gimp */
 
@@ -442,6 +489,8 @@ ReadImage (FILE     *fd,
                 *(temp++)= buffer[xpos * 4 + 1];
                 *(temp++)= buffer[xpos * 4];
               }
+            if (ypos == 0)
+              break;
             --ypos; /* next line */
             cur_progress++;
             if ((cur_progress % 5) == 0)
@@ -462,6 +511,8 @@ ReadImage (FILE     *fd,
                 *(temp++)= buffer[xpos * 3 + 1];
                 *(temp++)= buffer[xpos * 3];
               }
+            if (ypos == 0)
+              break;
             --ypos; /* next line */
             cur_progress++;
             if ((cur_progress % 5) == 0)
@@ -479,19 +530,12 @@ ReadImage (FILE     *fd,
             for (xpos= 0; xpos < width; ++xpos)
               {
                 rgb= ToS(&buffer[xpos * 2]);
-                if (using565) /* rgb 565 encoded */
-                  {
-                    *(temp++)= ((rgb >> 11) & 0x1f) * 8;
-                    *(temp++)= ((rgb >> 5)  & 0x3f) * 4;
-                    *(temp++)= ((rgb)       & 0x1f) * 8;
-                  }
-                else /* rgb555 */
-                  {
-                    *(temp++)= ((rgb >> 10) & 0x1f) * 8;
-                    *(temp++)= ((rgb >> 5)  & 0x1f) * 8;
-                    *(temp++)= ((rgb)       & 0x1f) * 8;
-                  }
+                *(temp++) = ((rgb & masks[0].mask) >> masks[0].shiftin) << masks[0].shiftout;
+                *(temp++) = ((rgb & masks[1].mask) >> masks[1].shiftin) << masks[1].shiftout;
+                *(temp++) = ((rgb & masks[2].mask) >> masks[2].shiftin) << masks[2].shiftout;
               }
+            if (ypos == 0)
+              break;
             --ypos; /* next line */
             cur_progress++;
             if ((cur_progress % 5) == 0)
@@ -519,6 +563,8 @@ ReadImage (FILE     *fd,
 		if (xpos == width)
 		  {
 		    ReadOK (fd, buffer, rowbytes - 1 - (width * bpp - 1) / 8);
+            if (ypos == 0)
+              break;
 		    ypos--;
 		    xpos = 0;
 
