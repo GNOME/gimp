@@ -1238,7 +1238,7 @@ show_frame (void)
   gtk_progress_bar_set_fraction (progress,
                                  ((float)frame_number / (float)(total_frames-0.999)));
 
-  text = g_strdup_printf (_("Frame %d of %d"), frame_number, total_frames);
+  text = g_strdup_printf (_("Frame %d of %d"), frame_number + 1, total_frames);
   gtk_progress_bar_set_text (progress, text);
   g_free (text);
 }
