@@ -1,3 +1,8 @@
+Wed Jul 28 21:32:52 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
+
+	* libgimp/gimpenv.c (gimp_data_directory): Add __XOS2RedirRoot() for
+	OS/2 version. 
+
 Wed Jul 28 19:41:08 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/curve_bend.c

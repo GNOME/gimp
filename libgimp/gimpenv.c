@@ -117,7 +117,11 @@ gimp_data_directory ()
     {
       if (!g_path_is_absolute (env_gimp_data_dir))
 	g_error ("GIMP_DATADIR environment variable should be an absolute path.");
+#ifndef __EMX__
       gimp_data_dir = g_strdup (env_gimp_data_dir);
+#else      
+      gimp_data_dir = g_strdup (__XOS2RedirRoot(env_gimp_data_dir));
+#endif      
     }
   else
     {
