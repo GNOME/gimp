@@ -1,3 +1,11 @@
+1999-02-22 adam, blah blah
+
+	* app/appenv.h: fixed a macro bug waiting to happen
+
+	* plug-ins/gee/gee.c: some crappy tweaks
+
+	* plug-ins/psd/psd.c: debugging turned off
+
 1999-02-22  Jay Cox  <jaycox@earthlink.net>
 
 	* app/channel.c: fixed bug in channel_bounds

@@ -444,6 +444,8 @@ void domap3(unsigned char *src, unsigned char *dest,
   unsigned int basesy;
 #endif
 
+  static unsigned int grrr=0;
+
   if ((cx+bx) == 0)
     cx++;
 
@@ -464,6 +466,8 @@ void domap3(unsigned char *src, unsigned char *dest,
   by2 = ((by)<<19)/bycxmcybx;
   cy2 = ((cy)<<19)/bycxmcybx;
 
+  grrr++;
+
   for (dy=0;dy<256;dy++)
     {
 #ifdef __AAARGH_GNUC__
@@ -473,12 +477,14 @@ void domap3(unsigned char *src, unsigned char *dest,
 #else
       unsigned int sx;
       unsigned int sy;
-      unsigned int dx;      
+      unsigned int dx; 
 #endif
 
-      sx = (basesx-=bx2);
       sy = (basesy+=cx2);
-
+      sx = (basesx-=bx2);
+      sx += ((double)(6<<11))*(sin((double)((((
+					       (basesy)
+					       >>11)+grrr))/(2.0*31.4159265))));
       dx = 256;
       do
 	{
@@ -572,6 +578,8 @@ render_frame(void)
 	}
 #endif
 
+      //      memcpy(preview_data1, seed_data, 256*256*3);
+
       if (frame != 0)
 	{
 	  if (feedbacktype)
@@ -584,7 +592,7 @@ render_frame(void)
 		    (t&256)? (~(t>>10)) : t; /* Quick specialized clamp */
 		}
 	    }
-	  else
+	  else// if (0)
 	    {
 	      gint pixwords = pixels/sizeof(gint32);
 	      gint32* seedwords = (gint32*) seed_data;
@@ -595,13 +603,19 @@ render_frame(void)
 		  /*preview_data1[i] = (preview_data1[i]*2 +
 		    seed_data[i]) /3;*/
 
+		  /* mod'd version of the below for a 'deeper' mix */
+		  prevwords[i] =
+		    ((prevwords[i] >> 1) & 0x7f7f7f7f) +
+		    ((prevwords[i] >> 2) & 0x3f3f3f3f) +
+		    ((seedwords[i] >> 2) & 0x3f3f3f3f);
 		  /* This is from Raph L... it should be a fast 50%/50%
 		     blend, though I don't know if 50%/50% is as nice as
 		     the old ratio. */
-		   prevwords[i] =
-		     ((prevwords[i] >> 1) & 0x7f7f7f7f) +
-		     ((seedwords[i] >> 1) & 0x7f7f7f7f) +
-		     (prevwords[i] & seedwords[i] & 0x01010101);
+		  /*
+		    prevwords[i] =
+		    ((prevwords[i] >> 1) & 0x7f7f7f7f) +
+		    ((seedwords[i] >> 1) & 0x7f7f7f7f) +
+		    (prevwords[i] & seedwords[i] & 0x01010101); */
 		}
 	    }	
 	}
@@ -649,19 +663,21 @@ render_frame(void)
 
 	      for (i=0;i<pixwords;i++)
 		{
+
+		  /* mod'd version of the below for a 'deeper' mix */
+		  prevwords[i] =
+		    ((prevwords[i] >> 1) & 0x7f7f7f7f) +
+		    ((prevwords[i] >> 2) & 0x3f3f3f3f) +
+		    ((seedwords[i] >> 2) & 0x3f3f3f3f);
 		  /* This is from Raph L... it should be a fast 50%/50%
 		     blend, though I don't know if 50%/50% is as nice as
 		     the old ratio. */
-		   prevwords[i] =
-		     ((prevwords[i] >> 1) & 0x7f7f7f7f) +
-		     ((seedwords[i] >> 1) & 0x7f7f7f7f) +
-		     (prevwords[i] & seedwords[i] & 0x01010101);
+		  /*
+		    prevwords[i] =
+		    ((prevwords[i] >> 1) & 0x7f7f7f7f) +
+		    ((seedwords[i] >> 1) & 0x7f7f7f7f) +
+		    (prevwords[i] & seedwords[i] & 0x01010101); */
 		}
-
-	      /*	      for (i=0;i<pixels;i++)
-		{
-		  preview_data1[i] = (preview_data1[i]*2 + seed_data[i]) /3;
-		}*/
 	    }	
 	}
     }
