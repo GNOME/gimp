@@ -48,6 +48,8 @@
 #include <sys/mman.h>
 #endif
 
+#include <glib.h> /* for G_OS_* */
+
 #ifdef G_OS_WIN32
 #include <io.h>
 #endif

@@ -60,14 +60,14 @@ static char rcsid[] = "$Id$";
 #include <dirent.h>
 #endif
 
+#include <gtk/gtk.h>
+
 #ifdef G_OS_WIN32
 #include <io.h>
 #ifndef S_ISREG
 #define S_ISREG(m) ((m) & _S_IFREG)
 #endif
 #endif
-
-#include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>

@@ -1,5 +1,18 @@
 2001-03-16  Hans Breuer  <hans@breuer.org>
 
+	* plug-ins/common/gqbist.c : #define PATH_MAX as _MAX_PATH
+	if it isn't defined
+
+	* plug-ins/common/gz.c : #include <io.h> for win32 _get_osfhandle ()
+
+	* plug-ins/gflare/gflare.c : #include <gtk/gtk.h> before using
+	G_OS_WIN32
+
+	* plug-ins/twain/twain.c : provide a main () entry point to allow
+	to build as console application as well
+
+2001-03-16  Hans Breuer  <hans@breuer.org>
+
 	* app/makefile.msc
 	* app/tools/makefile.msc : adapted to current state of file 
 	renaming/restructuring. Probably will break again soon ...

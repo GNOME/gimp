@@ -85,6 +85,7 @@
 #define STRICT
 #define WinMain WinMain_foo
 #include <windows.h>
+#include <io.h> /* _get_osfhandle */
 #undef WinMain
 #endif
 

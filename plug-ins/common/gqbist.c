@@ -62,6 +62,10 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#ifndef PATH_MAX
+#define PATH_MAX _MAX_PATH
+#endif
+
 /** qbist renderer ***********************************************************/
 
 #define MAX_TRANSFORMS	36
